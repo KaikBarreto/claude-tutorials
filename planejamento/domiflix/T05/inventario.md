@@ -29,7 +29,7 @@ backend falso não foram executados). Convenções:
 | 6 | Endereço de serviço diferente do cliente | **Bate**, mas fica na etapa 1. Alternância "Sim/Não" em "Endereço de serviço (diferente do cliente)". | `ServiceOrderFormDialog.tsx:1265-1337`; `os.ts:192-197` |
 | 7 | Toggle "gerar Pesquisa de Satisfação ao finalizar" | **Bate.** "Gerar Pesquisa de Satisfação ao finalizar?" Sim/Não; o padrão vem da configuração de NPS da empresa. | `ServiceOrderFormDialog.tsx:549-561, 2017-2030, 2440-2450`; `os.ts:312` |
 | 8 | Mover status arrastando e o "+" da coluna | **Bate.** Arrastar o cartão muda o status na hora, sem confirmação. Soltar em "Concluída" pode abrir a pergunta de receita. Sem "+" em "Concluída"/"Cancelada". Nova: coluna fixa **"Chamados do Portal"**, só quando existe chamado sem data. | `ServiceOrders.tsx:372-393, 402-446, 1160-1164, 1181-1195`; `os.ts:116-118` |
-| 9 | Configurar Status: status próprio, cor e ordem | **Reduzido.** O botão "Configurações" abre "Configurações de OS" só com: criar status (nome + cor), editar, reordenar arrastando, excluir. Prefixo/formato do número, SLA por tipo e campos obrigatórios por status **existem no código mas não aparecem** na janela. | `OsStatusManagerDialog.tsx:142-303` (UI) × `:32-137, 164-169, 218-241` (sem tela) |
+| 9 | Configurar Status: status próprio, cor e ordem | **Reduzido, e o "status próprio" não funciona de ponta a ponta.** O botão "Configurações" abre "Configurações de OS" só com: criar status (nome + cor), editar, reordenar arrastando, excluir. Prefixo/formato do número, SLA por tipo e campos obrigatórios por status **existem no código mas não aparecem** na janela. O status novo vira coluna/filtro, mas `service_orders.status` é um enum fixo de 7 valores: mover uma OS para ele deve ser recusado pelo banco (**P24**). | `OsStatusManagerDialog.tsx:142-303` (UI) × `:32-137, 164-169, 218-241` (sem tela) |
 | 10 | Filtros, busca e por que a busca ignora o período | **Bate.** Com texto digitado a busca olha todas as OS e mostra "Mostrando resultados de todas as OS (filtros pausados)". Filtro "Status" fica num botão "Filtros" dentro do campo de busca. | `ServiceOrders.tsx:193-261, 696-740`; `os.ts:43-56` |
 | 11 | Abrir a OS no app do técnico sendo gestor, e compartilhar o link | **Mudou nos nomes.** No detalhe: botão grande "Preencher OS" (ou "Relatório de Serviço" se concluída) e ação "Link OS" que copia o endereço público. Na tabela: "Visualizar OS", "Abrir checklist" (abre o app do técnico em **nova aba**). O link copiado tem endereço fixo `https://dominex.app/...`. | `ServiceOrderViewDialog.tsx:706-730, 786-793`; `ServiceOrders.tsx:1005-1013`; `utils/shareLinks.ts:27-45` |
 | 12 | Aba Relatório | **Bate**, com bloco novo "Saúde do agendamento". Calculado no navegador com as OS carregadas, período padrão "Este mês". | `OsReportDashboard.tsx:45-54`; `os.ts:762-794` |
@@ -62,6 +62,7 @@ backend falso não foram executados). Convenções:
 6. **Equipes não são uma tela própria:** estão em Funcionários › "Equipes", e o menu "Gestão › Funcionários" some sem o módulo RH (Glacial tem; o roteiro precisa avisar com "🔒"). Resposta à pendência 4 da trilha: **sem RH a aba não existe** (`App.tsx:869`, `SidebarMenuContent.tsx:117`); a criação de OS continua mostrando equipes já cadastradas (`useTeams` não checa módulo).
 7. **Tarefas e OS moram na mesma tabela**; a tela de OS esconde as tarefas (`serviceOrderAccess.ts:11-16`, `ServiceOrders.tsx:201`) e a Agenda mostra as duas.
 8. **Mapa: o técnico só aparece com posição enviada pelo celular** (carga dos últimos 120 minutos): sem dados o mapa fica só com a "Base da empresa" (`useLiveTechnicianLocations.ts:63-72`). A gravação precisa de posições semeadas (seção 4).
+9. **"Status próprio" não fecha o ciclo:** dá para criar a coluna, mas a OS não pode ser movida para ela (enum fixo no banco, **P24**). O que a janela entrega de verdade: renomear, trocar a cor, reordenar as colunas e excluir.
 
 ---
 
@@ -155,7 +156,7 @@ Janela "Nova Ordem de Serviço" (ou "Editar OS"), 920 px, com indicador numerado
 com recorrência ligada; na edição, "Salvar") (`:1907, 2149, 2119-2145`; `os.ts:153-168`). Só a etapa 1 tem trava: "Próximo" fica desligado sem cliente (`:1164-1170`).
 Se existir rascunho de um preenchimento interrompido, antes de tudo aparece **"Rascunho encontrado"** com "Começar do zero" e "Retomar rascunho" (`components/ui/DraftResumeDialog.tsx:58-70`).
 O rascunho é salvo a cada mudança, **só em criação**, em `sessionStorage` (`form-draft:service-order-form`) e guarda: campos do formulário (datas, descrição, notas, plano), cliente escolhido, tipos
-de serviço e itens do orçamento; **não** guarda equipamentos, checklists, responsáveis, recorrência, NPS nem endereço de serviço (`:337-378, 2150-2177`; `hooks/useFormDraft.ts:53, 79, 118`).
+de serviço e itens do orçamento; **não** guarda equipamentos, checklists, responsáveis, recorrência, NPS nem endereço de serviço (`:337-378, 2150-2177`; `hooks/useFormDraft.ts:53, 79, 118`). A gravação do rascunho acontece também ao **fechar** a janela (`flush`, `useFormDraft.ts:12-28`), e "Retomar rascunho" restaura os valores mas **não** muda a etapa: a janela sempre reabre na etapa 1 (`:443`).
 
 **Etapa "Cliente e Serviço"** (`:1938-1976` edição; `:2205-2325` criação)
 - Alternância **"Cliente cadastrado" / "Cliente avulso"** (só na criação). Cadastrado: campo "Cliente *" (placeholder "Selecione o cliente", busca "Buscar cliente...") com botão **"Criar cliente"**
@@ -171,6 +172,8 @@ de serviço e itens do orçamento; **não** guarda equipamentos, checklists, res
 - Tabela de itens (`quotes/QuoteItemsTable.tsx:250-420`): bloco "Serviços e Mão de Obra" (colunas "Serviço", "Qtd", "Valor Unit.", "Total"; seletor "Selecionar serviço...", vazio "Nenhum serviço adicionado.")
   e bloco de materiais ("Selecionar material...", "Nenhum material adicionado."). Rodapé: "Serviços e mão de obra", "Materiais", "Ajustes e descontos do orçamento" (se houver) e **"Total para faturamento"**.
 - Escolher serviços na etapa 1 **não cria linhas** aqui; adicionar uma linha de serviço aqui **inclui o serviço** no escopo da OS (`:1254-1261`). Materiais vêm do estoque (`inventory`, vazio no seed).
+- Como entra uma linha de serviço (`QuoteItemsTable.tsx:36-140`): na linha de adição, "Selecionar serviço..." (busca "Buscar serviço...", vazio "Nenhum serviço encontrado") preenche a descrição com o nome do tipo, a quantidade com **1** e o "Valor Unit." com o **"Preço padrão"** do tipo (R$ 180,00 no Manutenção Preventiva do T4; vazio se o tipo não tem preço);
+  o botão "+" (dica "Incluir") só liga com descrição e quantidade maior que zero. Salvar a OS sem nenhuma linha deixa o valor da OS em 0 (a etapa envia a lista vazia, `ServiceOrderFormDialog.tsx:809`; `useServiceOrders.ts:402-404`).
 
 **Etapa "Equipamentos e Checklists"** (`:1442-1850`)
 - Bloco **"Equipamentos"** só aparece se algum serviço escolhido é "Vinculado a equipamento" (ou se nenhum serviço foi escolhido) (`:289-292, 1445`). Texto "Selecione um ou mais equipamentos para esta OS." (ou "Selecione o equipamento." com 1),
@@ -358,3 +361,131 @@ sem handler (o falso devolve "vazio pelo tipo", sem efeito colateral); **NÃO** 
 `scheduled_date/time`, `schedule_plan`, `status` · `service_order_assignees` · `service_order_service_types` · `service_order_equipment` (+ `_service_types`) · `service_ratings` (≥ 8, respondidas) · `technician_locations` (relativas ao agora)
 · `teams`/`team_members` (a aula cria 1 ao vivo; 1 já pode existir) · estado do T4 (`service_types`, `service_type_categories`, `task_types`, `form_templates`, `form_questions`, `form_template_service_types`).
 Nada disso existe em `rec/fakebase/seeds/` hoje (só `companies`, `company_settings`, `subscription_plans`, `company_modules`, `tenant_payment_accounts`, `profiles`, `user_roles`, `user_preferences`, cadastros do T3 e `receita`).
+
+### 4.7 Contratos que o backend falso precisa imitar (para quem for escrever os handlers)
+Todos lidos nas migrations de `supabase/migrations/` da 1.38.6. O backend falso devolve "vazio pelo tipo" para RPC sem handler e **não grava nada**, então cada linha abaixo é uma tela que "parece funcionar e não muda nada".
+
+| RPC / tabela | Entrada → efeito | Retorno | Fonte |
+|---|---|---|---|
+| `sync_service_order_service_types(p_service_order_id, p_service_type_ids uuid[])` | apaga e regrava `service_order_service_types(service_order_id, service_type_id, company_id, position)` (só tipos **ativos**, máx. 50) **e** grava `service_orders.service_type_id = ids[0]` | `{service_order_id, service_type_ids}` | `20261018231000_orcamento_da_os_e_gerar_os.sql:292-373` |
+| `sync_service_order_scope_with_services(_service_order_id, _items, _confirm_response_deletion)` com `_items = [{equipment_id, service_type_ids[], form_template_ids[]}]` | regrava `service_order_equipment(service_order_id, equipment_id, form_template_id)` (um par por equipamento × checklist; **checklist avulso = `equipment_id` nulo**; equipamento sem checklist = `form_template_id` nulo) e `service_order_equipment_service_types(service_order_id, equipment_id, service_type_id, company_id, position)`; erro `SCOPE_RESPONSES_REQUIRE_CONFIRMATION\|n\|m` se apagaria respostas sem confirmação | `{…escopo, equipment_services:[{equipment_id, service_type_id, position}]}` | `20261019041000_protecao_escopo_e_distribuicao_orcamento.sql:92-196`; base em `20261014180000_sync_os_scope_escritorio_limpa_respostas_orfas.sql:54-` |
+| `sync_service_order_budget(p_service_order_id, p_items)` com itens `{item_type: servico\|mao_de_obra\|material, description, details, quantity, unit_price, inventory_id, service_type_id, source_quote_item_id}` | regrava `service_order_budget_items` (`total_price = round(qtd × preço, 2)`, `position`) e **atualiza a OS**: `labor_value` (serviços + mão de obra), `parts_value` (materiais) e `total_value` | `{labor_value, parts_value, total_value}` | `20261018231000_orcamento_da_os_e_gerar_os.sql:381-541` |
+| `reset_service_order(_service_order_id, _clear_responses)` | só vale para a_caminho/em_andamento/pausada/concluida; `status='agendada'`; zera `check_in_*`, `check_out_*`, `started_at`, `paused_at`, `resumed_at`, `completed_at`, `partial_finish`; com `_clear_responses` também zera diagnóstico, solução, assinaturas e PMOC e apaga `form_responses`, `os_photos` e `technician_locations` da OS; sempre apaga `service_ratings` ainda **sem resposta** | `{service_order_id, status:'agendada', responses_cleared, form_responses_deleted, photos_deleted, locations_deleted, …}` | `20261017161000_allow_reset_service_order_in_progress.sql:6-148` |
+| `schedule_book_service_order(p_service_order_id, p_resource_type 'technician'\|'team', p_resource_id, p_starts_at, p_ends_at, p_override_justification)` e `…_plan(…, p_starts_at, p_schedule_plan jsonb, …)` | atualiza data, hora, duração, `schedule_plan` e o recurso direto (`technician_id` **ou** `team_id`); `p_starts_at`/`p_ends_at` chegam em **UTC** (o app converte do fuso da empresa, `lib/scheduleBooking.ts:84-87`; Brasília = UTC−3). Conflito = erro cujo texto contém `public_api_schedule_conflict` ou `schedule_conflict` | `jsonb` (o app ignora) | `lib/scheduleBooking.ts:76-114`; `20261017122000_public_api_v1_booking_engine.sql:290-440` |
+| gatilho `schedule_sync_service_order_reservations()` em `service_orders` | cria/cancela `booking_reservations` e **bloqueia criação ou edição que sobreponha** outra reserva do mesmo técnico/equipe (`public_api_schedule_conflict`), salvo override com justificativa | — (erro) | `20261017122000_public_api_v1_booking_engine.sql:5-260`, conflito em `:162` |
+| gatilho `service_orders_track_pause_resume()` (**BEFORE UPDATE** em `service_orders`) | na troca de status: →`pausada` grava `paused_at=now()` e zera `resumed_at`; `pausada`→outro grava `resumed_at=now()`; →`em_andamento` grava `started_at` (só se nulo); →`concluida` grava `completed_at=now()`. **Arrastar o cartão no Kanban é um UPDATE**, então é isso que alimenta "Linha do tempo" da Agenda, "Tempo médio" e "Saúde do agendamento". Inserir direto numa coluna (botão "+") **não** passa por ele | — | `20260505000002_service_orders_started_completed_timestamps.sql:28-60` |
+| `get_nps_technician_ranking`, `get_nps_open_detractors`, `get_nps_criteria_averages` | leitura agregada de `service_ratings` por período (formas na 4.2) | arrays | `20260616090000_nps_carona_link_publico_ranking.sql:326-`; `hooks/useNps*.ts` |
+
+**Colunas para montar as sementes** (de `rec/fakebase/schema.json`): `os_statuses(key, label, color, position, is_default)` — **é `label`, não `name`**; os 7 de fábrica vêm de `20260606170000_catalog_tenant_isolation_hardening.sql:129-135`
+(só "Pausada" tem `is_default=false`); `os_config(number_prefix, number_format)` (sem `company_id`); `teams(name, description, color, icon_name, photo_url, is_active, created_by)`; `team_members(team_id, user_id)`;
+`technician_locations(user_id, service_order_id, event_type, lat, lng, address, created_at)`; `service_ratings(service_order_id, nps_score, quality_rating, punctuality_rating, professionalism_rating, comment, rated_by_name, rated_at, token)`;
+`nps_criteria(label, active, position)`; `nps_settings(question, require_stars, generate_on_finish, google_review_url, google_review_min_score)`; `service_order_assignees(service_order_id, user_id)`.
+
+**Padrões do NPS enquanto `nps_settings` está vazia** (`hooks/useNpsSettings.ts:17-37`): pergunta "De 0 a 10, o quão satisfeito(a) você ficou com o nosso serviço?", estrelas **opcionais**, "gerar ao finalizar" = Sim, sem link do Google. Critérios de fábrica: Qualidade, Pontualidade, Profissionalismo
+(`20260616140000_nps_onda2_criterios_dinamicos.sql:132`). O enum `os_status` tem `agendada` **antes** de `pendente` (`20260312220703_093582e0-8d80-4bc8-b62b-283763f15398.sql:2`): é por isso que o backend falso, que usa o 1º valor do enum, nasce a OS em "Agendada".
+
+---
+
+## 5. Pegadinhas (para roteiro e gravação)
+
+**P1 · "Agendada para…" no aviso, mas a OS cai em "Pendente".** O toast de criação diz "OS #N criada" + "Agendada para {data} às {hora}" (`useServiceOrders.ts:409-429`; `os.ts:71-79`), que descreve a **data**, não o status. No banco real a OS manual nasce **Pendente** (`status ... DEFAULT 'pendente'`;
+só o "+" da coluna do Kanban grava outro status, `ServiceOrderFormDialog.tsx:120-122, 823`). "Agendada" é o status de OS futura de **contrato** (`20260312220722_5744f224-aabf-4ddf-9329-dbe98fb46d32.sql:3`) e o destino de "Resetar OS". Na fala: "ela aparece na coluna Pendente, com a data marcada".
+No backend falso nasce "Agendada" e "OS #0" por falta de default (seção 4.1): corrigir na sementeira, não na fala.
+
+**P2 · HANDOFF (baixa) · Rascunho guarda só parte do preenchimento.** A trilha pede "mostre recuperando". Funciona em `sessionStorage` (some ao fechar a aba) e restaura cliente, tipos de serviço, orçamento, datas, descrição e notas; **não** restaura equipamentos, checklists, responsáveis, recorrência, NPS nem endereço de serviço
+(`ServiceOrderFormDialog.tsx:337-378, 2150-2177`; `hooks/useFormDraft.ts`). Para mostrar sem decepção, interromper na etapa 1 ou 2. Pedir ao time do app que o diálogo diga o que volta, ou que guarde tudo.
+
+**P3 · "Cliente avulso" cria cliente de verdade.** Ao salvar, `createCustomer` grava o cliente com o nome/telefone/endereço digitados (`ServiceOrderFormDialog.tsx:631-645`). Na fala: "cliente novo, cadastrado na hora", sem sugerir cliente descartável.
+
+**P4 · Vários tipos de serviço: o "Tipo" visível é só o primeiro.** `sync_service_order_service_types` grava todos em `service_order_service_types` mas copia só o 1º para `service_orders.service_type_id` (`20261018231000_orcamento_da_os_e_gerar_os.sql:364-366`), e a lista, o Kanban e a Agenda embutem `service_type` por essa coluna
+(`useServiceOrders.ts:200-211`). Cor, prefixo do código e legenda seguem o primeiro tipo. Na gravação, escolher o tipo principal **primeiro**.
+
+**P5 · Orçamento da OS mexe no valor da OS.** Salvar a OS roda `sync_service_order_budget`, que recalcula `labor_value`, `parts_value` e `total_value` (seção 4.7). O "Valor da OS" da pergunta de receita, o "Faturar OS" e o KPI "Faturamento" do Relatório partem daí. Escolher serviço na etapa 1 **não** cria linha de orçamento;
+adicionar linha de serviço na etapa 2 **inclui** o serviço no escopo (`ServiceOrderFormDialog.tsx:1254-1261`). Se o roteiro pular a etapa "Orçamento", o valor da OS fica 0 (o "Preço padrão" do tipo, do T4, só entra se a pessoa adicionar a linha).
+
+**P6 · HANDOFF (baixa) · "Reabrir OS" × "Resetar OS" e texto morto.** É o mesmo botão: o rótulo muda com o status e **sempre** devolve a OS a "Agendada" (`types/database.ts:20-26`; `ResetServiceOrderDialog.tsx:44-105`). Existem mensagens antigas "voltará ao status "Em andamento"" (`os.ts:1698`; `schedule.ts:178`), mas só a **tarefa**
+chega a essa confirmação (`ScheduleDetailPanel.tsx:382-387, 564-585`): nunca aparecem para OS. Na fala: "volta para Agendada". Pedir remoção do texto morto.
+
+**P7 · HANDOFF (média, provável; confirmar no app real) · "Gerar Pesquisa de Satisfação ao finalizar? = Não" pode não valer.** O gatilho do banco só cria a linha de avaliação se a pesquisa está habilitada (override da OS > padrão da empresa > Sim, `20260616120000_nps_generate_on_finish_override_e_rls.sql:44-71`), e o link público só oferece a pesquisa
+se a linha existe (`survey_enabled`, `:182-185`). Mas, ao concluir por qualquer tela do gestor (arrastar, seletor da lista, "Finalizar"), o app **insere a linha de qualquer jeito** (`useServiceOrders.ts:555-566`; a política "Users manage own service_ratings" permite; `token` tem valor padrão).
+Resultado provável: o "Não" é ignorado nesse caminho. Na fala, não prometer que o "Não" impede a pesquisa.
+
+**P8 · Ranking de Técnicos credita um técnico por OS.** O banco usa `technician_id` e, se nulo, o **1º responsável** (`20260616090000_nps_carona_link_publico_ranking.sql:326-380`). Ao escolher uma equipe o app **zera** `technician_id` (`useServiceOrders.ts:309-310`), então OS de equipe ou com vários técnicos conta para uma pessoa só. Para o roteiro: citar o ranking sem prometer divisão por equipe.
+
+**P9 · HANDOFF (baixa) · Filtro "Status" da Agenda não tem "Agendada", "A Caminho" nem status próprios** (só Pendente, Em andamento, Pausada, Concluída, Cancelada; `Schedule.tsx:963-974`). Marcando qualquer opção, as OS desses status somem da agenda (`:289`).
+
+**P10 · HANDOFF (baixa) · "Limpar filtros" no celular troca o período para "Este mês"**, contra o padrão "Todo o período" decidido em 21/10 (`ServiceOrders.tsx:508-512` × `:163-168`); no computador o "limpar" só zera o Status. Fora do vídeo (computador), mas vale avisar.
+
+**P11 · HANDOFF (média) · "Excluir todas da recorrência" apaga só as de hoje em diante.** O texto promete "todas", o código filtra `scheduled_date >= hoje` e apaga uma a uma (`ServiceOrders.tsx:327-350`; `os.ts:119-127`). Vale também para o grupo de **contrato**. Na gravação, não excluir recorrência; se precisar, falar "as que ainda estão por vir".
+
+**P12 · HANDOFF (baixa) · "+" das colunas "A Caminho", "Em Andamento" e "Pausada" cria a OS já nesse status**, sem os carimbos `started_at`/`paused_at`, porque o gatilho que os grava é **BEFORE UPDATE** (`ServiceOrders.tsx:426-432`; `20260505000002_...sql:28-60`). Só é bloqueado em "Concluída" e "Cancelada". Gravar o "+" na coluna "Pendente".
+
+**P13 · OS de vários dias não arrasta.** `draggable` só vale para OS de um dia (`MonthlyCalendar.tsx:284`; `WeeklyCalendar.tsx:234`; `DailyCalendar.tsx:239`). Reagendar na gravação com uma OS de um dia.
+
+**P14 · Soltar na Semana/Dia grava hora cheia; no Mês mantém a hora.** Semana e Dia usam `HH:00` do quadro onde soltou (`WeeklyCalendar.tsx:102-104`; `DailyCalendar.tsx:127-129`); o Mês reaproveita a hora original (`MonthlyCalendar.tsx:109-111`). A duração se mantém (`Schedule.tsx:697`, 120 min se vazia).
+Arrastar uma OS com responsável **depende da RPC** `schedule_book_service_order`: sem handler o toast diz "OS reagendada com sucesso!" e o cartão volta ao lugar.
+
+**P15 · O mapa mostra a última posição das últimas 2 h, seja qual for o evento.** O filtro "só aparece com OS a caminho/em andamento" da trilha vem do **celular** (que só envia posição durante o atendimento; confirmar no T7); o mapa lê `technician_locations` dos últimos 120 min e mostra também quem já fez check-out, com a cor "Check-out"
+(`useLiveTechnicianLocations.ts:63-72`; `LiveMap.tsx:128`). O contador "N técnico(s) ativo(s)" conta marcadores, incluindo check-out. Na fala: "técnicos que enviaram a posição nas últimas horas".
+
+**P16 · Equipe + técnicos na mesma OS.** A OS guarda a **1ª** equipe em `team_id` e todos os usuários em `service_order_assignees`; para reserva/conflito vale a equipe (`useServiceOrders.ts:308-310`; `Schedule.tsx:686-690`). "Membros" da equipe lista **qualquer colaborador ativo**, inclusive a administradora (`TeamFormDialog.tsx`; changelog 1.37.55).
+
+**P17 · HANDOFF (baixa) · Excluir equipe usa o `confirm()` do navegador** (`TeamsPanel.tsx:49`), fora do padrão das demais confirmações (janela do app) e **invisível na gravação** (o robô descarta a janela). Não gravar exclusão de equipe. Já a edição/criação funcionam normalmente.
+
+**P18 · Links copiados apontam sempre para `https://dominex.app`.** "Link OS" (detalhe) e "Copiar link de acompanhamento" (Agenda) montam `https://dominex.app/os-tecnico/<slug>?modo=cliente` (`utils/shareLinks.ts:44`), mesmo no ambiente de teste; "Abrir checklist" usa o endereço local (`ServiceOrders.tsx:804, 1012`).
+Na gravação, só mostrar o botão e o aviso "Copiado!"; não abrir nem colar o link (T7/T12 mostram a página pública).
+
+**P19 · Cor é `<input type="color">` sem campo de hex.** Em "Configurações de OS" (`OsStatusManagerDialog.tsx:250, 279`) e no "Visual da Equipe" (`TeamFormDialog.tsx:199`) não há campo de texto ao lado (diferente do T4). O seletor do sistema não aparece na gravação: o robô muda o valor por `eval`
+(setter nativo + evento `input`); só o quadradinho muda. No "Visual da Equipe" o hex aparece como texto ao lado (`:200`), o que ajuda a mostrar. Ícones são botões comuns (`:207+`).
+
+**P20 · Arrastar de verdade (HTML5).** Kanban (`ServiceOrders.tsx:1159-1207`), Agenda (`MonthlyCalendar.tsx:233-288`, `WeeklyCalendar.tsx:182-235`, `DailyCalendar.tsx:198-262`) e ordem dos status (`OsStatusManagerDialog.tsx:262-269`) usam `dataTransfer`. O passo `drag` do robô usa mouse real (`rec/recorder/runner.mjs:517-541`), que no Chromium deve acionar o HTML5; falta provar (dúvida 7.3).
+
+**P21 · "Abrir checklist" e "Abrir como técnico" abrem outra aba** (`ServiceOrders.tsx:804, 1012`; `ScheduleDetailPanel.tsx:250, 259`), que o robô não captura. Para chegar ao T7 usar **"Preencher OS"**, que navega na mesma aba (`ServiceOrderViewDialog.tsx:706-730`).
+
+**P22 · Datas relativas e feriados.** A Agenda abre no mês corrente e pinta feriados calculados no navegador para a cidade/UF da empresa (`Schedule.tsx:227-250`); sementes com `@today±N` caem em fim de semana conforme o dia da gravação. Semear por **dia da semana** (próxima segunda, terça…) e conferir os feriados do mês (ex.: Finados, 2/11).
+
+**P23 · Ruído de rede ao abrir a página de OS.** A janela "Configurações de OS" fica montada e consulta `os_config` (`.single()`), `os_sla_config` e `os_required_fields` ao abrir a página (`OsStatusManagerDialog.tsx:37-44, 66-73, 106-113`); sem `os_config` semeada o `.single()` devolve erro (silencioso). Semear 1 linha de `os_config`.
+
+**P24 · HANDOFF (alta, provável; confirmar no app real) · "Status próprio" cria uma coluna que não aceita OS.** A janela "Configurações de OS" só grava uma linha em `os_statuses` (`key` = nome sem acento e com `_`, `OsStatusManagerDialog.tsx:171-179`; `hooks/useOsStatuses.ts:50-58`) e o Kanban, os filtros e o seletor da linha passam a oferecer a chave nova
+(`ServiceOrders.tsx:302-304`). Mas `service_orders.status` é o enum `os_status` com **7 valores fixos** (`agendada, pendente, a_caminho, em_andamento, concluida, cancelada, pausada`; `integrations/supabase/types.ts:12035, 17759-17766`; `types/database.ts:5`) e arrastar ou escolher o status só faz
+`update({ status: <chave> })` com o `as OsStatus` (`ServiceOrders.tsx:372-393, 1160-1164`): o banco deve recusar com "invalid input value for enum". Nenhuma migration muda a coluna para texto. A trilha (cap. 9) promete "status próprio"; hoje só funcionam **renomear, trocar a cor, reordenar e excluir**. Cuidado com o excluir: as colunas vêm só de `os_statuses` (`ServiceOrders.tsx:302-304, 414-424`), então apagar um dos 7 tira a coluna e as OS desse status não aparecem em coluna nenhuma (o aviso do diálogo é "OS com este status podem ser afetadas").
+No backend falso o valor seria aceito (não há enum), o que **esconderia o defeito na gravação**. Roteiro: não criar nem mover para status próprio até a confirmação; pedir ao time do app correção (enum → texto/FK, ou limitar a janela a nome e cor).
+
+**Divergências do guia técnico do app × código 1.38.6** (usar o código): o guia e a trilha embutida são idênticos à 1.22.5 (`diff` vazio), logo ainda dizem "3 etapas", "mês como padrão" e "Reabrir OS volta para Em andamento".
+
+---
+
+## 6. 🚫 Não prometer · telas mortas e desligadas que tocam T5
+
+- 🚫 **Não existe toggle "exigir assinatura"** na criação/edição de OS: o estado das duas flags só é zerado no formulário (`ServiceOrderFormDialog.tsx:199-200, 456`); elas existem no banco e na API pública (`20261017122000_public_api_v1_booking_engine.sql:496`). A trilha diz que só nascem ligadas em OS de contrato/PMOC; conferir no T7. Não prometer o botão.
+- 🚫 **Não existe "líder de equipe"**: lista plana de membros (`TeamFormDialog.tsx:143-251`). 🚫 **Não existe tela de rastreamento separada**: "Histórico" é aba do Mapa; `/rastreamento` só redireciona (`App.tsx:884-885`).
+- 🚫 **Não prometer "status próprio" funcionando** (mover OS para a coluna criada): o banco só aceita os 7 status de fábrica (P24).
+- 🚫 **"Configurações de OS" cuida só dos status.** Não prometer prefixo/formato do número, SLA por tipo de serviço nem campos obrigatórios por status: o código existe e não tem tela (`OsStatusManagerDialog.tsx:32-137`).
+- 🚫 **Reabrir/Resetar OS devolve para "Agendada"**, nunca para "Em andamento"; só "Materiais, estoque, faturamento e dados administrativos" ficam intactos (`ResetServiceOrderDialog.tsx`). Cuidado com o plural: o aviso do próprio diálogo diz "poderá ser marcada como A caminho e receber um novo check-in".
+- 🚫 **Recorrência só na criação.** Na edição aparecem só as perguntas "Editar recorrência" / "Alterar data da recorrência?" para OS de recorrência ou contrato. 🚫 Não prometer que o rascunho guarda tudo (P2).
+- 🚫 **Tarefa não é OS**: não tem lista própria (só a Agenda e a oportunidade do CRM), não vai para Kanban, KPIs, Relatório nem NPS (`serviceOrderAccess.ts:11-16`). Também não passa pelo motor de reservas (arrastar tarefa nunca abre conflito, `Schedule.tsx:681-684`).
+- 🚫 **O mapa não mostra técnico sem posição enviada** pelo celular (nem "último local conhecido" depois de 2 h). Não prometer monitoramento contínuo nem histórico além do que o celular enviou (`useLiveTechnicianLocations.ts:63`). Tempo real depende do canal do banco (no vídeo, "Atualizar").
+- 🚫 **Convite para avaliar no Google** só existe com o link da empresa preenchido; "Gerar link de avaliação" depende de uma função do servidor (`resolve-google-maps-link`). Não prometer envio automático de avaliação do Google; quem mostra o convite é a página pública da OS (T7).
+- 🚫 **Avisos por WhatsApp ao cliente** (a caminho, início, fim; 1.35.0) não são configurados nestas telas: ficam em Integração com WhatsApp (T21). 🚫 Faturamento de verdade (lançar receita, gerar cobrança) é de T13/T19; aqui só se mostra onde fica o botão "Faturar OS".
+- 🚫 **Equipes dependem do módulo RH** (🔒): sem ele o menu Funcionários e a aba somem (`App.tsx:869`). Quem não tem RH ainda escolhe equipes **já cadastradas** na OS, mas não consegue criar nenhuma.
+- **Código morto / sem uso na 1.38.6:** `pages/Teams.tsx` (nenhum import); `STEPS` de 3 etapas em `ServiceOrderFormDialog.tsx:129-133`; hooks de `os_config`/SLA/campos obrigatórios em `OsStatusManagerDialog.tsx:32-137, 164-169, 218-241`; `reopenOsTitle`/`reopenOsBody` para OS (`os.ts:1695-1698`) e `schedule.ts:176-180`;
+  `?aba=` só reconhece `chamados` (`ServiceOrders.tsx:115-117`).
+
+---
+
+## 7. Dúvidas em aberto (só dá para fechar rodando o app)
+
+1. **Paridade 1.38.5 (robô) × 1.38.6**: só T4 foi conferido byte a byte; `ServiceOrders.tsx`, `ServiceOrderFormDialog.tsx`, `Schedule.tsx`, `LiveMap.tsx` e `TeamsPanel` não. Diferenciar os dois pacotes antes de congelar rótulos (a mudança 1.38.6 não altera telas citadas no changelog embutido, mas não foi medido).
+2. **Mapa no Chromium headless**: o mapa é Leaflet + vetores MapLibre; sem WebGL cai num fundo neutro (`lib/mapTiles.ts:61-87`). Provar se os tiles de Niterói (`/__tiles`) renderizam, se os marcadores e a rota do OSRM aparecem e se o fundo neutro é aceitável para o vídeo.
+3. **`drag` HTML5** com o robô: Kanban, Agenda (Mês/Semana/Dia) e ordem dos status. Se falhar, usar o seletor de status da linha (Lista) e a janela de edição para mostrar a mudança, e falar o arrasto sem executá-lo.
+4. **Total da OS**: confirmar que o handler de `sync_service_order_budget` precisa atualizar `total_value` para o KPI "Faturamento" e o "Valor da OS" aparecerem (resolvido pela leitura da migration; falta checar no app real que a lista recarrega).
+5. **Conflito de agenda**: só aparece se o falso rejeitar a reserva (gatilho de reservas inexistente). Decidir se o roteiro mostra o aviso (precisa de handler que devolva o erro `public_api_schedule_conflict`, e a lista de conflitos virá vazia, `lib/scheduleBooking.ts:42-57`) ou só cita; também decidir quem terá `fn:override_schedule_conflict` explícito (admin sem registro não vale).
+6. **Preferências da Agenda** (`user_preferences`): confirmar que o `upsert` do falso grava a escolha "Calendário/Lista" e "Dia/Semana/Mês" e que o robô, a cada gravação, parte do padrão (Mês/Calendário) com a linha existente no seed.
+7. **P7 (toggle de NPS)**: confirmar rodando no app real se concluir com "Gerar Pesquisa de Satisfação ao finalizar? = Não" ainda cria a avaliação (e a pesquisa aparece no link público).
+8. **Fuso da empresa**: a RPC de reserva recebe UTC calculado a partir do fuso do contexto de idioma (`useAppLocaleContext`, `useServiceOrders.ts:188, 799-800`); confirmar o valor de `timezone` no falso (Brasília) para o handler converter certo.
+9. **"Taxa de Resposta" do NPS** (respostas ÷ avaliações geradas ou ÷ OS concluídas?) e o cálculo de "NPS Score" em período sem resposta: ler o hook ao semear os números; prever o que o painel mostra para não cair em valores estranhos na gravação (`NpsDashboard.tsx`, `hooks/useServiceRatings.ts:127-170`).
+10. **Feriados municipais**: confirmar de onde `getAllHolidays(city, state, year)` lê cidade/UF (Niterói/RJ no seed) e se o calendário do mês gravado mostra feriados que a fala precisa citar (`Schedule.tsx:227-250`).
+11. **Mundo fictício**: os quatro clientes que o T3 criou têm `lat/lng` nulos (`seeds-extra/t3/apos-cap10.json`); só os 12 da base têm coordenadas. Se o Mapa usar OS do "Colégio Monte Verde", o app geocodifica via Nominatim e grava (`LiveMap.tsx:133-170`); preferir clientes da base para o destino ou completar `lat/lng` na sementeira.
+12. **Realtime no vídeo**: o canal de posições é simulado sem eventos; mostrar a posição "andando" exige regravar `technician_locations` entre cortes e clicar em "Atualizar". Decidir se vale ou se o capítulo mostra só o instante.
+13. **P24 (status próprio)**: criar um status, arrastar uma OS para ele e ver o que o app mostra (erro de enum? o cartão volta?). O backend falso não reproduz o erro; só o app real confirma. Decide se o capítulo mostra "criar status" ou só cor, nome e ordem.
+14. **Nome fictício "Glacial Cold Brasil"**: registrado no T4 (item 8); sem novidade aqui.
