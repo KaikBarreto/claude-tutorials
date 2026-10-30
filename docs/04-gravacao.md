@@ -79,3 +79,10 @@ DOMINEX_SRC=<código do app> rec/setup-app.sh && rec/run.sh build && rec/run.sh 
 - Aceite de cada capítulo: 0 passo falho, `lateBy` < 0,8 s, `pageIssues` vazio; conferir a folha de contato
   (`<nome>.contact.jpg`: empresa fictícia, versão certa do app, nenhum dado real). Gravação aceita **vale como final**.
 - Saídas em `rec/<tutorial>/`: `<nome>.mp4`, `<nome>.actions.json`, `<nome>.telemetry.json`, `<nome>.contact.jpg`.
+
+## Duas pessoas (ou agentes) gravando em paralelo
+Cada um com o seu Supabase falso (o estado é reiniciado a cada gravação): o primeiro usa o padrão (`rec/run.sh up`);
+o segundo sobe outra instância, `FAKE_PORT=54322 rec/run.sh fake`, e roda o robô com
+`FAKE_URL=http://127.0.0.1:54322`. O app continua um só: o robô desvia, dentro do navegador, as chamadas do endereço
+gravado no build para a instância indicada. `FAKE_PORT=54322 rec/run.sh down` derruba só essa instância. A gravação
+em si continua uma de cada vez (trava `.heavy.lock`).

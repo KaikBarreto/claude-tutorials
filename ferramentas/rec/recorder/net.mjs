@@ -4,7 +4,7 @@
 //   3) registra tudo em .runtime/externos.log (e o fakebase anota os sem handler em desconhecidos.log).
 import fs from 'node:fs';
 import path from 'node:path';
-import { FAKE_URL, RUNTIME_DIR } from './env.mjs';
+import { FAKE_URL, BAKED_FAKE_URL, RUNTIME_DIR } from './env.mjs';
 
 const LOCAL_HOSTS = new Set(['127.0.0.1', 'localhost', '[::1]', '::1']);
 const PNG_1PX = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==', 'base64');
@@ -44,6 +44,18 @@ function stubFor(resourceType, url) {
 /** Instala o desvio no contexto do Playwright. Retorna a lista (viva) de externos vistos. */
 export async function isolateNetwork(context, { verbose = false } = {}) {
   const hits = [];
+  // Outra instância do Supabase falso (agentes em paralelo): o app chama o endereço gravado no build; desvia para FAKE_URL.
+  const de = String(BAKED_FAKE_URL || '').replace(/\/$/, ''), para = String(FAKE_URL || '').replace(/\/$/, '');
+  if (de && para && de !== para) {
+    await context.route((url) => url.toString().startsWith(de), async (route) => {
+      try {
+        const resp = await route.fetch({ url: route.request().url().replace(de, para) });
+        await route.fulfill({ response: resp });
+      } catch (e) {
+        await route.abort().catch(() => {});
+      }
+    });
+  }
   await context.route((url) => !isLocalUrl(url.toString()), async (route) => {
     const req = route.request();
     const u = new URL(req.url());

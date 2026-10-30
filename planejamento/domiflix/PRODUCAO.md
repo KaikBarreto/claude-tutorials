@@ -89,6 +89,11 @@ se for melhor (custa o mesmo que o v4 por caractere: fica o v4, voz do T3); fala
 | — | T0 | 1fUfJ2KZAxkHKnc8wwce | exportado 30/10 22:12 |
 | V1.. | demais | (fluxo único, criado no 1º lote) | |
 
+**Créditos (Kaik, 30/10 23:16): 54.670 restantes** (de 121.000) → ~54 mil caracteres ≈ 55 a 60 min de fala ≈ 4 aulas.
+Gerar agora, na ordem da produção, só o que couber (T1, T4, T5, T7 se couber), com ~2 mil de reserva para regerar falas.
+As demais: roteiro pronto e voz quando houver créditos (o Kaik avisa). Antes de cada lote: somar os caracteres de
+`CAPS` + `TITULOS` e conferir com o saldo.
+
 ## Entrega
 ZIP único (ou em partes, se passar do limite de envio) com `Domiflix Tnn - <Título>.mp4/.srt/.vtt` de todas as aulas
 (T0 a T22, incluindo o T3 já entregue), 1080p, CRF 20 (padrão T3).

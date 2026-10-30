@@ -8,6 +8,8 @@ export const REC_DIR = path.resolve(here, '..');
 const file = JSON.parse(fs.readFileSync(path.join(REC_DIR, 'env.json'), 'utf8'));
 
 export const FAKE_URL = process.env.FAKE_URL || file.fakeUrl;
+/** Endereço do Supabase falso gravado no build do app (o robô desvia para FAKE_URL quando for outra instância). */
+export const BAKED_FAKE_URL = file.fakeUrl;
 export const APP_URL = process.env.APP_URL || file.appUrl;
 export const ANON_KEY = file.anonKey;
 export const RUNTIME_DIR = path.join(REC_DIR, '.runtime');

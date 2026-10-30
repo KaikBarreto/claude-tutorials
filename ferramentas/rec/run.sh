@@ -16,7 +16,11 @@ RUN="$REC/.runtime"
 mkdir -p "$RUN"
 
 cfg() { node -e 'console.log(require(process.argv[1])[process.argv[2]])' "$REC/env.json" "$1"; }
-FAKE_PORT="$(cfg fakePort)"
+FAKE_PORT_PADRAO="$(cfg fakePort)"
+FAKE_PORT="${FAKE_PORT:-$FAKE_PORT_PADRAO}"
+# instância extra do Supabase falso (outro agente em paralelo): FAKE_PORT=54322 rec/run.sh fake|down|status
+# (o app continua um só; o robô desvia as chamadas com FAKE_URL=http://127.0.0.1:54322)
+if [ "$FAKE_PORT" = "$FAKE_PORT_PADRAO" ]; then FK=fake; else FK="fake$FAKE_PORT"; fi
 APP_PORT="$(cfg appPort)"
 ANON_KEY="$(cfg anonKey)"
 PROJECT_ID="$(cfg projectId)"
@@ -40,7 +44,7 @@ is_ours() {
   kill -0 "$pid" 2>/dev/null || return 1
   args="$(ps -o args= -p "$pid" 2>/dev/null || true)"
   case "$name" in
-    fake) [[ "$args" == *"server.mjs"* ]] ;;
+    fake*) [[ "$args" == *"server.mjs"* ]] ;;
     app) [[ "$args" == *"vite"* || "$args" == *"serve-dist"* ]] ;;
   esac
 }
@@ -70,14 +74,14 @@ wait_http() { # url, tentativas (0,5s cada)
 }
 
 start_fake() {
-  stop_one fake
+  stop_one "$FK"
   (
     cd "$REC/fakebase"
-    FAKE_PORT="$FAKE_PORT" nohup node server.mjs >"$RUN/fakebase.log" 2>&1 &
-    echo $! >"$RUN/fake.pid"
+    FAKE_PORT="$FAKE_PORT" nohup node server.mjs >"$RUN/${FK/fake/fakebase}.log" 2>&1 &
+    echo $! >"$RUN/$FK.pid"
   )
   if wait_http "http://127.0.0.1:$FAKE_PORT/health" 40; then
-    echo "fakebase de pe: http://127.0.0.1:$FAKE_PORT (pid $(pid_of fake))"
+    echo "fakebase de pe: http://127.0.0.1:$FAKE_PORT (pid $(pid_of "$FK"))"
   else
     echo "fakebase nao respondeu; veja $RUN/fakebase.log" >&2
     tail -n 20 "$RUN/fakebase.log" >&2 || true
@@ -147,16 +151,16 @@ status_one() {
 case "${1:-}" in
   build) build_app ;;
   up)
-    is_ours fake && echo "fakebase ja de pe (pid $(pid_of fake))" || start_fake
+    is_ours "$FK" && echo "fakebase ja de pe (pid $(pid_of "$FK"))" || start_fake
     if [ "${2:-}" = "--dev" ]; then start_app dev; else start_app auto; fi
     ;;
   fake) start_fake ;;
   down)
-    stop_one app
-    stop_one fake
+    [ "$FK" = fake ] && stop_one app   # instância extra: só o fakebase dela (o app é compartilhado)
+    stop_one "$FK"
     ;;
   status)
-    status_one fake "http://127.0.0.1:$FAKE_PORT/health"
+    status_one "$FK" "http://127.0.0.1:$FAKE_PORT/health"
     status_one app "http://127.0.0.1:$APP_PORT/"
     ;;
   logs)
