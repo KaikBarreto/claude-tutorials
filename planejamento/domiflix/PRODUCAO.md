@@ -17,12 +17,12 @@ F = montagem final + legendas + conferência · ok = no ZIP
 | Aula | Título | L | R | V | Z | B | G | E | F |
 |---|---|---|---|---|---|---|---|---|---|
 | T0 | Boas-vindas à Dominex (ilustrada) | ok | ok | ok | ok | — | — | ok | ok (30/10 22:51, 3:25) |
-| T1 | Configurações e identidade da empresa | A2 | | | | | | | |
+| T1 | Configurações e identidade da empresa | ok | R1 | | | | | | |
 | T2 | Usuários, cargos e permissões | ok | | | | | | | |
 | T3 | Clientes, Fornecedores e Equipamentos | ok | ok | ok | ok | ok | ok | ok | ok (30/10) |
-| T4 | Serviços, tarefas e checklists | A1 | | | | | | | |
-| T5 | Ordens de Serviço, Agenda, Equipes e Mapa ao Vivo | A1 | | | | | | | |
-| T7 | O técnico em campo (celular) | A1 | | | | | | | |
+| T4 | Serviços, tarefas e checklists | ok | R1 | | | | | | |
+| T5 | Ordens de Serviço, Agenda, Equipes e Mapa ao Vivo | ok | R1 | | | | | | |
+| T7 | O técnico em campo (celular) | ok | R1 | | | | | | |
 | T18 | Área do Técnico: Refrigeração e Climatização | A2 | | | | | | | |
 | T8 | Estoque, compras e inventário | A2 | | | | | | | |
 | T9 | Orçamentos, Precificação e Proposta | A2 | | | | | | | |

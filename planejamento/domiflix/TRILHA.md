@@ -22,9 +22,9 @@ Padrão de produção: perfil Domiflix (`perfis/domiflix/PERFIL.md`), idêntico 
 | T1 | Configurações e identidade da empresa | CONFIGURAÇÕES | White Label (parcial) | em andamento (lote A2) | — |
 | T2 | Usuários, cargos e permissões | USUÁRIOS | — | feito (lote B1) | — |
 | T3 | Clientes, Fornecedores e Equipamentos | CLIENTES / FORNECEDORES / EQUIPAMENTOS | — | feito | **entregue 30/10** |
-| T4 | Serviços, tarefas e checklists | SERVIÇOS | Vídeo em checklist (parcial) | em andamento (lote A1) | — |
-| T5 | Ordens de Serviço, Agenda, Equipes e Mapa ao Vivo | ORDENS DE SERVIÇO / AGENDA | RH (Equipes) | em andamento (lote A1) | — |
-| T7 | O técnico em campo | TÉCNICO EM CAMPO | — | em andamento (lote A1) | — |
+| T4 | Serviços, tarefas e checklists | SERVIÇOS | Vídeo em checklist (parcial) | feito (lote A1) | — |
+| T5 | Ordens de Serviço, Agenda, Equipes e Mapa ao Vivo | ORDENS DE SERVIÇO / AGENDA | RH (Equipes) | feito (lote A1) | — |
+| T7 | O técnico em campo | TÉCNICO EM CAMPO | — | feito (lote A1) | — |
 | T18 | Área do Técnico: Refrigeração e Climatização | ÁREA DO TÉCNICO | Segmento específico | em andamento (lote A2) | — |
 | T8 | Estoque, compras e inventário | ESTOQUE | — | em andamento (lote A2) | — |
 | T9 | Orçamentos, Precificação e Proposta | ORÇAMENTOS | Precificação Avançada (parcial) | em andamento (lote A2) | — |
