@@ -276,7 +276,7 @@ em um cartão (`Settings.tsx:718-757`); cada interruptor mostra o toast **"Prefe
 | | "Exibir Valores" — Mostrar valores financeiros (mão de obra, peças) nas ordens de serviço | idem | ligado |
 | | "Exigir Assinatura" — Tornar obrigatória a assinatura do cliente ao finalizar OS | idem | desligado |
 | | "Salvar fotos no dispositivo" — botão para salvar a foto no aparelho (iPhone: "Salvar Imagem"; Android: baixa direto) | idem | ligado |
-| | **"Consumo de estoque na OS"** — Permite que o técnico registre os materiais usados durante a ordem de serviço e dê baixa no estoque ao finalizar | **servidor** (`company_settings.os_stock_consumption_enabled`), com spinner enquanto carrega | desligado no produto (**ligado no seed do fakebase**) |
+| | **"Consumo de estoque na OS"** — Permite que o técnico registre os materiais usados durante a ordem de serviço e dê baixa no estoque ao finalizar | **servidor** (`company_settings.os_stock_consumption_enabled`), com spinner enquanto carrega | desligado (`supabase/migrations/20260902160100_os_consumo_materiais_rascunho_e_commit.sql:520`; **ligado no seed do fakebase**) |
 | "Interface" — "Preferências visuais de listagens e tabelas" | "Tabelas Compactas" — Reduzir espaçamento nas tabelas para exibir mais dados por página; "Fotos de Equipamentos" — Exibir miniaturas de fotos dos equipamentos nas listagens | localStorage | compactas desligado; fotos ligado |
 | "Segurança" — "Confirmações e validações de segurança" | "Confirmar Exclusões" — Exibir diálogo de confirmação antes de excluir registros | localStorage | ligado |
 | "Agenda" — "Configurações da agenda e calendário" | "Exibir Feriados" — Mostrar feriados nacionais e municipais na agenda | localStorage | ligado |
