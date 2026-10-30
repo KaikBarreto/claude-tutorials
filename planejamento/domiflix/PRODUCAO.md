@@ -80,9 +80,14 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
 - Sem preço de plano da Dominex em nenhum vídeo.
 
 ## Voz: lotes e exportação
-| Lote | Aulas | Fluxo ElevenLabs | Exportado |
+Kaik (30/10 23:13): **um fluxo só com todas as aulas**, **uma versão por fala** (`generations_count: 1`), v3 liberado
+se for melhor (custa o mesmo que o v4 por caractere: fica o v4, voz do T3); fala ruim regera só ela. Estimativa:
+~12 mil caracteres por aula, ~230 mil créditos no total.
+
+| Lote | Aulas | Fluxo ElevenLabs | Situação |
 |---|---|---|---|
-| — | T0 | 1fUfJ2KZAxkHKnc8wwce | 30/10 22:12 |
+| — | T0 | 1fUfJ2KZAxkHKnc8wwce | exportado 30/10 22:12 |
+| V1.. | demais | (fluxo único, criado no 1º lote) | |
 
 ## Entrega
 ZIP único (ou em partes, se passar do limite de envio) com `Domiflix Tnn - <Título>.mp4/.srt/.vtt` de todas as aulas
