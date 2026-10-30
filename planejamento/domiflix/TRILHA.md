@@ -19,22 +19,22 @@ Padrão de produção: perfil Domiflix (`perfis/domiflix/PERFIL.md`), idêntico 
 | Ordem de exibição | Tutorial | Área (vinheta) | Módulo pago | Levantamento | Produção |
 |---|---|---|---|---|---|
 | T0 | Boas-vindas à Dominex (ilustrado, ~3 min 40 s, sem tela) | COMEÇANDO / AJUDA / ASSINATURA | — | feito | roteiro em aprovação |
-| T1 | Configurações e identidade da empresa | CONFIGURAÇÕES | White Label (parcial) | lote A2 | — |
+| T1 | Configurações e identidade da empresa | CONFIGURAÇÕES | White Label (parcial) | em andamento (lote A2) | — |
 | T2 | Usuários, cargos e permissões | USUÁRIOS | — | feito (lote B1) | — |
 | T3 | Clientes, Fornecedores e Equipamentos | CLIENTES / FORNECEDORES / EQUIPAMENTOS | — | feito | **entregue 30/10** |
 | T4 | Serviços, tarefas e checklists | SERVIÇOS | Vídeo em checklist (parcial) | em andamento (lote A1) | — |
 | T5 | Ordens de Serviço, Agenda, Equipes e Mapa ao Vivo | ORDENS DE SERVIÇO / AGENDA | RH (Equipes) | em andamento (lote A1) | — |
 | T7 | O técnico em campo | TÉCNICO EM CAMPO | — | em andamento (lote A1) | — |
-| T18 | Área do Técnico: Refrigeração e Climatização | ÁREA DO TÉCNICO | Segmento específico | lote A2 | — |
-| T8 | Estoque, compras e inventário | ESTOQUE | — | lote A2 | — |
-| T9 | Orçamentos, Precificação e Proposta | ORÇAMENTOS | Precificação Avançada (parcial) | lote A2 | — |
+| T18 | Área do Técnico: Refrigeração e Climatização | ÁREA DO TÉCNICO | Segmento específico | em andamento (lote A2) | — |
+| T8 | Estoque, compras e inventário | ESTOQUE | — | em andamento (lote A2) | — |
+| T9 | Orçamentos, Precificação e Proposta | ORÇAMENTOS | Precificação Avançada (parcial) | em andamento (lote A2) | — |
 | T10 | CRM: funil, leads e captação | CRM | CRM | feito (lote B1) | — |
 | T11 | Contratos e PMOC | CONTRATOS | Contratos e PMOC | feito (lote B1) | — |
 | T12 | Portal do Cliente e Portal do Contrato | PORTAL | Portal do Cliente + Contratos/PMOC | feito (lote B1) | — |
-| T13 | Financeiro | FINANCEIRO | — | em andamento (lote B2) | — |
-| T19 | Integração com Asaas, Assinaturas e Cobranças | COBRANÇAS | Cobranças | em andamento (lote B2) | — |
-| T20 | Relatório Financeiro e DRE | FINANCEIRO | — | em andamento (lote B2) | — |
-| T14 | Notas Fiscais (NFS-e e NF-e) | NOTAS FISCAIS | Emissão de Notas Fiscais | em andamento (lote B2) | — |
+| T13 | Financeiro | FINANCEIRO | — | feito (lote B2) | — |
+| T19 | Integração com Asaas, Assinaturas e Cobranças | COBRANÇAS | Cobranças | feito (lote B2) | — |
+| T20 | Relatório Financeiro e DRE | FINANCEIRO | — | feito (lote B2) | — |
+| T14 | Notas Fiscais (NFS-e e NF-e) | NOTAS FISCAIS | Emissão de Notas Fiscais | feito (lote B2) | — |
 | T15 | Funcionários: Financeiro do Funcionário e Ponto Eletrônico | FUNCIONÁRIOS | Funcionários / RH | lote C | — |
 | T22 | Ferramentas de RH: DISC, Organograma, Fluxograma | RH | Funcionários / RH | lote C | — |
 | T21 | Integração com WhatsApp | WHATSAPP | WhatsApp | lote C | — |
@@ -86,6 +86,8 @@ Cada aula parte do estado final da anterior no mundo fictício (Glacial Cold Bra
    "Configurações e identidade da empresa"** (com tela), logo depois do T0 (Guia Técnico T1: aba Empresa, documentos,
    White Label, Regional, Usabilidade, Origens, Atalhos, Aparência, Integrações, Zona de Perigo). Levantamento no lote A2.
 6. **Decidido pelo Kaik (30/10 21:55)**: nenhum vídeo mostra preço de plano (só o desconto de 20% do anual).
+7. **Glacial Cold Brasil é cliente real** (aparece no código em incidentes de produção). O nome foi escolha do Kaik para a
+   empresa de exemplo; no T14 ele sairia no PDF de uma nota fiscal simulada: confirmar antes de gravar o T14.
 
 ## Achados de segurança para o time do app (conferidos no código 1.38.6)
 1. **Cargos valem para todas as empresas.** A tabela `permission_presets` não tem `company_id`; a leitura é liberada
@@ -96,6 +98,10 @@ Cada aula parte do estado final da anterior no mundo fictício (Glacial Cold Bra
    e ações (`src/contexts/AuthContext.tsx:383-395`, modo legado); o cadastro só grava permissões quando alguma é
    marcada (`supabase/functions/create-user/index.ts:61`). Um técnico criado sem marcar nada fica com acesso total
    dentro dos módulos da empresa.
+3. **Uso de notas fiscais de outra empresa (gravidade baixa).** `nfse_month_usage(p_company_id)` e `nfse_can_emit(p_company_id)`
+   são `SECURITY DEFINER`, liberadas para qualquer usuário logado e não conferem se a empresa é a dele
+   (`20260825140000_...sql:21-38`, `20260615210000_...sql:91-190`): quem tiver o código de outra empresa vê o nível e o uso
+   mensal de notas dela.
 Os demais ajustes de texto e comportamento estão em "Pegadinhas" de cada `inventario.md` (marcados como handoff).
 
 ## Como retomar numa sessão nova
