@@ -3,9 +3,9 @@
 - **Título final da aula:** Usuários, cargos e permissões
 - **Áreas das vinhetas:** USUÁRIOS · CARGOS · PERMISSÕES · RESUMO
 - **Objetivo (uma frase):** colocar a equipe no Dominex dando a cada pessoa exatamente o acesso de que ela precisa.
-- **Pré-requisito:** T0 (Introdução e configurações iniciais). Aviso na tela: "Antes: Introdução e configurações iniciais".
-  O T0 virou "Boas-vindas à Dominex" (ilustrado, sem tela) e há a proposta de uma aula "Configurações da empresa" antes do T2
-  (`TRILHA.md`, decisão 5): o aviso passa a citar a aula que de fato vier antes.
+- **Pré-requisito:** T1 (Configurações e identidade da empresa). Aviso na tela: "Antes: Configurações e identidade da
+  empresa". O T0 virou "Boas-vindas à Dominex" (ilustrado, sem tela) e as configurações ganharam aula própria (Kaik,
+  30/10 21:55; `TRILHA.md`, decisão 5).
 - **Próximo:** T3 (Clientes, Fornecedores e Equipamentos). Aviso: "Próximo: Clientes, Fornecedores e Equipamentos".
 - **Duração estimada:** ~10 a 11 min de fala natural (11 blocos).
 - Base: `T02/inventario.md` (código 1.38.6). Rótulos entre aspas = exatamente como na tela.

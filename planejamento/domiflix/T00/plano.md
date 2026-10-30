@@ -53,7 +53,7 @@ Versão viva para o Kaik comentar: https://claude.ai/artifact/UQjsgSUXMRz34vCAh2
   "Tutoriais | Domiflix" em destaque.
 - Fala: "Os tutoriais da Domiflix são o seu caminho pra dominar o sistema. Cada aula mostra uma área inteira, na
   prática, dividida em capítulos, pra você voltar direto no ponto que precisar. Eles seguem uma ordem, e cada aula
-  aproveita o que você viu antes: primeiro a sua equipe e os cadastros, depois as ordens de serviço e o técnico em
+  aproveita o que você viu antes: primeiro as configurações da empresa, a sua equipe e os cadastros, depois as ordens de serviço e o técnico em
   campo, e aí orçamentos, contratos, financeiro e por aí vai. Pra encontrar, é só abrir o menu da sua conta e clicar
   em Tutoriais Domiflix. E aqui vai o combinado mais importante: assiste aos tutoriais, na ordem. É neles que você
   descobre os recursos que fazem o sistema render de verdade no seu dia a dia."
@@ -97,8 +97,10 @@ Versão viva para o Kaik comentar: https://claude.ai/artifact/UQjsgSUXMRz34vCAh2
 
 **5 · Fecho** (sem vinheta)
 - Ilustração: a trilha de novo, com a primeira fase acesa.
-- Fala: "Pronto, agora você já sabe como a gente vai trabalhar junto. O próximo passo é colocar a sua equipe no
-  sistema: no próximo tutorial, a gente cadastra os usuários e define o que cada um pode ver. Te vejo lá!"
+- Fala: "Pronto, agora você já sabe como a gente vai trabalhar junto. O próximo passo é deixar a Dominex com a cara
+  da sua empresa: no próximo tutorial, a gente coloca a logo, os dados da empresa e as preferências do dia a dia. Te
+  vejo lá!" (próximo = T1 "Configurações e identidade da empresa": aba Empresa com logo e dados, Regional,
+  Usabilidade; Guia Técnico T1 §1-5)
 
 **Cartela**: "Até a próxima aula!"
 
@@ -115,12 +117,12 @@ Versão viva para o Kaik comentar: https://claude.ai/artifact/UQjsgSUXMRz34vCAh2
   Domiflix e Dominex a voz já lê bem; o roteiro usa "proporcional" em vez de "pró-rata".
 
 ## Decisões para o Kaik
-1. **Configurações da empresa** (identidade, White Label, Regional, Usabilidade, Origens, Atalhos, Aparência,
-   Integrações) estavam no T0 antigo e ficam sem aula com o T0 novo. Proposta: um **T1 "Configurações da empresa"**
-   (com tela, ~10 min) antes do T2. Se aprovado, o fecho do T0 aponta para ele.
+1. ~~Configurações da empresa sem aula~~ **Decidido pelo Kaik (30/10 21:55)**: vira o **T1 "Configurações e
+   identidade da empresa"** (com tela), logo depois do T0. O fecho do T0 já aponta para ele.
 2. **Central de Ajuda** (gaveta de perguntas frequentes no menu da conta): proposta deixar fora do vídeo; os
    caminhos citados são tutoriais, Guia Técnico e suporte.
-3. Valores dos planos: o roteiro **não mostra preços** (mudam e podem ter promoção); só o desconto de 20% do anual.
+3. **Decidido pelo Kaik (30/10 21:55)**: **sem preços no vídeo** (mudam e podem ter promoção); só o desconto de 20%
+   do anual.
 4. Linha do período de teste (bloco 4): manter? Ajuda quem assiste ainda no teste a não estranhar módulos que
    "somem" ao ativar.
 

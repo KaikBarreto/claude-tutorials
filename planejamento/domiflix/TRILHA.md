@@ -19,6 +19,7 @@ Padrão de produção: perfil Domiflix (`perfis/domiflix/PERFIL.md`), idêntico 
 | Ordem de exibição | Tutorial | Área (vinheta) | Módulo pago | Levantamento | Produção |
 |---|---|---|---|---|---|
 | T0 | Boas-vindas à Dominex (ilustrado, ~3 min 40 s, sem tela) | COMEÇANDO / AJUDA / ASSINATURA | — | feito | roteiro em aprovação |
+| T1 | Configurações e identidade da empresa | CONFIGURAÇÕES | White Label (parcial) | lote A2 | — |
 | T2 | Usuários, cargos e permissões | USUÁRIOS | — | feito (lote B1) | — |
 | T3 | Clientes, Fornecedores e Equipamentos | CLIENTES / FORNECEDORES / EQUIPAMENTOS | — | feito | **entregue 30/10** |
 | T4 | Serviços, tarefas e checklists | SERVIÇOS | Vídeo em checklist (parcial) | em andamento (lote A1) | — |
@@ -39,14 +40,15 @@ Padrão de produção: perfil Domiflix (`perfis/domiflix/PERFIL.md`), idêntico 
 | T21 | Integração com WhatsApp | WHATSAPP | WhatsApp | lote C | — |
 | T17 | Dashboard, relatórios e exportações | DASHBOARD | — | lote C | — |
 
-Lotes do levantamento (2 por vez): A1 = T4, T5, T7 · B1 = T2, T10, T11, T12 · A2 = T18, T8, T9 ·
+Lotes do levantamento (2 por vez): A1 = T4, T5, T7 · B1 = T2, T10, T11, T12 · A2 = T1, T18, T8, T9 ·
 B2 = T13, T19, T20, T14 · C = T15, T22, T21, T17.
 
 ## Ordem de produção recomendada
 O T0 sai assim que o roteiro for aprovado (não depende de gravação nem de backend falso; só ilustrações e voz).
+O T1 (configurações) vem logo depois: telas de formulário, pouco backend falso.
 Depois, a da trilha oficial (menor risco primeiro: o miolo operacional está estável; integrações e fiscal dependem de
 simular serviços externos), sem T3:
-**T0 → T4 → T5 → T7 → T18 → T2 → T8 → T9 → T12 → T13 → T20 → T10 → T11 → T15 → T22 → T19 → T21 → T14 → T17**.
+**T0 → T1 → T4 → T5 → T7 → T18 → T2 → T8 → T9 → T12 → T13 → T20 → T10 → T11 → T15 → T22 → T19 → T21 → T14 → T17**.
 Cada aula parte do estado final da anterior no mundo fictício (Glacial Cold Brasil), na ordem de exibição.
 
 ## Trabalho comum a vários tutoriais (antes ou durante a produção)
@@ -80,9 +82,10 @@ Cada aula parte do estado final da anterior no mundo fictício (Glacial Cold Bra
    conta real), mostrando telas e respostas fiéis ao código. Confirmar.
 4. Pendências de validação da trilha oficial (seção "⚠️ Pendências de validação antes de gravar"): os levantamentos
    respondem o que o código responde; o resto fica em "Dúvidas" de cada `inventario.md`.
-5. Com o T0 novo (ilustrado), as **configurações da empresa** (identidade, White Label, Regional, Usabilidade,
-   Origens, Atalhos, Aparência, Integrações) ficam sem aula. Proposta: tutorial "Configurações da empresa" (com tela)
-   antes do T2. Ver `T00/plano.md` → "Decisões".
+5. ~~Configurações da empresa sem aula com o T0 novo~~ **Decidido pelo Kaik (30/10 21:55)**: vira o **T1
+   "Configurações e identidade da empresa"** (com tela), logo depois do T0 (Guia Técnico T1: aba Empresa, documentos,
+   White Label, Regional, Usabilidade, Origens, Atalhos, Aparência, Integrações, Zona de Perigo). Levantamento no lote A2.
+6. **Decidido pelo Kaik (30/10 21:55)**: nenhum vídeo mostra preço de plano (só o desconto de 20% do anual).
 
 ## Achados de segurança para o time do app (conferidos no código 1.38.6)
 1. **Cargos valem para todas as empresas.** A tabela `permission_presets` não tem `company_id`; a leitura é liberada
