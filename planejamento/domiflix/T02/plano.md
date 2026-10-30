@@ -22,7 +22,7 @@
 | 7 | USUÁRIOS / Conferindo o acesso | Clica em "Rafael Lima": "Perfil de acesso" Técnico de Campo, "Dados do usuário" Técnico, "Permissões concedidas" com "Telas (2)" e "Ações (1)". "Editar" mostra a mesma janela já preenchida (fecha em "Cancelar"). | — | 0:45 |
 | 8 | PERMISSÕES / O que o técnico vê | Gravação separada logada como Rafael: abre na Agenda e o menu mostra só "Agenda" e "Área do Técnico™". | "Cada pessoa vê só o que foi liberado" | 0:40 |
 | 9 | USUÁRIOS / Desativar e reativar | De volta como Camila: "Paulo Souza" → "Desativar" → "Usuário desativado" / "O slot foi liberado. Você pode reativá-lo depois."; etiqueta "Inativo" e o contador cai. "Reativar" → "Usuário reativado!". "Excluir" abre "Excluir usuário permanentemente?" → "Cancelar". | "Desativar guarda o cadastro e libera a vaga" | 1:00 |
-| 10 | USUÁRIOS / Vagas do plano | Zoom no contador. Se aprovado (decisão 3): estado com o limite cheio → faixa "Limite de usuários atingido ({count}/{max})" → "Contratar mais usuários" → janela "Limite de usuários atingido" (fecha em "Voltar"). | "As vagas extras se contratam na Assinatura" | 0:40 |
+| 10 | USUÁRIOS / Vagas do plano | Zoom no contador "{count}/{max} usuários". A fala explica que mais vagas se contratam na Assinatura (T0). **Sem encenar o limite estourado** (regra de 30/10 20:56): a faixa "Limite de usuários atingido" e a janela de limite ficam fora da tela. | "As vagas extras se contratam na Assinatura" | 0:35 |
 | 11 | RESUMO / Recapitulando | Montagem: cargos, Rafael e Tatiane na lista, visão do técnico. Fala corrida + próximo. | "Próximo: Clientes, Fornecedores e Equipamentos" | 1:15 |
 
 Transições faladas sugeridas: 1→2 "Antes de cadastrar as pessoas, vale montar os cargos"; 3→4 "Agora o cargo de quem fica
@@ -30,6 +30,19 @@ no escritório"; 4→5 "Com os cargos prontos, bora cadastrar a equipe"; 6→7 "
 7→8 "Olha como o Rafael enxerga o sistema"; 8→9 "E quando alguém sai de férias ou deixa a empresa?".
 Fala sempre no positivo (PERFIL: só possibilidades): "na sua própria linha ficam só os seus dados", nunca "você não
 consegue se excluir".
+
+**Falas dos cuidados ⚠️** (regra do Kaik, 30/10 20:56: primeiro o caminho certo, depois a consequência numa frase; nunca
+encenar a falha; confirmações normais do fluxo podem aparecer):
+
+| Cuidado (inventário) | Fala sugerida | Na tela |
+|---|---|---|
+| Técnico sem cargo nem tela marcada fica com acesso a tudo (inv. 5, item 2) | "Na hora de criar, é só escolher o cargo aqui: é ele que define o que o técnico enxerga." | Clique no chip do cargo (cap. 5) |
+| Reativar exige vaga livre (inv. 3.7) | "Pra reativar, é só ter uma vaga livre no plano: é ela que libera o botão Reativar." | Reativar com vaga sobrando (cap. 9) |
+| Ações da própria conta (inv. 3.7) | "Desativar e excluir aparecem nos outros usuários; na sua própria linha ficam os seus dados." | Painel da Camila só de passagem (decisão 4) |
+| Último administrador (inv. 3.7) | "Uma dica: a empresa sempre fica com pelo menos um administrador ativo, que é quem cuida dos acessos." | Nada encenado |
+| Excluir lançamento financeiro separado (trilha) | "Excluir Lançamento Financeiro fica à parte: liga só pra quem pode apagar lançamento." | Interruptor desligado no cap. 4 |
+| Cargo editado não muda quem já usa (inv. 3.6) | "Mudou um cargo? É só aplicar de novo nas pessoas: cada usuário guarda a cópia que recebeu." | Nada encenado |
+| Excluir é definitivo (confirmação do fluxo) | "Excluir apaga o login de vez; pra só tirar o acesso, o caminho é Desativar." | Janela "Excluir usuário permanentemente?" → "Cancelar" (cap. 9) |
 
 ## Mundo fictício
 
@@ -90,7 +103,8 @@ para o capítulo 8; `profiles`, `user_roles`, `companies`, `company_modules`, `s
    os técnicos do seed já cadastrados, criando só Rafael (que hoje já existe no seed: precisaria tirar) e Tatiane.
    Recomendo (a): T2 cria Rafael e Tatiane; os outros 5 técnicos entram num corte ("o resto da equipe eu já cadastrei").
 2. **Tatiane Ribeiro** passa a existir no mundo fictício (lista de usuários do T5 em diante). Ok?
-3. **Limite de usuários:** mostrar a faixa e a janela exige um estado especial (plano cheio); sem isso, só o contador.
+3. **Limite de usuários:** pela regra de 30/10 20:56, não encenar o limite estourado; a fala cita o caminho (Assinatura) e o
+   contador fica na tela. Se o Kaik quiser mostrar o botão "Contratar mais usuários", só com um estado especial (plano cheio).
 4. **Painel da Camila** mostra "Personalizado" e "Nenhuma permissão foi concedida." (handoff 1). Evitar clicar nela ou
    pedir a correção antes de gravar.
 5. **Handoffs antes de gravar** (inventário, seção 5): avisos múltiplos com "Role" (5), botão "Configurações" dos cargos (6),
