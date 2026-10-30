@@ -776,7 +776,8 @@ export async function runScript(script, opts = {}) {
 
   const session = await openSession({
     headed: opts.headed, email: script.user, storage: script.storage, cursorOverlay,
-    anonymous: isUrl, // modo url: sem login falso (o login, se houver, e passo de setup)
+    anonymous: isUrl || !!script.anonymous, // modo url: sem login falso; "anonymous": true grava pagina publica sem sessao
+    sameTab: !!script.sameTab, // "sameTab": true -> o que abriria outra aba abre nesta
     isolate: !isUrl, // modo url: a rede passa (o app e de outro lugar); fakebase: so localhost
     locale: script.locale, timezone: script.timezone, // padrao: pt-BR e America/Sao_Paulo
   });

@@ -54,6 +54,12 @@ navegador. Detalhes (rotas em subcaminho, `"spa": true`, aviso de cookies via `"
   "•" na telemetria; o valor nunca vai para log, `actions.json` ou `telemetry.json`. Texto literal `$NOME`: `"$$NOME"`.
 - Clique pelo teclado (Enter num botão) fica marcado `kb: true` na telemetria: não move o cursor desenhado, só orienta
   a câmera.
+- Opções do capítulo (raiz do JSON): `"user"` (entra como outro usuário do mundo fictício, ex.: a visão do técnico),
+  `"anonymous": true` (sem sessão: página pública, tela de login), `"sameTab": true` (link `target=_blank` e
+  `window.open` abrem na mesma aba, porque o vídeo grava uma aba só; PDF vira ilustração na edição),
+  `"seedExtra"` (estado de partida do mundo, por cima das sementes).
+- Data do mundo: o mesmo `FAKE_NOW` para o backend falso (`rec/run.sh up`) e para o robô (o navegador instala o relógio
+  nessa data e o tempo corre normalmente). Datas diferentes nos dois = telas com datas incoerentes.
 
 ## Rodar
 ```bash

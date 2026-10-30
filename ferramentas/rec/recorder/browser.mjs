@@ -87,6 +87,22 @@ const NOISE_FAILED = /ERR_ABORTED/; // requisicao cancelada pelo proprio app (tr
 
 // O app registra um service worker (PWA). Aqui ele fica bloqueado (senao ele passa por cima do desvio de rede),
 // entao entregamos um registro "de mentira" para o codigo do app nao quebrar.
+// "sameTab" no roteiro: o que abriria outra aba (link target=_blank, window.open) abre nesta, porque o vídeo grava uma
+// aba só (portal público, link do contrato...). PDF continua fora: vira ilustração na edição.
+function sameTabLinks() {
+  try {
+    const open = window.open;
+    window.open = function (url, ...rest) {
+      if (url) { location.assign(url); return window; }
+      return open.call(this, url, ...rest);
+    };
+    document.addEventListener('click', (e) => {
+      const a = e.target && e.target.closest ? e.target.closest('a[target]') : null;
+      if (a && a.target !== '_self' && a.href) a.target = '_self';
+    }, true);
+  } catch (e) { /* ignora */ }
+}
+
 function stubServiceWorker() {
   try {
     const sw = navigator.serviceWorker;
@@ -131,6 +147,7 @@ export async function launchBrowser({ headed = false, args = [] } = {}) {
  */
 export async function openSession({
   browser, headed = false, email = USER_EMAIL, storage = {}, anonymous = false, verboseNet = false,
+  sameTab = false, // links e window.open que abririam outra aba abrem nesta (o vídeo grava uma aba só)
   telemetry = true, // observa mouse/teclado reais da pagina (nao desenha nada)
   cursorOverlay = false, // SO depuracao: desenha um cursor sintetico na pagina (o video final NAO leva cursor)
   isolate = true,
@@ -158,6 +175,7 @@ export async function openSession({
   // envelhecem entre o planejamento e a gravação. O tempo continua correndo normalmente a partir dali.
   if (FAKE_NOW_DATE) await context.clock.install({ time: FAKE_NOW_DATE });
   await context.addInitScript(stubServiceWorker);
+  if (sameTab) await context.addInitScript(sameTabLinks);
   const tel = new Telemetry({ dsf: SCALE });
   if (telemetry || cursorOverlay) await tel.install(context, { overlay: cursorOverlay });
   const externos = isolate ? await isolateNetwork(context, { verbose: verboseNet }) : [];
