@@ -2,6 +2,9 @@
 
 Pedido do Kaik (30/10/2026, 20:33): planejar já todos os tutoriais da trilha, **exceto a Introdução (T0)**, que terá
 outro teor; levantar todas as telas e arquivos e guardar tudo para não perder entre sessões.
+T0 definido depois (21:16 e 21:19): vídeo **ilustrado** de 2 a 4 min, sem tela de sistema (tutoriais, Guia Técnico,
+suporte, assinatura, plano e cobrança proporcional). Plano em `T00/plano.md`; roteiro no doc
+https://claude.ai/artifact/UQjsgSUXMRz34vCAh2qW3w.
 Padrão de produção: perfil Domiflix (`perfis/domiflix/PERFIL.md`), idêntico ao T3.
 
 - Código de referência: Dominex **1.38.6** (`origin/main` 5f0b64ea), extraído em `/home/claude/domiflix/src-1.38.6`
@@ -15,7 +18,7 @@ Padrão de produção: perfil Domiflix (`perfis/domiflix/PERFIL.md`), idêntico 
 
 | Ordem de exibição | Tutorial | Área (vinheta) | Módulo pago | Levantamento | Produção |
 |---|---|---|---|---|---|
-| T0 | Bem-vindo, configuração, identidade e assinatura | — | White Label (parcial) | fora (teor diferente) | — |
+| T0 | Boas-vindas à Dominex (ilustrado, ~3 min 40 s, sem tela) | COMEÇANDO / AJUDA / ASSINATURA | — | feito | roteiro em aprovação |
 | T2 | Usuários, cargos e permissões | USUÁRIOS | — | em andamento (lote B1) | — |
 | T3 | Clientes, Fornecedores e Equipamentos | CLIENTES / FORNECEDORES / EQUIPAMENTOS | — | feito | **entregue 30/10** |
 | T4 | Serviços, tarefas e checklists | SERVIÇOS | Vídeo em checklist (parcial) | em andamento (lote A1) | — |
@@ -40,9 +43,10 @@ Lotes do levantamento (2 por vez): A1 = T4, T5, T7 · B1 = T2, T10, T11, T12 · 
 B2 = T13, T19, T20, T14 · C = T15, T22, T21, T17.
 
 ## Ordem de produção recomendada
-A da trilha oficial (menor risco primeiro: o miolo operacional está estável; integrações e fiscal dependem de
-simular serviços externos), sem T0 e T3:
-**T4 → T5 → T7 → T18 → T2 → T8 → T9 → T12 → T13 → T20 → T10 → T11 → T15 → T22 → T19 → T21 → T14 → T17**.
+O T0 sai assim que o roteiro for aprovado (não depende de gravação nem de backend falso; só ilustrações e voz).
+Depois, a da trilha oficial (menor risco primeiro: o miolo operacional está estável; integrações e fiscal dependem de
+simular serviços externos), sem T3:
+**T0 → T4 → T5 → T7 → T18 → T2 → T8 → T9 → T12 → T13 → T20 → T10 → T11 → T15 → T22 → T19 → T21 → T14 → T17**.
 Cada aula parte do estado final da anterior no mundo fictício (Glacial Cold Brasil), na ordem de exibição.
 
 ## Trabalho comum a vários tutoriais (antes ou durante a produção)
@@ -66,6 +70,9 @@ Cada aula parte do estado final da anterior no mundo fictício (Glacial Cold Bra
    conta real), mostrando telas e respostas fiéis ao código. Confirmar.
 4. Pendências de validação da trilha oficial (seção "⚠️ Pendências de validação antes de gravar"): os levantamentos
    respondem o que o código responde; o resto fica em "Dúvidas" de cada `inventario.md`.
+5. Com o T0 novo (ilustrado), as **configurações da empresa** (identidade, White Label, Regional, Usabilidade,
+   Origens, Atalhos, Aparência, Integrações) ficam sem aula. Proposta: tutorial "Configurações da empresa" (com tela)
+   antes do T2. Ver `T00/plano.md` → "Decisões".
 
 ## Como retomar numa sessão nova
 ```bash
