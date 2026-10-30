@@ -1,0 +1,482 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<!-- Cenas ilustradas do T0 "Boas-vindas à Dominex" (sem tela de sistema). 1280x800 CSS, renderizadas quadro a quadro
+     por render_cenas.cjs (window.setup(dados) + window.R(t)). Tudo é função do tempo: nada de transição CSS.
+     Rótulos reais do app/Guia Técnico 1.38.6 (ver planejamento/domiflix/T00/plano.md); nenhum valor em R$; sem logo de terceiros. -->
+<style>
+@font-face{font-family:M;font-weight:500;src:url(../../../web/fonts/montserrat-latin-500-normal.woff2) format('woff2')}
+@font-face{font-family:M;font-weight:600;src:url(../../../web/fonts/montserrat-latin-600-normal.woff2) format('woff2')}
+@font-face{font-family:M;font-weight:700;src:url(../../../web/fonts/montserrat-latin-700-normal.woff2) format('woff2')}
+@font-face{font-family:M;font-weight:800;src:url(../../../web/fonts/montserrat-latin-800-normal.woff2) format('woff2')}
+@font-face{font-family:M;font-weight:500;src:url(../../../web/fonts/montserrat-latin-ext-500-normal.woff2) format('woff2');unicode-range:U+0100-024F}
+@font-face{font-family:M;font-weight:700;src:url(../../../web/fonts/montserrat-latin-ext-700-normal.woff2) format('woff2');unicode-range:U+0100-024F}
+:root{--v:#00C597;--ve:#00A27D;--vc:#E6F9F4;--t:#18181B;--c:#71717A;--l:#E4E7EC;--e:#1E1E1E;--am:#FFF0A8}
+*{box-sizing:border-box;margin:0;padding:0;transition:none!important;animation:none!important}
+html,body{width:1280px;height:800px;overflow:hidden;background:#fff}
+body{font-family:M,sans-serif;color:var(--t);-webkit-font-smoothing:antialiased}
+#st{position:absolute;inset:0;overflow:hidden;background:
+  radial-gradient(1100px 650px at 92% -12%,rgba(0,197,151,.075),transparent 62%),
+  radial-gradient(900px 600px at -12% 112%,rgba(0,197,151,.05),transparent 60%),#fff}
+.g{position:absolute;left:0;top:0;width:1280px;height:800px;transform-origin:640px 400px}
+.ab{position:absolute}
+.card{position:absolute;background:#fff;border:1px solid #E8ECEA;border-radius:18px;
+  box-shadow:0 18px 40px rgba(16,24,40,.10),0 3px 8px rgba(16,24,40,.06)}
+.ic{display:inline-flex;align-items:center;justify-content:center;flex:none}
+.ic svg{width:100%;height:100%}
+.kick{font-weight:700;font-size:14px;letter-spacing:.3em;color:var(--v);text-transform:uppercase}
+.bar{background:#E9ECEF;border-radius:6px}
+.pill{display:inline-flex;align-items:center;gap:8px;border-radius:999px;font-weight:700}
+.row{display:flex;align-items:center}
+.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+.rip{position:absolute;width:56px;height:56px;margin:-28px 0 0 -28px;border-radius:50%;border:3px solid var(--v);opacity:0}
+/* trilha */
+.st{position:absolute;width:76px;height:76px;margin:-38px 0 0 -38px;border-radius:50%;background:#fff;border:3px solid #DCE1E6;
+  display:flex;align-items:center;justify-content:center;color:#A1A1AA}
+.st .fill{position:absolute;inset:-3px;border-radius:50%;background:var(--v);opacity:0}
+.st .ic{position:relative;width:32px;height:32px}
+.stl{position:absolute;width:230px;margin-left:-115px;text-align:center;font-weight:700;font-size:17px;line-height:1.25;color:#A1A1AA}
+/* menu da conta */
+.mi{position:relative;height:48px;display:flex;align-items:center;gap:14px;padding:0 16px;border-radius:12px;font-weight:600;font-size:16px}
+.mi .hl{position:absolute;inset:0;border-radius:12px;background:var(--v);opacity:0}
+.mi .ic,.mi span{position:relative}
+/* capítulos */
+.chl{position:relative;height:33px;display:flex;align-items:center;gap:12px;padding:0 12px;border-radius:9px;font-weight:600;font-size:15px;color:#3F3F46}
+.chl .hl{position:absolute;inset:0;border-radius:9px;background:var(--vc);opacity:0}
+.chl .dot{position:relative;width:9px;height:9px;border-radius:50%;background:#D4D4D8}
+.chl span{position:relative}
+mark{background:var(--am);color:inherit;padding:0 2px;border-radius:3px}
+</style></head>
+<body><div id="st"></div>
+<script>
+// ------------------------------------------------------------------ utilidades
+const cl=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
+const eo=x=>1-Math.pow(1-cl(x),3);
+const eio=x=>{x=cl(x);return x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2};
+const pr=(t,a,d=.45)=>cl((t-a)/d);
+const $=s=>document.querySelector(s);
+const ST=document.getElementById('st');
+function el(html,parent=ST){const d=document.createElement('div');d.innerHTML=html.trim();let f=null;for(const n of [...d.childNodes]){parent.appendChild(n);if(!f&&n.nodeType===1)f=n}return f}
+function grupo(){return el('<div class="g"></div>')}
+function ic(n,px,cor){const s=(window.ICONS||{})[n]||'';return `<span class="ic" style="width:${px}px;height:${px}px;${cor?'color:'+cor:''}">${s}</span>`}
+function hex(c){c=c.replace('#','');return[0,2,4].map(i=>parseInt(c.substr(i,2),16))}
+function mix(a,b,p){const A=hex(a),B=hex(b);return `rgb(${A.map((v,i)=>Math.round(v+(B[i]-v)*cl(p))).join(',')})`}
+// aparece em a, some em b (opacidade + leve subida + escala)
+function vis(e,t,a,b=1e9,o={}){
+  const din=o.din??.5,dout=o.dout??.4,dy=o.dy??16,dx=o.dx??0,sc=o.sc??.985;
+  const p=eo(pr(t,a,din)),q=1-eo(pr(t,b,dout)),op=Math.min(p,q);
+  e.style.opacity=op.toFixed(4);e.style.visibility=op<=.001?'hidden':'visible';
+  const s=sc+(1-sc)*p - (1-q)*(1-sc);
+  e.style.transform=`translate(${((1-p)*dx).toFixed(2)}px,${((1-p)*dy-(1-q)*dy*.5).toFixed(2)}px) scale(${s.toFixed(4)})`;
+  return op;
+}
+function ripple(r,t,a){const p=pr(t,a,.7);r.style.opacity=(p>0&&p<1)?(.6*(1-p)).toFixed(3):0;r.style.transform=`scale(${(.4+2.0*eo(p)).toFixed(3)})`}
+function pulse(e,t,a,amp=.045,dur=.9){const p=pr(t,a,dur);e.style.scale=(p>0&&p<1)?(1+amp*Math.sin(Math.PI*p)).toFixed(4):''}
+function digita(e,txt,t,a,b){const p=cl((t-a)/Math.max(.05,b-a));const n=Math.round(p*txt.length);
+  const car=(p>0&&p<1)||(Math.floor(t*2.2)%2===0&&p<1.2&&t>=a)?'<span style="color:var(--v);font-weight:500">|</span>':'';
+  e.innerHTML=(txt.slice(0,n)||'')+(t>=a&&t<b+.8?car:'');}
+
+// ------------------------------------------------------------------ tempos da fala (capNN.json do proc.py)
+let D=null;
+const norm=w=>w.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9%./-]+/g,'');
+function W(linha,palavra,n=1,campo='s'){
+  const alvo=norm(palavra);let k=0;
+  for(const w of D.words){if(w.linha===linha&&norm(w.w).replace(/[.,]$/,'')===alvo){k++;if(k===n)return w[campo]}}
+  for(const w of D.words){if(w.linha===linha&&norm(w.w).startsWith(alvo)){k++;if(k>=n)return w[campo]}}
+  console.warn('palavra não achada',linha,palavra);return L(linha);
+}
+const L=i=>(D.linhas[i]||{s:0}).s, LE=i=>(D.linhas[i]||{e:D.dur}).e;
+
+// ------------------------------------------------------------------ componentes
+const CAP_T3=['A tela de Clientes','Cliente empresa pelo CNPJ','Cliente pessoa física pelo CEP','Origens','A ficha do cliente',
+  'Formulário de captação','Fornecedores','Preparando os equipamentos','Cadastrando um equipamento','QR Code e etiqueta','Recapitulando'];
+function aula(x,y,escala=1){ // cartão de uma aula: player + capítulos (títulos reais do T3)
+  const g=el(`<div class="ab" style="left:${x}px;top:${y}px;width:${1000*escala}px;height:${500*escala}px"></div>`);
+  const inn=el(`<div class="ab" style="left:0;top:0;width:1000px;height:500px;transform-origin:0 0;transform:scale(${escala})"></div>`,g);
+  const c=el(`<div class="card" style="left:0;top:0;width:1000px;height:500px"></div>`,inn);
+  const pl=el(`<div class="ab" style="left:30px;top:87px;width:580px;height:326px;border-radius:14px;overflow:hidden;
+     background:radial-gradient(420px 260px at 78% 18%,rgba(0,197,151,.28),transparent 70%),#1E1E1E"></div>`,c);
+  el(`<div class="ab" style="left:30px;top:30px;width:420px">
+       <div class="row" style="gap:10px"><img src="../../../marca/assets/helmet_green.png" style="width:30px"><span class="kick" style="font-size:12px">▶ Domiflix</span></div>
+       <div style="margin-top:18px;color:#fff;font-weight:800;font-size:30px;line-height:1.18">Clientes, Fornecedores e Equipamentos</div></div>`,pl);
+  el(`<div class="ab" style="left:30px;top:262px;width:42px;height:42px;border-radius:50%;background:var(--v);display:flex;align-items:center;justify-content:center;color:#fff">${ic('play',20,'#fff')}</div>`,pl);
+  const trilho=el(`<div class="ab" style="left:90px;top:280px;width:460px;height:6px;border-radius:3px;background:rgba(255,255,255,.22)"></div>`,pl);
+  const prog=el(`<div class="ab" style="left:0;top:0;height:6px;width:0;border-radius:3px;background:var(--v)"></div>`,trilho);
+  const ticks=[];for(let i=0;i<CAP_T3.length;i++){ticks.push(el(`<div class="ab" style="left:${(i/(CAP_T3.length))*460}px;top:-3px;width:3px;height:12px;border-radius:2px;background:rgba(255,255,255,.55)"></div>`,trilho))}
+  const cab=el(`<div class="ab" style="left:640px;top:30px;font-weight:800;font-size:19px">Capítulos</div>`,c);
+  const lst=el(`<div class="ab" style="left:630px;top:66px;width:345px"></div>`,c);
+  const itens=CAP_T3.map(n=>el(`<div class="chl"><div class="hl"></div><div class="dot"></div><span>${n}</span></div>`,lst));
+  return {g,c,pl,prog,itens,ticks};
+}
+function aulaR(A,t,{lista=0,marca=-1,em=1e9}){ // lista: instante em que a lista entra; marca: capítulo destacado em "em"
+  A.itens.forEach((it,i)=>vis(it,t,lista+i*.07,1e9,{dy:8,din:.35,sc:1}));
+  const p=eo(pr(t,em,.5));
+  A.itens.forEach((it,i)=>{const on=i===marca?p:0;it.querySelector('.hl').style.opacity=on;it.querySelector('.dot').style.background=mix('#D4D4D8','#00C597',on);
+    it.style.color=mix('#3F3F46','#00805F',on)});
+  const alvo=marca>=0?(marca/CAP_T3.length)*460:0;A.prog.style.width=(16+(alvo-16)*p).toFixed(1)+'px';
+}
+const FASES=[['settings','Deixar o sistema de pé'],['users','Os cadastros que sustentam tudo'],['clipboard-list','A operação rodando'],
+  ['trending-up','Vender'],['file-signature','Contratos, PMOC e o cliente'],['wallet','O dinheiro e o fiscal'],['chart-column','Gente e crescimento']];
+const PX=[[200,300],[493,300],[787,300],[1080,300],[1080,560],[787,560],[493,560]];
+const PL=[0,293.3,586.7,880,1288.4,1581.4,1875.4];
+function trilha(par){ // as 7 fases (nomes do sumário do Guia Técnico), caminho em S
+  const g=el('<div class="g"></div>',par);
+  const k=el(`<div class="ab" style="left:0;top:118px;width:1280px;text-align:center"><span class="kick">▶ Trilha Domiflix</span></div>`,g);
+  const svg=el(`<svg class="ab" width="1280" height="800" viewBox="0 0 1280 800" style="left:0;top:0">
+     <path d="M200,300 H1080 A130,130 0 0 1 1080,560 H493" fill="none" stroke="#E4E7EC" stroke-width="10" stroke-linecap="round"/>
+     <path class="vp" d="M200,300 H1080 A130,130 0 0 1 1080,560 H493" fill="none" stroke="#00C597" stroke-width="10" stroke-linecap="round"/></svg>`,g);
+  const vp=svg.querySelector('.vp');const LT=vp.getTotalLength();vp.style.strokeDasharray=LT;vp.style.strokeDashoffset=LT;
+  const sts=FASES.map(([i,n],k)=>{const [x,y]=PX[k];
+    const s=el(`<div class="st" style="left:${x}px;top:${y}px"><div class="fill"></div>${ic(i,32)}</div>`,g);
+    const l=el(`<div class="stl" style="left:${x}px;top:${y+50}px">${n}</div>`,g);return {s,l}});
+  return {g,vp,LT,sts,k};
+}
+function trilhaR(T,t,acende){ // acende: instantes em que cada fase acende (Infinity = apagada)
+  let comp=0;
+  T.sts.forEach((o,k)=>{const a=acende[k]??Infinity;const p=eo(pr(t,a,.4));
+    o.s.querySelector('.fill').style.opacity=p;o.s.style.color=mix('#A1A1AA','#FFFFFF',p);o.s.style.borderColor=mix('#DCE1E6','#00C597',p);
+    o.l.style.color=mix('#A1A1AA','#18181B',p);const sp=pr(t,a,.5);o.s.style.transform=`scale(${(1+.12*Math.sin(Math.PI*sp)).toFixed(3)})`;
+    if(t>=a){const ant=k?PL[k-1]:0;comp=Math.max(comp,ant+(PL[k]-ant)*eo(pr(t,a-.25,.5)))}});
+  T.vp.style.strokeDashoffset=(T.LT-comp).toFixed(1);
+}
+const MENU=[['user','Perfil'],['credit-card','Assinatura'],['sun','Tema'],['video','Tutoriais | Domiflix'],['circle-help','Central de Ajuda'],['message-circle','Falar com o Suporte']];
+function lateral(x,y){ // barra lateral esquemática + cartão do perfil no rodapé (de onde o menu da conta abre)
+  const g=el(`<div class="ab" style="left:${x}px;top:${y}px"></div>`);
+  const c=el(`<div class="card" style="left:0;top:0;width:280px;height:600px;border-radius:20px"></div>`,g);
+  el(`<div class="ab row" style="left:24px;top:26px;gap:10px"><img src="../../../marca/assets/helmet_green.png" style="width:30px"><div class="bar" style="width:110px;height:14px"></div></div>`,c);
+  for(let i=0;i<7;i++)el(`<div class="ab row" style="left:24px;top:${92+i*52}px;gap:14px"><div style="width:22px;height:22px;border-radius:7px;background:#E9ECEF"></div><div class="bar" style="width:${[120,150,100,140,90,130,110][i]}px;height:12px"></div></div>`,c);
+  const pf=el(`<div class="ab row" style="left:14px;top:516px;width:252px;height:68px;border-radius:14px;background:#F6F7F8;gap:12px;padding:0 14px">
+      <div style="width:40px;height:40px;border-radius:50%;background:var(--vc);display:flex;align-items:center;justify-content:center">${ic('user',22,'#00A27D')}</div>
+      <div><div class="bar" style="width:110px;height:11px;background:#DDE1E5"></div><div class="bar" style="width:80px;height:9px;margin-top:8px"></div></div>
+      <div style="margin-left:auto;color:#A1A1AA">${ic('chevron-up',18)}</div></div>`,c);
+  const ring=el(`<div class="ab" style="left:10px;top:512px;width:260px;height:76px;border-radius:17px;border:3px solid var(--v);opacity:0"></div>`,c);
+  return {g,pf,ring};
+}
+function menu(x,y){ // menu da conta (rótulos e ordem reais: shell.ts 79-86)
+  const g=el(`<div class="card" style="left:${x}px;top:${y}px;width:330px;padding:12px"></div>`);
+  el(`<div class="row" style="gap:12px;padding:8px 8px 14px;border-bottom:1px solid #EEF0F2;margin-bottom:8px">
+     <div style="width:38px;height:38px;border-radius:50%;background:var(--vc);display:flex;align-items:center;justify-content:center">${ic('user',20,'#00A27D')}</div>
+     <div><div class="bar" style="width:130px;height:11px;background:#DDE1E5"></div><div class="bar" style="width:170px;height:9px;margin-top:8px"></div></div></div>`,g);
+  const its=MENU.map(([i,n],k)=>{if(k===3)el('<div style="height:1px;background:#EEF0F2;margin:6px 8px"></div>',g);
+    return el(`<div class="mi"><div class="hl"></div>${ic(i,20)}<span>${n}</span></div>`,g)});
+  const rip=el('<div class="rip"></div>',g);
+  return {g,its,rip};
+}
+function menuR(M,t,k,a){ // destaca o item k em a, com o toque
+  M.its.forEach((it,i)=>{const p=i===k?eo(pr(t,a,.25)):0;it.querySelector('.hl').style.opacity=p;it.style.color=mix('#27272A','#FFFFFF',p)});
+  const it=M.its[k];M.rip.style.left=(it.offsetLeft+60)+'px';M.rip.style.top=(it.offsetTop+24)+'px';ripple(M.rip,t,a);
+}
+function celular(x,y){ // aparelho genérico, conversa sem texto (sem logo)
+  const g=el(`<div class="ab" style="left:${x}px;top:${y}px;width:290px;height:580px;border-radius:44px;background:#1E1E1E;
+       box-shadow:0 24px 50px rgba(16,24,40,.22)"></div>`);
+  const s=el(`<div class="ab" style="left:11px;top:11px;width:268px;height:558px;border-radius:34px;background:#fff;overflow:hidden"></div>`,g);
+  el(`<div class="ab" style="left:117px;top:12px;width:34px;height:10px;border-radius:5px;background:#1E1E1E"></div>`,s);
+  el(`<div class="ab row" style="left:0;top:38px;width:268px;height:62px;gap:12px;padding:0 18px;border-bottom:1px solid #EEF0F2">
+     <div style="width:38px;height:38px;border-radius:50%;background:var(--v);display:flex;align-items:center;justify-content:center">${ic('headset',20,'#fff')}</div>
+     <div style="font-weight:700;font-size:16px">Suporte</div></div>`,s);
+  const bolhas=[[0,118,150],[1,186,170],[0,262,120],[1,322,190],[0,404,160],[1,466,140]].map(([lado,top,w])=>el(`<div class="ab" style="${lado?'right:16px':'left:16px'};top:${top}px;width:${w}px;
+     padding:12px 14px;border-radius:16px;${lado?'border-bottom-right-radius:5px;background:#D8F5EC':'border-bottom-left-radius:5px;background:#F1F3F5'}">
+     <div class="bar" style="height:8px;width:${w-40}px;background:${lado?'#A8E6D2':'#DDE1E5'}"></div>
+     <div class="bar" style="height:8px;width:${(w-40)*.6}px;margin-top:7px;background:${lado?'#A8E6D2':'#DDE1E5'}"></div></div>`,s));
+  return {g,bolhas};
+}
+
+// ------------------------------------------------------------------ capítulos
+const CAPS={};
+CAPS[0]=()=>{ // Boas-vindas: o ciclo do trabalho com a Dominex no centro
+  const g=grupo();
+  const tit=el(`<div class="ab" style="left:0;top:64px;width:1280px;text-align:center">
+     <div class="kick">▶ Domiflix</div>
+     <div style="margin-top:14px;font-weight:800;font-size:54px;letter-spacing:-.01em">Boas-vindas à <span style="color:var(--v)">Dominex</span></div></div>`,g);
+  const sub=el(`<div class="ab" style="left:0;top:178px;width:1280px;text-align:center;font-weight:600;font-size:21px;color:var(--c)">Como a gente vai caminhar junto</div>`,g);
+  const cx=640,cy=490,R=208;
+  const svg=el(`<svg class="ab" width="1280" height="800" style="left:0;top:0"><circle cx="${cx}" cy="${cy}" r="${R}" fill="none" stroke="#EEF1F3" stroke-width="8"/>
+     <circle class="arc" cx="${cx}" cy="${cy}" r="${R}" fill="none" stroke="#00C597" stroke-width="8" stroke-linecap="round" transform="rotate(-90 ${cx} ${cy})"/></svg>`,g);
+  const arc=svg.querySelector('.arc');const C=2*Math.PI*R;arc.style.strokeDasharray=C;arc.style.strokeDashoffset=C;
+  const logo=el(`<div class="ab" style="left:${cx-62}px;top:${cy-66}px;width:124px;height:132px;display:flex;align-items:center;justify-content:center">
+     <img src="../../../marca/assets/helmet_green.png" style="width:118px"></div>`,g);
+  const E=[['phone-call','Chamado do cliente',0],['clipboard-list','Ordem de serviço',90],['hard-hat','Técnico em campo',180],['banknote','Dinheiro na conta',270]]
+    .map(([i,n,ang])=>{const a=(ang-90)*Math.PI/180,x=cx+R*Math.cos(a),y=cy+R*Math.sin(a);
+      return el(`<div class="card row" style="left:${x-136}px;top:${y-36}px;width:272px;height:72px;white-space:nowrap;gap:12px;padding:0 16px;border-radius:16px">
+        <div style="width:44px;height:44px;border-radius:12px;background:var(--vc);display:flex;align-items:center;justify-content:center">${ic(i,24,'#00A27D')}</div>
+        <div style="font-weight:700;font-size:17px">${n}</div></div>`,g)});
+  return t=>{
+    vis(tit,t,W(0,'Boas-vindas')-.25,1e9,{dy:22});
+    vis(sub,t,W(0,'Neste'),1e9,{dy:10});
+    vis(logo,t,W(0,'lugar'),1e9,{sc:.8});
+    const a0=W(0,'chamado'),a3=W(0,'dinheiro');const at=[a0,a0+(a3-a0)*.38,a0+(a3-a0)*.7,a3];
+    E.forEach((e,i)=>vis(e,t,at[i],1e9,{sc:.9,dy:10}));
+    const p=eo(pr(t,a0,(a3-a0)+.9));arc.style.strokeDashoffset=(C*(1-p)).toFixed(1);
+    const fim=W(0,'caminhar');pulse(logo,t,fim,.06,1.1);
+  };
+};
+CAPS[1]=()=>{
+  const A=aula(140,150);
+  const T=trilha();
+  const lat=lateral(315,100),M=menu(635,300);
+  const comb=el(`<div class="ab" style="left:0;top:116px;width:1280px;display:flex;justify-content:center">
+     <div class="pill" style="padding:12px 24px;background:var(--v);color:#fff;font-size:21px;box-shadow:0 10px 24px rgba(0,197,151,.28)">${ic('circle-check',24,'#fff')}Assista aos tutoriais, na ordem</div></div>`);
+  const REC=[['calendar','Agenda',150,200],['map-pin','Mapa ao Vivo',340,175],['receipt','Orçamentos',930,182],['file-signature','PMOC',1110,214],
+             ['users','Portal do Cliente',170,708],['wallet','Cobranças',430,716],['file-text','Notas Fiscais',860,712],['clock','Ponto eletrônico',1090,700]]
+    .map(([i,n,x,y])=>el(`<div class="ab pill" style="left:${x-80}px;top:${y-21}px;height:42px;padding:0 16px;background:#fff;border:1px solid #E4E7EC;
+       font-size:15px;color:#27272A;box-shadow:0 6px 16px rgba(16,24,40,.08)">${ic(i,18,'#00A27D')}${n}</div>`));
+  return t=>{
+    const l1=L(1),l2=L(2),l3=L(3);
+    vis(A.g,t,.05,l1-.15,{dy:20});aulaR(A,t,{lista:W(0,'capítulos')-.35,marca:3,em:W(0,'voltar')});
+    const fimTrilha=l2-.1;
+    vis(T.g,t,l1,fimTrilha,{dy:0,sc:1});
+    vis(T.g,t,l1,t<l3?fimTrilha:1e9,{dy:0,sc:1});
+    if(t>=l3-.4){vis(T.g,t,l3-.2,1e9,{dy:0,sc:1})}
+    const ac=[W(1,'configurações'),W(1,'cadastros'),W(1,'ordens'),W(1,'orçamentos'),W(1,'contratos'),W(1,'financeiro'),W(1,'vai')];
+    trilhaR(T,t,t<l3-.3?ac:ac.map(()=>-1));
+    vis(lat.g,t,l2,l3-.2,{dx:-30,dy:0});vis(M.g,t,W(2,'menu')-.1,l3-.2,{dy:24,sc:.96});
+    lat.ring.style.opacity=eo(pr(t,W(2,'menu')-.3,.3))*(1-eo(pr(t,l3-.3,.3)));
+    menuR(M,t,3,W(2,'Tutoriais'));
+    const oc=vis(comb,t,W(3,'combinado'),1e9,{dy:-14});T.k.style.opacity=(1-oc).toFixed(3);
+    REC.forEach((r,i)=>vis(r,t,W(3,'recursos')+i*.12,1e9,{sc:.85,dy:8}));
+    T.g.style.filter='none';
+  };
+};
+CAPS[2]=()=>{
+  const A=aula(250,170,.78);
+  const q=el(`<div class="ab" style="left:1010px;top:120px;width:78px;height:78px;border-radius:50%;background:var(--v);color:#fff;display:flex;align-items:center;justify-content:center;
+     font-weight:800;font-size:44px;box-shadow:0 12px 26px rgba(0,197,151,.3)">?</div>`);
+  // navegador genérico com o Guia Técnico (textos reais da página publicada)
+  const B=el(`<div class="card" style="left:100px;top:76px;width:1080px;height:648px;overflow:hidden"></div>`);
+  el(`<div class="ab row" style="left:0;top:0;width:1080px;height:58px;background:#F6F7F8;border-bottom:1px solid #E8ECEA;gap:8px;padding:0 20px">
+     <i style="width:12px;height:12px;border-radius:50%;background:#E4E7EC;display:block"></i><i style="width:12px;height:12px;border-radius:50%;background:#E4E7EC;display:block"></i><i style="width:12px;height:12px;border-radius:50%;background:#E4E7EC;display:block"></i></div>`,B);
+  const end=el(`<div class="ab row" style="left:110px;top:11px;width:620px;height:36px;border-radius:10px;background:#fff;border:1px solid #E4E7EC;gap:10px;padding:0 14px;color:#A1A1AA">
+     ${ic('lock',15)}<span class="u" style="font-weight:600;font-size:16px;color:#27272A"></span></div>`,B);
+  const url=end.querySelector('.u');
+  const nav=el(`<div class="ab" style="left:0;top:58px;width:300px;height:590px;background:#FAFBFB;border-right:1px solid #EEF0F2"></div>`,B);
+  const busca=el(`<div class="ab row" style="left:18px;top:20px;width:264px;height:44px;border-radius:11px;background:#fff;border:1px solid #E4E7EC;gap:10px;padding:0 13px;color:#A1A1AA">
+     ${ic('search',17)}<span class="q" style="font-weight:600;font-size:15px;color:#A1A1AA">Buscar no guia…</span></div>`,nav);
+  const bq=busca.querySelector('.q');
+  const anel=el(`<div class="ab" style="left:15px;top:17px;width:270px;height:50px;border-radius:13px;border:3px solid var(--v);opacity:0"></div>`,nav);
+  const sum=el(`<div class="ab" style="left:22px;top:86px;width:260px"></div>`,nav);
+  const fs=FASES.map(([i,n],k)=>el(`<div style="font-weight:700;font-size:13px;line-height:1.3;color:#52525B;padding:9px 0;border-bottom:1px solid #EEF0F2">
+     <span class="mono" style="font-size:10px;letter-spacing:.08em;color:#00A27D">FASE 0${k+1}</span><br>${n}</div>`,sum));
+  const RES=[['T0 · BEM-VINDO, CONFIGURAÇÃO, IDENTIDADE E ASSINATURA','“Não acho o <mark>PMOC</mark> no menu”'],
+             ['T5 · ORDENS DE SERVIÇO, AGENDA, EQUIPES E MAPA AO VIVO','Aviso extra em OS de contrato <mark>PMOC</mark>'],
+             ['T11 · CONTRATOS E PMOC','Contratos e <mark>PMOC</mark>']];
+  const res=el(`<div class="ab" style="left:12px;top:78px;width:276px;background:#fff;border-radius:12px;border:1px solid #E8ECEA;box-shadow:0 12px 28px rgba(16,24,40,.12);padding:6px"></div>`,nav);
+  const rs=RES.map(([o,x])=>el(`<div style="position:relative;padding:10px 10px;border-radius:8px;font-size:13.5px;font-weight:600;line-height:1.35">
+     <div class="hl" style="position:absolute;inset:0;border-radius:8px;background:var(--vc);opacity:0"></div>
+     <div class="mono" style="position:relative;font-size:10.5px;letter-spacing:.04em;color:#00A27D;margin-bottom:4px">${o}</div><div style="position:relative;font-size:15px">${x}</div></div>`,res));
+  const rrip=el('<div class="rip"></div>',res);
+  const hero=el(`<div class="ab" style="left:300px;top:58px;width:780px;height:590px"></div>`,B);
+  const capa=el(`<div class="ab" style="left:56px;top:56px;width:660px">
+     <div class="kick" style="font-size:12px">Manual completo do produto</div>
+     <div style="margin-top:14px;font-weight:800;font-size:54px;letter-spacing:-.01em">Guia <em style="color:var(--v)">Técnico</em></div>
+     <div class="frase" style="margin-top:14px;font-weight:600;font-size:19px;line-height:1.45;color:#52525B">Como funciona cada função do sistema, tela por tela, na ordem da Trilha Domiflix.</div>
+     <div style="margin-top:36px">${[600,560,620,520,590,480].map(w=>`<div class="bar" style="width:${w}px;height:11px;margin-bottom:16px"></div>`).join('')}</div></div>`,hero);
+  const frase=capa.querySelector('.frase');
+  const sec=el(`<div class="ab" style="left:56px;top:56px;width:660px">
+     <div class="row" style="gap:12px"><span class="mono" style="font-size:13px;font-weight:700;color:#fff;background:var(--v);border-radius:6px;padding:3px 8px">T11</span>
+       <span style="font-weight:800;font-size:36px">Contratos e PMOC</span></div>
+     <div class="lead" style="margin-top:18px;font-weight:600;font-size:19px;line-height:1.55;color:#3F3F46;border-radius:8px;padding:8px 10px;margin-left:-10px">Receita recorrente e conformidade legal no mesmo lugar. É aqui que você transforma cliente avulso em contrato mensal, programa todas as visitas do ano de uma vez e emite os documentos que a Lei Federal 13.589/2018 exige de quem faz manutenção de climatização.</div>
+     <div style="margin-top:26px">${[600,560,620,520].map(w=>`<div class="bar" style="width:${w}px;height:11px;margin-bottom:16px"></div>`).join('')}</div></div>`,hero);
+  const lead=sec.querySelector('.lead');
+  const lat=lateral(110,100),M=menu(430,300),cel=celular(890,110);
+  const A2=aula(64,206,.62);
+  const liga=el(`<svg class="ab" width="1280" height="800" style="left:0;top:0"><path class="lk" d="M410,340 C640,300 760,330 924,316" fill="none" stroke="#00C597" stroke-width="4" stroke-dasharray="2 12" stroke-linecap="round"/></svg>`);
+  const lk=liga.querySelector('.lk');
+  return t=>{
+    const l1=L(1),l2=L(2),l3=L(3),l4=L(4);
+    vis(A.g,t,.05,l1-.1,{dy:18});aulaR(A,t,{lista:-5,marca:9,em:W(0,'capítulo')});
+    vis(q,t,W(0,'dúvida')-.2,l1-.1,{sc:.6});pulse(q,t,W(0,'dúvida')+.2,.08,.8);
+    vis(B,t,W(1,'Guia')-.3,l3-.15,{dy:24,sc:.97});
+    digita(url,'dominex.app/guia-tecnico',t,W(1,'dominex')-.05,W(1,'técnico',2,'e'));
+    const tUrl=W(1,'Ali')-.3;
+    vis(capa,t,tUrl,W(2,'clique')+.6,{dy:10,sc:1});
+    frase.style.background=`rgba(255,240,168,${(.9*eo(pr(t,W(1,'função'),.4))*(1-eo(pr(t,W(1,'mesma')+.9,.5)))).toFixed(3)})`;
+    fs.forEach((f,i)=>{const a=W(1,'mesma')+i*.16;const p=eo(pr(t,a,.3))*(1-eo(pr(t,a+.5,.4)));f.style.color=mix('#52525B','#00805F',p)});
+    anel.style.opacity=(eo(pr(t,W(2,'busca'),.3))*(1-eo(pr(t,W(2,'clique')+.4,.3)))).toFixed(3);
+    const q0=W(2,'digitar'),q1=W(2,'procura',1,'e');
+    if(t>=q0){bq.style.color='#27272A';digita(bq,'PMOC',t,q0,Math.max(q0+.4,q1))}else{bq.style.color='#A1A1AA';bq.textContent='Buscar no guia…'}
+    vis(res,t,q1,W(2,'trecho')+.3,{dy:8,sc:1});
+    rs.forEach((r,i)=>vis(r,t,q1+.1+i*.1,1e9,{dy:6,sc:1}));
+    const tc=W(2,'clique');rs[2].querySelector('.hl').style.opacity=eo(pr(t,tc,.2));
+    rrip.style.left='150px';rrip.style.top=(rs[2].offsetTop+rs[2].offsetHeight/2)+'px';ripple(rrip,t,tc);
+    vis(sec,t,W(2,'leva'),1e9,{dy:30,sc:1});
+    const tt=W(2,'trecho');lead.style.background=`rgba(255,240,168,${(eo(pr(t,tt,.25))*(1-pr(t,tt+.6,1.6))).toFixed(3)})`;
+    vis(lat.g,t,W(3,'menu')-.6,l4-.2,{dx:-30,dy:0});vis(M.g,t,W(3,'menu')-.2,l4-.2,{dy:24,sc:.96});
+    lat.ring.style.opacity=eo(pr(t,W(3,'menu')-.5,.3));
+    menuR(M,t,5,W(3,'Falar'));
+    vis(cel.g,t,W(3,'suporte')-.1,1e9,{dx:40,dy:0});
+    const b0=W(3,'WhatsApp');[0,1].forEach(i=>vis(cel.bolhas[i],t,b0+i*.55,1e9,{dy:10,sc:.9}));
+    vis(A2.g,t,l4-.1,1e9,{dx:-30,dy:0});aulaR(A2,t,{lista:-5,marca:9,em:W(4,'aula')});
+    const r0=W(4,'rápida');[2,3,4,5].forEach((i,k)=>vis(cel.bolhas[i],t,r0+k*.28,1e9,{dy:10,sc:.9}));
+    const tp=W(4,'ponto');const lo=eo(pr(t,tp-.1,.4));lk.style.opacity=lo;lk.style.strokeDashoffset=(-28*t).toFixed(1);
+    if(lo>0){const a=A2.itens[9].getBoundingClientRect(),b=cel.bolhas[3].getBoundingClientRect();const x0=a.right+8,y0=a.top+a.height/2,x1=b.left-10,y1=b.top+b.height/2;
+      lk.setAttribute('d',`M${x0},${y0} C${x0+120},${y0-60} ${x1-120},${y1-60} ${x1},${y1}`)}
+  };
+};
+CAPS[3]=()=>{
+  const lat=lateral(315,100),M=menu(635,300);
+  const AS=el(`<div class="card" style="left:96px;top:129px;width:600px;height:542px;padding:34px 36px"></div>`);
+  el(`<div style="font-weight:800;font-size:32px">Assinatura</div><div style="margin-top:6px;font-weight:600;font-size:16px;color:var(--c)">Gerencie seu plano, módulos e pagamentos</div>`,AS);
+  const box=el(`<div style="margin-top:26px;border:1px solid #E8ECEA;border-radius:16px;padding:22px 24px"></div>`,AS);
+  const linhas=[['Status','<span class="pill" style="padding:6px 14px;background:var(--vc);color:#00805F;font-size:14px"><i style="width:8px;height:8px;border-radius:50%;background:var(--v);display:block"></i>Ativa</span>'],
+    ['Plano','<div class="bar" style="width:170px;height:14px"></div>'],['Vencimento','<div class="bar" style="width:120px;height:14px"></div>'],
+    ['Valor mensal','<div class="bar" style="width:190px;height:26px;border-radius:8px"></div>']]
+    .map(([r,v])=>el(`<div class="row" style="position:relative;height:54px;justify-content:space-between;padding:0 12px;margin:0 -12px;border-radius:10px">
+       <div class="hl" style="position:absolute;inset:0;border-radius:10px;background:var(--vc);opacity:0"></div>
+       <span style="position:relative;font-weight:700;font-size:17px;color:#3F3F46">${r}</span><span style="position:relative">${v}</span></div>`,box));
+  const pagar=el(`<div class="row" style="position:relative;margin-top:22px;height:56px;border-radius:14px;background:var(--v);color:#fff;justify-content:center;font-weight:800;font-size:19px;gap:10px">${ic('credit-card',22,'#fff')}Pagar Agora</div>`,AS);
+  const prip=el('<div class="rip" style="left:264px;top:28px"></div>',pagar);
+  const uso=el(`<div class="card" style="left:730px;top:129px;width:454px;height:228px;padding:28px 30px">
+     <div style="font-weight:800;font-size:22px">Uso da conta</div><div style="margin-top:5px;font-weight:600;font-size:15px;color:var(--c)">Acompanhe o consumo do seu plano</div>
+     <div class="row" style="margin-top:26px;gap:10px;font-weight:700;font-size:16px;color:#3F3F46">${ic('users',20,'#00A27D')}Usuários</div>
+     <div style="margin-top:12px;height:12px;border-radius:6px;background:#EEF0F2"><div class="ub" style="height:12px;border-radius:6px;background:var(--v);width:0"></div></div></div>`);
+  const ub=uso.querySelector('.ub');
+  const hist=el(`<div class="card" style="left:730px;top:381px;width:454px;height:290px;padding:26px 30px">
+     <div style="font-weight:800;font-size:22px">Histórico de pagamentos</div></div>`);
+  const hl=[0,1,2].map(i=>el(`<div class="row" style="margin-top:${i?12:20}px;height:52px;border-radius:12px;background:#F7F8F8;padding:0 16px;gap:14px">
+     ${ic('calendar',18,'#A1A1AA')}<div class="bar" style="width:110px;height:11px"></div><div class="bar" style="width:90px;height:11px;margin-left:auto"></div>${ic('circle-check',20,'#00C597')}</div>`,hist));
+  // pagamento (linha 1): ciclo Mensal/Anual -20% e as três formas
+  const PG=el(`<div class="card" style="left:730px;top:129px;width:454px;height:542px;padding:30px 30px"></div>`);
+  el(`<div style="font-weight:800;font-size:22px">Formas de pagamento</div>`,PG);
+  const ciclo=el(`<div class="row" style="margin-top:22px;height:50px;border-radius:14px;background:#F1F3F5;padding:5px;position:relative"></div>`,PG);
+  const cm=el(`<div class="ab" style="left:5px;top:5px;width:192px;height:40px;border-radius:11px;background:#fff;box-shadow:0 2px 6px rgba(16,24,40,.12)"></div>`,ciclo);
+  el(`<div class="row" style="position:relative;width:197px;justify-content:center;font-weight:700;font-size:16px">Mensal</div>
+      <div class="row" style="position:relative;width:197px;justify-content:center;font-weight:700;font-size:16px;gap:8px">Anual <span class="pill" style="padding:3px 9px;background:var(--v);color:#fff;font-size:13px">-20%</span></div>`,ciclo);
+  const F=[['qr-code','PIX'],['receipt','Boleto'],['credit-card','Cartão']].map(([i,n],k)=>el(`<div class="row" style="position:relative;margin-top:${k?14:24}px;height:76px;border-radius:16px;border:1px solid #E4E7EC;padding:0 20px;gap:16px">
+     <div style="width:46px;height:46px;border-radius:12px;background:var(--vc);display:flex;align-items:center;justify-content:center">${ic(i,24,'#00A27D')}</div>
+     <span style="font-weight:800;font-size:20px">${n}</span><span class="tg" style="margin-left:auto"></span></div>`,PG));
+  F[0].querySelector('.tg').innerHTML=F[1].querySelector('.tg').innerHTML='<span class="pill" style="padding:6px 12px;background:var(--v);color:#fff;font-size:15px">-20% no anual</span>';
+  F[2].querySelector('.tg').innerHTML=`<span class="pill" style="padding:6px 12px;background:#F1F3F5;color:#3F3F46;font-size:14px;white-space:nowrap">${ic('refresh-cw',15,'#00A27D')}Mensal, renova sozinho</span>`;
+  const tg=F.map(f=>f.querySelector('.tg'));
+  return t=>{
+    const l1=L(1);const tA=W(0,'Ali')-.2;
+    vis(lat.g,t,.05,tA,{dx:-30,dy:0});vis(M.g,t,W(0,'Assinatura')-.15,tA,{dy:24,sc:.96});
+    lat.ring.style.opacity=eo(pr(t,W(0,'Assinatura')-.4,.3));menuR(M,t,1,W(0,'menu'));
+    vis(AS,t,tA+.1,1e9,{dy:20});
+    const at=[W(0,'status'),W(0,'plano',2),W(0,'vencimento'),W(0,'valor')];
+    linhas.forEach((r,i)=>{const p=eo(pr(t,at[i],.25))*(1-eo(pr(t,(at[i+1]??W(0,'uso'))+.1,.3)));r.querySelector('.hl').style.opacity=p});
+    vis(uso,t,W(0,'uso')-.2,l1-.1,{dx:30,dy:0});ub.style.width=(62*eo(pr(t,W(0,'uso'),1.0))).toFixed(1)+'%';
+    vis(hist,t,W(0,'histórico')-.2,l1-.1,{dx:30,dy:0});hl.forEach((h,i)=>vis(h,t,W(0,'histórico')+i*.12,1e9,{dy:8,sc:1}));
+    const tp=W(1,'Agora');pulse(pagar,t,tp,.05,.8);ripple(prip,t,tp+.15);
+    vis(PG,t,W(1,'usar')-.2,1e9,{dx:30,dy:0});
+    const tf=[W(1,'Pix'),W(1,'boleto'),W(1,'cartão')];F.forEach((f,i)=>vis(f,t,tf[i]-.1,1e9,{dy:10,sc:.95}));
+    const ta=W(1,'anual');cm.style.transform=`translateX(${(197*eo(pr(t,ta,.35))).toFixed(1)}px)`;
+    const t20=W(1,'vinte');[0,1].forEach(i=>vis(tg[i],t,t20+i*.15,1e9,{sc:.7,dy:0}));
+    vis(tg[2],t,W(1,'mensal')-.1,1e9,{sc:.7,dy:0});
+  };
+};
+CAPS[4]=()=>{
+  const MOD=[['layout-dashboard','Módulo Básico',1],['users','Portal do Cliente',1],['receipt','Orçamentos e Precificação',1],['video','Perguntas em vídeo',1],
+    ['file-signature','Gestão de Contratos e PMOC',0],['user-cog','Funcionários / RH',0],['trending-up','CRM',0],['file-text','Emissão de Notas Fiscais',0],['palette','White Label',0]];
+  const grade=el('<div class="g"></div>');
+  const selo=el(`<div class="ab" style="left:0;top:110px;width:1280px;display:flex;justify-content:center"><div class="pill sl" style="padding:10px 22px;background:var(--e);color:#fff;font-size:19px">${ic('sparkles',20,'#00C597')}<span class="tx">Período de teste</span></div></div>`,grade);
+  const slt=selo.querySelector('.tx');
+  const tiles=MOD.map(([i,n,base],k)=>{const x=170+(k%3)*318,y=190+Math.floor(k/3)*150;
+    const e=el(`<div class="card row" style="left:${x}px;top:${y}px;width:300px;height:128px;gap:16px;padding:0 22px;border-radius:18px">
+      <div class="icb" style="width:56px;height:56px;border-radius:15px;background:var(--vc);display:flex;align-items:center;justify-content:center;flex:none">${ic(i,28,'#00A27D')}</div>
+      <div style="font-weight:700;font-size:18px;line-height:1.25">${n}</div>
+      <div class="mais" style="position:absolute;right:14px;top:14px;width:30px;height:30px;border-radius:50%;background:var(--v);display:flex;align-items:center;justify-content:center;opacity:0">${ic('plus',18,'#fff')}</div></div>`,grade);
+    return {e,base}});
+  // Gerenciar Meu Plano: Planos Prontos / Personalizado + Seu Plano (sem preços)
+  const GM=el(`<div class="card" style="left:110px;top:84px;width:1060px;height:632px;overflow:hidden"></div>`);
+  el(`<div class="ab" style="left:36px;top:30px;font-weight:800;font-size:28px">Gerenciar Meu Plano</div>`,GM);
+  const tabs=el(`<div class="ab row" style="left:36px;top:84px;width:420px;height:50px;border-radius:14px;background:#F1F3F5;padding:5px"></div>`,GM);
+  const tb=el(`<div class="ab" style="left:5px;top:5px;width:205px;height:40px;border-radius:11px;background:#fff;box-shadow:0 2px 6px rgba(16,24,40,.12)"></div>`,tabs);
+  el(`<div class="row" style="position:relative;width:205px;justify-content:center;font-weight:700;font-size:16px">Planos Prontos</div><div class="row" style="position:relative;width:205px;justify-content:center;font-weight:700;font-size:16px">Personalizado</div>`,tabs);
+  const prontos=el(`<div class="ab" style="left:36px;top:160px;width:620px"></div>`,GM);
+  [0,1,2].forEach(i=>el(`<div class="row" style="position:relative;margin-bottom:16px;height:104px;border-radius:16px;border:${i===0?'2px solid #00C597':'1px solid #E4E7EC'};padding:0 22px;gap:12px">
+     <div><div class="bar" style="width:${[140,160,150][i]}px;height:14px;background:#DDE1E5"></div>
+       <div class="row" style="gap:8px;margin-top:12px"><span class="pill" style="height:24px;width:70px;background:#DBEAFE"></span>${'<span class="pill" style="height:24px;width:62px;background:var(--vc)"></span>'.repeat(i+1)}</div></div>
+     ${i===0?'<span class="pill" style="margin-left:auto;padding:5px 12px;background:var(--v);color:#fff;font-size:13px">Atual</span>':'<div class="bar" style="margin-left:auto;width:90px;height:16px"></div>'}</div>`,prontos));
+  const pers=el(`<div class="ab" style="left:36px;top:160px;width:620px"></div>`,GM);
+  el(`<div class="row" style="height:58px;border-radius:14px;background:var(--vc);padding:0 18px;gap:12px;font-weight:700;font-size:16px;color:#00805F">${ic('layout-dashboard',20,'#00A27D')}Módulo Básico<span class="pill" style="margin-left:auto;padding:4px 10px;background:#fff;color:#00805F;font-size:13px">Sempre incluso</span></div>
+      <div style="margin:18px 0 10px;font-weight:800;font-size:16px">Adicione módulos:</div>`,pers);
+  const ck=['Gestão de Contratos e PMOC','Funcionários / RH','CRM','Emissão de Notas Fiscais','White Label'].map(n=>el(`<div class="row" style="position:relative;margin-bottom:9px;height:46px;border-radius:12px;border:1px solid #E4E7EC;padding:0 16px;gap:12px;font-weight:700;font-size:15px">
+     <div class="hl" style="position:absolute;inset:-1px;border-radius:12px;border:2px solid var(--v);background:rgba(0,197,151,.06);opacity:0"></div>
+     <div class="cb" style="position:relative;width:22px;height:22px;border-radius:6px;border:2px solid #C9CED4;display:flex;align-items:center;justify-content:center;color:#fff"></div><span style="position:relative">${n}</span>
+     <div class="bar" style="position:relative;margin-left:auto;width:70px;height:12px"></div></div>`,pers));
+  const usu=el(`<div class="row" style="margin-top:14px;gap:14px;font-weight:800;font-size:16px">Usuários adicionais:
+     <div class="row" style="margin-left:auto;gap:0;border:1px solid #E4E7EC;border-radius:12px;overflow:hidden">
+       <span style="width:42px;height:40px;display:flex;align-items:center;justify-content:center;color:#71717A">${ic('minus',18)}</span>
+       <span class="n" style="width:46px;text-align:center;font-size:18px">0</span>
+       <span class="mb" style="width:42px;height:40px;display:flex;align-items:center;justify-content:center;color:#fff;background:var(--v)">${ic('plus',18,'#fff')}</span></div></div>`,pers);
+  const un=usu.querySelector('.n'),umb=usu.querySelector('.mb');
+  const seu=el(`<div class="ab" style="left:700px;top:0;width:360px;height:632px;background:#F7F8F8;border-left:1px solid #EEF0F2;padding:32px 28px">
+     <div style="font-weight:800;font-size:20px">Seu Plano</div>
+     ${[180,150,200,140].map(w=>`<div class="row" style="margin-top:22px;justify-content:space-between"><div class="bar" style="width:${w}px;height:11px"></div><div class="bar" style="width:56px;height:11px"></div></div>`).join('')}
+     <div style="position:absolute;left:28px;right:28px;bottom:34px;border-top:1px solid #E4E7EC;padding-top:20px" class="row"><span style="font-weight:800;font-size:17px">Total mensal</span><div class="bar" style="margin-left:auto;width:100px;height:20px"></div></div></div>`,GM);
+  // linha do tempo do ciclo: cobrança proporcional (sem valores)
+  const X0=170,X1=1110,HJ=.42,xh=X0+(X1-X0)*HJ;
+  const TL=el('<div class="g"></div>');
+  el(`<div class="ab" style="left:${X0}px;top:330px;width:${X1-X0}px;height:62px;border-radius:31px;background:#F1F3F5;border:2px solid #E4E7EC"></div>`,TL);
+  const ja=el(`<div class="ab row" style="left:${X0}px;top:330px;width:${xh-X0}px;height:62px;border-radius:31px 0 0 31px;background:#E4E7EC;justify-content:center;font-weight:700;font-size:16px;color:#71717A">Já pago</div>`,TL);
+  const vd=el(`<div class="ab row" style="left:${xh}px;top:330px;width:${X1-xh}px;height:62px;border-radius:0 31px 31px 0;background:var(--v);justify-content:center;font-weight:800;font-size:18px;color:#fff;gap:10px;transform-origin:0 50%">${ic('plus',20,'#fff')}Cobrança proporcional hoje</div>`,TL);
+  el(`<div class="ab" style="left:${X0}px;top:410px;font-weight:700;font-size:16px;color:#71717A">Início do ciclo</div>
+      <div class="ab" style="left:${X1-110}px;top:410px;width:110px;text-align:right;font-weight:700;font-size:16px;color:#71717A">Vencimento</div>`,TL);
+  const hoje=el(`<div class="ab" style="left:${xh-2}px;top:300px;width:4px;height:122px;border-radius:2px;background:var(--e)"></div>`,TL);
+  const hjl=el(`<div class="ab" style="left:${xh-40}px;top:258px;width:80px;text-align:center"><span class="pill" style="padding:6px 14px;background:var(--e);color:#fff;font-size:15px">Hoje</span></div>`,TL);
+  const chip=el(`<div class="ab pill" style="left:${xh-108}px;top:170px;height:50px;padding:0 20px;background:#fff;border:2px solid var(--v);color:#00805F;font-size:17px;box-shadow:0 10px 22px rgba(0,197,151,.18)">${ic('plus',20,'#00A27D')}<span class="tx">Módulo novo</span></div>`,TL);
+  const chs=chip.querySelector('.tx');
+  const ok=el(`<div class="ab pill" style="left:${xh+130}px;top:176px;height:40px;padding:0 16px;background:var(--vc);color:#00805F;font-size:15px">${ic('circle-check',18,'#00A27D')}Pagamento confirmado</div>`,TL);
+  const prox=el(`<div class="ab" style="left:${X0}px;top:500px;width:${X1-X0}px">
+      <div style="font-weight:800;font-size:17px;color:#3F3F46;margin-bottom:12px">Próxima renovação</div>
+      <div class="row" style="height:54px;border-radius:27px;background:var(--vc);border:2px solid var(--v);justify-content:center;font-weight:800;font-size:17px;color:#00805F">Valor do plano novo</div></div>`,TL);
+  // reduzir
+  const RD=el('<div class="g"></div>');
+  const rchip=el(`<div class="ab pill" style="left:${X0}px;top:200px;height:50px;padding:0 20px;background:#fff;border:2px solid #A1A1AA;color:#3F3F46;font-size:17px">${ic('minus',20,'#71717A')}Reduzir o plano</div>`,RD);
+  const atual=el(`<div class="ab" style="left:${X0}px;top:300px;width:${X1-X0}px">
+      <div style="font-weight:800;font-size:17px;color:#3F3F46;margin-bottom:12px">Ciclo atual</div>
+      <div class="row" style="height:62px;border-radius:31px;background:var(--v);justify-content:center;font-weight:800;font-size:18px;color:#fff;gap:10px">${ic('circle-check',20,'#fff')}Tudo liberado até o vencimento</div></div>`,RD);
+  const pc=el(`<div class="ab" style="left:${X0}px;top:470px;width:${X1-X0}px">
+      <div class="row" style="gap:12px;margin-bottom:12px"><span style="font-weight:800;font-size:17px;color:#3F3F46">Próximo ciclo</span>
+        <span class="pill" style="padding:5px 12px;background:#FEF3C7;color:#92400E;font-size:14px">Mudança de valor agendada</span></div>
+      <div class="row" style="height:44px;width:68%;border-radius:22px;background:#E6F9F4;border:2px dashed #00C597;justify-content:center;font-weight:800;font-size:16px;color:#00805F">Valor menor</div></div>`,RD);
+  return t=>{
+    const l1=L(1),l2=L(2),l3=L(3),l4=L(4);
+    const ta=W(0,'ativar');
+    vis(grade,t,.05,W(1,'Gerenciar')-.15,{dy:0,sc:1});
+    tiles.forEach((o,k)=>{vis(o.e,t,.1+k*.06,1e9,{dy:12,sc:.96});
+      const off=o.base?0:eo(pr(t,ta,.5));const volta=(k===4)?eo(pr(t,W(1,'crescer'),.5)):0;const d=off*(1-volta);
+      o.e.style.filter=`grayscale(${d.toFixed(3)})`;o.e.style.opacity=(parseFloat(o.e.style.opacity)*(1-.55*d)).toFixed(3);
+      o.e.querySelector('.mais').style.opacity=o.base?0:(d*.9).toFixed(3);
+      if(k===4){const ps=pr(t,W(1,'crescer'),.7);if(ps>0&&ps<1)o.e.style.transform=`scale(${(1+.06*Math.sin(Math.PI*ps)).toFixed(4)})`}});
+    slt.textContent=t<ta?'Período de teste':'Seu plano';
+    vis(GM,t,W(1,'Gerenciar')-.1,l2-.15,{dy:22,sc:.97});
+    const tp=W(1,'Personalizado');tb.style.transform=`translateX(${(205*eo(pr(t,tp,.35))).toFixed(1)}px)`;
+    vis(prontos,t,W(1,'Prontos')-.4,tp,{dy:8,sc:1,dout:.25});vis(pers,t,tp+.05,1e9,{dy:8,sc:1});
+    const tm=W(1,'módulos');ck.forEach((c,i)=>{const p=i===0?eo(pr(t,tm,.25)):0;c.querySelector('.hl').style.opacity=p;
+      const cb=c.querySelector('.cb');cb.style.background=mix('#FFFFFF','#00C597',p);cb.style.borderColor=mix('#C9CED4','#00C597',p);cb.innerHTML=p>.5?ic('check',16,'#fff'):''});
+    const tu=W(1,'usuários');un.textContent=t>=tu+.2?'1':'0';pulse(umb,t,tu,.12,.4);
+    vis(TL,t,l2-.05,l4-.15,{dy:0,sc:1});
+    vis(chip,t,W(2,'aumenta')-.1,1e9,{dy:-40,sc:.9});
+    pulse(hjl,t,W(2,'caminho'),.12,.7);
+    const td=W(2,'diferença');vd.style.opacity=eo(pr(t,td,.35));vd.style.transform=`scaleX(${(.2+.8*eo(pr(t,td,.6))).toFixed(4)})`;
+    pulse(vd,t,W(2,'faltam'),.03,.9);if(t<td){vd.style.transform='scaleX(.2)'}
+    const tc=W(3,'confirmado');vis(ok,t,tc,1e9,{dx:-10,dy:0,sc:.9});
+    const pc2=eo(pr(t,tc,.3));chip.style.background=mix('#FFFFFF','#00C597',pc2);chip.style.color=mix('#00805F','#FFFFFF',pc2);chip.querySelector('.ic').style.color=mix('#00A27D','#FFFFFF',pc2);
+    chs.textContent=t>=tc+.15?'Liberado':'Módulo novo';
+    vis(prox,t,W(3,'renovação')-.1,1e9,{dy:14,sc:1});
+    vis(RD,t,l4,LE(4)+5,{dy:0,sc:1});
+    vis(rchip,t,W(4,'reduzir')-.1,1e9,{dy:-20,sc:.9});vis(atual,t,W(4,'continua')-.1,1e9,{dy:12,sc:1});
+    vis(pc,t,W(4,'próximo')-.2,1e9,{dy:12,sc:1});
+    const fim=D.dur+.15;ST.style.opacity=(1-eo(pr(t,fim,.5))).toFixed(3); // some antes do fecho (sem vinheta entre os dois)
+  };
+};
+CAPS[5]=()=>{
+  const T=trilha();T.g.style.transform='translateY(-100px) scale(.78)';
+  const P=el(`<div class="card" style="left:210px;top:540px;width:860px;height:206px;padding:28px 34px"></div>`);
+  el(`<div class="kick" style="font-size:13px">Próximo tutorial</div><div style="margin-top:10px;font-weight:800;font-size:30px">Configurações e identidade da empresa</div>`,P);
+  const fila=el(`<div class="row" style="margin-top:20px;gap:14px"></div>`,P);
+  const it=[['image','Logo'],['building-2','Dados da empresa'],['sliders-horizontal','Preferências']].map(([i,n],k)=>el(`<div class="pill" style="height:48px;padding:0 20px;background:var(--vc);color:#00805F;font-size:16px">${ic(i,20,'#00A27D')}${n}</div>`,fila));
+  return t=>{
+    ST.style.opacity=eo(pr(t,0,.5)).toFixed(3);
+    trilhaR(T,t,[W(0,'passo'),Infinity,Infinity,Infinity,Infinity,Infinity,Infinity]);
+    vis(P,t,W(0,'passo')+.1,1e9,{dy:24});
+    const ti=[W(0,'logo'),W(0,'dados'),W(0,'preferências')];it.forEach((e,i)=>vis(e,t,ti[i]-.1,1e9,{sc:.85,dy:8}));
+    pulse(T.sts[0].s,t,W(0,'vejo'),.14,.8);pulse(P,t,W(0,'vejo'),.02,.8);
+  };
+};
+
+// ------------------------------------------------------------------ API para o renderizador
+let RENDER=null;
+window.setup=d=>{D=d;ST.innerHTML='';RENDER=CAPS[d.cap]();return true};
+window.R=t=>{RENDER(t);return true};
+</script></body></html>

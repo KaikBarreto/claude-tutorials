@@ -69,6 +69,9 @@ cortes) → `python3 -I montar_cap.py NN` → **`python3 -I auditar_camera.py` c
 Confira `python3 -I folha_zooms.py out/folhas_zoom` e mande **um capítulo de prévia** antes de seguir.
 Ilustração (fundo branco com desenho por cima, depois volta ao app) só para conceito que a tela não mostra; texto
 medido antes de desenhar; exemplo em `exemplos/dominex-t3/ilustracoes/`.
+**Aula ilustrada inteira** (boas-vindas, conceitos, combinados; sem tela do app): cada capítulo é uma animação HTML
+presa às palavras da fala (`edit/cenas/`), conferida em quadros antes do render; ver `docs/09-aula-ilustrada.md` e
+`exemplos/dominex-t0/`.
 
 ## 6. Montagem, legendas, conferência e entrega (`docs/05`, `06`, `07`)
 `python3 -I titulos.py` (títulos falados) → `python3 -I finish.py caps/<AULA>.aula.json` (vinheta da aula, vinhetas

@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<!-- MODELO de cenas ilustradas (capítulo sem gravação de tela). Copie para <tutorial>/edit/cenas/cenas.html.
+     1280x800 CSS, renderizado quadro a quadro por render_cenas.cjs (window.setup(dados) + window.R(t)).
+     Regras: tudo é função do tempo t (nada de transição/animação CSS); cada mudança presa a uma palavra da fala com
+     W(linha, 'palavra'[, ocorrência, 's'|'e']); rótulos reais do app; dados fictícios; sem logo de terceiros.
+     Exemplo completo: exemplos/dominex-t0/cenas/cenas.html. Ver docs/09-aula-ilustrada.md. -->
+<style>
+@font-face{font-family:M;font-weight:500;src:url(../../../web/fonts/montserrat-latin-500-normal.woff2) format('woff2')}
+@font-face{font-family:M;font-weight:600;src:url(../../../web/fonts/montserrat-latin-600-normal.woff2) format('woff2')}
+@font-face{font-family:M;font-weight:700;src:url(../../../web/fonts/montserrat-latin-700-normal.woff2) format('woff2')}
+@font-face{font-family:M;font-weight:800;src:url(../../../web/fonts/montserrat-latin-800-normal.woff2) format('woff2')}
+@font-face{font-family:M;font-weight:500;src:url(../../../web/fonts/montserrat-latin-ext-500-normal.woff2) format('woff2');unicode-range:U+0100-024F}
+@font-face{font-family:M;font-weight:700;src:url(../../../web/fonts/montserrat-latin-ext-700-normal.woff2) format('woff2');unicode-range:U+0100-024F}
+:root{--v:#00C597;--ve:#00A27D;--vc:#E6F9F4;--t:#18181B;--c:#71717A;--l:#E4E7EC;--e:#1E1E1E;--am:#FFF0A8}
+*{box-sizing:border-box;margin:0;padding:0;transition:none!important;animation:none!important}
+html,body{width:1280px;height:800px;overflow:hidden;background:#fff}
+body{font-family:M,sans-serif;color:var(--t);-webkit-font-smoothing:antialiased}
+#st{position:absolute;inset:0;overflow:hidden;background:
+  radial-gradient(1100px 650px at 92% -12%,rgba(0,197,151,.075),transparent 62%),
+  radial-gradient(900px 600px at -12% 112%,rgba(0,197,151,.05),transparent 60%),#fff}
+.g{position:absolute;left:0;top:0;width:1280px;height:800px;transform-origin:640px 400px}
+.ab{position:absolute}
+.card{position:absolute;background:#fff;border:1px solid #E8ECEA;border-radius:18px;
+  box-shadow:0 18px 40px rgba(16,24,40,.10),0 3px 8px rgba(16,24,40,.06)}
+.ic{display:inline-flex;align-items:center;justify-content:center;flex:none}
+.ic svg{width:100%;height:100%}
+.kick{font-weight:700;font-size:14px;letter-spacing:.3em;color:var(--v);text-transform:uppercase}
+.bar{background:#E9ECEF;border-radius:6px}
+.pill{display:inline-flex;align-items:center;gap:8px;border-radius:999px;font-weight:700}
+.row{display:flex;align-items:center}
+.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+.rip{position:absolute;width:56px;height:56px;margin:-28px 0 0 -28px;border-radius:50%;border:3px solid var(--v);opacity:0}
+/* trilha */
+.st{position:absolute;width:76px;height:76px;margin:-38px 0 0 -38px;border-radius:50%;background:#fff;border:3px solid #DCE1E6;
+  display:flex;align-items:center;justify-content:center;color:#A1A1AA}
+.st .fill{position:absolute;inset:-3px;border-radius:50%;background:var(--v);opacity:0}
+.st .ic{position:relative;width:32px;height:32px}
+.stl{position:absolute;width:230px;margin-left:-115px;text-align:center;font-weight:700;font-size:17px;line-height:1.25;color:#A1A1AA}
+/* menu da conta */
+.mi{position:relative;height:48px;display:flex;align-items:center;gap:14px;padding:0 16px;border-radius:12px;font-weight:600;font-size:16px}
+.mi .hl{position:absolute;inset:0;border-radius:12px;background:var(--v);opacity:0}
+.mi .ic,.mi span{position:relative}
+/* capítulos */
+.chl{position:relative;height:33px;display:flex;align-items:center;gap:12px;padding:0 12px;border-radius:9px;font-weight:600;font-size:15px;color:#3F3F46}
+.chl .hl{position:absolute;inset:0;border-radius:9px;background:var(--vc);opacity:0}
+.chl .dot{position:relative;width:9px;height:9px;border-radius:50%;background:#D4D4D8}
+.chl span{position:relative}
+mark{background:var(--am);color:inherit;padding:0 2px;border-radius:3px}
+</style></head>
+<body><div id="st"></div>
+<script>
+// ------------------------------------------------------------------ utilidades
+const cl=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
+const eo=x=>1-Math.pow(1-cl(x),3);
+const eio=x=>{x=cl(x);return x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2};
+const pr=(t,a,d=.45)=>cl((t-a)/d);
+const $=s=>document.querySelector(s);
+const ST=document.getElementById('st');
+function el(html,parent=ST){const d=document.createElement('div');d.innerHTML=html.trim();let f=null;for(const n of [...d.childNodes]){parent.appendChild(n);if(!f&&n.nodeType===1)f=n}return f}
+function grupo(){return el('<div class="g"></div>')}
+function ic(n,px,cor){const s=(window.ICONS||{})[n]||'';return `<span class="ic" style="width:${px}px;height:${px}px;${cor?'color:'+cor:''}">${s}</span>`}
+function hex(c){c=c.replace('#','');return[0,2,4].map(i=>parseInt(c.substr(i,2),16))}
+function mix(a,b,p){const A=hex(a),B=hex(b);return `rgb(${A.map((v,i)=>Math.round(v+(B[i]-v)*cl(p))).join(',')})`}
+// aparece em a, some em b (opacidade + leve subida + escala)
+function vis(e,t,a,b=1e9,o={}){
+  const din=o.din??.5,dout=o.dout??.4,dy=o.dy??16,dx=o.dx??0,sc=o.sc??.985;
+  const p=eo(pr(t,a,din)),q=1-eo(pr(t,b,dout)),op=Math.min(p,q);
+  e.style.opacity=op.toFixed(4);e.style.visibility=op<=.001?'hidden':'visible';
+  const s=sc+(1-sc)*p - (1-q)*(1-sc);
+  e.style.transform=`translate(${((1-p)*dx).toFixed(2)}px,${((1-p)*dy-(1-q)*dy*.5).toFixed(2)}px) scale(${s.toFixed(4)})`;
+  return op;
+}
+function ripple(r,t,a){const p=pr(t,a,.7);r.style.opacity=(p>0&&p<1)?(.6*(1-p)).toFixed(3):0;r.style.transform=`scale(${(.4+2.0*eo(p)).toFixed(3)})`}
+function pulse(e,t,a,amp=.045,dur=.9){const p=pr(t,a,dur);e.style.scale=(p>0&&p<1)?(1+amp*Math.sin(Math.PI*p)).toFixed(4):''}
+function digita(e,txt,t,a,b){const p=cl((t-a)/Math.max(.05,b-a));const n=Math.round(p*txt.length);
+  const car=(p>0&&p<1)||(Math.floor(t*2.2)%2===0&&p<1.2&&t>=a)?'<span style="color:var(--v);font-weight:500">|</span>':'';
+  e.innerHTML=(txt.slice(0,n)||'')+(t>=a&&t<b+.8?car:'');}
+
+// ------------------------------------------------------------------ tempos da fala (capNN.json do proc.py)
+let D=null;
+const norm=w=>w.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9%./-]+/g,'');
+function W(linha,palavra,n=1,campo='s'){
+  const alvo=norm(palavra);let k=0;
+  for(const w of D.words){if(w.linha===linha&&norm(w.w).replace(/[.,]$/,'')===alvo){k++;if(k===n)return w[campo]}}
+  for(const w of D.words){if(w.linha===linha&&norm(w.w).startsWith(alvo)){k++;if(k>=n)return w[campo]}}
+  console.warn('palavra não achada',linha,palavra);return L(linha);
+}
+const L=i=>(D.linhas[i]||{s:0}).s, LE=i=>(D.linhas[i]||{e:D.dur}).e;
+
+// ------------------------------------------------------------------ capítulos (um CAPS[n] por capítulo)
+const CAPS={};
+CAPS[0]=()=>{ // exemplo: título que entra na 1ª palavra e três cartões presos a palavras da linha 1
+  const g=grupo();
+  const tit=el(`<div class="ab" style="left:0;top:90px;width:1280px;text-align:center">
+     <div class="kick">▶ Sua série</div><div style="margin-top:14px;font-weight:800;font-size:52px">Título da cena</div></div>`,g);
+  const cards=[['calendar','Agenda'],['users','Clientes'],['wallet','Financeiro']].map(([i,n],k)=>el(`<div class="card row"
+     style="left:${190+k*310}px;top:330px;width:280px;height:120px;gap:14px;padding:0 22px">
+     <div style="width:52px;height:52px;border-radius:14px;background:var(--vc);display:flex;align-items:center;justify-content:center">${ic(i,26,'#00A27D')}</div>
+     <div style="font-weight:700;font-size:19px">${n}</div></div>`,g));
+  const rip=el('<div class="rip"></div>',cards[1]);rip.style.left='140px';rip.style.top='60px';
+  return t=>{
+    vis(tit,t,L(0)-.2);                                        // entra junto com a 1ª linha
+    const at=[W(1,'agenda'),W(1,'clientes'),W(1,'financeiro')]; // palavras da linha 1 da fala (tts_textos.py)
+    cards.forEach((c,k)=>vis(c,t,at[k]-.1,1e9,{sc:.9,dy:10}));
+    ripple(rip,t,W(1,'clientes')+.4); pulse(cards[1],t,W(1,'clientes')+.4,.05,.8);
+  };
+};
+
+// ------------------------------------------------------------------ API para o renderizador
+let RENDER=null;
+window.setup=d=>{D=d;ST.innerHTML='';RENDER=CAPS[d.cap]();return true};
+window.R=t=>{RENDER(t);return true};
+</script></body></html>

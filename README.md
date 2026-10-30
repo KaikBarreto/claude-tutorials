@@ -16,6 +16,8 @@ Esta skill faz uma aula em vídeo (1080p, de 5 a 20 minutos) de um app web, do r
 - **Montagem**: vinheta de abertura com o logo, **vinheta falada antes de cada capítulo**, trilha com ducking, efeitos,
   cortes de pausas, cartela final.
 - **Legendas** .srt e .vtt e **conferência** (folha de quadros, volume, todos os zooms) antes de entregar.
+- **Aula ilustrada** (boas-vindas, conceitos, combinados): sem tela do app, cada capítulo é uma animação HTML presa às
+  palavras da fala, com o mesmo palco, vinhetas, trilha e legendas (`docs/09-aula-ilustrada.md`).
 
 Piloto: Dominex · aula T3 "Clientes, Fornecedores e Equipamentos" (12:13, 12 capítulos), inteira em
 [`exemplos/dominex-t3/`](exemplos/dominex-t3/).
@@ -166,8 +168,10 @@ ferramentas/
   rec/                   robô gravador (Playwright) + Supabase falso opcional
   narracao/              conferência e alinhamento da voz, emendas, títulos, legendas
   edit/                  editor: câmera, cursor, palco, camadas, vinhetas de capítulo, montagem, auditoria, entrega
+  edit/cenas/            capítulos ilustrados: modelo de cenas HTML, renderizador quadro a quadro, gerador de capítulos
   kit/ audio/ web/       vinheta e cartela, trilha e SFX, ASR, fontes
 exemplos/dominex-t3/     a aula piloto inteira: inventário, roteiro, textos do TTS, roteiros do robô, specs, ilustração
+exemplos/dominex-t0/     aula ilustrada (boas-vindas): cenas HTML, textos do TTS, montagem encadeada
 ```
 
 ## 9. Problemas conhecidos
