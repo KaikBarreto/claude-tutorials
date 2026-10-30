@@ -54,8 +54,9 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
 7. Limpeza de disco: depois do F, apagar gravações, renders de capítulo e `proj/` da aula (fica o final + legendas).
 
 ## Ambiente de gravação (antes da primeira gravação nova)
-- App de gravação em `$TUT_HOME/app` está na **1.38.5** (a do T3): atualizar para a versão publicada mais recente
-  (`rec/setup-app.sh` com o código novo + `rec/run.sh build`) e regravar nada do T3.
+- App de gravação em `$TUT_HOME/app` **atualizado para a 1.38.6** em 30/10 22:55 (`DOMINEX_SRC=src-1.38.6
+  rec/setup-app.sh` + `rec/run.sh build`; dependências iguais). Fumaça ok (0 problema). Antes de cada gravação, conferir
+  se saiu versão nova (`git fetch` no clone, só leitura) e repetir.
 - Data do mundo: exportar o **mesmo `FAKE_NOW`** para o backend falso (`rec/run.sh fake`/`up`) e para o robô (o
   navegador instala o relógio nessa data: `recorder/browser.mjs`, testado 30/10). Datas diferentes = a assinatura da
   empresa fictícia (`@now+23d`) aparece vencida e o app mostra a tela de bloqueio com preço.
