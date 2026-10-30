@@ -119,3 +119,6 @@ navegador, bom para o vídeo).
    `fn:manage_contracts` sem efeito na tela (inventário 5).
 8. **Esforço no fakebase:** é o maior da trilha até aqui (catálogo da norma, 2 RPCs, 6 funções de PDF, visão de saúde,
    numeração de OS). Sugiro fazer junto com o T5 (numeração de OS) e o T4 (checklists).
+9. **Datas:** o navegador da gravação usa o relógio real (só o fakebase congela com `FAKE_NOW`,
+   `rec/fakebase/core/util.mjs:20-27`). Gravando depois de 01/11/2026, as visitas já nasceriam vencidas e o T12 mostraria
+   "Manutenção pendente". Proposta: início e 1º vencimento no mês seguinte ao da gravação (os valores ficam iguais).

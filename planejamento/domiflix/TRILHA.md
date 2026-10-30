@@ -19,7 +19,7 @@ Padrão de produção: perfil Domiflix (`perfis/domiflix/PERFIL.md`), idêntico 
 | Ordem de exibição | Tutorial | Área (vinheta) | Módulo pago | Levantamento | Produção |
 |---|---|---|---|---|---|
 | T0 | Boas-vindas à Dominex (ilustrado, ~3 min 40 s, sem tela) | COMEÇANDO / AJUDA / ASSINATURA | — | feito | roteiro em aprovação |
-| T2 | Usuários, cargos e permissões | USUÁRIOS | — | em andamento (lote B1) | — |
+| T2 | Usuários, cargos e permissões | USUÁRIOS | — | feito (lote B1) | — |
 | T3 | Clientes, Fornecedores e Equipamentos | CLIENTES / FORNECEDORES / EQUIPAMENTOS | — | feito | **entregue 30/10** |
 | T4 | Serviços, tarefas e checklists | SERVIÇOS | Vídeo em checklist (parcial) | em andamento (lote A1) | — |
 | T5 | Ordens de Serviço, Agenda, Equipes e Mapa ao Vivo | ORDENS DE SERVIÇO / AGENDA | RH (Equipes) | em andamento (lote A1) | — |
@@ -27,13 +27,13 @@ Padrão de produção: perfil Domiflix (`perfis/domiflix/PERFIL.md`), idêntico 
 | T18 | Área do Técnico: Refrigeração e Climatização | ÁREA DO TÉCNICO | Segmento específico | lote A2 | — |
 | T8 | Estoque, compras e inventário | ESTOQUE | — | lote A2 | — |
 | T9 | Orçamentos, Precificação e Proposta | ORÇAMENTOS | Precificação Avançada (parcial) | lote A2 | — |
-| T10 | CRM: funil, leads e captação | CRM | CRM | em andamento (lote B1) | — |
-| T11 | Contratos e PMOC | CONTRATOS | Contratos e PMOC | em andamento (lote B1) | — |
-| T12 | Portal do Cliente e Portal do Contrato | PORTAL | Portal do Cliente + Contratos/PMOC | em andamento (lote B1) | — |
-| T13 | Financeiro | FINANCEIRO | — | lote B2 | — |
-| T19 | Integração com Asaas, Assinaturas e Cobranças | COBRANÇAS | Cobranças | lote B2 | — |
-| T20 | Relatório Financeiro e DRE | FINANCEIRO | — | lote B2 | — |
-| T14 | Notas Fiscais (NFS-e e NF-e) | NOTAS FISCAIS | Emissão de Notas Fiscais | lote B2 | — |
+| T10 | CRM: funil, leads e captação | CRM | CRM | feito (lote B1) | — |
+| T11 | Contratos e PMOC | CONTRATOS | Contratos e PMOC | feito (lote B1) | — |
+| T12 | Portal do Cliente e Portal do Contrato | PORTAL | Portal do Cliente + Contratos/PMOC | feito (lote B1) | — |
+| T13 | Financeiro | FINANCEIRO | — | em andamento (lote B2) | — |
+| T19 | Integração com Asaas, Assinaturas e Cobranças | COBRANÇAS | Cobranças | em andamento (lote B2) | — |
+| T20 | Relatório Financeiro e DRE | FINANCEIRO | — | em andamento (lote B2) | — |
+| T14 | Notas Fiscais (NFS-e e NF-e) | NOTAS FISCAIS | Emissão de Notas Fiscais | em andamento (lote B2) | — |
 | T15 | Funcionários: Financeiro do Funcionário e Ponto Eletrônico | FUNCIONÁRIOS | Funcionários / RH | lote C | — |
 | T22 | Ferramentas de RH: DISC, Organograma, Fluxograma | RH | Funcionários / RH | lote C | — |
 | T21 | Integração com WhatsApp | WHATSAPP | WhatsApp | lote C | — |
@@ -60,6 +60,16 @@ Cada aula parte do estado final da anterior no mundo fictício (Glacial Cold Bra
    `perfis/domiflix/narracao/config_narracao.json` e no `PERFIL.md`.
 4. **Duração**: a trilha estimava 18 a 70 min por aula (gravação humana); no nosso padrão (fala natural, robô no
    ritmo da voz, cortes de pausa) o T3 previsto para 35 min saiu com 12:13. Esperar ~10 a 25 min por aula.
+5. **Relógio do navegador**: o fakebase congela a data (`FAKE_NOW`), mas o navegador da gravação usa o relógio real.
+   Congelar o navegador na mesma data (Playwright 1.63: `page.clock`) para as datas do mundo (visitas do PMOC,
+   vencimentos) não envelhecerem entre o planejamento e a gravação (T11, T12).
+6. **Gravador**: hoje não grava página sem login (contexto anônimo), nova aba (PDF, link público) nem download
+   (T11, T12). Desenvolver e testar no exemplo do T3 antes.
+7. **Endereço do app nos links**: o app gravado roda em `127.0.0.1:8080`, e isso aparece em "Link do portal", no
+   webhook do CRM etc. Proposta: servir num nome de produto mapeado para a máquina local (Chromium
+   `--host-resolver-rules`), sem tocar a rede (T10, T12).
+8. **Backend falso**: criar e gerenciar usuário (T2), CRM e captação (T10), PMOC com PDFs e numeração de OS (T11),
+   páginas públicas do portal (T12): lista exata em cada `plano.md` → "Gravação".
 
 ## Decisões para o Kaik
 1. ~~"Mostrar o erro de propósito" × "só possibilidades"~~ **Decidido pelo Kaik (30/10 20:56)**: nos ⚠️, pode
@@ -73,6 +83,17 @@ Cada aula parte do estado final da anterior no mundo fictício (Glacial Cold Bra
 5. Com o T0 novo (ilustrado), as **configurações da empresa** (identidade, White Label, Regional, Usabilidade,
    Origens, Atalhos, Aparência, Integrações) ficam sem aula. Proposta: tutorial "Configurações da empresa" (com tela)
    antes do T2. Ver `T00/plano.md` → "Decisões".
+
+## Achados de segurança para o time do app (conferidos no código 1.38.6)
+1. **Cargos valem para todas as empresas.** A tabela `permission_presets` não tem `company_id`; a leitura é liberada
+   para qualquer usuário logado (`20260418163700_...sql:99`, `USING (true)`) e a edição/exclusão para qualquer gestor
+   de qualquer empresa (`20260308205452_...sql:71-76`); a tela busca todos, sem filtro (`src/hooks/usePermissions.ts:206-212`).
+   Na prática, "Configurações de Cargos" e os "Perfis rápidos" de cada cliente mostram os cargos das outras empresas.
+2. **Usuário sem permissões gravadas vê tudo.** Sem linha em `user_permissions`, qualquer papel libera todas as telas
+   e ações (`src/contexts/AuthContext.tsx:383-395`, modo legado); o cadastro só grava permissões quando alguma é
+   marcada (`supabase/functions/create-user/index.ts:61`). Um técnico criado sem marcar nada fica com acesso total
+   dentro dos módulos da empresa.
+Os demais ajustes de texto e comportamento estão em "Pegadinhas" de cada `inventario.md` (marcados como handoff).
 
 ## Como retomar numa sessão nova
 ```bash
