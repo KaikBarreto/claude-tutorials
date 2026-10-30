@@ -13,9 +13,12 @@ sys.path.insert(0, HERE)
 import proc  # noqa: E402
 
 SR = 48000
-TITULOS = {1: "A tela de Clientes.", 2: "Cliente empresa pelo CNPJ.", 3: "Cliente pessoa física pelo CEP.", 4: "Origens.",
-           5: "A ficha do cliente.", 6: "Formulário de captação.", 7: "Fornecedores.", 8: "Preparando os equipamentos.",
-           9: "Cadastrando um equipamento.", 10: "quê-érre côde e etiqueta.", 11: "Recapitulando."}
+try:  # títulos do tutorial (tts_textos.py → TITULOS); sem eles, os do exemplo T3
+    from tts_textos import TITULOS  # noqa: E402
+except ImportError:
+    TITULOS = {1: "A tela de Clientes.", 2: "Cliente empresa pelo CNPJ.", 3: "Cliente pessoa física pelo CEP.", 4: "Origens.",
+               5: "A ficha do cliente.", 6: "Formulário de captação.", 7: "Fornecedores.", 8: "Preparando os equipamentos.",
+               9: "Cadastrando um equipamento.", 10: "quê-érre côde e etiqueta.", 11: "Recapitulando."}
 ALVO_LUFS = -21.9  # média da narração dos capítulos
 
 tid, d, words = proc.transcrever(sys.argv[1])
@@ -39,6 +42,13 @@ def lufs(y):
     return pyln.Meter(SR).integrated_loudness(np.pad(y, (0, max(0, int(0.5 * SR) - len(y)))).astype(np.float64))
 
 
+def legenda(t):
+    """grafia da fala -> grafia da legenda (config_narracao.json → trocas)"""
+    for f, l in sorted(proc.TROCAS, key=lambda p: -len(p[0])):
+        t = t.replace(f, l)
+    return t
+
+
 out = os.path.join(HERE, "titulos")
 os.makedirs(out, exist_ok=True)
 info = {}
@@ -53,7 +63,7 @@ for li, k in enumerate(sorted(TITULOS)):
     cl[-n:] *= np.linspace(1, 0, n)
     p = os.path.join(out, f"cap{k:02d}.wav")
     sf.write(p, cl, SR, subtype="FLOAT")
-    info[f"{k:02d}"] = {"texto": TITULOS[k].replace("quê-érre côde", "QR Code"), "wav": p, "dur": round(len(cl) / SR, 3),
+    info[f"{k:02d}"] = {"texto": legenda(TITULOS[k]), "wav": p, "dur": round(len(cl) / SR, 3),
                         "ok": min(w["ok"] for w in fw), "ouvido": " ".join(w["ouvido"] for w in fw)}
     print(f"cap{k:02d}: {len(cl) / SR:.2f}s  ouvido: {info[f'{k:02d}']['ouvido']!r}")
 json.dump(info, open(os.path.join(out, "titulos.json"), "w"), ensure_ascii=False, indent=1)
