@@ -11,6 +11,14 @@ import { Telemetry } from './telemetry.mjs';
 
 export const VIEWPORT = { width: 1280, height: 800 };
 export const SCALE = 2;
+/** Aparelhos para "device" no roteiro (o VIEWPORT acima muda no início da sessão: um processo grava um capítulo). */
+export const DEVICES = {
+  phone: {
+    width: 390, height: 844, isMobile: true, hasTouch: true,
+    userAgent: 'Mozilla/5.0 (Linux; Android 14; Pixel 8) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Mobile Safari/537.36',
+    geolocation: { latitude: -22.9035, longitude: -43.1038, accuracy: 15 }, // Niterói (mundo fictício)
+  },
+};
 export const TZ = 'America/Sao_Paulo';
 /** "Agora" do mundo falso (FAKE_NOW, o mesmo do backend falso): congela a data do navegador na gravação. */
 export const FAKE_NOW_DATE = (() => {
@@ -148,6 +156,7 @@ export async function launchBrowser({ headed = false, args = [] } = {}) {
 export async function openSession({
   browser, headed = false, email = USER_EMAIL, storage = {}, anonymous = false, verboseNet = false,
   sameTab = false, // links e window.open que abririam outra aba abrem nesta (o vídeo grava uma aba só)
+  device = null, // "phone": tela de celular (390x844 @2x, toque, localização); padrão: computador 1280x800
   telemetry = true, // observa mouse/teclado reais da pagina (nao desenha nada)
   cursorOverlay = false, // SO depuracao: desenha um cursor sintetico na pagina (o video final NAO leva cursor)
   isolate = true,
@@ -157,9 +166,13 @@ export async function openSession({
   const own = !browser;
   browser = browser || (await launchBrowser({ headed }));
   const session = anonymous ? null : await fakeLogin(email);
+  const dev = device ? DEVICES[device] : null;
+  if (device && !dev) throw new Error(`device desconhecido: ${device} (validos: ${Object.keys(DEVICES).join(', ')})`);
+  if (dev) Object.assign(VIEWPORT, { width: dev.width, height: dev.height });
   const context = await browser.newContext({
     viewport: VIEWPORT,
     screen: VIEWPORT,
+    ...(dev ? { isMobile: dev.isMobile, hasTouch: dev.hasTouch, userAgent: dev.userAgent, geolocation: dev.geolocation } : {}),
     deviceScaleFactor: SCALE,
     locale,
     timezoneId: timezone,
@@ -168,7 +181,7 @@ export async function openSession({
     acceptDownloads: false,
     // "Copiar link" (formulario de captacao, QR do equipamento) usa navigator.clipboard.writeText: sem esta permissao o
     // headless recusa e o app mostra o aviso de contingencia ("Link gerado" + URL) em vez de "Link gerado e copiado!"
-    permissions: ['clipboard-read', 'clipboard-write'],
+    permissions: ['clipboard-read', 'clipboard-write', ...(dev ? ['geolocation'] : [])],
     storageState: session ? buildStorageState(session, storage) : plainStorageState(storage),
   });
   // Relógio do navegador no "agora" do mundo falso: datas do mundo fictício (visitas do PMOC, vencimentos) não

@@ -69,3 +69,8 @@ ilustração antes de renderizar o capítulo (no T3 o nome do aparelho passou 20
   acorde na cartela. Mix final ~−16 LUFS, teto −1 dBTP.
 - Saídas: `aula_final.mp4`, `capitulos.json` (início de cada item no conteúdo, cortes, título falado).
 Tempo: ~40 quadros/s na junção (aula de 12 min ≈ 10 min) + vinheta e mix.
+
+## Celular (gravação com `"device": "phone"`)
+No JSON do capítulo: `"stage": {"bg": ..., "shadow": 0.45, "margin": 56, "radius": 46, "phone": {"bezel": 14}}` (aparelho
+genérico, sem marca, desenhado em volta da tela e acompanhando a câmera) e `"cursor": {"show": false, "touch": true,
+"ring_alpha": 0.7}` (sem seta; cada toque vira um anel verde). A câmera funciona igual (zoom na tela do aparelho).

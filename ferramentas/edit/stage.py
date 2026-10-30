@@ -12,8 +12,10 @@ cv2.setNumThreads(2)
 
 
 class Stage:
-    def __init__(self, geom, shadow=0.20, bg=None):
+    def __init__(self, geom, shadow=0.20, bg=None, phone=None):
         self.g = geom; self.shadow = shadow; self._cache = {}
+        # phone: {"bezel": 14, "color": [18,18,20], "rim": [62,62,66]} -> aparelho genérico (sem marca) em volta da tela
+        self.phone = None if not phone else {"bezel": 14, "color": (18, 18, 20), "rim": (62, 62, 66), **(phone if isinstance(phone, dict) else {})}
         if bg:  # fundo em imagem (ex.: assets/fundo_escuro.png), no tamanho de saida
             im = cv2.imread(bg, cv2.IMREAD_COLOR); assert im is not None, bg
             self.bg = np.ascontiguousarray(cv2.cvtColor(cv2.resize(im, (W, H), interpolation=cv2.INTER_AREA), cv2.COLOR_BGR2RGB))
@@ -25,6 +27,9 @@ class Stage:
     def _bg(self, X0, Y0, X1, Y1, r):
         key = (round(X0, 1), round(Y0, 1), round(X1, 1), round(Y1, 1))
         if key in self._cache: return self._cache[key]
+        tela = (X0, Y0, X1, Y1, r)
+        if self.phone:  # a sombra e o corpo do aparelho ficam em volta da tela, na escala da câmera
+            b = self.phone["bezel"] * r / max(1e-6, self.g.radius); X0, Y0, X1, Y1, r = X0 - b, Y0 - b, X1 + b, Y1 + b, r + b
         bx0, by0 = max(0, int(X0) - 110) // 4 * 4, max(0, int(Y0) - 90) // 4 * 4
         bx1, by1 = min(W, int(X1) + 114), min(H, int(Y1) + 134)
         bx1, by1 = min(W, -(-bx1 // 4) * 4), min(H, -(-by1 // 4) * 4)
@@ -35,9 +40,22 @@ class Stage:
             a = cv2.GaussianBlur(a, (0, 0), 30 / 4); a = cv2.resize(a, (bx1 - bx0, by1 - by0), interpolation=cv2.INTER_LINEAR)
             m = np.clip(255 * (1 - a * self.shadow), 0, 255).astype(np.uint8)
             box = bg[by0:by1, bx0:bx1]; cv2.multiply(box, cv2.cvtColor(m, cv2.COLOR_GRAY2RGB), dst=box, scale=1 / 255)
+        if self.phone: self._corpo(bg, X0, Y0, X1, Y1, r)
         if len(self._cache) > 3: self._cache.clear()
         self._cache[key] = bg
         return bg
+
+    def _corpo(self, bg, X0, Y0, X1, Y1, r):
+        """corpo do celular: retângulo arredondado escuro com um aro discreto (desenhado no fundo; a tela vai por cima)"""
+        x0, y0, x1, y1 = max(0, int(np.floor(X0)) - 2), max(0, int(np.floor(Y0)) - 2), min(W, int(np.ceil(X1)) + 2), min(H, int(np.ceil(Y1)) + 2)
+        if x1 <= x0 or y1 <= y0: return
+        a, _ = ui.rrect_alpha(x1 - x0, y1 - y0, X0 - x0, Y0 - y0, X1 - x0, Y1 - y0, r)
+        e = max(1.2, 2.2 * r / 60.0)  # largura do aro, na escala
+        ai, _ = ui.rrect_alpha(x1 - x0, y1 - y0, X0 - x0 + e, Y0 - y0 + e, X1 - x0 - e, Y1 - y0 - e, max(1.0, r - e))
+        box = bg[y0:y1, x0:x1].astype(np.float32)
+        rim, cor = np.array(self.phone["rim"], np.float32), np.array(self.phone["color"], np.float32)
+        box = box * (1 - a[..., None]) + rim * (a - ai)[..., None] + cor * ai[..., None]
+        bg[y0:y1, x0:x1] = np.clip(box, 0, 255).astype(np.uint8)
 
     # ------------------------------------------------------------ um quadro, uma janela
     def _render(self, pre, view, lin=False):

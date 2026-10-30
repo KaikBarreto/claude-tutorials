@@ -24,7 +24,7 @@ class Chapter:
         sc = ch.get("stage", {}); self.geom = Geom(self.SW, self.SH, sc.get("margin", 44), sc.get("radius", 16))
         self.cam = Camera(self.tele, self.geom, self.cur, self.T, self.dur, ch.get("camera"), ch.get("zooms", []))
         vp = self.tele.raw["video"].get("viewportCss", {}); ccfg.setdefault("dpr", self.SW / vp["width"] if vp.get("width") else 2.0)
-        self.cursor = CursorLayer(self.tele, self.geom, self.T, self.cur, ccfg); self.stage = Stage(self.geom, sc.get("shadow", 0.20), self.rp(sc["bg"]) if sc.get("bg") else None)
+        self.cursor = CursorLayer(self.tele, self.geom, self.T, self.cur, ccfg); self.stage = Stage(self.geom, sc.get("shadow", 0.20), self.rp(sc["bg"]) if sc.get("bg") else None, sc.get("phone"))
         self.ov = Overlays(ch, self.base); self.shut = self.cam.cfg["shutter"] / FPS; self._prev = None; self.reused = 0
 
     def rp(self, p):

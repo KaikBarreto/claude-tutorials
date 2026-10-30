@@ -592,6 +592,15 @@ const STEPS = {
     return { js: String(step.js).slice(0, 120), value: value === undefined ? undefined : JSON.parse(JSON.stringify(value)) };
   },
 
+  // celular: posição do aparelho (A Caminho, Check-in e Finalizar pedem localização)
+  async geo(ctx, step) {
+    await ctx.session.context.setGeolocation({ latitude: step.lat, longitude: step.lng, accuracy: step.accuracy ?? 15 });
+  },
+  // relógio do navegador (precisa de FAKE_NOW): "forward": "01:25:00" avança o tempo (ex.: duração do atendimento)
+  async clock(ctx, step) {
+    if (step.forward !== undefined) await ctx.page.clock.fastForward(step.forward);
+    else if (step.set) await ctx.page.clock.setSystemTime(new Date(step.set));
+  },
   async wait(ctx, step) {
     await sleep((step.seconds ?? 1) * 1000);
     return { seconds: step.seconds ?? 1 };
@@ -657,7 +666,7 @@ export function validateScript(script) {
   const warnings = [];
   const need = {
     click: ['target'], dblclick: ['target'], rightclick: ['target'], hover: ['target'], select: ['target', 'option'],
-    goto: ['url'], press: ['key'], upload: ['target', 'file'], drag: ['target', 'to'], eval: ['js'],
+    goto: ['url'], press: ['key'], upload: ['target', 'file'], drag: ['target', 'to'], eval: ['js'], geo: ['lat', 'lng'],
   };
   const check = (list, where) => {
     let lastAt = -1;
@@ -778,6 +787,7 @@ export async function runScript(script, opts = {}) {
     headed: opts.headed, email: script.user, storage: script.storage, cursorOverlay,
     anonymous: isUrl || !!script.anonymous, // modo url: sem login falso; "anonymous": true grava pagina publica sem sessao
     sameTab: !!script.sameTab, // "sameTab": true -> o que abriria outra aba abre nesta
+    device: script.device, // "device": "phone" -> grava em tela de celular
     isolate: !isUrl, // modo url: a rede passa (o app e de outro lugar); fakebase: so localhost
     locale: script.locale, timezone: script.timezone, // padrao: pt-BR e America/Sao_Paulo
   });

@@ -76,7 +76,10 @@ class Tele:
     def path(self, T, smooth=0.67, hold_gap=0.2, glide=0.12):
         """posicao (n,2) na grade densa. Lacuna sem amostras = mouse parado (segura e desliza no fim).
         Suavizacao de fase zero (sem atraso) e o clique fica exatamente sob a ponta."""
-        P = self.P; t, x, y = [P[0, 0]], [P[0, 1]], [P[0, 2]]
+        P = self.P
+        if P.ndim != 2 or len(P) == 0:  # sem mouse (celular, capítulo ilustrado): cursor parado no centro, invisível
+            return np.tile(np.array([[self.vw / 2.0, self.vh / 2.0]]), (len(T), 1))
+        t, x, y = [P[0, 0]], [P[0, 1]], [P[0, 2]]
         for k in range(1, len(P)):
             ta, tb = P[k - 1, 0], P[k, 0]
             if tb - ta > hold_gap:

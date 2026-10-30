@@ -9,7 +9,7 @@ from camera import W, H
 from stage import ui
 
 GREEN = np.array(ui.ACCENT, np.float32)  # anel do clique (nome antigo; e o acento da marca)
-DEFAULTS = dict(show=True, size=2.5, dpr=2.0, zoom_follow=0.5, smooth=0.67, tilt=7.0, blur=0.6, idle_hide=3.0,
+DEFAULTS = dict(show=True, touch=False, size=2.5, dpr=2.0, zoom_follow=0.5, smooth=0.67, tilt=7.0, blur=0.6, idle_hide=3.0,
                 bounce=0.22, ring=True, ring_alpha=0.55, ring_dur=0.6, ss=4)
 
 
@@ -102,7 +102,7 @@ class CursorLayer:
 
     def draw(self, img, t, cam, shutter_cam=0.5 / 30):
         c = self.c
-        if not c["show"]: return
+        if not c["show"] and not c["touch"]: return  # touch: celular, só o anel do toque (sem seta)
         f = np.clip(t * RATE, 0, len(self.T) - 1.001); i0 = int(f); a = f - i0
         if self.vis[i0] < 0.004 and self.vis[min(i0 + 1, len(self.vis) - 1)] < 0.004 and not self._ring_active(t): return
         n = self.samples(t, cam, shutter_cam); sh = c["blur"] / 30.0
@@ -122,7 +122,7 @@ class CursorLayer:
         if X1 <= X0 or Y1 <= Y0: return
         accA = np.zeros((Y1 - Y0, X1 - X0), np.float32); accC = np.zeros((Y1 - Y0, X1 - X0, 3), np.float32); wgt = 1.0 / len(layers)
         for L in layers:
-            if L["vis"] < 0.004: continue
+            if L["vis"] < 0.004 or not c["show"]: continue
             ix, iy = int(np.floor(L["ox"])), int(np.floor(L["oy"])); fx, fy = L["ox"] - ix, L["oy"] - iy
             for kind, w in L["kinds"]:
                 C, A, dx, dy = self._sprite(kind, L["u"] * L["bn"], L["phi"], fx, fy); self._add(accA, accC, C, A, ix + dx - X0, iy + dy - Y0, w * L["vis"] * wgt)

@@ -57,7 +57,10 @@ navegador. Detalhes (rotas em subcaminho, `"spa": true`, aviso de cookies via `"
 - Opções do capítulo (raiz do JSON): `"user"` (entra como outro usuário do mundo fictício, ex.: a visão do técnico),
   `"anonymous": true` (sem sessão: página pública, tela de login), `"sameTab": true` (link `target=_blank` e
   `window.open` abrem na mesma aba, porque o vídeo grava uma aba só; PDF vira ilustração na edição),
-  `"seedExtra"` (estado de partida do mundo, por cima das sementes).
+  `"seedExtra"` (estado de partida do mundo, por cima das sementes), `"device": "phone"` (celular: 390×844 a 2×, toque,
+  cara de Android, permissão de localização; o vídeo sai 780×1688).
+- Passos de celular: `{"do": "geo", "lat": -22.89, "lng": -43.12}` (posição do aparelho) e
+  `{"do": "clock", "forward": "01:25:00"}` (avança o relógio do navegador; precisa de `FAKE_NOW`).
 - Data do mundo: o mesmo `FAKE_NOW` para o backend falso (`rec/run.sh up`) e para o robô (o navegador instala o relógio
   nessa data e o tempo corre normalmente). Datas diferentes nos dois = telas com datas incoerentes.
 
