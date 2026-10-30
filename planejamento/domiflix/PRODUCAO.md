@@ -60,6 +60,8 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
 - Data do mundo: exportar o **mesmo `FAKE_NOW`** para o backend falso (`rec/run.sh fake`/`up`) e para o robô (o
   navegador instala o relógio nessa data: `recorder/browser.mjs`, testado 30/10). Datas diferentes = a assinatura da
   empresa fictícia (`@now+23d`) aparece vencida e o app mostra a tela de bloqueio com preço.
+- Robô da área de trabalho **unificado com o da skill** (30/10 23:0x; o antigo em `rec/_antes_skill/`): máscara de senha,
+  modo URL, `$VAR`. Validado regravando o T3 cap04: 23 passos, 0 falho, `lateBy` máx 0,29 s.
 - Robô ainda sem: nova aba (PDF, link público), download, página sem login por capítulo, endereço com nome de produto
   nos links, celular (T7). Fazer antes das aulas que precisam (ver cada `plano.md`).
 
