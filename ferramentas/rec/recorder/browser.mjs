@@ -12,6 +12,12 @@ import { Telemetry } from './telemetry.mjs';
 export const VIEWPORT = { width: 1280, height: 800 };
 export const SCALE = 2;
 export const TZ = 'America/Sao_Paulo';
+/** "Agora" do mundo falso (FAKE_NOW, o mesmo do backend falso): congela a data do navegador na gravação. */
+export const FAKE_NOW_DATE = (() => {
+  const v = process.env.FAKE_NOW;
+  const d = v ? new Date(v) : null;
+  return d && !Number.isNaN(d.getTime()) ? d : null;
+})();
 
 /** Chave que o supabase-js usa no localStorage: sb-<primeiro rotulo do host>-auth-token. */
 export function authStorageKey(supabaseUrl = FAKE_URL) {
@@ -50,7 +56,7 @@ export function buildStorageState(session, extra = {}) {
     [authStorageKey()]: JSON.stringify(session),
     app_version: v,
     notification_shown_version: v,
-    [`dominex:daily-tasks-shown:${session.user.id}`]: todayBR(),
+    [`dominex:daily-tasks-shown:${session.user.id}`]: todayBR(FAKE_NOW_DATE || new Date()),
     'pwa-install-dismissed': 'true',
     theme: 'light',
     ...extra,
@@ -148,6 +154,9 @@ export async function openSession({
     permissions: ['clipboard-read', 'clipboard-write'],
     storageState: session ? buildStorageState(session, storage) : plainStorageState(storage),
   });
+  // Relógio do navegador no "agora" do mundo falso: datas do mundo fictício (visitas do PMOC, vencimentos) não
+  // envelhecem entre o planejamento e a gravação. O tempo continua correndo normalmente a partir dali.
+  if (FAKE_NOW_DATE) await context.clock.install({ time: FAKE_NOW_DATE });
   await context.addInitScript(stubServiceWorker);
   const tel = new Telemetry({ dsf: SCALE });
   if (telemetry || cursorOverlay) await tel.install(context, { overlay: cursorOverlay });
