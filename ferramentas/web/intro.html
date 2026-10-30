@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Vinheta</title>
+<style>
+@font-face{font-family:Montserrat;font-weight:500;src:url(fonts/montserrat-latin-500-normal.woff2) format('woff2')}
+@font-face{font-family:Montserrat;font-weight:600;src:url(fonts/montserrat-latin-600-normal.woff2) format('woff2')}
+@font-face{font-family:Montserrat;font-weight:700;src:url(fonts/montserrat-latin-700-normal.woff2) format('woff2')}
+@font-face{font-family:Montserrat;font-weight:800;src:url(fonts/montserrat-latin-800-normal.woff2) format('woff2')}
+@font-face{font-family:Montserrat;font-weight:500;src:url(fonts/montserrat-latin-ext-500-normal.woff2) format('woff2');unicode-range:U+0100-024F}
+@font-face{font-family:Montserrat;font-weight:700;src:url(fonts/montserrat-latin-ext-700-normal.woff2) format('woff2');unicode-range:U+0100-024F}
+/* cores da marca: o script troca pelas de ?marca=<json> (kit/ui.py --web); estes valores são o padrão neutro */
+:root{--acc:#3B82F6;--acc-rgb:59,130,246;--acc-txt:#3B82F6;--acc-txt-rgb:59,130,246;--light:#F3F4F6;--light-rgb:243,244,246;
+  --bg0:#08080A;--bg1:#111316;--bg2:#0B0B0D;--bg3:#050506;--W:1920px;--H:1080px}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:var(--W);height:var(--H);overflow:hidden;background:#000}
+#stage{position:absolute;inset:0;overflow:hidden;background:var(--bg0)}
+#bg{position:absolute;inset:-10%;background:
+  radial-gradient(ellipse 55% 60% at 50% 46%, rgba(var(--acc-rgb),.10), rgba(var(--acc-rgb),0) 70%),
+  radial-gradient(ellipse 90% 80% at 50% 50%, var(--bg1) 0%, var(--bg2) 55%, var(--bg3) 100%)}
+#glow{position:absolute;left:50%;top:46%;width:1100px;height:900px;margin:-450px 0 0 -550px;border-radius:50%;
+  background:radial-gradient(closest-side, rgba(var(--acc-rgb),.50), rgba(var(--acc-rgb),.16) 45%, rgba(var(--acc-rgb),.04) 75%, rgba(var(--acc-rgb),0))}
+#content{position:absolute;inset:0;transform-origin:50% 46%}
+/* estilo "dominex-capacete": as 3 peças do capacete (web/assets) se encaixam e o DOMINEX sai de trás */
+#helm{position:absolute;left:0;top:0;width:957px;height:1000px;transform-origin:0 0}
+.pc,#sheen,#mksheen{position:absolute;inset:0;-webkit-mask-size:100% 100%;mask-size:100% 100%;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat}
+.pc{background:linear-gradient(158deg,#3BF0C2 0%,#11D6A6 26%,#00C597 52%,#00A47E 82%,#008A6A 100%);transform-origin:50% 55%}
+#p0{-webkit-mask-image:url(assets/piece_0_h.png);mask-image:url(assets/piece_0_h.png)}
+#p1{-webkit-mask-image:url(assets/piece_1_h.png);mask-image:url(assets/piece_1_h.png)}
+#p2{-webkit-mask-image:url(assets/piece_2_h.png);mask-image:url(assets/piece_2_h.png)}
+.hglow{position:absolute;left:-160px;top:-160px;width:1277px;height:1320px;background:url(assets/helmet_glow.png) 0 0/100% 100% no-repeat}
+#sheen{-webkit-mask-image:url(assets/helmet_green_h.png);mask-image:url(assets/helmet_green_h.png);
+  background:linear-gradient(112deg,rgba(255,255,255,0) 0%,rgba(255,255,255,0) 42%,rgba(255,255,255,.75) 50%,rgba(255,255,255,0) 58%,rgba(255,255,255,0) 100%);
+  background-size:300% 100%;mix-blend-mode:screen}
+#word{position:absolute;left:0;top:0;transform-origin:0 0}
+#word img{display:block;width:100%;height:100%}
+/* estilo "logo" (genérico): o logo da marca entra com escala suave + brilho; com símbolo + wordmark, o nome sai de trás */
+#mk,#mw{position:absolute;left:0;top:0;transform-origin:0 0;display:none}
+#mk img,#mw img{position:absolute;left:0;top:0;display:block;width:100%;height:100%}
+#mksheen{background:linear-gradient(112deg,rgba(255,255,255,0) 0%,rgba(255,255,255,0) 42%,rgba(255,255,255,.55) 50%,rgba(255,255,255,0) 58%,rgba(255,255,255,0) 100%);
+  background-size:300% 100%;mix-blend-mode:screen;opacity:0}
+body.logo #helm,body.logo #word{display:none}
+body.logo #mk{display:block}
+body.logo #ttl{max-width:1560px;margin:0 auto}
+#title{position:absolute;left:0;right:0;text-align:center;font-family:Montserrat,sans-serif;color:var(--light)}
+#lbl{display:inline-flex;align-items:center;gap:14px;font-weight:700;font-size:24px;letter-spacing:.34em;color:var(--acc-txt);text-indent:.34em}
+#lbl svg{width:18px;height:18px;margin-right:2px}
+#rule{height:2px;margin:22px auto 24px;background:linear-gradient(90deg,rgba(var(--acc-txt-rgb),0),var(--acc-txt),rgba(var(--acc-txt-rgb),0))}
+#ttl{font-weight:700;font-size:54px;letter-spacing:-.01em;line-height:1.12}
+#ttl .sub{display:block;margin-top:14px;font-weight:500;font-size:26px;letter-spacing:0;color:rgba(var(--light-rgb),.62)}
+#grain{display:none}
+#vig{position:absolute;inset:0;background:radial-gradient(ellipse 75% 75% at 50% 50%,rgba(0,0,0,0) 55%,rgba(0,0,0,.55) 100%)}
+#black{position:absolute;inset:0;background:#000}
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="bg"></div>
+  <div id="glow"></div>
+  <div id="content">
+    <div id="helm">
+      <div class="hglow"></div>
+      <div class="pc" id="p1"></div>
+      <div class="pc" id="p0"></div>
+      <div class="pc" id="p2"></div>
+      <div id="sheen"></div>
+    </div>
+    <div id="word"><img src="assets/wordmark_light.png" alt=""></div>
+    <div id="mw"><img id="mwimg" alt=""></div>
+    <div id="mk"><img id="mkimg" alt=""><div id="mksheen"></div></div>
+    <div id="title">
+      <div id="lbl"><svg viewBox="0 0 18 18"><path d="M4 2.2v13.6c0 .7.8 1.1 1.4.7l10-6.8c.5-.4.5-1.1 0-1.4l-10-6.8C4.8 1.1 4 1.5 4 2.2z" fill="currentColor"/></svg><span id="serie"></span></div>
+      <div id="rule"></div>
+      <div id="ttl"></div>
+    </div>
+  </div>
+  <canvas id="grain" width="960" height="540"></canvas>
+  <div id="vig"></div>
+  <div id="black" style="opacity:0"></div>
+</div>
+<script>
+// Parâmetros: ?title=...&sub=...&mode=outro&fps=30&marca=_marca/<hash>/marca.json (publicado por kit/ui.py --web)
+const Q = new URLSearchParams(location.search);
+const FPS = +(Q.get('fps') || 30);
+const TITLE = Q.get('title') || 'Título da aula';
+const SUB = Q.get('sub') || '';
+const OUTRO = Q.get('mode') === 'outro';
+// sem ?marca=: padrão neutro (o mesmo de kit/ui.py)
+const NEUTRA = {serie: 'Tutoriais', estilo: 'logo', frase: 'Até a próxima aula!',
+  cores: {acento: '#3B82F6', acento_rgb: '59,130,246', acento_texto: '#3B82F6', acento_texto_rgb: '59,130,246',
+          escuro: '#1E1E1E', claro: '#F3F4F6', claro_rgb: '243,244,246', fundo: ['#08080A', '#111316', '#0B0B0D', '#050506']},
+  fonte: {familia: 'Montserrat', arquivos: {}}, logo: {wordmark_altura: .5}};
+
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const seg = (t, [a, b]) => clamp((t - a) / (b - a));
+const E = {
+  outExpo: p => p >= 1 ? 1 : 1 - Math.pow(2, -10 * p),
+  outCubic: p => 1 - Math.pow(1 - p, 3),
+  outQuint: p => 1 - Math.pow(1 - p, 5),
+  inOut: p => p < .5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2,
+  inCubic: p => p * p * p,
+};
+const lerp = (a, b, p) => a + (b - a) * p;
+const $ = id => document.getElementById(id);
+
+function aplicarMarca(M) {
+  const c = M.cores, r = document.documentElement.style;
+  r.setProperty('--acc', c.acento); r.setProperty('--acc-rgb', c.acento_rgb);
+  r.setProperty('--acc-txt', c.acento_texto); r.setProperty('--acc-txt-rgb', c.acento_texto_rgb);
+  r.setProperty('--light', c.claro); r.setProperty('--light-rgb', c.claro_rgb);
+  c.fundo.forEach((v, i) => r.setProperty('--bg' + i, v));
+  $('ttl').innerHTML = TITLE.replace(/&/g, '&amp;').replace(/</g, '&lt;') + (SUB ? `<span class="sub">${SUB}</span>` : '');
+  if (M.serie) $('serie').textContent = M.serie.toUpperCase(); else $('lbl').style.display = 'none';
+}
+
+async function carregarFontes(M, base) {
+  const arqs = Object.entries((M.fonte || {}).arquivos || {});
+  if (arqs.length) {  // fonte da marca (TTF/OTF); um arquivo só serve todos os pesos (fonte variável)
+    for (const [w, src] of arqs) {
+      const f = new FontFace('MarcaFonte', `url("${base + src}")`, {weight: arqs.length === 1 ? '100 900' : String(w)});
+      document.fonts.add(await f.load());
+    }
+    $('title').style.fontFamily = 'MarcaFonte, Montserrat, sans-serif';
+  }
+  const fam = arqs.length ? 'MarcaFonte' : 'Montserrat';
+  await Promise.all([document.fonts.load(`700 54px ${fam}`, TITLE), document.fonts.load(`700 24px ${fam}`, M.serie || 'A'),
+                     SUB ? document.fonts.load(`500 26px ${fam}`, SUB) : null]);
+  await document.fonts.ready;
+}
+
+// ------------------------------------------------------------------ estilo "dominex-capacete" (igual ao T3)
+function capacete() {
+  // Linha do tempo (s) — os mesmos números alimentam os SFX (window.CUES)
+  const T = OUTRO
+    ? {fadeIn: [-1, -.5], p0: [.55, 1.05], p1: [.62, 1.12], p2: [.72, 1.20], clank: 1.20, sheen: [1.30, 2.05],
+       move: [-2, -1], word: [1.05, 1.75], lbl: [1.55, 2.0], rule: [1.6, 2.1], ttl: [1.68, 2.2], exit: [3.3, 3.85], end: 3.85}
+    : {fadeIn: [0, .35], p0: [.18, .80], p1: [.30, .92], p2: [.46, 1.02], clank: 1.02, sheen: [1.08, 1.85],
+       move: [1.62, 2.34], word: [1.80, 2.62], lbl: [2.40, 2.88], rule: [2.46, 3.06], ttl: [2.56, 3.14],
+       exit: [3.80, 4.30], end: 4.42};
+  window.DURATION = T.end;
+  window.CUES = OUTRO
+    ? [{t: T.p0[0], id: 'whoosh', pan: 0}, {t: T.clank, id: 'clank'}, {t: T.sheen[0] + .08, id: 'shine'},
+       {t: T.word[0], id: 'swoosh'}, {t: T.ttl[0], id: 'pop'}]
+    : [{t: 0.02, id: 'swell'}, {t: T.p0[0], id: 'whoosh', pan: 0}, {t: T.p1[0], id: 'whoosh', pan: -0.5},
+       {t: T.p2[0], id: 'whoosh', pan: 0.5}, {t: T.clank, id: 'clank'}, {t: T.sheen[0] + .08, id: 'shine'},
+       {t: T.move[0] + .05, id: 'swoosh'}, {t: T.ttl[0], id: 'pop'}, {t: T.exit[0] - .1, id: 'out'}];
+
+  // geometria (px do vídeo)
+  const HW = 957, HH = 1000;                  // canvas do capacete (metade do original)
+  const LOGO = {W: 2000, H: 407, helm: [0, 0, 389, 407], word: [481, 51, 2000, 375]};
+  const LOGO_W = 780, LS = LOGO_W / LOGO.W;   // logo final com 780 px de largura
+  const LOGO_X = (1920 - LOGO_W) / 2, LOGO_Y = 352;
+  const BIG_H = 360;                          // capacete grande (montagem)
+  const BIG = {s: BIG_H / HH, cx: 960, cy: 470};
+  const SMALL = {s: (LOGO.H * LS) / HH, x: LOGO_X, y: LOGO_Y};
+  const WORD = {x: LOGO_X + LOGO.word[0] * LS, y: LOGO_Y + LOGO.word[1] * LS,
+                w: (LOGO.word[2] - LOGO.word[0]) * LS, h: (LOGO.word[3] - LOGO.word[1]) * LS};
+  $('word').style.width = WORD.w + 'px'; $('word').style.height = WORD.h + 'px';
+  $('title').style.top = (LOGO_Y + LOGO.H * LS + 74) + 'px';
+
+  // granulado determinístico
+  const g = $('grain').getContext('2d'); const gimg = g.createImageData(960, 540);
+  function grain(n) {
+    let s = (n * 9301 + 49297) % 233280 || 1; const d = gimg.data;
+    for (let i = 0; i < d.length; i += 4) { s = (s * 16807) % 2147483647; const v = s & 255; d[i] = d[i + 1] = d[i + 2] = v; d[i + 3] = 255; }
+    g.putImageData(gimg, 0, 0);
+  }
+
+  function piece(id, t, span, from) {
+    const p = seg(t, span), e = E.outQuint(p);
+    const el = $(id);
+    el.style.opacity = clamp(p * 3);
+    el.style.transform = `translate(${lerp(from.dx, 0, e)}px, ${lerp(from.dy, 0, e)}px) rotate(${lerp(from.rot || 0, 0, e)}deg) scale(${lerp(from.s || 1, 1, e)})`;
+    el.style.filter = p < 1 ? `blur(${lerp(from.blur || 0, 0, E.outCubic(p))}px)` : 'none';
+  }
+
+  window.renderFrame = function (n) {
+    const t = n / FPS;
+    if (!OUTRO) $('black').style.opacity = 1 - E.outCubic(seg(t, T.fadeIn));
+
+    // peças (deslocamentos em px do canvas do capacete: 1 px de vídeo ≈ 5,6 px aqui)
+    const K = (OUTRO ? 1.9 : 1) * HH / 2000;  // deslocamentos escritos p/ o canvas de 2000 px
+    piece('p0', t, T.p0, {dx: 0, dy: 420 * K, s: .9, blur: 60 * K});
+    piece('p1', t, T.p1, {dx: -520 * K, dy: -300 * K, rot: -9, s: 1.04, blur: 60 * K});
+    piece('p2', t, T.p2, {dx: 640 * K, dy: 60 * K, rot: 7, s: 1.02, blur: 60 * K});
+
+    // encaixe: soco de escala + flash do brilho
+    const k = t - T.clank;
+    const punch = k > 0 ? Math.exp(-k * 7) * Math.sin(Math.min(k * 22, Math.PI)) * 0.022 : 0;
+    const mv = OUTRO ? 1 : E.inOut(seg(t, T.move));
+    const s = lerp(BIG.s, SMALL.s, mv) * (1 + punch);
+    const bigX = BIG.cx - HW * BIG.s / 2, bigY = BIG.cy - HH * BIG.s / 2;
+    const x = lerp(bigX, SMALL.x, mv) - HW * (s - lerp(BIG.s, SMALL.s, mv)) / 2;
+    const y = lerp(bigY, SMALL.y, mv) - HH * (s - lerp(BIG.s, SMALL.s, mv)) / 2;
+    $('helm').style.transform = `translate(${x}px, ${y}px) scale(${s})`;
+    const flash = k > 0 ? Math.exp(-k * 3.2) : 0;
+    document.querySelector('.hglow').style.opacity = clamp(.16 + .55 * flash) * clamp(seg(t, [T.p0[0], T.p2[1]]) * 1.2);
+    $('glow').style.opacity = (.35 + .45 * flash) * E.outCubic(seg(t, [0, .9]));
+    $('glow').style.transform = `translate(${lerp(0, SMALL.x + 75 - 960, mv) * .6}px, ${lerp(0, -40, mv)}px) scale(${lerp(.75, 1, mv) + .08 * flash})`;
+    const sp = seg(t, T.sheen);
+    $('sheen').style.opacity = sp > 0 && sp < 1 ? 1 : 0;
+    $('sheen').style.backgroundPosition = `${lerp(100, 0, E.inOut(sp))}% 0`;
+
+    // DOMINEX sai de trás do capacete: desliza p/ a direita e só aparece à direita da borda atual do capacete
+    const wp = E.outCubic(seg(t, T.word));
+    const wx = WORD.x + lerp(-170, 0, wp);
+    const edge = x + HW * s + 14;                      // borda direita do capacete + respiro
+    $('word').style.transform = `translate(${wx}px, ${WORD.y}px)`;
+    $('word').style.clipPath = `inset(-10% 0 -10% ${clamp(edge - wx, 0, WORD.w)}px)`;
+    $('word').style.opacity = clamp(seg(t, T.word) * 2.2);
+
+    titulo(t, T);
+    saida(t, T);
+    return true;
+  };
+}
+
+// ------------------------------------------------------------------ estilo "logo" (qualquer marca)
+function emblema(acc) {  // sem logo: selo neutro (quadrado arredondado no acento com a seta do mouse)
+  const n = parseInt(acc.slice(1), 16), cl = [16, 8, 0].map(b => Math.round(((n >> b) & 255) * .62 + 255 * .38));
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1">` +
+    `<stop offset="0" stop-color="rgb(${cl})"/><stop offset="1" stop-color="${acc}"/></linearGradient></defs>` +
+    `<rect x="6" y="6" width="228" height="228" rx="60" fill="url(#g)"/>` +
+    `<path d="M88 56v112l26-24 18 43 18-8-18-42h37z" fill="#fff" stroke="#fff" stroke-width="8" stroke-linejoin="round"/></svg>`;
+  return {src: 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg), w: 240, h: 240};
+}
+
+async function estiloLogo(M, base) {
+  document.body.classList.add('logo');
+  const L = M.logo || {}, ACC = M.cores.acento_rgb;
+  const A = !!(L.simbolo && L.wordmark);  // símbolo entra primeiro e o nome sai de trás dele (como o capacete)
+  const main = A ? L.simbolo : (L.arquivo || L.simbolo || L.wordmark || emblema(M.cores.acento));
+  const url = im => im.src.startsWith('data:') ? im.src : base + im.src;
+  const T = OUTRO
+    ? {fadeIn: [-1, -.5], enter: [.45, 1.30], land: 1.12, sheen: [1.30, 2.05], move: [-2, -1], word: [1.15, 1.85],
+       lbl: [1.55, 2.0], rule: [1.6, 2.1], ttl: [1.68, 2.2], exit: [3.3, 3.85], end: 3.85}
+    : {fadeIn: [0, .35], enter: [.15, 1.20], land: 1.02, sheen: [1.08, 1.85], move: [1.62, 2.34], word: [1.80, 2.62],
+       lbl: [2.40, 2.88], rule: [2.46, 3.06], ttl: [2.56, 3.14], exit: [3.80, 4.30], end: 4.42};
+  window.DURATION = T.end;
+  window.CUES = OUTRO
+    ? [{t: T.enter[0], id: 'whoosh', pan: 0}, {t: T.land, id: 'land'}, {t: T.sheen[0] + .08, id: 'shine'},
+       ...(A ? [{t: T.word[0], id: 'swoosh'}] : []), {t: T.ttl[0], id: 'pop'}]
+    : [{t: 0.02, id: 'swell'}, {t: T.enter[0], id: 'whoosh', pan: 0}, {t: T.land, id: 'land'},
+       {t: T.sheen[0] + .08, id: 'shine'}, {t: T.move[0] + .05, id: 'swoosh'}, {t: T.ttl[0], id: 'pop'},
+       {t: T.exit[0] - .1, id: 'out'}];
+
+  const mk = $('mk'), mkimg = $('mkimg'), sh = $('mksheen'), mw = $('mw');
+  mkimg.src = url(main);
+  sh.style.webkitMaskImage = sh.style.maskImage = `url("${url(main)}")`;
+  const decs = [mkimg.decode()];
+  if (A) { $('mwimg').src = url(L.wordmark); mw.style.display = 'block'; decs.push($('mwimg').decode()); }
+  await Promise.all(decs);
+
+  // geometria (px do vídeo): composição final = logo + 74 px + rótulo/título, centrada; entrada maior no centro
+  const fit = (w, h, W, H) => Math.min(W / w, H / h);
+  const asp = main.w / main.h;
+  const FIN = {}, BIG = {};
+  let WM = null;
+  if (A) {
+    const r = L.wordmark_altura || .5, aw = L.wordmark.w / L.wordmark.h, gap = .28;
+    FIN.h = Math.min(180, 780 / (asp + gap + r * aw)); FIN.w = FIN.h * asp;
+    WM = {w: FIN.h * r * aw, h: FIN.h * r, dx: FIN.h * (asp + gap), dy: FIN.h * (1 - r) / 2};
+    FIN.x = 960 - (FIN.w + FIN.h * gap + WM.w) / 2;
+  } else {
+    const s = fit(main.w, main.h, 780, 180); FIN.w = main.w * s; FIN.h = main.h * s; FIN.x = 960 - FIN.w / 2;
+  }
+  const sb = fit(main.w, main.h, A ? 560 : 1040, 330); BIG.w = main.w * sb; BIG.h = main.h * sb;
+  mk.style.width = BIG.w + 'px'; mk.style.height = BIG.h + 'px';
+  const TB = $('title').offsetHeight;
+  FIN.y = Math.round(540 - (FIN.h + 74 + TB) / 2);
+  $('title').style.top = (FIN.y + FIN.h + 74) + 'px';
+  const SF = FIN.w / BIG.w, BC = {x: 960, y: 505};
+  if (A) { mw.style.width = WM.w + 'px'; mw.style.height = WM.h + 'px'; }
+
+  window.renderFrame = function (n) {
+    const t = n / FPS;
+    if (!OUTRO) $('black').style.opacity = 1 - E.outCubic(seg(t, T.fadeIn));
+
+    // entrada: escala suave (0,84 -> 1), sobe um pouco, desfoque -> nítido; "pouso" com um leve soco de escala
+    const p = seg(t, T.enter), e = E.outQuint(p), k = t - T.land;
+    const punch = k > 0 ? Math.exp(-k * 7) * Math.sin(Math.min(k * 22, Math.PI)) * 0.012 : 0;
+    const mv = OUTRO ? 1 : E.inOut(seg(t, T.move));
+    const s = lerp(1, SF, mv) * lerp(.84, 1, e) * (1 + punch);
+    const cx = lerp(BC.x, FIN.x + FIN.w / 2, mv), cy = lerp(BC.y, FIN.y + FIN.h / 2, mv) + lerp(26, 0, e);
+    const x = cx - BIG.w * s / 2, y = cy - BIG.h * s / 2;
+    mk.style.transform = `translate(${x}px, ${y}px) scale(${s})`;
+    mk.style.opacity = clamp(p * 2.6);
+
+    // brilho: halo no acento que cresce na entrada, dá um flash no pouso e assenta
+    const flash = k > 0 ? Math.exp(-k * 3.2) : 0;
+    const gl = k > 0 ? .35 + .65 * flash : .5 * E.outCubic(p);
+    const bl = p < 1 ? lerp(16, 0, E.outCubic(p)) : 0;
+    mkimg.style.filter = (bl > .01 ? `blur(${bl.toFixed(2)}px) ` : '') +
+      `drop-shadow(0 0 14px rgba(${ACC},${(.55 * gl).toFixed(3)})) drop-shadow(0 0 48px rgba(${ACC},${(.32 * gl).toFixed(3)}))`;
+    const sp = seg(t, T.sheen);
+    sh.style.opacity = sp > 0 && sp < 1 ? 1 : 0;
+    sh.style.backgroundPosition = `${lerp(100, 0, E.inOut(sp))}% 0`;
+    $('glow').style.opacity = (.35 + .45 * flash) * E.outCubic(seg(t, [0, .9]));
+    $('glow').style.transform = `translate(${(cx - 960) * .6}px, ${cy - 496.8}px) scale(${lerp(.75, 1, mv) + .08 * flash})`;
+
+    if (A) {  // o nome sai de trás do símbolo: desliza p/ a direita e só aparece à direita da borda atual do símbolo
+      const wp = E.outCubic(seg(t, T.word)), wx0 = FIN.x + WM.dx, wx = wx0 + lerp(-170, 0, wp);
+      const edge = x + BIG.w * s + 14;
+      mw.style.transform = `translate(${wx}px, ${FIN.y + WM.dy}px)`;
+      mw.style.clipPath = `inset(-10% 0 -10% ${clamp(edge - wx, 0, WM.w)}px)`;
+      mw.style.opacity = clamp(seg(t, T.word) * 2.2);
+    }
+    titulo(t, T);
+    saida(t, T);
+    return true;
+  };
+}
+
+// ------------------------------------------------------------------ comum: rótulo + título e saída
+function titulo(t, T) {
+  const lp = E.outCubic(seg(t, T.lbl)), rp = E.inOut(seg(t, T.rule)), tp = E.outCubic(seg(t, T.ttl));
+  $('lbl').style.opacity = lp; $('lbl').style.transform = `translateY(${lerp(16, 0, lp)}px)`;
+  $('rule').style.width = lerp(0, 220, rp) + 'px'; $('rule').style.opacity = rp;
+  $('ttl').style.opacity = tp; $('ttl').style.transform = `translateY(${lerp(22, 0, tp)}px)`;
+}
+
+function saida(t, T) {  // leve avanço + escurece (a cartela termina preta)
+  const xp = E.inCubic(seg(t, T.exit));
+  $('content').style.transform = `scale(${1 + .05 * xp})`;
+  $('content').style.opacity = 1 - xp;
+  if (OUTRO) $('black').style.opacity = xp;
+  $('glow').style.opacity = parseFloat($('glow').style.opacity) * (1 - xp);
+}
+
+(async () => {
+  let M = NEUTRA, base = '';
+  if (Q.get('marca')) {
+    const r = await fetch(Q.get('marca'));
+    if (!r.ok) throw new Error(`não achei ${Q.get('marca')} (${r.status})`);
+    M = await r.json(); base = Q.get('marca').replace(/[^/]*$/, '');
+  }
+  aplicarMarca(M);
+  await carregarFontes(M, base);
+  if (M.estilo === 'dominex-capacete') capacete(); else await estiloLogo(M, base);
+  window.renderFrame(0); window.READY = true;
+})().catch(e => console.error('vinheta: ' + (e && e.message || e)));
+</script>
+</body>
+</html>

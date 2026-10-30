@@ -1,0 +1,59 @@
+{
+  "name": "t3-cap03",
+  "title": "T3 · Cap. 3 · Cliente pessoa física pelo CEP (narração 51,4 s; marcas L1..L7)",
+  "seed": "t3-cap03",
+  "pace": 1.0,
+  "cps": 9,
+  "tail": 1.5,
+  "start": { "x": 960, "y": 520 },
+  "seedExtra": ["t3/apos-cap02"],
+  "prewarm": ["/clientes"],
+  "setup": [
+    { "do": "goto", "url": "/clientes" },
+    { "do": "waitFor", "text": "Lista de Clientes" },
+    { "do": "waitFor", "idle": true }
+  ],
+  "steps": [
+    { "do": "mark", "name": "L1", "at": 0 },
+    { "do": "click", "target": { "role": "button", "name": "Novo Cliente" }, "at": 0.4, "label": "Novo Cliente" },
+    { "do": "waitFor", "target": { "role": "dialog" } },
+    { "do": "type", "target": { "placeholder": "Nome do cliente" }, "text": "Marcos Antônio Braga", "cps": 16, "at": 3.9, "label": "nome" },
+    { "do": "select", "target": { "role": "combobox", "hasText": "Pessoa Jurídica" }, "option": "Pessoa Física", "at": 7.2, "label": "tipo Pessoa Física" },
+
+    { "do": "mark", "name": "L2", "at": 9.64 },
+    { "do": "press", "key": "Tab", "times": 4, "at": 9.7, "delay": 40, "label": "foco no Celular" },
+    { "do": "type", "target": { "placeholder": "(00) 00000-0000", "exact": true }, "noClick": true, "text": "21930002202", "cps": 13, "at": 9.9, "label": "celular" },
+    { "do": "hover", "target": { "role": "switch", "name": "Receber mensagens pelo WhatsApp" }, "seconds": 0.5, "at": 11.2, "label": "interruptor do WhatsApp" },
+    { "do": "click", "target": { "role": "switch", "name": "Receber mensagens pelo WhatsApp" }, "when": { "role": "switch", "name": "Receber mensagens pelo WhatsApp", "checked": false }, "label": "liga o WhatsApp só se estiver desligado (compatível com o app antigo)" },
+    { "do": "press", "key": "Tab", "times": 2, "at": 12.4, "delay": 40, "label": "foco no e-mail" },
+    { "do": "type", "target": { "placeholder": "email@exemplo.com" }, "noClick": true, "text": "marcos@email.example", "cps": 22, "at": 12.55, "label": "e-mail" },
+
+    { "do": "mark", "name": "L3", "at": 14.52 },
+    { "do": "press", "key": "Tab", "times": 2, "at": 14.55, "delay": 40, "label": "foco na Origem" },
+    { "do": "click", "target": { "role": "combobox", "hasText": "Nenhuma" }, "at": 14.8, "label": "abre Origem" },
+    { "do": "click", "target": { "role": "option", "name": "Instagram" }, "at": 16.2, "label": "Instagram" },
+    { "do": "hover", "target": { "role": "button", "name": "Criar origem" }, "seconds": 1.5, "at": 18.3, "label": "botão + ao lado da Origem" },
+    { "do": "scroll", "by": -800, "duration": 0.8, "target": { "role": "button", "name": "Criar origem" }, "at": 21.0, "label": "volta ao topo da janela" },
+
+    { "do": "mark", "name": "L4", "at": 23.03 },
+    { "do": "click", "target": { "role": "tab", "name": "Fiscal" }, "at": 23.2, "label": "aba Fiscal" },
+    { "do": "type", "target": { "placeholder": "000.000.000-00" }, "text": "38461529006", "cps": 7, "at": 25.3, "label": "CPF" },
+
+    { "do": "mark", "name": "L5", "at": 29.99 },
+    { "do": "type", "target": { "placeholder": "00000-000" }, "text": "24230340", "cps": 5.5, "at": 30.3, "label": "CEP" },
+    { "do": "waitFor", "text": "Endereço encontrado", "timeout": 8, "optional": true },
+    { "do": "hover", "target": { "placeholder": "Rua, Avenida..." }, "seconds": 0.4, "at": 33.4, "label": "logradouro preenchido" },
+    { "do": "scroll", "by": 430, "duration": 0.6, "after": 60, "target": { "placeholder": "Rua, Avenida..." }, "at": 34.5, "label": "desce até o bairro" },
+    { "do": "hover", "target": { "placeholder": "Bairro" }, "seconds": 0.4, "at": 35.6, "label": "bairro preenchido" },
+
+    { "do": "mark", "name": "L6", "at": 36.87 },
+    { "do": "type", "target": { "placeholder": "Nº" }, "text": "148", "cps": 7, "at": 37.0, "label": "número" },
+    { "do": "type", "target": { "placeholder": "Apto, sala, bloco..." }, "text": "Apto 702", "cps": 10, "label": "complemento" },
+
+    { "do": "mark", "name": "L7", "at": 40.95 },
+    { "do": "click", "target": { "role": "button", "name": "Criar", "exact": true }, "at": 41.0, "label": "Criar" },
+    { "do": "waitFor", "gone": { "role": "dialog" }, "timeout": 10 },
+    { "do": "hover", "target": { "text": "Marcos Antônio Braga", "exact": true }, "seconds": 3.5, "at": 44.2, "label": "o Marcos entra na lista" },
+    { "do": "mark", "name": "FIM", "at": 51.4 }
+  ]
+}

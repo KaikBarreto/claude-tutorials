@@ -1,0 +1,31 @@
+{
+  "name": "exemplo-passos",
+  "title": "Exemplo de todos os tipos de passo no formulario de novo cliente (nao e uma aula; serve para testar o robo)",
+  "seed": "exemplo-01",
+  "pace": 1,
+  "cps": 11,
+  "tail": 1,
+  "start": { "x": 900, "y": 300 },
+  "prewarm": ["/clientes"],
+  "setup": [
+    { "do": "goto", "url": "/clientes" },
+    { "do": "waitFor", "idle": true }
+  ],
+  "steps": [
+    { "do": "click", "target": { "role": "button", "name": "Novo Cliente" }, "label": "abre o formulario" },
+    { "do": "waitFor", "target": { "placeholder": "Nome do cliente" } },
+    { "do": "type", "target": { "placeholder": "Nome do cliente" }, "text": "Café Central Ltda", "label": "nome com acento" },
+    { "do": "select", "target": { "role": "combobox", "hasText": "Pessoa Jurídica" }, "option": "Pessoa Física", "label": "troca o tipo (select do Radix)" },
+    { "do": "upload", "target": { "text": "Foto", "exact": true }, "file": "assets/logo-exemplo.png", "label": "anexa uma imagem (sem abrir a janela do sistema)" },
+    { "do": "hover", "target": { "role": "tab", "name": "Fiscal" }, "seconds": 0.5 },
+    { "do": "click", "target": { "role": "tab", "name": "Fiscal" }, "label": "aba Fiscal" },
+    { "do": "type", "target": { "placeholder": "000.000.000-00" }, "text": "52998224725", "label": "CPF (campo com mascara)" },
+    { "do": "press", "key": ["Tab", "Tab"], "label": "teclas soltas" },
+    { "do": "scroll", "target": { "placeholder": "00000-000" }, "label": "rola ate revelar o CEP" },
+    { "do": "type", "target": { "placeholder": "00000-000" }, "text": "24230092", "label": "CEP (consulta o ViaCEP falso)" },
+    { "do": "waitFor", "idle": true },
+    { "do": "pause", "seconds": 0.8 },
+    { "do": "click", "target": { "role": "button", "name": "Cancelar" }, "label": "fecha sem salvar" },
+    { "do": "waitFor", "gone": { "role": "dialog" } }
+  ]
+}

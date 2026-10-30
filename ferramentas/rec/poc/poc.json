@@ -1,0 +1,40 @@
+{
+  "name": "poc",
+  "title": "POC Domiflix: entrar em Clientes, buscar Padaria, abrir a ficha, voltar e abrir o formulario de novo cliente",
+  "seed": "poc-01",
+  "pace": 1.1,
+  "cps": 9,
+  "tail": 1.2,
+  "start": { "x": 980, "y": 470 },
+  "prewarm": ["/dashboard", "/clientes"],
+  "setup": [
+    { "do": "goto", "url": "/dashboard" },
+    { "do": "waitFor", "idle": true }
+  ],
+  "steps": [
+    { "do": "mark", "name": "inicio", "at": 0.8 },
+    { "do": "click", "target": { "role": "button", "name": "Gestão" }, "at": 1.6, "label": "abre o grupo Gestão do menu" },
+    { "do": "click", "target": { "role": "link", "name": "Clientes e Fornecedores" }, "at": 4.0, "label": "entra em Clientes" },
+    { "do": "waitFor", "text": "Lista de Clientes" },
+    { "do": "mark", "name": "lista-de-clientes" },
+    { "do": "type", "target": { "placeholder": "Buscar clientes..." }, "text": "Padaria", "at": 7.5, "label": "busca Padaria" },
+    { "do": "waitFor", "idle": true },
+    { "do": "click", "target": { "text": "Padaria Bom Grão", "exact": true }, "at": 11.0, "label": "abre a ficha do cliente" },
+    { "do": "waitFor", "text": "Informações" },
+    { "do": "mark", "name": "ficha-aberta" },
+    { "do": "click", "target": { "role": "tab", "name": "Equipamentos", "exact": true }, "at": 14.0, "label": "aba Equipamentos" },
+    { "do": "waitFor", "idle": true },
+    { "do": "click", "target": { "role": "tab", "name": "Geral", "exact": true }, "at": 17.0, "label": "volta para a aba Geral" },
+    { "do": "scroll", "by": 380, "duration": 1.1, "x": 960, "y": 520, "at": 18.8, "label": "rola a ficha para baixo" },
+    { "do": "pause", "seconds": 0.8, "why": "a narração comenta o endereço" },
+    { "do": "scroll", "by": -380, "duration": 0.9, "at": 22.0, "label": "rola de volta" },
+    { "do": "click", "target": { "selector": "button:has(svg.lucide-arrow-left)" }, "at": 24.4, "label": "volta para a lista" },
+    { "do": "waitFor", "text": "Selecione um cliente" },
+    { "do": "click", "target": { "role": "button", "name": "Novo Cliente" }, "at": 26.6, "label": "abre o formulário de novo cliente" },
+    { "do": "waitFor", "target": { "placeholder": "Nome do cliente" } },
+    { "do": "mark", "name": "formulario-aberto" },
+    { "do": "type", "target": { "placeholder": "Nome do cliente" }, "text": "Açougue Boa Brasa", "at": 28.6, "label": "digita o nome (com acento)" },
+    { "do": "mark", "name": "nome-digitado" },
+    { "do": "pause", "seconds": 1.2 }
+  ]
+}

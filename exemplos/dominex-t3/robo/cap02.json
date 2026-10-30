@@ -1,0 +1,74 @@
+{
+  "name": "t3-cap02",
+  "title": "T3 · Cap. 2 · Cliente empresa pelo CNPJ (narração 109,8 s; marcas L1..L11)",
+  "seed": "t3-cap02",
+  "pace": 1.0,
+  "cps": 9,
+  "tail": 1.5,
+  "start": { "x": 960, "y": 520 },
+  "prewarm": ["/clientes"],
+  "setup": [
+    { "do": "goto", "url": "/clientes" },
+    { "do": "waitFor", "text": "Lista de Clientes" },
+    { "do": "waitFor", "idle": true }
+  ],
+  "steps": [
+    { "do": "mark", "name": "L1", "at": 0 },
+    { "do": "click", "target": { "role": "button", "name": "Novo Cliente" }, "at": 4.2, "label": "Novo Cliente" },
+    { "do": "waitFor", "target": { "role": "dialog" } },
+
+    { "do": "mark", "name": "L2", "at": 6.36 },
+    { "do": "hover", "target": { "role": "tab", "name": "Contato" }, "seconds": 0.8, "at": 6.9, "label": "aba Contato" },
+    { "do": "hover", "target": { "role": "tab", "name": "Fiscal" }, "seconds": 0.8, "label": "aba Fiscal" },
+    { "do": "hover", "target": { "role": "tab", "name": "Portal" }, "seconds": 0.8, "label": "aba Portal" },
+    { "do": "click", "target": { "role": "tab", "name": "Fiscal" }, "at": 13.2, "label": "vai para a aba Fiscal" },
+
+    { "do": "mark", "name": "L3", "at": 17.88 },
+    { "do": "type", "target": { "placeholder": "000.000.000-00" }, "text": "91847200000130", "cps": 5.5, "at": 18.4, "label": "digita o CNPJ" },
+    { "do": "waitFor", "text": "Dados da empresa preenchidos", "timeout": 8, "optional": true },
+    { "do": "pause", "seconds": 1.2 },
+
+    { "do": "mark", "name": "L4", "at": 27.2 },
+    { "do": "hover", "target": { "placeholder": "Razão social da empresa" }, "seconds": 0.8, "at": 27.5, "label": "Razão Social" },
+    { "do": "hover", "target": { "placeholder": "Nome fantasia da empresa" }, "seconds": 0.8, "label": "Nome Fantasia" },
+    { "do": "hover", "target": { "label": "E-mail fiscal", "exact": true }, "seconds": 0.8, "label": "E-mail fiscal" },
+    { "do": "hover", "target": { "text": "Endereço fiscal", "exact": true }, "seconds": 1.0, "at": 32.0, "label": "bloco Endereço fiscal" },
+    { "do": "hover", "target": { "placeholder": "00000-000" }, "seconds": 0.6, "label": "CEP" },
+    { "do": "hover", "target": { "placeholder": "Rua, Avenida..." }, "seconds": 0.6, "label": "Logradouro" },
+    { "do": "hover", "target": { "placeholder": "Nº" }, "seconds": 0.5, "label": "Número" },
+    { "do": "hover", "target": { "placeholder": "Bairro" }, "seconds": 0.5, "label": "Bairro" },
+    { "do": "hover", "target": { "role": "combobox", "hasText": "Niterói" }, "seconds": 0.8, "label": "UF / Cidade" },
+
+    { "do": "mark", "name": "L5", "at": 42.48 },
+    { "do": "type", "target": { "placeholder": "Apto, sala, bloco..." }, "text": "Bloco B", "cps": 6, "at": 42.8, "label": "complemento" },
+
+    { "do": "scroll", "by": -600, "duration": 0.7, "x": 778, "y": 553, "at": 45.46 },
+    { "do": "mark", "name": "L6", "at": 46.34 },
+    { "do": "click", "target": { "role": "tab", "name": "Contato" }, "at": 46.6, "label": "volta para a aba Contato" },
+    { "do": "hover", "target": { "placeholder": "Nome do cliente" }, "seconds": 1.4, "at": 48.4, "label": "Nome já preenchido" },
+    { "do": "hover", "target": { "role": "combobox", "hasText": "Pessoa Jurídica" }, "seconds": 1.6, "at": 50.4, "label": "Tipo: Pessoa Jurídica" },
+
+    { "do": "mark", "name": "L7", "at": 52.66 },
+    { "do": "type", "target": { "placeholder": "(00) 00000-0000", "exact": true }, "text": "21930002201", "cps": 7, "at": 52.7, "label": "digita o celular" },
+    { "do": "hover", "target": { "role": "switch", "name": "Receber mensagens pelo WhatsApp" }, "seconds": 1.6, "at": 57.2, "label": "interruptor do WhatsApp libera" },
+    { "do": "click", "target": { "role": "switch", "name": "Receber mensagens pelo WhatsApp" }, "when": { "role": "switch", "name": "Receber mensagens pelo WhatsApp", "checked": false }, "label": "liga o WhatsApp só se estiver desligado (compatível com o app antigo)" },
+    { "do": "hover", "target": { "text": "Receber mensagens pelo WhatsApp", "exact": true }, "seconds": 5.5, "at": 60.0, "label": "mostra o interruptor ligado" },
+
+    { "do": "mark", "name": "L8", "at": 67.96 },
+    { "do": "click", "target": { "role": "combobox", "hasText": "Nenhuma" }, "at": 68.4, "label": "abre Origem" },
+    { "do": "click", "target": { "role": "option", "name": "Indicação" }, "at": 71.4, "label": "escolhe Indicação" },
+
+    { "do": "mark", "name": "L9", "at": 75.8 },
+    { "do": "type", "target": { "placeholder": "Observações sobre o cliente" }, "text": "Visitas só depois das 17h ou aos sábados.", "cps": 11, "at": 76.4, "label": "observações" },
+
+    { "do": "mark", "name": "L10", "at": 82.76 },
+    { "do": "click", "target": { "role": "tab", "name": "Portal" }, "at": 83.0, "label": "aba Portal" },
+    { "do": "hover", "target": { "role": "switch", "name": "Portal ativo" }, "seconds": 3.0, "at": 91.0, "label": "Portal ativo já ligado" },
+
+    { "do": "mark", "name": "L11", "at": 97.06 },
+    { "do": "click", "target": { "role": "button", "name": "Criar", "exact": true }, "at": 98.3, "label": "Criar" },
+    { "do": "waitFor", "gone": { "role": "dialog" }, "timeout": 10 },
+    { "do": "hover", "target": { "text": "Colégio Monte Verde", "exact": true }, "seconds": 3.5, "at": 102.8, "label": "o colégio entra na lista (sem abrir a ficha)" },
+    { "do": "mark", "name": "FIM", "at": 109.9 }
+  ]
+}

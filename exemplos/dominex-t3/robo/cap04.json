@@ -1,0 +1,44 @@
+{
+  "name": "t3-cap04",
+  "title": "T3 · Cap. 4 · Origens (narração 27,6 s; marcas L1..L4)",
+  "seed": "t3-cap04",
+  "pace": 1.0,
+  "cps": 9,
+  "tail": 1.5,
+  "start": { "x": 980, "y": 330 },
+  "seedExtra": ["t3/apos-cap03"],
+  "prewarm": ["/clientes"],
+  "setup": [
+    { "do": "goto", "url": "/clientes" },
+    { "do": "waitFor", "text": "Lista de Clientes" },
+    { "do": "waitFor", "idle": true }
+  ],
+  "steps": [
+    { "do": "mark", "name": "L1", "at": 0 },
+    { "do": "click", "target": { "role": "button", "name": "Configurar origens" }, "at": 3.6, "label": "Configurar origens" },
+    { "do": "waitFor", "text": "Origens de Clientes" },
+    { "do": "hover", "target": { "text": "Indicação", "exact": true, "within": "[role=dialog]" }, "seconds": 0.4, "at": 6.1, "label": "Indicação" },
+    { "do": "hover", "target": { "text": "Instagram", "exact": true, "within": "[role=dialog]" }, "seconds": 0.4, "label": "Instagram" },
+    { "do": "hover", "target": { "text": "Google", "exact": true, "within": "[role=dialog]" }, "seconds": 0.4, "label": "Google" },
+    { "do": "hover", "target": { "text": "WhatsApp", "exact": true, "within": "[role=dialog]" }, "seconds": 0.5, "label": "WhatsApp" },
+
+    { "do": "mark", "name": "L2", "at": 9.64 },
+    { "do": "type", "target": { "placeholder": "Nova origem..." }, "text": "Site", "cps": 6, "at": 9.8, "label": "digita Site" },
+    { "do": "click", "target": { "role": "button", "name": "Adicionar", "exact": true }, "at": 13.2, "label": "Adicionar" },
+    { "do": "waitFor", "text": "Origem criada", "timeout": 6, "optional": true },
+
+    { "do": "mark", "name": "L3", "at": 15.56 },
+    { "do": "hover", "target": { "selector": "[role=dialog] button[aria-haspopup='menu']", "nth": 3 }, "seconds": 0.7, "at": 15.7, "label": "menu da origem Site (abre ao passar o mouse)" },
+    { "do": "click", "target": { "selector": "[role=dialog] button[aria-haspopup='menu']", "nth": 3 }, "unless": { "role": "menuitem", "name": "Editar" }, "label": "abre o menu se ainda não abriu" },
+    { "do": "hover", "target": { "role": "menuitem", "name": "Editar" }, "seconds": 0.6, "label": "Editar" },
+    { "do": "hover", "target": { "role": "menuitem", "name": "Excluir" }, "seconds": 0.6, "label": "Excluir" },
+    { "do": "press", "key": "Escape", "label": "fecha o menu sem escolher" },
+
+    { "do": "mark", "name": "L4", "at": 19.0 },
+    { "do": "click", "target": { "role": "button", "name": "Fechar" }, "at": 19.4, "label": "fecha a janela de origens" },
+    { "do": "waitFor", "gone": { "role": "dialog" }, "timeout": 8 },
+    { "do": "scroll", "by": 330, "duration": 2.7, "x": 460, "y": 560, "at": 21.5, "label": "percorre a lista de clientes" },
+    { "do": "scroll", "by": -330, "duration": 2.2, "x": 460, "y": 560, "at": 25.1, "label": "volta ao topo" },
+    { "do": "mark", "name": "FIM", "at": 27.6 }
+  ]
+}
