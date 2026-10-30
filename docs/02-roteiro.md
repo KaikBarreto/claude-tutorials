@@ -34,6 +34,8 @@ Peça aprovação do roteiro antes de gerar a voz. Exemplo: [`roteiro.md`](../ex
   | Repara que aqui não tem botão de salvar: cada mudança já grava sozinha. | Repara que cada mudança já grava sozinha. |
   | ...em tamanho real, senão a etiqueta sai menor. | ...em tamanho real. |
 
+- Cuidado importante (o que dá errado se faltar algo): primeiro o caminho certo, depois a consequência como
+  informação, numa frase; nada de encenar o erro na tela.
 - Fala que depende de um comportamento que pode mudar (um interruptor que vinha desligado e foi corrigido para vir
   ligado): escreva de um jeito que vale nas duas versões ("com ela ligada, o cliente passa a receber...").
 

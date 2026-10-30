@@ -58,9 +58,9 @@ Cada aula parte do estado final da anterior no mundo fictício (Glacial Cold Bra
    ritmo da voz, cortes de pausa) o T3 previsto para 35 min saiu com 12:13. Esperar ~10 a 25 min por aula.
 
 ## Decisões para o Kaik
-1. **"Mostrar o erro de propósito" (padrão de gravação da trilha) × "só possibilidades" (regra do Kaik, 30/10)**:
-   proposta = valer a regra mais nova. Os ⚠️ da trilha viram orientação positiva ("pra X, é só Y") e cuidado no
-   roteiro, sem encenar o erro. Confirmar.
+1. ~~"Mostrar o erro de propósito" × "só possibilidades"~~ **Decidido pelo Kaik (30/10 20:56)**: nos ⚠️, pode
+   mostrar como informação o que dá errado se a pessoa não fizer, mas focado nas possibilidades: primeiro o caminho
+   certo, depois a consequência numa frase; sem encenar a falha. Avisos normais do fluxo aparecem como parte do uso.
 2. Gravação no celular (T7 e afins): aprovar o visual numa prévia antes de produzir.
 3. Integrações externas (Asaas, NFS-e/NF-e, WhatsApp): gravar só com o serviço simulado no backend falso (nada de
    conta real), mostrando telas e respostas fiéis ao código. Confirmar.

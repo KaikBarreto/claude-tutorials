@@ -50,6 +50,9 @@ memória de sessão. Tudo fica nesta pasta (`planejamento/domiflix/<Tnn>/`).
 ## Regras
 - Português do Brasil. Nada inventado: tudo sai do código (com `arquivo:linha`) ou fica em "dúvidas".
 - Só possibilidades na fala proposta; nada de "o sistema não faz X" nas falas (isso vai para 🚫 ou pegadinhas).
+- ⚠️ da trilha (Kaik, 30/10 20:56): a fala pode informar o que dá errado se a pessoa não fizer, mas focada na
+  possibilidade: primeiro o caminho certo, depois a consequência numa frase ("é só carregar o certificado aqui: é ele
+  que libera a emissão"). Nunca encenar a falha na tela; avisos normais do fluxo (confirmações) podem aparecer.
 - Dados sempre fictícios; nenhum segredo, token ou dado real nos arquivos.
 - Escreva SÓ dentro das suas pastas `<Tnn>/`. Não mexa no código do app, no backend falso nem em outros arquivos.
 - Sem commit/push.

@@ -19,6 +19,8 @@ dono do produto ao longo dele. Valem para qualquer app. Quando uma regra citar u
 - Natural, de colega mostrando o sistema ao vivo: "a gente", "você", "olha", "repara", "pronto".
 - **Só possibilidades**: nunca narrar o que o sistema não faz nem dificuldades ("a ficha não abre sozinha",
   "o sistema não busca o CNPJ"). Diga o caminho: "pra ver os detalhes, é só clicar".
+- **Cuidados importantes**: dá para informar o que acontece se a pessoa não fizer algo, mas sempre depois do caminho
+  certo e como informação ("é só carregar o certificado aqui: é ele que libera a emissão"). Não encenar a falha.
 - Rótulos da interface ditos exatamente como aparecem na tela.
 - Sem travessão na copy, sem superlativo, sem tom de anúncio, sem prometer o que o app não faz.
 

@@ -59,6 +59,11 @@ curto e anotar aqui.
   um "olha"/"repara" a cada 3 ou 4 frases. Exemplo concreto antes da regra. "Uma dica:" quando houver.
 - **Só possibilidades** (Kaik, 30/10): nunca o que o sistema não faz nem dificuldades; diga o caminho positivo
   ("pra ver os detalhes, é só clicar"). Vale para avisos e cartões na tela.
+- **Cuidados importantes** (os ⚠️ da trilha; Kaik, 30/10 20:56): pode **informar** o que acontece se a pessoa não
+  fizer, mas focado na possibilidade: primeiro o caminho certo, depois a consequência como informação. Não encenar a
+  falha na tela. Ex.: "Antes de emitir, é só carregar o certificado digital aqui: é ele que libera a emissão da nota."
+  ou "Uma dica: confere se o município está na cobertura antes de emitir, assim a nota passa direto." Avisos normais do
+  fluxo (uma confirmação, um aviso informativo) aparecem como parte do uso.
 - Rótulos ditos exatamente como na tela. Fala que depende de comportamento que pode mudar: escrever para valer nas
   duas versões.
 
