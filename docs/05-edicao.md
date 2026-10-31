@@ -41,7 +41,9 @@ Trocou a marca? Apague `edit/assets/fundo_escuro.png` (o `montar_cap.py` gera de
        "cortes": [[109.2, 110.7]]}
 ```
 - Zooms e destaques apontam para **rótulos de passos** do robô; o retângulo e o instante vêm do `actions.json`
-  (largura mínima do zoom ~1150–1300 px de 2560 para não exagerar).
+  (largura mínima do zoom ~1150–1300 px de 2560 para não exagerar). `"atraso": 0.8` faz o zoom começar 0,8 s depois
+  do passo (quando um clique logo antes ainda precisa aparecer inteiro).
+- A conferência do `entregar.py` tira quadros de cada ilustração pelo `caps/<nome>.chapter.json` (começo, meio e fim).
 - Avisos ancorados numa palavra da narração (`[linha, "palavra"]`). Aviso só para regra que vale guardar e não está na
   tela, sempre no positivo.
 - `titulo`/`kicker` viram a vinheta de capítulo (não há mais cartão pequeno de título).

@@ -43,9 +43,12 @@ caps = json.load(open(CAPJ))["chapters"]
 marks = [(1.6, "vinheta"), (T_IN + 3.0, "início")]
 for c in caps:
     if c["name"].startswith("vinheta-"): marks.append((T_IN + c["start"] + 1.8, c["name"].replace("vinheta-", "vinheta ")))
-    if c["name"] == "cap10":  # ilustração do QR (40,62 s do capítulo, menos o corte anterior a ela)
-        cut = sum(e - s for s, e in (c.get("cortes") or []) if e <= 40.62)
-        marks += [(T_IN + c["start"] + 40.62 - cut + 2.5, "ilustração 1"), (T_IN + c["start"] + 40.62 - cut + 6.5, "ilustração 2")]
+    if not c["name"].startswith("vinheta-"):  # ilustrações do capítulo (caps/<nome>.chapter.json), menos os cortes anteriores a elas
+        pj = os.path.join(os.path.dirname(os.path.abspath(__file__)), "caps", c["name"] + ".chapter.json")
+        for k, il in enumerate(json.load(open(pj)).get("illustrations") or [] if os.path.exists(pj) else []):
+            cut = sum(e - s for s, e in (c.get("cortes") or []) if e <= il["at"])
+            for j, fr in enumerate((0.32, 0.62, 0.90)):  # começo, meio e fim da ilustração
+                marks.append((T_IN + c["start"] + il["at"] - cut + fr * il["dur"], f"{c['name']} ilustração {k + 1}.{j + 1}"))
 marks.append((D - 1.6, "cartela"))
 tmp = os.path.join(ENT, "_q"); os.makedirs(tmp, exist_ok=True)
 for i, (t, _) in enumerate([] if SO_LEG else marks):
@@ -64,7 +67,7 @@ SO_LEG or sheet.save(os.path.join(OUT, "conferencia.jpg"), quality=88); SO_LEG o
 # ------------------------------------------------------------------ cópia com nome + legendas
 full = os.path.join(ENT, NOME + ".mp4")
 if not os.path.exists(full) or os.path.getmtime(full) < os.path.getmtime(FINAL):
-    sh(["cp", FINAL, full])
+    sh(["ln", "-f", FINAL, full])  # hardlink: o mesmo arquivo com outro nome, sem gastar disco (brief: nunca cp do vídeo)
 for ext in ("srt", "vtt"):
     sh(["cp", f"{LEG}.{ext}", os.path.join(ENT, f"{NOME}.{ext}")])
 

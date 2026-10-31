@@ -64,7 +64,7 @@ def blocos(ws):
 
     def cabe(lst):
         t = txt(lst)
-        return len(t) <= MAXL * MAXLINES - 4 and len(linhas(t)) <= MAXLINES and (lst[-1]["e"] - lst[0]["s"]) <= MAXD
+        return len(t) <= MAXL * MAXLINES - 4 and len(linhas(t)) <= MAXLINES and max(len(l) for l in linhas(t)) <= MAXL and (lst[-1]["e"] - lst[0]["s"]) <= MAXD
 
     def partir(s):
         """frase que não cabe numa legenda: divide em partes equilibradas, de preferência depois de vírgula"""

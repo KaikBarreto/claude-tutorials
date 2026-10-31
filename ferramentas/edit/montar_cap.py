@@ -6,7 +6,7 @@ começando em t=0 do vídeo, como os roteiros foram cronometrados.
 uso: python3 <tutorial>/edit/montar_cap.py NN [NN ...]   -> <tutorial>/edit/caps/capNN.chapter.json
 especificação: <tutorial>/edit/caps/specs.json
   {"NN": {"titulo": "...", "kicker": "...", "sem_titulo": false,
-          "zooms":  [{"de": "<rótulo>", "ate": "<rótulo>"?, "fim": "<rótulo>" | segundos | "+1.5"?, "escala"?, "min_w"?}],
+          "zooms":  [{"de": "<rótulo>", "ate": "<rótulo>"?, "fim": "<rótulo>" | segundos | "+1.5"?, "escala"?, "min_w"?, "atraso"?}],
           "spots":  [{"passo": "<rótulo>", "antes": 1.2, "dur": 1.8, "rotulo": "Novo Cliente"?}],
           "callouts": [{"palavra": [linha, "texto"] | "at": s, "dur": 3, "texto": "...", "pos": "bottom"}],
           "ilustracoes": [{"at"|"palavra", "dur", "src", "box"}]}}"""
@@ -103,7 +103,7 @@ def montar(nn):
             e = passo(acts, fim)["tStart"]
         else:
             e = float(fim)
-        item = {"at": round(a["tStart"] - 0.2, 3), "end": round(e, 3), "rect": rect}
+        item = {"at": round(a["tStart"] - 0.2 + float(z.get("atraso", 0)), 3), "end": round(e, 3), "rect": rect}  # atraso: começa depois (clique logo antes)
         if "escala" in z:
             item["scale"] = z["escala"]
         ch["zooms"].append(item)
