@@ -48,7 +48,10 @@ python3 -I proc.py 02=emendas/cap02_v2.wav   # força o capítulo de um arquivo
 `capNN.json`: palavras na grafia da legenda (`w`) e como foram ditas (`fala`), tempos `s/e`, linhas (= linhas da tabela
 do roteiro), frases e VAD. O script imprime as palavras vigiadas (as das `trocas`) e as que o ASR não achou. Palavra
 "sumida" quase sempre é o ASR colando duas palavras: decodifique o trecho isolado e meça duração/picos de sílaba antes
-de pedir regravação.
+de pedir regravação. Se ainda faltar, decodifique o trecho **desacelerado** (`ffmpeg -af atempo=0.8`, ou 0.65): no lote
+V3 (31/10, 96 palavras fracas em T2, T8, T9 e T12), "tem uma" no começo do capítulo e "empresa pagou" ("empresou") só
+apareceram assim; nenhuma era defeito da voz. Números ditos por extenso ("trinta reais", "zero um") e grafias de
+pronúncia ("bê-dê-i", "érre quatrocentos e dez á") sempre aparecem como fracas: não contam.
 
 ## Emendar frases trocadas — `emendar.py`
 Coloca cada frase nova no lugar da antiga **sem mudar a duração do capítulo** (a gravação continua sincronizada):

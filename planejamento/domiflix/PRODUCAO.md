@@ -28,7 +28,7 @@ F = montagem final + legendas + conferência · ok = no ZIP
 | T9 | Orçamentos, Precificação e Proposta | ok | ok | ok (V3) | ok (zip 5, 20:11) | agente F (54326), 1.38.9, desde 20:3x | | | |
 | T10 | CRM: funil, leads e captação | ok | ok | | | | | | |
 | T11 | Contratos e PMOC | ok | ok | | | | | | |
-| T12 | Portal do Cliente e Portal do Contrato | ok | ok | ok (V3) | capítulos ok (zip 5); títulos refazendo 20:3x | agente G (54327), 1.38.9, desde 20:3x | | | |
+| T12 | Portal do Cliente e Portal do Contrato | ok | ok | ok (V3) | ok (zip 5; títulos 20:4x) | agente G (54327), 1.38.9, desde 20:3x | | | |
 | T13 | Financeiro | ok | ok | | | | | | |
 | T19 | Integração com Asaas, Assinaturas e Cobranças | ok | ok | | | | | | |
 | T20 | Relatório Financeiro e DRE | ok | ok | | | | | | |
@@ -189,7 +189,7 @@ se for melhor (custa o mesmo que o v4 por caractere: fica o v4, voz do T3); fala
 | V2 | T18 (11,3 mil caracteres, 17 nós) + `T07 cap05 emenda` | mesmo fluxo | exportado 31/10 11:18 (zip 3); processando |
 | V2b | Correções de pronúncia (Kaik 31/10 11:04): `T01 cap05 A cor e o logo da marca (v2)` (logo com texto branco), `T01 emendas`, `T04 emendas`, `T18 emenda` = 1.745 créditos | mesmo fluxo | gerado 11:11, exportado 11:18 (zip 3); processando |
 | V2c | T3 v2 (1.38.9): `T03v2 cap06 Etiquetas`, `T03v2 cap07 Campos personalizados`, `T03v2 emendas`, `T03v2 inserções`, `T03v2 títulos` = 1.824 créditos | mesmo fluxo | gerado 31/10 16:37; **saldo ~0**; exportado 16:50 (zip 4): MP3 em `$TUT_HOME/recebido/1650/` |
-| V3 | T2 (8.464), T8 (13.934), T9 (13.544), T12 (10.270) = 46.212 créditos, 61 nós (1 versão cada), ~52,8 min de voz | mesmo fluxo | **gerado 31/10 18:3x–18:41** (Kaik comprou créditos 18:28 e aprovou "gere T2, T8, T9 e T12"); 61/61 concluídas, 0 falha; ids em `scratchpad/v3_nos.json`; **aguardando o Kaik exportar (zip 5)** |
+| V3 | T2 (8.464), T8 (13.934), T9 (13.544), T12 (10.270) = 46.212 créditos, 61 nós (1 versão cada), ~52,8 min de voz | mesmo fluxo | **gerado 31/10 18:3x–18:41** (Kaik comprou créditos 18:28 e aprovou "gere T2, T8, T9 e T12"); 61/61 concluídas, 0 falha; ids em `scratchpad/v3_nos.json`; zip 5 (18:53) processado: 96 palavras fracas, todas do ASR (conferidas isoladas e desaceleradas), nenhuma fala a refazer |
 | V3b | T10 (10,4 mil), T11 (14,2 mil) = ~24,6 mil | mesmo fluxo | roteiros ok; aguardando créditos |
 | V4 | T13 (12,8 mil), T19 (9,1 mil), T20 (7,9 mil), T14 (7,7 mil) = ~37,5 mil | mesmo fluxo | roteiros ok; aguardando créditos |
 | V5 | T15 (8,2 mil), T22 (6,9 mil), T21 (5,4 mil), T17 (5,6 mil) = ~26,1 mil | mesmo fluxo | roteiros ok; aguardando créditos |
