@@ -86,6 +86,15 @@ o segundo sobe outra instância, `FAKE_PORT=54322 rec/run.sh fake`, e roda o rob
 `FAKE_URL=http://127.0.0.1:54322`. O app continua um só: o robô desvia, dentro do navegador, as chamadas do endereço
 gravado no build para a instância indicada. `FAKE_PORT=54322 rec/run.sh down` derruba só essa instância. A gravação
 em si continua uma de cada vez (trava `.heavy.lock`).
+- **Porta só sua** (ex.: 54377, não "a próxima livre"): `rec/run.sh fake` de quem usa a mesma porta derruba e recria a
+  instância do outro (o `.pid` leva a porta no nome). Em 31/10 duas pessoas escolheram 54323; a instância recriada subiu
+  sem `FAKE_NOW` e a gravação do T1 cap. 13 falhou no meio (o menu não trocou de logo).
+- **`FAKE_NOW` igual no fakebase e no robô**: suba com `FAKE_NOW=... FAKE_PORT=<porta> rec/run.sh fake`, grave com
+  `FAKE_NOW=... FAKE_URL=http://127.0.0.1:<porta>` e, antes de cada gravação, confira que a instância ainda é a sua:
+  `tr '\0' '\n' < /proc/$(cat rec/.runtime/fake<porta>.pid)/environ | grep FAKE_`.
+- **Sequência de gravações sob a trava** (ex.: cap. 6, 13): um único `flock .heavy.lock bash lote.sh` com todas, para
+  ninguém entrar no meio. Comando em segundo plano com `timeout` é MORTO (com os filhos, o `flock` e a gravação) quando o
+  prazo acaba: dê um prazo longo (ex.: 1 h) ou a trava passa a outro processo no meio do lote.
 
 ## Dado de bastidor no meio da gravação
 Quando a fala só cita itens "cadastrados do mesmo jeito" (T4: cinco tipos de serviço), o robô os insere por REST no

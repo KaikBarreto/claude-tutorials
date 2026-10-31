@@ -57,6 +57,9 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
 - App de gravação em `$TUT_HOME/app` **atualizado para a 1.38.6** em 30/10 22:55 (`DOMINEX_SRC=src-1.38.6
   rec/setup-app.sh` + `rec/run.sh build`; dependências iguais). Fumaça ok (0 problema). Antes de cada gravação, conferir
   se saiu versão nova (`git fetch` no clone, só leitura) e repetir.
+  **31/10 18:07: app de gravação na 1.38.9** (feito pelo agente do T3 v2, sob a trava; schema do backend falso com
+  as tabelas e RPCs de etiquetas e campos). O dist da 1.38.6 ficou em `rec/.runtime/dist-1.38.6.bak`. T1 (cap05, 06
+  e 13 regravados) e T5 ficaram na 1.38.6; T3 v2, T7 e as seguintes gravam na 1.38.9.
   31/10 05:3x: saiu a **1.38.7** (só painel admin: `update-company`, permissão de um vendedor, changelog); nenhuma tela
   das aulas muda, então a gravação segue na 1.38.6. Atualizar quando sair versão que mexa em tela de aula.
 - Data do mundo: exportar o **mesmo `FAKE_NOW`** para o backend falso (`rec/run.sh fake`/`up`) e para o robô (o

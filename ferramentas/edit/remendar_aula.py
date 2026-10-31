@@ -490,8 +490,9 @@ def refazer_video():
             while pos < o["a"]:
                 next(it)
                 pos += 1
+            desloc = (D - o["a"]) * passo  # fixo para a operação toda (D cresce a cada quadro copiado)
             for _ in range(o["b"] - o["a"]):
-                poe(next(it), (D - o["a"]) * passo)
+                poe(next(it), desloc)
                 pos += 1
                 D += 1
             continue

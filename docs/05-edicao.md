@@ -77,6 +77,25 @@ ilustração antes de renderizar o capítulo (no T3 o nome do aparelho passou 20
 - Saídas: `aula_final.mp4`, `capitulos.json` (início de cada item no conteúdo, cortes, título falado).
 Tempo: ~40 quadros/s na junção (aula de 12 min ≈ 10 min) + vinheta e mix.
 
+## Corrigir uma aula já entregue sem refazer tudo: `remendar_aula.py caps/<AULA>.aula.json`
+Depois da entrega a limpeza apaga as gravações e os renders dos capítulos; ficam só `out/<AULA>/capitulos.json`,
+`video_sem_audio.mp4` e `proj/{audio48k.wav, edl.json, render.json, build/intro_v.mp4, build/outro_v.mp4}`. Rodar o
+`finish.py` de novo exigiria regravar e renderizar TODOS os capítulos; o `remendar_aula.py` refaz a aula só com o que mudou
+(a mesma linha do tempo, os mesmos parâmetros do `finish.py`):
+- `--audio cap03,cap07`: só narração nova **de mesma duração** (emenda do `emendar.py`; o `narration` do
+  `caps/capNN.chapter.json` aponta para `takes/capNN_v2/audio48k.wav`). Nenhum quadro muda: refaz `audio48k.wav`, `edl.json`,
+  o mix (`kit/mix.py` + SFX das vinhetas) e o MP4 final com o vídeo antigo.
+- `--novos cap05,cap06,cap13`: capítulos regravados e já renderizados (`render_chapter.py`; `out/capNN/capNN.mp4/.wav/.edit.json`),
+  com a duração que tiverem; o que vem depois se desloca. O vídeo antigo é copiado pacote a pacote (PyAV, com pts/dts; GOP
+  fechado, então o corte é limpo) e só se recodifica: os capítulos novos, as vinhetas de capítulo vizinhas (elas fundem a tela do
+  capítulo de antes com a do de depois) e, no máximo, ~2 s de cada lado até o IDR vizinho. Os quadros copiados saem idênticos.
+- `--plano` mostra a linha do tempo nova e o que é copiado/recodificado, sem escrever nada e sem pedir a trava
+  (`--frames cap05=1954` simula capítulo ainda sem render).
+Depois: `legendas_aula.py` e `entregar.py` como sempre. `aula_final.mp4` tem hardlinks em `entrega/` e `entrega_final/`:
+o script escreve em arquivo temporário e troca no fim (`ffmpeg -y` no mesmo nome truncaria a entrega antiga). Se cair no meio,
+o estado antigo fica em `out/<AULA>/_base` e a execução seguinte parte dele. Capítulo com `cortes` não é suportado (use o
+`finish.py`). H.264 bruto (`-f h264`) perde a ordem dos quadros B: por isso o remendo trabalha com pacotes de MP4.
+
 ## Celular (gravação com `"device": "phone"`)
 No JSON do capítulo: `"stage": {"bg": ..., "shadow": 0.45, "margin": 56, "radius": 46, "phone": {"bezel": 14}}` (aparelho
 genérico, sem marca, desenhado em volta da tela e acompanhando a câmera) e `"cursor": {"show": false, "touch": true,
