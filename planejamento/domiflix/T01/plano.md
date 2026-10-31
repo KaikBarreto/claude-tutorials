@@ -102,6 +102,8 @@ Já existentes: QR Code ("quê-érre côde"), Asaas ("asas"). CNPJ, CEP, OS: esc
    e **desligar no fim do capítulo 6** (fala: "se quiser manter, é só deixar ligado"). Cada aula tem a sua semente, então não vaza entre tutoriais.
 2. **Logo e cor da Glacial.** A Glacial Cold Brasil é cliente real (aparece no código com cor `#EEB770`, `components/ponto/PontoScreen.tsx:172-185`) e o logo de exemplo
    (emblema dourado + texto) tem dourado parecido. Confirmar se o arquivo do mundo é criação nossa; se for o logo real, pedir autorização ou trocar por um logo e cor inventados.
+   **Resolvido (31/10):** a identidade da Glacial (círculo preto, anel e símbolo dourados) foi enviada pelo próprio Kaik para o mundo dos vídeos
+   (`brand-fix/PEDIDOS.md`, 29/10; arquivos em `brand-fix/assets/`). Fica o logo do mundo e a cor `#EEB770`.
 3. **"Exibir em documentos" não vale para relatório da OS, proposta, contrato e PMOC** (inventário P2). A fala acima já se restringe a estoque, financeiro e RH. Alternativa: o time do
    app aplica nos demais antes da gravação (handoff). Decidir qual.
 4. **Tour do menu sem casa.** Os capítulos 1 a 4 da T0 antiga (tour do menu, sidebar × barra superior × celular, "o menu muda conforme módulo e cargo", dúvida nº 1) não estão no T0 novo

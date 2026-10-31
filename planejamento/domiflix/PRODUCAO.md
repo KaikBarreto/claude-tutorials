@@ -17,12 +17,12 @@ F = montagem final + legendas + conferência · ok = no ZIP
 | Aula | Título | L | R | V | Z | B | G | E | F |
 |---|---|---|---|---|---|---|---|---|---|
 | T0 | Boas-vindas à Dominex (ilustrada) | ok | ok | ok | ok | — | — | ok | ok (30/10 22:51, 3:25) |
-| T1 | Configurações e identidade da empresa | ok | R1 | | | | | | |
+| T1 | Configurações e identidade da empresa | ok | ok | V1 | | | | | | |
 | T2 | Usuários, cargos e permissões | ok | | | | | | | |
 | T3 | Clientes, Fornecedores e Equipamentos | ok | ok | ok | ok | ok | ok | ok | ok (30/10) |
-| T4 | Serviços, tarefas e checklists | ok | R1 | | | | | | |
-| T5 | Ordens de Serviço, Agenda, Equipes e Mapa ao Vivo | ok | R1 | | | | | | |
-| T7 | O técnico em campo (celular) | ok | R1 | | | | | | |
+| T4 | Serviços, tarefas e checklists | ok | ok | V1 | | | | | | |
+| T5 | Ordens de Serviço, Agenda, Equipes e Mapa ao Vivo | ok | ok | V1 | | | | | | |
+| T7 | O técnico em campo (celular) | ok | ok | V1 | | | | | | |
 | T18 | Área do Técnico: Refrigeração e Climatização | A2 | | | | | | | |
 | T8 | Estoque, compras e inventário | A2 | | | | | | | |
 | T9 | Orçamentos, Precificação e Proposta | A2 | | | | | | | |
@@ -44,7 +44,7 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
 ## Como cada aula é feita (molde T3)
 1. **R**: `planejamento/domiflix/Tnn/roteiro.md` (Tela × Fala por capítulo, estilo `exemplos/dominex-t3/roteiro.md` e
    `estilo_narracao.md`) + `$TUT_HOME/tnn/narracao/tts_textos.py` (`CAPS`, `TITULOS`, `KICKERS`) + `config_narracao.json`.
-2. **V**: um fluxo ElevenLabs por lote de aulas, nós rotulados `Tnn capMM <título>` e `Tnn títulos` (2 versões, padrão).
+2. **V**: o fluxo ElevenLabs único (todas as aulas), nós rotulados `Tnn capMM <título>` e `Tnn títulos` (1 versão por fala, pedido do Kaik).
    O Kaik exporta o zip do fluxo; `proc.py` por aula (`recebido_<hhmm>/Tnn*`), `titulos.py`.
 3. **B**: `rec/fakebase/seeds-extra/tnn/` + handlers que faltam (lista no `plano.md` → "Gravação").
 4. **G**: `rec/tnn/capMM.json` (passos com `label`, `at` pelos tempos do `capMM.json`), gravação um capítulo por vez sob
@@ -86,8 +86,9 @@ se for melhor (custa o mesmo que o v4 por caractere: fica o v4, voz do T3); fala
 
 | Lote | Aulas | Fluxo ElevenLabs | Situação |
 |---|---|---|---|
-| — | T0 | 1fUfJ2KZAxkHKnc8wwce | exportado 30/10 22:12 |
-| V1.. | demais | (fluxo único, criado no 1º lote) | |
+| — | T0 | 1fUfJ2KZAxkHKnc8wwce (fluxo próprio) | exportado 30/10 22:12 |
+| V1 | T1, T4, T5, T7 (39,6 mil caracteres, 65 nós) | (fluxo único, criado neste lote) | gerando (31/10) |
+| V2.. | demais | mesmo fluxo | |
 
 **Créditos (Kaik, 30/10 23:16): 54.670 restantes** (de 121.000) → ~54 mil caracteres ≈ 55 a 60 min de fala ≈ 4 aulas.
 Gerar agora, na ordem da produção, só o que couber (T1, T4, T5, T7 se couber), com ~2 mil de reserva para regerar falas.
