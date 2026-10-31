@@ -18,6 +18,14 @@ verificador válido), e-mails `.example`, telefones de faixa fictícia. Fonte da
   Componentes, Cobre Sul Suprimentos, Distribuidora Aurora de Peças.
 - **Equipamentos (25)**: Hi-Wall 9.000/12.000/18.000 BTUs, Cassete 36.000 BTUs etc.; categorias Split Hi-Wall,
   Split Cassete, Split Piso-Teto; campos Marca, Modelo, Nº de Série, Capacidade/Especificação, Local, Data de Instalação.
+- **Financeiro, o que o cadastro da empresa cria** (`supabase/functions/self-register/index.ts:997-1037`,
+  `create-company/index.ts:503-541`): contas **Caixa** (tipo caixa) e **Conta Principal** (banco), saldo inicial 0;
+  14 categorias padrão (Serviços Prestados, Vendas de Peças/Materiais, Contratos PMOC, Impostos e Taxas, Custo de
+  Materiais, Fornecedores e Insumos, Alimentação, Luz/Energia, Aluguel, Combustível/Transporte, Salários e Encargos,
+  Marketing e Publicidade, Ferramentas e Equipamentos, Outros) mais as 14 do sistema (gatilho
+  `seed_system_financial_categories`, `20261020223000_...sql:18-45`: Vendas de Serviços, CSP - Materiais, Tarifas e
+  Taxas...). Nome de categoria é único na empresa (`20260919190000_...sql`): a aula escolhe "Aluguel" na lista, não cria.
+  Ainda fora das sementes do backend falso: entram na base antes da primeira aula que abre o Financeiro (T8/T9).
 
 ## O que o T3 criou (`seeds-extra/t3/apos-cap10.json` = estado inicial do T4)
 - Clientes: **Colégio Monte Verde** (PJ, CNPJ 91.847.200/0001-30), **Marcos Antônio Braga** (PF), **Luana Martins**

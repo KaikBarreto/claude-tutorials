@@ -8,6 +8,7 @@ aula em `$TUT_HOME/tnn/` (já instalada), robô em `$TUT_HOME/rec/`.
 `planejamento/domiflix/Tnn/{roteiro,plano,inventario}.md` (coluna Tela = o que o robô faz; `[BACKEND: ...]`,
 `[TESTAR ...]`, `[ILUSTRAÇÃO: ...]`), `Tnn/narracao/tts_textos.py` e, depois da voz, `$TUT_HOME/tnn/narracao/capNN.json`
 (tempos de cada palavra e de cada linha). Sem `capNN.json` ainda: prepare tudo e deixe os `at` para depois.
+`PRODUCAO.md` → "Alinhamentos entre aulas" vale por cima do roteiro (datas, sementes e handlers combinados entre aulas).
 
 ## Ambiente (não atrapalhar o outro agente)
 - Uma instância do Supabase falso por agente: agente A porta 54321 (`rec/run.sh up`), agente B

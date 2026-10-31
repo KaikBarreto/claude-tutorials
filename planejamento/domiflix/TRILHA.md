@@ -116,7 +116,8 @@ Cada aula parte do estado final da anterior no mundo fictício (Glacial Cold Bra
    logado da empresa; a calculadora de mão de obra mostra e grava o custo mensal dos funcionários (`T09` P28). A tabela
    `inventory` grava materiais para qualquer usuário da empresa pela API (`T08` P17); receber O.C. em rascunho é aceito
    pelo servidor (`T08` P12). A função pública da proposta devolve `tax_rate` sem uso (`T09` P29).
-Os demais ajustes de texto e comportamento estão em "Pegadinhas" de cada `inventario.md` (marcados como handoff).
+Os demais ajustes de texto e comportamento estão em "Pegadinhas" de cada `inventario.md` (marcados como handoff) e
+na coluna Tela dos roteiros (marca `[handoff: ...]`, com `arquivo:linha`).
 
 ## Como retomar numa sessão nova
 ```bash
