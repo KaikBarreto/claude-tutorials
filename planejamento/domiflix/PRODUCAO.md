@@ -135,7 +135,12 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
    seu plano"; progresso; lembretes de 30 dias; "Tirar dúvidas com o suporte"), 4 a 4:30, 16:9 **e 9:16 nativo**, com
    telas reais da DomiFlix nova. **Antes de gerar:** roteiro revisado + storyboard das duas proporções + lista de telas
    para aprovação. A DomiFlix nova **não está no `main`** (17:13: só a atual, com temporadas). Voz: ~4 mil caracteres,
-   com ~5 mil reservados no saldo (recarga do Kaik às 18:28). Agente de roteiro rodando (`T00v2/`).
+   com ~5 mil reservados no saldo (recarga do Kaik às 18:28).
+   **19:3x roteiro + storyboards prontos** (`T00v2/`: 39 cenas, 4:28 estimado, 2.445 caracteres de voz nova; capítulos de
+   assinatura e plano reaproveitam o áudio do T0) e **publicados para aprovação**: https://claude.ai/artifact/Gjtpv2dE1HEY5GCx4hcnUx
+   (cena a cena com os quadros 16:9 e 9:16, decisões D1–D6, confirmações C1–C17, telas R01–R18). Aguardando o ok do Kaik.
+   Bloqueio: a DomiFlix nova não está no `main` (a branch `trilha-tutoriais-domiflix` é de 06/09, página do site; nenhuma
+   outra branch tem nome que indique a DomiFlix nova): R01–R12 esperam a publicação. Falta também o 9:16 no pipeline (D6).
 3. **T3 v2 (Kaik 31/10 12:11):** "Editar" e "Excluir" da ficha foram para "Ações" (já na 1.38.6, `5f0b64ea`: fichas de
    cliente e de equipamento) e "Configurar origens" virou um modal único "Configurações" com Origens, Etiquetas, Campos
    de clientes e Campos de fornecedores (`CustomerSettingsDialog.tsx`, recurso novo; publicado na 1.38.8). Afeta no T3: cap01 (botões do topo), cap04 (vira origens + etiquetas + campos), cap05 (cabeçalho da
