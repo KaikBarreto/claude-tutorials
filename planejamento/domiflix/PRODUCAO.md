@@ -149,6 +149,14 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
    **20:02 Kaik: DomiFlix nova publicada** (no `main` desde 17:34: 1.38.11 + ajustes até `487a0ca3` 19:29; o agente tinha
    conferido um `main` antigo). Fonte em `$TUT_HOME/src-1.38.11`. Agente de roteiro conferindo C1–C17 e R01–R12 no código
    novo e ajustando o pacote; a página de aprovação será regenerada. O app de gravação segue na 1.38.9.
+   **21:0x conferido na 1.38.11** (agente de roteiro): o código confirmou introdução obrigatória, trilha, selos, percentual
+   "Trilha do seu plano", lembrete de 30 dias, próxima aula e suporte com contexto (C8 e C17 saíram). Cena 22: o botão abre o
+   WhatsApp com a mensagem pronta (não envia sozinho). 4:27 estimado; 2.433 caracteres de voz. Página de aprovação v2 publicada.
+   Para o Kaik: D7 (técnicos também passam pela introdução), D8 (frases dele × rótulos: "Aprenda a usar a Dominex",
+   "Materiais e extras", "Formação básica"), D3 (conta contratada ou em teste) e **erro no app: "Adicionar ao meu plano" e
+   "Escolher meu plano" abrem `/billing`, que não existe** (cai em "não encontrada"). O player desenha a legenda a 15%/18% do
+   pé e usa UMA legenda por aula nas duas versões (mesma linha do tempo). Captura: app 1.38.11 em outra porta (8081) e
+   backend próprio; **não usar a 54322** (é do T18): usar a 54328.
 5. **Kaik 31/10 20:23: "botei mais créditos, avance, pode botar quantos agentes em paralelo você quiser, até 10".** Os 4
    agentes tinham parado no limite semanal da API (20:1x) e foram retomados. Rodando (9): T7 (A, 54321; corrige o celular
    que vaza no zoom, pedido do Kaik), T18 (B, 54322), T3 v2 (C, 54323), T2 (D, 54324), T8 (E, 54325), T9 (F, 54326),
