@@ -33,10 +33,10 @@ F = montagem final + legendas + conferência · ok = no ZIP
 | T19 | Integração com Asaas, Assinaturas e Cobranças | ok | ok | | | | | | |
 | T20 | Relatório Financeiro e DRE | ok | ok | | | | | | |
 | T14 | Notas Fiscais (NFS-e e NF-e) | ok | ok | | | | | | |
-| T15 | Funcionários: Financeiro do Funcionário e Ponto | C | | | | | | | |
-| T22 | Ferramentas de RH: DISC, Organograma, Fluxograma | C | | | | | | | |
-| T21 | Integração com WhatsApp | C | | | | | | | |
-| T17 | Dashboard, relatórios e exportações | C | | | | | | | |
+| T15 | Funcionários: Financeiro do Funcionário e Ponto | ok | R5 | | | | | | |
+| T22 | Ferramentas de RH: DISC, Organograma, Fluxograma | ok | R5 | | | | | | |
+| T21 | Integração com WhatsApp | ok | R5 | | | | | | |
+| T17 | Dashboard, relatórios e exportações | ok | R5 | | | | | | |
 
 Ordem (TRILHA.md): T0 → T1 → T4 → T5 → T7 → T18 → T2 → T8 → T9 → T12 → T13 → T20 → T10 → T11 → T15 → T22 → T19 →
 T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aula parte do estado final da anterior).
@@ -91,6 +91,13 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
 - **T9:** "Primeiro vencimento" das 3 parcelas do Orçamento #2 = **20/11/2026** (o T13 parte delas: 20/11, 20/12, 20/01).
 - **FAKE_NOW `2026-11-10T10:00:00-03:00`** em T11, T12, T13, T19, T20 e T14 (fatura do cartão fechada no dia 5,
   mensalidades do PMOC a partir de 10/12 ainda futuras).
+- **T9 → T15:** os funcionários que o T9 semeia para a calculadora de mão de obra entram só com o custo mensal
+  (`monthly_cost`) e salário 0; o T15 completa os salários num corte (com salário, o cron criaria folhas que o T13 não
+  mostra em Contas a Pagar).
+- **Dashboard (toda aula que o mostra):** OS de hoje ainda aberta aparece "Atrasada 0 dias" e os gráficos deslocam um dia
+  (bug de fuso, `src/pages/Dashboard.tsx:169,193,221`; T17 P2). Nas sementes, nenhuma OS do dia aberta no momento da
+  gravação, ou a câmera não enquadra "Requer Atenção".
+- **T22:** o robô nunca pousa o cursor no gráfico DISC (o tooltip cita pessoas reais; T22 P6).
 - **T19:** o handler `tenant-asaas-card-fees` (criado no T1) responde sem a franquia do Pix (`freeCount 0`): estender por
   semente ou parâmetro, sem reescrever o do T1.
 
@@ -106,7 +113,7 @@ se for melhor (custa o mesmo que o v4 por caractere: fica o v4, voz do T3); fala
 | V2 | T18 (11,3 mil caracteres, 17 nós) + `T07 cap05 emenda` | mesmo fluxo | gerado, aguardando exportação |
 | V3 | T2 (8,5 mil), T8 (13,9 mil), T9 (13,5 mil), T12 (10,3 mil), T10 (10,4 mil), T11 (14,2 mil) = ~70,8 mil | mesmo fluxo | roteiros ok; aguardando créditos |
 | V4 | T13 (12,8 mil), T19 (9,1 mil), T20 (7,9 mil), T14 (7,7 mil) = ~37,5 mil | mesmo fluxo | roteiros ok; aguardando créditos |
-| V5 | T15, T22, T21, T17 (~40 mil estimados) | mesmo fluxo | levantamento C a fazer |
+| V5 | T15, T22, T21, T17 (~40 mil estimados; ~15, 14, 12 e 14 min de vídeo) | mesmo fluxo | levantamento ok; roteiros (R5) em andamento |
 
 **Falas a refazer (próximo lote de voz, junto com o T18; o Kaik exporta uma vez):** T07 cap05, frase "O aplicativo
 deixa o vídeo mais leve antes de enviar." (em ~0:29; o ASR não ouve o "deixa" nem isolado; há tempo de fala para ele,

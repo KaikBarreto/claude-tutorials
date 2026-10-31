@@ -18,16 +18,16 @@ Padrão de produção: perfil Domiflix (`perfis/domiflix/PERFIL.md`), idêntico 
 
 | Ordem de exibição | Tutorial | Área (vinheta) | Módulo pago | Levantamento | Produção |
 |---|---|---|---|---|---|
-| T0 | Boas-vindas à Dominex (ilustrado, ~3 min 40 s, sem tela) | COMEÇANDO / AJUDA / ASSINATURA | — | feito | roteiro em aprovação |
-| T1 | Configurações e identidade da empresa | CONFIGURAÇÕES | White Label (parcial) | em andamento (lote A2) | — |
+| T0 | Boas-vindas à Dominex (ilustrado, ~3 min 40 s, sem tela) | COMEÇANDO / AJUDA / ASSINATURA | — | feito | **entregue 30/10** |
+| T1 | Configurações e identidade da empresa | CONFIGURAÇÕES | White Label (parcial) | feito (lote A2) | **entregue 31/10** |
 | T2 | Usuários, cargos e permissões | USUÁRIOS | — | feito (lote B1) | — |
 | T3 | Clientes, Fornecedores e Equipamentos | CLIENTES / FORNECEDORES / EQUIPAMENTOS | — | feito | **entregue 30/10** |
 | T4 | Serviços, tarefas e checklists | SERVIÇOS | Vídeo em checklist (parcial) | feito (lote A1) | — |
 | T5 | Ordens de Serviço, Agenda, Equipes e Mapa ao Vivo | ORDENS DE SERVIÇO / AGENDA | RH (Equipes) | feito (lote A1) | — |
 | T7 | O técnico em campo | TÉCNICO EM CAMPO | — | feito (lote A1) | — |
-| T18 | Área do Técnico: Refrigeração e Climatização | ÁREA DO TÉCNICO | Segmento específico | em andamento (lote A2) | — |
-| T8 | Estoque, compras e inventário | ESTOQUE | — | em andamento (lote A2) | — |
-| T9 | Orçamentos, Precificação e Proposta | ORÇAMENTOS | Precificação Avançada (parcial) | em andamento (lote A2) | — |
+| T18 | Área do Técnico: Refrigeração e Climatização | ÁREA DO TÉCNICO | Segmento específico | feito (lote A2) | — |
+| T8 | Estoque, compras e inventário | ESTOQUE | — | feito (lote A2) | — |
+| T9 | Orçamentos, Precificação e Proposta | ORÇAMENTOS | Precificação Avançada (parcial) | feito (lote A2) | — |
 | T10 | CRM: funil, leads e captação | CRM | CRM | feito (lote B1) | — |
 | T11 | Contratos e PMOC | CONTRATOS | Contratos e PMOC | feito (lote B1) | — |
 | T12 | Portal do Cliente e Portal do Contrato | PORTAL | Portal do Cliente + Contratos/PMOC | feito (lote B1) | — |
@@ -35,10 +35,10 @@ Padrão de produção: perfil Domiflix (`perfis/domiflix/PERFIL.md`), idêntico 
 | T19 | Integração com Asaas, Assinaturas e Cobranças | COBRANÇAS | Cobranças | feito (lote B2) | — |
 | T20 | Relatório Financeiro e DRE | FINANCEIRO | — | feito (lote B2) | — |
 | T14 | Notas Fiscais (NFS-e e NF-e) | NOTAS FISCAIS | Emissão de Notas Fiscais | feito (lote B2) | — |
-| T15 | Funcionários: Financeiro do Funcionário e Ponto Eletrônico | FUNCIONÁRIOS | Funcionários / RH | lote C | — |
-| T22 | Ferramentas de RH: DISC, Organograma, Fluxograma | RH | Funcionários / RH | lote C | — |
-| T21 | Integração com WhatsApp | WHATSAPP | WhatsApp | lote C | — |
-| T17 | Dashboard, relatórios e exportações | DASHBOARD | — | lote C | — |
+| T15 | Funcionários: Financeiro do Funcionário e Ponto Eletrônico | FUNCIONÁRIOS | Funcionários / RH | feito (lote C) | — |
+| T22 | Ferramentas de RH: DISC, Organograma, Fluxograma | RH | Funcionários / RH | feito (lote C) | — |
+| T21 | Integração com WhatsApp | WHATSAPP | WhatsApp | feito (lote C) | — |
+| T17 | Dashboard, relatórios e exportações | DASHBOARD | — | feito (lote C) | — |
 
 Lotes do levantamento (2 por vez): A1 = T4, T5, T7 · B1 = T2, T10, T11, T12 · A2 = T1, T18, T8, T9 ·
 B2 = T13, T19, T20, T14 · C = T15, T22, T21, T17.
@@ -116,6 +116,24 @@ Cada aula parte do estado final da anterior no mundo fictício (Glacial Cold Bra
    logado da empresa; a calculadora de mão de obra mostra e grava o custo mensal dos funcionários (`T09` P28). A tabela
    `inventory` grava materiais para qualquer usuário da empresa pela API (`T08` P17); receber O.C. em rascunho é aceito
    pelo servidor (`T08` P12). A função pública da proposta devolve `tax_rate` sem uso (`T09` P29).
+6. **Login criado pelo RH tem acesso a tudo (alta, dentro da empresa).** "Criar acesso ao sistema" (Funcionários) chama
+   `create-user` sem permissões (`src/pages/Employees.tsx:589-600,638-650`), e sem registro tudo fica liberado
+   (`src/contexts/AuthContext.tsx:382-394`): é o achado 2 por um caminho que sempre cai nele (`T15` P1). A senha temporária
+   aparece por extenso no aviso por 15 s (`Employees.tsx:612-616`, baixa, P2).
+7. **Vínculo de funcionário entre empresas (média, a confirmar com uma chamada de teste).** `create-user` com
+   `employee_id` troca o usuário de um funcionário de qualquer empresa, sem filtrar pela de quem chama
+   (`supabase/functions/create-user/index.ts:100-109`; `T15` P18).
+8. **Dados pessoais abertos dentro da empresa (média, LGPD).** CPF, salário, chave PIX e endereço dos funcionários
+   legíveis e editáveis por qualquer usuário da empresa pela API (`20260418163700_...sql:115-118`; `T15` P19); selfies do
+   ponto abertas aos colegas no bucket `time-photos` (`20261016080000_...sql:98-110`; P20); respostas do DISC legíveis por
+   todos (`20260724120000_...sql:101-104`; `T22` P1). Baixa: link do DISC sem prazo (`T22` P3), organograma e fluxograma
+   editáveis por qualquer usuário (`T22` P2), link do ponto vivo depois do arquivamento (`T15` P21).
+9. **Totais financeiros sem proteção na tela (média).** A permissão `fn:view_finance_totals` não é conferida em nenhum
+   componente (`src/hooks/usePermissions.ts:112`): quem só tem o Dashboard vê faturamento e caixa; e
+   `financial_transactions` aceita ler, criar e alterar lançamentos de qualquer papel (`20261004213000_...sql:162-197`;
+   `T17` P20).
+10. **Cliente nasce autorizado a receber WhatsApp (baixa, LGPD).** O padrão virou "ligado" em 16/10 no banco e no
+   formulário (`20261016233000_...sql:1-60`; `T21` P14).
 Os demais ajustes de texto e comportamento estão em "Pegadinhas" de cada `inventario.md` (marcados como handoff) e
 na coluna Tela dos roteiros (marca `[handoff: ...]`, com `arquivo:linha`).
 
