@@ -9,6 +9,7 @@ uso: python3 -I remendar_aula.py <aula.json> [--audio cap03,cap07] [--novos cap0
   --novos  capítulos regravados e já renderizados pelo render_chapter.py (out/capNN/capNN.mp4, .wav e .edit.json), com a
            duração que tiverem; o que vem depois deles na linha do tempo se desloca
   --plano  só imprime o plano (linha do tempo nova, o que é copiado e o que é recodificado); não escreve nada e não pede a trava
+  --manter-stems  não apaga proj/build/stems e music.wav depois do mix (por padrão somem: ~1,1 GB numa aula de 12 min)
 
 O que faz (na ordem do finish.py, mas só no que mudou):
   1. voz: refaz proj/audio48k.wav (fatias do áudio antigo dos capítulos que não mudaram + o áudio novo dos que mudaram),
@@ -24,6 +25,7 @@ O que faz (na ordem do finish.py, mas só no que mudou):
 Pesado: reexecuta sozinho sob flock .heavy.lock + nice (como o finish.py). Depois: legendas_aula.py e entregar.py."""
 import json
 import os
+import shutil
 import subprocess
 import sys
 import time
@@ -269,6 +271,11 @@ def refazer_voz():
 
 def refazer_mix():
     run([sys.executable, os.path.join(KIT, "mix.py"), PROJ])
+    if "--manter-stems" not in argv:  # stems e trilha só servem ao mix: apagá-los poupa ~1,1 GB numa aula de 12 min
+        assert os.path.basename(BUILD) == "build" and os.path.basename(PROJ) == "proj"
+        shutil.rmtree(os.path.join(BUILD, "stems"), ignore_errors=True)
+        if os.path.exists(os.path.join(BUILD, "music.wav")):
+            os.remove(os.path.join(BUILD, "music.wav"))
     if any(i["card"] for i in items):  # SFX também na saída da vinheta (Kaik 15:43), como no finish.py
         sys.path.insert(0, os.path.join(DOMI, "audio"))
         from kit import whoosh, pop, limit  # noqa: E402

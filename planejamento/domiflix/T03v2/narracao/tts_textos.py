@@ -49,7 +49,7 @@ Na escola é o seu Antônio, o zelador. Coloco o nome, o cargo e o telefone... e
 Pronto, ele aparece aqui, e nesse menu tem o WhatsApp dele, direto. Dá pra cadastrar quantos contatos quiser.
 Do lado da Geral ficam as outras abas. Em Equipamentos, os aparelhos desse cliente, que a gente cadastra daqui a pouco. Em Histórico, todas as ordens de serviço. Em Tarefas, os lembretes da agenda. E tem ainda Estoque, Chamados, Contratos, Documentos, Financeiro e Cobranças. Cada uma tem o seu tutorial. O importante agora é saber que tudo desse cliente fica reunido aqui.""",
 6: """Agora as etiquetas, que marcam clientes e fornecedores com uma cor.
-Ficam aqui em Configurações, Etiquetas, e já tem a Preferencial.
+Ficam aqui em Configurações, Etiquetas. Eu já deixei a Preferencial.
 Imagina que o Colégio Monte Verde tem contrato de pê-móqui: Nova etiqueta, escrevo Contrato pê-móqui, escolho a cor e Salvar etiqueta.
 Pra usar, na ficha do Colégio Monte Verde, Ações, Editar, e em Etiquetas marco a nova e a Preferencial: dá pra marcar mais de uma. Salvar.
 Pronto: elas aparecem na ficha e na lista. E em Filtros dá pra ver só os clientes de uma etiqueta.""",
