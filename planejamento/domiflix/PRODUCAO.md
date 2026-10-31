@@ -114,6 +114,12 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
    (conferir telas de cliente, fornecedor e portal na versão nova).
    **Kaik 12:45: "vou soltar a 1.38.9 com as funções definitivas disso"**: o levantamento do T3 v2 e a troca do app
    esperam a 1.38.9 (vigia no `main` rodando), não a 1.38.8.
+   **1.38.9 publicada 13:27** (`7690807a`; fonte em `$TUT_HOME/src-1.38.9`): várias etiquetas em clientes, fornecedores e
+   **equipamentos**, filtros, etiquetas nos seletores (OS, agenda, orçamento, compras, PDV), configurações reunidas
+   (`Equipment.tsx` perdeu ~190 linhas: a configuração de campos do equipamento deve ter ido para o modal único) e
+   etiquetas no portal do PMOC. Afeta o T3 (capítulos de equipamento também) e muda telas de T5, T8, T9, T11, T12
+   (sem etiquetas semeadas, só aparecem os controles novos). O T5 segue na 1.38.6 (já gravado; seletores sem etiqueta
+   ficam iguais); conferir na entrega se a agenda ganhou filtro visível.
 3. **T3 v2 (Kaik 31/10 12:11):** "Editar" e "Excluir" da ficha foram para "Ações" (já na 1.38.6, `5f0b64ea`: fichas de
    cliente e de equipamento) e "Configurar origens" virou um modal único "Configurações" com Origens, Etiquetas, Campos
    de clientes e Campos de fornecedores (`CustomerSettingsDialog.tsx`, recurso novo; publicado na 1.38.8). Afeta no T3: cap01 (botões do topo), cap04 (vira origens + etiquetas + campos), cap05 (cabeçalho da
