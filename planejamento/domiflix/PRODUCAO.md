@@ -26,9 +26,9 @@ F = montagem final + legendas + conferência · ok = no ZIP
 | T18 | Área do Técnico: Refrigeração e Climatização | ok | ok | V2 | | | | | |
 | T8 | Estoque, compras e inventário | ok | ok | | | | | | |
 | T9 | Orçamentos, Precificação e Proposta | ok | ok | | | | | | |
-| T10 | CRM: funil, leads e captação | ok || ok | | | | | | |
-| T11 | Contratos e PMOC | ok || ok | | | | | | |
-| T12 | Portal do Cliente e Portal do Contrato | ok || ok | | | | | | |
+| T10 | CRM: funil, leads e captação | ok | ok | | | | | | |
+| T11 | Contratos e PMOC | ok | ok | | | | | | |
+| T12 | Portal do Cliente e Portal do Contrato | ok | ok | | | | | | |
 | T13 | Financeiro | ok | | | | | | | |
 | T19 | Integração com Asaas, Assinaturas e Cobranças | ok | | | | | | | |
 | T20 | Relatório Financeiro e DRE | ok | | | | | | | |
