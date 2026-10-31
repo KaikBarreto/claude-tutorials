@@ -17,18 +17,18 @@ F = montagem final + legendas + conferência · ok = no ZIP
 | Aula | Título | L | R | V | Z | B | G | E | F |
 |---|---|---|---|---|---|---|---|---|---|
 | T0 | Boas-vindas à Dominex (ilustrada) | ok | ok | ok | ok | — | — | ok | ok (30/10 22:51, 3:25) |
-| T1 | Configurações e identidade da empresa | ok | ok | ok | ok (31/10 00:29) | ok | ok | ok | ok (31/10 05:20, 11:58) |
-| T2 | Usuários, cargos e permissões | ok | ok | | | | | | |
+| T1 | Configurações e identidade da empresa | ok | ok | ok | ok (31/10 00:29) | ok | ok | ok | ok (31/10 05:20, 11:58) · **v2 18:33** (pronúncia + logo com texto branco; 12:05; 1.38.6) |
+| T2 | Usuários, cargos e permissões | ok | ok | ok (V3 18:3x) | zip 5 (18:53) processando | | | | |
 | T3 | Clientes, Fornecedores e Equipamentos | ok | ok | ok | ok | ok | ok | ok | ok (30/10) |
-| T4 | Serviços, tarefas e checklists | ok | ok | ok | ok (31/10 00:29) | ok | ok | ok | ok (31/10 10:46, 10:27) |
+| T4 | Serviços, tarefas e checklists | ok | ok | ok | ok (31/10 00:29) | ok | ok | ok | ok (31/10 10:46, 10:27) · **v2 18:37** (pronúncia; só o áudio) |
 | T5 | Ordens de Serviço, Agenda, Equipes e Mapa ao Vivo | ok | ok | ok | ok (31/10 00:29) | ok | ok | ok | ok (31/10 18:2x, 13:49; 1.38.6) |
-| T7 | O técnico em campo (celular) | ok | ok | ok | ok (31/10 00:29; emenda pendente no cap05) | G4 pausado 11:2x (`rec/t7/ESTADO.md`) | | | |
-| T18 | Área do Técnico: Refrigeração e Climatização | ok | ok | ok | ok (31/10 11:30) | | | | |
-| T8 | Estoque, compras e inventário | ok | ok | | | | | | |
-| T9 | Orçamentos, Precificação e Proposta | ok | ok | | | | | | |
+| T7 | O técnico em campo (celular) | ok | ok | ok | ok (31/10 00:29; emenda do cap05 com folga 0,17 s) | agente A, 1.38.9 (porta 54321) | gravando | | |
+| T18 | Área do Técnico: Refrigeração e Climatização | ok | ok | ok | ok (31/10 11:30) | agente B, 1.38.9 (porta 54322), desde 19:0x | | | |
+| T8 | Estoque, compras e inventário | ok | ok | ok (V3) | zip 5 processando | | | | |
+| T9 | Orçamentos, Precificação e Proposta | ok | ok | ok (V3) | zip 5 processando | | | | |
 | T10 | CRM: funil, leads e captação | ok | ok | | | | | | |
 | T11 | Contratos e PMOC | ok | ok | | | | | | |
-| T12 | Portal do Cliente e Portal do Contrato | ok | ok | | | | | | |
+| T12 | Portal do Cliente e Portal do Contrato | ok | ok | ok (V3) | zip 5 processando | | | | |
 | T13 | Financeiro | ok | ok | | | | | | |
 | T19 | Integração com Asaas, Assinaturas e Cobranças | ok | ok | | | | | | |
 | T20 | Relatório Financeiro e DRE | ok | ok | | | | | | |
@@ -195,5 +195,7 @@ As demais: roteiro pronto e voz quando houver créditos (o Kaik avisa). Antes de
 `CAPS` + `TITULOS` e conferir com o saldo.
 
 ## Entrega
+Nome do arquivo **sem dois-pontos** (o ZIP abre no Windows e no Mac): título com ":" vira " - " só no nome do
+arquivo (ex.: `Domiflix T18 - Área do Técnico - Refrigeração e Climatização.mp4`); na vinheta fica como no roteiro.
 ZIP único (ou em partes, se passar do limite de envio) com `Domiflix Tnn - <Título>.mp4/.srt/.vtt` de todas as aulas
 (T0 a T22, incluindo o T3 já entregue), 1080p, CRF 20 (padrão T3).
