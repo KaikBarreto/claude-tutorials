@@ -23,9 +23,9 @@ F = montagem final + legendas + conferência · ok = no ZIP
 | T4 | Serviços, tarefas e checklists | ok | ok | ok | ok (31/10 00:29) | | | | |
 | T5 | Ordens de Serviço, Agenda, Equipes e Mapa ao Vivo | ok | ok | ok | ok (31/10 00:29) | | | | |
 | T7 | O técnico em campo (celular) | ok | ok | ok | ok (31/10 00:29; emenda pendente no cap05) | | | | |
-| T18 | Área do Técnico: Refrigeração e Climatização | A2 | | | | | | | |
-| T8 | Estoque, compras e inventário | A2 | | | | | | | |
-| T9 | Orçamentos, Precificação e Proposta | A2 | | | | | | | |
+| T18 | Área do Técnico: Refrigeração e Climatização | ok | | | | | | | |
+| T8 | Estoque, compras e inventário | ok | | | | | | | |
+| T9 | Orçamentos, Precificação e Proposta | ok | | | | | | | |
 | T10 | CRM: funil, leads e captação | ok | | | | | | | |
 | T11 | Contratos e PMOC | ok | | | | | | | |
 | T12 | Portal do Cliente e Portal do Contrato | ok | | | | | | | |

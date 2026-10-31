@@ -88,6 +88,12 @@ Cada aula parte do estado final da anterior no mundo fictício (Glacial Cold Bra
 6. **Decidido pelo Kaik (30/10 21:55)**: nenhum vídeo mostra preço de plano (só o desconto de 20% do anual).
 7. **Glacial Cold Brasil é cliente real** (aparece no código em incidentes de produção). O nome foi escolha do Kaik para a
    empresa de exemplo; no T14 ele sairia no PDF de uma nota fiscal simulada: confirmar antes de gravar o T14.
+8. **Trilha e Guia Técnico prometem o que o código 1.38.6 não faz (lote A2, 31/10).** T9: aprovar o orçamento e "Gerar
+   OS" não lançam custo nem baixam estoque. T8: não há cotação vencedora, campo "Categoria" nem compra montada pela NF-e.
+   Padrão adotado: o vídeo mostra só o que o código faz; o texto do Guia Técnico fica como handoff para o time do app
+   (detalhes em `T08/inventario.md` e `T09/inventario.md`, "Pegadinhas").
+9. **T8 com ~24 min de conteúdo.** Padrão adotado: uma aula só (1 tutorial por área), no tempo natural da fala, sem
+   encher; a compra direta remete ao tutorial do Financeiro (T13).
 
 ## Achados de segurança para o time do app (conferidos no código 1.38.6)
 1. **Cargos valem para todas as empresas.** A tabela `permission_presets` não tem `company_id`; a leitura é liberada
@@ -102,6 +108,14 @@ Cada aula parte do estado final da anterior no mundo fictício (Glacial Cold Bra
    são `SECURITY DEFINER`, liberadas para qualquer usuário logado e não conferem se a empresa é a dele
    (`20260825140000_...sql:21-38`, `20260615210000_...sql:91-190`): quem tiver o código de outra empresa vê o nível e o uso
    mensal de notas dela.
+4. **Custo e margem de um orçamento legíveis por quem tem o link da proposta (média, a confirmar com uma chamada de
+   teste).** A função pública já filtra os campos, mas `quotes` e `quote_items` liberam leitura para `anon` só com o
+   cabeçalho `x-share-token` e sem restrição de colunas (`T09/inventario.md` P27, com as migrations). Não é entre
+   empresas: é o segredo comercial de quem orça.
+5. **Dentro da mesma empresa, sem papel (baixa).** `quotes` e `employees` aceitam leitura e escrita de qualquer usuário
+   logado da empresa; a calculadora de mão de obra mostra e grava o custo mensal dos funcionários (`T09` P28). A tabela
+   `inventory` grava materiais para qualquer usuário da empresa pela API (`T08` P17); receber O.C. em rascunho é aceito
+   pelo servidor (`T08` P12). A função pública da proposta devolve `tax_rate` sem uso (`T09` P29).
 Os demais ajustes de texto e comportamento estão em "Pegadinhas" de cada `inventario.md` (marcados como handoff).
 
 ## Como retomar numa sessão nova
