@@ -88,6 +88,11 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
   preferir continuidade exata: regravar o cap11 do T1 com a integração desligada.
 
 ## Alinhamentos entre aulas (valem por cima dos roteiros)
+- **Links do app na tela** (31/10 20:5x): o app monta link público com `window.location.origin`, e na gravação aparecia
+  `http://127.0.0.1:8080/...` (T12: Link do portal e link da unidade). Origem real do app: `https://www.dominex.app`
+  (`src/lib/indexNow.ts:3`). O agente do T12 está pondo no gravador a opção `APP_ORIGIN` (desligada por padrão; o navegador
+  abre o app na origem real e o `page.route` serve o app local; chamadas externas abortadas). Toda aula que mostra link
+  público (T9 proposta, T12 portal, T15 ponto, T19 cobrança...) grava com ela.
 - **Financeiro padrão do cadastro** (contas Caixa e Conta Principal, 14 categorias padrão + 14 do sistema; detalhe em
   `MUNDO_FICTICIO.md` → Base): nas sementes de toda aula a partir da primeira que abre o Financeiro (T8/T9). O T11 já
   conta com eles; o T13, o T19 e o T20 foram revistos para isso (31/10 05:3x).
