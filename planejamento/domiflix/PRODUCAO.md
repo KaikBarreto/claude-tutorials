@@ -23,7 +23,7 @@ F = montagem final + legendas + conferência · ok = no ZIP
 | T4 | Serviços, tarefas e checklists | ok | ok | ok | ok (31/10 00:29) | | | | |
 | T5 | Ordens de Serviço, Agenda, Equipes e Mapa ao Vivo | ok | ok | ok | ok (31/10 00:29) | | | | |
 | T7 | O técnico em campo (celular) | ok | ok | ok | ok (31/10 00:29; emenda pendente no cap05) | | | | |
-| T18 | Área do Técnico: Refrigeração e Climatização | ok | | | | | | | |
+| T18 | Área do Técnico: Refrigeração e Climatização | ok | ok | V2 | | | | | |
 | T8 | Estoque, compras e inventário | ok | | | | | | | |
 | T9 | Orçamentos, Precificação e Proposta | ok | | | | | | | |
 | T10 | CRM: funil, leads e captação | ok | | | | | | | |
@@ -88,11 +88,12 @@ se for melhor (custa o mesmo que o v4 por caractere: fica o v4, voz do T3); fala
 |---|---|---|---|
 | — | T0 | 1fUfJ2KZAxkHKnc8wwce (fluxo próprio) | exportado 30/10 22:12 |
 | V1 | T1, T4, T5, T7 (39,6 mil caracteres, 65 nós) | Tuop7qPrgwc8qdaVebww (fluxo único) | exportado 31/10 00:29; proc.py e títulos ok (semelhança 0,87 a 1,00) |
-| V2.. | demais | mesmo fluxo | |
+| V2 | T18 (11,3 mil caracteres, 17 nós) + `T07 cap05 emenda` | mesmo fluxo | roteiro ok; gerar quando abrir vaga de agente (saldo após: ~3,6 mil) |
+| V3.. | demais | mesmo fluxo | aguardando créditos |
 
 **Falas a refazer (próximo lote de voz, junto com o T18; o Kaik exporta uma vez):** T07 cap05, frase "O aplicativo
 deixa o vídeo mais leve antes de enviar." (em ~0:29; o ASR não ouve o "deixa" nem isolado; há tempo de fala para ele,
-então pode estar só fraco). Nó curto `T07 cap05 emenda` (~55 caracteres) + `emendar.py` antes de gravar o T7. As demais
+então pode estar só fraco). Nó curto `T07 cap05 emenda` (~55 caracteres) + `emendar.py` antes de gravar o T7 (`t7/narracao/trocas.json` pronto). As demais
 palavras fracas do V1 foram conferidas decodificando o trecho isolado: eram do ASR (números, nomes colados).
 
 **Créditos (Kaik, 30/10 23:16): 54.670 restantes** (de 121.000) → ~54 mil caracteres ≈ 55 a 60 min de fala ≈ 4 aulas.
