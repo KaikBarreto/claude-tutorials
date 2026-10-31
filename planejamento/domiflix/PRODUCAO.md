@@ -17,7 +17,7 @@ F = montagem final + legendas + conferência · ok = no ZIP
 | Aula | Título | L | R | V | Z | B | G | E | F |
 |---|---|---|---|---|---|---|---|---|---|
 | T0 | Boas-vindas à Dominex (ilustrada) | ok | ok | ok | ok | — | — | ok | ok (30/10 22:51, 3:25) |
-| T1 | Configurações e identidade da empresa | ok | ok | ok | ok (31/10 00:29) | G1 | G1 | | |
+| T1 | Configurações e identidade da empresa | ok | ok | ok | ok (31/10 00:29) | ok | G1 (robô validado: 14 caps, 0 falho) | G1 | G1 |
 | T2 | Usuários, cargos e permissões | ok | ok | | | | | | |
 | T3 | Clientes, Fornecedores e Equipamentos | ok | ok | ok | ok | ok | ok | ok | ok (30/10) |
 | T4 | Serviços, tarefas e checklists | ok | ok | ok | ok (31/10 00:29) | | | | |
