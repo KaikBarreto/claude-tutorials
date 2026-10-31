@@ -135,7 +135,7 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
    seu plano"; progresso; lembretes de 30 dias; "Tirar dúvidas com o suporte"), 4 a 4:30, 16:9 **e 9:16 nativo**, com
    telas reais da DomiFlix nova. **Antes de gerar:** roteiro revisado + storyboard das duas proporções + lista de telas
    para aprovação. A DomiFlix nova **não está no `main`** (17:13: só a atual, com temporadas). Voz: ~4 mil caracteres,
-   saldo ~0 (precisa de recarga). Na fila: agente de roteiro na próxima vaga.
+   com ~5 mil reservados no saldo (recarga do Kaik às 18:28). Agente de roteiro rodando (`T00v2/`).
 3. **T3 v2 (Kaik 31/10 12:11):** "Editar" e "Excluir" da ficha foram para "Ações" (já na 1.38.6, `5f0b64ea`: fichas de
    cliente e de equipamento) e "Configurar origens" virou um modal único "Configurações" com Origens, Etiquetas, Campos
    de clientes e Campos de fornecedores (`CustomerSettingsDialog.tsx`, recurso novo; publicado na 1.38.8). Afeta no T3: cap01 (botões do topo), cap04 (vira origens + etiquetas + campos), cap05 (cabeçalho da
@@ -174,7 +174,8 @@ se for melhor (custa o mesmo que o v4 por caractere: fica o v4, voz do T3); fala
 | V2 | T18 (11,3 mil caracteres, 17 nós) + `T07 cap05 emenda` | mesmo fluxo | exportado 31/10 11:18 (zip 3); processando |
 | V2b | Correções de pronúncia (Kaik 31/10 11:04): `T01 cap05 A cor e o logo da marca (v2)` (logo com texto branco), `T01 emendas`, `T04 emendas`, `T18 emenda` = 1.745 créditos | mesmo fluxo | gerado 11:11, exportado 11:18 (zip 3); processando |
 | V2c | T3 v2 (1.38.9): `T03v2 cap06 Etiquetas`, `T03v2 cap07 Campos personalizados`, `T03v2 emendas`, `T03v2 inserções`, `T03v2 títulos` = 1.824 créditos | mesmo fluxo | gerado 31/10 16:37; **saldo ~0**; exportado 16:50 (zip 4): MP3 em `$TUT_HOME/recebido/1650/` |
-| V3 | T2 (8,5 mil), T8 (13,9 mil), T9 (13,5 mil), T12 (10,3 mil), T10 (10,4 mil), T11 (14,2 mil) = ~70,8 mil | mesmo fluxo | roteiros ok; aguardando créditos |
+| V3 | T2 (8.464), T8 (13.934), T9 (13.544), T12 (10.270) = 46.212 créditos, 61 nós (1 versão cada), ~52,8 min de voz | mesmo fluxo | **gerado 31/10 18:3x–18:41** (Kaik comprou créditos 18:28 e aprovou "gere T2, T8, T9 e T12"); 61/61 concluídas, 0 falha; ids em `scratchpad/v3_nos.json`; **aguardando o Kaik exportar (zip 5)** |
+| V3b | T10 (10,4 mil), T11 (14,2 mil) = ~24,6 mil | mesmo fluxo | roteiros ok; aguardando créditos |
 | V4 | T13 (12,8 mil), T19 (9,1 mil), T20 (7,9 mil), T14 (7,7 mil) = ~37,5 mil | mesmo fluxo | roteiros ok; aguardando créditos |
 | V5 | T15 (8,2 mil), T22 (6,9 mil), T21 (5,4 mil), T17 (5,6 mil) = ~26,1 mil | mesmo fluxo | roteiros ok; aguardando créditos |
 
@@ -185,6 +186,8 @@ palavras fracas do V1 foram conferidas decodificando o trecho isolado: eram do A
 
 **Para terminar (31/10 07:20): V3 + V4 + V5 = ~134,4 mil caracteres** (~70,8 + 37,5 + 26,1), mais ~3 mil de reserva
 para regerar falas; saldo de ~3,6 mil.
+**31/10 18:28:** o Kaik comprou créditos (saldo ~55,1 mil, "Para o t0"). Gerado o V3 (T2, T8, T9, T12: 46,2 mil); sobram
+~8,9 mil, com **~5 mil reservados para a voz do T0 v2** depois da aprovação do roteiro. Faltam V3b + V4 + V5 = ~88,2 mil.
 
 **Créditos (Kaik, 30/10 23:16): 54.670 restantes** (de 121.000) → ~54 mil caracteres ≈ 55 a 60 min de fala ≈ 4 aulas.
 Gerar agora, na ordem da produção, só o que couber (T1, T4, T5, T7 se couber), com ~2 mil de reserva para regerar falas.
