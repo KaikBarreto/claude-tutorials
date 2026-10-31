@@ -87,7 +87,7 @@ se for melhor (custa o mesmo que o v4 por caractere: fica o v4, voz do T3); fala
 | Lote | Aulas | Fluxo ElevenLabs | Situação |
 |---|---|---|---|
 | — | T0 | 1fUfJ2KZAxkHKnc8wwce (fluxo próprio) | exportado 30/10 22:12 |
-| V1 | T1, T4, T5, T7 (39,6 mil caracteres, 65 nós) | (fluxo único, criado neste lote) | gerando (31/10) |
+| V1 | T1, T4, T5, T7 (39,6 mil caracteres, 65 nós) | Tuop7qPrgwc8qdaVebww (fluxo único) | gerado, aguardando exportação |
 | V2.. | demais | mesmo fluxo | |
 
 **Créditos (Kaik, 30/10 23:16): 54.670 restantes** (de 121.000) → ~54 mil caracteres ≈ 55 a 60 min de fala ≈ 4 aulas.
