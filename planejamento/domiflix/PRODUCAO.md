@@ -17,12 +17,12 @@ F = montagem final + legendas + conferência · ok = no ZIP
 | Aula | Título | L | R | V | Z | B | G | E | F |
 |---|---|---|---|---|---|---|---|---|---|
 | T0 | Boas-vindas à Dominex (ilustrada) | ok | ok | ok | ok | — | — | ok | ok (30/10 22:51, 3:25) |
-| T1 | Configurações e identidade da empresa | ok | ok | V1 | | | | | | |
+| T1 | Configurações e identidade da empresa | ok | ok | ok | ok (31/10 00:29) | G1 | G1 | | |
 | T2 | Usuários, cargos e permissões | ok | | | | | | | |
 | T3 | Clientes, Fornecedores e Equipamentos | ok | ok | ok | ok | ok | ok | ok | ok (30/10) |
-| T4 | Serviços, tarefas e checklists | ok | ok | V1 | | | | | | |
-| T5 | Ordens de Serviço, Agenda, Equipes e Mapa ao Vivo | ok | ok | V1 | | | | | | |
-| T7 | O técnico em campo (celular) | ok | ok | V1 | | | | | | |
+| T4 | Serviços, tarefas e checklists | ok | ok | ok | ok (31/10 00:29) | | | | |
+| T5 | Ordens de Serviço, Agenda, Equipes e Mapa ao Vivo | ok | ok | ok | ok (31/10 00:29) | | | | |
+| T7 | O técnico em campo (celular) | ok | ok | ok | ok (31/10 00:29; emenda pendente no cap05) | | | | |
 | T18 | Área do Técnico: Refrigeração e Climatização | A2 | | | | | | | |
 | T8 | Estoque, compras e inventário | A2 | | | | | | | |
 | T9 | Orçamentos, Precificação e Proposta | A2 | | | | | | | |
@@ -87,8 +87,13 @@ se for melhor (custa o mesmo que o v4 por caractere: fica o v4, voz do T3); fala
 | Lote | Aulas | Fluxo ElevenLabs | Situação |
 |---|---|---|---|
 | — | T0 | 1fUfJ2KZAxkHKnc8wwce (fluxo próprio) | exportado 30/10 22:12 |
-| V1 | T1, T4, T5, T7 (39,6 mil caracteres, 65 nós) | Tuop7qPrgwc8qdaVebww (fluxo único) | gerado, aguardando exportação |
+| V1 | T1, T4, T5, T7 (39,6 mil caracteres, 65 nós) | Tuop7qPrgwc8qdaVebww (fluxo único) | exportado 31/10 00:29; proc.py e títulos ok (semelhança 0,87 a 1,00) |
 | V2.. | demais | mesmo fluxo | |
+
+**Falas a refazer (próximo lote de voz, junto com o T18; o Kaik exporta uma vez):** T07 cap05, frase "O aplicativo
+deixa o vídeo mais leve antes de enviar." (em ~0:29; o ASR não ouve o "deixa" nem isolado; há tempo de fala para ele,
+então pode estar só fraco). Nó curto `T07 cap05 emenda` (~55 caracteres) + `emendar.py` antes de gravar o T7. As demais
+palavras fracas do V1 foram conferidas decodificando o trecho isolado: eram do ASR (números, nomes colados).
 
 **Créditos (Kaik, 30/10 23:16): 54.670 restantes** (de 121.000) → ~54 mil caracteres ≈ 55 a 60 min de fala ≈ 4 aulas.
 Gerar agora, na ordem da produção, só o que couber (T1, T4, T5, T7 se couber), com ~2 mil de reserva para regerar falas.
