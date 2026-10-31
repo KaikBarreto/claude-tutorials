@@ -46,7 +46,8 @@ body{font-family:M,sans-serif;color:var(--t);background:#ECEEF0;-webkit-font-smo
 .d{position:absolute;left:0;top:0;width:1280px;height:800px;transform-origin:0 0}
 .kick{font-weight:700;letter-spacing:.3em;color:var(--v);text-transform:uppercase}
 .selo{display:inline-flex;align-items:center;gap:.45em;border-radius:6px;font-weight:800;color:#fff;white-space:nowrap;line-height:1}
-.selo.v{background:var(--ve)}.selo.r{background:var(--vm)}
+.selo.v{background:#059669}.selo.r{background:#DC2626}
+.selo.v,.selo.r{border-radius:2px;letter-spacing:.04em}
 .lbl{font-weight:800;line-height:1.15}
 .sub2{font-weight:600;color:var(--c);line-height:1.3}
 /* tela real */
@@ -59,6 +60,9 @@ body{font-family:M,sans-serif;color:var(--t);background:#ECEEF0;-webkit-font-smo
 .real li:before{content:"";flex:none;width:.42em;height:.42em;border-radius:50%;background:var(--ve);margin-top:.42em}
 .real .foco{display:inline-flex;align-items:center;gap:.5em;background:var(--ve);color:#fff;font-weight:800;border-radius:5px}
 .real .orig{font-weight:700;color:#52525B}
+/* faixa da legenda do player (DomiflixWatch.tsx: bottom 15% no computador, 18% no celular) */
+.faixa{position:absolute;pointer-events:none;background:repeating-linear-gradient(135deg,rgba(245,158,11,.20) 0 14px,rgba(245,158,11,.08) 14px 28px);border-top:3px dashed rgba(217,119,6,.95);border-bottom:3px dashed rgba(217,119,6,.95)}
+.faixat{position:absolute;font:800 22px M,sans-serif;color:#7C2D12;background:#FDE68A;padding:2px 8px;border-radius:3px}
 /* guias do 9:16 */
 .guia{position:absolute;pointer-events:none;border-color:rgba(236,72,153,.85)}
 .guiat{position:absolute;font:700 22px M,sans-serif;color:rgba(236,72,153,.95);background:rgba(255,255,255,.85);padding:1px 6px;border-radius:3px}
@@ -71,8 +75,8 @@ function el(html, pai){const t=document.createElement('div');t.innerHTML=html.tr
 function ic(n,px,cor){const s=(D.icones||{})[n]||'';return `<span class="ic" style="width:${px}px;height:${px}px;${cor?'color:'+cor:''}">${s}</span>`}
 function tempo(s){const m=Math.floor(s/60),r=(s-60*m);return `${m}:${r.toFixed(1).padStart(4,'0').replace('.',',')}`}
 function selo(tipo,px){return tipo==='v'
-  ? `<span class="selo v" style="font-size:${px}px;padding:${px*.42}px ${px*.6}px">${ic('check',px*1.05,'#fff')}Tem no seu plano</span>`
-  : `<span class="selo r" style="font-size:${px}px;padding:${px*.42}px ${px*.6}px">${ic('x',px*1.05,'#fff')}Não tem no seu plano</span>`}
+  ? `<span class="selo v" style="font-size:${px}px;padding:${px*.42}px ${px*.6}px">${ic('check',px*1.05,'#fff')}TEM NO SEU PLANO</span>`
+  : `<span class="selo r" style="font-size:${px}px;padding:${px*.42}px ${px*.6}px">${ic('x',px*1.05,'#fff')}NÃO TEM NO SEU PLANO</span>`}
 const IMG=n=>D.imagens[n];
 
 // ---------------------------------------------------------------- palco + painel por formato
@@ -93,6 +97,14 @@ function palco9(f){
 }
 function painel9(f){ palco9(f); return el(`<div class="painel" style="left:36px;top:110px;width:1008px;height:1700px;border-radius:16px"></div>`,f) }
 // a cena no 9:16 usa coordenadas do quadro (1080x1920); o painel começa em (36,110)
+function faixa16(f){
+  el(`<div class="faixa" style="left:166px;width:1587px;top:800px;height:130px"></div>`,f);
+  el(`<div class="faixat" style="left:1500px;top:806px">legenda</div>`,f);
+}
+function faixa9(f){
+  el(`<div class="faixa" style="left:0;width:1080px;top:1420px;height:180px"></div>`,f);
+  el(`<div class="faixat" style="left:860px;top:1428px;font-size:28px">legenda</div>`,f);
+}
 function guias9(f){
   el(`<div class="guia" style="left:0;right:0;top:180px;border-top:3px dashed"></div>`,f);
   el(`<div class="guia" style="left:0;right:0;top:1740px;border-top:3px dashed"></div>`,f);
@@ -103,28 +115,28 @@ function guias9(f){
 }
 // --------------------------------------------------------------- tela real
 const NOVA=['R01','R02','R03','R04','R05','R06','R07','R08','R09','R10','R11','R12'];
-function origem(id){return NOVA.includes(id)?'DomiFlix nova (não publicada)':(id==='R13'?'existe na 1.38.9 (conferir na nova)':'já existe na 1.38.9')}
+function origem(id){return NOVA.includes(id)?'DomiFlix nova (1.38.11)':(id==='R15'?'página pública (sem mudança)':'sem mudança na 1.38.11')}
 function real16(f,c){
   palco16(f);
   const r=el(`<div class="real" style="left:166px;top:44px;width:1587px;height:992px;border-radius:16px;padding:70px 84px"></div>`,f);
   el(`<div class="row" style="gap:18px"><span class="tag" style="font-size:30px;padding:10px 18px">${ic('monitor',32,'#fff')}TELA REAL · ${c.real.id}</span>
       <span class="orig" style="font-size:26px">${origem(c.real.id)}</span></div>`,r);
-  el(`<div class="nome" style="margin-top:34px;font-size:68px">${c.real.nome}</div>`,r);
+  el(`<div class="nome" style="margin-top:34px;font-size:64px;max-width:1380px">${c.real.nome}</div>`,r);
   el(`<div class="pa" style="margin-top:40px;font-size:22px">Precisa aparecer</div>`,r);
-  const ul=el(`<ul style="margin-top:14px;display:flex;flex-direction:column;gap:12px;font-size:34px"></ul>`,r);
+  const ul=el(`<ul style="margin-top:14px;display:flex;flex-direction:column;gap:10px;font-size:31px;max-width:1400px"></ul>`,r);
   c.real.itens.forEach(x=>el(`<li>${x}</li>`,ul));
-  el(`<div class="foco" style="position:absolute;left:84px;bottom:64px;font-size:30px;padding:14px 22px">${ic('zoom-in',34,'#fff')}Câmera: ${c.real.foco}</div>`,r);
+  el(`<div class="foco" style="position:absolute;right:70px;top:66px;font-size:28px;padding:12px 20px">${ic('zoom-in',32,'#fff')}Câmera: ${c.real.foco}</div>`,r);
 }
 function real9(f,c){
   const p=painel9(f);
-  const r=el(`<div class="real" style="left:36px;top:130px;width:936px;height:1440px;border-radius:10px;padding:56px 48px"></div>`,p);
+  const r=el(`<div class="real" style="left:36px;top:130px;width:936px;height:1160px;border-radius:10px;padding:44px 44px"></div>`,p);
   el(`<span class="tag" style="font-size:34px;padding:12px 18px">${ic('smartphone',38,'#fff')}TELA REAL · ${c.real.id}</span>`,r);
   el(`<div class="orig" style="margin-top:20px;font-size:32px">${origem(c.real.id)}</div>`,r);
-  el(`<div class="nome" style="margin-top:34px;font-size:72px">${c.real.nome}</div>`,r);
-  el(`<div class="pa" style="margin-top:44px;font-size:28px">Precisa aparecer</div>`,r);
-  const ul=el(`<ul style="margin-top:16px;display:flex;flex-direction:column;gap:16px;font-size:44px"></ul>`,r);
+  el(`<div class="nome" style="margin-top:26px;font-size:62px">${c.real.nome}</div>`,r);
+  el(`<div class="pa" style="margin-top:30px;font-size:28px">Precisa aparecer</div>`,r);
+  const ul=el(`<ul style="margin-top:12px;display:flex;flex-direction:column;gap:10px;font-size:40px"></ul>`,r);
   c.real.itens.forEach(x=>el(`<li>${x}</li>`,ul));
-  el(`<div class="foco" style="position:absolute;left:48px;right:48px;bottom:56px;font-size:40px;padding:18px 24px;white-space:normal;line-height:1.2">${ic('zoom-in',46,'#fff')}<span>Celular, recorte ampliado (390 → 936 px): ${c.real.foco}</span></div>`,r);
+  el(`<div class="foco" style="position:absolute;left:44px;right:44px;bottom:40px;font-size:36px;padding:14px 20px;white-space:normal;line-height:1.2">${ic('zoom-in',42,'#fff')}<span>Celular, recorte ampliado (390 → 936 px): ${c.real.foco}</span></div>`,r);
 }
 // --------------------------------------------------------------- vinhetas, abertura e cartela
 function vinheta16(f,c){
@@ -178,48 +190,50 @@ function cartela9(f){
 const MOD_PLANO=['Gestão de Contratos e PMOC','Funcionários / RH'];
 const MOD_OUTROS=['CRM/Kanban','Emissão de Notas Fiscais','Cobranças online'];
 const ILU={};
+// 16:9: desenho em 1280x800 (painel x1,24); a faixa da legenda cobre y 610 a 714 do desenho: nada essencial ali.
+// 9:16: área segura 936x1560 (x 72, y 180 do quadro); a faixa da legenda cobre y 1240 a 1420 da área: nada essencial ali.
 ILU.ciclo={
-  h(d){ // 1280x800
-    el(`<div class="ab" style="left:0;top:58px;width:1280px;text-align:center;font-weight:800;font-size:56px;letter-spacing:-.01em">Boas-vindas à <span style="color:var(--v)">Dominex</span></div>`,d);
-    const cx=640,cy=470,R=205;
+  h(d){
+    el(`<div class="ab" style="left:0;top:36px;width:1280px;text-align:center;font-weight:800;font-size:52px;letter-spacing:-.01em">Boas-vindas à <span style="color:var(--v)">Dominex</span></div>`,d);
+    const cx=640,cy=360,R=160;
     el(`<svg class="ab" width="1280" height="800" style="left:0;top:0"><circle cx="${cx}" cy="${cy}" r="${R}" fill="none" stroke="#00C597" stroke-width="10"/></svg>`,d);
-    el(`<img class="ab" src="${IMG('helmet_green')}" style="left:${cx-62}px;top:${cy-66}px;width:124px">`,d);
+    el(`<img class="ab" src="${IMG('helmet_green')}" style="left:${cx-56}px;top:${cy-60}px;width:112px">`,d);
     [['phone-call','Chamado do cliente',0],['clipboard-list','Ordem de serviço',90],['hard-hat','Técnico em campo',180],['banknote','Dinheiro na conta',270]].forEach(([i,n,a])=>{
       const r=(a-90)*Math.PI/180,x=cx+R*Math.cos(r),y=cy+R*Math.sin(r);
       el(`<div class="ab" style="left:${x-36}px;top:${y-36}px;width:72px;height:72px;border-radius:50%;background:#fff;border:5px solid var(--v);display:flex;align-items:center;justify-content:center">${ic(i,32,'#00A27D')}</div>`,d);
-      const pos=a===0?`left:${x-220}px;top:${y-88}px;width:440px;text-align:center`:a===180?`left:${x-220}px;top:${y+48}px;width:440px;text-align:center`:
-        a===90?`left:${x+52}px;top:${y-18}px;width:320px`:`left:${x-372}px;top:${y-18}px;width:320px;text-align:right`;
+      const pos=a===0?`left:${x-220}px;top:${y-78}px;width:440px;text-align:center`:a===180?`left:${x-220}px;top:${y+44}px;width:440px;text-align:center`:
+        a===90?`left:${x+50}px;top:${y-18}px;width:330px`:`left:${x-372}px;top:${y-18}px;width:320px;text-align:right`;
       el(`<div class="ab lbl" style="${pos};font-size:30px">${n}</div>`,d);
     });
   },
-  v(b){ // área segura 936x1560 (x 72, y 180 do quadro)
+  v(b){
     el(`<div class="ab" style="left:0;top:20px;width:936px;font-weight:800;font-size:96px;line-height:1.05">Boas-vindas à<br><span style="color:var(--v)">Dominex</span></div>`,b);
     const L=[['phone-call','Chamado do cliente'],['clipboard-list','Ordem de serviço'],['hard-hat','Técnico em campo'],['banknote','Dinheiro na conta']];
-    el(`<svg class="ab" width="936" height="1560" style="left:0;top:0;overflow:visible"><path d="M80,420 V1080 H860 V290 H80 V330" fill="none" stroke="#00C597" stroke-width="12" stroke-linejoin="round"/>
+    el(`<svg class="ab" width="936" height="1560" style="left:0;top:0;overflow:visible"><path d="M80,400 V1000 H860 V290 H80 V330" fill="none" stroke="#00C597" stroke-width="12" stroke-linejoin="round"/>
         <path d="M52,312 l28,30 l28,-30" fill="none" stroke="#00C597" stroke-width="12" stroke-linejoin="round"/></svg>`,b);
-    L.forEach(([i,n],k)=>{const y=420+k*220;
+    L.forEach(([i,n],k)=>{const y=400+k*200;
       el(`<div class="ab" style="left:10px;top:${y-70}px;width:140px;height:140px;border-radius:50%;background:#fff;border:8px solid var(--v);display:flex;align-items:center;justify-content:center">${ic(i,64,'#00A27D')}</div>`,b);
       el(`<div class="ab lbl" style="left:200px;top:${y-62}px;width:600px;font-size:58px;line-height:1.08">${n}</div>`,b);});
-    el(`<img class="ab" src="${IMG('helmet_green')}" style="left:398px;top:1190px;width:140px">`,b);
+    el(`<img class="ab" src="${IMG('helmet_green')}" style="left:408px;top:1090px;width:120px">`,b);
   }};
 ILU.passos={
   h(d,c){
-    el(`<div class="ab" style="left:0;top:120px;width:1280px;text-align:center"><span class="selo v" style="font-size:26px;padding:12px 18px">${ic(c.d.selo==='Comece agora'?'play':'flag',28,'#fff')}${c.d.selo}</span></div>`,d);
-    el(`<svg class="ab" width="1280" height="800" style="left:0;top:0"><path d="M290,380 H990" stroke="#00C597" stroke-width="8"/></svg>`,d);
+    el(`<div class="ab" style="left:0;top:104px;width:1280px;text-align:center"><span class="selo v" style="font-size:26px;padding:12px 18px">${ic(c.d.selo==='Comece agora'?'play':'flag',28,'#fff')}${c.d.selo}</span></div>`,d);
+    el(`<svg class="ab" width="1280" height="800" style="left:0;top:0"><path d="M290,340 H990" stroke="#00C597" stroke-width="8"/></svg>`,d);
     c.d.itens.forEach(([i,n],k)=>{const x=290+k*350;
-      el(`<div class="ab" style="left:${x-60}px;top:320px;width:120px;height:120px;border-radius:50%;background:var(--v);display:flex;align-items:center;justify-content:center">${ic(i,58,'#fff')}</div>`,d);
-      el(`<div class="ab" style="left:${x-165}px;top:466px;width:330px;text-align:center"><div style="font-weight:800;font-size:24px;color:var(--ve)">${k+1}</div>
+      el(`<div class="ab" style="left:${x-60}px;top:280px;width:120px;height:120px;border-radius:50%;background:var(--v);display:flex;align-items:center;justify-content:center">${ic(i,58,'#fff')}</div>`,d);
+      el(`<div class="ab" style="left:${x-165}px;top:424px;width:330px;text-align:center"><div style="font-weight:800;font-size:24px;color:var(--ve)">${k+1}</div>
           <div class="lbl" style="font-size:34px;margin-top:6px">${n}</div></div>`,d);
-      if(c.d.barra&&k===0)el(`<div class="ab" style="left:${x-110}px;top:600px;width:220px;height:10px;border-radius:5px;background:var(--v)"></div>`,d);});
+      if(c.d.barra&&k===0)el(`<div class="ab" style="left:${x-110}px;top:556px;width:220px;height:10px;border-radius:5px;background:var(--v)"></div>`,d);});
   },
   v(b,c){
-    el(`<div class="ab" style="left:0;top:30px"><span class="selo v" style="font-size:44px;padding:20px 26px">${ic(c.d.selo==='Comece agora'?'play':'flag',48,'#fff')}${c.d.selo}</span></div>`,b);
-    el(`<svg class="ab" width="936" height="1560" style="left:0;top:0"><path d="M90,400 V1240" stroke="#00C597" stroke-width="12"/></svg>`,b);
-    c.d.itens.forEach(([i,n],k)=>{const y=400+k*420;
+    el(`<div class="ab" style="left:0;top:20px"><span class="selo v" style="font-size:44px;padding:20px 26px">${ic(c.d.selo==='Comece agora'?'play':'flag',48,'#fff')}${c.d.selo}</span></div>`,b);
+    el(`<svg class="ab" width="936" height="1560" style="left:0;top:0"><path d="M90,360 V1080" stroke="#00C597" stroke-width="12"/></svg>`,b);
+    c.d.itens.forEach(([i,n],k)=>{const y=360+k*360;
       el(`<div class="ab" style="left:0;top:${y-90}px;width:180px;height:180px;border-radius:50%;background:var(--v);display:flex;align-items:center;justify-content:center">${ic(i,86,'#fff')}</div>`,b);
       el(`<div class="ab" style="left:230px;top:${y-96}px;width:700px"><div style="font-weight:800;font-size:46px;color:var(--ve)">${k+1}</div>
           <div class="lbl" style="font-size:62px;margin-top:4px;line-height:1.08">${n}</div></div>`,b);
-      if(c.d.barra&&k===0)el(`<div class="ab" style="left:230px;top:${y+110}px;width:560px;height:18px;border-radius:9px;background:var(--v)"></div>`,b);});
+      if(c.d.barra&&k===0)el(`<div class="ab" style="left:230px;top:${y+104}px;width:560px;height:18px;border-radius:9px;background:var(--v)"></div>`,b);});
   }};
 ILU.teste={
   h(d){
@@ -228,7 +242,7 @@ ILU.teste={
     el(`<div class="ab" style="left:595px;top:274px">${ic('arrow-right',44,'#18181B')}</div>`,d);
     el(`<div class="ab row" style="left:660px;top:230px;width:510px;height:130px;background:var(--v);border-radius:8px;justify-content:center;gap:14px;color:#fff;font-weight:800;font-size:34px">${ic('badge-check',40,'#fff')}Assinatura ativa</div>`,d);
     el(`<div class="ab row" style="left:110px;top:400px;width:1060px;height:80px;background:var(--ve);border-radius:6px;justify-content:center;gap:12px;color:#fff;font-weight:800;font-size:30px">${ic('circle-check',34,'#fff')}Combinados confirmados</div>`,d);
-    el(`<div class="ab row" style="left:660px;top:540px;width:510px;gap:14px;font-weight:800;font-size:30px">${ic('circle-play',42,'#00A27D')}Vídeo já assistido ${ic('check',34,'#00A27D')}</div>`,d);
+    el(`<div class="ab row" style="left:660px;top:520px;width:510px;gap:14px;font-weight:800;font-size:30px">${ic('circle-play',42,'#00A27D')}Vídeo já assistido ${ic('check',34,'#00A27D')}</div>`,d);
   },
   v(b){
     el(`<div class="ab kick" style="left:0;top:20px;width:936px;font-size:36px;line-height:1.4">A confirmação<br>continua valendo</div>`,b);
@@ -239,45 +253,42 @@ ILU.teste={
     el(`<div class="ab" style="left:0;top:660px;width:936px;height:300px;background:var(--v);border-radius:10px;padding:40px 40px;color:#fff">
         <div class="row lbl" style="gap:20px;font-size:64px">${ic('badge-check',64,'#fff')}Assinatura ativa</div>
         <div style="margin-top:36px"><span class="selo v" style="font-size:44px;padding:18px 22px;background:#00805F">${ic('circle-check',46,'#fff')}Continua valendo</span></div></div>`,b);
-    el(`<div class="ab row lbl" style="left:0;top:1060px;width:936px;gap:22px;font-size:62px">${ic('circle-play',80,'#00A27D')}Vídeo já assistido</div>`,b);
+    el(`<div class="ab row lbl" style="left:0;top:1050px;width:936px;gap:22px;font-size:62px">${ic('circle-play',80,'#00A27D')}Vídeo já assistido</div>`,b);
   }};
 ILU.mapa={
   h(d,c){
     const ch=!!c.d.chave;
-    el(`<div class="ab" style="left:90px;top:84px;width:700px"><div class="kick" style="font-size:20px">Trilha</div>
+    el(`<div class="ab" style="left:90px;top:70px;width:700px"><div class="kick" style="font-size:20px">Trilha</div>
         <div class="lbl" style="margin-top:12px;font-size:54px">Tutoriais do sistema</div></div>`,d);
-    const y=330,G=[[90,420,'#00C597'],[470,800,'#00C597'],[850,1190,'#E02424']];
+    const y=250,G=[[90,420,'#00C597'],[470,800,'#00C597'],[850,1190,'#DC2626']];
     let svg=`<svg class="ab" width="1280" height="800" style="left:0;top:0">`;
     G.forEach(([a,b,cor])=>{svg+=`<path d="M${a},${y} H${b}" stroke="${cor}" stroke-width="12" stroke-linecap="round"/>`});
     svg+=`</svg>`;el(svg,d);
     G.forEach(([a,b,cor],k)=>{const n=k===0?5:6;for(let i=0;i<n;i++){const x=a+22+i*(b-a-44)/(n-1);const feita=k===0&&i<3||(ch&&k===2&&i===1);
       el(`<div class="ab" style="left:${x-17}px;top:${y-17}px;width:34px;height:34px;border-radius:50%;background:${feita?cor:'#fff'};border:6px solid ${cor};display:flex;align-items:center;justify-content:center">${feita?ic('check',18,'#fff'):''}</div>`,d)}});
-    const T=[[90,'1','Formação Básica','comum a todos os clientes',''],[470,'2','Módulos do seu plano','Contratos e PMOC · RH',selo('v',22)],[850,'3','Outros módulos','aulas liberadas para assistir',selo('r',22)]];
-    T.forEach(([x,n,a,b,s])=>el(`<div class="ab" style="left:${x}px;top:${y+44}px;width:340px"><div style="font-weight:800;font-size:24px;color:var(--ve)">${n}</div>
-        <div class="lbl" style="font-size:33px;margin-top:4px">${a}</div><div class="sub2" style="font-size:21px;margin-top:8px">${b}</div>${s?`<div style="margin-top:14px">${s}</div>`:''}</div>`,d));
+    const T=[[90,'1','Formação Básica','comum a todos os clientes',''],[470,'2','Módulos do seu plano','Contratos e PMOC · RH',selo('v',21)],[850,'3','Outros módulos',ch?'':'aulas liberadas para assistir',selo('r',21)]];
+    T.forEach(([x,n,a,b2,s])=>el(`<div class="ab" style="left:${x}px;top:${y+40}px;width:340px"><div style="font-weight:800;font-size:24px;color:var(--ve)">${n}</div>
+        <div class="lbl" style="font-size:31px;margin-top:4px">${a}</div>${b2?`<div class="sub2" style="font-size:20px;margin-top:6px">${b2}</div>`:''}${s?`<div style="margin-top:12px">${s}</div>`:''}</div>`,d));
     if(ch){
-      el(`<svg class="ab" width="1280" height="800" style="left:0;top:0"><path d="M90,616 v26 H800 v-26" fill="none" stroke="#00A27D" stroke-width="6"/></svg>`,d);
-      el(`<div class="ab lbl" style="left:90px;top:660px;width:710px;text-align:center;font-size:30px;color:var(--vt)">Contam no progresso</div>`,d);
-      el(`<div class="ab lbl" style="left:850px;top:660px;width:340px;font-size:30px;color:var(--vm)">Explorar à vontade</div>`,d);
-      el(`<div class="ab" style="left:900px;top:70px;text-align:right;width:290px"><div class="kick" style="font-size:18px">Progresso</div><div style="font-weight:800;font-size:72px">38%</div></div>`,d);
-    } else el(`<div class="ab sub2" style="left:90px;top:680px;font-size:24px">trilha → módulos → aulas (sem temporadas)</div>`,d);
+      el(`<svg class="ab" width="1280" height="800" style="left:0;top:0"><path d="M90,520 v22 H800 v-22" fill="none" stroke="#00A27D" stroke-width="6"/></svg>`,d);
+      el(`<div class="ab lbl" style="left:90px;top:556px;width:710px;text-align:center;font-size:30px;color:var(--vt)">Contam no progresso</div>`,d);
+      el(`<div class="ab lbl" style="left:850px;top:556px;width:340px;font-size:30px;color:#DC2626">Explorar à vontade</div>`,d);
+      el(`<div class="ab" style="left:900px;top:60px;text-align:right;width:290px"><div class="kick" style="font-size:18px">Progresso</div><div style="font-weight:800;font-size:72px">38%</div></div>`,d);
+    } else el(`<div class="ab sub2" style="left:90px;top:556px;font-size:24px">trilha → módulos → aulas (sem temporadas)</div>`,d);
   },
   v(b,c){
     const ch=!!c.d.chave;
     if(ch) el(`<div class="ab" style="left:0;top:10px"><div class="kick" style="font-size:36px">Progresso</div><div style="font-weight:800;font-size:120px;line-height:1">38%</div></div>`,b);
     else el(`<div class="ab" style="left:0;top:10px;width:936px"><div class="kick" style="font-size:36px">Trilha</div><div class="lbl" style="margin-top:14px;font-size:88px;line-height:1.05">Tutoriais do sistema</div></div>`,b);
-    const X=40,Y=[420,800,1180];
-    if(ch) el(`<svg class="ab" width="936" height="1560" style="left:0;top:0"><path d="M880,${Y[0]-40} H916 V${Y[1]+150} H880" fill="none" stroke="#00A27D" stroke-width="12"/></svg>`,b);
+    const X=40,Y=[360,690,1010];
     el(`<svg class="ab" width="936" height="1560" style="left:0;top:0"><path d="M${X},${Y[0]} V${Y[1]-50}" stroke="#00C597" stroke-width="14"/>
-       <path d="M${X},${Y[1]} V${Y[2]-50}" stroke="#00C597" stroke-width="14"/><path d="M${X},${Y[2]} V1530" stroke="#E02424" stroke-width="14"/></svg>`,b);
-    const T=[['1','Formação Básica','comum a todos os clientes',''],['2','Módulos do seu plano','',selo('v',42)],['3','Outros módulos','aulas liberadas',selo('r',42)]];
+       <path d="M${X},${Y[1]} V${Y[2]-50}" stroke="#00C597" stroke-width="14"/><path d="M${X},${Y[2]} V1200" stroke="#DC2626" stroke-width="14"/>
+       ${ch?`<path d="M880,${Y[0]-40} H916 V${Y[1]+150} H880" fill="none" stroke="#00A27D" stroke-width="12"/>`:''}</svg>`,b);
+    const T=[['1','Formação Básica','comum a todos os clientes',''],['2','Módulos do seu plano','',selo('v',42)],['3','Outros módulos',ch?'explorar à vontade':'aulas liberadas',selo('r',42)]];
     T.forEach(([n,a,d2,s],k)=>{const y=Y[k];
-      el(`<div class="ab" style="left:${X-40}px;top:${y-40}px;width:80px;height:80px;border-radius:50%;background:${k===2?'var(--vm)':'var(--v)'};color:#fff;font-weight:800;font-size:44px;display:flex;align-items:center;justify-content:center">${n}</div>`,b);
-      el(`<div class="ab" style="left:120px;top:${y-42}px;width:816px"><div class="lbl" style="font-size:62px">${a}</div>${d2?`<div class="sub2" style="font-size:46px;margin-top:10px">${d2}</div>`:''}${s?`<div style="margin-top:22px">${s}</div>`:''}</div>`,b);});
-    if(ch){
-      el(`<div class="ab lbl" style="left:120px;top:${Y[2]-150}px;font-size:46px;color:var(--vt)">Contam no progresso</div>`,b);
-      el(`<div class="ab lbl" style="left:120px;top:${Y[2]+270}px;font-size:46px;color:var(--vm)">Explorar à vontade</div>`,b);
-    }
+      el(`<div class="ab" style="left:${X-40}px;top:${y-40}px;width:80px;height:80px;border-radius:50%;background:${k===2?'#DC2626':'var(--v)'};color:#fff;font-weight:800;font-size:44px;display:flex;align-items:center;justify-content:center">${n}</div>`,b);
+      el(`<div class="ab" style="left:120px;top:${y-42}px;width:740px"><div class="lbl" style="font-size:62px">${a}</div>${d2?`<div class="sub2" style="font-size:46px;margin-top:8px;${ch&&k===2?'color:#DC2626;font-weight:800':''}">${d2}</div>`:''}${s?`<div style="margin-top:20px">${s}</div>`:''}</div>`,b);});
+    if(ch) el(`<div class="ab lbl" style="left:120px;top:${Y[1]+140}px;font-size:46px;color:var(--vt)">Contam no progresso</div>`,b);
   }};
 ILU.lembrete={
   h(d){
@@ -294,43 +305,43 @@ ILU.lembrete={
   },
   v(b){
     el(`<div class="ab" style="left:0;top:10px"><div class="kick" style="font-size:36px">Lembretes</div><div class="lbl" style="font-size:88px;margin-top:12px;line-height:1.05">Primeiros<br>30 dias</div></div>`,b);
-    const w=120,g=30,x0=33,y0=340,fim=21,sinos=[3,7,12,17];
+    const w=110,g=26,x0=73,y0=290,fim=21,sinos=[3,7,12,17];
     for(let i=1;i<=30;i++){const c=(i-1)%6,r=Math.floor((i-1)/6),x=x0+c*(w+g),y=y0+r*(w+g),on=i<=fim;
-      el(`<div class="ab" style="left:${x}px;top:${y}px;width:${w}px;height:${w}px;border-radius:8px;${on?'background:var(--v)':'border:5px solid #18181B'};display:flex;align-items:center;justify-content:center;font-weight:800;font-size:44px;color:${on?'#fff':'#18181B'}">${sinos.includes(i)?ic('bell-ring',60,on?'#fff':'#18181B'):i}</div>`,b);}
-    el(`<div class="ab" style="left:0;top:1140px;width:936px;height:36px;border-radius:18px;background:var(--v)"></div>`,b);
-    el(`<div class="ab row" style="left:0;top:1210px;width:936px;justify-content:space-between"><span class="lbl" style="font-size:48px;line-height:1.12">Formação Básica +<br>módulos do seu plano</span><span style="font-weight:800;font-size:88px;color:var(--vt)">100%</span></div>`,b);
+      el(`<div class="ab" style="left:${x}px;top:${y}px;width:${w}px;height:${w}px;border-radius:8px;${on?'background:var(--v)':'border:5px solid #18181B'};display:flex;align-items:center;justify-content:center;font-weight:800;font-size:42px;color:${on?'#fff':'#18181B'}">${sinos.includes(i)?ic('bell-ring',56,on?'#fff':'#18181B'):i}</div>`,b);}
+    el(`<div class="ab" style="left:0;top:990px;width:936px;height:34px;border-radius:17px;background:var(--v)"></div>`,b);
+    el(`<div class="ab row" style="left:0;top:1056px;width:936px;justify-content:space-between"><span class="lbl" style="font-size:48px;line-height:1.12">Formação Básica +<br>módulos do seu plano</span><span style="font-weight:800;font-size:88px;color:var(--vt)">100%</span></div>`,b);
   }};
 ILU.trilhas={
   h(d){
-    el(`<div class="ab" style="left:100px;top:170px;width:480px;height:460px;background:var(--v);border-radius:8px;padding:44px 44px;color:#fff">
-        ${ic('graduation-cap',70,'#fff')}<div class="kick" style="font-size:18px;color:#fff;margin-top:28px">Trilha</div><div class="lbl" style="font-size:52px;margin-top:10px">Tutoriais do sistema</div>
-        <div style="margin-top:30px"><span class="selo" style="background:#18181B;font-size:24px;padding:11px 15px">${ic('target',26,'#fff')}Primeiro foco</span></div></div>`,d);
-    [['Gestão',170],['Contabilidade',410]].forEach(([n,y])=>el(`<div class="ab" style="left:630px;top:${y}px;width:550px;height:220px;border:5px dashed #18181B;border-radius:8px;padding:36px 40px">
-        <div class="kick" style="font-size:16px;color:#18181B">Trilha</div><div class="lbl" style="font-size:42px;margin-top:10px">${n}</div>
-        <div style="margin-top:22px"><span class="selo" style="background:#fff;color:#18181B;border:3px solid #18181B;font-size:22px;padding:9px 13px">${ic('clock',24,'#18181B')}No futuro</span></div></div>`,d));
+    el(`<div class="ab" style="left:100px;top:170px;width:480px;height:410px;background:var(--v);border-radius:8px;padding:38px 42px;color:#fff">
+        ${ic('graduation-cap',62,'#fff')}<div class="kick" style="font-size:18px;color:#fff;margin-top:22px">Trilha</div><div class="lbl" style="font-size:50px;margin-top:10px">Tutoriais do sistema</div>
+        <div style="margin-top:26px"><span class="selo" style="background:#18181B;font-size:24px;padding:11px 15px">${ic('target',26,'#fff')}Primeiro foco</span></div></div>`,d);
+    [['Gestão',170],['Contabilidade',385]].forEach(([n,y])=>el(`<div class="ab" style="left:630px;top:${y}px;width:550px;height:195px;border:5px dashed #18181B;border-radius:8px;padding:30px 40px">
+        <div class="kick" style="font-size:16px;color:#18181B">Trilha</div><div class="lbl" style="font-size:40px;margin-top:8px">${n}</div>
+        <div style="margin-top:18px"><span class="selo" style="background:#fff;color:#18181B;border:3px solid #18181B;font-size:22px;padding:8px 13px">${ic('clock',24,'#18181B')}No futuro</span></div></div>`,d));
   },
   v(b){
-    el(`<div class="ab" style="left:0;top:10px;width:936px;height:600px;background:var(--v);border-radius:10px;padding:56px 56px;color:#fff">
-        ${ic('graduation-cap',100,'#fff')}<div class="kick" style="font-size:34px;color:#fff;margin-top:30px">Trilha</div><div class="lbl" style="font-size:84px;margin-top:12px;line-height:1.05">Tutoriais do sistema</div>
-        <div style="margin-top:34px"><span class="selo" style="background:#18181B;font-size:44px;padding:16px 22px">${ic('target',46,'#fff')}Primeiro foco</span></div></div>`,b);
-    [['Gestão',700],['Contabilidade',1060]].forEach(([n,y])=>el(`<div class="ab" style="left:0;top:${y}px;width:936px;height:300px;border:7px dashed #18181B;border-radius:10px;padding:46px 50px">
-        <div class="lbl" style="font-size:68px">${n}</div>
-        <div style="margin-top:32px"><span class="selo" style="background:#fff;color:#18181B;border:4px solid #18181B;font-size:44px;padding:14px 20px">${ic('clock',46,'#18181B')}No futuro</span></div></div>`,b));
+    el(`<div class="ab" style="left:0;top:10px;width:936px;height:540px;background:var(--v);border-radius:10px;padding:44px 50px;color:#fff">
+        ${ic('graduation-cap',80,'#fff')}<div class="kick" style="font-size:32px;color:#fff;margin-top:24px">Trilha</div><div class="lbl" style="font-size:80px;margin-top:10px;line-height:1.05">Tutoriais do sistema</div>
+        <div style="margin-top:28px"><span class="selo" style="background:#18181B;font-size:42px;padding:14px 20px">${ic('target',44,'#fff')}Primeiro foco</span></div></div>`,b);
+    [['Gestão',610],['Contabilidade',890]].forEach(([n,y])=>el(`<div class="ab" style="left:0;top:${y}px;width:936px;height:240px;border:7px dashed #18181B;border-radius:10px;padding:34px 46px">
+        <div class="lbl" style="font-size:64px">${n}</div>
+        <div style="margin-top:22px"><span class="selo" style="background:#fff;color:#18181B;border:4px solid #18181B;font-size:42px;padding:12px 18px">${ic('clock',44,'#18181B')}No futuro</span></div></div>`,b));
   }};
 const MODS=[['layers','Módulo Básico',1],['users','Portal do Cliente',1],['receipt','Precificação Avançada',1],['video','Perguntas em Vídeo',1],
   ['file-signature','Gestão de Contratos e PMOC',1],['user-round','Funcionários / RH',1],['trending-up','CRM/Kanban',0],['file-text','Emissão de Notas Fiscais',0],['palette','White Label',0]];
 ILU.modulos={
   h(d){
-    el(`<div class="ab row" style="left:0;top:90px;width:1280px;justify-content:center;gap:18px"><span class="selo" style="background:#fff;color:#18181B;border:3px solid #18181B;font-size:24px;padding:10px 14px">${ic('hourglass',26,'#18181B')}Período de teste: todos</span>${ic('arrow-right',36,'#18181B')}<span class="selo v" style="font-size:24px;padding:12px 16px">${ic('badge-check',26,'#fff')}Seu plano</span></div>`,d);
-    MODS.forEach(([i,n,on],k)=>{const x=110+(k%3)*370,y=220+Math.floor(k/3)*160;
+    el(`<div class="ab row" style="left:0;top:90px;width:1280px;justify-content:center;gap:18px"><span class="selo" style="background:#fff;color:#18181B;border:3px solid #18181B;font-size:24px;padding:10px 14px">${ic('hourglass',26,'#18181B')}Período de teste: todos</span>${ic('arrow-right',36,'#18181B')}<span class="selo" style="background:var(--ve);font-size:24px;padding:12px 16px">${ic('badge-check',26,'#fff')}Seu plano</span></div>`,d);
+    MODS.forEach(([i,n,on],k)=>{const x=110+(k%3)*370,y=200+Math.floor(k/3)*130;
       el(`<div class="ab row" style="left:${x}px;top:${y}px;width:350px;gap:18px"><div style="width:80px;height:80px;flex:none;border-radius:8px;${on?'background:var(--v)':'border:4px solid #18181B'};display:flex;align-items:center;justify-content:center">${ic(on?i:'plus',40,on?'#fff':'#18181B')}</div>
           <div class="lbl" style="font-size:26px">${n}</div></div>`,d)});
   },
   v(b){
-    el(`<div class="ab" style="left:0;top:10px"><span class="selo v" style="font-size:46px;padding:18px 24px">${ic('badge-check',48,'#fff')}Seu plano</span></div>`,b);
-    el(`<div class="ab sub2" style="left:0;top:130px;width:936px;font-size:46px">No teste, todos ficam liberados</div>`,b);
-    MODS.forEach(([i,n,on],k)=>{const y=250+k*136;
-      el(`<div class="ab row" style="left:0;top:${y}px;width:936px;gap:28px"><div style="width:104px;height:104px;flex:none;border-radius:10px;${on?'background:var(--v)':'border:6px solid #18181B'};display:flex;align-items:center;justify-content:center">${ic(on?i:'plus',54,on?'#fff':'#18181B')}</div>
+    el(`<div class="ab" style="left:0;top:10px"><span class="selo" style="background:var(--ve);font-size:46px;padding:18px 24px">${ic('badge-check',48,'#fff')}Seu plano</span></div>`,b);
+    el(`<div class="ab sub2" style="left:0;top:124px;width:936px;font-size:46px">No teste, todos ficam liberados</div>`,b);
+    MODS.forEach(([i,n,on],k)=>{const y=210+k*110;
+      el(`<div class="ab row" style="left:0;top:${y}px;width:936px;gap:26px"><div style="width:92px;height:92px;flex:none;border-radius:10px;${on?'background:var(--v)':'border:6px solid #18181B'};display:flex;align-items:center;justify-content:center">${ic(on?i:'plus',48,on?'#fff':'#18181B')}</div>
           <div class="lbl" style="font-size:46px">${n}</div></div>`,b)});
   }};
 ILU.ciclo_pag={
@@ -344,27 +355,27 @@ ILU.ciclo_pag={
       el(`<div class="ab selo" style="left:484px;top:258px;background:#18181B;font-size:22px;padding:9px 15px">Hoje</div>`,d);
       el(`<div class="ab sub2" style="left:140px;top:474px;font-size:22px">Início do ciclo</div><div class="ab sub2" style="left:980px;top:474px;width:160px;text-align:right;font-size:22px">Vencimento</div>`,d);
     } else if(v===2){
-      el(`<div class="ab row" style="left:140px;top:160px;gap:18px"><span class="selo" style="background:#fff;color:#00805F;border:4px solid var(--v);font-size:26px;padding:10px 16px">${ic('circle-check',28,'#00805F')}Pagamento confirmado</span>${ic('arrow-right',38,'#18181B')}<span class="selo v" style="font-size:28px;padding:12px 18px">${ic('sparkles',28,'#fff')}Liberado</span></div>`,d);
+      el(`<div class="ab row" style="left:140px;top:160px;gap:18px"><span class="selo" style="background:#fff;color:#00805F;border:4px solid var(--v);font-size:26px;padding:10px 16px">${ic('circle-check',28,'#00805F')}Pagamento confirmado</span>${ic('arrow-right',38,'#18181B')}<span class="selo" style="background:var(--ve);font-size:28px;padding:12px 18px">${ic('sparkles',28,'#fff')}Liberado</span></div>`,d);
       el(`<div class="ab row" style="left:140px;top:300px;width:1000px;height:80px;background:var(--v);border-radius:8px;justify-content:center;color:#fff;font-weight:800;font-size:30px">Recursos novos liberados</div>`,d);
-      el(`<div class="ab lbl" style="left:140px;top:450px;font-size:28px">Próxima renovação</div>`,d);
-      el(`<div class="ab row" style="left:140px;top:498px;width:1000px;height:86px;border:5px solid var(--v);border-radius:8px;justify-content:center;font-weight:800;font-size:32px;color:var(--vt)">Valor do plano novo</div>`,d);
+      el(`<div class="ab lbl" style="left:140px;top:440px;font-size:28px">Próxima renovação</div>`,d);
+      el(`<div class="ab row" style="left:140px;top:488px;width:1000px;height:86px;border:5px solid var(--v);border-radius:8px;justify-content:center;font-weight:800;font-size:32px;color:var(--vt)">Valor do plano novo</div>`,d);
     } else {
-      el(`<div class="ab" style="left:140px;top:140px"><span class="selo" style="background:#fff;color:#18181B;border:4px solid #18181B;font-size:26px;padding:10px 16px">${ic('minus',28,'#18181B')}Reduzir o plano</span></div>`,d);
-      el(`<div class="ab lbl" style="left:140px;top:262px;font-size:28px">Ciclo atual</div>`,d);
-      el(`<div class="ab row" style="left:140px;top:308px;width:1000px;height:90px;background:var(--v);border-radius:8px;justify-content:center;gap:12px;color:#fff;font-weight:800;font-size:32px">${ic('circle-check',34,'#fff')}Tudo liberado até o vencimento</div>`,d);
-      el(`<div class="ab row" style="left:140px;top:462px;gap:16px"><span class="lbl" style="font-size:28px">Próximo ciclo</span><span class="selo" style="background:var(--am);color:#18181B;font-size:20px;padding:8px 12px">Mudança de valor agendada</span></div>`,d);
-      el(`<div class="ab row" style="left:140px;top:516px;width:640px;height:86px;border:5px dashed #18181B;border-radius:8px;justify-content:center;font-weight:800;font-size:32px">Valor menor</div>`,d);
+      el(`<div class="ab" style="left:140px;top:130px"><span class="selo" style="background:#fff;color:#18181B;border:4px solid #18181B;font-size:26px;padding:10px 16px">${ic('minus',28,'#18181B')}Reduzir o plano</span></div>`,d);
+      el(`<div class="ab lbl" style="left:140px;top:250px;font-size:28px">Ciclo atual</div>`,d);
+      el(`<div class="ab row" style="left:140px;top:296px;width:1000px;height:90px;background:var(--v);border-radius:8px;justify-content:center;gap:12px;color:#fff;font-weight:800;font-size:32px">${ic('circle-check',34,'#fff')}Tudo liberado até o vencimento</div>`,d);
+      el(`<div class="ab row" style="left:140px;top:440px;gap:16px"><span class="lbl" style="font-size:28px">Próximo ciclo</span><span class="selo" style="background:var(--am);color:#18181B;font-size:20px;padding:8px 12px">Mudança de valor agendada</span></div>`,d);
+      el(`<div class="ab row" style="left:140px;top:494px;width:640px;height:86px;border:5px dashed #18181B;border-radius:8px;justify-content:center;font-weight:800;font-size:32px">Valor menor</div>`,d);
     }
   },
   v(b,c){
     const v=c.d.v;
     if(v===1){
       el(`<div class="ab" style="left:0;top:10px"><span class="selo" style="background:#fff;color:#00805F;border:6px solid var(--v);font-size:46px;padding:18px 24px">${ic('plus',48,'#00805F')}Módulo novo</span></div>`,b);
-      el(`<div class="ab sub2" style="left:300px;top:190px;font-size:44px">Início do ciclo</div>`,b);
-      el(`<div class="ab row" style="left:300px;top:260px;width:600px;height:300px;border:7px solid #18181B;border-radius:10px 10px 0 0;justify-content:center;font-weight:800;font-size:56px">Já pago</div>`,b);
-      el(`<div class="ab" style="left:300px;top:560px;width:600px;height:640px;background:var(--v);border-radius:0 0 10px 10px;display:flex;align-items:center;justify-content:center;text-align:center;color:#fff;font-weight:800;font-size:56px;line-height:1.15;padding:0 30px">Cobrança proporcional hoje</div>`,b);
-      el(`<div class="ab" style="left:0;top:554px;width:900px;height:12px;background:#18181B"></div><div class="ab selo" style="left:0;top:470px;background:#18181B;font-size:46px;padding:16px 22px">Hoje</div>`,b);
-      el(`<div class="ab sub2" style="left:300px;top:1230px;font-size:44px">Vencimento</div>`,b);
+      el(`<div class="ab sub2" style="left:300px;top:150px;font-size:44px">Início do ciclo</div>`,b);
+      el(`<div class="ab row" style="left:300px;top:220px;width:600px;height:280px;border:7px solid #18181B;border-radius:10px 10px 0 0;justify-content:center;font-weight:800;font-size:56px">Já pago</div>`,b);
+      el(`<div class="ab" style="left:300px;top:500px;width:600px;height:560px;background:var(--v);border-radius:0 0 10px 10px;display:flex;align-items:center;justify-content:center;text-align:center;color:#fff;font-weight:800;font-size:56px;line-height:1.15;padding:0 30px">Cobrança proporcional hoje</div>`,b);
+      el(`<div class="ab" style="left:0;top:494px;width:900px;height:12px;background:#18181B"></div><div class="ab selo" style="left:0;top:410px;background:#18181B;font-size:46px;padding:16px 22px">Hoje</div>`,b);
+      el(`<div class="ab sub2" style="left:300px;top:1090px;font-size:44px">Vencimento</div>`,b);
     } else if(v===2){
       el(`<div class="ab" style="left:0;top:10px"><span class="selo" style="background:#fff;color:#00805F;border:6px solid var(--v);font-size:46px;padding:18px 24px">${ic('circle-check',48,'#00805F')}Pagamento confirmado</span></div>`,b);
       el(`<div class="ab" style="left:418px;top:160px">${ic('arrow-down',100,'#18181B')}</div>`,b);
@@ -383,14 +394,14 @@ ILU.ciclo_pag={
 const COMB=[['Formação Básica e módulos do plano','na ordem indicada'],['Dúvida depois da aula?','suporte pela própria aula'],['Plano e pagamentos','tela Assinatura']];
 ILU.combinados={
   h(d,c){
-    el(`<div class="ab" style="left:150px;top:90px"><div class="kick" style="font-size:20px">Recapitulando</div><div class="lbl" style="font-size:56px;margin-top:10px">Os combinados</div></div>`,d);
-    COMB.slice(0,c.d.n).forEach(([a,b2],k)=>{const y=260+k*150;
+    el(`<div class="ab" style="left:150px;top:80px"><div class="kick" style="font-size:20px">Recapitulando</div><div class="lbl" style="font-size:56px;margin-top:10px">Os combinados</div></div>`,d);
+    COMB.slice(0,c.d.n).forEach(([a,b2],k)=>{const y=230+k*120;
       el(`<div class="ab row" style="left:150px;top:${y}px;width:1000px;gap:30px"><div style="width:80px;height:80px;flex:none;border-radius:50%;background:var(--v);display:flex;align-items:center;justify-content:center">${ic('check',44,'#fff')}</div>
-          <div><div class="lbl" style="font-size:38px">${a}</div><div style="font-weight:700;font-size:28px;color:var(--vt);margin-top:6px">${b2}</div></div></div>`,d)});
+          <div><div class="lbl" style="font-size:38px">${a}</div><div style="font-weight:700;font-size:26px;color:var(--vt);margin-top:4px">${b2}</div></div></div>`,d)});
   },
   v(b,c){
     el(`<div class="ab" style="left:0;top:10px"><div class="kick" style="font-size:36px">Recapitulando</div><div class="lbl" style="font-size:96px;margin-top:12px;line-height:1.05">Os combinados</div></div>`,b);
-    COMB.slice(0,c.d.n).forEach(([a,b2],k)=>{const y=330+k*370;
+    COMB.slice(0,c.d.n).forEach(([a,b2],k)=>{const y=300+k*340;
       el(`<div class="ab row" style="left:0;top:${y}px;width:936px;gap:32px;align-items:flex-start"><div style="width:110px;height:110px;flex:none;border-radius:50%;background:var(--v);display:flex;align-items:center;justify-content:center">${ic('check',62,'#fff')}</div>
           <div><div class="lbl" style="font-size:60px;line-height:1.1">${a}</div><div style="font-weight:700;font-size:46px;color:var(--vt);margin-top:12px">${b2}</div></div></div>`,b)});
   }};
@@ -403,9 +414,11 @@ function quadro(c,fmt){
   if(fmt==='16x9'){
     if(t==='real')real16(f,c);else if(t==='vinheta')vinheta16(f,c);else if(t==='abertura')abertura16(f);else if(t==='cartela')cartela16(f);
     else{const d=painel16(f);ILU[t].h(d,c)}
+    if(t!=='abertura'&&t!=='cartela')faixa16(f);
   }else{
     if(t==='real')real9(f,c);else if(t==='vinheta')vinheta9(f,c);else if(t==='abertura')abertura9(f);else if(t==='cartela')cartela9(f);
     else{painel9(f);ILU[t].v(el(`<div class="ab" style="left:72px;top:180px;width:936px;height:1560px"></div>`,f),c)}
+    if(t!=='abertura'&&t!=='cartela')faixa9(f);
     guias9(f);
   }
   return f;
@@ -416,9 +429,10 @@ window.monta=function(fmt,so){
   const qw=Math.round(W*esc),qh=Math.round(H*esc);
   const cab=el(`<div class="cab"></div>`,F);
   el(`<div><h1>Domiflix T0 v2 · Boas-vindas à Dominex · <b>storyboard ${fmt==='16x9'?'16:9 (1920×1080)':'9:16 (1080×1920)'}</b></h1>
-      <div class="sub">Para aprovação do Kaik · 31/10/2026 · ${D.cenas.length} cenas · duração estimada ${tempo(D.total)} · roteiro e tempos: roteiro.md · telas: telas_necessarias.md · dúvidas: sinalizacoes.md</div></div>`,cab);
+      <div class="sub">Para aprovação do Kaik · 31/10/2026 · conferido na 1.38.11 + DomiFlix 487a0ca3 · ${D.cenas.length} cenas · duração estimada ${tempo(D.total)} · roteiro e tempos: roteiro.md · telas: telas_necessarias.md · dúvidas: sinalizacoes.md</div></div>`,cab);
   const lg=el(`<div class="leg"></div>`,cab);
-  el(`<div class="row"><span class="chip k-real">TELA REAL</span> retângulo no lugar da tela real (a DomiFlix nova não está publicada; nada de interface desenhada)</div>`,lg);
+  el(`<div class="row"><span class="chip k-real">TELA REAL</span> retângulo no lugar da tela real (DomiFlix nova na 1.38.11: capturar no app; nada de interface desenhada)</div>`,lg);
+  el(`<div class="row"><span class="chip" style="background:#F59E0B;color:#7C2D12">LEGENDA</span> faixa onde o player da DomiFlix desenha a legenda, ligada por padrão (${fmt==='16x9'?'y 800 a 930':'y 1420 a 1600'}): nada essencial ali</div>`,lg);
   el(`<div class="row"><span class="chip k-ilu">ILUSTRAÇÃO</span> só conceito · <span class="chip k-vin">VINHETA</span> identidade · <span class="chip k-conf">C1</span> confirmar (sinalizacoes.md) · cada quadro mostra o fim da cena</div>`,lg);
   if(fmt==='9x16')el(`<div class="row"><span class="chip" style="background:#EC4899">GUIAS</span> margem lateral de 72 px e faixas de 180 px em cima e embaixo: nada importante fora delas; texto mínimo 44 px (≈ 16 px num celular de 390 px)</div>`,lg);
   else el(`<div class="row">Selos desenhados como o Kaik pediu (saturados, ícone e texto brancos); na edição, entra o recorte do selo real.</div>`,lg);

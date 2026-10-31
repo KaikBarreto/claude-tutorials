@@ -4,14 +4,21 @@
 obrigatório do onboarding e mostra a DomiFlix nova. Nesta etapa só roteiro, storyboard e lista de telas: **nada de voz
 nem vídeo antes do ok**. Base: o T0 atual (3:25, aprovado em 30/10; `../T00/plano.md` e a área `$TUT_HOME/t0`).
 
+**Conferido na DomiFlix publicada (1.38.11 + `487a0ca3`, 31/10 19:29).** O que o código novo mudou neste roteiro: a frase do
+botão do suporte (cena 22: ele abre o WhatsApp com a mensagem pronta, não envia sozinho); os rótulos reais nas telas
+(cenas 07 a 12, 15, 17, 21, 22 e 38: "Aprenda a usar a Dominex", "Trilha do seu plano", "Formação básica", "Materiais e
+extras", "Adicionar ao meu plano", "Confirmar e começar a primeira aula"); no celular, os selos vêm da gaveta "Ver trilha";
+e a faixa onde o player desenha a legenda (ver "Composição"). As frases do Kaik ficaram letra por letra; onde a tela usa
+outro rótulo, está marcado (decisão D8 em `sinalizacoes.md`).
+
 Nesta pasta:
 - `roteiro.md` (este): cenas numeradas com tempo, fala (texto final da legenda) e composição 16:9 e 9:16.
 - `storyboard_16x9.png` e `storyboard_9x16.png`: um quadro por cena. Fonte em `storyboard/` (`cenas.py` calcula os tempos e
   escreve as tabelas de duração e de cenas deste roteiro; `render.cjs` desenha as folhas).
 - `narracao/tts_textos.py` e `narracao/config_narracao.json`: o texto da voz (grafia de pronúncia) e as trocas da legenda.
 - `telas_necessarias.md`: as telas reais (R01 a R18), com estado, dados fictícios e cena.
-- `sinalizacoes.md`: o que mudou de plano, cobrança e funcionamento, o que precisa de confirmação (C1 a C17) e as decisões
-  (D1 a D6).
+- `sinalizacoes.md`: o que mudou de plano, cobrança e funcionamento, o que o código confirmou e o que segue aberto (C1 a C16)
+  e as decisões (D1 a D8).
 
 ## Ficha
 - **Título:** Boas-vindas à Dominex (o mesmo). **Vinhetas:** COMEÇANDO (2) · AJUDA · ASSINATURA (2) · RECAPITULANDO.
@@ -19,10 +26,11 @@ Nesta pasta:
   cena. Mesma fala, trilha e duração nos dois; só a imagem muda. H.264 + AAC; SRT e VTT de cada versão.
 - **Voz:** Fernanda (eleven_v4), como no T0. `voz: nova` = gerar; `voz: T0` = áudio do T0 atual reaproveitado (texto
   idêntico letra por letra; `python3 narracao/tts_textos.py diff` confere).
-- **Caracteres:** roteiro inteiro **3.587** (3.464 de fala + 123 dos títulos). A gerar: **2.445** (capítulos 0, 1, 2, 3
+- **Caracteres:** roteiro inteiro **3.575** (3.452 de fala + 123 dos títulos). A gerar: **2.433** (capítulos 0, 1, 2, 3
   e 6 + os títulos 2 e 6), reaproveitando os capítulos 4 e 5 e quatro títulos do T0 atual (decisão D5).
-- **Duração estimada: 4:28** (fala nova a 2,6 palavras/s); no ritmo que a Fernanda teve no T0 atual, ~4:12. Conta abaixo.
-- **Marcas:** `[confirmar Cn]` = afirmação que o código publicado (1.38.9) não confirma (`sinalizacoes.md`);
+- **Duração estimada: 4:27** (fala nova a 2,6 palavras/s); no ritmo que a Fernanda teve no T0 atual, ~4:11. Conta abaixo.
+- **Marcas:** `[confirmar Cn]` = ponto que o código publicado (1.38.11) não fecha sozinho: catálogo, comercial ou frase
+  ajustada que o Kaik precisa ver (`sinalizacoes.md`);
   `TELA REAL Rnn` = tela real a capturar (`telas_necessarias.md`). Nenhuma interface desenhada: onde vai tela real, o
   storyboard tem um retângulo "TELA REAL" com o que precisa aparecer. Ilustração só para conceito.
 - **Fala:** as frases que o Kaik deu entre aspas (itens 1, 3 e 7) estão letra por letra. O resto segue o perfil: fala
@@ -38,13 +46,13 @@ Nesta pasta:
 | 5. Só Formação Básica e módulos contratados no percentual | Cenas 15 e 16 | Frases novas |
 | 6. Lembretes nos primeiros 30 dias | Cena 17 | Frase nova |
 | 7. "Você não precisa esperar uma reunião..." | Cena 20 (e o combinado da cena 36) | Frase do Kaik, letra por letra |
-| 8. "Tirar dúvidas com o suporte" envia empresa, usuário, módulo e aula | Cenas 21 e 22 | Tela real |
+| 8. "Tirar dúvidas com o suporte" envia empresa, usuário, módulo e aula | Cenas 21 e 22 | Tela real; a fala segue o código: o WhatsApp abre com a mensagem pronta |
 | 9. Outras trilhas no futuro (gestão, contabilidade), foco na Tutoriais do sistema | Cena 18 | Frase nova |
 | Manter suporte, assinatura e crescimento | cap03, cap04, cap05 | cap04 e cap05 sem mudar uma palavra; cap03 só no necessário |
 | Telas reais, selos saturados, sem temporadas, ordem dos grupos | todas as cenas de tela | R01 a R18 |
 | 9:16 nativo com as regras de composição | coluna 9:16 de cada cena | ver "Composição" |
 | Logo DomiFlix todo branco no escuro | vinheta e cartela | decisão D1 |
-| 4:00 a 4:30 | | 4:28 estimado (4:12 no ritmo real) |
+| 4:00 a 4:30 | | 4:27 estimado (4:11 no ritmo real) |
 
 ## Mapa dos capítulos (v2 ← T0 atual)
 | v2 | Vinheta (título) | Área | T0 atual | Fala | Título falado |
@@ -87,16 +95,24 @@ da conta (cena 13, ~6 s): a DomiFlix nova já indica a próxima aula e o menu ap
   legendas do perfil.
 - **Tela real:** a gravação ocupa o painel inteiro, como nas aulas com tela, com a câmera v2 (zoom no que a fala cita) e
   destaques com o rótulo exato. Dados do mundo fictício (Glacial Cold Brasil, Camila Duarte); valores em R$ cobertos.
+- **Faixa da legenda:** o player da DomiFlix desenha a legenda dentro do vídeo, a 15% do pé no computador
+  (`src/pages/DomiflixWatch.tsx:1446-1452`), e a primeira legenda enviada já vem ligada. No quadro 1920×1080, a faixa vai de
+  **y 800 a 930**: nada essencial ali (marcada em laranja nas folhas).
 - **Ilustração**, só para conceito, com o ajuste de estilo pedido: menos cartões e cantos arredondados, nada de fundo
   acinzentado nem barras-fantasma; texto grande, ícone, linha e cor saturada. Selos sempre saturados, ícone e texto brancos.
 
 ### 9:16 (nativo, recomposto cena a cena)
 - Palco escuro e painel claro de 1008×1700 (x 36, y 110). Conteúdo só na área segura: **x 72 a 1008 e y 180 a 1740** (guias
-  magenta nas folhas). Os 180 px de baixo também ficam livres para a legenda do player.
+  magenta nas folhas).
+- **Faixa da legenda:** no celular o player desenha a legenda a 18% do pé do vídeo vertical: **y 1420 a 1600** do quadro.
+  Nada essencial ali (marcada em laranja). Na prática, o conteúdo vai de y 180 a ~1400.
+- **É a "Versão para celular" da aula:** em tela menor que 1024 px a DomiFlix troca sozinha o vídeo horizontal pelo
+  vertical, inclusive na introdução obrigatória (`DomiflixWatch.tsx:480`; `DomiflixIntroGate.tsx:42`).
 - **Um assunto por vez:** o que no 16:9 aparece junto entra em sequência, preso à palavra da fala.
 - Texto mínimo **44 px** (≈ 16 px num celular de 390 px de largura); títulos de 88 a 112 px; **no máximo 2 linhas** por bloco.
 - **Tela real = captura do celular** (viewport 390×844), recortada na área que a fala cita e ampliada 2,4× (390 → 936 px).
-  Nunca o print do computador reduzido. A lista de aulas é a da interface mobile real da DomiFlix.
+  Nunca o print do computador reduzido. A lista de aulas é a da interface mobile real da DomiFlix: na página inicial do
+  celular não há selos; os selos e a trilha com as aulas vêm da gaveta "Ver trilha", dentro da aula.
 - Grupos e comparações sempre na vertical: Formação Básica em cima, módulos do plano no meio, outros módulos embaixo.
 
 ## Cenas
@@ -276,7 +292,7 @@ palavras do `capNN.json`, como no T0 atual.
 
 - **16:9:** O que abre: a conversa do WhatsApp com a mensagem pronta. Sem gravar o WhatsApp (marca de terceiro): celular genérico, sem logo, com o texto real do app; cada item destaca com a fala: Empresa, E-mail do usuário, Módulo e Aula (a mensagem também traz "Trilha: Tutoriais do sistema").
 - **9:16:** Os itens da mensagem em linhas grandes (56 px), um destaque por vez, acima da faixa da legenda.
-- **Tela real R10** (Mensagem pronta para o suporte (WhatsApp)): "Olá, equipe de suporte! Preciso tirar uma dúvida sobre a aula 2.1 — (aula), da DomiFlix."; E-mail do usuário: camila.duarte@glacialcold.example; Empresa: Glacial Cold Brasil · Trilha: Tutoriais do sistema; Módulo: Gestão de Contratos e PMOC · Aula: 2.1 — (aula); Minha dúvida:.
+- **Tela real R10** (Mensagem pronta para o suporte no WhatsApp): "Olá, equipe de suporte! Preciso tirar uma dúvida sobre a aula 2.1 — (aula), da DomiFlix."; E-mail do usuário: camila.duarte@glacialcold.example; Empresa: Glacial Cold Brasil · Trilha: Tutoriais do sistema; Módulo: Gestão de Contratos e PMOC · Aula: 2.1 — (aula); Minha dúvida:.
 
 **Cena 23 · 2:24,4 a 2:33,2** · Guia Técnico · TELA REAL R15 · voz: nova
 > Se você preferir ler, o Guia Técnico explica cada função por escrito, tela por tela, no endereço dominex.app/guia-tecnico.
@@ -410,13 +426,20 @@ palavras do `capNN.json`, como no T0 atual.
 1. **Voz** (só depois do ok e com crédito): um nó por capítulo novo (`T00v2 cap00` a `cap03` e `cap06`) e um nó
    `T00v2 títulos` ("O seu progresso. [pause] Os combinados."); `proc.py` e `titulos.py`. Os capítulos 4 e 5 e os títulos
    1, 3, 4 e 5 vêm do T0 atual (`capNN.json`, wav e `titulos/`), renumerados.
-2. **Telas:** R13 a R18 já dá para gravar na 1.38.9 (backend falso); R01 a R12 esperam a DomiFlix nova publicada. Cada uma
-   em duas capturas: computador (1280×800, para o 16:9) e celular (390×844, para o 9:16).
+2. **Telas:** todas existem na 1.38.11 (R01 a R12 na DomiFlix nova; R13 a R18 sem mudança), mas nenhuma é gravável no app de
+   gravação de hoje (8080, na 1.38.9). Precisa de uma segunda instância 1.38.11 com backend falso próprio: plano em
+   `telas_necessarias.md`, "Plano de captura na 1.38.11". Cada tela em duas capturas: computador (1280×800, para o 16:9) e
+   celular (390×844, para o 9:16). O botão de contratar abre uma página que não existe (C5): a cena 10 para no clique.
 3. **Ilustrações:** refazer `edit/cenas/cenas.html` no estilo novo, com uma versão 16:9 (1280×800) e uma 9:16 (1080×1920)
-   de cada cena, presas às palavras.
-4. **9:16 no pipeline:** hoje só monta 16:9. Falta palco vertical (`fundo_escuro.py` gera só 1920×1080), vinheta de
-   abertura, vinheta de capítulo e cartela verticais, e a montagem e a câmera no quadro vertical. Pedir ok antes de mexer
-   na identidade congelada (perfil): é pedido explícito do Kaik, mas vale conferir o resultado com ele numa prévia.
-5. **Legendas:** as mesmas falas nas duas versões; no 9:16, linha mais curta (~32 caracteres) para caber na largura.
-6. **Entrega:** `Domiflix T0 - Boas-vindas à Dominex.mp4` (16:9) e `Domiflix T0 - Boas-vindas à Dominex (vertical).mp4`
-   (9:16), cada um com `.srt` e `.vtt` do mesmo nome.
+   de cada cena, presas às palavras, e nada essencial nas faixas da legenda.
+4. **9:16 no pipeline:** palco, vinhetas, cartela e montagem verticais estão com outro agente, numa área própria. Do lado da
+   DomiFlix, a 9:16 é a "Versão para celular" da mesma aula (campo do painel admin: "Use o mesmo conteúdo em vídeo vertical
+   9:16. No celular ele substitui automaticamente a versão horizontal.", `src/pages/admin/AdminDomiflix.tsx:709`).
+5. **Legendas:** a DomiFlix guarda as legendas **por aula**, não por vídeo (`domiflix_episode_subtitles`), e a primeira enviada
+   já vem ligada. As duas versões usam o mesmo arquivo: a 16:9 e a 9:16 precisam ter **exatamente a mesma linha do tempo**
+   (mesmo áudio, mesmos cortes). Linhas de até ~40 caracteres cabem no player vertical (fonte de 14 px num vídeo de ~370 px
+   de largura). O SRT e o VTT "de cada versão" pedidos pelo Kaik saem iguais.
+6. **Catálogo:** o T0 v2 tem de ser a **1ª aula da Formação básica** da trilha "Tutoriais do sistema", ativa e com vídeo: é
+   ela que a introdução obrigatória toca (`supabase/migrations/20261031234000_domiflix_trilha_guiada.sql:521,554-563`).
+7. **Entrega:** `Domiflix T0 - Boas-vindas à Dominex.mp4` (16:9) e `Domiflix T0 - Boas-vindas à Dominex (vertical).mp4`
+   (9:16), cada um com `.srt` e `.vtt` do mesmo nome; na DomiFlix, o vertical entra como "Versão para celular" da mesma aula.

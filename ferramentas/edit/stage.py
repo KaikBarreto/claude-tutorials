@@ -71,7 +71,12 @@ class Stage:
         bgimg = self._bg(X0, Y0, X1, Y1, r); out = bgimg.copy()
         M = np.array([[k / rx, 0, -vx * k - rx0], [0, k / ry, -vy * k - ry0]], np.float32)
         out[ry0:ry1, rx0:rx1] = cv2.warpAffine(pre, M, (rx1 - rx0, ry1 - ry0), flags=interp, borderMode=cv2.BORDER_REPLICATE)
-        c = int(np.ceil(r)) + 2; L, R, T, B = X0 > 0, X1 < W, Y0 > 0, Y1 < H; patches = []
+        c = int(np.ceil(r)) + 2
+        # Celular: o canto arredondado (raio r) invade o quadro mesmo com a borda da tela já FORA dele (zoom entrando/saindo, deslizes,
+        # desfoque de movimento): sem recortar o canto a tela aparecia com cantos retos por cima da moldura. `pad` estende a regra
+        # "este lado da tela está dentro do quadro" pela largura do canto. Desktop: pad = 0 (idêntico ao T3 congelado).
+        pad = c if self.phone else 0
+        L, R, T, B = X0 > -pad, X1 < W + pad, Y0 > -pad, Y1 < H + pad; patches = []
         for (on, px, py, pw, ph) in (
                 (L and T, rx0, ry0, c, c), (R and T, rx1 - c, ry0, c, c), (L and B, rx0, ry1 - c, c, c), (R and B, rx1 - c, ry1 - c, c, c),
                 (T, rx0 + (c if L else 0), ry0, (rx1 - (c if R else 0)) - (rx0 + (c if L else 0)), 2),

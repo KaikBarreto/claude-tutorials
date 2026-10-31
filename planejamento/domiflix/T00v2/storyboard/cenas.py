@@ -43,7 +43,7 @@ TELAS = {
     "R07": "Página da aula",
     "R08": "Sua trilha: aulas com progresso e próxima aula",
     "R09": "Botão Tirar dúvidas com o suporte",
-    "R10": "Mensagem pronta para o suporte (WhatsApp)",
+    "R10": "Mensagem pronta para o suporte no WhatsApp",
     "R11": "Lembrete da trilha de tutoriais (faixa no topo)",
     "R12": "Confirmação no fim do T0",
     "R13": "Menu da conta: Tutoriais | Domiflix",
