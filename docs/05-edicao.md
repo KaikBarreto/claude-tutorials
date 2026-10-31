@@ -117,3 +117,18 @@ Depois da entrega a limpeza apaga as gravações e os renders dos capítulos; fi
 No JSON do capítulo: `"stage": {"bg": ..., "shadow": 0.45, "margin": 56, "radius": 46, "phone": {"bezel": 14}}` (aparelho
 genérico, sem marca, desenhado em volta da tela e acompanhando a câmera) e `"cursor": {"show": false, "touch": true,
 "ring_alpha": 0.7}` (sem seta; cada toque vira um anel verde). A câmera funciona igual (zoom na tela do aparelho).
+
+- **A tela fica presa ao retângulo ARREDONDADO do aparelho em todo quadro, com a moldura por cima** (entrada e saída do zoom,
+  deslizes, desfoque de movimento). O `Stage._render` recorta cada canto da tela com a máscara arredondada, e antes só o fazia
+  quando o lado correspondente da tela estava DENTRO do quadro. No celular a tela é mais alta que o quadro: na entrada/saída do
+  zoom a borda de cima ou de baixo sai do quadro enquanto o canto (raio ~100 px a 2,2x) ainda invade, e nada o recortava: a tela
+  vazava com canto reto por cima da moldura (Kaik, T7 cap. 1: "a imagem do celular cruza o celular e fica com as bordas retas
+  aparecendo"; 362 quadros de risco num capítulo de 70 s, 139 seguidos numa só passagem). Agora a regra é "dentro do quadro OU a menos
+  de um canto (`pad = ceil(r) + 2`) dele", só quando `stage.phone` existe; no computador `pad = 0` e o quadro é idêntico ao do T3.
+- **Conferir** (sob a trava, nenhum precisa de gravação nova): `python3 -I auditar_recorte.py caps/capNN.chapter.json` compõe o palco
+  com a tela toda magenta e toda preta, tira a cobertura da tela de cada quadro (média dos sub-quadros do desfoque inclusive) e
+  compara com o retângulo arredondado calculado; sai com código 1 se algum pixel erra mais de 0,5 (olhar a folha de quadros não
+  basta: em vários trechos o canto reto dura só 2 a 13 quadros, uns 0,07 a 0,4 s). `python3 -I folha_transicoes.py caps/capNN.chapter.json` tira do MP4 renderizado só os
+  quadros de transição (os de risco e um no meio de cada entrada, saída e deslize) numa folha `.folha_transicoes.jpg`.
+  `bash testes/recorte_celular.sh` (~1 min, sem gravação) confere o palco: o código novo passa, o ANTIGO (`pad = 0`) é acusado e o
+  16:9 sai idêntico bit a bit. Rode junto de `bash testes/identidade_domiflix.sh` depois de mexer em `stage.py`.
