@@ -19,7 +19,7 @@ Aí, no celular da empresa, é só apontar a câmera pro código, na opção de 
 Pronto, conectado. A tela mostra o número da empresa e que o canal está ativo, e já abre as Automações.""",
 4: """Número conectado. Antes de ligar os avisos, os horários. A Proteção do número faz os avisos saírem no ritmo de uma pessoa, o que protege o número e respeita o cliente.
 São duas janelas. Os avisos de serviço acompanham a operação: o técnico a caminho, o serviço iniciado e o concluído.
-Na Glacial, eles saem das sete da manhã às dez da noite, todos os dias.
+Na Glaciál, eles saem das sete da manhã às dez da noite, todos os dias.
 Os lembretes de cobrança já vêm das oito da manhã às oito da noite, de segunda a sábado, e eu deixo assim.
 Fora do horário, a mensagem espera na fila e sai assim que a janela abre.
 Pra gravar, o botão fica logo abaixo, no cartão das automações: Salvar configurações.""",
@@ -32,7 +32,7 @@ Salvar configurações, e os avisos da ordem de serviço estão prontos.""",
 6: """E as cobranças também avisam sozinhas. Na aba Cobranças são quatro momentos: quando a cobrança é gerada, antes do vencimento, no dia e depois.
 Antes do vencimento, você escolhe quantos dias antes, aqui três. E a mensagem leva o valor e o link de pagamento.
 O aviso de atraso sai dois dias depois, e só pra quem ainda não pagou.
-Os quatro já vêm ligados, do jeito que a Glacial precisa, então eu deixo assim.""",
+Os quatro já vêm ligados, do jeito que a Glaciál precisa, então eu deixo assim.""",
 7: """E quem recebe esses avisos? Os clientes com a opção Receber mensagens pelo WhatsApp ligada.
 Ela fica no cadastro de cada cliente, do lado do celular, e libera com o celular completo, com o DDD. No Hotel Mirante do Mar, ela está ligada.
 E se o cliente responder pedindo pra parar, os avisos param pra ele. Quem decide é o cliente.""",

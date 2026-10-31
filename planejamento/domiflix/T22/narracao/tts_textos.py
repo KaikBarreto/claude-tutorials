@@ -59,7 +59,7 @@ E daqui sai o pópi, o procedimento operacional padrão. O Baixar pópi em pê-d
 Ele traz o objetivo, os responsáveis de cada faixa, o desenho e o passo a passo de cada etapa. E como sai do desenho, é só manter o fluxograma em dia que o procedimento acompanha.""",
 11: """Pronto! Recapitulando: a gente mandou o teste disque pro Rafael, ele respondeu pelo celular, e o perfil chegou com as qualidades, os pontos de atenção e o jeito de liderar.
 Depois viu as interações entre dois colegas, a comparação e a evolução de um perfil ao longo do tempo.
-No organograma, montou a estrutura da Glacial com os setores e viu como encontrar cada pessoa.
+No organograma, montou a estrutura da Glaciál com os setores e viu como encontrar cada pessoa.
 E no fluxograma, desenhou o atendimento de um chamado com os responsáveis, conferiu o desenho e viu de onde sai o pópi.
 No próximo tutorial, a gente conecta o WhatsApp da empresa pra avisar o cliente sozinho, a cada passo da ordem de serviço. Até lá!""",
 }

@@ -21,12 +21,12 @@ Dou um nome pra ele e digito a senha, que é a do próprio certificado, e não a
 Antes de enviar, a autorização. O certificado fica guardado com criptografia e só serve pra assinar as notas que a sua empresa mandar emitir.
 Clico em Enviar certificado. A tela mostra até quando ele vale, e a empresa já está apta a emitir.
 E cada uso do certificado fica registrado aqui embaixo, a começar por este envio.""",
-4: """Com o certificado no lugar, falta dizer como a empresa paga imposto. A Glacial é do Simples Nacional. Na apuração, a primeira opção já vem marcada, e é a da maioria das empresas do Simples.
+4: """Com o certificado no lugar, falta dizer como a empresa paga imposto. A Glaciál é do Simples Nacional. Na apuração, a primeira opção já vem marcada, e é a da maioria das empresas do Simples.
 No percentual de tributos do Simples vai o número que o seu contador passa. Aqui, seis por cento. Ele entra sozinho em toda nota nova.
 Clico em Salvar tributação.""",
 5: """O último passo são os serviços. É a mesma lista de tipos de serviço das ordens de serviço, e com os códigos preenchidos uma vez, toda nota já sai pronta.
 A higienização ainda não tem código. Abro ela na aba Fiscal e escolho o código do serviço, o código municipal, de três dígitos, e o código ene-bê-ésse, da Nomenclatura Brasileira de Serviços.
-A alíquota do i-ésse-ésse fica em branco, porque a Glacial é do Simples e o i-ésse-ésse não é retido. Se a sua empresa não for do Simples, a alíquota da prefeitura vai aqui. Salvo.""",
+A alíquota do i-ésse-ésse fica em branco, porque a Glaciál é do Simples e o i-ésse-ésse não é retido. Se a sua empresa não for do Simples, a alíquota da prefeitura vai aqui. Salvo.""",
 6: """Tudo pronto, bora emitir a primeira nota. É a da limpeza dos splits do Restaurante Sabor da Serra, que pagou pelo link. Clico em Nova Nota.
 Em Pessoas, a data de competência já vem com hoje, o dia do serviço, e o regime de apuração em Competência. O tomador é o cliente, o restaurante.
 Pra emitir, o cliente precisa ter CPF ou CNPJ e endereço no cadastro. Esses dados ficam na aba Fiscal da ficha do cliente.

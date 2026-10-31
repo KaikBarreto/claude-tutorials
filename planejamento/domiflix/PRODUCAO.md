@@ -101,6 +101,18 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
 - **T19:** o handler `tenant-asaas-card-fees` (criado no T1) responde sem a franquia do Pix (`freeCount 0`): estender por
   semente ou parâmetro, sem reescrever o do T1.
 
+## Correções pedidas pelo Kaik (31/10 11:04)
+- **Pronúncia** em todas as aulas: Glacial Cold Brasil → "Glaciál Côude Brasil" (sozinho, "Glaciál"); White Label →
+  "uáit lêibou". Textos e `config_narracao.json` corrigidos no planejamento e na área de trabalho (perfil também).
+  Já gravadas: T1 (cap03, cap06, cap07, cap13 por emenda; cap05 refeito inteiro), T4 (cap03 por emenda), T18 (cap01,
+  emenda depois do V2). `trocas.json` de t1 e t4 prontos.
+- **T1, logo do White Label:** usar a versão com o texto branco (`/home/claude/brand-fix/assets/glacial_horizontal_texto_branco.png`)
+  no "Logo completo" (o menu é escuro). Roteiro do cap05 reescrito (linhas 3 e 4) e voz nova (`T01 cap05 ... (v2)`):
+  regravar o cap05 com o passo "Substituir" + upload, refazer a edição dele, as emendas e o `finish`/`entregar`.
+- **T4:** emenda no cap03, render só do cap03 e `finish`/`entregar` de novo.
+- **Vídeos do site (sugestões do Matheus):** cabeçalho do portal em preto, "como se a marca tivesse definido assim",
+  e, no círculo, só o ícone do logo com o nome embaixo (05 PMOC e 06 Portal do Cliente).
+
 ## Voz: lotes e exportação
 Kaik (30/10 23:13): **um fluxo só com todas as aulas**, **uma versão por fala** (`generations_count: 1`), v3 liberado
 se for melhor (custa o mesmo que o v4 por caractere: fica o v4, voz do T3); fala ruim regera só ela. Estimativa:
@@ -111,6 +123,7 @@ se for melhor (custa o mesmo que o v4 por caractere: fica o v4, voz do T3); fala
 | — | T0 | 1fUfJ2KZAxkHKnc8wwce (fluxo próprio) | exportado 30/10 22:12 |
 | V1 | T1, T4, T5, T7 (39,6 mil caracteres, 65 nós) | Tuop7qPrgwc8qdaVebww (fluxo único) | exportado 31/10 00:29; proc.py e títulos ok (semelhança 0,87 a 1,00) |
 | V2 | T18 (11,3 mil caracteres, 17 nós) + `T07 cap05 emenda` | mesmo fluxo | gerado, aguardando exportação |
+| V2b | Correções de pronúncia (Kaik 31/10 11:04): `T01 cap05 A cor e o logo da marca (v2)` (logo com texto branco), `T01 emendas`, `T04 emendas`, `T18 emenda` = 1.745 créditos | mesmo fluxo | gerado 31/10 11:11; aguardando exportação (junto com o V2) |
 | V3 | T2 (8,5 mil), T8 (13,9 mil), T9 (13,5 mil), T12 (10,3 mil), T10 (10,4 mil), T11 (14,2 mil) = ~70,8 mil | mesmo fluxo | roteiros ok; aguardando créditos |
 | V4 | T13 (12,8 mil), T19 (9,1 mil), T20 (7,9 mil), T14 (7,7 mil) = ~37,5 mil | mesmo fluxo | roteiros ok; aguardando créditos |
 | V5 | T15 (8,2 mil), T22 (6,9 mil), T21 (5,4 mil), T17 (5,6 mil) = ~26,1 mil | mesmo fluxo | roteiros ok; aguardando créditos |

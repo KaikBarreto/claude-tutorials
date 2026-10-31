@@ -47,6 +47,8 @@ com o Supabase falso e o mundo fictício da Glacial Cold Brasil. Prova de que a 
 | 18.000 BTUs | dezoito mil bê-tê-ús |
 | 127 V, 220 V e 380 V | cento e vinte e sete, duzentos e vinte e trezentos e oitenta volts |
 | Asaas | asas |
+| Glacial Cold Brasil / Glacial | Glaciál Côude Brasil / Glaciál (Kaik, 31/10: sem acento o v4 lê "gleitiau") |
+| White Label | uáit lêibou (Kaik, 31/10: "uáit lêibel" soou mal) |
 | DRE | dê érri ê |
 | PMOC | soletrar foneticamente quando aparecer (testar antes) |
 CNPJ, CPF, CEP, OS, LGPD: escrita normal. Números por extenso como se fala. Palavra nova difícil: testar num trecho

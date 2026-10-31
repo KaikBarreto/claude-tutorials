@@ -10,7 +10,7 @@ Se você ainda não viu o tutorial Notas Fiscais, dá uma olhada antes. [pause] 
 1: """As abas ficam aqui do lado. Em Funcionários fica a equipe, e em pê-jota ou mêi, os prestadores de serviço, cada um com o seu contrato.
 As Equipes a gente montou no tutorial de ordens de serviço. E o Controle de Ponto é a segunda metade desta aula.
 As três últimas são as ferramentas de érre-agá, que têm um tutorial só delas.
-Na lista estão os seis técnicos da Glacial. Clicando num nome, a ficha abre aqui do lado, com as ações e os números da pessoa.
+Na lista estão os seis técnicos da Glaciál. Clicando num nome, a ficha abre aqui do lado, com as ações e os números da pessoa.
 Agora, bora colocar alguém novo na equipe.""",
 2: """A Tatiane, que cuida do escritório, já usa a Dominex desde o tutorial de usuários. Agora ela entra no cadastro de funcionários, pra receber o salário e bater o ponto.
 A janela tem quatro abas: Dados, Pagamento, Ponto eletrônico e Perfil. A foto é opcional, e aparece na ficha e no ponto.
@@ -25,7 +25,7 @@ O cê-bê-ó e a matrícula saem no holerite, e os dependentes entram no cálcul
 Ela usa vale-transporte, de duzentos e vinte reais por mês, e o desconto dele também sai no holerite.""",
 4: """Logo abaixo vem a configuração de pagamento: com que frequência e em que dia a pessoa recebe.
 Dá pra pagar por mês, por quinzena ou por semana.
-Na Glacial o pagamento é mensal, no quinto dia útil. Se preferir uma data fixa, é só trocar pra dia corrido e escolher o dia do mês.
+Na Glaciál o pagamento é mensal, no quinto dia útil. Se preferir uma data fixa, é só trocar pra dia corrido e escolher o dia do mês.
 Repara na dica: é essa configuração que faz a folha da Tatiane aparecer sozinha em Contas a Pagar.""",
 5: """Falta ligar o cadastro ao login. Como a Tatiane já é usuária, é só vincular: escolho o nome dela aqui.
 Pra quem ainda não tem login, o Criar acesso ao sistema cria um com o e-mail do cadastro. Depois, em Usuários e Permissões, é só aplicar o cargo da pessoa.
@@ -44,7 +44,7 @@ No Extrato fica cada movimento, com o saldo depois dele. E o Gerar Recibo, no pa
 Na Tatiane, que é cê-éle-tê, a mesma janela abre no modo cê-éle-tê. Ela calcula o i-ene-ésse-ésse, o imposto de renda e o vale-transporte e mostra o líquido a pagar.
 Ao confirmar, o holerite abre pronto pra imprimir. Uma dica: os descontos são uma estimativa, então confere com o seu contador antes de fechar a folha. O pagamento dela fica pro dia certo, então eu cancelo.""",
 8: """Agora o ponto eletrônico, começando pelas regras. Em Controle de Ponto, na aba Config, fica a jornada padrão da empresa: das oito às cinco, com uma hora de intervalo.
-Aqui você decide o que cada batida pede: a selfie e a localização. As duas já vêm ligadas, e na Glacial a gente fica só com a localização.
+Aqui você decide o que cada batida pede: a selfie e a localização. As duas já vêm ligadas, e na Glaciál a gente fica só com a localização.
 E pra quem faz plantão à noite, as batidas da madrugada contam no dia em que a pessoa começou a trabalhar.
 Clico em Salvar configurações.
 Se a equipe bate o ponto na empresa, tem o ponto em grupo: um link pra deixar aberto num tablet fixo, e cada um escolhe o próprio nome na lista.

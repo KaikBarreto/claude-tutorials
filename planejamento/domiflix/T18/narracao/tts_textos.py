@@ -7,7 +7,7 @@ CAPS = {
 São as contas e as consultas do dia a dia do técnico: quantos bê-tê-ús uma sala pede, qual capacitor usar, a pressão de um gás, o código de erro de um split. Tudo reunido num lugar só, pra apoiar o atendimento.
 Se você ainda não viu o tutorial O técnico em campo, dá uma olhada antes. [pause] Vamos começar abrindo a Área do Técnico.""",
 1: """A Área do Técnico fica no menu da esquerda, logo depois do grupo Operacional. Quando abre, o selo aqui no alto mostra o segmento da empresa: Refrigeração e Climatização.
-É o segmento que define quais ferramentas a empresa usa. Clicando no selo, aparece a lista de ramos, e o da Glacial vem primeiro, com a marca Incluído.
+É o segmento que define quais ferramentas a empresa usa. Clicando no selo, aparece a lista de ramos, e o da Glaciál vem primeiro, com a marca Incluído.
 Escolhendo outro ramo, como Energia Solar, aparece uma prévia: as ferramentas daquele ramo com um cadeado, e o botão Falar com representante.
 Volto pro nosso segmento, e as ferramentas de refrigeração estão todas aqui.""",
 2: """Já dentro, o Início é a porta de entrada. Em Ferramentas ficam os dez cartões, um pra cada ferramenta, e a gente passa por todos eles hoje.

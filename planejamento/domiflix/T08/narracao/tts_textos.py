@@ -3,7 +3,7 @@
 # Trocas de pronúncia em relação ao roteiro (a legenda segue a grafia do roteiro, ver config_narracao.json):
 #   Excel -> "ékisel" | Kardex -> "cárdex" | NF-e -> "ene-éfe-é" | PDF -> "pê-dê-éfe" | PDV -> "pê-dê-vê" | XML -> "xis-eme-éle" | ticket -> "tíquete" | 25 A -> "vinte e cinco ampères" | 35 µF -> "trinta e cinco microfarads" | 40 µF -> "quarenta microfarads" | R-32 -> "érre trinta e dois" | R-410A -> "érre quatrocentos e dez á" | Van 01 -> "van zero um"
 CAPS = {
-0: """Oi! Neste tutorial a gente vai cuidar do que a Glacial Cold Brasil tem guardado: os materiais, os locais onde eles ficam, as compras para repor e a contagem.
+0: """Oi! Neste tutorial a gente vai cuidar do que a Glaciál Côude Brasil tem guardado: os materiais, os locais onde eles ficam, as compras para repor e a contagem.
 Quando o técnico usa um gás, quando chega uma entrega, quando uma peça está acabando, tudo passa por aqui. Você sabe o que tem, onde está e quanto custou.
 Se você ainda não viu o tutorial Área do Técnico: Refrigeração e Climatização, dá uma olhada antes. [pause] Vamos conhecer a tela.""",
 1: """A tela tem seis abas: Estoque Atual, Histórico de Materiais, que é o cárdex, Compras de Material, Inventários, Posição de Estoque e Relatório. Lá em cima ficam também os botões Importar xis-eme-éle da ene-éfe-é e Configurações, que a gente usa mais à frente.

@@ -1,7 +1,7 @@
 # Texto enviado ao ElevenLabs (eleven_v4, Fernanda) por capítulo do T1 "Configurações e identidade da empresa".
 # Gerado do roteiro.md (coluna Fala): cada linha do texto é uma linha da tabela Tela × Fala.
 # Trocas de pronúncia em relação ao roteiro (a legenda segue a grafia do roteiro, ver config_narracao.json):
-#   API -> "á-pê-í" | Asaas -> "asas" | Excel -> "ékisel" | JPG -> "jota-pê-gê" | PDF -> "pê-dê-éfe" | PNG -> "pê-ene-gê" | QR Code -> "quê-érre côde" | RH -> "érre-agá" | Shift -> "chift" | White Label -> "uáit lêibel"
+#   API -> "á-pê-í" | Asaas -> "asas" | Excel -> "ékisel" | JPG -> "jota-pê-gê" | PDF -> "pê-dê-éfe" | PNG -> "pê-ene-gê" | QR Code -> "quê-érre côde" | RH -> "érre-agá" | Shift -> "chift" | White Label -> "uáit lêibou"
 CAPS = {
 0: """Oi! Neste tutorial a gente vai deixar a Dominex com a cara da sua empresa: o logo, os dados, a cor da marca e as preferências do dia a dia.
 É daqui que sai o que aparece nos recibos e nos relatórios. Fazendo uma vez, vale pra tudo.
@@ -15,7 +15,7 @@ Olha: eu mexo no nome, o selo mostra Alterações não salvas, depois Salvando, 
 Escolho o arquivo e pronto: o logo aparece aqui e já fica salvo, com os botões Substituir e Remover do lado.
 Se um dia quiser tirar, o Remover pede uma confirmação antes. Aqui eu cancelo, o logo fica.
 Esse logo sai no cabeçalho dos recibos, das propostas e dos relatórios. Uma dica: use um arquivo com boa resolução, que ele fica nítido no papel.""",
-3: """Agora os dados cadastrais. O nome da empresa já está aqui, Glacial Cold Brasil, e logo abaixo fica o campo CNPJ ou CPF.
+3: """Agora os dados cadastrais. O nome da empresa já está aqui, Glaciál Côude Brasil, e logo abaixo fica o campo CNPJ ou CPF.
 Eu digito só os números, e a máscara entra sozinha.
 O segmento já vem definido: Refrigeração e Climatização. É ele que libera as ferramentas do seu ramo, como a Área do Técnico. Se o ramo da empresa mudar, é só falar com a Dominex.
 Em Contato vão o telefone e o e-mail da empresa.
@@ -26,12 +26,12 @@ Completou os oito números, a Dominex traz a rua, o bairro e a cidade.
 O número e o complemento eu completo na mão. Aqui é o duzentos.
 Uma dica: se você não souber o CEP, é só digitar o nome da rua em Endereço, que a Dominex vai sugerindo as opções.
 E repara que aqui o Exibir em documentos é um só, que vale pro endereço inteiro.""",
-5: """Agora a marca no sistema inteiro, com o uáit lêibel. É o módulo que personaliza a Dominex com a identidade da sua empresa.
-Pra ver a sua cor no sistema inteiro, é só ligar o Ativar uáit lêibel. Ligado, a Dominex passa a usar o logo e a cor da sua empresa no lugar dos nossos.
-O Logo completo já usa o logo da empresa por padrão. E o Ícone é a versão quadrada, que aparece quando o menu lateral fica recolhido.
-Vou enviar o ícone: escolho o arquivo, e ele já aparece aqui.
+5: """Agora a marca no sistema inteiro, com o uáit lêibou. É o módulo que personaliza a Dominex com a identidade da sua empresa.
+Pra ver a sua cor no sistema inteiro, é só ligar o Ativar uáit lêibou. Ligado, a Dominex passa a usar o logo e a cor da sua empresa no lugar dos nossos.
+O Logo completo começa com o logo da empresa. Como o menu é escuro, eu troco pela versão com o texto branco: Substituir, escolho o arquivo, e pronto.
+E o Ícone é a versão quadrada, que aparece quando o menu lateral fica recolhido. Vou enviar o ícone do mesmo jeito, e ele já aparece aqui.
 Agora a cor primária. Clico no botão da cor, e abre o seletor, com as cores prontas e um campo pra digitar o código da cor.
-Eu digito o código do dourado da marca da Glacial. Olha: os botões, as abas e os destaques já mudam na hora. Uma dica: o código da cor vem do manual da marca, ou de quem fez o seu logo.
+Eu digito o código do dourado da marca da Glaciál. Olha: os botões, as abas e os destaques já mudam na hora. Uma dica: o código da cor vem do manual da marca, ou de quem fez o seu logo.
 E, recolhendo o menu, aparece o ícone. Abrindo de novo, volta o logo.""",
 6: """A mesma marca vale pros quê-érre côdes que a Dominex gera, como o da etiqueta de cada equipamento, com o seu logo no centro.
 Em Estilo dos pontos e em Cantos, eu escolho Arredondado, e a prévia mostra como fica.
@@ -39,11 +39,11 @@ Na Cor do quê-érre côde, vale escolher um tom escuro, pra câmera do celular 
 Descendo, o Cabeçalho do Relatório de Serviço. É o topo do relatório que o cliente recebe quando a ordem de serviço é concluída, e a prévia mostra como vai ficar.
 Dá pra ajustar as cores e o tamanho do logo, e escolher se vai o Logo Completo ou só o Ícone.
 E lá em cima, a Imagem ao compartilhar a OS. É a imagem que aparece no WhatsApp quando você manda o link da ordem de serviço pro cliente. Em Usar logo da empresa, ela é gerada na hora, e em Ajustar arte você vê como fica no cartão grande e na miniatura.
-Pra manter a sua cor no sistema, é só deixar o uáit lêibel ligado. Eu vou desligar aqui pra seguir com o padrão, e o verde da Dominex volta.""",
+Pra manter a sua cor no sistema, é só deixar o uáit lêibou ligado. Eu vou desligar aqui pra seguir com o padrão, e o verde da Dominex volta.""",
 7: """Passando pros padrões, na aba Regional. Aqui ficam o idioma, a moeda e o fuso horário.
 Em Meu idioma, cada pessoa escolhe o idioma que vê no sistema. Aplica na hora, e vale só pra ela.
 Já os Padrões da empresa valem pra todo mundo: o país, o idioma padrão, a moeda e o fuso horário. Quem é administrador ajusta essa parte.
-A lista de moedas traz as bandeiras, e no fuso dá pra buscar pelo nome da cidade. Como a Glacial fica em Niterói, o Brasil, o real e o horário de Brasília já estão certos, então eu não troco nada.
+A lista de moedas traz as bandeiras, e no fuso dá pra buscar pelo nome da cidade. Como a Glaciál fica em Niterói, o Brasil, o real e o horário de Brasília já estão certos, então eu não troco nada.
 A moeda é a de operação da empresa, então vale deixar a certa já no começo. Se um dia você trocar, os valores já lançados continuam com o mesmo número.
 O Perfil Comportamental, do teste dos funcionários, a gente vê no tutorial de Ferramentas de érre-agá.""",
 8: """Agora o jeito de trabalhar do dia a dia, na aba Usabilidade. São preferências em quatro grupos: Ordens de Serviço, Interface, Segurança e Agenda.
@@ -74,7 +74,7 @@ WhatsApp e Cobranças dependem dos módulos contratados, e cada uma tem o seu tu
 Aqui você consulta os termos de uso e, se quiser, baixa em pê-dê-éfe. Embaixo fica a data em que você aceitou.
 O Exportar meus dados baixa uma planilha do ékisel com clientes, equipamentos, ordens de serviço, financeiro e mais. Você escolhe os grupos que quer, e serve de cópia de segurança. Aqui eu só mostro e cancelo.
 Por último, a Zona de Perigo. O Zerar Sistema apaga os dados operacionais que você escolher, e mantém os dados da empresa e os usuários. Se um dia precisar recomeçar, o caminho é baixar os dados em Exportar meus dados e só então usar o Zerar Sistema, que pede o nome da empresa pra confirmar, porque não tem volta. Eu cancelo, claro.""",
-13: """Pronto! Recapitulando: a gente colocou o logo, os dados e o endereço da empresa, e viu como a sua marca aparece no sistema, nos quê-érre côdes e nos relatórios, com o uáit lêibel.
+13: """Pronto! Recapitulando: a gente colocou o logo, os dados e o endereço da empresa, e viu como a sua marca aparece no sistema, nos quê-érre côdes e nos relatórios, com o uáit lêibou.
 Também passou pelos padrões de idioma, moeda e fuso, pelas preferências de Usabilidade, pelas origens dos clientes, pelos atalhos e pela aparência, e conheceu onde ficam as integrações e a Zona de Perigo.
 E tudo isso a Dominex salvou sozinha. Qualquer ajuste, você volta aqui quando quiser.
 No próximo tutorial, a gente monta a equipe: quem entra no sistema e o que cada pessoa pode fazer. Até lá!""",

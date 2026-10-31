@@ -4,7 +4,7 @@
 #   Asaas -> "asas" | PDF -> "pê-dê-éfe" | DRE -> "dê érri ê" | DFC -> "dê-éfe-cê" | CSV -> "cê-ésse-vê" | Excel -> "ékisel"
 CAPS = {
 0: """Oi! Neste tutorial a gente vai ler o que o dinheiro lançado no Financeiro está dizendo: o resultado do mês, o caixa dos próximos dias e o pacote pro contador.
-Tudo isso fica em Relatórios, no menu Financeiro, em cinco abas: Visão Geral, dê érri ê Resultado, dê-éfe-cê Fluxo de Caixa, Contabilidade e Análise. Pra ficar mais claro, a Glacial já tem lançados os três meses anteriores.
+Tudo isso fica em Relatórios, no menu Financeiro, em cinco abas: Visão Geral, dê érri ê Resultado, dê-éfe-cê Fluxo de Caixa, Contabilidade e Análise. Pra ficar mais claro, a Glaciál já tem lançados os três meses anteriores.
 Se você ainda não viu os tutoriais do Financeiro e da integração com o asas, dá uma olhada antes. [pause] Vamos começar pela visão geral.""",
 1: """A visão geral fica melhor com mais de um mês, então eu escolho, no período Personalizado, os três meses que já fecharam.
 Repara que essa aba abre no Regime de Caixa, que mostra o que de fato entrou e saiu da conta. Daqui a pouco a gente vê a diferença pro de competência.

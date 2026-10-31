@@ -13,14 +13,14 @@ Na primeira aba ainda não tem nada. Aqui em cima ficam os botões Categorias e 
 Escrevo o nome, escolho a cor e clico no mais. Instalação, Manutenção e Higienização.
 Pela alça do lado, dá pra arrastar e deixar na ordem que você preferir.
 Pronto, três categorias. Agora o primeiro serviço.""",
-3: """Vou cadastrar a manutenção preventiva, que é o serviço que a Glacial mais faz. Clico em Novo Tipo.
+3: """Vou cadastrar a manutenção preventiva, que é o serviço que a Glaciál mais faz. Clico em Novo Tipo.
 Dou o nome, Manutenção Preventiva, e escolho uma cor, que identifica o serviço nas listas. Uma dica: uma cor diferente pra cada serviço ajuda a bater o olho.
 Escolho a categoria Manutenção e escrevo uma descrição curta.
 No Prefixo de Numeração OS vão as letras que abrem o número da ordem de serviço. Pra preventiva, ême-pê. Assim, quando a ordem sair, o número já mostra de que serviço se trata.
 Em Preço padrão, coloco cento e oitenta reais. É o valor que o orçamento sugere quando você adiciona esse serviço, e dá pra ajustar na hora.
 Os dois interruptores ficam ligados: o Vinculado a equipamento, que a gente explica já já, e o Ativo, que deixa o serviço disponível pra escolher.
 Criar. Pronto, o primeiro serviço está na lista.
-Os outros serviços da Glacial eu já deixei cadastrados do mesmo jeito: manutenção corretiva, instalação, higienização, carga de gás e visita técnica.""",
+Os outros serviços da Glaciál eu já deixei cadastrados do mesmo jeito: manutenção corretiva, instalação, higienização, carga de gás e visita técnica.""",
 4: """Agora a lista tem os seis serviços, cada um com a sua cor, a categoria e o prefixo.
 Pra achar um, é só buscar pelo nome ou pela descrição.
 Em Filtros você vê só uma categoria, e em Ordenar escolhe a ordem de A a Z ou de Z a A.
