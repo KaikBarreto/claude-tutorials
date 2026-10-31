@@ -111,7 +111,9 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
    roteiro dos trechos do T3 e voz só do que muda. (c) Trocar o app de gravação para a 1.38.8, depois que o T5 e o cap05
    do T1 estiverem gravados. (d) T7 retomado (G4, `rec/t7/ESTADO.md`) e T18, na 1.38.8. (e) T3 v2. (f) Com créditos:
    vozes V3–V5 e as aulas T2, T8, T9, T12, T13, T20, T10, T11, T15, T22, T19, T21, T14, T17, na ordem da trilha
-   (conferir telas de cliente, fornecedor e portal na 1.38.8).
+   (conferir telas de cliente, fornecedor e portal na versão nova).
+   **Kaik 12:45: "vou soltar a 1.38.9 com as funções definitivas disso"**: o levantamento do T3 v2 e a troca do app
+   esperam a 1.38.9 (vigia no `main` rodando), não a 1.38.8.
 3. **T3 v2 (Kaik 31/10 12:11):** "Editar" e "Excluir" da ficha foram para "Ações" (já na 1.38.6, `5f0b64ea`: fichas de
    cliente e de equipamento) e "Configurar origens" virou um modal único "Configurações" com Origens, Etiquetas, Campos
    de clientes e Campos de fornecedores (`CustomerSettingsDialog.tsx`, recurso novo; publicado na 1.38.8). Afeta no T3: cap01 (botões do topo), cap04 (vira origens + etiquetas + campos), cap05 (cabeçalho da
