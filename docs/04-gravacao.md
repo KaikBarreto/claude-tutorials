@@ -80,6 +80,36 @@ DOMINEX_SRC=<código do app> rec/setup-app.sh && rec/run.sh build && rec/run.sh 
   (`<nome>.contact.jpg`: empresa fictícia, versão certa do app, nenhum dado real). Gravação aceita **vale como final**.
 - Saídas em `rec/<tutorial>/`: `<nome>.mp4`, `<nome>.actions.json`, `<nome>.telemetry.json`, `<nome>.contact.jpg`.
 
+## Custo real dos gestos e como encaixar na fala
+O `at` marca o INÍCIO do passo e a fala não espera por ele: um gesto que custa mais que o intervalo entre as palavras chega
+atrasado, e o atraso se soma ao do passo seguinte. Medido no T3 v2 (app 1.38.9, sem outro agente na máquina):
+
+| Gesto | pace 0,5 | pace 0,9 |
+|---|---|---|
+| `click` | 0,5 a 0,9 s | 0,8 a 1,3 s |
+| 1º clique numa janela ou folha recém-aberta | 0,9 a 1,6 s | até 2,1 s |
+| `hover` curto (`seconds` 0,15 a 0,3) | 0,55 a 0,75 s | 1,0 a 1,6 s |
+| `type`, por caractere | 0,09 s a `cps` 40; 0,17 s a `cps` 14 | igual (quem manda é o `cps`) |
+| `scroll` com `point` + `by` (`duration` 0,5, `after` 100) | ~1,1 s | |
+| `scroll` com `target`, ou clique num alvo fora da parte visível de uma lista (o robô rola o alvo até o centro) | 2,5 a 2,6 s | |
+| `eval` | < 0,1 s | |
+
+- **Pace 0,5 e `seconds` curtos** nos capítulos de formulário e de janelas de Configurações. O `pace` só encurta o movimento e a
+  pausa do clique (~0,2 s por clique); o resto é custo do navegador. Capítulo adotado de outro tutorial (`adotar` no `gerar.py`)
+  sai ~25% mais lento que o original: baixe `pace` e `seconds` herdados com `modif`.
+- **Âncora do `at`** = palavra − (custo do gesto − `seconds`), para o cursor CHEGAR na palavra. O 1º clique de uma janela ou folha
+  entra com folga ≥ 1,5 s; uma cadeia de hovers só cabe se `custo + seconds` ≤ intervalo entre as palavras.
+- **Digitar sem esperar**: `click` no campo e depois `type` com `noClick: true`, `cps` 40, `at` = palavra − 0,05. Texto longo ou
+  sem graça visual: `colar()` do `gerar.py` do T3 v2 (`document.execCommand('insertText')`, ~0,05 s; o valor fica no `actions.json`).
+- **Foco por `eval`, não por Tab**: depois de escolher um item de um Select (Radix) o foco volta ao seletor com atraso, e há tab stops
+  escondidos entre os campos. Focar pelo seletor (`input[placeholder="Marca"].focus()`) e, para "Adicionar opção", clicar o botão
+  pelo texto e focar a linha nova (`ADD_OPCAO`).
+- **Fechar janela**: Esc (duas vezes se houver seletor de cor ou popover aberto) e, como plano B, um `eval` que clica o botão
+  Fechar (`FECHAR_EVAL`). Um `click` condicional no botão Fechar pode travar 30 s se a janela sumir durante o passo.
+- **Espera do app maior que a pausa da fala** (3 a 6 s depois de um Salvar): `pausas.py NN T:DUR ...` (script do T5, copiado para
+  `<tutorial>/narracao/`; ainda não está em `ferramentas/narracao/`) insere silêncio na voz num vão entre frases, e a montagem corta o
+  trecho parado com `cortes` ([05-edicao.md](05-edicao.md)).
+
 ## Duas pessoas (ou agentes) gravando em paralelo
 Cada um com o seu Supabase falso (o estado é reiniciado a cada gravação): o primeiro usa o padrão (`rec/run.sh up`);
 o segundo sobe outra instância, `FAKE_PORT=54322 rec/run.sh fake`, e roda o robô com
