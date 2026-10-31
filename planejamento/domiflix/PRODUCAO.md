@@ -18,17 +18,17 @@ F = montagem final + legendas + conferência · ok = no ZIP
 |---|---|---|---|---|---|---|---|---|---|
 | T0 | Boas-vindas à Dominex (ilustrada) | ok | ok | ok | ok | — | — | ok | ok (30/10 22:51, 3:25) |
 | T1 | Configurações e identidade da empresa | ok | ok | ok | ok (31/10 00:29) | ok | ok | ok | ok (31/10 05:20, 11:58) · **v2 18:33** (pronúncia + logo com texto branco; 12:05; 1.38.6) |
-| T2 | Usuários, cargos e permissões | ok | ok | ok (V3 18:3x) | zip 5 (18:53) processando | | | | |
+| T2 | Usuários, cargos e permissões | ok | ok | ok (V3 18:3x) | ok (zip 5, 19:31) | agente D (54324), 1.38.9, desde 20:3x | | | |
 | T3 | Clientes, Fornecedores e Equipamentos | ok | ok | ok | ok | ok | ok | ok | ok (30/10) |
 | T4 | Serviços, tarefas e checklists | ok | ok | ok | ok (31/10 00:29) | ok | ok | ok | ok (31/10 10:46, 10:27) · **v2 18:37** (pronúncia; só o áudio) |
 | T5 | Ordens de Serviço, Agenda, Equipes e Mapa ao Vivo | ok | ok | ok | ok (31/10 00:29) | ok | ok | ok | ok (31/10 18:2x, 13:49; 1.38.6) |
 | T7 | O técnico em campo (celular) | ok | ok | ok | ok (31/10 00:29; emenda do cap05 com folga 0,17 s) | agente A, 1.38.9 (porta 54321) | gravando | | |
 | T18 | Área do Técnico: Refrigeração e Climatização | ok | ok | ok | ok (31/10 11:30) | agente B, 1.38.9 (porta 54322), desde 19:0x | | | |
-| T8 | Estoque, compras e inventário | ok | ok | ok (V3) | zip 5 processando | | | | |
-| T9 | Orçamentos, Precificação e Proposta | ok | ok | ok (V3) | zip 5 processando | | | | |
+| T8 | Estoque, compras e inventário | ok | ok | ok (V3) | ok (zip 5, 19:50) | agente E (54325), 1.38.9, desde 20:3x | | | |
+| T9 | Orçamentos, Precificação e Proposta | ok | ok | ok (V3) | ok (zip 5, 20:11) | agente F (54326), 1.38.9, desde 20:3x | | | |
 | T10 | CRM: funil, leads e captação | ok | ok | | | | | | |
 | T11 | Contratos e PMOC | ok | ok | | | | | | |
-| T12 | Portal do Cliente e Portal do Contrato | ok | ok | ok (V3) | zip 5 processando | | | | |
+| T12 | Portal do Cliente e Portal do Contrato | ok | ok | ok (V3) | capítulos ok (zip 5); títulos refazendo 20:3x | agente G (54327), 1.38.9, desde 20:3x | | | |
 | T13 | Financeiro | ok | ok | | | | | | |
 | T19 | Integração com Asaas, Assinaturas e Cobranças | ok | ok | | | | | | |
 | T20 | Relatório Financeiro e DRE | ok | ok | | | | | | |
@@ -144,6 +144,13 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
    **20:02 Kaik: DomiFlix nova publicada** (no `main` desde 17:34: 1.38.11 + ajustes até `487a0ca3` 19:29; o agente tinha
    conferido um `main` antigo). Fonte em `$TUT_HOME/src-1.38.11`. Agente de roteiro conferindo C1–C17 e R01–R12 no código
    novo e ajustando o pacote; a página de aprovação será regenerada. O app de gravação segue na 1.38.9.
+5. **Kaik 31/10 20:23: "botei mais créditos, avance, pode botar quantos agentes em paralelo você quiser, até 10".** Os 4
+   agentes tinham parado no limite semanal da API (20:1x) e foram retomados. Rodando (9): T7 (A, 54321; corrige o celular
+   que vaza no zoom, pedido do Kaik), T18 (B, 54322), T3 v2 (C, 54323), T2 (D, 54324), T8 (E, 54325), T9 (F, 54326),
+   T12 (G, 54327), roteiro do T0 v2 (1.38.11) e pipeline vertical 9:16 do T0 v2. Gargalo real: a máquina tem 2 CPUs e
+   gravação/render são um por vez (trava por capítulo); os agentes mantêm a fila cheia. Disco: 6,5 → 9,0 GB livres
+   (apagados 75 caches `.pkl` de vídeos do site que não mudaram hoje; regeráveis com `tools/run.py <spec> track`).
+   Pergunta ao Kaik: os créditos são do Claude ou do ElevenLabs (as vozes de T10, T11, T13–T15, T17, T19–T22 pedem ~88 mil).
 3. **T3 v2 (Kaik 31/10 12:11):** "Editar" e "Excluir" da ficha foram para "Ações" (já na 1.38.6, `5f0b64ea`: fichas de
    cliente e de equipamento) e "Configurar origens" virou um modal único "Configurações" com Origens, Etiquetas, Campos
    de clientes e Campos de fornecedores (`CustomerSettingsDialog.tsx`, recurso novo; publicado na 1.38.8). Afeta no T3: cap01 (botões do topo), cap04 (vira origens + etiquetas + campos), cap05 (cabeçalho da
