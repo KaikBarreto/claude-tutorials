@@ -30,7 +30,8 @@ aula em `$TUT_HOME/tnn/` (já instalada), robô em `$TUT_HOME/rec/`.
    outra aba: `"sameTab": true`; outro usuário: `"user"`.
 3. **Gravação** (`node rec/record.mjs rec/tnn/capMM.json --out rec/tnn --name tnn-capMM`): aceite = 0 passo falho,
    `lateBy` < 0,8 s, folha de contato sem dado real, rodapé com a versão do app. Um capítulo por vez.
-4. **Edição**: `tnn/edit/caps/specs.json` (título e área da vinheta = `TITULOS`/`KICKERS`; zooms e destaques por
+4. **Edição**: `tnn/edit/caps/specs.json` (título e área da vinheta = `TITULOS`/`KICKERS`, escritos como na tela: aplique
+   as `trocas` do `config_narracao.json`, ex.: "O teste disque." → "O teste DISC"; zooms e destaques por
    `label`; avisos por palavra; ilustrações) → `python3 -I montar_cap.py MM` → **`python3 -I auditar_camera.py` com
    0 problema** → `render_chapter.py` (fila) → conferir com `folha_zooms.py`. Celular: no capítulo, `stage.phone` e
    `cursor.touch` (`docs/05-edicao.md`, fim). `[ILUSTRAÇÃO]`: desenho por código (exemplo

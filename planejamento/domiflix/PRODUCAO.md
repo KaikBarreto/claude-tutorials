@@ -33,10 +33,10 @@ F = montagem final + legendas + conferência · ok = no ZIP
 | T19 | Integração com Asaas, Assinaturas e Cobranças | ok | ok | | | | | | |
 | T20 | Relatório Financeiro e DRE | ok | ok | | | | | | |
 | T14 | Notas Fiscais (NFS-e e NF-e) | ok | ok | | | | | | |
-| T15 | Funcionários: Financeiro do Funcionário e Ponto | ok | R5 | | | | | | |
-| T22 | Ferramentas de RH: DISC, Organograma, Fluxograma | ok | R5 | | | | | | |
-| T21 | Integração com WhatsApp | ok | R5 | | | | | | |
-| T17 | Dashboard, relatórios e exportações | ok | R5 | | | | | | |
+| T15 | Funcionários: Financeiro do Funcionário e Ponto | ok | ok | | | | | | |
+| T22 | Ferramentas de RH: DISC, Organograma, Fluxograma | ok | ok | | | | | | |
+| T21 | Integração com WhatsApp | ok | ok | | | | | | |
+| T17 | Dashboard, relatórios e exportações | ok | ok | | | | | | |
 
 Ordem (TRILHA.md): T0 → T1 → T4 → T5 → T7 → T18 → T2 → T8 → T9 → T12 → T13 → T20 → T10 → T11 → T15 → T22 → T19 →
 T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aula parte do estado final da anterior).
@@ -113,12 +113,15 @@ se for melhor (custa o mesmo que o v4 por caractere: fica o v4, voz do T3); fala
 | V2 | T18 (11,3 mil caracteres, 17 nós) + `T07 cap05 emenda` | mesmo fluxo | gerado, aguardando exportação |
 | V3 | T2 (8,5 mil), T8 (13,9 mil), T9 (13,5 mil), T12 (10,3 mil), T10 (10,4 mil), T11 (14,2 mil) = ~70,8 mil | mesmo fluxo | roteiros ok; aguardando créditos |
 | V4 | T13 (12,8 mil), T19 (9,1 mil), T20 (7,9 mil), T14 (7,7 mil) = ~37,5 mil | mesmo fluxo | roteiros ok; aguardando créditos |
-| V5 | T15, T22, T21, T17 (~40 mil estimados; ~15, 14, 12 e 14 min de vídeo) | mesmo fluxo | levantamento ok; roteiros (R5) em andamento |
+| V5 | T15 (8,2 mil), T22 (6,9 mil), T21 (5,4 mil), T17 (5,6 mil) = ~26,1 mil | mesmo fluxo | roteiros ok; aguardando créditos |
 
 **Falas a refazer (próximo lote de voz, junto com o T18; o Kaik exporta uma vez):** T07 cap05, frase "O aplicativo
 deixa o vídeo mais leve antes de enviar." (em ~0:29; o ASR não ouve o "deixa" nem isolado; há tempo de fala para ele,
 então pode estar só fraco). Nó curto `T07 cap05 emenda` (~55 caracteres) + `emendar.py` antes de gravar o T7 (`t7/narracao/trocas.json` pronto). As demais
 palavras fracas do V1 foram conferidas decodificando o trecho isolado: eram do ASR (números, nomes colados).
+
+**Para terminar (31/10 07:20): V3 + V4 + V5 = ~134,4 mil caracteres** (~70,8 + 37,5 + 26,1), mais ~3 mil de reserva
+para regerar falas; saldo de ~3,6 mil.
 
 **Créditos (Kaik, 30/10 23:16): 54.670 restantes** (de 121.000) → ~54 mil caracteres ≈ 55 a 60 min de fala ≈ 4 aulas.
 Gerar agora, na ordem da produção, só o que couber (T1, T4, T5, T7 se couber), com ~2 mil de reserva para regerar falas.
