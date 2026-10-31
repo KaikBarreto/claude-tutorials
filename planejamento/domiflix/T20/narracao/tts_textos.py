@@ -17,9 +17,10 @@ A tabela segue uma ordem. A receita bruta, menos os impostos, dá a receita líq
 Clicando num grupo, aparecem as categorias dele. No custo dos serviços estão o material, a mão de obra avulsa e as peças e componentes, que a gente criou no tutorial do Financeiro.
 E a coluna da direita mostra o peso de cada linha sobre o faturamento. Assim você vê, por exemplo, quanto do que entrou foi gasto em material.""",
 3: """E os grupos do dê érri ê você organiza do seu jeito. Em Configurar dê érri ê fica a estrutura inteira, separada pela natureza de cada grupo: receita, dedução, custo e despesa operacional.
-O aluguel e o combustível entram no subgrupo de despesa operacional que já vem com a empresa. Vou dar a ele um nome mais claro: clico no lápis e escrevo Despesas administrativas. A natureza continua a mesma, que é o que garante a conta certa. Salvar.
-E dá pra criar subgrupos. Em Novo subgrupo, a natureza é Despesa operacional, e o nome, Despesas com veículos. Adicionar.
-Agora é só levar o combustível pra lá. Dá pra arrastar, ou usar o seletor da categoria e escolher o grupo novo.
+Repara: a empresa já nasce com um subgrupo de despesa operacional, o Despesas com pessoal, e todas as despesas do dia a dia caem nele, do salário ao aluguel. Dá pra mudar o nome no lápis, mas aqui eu vou separar as despesas.
+Em Novo subgrupo, a natureza é Despesa operacional, e o nome, Despesas administrativas. Adicionar.
+Agora é só levar o aluguel pra lá. Dá pra arrastar, ou usar o seletor da categoria e escolher o grupo novo. A energia e as ferramentas vão do mesmo jeito.
+E crio mais um, Despesas com veículos, pro combustível.
 Repara que só a apresentação muda: os lançamentos continuam iguais. E, se precisar, em Outras visões dá pra montar formas diferentes de ver o mesmo dê érri ê.
 De volta ao dê érri ê, os dois subgrupos já aparecem nas despesas operacionais.""",
 4: """Agora o botão que mais gera dúvida: caixa ou competência. O dê érri ê abre no Regime de Competência, em que cada lançamento entra no mês em que aconteceu, pago ou não.

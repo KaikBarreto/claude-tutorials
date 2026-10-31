@@ -12,11 +12,10 @@ Cobranças é o módulo de cobrar o cliente por pix, boleto ou cartão, e em Rel
 Lá em cima ficam o filtro de período, que começa em Este mês, e o botão Configurações Financeiras, onde moram as categorias.
 Uma dica: o período vale pra tela inteira. Então, antes de ler qualquer número, confere qual período está escolhido.""",
 2: """Antes de lançar qualquer coisa, o sistema precisa saber de onde o dinheiro sai e pra onde ele vai. Isso fica em Movimentações Financeiras, nesta coluna, Contas e cartões.
-A Conta Principal, que é o banco da empresa, já está aqui. Logo acima fica a Conciliação, onde você importa o extrato do banco pra conferir com o sistema.
-Falta o caixa, o dinheiro em espécie do escritório. Clico em Nova conta, aqui embaixo. Numa conta de banco, você escolhe o banco em Instituição. Aqui o nome é Caixa da empresa, e o Tipo, Caixa.
-No Saldo Inicial vai o que já tem nesse caixa hoje: oitocentos reais.
-Repara no Faz parte do caixa da empresa. Ligado, o dinheiro dessa conta entra no fluxo de caixa dos próximos dias. Pra uma poupança ou um investimento, a dica é desligar.
-Escolho uma cor, confiro a pré-visualização e clico em Criar Conta. Pronto, o caixa já aparece na coluna, com o saldo dele.""",
+Duas contas já vêm com a empresa: o Caixa, que é o dinheiro em espécie do escritório, e a Conta Principal, que é o banco. Logo acima fica a Conciliação, onde você importa o extrato do banco pra conferir com o sistema.
+As duas começam com saldo zero, então o primeiro passo é acertar o saldo inicial. No menu da Conta Principal, clico em Editar e, no Saldo Inicial, coloco o que tem no banco hoje: dezoito mil e quinhentos reais.
+Repara no Faz parte do caixa da empresa. Ligado, o dinheiro dessa conta entra no fluxo de caixa dos próximos dias. Já uma poupança ou um investimento você cria em Nova conta, aqui embaixo, com essa opção desligada.
+No Caixa, do mesmo jeito, os oitocentos reais em espécie. Pronto, as duas contas já mostram o saldo.""",
 3: """Conta criada, agora o primeiro dinheiro entrando. Abro a Conta Principal: em cima o saldo, e embaixo o extrato, ainda vazio.
 Clico em Nova movimentação, e escolho entre Receita, Despesa ou Transferência. Imagina que a equipe terminou a instalação de um split no Mercado Vila Nova, e o cliente pagou na hora. É uma Receita.
 Em O que é, a Categoria é Vendas de Serviços, e na Descrição eu conto o que foi. No Cliente vinculado, o Mercado Vila Nova, e assim a receita aparece também no financeiro da ficha dele.
@@ -38,7 +37,7 @@ Registrar compra. Pronto: a mangueira entrou no Estoque Principal, e a despesa j
 6: """De volta em Movimentações, o extrato da Conta Principal já mostra a compra direta, junto da receita.
 Cada linha tem o Editar e o Excluir. Quem pode excluir lançamento você define nos cargos, pela permissão Excluir Lançamento Financeiro.
 E quando o dinheiro só muda de lugar? Por exemplo, tirei trezentos reais do banco pra deixar de troco no caixa. No menu da conta, clico em Transferir.
-Na Origem, a Conta Principal, e no Destino, o Caixa da empresa. Trezentos reais, com a descrição Troco do caixa. E Transferir.
+Na Origem, a Conta Principal, e no Destino, o Caixa. Trezentos reais, com a descrição Troco do caixa. E Transferir.
 A transferência aparece nas duas contas: saiu do banco e entrou no caixa. E ela fica fora das receitas e das despesas, porque o dinheiro continua dentro da empresa.
 E se a contagem do caixa não bater com o sistema? No menu da conta tem o Ajustar saldo: você informa quanto a conta realmente tem, e o sistema lança a diferença.""",
 7: """Agora o cartão de crédito, que funciona diferente. Clico em Novo cartão e dou o nome: Cartão Empresarial.
@@ -47,7 +46,7 @@ Uma dica: compra feita no próprio dia do fechamento já entra na fatura seguint
 O Limite de crédito é opcional, e eu coloco dez mil reais. Criar Cartão, e ele aparece no grupo Cartões, com a fatura em aberto.""",
 8: """Cartão criado. As faturas aparecem sozinhas, conforme as compras entram nele.
 Vou lançar uma compra que já estava no cartão. Nova movimentação, Despesa, e na conta eu escolho o Cartão Empresarial. Repara que aparece o bloco Despesa no Cartão de Crédito.
-A categoria Ferramentas ainda não existe, então eu crio na hora, no botão de mais do lado do campo. O tipo já vem como Despesa, é só dar o nome e criar.
+Na categoria, a Ferramentas e Equipamentos, que já vem com a empresa. Se faltar alguma, o botão de mais do lado do campo cria na hora.
 Na descrição, a bomba de vácuo e o vacuômetro, de mil duzentos e noventa reais. E a data é a da compra, que foi no mês passado.
 Em Parcelas, três vezes. E olha que útil: o bloco mostra em qual fatura cai cada parcela de quatrocentos e trinta reais. A primeira cai na fatura deste mês.
 A compra não sai do caixa nem do banco agora: ela entra na fatura, e o dinheiro só sai quando você paga a fatura. Salvar.""",
@@ -62,7 +61,7 @@ Dá pra separar em A Pagar e A Receber. E essa faixa mostra o horizonte: o que j
 Olha o boleto do gás, que a gente lançou agora há pouco. E a primeira das três parcelas do orçamento do hotel, que nasceram quando a gente aprovou o orçamento, no tutorial de Orçamentos.
 Também dá pra ver tudo num calendário, e o Exportar leva a lista pra ékisel, pê-dê-éfe ou cê-ésse-vê.
 Agora uma conta que se repete: o aluguel do galpão. Clico em Nova Conta, deixo o Tipo em A Pagar e escrevo a descrição.
-A categoria Aluguel eu crio na hora, do mesmo jeito. O valor é dois mil e oitocentos reais, vence todo dia dez, e sai da Conta Principal.
+A categoria Aluguel já vem pronta. O valor é dois mil e oitocentos reais, vence todo dia dez, e sai da Conta Principal.
 Em Parcelar ou repetir, a Recorrência é Mensal, com doze parcelas. Criar Conta.
 Repara: o sistema já cria as doze de uma vez, cada uma com o seu vencimento. E, buscando por aluguel, aparecem todas, porque a busca procura em todos os meses.""",
 11: """Bom, agora a baixa: o que foi pago e o que foi recebido. O boleto do gás foi pago hoje. Na aba A Pagar, no menu da linha, clico em Marcar como pago.
@@ -71,9 +70,9 @@ Agora o outro lado. O hotel já pagou a primeira mensalidade do pê-móqui. Na a
 No menu da primeira, Marcar como recebido. Repara no Valor recebido: informando um valor menor, você registra só uma parte, e o restante continua a receber, com um novo vencimento.
 Aqui o hotel pagou o valor inteiro, no pix, na Conta Principal. Se tivesse tarifa da maquininha, ela ia neste campo, e o sistema lança como despesa em Tarifas e Taxas.
 Confirmar recebimento. Pronto, primeira mensalidade recebida.""",
-12: """Pra tudo isso virar relatório, as categorias contam muito. Elas ficam em Configurações Financeiras, na aba Categorias, separadas em receita e despesa.
-As que têm o selo Sistema já vêm com a empresa, porque os lançamentos automáticos usam elas. Nelas dá pra mudar o nome, a cor e o ícone.
-Vou criar uma: Peças e componentes, do tipo Despesa, como categoria principal.
+12: """Pra tudo isso virar relatório, as categorias contam muito. Elas ficam em Configurações Financeiras, na aba Categorias, separadas em receita e despesa, e a empresa já nasce com uma lista pronta.
+As que têm o selo Sistema são as que os lançamentos automáticos usam. Nelas dá pra mudar o nome, a cor e o ícone.
+Falta uma pras peças que a equipe troca no serviço. Vou criar a Peças e componentes, do tipo Despesa, como categoria principal.
 O campo mais importante é o Onde aparece no dê érri ê. Peça trocada no serviço é custo direto, então escolho Custos diretos. E a Prévia no dê érri ê já mostra o efeito: essa categoria reduz o lucro bruto.
 É a categoria que decide em que linha do dê érri ê cada valor aparece. Criar, e pronto.
 No menu de cada categoria dá pra adicionar subcategorias, por exemplo, compressor e capacitor dentro de Peças e componentes.
@@ -83,7 +82,7 @@ Do lado, o que ainda vai entrar e o que ainda vai sair no período. Clicando, vo
 Em Saldo por Conta, quanto tem em cada conta e no caixa, e quanto falta pagar nas faturas do cartão.
 Embaixo vêm os gráficos: o fluxo do que já entrou e saiu, a projeção do caixa com os vencimentos do período e a agenda de vencimentos, que mostra quando o caixa vai ser mais pressionado.
 E ainda as despesas que mais pesam, a evolução do resultado e as últimas movimentações. Tudo isso respeita o período lá de cima.""",
-14: """Pronto! Recapitulando: a gente cadastrou o caixa ao lado da Conta Principal, lançou uma receita e uma despesa, fez a compra direta de material e passou dinheiro de uma conta pra outra.
+14: """Pronto! Recapitulando: a gente acertou o saldo inicial do caixa e do banco, lançou uma receita e uma despesa, fez a compra direta de material e passou dinheiro de uma conta pra outra.
 Cadastrou o cartão da empresa, lançou uma compra parcelada, viu cada parcela na sua fatura e pagou a fatura que fechou.
 Em Contas a Pagar e Receber, criou o aluguel do ano de uma vez, deu baixa no boleto e recebeu a primeira mensalidade do pê-móqui.
 E organizou as categorias, que decidem onde cada valor aparece no dê érri ê, e viu o mês inteiro na Visão Geral.

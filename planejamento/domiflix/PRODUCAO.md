@@ -29,7 +29,7 @@ F = montagem final + legendas + conferência · ok = no ZIP
 | T10 | CRM: funil, leads e captação | ok | ok | | | | | | |
 | T11 | Contratos e PMOC | ok | ok | | | | | | |
 | T12 | Portal do Cliente e Portal do Contrato | ok | ok | | | | | | |
-| T13 | Financeiro | ok | revisão (contas padrão) | | | | | | |
+| T13 | Financeiro | ok | ok | | | | | | |
 | T19 | Integração com Asaas, Assinaturas e Cobranças | ok | ok | | | | | | |
 | T20 | Relatório Financeiro e DRE | ok | ok | | | | | | |
 | T14 | Notas Fiscais (NFS-e e NF-e) | ok | ok | | | | | | |
@@ -87,7 +87,7 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
 ## Alinhamentos entre aulas (valem por cima dos roteiros)
 - **Financeiro padrão do cadastro** (contas Caixa e Conta Principal, 14 categorias padrão + 14 do sistema; detalhe em
   `MUNDO_FICTICIO.md` → Base): nas sementes de toda aula a partir da primeira que abre o Financeiro (T8/T9). O T11 já
-  conta com eles; o T13 está sendo revisto para isso (31/10 05:2x).
+  conta com eles; o T13, o T19 e o T20 foram revistos para isso (31/10 05:3x).
 - **T9:** "Primeiro vencimento" das 3 parcelas do Orçamento #2 = **20/11/2026** (o T13 parte delas: 20/11, 20/12, 20/01).
 - **FAKE_NOW `2026-11-10T10:00:00-03:00`** em T11, T12, T13, T19, T20 e T14 (fatura do cartão fechada no dia 5,
   mensalidades do PMOC a partir de 10/12 ainda futuras).
@@ -105,7 +105,7 @@ se for melhor (custa o mesmo que o v4 por caractere: fica o v4, voz do T3); fala
 | V1 | T1, T4, T5, T7 (39,6 mil caracteres, 65 nós) | Tuop7qPrgwc8qdaVebww (fluxo único) | exportado 31/10 00:29; proc.py e títulos ok (semelhança 0,87 a 1,00) |
 | V2 | T18 (11,3 mil caracteres, 17 nós) + `T07 cap05 emenda` | mesmo fluxo | gerado, aguardando exportação |
 | V3 | T2 (8,5 mil), T8 (13,9 mil), T9 (13,5 mil), T12 (10,3 mil), T10 (10,4 mil), T11 (14,2 mil) = ~70,8 mil | mesmo fluxo | roteiros ok; aguardando créditos |
-| V4 | T13 (12,7 mil), T19 (9,1 mil), T20 (7,9 mil), T14 (7,7 mil) = ~37,4 mil (antes da revisão do T13) | mesmo fluxo | roteiros ok; aguardando créditos |
+| V4 | T13 (12,8 mil), T19 (9,1 mil), T20 (7,9 mil), T14 (7,7 mil) = ~37,5 mil | mesmo fluxo | roteiros ok; aguardando créditos |
 | V5 | T15, T22, T21, T17 (~40 mil estimados) | mesmo fluxo | levantamento C a fazer |
 
 **Falas a refazer (próximo lote de voz, junto com o T18; o Kaik exporta uma vez):** T07 cap05, frase "O aplicativo

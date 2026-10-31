@@ -105,9 +105,11 @@ bancos (`handlers/ext/brasilapi.com.br.mjs:85-96`); preferência em `user_prefer
 
 ## Riscos e decisões para o Kaik
 
-1. **Contas iniciais:** o T11 conta com "Caixa", "Conta Principal" e "Contratos PMOC" como padrões, mas o app não cria
-   nenhuma conta. Proposta: a semente do T11 cria só "Conta Principal" e "Contratos PMOC" (o que as parcelas usam) e o T13
-   cria o "Caixa da empresa" na tela. Confirmar e alinhar com o T11.
+1. **Contas iniciais [corrigido em 31/10, conferido pelo Tech Lead]:** o cadastro da empresa cria "Caixa" e "Conta
+   Principal" com saldo zero e as 14 categorias padrão, entre elas "Contratos PMOC", "Aluguel" e "Ferramentas e
+   Equipamentos" (`supabase/functions/self-register/index.ts:997-1037`), como o T11 já supõe. Decisão: a semente do T11 fica
+   como está, o T13 acerta na tela o saldo inicial das duas contas (capítulo 2) e escolhe na lista as categorias que já
+   existem; o "Caixa da empresa" e as categorias criadas na hora saíram do roteiro.
 2. **Duração (~15 min, 14 blocos):** manter ou tirar "Ajustar saldo" (já é só zoom) e encurtar o cap. 1?
 3. **Banco no cadastro:** deixar "Instituição" vazia (sem logo de terceiro) ou usar a "Cooperativa de Crédito Exemplo" do
    fakebase? Nomes de bancos reais aparecem na lista ao abrir o seletor.

@@ -67,10 +67,17 @@ Avisos da trilha:
 
 ### 0.3 O que mais pode surpreender (detalhes na seção 5)
 
-1. **Nenhuma conta bancária nem caixa nasce com a empresa**; só 14 categorias "do sistema" e 6 grupos do DRE
-   (`supabase/migrations/20261020223000_profit_distribution_and_investment_outside_dre.sql:28-42`;
-   `supabase/migrations/20261021110000_renomeia_grupo_receita_dre.sql:35-50`). O plano do T11 supõe "Caixa", "Conta
-   Principal" e "Contratos PMOC" como "padrões do cadastro": no código não são; precisam vir de semente (plano, decisão 1).
+1. **[corrigido em 31/10, conferido pelo Tech Lead]** O cadastro da empresa **cria** as contas **"Caixa"** (tipo caixa) e
+   **"Conta Principal"** (banco), com saldo inicial 0, e 14 categorias padrão por `upsert` sobre as 14 "do sistema" do
+   gatilho: "Serviços Prestados", "Vendas de Peças/Materiais", "Contratos PMOC" (entrada), "Impostos e Taxas" (`is_system`),
+   "Custo de Materiais", "Fornecedores e Insumos", "Alimentação", "Luz/Energia", "Aluguel", "Combustível/Transporte",
+   "Salários e Encargos", "Marketing e Publicidade", "Ferramentas e Equipamentos", "Outros"
+   (`supabase/functions/self-register/index.ts:997-1037`; `supabase/functions/create-company/index.ts:503-541`); mais os
+   6 grupos do DRE (`supabase/migrations/20261020223000_profit_distribution_and_investment_outside_dre.sql:28-42`;
+   `supabase/migrations/20261021110000_renomeia_grupo_receita_dre.sql:35-50`). O nome é único por empresa
+   (`supabase/migrations/20260919190000_dedup_categorias_financeiras_e_trava.sql`): criar "Aluguel" de novo dá erro. O plano
+   do T11 está certo ("Caixa", "Conta Principal" e "Contratos PMOC" são padrões do cadastro). A versão anterior deste item
+   dizia o contrário e estava errada.
 2. Guia Técnico desatualizado em pontos visíveis: "Exportar CSV" e "Nova Receita/Nova Despesa" na Visão Geral não existem
    mais; o interruptor "Incluir compras no cartão" mudou para Configurações → Usabilidade → "Movimentações financeiras"
    (`FinanceMovimentacoes.tsx:936-940`; `lib/i18n/messages/app/settings.ts:281-284`).
