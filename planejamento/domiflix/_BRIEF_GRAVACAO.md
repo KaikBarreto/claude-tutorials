@@ -35,8 +35,9 @@ aula em `$TUT_HOME/tnn/` (já instalada), robô em `$TUT_HOME/rec/`.
    `cursor.touch` (`docs/05-edicao.md`, fim). `[ILUSTRAÇÃO]`: desenho por código (exemplo
    `exemplos/dominex-t3/ilustracoes/ilustra_qr.py`) ou cenas HTML (`docs/09-aula-ilustrada.md`).
 5. **Montagem e entrega**: `titulos.py` → `finish.py caps/Tnn.aula.json` → `legendas_aula.py` → `entregar.py out/Tnn
-   "Domiflix Tnn - <Título>"`; copie `.mp4/.srt/.vtt` para `$TUT_HOME/entrega_final/`. Depois apague gravações,
-   renders de capítulo e `proj/build/{stems,music.wav}` da aula (disco: ~8 GB livres no total).
+   "Domiflix Tnn - <Título>"`; ponha `.mp4/.srt/.vtt` em `$TUT_HOME/entrega_final/` com `ln -f` (hardlink: o mesmo
+   arquivo, sem gastar disco; nunca `cp`). Depois apague gravações, renders de capítulo e `proj/build/{stems,music.wav}`
+   da aula (disco: ~7 GB livres no total, `df -h /home/claude` antes de gravar; abaixo de 3 GB, pare e avise).
 
 ## Regras do vídeo (as do T3)
 Só o app real (nada inventado); dados fictícios (sem dado real, token ou senha na tela: senha só por `$TUT_SENHA`);
