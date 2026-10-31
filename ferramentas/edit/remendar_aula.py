@@ -211,7 +211,7 @@ def refazer_voz():
     assert old_wav.samplerate == SR and old_wav.channels == 1
     o_off, energia = 0, []
     tmp = os.path.join(PROJ, "audio48k.wav.novo")
-    with sf.SoundFile(tmp, "w", SR, 1, "FLOAT") as fo:
+    with sf.SoundFile(tmp, "w", SR, 1, "FLOAT", format="WAV") as fo:  # a extensão .novo não diz o formato
         for it in items:
             n_old, n = it["o_frames"] * SR // FPS, it["frames"] * SR // FPS
             if it["novo"]:
@@ -536,7 +536,7 @@ def refazer_video():
 def mux(video):
     tmp = os.path.join(OUT, "aula_final.mp4.novo")
     run(["ffmpeg", "-v", "error", "-y", "-i", video, "-i", os.path.join(BUILD, "mix.wav"), "-map", "0:v:0", "-map", "1:a:0", "-c:v", "copy", "-c:a", "aac",
-         "-b:a", "192k", "-ar", "48000", "-ac", "2", "-shortest", "-movflags", "+faststart", tmp])
+         "-b:a", "192k", "-ar", "48000", "-ac", "2", "-shortest", "-movflags", "+faststart", "-f", "mp4", tmp])
     return tmp
 
 
