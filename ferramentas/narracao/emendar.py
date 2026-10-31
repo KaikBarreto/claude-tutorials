@@ -12,6 +12,9 @@ Regras (31/10/2026, depois do T1/T4/T7):
     fala terminar >= 0,2 s antes da próxima palavra do capítulo (pelas `words` do capNN.json) ou do fim do capítulo;
     se ainda assim não couber, o script AVISA e nunca deixa a frase passar por cima da fala seguinte (corta o fim com
     fade e diz quanto cortou: gere a frase de novo, mais curta);
+  * `"empurra": true` numa troca (opção, 1/11/2026, T3 v2): se a frase não couber nem comprimida, em vez de cortar o fim o script abre
+    silêncio logo depois da janela e o resto do capítulo anda para a frente (a duração CRESCE, como numa inserção; as trocas seguintes do
+    capítulo e as inserções com `em` numérico acompanham o deslocamento). Use quando a frase nova é boa e só a janela é curta;
   * imprime a folga final de cada troca (próxima palavra - fim da fala nova) e um resumo no fim;
   * lê o take ORIGINAL do capítulo: se o capNN.json atual já é uma emenda (take dentro de emendas/), usa o
     capNN.v1.json (cópia guardada) em vez de emendar duas vezes; sem o v1, para com a explicação;
@@ -175,6 +178,7 @@ def main():
     os.makedirs(os.path.join(HERE, "emendas"), exist_ok=True)
     resumo = []
     emendado = {}  # cap -> áudio depois das trocas
+    empurrado = {}  # cap -> [(instante original, segundos de silêncio aberto ali)] das trocas com `empurra`
     for cap in sorted({t["cap"] for t in T}):
         c = carregar_cap(cap)
         y, sr2 = sf.read(os.path.join(c["pasta"], "audio48k.wav"), dtype="float32")
@@ -183,16 +187,19 @@ def main():
             y = y.mean(1)
         y = y.copy()
         alvo = lufs(y)
-        fim_cap = len(y) / SR
+        fim_cap0 = len(y) / SR  # duração do take original (relógio original; `y` cresce se uma troca usar `empurra`)
+        empurroes = []          # (instante no relógio ORIGINAL, segundos de silêncio aberto ali): o que vem depois andou
         for i, t in enumerate(T):
             if t["cap"] != cap:
                 continue
-            prox = min(proxima_palavra(c, cap, i, T), fim_cap)
+            off = sum(e for p, e in empurroes if p <= t["de"] + 1e-6)  # quanto o capítulo já andou até esta troca
+            prox = min(proxima_palavra(c, cap, i, T), fim_cap0) + off
             ant = palavra_anterior_fim(c, t["de"])
-            ini = max(0.0, t["de"] - RECUO_INI)                    # (a) nunca abaixo de 0
-            if ant and ini < ant + 0.005 and ant < t["de"]:         # nem em cima da palavra anterior
+            ant = ant + off if ant else 0.0
+            ini = max(0.0, t["de"] - RECUO_INI) + off                # (a) nunca abaixo de 0
+            if ant and ini < ant + 0.005 and ant < t["de"] + off:   # nem em cima da palavra anterior
                 ini = ant + 0.005
-            fim = min(fim_cap, t["ate"] + AVANCO_FIM, max(ini, prox - 0.005))
+            fim = min(len(y) / SR, t["ate"] + AVANCO_FIM + off, max(ini, prox - 0.005))
             a, b = int(round(ini * SR)), int(round(fim * SR))
             y[a:b] = 0.0
             nome = f"cap{cap:02d} {t['de']:.2f}-{t['ate']:.2f}"
@@ -219,6 +226,15 @@ def main():
             cl = fade(cl * min(g, 2.0))
             aviso = ""
             fim_nova = ini + fim_fala
+            if t.get("empurra") and fim_nova > prox - MARGEM + 0.005:
+                # `empurra`: a frase não cabe nem comprimida. Em vez de cortar o fim, abre silêncio logo depois da janela e o resto do
+                # capítulo anda para a frente (a duração do capítulo CRESCE; a gravação de tela usa a duração nova)
+                extra = round(fim_nova - (prox - MARGEM) + 0.005, 3)
+                pos = int(round(fim * SR))
+                y = np.concatenate([y[:pos], np.zeros(int(round(extra * SR)), dtype=y.dtype), y[pos:]])
+                empurroes.append((fim - off, extra))
+                prox += extra
+                aviso = f"EMPURRADA: +{extra:.2f} s de silêncio depois da frase; o resto do capítulo andou {extra:.2f} s (o capítulo ficou mais longo)"
             folga = prox - fim_nova
             lim = int(round((prox - MARGEM_MIN) * SR)) - a           # nunca invade a fala seguinte
             if len(cl) > lim:
@@ -229,6 +245,7 @@ def main():
                              f"gere a frase de novo, mais curta")
             if not aviso and folga < MARGEM - 0.005:
                 aviso = f"ATENÇÃO: folga {folga:.2f} s < {MARGEM:.1f} s mesmo com compressão de {(r - 1) * 100:.1f}%"
+            empurrada = aviso.startswith("EMPURRADA")
             n = min(len(cl), len(y) - a)
             y[a:a + n] += cl[:n]
             comp = f", tempo x{r:.3f} (+{(r - 1) * 100:.1f}%)" if r > 1.0 else ""
@@ -236,7 +253,8 @@ def main():
             print(f"    fala nova termina em {fim_nova:.2f} s; próxima fala em {prox:.2f} s -> folga final {folga:.2f} s{comp}")
             if aviso:
                 print(f"    {aviso}")
-            resumo.append((nome, "frase nova", r, folga, "ok" if not aviso else aviso.split(":")[0]))
+            resumo.append((nome, "frase nova", r, folga, "ok" if not aviso else "empurrada" if empurrada else aviso.split(":")[0]))
+        empurrado[cap] = empurroes
         out = os.path.join(HERE, "emendas", f"cap{cap:02d}_v2.wav")
         sf.write(out, y, SR, subtype="PCM_24")
         emendado[cap] = y
@@ -258,14 +276,15 @@ def main():
         fim_cap = len(y) / SR
         pontos = []
         for it in sorted((i for i in INS if i["cap"] == cap), key=lambda i: fim_cap if i["em"] == "fim" else float(i["em"])):
-            t = fim_cap if it["em"] == "fim" else float(it["em"])
+            t_vad = c["dur"] if it["em"] == "fim" else float(it["em"])  # relógio do take original (o VAD é dele)
+            t = fim_cap if it["em"] == "fim" else t_vad + sum(e for p, e in empurrado.get(cap, []) if p <= t_vad + 1e-6)
             folga = float(it.get("folga", 0.12))
             cl, fim_fala = clips_ins[it["novo"]]
             g = 10 ** ((alvo - lufs(cl)) / 20) if lufs(cl) > -60 else 1.0
             cl = fade(cl * min(g, 2.0))
-            fala = [v for v in c["vad"] if v[0] < t < v[1]]
-            antes = max([v[1] for v in c["vad"] if v[1] <= t] or [0.0])
-            depois = min([v[0] for v in c["vad"] if v[0] >= t] or [fim_cap])
+            fala = [v for v in c["vad"] if v[0] < t_vad < v[1]]
+            antes = max([v[1] for v in c["vad"] if v[1] <= t_vad] or [0.0])
+            depois = min([v[0] for v in c["vad"] if v[0] >= t_vad] or [c["dur"]])
             aviso = "  ATENÇÃO: o corte cai em cima de fala; escolha um instante num silêncio" if fala and it["em"] != "fim" else ""
             print(f"cap{cap:02d} inserção em {t:.2f} s (silêncio de {antes:.2f} a {depois:.2f} s) + {len(cl) / SR:.2f} s de frase, "
                   f"folga {folga:.2f} s de cada lado -> {it['novo']}{aviso}")

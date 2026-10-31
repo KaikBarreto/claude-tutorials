@@ -64,10 +64,26 @@ python3 -I proc.py NN=emendas/capNN_v2.wav ...         # refaz palavras e legend
 - A frase nova nunca invade a fala seguinte: se for mais longa que a janela, o tempo é comprimido com `atempo` (mantém o
   tom, no máximo 8%) até a fala terminar **≥ 0,2 s antes da próxima palavra** do capítulo (pelas `words` do `capNN.json`)
   ou do fim do capítulo. Se nem assim couber, o script avisa (`ATENÇÃO` ou `CORTADA`) e a frase deve ser gerada de
-  novo, mais curta. O fim do script imprime o resumo das folgas; confira depois do `proc.py` pelo ASR.
+  novo, mais curta (ou a troca marcada com `empurra`, abaixo). O fim do script imprime o resumo das folgas; confira
+  depois do `proc.py` pelo ASR.
 - Troca em 0 s é válida (o início da janela nunca fica abaixo de 0). O script lê o take **original**: se o
   `capNN.json` já é uma emenda, usa o `capNN.v1.json`; sem ele, para.
+- **Frase nova que não cabe nem comprimida** (T3 v2, 1/11/2026): em vez de pedir outra geração, marque a troca com
+  `"empurra": true` no `trocas.json`. O script abre o silêncio que faltar logo depois da janela e o resto do capítulo anda
+  junto (cap. 5: +0,55 s; cap. 10: +0,26 s). A duração **cresce** (como numa inserção): as trocas seguintes do capítulo e as
+  inserções com `em` numérico acompanham o deslocamento, e a gravação de tela usa a duração nova. Sem `empurra` o aviso
+  `CORTADA` continua valendo.
+- **Inserções** (frases que não existiam): chave `insercoes` do `trocas.json`, cada item
+  `{"cap": 10, "em": 6.52 | "fim", "folga": 0.12, "novo": "frase"}` (`em` = instante do corte no take **original**, num
+  silêncio; `folga` = silêncio de cada lado). As frases vêm de outro MP3: `python3 -I emendar.py [<trocas>.mp3] --insercoes
+  <insercoes>.mp3`. A duração do capítulo aumenta; capítulo só com inserções grava `emendas/capNN_v2.wav`, capítulo que também tem
+  trocas grava `capNN_v3.wav` (o `_v2` fica só com as trocas). Rode o `proc.py` no arquivo novo: as `words` já saem no relógio novo.
+- **Capítulo novo no meio da aula** (T3 v2: Etiquetas e Campos personalizados): gere o nó, exporte e rode `proc.py NN=<mp3>`; os
+  capítulos seguintes mudam de número (renomeie `capNN.json`, `takes/`, `emendas/` e `titulos/` de baixo para cima, para não
+  sobrescrever) e as emendas herdadas ganham outro nome (`capNN_t3`), senão a emenda nova do número reutilizado a apaga.
 
 ## Títulos das vinhetas — `titulos.py`
 Separa o áudio dos títulos em `titulos/capNN.wav` (sem silêncio nas pontas, no volume da narração) e `titulos.json`
 (texto + duração). A montagem estica a vinheta quando o título falado é longo.
+`titulos.py <mp3> --so 6,7`: o MP3 traz só esses títulos; os demais ficam como estão e as entradas novas entram no
+`titulos.json` existente (T3 v2).
