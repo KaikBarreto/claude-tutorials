@@ -1,0 +1,450 @@
+# T0 v2 · Boas-vindas à Dominex (onboarding novo)
+
+**Roteiro revisado para aprovação.** Pedido do Kaik de 31/10 17:13 (`pedido_kaik_31-10.txt`): o vídeo vira o 1º passo
+obrigatório do onboarding e mostra a DomiFlix nova. Nesta etapa só roteiro, storyboard e lista de telas: **nada de voz
+nem vídeo antes do ok**. Base: o T0 atual (3:25, aprovado em 30/10; `../T00/plano.md` e a área `$TUT_HOME/t0`).
+
+Nesta pasta:
+- `roteiro.md` (este): cenas numeradas com tempo, fala (texto final da legenda) e composição 16:9 e 9:16.
+- `storyboard_16x9.png` e `storyboard_9x16.png`: um quadro por cena. Fonte em `storyboard/` (`cenas.py` calcula os tempos e
+  escreve as tabelas de duração e de cenas deste roteiro; `render.cjs` desenha as folhas).
+- `narracao/tts_textos.py` e `narracao/config_narracao.json`: o texto da voz (grafia de pronúncia) e as trocas da legenda.
+- `telas_necessarias.md`: as telas reais (R01 a R18), com estado, dados fictícios e cena.
+- `sinalizacoes.md`: o que mudou de plano, cobrança e funcionamento, o que precisa de confirmação (C1 a C17) e as decisões
+  (D1 a D6).
+
+## Ficha
+- **Título:** Boas-vindas à Dominex (o mesmo). **Vinhetas:** COMEÇANDO (2) · AJUDA · ASSINATURA (2) · RECAPITULANDO.
+- **Formatos:** 16:9 1920×1080 no estilo atual (palco escuro, painel claro) e 9:16 1080×1920 nativo, recomposto cena a
+  cena. Mesma fala, trilha e duração nos dois; só a imagem muda. H.264 + AAC; SRT e VTT de cada versão.
+- **Voz:** Fernanda (eleven_v4), como no T0. `voz: nova` = gerar; `voz: T0` = áudio do T0 atual reaproveitado (texto
+  idêntico letra por letra; `python3 narracao/tts_textos.py diff` confere).
+- **Caracteres:** roteiro inteiro **3.587** (3.464 de fala + 123 dos títulos). A gerar: **2.445** (capítulos 0, 1, 2, 3
+  e 6 + os títulos 2 e 6), reaproveitando os capítulos 4 e 5 e quatro títulos do T0 atual (decisão D5).
+- **Duração estimada: 4:28** (fala nova a 2,6 palavras/s); no ritmo que a Fernanda teve no T0 atual, ~4:12. Conta abaixo.
+- **Marcas:** `[confirmar Cn]` = afirmação que o código publicado (1.38.9) não confirma (`sinalizacoes.md`);
+  `TELA REAL Rnn` = tela real a capturar (`telas_necessarias.md`). Nenhuma interface desenhada: onde vai tela real, o
+  storyboard tem um retângulo "TELA REAL" com o que precisa aparecer. Ilustração só para conceito.
+- **Fala:** as frases que o Kaik deu entre aspas (itens 1, 3 e 7) estão letra por letra. O resto segue o perfil: fala
+  natural, só possibilidades, rótulos exatos, sem preço de plano, nenhum travessão.
+
+## O pedido, item por item
+| Pedido do Kaik | Onde | Como |
+|---|---|---|
+| 1. Primeiro passo obrigatório, "assista até o final e confirme..." | Cena 03 | Frase do Kaik, letra por letra |
+| 2. Começou no teste e contratou: a confirmação vale, o vídeo não volta | Cena 04 | Frase nova |
+| 3. Explicação nova da DomiFlix (trilha, Formação Básica, módulos, "Não tem no seu plano", aula de um tema, progresso, próxima aula) | Cenas 06 a 12 | Texto do Kaik, letra por letra (só "DomiFlix" na grafia da voz) |
+| 4. Três grupos com os selos e o CTA | Cena 06 (mapa da trilha), 07 a 10 (telas reais), 16 | Formação Básica → módulos do plano → outros módulos |
+| 5. Só Formação Básica e módulos contratados no percentual | Cenas 15 e 16 | Frases novas |
+| 6. Lembretes nos primeiros 30 dias | Cena 17 | Frase nova |
+| 7. "Você não precisa esperar uma reunião..." | Cena 20 (e o combinado da cena 36) | Frase do Kaik, letra por letra |
+| 8. "Tirar dúvidas com o suporte" envia empresa, usuário, módulo e aula | Cenas 21 e 22 | Tela real |
+| 9. Outras trilhas no futuro (gestão, contabilidade), foco na Tutoriais do sistema | Cena 18 | Frase nova |
+| Manter suporte, assinatura e crescimento | cap03, cap04, cap05 | cap04 e cap05 sem mudar uma palavra; cap03 só no necessário |
+| Telas reais, selos saturados, sem temporadas, ordem dos grupos | todas as cenas de tela | R01 a R18 |
+| 9:16 nativo com as regras de composição | coluna 9:16 de cada cena | ver "Composição" |
+| Logo DomiFlix todo branco no escuro | vinheta e cartela | decisão D1 |
+| 4:00 a 4:30 | | 4:28 estimado (4:12 no ritmo real) |
+
+## Mapa dos capítulos (v2 ← T0 atual)
+| v2 | Vinheta (título) | Área | T0 atual | Fala | Título falado |
+|---|---|---|---|---|---|
+| cap00 | sem vinheta (Boas-vindas) | | cap00 | nova (a 1ª linha é a do T0) | |
+| cap01 | Como funcionam os tutoriais | COMEÇANDO | cap01 | nova | T0 |
+| cap02 | O seu progresso | COMEÇANDO | novo | nova | novo |
+| cap03 | Quando bater uma dúvida | AJUDA | cap02 | nova | T0 |
+| cap04 | A sua assinatura | ASSINATURA | cap03 | **T0, idêntica** | T0 |
+| cap05 | Quando a empresa cresce | ASSINATURA | cap04 | **T0, idêntica** | T0 |
+| cap06 | Os combinados | RECAPITULANDO | cap05 (fecho), trocado | nova | novo |
+
+## Duração
+Vinheta da aula, vinhetas de capítulo, cauda de 1,2 s por capítulo e cartela com as durações do T0 atual
+(`out/T0/capitulos.json`); títulos novos curtos ficam no mínimo de 3,2 s.
+
+<!-- DURACAO -->
+| Bloco | Palavras | Fala | Vinheta + cauda | Total | Começa em | Voz |
+|---|---|---|---|---|---|---|
+| Vinheta da aula | | | 4,4 s | 4,4 s | 0:00,0 | identidade |
+| cap00 · Boas-vindas | 72 | 27,7 s | 1,2 s | 28,9 s | 0:04,4 | nova (2,6 palavras/s) |
+| cap01 · Como funcionam os tutoriais | 121 | 46,5 s | 4,9 s | 51,5 s | 0:33,3 | nova (2,6 palavras/s) |
+| cap02 · O seu progresso | 79 | 30,4 s | 4,4 s | 34,8 s | 1:24,8 | nova (2,6 palavras/s) |
+| cap03 · Quando bater uma dúvida | 100 | 38,5 s | 4,5 s | 43,0 s | 1:59,5 | nova (2,6 palavras/s) |
+| cap04 · A sua assinatura | 75 | 25,6 s | 4,4 s | 30,0 s | 2:42,5 | áudio do T0 atual (tempo real) |
+| cap05 · Quando a empresa cresce | 122 | 42,9 s | 4,4 s | 47,3 s | 3:12,5 | áudio do T0 atual (tempo real) |
+| cap06 · Os combinados | 53 | 20,4 s | 4,4 s | 24,8 s | 3:59,8 | nova (2,6 palavras/s) |
+| Cartela | | | 3,4 s | 3,4 s | 4:24,6 | identidade |
+| **Total** | **622** | | | **4:28,0** | | |
+
+Estimativa principal **4:28,0** (fala nova a 2,6 palavras/s + áudio real dos capítulos 4 e 5). Na velocidade que a Fernanda teve no T0 atual (2,89 palavras/s, pausas incluídas): **4:11,6**. Se tudo fosse lido a 2,6: 4:35,3. Faixa pedida: 4:00 a 4:30.
+<!-- /DURACAO -->
+
+Para caber folga (por exemplo, a frase opcional do treinamento ao vivo, D4, ~5 s), o candidato a sair é a frase do menu
+da conta (cena 13, ~6 s): a DomiFlix nova já indica a próxima aula e o menu aparece de novo na cena 24.
+
+## Composição
+### 16:9 (estilo atual)
+- Palco escuro e painel claro de 1587×992 com cantos de 16 px, como o T0 atual; vinhetas, cartela, trilha (seed 3), SFX e
+  legendas do perfil.
+- **Tela real:** a gravação ocupa o painel inteiro, como nas aulas com tela, com a câmera v2 (zoom no que a fala cita) e
+  destaques com o rótulo exato. Dados do mundo fictício (Glacial Cold Brasil, Camila Duarte); valores em R$ cobertos.
+- **Ilustração**, só para conceito, com o ajuste de estilo pedido: menos cartões e cantos arredondados, nada de fundo
+  acinzentado nem barras-fantasma; texto grande, ícone, linha e cor saturada. Selos sempre saturados, ícone e texto brancos.
+
+### 9:16 (nativo, recomposto cena a cena)
+- Palco escuro e painel claro de 1008×1700 (x 36, y 110). Conteúdo só na área segura: **x 72 a 1008 e y 180 a 1740** (guias
+  magenta nas folhas). Os 180 px de baixo também ficam livres para a legenda do player.
+- **Um assunto por vez:** o que no 16:9 aparece junto entra em sequência, preso à palavra da fala.
+- Texto mínimo **44 px** (≈ 16 px num celular de 390 px de largura); títulos de 88 a 112 px; **no máximo 2 linhas** por bloco.
+- **Tela real = captura do celular** (viewport 390×844), recortada na área que a fala cita e ampliada 2,4× (390 → 936 px).
+  Nunca o print do computador reduzido. A lista de aulas é a da interface mobile real da DomiFlix.
+- Grupos e comparações sempre na vertical: Formação Básica em cima, módulos do plano no meio, outros módulos embaixo.
+
+## Cenas
+Cada quadro do storyboard mostra o fim da cena. Tempo = estimativa (ver "Duração"); depois da voz, as cenas se prendem às
+palavras do `capNN.json`, como no T0 atual.
+
+<!-- CENAS -->
+### Abertura
+
+**Cena 01 · 0:00,0 a 0:04,4** · Vinheta da aula · VINHETA
+> (sem fala) Boas-vindas à Dominex
+
+- **16:9:** Vinheta do perfil: o capacete se monta, DOMINEX e o título "Boas-vindas à Dominex". Proposta: o "▶ DOMIFLIX" verde vira o logo DomiFlix todo branco, capacete e texto (D1).
+- **9:16:** Vinheta nativa na vertical: capacete (y 520 a 830), DOMINEX (y 880), logo DomiFlix branco (420 px, y 1060) e o título em 2 linhas de 88 px (y 1210 a 1400); tudo entre y 180 e 1740.
+
+### cap00 · Boas-vindas (sem vinheta; voz nova)
+
+**Mudança em relação ao T0 atual:** Ficam as duas primeiras frases (boas-vindas e o ciclo do trabalho). Sai "Neste vídeo rápido, eu te mostro como a gente vai caminhar junto." Entram o 1º passo obrigatório do onboarding (texto do Kaik, item 1) e a confirmação que vale do teste para a assinatura (item 2). Visual: o ciclo do trabalho reestilizado (sem cartões) e duas ilustrações novas.
+
+**Cena 02 · 0:04,4 a 0:15,2** · O ciclo do trabalho · ILUSTRAÇÃO · voz: nova
+> Oi! Boas-vindas à Dominex. A partir de agora, a sua empresa tem um lugar só pra organizar o trabalho, do chamado do cliente até o dinheiro na conta.
+
+- **16:9:** Painel claro. "Boas-vindas à Dominex" no alto (Dominex em verde). Embaixo, o arco verde se fecha em volta do capacete e as 4 estações entram entre "chamado" e "dinheiro": Chamado do cliente, Ordem de serviço, Técnico em campo, Dinheiro na conta. Só ícone e texto, sem cartão.
+- **9:16:** Título em 2 linhas no topo (96 px). As 4 estações numa coluna (círculo de 140 px com o ícone, texto 58 px em até 2 linhas), ligadas pela linha verde que desce, volta pela direita e entra de novo no topo (o ciclo); acendem uma por vez. O capacete embaixo.
+
+**Cena 03 · 0:15,2 a 0:24,4** · O primeiro passo · ILUSTRAÇÃO · voz: nova
+> Este vídeo é o primeiro passo para começar a usar a Dominex. Assista até o final e confirme que entendeu os combinados para continuar.
+>
+> [confirmar C1]
+
+- **16:9:** Selo "Primeiro passo". Três passos numa linha, número grande e texto, sem cartões: 1 Assistir até o final (a barrinha do vídeo enche em "final"), 2 Confirmar os combinados (acende em "confirme"), 3 Continuar (acende em "continuar"). Se a DomiFlix nova tiver tela própria de onboarding, troca por ela (R01).
+- **9:16:** Selo no alto e os 3 passos empilhados (círculo de 180 px, texto 62 px em até 2 linhas), um acende por vez; a barrinha do vídeo no passo 1.
+
+**Cena 04 · 0:24,4 a 0:33,3** · Do teste para a assinatura · ILUSTRAÇÃO · voz: nova
+> Começou pelo período de teste? Quando você contratar, essa confirmação continua valendo e o vídeo não é exigido de novo.
+>
+> [confirmar C2]
+
+- **16:9:** Linha do tempo: Período de teste → Assinatura ativa. O selo verde "Combinados confirmados" nasce no teste e segue pela assinatura (faixa contínua); no fim, "Vídeo já assistido" com check. Nada riscado.
+- **9:16:** A mesma linha do tempo na vertical (teste em cima, assinatura embaixo), o selo descendo junto; texto 44 a 64 px.
+
+### cap01 · Como funcionam os tutoriais (vinheta: COMEÇANDO; voz nova)
+
+**Mudança em relação ao T0 atual:** A fala vira a explicação nova do Kaik (item 3), letra por letra: trilha Tutoriais do sistema, Formação Básica, módulos do plano na ordem recomendada, aulas dos módulos não contratados com "Não tem no seu plano" e a contratação por ali, uma aula por tema com descrição, legendas e materiais de apoio, progresso salvo e próxima aula. Saem "cada aula mostra uma área inteira, dividida em capítulos", a ordem antiga (configurações, equipe, cadastros, OS...) e o "combinado mais importante" (vira o 1º combinado do fecho). Fica a frase do menu da conta. Visual: telas reais da DomiFlix nova no lugar do cartão de aula com capítulos e da trilha de 7 fases; os três grupos (item 4) num mapa da trilha.
+
+**Cena 05 · 0:33,3 a 0:37,0** · Vinheta do capítulo · VINHETA · título: T0
+> COMEÇANDO · Como funcionam os tutoriais.
+
+- **16:9:** Vinheta de capítulo do perfil (título com a voz do T0 atual).
+- **9:16:** Vinheta vertical: barra verde à esquerda (x 72), área em 40 px espaçada e título em até 3 linhas de 112 px, no meio da altura.
+
+**Cena 06 · 0:37,0 a 0:41,6** · O mapa da trilha · ILUSTRAÇÃO · voz: nova
+> Na DomiFlix, o seu primeiro caminho é a trilha Tutoriais do sistema.
+>
+> [confirmar C3] [confirmar C4]
+
+- **16:9:** "Tutoriais do sistema" grande à esquerda (rótulo TRILHA). Dela sai a linha da trilha com os 3 grupos em ordem (verde nos dois primeiros, vermelha no terceiro) e as aulas como pontos: Formação Básica · Módulos do seu plano (selo verde com check branco, "Tem no seu plano") · Outros módulos (selo vermelho com X branco, "Não tem no seu plano"). Trilha → módulos → aulas, sem temporadas.
+- **9:16:** "Tutoriais do sistema" em 2 linhas no topo; a trilha desce na vertical com os 3 grupos empilhados (nomes 62 px, selos 42 px).
+
+**Cena 07 · 0:41,6 a 0:46,3** · Formação Básica · TELA REAL R03 · voz: nova
+> Ela começa pela Formação Básica, com aquilo que todo cliente precisa aprender.
+>
+> [confirmar C3]
+
+- **16:9:** Tela inteira da trilha no painel e zoom no grupo Formação Básica; destaque no nome do grupo em "Formação Básica".
+- **9:16:** Recorte da trilha no celular (390 → 936 px, 2,4×) só com a Formação Básica.
+- **Tela real R03** (Trilha: grupo Formação Básica): grupo "Formação Básica" no topo da trilha; aulas na ordem, 3 concluídas; nenhuma "Temporada" ou "Episódio".
+
+**Cena 08 · 0:46,3 a 0:51,6** · Módulos do seu plano · TELA REAL R04 · voz: nova
+> Depois vêm os módulos que fazem parte do seu plano, sempre na ordem recomendada.
+>
+> [confirmar C4] [confirmar C11]
+
+- **16:9:** A câmera desce para os módulos do plano; destaque no selo verde "Tem no seu plano" em "plano" e na ordem (1º, 2º) em "ordem".
+- **9:16:** Recorte do celular com os módulos do plano, um embaixo do outro; zoom no selo verde.
+- **Tela real R04** (Trilha: módulos do plano, selo verde): Gestão de Contratos e PMOC e Funcionários / RH; selo verde saturado, check e texto brancos: "Tem no seu plano"; ordem recomendada.
+
+**Cena 09 · 0:51,6 a 0:59,7** · Outros módulos · TELA REAL R05 · voz: nova
+> Você também pode assistir às aulas dos módulos que ainda não contratou. Eles aparecem identificados como “Não tem no seu plano”,
+>
+> [confirmar C4]
+
+- **16:9:** A câmera desce para os outros módulos (por último); destaque no play de uma aula em "assistir" e no selo vermelho em "identificados".
+- **9:16:** Recorte do celular com um módulo não contratado: selo vermelho em zoom e as aulas com play.
+- **Tela real R05** (Trilha: outros módulos, selo vermelho): CRM/Kanban, Emissão de Notas Fiscais, Cobranças online; selo vermelho saturado, X e texto brancos: "Não tem no seu plano"; aulas com play (liberadas).
+
+**Cena 10 · 0:59,7 a 1:06,3** · Contratar por ali mesmo · TELA REAL R06 · voz: nova
+> para você conhecer a função na prática e, se fizer sentido, solicitar a contratação por ali mesmo.
+>
+> [confirmar C5]
+
+- **16:9:** Zoom no CTA de contratação do módulo; clique (anel verde) em "solicitar".
+- **9:16:** Recorte do celular só com o CTA, grande; toque em "solicitar".
+- **Tela real R06** (CTA de contratação de módulo não contratado): CTA de contratação no módulo ou na aula; o que abre ao clicar.
+
+**Cena 11 · 1:06,3 a 1:12,4** · Uma aula, um tema · TELA REAL R07 · voz: nova
+> Cada aula ensina um tema em um único vídeo, com descrição, legendas e materiais de apoio.
+>
+> [confirmar C6]
+
+- **16:9:** Página da aula inteira; destaques em sequência: descrição ("descrição"), legendas ("legendas") e materiais de apoio ("materiais"). A lista lateral fica visível.
+- **9:16:** A aula no celular, um recorte por vez: player com a legenda ligada → descrição → materiais de apoio.
+- **Tela real R07** (Página da aula): player com legenda ligada; título e descrição da aula; materiais de apoio; lista lateral de aulas.
+
+**Cena 12 · 1:12,4 a 1:17,8** · Progresso e próxima aula · TELA REAL R08 · voz: nova
+> Seu progresso fica salvo, e a DomiFlix sempre indica qual é a próxima aula.
+>
+> [confirmar C7]
+
+- **16:9:** Zoom na lista lateral: as concluídas com check em "salvo" e a próxima aula em destaque em "próxima".
+- **9:16:** A lista de aulas da interface mobile real (não a lateral reduzida): checks e a próxima em destaque.
+- **Tela real R08** (Lista de aulas com progresso e próxima aula): aulas concluídas com check; aula recomendada / próxima aula em destaque.
+
+**Cena 13 · 1:17,8 a 1:24,8** · Onde encontrar · TELA REAL R13 · voz: nova
+> Pra encontrar, é só abrir o menu da sua conta e clicar em Tutoriais DomiFlix.
+>
+> [confirmar C8]
+
+- **16:9:** Sistema com o menu da conta aberto (cartão da foto no rodapé da barra lateral); "Tutoriais | Domiflix" destacado e clicado em "Tutoriais".
+- **9:16:** Celular: Menu → seção Conta, recorte dos atalhos; "Tutoriais | Domiflix" em destaque.
+- **Tela real R13** (Menu da conta: Tutoriais | Domiflix): menu da conta: Perfil, Assinatura, Tema, Tutoriais | Domiflix, Central de Ajuda, Falar com o Suporte.
+
+### cap02 · O seu progresso (vinheta: COMEÇANDO; voz nova)
+
+**Mudança em relação ao T0 atual:** Capítulo novo: o percentual da trilha (item 5), os lembretes dos primeiros 30 dias (item 6) e as outras trilhas no futuro (item 9).
+
+**Cena 14 · 1:24,8 a 1:28,0** · Vinheta do capítulo · VINHETA · título: voz nova
+> COMEÇANDO · O seu progresso.
+
+- **16:9:** Vinheta de capítulo do perfil (título com voz nova).
+- **9:16:** Vinheta vertical, como a do capítulo 1.
+
+**Cena 15 · 1:28,0 a 1:34,5** · A barra de progresso · TELA REAL R02 · voz: nova
+> Na barra de progresso da trilha, só contam a Formação Básica e os módulos do seu plano.
+>
+> [confirmar C9] [confirmar C11]
+
+- **16:9:** Zoom na barra de progresso com o percentual; destaque com o rótulo "Formação Básica + módulos do seu plano" (padrão dos destaques).
+- **9:16:** Recorte do celular só com a barra e o percentual, grandes; embaixo, o rótulo em 2 linhas (56 px).
+- **Tela real R02** (Trilha Tutoriais do sistema: topo e barra de progresso): nome da trilha; barra de progresso com o percentual.
+
+**Cena 16 · 1:34,5 a 1:39,9** · Explorar à vontade · ILUSTRAÇÃO · voz: nova
+> As aulas dos outros módulos você explora à vontade, sem atrapalhar o seu progresso.
+>
+> [confirmar C9]
+
+- **16:9:** O mapa da trilha de novo: uma chave verde abraça Formação Básica e Módulos do seu plano ("Contam no progresso"); Outros módulos fica fora ("Explorar à vontade"). Uma aula do grupo vermelho ganha check e o percentual não se mexe.
+- **9:16:** Grupos empilhados; uma chave verde à direita junta os dois primeiros ("Contam no progresso"); o terceiro embaixo com "Explorar à vontade"; o percentual no topo (120 px), parado.
+
+**Cena 17 · 1:39,9 a 1:49,5** · Lembretes de 30 dias · ILUSTRAÇÃO · voz: nova
+> Nos primeiros 30 dias, a Dominex vai te lembrar de continuar, até você concluir a Formação Básica e os tutoriais dos módulos do seu plano.
+>
+> [confirmar C10]
+
+- **16:9:** Faixa de 30 dias com sininhos em alguns dias; a barra de progresso enche até 100% e a faixa termina em "Concluído". Se o lembrete for um aviso no sistema, entra a tela real dele no fim (R11).
+- **9:16:** Calendário de 30 dias (6 × 5) com sininhos; embaixo, o progresso chegando a 100%.
+
+**Cena 18 · 1:49,5 a 1:59,5** · Outras trilhas no futuro · ILUSTRAÇÃO · voz: nova
+> No futuro, a DomiFlix pode ganhar outras trilhas, como gestão e contabilidade. Mas o primeiro foco é sempre a trilha Tutoriais do sistema.
+>
+> [confirmar C12]
+
+- **16:9:** Tutoriais do sistema grande à esquerda (cheia, verde, "Primeiro foco"); à direita, Gestão e Contabilidade só em contorno tracejado ("No futuro"). Em "primeiro foco", as duas recuam.
+- **9:16:** Empilhadas: Tutoriais do sistema grande no alto; Gestão e Contabilidade tracejadas embaixo.
+
+### cap03 · Quando bater uma dúvida (vinheta: AJUDA; voz nova)
+
+**Mudança em relação ao T0 atual:** Entram o reforço do Kaik (item 7, letra por letra) e o botão Tirar dúvidas com o suporte com o contexto (item 8). O Guia Técnico fica, mais curto e sem "na mesma ordem dos tutoriais" (a trilha mudou; ver sinalizações). O WhatsApp pelo menu da conta fica (com "também"). Saem "Volta direto no capítulo daquele assunto" (a aula nova não tem capítulos) e a dica "quando você já assistiu à aula..." (o reforço novo diz o mesmo).
+
+**Cena 19 · 1:59,5 a 2:02,8** · Vinheta do capítulo · VINHETA · título: T0
+> AJUDA · Quando bater uma dúvida.
+
+- **16:9:** Vinheta de capítulo do perfil (título com a voz do T0 atual).
+- **9:16:** Vinheta vertical.
+
+**Cena 20 · 2:02,8 a 2:14,0** · Primeiro os tutoriais · ILUSTRAÇÃO · voz: nova
+> Você não precisa esperar uma reunião para começar. Primeiro siga os tutoriais. Se depois da aula ainda restar uma dúvida específica, fale com o suporte diretamente pela própria aula.
+>
+> [confirmar C13]
+
+- **16:9:** A ordem certa, sem cartões: "Comece agora" com o play (em "começar"), 1 Siga os tutoriais (em "Primeiro"), 2 Restou uma dúvida específica? (em "dúvida"), 3 Suporte pela própria aula (em "suporte"), ligados pela linha verde. Nada de reunião riscada.
+- **9:16:** Os passos empilhados, um por vez (círculo de 180 px, texto 62 px).
+
+**Cena 21 · 2:14,0 a 2:17,5** · Tirar dúvidas com o suporte · TELA REAL R09 · voz: nova
+> É só clicar em Tirar dúvidas com o suporte:
+>
+> [confirmar C14]
+
+- **16:9:** Página da aula; zoom no botão "Tirar dúvidas com o suporte"; clique em "clicar".
+- **9:16:** Recorte do celular com o botão grande; toque.
+- **Tela real R09** (Botão Tirar dúvidas com o suporte): botão "Tirar dúvidas com o suporte" na aula.
+
+**Cena 22 · 2:17,5 a 2:25,2** · O contexto vai junto · TELA REAL R10 · voz: nova
+> ele já envia a sua empresa, o seu usuário, o módulo e a aula, pra gente começar do ponto certo.
+>
+> [confirmar C14]
+
+- **16:9:** A conversa ou o chamado aberto com o contexto; cada item destaca junto com a fala: empresa (Glacial Cold Brasil), usuário (Camila Duarte), módulo, aula. Se o canal for o WhatsApp: celular genérico, sem logo, com o texto real da mensagem copiado do código.
+- **9:16:** Os 4 itens do contexto em linhas grandes (56 px), um destaque por vez.
+- **Tela real R10** (Contexto enviado ao suporte): Empresa: Glacial Cold Brasil; Usuário: Camila Duarte; Módulo: Gestão de Contratos e PMOC; Aula: (nome real).
+
+**Cena 23 · 2:25,2 a 2:34,0** · Guia Técnico · TELA REAL R15 · voz: nova
+> Se você preferir ler, o Guia Técnico explica cada função por escrito, tela por tela, no endereço dominex.app/guia-tecnico.
+>
+> [confirmar C15]
+
+- **16:9:** A página do Guia Técnico (já existe): "Manual completo do produto", "Guia Técnico", "Buscar no guia…"; o endereço dominex.app/guia-tecnico digitado na barra em "endereço".
+- **9:16:** O Guia no celular (recorte do topo) e o endereço em texto grande (64 px) embaixo do recorte.
+- **Tela real R15** (Guia Técnico (página pública)): topo do guia e a busca; endereço dominex.app/guia-tecnico.
+
+**Cena 24 · 2:34,0 a 2:42,5** · WhatsApp pelo menu · TELA REAL R14 · voz: nova
+> Fora da aula, o suporte também atende pelo WhatsApp, em Falar com o Suporte, no menu da sua conta.
+
+- **16:9:** Menu da conta aberto; "Falar com o Suporte" destacado e clicado em "Falar".
+- **9:16:** Celular: Menu → Conta; "Falar com o Suporte" em destaque.
+- **Tela real R14** (Menu da conta: Falar com o Suporte): menu da conta com "Falar com o Suporte".
+
+### cap04 · A sua assinatura (vinheta: ASSINATURA; fala e áudio do T0 atual, sem voz nova)
+
+**Mudança em relação ao T0 atual:** Fala idêntica ao T0 atual (reaproveita o áudio). Código da assinatura igual da 1.38.6 para a 1.38.9. Visual: tela real da Assinatura (já existe) com os valores cobertos, no lugar do cartão desenhado (decisão D2).
+
+**Cena 25 · 2:42,5 a 2:45,7** · Vinheta do capítulo · VINHETA · título: T0
+> ASSINATURA · A sua assinatura.
+
+- **16:9:** Vinheta de capítulo do perfil (título com a voz do T0 atual).
+- **9:16:** Vinheta vertical.
+
+**Cena 26 · 2:45,7 a 2:58,1** · A tela Assinatura · TELA REAL R16 · voz: T0
+> Tudo sobre o seu plano fica na tela Assinatura, também no menu da sua conta. Ali você vê o status, o plano, o vencimento e o valor, acompanha o uso da conta e o histórico de pagamentos.
+
+- **16:9:** Menu da conta → "Assinatura" (em "Assinatura"); a tela com destaques na ordem da fala: status, plano, vencimento, valor (coberto), uso da conta, histórico de pagamentos. Valores em R$ cobertos por tarja lisa (D2).
+- **9:16:** A Assinatura no celular, um recorte por vez: status, plano e vencimento → uso da conta → histórico.
+- **Tela real R16** (Assinatura): status Ativa, Plano, Vencimento, Valor mensal (coberto); Uso da conta; Histórico de pagamentos.
+
+**Cena 27 · 2:58,1 a 3:12,5** · Pagar Agora · TELA REAL R17 · voz: T0
+> Pra pagar, é só clicar em Pagar Agora: dá pra usar Pix, boleto ou cartão. No plano anual, o Pix e o boleto têm 20% de desconto; no cartão, a cobrança é mensal e renova sozinha.
+
+- **16:9:** Card Pagamento: clique em "Pagar Agora"; destaque em "20% de desconto no plano anual · válido para Pix ou Boleto"; as formas Pix, Boleto e Cartão; no "cartão", o aviso de renovação automática. Valores cobertos.
+- **9:16:** Recortes em sequência: botão Pagar Agora → Pix, Boleto, Cartão empilhados → o selo do anual.
+- **Tela real R17** (Assinatura: pagamento): Pagar Agora; 20% de desconto no plano anual · válido para Pix ou Boleto; Pix, Boleto, Cartão.
+
+### cap05 · Quando a empresa cresce (vinheta: ASSINATURA; fala e áudio do T0 atual, sem voz nova)
+
+**Mudança em relação ao T0 atual:** Fala idêntica ao T0 atual (reaproveita o áudio). Visual: Gerenciar Meu Plano real (valores cobertos); as ilustrações do teste e do proporcional ficam, reestilizadas (sem cartões e sem cinza).
+
+**Cena 28 · 3:12,5 a 3:15,7** · Vinheta do capítulo · VINHETA · título: T0
+> ASSINATURA · Quando a empresa cresce.
+
+- **16:9:** Vinheta de capítulo do perfil (título com a voz do T0 atual).
+- **9:16:** Vinheta vertical.
+
+**Cena 29 · 3:15,7 a 3:24,1** · Teste e plano · ILUSTRAÇÃO · voz: T0
+> No período de teste, todos os módulos ficam liberados pra você conhecer; ao ativar a assinatura, ficam os do plano que você escolheu.
+>
+> [confirmar C11]
+
+- **16:9:** Os módulos (nomes do catálogo) em grade de ícone e texto, todos acesos sob "Período de teste"; em "ativar a assinatura", ficam acesos só os do plano e os outros viram contorno com "+".
+- **9:16:** Os módulos numa coluna (texto 46 px, quadrado de 104 px), com a mesma virada.
+
+**Cena 30 · 3:24,1 a 3:36,3** · Gerenciar Meu Plano · TELA REAL R18 · voz: T0
+> E quando a sua empresa crescer, o plano cresce junto. Em Gerenciar Meu Plano, você escolhe um dos Planos Prontos ou monta o seu no Personalizado, com os módulos e os usuários que precisar.
+
+- **16:9:** "Gerenciar Meu Plano": abas "Planos Prontos" e "Personalizado" (clique em "Personalizado"), módulos, usuários adicionais e o painel "Seu Plano". Valores cobertos (D2).
+- **9:16:** Recortes do celular: as abas → a lista de módulos → usuários adicionais.
+- **Tela real R18** (Gerenciar Meu Plano): abas Planos Prontos e Personalizado; módulos e usuários adicionais; painel Seu Plano (valores cobertos).
+
+**Cena 31 · 3:36,3 a 3:45,2** · O proporcional · ILUSTRAÇÃO · voz: T0
+> E funciona assim: se você aumenta o plano no meio do caminho, paga hoje só a diferença, proporcional aos dias que faltam até o vencimento.
+
+- **16:9:** O ciclo numa linha: Início do ciclo · Hoje · Vencimento; o trecho "Já pago" em contorno escuro e o que falta em verde, "Cobrança proporcional hoje".
+- **9:16:** O ciclo na vertical (início em cima, vencimento embaixo), o trecho que falta em verde.
+
+**Cena 32 · 3:45,2 a 3:52,2** · Liberado e renovação · ILUSTRAÇÃO · voz: T0
+> Os recursos novos entram assim que o pagamento é confirmado, e a renovação seguinte já vem com o valor do plano novo.
+
+- **16:9:** "Pagamento confirmado" → "Liberado"; embaixo, "Próxima renovação: valor do plano novo".
+- **9:16:** Empilhado: confirmado → liberado → próxima renovação.
+
+**Cena 33 · 3:52,2 a 3:59,8** · Reduzir o plano · ILUSTRAÇÃO · voz: T0
+> E se você reduzir, continua com tudo até o vencimento, e o valor menor começa no próximo ciclo.
+
+- **16:9:** "Reduzir o plano": "Ciclo atual: tudo liberado até o vencimento" e "Próximo ciclo: valor menor", com o rótulo real "Mudança de valor agendada".
+- **9:16:** Empilhado: ciclo atual em cima, próximo ciclo embaixo.
+
+### cap06 · Os combinados (vinheta: RECAPITULANDO; voz nova)
+
+**Mudança em relação ao T0 atual:** No lugar do fecho antigo ("no próximo tutorial, a gente coloca a logo...", que apontava para o T1): recapitulação dos combinados, o convite para confirmar e a primeira aula da Formação Básica.
+
+**Cena 34 · 3:59,8 a 4:03,0** · Vinheta do capítulo · VINHETA · título: voz nova
+> RECAPITULANDO · Os combinados.
+
+- **16:9:** Vinheta de capítulo do perfil (título com voz nova).
+- **9:16:** Vinheta vertical.
+
+**Cena 35 · 4:03,0 a 4:08,8** · Combinado 1 · ILUSTRAÇÃO · voz: nova
+> Então, recapitulando: primeiro a Formação Básica e os módulos do seu plano, na ordem indicada.
+>
+> [confirmar C17]
+
+- **16:9:** Lista "Os combinados" em texto grande, sem cartões; o item 1 entra com check: "Formação Básica e módulos do plano", e embaixo, menor, "na ordem indicada".
+- **9:16:** A lista item por item: título 60 px (até 2 linhas) e a linha de baixo em 46 px; check de 110 px.
+
+**Cena 36 · 4:08,8 a 4:13,8** · Combinado 2 · ILUSTRAÇÃO · voz: nova
+> Restou uma dúvida depois da aula? Fale com o suporte pela própria aula.
+>
+> [confirmar C17]
+
+- **16:9:** Item 2: "Dúvida depois da aula?" e, embaixo, "suporte pela própria aula".
+- **9:16:** Item 2 entra embaixo do 1.
+
+**Cena 37 · 4:13,8 a 4:17,2** · Combinado 3 · ILUSTRAÇÃO · voz: nova
+> E o seu plano você acompanha na tela Assinatura.
+>
+> [confirmar C17]
+
+- **16:9:** Item 3: "Plano e pagamentos" e, embaixo, "tela Assinatura".
+- **9:16:** Item 3 entra embaixo do 2.
+
+**Cena 38 · 4:17,2 a 4:24,6** · Confirmar e seguir · TELA REAL R12 · voz: nova
+> Agora é só confirmar que entendeu os combinados e seguir pra primeira aula. Te vejo lá!
+>
+> [confirmar C1] [confirmar C16] [confirmar C17]
+
+- **16:9:** A tela real da confirmação; clique em "confirmar"; em "primeira aula", a aula recomendada da Formação Básica.
+- **9:16:** Recorte do celular com a confirmação (botão grande) → a próxima aula.
+- **Tela real R12** (Confirmação dos combinados): confirmação dos combinados no fim do T0; em seguida, a 1ª aula da Formação Básica.
+
+### Cartela
+
+**Cena 39 · 4:24,6 a 4:28,0** · Cartela · VINHETA
+> (sem fala) Até a próxima aula!
+
+- **16:9:** Cartela do perfil: "Até a próxima aula!" (proposta D1: logo DomiFlix branco).
+- **9:16:** Cartela vertical: capacete e DOMINEX no meio da altura, logo DomiFlix branco e a frase em 72 px.
+
+<!-- /CENAS -->
+
+## Produção (depois do ok)
+1. **Voz** (só depois do ok e com crédito): um nó por capítulo novo (`T00v2 cap00` a `cap03` e `cap06`) e um nó
+   `T00v2 títulos` ("O seu progresso. [pause] Os combinados."); `proc.py` e `titulos.py`. Os capítulos 4 e 5 e os títulos
+   1, 3, 4 e 5 vêm do T0 atual (`capNN.json`, wav e `titulos/`), renumerados.
+2. **Telas:** R13 a R18 já dá para gravar na 1.38.9 (backend falso); R01 a R12 esperam a DomiFlix nova publicada. Cada uma
+   em duas capturas: computador (1280×800, para o 16:9) e celular (390×844, para o 9:16).
+3. **Ilustrações:** refazer `edit/cenas/cenas.html` no estilo novo, com uma versão 16:9 (1280×800) e uma 9:16 (1080×1920)
+   de cada cena, presas às palavras.
+4. **9:16 no pipeline:** hoje só monta 16:9. Falta palco vertical (`fundo_escuro.py` gera só 1920×1080), vinheta de
+   abertura, vinheta de capítulo e cartela verticais, e a montagem e a câmera no quadro vertical. Pedir ok antes de mexer
+   na identidade congelada (perfil): é pedido explícito do Kaik, mas vale conferir o resultado com ele numa prévia.
+5. **Legendas:** as mesmas falas nas duas versões; no 9:16, linha mais curta (~32 caracteres) para caber na largura.
+6. **Entrega:** `Domiflix T0 - Boas-vindas à Dominex.mp4` (16:9) e `Domiflix T0 - Boas-vindas à Dominex (vertical).mp4`
+   (9:16), cada um com `.srt` e `.vtt` do mesmo nome.

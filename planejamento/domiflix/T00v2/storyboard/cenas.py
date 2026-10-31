@@ -37,8 +37,8 @@ TELAS = {
     "R01": "Onboarding: o T0 como 1º passo obrigatório",
     "R02": "Trilha Tutoriais do sistema: topo e barra de progresso",
     "R03": "Trilha: grupo Formação Básica",
-    "R04": "Trilha: módulos do plano (selo verde)",
-    "R05": "Trilha: outros módulos (selo vermelho)",
+    "R04": "Trilha: módulos do plano, selo verde",
+    "R05": "Trilha: outros módulos, selo vermelho",
     "R06": "CTA de contratação de módulo não contratado",
     "R07": "Página da aula",
     "R08": "Lista de aulas com progresso e próxima aula",
@@ -98,23 +98,25 @@ CENAS = [
     dict(k="abertura", tipo="VINHETA", titulo="Vinheta da aula",
          c16="Vinheta do perfil: o capacete se monta, DOMINEX e o título \"Boas-vindas à Dominex\". Proposta: o "
              "\"▶ DOMIFLIX\" verde vira o logo DomiFlix todo branco, capacete e texto (D1).",
-         c9="Vinheta nativa na vertical: capacete no centro (y 620 a 900), DOMINEX embaixo, logo DomiFlix branco "
-            "(420 px) e o título em 2 linhas de 88 px; tudo entre y 180 e 1740.",
+         c9="Vinheta nativa na vertical: capacete (y 520 a 830), DOMINEX (y 880), logo DomiFlix branco (420 px, "
+            "y 1060) e o título em 2 linhas de 88 px (y 1210 a 1400); tudo entre y 180 e 1740.",
          d={"t": "abertura"}),
     # cap00
     dict(cap=0, linha=0, tipo="ILUSTRAÇÃO", titulo="O ciclo do trabalho",
          c16="Painel claro. \"Boas-vindas à Dominex\" no alto (Dominex em verde). Embaixo, o arco verde se fecha em "
              "volta do capacete e as 4 estações entram entre \"chamado\" e \"dinheiro\": Chamado do cliente, Ordem de "
              "serviço, Técnico em campo, Dinheiro na conta. Só ícone e texto, sem cartão.",
-         c9="Título em 2 linhas no topo (96 px). As 4 estações numa coluna (ícone 88 px, texto 56 px), ligadas por uma "
-            "linha verde que desce e volta ao topo pela direita (o ciclo); acendem uma por vez.",
+         c9="Título em 2 linhas no topo (96 px). As 4 estações numa coluna (círculo de 140 px com o ícone, texto 58 px "
+            "em até 2 linhas), ligadas pela linha verde que desce, volta pela direita e entra de novo no topo (o ciclo); "
+            "acendem uma por vez. O capacete embaixo.",
          d={"t": "ciclo"}),
     dict(cap=0, linha=1, tipo="ILUSTRAÇÃO", titulo="O primeiro passo",
          c16="Selo \"Primeiro passo\". Três passos numa linha, número grande e texto, sem cartões: 1 Assistir até o "
              "final (a barrinha do vídeo enche em \"final\"), 2 Confirmar os combinados (acende em \"confirme\"), "
              "3 Continuar (acende em \"continuar\"). Se a DomiFlix nova tiver tela própria de onboarding, troca por "
              "ela (R01).",
-         c9="Os 3 passos empilhados (número 120 px, texto 60 px em até 2 linhas), um acende por vez.",
+         c9="Selo no alto e os 3 passos empilhados (círculo de 180 px, texto 62 px em até 2 linhas), um acende por "
+            "vez; a barrinha do vídeo no passo 1.",
          d={"t": "passos", "selo": "Primeiro passo", "itens": [["play", "Assistir até o final"],
                                                               ["circle-check", "Confirmar os combinados"],
                                                               ["arrow-right", "Continuar"]], "barra": 1},
@@ -123,7 +125,7 @@ CENAS = [
          c16="Linha do tempo: Período de teste → Assinatura ativa. O selo verde \"Combinados confirmados\" nasce no "
              "teste e segue pela assinatura (faixa contínua); no fim, \"Vídeo já assistido\" com check. Nada riscado.",
          c9="A mesma linha do tempo na vertical (teste em cima, assinatura embaixo), o selo descendo junto; texto "
-            "56 a 64 px.",
+            "44 a 64 px.",
          d={"t": "teste"}, confirmar=["C2"]),
     # cap01
     dict(k="vinheta", cap=1, tipo="VINHETA", titulo="Vinheta do capítulo",
@@ -131,12 +133,12 @@ CENAS = [
          c9="Vinheta vertical: barra verde à esquerda (x 72), área em 40 px espaçada e título em até 3 linhas de "
             "112 px, no meio da altura.", d={"t": "vinheta"}),
     dict(cap=1, linha=0, tipo="ILUSTRAÇÃO", titulo="O mapa da trilha",
-         c16="\"Tutoriais do sistema\" grande à esquerda (rótulo TRILHA). Dela sai a linha verde com os 3 grupos em "
-             "ordem e as aulas como pontos: Formação Básica · Módulos do seu plano (selo verde com check branco, "
+         c16="\"Tutoriais do sistema\" grande à esquerda (rótulo TRILHA). Dela sai a linha da trilha com os 3 grupos "
+             "em ordem (verde nos dois primeiros, vermelha no terceiro) e as aulas como pontos: Formação Básica · Módulos do seu plano (selo verde com check branco, "
              "\"Tem no seu plano\") · Outros módulos (selo vermelho com X branco, \"Não tem no seu plano\"). Trilha → "
              "módulos → aulas, sem temporadas.",
          c9="\"Tutoriais do sistema\" em 2 linhas no topo; a trilha desce na vertical com os 3 grupos empilhados "
-            "(nomes 56 px, selos 44 px).",
+            "(nomes 62 px, selos 42 px).",
          d={"t": "mapa"}, confirmar=["C3", "C4"]),
     dict(cap=1, linha=1, tipo="TELA REAL", titulo="Formação Básica",
          c16="Tela inteira da trilha no painel e zoom no grupo Formação Básica; destaque no nome do grupo em "
@@ -203,16 +205,16 @@ CENAS = [
          c16="O mapa da trilha de novo: uma chave verde abraça Formação Básica e Módulos do seu plano (\"Contam no "
              "progresso\"); Outros módulos fica fora (\"Explorar à vontade\"). Uma aula do grupo vermelho ganha check "
              "e o percentual não se mexe.",
-         c9="Grupos empilhados; a chave à direita dos dois primeiros; o terceiro embaixo com \"Explorar à vontade\"; "
-            "o percentual parado no topo (72 px).",
+         c9="Grupos empilhados; uma chave verde à direita junta os dois primeiros (\"Contam no progresso\"); o "
+            "terceiro embaixo com \"Explorar à vontade\"; o percentual no topo (120 px), parado.",
          d={"t": "mapa", "chave": 1}, confirmar=["C9"]),
     dict(cap=2, linha=2, tipo="ILUSTRAÇÃO", titulo="Lembretes de 30 dias",
-         c16="Faixa de 30 dias com sininhos em alguns dias; o anel de progresso enche até 100% e a faixa termina em "
+         c16="Faixa de 30 dias com sininhos em alguns dias; a barra de progresso enche até 100% e a faixa termina em "
              "\"Concluído\". Se o lembrete for um aviso no sistema, entra a tela real dele no fim (R11).",
          c9="Calendário de 30 dias (6 × 5) com sininhos; embaixo, o progresso chegando a 100%.",
          d={"t": "lembrete"}, confirmar=["C10"]),
     dict(cap=2, linha=3, tipo="ILUSTRAÇÃO", titulo="Outras trilhas no futuro",
-         c16="Três trilhas lado a lado: Tutoriais do sistema (cheia, verde, \"Primeiro foco\"), Gestão e "
+         c16="Tutoriais do sistema grande à esquerda (cheia, verde, \"Primeiro foco\"); à direita, Gestão e "
              "Contabilidade só em contorno tracejado (\"No futuro\"). Em \"primeiro foco\", as duas recuam.",
          c9="Empilhadas: Tutoriais do sistema grande no alto; Gestão e Contabilidade tracejadas embaixo.",
          d={"t": "trilhas"}, confirmar=["C12"]),
@@ -221,10 +223,10 @@ CENAS = [
          c16="Vinheta de capítulo do perfil (título com a voz do T0 atual).", c9="Vinheta vertical.",
          d={"t": "vinheta"}),
     dict(cap=3, linha=0, tipo="ILUSTRAÇÃO", titulo="Primeiro os tutoriais",
-         c16="A ordem certa, sem cartões: \"Comece agora\" com o play (em \"começar\"), 1 Tutoriais (em "
-             "\"Primeiro\"), 2 Dúvida específica (em \"dúvida\"), 3 Suporte pela própria aula (em \"suporte\"), "
+         c16="A ordem certa, sem cartões: \"Comece agora\" com o play (em \"começar\"), 1 Siga os tutoriais (em "
+             "\"Primeiro\"), 2 Restou uma dúvida específica? (em \"dúvida\"), 3 Suporte pela própria aula (em \"suporte\"), "
              "ligados pela linha verde. Nada de reunião riscada.",
-         c9="Os passos empilhados, um por vez (texto 60 px).",
+         c9="Os passos empilhados, um por vez (círculo de 180 px, texto 62 px).",
          d={"t": "passos", "selo": "Comece agora", "itens": [["graduation-cap", "Siga os tutoriais"],
                                                             ["circle-help", "Restou uma dúvida específica?"],
                                                             ["headset", "Suporte pela própria aula"]]},
@@ -279,7 +281,7 @@ CENAS = [
     dict(cap=5, linha=0, tipo="ILUSTRAÇÃO", titulo="Teste e plano",
          c16="Os módulos (nomes do catálogo) em grade de ícone e texto, todos acesos sob \"Período de teste\"; em "
              "\"ativar a assinatura\", ficam acesos só os do plano e os outros viram contorno com \"+\".",
-         c9="Os módulos numa coluna (texto 52 px), com a mesma virada.",
+         c9="Os módulos numa coluna (texto 46 px, quadrado de 104 px), com a mesma virada.",
          d={"t": "modulos"}, confirmar=["C11"]),
     dict(cap=5, linha=1, tipo="TELA REAL", titulo="Gerenciar Meu Plano",
          c16="\"Gerenciar Meu Plano\": abas \"Planos Prontos\" e \"Personalizado\" (clique em \"Personalizado\"), "
@@ -303,14 +305,14 @@ CENAS = [
     dict(k="vinheta", cap=6, tipo="VINHETA", titulo="Vinheta do capítulo",
          c16="Vinheta de capítulo do perfil (título com voz nova).", c9="Vinheta vertical.", d={"t": "vinheta"}),
     dict(cap=6, linha=0, tipo="ILUSTRAÇÃO", titulo="Combinado 1",
-         c16="Lista \"Os combinados\" em texto grande, sem cartões; o item 1 entra com check: \"Formação Básica e os "
-             "módulos do seu plano, na ordem\".",
-         c9="A lista item por item (64 px, até 2 linhas cada).", d={"t": "combinados", "n": 1}, confirmar=["C17"]),
+         c16="Lista \"Os combinados\" em texto grande, sem cartões; o item 1 entra com check: \"Formação Básica e "
+             "módulos do plano\", e embaixo, menor, \"na ordem indicada\".",
+         c9="A lista item por item: título 60 px (até 2 linhas) e a linha de baixo em 46 px; check de 110 px.", d={"t": "combinados", "n": 1}, confirmar=["C17"]),
     dict(cap=6, linha=1, tipo="ILUSTRAÇÃO", titulo="Combinado 2",
-         c16="Item 2: \"Dúvida depois da aula: suporte pela própria aula\".", c9="Item 2 entra embaixo do 1.",
+         c16="Item 2: \"Dúvida depois da aula?\" e, embaixo, \"suporte pela própria aula\".", c9="Item 2 entra embaixo do 1.",
          d={"t": "combinados", "n": 2}, confirmar=["C17"]),
     dict(cap=6, linha=2, tipo="ILUSTRAÇÃO", titulo="Combinado 3",
-         c16="Item 3: \"Plano e pagamentos: tela Assinatura\".", c9="Item 3 entra embaixo do 2.",
+         c16="Item 3: \"Plano e pagamentos\" e, embaixo, \"tela Assinatura\".", c9="Item 3 entra embaixo do 2.",
          d={"t": "combinados", "n": 3}, confirmar=["C17"]),
     dict(cap=6, linha=3, tipo="TELA REAL", titulo="Confirmar e seguir",
          c16="A tela real da confirmação; clique em \"confirmar\"; em \"primeira aula\", a aula recomendada da "
@@ -321,7 +323,7 @@ CENAS = [
          confirmar=["C1", "C16", "C17"]),
     dict(k="cartela", tipo="VINHETA", titulo="Cartela",
          c16="Cartela do perfil: \"Até a próxima aula!\" (proposta D1: logo DomiFlix branco).",
-         c9="Cartela vertical: logo DOMINEX no meio da altura, logo DomiFlix branco e a frase em 64 px.",
+         c9="Cartela vertical: capacete e DOMINEX no meio da altura, logo DomiFlix branco e a frase em 72 px.",
          d={"t": "cartela"}),
 ]
 

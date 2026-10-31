@@ -93,10 +93,25 @@ Depois da entrega a limpeza apaga as gravações e os renders dos capítulos; fi
   capítulo de antes com a do de depois) e, no máximo, ~2 s de cada lado até o IDR vizinho. Os quadros copiados saem idênticos.
 - `--plano` mostra a linha do tempo nova e o que é copiado/recodificado, sem escrever nada e sem pedir a trava
   (`--frames cap05=1954` simula capítulo ainda sem render).
-Depois: `legendas_aula.py` e `entregar.py` como sempre. `aula_final.mp4` tem hardlinks em `entrega/` e `entrega_final/`:
-o script escreve em arquivo temporário e troca no fim (`ffmpeg -y` no mesmo nome truncaria a entrega antiga). Se cair no meio,
-o estado antigo fica em `out/<AULA>/_base` e a execução seguinte parte dele. Capítulo com `cortes` não é suportado (use o
-`finish.py`). H.264 bruto (`-f h264`) perde a ordem dos quadros B: por isso o remendo trabalha com pacotes de MP4.
+- `--manter-stems`: por padrão, depois do mix, `proj/build/stems` e `music.wav` somem (~1,1 GB numa aula de 12 min; a trilha sai
+  igual de novo, `--seed 3`). O `mix.wav` fica: apague-o depois de entregar.
+- **Depois**: `legendas_aula.py` e `entregar.py` como sempre (cada um sob a trava, ou a cadeia toda numa posse só:
+  `flock .heavy.lock nice -n 10 env TUT_LOCKED=1 bash cadeia.sh`, com render do capítulo que falta, remendo, legendas e entrega).
+- **Medido** (31/10, 2 núcleos): T1 com 3 capítulos novos e 2 só de áudio = 8,4 min (5.541 de 21.755 quadros recodificados, ~23 q/s;
+  o mix leva ~1 min); T4 só áudio = 4,1 min.
+- **Conferir uma aula remendada**: `ffmpeg -xerror -i aula.mp4 -f null -` (decodifica tudo sem erro); a diferença entre quadros
+  consecutivos em cada emenda (T1: 0,4 e 0,6, no nível dos vizinhos; um salto de 85 no quadro 20.309 já existia no vídeo antigo, é
+  um corte de cena do próprio capítulo); e a diferença de áudio antigo × novo por janela de 5 s (só as janelas trocadas passam de
+  −10 dB; o resto fica no piso do AAC, −30 a −38 dB).
+- **Hardlinks**: `aula_final.mp4` tem links em `entrega/` e `entrega_final/`; o script escreve em arquivo temporário e troca no
+  fim (`ffmpeg -y` no mesmo nome truncaria a entrega antiga). Já `legendas_aula.py` + `entregar.py` reescrevem `.srt`/`.vtt` no mesmo
+  arquivo: a legenda nova já vale em `entrega_final/` antes do MP4. Troque o MP4 logo depois (`ln -f entrega/<nome>.mp4 entrega_final/`).
+- Se cair no meio, o estado antigo fica em `out/<AULA>/_base` e a execução seguinte parte dele. Capítulo com `cortes` não é
+  suportado (use o `finish.py`). H.264 bruto (`-f h264`) perde a ordem dos quadros B: por isso o remendo trabalha com pacotes de MP4.
+- **Mexeu na emenda de pacotes? Teste antes numa amostra** (copia `[0, IDR)` + recodifica um trecho + copia o resto, tirado do vídeo
+  antigo): conferir pts/dts estritamente crescentes (passo 512), md5 dos quadros copiados idêntico ao antigo e PSNR dos recodificados
+  ≥ 44 dB. Esse teste pegou um deslocamento que crescia a cada quadro copiado (`(D − a) * passo` dentro do laço), que teria
+  estragado a primeira aula de verdade.
 
 ## Celular (gravação com `"device": "phone"`)
 No JSON do capítulo: `"stage": {"bg": ..., "shadow": 0.45, "margin": 56, "radius": 46, "phone": {"bezel": 14}}` (aparelho
