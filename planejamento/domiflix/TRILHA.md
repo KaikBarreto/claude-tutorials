@@ -150,6 +150,11 @@ na coluna Tela dos roteiros (marca `[handoff: ...]`, com `arquivo:linha`).
   "Template criado" no lugar de checklist (`src/hooks/useFormTemplates.ts:98,119`); prévia do prefixo de numeração da OS
   diferente do número gerado (`ServiceTypesPanel.tsx:322,758` × `src/pages/ServiceOrders.tsx:187-191`); permissão de
   Checklists sem efeito (`src/hooks/usePermissions.ts:60`).
+- **1.38.9 (levantamento do T3 v2, 31/10; detalhes e `arquivo:linha` em `T03v2/inventario_delta.md`):** as RPCs de etiqueta
+  não conferem o módulo contratado; o botão "Configurações" aparece para todos, mas só quem tem `can_manage_system`
+  grava; o selo da etiqueta usa sempre texto branco (pouco contraste em laranja e verde); apagar campo personalizado
+  não pede confirmação; a coluna "Portal" dos campos nasce desligada (o "Tensão" do T3 some do portal do T12 se não for
+  ligado); a migration da 1.38.7 grava um e-mail fixo de pessoa.
 
 ## Como retomar numa sessão nova
 ```bash

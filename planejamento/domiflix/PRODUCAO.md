@@ -123,6 +123,10 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
    etiquetas no portal do PMOC. Afeta o T3 (capítulos de equipamento também) e muda telas de T5, T8, T9, T11, T12
    (sem etiquetas semeadas, só aparecem os controles novos). O T5 segue na 1.38.6 (já gravado; seletores sem etiqueta
    ficam iguais); conferir na entrega se a agenda ganhou filtro visível.
+   **16:4x:** levantamento e roteiro do T3 v2 prontos (`T03v2/`), voz gerada (lote V2c). Para gravar na 1.38.9, o backend
+   falso precisa de 5 tabelas, 5 colunas, 3 RPCs chamadas em todo salvar, padrões e o gancho de exclusão
+   (`T03v2/inventario_delta.md`); a troca do app para a 1.38.9 vem junto com isso, depois do T1 cap05/cap06 (1.38.6).
+   T7 retomado (G4): prepara agora e grava na 1.38.9.
 3. **T3 v2 (Kaik 31/10 12:11):** "Editar" e "Excluir" da ficha foram para "Ações" (já na 1.38.6, `5f0b64ea`: fichas de
    cliente e de equipamento) e "Configurar origens" virou um modal único "Configurações" com Origens, Etiquetas, Campos
    de clientes e Campos de fornecedores (`CustomerSettingsDialog.tsx`, recurso novo; publicado na 1.38.8). Afeta no T3: cap01 (botões do topo), cap04 (vira origens + etiquetas + campos), cap05 (cabeçalho da
@@ -160,6 +164,7 @@ se for melhor (custa o mesmo que o v4 por caractere: fica o v4, voz do T3); fala
 | V1 | T1, T4, T5, T7 (39,6 mil caracteres, 65 nós) | Tuop7qPrgwc8qdaVebww (fluxo único) | exportado 31/10 00:29; proc.py e títulos ok (semelhança 0,87 a 1,00) |
 | V2 | T18 (11,3 mil caracteres, 17 nós) + `T07 cap05 emenda` | mesmo fluxo | exportado 31/10 11:18 (zip 3); processando |
 | V2b | Correções de pronúncia (Kaik 31/10 11:04): `T01 cap05 A cor e o logo da marca (v2)` (logo com texto branco), `T01 emendas`, `T04 emendas`, `T18 emenda` = 1.745 créditos | mesmo fluxo | gerado 11:11, exportado 11:18 (zip 3); processando |
+| V2c | T3 v2 (1.38.9): `T03v2 cap06 Etiquetas`, `T03v2 cap07 Campos personalizados`, `T03v2 emendas`, `T03v2 inserções`, `T03v2 títulos` = 1.824 créditos | mesmo fluxo | gerado 31/10 16:37; **saldo ~0**; aguardando exportação (zip 4) |
 | V3 | T2 (8,5 mil), T8 (13,9 mil), T9 (13,5 mil), T12 (10,3 mil), T10 (10,4 mil), T11 (14,2 mil) = ~70,8 mil | mesmo fluxo | roteiros ok; aguardando créditos |
 | V4 | T13 (12,8 mil), T19 (9,1 mil), T20 (7,9 mil), T14 (7,7 mil) = ~37,5 mil | mesmo fluxo | roteiros ok; aguardando créditos |
 | V5 | T15 (8,2 mil), T22 (6,9 mil), T21 (5,4 mil), T17 (5,6 mil) = ~26,1 mil | mesmo fluxo | roteiros ok; aguardando créditos |
