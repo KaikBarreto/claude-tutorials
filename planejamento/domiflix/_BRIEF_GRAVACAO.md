@@ -16,6 +16,8 @@ aula em `$TUT_HOME/tnn/` (já instalada), robô em `$TUT_HOME/rec/`.
   (porta 8080) é um só: suba com `rec/run.sh up` só se `rec/run.sh status` disser que está parado.
 - Data do mundo: `FAKE_NOW=2026-11-03T09:00:00-03:00` (terça) no backend E no robô, salvo se o `plano.md` pedir outra.
 - Gravação e render só sob `flock $TUT_HOME/.heavy.lock` (um de cada vez na máquina), com `nice`.
+  **Uma trava por capítulo** (cada gravação, ensaio ou render pega e solta a trava): nunca um lote inteiro sob um flock
+  só. Em 31/10 um lote de 1 h do T3 v2 parou a fila de 4 agentes (T7, voz nova, storyboard do T0).
 - Nunca `pkill`/`killall`; `rm` só com `"${VAR:?}"`; nada fora de `tnn/`, `rec/tnn/`, `rec/fakebase/seeds-extra/tnn/` e
   handlers novos em `rec/fakebase/handlers/` (um arquivo por função; não reescreva handler de outra aula: estenda).
 - Código do app: só leitura (`$TUT_HOME/app` é a cópia de gravação, 1.38.6; `src-1.38.6` para ler).

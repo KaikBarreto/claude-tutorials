@@ -92,9 +92,12 @@ em si continua uma de cada vez (trava `.heavy.lock`).
 - **`FAKE_NOW` igual no fakebase e no robô**: suba com `FAKE_NOW=... FAKE_PORT=<porta> rec/run.sh fake`, grave com
   `FAKE_NOW=... FAKE_URL=http://127.0.0.1:<porta>` e, antes de cada gravação, confira que a instância ainda é a sua:
   `tr '\0' '\n' < /proc/$(cat rec/.runtime/fake<porta>.pid)/environ | grep FAKE_`.
-- **Sequência de gravações sob a trava** (ex.: cap. 6, 13): um único `flock .heavy.lock bash lote.sh` com todas, para
-  ninguém entrar no meio. Comando em segundo plano com `timeout` é MORTO (com os filhos, o `flock` e a gravação) quando o
-  prazo acaba: dê um prazo longo (ex.: 1 h) ou a trava passa a outro processo no meio do lote.
+- **Sequência de gravações: uma trava por capítulo** (`flock .heavy.lock` em cada gravação, ensaio ou render), para os
+  jobs curtos dos outros entrarem entre os seus. Em 31/10 um lote de 1 h sob um flock só (T3 v2) parou a fila de quatro
+  agentes. Cada capítulo parte da própria semente (`apos-capNN`) e cada agente tem o seu Supabase falso, então quem entra
+  entre dois capítulos não mexe em nada seu. Comando em segundo plano com `timeout` é MORTO (com os filhos, o `flock` e a
+  gravação em andamento) quando o prazo acaba: prazo por capítulo e com folga (~3× a duração dele), nunca um prazo curto
+  para o lote todo.
 
 ## Dado de bastidor no meio da gravação
 Quando a fala só cita itens "cadastrados do mesmo jeito" (T4: cinco tipos de serviço), o robô os insere por REST no
