@@ -13,6 +13,9 @@
 # Os capítulos 4 e 5 são IDÊNTICOS, byte a byte, aos capítulos 3 e 4 do T0 atual: reaproveitam o áudio e os tempos
 # (capNN.json) sem gerar voz. Os títulos 1, 3, 4 e 5 são os do T0 atual (titulos/cap01..04.wav).
 # `python3 tts_textos.py` soma caracteres e palavras; `python3 tts_textos.py diff` mostra o que é voz nova.
+# 31/10 (conferência na 1.38.11 + DomiFlix 487a0ca3): cap 3, linha 2, ajustada ao código: o botão "Tirar dúvidas com o
+# suporte" abre o WhatsApp com a mensagem pronta (empresa, e-mail do usuário, trilha, módulo e aula); quem envia é a
+# pessoa (src/components/domiflix/DomiflixLessonDetails.tsx:43-54,79-87). Antes: "ele já envia ...".
 CAPS = {
 0: """Oi! Boas-vindas à Dominex. A partir de agora, a sua empresa tem um lugar só pra organizar o trabalho, do chamado do cliente até o dinheiro na conta.
 Este vídeo é o primeiro passo para começar a usar a Dominex. Assista até o final e confirme que entendeu os combinados para continuar.
@@ -29,7 +32,7 @@ As aulas dos outros módulos você explora à vontade, sem atrapalhar o seu prog
 Nos primeiros trinta dias, a Dominex vai te lembrar de continuar, até você concluir a Formação Básica e os tutoriais dos módulos do seu plano.
 No futuro, a Domiflix pode ganhar outras trilhas, como gestão e contabilidade. Mas o primeiro foco é sempre a trilha Tutoriais do sistema.""",
 3: """Você não precisa esperar uma reunião para começar. Primeiro siga os tutoriais. Se depois da aula ainda restar uma dúvida específica, fale com o suporte diretamente pela própria aula.
-É só clicar em Tirar dúvidas com o suporte: ele já envia a sua empresa, o seu usuário, o módulo e a aula, pra gente começar do ponto certo.
+É só clicar em Tirar dúvidas com o suporte: o WhatsApp abre com a sua empresa, o seu usuário, o módulo e a aula já na mensagem.
 Se você preferir ler, o Guia Técnico explica cada função por escrito, tela por tela, no endereço dominex ponto ép barra guia técnico.
 Fora da aula, o suporte também atende pelo WhatsApp, em Falar com o Suporte, no menu da sua conta.""",
 4: """Tudo sobre o seu plano fica na tela Assinatura, também no menu da sua conta. Ali você vê o status, o plano, o vencimento e o valor, acompanha o uso da conta e o histórico de pagamentos.

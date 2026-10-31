@@ -34,18 +34,18 @@ def legenda(txt):
 
 # ---------------------------------------------------------------------------------------------- telas reais (ids)
 TELAS = {
-    "R01": "Onboarding: o T0 como 1º passo obrigatório",
-    "R02": "Trilha Tutoriais do sistema: topo e barra de progresso",
-    "R03": "Trilha: grupo Formação Básica",
+    "R01": "Introdução obrigatória: o T0 como 1º passo",
+    "R02": "Trilha do seu plano: barra de progresso",
+    "R03": "Trilha: módulo da Formação básica",
     "R04": "Trilha: módulos do plano, selo verde",
     "R05": "Trilha: outros módulos, selo vermelho",
     "R06": "CTA de contratação de módulo não contratado",
     "R07": "Página da aula",
-    "R08": "Lista de aulas com progresso e próxima aula",
+    "R08": "Sua trilha: aulas com progresso e próxima aula",
     "R09": "Botão Tirar dúvidas com o suporte",
-    "R10": "Contexto enviado ao suporte",
-    "R11": "Lembrete dos primeiros 30 dias",
-    "R12": "Confirmação dos combinados",
+    "R10": "Mensagem pronta para o suporte (WhatsApp)",
+    "R11": "Lembrete da trilha de tutoriais (faixa no topo)",
+    "R12": "Confirmação no fim do T0",
     "R13": "Menu da conta: Tutoriais | Domiflix",
     "R14": "Menu da conta: Falar com o Suporte",
     "R15": "Guia Técnico (página pública)",
@@ -78,10 +78,11 @@ CAPS = {
                     "contexto (item 8). O Guia Técnico fica, mais curto e sem \"na mesma ordem dos tutoriais\" (a trilha "
                     "mudou; ver sinalizações). O WhatsApp pelo menu da conta fica (com \"também\"). Saem \"Volta direto no "
                     "capítulo daquele assunto\" (a aula nova não tem capítulos) e a dica \"quando você já assistiu à "
-                    "aula...\" (o reforço novo diz o mesmo)."),
+                    "aula...\" (o reforço novo diz o mesmo). Conferência na 1.38.11: a frase do botão foi ajustada "
+                    "ao código (ele abre o WhatsApp com a mensagem pronta; antes dizia \"ele já envia\")."),
     4: dict(titulo="A sua assinatura", vinheta="Assinatura", voz="T0",
             mudanca="Fala idêntica ao T0 atual (reaproveita o áudio). Código da assinatura igual da 1.38.6 para a "
-                    "1.38.9. Visual: tela real da Assinatura (já existe) com os valores cobertos, no lugar do cartão "
+                    "1.38.11. Visual: tela real da Assinatura (já existe) com os valores cobertos, no lugar do cartão "
                     "desenhado (decisão D2)."),
     5: dict(titulo="Quando a empresa cresce", vinheta="Assinatura", voz="T0",
             mudanca="Fala idêntica ao T0 atual (reaproveita o áudio). Visual: Gerenciar Meu Plano real (valores "
@@ -97,7 +98,8 @@ CAPS = {
 CENAS = [
     dict(k="abertura", tipo="VINHETA", titulo="Vinheta da aula",
          c16="Vinheta do perfil: o capacete se monta, DOMINEX e o título \"Boas-vindas à Dominex\". Proposta: o "
-             "\"▶ DOMIFLIX\" verde vira o logo DomiFlix todo branco, capacete e texto (D1).",
+             "\"▶ DOMIFLIX\" verde vira o logo DomiFlix todo branco, capacete e texto (D1), o mesmo que a DomiFlix nova "
+             "passou a usar.",
          c9="Vinheta nativa na vertical: capacete (y 520 a 830), DOMINEX (y 880), logo DomiFlix branco (420 px, "
             "y 1060) e o título em 2 linhas de 88 px (y 1210 a 1400); tudo entre y 180 e 1740.",
          d={"t": "abertura"}),
@@ -111,22 +113,24 @@ CENAS = [
             "acendem uma por vez. O capacete embaixo.",
          d={"t": "ciclo"}),
     dict(cap=0, linha=1, tipo="ILUSTRAÇÃO", titulo="O primeiro passo",
-         c16="Selo \"Primeiro passo\". Três passos numa linha, número grande e texto, sem cartões: 1 Assistir até o "
-             "final (a barrinha do vídeo enche em \"final\"), 2 Confirmar os combinados (acende em \"confirme\"), "
-             "3 Continuar (acende em \"continuar\"). Se a DomiFlix nova tiver tela própria de onboarding, troca por "
-             "ela (R01).",
+         c16="Selo \"Primeiro passo\" (o mesmo rótulo da tela do app). Três passos numa linha, número grande e texto, "
+             "sem cartões: 1 Assistir até o final (a barrinha do vídeo enche em \"final\"), 2 Confirmar os combinados "
+             "(acende em \"confirme\"), 3 Começar a primeira aula (acende em \"continuar\"; é o botão real \"Confirmar "
+             "e começar a primeira aula\"). A tela real da introdução (R01) é onde este vídeo passa: fica fora, para "
+             "não mostrar a tela dentro dela mesma.",
          c9="Selo no alto e os 3 passos empilhados (círculo de 180 px, texto 62 px em até 2 linhas), um acende por "
-            "vez; a barrinha do vídeo no passo 1.",
+            "vez; a barrinha do vídeo no passo 1. Tudo acima da faixa da legenda.",
          d={"t": "passos", "selo": "Primeiro passo", "itens": [["play", "Assistir até o final"],
                                                               ["circle-check", "Confirmar os combinados"],
-                                                              ["arrow-right", "Continuar"]], "barra": 1},
-         confirmar=["C1"]),
+                                                              ["arrow-right", "Começar a primeira aula"]], "barra": 1}),
     dict(cap=0, linha=2, tipo="ILUSTRAÇÃO", titulo="Do teste para a assinatura",
          c16="Linha do tempo: Período de teste → Assinatura ativa. O selo verde \"Combinados confirmados\" nasce no "
-             "teste e segue pela assinatura (faixa contínua); no fim, \"Vídeo já assistido\" com check. Nada riscado.",
+             "teste e segue pela assinatura (faixa contínua); no fim, \"Vídeo já assistido\" com check. Nada riscado. "
+             "A tela real diz o mesmo: \"Exibido uma única vez\" e \"Se você estiver em teste e depois contratar, esta "
+             "confirmação continuará válida.\"",
          c9="A mesma linha do tempo na vertical (teste em cima, assinatura embaixo), o selo descendo junto; texto "
             "44 a 64 px.",
-         d={"t": "teste"}, confirmar=["C2"]),
+         d={"t": "teste"}),
     # cap01
     dict(k="vinheta", cap=1, tipo="VINHETA", titulo="Vinheta do capítulo",
          c16="Vinheta de capítulo do perfil (título com a voz do T0 atual).",
@@ -134,88 +138,103 @@ CENAS = [
             "112 px, no meio da altura.", d={"t": "vinheta"}),
     dict(cap=1, linha=0, tipo="ILUSTRAÇÃO", titulo="O mapa da trilha",
          c16="\"Tutoriais do sistema\" grande à esquerda (rótulo TRILHA). Dela sai a linha da trilha com os 3 grupos "
-             "em ordem (verde nos dois primeiros, vermelha no terceiro) e as aulas como pontos: Formação Básica · Módulos do seu plano (selo verde com check branco, "
-             "\"Tem no seu plano\") · Outros módulos (selo vermelho com X branco, \"Não tem no seu plano\"). Trilha → "
-             "módulos → aulas, sem temporadas.",
+             "em ordem (verde nos dois primeiros, vermelha no terceiro) e as aulas como pontos: Formação Básica · Módulos "
+             "do seu plano (selo verde, check e texto brancos, \"TEM NO SEU PLANO\") · Outros módulos (selo vermelho, X "
+             "e texto brancos, \"NÃO TEM NO SEU PLANO\"). Selos iguais aos do app. Trilha → módulos → aulas, sem "
+             "temporadas. Na tela do app, o título da página é \"Aprenda a usar a Dominex\" (C3).",
          c9="\"Tutoriais do sistema\" em 2 linhas no topo; a trilha desce na vertical com os 3 grupos empilhados "
-            "(nomes 62 px, selos 42 px).",
-         d={"t": "mapa"}, confirmar=["C3", "C4"]),
+            "(nomes 62 px, selos 42 px), acima da faixa da legenda.",
+         d={"t": "mapa"}, confirmar=["C3"]),
     dict(cap=1, linha=1, tipo="TELA REAL", titulo="Formação Básica",
-         c16="Tela inteira da trilha no painel e zoom no grupo Formação Básica; destaque no nome do grupo em "
-             "\"Formação Básica\".",
-         c9="Recorte da trilha no celular (390 → 936 px, 2,4×) só com a Formação Básica.",
-         real=dict(id="R03", itens=["grupo \"Formação Básica\" no topo da trilha", "aulas na ordem, 3 concluídas",
-                                    "nenhuma \"Temporada\" ou \"Episódio\""], foco="zoom no grupo Formação Básica"),
+         c16="A página da DomiFlix (\"Aprenda a usar a Dominex\", \"Olá, Camila · continue sua trilha\") e zoom no "
+             "Módulo 1, com o selo \"FORMAÇÃO BÁSICA\"; destaque no selo em \"Formação Básica\".",
+         c9="A página inicial no celular (nessa lista não há selos): \"Aprenda a usar a Dominex\", o cartão \"Trilha "
+            "do seu plano\" e o Módulo 1; recorte ampliado (390 → 936 px) na lista do módulo.",
+         real=dict(id="R03", itens=["\"Aprenda a usar a Dominex\" e \"Olá, Camila · continue sua trilha\"",
+                                    "Módulo 1 com o selo \"FORMAÇÃO BÁSICA\"",
+                                    "aulas com check e \"Próxima aula recomendada\""], foco="zoom no Módulo 1"),
          confirmar=["C3"]),
     dict(cap=1, linha=2, tipo="TELA REAL", titulo="Módulos do seu plano",
-         c16="A câmera desce para os módulos do plano; destaque no selo verde \"Tem no seu plano\" em \"plano\" e na "
-             "ordem (1º, 2º) em \"ordem\".",
-         c9="Recorte do celular com os módulos do plano, um embaixo do outro; zoom no selo verde.",
+         c16="A câmera desce para os módulos do plano: selo verde \"TEM NO SEU PLANO\" em \"plano\"; as aulas com "
+             "\"Na sequência do seu plano\" em \"ordem\".",
+         c9="A página inicial do celular não mostra selos: o recorte vem da gaveta \"Ver trilha\" (a mesma lista da "
+            "lateral), com os módulos do plano um embaixo do outro e o selo verde em zoom.",
          real=dict(id="R04", itens=["Gestão de Contratos e PMOC e Funcionários / RH",
-                                    "selo verde saturado, check e texto brancos: \"Tem no seu plano\"",
-                                    "ordem recomendada"], foco="zoom no selo verde"),
-         confirmar=["C4", "C11"]),
+                                    "selo verde, check e texto brancos: \"TEM NO SEU PLANO\"",
+                                    "\"Na sequência do seu plano\""], foco="zoom no selo verde")),
     dict(cap=1, linha=3, de=0, tipo="TELA REAL", titulo="Outros módulos",
-         c16="A câmera desce para os outros módulos (por último); destaque no play de uma aula em \"assistir\" e no "
-             "selo vermelho em \"identificados\".",
-         c9="Recorte do celular com um módulo não contratado: selo vermelho em zoom e as aulas com play.",
+         c16="A câmera desce até os outros módulos, por último: selo vermelho \"NÃO TEM NO SEU PLANO\" em "
+             "\"identificados\"; as aulas com \"Conheça este módulo\"; em \"assistir\", o aviso real \"Consultar fora "
+             "da ordem?\" e o clique em \"Consultar esta aula\".",
+         c9="Gaveta \"Ver trilha\" no celular: o separador \"Conheça outros módulos\" (\"Você pode assistir e "
+            "contratar direto pela aula.\") e o módulo com o selo vermelho em zoom.",
          real=dict(id="R05", itens=["CRM/Kanban, Emissão de Notas Fiscais, Cobranças online",
-                                    "selo vermelho saturado, X e texto brancos: \"Não tem no seu plano\"",
-                                    "aulas com play (liberadas)"], foco="zoom no selo vermelho"),
-         confirmar=["C4"]),
+                                    "selo vermelho, X e texto brancos: \"NÃO TEM NO SEU PLANO\"",
+                                    "\"Conheça este módulo\" e o aviso \"Consultar fora da ordem?\""],
+                   foco="zoom no selo vermelho")),
     dict(cap=1, linha=3, de=21, tipo="TELA REAL", titulo="Contratar por ali mesmo",
-         c16="Zoom no CTA de contratação do módulo; clique (anel verde) em \"solicitar\".",
-         c9="Recorte do celular só com o CTA, grande; toque em \"solicitar\".",
-         real=dict(id="R06", itens=["CTA de contratação no módulo ou na aula", "o que abre ao clicar"],
-                   foco="zoom no CTA e clique"),
+         c16="Na aula do módulo não contratado, o bloco \"Conheça agora. Ative quando fizer sentido.\" e o botão "
+             "\"Adicionar ao meu plano\" (conta contratada); zoom e clique em \"solicitar\". O valor \"A partir de R$ "
+             ".../mês\" fica coberto. A cena para no clique: hoje o botão abre um endereço que não existe (C5).",
+         c9="Recorte do bloco embaixo do vídeo, no celular, com o botão grande; toque em \"solicitar\".",
+         real=dict(id="R06", itens=["\"Conheça agora. Ative quando fizer sentido.\"",
+                                    "\"Esta aula está liberada, mas a função ... ainda não faz parte do seu plano.\"",
+                                    "botão \"Adicionar ao meu plano\" (em teste: \"Escolher meu plano\")"],
+                   foco="zoom no botão e clique"),
          confirmar=["C5"]),
     dict(cap=1, linha=4, tipo="TELA REAL", titulo="Uma aula, um tema",
-         c16="Página da aula inteira; destaques em sequência: descrição (\"descrição\"), legendas (\"legendas\") e "
-             "materiais de apoio (\"materiais\"). A lista lateral fica visível.",
-         c9="A aula no celular, um recorte por vez: player com a legenda ligada → descrição → materiais de apoio.",
-         real=dict(id="R07", itens=["player com legenda ligada", "título e descrição da aula", "materiais de apoio",
-                                    "lista lateral de aulas"], foco="descrição → legendas → materiais"),
+         c16="Página da aula: a trilha à esquerda, o vídeo, \"(módulo) · Aula 1.4\", o título e a descrição. Destaques em "
+             "sequência: a descrição (\"descrição\"), o menu \"Legendas\" do player (\"legendas\") e \"Materiais e "
+             "extras\" (\"materiais\").",
+         c9="No celular (com a versão vertical da aula, se houver), um recorte por vez: o vídeo com a legenda → a "
+            "descrição → \"Materiais e extras\".",
+         real=dict(id="R07", itens=["vídeo com a legenda ligada (menu \"Legendas\")",
+                                    "\"(módulo) · Aula 1.4\", título e descrição",
+                                    "\"Materiais e extras\" com 1 ou 2 itens"], foco="descrição → legendas → materiais"),
          confirmar=["C6"]),
     dict(cap=1, linha=5, tipo="TELA REAL", titulo="Progresso e próxima aula",
-         c16="Zoom na lista lateral: as concluídas com check em \"salvo\" e a próxima aula em destaque em "
-             "\"próxima\".",
-         c9="A lista de aulas da interface mobile real (não a lateral reduzida): checks e a próxima em destaque.",
-         real=dict(id="R08", itens=["aulas concluídas com check", "aula recomendada / próxima aula em destaque"],
-                   foco="lista de aulas, a próxima aula"),
-         confirmar=["C7"]),
+         c16="Zoom na trilha à esquerda (\"Sua trilha\"): \"Trilha do seu plano\" com o percentual, as aulas 1.1, 1.2... "
+             "com check em \"salvo\" e a próxima em destaque em \"próxima\".",
+         c9="No celular, o botão \"Ver trilha\" abre a gaveta com a mesma lista; recorte com os checks e a próxima aula.",
+         real=dict(id="R08", itens=["\"Sua trilha\", \"Trilha do seu plano\" e o percentual",
+                                    "aulas numeradas (1.1, 1.2...) com check", "a aula atual e a próxima"],
+                   foco="lista de aulas, a próxima aula")),
     dict(cap=1, linha=6, tipo="TELA REAL", titulo="Onde encontrar",
          c16="Sistema com o menu da conta aberto (cartão da foto no rodapé da barra lateral); \"Tutoriais | Domiflix\" "
-             "destacado e clicado em \"Tutoriais\".",
+             "destacado e clicado em \"Tutoriais\". Rótulo igual na 1.38.11.",
          c9="Celular: Menu → seção Conta, recorte dos atalhos; \"Tutoriais | Domiflix\" em destaque.",
          real=dict(id="R13", itens=["menu da conta: Perfil, Assinatura, Tema, Tutoriais | Domiflix, Central de Ajuda, "
-                                    "Falar com o Suporte"], foco="Tutoriais | Domiflix"),
-         confirmar=["C8"]),
+                                    "Falar com o Suporte"], foco="Tutoriais | Domiflix")),
     # cap02
     dict(k="vinheta", cap=2, tipo="VINHETA", titulo="Vinheta do capítulo",
          c16="Vinheta de capítulo do perfil (título com voz nova).", c9="Vinheta vertical, como a do capítulo 1.",
          d={"t": "vinheta"}),
     dict(cap=2, linha=0, tipo="TELA REAL", titulo="A barra de progresso",
-         c16="Zoom na barra de progresso com o percentual; destaque com o rótulo \"Formação Básica + módulos do seu "
-             "plano\" (padrão dos destaques).",
-         c9="Recorte do celular só com a barra e o percentual, grandes; embaixo, o rótulo em 2 linhas (56 px).",
-         real=dict(id="R02", itens=["nome da trilha", "barra de progresso com o percentual"],
-                   foco="zoom na barra e no percentual"),
-         confirmar=["C9", "C11"]),
+         c16="Zoom no bloco \"Trilha do seu plano\" com o percentual e a barra; embaixo, \"X de Y aulas concluídas · "
+             "Formação básica Z%\". Destaque em \"Trilha do seu plano\".",
+         c9="O cartão do topo da página no celular (\"Trilha do seu plano\", \"X de Y aulas\", o percentual e "
+            "\"Formação básica: ...\"), ampliado.",
+         real=dict(id="R02", itens=["\"Trilha do seu plano\" e o percentual", "barra de progresso",
+                                    "\"Formação básica\" com o percentual dela"],
+                   foco="zoom na barra e no percentual")),
     dict(cap=2, linha=1, tipo="ILUSTRAÇÃO", titulo="Explorar à vontade",
          c16="O mapa da trilha de novo: uma chave verde abraça Formação Básica e Módulos do seu plano (\"Contam no "
              "progresso\"); Outros módulos fica fora (\"Explorar à vontade\"). Uma aula do grupo vermelho ganha check "
              "e o percentual não se mexe.",
          c9="Grupos empilhados; uma chave verde à direita junta os dois primeiros (\"Contam no progresso\"); o "
-            "terceiro embaixo com \"Explorar à vontade\"; o percentual no topo (120 px), parado.",
-         d={"t": "mapa", "chave": 1}, confirmar=["C9"]),
+            "terceiro embaixo com \"explorar à vontade\"; o percentual no topo (120 px), parado.",
+         d={"t": "mapa", "chave": 1}),
     dict(cap=2, linha=2, tipo="ILUSTRAÇÃO", titulo="Lembretes de 30 dias",
          c16="Faixa de 30 dias com sininhos em alguns dias; a barra de progresso enche até 100% e a faixa termina em "
-             "\"Concluído\". Se o lembrete for um aviso no sistema, entra a tela real dele no fim (R11).",
-         c9="Calendário de 30 dias (6 × 5) com sininhos; embaixo, o progresso chegando a 100%.",
-         d={"t": "lembrete"}, confirmar=["C10"]),
+             "\"Concluído\". No fim, a faixa real do lembrete no topo do sistema (R11): \"Camila, vamos retomar de onde "
+             "você parou?\", o selo \"Contratado\" e \"Continuar trilha\".",
+         c9="Calendário de 30 dias (6 × 5) com sininhos e, embaixo, o progresso chegando a 100%; no fim, a faixa do "
+            "lembrete no topo da tela do celular (\"Continuar tutorial\").",
+         d={"t": "lembrete"}),
     dict(cap=2, linha=3, tipo="ILUSTRAÇÃO", titulo="Outras trilhas no futuro",
          c16="Tutoriais do sistema grande à esquerda (cheia, verde, \"Primeiro foco\"); à direita, Gestão e "
-             "Contabilidade só em contorno tracejado (\"No futuro\"). Em \"primeiro foco\", as duas recuam.",
+             "Contabilidade só em contorno tracejado (\"No futuro\"). Em \"primeiro foco\", as duas recuam. No app, "
+             "quando houver mais de um, eles aparecem em \"Cursos disponíveis\".",
          c9="Empilhadas: Tutoriais do sistema grande no alto; Gestão e Contabilidade tracejadas embaixo.",
          d={"t": "trilhas"}, confirmar=["C12"]),
     # cap03
@@ -232,17 +251,20 @@ CENAS = [
                                                             ["headset", "Suporte pela própria aula"]]},
          confirmar=["C13"]),
     dict(cap=3, linha=1, de=0, tipo="TELA REAL", titulo="Tirar dúvidas com o suporte",
-         c16="Página da aula; zoom no botão \"Tirar dúvidas com o suporte\"; clique em \"clicar\".",
-         c9="Recorte do celular com o botão grande; toque.",
-         real=dict(id="R09", itens=["botão \"Tirar dúvidas com o suporte\" na aula"], foco="zoom no botão e clique"),
-         confirmar=["C14"]),
+         c16="Na página da aula, o botão verde \"Tirar dúvidas com o suporte\" (com o ícone do WhatsApp, como no app); "
+             "zoom e clique em \"clicar\".",
+         c9="Recorte do botão embaixo do vídeo, no celular, grande; toque.",
+         real=dict(id="R09", itens=["botão verde \"Tirar dúvidas com o suporte\", embaixo da descrição da aula"],
+                   foco="zoom no botão e clique")),
     dict(cap=3, linha=1, de=9, tipo="TELA REAL", titulo="O contexto vai junto",
-         c16="A conversa ou o chamado aberto com o contexto; cada item destaca junto com a fala: empresa (Glacial "
-             "Cold Brasil), usuário (Camila Duarte), módulo, aula. Se o canal for o WhatsApp: celular genérico, sem "
-             "logo, com o texto real da mensagem copiado do código.",
-         c9="Os 4 itens do contexto em linhas grandes (56 px), um destaque por vez.",
-         real=dict(id="R10", itens=["Empresa: Glacial Cold Brasil", "Usuário: Camila Duarte",
-                                    "Módulo: Gestão de Contratos e PMOC", "Aula: (nome real)"],
+         c16="O que abre: a conversa do WhatsApp com a mensagem pronta. Sem gravar o WhatsApp (marca de terceiro): "
+             "celular genérico, sem logo, com o texto real do app; cada item destaca com a fala: Empresa, E-mail do "
+             "usuário, Módulo e Aula (a mensagem também traz \"Trilha: Tutoriais do sistema\").",
+         c9="Os itens da mensagem em linhas grandes (56 px), um destaque por vez, acima da faixa da legenda.",
+         real=dict(id="R10", itens=["\"Olá, equipe de suporte! Preciso tirar uma dúvida sobre a aula 2.1 — (aula), da DomiFlix.\"",
+                                    "E-mail do usuário: camila.duarte@glacialcold.example",
+                                    "Empresa: Glacial Cold Brasil · Trilha: Tutoriais do sistema",
+                                    "Módulo: Gestão de Contratos e PMOC · Aula: 2.1 — (aula)", "Minha dúvida:"],
                    foco="um item por vez"),
          confirmar=["C14"]),
     dict(cap=3, linha=2, tipo="TELA REAL", titulo="Guia Técnico",
@@ -281,8 +303,8 @@ CENAS = [
     dict(cap=5, linha=0, tipo="ILUSTRAÇÃO", titulo="Teste e plano",
          c16="Os módulos (nomes do catálogo) em grade de ícone e texto, todos acesos sob \"Período de teste\"; em "
              "\"ativar a assinatura\", ficam acesos só os do plano e os outros viram contorno com \"+\".",
-         c9="Os módulos numa coluna (texto 46 px, quadrado de 104 px), com a mesma virada.",
-         d={"t": "modulos"}, confirmar=["C11"]),
+         c9="Os módulos numa coluna (texto 46 px, quadrado de 92 px), com a mesma virada.",
+         d={"t": "modulos"}),
     dict(cap=5, linha=1, tipo="TELA REAL", titulo="Gerenciar Meu Plano",
          c16="\"Gerenciar Meu Plano\": abas \"Planos Prontos\" e \"Personalizado\" (clique em \"Personalizado\"), "
              "módulos, usuários adicionais e o painel \"Seu Plano\". Valores cobertos (D2).",
@@ -307,20 +329,22 @@ CENAS = [
     dict(cap=6, linha=0, tipo="ILUSTRAÇÃO", titulo="Combinado 1",
          c16="Lista \"Os combinados\" em texto grande, sem cartões; o item 1 entra com check: \"Formação Básica e "
              "módulos do plano\", e embaixo, menor, \"na ordem indicada\".",
-         c9="A lista item por item: título 60 px (até 2 linhas) e a linha de baixo em 46 px; check de 110 px.", d={"t": "combinados", "n": 1}, confirmar=["C17"]),
+         c9="A lista item por item: título 60 px (até 2 linhas) e a linha de baixo em 46 px; check de 110 px.", d={"t": "combinados", "n": 1}),
     dict(cap=6, linha=1, tipo="ILUSTRAÇÃO", titulo="Combinado 2",
          c16="Item 2: \"Dúvida depois da aula?\" e, embaixo, \"suporte pela própria aula\".", c9="Item 2 entra embaixo do 1.",
-         d={"t": "combinados", "n": 2}, confirmar=["C17"]),
+         d={"t": "combinados", "n": 2}),
     dict(cap=6, linha=2, tipo="ILUSTRAÇÃO", titulo="Combinado 3",
          c16="Item 3: \"Plano e pagamentos\" e, embaixo, \"tela Assinatura\".", c9="Item 3 entra embaixo do 2.",
-         d={"t": "combinados", "n": 3}, confirmar=["C17"]),
+         d={"t": "combinados", "n": 3}),
     dict(cap=6, linha=3, tipo="TELA REAL", titulo="Confirmar e seguir",
-         c16="A tela real da confirmação; clique em \"confirmar\"; em \"primeira aula\", a aula recomendada da "
-             "Formação Básica.",
-         c9="Recorte do celular com a confirmação (botão grande) → a próxima aula.",
-         real=dict(id="R12", itens=["confirmação dos combinados no fim do T0", "em seguida, a 1ª aula da Formação "
-                                    "Básica"], foco="botão de confirmar"),
-         confirmar=["C1", "C16", "C17"]),
+         c16="A confirmação real no fim do vídeo: a caixa \"Assisti ao vídeo até o final e entendi os combinados.\" e o "
+             "botão \"Confirmar e começar a primeira aula\" (em \"confirmar\"); depois, a próxima aula da Formação "
+             "básica.",
+         c9="No celular, abaixo do vídeo vertical: a caixa e o botão em recorte ampliado; depois, a próxima aula.",
+         real=dict(id="R12", itens=["caixa \"Assisti ao vídeo até o final e entendi os combinados.\"",
+                                    "botão \"Confirmar e começar a primeira aula\"", "\"Exibido uma única vez\""],
+                   foco="caixa e botão"),
+         confirmar=["C16"]),
     dict(k="cartela", tipo="VINHETA", titulo="Cartela",
          c16="Cartela do perfil: \"Até a próxima aula!\" (proposta D1: logo DomiFlix branco).",
          c9="Cartela vertical: capacete e DOMINEX no meio da altura, logo DomiFlix branco e a frase em 72 px.",
