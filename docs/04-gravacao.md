@@ -129,6 +129,29 @@ em si continua uma de cada vez (trava `.heavy.lock`).
   gravação em andamento) quando o prazo acaba: prazo por capítulo e com folga (~3× a duração dele), nunca um prazo curto
   para o lote todo.
 
+## Endereço do produto na tela (`APP_ORIGIN`)
+Quando o assunto da aula é um LINK que aparece escrito na tela (T12: "Link do portal", link da unidade do contrato), o
+`http://127.0.0.1:8080/...` parece ambiente de teste. `APP_ORIGIN=https://www.dominex.app` (opção do gravador, **desligada por
+padrão**, só no modo fakebase) abre o app nessa origem: o navegador acredita estar em `https://www.dominex.app`, mas o
+`page.route` serve cada requisição daquela origem do app local (8080), com fallback de SPA para o `index.html` (rota sem
+extensão que dá 404), do mesmo jeito que o gravador já desvia o Supabase para a instância falsa. O endereço não é gravado
+(gravamos só a página), então não há certificado nem servidor https: a requisição roteada nunca vai para a rede.
+- **Como usar**: `APP_ORIGIN=https://www.dominex.app FAKE_URL=http://127.0.0.1:<porta> node rec/record.mjs rec/tNN/capNN.json`
+  (também em `explorar` e `smoke`; vale para qualquer script que use `openSession`). Sem a variável o comportamento é o de sempre
+  (`rec/recorder/{env,app-origin,browser,runner}.mjs`). Só aceita `http(s)://host` sem caminho; recusa `localhost`/`127.0.0.1`.
+- **Nada sai para fora**: com a origem ligada o Chromium sobe com `--host-resolver-rules=MAP * ~NOTFOUND , EXCLUDE 127.0.0.1 ,
+  EXCLUDE localhost` e `--no-proxy-server`, além da rede isolada de sempre (analytics, mapas e demais externos já são abortados
+  ou respondidos pelo `net.mjs`); `serviceWorkers: 'block'`. Conferido em 31/10 (`rec/t12/app_origin_teste.mjs`): `/`, `/clientes`
+  e `/equipamentos` abrem idênticos à linha de base, com 495 requisições servidas do app local, 0 erros no console, 0 respostas
+  >= 400, e o único externo (gtag do `index.html`) desviado.
+- **O app não muda pelo hostname** (conferido no código: nenhuma lógica de `location.hostname`/`origin` separa site e app; só
+  `src/lib/indexNow.ts` cita o domínio, para avisar buscadores, e não roda nos fluxos gravados). Quem usar a opção deve repetir
+  o teste (`APP_ORIGIN=... node rec/t12/app_origin_teste.mjs / /clientes --anon`) se o app mudar.
+- **O que muda na tela**: tudo o que o app monta com `window.location.origin` (Link do portal, "Copiar link", link da unidade, QR
+  Code) passa a mostrar `https://www.dominex.app/...`. O token do link continua fictício (não existe no servidor de verdade).
+  O arquivo `ferramentas/rec/recorder` deste repositório (cópia da skill) não foi tocado: a opção vive em `rec/recorder` do
+  ambiente de gravação.
+
 ## Dado de bastidor no meio da gravação
 Quando a fala só cita itens "cadastrados do mesmo jeito" (T4: cinco tipos de serviço), o robô os insere por REST no
 backend falso (`eval` com `fetch` em `/rest/v1/<tabela>`, `Prefer: return=representation`) enquanto a câmera olha outra
