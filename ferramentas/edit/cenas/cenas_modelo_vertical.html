@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<!-- MODELO de cenas ilustradas do formato VERTICAL 9:16 (1080x1920). Copie para <tutorial>/edit/cenas/cenas_vertical.html.
+     Versão vertical do cenas_modelo.html: a página é o QUADRO FINAL (palco escuro vertical + painel claro + cena), renderizado
+     quadro a quadro por render_cenas_vertical.cjs (window.setup(dados) + window.R(t)), sem recompor depois.
+     Geometria (formato_9x16.json, via window.FORMATO): painel de 1008x1700 em (36, 110) com cantos de 16 px; as cenas são
+     desenhadas na ÁREA SEGURA, a caixa de 936x1560 em #st (x 0 a 936, y 0 a 1560; no quadro: x 72 a 1008, y 180 a 1740).
+     Regras do pedido do Kaik (31/10) que o render_cenas_vertical.cjs --auditar confere: nada fora da área segura; texto de 44 px
+     ou mais (≈ 16 px num celular de 390 px); no máximo 2 linhas por bloco; nada essencial na faixa da legenda do player (no
+     celular a 18% do pé: y 1240 a 1420 da área segura); um assunto por vez, preso à palavra da fala; grupos e comparações
+     empilhados na vertical; telas reais = captura do celular (390x844) recortada e ampliada, nunca print do computador.
+     Mesmas utilidades do cenas_modelo.html: tudo é função do tempo t (nada de transição/animação CSS), W(linha,'palavra'),
+     L(i)/LE(i), vis, ripple, pulse, digita, mix, el, ic. Ver docs/09-aula-ilustrada.md ("Vertical 9:16"). -->
+<style>
+@font-face{font-family:M;font-weight:500;src:url(../../../web/fonts/montserrat-latin-500-normal.woff2) format('woff2')}
+@font-face{font-family:M;font-weight:600;src:url(../../../web/fonts/montserrat-latin-600-normal.woff2) format('woff2')}
+@font-face{font-family:M;font-weight:700;src:url(../../../web/fonts/montserrat-latin-700-normal.woff2) format('woff2')}
+@font-face{font-family:M;font-weight:800;src:url(../../../web/fonts/montserrat-latin-800-normal.woff2) format('woff2')}
+@font-face{font-family:M;font-weight:500;src:url(../../../web/fonts/montserrat-latin-ext-500-normal.woff2) format('woff2');unicode-range:U+0100-024F}
+@font-face{font-family:M;font-weight:700;src:url(../../../web/fonts/montserrat-latin-ext-700-normal.woff2) format('woff2');unicode-range:U+0100-024F}
+:root{--v:#00C597;--ve:#00A27D;--vt:#00805F;--vc:#E6F9F4;--t:#18181B;--c:#52525B;--l:#E4E7EC;--e:#1E1E1E;--am:#F59E0B;--sv:#059669;--sr:#DC2626}
+*{box-sizing:border-box;margin:0;padding:0;transition:none!important;animation:none!important}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#05080a}
+body{font-family:M,sans-serif;color:var(--t);-webkit-font-smoothing:antialiased}
+#palco{position:absolute;inset:0;background:#070b0c center/100% 100% no-repeat}
+/* painel: a mesma sombra do 16:9 (desfoque 60 = sigma 30, deslocada 14 px, 0,35) */
+#pn{position:absolute;left:36px;top:110px;width:1008px;height:1700px;border-radius:16px;overflow:hidden;box-shadow:0 14px 60px rgba(0,0,0,.35);
+  background:radial-gradient(900px 700px at 92% -8%,rgba(0,197,151,.075),transparent 62%),radial-gradient(800px 700px at -12% 108%,rgba(0,197,151,.05),transparent 60%),#fff}
+#st{position:absolute;left:36px;top:70px;width:936px;height:1560px}
+.g{position:absolute;left:0;top:0;width:936px;height:1560px;transform-origin:468px 780px}
+.ab{position:absolute}
+.row{display:flex;align-items:center}
+.ic{display:inline-flex;align-items:center;justify-content:center;flex:none}
+.ic svg{width:100%;height:100%}
+.kick{font-weight:700;font-size:44px;letter-spacing:.24em;color:var(--ve);text-transform:uppercase}
+.lbl{font-weight:800;line-height:1.12}
+.sub2{font-weight:600;color:var(--c);line-height:1.25}
+.pill{display:inline-flex;align-items:center;gap:.4em;border-radius:999px;font-weight:700}
+/* selos do plano (cores do app: DomiflixModuleBadge): verde "Tem no seu plano", vermelho "Não tem no seu plano"; ícone e texto brancos */
+.selo{display:inline-flex;align-items:center;gap:.45em;border-radius:6px;font-weight:800;color:#fff;white-space:nowrap;line-height:1;letter-spacing:.02em}
+.selo.v{background:var(--sv)}.selo.r{background:var(--sr)}
+.rip{position:absolute;width:112px;height:112px;margin:-56px 0 0 -56px;border-radius:50%;border:5px solid var(--v);opacity:0}
+.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+mark{background:#FFF0A8;color:inherit;padding:0 4px;border-radius:4px}
+/* guias de conferência (só em --stills --guias; nunca entram no vídeo) */
+.guia{position:absolute;pointer-events:none;z-index:50;border:0 dashed rgba(236,72,153,.9)}
+.faixa{position:absolute;left:0;width:1080px;pointer-events:none;z-index:49;background:repeating-linear-gradient(135deg,rgba(245,158,11,.22) 0 14px,rgba(245,158,11,.08) 14px 28px);border-top:3px dashed rgba(217,119,6,.95);border-bottom:3px dashed rgba(217,119,6,.95)}
+</style></head>
+<body><div id="palco"></div><div id="pn"><div id="st"></div></div>
+<script>
+// ------------------------------------------------------------------ geometria (formato_9x16.json) e utilidades
+const F=window.FORMATO||{segura:{x0:72,y0:180,x1:1008,y1:1740},legenda_faixa:{y0:1420,y1:1600}};
+const SEG={w:F.segura.x1-F.segura.x0,h:F.segura.y1-F.segura.y0};                  // 936 x 1560: o desenho vive aqui
+const FAIXA={y0:F.legenda_faixa.y0-F.segura.y0,y1:F.legenda_faixa.y1-F.segura.y0}; // 1240 a 1420 na área segura
+const cl=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
+const eo=x=>1-Math.pow(1-cl(x),3);
+const eio=x=>{x=cl(x);return x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2};
+const pr=(t,a,d=.45)=>cl((t-a)/d);
+const $=s=>document.querySelector(s);
+const ST=document.getElementById('st');
+function el(html,parent=ST){const d=document.createElement('div');d.innerHTML=html.trim();let f=null;for(const n of [...d.childNodes]){parent.appendChild(n);if(!f&&n.nodeType===1)f=n}return f}
+function grupo(){return el('<div class="g"></div>')}
+function ic(n,px,cor){const s=(window.ICONS||{})[n]||'';return `<span class="ic" style="width:${px}px;height:${px}px;${cor?'color:'+cor:''}">${s}</span>`}
+function hex(c){c=c.replace('#','');return[0,2,4].map(i=>parseInt(c.substr(i,2),16))}
+function mix(a,b,p){const A=hex(a),B=hex(b);return `rgb(${A.map((v,i)=>Math.round(v+(B[i]-v)*cl(p))).join(',')})`}
+// aparece em a, some em b (opacidade + leve subida + escala); dy maior que no 16:9 porque o texto é maior
+function vis(e,t,a,b=1e9,o={}){
+  const din=o.din??.5,dout=o.dout??.4,dy=o.dy??28,dx=o.dx??0,sc=o.sc??.985;
+  const p=eo(pr(t,a,din)),q=1-eo(pr(t,b,dout)),op=Math.min(p,q);
+  e.style.opacity=op.toFixed(4);e.style.visibility=op<=.001?'hidden':'visible';
+  const s=sc+(1-sc)*p - (1-q)*(1-sc);
+  e.style.transform=`translate(${((1-p)*dx).toFixed(2)}px,${((1-p)*dy-(1-q)*dy*.5).toFixed(2)}px) scale(${s.toFixed(4)})`;
+  return op;
+}
+function ripple(r,t,a){const p=pr(t,a,.7);r.style.opacity=(p>0&&p<1)?(.6*(1-p)).toFixed(3):0;r.style.transform=`scale(${(.4+2.0*eo(p)).toFixed(3)})`}
+function pulse(e,t,a,amp=.045,dur=.9){const p=pr(t,a,dur);e.style.scale=(p>0&&p<1)?(1+amp*Math.sin(Math.PI*p)).toFixed(4):''}
+function digita(e,txt,t,a,b){const p=cl((t-a)/Math.max(.05,b-a));const n=Math.round(p*txt.length);
+  const car=(p>0&&p<1)||(Math.floor(t*2.2)%2===0&&p<1.2&&t>=a)?'<span style="color:var(--v);font-weight:500">|</span>':'';
+  e.innerHTML=(txt.slice(0,n)||'')+(t>=a&&t<b+.8?car:'');}
+
+// ------------------------------------------------------------------ tempos da fala (capNN.json do proc.py)
+let D=null;
+const norm=w=>w.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9%./-]+/g,'');
+function W(linha,palavra,n=1,campo='s'){
+  const alvo=norm(palavra);let k=0;
+  for(const w of D.words){if(w.linha===linha&&norm(w.w).replace(/[.,]$/,'')===alvo){k++;if(k===n)return w[campo]}}
+  for(const w of D.words){if(w.linha===linha&&norm(w.w).startsWith(alvo)){k++;if(k>=n)return w[campo]}}
+  console.warn('palavra não achada',linha,palavra);return L(linha);
+}
+const L=i=>(D.linhas[i]||{s:0}).s, LE=i=>(D.linhas[i]||{e:D.dur}).e;
+
+// ------------------------------------------------------------------ capítulos (um CAPS[n] por capítulo)
+const CAPS={};
+CAPS[0]=()=>{ // exemplo: título no alto (área + até 2 linhas) e três itens EMPILHADOS presos a palavras da linha 1
+  const g=grupo();
+  const tit=el(`<div class="ab" style="left:0;top:20px;width:936px"><div class="kick">Sua série</div>
+     <div class="lbl" style="margin-top:18px;font-size:88px;line-height:1.08">Título da cena em duas linhas</div></div>`,g);
+  const itens=[['calendar','Agenda'],['users','Clientes'],['wallet','Financeiro']].map(([i,n],k)=>el(`<div class="ab row" style="left:0;top:${430+k*210}px;width:936px;gap:34px">
+     <div style="width:140px;height:140px;border-radius:24px;background:var(--v);display:flex;align-items:center;justify-content:center;flex:none">${ic(i,76,'#fff')}</div>
+     <div class="lbl" style="font-size:68px">${n}</div></div>`,g));
+  const rip=el('<div class="rip"></div>',itens[1]);rip.style.left='70px';rip.style.top='70px';
+  return t=>{
+    vis(tit,t,L(0)-.2);                                          // entra junto com a 1ª linha
+    const at=[W(1,'agenda'),W(1,'clientes'),W(1,'financeiro')];  // palavras da linha 1 da fala (tts_textos.py)
+    itens.forEach((c,k)=>vis(c,t,at[k]-.1,1e9,{sc:.94}));
+    ripple(rip,t,W(1,'clientes')+.4);pulse(itens[1],t,W(1,'clientes')+.4,.05,.8);
+  };
+};
+
+// ------------------------------------------------------------------ API para o renderizador
+let RENDER=null;
+function guias(){ // linhas da área segura (magenta) e faixa da legenda do player (laranja), em coordenadas do QUADRO
+  const s=F.segura,f=F.legenda_faixa,B=document.body;
+  const l=(css)=>el(`<div class="guia" style="${css}"></div>`,B);
+  l(`left:0;right:0;top:${s.y0}px;border-top-width:3px`);l(`left:0;right:0;top:${s.y1}px;border-top-width:3px`);
+  l(`top:0;bottom:0;left:${s.x0}px;border-left-width:3px`);l(`top:0;bottom:0;left:${s.x1}px;border-left-width:3px`);
+  el(`<div class="faixa" style="top:${f.y0}px;height:${f.y1-f.y0}px"></div>`,B);
+}
+window.setup=d=>{
+  D=d;ST.innerHTML='';
+  if(window.PALCO)document.getElementById('palco').style.backgroundImage=`url("${window.PALCO}")`;
+  if(window.GUIAS)guias();
+  RENDER=CAPS[d.cap]();return true};
+window.R=t=>{RENDER(t);return true};
+</script></body></html>

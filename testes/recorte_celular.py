@@ -50,6 +50,8 @@ for d, v in casos:
     pn, pa = max(pn, en), max(pa, ea); falhas_ant += ea > LIMITE
     if en > LIMITE: print(f"   FALHOU (novo): {d}: erro {en:.2f}"); ruim += 1
 print(f"1. celular, código novo: {len(casos)} quadros de risco, pior erro de cobertura {pn:.3f} (limite {LIMITE})  {'ok' if pn <= LIMITE else 'FALHOU'}")
+er, _ = erro_cobertura(novo, g, SW, SH, [(SW / 2, SH / 2, g.vw0)])   # repouso exato: caminho `_static` do palco (tela em pixels inteiros)
+print(f"1b. celular, repouso exato (zoom 1): erro de cobertura {er:.3f}  {'ok' if er <= LIMITE else 'FALHOU'}"); ruim += er > LIMITE
 if falhas_ant == 0:
     print("2. celular, código antigo: o teste NÃO acusou canto reto nele: não serve para nada. FALHOU"); ruim += 1
 else:

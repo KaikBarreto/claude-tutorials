@@ -1,9 +1,12 @@
 """Passo final da aula: vinheta (com o titulo) + capitulos + cartela, e a trilha lo-fi com ducking sob a voz (kit/mix.py).
-uso: python3 <tutorial>/edit/finish.py <aula.json> [--render] [--skip-brand] [--crf 20]
+uso: python3 <tutorial>/edit/finish.py <aula.json> [--render] [--skip-brand] [--crf 20] [--formato 16x9|9x16]
   aula.json: {"title": "titulo da vinheta", "outro_line": "Ate a proxima aula!", "out": "out/aula",
               "chapters": ["cap1.chapter.json", ...],            # na ordem; cada um ja renderizado (ou use --render)
-              "mix": {"music_db": -7, "music_duck_db": -8, "music_seed": 3}, "sfx": true}
+              "mix": {"music_db": -7, "music_duck_db": -8, "music_seed": 3}, "sfx": true,
+              "formato": "16x9", "card_no_primeiro": false}      # formato: 9x16 = vertical 1080x1920 (docs/05-edicao.md, "Vertical 9:16")
 Reaproveita do kit sem alterar: kit/brand_clips.sh (vinheta/cartela) e kit/mix.py (voz, trilha, ducking, SFX discretos).
+Com --formato 9x16 (ou "formato" no JSON) so troca as pecas de imagem: kit/brand_clips_vertical.sh, vinheta_cap_vertical.py e
+render_chapter_vertical.py; a voz, a trilha, o SFX e o mix.py sao os mesmos (mesmo som do 16:9). Sem a opcao, nada muda.
 Monta um "projeto do kit" em <out>/proj (audio48k.wav = narracoes em sequencia, edl.json, render.json) e o mix.py roda em cima dele.
 Saidas: <out>/aula_final.mp4 (H.264 yuv420p bt709 TV + AAC 192k) e <out>/proj/build/mix.wav. Sempre sob flock .heavy.lock + nice."""
 import json, os, socket, subprocess, sys, time
@@ -20,6 +23,10 @@ W, H, FPS, SR = 1920, 1080, 30, 48000
 XF_IN, XF_OUT = 0.4, 0.5  # os mesmos do kit/render.py e kit/mix.py
 
 LJ = os.path.abspath(argv[0]); BASE = os.path.dirname(LJ); L = json.load(open(LJ)); rp = lambda p: p if os.path.isabs(p) else os.path.normpath(os.path.join(BASE, p))
+FORMATO = opt("--formato", L.get("formato", "16x9"))  # 9x16 = vertical (1080x1920): vinhetas, cartela e capitulos dos modulos *_vertical
+if FORMATO not in ("16x9", "9x16"): sys.exit(f"formato {FORMATO!r}: use 16x9 (padrao) ou 9x16")
+VERT = FORMATO == "9x16"
+if VERT: import vertical as V; W, H = V.W, V.H  # noqa: E402,E702
 OUT = rp(L.get("out", "out/aula")); PROJ = os.path.join(OUT, "proj"); BUILD = os.path.join(PROJ, "build"); os.makedirs(BUILD, exist_ok=True)
 run = lambda cmd, **kw: subprocess.run(cmd, check=True, **kw)
 
@@ -29,7 +36,7 @@ for cj in L["chapters"]:
     cj = rp(cj); ch = json.load(open(cj)); outd = os.path.normpath(os.path.join(os.path.dirname(cj), ch.get("output", {}).get("dir", "out")))
     name = ch.get("name") or os.path.splitext(os.path.basename(cj))[0].replace(".chapter", ""); side = os.path.join(outd, name + ".edit.json")
     if "--render" in argv or not os.path.exists(side):
-        print(f"renderizando {name}...", flush=True); run([sys.executable, os.path.join(HERE, "render_chapter.py"), cj])
+        print(f"renderizando {name}...", flush=True); run([sys.executable, os.path.join(HERE, "render_chapter_vertical.py" if VERT else "render_chapter.py"), cj])
     s = json.load(open(side)); s["ch"] = ch; chs.append(s)
 print(f"{len(chs)} capitulos, {sum(c['frames'] for c in chs) / FPS:.1f} s de conteudo")
 
@@ -50,12 +57,13 @@ for c in chs:
 # (exceto o primeiro, que ja vem depois da vinheta da aula). Entram como itens da linha do tempo: video gerado aqui,
 # voz em silencio, e o whoosh + pop do kit/mix.py pelo "title"/"title_at" (chapters[].t_out do edl).
 if L.get("cards", True):
-    import vinheta_cap as VC  # noqa: E402
+    if VERT: import vinheta_cap_vertical as VC  # noqa: E402,E701
+    else: import vinheta_cap as VC  # noqa: E402,E701
     VOZES = json.load(open(rp(L["card_voices"]))) if L.get("card_voices") else {}  # {NN: {wav, dur}} (narracao/titulos.py)
     seq = []
     for i, c in enumerate(chs):
         cd = c["ch"].get("card")
-        if cd and i > 0:
+        if cd and (i > 0 or L.get("card_no_primeiro")):  # card_no_primeiro: vinheta tambem no 1o capitulo (previas de um capitulo so)
             voz = VOZES.get(c["name"][-2:])
             dur = VC.dur_for(voz["dur"]) if voz else VC.DUR
             seq.append(dict(name="vinheta-" + c["name"], card=cd, frames=int(round(dur * FPS)), wav=None, video=None, voz=voz,
@@ -124,7 +132,7 @@ if "--skip-brand" not in argv or not os.path.exists(os.path.join(BUILD, "intro_v
     srv = subprocess.Popen([sys.executable, "-m", "http.server", str(port), "--bind", "127.0.0.1"], cwd=os.path.join(DOMI, "web"),
                            stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL); time.sleep(1.2)
     try:
-        run(["bash", os.path.join(KIT, "brand_clips.sh"), PROJ, L.get("title", "Aula"), L.get("outro_line", "")], env={**os.environ, "PORT": str(port)})
+        run(["bash", os.path.join(KIT, "brand_clips_vertical.sh" if VERT else "brand_clips.sh"), PROJ, L.get("title", "Aula"), L.get("outro_line", "")], env={**os.environ, "PORT": str(port)})
     finally:
         srv.terminate(); srv.wait()
 

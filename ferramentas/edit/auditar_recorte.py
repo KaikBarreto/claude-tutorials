@@ -23,9 +23,16 @@ def janela(g, SW, SH, view):
     return -vx * k, -vy * k, (SW - vx) * k, (SH - vy) * k, g.radius * k / g.k0
 
 
-def mascara(g, SW, SH, view):
+def repouso(g, SW, SH, view):
+    """True na janela de repouso exato (zoom 1, câmera no centro): o palco a desenha por outro caminho (`Stage._static`), com a tela
+    em pixels INTEIROS (x0, y0, w0, h0); a conta em ponto flutuante cairia meio pixel ao lado e daria erro 0,5 a 0,6 à toa"""
+    cx, cy, vw = view
+    return abs(cx - SW / 2) <= 0.05 and abs(cy - SH / 2) <= 0.05 and abs(vw - g.vw0) <= 0.05
+
+
+def mascara(g, SW, SH, view, inteiro=False):
     """cobertura analítica (0 a 1) do retângulo arredondado da tela nesta janela (distância com sinal, borda suavizada em 1 px)"""
-    X0, Y0, X1, Y1, r = janela(g, SW, SH, view)
+    X0, Y0, X1, Y1, r = (g.x0, g.y0, g.x0 + g.w0, g.y0 + g.h0, g.radius) if inteiro else janela(g, SW, SH, view)
     hx, hy = (X1 - X0) / 2, (Y1 - Y0) / 2
     qx, qy = np.abs(XX - (X0 + X1) / 2) - (hx - r), np.abs(YY - (Y0 + Y1) / 2) - (hy - r)
     d = np.sqrt(np.maximum(qx, 0) ** 2 + np.maximum(qy, 0) ** 2) + np.minimum(np.maximum(qx, qy), 0) - r
@@ -38,7 +45,8 @@ def erro_cobertura(stage, g, SW, SH, views):
     mag = np.zeros((SH, SW, 3), np.uint8); mag[..., 0] = 255; mag[..., 2] = 255; preto = np.zeros((SH, SW, 3), np.uint8)
     a, _ = stage.render(mag, views); b, _ = stage.render(preto, views)
     cob = (a[..., 0].astype(np.float32) - b[..., 0].astype(np.float32)) / 255.0
-    err = np.abs(cob - np.mean([mascara(g, SW, SH, v) for v in views], 0)); err[:2, :] = 0; err[-2:, :] = 0
+    est = len(views) == 1 and repouso(g, SW, SH, views[0])   # um quadro só no repouso exato vai pelo caminho `_static`
+    err = np.abs(cob - np.mean([mascara(g, SW, SH, v, est) for v in views], 0)); err[:2, :] = 0; err[-2:, :] = 0
     return float(err.max()), int((err > LIMITE).sum())
 
 

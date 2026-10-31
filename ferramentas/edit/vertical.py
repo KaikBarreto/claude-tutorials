@@ -5,7 +5,8 @@ Pedido do Kaik (T0 v2, 31/10): versão nativa para celular, recomposta cena a ce
   - margem lateral mínima de 72 px; nada importante nos 180 px de cima e de baixo; texto de 44 px ou mais;
   - no máximo 2 linhas por bloco; legendas (.srt/.vtt) com linhas de ~32 caracteres.
 
-Uso como módulo: `import vertical as V` -> V.W, V.H, V.PAINEL, V.SEGURA, V.TEXTO_MIN, V.LEGENDA_COL, V.fora_da_area_segura(img).
+Uso como módulo: `import vertical as V` -> V.W, V.H, V.PAINEL, V.SEGURA, V.LEGENDA_FAIXA, V.TEXTO_MIN, V.LEGENDA_COL,
+V.fora_da_area_segura(img), V.caixa_fora_da_segura(caixa).
 Linha de comando: python3 vertical.py <quadro.png> [...]   (confere se há conteúdo fora da área segura em cada imagem)"""
 import json
 import os
@@ -20,6 +21,7 @@ _p = GEO["painel"]
 PX, PY, PW, PH, PR, PSOMBRA = _p["x"], _p["y"], _p["largura"], _p["altura"], _p["raio"], _p["sombra"]
 PAINEL = (PX, PY, PW, PH)
 SEGURA = (GEO["segura"]["x0"], GEO["segura"]["y0"], GEO["segura"]["x1"], GEO["segura"]["y1"])
+LEGENDA_FAIXA = (GEO["legenda_faixa"]["y0"], GEO["legenda_faixa"]["y1"])  # onde o player do celular desenha a legenda
 TEXTO_MIN, LINHAS_MAX, LEGENDA_COL = GEO["texto_min"], GEO["linhas_max"], GEO["legenda_coluna"]
 
 
@@ -34,6 +36,18 @@ def fora_da_area_segura(img, limiar=150, minimo=60):
     faixas = {"alto (y < %d)" % y0: vivo[:y0].sum(), "baixo (y >= %d)" % y1: vivo[y1:].sum(),
               "esquerda (x < %d)" % x0: vivo[y0:y1, :x0].sum(), "direita (x >= %d)" % x1: vivo[y0:y1, x1:].sum()}
     return {k: int(v) for k, v in faixas.items() if v > minimo}
+
+
+def caixa_fora_da_segura(caixa, folga=0):
+    """caixa = (x0, y0, x1, y1) em px do quadro 1080x1920 (um texto, um logo, um bloco). Devolve a lista dos lados que
+    passam da área segura (vazia = dentro). `folga` tolera alguns px (animações em curso)."""
+    x0, y0, x1, y1 = SEGURA
+    lados = []
+    if caixa[0] < x0 - folga: lados.append(f"esquerda ({caixa[0]:.0f} < {x0})")
+    if caixa[1] < y0 - folga: lados.append(f"alto ({caixa[1]:.0f} < {y0})")
+    if caixa[2] > x1 + folga: lados.append(f"direita ({caixa[2]:.0f} > {x1})")
+    if caixa[3] > y1 + folga: lados.append(f"baixo ({caixa[3]:.0f} > {y1})")
+    return lados
 
 
 if __name__ == "__main__":

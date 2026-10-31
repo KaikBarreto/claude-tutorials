@@ -1,7 +1,8 @@
 """Legendas da aula inteira (.srt e .vtt) no relógio do vídeo final:
 vinheta da aula (T_IN) + capítulos e vinhetas de capítulo na ordem de out/T3/capitulos.json, descontando os cortes.
 O título falado de cada vinheta de capítulo também vira legenda.
-uso: python3 -I legendas_aula.py <capitulos.json> <intro_v.mp4> <saida_sem_extensao>"""
+uso: python3 -I legendas_aula.py <capitulos.json> <intro_v.mp4> <saida_sem_extensao> [--linha N]
+  --linha N: caracteres por linha (padrão 42, o do 16:9; vertical 9:16: --linha 32, docs/05-edicao.md). O relógio é o mesmo; só a quebra em legendas muda."""
 import json
 import os
 import subprocess
@@ -11,7 +12,12 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import legendas as L  # noqa: E402
 
-capj, intro, out = sys.argv[1:4]
+argv = sys.argv[1:]
+if "--linha" in argv:  # linhas mais curtas para o player do celular (a quebra de bloco e de linha usa L.MAXL)
+    i = argv.index("--linha")
+    L.MAXL = int(argv[i + 1])
+    del argv[i:i + 2]
+capj, intro, out = argv[:3]
 T_IN = float(subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", intro],
                             capture_output=True, text=True).stdout.strip())
 TIT = json.load(open(os.path.join(HERE, "titulos", "titulos.json")))

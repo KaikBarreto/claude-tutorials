@@ -118,11 +118,11 @@ if partes:
             for a_, b_, tx in sel: f.write(f"{ts(a_, '.')} --> {ts(b_, '.')}\n{tx}\n\n")
 if "--unico" in argv and not SO_LEG:
     # a aula inteira num arquivo só que cabe no envio do chat (Kaik 30/10 17:03: "junte tudo num vídeo só"):
-    # 720p, duas passadas no tamanho exato, AAC 80k, legendas embutidas (faixa mov_text, desligada por padrão)
+    # 720p (1280x720; 720x1280 se o vídeo for vertical), duas passadas no tamanho exato, AAC 80k, legendas embutidas (faixa mov_text, desligada por padrão)
     alvo = os.path.join(ENT, f"{NOME} (720p).mp4"); A_KB = 80; pl = os.path.join(ENT, "_2pass")
     for frac in (0.965, 0.93, 0.89):
         vbr = int((MAXB * 8 * frac - A_KB * 1e3 * D) / D); tmpf = alvo + ".tmp.mp4"
-        comum = ["-vf", "scale=1280:720:flags=lanczos", "-c:v", "libx264", "-preset", "medium", "-b:v", str(vbr), "-g", "300",
+        comum = ["-vf", f"scale={'720:1280' if v['height'] > v['width'] else '1280:720'}:flags=lanczos", "-c:v", "libx264", "-preset", "medium", "-b:v", str(vbr), "-g", "300",
                  "-pix_fmt", "yuv420p", "-color_primaries", "bt709", "-color_trc", "bt709", "-colorspace", "bt709",
                  "-color_range", "tv", "-passlogfile", pl]
         sh(["nice", "-n", "10", "ffmpeg", "-y", "-v", "error", "-i", FINAL, *comum, "-pass", "1", "-an", "-f", "null", "/dev/null"])
