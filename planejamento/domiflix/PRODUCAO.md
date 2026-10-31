@@ -102,6 +102,21 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
 - **T19:** o handler `tenant-asaas-card-fees` (criado no T1) responde sem a franquia do Pix (`freeCount 0`): estender por
   semente ou parâmetro, sem reescrever o do T1.
 
+## Fila (31/10 12:1x; nada sai da fila sem estar entregue)
+1. **Rodando:** G3 grava/edita o T5 · dev-video ajusta os vídeos 05 e 06 do site (sugestões do Matheus).
+2. **Próximas vagas, nesta ordem:** (a) `emendar.py` corrigido + T1 (cap05 com o logo branco e emendas de pronúncia) e T4
+   (emenda do cap03), reentregues; (b) T7 retomado (G4, `rec/t7/ESTADO.md`; emenda do cap05 encaixada); (c) T18;
+   (d) **T3 v2** com o layout novo de Clientes e Fornecedores (abaixo), assim que a versão com o modal único estiver
+   publicada no `main`; (e) com créditos: vozes V3–V5 e as aulas T2, T8, T9, T12, T13, T20, T10, T11, T15, T22, T19,
+   T21, T14, T17, na ordem da trilha.
+3. **T3 v2 (Kaik 31/10 12:11):** "Editar" e "Excluir" da ficha foram para "Ações" (já na 1.38.6, `5f0b64ea`: fichas de
+   cliente e de equipamento) e "Configurar origens" virou um modal único "Configurações" com Origens, Etiquetas, Campos
+   de clientes e Campos de fornecedores (`CustomerSettingsDialog.tsx`, recurso novo; **ainda não está no `main`**: último
+   publicado 1.38.7). Afeta no T3: cap01 (botões do topo), cap04 (vira origens + etiquetas + campos), cap05 (cabeçalho da
+   ficha), cap07 (fornecedor, campos), cap10 (ficha do equipamento) e o recap; no T1, o cap09 (Origens) se o cartão de
+   Configurações mudar. Plano: levantamento da versão nova → roteiro dos trechos → voz só do que muda → regravar esses
+   capítulos → reentregar (T1 junto, se o cap09 mudar). As aulas seguintes passam a gravar na versão nova.
+
 ## Correções pedidas pelo Kaik (31/10 11:04)
 - **Pronúncia** em todas as aulas: Glacial Cold Brasil → "Glaciál Côude Brasil" (sozinho, "Glaciál"); White Label →
   "uáit lêibou". Textos e `config_narracao.json` corrigidos no planejamento e na área de trabalho (perfil também).
