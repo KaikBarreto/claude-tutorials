@@ -23,7 +23,7 @@ F = montagem final + legendas + conferência · ok = no ZIP
 | T4 | Serviços, tarefas e checklists | ok | ok | ok | ok (31/10 00:29) | ok | ok | ok | ok (31/10 10:46, 10:27) |
 | T5 | Ordens de Serviço, Agenda, Equipes e Mapa ao Vivo | ok | ok | ok | ok (31/10 00:29) | G3 | G3 | G3 | G3 |
 | T7 | O técnico em campo (celular) | ok | ok | ok | ok (31/10 00:29; emenda pendente no cap05) | G4 pausado 11:2x (`rec/t7/ESTADO.md`) | | | |
-| T18 | Área do Técnico: Refrigeração e Climatização | ok | ok | V2 | | | | | |
+| T18 | Área do Técnico: Refrigeração e Climatização | ok | ok | ok | ok (31/10 11:30) | | | | |
 | T8 | Estoque, compras e inventário | ok | ok | | | | | | |
 | T9 | Orçamentos, Precificação e Proposta | ok | ok | | | | | | |
 | T10 | CRM: funil, leads e captação | ok | ok | | | | | | |
@@ -111,6 +111,13 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
   no "Logo completo" (o menu é escuro). Roteiro do cap05 reescrito (linhas 3 e 4) e voz nova (`T01 cap05 ... (v2)`):
   regravar o cap05 com o passo "Substituir" + upload, refazer a edição dele, as emendas e o `finish`/`entregar`.
 - **T4:** emenda no cap03, render só do cap03 e `finish`/`entregar` de novo.
+- **Processado 31/10 11:30** (`recebido/1118/processar.log`): T18 inteiro ok (16 capítulos, títulos, emenda do cap01 com
+  0,57 s de folga; palavras fracas conferidas isoladas: todas do ASR). T7 cap05 e T1 cap03/06/07/13 emendados, mas a frase
+  nova é um pouco mais longa: encosta na fala seguinte no T7 cap05 (−0,05 s) e no T1 cap03 (−0,16 s), sem respiro no T1
+  cap07 (+0,03 s). T4: `emendar.py` quebrou (troca começando em 0 s dá índice negativo). **Antes de usar:** corrigir o
+  `emendar.py` (início ≥ 0; frase mais longa que a janela comprimida até ~8% para deixar ≥ 0,2 s antes da próxima fala)
+  e refazer as emendas de t1, t4 e t7. A fala do T7 diz "deixa" (decodificado isolado: "Deixa o vídeo"); o ASR é que cola
+  "aplicativo deixa". Cópias `capNN.v1.json` guardadas.
 - **Vídeos do site (sugestões do Matheus):** cabeçalho do portal em preto, "como se a marca tivesse definido assim",
   e, no círculo, só o ícone do logo com o nome embaixo (05 PMOC e 06 Portal do Cliente).
 
