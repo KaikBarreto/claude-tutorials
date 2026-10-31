@@ -3,7 +3,8 @@ no lugar da frase antiga, SEM mudar a duração do capítulo (a gravação de te
 frase nova começa onde a antiga começava; o resto da janela antiga vira silêncio. Troca sem frase nova = só silêncio.
 Saída: emendas/capNN_v2.wav (48 kHz mono) para cada capítulo afetado; depois rode
   python3 -I proc.py NN=emendas/capNN_v2.wav ...   (refaz palavras/legendas desses capítulos)
-uso: python3 -I emendar.py <frases_novas.mp3>
+uso: python3 -I emendar.py <frases_novas.mp3> [--insercoes <insercoes.mp3>]
+     (sem trocas na lista: só `--insercoes <mp3>`; sem inserções: só o MP3 das frases novas)
 
 Regras (31/10/2026, depois do T1/T4/T7):
   * o início da janela nunca fica abaixo de 0 (troca em 0 s) nem invade a palavra anterior;
@@ -14,7 +15,15 @@ Regras (31/10/2026, depois do T1/T4/T7):
   * imprime a folga final de cada troca (próxima palavra - fim da fala nova) e um resumo no fim;
   * lê o take ORIGINAL do capítulo: se o capNN.json atual já é uma emenda (take dentro de emendas/), usa o
     capNN.v1.json (cópia guardada) em vez de emendar duas vezes; sem o v1, para com a explicação;
-  * apaga o `words.json` do take antigo de emendas/capNN_v2 para o proc.py não reaproveitar o ASR da emenda anterior."""
+  * apaga o `words.json` do take antigo de emendas/capNN_v2 para o proc.py não reaproveitar o ASR da emenda anterior.
+
+Inserções (1/11/2026, T3 v2): a chave `insercoes` do trocas.json acrescenta frases que NÃO existiam, o que MUDA a duração do
+capítulo (as trocas não mudam). Cada item: {"cap": 10, "em": 6.52 | "fim", "folga": 0.12, "novo": "frase"}; `em` = instante do corte
+no take ORIGINAL (num silêncio; o script avisa se cair em cima de fala) e `folga` = silêncio extra de cada lado da frase
+(o resto do áudio é empurrado para a frente). As frases vêm de outro MP3 (`--insercoes`), recortadas do mesmo jeito das trocas
+(alinhamento por palavra, bordas pelo VAD, volume casado por LUFS). Capítulo que também tem trocas parte da saída delas e grava
+emendas/capNN_v3.wav (o _v2 fica só com as trocas); capítulo só com inserções grava emendas/capNN_v2.wav. Depois do
+proc.py desses arquivos, as `words` já estão no relógio novo: a gravação de tela usa a duração nova."""
 import json
 import os
 import subprocess
@@ -103,14 +112,11 @@ def palavra_anterior_fim(c, de):
     return max(fins) if fins else 0.0
 
 
-def main():
-    T = json.load(open(os.path.join(HERE, "trocas.json")))["trocas"]
-    src = sys.argv[1]
-
-    # 1) transcreve o MP3 das frases novas e acha cada frase (alinhamento palavra a palavra com o texto pedido)
+def recortar(src, frases, rotulo="frase"):
+    """Transcreve o MP3 `src` (as `frases`, uma por linha, nesta ordem) e devolve {frase: (trecho, instante da última palavra
+    dentro do trecho, em s)}: alinhamento palavra a palavra com o texto pedido e bordas encostadas no silêncio (VAD)."""
     tid, d, words = proc.transcrever(src)
-    novas = [t["novo"] for t in T if t["novo"]]
-    toks = proc.tokens("\n".join(novas))
+    toks = proc.tokens("\n".join(frases))
     vad = json.load(open(os.path.join(d, "vad.json")))
     ws = proc.alinhar(toks, words, vad)
     x, sr = sf.read(os.path.join(d, "audio48k.wav"), dtype="float32")
@@ -123,17 +129,52 @@ def main():
                 return v0 - 0.04 if lado == "ini" else v1 + 0.06
         return t
 
-    clips = {}  # frase -> (trecho, instante da última palavra dentro do trecho, em s)
-    for li, frase in enumerate(novas):
+    clips = {}
+    for li, frase in enumerate(frases):
         fw = [w for w in ws if w["linha"] == li]
         a, b = max(0.0, borda(fw[0]["s"], "ini")), borda(fw[-1]["e"], "fim")
         fim_vad = next((v1 for v0, v1 in vad if v0 - 0.02 <= fw[-1]["e"] <= v1 + 0.02), 0.0)  # o mais tardio dos dois: conservador
         clips[frase] = (x[int(a * SR):int(b * SR)].copy(), max(fw[-1]["e"], fim_vad) - a)
         ok = min(w["ok"] for w in fw)
-        print(f"frase {li + 1}: {a:6.2f}-{b:6.2f} ({b - a:.2f}s) menor semelhança {ok:.2f}: {frase}")
+        print(f"{rotulo} {li + 1}: {a:6.2f}-{b:6.2f} ({b - a:.2f}s) menor semelhança {ok:.2f}: {frase}")
+    return clips
+
+
+def inserir(y, pontos):
+    """Cola frases novas num áudio, empurrando o resto para a frente (a duração aumenta).
+    pontos: [(segundo do corte no take de partida, trecho, folga)] em ordem crescente; cada trecho entra com `folga` s de
+    silêncio de cada lado."""
+    partes, ult = [], 0
+    for t, clip, folga in pontos:
+        i = min(len(y), max(ult, int(round(t * SR))))
+        gap = np.zeros(int(round(folga * SR)), dtype=y.dtype)
+        partes += [y[ult:i], gap, clip, gap]
+        ult = i
+    partes.append(y[ult:])
+    return np.concatenate(partes)
+
+
+def main():
+    cfg = json.load(open(os.path.join(HERE, "trocas.json")))
+    T, INS = cfg.get("trocas", []), cfg.get("insercoes", [])
+    args = sys.argv[1:]
+    ins_mp3 = None
+    if "--insercoes" in args:
+        k = args.index("--insercoes")
+        ins_mp3 = args[k + 1]
+        del args[k:k + 2]
+    src = args[0] if args else None
+    novas = [t["novo"] for t in T if t["novo"]]
+    if (novas and not src) or (INS and not ins_mp3):
+        sys.exit("uso: python3 -I emendar.py <frases_novas.mp3> [--insercoes <insercoes.mp3>]")
+
+    # 1) transcreve o MP3 das frases novas e acha cada frase (alinhamento palavra a palavra com o texto pedido)
+    clips = recortar(src, novas, "frase") if novas else {}  # frase -> (trecho, instante da última palavra no trecho, em s)
+    clips_ins = recortar(ins_mp3, [i["novo"] for i in INS], "inserção") if INS else {}
 
     os.makedirs(os.path.join(HERE, "emendas"), exist_ok=True)
     resumo = []
+    emendado = {}  # cap -> áudio depois das trocas
     for cap in sorted({t["cap"] for t in T}):
         c = carregar_cap(cap)
         y, sr2 = sf.read(os.path.join(c["pasta"], "audio48k.wav"), dtype="float32")
@@ -198,15 +239,50 @@ def main():
             resumo.append((nome, "frase nova", r, folga, "ok" if not aviso else aviso.split(":")[0]))
         out = os.path.join(HERE, "emendas", f"cap{cap:02d}_v2.wav")
         sf.write(out, y, SR, subtype="PCM_24")
+        emendado[cap] = y
         velho = os.path.join(HERE, "takes", f"cap{cap:02d}_v2", "words.json")
         if os.path.exists(velho):  # o proc.py só roda o ASR se não há words.json: não deixa valer o da emenda anterior
             os.remove(velho)
         print("  ->", out, f"{len(y) / SR:.2f}s, LUFS {lufs(y):.2f} (antes {alvo:.2f})")
 
+    # 2) inserções: frases que não existiam; a duração do capítulo AUMENTA (o resto do áudio é empurrado para a frente)
+    for cap in sorted({i["cap"] for i in INS}):
+        c = carregar_cap(cap)  # take original: dá o VAD para conferir que o corte cai num silêncio
+        if cap in emendado:
+            y, sufixo = emendado[cap], "v3"  # parte da saída das trocas; o _v2 continua só com elas
+        else:
+            y, _ = sf.read(os.path.join(c["pasta"], "audio48k.wav"), dtype="float32")
+            y = (y.mean(1) if y.ndim == 2 else y).copy()
+            sufixo = "v2"
+        alvo = lufs(y)
+        fim_cap = len(y) / SR
+        pontos = []
+        for it in sorted((i for i in INS if i["cap"] == cap), key=lambda i: fim_cap if i["em"] == "fim" else float(i["em"])):
+            t = fim_cap if it["em"] == "fim" else float(it["em"])
+            folga = float(it.get("folga", 0.12))
+            cl, fim_fala = clips_ins[it["novo"]]
+            g = 10 ** ((alvo - lufs(cl)) / 20) if lufs(cl) > -60 else 1.0
+            cl = fade(cl * min(g, 2.0))
+            fala = [v for v in c["vad"] if v[0] < t < v[1]]
+            antes = max([v[1] for v in c["vad"] if v[1] <= t] or [0.0])
+            depois = min([v[0] for v in c["vad"] if v[0] >= t] or [fim_cap])
+            aviso = "  ATENÇÃO: o corte cai em cima de fala; escolha um instante num silêncio" if fala and it["em"] != "fim" else ""
+            print(f"cap{cap:02d} inserção em {t:.2f} s (silêncio de {antes:.2f} a {depois:.2f} s) + {len(cl) / SR:.2f} s de frase, "
+                  f"folga {folga:.2f} s de cada lado -> {it['novo']}{aviso}")
+            pontos.append((t, cl, folga))
+            resumo.append((f"cap{cap:02d} inserção {t:.2f}", "inserida", None, None, "ok" if not aviso else "ATENÇÃO"))
+        y2 = inserir(y, pontos)
+        out = os.path.join(HERE, "emendas", f"cap{cap:02d}_{sufixo}.wav")
+        sf.write(out, y2, SR, subtype="PCM_24")
+        velho = os.path.join(HERE, "takes", f"cap{cap:02d}_{sufixo}", "words.json")
+        if os.path.exists(velho):
+            os.remove(velho)
+        print("  ->", out, f"{len(y2) / SR:.2f}s (era {len(y) / SR:.2f}s, +{(len(y2) - len(y)) / SR:.2f}s), LUFS {lufs(y2):.2f} (antes {alvo:.2f})")
+
     print("\nresumo das folgas (fala nova -> próxima fala):")
     for nome, tipo, r, folga, st in resumo:
         if folga is None:
-            print(f"  {nome:<22} {tipo}")
+            print(f"  {nome:<22} {tipo}" + (f"  {st}" if tipo == "inserida" else ""))
         else:
             print(f"  {nome:<22} folga {folga:5.2f} s  tempo x{r:.3f}  {st}")
 

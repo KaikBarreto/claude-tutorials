@@ -1,6 +1,8 @@
 """Separa o MP3 com os nomes dos capítulos (um por vinheta, separados por [pause]) em um WAV por capítulo.
 Saída: titulos/capNN.wav (48 kHz mono, com o mesmo volume da narração) + titulos/titulos.json {NN: {texto, wav, dur}}
-uso: python3 -I titulos.py <titulos.mp3>"""
+uso: python3 -I titulos.py <titulos.mp3> [--so 6,7]
+     --so: o MP3 só traz esses títulos (na ordem dos números); os demais capítulos ficam como estão e as entradas novas
+     entram no titulos.json que já existe (aula atualizada com capítulos novos)."""
 import json
 import os
 import sys
@@ -21,8 +23,16 @@ except ImportError:
                9: "Cadastrando um equipamento.", 10: "quê-érre côde e etiqueta.", 11: "Recapitulando."}
 ALVO_LUFS = -21.9  # média da narração dos capítulos
 
-tid, d, words = proc.transcrever(sys.argv[1])
-textos = [TITULOS[k] for k in sorted(TITULOS)]
+args = sys.argv[1:]
+SO = None
+if "--so" in args:
+    k = args.index("--so")
+    SO = sorted(int(x) for x in args[k + 1].split(","))
+    del args[k:k + 2]
+CHAVES = SO or sorted(TITULOS)
+
+tid, d, words = proc.transcrever(args[0])
+textos = [TITULOS[k] for k in CHAVES]
 toks = proc.tokens("\n".join(textos))
 vad = json.load(open(os.path.join(d, "vad.json")))
 ws = proc.alinhar(toks, words, vad)
@@ -52,7 +62,7 @@ def legenda(t):
 out = os.path.join(HERE, "titulos")
 os.makedirs(out, exist_ok=True)
 info = {}
-for li, k in enumerate(sorted(TITULOS)):
+for li, k in enumerate(CHAVES):
     fw = [w for w in ws if w["linha"] == li]
     a, b = borda(fw[0]["s"], "ini"), borda(fw[-1]["e"], "fim")
     cl = x[max(0, int(a * SR)):int(b * SR)].copy()
@@ -66,4 +76,9 @@ for li, k in enumerate(sorted(TITULOS)):
     info[f"{k:02d}"] = {"texto": legenda(TITULOS[k]), "wav": p, "dur": round(len(cl) / SR, 3),
                         "ok": min(w["ok"] for w in fw), "ouvido": " ".join(w["ouvido"] for w in fw)}
     print(f"cap{k:02d}: {len(cl) / SR:.2f}s  ouvido: {info[f'{k:02d}']['ouvido']!r}")
-json.dump(info, open(os.path.join(out, "titulos.json"), "w"), ensure_ascii=False, indent=1)
+arq = os.path.join(out, "titulos.json")
+if SO and os.path.exists(arq):  # --so: acrescenta/troca só estes capítulos no titulos.json existente
+    antigo = json.load(open(arq))
+    antigo.update(info)
+    info = dict(sorted(antigo.items()))
+json.dump(info, open(arq, "w"), ensure_ascii=False, indent=1)
