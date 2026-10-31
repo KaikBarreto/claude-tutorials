@@ -103,7 +103,10 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
   semente ou parâmetro, sem reescrever o do T1.
 
 ## Fila (31/10 12:1x; nada sai da fila sem estar entregue)
-1. **Rodando:** G3 grava/edita o T5 · dev-video ajusta os vídeos 05 e 06 do site (sugestões do Matheus).
+1. **Rodando (Kaik 14:48 liberou até 4 agentes ao mesmo tempo):** dev-video no 06 e no 12 do site (com a trava
+   pesada só para ele, pedido de urgência) · G3 com o T5 pausado antes do cap17 e do finish · dev-gravacao corrigindo
+   T1 e T4 (prepara o leve; o pesado espera a trava) · dev-levantamento na 1.38.9 + roteiro do T3 v2 (`T03v2/`).
+   Disco: 5,6 GB livres; T1/T4 guardam `video_sem_audio.mp4` para corrigir só o áudio.
 2. **Próximas vagas, nesta ordem.** A **1.38.8** saiu às 12:40 (`0b35ea72`, etiquetas e campos personalizados; fonte em
    `$TUT_HOME/src-1.38.8`). O T1 não muda: as Configurações e o `CustomerOriginManagerDialog` seguem iguais.
    (a) `emendar.py` corrigido, T4 (emenda do cap03) e T1 (cap05 com o logo branco e emendas de pronúncia), ainda na
