@@ -56,6 +56,18 @@ a frase nova começa onde a antiga começava; o resto vira silêncio, depois cor
 parada. Lista com as janelas de tempo: `trocas.json` (exemplo em `exemplos/dominex-t3/narracao/trocas.json`).
 Volume casado por LUFS.
 
+```bash
+cd $TUT_HOME/<tutorial>/narracao
+python3 -I emendar.py recebido/<frases novas>.mp3      # -> emendas/capNN_v2.wav + folga final de cada troca
+python3 -I proc.py NN=emendas/capNN_v2.wav ...         # refaz palavras e legendas (guarde antes o capNN.json como capNN.v1.json)
+```
+- A frase nova nunca invade a fala seguinte: se for mais longa que a janela, o tempo é comprimido com `atempo` (mantém o
+  tom, no máximo 8%) até a fala terminar **≥ 0,2 s antes da próxima palavra** do capítulo (pelas `words` do `capNN.json`)
+  ou do fim do capítulo. Se nem assim couber, o script avisa (`ATENÇÃO` ou `CORTADA`) e a frase deve ser gerada de
+  novo, mais curta. O fim do script imprime o resumo das folgas; confira depois do `proc.py` pelo ASR.
+- Troca em 0 s é válida (o início da janela nunca fica abaixo de 0). O script lê o take **original**: se o
+  `capNN.json` já é uma emenda, usa o `capNN.v1.json`; sem ele, para.
+
 ## Títulos das vinhetas — `titulos.py`
 Separa o áudio dos títulos em `titulos/capNN.wav` (sem silêncio nas pontas, no volume da narração) e `titulos.json`
 (texto + duração). A montagem estica a vinheta quando o título falado é longo.
