@@ -127,6 +127,12 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
    falso precisa de 5 tabelas, 5 colunas, 3 RPCs chamadas em todo salvar, padrões e o gancho de exclusão
    (`T03v2/inventario_delta.md`); a troca do app para a 1.38.9 vem junto com isso, depois do T1 cap05/cap06 (1.38.6).
    T7 retomado (G4): prepara agora e grava na 1.38.9.
+4. **T0 v2 (Kaik 31/10 17:13, `T00v2/pedido_kaik_31-10.txt`):** refazer o T0 para o onboarding novo (o vídeo é o 1º
+   passo obrigatório; trilha "Tutoriais do sistema" → Formação Básica → módulos do plano → outros módulos com "Não tem no
+   seu plano"; progresso; lembretes de 30 dias; "Tirar dúvidas com o suporte"), 4 a 4:30, 16:9 **e 9:16 nativo**, com
+   telas reais da DomiFlix nova. **Antes de gerar:** roteiro revisado + storyboard das duas proporções + lista de telas
+   para aprovação. A DomiFlix nova **não está no `main`** (17:13: só a atual, com temporadas). Voz: ~4 mil caracteres,
+   saldo ~0 (precisa de recarga). Na fila: agente de roteiro na próxima vaga.
 3. **T3 v2 (Kaik 31/10 12:11):** "Editar" e "Excluir" da ficha foram para "Ações" (já na 1.38.6, `5f0b64ea`: fichas de
    cliente e de equipamento) e "Configurar origens" virou um modal único "Configurações" com Origens, Etiquetas, Campos
    de clientes e Campos de fornecedores (`CustomerSettingsDialog.tsx`, recurso novo; publicado na 1.38.8). Afeta no T3: cap01 (botões do topo), cap04 (vira origens + etiquetas + campos), cap05 (cabeçalho da
