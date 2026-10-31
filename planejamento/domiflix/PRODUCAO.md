@@ -18,14 +18,14 @@ F = montagem final + legendas + conferência · ok = no ZIP
 |---|---|---|---|---|---|---|---|---|---|
 | T0 | Boas-vindas à Dominex (ilustrada) | ok | ok | ok | ok | — | — | ok | ok (30/10 22:51, 3:25) |
 | T1 | Configurações e identidade da empresa | ok | ok | ok | ok (31/10 00:29) | G1 | G1 | | |
-| T2 | Usuários, cargos e permissões | ok | | | | | | | |
+| T2 | Usuários, cargos e permissões | ok | ok | | | | | | |
 | T3 | Clientes, Fornecedores e Equipamentos | ok | ok | ok | ok | ok | ok | ok | ok (30/10) |
 | T4 | Serviços, tarefas e checklists | ok | ok | ok | ok (31/10 00:29) | | | | |
 | T5 | Ordens de Serviço, Agenda, Equipes e Mapa ao Vivo | ok | ok | ok | ok (31/10 00:29) | | | | |
 | T7 | O técnico em campo (celular) | ok | ok | ok | ok (31/10 00:29; emenda pendente no cap05) | | | | |
 | T18 | Área do Técnico: Refrigeração e Climatização | ok | ok | V2 | | | | | |
-| T8 | Estoque, compras e inventário | ok | | | | | | | |
-| T9 | Orçamentos, Precificação e Proposta | ok | | | | | | | |
+| T8 | Estoque, compras e inventário | ok | ok | | | | | | |
+| T9 | Orçamentos, Precificação e Proposta | ok | ok | | | | | | |
 | T10 | CRM: funil, leads e captação | ok | | | | | | | |
 | T11 | Contratos e PMOC | ok | | | | | | | |
 | T12 | Portal do Cliente e Portal do Contrato | ok | | | | | | | |
