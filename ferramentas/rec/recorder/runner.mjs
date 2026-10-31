@@ -7,7 +7,7 @@ import { openSession, closeSession, settle, VIEWPORT, SCALE } from './browser.mj
 import { startCapture } from './capture.mjs';
 import { assemble, contactSheet, probeVideo } from './assemble.mjs';
 import { makeRng, sleep, planMove, typingDelays, minJerk, clamp } from './human.mjs';
-import { APP_URL, FAKE_URL, resolveMode } from './env.mjs';
+import { APP_URL, APP_ORIGIN, LOCAL_APP_URL, FAKE_URL, resolveMode } from './env.mjs';
 
 const r1 = (v) => Math.round(v * 10) / 10;
 const r3 = (v) => Math.round(v * 1000) / 1000;
@@ -736,6 +736,7 @@ export async function runScript(script, opts = {}) {
   for (const w of lint.warnings) console.log(`  aviso: ${w}`);
   if (lint.errors.length) throw new Error(`roteiro invalido:\n  - ${lint.errors.join('\n  - ')}`);
   const isUrl = lint.mode === 'url'; // modo url: o app de qualquer pessoa, por endereco (sem fakebase)
+  if (isUrl && APP_ORIGIN) throw new Error('APP_ORIGIN so vale no modo fakebase (no modo url use APP_URL com o endereco do app)');
   // "$NOME" nos passos type: se faltar a variavel, para AQUI, antes de abrir o navegador (nunca no meio da gravacao)
   const missing = missingEnvVars(script);
   if (missing.length) {
@@ -766,6 +767,8 @@ export async function runScript(script, opts = {}) {
     if (!process.env.APP_URL) log('  aviso: APP_URL nao definido; usando o endereco de env.json (para outro app: APP_URL=http://... node rec/record.mjs ...)');
     log('  sem reset/seed, sessao anonima e rede sem desvio (nada do fakebase)');
   }
+
+  if (APP_ORIGIN) log(`  APP_ORIGIN: o navegador abre o app em ${APP_ORIGIN} (servido pelo app local ${LOCAL_APP_URL}; nada sai para a rede)`);
 
   if (!isUrl && !(opts.noReset ?? script.noReset)) {
     await fetch(`${FAKE_URL}/__dev/reset`, { method: 'POST' }).catch(() => {

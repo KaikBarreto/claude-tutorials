@@ -5,8 +5,9 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { chromium } from './pw.mjs';
-import { APP_URL, FAKE_URL, ANON_KEY, USER_EMAIL, REC_DIR } from './env.mjs';
+import { APP_URL, APP_ORIGIN, FAKE_URL, ANON_KEY, USER_EMAIL, REC_DIR } from './env.mjs';
 import { isolateNetwork } from './net.mjs';
+import { serveAppAtOrigin, withAppOriginArgs } from './app-origin.mjs';
 import { Telemetry } from './telemetry.mjs';
 
 export const VIEWPORT = { width: 1280, height: 800 };
@@ -128,7 +129,7 @@ function stubServiceWorker() {
 export async function launchBrowser({ headed = false, args = [] } = {}) {
   return chromium.launch({
     headless: !headed,
-    args: [
+    args: withAppOriginArgs([
       // sem esta flag o screencast do Chrome entrega quadros de 1280x800 (CSS px) mesmo com deviceScaleFactor 2;
       // com ela os quadros saem em pixels fisicos: 2560x1600
       `--force-device-scale-factor=${SCALE}`,
@@ -140,7 +141,7 @@ export async function launchBrowser({ headed = false, args = [] } = {}) {
       '--autoplay-policy=no-user-gesture-required',
       '--no-first-run',
       ...args,
-    ],
+    ]),
   });
 }
 
@@ -192,6 +193,8 @@ export async function openSession({
   const tel = new Telemetry({ dsf: SCALE });
   if (telemetry || cursorOverlay) await tel.install(context, { overlay: cursorOverlay });
   const externos = isolate ? await isolateNetwork(context, { verbose: verboseNet }) : [];
+  // APP_ORIGIN (opcional): o app abre em https://www.dominex.app, servido pelo app local (vem DEPOIS do desvio de rede: vale primeiro)
+  const appOrigin = isolate && APP_ORIGIN ? await serveAppAtOrigin(context, { verbose: verboseNet }) : null;
   const page = await context.newPage();
 
   const diag = { console: [], pageErrors: [], failed: [], bad: [], externos, inflight: new Set(), lastNet: Date.now() };
@@ -242,7 +245,7 @@ export async function openSession({
   page.on('response', (r) => {
     if (r.status() >= 400) diag.bad.push(`${r.status()} ${r.request().method()} ${r.url().slice(0, 220)}`);
   });
-  return { browser, context, page, session, diag, tel, ownsBrowser: own };
+  return { browser, context, page, session, diag, tel, appOrigin, ownsBrowser: own };
 }
 
 /**

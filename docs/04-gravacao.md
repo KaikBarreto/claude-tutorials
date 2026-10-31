@@ -149,8 +149,8 @@ extensão que dá 404), do mesmo jeito que o gravador já desvia o Supabase para
   o teste (`APP_ORIGIN=... node rec/t12/app_origin_teste.mjs / /clientes --anon`) se o app mudar.
 - **O que muda na tela**: tudo o que o app monta com `window.location.origin` (Link do portal, "Copiar link", link da unidade, QR
   Code) passa a mostrar `https://www.dominex.app/...`. O token do link continua fictício (não existe no servidor de verdade).
-  O arquivo `ferramentas/rec/recorder` deste repositório (cópia da skill) não foi tocado: a opção vive em `rec/recorder` do
-  ambiente de gravação.
+  A opção vive em `rec/recorder` do ambiente de gravação e na cópia da skill (`ferramentas/rec/recorder/{env,app-origin,browser,
+  runner}.mjs`, idênticas, sincronizadas em 31/10).
 
 ## Dado de bastidor no meio da gravação
 Quando a fala só cita itens "cadastrados do mesmo jeito" (T4: cinco tipos de serviço), o robô os insere por REST no
