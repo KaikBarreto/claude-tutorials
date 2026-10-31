@@ -104,11 +104,13 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
 
 ## Fila (31/10 12:1x; nada sai da fila sem estar entregue)
 1. **Rodando:** G3 grava/edita o T5 · dev-video ajusta os vídeos 05 e 06 do site (sugestões do Matheus).
-2. **Próximas vagas, nesta ordem:** (a) `emendar.py` corrigido + T1 (cap05 com o logo branco e emendas de pronúncia) e T4
-   (emenda do cap03), reentregues; (b) T7 retomado (G4, `rec/t7/ESTADO.md`; emenda do cap05 encaixada); (c) T18;
-   (d) **T3 v2** com o layout novo de Clientes e Fornecedores (abaixo), assim que a versão com o modal único estiver
-   publicada no `main`; (e) com créditos: vozes V3–V5 e as aulas T2, T8, T9, T12, T13, T20, T10, T11, T15, T22, T19,
-   T21, T14, T17, na ordem da trilha.
+2. **Próximas vagas, nesta ordem** (Kaik 12:25: "a mudança da dominex tô publicando"; vigia no `main` rodando):
+   (a) assim que publicar: levantamento das telas novas de Clientes/Fornecedores e do cartão Origens das Configurações,
+   roteiro dos trechos do T3 e do T1 cap09 (se mudou) e voz só do que muda; (b) `emendar.py` corrigido + T4 (emenda do
+   cap03) reentregue; T1 (cap05 com o logo branco, cap09 se mudou, emendas de pronúncia) reentregue uma vez só;
+   (c) T7 retomado (G4, `rec/t7/ESTADO.md`) e T18, já na versão nova; (d) T3 v2; (e) com créditos: vozes V3–V5 e as
+   aulas T2, T8, T9, T12, T13, T20, T10, T11, T15, T22, T19, T21, T14, T17, na ordem da trilha.
+   App de gravação: só troca para a versão nova depois que o G3 terminar de gravar o T5 (uma aula, uma versão).
 3. **T3 v2 (Kaik 31/10 12:11):** "Editar" e "Excluir" da ficha foram para "Ações" (já na 1.38.6, `5f0b64ea`: fichas de
    cliente e de equipamento) e "Configurar origens" virou um modal único "Configurações" com Origens, Etiquetas, Campos
    de clientes e Campos de fornecedores (`CustomerSettingsDialog.tsx`, recurso novo; **ainda não está no `main`**: último
