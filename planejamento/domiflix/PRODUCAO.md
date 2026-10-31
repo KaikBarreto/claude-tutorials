@@ -21,7 +21,7 @@ F = montagem final + legendas + conferência · ok = no ZIP
 | T2 | Usuários, cargos e permissões | ok | ok | | | | | | |
 | T3 | Clientes, Fornecedores e Equipamentos | ok | ok | ok | ok | ok | ok | ok | ok (30/10) |
 | T4 | Serviços, tarefas e checklists | ok | ok | ok | ok (31/10 00:29) | ok | ok | ok | ok (31/10 10:46, 10:27) |
-| T5 | Ordens de Serviço, Agenda, Equipes e Mapa ao Vivo | ok | ok | ok | ok (31/10 00:29) | G3 | G3 | G3 | G3 |
+| T5 | Ordens de Serviço, Agenda, Equipes e Mapa ao Vivo | ok | ok | ok | ok (31/10 00:29) | ok | ok | ok | ok (31/10 18:2x, 13:49; 1.38.6) |
 | T7 | O técnico em campo (celular) | ok | ok | ok | ok (31/10 00:29; emenda pendente no cap05) | G4 pausado 11:2x (`rec/t7/ESTADO.md`) | | | |
 | T18 | Área do Técnico: Refrigeração e Climatização | ok | ok | ok | ok (31/10 11:30) | | | | |
 | T8 | Estoque, compras e inventário | ok | ok | | | | | | |

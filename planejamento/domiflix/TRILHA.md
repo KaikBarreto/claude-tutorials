@@ -150,6 +150,10 @@ na coluna Tela dos roteiros (marca `[handoff: ...]`, com `arquivo:linha`).
   "Template criado" no lugar de checklist (`src/hooks/useFormTemplates.ts:98,119`); prévia do prefixo de numeração da OS
   diferente do número gerado (`ServiceTypesPanel.tsx:322,758` × `src/pages/ServiceOrders.tsx:187-191`); permissão de
   Checklists sem efeito (`src/hooks/usePermissions.ts:60`).
+- **T5 (31/10):** status próprio de OS não aceita OS (`src/components/service-orders/OsStatusManagerDialog.tsx:171`,
+  `src/hooks/useOsStatuses.ts:50`); a resposta "Não" da pesquisa é ignorada (`src/hooks/useServiceOrders.ts:555`); excluir
+  a recorrência só apaga as futuras (`src/pages/ServiceOrders.tsx:327`); o contador "21 de 24" conta tarefas como OS
+  (`ServiceOrders.tsx:1079`); fuso do Dashboard (`src/pages/Dashboard.tsx:169`, já no T17).
 - **1.38.9 (levantamento do T3 v2, 31/10; detalhes e `arquivo:linha` em `T03v2/inventario_delta.md`):** as RPCs de etiqueta
   não conferem o módulo contratado; o botão "Configurações" aparece para todos, mas só quem tem `can_manage_system`
   grava; o selo da etiqueta usa sempre texto branco (pouco contraste em laranja e verde); apagar campo personalizado

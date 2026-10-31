@@ -107,6 +107,8 @@ def montar(nn):
         if "escala" in z:
             item["scale"] = z["escala"]
         ch["zooms"].append(item)
+    for r in spec.get("repouso", []):  # [[de, até], ...] em s: câmera parada (zoom 1) sob uma ilustração que cobre a janela; o zoom automático dos cliques não puxa a tela
+        ch["zooms"].append({"at": float(r[0]), "end": float(r[1]), "scale": 1.0, "target": [1280, 800]})
     for s in spec.get("spots", []):
         a = passo(acts, s["passo"])
         r = a["rect"]

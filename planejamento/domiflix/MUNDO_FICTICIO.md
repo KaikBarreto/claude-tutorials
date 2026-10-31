@@ -57,6 +57,11 @@ desligado) + `t4/inicio` + `t4/apos-capMM`. O T4 parte sem tipo de serviço, cat
   Dreno escoando [Vídeo], e, de bastidor, Observações [Texto] e Assinatura do cliente [Assinatura]).
 - Handler novo `nfse-tax-codes` (lista de códigos de serviço da LC 116 do app, para a aba Fiscal do cap. 5).
 
+## O que o T5 criou (`seeds-extra/t5/apos-cap15.json` e as sementes por capítulo = estado inicial do T7)
+OS nova #22 (a do capítulo de abertura de OS), recorrência, agenda com tarefas (`seeds-extra/t5/tarefas-agenda.json`),
+equipe **Equipe Alfa** (cor #3B82F6, ícone de capacete), 6 avaliações de atendimento (NPS) e os chamados do portal.
+Detalhes nos `apos-capNN.json` e no relatório do T5 em `PRODUCAO.md`.
+
 ## Próximas aulas
 Cada `<Tnn>/plano.md` → "Mundo fictício" diz o que precisa existir no começo e o que a aula cria. Ao produzir,
 gravar o estado final em `seeds-extra/<id>/apos-capNN.json` e atualizar esta página.

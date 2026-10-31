@@ -48,6 +48,8 @@ Trocou a marca? Apague `edit/assets/fundo_escuro.png` (o `montar_cap.py` gera de
   colado na borda direita (≤ ~90 px): `min_w` pequeno e `escala` ≥ 2,6. Passo logo depois de abrir um modal pode ter
   `rect` velho: para o zoom, use o rótulo de um passo posterior. Conferir tudo com `auditar_camera.py` (T4, ver `08-licoes.md`).
 - A conferência do `entregar.py` tira quadros de cada ilustração pelo `caps/<nome>.chapter.json` (começo, meio e fim).
+- `"repouso": [[de, até], ...]` (segundos do capítulo) segura a câmera parada, sem zoom, sob uma ilustração que cobre
+  a janela, para os cliques do robô não puxarem a tela por baixo dela (T5, cap16).
 - Avisos ancorados numa palavra da narração (`[linha, "palavra"]`, a primeira ocorrência na linha: use uma palavra que
   só aparece onde o aviso deve entrar). Aviso só para regra que vale guardar e não está na tela, sempre no positivo.
 - `titulo`/`kicker` viram a vinheta de capítulo (não há mais cartão pequeno de título).
