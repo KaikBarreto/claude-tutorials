@@ -22,7 +22,7 @@ F = montagem final + legendas + conferência · ok = no ZIP
 | T3 | Clientes, Fornecedores e Equipamentos | ok | ok | ok | ok | ok | ok | ok | ok (30/10) |
 | T4 | Serviços, tarefas e checklists | ok | ok | ok | ok (31/10 00:29) | ok | ok | ok | ok (31/10 10:46, 10:27) |
 | T5 | Ordens de Serviço, Agenda, Equipes e Mapa ao Vivo | ok | ok | ok | ok (31/10 00:29) | G3 | G3 | G3 | G3 |
-| T7 | O técnico em campo (celular) | ok | ok | ok | ok (31/10 00:29; emenda pendente no cap05) | G4 | G4 | G4 | G4 |
+| T7 | O técnico em campo (celular) | ok | ok | ok | ok (31/10 00:29; emenda pendente no cap05) | G4 pausado 11:2x (`rec/t7/ESTADO.md`) | | | |
 | T18 | Área do Técnico: Refrigeração e Climatização | ok | ok | V2 | | | | | |
 | T8 | Estoque, compras e inventário | ok | ok | | | | | | |
 | T9 | Orçamentos, Precificação e Proposta | ok | ok | | | | | | |
@@ -97,6 +97,7 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
 - **Dashboard (toda aula que o mostra):** OS de hoje ainda aberta aparece "Atrasada 0 dias" e os gráficos deslocam um dia
   (bug de fuso, `src/pages/Dashboard.tsx:169,193,221`; T17 P2). Nas sementes, nenhuma OS do dia aberta no momento da
   gravação, ou a câmera não enquadra "Requer Atenção".
+- **T7 → T8:** Fita isolante com 28 no estoque (o roteiro do T8 e o T7 batem; o `plano.md` do T8 dizia 29).
 - **T22:** o robô nunca pousa o cursor no gráfico DISC (o tooltip cita pessoas reais; T22 P6).
 - **T19:** o handler `tenant-asaas-card-fees` (criado no T1) responde sem a franquia do Pix (`freeCount 0`): estender por
   semente ou parâmetro, sem reescrever o do T1.
