@@ -144,6 +144,12 @@ na coluna Tela dos roteiros (marca `[handoff: ...]`, com `arquivo:linha`).
   e barra que estoura em 1280 px (`TopNavbar.tsx:249,277`); janela dos Termos de Uso sem `DialogTitle`, acessibilidade
   (`src/components/TermsOfServiceModal.tsx:90-97`). A confirmar: logo largo aparece espremido no menu lateral com o
   White Label ligado.
+- **T4 (31/10):** "Novo Tipo" reabre o tipo selecionado (`src/components/service-orders/ServiceTypesPanel.tsx:151-156,255-257`);
+  checklist recém-criado não abre, fica o primeiro da lista em leitura (`src/components/service-orders/ChecklistsPanel.tsx:132-138,156-170`);
+  na ficha do checklist o nome some em 1280 px (`src/pages/ChecklistDetail.tsx:507-533`) e a lixeira não tem rótulo (`:559-561`); aviso
+  "Template criado" no lugar de checklist (`src/hooks/useFormTemplates.ts:98,119`); prévia do prefixo de numeração da OS
+  diferente do número gerado (`ServiceTypesPanel.tsx:322,758` × `src/pages/ServiceOrders.tsx:187-191`); permissão de
+  Checklists sem efeito (`src/hooks/usePermissions.ts:60`).
 
 ## Como retomar numa sessão nova
 ```bash

@@ -43,11 +43,16 @@ Trocou a marca? Apague `edit/assets/fundo_escuro.png` (o `montar_cap.py` gera de
 - Zooms e destaques apontam para **rótulos de passos** do robô; o retângulo e o instante vêm do `actions.json`
   (largura mínima do zoom ~1150–1300 px de 2560 para não exagerar). `"atraso": 0.8` faz o zoom começar 0,8 s depois
   do passo (quando um clique logo antes ainda precisa aparecer inteiro).
+- `"escala": 1.4` fixa o aumento do zoom (sem ele, sai do tamanho do retângulo) e `"min_w"` muda a largura mínima.
+  Digitação com `noClick` (cursor parado longe do campo): `escala` ≈ 1,4, para campo e cursor caberem juntos. Alvo
+  colado na borda direita (≤ ~90 px): `min_w` pequeno e `escala` ≥ 2,6. Passo logo depois de abrir um modal pode ter
+  `rect` velho: para o zoom, use o rótulo de um passo posterior. Conferir tudo com `auditar_camera.py` (T4, ver `08-licoes.md`).
 - A conferência do `entregar.py` tira quadros de cada ilustração pelo `caps/<nome>.chapter.json` (começo, meio e fim).
-- Avisos ancorados numa palavra da narração (`[linha, "palavra"]`). Aviso só para regra que vale guardar e não está na
-  tela, sempre no positivo.
+- Avisos ancorados numa palavra da narração (`[linha, "palavra"]`, a primeira ocorrência na linha: use uma palavra que
+  só aparece onde o aviso deve entrar). Aviso só para regra que vale guardar e não está na tela, sempre no positivo.
 - `titulo`/`kicker` viram a vinheta de capítulo (não há mais cartão pequeno de título).
-- Zoom manual não pode coincidir com ilustração que cobre a janela (a ilustração usa a janela em repouso).
+- Zoom manual não pode coincidir com ilustração que cobre a janela (a ilustração usa a janela em repouso); a saída do
+  zoom leva ~1 s, então termine-o pelo menos 1 s antes do `at` da ilustração.
 
 ## Ilustração na tela (ex.: `ilustra_qr.py`)
 Sequência PNG 1587×992 com alfa (cantos de 16 px) desenhada por código (PIL, 2× para anti-serrilhado), fundo

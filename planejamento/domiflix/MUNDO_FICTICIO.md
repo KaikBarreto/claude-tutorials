@@ -36,6 +36,27 @@ verificador válido), e-mails `.example`, telefones de faixa fictícia. Fonte da
   **Cassete 36.000 BTUs - Recepção** (Pousada Sol Nascente); categoria **Multi Split**; campo **Tensão**
   (127 V, 220 V, 380 V); tarefa "Trocar as pilhas do controle"; anexo no equipamento.
 
+## O que o T4 criou (`seeds-extra/t4/apos-cap14.json` = estado inicial do T5)
+Cadeia de sementes de cada capítulo: base + `t3/apos-cap10` + `t1/apos-cap13` (identidade da empresa, White Label
+desligado) + `t4/inicio` + `t4/apos-capMM`. O T4 parte sem tipo de serviço, categoria, tipo de tarefa nem checklist
+(nem a base nem o T3 os trazem); usuários continuam os da base. Não mexe em clientes, equipamentos nem financeiro.
+- **Categorias de serviço**: **Instalação** (azul), **Manutenção** e **Higienização** (as duas na cor padrão, cinza:
+  a fala só deu tempo de um ciclo completo com cor).
+- **Tipos de serviço (6)**, todos ativos e vinculados a equipamento, menos a Visita Técnica:
+  **Manutenção Preventiva** (MP, verde, Manutenção, R$ 180, "Limpeza e conferência completa do aparelho e teste",
+  fiscal 14.01.01 / município 001 / ISS 5%; criado ao vivo no cap. 3, fiscal no cap. 5, descrição editada no cap. 6);
+  e, de bastidor (REST no backend falso durante o cap. 3), **Manutenção Corretiva** (MC, laranja, Manutenção, R$ 220),
+  **Instalação de Split** (INS, azul, Instalação, R$ 650, fiscal 14.06.01 / 001 / ISS 5%), **Higienização de Split**
+  (HIG, ciano, Higienização, R$ 180), **Carga de Gás** (GAS, roxo, Manutenção, R$ 350) e **Visita Técnica** (VT, cinza,
+  sem categoria, R$ 120, sem equipamento).
+- **Tipos de tarefa (4)**: **Reunião** (roxo, criado ao vivo no cap. 7) e, de bastidor, **Treinamento da equipe** (azul),
+  **Entrega de material** (laranja) e **Compra de peças** (amarelo).
+- **Checklists (2)**: **Manutenção preventiva de split** (do catálogo, 13 perguntas, vinculado a Manutenção Preventiva) e
+  **Higienização de split** (do zero, vinculado a Higienização de Split, 6 perguntas na ordem final: Estado da serpentina
+  [Conformidade], Filtros lavados? [Verdadeiro/Falso + foto], Aspecto da água retirada [Seleção: Limpa, Turva, Suja],
+  Dreno escoando [Vídeo], e, de bastidor, Observações [Texto] e Assinatura do cliente [Assinatura]).
+- Handler novo `nfse-tax-codes` (lista de códigos de serviço da LC 116 do app, para a aba Fiscal do cap. 5).
+
 ## Próximas aulas
 Cada `<Tnn>/plano.md` → "Mundo fictício" diz o que precisa existir no começo e o que a aula cria. Ao produzir,
 gravar o estado final em `seeds-extra/<id>/apos-capNN.json` e atualizar esta página.

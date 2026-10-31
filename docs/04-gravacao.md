@@ -86,3 +86,11 @@ o segundo sobe outra instância, `FAKE_PORT=54322 rec/run.sh fake`, e roda o rob
 `FAKE_URL=http://127.0.0.1:54322`. O app continua um só: o robô desvia, dentro do navegador, as chamadas do endereço
 gravado no build para a instância indicada. `FAKE_PORT=54322 rec/run.sh down` derruba só essa instância. A gravação
 em si continua uma de cada vez (trava `.heavy.lock`).
+
+## Dado de bastidor no meio da gravação
+Quando a fala só cita itens "cadastrados do mesmo jeito" (T4: cinco tipos de serviço), o robô os insere por REST no
+backend falso (`eval` com `fetch` em `/rest/v1/<tabela>`, `Prefer: return=representation`) enquanto a câmera olha outra
+coisa, e manda o app refazer a consulta **sem eventos de rede**: o par offline/online mostra o aviso "Conexão restaurada".
+Acha-se o `QueryClient` pela fibra do React (`#root` → chave `__reactContainer$` → `memoizedProps.client`) e chama-se
+`refetchQueries({ type: 'active' })` (exemplo: `REFETCH_JS` em `rec/t4/gerar.py`). O estado final do capítulo, com os
+itens de bastidor, vai para a semente `apos-capNN`, e o capítulo seguinte já parte dele.

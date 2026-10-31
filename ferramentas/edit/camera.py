@@ -117,6 +117,7 @@ class Camera:
         out = []; g = self.g
         for z in zooms:
             s = float(z["at"]); e = float(z["end"]) if "end" in z else s + float(z.get("dur", 3.0))
+            s = max(0.0, s)  # zoom do primeiro passo pode cair antes de 0 s (tStart - 0,2): fatiar com índice negativo o descartava
             sc, fol = z.get("scale"), z.get("follow")
             if "rect" in z:
                 x, y, w, h = z["rect"]; ax, ay = x + w / 2, y + h / 2

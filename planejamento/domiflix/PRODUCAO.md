@@ -20,9 +20,9 @@ F = montagem final + legendas + conferência · ok = no ZIP
 | T1 | Configurações e identidade da empresa | ok | ok | ok | ok (31/10 00:29) | ok | ok | ok | ok (31/10 05:20, 11:58) |
 | T2 | Usuários, cargos e permissões | ok | ok | | | | | | |
 | T3 | Clientes, Fornecedores e Equipamentos | ok | ok | ok | ok | ok | ok | ok | ok (30/10) |
-| T4 | Serviços, tarefas e checklists | ok | ok | ok | ok (31/10 00:29) | G2 | G2 | G2 | G2 |
-| T5 | Ordens de Serviço, Agenda, Equipes e Mapa ao Vivo | ok | ok | ok | ok (31/10 00:29) | | | | |
-| T7 | O técnico em campo (celular) | ok | ok | ok | ok (31/10 00:29; emenda pendente no cap05) | | | | |
+| T4 | Serviços, tarefas e checklists | ok | ok | ok | ok (31/10 00:29) | ok | ok | ok | ok (31/10 10:46, 10:27) |
+| T5 | Ordens de Serviço, Agenda, Equipes e Mapa ao Vivo | ok | ok | ok | ok (31/10 00:29) | G3 | G3 | G3 | G3 |
+| T7 | O técnico em campo (celular) | ok | ok | ok | ok (31/10 00:29; emenda pendente no cap05) | G4 | G4 | G4 | G4 |
 | T18 | Área do Técnico: Refrigeração e Climatização | ok | ok | V2 | | | | | |
 | T8 | Estoque, compras e inventário | ok | ok | | | | | | |
 | T9 | Orçamentos, Precificação e Proposta | ok | ok | | | | | | |
