@@ -17,10 +17,10 @@ F = montagem final + legendas + conferência · ok = no ZIP
 | Aula | Título | L | R | V | Z | B | G | E | F |
 |---|---|---|---|---|---|---|---|---|---|
 | T0 | Boas-vindas à Dominex (ilustrada) | ok | ok | ok | ok | — | — | ok | ok (30/10 22:51, 3:25) |
-| T1 | Configurações e identidade da empresa | ok | ok | ok | ok (31/10 00:29) | ok | G1 (robô validado: 14 caps, 0 falho) | G1 | G1 |
+| T1 | Configurações e identidade da empresa | ok | ok | ok | ok (31/10 00:29) | ok | ok | ok | ok (31/10 05:20, 11:58) |
 | T2 | Usuários, cargos e permissões | ok | ok | | | | | | |
 | T3 | Clientes, Fornecedores e Equipamentos | ok | ok | ok | ok | ok | ok | ok | ok (30/10) |
-| T4 | Serviços, tarefas e checklists | ok | ok | ok | ok (31/10 00:29) | | | | |
+| T4 | Serviços, tarefas e checklists | ok | ok | ok | ok (31/10 00:29) | G2 | G2 | G2 | G2 |
 | T5 | Ordens de Serviço, Agenda, Equipes e Mapa ao Vivo | ok | ok | ok | ok (31/10 00:29) | | | | |
 | T7 | O técnico em campo (celular) | ok | ok | ok | ok (31/10 00:29; emenda pendente no cap05) | | | | |
 | T18 | Área do Técnico: Refrigeração e Climatização | ok | ok | V2 | | | | | |

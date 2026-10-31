@@ -119,6 +119,14 @@ Cada aula parte do estado final da anterior no mundo fictício (Glacial Cold Bra
 Os demais ajustes de texto e comportamento estão em "Pegadinhas" de cada `inventario.md` (marcados como handoff) e
 na coluna Tela dos roteiros (marca `[handoff: ...]`, com `arquivo:linha`).
 
+## Handoffs achados na gravação (texto e comportamento, para o time do app; código 1.38.6)
+- **T1 (31/10):** logo PNG transparente vira JPEG com fundo preto ao salvar (`src/utils/imageConvert.ts:85,94-98`,
+  chamado em `src/pages/Settings.tsx:535`); seletor de cor mostra "#NANNANNAN" (`src/components/ui/ColorPicker.tsx:16-23`;
+  `Settings.tsx:87,261,1507`); Menu Superior com o logo invisível no tema claro (`src/components/layout/TopNavbar.tsx:262-273`)
+  e barra que estoura em 1280 px (`TopNavbar.tsx:249,277`); janela dos Termos de Uso sem `DialogTitle`, acessibilidade
+  (`src/components/TermsOfServiceModal.tsx:90-97`). A confirmar: logo largo aparece espremido no menu lateral com o
+  White Label ligado.
+
 ## Como retomar numa sessão nova
 ```bash
 git clone https://github.com/KaikBarreto/claude-tutorials            # esta skill + este planejamento
