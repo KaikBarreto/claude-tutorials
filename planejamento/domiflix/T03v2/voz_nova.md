@@ -306,7 +306,7 @@ O botão da página Equipamentos ainda se chama "Configurar Campos" (`src/lib/i1
 | 09 | "Na ficha ficam os dados e o Histórico de Gastos." | cartão da ficha do fornecedor | `src/lib/i18n/messages/app/customers.ts:560` |
 | 10 | "Em Configurar Campos estão os que já vêm prontos" | botão da página de equipamentos | `src/lib/i18n/messages/app/equipment.ts:21`; `src/components/customers/EquipmentPageChrome.tsx:49-52` |
 | 11 | "Novo Equipamento" / "Criar" | botão da página e botão do formulário | `src/lib/i18n/messages/app/equipment.ts:19-21,71`; `src/components/customers/EquipmentPageChrome.tsx:53-58` |
-| 11 | "Logo abaixo [da Categoria], em Etiquetas" | ordem dos campos do formulário de equipamento | `src/components/customers/EquipmentFormDialog.tsx:381-411` (Categoria, depois Etiquetas, depois os campos configuráveis) |
+| 11 | "Logo abaixo [da Categoria], em Etiquetas" | ordem dos campos do formulário de equipamento | `src/components/customers/EquipmentFormDialog.tsx:380-420` (Categoria em 380-408, Etiquetas em 410-418, depois os campos configuráveis) |
 | 12 | "Em Gerar Etiqueta você escolhe o que sai impresso" | botão da ficha do equipamento | `src/pages/EquipmentDetail.tsx:581`; `src/lib/i18n/messages/app/equipment.ts:153` |
 | 12 | "o Baixar quê-érre salva a imagem" | botão do diálogo da etiqueta | `src/lib/i18n/messages/app/equipment.ts:325` ("Baixar QR (PNG)") |
 
