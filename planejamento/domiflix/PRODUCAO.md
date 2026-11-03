@@ -169,6 +169,13 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
   `render_chapter_vertical.py` só aceitava quadro pronto: o agente do vertical está fazendo a câmera da tela do celular
   (recorte ~2,4×, sem moldura, conteúdo até y 1420). T3 v2: falta o cap05 final. T7: renders dos capítulos na fila.
   4 agentes ativos (T0, T7, T3 v2, vertical); nada novo até um deles fechar.
+- 19:0x Kaik: "não tem como gravar ou renderizar em paralelo?". Gravação continua sozinha (2 núcleos; com render junto o
+  robô atrasa até 13 s). **Render em partes** (`render_chapter.py`, padrão 2 processos, 4 trechos com corte fora de aviso,
+  destaque, ilustração e título): ~1,4× mais rápido, 598 de 600 quadros idênticos sem perda; instalado em 22 aulas às 19:5x
+  (o T3 antigo ficou como estava). Falta o mesmo no `render_chapter_vertical.py`.
+- 19:3x Vertical: `render_chapter_vertical.py` aceita a gravação do celular (agente do vertical concluído); falta o specs
+  do celular do T0 v2 (agente do T0). Emendas da 1.38.19: T1, T4, T5, T8 com folgas ≥ 0,20 s; T9 (uma folga de 0,18 s, sem
+  corte) terminando o `proc.py`.
 
 ## Fila (31/10 12:1x; nada sai da fila sem estar entregue)
 1. **Rodando (Kaik 14:48 liberou até 4 agentes ao mesmo tempo):** dev-video no 06 e no 12 do site (com a trava
