@@ -48,7 +48,8 @@ aula em `$TUT_HOME/tnn/` (já instalada), robô em `$TUT_HOME/rec/`.
 
 ## Regras do vídeo (as do T3)
 Só o app real (nada inventado); dados fictícios (sem dado real, token ou senha na tela: senha só por `$TUT_SENHA`);
-sem preço de plano da Dominex; zoom sempre no alvo da ação (a montagem recusa capítulo com alvo fora do quadro);
+nada coberto com tarja (Kaik 03/11: dados de demonstração, preços de plano inclusive, aparecem como estão; só a fala e as
+ilustrações não citam preço de plano); zoom sempre no alvo da ação (a montagem recusa capítulo com alvo fora do quadro);
 vinheta falada por capítulo; sem contador de etapas; legendas em arquivo; vídeo completo 1080p.
 
 ## Relatório (≤ 200 palavras)

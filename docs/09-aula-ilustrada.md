@@ -9,7 +9,8 @@ aula, vinhetas de capítulo faladas, trilha, SFX, legendas, cartela). Exemplo co
 Tabela **Ilustração × Fala** (em vez de Tela × Fala): cada linha é um momento, a cena muda junto com a frase ao lado.
 Mesmas regras de fala (só possibilidades, rótulos exatos). As cenas **não imitam telas**: mostram o caminho com
 cartões, ícones e os **rótulos reais** do app ("Menu da sua conta" → "Assinatura"). Nada de valor em dinheiro que
-mude com o tempo (preço de plano). Busca ou resultado mostrado precisa ser real (rode a busca de verdade e copie).
+mude com o tempo (preço de plano) na ilustração; na gravação da tela, os valores aparecem como estão, sem tarja
+(Kaik 03/11). Busca ou resultado mostrado precisa ser real (rode a busca de verdade e copie).
 
 ## Narração
 Igual à aula com tela (`docs/03-narracao.md`). Em `narracao/tts_textos.py`, além de `CAPS` (uma linha por linha da

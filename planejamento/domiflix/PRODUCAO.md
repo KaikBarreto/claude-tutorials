@@ -82,7 +82,9 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
 - Endereço do app nos links: nome de produto mapeado para a máquina local (sem rede).
 - Datas: navegador e backend falso congelados na mesma data (`FAKE_NOW`), mês seguinte ao da gravação quando o PMOC
   precisar de visitas futuras.
-- Sem preço de plano da Dominex em nenhum vídeo.
+- **Sem tarja** (Kaik 03/11 20:16: "não precisa botar tarja preta cobrindo nada inclusive faturamento, são dados mock"; e,
+  perguntado, "Mostrar tudo"): faturamento, valores e os preços de plano do catálogo (R$ 197, R$ 547...) aparecem na tela
+  como estão. A fala e as ilustrações seguem sem citar preço de plano. Substitui o antigo "sem preço de plano em nenhum vídeo".
 - **T19 × T1 (Asaas):** o T19 parte sem a conta Asaas para mostrar a ativação, embora o cap11 do T1 mostre o cartão
   "Ativo"; a fala do T19 avisa "se na sua empresa a integração já está ativa, pode pular". Alternativa, se o Kaik
   preferir continuidade exata: regravar o cap11 do T1 com a integração desligada.
