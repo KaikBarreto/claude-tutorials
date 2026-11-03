@@ -92,7 +92,7 @@ else:
                             "-vf", "scale=out_color_matrix=bt709:out_range=tv:flags=accurate_rnd+full_chroma_int,format=yuv420p", "-c:v", "libx264",
                             "-preset", str(preset), "-crf", str(crf), "-g", "60", "-colorspace", "bt709", "-color_primaries", "bt709", "-color_trc", "bt709",
                             "-color_range", "tv", "-movflags", "+faststart", out_mp4], stdin=subprocess.PIPE)
-    rd = Reader(VIDEO, SW, SH, T0 + F0 / FPS, FPS); moving = 0
+    rd = Reader(VIDEO, SW, SH, T0, FPS, skip=F0); moving = 0
     for f in range(F0, F1):
         t = T0 + f / FPS; fr = rd.next(); img, n = C.compose(t, fr); enc.stdin.write(img.tobytes()); moving += n > 1
         if (f - F0) % 30 == 29 or f == F1 - 1:

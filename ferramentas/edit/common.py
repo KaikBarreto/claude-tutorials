@@ -49,9 +49,12 @@ def probe(path):
 class Reader:
     """leitura sequencial (streaming) de quadros RGB de um video, a partir de `start` s; um quadro por vez na memoria"""
 
-    def __init__(self, path, w, h, start=0.0, fps=30, explicit=True):
-        """explicit=True: o video e da gravacao (bt709 faixa TV); False: segue as marcas do arquivo (vinheta/cartela do kit, sem marcas = padrao do kit)"""
+    def __init__(self, path, w, h, start=0.0, fps=30, explicit=True, skip=0):
+        """explicit=True: o video e da gravacao (bt709 faixa TV); False: segue as marcas do arquivo (vinheta/cartela do kit, sem marcas = padrao do kit)
+        skip: descarta os `skip` primeiros quadros depois do fps (render em partes: decodifica desde `start`, como o render inteiro,
+        para escolher os mesmos quadros da gravacao; com -ss no meio do video a escolha podia sair 1 quadro deslocada)"""
         vf = f"fps={fps},scale=in_color_matrix=bt709:in_range=limited:out_range=full:flags=accurate_rnd+full_chroma_int+bicubic,format=rgb24" if explicit else f"fps={fps},format=rgb24"
+        if skip: vf = vf.replace(f"fps={fps},", f"fps={fps},trim=start_frame={int(skip)},setpts=PTS-STARTPTS,", 1)
         cmd = ["ffmpeg", "-v", "error"] + (["-ss", f"{start:.4f}"] if start > 0 else []) + ["-i", path, "-an", "-vf", vf, "-f", "rawvideo", "-"]
         self.w, self.h, self.n = w, h, w * h * 3; self.last = None
         self.p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, bufsize=self.n * 2)
