@@ -15,7 +15,7 @@
                  em até 2 linhas a partir de y 1210;
        cartela:  capacete 280 px em y 600, DOMINEX 580 px em y 930, logo da série 380 px em y 1100, frase de 72 px em y 1230.
      Tudo entre y 180 e 1420 e x 72 a 1008 (formato_9x16.json); texto sempre >= 44 px.
-     Parâmetros: ?title=...&sub=...&mode=outro&fps=30&marca=_marca/<hash>/marca.json&serie_logo=assets/<logo branco>.png -->
+     Parâmetros: ?title=...&sub=...&mode=outro&fps=30&marca=_marca/<hash>/marca.json&serie_logo=assets/<logo branco>.png&sem_serie=1 -->
 <style>
 @font-face{font-family:Montserrat;font-weight:500;src:url(fonts/montserrat-latin-500-normal.woff2) format('woff2')}
 @font-face{font-family:Montserrat;font-weight:600;src:url(fonts/montserrat-latin-600-normal.woff2) format('woff2')}
@@ -87,7 +87,8 @@ const FPS = +(Q.get('fps') || 30);
 const TITLE = Q.get('title') || 'Título da aula';
 const SUB = Q.get('sub') || '';
 const OUTRO = Q.get('mode') === 'outro';
-const SERIE_LOGO = Q.get('serie_logo') || '';   // logo da série todo branco (ex.: DomiFlix, capacete e texto)
+const SEM_SERIE = Q.get('sem_serie') === '1';   // sem logo nem rótulo da série: capacete + DOMINEX + fio + título
+const SERIE_LOGO = SEM_SERIE ? '' : (Q.get('serie_logo') || '');   // logo da série todo branco (ex.: DomiFlix, capacete e texto)
 
 const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
 const seg = (t, [a, b]) => clamp((t - a) / (b - a));
@@ -110,6 +111,7 @@ function aplicarMarca(M) {
   c.fundo.forEach((v, i) => r.setProperty('--bg' + i, v));
   $('ttl').innerHTML = esc(TITLE) + (SUB ? `<span class="sub">${esc(SUB)}</span>` : '');
   if (SERIE_LOGO) { $('lbl').style.display = 'none'; $('sl').style.display = 'block'; }
+  else if (SEM_SERIE) { $('lbl').style.display = 'none'; }
   else if (M.serie) $('serie').textContent = M.serie.toUpperCase(); else $('lbl').style.display = 'none';
 }
 
@@ -158,13 +160,18 @@ function capacete() {
   const WORD = {w: G.wordW, h: G.wordW * 324 / 1519};                    // o mesmo recorte do DOMINEX do 16:9 (LOGO.word: 1519x324)
 
   // logo da série (ou rótulo) + fio + título, empilhados a partir de G.logoTop; o título começa em G.ttlTop
-  $('title').style.top = G.logoTop + 'px';
   $('sl').style.width = G.logoW + 'px';
   $('ttl').style.fontSize = ajustarTitulo(G.ttlPx) + 'px';
-  const primeiro = SERIE_LOGO ? $('sl') : $('lbl');
   const rule = $('rule');
-  rule.style.marginTop = G.ruleAbove + 'px';
-  rule.style.marginBottom = Math.max(8, G.ttlTop - G.logoTop - primeiro.getBoundingClientRect().height - G.ruleAbove - 3) + 'px';
+  if (SEM_SERIE) {   // sem o logo da série: fio e título sobem logo abaixo do DOMINEX (sem buraco)
+    $('title').style.top = (G.wordTop + WORD.h + 62) + 'px';
+    rule.style.marginTop = '0px'; rule.style.marginBottom = '40px';
+  } else {
+    $('title').style.top = G.logoTop + 'px';
+    const primeiro = SERIE_LOGO ? $('sl') : $('lbl');
+    rule.style.marginTop = G.ruleAbove + 'px';
+    rule.style.marginBottom = Math.max(8, G.ttlTop - G.logoTop - primeiro.getBoundingClientRect().height - G.ruleAbove - 3) + 'px';
+  }
 
   function piece(id, t, span, from) {
     const p = seg(t, span), e = E.outQuint(p);

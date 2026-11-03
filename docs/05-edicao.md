@@ -89,6 +89,8 @@ introdução obrigatória). Por isso o vertical tem de ter **a mesma linha do te
   `render_chapter.py`), `finish.py --formato 9x16` (ou `"formato": "9x16"` na aula; mesma mixagem), `entregar.py --unico` (720x1280).
 - Geometria única em `formato_9x16.json`: painel 1008x1700 em (36,110); conteúdo em x 72-1008, **y 180-1420**; texto >= 44 px;
   até 2 linhas. **Faixa da legenda do player: y 1420-1600** (18% do pé no celular; 15% no computador, y 800-930 do 16:9): nada essencial.
+- Vinheta e cartela verticais não levam o logo da DomiFlix (pedido do Kaik): capacete + DOMINEX + título; `SERIE_LOGO=assets/<png>` o devolve.
+  No 16:9, `"sem_domiflix": true` na aula (ou `brand_clips.sh --sem-domiflix`) tira o "▶ DOMIFLIX"; o padrão continua com ele.
 - Legenda única com linhas curtas, que servem às duas proporções: `legendas_aula.py ... --linha 32`; gere uma vez e use o mesmo
   arquivo nas duas entregas. Nomes: `<Aula>.mp4` e `<Aula> (vertical).mp4`, cada um com `.srt` e `.vtt`.
 - Teste: `flock $TUT_HOME/.heavy.lock nice -n 10 bash testes/vertical_9x16.sh`. Ver também `docs/09-aula-ilustrada.md` (cenas).

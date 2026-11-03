@@ -151,6 +151,12 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
   mim: "á-pê-í Pública" (T1) e "Custo por quilômetro mais bê-dê-i" (T9). `trocas_1.38.19.json` em `tN/narracao/`.
 - 17:17 **Voz das falas da 1.38.19 gerada** (nós `T01/T04/T05/T08/T09 emendas 1.38.19`, 3.180 créditos; ids em
   `scratchpad/emendas_1_38_19_nos.json`). Saldo ElevenLabs estimado ~3,2 mil. Entra no mesmo zip 6 do Kaik.
+- 17:23 Kaik: "nessas vinhetas de início e fim não precisa ter o logo da domiflix E o logo da dominex, só o da dominex tá
+  bom". Feito no T0 v2: vertical sem o logo DomiFlix; no 16:9, opção `brand_clips.sh --sem-domiflix` (ou `"sem_domiflix":
+  true` no JSON da aula), padrão desligado (as outras aulas seguem com o "▶ DOMIFLIX" em texto; identidade IDÊNTICA).
+  Prévia refeita enviada.
+- 17:33 Kaik mandou só os 11 MP3 novos (a exportação inteira do fluxo vinha de cópia antiga, idêntica à de 31/10).
+  Emendas de T1, T4, T5, T8, T9 rodando (`scratchpad/emendas_1_38_19.sh`); T0 v2: agente processando em `t0v2/narracao`.
 - Agentes: levantamento do impacto da 1.38.19 (`IMPACTO_1.38.19.md`), telas e ilustrações do T0 v2 (porta 54328),
   pipeline vertical (retomado). As gravações (T2, T3 v2, T7, T8, T9, T12, T18) esperam o levantamento.
 

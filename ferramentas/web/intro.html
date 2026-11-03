@@ -111,7 +111,7 @@ function aplicarMarca(M) {
   r.setProperty('--light', c.claro); r.setProperty('--light-rgb', c.claro_rgb);
   c.fundo.forEach((v, i) => r.setProperty('--bg' + i, v));
   $('ttl').innerHTML = TITLE.replace(/&/g, '&amp;').replace(/</g, '&lt;') + (SUB ? `<span class="sub">${SUB}</span>` : '');
-  if (M.serie) $('serie').textContent = M.serie.toUpperCase(); else $('lbl').style.display = 'none';
+  if (M.serie && Q.get('sem_serie') !== '1') $('serie').textContent = M.serie.toUpperCase(); else $('lbl').style.display = 'none';  // sem_serie=1: sem o rótulo "▶ SÉRIE" (opção; padrão: com)
 }
 
 async function carregarFontes(M, base) {

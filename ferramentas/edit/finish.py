@@ -5,6 +5,7 @@ uso: python3 <tutorial>/edit/finish.py <aula.json> [--render] [--skip-brand] [--
               "mix": {"music_db": -7, "music_duck_db": -8, "music_seed": 3}, "sfx": true,
               "formato": "16x9", "card_no_primeiro": false}      # formato: 9x16 = vertical 1080x1920 (docs/05-edicao.md, "Vertical 9:16")
 Reaproveita do kit sem alterar: kit/brand_clips.sh (vinheta/cartela) e kit/mix.py (voz, trilha, ducking, SFX discretos).
+"sem_domiflix": true no JSON da aula tira o \"▶ DOMIFLIX\" da vinheta e da cartela 16:9 (padrao: com; o vertical nunca o tem).
 Com --formato 9x16 (ou "formato" no JSON) so troca as pecas de imagem: kit/brand_clips_vertical.sh, vinheta_cap_vertical.py e
 render_chapter_vertical.py; a voz, a trilha, o SFX e o mix.py sao os mesmos (mesmo som do 16:9). Sem a opcao, nada muda.
 Monta um "projeto do kit" em <out>/proj (audio48k.wav = narracoes em sequencia, edl.json, render.json) e o mix.py roda em cima dele.
@@ -132,7 +133,7 @@ if "--skip-brand" not in argv or not os.path.exists(os.path.join(BUILD, "intro_v
     srv = subprocess.Popen([sys.executable, "-m", "http.server", str(port), "--bind", "127.0.0.1"], cwd=os.path.join(DOMI, "web"),
                            stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL); time.sleep(1.2)
     try:
-        run(["bash", os.path.join(KIT, "brand_clips_vertical.sh" if VERT else "brand_clips.sh"), PROJ, L.get("title", "Aula"), L.get("outro_line", "")], env={**os.environ, "PORT": str(port)})
+        run(["bash", os.path.join(KIT, "brand_clips_vertical.sh" if VERT else "brand_clips.sh")] + (["--sem-domiflix"] if L.get("sem_domiflix") and not VERT else []) + [PROJ, L.get("title", "Aula"), L.get("outro_line", "")], env={**os.environ, "PORT": str(port)})
     finally:
         srv.terminate(); srv.wait()
 
