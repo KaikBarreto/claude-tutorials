@@ -157,6 +157,10 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
   Prévia refeita enviada.
 - 17:33 Kaik mandou só os 11 MP3 novos (a exportação inteira do fluxo vinha de cópia antiga, idêntica à de 31/10).
   Emendas de T1, T4, T5, T8, T9 rodando (`scratchpad/emendas_1_38_19.sh`); T0 v2: agente processando em `t0v2/narracao`.
+- 18:2x Emendas aplicadas; 5 falas apertadas (T1 cap11, T4 cap01, T5 cap02, T8 cap04 cortada, T9 cap09 cortada) refeitas
+  com `"empurra": true` (2ª passada, `scratchpad/emendas_1_38_19_b.sh`). T0 v2: voz processada (~4:10), 31 de 36 telas
+  gravadas (computador e celular; R04/R05/R16–R18 em conta contratada), 15 ilustrações nas duas proporções; faltam R16–R18
+  com tarja, "20% de desconto" no R17 e histórico de pagamentos no R16, render e montagem (prévia do cap01 antes).
 - Agentes: levantamento do impacto da 1.38.19 (`IMPACTO_1.38.19.md`), telas e ilustrações do T0 v2 (porta 54328),
   pipeline vertical (retomado). As gravações (T2, T3 v2, T7, T8, T9, T12, T18) esperam o levantamento.
 
