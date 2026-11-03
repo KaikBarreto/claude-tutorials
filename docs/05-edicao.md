@@ -85,8 +85,12 @@ introdução obrigatória). Por isso o vertical tem de ter **a mesma linha do te
 áudio) e **uma única legenda por aula** (SRT/VTT iguais nas duas versões). É opção nova; o 16:9 não muda (`identidade_domiflix.sh`).
 - Peças: `fundo_escuro_vertical.py` (palco = o do 16:9 girado 90°), `web/intro_vertical.html` + `kit/brand_clips_vertical.sh`
   (vinheta e cartela, logo DomiFlix todo branco, mesmo som e mesma duração), `vinheta_cap_vertical.py` (vinheta de capítulo),
-  `render_chapter_vertical.py` (adapta um vídeo 1080x1920 pronto, sem recodificar; telas do celular dependem do recorte do
-  `render_chapter.py`), `finish.py --formato 9x16` (ou `"formato": "9x16"` na aula; mesma mixagem), `entregar.py --unico` (720x1280).
+  `render_chapter_vertical.py` (cena ilustrada 1080x1920 pronta, sem recodificar; ou tela real do celular, abaixo), `finish.py --formato 9x16` (ou `"formato": "9x16"` na aula; mesma mixagem), `entregar.py --unico` (720x1280).
+- **Tela real do celular** (gravação 390x844, `"telemetry"` no JSON): `render_chapter_vertical.py` recorta a área que a fala cita e amplia
+  2,4x (390 -> 936 px) na janela `tela_real` do painel (x 72, y 240, 936x1160, acima da faixa da legenda), sem moldura de aparelho;
+  câmera v2 (alvos do actions/telemetria; só desliza, e fica no alvo entre uma ação e outra), anel do toque, destaques e avisos como
+  no 16:9. Usa `camera.py`/`cursor.py`/`overlay.py` por cópia privada (`celular_vertical.py`): os do 16:9 não mudam. Mesmo JSON do
+  capítulo de celular do 16:9, mais `"camera_9x16"` e `"scale9"` (opcionais). Alvo fora da janela = erro (`--aceitar-camera`).
 - Geometria única em `formato_9x16.json`: painel 1008x1700 em (36,110); conteúdo em x 72-1008, **y 180-1420**; texto >= 44 px;
   até 2 linhas. **Faixa da legenda do player: y 1420-1600** (18% do pé no celular; 15% no computador, y 800-930 do 16:9): nada essencial.
 - Vinheta e cartela verticais não levam o logo da DomiFlix (pedido do Kaik): capacete + DOMINEX + título; `SERIE_LOGO=assets/<png>` o devolve.

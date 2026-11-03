@@ -87,7 +87,9 @@ class CapituloCelular:
         zooms = []
         for z in ch.get("zooms", []):
             z = dict(z); z["scale"] = float(z.pop("scale9", 1.0)); zooms.append(z)  # o escala do 16:9 não vale aqui
-        cfg = {**ch.get("camera", {}), "depth": 1.0, "min_zoom": 1.0, **ch.get("camera_9x16", {})}
+        # o vertical só desliza (viagens de ~700 px entre o topo e o pé da tela): chega antes (lead) e com a mola mais rápida que a do 16:9
+        cfg = {**ch.get("camera", {}), "depth": 1.0, "min_zoom": 1.0, "lead": 0.8, "t_out": 0.75, "t_slide": 0.75, "t_move": 0.6,
+               **ch.get("camera_9x16", {})}
         self.cam = cam_m.Camera(self.tele, g, self.cur, self.T, dur, cfg, zooms)
         self._segurar(dur)
         self.problemas = list(getattr(self.cam, "problemas", [])) + self._fora_da_janela()
