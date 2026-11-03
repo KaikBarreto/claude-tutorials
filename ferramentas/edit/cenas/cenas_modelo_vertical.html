@@ -4,7 +4,7 @@
      Versão vertical do cenas_modelo.html: a página é o QUADRO FINAL (palco escuro vertical + painel claro + cena), renderizado
      quadro a quadro por render_cenas_vertical.cjs (window.setup(dados) + window.R(t)), sem recompor depois.
      Geometria (formato_9x16.json, via window.FORMATO): painel de 1008x1700 em (36, 110) com cantos de 16 px; as cenas são
-     desenhadas na ÁREA SEGURA, a caixa de 936x1560 em #st (x 0 a 936, y 0 a 1560; no quadro: x 72 a 1008, y 180 a 1740).
+     desenhadas na ÁREA SEGURA, a caixa de 936x1240 em #st (x 0 a 936, y 0 a 1240; no quadro: x 72 a 1008, y 180 a 1420).
      Regras do pedido do Kaik (31/10) que o render_cenas_vertical.cjs --auditar confere: nada fora da área segura; texto de 44 px
      ou mais (≈ 16 px num celular de 390 px); no máximo 2 linhas por bloco; nada essencial na faixa da legenda do player (no
      celular a 18% do pé: y 1240 a 1420 da área segura); um assunto por vez, preso à palavra da fala; grupos e comparações
@@ -49,9 +49,9 @@ mark{background:#FFF0A8;color:inherit;padding:0 4px;border-radius:4px}
 <body><div id="palco"></div><div id="pn"><div id="st"></div></div>
 <script>
 // ------------------------------------------------------------------ geometria (formato_9x16.json) e utilidades
-const F=window.FORMATO||{segura:{x0:72,y0:180,x1:1008,y1:1740},legenda_faixa:{y0:1420,y1:1600}};
-const SEG={w:F.segura.x1-F.segura.x0,h:F.segura.y1-F.segura.y0};                  // 936 x 1560: o desenho vive aqui
-const FAIXA={y0:F.legenda_faixa.y0-F.segura.y0,y1:F.legenda_faixa.y1-F.segura.y0}; // 1240 a 1420 na área segura
+const F=window.FORMATO||{segura:{x0:72,y0:180,x1:1008,y1:1420},legenda_faixa:{y0:1420,y1:1600}};
+const SEG={w:F.segura.x1-F.segura.x0,h:F.segura.y1-F.segura.y0};                  // 936 x 1240: o desenho vive aqui (acima da faixa da legenda)
+const FAIXA={y0:F.legenda_faixa.y0-F.segura.y0,y1:F.legenda_faixa.y1-F.segura.y0}; // 1240 a 1420: a faixa começa onde a área segura termina
 const cl=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
 const eo=x=>1-Math.pow(1-cl(x),3);
 const eio=x=>{x=cl(x);return x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2};

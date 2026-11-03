@@ -47,3 +47,13 @@ Depois, igual à aula com tela: `render_chapter.py` de cada capítulo → `finis
 (exemplo encadeado: `exemplos/dominex-t0/edicao/montar_t0.sh`). Os capítulos saem com câmera sem zoom automático e
 cursor oculto. Capítulo seguido de outro **sem** vinheta: a cena some no fim (`ST.style.opacity`) depois da última
 palavra e a seguinte começa do branco.
+
+## Vertical 9:16
+Molde `cenas/cenas_modelo_vertical.html` (copie para `<tutorial>/edit/cenas/cenas_vertical.html`): 1080x1920, cenas desenhadas na
+área segura (x 72-1008, y 180-1420; a faixa da legenda do player, y 1420-1600, fica livre), um assunto por vez preso à palavra,
+texto >= 44 px, até 2 linhas, telas reais = captura do celular (390x844) recortada. Mesmas utilidades do 16:9 (`W(linha,'palavra')`).
+- `node render_cenas_vertical.cjs <cap> <capNN.json> <saida.mp4> [--cauda 1.2] [--de S --ate S]` (vídeo = quadro final, com palco e painel);
+  `--stills t1,t2 [--guias]` mostra a área segura (magenta) e a faixa (laranja); `--auditar` confere texto, caixas e faixa (exit 2 se houver erro).
+- `bash render_todos_vertical.sh [NN ...]` (uma trava por capítulo); `python3 capitulos_ilustrados.py "<Título>" --formato 9x16`
+  gera `capNN.9x16.chapter.json` e `<AULA>.9x16.aula.json` a partir da MESMA narração do 16:9, então os tempos saem iguais.
+- Montagem: `finish.py caps/<AULA>.9x16.aula.json`; legenda única: `legendas_aula.py ... --linha 32`. Exemplo: `previa_vertical.sh` do T0 v2.

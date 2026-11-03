@@ -79,6 +79,20 @@ ilustração antes de renderizar o capítulo (no T3 o nome do aparelho passou 20
 - Saídas: `aula_final.mp4`, `capitulos.json` (início de cada item no conteúdo, cortes, título falado).
 Tempo: ~40 quadros/s na junção (aula de 12 min ≈ 10 min) + vinheta e mix.
 
+### Vertical 9:16 (versão para celular)
+A 9:16 é a "Versão para celular" da MESMA aula: a DomiFlix troca sozinha o vídeo em tela menor que 1024 px (inclusive na
+introdução obrigatória). Por isso o vertical tem de ter **a mesma linha do tempo** do 16:9 (mesmas vinhetas, cortes, tempos e
+áudio) e **uma única legenda por aula** (SRT/VTT iguais nas duas versões). É opção nova; o 16:9 não muda (`identidade_domiflix.sh`).
+- Peças: `fundo_escuro_vertical.py` (palco = o do 16:9 girado 90°), `web/intro_vertical.html` + `kit/brand_clips_vertical.sh`
+  (vinheta e cartela, logo DomiFlix todo branco, mesmo som e mesma duração), `vinheta_cap_vertical.py` (vinheta de capítulo),
+  `render_chapter_vertical.py` (adapta um vídeo 1080x1920 pronto, sem recodificar; telas do celular dependem do recorte do
+  `render_chapter.py`), `finish.py --formato 9x16` (ou `"formato": "9x16"` na aula; mesma mixagem), `entregar.py --unico` (720x1280).
+- Geometria única em `formato_9x16.json`: painel 1008x1700 em (36,110); conteúdo em x 72-1008, **y 180-1420**; texto >= 44 px;
+  até 2 linhas. **Faixa da legenda do player: y 1420-1600** (18% do pé no celular; 15% no computador, y 800-930 do 16:9): nada essencial.
+- Legenda única com linhas curtas, que servem às duas proporções: `legendas_aula.py ... --linha 32`; gere uma vez e use o mesmo
+  arquivo nas duas entregas. Nomes: `<Aula>.mp4` e `<Aula> (vertical).mp4`, cada um com `.srt` e `.vtt`.
+- Teste: `flock $TUT_HOME/.heavy.lock nice -n 10 bash testes/vertical_9x16.sh`. Ver também `docs/09-aula-ilustrada.md` (cenas).
+
 ## Corrigir uma aula já entregue sem refazer tudo: `remendar_aula.py caps/<AULA>.aula.json`
 Depois da entrega a limpeza apaga as gravações e os renders dos capítulos; ficam só `out/<AULA>/capitulos.json`,
 `video_sem_audio.mp4` e `proj/{audio48k.wav, edl.json, render.json, build/intro_v.mp4, build/outro_v.mp4}`. Rodar o

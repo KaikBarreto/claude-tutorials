@@ -8,7 +8,7 @@
 //      node render_cenas_vertical.cjs <cap> <capNN.json> <pasta> --stills 1.5,6,12.3 [--guias]      (PNGs; --guias desenha a
 //        área segura em magenta e a faixa da legenda do player em laranja)
 //      node render_cenas_vertical.cjs <cap> <capNN.json> - --auditar [--passo 0.25] [--de S] [--ate S]
-//        confere de 0,25 em 0,25 s tudo o que está visível: texto >= 44 px, caixas dentro da área segura (x 72-1008, y 180-1740),
+//        confere de 0,25 em 0,25 s tudo o que está visível: texto >= 44 px, caixas dentro da área segura (x 72-1008, y 180-1420),
 //        no máximo 2 linhas, nada de texto na faixa da legenda (y 1420-1600). Sai com código 2 se houver ERRO (AVISO não reprova).
 //        Exceções deliberadas: data-mini (texto menor), data-linhas="3" (até 3 linhas) no elemento ou num ancestral.
 // A página expõe window.setup(dados) e window.R(t); recebe window.FORMATO (formato_9x16.json), window.PALCO (o palco 9x16),
