@@ -18,7 +18,7 @@ F = montagem final + legendas + conferência · ok = no ZIP
 |---|---|---|---|---|---|---|---|---|---|
 | T0 | Boas-vindas à Dominex (ilustrada) | ok | ok | ok | ok | — | — | ok | ok (30/10 22:51, 3:25) |
 | T1 | Configurações e identidade da empresa | ok | ok | ok | ok (31/10 00:29) | ok | ok | ok | ok (31/10 05:20, 11:58) · **v2 18:33** (pronúncia + logo com texto branco; 12:05; 1.38.6) |
-| T2 | Usuários, cargos e permissões | ok | ok | ok (V3 18:3x) | ok (zip 5, 19:31) | agente D (54324), 1.38.9, desde 20:3x | | | |
+| T2 | Usuários, cargos e permissões | ok | ok | ok (V3 18:3x) | ok (zip 5, 19:31) | agente novo 03/11 22:4x, 1.38.19 (54324): preparo e ensaio; grava depois do T0 v2 | | | |
 | T3 | Clientes, Fornecedores e Equipamentos | ok | ok | ok | ok | ok | ok | ok | ok (30/10) |
 | T4 | Serviços, tarefas e checklists | ok | ok | ok | ok (31/10 00:29) | ok | ok | ok | ok (31/10 10:46, 10:27) · **v2 18:37** (pronúncia; só o áudio) |
 | T5 | Ordens de Serviço, Agenda, Equipes e Mapa ao Vivo | ok | ok | ok | ok (31/10 00:29) | ok | ok | ok | ok (31/10 18:2x, 13:49; 1.38.6) |
@@ -197,6 +197,10 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
   idênticos ao código antigo). T3 v2: 14 capítulos renderizados, `aula_final.mp4` pronto (22:22), revisão minha antes da
   entrega. T18: ensaio rápido dos 16 capítulos ok (cap07 e cap14 corrigidos no `gerar.py`: botão por substring e galão por
   `role=img`); segue para a gravação. T0 v2: regravando cap02-p, cap03 e cap06-p sem tarja.
+- 22:38 Kaik: "avance". T3 v2 revisado e aprovado (folha de quadros: vinheta, cartões de capítulo, telas sem tarja, cartela);
+  o agente estava parado 16 min num laço `pgrep -f` que achava a si mesmo (lição em `docs/08`), encerrado pelo PID; segue
+  legendas e entrega. **T2 despachado** (porta 54324, 1.38.19): fase 1 = preparo e ensaio rápido; gravação real só depois
+  do T0 v2, que tem prioridade na trava.
 
 ## Fila (31/10 12:1x; nada sai da fila sem estar entregue)
 1. **Rodando (Kaik 14:48 liberou até 4 agentes ao mesmo tempo):** dev-video no 06 e no 12 do site (com a trava

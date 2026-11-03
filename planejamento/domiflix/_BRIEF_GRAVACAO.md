@@ -18,6 +18,8 @@ aula em `$TUT_HOME/tnn/` (já instalada), robô em `$TUT_HOME/rec/`.
 - Gravação e render só sob `flock $TUT_HOME/.heavy.lock` (um de cada vez na máquina), com `nice`.
   **Uma trava por capítulo** (cada gravação, ensaio ou render pega e solta a trava): nunca um lote inteiro sob um flock
   só. Em 31/10 um lote de 1 h do T3 v2 parou a fila de 4 agentes (T7, voz nova, storyboard do T0).
+- Esperar uma etapa: rode o próprio comando em segundo plano e aguarde o aviso de término, sem laço de consulta. Nunca
+  `pgrep -f` com o padrão dentro do próprio laço: ele acha o próprio laço e não termina (T3 v2 parado 16 min, 03/11).
 - **Link ou QR escrito na tela** (portal, proposta, ponto, cobrança): grave com `APP_ORIGIN=https://www.dominex.app` para o
   link sair com o domínio real, e não `http://127.0.0.1:8080` ([docs/04-gravacao.md](../../docs/04-gravacao.md), "Endereço do
   produto na tela"). Desligada por padrão.
