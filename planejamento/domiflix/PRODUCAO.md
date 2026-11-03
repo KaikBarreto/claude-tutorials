@@ -193,6 +193,10 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
 - 20:27–21:15 **trava presa por um teste meu** (flock dentro de flock; lição em `docs/08`): máquina parada 47 min. O agente do
   T3 v2 achou; encerrado pelo PID. `identidade_domiflix.sh` IDÊNTICO com o `overlay.py`/`montar_cap.py` do T7 na skill.
   T3 v2: 14 capítulos gravados na 1.38.19 e auditados; renders, finish e entrega em andamento. T7 conferido na folha de quadros.
+- 22:2x `recorte_celular.sh` OK com as ferramentas do T7 (celular: pior erro de cobertura 0,004; 16:9: 50 de 50 quadros
+  idênticos ao código antigo). T3 v2: 14 capítulos renderizados, `aula_final.mp4` pronto (22:22), revisão minha antes da
+  entrega. T18: ensaio rápido dos 16 capítulos ok (cap07 e cap14 corrigidos no `gerar.py`: botão por substring e galão por
+  `role=img`); segue para a gravação. T0 v2: regravando cap02-p, cap03 e cap06-p sem tarja.
 
 ## Fila (31/10 12:1x; nada sai da fila sem estar entregue)
 1. **Rodando (Kaik 14:48 liberou até 4 agentes ao mesmo tempo):** dev-video no 06 e no 12 do site (com a trava
