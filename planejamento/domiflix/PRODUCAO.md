@@ -22,8 +22,8 @@ F = montagem final + legendas + conferência · ok = no ZIP
 | T3 | Clientes, Fornecedores e Equipamentos | ok | ok | ok | ok | ok | ok | ok | ok (30/10) |
 | T4 | Serviços, tarefas e checklists | ok | ok | ok | ok (31/10 00:29) | ok | ok | ok | ok (31/10 10:46, 10:27) · **v2 18:37** (pronúncia; só o áudio) |
 | T5 | Ordens de Serviço, Agenda, Equipes e Mapa ao Vivo | ok | ok | ok | ok (31/10 00:29) | ok | ok | ok | ok (31/10 18:2x, 13:49; 1.38.6) |
-| T7 | O técnico em campo (celular) | ok | ok | ok | ok (31/10 00:29; emenda do cap05 com folga 0,17 s) | agente A, 1.38.9 (porta 54321) | gravando | | |
-| T18 | Área do Técnico: Refrigeração e Climatização | ok | ok | ok | ok (31/10 11:30) | agente B, 1.38.9 (porta 54322), desde 19:0x | | | |
+| T7 | O técnico em campo (celular) | ok | ok | ok | ok (31/10 00:29; emenda do cap05 com folga 0,17 s) | ok (54321) | ok (1.38.19) | ok | ok (03/11 20:3x, 12:26; 1.38.19) |
+| T18 | Área do Técnico: Refrigeração e Climatização | ok | ok | ok | ok (31/10 11:30) | agente novo 03/11 20:3x, 1.38.19 (porta 54322) | | | |
 | T8 | Estoque, compras e inventário | ok | ok | ok (V3) | ok (zip 5, 19:50) | agente E (54325), 1.38.9, desde 20:3x | | | |
 | T9 | Orçamentos, Precificação e Proposta | ok | ok | ok (V3) | ok (zip 5, 20:11) | agente F (54326), 1.38.9, desde 20:3x | | | |
 | T10 | CRM: funil, leads e captação | ok | ok | | | | | | |
@@ -183,6 +183,13 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
   (uma por aula) ficam? Celular: regravando o cap01-p sem os ~6 s de hover (manter o anel nos toques "Ver trilha" e "Menu").
   Emendas: o `tts_textos.py` da área de trabalho de T1/T4/T5/T8/T9 era o anterior à 1.38.19 (legenda e linhas do
   `capNN.json` sairiam com o texto antigo); trocado pelo do planejamento e `proc.py` refeito (`scratchpad/emendas_texto.sh`).
+- 20:16 Kaik sobre a prévia: "ficou ótimo mas não precisa botar tarja preta cobrindo nada inclusive faturamento, são dados
+  mock"; perguntado sobre os preços de plano (são os do catálogo real), "Mostrar tudo". Regra nova em "Alinhamentos".
+- 20:3x **T7 entregue** (`Domiflix T7 - O técnico em campo`, 12:26, -15,8 LUFS, 14 capítulos, câmera 0 problema; handoffs em
+  `rec/t7/HANDOFFS.md`; para o T8: Fita isolante 28 e consumo de 2 rolos; P23 não conferido na 1.38.19). `overlay.py` (avisos
+  ao lado do celular) e `montar_cap.py` (celular, `repouso`, `TUT_REC`) do T7 levados para a skill. Emendas da 1.38.19 com o
+  texto novo: semelhança 0,80 a 1,00 (o resto é número lido pelo ASR). Agentes agora: T3 v2, T0 v2 (novo, contexto do
+  anterior acabou; segue cap01 sem tarja, cap02–06, montagem e entrega) e T18 (novo).
 
 ## Fila (31/10 12:1x; nada sai da fila sem estar entregue)
 1. **Rodando (Kaik 14:48 liberou até 4 agentes ao mesmo tempo):** dev-video no 06 e no 12 do site (com a trava
