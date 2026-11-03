@@ -3,6 +3,12 @@
 ## Por capítulo: `render_chapter.py`
 Entrada: JSON do capítulo (gerado pelo `montar_cap.py`) com o MP4 2560×1600 do robô, a telemetria, a narração e as
 camadas. Saída: MP4 1920×1080 30 fps (bt709, faixa TV) + WAV da narração alinhado + `.edit.json` (sidecar).
+- **Em partes** (padrão desde 03/11; `--partes 1` ou `TUT_PARTES=1` volta ao processo único): o desenho do quadro usa um
+  núcleo só e deixava 43% da máquina de 2 núcleos parada. O capítulo vira 4 trechos, renderizados 2 de cada vez sob a mesma
+  trava, e o `concat -c copy` junta tudo: ~1,4× mais rápido (20 s de vídeo: 136 → 97 s), 598 de 600 quadros idênticos ao
+  render inteiro (os outros 2 a 81,5 dB). Cada trecho decodifica a gravação desde o início do capítulo e descarta os quadros
+  anteriores, para usar os mesmos quadros da gravação. Os cortes só caem em quadros sem aviso, destaque, ilustração ou
+  título, porque essas camadas guardam estado do 1º quadro em que aparecem. Trecho < 10 s vai inteiro.
 - **Câmera v2** (estilo Recordly/Screen Studio; refeita em 30/10 depois do "zoom no canto" e dos "zooms perdidos"):
   - Mira o **alvo da ação**, não o mouse: clique do mouse (ponto/campo), clique pelo teclado (Enter/Espaço num botão,
     telemetria `kb`) e cada tecla digitada (retângulo do campo com o foco). Eventos a menos de 2,5 s viram um grupo.
