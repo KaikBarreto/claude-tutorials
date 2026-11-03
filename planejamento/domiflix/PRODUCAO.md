@@ -163,6 +163,12 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
   com tarja, "20% de desconto" no R17 e histórico de pagamentos no R16, render e montagem (prévia do cap01 antes).
 - Agentes: levantamento do impacto da 1.38.19 (`IMPACTO_1.38.19.md`), telas e ilustrações do T0 v2 (porta 54328),
   pipeline vertical (retomado). As gravações (T2, T3 v2, T7, T8, T9, T12, T18) esperam o levantamento.
+- 18:5x 2ª passada das emendas: T1 cap11 com folga 0,20/0,21 s (empurrada); T4, T5, T8, T9 na fila da trava. T0 v2: 20%
+  de desconto só com ciclo anual (`Billing.tsx:333`, semente `conta-anual` no R17); R16 com 3 pagamentos; C5 confirmado
+  (404). **cap01 16:9 gravado com 64,8 s para 44,1 s de voz** (aula carregando devagar): regravando sem a espera. O
+  `render_chapter_vertical.py` só aceitava quadro pronto: o agente do vertical está fazendo a câmera da tela do celular
+  (recorte ~2,4×, sem moldura, conteúdo até y 1420). T3 v2: falta o cap05 final. T7: renders dos capítulos na fila.
+  4 agentes ativos (T0, T7, T3 v2, vertical); nada novo até um deles fechar.
 
 ## Fila (31/10 12:1x; nada sai da fila sem estar entregue)
 1. **Rodando (Kaik 14:48 liberou até 4 agentes ao mesmo tempo):** dev-video no 06 e no 12 do site (com a trava
