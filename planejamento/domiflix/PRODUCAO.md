@@ -139,6 +139,12 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
   T8, T5, T4, T1 e roteiros de T11/T13/T15 (agente), voz delas num lote; (4) gravações na 1.38.19, uma aula por vez na
   ordem T7 → T3 v2 (toda na 1.38.19) → T18 → T2 → T12 → T8 → T9; (5) remendos das entregues (T5 capítulos da OS; T4 e T1
   trechos), com `remendar_aula.py`.
+- 17:3x **Backend falso na 1.38.19** (agente): schema regerado (258 tabelas, 381 RPCs; o anterior em `schema.json.1.38.9`),
+  BDI (`quotes.use_bdi`, padrões de OS e itens), `sync_service_order_budget` com `p_pricing`, `generate_service_order_from_quote`
+  copiando o BDI, NPS e avisos vazios; semente base `seeds/gen-03-domiflix.json` (agente do T0) com a introdução concluída
+  para os 7 usuários base. Fumaça ok (Dashboard, Clientes, Nova OS, Novo Orçamento, Estoque, Compras, Financeiro).
+  Pendente: sincronizar com a cópia da skill (`ferramentas/rec/fakebase`) no fim.
+- 17:3x T7 retomado (mesmo agente): regravar tudo na 1.38.19 e entregar.
 - Agentes: levantamento do impacto da 1.38.19 (`IMPACTO_1.38.19.md`), telas e ilustrações do T0 v2 (porta 54328),
   pipeline vertical (retomado). As gravações (T2, T3 v2, T7, T8, T9, T12, T18) esperam o levantamento.
 
