@@ -110,6 +110,19 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
 - **T19:** o handler `tenant-asaas-card-fees` (criado no T1) responde sem a franquia do Pix (`freeCount 0`): estender por
   semente ou parâmetro, sem reescrever o do T1.
 
+## Retomada (03/11 16:3x)
+- 31/10 21:0x: o limite semanal do Kaik acabou e os US$ 90 de créditos foram gastos em < 20 min (9 agentes em paralelo +
+  a conversa principal). Tudo parou; a máquina reiniciou e os arquivos ficaram. **Regra nova: no máximo 3 agentes**, briefs
+  curtos, nada de consulta em laço (a máquina só grava/renderiza um capítulo por vez; agente a mais só gasta).
+- Kaik 03/11 16:33: continuar; revisitar aulas cujas telas mudaram ("principalmente a partir de orçamento, precificação,
+  custos dos serviços"); fazer o T0 obrigatório (vertical também). **App de gravação na 1.38.19** (main `24f499ba`,
+  `src-1.38.19`; dist da 1.38.9 em `rec/.runtime/dist-1.38.9.bak`). Toda gravação nova é na 1.38.19.
+- Decisões do T0 v2 (Kaik 16:4x): D8 frases dele letra por letra (imagem destaca o rótulo real); D7 sem aviso para
+  técnicos; D3 conta **em teste** ("Escolher meu plano", sem preço); D4 sem treinamento ao vivo; D1, D2, D5, D6 como
+  propostos. Voz (~2,4 mil) depois da conferência das telas na 1.38.19.
+- Agentes: levantamento do impacto da 1.38.19 (`IMPACTO_1.38.19.md`), telas e ilustrações do T0 v2 (porta 54328),
+  pipeline vertical (retomado). As gravações (T2, T3 v2, T7, T8, T9, T12, T18) esperam o levantamento.
+
 ## Fila (31/10 12:1x; nada sai da fila sem estar entregue)
 1. **Rodando (Kaik 14:48 liberou até 4 agentes ao mesmo tempo):** dev-video no 06 e no 12 do site (com a trava
    pesada só para ele, pedido de urgência) · G3 com o T5 pausado antes do cap17 e do finish · dev-gravacao corrigindo
