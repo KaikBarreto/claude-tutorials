@@ -119,7 +119,15 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
   `src-1.38.19`; dist da 1.38.9 em `rec/.runtime/dist-1.38.9.bak`). Toda gravação nova é na 1.38.19.
 - Decisões do T0 v2 (Kaik 16:4x): D8 frases dele letra por letra (imagem destaca o rótulo real); D7 sem aviso para
   técnicos; D3 conta **em teste** ("Escolher meu plano", sem preço); D4 sem treinamento ao vivo; D1, D2, D5, D6 como
-  propostos. Voz (~2,4 mil) depois da conferência das telas na 1.38.19.
+  propostos. Conferência na 1.38.19 (agente do T0): em teste os módulos fora do plano mostram o selo azul "LIBERADO NO
+  TESTE"; para mostrar o vermelho pedido pelo Kaik, R04/R05 são gravadas com a conta contratada (o resto em teste). Cena 04
+  reescrita para ser exata ("Se você confirmar ainda no teste, essa confirmação continua valendo quando contratar..."): em
+  teste a introdução tem "Pular por agora", e quem contrata sem confirmar volta a ter o vídeo obrigatório. O botão de
+  contratar ainda abre `/billing` (erro C5): a cena para no clique.
+- **Voz do T0 v2 gerada 16:47** (fluxo único, nós `T00v2 cap00/01/02/03/06` + `T00v2 títulos`, 1 versão cada, 2.471
+  créditos; ids em `scratchpad/t0v2_nos.json`): 28,3 + 44,1 + 29,7 + 36,8 + 19,6 s; cap04/cap05 e 4 títulos reaproveitam o
+  T0 atual. Aguardando o Kaik exportar o fluxo (zip 6).
+- Prévia do visual vertical (20 s) enviada ao Kaik 16:4x.
 - Agentes: levantamento do impacto da 1.38.19 (`IMPACTO_1.38.19.md`), telas e ilustrações do T0 v2 (porta 54328),
   pipeline vertical (retomado). As gravações (T2, T3 v2, T7, T8, T9, T12, T18) esperam o levantamento.
 

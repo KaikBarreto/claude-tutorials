@@ -19,7 +19,7 @@
 CAPS = {
 0: """Oi! Boas-vindas à Dominex. A partir de agora, a sua empresa tem um lugar só pra organizar o trabalho, do chamado do cliente até o dinheiro na conta.
 Este vídeo é o primeiro passo para começar a usar a Dominex. Assista até o final e confirme que entendeu os combinados para continuar.
-Começou pelo período de teste? Quando você contratar, essa confirmação continua valendo e o vídeo não é exigido de novo.""",
+Começou pelo período de teste? Se você confirmar ainda no teste, essa confirmação continua valendo quando contratar, e o vídeo não é exigido de novo.""",
 1: """Na Domiflix, o seu primeiro caminho é a trilha Tutoriais do sistema.
 Ela começa pela Formação Básica, com aquilo que todo cliente precisa aprender.
 Depois vêm os módulos que fazem parte do seu plano, sempre na ordem recomendada.
