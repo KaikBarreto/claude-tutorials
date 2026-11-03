@@ -190,6 +190,9 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
   ao lado do celular) e `montar_cap.py` (celular, `repouso`, `TUT_REC`) do T7 levados para a skill. Emendas da 1.38.19 com o
   texto novo: semelhança 0,80 a 1,00 (o resto é número lido pelo ASR). Agentes agora: T3 v2, T0 v2 (novo, contexto do
   anterior acabou; segue cap01 sem tarja, cap02–06, montagem e entrega) e T18 (novo).
+- 20:27–21:15 **trava presa por um teste meu** (flock dentro de flock; lição em `docs/08`): máquina parada 47 min. O agente do
+  T3 v2 achou; encerrado pelo PID. `identidade_domiflix.sh` IDÊNTICO com o `overlay.py`/`montar_cap.py` do T7 na skill.
+  T3 v2: 14 capítulos gravados na 1.38.19 e auditados; renders, finish e entrega em andamento. T7 conferido na folha de quadros.
 
 ## Fila (31/10 12:1x; nada sai da fila sem estar entregue)
 1. **Rodando (Kaik 14:48 liberou até 4 agentes ao mesmo tempo):** dev-video no 06 e no 12 do site (com a trava
