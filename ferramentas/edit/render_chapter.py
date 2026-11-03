@@ -46,13 +46,28 @@ F0, F1 = map(int, opt("--quadros").split(":")) if QUADROS else (0, N)
 P = max(1, int(opt("--partes", os.environ.get("TUT_PARTES", "2"))))  # processos ao mesmo tempo (1 = como antes)
 
 
-def em_partes(P):
+def cortes(P):
+    """Onde dividir: 2P trechos, cada corte no quadro sem aviso, destaque, ilustracao nem titulo mais perto do ideal (essas
+    camadas guardam estado do 1o quadro em que aparecem, ex.: a largura do aviso ao lado do celular). Sem quadro livre perto,
+    o corte cai fora (menos trechos)."""
+    jan = [(float(x["at"]), float(x["at"]) + float(x.get("dur", 3.0))) for k in ("callouts", "spots", "illustrations") for x in ch.get(k, [])]
+    if ch.get("title"): a = float(ch.get("title_at", 0.5)); jan.append((a, a + float(ch.get("title_dur", 3.6))))
+    livre = lambda f: all(not (a - 0.15 <= T0 + f / FPS <= b + 0.15) for a, b in jan)
+    S, cs = 2 * P, [0]
+    for i in range(1, S):
+        ideal, meia = round(N * i / S), int(N / S / 2)
+        f = next((g for d in range(meia) for g in (ideal - d, ideal + d) if cs[-1] + 60 <= g <= N - 60 and livre(g) and livre(g - 1)), None)
+        if f is not None: cs.append(f)
+    return cs + [N]
+
+
+def em_partes(P, cuts):
     """Kaik 03/11 ("nao tem como renderizar em paralelo?"): o desenho do quadro usa 1 nucleo e deixava 43% da maquina parada.
-    Divide os quadros em 2P trechos seguidos, renderiza P de cada vez (este mesmo script com --quadros, ainda sob a mesma
-    trava) e junta com concat -c copy. Cada quadro usa o mesmo t do render inteiro (T0 + f/FPS)."""
+    Renderiza os trechos de `cuts`, P de cada vez (este mesmo script com --quadros, ainda sob a mesma trava), e junta com
+    concat -c copy. Cada quadro usa o mesmo t (T0 + f/FPS) e o mesmo quadro da gravacao do render inteiro."""
     import ctypes, shutil, signal, tempfile
     tmp = tempfile.mkdtemp(prefix=f".{NAME}.partes.", dir=os.path.dirname(os.path.abspath(out_mp4)))
-    S = 2 * P; cuts = [round(N * i / S) for i in range(S + 1)]; parte = lambda i: os.path.join(tmp, f"p{i:02d}.mp4")
+    S = len(cuts) - 1; parte = lambda i: os.path.join(tmp, f"p{i:02d}.mp4")
     cmd = [sys.executable, "-I", os.path.abspath(__file__), argv[0], "--crf", str(crf), "--preset", str(preset), "--partes", "1"]
     cmd += (["--aceitar-camera"] if "--aceitar-camera" in argv else []) + (["--range", opt("--range")] if rng else [])
     morre_junto = lambda: ctypes.CDLL(None).prctl(1, signal.SIGKILL)  # PR_SET_PDEATHSIG: filho nao sobrevive ao pai
@@ -85,8 +100,9 @@ def em_partes(P):
 
 
 t_wall = time.time()
-if P > 1 and not QUADROS and N >= 300:
-    moving, rss = em_partes(P); C.ov.close()
+CUTS = cortes(P) if (P > 1 and not QUADROS and N >= 300) else [0, N]
+if len(CUTS) > 2:
+    moving, rss = em_partes(P, CUTS); C.ov.close()
 else:
     enc = subprocess.Popen(["ffmpeg", "-v", "error", "-y", "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{W}x{H}", "-r", str(FPS), "-i", "-",
                             "-vf", "scale=out_color_matrix=bt709:out_range=tv:flags=accurate_rnd+full_chroma_int,format=yuv420p", "-c:v", "libx264",
@@ -107,6 +123,6 @@ side = dict(name=NAME, video=out_mp4, wav=out_wav if os.path.exists(out_wav) els
                           round(float(v), 3) if not isinstance(v, str) else v) for k, v in r.items()} for r in cam.regions],
             callouts=[{**c, "at": c["at"] - T0} for c in ch.get("callouts", [])], spots=ch.get("spots", []),
             stats=dict(wall_s=round(el, 1), fps=round(NQ / el, 2), frames_with_blur=int(moving), peak_rss_mb=rss,
-                       partes=P if (P > 1 and not QUADROS and N >= 300) else 1))
+                       partes=len(CUTS) - 1, cortes=CUTS[1:-1]))
 json.dump(side, open(os.path.splitext(out_mp4)[0] + ".edit.json", "w"), ensure_ascii=False, indent=1)  # ao lado do MP4 (o finish.py le este arquivo)
 print(f"\nok {out_mp4}  ({NQ / FPS:.1f} s, {el:.0f} s de render = {NQ / el:.1f} q/s, {moving} quadros com desfoque, pico {rss} MB)")
