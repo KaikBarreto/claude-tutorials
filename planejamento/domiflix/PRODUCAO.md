@@ -128,6 +128,17 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
   créditos; ids em `scratchpad/t0v2_nos.json`): 28,3 + 44,1 + 29,7 + 36,8 + 19,6 s; cap04/cap05 e 4 títulos reaproveitam o
   T0 atual. Aguardando o Kaik exportar o fluxo (zip 6).
 - Prévia do visual vertical (20 s) enviada ao Kaik 16:4x.
+- **Impacto da 1.38.19** (`IMPACTO_1.38.19.md`, 17:1x): entregues T1 (Integrações ganhou a 4ª subaba "Impressora fiscal";
+  2 falas), T4 ("Novo Tipo" virou "Novo Serviço"; 2 falas) e **T5 (assistente da Nova OS refeito, sem a etapa
+  "Orçamento"; 5 falas)**; com voz: **T9 (assistente de 5 → 3 etapas; 8 falas; desconto do exemplo passa a R$ 85,00 para o
+  total seguir R$ 1.000,00)** e T8 ("Estoque geral" e compras em lista; 2 + 3 leves); sem voz: T11 (contrato 6/7 → 5
+  etapas; 11 + 1), T13 (2), T15 (aba "Acesso"; 2 + 1); T14 e T17 só robô; **T2, T3 v2, T7, T10, T12, T18–T22 sem mudança
+  visível**. Backend falso: schema da 1.38.19, BDI, NPS vazio e **semente base com a introdução da DomiFlix concluída**
+  (sem ela a 1.38.19 abre com a tela escura da introdução em toda aula).
+- Plano: (1) T0 v2 (telas + ilustrações, montagem depois do zip 6); (2) backend 1.38.19 (agente); (3) falas novas de T9,
+  T8, T5, T4, T1 e roteiros de T11/T13/T15 (agente), voz delas num lote; (4) gravações na 1.38.19, uma aula por vez na
+  ordem T7 → T3 v2 (toda na 1.38.19) → T18 → T2 → T12 → T8 → T9; (5) remendos das entregues (T5 capítulos da OS; T4 e T1
+  trechos), com `remendar_aula.py`.
 - Agentes: levantamento do impacto da 1.38.19 (`IMPACTO_1.38.19.md`), telas e ilustrações do T0 v2 (porta 54328),
   pipeline vertical (retomado). As gravações (T2, T3 v2, T7, T8, T9, T12, T18) esperam o levantamento.
 
