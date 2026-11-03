@@ -19,7 +19,7 @@ F = montagem final + legendas + conferência · ok = no ZIP
 | T0 | Boas-vindas à Dominex (ilustrada) | ok | ok | ok | ok | — | — | ok | ok (30/10 22:51, 3:25) |
 | T1 | Configurações e identidade da empresa | ok | ok | ok | ok (31/10 00:29) | ok | ok | ok | ok (31/10 05:20, 11:58) · **v2 18:33** (pronúncia + logo com texto branco; 12:05; 1.38.6) |
 | T2 | Usuários, cargos e permissões | ok | ok | ok (V3 18:3x) | ok (zip 5, 19:31) | agente novo 03/11 22:4x, 1.38.19 (54324): preparo e ensaio; grava depois do T0 v2 | | | |
-| T3 | Clientes, Fornecedores e Equipamentos | ok | ok | ok | ok | ok | ok | ok | ok (30/10) |
+| T3 | Clientes, Fornecedores e Equipamentos | ok | ok | ok | ok | ok | ok | ok | **v2 entregue 03/11 22:4x** (14:13, 1.38.19, -15,8 LUFS; v1 de 30/10 em `t3/edit/out`) |
 | T4 | Serviços, tarefas e checklists | ok | ok | ok | ok (31/10 00:29) | ok | ok | ok | ok (31/10 10:46, 10:27) · **v2 18:37** (pronúncia; só o áudio) |
 | T5 | Ordens de Serviço, Agenda, Equipes e Mapa ao Vivo | ok | ok | ok | ok (31/10 00:29) | ok | ok | ok | ok (31/10 18:2x, 13:49; 1.38.6) |
 | T7 | O técnico em campo (celular) | ok | ok | ok | ok (31/10 00:29; emenda do cap05 com folga 0,17 s) | ok (54321) | ok (1.38.19) | ok | ok (03/11 20:3x, 12:26; 1.38.19) |
@@ -201,6 +201,9 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
   o agente estava parado 16 min num laço `pgrep -f` que achava a si mesmo (lição em `docs/08`), encerrado pelo PID; segue
   legendas e entrega. **T2 despachado** (porta 54324, 1.38.19): fase 1 = preparo e ensaio rápido; gravação real só depois
   do T0 v2, que tem prioridade na trava.
+- 22:4x **T3 v2 entregue** em `entrega_final/` (MP4, SRT e VTT; 242 legendas; 0 falho, maior atraso 0,44 s). Ponto
+  conhecido: no cap10 (10:24 do vídeo) o clique na aba Categorias cai com a aba 67% visível na borda enquanto a câmera se
+  afasta (meio segundo); a gravação bruta já foi limpa, refazer = regravar o cap10. Fica como está salvo pedido do Kaik.
 
 ## Fila (31/10 12:1x; nada sai da fila sem estar entregue)
 1. **Rodando (Kaik 14:48 liberou até 4 agentes ao mesmo tempo):** dev-video no 06 e no 12 do site (com a trava
