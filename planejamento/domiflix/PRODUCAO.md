@@ -176,6 +176,11 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
 - 19:3x Vertical: `render_chapter_vertical.py` aceita a gravação do celular (agente do vertical concluído); falta o specs
   do celular do T0 v2 (agente do T0). Emendas da 1.38.19: T1, T4, T5, T8 com folgas ≥ 0,20 s; T9 (uma folga de 0,18 s, sem
   corte) terminando o `proc.py`.
+- 20:0x **Prévia do cap01 do T0 v2 (16:9) enviada ao Kaik** (`t0v2/edit/out/cap01/cap01_previa.mp4`, 44,9 s; gravação 45,7 s
+  para 44,08 s de voz, maior atraso 1,2 s num passo sem rótulo, câmera com 0 problema). Pergunta: as bolinhas da ilustração
+  (uma por aula) ficam? Celular: regravando o cap01-p sem os ~6 s de hover (manter o anel nos toques "Ver trilha" e "Menu").
+  Emendas: o `tts_textos.py` da área de trabalho de T1/T4/T5/T8/T9 era o anterior à 1.38.19 (legenda e linhas do
+  `capNN.json` sairiam com o texto antigo); trocado pelo do planejamento e `proc.py` refeito (`scratchpad/emendas_texto.sh`).
 
 ## Fila (31/10 12:1x; nada sai da fila sem estar entregue)
 1. **Rodando (Kaik 14:48 liberou até 4 agentes ao mesmo tempo):** dev-video no 06 e no 12 do site (com a trava
