@@ -145,7 +145,7 @@ palavras do `capNN.json`, como no T0 atual.
 - **9:16:** Selo no alto e os 3 passos empilhados (círculo de 180 px, texto 62 px em até 2 linhas), um acende por vez; a barrinha do vídeo no passo 1. Tudo acima da faixa da legenda.
 
 **Cena 04 · 0:24,4 a 0:33,3** · Do teste para a assinatura · ILUSTRAÇÃO · voz: nova
-> Começou pelo período de teste? Quando você contratar, essa confirmação continua valendo e o vídeo não é exigido de novo.
+> Começou pelo período de teste? Se você confirmar ainda no teste, essa confirmação continua valendo quando contratar, e o vídeo não é exigido de novo.
 
 - **16:9:** Linha do tempo: Período de teste → Assinatura ativa. O selo verde "Combinados confirmados" nasce no teste e segue pela assinatura (faixa contínua); no fim, "Vídeo já assistido" com check. Nada riscado. A tela real diz o mesmo: "Exibido uma única vez" e "Se você estiver em teste e depois contratar, esta confirmação continuará válida."
 - **9:16:** A mesma linha do tempo na vertical (teste em cima, assinatura embaixo), o selo descendo junto; texto 44 a 64 px.
