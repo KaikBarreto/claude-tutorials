@@ -10,26 +10,26 @@ Se você ainda não viu o tutorial de Tipos de Serviço, Tipos de Tarefa e Check
 No alto, os indicadores: OS Abertas, Concluídas, Atrasadas e Próximos sete dias. O período mostra todas as OS, e dá pra filtrar quando precisar.
 A tela abre em Kanban, com uma coluna por status: Agendada, Pendente, A Caminho, Em Andamento, Concluída, Pausada e Cancelada. Cada cartão traz o código da OS: o prefixo do serviço, o ano e o número, como ême-pê, dois mil e vinte e seis, doze.
 Se você prefere uma lista, é só trocar aqui: a OS, o criador, o cliente, o tipo, a data, o status e as ações. Uma dica: a escolha fica guardada neste navegador.""",
-2: """Vamos abrir a primeira ordem de serviço. Clico em Nova OS. A janela tem quatro etapas, e a primeira é Cliente e Serviço.
+2: """Vamos abrir a primeira ordem de serviço. Clico em Nova OS. A janela tem quatro etapas, e a primeira é Atendimento e orçamento.
 O cliente pode ser cadastrado ou avulso. No avulso, você digita os dados na hora, e ele já entra no cadastro de clientes.
 Aqui é o Colégio Monte Verde, que a gente cadastrou no tutorial de clientes.
 Em Tipos de Serviço, a Manutenção Preventiva. Dá pra escolher mais de um serviço na mesma ordem, e o primeiro vira o principal, que dá a cor e o prefixo do código.
 E se o atendimento for em outro lugar, como uma filial ou uma obra, é só ligar o Endereço de serviço, que vale só pra essa ordem. Aqui é no colégio mesmo, então eu desligo.""",
-3: """Agora a etapa Orçamento, onde ficam os valores da ordem: serviços, mão de obra e materiais.
-Escolho a Manutenção Preventiva, e a quantidade e o valor já vêm: um, e cento e oitenta reais, que é o Preço padrão que a gente cadastrou. Clico no mais, e o Total para faturamento mostra cento e oitenta reais.
+3: """Aqui embaixo, no orçamento, ficam os valores da ordem: serviços, mão de obra e materiais.
+A Manutenção Preventiva já entrou na linha, com a quantidade um e cento e oitenta reais, que é o Preço padrão que a gente cadastrou. E o Total para faturamento mostra cento e oitenta reais.
 Se precisar sair no meio, o rascunho guarda o cliente, os serviços e os valores. Fecho a janela, abro a Nova OS de novo, e é só clicar em Retomar rascunho.
 Pronto, está tudo de volta. Vamos pra próxima etapa.""",
 4: """Agora o equipamento: marco o rai-uól dezoito mil bê-tê-ús da sala dos professores. Como a Manutenção Preventiva é vinculada a equipamento, a Dominex pede o aparelho.
 Abrindo o aparelho, aparecem os serviços que vão ser feitos nele e os checklists aplicados. Olha: o da manutenção preventiva já entrou sozinho, com as treze perguntas, porque a gente ligou ele a esse serviço no tutorial anterior.
 Dá pra pré-visualizar o checklist e copiar os serviços e checklists pra outros aparelhos da mesma ordem. Tem ainda os checklists avulsos, que valem pra ordem toda.""",
-5: """Última etapa: Agendamento e Detalhes. Primeiro, uma revisão do escopo, pra você conferir os serviços e os checklists de cada aparelho antes de salvar.
+5: """Agora a etapa Equipe e agenda, é aqui que a gente escolhe quem vai atender, o dia e o horário.
 Em Responsáveis, escolho quem vai: o Rafael Lima. Técnicos e equipes ficam no mesmo seletor, e as equipes a gente vê daqui a pouco.
 No Período do atendimento, a data é na terça, e a jornada vai das nove às onze da manhã. Se o serviço dura mais de um dia, dá pra marcar o período inteiro, com o horário de cada dia.
 Na descrição, vai o que precisa ser feito.
 Em Gerar Pesquisa de Satisfação ao finalizar, deixo Sim: assim o cliente pode avaliar o atendimento depois que a ordem for concluída.
 Uma dica: se o técnico já tiver outro atendimento naquele horário, o sistema avisa, e quem tem permissão pode autorizar com uma justificativa.
-Criar OS. Pronto: a OS número dezesseis foi criada, e aparece na coluna Pendente, já com a data marcada.""",
-6: """Agora uma ordem que se repete. Pra Academia Ponto Forte, a higienização dos splits todo mês, com o Lucas Ferreira. Preencho como antes e, na última etapa, ligo a Recorrência.
+Pra fechar, a etapa Revisão, o Confira antes de salvar, com o resumo da ordem. Conferido, Criar OS. Pronto: a OS número dezesseis foi criada, e aparece na coluna Pendente, já com a data marcada.""",
+6: """Agora uma ordem que se repete. Pra Academia Ponto Forte, a higienização dos splits todo mês, com o Lucas Ferreira. Preencho como antes e, em Equipe e agenda, ligo a Recorrência.
 Em Frequência, escolho Mensal, a cada um mês, e em Até a data final. A prévia já diz quantas ordens vão ser criadas, antes de salvar.
 Criar OS Recorrentes. Pronto, a série inteira foi criada de uma vez.
 Se você mudar a data de uma ordem da série, o sistema pergunta se vale só pra ela ou também pras próximas; é só escolher o que faz sentido.""",

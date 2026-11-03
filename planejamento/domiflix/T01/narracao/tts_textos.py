@@ -66,9 +66,9 @@ Na aba Aparência, o primeiro bloco é o Estilo de Navegação. Hoje a gente est
 Se você preferir o Menu Superior, é só clicar, e a barra vai pro alto da tela. Eu volto pro lateral.
 Logo abaixo, a cor do menu: Escuro, que é a recomendada, ou Seguir o tema.
 E o tema do sistema, claro ou escuro. Cada pessoa escolhe o seu, e vale só pra quem escolheu. Eu fico no claro.""",
-11: """Por fim, a aba Integrações, onde ficam as ligações com outros serviços. São três subabas. Na primeira, o WhatsApp, é onde a empresa conecta o número pra falar com o cliente.
+11: """Por fim, a aba Integrações, onde ficam as ligações com outros serviços. São quatro subabas. Na primeira, o WhatsApp, é onde a empresa conecta o número pra falar com o cliente.
 Em Cobranças, a asas é a conta onde os seus clientes pagam por pix, boleto e cartão. O cartão Recebimentos mostra que ela está ativa.
-E a á-pê-í Pública, pra quem quer ligar a Dominex a outros sistemas.
+A Impressora fiscal liga a impressora do computador à Dominex. E a á-pê-í Pública, pra quem quer ligar a Dominex a outros sistemas.
 WhatsApp e Cobranças dependem dos módulos contratados, e cada uma tem o seu tutorial.""",
 12: """E, no fim da aba Empresa, o que é de segurança. Primeiro, os Documentos Legais.
 Aqui você consulta os termos de uso e, se quiser, baixa em pê-dê-éfe. Embaixo fica a data em que você aceitou.

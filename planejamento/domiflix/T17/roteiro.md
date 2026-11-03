@@ -99,7 +99,7 @@ Tudo fictício: os números do Dashboard saem das sementes de todas as aulas (OS
 | --- | --- |
 | Capítulo novo (semente `inicio`); menu "Financeiro" → "Relatórios": abas "Visão Geral", "DRE - Resultado", "DFC - Fluxo de Caixa", "Contabilidade" e "Análise", com um clique rápido em cada uma. [BACKEND: herdado do T13 e do T20, como o `cash_flow_opening_balances` do DFC] | E no Financeiro, os relatórios ficam no item Relatórios, em cinco abas: a visão geral, o DRE, o DFC, o pacote pra contabilidade e a análise dos períodos. |
 | Zoom na aba "DRE - Resultado". | A leitura de cada um está no tutorial Relatório Financeiro e DRE. |
-| Menu "Gestão" → "Estoque": abas "Posição de Estoque", "Inventários" e "Relatório", com um clique rápido em cada uma. [BACKEND: `get_accessible_inventory_ids` e os dados do T8 herdados (`T08/plano.md:94`)] | No Estoque, a Posição de Estoque mostra o saldo numa data, os Inventários guardam as contagens, e o Relatório mostra as compras de material. |
+| Menu "Gestão" → "Estoque": abas "Posição de Estoque", "Inventários" e "Relatório", com um clique rápido em cada uma. [BACKEND: `get_accessible_inventory_ids` e os dados do T8 herdados (`T08/plano.md:94`)] **[1.38.19, robô]** a aba "Relatório" abre com as subabas "Compras" (a do T8, aberta por padrão) e "Curva ABC"; só o clique rápido na aba, sem abrir a "Curva ABC" (se abrir, o handler `get_inventory_abc_report` devolve `[]`). Fala intacta. Nas telas do Dashboard conferir que não há faixa de aviso nem o gate da trilha Domiflix (G1 do `IMPACTO_1.38.19.md`). | No Estoque, a Posição de Estoque mostra o saldo numa data, os Inventários guardam as contagens, e o Relatório mostra as compras de material. |
 
 ### cap08 · Pessoas: o ponto (vinheta: RELATÓRIOS)
 

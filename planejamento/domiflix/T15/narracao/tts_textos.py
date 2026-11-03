@@ -13,7 +13,7 @@ As três últimas são as ferramentas de érre-agá, que têm um tutorial só de
 Na lista estão os seis técnicos da Glaciál. Clicando num nome, a ficha abre aqui do lado, com as ações e os números da pessoa.
 Agora, bora colocar alguém novo na equipe.""",
 2: """A Tatiane, que cuida do escritório, já usa a Dominex desde o tutorial de usuários. Agora ela entra no cadastro de funcionários, pra receber o salário e bater o ponto.
-A janela tem quatro abas: Dados, Pagamento, Ponto eletrônico e Perfil. A foto é opcional, e aparece na ficha e no ponto.
+A janela tem cinco abas: Dados, Pagamento, Acesso, Ponto eletrônico e Perfil. A foto é opcional, e aparece na ficha e no ponto.
 Em Dados vão o nome completo, o CPF, o telefone, o e-mail e o cargo, assistente administrativa.
 Depois, o endereço e a data de admissão.
 E a chave pix dela, aqui o e-mail. Ela fica guardada na ficha, à mão na hora de pagar.""",
@@ -27,8 +27,8 @@ Ela usa vale-transporte, de duzentos e vinte reais por mês, e o desconto dele t
 Dá pra pagar por mês, por quinzena ou por semana.
 Na Glaciál o pagamento é mensal, no quinto dia útil. Se preferir uma data fixa, é só trocar pra dia corrido e escolher o dia do mês.
 Repara na dica: é essa configuração que faz a folha da Tatiane aparecer sozinha em Contas a Pagar.""",
-5: """Falta ligar o cadastro ao login. Como a Tatiane já é usuária, é só vincular: escolho o nome dela aqui.
-Pra quem ainda não tem login, o Criar acesso ao sistema cria um com o e-mail do cadastro. Depois, em Usuários e Permissões, é só aplicar o cargo da pessoa.
+5: """Falta ligar o cadastro ao login, e isso fica na aba Acesso. Como a Tatiane já é usuária, é só vincular: escolho o nome dela aqui.
+Pra quem ainda não tem login, o Criar acesso ao sistema cria um com o e-mail do cadastro, e na própria aba Acesso já dá pra escolher o Papel no sistema e as Permissões.
 Clico em Criar Funcionário. Pronto, a Tatiane entrou na lista.""",
 6: """Com a Tatiane cadastrada, eu completei os técnicos do mesmo jeito, cada um com o salário e o dia do pagamento. Agora, o dinheiro do dia a dia.
 Clico no Rafael, e a ficha dele abre do lado. Em cima ficam as movimentações, e embaixo, os números, como o salário e o saldo atual, que é quanto ele tem a receber.

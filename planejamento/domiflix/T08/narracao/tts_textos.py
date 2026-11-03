@@ -25,13 +25,13 @@ Em Filtros, marco Estoque abaixo do mínimo e vejo só os três que precisam de 
 Uma dica: no mesmo menu existe o Excluir. Para encerrar um material, zere o saldo e tire dos locais, porque ao excluir o histórico dele também é apagado.""",
 4: """Quando a empresa tem uma van, ou mais de um depósito, entram os locais. Tudo começa em Configurações, que tem duas abas. Em Grupos de material ficam as famílias do estoque, cada uma com a sua cor: Gases, Cobre e tubos, Elétrica e Consumíveis.
 Em Locais de estoque, já existe o Estoque Principal, o local padrão da empresa. Vou criar o da van do técnico: digito van zero um e clico no botão de mais.
-Fechando a janela, cada local ganha a sua aba, e o principal leva uma estrela.
-Agora digo o que existe na van. Na engrenagem da aba, em Adicionar por grupo, escolho Gases, e os gases já entram. Marco também a Fita isolante e salvo.
+Fechando a janela, os dois aparecem na lista, e o principal leva uma estrela.
+Agora digo o que existe na van. Na engrenagem da van zero um, em Adicionar por grupo, escolho Gases, e os gases já entram. Marco também a Fita isolante e salvo.
 Uma dica: para tirar um material de um local, transfira o saldo antes, porque com saldo a Dominex não deixa remover e oferece o botão Transferir saldo.""",
 5: """Com a van criada, vamos carregá-la. No Estoque Principal, no menu do Gás refrigerante érre quatrocentos e dez á, clico em Transferir.
 A origem já vem preenchida, com oito vírgula cinco disponíveis. Escolho a van zero um como destino, digito dois quilos e anoto: Carga da van do Rafael.
-Clico em Transferir. Na aba da van zero um, o érre quatrocentos e dez á aparece com dois quilos, e no Estoque Principal sobram seis vírgula cinco. A transferência tira de um local e põe no outro, e o histórico guarda os dois lados.""",
-6: """Dá para escolher quem enxerga cada local. Na engrenagem da van, abro a aba Acesso. Por padrão, todos os usuários da empresa veem o local.
+Clico em Transferir. Clico na van zero um, na lista de locais, e o érre quatrocentos e dez á aparece com dois quilos. No Estoque Principal sobram seis vírgula cinco. A transferência tira de um local e põe no outro, e o histórico guarda os dois lados.""",
+6: """Dá para escolher quem enxerga cada local. Na engrenagem da van zero um, abro a aba Acesso. Por padrão, todos os usuários da empresa veem o local.
 Ligo Restringir acesso a este local, e aparece a lista de pessoas. A Camila, que é administradora, mostra Sempre tem acesso: quem administra enxerga todos os locais.
 Marco o Rafael Lima, que é quem usa a van, e clico em Salvar acesso. Agora só ele e a gestão veem e movimentam a van zero um.
 Uma dica: marque sempre alguém, porque sem ninguém marcado o local continua aberto a todos.""",
@@ -41,7 +41,7 @@ Estas duas linhas de Consumo vêm da OS número dezesseis, que o técnico finali
 Nos Filtros, escolho o período, que começa no mês atual, o tipo de movimento e o local. Filtrando por Consumo, ficam só essas duas linhas.
 E se eu clico num material, como o Gás refrigerante érre quatrocentos e dez á, vejo só o histórico dele. Todo movimento deixa rastro: quem fez, quando e de onde.""",
 8: """Agora, o que fazer quando o material está acabando: as compras. Na aba Compras de Material, uma faixa vermelha já avisa que três materiais estão abaixo do mínimo.
-Aqui em cima, o Fornecedores abre o cadastro dos fornecedores. O Registrar compra direta lança a entrada no estoque e a despesa de uma vez. Ele só aparece para quem administra estoque e financeiro, e fica para o tutorial Financeiro.
+Aqui em cima, o Fornecedores abre o cadastro dos fornecedores, e o menu Nova compra reúne o Criar requisição e o Registrar compra direta. Esse lança a entrada no estoque e a despesa de uma vez, e fica para o tutorial Financeiro.
 Vou fazer uma requisição, que é a lista do que precisa ser comprado. Clico em Criar requisição e dou o título: Reposição de gás, cobre e capacitor. O destino é o Estoque Principal, porque é pra lá que o material vai quando chegar.
 Em vez de procurar um por um, uso o Adicionar itens abaixo do mínimo. Escolho o local, e a lista mostra o déficit de cada material, ou seja, quanto falta para chegar ao mínimo. Adiciono todos à requisição.
 As quantidades entram em branco, porque quem decide quanto comprar é você. Peço dez quilos de érre quatrocentos e dez á, vinte metros de tubo de cobre de três oitavos e seis capacitores.

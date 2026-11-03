@@ -18,17 +18,17 @@ Na Assinatura digitalizada, o recomendado é fotografar a assinatura no papel e 
 O Carimbo do responsável é uma imagem, então envio o arquivo. Pra terminar, Cadastrar responsável.
 Pronto: o Ricardo está na lista, com o cê-éfe-tê barra créa e a modalidade. Com a assinatura cadastrada, os PDFs da norma já saem assinados.""",
 3: """Agora, o primeiro contrato, começando por um comum, sem pê-móqui. É uma manutenção trimestral no Colégio Monte Verde. Clico em Novo Contrato.
-No Nome do Contrato, escrevo Manutenção preventiva trimestral, Colégio Monte Verde, e no Cliente escolho o colégio. A chave É um contrato pê-móqui? fica desligada. Um contrato comum tem seis etapas, que aparecem na barra aqui em cima.
-Segunda etapa: Ambientes e Equipamentos. O colégio tem um aparelho só, então uso o Adicionar equipamento sem ambiente e marco o rai-uól dezoito mil bê-tê-ús da sala dos professores. Se o cliente tivesse vários espaços, dava pra separar em ambientes.
-Na Frequência, o atalho Trimestral resolve. Escolho a Data de Início e deixo o Horizonte em doze meses. A Prévia das datas mostra as quatro visitas que vão nascer.
-Em Equipe e Cobrança, o Técnico Executor é obrigatório: escolho o Rafael Lima. Em Tipo de Serviço, Manutenção Preventiva, e no Checklist Padrão, o de manutenção preventiva de split, que a gente criou no tutorial Tipos de Serviço, Tipos de Tarefa e Checklists. O Contrato Ativo fica ligado, porque as ordens de serviço só nascem pra contratos ativos.
-No Financeiro, deixo desligado o Já gerar as parcelas a receber. Dá pra lançar a cobrança depois, na aba Financeiro do contrato.
+No Nome do Contrato, escrevo Manutenção preventiva trimestral, Colégio Monte Verde, e no Cliente escolho o colégio. A chave É um contrato pê-móqui? fica desligada. Um contrato comum tem cinco etapas, que aparecem na barra aqui em cima.
+Segunda etapa: Escopo técnico. O colégio tem um aparelho só, então uso o Adicionar equipamento sem ambiente e marco o rai-uól dezoito mil bê-tê-ús da sala dos professores. Se o cliente tivesse vários espaços, dava pra separar em ambientes.
+Na Agenda, o atalho Trimestral resolve. Escolho a Data de Início e deixo o Horizonte em doze meses. A Prévia das datas mostra as quatro visitas que vão nascer.
+Em Operação e cobrança, o Técnico Executor é obrigatório: escolho o Rafael Lima. Em Tipo de Serviço, Manutenção Preventiva, e no Checklist Padrão, o de manutenção preventiva de split, que a gente criou no tutorial Tipos de Serviço, Tipos de Tarefa e Checklists. O Contrato Ativo fica ligado, porque as ordens de serviço só nascem pra contratos ativos.
+Mais embaixo, na Configuração financeira, deixo desligado o Já gerar as parcelas a receber. Dá pra lançar a cobrança depois, na aba Financeiro do contrato.
 Na Revisão, confiro tudo e clico em Criar Contrato. Pronto: quatro ordens de serviço já estão na agenda. Ao criar, o sistema agenda todas as visitas do período de uma vez. Pra mais um ciclo, é só renovar.""",
 4: """Agora o pê-móqui do hotel, aquele que estava em negociação no cê-érre-ême. O hotel topou, então bora criar o contrato. Clico em Novo Contrato.
 No Nome do Contrato, pê-móqui, Hotel Mirante do Mar. No Cliente, o próprio Hotel Mirante do Mar.
 E agora a chave que liga o pê-móqui: É um contrato pê-móqui? Ligando, o contrato passa a ter Responsável Técnico, e as ordens de serviço saem com o selo de conformidade legal.
-Repara na barra de etapas: ganhou a Unidade e érre-tê, e agora são sete.""",
-5: """Vamos pela primeira etapa nova, a Unidade e érre-tê. No Responsável Técnico, escolho o Ricardo, que a gente cadastrou. Se faltar alguém, o botão de mais cadastra um érre-tê na hora, sem sair daqui.
+Repara que a Unidade e o érre-tê aparecem aqui mesmo, em Dados do contrato, e a barra segue com as mesmas cinco etapas.""",
+5: """Ainda em Dados do contrato, repara no que apareceu: o Responsável Técnico e a Identificação da Unidade. No Responsável Técnico, escolho o Ricardo, que a gente cadastrou. Se faltar alguém, o botão de mais cadastra um érre-tê na hora, sem sair daqui.
 Passando o mouse no ícone de informação, a tela lembra que o érre-tê assina o Termo de Responsabilidade Técnica e que ele é diferente do técnico executor.
 Embaixo, a Identificação da Unidade: o endereço do ambiente climatizado. Ele pode ser diferente do endereço do cliente, mas já vem preenchido com o cadastro do hotel. Eu só dou um nome pra unidade: Hotel Mirante do Mar, São Francisco.
 O Conforme Lei Federal treze mil quinhentos e oitenta e nove, de dois mil e dezoito, confirma que as ordens de serviço vão sair com selo de conformidade. E o quadro O que o pê-móqui desbloqueia lista o que vem junto. São o Termo de Responsabilidade Técnica, o Dossiê pê-móqui, o Cronograma anual em pê-dê-éfe, o portal com quê-érre côde e o selo nas ordens de serviço.""",
@@ -40,18 +40,18 @@ Agora as máquinas. Em Adicionar equipamento, marco o Cassete trinta e seis mil 
 Cada máquina segue a própria rotina da norma. Abrindo o Cassete, o Escopo da norma já vem em Expansão Direta, que cobre splits, cassetes e piso-teto. Os sistemas de grande porte ficam em Sistemas Centrais.
 O checklist Essencial da norma já vem escolhido pra essa máquina, com as perguntas, a frequência de cada uma e a coluna Na primeira OS. Se você tem um checklist seu, dá pra juntar em Checklists personalizados desta máquina.
 O Restaurante e o Salão de eventos seguem o mesmo caminho, então deixo os dois prontos.""",
-7: """Ambientes prontos, falta dizer de quanto em quanto tempo o técnico vai lá. Na Frequência, a lei recomenda visita mensal, e é o que já vem marcado, no atalho Mensal. A faixa Cadência das visitas explica isso.
+7: """Ambientes prontos, falta dizer de quanto em quanto tempo o técnico vai lá. Na Agenda, a lei recomenda visita mensal, e é o que já vem marcado, no atalho Mensal. A faixa Cadência das visitas explica isso.
 Dá pra personalizar a cadência, por exemplo, a cada quatorze dias. Só que a norma recomenda mensal, e a tela avisa quando você foge disso.
 Escolho a Data de Início e deixo o Horizonte em doze meses, o que dá doze visitas.
 A Prévia das visitas mostra as datas em Lista ou em Calendário. Se alguma cair num sábado ou domingo, ganha o selo Fim de semana, e depois dá pra mudar a data dessa visita na agenda.
-Embaixo, a faixa Rotina por equipamento lembra que cada máquina segue a própria rotina da norma, que a gente já configurou na etapa de Ambientes. Quem não quer ajustar nada é só avançar.""",
-8: """Frequência definida, agora quem executa e quem cobra. Em Equipe e Cobrança, os Técnicos Executores são obrigatórios: escolho o Rafael Lima e o Bruno Alves, que vão a campo. Nos Responsáveis Financeiros, a Tatiane Ribeiro, do escritório, que acompanha a cobrança. O Contrato Ativo fica ligado.
-Agora o Financeiro, a etapa Como e quando receber. É opcional, mas vale aproveitar: ligo o Já gerar as parcelas a receber.
+Embaixo, a faixa Rotina por equipamento lembra que cada máquina segue a própria rotina da norma, que a gente já configurou no Escopo técnico. Quem não quer ajustar nada é só avançar.""",
+8: """Agenda definida, agora quem executa e quem cobra. Em Operação e cobrança, os Técnicos Executores são obrigatórios: escolho o Rafael Lima e o Bruno Alves, que vão a campo. Nos Responsáveis Financeiros, a Tatiane Ribeiro, do escritório, que acompanha a cobrança. O Contrato Ativo fica ligado.
+Mais embaixo, na Configuração financeira, que é opcional, mas vale aproveitar: ligo o Já gerar as parcelas a receber.
 Na Descrição da parcela, Mensalidade pê-móqui. No Valor de cada parcela, mil e duzentos reais. Esse valor é o de cada mensalidade, e não o total dividido.
 O Primeiro vencimento define o dia da cobrança, e os próximos caem no mesmo dia dos meses seguintes. Em Quantas parcelas, já vem doze, igual ao horizonte do contrato.
 A Conta de recebimento é a Conta Principal, e a Categoria, Contratos pê-móqui. Em Duração da cobrança, deixo Por um período. Se o contrato não tiver data pra acabar, existe o Sem prazo para terminar.
 Em Como vai ficar, a tela confere a conta: doze parcelas de mil e duzentos reais, somando catorze mil e quatrocentos reais.""",
-9: """Última etapa: a Revisão. A Dominex junta tudo o que a gente preencheu. Tem o contrato, a unidade e o érre-tê, os ambientes e as máquinas, o plano de cada uma, a frequência, a equipe e o financeiro. Se algo estiver errado, dá pra voltar na etapa e corrigir.
+9: """Última etapa: a Revisão. A Dominex junta tudo o que a gente preencheu. Tem os Dados do contrato, a unidade e o érre-tê, o Escopo técnico, a Agenda e a Operação e cobrança. Se algo estiver errado, dá pra voltar na etapa e corrigir.
 Está tudo certo, então clico em Criar Contrato.
 Pronto! O contrato nasceu com doze ordens de serviço na agenda e doze parcelas lançadas no Financeiro. Os documentos da norma ficam sendo gerados em segundo plano.
 Lembra: ao criar, o sistema agenda todas as visitas do período. E cada ordem de serviço do contrato já pede a assinatura do técnico no fim do atendimento.""",

@@ -1,5 +1,8 @@
 # Roteiro T1 · Configurações e identidade da empresa
 
+> **Atualização Dominex 1.38.19 (aula já entregue na 1.38.6).** Regravar só o **cap11 (Onde ficam as integrações)**: a tela mostra quatro subabas, "WhatsApp", "Cobranças (Asaas)", "Impressora fiscal" e "API Pública"; passo novo: zoom na "Impressora fiscal" (sem clicar) entre Cobranças e API Pública. Falas: `T01/narracao/emendas_1.38.19.txt`.
+
+
 Roteiro pronto para gerar a voz e gravar (molde T3; sem etapa de aprovação, pedido do Kaik de 30/10 22:44). Coluna Fala = texto
 da narração (voz Fernanda, ElevenLabs), na grafia da legenda; a grafia de pronúncia do TTS é aplicada em `narracao/tts_textos.py`.
 Coluna Tela = o que o robô faz e onde a câmera foca, com os rótulos entre aspas como na tela (`T01/inventario.md`).
@@ -145,10 +148,10 @@ Todos os nomes, documentos e telefones são fictícios.
 
 | Tela | Fala |
 | --- | --- |
-| Clique na aba "Integrações": subabas "WhatsApp", "Cobranças (Asaas)" e "API Pública"; a subaba "WhatsApp" aberta, na tela de conexão (sem conectar nada). [BACKEND: `company_whatsapp_settings` e `whatsapp_connections` sem seed devolvem lista vazia; nada de QR Code] | Por fim, a aba Integrações, onde ficam as ligações com outros serviços. São três subabas. Na primeira, o WhatsApp, é onde a empresa conecta o número pra falar com o cliente. |
+| Clique na aba "Integrações": subabas "WhatsApp", "Cobranças (Asaas)", "Impressora fiscal" e "API Pública" (1.38.19: quatro); a subaba "WhatsApp" aberta, na tela de conexão (sem conectar nada). [BACKEND: `company_whatsapp_settings` e `whatsapp_connections` sem seed devolvem lista vazia; nada de QR Code] | Por fim, a aba Integrações, onde ficam as ligações com outros serviços. São quatro subabas. Na primeira, o WhatsApp, é onde a empresa conecta o número pra falar com o cliente. |
 | Clique em "Cobranças (Asaas)": cartão "Recebimentos (Asaas)" com o selo verde "Ativo"; zoom nos botões "Configurações" e "Simulador" (sem clicar). [BACKEND: função `tenant-asaas-card-fees` sem handler; a subaba a chama ao abrir (sem ela o cartão mostra "Taxas de referência"); entra também no T19] | Em Cobranças, a Asaas é a conta onde os seus clientes pagam por Pix, boleto e cartão. O cartão Recebimentos mostra que ela está ativa. |
-| Zoom na terceira subaba, "API Pública" (só o nome, sem clicar). [Não abrir: chama `api-key-manager`, sem handler] | E a API Pública, pra quem quer ligar a Dominex a outros sistemas. |
-| As três subabas em destaque. | WhatsApp e Cobranças dependem dos módulos contratados, e cada uma tem o seu tutorial. |
+| Zoom nas subabas "Impressora fiscal" e "API Pública" (só os nomes, sem clicar: a "Impressora fiscal" consulta o aplicativo local; a câmera só passa). [Não abrir: chama `api-key-manager`, sem handler] | A Impressora fiscal liga a impressora do computador à Dominex. E a API Pública, pra quem quer ligar a Dominex a outros sistemas. |
+| As quatro subabas em destaque. | WhatsApp e Cobranças dependem dos módulos contratados, e cada uma tem o seu tutorial. |
 
 ### cap12 · Termos, cópia dos dados e Zona de Perigo (vinheta: SEGURANÇA)
 

@@ -8,12 +8,12 @@ CAPS = {
 Se você ainda não viu o tutorial de Clientes, Fornecedores e Equipamentos, dá uma olhada antes. [pause] Vamos abrir a tela de Serviços.""",
 1: """Os serviços ficam no menu da esquerda, em Gestão, Serviços.
 A tela tem três abas: Tipos de Serviços, Tipos de Tarefas e Checklists. O tipo de serviço diz o que a equipe vai fazer, o checklist é o roteiro dessa visita, e o tipo de tarefa organiza os compromissos internos da agenda. A gente passa pelas três, nessa ordem.
-Na primeira aba ainda não tem nada. Aqui em cima ficam os botões Categorias e Novo Tipo. Vamos começar pelas categorias.""",
+Na primeira aba ainda não tem nada. Aqui em cima ficam os botões Categorias e Novo Serviço. Vamos começar pelas categorias.""",
 2: """As categorias agrupam serviços parecidos e depois viram um filtro na lista. Vale criar antes dos serviços.
 Escrevo o nome, escolho a cor e clico no mais. Instalação, Manutenção e Higienização.
 Pela alça do lado, dá pra arrastar e deixar na ordem que você preferir.
 Pronto, três categorias. Agora o primeiro serviço.""",
-3: """Vou cadastrar a manutenção preventiva, que é o serviço que a Glaciál mais faz. Clico em Novo Tipo.
+3: """Vou cadastrar a manutenção preventiva, que é o serviço que a Glaciál mais faz. Clico em Novo Serviço.
 Dou o nome, Manutenção Preventiva, e escolho uma cor, que identifica o serviço nas listas. Uma dica: uma cor diferente pra cada serviço ajuda a bater o olho.
 Escolho a categoria Manutenção e escrevo uma descrição curta.
 No Prefixo de Numeração OS vão as letras que abrem o número da ordem de serviço. Pra preventiva, ême-pê. Assim, quando a ordem sair, o número já mostra de que serviço se trata.

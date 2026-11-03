@@ -145,6 +145,12 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
   para os 7 usuários base. Fumaça ok (Dashboard, Clientes, Nova OS, Novo Orçamento, Estoque, Compras, Financeiro).
   Pendente: sincronizar com a cópia da skill (`ferramentas/rec/fakebase`) no fim.
 - 17:3x T7 retomado (mesmo agente): regravar tudo na 1.38.19 e entregar.
+- 17:1x **Falas da 1.38.19 reescritas** (agente de roteiro): T9 12 trocas (1.324 caracteres; total segue R$ 1.000,00 com
+  desconto R$ 85,00), T8 5, T5 6 (regravar cap02, 03, 04 só tela, 05, 06), T4 2 (+ as 2 do "Glaciál"; regravar cap01 e
+  cap03), T1 2 (regravar cap11); roteiros de T11, T13, T15 (e anotações de T14/T17) atualizados. Pronúncia ajustada por
+  mim: "á-pê-í Pública" (T1) e "Custo por quilômetro mais bê-dê-i" (T9). `trocas_1.38.19.json` em `tN/narracao/`.
+- 17:17 **Voz das falas da 1.38.19 gerada** (nós `T01/T04/T05/T08/T09 emendas 1.38.19`, 3.180 créditos; ids em
+  `scratchpad/emendas_1_38_19_nos.json`). Saldo ElevenLabs estimado ~3,2 mil. Entra no mesmo zip 6 do Kaik.
 - Agentes: levantamento do impacto da 1.38.19 (`IMPACTO_1.38.19.md`), telas e ilustrações do T0 v2 (porta 54328),
   pipeline vertical (retomado). As gravações (T2, T3 v2, T7, T8, T9, T12, T18) esperam o levantamento.
 

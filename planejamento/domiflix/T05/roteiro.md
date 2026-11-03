@@ -1,5 +1,8 @@
 # Roteiro T5 · Ordens de Serviço, Agenda, Equipes e Mapa ao Vivo
 
+> **Atualização Dominex 1.38.19 (aula já entregue na 1.38.6).** Regravar **cap02, cap03, cap04, cap05 e cap06**. Passos novos: (cap02) etapa "Atendimento e orçamento" e a linha do serviço já nasce ao escolher o tipo; (cap03) sem etapa "Orçamento" nem botão "+", o orçamento fica abaixo na mesma etapa e o "Próximo" é um só; (cap04) só a tela, a etapa agora é "Escopo técnico" (fala igual); (cap05) "Equipe e agenda" e depois a etapa "Revisão" ("Confira antes de salvar") antes de "Criar OS"; (cap06) Recorrência em "Equipe e agenda". Kanban, Lista, Filtros, Configurações de OS, detalhe, Resetar OS e Agenda não mudam. Falas: `T05/narracao/emendas_1.38.19.txt`.
+
+
 Roteiro pronto para gerar a voz e gravar (molde T3; sem etapa de aprovação, pedido do Kaik de 30/10 22:44). Coluna Fala = texto
 da narração (voz Fernanda, ElevenLabs), na grafia da legenda; a grafia de pronúncia do TTS é aplicada em `narracao/tts_textos.py`.
 Coluna Tela = o que o robô faz e onde a câmera foca, com os rótulos entre aspas como na tela (`T05/inventario.md`).
@@ -49,26 +52,26 @@ Todos os nomes, valores e datas são fictícios; as datas são relativas ao dia 
 
 | Tela | Fala |
 | --- | --- |
-| Clique em "Nova OS": abre a janela "Nova Ordem de Serviço", com as etapas numeradas e a etapa "Cliente e Serviço". | Vamos abrir a primeira ordem de serviço. Clico em Nova OS. A janela tem quatro etapas, e a primeira é Cliente e Serviço. |
+| Clique em "Nova OS": abre a janela "Nova Ordem de Serviço", com as etapas numeradas e a etapa "Atendimento e orçamento" (1.38.19; eram "Cliente e Serviço", "Orçamento", "Equipamentos e Checklists" e "Agendamento e Detalhes"; agora "Atendimento e orçamento", "Escopo técnico", "Equipe e agenda" e "Revisão"). | Vamos abrir a primeira ordem de serviço. Clico em Nova OS. A janela tem quatro etapas, e a primeira é Atendimento e orçamento. |
 | Clique em "Cliente avulso": aparece "O cliente será criado automaticamente com os dados abaixo."; volta para "Cliente cadastrado". | O cliente pode ser cadastrado ou avulso. No avulso, você digita os dados na hora, e ele já entra no cadastro de clientes. |
 | Em "Cliente *" (placeholder "Selecione o cliente"), busca "Colégio" e escolhe "Colégio Monte Verde". | Aqui é o Colégio Monte Verde, que a gente cadastrou no tutorial de clientes. |
-| Em "Tipos de Serviço" ("Selecione"), escolhe "Manutenção Preventiva" (o tipo principal primeiro). | Em Tipos de Serviço, a Manutenção Preventiva. Dá pra escolher mais de um serviço na mesma ordem, e o primeiro vira o principal, que dá a cor e o prefixo do código. |
+| Em "Tipos de Serviço" ("Selecione"), escolhe "Manutenção Preventiva" (o tipo principal primeiro): **a linha do orçamento já é criada** com "Qtd" 1 e o preço cadastrado ("O serviço entra abaixo com quantidade 1 e o preço cadastrado."), sem botão "+". | Em Tipos de Serviço, a Manutenção Preventiva. Dá pra escolher mais de um serviço na mesma ordem, e o primeiro vira o principal, que dá a cor e o prefixo do código. |
 | Liga "Endereço de serviço (diferente do cliente)": aparecem "CEP", "Número", "Endereço", "Bairro" e "UF / Cidade" e o texto "O atendimento será feito neste endereço (filial, obra, evento). Quando vazio, usa o endereço do cliente."; desliga. | E se o atendimento for em outro lugar, como uma filial ou uma obra, é só ligar o Endereço de serviço, que vale só pra essa ordem. Aqui é no colégio mesmo, então eu desligo. |
 
 ### cap03 · Orçamento e rascunho (vinheta: ORDENS DE SERVIÇO)
 
 | Tela | Fala |
 | --- | --- |
-| Clique em "Próximo": etapa "Orçamento" ("Serviços, mão de obra e materiais"). | Agora a etapa Orçamento, onde ficam os valores da ordem: serviços, mão de obra e materiais. |
-| Em "Selecionar serviço...", escolhe "Manutenção Preventiva": "Qtd" 1 e "Valor Unit." 180 vêm sozinhos; clique no "+" ("Incluir"); o rodapé "Total para faturamento" mostra R$ 180,00. [BACKEND: RPC `sync_service_order_budget` atualiza `total_value`; sem linha o valor da OS fica 0] | Escolho a Manutenção Preventiva, e a quantidade e o valor já vêm: um, e cento e oitenta reais, que é o Preço padrão que a gente cadastrou. Clico no mais, e o Total para faturamento mostra cento e oitenta reais. |
-| Fecha a janela; clique em "Nova OS": aparece "Rascunho encontrado" com "Começar do zero" e "Retomar rascunho"; clique em "Retomar rascunho": a janela reabre na etapa 1 com cliente, serviço e valor de volta. [Interromper na etapa 2: o rascunho não guarda equipamentos, checklists nem responsáveis] | Se precisar sair no meio, o rascunho guarda o cliente, os serviços e os valores. Fecho a janela, abro a Nova OS de novo, e é só clicar em Retomar rascunho. |
-| Clique em "Próximo" duas vezes (trecho acelerado) até a etapa "Equipamentos e Checklists". | Pronto, está tudo de volta. Vamos pra próxima etapa. |
+| **Sem "Próximo"** (1.38.19): na mesma etapa "Atendimento e orçamento", desce até o bloco do orçamento (chave "Precificar com BDI" desligada, "Preço livre"; totais "Serviços e mão de obra", "Materiais" e "Total para faturamento"). | Aqui embaixo, no orçamento, ficam os valores da ordem: serviços, mão de obra e materiais. |
+| A câmera para na linha "Manutenção Preventiva" já criada, com "Qtd" 1 e "Valor Unit." 180; **sem clicar em "+"** (não existe mais); o rodapé "Total para faturamento" mostra R$ 180,00. [BACKEND: RPC `sync_service_order_budget` atualiza `total_value`; sem linha o valor da OS fica 0] | A Manutenção Preventiva já entrou na linha, com a quantidade um e cento e oitenta reais, que é o Preço padrão que a gente cadastrou. E o Total para faturamento mostra cento e oitenta reais. |
+| Fecha a janela; clique em "Nova OS": aparece "Rascunho encontrado" com "Começar do zero" e "Retomar rascunho"; clique em "Retomar rascunho": a janela reabre na etapa 1 ("Atendimento e orçamento") com cliente, serviço e valor de volta. [Interromper na etapa 2: o rascunho não guarda equipamentos, checklists nem responsáveis] | Se precisar sair no meio, o rascunho guarda o cliente, os serviços e os valores. Fecho a janela, abro a Nova OS de novo, e é só clicar em Retomar rascunho. |
+| Clique em **"Próximo" uma vez** (1.38.19) até a etapa "Escopo técnico" (antes "Equipamentos e Checklists"). | Pronto, está tudo de volta. Vamos pra próxima etapa. |
 
 ### cap04 · Equipamentos e checklists (vinheta: ORDENS DE SERVIÇO)
 
 | Tela | Fala |
 | --- | --- |
-| Etapa "Equipamentos e Checklists": bloco "Equipamentos" com os aparelhos do colégio; marca "Hi-Wall 18.000 BTUs - Sala dos professores". | Agora o equipamento: marco o Hi-Wall dezoito mil BTUs da sala dos professores. Como a Manutenção Preventiva é vinculada a equipamento, a Dominex pede o aparelho. |
+| Etapa "Escopo técnico" (antes "Equipamentos e Checklists"): bloco "Equipamentos" com os aparelhos do colégio; marca "Hi-Wall 18.000 BTUs - Sala dos professores". | Agora o equipamento: marco o Hi-Wall dezoito mil BTUs da sala dos professores. Como a Manutenção Preventiva é vinculada a equipamento, a Dominex pede o aparelho. |
 | Abre a setinha do equipamento: "Serviços neste equipamento" e "Checklists aplicados" com "Manutenção preventiva de split", "13 perguntas" e "Pré-visualizar checklist". [BACKEND: RPC `sync_service_order_scope_with_services`; sem ela a OS nasce sem equipamento nem checklist e o T7 abre vazio] | Abrindo o aparelho, aparecem os serviços que vão ser feitos nele e os checklists aplicados. Olha: o da manutenção preventiva já entrou sozinho, com as treze perguntas, porque a gente ligou ele a esse serviço no tutorial anterior. |
 | Zoom em "Copiar para outros"; a câmera passa pelo bloco "Checklists avulsos" ("Checklists a nível de OS, sem equipamento vinculado."). | Dá pra pré-visualizar o checklist e copiar os serviços e checklists pra outros aparelhos da mesma ordem. Tem ainda os checklists avulsos, que valem pra ordem toda. |
 
@@ -76,19 +79,19 @@ Todos os nomes, valores e datas são fictícios; as datas são relativas ao dia 
 
 | Tela | Fala |
 | --- | --- |
-| Clique em "Próximo": etapa "Agendamento e Detalhes" com o quadro "Revisão do escopo da OS". | Última etapa: Agendamento e Detalhes. Primeiro, uma revisão do escopo, pra você conferir os serviços e os checklists de cada aparelho antes de salvar. |
+| Clique em "Próximo": etapa "Equipe e agenda" (antes "Agendamento e Detalhes"; sem o quadro "Revisão do escopo da OS", que foi para a etapa final). | Agora a etapa Equipe e agenda, é aqui que a gente escolhe quem vai atender, o dia e o horário. |
 | Abre "Responsáveis" e marca "Rafael Lima"; fecha o seletor. | Em Responsáveis, escolho quem vai: o Rafael Lima. Técnicos e equipes ficam no mesmo seletor, e as equipes a gente vê daqui a pouco. |
 | Zoom em "Período do atendimento": "Data inicial" na próxima terça; no quadro "Jornadas por dia", "Quando começa" 09:00 e "Quando termina" 11:00. | No Período do atendimento, a data é na terça, e a jornada vai das nove às onze da manhã. Se o serviço dura mais de um dia, dá pra marcar o período inteiro, com o horário de cada dia. |
 | Digita em "Descrição do Serviço": "Manutenção preventiva do Hi-Wall da sala dos professores". | Na descrição, vai o que precisa ser feito. |
 | Zoom em "Gerar Pesquisa de Satisfação ao finalizar?" (Sim). | Em Gerar Pesquisa de Satisfação ao finalizar, deixo Sim: assim o cliente pode avaliar o atendimento depois que a ordem for concluída. |
 | A câmera volta ao seletor "Responsáveis" (sem abrir aviso). | Uma dica: se o técnico já tiver outro atendimento naquele horário, o sistema avisa, e quem tem permissão pode autorizar com uma justificativa. |
-| Clique em "Criar OS": toast "OS #16 criada" com "Agendada para ... às 09:00"; o cartão "MP-2026-16" aparece na coluna PENDENTE. [BACKEND: hook de `service_orders`: `status` `pendente`, `order_number` a partir de 16, `entry_type` `os`, `origin` `manual`] | Criar OS. Pronto: a OS número dezesseis foi criada, e aparece na coluna Pendente, já com a data marcada. |
+| Clique em "Próximo": etapa "Revisão" com o resumo "Confira antes de salvar" (a câmera mostra serviços e checklists por aparelho). Clique em "Criar OS": toast "OS #16 criada" com "Agendada para ... às 09:00"; o cartão "MP-2026-16" aparece na coluna PENDENTE. [BACKEND: hook de `service_orders`: `status` `pendente`, `order_number` a partir de 16, `entry_type` `os`, `origin` `manual`] | Pra fechar, a etapa Revisão, o Confira antes de salvar, com o resumo da ordem. Conferido, Criar OS. Pronto: a OS número dezesseis foi criada, e aparece na coluna Pendente, já com a data marcada. |
 
 ### cap06 · Recorrência (vinheta: ORDENS DE SERVIÇO)
 
 | Tela | Fala |
 | --- | --- |
-| Clique em "Nova OS": cliente "Academia Ponto Forte", tipo "Higienização de Split", responsável "Lucas Ferreira" (etapas aceleradas); na última etapa, liga o interruptor "Recorrência". | Agora uma ordem que se repete. Pra Academia Ponto Forte, a higienização dos splits todo mês, com o Lucas Ferreira. Preencho como antes e, na última etapa, ligo a Recorrência. |
+| Clique em "Nova OS": cliente "Academia Ponto Forte", tipo "Higienização de Split", responsável "Lucas Ferreira" (etapas aceleradas); na etapa "Equipe e agenda", liga o interruptor "Recorrência". | Agora uma ordem que se repete. Pra Academia Ponto Forte, a higienização dos splits todo mês, com o Lucas Ferreira. Preencho como antes e, em Equipe e agenda, ligo a Recorrência. |
 | Em "Frequência" escolhe "Mensal", "A cada" 1; em "Até *" põe a data de daqui a três meses; aparece a prévia "Serão criadas N OS, de X até Y." | Em Frequência, escolho Mensal, a cada um mês, e em Até a data final. A prévia já diz quantas ordens vão ser criadas, antes de salvar. |
 | Clique em "Criar OS Recorrentes"; toast "4 OS criadas com recorrência!"; as quatro aparecem no Kanban. [BACKEND: o hook grava `recurrence_group_id` e status `pendente` nas OS da série; `order_number` 17 a 20] | Criar OS Recorrentes. Pronto, a série inteira foi criada de uma vez. |
 | Zoom nos cartões da série no Kanban (sem editar). | Se você mudar a data de uma ordem da série, o sistema pergunta se vale só pra ela ou também pras próximas; é só escolher o que faz sentido. |

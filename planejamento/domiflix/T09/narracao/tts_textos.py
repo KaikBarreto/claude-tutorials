@@ -27,25 +27,25 @@ Em Recursos, vinculo a van zero um. Ela custa vinte reais por hora, e o serviço
 Em Materiais, escolho do estoque um limpa-evaporador em isprei, uma fita isolante e uma mangueira de dreno, um de cada. Aqui o material entra pelo preço de custo, e o total é trinta reais.
 No Resumo, a soma: quarenta e oito reais de mão de obra, trinta reais de recurso e trinta reais de material, ou seja, cento e oito reais de custo. Dividido pelo bê-dê-i, o preço sugerido é cento e oitenta reais.
 Isso se faz uma vez só. Daí em diante, o preço sai calculado em todo orçamento.""",
-5: """Com o motor de preço pronto, vamos montar o orçamento. Em Novo Orçamento, o assistente tem cinco etapas, e a primeira é o destinatário.
+5: """Com o motor de preço pronto, vamos montar o orçamento. Em Novo Orçamento, o assistente tem três etapas, e a primeira é a Montagem, que começa pelo destinatário.
 Posso orçar para um cliente cadastrado ou para um prospecto, alguém que ainda não é cliente e só precisa de um nome. Ainda não é cliente? Orce como prospecto.
-Hoje é cliente cadastrado: a Pousada Brisa do Mar. Avanço.""",
-6: """A segunda etapa são os serviços. No alto, o bloco do bê-dê-i já vem com as taxas que salvei na Precificação. Elas valem só para este orçamento, e posso ajustar se precisar.
+Hoje é cliente cadastrado: a Pousada Brisa do Mar.""",
+6: """Descendo na mesma tela, chegam os serviços. No bloco Configurações bê-dê-i, o Ajustar taxas e entender o bê-dê-i mostra as taxas que salvei na Precificação. Elas valem só para este orçamento, e posso ajustar se precisar.
 Escolho a Higienização de Split e a quantidade, três, que são os três splits da pousada. O preço unitário já sai calculado: cento e oitenta reais, que é o custo de cento e oito reais dividido pelo bê-dê-i.
 Clicando no nome do serviço, vejo de onde vem o preço: a mão de obra, os materiais, os custos extras e o custo total de cada unidade.
 Agora a Carga de Gás. Esse serviço ainda não tem custo cadastrado, e a Dominex avisa com o selo Sem custos configurados. Nesse caso, o preço vem do preço padrão do tipo de serviço: trezentos e cinquenta reais.
 O subtotal dos serviços fecha em oitocentos e noventa reais.
 Uma dica: se você digita o preço na mão, ou muda a quantidade depois, aquela linha deixa de acompanhar as taxas do bê-dê-i.""",
-7: """A terceira etapa traz os materiais. Em Adicionar materiais, busco gás e escolho o Gás refrigerante érre quatrocentos e dez á. O preço que aparece, cento e cinquenta reais por quilo, é o preço de venda cadastrado no estoque.
+7: """Logo abaixo ficam os materiais. Em Adicionar materiais, busco gás e escolho o Gás refrigerante érre quatrocentos e dez á. O preço que aparece, cento e cinquenta reais por quilo, é o preço de venda cadastrado no estoque.
 Coloco um quilo e adiciono ao orçamento. O material do estoque entra pelo preço de venda, sem bê-dê-i, e a lista não mostra saldo, porque orçar não consome estoque.
-Embaixo, o deslocamento: dezoito quilômetros. A Dominex multiplica pelo custo por quilômetro da Precificação e mostra vinte e sete reais.""",
-8: """Na quarta etapa, o desconto, que pode ser em reais ou em porcentagem. Dou sessenta e sete reais, e o total do orçamento vai fechar em mil reais.
-A caixa de brindes eu deixo como está.
+Embaixo, o deslocamento: dezoito quilômetros. A Dominex multiplica pelo custo por quilômetro, que dá vinte e sete reais de custo, e, na modalidade Custo por quilômetro mais bê-dê-i, o preço resultante é de quarenta e cinco reais.""",
+8: """No Próximo, entram as Condições comerciais, com o desconto em reais ou em porcentagem. Dou oitenta e cinco reais, e o Preço praticado, aqui do lado, vai fechar em mil reais.
+A caixa de brindes e o número de parcelas, em À vista, eu deixo como estão.
 Em Observações, escrevo o horário de atendimento. Em Condições e Termos, a regra do serviço: executado depois da aprovação, em data combinada com o cliente.
 Repara que os dois textos saem na proposta do cliente: Condições e Termos aparece como Informações adicionais, e Observações aparece com o mesmo nome. Então escrevo pensando nele.""",
-9: """A última etapa é a validade e a revisão. Em Válido até, marco quinze dias à frente: é a data que o cliente vê na proposta. O modelo é o clin, e o pagamento, à vista.
-O resumo mostra dois valores. A Sugestão pelo bê-dê-i, setecentos e trinta e cinco reais, é só uma referência para você. Ela sai dos custos cadastrados, e a Carga de Gás ainda não tem custo, por isso a sugestão fica abaixo.
-O que vale é o Total do orçamento, mil reais: os preços das linhas, mais o deslocamento, menos o desconto. É o valor da proposta e da ordem de serviço.
+9: """Agora a última etapa, Revisão e envio. Em Válido até, marco quinze dias à frente: é a data que o cliente vê na proposta. O modelo é o clin, com a Capa da proposta ao lado.
+No resumo, aqui do lado, o Preço sugerido, mil e oitenta e cinco reais, é só uma referência para você. Logo abaixo, o guia O que entra no bê-dê-i mostra o que o bê-dê-i calcula sozinho e o que fica de fora, como a Carga de Gás e o gás, que entram pelo preço cadastrado.
+O que vale é o Preço praticado, mil reais: os preços das linhas, mais o deslocamento, menos o desconto. É o valor da proposta e da ordem de serviço.
 Embaixo, as opções de pagamento: novecentos e cinquenta reais à vista, com cinco por cento de desconto, ou dez parcelas de cem reais no cartão.
 Clico em Criar Orçamento. Ele entra na lista como Rascunho, e ainda não foi para o cliente.""",
 10: """Agora, o documento que o cliente recebe. Em Configurar Proposta, o primeiro passo é o modelo: clin, Vanguarda, Aurora ou Prisma, cada um com uma capa diferente.
@@ -79,7 +79,7 @@ Clico em Gerar OS. A ordem nasce com os serviços, os equipamentos, os checklist
 Na tela de Ordens de Serviço, a OS número dezessete já está lá, agendada, no valor de mil reais. Falta só escolher o técnico e a data, como no tutorial de Ordens de Serviço.
 Uma dica: o Gerar OS não mexe no estoque. O consumo de material é lançado na própria ordem, quando o técnico a executa.""",
 16: """Pronto! Recapitulando: você ensinou a Dominex a calcular o preço. Salvou as taxas na Precificação, cadastrou a van zero um nos Custos Globais e montou o custo da higienização, que virou preço pelo bê-dê-i.
-Montou o orçamento em cinco etapas, com serviços, materiais, deslocamento e desconto, e viu a diferença entre a Sugestão pelo bê-dê-i e o Total do orçamento.
+Montou o orçamento em três etapas, com serviços, materiais, deslocamento e desconto, e viu a diferença entre o Preço sugerido e o Preço praticado.
 Configurou a proposta, gerou o link, viu o que o cliente vê, aprovou com um clique e acompanhou as visualizações.
 Aprovou outro orçamento por dentro, com as parcelas, e transformou o aprovado em ordem de serviço, distribuída pelos equipamentos.
 Com o orçamento fechado, o próximo passo é encher o funil de novos clientes. No próximo tutorial, a gente vê o cê-érre-ême. Até lá!""",

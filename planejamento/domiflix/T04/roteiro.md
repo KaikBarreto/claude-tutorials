@@ -1,5 +1,8 @@
 # Roteiro T4 · Tipos de Serviço, Tipos de Tarefa e Checklists
 
+> **Atualização Dominex 1.38.19 (aula já entregue na 1.38.6).** Regravar **cap01 (A tela de Serviços)** e **cap03 (Cadastrando o primeiro serviço)**: o botão da aba "Tipos de Serviços" agora se chama "Novo Serviço" e a janela também; o resto igual (a edição segue "Editar Tipo de Serviço"; "Tipos de Tarefa" e "Checklists" não mudam, então o cap07 fica). Falas: `T04/narracao/emendas_1.38.19.txt`. Atenção: o `trocas_1.38.19.json` do t4 repete as duas trocas de pronúncia do cap03 (Glaciál), porque o `emendar.py` sempre parte do take original.
+
+
 Roteiro pronto para gerar a voz e gravar (molde T3; sem etapa de aprovação, pedido do Kaik de 30/10 22:44). Coluna Fala = texto
 da narração (voz Fernanda, ElevenLabs), na grafia da legenda; a grafia de pronúncia do TTS é aplicada em `narracao/tts_textos.py`.
 Coluna Tela = o que o robô faz e onde a câmera foca, com os rótulos entre aspas como na tela (`T04/inventario.md`).
@@ -38,7 +41,7 @@ Todos os nomes, valores e códigos são fictícios.
 | --- | --- |
 | Clique em "Serviços" no grupo Gestão do menu lateral; abre a tela com o título "Serviços" e o subtítulo "Configure os tipos de serviços, tarefas e checklists". [TESTAR: gravar sempre por Gestão e Serviços (`/checklists` e `/questionarios` redirecionam para a aba padrão)] | Os serviços ficam no menu da esquerda, em Gestão, Serviços. |
 | Zoom nas abas "Tipos de Serviços", "Tipos de Tarefas" e "Checklists". | A tela tem três abas: Tipos de Serviços, Tipos de Tarefas e Checklists. O tipo de serviço diz o que a equipe vai fazer, o checklist é o roteiro dessa visita, e o tipo de tarefa organiza os compromissos internos da agenda. A gente passa pelas três, nessa ordem. |
-| Aba "Tipos de Serviços" vazia ("Nenhum tipo de serviço"); zoom nos botões "Categorias" e "Novo Tipo", na linha das abas. | Na primeira aba ainda não tem nada. Aqui em cima ficam os botões Categorias e Novo Tipo. Vamos começar pelas categorias. |
+| Aba "Tipos de Serviços" vazia ("Nenhum tipo de serviço"); zoom nos botões "Categorias" e "Novo Serviço" (1.38.19; era "Novo Tipo"), na linha das abas. | Na primeira aba ainda não tem nada. Aqui em cima ficam os botões Categorias e Novo Serviço. Vamos começar pelas categorias. |
 
 ### cap02 · Categorias (vinheta: SERVIÇOS)
 
@@ -53,7 +56,7 @@ Todos os nomes, valores e códigos são fictícios.
 
 | Tela | Fala |
 | --- | --- |
-| Clique em "Novo Tipo": abre o modal "Novo Tipo de Serviço", aba "Dados" (pílulas "Dados" e "Fiscal"). [Lista vazia: o primeiro tipo nasce limpo; os demais não são criados ao vivo por causa da pegadinha P1] | Vou cadastrar a manutenção preventiva, que é o serviço que a Glacial mais faz. Clico em Novo Tipo. |
+| Clique em "Novo Serviço" (1.38.19; era "Novo Tipo"): abre o modal "Novo Serviço", aba "Dados" (pílulas "Dados" e "Fiscal"). [Lista vazia: o primeiro tipo nasce limpo; os demais não são criados ao vivo por causa da pegadinha P1] | Vou cadastrar a manutenção preventiva, que é o serviço que a Glacial mais faz. Clico em Novo Serviço. |
 | Digita "Manutenção Preventiva" em "Nome *"; em "Cor", digita `#22C55E` no campo de texto ao lado do quadrado (`{"selector":"input[type=color] + input"}`). | Dou o nome, Manutenção Preventiva, e escolho uma cor, que identifica o serviço nas listas. Uma dica: uma cor diferente pra cada serviço ajuda a bater o olho. |
 | Em "Categoria", escolhe "Manutenção"; digita em "Descrição": "Limpeza e conferência completa do aparelho". | Escolho a categoria Manutenção e escrevo uma descrição curta. |
 | Digita "MP" em "Prefixo de Numeração OS"; zoom na prévia embaixo do campo. | No Prefixo de Numeração OS vão as letras que abrem o número da ordem de serviço. Pra preventiva, MP. Assim, quando a ordem sair, o número já mostra de que serviço se trata. |

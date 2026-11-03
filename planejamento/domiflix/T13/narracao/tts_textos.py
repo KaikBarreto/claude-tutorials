@@ -12,9 +12,9 @@ Cobranças é o módulo de cobrar o cliente por pix, boleto ou cartão, e em Rel
 Lá em cima ficam o filtro de período, que começa em Este mês, e o botão Configurações Financeiras, onde moram as categorias.
 Uma dica: o período vale pra tela inteira. Então, antes de ler qualquer número, confere qual período está escolhido.""",
 2: """Antes de lançar qualquer coisa, o sistema precisa saber de onde o dinheiro sai e pra onde ele vai. Isso fica em Movimentações Financeiras, nesta coluna, Contas e cartões.
-Duas contas já vêm com a empresa: o Caixa, que é o dinheiro em espécie do escritório, e a Conta Principal, que é o banco. Logo acima fica a Conciliação, onde você importa o extrato do banco pra conferir com o sistema.
+Duas contas já vêm com a empresa: o Caixa, que é o dinheiro em espécie do escritório, e a Conta Principal, que é o banco. No alto da tela, ao lado do título, o botão Conciliação bancária é onde você importa o extrato do banco pra conferir com o sistema.
 As duas começam com saldo zero, então o primeiro passo é acertar o saldo inicial. No menu da Conta Principal, clico em Editar e, no Saldo Inicial, coloco o que tem no banco hoje: dezoito mil e quinhentos reais.
-Repara no Faz parte do caixa da empresa. Ligado, o dinheiro dessa conta entra no fluxo de caixa dos próximos dias. Já uma poupança ou um investimento você cria em Nova conta, aqui embaixo, com essa opção desligada.
+Repara no Faz parte do caixa da empresa. Ligado, o dinheiro dessa conta entra no fluxo de caixa dos próximos dias. Já uma poupança ou um investimento você cria em Nova conta, no mais do grupo Contas, com essa opção desligada.
 No Caixa, do mesmo jeito, os oitocentos reais em espécie. Pronto, as duas contas já mostram o saldo.""",
 3: """Conta criada, agora o primeiro dinheiro entrando. Abro a Conta Principal: em cima o saldo, e embaixo o extrato, ainda vazio.
 Clico em Nova movimentação, e escolho entre Receita, Despesa ou Transferência. Imagina que a equipe terminou a instalação de um split no Mercado Vila Nova, e o cliente pagou na hora. É uma Receita.
