@@ -4,6 +4,7 @@ Cores e fonte vem da marca (kit/ui.py): cartoes em ui.lower_third/callout/spot_l
 Todos os tempos do JSON sao em segundos do video (mesmo relogio da telemetria)."""
 import glob, json, os, subprocess
 import numpy as np, cv2
+from PIL import Image, ImageDraw
 from stage import ui
 from camera import W, H
 
@@ -24,6 +25,29 @@ def paste(img, spr_pad, x, y, alpha=1.0, fit_w=None):
 
 def size_of(spr_pad):
     return spr_pad[0].width - 2 * spr_pad[1], spr_pad[0].height - 2 * spr_pad[1]
+
+
+_LAT = {}
+
+
+def callout_coluna(text, w_max):
+    """T7 (celular): o mesmo aviso do kit (pílula escura, ponto no acento, Montserrat 600 / 30 px), mas em coluna de no máximo
+    `w_max` px, para ficar AO LADO do aparelho sem encolher o texto (o aviso de uma linha ficaria ilegível dentro de 447 px)."""
+    k = (text, int(w_max))
+    if k in _LAT: return _LAT[k]
+    f = ui.font(600, 30); avail = int(w_max) - 74; linhas, cur = [], ""
+    for p in text.split(" "):
+        t = (cur + " " + p).strip()
+        if not cur or f.getbbox(t)[2] <= avail: cur = t
+        else: linhas.append(cur); cur = p
+    linhas.append(cur)
+    lh, pv = 40, 21; w = max(f.getbbox(l)[2] for l in linhas) + 74; h = lh * len(linhas) + 2 * pv
+    spr = ui.rrect(w, h, 18, ui.DARK + (236,)); d = ImageDraw.Draw(spr); y0 = pv + lh // 2
+    d.ellipse([22, y0 - 5, 32, y0 + 5], fill=ui.ACCENT_TEXT + (255,))
+    for i, l in enumerate(linhas): d.text((44, pv + lh * i + lh // 2), l, font=f, fill=(255, 255, 255, 255), anchor="lm")
+    spr2 = Image.new("RGBA", (w + 14, h)); spr2.alpha_composite(spr)
+    _LAT[k] = ui.with_shadow(spr2, 16, 0.3, 8)
+    return _LAT[k]
 
 
 class Illus:
@@ -124,6 +148,7 @@ class Overlays:
         self.title = ch.get("title"); self.kicker = ch.get("title_kicker", ""); self.t_at = float(ch.get("title_at", 0.5))
         self.t_dur = float(ch.get("title_dur", 3.6)); self.callouts = ch.get("callouts", []); self.spots = ch.get("spots", [])
         self.illus = [Illus(d, base) for d in ch.get("illustrations", [])]
+        self.lateral = bool((ch.get("stage") or {}).get("phone")); self._wlat = {}   # celular: avisos em coluna ao lado do aparelho
 
     def under(self, img, t):
         for il in self.illus: il.draw(img, t)
@@ -147,6 +172,17 @@ class Overlays:
         for co in self.callouts:
             a, b = float(co["at"]), float(co["at"]) + float(co.get("dur", 3.0)); al = min(eoc((t - a) / 0.3), eoc((b - t) / 0.25))
             if al <= 0: continue
+            if self.lateral:   # ao lado do aparelho (a câmera mantém o celular no meio do quadro): nunca cobre a tela
+                ci = id(co)
+                if ci not in self._wlat:   # largura escolhida uma vez, pela folga ao lado do aparelho no 1º quadro do aviso
+                    folga = max(W - X1 - 30 - 24, X0 - 30 - 24); self._wlat[ci] = int(min(420, max(300, folga)))
+                c = callout_coluna(co["text"], self._wlat[ci]); cw, chh = size_of(c)
+                x_ = X1 + 30
+                if x_ + cw > W - 24: x_ = X0 - 30 - cw if X0 - 30 - cw >= 24 else W - 24 - cw
+                top = co.get("pos") == "top"
+                y_ = (Y0 + 40 if Y0 > 0 else 40) - 10 * (1 - al) if top else min(Y1, H) - 44 - chh + 10 * (1 - al)
+                paste(img, c, x_, y_, al)
+                continue
             c = ui.callout(co["text"]); cw, chh = size_of(c)
             cy_ = Y0 + 26 - 10 * (1 - al) if co.get("pos") == "top" else Y1 - 30 - chh + 10 * (1 - al)
             paste(img, c, (X0 + X1) / 2 - cw / 2, cy_, al, fit_w=X1 - X0 - 40)

@@ -3,13 +3,16 @@ Os zooms e destaques apontam para os RÓTULOS dos passos do roteiro do robô (re
 instantes vêm do <nome>.actions.json da gravação. A narração é a do capítulo (<tutorial>/narracao/capNN.json -> audio48k.wav),
 começando em t=0 do vídeo, como os roteiros foram cronometrados.
 
+T7 (celular): a gravação tem "device": "phone" (quadro 780x1688). O montador lê o tamanho do vídeo do actions.json, põe o aparelho
+genérico no palco (`stage.phone`), o toque como anel (`cursor.touch`, sem seta) e usa `min_w` em pixels do vídeo do celular
+(zoom = 3348 / (min_w * 1,24), entre 1,15x e 3,5x: min_w 1100 ~ 2,4x; 900 ~ 3x; 1400 ~ 1,9x).
 uso: python3 <tutorial>/edit/montar_cap.py NN [NN ...]   -> <tutorial>/edit/caps/capNN.chapter.json
 especificação: <tutorial>/edit/caps/specs.json
   {"NN": {"titulo": "...", "kicker": "...", "sem_titulo": false,
           "zooms":  [{"de": "<rótulo>", "ate": "<rótulo>"?, "fim": "<rótulo>" | segundos | "+1.5"?, "escala"?, "min_w"?, "atraso"?}],
           "spots":  [{"passo": "<rótulo>", "antes": 1.2, "dur": 1.8, "rotulo": "Novo Cliente"?}],
           "callouts": [{"palavra": [linha, "texto"] | "at": s, "dur": 3, "texto": "...", "pos": "bottom"}],
-          "ilustracoes": [{"at"|"palavra", "dur", "src", "box"}]}}"""
+          "ilustracoes": [{"at"|"palavra", "dur", "src", "box"}], "repouso": [[de, até], ...]?}}"""
 import json
 import os
 import sys
@@ -26,10 +29,12 @@ def fundo():
 
 
 TUT = os.path.basename(os.path.dirname(HERE))  # id do tutorial = nome da pasta (ex.: t3); gravações em rec/<id>/<id>-capNN.*
-REC = os.path.join(DOMI, "rec", TUT)
+REC = os.environ.get("TUT_REC") or os.environ.get("T7_REC") or os.path.join(DOMI, "rec", TUT)   # TUT_REC=rec/tN/_ens: confere os rótulos do specs contra um ensaio
 NARR = os.path.join(DOMI, TUT, "narracao")
 CAPS = os.path.join(HERE, "caps")
-SW, SH = 2560, 1600
+SW, SH = 780, 1688   # celular (device "phone": 390x844 @2x); montar() confere com o actions.json de cada gravação
+FASE_CELULAR = {"margin": 56, "radius": 46, "shadow": 0.45, "phone": {"bezel": 14}}
+CAMERA_CELULAR = {"auto": True, "depth": 2.3}
 
 
 def passo(acts, rot):
@@ -53,14 +58,19 @@ def ajusta(x0, y0, x1, y1, min_w):
     if w < min_w:
         cx = (x0 + x1) / 2
         x0, x1 = cx - min_w / 2, cx + min_w / 2
-    min_h = min_w * 1600 / 2560 * 0.55
+    min_h = min_w * 9 / 16 * 0.55
     if h < min_h:
         cy = (y0 + y1) / 2
         y0, y1 = cy - min_h / 2, cy + min_h / 2
-    dx = max(0, -x0) - max(0, x1 - SW)
-    dy = max(0, -y0) - max(0, y1 - SH)
+    dx = max(0, -x0) - max(0, x1 - SW) if (x1 - x0) <= SW else SW / 2 - (x0 + x1) / 2   # mais largo que o celular: centra
+    dy = max(0, -y0) - max(0, y1 - SH) if (y1 - y0) <= SH else SH / 2 - (y0 + y1) / 2
     x0, x1, y0, y1 = x0 + dx, x1 + dx, y0 + dy, y1 + dy
     return [round(x0), round(y0), round(x1 - x0), round(y1 - y0)]
+
+
+def tamanho_do_video(A):
+    v = A["video"]
+    return int(v.get("width", SW)), int(v.get("height", SH))
 
 
 def t_palavra(narr, ref):
@@ -79,11 +89,14 @@ def montar(nn):
     acts = [a for a in A["actions"] if a.get("ok", True)]
     narr = json.load(open(os.path.join(NARR, f"cap{nn}.json")))
     dur_v = float(A["video"]["durationS"])
+    global SW, SH
+    SW, SH = tamanho_do_video(A)
     ch = {"name": f"cap{nn}", "video": base + ".mp4", "telemetry": base + ".telemetry.json",
           "narration": os.path.join(narr["pasta"], "audio48k.wav"), "audio_offset": 0.0,
           "trim": {"start": 0.0, "end": round(min(dur_v, narr["dur"] + spec.get("cauda", 0.8)), 3)},
-          "camera": {"auto": True, "depth": 1.8}, "cursor": {"size": spec.get("cursor", 2.8)},
-          "stage": {"bg": fundo(), "shadow": 0.35},
+          "camera": {**CAMERA_CELULAR, **spec.get("camera", {})},
+          "cursor": {"show": False, "touch": True, "ring_alpha": 0.7, "size": spec.get("cursor", 2.8)},
+          "stage": {"bg": fundo(), **FASE_CELULAR},
           "zooms": [], "spots": [], "callouts": [], "illustrations": [],
           "output": {"dir": os.path.join(HERE, "out", f"cap{nn}"), "crf": 18, "preset": "veryfast"}}
     if not spec.get("sem_titulo"):  # título vai na vinheta de capítulo (finish.py), não no cartão pequeno do editor
@@ -93,7 +106,7 @@ def montar(nn):
         b = passo(acts, z.get("ate", z["de"]))
         i0, i1 = acts.index(a), acts.index(b)
         rs = [x["rect"] for x in acts[i0:i1 + 1] if x.get("rect")]
-        rect = ajusta(*uniao(rs), z.get("min_w", 1150))
+        rect = ajusta(*uniao(rs), z.get("min_w", 1100))
         fim = z.get("fim")
         if fim is None:
             e = b["tEnd"] + 0.4
@@ -107,8 +120,8 @@ def montar(nn):
         if "escala" in z:
             item["scale"] = z["escala"]
         ch["zooms"].append(item)
-    for r in spec.get("repouso", []):  # [[de, até], ...] em s: câmera parada (zoom 1) sob uma ilustração que cobre a janela; o zoom automático dos cliques não puxa a tela
-        ch["zooms"].append({"at": float(r[0]), "end": float(r[1]), "scale": 1.0, "target": [1280, 800]})
+    for r in spec.get("repouso", []):  # [[de, até], ...] em s: câmera parada (zoom 1) sob uma ilustração que cobre o palco; o zoom automático dos cliques não puxa a tela
+        ch["zooms"].append({"at": float(r[0]), "end": float(r[1]), "scale": 1.0, "target": [SW / 2, SH / 2]})
     for s in spec.get("spots", []):
         a = passo(acts, s["passo"])
         r = a["rect"]
