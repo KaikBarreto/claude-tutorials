@@ -8,7 +8,15 @@ JSON do capítulo (o mesmo do 16:9, de capitulos_ilustrados.py): {"name","video"
   "trim":{"start","end"}?, "callouts"?, "spots"?, "output":{"dir"}}. O "video" tem de ser 1080x1920 a 30 q/s.
   audio_offset: s em que a narração começa no relógio do vídeo (< 0 corta o começo dela: vídeo gerado com --de).
 Recorte (trim) diferente do vídeo inteiro não é aceito aqui: gere só o trecho com render_cenas_vertical.cjs --de/--ate.
-Capítulo com gravação do celular (tela real recortada) depende do render_chapter.py com a câmera do celular: não é este."""
+
+GRAVAÇÃO DO CELULAR (JSON com "telemetry"; vídeo 390x844 CSS, "device": "phone"): a tela real é recortada na área que a fala cita e
+ampliada 2,4x (390 -> 936 px) numa janela do painel (formato_9x16.json "tela_real"), sem moldura de aparelho, acima da faixa da
+legenda e com 72 px de margem; câmera v2 (alvos do actions.json/telemetria), anel do toque e destaques/avisos como no 16:9 (módulo
+celular_vertical.py; camera.py, cursor.py e overlay.py não são alterados). Aceita "trim" e grava um MP4 final (como o render_chapter.py):
+  uso: ... <capitulo.json> [--out video.mp4] [--range a:b] [--stills t1,t2] [--crf 17] [--preset veryfast] [--aceitar-camera] [--no-audio]
+  JSON: o mesmo do capítulo de celular do 16:9 ("video","telemetry","narration","audio_offset","trim","zooms","spots","callouts",
+  "camera","cursor","stage":{"bg": palco vertical}, "output"); extras só do vertical: "camera_9x16", "scale9" nos zooms.
+Roda sob `flock $TUT_HOME/.heavy.lock nice -n 10` (reexecuta sozinho)."""
 import json
 import os
 import sys
@@ -38,17 +46,41 @@ OUTD = rp(ch.get("output", {}).get("dir", "out"))
 VIDEO = rp(ch["video"])
 os.makedirs(OUTD, exist_ok=True)
 
+CEL = "telemetry" in ch  # gravação do celular: composição própria (celular_vertical.py)
+if CEL:
+    from common import ensure_heavy
+    ensure_heavy()
 info = probe(VIDEO)
-if (info["w"], info["h"]) != (W, H):
+if not CEL and (info["w"], info["h"]) != (W, H):
     sys.exit(f"{VIDEO}: {info['w']}x{info['h']}; o capítulo vertical é o quadro final {W}x{H} (render_cenas_vertical.cjs)")
-if abs(info["fps"] - FPS) > 0.01:
+if not CEL and abs(info["fps"] - FPS) > 0.01:
     sys.exit(f"{VIDEO}: {info['fps']:.2f} q/s; o vertical é {FPS} q/s")
 trim = ch.get("trim", {})
 t0, t1 = float(trim.get("start", 0.0)), float(trim.get("end") or info["dur"])
-if t0 > 0.001 or t1 < info["dur"] - 0.05:
+if "--range" in argv and CEL:
+    a, b = map(float, opt("--range").split(":")); t0, t1 = max(t0, a), min(t1, b)
+if not CEL and (t0 > 0.001 or t1 < info["dur"] - 0.05):
     sys.exit(f"trim {t0}..{t1} s diferente do vídeo inteiro (0..{info['dur']:.2f} s): gere só o trecho com render_cenas_vertical.cjs --de/--ate")
-N = int(round(info["dur"] * FPS))
+N = int(round((t1 - t0) * FPS)) if CEL else int(round(info["dur"] * FPS))
+if CEL:
+    import time
+    import cv2
+    from celular_vertical import CapituloCelular
+    C = CapituloCelular(ch, rp, VIDEO, info["w"], info["h"], info["dur"], t0, t1)
+    if C.problemas:
+        print("CHECAGEM DA CÂMERA:", *C.problemas, sep="\n  ", flush=True)
+        if "--stills" not in argv and "--aceitar-camera" not in argv:
+            sys.exit("câmera com alvo fora da janela do celular: corrija o zoom/roteiro (ou --aceitar-camera, com motivo)")
 
+if "--stills" in argv and CEL:
+    sd = os.path.join(OUTD, "stills")
+    os.makedirs(sd, exist_ok=True)
+    for t in map(float, opt("--stills").split(",")):
+        from common import still
+        img, n = C.compose(t, still(VIDEO, t, info["w"], info["h"]))
+        cv2.imwrite(os.path.join(sd, f"{NAME}_{t:07.2f}.png"), cv2.cvtColor(img, cv2.COLOR_RGB2BGR))
+        print(f"t={t:.2f} sub-quadros={n} -> {sd}")
+    sys.exit(0)
 if "--stills" in argv:
     import cv2
     sd = os.path.join(OUTD, "stills")
@@ -90,6 +122,27 @@ def alinhar_audio(out_wav):
 
 out_wav = opt("--wav", os.path.join(OUTD, NAME + ".wav"))
 has_audio = False if "--no-audio" in argv else alinhar_audio(out_wav)
+if CEL:
+    import subprocess
+    from common import Reader
+    out_mp4 = opt("--out", os.path.join(OUTD, NAME + ".mp4"))
+    crf, preset = opt("--crf", ch.get("output", {}).get("crf", 17)), opt("--preset", ch.get("output", {}).get("preset", "veryfast"))
+    enc = subprocess.Popen(["ffmpeg", "-v", "error", "-y", "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{W}x{H}", "-r", str(FPS), "-i", "-",
+                            "-vf", "scale=out_color_matrix=bt709:out_range=tv:flags=accurate_rnd+full_chroma_int,format=yuv420p", "-c:v", "libx264",
+                            "-preset", str(preset), "-crf", str(crf), "-g", "60", "-colorspace", "bt709", "-color_primaries", "bt709", "-color_trc", "bt709",
+                            "-color_range", "tv", "-movflags", "+faststart", out_mp4], stdin=subprocess.PIPE)
+    rd = Reader(VIDEO, info["w"], info["h"], t0, FPS); t_wall = time.time(); moving = 0
+    for f in range(N):
+        t = t0 + f / FPS; img, n = C.compose(t, rd.next()); enc.stdin.write(img.tobytes()); moving += n > 1
+        if f % 30 == 29 or f == N - 1:
+            el = time.time() - t_wall; print(f"\r{f + 1}/{N} quadros  {(f + 1) / el:.1f} q/s", end="", flush=True)
+    enc.stdin.close(); enc.wait(); rd.close(); C.ov.close(); el = time.time() - t_wall
+    side = dict(name=NAME, video=out_mp4, wav=out_wav if has_audio and os.path.exists(out_wav) else None, title=ch.get("title"), dur=N / FPS,
+                frames=N, start=t0, zoom_in=C.zoom_in(), regions=C.regioes(), callouts=[{**c, "at": c["at"] - t0} for c in ch.get("callouts", [])],
+                spots=ch.get("spots", []), stats=dict(formato="9x16", celular=True, wall_s=round(el, 1), frames_with_blur=int(moving)))
+    json.dump(side, open(os.path.splitext(out_mp4)[0] + ".edit.json", "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+    print(f"\nok {out_mp4}  ({N / FPS:.1f} s, {el:.0f} s de render, {moving} quadros com desfoque)")
+    sys.exit(0)
 side = dict(name=NAME, video=VIDEO, wav=out_wav if has_audio and os.path.exists(out_wav) else None, title=ch.get("title"), dur=N / FPS, frames=N,
             start=t0, zoom_in=[], regions=[], callouts=[{**c, "at": c["at"] - t0} for c in ch.get("callouts", [])], spots=ch.get("spots", []),
             stats=dict(formato="9x16", sem_recodificar=True))

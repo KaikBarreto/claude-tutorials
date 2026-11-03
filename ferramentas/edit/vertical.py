@@ -22,6 +22,7 @@ PX, PY, PW, PH, PR, PSOMBRA = _p["x"], _p["y"], _p["largura"], _p["altura"], _p[
 PAINEL = (PX, PY, PW, PH)
 SEGURA = (GEO["segura"]["x0"], GEO["segura"]["y0"], GEO["segura"]["x1"], GEO["segura"]["y1"])
 LEGENDA_FAIXA = (GEO["legenda_faixa"]["y0"], GEO["legenda_faixa"]["y1"])  # onde o player do celular desenha a legenda
+TELA_X, TELA_Y, TELA_W, TELA_H, TELA_R = (GEO["tela_real"][k] for k in ("x", "y", "largura", "altura", "raio"))  # janela da tela real (celular)
 TEXTO_MIN, LINHAS_MAX, LEGENDA_COL = GEO["texto_min"], GEO["linhas_max"], GEO["legenda_coluna"]
 
 
