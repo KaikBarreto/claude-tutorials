@@ -343,7 +343,7 @@ async function moveToTarget(ctx, step, { allowScroll = true } = {}) {
   const timeoutMs = (step.timeout ?? ctx.script.timeout ?? 12) * 1000;
   const loc = locatorFor(ctx.page, step.target);
   let box = await stableBox(loc, timeoutMs);
-  if (allowScroll) box = await ensureVisible(ctx, loc, box, timeoutMs);
+  if (allowScroll && !step.noScroll) box = await ensureVisible(ctx, loc, box, timeoutMs); // noScroll: alvo fixo fora da faixa 96..altura-70 (cabeçalho/barra de baixo do celular): sem rolar à toa (~6 s)
   let pt = pickPoint(box, ctx.rng);
   await ctx.h.moveTo(pt.x, pt.y);
   // confere se o alvo continua onde estava (animacao/layout) e se e ele que esta sob o ponteiro

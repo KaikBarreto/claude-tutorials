@@ -101,6 +101,9 @@ atrasado, e o atraso se soma ao do passo seguinte. Medido no T3 v2 (app 1.38.9, 
   entra com folga ≥ 1,5 s; uma cadeia de hovers só cabe se `custo + seconds` ≤ intervalo entre as palavras.
 - **Digitar sem esperar**: `click` no campo e depois `type` com `noClick: true`, `cps` 40, `at` = palavra − 0,05. Texto longo ou
   sem graça visual: `colar()` do `gerar.py` do T3 v2 (`document.execCommand('insertText')`, ~0,05 s; o valor fica no `actions.json`).
+- **Alvo fixo no topo ou na base da tela** (cabeçalho, barra de baixo do celular): o robô só aceita alvo entre y 96 e a altura
+  − 70 e tenta rolar a página 6 vezes (~6 s de atraso). Use `"noScroll": true` no passo: clique de verdade, com anel e
+  telemetria, sem rolar (T0 v2, celular, "Ver trilha" e "Menu").
 - **Foco por `eval`, não por Tab**: depois de escolher um item de um Select (Radix) o foco volta ao seletor com atraso, e há tab stops
   escondidos entre os campos. Focar pelo seletor (`input[placeholder="Marca"].focus()`) e, para "Adicionar opção", clicar o botão
   pelo texto e focar a linha nova (`ADD_OPCAO`).
