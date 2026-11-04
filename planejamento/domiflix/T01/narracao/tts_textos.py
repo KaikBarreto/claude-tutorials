@@ -6,7 +6,7 @@ CAPS = {
 0: """Oi! Neste tutorial a gente vai deixar a Dominex com a cara da sua empresa: o logo, os dados, a cor da marca e as preferências do dia a dia.
 É daqui que sai o que aparece nos recibos e nos relatórios. Fazendo uma vez, vale pra tudo.
 O menu da esquerda também se ajusta ao plano da empresa e ao cargo de cada pessoa, então cada um vê o que faz parte do seu trabalho.
-Se você ainda não viu o tutorial Boas-vindas à Dominex, dá uma olhada antes. [pause] Vamos começar abrindo as Configurações.""",
+Se você ainda não viu o tutorial Boas-vindas à Dominex, dá uma olhada antes. [pause] Antes de tudo, vamos instalar o ép.""",
 1: """As configurações ficam no rodapé do menu, do lado do Sair. Clicou, abre a tela com tudo da empresa.
 No alto ficam as abas: Empresa, Regional, Usuários e Permissões, Usabilidade, Atalhos, Aparência e Integrações. A de Usuários e Permissões é o assunto da próxima aula, então hoje a gente passa pelas outras.
 Aqui o salvamento é automático. Pode ir preenchendo que a Dominex salva sozinha, e esse selo no canto avisa quando já gravou.
@@ -74,10 +74,18 @@ WhatsApp e Cobranças dependem dos módulos contratados, e cada uma tem o seu tu
 Aqui você consulta os termos de uso e, se quiser, baixa em pê-dê-éfe. Embaixo fica a data em que você aceitou.
 O Exportar meus dados baixa uma planilha do ékisel com clientes, equipamentos, ordens de serviço, financeiro e mais. Você escolhe os grupos que quer, e serve de cópia de segurança. Aqui eu só mostro e cancelo.
 Por último, a Zona de Perigo. O Zerar Sistema apaga os dados operacionais que você escolher, e mantém os dados da empresa e os usuários. Se um dia precisar recomeçar, o caminho é baixar os dados em Exportar meus dados e só então usar o Zerar Sistema, que pede o nome da empresa pra confirmar, porque não tem volta. Eu cancelo, claro.""",
-13: """Pronto! Recapitulando: a gente colocou o logo, os dados e o endereço da empresa, e viu como a sua marca aparece no sistema, nos quê-érre côdes e nos relatórios, com o uáit lêibou.
+13: """Pronto! Recapitulando: a gente instalou o ép, colocou o logo, os dados e o endereço, e viu como a sua marca aparece no sistema, nos quê-érre côdes e nos relatórios, com o uáit lêibou.
 Também passou pelos padrões de idioma, moeda e fuso, pelas preferências de Usabilidade, pelas origens dos clientes, pelos atalhos e pela aparência, e conheceu onde ficam as integrações e a Zona de Perigo.
 E tudo isso a Dominex salvou sozinha. Qualquer ajuste, você volta aqui quando quiser.
 No próximo tutorial, a gente monta a equipe: quem entra no sistema e o que cada pessoa pode fazer. Até lá!""",
+14: """A Dominex é um ép uéb: funciona no navegador, sem baixar nada da loja. Mas ela não precisa ficar presa numa aba. Dá pra instalar no computador e no celular, e ela abre na janela dela, com ícone, como qualquer outro ép.
+No computador, no Chrome ou no Edge, com a Dominex aberta, repara neste ícone, no fim da barra de endereço. Clico nele e confirmo em Instalar.
+Pronto. A Dominex abre numa janela própria, sem a barra do navegador, e ganha um ícone no computador pra abrir direto.
+No celular Android, é pelo Chrome. Com a Dominex aberta, toco nos três pontinhos e em Instalar ép. Em algumas versões, o nome é Adicionar à tela inicial, e depois você confirma em Instalar.
+O ícone da Dominex vai pra tela inicial. Tocando nele, o ép abre em tela cheia.
+No iPhone, o caminho é pelo Safari, e muda um pouco. Toco em Compartilhar, que no Safari mais novo fica nos três pontinhos, e escolho Adicionar à Tela de Início.
+Deixo ligado o Abrir como ép uéb e toco em Adicionar. Na primeira vez, o ép pode pedir o login de novo, porque ele guarda o acesso separado do Safari.
+Instalado ou no navegador, é a mesma Dominex, com os mesmos dados. Agora sim, vamos abrir as Configurações.""",
 }
 
 # Títulos falados das vinhetas de capítulo (um nó no ElevenLabs, separados por [pause]); cap00 sem vinheta.
@@ -93,7 +101,7 @@ TITULOS = {1: "Onde fica e como salva.",
            10: "Atalhos e aparência.",
            11: "Onde ficam as integrações.",
            12: "Termos, cópia dos dados e Zona de Perigo.",
-           13: "Recapitulando."}
+           13: "Recapitulando.", 14: "O ép no computador e no celular."}
 # Rótulo de área em cima do título (vinheta).
 KICKERS = {1: "Configurações",
            2: "Identidade",
@@ -107,7 +115,7 @@ KICKERS = {1: "Configurações",
            10: "Preferências",
            11: "Integrações",
            12: "Segurança",
-           13: "Resumo"}
+           13: "Resumo", 14: "App"}
 
 if __name__ == "__main__":
     tot = 0

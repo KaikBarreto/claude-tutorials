@@ -35,6 +35,34 @@ Todos os nomes, documentos e telefones são fictícios.
 | A câmera volta a deslizar pelos grupos do menu lateral. | O menu da esquerda também se ajusta ao plano da empresa e ao cargo de cada pessoa, então cada um vê o que faz parte do seu trabalho. |
 | Cartão discreto: "Antes: Boas-vindas à Dominex". | Se você ainda não viu o tutorial Boas-vindas à Dominex, dá uma olhada antes. [pause] Vamos começar abrindo as Configurações. |
 
+### cap14 · O app no computador e no celular (vinheta: APP) · entra logo depois do cap00
+
+> Pedido do Kaik (04/11 19:27): capítulo próprio sobre instalar o app (PWA), primeiro no computador e depois no celular,
+> explicando que o app é web mas não precisa ficar no navegador e mostrando as diferenças entre Android e iOS. Decidido
+> com ele: entra logo depois da abertura; o computador é **gravado de verdade** (navegador inteiro, Xvfb + x11grab,
+> `TUT_HOME/t1pwa/`); o celular é **ilustrado** (aparelho genérico, sem logo de marca, com as telas reais da Dominex no
+> layout de celular dentro). Recebe o número 14 para não renumerar os capítulos já entregues; a ordem de exibição vem da
+> montagem. O app é instalável (`public/manifest.json`: "Dominex", `start_url` `/dashboard`, `display` standalone;
+> service worker do VitePWA; `PwaRootEntry.tsx`), mas não tem botão de instalar dentro dele (`InstallBanner.tsx` não é
+> usado): a instalação é sempre pela interface do navegador. Rótulos do celular conferidos em 04/11 (iOS 26: "Compartilhar"
+> nos três pontinhos, "Adicionar à Tela de Início", "Abrir como app web", "Adicionar"; Chrome Android: "Instalar app" ou
+> "Adicionar à tela inicial" e "Instalar").
+
+| Tela | Fala |
+| --- | --- |
+| Computador (gravação real): janela do navegador com dominex.app/dashboard, Camila logada no mundo do início do T1; plano aberto da janela inteira, com a barra de endereço visível. | A Dominex é um app web: funciona no navegador, sem baixar nada da loja. Mas ela não precisa ficar presa numa aba. Dá pra instalar no computador e no celular, e ela abre na janela dela, com ícone, como qualquer outro app. |
+| Zoom no fim da barra de endereço; o cursor vai ao ícone de instalar e clica; abre a janela do navegador "Instalar app?" com o nome e o ícone da Dominex; destaque em "Instalar" e clique. | No computador, no Chrome ou no Edge, com a Dominex aberta, repara neste ícone, no fim da barra de endereço. Clico nele e confirmo em Instalar. |
+| A Dominex abre na janela própria, sem barra de endereço, no Dashboard; a câmera volta ao plano aberto. | Pronto. A Dominex abre numa janela própria, sem a barra do navegador, e ganha um ícone no computador pra abrir direto. |
+| [ILUSTRAÇÃO] Celular genérico (Android): navegador com barra de endereço "dominex.app" e o botão de três pontinhos; dentro, a tela real da Dominex no layout de celular. Toque nos três pontinhos; menu com "Instalar app" (destaque); toque; quadro "Instalar app" com ícone e nome "Dominex" e o botão "Instalar"; toque. | No celular Android, é pelo Chrome. Com a Dominex aberta, toco nos três pontinhos e em Instalar app. Em algumas versões, o nome é Adicionar à tela inicial, e depois você confirma em Instalar. |
+| [ILUSTRAÇÃO] Tela inicial genérica (ícones inventados) com o ícone real da Dominex (`public/icons/`); toque; o app abre em tela cheia, sem barra do navegador (tela real da Dominex). | O ícone da Dominex vai pra tela inicial. Tocando nele, o app abre em tela cheia. |
+| [ILUSTRAÇÃO] Celular genérico (iPhone): navegador com a barra embaixo e os três pontinhos; toque; menu com "Compartilhar"; toque; folha de compartilhamento com "Adicionar à Tela de Início" (destaque); toque. | No iPhone, o caminho é pelo Safari, e muda um pouco. Toco em Compartilhar, que no Safari mais novo fica nos três pontinhos, e escolho Adicionar à Tela de Início. |
+| [ILUSTRAÇÃO] Quadro "Adicionar à Tela de Início" com ícone, nome "Dominex", interruptor "Abrir como app web" ligado (destaque) e "Adicionar"; toque; tela inicial com o ícone; toque; o app abre em tela cheia na tela de entrada (login real da Dominex no celular). | Deixo ligado o Abrir como app web e toco em Adicionar. Na primeira vez, o app pode pedir o login de novo, porque ele guarda o acesso separado do Safari. |
+| Os três lado a lado (janela do computador, Android e iPhone) com a Dominex aberta; transição para o capítulo das Configurações. | Instalado ou no navegador, é a mesma Dominex, com os mesmos dados. Agora sim, vamos abrir as Configurações. |
+
+Trocas na abertura e no resumo (mesma janela de fala, só áudio; `narracao/emendas_pwa.json`):
+- cap00, última frase: "Vamos começar abrindo as Configurações." → "Antes de tudo, vamos instalar o app."
+- cap13, primeira frase: "a gente colocou o logo, os dados e o endereço da empresa," → "a gente instalou o app, colocou o logo, os dados e o endereço,"
+
 ### cap01 · Onde fica e como salva (vinheta: CONFIGURAÇÕES)
 
 | Tela | Fala |
