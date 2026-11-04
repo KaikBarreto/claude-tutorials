@@ -26,7 +26,7 @@ F = montagem final + legendas + conferência · ok = no ZIP
 | T18 | Área do Técnico: Refrigeração e Climatização | ok | ok | ok | ok (31/10 11:30) | ok (1.38.19, 54322) | ok | ok | **entregue 04/11 02:2x** (13:19, -15,8 LUFS, 208 legendas; zoom no cap00 depois da revisão) |
 | T8 | Estoque, compras e inventário | ok | ok | ok (V3) | ok (zip 5, 19:50) | fase 1 ok 04/11 11:xx (16 caps, 0 falho); **fase 2 liberada** (54325) | | | |
 | T9 | Orçamentos, Precificação e Proposta | ok | ok | ok (V3) | ok (zip 5, 20:11) | fase 1 ok 04/11 11:xx (17 caps, 0 falho, falas × tela 0 diferença); **fase 2 liberada** (54326) | | | |
-| T10 | CRM: funil, leads e captação | ok | ok | | | | | | |
+| T10 | CRM: funil, leads e captação | ok | ok | | | sem voz, agente 04/11 15:4x (54328): backend, telas, robô provisório e ensaio | | | |
 | T11 | Contratos e PMOC | ok | ok | | | | | | |
 | T12 | Portal do Cliente e Portal do Contrato | ok | ok | ok (V3) | ok (zip 5; títulos 20:4x) | agente novo 04/11 00:5x, 1.38.19 (54327): ensaio ok 03:2x; **aprovado 04/11 07:xx** (12:00; cap08 com faixa de endereço = defeito do app) | | | |
 | T13 | Financeiro | ok | ok | | | | | | |
@@ -303,6 +303,11 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
   atraso máximo 0,45 s, câmera 0, mesmas durações). `conferir_remendo --novos 297.53:387.07,587.73:624.37` OK (dois trechos,
   deslocamento 0); o silêncio antes da cartela já existia no entregue (falso alarme corrigido na ferramenta). "+ Novo Serviço"
   conferido por recorte no começo de 07 e 08 e no 14. Fica só o rodapé v1.38.6 nos caps 00 e 09 a 13 (já sinalizado).
+- 04/11 15:4x Kaik: "continue fazendo os vídeos". T8 e T9 na fase 2 (gravando e renderizando, uma trava por capítulo).
+  As 10 aulas restantes têm roteiro pronto na 1.38.19 (T11, T13 e T15 já reescritos), mas a voz espera ~88 mil créditos
+  do ElevenLabs (saldo ~3 mil); perguntado de novo ao Kaik. Enquanto isso, **T10 sem voz** (agente, 54328): backend falso
+  dos 16 `[BACKEND]`, telas conferidas na 1.38.19, `gerar.py` com tempos provisórios do texto e ensaio; com a voz, falta só
+  regerar os tempos, ensaiar e gravar. Disco 4,7 GB livres.
 
 ## Fila (31/10 12:1x; nada sai da fila sem estar entregue)
 1. **Rodando (Kaik 14:48 liberou até 4 agentes ao mesmo tempo):** dev-video no 06 e no 12 do site (com a trava
