@@ -319,6 +319,12 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
   Reserva mínima de 8 mil. **17:5x: voz gerada** para T10, T11, T13, T14, T15, T17, T19, T20, T21, T22 e a emenda
   do T9 (141 nós, ~100 min, ~88,4 mil créditos; saldo ~24,8 mil). Daqui não se baixa o áudio (o proxy recusa
   `elevenlabsusercontent.com`): o Kaik exporta o fluxo (zip 7).
+- 04/11 17:49 **zip 7 recebido** (305 MP3, exportação atual; os 141 novos extraídos em `$TUT_HOME/recebido/1749/`, 95 MB).
+  Disco 3,1 → 4,4 GB: apagados os `video_sem_audio.mp4` de T0, T1, T3 v2, T5, T7 e T18 (MD5 dos pacotes igual ao vídeo
+  do `aula_final.mp4`; recria-se com `-map 0:v -c copy`, ver `docs/05-edicao.md`), caches do pip/uv e testes sintéticos.
+  T2, T4 e T12 ficam: o final tem um quadro a menos (`-shortest`). Processamento: T9 cap06 com o agente do T9 (emenda),
+  T10 com o agente do T10 (tempos reais, ensaio, fase 1) e as outras 9 com um agente de voz (`proc.py`, títulos,
+  palavras fracas).
 
 ## Fila (31/10 12:1x; nada sai da fila sem estar entregue)
 1. **Rodando (Kaik 14:48 liberou até 4 agentes ao mesmo tempo):** dev-video no 06 e no 12 do site (com a trava
@@ -413,9 +419,9 @@ se for melhor (custa o mesmo que o v4 por caractere: fica o v4, voz do T3); fala
 | V2b | Correções de pronúncia (Kaik 31/10 11:04): `T01 cap05 A cor e o logo da marca (v2)` (logo com texto branco), `T01 emendas`, `T04 emendas`, `T18 emenda` = 1.745 créditos | mesmo fluxo | gerado 11:11, exportado 11:18 (zip 3); processando |
 | V2c | T3 v2 (1.38.9): `T03v2 cap06 Etiquetas`, `T03v2 cap07 Campos personalizados`, `T03v2 emendas`, `T03v2 inserções`, `T03v2 títulos` = 1.824 créditos | mesmo fluxo | gerado 31/10 16:37; **saldo ~0**; exportado 16:50 (zip 4): MP3 em `$TUT_HOME/recebido/1650/` |
 | V3 | T2 (8.464), T8 (13.934), T9 (13.544), T12 (10.270) = 46.212 créditos, 61 nós (1 versão cada), ~52,8 min de voz | mesmo fluxo | **gerado 31/10 18:3x–18:41** (Kaik comprou créditos 18:28 e aprovou "gere T2, T8, T9 e T12"); 61/61 concluídas, 0 falha; ids em `scratchpad/v3_nos.json`; zip 5 (18:53) processado: 96 palavras fracas, todas do ASR (conferidas isoladas e desaceleradas), nenhuma fala a refazer |
-| V3b | T10 (10,4 mil), T11 (14,2 mil) = ~24,6 mil | mesmo fluxo | **gerado 04/11 17:2x–17:5x** (1 versão cada, 0 falha; durações medidas nos `nos_elevenlabs.json`); aguardando a exportação do Kaik (zip 7) |
-| V4 | T13 (12,8 mil), T19 (9,1 mil), T20 (7,9 mil), T14 (7,7 mil) = ~37,5 mil | mesmo fluxo | **gerado 04/11 17:2x–17:5x** (1 versão cada, 0 falha; durações medidas nos `nos_elevenlabs.json`); aguardando a exportação do Kaik (zip 7) |
-| V5 | T15 (8,2 mil), T22 (6,9 mil), T21 (5,4 mil), T17 (5,6 mil) = ~26,1 mil | mesmo fluxo | **gerado 04/11 17:2x–17:5x** (1 versão cada, 0 falha; durações medidas nos `nos_elevenlabs.json`); aguardando a exportação do Kaik (zip 7) |
+| V3b | T10 (10,4 mil), T11 (14,2 mil) = ~24,6 mil | mesmo fluxo | **gerado 04/11 17:2x–17:5x** (1 versão cada, 0 falha; durações medidas nos `nos_elevenlabs.json`); zip 7 recebido 17:49; processando |
+| V4 | T13 (12,8 mil), T19 (9,1 mil), T20 (7,9 mil), T14 (7,7 mil) = ~37,5 mil | mesmo fluxo | **gerado 04/11 17:2x–17:5x** (1 versão cada, 0 falha; durações medidas nos `nos_elevenlabs.json`); zip 7 recebido 17:49; processando |
+| V5 | T15 (8,2 mil), T22 (6,9 mil), T21 (5,4 mil), T17 (5,6 mil) = ~26,1 mil | mesmo fluxo | **gerado 04/11 17:2x–17:5x** (1 versão cada, 0 falha; durações medidas nos `nos_elevenlabs.json`); zip 7 recebido 17:49; processando |
 
 **Falas a refazer (próximo lote de voz, junto com o T18; o Kaik exporta uma vez):** T07 cap05, frase "O aplicativo
 deixa o vídeo mais leve antes de enviar." (em ~0:29; o ASR não ouve o "deixa" nem isolado; há tempo de fala para ele,

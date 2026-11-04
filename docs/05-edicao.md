@@ -112,7 +112,12 @@ introdução obrigatória). Por isso o vertical tem de ter **a mesma linha do te
 Depois da entrega a limpeza apaga as gravações e os renders dos capítulos; ficam só `out/<AULA>/capitulos.json`,
 `video_sem_audio.mp4` e `proj/{audio48k.wav, edl.json, render.json, build/intro_v.mp4, build/outro_v.mp4}`. Rodar o
 `finish.py` de novo exigiria regravar e renderizar TODOS os capítulos; o `remendar_aula.py` refaz a aula só com o que mudou
-(a mesma linha do tempo, os mesmos parâmetros do `finish.py`):
+(a mesma linha do tempo, os mesmos parâmetros do `finish.py`).
+Com o disco apertado, o `video_sem_audio.mp4` pode sair, porque o vídeo do `aula_final.mp4` é cópia dele. Antes de apagar,
+confira o MD5 dos pacotes (`ffmpeg -i X -map 0:v -c copy -f md5 -` nos dois). Antes de remendar, recrie com
+`ffmpeg -i aula_final.mp4 -map 0:v -c copy video_sem_audio.mp4`. Exceção: quando o `-shortest` cortou o último quadro do
+final (T2, T4 e T12, um quadro a menos), o MD5 difere; nesse caso, mantenha o `video_sem_audio.mp4`. Feito em 04/11 em T0,
+T1, T3 v2, T5, T7 e T18: ~1 GB liberado. Uso:
 - `--audio cap03,cap07`: só narração nova **de mesma duração** (emenda do `emendar.py`; o `narration` do
   `caps/capNN.chapter.json` aponta para `takes/capNN_v2/audio48k.wav`). Nenhum quadro muda: refaz `audio48k.wav`, `edl.json`,
   o mix (`kit/mix.py` + SFX das vinhetas) e o MP4 final com o vídeo antigo.
