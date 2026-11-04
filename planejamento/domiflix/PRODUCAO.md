@@ -17,7 +17,7 @@ F = montagem final + legendas + conferência · ok = no ZIP
 | Aula | Título | L | R | V | Z | B | G | E | F |
 |---|---|---|---|---|---|---|---|---|---|
 | T0 | Boas-vindas à Dominex (ilustrada) | ok | ok | ok | ok | — | — | ok | ok (30/10 22:51, 3:25) · **v2 entregue 04/11 02:4x** (4:20,6, 16:9 + 9:16, -15,8 LUFS, SRT/VTT por versão; v1 em `t0/entrega_antiga`) |
-| T1 | Configurações e identidade da empresa | ok | ok | ok | ok (31/10 00:29) | ok | ok | ok | ok (31/10 05:20, 11:58) · **v2 18:33** (pronúncia + logo com texto branco; 12:05; 1.38.6) · **remendo 1.38.19 entregue 04/11 12:2x** (12:09) |
+| T1 | Configurações e identidade da empresa (+ cap. PWA pedido 04/11) | ok | ok | ok | ok (31/10 00:29) | ok | ok | ok | ok (31/10 05:20, 11:58) · **v2 18:33** (pronúncia + logo com texto branco; 12:05; 1.38.6) · **remendo 1.38.19 entregue 04/11 12:2x** (12:09) |
 | T2 | Usuários, cargos e permissões | ok | ok | ok (V3 18:3x) | ok (zip 5, 19:31) | agente novo 03/11 22:4x, 1.38.19 (54324): **ensaio ok 04/11 00:4x** (cap00–10, 0 falho; cap11 só montagem); **entregue 04/11 09:xx** (10:15, -15,8 LUFS, 181 legendas; recarregamento do "Criar Usuário" cortado com pausa na voz nos caps 05 e 06) | | | |
 | T3 | Clientes, Fornecedores e Equipamentos | ok | ok | ok | ok | ok | ok | ok | **v2 entregue 03/11 22:4x** (14:13, 1.38.19, -15,8 LUFS; v1 de 30/10 em `t3/edit/out`) |
 | T4 | Serviços, tarefas e checklists | ok | ok | ok | ok (31/10 00:29) | ok | ok | ok | ok (31/10 10:46, 10:27) · **v2 18:37** (pronúncia; só o áudio) · **remendo 1.38.19 entregue 04/11 14:2x** (10:28; caps 01 a 08 e 14 novos) |
@@ -331,6 +331,15 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
   carga 2,3; gravação, render e ASR em fila única); mais agentes só alongam a fila e gastam o limite de uso. O que ajuda é
   a próxima aula pronta quando a fila vaga: **T11 fase 1** despachado como 4º agente (54329, `FAKE_NOW` 2026-11-10 10:00),
   sem escrever em `t11/narracao` enquanto o agente de voz processa.
+- 04/11 19:27 Kaik ouviu o T10: a voz dizia "wébruqui"; o certo é **"wébirrúqui"**. A grafia do TTS virou "Uébirrúqui(s)"
+  (fonte e trocas da legenda). Como o T10 ainda não foi gravado, os capítulos 02, 08 e 10 foram gerados de novo,
+  inteiros (nós `T10 capNN … (v2)`, 3.176 créditos, saldo ~21,6 mil). Aguardando o Kaik mandar os 3 MP3.
+- 04/11 19:27 **Pedido novo do Kaik: capítulo de instalar o app (PWA) no T1**, no computador e depois no celular, explicando
+  que o app é web mas não precisa ficar no navegador, com as diferenças entre Android e iOS. Decidido (perguntas 19:3x):
+  entra **logo depois da abertura do T1**, com uma frase nova na abertura e no resumo; o **celular o Kaik grava** (Android e
+  iPhone, sem narração); o **computador é gravado aqui**, no navegador inteiro (Xvfb + x11grab, cadeado em dominex.app
+  com CA local; agente em `t1pwa/`, 54330). O app é instalável (manifest, service worker, `PwaRootEntry`), mas não tem
+  botão de instalar dentro dele (`InstallBanner.tsx` não é usado). Roteiro e voz do capítulo depois das gravações.
 
 ## Fila (31/10 12:1x; nada sai da fila sem estar entregue)
 1. **Rodando (Kaik 14:48 liberou até 4 agentes ao mesmo tempo):** dev-video no 06 e no 12 do site (com a trava
