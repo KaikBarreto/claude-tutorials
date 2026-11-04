@@ -27,7 +27,7 @@ F = montagem final + legendas + conferência · ok = no ZIP
 | T8 | Estoque, compras e inventário | ok | ok | ok (V3) | ok (zip 5, 19:50) | fase 1 ok 04/11 11:xx (16 caps, 0 falho) | ok (fase 2; atraso máximo 0,79 s) | ok (câmera 0) | **entregue 04/11 16:5x** (16:53, -15,8 LUFS) · pico corrigido 18:42 (-3,6 dBTP; vídeo idêntico) |
 | T9 | Orçamentos, Precificação e Proposta | ok | ok | ok (V3) | ok (zip 5, 20:11) | fase 1 ok 04/11 11:xx (17 caps, 0 falho, falas × tela 0 diferença); **fase 2 liberada** (54326) | | | |
 | T10 | CRM: funil, leads e captação | ok | ok | ok (04/11 17:xx) | | agente 04/11 15:4x (54328): backend, telas, robô provisório e ensaio | | | |
-| T11 | Contratos e PMOC | ok | ok | ok (04/11 17:xx) | | | | | |
+| T11 | Contratos e PMOC | ok | ok | ok (04/11 17:xx) | zip 7 (processando) | fase 1, agente 04/11 19:0x (54329) | | | |
 | T12 | Portal do Cliente e Portal do Contrato | ok | ok | ok (V3) | ok (zip 5; títulos 20:4x) | agente novo 04/11 00:5x, 1.38.19 (54327): ensaio ok 03:2x; **aprovado 04/11 07:xx** (12:00; cap08 com faixa de endereço = defeito do app) | | | |
 | T13 | Financeiro | ok | ok | ok (04/11 17:xx) | | | | | |
 | T19 | Integração com Asaas, Assinaturas e Cobranças | ok | ok | ok (04/11 17:xx) | | | | | |
@@ -327,6 +327,10 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
   palavras fracas).
 - 04/11 18:42 **T8 final na entrega**: pico real -0,6 → -3,6 dBTP (-3 dB em 0,13 s do `mix.wav`, vídeo copiado,
   MD5 dos pacotes de vídeo igual, áudio alinhado ao mix com correlação ≥ 0,999), -15,8 LUFS. Lição em `08-licoes.md`.
+- 04/11 18:59 Kaik: "consegue acelerar despachando mais agentes em paralelo?" Resposta: o gargalo é a máquina (2 CPUs,
+  carga 2,3; gravação, render e ASR em fila única); mais agentes só alongam a fila e gastam o limite de uso. O que ajuda é
+  a próxima aula pronta quando a fila vaga: **T11 fase 1** despachado como 4º agente (54329, `FAKE_NOW` 2026-11-10 10:00),
+  sem escrever em `t11/narracao` enquanto o agente de voz processa.
 
 ## Fila (31/10 12:1x; nada sai da fila sem estar entregue)
 1. **Rodando (Kaik 14:48 liberou até 4 agentes ao mesmo tempo):** dev-video no 06 e no 12 do site (com a trava
