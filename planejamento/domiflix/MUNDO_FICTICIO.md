@@ -27,6 +27,14 @@ verificador válido), e-mails `.example`, telefones de faixa fictícia. Fonte da
   Taxas...). Nome de categoria é único na empresa (`20260919190000_...sql`): a aula escolhe "Aluguel" na lista, não cria.
   Ainda fora das sementes do backend falso: entram na base antes da primeira aula que abre o Financeiro (T8/T9).
 
+## O que o T2 criou (`seeds-extra/t2/apos-cap10.json` = estado inicial do T3, T5 e T7; é DELTA sobre a base PADRÃO)
+Gravado numa base própria (`seeds-extra/t2/_base`, só a Camila) + `t1/apos-cap13` + `t2/inicio` (Camila com Acesso Total e a trilha Domiflix com `is_onboarding false`).
+Estado final (aula entregue em 04/11): **cargos** Técnico de Campo ("Agenda, ferramentas e OS pelo link"; telas Agenda e Área do Técnico + ação Editar OS em campo, 3
+permissões) e Escritório ("Atendimento, OS, orçamentos e financeiro do dia a dia"; 13 permissões, sem Excluir Lançamento Financeiro); **usuários** (8 ativos, contador
+8/15): Camila Duarte (Acesso Total), Rafael Lima, Bruno Alves, Júlia Santos, Lucas Ferreira, Marina Costa e Paulo Souza (Técnico, cargo Técnico de Campo; o Paulo é
+desativado e reativado na aula e termina ativo) e **Tatiane Ribeiro** (Interno, cargo Escritório, tatiane.ribeiro@glacialcold.example, (21) 3000-1008). Os cinco técnicos
+além do Rafael entram "num corte" (já cadastrados) antes do cap. 9. Senha de demonstração: gerada na hora (`$TUT_SENHA`), nunca em arquivo. Relógio do mundo: 03/11/2026 09:00.
+
 ## O que o T3 criou (`seeds-extra/t3/apos-cap10.json` = estado inicial do T4)
 - Clientes: **Colégio Monte Verde** (PJ, CNPJ 91.847.200/0001-30), **Marcos Antônio Braga** (PF), **Luana Martins**
   (veio pelo formulário de captação), **Pousada Sol Nascente** (criado rápido no cadastro de equipamento).

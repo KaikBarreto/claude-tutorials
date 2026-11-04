@@ -18,7 +18,7 @@ F = montagem final + legendas + conferência · ok = no ZIP
 |---|---|---|---|---|---|---|---|---|---|
 | T0 | Boas-vindas à Dominex (ilustrada) | ok | ok | ok | ok | — | — | ok | ok (30/10 22:51, 3:25) · **v2 entregue 04/11 02:4x** (4:20,6, 16:9 + 9:16, -15,8 LUFS, SRT/VTT por versão; v1 em `t0/entrega_antiga`) |
 | T1 | Configurações e identidade da empresa | ok | ok | ok | ok (31/10 00:29) | ok | ok | ok | ok (31/10 05:20, 11:58) · **v2 18:33** (pronúncia + logo com texto branco; 12:05; 1.38.6) |
-| T2 | Usuários, cargos e permissões | ok | ok | ok (V3 18:3x) | ok (zip 5, 19:31) | agente novo 03/11 22:4x, 1.38.19 (54324): **ensaio ok 04/11 00:4x** (cap00–10, 0 falho; cap11 só montagem); **gravando desde 02:3x** (liberado com o T18 entregue) | | | |
+| T2 | Usuários, cargos e permissões | ok | ok | ok (V3 18:3x) | ok (zip 5, 19:31) | agente novo 03/11 22:4x, 1.38.19 (54324): **ensaio ok 04/11 00:4x** (cap00–10, 0 falho; cap11 só montagem); **entregue 04/11 09:xx** (10:15, -15,8 LUFS, 181 legendas; recarregamento do "Criar Usuário" cortado com pausa na voz nos caps 05 e 06) | | | |
 | T3 | Clientes, Fornecedores e Equipamentos | ok | ok | ok | ok | ok | ok | ok | **v2 entregue 03/11 22:4x** (14:13, 1.38.19, -15,8 LUFS; v1 de 30/10 em `t3/edit/out`) |
 | T4 | Serviços, tarefas e checklists | ok | ok | ok | ok (31/10 00:29) | ok | ok | ok | ok (31/10 10:46, 10:27) · **v2 18:37** (pronúncia; só o áudio) |
 | T5 | Ordens de Serviço, Agenda, Equipes e Mapa ao Vivo | ok | ok | ok | ok (31/10 00:29) | ok | ok | ok | ok (31/10 18:2x, 13:49; 1.38.6) |
@@ -269,6 +269,7 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
 - 04/11 08:xx T2 montado (10:14, 12 caps, 0 falho, câmera 0). Revisão: busca de cor, quadros parados e 4 folhas de zoom
   limpas; só o recarregamento do app depois de "Criar Usuário" (`window.location.reload()` em `Users.tsx`, 3,7 a 9,6 s) nos
   caps 05 e 06. Pedido: `pausas.py` (mesma voz) + regravação + `cortes`, como no T0 v2 cap03.
+- 04/11 09:xx **T2 entregue** (10:15). Entregues até aqui na 1.38.19: T0 v2 (16:9 + 9:16), T3 v2, T18, T12, T2.
 
 ## Fila (31/10 12:1x; nada sai da fila sem estar entregue)
 1. **Rodando (Kaik 14:48 liberou até 4 agentes ao mesmo tempo):** dev-video no 06 e no 12 do site (com a trava
