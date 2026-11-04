@@ -29,6 +29,10 @@ o `titulos.py` usa esses títulos.
    lucide (o renderizador acha sozinho os nomes usados na página; `npm i` na pasta instala o `lucide-static`).
 5. Elemento com escala própria (ex.: um cartão reduzido) precisa de um invólucro: a animação mexe no `transform` do
    elemento externo e apagaria a escala.
+6. **Cartão nunca vazio**: a cena seguinte entra quando a anterior sai (ou a anterior fica até ela entrar), e um título
+   sozinho fica grande no centro, subindo quando o resto entra. No T0 v2 (04/11) o cartão ficou 2 a 3,6 s vazio entre duas
+   cenas e 6,6 s só com o título pequeno no topo, na abertura. Medir no vídeo final: miolo do cartão branco e liso ≥ 1 s
+   fora do começo de cena é defeito.
 
 ## Conferir antes do render (obrigatório)
 ```bash

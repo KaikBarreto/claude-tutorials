@@ -34,9 +34,11 @@ aula em `$TUT_HOME/tnn/` (já instalada), robô em `$TUT_HOME/rec/`.
 2. **Robô** (`rec/tnn/capMM.json`, formato do T3): `mark Ln` no início de cada linha (`linhas[i].s` do `capMM.json`),
    passos com `at` tirado da palavra que os anuncia, `label` em tudo que a edição usa, `seedExtra` encadeado
    (`tnn/apos-capMM`). Celular: `"device": "phone"` + passos `geo`/`clock`. Página pública: `"anonymous": true`;
-   outra aba: `"sameTab": true`; outro usuário: `"user"`.
+   outra aba: `"sameTab": true`; outro usuário: `"user"`. Página fora do app (ex.: Guia Técnico): a volta recarrega o app;
+   pausa na voz no fim da linha, `mark` só com o app carregado e `cortes` no recarregamento.
 3. **Gravação** (`node rec/record.mjs rec/tnn/capMM.json --out rec/tnn --name tnn-capMM`): aceite = 0 passo falho,
-   `lateBy` < 0,8 s, folha de contato sem dado real, rodapé com a versão do app. Um capítulo por vez.
+   `lateBy` < 0,8 s, folha de contato sem dado real e sem aviso de erro do app ("Não foi possível", "erro", "Tente
+   novamente", "indisponível", R$ 0,00 onde devia haver preço), rodapé com a versão do app. Um capítulo por vez.
 4. **Edição**: `tnn/edit/caps/specs.json` (título e área da vinheta = `TITULOS`/`KICKERS`, escritos como na tela: aplique
    as `trocas` do `config_narracao.json`, ex.: "O teste disque." → "O teste DISC"; zooms e destaques por
    `label`; avisos por palavra; ilustrações) → `python3 -I montar_cap.py MM` → **`python3 -I auditar_camera.py` com

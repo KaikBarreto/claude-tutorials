@@ -16,7 +16,7 @@ F = montagem final + legendas + conferência · ok = no ZIP
 
 | Aula | Título | L | R | V | Z | B | G | E | F |
 |---|---|---|---|---|---|---|---|---|---|
-| T0 | Boas-vindas à Dominex (ilustrada) | ok | ok | ok | ok | — | — | ok | ok (30/10 22:51, 3:25) |
+| T0 | Boas-vindas à Dominex (ilustrada) | ok | ok | ok | ok | — | — | ok | ok (30/10 22:51, 3:25) · **v2 em ajuste 04/11** (4:20, 16:9 + 9:16; cap03 e cap05 regravando; v1 em `t0/entrega_antiga`) |
 | T1 | Configurações e identidade da empresa | ok | ok | ok | ok (31/10 00:29) | ok | ok | ok | ok (31/10 05:20, 11:58) · **v2 18:33** (pronúncia + logo com texto branco; 12:05; 1.38.6) |
 | T2 | Usuários, cargos e permissões | ok | ok | ok (V3 18:3x) | ok (zip 5, 19:31) | agente novo 03/11 22:4x, 1.38.19 (54324): preparo e ensaio; grava depois do T0 v2 | | | |
 | T3 | Clientes, Fornecedores e Equipamentos | ok | ok | ok | ok | ok | ok | ok | **v2 entregue 03/11 22:4x** (14:13, 1.38.19, -15,8 LUFS; v1 de 30/10 em `t3/edit/out`) |
@@ -111,6 +111,11 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
 - **T22:** o robô nunca pousa o cursor no gráfico DISC (o tooltip cita pessoas reais; T22 P6).
 - **T19:** o handler `tenant-asaas-card-fees` (criado no T1) responde sem a franquia do Pix (`freeCount 0`): estender por
   semente ou parâmetro, sem reescrever o do T1.
+- **Catálogo do plano (Gerenciar Meu Plano → Personalizado, 1.38.19):** a aba só calcula preço com `subscription_modules`
+  completo: `basic` > 0; `customer_portal`, `finance_advanced`, `pricing_advanced` e `video_questions` com preço 0;
+  `extra_user` > 0; `whatsapp_tiers` respondendo (`src/components/billing/ModulesManagementCard.tsx:186-199`). Faltando um,
+  aparece "Não foi possível validar o catálogo de preços", "preço indisponível" e R$ 0,00 (T0 v2 cap05, 04/11). Aula que
+  mostra essa tela (T13, T17, T20) parte do `seeds-extra/t0v2/catalogo.json` corrigido, com preços das migrations.
 
 ## Retomada (03/11 16:3x)
 - 31/10 21:0x: o limite semanal do Kaik acabou e os US$ 90 de créditos foram gastos em < 20 min (9 agentes em paralelo +
@@ -204,6 +209,14 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
 - 22:4x **T3 v2 entregue** em `entrega_final/` (MP4, SRT e VTT; 242 legendas; 0 falho, maior atraso 0,44 s). Ponto
   conhecido: no cap10 (10:24 do vídeo) o clique na aba Categorias cai com a aba 67% visível na borda enquanto a câmera se
   afasta (meio segundo); a gravação bruta já foi limpa, refazer = regravar o cap10. Fica como está salvo pedido do Kaik.
+- 04/11 00:0x **T0 v2 montado** nas duas proporções (4:20,6; mesma linha do tempo; -15,8 LUFS; câmera 0 problema) e posto
+  em `entrega_final/` pelo agente antes da minha revisão; o T0 antigo foi para `t0/entrega_antiga`. A revisão do vídeo
+  inteiro (folha de 2 s, dois formatos) achou: (1) cap05, aba Personalizado com erro do app ("Não foi possível validar o
+  catálogo de preços", "preço indisponível", R$ 0,00) por ~3 s, causado pelo catálogo da semente sem `finance_advanced` e
+  `extra_user`; (2) cap03, volta do Guia Técnico recarrega o app (spinner ~3,5 s + quadro escuro), com o aviso do endereço
+  por cima; (3) cap05, cartão vazio de 2 a 3,6 s entre duas cenas; (4) abertura com 6,6 s de cartão vazio só com o título.
+  Devolvido ao mesmo agente: catálogo com preços das migrations, pausa + `cortes` no cap03, regravação de cap03 e cap05
+  nos dois formatos. Ainda não foi ao Kaik.
 
 ## Fila (31/10 12:1x; nada sai da fila sem estar entregue)
 1. **Rodando (Kaik 14:48 liberou até 4 agentes ao mesmo tempo):** dev-video no 06 e no 12 do site (com a trava
