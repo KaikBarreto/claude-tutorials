@@ -56,7 +56,9 @@ aula em `$TUT_HOME/tnn/` (já instalada), robô em `$TUT_HOME/rec/`.
 Só o app real (nada inventado); dados fictícios (sem dado real, token ou senha na tela: senha só por `$TUT_SENHA`);
 nada coberto com tarja (Kaik 03/11: dados de demonstração, preços de plano inclusive, aparecem como estão; só a fala e as
 ilustrações não citam preço de plano); zoom sempre no alvo da ação (a montagem recusa capítulo com alvo fora do quadro);
-vinheta falada por capítulo; sem contador de etapas; legendas em arquivo; vídeo completo 1080p.
+vinheta falada por capítulo; sem contador de etapas; legendas em arquivo; vídeo completo 1080p; nenhum trecho parado
+mais de ~20 s sem zoom ou destaque (o cap00 também tem zoom: no T18 a abertura ficou 32 s parada no Dashboard).
+Antes de mandar ao main: folha de 3 s do vídeo INTEIRO, não só a de destaques.
 
 ## Relatório (≤ 200 palavras)
 Duração final, specs e loudness (saída do `entregar.py`), problemas de câmera (deve ser 0), o que ficou diferente do
