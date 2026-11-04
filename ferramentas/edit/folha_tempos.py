@@ -15,7 +15,10 @@ import sys
 from PIL import Image, ImageDraw, ImageFont
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-FT = os.path.join(os.path.dirname(os.path.dirname(HERE)), "kit", "fonts", "Montserrat-700.ttf")
+# instalada em tN/edit/ a fonte fica no kit da pasta de trabalho; rodando da skill, no kit de TUT_HOME
+FT = next((p for p in (os.path.join(os.path.dirname(os.path.dirname(HERE)), "kit", "fonts", "Montserrat-700.ttf"),
+                       os.path.join(os.environ.get("TUT_HOME", "."), "kit", "fonts", "Montserrat-700.ttf"))
+           if os.path.exists(p)), "")
 
 
 def opt(a, nome, padrao, tipo=float):
@@ -43,7 +46,7 @@ def main():
     if not ts:
         sys.exit("nenhum instante: passe grupos t0:t1:passo ou --emendas")
     H = W * 9 // 16
-    font = ImageFont.truetype(FT, 15) if os.path.exists(FT) else ImageFont.load_default()
+    font = ImageFont.truetype(FT, 15) if FT else ImageFont.load_default()
     tiles = []
     for t in ts:
         r = subprocess.run(["ffmpeg", "-v", "error", "-ss", f"{t:.3f}", "-i", mp4, "-frames:v", "1", "-vf", f"scale={W}:{H}",

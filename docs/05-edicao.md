@@ -132,11 +132,16 @@ Depois da entrega a limpeza apaga as gravações e os renders dos capítulos; fi
   Automático (04/11, T5/T4/T1, ~1 min cada): `conferir_remendo.py antigo.mp4 novo.mp4 --novos INICIO:FIM --emendas t1,t2
   --srt antigo.srt novo.srt` confere quadros iguais antes dos capítulos novos e iguais com deslocamento (em quadros inteiros,
   achado sozinho) depois deles, áudio sem buraco nas emendas e legendas iguais fora dos novos; sai com 1 se algo falhar.
+  Dois ou mais trechos novos separados (ex.: caps 07-08 e 14): `--novos A:B,C:D`, cada trecho antigo entre eles ganha o
+  próprio deslocamento (testado com par sintético: +1 s e −1 s achados, e FALHOU quando faltou um trecho).
   A olho: `folha_tempos.py aula_final.mp4 emendas.jpg "Tnn · emendas" --emendas t1,t2` (de 0,5 em 0,5 s, 2 s antes e
   depois de cada emenda) e a folha de 3 s só dos capítulos novos.
 - **Antes de escolher o que regravar**: o rótulo que mudou entre versões do app aparece também na tela de capítulos que
   não falam dele. No T4 (1.38.19) o botão "Novo Tipo" virou "Novo Serviço": regravados só os 2 capítulos com fala, os
   vizinhos 02, 04, 05 e 06 seguiram com "+ Novo Tipo" no topo, e a revisão mandou regravar mais 4 (só tela, mesma voz).
+  A segunda revisão achou mais 3: cap07 e cap08 começam na página (o `setup` do robô abre `/servicos`) e trocam de aba
+  em 1 s; o cap14 (recapitulação) volta a ela por 10 s. Liste todos de uma vez pelo robô: os `rec/tN/capNN.json` cujo
+  `setup` ou passo abre a página, mais os cliques de aba, não só os capítulos vizinhos.
 - **Hardlinks**: `aula_final.mp4` tem links em `entrega/` e `entrega_final/`; o script escreve em arquivo temporário e troca no
   fim (`ffmpeg -y` no mesmo nome truncaria a entrega antiga). Já `legendas_aula.py` + `entregar.py` reescrevem `.srt`/`.vtt` no mesmo
   arquivo: a legenda nova já vale em `entrega_final/` antes do MP4. Troque o MP4 logo depois (`ln -f entrega/<nome>.mp4 entrega_final/`).

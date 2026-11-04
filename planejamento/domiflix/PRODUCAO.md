@@ -17,11 +17,11 @@ F = montagem final + legendas + conferência · ok = no ZIP
 | Aula | Título | L | R | V | Z | B | G | E | F |
 |---|---|---|---|---|---|---|---|---|---|
 | T0 | Boas-vindas à Dominex (ilustrada) | ok | ok | ok | ok | — | — | ok | ok (30/10 22:51, 3:25) · **v2 entregue 04/11 02:4x** (4:20,6, 16:9 + 9:16, -15,8 LUFS, SRT/VTT por versão; v1 em `t0/entrega_antiga`) |
-| T1 | Configurações e identidade da empresa | ok | ok | ok | ok (31/10 00:29) | ok | ok | ok | ok (31/10 05:20, 11:58) · **v2 18:33** (pronúncia + logo com texto branco; 12:05; 1.38.6) |
+| T1 | Configurações e identidade da empresa | ok | ok | ok | ok (31/10 00:29) | ok | ok | ok | ok (31/10 05:20, 11:58) · **v2 18:33** (pronúncia + logo com texto branco; 12:05; 1.38.6) · **remendo 1.38.19 entregue 04/11 12:2x** (12:09) |
 | T2 | Usuários, cargos e permissões | ok | ok | ok (V3 18:3x) | ok (zip 5, 19:31) | agente novo 03/11 22:4x, 1.38.19 (54324): **ensaio ok 04/11 00:4x** (cap00–10, 0 falho; cap11 só montagem); **entregue 04/11 09:xx** (10:15, -15,8 LUFS, 181 legendas; recarregamento do "Criar Usuário" cortado com pausa na voz nos caps 05 e 06) | | | |
 | T3 | Clientes, Fornecedores e Equipamentos | ok | ok | ok | ok | ok | ok | ok | **v2 entregue 03/11 22:4x** (14:13, 1.38.19, -15,8 LUFS; v1 de 30/10 em `t3/edit/out`) |
-| T4 | Serviços, tarefas e checklists | ok | ok | ok | ok (31/10 00:29) | ok | ok | ok | ok (31/10 10:46, 10:27) · **v2 18:37** (pronúncia; só o áudio) |
-| T5 | Ordens de Serviço, Agenda, Equipes e Mapa ao Vivo | ok | ok | ok | ok (31/10 00:29) | ok | ok | ok | ok (31/10 18:2x, 13:49; 1.38.6) |
+| T4 | Serviços, tarefas e checklists | ok | ok | ok | ok (31/10 00:29) | ok | ok | ok | ok (31/10 10:46, 10:27) · **v2 18:37** (pronúncia; só o áudio) · remendo 1.38.19 dos caps 01 a 06 liberado 04/11 12:2x (10:28); caps 07, 08 e 14 em regravação |
+| T5 | Ordens de Serviço, Agenda, Equipes e Mapa ao Vivo | ok | ok | ok | ok (31/10 00:29) | ok | ok | ok | ok (31/10 18:2x, 13:49; 1.38.6) · **remendo 1.38.19 entregue 04/11 12:2x** (13:56) |
 | T7 | O técnico em campo (celular) | ok | ok | ok | ok (31/10 00:29; emenda do cap05 com folga 0,17 s) | ok (54321) | ok (1.38.19) | ok | ok (03/11 20:3x, 12:26; 1.38.19) |
 | T18 | Área do Técnico: Refrigeração e Climatização | ok | ok | ok | ok (31/10 11:30) | ok (1.38.19, 54322) | ok | ok | **entregue 04/11 02:2x** (13:19, -15,8 LUFS, 208 legendas; zoom no cap00 depois da revisão) |
 | T8 | Estoque, compras e inventário | ok | ok | ok (V3) | ok (zip 5, 19:50) | fase 1 ok 04/11 11:xx (16 caps, 0 falho); **fase 2 liberada** (54325) | | | |
@@ -290,6 +290,12 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
   nativa não grava; abrir o Visualizar contrariava a fala); menu lateral recolhido como no T8 ("Configurar Proposta" cobre
   a aba "Precificação" a 1280 px). Fica: cap09 com dois "sugerido" (a fala explica). **T9: pode gravar.**
   Próxima leva de voz (remendo só de áudio, mesma duração): T9 cap06 "os custos extras" → "os recursos e extras" (rótulo).
+- 04/11 12:2x **T5 e T1 entregues** com os remendos da 1.38.19 (T5 835,8 s, -15,9 LUFS; T1 729,2 s, -15,8 LUFS; gravações e
+  renders de capítulo apagados). T4: 02, 04, 05 e 06 regravados na 1.38.19 (0 falho, atraso máximo 0,67 s, câmera 0, estados
+  iguais aos de 31/10); `conferir_remendo` OK (+8 quadros, legendas 172 → 172). **Liberada a entrega.** A mesma revisão achou
+  mais 3 capítulos antigos na aba Tipos de Serviços com "+ Novo Tipo": cap14 (recapitulação, 10 s, legível no zoom das
+  Categorias), cap07 e cap08 (começam nela por 1 s, pelo `setup` do robô). Regravar só a tela dos 3 (mesma voz, partindo dos
+  `apos` existentes) e remendar de novo. `conferir_remendo.py` passou a aceitar vários trechos (`--novos A:B,C:D`).
 
 ## Fila (31/10 12:1x; nada sai da fila sem estar entregue)
 1. **Rodando (Kaik 14:48 liberou até 4 agentes ao mesmo tempo):** dev-video no 06 e no 12 do site (com a trava
