@@ -101,6 +101,13 @@ e `public/guia-tecnico/`. A coluna da direita vale para a 1.38.9 e para a 1.38.1
   salvar não vê o material até a janela perder e ganhar o foco ou a tela remontar depois de 30 s. Basta invalidar
   `['accessible-inventory-ids']` ao criar material e ao mudar locais. No vídeo (T8, caps 02 e 11) a lista atualiza pelo
   foco da janela, um evento real do navegador, como vai ser depois da correção.
+- **Orçamentos a 1280 px (achado no T9, 04/11):** com o menu lateral aberto, o botão "Configurar Proposta" cobre parte da aba
+  "Precificação". No vídeo o menu fica recolhido.
+- **Dois "sugerido" no resumo do orçamento (T9):** ao lado de "Preço sugerido R$ 1.085,00" aparece "Composição do preço sugerido
+  R$ 585,00" (`crm.ts:558`, `bdiCompositionTitle`), que é só a parte do BDI automático. Um rótulo como "Parte calculada pelo
+  BDI" evitaria a leitura de dois preços sugeridos diferentes.
+- **"Observações internas" sai na proposta (T9, P9 do inventário):** o campo de observações do orçamento tem o placeholder
+  "Observações internas" (`crm.ts:628`), mas o texto é impresso para o cliente.
 - **Botão de contratar da DomiFlix** ("Adicionar ao meu plano" e "Escolher meu plano") abre `/billing`, rota que não existe:
   cai em "não encontrada". O certo é `/assinatura?addModule=<código>` (como o "Adicionar módulo" do sistema faz:
   `src/components/ModuleGateModal.tsx:58-68`). Arquivo: `src/components/domiflix/DomiflixModuleOffer.tsx:31`. Se a cena 10
