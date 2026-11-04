@@ -27,16 +27,16 @@ F = montagem final + legendas + conferência · ok = no ZIP
 | T8 | Estoque, compras e inventário | ok | ok | ok (V3) | ok (zip 5, 19:50) | fase 1 ok 04/11 11:xx (16 caps, 0 falho) | ok (fase 2; atraso máximo 0,79 s) | ok (câmera 0) | **entregue 04/11 16:5x** (16:53, -15,8 LUFS) · pico corrigido 18:42 (-3,6 dBTP; vídeo idêntico) |
 | T9 | Orçamentos, Precificação e Proposta | ok | ok | ok (V3) | ok (zip 5, 20:11) | fase 1 ok 04/11 11:xx (17 caps, 0 falho, falas × tela 0 diferença); **fase 2 liberada** (54326) | | | |
 | T10 | CRM: funil, leads e captação | ok | ok | ok (04/11 17:xx) | | agente 04/11 15:4x (54328): backend, telas, robô provisório e ensaio | | | |
-| T11 | Contratos e PMOC | ok | ok | ok (04/11 17:xx) | zip 7 (processando) | fase 1, agente 04/11 19:0x (54329) | | | |
+| T11 | Contratos e PMOC | ok | ok | ok (04/11 17:xx) | ok (zip 7, 15 caps, 15,5 min; 0 fala a refazer) | fase 1, agente 04/11 19:0x (54329) | | | |
 | T12 | Portal do Cliente e Portal do Contrato | ok | ok | ok (V3) | ok (zip 5; títulos 20:4x) | agente novo 04/11 00:5x, 1.38.19 (54327): ensaio ok 03:2x; **aprovado 04/11 07:xx** (12:00; cap08 com faixa de endereço = defeito do app) | | | |
-| T13 | Financeiro | ok | ok | ok (04/11 17:xx) | | | | | |
-| T19 | Integração com Asaas, Assinaturas e Cobranças | ok | ok | ok (04/11 17:xx) | | | | | |
-| T20 | Relatório Financeiro e DRE | ok | ok | ok (04/11 17:xx) | | | | | |
-| T14 | Notas Fiscais (NFS-e e NF-e) | ok | ok | ok (04/11 17:xx) | | | | | |
-| T15 | Funcionários: Financeiro do Funcionário e Ponto | ok | ok | ok (04/11 17:xx) | | | | | |
-| T22 | Ferramentas de RH: DISC, Organograma, Fluxograma | ok | ok | ok (04/11 17:xx) | | | | | |
-| T21 | Integração com WhatsApp | ok | ok | ok (04/11 17:xx) | | | | | |
-| T17 | Dashboard, relatórios e exportações | ok | ok | ok (04/11 17:xx) | | | | | |
+| T13 | Financeiro | ok | ok | ok (04/11 17:xx) | ok (zip 7, 15 caps, 14,0 min; 0 fala a refazer) | | | | |
+| T19 | Integração com Asaas, Assinaturas e Cobranças | ok | ok | ok (04/11 17:xx) | ok (zip 7, 14 caps, 9,7 min; 0 fala a refazer) | | | | |
+| T20 | Relatório Financeiro e DRE | ok | ok | ok (04/11 17:xx) | ok (zip 7, 13 caps, 8,7 min; 0 fala a refazer) | | | | |
+| T14 | Notas Fiscais (NFS-e e NF-e) | ok | ok | ok (04/11 17:xx) | ok (zip 7, 14 caps, 8,3 min; 0 fala a refazer) | | | | |
+| T15 | Funcionários: Financeiro do Funcionário e Ponto | ok | ok | ok (04/11 17:xx) | ok (zip 7, 13 caps, 8,9 min; 0 fala a refazer) | | | | |
+| T22 | Ferramentas de RH: DISC, Organograma, Fluxograma | ok | ok | ok (04/11 17:xx) | ok (zip 7, 12 caps, 7,5 min; 0 fala a refazer) | | | | |
+| T21 | Integração com WhatsApp | ok | ok | ok (04/11 17:xx) | ok (zip 7, 11 caps, 5,9 min; 0 fala a refazer) | | | | |
+| T17 | Dashboard, relatórios e exportações | ok | ok | ok (04/11 17:xx) | ok (zip 7, 12 caps, 6,0 min; 0 fala a refazer) | | | | |
 
 Ordem (TRILHA.md): T0 → T1 → T4 → T5 → T7 → T18 → T2 → T8 → T9 → T12 → T13 → T20 → T10 → T11 → T15 → T22 → T19 →
 T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aula parte do estado final da anterior).
@@ -350,6 +350,9 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
   avulsos"). T2 (permissão "Editar OS em campo") não muda. O caso de uso sugerido (checklist sem equipamento arrastado
   para dentro do equipamento em "Editar OS", respostas mantidas) pede um trecho novo no T7. Falas novas só com os
   rótulos finais do código publicado.
+- 04/11 19:5x **Voz do zip 7 processada** em T11, T13, T14, T15, T17, T19, T20, T21 e T22 (`proc.py` e títulos; 164 palavras
+  fracas, todas do ASR, conferidas isoladas e desaceleradas; nenhuma fala a refazer). Disco 4,1 → 3,0 GB com a montagem do
+  T9: apagados rascunhos de 29 a 31/10 e os MP3 dos zips 1, 3 e 4 (voz já processada e ainda no fluxo) → 3,4 GB.
 
 ## Fila (31/10 12:1x; nada sai da fila sem estar entregue)
 1. **Rodando (Kaik 14:48 liberou até 4 agentes ao mesmo tempo):** dev-video no 06 e no 12 do site (com a trava
