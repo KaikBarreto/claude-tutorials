@@ -266,6 +266,9 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
   da correção. Entregando.
 - 04/11 07:xx **T12 entregue** (11:59, -15,8 LUFS, 194 legendas). T8 e T9 despachados (fase 1 na 1.38.19, portas 54325 e
   54326); gravação só com o meu "pode gravar" (disco a 4,3 GB, o T2 ainda monta).
+- 04/11 08:xx T2 montado (10:14, 12 caps, 0 falho, câmera 0). Revisão: busca de cor, quadros parados e 4 folhas de zoom
+  limpas; só o recarregamento do app depois de "Criar Usuário" (`window.location.reload()` em `Users.tsx`, 3,7 a 9,6 s) nos
+  caps 05 e 06. Pedido: `pausas.py` (mesma voz) + regravação + `cortes`, como no T0 v2 cap03.
 
 ## Fila (31/10 12:1x; nada sai da fila sem estar entregue)
 1. **Rodando (Kaik 14:48 liberou até 4 agentes ao mesmo tempo):** dev-video no 06 e no 12 do site (com a trava
