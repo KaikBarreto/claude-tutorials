@@ -16,7 +16,7 @@ F = montagem final + legendas + conferência · ok = no ZIP
 
 | Aula | Título | L | R | V | Z | B | G | E | F |
 |---|---|---|---|---|---|---|---|---|---|
-| T0 | Boas-vindas à Dominex (ilustrada) | ok | ok | ok | ok | — | — | ok | ok (30/10 22:51, 3:25) · **v2 em ajuste 04/11** (4:20, 16:9 + 9:16; cap03 e cap05 regravando; v1 em `t0/entrega_antiga`) |
+| T0 | Boas-vindas à Dominex (ilustrada) | ok | ok | ok | ok | — | — | ok | ok (30/10 22:51, 3:25) · **v2 entregue 04/11 02:4x** (4:20,6, 16:9 + 9:16, -15,8 LUFS, SRT/VTT por versão; v1 em `t0/entrega_antiga`) |
 | T1 | Configurações e identidade da empresa | ok | ok | ok | ok (31/10 00:29) | ok | ok | ok | ok (31/10 05:20, 11:58) · **v2 18:33** (pronúncia + logo com texto branco; 12:05; 1.38.6) |
 | T2 | Usuários, cargos e permissões | ok | ok | ok (V3 18:3x) | ok (zip 5, 19:31) | agente novo 03/11 22:4x, 1.38.19 (54324): **ensaio ok 04/11 00:4x** (cap00–10, 0 falho; cap11 só montagem); **gravando desde 02:3x** (liberado com o T18 entregue) | | | |
 | T3 | Clientes, Fornecedores e Equipamentos | ok | ok | ok | ok | ok | ok | ok | **v2 entregue 03/11 22:4x** (14:13, 1.38.19, -15,8 LUFS; v1 de 30/10 em `t3/edit/out`) |
@@ -235,6 +235,11 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
 - 04/11 02:2x **T18 entregue** (13:19). Revisão do vídeo inteiro: sem erro do app; só a abertura parada 32 s, resolvida
   com 2 zooms no cap00. Stems e `music.wav` do T18 apagados (1,1 GB; o `remendar_aula.py` só usa o `mix.wav`): 5,2 GB
   livres. T2 liberado para gravar (divide a trava com o T0 v2, que tem prioridade, e com o ensaio do T12).
+- 04/11 02:4x **T0 v2 aprovado**: cap05 refeito com a conta em R$ 547 e, no Personalizado, Cobranças online + CRM /
+  Kanban + 2 usuários (R$ 357 → 617, faixa verde de Upgrade; a linha "R$ -190,00 vs plano atual" aparece ~2 s, é do app).
+  Varredura de cor nos dois finais: só elementos normais do app. Legendas da vertical recriadas como hardlink (o pedido quer
+  SRT/VTT por versão). Limpeza do T0 v2: stems, `music.wav`, prévia antiga e renders de capítulo (gravações ficam até o
+  retorno do Kaik). Prévias 720p para o Kaik em codificação; roteiro final com tempos e lista de telas com o dev-documentos.
 
 ## Fila (31/10 12:1x; nada sai da fila sem estar entregue)
 1. **Rodando (Kaik 14:48 liberou até 4 agentes ao mesmo tempo):** dev-video no 06 e no 12 do site (com a trava
