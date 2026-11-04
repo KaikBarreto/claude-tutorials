@@ -257,6 +257,9 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
   Kaik decidir (Personalizado R$ 617, faixa R11, gaveta no celular depois da correção do app).
 - 04/11 06:2x **segundo reinício do container**: pararam os renders do T2 (feitos até o cap07) e o finish do T12 (ainda na
   fila da trava). App religado com `rec/run.sh app`; T2 e T12 retomados (religam a própria porta e refazem o que parou).
+- 04/11 06:4x disco a 2,6 GB: o T2 parou antes do finish (12 capítulos gravados e renderizados, câmera 0). Apaguei 1,5 GB
+  de intermediários de revisão e testes no scratchpad (folhas brutas, splice, rec_fake, ex/, testes de 30/10): 4,1 GB.
+  Regra nova no brief: stems e `music.wav` saem logo depois do finish.
 
 ## Fila (31/10 12:1x; nada sai da fila sem estar entregue)
 1. **Rodando (Kaik 14:48 liberou até 4 agentes ao mesmo tempo):** dev-video no 06 e no 12 do site (com a trava
