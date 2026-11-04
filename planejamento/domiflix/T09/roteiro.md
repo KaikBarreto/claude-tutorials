@@ -81,7 +81,7 @@ Todos os nomes, valores e datas são fictícios; "Válido até", "visto há X", 
 | Sub-aba "Resumo": as caixas "Mão de obra", "Materiais", "Recursos" e "Extras manuais"; o cartão com "Custo total" (R$ 108,00), "Preço sugerido (BDI)" (R$ 180,00) e a linha "BDI: 0.6000" com "Lucro padrão: 22.00%". **[1.38.19, robô]** o resumo troca "Custo total" / "Preço sugerido (BDI)" por "Seu custo total para executar" / "Cliente paga com BDI"; as quatro caixas e os valores continuam. | No Resumo, a soma: quarenta e oito reais de mão de obra, trinta reais de recurso e trinta reais de material, ou seja, cento e oito reais de custo. Dividido pelo BDI, o preço sugerido é cento e oitenta reais. |
 | (sem ação; a câmera fica no cartão de resumo) | Isso se faz uma vez só. Daí em diante, o preço sai calculado em todo orçamento. |
 
-### cap05 · Primeira etapa: o destinatário (vinheta: ORÇAMENTOS)
+### cap05 · O destinatário (vinheta: ORÇAMENTOS)
 
 | Tela | Fala |
 | --- | --- |
@@ -89,7 +89,7 @@ Todos os nomes, valores e datas são fictícios; "Válido até", "visto há X", 
 | Etapa "Montagem", bloco "Destinatário": clique em "Novo prospecto": aparecem "Nome *", "Telefone" e "E-mail"; volta para "Cliente cadastrado". | Posso orçar para um cliente cadastrado ou para um prospecto, alguém que ainda não é cliente e só precisa de um nome. Ainda não é cliente? Orce como prospecto. |
 | Em "Cliente *" ("Selecione o cliente") busca "Pousada" e escolhe "Pousada Brisa do Mar"; **sem "Próximo"** (1.38.19): a câmera desce para os serviços na mesma etapa "Montagem". | Hoje é cliente cadastrado: a Pousada Brisa do Mar. |
 
-### cap06 · Segunda etapa: serviços e preço (vinheta: ORÇAMENTOS)
+### cap06 · Serviços e preço (vinheta: ORÇAMENTOS)
 
 | Tela | Fala |
 | --- | --- |
@@ -100,7 +100,7 @@ Todos os nomes, valores e datas são fictícios; "Válido até", "visto há X", 
 | Zoom no rodapé "Subtotal Serviços" (R$ 890,00). | O subtotal dos serviços fecha em oitocentos e noventa reais. |
 | A câmera passa pelo campo "Preço unit." de uma linha (editável), sem digitar. | Uma dica: se você digita o preço na mão, ou muda a quantidade depois, aquela linha deixa de acompanhar as taxas do BDI. |
 
-### cap07 · Terceira etapa: materiais e deslocamento (vinheta: ORÇAMENTOS)
+### cap07 · Materiais e deslocamento (vinheta: ORÇAMENTOS)
 
 | Tela | Fala |
 | --- | --- |
@@ -108,7 +108,7 @@ Todos os nomes, valores e datas são fictícios; "Válido até", "visto há X", 
 | Aumenta a quantidade para 1 (botão "+"); o rodapé mostra "1 material" e "Total: R$ 150,00"; clique em "Adicionar ao orçamento": a tabela (Material, Qtd, Preço unit., Total) com o "Subtotal Materiais". | Coloco um quilo e adiciono ao orçamento. O material do estoque entra pelo preço de venda, sem BDI, e a lista não mostra saldo, porque orçar não consome estoque. |
 | No bloco "Deslocamento" (fora do "Ajustar taxas") digita 18 em "Distância (km)"; "Modalidade" fica em "Custo por km + BDI"; embaixo aparece "Custo R$ 27,00 · Preço resultante R$ 45,00" e a câmera para nessa linha (1.38.19: o deslocamento no orçamento passa a valer R$ 45,00). | Embaixo, o deslocamento: dezoito quilômetros. A Dominex multiplica pelo custo por quilômetro, que dá vinte e sete reais de custo, e, na modalidade Custo por km mais BDI, o preço resultante é de quarenta e cinco reais. |
 
-### cap08 · Quarta etapa: desconto e condições (vinheta: ORÇAMENTOS)
+### cap08 · Desconto e condições (vinheta: ORÇAMENTOS)
 
 | Tela | Fala |
 | --- | --- |
@@ -117,7 +117,7 @@ Todos os nomes, valores e datas são fictícios; "Válido até", "visto há X", 
 | Em "Observações" digita "Atendimento de segunda a sexta, das 8h às 17h."; em "Condições / Termos" digita "Serviço executado após a aprovação, com data combinada com o cliente.". | Em Observações, escrevo o horário de atendimento. Em Condições e Termos, a regra do serviço: executado depois da aprovação, em data combinada com o cliente. |
 | (sem ação; a câmera fica nos dois campos) | Repara que os dois textos saem na proposta do cliente: Condições e Termos aparece como Informações adicionais, e Observações aparece com o mesmo nome. Então escrevo pensando nele. |
 
-### cap09 · Quinta etapa: validade e revisão (vinheta: ORÇAMENTOS)
+### cap09 · Validade e revisão (vinheta: ORÇAMENTOS)
 
 | Tela | Fala |
 | --- | --- |
