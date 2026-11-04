@@ -28,7 +28,7 @@ F = montagem final + legendas + conferência · ok = no ZIP
 | T9 | Orçamentos, Precificação e Proposta | ok | ok | ok (V3) | ok (zip 5, 20:11) | agente F (54326), 1.38.9, desde 20:3x | | | |
 | T10 | CRM: funil, leads e captação | ok | ok | | | | | | |
 | T11 | Contratos e PMOC | ok | ok | | | | | | |
-| T12 | Portal do Cliente e Portal do Contrato | ok | ok | ok (V3) | ok (zip 5; títulos 20:4x) | agente novo 04/11 00:5x, 1.38.19 (54327): fase 1 = preparo e ensaio; grava quando a fila andar | | | |
+| T12 | Portal do Cliente e Portal do Contrato | ok | ok | ok (V3) | ok (zip 5; títulos 20:4x) | agente novo 04/11 00:5x, 1.38.19 (54327): **ensaio ok 03:2x** (12 caps, 0 falho, unknowns 0); **gravando desde 03:3x** | | | |
 | T13 | Financeiro | ok | ok | | | | | | |
 | T19 | Integração com Asaas, Assinaturas e Cobranças | ok | ok | | | | | | |
 | T20 | Relatório Financeiro e DRE | ok | ok | | | | | | |
@@ -240,6 +240,12 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
   Varredura de cor nos dois finais: só elementos normais do app. Legendas da vertical recriadas como hardlink (o pedido quer
   SRT/VTT por versão). Limpeza do T0 v2: stems, `music.wav`, prévia antiga e renders de capítulo (gravações ficam até o
   retorno do Kaik). Prévias 720p para o Kaik em codificação; roteiro final com tempos e lista de telas com o dev-documentos.
+- 04/11 03:xx Prévias 720p do T0 v2 enviadas ao Kaik. Roteiro final (`T00v2/roteiro_final.md`) achou o destaque "Tem no seu
+  plano" sobre a legenda do player no cap01 vertical (gaveta "Ver trilha" não abria): cap01-p refazendo. Para o Kaik decidir:
+  Personalizado a R$ 617 acima do Master (R$ 597; sugestão: Cobranças + 8 usuários = R$ 567); faixa R11 do lembrete fora;
+  quadro "Você pode pular durante o teste" na confirmação; botão "Escolher meu plano" leva a /billing (404, C5).
+  T12: fase 1 ok; o agente corrigiu `fakebase/core/query.mjs` (embed `alias:coluna_fk(...)`), aceito e levado à skill;
+  liberado para gravar.
 
 ## Fila (31/10 12:1x; nada sai da fila sem estar entregue)
 1. **Rodando (Kaik 14:48 liberou até 4 agentes ao mesmo tempo):** dev-video no 06 e no 12 do site (com a trava
