@@ -86,6 +86,10 @@ e `public/guia-tecnico/`. A coluna da direita vale para a 1.38.9 e para a 1.38.1
 | D8 | **Frases do Kaik × rótulos da tela** (as frases ficaram letra por letra): "a trilha Tutoriais do sistema" (a página mostra "Aprenda a usar a Dominex"), "materiais de apoio" (a aula mostra "Materiais e extras") e "Formação Básica" (a tela escreve "Formação básica"). | Manter as frases e destacar o rótulo real na imagem. Alternativa: o Kaik troca a frase ou o time do app troca o rótulo. |
 
 ## 4. Para o time do app (não bloqueia o vídeo)
+- **"Ver trilha" no celular não aparece (achado na gravação, 04/11):** na aula, no celular, a gaveta abre (`role=dialog`,
+  `data-state=open`), mas fica atrás da página: a página da aula é `fixed inset-0 z-[100]` (`src/pages/DomiflixWatch.tsx:575`)
+  e a gaveta usa `z-50` (`src/components/ui/drawer.tsx:21,57`). O cliente no celular não vê a trilha, os selos nem o progresso
+  dentro da aula. Afeta o 9:16 do T0 v2 (cenas 07 a 09 e 12, sem selos no celular): corrigido o app, regravar o cap01-p.
 - **Botão de contratar da DomiFlix** ("Adicionar ao meu plano" e "Escolher meu plano") abre `/billing`, rota que não existe:
   cai em "não encontrada". O certo é `/assinatura?addModule=<código>` (como o "Adicionar módulo" do sistema faz:
   `src/components/ModuleGateModal.tsx:58-68`). Arquivo: `src/components/domiflix/DomiflixModuleOffer.tsx:31`. Se a cena 10
