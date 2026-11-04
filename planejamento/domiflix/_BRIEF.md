@@ -4,7 +4,7 @@ Objetivo: deixar cada tutorial da trilha **pronto para virar roteiro e gravaçã
 memória de sessão. Tudo fica nesta pasta (`planejamento/domiflix/<Tnn>/`).
 
 ## Fontes (somente leitura)
-- Código do app na versão publicada **1.38.6**: `/home/claude/domiflix/src-1.38.6` (cópia de `origin/main` 5f0b64ea).
+- Código do app na versão de gravação **1.38.19**: `/home/claude/domiflix/src-1.38.19` (main `24f499ba`; a 1.38.6, base de T1, T4 e T5, segue em `src-1.38.6`).
   Nunca altere nada ali.
 - Trilha oficial (validada na 1.22.5, pode estar desatualizada): `_referencia/trilha-de-tutoriais_v1.22.5.md`
   (capítulos, abertura/recap/próximo, ⚠️ pontos sensíveis, 🔒 módulos pagos, 🚫 não prometer, telas mortas,

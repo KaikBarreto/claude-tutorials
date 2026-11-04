@@ -25,7 +25,7 @@ aula em `$TUT_HOME/tnn/` (já instalada), robô em `$TUT_HOME/rec/`.
   produto na tela"). Desligada por padrão.
 - Nunca `pkill`/`killall`; `rm` só com `"${VAR:?}"`; nada fora de `tnn/`, `rec/tnn/`, `rec/fakebase/seeds-extra/tnn/` e
   handlers novos em `rec/fakebase/handlers/` (um arquivo por função; não reescreva handler de outra aula: estenda).
-- Código do app: só leitura (`$TUT_HOME/app` é a cópia de gravação, 1.38.6; `src-1.38.6` para ler).
+- Código do app: só leitura (`$TUT_HOME/app` é a cópia de gravação, 1.38.19; `src-1.38.19` para ler).
 
 ## Etapas
 1. **Mundo e backend falso**: estado de partida em `rec/fakebase/seeds-extra/tnn/` (herda o fim da aula anterior na

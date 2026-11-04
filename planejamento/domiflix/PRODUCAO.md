@@ -223,6 +223,12 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
 - 04/11 00:1x o T2 semeou por engano a 54321 (do T7, entregue; ninguém gravava nela): desligadas a 54321 e a 54323 (T3 v2,
   entregue). 00:28 Kaik: "avance". Fila sem mudança e sem 4º agente (regra de 3): T0 v2 corrigindo com prioridade, T18
   renderizando, T2 grava depois do T0 v2; a vaga do T0 v2 vai para o T12 (preparo de 31/10 em `rec/t12/ESTADO.md`).
+- 04/11 01:4x T0 v2 com os 4 ajustes entregue por cima. Aprovados: cap03 (pausa de 3,6 s + `cortes` 30,4–33,95 nos dois
+  formatos), cartão vazio do cap05, abertura do cap00. **Recusado o cap05**: para a faixa de redução sumir o agente baixou a
+  conta para R$ 357 só no cap05 (semente `conta-cap05`), e a tela mostrava "Plano Avançado" a R$ 357/mês com renovação de
+  R$ 547 embaixo e R$ 547 no cap04. Refazendo: conta em R$ 547 e, na aba Personalizado, módulos e usuários marcados com a
+  fala até o total passar de R$ 547 (aumento, como diz a fala). Disco a 2,9 GB: apagados renders e `video_sem_audio` do
+  T3 v1 e `src-1.38.11` (3,4 GB livres). T2 com ensaio ok, parado até a vez; T12 despachado (fase 1).
 
 ## Fila (31/10 12:1x; nada sai da fila sem estar entregue)
 1. **Rodando (Kaik 14:48 liberou até 4 agentes ao mesmo tempo):** dev-video no 06 e no 12 do site (com a trava
