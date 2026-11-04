@@ -296,6 +296,9 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
   mais 3 capítulos antigos na aba Tipos de Serviços com "+ Novo Tipo": cap14 (recapitulação, 10 s, legível no zoom das
   Categorias), cap07 e cap08 (começam nela por 1 s, pelo `setup` do robô). Regravar só a tela dos 3 (mesma voz, partindo dos
   `apos` existentes) e remendar de novo. `conferir_remendo.py` passou a aceitar vários trechos (`--novos A:B,C:D`).
+- 04/11 13:1x T4 entregue (12:28). T2 original (168 MB) enviado ao Kaik pelo chat: passou inteiro, o limite de 30 MB não vale
+  mais. 13:1x o limite de 5 h da conta parou os 3 agentes; 14:13 **terceiro reinício do container** (app e fakebases caíram).
+  Religuei o app 8080; agentes retomados às 14:1x, cada um sobe o próprio fakebase (54324 T4, 54325 T8, 54326 T9).
 
 ## Fila (31/10 12:1x; nada sai da fila sem estar entregue)
 1. **Rodando (Kaik 14:48 liberou até 4 agentes ao mesmo tempo):** dev-video no 06 e no 12 do site (com a trava
