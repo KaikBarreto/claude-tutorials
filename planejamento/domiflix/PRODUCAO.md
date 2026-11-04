@@ -24,7 +24,7 @@ F = montagem final + legendas + conferência · ok = no ZIP
 | T5 | Ordens de Serviço, Agenda, Equipes e Mapa ao Vivo | ok | ok | ok | ok (31/10 00:29) | ok | ok | ok | ok (31/10 18:2x, 13:49; 1.38.6) · **remendo 1.38.19 entregue 04/11 12:2x** (13:56) |
 | T7 | O técnico em campo (celular) | ok | ok | ok | ok (31/10 00:29; emenda do cap05 com folga 0,17 s) | ok (54321) | ok (1.38.19) | ok | ok (03/11 20:3x, 12:26; 1.38.19) |
 | T18 | Área do Técnico: Refrigeração e Climatização | ok | ok | ok | ok (31/10 11:30) | ok (1.38.19, 54322) | ok | ok | **entregue 04/11 02:2x** (13:19, -15,8 LUFS, 208 legendas; zoom no cap00 depois da revisão) |
-| T8 | Estoque, compras e inventário | ok | ok | ok (V3) | ok (zip 5, 19:50) | fase 1 ok 04/11 11:xx (16 caps, 0 falho) | ok (fase 2; atraso máximo 0,79 s) | ok (câmera 0) | **entregue 04/11 16:5x** (16:53, -15,8 LUFS; pico em correção) |
+| T8 | Estoque, compras e inventário | ok | ok | ok (V3) | ok (zip 5, 19:50) | fase 1 ok 04/11 11:xx (16 caps, 0 falho) | ok (fase 2; atraso máximo 0,79 s) | ok (câmera 0) | **entregue 04/11 16:5x** (16:53, -15,8 LUFS) · pico corrigido 18:42 (-3,6 dBTP; vídeo idêntico) |
 | T9 | Orçamentos, Precificação e Proposta | ok | ok | ok (V3) | ok (zip 5, 20:11) | fase 1 ok 04/11 11:xx (17 caps, 0 falho, falas × tela 0 diferença); **fase 2 liberada** (54326) | | | |
 | T10 | CRM: funil, leads e captação | ok | ok | ok (04/11 17:xx) | | agente 04/11 15:4x (54328): backend, telas, robô provisório e ensaio | | | |
 | T11 | Contratos e PMOC | ok | ok | ok (04/11 17:xx) | | | | | |
@@ -325,6 +325,8 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
   T2, T4 e T12 ficam: o final tem um quadro a menos (`-shortest`). Processamento: T9 cap06 com o agente do T9 (emenda),
   T10 com o agente do T10 (tempos reais, ensaio, fase 1) e as outras 9 com um agente de voz (`proc.py`, títulos,
   palavras fracas).
+- 04/11 18:42 **T8 final na entrega**: pico real -0,6 → -3,6 dBTP (-3 dB em 0,13 s do `mix.wav`, vídeo copiado,
+  MD5 dos pacotes de vídeo igual, áudio alinhado ao mix com correlação ≥ 0,999), -15,8 LUFS. Lição em `08-licoes.md`.
 
 ## Fila (31/10 12:1x; nada sai da fila sem estar entregue)
 1. **Rodando (Kaik 14:48 liberou até 4 agentes ao mesmo tempo):** dev-video no 06 e no 12 do site (com a trava
