@@ -117,7 +117,9 @@ Com o disco apertado, o `video_sem_audio.mp4` pode sair, porque o vídeo do `aul
 confira o MD5 dos pacotes (`ffmpeg -i X -map 0:v -c copy -f md5 -` nos dois). Antes de remendar, recrie com
 `ffmpeg -i aula_final.mp4 -map 0:v -c copy video_sem_audio.mp4`. Exceção: quando o `-shortest` cortou o último quadro do
 final (T2, T4 e T12, um quadro a menos), o MD5 difere; nesse caso, mantenha o `video_sem_audio.mp4`. Feito em 04/11 em T0,
-T1, T3 v2, T5, T7 e T18: ~1 GB liberado. Uso:
+T1, T3 v2, T5, T7 e T18: ~1 GB liberado. O `proj/build/mix.wav` também pode sair depois da entrega: o remendo refaz o mix
+do zero (`refazer_mix()`, a partir de `audio48k.wav` e `edl.json`). Ajuste feito à mão no mix se perde no remendo (T8: -3 dB
+em 834,93–835,06 s contra o pico do AAC): confira o pico real que o `entregar.py` mostra. Uso:
 - `--audio cap03,cap07`: só narração nova **de mesma duração** (emenda do `emendar.py`; o `narration` do
   `caps/capNN.chapter.json` aponta para `takes/capNN_v2/audio48k.wav`). Nenhum quadro muda: refaz `audio48k.wav`, `edl.json`,
   o mix (`kit/mix.py` + SFX das vinhetas) e o MP4 final com o vídeo antigo.

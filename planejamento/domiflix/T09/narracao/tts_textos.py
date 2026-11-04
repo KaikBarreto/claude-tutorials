@@ -32,7 +32,7 @@ Posso orçar para um cliente cadastrado ou para um prospecto, alguém que ainda 
 Hoje é cliente cadastrado: a Pousada Brisa do Mar.""",
 6: """Descendo na mesma tela, chegam os serviços. No bloco Configurações bê-dê-i, o Ajustar taxas e entender o bê-dê-i mostra as taxas que salvei na Precificação. Elas valem só para este orçamento, e posso ajustar se precisar.
 Escolho a Higienização de Split e a quantidade, três, que são os três splits da pousada. O preço unitário já sai calculado: cento e oitenta reais, que é o custo de cento e oito reais dividido pelo bê-dê-i.
-Clicando no nome do serviço, vejo de onde vem o preço: a mão de obra, os materiais, os custos extras e o custo total de cada unidade.
+Clicando no nome do serviço, vejo de onde vem o preço: a mão de obra, os materiais, os recursos e extras, e o custo total de cada unidade.
 Agora a Carga de Gás. Esse serviço ainda não tem custo cadastrado, e a Dominex avisa com o selo Sem custos configurados. Nesse caso, o preço vem do preço padrão do tipo de serviço: trezentos e cinquenta reais.
 O subtotal dos serviços fecha em oitocentos e noventa reais.
 Uma dica: se você digita o preço na mão, ou muda a quantidade depois, aquela linha deixa de acompanhar as taxas do bê-dê-i.""",

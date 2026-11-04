@@ -25,7 +25,7 @@ F = montagem final + legendas + conferência · ok = no ZIP
 | T7 | O técnico em campo (celular) | ok | ok | ok | ok (31/10 00:29; emenda do cap05 com folga 0,17 s) | ok (54321) | ok (1.38.19) | ok | ok (03/11 20:3x, 12:26; 1.38.19) |
 | T18 | Área do Técnico: Refrigeração e Climatização | ok | ok | ok | ok (31/10 11:30) | ok (1.38.19, 54322) | ok | ok | **entregue 04/11 02:2x** (13:19, -15,8 LUFS, 208 legendas; zoom no cap00 depois da revisão) |
 | T8 | Estoque, compras e inventário | ok | ok | ok (V3) | ok (zip 5, 19:50) | fase 1 ok 04/11 11:xx (16 caps, 0 falho) | ok (fase 2; atraso máximo 0,79 s) | ok (câmera 0) | **entregue 04/11 16:5x** (16:53, -15,8 LUFS) · pico corrigido 18:42 (-3,6 dBTP; vídeo idêntico) |
-| T9 | Orçamentos, Precificação e Proposta | ok | ok | ok (V3) | ok (zip 5, 20:11) | fase 1 ok 04/11 11:xx (17 caps, 0 falho, falas × tela 0 diferença) | ok (atraso máx. 0,77 s) | ok (câmera 0) | aprovado 04/11 20:0x (16:38); falta trocar vinhetas 05 a 09 e entregar |
+| T9 | Orçamentos, Precificação e Proposta | ok | ok | ok (V3) | ok (zip 5, 20:11) | fase 1 ok 04/11 11:xx (17 caps, 0 falho, falas × tela 0 diferença) | ok (atraso máx. 0,77 s) | ok (câmera 0) | **entregue 04/11 20:3x** (16:33; vinhetas 05 a 09 sem número de etapa) |
 | T10 | CRM: funil, leads e captação | ok | ok | ok (04/11 17:xx) | | agente 04/11 15:4x (54328): backend, telas, robô provisório e ensaio | | | |
 | T11 | Contratos e PMOC | ok | ok | ok (04/11 17:xx) | ok (zip 7, 15 caps, 15,5 min; 0 fala a refazer) | fase 1, agente 04/11 19:0x (54329) | | | |
 | T12 | Portal do Cliente e Portal do Contrato | ok | ok | ok (V3) | ok (zip 5; títulos 20:4x) | agente novo 04/11 00:5x, 1.38.19 (54327): ensaio ok 03:2x; **aprovado 04/11 07:xx** (12:00; cap08 com faixa de endereço = defeito do app) | | | |
@@ -360,6 +360,9 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
   de verdade** (`t1pwa/desktop.mp4`, 21,8 s; técnica em `docs/04-gravacao.md`); celular ilustrado em andamento (`t1pwa_cel/`).
 - 04/11 20:06 **zip 8 recebido** (7 MP3: T10 caps 02/08/10 v2, T01 cap14 + título + emendas, T09 títulos v2; durações iguais às
   geradas) em `recebido/2006/`; repassados aos agentes do T9, do T10 e do capítulo do app.
+- 04/11 20:3x **T9 entregue** (993,0 s = 16:33; -15,8 LUFS; -3,6 dBTP; vinhetas 05 a 09 com os títulos novos, conferidas
+  por folha; 268 legendas). A fonte do T9 ainda tinha "custos extras" no cap06: corrigida. Disco 3,8 → 5,0 GB: apagados
+  os `mix.wav` de T2, T8, T9 e T18 (o remendo refaz o mix; `docs/05-edicao.md`).
 
 ## Fila (31/10 12:1x; nada sai da fila sem estar entregue)
 1. **Rodando (Kaik 14:48 liberou até 4 agentes ao mesmo tempo):** dev-video no 06 e no 12 do site (com a trava
