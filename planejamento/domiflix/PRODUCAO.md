@@ -255,6 +255,8 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
   18 destaques conferidos com OCR) e entregue por cima. Roteiro final publicado como documento para o Kaik
   (https://claude.ai/artifact/D5S8enARu7gU81gadHCEe1; cópia em `T00v2/roteiro_final.md`). T0 v2 fechado, salvo o que o
   Kaik decidir (Personalizado R$ 617, faixa R11, gaveta no celular depois da correção do app).
+- 04/11 06:2x **segundo reinício do container**: pararam os renders do T2 (feitos até o cap07) e o finish do T12 (ainda na
+  fila da trava). App religado com `rec/run.sh app`; T2 e T12 retomados (religam a própria porta e refazem o que parou).
 
 ## Fila (31/10 12:1x; nada sai da fila sem estar entregue)
 1. **Rodando (Kaik 14:48 liberou até 4 agentes ao mesmo tempo):** dev-video no 06 e no 12 do site (com a trava
