@@ -26,17 +26,17 @@ F = montagem final + legendas + conferência · ok = no ZIP
 | T18 | Área do Técnico: Refrigeração e Climatização | ok | ok | ok | ok (31/10 11:30) | ok (1.38.19, 54322) | ok | ok | **entregue 04/11 02:2x** (13:19, -15,8 LUFS, 208 legendas; zoom no cap00 depois da revisão) |
 | T8 | Estoque, compras e inventário | ok | ok | ok (V3) | ok (zip 5, 19:50) | fase 1 ok 04/11 11:xx (16 caps, 0 falho) | ok (fase 2; atraso máximo 0,79 s) | ok (câmera 0) | **entregue 04/11 16:5x** (16:53, -15,8 LUFS; pico em correção) |
 | T9 | Orçamentos, Precificação e Proposta | ok | ok | ok (V3) | ok (zip 5, 20:11) | fase 1 ok 04/11 11:xx (17 caps, 0 falho, falas × tela 0 diferença); **fase 2 liberada** (54326) | | | |
-| T10 | CRM: funil, leads e captação | ok | ok | | | sem voz, agente 04/11 15:4x (54328): backend, telas, robô provisório e ensaio | | | |
-| T11 | Contratos e PMOC | ok | ok | | | | | | |
+| T10 | CRM: funil, leads e captação | ok | ok | ok (04/11 17:xx) | | agente 04/11 15:4x (54328): backend, telas, robô provisório e ensaio | | | |
+| T11 | Contratos e PMOC | ok | ok | ok (04/11 17:xx) | | | | | |
 | T12 | Portal do Cliente e Portal do Contrato | ok | ok | ok (V3) | ok (zip 5; títulos 20:4x) | agente novo 04/11 00:5x, 1.38.19 (54327): ensaio ok 03:2x; **aprovado 04/11 07:xx** (12:00; cap08 com faixa de endereço = defeito do app) | | | |
-| T13 | Financeiro | ok | ok | | | | | | |
-| T19 | Integração com Asaas, Assinaturas e Cobranças | ok | ok | | | | | | |
-| T20 | Relatório Financeiro e DRE | ok | ok | | | | | | |
-| T14 | Notas Fiscais (NFS-e e NF-e) | ok | ok | | | | | | |
-| T15 | Funcionários: Financeiro do Funcionário e Ponto | ok | ok | | | | | | |
-| T22 | Ferramentas de RH: DISC, Organograma, Fluxograma | ok | ok | | | | | | |
-| T21 | Integração com WhatsApp | ok | ok | | | | | | |
-| T17 | Dashboard, relatórios e exportações | ok | ok | | | | | | |
+| T13 | Financeiro | ok | ok | ok (04/11 17:xx) | | | | | |
+| T19 | Integração com Asaas, Assinaturas e Cobranças | ok | ok | ok (04/11 17:xx) | | | | | |
+| T20 | Relatório Financeiro e DRE | ok | ok | ok (04/11 17:xx) | | | | | |
+| T14 | Notas Fiscais (NFS-e e NF-e) | ok | ok | ok (04/11 17:xx) | | | | | |
+| T15 | Funcionários: Financeiro do Funcionário e Ponto | ok | ok | ok (04/11 17:xx) | | | | | |
+| T22 | Ferramentas de RH: DISC, Organograma, Fluxograma | ok | ok | ok (04/11 17:xx) | | | | | |
+| T21 | Integração com WhatsApp | ok | ok | ok (04/11 17:xx) | | | | | |
+| T17 | Dashboard, relatórios e exportações | ok | ok | ok (04/11 17:xx) | | | | | |
 
 Ordem (TRILHA.md): T0 → T1 → T4 → T5 → T7 → T18 → T2 → T8 → T9 → T12 → T13 → T20 → T10 → T11 → T15 → T22 → T19 →
 T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aula parte do estado final da anterior).
@@ -316,7 +316,9 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
 - 04/11 17:13 **Kaik comprou US$ 20 de créditos no ElevenLabs** (print: 172.768 de 286.000 usados, saldo 113.232;
   Creator, renova em 28/11). Agente de voz despachado: emenda do T9 cap06 ("os recursos e extras", rótulo de
   `QuoteFormDialog.tsx:1753`), T11, V4, V5 e o T10 por último, depois da conferência de rótulos do agente do T10.
-  Reserva mínima de 8 mil.
+  Reserva mínima de 8 mil. **17:5x: voz gerada** para T10, T11, T13, T14, T15, T17, T19, T20, T21, T22 e a emenda
+  do T9 (141 nós, ~100 min, ~88,4 mil créditos; saldo ~24,8 mil). Daqui não se baixa o áudio (o proxy recusa
+  `elevenlabsusercontent.com`): o Kaik exporta o fluxo (zip 7).
 
 ## Fila (31/10 12:1x; nada sai da fila sem estar entregue)
 1. **Rodando (Kaik 14:48 liberou até 4 agentes ao mesmo tempo):** dev-video no 06 e no 12 do site (com a trava
@@ -411,9 +413,9 @@ se for melhor (custa o mesmo que o v4 por caractere: fica o v4, voz do T3); fala
 | V2b | Correções de pronúncia (Kaik 31/10 11:04): `T01 cap05 A cor e o logo da marca (v2)` (logo com texto branco), `T01 emendas`, `T04 emendas`, `T18 emenda` = 1.745 créditos | mesmo fluxo | gerado 11:11, exportado 11:18 (zip 3); processando |
 | V2c | T3 v2 (1.38.9): `T03v2 cap06 Etiquetas`, `T03v2 cap07 Campos personalizados`, `T03v2 emendas`, `T03v2 inserções`, `T03v2 títulos` = 1.824 créditos | mesmo fluxo | gerado 31/10 16:37; **saldo ~0**; exportado 16:50 (zip 4): MP3 em `$TUT_HOME/recebido/1650/` |
 | V3 | T2 (8.464), T8 (13.934), T9 (13.544), T12 (10.270) = 46.212 créditos, 61 nós (1 versão cada), ~52,8 min de voz | mesmo fluxo | **gerado 31/10 18:3x–18:41** (Kaik comprou créditos 18:28 e aprovou "gere T2, T8, T9 e T12"); 61/61 concluídas, 0 falha; ids em `scratchpad/v3_nos.json`; zip 5 (18:53) processado: 96 palavras fracas, todas do ASR (conferidas isoladas e desaceleradas), nenhuma fala a refazer |
-| V3b | T10 (10,4 mil), T11 (14,2 mil) = ~24,6 mil | mesmo fluxo | créditos comprados 04/11 17:13; **gerando** (agente de voz; T10 por último) |
-| V4 | T13 (12,8 mil), T19 (9,1 mil), T20 (7,9 mil), T14 (7,7 mil) = ~37,5 mil | mesmo fluxo | créditos comprados 04/11 17:13; **gerando** (agente de voz; T10 por último) |
-| V5 | T15 (8,2 mil), T22 (6,9 mil), T21 (5,4 mil), T17 (5,6 mil) = ~26,1 mil | mesmo fluxo | créditos comprados 04/11 17:13; **gerando** (agente de voz; T10 por último) |
+| V3b | T10 (10,4 mil), T11 (14,2 mil) = ~24,6 mil | mesmo fluxo | **gerado 04/11 17:2x–17:5x** (1 versão cada, 0 falha; durações medidas nos `nos_elevenlabs.json`); aguardando a exportação do Kaik (zip 7) |
+| V4 | T13 (12,8 mil), T19 (9,1 mil), T20 (7,9 mil), T14 (7,7 mil) = ~37,5 mil | mesmo fluxo | **gerado 04/11 17:2x–17:5x** (1 versão cada, 0 falha; durações medidas nos `nos_elevenlabs.json`); aguardando a exportação do Kaik (zip 7) |
+| V5 | T15 (8,2 mil), T22 (6,9 mil), T21 (5,4 mil), T17 (5,6 mil) = ~26,1 mil | mesmo fluxo | **gerado 04/11 17:2x–17:5x** (1 versão cada, 0 falha; durações medidas nos `nos_elevenlabs.json`); aguardando a exportação do Kaik (zip 7) |
 
 **Falas a refazer (próximo lote de voz, junto com o T18; o Kaik exporta uma vez):** T07 cap05, frase "O aplicativo
 deixa o vídeo mais leve antes de enviar." (em ~0:29; o ASR não ouve o "deixa" nem isolado; há tempo de fala para ele,
