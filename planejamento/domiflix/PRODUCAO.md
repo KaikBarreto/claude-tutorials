@@ -270,6 +270,8 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
   limpas; só o recarregamento do app depois de "Criar Usuário" (`window.location.reload()` em `Users.tsx`, 3,7 a 9,6 s) nos
   caps 05 e 06. Pedido: `pausas.py` (mesma voz) + regravação + `cortes`, como no T0 v2 cap03.
 - 04/11 09:xx **T2 entregue** (10:15). Entregues até aqui na 1.38.19: T0 v2 (16:9 + 9:16), T3 v2, T18, T12, T2.
+- 04/11 09:xx Desligadas as portas 54324 (T2) e 54327 (T12), entregues. Remendos de T5 (caps 02 a 06), T4 (01 e 03) e
+  T1 (11) despachados (fase 1 na 1.38.19, porta 54324; `remendar_aula.py` na fase 2). Em curso: T8, T9 (fase 1) e remendos.
 
 ## Fila (31/10 12:1x; nada sai da fila sem estar entregue)
 1. **Rodando (Kaik 14:48 liberou até 4 agentes ao mesmo tempo):** dev-video no 06 e no 12 do site (com a trava
