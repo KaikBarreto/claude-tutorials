@@ -251,6 +251,10 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
   destaques do 9:16 conferem (folha com OCR). Em curso: cap01-p sem toque em "Ver trilha" (opção b: lista de módulos da
   página inicial no celular, sem selos; os selos ficam na ilustração e no cabeçalho da aula). Corrigido o app, regravar o
   cap01-p com a gaveta (opção a). Sem CSS injetado.
+- 04/11 04:xx 9:16 do cap01 refeito (opção b: lista de módulos da página inicial no celular, sem toque em "Ver trilha";
+  18 destaques conferidos com OCR) e entregue por cima. Roteiro final publicado como documento para o Kaik
+  (https://claude.ai/artifact/D5S8enARu7gU81gadHCEe1; cópia em `T00v2/roteiro_final.md`). T0 v2 fechado, salvo o que o
+  Kaik decidir (Personalizado R$ 617, faixa R11, gaveta no celular depois da correção do app).
 
 ## Fila (31/10 12:1x; nada sai da fila sem estar entregue)
 1. **Rodando (Kaik 14:48 liberou até 4 agentes ao mesmo tempo):** dev-video no 06 e no 12 do site (com a trava
