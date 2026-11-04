@@ -17,6 +17,12 @@ export function rowsOf(name) {
 
 /** Linhas de `target` relacionadas a `row` (de `source`). null = sem relacionamento conhecido. */
 export function resolveRelated(source, target, hints, row) {
+  // PostgREST aceita o NOME DA COLUNA FK como alvo do embed (`alias:responsible_technician_id (...)`): resolve para a tabela da FK
+  // (T12, 04/11: sem isto o contrato perdia o Responsável Técnico e a aba Documentos acusava "Dados faltando").
+  if (!S.isKnown(target)) {
+    const fk = S.relsFrom(source).find((r) => r.cols.length === 1 && r.cols[0] === target);
+    if (fk) { hints = [target]; target = fk.to; }
+  }
   const e = S.findEmbed(source, target, hints);
   if (!e) return null;
   if (e.via === 'forward') {
