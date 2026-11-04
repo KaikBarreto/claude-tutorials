@@ -217,6 +217,9 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
   por cima; (3) cap05, cartão vazio de 2 a 3,6 s entre duas cenas; (4) abertura com 6,6 s de cartão vazio só com o título.
   Devolvido ao mesmo agente: catálogo com preços das migrations, pausa + `cortes` no cap03, regravação de cap03 e cap05
   nos dois formatos. Ainda não foi ao Kaik.
+- 04/11 00:1x o T2 semeou por engano a 54321 (do T7, entregue; ninguém gravava nela): desligadas a 54321 e a 54323 (T3 v2,
+  entregue). 00:28 Kaik: "avance". Fila sem mudança e sem 4º agente (regra de 3): T0 v2 corrigindo com prioridade, T18
+  renderizando, T2 grava depois do T0 v2; a vaga do T0 v2 vai para o T12 (preparo de 31/10 em `rec/t12/ESTADO.md`).
 
 ## Fila (31/10 12:1x; nada sai da fila sem estar entregue)
 1. **Rodando (Kaik 14:48 liberou até 4 agentes ao mesmo tempo):** dev-video no 06 e no 12 do site (com a trava
