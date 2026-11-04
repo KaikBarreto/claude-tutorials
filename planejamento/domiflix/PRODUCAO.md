@@ -26,7 +26,7 @@ F = montagem final + legendas + conferência · ok = no ZIP
 | T18 | Área do Técnico: Refrigeração e Climatização | ok | ok | ok | ok (31/10 11:30) | ok (1.38.19, 54322) | ok | ok | **entregue 04/11 02:2x** (13:19, -15,8 LUFS, 208 legendas; zoom no cap00 depois da revisão) |
 | T8 | Estoque, compras e inventário | ok | ok | ok (V3) | ok (zip 5, 19:50) | fase 1 ok 04/11 11:xx (16 caps, 0 falho) | ok (fase 2; atraso máximo 0,79 s) | ok (câmera 0) | **entregue 04/11 16:5x** (16:53, -15,8 LUFS) · pico corrigido 18:42 (-3,6 dBTP; vídeo idêntico) |
 | T9 | Orçamentos, Precificação e Proposta | ok | ok | ok (V3) | ok (zip 5, 20:11) | fase 1 ok 04/11 11:xx (17 caps, 0 falho, falas × tela 0 diferença) | ok (atraso máx. 0,77 s) | ok (câmera 0) | **entregue 04/11 20:3x** (16:33; vinhetas 05 a 09 sem número de etapa) |
-| T10 | CRM: funil, leads e captação | ok | ok | ok (04/11 17:xx) | | agente 04/11 15:4x (54328): backend, telas, robô provisório e ensaio | | | |
+| T10 | CRM: funil, leads e captação | ok | ok | ok (04/11 17:xx) | | fase 1 ok 04/11 21:xx (11 caps, 0 falho; arrasto do cap02 por DragEvent real; caps 02/08/10 com a voz v2) | **fase 2 liberada** (54328) | | |
 | T11 | Contratos e PMOC | ok | ok | ok (04/11 17:xx) | ok (zip 7, 15 caps, 15,5 min; 0 fala a refazer) | fase 1, agente 04/11 19:0x (54329) | | | |
 | T12 | Portal do Cliente e Portal do Contrato | ok | ok | ok (V3) | ok (zip 5; títulos 20:4x) | agente novo 04/11 00:5x, 1.38.19 (54327): ensaio ok 03:2x; **aprovado 04/11 07:xx** (12:00; cap08 com faixa de endereço = defeito do app) | | | |
 | T13 | Financeiro | ok | ok | ok (04/11 17:xx) | ok (zip 7, 15 caps, 14,0 min; 0 fala a refazer) | fase 1, agente 04/11 20:3x (54332) | | | |
@@ -369,6 +369,11 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
   no celular (390 px), aparelho genérico sem logos. Ajuste pedido: o menu "Compartilhar" visível ~1 s. **Fase B**
   despachada: voz no T1 (`proc.py` 14, título, emendas do cap00 e cap13), render do cap14 (computador real +
   ilustrações) e inserção depois do cap00 com extensão `--inserir` no `remendar_aula.py` (testada no exemplo antes).
+- 04/11 21:3x **T1 com o cap14 montado** (fase B): 13:35,7 (+86,5 s), emendas do cap00 (folga 0,53 s) e do cap13 (0,22 s, ×0,945),
+  `remendar_aula.py --inserir cap14:depois=cap00` (2764 quadros recodificados, 21707 copiados). `conferir_remendo` corrigido
+  (deslocamento por vários pontos e por índice de quadro; busca em volta do esperado para inserções): OK, quadros 0,00,
+  legendas iguais e deslocadas. Achado na revisão: o fim do cap00 ainda levava o cursor e o zoom ao botão Configurações
+  (frase antiga); **fase C**: regravar só o cap00 sem esse final e remendar `--novos cap00`.
 
 ## Fila (31/10 12:1x; nada sai da fila sem estar entregue)
 1. **Rodando (Kaik 14:48 liberou até 4 agentes ao mesmo tempo):** dev-video no 06 e no 12 do site (com a trava
