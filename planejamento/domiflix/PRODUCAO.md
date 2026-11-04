@@ -18,7 +18,7 @@ F = montagem final + legendas + conferência · ok = no ZIP
 |---|---|---|---|---|---|---|---|---|---|
 | T0 | Boas-vindas à Dominex (ilustrada) | ok | ok | ok | ok | — | — | ok | ok (30/10 22:51, 3:25) · **v2 em ajuste 04/11** (4:20, 16:9 + 9:16; cap03 e cap05 regravando; v1 em `t0/entrega_antiga`) |
 | T1 | Configurações e identidade da empresa | ok | ok | ok | ok (31/10 00:29) | ok | ok | ok | ok (31/10 05:20, 11:58) · **v2 18:33** (pronúncia + logo com texto branco; 12:05; 1.38.6) |
-| T2 | Usuários, cargos e permissões | ok | ok | ok (V3 18:3x) | ok (zip 5, 19:31) | agente novo 03/11 22:4x, 1.38.19 (54324): preparo e ensaio; grava depois do T0 v2 | | | |
+| T2 | Usuários, cargos e permissões | ok | ok | ok (V3 18:3x) | ok (zip 5, 19:31) | agente novo 03/11 22:4x, 1.38.19 (54324): **ensaio ok 04/11 00:4x** (cap00–10, 0 falho; cap11 só montagem); grava depois do T0 v2 | | | |
 | T3 | Clientes, Fornecedores e Equipamentos | ok | ok | ok | ok | ok | ok | ok | **v2 entregue 03/11 22:4x** (14:13, 1.38.19, -15,8 LUFS; v1 de 30/10 em `t3/edit/out`) |
 | T4 | Serviços, tarefas e checklists | ok | ok | ok | ok (31/10 00:29) | ok | ok | ok | ok (31/10 10:46, 10:27) · **v2 18:37** (pronúncia; só o áudio) |
 | T5 | Ordens de Serviço, Agenda, Equipes e Mapa ao Vivo | ok | ok | ok | ok (31/10 00:29) | ok | ok | ok | ok (31/10 18:2x, 13:49; 1.38.6) |
@@ -116,6 +116,9 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
   `extra_user` > 0; `whatsapp_tiers` respondendo (`src/components/billing/ModulesManagementCard.tsx:186-199`). Faltando um,
   aparece "Não foi possível validar o catálogo de preços", "preço indisponível" e R$ 0,00 (T0 v2 cap05, 04/11). Aula que
   mostra essa tela (T13, T17, T20) parte do `seeds-extra/t0v2/catalogo.json` corrigido, com preços das migrations.
+- **Trilha Domiflix (G1 do `IMPACTO_1.38.19.md`):** toda aula depois do T0 semeia `domiflix_learning_paths`
+  `tutoriais-do-sistema` com `is_onboarding: false`, como `seeds-extra/t2/inicio.json`; sem isso a tela escura de introdução
+  ou a faixa de lembrete aparecem (a base `gen-03-domiflix.json` está com `true`, que só o T0 v2 usa).
 
 ## Retomada (03/11 16:3x)
 - 31/10 21:0x: o limite semanal do Kaik acabou e os US$ 90 de créditos foram gastos em < 20 min (9 agentes em paralelo +
