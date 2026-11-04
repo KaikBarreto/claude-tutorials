@@ -24,8 +24,8 @@ F = montagem final + legendas + conferência · ok = no ZIP
 | T5 | Ordens de Serviço, Agenda, Equipes e Mapa ao Vivo | ok | ok | ok | ok (31/10 00:29) | ok | ok | ok | ok (31/10 18:2x, 13:49; 1.38.6) |
 | T7 | O técnico em campo (celular) | ok | ok | ok | ok (31/10 00:29; emenda do cap05 com folga 0,17 s) | ok (54321) | ok (1.38.19) | ok | ok (03/11 20:3x, 12:26; 1.38.19) |
 | T18 | Área do Técnico: Refrigeração e Climatização | ok | ok | ok | ok (31/10 11:30) | ok (1.38.19, 54322) | ok | ok | **entregue 04/11 02:2x** (13:19, -15,8 LUFS, 208 legendas; zoom no cap00 depois da revisão) |
-| T8 | Estoque, compras e inventário | ok | ok | ok (V3) | ok (zip 5, 19:50) | agente E (54325), 1.38.9, desde 20:3x | | | |
-| T9 | Orçamentos, Precificação e Proposta | ok | ok | ok (V3) | ok (zip 5, 20:11) | agente F (54326), 1.38.9, desde 20:3x | | | |
+| T8 | Estoque, compras e inventário | ok | ok | ok (V3) | ok (zip 5, 19:50) | agente novo 04/11 07:xx, 1.38.19 (54325): fase 1 = preparo e ensaio | | | |
+| T9 | Orçamentos, Precificação e Proposta | ok | ok | ok (V3) | ok (zip 5, 20:11) | agente novo 04/11 07:xx, 1.38.19 (54326): fase 1 = preparo e ensaio | | | |
 | T10 | CRM: funil, leads e captação | ok | ok | | | | | | |
 | T11 | Contratos e PMOC | ok | ok | | | | | | |
 | T12 | Portal do Cliente e Portal do Contrato | ok | ok | ok (V3) | ok (zip 5; títulos 20:4x) | agente novo 04/11 00:5x, 1.38.19 (54327): ensaio ok 03:2x; **aprovado 04/11 07:xx** (12:00; cap08 com faixa de endereço = defeito do app) | | | |
@@ -264,6 +264,8 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
   busca de cor. Única ressalva: a faixa "Dados faltando: Endereço do cliente" na aba Documentos (cap08, 8:30–8:57) é DEFEITO DO
   APP (`useContractDetail.ts:42` não busca o endereço; anotado em `T00v2/sinalizacoes.md`, seção 4); regravar o cap08 depois
   da correção. Entregando.
+- 04/11 07:xx **T12 entregue** (11:59, -15,8 LUFS, 194 legendas). T8 e T9 despachados (fase 1 na 1.38.19, portas 54325 e
+  54326); gravação só com o meu "pode gravar" (disco a 4,3 GB, o T2 ainda monta).
 
 ## Fila (31/10 12:1x; nada sai da fila sem estar entregue)
 1. **Rodando (Kaik 14:48 liberou até 4 agentes ao mesmo tempo):** dev-video no 06 e no 12 do site (com a trava
