@@ -86,6 +86,11 @@ e `public/guia-tecnico/`. A coluna da direita vale para a 1.38.9 e para a 1.38.1
 | D8 | **Frases do Kaik × rótulos da tela** (as frases ficaram letra por letra): "a trilha Tutoriais do sistema" (a página mostra "Aprenda a usar a Dominex"), "materiais de apoio" (a aula mostra "Materiais e extras") e "Formação Básica" (a tela escreve "Formação básica"). | Manter as frases e destacar o rótulo real na imagem. Alternativa: o Kaik troca a frase ou o time do app troca o rótulo. |
 
 ## 4. Para o time do app (não bloqueia o vídeo)
+- **Aba Documentos do contrato PMOC sempre acusa "Endereço do cliente" em branco (achado no T12, 04/11):** a tela do contrato
+  busca `customers (id, name, document, phone)` (`src/hooks/useContractDetail.ts:42`), sem `address, city, state`, mas monta
+  `customer_address` com eles (`src/pages/ContractDetail.tsx:1519`); `PmocContractDocsTab.tsx:478` então mostra "Dados faltando
+  para gerar documentos PMOC: Endereço do cliente" para TODO contrato, e o PDF pode sair sem endereço. A `useContracts.ts:1909`
+  já pede o endereço. Afeta o T12 (cap08, 8:30–8:57): corrigido o app, regravar o cap08.
 - **"Ver trilha" no celular não aparece (achado na gravação, 04/11):** na aula, no celular, a gaveta abre (`role=dialog`,
   `data-state=open`), mas fica atrás da página: a página da aula é `fixed inset-0 z-[100]` (`src/pages/DomiflixWatch.tsx:575`)
   e a gaveta usa `z-50` (`src/components/ui/drawer.tsx:21,57`). O cliente no celular não vê a trilha, os selos nem o progresso

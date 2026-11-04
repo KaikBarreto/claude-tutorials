@@ -28,7 +28,7 @@ F = montagem final + legendas + conferência · ok = no ZIP
 | T9 | Orçamentos, Precificação e Proposta | ok | ok | ok (V3) | ok (zip 5, 20:11) | agente F (54326), 1.38.9, desde 20:3x | | | |
 | T10 | CRM: funil, leads e captação | ok | ok | | | | | | |
 | T11 | Contratos e PMOC | ok | ok | | | | | | |
-| T12 | Portal do Cliente e Portal do Contrato | ok | ok | ok (V3) | ok (zip 5; títulos 20:4x) | agente novo 04/11 00:5x, 1.38.19 (54327): **ensaio ok 03:2x** (12 caps, 0 falho, unknowns 0); **gravando desde 03:3x** | | | |
+| T12 | Portal do Cliente e Portal do Contrato | ok | ok | ok (V3) | ok (zip 5; títulos 20:4x) | agente novo 04/11 00:5x, 1.38.19 (54327): ensaio ok 03:2x; **aprovado 04/11 07:xx** (12:00; cap08 com faixa de endereço = defeito do app) | | | |
 | T13 | Financeiro | ok | ok | | | | | | |
 | T19 | Integração com Asaas, Assinaturas e Cobranças | ok | ok | | | | | | |
 | T20 | Relatório Financeiro e DRE | ok | ok | | | | | | |
@@ -260,6 +260,10 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
 - 04/11 06:4x disco a 2,6 GB: o T2 parou antes do finish (12 capítulos gravados e renderizados, câmera 0). Apaguei 1,5 GB
   de intermediários de revisão e testes no scratchpad (folhas brutas, splice, rec_fake, ex/, testes de 30/10): 4,1 GB.
   Regra nova no brief: stems e `music.wav` saem logo depois do finish.
+- 04/11 07:xx **T12 aprovado** (12:00, -15,8 LUFS, câmera 0, 0 falho, maior trecho sem zoom 15,7 s). Revisão: 5 folhas de 3 s +
+  busca de cor. Única ressalva: a faixa "Dados faltando: Endereço do cliente" na aba Documentos (cap08, 8:30–8:57) é DEFEITO DO
+  APP (`useContractDetail.ts:42` não busca o endereço; anotado em `T00v2/sinalizacoes.md`, seção 4); regravar o cap08 depois
+  da correção. Entregando.
 
 ## Fila (31/10 12:1x; nada sai da fila sem estar entregue)
 1. **Rodando (Kaik 14:48 liberou até 4 agentes ao mesmo tempo):** dev-video no 06 e no 12 do site (com a trava
