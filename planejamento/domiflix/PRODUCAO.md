@@ -363,6 +363,12 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
 - 04/11 20:3x **T9 entregue** (993,0 s = 16:33; -15,8 LUFS; -3,6 dBTP; vinhetas 05 a 09 com os títulos novos, conferidas
   por folha; 268 legendas). A fonte do T9 ainda tinha "custos extras" no cap06: corrigida. Disco 3,8 → 5,0 GB: apagados
   os `mix.wav` de T2, T8, T9 e T18 (o remendo refaz o mix; `docs/05-edicao.md`).
+- 04/11 20:5x **T1 cap14, celular ilustrado aprovado** (fase A, `t1pwa_cel/`): Android (⋮ → "Instalar app" → "Instalar" →
+  tela inicial com ícones inventados → app em tela cheia), iPhone ("…" → "Compartilhar" → "Adicionar à Tela de Início" →
+  "Abrir como app web" ligado → "Adicionar" → login real) e cena final "A mesma Dominex"; telas reais da Dominex
+  no celular (390 px), aparelho genérico sem logos. Ajuste pedido: o menu "Compartilhar" visível ~1 s. **Fase B**
+  despachada: voz no T1 (`proc.py` 14, título, emendas do cap00 e cap13), render do cap14 (computador real +
+  ilustrações) e inserção depois do cap00 com extensão `--inserir` no `remendar_aula.py` (testada no exemplo antes).
 
 ## Fila (31/10 12:1x; nada sai da fila sem estar entregue)
 1. **Rodando (Kaik 14:48 liberou até 4 agentes ao mesmo tempo):** dev-video no 06 e no 12 do site (com a trava
