@@ -2,12 +2,16 @@
 (Depois da entrega a limpeza apaga as gravações e os renders dos capítulos; este script refaz a aula só com o que a entrega
 deixa em <out>: capitulos.json, video_sem_audio.mp4 e proj/{audio48k.wav, edl.json, render.json, build/{intro_v.mp4, outro_v.mp4}}.)
 
-uso: python3 -I remendar_aula.py <aula.json> [--audio cap03,cap07] [--novos cap05,cap06,cap13] [--plano] [--crf 20]
+uso: python3 -I remendar_aula.py <aula.json> [--audio cap03,cap07] [--novos cap05,cap06,cap13] [--inserir cap14:depois=cap00] [--plano] [--crf 20]
                                   [--frames cap05=1954,cap06=1846]   (só com --plano: quadros de capítulos novos ainda sem render)
   --audio  capítulos que só ganharam narração nova, com a MESMA duração (o "narration" do caps/capNN.chapter.json aponta
            para a emenda); o vídeo deles não muda
   --novos  capítulos regravados e já renderizados pelo render_chapter.py (out/capNN/capNN.mp4, .wav e .edit.json), com a
            duração que tiverem; o que vem depois deles na linha do tempo se desloca
+  --inserir  capítulo NOVO que não existia na aula entregue, colocado logo depois de outro (`cap14:depois=cap00`; vários, separados
+           por vírgula). Entra como `--novos` (render pelo render_chapter.py, duração própria, listado no `chapters` do aula.json) e,
+           se o capítulo tem "card", ganha a vinheta falada (titulos.json do `card_voices`, como no finish.py). O que vem depois se
+           desloca; a vinheta do capítulo que passa a seguir o inserido é refeita (ela funde a tela do capítulo de antes com a de depois)
   --plano  só imprime o plano (linha do tempo nova, o que é copiado e o que é recodificado); não escreve nada e não pede a trava
   --manter-stems  não apaga proj/build/stems e music.wav depois do mix (por padrão somem: ~1,1 GB numa aula de 12 min)
 
@@ -63,6 +67,16 @@ PROJ = os.path.join(OUT, "proj")
 BUILD = os.path.join(PROJ, "build")
 AUDIO = [x for x in (opt("--audio") or "").split(",") if x]
 NOVOS = [x for x in (opt("--novos") or "").split(",") if x]
+INSERIR = []  # [(capítulo novo, capítulo depois do qual entra)]
+for _x in (opt("--inserir") or "").split(","):
+    if _x:
+        try:
+            _c, _d = _x.split(":depois=")
+        except ValueError:
+            sys.exit(f"--inserir {_x}: use cap14:depois=cap00")
+        INSERIR.append((_c, _d))
+        if _c not in NOVOS:
+            NOVOS.append(_c)
 FRAMES_TESTE = {k: int(v) for k, v in (kv.split("=") for kv in (opt("--frames") or "").split(",") if kv)}
 CRF = int(opt("--crf", L.get("crf", 20)))
 SFX = L.get("sfx", True)
@@ -95,6 +109,37 @@ intro_p, outro_p = os.path.join(BUILD, "intro_v.mp4"), os.path.join(BUILD, "outr
 n_in, n_out, n_xo = (int(round(probe(intro_p)["dur"] * FPS)), int(round(probe(outro_p)["dur"] * FPS)), int(round(XF_OUT * FPS)))
 
 # ------------------------------------------------------------------ linha do tempo antiga e nova
+def ler_side(it, nm):
+    """render do capítulo novo (out/<nm>/<nm>.edit.json): quadros, wav e eventos"""
+    outd = os.path.normpath(os.path.join(os.path.dirname(CJ[nm][0]), CJ[nm][1].get("output", {}).get("dir", "out")))
+    side = os.path.join(outd, nm + ".edit.json")
+    if os.path.exists(side):
+        it["side"] = json.load(open(side))
+        it["frames"] = int(it["side"]["frames"])
+    elif PLANO and nm in FRAMES_TESTE:
+        it["frames"] = FRAMES_TESTE[nm]
+    else:
+        sys.exit(f"{nm}: falta o render ({side}); rode o render_chapter.py antes (ou --frames {nm}=N com --plano)")
+
+
+def itens_inseridos(nm):
+    """[vinheta (se o capítulo tem card), capítulo] de um capítulo inserido: o_frames = 0 (não existe no vídeo antigo)"""
+    out = []
+    cd = CJ[nm][1].get("card")
+    if cd and L.get("cards", True):
+        import vinheta_cap as VC  # noqa: E402
+        vozes = json.load(open(rp(L["card_voices"]))) if L.get("card_voices") else {}
+        voz = vozes.get(nm[-2:])
+        dur = VC.dur_for(voz["dur"]) if voz else VC.DUR
+        out.append(dict(name="vinheta-" + nm, card=True, voz=(voz or {}).get("texto"), voz_wav=(voz or {}).get("wav"), cortes=[], o_frames=0,
+                        o_start_s=0.0, novo=False, audio=False, side=None, inserido=True, frames=int(round(dur * FPS))))
+    it = dict(name=nm, card=False, voz=None, cortes=[], o_frames=0, o_start_s=0.0, novo=True, audio=False, side=None, inserido=True)
+    it["frames"] = 0
+    ler_side(it, nm)
+    out.append(it)
+    return out
+
+
 items = []
 for c in json.load(open(OLD("capitulos.json")))["chapters"]:
     nm = c["name"]
@@ -104,16 +149,19 @@ for c in json.load(open(OLD("capitulos.json")))["chapters"]:
         sys.exit(f"{nm}: capítulo com cortes não é suportado aqui (use o finish.py com todos os capítulos renderizados)")
     it["frames"] = it["o_frames"]
     if it["novo"]:
-        outd = os.path.normpath(os.path.join(os.path.dirname(CJ[nm][0]), CJ[nm][1].get("output", {}).get("dir", "out")))
-        side = os.path.join(outd, nm + ".edit.json")
-        if os.path.exists(side):
-            it["side"] = json.load(open(side))
-            it["frames"] = int(it["side"]["frames"])
-        elif PLANO and nm in FRAMES_TESTE:
-            it["frames"] = FRAMES_TESTE[nm]
-        else:
-            sys.exit(f"{nm}: falta o render ({side}); rode o render_chapter.py antes (ou --frames {nm}=N com --plano)")
+        ler_side(it, nm)
     items.append(it)
+for _c, _d in INSERIR:  # capítulos inseridos: logo depois de `_d` (e da vinheta do próprio capítulo, que vem antes dele)
+    _k = next((i for i, x in enumerate(items) if x["name"] == _d), None)
+    if _k is None:
+        sys.exit(f"--inserir {_c}:depois={_d}: {_d} não está no capitulos.json antigo")
+    if any(x["name"] == _c for x in items):
+        sys.exit(f"--inserir {_c}: já está na aula entregue (use --novos)")
+    _nxt = items[_k + 1]["o_start_s"] if _k + 1 < len(items) else 0.0
+    _novos_it = itens_inseridos(_c)
+    for _it in _novos_it:
+        _it["o_start_s"] = _nxt
+    items[_k + 1:_k + 1] = _novos_it
 for _n in AUDIO + NOVOS:
     if not any(i["name"] == _n for i in items):
         sys.exit(f"{_n}: não está no capitulos.json antigo")
@@ -138,7 +186,7 @@ CDUR = round(_t, 3)
 log(f"{len(items)} itens | conteúdo {sum(i['o_frames'] for i in items) / FPS:.2f} s -> {N_C / FPS:.2f} s | vídeo {O_TOTAL} -> {N_TOTAL} quadros")
 for it in items:
     if it["novo"] or it["audio"] or it["sujo"]:
-        log(f"  {it['name']:<14} {'novo' if it['novo'] else 'só áudio novo' if it['audio'] else 'vinheta refeita'}: {it['o_frames']} -> {it['frames']} quadros "
+        log(f"  {it['name']:<14} {'inserido' if it.get('inserido') else 'novo' if it['novo'] else 'só áudio novo' if it['audio'] else 'vinheta refeita'}: {it['o_frames']} -> {it['frames']} quadros "
             f"(começa em {starts[items.index(it)]:.2f} s)")
 HAS_GEN = any(i["sujo"] for i in items)
 
@@ -220,6 +268,14 @@ def refazer_voz():
                 x = x.mean(1) if x.ndim == 2 else x
             elif it["audio"]:
                 x = narracao_alinhada(CJ[it["name"]][0], CJ[it["name"]][1], it["frames"])
+            elif it.get("inserido"):  # vinheta falada de capítulo inserido: silêncio com o título em VOZ_AT (como no finish.py)
+                import vinheta_cap as VC  # noqa: E402
+                x = np.zeros(n, np.float32)
+                if it.get("voz_wav"):
+                    v_ = sf.read(it["voz_wav"], dtype="float32")[0]
+                    v_ = v_.mean(1) if v_.ndim == 2 else v_
+                    a_ = int(VC.VOZ_AT * SR)
+                    x[a_:a_ + len(v_)] = v_[:max(0, n - a_)]
             else:  # não mudou: fatia do áudio antigo, idêntica
                 old_wav.seek(o_off)
                 x = old_wav.read(n_old, dtype="float32")

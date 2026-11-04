@@ -39,6 +39,11 @@ def quadro(f, t):
     return np.frombuffer(raw, np.uint8).astype(np.float32)
 
 
+def qf(f, n):
+    """quadro de índice n (mesma convenção da janela()); comparar por índice evita a fronteira entre dois quadros"""
+    return quadro(f, (n - 0.25) / FR)
+
+
 def janela(f, n0, n, w=160, h=90):
     """n quadros seguidos a partir do quadro n0, em cinza w x h, num processo só."""
     raw = subprocess.check_output(["ffmpeg", "-v", "error", "-ss", f"{max(n0 - 0.25, 0) / FR:.5f}", "-i", f, "-frames:v",
@@ -46,16 +51,16 @@ def janela(f, n0, n, w=160, h=90):
     return np.frombuffer(raw, np.uint8).astype(np.float32).reshape(-1, w * h)
 
 
-def achar_desl(old, new, b, e, busca=10.0):
-    """Deslocamento do trecho antigo [b, e) do vídeo novo, até ±busca s: assinatura de 8 quadros, 0,5 s entre eles."""
+def achar_desl(old, new, b, e, centro=0.0, busca=10.0):
+    """Deslocamento do trecho antigo [b, e) do vídeo novo, em centro ± busca s: assinatura de 8 quadros, 0,5 s entre eles."""
     span = 7 * 15
     m = round((b + max(0.5, min(6.0, (e - b) / 2 - span / FR / 2))) * FR)
-    S = round(busca * FR)
+    S, C = round(busca * FR), round(centro * FR)
     sig = janela(new, m, span + 1)[::15]
-    lo = max(m - S, 0)
-    ow = janela(old, lo, m + S + span + 1 - lo)
+    lo = max(m - C - S, 0)
+    ow = janela(old, lo, max(m - C + S + span + 1 - lo, 1))
     best = (float("inf"), 0)
-    for s in range(-S, S + 1):
+    for s in range(C - S, C + S + 1):
         idx = m - s - lo + np.arange(0, span + 1, 15)
         if idx[0] >= 0 and idx[-1] < len(ow) and len(sig) == len(idx):
             best = min(best, (float(np.abs(ow[idx] - sig).mean()), s))
@@ -99,11 +104,15 @@ def main():
         ultimo = k + 1 == len(trechos)
         e = dn if ultimo else trechos[k + 1][0]
         if ultimo:  # o fim dos dois vídeos é o mesmo: o deslocamento é a diferença de duração, em quadros inteiros
-            base, t = round((dn - do) * FR), min(b + 6, dn - 2)
-            qn = quadro(new, t)
-            desl = min(range(base - 3, base + 4), key=lambda s: np.abs(quadro(old, t - s / FR) - qn).mean()) / FR
-        else:
-            desl, dmin = achar_desl(old, new, b, e)
+            # vários pontos: num trecho parado um ponto só não separa s de s±1 (T1 cap14: escolheu 2595 em vez de 2596)
+            base = round((dn - do) * FR)
+            pts = sorted({round(t * FR) for t in (min(b + 6, dn - 2), b + (e - b) * 0.4, b + (e - b) * 0.8, e - 8) if b < t < e - 1})
+            qn = {n: qf(new, n) for n in pts}
+            desl = min(range(base - 3, base + 4),
+                       key=lambda s: sum(float(np.abs(qf(old, n - s) - qn[n]).mean()) for n in pts)) / FR
+        else:  # perto de 0, do deslocamento do trecho anterior e da diferença de duração (capítulo inserido: T1, +86,5 s)
+            ant = segs[-1][2] if segs else 0.0
+            desl, dmin = min((achar_desl(old, new, b, e, c)[::-1] for c in sorted({0.0, round(ant, 3), round(dn - do, 3)})))[::-1]
             if dmin > 1.0:
                 falhas.append(f"trecho antigo {b:.2f}-{e:.2f} não achado no vídeo antigo (diferença {dmin:.2f})")
         segs.append((b, e, desl, ultimo))
@@ -115,7 +124,12 @@ def main():
             falhas.append(f"quadro {t:.2f} diferente do antigo")
     for b, e, desl, ultimo in segs:
         for t in sorted(x for x in (b + 6, b + (e - b) * 0.4, b + (e - b) * 0.8, e - (8 if ultimo else 3)) if b < x < e - 1):
-            d = np.abs(quadro(old, t - desl) - quadro(new, t)).mean()
+            fn = round(t * FR)
+            qo, qn = qf(old, fn - round(desl * FR)), qf(new, fn)
+            if qo.size != qn.size:
+                falhas.append(f"quadro {t:.2f}: o antigo deslocado ({t - desl:.2f}) cai fora do vídeo antigo")
+                continue
+            d = np.abs(qo - qn).mean()
             print(f"  depois {t:8.2f} (antigo {t - desl:8.2f}): diferença {d:5.2f}")
             if d > 1.0:
                 falhas.append(f"quadro {t:.2f} diferente do antigo deslocado")
