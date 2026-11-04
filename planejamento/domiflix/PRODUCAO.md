@@ -275,6 +275,12 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
 - 04/11 10:xx Remendos, fase 1 ok (8 capítulos, 0 falho). Aceito e a sinalizar ao Kaik: rodapé v1.38.19 nos capítulos novos
   contra v1.38.6 nos vizinhos; T5 cap05 com a fala "Confira antes de salvar" e o título real "Pronto para criar" em destaque.
   Durações: T5 +6,2 s, T4 +0,3 s, T1 +4,0 s. Liberada a gravação, com revisão antes de trocar os arquivos entregues.
+- 04/11 11:xx Remendos, fase 2 revistos (folhas de emenda, de 3 s e de destaques, mais a conferência do `05-edicao.md`):
+  quadros idênticos ao entregue fora dos capítulos novos (T5 desloca 185 quadros), sem buraco nem estalo nas emendas,
+  legendas iguais e deslocadas. **T5 e T1 aprovados** (entrega + limpeza pelo agente). **T4 retido**: os capítulos antigos
+  02, 04, 05 e 06 (aba Tipos de Serviços, 1.38.6) mostram "+ Novo Tipo", grande no zoom da aba Fiscal do cap05, logo depois
+  do cap03 ensinar "Novo Serviço". Regravar só a tela desses 4 na 1.38.19 (mesma voz; `serviceTypes.btnNew` mudou, tarefas
+  seguem "Novo Tipo"). A análise de impacto olhou só as falas; o rótulo na tela dos capítulos vizinhos escapou.
 
 ## Fila (31/10 12:1x; nada sai da fila sem estar entregue)
 1. **Rodando (Kaik 14:48 liberou até 4 agentes ao mesmo tempo):** dev-video no 06 e no 12 do site (com a trava
