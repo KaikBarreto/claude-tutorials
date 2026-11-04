@@ -24,7 +24,7 @@ F = montagem final + legendas + conferência · ok = no ZIP
 | T5 | Ordens de Serviço, Agenda, Equipes e Mapa ao Vivo | ok | ok | ok | ok (31/10 00:29) | ok | ok | ok | ok (31/10 18:2x, 13:49; 1.38.6) · **remendo 1.38.19 entregue 04/11 12:2x** (13:56) |
 | T7 | O técnico em campo (celular) | ok | ok | ok | ok (31/10 00:29; emenda do cap05 com folga 0,17 s) | ok (54321) | ok (1.38.19) | ok | ok (03/11 20:3x, 12:26; 1.38.19) |
 | T18 | Área do Técnico: Refrigeração e Climatização | ok | ok | ok | ok (31/10 11:30) | ok (1.38.19, 54322) | ok | ok | **entregue 04/11 02:2x** (13:19, -15,8 LUFS, 208 legendas; zoom no cap00 depois da revisão) |
-| T8 | Estoque, compras e inventário | ok | ok | ok (V3) | ok (zip 5, 19:50) | fase 1 ok 04/11 11:xx (16 caps, 0 falho); **fase 2 liberada** (54325) | | | |
+| T8 | Estoque, compras e inventário | ok | ok | ok (V3) | ok (zip 5, 19:50) | fase 1 ok 04/11 11:xx (16 caps, 0 falho) | ok (fase 2; atraso máximo 0,79 s) | ok (câmera 0) | **entregue 04/11 16:5x** (16:53, -15,8 LUFS; pico em correção) |
 | T9 | Orçamentos, Precificação e Proposta | ok | ok | ok (V3) | ok (zip 5, 20:11) | fase 1 ok 04/11 11:xx (17 caps, 0 falho, falas × tela 0 diferença); **fase 2 liberada** (54326) | | | |
 | T10 | CRM: funil, leads e captação | ok | ok | | | sem voz, agente 04/11 15:4x (54328): backend, telas, robô provisório e ensaio | | | |
 | T11 | Contratos e PMOC | ok | ok | | | | | | |
@@ -308,6 +308,15 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
   do ElevenLabs (saldo ~3 mil); perguntado de novo ao Kaik. Enquanto isso, **T10 sem voz** (agente, 54328): backend falso
   dos 16 `[BACKEND]`, telas conferidas na 1.38.19, `gerar.py` com tempos provisórios do texto e ensaio; com a voz, falta só
   regerar os tempos, ensaiar e gravar. Disco 4,7 GB livres.
+- 04/11 16:5x **T8 entregue** (16:53, -15,8 LUFS; 16 caps, 0 falho, atraso máximo 0,79 s, câmera 0). Revisão: folha de 3 s
+  inteira, 25 destaques e avisos, recapitulação sem selo. Único ajuste: o aviso final passou a usar o título exato do T9
+  ("Próximo: Orçamentos, Precificação e Proposta"), com remendo do cap15 e `conferir_remendo` OK. Pico real -0,6 dBTP
+  (as outras aulas ficam entre -3,3 e -3,6): é o AAC estourando num "s" forte do fim do cap12 (13:54; no mix.wav é
+  -4,7 dBFS). Correção só no áudio: -3 dB em 834,93-835,06 s, com rampas de 20 ms, e vídeo copiado.
+- 04/11 17:13 **Kaik comprou US$ 20 de créditos no ElevenLabs** (print: 172.768 de 286.000 usados, saldo 113.232;
+  Creator, renova em 28/11). Agente de voz despachado: emenda do T9 cap06 ("os recursos e extras", rótulo de
+  `QuoteFormDialog.tsx:1753`), T11, V4, V5 e o T10 por último, depois da conferência de rótulos do agente do T10.
+  Reserva mínima de 8 mil.
 
 ## Fila (31/10 12:1x; nada sai da fila sem estar entregue)
 1. **Rodando (Kaik 14:48 liberou até 4 agentes ao mesmo tempo):** dev-video no 06 e no 12 do site (com a trava
@@ -402,9 +411,9 @@ se for melhor (custa o mesmo que o v4 por caractere: fica o v4, voz do T3); fala
 | V2b | Correções de pronúncia (Kaik 31/10 11:04): `T01 cap05 A cor e o logo da marca (v2)` (logo com texto branco), `T01 emendas`, `T04 emendas`, `T18 emenda` = 1.745 créditos | mesmo fluxo | gerado 11:11, exportado 11:18 (zip 3); processando |
 | V2c | T3 v2 (1.38.9): `T03v2 cap06 Etiquetas`, `T03v2 cap07 Campos personalizados`, `T03v2 emendas`, `T03v2 inserções`, `T03v2 títulos` = 1.824 créditos | mesmo fluxo | gerado 31/10 16:37; **saldo ~0**; exportado 16:50 (zip 4): MP3 em `$TUT_HOME/recebido/1650/` |
 | V3 | T2 (8.464), T8 (13.934), T9 (13.544), T12 (10.270) = 46.212 créditos, 61 nós (1 versão cada), ~52,8 min de voz | mesmo fluxo | **gerado 31/10 18:3x–18:41** (Kaik comprou créditos 18:28 e aprovou "gere T2, T8, T9 e T12"); 61/61 concluídas, 0 falha; ids em `scratchpad/v3_nos.json`; zip 5 (18:53) processado: 96 palavras fracas, todas do ASR (conferidas isoladas e desaceleradas), nenhuma fala a refazer |
-| V3b | T10 (10,4 mil), T11 (14,2 mil) = ~24,6 mil | mesmo fluxo | roteiros ok; aguardando créditos |
-| V4 | T13 (12,8 mil), T19 (9,1 mil), T20 (7,9 mil), T14 (7,7 mil) = ~37,5 mil | mesmo fluxo | roteiros ok; aguardando créditos |
-| V5 | T15 (8,2 mil), T22 (6,9 mil), T21 (5,4 mil), T17 (5,6 mil) = ~26,1 mil | mesmo fluxo | roteiros ok; aguardando créditos |
+| V3b | T10 (10,4 mil), T11 (14,2 mil) = ~24,6 mil | mesmo fluxo | créditos comprados 04/11 17:13; **gerando** (agente de voz; T10 por último) |
+| V4 | T13 (12,8 mil), T19 (9,1 mil), T20 (7,9 mil), T14 (7,7 mil) = ~37,5 mil | mesmo fluxo | créditos comprados 04/11 17:13; **gerando** (agente de voz; T10 por último) |
+| V5 | T15 (8,2 mil), T22 (6,9 mil), T21 (5,4 mil), T17 (5,6 mil) = ~26,1 mil | mesmo fluxo | créditos comprados 04/11 17:13; **gerando** (agente de voz; T10 por último) |
 
 **Falas a refazer (próximo lote de voz, junto com o T18; o Kaik exporta uma vez):** T07 cap05, frase "O aplicativo
 deixa o vídeo mais leve antes de enviar." (em ~0:29; o ASR não ouve o "deixa" nem isolado; há tempo de fala para ele,
