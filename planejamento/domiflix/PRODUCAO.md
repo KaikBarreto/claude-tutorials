@@ -340,6 +340,16 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
   iPhone, sem narração); o **computador é gravado aqui**, no navegador inteiro (Xvfb + x11grab, cadeado em dominex.app
   com CA local; agente em `t1pwa/`, 54330). O app é instalável (manifest, service worker, `PwaRootEntry`), mas não tem
   botão de instalar dentro dele (`InstallBanner.tsx` não é usado). Roteiro e voz do capítulo depois das gravações.
+  Roteiro e voz já feitos às 19:4x (cap14, 81,1 s; título; frases trocadas na abertura e no resumo); celular ilustrado
+  (o Kaik preferiu: "grave você ou ilustre tudo").
+- 04/11 19:4x **Handoff do app: preenchimento e edição de OS** (`HANDOFF_OS_preenchimento_2026-11-04.md`). AINDA NÃO
+  publicado (sem commit/deploy; migration pendente): não gravar antes de confirmar a publicação e atualizar app 8080,
+  `src-*` e o schema do backend falso. Impacto nas falas: **T7** (cap03: "o cartão de Checklists" e o rodapé "Finalizar OS,
+  Finalizar Parcial"; a tela do preenchimento aparece em quase todos os capítulos → regravar a imagem do T7 inteiro na
+  versão nova, com a mesma voz onde a fala não muda) e, se o formulário de criação também mudou, **T5** (cap04: "checklists
+  avulsos"). T2 (permissão "Editar OS em campo") não muda. O caso de uso sugerido (checklist sem equipamento arrastado
+  para dentro do equipamento em "Editar OS", respostas mantidas) pede um trecho novo no T7. Falas novas só com os
+  rótulos finais do código publicado.
 
 ## Fila (31/10 12:1x; nada sai da fila sem estar entregue)
 1. **Rodando (Kaik 14:48 liberou até 4 agentes ao mesmo tempo):** dev-video no 06 e no 12 do site (com a trava
