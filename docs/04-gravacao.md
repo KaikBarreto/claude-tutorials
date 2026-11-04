@@ -155,6 +155,23 @@ extensão que dá 404), do mesmo jeito que o gravador já desvia o Supabase para
   A opção vive em `rec/recorder` do ambiente de gravação e na cópia da skill (`ferramentas/rec/recorder/{env,app-origin,browser,
   runner}.mjs`, idênticas, sincronizadas em 31/10).
 
+## Interface do navegador na tela (instalar o app, barra de endereço)
+O robô grava só a página. Quando a aula precisa da interface do próprio navegador (ícone de instalar na barra de
+endereço, a janela "Instale o app", o app abrindo em janela própria), grave a tela inteira, de verdade (T1 cap14, 04/11):
+- `Xvfb :99 -screen 0 1920x1080x24` e `ffmpeg -f x11grab -draw_mouse 1 -framerate 30`; Chromium do Playwright com
+  `headless: false`, `DISPLAY=:99`, `--lang=pt-BR`, perfil limpo e `ignoreDefaultArgs: ['--enable-automation']` (sem a
+  faixa "controlado por software de teste"). O Playwright segue valendo para o backend falso (route) na página.
+- Endereço real do produto com conexão segura: `--host-resolver-rules="MAP dominex.app 127.0.0.1:<porta>"`, um proxy
+  HTTPS local para o 8080 e um certificado de uma CA local posta no NSS do perfil (`certutil`). Não aparece "Não seguro"
+  (o Chromium mostra o ícone de ajustes de conexão). Contexto seguro, manifest e service worker deixam o app instalável.
+- Cliques na interface do navegador são eventos X reais (XTest via `python-xlib`; o `xdotool` não está no apt).
+- O Playwright não enxerga a janela do app instalado: detecte a abertura pelo título da janela no X.
+- `clock.install` do Playwright travou a tela nesse modo: para a data do mundo, desloque só o `Date`.
+- Rótulos reais (Chromium pt-BR): dica do ícone "Instalar Dominex", janela "Instale o app" com "Cancelar" e "Instalar",
+  título da janela do app "Dominex - Dashboard | Dominex". Entre "Instalar" e a janela do app há ~4 s parados e um quadro
+  branco: corte ou acelere na montagem.
+- Celular (Android/iOS) não roda nesta máquina (sem KVM): ilustre o aparelho com as telas reais da Dominex dentro.
+
 ## Dado de bastidor no meio da gravação
 Quando a fala só cita itens "cadastrados do mesmo jeito" (T4: cinco tipos de serviço), o robô os insere por REST no
 backend falso (`eval` com `fetch` em `/rest/v1/<tabela>`, `Prefer: return=representation`) enquanto a câmera olha outra
