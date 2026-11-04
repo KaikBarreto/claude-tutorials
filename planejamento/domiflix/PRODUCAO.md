@@ -272,6 +272,9 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
 - 04/11 09:xx **T2 entregue** (10:15). Entregues até aqui na 1.38.19: T0 v2 (16:9 + 9:16), T3 v2, T18, T12, T2.
 - 04/11 09:xx Desligadas as portas 54324 (T2) e 54327 (T12), entregues. Remendos de T5 (caps 02 a 06), T4 (01 e 03) e
   T1 (11) despachados (fase 1 na 1.38.19, porta 54324; `remendar_aula.py` na fase 2). Em curso: T8, T9 (fase 1) e remendos.
+- 04/11 10:xx Remendos, fase 1 ok (8 capítulos, 0 falho). Aceito e a sinalizar ao Kaik: rodapé v1.38.19 nos capítulos novos
+  contra v1.38.6 nos vizinhos; T5 cap05 com a fala "Confira antes de salvar" e o título real "Pronto para criar" em destaque.
+  Durações: T5 +6,2 s, T4 +0,3 s, T1 +4,0 s. Liberada a gravação, com revisão antes de trocar os arquivos entregues.
 
 ## Fila (31/10 12:1x; nada sai da fila sem estar entregue)
 1. **Rodando (Kaik 14:48 liberou até 4 agentes ao mesmo tempo):** dev-video no 06 e no 12 do site (com a trava
