@@ -229,6 +229,9 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
   R$ 547 embaixo e R$ 547 no cap04. Refazendo: conta em R$ 547 e, na aba Personalizado, módulos e usuários marcados com a
   fala até o total passar de R$ 547 (aumento, como diz a fala). Disco a 2,9 GB: apagados renders e `video_sem_audio` do
   T3 v1 e `src-1.38.11` (3,4 GB livres). T2 com ensaio ok, parado até a vez; T12 despachado (fase 1).
+- 04/11 01:56 **container reiniciou**: pararam o T12 (fase 1), o finish do T18 e a cadeia do cap05 do T0 v2; todos os
+  backends caíram. App religado (novo `rec/run.sh app`, só o 8080); a 54321 fica desligada de propósito. Os três agentes
+  retomados com a ordem de religar a própria porta e refazer o que ficou pela metade. T2 segue parado (religa a 54324 na vez).
 
 ## Fila (31/10 12:1x; nada sai da fila sem estar entregue)
 1. **Rodando (Kaik 14:48 liberou até 4 agentes ao mesmo tempo):** dev-video no 06 e no 12 do site (com a trava

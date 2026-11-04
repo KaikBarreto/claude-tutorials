@@ -4,6 +4,7 @@
 #   rec/run.sh up         sobe os dois; usa app/dist se existir (rapido, como o sistema real), senao o vite dev
 #   rec/run.sh up --dev   forca o vite dev (lento: centenas de modulos soltos por rota)
 #   rec/run.sh fake       reinicia SO o Supabase falso (recarrega seeds/handlers; o app continua)
+#   rec/run.sh app        sobe SO o app (8080); cada agente sobe o proprio fakebase (FAKE_PORT=... rec/run.sh fake)
 #   rec/run.sh down       derruba os dois
 #   rec/run.sh status     mostra PIDs e se respondem
 #   rec/run.sh logs       ultimas linhas dos logs
@@ -155,6 +156,7 @@ case "${1:-}" in
     if [ "${2:-}" = "--dev" ]; then start_app dev; else start_app auto; fi
     ;;
   fake) start_fake ;;
+  app) start_app auto ;;
   down)
     [ "$FK" = fake ] && stop_one app   # instância extra: só o fakebase dela (o app é compartilhado)
     stop_one "$FK"

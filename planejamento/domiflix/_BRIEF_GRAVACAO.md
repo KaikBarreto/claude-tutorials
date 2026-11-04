@@ -11,9 +11,11 @@ aula em `$TUT_HOME/tnn/` (já instalada), robô em `$TUT_HOME/rec/`.
 `PRODUCAO.md` → "Alinhamentos entre aulas" vale por cima do roteiro (datas, sementes e handlers combinados entre aulas).
 
 ## Ambiente (não atrapalhar o outro agente)
-- Uma instância do Supabase falso por agente: agente A porta 54321 (`rec/run.sh up`), agente B
-  `FAKE_PORT=54322 rec/run.sh fake` + `FAKE_URL=http://127.0.0.1:54322` no robô (`docs/04-gravacao.md`, fim). O app
-  (porta 8080) é um só: suba com `rec/run.sh up` só se `rec/run.sh status` disser que está parado.
+- Uma instância do Supabase falso por agente, na porta da aula: `FAKE_PORT=543xx rec/run.sh fake`, e
+  `export FAKE_URL=http://127.0.0.1:543xx` em TODO comando do robô (`docs/04-gravacao.md`, fim). A 54321 (padrão)
+  fica desligada: robô sem `FAKE_URL` falha na hora em vez de gravar no mundo de outra aula. O app (porta 8080) é um
+  só: `rec/run.sh app` sobe só ele (não faz nada se já estiver de pé). Depois de reinício do container, cada agente
+  religa a própria porta e refaz a etapa que escrevia direto no arquivo final (gravação, finish).
 - Data do mundo: `FAKE_NOW=2026-11-03T09:00:00-03:00` (terça) no backend E no robô, salvo se o `plano.md` pedir outra.
 - Gravação e render só sob `flock $TUT_HOME/.heavy.lock` (um de cada vez na máquina), com `nice`.
   **Uma trava por capítulo** (cada gravação, ensaio ou render pega e solta a trava): nunca um lote inteiro sob um flock
