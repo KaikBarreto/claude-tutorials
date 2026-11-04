@@ -62,6 +62,13 @@ OS nova #22 (a do capítulo de abertura de OS), recorrência, agenda com tarefas
 equipe **Equipe Alfa** (cor #3B82F6, ícone de capacete), 6 avaliações de atendimento (NPS) e os chamados do portal.
 Detalhes nos `apos-capNN.json` e no relatório do T5 em `PRODUCAO.md`.
 
+## O que o T12 criou (`seeds-extra/t12/apos-cap11.json` = estado inicial do T13)
+Parte de `t12/inicio` (fim do T11 reconstruído sobre `t5/apos-cap05`; trilha Domiflix com `is_onboarding false`). Criado ao vivo: a OS #34 "Pendente"
+(origem Portal do Cliente, sem data, Cassete 36.000 BTUs - Restaurante do hotel: "O ar do restaurante está pingando água perto da janela."); a seção
+"Cobranças" em "Oculto" no Portal do Contrato do hotel; documentos do PMOC do hotel "Liberado" no portal. A OS #15 da Mariana Lopes (T5) segue na fila de
+chamados (o Dashboard avisa "2 chamados"; aulas seguintes que abrirem o Dashboard passam a marca `dominex:portal-tickets-seen:<id da Camila>` no `storage`).
+Senha do portal: nenhuma (hotel e colégio sem senha). Links: `https://www.dominex.app/portal/<token>` e `/contrato/unidade/pmoc-hotel-mirante-do-mar-k7m2q9x4wb3d`.
+
 ## Próximas aulas
 Cada `<Tnn>/plano.md` → "Mundo fictício" diz o que precisa existir no começo e o que a aula cria. Ao produzir,
 gravar o estado final em `seeds-extra/<id>/apos-capNN.json` e atualizar esta página.
