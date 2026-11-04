@@ -46,6 +46,9 @@ Trocou a marca? Apague `edit/assets/fundo_escuro.png` (o `montar_cap.py` gera de
        "ilustracoes": [{"at": 40.62, "dur": 8.1, "src": ".../ilu_qr", "box": [166, 44, 1587, 992], "scale_in": 0.0}],
        "cortes": [[109.2, 110.7]]}
 ```
+- `callouts.palavra` = `[linha, "palavra"]` com a linha contada **a partir de 0** (`words[].linha` da narração; a
+  linha 1 do roteiro é 0) e a palavra exata, sem pontuação. Com a numeração do roteiro o aviso cai na linha seguinte
+  ou o `montar_cap.py` aborta (T5 e de novo no T8; lição em `08-licoes.md`).
 - Zooms e destaques apontam para **rótulos de passos** do robô; o retângulo e o instante vêm do `actions.json`
   (largura mínima do zoom ~1150–1300 px de 2560 para não exagerar). `"atraso": 0.8` faz o zoom começar 0,8 s depois
   do passo (quando um clique logo antes ainda precisa aparecer inteiro).
