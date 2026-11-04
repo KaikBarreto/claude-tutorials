@@ -24,7 +24,7 @@ F = montagem final + legendas + conferência · ok = no ZIP
 | T5 | Ordens de Serviço, Agenda, Equipes e Mapa ao Vivo | ok | ok | ok | ok (31/10 00:29) | ok | ok | ok | ok (31/10 18:2x, 13:49; 1.38.6) |
 | T7 | O técnico em campo (celular) | ok | ok | ok | ok (31/10 00:29; emenda do cap05 com folga 0,17 s) | ok (54321) | ok (1.38.19) | ok | ok (03/11 20:3x, 12:26; 1.38.19) |
 | T18 | Área do Técnico: Refrigeração e Climatização | ok | ok | ok | ok (31/10 11:30) | ok (1.38.19, 54322) | ok | ok | **entregue 04/11 02:2x** (13:19, -15,8 LUFS, 208 legendas; zoom no cap00 depois da revisão) |
-| T8 | Estoque, compras e inventário | ok | ok | ok (V3) | ok (zip 5, 19:50) | agente novo 04/11 07:xx, 1.38.19 (54325): fase 1 = preparo e ensaio | | | |
+| T8 | Estoque, compras e inventário | ok | ok | ok (V3) | ok (zip 5, 19:50) | fase 1 ok 04/11 11:xx (16 caps, 0 falho); **fase 2 liberada** (54325) | | | |
 | T9 | Orçamentos, Precificação e Proposta | ok | ok | ok (V3) | ok (zip 5, 20:11) | agente novo 04/11 07:xx, 1.38.19 (54326): fase 1 = preparo e ensaio | | | |
 | T10 | CRM: funil, leads e captação | ok | ok | | | | | | |
 | T11 | Contratos e PMOC | ok | ok | | | | | | |
@@ -281,6 +281,10 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
   02, 04, 05 e 06 (aba Tipos de Serviços, 1.38.6) mostram "+ Novo Tipo", grande no zoom da aba Fiscal do cap05, logo depois
   do cap03 ensinar "Novo Serviço". Regravar só a tela desses 4 na 1.38.19 (mesma voz; `serviceTypes.btnNew` mudou, tarefas
   seguem "Novo Tipo"). A análise de impacto olhou só as falas; o rótulo na tela dos capítulos vizinhos escapou.
+- 04/11 11:xx T8 fase 1 ok: 16 capítulos no ensaio, 0 falho, observador de avisos vazio, falas sem mudança. Robô ajustado à
+  1.38.19 (Estoque geral + locais, menu lateral recolhido a 1280 px, Nova compra, inventário, Kardex, Relatório). Defeito do
+  app: material novo fora da lista por até 30 s (`accessible-inventory-ids` sem invalidação; `sinalizacoes.md` seção 4); o
+  robô usa o foco da janela. **T8: pode gravar**, com aviso no recolhimento do menu (cap00) e revisão antes da entrega.
 
 ## Fila (31/10 12:1x; nada sai da fila sem estar entregue)
 1. **Rodando (Kaik 14:48 liberou até 4 agentes ao mesmo tempo):** dev-video no 06 e no 12 do site (com a trava
