@@ -246,6 +246,11 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
   quadro "Você pode pular durante o teste" na confirmação; botão "Escolher meu plano" leva a /billing (404, C5).
   T12: fase 1 ok; o agente corrigiu `fakebase/core/query.mjs` (embed `alias:coluna_fk(...)`), aceito e levado à skill;
   liberado para gravar.
+- 04/11 03:5x T0 v2, cap01 do 9:16: a gaveta "Ver trilha" abre ATRÁS da aula no celular (defeito do app: `DomiflixWatch.tsx:575`
+  `z-[100]` × `drawer.tsx` `z-50`; anotado em `T00v2/sinalizacoes.md`, seção 4). Feito: destaque errado removido; os outros 18
+  destaques do 9:16 conferem (folha com OCR). Em curso: cap01-p sem toque em "Ver trilha" (opção b: lista de módulos da
+  página inicial no celular, sem selos; os selos ficam na ilustração e no cabeçalho da aula). Corrigido o app, regravar o
+  cap01-p com a gaveta (opção a). Sem CSS injetado.
 
 ## Fila (31/10 12:1x; nada sai da fila sem estar entregue)
 1. **Rodando (Kaik 14:48 liberou até 4 agentes ao mesmo tempo):** dev-video no 06 e no 12 do site (com a trava
