@@ -131,7 +131,8 @@ Depois da entrega a limpeza apaga as gravações e os renders dos capítulos; fi
   −10 dB; o resto fica no piso do AAC, −30 a −38 dB).
   Automático (04/11, T5/T4/T1, ~1 min cada): `conferir_remendo.py antigo.mp4 novo.mp4 --novos INICIO:FIM --emendas t1,t2
   --srt antigo.srt novo.srt` confere quadros iguais antes dos capítulos novos e iguais com deslocamento (em quadros inteiros,
-  achado sozinho) depois deles, áudio sem buraco nas emendas e legendas iguais fora dos novos; sai com 1 se algo falhar.
+  achado sozinho) depois deles, áudio sem buraco nas emendas (silêncio que o antigo já tinha no mesmo ponto, como a pausa
+  de 0,1 s antes da cartela, não conta) e legendas iguais fora dos novos; sai com 1 se algo falhar.
   Dois ou mais trechos novos separados (ex.: caps 07-08 e 14): `--novos A:B,C:D`, cada trecho antigo entre eles ganha o
   próprio deslocamento (testado com par sintético: +1 s e −1 s achados, e FALHOU quando faltou um trecho).
   A olho: `folha_tempos.py aula_final.mp4 emendas.jpg "Tnn · emendas" --emendas t1,t2` (de 0,5 em 0,5 s, 2 s antes e

@@ -10,7 +10,7 @@ uso: python3 -I conferir_remendo.py antigo.mp4 novo.mp4 --novos INICIO:FIM[,INIC
 
 Confere: (1) quadros iguais ao antigo antes do primeiro INICIO e, em cada trecho antigo depois de um FIM, iguais ao antigo
 deslocado (deslocamento em quadros inteiros, achado sozinho trecho a trecho); (2) áudio em volta de cada emenda sem buraco
-(< -60 dB) e sem salto de amostra fora do normal do próprio vídeo antigo; (3) legendas: falas antes do primeiro INICIO
+(< -60 dB) que o antigo não tenha no mesmo ponto e sem salto de amostra fora do normal do próprio vídeo antigo; (3) legendas: falas antes do primeiro INICIO
 idênticas e, em cada trecho antigo, com o mesmo texto e o tempo deslocado. Sai com código 1 se algo falhar. Leva ~1 min numa
 aula de 14 min (não precisa da trava pesada).
 """
@@ -121,12 +121,23 @@ def main():
                 falhas.append(f"quadro {t:.2f} diferente do antigo deslocado")
     ref = max(float(np.abs(np.diff(audio(old, c - 3, c + 3))).max()) for c in (do * 0.25, do * 0.5, do * 0.75))
     print(f"  áudio: maior salto entre amostras no antigo (3 trechos de 6 s) = {ref:.3f}")
+
+    def rms(x):
+        n = len(x) // 960
+        return 20 * np.log10(np.sqrt((x[:n * 960].reshape(n, 960) ** 2).mean(1) + 1e-12))
+
+    todos = [(0.0, ini, 0.0)] + [(b, e, d) for b, e, d, _ in segs]
     for s in emendas:
         x = audio(new, s - 3, s + 3)
-        n = len(x) // 960
-        db = 20 * np.log10(np.sqrt((x[:n * 960].reshape(n, 960) ** 2).mean(1) + 1e-12))
-        salto, mudo = float(np.abs(np.diff(x)).max()), int((db < -60).sum())
-        print(f"  emenda {s:8.2f}: rms (20 ms) {db.min():6.1f} a {db.max():5.1f} dB, maior salto {salto:.3f}, janelas mudas {mudo}")
+        db = rms(x)
+        # silêncio que já existe no antigo, no mesmo ponto do trecho antigo vizinho (ex.: a pausa antes da cartela), não conta
+        d = min(todos, key=lambda g: 0 if g[0] <= s <= g[1] else min(abs(s - g[0]), abs(s - g[1])))[2]
+        dbo = rms(audio(old, s - d - 3, s - d + 3))
+        k = min(len(db), len(dbo))
+        salto, mudo = float(np.abs(np.diff(x)).max()), int(((db[:k] < -60) & (dbo[:k] >= -60)).sum())
+        ja = int((db < -60).sum()) - mudo
+        print(f"  emenda {s:8.2f}: rms (20 ms) {db.min():6.1f} a {db.max():5.1f} dB, maior salto {salto:.3f}, janelas mudas {mudo}"
+              + (f" (+{ja} que o antigo já tinha)" if ja else ""))
         if mudo:
             falhas.append(f"buraco no áudio em {s:.2f}")
         if salto > max(1.0, ref * 1.3):

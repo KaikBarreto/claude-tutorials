@@ -20,7 +20,7 @@ F = montagem final + legendas + conferência · ok = no ZIP
 | T1 | Configurações e identidade da empresa | ok | ok | ok | ok (31/10 00:29) | ok | ok | ok | ok (31/10 05:20, 11:58) · **v2 18:33** (pronúncia + logo com texto branco; 12:05; 1.38.6) · **remendo 1.38.19 entregue 04/11 12:2x** (12:09) |
 | T2 | Usuários, cargos e permissões | ok | ok | ok (V3 18:3x) | ok (zip 5, 19:31) | agente novo 03/11 22:4x, 1.38.19 (54324): **ensaio ok 04/11 00:4x** (cap00–10, 0 falho; cap11 só montagem); **entregue 04/11 09:xx** (10:15, -15,8 LUFS, 181 legendas; recarregamento do "Criar Usuário" cortado com pausa na voz nos caps 05 e 06) | | | |
 | T3 | Clientes, Fornecedores e Equipamentos | ok | ok | ok | ok | ok | ok | ok | **v2 entregue 03/11 22:4x** (14:13, 1.38.19, -15,8 LUFS; v1 de 30/10 em `t3/edit/out`) |
-| T4 | Serviços, tarefas e checklists | ok | ok | ok | ok (31/10 00:29) | ok | ok | ok | ok (31/10 10:46, 10:27) · **v2 18:37** (pronúncia; só o áudio) · remendo 1.38.19 dos caps 01 a 06 liberado 04/11 12:2x (10:28); caps 07, 08 e 14 em regravação |
+| T4 | Serviços, tarefas e checklists | ok | ok | ok | ok (31/10 00:29) | ok | ok | ok | ok (31/10 10:46, 10:27) · **v2 18:37** (pronúncia; só o áudio) · **remendo 1.38.19 entregue 04/11 14:2x** (10:28; caps 01 a 08 e 14 novos) |
 | T5 | Ordens de Serviço, Agenda, Equipes e Mapa ao Vivo | ok | ok | ok | ok (31/10 00:29) | ok | ok | ok | ok (31/10 18:2x, 13:49; 1.38.6) · **remendo 1.38.19 entregue 04/11 12:2x** (13:56) |
 | T7 | O técnico em campo (celular) | ok | ok | ok | ok (31/10 00:29; emenda do cap05 com folga 0,17 s) | ok (54321) | ok (1.38.19) | ok | ok (03/11 20:3x, 12:26; 1.38.19) |
 | T18 | Área do Técnico: Refrigeração e Climatização | ok | ok | ok | ok (31/10 11:30) | ok (1.38.19, 54322) | ok | ok | **entregue 04/11 02:2x** (13:19, -15,8 LUFS, 208 legendas; zoom no cap00 depois da revisão) |
@@ -299,6 +299,10 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
 - 04/11 13:1x T4 entregue (12:28). T2 original (168 MB) enviado ao Kaik pelo chat: passou inteiro, o limite de 30 MB não vale
   mais. 13:1x o limite de 5 h da conta parou os 3 agentes; 14:13 **terceiro reinício do container** (app e fakebases caíram).
   Religuei o app 8080; agentes retomados às 14:1x, cada um sobe o próprio fakebase (54324 T4, 54325 T8, 54326 T9).
+- 04/11 14:2x **T4 entregue de novo, final** (10:28, -15,8 LUFS, -3,6 dBTP): caps 07, 08 e 14 regravados na 1.38.19 (0 falho,
+  atraso máximo 0,45 s, câmera 0, mesmas durações). `conferir_remendo --novos 297.53:387.07,587.73:624.37` OK (dois trechos,
+  deslocamento 0); o silêncio antes da cartela já existia no entregue (falso alarme corrigido na ferramenta). "+ Novo Serviço"
+  conferido por recorte no começo de 07 e 08 e no 14. Fica só o rodapé v1.38.6 nos caps 00 e 09 a 13 (já sinalizado).
 
 ## Fila (31/10 12:1x; nada sai da fila sem estar entregue)
 1. **Rodando (Kaik 14:48 liberou até 4 agentes ao mesmo tempo):** dev-video no 06 e no 12 do site (com a trava
