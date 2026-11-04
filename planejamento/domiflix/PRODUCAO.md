@@ -17,7 +17,7 @@ F = montagem final + legendas + conferência · ok = no ZIP
 | Aula | Título | L | R | V | Z | B | G | E | F |
 |---|---|---|---|---|---|---|---|---|---|
 | T0 | Boas-vindas à Dominex (ilustrada) | ok | ok | ok | ok | — | — | ok | ok (30/10 22:51, 3:25) · **v2 entregue 04/11 02:4x** (4:20,6, 16:9 + 9:16, -15,8 LUFS, SRT/VTT por versão; v1 em `t0/entrega_antiga`) |
-| T1 | Configurações e identidade da empresa (+ cap. PWA pedido 04/11) | ok | ok | ok | ok (31/10 00:29) | ok | ok | ok | ok (31/10 05:20, 11:58) · **v2 18:33** (pronúncia + logo com texto branco; 12:05; 1.38.6) · **remendo 1.38.19 entregue 04/11 12:2x** (12:09) |
+| T1 | Configurações e identidade da empresa (+ cap. PWA pedido 04/11) | ok | ok | ok | ok (31/10 00:29) | ok | ok | ok | ok (31/10 05:20, 11:58) · **v2 18:33** (pronúncia + logo com texto branco; 12:05; 1.38.6) · **remendo 1.38.19 entregue 04/11 12:2x** (12:09) · **com o capítulo do app (PWA) entregue 04/11 22:0x** (13:36) |
 | T2 | Usuários, cargos e permissões | ok | ok | ok (V3 18:3x) | ok (zip 5, 19:31) | agente novo 03/11 22:4x, 1.38.19 (54324): **ensaio ok 04/11 00:4x** (cap00–10, 0 falho; cap11 só montagem); **entregue 04/11 09:xx** (10:15, -15,8 LUFS, 181 legendas; recarregamento do "Criar Usuário" cortado com pausa na voz nos caps 05 e 06) | | | |
 | T3 | Clientes, Fornecedores e Equipamentos | ok | ok | ok | ok | ok | ok | ok | **v2 entregue 03/11 22:4x** (14:13, 1.38.19, -15,8 LUFS; v1 de 30/10 em `t3/edit/out`) |
 | T4 | Serviços, tarefas e checklists | ok | ok | ok | ok (31/10 00:29) | ok | ok | ok | ok (31/10 10:46, 10:27) · **v2 18:37** (pronúncia; só o áudio) · **remendo 1.38.19 entregue 04/11 14:2x** (10:28; caps 01 a 08 e 14 novos) |
@@ -374,6 +374,9 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
   (deslocamento por vários pontos e por índice de quadro; busca em volta do esperado para inserções): OK, quadros 0,00,
   legendas iguais e deslocadas. Achado na revisão: o fim do cap00 ainda levava o cursor e o zoom ao botão Configurações
   (frase antiga); **fase C**: regravar só o cap00 sem esse final e remendar `--novos cap00`.
+- 04/11 22:0x **T1 entregue com o capítulo do app** (815,7 s = 13:36; -15,8 LUFS; -3,6 dBTP; 227 legendas): cap00 regravado
+  (fim no Dashboard, câmera aberta; 0 falho, atraso 0,07 s), `conferir_remendo` OK contra as duas versões anteriores.
+  Limpeza: versões intermediárias, renders do cap00/cap14, `mix.wav` e o perfil do navegador (`t1pwa/`). Disco 4,8 GB.
 
 ## Fila (31/10 12:1x; nada sai da fila sem estar entregue)
 1. **Rodando (Kaik 14:48 liberou até 4 agentes ao mesmo tempo):** dev-video no 06 e no 12 do site (com a trava
