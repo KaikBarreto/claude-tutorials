@@ -28,7 +28,7 @@ F = montagem final + legendas + conferência · ok = no ZIP
 | T9 | Orçamentos, Precificação e Proposta | ok | ok | ok (V3) | ok (zip 5, 20:11) | agente F (54326), 1.38.9, desde 20:3x | | | |
 | T10 | CRM: funil, leads e captação | ok | ok | | | | | | |
 | T11 | Contratos e PMOC | ok | ok | | | | | | |
-| T12 | Portal do Cliente e Portal do Contrato | ok | ok | ok (V3) | ok (zip 5; títulos 20:4x) | agente G (54327), 1.38.9, desde 20:3x | | | |
+| T12 | Portal do Cliente e Portal do Contrato | ok | ok | ok (V3) | ok (zip 5; títulos 20:4x) | agente novo 04/11 00:5x, 1.38.19 (54327): fase 1 = preparo e ensaio; grava quando a fila andar | | | |
 | T13 | Financeiro | ok | ok | | | | | | |
 | T19 | Integração com Asaas, Assinaturas e Cobranças | ok | ok | | | | | | |
 | T20 | Relatório Financeiro e DRE | ok | ok | | | | | | |
