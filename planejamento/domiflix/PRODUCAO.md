@@ -27,7 +27,7 @@ F = montagem final + legendas + conferência · ok = no ZIP
 | T8 | Estoque, compras e inventário | ok | ok | ok (V3) | ok (zip 5, 19:50) | fase 1 ok 04/11 11:xx (16 caps, 0 falho) | ok (fase 2; atraso máximo 0,79 s) | ok (câmera 0) | **entregue 04/11 16:5x** (16:53, -15,8 LUFS) · pico corrigido 18:42 (-3,6 dBTP; vídeo idêntico) |
 | T9 | Orçamentos, Precificação e Proposta | ok | ok | ok (V3) | ok (zip 5, 20:11) | fase 1 ok 04/11 11:xx (17 caps, 0 falho, falas × tela 0 diferença) | ok (atraso máx. 0,77 s) | ok (câmera 0) | **entregue 04/11 20:3x** (16:33; vinhetas 05 a 09 sem número de etapa) · **remendo cap06 05/11 12:5x** ("1,5" com vírgula) |
 | T10 | CRM: funil, leads e captação | ok | ok | ok (04/11 17:xx) | | fase 1 ok 04/11 21:xx (11 caps, 0 falho; arrasto do cap02 por DragEvent real; caps 02/08/10 com a voz v2) | ok (1.38.19; 11 caps, 0 falho, atraso máx. 0,78 s) | ok (câmera 0) | **entregue 05/11 01:4x** (12:33, -15,8 LUFS, -3,6 dBTP, 202 legendas). URL do webhook no cap08 fica como está (Kaik 05/11 01:46: "pode deixar") |
-| T11 | Contratos e PMOC | ok | ok | ok (04/11 17:xx) | ok (zip 7, 15 caps, 15,5 min; 0 fala a refazer) | fase 1 ok 05/11 00:5x (15 caps, 0 falho; 6 falas sem a contagem, voz `T11 emendas contagem`) | **fase 2 liberada 05/11 10:0x** (emendas sem compressão; 54329) · pausada 13:2x (1.38.24) · **regravação inteira na 1.38.24 05/11 13:4x** (cap10 com as duas novidades; voz nova do cap10) | | |
+| T11 | Contratos e PMOC | ok | ok | ok (04/11 17:xx) | ok (zip 7, 15 caps, 15,5 min; 0 fala a refazer) | fase 1 ok 05/11 00:5x (15 caps, 0 falho; 6 falas sem a contagem, voz `T11 emendas contagem`) | ok (1.38.24; 15 caps, 0 falho, atraso máx. 0,90 s) | ok (câmera 0; corte de 29,9 s no cap06) | **entregue 05/11 18:4x** (18:22, -15,8 LUFS, -3,6 dBTP, 285 legendas; cap10 com Planejar visita e Vincular OS existente) |
 | T12 | Portal do Cliente e Portal do Contrato | ok | ok | ok (V3) | ok (zip 5; títulos 20:4x) | agente novo 04/11 00:5x, 1.38.19 (54327): ensaio ok 03:2x; **aprovado 04/11 07:xx** (12:00; cap08 com faixa de endereço = defeito do app) | | | |
 | T13 | Financeiro | ok | ok | ok (04/11 17:xx) | ok (zip 7, 15 caps, 14,0 min; 0 fala a refazer) | fase 1 ok 05/11 00:3x (15 caps, 0 falho; 2 falas a emendar) | ok (1.38.21; 15 caps, 0 falho; pausas na voz em 11 linhas) | ok (câmera 0) | **entregue 05/11 10:1x** (15:30, -15,8 LUFS, -3,6 dBTP, 248 legendas) |
 | T19 | Integração com Asaas, Assinaturas e Cobranças | ok | ok | ok (04/11 17:xx) | ok (zip 7, 14 caps, 9,7 min; 0 fala a refazer) | fase 1 ok 05/11 02:5x (14 caps, 0 falho; 1 fala, voz `T19 emendas cobrança`) | grava depois do T13 e do T11 | | |
@@ -578,6 +578,12 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
   `[[94,4, 124,3]]` no cap06: sai na lista com os três ambientes. "Antes: CRM" e "Próximo: Portal do Cliente e Portal do Contrato" certos.
   Dois carregamentos de ~2 s com a página em branco (ao abrir o contrato, 12:48 e 17:00): é o app, com fala por cima; ficam. Finish e
   legendas refeitos por mim (`t11/edit/finish.py` com a limpeza dos stems).
+- 05/11 18:4x **T11 entregue** (`entrega_final/`, hardlink): 1102,4 s (18:22), -15,8 LUFS, 285 legendas. O primeiro `entregar.py` deu **pico real
+  de -0,3 dBTP** depois do AAC (o mix estava em -3,5), num ponto só (537,1 s). Corrigido como no T8: -3 dB só naquele trecho do `mix.wav`
+  (±65 ms) e o áudio refeito com o vídeo copiado (MD5 dos pacotes igual): **-3,6 dBTP**. Script em `scratchpad/pico_aac.py` (vale passar
+  para a skill). Limpeza: `mix.wav`, `video_sem_audio.mp4` (recriável do `aula_final` com `-map 0:v -c copy`; MD5 igual) e os renders
+  dos capítulos, que o `remendar_aula.py` não usa: ele pega os quadros vizinhos do vídeo antigo. Disco: 3,2 GB. **T19 liberado para
+  render e finish**, depois da gravação. **T20 liberado** para as emendas e a gravação; renderiza depois do T19.
 
 ## Fila (31/10 12:1x; nada sai da fila sem estar entregue)
 1. **Rodando (Kaik 14:48 liberou até 4 agentes ao mesmo tempo):** dev-video no 06 e no 12 do site (com a trava
