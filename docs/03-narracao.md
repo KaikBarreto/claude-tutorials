@@ -53,6 +53,13 @@ V3 (31/10, 96 palavras fracas em T2, T8, T9 e T12), "tem uma" no começo do cap�
 apareceram assim; nenhuma era defeito da voz. Números ditos por extenso ("trinta reais", "zero um") e grafias de
 pronúncia ("bê-dê-i", "érre quatrocentos e dez á") sempre aparecem como fracas: não contam.
 
+## Respiros quando a tela é mais lenta que a fala — `pausas.py`
+Na gravação real, um formulário lento ou uma espera do app deixa o robô atrasado em relação à fala (`lateBy` > 0,8 s; o ensaio
+`--rapido` não mede isso). Primeiro enxugue o robô (menos espera, digitação curta ou colada); se ainda faltar tempo, abra um
+respiro na voz entre duas frases: `python3 -I pausas.py NN T:DUR [T:DUR ...]` (`T` em s da narração original, num vão entre
+frases; `--desfazer` volta ao original). Espera longa: respiro + `cortes` no spec (o `finish.py` tira vídeo e áudio juntos).
+Usado no T2, no T10 e no T13.
+
 ## Emendar frases trocadas — `emendar.py`
 Coloca cada frase nova no lugar da antiga **sem mudar a duração do capítulo** (a gravação continua sincronizada):
 a frase nova começa onde a antiga começava; o resto vira silêncio, depois cortado na montagem se a tela estiver
