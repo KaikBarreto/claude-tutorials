@@ -130,3 +130,7 @@ e `public/guia-tecnico/`. A coluna da direita vale para a 1.38.9 e para a 1.38.1
   do DRE, categoria sem grupo (`dre_group` nulo) cai em despesa operacional, e essas duas categorias do sistema aparecem na
   lista junto das despesas com pessoal. Se o relatório também as somar, pagamento de fatura e transferência entre contas
   viram despesa no resultado. A fala do T20 não cita a lista.
+- **Asaas, "Categoria da receita" sem lista (T19, 05/11):** o filtro compara `type === 'income'`, mas o banco grava 'entrada'
+  (`SettingsAsaasContent.tsx:94`); o campo fica como texto com "Nenhuma" e a categoria não aparece para escolher.
+- **Asaas, cartão de taxas em "referência" depois de "Ativar recebimentos" (T19, 05/11):** a consulta fica guardada por 10 min;
+  as taxas da conta só aparecem depois de recarregar a página.
