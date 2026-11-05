@@ -29,7 +29,7 @@ F = montagem final + legendas + conferência · ok = no ZIP
 | T10 | CRM: funil, leads e captação | ok | ok | ok (04/11 17:xx) | | fase 1 ok 04/11 21:xx (11 caps, 0 falho; arrasto do cap02 por DragEvent real; caps 02/08/10 com a voz v2) | ok (1.38.19; 11 caps, 0 falho, atraso máx. 0,78 s) | ok (câmera 0) | **entregue 05/11 01:4x** (12:33, -15,8 LUFS, -3,6 dBTP, 202 legendas). URL do webhook no cap08 fica como está (Kaik 05/11 01:46: "pode deixar") |
 | T11 | Contratos e PMOC | ok | ok | ok (04/11 17:xx) | ok (zip 7, 15 caps, 15,5 min; 0 fala a refazer) | fase 1 ok 05/11 00:5x (15 caps, 0 falho; 6 falas sem a contagem, voz `T11 emendas contagem`) | voz recebida 00:59; emendas e ensaios; grava depois do T13 (disco) | | |
 | T12 | Portal do Cliente e Portal do Contrato | ok | ok | ok (V3) | ok (zip 5; títulos 20:4x) | agente novo 04/11 00:5x, 1.38.19 (54327): ensaio ok 03:2x; **aprovado 04/11 07:xx** (12:00; cap08 com faixa de endereço = defeito do app) | | | |
-| T13 | Financeiro | ok | ok | ok (04/11 17:xx) | ok (zip 7, 15 caps, 14,0 min; 0 fala a refazer) | fase 1 ok 05/11 00:3x (15 caps, 0 falho; 2 falas a emendar) | **fase 2 liberada 05/11 00:4x** (voz das emendas recebida; 54332) | | |
+| T13 | Financeiro | ok | ok | ok (04/11 17:xx) | ok (zip 7, 15 caps, 14,0 min; 0 fala a refazer) | fase 1 ok 05/11 00:3x (15 caps, 0 falho; 2 falas a emendar) | fase 2 (1.38.21): 15 caps gravados 02:45–03:33; regravando caps com atraso (pausas na voz) e o cap13 (4 falhos) | | |
 | T19 | Integração com Asaas, Assinaturas e Cobranças | ok | ok | ok (04/11 17:xx) | ok (zip 7, 14 caps, 9,7 min; 0 fala a refazer) | fase 1 ok 05/11 02:5x (14 caps, 0 falho; 1 fala, voz `T19 emendas cobrança`) | grava depois do T13 e do T11 | | |
 | T20 | Relatório Financeiro e DRE | ok | ok | ok (04/11 17:xx) | ok (zip 7, 13 caps, 8,7 min; 0 fala a refazer) | fase 1, agente 05/11 01:4x (54335): pronto para ensaiar; ensaios depois da semente final do T19; 3 falas novas (voz `T20 emendas 1.38.21` gerada) | | | |
 | T14 | Notas Fiscais (NFS-e e NF-e) | ok | ok | ok (04/11 17:xx) | ok (zip 7, 14 caps, 8,3 min; 0 fala a refazer) | | | | |
@@ -442,6 +442,11 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
 - 05/11 03:1x **T15 e T22 fase 1 despachados** (54336, 54337) para que as falas a corrigir entrem no lote de voz da manhã. O T15
   parte do fim do T20 (o T14 foi para o fim; o T15 não mostra nada fiscal, a conferir pelo agente). Ordem de gravação:
   T13, T11, T19, T20, T7, T15, T22, T21, **T14 antes do T17** (o Dashboard pode ler as notas fiscais), T17.
+- 05/11 03:3x **T13: atrasos na gravação** (marca da linha 1,8 a 2,6 s atrasada nos caps 03 a 07, 8,2 s no cap10 por um "Criar Conta"
+  de ~8 s, 3,6 s no cap11; cap13 com 4 falhos). Causa no cap04: `select` de combobox seguidos com menos tempo de fala do que o
+  app pede (o ensaio rápido não mede isso). Decisão: robô mais enxuto primeiro, depois `pausas.py` curto na fronteira das
+  linhas, corte só para espera longa; o "Criar Conta" de 8 s é investigado (se for o fake, corrige o fake). Regravar só
+  os capítulos que mudaram.
 
 ## Fila (31/10 12:1x; nada sai da fila sem estar entregue)
 1. **Rodando (Kaik 14:48 liberou até 4 agentes ao mesmo tempo):** dev-video no 06 e no 12 do site (com a trava
