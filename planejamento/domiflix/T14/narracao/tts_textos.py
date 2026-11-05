@@ -22,7 +22,7 @@ Clico em Salvar dados fiscais. Esses dados valem também pro cadastro da empresa
 Dou um nome pra ele e digito a senha, que é a do próprio certificado, e não a do sistema.
 Antes de enviar, a autorização. O certificado fica guardado com criptografia e só serve pra assinar as notas que a sua empresa mandar emitir.
 Clico em Enviar certificado. A tela volta pra aba Empresa e confere sozinha o município, que está liberado. O painel mostra até quando o certificado vale, e a empresa já está apta a emitir.
-E na aba do certificado, cada uso dele fica registrado: o envio e a consulta do município.""",
+E na aba do certificado, cada uso fica registrado: o Certificado enviado e, logo acima, o Certificado utilizado na consulta do município.""",
 4: """Com o certificado no lugar, falta dizer como a empresa paga imposto. A Glaciál é do Simples Nacional. Na apuração, a primeira opção já vem marcada, e é a da maioria das empresas do Simples.
 No percentual de tributos do Simples vai o número que o seu contador passa. Aqui, seis por cento. Ele entra sozinho em toda nota nova.
 Clico em Salvar tributação.""",
@@ -61,7 +61,7 @@ E o Ver lançamento abre essa despesa direto nas Movimentações do Financeiro."
 13: """Pronto! Recapitulando: em Configurações fiscais, você salvou os dados da empresa, enviou o certificado, definiu a tributação e deixou os serviços com código.
 Emitiu a nota de serviço em quatro abas, com a autorização na hora e o pê-dê-éfe pra mandar. O rascunho espera a hora certa, e o cancelamento pede um motivo.
 No contrato, a nota sai sozinha a cada parcela. E as notas dos fornecedores chegam pelo CNPJ, recebem a ciência e viram conta a pagar.
-Com as notas em dia, falta acompanhar tudo de cima. No próximo tutorial, o último da trilha, a gente lê o Dashboard, os relatórios e as exportações. Até lá!""",
+Com as notas em dia, falta acompanhar tudo de cima. No próximo tutorial, o último da trilha, a gente vê o Dashboard, os relatórios e as exportações. Até lá!""",
 }
 
 # Capítulos que mudaram na revisão 1.38.24 (voz nova): inteiros = um nó por capítulo; emendas = narracao/emendas_1_38_24.json.

@@ -546,6 +546,10 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
   Sinalizados: chave técnica no Histórico e empresa de exemplo fixa na prévia de cobrança. **T14: base `t21/apos-cap10`
   passada**, com as decisões acima. Download do Kaik: T21 cap10 junto com a voz do T14 (depois do ensaio do T14).
   Gravação do T21 depois do T22.
+- 05/11 16:5x **Terceiro limite de 5 h** (T11, T19 e T14 pararam; zera 17:20). Até ali: T11 com os caps 00 a 14 gravados na 1.38.24
+  (cap10 com a voz nova, 15:47) e regravando 02 e 03; T19 com os 14 caps gravados (lote de regravação em curso); T14 aplicando
+  as decisões. 17:28 **sétimo reinício do container** (app religado, pid 660, 1.38.24, sem o descritor da trava). Os três agentes
+  retomados (Kaik 17:27: "Try again").
 
 ## Fila (31/10 12:1x; nada sai da fila sem estar entregue)
 1. **Rodando (Kaik 14:48 liberou até 4 agentes ao mesmo tempo):** dev-video no 06 e no 12 do site (com a trava
