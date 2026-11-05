@@ -11,7 +11,8 @@ Regras (31/10/2026, depois do T1/T4/T7):
   * frase nova mais longa que a janela: o tempo é comprimido com ffmpeg `atempo` (mantém o tom), no máximo ~8%, para a
     fala terminar >= 0,2 s antes da próxima palavra do capítulo (pelas `words` do capNN.json) ou do fim do capítulo;
     se ainda assim não couber, o script AVISA e nunca deixa a frase passar por cima da fala seguinte (corta o fim com
-    fade e diz quanto cortou: gere a frase de novo, mais curta);
+    fade e diz quanto cortou: gere a frase de novo, mais curta). Aula ainda não gravada: EMENDA_COMPRIME_MAX=0 (sem
+    compressão) com `empurra` em todas as trocas;
   * `"empurra": true` numa troca (opção, 1/11/2026, T3 v2): se a frase não couber nem comprimida, em vez de cortar o fim o script abre
     silêncio logo depois da janela e o resto do capítulo anda para a frente (a duração CRESCE, como numa inserção; as trocas seguintes do
     capítulo e as inserções com `em` numérico acompanham o deslocamento). Use quando a frase nova é boa e só a janela é curta;
@@ -43,7 +44,10 @@ import proc  # noqa: E402
 SR = 48000
 MARGEM = 0.20      # folga desejada entre o fim da fala nova e a próxima palavra (s)
 MARGEM_MIN = 0.03  # abaixo disso a frase encostaria na fala seguinte: corta o fim em vez de invadir
-COMPRIME_MAX = 0.08  # compressão máxima de tempo (8%)
+# compressão máxima de tempo (8%). Aula AINDA NÃO GRAVADA (T11, 05/11/2026): a tela vai ser gravada em cima do áudio novo, então não
+# há sincronismo a manter; com EMENDA_COMPRIME_MAX=0 e "empurra": true nas trocas, a frase nova fica na velocidade natural e o
+# capítulo cresce o necessário.
+COMPRIME_MAX = float(os.environ.get("EMENDA_COMPRIME_MAX", "0.08"))
 RECUO_INI = 0.03   # a janela antiga começa 30 ms antes da primeira palavra
 AVANCO_FIM = 0.05  # e termina 50 ms depois da última
 
@@ -212,7 +216,7 @@ def main():
             # (b) a fala nova precisa terminar >= MARGEM antes da próxima fala: comprime o tempo, no máximo 8%
             r = 1.0
             disponivel = prox - MARGEM - ini
-            if fim_fala > disponivel:
+            if fim_fala > disponivel and COMPRIME_MAX > 0:
                 alvo_r = fim_fala / max(disponivel, 1e-3) * 1.002   # razão de duração que dá a folga pedida (com 0,2% de sobra)
                 r_nom = min(1.0 + COMPRIME_MAX, alvo_r)
                 for _ in range(3):  # a razão real do atempo difere um pouco da pedida: confere e corrige

@@ -76,6 +76,9 @@ python3 -I proc.py NN=emendas/capNN_v2.wav ...         # refaz palavras e legend
   junto (cap. 5: +0,55 s; cap. 10: +0,26 s). A duração **cresce** (como numa inserção): as trocas seguintes do capítulo e as
   inserções com `em` numérico acompanham o deslocamento, e a gravação de tela usa a duração nova. Sem `empurra` o aviso
   `CORTADA` continua valendo.
+- **Aula ainda não gravada** (T11, 05/11/2026): a compressão só existe para manter o sincronismo com uma gravação de tela que já
+  existe. Antes da gravação, rode `EMENDA_COMPRIME_MAX=0 python3 -I emendar.py ...` com `"empurra": true` em todas as trocas:
+  a frase nova fica na velocidade natural, igual às vizinhas, e o capítulo cresce o que precisar.
 - **Inserções** (frases que não existiam): chave `insercoes` do `trocas.json`, cada item
   `{"cap": 10, "em": 6.52 | "fim", "folga": 0.12, "novo": "frase"}` (`em` = instante do corte no take **original**, num
   silêncio; `folga` = silêncio de cada lado). As frases vêm de outro MP3: `python3 -I emendar.py [<trocas>.mp3] --insercoes
