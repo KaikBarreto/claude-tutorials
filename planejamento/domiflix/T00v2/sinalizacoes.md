@@ -140,3 +140,5 @@ e `public/guia-tecnico/`. A coluna da direita vale para a 1.38.9 e para a 1.38.1
   rodapé quase preto; o texto se lê, mas o botão quase some (caps 07 e 08 do T7; quadros em `rec/t7/quadros_1.38.21/retomar_os/`).
 - **Ponto, saldo negativo com a jornada aberta (T15, 05/11):** em Hoje, o olho do dia mostra "Saldo -7h52min" enquanto a jornada
   ainda está aberta (a pessoa acabou de entrar); dá a impressão de dívida de horas antes do fim do dia.
+- **Ponto no celular, logo escuro sobre cabeçalho preto (T15, 05/11):** a tela de bater o ponto põe o logo da empresa sobre fundo
+  preto; logo com texto escuro (o caso comum) fica quase ilegível. Um fundo claro atrás do logo resolveria.

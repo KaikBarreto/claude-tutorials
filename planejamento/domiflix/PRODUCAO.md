@@ -469,7 +469,7 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
 - 05/11 07:5x **T15 fase 1 ok na base provisória** (todos os caps, 0 falho). 5 falas novas (e-mail na aba Acesso; a chave "Criar acesso
   ao sistema" mostrada antes de vincular; registro manual sem data; saldo só filtrando uma pessoa): `T15/narracao/emendas_1_38_21.json`,
   voz `T15 emendas 1.38.21` (49,9 s). Logo da empresa sumido no celular (cap09b) com `APP_ORIGIN`: não é geral (o portal do T12 mostra o
-  logo); o agente acha a requisição e corrige. **Pedido ao Kaik: lote de 7 nós** (T07 ×4, T19, T20, T15).
+  logo); conferido: o logo carrega, o "Mixed Content" era só aviso de console (resumo.py contava). Caps 05 e 10 reensaiados ok. **Pedido ao Kaik: lote de 7 nós** (T07 ×4, T19, T20, T15).
 
 ## Fila (31/10 12:1x; nada sai da fila sem estar entregue)
 1. **Rodando (Kaik 14:48 liberou até 4 agentes ao mesmo tempo):** dev-video no 06 e no 12 do site (com a trava
