@@ -35,7 +35,7 @@ F = montagem final + legendas + conferência · ok = no ZIP
 | T14 | Notas Fiscais (NFS-e e NF-e) | ok | ok | ok (04/11 17:xx) | ok (zip 7, 14 caps, 8,3 min; 0 fala a refazer) | | | | |
 | T15 | Funcionários: Financeiro do Funcionário e Ponto | ok | ok | ok (04/11 17:xx) | ok (zip 7, 13 caps, 8,9 min; 0 fala a refazer) | fase 1 ok 05/11 08:1x (todos os caps, 0 falho; base `t20/apos-cap12`; semente final `t15/apos-cap12`; 5 falas, voz `T15 emendas 1.38.21`) | | | |
 | T22 | Ferramentas de RH: DISC, Organograma, Fluxograma | ok | ok | ok (04/11 17:xx) | ok (zip 7, 12 caps, 7,5 min; 0 fala a refazer) | fase 1 ok 05/11 13:1x (12 caps, 0 falho; base `t15/apos-cap12`; semente final `t22/apos-cap11`; 9 falas, voz `T22 emendas 1.38.21`) | | | |
-| T21 | Integração com WhatsApp | ok | ok | ok (04/11 17:xx) | ok (zip 7, 11 caps, 5,9 min; 0 fala a refazer) | | | | |
+| T21 | Integração com WhatsApp | ok | ok | ok (04/11 17:xx) | ok (zip 7, 11 caps, 5,9 min; 0 fala a refazer) | fase 1 despachada 05/11 13:3x (1.38.24, 54340; base `t22/apos-cap11`) | | | |
 | T17 | Dashboard, relatórios e exportações | ok | ok | ok (04/11 17:xx) | ok (zip 7, 12 caps, 6,0 min; 0 fala a refazer) | | | | |
 
 Ordem (TRILHA.md): T0 → T1 → T4 → T5 → T7 → T18 → T2 → T8 → T9 → T12 → T13 → T20 → T10 → T11 → T15 → T22 → T19 →
@@ -493,6 +493,10 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
   ferramentas do quadro à vista; formas listadas; Duração só na Espera; Organizar antes do Formatar; botões só com ícone): voz
   `T22 emendas 1.38.21` (100,2 s). Trechos longos de robô (cap02, 06, 08, 09) vão por respiro curto + corte na fase 2; ligações do
   cap08 pelo plano B (corte para o desenho ligado). Defeitos do quadro sinalizados. **Lote de voz do Kaik: 8 nós** (+ T22).
+- 05/11 13:2x **1.38.22 a 1.38.24 no origin/main** (contratos, OS com período e fiscal). **T11 pausado** antes de renderizar (caps 00 a 14
+  gravados na 1.38.21; 3º lote com pausas na voz parou no cap01). `src-1.38.24` exportado (`2bc90726`); levantamento em
+  `IMPACTO_1.38.24.md` (agente). **App de gravação na 1.38.24** às 13:28 (build sob a trava, 2 min; pid 12456, sem o descritor da
+  trava; dist da 1.38.21 em `rec/.runtime/dist-anterior.bak`). **T21 fase 1 despachado** (54340; base `t22/apos-cap11`).
 
 ## Fila (31/10 12:1x; nada sai da fila sem estar entregue)
 1. **Rodando (Kaik 14:48 liberou até 4 agentes ao mesmo tempo):** dev-video no 06 e no 12 do site (com a trava
