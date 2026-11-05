@@ -619,6 +619,13 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
   itens 4 e 5 seguem a fala; cap12 recap pelas abas ao vivo, com 2 s da ilustração do cartão. Limpeza: renders, `video_sem_audio`
   (MD5 igual), mix e stems (estavam em `/dev/shm`). Em `entrega_final/`, o T10 perdeu os dois-pontos do nome (regra da Entrega).
   **T7 retomado** ("T7: render"): montagem, render, finish e legendas; o P23 do cap09 sai pelo enquadramento da câmera.
+- 05/11 22:5x **T15 gravado na 1.38.24** (agente Opus): trocas na velocidade natural (cap02 38,48 s, igual; cap05 29,26 s, +4,86 s;
+  cap10 38,63 s, +2,31 s); ensaios de 02, 05 e 10 ok; 0 falho em todos, maior atraso 0,86 s (só a marca da L3 do cap10; gestos em
+  até 0,29 s). Regravados 03, 06, 10, 11 e 12 depois de acertar âncoras. **Recap (cap12)**: a tomada ao vivo mostra o vale, o bônus e a
+  falta do Rafael em R$ 0,00 (o ciclo já foi pago), não tem a janela "Pagamento" nem a batida no celular: na montagem, fazer a
+  "montagem rápida" do roteiro com trechos dos capítulos (como o `montagem_cap13.py` do T7). Espera "T15: render" (depois do T7).
+  **T22 despachado** (Opus): 9 trocas da 1.38.21 (100,3 s) na velocidade natural + gravação sem `--seed` (a `t22/apos-cap11` é a base
+  do T21); espera "T22: render".
 
 ## Fila (31/10 12:1x; nada sai da fila sem estar entregue)
 1. **Rodando (Kaik 14:48 liberou até 4 agentes ao mesmo tempo):** dev-video no 06 e no 12 do site (com a trava
