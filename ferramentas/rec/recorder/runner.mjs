@@ -557,6 +557,7 @@ const STEPS = {
   /**
    * Arrasta de `target` ate `to` (um alvo ou { x, y } em px CSS), segurando o botao: serve para HTML5 drag and drop e
    * para bibliotecas por ponteiro (dnd-kit): pressiona, da um arranque curto, percorre o caminho e solta.
+   * Opcao `hold`: segundos pairando sobre o destino antes de soltar (padrao 0,22 a 0,38 s).
    */
   async drag(ctx, step) {
     const src = await moveToTarget(ctx, step);
@@ -577,7 +578,8 @@ const STEPS = {
       dest = pickPoint(destBox, ctx.rng);
     }
     await h.moveTo(dest.x, dest.y);
-    await sleep(ctx.rng.range(220, 380)); // pairando sobre a area de soltar
+    // pairando sobre a area de soltar; `hold` (s) segura o item ali antes de soltar (ex.: o aviso "Solte aqui" fica visivel). Padrao: 0,22 a 0,38 s
+    await sleep(step.hold !== undefined ? step.hold * 1000 : ctx.rng.range(220, 380));
     ctx.tel.setClickTarget(destBox);
     ctx.tel.nodeButton('up', h.x, h.y);
     await ctx.page.mouse.up();
