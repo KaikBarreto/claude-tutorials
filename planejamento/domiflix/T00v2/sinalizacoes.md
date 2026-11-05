@@ -111,7 +111,8 @@ e `public/guia-tecnico/`. A coluna da direita vale para a 1.38.9 e para a 1.38.1
 - **Botão de contratar da DomiFlix** ("Adicionar ao meu plano" e "Escolher meu plano") abre `/billing`, rota que não existe:
   cai em "não encontrada". O certo é `/assinatura?addModule=<código>` (como o "Adicionar módulo" do sistema faz:
   `src/components/ModuleGateModal.tsx:58-68`). Arquivo: `src/components/domiflix/DomiflixModuleOffer.tsx:31`. Se a cena 10
-  for mostrar o destino do clique, isto precisa estar corrigido antes da gravação.
+  for mostrar o destino do clique, isto precisa estar corrigido antes da gravação. **Corrigido em `36c6303f` (1.38.21): o botão vai
+  para `/assinatura`.**
 - Proposta e follow-up comercial falam em "implantação guiada" e "a implantação a gente faz junto com você" (C13).
 - O Guia Técnico diz "na ordem da Trilha Domiflix" e segue a trilha antiga de 7 fases (C15).
 - A barra da DomiFlix ainda mostra "Módulos", "Lives" e "Minha Lista", do modelo antigo (`src/lib/i18n/messages/app/domiflix.ts`,
@@ -119,3 +120,9 @@ e `public/guia-tecnico/`. A coluna da direita vale para a 1.38.9 e para a 1.38.1
 - A introdução diz "Bem-vindo, (nome)" para todos (`DomiflixIntroGate.tsx:189`); "Boas-vindas, (nome)" serve para qualquer pessoa.
 - "Tutoriais | Domiflix" no menu, "DomiFlix" no pedido e no logo: definir uma grafia.
 - "Formação básica" na tela e "Formação Básica" no pedido: definir uma grafia (D8).
+- **Contagem de visitas do contrato (T11, 05/11):** o horizonte conta as duas pontas. Trimestral com "Horizonte (meses)" 12
+  dá "= 5 ocorrências" e "Contrato criado com 5 OSs"; o PMOC mensal nasce com 13 OSs (a última no mesmo dia, um ano depois),
+  com 12 parcelas. Se a visita do aniversário não for de propósito, é um a mais por contrato (e pode duplicar com a renovação).
+  As falas do T11 não citam a quantidade, então a correção só mudaria a imagem.
+- **Faixa "Dados faltando: Endereço do cliente" (T12 cap08 e T11 cap12):** o mesmo defeito do `useContractDetail.ts:42`
+  (seção acima); os dois capítulos são regravados depois da correção.

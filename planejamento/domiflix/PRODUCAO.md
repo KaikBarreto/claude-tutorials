@@ -22,12 +22,12 @@ F = montagem final + legendas + conferência · ok = no ZIP
 | T3 | Clientes, Fornecedores e Equipamentos | ok | ok | ok | ok | ok | ok | ok | **v2 entregue 03/11 22:4x** (14:13, 1.38.19, -15,8 LUFS; v1 de 30/10 em `t3/edit/out`) |
 | T4 | Serviços, tarefas e checklists | ok | ok | ok | ok (31/10 00:29) | ok | ok | ok | ok (31/10 10:46, 10:27) · **v2 18:37** (pronúncia; só o áudio) · **remendo 1.38.19 entregue 04/11 14:2x** (10:28; caps 01 a 08 e 14 novos) |
 | T5 | Ordens de Serviço, Agenda, Equipes e Mapa ao Vivo | ok | ok | ok | ok (31/10 00:29) | ok | ok | ok | ok (31/10 18:2x, 13:49; 1.38.6) · **remendo 1.38.19 entregue 04/11 12:2x** (13:56) |
-| T7 | O técnico em campo (celular) | ok | ok | ok | ok (31/10 00:29; emenda do cap05 com folga 0,17 s) | ok (54321) | ok (1.38.19) | ok | ok (03/11 20:3x, 12:26; 1.38.19) |
+| T7 | O técnico em campo (celular) | ok | ok | ok | ok (31/10 00:29; emenda do cap05 com folga 0,17 s) | ok (54321) | ok (1.38.19) | ok | ok (03/11 20:3x, 12:26; 1.38.19) · **regravação na 1.38.21 + cap14 "Editar OS"**: fase 1, agente 05/11 01:0x (54334) |
 | T18 | Área do Técnico: Refrigeração e Climatização | ok | ok | ok | ok (31/10 11:30) | ok (1.38.19, 54322) | ok | ok | **entregue 04/11 02:2x** (13:19, -15,8 LUFS, 208 legendas; zoom no cap00 depois da revisão) |
 | T8 | Estoque, compras e inventário | ok | ok | ok (V3) | ok (zip 5, 19:50) | fase 1 ok 04/11 11:xx (16 caps, 0 falho) | ok (fase 2; atraso máximo 0,79 s) | ok (câmera 0) | **entregue 04/11 16:5x** (16:53, -15,8 LUFS) · pico corrigido 18:42 (-3,6 dBTP; vídeo idêntico) |
 | T9 | Orçamentos, Precificação e Proposta | ok | ok | ok (V3) | ok (zip 5, 20:11) | fase 1 ok 04/11 11:xx (17 caps, 0 falho, falas × tela 0 diferença) | ok (atraso máx. 0,77 s) | ok (câmera 0) | **entregue 04/11 20:3x** (16:33; vinhetas 05 a 09 sem número de etapa) |
 | T10 | CRM: funil, leads e captação | ok | ok | ok (04/11 17:xx) | | fase 1 ok 04/11 21:xx (11 caps, 0 falho; arrasto do cap02 por DragEvent real; caps 02/08/10 com a voz v2) | **fase 2 liberada** (54328) | | |
-| T11 | Contratos e PMOC | ok | ok | ok (04/11 17:xx) | ok (zip 7, 15 caps, 15,5 min; 0 fala a refazer) | fase 1, agente 04/11 19:0x (54329) | | | |
+| T11 | Contratos e PMOC | ok | ok | ok (04/11 17:xx) | ok (zip 7, 15 caps, 15,5 min; 0 fala a refazer) | fase 1 ok 05/11 00:5x (15 caps, 0 falho; 6 falas sem a contagem, voz `T11 emendas contagem`) | aguardando a voz | | |
 | T12 | Portal do Cliente e Portal do Contrato | ok | ok | ok (V3) | ok (zip 5; títulos 20:4x) | agente novo 04/11 00:5x, 1.38.19 (54327): ensaio ok 03:2x; **aprovado 04/11 07:xx** (12:00; cap08 com faixa de endereço = defeito do app) | | | |
 | T13 | Financeiro | ok | ok | ok (04/11 17:xx) | ok (zip 7, 15 caps, 14,0 min; 0 fala a refazer) | fase 1 ok 05/11 00:3x (15 caps, 0 falho; 2 falas a emendar) | **fase 2 liberada 05/11 00:4x** (voz das emendas recebida; 54332) | | |
 | T19 | Integração com Asaas, Assinaturas e Cobranças | ok | ok | ok (04/11 17:xx) | ok (zip 7, 14 caps, 9,7 min; 0 fala a refazer) | fase 1, agente 05/11 00:4x (54333) | | | |
@@ -399,6 +399,20 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
   muda para a 1.38.21 (sob a trava) antes do T7 e do T14.
 - 05/11 00:38 **MP3 das emendas do T13 recebido** (19,57 s, `recebido/0030_t13/`). T13 liberado para a fase 2 (emendas
   cap03 e cap12, caps 10 e 11 com mais itens por página, cap05 pelo menu "Nova compra"), revezando a trava com o T10.
+- 05/11 00:5x **Levantamento da 1.38.21** (`IMPACTO_1.38.21.md`, `src-1.38.21` exportado): tudo (a) menos **T7** (visual neutro
+  no preenchimento + gaveta "Editar OS" refeita), **T18 cap03** ((b): cartão Checklists sem moldura, fala igual) e **T14** (4 falas
+  + 1 leve; reescrita na vez dele). Decisão: **T7 regravado inteiro na 1.38.21** (mesma voz; L68 "área de Checklists"; cap14
+  novo com o caso do handoff, equipamento criado na gaveta e checklist arrastado com as respostas; linha nova no recap); voz do
+  cap14 só depois do ensaio. T18 cap03 fica para depois do T7 (remendo, sem voz).
+- 05/11 00:52 **App de gravação na 1.38.21** (build sob a trava, 3 min; dist da 1.38.19 em `rec/.runtime/dist-1.38.19.bak`).
+  O robô lê a versão de `app/src/config/version.ts` (sem gaveta de novidades). T10 ficou todo na 1.38.19 (já gravado); T13
+  grava inteiro na 1.38.21. Disco 3,5 → 4,4 GB: `video_sem_audio` de T9 e T1 (pacotes iguais ao final, md5), stems e
+  música do T0 v2 9:16, `mix.wav` do T0 v1 e `recebido/1853` (zip 5 em dobro, voz processada).
+- 05/11 00:5x **T11 fase 1 ok**: a tela conta as duas pontas do horizonte (trimestral 12 meses = 5 ocorrências; PMOC = 13
+  OSs, 12 parcelas). 6 falas reescritas sem a contagem (`T11/narracao/emendas_contagem.json`), conferidas pelo agente;
+  voz gerada (`T11 emendas contagem`, 75,7 s, 1.088 créditos) e pedida ao Kaik, com a sinalização da contagem
+  (`T00v2/sinalizacoes.md`). cap12 com a faixa "Dados faltando" (defeito do T12): grava e regrava depois da correção.
+  T12 entregue supõe OS #18 a #21, #22 a #33 e #34; agora são #18 a #22, #23 a #35 e #36: aceito (aulas independentes).
 
 ## Fila (31/10 12:1x; nada sai da fila sem estar entregue)
 1. **Rodando (Kaik 14:48 liberou até 4 agentes ao mesmo tempo):** dev-video no 06 e no 12 do site (com a trava
