@@ -28,7 +28,7 @@ O resultado mostra o valor líquido que fica na sua conta e, embaixo, quando cai
 No Repassar ao cliente, a taxa entra no que o cliente paga, e a empresa recebe o valor cheio.
 No pix, o dinheiro cai na hora. Uma dica: o simulador é uma estimativa, e o valor final quem calcula é o asas, na hora da cobrança.""",
 6: """Hora de cobrar de verdade. Com a integração ativa, a tela de Cobranças mostra os totais a receber, recebido e vencido, e a lista, ainda vazia.
-Clico em Nova cobrança. A janela tem quatro abas, e o resumo do recebimento fica sempre embaixo. O cliente é o Restaurante Sabor da Serra, que pediu a limpeza dos splits da cozinha.
+Clico em Nova cobrança. A janela tem quatro abas e, com o cliente e o valor preenchidos, mostra embaixo o resumo do recebimento. O cliente é o Restaurante Sabor da Serra, que pediu a limpeza dos splits da cozinha.
 Pra gerar a cobrança, o cliente precisa ter CPF ou CNPJ no cadastro, que é o dado que o asas pede. O restaurante já tem.
 O valor é quatrocentos e cinquenta reais, com vencimento daqui a três dias. Repara na dica: no regime de competência, a receita entra hoje, que é quando a venda é registrada. Na descrição, o serviço.
 Avanço pra aba Pagamento. Deixo o Cliente escolhe, e no link ele decide entre pix, boleto e cartão.
