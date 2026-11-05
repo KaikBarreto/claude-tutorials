@@ -554,6 +554,12 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
   os outros ≤ 0,79 s. Respiros na voz em 9 capítulos, sem cortes. O cap06 tem 36 s mudos (Restaurante e Salão) que o finish acelera.
   "PMOC" do cap10 (112 s, ouvido "POC" no capítulo inteiro) conferido isolado: o ASR ouve "PMOC" em 1,0x e 0,8x. Liberados o
   finish e as legendas; o agente para antes do `entregar.py`.
+- 05/11 17:5x **Disco a 980 MB** durante o `finish.py` do T11 (stems de voz, música e SFX + `music.wav` + `mix.wav` = ~2,2 GB em float32;
+  `docs/08-licoes.md` já falava disso). O T19 parou de gravar por conta própria; o agente do T11 apagou os stems ao fim do mix
+  (2,6 GB livres). Correção: o `finish.py` das aulas que faltam (t19, t20, t7, t15, t22, t21, t14, t17) apaga stems e `music.wav`
+  logo depois do `mix.py`, como o `remendar_aula.py` (`--manter-stems` mantém). **Pendente:** passar a mudança ao
+  `ferramentas/edit/finish.py` da skill depois do finish do T19, rodando o exemplo. O T19 retomou a gravação, com limite de 1,5 GB
+  só para gravar.
 
 ## Fila (31/10 12:1x; nada sai da fila sem estar entregue)
 1. **Rodando (Kaik 14:48 liberou até 4 agentes ao mesmo tempo):** dev-video no 06 e no 12 do site (com a trava
