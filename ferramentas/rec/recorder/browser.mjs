@@ -126,10 +126,17 @@ function stubServiceWorker() {
   } catch (e) { /* ignora */ }
 }
 
+// Idioma do PROCESSO do navegador em pt-BR. Os controles nativos (hora, data, número) seguem o idioma do processo, não o
+// `locale` do contexto: sem isto o robô mostrava "08:00 AM", data em mm/dd e "8.5", e "6,25" digitado num campo numérico
+// virava 625 (05/11/2026; achado no T15, visto no T5 entregue). `--lang` sozinho não basta no headless shell.
+const ENV_PT_BR = { LANG: 'pt_BR.UTF-8', LANGUAGE: 'pt_BR:pt', LC_ALL: 'pt_BR.UTF-8' };
+
 export async function launchBrowser({ headed = false, args = [] } = {}) {
   return chromium.launch({
     headless: !headed,
+    env: { ...process.env, ...ENV_PT_BR },
     args: withAppOriginArgs([
+      '--lang=pt-BR',
       // sem esta flag o screencast do Chrome entrega quadros de 1280x800 (CSS px) mesmo com deviceScaleFactor 2;
       // com ela os quadros saem em pixels fisicos: 2560x1600
       `--force-device-scale-factor=${SCALE}`,
