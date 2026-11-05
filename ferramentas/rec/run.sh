@@ -50,6 +50,19 @@ is_ours() {
   esac
 }
 
+# Serviço que fica de pé (fake, app) não pode herdar a trava pesada: chamado de dentro de um flock, o processo segura a
+# trava enquanto viver (05/11/2026: o 8080 subiu sob o flock da troca de versão e parou a fila de 5 agentes por 50 min).
+# Chame dentro do subshell, logo antes do nohup: fecha todo descritor que aponte para um arquivo *.heavy.lock.
+fecha_trava() {
+  local fd alvo
+  for fd in /proc/"$BASHPID"/fd/*; do
+    alvo="$(readlink "$fd" 2>/dev/null || true)"
+    case "$alvo" in
+      *.heavy.lock) eval "exec ${fd##*/}>&-" ;;
+    esac
+  done
+}
+
 stop_one() {
   local name="$1" pid
   if is_ours "$name"; then
@@ -78,6 +91,7 @@ start_fake() {
   stop_one "$FK"
   (
     cd "$REC/fakebase"
+    fecha_trava
     FAKE_PORT="$FAKE_PORT" nohup node server.mjs >"$RUN/${FK/fake/fakebase}.log" 2>&1 &
     echo $! >"$RUN/$FK.pid"
   )
@@ -100,6 +114,7 @@ start_app() {
   rm -f "${RUN:?}/app.pid"
   if [ "$mode" != "dev" ] && [ -f "$APP/dist/index.html" ]; then
     (
+      fecha_trava
       nohup node "$REC/recorder/serve-dist.mjs" "$APP/dist" "$APP_PORT" >"$RUN/app.log" 2>&1 &
       echo $! >"$RUN/app.pid"
     )
@@ -109,6 +124,7 @@ start_app() {
     (
       cd "$APP"
       app_env
+      fecha_trava
       nohup node node_modules/.bin/vite --host 127.0.0.1 --port "$APP_PORT" --strictPort >"$RUN/app.log" 2>&1 &
       echo $! >"$RUN/app.pid"
     )
