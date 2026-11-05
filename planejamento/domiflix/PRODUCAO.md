@@ -35,7 +35,7 @@ F = montagem final + legendas + conferência · ok = no ZIP
 | T14 | Notas Fiscais (NFS-e e NF-e) | ok | ok | ok (04/11 17:xx) | ok (zip 7, 14 caps, 8,3 min; 0 fala a refazer) | reescrita + fase 1 despachadas 05/11 13:4x (Opus, 1.38.24, 54341; base = fim do T21) | | | |
 | T15 | Funcionários: Financeiro do Funcionário e Ponto | ok | ok | ok (04/11 17:xx) | ok (zip 7, 13 caps, 8,9 min; 0 fala a refazer) | fase 1 ok 05/11 08:1x (todos os caps, 0 falho; base `t20/apos-cap12`; semente final `t15/apos-cap12`; 5 falas, voz `T15 emendas 1.38.21`) | | | |
 | T22 | Ferramentas de RH: DISC, Organograma, Fluxograma | ok | ok | ok (04/11 17:xx) | ok (zip 7, 12 caps, 7,5 min; 0 fala a refazer) | fase 1 ok 05/11 13:1x (12 caps, 0 falho; base `t15/apos-cap12`; semente final `t22/apos-cap11`; 9 falas, voz `T22 emendas 1.38.21`) | | | |
-| T21 | Integração com WhatsApp | ok | ok | ok (04/11 17:xx) | ok (zip 7, 11 caps, 5,9 min; 0 fala a refazer) | fase 1 despachada 05/11 13:3x (1.38.24, 54340; base `t22/apos-cap11`) | | | |
+| T21 | Integração com WhatsApp | ok | ok | ok (04/11 17:xx) | ok (zip 7, 11 caps, 5,9 min; 0 fala a refazer) | **fase 1 ok 05/11 15:0x** (1.38.24, 54340; 11 caps, 0 falho; base `t22/apos-cap11`; semente final `t21/apos-cap10`; recap regerado, voz `T21 cap10 Recapitulando 1.38.24`, 27,8 s) | | | |
 | T17 | Dashboard, relatórios e exportações | ok | ok | ok (04/11 17:xx) | ok (zip 7, 12 caps, 6,0 min; 0 fala a refazer) | | | | |
 
 Ordem (TRILHA.md): T0 → T1 → T4 → T5 → T7 → T18 → T2 → T8 → T9 → T12 → T13 → T20 → T10 → T11 → T15 → T22 → T19 →
@@ -539,6 +539,13 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
     9. NF-e recebida: uma consulta a cada 65 min;
     10. o certificado tem de ser do CNPJ da empresa.
   - O "Próximo" do T21 passa a ser o T14 (agente do T21 avisado) e o "Antes" do T17 também é o T14 (fase 1 do T17).
+- 05/11 15:1x **T21 fase 1 ok** (caps 0 a 10, 0 falho, `unknowns` e `__avisos` vazios). Quatro handlers de WhatsApp (conectar,
+  escolher, desconectar e o bastidor da leitura do QR). O recap troca 2 linhas (só o estilo do técnico a caminho foi escolhido; o
+  próximo é o T14) e foi **regerado inteiro**: `T21 cap10 Recapitulando 1.38.24` (27,8 s, 427 créditos;
+  `T21/narracao/nos_1_38_24.json`). O cap10 reaproveita o trecho do interruptor do cap07 (a ficha leva ~9 s para abrir).
+  Sinalizados: chave técnica no Histórico e empresa de exemplo fixa na prévia de cobrança. **T14: base `t21/apos-cap10`
+  passada**, com as decisões acima. Download do Kaik: T21 cap10 junto com a voz do T14 (depois do ensaio do T14).
+  Gravação do T21 depois do T22.
 
 ## Fila (31/10 12:1x; nada sai da fila sem estar entregue)
 1. **Rodando (Kaik 14:48 liberou até 4 agentes ao mesmo tempo):** dev-video no 06 e no 12 do site (com a trava

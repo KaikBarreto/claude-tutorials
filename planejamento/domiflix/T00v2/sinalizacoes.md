@@ -150,3 +150,5 @@ e `public/guia-tecnico/`. A coluna da direita vale para a 1.38.9 e para a 1.38.1
   - depois de uma ação, a lista de notas não recarrega sozinha (no vídeo, um corte no cap09);
   - "Descartar nota?" aparece mesmo com o rascunho já salvo;
   - "Baixar PDF" abre uma aba em branco antes de baixar.
+- **WhatsApp (T21, 05/11):** o Histórico de envios mostra a chave técnica do aviso ("OS · a_caminho") em vez do nome; a prévia
+  dos avisos de cobrança traz uma empresa de exemplo fixa ("Clima Forte Serviços") em vez do nome da empresa logada.

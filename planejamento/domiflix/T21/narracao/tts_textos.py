@@ -44,9 +44,9 @@ A academia preferiu não receber mensagens, então o aviso dela aparece como ign
 O Desconectar pausa a fila de avisos. Depois, é só conectar de novo, lendo um quê-érre côde novo no aparelho que você quiser.
 Conectar e desconectar fica com o administrador ou o gestor. E com o canal ativo, os avisos seguem saindo sozinhos, no ritmo que você definiu.""",
 10: """Pronto! Recapitulando: a gente conectou o WhatsApp da empresa pelo quê-érre côde, com o aceite e a dica do chip separado.
-Definiu os horários de envio, ligou os avisos da ordem de serviço, conheceu os das cobranças e escolheu o estilo de cada mensagem.
+Definiu os horários de envio, ligou os avisos da ordem de serviço, conheceu os das cobranças e escolheu o estilo da mensagem do técnico a caminho.
 Viu que recebe quem está autorizado no cadastro e acompanhou cada envio no Histórico.
-No próximo tutorial, o último da trilha, a gente lê o Dashboard e encontra cada relatório da Dominex. Até lá!""",
+No próximo tutorial, a gente configura e emite as notas fiscais. Até lá!""",
 }
 
 # Títulos falados das vinhetas de capítulo (um nó no ElevenLabs, separados por [pause]); cap00 sem vinheta.
