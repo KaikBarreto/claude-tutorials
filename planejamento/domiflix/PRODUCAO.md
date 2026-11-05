@@ -513,6 +513,11 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
 - 05/11 13:5x **T11 cap10 ensaiado na 1.38.24** (0 falho). A equipe se troca em "Responsáveis"; o Vincular lista a OS #10 do hotel
   e as competências de 01/12/2026 a 01/12/2027. Voz do cap10 inteiro gerada: `T11 cap10 O contrato por dentro 1.38.24`, 1.906
   caracteres, registro em `T11/narracao/nos_1_38_24.json`. **Lote de voz do Kaik: 9 nós** (+ T11 cap10).
+- 05/11 14:0x Download direto do ElevenLabs testado de novo: o proxy continua recusando `elevenlabsusercontent.com` (403).
+- 05/11 14:54 **Zip 8 recebido** (fluxo inteiro, 323 MP3, 233,6 MB). Extraídos só os 9 nós novos, pelo nome e pela duração (todos
+  batem, ±0,05 s), em `$TUT_HOME/recebido/1454_lote9/zip/`; zip apagado depois da extração. Disco 3,2 → 3,8 GB (apagados
+  `src-1.38.19`, `src-1.38.21` e o `dist-anterior.bak`). **T11** recebeu a voz do cap10. **T19 liberado só para gravar**, revezando
+  a trava com o T11; renderiza depois dele, por causa do disco. Na fila, com a voz pronta: T20, T7, T15 e T22, nesta ordem.
 
 ## Fila (31/10 12:1x; nada sai da fila sem estar entregue)
 1. **Rodando (Kaik 14:48 liberou até 4 agentes ao mesmo tempo):** dev-video no 06 e no 12 do site (com a trava
