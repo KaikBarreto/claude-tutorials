@@ -584,6 +584,16 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
   para a skill). Limpeza: `mix.wav`, `video_sem_audio.mp4` (recriável do `aula_final` com `-map 0:v -c copy`; MD5 igual) e os renders
   dos capítulos, que o `remendar_aula.py` não usa: ele pega os quadros vizinhos do vídeo antigo. Disco: 3,2 GB. **T19 liberado para
   render e finish**, depois da gravação. **T20 liberado** para as emendas e a gravação; renderiza depois do T19.
+- 05/11 18:5x a 20:1x **Limite SEMANAL do Sonnet** (volta 11/11 11:00, Lisboa). Os agentes do T19, T20 e T17 pararam:
+  - T19: os 14 caps já estavam gravados e renderizados (câmera 0);
+  - T20: os 13 caps gravados de 19:01 a 20:08, na 1.38.24;
+  - T17: fase 1 no meio.
+  20:37 **oitavo reinício do container** (app religado, pid 659). **Kaik 20:4x: "Continuar tudo no Opus"** (opções: fechar só T19/T20 ou
+  pausar). Os agentes Sonnet não podem ser retomados até 11/11; os novos vão em Opus, no máximo 2 por vez.
+  - T19: o finish e as legendas correm por mim.
+  - T20 (Opus): conferência das gravações, montagem, render e finish.
+  - T7 (Opus): voz e gravação.
+  - Kaik avisado do download dos 6 nós do T14/T21.
 
 ## Fila (31/10 12:1x; nada sai da fila sem estar entregue)
 1. **Rodando (Kaik 14:48 liberou até 4 agentes ao mesmo tempo):** dev-video no 06 e no 12 do site (com a trava
