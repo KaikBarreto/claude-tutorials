@@ -385,6 +385,18 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
   cap03 L7 ("coluna Saldo Após" só a partir de 1440 px; vira "Embaixo de cada valor aparece o Saldo...") e cap12 L2 ("selo
   Sistema" é um cadeado com a dica "Categoria do sistema"). Voz delas no próximo lote, junto com o que o T11 achar.
   Caps 10 e 11 ("aparecem todas" com 10 por página): resolver no robô (mais itens por página), sem voz nova.
+- 05/11 00:2x Kaik: "não pare até terminar tudo; se acabar o limite semanal, vá agendando tasks de voltar ao trabalho".
+  20 retomadas agendadas nesta sessão (6 em 6 h até 07/11, depois 12 em 12 h até 12/11; ids em `RETOMADAS.md`).
+- 05/11 00:3x **Voz das 2 falas do T13 gerada** (nó `T13 emendas 1.38.19`, 19,5 s, 274 créditos) sem esperar o T11, para não
+  travar o T13 à noite; download direto ainda dá 403, pedido ao Kaik. Se o T11 ou o T19 acharem falas, vão num nó próprio.
+- 05/11 00:4x **Handoff da OS publicado**: `b5ebd555` (1.38.20, 04/11 20:14, com a migration `20261104190000_edit_os_scope...`).
+  Depois veio a **1.38.21** (`f264b235` e `a68adc13`, 05/11 00:0x: NFS-e direto no Portal Nacional, Fisqal aposentado,
+  `nfse-register-company` e `nfse-webhook` removidos; Configurações fiscais mais curtas). Também entrou `36c6303f`
+  (Domiflix: contratação vai para a assinatura). Levantamento por aula despachado (agente só leitura → `IMPACTO_1.38.21.md`,
+  exporta `src-1.38.21`), com as falas novas do T7 e o trecho "Editar OS". O T14 depende da mudança fiscal (cap02 "Empresa:
+  registrada" e cap03 "Passo 2 de 2" não existem mais): **vai para o fim da fila**, com a reescrita na vez dele (Opus,
+  domínio fiscal). Nova ordem: T20, T15, T22, T21, T17, T14. O app de gravação continua na 1.38.19 enquanto o T10 grava;
+  muda para a 1.38.21 (sob a trava) antes do T7 e do T14.
 
 ## Fila (31/10 12:1x; nada sai da fila sem estar entregue)
 1. **Rodando (Kaik 14:48 liberou até 4 agentes ao mesmo tempo):** dev-video no 06 e no 12 do site (com a trava
