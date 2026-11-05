@@ -31,7 +31,7 @@ F = montagem final + legendas + conferência · ok = no ZIP
 | T12 | Portal do Cliente e Portal do Contrato | ok | ok | ok (V3) | ok (zip 5; títulos 20:4x) | agente novo 04/11 00:5x, 1.38.19 (54327): ensaio ok 03:2x; **aprovado 04/11 07:xx** (12:00; cap08 com faixa de endereço = defeito do app) | | | |
 | T13 | Financeiro | ok | ok | ok (04/11 17:xx) | ok (zip 7, 15 caps, 14,0 min; 0 fala a refazer) | fase 1 ok 05/11 00:3x (15 caps, 0 falho; 2 falas a emendar) | fase 2 (1.38.21): 15 caps gravados 02:45–03:33; regravando caps com atraso (pausas na voz) e o cap13 (4 falhos) | | |
 | T19 | Integração com Asaas, Assinaturas e Cobranças | ok | ok | ok (04/11 17:xx) | ok (zip 7, 14 caps, 9,7 min; 0 fala a refazer) | fase 1 ok 05/11 02:5x (14 caps, 0 falho; 1 fala, voz `T19 emendas cobrança`) | grava depois do T13 e do T11 | | |
-| T20 | Relatório Financeiro e DRE | ok | ok | ok (04/11 17:xx) | ok (zip 7, 13 caps, 8,7 min; 0 fala a refazer) | fase 1, agente 05/11 01:4x (54335): pronto para ensaiar; ensaios depois da semente final do T19; 3 falas novas (voz `T20 emendas 1.38.21` gerada) | | | |
+| T20 | Relatório Financeiro e DRE | ok | ok | ok (04/11 17:xx) | ok (zip 7, 13 caps, 8,7 min; 0 fala a refazer) | fase 1 ok 05/11 08:0x (13 caps, 0 falho, 21 conferências iguais; semente final `t20/apos-cap12`; 3 falas, voz `T20 emendas 1.38.21`) | | | |
 | T14 | Notas Fiscais (NFS-e e NF-e) | ok | ok | ok (04/11 17:xx) | ok (zip 7, 14 caps, 8,3 min; 0 fala a refazer) | | | | |
 | T15 | Funcionários: Financeiro do Funcionário e Ponto | ok | ok | ok (04/11 17:xx) | ok (zip 7, 13 caps, 8,9 min; 0 fala a refazer) | fase 1, agente 05/11 03:1x (54336; base = fim do T20, sem o T14) | | | |
 | T22 | Ferramentas de RH: DISC, Organograma, Fluxograma | ok | ok | ok (04/11 17:xx) | ok (zip 7, 12 caps, 7,5 min; 0 fala a refazer) | fase 1, agente 05/11 03:1x (54337; ensaia depois do T15) | | | |
@@ -470,6 +470,8 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
   ao sistema" mostrada antes de vincular; registro manual sem data; saldo só filtrando uma pessoa): `T15/narracao/emendas_1_38_21.json`,
   voz `T15 emendas 1.38.21` (49,9 s). Logo da empresa sumido no celular (cap09b) com `APP_ORIGIN`: não é geral (o portal do T12 mostra o
   logo); conferido: o logo carrega, o "Mixed Content" era só aviso de console (resumo.py contava). Caps 05 e 10 reensaiados ok. **Pedido ao Kaik: lote de 7 nós** (T07 ×4, T19, T20, T15).
+- 05/11 08:0x **T20 fase 1 ok** na base final (DRE out: receita bruta 13.950,00, resultado 5.137,80; projeção R$ 380,00). Semente
+  final `t20/apos-cap12` passada ao T15 ("T15: base pronta").
 
 ## Fila (31/10 12:1x; nada sai da fila sem estar entregue)
 1. **Rodando (Kaik 14:48 liberou até 4 agentes ao mesmo tempo):** dev-video no 06 e no 12 do site (com a trava
