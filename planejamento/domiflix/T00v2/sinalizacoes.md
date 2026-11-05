@@ -126,3 +126,7 @@ e `public/guia-tecnico/`. A coluna da direita vale para a 1.38.9 e para a 1.38.1
   As falas do T11 não citam a quantidade, então a correção só mudaria a imagem.
 - **Faixa "Dados faltando: Endereço do cliente" (T12 cap08 e T11 cap12):** o mesmo defeito do `useContractDetail.ts:42`
   (seção acima); os dois capítulos são regravados depois da correção.
+- **DRE: "Pagamento de Fatura" e "Transferência entre contas" na lista de despesas (T20, 05/11, a confirmar):** na configuração
+  do DRE, categoria sem grupo (`dre_group` nulo) cai em despesa operacional, e essas duas categorias do sistema aparecem na
+  lista junto das despesas com pessoal. Se o relatório também as somar, pagamento de fatura e transferência entre contas
+  viram despesa no resultado. A fala do T20 não cita a lista.
