@@ -550,6 +550,10 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
   (cap10 com a voz nova, 15:47) e regravando 02 e 03; T19 com os 14 caps gravados (lote de regravação em curso); T14 aplicando
   as decisões. 17:28 **sétimo reinício do container** (app religado, pid 660, 1.38.24, sem o descritor da trava). Os três agentes
   retomados (Kaik 17:27: "Try again").
+- 05/11 17:4x **T11 na 1.38.24: 15 caps gravados (0 falho), montados (câmera 0) e renderizados.** Atraso máximo 0,90 s no cap02 (aceito),
+  os outros ≤ 0,79 s. Respiros na voz em 9 capítulos, sem cortes. O cap06 tem 36 s mudos (Restaurante e Salão) que o finish acelera.
+  "PMOC" do cap10 (112 s, ouvido "POC" no capítulo inteiro) conferido isolado: o ASR ouve "PMOC" em 1,0x e 0,8x. Liberados o
+  finish e as legendas; o agente para antes do `entregar.py`.
 
 ## Fila (31/10 12:1x; nada sai da fila sem estar entregue)
 1. **Rodando (Kaik 14:48 liberou até 4 agentes ao mesmo tempo):** dev-video no 06 e no 12 do site (com a trava
