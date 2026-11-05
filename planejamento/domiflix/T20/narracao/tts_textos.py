@@ -12,7 +12,7 @@ Os três números de cima resumem o período: o faturamento, o resultado e a mar
 No gráfico de receita e despesa, mês a mês, dá pra ver qual mês foi mais fraco.
 E embaixo, de onde veio a receita e pra onde foi a despesa, por categoria.""",
 2: """Agora o dê érri ê, o demonstrativo de resultado. Ele explica de onde veio o resultado do mês, linha por linha. Pra ler um mês fechado, escolho Mês passado.
-Em cima ficam a margem, a receita líquida e o resultado líquido, e o gráfico mostra a evolução dos últimos meses.
+Em cima da tabela ficam o Configurar dê érri ê, a escolha do regime, o Incluir projeções e o Exportar.
 A tabela segue uma ordem. A receita bruta, menos os impostos, dá a receita líquida. Menos o custo dos serviços prestados, dá o lucro bruto. E, menos as despesas operacionais, o resultado líquido.
 Clicando num grupo, aparecem as categorias dele. No custo dos serviços estão o material, a mão de obra avulsa e as peças e componentes, que a gente criou no tutorial do Financeiro.
 E a coluna da direita mostra o peso de cada linha sobre o faturamento. Assim você vê, por exemplo, quanto do que entrou foi gasto em material.""",
@@ -33,14 +33,14 @@ Em competência, cada parcela entra no mês dela, a partir do mês da compra. Em
 E o mês da fatura não conta pro resultado: ele só diz quando o pagamento vence.
 Por isso a bomba de vácuo aparece aqui, no mês em que a fatura foi paga.
 E a transferência entre contas e o pagamento da fatura ficam fora do dê érri ê nos dois regimes. É dinheiro mudando de lugar, e não resultado.""",
-6: """E dá pra olhar um mês ao lado do outro. Volto pro mês passado e clico em Comparar períodos. Escolho Período anterior e clico em Aplicar comparação. A tabela ganha a coluna do mês anterior e a variação de cada linha.
+6: """E dá pra olhar um mês ao lado do outro. Volto pro mês passado e clico em Comparar períodos. Escolho Período anterior e clico em Aplicar comparação. A tabela ganha a coluna do mês anterior, ao lado do atual.
 Assim você vê na hora o que cresceu e o que caiu de um mês pro outro.
 E agora pra frente. Em competência, com um período que vai até o fim do mês que vem, aparece o Incluir projeções. Ligado, ele soma as próximas mensalidades das assinaturas: aqui, um ciclo de trezentos e oitenta reais, da assinatura da Academia Ponto Forte.
 Repara no rodapé: a projeção só aparece no relatório. Nenhum lançamento é criado.""",
 7: """O dê érri ê conta o passado. Pro caixa dos próximos dias tem o dê-éfe-cê, o fluxo de caixa. Ele abre no Previsto, com o saldo de hoje e o que vai entrar e sair nos próximos quinze dias.
 Em Próximos, dá pra ver trinta dias. A tabela vai dia a dia: o saldo que começa, o que entra, o que sai e o saldo que fica.
 Clicando num valor, aparecem as contas daquele dia, como o aluguel do galpão. Assim dá pra ver o dia em que a conta aperta, antes de chegar nele.
-A previsão considera tudo pago no vencimento. E o que já venceu sem baixa aparece separado, na coluna Dívida.""",
+A previsão considera tudo pago no vencimento. E o que já venceu sem baixa aparece separado, na coluna Dívida. Aqui ela está vazia, porque nada ficou em atraso.""",
 8: """No Realizado, o que de fato entrou e saiu no período: o saldo do começo, a variação e o saldo do fim.
 As entradas e saídas aparecem separadas pelo grupo dê-éfe-cê de cada categoria. Aqui é tudo da operação: os serviços, o material, o aluguel.
 E o Exportar leva o fluxo pra ékisel, pê-dê-éfe ou cê-ésse-vê. Uma dica: lucro e dinheiro em caixa são perguntas diferentes, e um mês com lucro pode fechar com pouco caixa.""",
