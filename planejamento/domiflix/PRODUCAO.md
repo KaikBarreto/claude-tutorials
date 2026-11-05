@@ -463,6 +463,9 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
   da Pousada Sol Nascente; ensaios 00 a 14 com 0 falho; cap14 no caso do handoff, equipamento criado na gaveta). Decisões: o
   equipamento criado é novo no mundo (**Hi-Wall 12.000 BTUs, Sala de café, 220 V**; o Cassete da Recepção já existia no T3) e o
   "Solte aqui para vincular" fica ~1,5 s na tela. Voz (cap14, título, L68, recap) depois do ensaio final do cap14.
+- 05/11 07:4x **Voz do T7 gerada** (`T07/narracao/nos_1_38_21.json`): `T07 cap14 Editar a OS em campo` (1.928 caracteres; fala do
+  equipamento enxugada), `T07 títulos cap14` (2,6 s), `T07 emendas 1.38.21` (cap03 L3, 12,7 s) e `T07 inserção recap` (cap13 L4,
+  9,1 s). Opção `hold` no `drag` do gravador (padrão igual). Lote para o Kaik baixar: T07 (4 nós), T20 e T19.
 
 ## Fila (31/10 12:1x; nada sai da fila sem estar entregue)
 1. **Rodando (Kaik 14:48 liberou até 4 agentes ao mesmo tempo):** dev-video no 06 e no 12 do site (com a trava

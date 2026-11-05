@@ -66,7 +66,7 @@ No próximo tutorial, a gente conhece a Área do Técnico de Refrigeração e Cl
 14: """Pra fechar, um recurso que ajuda quando a ordem muda no meio do atendimento. Esta é uma ordem da Pousada Sol Nascente, já em andamento. Repara que o checklist de Manutenção preventiva de split está solto, sem equipamento, e o técnico já respondeu cinco perguntas.
 O ajuste fica no menu de mais ações. Toco em Editar OS, e abre a gaveta com a Estrutura da OS. Quem libera essa opção é o gestor, pela permissão Editar OS em campo.
 Aqui embaixo está o bloco Checklists sem equipamento, com o de Manutenção preventiva de split. O visto verde mostra que ele já tem respostas. E a ordem ainda não tem nenhum equipamento.
-Então eu cadastro o equipamento aqui mesmo. Toco em Adicionar equipamento, escrevo o nome, rai-uól doze mil bê-tê-ús, Sala de café, repito Sala de café em Local, escolho a Tensão, duzentos e vinte volts, e toco em Criar. O equipamento já aparece na gaveta.
+Então eu cadastro o equipamento aqui mesmo. Toco em Adicionar equipamento e escrevo o nome, rai-uól doze mil bê-tê-ús, Sala de café, e o local. A Tensão é obrigatória: duzentos e vinte volts. Toco em Criar, e o equipamento já aparece na gaveta.
 Na mesma gaveta, dá pra escolher mais checklists e remover o que não vale. Se uma remoção for apagar respostas, o aplicativo pede confirmação antes.
 Agora, o principal. Seguro pela alça do checklist e arrasto até o rai-uól. O cartão acende e mostra Solte aqui para vincular. Solto, e o checklist passa pra dentro do equipamento.
 Uma dica: se arrastar no celular não ajudar, o menu de três pontos do checklist faz o mesmo. Em Mover para, é só escolher o destino.
