@@ -455,6 +455,10 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
   campo nativo. **Pendente:** levantar o que mais as aulas entregues mostram (campos nativos com hora, data ou decimal) e
   propor remendos ao Kaik. Retomados T13, T7 e T15 (o T15 ensaia na base provisória para as falas entrarem no lote de voz
   da manhã); T20 e T22 depois; T11 e T19 refazem ensaio de digitação numérica antes da fase 2.
+- 05/11 07:0x **Auditoria dos campos nativos nas aulas entregues** (quadros em `$TUT_HOME/auditoria_locale/`): só **T5 cap13** (~10:05,
+  "Horário 08:00 AM" na Nova Tarefa) e **T9 cap06** (~6:12, "Custo / km 1.5", em zoom). Remendo dos dois capítulos com o
+  gravador corrigido, depois da entrega do T13 (`remendar_aula.py --novos`; rodapé na 1.38.21 nesses capítulos, como os
+  remendos anteriores do T4/T5). Defeito do app sinalizado: textos do BDI com ponto decimal ("÷ 0.6000").
 
 ## Fila (31/10 12:1x; nada sai da fila sem estar entregue)
 1. **Rodando (Kaik 14:48 liberou até 4 agentes ao mesmo tempo):** dev-video no 06 e no 12 do site (com a trava

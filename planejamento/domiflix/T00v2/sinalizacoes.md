@@ -134,3 +134,5 @@ e `public/guia-tecnico/`. A coluna da direita vale para a 1.38.9 e para a 1.38.1
   (`SettingsAsaasContent.tsx:94`); o campo fica como texto com "Nenhuma" e a categoria não aparece para escolher.
 - **Asaas, cartão de taxas em "referência" depois de "Ativar recebimentos" (T19, 05/11):** a consulta fica guardada por 10 min;
   as taxas da conta só aparecem depois de recarregar a página.
+- **Orçamento, BDI com ponto decimal (T9, 05/11):** textos montados pelo app saem com ponto: "R$ 0,00 ÷ 0.6000" na Composição do
+  preço sugerido, "BDI atual 1.0000" e "R$ 32,00/h × 1.5h" (formatação sem pt-BR; o cliente vê assim também).
