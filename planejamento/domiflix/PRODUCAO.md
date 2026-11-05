@@ -483,6 +483,8 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
   cartões "Antes" e "Próximo" incluídos. Lição: ensaio que roda com o app fora do ar não pode gravar semente. **T11 fase 2 liberada.**
 - 05/11 10:1x **T13 entregue** (`entrega_final/`, 248 legendas; disco 4,4 GB). Remendos do **T5 cap13** e do **T9 cap06** (gravador
   pt-BR) despachados (fakes 54338 e 54339).
+- 05/11 10:3x **Segundo limite de 5 h** (T11, remendos e T22 pararam; zera 11:20). 12:25 retomada 2/20; **sexto reinício do container**
+  (app religado, pid 212). Agentes retomados com instruções de reinício. Lote de voz (7 nós) ainda não baixado pelo Kaik.
 
 ## Fila (31/10 12:1x; nada sai da fila sem estar entregue)
 1. **Rodando (Kaik 14:48 liberou até 4 agentes ao mesmo tempo):** dev-video no 06 e no 12 do site (com a trava
