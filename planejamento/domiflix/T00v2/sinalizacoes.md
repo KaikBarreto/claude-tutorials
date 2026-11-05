@@ -138,3 +138,5 @@ e `public/guia-tecnico/`. A coluna da direita vale para a 1.38.9 e para a 1.38.1
   preço sugerido, "BDI atual 1.0000" e "R$ 32,00/h × 1.5h" (formatação sem pt-BR; o cliente vê assim também).
 - **"Retomar OS" com pouco contraste (T7, 1.38.21):** no celular, o botão virou neutro (`bg-foreground`) e fica cinza-escuro sobre o
   rodapé quase preto; o texto se lê, mas o botão quase some (caps 07 e 08 do T7; quadros em `rec/t7/quadros_1.38.21/retomar_os/`).
+- **Ponto, saldo negativo com a jornada aberta (T15, 05/11):** em Hoje, o olho do dia mostra "Saldo -7h52min" enquanto a jornada
+  ainda está aberta (a pessoa acabou de entrar); dá a impressão de dívida de horas antes do fim do dia.

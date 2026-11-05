@@ -14,7 +14,7 @@ Na lista estão os seis técnicos da Glaciál. Clicando num nome, a ficha abre a
 Agora, bora colocar alguém novo na equipe.""",
 2: """A Tatiane, que cuida do escritório, já usa a Dominex desde o tutorial de usuários. Agora ela entra no cadastro de funcionários, pra receber o salário e bater o ponto.
 A janela tem cinco abas: Dados, Pagamento, Acesso, Ponto eletrônico e Perfil. A foto é opcional, e aparece na ficha e no ponto.
-Em Dados vão o nome completo, o CPF, o telefone, o e-mail e o cargo, assistente administrativa.
+Em Dados vão o nome completo, o CPF, o telefone e o cargo, assistente administrativa.
 Depois, o endereço e a data de admissão.
 E a chave pix dela, aqui o e-mail. Ela fica guardada na ficha, à mão na hora de pagar.""",
 3: """Agora a aba Pagamento. O salário da Tatiane é de dois mil e oitocentos reais.
@@ -27,8 +27,8 @@ Ela usa vale-transporte, de duzentos e vinte reais por mês, e o desconto dele t
 Dá pra pagar por mês, por quinzena ou por semana.
 Na Glaciál o pagamento é mensal, no quinto dia útil. Se preferir uma data fixa, é só trocar pra dia corrido e escolher o dia do mês.
 Repara na dica: é essa configuração que faz a folha da Tatiane aparecer sozinha em Contas a Pagar.""",
-5: """Falta ligar o cadastro ao login, e isso fica na aba Acesso. Como a Tatiane já é usuária, é só vincular: escolho o nome dela aqui.
-Pra quem ainda não tem login, o Criar acesso ao sistema cria um com o e-mail do cadastro, e na própria aba Acesso já dá pra escolher o Papel no sistema e as Permissões.
+5: """Falta ligar o cadastro ao login, e isso fica na aba Acesso, onde também está o e-mail dela, que serve de login.
+Pra quem ainda não tem acesso, o Criar acesso ao sistema cria o login com esse e-mail. Ligado, ele mostra o Papel no sistema e as Permissões. Como a Tatiane já é usuária, eu desligo e só vinculo: escolho o nome dela aqui.
 Clico em Criar Funcionário. Pronto, a Tatiane entrou na lista.""",
 6: """Com a Tatiane cadastrada, eu completei os técnicos do mesmo jeito, cada um com o salário e o dia do pagamento. Agora, o dinheiro do dia a dia.
 Clico no Rafael, e a ficha dele abre do lado. Em cima ficam as movimentações, e embaixo, os números, como o salário e o saldo atual, que é quanto ele tem a receber.
@@ -58,9 +58,9 @@ Ela toca em Registrar Entrada, o celular pega a localização e mostra o resumo:
 Confirmar registro, e pronto, a entrada está registrada. O intervalo, a volta e a saída vêm depois, pelo mesmo botão.""",
 10: """E do lado do escritório, você acompanha tudo na hora. Em Hoje, a Tatiane já aparece como presente, com o horário da entrada.
 No olho ficam os registros do dia, com o endereço de cada batida.
-Se alguém esquecer de bater, o lápis abre o registro manual. Você escolhe o tipo, a data e o horário e escreve a justificativa, que é obrigatória.
+Se alguém esquecer de bater, o lápis abre o registro manual. Você escolhe o tipo e o horário e escreve a justificativa, que é obrigatória.
 Em Histórico ficam as jornadas de todo mundo, com filtro por funcionário e por período, e o cê-ésse-vê leva tudo pra uma planilha.
-E o Relatório mostra o mês inteiro num calendário, com as horas trabalhadas e o saldo de cada pessoa.""",
+E o Relatório mostra o mês inteiro num calendário, com as horas trabalhadas por dia. Filtrando uma pessoa, você vê o saldo dela.""",
 11: """E a folha do mês, quem lança? No dia seguinte, ela já está em Contas a Pagar e Receber. Procuro por folha na aba A Pagar.
 Olha a folha de cada um, no valor do salário, vencendo no quinto dia útil do mês que vem. Ela entra sozinha pela configuração de pagamento, com antecedência pra você se programar.
 Na hora de pagar, o Marcar como pago abre a mesma janela de pagamento, já quitando essa folha.
