@@ -30,7 +30,7 @@ F = montagem final + legendas + conferência · ok = no ZIP
 | T11 | Contratos e PMOC | ok | ok | ok (04/11 17:xx) | ok (zip 7, 15 caps, 15,5 min; 0 fala a refazer) | fase 1 ok 05/11 00:5x (15 caps, 0 falho; 6 falas sem a contagem, voz `T11 emendas contagem`) | ok (1.38.24; 15 caps, 0 falho, atraso máx. 0,90 s) | ok (câmera 0; corte de 29,9 s no cap06) | **entregue 05/11 18:4x** (18:22, -15,8 LUFS, -3,6 dBTP, 285 legendas; cap10 com Planejar visita e Vincular OS existente) |
 | T12 | Portal do Cliente e Portal do Contrato | ok | ok | ok (V3) | ok (zip 5; títulos 20:4x) | agente novo 04/11 00:5x, 1.38.19 (54327): ensaio ok 03:2x; **aprovado 04/11 07:xx** (12:00; cap08 com faixa de endereço = defeito do app) | | | |
 | T13 | Financeiro | ok | ok | ok (04/11 17:xx) | ok (zip 7, 15 caps, 14,0 min; 0 fala a refazer) | fase 1 ok 05/11 00:3x (15 caps, 0 falho; 2 falas a emendar) | ok (1.38.21; 15 caps, 0 falho; pausas na voz em 11 linhas) | ok (câmera 0) | **entregue 05/11 10:1x** (15:30, -15,8 LUFS, -3,6 dBTP, 248 legendas) |
-| T19 | Integração com Asaas, Assinaturas e Cobranças | ok | ok | ok (04/11 17:xx) | ok (zip 7, 14 caps, 9,7 min; 0 fala a refazer) | fase 1 ok 05/11 02:5x (14 caps, 0 falho; 1 fala, voz `T19 emendas cobrança`) | grava depois do T13 e do T11 | | |
+| T19 | Integração com Asaas, Assinaturas e Cobranças | ok | ok | ok (04/11 17:xx) | ok (zip 7, 14 caps, 9,7 min; 0 fala a refazer) | fase 1 ok 05/11 02:5x (14 caps, 0 falho; 1 fala, voz `T19 emendas cobrança`) | grava depois do T13 e do T11 | | **entregue 05/11 20:5x** (10:53, -15,8 LUFS, -3,6 dBTP, 181 legendas; 1.38.24) |
 | T20 | Relatório Financeiro e DRE | ok | ok | ok (04/11 17:xx) | ok (zip 7, 13 caps, 8,7 min; 0 fala a refazer) | fase 1 ok 05/11 08:0x (13 caps, 0 falho, 21 conferências iguais; semente final `t20/apos-cap12`; 3 falas, voz `T20 emendas 1.38.21`) | | | |
 | T14 | Notas Fiscais (NFS-e e NF-e) | ok | ok | ok (04/11 17:xx) | ok (zip 7, 14 caps, 8,3 min; 0 fala a refazer) | reescrita + fase 1 despachadas 05/11 13:4x (Opus, 1.38.24, 54341; base = fim do T21) | | | |
 | T15 | Funcionários: Financeiro do Funcionário e Ponto | ok | ok | ok (04/11 17:xx) | ok (zip 7, 13 caps, 8,9 min; 0 fala a refazer) | fase 1 ok 05/11 08:1x (todos os caps, 0 falho; base `t20/apos-cap12`; semente final `t15/apos-cap12`; 5 falas, voz `T15 emendas 1.38.21`) | | | |
@@ -594,6 +594,12 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
   - T20 (Opus): conferência das gravações, montagem, render e finish.
   - T7 (Opus): voz e gravação.
   - Kaik avisado do download dos 6 nós do T14/T21.
+- 05/11 20:5x **T19 entregue** (`entrega_final/`): 653,5 s (10:53), -15,8 LUFS, -3,6 dBTP, 181 legendas. Finish e legendas por mim (o
+  primeiro finish, lançado com `&`, foi parado e relançado como tarefa rastreada: processo solto morre minutos depois da resposta).
+  Revisão em folhas de 3 s: cartões "Antes: Financeiro" e "Próximo: Relatório Financeiro e DRE" certos; ilustração "O caminho do
+  dinheiro"; página de pagamento do cliente com Pix, boleto e cartão de teste; nada a corrigir. Limpeza: `mix.wav`, `video_sem_audio`
+  (MD5 igual) e os renders dos capítulos. **Zip 9 do Kaik** (20:55, 332 MP3): extraídos só os 6 nós novos (T14 caps 02, 03, 08 e 13 v2,
+  T14 emendas cap10, T21 emendas), todos com a duração certa, em `$TUT_HOME/recebido/2055_lote6/zip/` (zip lido no lugar, sem cópia).
 
 ## Fila (31/10 12:1x; nada sai da fila sem estar entregue)
 1. **Rodando (Kaik 14:48 liberou até 4 agentes ao mesmo tempo):** dev-video no 06 e no 12 do site (com a trava
