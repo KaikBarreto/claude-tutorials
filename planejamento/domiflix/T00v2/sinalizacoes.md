@@ -146,3 +146,7 @@ e `public/guia-tecnico/`. A coluna da direita vale para a 1.38.9 e para a 1.38.1
 - **RH, fluxograma e organograma (T22, 05/11):** o painel "Editar nó" do organograma fica em parte coberto pela barra de ferramentas;
   no fluxograma, as alças de ligação da Decisão e do Documento ficam sob a camada do texto (arrastar a seta pega só parte delas);
   os botões de zoom do quadro não respondem; Conferência, Sobre o processo e Exportar só têm ícone (o nome só no tooltip).
+- **Notas fiscais (T14, 05/11, achados no código da 1.38.24, a confirmar na tela):**
+  - depois de uma ação, a lista de notas não recarrega sozinha (no vídeo, um corte no cap09);
+  - "Descartar nota?" aparece mesmo com o rascunho já salvo;
+  - "Baixar PDF" abre uma aba em branco antes de baixar.

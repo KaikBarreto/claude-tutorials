@@ -518,6 +518,27 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
   batem, ±0,05 s), em `$TUT_HOME/recebido/1454_lote9/zip/`; zip apagado depois da extração. Disco 3,2 → 3,8 GB (apagados
   `src-1.38.19`, `src-1.38.21` e o `dist-anterior.bak`). **T11** recebeu a voz do cap10. **T19 liberado só para gravar**, revezando
   a trava com o T11; renderiza depois dele, por causa do disco. Na fila, com a voz pronta: T20, T7, T15 e T22, nesta ordem.
+- 05/11 15:1x **T14, primeira parada** (Opus). Caps 2, 3, 8 e 13 regerados inteiros (`CAPS` em `T14/narracao/tts_textos.py`).
+  Emendas no cap00 L4 ("Antes" = T21) e no cap10 L3 (os dados fiscais vêm da Manutenção Preventiva; falta só o NBS):
+  `T14/narracao/emendas_1_38_24.json`. `--check` ok nos 14 caps. **Voz só depois do ensaio na tela** (falta a base do T21).
+  Decisões minhas, a passar ao agente com o "T14: T21 pronto":
+  - `FAKE_NOW` 13/11 15:10 nos caps 0 a 11 e 16:20 nos caps 12 e 13 (uma consulta de NF-e a cada 65 min; o T17 abre 16:30): ok.
+  - **cap08 L4 sem a ilustração do PDF.** Seria um PDF fabricado pelo fake, de layout próprio, com o nome de um cliente real
+    (`TRILHA.md`, item 7). A fala fica sobre um elemento real da tela (o ambiente da nota, se a tela mostrar; senão o zoom no
+    "Baixar PDF").
+  - cap13 L4: "a gente lê o Dashboard" → "a gente vê o Dashboard".
+  - Mudanças de funcionamento que a aula passa a dizer (sinalizadas ao Kaik):
+    1. sem registro da empresa; "Salvar dados fiscais" exige razão social, CNPJ, IM e endereço;
+    2. o município só é consultado com certificado válido;
+    3. depois do envio do certificado, o app volta à aba Empresa e confere o município sozinho;
+    4. empresa nova nasce em Produção;
+    5. a nota é autorizada na hora, sem protocolo;
+    6. o PDF sai só pelo menu, sem XML;
+    7. nota em homologação não conta na cota;
+    8. cada nota fica presa ao ambiente em que saiu;
+    9. NF-e recebida: uma consulta a cada 65 min;
+    10. o certificado tem de ser do CNPJ da empresa.
+  - O "Próximo" do T21 passa a ser o T14 (agente do T21 avisado) e o "Antes" do T17 também é o T14 (fase 1 do T17).
 
 ## Fila (31/10 12:1x; nada sai da fila sem estar entregue)
 1. **Rodando (Kaik 14:48 liberou até 4 agentes ao mesmo tempo):** dev-video no 06 e no 12 do site (com a trava
