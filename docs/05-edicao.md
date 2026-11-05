@@ -119,7 +119,11 @@ confira o MD5 dos pacotes (`ffmpeg -i X -map 0:v -c copy -f md5 -` nos dois). An
 final (T2, T4 e T12, um quadro a menos), o MD5 difere; nesse caso, mantenha o `video_sem_audio.mp4`. Feito em 04/11 em T0,
 T1, T3 v2, T5, T7 e T18: ~1 GB liberado. O `proj/build/mix.wav` também pode sair depois da entrega: o remendo refaz o mix
 do zero (`refazer_mix()`, a partir de `audio48k.wav` e `edl.json`). Ajuste feito à mão no mix se perde no remendo (T8: -3 dB
-em 834,93–835,06 s contra o pico do AAC): confira o pico real que o `entregar.py` mostra. Uso:
+em 834,93–835,06 s contra o pico do AAC): confira o pico real que o `entregar.py` mostra.
+Rode a **cópia em `tNN/edit`** (copie da skill se faltar): o `KIT` e o `DOMI` saem da posição do script (`<TUT_HOME>/kit`), e a
+cópia de `ferramentas/edit` procura `<repo>/kit`, que não existe; o mix falha no meio e a próxima execução parte do `_base` (T20,
+05/11). Com o disco apertado, `proj/build/stems` e `mix.wav` podem ser symlinks para `/dev/shm`; aí a limpeza automática não apaga
+os stems (o `rmtree` ignora o symlink): apague `/dev/shm/<aula>_*` depois da entrega. Uso:
 - `--inserir cap14:depois=cap00`: capítulo que não existia (render pelo `render_chapter.py`, com `card` e voz do título em
   `card_voices`); entra depois do indicado, a vinheta do capítulo seguinte é refeita e o resto se desloca (T1, 04/11: +86,5 s,
   2764 quadros recodificados). Confira com `conferir_remendo.py`, que acha deslocamentos grandes sozinho.

@@ -31,7 +31,7 @@ F = montagem final + legendas + conferência · ok = no ZIP
 | T12 | Portal do Cliente e Portal do Contrato | ok | ok | ok (V3) | ok (zip 5; títulos 20:4x) | agente novo 04/11 00:5x, 1.38.19 (54327): ensaio ok 03:2x; **aprovado 04/11 07:xx** (12:00; cap08 com faixa de endereço = defeito do app) | | | |
 | T13 | Financeiro | ok | ok | ok (04/11 17:xx) | ok (zip 7, 15 caps, 14,0 min; 0 fala a refazer) | fase 1 ok 05/11 00:3x (15 caps, 0 falho; 2 falas a emendar) | ok (1.38.21; 15 caps, 0 falho; pausas na voz em 11 linhas) | ok (câmera 0) | **entregue 05/11 10:1x** (15:30, -15,8 LUFS, -3,6 dBTP, 248 legendas) |
 | T19 | Integração com Asaas, Assinaturas e Cobranças | ok | ok | ok (04/11 17:xx) | ok (zip 7, 14 caps, 9,7 min; 0 fala a refazer) | fase 1 ok 05/11 02:5x (14 caps, 0 falho; 1 fala, voz `T19 emendas cobrança`) | grava depois do T13 e do T11 | | **entregue 05/11 20:5x** (10:53, -15,8 LUFS, -3,6 dBTP, 181 legendas; 1.38.24) |
-| T20 | Relatório Financeiro e DRE | ok | ok | ok (04/11 17:xx) | ok (zip 7, 13 caps, 8,7 min; 0 fala a refazer) | fase 1 ok 05/11 08:0x (13 caps, 0 falho, 21 conferências iguais; semente final `t20/apos-cap12`; 3 falas, voz `T20 emendas 1.38.21`) | | | |
+| T20 | Relatório Financeiro e DRE | ok | ok | ok (04/11 17:xx) | ok (zip 7, 13 caps, 8,7 min; 0 fala a refazer) | fase 1 ok 05/11 08:0x (13 caps, 0 falho, 21 conferências iguais; semente final `t20/apos-cap12`; 3 falas, voz `T20 emendas 1.38.21`) | ok (1.38.24; 13 caps, 0 falho, atraso máx. 0,71 s; regravados 01, 03 a 06) | ok (câmera 0 problema) | **entregue 05/11 22:4x** (9:44,6, -15,8 LUFS, -3,6 dBTP, 153 legendas; cartão "Próximo" corrigido por remendo) |
 | T14 | Notas Fiscais (NFS-e e NF-e) | ok | ok | ok (04/11 17:xx) | ok (zip 7, 14 caps, 8,3 min; 0 fala a refazer) | reescrita + fase 1 despachadas 05/11 13:4x (Opus, 1.38.24, 54341; base = fim do T21) | | | |
 | T15 | Funcionários: Financeiro do Funcionário e Ponto | ok | ok | ok (04/11 17:xx) | ok (zip 7, 13 caps, 8,9 min; 0 fala a refazer) | fase 1 ok 05/11 08:1x (todos os caps, 0 falho; base `t20/apos-cap12`; semente final `t15/apos-cap12`; 5 falas, voz `T15 emendas 1.38.21`) | | | |
 | T22 | Ferramentas de RH: DISC, Organograma, Fluxograma | ok | ok | ok (04/11 17:xx) | ok (zip 7, 12 caps, 7,5 min; 0 fala a refazer) | fase 1 ok 05/11 13:1x (12 caps, 0 falho; base `t15/apos-cap12`; semente final `t22/apos-cap11`; 9 falas, voz `T22 emendas 1.38.21`) | | | |
@@ -609,6 +609,16 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
   Sinalizado ao time do app. Espera "T7: render" depois da entrega do T20 (disco: 2,3 GB livres).
   **T15 despachado** (Opus): 5 trocas da 1.38.21 (49,9 s) na velocidade natural + gravação de todos os capítulos sem `--seed`
   (as sementes de 05/11 já alimentaram o T22); espera "T15: render".
+- 05/11 22:4x **T20 entregue** (`entrega_final/`): 584,6 s (9:44,6), -15,8 LUFS, -3,6 dBTP (AAC conferido), 153 legendas. Fase 2 pelo
+  agente Opus: regravou 01 e 03 a 06 (atrasos de 1,2 a 7,5 s), respiro de 2,6 s no cap03, maior atraso final 0,71 s, câmera 0 problema.
+  Revisão em folhas de 3 s: tudo certo, menos o cartão "Próximo: Notas Fiscais (NFS-e e NF-e)", **erro do meu briefing** (o roteiro do
+  T20 e o "Antes" do T15 dizem "Notas Fiscais", título final do T14). Corrigido com o cap12 rerenderizado + `remendar_aula.py
+  --novos cap12` (1.324 quadros recodificados, 2,4 min). A cópia do `remendar_aula.py` da skill não acha o `kit/` (o `KIT` sai da
+  posição do script): rodar a cópia em `tNN/edit` (anotado em `docs/05-edicao.md`). Diverge do roteiro (o app manda): cap04 destaca
+  a Receita Bruta ("Vendas de Serviços" vem recolhida); cap06 sem coluna de variação; cap11 a lista de fechamento cobre a L2 e os
+  itens 4 e 5 seguem a fala; cap12 recap pelas abas ao vivo, com 2 s da ilustração do cartão. Limpeza: renders, `video_sem_audio`
+  (MD5 igual), mix e stems (estavam em `/dev/shm`). Em `entrega_final/`, o T10 perdeu os dois-pontos do nome (regra da Entrega).
+  **T7 retomado** ("T7: render"): montagem, render, finish e legendas; o P23 do cap09 sai pelo enquadramento da câmera.
 
 ## Fila (31/10 12:1x; nada sai da fila sem estar entregue)
 1. **Rodando (Kaik 14:48 liberou até 4 agentes ao mesmo tempo):** dev-video no 06 e no 12 do site (com a trava
