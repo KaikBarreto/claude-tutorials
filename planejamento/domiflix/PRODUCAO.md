@@ -29,7 +29,7 @@ F = montagem final + legendas + conferência · ok = no ZIP
 | T10 | CRM: funil, leads e captação | ok | ok | ok (04/11 17:xx) | | fase 1 ok 04/11 21:xx (11 caps, 0 falho; arrasto do cap02 por DragEvent real; caps 02/08/10 com a voz v2) | ok (1.38.19; 11 caps, 0 falho, atraso máx. 0,78 s) | ok (câmera 0) | **entregue 05/11 01:4x** (12:33, -15,8 LUFS, -3,6 dBTP, 202 legendas). URL do webhook no cap08 fica como está (Kaik 05/11 01:46: "pode deixar") |
 | T11 | Contratos e PMOC | ok | ok | ok (04/11 17:xx) | ok (zip 7, 15 caps, 15,5 min; 0 fala a refazer) | fase 1 ok 05/11 00:5x (15 caps, 0 falho; 6 falas sem a contagem, voz `T11 emendas contagem`) | **fase 2 liberada 05/11 10:0x** (emendas sem compressão; 54329) | | |
 | T12 | Portal do Cliente e Portal do Contrato | ok | ok | ok (V3) | ok (zip 5; títulos 20:4x) | agente novo 04/11 00:5x, 1.38.19 (54327): ensaio ok 03:2x; **aprovado 04/11 07:xx** (12:00; cap08 com faixa de endereço = defeito do app) | | | |
-| T13 | Financeiro | ok | ok | ok (04/11 17:xx) | ok (zip 7, 15 caps, 14,0 min; 0 fala a refazer) | fase 1 ok 05/11 00:3x (15 caps, 0 falho; 2 falas a emendar) | ok (1.38.21; 15 caps, 0 falho; pausas na voz em 11 linhas) | ok (câmera 0) | **aprovado 05/11 10:0x** (15:30, -15,8 LUFS, -3,5 dBTP; resumo e cartões corrigidos); entregando |
+| T13 | Financeiro | ok | ok | ok (04/11 17:xx) | ok (zip 7, 15 caps, 14,0 min; 0 fala a refazer) | fase 1 ok 05/11 00:3x (15 caps, 0 falho; 2 falas a emendar) | ok (1.38.21; 15 caps, 0 falho; pausas na voz em 11 linhas) | ok (câmera 0) | **entregue 05/11 10:1x** (15:30, -15,8 LUFS, -3,6 dBTP, 248 legendas) |
 | T19 | Integração com Asaas, Assinaturas e Cobranças | ok | ok | ok (04/11 17:xx) | ok (zip 7, 14 caps, 9,7 min; 0 fala a refazer) | fase 1 ok 05/11 02:5x (14 caps, 0 falho; 1 fala, voz `T19 emendas cobrança`) | grava depois do T13 e do T11 | | |
 | T20 | Relatório Financeiro e DRE | ok | ok | ok (04/11 17:xx) | ok (zip 7, 13 caps, 8,7 min; 0 fala a refazer) | fase 1 ok 05/11 08:0x (13 caps, 0 falho, 21 conferências iguais; semente final `t20/apos-cap12`; 3 falas, voz `T20 emendas 1.38.21`) | | | |
 | T14 | Notas Fiscais (NFS-e e NF-e) | ok | ok | ok (04/11 17:xx) | ok (zip 7, 14 caps, 8,3 min; 0 fala a refazer) | | | | |
@@ -481,6 +481,8 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
 - 05/11 10:0x **T13 aprovado**: o aluguel vazio no resumo vinha de sementes `apos-cap11/12` refeitas num ensaio com o 8080 fora
   do ar (sem as 12 parcelas); cadeia refeita, caps 13 e 14 regravados (busca mostra "Aluguel do galpão (1/12)", A PAGAR R$ 2.800,00);
   cartões "Antes" e "Próximo" incluídos. Lição: ensaio que roda com o app fora do ar não pode gravar semente. **T11 fase 2 liberada.**
+- 05/11 10:1x **T13 entregue** (`entrega_final/`, 248 legendas; disco 4,4 GB). Remendos do **T5 cap13** e do **T9 cap06** (gravador
+  pt-BR) despachados (fakes 54338 e 54339).
 
 ## Fila (31/10 12:1x; nada sai da fila sem estar entregue)
 1. **Rodando (Kaik 14:48 liberou até 4 agentes ao mesmo tempo):** dev-video no 06 e no 12 do site (com a trava
