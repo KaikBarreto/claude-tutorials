@@ -8,7 +8,7 @@ Uma ajuda a entender o jeito de cada pessoa, a outra mostra quem responde a quem
 As três ficam na tela de Funcionários e fazem parte do módulo Funcionários e érre-agá.
 Se você ainda não viu o tutorial de Funcionários, com o financeiro e o ponto eletrônico, dá uma olhada antes. [pause] Vamos começar pelas pessoas.""",
 1: """O perfil comportamental usa o teste disque. Ele mostra como cada pessoa age no dia a dia, em quatro fatores: Dominância, Influência, Estabilidade e Conformidade.
-Cada pessoa da equipe tem um cartão aqui. O Bruno já respondeu, e o cartão dele mostra o resultado.
+Troco pra grade, e cada pessoa da equipe ganha um cartão. O Bruno já respondeu, e o cartão dele mostra o resultado.
 Agora o Rafael. Clico em Gerar link, e aqui você decide se a pessoa vê o resultado no final. O padrão vem das configurações da empresa, e dá pra mudar a cada teste.
 O link já vem copiado. Ele é só do Rafael e abre sem login, então manda direto pra ele, como uma mensagem pessoal.""",
 2: """No celular do Rafael, o link abre o teste. Leva uns cinco minutos, e ele responde pensando no dia a dia dele.
@@ -22,9 +22,9 @@ Depois vêm as competências, o perfil emocional, onde a pessoa brilha e como li
 No fim, os motivadores de carreira. E repara no aviso: é uma ferramenta de autoconhecimento e de comunicação da equipe, e nenhum perfil é melhor que outro.
 E pra levar pra uma conversa, o Ver pê-dê-éfe gera o dossiê completo do perfil.""",
 4: """Imagina que o Rafael e o Bruno vão juntos numa instalação. Em Interações, escolho o Bruno pra ver como os dois funcionam juntos.
-Aparecem os atritos que podem surgir, as sinergias e a melhor forma de comunicação entre os dois. Ajuda bastante a montar as duplas de campo.
+Aparecem os dois perfis no mesmo gráfico, os atritos que podem surgir, as sinergias e a melhor forma de comunicação entre os dois. Ajuda bastante a montar as duplas de campo.
 E o Ver comparação gera o pê-dê-éfe da dupla.
-Com dois perfis respondidos, a aba ganha o Comparar. Escolho o Rafael e o Bruno.
+Volto pra aba Perfil Comportamental. Com dois perfis respondidos, ela ganha o Comparar. Escolho o Rafael e o Bruno.
 Os dois perfis ficam no mesmo gráfico, com as competências de cada um lado a lado.""",
 5: """E o perfil muda com o tempo. O Bruno já fez o teste duas vezes, e no Histórico dele dá pra ver o que mudou de uma pra outra.
 A evolução do perfil compara a avaliação de agora com a anterior e explica em palavras o que subiu e o que recuou.
@@ -39,22 +39,22 @@ Coloco o setor Campo no Rafael e clico em Aplicar aos de baixo. Pronto, todo mun
 E repara no selo: o quadro salva sozinho a cada mudança.""",
 7: """Com as pessoas no lugar, o Organizar arruma tudo em árvore, sozinho.
 E o Adicionar caixa põe uma anotação no quadro. Aqui eu lembro que o Bruno e o Lucas formam a Equipe Alfa.
-Em Tela cheia ficam as ferramentas pra ler um organograma grande.
+Na lateral ficam as ferramentas pra ler um organograma grande, e em Tela cheia o quadro ocupa a tela toda.
 A Árvore mostra a hierarquia em lista, como um índice.
 O Destacar por setor acende um setor só.
 E o Buscar pessoa leva direto até alguém.
 Pra imprimir ou mandar pra alguém, o Exportar baixa o organograma em imagem ou em pê-dê-éfe.""",
 8: """Por fim, como o trabalho acontece: o fluxograma. Vou desenhar o atendimento de um chamado que o cliente abre no portal. Clico em Novo fluxograma e dou o nome.
 Ele já nasce com o Início. Clico nele e escrevo o que dá a largada: o chamado aberto no portal.
-No Adicionar forma, cada forma diz pra que serve. A Tarefa é uma etapa comum, e a Decisão é quando o caminho muda, com sim ou não.
+No Adicionar forma ficam as formas do desenho: início, tarefa, decisão, subprocesso, documento, espera, fim e observação. A Tarefa é uma etapa comum, e a Decisão é quando o caminho muda, com sim ou não.
 Então eu monto o caminho: a triagem, a decisão se precisa de visita, o agendamento, a visita, o relatório e o fim. E, se não precisar de visita, a orientação por telefone.
 As setas ligam uma etapa na próxima: é só puxar da borda de uma forma até a outra. E na decisão, cada saída ganha um rótulo, sim ou não.""",
 9: """Agora, quem faz cada parte. Com Adicionar raia, eu crio uma faixa pra cada responsável, Escritório e Campo, e coloco cada etapa na faixa de quem faz.
-Em cada etapa dá pra detalhar. Na triagem, escrevo como fazer, escolho a Tatiane como responsável e coloco a duração, duas horas.
-O Formatar alinha as caixas e as setas sem mexer no desenho. Já o Organizar, do lado, refaz o arranjo do zero, da esquerda pra direita.
+Em cada etapa dá pra detalhar. Na triagem, escrevo como fazer e escolho a Tatiane como responsável.
+Com as etapas nas faixas, o Organizar refaz o arranjo da esquerda pra direita. Depois, o Formatar só alinha as caixas e as setas, sem mexer no desenho.
 E aqui também tudo salva sozinho.""",
-10: """Desenho pronto, vamos conferir. A Conferência do fluxograma procura etapa solta, decisão sem caminho ou fluxo sem fim, e leva você direto até ela. Aqui está tudo certo.
-Em Sobre o processo ficam o objetivo, o que dispara o processo, o dono, a área e a frequência. Aqui, a dona é a Tatiane.
+10: """Desenho pronto, vamos conferir. No ícone do escudo, a Conferência do fluxograma procura etapa solta, decisão sem caminho ou fluxo sem fim, e leva você direto até ela. Aqui está tudo certo.
+No ícone da prancheta, o Sobre o processo guarda o objetivo, o que dispara o processo, o dono, a área e a frequência. Aqui, escrevo a Tatiane como dona.
 E daqui sai o pópi, o procedimento operacional padrão. O Baixar pópi em pê-dê-éfe gera o documento pronto pra equipe.
 Ele traz o objetivo, os responsáveis de cada faixa, o desenho e o passo a passo de cada etapa. E como sai do desenho, é só manter o fluxograma em dia que o procedimento acompanha.""",
 11: """Pronto! Recapitulando: a gente mandou o teste disque pro Rafael, ele respondeu pelo celular, e o perfil chegou com as qualidades, os pontos de atenção e o jeito de liderar.

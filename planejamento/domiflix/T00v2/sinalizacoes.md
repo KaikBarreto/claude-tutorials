@@ -142,3 +142,6 @@ e `public/guia-tecnico/`. A coluna da direita vale para a 1.38.9 e para a 1.38.1
   ainda está aberta (a pessoa acabou de entrar); dá a impressão de dívida de horas antes do fim do dia.
 - **Ponto no celular, logo escuro sobre cabeçalho preto (T15, 05/11):** a tela de bater o ponto põe o logo da empresa sobre fundo
   preto; logo com texto escuro (o caso comum) fica quase ilegível. Um fundo claro atrás do logo resolveria.
+- **RH, fluxograma e organograma (T22, 05/11):** o painel "Editar nó" do organograma fica em parte coberto pela barra de ferramentas;
+  no fluxograma, as alças de ligação da Decisão e do Documento ficam sob a camada do texto (arrastar a seta pega só parte delas);
+  os botões de zoom do quadro não respondem; Conferência, Sobre o processo e Exportar só têm ícone (o nome só no tooltip).

@@ -34,7 +34,7 @@ F = montagem final + legendas + conferência · ok = no ZIP
 | T20 | Relatório Financeiro e DRE | ok | ok | ok (04/11 17:xx) | ok (zip 7, 13 caps, 8,7 min; 0 fala a refazer) | fase 1 ok 05/11 08:0x (13 caps, 0 falho, 21 conferências iguais; semente final `t20/apos-cap12`; 3 falas, voz `T20 emendas 1.38.21`) | | | |
 | T14 | Notas Fiscais (NFS-e e NF-e) | ok | ok | ok (04/11 17:xx) | ok (zip 7, 14 caps, 8,3 min; 0 fala a refazer) | | | | |
 | T15 | Funcionários: Financeiro do Funcionário e Ponto | ok | ok | ok (04/11 17:xx) | ok (zip 7, 13 caps, 8,9 min; 0 fala a refazer) | fase 1 ok 05/11 08:1x (todos os caps, 0 falho; base `t20/apos-cap12`; semente final `t15/apos-cap12`; 5 falas, voz `T15 emendas 1.38.21`) | | | |
-| T22 | Ferramentas de RH: DISC, Organograma, Fluxograma | ok | ok | ok (04/11 17:xx) | ok (zip 7, 12 caps, 7,5 min; 0 fala a refazer) | fase 1, agente 05/11 03:1x (54337; ensaia depois do T15) | | | |
+| T22 | Ferramentas de RH: DISC, Organograma, Fluxograma | ok | ok | ok (04/11 17:xx) | ok (zip 7, 12 caps, 7,5 min; 0 fala a refazer) | fase 1 ok 05/11 13:1x (12 caps, 0 falho; base `t15/apos-cap12`; semente final `t22/apos-cap11`; 9 falas, voz `T22 emendas 1.38.21`) | | | |
 | T21 | Integração com WhatsApp | ok | ok | ok (04/11 17:xx) | ok (zip 7, 11 caps, 5,9 min; 0 fala a refazer) | | | | |
 | T17 | Dashboard, relatórios e exportações | ok | ok | ok (04/11 17:xx) | ok (zip 7, 12 caps, 6,0 min; 0 fala a refazer) | | | | |
 
@@ -489,6 +489,10 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
   e **T9 cap06** ("Custo / km 1,5"; 993,0 s; -15,8 LUFS; `conferir_remendo` OK rodado por mim com os limites do cap06: 357,933
   a 422,867). Versões antigas em `edit/out/Tn/entrega_antiga/`. Rodapé desses capítulos na 1.38.21 (como os remendos anteriores).
   O `rec/t9/gerar.py 6` não roda mais (fala "custos extras" virou "recursos e extras"); o `cap06.json` de 04/11 vale.
+- 05/11 13:2x **T22 fase 1 ok**: 9 falas novas (lista que vira grade; Interações com os dois perfis no gráfico; Voltar que sai da aba;
+  ferramentas do quadro à vista; formas listadas; Duração só na Espera; Organizar antes do Formatar; botões só com ícone): voz
+  `T22 emendas 1.38.21` (100,2 s). Trechos longos de robô (cap02, 06, 08, 09) vão por respiro curto + corte na fase 2; ligações do
+  cap08 pelo plano B (corte para o desenho ligado). Defeitos do quadro sinalizados. **Lote de voz do Kaik: 8 nós** (+ T22).
 
 ## Fila (31/10 12:1x; nada sai da fila sem estar entregue)
 1. **Rodando (Kaik 14:48 liberou até 4 agentes ao mesmo tempo):** dev-video no 06 e no 12 do site (com a trava
