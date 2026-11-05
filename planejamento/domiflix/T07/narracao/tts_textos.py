@@ -19,7 +19,7 @@ Os botões Uêiz e Gúgol Méps levam o trajeto direto pro aplicativo de navega�
 Uma dica: o A Caminho é opcional. Se o técnico já estiver no local, ele faz o tchéquin direto, a partir da ordem Pendente.""",
 3: """Chegou ao local? Então é hora do tchéquin. Toco em Fazer Tchéquin. O celular registra a hora e o lugar do atendimento, e o status passa pra Em Andamento.
 Logo abaixo do cabeçalho fica o carimbo do tchéquin: o dia, a hora e o endereço onde o técnico estava. Esses dados vão pro relatório do cliente.
-Assim que o tchéquin é feito, a tela ganha o cartão de Checklists, com um checklist pra cada equipamento da ordem, e o rodapé preto, com Finalizar OS, Finalizar Parcial e o menu de mais ações.""",
+Assim que o tchéquin é feito, a tela ganha a área de Checklists, com um checklist pra cada equipamento da ordem, e o rodapé preto, com Finalizar OS, Finalizar Parcial e o menu de mais ações.""",
 4: """Com o atendimento iniciado, é hora do checklist. Cada equipamento da ordem tem o seu. Aqui é o rai-uól dezoito mil bê-tê-ús da sala dos professores, e o checklist é o de Manutenção preventiva de split, que a gente importou no tutorial de Tipos de Serviço, Tipos de Tarefa e Checklists. O contador mostra as perguntas respondidas: por enquanto, zero de treze.
 As primeiras cinco perguntas são de Sim ou Não: filtros, serpentinas, dreno, fixações e conexões elétricas. O asterisco vermelho marca as obrigatórias. É só tocar no interruptor, e a resposta vira Sim.
 Trabalhe com o celular conectado: cada resposta é gravada na hora, e se a internet cair o aplicativo avisa em vermelho que ainda não dá pra salvar.
@@ -61,7 +61,18 @@ Essa avaliação chega pra você em ene-pê-ésse e Satisfação, na tela de Ord
 13: """Pronto! Recapitulando: o técnico abriu a ordem pela agenda, tocou em A Caminho, acompanhou a rota e fez o tchéquin quando chegou.
 Depois preencheu o checklist do equipamento, com respostas, medições, foto e a assinatura do cliente, anotou os materiais que usou e viu como pausar e como finalizar parcialmente quando a visita não termina no dia.
 Na finalização, conferiu o resumo do consumo, e o estoque baixou. A ordem virou um relatório, que dá pra baixar em pê-dê-éfe ou mandar por link, e o cliente avaliou o atendimento.
+E, quando a ordem muda no meio do atendimento, ele ajusta os equipamentos e os checklists na gaveta Editar OS, e as respostas vão junto.
 No próximo tutorial, a gente conhece a Área do Técnico de Refrigeração e Climatização, a caixa de ferramentas de apoio que fica a um toque do atendimento. Até lá!""",
+14: """Pra fechar, um recurso que ajuda quando a ordem muda no meio do atendimento. Esta é uma ordem da Pousada Sol Nascente, já em andamento. Repara que o checklist de Manutenção preventiva de split está solto, sem equipamento, e o técnico já respondeu cinco perguntas.
+O ajuste fica no menu de mais ações. Toco em Editar OS, e abre a gaveta com a Estrutura da OS. Quem libera essa opção é o gestor, pela permissão Editar OS em campo.
+Aqui embaixo está o bloco Checklists sem equipamento, com o de Manutenção preventiva de split. O visto verde mostra que ele já tem respostas. E a ordem ainda não tem nenhum equipamento.
+Então eu cadastro o equipamento aqui mesmo. Toco em Adicionar equipamento, escrevo o nome, Cassete trinta e seis mil bê-tê-ús, Recepção, e toco em Criar. O equipamento já aparece na gaveta.
+Na mesma gaveta, dá pra escolher mais checklists e remover o que não vale. Se uma remoção for apagar respostas, o aplicativo pede confirmação antes.
+Agora, o principal. Seguro pela alça do checklist e arrasto até o Cassete. O cartão acende e mostra Solte aqui para vincular. Solto, e o checklist passa pra dentro do equipamento.
+Uma dica: se arrastar no celular não ajudar, o menu de três pontos do checklist faz o mesmo. Em Mover para, é só escolher o destino.
+Com o checklist no lugar, toco em Salvar equipamentos e checklists. O aplicativo avisa: OS atualizada, e conta quantas respostas acompanharam o checklist movido.
+Fecho a gaveta. O checklist agora está dentro do Cassete, e as cinco respostas continuam lá, cinco de treze. Foi só uma troca de vínculo: nada foi apagado, e ninguém precisou responder de novo.
+Na outra aba, Data e horários, o técnico remarca a ordem sem sair do preenchimento: a data, e o início e o fim de cada dia. Lembrando que a edição precisa de internet: sem conexão, o Editar OS aparece desativado, com o aviso Disponível apenas online.""",
 }
 
 # Títulos falados das vinhetas de capítulo (um nó no ElevenLabs, separados por [pause]); cap00 sem vinheta.
@@ -77,7 +88,8 @@ TITULOS = {1: "Abrindo a OS no celular.",
            10: "Finalizar a OS.",
            11: "O relatório e o pê-dê-éfe.",
            12: "O link do cliente.",
-           13: "Recapitulando."}
+           13: "Recapitulando.",
+           14: "Editar a OS em campo."}
 # Rótulo de área em cima do título (vinheta).
 KICKERS = {1: "Técnico em campo",
            2: "Técnico em campo",
@@ -91,7 +103,8 @@ KICKERS = {1: "Técnico em campo",
            10: "Técnico em campo",
            11: "Relatório",
            12: "Visão do cliente",
-           13: "Resumo"}
+           13: "Resumo",
+           14: "Técnico em campo"}
 
 if __name__ == "__main__":
     tot = 0

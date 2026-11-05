@@ -20,10 +20,10 @@ Pronto: o Ricardo está na lista, com o cê-éfe-tê barra créa e a modalidade.
 3: """Agora, o primeiro contrato, começando por um comum, sem pê-móqui. É uma manutenção trimestral no Colégio Monte Verde. Clico em Novo Contrato.
 No Nome do Contrato, escrevo Manutenção preventiva trimestral, Colégio Monte Verde, e no Cliente escolho o colégio. A chave É um contrato pê-móqui? fica desligada. Um contrato comum tem cinco etapas, que aparecem na barra aqui em cima.
 Segunda etapa: Escopo técnico. O colégio tem um aparelho só, então uso o Adicionar equipamento sem ambiente e marco o rai-uól dezoito mil bê-tê-ús da sala dos professores. Se o cliente tivesse vários espaços, dava pra separar em ambientes.
-Na Agenda, o atalho Trimestral resolve. Escolho a Data de Início e deixo o Horizonte em doze meses. A Prévia das datas mostra as quatro visitas que vão nascer.
+Na Agenda, o atalho Trimestral resolve. Escolho a Data de Início e deixo o Horizonte em doze meses. A Prévia das datas mostra cada visita que vai nascer, com o dia da semana.
 Em Operação e cobrança, o Técnico Executor é obrigatório: escolho o Rafael Lima. Em Tipo de Serviço, Manutenção Preventiva, e no Checklist Padrão, o de manutenção preventiva de split, que a gente criou no tutorial Tipos de Serviço, Tipos de Tarefa e Checklists. O Contrato Ativo fica ligado, porque as ordens de serviço só nascem pra contratos ativos.
 Mais embaixo, na Configuração financeira, deixo desligado o Já gerar as parcelas a receber. Dá pra lançar a cobrança depois, na aba Financeiro do contrato.
-Na Revisão, confiro tudo e clico em Criar Contrato. Pronto: quatro ordens de serviço já estão na agenda. Ao criar, o sistema agenda todas as visitas do período de uma vez. Pra mais um ciclo, é só renovar.""",
+Na Revisão, confiro tudo e clico em Criar Contrato. Pronto: as ordens de serviço já estão na agenda, uma por visita. Ao criar, o sistema agenda todas as visitas do período de uma vez. Pra mais um ciclo, é só renovar.""",
 4: """Agora o pê-móqui do hotel, aquele que estava em negociação no cê-érre-ême. O hotel topou, então bora criar o contrato. Clico em Novo Contrato.
 No Nome do Contrato, pê-móqui, Hotel Mirante do Mar. No Cliente, o próprio Hotel Mirante do Mar.
 E agora a chave que liga o pê-móqui: É um contrato pê-móqui? Ligando, o contrato passa a ter Responsável Técnico, e as ordens de serviço saem com o selo de conformidade legal.
@@ -42,8 +42,8 @@ O checklist Essencial da norma já vem escolhido pra essa máquina, com as pergu
 O Restaurante e o Salão de eventos seguem o mesmo caminho, então deixo os dois prontos.""",
 7: """Ambientes prontos, falta dizer de quanto em quanto tempo o técnico vai lá. Na Agenda, a lei recomenda visita mensal, e é o que já vem marcado, no atalho Mensal. A faixa Cadência das visitas explica isso.
 Dá pra personalizar a cadência, por exemplo, a cada quatorze dias. Só que a norma recomenda mensal, e a tela avisa quando você foge disso.
-Escolho a Data de Início e deixo o Horizonte em doze meses, o que dá doze visitas.
-A Prévia das visitas mostra as datas em Lista ou em Calendário. Se alguma cair num sábado ou domingo, ganha o selo Fim de semana, e depois dá pra mudar a data dessa visita na agenda.
+Escolho a Data de Início e deixo o Horizonte em doze meses. Do lado, a tela já mostra quantas ocorrências isso dá.
+A Prévia das datas mostra cada visita com o dia da semana. Se alguma cair num sábado ou domingo, ganha o selo Fim de semana, e depois dá pra mudar a data dessa visita na agenda.
 Embaixo, a faixa Rotina por equipamento lembra que cada máquina segue a própria rotina da norma, que a gente já configurou no Escopo técnico. Quem não quer ajustar nada é só avançar.""",
 8: """Agenda definida, agora quem executa e quem cobra. Em Operação e cobrança, os Técnicos Executores são obrigatórios: escolho o Rafael Lima e o Bruno Alves, que vão a campo. Nos Responsáveis Financeiros, a Tatiane Ribeiro, do escritório, que acompanha a cobrança. O Contrato Ativo fica ligado.
 Mais embaixo, na Configuração financeira, que é opcional, mas vale aproveitar: ligo o Já gerar as parcelas a receber.
@@ -53,12 +53,12 @@ A Conta de recebimento é a Conta Principal, e a Categoria, Contratos pê-móqui
 Em Como vai ficar, a tela confere a conta: doze parcelas de mil e duzentos reais, somando catorze mil e quatrocentos reais.""",
 9: """Última etapa: a Revisão. A Dominex junta tudo o que a gente preencheu. Tem os Dados do contrato, a unidade e o érre-tê, o Escopo técnico, a Agenda e a Operação e cobrança. Se algo estiver errado, dá pra voltar na etapa e corrigir.
 Está tudo certo, então clico em Criar Contrato.
-Pronto! O contrato nasceu com doze ordens de serviço na agenda e doze parcelas lançadas no Financeiro. Os documentos da norma ficam sendo gerados em segundo plano.
+Pronto! O contrato nasceu com as ordens de serviço na agenda e doze parcelas lançadas no Financeiro. Os documentos da norma ficam sendo gerados em segundo plano.
 Lembra: ao criar, o sistema agenda todas as visitas do período. E cada ordem de serviço do contrato já pede a assinatura do técnico no fim do atendimento.""",
 10: """Contrato criado, olha o que ele já trouxe. Na lista, abro o Filtros e, em Tipo, marco pê-móqui: sobra só o contrato do hotel. A coluna Saúde é um semáforo: Em dia, Manutenção Pendente quando uma visita atrasa, e ATENÇÃO quando duas ou mais atrasam.
 Abro o contrato. Em cima ficam o Editar contrato e o Excluir contrato, e as abas. O Histórico pê-móqui e o Cronograma só aparecem nos contratos pê-móqui.
 Na Visão Geral, as Informações do contrato e o Resumo, com o total de ocorrências e a próxima ordem de serviço. O cartão Portal do Contrato é o link do cliente, e fica pro próximo tutorial. O Progresso mostra quantas visitas já foram concluídas.
-Em Ocorrências, as doze visitas do ano, cada uma com data, dia da semana e ordem de serviço. Cada visita é uma ordem de serviço normal na agenda. Se uma não vai acontecer, o Pular cancela só ela.
+Em Ocorrências, todas as visitas do contrato, cada uma com data, dia da semana e ordem de serviço. Cada visita é uma ordem de serviço normal na agenda. Se uma não vai acontecer, o Pular cancela só ela.
 Em Ambientes e Equipamentos, os três ambientes com as quatro máquinas, e dá pra editar daqui.
 O Histórico pê-móqui guarda a prova de cada tarefa cumprida nas visitas. Começa vazio e vai enchendo conforme os técnicos concluem as ordens de serviço.
 E no Financeiro, o Previsto fecha em catorze mil e quatrocentos reais, as doze parcelas, todas Pendente. Quando o hotel pagar, é só clicar em Marcar como pago na parcela.""",
