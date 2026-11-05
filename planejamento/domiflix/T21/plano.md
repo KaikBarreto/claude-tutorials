@@ -6,11 +6,11 @@
   da OS e das cobranças, acompanhando cada envio no histórico.
 - **Pré-requisito:** T22 na ordem de exibição; a base é o T1 (onde ficam as integrações), o T5/T7 (status da OS) e o T19
   (cobranças). Aviso: "Antes: Ferramentas de RH".
-- **Próximo:** T17 (Dashboard, relatórios e exportações), o último. Aviso: "Próximo: Dashboard e relatórios".
+- **Próximo:** T14 (Notas Fiscais, NFS-e e NF-e); depois o T17. Aviso: "Próximo: Notas Fiscais" (correção do coordenador, 05/11).
 - **Duração estimada:** ~12 min de fala natural (11 blocos). 🔒 Módulo **WhatsApp** (no catálogo, "Avisos de WhatsApp").
 - Base: `T21/inventario.md` (código 1.38.6). WhatsApp e celular **simulados**: nenhum número, conta ou QR real.
 - **FAKE_NOW:** `2026-11-12T14:00:00-03:00` (quinta) nos blocos 0 a 7 e 9; o bloco 8 é um corte para `2026-11-13T15:00:00-03:00`
-  (sexta), depois de um atendimento com avisos. O T17 parte do dia 13.
+  (sexta), depois de um atendimento com avisos. O T14 (e depois o T17) parte do dia 13.
 
 ## Capítulos propostos
 
