@@ -459,6 +459,10 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
   "Horário 08:00 AM" na Nova Tarefa) e **T9 cap06** (~6:12, "Custo / km 1.5", em zoom). Remendo dos dois capítulos com o
   gravador corrigido, depois da entrega do T13 (`remendar_aula.py --novos`; rodapé na 1.38.21 nesses capítulos, como os
   remendos anteriores do T4/T5). Defeito do app sinalizado: textos do BDI com ponto decimal ("÷ 0.6000").
+- 05/11 07:3x **T7 fase 1 ok na 1.38.21** (schema regerado, só colunas novas; handler `edit_service_order_scope`; OS #23 de bastidor
+  da Pousada Sol Nascente; ensaios 00 a 14 com 0 falho; cap14 no caso do handoff, equipamento criado na gaveta). Decisões: o
+  equipamento criado é novo no mundo (**Hi-Wall 12.000 BTUs, Sala de café, 220 V**; o Cassete da Recepção já existia no T3) e o
+  "Solte aqui para vincular" fica ~1,5 s na tela. Voz (cap14, título, L68, recap) depois do ensaio final do cap14.
 
 ## Fila (31/10 12:1x; nada sai da fila sem estar entregue)
 1. **Rodando (Kaik 14:48 liberou até 4 agentes ao mesmo tempo):** dev-video no 06 e no 12 do site (com a trava

@@ -136,3 +136,5 @@ e `public/guia-tecnico/`. A coluna da direita vale para a 1.38.9 e para a 1.38.1
   as taxas da conta só aparecem depois de recarregar a página.
 - **Orçamento, BDI com ponto decimal (T9, 05/11):** textos montados pelo app saem com ponto: "R$ 0,00 ÷ 0.6000" na Composição do
   preço sugerido, "BDI atual 1.0000" e "R$ 32,00/h × 1.5h" (formatação sem pt-BR; o cliente vê assim também).
+- **"Retomar OS" com pouco contraste (T7, 1.38.21):** no celular, o botão virou neutro (`bg-foreground`) e fica cinza-escuro sobre o
+  rodapé quase preto; o texto se lê, mas o botão quase some (caps 07 e 08 do T7; quadros em `rec/t7/quadros_1.38.21/retomar_os/`).
