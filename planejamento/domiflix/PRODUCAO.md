@@ -29,7 +29,7 @@ F = montagem final + legendas + conferência · ok = no ZIP
 | T10 | CRM: funil, leads e captação | ok | ok | ok (04/11 17:xx) | | fase 1 ok 04/11 21:xx (11 caps, 0 falho; arrasto do cap02 por DragEvent real; caps 02/08/10 com a voz v2) | **fase 2 liberada** (54328) | | |
 | T11 | Contratos e PMOC | ok | ok | ok (04/11 17:xx) | ok (zip 7, 15 caps, 15,5 min; 0 fala a refazer) | fase 1, agente 04/11 19:0x (54329) | | | |
 | T12 | Portal do Cliente e Portal do Contrato | ok | ok | ok (V3) | ok (zip 5; títulos 20:4x) | agente novo 04/11 00:5x, 1.38.19 (54327): ensaio ok 03:2x; **aprovado 04/11 07:xx** (12:00; cap08 com faixa de endereço = defeito do app) | | | |
-| T13 | Financeiro | ok | ok | ok (04/11 17:xx) | ok (zip 7, 15 caps, 14,0 min; 0 fala a refazer) | fase 1, agente 04/11 20:3x (54332) | | | |
+| T13 | Financeiro | ok | ok | ok (04/11 17:xx) | ok (zip 7, 15 caps, 14,0 min; 0 fala a refazer) | fase 1 ok 05/11 00:3x (15 caps, 0 falho; 2 falas a emendar) | | | |
 | T19 | Integração com Asaas, Assinaturas e Cobranças | ok | ok | ok (04/11 17:xx) | ok (zip 7, 14 caps, 9,7 min; 0 fala a refazer) | | | | |
 | T20 | Relatório Financeiro e DRE | ok | ok | ok (04/11 17:xx) | ok (zip 7, 13 caps, 8,7 min; 0 fala a refazer) | | | | |
 | T14 | Notas Fiscais (NFS-e e NF-e) | ok | ok | ok (04/11 17:xx) | ok (zip 7, 14 caps, 8,3 min; 0 fala a refazer) | | | | |
@@ -380,6 +380,11 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
 - 05/11 00:0x **Quarto reinício do container**: caíram o app, os backends falsos e os agentes do T10 (fase 2: gravação do cap06
   e renders dos caps 02 a 05 e 09), do T11 (ensaios dos caps 2 a 7) e do T13 (fase 1). App religado; agentes retomados com
   instruções de reinício (subir o próprio fake, ignorar `.pid` velhos, refazer só o que ficou pela metade). Entrega intacta.
+- 05/11 00:3x **T13 fase 1 ok** (15 caps, 0 falho; sem dependência do T10/T11; handlers novos `registrar_compra_material_direta`
+  e `pay_credit_card_bill`). Duas falas não batem com a 1.38.19 a 1280 px e foram reescritas na fonte (`emendas_1_38_19b.json`):
+  cap03 L7 ("coluna Saldo Após" só a partir de 1440 px; vira "Embaixo de cada valor aparece o Saldo...") e cap12 L2 ("selo
+  Sistema" é um cadeado com a dica "Categoria do sistema"). Voz delas no próximo lote, junto com o que o T11 achar.
+  Caps 10 e 11 ("aparecem todas" com 10 por página): resolver no robô (mais itens por página), sem voz nova.
 
 ## Fila (31/10 12:1x; nada sai da fila sem estar entregue)
 1. **Rodando (Kaik 14:48 liberou até 4 agentes ao mesmo tempo):** dev-video no 06 e no 12 do site (com a trava

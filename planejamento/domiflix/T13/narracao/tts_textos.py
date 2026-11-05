@@ -22,7 +22,7 @@ Em O que é, a Categoria é Vendas de Serviços, e na Descrição eu conto o que
 Do lado fica a Ordem de serviço, pra quando a receita é de uma ordem. E lembra do Faturar OS, do tutorial de Ordens de Serviço? Ele abre este mesmo formulário, já com a ordem e o cliente preenchidos.
 Em Dinheiro vai o valor, mil oitocentos e cinquenta reais, a conta onde ele entrou, a Conta Principal, e a forma de pagamento, pix.
 Repara nas duas datas. A Data do lançamento é quando o serviço aconteceu. E, com o Já foi recebido ligado, a Data do recebimento é quando o dinheiro entrou. Hoje são iguais, mas cada uma conta num tipo de relatório, que a gente vê no tutorial do dê érri ê.
-Salvo, e a receita entra no extrato. A coluna Saldo Após mostra como ficou o saldo da conta depois de cada movimentação.""",
+Salvo, e a receita entra no extrato. Embaixo de cada valor aparece o Saldo, que mostra como ficou a conta depois daquela movimentação.""",
 4: """Agora o dinheiro saindo. A gente comprou gás érre quatrocentos e dez á e tubos de cobre na Ventura, pra pagar no boleto. Nova movimentação, Despesa.
 A Categoria é cê-ésse-pê Materiais, o custo do material usado nos serviços. E no Fornecedor vinculado, a Ventura Gás e Tubos. Lembra do Histórico de Gastos, na ficha do fornecedor? É escolhendo o fornecedor aqui que a despesa aparece lá.
 Seiscentos e quarenta reais, saindo da Conta Principal, no boleto.
@@ -71,7 +71,7 @@ No menu da primeira, Marcar como recebido. Repara no Valor recebido: informando 
 Aqui o hotel pagou o valor inteiro, no pix, na Conta Principal. Se tivesse tarifa da maquininha, ela ia neste campo, e o sistema lança como despesa em Tarifas e Taxas.
 Confirmar recebimento. Pronto, primeira mensalidade recebida.""",
 12: """Pra tudo isso virar relatório, as categorias contam muito. Elas ficam em Configurações Financeiras, na aba Categorias, separadas em receita e despesa, e a empresa já nasce com uma lista pronta.
-As que têm o selo Sistema são as que os lançamentos automáticos usam. Nelas dá pra mudar o nome, a cor e o ícone.
+As que têm o cadeado são as Categorias do sistema, que os lançamentos automáticos usam. Nelas dá pra mudar o nome, a cor e o ícone.
 Falta uma pras peças que a equipe troca no serviço. Vou criar a Peças e componentes, do tipo Despesa, como categoria principal.
 O campo mais importante é o Onde aparece no dê érri ê. Peça trocada no serviço é custo direto, então escolho Custos diretos. E a Prévia no dê érri ê já mostra o efeito: essa categoria reduz o lucro bruto.
 É a categoria que decide em que linha do dê érri ê cada valor aparece. Criar, e pronto.
