@@ -25,7 +25,7 @@ F = montagem final + legendas + conferência · ok = no ZIP
 | T7 | O técnico em campo (celular) | ok | ok | ok | ok (31/10 00:29; emenda do cap05 com folga 0,17 s) | ok (54321) | ok (1.38.19) | ok | ok (03/11 20:3x, 12:26; 1.38.19) · **regravação na 1.38.21 + cap14 "Editar OS"**: fase 1, agente 05/11 01:0x (54334) |
 | T18 | Área do Técnico: Refrigeração e Climatização | ok | ok | ok | ok (31/10 11:30) | ok (1.38.19, 54322) | ok | ok | **entregue 04/11 02:2x** (13:19, -15,8 LUFS, 208 legendas; zoom no cap00 depois da revisão) |
 | T8 | Estoque, compras e inventário | ok | ok | ok (V3) | ok (zip 5, 19:50) | fase 1 ok 04/11 11:xx (16 caps, 0 falho) | ok (fase 2; atraso máximo 0,79 s) | ok (câmera 0) | **entregue 04/11 16:5x** (16:53, -15,8 LUFS) · pico corrigido 18:42 (-3,6 dBTP; vídeo idêntico) |
-| T9 | Orçamentos, Precificação e Proposta | ok | ok | ok (V3) | ok (zip 5, 20:11) | fase 1 ok 04/11 11:xx (17 caps, 0 falho, falas × tela 0 diferença) | ok (atraso máx. 0,77 s) | ok (câmera 0) | **entregue 04/11 20:3x** (16:33; vinhetas 05 a 09 sem número de etapa) |
+| T9 | Orçamentos, Precificação e Proposta | ok | ok | ok (V3) | ok (zip 5, 20:11) | fase 1 ok 04/11 11:xx (17 caps, 0 falho, falas × tela 0 diferença) | ok (atraso máx. 0,77 s) | ok (câmera 0) | **entregue 04/11 20:3x** (16:33; vinhetas 05 a 09 sem número de etapa) · **remendo cap06 05/11 12:5x** ("1,5" com vírgula) |
 | T10 | CRM: funil, leads e captação | ok | ok | ok (04/11 17:xx) | | fase 1 ok 04/11 21:xx (11 caps, 0 falho; arrasto do cap02 por DragEvent real; caps 02/08/10 com a voz v2) | ok (1.38.19; 11 caps, 0 falho, atraso máx. 0,78 s) | ok (câmera 0) | **entregue 05/11 01:4x** (12:33, -15,8 LUFS, -3,6 dBTP, 202 legendas). URL do webhook no cap08 fica como está (Kaik 05/11 01:46: "pode deixar") |
 | T11 | Contratos e PMOC | ok | ok | ok (04/11 17:xx) | ok (zip 7, 15 caps, 15,5 min; 0 fala a refazer) | fase 1 ok 05/11 00:5x (15 caps, 0 falho; 6 falas sem a contagem, voz `T11 emendas contagem`) | **fase 2 liberada 05/11 10:0x** (emendas sem compressão; 54329) | | |
 | T12 | Portal do Cliente e Portal do Contrato | ok | ok | ok (V3) | ok (zip 5; títulos 20:4x) | agente novo 04/11 00:5x, 1.38.19 (54327): ensaio ok 03:2x; **aprovado 04/11 07:xx** (12:00; cap08 com faixa de endereço = defeito do app) | | | |
@@ -485,6 +485,10 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
   pt-BR) despachados (fakes 54338 e 54339).
 - 05/11 10:3x **Segundo limite de 5 h** (T11, remendos e T22 pararam; zera 11:20). 12:25 retomada 2/20; **sexto reinício do container**
   (app religado, pid 212). Agentes retomados com instruções de reinício. Lote de voz (7 nós) ainda não baixado pelo Kaik.
+- 05/11 12:5x **Remendos entregues com o gravador pt-BR**: **T5 cap13** ("Horário 08:00"; 835,8 s; -15,9 LUFS; `conferir_remendo` OK)
+  e **T9 cap06** ("Custo / km 1,5"; 993,0 s; -15,8 LUFS; `conferir_remendo` OK rodado por mim com os limites do cap06: 357,933
+  a 422,867). Versões antigas em `edit/out/Tn/entrega_antiga/`. Rodapé desses capítulos na 1.38.21 (como os remendos anteriores).
+  O `rec/t9/gerar.py 6` não roda mais (fala "custos extras" virou "recursos e extras"); o `cap06.json` de 04/11 vale.
 
 ## Fila (31/10 12:1x; nada sai da fila sem estar entregue)
 1. **Rodando (Kaik 14:48 liberou até 4 agentes ao mesmo tempo):** dev-video no 06 e no 12 do site (com a trava
