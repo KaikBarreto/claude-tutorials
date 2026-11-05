@@ -33,7 +33,7 @@ F = montagem final + legendas + conferência · ok = no ZIP
 | T19 | Integração com Asaas, Assinaturas e Cobranças | ok | ok | ok (04/11 17:xx) | ok (zip 7, 14 caps, 9,7 min; 0 fala a refazer) | fase 1 ok 05/11 02:5x (14 caps, 0 falho; 1 fala, voz `T19 emendas cobrança`) | grava depois do T13 e do T11 | | |
 | T20 | Relatório Financeiro e DRE | ok | ok | ok (04/11 17:xx) | ok (zip 7, 13 caps, 8,7 min; 0 fala a refazer) | fase 1 ok 05/11 08:0x (13 caps, 0 falho, 21 conferências iguais; semente final `t20/apos-cap12`; 3 falas, voz `T20 emendas 1.38.21`) | | | |
 | T14 | Notas Fiscais (NFS-e e NF-e) | ok | ok | ok (04/11 17:xx) | ok (zip 7, 14 caps, 8,3 min; 0 fala a refazer) | | | | |
-| T15 | Funcionários: Financeiro do Funcionário e Ponto | ok | ok | ok (04/11 17:xx) | ok (zip 7, 13 caps, 8,9 min; 0 fala a refazer) | fase 1, agente 05/11 03:1x (54336; base = fim do T20, sem o T14) | | | |
+| T15 | Funcionários: Financeiro do Funcionário e Ponto | ok | ok | ok (04/11 17:xx) | ok (zip 7, 13 caps, 8,9 min; 0 fala a refazer) | fase 1 ok 05/11 08:1x (todos os caps, 0 falho; base `t20/apos-cap12`; semente final `t15/apos-cap12`; 5 falas, voz `T15 emendas 1.38.21`) | | | |
 | T22 | Ferramentas de RH: DISC, Organograma, Fluxograma | ok | ok | ok (04/11 17:xx) | ok (zip 7, 12 caps, 7,5 min; 0 fala a refazer) | fase 1, agente 05/11 03:1x (54337; ensaia depois do T15) | | | |
 | T21 | Integração com WhatsApp | ok | ok | ok (04/11 17:xx) | ok (zip 7, 11 caps, 5,9 min; 0 fala a refazer) | | | | |
 | T17 | Dashboard, relatórios e exportações | ok | ok | ok (04/11 17:xx) | ok (zip 7, 12 caps, 6,0 min; 0 fala a refazer) | | | | |
@@ -472,6 +472,7 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
   logo); conferido: o logo carrega, o "Mixed Content" era só aviso de console (resumo.py contava). Caps 05 e 10 reensaiados ok. **Pedido ao Kaik: lote de 7 nós** (T07 ×4, T19, T20, T15).
 - 05/11 08:0x **T20 fase 1 ok** na base final (DRE out: receita bruta 13.950,00, resultado 5.137,80; projeção R$ 380,00). Semente
   final `t20/apos-cap12` passada ao T15 ("T15: base pronta").
+- 05/11 08:1x **T15 fase 1 ok na base final** (valores de conta iguais). Semente final `t15/apos-cap12` passada ao T22.
 
 ## Fila (31/10 12:1x; nada sai da fila sem estar entregue)
 1. **Rodando (Kaik 14:48 liberou até 4 agentes ao mesmo tempo):** dev-video no 06 e no 12 do site (com a trava
