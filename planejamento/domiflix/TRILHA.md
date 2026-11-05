@@ -50,6 +50,9 @@ Depois, a da trilha oficial (menor risco primeiro: o miolo operacional está est
 simular serviços externos), sem T3:
 **T0 → T1 → T4 → T5 → T7 → T18 → T2 → T8 → T9 → T12 → T13 → T20 → T10 → T11 → T15 → T22 → T19 → T21 → T14 → T17**.
 Cada aula parte do estado final da anterior no mundo fictício (Glacial Cold Brasil), na ordem de exibição.
+**Ordem de exibição** (a dos cartões "Antes"/"Próximo" e das falas; tirada dos cabeçalhos dos `roteiro.md`, 05/11):
+T0 → T1 → T2 → T3 → T4 → T5 → T7 → T18 → T8 → T9 → T10 → T11 → T12 → T13 → T19 → T20 → T14 → T15 → T22 → T21 → T17.
+A lista em negrito acima é só a ordem de **produção**; a base do mundo de cada aula segue a fila real (`PRODUCAO.md`).
 
 ## Trabalho comum a vários tutoriais (antes ou durante a produção)
 1. **Backend falso por tutorial**: sementes do estado inicial (`seeds-extra/<id>/apos-capNN.json`), RPCs, edge

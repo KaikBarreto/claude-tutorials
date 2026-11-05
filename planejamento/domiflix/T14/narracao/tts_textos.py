@@ -8,7 +8,7 @@ CAPS = {
 0: """Oi! Neste tutorial a gente vai emitir a nota fiscal do serviço direto da Dominex e acompanhar as notas que os fornecedores emitem pra sua empresa.
 A configuração fiscal é feita uma vez só. Depois, cada nota sai em poucos cliques, com os códigos e os impostos já preenchidos.
 As notas fazem parte do módulo Emissão de Notas Fiscais. Com ele contratado, o item Notas Fiscais aparece aqui no menu.
-Se você ainda não viu o tutorial Integração com WhatsApp, dá uma olhada antes. [pause] Vamos entender as duas notas.""",
+Se você ainda não viu o tutorial Relatório Financeiro e dê érri ê, dá uma olhada antes. [pause] Vamos entender as duas notas.""",
 1: """Esta tela cuida de duas notas. A ene-éfe-ésse-é é a nota fiscal de serviço, que a sua empresa emite pro cliente depois do atendimento.
 A ene-éfe-é é a nota de produto, que o fornecedor emite quando você compra dele. Ela chega aqui sozinha, pelo CNPJ da empresa.
 Nas abas ficam as notas emitidas, o relatório das últimas, as emissões automáticas dos contratos e as notas recebidas. E o selo mostra quantas notas já saíram no mês.""",
@@ -61,7 +61,7 @@ E o Ver lançamento abre essa despesa direto nas Movimentações do Financeiro."
 13: """Pronto! Recapitulando: em Configurações fiscais, você salvou os dados da empresa, enviou o certificado, definiu a tributação e deixou os serviços com código.
 Emitiu a nota de serviço em quatro abas, com a autorização na hora e o pê-dê-éfe pra mandar. O rascunho espera a hora certa, e o cancelamento pede um motivo.
 No contrato, a nota sai sozinha a cada parcela. E as notas dos fornecedores chegam pelo CNPJ, recebem a ciência e viram conta a pagar.
-Com as notas em dia, falta acompanhar tudo de cima. No próximo tutorial, o último da trilha, a gente vê o Dashboard, os relatórios e as exportações. Até lá!""",
+Com o dinheiro e as notas em dia, o próximo passo é a equipe. No próximo tutorial, a gente vê o financeiro de cada funcionário e o ponto eletrônico. Até lá!""",
 }
 
 # Capítulos que mudaram na revisão 1.38.24 (voz nova): inteiros = um nó por capítulo; emendas = narracao/emendas_1_38_24.json.

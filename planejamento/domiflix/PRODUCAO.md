@@ -560,6 +560,24 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
   logo depois do `mix.py`, como o `remendar_aula.py` (`--manter-stems` mantém). **Pendente:** passar a mudança ao
   `ferramentas/edit/finish.py` da skill depois do finish do T19, rodando o exemplo. O T19 retomou a gravação, com limite de 1,5 GB
   só para gravar.
+- 05/11 18:1x **Correção: ordem de exibição** (erro meu, achado na revisão do T11, cujo "Próximo" é o T12). Às 13:4x e 15:1x usei a ordem de
+  *produção* do `TRILHA.md` para os cartões. A de exibição (cabeçalhos dos roteiros) é T20 → **T14** → T15 e T22 → **T21** → T17. Desfeito:
+  - **T14**: "Antes" volta a ser o T20 e o "Próximo" o T15 (cap00 fica com o take original; recap regerado como `T14 cap13 Recapitulando
+    1.38.24 v2`, 40,1 s; emenda só do cap10: `T14 emendas 1.38.24 cap10`, 10,2 s).
+  - **T21**: "Próximo" volta a ser o T17. Só a L2 do recap muda (`T21 emendas 1.38.24`, 9,1 s).
+  - **T17**: "Antes" continua o T21 (nada mudou).
+  - Nós que **não** devem ser usados: `T21 cap10 Recapitulando 1.38.24`, `T14 cap13 Recapitulando 1.38.24` e `T14 emendas 1.38.24` (sem
+    "cap10"). Custo do erro: ~1,3 mil créditos.
+  - A base do mundo do T14 continua o fim do T21 (fila de produção). Lição em `docs/08-licoes.md`; ordem de exibição escrita no `TRILHA.md`.
+  - Voz do T14 gerada às 18:0x: caps 02 (54,3 s), 03 (46,6 s) e 08 (25,8 s) inteiros.
+  - **Download pendente do Kaik (6 nós, para quando o T21 e o T14 forem gravar):** `T14 cap02 Os dados da empresa 1.38.24`,
+    `T14 cap03 O certificado digital 1.38.24`, `T14 cap08 Nota autorizada 1.38.24`, `T14 cap13 Recapitulando 1.38.24 v2`,
+    `T14 emendas 1.38.24 cap10` e `T21 emendas 1.38.24`.
+- 05/11 18:1x **T11 revisado** (folhas de 3 s; 1132,3 s, -15,8 LUFS, -3,5 dBTP, 285 legendas). Único defeito: 36 s mudos no cap06 (o robô
+  monta o Restaurante e o Salão de eventos depois da fala "então deixo os dois prontos"); o `finish.py` não acelera trecho. Corte
+  `[[94,4, 124,3]]` no cap06: sai na lista com os três ambientes. "Antes: CRM" e "Próximo: Portal do Cliente e Portal do Contrato" certos.
+  Dois carregamentos de ~2 s com a página em branco (ao abrir o contrato, 12:48 e 17:00): é o app, com fala por cima; ficam. Finish e
+  legendas refeitos por mim (`t11/edit/finish.py` com a limpeza dos stems).
 
 ## Fila (31/10 12:1x; nada sai da fila sem estar entregue)
 1. **Rodando (Kaik 14:48 liberou até 4 agentes ao mesmo tempo):** dev-video no 06 e no 12 do site (com a trava
