@@ -377,6 +377,9 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
 - 04/11 22:0x **T1 entregue com o capítulo do app** (815,7 s = 13:36; -15,8 LUFS; -3,6 dBTP; 227 legendas): cap00 regravado
   (fim no Dashboard, câmera aberta; 0 falho, atraso 0,07 s), `conferir_remendo` OK contra as duas versões anteriores.
   Limpeza: versões intermediárias, renders do cap00/cap14, `mix.wav` e o perfil do navegador (`t1pwa/`). Disco 4,8 GB.
+- 05/11 00:0x **Quarto reinício do container**: caíram o app, os backends falsos e os agentes do T10 (fase 2: gravação do cap06
+  e renders dos caps 02 a 05 e 09), do T11 (ensaios dos caps 2 a 7) e do T13 (fase 1). App religado; agentes retomados com
+  instruções de reinício (subir o próprio fake, ignorar `.pid` velhos, refazer só o que ficou pela metade). Entrega intacta.
 
 ## Fila (31/10 12:1x; nada sai da fila sem estar entregue)
 1. **Rodando (Kaik 14:48 liberou até 4 agentes ao mesmo tempo):** dev-video no 06 e no 12 do site (com a trava
