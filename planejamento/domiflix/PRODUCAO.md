@@ -600,6 +600,15 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
   dinheiro"; página de pagamento do cliente com Pix, boleto e cartão de teste; nada a corrigir. Limpeza: `mix.wav`, `video_sem_audio`
   (MD5 igual) e os renders dos capítulos. **Zip 9 do Kaik** (20:55, 332 MP3): extraídos só os 6 nós novos (T14 caps 02, 03, 08 e 13 v2,
   T14 emendas cap10, T21 emendas), todos com a duração certa, em `$TUT_HOME/recebido/2055_lote6/zip/` (zip lido no lugar, sem cópia).
+- 05/11 21:5x **T7 gravado na 1.38.24** (agente Opus): voz do lote 9 aplicada (cap14 131,2 s; título 14; troca da cap03 L3 sem
+  compressão, 33,92 s; recap cap13 com a L4 nova, 54,62 s); ensaios `--rapido` de 03, 13 e 14 ok; gravação de 00 a 14 com 0 falho,
+  maior atraso 0,78 s (cap05). Cap02 regravado: o robô rolava com a roda sobre o mapa da rota, o mapa dava zoom e o passo atrasava
+  6,2 s (agora rola por `eval`; lição em `docs/08-licoes.md`). No cap14 o "Solte aqui para vincular" fica 3,7 s (casa com a fala).
+  **P23 confirmado na 1.38.24:** no cap09, depois de "Confirmar", a assinatura aparece como texto cru (`data:image/png;base64...`,
+  ~28,8 a 34,7 s); resolver na montagem sem tarja nem tela inventada (corte onde não houver fala, enquadramento no resto).
+  Sinalizado ao time do app. Espera "T7: render" depois da entrega do T20 (disco: 2,3 GB livres).
+  **T15 despachado** (Opus): 5 trocas da 1.38.21 (49,9 s) na velocidade natural + gravação de todos os capítulos sem `--seed`
+  (as sementes de 05/11 já alimentaram o T22); espera "T15: render".
 
 ## Fila (31/10 12:1x; nada sai da fila sem estar entregue)
 1. **Rodando (Kaik 14:48 liberou até 4 agentes ao mesmo tempo):** dev-video no 06 e no 12 do site (com a trava

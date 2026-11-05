@@ -152,3 +152,7 @@ e `public/guia-tecnico/`. A coluna da direita vale para a 1.38.9 e para a 1.38.1
   - "Baixar PDF" abre uma aba em branco antes de baixar.
 - **WhatsApp (T21, 05/11):** o Histórico de envios mostra a chave técnica do aviso ("OS · a_caminho") em vez do nome; a prévia
   dos avisos de cobrança traz uma empresa de exemplo fixa ("Clima Forte Serviços") em vez do nome da empresa logada.
+- **Assinatura do cliente vira texto cru no celular (T7, confirmado na 1.38.24, 05/11):** depois de "Confirmar" na pergunta de
+  assinatura do checklist, a pergunta mostra o valor gravado, uma linha enorme `data:image/png;base64,...`, em vez da imagem; a
+  assinatura só volta a aparecer ao tocar no lápis. Em `DynamicFormQuestions.tsx` o modo resposta só trata foto; o último caso
+  imprime `response_value` como texto (vídeo gravado sai como parágrafo vazio). No vídeo, o trecho sai na montagem.
