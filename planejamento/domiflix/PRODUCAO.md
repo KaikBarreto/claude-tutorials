@@ -27,7 +27,7 @@ F = montagem final + legendas + conferência · ok = no ZIP
 | T8 | Estoque, compras e inventário | ok | ok | ok (V3) | ok (zip 5, 19:50) | fase 1 ok 04/11 11:xx (16 caps, 0 falho) | ok (fase 2; atraso máximo 0,79 s) | ok (câmera 0) | **entregue 04/11 16:5x** (16:53, -15,8 LUFS) · pico corrigido 18:42 (-3,6 dBTP; vídeo idêntico) |
 | T9 | Orçamentos, Precificação e Proposta | ok | ok | ok (V3) | ok (zip 5, 20:11) | fase 1 ok 04/11 11:xx (17 caps, 0 falho, falas × tela 0 diferença) | ok (atraso máx. 0,77 s) | ok (câmera 0) | **entregue 04/11 20:3x** (16:33; vinhetas 05 a 09 sem número de etapa) |
 | T10 | CRM: funil, leads e captação | ok | ok | ok (04/11 17:xx) | | fase 1 ok 04/11 21:xx (11 caps, 0 falho; arrasto do cap02 por DragEvent real; caps 02/08/10 com a voz v2) | **fase 2 liberada** (54328) | | |
-| T11 | Contratos e PMOC | ok | ok | ok (04/11 17:xx) | ok (zip 7, 15 caps, 15,5 min; 0 fala a refazer) | fase 1 ok 05/11 00:5x (15 caps, 0 falho; 6 falas sem a contagem, voz `T11 emendas contagem`) | aguardando a voz | | |
+| T11 | Contratos e PMOC | ok | ok | ok (04/11 17:xx) | ok (zip 7, 15 caps, 15,5 min; 0 fala a refazer) | fase 1 ok 05/11 00:5x (15 caps, 0 falho; 6 falas sem a contagem, voz `T11 emendas contagem`) | voz recebida 00:59; emendas e ensaios; grava depois do T13 (disco) | | |
 | T12 | Portal do Cliente e Portal do Contrato | ok | ok | ok (V3) | ok (zip 5; títulos 20:4x) | agente novo 04/11 00:5x, 1.38.19 (54327): ensaio ok 03:2x; **aprovado 04/11 07:xx** (12:00; cap08 com faixa de endereço = defeito do app) | | | |
 | T13 | Financeiro | ok | ok | ok (04/11 17:xx) | ok (zip 7, 15 caps, 14,0 min; 0 fala a refazer) | fase 1 ok 05/11 00:3x (15 caps, 0 falho; 2 falas a emendar) | **fase 2 liberada 05/11 00:4x** (voz das emendas recebida; 54332) | | |
 | T19 | Integração com Asaas, Assinaturas e Cobranças | ok | ok | ok (04/11 17:xx) | ok (zip 7, 14 caps, 9,7 min; 0 fala a refazer) | fase 1, agente 05/11 00:4x (54333) | | | |
@@ -413,6 +413,8 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
   voz gerada (`T11 emendas contagem`, 75,7 s, 1.088 créditos) e pedida ao Kaik, com a sinalização da contagem
   (`T00v2/sinalizacoes.md`). cap12 com a faixa "Dados faltando" (defeito do T12): grava e regrava depois da correção.
   T12 entregue supõe OS #18 a #21, #22 a #33 e #34; agora são #18 a #22, #23 a #35 e #36: aceito (aulas independentes).
+- 05/11 00:59 **MP3 das emendas do T11 recebido** (75,73 s, `recebido/0059_t11/`): agente aplica as emendas e ensaia os caps
+  03, 07, 09 e 10; grava só depois do T13 (duas aulas em fase 2 juntas não cabem no disco).
 
 ## Fila (31/10 12:1x; nada sai da fila sem estar entregue)
 1. **Rodando (Kaik 14:48 liberou até 4 agentes ao mesmo tempo):** dev-video no 06 e no 12 do site (com a trava
