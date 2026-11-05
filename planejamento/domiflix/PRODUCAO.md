@@ -510,6 +510,9 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
     conserto no app.
   - **T14 fase 1 despachado** (Opus, 54341, `FAKE_NOW` 13/11 15:30, base = fim do T21). Antes de gravar, confirmar com o Kaik o
     nome Glacial Cold Brasil no PDF simulado da nota (`TRILHA.md`, item 7).
+- 05/11 13:5x **T11 cap10 ensaiado na 1.38.24** (0 falho). A equipe se troca em "Responsáveis"; o Vincular lista a OS #10 do hotel
+  e as competências de 01/12/2026 a 01/12/2027. Voz do cap10 inteiro gerada: `T11 cap10 O contrato por dentro 1.38.24`, 1.906
+  caracteres, registro em `T11/narracao/nos_1_38_24.json`. **Lote de voz do Kaik: 9 nós** (+ T11 cap10).
 
 ## Fila (31/10 12:1x; nada sai da fila sem estar entregue)
 1. **Rodando (Kaik 14:48 liberou até 4 agentes ao mesmo tempo):** dev-video no 06 e no 12 do site (com a trava
