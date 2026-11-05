@@ -447,6 +447,14 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
   app pede (o ensaio rápido não mede isso). Decisão: robô mais enxuto primeiro, depois `pausas.py` curto na fronteira das
   linhas, corte só para espera longa; o "Criar Conta" de 8 s é investigado (se for o fake, corrige o fake). Regravar só
   os capítulos que mudaram.
+- 05/11 03:4x **Limite de 5 h de uso**: T7, T13, T20 e T22 pararam no meio (T15 tinha acabado de reportar). 06:24 retomada 1/20;
+  **quinto reinício do container** (app e fakes caídos; app religado, pid 220). `pausas.py` entra na skill (estava solto no T2 e no T10).
+- 05/11 06:4x **Gravador em pt-BR de verdade** (`browser.mjs`: `LANG`/`LANGUAGE`/`LC_ALL` pt_BR no processo do navegador). Antes,
+  os campos nativos saíam em inglês: hora "08:00 AM" (visto no **T5 entregue**, janela "Nova Tarefa", ~10:05), data mm/dd,
+  número com ponto, e "6,25" digitado virava 625. Agentes avisados para digitar decimal com vírgula e regravar o que mostrar
+  campo nativo. **Pendente:** levantar o que mais as aulas entregues mostram (campos nativos com hora, data ou decimal) e
+  propor remendos ao Kaik. Retomados T13, T7 e T15 (o T15 ensaia na base provisória para as falas entrarem no lote de voz
+  da manhã); T20 e T22 depois; T11 e T19 refazem ensaio de digitação numérica antes da fase 2.
 
 ## Fila (31/10 12:1x; nada sai da fila sem estar entregue)
 1. **Rodando (Kaik 14:48 liberou até 4 agentes ao mesmo tempo):** dev-video no 06 e no 12 do site (com a trava
