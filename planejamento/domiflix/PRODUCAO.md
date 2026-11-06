@@ -685,6 +685,10 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
 - 06/11 07:57 O render do T14 parou no piso (1,32 GB, antes do cap11), com os caps 00 a 10 prontos e conferidos; o agente acrescentou
   aceleração ao `t14/edit/finish.py` (cap09 em 4x, com selo; legendas descontam o tempo). 12:00 **novo reinício** (app religado, pid 220).
   Renders 11 a 13 + finish do T14 rodando comigo; **"T17: render"** enviado (prepara a montagem e espera disco e trava).
+- 06/11 12:07 **Kaik sobre o T0 vertical** (2 prints): "o começo ficou bugadinho" (título cortado à esquerda de 0:04 a 0:11) e
+  "algumas informações ficaram uma sobrepondo a outra" (linha do tempo do teste: "Combinados confirmados" sobre "Vídeo já assistido").
+  Minha folha de 2 s achou ainda rótulos de destaque cobrindo texto do app (2:26, 2:32, 2:46, 2:54, 2:58, 3:22, 4:12) e 26 s parados
+  em 1:28. O 16:9 está certo. **Agente Opus despachado** para consertar só a vertical (cenas, rótulos, zoom; remendo com `--novos`).
 
 ## Fila (31/10 12:1x; nada sai da fila sem estar entregue)
 1. **Rodando (Kaik 14:48 liberou até 4 agentes ao mesmo tempo):** dev-video no 06 e no 12 do site (com a trava
