@@ -22,7 +22,7 @@ F = montagem final + legendas + conferência · ok = no ZIP
 | T3 | Clientes, Fornecedores e Equipamentos | ok | ok | ok | ok | ok | ok | ok | **v2 entregue 03/11 22:4x** (14:13, 1.38.19, -15,8 LUFS; v1 de 30/10 em `t3/edit/out`) |
 | T4 | Serviços, tarefas e checklists | ok | ok | ok | ok (31/10 00:29) | ok | ok | ok | ok (31/10 10:46, 10:27) · **v2 18:37** (pronúncia; só o áudio) · **remendo 1.38.19 entregue 04/11 14:2x** (10:28; caps 01 a 08 e 14 novos) |
 | T5 | Ordens de Serviço, Agenda, Equipes e Mapa ao Vivo | ok | ok | ok | ok (31/10 00:29) | ok | ok | ok | ok (31/10 18:2x, 13:49; 1.38.6) · **remendo 1.38.19 entregue 04/11 12:2x** (13:56) |
-| T7 | O técnico em campo (celular) | ok | ok | ok | ok (31/10 00:29; emenda do cap05 com folga 0,17 s) | ok (54321) | ok (1.38.19) | ok | ok (03/11 20:3x, 12:26; 1.38.19) · **regravação na 1.38.21 + cap14 "Editar OS"**: fase 1, agente 05/11 01:0x (54334) |
+| T7 | O técnico em campo (celular) | ok | ok | ok | ok (31/10 00:29; emenda do cap05 com folga 0,17 s) | ok (54321) | ok (1.38.19) | ok | ok (03/11 20:3x, 12:26; 1.38.19) · **regravação na 1.38.24 + cap14 "Editar OS": entregue 06/11 01:1x** (14:51,6; -15,8 LUFS; -3,6 dBTP; 246 legendas) |
 | T18 | Área do Técnico: Refrigeração e Climatização | ok | ok | ok | ok (31/10 11:30) | ok (1.38.19, 54322) | ok | ok | **entregue 04/11 02:2x** (13:19, -15,8 LUFS, 208 legendas; zoom no cap00 depois da revisão) |
 | T8 | Estoque, compras e inventário | ok | ok | ok (V3) | ok (zip 5, 19:50) | fase 1 ok 04/11 11:xx (16 caps, 0 falho) | ok (fase 2; atraso máximo 0,79 s) | ok (câmera 0) | **entregue 04/11 16:5x** (16:53, -15,8 LUFS) · pico corrigido 18:42 (-3,6 dBTP; vídeo idêntico) |
 | T9 | Orçamentos, Precificação e Proposta | ok | ok | ok (V3) | ok (zip 5, 20:11) | fase 1 ok 04/11 11:xx (17 caps, 0 falho, falas × tela 0 diferença) | ok (atraso máx. 0,77 s) | ok (câmera 0) | **entregue 04/11 20:3x** (16:33; vinhetas 05 a 09 sem número de etapa) · **remendo cap06 05/11 12:5x** ("1,5" com vírgula) |
@@ -34,7 +34,7 @@ F = montagem final + legendas + conferência · ok = no ZIP
 | T20 | Relatório Financeiro e DRE | ok | ok | ok (04/11 17:xx) | ok (zip 7, 13 caps, 8,7 min; 0 fala a refazer) | fase 1 ok 05/11 08:0x (13 caps, 0 falho, 21 conferências iguais; semente final `t20/apos-cap12`; 3 falas, voz `T20 emendas 1.38.21`) | ok (1.38.24; 13 caps, 0 falho, atraso máx. 0,71 s; regravados 01, 03 a 06) | ok (câmera 0 problema) | **entregue 05/11 22:4x** (9:44,6, -15,8 LUFS, -3,6 dBTP, 153 legendas; cartão "Próximo" corrigido por remendo) |
 | T14 | Notas Fiscais (NFS-e e NF-e) | ok | ok | ok (04/11 17:xx) | ok (zip 7, 14 caps, 8,3 min; 0 fala a refazer) | reescrita + fase 1 despachadas 05/11 13:4x (Opus, 1.38.24, 54341; base = fim do T21) | | | |
 | T15 | Funcionários: Financeiro do Funcionário e Ponto | ok | ok | ok (04/11 17:xx) | ok (zip 7, 13 caps, 8,9 min; 0 fala a refazer) | fase 1 ok 05/11 08:1x (todos os caps, 0 falho; base `t20/apos-cap12`; semente final `t15/apos-cap12`; 5 falas, voz `T15 emendas 1.38.21`) | | | |
-| T22 | Ferramentas de RH: DISC, Organograma, Fluxograma | ok | ok | ok (04/11 17:xx) | ok (zip 7, 12 caps, 7,5 min; 0 fala a refazer) | fase 1 ok 05/11 13:1x (12 caps, 0 falho; base `t15/apos-cap12`; semente final `t22/apos-cap11`; 9 falas, voz `T22 emendas 1.38.21`) | | | |
+| T22 | Ferramentas de RH: DISC, Organograma, Fluxograma | ok | ok | ok (04/11 17:xx) | ok (zip 7, 12 caps, 7,5 min; 0 fala a refazer) | fase 1 ok 05/11 13:1x (12 caps, 0 falho; base `t15/apos-cap12`; semente final `t22/apos-cap11`; 9 falas, voz `T22 emendas 1.38.21`) | **gravado na 1.38.24 (06/11 01:0x; 0 falho, maior atraso 0,68 s)** | | |
 | T21 | Integração com WhatsApp | ok | ok | ok (04/11 17:xx) | ok (zip 7, 11 caps, 5,9 min; 0 fala a refazer) | **fase 1 ok 05/11 15:0x** (1.38.24, 54340; 11 caps, 0 falho; base `t22/apos-cap11`; semente final `t21/apos-cap10`; recap regerado, voz `T21 cap10 Recapitulando 1.38.24`, 27,8 s) | | | |
 | T17 | Dashboard, relatórios e exportações | ok | ok | ok (04/11 17:xx) | ok (zip 7, 12 caps, 6,0 min; 0 fala a refazer) | fase 1 despachada 05/11 18:2x (1.38.24, 54342; base `t14/apos-cap12`, `FAKE_NOW` 13/11 16:30) | | | |
 
@@ -635,6 +635,13 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
   mix em `/dev/shm` perdido) e a regravação do cap07 do T22. T22: 00 a 06 e 08 a 10 bons; o cap11 das 00:30 falhou no passo 1 (abriu
   em Funcionários: o onBack do editor do organograma chega depois do clique na aba; setup com 3,5 s e segundo clique). Regravo 07 e 11 e
   rodo de novo o finish do T7; revisão e entrega do T7 comigo (sem retomar o agente, que tinha ~670 mil tokens de contexto).
+- 06/11 01:1x **T7 entregue** (`entrega_final/`, troca a versão de 03/11): 891,6 s (14:51,6), -15,8 LUFS, -3,6 dBTP (AAC conferido),
+  246 legendas. Revisão em folhas de 3 s do vídeo inteiro: cartões Antes (T5) e Próximo (T18) certos; cap14 entre o 12 e o 13; recap com o
+  arrasto do cap14. **P23** (assinatura em texto cru no cap09): resolvido pela câmera (cabeçalho com o selo "Concluído" até o lápis); no
+  quadro a quadro sobram 2 quadros borrados da transição (~0,07 s) com a linha, imperceptíveis na velocidade normal. Fim do cap12 com ~16 s
+  sem movimento (dentro do limite de ~20 s). Limpeza: renders dos capítulos e `/dev/shm`. **T22 gravado** (00 a 11, 0 falho); cap11 com
+  setup consertado (troca de aba a partir de `/funcionarios/organograma` remonta a página na lista; `when`/`unless` não valem no setup)
+  e "Excluir nó" com `noScroll`. **T21 despachado** (Opus, novo: emenda da L2 do recap + gravação final). **"T15: render"** enviado.
 
 ## Fila (31/10 12:1x; nada sai da fila sem estar entregue)
 1. **Rodando (Kaik 14:48 liberou até 4 agentes ao mesmo tempo):** dev-video no 06 e no 12 do site (com a trava
