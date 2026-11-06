@@ -30,3 +30,6 @@ sobrarem com `delete_trigger`.
 | 20 | 12/11 00:24 | trig_01L4wygCmVDjxA89wSf8SedZ |
 
 A partir da 11, de 12 em 12 h. A 20 manda agendar uma nova série se ainda faltar trabalho (anotar os ids aqui).
+
+**06/11 14:2x: produção concluída.** As retomadas 1 a 6 dispararam; as 7 a 20 foram apagadas com `delete_trigger` (todas as aulas
+entregues ao Kaik no chat). Nenhum lembrete "Domiflix: retomar produção" ficou ativo.

@@ -702,6 +702,16 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
   `remendar_aula.py` (cópia em `t0v2/edit`) aceita 9x16. Pedido em seguida: o mesmo nos rótulos do cap01.
 - 06/11 13:3x **T0 vertical reentregue** (`entrega_final/`, enviado ao Kaik no chat): cap01 também sem rótulos (só contorno; o selo "NÃO TEM NO
   SEU PLANO" é do app). 260,6 s, -15,8 LUFS, -3,6 dBTP; `conferir_remendo` OK; 16:9 idêntico. Renders e `video_sem_audio` (MD5 igual) apagados.
+- 06/11 14:0x **T17 entregue** (`entrega_final/`): 420,8 s (7:00,8), -15,9 LUFS, -3,6 dBTP (AAC conferido), 111 legendas; cartões Antes (T21) e
+  "Fim da trilha" certos. Fica para o time do app (handoff, não cobrimos): "Mês passado" com 0 OS e 0% ao lado de R$ 13.950,00 (mundo das
+  sementes), Faturamento cortado ~0,6 s com o menu aberto, "0" solto na OS #15, compras do Estoque zeradas e "0 registros" em Materiais das OS
+  na exportação. Renders e `video_sem_audio` (MD5 igual) apagados.
+- 06/11 14:2x **TRILHA ENTREGUE AO KAIK** (chat, qualidade cheia): 21 aulas (4 h 10 min) + T0 vertical, cada uma como MP4 próprio, na ordem de
+  exibição, e o ZIP "Domiflix - legendas e ordem das aulas" (44 legendas .srt/.vtt + LEIA-ME com a ordem e as durações). O envio em lote de 3
+  arquivos grandes deu 502 em cinco (T3, T5, T7, T8, T11, 227 a 254 MiB); um por vez, todos passaram. Retomadas 7 a 20 apagadas.
+  **Pendências** (dependem do app ou de decisão do Kaik): remendos do T12 cap08 e do T11 cap12 (faixa de endereço) e da gaveta "Ver trilha" no
+  cap01 do T0 vertical, depois do conserto no app; T22 cap09 (fala "da esquerda pra direita" com as etapas em coluna, emenda opcional); na skill,
+  levar ao `ferramentas/edit/` o apagar dos stems do finish, o `pico_aac.py` e a aceleração do `t14/edit/finish.py` (rodar o exemplo antes).
 
 ## Fila (31/10 12:1x; nada sai da fila sem estar entregue)
 1. **Rodando (Kaik 14:48 liberou até 4 agentes ao mesmo tempo):** dev-video no 06 e no 12 do site (com a trava
