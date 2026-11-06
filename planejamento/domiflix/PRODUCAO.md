@@ -626,6 +626,11 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
   "montagem rápida" do roteiro com trechos dos capítulos (como o `montagem_cap13.py` do T7). Espera "T15: render" (depois do T7).
   **T22 despachado** (Opus): 9 trocas da 1.38.21 (100,3 s) na velocidade natural + gravação sem `--seed` (a `t22/apos-cap11` é a base
   do T21); espera "T22: render".
+- 06/11 00:2x **Disco a 1,6 GB**: o T7 (capítulos 00 a 14 renderizados, câmera 0 problema, recorte ok) esperava 2,5 GB para o finish.
+  Liberei ~0,8 GB: `video_sem_audio.mp4` de T2, T4, T8 e T13 e os dois `mix.wav` do T0 v2. **Erro meu:** o MD5 desses quatro diferia
+  só no último quadro (o `-shortest`), e a regra do `docs/05-edicao.md` manda mantê-los nesse caso (o remendo exige o total exato de
+  quadros). As entregas não mudam; um remendo futuro nessas quatro precisa recriar o arquivo antes (receita na mesma seção). O finish do
+  T7 roda com stems, trilha e mix em `/dev/shm` e piso de 1,5 GB (só ~0,6 GB vão para o disco). T22 gravando em `/dev/shm/t22_rec`.
 
 ## Fila (31/10 12:1x; nada sai da fila sem estar entregue)
 1. **Rodando (Kaik 14:48 liberou até 4 agentes ao mesmo tempo):** dev-video no 06 e no 12 do site (com a trava

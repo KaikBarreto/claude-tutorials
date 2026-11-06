@@ -116,8 +116,12 @@ Depois da entrega a limpeza apaga as gravações e os renders dos capítulos; fi
 Com o disco apertado, o `video_sem_audio.mp4` pode sair, porque o vídeo do `aula_final.mp4` é cópia dele. Antes de apagar,
 confira o MD5 dos pacotes (`ffmpeg -i X -map 0:v -c copy -f md5 -` nos dois). Antes de remendar, recrie com
 `ffmpeg -i aula_final.mp4 -map 0:v -c copy video_sem_audio.mp4`. Exceção: quando o `-shortest` cortou o último quadro do
-final (T2, T4 e T12, um quadro a menos), o MD5 difere; nesse caso, mantenha o `video_sem_audio.mp4`. Feito em 04/11 em T0,
-T1, T3 v2, T5, T7 e T18: ~1 GB liberado. O `proj/build/mix.wav` também pode sair depois da entrega: o remendo refaz o mix
+final (T2, T4, T8, T12 e T13, um quadro a menos), o MD5 difere; nesse caso, **não apague** o `video_sem_audio.mp4`: o
+`remendar_aula.py` exige o total exato de quadros da linha do tempo antiga ("o vídeo antigo não tem os quadros...") e o
+último quadro não volta por cópia (a cartela do `outro_v.mp4` é recodificada no finish, os pacotes não batem). Em 06/11 os de
+T2, T4, T8 e T13 foram apagados por engano, com o disco a 1,6 GB; para remendar uma delas, recrie o arquivo com os pacotes do
+`aula_final.mp4` até o último IDR + o trecho final recodificado pelo `encoder()` do remendar com o último quadro repetido, e
+confira o SPS/PPS e o total de quadros antes de rodar. Feito em 04/11 em T0, T1, T3 v2, T5, T7 e T18: ~1 GB liberado. O `proj/build/mix.wav` também pode sair depois da entrega: o remendo refaz o mix
 do zero (`refazer_mix()`, a partir de `audio48k.wav` e `edl.json`). Ajuste feito à mão no mix se perde no remendo (T8: -3 dB
 em 834,93–835,06 s contra o pico do AAC): confira o pico real que o `entregar.py` mostra.
 Rode a **cópia em `tNN/edit`** (copie da skill se faltar): o `KIT` e o `DOMI` saem da posição do script (`<TUT_HOME>/kit`), e a
