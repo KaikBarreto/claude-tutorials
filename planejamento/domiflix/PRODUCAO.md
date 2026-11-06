@@ -700,6 +700,8 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
   **Achado:** o 9:16 entregue em 04/11 tinha perdido as ilustrações dos caps 02, 03, 05 e 06 (renders das 03:3x sem o `compor`):
   restauradas; o trecho parado do cap02 caiu para ~3 s. 260,6 s, -15,8 LUFS, -3,6 dBTP; áudio e legendas iguais; 16:9 idêntico.
   `remendar_aula.py` (cópia em `t0v2/edit`) aceita 9x16. Pedido em seguida: o mesmo nos rótulos do cap01.
+- 06/11 13:3x **T0 vertical reentregue** (`entrega_final/`, enviado ao Kaik no chat): cap01 também sem rótulos (só contorno; o selo "NÃO TEM NO
+  SEU PLANO" é do app). 260,6 s, -15,8 LUFS, -3,6 dBTP; `conferir_remendo` OK; 16:9 idêntico. Renders e `video_sem_audio` (MD5 igual) apagados.
 
 ## Fila (31/10 12:1x; nada sai da fila sem estar entregue)
 1. **Rodando (Kaik 14:48 liberou até 4 agentes ao mesmo tempo):** dev-video no 06 e no 12 do site (com a trava
