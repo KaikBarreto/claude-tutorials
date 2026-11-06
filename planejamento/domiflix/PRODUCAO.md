@@ -35,7 +35,7 @@ F = montagem final + legendas + conferência · ok = no ZIP
 | T14 | Notas Fiscais (NFS-e e NF-e) | ok | ok | ok (04/11 17:xx) | ok (zip 7, 14 caps, 8,3 min; 0 fala a refazer) | reescrita + fase 1 despachadas 05/11 13:4x (Opus, 1.38.24, 54341; base = fim do T21) | | | |
 | T15 | Funcionários: Financeiro do Funcionário e Ponto | ok | ok | ok (04/11 17:xx) | ok (zip 7, 13 caps, 8,9 min; 0 fala a refazer) | fase 1 ok 05/11 08:1x (todos os caps, 0 falho; base `t20/apos-cap12`; semente final `t15/apos-cap12`; 5 falas, voz `T15 emendas 1.38.21`) | ok (1.38.24, 05/11 22:5x) | ok | **entregue 06/11 02:3x** (10:00,7; -15,8 LUFS; -3,6 dBTP; 169 legendas) |
 | T22 | Ferramentas de RH: DISC, Organograma, Fluxograma | ok | ok | ok (04/11 17:xx) | ok (zip 7, 12 caps, 7,5 min; 0 fala a refazer) | fase 1 ok 05/11 13:1x (12 caps, 0 falho; base `t15/apos-cap12`; semente final `t22/apos-cap11`; 9 falas, voz `T22 emendas 1.38.21`) | **gravado na 1.38.24 (06/11 01:0x; 0 falho, maior atraso 0,68 s)** | ok | **entregue 06/11 06:3x** (9:16,3; -15,9 LUFS; -3,6 dBTP; 142 legendas) |
-| T21 | Integração com WhatsApp | ok | ok | ok (04/11 17:xx) | ok (zip 7, 11 caps, 5,9 min; 0 fala a refazer) | **fase 1 ok 05/11 15:0x** (1.38.24, 54340; 11 caps, 0 falho; base `t22/apos-cap11`; semente final `t21/apos-cap10`; recap regerado, voz `T21 cap10 Recapitulando 1.38.24`, 27,8 s) | | | |
+| T21 | Integração com WhatsApp | ok | ok | ok (04/11 17:xx) | ok (zip 7, 11 caps, 5,9 min; 0 fala a refazer) | **fase 1 ok 05/11 15:0x** (1.38.24, 54340; 11 caps, 0 falho; base `t22/apos-cap11`; semente final `t21/apos-cap10`; recap: take original + emenda da L2) | ok (06/11 01:4x) | ok | **entregue 06/11 07:2x** (6:50,7; -15,9 LUFS; -3,6 dBTP; 112 legendas) |
 | T17 | Dashboard, relatórios e exportações | ok | ok | ok (04/11 17:xx) | ok (zip 7, 12 caps, 6,0 min; 0 fala a refazer) | fase 1 despachada 05/11 18:2x (1.38.24, 54342; base `t14/apos-cap12`, `FAKE_NOW` 13/11 16:30) | | | |
 
 Ordem (TRILHA.md): T0 → T1 → T4 → T5 → T7 → T18 → T2 → T8 → T9 → T12 → T13 → T20 → T10 → T11 → T15 → T22 → T19 →
@@ -677,6 +677,14 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
   cap11 os menus abrem sem cursor (a voz não tem vão). Defeitos do app (handoff, não cobrimos): um "0" solto na janela da OS #15 no fim do
   cap04 e o Faturamento cortado ("R$ 2.300,...") com o menu lateral aberto (cap05 em 23,3 s e início dos caps 06 a 10). Espera "T17: render".
   Disco 2,1 GB depois de limpar o cache do npm (430 MB, regenerável).
+- 06/11 07:1x **Reinício do container** (app religado, pid 197): o finish do T21 parou depois do `audio48k`; refeito por mim com o
+  `t21/edit/finish_t21.sh` (re-executável). **"T14: render"** enviado ao agente do T14.
+- 06/11 07:2x **T21 entregue** (`entrega_final/`): 410,7 s (6:50,7), -15,9 LUFS, -3,6 dBTP (AAC conferido), 112 legendas. Revisão nas
+  folhas de 3 s: cartões Antes (T22) e Próximo (T17) certos, recap pelas telas. `video_sem_audio` com MD5 igual (apagado; recriar com
+  `-c copy` antes de remendar), renders e `/dev/shm` limpos.
+- 06/11 07:57 O render do T14 parou no piso (1,32 GB, antes do cap11), com os caps 00 a 10 prontos e conferidos; o agente acrescentou
+  aceleração ao `t14/edit/finish.py` (cap09 em 4x, com selo; legendas descontam o tempo). 12:00 **novo reinício** (app religado, pid 220).
+  Renders 11 a 13 + finish do T14 rodando comigo; **"T17: render"** enviado (prepara a montagem e espera disco e trava).
 
 ## Fila (31/10 12:1x; nada sai da fila sem estar entregue)
 1. **Rodando (Kaik 14:48 liberou até 4 agentes ao mesmo tempo):** dev-video no 06 e no 12 do site (com a trava
