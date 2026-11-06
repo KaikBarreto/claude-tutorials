@@ -34,7 +34,7 @@ F = montagem final + legendas + conferência · ok = no ZIP
 | T20 | Relatório Financeiro e DRE | ok | ok | ok (04/11 17:xx) | ok (zip 7, 13 caps, 8,7 min; 0 fala a refazer) | fase 1 ok 05/11 08:0x (13 caps, 0 falho, 21 conferências iguais; semente final `t20/apos-cap12`; 3 falas, voz `T20 emendas 1.38.21`) | ok (1.38.24; 13 caps, 0 falho, atraso máx. 0,71 s; regravados 01, 03 a 06) | ok (câmera 0 problema) | **entregue 05/11 22:4x** (9:44,6, -15,8 LUFS, -3,6 dBTP, 153 legendas; cartão "Próximo" corrigido por remendo) |
 | T14 | Notas Fiscais (NFS-e e NF-e) | ok | ok | ok (04/11 17:xx) | ok (zip 7, 14 caps, 8,3 min; 0 fala a refazer) | reescrita + fase 1 despachadas 05/11 13:4x (Opus, 1.38.24, 54341; base = fim do T21) | | | |
 | T15 | Funcionários: Financeiro do Funcionário e Ponto | ok | ok | ok (04/11 17:xx) | ok (zip 7, 13 caps, 8,9 min; 0 fala a refazer) | fase 1 ok 05/11 08:1x (todos os caps, 0 falho; base `t20/apos-cap12`; semente final `t15/apos-cap12`; 5 falas, voz `T15 emendas 1.38.21`) | ok (1.38.24, 05/11 22:5x) | ok | **entregue 06/11 02:3x** (10:00,7; -15,8 LUFS; -3,6 dBTP; 169 legendas) |
-| T22 | Ferramentas de RH: DISC, Organograma, Fluxograma | ok | ok | ok (04/11 17:xx) | ok (zip 7, 12 caps, 7,5 min; 0 fala a refazer) | fase 1 ok 05/11 13:1x (12 caps, 0 falho; base `t15/apos-cap12`; semente final `t22/apos-cap11`; 9 falas, voz `T22 emendas 1.38.21`) | **gravado na 1.38.24 (06/11 01:0x; 0 falho, maior atraso 0,68 s)** | | |
+| T22 | Ferramentas de RH: DISC, Organograma, Fluxograma | ok | ok | ok (04/11 17:xx) | ok (zip 7, 12 caps, 7,5 min; 0 fala a refazer) | fase 1 ok 05/11 13:1x (12 caps, 0 falho; base `t15/apos-cap12`; semente final `t22/apos-cap11`; 9 falas, voz `T22 emendas 1.38.21`) | **gravado na 1.38.24 (06/11 01:0x; 0 falho, maior atraso 0,68 s)** | ok | **entregue 06/11 06:3x** (9:16,3; -15,9 LUFS; -3,6 dBTP; 142 legendas) |
 | T21 | Integração com WhatsApp | ok | ok | ok (04/11 17:xx) | ok (zip 7, 11 caps, 5,9 min; 0 fala a refazer) | **fase 1 ok 05/11 15:0x** (1.38.24, 54340; 11 caps, 0 falho; base `t22/apos-cap11`; semente final `t21/apos-cap10`; recap regerado, voz `T21 cap10 Recapitulando 1.38.24`, 27,8 s) | | | |
 | T17 | Dashboard, relatórios e exportações | ok | ok | ok (04/11 17:xx) | ok (zip 7, 12 caps, 6,0 min; 0 fala a refazer) | fase 1 despachada 05/11 18:2x (1.38.24, 54342; base `t14/apos-cap12`, `FAKE_NOW` 13/11 16:30) | | | |
 
@@ -662,6 +662,16 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
   vezes (menu da linha por hover; o Cancelar caía sob a fala e impedia o corte). Montagem: só o cap09 corta (11,50–12,60 e 16,15–19,40) e
   acelera (7,9–11,47). Lições gerais em `docs/08-licoes.md`; handoffs no roteiro. Espera "T14: render" (depois do T21).
   **T17 despachado** (Opus, novo): prévia de atraso dos ensaios, robô/respiros e gravação final; espera "T17: render".
+- 06/11 03:3x a 06:2x Disco a 1,2 GB durante o finish do T22: o T17 parou antes da gravação final (ensaios 00 a 07 ok, respiros nos caps 09
+  e 11). Apagar versões antigas e gravações brutas foi barrado pelo classificador (destruição irreversível): pergunta ao Kaik pendente.
+  Liberado só o que a regra permite: `video_sem_audio` do T7 e dos dois T0 v2 (MD5 igual ao final; recriar com `-c copy` antes de remendar).
+  **Reinício do container às 06:2x** (app religado, pid 207).
+- 06/11 06:3x **T22 entregue** (`entrega_final/`): 556,3 s (9:16,3), -15,9 LUFS, -3,6 dBTP, 142 legendas; câmera 0; cap03 regravado antes
+  da montagem (um tooltip mostrava pessoa real); 67,9 s de cortes (02, 06, 08, 09), plano B no cap08. Revisão nas folhas de 3 s: cartões
+  certos. **Divergência para o Kaik decidir:** no cap09 a fala diz "o Organizar refaz o arranjo da esquerda pra direita"; o app arruma da
+  esquerda para a direita (dagre LR, `lib/flowchart/layout.ts`), mas, sem setas dentro de cada faixa, as etapas ficam em coluna na tela.
+  Conserto possível: uma emenda curta da fala. Renders apagados; `video_sem_audio` fica (MD5 diferente). **"T17: continuar"** (piso de
+  0,8 GiB para gravar, que vai para /dev/shm) e **"T21: render"** enviados.
 
 ## Fila (31/10 12:1x; nada sai da fila sem estar entregue)
 1. **Rodando (Kaik 14:48 liberou até 4 agentes ao mesmo tempo):** dev-video no 06 e no 12 do site (com a trava
