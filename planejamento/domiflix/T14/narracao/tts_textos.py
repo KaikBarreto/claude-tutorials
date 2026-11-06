@@ -66,7 +66,7 @@ Com o dinheiro e as notas em dia, o próximo passo é a equipe. No próximo tuto
 
 # Capítulos que mudaram na revisão 1.38.24 (voz nova): inteiros = um nó por capítulo; emendas = narracao/emendas_1_38_24.json.
 REGERAR_INTEIROS = [2, 3, 8, 13]
-EMENDAS_1_38_24 = {0: [4], 10: [3]}
+EMENDAS_1_38_24 = {10: [3]}   # 05/11 18:1x: o cap00 fica com o take original (Antes = T20); só o cap10 L3 é emenda
 
 # Títulos falados das vinhetas de capítulo (um nó no ElevenLabs, separados por [pause]); cap00 sem vinheta.
 TITULOS = {1: "A nota do serviço.",
