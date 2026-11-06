@@ -694,6 +694,12 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
   ilustração "Duas notas nesta tela" no cap01; cap09 com cortes e trecho em 4x (selo); o PDF da nota não aparece. Diverge (agente): cap12 L4 a
   fala cita R$ 1.180,00 ~6 s antes do campo; cap13 o cartão da nota automática fica ~0,7 s. `video_sem_audio` com MD5 igual (apagado),
   renders e `/dev/shm` limpos.
+- 06/11 13:3x **T0 vertical consertado** (agente Opus): o título cresce do canto esquerdo e cabe no painel (tinta entre x 79 e 988); a
+  linha do tempo do teste refeita (faixa entre os círculos, selo junto da faixa, "Vídeo já assistido" sob "Assinatura ativa"; 0
+  sobreposição quadro a quadro); rótulos dos destaques tirados nos caps 02 a 06 (só o contorno); endereço do guia numa faixa escura livre.
+  **Achado:** o 9:16 entregue em 04/11 tinha perdido as ilustrações dos caps 02, 03, 05 e 06 (renders das 03:3x sem o `compor`):
+  restauradas; o trecho parado do cap02 caiu para ~3 s. 260,6 s, -15,8 LUFS, -3,6 dBTP; áudio e legendas iguais; 16:9 idêntico.
+  `remendar_aula.py` (cópia em `t0v2/edit`) aceita 9x16. Pedido em seguida: o mesmo nos rótulos do cap01.
 
 ## Fila (31/10 12:1x; nada sai da fila sem estar entregue)
 1. **Rodando (Kaik 14:48 liberou até 4 agentes ao mesmo tempo):** dev-video no 06 e no 12 do site (com a trava
