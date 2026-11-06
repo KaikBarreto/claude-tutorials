@@ -32,7 +32,7 @@ F = montagem final + legendas + conferência · ok = no ZIP
 | T13 | Financeiro | ok | ok | ok (04/11 17:xx) | ok (zip 7, 15 caps, 14,0 min; 0 fala a refazer) | fase 1 ok 05/11 00:3x (15 caps, 0 falho; 2 falas a emendar) | ok (1.38.21; 15 caps, 0 falho; pausas na voz em 11 linhas) | ok (câmera 0) | **entregue 05/11 10:1x** (15:30, -15,8 LUFS, -3,6 dBTP, 248 legendas) |
 | T19 | Integração com Asaas, Assinaturas e Cobranças | ok | ok | ok (04/11 17:xx) | ok (zip 7, 14 caps, 9,7 min; 0 fala a refazer) | fase 1 ok 05/11 02:5x (14 caps, 0 falho; 1 fala, voz `T19 emendas cobrança`) | grava depois do T13 e do T11 | | **entregue 05/11 20:5x** (10:53, -15,8 LUFS, -3,6 dBTP, 181 legendas; 1.38.24) |
 | T20 | Relatório Financeiro e DRE | ok | ok | ok (04/11 17:xx) | ok (zip 7, 13 caps, 8,7 min; 0 fala a refazer) | fase 1 ok 05/11 08:0x (13 caps, 0 falho, 21 conferências iguais; semente final `t20/apos-cap12`; 3 falas, voz `T20 emendas 1.38.21`) | ok (1.38.24; 13 caps, 0 falho, atraso máx. 0,71 s; regravados 01, 03 a 06) | ok (câmera 0 problema) | **entregue 05/11 22:4x** (9:44,6, -15,8 LUFS, -3,6 dBTP, 153 legendas; cartão "Próximo" corrigido por remendo) |
-| T14 | Notas Fiscais (NFS-e e NF-e) | ok | ok | ok (04/11 17:xx) | ok (zip 7, 14 caps, 8,3 min; 0 fala a refazer) | reescrita + fase 1 despachadas 05/11 13:4x (Opus, 1.38.24, 54341; base = fim do T21) | | | |
+| T14 | Notas Fiscais (NFS-e e NF-e) | ok | ok | ok (04/11 17:xx) | ok (zip 7, 14 caps, 8,3 min; 0 fala a refazer) | reescrita + fase 1 despachadas 05/11 13:4x (Opus, 1.38.24, 54341; base = fim do T21) | ok (06/11 03:0x; 0 falho, maior atraso 0,69 s) | ok | **entregue 06/11 12:2x** (9:36,6; -15,8 LUFS; -3,6 dBTP; 160 legendas) |
 | T15 | Funcionários: Financeiro do Funcionário e Ponto | ok | ok | ok (04/11 17:xx) | ok (zip 7, 13 caps, 8,9 min; 0 fala a refazer) | fase 1 ok 05/11 08:1x (todos os caps, 0 falho; base `t20/apos-cap12`; semente final `t15/apos-cap12`; 5 falas, voz `T15 emendas 1.38.21`) | ok (1.38.24, 05/11 22:5x) | ok | **entregue 06/11 02:3x** (10:00,7; -15,8 LUFS; -3,6 dBTP; 169 legendas) |
 | T22 | Ferramentas de RH: DISC, Organograma, Fluxograma | ok | ok | ok (04/11 17:xx) | ok (zip 7, 12 caps, 7,5 min; 0 fala a refazer) | fase 1 ok 05/11 13:1x (12 caps, 0 falho; base `t15/apos-cap12`; semente final `t22/apos-cap11`; 9 falas, voz `T22 emendas 1.38.21`) | **gravado na 1.38.24 (06/11 01:0x; 0 falho, maior atraso 0,68 s)** | ok | **entregue 06/11 06:3x** (9:16,3; -15,9 LUFS; -3,6 dBTP; 142 legendas) |
 | T21 | Integração com WhatsApp | ok | ok | ok (04/11 17:xx) | ok (zip 7, 11 caps, 5,9 min; 0 fala a refazer) | **fase 1 ok 05/11 15:0x** (1.38.24, 54340; 11 caps, 0 falho; base `t22/apos-cap11`; semente final `t21/apos-cap10`; recap: take original + emenda da L2) | ok (06/11 01:4x) | ok | **entregue 06/11 07:2x** (6:50,7; -15,9 LUFS; -3,6 dBTP; 112 legendas) |
@@ -689,6 +689,11 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
   "algumas informações ficaram uma sobrepondo a outra" (linha do tempo do teste: "Combinados confirmados" sobre "Vídeo já assistido").
   Minha folha de 2 s achou ainda rótulos de destaque cobrindo texto do app (2:26, 2:32, 2:46, 2:54, 2:58, 3:22, 4:12) e 26 s parados
   em 1:28. O 16:9 está certo. **Agente Opus despachado** para consertar só a vertical (cenas, rótulos, zoom; remendo com `--novos`).
+- 06/11 12:2x **T14 entregue** (`entrega_final/`): 576,6 s (9:36,6), -15,8 LUFS, -3,6 dBTP (AAC conferido), 160 legendas. Renders 11 a 13 e
+  finish rodados por mim (`t14/edit/render_todos.sh`, `finish_t14.sh`). Revisão nas folhas de 3 s: cartões Antes (T20) e Próximo (T15) certos;
+  ilustração "Duas notas nesta tela" no cap01; cap09 com cortes e trecho em 4x (selo); o PDF da nota não aparece. Diverge (agente): cap12 L4 a
+  fala cita R$ 1.180,00 ~6 s antes do campo; cap13 o cartão da nota automática fica ~0,7 s. `video_sem_audio` com MD5 igual (apagado),
+  renders e `/dev/shm` limpos.
 
 ## Fila (31/10 12:1x; nada sai da fila sem estar entregue)
 1. **Rodando (Kaik 14:48 liberou até 4 agentes ao mesmo tempo):** dev-video no 06 e no 12 do site (com a trava
