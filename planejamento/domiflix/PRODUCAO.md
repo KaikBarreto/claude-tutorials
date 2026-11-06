@@ -631,6 +631,10 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
   só no último quadro (o `-shortest`), e a regra do `docs/05-edicao.md` manda mantê-los nesse caso (o remendo exige o total exato de
   quadros). As entregas não mudam; um remendo futuro nessas quatro precisa recriar o arquivo antes (receita na mesma seção). O finish do
   T7 roda com stems, trilha e mix em `/dev/shm` e piso de 1,5 GB (só ~0,6 GB vão para o disco). T22 gravando em `/dev/shm/t22_rec`.
+- 06/11 00:39 **Reinício do container** (app religado, pid 218; fakebase 54337 do T22 religado). Pararam: o finish do T7 (vídeo pela metade,
+  mix em `/dev/shm` perdido) e a regravação do cap07 do T22. T22: 00 a 06 e 08 a 10 bons; o cap11 das 00:30 falhou no passo 1 (abriu
+  em Funcionários: o onBack do editor do organograma chega depois do clique na aba; setup com 3,5 s e segundo clique). Regravo 07 e 11 e
+  rodo de novo o finish do T7; revisão e entrega do T7 comigo (sem retomar o agente, que tinha ~670 mil tokens de contexto).
 
 ## Fila (31/10 12:1x; nada sai da fila sem estar entregue)
 1. **Rodando (Kaik 14:48 liberou até 4 agentes ao mesmo tempo):** dev-video no 06 e no 12 do site (com a trava
