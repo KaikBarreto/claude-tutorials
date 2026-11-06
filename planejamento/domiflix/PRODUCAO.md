@@ -642,6 +642,15 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
   sem movimento (dentro do limite de ~20 s). Limpeza: renders dos capítulos e `/dev/shm`. **T22 gravado** (00 a 11, 0 falho); cap11 com
   setup consertado (troca de aba a partir de `/funcionarios/organograma` remonta a página na lista; `when`/`unless` não valem no setup)
   e "Excluir nó" com `noScroll`. **T21 despachado** (Opus, novo: emenda da L2 do recap + gravação final). **"T15: render"** enviado.
+- 06/11 01:3x **Remendo do T18 cap03 entregue** ((b) da 1.38.21: cartão "Checklists" sem moldura e o bloco único de contexto da OS):
+  cap03 regravado na 1.38.24 (0 falho, maior atraso 0,80 s), câmera 0 problema, mesmo corte (37,76 s), `remendar_aula.py --novos cap03`
+  (1.450 quadros recodificados). 799,1 s (13:19,1), -15,8 LUFS, -3,2 dBTP; legendas iguais (a fala não muda). Rodapé do cap03 na 1.38.24
+  (os outros na 1.38.19, como nos remendos anteriores). A espera branca depois do "Preencher OS" (~1,7 s, câmera no canto vazio da página
+  nova) já existia na versão de 04/11 (~2 s). `video_sem_audio` recriado do final (MD5 igual) e apagado depois de novo; stems em `/dev/shm`.
+- 06/11 01:4x **T21 gravado** (agente Opus, 49 min): 00 a 10 com 0 falho e maior atraso 0,47 s; L2 do recap emendada (+0,81 s, junção limpa).
+  O `prever.py --ens` achou 6 capítulos que a fase 1 deixaria atrasados (0,8 a 10,6 s): robô enxuto e respiro de 9,2 s no cap07 (cortes na
+  montagem). Lições em `docs/08-licoes.md`. Espera "T21: render" (depois do T22). **T14 retomado** (agente Opus da fase 1): voz nova
+  (caps 02, 03, 08 e 13 inteiros + emenda do cap10) e gravação final; espera "T14: render".
 
 ## Fila (31/10 12:1x; nada sai da fila sem estar entregue)
 1. **Rodando (Kaik 14:48 liberou até 4 agentes ao mesmo tempo):** dev-video no 06 e no 12 do site (com a trava
