@@ -657,6 +657,11 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
   lista de movimentos, Config, batida do 9b num celular dentro da janela, Hoje, Histórico, Relatório e as folhas em A Pagar), sem tela
   branca. Os saldos da lista começam em R$ 0,00 e ganham valor no cap05 (a fala explica: "completei os técnicos do mesmo jeito, cada um com
   o salário"). `video_sem_audio` com MD5 diferente do final (fica); renders dos capítulos apagados. **"T22: render"** enviado.
+- 06/11 03:0x **T14 gravado na 1.38.24** (agente Opus da fase 1, retomado): voz nova nos caps 02, 03, 08 e 13 (nó v2) e emenda do cap10 L3
+  (+4,25 s); cap00 com o take original; respiros nos caps 09, 10 e 12. 00 a 13 com 0 falho, maior atraso 0,69 s (cap07); cap09 regravado duas
+  vezes (menu da linha por hover; o Cancelar caía sob a fala e impedia o corte). Montagem: só o cap09 corta (11,50–12,60 e 16,15–19,40) e
+  acelera (7,9–11,47). Lições gerais em `docs/08-licoes.md`; handoffs no roteiro. Espera "T14: render" (depois do T21).
+  **T17 despachado** (Opus, novo): prévia de atraso dos ensaios, robô/respiros e gravação final; espera "T17: render".
 
 ## Fila (31/10 12:1x; nada sai da fila sem estar entregue)
 1. **Rodando (Kaik 14:48 liberou até 4 agentes ao mesmo tempo):** dev-video no 06 e no 12 do site (com a trava
