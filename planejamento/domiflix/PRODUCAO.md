@@ -672,6 +672,11 @@ T21 → T14 → T17. O mundo fictício segue a ordem de **exibição** (cada aul
   esquerda para a direita (dagre LR, `lib/flowchart/layout.ts`), mas, sem setas dentro de cada faixa, as etapas ficam em coluna na tela.
   Conserto possível: uma emenda curta da fala. Renders apagados; `video_sem_audio` fica (MD5 diferente). **"T17: continuar"** (piso de
   0,8 GiB para gravar, que vai para /dev/shm) e **"T21: render"** enviados.
+- 06/11 07:0x **T17 gravado na 1.38.24** (agente Opus): 00 a 11 com 0 falho, maior atraso 0,55 s (cap05, 3ª tomada); respiros no cap09
+  (+2,0 s) e no cap11 (+1,2 s); nada a cortar. Cartões: Antes "Integração com WhatsApp" (cap00 L4) e "Fim da trilha" (cap11 L4). No cap09 L4 e no
+  cap11 os menus abrem sem cursor (a voz não tem vão). Defeitos do app (handoff, não cobrimos): um "0" solto na janela da OS #15 no fim do
+  cap04 e o Faturamento cortado ("R$ 2.300,...") com o menu lateral aberto (cap05 em 23,3 s e início dos caps 06 a 10). Espera "T17: render".
+  Disco 2,1 GB depois de limpar o cache do npm (430 MB, regenerável).
 
 ## Fila (31/10 12:1x; nada sai da fila sem estar entregue)
 1. **Rodando (Kaik 14:48 liberou até 4 agentes ao mesmo tempo):** dev-video no 06 e no 12 do site (com a trava
