@@ -801,5 +801,9 @@ As demais: roteiro pronto e voz quando houver créditos (o Kaik avisa). Antes de
 ## Entrega
 Nome do arquivo **sem dois-pontos** (o ZIP abre no Windows e no Mac): título com ":" vira " - " só no nome do
 arquivo (ex.: `Domiflix T18 - Área do Técnico - Refrigeração e Climatização.mp4`); na vinheta fica como no roteiro.
+**Caminho escolhido (Kaik 06/11 02:45: "você pode me dar os arquivos como achar melhor ao final"):** o `SendUserFile` aceita os MP4
+em qualidade cheia direto de `entrega_final/` (testado 06/11 12:0x: 41, 132 e 166 MB entregues; o limite de ~30 MiB não vale aqui).
+O ZIP único de ~4,5 GB não cabe no disco: no fim, cada aula vai como MP4 próprio, na ordem de exibição, e um ZIP pequeno leva todas
+as legendas (.srt/.vtt) e um LEIA-ME com a ordem. Já enviados em 06/11: T0 vertical, T21, T22.
 ZIP único (ou em partes, se passar do limite de envio) com `Domiflix Tnn - <Título>.mp4/.srt/.vtt` de todas as aulas
 (T0 a T22, incluindo o T3 já entregue), 1080p, CRF 20 (padrão T3).
