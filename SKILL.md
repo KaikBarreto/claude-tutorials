@@ -17,6 +17,9 @@ Se o tutorial é de uma série que já tem perfil em `perfis/`, **o perfil vale 
   (`exemplos/dominex-t3/`) congelado: marca e vinheta do capacete, voz Fernanda, pronúncias, mundo fictício Glacial
   Cold Brasil no Supabase falso, câmera, vinhetas faladas, trilha (seed 3), nomes de arquivo e entrega. Só o conteúdo
   muda de uma aula para outra.
+- **EcoFlix (EcoSistema)** → `PERFIL=ecoflix` e `perfis/ecoflix/PERFIL.md`: o padrão da Domiflix com a marca da
+  EcoSistema, voz masculina e o mundo da Recicla Vale Metais. Em montagem desde 08/11/2026: o que o perfil ainda não
+  fixou segue a Domiflix.
 Sem perfil (o app de outra pessoa): use os modelos neutros e configure marca, voz e app (abaixo). Para uma série nova
 que vai ter várias aulas, crie `perfis/<serie>/` copiando a estrutura do perfil Domiflix.
 
