@@ -154,6 +154,21 @@ em si continua uma de cada vez (trava `.heavy.lock`).
   gravação em andamento) quando o prazo acaba: prazo por capítulo e com folga (~3× a duração dele), nunca um prazo curto
   para o lote todo.
 
+## Kit do robô por aula (`rec/<id>/`, molde em `ferramentas/rec/molde/`)
+O `instalar.sh` copia para `rec/<id>/` as ferramentas que a trilha Domiflix afinou de aula em aula (T15 → T22/T21 → T14); o id da
+aula é o nome da pasta. Ordem de uso de cada capítulo, cada passo pesado sob a trava:
+1. `python3 -I rec/<id>/ensaio.py NN` → `rec/<id>/_ens/capNN.json` sem os `at` e com cauda curta; grave com `--rapido`. Acha seletor
+   errado, passo que falha e estado que não fecha; NÃO mede atraso.
+2. `python3 -I rec/<id>/resumo.py NN --ens` (ou sem `--ens`, na gravação): falhas, atrasos, ruído esperado contado à parte
+   (WebSocket do realtime, 406 de `.single()` sem linha) e, por passo, a palavra falada no instante do gesto (coluna `voz:`) e o
+   valor devolvido pelos `eval` (`=> ...`; `confere*` acusa TELA DIFERENTE DA FALA).
+3. `python3 -I rec/<id>/prever.py NN [...] --ens`: simula o roteiro atual com as durações medidas no ensaio (passo novo: modelo de
+   custo; rolagem suave por `eval` conta o `dur_ms`). Atraso previsto ≥ 0,8 s pede robô mais enxuto ou respiro, e outro ensaio.
+4. `node rec/<id>/explorar.mjs rec/<id>/_ex/algo.json`: abre o app no Supabase falso e executa passos soltos (fotos, textos, HTML,
+   `upload`), para achar seletores antes de escrever o roteiro. Divide o backend falso com a gravação (e o reseta): sob a trava.
+O gerador do roteiro (`gerar.py`, com os ajudantes de âncora, rolagem e observador de avisos) é de cada aula: veja as lições em
+`08-licoes.md` antes de escrever o seu.
+
 ## Endereço do produto na tela (`APP_ORIGIN`)
 Quando o assunto da aula é um LINK que aparece escrito na tela (T12: "Link do portal", link da unidade do contrato), o
 `http://127.0.0.1:8080/...` parece ambiente de teste. `APP_ORIGIN=https://www.dominex.app` (opção do gravador, **desligada por

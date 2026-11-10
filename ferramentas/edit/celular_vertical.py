@@ -10,9 +10,11 @@ Câmera do vertical: só desliza para o alvo (zoom 1 = largura inteira da tela =
 import importlib.util
 import os
 import sys
+from functools import lru_cache
 
 import cv2
 import numpy as np
+from PIL import Image, ImageDraw
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
@@ -23,6 +25,25 @@ from tele import RATE, Tele  # noqa: E402
 import vertical as V  # noqa: E402
 
 TX, TY, TW, TH, TR = V.TELA_X, V.TELA_Y, V.TELA_W, V.TELA_H, V.TELA_R
+_eoc = lambda p: 1 - (1 - min(max(p, 0.0), 1.0)) ** 3  # noqa: E731  (a mesma curva do overlay.py)
+
+
+@lru_cache(None)
+def aviso9(texto, fs=44):
+    """o cartão escuro do aviso (ui.callout) no tamanho do vertical: o mesmo desenho, com o texto em fs px (o do 16:9 tem 30, abaixo
+    do mínimo de 44 px do vertical). Devolve (sprite com sombra, pad), como o ui.callout."""
+    k = fs / 30.0
+    f = ui.font(600, fs)
+    tw = f.getbbox(texto)[2]
+    w, h = int(round(tw + 60 * k)), int(round(64 * k))
+    spr = ui.rrect(w, h, int(round(18 * k)), ui.DARK + (236,))
+    d = ImageDraw.Draw(spr)
+    cx, r = 27 * k, 5 * k
+    d.ellipse([cx - r, h / 2 - r, cx + r, h / 2 + r], fill=ui.ACCENT_TEXT + (255,))
+    d.text((int(round(44 * k)), h // 2), texto, font=f, fill=(255, 255, 255, 255), anchor="lm")
+    spr2 = Image.new("RGBA", (w + int(round(14 * k)), h))
+    spr2.alpha_composite(spr)
+    return ui.with_shadow(spr2, int(round(16 * k)), 0.3, int(round(8 * k)))
 
 
 def modulos_da_janela(w=TW, h=TH):
@@ -92,9 +113,16 @@ class CapituloCelular:
                **ch.get("camera_9x16", {})}
         self.cam = cam_m.Camera(self.tele, g, self.cur, self.T, dur, cfg, zooms)
         self._segurar(dur)
+        self._prender_na_tela(SW, SH)
         self.problemas = list(getattr(self.cam, "problemas", [])) + self._fora_da_janela()
         self.cursor = cur_m.CursorLayer(self.tele, g, self.T, self.cur, ccfg)
-        self.ov = ov_m.Overlays({**ch, "title": None, "illustrations": []}, os.path.dirname(rp(ch["video"])))
+        # avisos com "y9" (06/11, T0 v2): posição própria no vertical = topo do cartão em px da janela da tela (0 a 1160), centrado na
+        # largura, texto de "fs9" px (padrão 44); servem para pôr o aviso numa faixa livre da tela em vez do pé, onde cobria o app.
+        # Os outros avisos seguem pelo overlay.py, como antes.
+        self.avisos9 = [c for c in ch.get("callouts", []) if "y9" in c]
+        self.ov_m = ov_m
+        self.ov = ov_m.Overlays({**ch, "title": None, "illustrations": [], "callouts": [c for c in ch.get("callouts", []) if "y9" not in c]},
+                                os.path.dirname(rp(ch["video"])))
         self.shut = self.cam.cfg["shutter"] / self.FPS
         bg = rp(ch.get("stage", {}).get("bg")) or os.path.join(HERE, "assets", "fundo_escuro_9x16.png")
         self.base = base_do_quadro(bg)
@@ -112,6 +140,16 @@ class CapituloCelular:
                 ax, ay = r["track"][-1][1:] if r.get("track") else (r["ax"], r["ay"])
                 out.append(dict(s=r["e"], e=nxt, z=r["z"], ax=ax, ay=ay, follow=0.0, src="hold"))
         self.cam.regions = out; self.cam._simulate()
+
+    def _prender_na_tela(self, SW, SH):
+        """06/11 (T0 v2): a vista da câmera fica sempre DENTRO da tela gravada. Com zoom 1 a janela já mostra a largura inteira, mas o
+        "seguir" do zoom automático (toque perto da borda, ex. o Menu em x 700) deslocava a vista até 21 px para o lado, e o warp repetia a
+        última coluna da tela (BORDER_REPLICATE) numa faixa de até 25 px da janela: o equivalente vertical do canto reto do 16:9. Prender
+        a vista não tira alvo nenhum da janela (a vista anda para dentro da tela, onde o alvo está); a checagem é refeita com ela."""
+        cam = self.cam; vh = cam.vw * TH / TW
+        cam.cx = np.clip(cam.cx, cam.vw / 2, SW - cam.vw / 2)
+        cam.cy = np.clip(cam.cy, vh / 2, SH - vh / 2)
+        cam._check()
 
     def _fora_da_janela(self):
         """alvo da ação (retângulo do toque/campo) que não cabe na janela de 936x1160 depois que a câmera assentou"""
@@ -140,6 +178,13 @@ class CapituloCelular:
             win = cv2.convertScaleAbs(acc, alpha=1.0 / n)
         win = np.ascontiguousarray(win)
         self.cursor.draw(win, t, cam, self.shut); self.ov.over(win, t, (0, 0, TW, TH), cam.view(t))
+        for co in self.avisos9:  # entrada e saída iguais às do overlay.py (fusão 0,3/0,25 s, sobe 10 px ao entrar)
+            a, b = float(co["at"]), float(co["at"]) + float(co.get("dur", 3.0))
+            al = min(_eoc((t - a) / 0.3), _eoc((b - t) / 0.25))
+            if al > 0:
+                spr = aviso9(co["text"], int(co.get("fs9", 44)))
+                cw, _ = self.ov_m.size_of(spr)
+                self.ov_m.paste(win, spr, TW / 2 - cw / 2, float(co["y9"]) + 10 * (1 - al), al)
         img = self.base.copy(); reg = img[TY:TY + TH, TX:TX + TW].astype(np.float32)
         reg = reg * (1 - self.mask) + win.astype(np.float32) * self.mask
         img[TY:TY + TH, TX:TX + TW] = np.clip(reg, 0, 255).astype(np.uint8)

@@ -16,7 +16,10 @@ relativos à pasta do marca.json; chaves que começam com `_` são comentário.
 | `logo.arquivo` | logo principal, PNG com fundo transparente (≥ 1600 px de largura) ou SVG, na versão para fundo escuro | sem logo: selo neutro |
 | `logo.simbolo` e `logo.wordmark` | opcionais; com os dois, o símbolo entra primeiro e o nome sai de trás dele | |
 | `logo.wordmark_altura` | altura do nome em relação à do símbolo nessa composição | `0.5` |
-| `vinheta.estilo` | `logo` (qualquer marca) ou `dominex-capacete` (só a Dominex: peças do capacete em `web/assets`) | `logo` |
+| `logo.pecas` | `pecas.json` do símbolo em peças (gerado por `kit/brand_extract.py --pecas`), para o estilo `ecosistema-reciclagem` | |
+| `vinheta.estilo` | `logo` (qualquer marca), `dominex-capacete` (só a Dominex: peças do capacete em `web/assets`) ou `ecosistema-reciclagem` (símbolo em peças que se encaixam girando; EcoFlix) | `logo` |
+| `vinheta.som` | som próprio da vinheta (mp3/wav, **fora do git**); no `ecosistema-reciclagem` o 2º golpe dele cai no encaixe. Sem o arquivo, vale o sintetizado | sintetizado |
+| `vinheta.som_origem` e `som_tom` | de onde o `instalar.sh` copia o som (caminho dentro de `APP_SRC`); transposição do sintetizado quando o som falta (semitons) | `2` |
 | `cartela.frase` | frase da cartela final; o `outro_line` do aula.json, se houver, vale mais | `Até a próxima aula!` |
 
 - O resto sai do acento: texto no acento sobre o escuro é clareado até ficar legível, texto sobre o acento fica branco
@@ -24,5 +27,15 @@ relativos à pasta do marca.json; chaves que começam com `_` são comentário.
   gere o fundo de novo: `python3 <tutorial>/edit/fundo_escuro.py`.
 - Conferir a marca em uso: `python3 kit/ui.py`. Logo num arquivo só (símbolo à esquerda + nome):
   `python3 kit/brand_extract.py logo.png <pasta da marca>` grava `assets/simbolo.png` e `assets/wordmark.png`.
+- Símbolo feito de peças separadas (ex.: o de reciclagem): `python3 kit/brand_extract.py --pecas logo.png <pasta da marca>`
+  separa as peças e o nome **sem redesenhar** (cada pixel do PNG vai para uma peça; empilhadas, refazem o símbolo pixel a
+  pixel) e grava `assets/pecas.json` (centro de giro, ordem do encaixe e o lugar de cada parte no logo).
+- Estilo `ecosistema-reciclagem`: os tempos, curvas e sons do `dominex-capacete` (vinheta 4,42 s com saída escura em
+  4,30 s; cartela 3,85 s). As peças giram em volta do centro do símbolo, no sentido das setas, até o lugar exato do logo
+  oficial; soco e brilho no encaixe; o nome sai de trás do símbolo; título embaixo, sem o rótulo "▶ SÉRIE" (o nome já é a
+  série). Com `vinheta.som`, o som da marca toca inteiro: os dois primeiros golpes, achados no próprio arquivo, caem quando
+  a última peça assenta e no encaixe; por baixo, o respiro e os whooshes das peças. O som não vai para o git: o
+  `instalar.sh` copia de `APP_SRC/<som_origem>`.
 - Só o logo da própria marca; nada de logo ou fonte de terceiros sem licença.
-- Exemplo completo: `perfis/domiflix/marca/` (estilo `dominex-capacete`, saída idêntica ao T3).
+- Exemplos completos: `perfis/domiflix/marca/` (estilo `dominex-capacete`, saída idêntica ao T3) e
+  `perfis/ecoflix/marca/` (`ecosistema-reciclagem`, som oficial da EcoFlix).

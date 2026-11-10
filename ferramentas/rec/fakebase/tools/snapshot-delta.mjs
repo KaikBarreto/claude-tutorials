@@ -64,7 +64,8 @@ if (cmd === 'base') {
   const out = {};
   const patch = {};
   const ignored = [];
-  const keyOf = (r) => r.id ?? JSON.stringify([r.company_id, r.field_key, r.module_code]);
+  // tabelas sem coluna `id` (vinculos de etiqueta: empresa + cadastro + etiqueta) entram pela chave composta
+  const keyOf = (r) => r.id ?? JSON.stringify([r.company_id, r.field_key, r.module_code, r.customer_id, r.supplier_id, r.equipment_id, r.label_id]);
   for (const [table, rows] of Object.entries(now)) {
     const was = new Map((base[table] || []).map((r) => [keyOf(r), r]));
     const added = [];
@@ -74,7 +75,7 @@ if (cmd === 'base') {
       if (!b) { added.push(rel(r, nowMs)); continue; }
       const set = {};
       for (const [k, v] of Object.entries(r)) if (!sameValue(v, b[k])) set[k] = relTime(v, nowMs);
-      if (Object.keys(set).length) changed.push({ match: r.id !== undefined ? { id: r.id } : { company_id: r.company_id, field_key: r.field_key }, set });
+      if (Object.keys(set).length) changed.push({ match: r.id !== undefined ? { id: r.id } : r.label_id !== undefined ? { company_id: r.company_id, label_id: r.label_id, ...(r.customer_id ? { customer_id: r.customer_id } : {}), ...(r.supplier_id ? { supplier_id: r.supplier_id } : {}), ...(r.equipment_id ? { equipment_id: r.equipment_id } : {}) } : { company_id: r.company_id, field_key: r.field_key }, set });
     }
     const removed = [...was.keys()].filter((k) => !rows.some((r) => keyOf(r) === k));
     if (!added.length && !changed.length && !removed.length) continue;

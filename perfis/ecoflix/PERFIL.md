@@ -26,16 +26,25 @@ legendas .srt/.vtt; trilha lo-fi com ducking; nada coberto com tarja (os dados s
 **Sem**: contador de etapas, travessão na copy (as aberturas da fonte têm travessão: tirar), logo de terceiros, preço
 de plano na fala.
 
-## Identidade (marca `perfis/ecoflix/marca`)
+## Identidade (marca `perfis/ecoflix/marca`, estilo `ecosistema-reciclagem`)
 - Logo oficial (repositório do EcoSistema, `src/assets`): símbolo de reciclagem em **3 peças** com gradiente verde
   (#5CE593 → #408B68) + wordmark **EcoFlix®**: `ecoflix_logo_light.png` no fundo escuro, `ecoflix_logo_dark.png` no
-  claro. EcoSistema: `ecosistema_logo_light.png` e `ecosistema_logo_dark.png`. Nunca redesenhar.
-- **Vinheta de abertura** (~4,4 s, molde da Domiflix): as 3 peças do símbolo se encaixam girando (no lugar das 3 peças
-  do capacete), passa um brilho, o símbolo vai para a esquerda e o "EcoFlix" sai de trás; embaixo, o título da aula;
-  escurece. Som: o oficial da EcoFlix que já toca no app (`src/assets/ecoflix-intro.mp3`, 4,1 s), com o encaixe das
-  peças nos golpes dele; se não casar, o sintetizado da Domiflix noutra tonalidade (o Kaik deixou a vinheta a critério,
-  10/11). Mídia não vai para o git: o instalador copia do repositório do app.
-- **Cartela final** (3,9 s): a mesma montagem do logo + "Até a próxima aula!".
+  claro. EcoSistema: `ecosistema_logo_light.png` e `ecosistema_logo_dark.png`. Nunca redesenhar: as 3 peças e o nome
+  saíram do `ecoflix_logo_light.png` por `kit/brand_extract.py --pecas` (cores originais; empilhadas, refazem o PNG).
+- **Vinheta de abertura** (4,42 s, os tempos e curvas do capacete; escura em 4,30 s): as 3 peças giram em volta do
+  centro, no sentido das setas, e se encaixam (soco e brilho), passa o reflexo, o símbolo vai para a esquerda e o
+  "EcoFlix" sai de trás; embaixo, o fio verde e o título da aula (sem "▶ ECOFLIX": o nome já está no logo); escurece.
+- **Som** (decidido em 10/11; o Kaik deixou a critério): o oficial do app (`src/assets/ecoflix-intro.mp3`, "tã-dã" em
+  Ré com cauda que morre sozinha), inteiro: o 1º golpe cai quando a última peça assenta (0,88 s) e o 2º no encaixe
+  (1,02 s); por baixo, o respiro e os whooshes das peças; −19 LUFS com 0,3 dB de limitador. Casou em duração, final e
+  volume. Mídia fora do git: `APP_SRC=<código do app> bash instalar.sh` copia; sem o arquivo, vai o sintetizado da
+  Domiflix 2 semitons acima (Mi maior). **Escolha (10/11): o sintetizado em Mi maior** (`"som": ""` no marca.json),
+  porque o player da EcoFlix já toca o som oficial antes de cada vídeo e ele soaria duas vezes seguidas. Para voltar ao
+  oficial (ex.: vídeo usado fora do player), `"som": "assets/ecoflix-intro.mp3"`.
+- **Cartela final** (3,85 s): a mesma montagem do logo + fio + "Até a próxima aula!"; o encaixe em 1,20 s e a cauda do
+  som some com o preto.
+- Vinheta de capítulo, cartões "Antes:"/"Próximo:", avisos, destaques, cursor e palco: o layout da Domiflix nas cores
+  daqui (tudo lê o marca.json).
 - Cores: acento **#50D088** (o verde do símbolo), escuro **#121212** (fundo do tema escuro do app), claro **#F3F4F6**.
   O verde da interface do app (#16A34A) não é acento do vídeo: fica escuro demais no palco.
 - Fonte **Montserrat** (a do app, igual à Domiflix). Nunca a "Netflix Sans" das telas da EcoFlix (fonte da Netflix).
@@ -52,15 +61,19 @@ de plano na fala.
 - Antes da primeira aula: um nó só com todas as palavras da tabela abaixo, na voz escolhida, para conferir.
 
 ### Pronúncia (no texto do TTS; a legenda usa a grafia da tela; `narracao/config_narracao.json`)
-A troca fala → legenda precisa do mesmo número de palavras: sigla soletrada vai com hífen ("ene-éfe-é" → "NF-e").
+Som exato: o eleven_v4 aceita IPA entre barras no lugar da palavra ("/ˈẽniˈɛfiˈe/"); é o caminho quando a grafia
+não basta (NF-e, NFS-e, ICMS: soletradas soavam "blocadas", de corrido só funcionavam dentro da frase). Acento tônico
+em cada letra deixa a sigla "vocal" (Kaik, 10/11). Com hífen quando a voz já lê bem (CFOP, MTR). Troca fala → legenda
+com o mesmo número de palavras dos dois lados (o IPA conta como uma).
 | Tela / legenda | Texto do TTS | Situação |
 |---|---|---|
 | EcoSistema | Ecossistema | ok (sem o "ss" o TTS erra) |
 | EcoFlix / EcoTray / Cato | Écoflix / Ecotrêi / Cáto | ok (Kaik ouviu, 10/11) |
-| NF-e / NFS-e | ene-éfe-ê / ene-éfe-ésse-ê | Kaik, 10/11: "ENE ÉFE Ê", "ENE ÉFE ÉSSE Ê" |
+| NF-e | /ˈẽniˈɛfiˈe/ (IPA) | Kaik, 10/11 01:16: o melhor do teste 6 (o guia do eleven_v4 aceita IPA entre barras) |
+| NFS-e | /ˈẽːniˈɛːfiˈɛːsiˈeː/ (IPA, provisório) | Kaik, 10/11 01:19: o S ainda ruim nos três do teste 7; teste 8 |
 | SEFAZ | sefás | Kaik, 10/11: é "SEFÁS" ("séfaz" saía "séfas") |
 | CFOP | cê-éfe-ó-pê | Kaik, 10/11: soletrada ("cê-fópi" saía "cêfop") |
-| ICMS | i-cê-eme-ésse | Kaik, 10/11: soletrada, como sigla |
+| ICMS | /iˈseˈɛmiˈɛːsːi/ (IPA) | Kaik, 10/11 01:19: a 4 do teste 7 ("o S tá ótimo") |
 | Kardex | cardécs | Kaik, 10/11: é "CARDÉX" ("cárdecs" saía "cárdex") |
 | DANFE / NCM | dânfi / ene-cê-ême | ok (10/11) |
 | CST / CSOSN | cê-ésse-tê / cê-ésse-ó-ésse-ene | ok (10/11) |
@@ -114,6 +127,10 @@ A minutagem da fonte é alvo; a duração é a da fala (~790 caracteres de narra
 ## Edição
 Igual à Domiflix (specs.json do T3, zooms por `label`, `min_w` 1300, folha de zooms, folha de 3 s do vídeo inteiro).
 Zoom nos campos críticos da fonte: CNPJ, peso, valor, alíquota, chave de acesso, número da nota.
+**Ilustração de conceito** (Kaik, 10/11: bem mais que na Domiflix): cada `[ILUSTRAÇÃO: ...]` do roteiro vira uma cena
+do kit `cenas/cenas_ecoflix.html` (estilo, utilidades e os exemplos "Tara e peso líquido" e "Caixa × competência"),
+presa às palavras da fala, renderizada só no trecho (`--de/--ate`) e encaixada sobre a janela do app
+(`docs/09-aula-ilustrada.md`, "Ilustração de conceito no meio do capítulo"); antes da voz, com tempos estimados.
 Montagem com `perfis/ecoflix/aula.json` (trilha lo-fi própria: `music_seed` provisório 5, decide-se na prévia).
 
 ## Entrega

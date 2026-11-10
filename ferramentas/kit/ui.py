@@ -25,7 +25,7 @@ KIT = os.path.dirname(os.path.abspath(__file__))
 TUT_HOME = os.path.dirname(KIT)
 FONTS = os.path.join(KIT, "fonts")
 REF = (0, 197, 151)  # verde de referência: fundos e luzes derivados foram desenhados para ele
-ESTILOS = ("logo", "dominex-capacete")
+ESTILOS = ("logo", "dominex-capacete", "ecosistema-reciclagem")
 NEUTRA = {"serie": "Tutoriais",
           "cores": {"acento": "#3B82F6", "escuro": "#1E1E1E", "claro": "#F3F4F6"},
           "fonte": {"familia": "Montserrat", "arquivos": {}},
@@ -95,6 +95,14 @@ def carregar_marca(path=None):
         return p
     for k in ("arquivo", "simbolo", "wordmark"):
         m["logo"][k] = arq(m["logo"].get(k), "logo." + k)
+    if m["logo"].get("pecas") or m["vinheta"]["estilo"] == "ecosistema-reciclagem":  # símbolo em peças (kit/brand_extract.py --pecas)
+        if not m["logo"].get("pecas"):
+            raise ValueError('marca.json: o estilo "ecosistema-reciclagem" precisa de "logo": {"pecas": "assets/pecas.json"} '
+                             "(gere com kit/brand_extract.py --pecas)")
+        m["logo"]["pecas"] = arq(m["logo"]["pecas"], "logo.pecas")
+    if m["vinheta"].get("som"):  # som próprio da vinheta (mídia fora do git: o instalar.sh copia); sem o arquivo, som sintetizado
+        p = os.path.normpath(os.path.join(base, os.path.expanduser(str(m["vinheta"]["som"]))))
+        m["vinheta"]["som"], m["vinheta"]["som_ausente"] = (p, "") if os.path.isfile(p) else ("", p)
     fa = m["fonte"].get("arquivos") or {}
     fa = {"400": fa} if isinstance(fa, str) else fa  # um arquivo só (ex.: fonte variável)
     m["fonte"]["arquivos"] = {int(w): arq(p, f"fonte.arquivos.{w}") for w, p in fa.items() if p}
@@ -323,6 +331,13 @@ def dados_web(m=None):
     for k in ("arquivo", "simbolo", "wordmark"):
         if m["logo"][k]:
             arqs["img:" + k] = m["logo"][k]
+    if m["vinheta"]["estilo"] == "ecosistema-reciclagem":  # peças, símbolo, brilho e nome copiados sem recorte (o quadro é a geometria)
+        geo = json.load(open(m["logo"]["pecas"], encoding="utf-8")); pasta = os.path.dirname(m["logo"]["pecas"])
+        geo = {k: v for k, v in geo.items() if not k.startswith("_")}
+        for parte in [geo["simbolo"], geo["brilho"], geo["wordmark"]] + geo["pecas"]:
+            nome = "pecas-" + os.path.basename(parte["arquivo"])
+            arqs[nome] = os.path.join(pasta, parte["arquivo"]); parte["arquivo"] = nome
+        cfg["pecas"] = geo
     return cfg, arqs
 
 
@@ -363,6 +378,8 @@ if __name__ == "__main__":
     else:
         print("marca.json:", MARCA["_arquivo"] or "(nenhum: padrão neutro)")
         print("série:", MARCA["serie"] or "(sem rótulo)", "| vinheta:", MARCA["vinheta"]["estilo"], "| cartela:", MARCA["cartela"]["frase"])
+        if MARCA["vinheta"].get("som") or MARCA["vinheta"].get("som_ausente"):
+            print("som da vinheta:", MARCA["vinheta"].get("som") or f"FALTA {MARCA['vinheta']['som_ausente']} (vai o sintetizado)")
         print("cores: acento", hexa(ACCENT), "texto", hexa(ACCENT_TEXT), "sobre o acento", hexa(ON_ACCENT), "escuro", hexa(DARK), "claro", hexa(LIGHT))
         print("fonte:", MARCA["fonte"].get("familia"), {w: os.path.relpath(p, TUT_HOME) for w, p in FONT_FILES.items()})
         print("logo:", {k: v for k, v in MARCA["logo"].items() if v})

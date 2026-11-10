@@ -1,47 +1,126 @@
-"""Folha de TODOS os destaques e zooms do 9:16 (celular) com o rótulo ao lado e conferência por OCR do texto do alvo.
-uso: python3 -I folha_destaques.py <saida.jpg>   (lê t0v2/edit/caps/cap0N.9x16.chapter.json e as gravações do celular; imprime os destaques com OCR OK/NAO CONFERE;
-destaque = retângulo vermelho, zoom = janela azul; tesseract 'eng' tira o acento, então "dúvidas"/"Cobranças" podem sair como falha de OCR: olhe o quadro).
-Ajuste E (pasta edit da aula) e ZL (rótulos dos zooms, na ordem do capítulo) para outra aula."""
-import json, subprocess, os, sys, unicodedata, re
+#!/usr/bin/env python3
+"""Folha de TODOS os destaques e zooms do 9:16 da tela real do celular, com o rótulo ao lado e conferência por OCR do texto do alvo (T0 v2).
+uso: python3 -I folha_destaques.py [saida.jpg] [NN ...]   (padrão: out/folha_destaques_9x16.jpg e todos os caps/capNN.9x16.chapter.json)
+Lê os caps/capNN.9x16.chapter.json e as gravações do celular ("video" do JSON); para cada destaque (spot) tira o quadro em at + 0,9 s,
+recorta o alvo, passa o OCR (tesseract) e diz se as duas primeiras palavras do rótulo aparecem (OK / NAO CONFERE). Destaque = retângulo
+vermelho; zoom = janela azul (o que o zoom mostra), com o número do zoom no capítulo e os tempos. O tesseract 'eng' tira o acento e
+troca letras ("formagao", "ddvidas"): cada palavra vale com parecença >= 0,8; NAO CONFERE pede olhar o quadro. Sem tesseract a folha sai
+igual, sem a coluna do OCR.
+Saídas: a folha e <saida>.json com [capítulo, tipo, rótulo, t, ok, texto lido] (os destaques também vão para a tela)."""
+import difflib
+import glob
+import json
+import os
+import re
+import shutil
+import subprocess
+import sys
+import tempfile
+import unicodedata
+
 from PIL import Image, ImageDraw, ImageFont
-sys.path.insert(0,'/home/claude/domiflix/t0v2/edit')
-E='/home/claude/domiflix/t0v2/edit'
-def norm(s): return re.sub(r'[^a-z0-9 ]','',unicodedata.normalize('NFD',s.lower()).encode('ascii','ignore').decode())
-def frame(video,t,path):
-    subprocess.run(['ffmpeg','-y','-loglevel','error','-ss',str(max(t,0)),'-i',video,'-frames:v','1',path],check=True); return Image.open(path).convert('RGB')
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+saida = sys.argv[1] if len(sys.argv) > 1 else os.path.join(HERE, 'out', 'folha_destaques_9x16.jpg')
+todos = sorted(m.group(1) for p in glob.glob(os.path.join(HERE, 'caps', 'cap*.9x16.chapter.json'))
+               if (m := re.fullmatch(r'cap(\d\d[a-z]?)\.9x16\.chapter\.json', os.path.basename(p))))
+caps = [f'{int(m[1]):02d}{m[2]}' for a in sys.argv[2:] if (m := re.fullmatch(r'(\d+)([a-z]?)', a))] or todos
+OCR = shutil.which('tesseract')
+TMP = tempfile.mkdtemp(prefix='folha_destaques_')
+
+
+def norm(s):
+    return re.sub(r'[^a-z0-9 ]', '', unicodedata.normalize('NFD', s.lower()).encode('ascii', 'ignore').decode())
+
+
+def frame(video, t):
+    p = os.path.join(TMP, 'f.png')
+    subprocess.run(['ffmpeg', '-y', '-loglevel', 'error', '-ss', str(max(t, 0)), '-i', video, '-frames:v', '1', p], check=True)
+    return Image.open(p).convert('RGB')
+
+
 def ocr(img):
-    img.save('/tmp/claude-0/fd/o.png'); return subprocess.run(['tesseract','/tmp/claude-0/fd/o.png','-','--psm','6','-l','eng'],capture_output=True,text=True).stdout
-ZL={1:['Formação básica','Na sequência do seu plano','Conheça este módulo','selo Não tem no seu plano','botão Escolher meu plano','Materiais e extras','Trilha do seu plano 43%','Próxima recomendada','abre o Menu','Tutoriais | Domiflix'],
- 2:['Trilha do seu plano'],3:['botão Tirar dúvidas ... / clica','busca do guia','Falar com o Suporte / clica'],4:['status ... valor','Pagar Agora ... 20% de desconto'],
- 5:['abre Gerenciar Meu Plano','Cobranças online ... CRM / Kanban','sobe usuários ... 2'],6:['marca a caixa ... botão Confirmar']}
-cells=[]; rel=[]
-for n in range(1,7):
-    c=json.load(open(f'{E}/caps/cap{n:02d}.9x16.chapter.json')); v=c['video']
-    for s in c['spots']:
-        t=s['at']+0.9; im=frame(v,t,'/tmp/claude-0/fd/f.png'); x,y,w,h=s['rect']
-        crop=im.crop((max(0,int(x-6)),max(0,int(y-6)),min(im.width,int(x+w+6)),min(im.height,int(y+h+6))))
-        txt=norm(ocr(crop.resize((crop.width*3,crop.height*3))))
-        ok=all(tok in txt for tok in norm(s['label']).split()[:2]) 
-        d=ImageDraw.Draw(im); d.rectangle((x,y,x+w,y+h),outline=(255,0,0),width=6)
-        reg=im.crop((0,max(0,int(y-200)),780,min(im.height,int(y+h+200))))
-        cells.append((f'cap{n:02d} t={t:.1f}s DESTAQUE "{s["label"]}"  OCR: {"OK" if ok else "NAO CONFERE"}',reg)); rel.append((n,'destaque',s['label'],round(t,1),ok,txt[:50]))
-    for i,z in enumerate(c['zooms']):
-        t=z['at']+0.8; im=frame(v,t,'/tmp/claude-0/fd/f.png'); x,y,w,h=z['rect']
-        d=ImageDraw.Draw(im); d.rectangle((x+4,y+4,x+w-4,y+h-4),outline=(0,160,255),width=8)
-        lab=ZL[n][i] if i<len(ZL[n]) else '?'
-        cells.append((f'cap{n:02d} t={t:.1f}s ZOOM "{lab}" (janela azul = o que o zoom mostra)',im)); rel.append((n,'zoom',lab,round(t,1),None,''))
-W=300; font=ImageFont.load_default()
-rows=[]; per=6
-for k in range(0,len(cells),per):
-    row=cells[k:k+per]; imgs=[]
-    for cap,im in row:
-        r=im.resize((W,int(im.height*W/im.width))); canvas=Image.new('RGB',(W,r.height+36),(20,20,20)); canvas.paste(r,(0,36)); ImageDraw.Draw(canvas).text((3,3),cap[:55]+'\n'+cap[55:110],fill=(255,255,255),font=font); imgs.append(canvas)
-    hh=max(i.height for i in imgs); R=Image.new('RGB',(W*per,hh),(0,0,0))
-    for j,i in enumerate(imgs): R.paste(i,(j*W,0))
-    rows.append(R)
-H=sum(r.height for r in rows); S=Image.new('RGB',(W*per,H)); yy=0
-for r in rows: S.paste(r,(0,yy)); yy+=r.height
-out=sys.argv[1]; S.save(out,quality=88); json.dump(rel,open(out+'.json','w'),ensure_ascii=False)
+    p = os.path.join(TMP, 'o.png')
+    img.save(p)
+    return subprocess.run([OCR, p, '-', '--psm', '6', '-l', 'eng'], capture_output=True, text=True).stdout
+
+
+def quebra(texto, fonte, larg):
+    """linhas do rótulo que cabem em `larg` px na fonte (palavra a palavra)"""
+    linhas, cur = [], ''
+    for w in texto.split():
+        prova = (cur + ' ' + w).strip()
+        if cur and fonte.getlength(prova) > larg:
+            linhas.append(cur)
+            cur = w
+        else:
+            cur = prova
+    return linhas + [cur]
+
+
+cells, rel = [], []
+try:
+    for nn in caps:
+        c = json.load(open(os.path.join(HERE, 'caps', f'cap{nn}.9x16.chapter.json')))
+        v = c['video']
+        if not os.path.isabs(v):
+            v = os.path.normpath(os.path.join(HERE, 'caps', v))
+        for s in c.get('spots', []):
+            t = s['at'] + 0.9
+            im = frame(v, t)
+            x, y, w, h = s['rect']
+            rot = s.get('label') or ''
+            ok, txt = None, ''
+            if OCR and rot:
+                crop = im.crop((max(0, int(x - 6)), max(0, int(y - 6)), min(im.width, int(x + w + 6)), min(im.height, int(y + h + 6))))
+                txt = norm(ocr(crop.resize((crop.width * 3, crop.height * 3))))
+                lidas = txt.split()  # tolera 1 letra trocada pelo OCR (ç -> g, ú -> d): parecença >= 0,8 por palavra
+                ok = all(tok in txt or any(difflib.SequenceMatcher(None, tok, w).ratio() >= 0.8 for w in lidas) for tok in norm(rot).split()[:2])
+            ImageDraw.Draw(im).rectangle((x, y, x + w, y + h), outline=(255, 0, 0), width=6)
+            reg = im.crop((0, max(0, int(y - 200)), im.width, min(im.height, int(y + h + 200))))
+            nota = '' if ok is None else f'  OCR: {"OK" if ok else "NAO CONFERE"}'
+            cells.append((f'cap{nn} t={t:.1f}s DESTAQUE "{rot}"{nota}', reg))
+            rel.append((nn, 'destaque', rot, round(t, 1), ok, txt[:50]))
+        for i, z in enumerate(c.get('zooms', []), 1):
+            if 'rect' not in z:
+                continue  # repouso (câmera parada) e alvos sem retângulo
+            t = z['at'] + 0.8
+            im = frame(v, t)
+            x, y, w, h = z['rect']
+            ImageDraw.Draw(im).rectangle((x + 4, y + 4, x + w - 4, y + h - 4), outline=(0, 160, 255), width=8)
+            lab = z.get('label') or f'zoom {i} ({z["at"]:.1f}-{z.get("end", z["at"]):.1f} s)'
+            cells.append((f'cap{nn} t={t:.1f}s ZOOM {lab} (janela azul = o que o zoom mostra)', im))
+            rel.append((nn, 'zoom', lab, round(t, 1), None, ''))
+finally:
+    shutil.rmtree(TMP, ignore_errors=True)
+if not cells:
+    raise SystemExit('nenhum destaque nem zoom nos caps/capNN.9x16.chapter.json')
+W = 300
+FONTE = os.path.join(os.environ.get('TUT_HOME') or os.path.dirname(os.path.dirname(HERE)), 'kit', 'fonts', 'Montserrat-600.ttf')
+font = ImageFont.truetype(FONTE, 12) if os.path.exists(FONTE) else ImageFont.load_default()  # com acento (a padrão do PIL não tem)
+rows, per = [], 6
+for k in range(0, len(cells), per):
+    imgs = []
+    for cap, im in cells[k:k + per]:
+        r = im.resize((W, int(im.height * W / im.width)))
+        canvas = Image.new('RGB', (W, r.height + 36), (20, 20, 20))
+        canvas.paste(r, (0, 36))
+        ImageDraw.Draw(canvas).text((3, 3), '\n'.join(quebra(cap, font, W - 6)[:2]), fill=(255, 255, 255), font=font)
+        imgs.append(canvas)
+    hh = max(i.height for i in imgs)
+    linha = Image.new('RGB', (W * per, hh), (0, 0, 0))
+    for j, i in enumerate(imgs):
+        linha.paste(i, (j * W, 0))
+    rows.append(linha)
+S = Image.new('RGB', (W * per, sum(r.height for r in rows)))
+yy = 0
+for r in rows:
+    S.paste(r, (0, yy))
+    yy += r.height
+os.makedirs(os.path.dirname(os.path.abspath(saida)), exist_ok=True)
+S.save(saida, quality=88)
+json.dump(rel, open(saida + '.json', 'w'), ensure_ascii=False)
 for r in rel:
-    if r[1]=='destaque': print(r)
-print(S.size)
+    if r[1] == 'destaque':
+        print(r)
+print(saida, S.size, f'{len(cells)} quadros' + ('' if OCR else ' (sem tesseract: sem OCR)'))

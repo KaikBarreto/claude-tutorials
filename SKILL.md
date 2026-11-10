@@ -79,7 +79,8 @@ presa às palavras da fala (`edit/cenas/`), conferida em quadros antes do render
 ## 6. Montagem, legendas, conferência e entrega (`docs/05`, `06`, `07`)
 `python3 -I titulos.py` (títulos falados) → `python3 -I finish.py caps/<AULA>.aula.json` (vinheta da aula, vinhetas
 de capítulo com voz e SFX, cortes, trilha com ducking, cartela) → `python3 -I legendas_aula.py ...` →
-`python3 -I entregar.py out/<AULA> "<Série> - <Título>"` (specs, volume, folha de quadros). Entregue **o vídeo
+`python3 -I entregar.py out/<AULA> "<Série> - <Título>"` (specs, volume, folha de quadros) → **folha de 3 s do vídeo
+inteiro** (`bash folhas3s.sh out/<AULA>/aula_final.mp4 out/<AULA>/folhas3s`), olhada do começo ao fim. Entregue **o vídeo
 completo** 1080p + `.srt` + `.vtt` com o mesmo nome.
 
 ## Sempre
