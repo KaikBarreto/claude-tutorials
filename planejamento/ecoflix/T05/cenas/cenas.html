@@ -1,0 +1,480 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<!-- Kit de ilustração da EcoFlix: estilo + utilidades + duas cenas de exemplo do ferro-velho. Mesmo formato do
+     cenas_modelo.html (docs/09-aula-ilustrada.md): 1280x800 CSS, renderizado quadro a quadro por render_cenas.cjs
+     (window.setup(dados) + window.R(t)); tudo é função do tempo t (nada de transição/animação CSS); cada mudança presa a
+     uma palavra da fala com W(linha, 'palavra'[, ocorrência, 's'|'e']).
+     Na EcoFlix a ilustração entra NO MEIO do capítulo gravado, cobrindo a janela do app, sempre que a fala explica um
+     conceito ([ILUSTRAÇÃO: ...] no roteiro): copie para <tutorial>/edit/cenas/cenas.html, escreva um CAPS[n] por capítulo
+     (várias ilustrações do mesmo capítulo cabem no mesmo CAPS[n], cada uma no seu trecho) e renderize só o trecho dela:
+       node render_cenas.cjs <n> ../../narracao/capNN.json <saida.mp4> --de <at> --ate <at + dur>
+     Antes da voz, tempos estimados: python3 tempos_estimados.py exemplo/cap01.json "fala 0" "fala 1" ...
+     Exemplos: CAPS[1] "Tara e peso líquido" (exemplo/cap01.json) e CAPS[2] "Caixa × competência" (exemplo/cap02.json).
+     Regras: rótulos exatos do app ("Peso bruto", "Tara", "Peso líquido", "Competência", "Regime de Caixa"), dados do
+     mundo da Recicla Vale Metais, objetos genéricos sem marca, nenhum logo de terceiros, texto medido (cabe no cartão). -->
+<style>
+@font-face{font-family:M;font-weight:500;src:url(../../../web/fonts/montserrat-latin-500-normal.woff2) format('woff2')}
+@font-face{font-family:M;font-weight:600;src:url(../../../web/fonts/montserrat-latin-600-normal.woff2) format('woff2')}
+@font-face{font-family:M;font-weight:700;src:url(../../../web/fonts/montserrat-latin-700-normal.woff2) format('woff2')}
+@font-face{font-family:M;font-weight:800;src:url(../../../web/fonts/montserrat-latin-800-normal.woff2) format('woff2')}
+@font-face{font-family:M;font-weight:500;src:url(../../../web/fonts/montserrat-latin-ext-500-normal.woff2) format('woff2');unicode-range:U+0100-024F}
+@font-face{font-family:M;font-weight:700;src:url(../../../web/fonts/montserrat-latin-ext-700-normal.woff2) format('woff2');unicode-range:U+0100-024F}
+/* ---------------------------------------------------------------- paleta EcoFlix (marca: acento #50D088, escuro #121212)
+   --v  acento: preenchimentos, barras, contornos de destaque (nunca texto sobre branco: contraste baixo)
+   --ve verde escuro: texto e ícone verde sobre branco (contraste 5,0)   --vc verde claro: fundo de ícone/resultado
+   --a  âmbar: o SEGUNDO conceito da cena (ex.: competência x caixa)     --ae texto âmbar (5,9)   --ac âmbar claro
+   --t  texto (o escuro da marca)   --c texto secundário (4,8)   --l linhas   --e painel escuro (mostrador) */
+:root{--v:#50D088;--ve:#2E7D57;--vc:#EAF8F0;--vm:#A9E9C6;--a:#F2B63D;--ae:#8A5A00;--ac:#FFF5DF;
+  --t:#121212;--c:#6B7280;--l:#E6E9EE;--e:#121212}
+*{box-sizing:border-box;margin:0;padding:0;transition:none!important;animation:none!important}
+html,body{width:1280px;height:800px;overflow:hidden;background:#fff}
+body{font-family:M,sans-serif;color:var(--t);-webkit-font-smoothing:antialiased}
+#st{position:absolute;inset:0;overflow:hidden;background:
+  radial-gradient(1100px 650px at 92% -12%,rgba(80,208,136,.09),transparent 62%),
+  radial-gradient(900px 600px at -12% 112%,rgba(80,208,136,.06),transparent 60%),#fff}
+.g{position:absolute;left:0;top:0;width:1280px;height:800px;transform-origin:640px 400px}
+.ab{position:absolute}
+.row{display:flex;align-items:center}
+/* título da cena: área (kicker) + conceito; sozinho fica grande no centro e sobe quando o desenho entra */
+.kick{font-weight:700;font-size:15px;letter-spacing:.3em;color:var(--ve);text-transform:uppercase}
+.h{font-weight:800;font-size:46px;letter-spacing:-.01em;line-height:1.1}
+/* cartão, chip, etiqueta, ícone */
+.card{position:absolute;background:#fff;border:1px solid #E1E8E4;border-radius:18px;
+  box-shadow:0 18px 40px rgba(16,24,40,.10),0 3px 8px rgba(16,24,40,.06)}
+.ic{display:inline-flex;align-items:center;justify-content:center;flex:none}
+.ic svg{width:100%;height:100%}
+.ico{display:flex;align-items:center;justify-content:center;flex:none;border-radius:14px;background:var(--vc);color:var(--ve)}
+.ico.a{background:var(--ac);color:var(--ae)}
+.tag{display:inline-flex;align-items:center;gap:8px;padding:9px 18px;border-radius:999px;font-weight:800;font-size:20px;white-space:nowrap}
+.tag.v{background:var(--vc);color:var(--ve)} .tag.a{background:var(--ac);color:var(--ae)}
+.lbl{font-weight:700;font-size:17px;color:var(--c)}
+.num{font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+.op{position:absolute;width:60px;height:60px;border-radius:50%;background:#F2F4F7;color:var(--t);display:flex;
+  align-items:center;justify-content:center;font-weight:800;font-size:34px;line-height:1}
+/* mostrador da balança (painel escuro, número no acento) */
+.most{background:var(--e);border-radius:16px;padding:16px 22px 18px;box-shadow:0 16px 34px rgba(16,24,40,.22)}
+.most .ml{position:relative;height:20px;font-weight:700;font-size:15px;letter-spacing:.22em;color:#A9E9C6;text-transform:uppercase}
+.most .ml span{position:absolute;left:0;top:0;white-space:nowrap}
+.most .mn{margin-top:6px;font-weight:800;font-size:44px;color:var(--v);font-variant-numeric:tabular-nums;white-space:nowrap}
+.rip{position:absolute;width:56px;height:56px;margin:-28px 0 0 -28px;border-radius:50%;border:3px solid var(--v);opacity:0}
+</style></head>
+<body><div id="st"></div>
+<script>
+// ------------------------------------------------------------------ utilidades (as do cenas_modelo.html + as da EcoFlix)
+const cl=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
+const eo=x=>1-Math.pow(1-cl(x),3);
+const eio=x=>{x=cl(x);return x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2};
+const pr=(t,a,d=.45)=>cl((t-a)/d);
+const lerp=(a,b,p)=>a+(b-a)*p;
+const $=s=>document.querySelector(s);
+const ST=document.getElementById('st');
+function el(html,parent=ST){const d=document.createElement('div');d.innerHTML=html.trim();let f=null;for(const n of [...d.childNodes]){parent.appendChild(n);if(!f&&n.nodeType===1)f=n}return f}
+function grupo(){return el('<div class="g"></div>')}
+function ic(n,px,cor){const s=(window.ICONS||{})[n]||'';return `<span class="ic" style="width:${px}px;height:${px}px;${cor?'color:'+cor:''}">${s}</span>`}
+function hex(c){c=c.replace('#','');return[0,2,4].map(i=>parseInt(c.substr(i,2),16))}
+function mix(a,b,p){const A=hex(a),B=hex(b);return `rgb(${A.map((v,i)=>Math.round(v+(B[i]-v)*cl(p))).join(',')})`}
+// aparece em a, some em b (opacidade + leve subida + escala): a entrada e a saída suaves de tudo
+function vis(e,t,a,b=1e9,o={}){
+  const din=o.din??.5,dout=o.dout??.4,dy=o.dy??16,dx=o.dx??0,sc=o.sc??.985;
+  const p=eo(pr(t,a,din)),q=1-eo(pr(t,b,dout)),op=Math.min(p,q);
+  e.style.opacity=op.toFixed(4);e.style.visibility=op<=.001?'hidden':'visible';
+  const s=sc+(1-sc)*p - (1-q)*(1-sc);
+  e.style.transform=`translate(${((1-p)*dx).toFixed(2)}px,${((1-p)*dy-(1-q)*dy*.5).toFixed(2)}px) scale(${s.toFixed(4)})`;
+  return op;
+}
+function ripple(r,t,a){const p=pr(t,a,.7);r.style.opacity=(p>0&&p<1)?(.6*(1-p)).toFixed(3):0;r.style.transform=`scale(${(.4+2.0*eo(p)).toFixed(3)})`}
+function pulse(e,t,a,amp=.045,dur=.9){const p=pr(t,a,dur);e.style.scale=(p>0&&p<1)?(1+amp*Math.sin(Math.PI*p)).toFixed(4):''}
+function digita(e,txt,t,a,b){const p=cl((t-a)/Math.max(.05,b-a));const n=Math.round(p*txt.length);
+  const car=(p>0&&p<1)||(Math.floor(t*2.2)%2===0&&p<1.2&&t>=a)?'<span style="color:var(--v);font-weight:500">|</span>':'';
+  e.innerHTML=(txt.slice(0,n)||'')+(t>=a&&t<b+.8?car:'');}
+// EcoFlix: números e dinheiro no jeito brasileiro; contagem suave de um número; traço que se desenha; arco; contorno
+const NF=new Intl.NumberFormat('pt-BR');
+const kg=v=>NF.format(Math.round(v))+' kg';
+const brl=v=>'R$ '+v.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
+function conta(e,t,a,d,v0,v1,fmt=kg){const p=eo(pr(t,a,d));const s=fmt(lerp(v0,v1,p));if(e.textContent!==s)e.textContent=s;return p}
+function traco(p,t,a,d=.8){if(!p._L){p._L=p.getTotalLength();p.style.strokeDasharray=p._L}const q=eio(pr(t,a,d));p.style.strokeDashoffset=(p._L*(1-q)).toFixed(2);p.style.opacity=q>0?1:0;return q}
+function arco(e,t,a,d,x0,y0,x1,y1,h=-80,rot=0){const p=eio(pr(t,a,d));const x=lerp(x0,x1,p),y=lerp(y0,y1,p)+h*4*p*(1-p);
+  e.style.transform=`translate(${x.toFixed(2)}px,${y.toFixed(2)}px) rotate(${(rot*p).toFixed(2)}deg)`;return p}
+function contorno(e,t,a,de,para,d=.45){e.style.borderColor=mix(de,para,eo(pr(t,a,d)))}
+// título padrão da cena: grande no centro enquanto está sozinho, sobe para o alto quando o desenho entra (em "sobe")
+function titulo(g,kick,txt){return el(`<div class="ab" style="left:0;top:0;width:1280px;text-align:center">
+  <div class="kick">${kick}</div><div class="h" style="margin-top:12px">${txt}</div></div>`,g)}
+function posTitulo(e,t,a,sobe,sai=1e9){vis(e,t,a,sai,{dy:14});const p=eio(pr(t,sobe,.7));
+  e.style.top=lerp(318,46,p).toFixed(2)+'px';e.style.scale=lerp(1.12,1,p).toFixed(4)}
+
+// ------------------------------------------------------------------ tempos da fala (capNN.json do proc.py ou estimado)
+let D=null;
+const norm=w=>w.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9%./-]+/g,'');
+function W(linha,palavra,n=1,campo='s'){
+  const alvo=norm(palavra);let k=0;
+  for(const w of D.words){if(w.linha===linha&&norm(w.w).replace(/[.,]$/,'')===alvo){k++;if(k===n)return w[campo]}}
+  for(const w of D.words){if(w.linha===linha&&norm(w.w).startsWith(alvo)){k++;if(k>=n)return w[campo]}}
+  console.warn('palavra não achada',linha,palavra);return L(linha);
+}
+const L=i=>(D.linhas[i]||{s:0}).s, LE=i=>(D.linhas[i]||{e:D.dur}).e;
+
+// ------------------------------------------------------------------ desenhos genéricos (sem marca)
+// caminhão de lado (frente para a direita), com a carga de sucata em pedaços (.pd) que podem ser descarregados
+function caminhao(){
+  const pd=[ // [forma, cor, centro da peça, destino no monte atrás do caminhão (deslocamento do centro e giro)]
+    ['<polygon points="28,90 44,52 88,42 100,90"/>','#8C5A3C',[64,66],[-224,148,6]],
+    ['<polygon points="82,90 102,36 146,48 154,90"/>','#6F7983',[118,63],[-318,122,12]],
+    ['<rect x="118" y="44" width="112" height="16" rx="8" transform="rotate(-8 174 52)"/>','#9AA3AD',[174,52],[-334,98,-18]],
+    ['<polygon points="148,90 170,54 212,44 232,90"/>','#A0694A',[190,67],[-425,148,-8]],
+    ['<polygon points="210,90 232,40 276,54 286,90"/>','#4F5861',[248,65],[-373,120,-10]],
+    ['<polygon points="258,90 282,60 308,66 312,90"/>','#8A949E',[285,75],[-375,148,4]],
+    ['<g><circle cx="192" cy="64" r="19"/><circle cx="192" cy="64" r="7" fill="#8A949E"/></g>','#5E6670',[192,64],[-242,155,200]],
+    ['<polygon points="40,70 60,50 84,64 64,86"/>','#B07A55',[62,68],[-307,100,30]]];
+  const pecas=pd.map(([f,c,[cx,cy],[dx,dy,r]])=>`<g class="pd" data-cx="${cx}" data-cy="${cy}" data-dx="${dx}" data-dy="${dy}" data-r="${r}" fill="${c}">${f}</g>`).join('');
+  const roda=x=>`<g class="roda" data-x="${x}" transform="translate(${x},196)"><circle r="26" fill="#1B1F24"/><circle r="12" fill="#9AA3AD"/>
+    <rect x="-2.5" y="-23" width="5" height="10" rx="2" fill="#5B636C"/><rect x="-2.5" y="13" width="5" height="10" rx="2" fill="#5B636C"/></g>`;
+  return `<svg viewBox="0 0 500 230" width="500" height="230" style="overflow:visible">
+    <g class="carga">${pecas}</g>
+    <rect x="18" y="86" width="304" height="88" rx="6" fill="#7E8994"/>
+    <rect x="16" y="82" width="308" height="11" rx="4" fill="#68727D"/>
+    <g stroke="#707A85" stroke-width="3">${[78,138,198,258].map(x=>`<line x1="${x}" y1="98" x2="${x}" y2="168"/>`).join('')}</g>
+    <path d="M334,176 L334,76 Q334,64 346,64 L412,64 L462,116 L472,121 Q480,124 480,134 L480,176 Z" fill="#2F3640"/>
+    <path d="M348,78 L406,78 L444,116 L348,116 Z" fill="#D7E5ED"/>
+    <rect x="470" y="142" width="10" height="11" rx="2" fill="#F2B63D"/>
+    <rect x="12" y="170" width="472" height="15" rx="4" fill="#23282E"/>
+    ${roda(92)}${roda(158)}${roda(416)}
+  </svg>`;
+}
+
+// ------------------------------------------------------------------ T05 · utilidades que faltavam no kit (desta aula)
+// ícone do EcoTray: o assets/icon.png do próprio EcoTray (1.7.22), reduzido para 128 px. É o mesmo da bandeja do Windows
+// nas cenas de Windows; nunca redesenhar.
+const ECO='data:image/png;base64,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';
+const kgd=(v,c=1)=>v.toLocaleString('pt-BR',{minimumFractionDigits:c,maximumFractionDigits:c})+' kg';   // peso com casas
+const VERM='#B42318', VERMC='#FEF3F2', VERMB='#F04438';                                     // erro (contraste 6,5)
+// o elemento (left:0;top:0) viaja por um caminho SVG da página, com o centro sobre o ponto; devolve o progresso
+function segue(e,path,t,a,d){const p=eio(pr(t,a,d));const L=path.getTotalLength(),pt=path.getPointAtLength(L*p);
+  e.style.transform=`translate(${(pt.x-e.offsetWidth/2).toFixed(2)}px,${(pt.y-e.offsetHeight/2).toFixed(2)}px)`;return p}
+// objeto que viaja: aparece no começo do trajeto e some no fim (sem saltar)
+function viaja(e,path,t,a,d){const p=segue(e,path,t,a,d);const op=t<a?0:Math.min(1,cl((t-a)/.18),p<1?1:1-cl((t-a-d)/.25));
+  e.style.opacity=op.toFixed(3);e.style.visibility=op<=.001?'hidden':'visible';return p}
+// papel saindo da impressora: a janela (overflow hidden) tem a base na fenda e o papel sobe de dentro dela
+function papel(jan,pap,t,a,d=.8){const p=eio(pr(t,a,d));pap.style.transform=`translateY(${((1-p)*(pap.offsetHeight+4)).toFixed(2)}px)`;
+  jan.style.visibility=p>0?'visible':'hidden';return p}
+// caminho SVG na página toda (1280x800), por baixo ou por cima conforme a ordem de criação
+function caminho(d,pai,{cor='var(--v)',lw=6,tr=null,op=1}={}){const s=el(`<svg class="ab" style="left:0;top:0;overflow:visible" width="1280" height="800">
+  <path d="${d}" fill="none" stroke="${cor}" stroke-width="${lw}" stroke-linecap="round" ${tr?`stroke-dasharray="${tr}"`:''} opacity="${op}"/></svg>`,pai);
+  return s.querySelector('path')}
+// ---- desenhos genéricos desta aula (sem marca): impressora de cupom, balança de plataforma, carroça, teclado,
+//      computador, janela de navegador, celular, campo de peso
+function impressoraSVG(w=230){const h=w*170/230;return `<svg viewBox="0 0 230 170" width="${w}" height="${h}">
+  <rect x="10" y="152" width="210" height="12" rx="6" fill="#101828" opacity=".08"/>
+  <rect x="8" y="46" width="214" height="110" rx="20" fill="#39424E"/>
+  <rect x="22" y="20" width="186" height="50" rx="18" fill="#4A5563"/>
+  <rect x="36" y="36" width="158" height="9" rx="4.5" fill="#1B1F24"/>
+  <rect x="26" y="116" width="44" height="16" rx="8" fill="#2B323B"/>
+  <circle cx="196" cy="124" r="6" fill="#50D088"/></svg>`}
+// fenda da impressora (x do centro, y da fenda e largura útil) para uma impressora de largura w
+const fenda=w=>({cx:w*115/230, y:w*40/230, larg:w*150/230});
+function plataformaSVG(w=360){return `<svg viewBox="0 0 360 30" width="${w}" height="${w*30/360}">
+  <rect x="1" y="3" width="358" height="16" rx="5" fill="#CBD1D8" stroke="#A8B0B9" stroke-width="2"/>
+  <rect x="20" y="19" width="24" height="9" rx="2" fill="#A8B0B9"/><rect x="316" y="19" width="24" height="9" rx="2" fill="#A8B0B9"/></svg>`}
+// carroça de carroceiro (de lado): caixa de tábuas sobre uma roda de pneu, varais para a direita apoiados num pé
+function carrocaSVG(w=240){return `<svg viewBox="0 0 260 140" width="${w}" height="${w*140/260}" style="overflow:visible">
+  <polygon points="24,46 44,18 80,24 88,46" fill="#6F7983"/><polygon points="76,46 96,8 134,16 142,46" fill="#A0694A"/>
+  <rect x="104" y="14" width="80" height="13" rx="6.5" transform="rotate(-8 144 20)" fill="#9AA3AD"/>
+  <polygon points="140,46 158,22 184,28 190,46" fill="#4F5861"/>
+  <circle cx="58" cy="34" r="13" fill="#5E6670"/><circle cx="58" cy="34" r="5" fill="#8A949E"/>
+  <rect x="8" y="42" width="190" height="52" rx="5" fill="#8C5A3C"/>
+  <g stroke="#6B4A33" stroke-width="3"><line x1="10" y1="60" x2="196" y2="60"/><line x1="10" y1="77" x2="196" y2="77"/></g>
+  <rect x="4" y="38" width="198" height="9" rx="4" fill="#6B4A33"/>
+  <line x1="196" y1="84" x2="256" y2="90" stroke="#6B4A33" stroke-width="8" stroke-linecap="round"/>
+  <line x1="246" y1="90" x2="246" y2="133" stroke="#6B4A33" stroke-width="6" stroke-linecap="round"/>
+  <circle cx="98" cy="104" r="32" fill="#1B1F24"/><circle cx="98" cy="104" r="13" fill="#9AA3AD"/><circle cx="98" cy="104" r="4" fill="#5B636C"/></svg>`}
+function tecladoSVG(w=210){let k='';for(let r=0;r<3;r++)for(let c=0;c<10;c++)k+=`<rect x="${13+c*19}" y="${12+r*17}" width="15" height="13" rx="3" fill="#fff"/>`;
+  return `<svg viewBox="0 0 214 86" width="${w}" height="${w*86/214}"><rect width="214" height="86" rx="12" fill="#DDE2E8"/>${k}
+  <rect x="52" y="63" width="110" height="13" rx="3" fill="#fff"/></svg>`}
+function pcHTML(w=200,h=136,eco=true,ico=17){return `<div style="position:relative;width:${w}px;height:${h+36}px">
+  <div style="position:absolute;left:0;top:0;width:${w}px;height:${h}px;border-radius:12px;background:#2F3640;padding:8px">
+   <div class="tela" style="position:relative;width:100%;height:100%;border-radius:6px;background:#F4F6F8;overflow:hidden">
+    <div style="position:absolute;left:12px;top:12px;width:44%;height:9px;border-radius:5px;background:#DCE1E7"></div>
+    <div style="position:absolute;left:12px;top:28px;width:64%;height:9px;border-radius:5px;background:#E6EAEE"></div>
+    <div class="row" style="position:absolute;left:0;right:0;bottom:0;height:${ico+11}px;background:#E1E5EA;justify-content:flex-end;gap:7px;padding:0 9px">
+     ${eco?`<img class="trayico" src="${ECO}" width="${ico}" height="${ico}">`:''}
+     <div><div style="width:26px;height:4px;border-radius:2px;background:#A9B1BB"></div><div style="width:20px;height:4px;border-radius:2px;background:#C3C9D0;margin-top:3px"></div></div>
+    </div></div></div>
+  <div style="position:absolute;left:${w/2-12}px;top:${h}px;width:24px;height:24px;background:#3B4450"></div>
+  <div style="position:absolute;left:${w/2-52}px;top:${h+23}px;width:104px;height:11px;border-radius:6px;background:#2F3640"></div></div>`}
+function navegadorHTML(w,h,aba,fs=16){return `<div class="card" style="left:0;top:0;width:${w}px;height:${h}px;overflow:hidden;border-radius:16px">
+  <div class="row" style="height:46px;background:#EEF1F4;border-bottom:1px solid var(--l);padding:0 16px;gap:7px">
+   <span style="width:11px;height:11px;border-radius:50%;background:#C9CED6"></span><span style="width:11px;height:11px;border-radius:50%;background:#C9CED6"></span>
+   <span style="width:11px;height:11px;border-radius:50%;background:#C9CED6"></span>
+   <div style="margin-left:14px;align-self:flex-end;height:36px;padding:0 18px;border-radius:10px 10px 0 0;background:#fff;display:flex;align-items:center;font-weight:700;font-size:${fs}px">${aba}</div></div>
+  <div class="navc" style="position:relative;height:${h-46}px"></div></div>`}
+// esqueleto de conteúdo (blocos cinza) dentro de uma tela genérica
+const esq=(x,y,w,h=12,c='#E6EAEE')=>`<div style="position:absolute;left:${x}px;top:${y}px;width:${w}px;height:${h}px;border-radius:${Math.min(6,h/2)}px;background:${c}"></div>`;
+function celularHTML(w=170,h=330){return `<div style="position:relative;width:${w}px;height:${h}px;border-radius:30px;background:#2F3640;padding:10px">
+  <div class="tela" style="position:relative;width:100%;height:100%;border-radius:22px;background:#F4F6F8;overflow:hidden">
+   <div style="position:absolute;left:50%;top:8px;width:56px;height:14px;margin-left:-28px;border-radius:7px;background:#2F3640"></div></div></div>`}
+// campo de peso genérico: valor, "kg" e um ícone à direita
+function campoHTML(w,h=68,fs=34){return `<div class="campo" style="position:relative;width:${w}px;height:${h}px;border:2px solid #D0D5DD;border-radius:14px;background:#fff;
+  display:flex;align-items:center;padding:0 16px 0 20px;gap:10px"><div class="cv num" style="font-size:${fs}px;white-space:nowrap"></div>
+  <div class="cu" style="font-weight:700;font-size:${Math.round(fs*.56)}px;color:var(--c)">kg</div><div class="ci" style="margin-left:auto;position:relative;width:30px;height:30px"></div></div>`}
+function sacoSVG(w=130){return `<svg viewBox="0 0 140 150" width="${w}" height="${w*150/140}">
+  <path d="M30 40 Q18 72 17 110 Q17 143 70 145 Q123 143 123 110 Q122 72 110 40 Z" fill="#E8DCC2" stroke="#C9B994" stroke-width="3"/>
+  <g stroke="#D6C7A6" stroke-width="2"><path d="M24 78 Q70 86 116 78" fill="none"/><path d="M20 106 Q70 114 120 106" fill="none"/></g>
+  <path d="M33 42 Q70 30 107 42 L99 20 Q70 12 41 20 Z" fill="#DCCFB0" stroke="#C9B994" stroke-width="2"/>
+  <rect x="42" y="33" width="56" height="9" rx="4.5" fill="#B39F74"/></svg>`}
+// a ponte (cap00, cap01, cap09): o sistema no navegador (pedido e comprovante) à esquerda, o computador com o EcoTray no
+// meio, a balança (em cima) e a impressora (embaixo) à direita; cabos, linha verde e as rotas do peso e do cupom
+function ponte(g,{carga='carroca',navX=50}={}){
+  const o={};
+  o.cB=caminho('M 856 240 C 790 240, 800 392, 742 392',g,{cor:'#4B5563',lw:5});
+  o.cP=caminho('M 742 442 C 820 442, 860 640, 948 640',g,{cor:'#4B5563',lw:5});
+  o.vA=caminho('M 538 392 C 482 392, 480 318, 424 318',g);
+  o.vB=caminho('M 538 442 C 482 442, 480 560, 424 560',g);
+  o.r1=caminho('M 856 240 C 790 240, 800 392, 742 392 L 640 392',g,{op:0});        // balança → EcoTray
+  o.r2=caminho('M 640 392 L 538 392 C 482 392, 480 318, 424 318',g,{op:0});        // EcoTray → pedido
+  o.r3=caminho('M 424 560 C 482 560, 480 442, 538 442 L 640 442',g,{op:0});        // comprovante → EcoTray
+  o.r4=caminho('M 640 442 L 742 442 C 820 442, 860 640, 948 640',g,{op:0});        // EcoTray → impressora
+  o.ext=el('<div class="ab" style="left:0;top:0;width:1280px;height:800px"></div>',g);   // camada para o que a cena desenha por baixo
+  o.nav=el(`<div class="ab" style="left:${navX}px;top:168px;width:400px;height:540px">${navegadorHTML(400,540,'EcoSistema')}</div>`,g);
+  const navc=o.nav.querySelector('.navc'); o.navc=navc;
+  o.ped=el(`<div class="ab" style="left:30px;top:24px;width:340px"><div class="row" style="gap:12px">
+    <div class="ico" style="width:40px;height:40px">${ic('clipboard-list',22)}</div><div style="font-weight:800;font-size:21px">Pedido</div></div>
+    <div style="margin-top:14px">${campoHTML(340)}</div></div>`,navc);
+  o.campo=o.ped.querySelector('.campo'); o.cv=o.ped.querySelector('.cv'); o.ci=o.ped.querySelector('.ci');
+  o.icX=el(`<div class="ab" style="left:0;top:0;opacity:0">${ic('circle-x',30,VERM)}</div>`,o.ci);
+  o.icOk=el(`<div class="ab" style="left:0;top:0;opacity:0">${ic('circle-check',30,'#2E7D57')}</div>`,o.ci);
+  o.car=el('<div class="ab" style="left:0;top:16px;width:3px;height:36px;border-radius:2px;background:var(--v);opacity:0"></div>',o.campo);
+  el(esq(30,176,250,12,'#EEF1F4')+esq(30,198,170,12,'#EEF1F4')+esq(30,424,280,12,'#EEF1F4')+esq(30,446,190,12,'#EEF1F4'),navc);
+  o.doc=el(`<div class="card" style="left:30px;top:296px;width:340px;height:100px;padding:0 22px;display:flex;align-items:center;gap:14px;
+    box-shadow:0 8px 20px rgba(16,24,40,.08)"><div class="ico a" style="width:52px;height:52px">${ic('file-text',28)}</div>
+    <div style="font-weight:800;font-size:22px">Comprovante</div>
+    <div class="tag a" style="margin-left:auto;font-size:17px;padding:6px 14px;opacity:0">PDF</div></div>`,navc);
+  o.tagPdf=o.doc.querySelector('.tag');
+  o.viaj=el('<div class="ab" style="left:0;top:0;width:1280px;height:800px"></div>',g);  // o que viaja passa por trás do EcoTray
+  o.pc=el(`<div class="ab" style="left:540px;top:338px">${pcHTML(200,136)}</div>`,g);
+  o.tray=o.pc.querySelector('.trayico');
+  o.pcl=el(`<div class="ab row" style="left:540px;top:522px;width:200px;justify-content:center;gap:9px">
+    <img src="${ECO}" width="28" height="28"><div style="font-weight:800;font-size:20px">EcoTray</div></div>`,g);
+  o.bal=el('<div class="ab" style="left:0;top:0;width:1280px;height:800px"></div>',g);
+  el(`<div class="ab" style="left:880px;top:408px">${plataformaSVG(340)}</div>`,o.bal);
+  el('<div class="ab" style="left:958px;top:280px;width:10px;height:134px;border-radius:4px;background:#B9C1C9"></div>',o.bal);
+  o.carga=carga==='saco'?el(`<div class="ab" style="left:1060px;top:268px">${sacoSVG(130)}</div>`,o.bal)
+                       :el(`<div class="ab" style="left:982px;top:291px">${carrocaSVG(226)}</div>`,o.bal);
+  o.most=el(`<div class="ab most" style="left:856px;top:196px;width:214px;text-align:center"><div class="mn" style="margin-top:0">0 kg</div></div>`,o.bal);
+  o.mn=o.most.querySelector('.mn');
+  const F=fenda(230);
+  o.jan=el(`<div class="ab" style="left:${935+F.cx-62}px;top:${548+F.y-122}px;width:124px;height:122px;overflow:hidden;visibility:hidden"></div>`,g);
+  o.pap=el(`<div class="ab" style="left:2px;top:6px;width:120px;height:116px;background:#fff;border:1px solid #D0D5DD;border-radius:4px;
+    box-shadow:0 4px 10px rgba(16,24,40,.10)">${esq(14,16,70,9,'#98A2B3')}${esq(14,36,92,7)}${esq(14,52,80,7)}${esq(14,68,92,7)}
+    ${esq(14,90,56,9,'#98A2B3')}</div>`,o.jan);
+  o.imp=el(`<div class="ab" style="left:935px;top:548px">${impressoraSVG(230)}</div>`,g);
+  return o;
+}
+// pílula verde do peso e ficha do cupom (o que viaja pela ponte)
+const pilulaHTML=txt=>`<div class="ab" style="left:0;top:0;padding:8px 16px;border-radius:999px;background:var(--v);color:#0E3B25;font-weight:800;
+  font-size:22px;white-space:nowrap;box-shadow:0 6px 16px rgba(80,208,136,.35)">${txt}</div>`;
+const fichaHTML=()=>`<div class="ab" style="left:0;top:0;width:52px;height:52px;border-radius:14px;background:#fff;border:2px solid var(--v);
+  display:flex;align-items:center;justify-content:center;color:var(--ve);box-shadow:0 6px 16px rgba(16,24,40,.12)">${ic('receipt-text',28)}</div>`;
+// viaja em duas pernas (até o EcoTray, uma pausa por trás dele, e adiante); visível do começo ao fim do trajeto
+function viaja2(e,ra,rb,t,a,da,pausa,db){const b=a+da+pausa;if(t<b)segue(e,ra,t,a,da);else segue(e,rb,t,b,db);
+  const op=t<a?0:Math.min(1,cl((t-a)/.18),1-cl((t-b-db)/.25));e.style.opacity=op.toFixed(3);e.style.visibility=op<=.001?'hidden':'visible'}
+// linha pontilhada que se desenha da esquerda para a direita (o traco() do kit troca o tracejado por um traço cheio)
+function pontilhado(p,t,a,d=.8){if(!p._bb)p._bb=p.getBBox();const q=eio(pr(t,a,d)),b=p._bb,s=p.ownerSVGElement;
+  s.style.clipPath=`inset(-20px ${(1280-(b.x+b.width*q)).toFixed(1)}px -20px -20px)`;p.style.opacity=q>0?1:0;return q}
+// balão de fala (texto curto), com a ponta embaixo à esquerda ('be') ou em cima à direita ('cd')
+function balaoHTML(txt,{cor='#D0D5DD',tx='var(--t)',fundo='#fff',ponta='be',fs=28}={}){
+  const pt=ponta==='be'?`left:26px;bottom:-9px;border-right:2px solid ${cor};border-bottom:2px solid ${cor}`
+                       :`right:26px;top:-9px;border-left:2px solid ${cor};border-top:2px solid ${cor}`;
+  return `<div style="position:relative;display:inline-block;padding:10px 22px;border-radius:18px;background:${fundo};border:2px solid ${cor};
+    font-weight:800;font-size:${fs}px;color:${tx};white-space:nowrap;box-shadow:0 8px 20px rgba(16,24,40,.10)">${txt}
+    <span style="position:absolute;${pt};width:16px;height:16px;background:${fundo};transform:rotate(45deg)"></span></div>`}
+
+// ------------------------------------------------------------------ CAPS[0] · Hoje, tudo à mão → com o EcoTray
+// fala (cap00): 1 "Hoje, o Marcos lê o peso no visor da balança e digita no sistema. A balança marca trezentos e doze
+// quilos, e no sistema entra trezentos e vinte e um."  2 "E o comprovante abre num PDF, que ainda precisa mandar pra
+// impressora."  3 "Com o EcoTray, o peso entra sozinho e o cupom sai na hora."
+// O mesmo desenho da ponte do cap01 (sistema à esquerda, balança e impressora à direita, o EcoTray no meio). Âncoras
+// fora dos números (a junção do mundo pode mudar o peso): a digitação vai de "entra" até o fim da linha.
+const CAPS={};
+CAPS[0]=()=>{
+  const PESO=312, DIGITADO='321';                           // a carroça do Valdir; o erro de digitação
+  const g=grupo();
+  const tit=el(`<div class="ab" style="left:0;top:0;width:1280px;text-align:center"><div class="kick">Balança e impressora</div>
+    <div class="h" style="margin-top:12px;position:relative;height:51px"><span id="h1" style="position:absolute;left:0;right:0">Hoje, tudo à mão</span>
+    <span id="h2" style="position:absolute;left:0;right:0;opacity:0">Com o EcoTray</span></div></div>`,g);
+  // hoje: a seta pontilhada do PDF até a impressora, com a dúvida no meio
+  const seta=caminho('M 432 560 C 580 560, 760 640, 924 640',g,{cor:'#98A2B3',lw:4,tr:'2 12'});
+  const duv=el(`<div class="ab" style="left:648px;top:570px;width:60px;height:60px;border-radius:50%;background:#fff;border:2px solid #D0D5DD;
+    display:flex;align-items:center;justify-content:center;font-weight:800;font-size:32px;color:#667085;box-shadow:0 6px 16px rgba(16,24,40,.08)">?</div>`,g);
+  const P=ponte(g,{carga:'carroca'});
+  const tec=el(`<div class="ab" style="left:535px;top:276px">${tecladoSVG(210)}</div>`,g);       // o Marcos digita
+  const pill=el(pilulaHTML(kg(PESO)),P.viaj), tok=el(fichaHTML(),P.viaj);
+  const rip=el('<div class="rip"></div>',g); rip.style.left='250px'; rip.style.top='318px';
+
+  return t=>{
+    const t0=W(1,'Hoje')-.3, tpe=W(1,'peso'), tvi=W(1,'visor'), tdi=W(1,'digita'), tsi=W(1,'sistema'), tma=W(1,'marca'),
+          ten=W(1,'entra'), tf1=LE(1);
+    const tco=W(2,'comprovante'), tpdf=W(2,'PDF'), tma2=W(2,'mandar'), tim=W(2,'impressora');
+    const t3=L(3), tec3=W(3,'EcoTray'), tp3=W(3,'peso'), tso=W(3,'sozinho'), tcu=W(3,'cupom');
+    posTitulo(tit,t,t0-.6,tpe-.15);
+    const q=eo(pr(t,t3-.15,.5)); $('#h1').style.opacity=(1-q).toFixed(3); $('#h2').style.opacity=q.toFixed(3);
+    // a balança com a carroça; o visor conta até o peso; pulsa no "visor" e no "marca"
+    vis(P.bal,t,tpe-.1,1e9,{dy:14}); conta(P.mn,t,tpe+.25,1.0,0,PESO);
+    pulse(P.most,t,tvi,.05,.7); pulse(P.most,t,tma,.05,.7);
+    // o sistema e o teclado; o Marcos digita, uma tecla por vez, até o fim da linha, e o número fica vermelho
+    vis(tec,t,tdi-.1,tec3,{dy:12}); vis(P.nav,t,tsi-.2,1e9,{dy:16});
+    const k0=ten+.3, st=Math.max(.2,(tf1-.25-k0)/2), nd=t<k0?0:Math.min(3,1+Math.floor((t-k0)/st));
+    const chega=tp3-.05+1.55;                                 // o peso da balança chega ao campo
+    const txt=t>=chega?String(PESO):DIGITADO.slice(0,nd); if(P.cv.textContent!==txt) P.cv.textContent=txt;
+    P.car.style.opacity=(t>=tsi&&t<tf1)?1:0; P.car.style.left=(P.cv.offsetLeft+P.cv.offsetWidth+3)+'px';
+    const er=eo(pr(t,tf1,.4)), ok=eo(pr(t,chega,.4));
+    P.campo.style.borderColor=ok>0?mix(VERMB,'#50D088',ok):mix('#D0D5DD',VERMB,er);
+    P.campo.style.background=ok>0?mix(VERMC,'#F4FBF7',ok):mix('#FFFFFF',VERMC,er);
+    P.cv.style.color=ok>0?mix(VERM,'#2E7D57',ok):mix('#121212',VERM,er);
+    P.icX.style.opacity=(er*(1-ok)).toFixed(3); P.icOk.style.opacity=ok.toFixed(3);
+    pulse(P.campo,t,tf1,.05,.8); pulse(P.most,t,tf1,.04,.8); pulse(P.campo,t,tso,.04,.8); ripple(rip,t,chega-.05);
+    // o comprovante abre num PDF; a seta pontilhada até a impressora, com a dúvida no meio
+    vis(P.doc,t,tco-.1,1e9,{dy:14}); vis(P.tagPdf,t,tco-.1,tec3,{dy:0,sc:.9}); pulse(P.tagPdf,t,tpdf,.08,.7);
+    pontilhado(seta,t,tma2-.1,.9); seta.style.opacity=(t>=tma2-.1?1-eo(pr(t,tec3,.4)):0).toFixed(3);
+    vis(duv,t,tma2+.35,tec3,{sc:.7,dy:0}); vis(P.imp,t,tim-.3,1e9,{dy:14});
+    // com o EcoTray: o teclado e a dúvida saem, o EcoTray entra no meio e as linhas se desenham
+    vis(P.pc,t,tec3-.1,1e9,{dy:14}); vis(P.pcl,t,tec3+.1,1e9,{dy:10});
+    traco(P.cB,t,tec3+.2,.6); traco(P.cP,t,tec3+.3,.6); traco(P.vA,t,tec3+.45,.5); traco(P.vB,t,tec3+.5,.5);
+    viaja2(pill,P.r1,P.r2,t,tp3-.05,.8,.1,.65);
+    viaja2(tok,P.r3,P.r4,t,tcu-.25,.5,.05,.5);
+    papel(P.jan,P.pap,t,tcu+.7,.8);
+  };
+};
+
+// ------------------------------------------------------------------ CAPS[1] · A ponte do EcoTray
+// fala (cap01): 1 "Mas o que é o EcoTray? O EcoSistema roda no navegador. E o navegador, sozinho, não conversa com a
+// balança nem com a impressora."  2 "O EcoTray é um programa pequeno, instalado no computador onde elas estão ligadas.
+// Ele faz a ponte."  3 "A balança manda o peso pro EcoTray, e ele passa pro sistema. Na volta, o sistema manda o cupom,
+// e o EcoTray entrega na impressora."
+CAPS[1]=()=>{
+  const PESO=18.6;                                          // o saco de latinha da Dona Cida (cap06)
+  const g=grupo();
+  const tit=titulo(g,'EcoTray','A ponte do EcoTray');
+  // sem cabo: o navegador não chega na balança nem na impressora (pontilhado cinza e um X no meio)
+  const tr=[caminho('M 456 440 L 602 440',g,{cor:'#C3C9D0',lw:4,tr:'2 12'}),
+            caminho('M 678 440 C 760 440, 790 240, 850 240',g,{cor:'#C3C9D0',lw:4,tr:'2 12'}),
+            caminho('M 678 440 C 760 440, 860 640, 942 640',g,{cor:'#C3C9D0',lw:4,tr:'2 12'})];
+  const xis=el(`<div class="ab" style="left:606px;top:406px;width:68px;height:68px;border-radius:50%;background:#F2F4F7;border:2px solid #D0D5DD;
+    display:flex;align-items:center;justify-content:center"><svg width="30" height="30" viewBox="0 0 30 30"><path d="M7 7 L23 23 M23 7 L7 23"
+    stroke="#667085" stroke-width="4" stroke-linecap="round"/></svg></div>`,g);
+  const P=ponte(g,{carga:'saco',navX:440});
+  const pill=el(pilulaHTML(kgd(PESO)),P.viaj), tok=el(fichaHTML(),P.viaj);
+  const ripT=el('<div class="rip"></div>',g); ripT.style.left='710px'; ripT.style.top='460px';   // ícone na bandeja
+  const ripC=el('<div class="rip"></div>',g); ripC.style.left='250px'; ripC.style.top='318px';   // campo do pedido
+
+  return t=>{
+    const t0=W(1,'Mas')-.3, tes=W(1,'EcoSistema'), tna=W(1,'navegador'), tba=W(1,'balanca'), tim=W(1,'impressora');
+    const tpg=W(2,'programa'), tcp=W(2,'computador'), tli=W(2,'ligadas'), tpo=W(2,'ponte');
+    const tma=W(3,'manda'), tet=W(3,'EcoTray'), tpa=W(3,'passa'), tsi=W(3,'sistema'), tma2=W(3,'manda',2),
+          tet2=W(3,'EcoTray',2), ten=W(3,'entrega'), tim3=W(3,'impressora');
+    posTitulo(tit,t,t0-.6,tes-.15);
+    // o sistema no navegador: entra no centro e vai para a esquerda quando a balança e a impressora chegam
+    vis(P.nav,t,tes-.15,1e9,{dy:16}); P.nav.style.left=lerp(440,50,eio(pr(t,tba-.75,.7))).toFixed(2)+'px';
+    pulse(P.nav,t,tna,.025,.7);
+    vis(P.bal,t,tba-.1,1e9,{dy:14}); if(t<tma+.2) conta(P.mn,t,tba+.2,.8,0,PESO,kgd);
+    vis(P.imp,t,tim-.15,1e9,{dy:14});
+    // o X no lugar do cabo, até o EcoTray entrar
+    const xa=tim+.15, xs=tpg-.1;
+    tr.forEach((p,i)=>{pontilhado(p,t,xa+i*.08,.5); if(t>=xa) p.style.opacity=(1-eo(pr(t,xs,.4))).toFixed(3)});
+    vis(xis,t,xa+.25,xs,{sc:.7,dy:0});
+    // o EcoTray: programa pequeno no computador; os cabos na palavra "ligadas"; a linha verde acende na "ponte"
+    vis(P.pcl,t,tpg-.1,1e9,{dy:10}); vis(P.pc,t,tcp-.15,1e9,{dy:14}); ripple(ripT,t,tcp+.35);
+    traco(P.cB,t,tli-.2,.6); traco(P.cP,t,tli-.1,.6);
+    traco(P.vA,t,tpo-.25,.5); traco(P.vB,t,tpo-.2,.5);
+    for(const v of [P.vA,P.vB]) v.style.filter=t>=tpo?`drop-shadow(0 0 ${(6*Math.sin(Math.PI*pr(t,tpo,.9))).toFixed(2)}px rgba(80,208,136,.9))`:'';
+    // o peso vai da balança ao EcoTray e dele ao sistema; o cupom faz o caminho de volta, até a impressora
+    const d1=Math.max(.8,tet-tma+.25), b2=tpa-.2, d2=Math.max(.7,tsi-tpa+.35);
+    viaja2(pill,P.r1,P.r2,t,tma-.05,d1,Math.max(0,b2-(tma-.05+d1)),d2);
+    const chega=Math.max(tma-.05+d1,b2)+d2;
+    const txt=t>=chega?'18,6':''; if(P.cv.textContent!==txt) P.cv.textContent=txt;
+    const ok=eo(pr(t,chega,.4)); P.campo.style.borderColor=mix('#D0D5DD','#50D088',ok); P.campo.style.background=mix('#FFFFFF','#F4FBF7',ok);
+    P.cv.style.color='#2E7D57'; P.icOk.style.opacity=ok.toFixed(3); ripple(ripC,t,chega-.05);
+    pulse(P.pcl,t,tet,.06,.7); pulse(P.pcl,t,tet2,.06,.7);
+    vis(P.doc,t,tes-.15,1e9,{dy:0});
+    const e1=Math.max(.7,tet2-tma2+.1), e2b=ten-.2, e2=Math.max(.7,tim3-ten+.15);
+    viaja2(tok,P.r3,P.r4,t,tma2-.1,e1,Math.max(0,e2b-(tma2-.1+e1)),e2);
+    papel(P.jan,P.pap,t,Math.max(tma2-.1+e1,e2b)+e2-.1,.8);
+  };
+};
+
+// ------------------------------------------------------------------ CAPS[3] · O pareamento
+// fala (cap03): 2 "Isso é o pareamento: o sistema e o EcoTray se reconhecem."  3 "O sistema procura o EcoTray dentro do
+// próprio computador. Por isso, ele vai instalado no computador em que a balança e a impressora estão ligadas."
+CAPS[3]=()=>{
+  const g=grupo();
+  const tit=titulo(g,'Conexão','O pareamento');
+  // um computador "por dentro": na tela, o navegador com o sistema e o EcoTray; a linha verde não sai da tela
+  const monitor=(eco)=>`<div style="position:relative;width:800px;height:500px">
+    <div class="bz" style="position:absolute;left:0;top:0;width:800px;height:440px;border-radius:22px;background:${eco?'#2F3640':'#98A2B3'};padding:14px;
+      box-shadow:0 0 0 0 rgba(80,208,136,0)">
+     <div class="tela" style="position:relative;width:100%;height:100%;border-radius:10px;background:${eco?'#F4F6F8':'#F2F4F7'};overflow:hidden">
+      <div class="row" style="position:absolute;left:0;right:0;bottom:0;height:40px;background:${eco?'#E1E5EA':'#EAECF0'};justify-content:flex-end;gap:10px;padding:0 16px">
+       ${eco?`<img src="${ECO}" width="26" height="26">`:''}<div><div style="width:40px;height:6px;border-radius:3px;background:#A9B1BB"></div>
+       <div style="width:30px;height:6px;border-radius:3px;background:#C3C9D0;margin-top:5px"></div></div></div></div></div>
+    <div style="position:absolute;left:380px;top:440px;width:40px;height:40px;background:${eco?'#3B4450':'#B9C1C9'}"></div>
+    <div style="position:absolute;left:310px;top:476px;width:180px;height:18px;border-radius:9px;background:${eco?'#2F3640':'#98A2B3'}"></div></div>`;
+  // computador 1 (com o EcoTray): um invólucro que encolhe e vai para a esquerda, e por dentro o que entra
+  const mv1=el('<div class="ab" style="left:0;top:0;width:800px;height:500px;transform-origin:0 0"></div>',g);
+  const pc1=el(`<div class="ab" style="left:0;top:0">${monitor(true)}</div>`,mv1);
+  const tela=pc1.querySelector('.tela'), bz=pc1.querySelector('.bz');
+  const lin=el(`<svg class="ab" style="left:0;top:0;overflow:visible" width="772" height="412"><path d="M 322 186 L 556 186" fill="none"
+    stroke="var(--v)" stroke-width="7" stroke-linecap="round"/></svg>`,tela).querySelector('path');
+  const nav=el(`<div class="ab" style="left:26px;top:60px;width:296px;height:252px">${navegadorHTML(296,252,'EcoSistema',24)}</div>`,tela);
+  el(esq(24,30,200,14,'#EEF1F4')+esq(24,58,150,14,'#EEF1F4')+esq(24,110,240,14,'#EEF1F4')+esq(24,138,180,14,'#EEF1F4'),nav.querySelector('.navc'));
+  const eco=el(`<div class="card" style="left:556px;top:108px;width:196px;height:156px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px">
+    <img src="${ECO}" width="62" height="62"><div style="font-weight:800;font-size:30px">EcoTray</div></div>`,tela);
+  const b1=el(`<div class="ab" style="left:330px;top:58px">${balaoHTML('EcoTray?',{fs:30})}</div>`,tela);
+  const b2=el(`<div class="ab" style="left:316px;top:224px">${balaoHTML('Aqui! v1.7.22',{cor:'var(--v)',tx:'var(--ve)',fundo:'#F4FBF7',ponta:'cd',fs:30})}</div>`,tela);
+  const scan=el('<div class="rip" style="width:120px;height:120px;margin:-60px 0 0 -60px;border-width:4px"></div>',tela); scan.style.left='322px'; scan.style.top='186px';
+  // computador 2 (sem EcoTray e sem cabo): cinza, a pergunta fica sem resposta
+  const mv2=el('<div class="ab" style="left:730px;top:172px;width:800px;height:500px;transform-origin:0 0;transform:scale(.62)"></div>',g);
+  const pc2=el(`<div class="ab" style="left:0;top:0">${monitor(false)}</div>`,mv2);
+  const tela2=pc2.querySelector('.tela');
+  const nav2=el(`<div class="ab" style="left:26px;top:60px;width:296px;height:252px;opacity:.75">${navegadorHTML(296,252,'EcoSistema',24)}</div>`,tela2);
+  el(esq(24,30,200,14,'#EEF1F4')+esq(24,58,150,14,'#EEF1F4')+esq(24,110,240,14,'#EEF1F4')+esq(24,138,180,14,'#EEF1F4'),nav2.querySelector('.navc'));
+  el(`<div class="ab" style="left:330px;top:58px">${balaoHTML('EcoTray?',{tx:'#667085',fs:30})}</div>`,tela2);
+  const sem=el(`<div class="ab" style="left:730px;top:496px;width:496px;text-align:center"><div class="tag" style="background:#F2F4F7;color:#475467">Sem EcoTray</div></div>`,g);
+  // a balança e a impressora, ligadas por cabo ao computador 1
+  const cab1=caminho('M 210 447 C 210 500, 190 510, 190 560',g,{cor:'#4B5563',lw:5});
+  const cab2=caminho('M 400 447 C 400 510, 457 540, 457 608',g,{cor:'#4B5563',lw:5});
+  const bal=el('<div class="ab" style="left:0;top:0;width:1280px;height:800px"></div>',g);
+  el(`<div class="ab" style="left:80px;top:692px">${plataformaSVG(230)}</div>`,bal);
+  el('<div class="ab" style="left:184px;top:616px;width:9px;height:80px;border-radius:4px;background:#B9C1C9"></div>',bal);
+  el(`<div class="ab" style="left:220px;top:616px">${sacoSVG(76)}</div>`,bal);
+  el(`<div class="ab most" style="left:118px;top:560px;width:144px;padding:10px 14px;text-align:center"><div class="mn" style="margin-top:0;font-size:28px">${kgd(18.6)}</div></div>`,bal);
+  const imp=el(`<div class="ab" style="left:372px;top:592px">${impressoraSVG(170)}</div>`,g);
+  mv1.after(cab1.parentNode); mv1.after(cab2.parentNode);   // cabos por cima do pé do monitor, por baixo dos aparelhos
+
+  return t=>{
+    const t0=W(2,'Isso')-.3, tpa=W(2,'pareamento'), tsi=W(2,'sistema'), tec=W(2,'EcoTray'), tre=W(2,'reconhecem');
+    const tpr=W(3,'procura'), tde=W(3,'dentro'), tpi=W(3,'Por'), tco2=W(3,'computador',2), tba=W(3,'balanca'), tim=W(3,'impressora'), tli=W(3,'ligadas');
+    posTitulo(tit,t,t0-.6,tpa-.2);
+    // o computador grande entra; o navegador pergunta, o EcoTray responde, a linha verde acende
+    vis(pc1,t,tpa-.15,1e9,{dy:16});
+    vis(nav,t,tsi-.2,1e9,{dy:12}); vis(b1,t,tsi+.15,1e9,{dy:8,sc:.9});
+    vis(eco,t,tec-.2,1e9,{dy:12}); vis(b2,t,tec+.2,1e9,{dy:8,sc:.9});
+    traco(lin,t,tre-.15,.6);
+    lin.style.filter=t>=tre?`drop-shadow(0 0 ${(7*Math.sin(Math.PI*pr(t,tre+.3,1.0))).toFixed(2)}px rgba(80,208,136,.9))`:'';
+    pulse(b1,t,tpr,.06,.8); ripple(scan,t,tpr+.1);
+    // "dentro do próprio computador": a moldura do computador ganha o contorno verde
+    const cv=eo(pr(t,tde,.5)); bz.style.boxShadow=`0 0 0 ${(6*cv).toFixed(2)}px rgba(80,208,136,${(.55*cv).toFixed(3)})`;
+    // "Por isso": o computador encolhe para a esquerda; ao lado, outro computador, sem EcoTray, fica cinza
+    const sh=eio(pr(t,tpi-.1,.8)); mv1.style.transform=`translate(${lerp(240,54,sh).toFixed(2)}px,${lerp(150,172,sh).toFixed(2)}px) scale(${lerp(1,.62,sh).toFixed(4)})`;
+    vis(pc2,t,tpi+.35,1e9,{dy:22});
+    vis(sem,t,tpi+.6,1e9,{dy:10});
+    pulse(pc1,t,tco2,.03,.7);
+    // a balança e a impressora ligadas no computador do EcoTray
+    vis(bal,t,tba-.15,1e9,{dy:12}); traco(cab1,t,tba-.1,.5);
+    vis(imp,t,tim-.15,1e9,{dy:12}); traco(cab2,t,tim-.1,.5);
+    if(t>=tli){const k=Math.sin(Math.PI*pr(t,tli,1.0));lin.style.filter=`drop-shadow(0 0 ${(8*k).toFixed(2)}px rgba(80,208,136,.95))`}
+    pulse(pc1,t,tli,.035,.8);
+  };
+};
+// ------------------------------------------------------------------ API para o renderizador
+let RENDER=null;
+window.setup=d=>{D=d;ST.innerHTML='';RENDER=CAPS[d.cap]();return true};
+window.R=t=>{RENDER(t);return true};
+</script></body></html>
