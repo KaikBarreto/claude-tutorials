@@ -248,3 +248,14 @@ Decisões:
   coordenador: T5 sem celular e papel de 58 mm; T8 com pesos digitados e compra finalizada no cap09. **Para o Kaik
   (possíveis bugs)**: o "Guia de Instalação" do EcoTray ainda fala em ZIP; valorizar ticket sem valores ignora a tabela de
   preço do fornecedor.
+- 10/11 03:2x **T0 e T25 prontas** (roteiro). T0: 14 blocos, 1.544 palavras, ~9,9 min de fala (~11,5 min de vídeo); o
+  vertical usa o mesmo áudio, com cada tela regravada no celular 390×844 (tabela no plano); trocas novas "Fiscal e
+  Ambiental" e "Coletas e Logística" (o "&" do menu); backend `get_ecoflix_learning_status` (4 estados),
+  `acknowledge_ecoflix_intro`, catálogo das 26 aulas. Código × fonte: o Pix Automático já vem ligado; sem permissão,
+  "Cancelar assinatura" some (não ganha cadeado); os rótulos do menu são outros. T25: 12 blocos, 1.308 palavras, ~8,4 min
+  de fala (~10 min de vídeo); pronúncias a testar Shift ("xífti", "xífti-cê"), "Vence em sete dias"; backend RPCs do
+  Dashboard; arrastos `[TESTAR]`. Código × fonte: o "?" não abre a lista de atalhos (o hook não está montado; a aula usa
+  o Ctrl+K); a Agenda já não conta o fiado em dobro (o ⚠️ saiu); o gráfico de 6 meses termina no fim do período do
+  filtro; o Marketplace saiu da rotina semanal. Decisões do coordenador: o "20 %" do anual não é falado (regra de
+  preço); o CRM sai do plano só no cap03 da T0; o cartão final da T25 é "Próximo: os módulos do seu plano". **Para o
+  Kaik (possível bug)**: o atalho "?" não abre a lista de atalhos.

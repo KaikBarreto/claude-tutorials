@@ -82,9 +82,11 @@ A cópia não traz `supabase/migrations`: o que as RPCs devolvem vem do contrato
   Shift+X "Caixa", Shift+P "Pedidos", Shift+E "Ver Estoque", Shift+S "Configurações", Shift+F "Funcionários (RH)", Shift+N
   "Fiscal & Ambiental", Shift+A "Agenda"; Ctrl+K "Busca Global". Não valem digitando num campo (`:170-177`). Ligados por
   padrão (`user_shortcuts.shortcuts_enabled`, `:50-92`).
-- **"Atalhos de Teclado"** (`components/KeyboardShortcutsModal.tsx`): abre com "?" (Shift + ?, `:150-157`) ou por "Ver Atalhos de
-  Teclado" na busca (digitando "atalho"); "Atalhos Globais" (Ctrl+Z "Desfazer última ação", Ctrl+Shift+Z, Esc, Enter),
-  "Geral", "Navegação" (rótulo, descrição e a tecla), quadro "Dica" (`:37-140`).
+- **"Atalhos de Teclado"** (`components/KeyboardShortcutsModal.tsx`): abre **só** por "Ver Atalhos de Teclado", na busca do Ctrl+K
+  (digitando "atalho", "teclado" ou "shortcut", `CommandPalette.tsx:555,660-680`), pelo evento `open-keyboard-shortcuts`
+  (`AppLayout.tsx:350-355,539`). O "?" do hook `useKeyboardShortcutsModal` (`:139-166`) **não está montado** em lugar nenhum.
+  Conteúdo: "Atalhos Globais" (Ctrl+Z "Desfazer última ação", Ctrl+Shift+Z, Esc, Enter), "Geral", "Navegação" (rótulo,
+  descrição e a tecla), quadro "Dica" (`:37-140`).
 - **Configurações → "Atalhos"** (`components/settings/SettingsShortcutsContent.tsx:100-148`): "Atalhos de Teclado" (chave),
   "Navegação" · "Clique na tecla para personalizar", "Geral", dicas ("Atalhos não funcionam quando você está digitando em
   campos de texto"). A aula só cita.
@@ -114,3 +116,7 @@ A cópia não traz `supabase/migrations`: o que as RPCs devolvem vem do contrato
 3. **"Evolução do lucro":** a tela diz "Evolução da Margem" e "Margem (Vendas − Compras)"; só a janela "Configurações do
    Dashboard" ainda diz "Card Lucro", "Evolução do Lucro" e "Comparativo Mensal - Lucro" (handoff para o time).
 4. **Rotina semanal "propostas do marketplace":** o Marketplace está fora da trilha (seção "fora" da fonte): sai da fala.
+5. **Lista de atalhos pelo "?":** o código tem o atalho, mas o hook não está montado; a lista abre pelo Ctrl+K ("Ver Atalhos de
+   Teclado"). A aula ensina esse caminho (handoff: montar o hook ou tirar o código morto).
+6. **"Contas a Pagar/Receber" e "Agenda" não estão na "Navegação" do Ctrl+K** (`CommandPalette.tsx:93-123`): a aula chega às duas
+   pelo menu e pelo Shift+A.

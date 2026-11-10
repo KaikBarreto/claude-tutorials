@@ -13,7 +13,7 @@ desenhada, nunca tela inventada), `[TESTAR]` (o robô confere antes de gravar). 
 - **Próximo:** as aulas dos módulos do plano (cartão "Próximo: os módulos do seu plano"; na trilha, a primeira é o T16)
 - **Vinhetas (áreas):** DASHBOARD · DASHBOARD · DASHBOARD · DASHBOARD · AGENDA · AGENDA · ATALHOS · ROTINA · ROTINA ·
   ROTINA · RESUMO (todos os capítulos menos o 0)
-- **Duração estimada:** ~10 min de vídeo (1.319 palavras de fala, ~8,5 min de voz a 2,6 palavras/s; 7.145 caracteres, ~9 min a
+- **Duração estimada:** ~10 min de vídeo (1.308 palavras de fala, ~8,4 min de voz a 2,6 palavras/s; 7.090 caracteres, ~9 min a
   790 por minuto, mais a vinheta de abertura, 11 vinhetas de capítulo, a cartela e as ações na tela); alvo da fonte ~13 min
 
 ### cap00 · Abertura
@@ -31,7 +31,7 @@ desenhada, nunca tela inventada), `[TESTAR]` (o robô confere antes de gravar). 
 | Tela | Fala |
 | --- | --- |
 | Capítulo novo (`inicio`), no Dashboard, filtro "Este mês". Destaque nos três cartões, um por vez: "Total Compras", "Total Vendas" e "Margem (Vendas − Compras)". | Lá em cima ficam três cartões: Total Compras, Total Vendas e a Margem. Eles seguem o filtro de período, que abre em Este mês. |
-| [ZOOM: o cartão "Margem (Vendas − Compras)", vermelho, com o valor negativo de novembro] | Repara na margem: é só as vendas menos as compras do período. Em novembro, até hoje, a Recicla Vale comprou mais do que vendeu, e ela aparece negativa, em vermelho. |
+| [ZOOM: o cartão "Margem (Vendas − Compras)", vermelho, com o valor negativo de novembro] | Repara na margem: ela é só vendas menos compras, no período. Em novembro, até hoje, a Recicla Vale comprou mais do que vendeu, e ela aparece negativa, em vermelho. |
 | [ILUSTRAÇÃO: margem × lucro. À esquerda, o pátio com uma pilha de ferro comprada no mês e a etiqueta "Comprado, esperando a venda", e a conta "Vendas − Compras" em vermelho. Na frase "o lucro de verdade", à direita, a conta "Vendas − custo do que foi vendido − impostos − despesas", com a etiqueta "Relatório Financeiro"] | Uma dica: margem não é lucro. Esse vermelho é material comprado que ainda está no pátio, esperando a venda. O lucro de verdade, com custo, imposto e despesa, fica no Relatório Financeiro. |
 | No filtro, escolhe "Mês passado": os cartões mudam para outubro. [ZOOM: "Total Compras" R$ 256.860,00, "Total Vendas" R$ 269.240,00 e "Margem (Vendas − Compras)" R$ 12.380,00, verde] [BACKEND: `get_financial_dre_summary` de outubro com os números do T15] | Agora, outubro inteiro. As vendas passaram as compras, e a margem ficou positiva: doze mil trezentos e oitenta reais. |
 | Clique em "Ver detalhes" no cartão da margem: a janela "Margem (Vendas − Compras)", "Detalhamento da métrica do período selecionado", com o bloco "Como é calculado": "Total de Vendas", "− Total de Compras", "= Margem". Depois da frase, fecha. | Em Ver detalhes, a conta aparece aberta: o total de vendas, menos o total de compras, dá a margem. |
@@ -93,13 +93,13 @@ desenhada, nunca tela inventada), `[TESTAR]` (o robô confere antes de gravar). 
 
 | Tela | Fala |
 | --- | --- |
-| Capítulo novo (`apos-cap05`), no Dashboard; tecla "?" (Shift + /): a janela "Atalhos de Teclado", com "Atalhos Globais", "Geral" e "Navegação". [TESTAR: o "?" abre a lista] | Pra andar mais rápido, tem os atalhos de teclado. Apertando a interrogação, aparece a lista inteira. |
+| Capítulo novo (`apos-cap05`), no Dashboard; tecla Ctrl+K: a busca abre ("Buscar páginas, clientes, fornecedores, materiais, funcionários..."), com "Ações Rápidas" e "Navegação". [TESTAR: o Ctrl+K chega à página, sem o atalho do navegador] | Pra andar mais rápido, o Ctrl+K abre a busca de tudo: telas, clientes, fornecedores, materiais e funcionários. |
+| Digita "cobre": em "Resultados da Busca", "Cobre mel", "Cobre misto" e os outros; passa o mouse em "Cobre mel": o painel ao lado mostra "Material", "Estoque", "P. Compra" e "P. Venda". [ZOOM: "P. Compra" R$ 42,50 e "P. Venda" R$ 47,90] | Digito cobre, e os materiais aparecem na hora. No Cobre mel, o painel mostra o estoque e os preços: quarenta e dois e cinquenta na compra e quarenta e sete e noventa na venda. |
+| A câmera fica no resultado ("Pressione Enter para abrir"). | Com Enter, você vai direto pra ele. |
+| Apaga a busca e digita "atalho": em "Sistema", "Ver Atalhos de Teclado"; Enter: a janela "Atalhos de Teclado", com "Atalhos Globais", "Geral" e "Navegação". (O "?" do teclado não abre a lista na 1.59.154: `useKeyboardShortcutsModal` não está montado; o caminho é este.) | E digitando atalho, aparece Ver Atalhos de Teclado, com a lista inteira. |
 | Destaque em "Navegação", um por vez: "Compra" Shift+C, "Venda" Shift+V, "Caixa" Shift+X e "Agenda" Shift+A. | É sempre Shift mais uma letra: Shift+C abre a compra, Shift+V a venda, Shift+X o caixa e Shift+A a agenda. |
 | Esc fecha; tecla Shift+X: abre o "Caixa"; depois, tecla Shift+D: volta ao Dashboard. | Olha: Shift+X, e o caixa abre. Shift+D, e volto pro Dashboard. |
 | A câmera fica no Dashboard. | Os atalhos valem fora dos campos de texto. Com o cursor num campo, a letra vai pro campo. |
-| Tecla Ctrl+K: a busca abre ("Buscar páginas, clientes, fornecedores, materiais, funcionários..."), com "Ações Rápidas" e "Navegação". [TESTAR: o Ctrl+K chega à página] | E o Ctrl+K abre a busca de tudo: telas, clientes, fornecedores, materiais e funcionários. |
-| Digita "cobre": em "Resultados da Busca", "Cobre mel", "Cobre misto" e os outros; passa o mouse em "Cobre mel": o painel ao lado mostra "Material", "Estoque", "P. Compra" e "P. Venda". [ZOOM: "P. Compra" R$ 42,50 e "P. Venda" R$ 47,90] | Digito cobre, e os materiais aparecem na hora. No Cobre mel, o painel mostra o estoque e os preços: quarenta e dois e cinquenta na compra e quarenta e sete e noventa na venda. |
-| Esc fecha. | Com Enter, você vai direto pra ele. É o jeito mais rápido de achar qualquer coisa. |
 
 ### cap08 · A rotina diária (vinheta: ROTINA)
 

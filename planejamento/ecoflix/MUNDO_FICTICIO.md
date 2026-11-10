@@ -137,3 +137,8 @@ vendeu pouco num mês) cabem num dos meses.
 - **Ticket de Pesagem** (T8): próximo ticket 58; caminhão da Cooperativa Recomeço com 9.460 kg na entrada e 6.380 kg na
   saída, 2 % de impureza (3.018,4 kg de Alumínio latinha a R$ 6,20 = R$ 18.714,08, pago por Pix); rascunho do Jair Lopes
   (Auto Peças Vale Forte); pesos digitados (a balança rodoviária fica fora do EcoTray).
+- **Assinatura e EcoFlix** (T0): plano Personalizado com 10 módulos, vence em 05/12/2026, `max_users` 3, 4 renovações
+  pagas com nota; o status da EcoFlix em 4 estados (portão no teste, trilha, e um capítulo sem `crm_kanban` para o selo
+  "Não tem no seu plano" aparecer); o catálogo das 26 aulas. A fala não diz o desconto do plano anual (regra de preço).
+- **Rotina** (T25): outubro com os números da T15 (margem de R$ 12.380,00, falada; conferir junto da DRE de +R$ 6.500 na
+  junção) e novembro com compras maiores que vendas; as contas da T13; 2 tarefas na Agenda; feriados de Taubaté.

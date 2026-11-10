@@ -20,7 +20,7 @@
 | 4 | DASHBOARD / O painel do seu jeito | "Configurações" → "Configurações do Dashboard": desliga "Métodos de Pagamento"; arrasta "Volume Semanal" para logo depois dos cartões; "Voltar ordem ao normal" em destaque. | `inicio` (layout padrão) |
 | 5 | AGENDA / Tarefas no calendário | Menu "Agenda" (mês de novembro); "Nova Tarefa": "Revisão do caminhão FKD2E41", 12/11, 09:00, "Lembrar no dia"; "Salvar"; arrasta para o dia 13; feriados dos dias 15 e 20. | `inicio` → `apos-cap05` |
 | 6 | AGENDA / Os avisos automáticos | "A Receber: R$ 4.790,00" (17/11) e "A Pagar: R$ 2.360,00" (23/11); clique → "Contas a Pagar/Receber"; dezembro: "Vencimento - Assinatura EcoSistema" (05/12); ilustração do fiado em parcelas; Dashboard com "1 lembrete para hoje". | `apos-cap05` |
-| 7 | ATALHOS / Atalhos e o Ctrl+K | "?" → "Atalhos de Teclado"; Shift+X (Caixa) e Shift+D (Dashboard); Ctrl+K, "cobre" → "Cobre mel" ("P. Compra" R$ 42,50, "P. Venda" R$ 47,90). | `apos-cap05` |
+| 7 | ATALHOS / Atalhos e o Ctrl+K | Ctrl+K, "cobre" → "Cobre mel" ("P. Compra" R$ 42,50, "P. Venda" R$ 47,90); "atalho" → "Ver Atalhos de Teclado" → "Atalhos de Teclado"; Shift+X (Caixa) e Shift+D (Dashboard). | `apos-cap05` |
 | 8 | ROTINA / A rotina diária | Ilustração "10 min"; "Tarefas para hoje" ao abrir; Ctrl+K → "Histórico do Caixa" ("Caixas Fechados" de 09/11); "Contas a Pagar/Receber" ("Vence em 7 dias"); Agenda: amanhã, "Coleta na Auto Peças Vale Forte" 08:00. 🔒 Coletas citado. | `apos-cap05` sem a marca do lembrete diário |
 | 9 | ROTINA / A rotina semanal | Ilustração "30 min"; Shift+E → "Estoque"; "Contas a Pagar/Receber" → aba "A Receber". | `apos-cap05` |
 | 10 | ROTINA / A rotina mensal | Ilustração "2 h" com as quatro tarefas e as aulas; Agenda → dezembro → dia 1 → "Nova Tarefa" "Fechamento de novembro" com "Lembrar no dia". 🔒 notas fiscais citado. | `apos-cap05` → `apos-cap10` |
@@ -76,8 +76,8 @@ no dia 13), `apos-cap10` (o fechamento de novembro no dia 1º de dezembro = esta
   `suppliers` (`linked_customer_id`), `companies`, `company_fiscal_config`, `user_shortcuts`, e as da busca do Ctrl+K
   (`customers`, `suppliers`, `balances`, `materials`, `employees`).
 - [TESTAR] o arrasto do Dashboard (dnd-kit, ponteiro, 8 px antes de pegar: apertar, mover devagar, soltar) e o da Agenda (arrasto
-  nativo do navegador, `dragstart`/`drop`); o clique num aviso compacto do mês levando às Contas; o "?" do teclado abrindo a
-  lista; o Ctrl+K não cair no atalho do navegador.
+  nativo do navegador, `dragstart`/`drop`); o clique num aviso compacto do mês levando às Contas; o Ctrl+K não cair no atalho do
+  navegador (a lista de atalhos abre pelo Ctrl+K, "Ver Atalhos de Teclado": o "?" não abre nada na 1.59.154).
 - **Ilustrações** (`docs/09-aula-ilustrada.md`): cap00 (as três perguntas do dia); cap01 (margem × lucro: o ferro parado no
   estoque); cap02 (31 dias × 10 dias); cap06 (uma venda a prazo virando três parcelas, cada uma num dia); cap08, cap09, cap10 (as
   rotinas com o relógio e os itens, cada item com a etiqueta da sua aula); cap11 (as três rotinas juntas).

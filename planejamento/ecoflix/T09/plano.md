@@ -6,7 +6,7 @@
   caixa aberto; reabertura para o caixa já fechado), reimprimir comprovante, e usar o Histórico do Caixa (relatórios e
   reabrir).
 - **Antes:** T8 "Ticket de Pesagem". **Próximo:** T10 "Estoque: saldo, histórico e posição".
-- **Duração:** alvo da fonte ~12 min; ver `roteiro.md` (fala natural).
+- **Duração:** alvo da fonte ~12 min; a fala dá ~10,9 min (1.702 palavras), ~12,5 min com vinhetas, PDFs e ações.
 - **Base:** `T09/inventario.md` (código 1.59.154). Desktop, logado como **Rafael Nogueira** (administrador).
 - **FAKE_NOW:** `2026-11-11T08:30:00-03:00` (quarta), a manhã seguinte ao dia do T6. Motivo: o caixa antigo a reabrir é
   do Marcos, que não está com caixa aberto nesse dia, e o Rafael já tem o caixa dele aberto (a edição de pedido sem caixa

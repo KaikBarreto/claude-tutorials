@@ -11,7 +11,7 @@ Na Recicla Vale Metais, o Rafael começa o dia com três perguntas: como vai o m
 As respostas ficam em duas telas do menu: o Dashboard, no alto, e a Agenda, no fim.
 Se você ainda não viu o tutorial do Cáto, o assistente, dá uma olhada antes. [pause] Vamos aos números.""",
 1: """Lá em cima ficam três cartões: Total Compras, Total Vendas e a Margem. Eles seguem o filtro de período, que abre em Este mês.
-Repara na margem: é só as vendas menos as compras do período. Em novembro, até hoje, a Recicla Vale comprou mais do que vendeu, e ela aparece negativa, em vermelho.
+Repara na margem: ela é só vendas menos compras, no período. Em novembro, até hoje, a Recicla Vale comprou mais do que vendeu, e ela aparece negativa, em vermelho.
 Uma dica: margem não é lucro. Esse vermelho é material comprado que ainda está no pátio, esperando a venda. O lucro de verdade, com custo, imposto e despesa, fica no Relatório Financeiro.
 Agora, outubro inteiro. As vendas passaram as compras, e a margem ficou positiva: doze mil trezentos e oitenta reais.
 Em Ver detalhes, a conta aparece aberta: o total de vendas, menos o total de compras, dá a margem.""",
@@ -43,13 +43,13 @@ O fiado com vencimento entra do mesmo jeito, uma vez só: cada parcela no seu di
 Clicando no aviso, você vai direto pra Contas a Pagar e Receber, pra conferir ou dar baixa.
 E o vencimento da assinatura do Ecossistema também entra, em laranja: aqui, no sábado, cinco de dezembro.
 E as tarefas com Lembrar no dia aparecem no alto do Dashboard, no dia certo.""",
-7: """Pra andar mais rápido, tem os atalhos de teclado. Apertando a interrogação, aparece a lista inteira.
+7: """Pra andar mais rápido, o contról-cá abre a busca de tudo: telas, clientes, fornecedores, materiais e funcionários.
+Digito cobre, e os materiais aparecem na hora. No Cobre mel, o painel mostra o estoque e os preços: quarenta e dois e cinquenta na compra e quarenta e sete e noventa na venda.
+Com Enter, você vai direto pra ele.
+E digitando atalho, aparece Ver Atalhos de Teclado, com a lista inteira.
 É sempre xífti mais uma letra: xífti-cê abre a compra, xífti-vê a venda, xífti-xis o caixa e xífti-á a agenda.
 Olha: xífti-xis, e o caixa abre. xífti-dê, e volto pro Dashboard.
-Os atalhos valem fora dos campos de texto. Com o cursor num campo, a letra vai pro campo.
-E o contról-cá abre a busca de tudo: telas, clientes, fornecedores, materiais e funcionários.
-Digito cobre, e os materiais aparecem na hora. No Cobre mel, o painel mostra o estoque e os preços: quarenta e dois e cinquenta na compra e quarenta e sete e noventa na venda.
-Com Enter, você vai direto pra ele. É o jeito mais rápido de achar qualquer coisa.""",
+Os atalhos valem fora dos campos de texto. Com o cursor num campo, a letra vai pro campo.""",
 8: """Bom, números lidos e agenda em uso. Agora, a rotina que mantém o sistema vivo, começando pela diária: uns dez minutos, logo cedo.
 Ao abrir o sistema de manhã, ele já mostra as tarefas de hoje, como a cotação do cobre com a Fundição, às duas da tarde.
 Primeiro, o caixa. No Histórico do Caixa, você confere se os caixas de ontem fecharam, com o saldo final de cada um. Depois, é só abrir o caixa do dia.

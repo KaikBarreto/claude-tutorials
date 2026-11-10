@@ -15,7 +15,7 @@ Marcos Antunes. Cada capítulo parte de um navegador novo com a semente indicada
   ações; alvo da fonte ~14 min).
 - Marcas: `[BACKEND: ...]` o que o backend falso precisa ter; `[ZOOM: ...]` zoom suave que dura a frase inteira;
   `[ILUSTRAÇÃO: ...]` cena desenhada no estilo da marca (`docs/09-aula-ilustrada.md`); `[OUTRO USUÁRIO: ...]` trecho
-  gravado em outra sessão.
+  gravado em outra sessão; `[TESTAR: ...]` o robô confere no ensaio.
 
 ### cap00 · Abertura
 
@@ -36,7 +36,7 @@ Marcos Antunes. Cada capítulo parte de um navegador novo com a semente indicada
 | [ZOOM: o cartão amarelo com "#84 · R$ 1.250,00", "Rafael Nogueira", "09/11 07:58 → 09/11 17:44", o link "reabrir outro caixa" e o botão "Reabrir #84"] | E esse cartão amarelo é o último caixa que eu fechei, o de ontem, com o valor e o horário. Ele serve pra reabrir, se precisar corrigir alguma coisa. |
 | O zoom solta; a câmera desce até "PAINEL GERENCIAL": "Hoje", "0 caixas encontrados", "Nenhum caixa foi aberto neste dia." | Mais embaixo, o Painel Gerencial mostra os caixas abertos no dia. Por enquanto, nenhum. |
 | A câmera volta ao topo da página. | Quem não tem acesso aos caixas da equipe toda vê, no lugar disso, um cartão grande escrito Caixa Fechado, com o mesmo botão. |
-| O robô aperta Shift+C (atalho padrão "Compra"): a tela de compra começa a abrir, aparece o aviso "Abra o caixa antes de realizar compras" e o app volta sozinho para `/caixa`. Câmera no aviso. | Repara o que acontece se alguém tenta lançar uma compra agora: o sistema avisa Abra o caixa antes de realizar compras e volta pra cá. |
+| O robô aperta Shift+C (atalho padrão "Compra"): a tela de compra começa a abrir, aparece o aviso "Abra o caixa antes de realizar compras" e o app volta sozinho para `/caixa`. Câmera no aviso. [TESTAR: se o atalho não responder nessa tela, o robô abre `/compra` direto pelo endereço; o aviso e a volta são os mesmos, `Purchase.tsx:2102-2121`] | Repara o que acontece se alguém tenta lançar uma compra agora: o sistema avisa Abra o caixa antes de realizar compras e volta pra cá. |
 | Câmera no botão "Abrir Caixa". | Uma dica: venda, despesa e receita também precisam de caixa aberto. Então o dia começa por aqui: vamos abrir. |
 
 ### cap02 · Abrir o caixa (vinheta: ABERTURA)
