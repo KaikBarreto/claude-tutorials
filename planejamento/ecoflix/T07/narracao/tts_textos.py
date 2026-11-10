@@ -17,6 +17,7 @@ Ela serve pro pedido avulso, de quem passou uma vez e não quer cadastro. O esto
 Só que esse pedido não entra no histórico nem no portal de ninguém. Uma dica: com Não informado, o pagamento não pode ir pro saldo, que é o fiado. Pra isso, o pedido precisa de um fornecedor.
 Repara que alguns nomes têm um aviso com número. Ele mostra o que falta no cadastro: no Valdir, o CPF e o endereço. É só um lembrete, e não trava o pedido.
 O Valdir não tem telefone, e isso não aparece aqui porque o cadastro dele está marcado com Não possui telefone. Uma dica: quando a pessoa não tem telefone mesmo, marque essa opção em Editar, em vez de inventar um número.
+E o alfinete do lado fixa um fornecedor como padrão, pra ele já vir escolhido nos próximos pedidos.
 Hoje chegou um carroceiro novo, o Zé Moreira. Na busca, ninguém. Então a gente cadastra ele agora.""",
 3: """Sem sair da compra, é só clicar no mais. Abre o mesmo cadastro da tela de Clientes e Fornecedores.
 O único campo obrigatório é o nome: José Carlos Moreira. No apelido, Zé Moreira, que é como o pátio chama ele. E o telefone.
@@ -24,8 +25,8 @@ A chave Pix dele é o telefone. Aqui também dá pra escolher a tabela de preço
 Salvar. Pronto: o Zé já vem escolhido no pedido. O CPF e o endereço, você completa depois, com calma, na tela de Clientes e Fornecedores.""",
 4: """Agora o preço. Do lado do fornecedor fica a tabela de preços do pedido. Ela vem do cadastro do fornecedor, e quando ele não tem uma, vem a principal, a da estrela.
 Quando você escolhe o material, o sistema procura o preço nesta ordem. Primeiro, o preço especial combinado com aquele fornecedor. Depois, a tabela do pedido. E por último, o preço do próprio material.
-A tela sempre avisa quando valeu um preço especial ou o da tabela. E o preço é uma sugestão: dá pra mudar na hora.
-O Zé é novo e está na tabela principal, então vale o preço de cada material. Uma dica: escolha o fornecedor antes dos materiais, porque o preço entra na hora em que você escolhe o material.""",
+Uma dica: a tela sempre avisa quando valeu um preço especial ou o da tabela. E o preço é só uma sugestão: dá pra mudar na hora.
+O Zé é novo e está na tabela principal, então vale o preço de cada material. E escolha sempre o fornecedor antes dos materiais, porque o preço entra na hora em que você escolhe o material.""",
 5: """Agora o primeiro material: o cobre misto do Zé. O preço veio do cadastro do material: trinta e seis reais o quilo. E repara no peso: doze quilos e quatrocentos, direto da balança.
 Quem traz esse peso é o Ecotrêi, o programa que fica aberto no computador, ligado na balança. O selo ao vivo quer dizer que o peso está chegando agora.
 O botão azul dentro do campo puxa o peso de novo, quando você precisar. A leitura da balança faz parte do módulo de balança, que depende do plano contratado. Sem ele, é só digitar o peso.
@@ -49,6 +50,7 @@ E se precisar conferir as pesagens separadas, esse botão desfaz a mescla e devo
 Em vez de fazer a conta, eu digito o valor final: duzentos e vinte e cinco, vírgula, zero zero. O desconto se calcula sozinho: quatro reais e oitenta e nove.
 Uma dica: em qualquer campo de valor, os centavos vêm depois da vírgula. O campo apaga o ponto, então zero ponto setenta e cinco vira setenta e cinco reais. Digite com calma e confira.
 Confirmar. O ferro fechou em duzentos e vinte e cinco, e o total da compra ficou novecentos e treze reais e vinte.
+Clicando na linha, abre o detalhe da pesagem: as duas pesagens, o bruto, a impureza e o desconto. É assim que você confere antes de finalizar.
 E se o combinado for o valor do pedido inteiro, o lápis do lado deixa digitar o total fechado. A tela continua mostrando embaixo o valor calculado, pra conferência.""",
 9: """Conferido, é hora de pagar. Finalizar abre o pagamento, com o resumo do pedido do lado: o fornecedor, os itens e o total.
 São três formas. Dinheiro sai do caixa. Pix ou transferência sai da conta do banco. E o saldo é o fiado: na compra, a Recicla Vale fica devendo ao fornecedor. Na venda, é o cliente que fica devendo.
@@ -79,17 +81,17 @@ O lucro estimado compara o preço de venda com o preço de compra do material. N
 Uma dica: o Estoque Disponível já desconta o que está nesta venda. Tinha duzentos e catorze quilos de latão. Com os cento e cinquenta e dois da venda, a tela mostra sessenta e dois. Não sumiu nada.
 Quem leva a carga é o Edson, no caminhão da Recicla Vale. Então, em Opções avançadas, eu ligo o Comprovante sem valores.""",
 14: """A Fundição também quer sessenta quilos de cobre mel, mas no sistema tem quarenta e dois. Ao incluir, a tela avisa: faltam dezoito quilos, e propõe de onde puxar.
+Na origem, a lista mostra os outros materiais desta unidade que têm saldo. Uma dica: quem tem filial vê aqui também as outras unidades, o que depende do plano contratado, e aí a venda só fecha com internet.
 A equipe já limpou parte do cobre misto, que agora é cobre mel. Então eu puxo dezoito quilos do cobre misto.
 O cobre mel fica com os sessenta quilos que a venda precisa.
 Transferir e Adicionar. A transferência fica agendada e acontece junto com a venda: se alguma parte falhar, nada é gravado. A venda fecha em sete mil setecentos e vinte e dois reais e oitenta, com novecentos e noventa e dois e oitenta de lucro estimado.
-Se você preferir não transferir, no Cancelar a tela pergunta, e dá pra Inserir mesmo assim. Aí o estoque fica negativo até você lançar a compra que faltou. Quem tem filial vê aqui também as outras unidades: isso depende do plano contratado e precisa de internet.
+Se você preferir não transferir, no Cancelar a tela pergunta, e dá pra Inserir mesmo assim. Aí o estoque fica negativo até você lançar a compra que faltou.
 A Fundição paga no Pix. Confirmar pagamento, e venda registrada. Como o Comprovante sem valores está ligado, o comprovante sai só com o material e o peso. É esse papel que o Edson leva.""",
 15: """E se a internet cair no meio do dia? A faixa no topo avisa, e o trabalho continua. A compra, a venda e o caixa funcionam sem internet.
 Chegou a Dona Cida com a latinha. A balança continua funcionando, porque o Ecotrêi está aqui no computador: catorze quilos e seiscentos. Finalizo em dinheiro, e a compra fica guardada no computador, com um número provisório.
 No caixa, ela aparece em Pendências de Sincronização, esperando a internet.
 Quando a internet volta, a fila sobe sozinha. Pronto: operação sincronizada, e a compra ganha o número de verdade.
-Uma dica: se uma operação ficar com Erro, ela não vai de novo sozinha, pra não lançar em dobro. Use o Tentar novamente, o ícone de atualizar do lado: ele reenvia sem duplicar. Sem esse botão, remova pela lixeira e refaça a operação normalmente.
-E a venda que puxa estoque de outra unidade precisa de internet pra ser finalizada.""",
+Uma dica: se uma operação ficar com Erro, ela não vai de novo sozinha, pra não lançar em dobro. Use o Tentar novamente, o ícone de atualizar do lado: ele reenvia sem duplicar. Sem esse botão, remova pela lixeira e refaça a operação normalmente.""",
 16: """Pronto! Recapitulando: a gente abriu a compra pelo caixa, pelo atalho e pelo contról-cá, viu o Não informado e cadastrou o Zé na hora.
 Viu qual preço vale, puxou o peso da balança, descontou a tara e a impureza, e fez a dupla pesagem da carroça.
 Mesclou a latinha, fechou o valor do ferro e pagou o Zé em dinheiro. Na compra da oficina, pagou em dinheiro, Pix e fiado em duas parcelas.

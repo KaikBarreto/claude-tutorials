@@ -1,18 +1,19 @@
 # Texto enviado ao ElevenLabs (eleven_v4, voz Kaik Barreto) por capítulo do T16 "Nota Fiscal de mercadoria (NF-e)".
-# Gerado do roteiro.md (coluna Fala): cada linha do texto é uma linha da tabela Tela × Fala.
-# Trocas de pronúncia em relação ao roteiro (a legenda segue a grafia do roteiro, ver config_narracao.json):
-#   Fiscal & Ambiental -> "Fiscal e Ambiental" | NFS-e -> "ene-éfe-ésse-ê" | NF-e -> "ene-éfe-ê" | CC-e -> "cê-cê-ê" | EcoSistema -> "Ecossistema" | SEFAZ -> "sefás" | CFOP -> "cê-éfe-ó-pê" | ICMS -> "i-cê-eme-ésse" | DANFE -> "dânfi" | NCM -> "ene-cê-ême" | XML -> "xis-ême-éle" | PDF -> "pê-dê-éfe" | MTR -> "ême-tê-érre" | CDF -> "cê-dê-éfe" | DRE -> "dê-érri-ê" | IBS -> "i-bê-ésse" | CBS -> "cê-bê-ésse" | A1 -> "á-um" | pfx -> "pê-éfe-xis"
-# Novas desta aula (testar num trecho curto antes): CC-e, A1, pfx, IBS, CBS, Fiscal & Ambiental.
+# Gerado do roteiro.md (coluna Fala) por T16_gera_tts.py: cada linha do texto é uma linha da tabela Tela × Fala.
+# Trocas de pronúncia usadas (legenda -> fala; tabela do PERFIL de 10/11 01:20, com o IPA de NF-e, NFS-e e ICMS):
+#   Fiscal & Ambiental -> "Fiscal e Ambiental" | EcoSistema -> "Ecossistema" | NFS-e -> "/ˈẽːniˈɛːfiˈɛːsiˈeː/" | SEFAZ -> "sefás" | DANFE -> "dânfi" | NF-e -> "/ˈẽniˈɛfiˈe/" | CFOP -> "cê-éfe-ó-pê" | ICMS -> "/iˈseˈɛmiˈɛːsːi/" | CC-e -> "cê-cê-ê" | NCM -> "ene-cê-ême" | MTR -> "ême-tê-érre" | CDF -> "cê-dê-éfe" | XML -> "xis-ême-éle" | PDF -> "pê-dê-éfe" | DRE -> "dê-érri-ê" | pfx -> "pê-éfe-xis" | IBS -> "i-bê-ésse" | CBS -> "cê-bê-ésse" | A1 -> "á-um"
+# Novas desta aula (testar num trecho curto antes da voz): CC-e, A1, pfx, IBS, CBS, Fiscal & Ambiental.
 CAPS = {
 0: """Oi! Neste tutorial a gente vai do certificado digital até a nota fiscal autorizada, na Recicla Vale Metais.
-A Fundição Bandeira do Vale compra cobre dela toda semana. E a carga só sai do pátio com a nota fiscal de mercadoria, a ene-éfe-ê.
+A Fundição Bandeira do Vale compra cobre dela toda semana. E a carga só sai do pátio com a nota fiscal de mercadoria, a /ˈẽniˈɛfiˈe/.
 As notas fazem parte do módulo Notas Fiscais. Se ele estiver no seu plano, tudo fica em Fiscal e Ambiental.
 Se você ainda não viu o tutorial Relatório Financeiro e dê-érri-ê, dá uma olhada antes. [pause] É a parte mais delicada do sistema, então a gente vai devagar e na ordem.""",
 1: """Tudo começa no menu, em Fiscal e Ambiental.
 Aqui ficam as telas fiscais: as notas de mercadoria, as de serviço, o transporte, o ambiental e o estoque fiscal. Hoje a gente fica nas notas de mercadoria.
-Clico em Notas Fiscais, ene-éfe-ê.
+Clico em Notas Fiscais, /ˈẽniˈɛfiˈe/.
 Em cima ficam as sub-abas: Entrada, Saída, Notas Recebidas e Inutilizadas.
 Saída é a nota da venda, quando a mercadoria sai do pátio pro cliente. Entrada é a da compra, quando ela chega do fornecedor.
+Notas Recebidas são as que os fornecedores emitem contra o seu CNPJ, e Inutilizadas guarda os números fechados. Cada uma tem a sua parte neste tutorial.
 Do lado direito ficam as Configurações Fiscais e a cota do mês. Embaixo, os cartões das notas emitidas, pendentes e rejeitadas ou canceladas. E o botão Nova Nota.""",
 2: """Antes de qualquer nota, a configuração. Ela fica no botão Configurações Fiscais e é tudo o que a sefás, a Secretaria da Fazenda do estado, precisa saber antes da primeira nota.
 Na esquerda ficam as seções, em três grupos: emissão, regras fiscais e documentos.
@@ -20,7 +21,7 @@ Repara que Empresa, Impostos, Numeração e Transportadora estão apagados, com 
 É o certificado digital que assina a nota, como a assinatura da empresa. Sem ele, nada do que for preenchido aqui chega na sefás.
 Por isso a ordem está na própria tela. Passo um, o certificado. Passo dois, os dados da empresa. Passo três, os impostos.
 Uma dica: faça essa configuração junto com o contador. Um campo errado aqui faz a sefás recusar a nota na hora de emitir.""",
-3: """Então, o certificado. A ene-éfe-ê usa o certificado á-um, que é um arquivo de computador com uma senha.
+3: """Então, o certificado. A /ˈẽniˈɛfiˈe/ usa o certificado á-um, que é um arquivo de computador com uma senha.
 Em Arquivo do Certificado, clico em Selecionar arquivo e escolho o arquivo ponto pê-éfe-xis da Recicla Vale.
 Em Senha do Certificado vai a senha do próprio arquivo, e não a senha da empresa.
 Clico em Validar Certificado. Pronto: certificado validado.
@@ -33,11 +34,11 @@ Confiro a razão social completa e digito a inscrição estadual. O CNPJ daqui �
 O endereço fiscal vem do cadastro da empresa, o mesmo do comprovante. Pra mudar, é em Configurações, Empresa.
 Passo três, os impostos. Primeiro, o regime tributário. A Recicla Vale é Lucro Real, e quem define isso é o contador.
 Olha: escolhido o regime, a tela já ajusta os campos de PIS e COFINS.
-Mais embaixo vem o i-cê-eme-ésse, o imposto do estado sobre a mercadoria, com a alíquota e os códigos que o contador passar.
+Mais embaixo vem o /iˈseˈɛmiˈɛːsːi/, o imposto do estado sobre a mercadoria, com a alíquota e os códigos que o contador passar.
 Depois, o cê-éfe-ó-pê padrão de cada operação. O cê-éfe-ó-pê é o código que diz que tipo de nota é aquela: uma venda, uma compra, uma devolução.
 No fim, a Reforma Tributária. Ligado o cálculo do i-bê-ésse e da cê-bê-ésse, o sistema calcula esses tributos sozinho, com os códigos que o contador passar.
 Tudo isso é o padrão. Ele vale pra toda nota em que nenhum cenário se aplica.
-Clico em Salvar configuração. Pronto: a empresa está cadastrada pra emitir ene-éfe-ê.""",
+Clico em Salvar configuração. Pronto: a empresa está cadastrada pra emitir /ˈẽniˈɛfiˈe/.""",
 5: """E quando uma venda não segue o padrão? Pra isso existem os cenários. Um cenário é uma exceção ao padrão, que só vale numa situação certa.
 O aviso de cima vale pra todos os cenários: o que você preenche aqui vai impresso na nota. O Ecossistema não faz recomendação fiscal, então confirme tudo com a contabilidade.
 Por exemplo: o contador passou um tratamento próprio para as vendas à Fundição Bandeira do Vale. Clico em Criar o primeiro cenário e dou um nome que diga a situação.
@@ -55,7 +56,7 @@ Clico em Adicionar. Pronto: a próxima nota sai com o número mil duzentos e qua
 Aqui vai a Cargas Vale do Sol: razão social, CNPJ, inscrição estadual e endereço.
 No bloco Veículo vai a placa do caminhão que costuma fazer a entrega.
 Clico em Adicionar, e ela entra na lista.
-E Serviços é o cadastro da nota de serviço, a ene-éfe-ésse-ê, pra quando a empresa presta um serviço, como uma coleta. Isso fica pro próximo tutorial.""",
+E Serviços é o cadastro da nota de serviço, a /ˈẽːniˈɛːfiˈɛːsiˈeː/, pra quando a empresa presta um serviço, como uma coleta. Isso fica pro próximo tutorial.""",
 8: """Antes de emitir, a cota. Cada nível do módulo tem um limite de documentos por mês, e o selo mostra quantos já foram usados: zero de cem.
 Passando o mouse, aparecem o nível contratado e quanto você emitiu no mês. O tamanho da cota depende do plano.
 Toda nota que você emite conta: a de mercadoria, a de serviço, o manifesto de transporte, o ême-tê-érre e o cê-dê-éfe. E as notas recebidas, depois que você ativa esse recurso.
@@ -63,19 +64,19 @@ Uma dica: nota cancelada continua contando. Cancelar não devolve o documento pr
 O selo fica âmbar perto do limite e vermelho quando chega nele. Mesmo assim, ainda dá pra emitir mais cinco documentos: é a tolerância.
 Só depois dos cinco a emissão trava, com o aviso Suas notas do mês acabaram. Aí é subir de nível, e vale na hora.""",
 9: """Agora sim, a primeira nota. A Serra Fina Alumínio Reciclagem comprou alumínio perfil e pediu a nota. Clico em Nova Nota.
-É uma venda, então ene-éfe-ê de Saída. A nota tem dois passos: Dados e Itens.
+É uma venda, então /ˈẽniˈɛfiˈe/ de Saída. A nota tem dois passos: Dados e Itens.
 Em Para quem, escolho o cliente: a Serra Fina.
 Em O que é vai a natureza da operação: venda de mercadorias. O cê-éfe-ó-pê vem sozinho, pela natureza e pelo estado do cliente.
 E a numeração: série um, número mil duzentos e quarenta e nove, como a gente configurou. A data em branco é agora.
 Clico em Avançar, e vêm os itens.
 Escolho o alumínio perfil. O ene-cê-ême, que é o código do tipo de mercadoria, e o preço de venda vêm do cadastro. Trezentos e vinte quilos, a dez e quarenta o quilo.
 Clico em Incluir. A nota fica em três mil trezentos e vinte e oito reais, e o selo de cima diz Pronta pra emitir.
-Uma dica: antes da primeira nota, confirme com o contador que o CNPJ já está credenciado na sefás pra emitir ene-éfe-ê. Assim a primeira nota já sai autorizada.
-Quando você emite, o certificado assina a nota e ela vai pra sefás. A sefás confere e, estando tudo certo, autoriza. Aí a nota ganha um protocolo e uma chave de acesso.
+Uma dica: antes da primeira nota, confirme com o contador que o CNPJ já está credenciado na sefás pra emitir /ˈẽniˈɛfiˈe/. Assim a primeira nota já sai autorizada.
+Quando você emite, o certificado assina a nota e ela vai pra sefás. A sefás confere e, estando tudo certo, autoriza e devolve o protocolo. Aí sim, a nota vale.
 Clico em Emitir Nota, e ela entra na lista como Aguardando sefás.
 Uma dica: enviada pra processamento ainda não é autorizada. A nota só está autorizada quando aparecem o número, o protocolo e a chave de acesso.
 Em Visualizar está tudo: a nota mil duzentos e quarenta e nove, autorizada, com a chave de acesso, os quarenta e quatro números que identificam a nota, e o protocolo da sefás.""",
-10: """Quase sempre a nota nasce de uma venda que já está no sistema. Hoje cedo, a Fundição Bandeira do Vale comprou cobre mel. Em vez de digitar tudo de novo, a gente puxa o pedido.
+10: """Muitas vezes a nota nasce de uma venda que já está no sistema. Hoje cedo, a Fundição Bandeira do Vale comprou cobre mel. Em vez de digitar tudo de novo, a gente puxa o pedido.
 Em Importar de, clico em Pedido, e aparecem as vendas. Esta é a da Fundição.
 Clico em Importar. O cliente e os itens vêm do pedido.
 Repara na quantidade: quinhentos quilos. A balança marcou quinhentos e seis, mas seis quilos foram de tara e impureza.
@@ -87,7 +88,7 @@ Emitir Nota. Pronto: a mil duzentos e cinquenta está autorizada.""",
 Em vez de uma nota por compra, dá pra juntar o dia todo. Na barra Importar de, clico em Emissão em Massa, Caixa.
 Escolho ontem, nove de novembro. Aparece o caixa do Marcos, já fechado, com as compras do dia.
 Seleciono todas as que ainda não têm nota.
-Em Como as notas serão geradas, escolho Uma nota consolidada. A tela mostra a faixa: ene-éfe-ê mil duzentos e cinquenta e um, de oitocentos e três reais e trinta.
+Em Como as notas serão geradas, escolho Uma nota consolidada. A tela mostra a faixa: /ˈẽniˈɛfiˈe/ mil duzentos e cinquenta e um, de oitocentos e três reais e trinta.
 Ela junta os itens iguais: sessenta e quatro quilos de latinha, cento e oitenta de papelão e quatrocentos e dez de ferro misto. Quem prefere uma nota por compra usa a outra opção, Uma nota por pedido.
 Clico em Montar nota consolidada. A nota fica em nome da própria Recicla Vale, como consumidor final, e a natureza é entrada de sucata para revenda, de pessoa física.
 Confiro os itens e clico em Emitir Nota. Pronto: a mil duzentos e cinquenta e um está autorizada, com as compras do dia inteiro.""",
@@ -110,12 +111,15 @@ O dânfi é a folha impressa que acompanha a carga no caminhão. O xis-ême-éle
 Os dois ficam no menu da nota.
 Download dânfi abre o pê-dê-éfe, pronto pra imprimir.
 E Download xis-ême-éle baixa o arquivo, com o número da nota no nome.
-O menu muda com a situação da nota. Na cancelada, aparece o xis-ême-éle de Cancelamento.""",
+E em Visualizar, a aba xis-ême-éle mostra o mesmo arquivo enviado à sefás, pra conferir ou copiar um trecho.
+O menu muda com a situação da nota. Na cancelada, aparece o xis-ême-éle de Cancelamento.
+E pra mandar as notas do mês pro contador, tem a Exportação Contábil, que é assunto do próximo tutorial.""",
 15: """Até aqui, as notas que a Recicla Vale emite. Agora, as que ela recebe.
 Quando um fornecedor emite uma nota com o CNPJ da Recicla Vale como destinatário, a nota passa pela sefás. Com o recurso ativo, ela aparece sozinha aqui.
 Clico em Ativar Notas Recebidas. A tela avisa: daqui pra frente, cada nota recebida conta na mesma cota das notas que você emite.
 Ativar mesmo assim. Em instantes chegam as notas emitidas contra o CNPJ da Recicla Vale: a da Auto Peças Vale Forte, de mil novecentos e oitenta e quatro reais, e a do Depósito Irmãos Siqueira.
-Cada linha mostra quem emitiu, o valor, a data, a situação na sefás e a manifestação.""",
+Cada linha mostra quem emitiu, o valor, a data, a situação na sefás e a manifestação.
+Daqui pra frente, as notas entram sozinhas. E o Sincronizar agora faz a busca na hora.""",
 16: """Chegou a nota, e agora? Repara na coluna Manifestação: as duas já estão com Ciência.
 Manifestar é responder à sefás sobre a nota que chegou. A ciência não é um botão: ela já vem sozinha, quando a nota entra.
 A do Depósito chegou só com o resumo. Pra baixar o xis-ême-éle e o dânfi de uma nota recebida, é Buscar documento, que não confirma nem recusa nada.

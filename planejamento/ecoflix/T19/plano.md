@@ -17,10 +17,10 @@
 |---|---|---|---|---|
 | 0 | (sem vinheta) | Dashboard → menu "Funcionários (RH)"; [ILUSTRAÇÃO: o caderninho do pátio] | 🔒 · "Antes: Relatório Financeiro e DRE" | 0:30 |
 | 1 | FUNCIONÁRIOS / A tela Funcionários e suas abas | As 7 abas; "Ativos"/"Inativos"; botões; lista "Equipe" com o saldo; ficha do Diego; aba "Dashboard" | ⚠️ abas do ponto só com "Gerenciar Ponto Eletrônico"; o saldo = o que falta pagar | 1:05 |
-| 2 | CADASTRO / Cadastrar o funcionário | "Novo Funcionário": Gabriel Rocha, CPF, telefone, cargo, "Pátio", admissão 10/11; "Salário *" R$ 1.980,00; "Calcular" (Lucro Real, EPI R$ 600,00/ano → "Custo total mensal" R$ 3.361,00); "Chave PIX"; "Cadastrar" | ⚠️ funcionário novo nasce com saldo = salário; estimativa → contador | 1:50 |
+| 2 | CADASTRO / Cadastrar o funcionário | "Novo Funcionário": Gabriel Rocha, CPF, telefone, cargo, "Pátio", admissão 10/11; "Salário *" R$ 2.520,00; "Calcular" (Lucro Real, EPI R$ 600,00/ano → "Custo total mensal" R$ 4.264,00); "Chave PIX"; "Cadastrar" | ⚠️ funcionário novo nasce com saldo = salário; estimativa → contador | 1:50 |
 | 3 | CADASTRO / Campos de folha | "Editar" Gabriel → "CLT" → "Nº de dependentes (IRRF)" 1, "Desconta vale-transporte (até 6%)", VT R$ 220,00 → "Atualizar"; [ILUSTRAÇÃO: Informal × CLT] | | 1:00 |
 | 4 | DEPARTAMENTOS / Departamentos | "Gerenciar departamentos": cria "Transporte" (laranja, caminhão) → Edson nele | | 0:45 |
-| 5 | MOVIMENTAÇÕES / Lançar vale, bônus e falta | Diego: vale R$ 200,00 (dinheiro), falta R$ 90,00 → saldo R$ 1.690,00; Cláudio: bônus R$ 150,00 → R$ 2.750,00; [ILUSTRAÇÃO: a conta do saldo] | ⚠️ conta do saldo; ⚠️ não lançar o vale de novo no banco ("Buscar lançamento") | 1:55 |
+| 5 | MOVIMENTAÇÕES / Lançar vale, bônus e falta | Diego: vale R$ 200,00 (dinheiro), falta R$ 90,00 → saldo R$ 1.690,00; Cláudio: bônus R$ 150,00 → R$ 2.250,00; [ILUSTRAÇÃO: a conta do saldo] | ⚠️ conta do saldo; ⚠️ não lançar o vale de novo no banco ("Buscar lançamento") | 1:55 |
 | 6 | PAGAMENTO / Pagar e receber do funcionário | Edson: "Recebimento" R$ 100,00 (vales 500 → 400); "Pagamento": desconto de vales R$ 400,00, "CLT (com folha)" de relance, "Valor efetivamente pago" R$ 2.750,00, Pix → saldo volta a R$ 2.900,00; [ILUSTRAÇÃO: o ciclo do pagamento] | ⚠️ INSS e IRRF estimados; ⚠️ pagou, zera e recomeça do salário | 2:00 |
 | 7 | EXTRATO / O extrato do funcionário | "Extrato - Edson Moura": cartões, pagamento detalhado, "Gerar Recibo", "Ajuste de salário: R$ 2.800,00 → R$ 2.900,00", lixeira; [ILUSTRAÇÃO: a linha do extrato presa ao dinheiro] | ⚠️ trocar salário lança o ajuste; ⚠️ excluir desfaz o dinheiro | 1:05 |
 | 8 | PONTO ELETRÔNICO / Ligar o ponto e gerar o link | Aba "Ponto eletrônico" do Gabriel (já ligado), PIN; "Copiar link do ponto"; "Ativar ponto eletrônico" → Juliana; "Tablet da empresa"; [ILUSTRAÇÃO: dois links] | ⚠️ dois links diferentes | 1:25 |
@@ -51,10 +51,14 @@ nesse dia). Caixa do Rafael aberto. Ponto em uso desde 01/09 pelo pátio (Marcos
 | Juliana Prado | Assistente administrativa | Escritório | 05/06/2023 | 2.800,00 | CLT | 362.918.470-78 | juliana.prado@reciclavale.example | não (liga no cap. 8: `juliana-prado-8w3n`) |
 | Marcos Antunes | Balanceiro | Pátio | 16/08/2021 | 2.400,00 | CLT | 305.672.148-26 | (12) 90000-4103 | sim (`marcos-antunes-7q2d`) |
 | Edson Moura | Motorista | Pátio (Transporte no cap. 4) | 04/04/2019 | 2.900,00 | Informal | 251.847.396-37 | 251.847.396-37 | sim (`edson-moura-3k8f`) |
-| Cláudio Ribeiro | Operador de empilhadeira | Pátio | 11/01/2022 | 2.600,00 | CLT | 334.095.127-64 | (12) 90000-4105 | sim (`claudio-ribeiro-9m4t`) |
-| Diego Santana | Ajudante de pátio | Pátio | 07/07/2025 | 1.980,00 | Informal | 447.103.682-36 | (12) 90000-4106 | sim (`diego-santana-5x1r`) |
-| Rogério Batista | Ajudante de pátio | Pátio | 03/02/2025 | 1.980,00 | Informal | 392.660.514-62 | (12) 90000-4108 | não (desligado ao sair, 30/10) |
-| **Gabriel Rocha** (cap. 2) | Ajudante de pátio | Pátio | 10/11/2026 | 1.980,00 | Informal → CLT (cap. 3), 1 dependente, VT R$ 220,00 | 418.273.956-64 | (12) 90000-4107 | nasce ligado (`gabriel-rocha-4f7k`) |
+| Cláudio Ferraz | Ajudante de pátio | Pátio | 11/01/2022 | 2.100,00 | CLT | 334.095.127-64 | (12) 90000-4105 | sim (`claudio-ferraz-9m4t`) |
+| Diego Morais | Ajudante de pátio | Pátio | 07/07/2025 | 1.980,00 | Informal | 447.103.682-36 | (12) 90000-4106 | sim (`diego-morais-5x1r`) |
+| Rogério Batista | Ajudante de pátio (ex) | Pátio | 03/02/2025 | 1.980,00 | Informal | 392.660.514-62 | (12) 90000-4108 | não (desligado ao sair, 30/10) |
+| **Gabriel Rocha** (cap. 2) | Operador de empilhadeira | Pátio | 10/11/2026 | 2.520,00 | Informal → CLT (cap. 3), 1 dependente, VT R$ 220,00 | 418.273.956-64 | (12) 90000-4107 | nasce ligado (`gabriel-rocha-4f7k`) |
+
+Os dois ajudantes (Cláudio Ferraz e Diego Morais) são os nomes da T11 (coordenador, 10/11); se a T11 definiu outros documentos,
+valem os dela. O operador de empilhadeira é o Gabriel, contratado na aula. Custo do Gabriel na calculadora: R$ 2.520,00 × 1,6722
+(Lucro Real) + R$ 50,00 de EPI = **R$ 4.264,00**.
 
 Telefones: Rafael 4101, Juliana 4102, Marcos 4103, Edson 4104, Cláudio 4105, Diego 4106, Gabriel 4107, Rogério 4108. Sem foto
 (iniciais). Ninguém com custo mensal calculado, a não ser o Gabriel (cap. 2). "Automação da folha" desligada.
@@ -66,7 +70,7 @@ Telefones: Rafael 4101, Juliana 4102, Marcos 4103, Edson 4104, Cláudio 4105, Di
   (+100, 2.900,00) · 15/10 "vale" R$ 200,00 dinheiro "Adiantamento" (2.700,00) · 22/10 "bonus" R$ 250,00 "Viagens extras para
   São José dos Campos" (2.950,00) · 28/10 "vale" R$ 300,00 dinheiro "Adiantamento" (2.650,00). Vales 500,00; bônus 250,00.
 - Na aula: Diego vale R$ 200,00 "Adiantamento" (1.780,00) e falta R$ 90,00 "Faltou sexta, 06/11, sem avisar" (1.690,00); Cláudio
-  bônus R$ 150,00 "Meta de prensagem de outubro" (2.750,00); Edson recebimento R$ 100,00 "Sobra do vale da viagem" (2.750,00) e
+  bônus R$ 150,00 "Meta de prensagem de outubro" (2.250,00); Edson recebimento R$ 100,00 "Sobra do vale da viagem" (2.750,00) e
   pagamento R$ 2.750,00 Pix (vales descontados 400,00; reset 2.900,00).
 
 **Dinheiro:** caixa do Rafael aberto em 10/11 às 07:30 com R$ 1.500,00 (só ele aberto; se o do Marcos estiver aberto, aparece
@@ -103,7 +107,7 @@ Anotar no `MUNDO_FICTICIO.md`: os 8 funcionários, os 3 departamentos, o endere�
 - Integrações a simular: Nominatim (interceptar no navegador, valores acima); **câmera falsa** do Chromium com um vídeo de avatar
   ilustrado genérico, sem rosto real; o robô toca "Tirar foto agora".
 - Celular: capítulo 9 inteiro em `device: phone`, sem login, permissão de localização e câmera concedidas.
-- Cap. 10: o `setup` abre a aba "Folha de Ponto" e escolhe "Cláudio Ribeiro" fora do vídeo (a visão "Todos os funcionários" mostraria
+- Cap. 10: o `setup` abre a aba "Folha de Ponto" e escolhe "Cláudio Ferraz" fora do vídeo (a visão "Todos os funcionários" mostraria
   falta falsa para o Gabriel e a Juliana: ver Riscos, 1).
 - Ilustrações (cena HTML no estilo da marca, `docs/09-aula-ilustrada.md`): caderninho do pátio (0), iceberg do custo (2), Informal ×
   CLT (3), a conta do saldo (5), o ciclo do pagamento (6), extrato preso ao dinheiro (7), dois links (8), a hora do sistema (9), a
