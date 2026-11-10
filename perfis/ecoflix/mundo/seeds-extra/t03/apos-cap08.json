@@ -1,0 +1,214 @@
+{
+ "_doc": "T03 · estado depois do cap08 (cumulativo sobre t03/inicio). Gerado por rec/t03/t03_sementes.py.",
+ "materials": [
+  {
+   "id": "@id:material.radiador",
+   "company_id": "@id:company.reciclavale",
+   "code": "70",
+   "code_prefix": null,
+   "name": "Radiador de cobre",
+   "fiscal_name": null,
+   "group_id": "@id:grupo.radiadores",
+   "unit": "Kg",
+   "ncm": "74040000",
+   "purchase_price": 21.0,
+   "sale_price": 24.5,
+   "purchase_price_currency": "BRL",
+   "sale_price_currency": "BRL",
+   "current_stock": 110.0,
+   "pieces_per_commercial_unit": null,
+   "is_archived": false,
+   "archived_at": null,
+   "created_by": null,
+   "created_at": "2026-11-10T10:52:00.000Z",
+   "updated_at": "2026-11-10T11:21:00.000Z"
+  }
+ ],
+ "stock_movements": [
+  {
+   "id": "@id:mov.t03.radiador.inicial",
+   "company_id": "@id:company.reciclavale",
+   "material_id": "@id:material.radiador",
+   "type": "SALDO_INICIAL",
+   "quantity": 120,
+   "stock_before": 0,
+   "stock_after": 120,
+   "description": "Saldo inicial do cadastro do material",
+   "created_by": null,
+   "created_at": "2026-11-10T10:52:00.000Z",
+   "transaction_at": "2026-11-10T10:52:00.000Z",
+   "transaction_date": "2026-11-10"
+  },
+  {
+   "id": "@id:mov.t03.radiador.saida",
+   "company_id": "@id:company.reciclavale",
+   "material_id": "@id:material.radiador",
+   "type": "EDICAO_MANUAL",
+   "quantity": -2,
+   "stock_before": 120,
+   "stock_after": 118,
+   "description": "Ajuste de inventário",
+   "created_by": "@id:user.rafael",
+   "client_request_id": "@id:cri.t03.saida",
+   "created_at": "2026-11-10T11:20:00.000Z",
+   "transaction_at": "2026-11-10T11:20:00.000Z",
+   "transaction_date": "2026-11-10"
+  },
+  {
+   "id": "@id:mov.t03.radiador.transf",
+   "company_id": "@id:company.reciclavale",
+   "material_id": "@id:material.radiador",
+   "type": "TRANSFERENCIA",
+   "quantity": -8,
+   "stock_before": 118,
+   "stock_after": 110,
+   "description": "Transferência para Ferro misto",
+   "created_by": "@id:user.rafael",
+   "client_request_id": "@id:cri.t03.transf",
+   "created_at": "2026-11-10T11:21:00.000Z",
+   "transaction_at": "2026-11-10T11:21:00.000Z",
+   "transaction_date": "2026-11-10"
+  },
+  {
+   "id": "@id:mov.t03.ferromisto.transf",
+   "company_id": "@id:company.reciclavale",
+   "material_id": "@id:material.ferro_misto",
+   "type": "TRANSFERENCIA",
+   "quantity": 8,
+   "stock_before": 6420,
+   "stock_after": 6428,
+   "description": "Transferência de Radiador de cobre",
+   "created_by": "@id:user.rafael",
+   "related_movement_id": "@id:mov.t03.radiador.transf",
+   "created_at": "2026-11-10T11:21:00.000Z",
+   "transaction_at": "2026-11-10T11:21:00.000Z",
+   "transaction_date": "2026-11-10"
+  }
+ ],
+ "price_table_items": [
+  {
+   "id": "@id:pti.padrao.radiador",
+   "price_table_id": "@id:tabela.padrao",
+   "material_id": "@id:material.radiador",
+   "purchase_price": 21.0,
+   "sale_price": 24.5,
+   "is_override": false,
+   "created_at": "2026-11-10T10:56:00.000Z",
+   "updated_at": "2026-11-10T11:04:00.000Z"
+  }
+ ],
+ "_patch": {
+  "materials": [
+   {
+    "match": {
+     "id": "@id:material.cobre_mel"
+    },
+    "set": {
+     "purchase_price": 42.5,
+     "sale_price": 47.9
+    }
+   },
+   {
+    "match": {
+     "id": "@id:material.cobre_misto"
+    },
+    "set": {
+     "purchase_price": 36.0,
+     "sale_price": 41.5
+    }
+   },
+   {
+    "match": {
+     "id": "@id:material.fio_cobre"
+    },
+    "set": {
+     "purchase_price": 18.0,
+     "sale_price": 22.0
+    }
+   },
+   {
+    "match": {
+     "id": "@id:material.ferro_misto"
+    },
+    "set": {
+     "current_stock": 6428
+    }
+   }
+  ],
+  "price_table_items": [
+   {
+    "match": {
+     "id": "@id:pti.padrao.cobre_mel"
+    },
+    "set": {
+     "purchase_price": 42.5,
+     "sale_price": 47.9
+    }
+   },
+   {
+    "match": {
+     "id": "@id:pti.padrao.cobre_misto"
+    },
+    "set": {
+     "purchase_price": 36.0,
+     "sale_price": 41.5
+    }
+   },
+   {
+    "match": {
+     "id": "@id:pti.padrao.fio_cobre"
+    },
+    "set": {
+     "purchase_price": 18.0,
+     "sale_price": 22.0
+    }
+   }
+  ],
+  "suppliers": [
+   {
+    "match": {
+     "id": "@id:fornecedor.siqueira"
+    },
+    "set": {
+     "default_price_table_id": "@id:tabela.depositos"
+    }
+   }
+  ],
+  "customers": [
+   {
+    "match": {
+     "id": "@id:cliente.siqueira"
+    },
+    "set": {
+     "default_price_table_id": "@id:tabela.depositos"
+    }
+   }
+  ]
+ },
+ "material_groups": [
+  {
+   "id": "@id:grupo.radiadores",
+   "company_id": "@id:company.reciclavale",
+   "name": "Radiadores",
+   "color": "#0F766E",
+   "icon": "car",
+   "created_at": "2026-11-10T11:03:00.000Z",
+   "updated_at": "2026-11-10T11:03:00.000Z"
+  }
+ ],
+ "price_tables": [
+  {
+   "id": "@id:tabela.depositos",
+   "company_id": "@id:company.reciclavale",
+   "name": "Tabela Depósitos",
+   "is_default": false,
+   "is_linked": true,
+   "linked_to_table_id": "@id:tabela.padrao",
+   "variation_type": "percentage",
+   "variation_amount": 4,
+   "variation_direction": "positive",
+   "created_at": "2026-11-10T11:10:00.000Z",
+   "updated_at": "2026-11-10T11:10:00.000Z"
+  }
+ ]
+}

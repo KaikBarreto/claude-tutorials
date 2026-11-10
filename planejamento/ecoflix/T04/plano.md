@@ -55,18 +55,21 @@ conta-corrente"; 9→10 "Agora, o Lucro estimado"; 10→11 "Agora, o Financeiro"
 ## Mundo: o que esta aula precisa
 Além do `MUNDO_FICTICIO.md` (a conferir/consolidar pelo agente Mundo; os números abaixo estão na fala).
 
-**Saldos em 10/11 08:30 (início do T4).** Só estes cinco diferentes de zero (os outros parceiros zerados):
+**Saldos em 10/11 08:30 (início do T4).** Só estes seis diferentes de zero (os outros parceiros zerados; junção de 10/11:
+`MUNDO_LINHA_DO_TEMPO.md`, "Saldos dos parceiros"):
 | Parceiro | Saldo na linha | De onde vem | Na tela |
 |---|---|---|---|
 | Aços Quiririm Ltda (cliente) | +4.870,00 | venda no saldo em 05/11: ferro pesado 2.608 kg (3.260,00), chaparia 1.000 kg (980,00), ferro misto 600 kg (630,00) | verde, "a receber" |
-| Serra Fina Alumínio Reciclagem (cliente) | −1.500,00 | adiantamento recebido por Pix em 06/11 pela próxima carga de alumínio | vermelho, "a pagar" |
-| Cooperativa Recomeço (fornecedor) | +2.550,00 | compra de 06/11 (3.700,00) no saldo, menos Pix parcial de 1.150,00 em 09/11 | vermelho, "a pagar" |
+| Serra Fina Alumínio Reciclagem (cliente) | −1.500,00 | adiantamento recebido por Pix em 06/11 (na Conta Secundária) pela próxima carga de alumínio | vermelho, "a pagar" |
+| Cooperativa Recomeço (fornecedor) | +2.550,00 | compra de 06/11 (3.700,00) no saldo, menos Pix parcial de 1.150,00 em 09/11 (da Conta Secundária) | vermelho, "a pagar" |
 | Valdir Pereira (fornecedor) | −300,00 | vale em dinheiro em 03/11 ("adiantamento a favor dele" lido como dinheiro adiantado a ele) | verde, "a receber" |
+| Fundição Bandeira do Vale (cliente) | +14.370,00 | venda de 03/11 do T13: 300 kg de cobre mel, a prazo em 3 parcelas de 4.790,00 (17/11, 17/12, 18/01) | verde, "a receber" |
 | Depósito Irmãos Siqueira (duplo, linha `party`) | −840,00 | compra no saldo em 06/11: ferro pesado 1.200 kg (1.140,00), ferro misto 320 kg (240,00), cobre misto 20 kg (720,00) = 2.100,00; venda no saldo em 05/11: papelão 1.250 kg (1.000,00) e plástico PET 100 kg (260,00) = 1.260,00 | vermelho nas duas abas ("-R$ 840,00" em Clientes, "R$ 840,00" em Fornecedores) |
-Se o fiado parcelado da Fundição Bandeira do Vale (T13) virar saldo de parceiro, o total de "A Receber" do cap. 12 muda.
+O fiado parcelado da Fundição Bandeira do Vale (T13) está no saldo dela: o "A Receber" do cap. 12 é R$ 19.540,00 (junção).
 
 **Cooperativa Recomeço** (fornecedora PJ, completa para NF-e, com `portal_token`): 14 compras, uma por sexta de 07/08 a
-06/11, a preço de tabela, forma "Saldo", cada uma paga por Pix na segunda seguinte (a de 06/11 só em parte, acima).
+06/11, a preço de tabela, forma "Saldo", cada uma paga por Pix na segunda seguinte (a de 30/10, com o feriado de 02/11, em
+03/11, da Conta Secundária; a de 06/11 só em parte, acima).
 | Material | R$/kg | Ago (4) | Set (4) | Out (5) | 06/11 | Total |
 |---|---|---|---|---|---|---|
 | Papelão | 0,55 | 6.700 | 6.900 | 8.400 | 1.700 | 23.700 kg |
@@ -101,7 +104,7 @@ com código IBGE. Todos os parceiros com `portal_token`.
 | Serralheria dupla (cap. 5) | cliente criado com os mesmos dados e vínculo `link_customer_supplier`; saldo único zero |
 | Depósito Irmãos Siqueira (cap. 6) | "Tabela de Preços Padrão" = "Tabela Depósitos" (nos dois lados do duplo) |
 | Pagamento (cap. 9) | Pix de R$ 1.200,00 à Cooperativa Recomeço, conta bancária principal, observação "Acerto parcial da entrega de 06/11", 10/11 ~08:35; saldo R$ 1.350,00 |
-Saldos no fim: A Receber R$ 5.170,00 (Aços Quiririm 4.870,00; Valdir −300,00); A Pagar R$ 3.690,00 (Cooperativa 1.350,00;
+Saldos no fim: A Receber R$ 19.540,00 (Fundição Bandeira do Vale 14.370,00, a venda parcelada de 03/11 do T13; Aços Quiririm 4.870,00; Valdir −300,00); A Pagar R$ 3.690,00 (Cooperativa 1.350,00;
 Depósito −840,00; Serra Fina −1.500,00). A "Cida Ramos" continua no mundo (a aula só aponta).
 
 ## Gravação

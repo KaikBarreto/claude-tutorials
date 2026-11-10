@@ -54,8 +54,9 @@ cobre mel"; 14→15 "E se a internet cair no meio do dia?".
 
 ## Mundo: o que esta aula precisa
 Além do `MUNDO_FICTICIO.md` (alinhar com T3, T4, T5 e T6 na consolidação):
-- **Caixa** do Rafael aberto em 10/11 com **R$ 2.500,00** em dinheiro (cobre R$ 913,20 + R$ 200,00 + R$ 90,52). A fala não diz o
-  valor do caixa.
+- **Caixa** do Rafael: o **#85**, aberto às 08:31 com **R$ 1.500,00** (o da T6; dá para o dinheiro da aula: R$ 913,20 + R$ 200,00 +
+  R$ 90,52). Na semente da T7 só o #85 está aberto (o #86 do Marcos ainda não abriu, para não aparecer "Em qual caixa
+  registrar?"). A fala não diz o valor do caixa. Junção: `MUNDO_LINHA_DO_TEMPO.md`, "Caixas".
 - **Preferências:** Múltiplas Tabelas de Preço ligada (T3); impureza desconta do valor (padrão); itens editáveis (padrão);
   impressão automática **desligada** (para a janela "Imprimir Comprovante" aparecer); impressão direta pelo EcoTray **ligada**;
   balança ativada, **leitura contínua ligada**, 3 casas (T5); balança exclusiva desligada; "só peso líquido" desligado; atalhos
@@ -66,7 +67,8 @@ Além do `MUNDO_FICTICIO.md` (alinhar com T3, T4, T5 e T6 na consolidação):
   e outro.
 - **Tabelas de preço:** a padrão (estrela; nome do T3) e "Tabela Depósitos" (T3). O Zé fica na padrão; nenhuma tabela dá preço
   aos itens da aula.
-- **Estoque no início** (kg): Metal amarelo (latão) **214**; Cobre mel **42**; Cobre misto ≥ 0 (ex.: 35,6); demais positivos.
+- **Estoque no início** (kg): Metal amarelo (latão) **214**; Cobre mel **42**; Cobre misto 148 (o estoque de 10/11 08:30 da junção,
+  que é o mesmo do T10 e do T21); demais como lá.
 - **Parceiros:** Valdir Pereira **sem CPF e sem endereço**, com "Não possui telefone" marcado (indicador "2": "CPF/CNPJ não
   informado", "Endereço não informado"); Aparecida Ramos com apelido "Dona Cida"; **Auto Peças Vale Forte** com **preço especial
   da Bateria automotiva R$ 3,40/kg** e saldo R$ 0,00; Fundição Bandeira do Vale com saldo qualquer (paga no Pix).
@@ -84,7 +86,7 @@ Além do `MUNDO_FICTICIO.md` (alinhar com T3, T4, T5 e T6 na consolidação):
     de R$ 1.000,00 (**25/11/2026** e **10/12/2026**), saldo da oficina depois: R$ 2.000,00 a pagar.
   - **Venda (Fundição Bandeira do Vale, Pix R$ 7.722,80, "Comprovante sem valores"):** Metal amarelo (latão) 152 kg × 31,90 =
     R$ 4.848,80 (lucro R$ 668,80) · Cobre mel 60 kg × 47,90 = R$ 2.874,00 (lucro R$ 324,00) com transferência de **18 kg de Cobre
-    misto → Cobre mel** na finalização. Lucro estimado **R$ 992,80**. Quem leva: Edson Moura, caminhão FKD2E41 (só na fala).
+    misto → Cobre mel** na finalização. Lucro estimado **R$ 992,80**. Quem busca: o motorista da Fundição (só na fala; junção: o FKD2E41 e o Edson estão na viagem da T17).
   - **Compra 3 sem internet (Dona Cida, dinheiro):** Alumínio latinha 14,6 kg × 6,20 = R$ 90,52; fila local e sincronização.
 - **Fica para as próximas:** saldo a pagar de R$ 2.000,00 à Vale Forte em 2 parcelas (T13); os pedidos do dia no histórico do
   caixa (T9); estoque final: latão 62 kg, cobre mel 0 kg, cobre misto (inicial + 12,4 + 64 − 18).

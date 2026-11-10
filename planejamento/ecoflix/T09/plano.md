@@ -26,7 +26,7 @@ a latinha da Aparecida foi lançada com 24 kg em vez de 42 kg e uma compra do Va
 | 2 | PEDIDOS / A tela Pedidos | "Este mês", "Todas as Ordens", colunas, "Resumo do período filtrado", linha expandida. | `inicio` |
 | 3 | PEDIDOS / Filtrar até achar | "Mês passado"; busca "Vale Forte" sem a bateria; "Tipo: Compras" + "Material: Bateria automotiva" + "Com Pix/Transferência" → 21/10, "Depósito Irmãos Siqueira", R$ 744,00. | `inicio` |
 | 4 | CORREÇÕES / Editar um pedido | "Editar" no pedido de 21/10: o aviso do caixa fechado e a dica de reabrir (sem editar); "Hoje": a latinha da Aparecida, 24 kg → 42 kg, "CONFIRMAR PAGAMENTO" em dinheiro. Ilustração: desfaz e grava de novo. | `inicio` |
-| 5 | CORREÇÕES / Excluir e o selo de estornado | Valdir duplicado → prévia "Vou desfazer tudo que este pedido criou:" → "Pedido excluído"; o PET da Cooperativa Recomeço com "Estornado em 05/11"; Histórico de Exclusões. | `apos-cap04` |
+| 5 | CORREÇÕES / Excluir e o selo de estornado | Valdir duplicado → prévia "Vou desfazer tudo que este pedido criou:" → "Pedido excluído"; a compra de 03/11 da Aparecida com "Estornado em 05/11"; Histórico de Exclusões. | `apos-cap04` |
 | 6 | COMPROVANTES / Reimprimir e cupom sem valor | "Ver comprovante" da latinha: "Popup bloqueado..." e a liberação (ilustração do navegador); PDF em nova aba; "Cupom sem valor" no Valdir → "Comprovante sem valores" → PDF sem valores. | `apos-cap05` |
 | 7 | HISTÓRICO / O Histórico do Caixa | "Histórico do Caixa": colunas, corrente do mesmo dia, resumo da linha, busca "21/10". | `apos-cap06` |
 | 8 | HISTÓRICO / Relatórios do caixa | No #70 de 21/10: "Ver comprovante" (fechamento) e "Relatório de estoque" (nova aba). | `apos-cap06` |
@@ -48,7 +48,7 @@ corrigir lá dentro".
 
 ## Mundo: o que esta aula precisa
 Além do `MUNDO_FICTICIO.md` e do fim do T6 (caixas #85 e #86 de 10/11 fechados no fim daquele dia):
-- **Rafael:** caixa **#88** aberto em 11/11 às 07:10 com R$ 1.200,00 (ele mesmo). Compras dele no #88, todas em dinheiro:
+- **Rafael:** caixa **#87** aberto em 11/11 às 07:10 com R$ 1.200,00 (ele mesmo). Compras dele no #87, todas em dinheiro:
   07:22 Aparecida Ramos, **24 kg** de alumínio latinha a R$ 6,20 = **R$ 148,80** (o certo seriam 42 kg); 07:41 Valdir
   Pereira, 280 kg de ferro misto a R$ 0,75 = **R$ 210,00**; 07:42 a mesma compra do Valdir de novo (duplicada).
 - **Marcos:** nenhum caixa aberto em 11/11. Caixa **#70** de 21/10/2026, 07:02 → 17:31, saldo inicial R$ 800,00, saldo
@@ -57,27 +57,30 @@ Além do `MUNDO_FICTICIO.md` e do fim do T6 (caixas #85 e #86 de 10/11 fechados 
   bateria automotiva** a R$ 3,10 = **R$ 744,00**, Pix/Transferência na "Conta Principal". Nenhuma diferença no fechamento.
 - **Auto Peças Vale Forte:** compra de 08/10 (caixa do dia), 850 kg de chaparia a R$ 0,70 = R$ 595,00, Pix (aparece na
   busca do cap03). Nenhuma compra de bateria no nome dela em outubro.
-- **Tabela de preço:** Depósito Irmãos Siqueira e Auto Peças Vale Forte compram bateria pela mesma tabela (a padrão, R$ 3,10),
-  para a troca de fornecedor não mudar o preço do item `[TESTAR no ensaio]`.
-- **Estornado:** 03/11, Cooperativa Recomeço, 380 kg de plástico PET a R$ 1,90 = R$ 722,00, Pix, lançada duas vezes; a
-  cópia foi excluída em 05/11 com o caixa de 03/11 já fechado: `reverted_at` 05/11, compensação no caixa de 05/11
+- **Tabela de preço:** Depósito Irmãos Siqueira e Auto Peças Vale Forte compram bateria pela mesma tabela (a padrão, R$ 3,10).
+  A Vale Forte tem o preço especial de R$ 3,40 na bateria (T7) desde 09/11 18:00; trocar o fornecedor de um pedido salvo
+  não refaz o preço dos itens já lançados (`Purchase.tsx:2180-2205` só mexe no item que está sendo digitado), então os
+  240 kg seguem a R$ 3,10 `[TESTAR no ensaio]`.
+- **Estornado:** 03/11, Aparecida Ramos, 38 kg de alumínio latinha e 280 kg de papelão = R$ 389,60, dinheiro, no caixa do
+  Marcos de 03/11, lançada duas vezes (junção: a cooperativa tem 14 compras no T4 e o extrato da T14 não tem esse Pix); a
+  cópia foi excluída em 05/11 com o caixa de 03/11 já fechado: `reverted_at` 05/11, compensação no caixa do Marcos de 05/11
   (`reverted_compensation_register_id`), a linha fica na lista com "Estornado em 05/11". Linha correspondente em
   `destructive_actions_audit` (05/11).
-- **Criado ao vivo:** a latinha da Aparecida corrigida para 42 kg = R$ 260,40 (o #88 paga a diferença de R$ 111,60); a
+- **Criado ao vivo:** a latinha da Aparecida corrigida para 42 kg = R$ 260,40 (o #87 paga a diferença de R$ 111,60); a
   compra duplicada do Valdir excluída (auditoria "Excluiu compra ..."); "Cupom sem valor" ligado na compra do Valdir;
   #70 reaberto, a bateria passada para "Auto Peças Vale Forte" (mesma data, mesmo caixa, mesmo Pix) e o #70 fechado de
   novo com 21/10/2026 17:31 e R$ 612,50.
-- **Estado final:** #88 do Rafael aberto; #70 fechado em 21/10. O T10 parte de `apos-cap09`.
+- **Estado final:** #87 do Rafael aberto; #70 fechado em 21/10. O T10 parte de `apos-cap09`.
 
 ## Gravação
 - **Rotas:** `/pedidos`, `/compra` (modo edição, duas vezes), `/historico-caixa`, `/configuracoes` (aba "Empresa"),
-  `/historico-exclusoes`, `/caixa` (abas "Início", #70 e #88). PDFs em nova aba (comprovante de compra, relatório de
+  `/historico-exclusoes`, `/caixa` (abas "Início", #70 e #87). PDFs em nova aba (comprovante de compra, relatório de
   fechamento, relatório de estoque): o robô grava a aba nova e volta.
 - **Popup bloqueado (cap06):** no primeiro "Ver comprovante" o robô faz o `window.open` da página devolver `null` (o
   navegador "bloqueou"), para o aviso real do app aparecer; a liberação no navegador é ilustração; o segundo clique abre
   normal.
 - **RPCs e tabelas a simular:** `set_order_hide_financials`; `preview_order_deletion` (estoque e pagamentos do pedido, modo
-  `hard_delete` com o #88 aberto); `delete_purchase_atomic` (com a linha em `destructive_actions_audit`, `entity_label` =
+  `hard_delete` com o #87 aberto); `delete_purchase_atomic` (com a linha em `destructive_actions_audit`, `entity_label` =
   nome do fornecedor, como a central de ajuda descreve); `revert_consolidated_order_atomic` (devolve `origin_register_closed`
   false com a origem aberta) e `create_purchase_atomic` (respeita `p_transaction_at` e o caixa de origem); reabrir e fechar
   com `closed_at` retroativo; filtros por material (vínculo dos itens) e por forma de pagamento.

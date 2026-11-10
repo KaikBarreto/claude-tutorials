@@ -1,0 +1,533 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<!-- Cenas de conceito do T6 "Caixa: abrir, fechar e o cofre" (EcoFlix), feitas do kit perfis/ecoflix/cenas/
+     cenas_ecoflix.html (docs/09-aula-ilustrada.md): 1280x800 CSS, quadro a quadro por render_cenas.cjs (window.setup(dados) +
+     window.R(t)); tudo é função do tempo t; cada mudança presa a uma palavra da fala com W(linha, 'palavra'[, ocorrência]).
+     Uma cena por capítulo: CAPS[0] o dinheiro do dia, [3] dia só de Pix, [4] cofre x caixa, [9] suprimento e sangria,
+     [10] esperado x contado. Janelas e o que cada uma mostra: ilustracoes.json; tempos estimados (antes da voz):
+     tempos/capNN.json. Os dois exemplos do kit saíram (o caminhao() do kit fica: o cap03 usa).
+     Valores dos caixas em constantes no topo de cada cena (a junção do mundo pode mudar os números; as âncoras não são número).
+     A aula acrescenta ao kit: --r/--re/--rc e .tag.r (despesa), .tag.n/.ico.n, seta com ponta, ficha que viaja, viagem(),
+     e os desenhos da gaveta do caixa, do cofre, do banco, da carroça, do pátio, da pilha de notas e do maço. -->
+<style>
+@font-face{font-family:M;font-weight:500;src:url(../../../web/fonts/montserrat-latin-500-normal.woff2) format('woff2')}
+@font-face{font-family:M;font-weight:600;src:url(../../../web/fonts/montserrat-latin-600-normal.woff2) format('woff2')}
+@font-face{font-family:M;font-weight:700;src:url(../../../web/fonts/montserrat-latin-700-normal.woff2) format('woff2')}
+@font-face{font-family:M;font-weight:800;src:url(../../../web/fonts/montserrat-latin-800-normal.woff2) format('woff2')}
+@font-face{font-family:M;font-weight:500;src:url(../../../web/fonts/montserrat-latin-ext-500-normal.woff2) format('woff2');unicode-range:U+0100-024F}
+@font-face{font-family:M;font-weight:700;src:url(../../../web/fonts/montserrat-latin-ext-700-normal.woff2) format('woff2');unicode-range:U+0100-024F}
+/* ---------------------------------------------------------------- paleta EcoFlix (marca: acento #50D088, escuro #121212)
+   --v  acento: preenchimentos, barras, contornos de destaque (nunca texto sobre branco: contraste baixo)
+   --ve verde escuro: texto e ícone verde sobre branco (contraste 5,0)   --vc verde claro: fundo de ícone/resultado
+   --a  âmbar: o SEGUNDO conceito da cena (ex.: competência x caixa)     --ae texto âmbar (5,9)   --ac âmbar claro
+   --t  texto (o escuro da marca)   --c texto secundário (4,8)   --l linhas   --e painel escuro (mostrador) */
+:root{--v:#50D088;--ve:#2E7D57;--vc:#EAF8F0;--vm:#A9E9C6;--a:#F2B63D;--ae:#8A5A00;--ac:#FFF5DF;
+  --t:#121212;--c:#6B7280;--l:#E6E9EE;--e:#121212}
+*{box-sizing:border-box;margin:0;padding:0;transition:none!important;animation:none!important}
+html,body{width:1280px;height:800px;overflow:hidden;background:#fff}
+body{font-family:M,sans-serif;color:var(--t);-webkit-font-smoothing:antialiased}
+#st{position:absolute;inset:0;overflow:hidden;background:
+  radial-gradient(1100px 650px at 92% -12%,rgba(80,208,136,.09),transparent 62%),
+  radial-gradient(900px 600px at -12% 112%,rgba(80,208,136,.06),transparent 60%),#fff}
+.g{position:absolute;left:0;top:0;width:1280px;height:800px;transform-origin:640px 400px}
+.ab{position:absolute}
+.row{display:flex;align-items:center}
+/* título da cena: área (kicker) + conceito; sozinho fica grande no centro e sobe quando o desenho entra */
+.kick{font-weight:700;font-size:15px;letter-spacing:.3em;color:var(--ve);text-transform:uppercase}
+.h{font-weight:800;font-size:46px;letter-spacing:-.01em;line-height:1.1}
+/* cartão, chip, etiqueta, ícone */
+.card{position:absolute;background:#fff;border:1px solid #E1E8E4;border-radius:18px;
+  box-shadow:0 18px 40px rgba(16,24,40,.10),0 3px 8px rgba(16,24,40,.06)}
+.ic{display:inline-flex;align-items:center;justify-content:center;flex:none}
+.ic svg{width:100%;height:100%}
+.ico{display:flex;align-items:center;justify-content:center;flex:none;border-radius:14px;background:var(--vc);color:var(--ve)}
+.ico.a{background:var(--ac);color:var(--ae)}
+.tag{display:inline-flex;align-items:center;gap:8px;padding:9px 18px;border-radius:999px;font-weight:800;font-size:20px;white-space:nowrap}
+.tag.v{background:var(--vc);color:var(--ve)} .tag.a{background:var(--ac);color:var(--ae)}
+.lbl{font-weight:700;font-size:17px;color:var(--c)}
+.num{font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+.op{position:absolute;width:60px;height:60px;border-radius:50%;background:#F2F4F7;color:var(--t);display:flex;
+  align-items:center;justify-content:center;font-weight:800;font-size:34px;line-height:1}
+/* mostrador da balança (painel escuro, número no acento) */
+.most{background:var(--e);border-radius:16px;padding:16px 22px 18px;box-shadow:0 16px 34px rgba(16,24,40,.22)}
+.most .ml{position:relative;height:20px;font-weight:700;font-size:15px;letter-spacing:.22em;color:#A9E9C6;text-transform:uppercase}
+.most .ml span{position:absolute;left:0;top:0;white-space:nowrap}
+.most .mn{margin-top:6px;font-weight:800;font-size:44px;color:var(--v);font-variant-numeric:tabular-nums;white-space:nowrap}
+.rip{position:absolute;width:56px;height:56px;margin:-28px 0 0 -28px;border-radius:50%;border:3px solid var(--v);opacity:0}
+/* ---------------------------------------------------------------- T6: o que a aula acrescenta ao kit (o mesmo do T4)
+   --r vermelho (despesa de verdade, a tarifa): preenchimento e contorno
+   --re texto vermelho sobre branco (6,6) e sobre --rc (6,0)   --rc vermelho claro: fundo de etiqueta e de célula */
+:root{--r:#E5484D;--re:#B42318;--rc:#FEF1F0}
+.tag.r{background:var(--rc);color:var(--re)} .tag.n{background:#F2F4F7;color:#374151}
+.ico.r{background:var(--rc);color:var(--re)} .ico.n{background:#EEF1F4;color:#4B5563}
+.tok{position:absolute;left:0;top:0;width:48px;height:48px;border-radius:50%;background:#fff;border:2px solid #D5DCE2;
+  display:flex;align-items:center;justify-content:center;color:#374151;box-shadow:0 6px 14px rgba(16,24,40,.12)}
+</style></head>
+<body><div id="st"></div>
+<script>
+// ------------------------------------------------------------------ utilidades (as do cenas_modelo.html + as da EcoFlix)
+const cl=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
+const eo=x=>1-Math.pow(1-cl(x),3);
+const eio=x=>{x=cl(x);return x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2};
+const pr=(t,a,d=.45)=>cl((t-a)/d);
+const lerp=(a,b,p)=>a+(b-a)*p;
+const $=s=>document.querySelector(s);
+const ST=document.getElementById('st');
+function el(html,parent=ST){const d=document.createElement('div');d.innerHTML=html.trim();let f=null;for(const n of [...d.childNodes]){parent.appendChild(n);if(!f&&n.nodeType===1)f=n}return f}
+function grupo(){return el('<div class="g"></div>')}
+function ic(n,px,cor){const s=(window.ICONS||{})[n]||'';return `<span class="ic" style="width:${px}px;height:${px}px;${cor?'color:'+cor:''}">${s}</span>`}
+function hex(c){c=c.replace('#','');return[0,2,4].map(i=>parseInt(c.substr(i,2),16))}
+function mix(a,b,p){const A=hex(a),B=hex(b);return `rgb(${A.map((v,i)=>Math.round(v+(B[i]-v)*cl(p))).join(',')})`}
+// aparece em a, some em b (opacidade + leve subida + escala): a entrada e a saída suaves de tudo
+function vis(e,t,a,b=1e9,o={}){
+  const din=o.din??.5,dout=o.dout??.4,dy=o.dy??16,dx=o.dx??0,sc=o.sc??.985;
+  const p=eo(pr(t,a,din)),q=1-eo(pr(t,b,dout)),op=Math.min(p,q);
+  e.style.opacity=op.toFixed(4);e.style.visibility=op<=.001?'hidden':'visible';
+  const s=sc+(1-sc)*p - (1-q)*(1-sc);
+  e.style.transform=`translate(${((1-p)*dx).toFixed(2)}px,${((1-p)*dy-(1-q)*dy*.5).toFixed(2)}px) scale(${s.toFixed(4)})`;
+  return op;
+}
+function ripple(r,t,a){const p=pr(t,a,.7);r.style.opacity=(p>0&&p<1)?(.6*(1-p)).toFixed(3):0;r.style.transform=`scale(${(.4+2.0*eo(p)).toFixed(3)})`}
+function pulse(e,t,a,amp=.045,dur=.9){const p=pr(t,a,dur);e.style.scale=(p>0&&p<1)?(1+amp*Math.sin(Math.PI*p)).toFixed(4):''}
+function digita(e,txt,t,a,b){const p=cl((t-a)/Math.max(.05,b-a));const n=Math.round(p*txt.length);
+  const car=(p>0&&p<1)||(Math.floor(t*2.2)%2===0&&p<1.2&&t>=a)?'<span style="color:var(--v);font-weight:500">|</span>':'';
+  e.innerHTML=(txt.slice(0,n)||'')+(t>=a&&t<b+.8?car:'');}
+// EcoFlix: números e dinheiro no jeito brasileiro; contagem suave de um número; traço que se desenha; arco; contorno
+const NF=new Intl.NumberFormat('pt-BR');
+const kg=v=>NF.format(Math.round(v))+' kg';
+const brl=v=>'R$ '+v.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
+function conta(e,t,a,d,v0,v1,fmt=kg){const p=eo(pr(t,a,d));const s=fmt(lerp(v0,v1,p));if(e.textContent!==s)e.textContent=s;return p}
+function traco(p,t,a,d=.8){if(!p._L){p._L=p.getTotalLength();p.style.strokeDasharray=p._L}const q=eio(pr(t,a,d));p.style.strokeDashoffset=(p._L*(1-q)).toFixed(2);p.style.opacity=q>0?1:0;return q}
+function arco(e,t,a,d,x0,y0,x1,y1,h=-80,rot=0){const p=eio(pr(t,a,d));const x=lerp(x0,x1,p),y=lerp(y0,y1,p)+h*4*p*(1-p);
+  e.style.transform=`translate(${x.toFixed(2)}px,${y.toFixed(2)}px) rotate(${(rot*p).toFixed(2)}deg)`;return p}
+function contorno(e,t,a,de,para,d=.45){e.style.borderColor=mix(de,para,eo(pr(t,a,d)))}
+// título padrão da cena: grande no centro enquanto está sozinho, sobe para o alto quando o desenho entra (em "sobe")
+function titulo(g,kick,txt){return el(`<div class="ab" style="left:0;top:0;width:1280px;text-align:center">
+  <div class="kick">${kick}</div><div class="h" style="margin-top:12px">${txt}</div></div>`,g)}
+function posTitulo(e,t,a,sobe,sai=1e9){vis(e,t,a,sai,{dy:14});const p=eio(pr(t,sobe,.7));
+  e.style.top=lerp(318,46,p).toFixed(2)+'px';e.style.scale=lerp(1.12,1,p).toFixed(4)}
+
+// ------------------------------------------------------------------ tempos da fala (capNN.json do proc.py ou estimado)
+let D=null;
+const norm=w=>w.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9%./-]+/g,'');
+function W(linha,palavra,n=1,campo='s'){
+  const alvo=norm(palavra);let k=0;
+  for(const w of D.words){if(w.linha===linha&&norm(w.w).replace(/[.,]$/,'')===alvo){k++;if(k===n)return w[campo]}}
+  for(const w of D.words){if(w.linha===linha&&norm(w.w).startsWith(alvo)){k++;if(k>=n)return w[campo]}}
+  console.warn('palavra não achada',linha,palavra);return L(linha);
+}
+const L=i=>(D.linhas[i]||{s:0}).s, LE=i=>(D.linhas[i]||{e:D.dur}).e;
+
+// ------------------------------------------------------------------ desenhos genéricos (sem marca)
+// caminhão de lado (frente para a direita), com a carga de sucata em pedaços (.pd) que podem ser descarregados
+function caminhao(){
+  const pd=[ // [forma, cor, centro da peça, destino no monte atrás do caminhão (deslocamento do centro e giro)]
+    ['<polygon points="28,90 44,52 88,42 100,90"/>','#8C5A3C',[64,66],[-224,148,6]],
+    ['<polygon points="82,90 102,36 146,48 154,90"/>','#6F7983',[118,63],[-318,122,12]],
+    ['<rect x="118" y="44" width="112" height="16" rx="8" transform="rotate(-8 174 52)"/>','#9AA3AD',[174,52],[-334,98,-18]],
+    ['<polygon points="148,90 170,54 212,44 232,90"/>','#A0694A',[190,67],[-425,148,-8]],
+    ['<polygon points="210,90 232,40 276,54 286,90"/>','#4F5861',[248,65],[-373,120,-10]],
+    ['<polygon points="258,90 282,60 308,66 312,90"/>','#8A949E',[285,75],[-375,148,4]],
+    ['<g><circle cx="192" cy="64" r="19"/><circle cx="192" cy="64" r="7" fill="#8A949E"/></g>','#5E6670',[192,64],[-242,155,200]],
+    ['<polygon points="40,70 60,50 84,64 64,86"/>','#B07A55',[62,68],[-307,100,30]]];
+  const pecas=pd.map(([f,c,[cx,cy],[dx,dy,r]])=>`<g class="pd" data-cx="${cx}" data-cy="${cy}" data-dx="${dx}" data-dy="${dy}" data-r="${r}" fill="${c}">${f}</g>`).join('');
+  const roda=x=>`<g class="roda" data-x="${x}" transform="translate(${x},196)"><circle r="26" fill="#1B1F24"/><circle r="12" fill="#9AA3AD"/>
+    <rect x="-2.5" y="-23" width="5" height="10" rx="2" fill="#5B636C"/><rect x="-2.5" y="13" width="5" height="10" rx="2" fill="#5B636C"/></g>`;
+  return `<svg viewBox="0 0 500 230" width="500" height="230" style="overflow:visible">
+    <g class="carga">${pecas}</g>
+    <rect x="18" y="86" width="304" height="88" rx="6" fill="#7E8994"/>
+    <rect x="16" y="82" width="308" height="11" rx="4" fill="#68727D"/>
+    <g stroke="#707A85" stroke-width="3">${[78,138,198,258].map(x=>`<line x1="${x}" y1="98" x2="${x}" y2="168"/>`).join('')}</g>
+    <path d="M334,176 L334,76 Q334,64 346,64 L412,64 L462,116 L472,121 Q480,124 480,134 L480,176 Z" fill="#2F3640"/>
+    <path d="M348,78 L406,78 L444,116 L348,116 Z" fill="#D7E5ED"/>
+    <rect x="470" y="142" width="10" height="11" rx="2" fill="#F2B63D"/>
+    <rect x="12" y="170" width="472" height="15" rx="4" fill="#23282E"/>
+    ${roda(92)}${roda(158)}${roda(416)}
+  </svg>`;
+}
+
+// ------------------------------------------------------------------ T6 · utilidades desta aula (faltavam no kit; as mesmas do T4)
+// A janela de cada cena abre 0,3 s antes da palavra "de" (ilustracoes.json); o título entra 0,6 s antes disso, então já
+// está inteiro no 1º quadro, grande no centro, e sobe em "sobe".
+const ABRE=.3;
+function tituloCena(tit,t,de,sobe){posTitulo(tit,t,de-ABRE-.6,sobe)}
+// seta com ponta: o traço se desenha (traco) e a ponta aparece no fim
+function seta(pai,d,cor='var(--v)',w=4){
+  const s=el(`<svg class="ab" style="left:0;top:0;overflow:visible" width="1280" height="800"><path d="${d}" fill="none" stroke="${cor}"
+    stroke-width="${w}" stroke-linecap="round"/><path d="" fill="none" stroke="${cor}" stroke-width="${w}" stroke-linecap="round"
+    stroke-linejoin="round" opacity="0"/></svg>`,pai);
+  const [p,pt]=s.querySelectorAll('path'), L=p.getTotalLength(), A=p.getPointAtLength(L), B=p.getPointAtLength(Math.max(0,L-8));
+  const an=Math.atan2(A.y-B.y,A.x-B.x), k=13, P=a=>`${(A.x-k*Math.cos(an+a)).toFixed(1)},${(A.y-k*Math.sin(an+a)).toFixed(1)}`;
+  pt.setAttribute('d',`M${P(.55)} L${A.x.toFixed(1)},${A.y.toFixed(1)} L${P(-.55)}`);
+  return {p,pt,draw(t,a,d=.7){const q=traco(p,t,a,d);pt.style.opacity=cl((q-.8)/.2).toFixed(3);return q}};
+}
+// ficha que viaja por uma seta (círculo branco com o ícone por cima do traço)
+function ficha(pai,icone,px=24,flip=false){return el(`<div class="tok"><span class="ic" style="width:${px}px;height:${px}px;
+  ${flip?'transform:scaleX(-1)':''}">${(window.ICONS||{})[icone]||''}</span></div>`,pai)}
+// a ficha percorre de (x0,y0) a (x1,y1) a partir de a; antes disso não aparece; se "some", desaparece ao chegar (entra no destino)
+function viagem(f,t,a,d,x0,y0,x1,y1,h=0,some=false){const q=arco(f,t,a,d,x0,y0,x1,y1,h,0);
+  const op=t<a?0:(some?Math.min(1,q*6,(1-q)*6):Math.min(1,q*6+.0001)); f.style.opacity=op.toFixed(3); f.style.visibility=op>0?'visible':'hidden'; return q}
+
+// ------------------------------------------------------------------ T6 · desenhos genéricos desta aula (sem marca)
+// notas genéricas (verdes, sem valor impresso)
+const NOTA=['#9ED9B5','#7CC69B','#B7E4C7','#8FCFA8'];
+// gaveta do caixa vista de cima: 4 compartimentos de nota atrás, 5 copinhos de moeda na frente e o puxador
+function gaveta(cheia=true,w=300){
+  const nota=(x,y,c)=>`<g><rect x="${x}" y="${y}" width="51" height="56" rx="4" fill="${c}" stroke="#2E7D57" stroke-opacity=".35" stroke-width="1.5"/>
+    <ellipse cx="${x+25.5}" cy="${y+28}" rx="11" ry="13" fill="#fff" opacity=".55"/></g>`;
+  const comp=[0,1,2,3].map(i=>`<rect x="${22+i*65}" y="20" width="61" height="66" rx="6" fill="#F4F6F8"/>`+(cheia?nota(27+i*65,25,NOTA[i]):'')).join('');
+  const moe=[0,1,2,3,4].map(i=>`<circle cx="${42+i*54}" cy="116" r="20" fill="#F4F6F8" stroke="#C9D1D8" stroke-width="2"/>`+
+    (cheia?`<circle cx="${42+i*54}" cy="116" r="12" fill="${i%2?'#C9A44C':'#AEB8C2'}"/><circle cx="${42+i*54}" cy="116" r="6" fill="#fff" opacity=".35"/>`:'')).join('');
+  return `<svg viewBox="0 0 300 172" width="${w}" height="${w*172/300}" style="overflow:visible">
+    <rect x="6" y="6" width="288" height="146" rx="14" fill="#DDE3E8" stroke="#AEB8C2" stroke-width="3"/>
+    <rect x="16" y="14" width="268" height="78" rx="9" fill="#C9D1D8"/>${comp}${moe}
+    <rect x="0" y="148" width="300" height="24" rx="7" fill="#4F5861"/><rect x="118" y="155" width="64" height="8" rx="4" fill="#2F3640"/></svg>`;
+}
+// cofre (porta com segredo redondo, puxador e dobradiças)
+function cofre(w=200){
+  const marcas=[...Array(12)].map((_,i)=>{const a=i*Math.PI/6, r1=25, r2=30;
+    return `<line x1="${(100+r1*Math.cos(a)).toFixed(1)}" y1="${(88+r1*Math.sin(a)).toFixed(1)}" x2="${(100+r2*Math.cos(a)).toFixed(1)}" y2="${(88+r2*Math.sin(a)).toFixed(1)}"/>`}).join('');
+  return `<svg viewBox="0 0 200 200" width="${w}" height="${w}">
+    <rect x="26" y="176" width="26" height="14" rx="4" fill="#2F3640"/><rect x="148" y="176" width="26" height="14" rx="4" fill="#2F3640"/>
+    <rect x="8" y="8" width="184" height="172" rx="18" fill="#4F5861"/>
+    <rect x="24" y="24" width="152" height="140" rx="10" fill="#5E6670" stroke="#3F4750" stroke-width="3"/>
+    <rect x="14" y="46" width="12" height="26" rx="4" fill="#2F3640"/><rect x="14" y="118" width="12" height="26" rx="4" fill="#2F3640"/>
+    <circle cx="100" cy="88" r="36" fill="#E3E8EC" stroke="#3F4750" stroke-width="4"/>
+    <g stroke="#7E8994" stroke-width="2.5" stroke-linecap="round">${marcas}</g>
+    <circle cx="100" cy="88" r="12" fill="#9AA3AD"/><rect x="97" y="62" width="6" height="16" rx="3" fill="#4F5861"/>
+    <rect x="72" y="136" width="56" height="12" rx="6" fill="#C9D1D8"/></svg>`;
+}
+// banco (prédio genérico com frontão e colunas)
+function banco(w=220){
+  return `<svg viewBox="0 0 220 190" width="${w}" height="${w*190/220}">
+    <polygon points="110,6 212,58 8,58" fill="#5E6670"/><circle cx="110" cy="38" r="10" fill="#D7DEE4"/>
+    <rect x="12" y="56" width="196" height="12" rx="3" fill="#4F5861"/>
+    ${[0,1,2,3,4].map(i=>`<rect x="${24+i*38}" y="72" width="20" height="86" rx="3" fill="#D7DEE4"/>`).join('')}
+    <rect x="8" y="158" width="204" height="12" rx="3" fill="#9AA3AD"/><rect x="0" y="170" width="220" height="16" rx="4" fill="#7E8994"/></svg>`;
+}
+// carroça de carroceiro (caixa com sucata, roda e varais)
+function carroca(w=220){
+  return `<svg viewBox="0 0 240 150" width="${w}" height="${w*150/240}" style="overflow:visible">
+    <line x1="168" y1="74" x2="236" y2="44" stroke="#5B4632" stroke-width="7" stroke-linecap="round"/>
+    <polygon points="34,52 62,26 98,34 112,52" fill="#8C5A3C"/><polygon points="92,52 112,20 150,30 160,52" fill="#6F7983"/>
+    <rect x="56" y="26" width="92" height="12" rx="6" transform="rotate(-10 102 32)" fill="#9AA3AD"/>
+    <rect x="18" y="50" width="156" height="50" rx="5" fill="#A0694A"/>
+    <g stroke="#8A5A3C" stroke-width="2.5">${[64,74,84].map(y=>`<line x1="22" y1="${y}" x2="170" y2="${y}"/>`).join('')}</g>
+    <line x1="160" y1="100" x2="164" y2="130" stroke="#5B4632" stroke-width="7" stroke-linecap="round"/>
+    <circle cx="86" cy="112" r="30" fill="#2F3640"/><circle cx="86" cy="112" r="12" fill="#9AA3AD"/>
+    <g stroke="#9AA3AD" stroke-width="3">${[0,60,120].map(a=>`<line x1="${86-24*Math.cos(a*Math.PI/180)}" y1="${112-24*Math.sin(a*Math.PI/180)}" x2="${86+24*Math.cos(a*Math.PI/180)}" y2="${112+24*Math.sin(a*Math.PI/180)}"/>`).join('')}</g></svg>`;
+}
+// o pátio (o mesmo desenho do T4): galpão com porta de enrolar e um monte de sucata
+function patio(w=440){
+  const gal=[...Array(11)].map((_,i)=>`<line x1="${44+i*18}" y1="100" x2="${44+i*18}" y2="212"/>`).join('');
+  const porta=[...Array(6)].map((_,i)=>`<line x1="94" y1="${142+i*12}" x2="178" y2="${142+i*12}"/>`).join('');
+  return `<svg viewBox="0 0 440 240" width="${w}" height="${w*240/440}" style="overflow:visible">
+    <rect x="0" y="212" width="440" height="6" rx="3" fill="#DDE2E7"/>
+    <rect x="30" y="92" width="212" height="122" fill="#E6EBEF"/><g stroke="#D3DAE0" stroke-width="2">${gal}</g>
+    <polygon points="14,98 136,38 258,98" fill="#5E6670"/><rect x="10" y="92" width="252" height="10" rx="4" fill="#4F5861"/>
+    <rect x="88" y="132" width="96" height="82" rx="3" fill="#2F3640"/><g stroke="#434B55" stroke-width="2">${porta}</g>
+    <rect x="44" y="120" width="30" height="20" rx="3" fill="#C9D6DE"/><rect x="198" y="120" width="30" height="20" rx="3" fill="#C9D6DE"/>
+    <polygon points="262,214 290,164 330,132 372,124 410,152 436,214" fill="#7E8994"/>
+    <polygon points="270,214 296,178 332,170 346,214" fill="#8C5A3C"/><polygon points="330,214 352,154 394,160 404,214" fill="#6F7983"/>
+    <rect x="300" y="142" width="110" height="14" rx="7" transform="rotate(-14 355 149)" fill="#9AA3AD"/>
+    <polygon points="372,214 392,174 426,182 434,214" fill="#A0694A"/>
+    <circle cx="318" cy="190" r="17" fill="#4F5861"/><circle cx="318" cy="190" r="6" fill="#9AA3AD"/>
+    <polygon points="352,136 370,118 392,130 376,150" fill="#B07A55"/></svg>`;
+}
+// pilha de notas vista de lado (camadas finas); fica dentro de um invólucro que corta por cima (a pilha cresce e diminui)
+function pilhaNotas(w=220){
+  const c=[];for(let i=0;i<22;i++){const y=192-i*9, dx=(i*37%11)-5;
+    c.push(`<rect x="${12+dx}" y="${y}" width="${w-24}" height="8" rx="2" fill="${NOTA[i%4]}" stroke="#2E7D57" stroke-opacity=".3" stroke-width="1"/>`);
+    if(i%6===3) c.push(`<rect x="${w/2-22+dx}" y="${y-1}" width="44" height="10" rx="2" fill="#F5E6C4"/>`);}
+  return `<svg viewBox="0 0 ${w} 202" width="${w}" height="202" style="position:absolute;left:0;bottom:0">${c.join('')}</svg>`;
+}
+// maço de notas com cinta (o dinheiro que muda de lugar)
+function maco(txt){return `<div class="row" style="gap:10px;padding:8px 14px 8px 10px;border-radius:12px;background:#fff;border:2px solid var(--v);
+  box-shadow:0 10px 22px rgba(16,24,40,.16)"><svg viewBox="0 0 54 34" width="54" height="34"><rect x="2" y="6" width="50" height="26" rx="4" fill="#7CC69B"/>
+  <rect x="0" y="2" width="50" height="26" rx="4" fill="#9ED9B5" stroke="#2E7D57" stroke-opacity=".4"/><rect x="19" y="2" width="12" height="26" fill="#F5E6C4"/></svg>
+  <span class="num" style="font-size:20px;color:var(--ve)">${txt}</span></div>`}
+
+// ------------------------------------------------------------------ CAPS[0] · O dinheiro do dia
+// fala 0 "Oi! Neste tutorial a gente vai cuidar do dinheiro do dia na Recicla Vale Metais."  1 "No ferro-velho, quase toda
+// compra de sucata é paga em dinheiro vivo. Se o caixa não bate no fim do dia, ninguém sabe onde foi parar a diferença."
+// 2 "Então a gente vai ver com quanto o caixa abre, com quanto ele fecha, e onde fica o dinheiro da empresa quando não tem
+// caixa aberto."
+const CAPS={};
+CAPS[0]=()=>{
+  const g=grupo();
+  const tit=titulo(g,'Caixa','O dinheiro do dia');
+  const gav=el(`<div class="ab" style="left:490px;top:270px;width:300px">${gaveta(true)}
+      <div style="margin-top:12px;text-align:center;font-weight:800;font-size:22px">Caixa</div></div>`,g);
+  const venda=el(`<div class="card row" style="left:70px;top:300px;width:220px;height:108px;padding:0 22px;gap:16px">
+      <div class="ico" style="width:56px;height:56px;border-radius:16px">${ic('factory',30)}</div>
+      <div style="font-weight:800;font-size:24px">Venda</div></div>`,g);
+  const car=el(`<div class="ab" style="left:990px;top:288px;width:220px">${carroca(220)}
+      <div class="ch" style="margin-top:14px;text-align:center"><span class="tag a" style="font-size:17px;padding:6px 14px">compra de sucata</span></div></div>`,g);
+  const sIn=seta(g,'M300 354 L478 354');
+  const sOut=[294,354,414].map(y=>seta(g,`M802 ${y} L982 ${y}`,'var(--a)'));
+  const fIn=ficha(g,'banknote',24), fOut=[0,1,2].map(()=>ficha(g,'banknote',24));
+  const duv=el(`<div class="ab row" style="left:560px;top:196px;gap:12px">
+      <div class="dq" style="width:52px;height:52px;border-radius:50%;background:var(--ac);color:var(--ae);display:flex;align-items:center;justify-content:center">${ic('circle-help',30)}</div>
+      <div class="dt"><span class="tag a" style="font-size:18px;padding:7px 15px">a diferença?</span></div></div>`,g);
+  // abre e fecha: o caixa pega dinheiro do cofre e devolve no fim
+  const cof=el(`<div class="ab" style="left:575px;top:530px;width:130px;text-align:center">${cofre(130)}
+      <div style="margin-top:6px;font-weight:800;font-size:22px">Cofre</div></div>`,g);
+  const sAb=seta(g,'M570 590 C 516 586, 498 530, 522 454'), sFe=seta(g,'M758 454 C 782 530, 764 586, 710 590','var(--a)');
+  const tAb=el('<div class="ab" style="left:380px;top:530px"><span class="tag v" style="font-size:17px;padding:6px 15px">abre</span></div>',g);
+  const tFe=el('<div class="ab" style="left:800px;top:530px"><span class="tag a" style="font-size:17px;padding:6px 15px">fecha</span></div>',g);
+
+  return t=>{
+    const t0=W(0,'oi'), tdi=W(0,'dinheiro'), tdia=W(0,'dia'), tre=W(0,'recicla');
+    const tcp=W(1,'compra'), tdv=W(1,'dinheiro'), tba=W(1,'bate'), tdf=W(1,'diferenca');
+    const tab=W(2,'abre'), tfe=W(2,'fecha'), tem=W(2,'empresa'), tap=W(2,'aberto');
+    tituloCena(tit,t,t0,tdi-.6);
+    vis(gav,t,tdi-.1,1e9,{dy:20,sc:.95});
+    // entra dinheiro da venda; sai dinheiro na compra de sucata
+    vis(venda,t,tdia-.2,1e9,{dx:-20,dy:0}); sIn.draw(t,tdia,.6); viagem(fIn,t,tdia+.3,.9,316,330,420,330);
+    vis(car,t,tre-.2,1e9,{dx:20,dy:0}); sOut[1].draw(t,tre,.6); viagem(fOut[1],t,tre+.3,.9,818,330,922,330);
+    // quase toda compra é em dinheiro vivo: muitas setas saindo da gaveta
+    sOut[0].draw(t,tcp-.1,.6); sOut[2].draw(t,tcp+.05,.6); pulse(car.querySelector('.ch'),t,tcp,.06,.7);
+    viagem(fOut[0],t,tdv-.25,.9,818,270,922,270); viagem(fOut[2],t,tdv-.05,.9,818,390,922,390);
+    // o caixa não bate: onde foi parar a diferença?
+    vis(duv.querySelector('.dq'),t,tba-.15,1e9,{sc:.7,dy:0}); vis(duv.querySelector('.dt'),t,tdf-.2,1e9,{dx:-10,dy:0});
+    // com quanto abre, com quanto fecha e onde fica o dinheiro da empresa: o cofre
+    vis(tAb,t,tab-.1,1e9,{dy:8,sc:.9}); pulse(gav,t,tab,.03,.6); vis(tFe,t,tfe-.1,1e9,{dy:8,sc:.9}); pulse(gav,t,tfe,.03,.6);
+    vis(cof,t,tem-.3,1e9,{dy:18,sc:.95}); sAb.draw(t,tem,.6); sFe.draw(t,tem+.2,.6); pulse(cof,t,tap-.1,.04,.7);
+  };
+};
+
+// ------------------------------------------------------------------ CAPS[3] · Dia só de Pix (abrir com zero)
+// fala 1 "Agora imagina um dia em que a Recicla Vale só entrega carga pros clientes, e eles pagam por Pix ou transferência.
+// Nenhum dinheiro vivo passa pela gaveta."  2 "Aí faz sentido abrir o caixa com zero. É só deixar o campo vazio ou
+// digitar zero."  ("R$ 0,00" é o do aviso do app: "O caixa será aberto sem dinheiro em espécie (R$ 0,00)...")
+CAPS[3]=()=>{
+  const g=grupo();
+  const tit=titulo(g,'Abertura','Dia só de Pix');
+  const pat=el(`<div class="ab" style="left:60px;top:196px;width:290px">${patio(290)}
+      <div style="margin-top:8px;text-align:center;font-weight:800;font-size:20px">Recicla Vale</div></div>`,g);
+  const cam=el(`<div class="ab" style="left:0;top:0;width:250px;height:115px">${caminhao()}</div>`,g);
+  cam.querySelector('svg').setAttribute('width','250'); cam.querySelector('svg').setAttribute('height','115');
+  const rodas=[...cam.querySelectorAll('.roda')];
+  const cli=el(`<div class="card row" style="left:990px;top:236px;width:220px;height:108px;padding:0 22px;gap:16px">
+      <div class="ico" style="width:56px;height:56px;border-radius:16px">${ic('factory',30)}</div>
+      <div style="font-weight:800;font-size:24px">Cliente</div></div>`,g);
+  const ban=el(`<div class="ab" style="left:1010px;top:472px;width:180px;text-align:center">${banco(180)}
+      <div style="margin-top:8px;font-weight:800;font-size:22px">Banco</div></div>`,g);
+  const sPix=seta(g,'M1100 352 L1100 462');
+  const fPix=ficha(g,'smartphone',24);
+  const pix=el('<div class="ab" style="left:806px;top:388px"><span class="tag v" style="font-size:18px;padding:7px 15px">Pix ou transferência</span></div>',g);
+  const gav=el(`<div class="ab" style="left:330px;top:456px;width:300px">${gaveta(false)}
+      <div style="margin-top:12px;text-align:center;font-weight:800;font-size:22px">Caixa</div></div>`,g);
+  const zero=el('<div class="ab num" style="left:660px;top:478px;font-size:44px;white-space:nowrap">R$ 0,00</div>',g);
+  const tag=el('<div class="ab" style="left:662px;top:546px"><span class="tag v" style="font-size:18px;padding:7px 15px">abre com zero</span></div>',g);
+  const X0=230, X1=708, Y=252;                                   // caminhão: sai do pátio e para perto do cliente
+
+  return t=>{
+    const t0=W(1,'agora'), tre=W(1,'recicla'), ten=W(1,'entrega'), tcl=W(1,'clientes'), tpa=W(1,'pagam'), tpi=W(1,'pix'),
+          tne=W(1,'nenhum'), tga=W(1,'gaveta');
+    const tca=W(2,'caixa'), tz1=W(2,'zero',1), tva=W(2,'vazio'), tz2=W(2,'zero',2);
+    tituloCena(tit,t,t0,tre-.6);
+    vis(pat,t,tre-.25,1e9,{dy:16,sc:.96});
+    // a carga vai para o cliente
+    const d=Math.max(1.3,tcl-ten+.3), p=eo(pr(t,ten,d)), x=lerp(X0,X1,p);
+    vis(cam,t,ten-.25,1e9,{dy:0,sc:1}); cam.style.transform=`translate(${x.toFixed(2)}px,${Y}px)`;
+    rodas.forEach(r=>r.setAttribute('transform',`translate(${r.dataset.x},196) rotate(${((x-X0)/13*57.3).toFixed(2)})`));
+    vis(cli,t,tcl-.35,1e9,{dx:20,dy:0});
+    // o pagamento vai direto pro banco
+    vis(ban,t,tpa-.25,1e9,{dy:16,sc:.96}); sPix.draw(t,tpa,.6); viagem(fPix,t,tpa+.3,.9,1076,352,1076,410);
+    vis(pix,t,tpi-.15,1e9,{dx:10,dy:0});
+    // a gaveta fica vazia: abre com zero
+    vis(gav,t,tne-.1,1e9,{dy:18,sc:.95}); pulse(gav,t,tga,.03,.7);
+    vis(zero,t,tca-.15,1e9,{dy:10}); vis(tag,t,tz1-.1,1e9,{dy:8,sc:.9}); pulse(zero,t,tva,.05,.7); pulse(tag,t,tz2,.05,.7);
+  };
+};
+
+// ------------------------------------------------------------------ CAPS[4] · Cofre × caixa
+// fala 1 "O cofre é todo o dinheiro vivo da empresa: dezoito mil e quinhentos reais. No sistema, ele também aparece como
+// Conta Dinheiro."  2 "Quando eu abri o meu caixa com mil e quinhentos, esse dinheiro foi pra minha gaveta. Ele continua
+// sendo da empresa, só mudou de lugar."  3 "O que não está em nenhum caixa aberto é o disponível no cofre: dezessete mil. É
+// desse dinheiro que sai um caixa novo."  4 "Por isso o caixa só abre com o dinheiro que já está registrado no cofre. E
+// quando ele fecha, o dinheiro contado volta pro cofre. Assim, todo real tem um lugar."
+// (rótulos do app: "Cofre (Conta DINHEIRO)", "Disponível no cofre: R$ X", "dentro de caixas abertos")
+CAPS[4]=()=>{
+  const TOTAL=18500, NO_CAIXA=1500, DISP=TOTAL-NO_CAIXA;      // R$ (MUNDO: cofre 18.500; caixa #85 do Rafael aberto com 1.500)
+  const g=grupo();
+  const tit=titulo(g,'Cofre','Cofre × caixa');
+  const car=el(`<div class="card" style="left:80px;top:172px;width:520px;height:404px">
+      <div class="ab" style="left:26px;top:28px;width:160px;height:160px">${cofre(160)}</div>
+      <div class="ab" style="left:212px;top:32px;width:290px">
+        <div id="c4-nome" style="font-weight:800;font-size:26px">Cofre</div>
+        <div id="c4-cap" class="lbl" style="margin-top:4px">todo o dinheiro vivo</div>
+        <div id="c4-num" class="num" style="margin-top:10px;font-size:36px">${brl(TOTAL)}</div>
+        <div id="c4-sis" class="row" style="margin-top:12px;gap:10px"><span class="lbl" style="font-size:15px">no sistema</span>
+          <span class="tag n" style="font-size:15px;padding:5px 12px">Conta DINHEIRO</span></div></div>
+      <div id="c4-barra" class="ab" style="left:26px;top:228px;width:468px;height:16px;border-radius:8px;background:#EEF1F4;overflow:hidden">
+        <div id="c4-bv" style="position:absolute;left:0;top:0;bottom:0;background:var(--v)"></div>
+        <div id="c4-ba" style="position:absolute;right:0;top:0;bottom:0;background:var(--a)"></div></div>
+      <div id="c4-la" class="ab row" style="left:26px;top:268px;width:468px;height:44px;gap:12px">
+        <span style="width:14px;height:14px;border-radius:50%;background:var(--a);flex:none"></span>
+        <span style="font-weight:700;font-size:19px">dentro de caixas</span>
+        <span class="num" style="margin-left:auto;font-size:24px">${brl(NO_CAIXA)}</span></div>
+      <div id="c4-lv" class="ab row" style="left:14px;top:322px;width:492px;height:56px;padding:0 12px;gap:12px;border-radius:12px">
+        <span style="width:14px;height:14px;border-radius:50%;background:var(--v);flex:none"></span>
+        <span style="font-weight:700;font-size:19px">Disponível no cofre</span>
+        <span class="num" style="margin-left:auto;font-size:24px;color:var(--ve)">${brl(DISP)}</span></div></div>`,g);
+  const gav=el(`<div class="ab" style="left:830px;top:232px;width:300px">${gaveta(true)}
+      <div style="margin-top:12px;text-align:center;font-weight:800;font-size:22px">Caixa do Rafael</div>
+      <div class="gv num" style="margin-top:6px;text-align:center;font-size:30px">${brl(NO_CAIXA)}</div></div>`,g);
+  const sAb=seta(g,'M612 292 C 680 222, 760 222, 822 292'), sFe=seta(g,'M822 392 C 760 462, 680 462, 612 392','var(--a)');
+  const tAb=el('<div class="ab" style="left:648px;top:178px"><span class="tag v" style="font-size:17px;padding:6px 14px">abre o caixa</span></div>',g);
+  const tFe=el('<div class="ab" style="left:650px;top:470px"><span class="tag a" style="font-size:17px;padding:6px 14px">fecha o caixa</span></div>',g);
+  const mac=el(`<div class="ab" style="left:0;top:0">${maco(brl(NO_CAIXA))}</div>`,g);
+  const fVolta=ficha(g,'banknote',24);
+  const bv=$('#c4-bv'), ba=$('#c4-ba'), lv=$('#c4-lv');
+
+  return t=>{
+    const tco=W(1,'cofre'), tvi=W(1,'vivo'), tem=W(1,'empresa'), tsi=W(1,'sistema'), tct=W(1,'conta');
+    const tca=W(2,'caixa'), tdi=W(2,'dinheiro'), tga=W(2,'gaveta'), te2=W(2,'empresa'), tlu=W(2,'lugar');
+    const tdp=W(3,'disponivel'), tno=W(3,'novo');
+    const tab=W(4,'abre'), tfe=W(4,'fecha'), tvo=W(4,'volta'), tl4=W(4,'lugar');
+    tituloCena(tit,t,tco,tco-.3);
+    // o cofre: todo o dinheiro vivo da empresa
+    vis(car,t,tco+.1,1e9,{dy:20}); vis($('#c4-nome'),t,tco+.2,1e9,{dy:6}); vis($('#c4-cap'),t,tvi-.2,1e9,{dy:6});
+    vis($('#c4-num'),t,tem-.15,1e9,{dy:8}); vis($('#c4-barra'),t,tem+.1,1e9,{dy:0,sc:1}); vis($('#c4-sis'),t,tsi-.15,1e9,{dy:6});
+    pulse($('#c4-sis'),t,tct,.05,.7);
+    // abri o meu caixa: o maço sai do cofre e vai pra gaveta (continua sendo da empresa)
+    vis(gav,t,tca-.15,1e9,{dx:20,dy:0}); const gv=gav.querySelector('.gv');
+    const dv=Math.max(1,tga-tdi+.3), q=arco(mac,t,tdi-.1,dv,118,262,898,268,-120,0);
+    const om=t<tdi-.1?0:Math.min(1,q*6,(1-q)*5+.0001*(q<1)); mac.style.opacity=om.toFixed(3); mac.style.visibility=om>0?'visible':'hidden';
+    vis(gv,t,tdi-.1+dv*.85,1e9,{dy:6});
+    const pa=eo(pr(t,te2-.2,.8)), fa=NO_CAIXA/TOTAL*pa;
+    bv.style.width=((1-fa)*100).toFixed(2)+'%'; ba.style.width=(fa*100).toFixed(2)+'%';
+    vis($('#c4-la'),t,te2-.15,1e9,{dy:6}); pulse($('#c4-barra'),t,tlu,.03,.6);
+    // o que não está em caixa nenhum: o disponível no cofre
+    vis(lv,t,tdp-.2,1e9,{dy:6}); const hv=eo(pr(t,tno-.2,.5));
+    lv.style.background=mix('#FFFFFF','#EAF8F0',hv); lv.style.boxShadow=`inset 0 0 0 ${(2*hv).toFixed(2)}px #50D088`;
+    // abre: o caixa sai do cofre; fecha: o dinheiro contado volta pro cofre
+    sAb.draw(t,tab-.15,.7); vis(tAb,t,tab,1e9,{dy:8,sc:.9});
+    sFe.draw(t,tfe-.15,.7); vis(tFe,t,tfe,1e9,{dy:8,sc:.9});
+    viagem(fVolta,t,tvo-.15,1.0,800,360,604,360,64,true);
+    pulse(car,t,tl4,.02,.7); pulse(gav,t,tl4+.1,.03,.7);
+  };
+};
+
+// ------------------------------------------------------------------ CAPS[9] · Suprimento e sangria
+// fala 0 "Lembra que o Marcos queria vinte mil e abriu com dezessete? Os três mil que faltam vêm do banco."  1 "Pôr dinheiro
+// na gaveta durante o dia é o que muita gente chama de suprimento. Quando ele vem do banco, aqui no sistema é um Saque."
+// 2 "A sangria é o caminho contrário: o dinheiro sai de um caixa, ou do cofre, e vai pro banco."  3 "Nos dois casos não é
+// receita nem despesa: é o mesmo dinheiro da empresa mudando de lugar. Só a tarifa do banco é despesa de verdade."
+// (no app: "Saque / Sangria", "Saque", "Sangria"; a tarifa vai como despesa)
+CAPS[9]=()=>{
+  const QUERIA=20000, ABRIU=17000, FALTAM=QUERIA-ABRIU;      // R$ (MUNDO: o #86 do Marcos tentou 20.000 e abriu com 17.000)
+  const g=grupo();
+  const tit=titulo(g,'Movimentações','Suprimento e sangria');
+  const ban=el(`<div class="ab" style="left:80px;top:224px;width:210px;text-align:center">${banco(210)}
+      <div style="margin-top:8px;font-weight:800;font-size:22px">Banco</div></div>`,g);
+  const gav=el(`<div class="ab" style="left:490px;top:196px;width:300px">${gaveta(true)}
+      <div style="margin-top:10px;text-align:center;font-weight:800;font-size:22px">Caixa do Marcos</div>
+      <div class="row" style="margin-top:6px;justify-content:center;gap:10px;align-items:baseline">
+        <span class="g9a num" style="font-size:30px">${brl(ABRIU)}</span><span class="g9q lbl" style="font-size:17px">de ${brl(QUERIA)}</span></div>
+      <div class="g9f" style="margin-top:10px;text-align:center"><span class="tag a" style="font-size:17px;padding:6px 14px">faltam ${brl(FALTAM)}</span></div></div>`,g);
+  const cof=el(`<div class="ab" style="left:1010px;top:226px;width:180px;text-align:center">${cofre(180)}
+      <div style="margin-top:6px;font-weight:800;font-size:22px">Cofre</div></div>`,g);
+  // suprimento (banco → gaveta) e sangria (gaveta ou cofre → banco)
+  const sSup=seta(g,'M302 268 L478 268'), sSan=seta(g,'M478 348 L302 348','var(--a)');
+  const sCof=seta(g,'M1100 448 C 1100 640, 210 650, 186 476','var(--a)');
+  const fSup=ficha(g,'banknote',24);
+  const rSup=el('<div class="ab" style="left:316px;top:208px;width:150px;text-align:center"><span class="tag v" style="font-size:17px;padding:6px 14px">suprimento</span></div>',g);
+  const rSaq=el(`<div class="ab row" style="left:306px;top:282px;width:170px;justify-content:center;gap:6px">
+      <span class="lbl" style="font-size:15px">no sistema:</span><span style="font-weight:800;font-size:17px;color:var(--ve)">Saque</span></div>`,g);
+  const rSan=el('<div class="ab" style="left:316px;top:364px;width:150px;text-align:center"><span class="tag a" style="font-size:17px;padding:6px 14px">Sangria</span></div>',g);
+  // nos dois casos: o dinheiro só muda de lugar; a tarifa é despesa
+  const selo=el(`<div class="card" style="left:500px;top:636px;width:280px;height:88px;padding:0 18px;display:flex;flex-direction:column;
+      align-items:center;justify-content:center;gap:2px">
+      <div class="s1" style="font-weight:800;font-size:20px">não é receita</div><div class="s2" style="font-weight:800;font-size:20px">nem despesa</div></div>`,g);
+  const tar=el(`<div class="ab" style="left:0;top:0"><div class="row" style="gap:8px">
+      <div style="width:40px;height:40px;border-radius:50%;background:#C9A44C;border:3px solid #A8862F;display:flex;align-items:center;justify-content:center;
+        color:#fff;font-weight:800;font-size:18px">$</div><span style="font-weight:700;font-size:17px;color:#374151">tarifa</span></div></div>`,g);
+  const desp=el('<div class="ab" style="left:40px;top:600px"><span class="tag r" style="font-size:17px;padding:6px 14px">despesa</span></div>',g);
+
+  return t=>{
+    const t0=W(0,'lembra'), tma=W(0,'marcos'), tqu=W(0,'queria'), tab=W(0,'abriu'), tfa=W(0,'faltam'), tbc=W(0,'banco');
+    const tga=W(1,'gaveta'), tsu=W(1,'suprimento'), tsq=W(1,'saque');
+    const tsg=W(2,'sangria'), tco=W(2,'contrario'), tcx=W(2,'caixa'), tcf=W(2,'cofre');
+    const tre=W(3,'receita'), tde=W(3,'despesa',1), tlu=W(3,'lugar'), tta=W(3,'tarifa'), td2=W(3,'despesa',2);
+    tituloCena(tit,t,t0,tma-.55);
+    // o caixa do Marcos: abriu com menos do que queria
+    vis(gav,t,tma-.15,1e9,{dy:18,sc:.95}); vis(gav.querySelector('.g9q'),t,tqu-.1,1e9,{dy:6}); vis(gav.querySelector('.g9a'),t,tab-.15,1e9,{dy:6});
+    vis(gav.querySelector('.g9f'),t,tfa-.15,1e9,{dy:6,sc:.9});
+    vis(ban,t,tbc-.3,1e9,{dx:-20,dy:0});
+    // suprimento: pôr dinheiro na gaveta; vindo do banco, no sistema é um Saque
+    sSup.draw(t,tga-.25,.6); viagem(fSup,t,tga+.1,.9,318,244,420,244);
+    vis(rSup,t,tsu-.15,1e9,{dy:8,sc:.9}); vis(rSaq,t,tsq-.3,1e9,{dy:6});
+    // sangria: o caminho contrário, de um caixa ou do cofre para o banco
+    vis(rSan,t,tsg-.1,1e9,{dy:8,sc:.9}); sSan.draw(t,tco-.1,.6); pulse(gav,t,tcx,.03,.6);
+    vis(cof,t,tcf-.3,1e9,{dx:20,dy:0}); sCof.draw(t,tcf+.05,1.1);
+    // não é receita nem despesa; só a tarifa é despesa de verdade
+    vis(selo,t,tre-.15,1e9,{dy:12}); vis(selo.querySelector('.s1'),t,tre-.15,1e9,{dy:4}); vis(selo.querySelector('.s2'),t,tde-.15,1e9,{dy:4});
+    pulse(selo,t,tlu-.1,.04,.7);
+    viagem(tar,t,tta-.2,.8,96,470,58,540,0); vis(desp,t,td2-.15,1e9,{dy:8,sc:.9});
+  };
+};
+
+// ------------------------------------------------------------------ CAPS[10] · Esperado × contado
+// fala 6 "Agora vem a conferência. De um lado, o que o sistema espera. Do outro, o que você conta na gaveta."  7 "Se os dois
+// batem, o caixa fecha sem diferença. Se não batem, a diferença fica registrada, pra mais ou pra menos."
+// (no app: "Valor esperado pelo sistema: R$ X"; a pilha "contada" não tem número: a versão que não bate não inventa valor)
+CAPS[10]=()=>{
+  const ESPERADO=1007.10;                                   // R$ (MUNDO: o #85 fecha sem diferença com R$ 1.007,10)
+  const g=grupo();
+  const tit=titulo(g,'Fechamento','Esperado × contado');
+  const H=202;                                              // altura da pilha cheia
+  const lado=(x,chip,cls)=>el(`<div class="ab" style="left:${x}px;top:196px;width:300px;display:flex;flex-direction:column;align-items:center">
+      <div class="ch"><span class="tag ${cls}" style="font-size:18px;padding:7px 16px">${chip}</span></div>
+      <div class="pl" style="position:relative;margin-top:22px;width:220px;height:${H}px">
+        <div class="fant" style="position:absolute;left:0;right:0;bottom:0;height:${H}px;border:2px dashed var(--a);border-radius:6px;opacity:0"></div>
+        <div class="corte" style="position:absolute;left:0;right:0;bottom:0;height:${H}px;overflow:hidden">${pilhaNotas(220)}</div></div>
+      <div style="width:250px;height:4px;border-radius:2px;background:#DDE2E7"></div></div>`,g);
+  const E=lado(170,'esperado','n'), C=lado(810,'contado','n');
+  const valE=el(`<div class="ab" style="left:170px;top:476px;width:300px;text-align:center">
+      <div class="num" style="font-size:36px">${brl(ESPERADO)}</div><div class="lbl" style="margin-top:2px">pelo sistema</div></div>`,g);
+  const mao=el(`<div class="ab" style="left:810px;top:476px;width:300px;display:flex;flex-direction:column;align-items:center">
+      <div class="ico" style="width:52px;height:52px;border-radius:50%">${ic('hand-coins',28)}</div><div class="lbl" style="margin-top:6px">na gaveta</div></div>`,g);
+  // o meio: igual (bate) ou diferente (não bate)
+  const ind=el(`<div class="ab" style="left:592px;top:296px;width:96px;height:96px">
+      <div class="iv" style="position:absolute;inset:0;border-radius:50%;background:var(--vc);border:3px solid var(--v);display:flex;align-items:center;
+        justify-content:center;color:var(--ve)">${ic('equal',46)}</div>
+      <div class="ia" style="position:absolute;inset:0;border-radius:50%;background:var(--ac);border:3px solid var(--a);display:flex;align-items:center;
+        justify-content:center;color:var(--ae);opacity:0">${ic('equal-not',46)}</div></div>`,g);
+  const ok=el(`<div class="ab" style="left:0;top:590px;width:1280px;text-align:center"><span class="tag v" style="font-size:20px;padding:9px 20px">
+      ${ic('circle-check',22)}sem diferença</span></div>`,g);
+  const dif=el(`<div class="ab row" style="left:0;top:590px;width:1280px;justify-content:center;gap:12px">
+      <span class="d1 tag a" style="font-size:20px;padding:9px 20px">diferença</span>
+      <span class="d2 tag n" style="font-size:18px;padding:8px 16px">${ic('clipboard-check',20)}registrada</span>
+      <span class="d3 tag n" style="font-size:18px;padding:8px 16px">+ ou −</span></div>`,g);
+  const corteC=C.querySelector('.corte'), fant=C.querySelector('.fant');
+
+  return t=>{
+    const t0=W(6,'agora'), tla=W(6,'lado'), tes=W(6,'espera'), tou=W(6,'outro'), tct=W(6,'conta'), tga=W(6,'gaveta');
+    const tb1=W(7,'batem',1), tsd=W(7,'diferenca',1), tna=W(7,'nao'), td2=W(7,'diferenca',2), trg=W(7,'registrada'), tma=W(7,'mais');
+    tituloCena(tit,t,t0,tla-.6);
+    // de um lado, o que o sistema espera
+    vis(E,t,tla-.15,1e9,{dy:18,sc:.96}); vis(E.querySelector('.ch'),t,tes-.25,1e9,{dy:6,sc:.9}); vis(valE,t,tes-.1,1e9,{dy:8});
+    // do outro, o que você conta na gaveta: a pilha cresce enquanto conta
+    vis(C,t,tou-.15,1e9,{dy:18,sc:.96}); vis(mao,t,tou,1e9,{dy:8});
+    const cresce=eio(pr(t,tct-.1,Math.max(1,tga-tct+.4)));
+    // se não batem: a pilha contada fica menor e o pedaço que falta aparece tracejado
+    const enc=eio(pr(t,tna-.05,.7));
+    corteC.style.height=(H*cresce*(1-.28*enc)).toFixed(1)+'px';
+    vis(C.querySelector('.ch'),t,tga-.3,1e9,{dy:6,sc:.9});
+    fant.style.opacity=(eo(pr(t,td2-.2,.5))*.9).toFixed(3);
+    // o meio: bate (igual, verde) e depois a versão que não bate (diferente, âmbar)
+    vis(ind,t,tb1-.2,1e9,{sc:.7,dy:0}); const tr=eo(pr(t,tna-.05,.5));
+    ind.querySelector('.ia').style.opacity=tr.toFixed(3); ind.querySelector('.iv').style.opacity=(1-tr).toFixed(3);
+    vis(ok,t,tsd-.2,tna-.05,{dy:8}); vis(dif.querySelector('.d1'),t,td2-.2,1e9,{dy:8,sc:.9});
+    vis(dif.querySelector('.d2'),t,trg-.2,1e9,{dy:8,sc:.9}); vis(dif.querySelector('.d3'),t,tma-.2,1e9,{dy:8,sc:.9});
+  };
+};
+
+// ------------------------------------------------------------------ API para o renderizador
+let RENDER=null;
+window.setup=d=>{D=d;ST.innerHTML='';RENDER=CAPS[d.cap]();return true};
+window.R=t=>{RENDER(t);return true};
+</script></body></html>

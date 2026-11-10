@@ -1,0 +1,178 @@
+{
+ "_doc": "T11 · Produção: apos-cap09 (gerado por rec/t11/t11_sementes.py; não editar à mão)",
+ "production_order_entries": [
+  {
+   "id": "@id:t11.entry.3",
+   "production_order_id": "@id:t11.order.3",
+   "company_id": "@id:company.reciclavale",
+   "entry_date": "2026-11-10",
+   "produced_qty": 480,
+   "posted": true,
+   "total_material_cost": 3087.6,
+   "note": null,
+   "client_request_id": null,
+   "created_by": "@id:user.rafael",
+   "created_at": "2026-11-10T20:33:00.000Z",
+   "updated_at": "2026-11-10T20:33:00.000Z"
+  }
+ ],
+ "production_order_consumption": [
+  {
+   "id": "@id:t11.cons.3.latinha",
+   "production_order_id": "@id:t11.order.3",
+   "entry_id": "@id:t11.entry.3",
+   "company_id": "@id:company.reciclavale",
+   "material_id": "@id:material.al_latinha",
+   "theoretical_qty": 480,
+   "actual_qty": 498,
+   "unit_cost": 6.2,
+   "line_cost": 3087.6,
+   "loss_qty": 18,
+   "loss_reason": "reaproveitavel",
+   "created_at": "2026-11-10T20:33:00.000Z"
+  }
+ ],
+ "production_order_outputs": [
+  {
+   "id": "@id:t11.out.3.fardo",
+   "production_order_id": "@id:t11.order.3",
+   "entry_id": "@id:t11.entry.3",
+   "company_id": "@id:company.reciclavale",
+   "material_id": "@id:t11.material.fardo",
+   "is_primary": true,
+   "qty": 480,
+   "created_at": "2026-11-10T20:33:00.000Z"
+  },
+  {
+   "id": "@id:t11.out.3.chaparia",
+   "production_order_id": "@id:t11.order.3",
+   "entry_id": "@id:t11.entry.3",
+   "company_id": "@id:company.reciclavale",
+   "material_id": "@id:material.chaparia",
+   "is_primary": false,
+   "qty": 14,
+   "created_at": "2026-11-10T20:33:00.000Z"
+  }
+ ],
+ "production_order_workers": [
+  {
+   "id": "@id:t11.worker.3.claudio.dia",
+   "order_id": "@id:t11.order.3",
+   "entry_id": "@id:t11.entry.3",
+   "employee_id": "@id:employee.claudio",
+   "company_id": "@id:company.reciclavale",
+   "produced_qty": 260,
+   "created_at": "2026-11-10T20:33:00.000Z"
+  },
+  {
+   "id": "@id:t11.worker.3.diego.dia",
+   "order_id": "@id:t11.order.3",
+   "entry_id": "@id:t11.entry.3",
+   "employee_id": "@id:employee.diego",
+   "company_id": "@id:company.reciclavale",
+   "produced_qty": 220,
+   "created_at": "2026-11-10T20:33:00.000Z"
+  }
+ ],
+ "stock_movements": [
+  {
+   "id": "@id:t11.sm.3.latinha",
+   "company_id": "@id:company.reciclavale",
+   "material_id": "@id:material.al_latinha",
+   "type": "PRODUCAO",
+   "quantity": -498,
+   "stock_before": 640,
+   "stock_after": 142,
+   "description": "Consumo de produção (lançamento)",
+   "order_id": "@id:t11.order.3",
+   "order_type": "production",
+   "entry_id": "@id:t11.entry.3",
+   "related_movement_id": null,
+   "created_by": "@id:user.rafael",
+   "transaction_at": "2026-11-10T20:33:00.000Z",
+   "transaction_date": "2026-11-10",
+   "created_at": "2026-11-10T20:33:00.000Z"
+  },
+  {
+   "id": "@id:t11.sm.3.fardo",
+   "company_id": "@id:company.reciclavale",
+   "material_id": "@id:t11.material.fardo",
+   "type": "PRODUCAO",
+   "quantity": 480,
+   "stock_before": 0,
+   "stock_after": 480,
+   "description": "Produto de produção (lançamento)",
+   "order_id": "@id:t11.order.3",
+   "order_type": "production",
+   "entry_id": "@id:t11.entry.3",
+   "related_movement_id": null,
+   "created_by": "@id:user.rafael",
+   "transaction_at": "2026-11-10T20:33:00.000Z",
+   "transaction_date": "2026-11-10",
+   "created_at": "2026-11-10T20:33:00.000Z"
+  },
+  {
+   "id": "@id:t11.sm.3.chaparia",
+   "company_id": "@id:company.reciclavale",
+   "material_id": "@id:material.chaparia",
+   "type": "PRODUCAO",
+   "quantity": 14,
+   "stock_before": 3150,
+   "stock_after": 3164,
+   "description": "Coproduto de produção (lançamento)",
+   "order_id": "@id:t11.order.3",
+   "order_type": "production",
+   "entry_id": "@id:t11.entry.3",
+   "related_movement_id": null,
+   "created_by": "@id:user.rafael",
+   "transaction_at": "2026-11-10T20:33:00.000Z",
+   "transaction_date": "2026-11-10",
+   "created_at": "2026-11-10T20:33:00.000Z"
+  }
+ ],
+ "_patch": {
+  "materials": [
+   {
+    "match": {
+     "id": "@id:material.al_latinha"
+    },
+    "set": {
+     "current_stock": 142,
+     "updated_at": "2026-11-10T20:33:00.000Z"
+    }
+   },
+   {
+    "match": {
+     "id": "@id:t11.material.fardo"
+    },
+    "set": {
+     "current_stock": 480,
+     "updated_at": "2026-11-10T20:33:00.000Z"
+    }
+   },
+   {
+    "match": {
+     "id": "@id:material.chaparia"
+    },
+    "set": {
+     "current_stock": 3164,
+     "updated_at": "2026-11-10T20:33:00.000Z"
+    }
+   }
+  ],
+  "production_orders": [
+   {
+    "match": {
+     "id": "@id:t11.order.3"
+    },
+    "set": {
+     "status": "in_progress",
+     "produced_qty": 480,
+     "total_material_cost": 3087.6,
+     "cost_per_unit": 6.4325,
+     "updated_at": "2026-11-10T20:33:00.000Z"
+    }
+   }
+  ]
+ }
+}

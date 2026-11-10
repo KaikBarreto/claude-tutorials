@@ -69,7 +69,7 @@ Uma dica: nunca lance um saque como Nova Receita. Ele entraria no relatório com
 Confirmar Saque. Pronto: o caixa do Marcos chegou nos vinte mil.
 Na opção Sangria, você escolhe de onde sai o dinheiro, o cofre ou um caixa aberto, e a conta do banco que recebe.
 Já a Nova Movimentação Bancária é pra entrada ou saída direto no banco, que não vem de pedido. Por exemplo, a tarifa mensal da conta.
-Saída, a descrição, trinta e nove e noventa, e a categoria Tarifas bancárias.
+Saída, a descrição, trinta e nove e noventa, e a categoria Tarifas.
 Salvar. Essa sim entra no resultado como despesa.""",
 10: """Fim do dia. No meu caixa entrou a venda pra Aços Quiririm, por transferência, e saíram duas compras em dinheiro: a latinha da Aparecida e o ferro misto do Valdir.
 Antes de liberar o Fechar Caixa, o sistema confere se ficou algum pedido não finalizado neste caixa.

@@ -15,7 +15,7 @@ A gente começa pelo saldo de agora.""",
 2: """Esta é a tela do saldo. Os três cartões de cima somam o pátio inteiro.
 O Peso Total em Estoque é a soma do saldo de todos os materiais.
 O Total Pago é quanto esse estoque custou, pelo preço médio que você pagou. E a Projeção de Vendas é quanto ele vale pela tabela de venda.
-Olha o cobre mel: duzentos e doze quilos e meio no Estoque Atual, pagos em média a quarenta e dois e cinquenta o quilo.
+Olha o cobre mel: quarenta e dois quilos no Estoque Atual, pagos em média a quarenta e dois e cinquenta o quilo.
 Esse é o preço médio do material que você tem hoje. Por isso ele vem com o selo de estimativa.
 O Estoque Atual é o saldo de verdade. Ele muda com tudo o que entra e sai: compra, venda, transferência, ajuste manual, exclusão e produção.
 Então, quando alguém pergunta quanto tem, a resposta é aqui. O ferro misto, por exemplo, está com seis mil quatrocentos e vinte quilos.""",
@@ -75,7 +75,7 @@ Hoje, o ferro pesado está com dois mil e quinhentos quilos.
 A Posição é uma foto do estoque. Você escolhe a data e a hora, e ela mostra o saldo de cada material naquele instante. O que entrou ou saiu depois fica fora da foto.
 Eu volto o calendário pra outubro e clico no dia trinta e um. A hora fica em vinte e três e cinquenta e nove, então entra tudo o que aconteceu no sábado.
 Ver posição.
-No dia trinta e um, o ferro pesado tinha mil oitocentos e sessenta quilos. A diferença pra hoje são as compras, a venda e a transferência de novembro.
+No dia trinta e um, o ferro pesado tinha quarenta e um mil oitocentos e sessenta quilos. A diferença pra hoje são as compras, as vendas e a transferência de novembro.
 Do lado, o valor desse estoque, pelo custo médio das compras até aquela data, e a projeção, pelo preço de venda de hoje. Embaixo, o total geral.""",
 11: """Com a foto do dia trinta e um na tela, é só exportar. No Exportar, escolho pê-dê-éfe.
 Aqui você escolhe as colunas e os materiais do arquivo. A tela guarda essa escolha pra próxima vez.

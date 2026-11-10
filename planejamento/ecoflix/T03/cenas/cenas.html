@@ -1,0 +1,862 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<!-- T03 · Materiais e tabelas de preço: as cenas [ILUSTRAÇÃO] da aula, no kit da EcoFlix (perfis/ecoflix/cenas/cenas_ecoflix.html;
+     docs/09-aula-ilustrada.md). 1280x800 CSS, renderizado quadro a quadro por render_cenas.cjs (window.setup + window.R(t));
+     tudo é função do tempo t e preso às palavras da fala com W(linha, 'palavra'). Os dois exemplos do kit saíram.
+     As âncoras de cada cena (de, ate, cauda) ficam em ILU, logo abaixo das utilidades: é o mesmo conteúdo do
+     ilustracoes.json desta pasta (a edição calcula o "at", o "dur" e o "repouso" com elas). Cada cena só aparece na sua
+     janela: abre 0,3 s antes do início da palavra "de" e fecha "cauda" s depois do fim da palavra "ate".
+     Conferir (quadros): node <skill>/ferramentas/edit/cenas/render_cenas.cjs N tempos/capNN.json <pasta> --html cenas.html --stills t1,t2
+     Dados: mundo da Recicla Vale Metais (MUNDO_FICTICIO.md, T03/plano.md); rótulos do app como no T03/inventario.md. -->
+<style>
+@font-face{font-family:M;font-weight:500;src:url(../../../web/fonts/montserrat-latin-500-normal.woff2) format('woff2')}
+@font-face{font-family:M;font-weight:600;src:url(../../../web/fonts/montserrat-latin-600-normal.woff2) format('woff2')}
+@font-face{font-family:M;font-weight:700;src:url(../../../web/fonts/montserrat-latin-700-normal.woff2) format('woff2')}
+@font-face{font-family:M;font-weight:800;src:url(../../../web/fonts/montserrat-latin-800-normal.woff2) format('woff2')}
+@font-face{font-family:M;font-weight:500;src:url(../../../web/fonts/montserrat-latin-ext-500-normal.woff2) format('woff2');unicode-range:U+0100-024F}
+@font-face{font-family:M;font-weight:700;src:url(../../../web/fonts/montserrat-latin-ext-700-normal.woff2) format('woff2');unicode-range:U+0100-024F}
+/* ---------------------------------------------------------------- paleta EcoFlix (marca: acento #50D088, escuro #121212)
+   --v  acento: preenchimentos, barras, contornos de destaque (nunca texto sobre branco: contraste baixo)
+   --ve verde escuro: texto e ícone verde sobre branco (contraste 5,0)   --vc verde claro: fundo de ícone/resultado
+   --a  âmbar: o SEGUNDO conceito da cena (ex.: competência x caixa)     --ae texto âmbar (5,9)   --ac âmbar claro
+   --t  texto (o escuro da marca)   --c texto secundário (4,8)   --l linhas   --e painel escuro (mostrador) */
+:root{--v:#50D088;--ve:#2E7D57;--vc:#EAF8F0;--vm:#A9E9C6;--a:#F2B63D;--ae:#8A5A00;--ac:#FFF5DF;
+  --t:#121212;--c:#6B7280;--l:#E6E9EE;--e:#121212}
+*{box-sizing:border-box;margin:0;padding:0;transition:none!important;animation:none!important}
+html,body{width:1280px;height:800px;overflow:hidden;background:#fff}
+body{font-family:M,sans-serif;color:var(--t);-webkit-font-smoothing:antialiased}
+#st{position:absolute;inset:0;overflow:hidden;background:
+  radial-gradient(1100px 650px at 92% -12%,rgba(80,208,136,.09),transparent 62%),
+  radial-gradient(900px 600px at -12% 112%,rgba(80,208,136,.06),transparent 60%),#fff}
+.g{position:absolute;left:0;top:0;width:1280px;height:800px;transform-origin:640px 400px}
+.ab{position:absolute}
+.row{display:flex;align-items:center}
+/* título da cena: área (kicker) + conceito; sozinho fica grande no centro e sobe quando o desenho entra */
+.kick{font-weight:700;font-size:15px;letter-spacing:.3em;color:var(--ve);text-transform:uppercase}
+.h{font-weight:800;font-size:46px;letter-spacing:-.01em;line-height:1.1}
+/* cartão, chip, etiqueta, ícone */
+.card{position:absolute;background:#fff;border:1px solid #E1E8E4;border-radius:18px;
+  box-shadow:0 18px 40px rgba(16,24,40,.10),0 3px 8px rgba(16,24,40,.06)}
+.ic{display:inline-flex;align-items:center;justify-content:center;flex:none}
+.ic svg{width:100%;height:100%}
+.ico{display:flex;align-items:center;justify-content:center;flex:none;border-radius:14px;background:var(--vc);color:var(--ve)}
+.ico.a{background:var(--ac);color:var(--ae)}
+.tag{display:inline-flex;align-items:center;gap:8px;padding:9px 18px;border-radius:999px;font-weight:800;font-size:20px;white-space:nowrap}
+.tag.v{background:var(--vc);color:var(--ve)} .tag.a{background:var(--ac);color:var(--ae)}
+.lbl{font-weight:700;font-size:17px;color:var(--c)}
+.num{font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+.op{position:absolute;width:60px;height:60px;border-radius:50%;background:#F2F4F7;color:var(--t);display:flex;
+  align-items:center;justify-content:center;font-weight:800;font-size:34px;line-height:1}
+/* mostrador da balança (painel escuro, número no acento) */
+.most{background:var(--e);border-radius:16px;padding:16px 22px 18px;box-shadow:0 16px 34px rgba(16,24,40,.22)}
+.most .ml{position:relative;height:20px;font-weight:700;font-size:15px;letter-spacing:.22em;color:#A9E9C6;text-transform:uppercase}
+.most .ml span{position:absolute;left:0;top:0;white-space:nowrap}
+.most .mn{margin-top:6px;font-weight:800;font-size:44px;color:var(--v);font-variant-numeric:tabular-nums;white-space:nowrap}
+.rip{position:absolute;width:56px;height:56px;margin:-28px 0 0 -28px;border-radius:50%;border:3px solid var(--v);opacity:0}
+/* ---------------------------------------------------------------- peças desta aula (T03) */
+.tag.n{background:#F2F4F7;color:#374151}
+.ficha{position:absolute;display:flex;align-items:center;gap:12px;height:58px;padding:0 18px;background:#fff;
+  border:1px solid #E1E8E4;border-radius:14px;box-shadow:0 8px 20px rgba(16,24,40,.08);font-weight:700;font-size:19px;white-space:nowrap}
+.dot{width:12px;height:12px;border-radius:50%;flex:none}
+.papel{position:absolute;background:#fff;border:1px solid #E3E7EC;border-radius:10px;
+  box-shadow:0 18px 40px rgba(16,24,40,.12),0 3px 8px rgba(16,24,40,.06)}
+.barra{height:10px;border-radius:5px;background:#E6E9EE}
+/* lousa (cap00): quadro escuro com moldura de madeira, giz claro */
+.lousa{border-radius:20px;border:12px solid #A47B57;padding:20px 30px 22px;color:#F3F4F6;
+  background:radial-gradient(420px 220px at 30% 20%,rgba(255,255,255,.06),transparent 70%),#22302A;
+  box-shadow:0 18px 40px rgba(16,24,40,.18),inset 0 0 0 2px rgba(0,0,0,.18)}
+.lousa .lh{font-weight:800;font-size:28px;height:36px;line-height:36px;white-space:nowrap}
+.lousa .lgiz{margin-top:8px;height:3px;border-radius:2px;background:rgba(243,244,246,.35)}
+.lousa .lcol{width:140px;flex:none;text-align:center}
+.lousa .lt{display:inline-block;padding:6px 14px;border-radius:999px;font-weight:800;font-size:16px;border:2px solid #4E5A54;color:#9DA6A1}
+.lousa .lrow{height:60px}
+.lousa .ln{width:276px;flex:none;font-weight:700;font-size:22px;white-space:nowrap}
+.lousa .lv{font-weight:800;font-size:24px;font-variant-numeric:tabular-nums;white-space:nowrap}
+/* gaveta (cap05) */
+.gav{position:absolute;width:330px;height:120px;background:#fff;border:1px solid #DCE3E8;border-radius:16px;overflow:hidden;
+  box-shadow:0 10px 24px rgba(16,24,40,.08)}
+.gav .cor{position:absolute;left:0;top:0;bottom:0;width:14px}
+.gav .nome{position:absolute;left:14px;right:0;top:26px;text-align:center;font-weight:800;font-size:24px;white-space:nowrap}
+.gav .puxa{position:absolute;left:131px;top:78px;width:82px;height:12px;border-radius:6px;background:#D7DDE3}
+/* degrau (cap07) */
+.deg{position:absolute;border-radius:16px 16px 6px 6px;border:1px solid #E1E8E4;background:#F2F4F7;transform-origin:50% 100%;
+  padding:22px 24px;overflow:hidden}
+.deg .dk{font-weight:800;font-size:15px;letter-spacing:.22em;color:#14532D;text-transform:uppercase;white-space:nowrap}
+.deg .dl{margin-top:10px;font-weight:800;font-size:25px;white-space:nowrap}
+.deg .ds{margin-top:6px;font-weight:700;font-size:18px;color:#1F2937;white-space:nowrap}
+.bola{position:absolute;width:64px;height:64px;border-radius:50%;background:#fff;border:2px solid #E1E8E4;color:#9AA3AD;
+  display:flex;align-items:center;justify-content:center;box-shadow:0 8px 18px rgba(16,24,40,.10)}
+</style></head>
+<body><div id="st"></div>
+<script>
+// ------------------------------------------------------------------ utilidades (as do cenas_modelo.html + as da EcoFlix)
+const cl=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
+const eo=x=>1-Math.pow(1-cl(x),3);
+const eio=x=>{x=cl(x);return x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2};
+const pr=(t,a,d=.45)=>cl((t-a)/d);
+const lerp=(a,b,p)=>a+(b-a)*p;
+const $=s=>document.querySelector(s);
+const ST=document.getElementById('st');
+function el(html,parent=ST){const d=document.createElement('div');d.innerHTML=html.trim();let f=null;for(const n of [...d.childNodes]){parent.appendChild(n);if(!f&&n.nodeType===1)f=n}return f}
+function grupo(){return el('<div class="g"></div>')}
+function ic(n,px,cor){const s=(window.ICONS||{})[n]||'';return `<span class="ic" style="width:${px}px;height:${px}px;${cor?'color:'+cor:''}">${s}</span>`}
+function hex(c){c=c.replace('#','');return[0,2,4].map(i=>parseInt(c.substr(i,2),16))}
+function mix(a,b,p){const A=hex(a),B=hex(b);return `rgb(${A.map((v,i)=>Math.round(v+(B[i]-v)*cl(p))).join(',')})`}
+// aparece em a, some em b (opacidade + leve subida + escala): a entrada e a saída suaves de tudo
+function vis(e,t,a,b=1e9,o={}){
+  const din=o.din??.5,dout=o.dout??.4,dy=o.dy??16,dx=o.dx??0,sc=o.sc??.985;
+  const p=eo(pr(t,a,din)),q=1-eo(pr(t,b,dout)),op=Math.min(p,q);
+  e.style.opacity=op.toFixed(4);e.style.visibility=op<=.001?'hidden':'visible';
+  const s=sc+(1-sc)*p - (1-q)*(1-sc);
+  e.style.transform=`translate(${((1-p)*dx).toFixed(2)}px,${((1-p)*dy-(1-q)*dy*.5).toFixed(2)}px) scale(${s.toFixed(4)})`;
+  return op;
+}
+function ripple(r,t,a){const p=pr(t,a,.7);r.style.opacity=(p>0&&p<1)?(.6*(1-p)).toFixed(3):0;r.style.transform=`scale(${(.4+2.0*eo(p)).toFixed(3)})`}
+function pulse(e,t,a,amp=.045,dur=.9){const p=pr(t,a,dur);e.style.scale=(p>0&&p<1)?(1+amp*Math.sin(Math.PI*p)).toFixed(4):''}
+function digita(e,txt,t,a,b){const p=cl((t-a)/Math.max(.05,b-a));const n=Math.round(p*txt.length);
+  const car=(p>0&&p<1)||(Math.floor(t*2.2)%2===0&&p<1.2&&t>=a)?'<span style="color:var(--v);font-weight:500">|</span>':'';
+  e.innerHTML=(txt.slice(0,n)||'')+(t>=a&&t<b+.8?car:'');}
+// EcoFlix: números e dinheiro no jeito brasileiro; contagem suave de um número; traço que se desenha; arco; contorno
+const NF=new Intl.NumberFormat('pt-BR');
+const kg=v=>NF.format(Math.round(v))+' kg';
+const brl=v=>'R$ '+v.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
+function conta(e,t,a,d,v0,v1,fmt=kg){const p=eo(pr(t,a,d));const s=fmt(lerp(v0,v1,p));if(e.textContent!==s)e.textContent=s;return p}
+function traco(p,t,a,d=.8){if(!p._L){p._L=p.getTotalLength();p.style.strokeDasharray=p._L}const q=eio(pr(t,a,d));p.style.strokeDashoffset=(p._L*(1-q)).toFixed(2);p.style.opacity=q>0?1:0;return q}
+function arco(e,t,a,d,x0,y0,x1,y1,h=-80,rot=0){const p=eio(pr(t,a,d));const x=lerp(x0,x1,p),y=lerp(y0,y1,p)+h*4*p*(1-p);
+  e.style.transform=`translate(${x.toFixed(2)}px,${y.toFixed(2)}px) rotate(${(rot*p).toFixed(2)}deg)`;return p}
+function contorno(e,t,a,de,para,d=.45){e.style.borderColor=mix(de,para,eo(pr(t,a,d)))}
+// título padrão da cena: grande no centro enquanto está sozinho, sobe para o alto quando o desenho entra (em "sobe")
+function titulo(g,kick,txt){return el(`<div class="ab" style="left:0;top:0;width:1280px;text-align:center">
+  <div class="kick">${kick}</div><div class="h" style="margin-top:12px">${txt}</div></div>`,g)}
+function posTitulo(e,t,a,sobe,sai=1e9){vis(e,t,a,sai,{dy:14});const p=eio(pr(t,sobe,.7));
+  e.style.top=lerp(318,46,p).toFixed(2)+'px';e.style.scale=lerp(1.12,1,p).toFixed(4)}
+
+// ------------------------------------------------------------------ tempos da fala (capNN.json do proc.py ou estimado)
+let D=null;
+const norm=w=>w.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9%./-]+/g,'');
+function W(linha,palavra,n=1,campo='s'){
+  const alvo=norm(palavra);let k=0;
+  for(const w of D.words){if(w.linha===linha&&norm(w.w).replace(/[.,]$/,'')===alvo){k++;if(k===n)return w[campo]}}
+  for(const w of D.words){if(w.linha===linha&&norm(w.w).startsWith(alvo)){k++;if(k>=n)return w[campo]}}
+  console.warn('palavra não achada',linha,palavra);return L(linha);
+}
+const L=i=>(D.linhas[i]||{s:0}).s, LE=i=>(D.linhas[i]||{e:D.dur}).e;
+
+// ------------------------------------------------------------------ desenhos genéricos (sem marca)
+// caminhão de lado (frente para a direita), com a carga de sucata em pedaços (.pd) que podem ser descarregados
+function caminhao(){
+  const pd=[ // [forma, cor, centro da peça, destino no monte atrás do caminhão (deslocamento do centro e giro)]
+    ['<polygon points="28,90 44,52 88,42 100,90"/>','#8C5A3C',[64,66],[-224,148,6]],
+    ['<polygon points="82,90 102,36 146,48 154,90"/>','#6F7983',[118,63],[-318,122,12]],
+    ['<rect x="118" y="44" width="112" height="16" rx="8" transform="rotate(-8 174 52)"/>','#9AA3AD',[174,52],[-334,98,-18]],
+    ['<polygon points="148,90 170,54 212,44 232,90"/>','#A0694A',[190,67],[-425,148,-8]],
+    ['<polygon points="210,90 232,40 276,54 286,90"/>','#4F5861',[248,65],[-373,120,-10]],
+    ['<polygon points="258,90 282,60 308,66 312,90"/>','#8A949E',[285,75],[-375,148,4]],
+    ['<g><circle cx="192" cy="64" r="19"/><circle cx="192" cy="64" r="7" fill="#8A949E"/></g>','#5E6670',[192,64],[-242,155,200]],
+    ['<polygon points="40,70 60,50 84,64 64,86"/>','#B07A55',[62,68],[-307,100,30]]];
+  const pecas=pd.map(([f,c,[cx,cy],[dx,dy,r]])=>`<g class="pd" data-cx="${cx}" data-cy="${cy}" data-dx="${dx}" data-dy="${dy}" data-r="${r}" fill="${c}">${f}</g>`).join('');
+  const roda=x=>`<g class="roda" data-x="${x}" transform="translate(${x},196)"><circle r="26" fill="#1B1F24"/><circle r="12" fill="#9AA3AD"/>
+    <rect x="-2.5" y="-23" width="5" height="10" rx="2" fill="#5B636C"/><rect x="-2.5" y="13" width="5" height="10" rx="2" fill="#5B636C"/></g>`;
+  return `<svg viewBox="0 0 500 230" width="500" height="230" style="overflow:visible">
+    <g class="carga">${pecas}</g>
+    <rect x="18" y="86" width="304" height="88" rx="6" fill="#7E8994"/>
+    <rect x="16" y="82" width="308" height="11" rx="4" fill="#68727D"/>
+    <g stroke="#707A85" stroke-width="3">${[78,138,198,258].map(x=>`<line x1="${x}" y1="98" x2="${x}" y2="168"/>`).join('')}</g>
+    <path d="M334,176 L334,76 Q334,64 346,64 L412,64 L462,116 L472,121 Q480,124 480,134 L480,176 Z" fill="#2F3640"/>
+    <path d="M348,78 L406,78 L444,116 L348,116 Z" fill="#D7E5ED"/>
+    <rect x="470" y="142" width="10" height="11" rx="2" fill="#F2B63D"/>
+    <rect x="12" y="170" width="472" height="15" rx="4" fill="#23282E"/>
+    ${roda(92)}${roda(158)}${roda(416)}
+  </svg>`;
+}
+
+// ------------------------------------------------------------------ utilidades desta aula (faltavam no kit)
+// monte de sucata genérico (pedaços em polígono), 260x120; tons = lista de cores dos pedaços
+function monte(tons){
+  const f=['<polygon points="14,118 40,62 92,48 112,118"/>','<polygon points="70,118 98,36 150,30 168,118"/>',
+    '<rect x="96" y="40" width="120" height="16" rx="8" transform="rotate(-12 156 48)"/>','<polygon points="150,118 172,58 222,52 246,118"/>',
+    '<polygon points="40,118 58,86 96,80 108,118"/>','<polygon points="186,118 204,84 240,90 252,118"/>',
+    '<g><circle cx="128" cy="86" r="22"/><circle cx="128" cy="86" r="8" fill="#E6E9EE"/></g>','<polygon points="112,118 126,96 158,94 170,118"/>'];
+  return `<svg viewBox="0 0 260 120" width="260" height="120" style="overflow:visible">${f.map((s,i)=>`<g fill="${tons[i%tons.length]}">${s}</g>`).join('')}</svg>`;
+}
+// seta que se desenha (traco) com a ponta aparecendo no fim; d = caminho SVG no palco (1280x800)
+function seta(pai,d,cor='#50D088',w=4){
+  const s=el(`<svg class="ab" style="left:0;top:0;overflow:visible" width="1280" height="800">
+    <path d="${d}" fill="none" stroke="${cor}" stroke-width="${w}" stroke-linecap="round"/>
+    <path d="M-12,-9 L0,0 L-12,9" fill="none" stroke="${cor}" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round" opacity="0"/></svg>`,pai);
+  const [p,h]=s.querySelectorAll('path');const Lp=p.getTotalLength(),a=p.getPointAtLength(Lp),b=p.getPointAtLength(Math.max(0,Lp-4));
+  h.setAttribute('transform',`translate(${a.x.toFixed(2)},${a.y.toFixed(2)}) rotate(${(Math.atan2(a.y-b.y,a.x-b.x)*57.2958).toFixed(2)})`);
+  return {s,p,h};
+}
+function setaR(o,t,a,d=.55){const q=traco(o.p,t,a,d);o.h.style.opacity=cl((q-.85)/.15).toFixed(3);return q}
+// ponto que viaja por um caminho (o "dado" indo de um lugar ao outro); some suave nas pontas
+function viaja(e,path,t,a,d,r=8){const p=eio(pr(t,a,d));const Lp=path.getTotalLength(),q=path.getPointAtLength(Lp*p);
+  e.style.transform=`translate(${(q.x-r).toFixed(2)}px,${(q.y-r).toFixed(2)}px)`;
+  e.style.opacity=(p>0&&p<1)?Math.min(1,p*6,(1-p)*6).toFixed(3):'0';return p}
+// número que vira no lugar (16 → 70): a = o de antes, b = o novo, empilhados
+function vira(a,b,t,t0,d=.5){const p=eio(pr(t,t0,d));a.style.transform=`scaleY(${Math.max(0,1-2*p).toFixed(3)})`;
+  b.style.transform=`scaleY(${Math.max(0,2*p-1).toFixed(3)})`;a.style.opacity=p<.5?1:0;b.style.opacity=p>=.5?1:0;return p}
+// cor que acende em qualquer propriedade (fundo, texto), como o contorno do kit
+function luz(e,prop,t,a,de,para,d=.45){e.style[prop]=mix(de,para,eo(pr(t,a,d)))}
+// anel de destaque em volta de um cartão (sem mexer na sombra dele)
+function anel(e,t,a,rgba,sombra='0 18px 40px rgba(16,24,40,.10),0 3px 8px rgba(16,24,40,.06)',px=5){
+  e.style.boxShadow=`0 0 0 ${(px*eo(pr(t,a,.45))).toFixed(2)}px ${rgba},${sombra}`}
+// texto escrito à mão (giz, caneta): sem cursor piscando
+function escreve(e,txt,t,a,b){const p=cl((t-a)/Math.max(.05,b-a));const s=txt.slice(0,Math.round(p*txt.length));if(e._s!==s){e.textContent=s;e._s=s}}
+
+// ------------------------------------------------------------------ cenas da aula: âncoras (= ilustracoes.json)
+// de = [linha, palavra, ocorrência] (a janela abre 0,3 s antes do início dela); ate = a palavra em cujo fim a cena pode
+// sair (a janela fecha "cauda" s depois); mostra = todo nome, número e rótulo escrito na cena
+const ILU=[
+ {cap:0,id:'ilu00_cardapio',de:[0,'Oi',1],ate:[1,'primeiro',1],cauda:.6,
+  resumo:'o cadastro de materiais é o cardápio do pátio, e a compra, a venda e a nota fiscal puxam dele',
+  mostra:['Recicla Vale Metais','Compra','Venda','Cobre mel','Ferro pesado','Alumínio latinha','R$ 42,00','R$ 47,40','R$ 0,95','R$ 1,25','R$ 6,20','R$ 7,40','Nota fiscal']},
+ {cap:1,id:'ilu01_totais',de:[3,'Total',1],ate:[3,'hoje',1],cauda:.6,
+  resumo:'Total Pago é o estoque vezes o preço médio pago; Projeção de Vendas é o mesmo estoque vezes o preço de venda',
+  mostra:['Total Pago','Projeção de Vendas','Estoque','Preço médio pago','Preço de Venda','o que você pagou','se vender tudo hoje']},
+ {cap:3,id:'ilu03_codigo',de:[1,'atalho',1],ate:[2,'setenta',1],cauda:.6,
+  resumo:'o código é o atalho do balcão (digita o número, o material aparece); dá para usar o do caderno: 16 vira 70',
+  mostra:['1','2','3','4','13','14','15','16','70','Radiador de cobre','Compra','Venda','Radiador','Rafael']},
+ {cap:4,id:'ilu04_ncm',de:[0,'Pra',1],ate:[0,'nota',2],cauda:.6,
+  resumo:'o NCM é um código de 8 dígitos que vai dentro da nota',
+  mostra:['Nota fiscal','Radiador de cobre','NCM','7404.00.00','8 dígitos','Desperdícios e resíduos de cobre']},
+ {cap:4,id:'ilu04_nomefiscal',de:[5,'Por',1],ate:[6,'iguais',1],cauda:.6,
+  resumo:'os três alumínios saem na nota como SUCATA DE ALUMÍNIO; a tela, os pedidos e os comprovantes ficam com o nome normal',
+  mostra:['Alumínio latinha','Alumínio perfil','Alumínio bloco','Nota fiscal','SUCATA DE ALUMÍNIO','Tela','Pedidos','Comprovantes','linhas iguais']},
+ {cap:4,id:'ilu04_onde',de:[8,'No',1],ate:[8,'fiscal',1],cauda:.6,
+  resumo:'no material (e na planilha) vão o NCM e o nome na nota; CFOP, CST e ICMS ficam nos cenários fiscais, definidos pelo contador',
+  mostra:['No material','e na planilha','NCM','Nome na nota','Nos cenários fiscais','CFOP','CST','ICMS','mudam conforme','Operação','Regime','Parceiro','quem define','Contador']},
+ {cap:5,id:'ilu05_gavetas',de:[1,'Grupo',1],ate:[1,'nova',1],cauda:.6,
+  resumo:'grupo é uma gaveta: cada material na sua; o radiador ganha a gaveta nova Radiadores',
+  mostra:['Ferrosos','Cobre','Alumínio','Metais','Outros','Radiadores','Ferro pesado','Cobre mel','Alumínio latinha','Bronze','Papelão','Radiador de cobre']},
+ {cap:7,id:'ilu07_vinculada',de:[3,'Vinculada',1],ate:[3,'também',1],cauda:.6,
+  resumo:'a Tabela Depósitos é vinculada: acompanha a Principal com +4%, e quando o preço muda lá muda aqui também',
+  mostra:['Principal','Tabela Depósitos','+4%','Cobre mel','R$ 42,50','R$ 44,20','R$ 42,00']},
+ {cap:7,id:'ilu07_ordem',de:[7,'quando',1],ate:[7,'material',2],cauda:.6,
+  resumo:'a ordem do preço: primeiro o personalizado do parceiro, depois a tabela do pedido, por último o preço do material',
+  mostra:['Primeiro','Preço personalizado','do cliente ou fornecedor','Depois','Tabela escolhida','no pedido','Por último','Preço do material']},
+ {cap:8,id:'ilu08_transferir',de:[3,'transferir',1],ate:[3,'misto',1],cauda:.6,
+  resumo:'na desmontagem, os 8 kg de ferro das cintas e suportes saem do Radiador de cobre e vão para o Ferro misto',
+  mostra:['Radiador de cobre','Ferro misto','8 kg de ferro']},
+ {cap:10,id:'ilu10_arquivar',de:[0,'Por',1],ate:[0,'lá',1],cauda:.6,
+  resumo:'excluir arquiva: o material sai da lista e das buscas, e as compras, as vendas e o histórico continuam',
+  mostra:['Lista e buscas','Ferro misto','Cobre mel','Radiador de cobre','apagar','arquiva','Compras','Vendas','Histórico']},
+];
+// várias cenas num capítulo: cada uma no seu grupo, visível só na sua janela (a mesma conta da edição)
+function janela(c){return [W(c.de[0],c.de[1],c.de[2],'s')-.3, W(c.ate[0],c.ate[1],c.ate[2],'e')+c.cauda]}
+const S={};
+function capitulo(...ids){
+  const cs=ids.map(id=>{const g=grupo();return {c:ILU.find(x=>x.id===id),g,R:S[id](g)}});
+  return t=>{for(const k of cs){if(!k.J)k.J=janela(k.c);const on=t>=k.J[0]-.05&&t<=k.J[1]+.05;
+    k.g.style.display=on?'':'none';if(on)k.R(t,k.J)}};
+}
+const SOMBRA='0 18px 40px rgba(16,24,40,.10),0 3px 8px rgba(16,24,40,.06)';
+
+// ================================================================== cap00 · O cardápio do pátio (linhas 0 e 1)
+// 0 "Oi! Neste tutorial a gente vai montar o cardápio da Recicla Vale Metais: cada material que entra no pátio, com o
+//   preço de compra e o preço de venda."  1 "É desse cadastro que a compra, a venda e a nota fiscal puxam os dados. Por
+//   isso ele vem primeiro."  Preços da semente t3/inicio (o cobre ainda R$ 0,50 abaixo; o cap06 corrige).
+S.ilu00_cardapio=g=>{
+  const tit=titulo(g,'Materiais','O cardápio do pátio');
+  const MAT=[['Cobre mel',42.00,47.40],['Ferro pesado',0.95,1.25],['Alumínio latinha',6.20,7.40]];
+  const BW=640,BH=348,BX=320,BY=290;                         // lousa no centro; depois vai para a esquerda (90%)
+  const mov=el(`<div class="ab" style="left:${BX}px;top:${BY}px;width:${BW}px;height:${BH}px;transform-origin:${BW/2}px ${BH/2}px"></div>`,g);
+  const lousa=el(`<div class="ab lousa" style="left:0;top:0;width:${BW}px;height:${BH}px">
+      <div class="lh"></div><div class="lgiz"></div>
+      <div class="row" style="margin-top:14px;height:40px"><div style="width:276px;flex:none"></div>
+        <div class="lcol"><span class="lt">Compra</span></div><div class="lcol"><span class="lt">Venda</span></div></div>
+      ${MAT.map(([n,c,v])=>`<div class="row lrow"><div class="ln">${n}</div>
+        <div class="lcol lv" style="color:#50D088">${brl(c)}</div><div class="lcol lv" style="color:#F2B63D">${brl(v)}</div></div>`).join('')}
+    </div>`,mov);
+  const cab=lousa.querySelector('.lh'), [chC,chV]=lousa.querySelectorAll('.lt'), linhas=[...lousa.querySelectorAll('.lrow')];
+  const vC=linhas.map(r=>r.querySelectorAll('.lv')[0]), vV=linhas.map(r=>r.querySelectorAll('.lv')[1]);
+  // os três que puxam do cadastro
+  const DST=[['Compra','shopping-cart',''],['Venda','hand-coins','a'],['Nota fiscal','file-text','n']];
+  const CX=800,CW=390,CH=92,GAP=18,CY0=464-(3*CH+2*GAP)/2;
+  const dst=DST.map(([n,i,k],j)=>el(`<div class="card row" style="left:${CX}px;top:${CY0+j*(CH+GAP)}px;width:${CW}px;height:${CH}px;padding:0 24px;gap:18px">
+      <div class="ico ${k}" style="width:56px;height:56px;${k==='n'?'background:#EEF1F4;color:#4B5563':''}">${ic(i,28)}</div>
+      <div style="font-weight:800;font-size:24px;white-space:nowrap">${n}</div></div>`,g));
+  const ys=[0,1,2].map(j=>CY0+j*(CH+GAP)+CH/2);
+  const setas=ys.map(y=>seta(g,`M656,464 C724,464 722,${y} ${CX-10},${y}`));
+  const pts=ys.map(()=>el('<div class="ab" style="left:0;top:0;width:16px;height:16px;border-radius:50%;background:var(--v);border:3px solid #fff;box-shadow:0 2px 6px rgba(16,24,40,.25);opacity:0"></div>',g));
+  let A=null;
+  return (t,J)=>{
+    if(!A)A={mo:W(0,'montar'),re:W(0,'recicla'),me:W(0,'metais',1,'e'),ca:W(0,'cada'),co:W(0,'compra'),ve:W(0,'venda'),
+      cad:W(1,'cadastro'),c2:W(1,'compra'),v2:W(1,'venda'),no:W(1,'nota'),pu:W(1,'puxam'),pri:W(1,'primeiro')};
+    posTitulo(tit,t,J[0]-.6,A.mo-.3);
+    vis(lousa,t,A.mo-.1,1e9,{dy:20});
+    escreve(cab,'Recicla Vale Metais',t,A.re-.05,A.me-.05);
+    linhas.forEach((r,i)=>vis(r,t,A.ca-.1+i*.42,1e9,{dx:-14,dy:0}));
+    // as etiquetas acendem na palavra, e os preços da coluna aparecem
+    const pc=eo(pr(t,A.co-.05,.45)), pv=eo(pr(t,A.ve-.05,.45));
+    chC.style.background=mix('#22302A','#50D088',pc); chC.style.borderColor=mix('#4E5A54','#50D088',pc); chC.style.color=mix('#9DA6A1','#121212',pc);
+    chV.style.background=mix('#22302A','#F2B63D',pv); chV.style.borderColor=mix('#4E5A54','#F2B63D',pv); chV.style.color=mix('#9DA6A1','#121212',pv);
+    vC.forEach((e,i)=>vis(e,t,A.co+.05+i*.12,1e9,{dy:8})); vV.forEach((e,i)=>vis(e,t,A.ve+.05+i*.12,1e9,{dy:8}));
+    // abre espaço: a lousa vai para a esquerda e entram os três destinos, cada um na sua palavra
+    const sl=eio(pr(t,A.cad-.3,.8)); mov.style.transform=`translate(${(-280*sl).toFixed(2)}px,0) scale(${(1-.1*sl).toFixed(4)})`;
+    [A.c2,A.v2,A.no].forEach((a,j)=>{setaR(setas[j],t,a-.3,.5); vis(dst[j],t,a-.1,1e9,{dx:22,dy:0})});
+    // puxam os dados: um ponto sai da lousa para cada um
+    pts.forEach((p,j)=>viaja(p,setas[j].p,t,A.pu+j*.14,.8));
+    // primeiro: a lousa ganha o anel verde
+    lousa.style.boxShadow=`0 0 0 ${(7*eo(pr(t,A.pri-.1,.5))).toFixed(2)}px rgba(80,208,136,.35),0 18px 40px rgba(16,24,40,.18),inset 0 0 0 2px rgba(0,0,0,.18)`;
+    pulse(lousa,t,A.pri-.1,.03,.8);
+  };
+};
+// posição de um elemento no palco (medida na montagem, antes de qualquer animação): [x, y, largura, altura]
+function caixa(e){const r=e.getBoundingClientRect();return [r.left,r.top,r.width,r.height]}
+
+// ================================================================== cap01 · Total Pago × Projeção de Vendas (linha 3)
+// 3 "O Total Pago é esse estoque vezes o preço médio que você pagou nas compras. E a Projeção de Vendas é o mesmo estoque
+//   vezes o preço de venda: quanto entraria se você vendesse tudo hoje."  Rótulos do app: "Total Pago", "Projeção de
+//   Vendas", "Preço médio pago", "Preço de Venda" (cartões e colunas da tela Estoque). Sem valores (a fala não diz).
+//   Duas contas na ordem da fala: Total Pago = Estoque × Preço médio pago; Projeção de Vendas = o mesmo Estoque × Preço de Venda.
+S.ilu01_totais=g=>{
+  const tit=titulo(g,'Estoque','Total Pago × Projeção de Vendas');
+  const RY=[318,584], X={res:88,ig:488,pil:568,x:852,fat:934};
+  const res=(y,cls,icn,nome,sub)=>el(`<div class="card row" style="left:${X.res}px;top:${y-66}px;width:380px;height:132px;padding:0 24px;gap:18px">
+      <div class="ico ${cls}" style="width:60px;height:60px">${ic(icn,30)}</div>
+      <div><div style="font-weight:800;font-size:24px;white-space:nowrap">${nome}</div>
+        <div class="lbl" style="margin-top:6px;white-space:nowrap">${sub}</div></div></div>`,g);
+  const cT=res(RY[0],'','wallet','Total Pago','o que você pagou'), cP=res(RY[1],'a','trending-up','Projeção de Vendas','se vender tudo hoje');
+  const oi=RY.map(y=>el(`<div class="op" style="left:${X.ig}px;top:${y-30}px">=</div>`,g));
+  const TONS=['#8C5A3C','#6F7983','#9AA3AD','#A0694A','#4F5861','#8A949E','#5E6670','#B07A55'];
+  const pilha=y=>el(`<div class="ab" style="left:${X.pil}px;top:${y-84}px;width:260px;height:168px">${monte(TONS)}
+      <div style="position:absolute;left:0;top:126px;width:260px;text-align:center"><span class="tag n">${ic('package',20)}Estoque</span></div></div>`,g);
+  const p1=pilha(RY[0]), p2=pilha(RY[1]);
+  const ox=RY.map(y=>el(`<div class="op" style="left:${X.x}px;top:${y-30}px">×</div>`,g));
+  const fat=[el(`<div class="ab" style="left:${X.fat}px;top:${RY[0]-23}px"><span class="tag v" style="font-size:21px">Preço médio pago</span></div>`,g),
+             el(`<div class="ab" style="left:${X.fat}px;top:${RY[1]-23}px"><span class="tag a" style="font-size:21px">Preço de Venda</span></div>`,g)];
+  let A=null;
+  return (t,J)=>{
+    if(!A)A={to:W(3,'total'),es:W(3,'estoque',1),ve:W(3,'vezes',1),pr:W(3,'preco',1),cm:W(3,'compras'),
+      pj:W(3,'projecao'),ms:W(3,'mesmo'),v2:W(3,'vezes',2),p2:W(3,'preco',2),en:W(3,'entraria')};
+    posTitulo(tit,t,J[0]-.6,A.to-.25);
+    // Total Pago = Estoque × Preço médio pago
+    vis(cT,t,A.to-.05,1e9,{dx:-20,dy:0});
+    vis(oi[0],t,A.es-.35,1e9,{sc:.6,dy:0}); vis(p1,t,A.es-.15,1e9,{dy:14});
+    vis(ox[0],t,A.ve-.05,1e9,{sc:.6,dy:0}); vis(fat[0],t,A.pr-.05,1e9,{dx:16,dy:0});
+    contorno(cT,t,A.cm-.1,'#E1E8E4','#50D088'); anel(cT,t,A.cm-.1,'rgba(80,208,136,.22)',SOMBRA,4); pulse(cT,t,A.cm-.1,.035,.8);
+    // Projeção de Vendas = o mesmo Estoque (o monte de cima desce uma cópia) × Preço de Venda
+    vis(cP,t,A.pj-.05,1e9,{dx:-20,dy:0});
+    vis(oi[1],t,A.ms-.3,1e9,{sc:.6,dy:0}); pulse(p1,t,A.ms-.15,.04,.6);
+    const q=eio(pr(t,A.ms-.05,.85)); p2.style.opacity=eo(pr(t,A.ms-.1,.25)).toFixed(3); p2.style.visibility=t<A.ms-.1?'hidden':'visible';
+    p2.style.transform=`translateY(${(-(RY[1]-RY[0])*(1-q)).toFixed(2)}px)`;
+    vis(ox[1],t,A.v2-.05,1e9,{sc:.6,dy:0}); vis(fat[1],t,A.p2-.05,1e9,{dx:16,dy:0});
+    contorno(cP,t,A.en-.1,'#E1E8E4','#F2B63D'); anel(cP,t,A.en-.1,'rgba(242,182,61,.24)',SOMBRA,4); pulse(cP,t,A.en-.1,.035,.8);
+  };
+};
+
+// ================================================================== cap03 · O código é um atalho (linhas 1 e 2)
+// 1 "É o atalho do dia a dia: na compra e na venda, o operador digita o número e o material aparece."  2 "Se você já tem
+//   os seus códigos, do caderno ou de outro sistema, pode usar os mesmos. No caderno do Rafael, o radiador sempre foi o
+//   setenta."  Códigos 1 a 15 = os 15 materiais do mundo; o radiador ganhou o 16 (cap02) e vira o 70 (o "+1" da marcação
+//   é da linha 0, que é tela: ficou de fora).
+S.ilu03_codigo=g=>{
+  const tit=titulo(g,'Materiais','O código é um atalho');
+  // a fila de fichas: 1 2 3 4 … 13 14 15 e a do radiador
+  const X0=142,TY=192,T=72;
+  const nums=[[1,0],[2,84],[3,168],[4,252],[13,392],[14,476],[15,560]];
+  const fila=nums.map(([n,x])=>el(`<div class="card" style="left:${X0+x}px;top:${TY}px;width:${T}px;height:${T}px;border-radius:16px;
+      display:flex;align-items:center;justify-content:center"><span class="num" style="font-size:28px;color:#4B5563">${n}</span></div>`,g));
+  const ret=el(`<div class="ab" style="left:${X0+336}px;top:${TY}px;width:44px;height:${T}px;display:flex;align-items:center;justify-content:center;
+      font-weight:800;font-size:30px;color:#6B7280">…</div>`,g);
+  const fic=el(`<div class="card row" style="left:${X0+652}px;top:${TY}px;width:344px;height:${T}px;border-radius:16px;overflow:hidden">
+      <div class="nbox" style="position:relative;width:${T}px;height:${T}px;flex:none;background:#F2F4F7;border-right:1px solid #E1E8E4">
+        <span class="num va" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:30px">16</span>
+        <span class="num vb" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:30px;opacity:0;color:#2E7D57">70</span></div>
+      <div style="padding:0 20px;font-weight:700;font-size:21px;white-space:nowrap">Radiador de cobre</div></div>`,g);
+  const nbox=fic.querySelector('.nbox'), fa=fic.querySelector('.va'), fb=fic.querySelector('.vb');
+  // o balcão: compra e venda (as etiquetas acendem na palavra), o operador digita o número, o material aparece
+  const BX0=380,BX1=92,BY=328;
+  const bal=el(`<div class="ab" style="left:${BX0}px;top:${BY}px;width:520px;height:254px"></div>`,g);
+  const balC=el(`<div class="card" style="left:0;top:0;width:520px;height:254px;padding:26px 28px">
+      <div class="row" style="gap:12px;height:42px"><span class="tag n cC">${ic('shopping-cart',20)}Compra</span><span class="tag n cV">${ic('hand-coins',20)}Venda</span></div>
+      <div class="row" style="margin-top:18px;height:72px;border:2px solid #D7DDE3;border-radius:16px;padding:0 20px;gap:16px">
+        ${ic('keyboard',32,'#6B7280')}<span class="num" style="font-size:36px;position:relative;display:inline-block;width:84px;height:44px">
+          <span class="va2" style="position:absolute;left:0;top:0;transform-origin:50% 55%"></span><span class="vb2" style="position:absolute;left:0;top:0;opacity:0;transform-origin:50% 55%">70</span></span></div>
+      <div class="row res" style="margin-top:18px;height:44px;gap:12px">${ic('arrow-down-right',26,'#2E7D57')}
+        <span class="tag v" style="font-size:19px;padding:8px 16px">Radiador de cobre</span></div></div>`,bal);
+  const chC=balC.querySelector('.cC'), chV=balC.querySelector('.cV'), dg=balC.querySelector('.va2'), dg70=balC.querySelector('.vb2'), resl=balC.querySelector('.res');
+  // o caderno do Rafael
+  const NX=660,NY=328,NW=530,NH=284;
+  const cad=el(`<div class="card" style="left:${NX}px;top:${NY}px;width:${NW}px;height:${NH}px;overflow:hidden;background:#FFFEF8">
+      <div style="position:absolute;left:0;right:0;top:0;height:44px;background:#F4F1E6;border-bottom:1px solid #E6E0CC"></div>
+      ${[0,1,2,3,4,5,6,7,8,9].map(i=>`<div style="position:absolute;left:${36+i*48}px;top:13px;width:18px;height:18px;border-radius:50%;background:#fff;border:3px solid #B9C1C9"></div>`).join('')}
+      <div class="raf" style="position:absolute;right:24px;top:58px;padding:5px 14px;border-radius:8px;background:#F4F1E6;font-weight:700;font-size:17px;color:#6B5E3C">Rafael</div>
+      ${[1,2,3,4].map(i=>`<div style="position:absolute;left:24px;right:24px;top:${56+i*50}px;height:2px;background:#DCE6F0"></div>`).join('')}
+      <div style="position:absolute;left:58px;top:44px;bottom:0;width:2px;background:#F3C9C4"></div>
+      <div class="row" style="position:absolute;left:80px;right:44px;top:${56+2*50-44}px;height:42px;gap:12px;font-size:26px;color:#1F3A5F">
+        <span class="mk" style="position:absolute;left:-12px;right:-16px;top:0;bottom:-2px;border-radius:8px;background:#EAF8F0;opacity:0"></span>
+        <span style="position:relative;font-weight:700">Radiador</span><span style="position:relative;flex:1;border-bottom:3px dotted #9AA9BA;height:26px"></span>
+        <span class="c70" style="position:relative;font-weight:800">70</span></div>
+      <div style="position:absolute;left:80px;top:${56+3*50-24}px;width:210px;height:9px;border-radius:5px;background:#E7EBF0"></div>
+      <div style="position:absolute;left:80px;top:${56+4*50-24}px;width:150px;height:9px;border-radius:5px;background:#E7EBF0"></div></div>`,g);
+  const mk=cad.querySelector('.mk'), raf=cad.querySelector('.raf');
+  // o 70 do caderno voa até a ficha (posições medidas)
+  const voa=el('<div class="ab num" style="left:0;top:0;font-size:30px;color:#2E7D57;opacity:0">70</div>',g);
+  const [ax,ay]=caixa(cad.querySelector('.c70')), [bx,by,bw,bh]=caixa(nbox), [,,vw,vh]=caixa(voa);
+  const V0=[ax-2,ay+2], V1=[bx+(bw-vw)/2,by+(bh-vh)/2];
+  let A=null;
+  return (t,J)=>{
+    if(!A)A={at:W(1,'atalho'),di:W(1,'dia',1),co:W(1,'compra'),ve:W(1,'venda'),dg:W(1,'digita'),ap:W(1,'aparece'),
+      ca:W(2,'caderno',1),us:W(2,'usar'),ra:W(2,'rafael'),rd:W(2,'radiador'),fo:W(2,'foi')};
+    posTitulo(tit,t,J[0]-.6,A.at-.25);
+    fila.forEach((f,i)=>vis(f,t,A.at-.1+i*.05,1e9,{dy:14})); vis(ret,t,A.at+.1,1e9,{dy:14}); vis(fic,t,A.at+.35,1e9,{dy:14});
+    // o balcão do dia a dia; as etiquetas acendem em "compra" e "venda"; digita o número; o material aparece
+    vis(balC,t,A.di-.15,1e9,{dy:18});
+    const pc=eo(pr(t,A.co-.1,.45)), pv=eo(pr(t,A.ve-.1,.45));
+    chC.style.background=mix('#F2F4F7','#EAF8F0',pc); chC.style.color=mix('#374151','#2E7D57',pc); pulse(chC,t,A.co-.1,.08,.6);
+    chV.style.background=mix('#F2F4F7','#FFF5DF',pv); chV.style.color=mix('#374151','#8A5A00',pv); pulse(chV,t,A.ve-.1,.08,.6);
+    escreve(dg,'16',t,A.dg,A.dg+.45);
+    vis(resl,t,A.ap-.1,1e9,{dx:-12,dy:0});
+    contorno(fic,t,A.ap-.1,'#E1E8E4','#50D088'); anel(fic,t,A.ap-.1,'rgba(80,208,136,.25)',SOMBRA,4); pulse(fic,t,A.ap-.1,.05,.8);
+    luz(nbox,'background',t,A.ap-.1,'#F2F4F7','#EAF8F0'); luz(fa,'color',t,A.ap-.1,'#121212','#2E7D57');
+    // o caderno entra e o balcão abre espaço; pode usar os mesmos: a linha do radiador acende; o Rafael
+    const sl=eio(pr(t,A.ca-.35,.8)); bal.style.left=lerp(BX0,BX1,sl).toFixed(2)+'px';
+    vis(cad,t,A.ca-.1,1e9,{dx:24,dy:0});
+    mk.style.opacity=eo(pr(t,A.us-.1,.45)).toFixed(3); pulse(raf,t,A.ra-.1,.1,.7);
+    // sempre foi o 70: o número voa do caderno para a ficha, que vira de 16 para 70 (e o balcão também)
+    const q=arco(voa,t,A.fo-.1,.7,V0[0],V0[1],V1[0],V1[1],-110);
+    voa.style.opacity=(q>0&&q<1?Math.min(1,q*6,(1-q)*5+.0):0).toFixed(3);
+    vira(fa,fb,t,A.fo+.25,.5); vira(dg,dg70,t,A.fo+.45,.5); pulse(fic,t,A.fo+.5,.05,.8);
+  };
+};
+
+// ================================================================== cap04 · três cenas: NCM (0), nome na nota (5 e 6), o que fica onde (8)
+// 0 "Pra quem emite nota fiscal, cada material precisa do NCM. É um código de oito dígitos que diz pra Receita que
+//   mercadoria é aquela, e ele vai dentro da nota."  (NCM do cobre e a descrição do seletor: plano.md, ncm_presets)
+S.ilu04_ncm=g=>{
+  const tit=titulo(g,'Nota fiscal','O NCM na nota');
+  const nota=el(`<div class="papel" style="left:116px;top:188px;width:450px;height:500px;padding:30px">
+      <div class="row" style="gap:14px"><div style="width:48px;height:48px;border-radius:10px;background:#EEF1F4"></div>
+        <div style="flex:1"><div class="barra" style="width:62%"></div><div class="barra" style="width:40%;margin-top:10px"></div></div></div>
+      <div style="margin-top:22px;font-weight:800;font-size:24px">Nota fiscal</div>
+      <div style="margin-top:14px;height:1px;background:#E6E9EE"></div>
+      <div class="barra" style="margin-top:18px;width:100%;height:12px;background:#EEF1F4"></div>
+      <div class="lr row" style="position:relative;margin-top:14px;height:62px;padding:0 14px;border-radius:12px;gap:10px">
+        <span class="hl" style="position:absolute;inset:0;border-radius:12px;background:#EAF8F0;opacity:0"></span>
+        <span style="position:relative;font-weight:700;font-size:20px;white-space:nowrap">Radiador de cobre</span>
+        <span class="slot" style="position:relative;margin-left:auto;width:140px;height:38px;border:2px dashed #CBD2D9;border-radius:9px"></span></div>
+      ${[0,1].map(()=>`<div class="row" style="margin-top:14px;height:40px;padding:0 14px;gap:12px"><div class="barra" style="width:50%"></div>
+        <div class="barra" style="margin-left:auto;width:26%"></div></div>`).join('')}
+      <div style="margin-top:24px;height:1px;background:#E6E9EE"></div>
+      <div class="row" style="margin-top:20px;gap:12px"><div class="barra" style="width:30%"></div><div class="barra" style="margin-left:auto;width:34%;height:14px"></div></div>
+      <div class="barra" style="margin-top:28px;width:56%"></div><div class="barra" style="margin-top:12px;width:44%"></div></div>`,g);
+  const hl=nota.querySelector('.hl'), slot=nota.querySelector('.slot');
+  const DIG='7404.00.00';
+  const ncm=el(`<div class="card" style="left:646px;top:250px;width:520px;height:214px;padding:28px 34px">
+      <div class="kick" style="color:#6B7280;font-size:16px">NCM</div>
+      <div class="num dd" style="margin-top:8px;font-size:64px;line-height:1.15;white-space:nowrap">${[...DIG].map(c=>`<span class="${c==='.'?'pt':'dgt'}" style="color:#C4CBD3">${c}</span>`).join('')}</div>
+      <div class="lbl desc" style="margin-top:10px;font-size:19px;white-space:nowrap">Desperdícios e resíduos de cobre</div></div>`,g);
+  const dgt=[...ncm.querySelectorAll('.dgt')], pts=[...ncm.querySelectorAll('.pt')], desc=ncm.querySelector('.desc');
+  const oito=el(`<div class="ab" style="left:680px;top:490px"><span class="tag v" style="font-size:21px">${ic('hash',22)}8 dígitos</span></div>`,g);
+  const voo=el(`<div class="ab" style="left:0;top:0"><span class="tag v" style="font-size:17px;padding:7px 13px">${DIG}</span></div>`,g);
+  // a cópia sai do número do cartão e pousa na vaga da linha do radiador (posições medidas)
+  const [sx,sy,sw,sh]=caixa(slot), [,,vw,vh]=caixa(voo.firstElementChild), [nx,ny]=caixa(ncm.querySelector('.dd'));
+  const V0=[nx+30,ny+18], V1=[sx+(sw-vw)/2,sy+(sh-vh)/2];
+  let A=null;
+  return (t,J)=>{
+    if(!A)A={no:W(0,'nota',1),ma:W(0,'material'),nc:W(0,'ncm'),co:W(0,'codigo'),di:W(0,'digitos'),me:W(0,'mercadoria'),
+      de:W(0,'dentro'),n2:W(0,'nota',2)};
+    posTitulo(tit,t,J[0]-.6,A.no-.25);
+    vis(nota,t,A.no-.1,1e9,{dy:20});
+    hl.style.opacity=eo(pr(t,A.ma-.1,.45)).toFixed(3);
+    vis(ncm,t,A.nc-.1,1e9,{dx:24,dy:0});
+    // um código de oito dígitos: os dígitos acendem um por um; o rótulo entra em "dígitos"
+    dgt.forEach((d,i)=>d.style.color=mix('#C4CBD3','#121212',eo(pr(t,A.co+i*.09,.3)))); pts.forEach(d=>d.style.color=mix('#C4CBD3','#9AA3AD',eo(pr(t,A.co,.4))));
+    vis(oito,t,A.di-.05,1e9,{dy:10});
+    vis(desc,t,A.me-.1,1e9,{dy:8});
+    // vai dentro da nota: uma cópia do código pousa na linha do radiador
+    const q=arco(voo,t,A.de-.1,.9,V0[0],V0[1],V1[0],V1[1],-110);
+    voo.style.opacity=(q>0?Math.min(1,q*5):0).toFixed(3); voo.style.visibility=q>0?'visible':'hidden';
+    contorno(slot,t,A.de+.75,'#CBD2D9','#50D088'); slot.style.borderStyle=t>A.de+.75?'solid':'dashed';
+    pulse(nota,t,A.n2-.05,.025,.8);
+  };
+};
+// 5 "Por exemplo: latinha, perfil e bloco podem sair na nota como sucata de alumínio."  6 "Uma dica: esse campo muda só a
+//   nota. A tela, os pedidos e os comprovantes continuam com o nome normal, de propósito: senão os três alumínios virariam
+//   linhas iguais."  (campo "Identificação/Produto Fiscal"; o exemplo é o do próprio app: "SUCATA DE ALUMÍNIO")
+S.ilu04_nomefiscal=g=>{
+  const tit=titulo(g,'Nota fiscal','Nome na nota');
+  const NOM=['Alumínio latinha','Alumínio perfil','Alumínio bloco'], FY=[196,270,344];
+  const fic=NOM.map((n,i)=>el(`<div class="ficha" style="left:70px;top:${FY[i]}px;width:420px"><span class="dot" style="background:#0EA5E9"></span>${n}
+      <span class="ok" style="margin-left:auto;opacity:0">${ic('circle-check',26,'#2E7D57')}</span></div>`,g));
+  const oks=fic.map(f=>f.querySelector('.ok'));
+  const nota=el(`<div class="papel" style="left:640px;top:186px;width:550px;height:524px;padding:28px">
+      <div class="row" style="gap:14px"><div style="width:46px;height:46px;border-radius:10px;background:#EEF1F4"></div>
+        <div style="flex:1"><div class="barra" style="width:56%"></div><div class="barra" style="width:36%;margin-top:10px"></div></div></div>
+      <div style="margin-top:22px;font-weight:800;font-size:22px">Nota fiscal</div>
+      <div style="margin-top:14px;height:1px;background:#E6E9EE"></div>
+      ${[0,1,2].map(()=>`<div class="row" style="margin-top:16px;height:46px;padding:0 12px;gap:12px"><div class="tx" style="width:270px;height:46px;flex:none"></div>
+        <div class="barra" style="margin-left:auto;width:70px"></div><div class="barra" style="width:80px"></div></div>`).join('')}
+      <div style="margin-top:22px;height:1px;background:#E6E9EE"></div>
+      <div class="row" style="margin-top:18px"><div class="barra" style="width:28%"></div><div class="barra" style="margin-left:auto;width:30%;height:14px"></div></div>
+      <div class="barra" style="margin-top:30px;width:62%"></div><div class="barra" style="margin-top:12px;width:48%"></div>
+      <div class="barra" style="margin-top:12px;width:54%"></div></div>`,g);
+  // os nomes que vão para a nota (saem das fichas e viram SUCATA DE ALUMÍNIO); destino = as linhas da nota, medidas
+  const DEST=[...nota.querySelectorAll('.tx')].map(e=>caixa(e));
+  const lin=NOM.map((n,i)=>el(`<div class="ab" style="left:0;top:0;width:290px;height:46px">
+      <span class="o1" style="position:absolute;left:0;top:11px;font-weight:700;font-size:19px;white-space:nowrap">${n}</span>
+      <span class="o2" style="position:absolute;left:0;top:11px;font-weight:800;font-size:19px;white-space:nowrap;opacity:0;color:#2E7D57">SUCATA DE ALUMÍNIO</span></div>`,g));
+  const lug=el(`<div class="ab row" style="left:70px;top:436px;gap:12px">
+      <span class="tag n lt1" style="font-size:17px">${ic('monitor',20)}Tela</span><span class="tag n lt2" style="font-size:17px">${ic('clipboard-list',20)}Pedidos</span>
+      <span class="tag n lt3" style="font-size:17px">${ic('receipt-text',20)}Comprovantes</span></div>`,g);
+  const lts=[lug.querySelector('.lt1'),lug.querySelector('.lt2'),lug.querySelector('.lt3')];
+  const xis=el(`<div class="card" style="left:70px;top:510px;width:420px;height:200px;padding:18px 24px">
+      <span class="tag a" style="font-size:16px;padding:6px 14px">linhas iguais</span>
+      ${[0,1,2].map(i=>`<div style="margin-top:${i?8:12}px;height:34px;padding:0 14px;border-radius:10px;background:#F6F7F9;display:flex;align-items:center;
+        font-weight:800;font-size:17px;color:#6B7280;white-space:nowrap">SUCATA DE ALUMÍNIO</div>`).join('')}
+      <svg class="ab" style="left:0;top:0;overflow:visible" width="420" height="200"><path class="x1" d="M126,62 L294,182" fill="none" stroke="#F2B63D" stroke-width="9" stroke-linecap="round"/>
+        <path class="x2" d="M294,62 L126,182" fill="none" stroke="#F2B63D" stroke-width="9" stroke-linecap="round"/></svg></div>`,g);
+  const x1=xis.querySelector('.x1'), x2=xis.querySelector('.x2');
+  let A=null;
+  return (t,J)=>{
+    if(!A)A={la:W(5,'latinha'),pe:W(5,'perfil'),bl:W(5,'bloco'),sa:W(5,'sair'),su:W(5,'sucata'),
+      mu:W(6,'muda'),no:W(6,'nota'),te:W(6,'tela'),pd:W(6,'pedidos'),cp:W(6,'comprovantes'),cn:W(6,'continuam'),
+      se:W(6,'senao'),vi:W(6,'virariam')};
+    posTitulo(tit,t,J[0]-.6,A.la-.25);
+    [A.la,A.pe,A.bl].forEach((a,i)=>vis(fic[i],t,a-.1,1e9,{dx:-16,dy:0}));
+    vis(nota,t,A.sa-.45,1e9,{dx:24,dy:0});
+    // os nomes voam das fichas para as linhas da nota e viram SUCATA DE ALUMÍNIO
+    lin.forEach((e,i)=>{const q=arco(e,t,A.sa-.05+i*.16,.8,112,FY[i]+6,DEST[i][0],DEST[i][1],-70);e.style.opacity=(q>0?Math.min(1,q*4):0).toFixed(3);
+      const m=eo(pr(t,A.su-.05+i*.12,.5));e.querySelector('.o1').style.opacity=(1-m).toFixed(3);e.querySelector('.o2').style.opacity=m.toFixed(3);
+      e.querySelector('.o1').style.transform=`translateY(${(-8*m).toFixed(2)}px)`;e.querySelector('.o2').style.transform=`translateY(${(8*(1-m)).toFixed(2)}px)`});
+    // esse campo muda só a nota
+    contorno(nota,t,A.mu-.1,'#E3E7EC','#50D088'); anel(nota,t,A.mu-.1,'rgba(80,208,136,.22)','0 18px 40px rgba(16,24,40,.12),0 3px 8px rgba(16,24,40,.06)',4);
+    pulse(nota,t,A.no-.05,.02,.8);
+    // a tela, os pedidos e os comprovantes continuam com o nome normal
+    [A.te,A.pd,A.cp].forEach((a,i)=>vis(lts[i],t,a-.1,1e9,{dy:10}));
+    oks.forEach((o,i)=>{o.style.opacity=eo(pr(t,A.cn-.1+i*.15,.4)).toFixed(3)}); fic.forEach((f,i)=>pulse(f,t,A.cn-.1+i*.15,.03,.7));
+    // senão: três linhas iguais (riscadas)
+    vis(xis,t,A.se-.1,1e9,{dy:16});
+    traco(x1,t,A.vi-.05,.4); traco(x2,t,A.vi+.25,.4);
+  };
+};
+// 8 "No material, e na planilha de importação também, vão o NCM e o nome da nota. Os impostos, como CFOP, CST e ICMS,
+//   ficam nos cenários fiscais. Eles mudam conforme a operação, o regime da empresa e o parceiro, e quem define é o
+//   contador. Isso a gente vê no tutorial de nota fiscal."  O cartão "No material" começa no centro e abre espaço quando
+//   entram os impostos; o cartão dos cenários fiscais se forma em volta deles.
+S.ilu04_onde=g=>{
+  const tit=titulo(g,'Nota fiscal','O que fica onde');
+  const MX0=405,MX1=70,MY=262;
+  const mw=el(`<div class="ab" style="left:${MX0}px;top:${MY}px;width:470px;height:296px"></div>`,g);
+  const item=(icn,txt,cls)=>`<div class="row ${cls}" style="margin-top:14px;height:64px;padding:0 18px;gap:14px;border:1px solid #E1E8E4;border-radius:14px;background:#FBFDFC">
+      <div class="ico" style="width:40px;height:40px;border-radius:11px">${ic(icn,22)}</div><div style="font-weight:800;font-size:23px;white-space:nowrap">${txt}</div></div>`;
+  const mat=el(`<div class="card" style="left:0;top:0;width:470px;height:296px;padding:28px">
+      <div class="row" style="gap:16px"><div class="ico" style="width:60px;height:60px">${ic('package',30)}</div>
+        <div><div style="font-weight:800;font-size:28px;white-space:nowrap">No material</div>
+          <div class="row pl" style="margin-top:6px;gap:8px;color:#6B7280">${ic('sheet',18)}<span class="lbl">e na planilha</span></div></div></div>
+      <div style="height:12px"></div>${item('hash','NCM','c1')}${item('file-text','Nome na nota','c2')}</div>`,mw);
+  const pl=mat.querySelector('.pl'), m1=mat.querySelector('.c1'), m2=mat.querySelector('.c2');
+  const CX=592,CY=186,CW=618;
+  const cen=el(`<div class="card" style="left:${CX}px;top:${CY}px;width:${CW}px;height:452px;padding:28px">
+      <div class="row" style="gap:16px"><div class="ico a" style="width:60px;height:60px">${ic('file-text',30)}</div>
+        <div style="font-weight:800;font-size:28px;white-space:nowrap">Nos cenários fiscais</div></div></div>`,g);
+  const IX=CX+28;
+  const imp=['CFOP','CST','ICMS'].map((n,i)=>el(`<div class="ab" style="left:${IX+[0,118,218][i]}px;top:${CY+114}px"><span class="tag a" style="font-size:22px">${n}</span></div>`,g));
+  const dv=el(`<div class="ab" style="left:${IX}px;top:${CY+192}px;width:${CW-56}px;height:1px;background:#E6E9EE"></div>`,g);
+  const mc=el(`<div class="ab lbl" style="left:${IX}px;top:${CY+212}px;font-size:18px;white-space:nowrap">mudam conforme</div>`,g);
+  const sub=['Operação','Regime','Parceiro'].map((n,i)=>el(`<div class="ab" style="left:${IX+[0,152,284][i]}px;top:${CY+246}px"><span class="tag n" style="font-size:19px;padding:8px 16px">${n}</span></div>`,g));
+  const qd=el(`<div class="ab lbl" style="left:${IX}px;top:${CY+320}px;font-size:18px;white-space:nowrap">quem define</div>`,g);
+  const ct=el(`<div class="ab" style="left:${IX}px;top:${CY+354}px"><span class="tag a" style="font-size:21px;box-shadow:0 0 0 3px #F2B63D">${ic('user-round',22)}Contador</span></div>`,g);
+  let A=null;
+  return (t,J)=>{
+    if(!A)A={ma:W(8,'material'),pl:W(8,'planilha'),nc:W(8,'ncm'),no:W(8,'nome'),im:W(8,'impostos'),cf:W(8,'cfop'),cs:W(8,'cst'),ic:W(8,'icms'),
+      fi:W(8,'ficam'),ce:W(8,'cenarios'),co:W(8,'conforme'),op:W(8,'operacao'),re:W(8,'regime'),pa:W(8,'parceiro'),
+      qu:W(8,'quem'),ct:W(8,'contador'),tu:W(8,'tutorial')};
+    posTitulo(tit,t,J[0]-.6,A.ma-.25);
+    vis(mat,t,A.ma-.1,1e9,{dy:18}); vis(pl,t,A.pl-.1,1e9,{dy:6});
+    vis(m1,t,A.nc-.1,1e9,{dx:-12,dy:0}); vis(m2,t,A.no-.1,1e9,{dx:-12,dy:0});
+    contorno(mat,t,A.no+.3,'#E1E8E4','#50D088');
+    // os impostos: o material abre espaço; os impostos entram soltos e o cartão dos cenários fiscais se forma em volta deles
+    const sl=eio(pr(t,A.im-.2,.8)); mw.style.left=lerp(MX0,MX1,sl).toFixed(2)+'px';
+    [A.cf,A.cs,A.ic].forEach((a,i)=>vis(imp[i],t,a-.1,1e9,{sc:.8,dy:0}));
+    vis(cen,t,A.fi-.1,1e9,{dx:20,dy:0}); contorno(cen,t,A.ce,'#E1E8E4','#F2B63D');
+    vis(dv,t,A.co-.2,1e9,{dy:0}); vis(mc,t,A.co-.1,1e9,{dy:6});
+    [A.op,A.re,A.pa].forEach((a,i)=>vis(sub[i],t,a-.1,1e9,{sc:.85,dy:0}));
+    vis(qd,t,A.qu-.1,1e9,{dy:6}); vis(ct,t,A.ct-.15,1e9,{sc:.7,dy:0}); pulse(ct,t,A.ct+.3,.06,.8);
+    pulse(cen,t,A.tu-.1,.015,.9);
+  };
+};
+
+// ================================================================== cap05 · Grupo é uma gaveta (linha 1)
+// 1 "Grupo é como uma gaveta: junta os materiais parecidos. Com o radiador vão chegar outros, de alumínio e misto, então
+//   vale uma gaveta nova."  Grupos e cores da semente (02-cadastros.json); Radiadores com a cor do plano (#0F766E).
+S.ilu05_gavetas=g=>{
+  const tit=titulo(g,'Grupos','Grupo é uma gaveta');
+  const GX=[115,475,835], GY=[384,574];
+  const GR=[['Ferrosos','#64748B','Ferro pesado'],['Cobre','#C2410C','Cobre mel'],['Alumínio','#0EA5E9','Alumínio latinha'],
+            ['Metais','#CA8A04','Bronze'],['Outros','#16A34A','Papelão']];
+  const mov=el('<div class="ab" style="left:95px;top:364px;width:1090px;height:350px;border-radius:24px;background:#F2F4F7;border:1px solid #E1E8E4"></div>',g);
+  const pos=i=>[GX[i%3],GY[Math.floor(i/3)]];
+  // fichas (atrás das gavetas depois que caem: a camada muda quando a base da ficha chega na boca da gaveta)
+  const FW=230,FH=58;
+  const fic=GR.map(([gn,c,m],i)=>{const [x,y]=pos(i);return el(`<div class="ficha" style="left:0;top:0;width:${FW}px;height:${FH}px;
+      align-items:flex-start;padding-top:16px;justify-content:center"><span class="dot" style="background:${c};margin-top:4px"></span>${m}</div>`,g)});
+  const gav=GR.map(([gn,c],i)=>{const [x,y]=pos(i);return el(`<div class="gav" style="left:${x}px;top:${y}px"><div class="cor" style="background:${c}"></div>
+      <div class="nome">${gn}</div><div class="puxa"></div></div>`,g)});
+  // a vaga da 6ª gaveta (tracejada) e a gaveta nova
+  const [x6,y6]=pos(5);
+  const vaga=el(`<div class="ab" style="left:${x6}px;top:${y6}px;width:330px;height:120px;border:2px dashed #CBD2D9;border-radius:16px"></div>`,g);
+  const rad=el(`<div class="ficha" style="left:0;top:0;width:${FW+30}px;height:${FH}px;align-items:flex-start;padding-top:16px;justify-content:center">
+      <span class="dot" style="background:#0F766E;margin-top:4px"></span>Radiador de cobre</div>`,g);
+  const fan=[0,1].map(()=>el(`<div class="ab" style="left:0;top:0;width:${FW+30}px;height:${FH}px;border-radius:14px;border:2px dashed #B9C1C9;background:rgba(255,255,255,.85)"></div>`,g));
+  const nova=el(`<div class="gav" style="left:${x6}px;top:${y6}px"><div class="cor" style="background:#0F766E"></div>
+      <div class="nome">Radiadores</div><div class="puxa"></div></div>`,g);
+  // camadas: fichas caindo na frente; já na gaveta, atrás da frente dela
+  const z=(e,v)=>{if(e._z!==v){e.style.zIndex=v;e._z=v}};
+  gav.forEach(e=>z(e,5)); z(nova,5); z(vaga,4);
+  const cai=(e,t,a,d,x0,y0,x1,y1,frente)=>{const p=eio(pr(t,a,d));const y=lerp(y0,y1,p),x=lerp(x0,x1,p);
+    e.style.transform=`translate(${x.toFixed(2)}px,${y.toFixed(2)}px)`;z(e,(y+FH)>=frente+2?3:8);return p};
+  let A=null;
+  return (t,J)=>{
+    if(!A)A={gr:W(1,'grupo'),ga:W(1,'gaveta',1),ju:W(1,'junta'),pa:W(1,'parecidos'),ra:W(1,'radiador'),ou:W(1,'outros'),
+      va:W(1,'vale'),g2:W(1,'gaveta',2),nv:W(1,'nova')};
+    posTitulo(tit,t,J[0]-.6,A.ga-.75);
+    vis(mov,t,A.ga-.6,1e9,{dy:18}); gav.forEach((e,i)=>vis(e,t,A.ga-.55+i*.06,1e9,{dy:18})); vis(vaga,t,A.ga-.25,1e9,{dy:18});
+    // junta os materiais parecidos: cada ficha cai na sua gaveta
+    fic.forEach((f,i)=>{const [x,y]=pos(i);const xf=x+(330-FW)/2;
+      f.style.opacity=eo(pr(t,A.ju-.25+i*.17,.3)).toFixed(3);
+      cai(f,t,A.ju+.05+i*.17,.7,xf,204,xf,y-46,y)});
+    // o radiador (e os que vão chegar) esperam em cima; a gaveta nova; caem nela
+    const xr=(1280-(FW+30))/2, xd=x6+(330-FW-30)/2;
+    rad.style.opacity=eo(pr(t,A.ra-.1,.4)).toFixed(3);
+    fan.forEach((f,i)=>{f.style.opacity=(eo(pr(t,A.ou-.1+i*.2,.4))).toFixed(3)});
+    const pR=eio(pr(t,A.g2-.1,.85));
+    const xR=lerp(xr,xd,pR), yR=lerp(204,y6-46,pR)-90*4*pR*(1-pR);
+    rad.style.transform=`translate(${xR.toFixed(2)}px,${yR.toFixed(2)}px)`; z(rad,(yR+FH)>=y6+2?3:9);
+    fan.forEach((f,i)=>{const dx=(i?1:-1)*30,dy=-6;const p=eio(pr(t,A.g2-.18+i*.05,.85));
+      const xf=lerp(xr,xd,p)+dx,yf=lerp(204,y6-46,p)-90*4*p*(1-p)+dy;
+      f.style.transform=`translate(${xf.toFixed(2)}px,${yf.toFixed(2)}px)`;z(f,(yf+FH)>=y6+2?2:7)});
+    vis(nova,t,A.va-.1,1e9,{dy:12,sc:.96});
+  };
+};
+
+// ================================================================== cap07 · duas cenas: vinculada (3) e a ordem do preço (7)
+// 3 "Vinculada quer dizer que ela acompanha a principal sozinha: quando o preço muda lá, como a gente fez com o cobre, muda
+//   aqui também."  Nome da tabela padrão na semente: "Principal". Cobre mel: 42,00 → 42,50 (o reajuste do cap06);
+//   na Tabela Depósitos (+4%): 44,20. O valor antigo da Tabela Depósitos não aparece (ela nem existia).
+S.ilu07_vinculada=g=>{
+  const tit=titulo(g,'Preços','Tabela vinculada');
+  const TOP=316, CW=450, XL=80, XR=750;
+  const cartao=(x,cls,icn,nome,val)=>el(`<div class="card" style="left:${x}px;top:${TOP}px;width:${CW}px;height:250px;padding:26px 28px">
+      <div class="row" style="gap:14px"><div class="ico ${cls}" style="width:56px;height:56px">${icn}</div>
+        <div style="font-weight:800;font-size:27px;white-space:nowrap">${nome}</div></div>
+      <div style="margin-top:20px;height:1px;background:#E6E9EE"></div>
+      <div style="position:relative;margin-top:6px;height:110px">
+        <div style="position:absolute;left:0;top:44px;font-weight:700;font-size:22px;white-space:nowrap">Cobre mel</div>
+        <div class="old num" style="position:absolute;right:0;top:8px;font-size:18px;color:#6B7280;text-decoration:line-through;opacity:0;white-space:nowrap">${brl(42)}</div>
+        <div class="row" style="position:absolute;right:0;top:38px;gap:12px">
+          <div class="up" style="width:36px;height:36px;border-radius:50%;background:#EAF8F0;display:flex;align-items:center;justify-content:center;opacity:0">${ic('arrow-up',22,'#2E7D57')}</div>
+          <div class="num vv" style="font-size:40px;white-space:nowrap">${val}</div></div></div></div>`,g);
+  const cP=cartao(XL,'',`<span class="ic" style="width:30px;height:30px">${(window.ICONS||{})['star']||''}</span>`,'Principal',brl(42.5));
+  const cD=cartao(XR,'a',ic('link-2',30),'Tabela Depósitos',brl(44.2));
+  cP.querySelector('.ico svg')&&(cP.querySelector('.ico svg').style.fill='currentColor');
+  const [uP,uD]=[cP.querySelector('.up'),cD.querySelector('.up')], [vP,vD]=[cP.querySelector('.vv'),cD.querySelector('.vv')], old=cP.querySelector('.old');
+  // a corrente entre as duas, na altura do preço, com o +4%
+  const CY=TOP+26+56+20+1+6+60;                              // meio da linha do preço
+  const X0=XL+CW, X1=XR, LW=50, PASSO=(X1-X0-LW)/7;
+  const elos=[0,1,2,3,4,5,6,7].map(i=>el(`<div class="ab" style="left:${(X0+i*PASSO).toFixed(1)}px;top:${CY-(i%2?6:14)}px;width:${LW}px;height:${i%2?12:28}px;
+      border-radius:14px;${i%2?'background:#9AA3AD':'border:7px solid #9AA3AD'}"></div>`,g));
+  const mais=el(`<div class="ab" style="left:${X0}px;top:${CY-92}px;width:${X1-X0}px;text-align:center"><span class="tag v" style="font-size:24px">+4%</span></div>`,g);
+  const trilho=el(`<svg class="ab" style="left:0;top:0;overflow:visible" width="1280" height="800"><path d="M${X0-14},${CY} L${X1+14},${CY}" fill="none" stroke="none"/></svg>`,g).querySelector('path');
+  const pt=[0,1].map(()=>el('<div class="ab" style="left:0;top:0;width:20px;height:20px;border-radius:50%;background:var(--v);border:3px solid #fff;box-shadow:0 2px 6px rgba(16,24,40,.25);opacity:0;z-index:4"></div>',g));
+  let A=null;
+  return (t,J)=>{
+    if(!A)A={vi:W(3,'vinculada'),qu:W(3,'quer'),ac:W(3,'acompanha'),pr:W(3,'principal'),m1:W(3,'muda',1),
+      co:W(3,'cobre'),m2:W(3,'muda',2),aq:W(3,'aqui')};
+    posTitulo(tit,t,J[0]-.6,A.vi-.3);
+    vis(cP,t,A.vi-.1,1e9,{dx:-20,dy:0}); vis(cD,t,A.vi+.15,1e9,{dx:20,dy:0});
+    elos.forEach((e,i)=>vis(e,t,A.vi+.35+i*.06,1e9,{sc:.5,dy:0,din:.4})); vis(mais,t,A.qu-.05,1e9,{sc:.7,dy:6});
+    // acompanha a principal: o preço passa pela corrente
+    viaja(pt[0],trilho,t,A.ac-.05,.8,10); pulse(vD,t,A.ac+.65,.06,.6);
+    contorno(cP,t,A.pr-.1,'#E1E8E4','#50D088'); anel(cP,t,A.pr-.1,'rgba(80,208,136,.22)',SOMBRA,4);
+    // muda lá (como no cobre: era R$ 42,00) e muda aqui também
+    uP.style.opacity=eo(pr(t,A.m1-.05,.4)).toFixed(3); pulse(vP,t,A.m1-.05,.06,.7);
+    vis(old,t,A.co-.1,1e9,{dy:8});
+    viaja(pt[1],trilho,t,A.m2-.1,.6,10);
+    uD.style.opacity=eo(pr(t,A.aq-.1,.4)).toFixed(3); pulse(vD,t,A.aq-.1,.06,.7);
+    contorno(cD,t,A.aq-.1,'#E1E8E4','#F2B63D'); anel(cD,t,A.aq-.1,'rgba(242,182,61,.24)',SOMBRA,4);
+  };
+};
+// 7 "E quando um material tem mais de um preço possível, qual vale? Uma dica: essa é a dúvida clássica, então vale guardar
+//   a ordem. Primeiro, o preço personalizado daquele cliente ou fornecedor. Depois, a tabela escolhida no pedido. E por
+//   último, o preço do material."  (ordem do código: OrderFormInputs.tsx, inventário §9)  O pódio sobe apagado na
+//   pergunta (três preços possíveis) e cada degrau acende na sua palavra.
+S.ilu07_ordem=g=>{
+  const tit=titulo(g,'Preços','A ordem do preço');
+  const DX=[75,460,845], DH=[340,260,180], CHAO=712, DW=370;
+  const DG=[['Primeiro','Preço personalizado','do cliente ou fornecedor','#50D088','user-round'],
+            ['Depois','Tabela escolhida','no pedido','#A9E9C6','table-2'],
+            ['Por último','Preço do material','','#EAF8F0','package']];
+  const chao=el(`<div class="ab" style="left:56px;top:${CHAO}px;width:1168px;height:4px;border-radius:2px;background:#DDE2E7"></div>`,g);
+  const deg=DG.map(([k,l,s,c,i],j)=>el(`<div class="deg" style="left:${DX[j]}px;top:${CHAO-DH[j]}px;width:${DW}px;height:${DH[j]}px">
+      <div class="dk">${k}</div><div class="dl">${l}</div>${s?`<div class="ds">${s}</div>`:''}
+      <span class="dic" style="position:absolute;right:22px;bottom:20px;opacity:0">${ic(i,46,'#14532D')}</span></div>`,g));
+  const txt=deg.map(d=>[...d.querySelectorAll('.dk,.dl,.ds')]), dic=deg.map(d=>d.querySelector('.dic'));
+  const bolas=DG.map(()=>el(`<div class="bola" style="left:0;top:0;width:76px;height:76px">${ic('tag',34)}</div>`,g));
+  let A=null;
+  return (t,J)=>{
+    if(!A)A={ma:W(7,'material',1),qu:W(7,'qual'),p1:W(7,'primeiro'),cl:W(7,'cliente'),de:W(7,'depois'),pe:W(7,'pedido'),ul:W(7,'ultimo')};
+    posTitulo(tit,t,J[0]-.6,A.ma-.3);
+    // mais de um preço possível: o pódio sobe apagado, com uma etiqueta de preço em cada degrau
+    vis(chao,t,A.ma-.2,1e9,{dy:0});
+    deg.forEach((d,i)=>{const s=eio(pr(t,A.ma-.1+i*.12,.8));d.style.transform=`scaleY(${s.toFixed(4)})`;d.style.opacity=s>0?1:0;
+      const b=bolas[i];b.style.transform=`translate(${(DX[i]+DW/2-38).toFixed(2)}px,${(CHAO-DH[i]-90).toFixed(2)}px)`;
+      b.style.opacity=eo(pr(t,A.ma+.55+i*.15,.4)).toFixed(3)});
+    // qual vale? as etiquetas pulsam uma depois da outra
+    bolas.forEach((b,i)=>pulse(b,t,A.qu-.05+i*.22,.12,.5));
+    // cada degrau acende na sua palavra (o primeiro mais forte)
+    [A.p1,A.de,A.ul].forEach((a,i)=>{luz(deg[i],'background',t,a-.1,'#F2F4F7',DG[i][3]);
+      contorno(deg[i],t,a-.1,'#E1E8E4',i===2?'#CFEBDD':DG[i][3]);
+      vis(txt[i][0],t,a,1e9,{dy:8}); vis(txt[i][1],t,a+.18,1e9,{dy:8}); dic[i].style.opacity=(.55*eo(pr(t,a+.3,.45))).toFixed(3);
+      contorno(bolas[i],t,a-.1,'#E1E8E4','#50D088'); luz(bolas[i],'color',t,a-.1,'#9AA3AD','#2E7D57'); pulse(bolas[i],t,a-.1,.1,.6)});
+    if(txt[0][2])vis(txt[0][2],t,A.cl-.2,1e9,{dy:8});
+    if(txt[1][2])vis(txt[1][2],t,A.pe-.2,1e9,{dy:8});
+  };
+};
+
+// ================================================================== cap08 · Transferir entre materiais (linha 3)
+// 3 "Agora, transferir. Na desmontagem dos radiadores saíram oito quilos de ferro, das cintas e dos suportes. Esse peso
+//   entrou como radiador, mas é ferro misto."  (o selo "o peso total não muda" é da linha 5, que é tela: ficou de fora)
+S.ilu08_transferir=g=>{
+  const tit=titulo(g,'Estoque','Transferir entre materiais');
+  const CY=430, PX=1010;                                       // altura do radiador; centro do monte de Ferro misto
+  const svg=el(`<svg class="ab" style="left:0;top:0;overflow:visible" width="1280" height="800">
+      <line class="chao" x1="70" y1="${CY+128}" x2="1210" y2="${CY+128}" stroke="#DDE2E7" stroke-width="4" stroke-linecap="round"/>
+      <g class="fm">${''}</g>
+      <g class="rad"><g class="nuc">
+        <rect x="-120" y="-98" width="240" height="22" rx="7" fill="#A8693F"/><rect x="-120" y="76" width="240" height="22" rx="7" fill="#A8693F"/>
+        <rect x="-110" y="-76" width="220" height="152" fill="#D08A55"/>
+        ${Array.from({length:24},(_,i)=>`<line x1="${-104+i*9}" y1="-76" x2="${-104+i*9}" y2="76" stroke="#B0703F" stroke-width="3"/>`).join('')}
+        ${[-44,0,44].map(y=>`<line x1="-110" y1="${y}" x2="110" y2="${y}" stroke="#E7A673" stroke-width="3"/>`).join('')}
+        <rect x="70" y="-112" width="22" height="16" rx="4" fill="#9C5B33"/><rect x="-92" y="96" width="22" height="16" rx="4" fill="#9C5B33"/></g></g>
+    </svg>`,g);
+  const rad=svg.querySelector('.rad');
+  // as peças de ferro (cintas e suportes), cada uma com o seu transform no palco
+  const ferro=[
+    ['<rect x="-7" y="-104" width="14" height="208" rx="4"/>',[-128,0,0]],   // cinta esquerda (montada: em volta do núcleo)
+    ['<rect x="-7" y="-104" width="14" height="208" rx="4"/>',[128,0,0]],    // cinta direita
+    ['<path d="M-32,-12 h64 v12 h-52 v24 h-12 z"/>',[-84,112,0]],           // suporte esquerdo
+    ['<path d="M32,-12 h-64 v12 h52 v24 h12 z"/>',[84,112,0]]];             // suporte direito
+  const pecas=ferro.map(([f])=>{const p=document.createElementNS('http://www.w3.org/2000/svg','g');p.setAttribute('fill','#6F7983');
+    p.innerHTML=f;svg.appendChild(p);return p});
+  // monte de Ferro misto (cinzas)
+  const fm=svg.querySelector('.fm');
+  fm.innerHTML=`<g transform="translate(${PX-130},${CY+8})">${monte(['#6F7983','#4F5861','#9AA3AD','#5E6670','#8A949E','#7E8994','#68727D','#A3ACB5']).replace(/^<svg[^>]*>|<\/svg>$/g,'')}</g>`;
+  const chR=el(`<div class="ab" style="left:0;top:${CY+152}px;width:400px;text-align:center"><span class="tag v">Radiador de cobre</span></div>`,g);
+  const chF=el(`<div class="ab" style="left:${PX-200}px;top:${CY+152}px;width:400px;text-align:center"><span class="tag a">Ferro misto</span></div>`,g);
+  const kgc=el(`<div class="ab" style="left:0;top:0"><span class="tag n" style="background:#fff;border:2px solid #9AA3AD">${ic('weight',20)}${kg(8)} de ferro</span></div>`,g);
+  const sT=seta(g,`M772,${CY+20} C820,${CY-70} 880,${CY-70} 900,${CY-6}`,'#50D088',4);
+  // posições das peças: montada → separada → pilha ao lado → em cima do Ferro misto
+  const SEP=[[-176,0,0],[176,0,0],[-120,148,0],[120,148,0]];
+  const PIL=[[262,96,90],[262,78,90],[236,52,0],[292,52,0]];   // relativas ao centro do radiador
+  const FIM=[[PX-34,CY+36,90],[PX+26,CY+22,92],[PX-28,CY+4,-14],[PX+50,CY+8,12]];
+  let A=null;
+  return (t,J)=>{
+    if(!A)A={tr:W(3,'transferir'),de:W(3,'desmontagem'),ra:W(3,'radiadores'),sa:W(3,'sairam'),qu:W(3,'quilos'),fe:W(3,'ferro',1),
+      ci:W(3,'cintas'),su:W(3,'suportes'),en:W(3,'entrou'),rd:W(3,'radiador'),ma:W(3,'mas'),f2:W(3,'ferro',2),mi:W(3,'misto')};
+    posTitulo(tit,t,J[0]-.6,A.de-.35);
+    // o radiador entra no centro; vai para a esquerda quando entra o Ferro misto
+    const op=eo(pr(t,A.de-.15,.5)); rad.style.opacity=op; svg.querySelector('.chao').style.opacity=op;
+    const sh=eio(pr(t,A.fe-.15,.8)), cx=lerp(640,360,sh);
+    rad.setAttribute('transform',`translate(${cx.toFixed(2)},${CY})`);
+    chR.style.left=(cx-200).toFixed(2)+'px'; vis(chR.firstElementChild,t,A.ra-.1,1e9,{dy:8});
+    fm.style.opacity=eo(pr(t,A.fe+.15,.5)); vis(chF,t,A.fe+.3,1e9,{dy:8});
+    // desmontagem: as peças de ferro se soltam (radiadores), vão para a pilha ao lado (saíram), e depois para o Ferro misto
+    const s1=eio(pr(t,A.ra-.1,.7)), s2=eio(pr(t,A.sa,.8)), s3=eio(pr(t,A.f2-.25,.95));
+    pecas.forEach((p,i)=>{const H=ferro[i][1],Sp=SEP[i],P=PIL[i],F=FIM[i];
+      let x=lerp(H[0],Sp[0],s1),y=lerp(H[1],Sp[1],s1),r=0;
+      x=lerp(x,P[0],s2);y=lerp(y,P[1],s2)-(i%2?60:190)*4*s2*(1-s2);r=lerp(0,P[2],s2);
+      let X=cx+x,Y=CY+y; X=lerp(X,F[0],s3);Y=lerp(Y,F[1],s3)-150*4*s3*(1-s3);r=lerp(r,F[2],s3);
+      p.setAttribute('transform',`translate(${X.toFixed(2)},${Y.toFixed(2)}) rotate(${r.toFixed(2)})`);p.style.opacity=op;
+      const destaque=i<2?eo(pr(t,A.ci-.1,.4))*(1-eo(pr(t,A.ci+.9,.5))):eo(pr(t,A.su-.1,.4))*(1-eo(pr(t,A.su+.9,.5)));
+      p.setAttribute('fill',mix('#6F7983','#2E7D57',destaque))});
+    // 8 kg de ferro: o rótulo segue a pilha
+    const kx=lerp(cx+262,PX,s3)-104, ky=lerp(CY-6,CY-58,s3)-150*4*s3*(1-s3)*.6;
+    kgc.style.left=kx.toFixed(2)+'px'; kgc.style.top=ky.toFixed(2)+'px'; vis(kgc.firstElementChild,t,A.fe-.25,1e9,{dy:8});
+    // esse peso entrou como radiador: o rótulo do radiador acende
+    pulse(chR.firstElementChild,t,A.rd-.1,.06,.8); anel(chR.firstElementChild,t,A.en-.1,'rgba(80,208,136,.30)','0 0 0 0 transparent',4);
+    // mas é ferro misto: a seta e a viagem
+    setaR(sT,t,A.ma-.15,.5); pulse(chF.firstElementChild,t,A.mi-.1,.07,.8);
+    anel(chF.firstElementChild,t,A.mi-.1,'rgba(242,182,61,.32)','0 0 0 0 transparent',4);
+  };
+};
+
+// ================================================================== cap10 · Excluir é arquivar (linha 0)
+// 0 "Por último, o Excluir. Ele parece apagar, mas na verdade arquiva. O material sai da lista e das buscas do pedido, e as
+//   compras, as vendas e o histórico dele continuam lá."  (a linha "Exclusão" que zera o estoque é da linha 1, que é tela)
+S.ilu10_arquivar=g=>{
+  const tit=titulo(g,'Materiais','Excluir é arquivar');
+  const LX=80,LY=262,RW=400,OY=LY-200;                       // OY: tudo desce junto com a lista
+  const lista=el(`<div class="card" style="left:${LX}px;top:${LY}px;width:${RW}px;height:300px;padding:22px 24px">
+      <div class="row" style="gap:12px;height:40px">${ic('list',26,'#4B5563')}<div style="font-weight:800;font-size:22px">Lista e buscas</div>
+        <span class="lupa" style="margin-left:auto">${ic('search',24,'#6B7280')}</span></div>
+      <div style="margin-top:14px;height:1px;background:#E6E9EE"></div></div>`,g);
+  const lupa=lista.querySelector('.lupa');
+  const ROWY=i=>LY+22+40+15+12+i*66;
+  const lin=[['Ferro misto','#64748B'],['Cobre mel','#C2410C']].map(([n,c],i)=>el(`<div class="ficha" style="left:${LX+18}px;top:${ROWY(i)}px;width:${RW-36}px;box-shadow:none">
+      <span class="dot" style="background:${c}"></span>${n}</div>`,g));
+  const vaga=el(`<div class="ab" style="left:${LX+18}px;top:${ROWY(2)}px;width:${RW-36}px;height:58px;border:2px dashed #CBD2D9;border-radius:14px;opacity:0"></div>`,g);
+  // apagar (riscado) × arquiva
+  const lix=el(`<div class="ab row" style="left:556px;top:${206+OY}px;gap:14px"><div class="lixc" style="position:relative;width:76px;height:76px;border-radius:50%;background:#F2F4F7;
+      display:flex;align-items:center;justify-content:center">${ic('trash-2',36,'#6B7280')}
+      <svg class="ab" style="left:0;top:0;overflow:visible" width="76" height="76"><path class="risco" d="M14,62 L62,14" fill="none" stroke="#8A5A00" stroke-width="6" stroke-linecap="round"/></svg></div>
+      <div class="lbl" style="font-size:20px">apagar</div></div>`,g);
+  const risco=lix.querySelector('.risco'), lixc=lix.querySelector('.lixc');
+  const AW=320,AX=556,AY=312+OY;
+  const arq=el(`<div class="card" style="left:${AX}px;top:${AY}px;width:${AW}px;height:188px;padding:20px 22px">
+      <div class="row" style="gap:14px"><div class="ico" style="width:52px;height:52px">${ic('archive',28)}</div>
+        <div style="font-weight:800;font-size:23px;color:#2E7D57">arquiva</div></div></div>`,g);
+  // o radiador: sai da lista e entra no arquivo (menor, apagadinho)
+  const rad=el(`<div class="ficha" style="left:0;top:0;width:${RW-36}px;transform-origin:0 0"><span class="dot" style="background:#0F766E"></span>Radiador de cobre</div>`,g);
+  const ESC=(AW-44)/(RW-36);
+  // o que continua lá
+  const HX=920, HY=[236+OY,320+OY,404+OY];
+  const his=[['Compras','shopping-cart'],['Vendas','hand-coins'],['Histórico','history']].map(([n,i],k)=>el(`<div class="ficha" style="left:${HX}px;top:${HY[k]}px;width:280px">
+      ${ic(i,24,'#4B5563')}${n}<span class="ok" style="margin-left:auto;opacity:0">${ic('circle-check',26,'#2E7D57')}</span></div>`,g));
+  const oks=his.map(h=>h.querySelector('.ok'));
+  const y0=AY+94;
+  const liga=HY.map(y=>{const s=seta(g,`M${AX+AW+4},${y0} C${AX+AW+26},${y0} ${HX-26},${y+29} ${HX-6},${y+29}`,'#C9D1D8',3);s.h.remove();return s});
+  let A=null;
+  return (t,J)=>{
+    if(!A)A={ex:W(0,'excluir'),ap:W(0,'apagar'),ar:W(0,'arquiva'),sa:W(0,'sai'),bu:W(0,'buscas'),
+      co:W(0,'compras'),ve:W(0,'vendas'),hi:W(0,'historico'),cn:W(0,'continuam'),la:W(0,'la')};
+    posTitulo(tit,t,J[0]-.6,A.ex-.3);
+    vis(lista,t,A.ex-.1,1e9,{dx:-20,dy:0}); lin.forEach((e,i)=>vis(e,t,A.ex+.05+i*.08,1e9,{dx:-20,dy:0}));
+    // o radiador: na lista (acende em "Excluir"), depois voa para o arquivo
+    const qa=eio(pr(t,A.sa-.15,.9));
+    const x=lerp(LX+18,AX+22,qa), y=lerp(ROWY(2),AY+94,qa)-90*4*qa*(1-qa), s=lerp(1,ESC,qa);
+    const ent=eo(pr(t,A.ex+.2,.45));
+    rad.style.transform=`translate(${(x-20*(1-ent)).toFixed(2)}px,${y.toFixed(2)}px) scale(${s.toFixed(4)})`;
+    rad.style.opacity=ent.toFixed(3);
+    rad.style.background=qa>0?mix('#FFF5DF','#F6F7F9',qa):mix('#FFFFFF','#FFF5DF',eo(pr(t,A.ex+.5,.45)));
+    vaga.style.opacity=eo(pr(t,A.sa+.1,.4)).toFixed(3);
+    // parece apagar, mas arquiva
+    vis(lix,t,A.ap-.1,1e9,{dy:10}); traco(risco,t,A.ar-.15,.4); lixc.style.opacity=lerp(1,.5,eo(pr(t,A.ar+.2,.5))).toFixed(3);
+    vis(arq,t,A.ar-.05,1e9,{dy:14}); contorno(arq,t,A.ar+.2,'#E1E8E4','#50D088');
+    pulse(lupa,t,A.bu-.1,.18,.7);
+    // as compras, as vendas e o histórico continuam lá
+    [A.co,A.ve,A.hi].forEach((a,i)=>vis(his[i],t,a-.1,1e9,{dx:16,dy:0}));
+    liga.forEach((l,i)=>traco(l.p,t,A.cn-.15+i*.1,.5));
+    oks.forEach((o,i)=>{o.style.opacity=eo(pr(t,A.cn+.2+i*.15,.4)).toFixed(3)});
+    pulse(rad,t,A.la-.1,.04,.8);
+  };
+};
+
+// ------------------------------------------------------------------ capítulos
+const CAPS={};
+CAPS[0]=()=>capitulo('ilu00_cardapio');
+CAPS[1]=()=>capitulo('ilu01_totais');
+CAPS[3]=()=>capitulo('ilu03_codigo');
+CAPS[4]=()=>capitulo('ilu04_ncm','ilu04_nomefiscal','ilu04_onde');
+CAPS[5]=()=>capitulo('ilu05_gavetas');
+CAPS[7]=()=>capitulo('ilu07_vinculada','ilu07_ordem');
+CAPS[8]=()=>capitulo('ilu08_transferir');
+CAPS[10]=()=>capitulo('ilu10_arquivar');
+
+// ------------------------------------------------------------------ API para o renderizador
+let RENDER=null;
+window.setup=d=>{D=d;ST.innerHTML='';RENDER=CAPS[d.cap]();return true};
+window.R=t=>{RENDER(t);return true};
+</script></body></html>

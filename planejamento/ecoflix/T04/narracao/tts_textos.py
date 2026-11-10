@@ -91,7 +91,7 @@ Na cooperativa, o frete das entregas de outubro, quatrocentos e cinquenta reais,
 Elas aparecem aqui quando a despesa ou a receita é lançada com o nome do parceiro.
 E em Notas fiscais ficam as notas desse parceiro. A cooperativa ainda não tem nenhuma. A emissão de nota depende do plano contratado e tem um tutorial só dela.""",
 12: """Pra fechar, a pergunta do dia a dia: quem te deve, e quanto? Lá em cima, Relatório.
-Em A Receber fica tudo que vai entrar: cinco mil cento e setenta reais.
+Em A Receber fica tudo que vai entrar: dezenove mil quinhentos e quarenta reais. A maior parte é da Fundição Bandeira do Vale, que comprou cobre em três vezes.
 A Aços Quiririm é cliente, com saldo positivo e verde: ela te deve quatro mil oitocentos e setenta reais.
 O Valdir é fornecedor, com saldo negativo, também verde. A Recicla adiantou trezentos reais pra ele, e ele paga em sucata.
 Em A Pagar fica o que vai sair: três mil seiscentos e noventa reais.

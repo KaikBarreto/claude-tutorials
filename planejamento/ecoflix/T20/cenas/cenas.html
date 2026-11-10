@@ -1,0 +1,726 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<!-- T20 · Portal do Cliente e Fornecedor: as ilustrações de conceito, no kit da EcoFlix (perfis/ecoflix/cenas/cenas_ecoflix.html;
+     docs/09-aula-ilustrada.md, "Ilustração de conceito no meio do capítulo"). 1280x800 CSS, window.setup(dados) + window.R(t);
+     tudo é função do tempo e cada mudança fica presa a uma palavra com W(linha, 'palavra'). Uma janela por cena (ilustracoes.json);
+     até a voz chegar, os tempos são os estimados de tempos/capNN.json.
+     Cenas: CAPS[0] do print ao link · CAPS[1] até onde vai o acesso · CAPS[2] quem tem o link, entra · CAPS[3] cliente e
+     fornecedor (vale o que esconde mais) · CAPS[4] cada aba, três jeitos · CAPS[6] um saldo, dois lados · CAPS[8] quem pede e
+     quem decide · CAPS[10] fotos no pedido (fala 0 e 1) e dois links diferentes (fala 5 e 6).
+     Celular e computador genéricos, com a tela lisa: a página do portal nunca é desenhada (é tela do app). Sem logo nem marca. -->
+<style>
+@font-face{font-family:M;font-weight:500;src:url(../../../web/fonts/montserrat-latin-500-normal.woff2) format('woff2')}
+@font-face{font-family:M;font-weight:600;src:url(../../../web/fonts/montserrat-latin-600-normal.woff2) format('woff2')}
+@font-face{font-family:M;font-weight:700;src:url(../../../web/fonts/montserrat-latin-700-normal.woff2) format('woff2')}
+@font-face{font-family:M;font-weight:800;src:url(../../../web/fonts/montserrat-latin-800-normal.woff2) format('woff2')}
+@font-face{font-family:M;font-weight:500;src:url(../../../web/fonts/montserrat-latin-ext-500-normal.woff2) format('woff2');unicode-range:U+0100-024F}
+@font-face{font-family:M;font-weight:700;src:url(../../../web/fonts/montserrat-latin-ext-700-normal.woff2) format('woff2');unicode-range:U+0100-024F}
+/* ---------------------------------------------------------------- paleta EcoFlix (marca: acento #50D088, escuro #121212)
+   --v  acento: preenchimentos, barras, contornos de destaque (nunca texto sobre branco: contraste baixo)
+   --ve verde escuro: texto e ícone verde sobre branco (contraste 5,0)   --vc verde claro: fundo de ícone/resultado
+   --a  âmbar: o SEGUNDO conceito da cena (ex.: competência x caixa)     --ae texto âmbar (5,9)   --ac âmbar claro
+   --t  texto (o escuro da marca)   --c texto secundário (4,8)   --l linhas   --e painel escuro (mostrador) */
+:root{--v:#50D088;--ve:#2E7D57;--vc:#EAF8F0;--vm:#A9E9C6;--a:#F2B63D;--ae:#8A5A00;--ac:#FFF5DF;
+  --t:#121212;--c:#6B7280;--l:#E6E9EE;--e:#121212}
+*{box-sizing:border-box;margin:0;padding:0;transition:none!important;animation:none!important}
+html,body{width:1280px;height:800px;overflow:hidden;background:#fff}
+body{font-family:M,sans-serif;color:var(--t);-webkit-font-smoothing:antialiased}
+#st{position:absolute;inset:0;overflow:hidden;background:
+  radial-gradient(1100px 650px at 92% -12%,rgba(80,208,136,.09),transparent 62%),
+  radial-gradient(900px 600px at -12% 112%,rgba(80,208,136,.06),transparent 60%),#fff}
+.g{position:absolute;left:0;top:0;width:1280px;height:800px;transform-origin:640px 400px}
+.ab{position:absolute}
+.row{display:flex;align-items:center}
+/* título da cena: área (kicker) + conceito; sozinho fica grande no centro e sobe quando o desenho entra */
+.kick{font-weight:700;font-size:15px;letter-spacing:.3em;color:var(--ve);text-transform:uppercase}
+.h{font-weight:800;font-size:46px;letter-spacing:-.01em;line-height:1.1}
+/* cartão, chip, etiqueta, ícone */
+.card{position:absolute;background:#fff;border:1px solid #E1E8E4;border-radius:18px;
+  box-shadow:0 18px 40px rgba(16,24,40,.10),0 3px 8px rgba(16,24,40,.06)}
+.ic{display:inline-flex;align-items:center;justify-content:center;flex:none}
+.ic svg{width:100%;height:100%}
+.ico{display:flex;align-items:center;justify-content:center;flex:none;border-radius:14px;background:var(--vc);color:var(--ve)}
+.ico.a{background:var(--ac);color:var(--ae)}
+.tag{display:inline-flex;align-items:center;gap:8px;padding:9px 18px;border-radius:999px;font-weight:800;font-size:20px;white-space:nowrap}
+.tag.v{background:var(--vc);color:var(--ve)} .tag.a{background:var(--ac);color:var(--ae)}
+.lbl{font-weight:700;font-size:17px;color:var(--c)}
+.num{font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+.op{position:absolute;width:60px;height:60px;border-radius:50%;background:#F2F4F7;color:var(--t);display:flex;
+  align-items:center;justify-content:center;font-weight:800;font-size:34px;line-height:1}
+/* mostrador da balança (painel escuro, número no acento) */
+.most{background:var(--e);border-radius:16px;padding:16px 22px 18px;box-shadow:0 16px 34px rgba(16,24,40,.22)}
+.most .ml{position:relative;height:20px;font-weight:700;font-size:15px;letter-spacing:.22em;color:#A9E9C6;text-transform:uppercase}
+.most .ml span{position:absolute;left:0;top:0;white-space:nowrap}
+.most .mn{margin-top:6px;font-weight:800;font-size:44px;color:var(--v);font-variant-numeric:tabular-nums;white-space:nowrap}
+.rip{position:absolute;width:56px;height:56px;margin:-28px 0 0 -28px;border-radius:50%;border:3px solid var(--v);opacity:0}
+/* T20: rótulo embaixo do desenho, legenda curta, chips (1 a 3 palavras), balão de conversa, selo redondo */
+.rot{font-weight:800;font-size:23px;text-align:center;white-space:nowrap}
+.sub{font-weight:700;font-size:20px;color:#4B5563;text-align:center;white-space:nowrap}
+.tag.c{background:#F2F4F7;color:#4B5563}
+.chip{display:inline-flex;align-items:center;gap:9px;padding:10px 19px 10px 16px;border-radius:999px;font-weight:800;font-size:20px;
+  white-space:nowrap;background:#fff;border:1.5px solid #DDE5E0;color:var(--t);box-shadow:0 6px 14px rgba(16,24,40,.07)}
+.chip.v{background:var(--vc);border-color:var(--vm);color:var(--ve)}
+.chip.a{background:var(--ac);border-color:#F6D58E;color:var(--ae)}
+.chip.c{background:#F2F4F7;border-color:#E1E5EA;color:#4B5563}
+.chip.r{background:#FDECEA;border-color:#F6C5BF;color:#B42318}
+.bal{position:absolute;background:#fff;border:1.5px solid #DCE4DF;border-radius:18px;box-shadow:0 12px 26px rgba(16,24,40,.10)}
+.rabo{position:absolute;width:18px;height:18px;background:inherit;border-right:1.5px solid #DCE4DF;border-bottom:1.5px solid #DCE4DF}
+.badge{position:absolute;width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  box-shadow:0 6px 14px rgba(16,24,40,.16)}
+.badge.v{background:var(--vc);border:3px solid var(--v);color:var(--ve)}
+.badge.a{background:var(--ac);border:3px solid var(--a);color:var(--ae)}
+</style></head>
+<body><div id="st"></div>
+<script>
+// ------------------------------------------------------------------ utilidades (as do cenas_modelo.html + as da EcoFlix)
+const cl=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
+const eo=x=>1-Math.pow(1-cl(x),3);
+const eio=x=>{x=cl(x);return x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2};
+const pr=(t,a,d=.45)=>cl((t-a)/d);
+const lerp=(a,b,p)=>a+(b-a)*p;
+const $=s=>document.querySelector(s);
+const ST=document.getElementById('st');
+function el(html,parent=ST){const d=document.createElement('div');d.innerHTML=html.trim();let f=null;for(const n of [...d.childNodes]){parent.appendChild(n);if(!f&&n.nodeType===1)f=n}return f}
+function grupo(){return el('<div class="g"></div>')}
+function ic(n,px,cor){const s=(window.ICONS||{})[n]||'';return `<span class="ic" style="width:${px}px;height:${px}px;${cor?'color:'+cor:''}">${s}</span>`}
+function hex(c){c=c.replace('#','');return[0,2,4].map(i=>parseInt(c.substr(i,2),16))}
+function mix(a,b,p){const A=hex(a),B=hex(b);return `rgb(${A.map((v,i)=>Math.round(v+(B[i]-v)*cl(p))).join(',')})`}
+// aparece em a, some em b (opacidade + leve subida + escala): a entrada e a saída suaves de tudo
+function vis(e,t,a,b=1e9,o={}){
+  const din=o.din??.5,dout=o.dout??.4,dy=o.dy??16,dx=o.dx??0,sc=o.sc??.985;
+  const p=eo(pr(t,a,din)),q=1-eo(pr(t,b,dout)),op=Math.min(p,q);
+  e.style.opacity=op.toFixed(4);e.style.visibility=op<=.001?'hidden':'visible';
+  const s=sc+(1-sc)*p - (1-q)*(1-sc);
+  e.style.transform=`translate(${((1-p)*dx).toFixed(2)}px,${((1-p)*dy-(1-q)*dy*.5).toFixed(2)}px) scale(${s.toFixed(4)})`;
+  return op;
+}
+function ripple(r,t,a){const p=pr(t,a,.7);r.style.opacity=(p>0&&p<1)?(.6*(1-p)).toFixed(3):0;r.style.transform=`scale(${(.4+2.0*eo(p)).toFixed(3)})`}
+function pulse(e,t,a,amp=.045,dur=.9){const p=pr(t,a,dur);e.style.scale=(p>0&&p<1)?(1+amp*Math.sin(Math.PI*p)).toFixed(4):''}
+function digita(e,txt,t,a,b){const p=cl((t-a)/Math.max(.05,b-a));const n=Math.round(p*txt.length);
+  const car=(p>0&&p<1)||(Math.floor(t*2.2)%2===0&&p<1.2&&t>=a)?'<span style="color:var(--v);font-weight:500">|</span>':'';
+  e.innerHTML=(txt.slice(0,n)||'')+(t>=a&&t<b+.8?car:'');}
+// EcoFlix: números e dinheiro no jeito brasileiro; contagem suave de um número; traço que se desenha; arco; contorno
+const NF=new Intl.NumberFormat('pt-BR');
+const kg=v=>NF.format(Math.round(v))+' kg';
+const brl=v=>'R$ '+v.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
+function conta(e,t,a,d,v0,v1,fmt=kg){const p=eo(pr(t,a,d));const s=fmt(lerp(v0,v1,p));if(e.textContent!==s)e.textContent=s;return p}
+function traco(p,t,a,d=.8){if(!p._L){p._L=p.getTotalLength();p.style.strokeDasharray=p._L}const q=eio(pr(t,a,d));p.style.strokeDashoffset=(p._L*(1-q)).toFixed(2);p.style.opacity=q>0?1:0;return q}
+function arco(e,t,a,d,x0,y0,x1,y1,h=-80,rot=0){const p=eio(pr(t,a,d));const x=lerp(x0,x1,p),y=lerp(y0,y1,p)+h*4*p*(1-p);
+  e.style.transform=`translate(${x.toFixed(2)}px,${y.toFixed(2)}px) rotate(${(rot*p).toFixed(2)}deg)`;return p}
+function contorno(e,t,a,de,para,d=.45){e.style.borderColor=mix(de,para,eo(pr(t,a,d)))}
+// título padrão da cena: grande no centro enquanto está sozinho, sobe para o alto quando o desenho entra (em "sobe")
+function titulo(g,kick,txt){return el(`<div class="ab" style="left:0;top:0;width:1280px;text-align:center">
+  <div class="kick">${kick}</div><div class="h" style="margin-top:12px">${txt}</div></div>`,g)}
+function posTitulo(e,t,a,sobe,sai=1e9){vis(e,t,a,sai,{dy:14});const p=eio(pr(t,sobe,.7));
+  e.style.top=lerp(318,46,p).toFixed(2)+'px';e.style.scale=lerp(1.12,1,p).toFixed(4)}
+
+// ------------------------------------------------------------------ tempos da fala (capNN.json do proc.py ou estimado)
+let D=null;
+const norm=w=>w.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9%./-]+/g,'');
+function W(linha,palavra,n=1,campo='s'){
+  const alvo=norm(palavra);let k=0;
+  for(const w of D.words){if(w.linha===linha&&norm(w.w).replace(/[.,]$/,'')===alvo){k++;if(k===n)return w[campo]}}
+  for(const w of D.words){if(w.linha===linha&&norm(w.w).startsWith(alvo)){k++;if(k>=n)return w[campo]}}
+  console.warn('palavra não achada',linha,palavra);return L(linha);
+}
+const L=i=>(D.linhas[i]||{s:0}).s, LE=i=>(D.linhas[i]||{e:D.dur}).e;
+
+// ------------------------------------------------------------------ desenhos genéricos (sem marca)
+// caminhão de lado (frente para a direita), com a carga de sucata em pedaços (.pd) que podem ser descarregados
+function caminhao(){
+  const pd=[ // [forma, cor, centro da peça, destino no monte atrás do caminhão (deslocamento do centro e giro)]
+    ['<polygon points="28,90 44,52 88,42 100,90"/>','#8C5A3C',[64,66],[-224,148,6]],
+    ['<polygon points="82,90 102,36 146,48 154,90"/>','#6F7983',[118,63],[-318,122,12]],
+    ['<rect x="118" y="44" width="112" height="16" rx="8" transform="rotate(-8 174 52)"/>','#9AA3AD',[174,52],[-334,98,-18]],
+    ['<polygon points="148,90 170,54 212,44 232,90"/>','#A0694A',[190,67],[-425,148,-8]],
+    ['<polygon points="210,90 232,40 276,54 286,90"/>','#4F5861',[248,65],[-373,120,-10]],
+    ['<polygon points="258,90 282,60 308,66 312,90"/>','#8A949E',[285,75],[-375,148,4]],
+    ['<g><circle cx="192" cy="64" r="19"/><circle cx="192" cy="64" r="7" fill="#8A949E"/></g>','#5E6670',[192,64],[-242,155,200]],
+    ['<polygon points="40,70 60,50 84,64 64,86"/>','#B07A55',[62,68],[-307,100,30]]];
+  const pecas=pd.map(([f,c,[cx,cy],[dx,dy,r]])=>`<g class="pd" data-cx="${cx}" data-cy="${cy}" data-dx="${dx}" data-dy="${dy}" data-r="${r}" fill="${c}">${f}</g>`).join('');
+  const roda=x=>`<g class="roda" data-x="${x}" transform="translate(${x},196)"><circle r="26" fill="#1B1F24"/><circle r="12" fill="#9AA3AD"/>
+    <rect x="-2.5" y="-23" width="5" height="10" rx="2" fill="#5B636C"/><rect x="-2.5" y="13" width="5" height="10" rx="2" fill="#5B636C"/></g>`;
+  return `<svg viewBox="0 0 500 230" width="500" height="230" style="overflow:visible">
+    <g class="carga">${pecas}</g>
+    <rect x="18" y="86" width="304" height="88" rx="6" fill="#7E8994"/>
+    <rect x="16" y="82" width="308" height="11" rx="4" fill="#68727D"/>
+    <g stroke="#707A85" stroke-width="3">${[78,138,198,258].map(x=>`<line x1="${x}" y1="98" x2="${x}" y2="168"/>`).join('')}</g>
+    <path d="M334,176 L334,76 Q334,64 346,64 L412,64 L462,116 L472,121 Q480,124 480,134 L480,176 Z" fill="#2F3640"/>
+    <path d="M348,78 L406,78 L444,116 L348,116 Z" fill="#D7E5ED"/>
+    <rect x="470" y="142" width="10" height="11" rx="2" fill="#F2B63D"/>
+    <rect x="12" y="170" width="472" height="15" rx="4" fill="#23282E"/>
+    ${roda(92)}${roda(158)}${roda(416)}
+  </svg>`;
+}
+
+// ------------------------------------------------------------------ T20: desenhos genéricos que faltavam no kit
+// pessoa em pé, busto (avatar), celular e monitor com a tela lisa (nunca a página do app), escritório, galpão com fardos, chave,
+// porta que abre, QR de enfeite, folha A4 (comprovante), cupom térmico, envelope, pasta, foto de carga, chip, X, voo, pulsos.
+let UID=0; const uid=p=>`${p}${++UID}`;
+const PELE='#E8B791', CAB='#3A2B22';
+const PAP=['#C9A57C','#9B7A55'], PETc=['#A9D3E6','#6E9FB6'], LAT=['#C6CDD5','#8A949E'];
+function pessoa(cor='#5C8FD6',esc='#4A78BA',cel=false,w=80){             // 80x170 na escala 1, os pés em y 164
+  return `<svg viewBox="0 0 80 170" width="${w}" height="${(w*170/80).toFixed(1)}" style="display:block;overflow:visible">
+    <rect x="23" y="100" width="15" height="64" rx="7" fill="#3B4A5C"/><rect x="42" y="100" width="15" height="64" rx="7" fill="#3B4A5C"/>
+    <path d="M21,52 L14,98" stroke="${esc}" stroke-width="11" stroke-linecap="round" fill="none"/>
+    ${cel?'':`<path d="M59,52 L66,98" stroke="${esc}" stroke-width="11" stroke-linecap="round" fill="none"/>`}
+    <path d="M16,60 Q16,40 36,40 L44,40 Q64,40 64,60 L64,110 L16,110 Z" fill="${cor}"/>
+    ${cel?`<path d="M59,50 Q77,68 61,80" stroke="${esc}" stroke-width="11" stroke-linecap="round" fill="none"/>
+      <g transform="rotate(-14 55 64)"><rect x="46" y="48" width="18" height="31" rx="3.5" fill="#1F2630"/><rect x="48.5" y="51" width="13" height="24" rx="2" fill="#DDEFE5"/></g>`:''}
+    <circle cx="40" cy="21" r="16" fill="${PELE}"/><path d="M24,21 Q23,4 40,4 Q57,4 56,21 Q50,12 40,12 Q30,12 24,21 Z" fill="${CAB}"/>
+  </svg>`;
+}
+function busto(px,cor='#5C8FD6',fundo='#EEF1F4'){
+  return `<svg viewBox="0 0 100 100" width="${px}" height="${px}" style="display:block;flex:none"><circle cx="50" cy="50" r="50" fill="${fundo}"/>
+    <path d="M21,87 Q23,61 50,60 Q77,61 79,87 Q66,99 50,99 Q34,99 21,87 Z" fill="${cor}"/>
+    <circle cx="50" cy="38" r="17" fill="${PELE}"/><path d="M33,38 Q32,20 50,20 Q68,20 67,38 Q60,29 50,29 Q40,29 33,38 Z" fill="${CAB}"/></svg>`;
+}
+function celular(w=130){const h=Math.round(w*240/130), g=uid('cg'), c=uid('cc');   // 130x240 na escala 1
+  return `<svg viewBox="0 0 130 240" width="${w}" height="${h}" style="display:block;overflow:visible">
+    <defs><linearGradient id="${g}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F6FBF8"/><stop offset="1" stop-color="#D9EEE2"/></linearGradient>
+      <clipPath id="${c}"><rect x="8" y="10" width="114" height="220" rx="16"/></clipPath></defs>
+    <rect x="0" y="0" width="130" height="240" rx="22" fill="#1F2630"/>
+    <g clip-path="url(#${c})"><rect x="8" y="10" width="114" height="220" fill="url(#${g})"/><polygon points="80,10 114,10 30,230 -4,230" fill="#fff" opacity=".45"/></g>
+    <rect x="49" y="17" width="32" height="7" rx="3.5" fill="#1F2630"/>
+  </svg>`;
+}
+function monitor(w=340){const h=Math.round(w*250/340), g=uid('mg');           // 340x250 na escala 1
+  return `<svg viewBox="0 0 340 250" width="${w}" height="${h}" style="display:block">
+    <defs><linearGradient id="${g}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F6FBF8"/><stop offset="1" stop-color="#D9EEE2"/></linearGradient></defs>
+    <rect x="148" y="205" width="44" height="30" fill="#A8B0B9"/><rect x="104" y="232" width="132" height="14" rx="7" fill="#C3CAD2"/>
+    <rect x="0" y="0" width="340" height="212" rx="14" fill="#1F2630"/>
+    <rect x="11" y="11" width="318" height="186" rx="7" fill="url(#${g})"/>
+    <polygon points="196,11 252,11 130,197 74,197" fill="#fff" opacity=".4"/>
+  </svg>`;
+}
+function fardo(x,y,w,h,c,f){return `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="4" fill="${c}"/>
+  <rect x="${(x+w*.26).toFixed(1)}" y="${y}" width="4" height="${h}" fill="${f}"/><rect x="${(x+w*.66).toFixed(1)}" y="${y}" width="4" height="${h}" fill="${f}"/>`}
+function escritorio(w=230){                                                 // 230x230 na escala 1
+  const jan=(x,y)=>`<rect x="${x}" y="${y}" width="42" height="36" rx="3" fill="#B8D4E6"/><rect x="${x}" y="${y+16}" width="42" height="3" fill="#9DBDD2"/>`;
+  return `<svg viewBox="0 0 230 230" width="${w}" height="${w}" style="display:block">
+    <rect x="12" y="34" width="206" height="196" rx="4" fill="#E2E7EC"/><rect x="0" y="22" width="230" height="16" rx="4" fill="#BAC4CE"/>
+    ${[34,94,154].map(x=>jan(x,58)+jan(x,112)).join('')}
+    <rect x="66" y="152" width="98" height="10" rx="3" fill="#fff"/>
+    <rect x="93" y="170" width="44" height="60" rx="3" fill="#6B7A8A"/><circle cx="129" cy="202" r="3" fill="#E2E7EC"/>
+  </svg>`;
+}
+function galpao(w=290){                                                     // 290x230 na escala 1, fardos de papelão e PET
+  return `<svg viewBox="0 0 290 230" width="${w}" height="${(w*230/290).toFixed(1)}" style="display:block">
+    <path d="M16,92 L145,36 L274,92 L274,230 L16,230 Z" fill="#D3DAE1"/>
+    <path d="M0,88 L145,24 L290,88 L290,100 L145,36 L0,100 Z" fill="#7E8994"/>
+    <rect x="80" y="112" width="130" height="118" rx="3" fill="#3B4450"/>
+    ${fardo(88,192,56,38,...PAP)}${fardo(146,192,56,38,...PETc)}${fardo(104,152,56,38,...PAP)}
+    ${fardo(222,194,50,36,...PAP)}${fardo(228,158,44,34,...PETc)}
+  </svg>`;
+}
+function chave(w=200){const h=w*.4, k=w/200;                                 // a ponta para a esquerda, o elo do link na cabeça
+  return `<div style="position:relative;width:${w}px;height:${h}px">
+    <svg viewBox="0 0 200 80" width="${w}" height="${h}" style="display:block;overflow:visible">
+      <rect x="8" y="33" width="130" height="14" rx="5" fill="#3FB877"/>
+      <rect x="24" y="45" width="11" height="22" rx="2" fill="#3FB877"/><rect x="44" y="45" width="11" height="16" rx="2" fill="#3FB877"/>
+      <circle cx="160" cy="40" r="36" fill="#50D088"/><circle cx="160" cy="40" r="22" fill="#fff"/></svg>
+    <div class="ab" style="left:${(146*k).toFixed(1)}px;top:${(26*k).toFixed(1)}px">${ic('link',Math.round(28*k),'var(--ve)')}</div></div>`;
+}
+function porta(w=200,h=300){                                                // moldura, vão iluminado e a folha (abre com abre())
+  const iw=w-28, ih=h-14;
+  return `<div style="position:relative;width:${w}px;height:${h}px">
+    <div class="ab" style="left:0;top:0;width:${w}px;height:${h}px;border-radius:12px 12px 0 0;background:#5B6670"></div>
+    <div class="ab" style="left:14px;top:14px;width:${iw}px;height:${ih}px;border-radius:5px 5px 0 0;background:radial-gradient(130% 95% at 50% 100%,#C9F0DA 0,#ECF9F2 50%,#FAFDFB 100%)"></div>
+    <div class="ab folha" style="left:14px;top:14px;width:${iw}px;height:${ih}px;transform-origin:0 50%;border-radius:5px 5px 0 0;background:#E7ECF1;border:2px solid #C9D1D9">
+      <div class="ab" style="left:14%;top:7%;width:72%;height:38%;border:2px solid #D3DAE1;border-radius:6px"></div>
+      <div class="ab" style="left:14%;top:52%;width:72%;height:41%;border:2px solid #D3DAE1;border-radius:6px"></div>
+      <div class="ab" style="right:9%;top:46%;width:16px;height:16px;border-radius:50%;background:#8A949E"></div></div></div>`;
+}
+function abre(pt,p,ang=72){const f=pt.querySelector('.folha'), q=eio(p);
+  f.style.transform=`perspective(${(f.offsetWidth*4)|0}px) rotateY(${(ang*q).toFixed(2)}deg)`;f.style.filter=`brightness(${(1-.1*q).toFixed(3)})`}
+function qr(px,sem=7){let s=sem>>>0;const r=()=>(s=(Math.imul(s,1664525)+1013904223)>>>0)/4294967296;const N=21;let q='';
+  const fz=(x,y)=>(x<8&&y<8)||(x>N-9&&y<8)||(x<8&&y>N-9);
+  for(let y=0;y<N;y++)for(let x=0;x<N;x++)if(!fz(x,y)&&r()<.47)q+=`<rect x="${x+1}" y="${y+1}" width="1" height="1"/>`;
+  const f=(x,y)=>`<rect x="${x+1}" y="${y+1}" width="7" height="7"/><rect x="${x+2}" y="${y+2}" width="5" height="5" fill="#fff"/><rect x="${x+3}" y="${y+3}" width="3" height="3"/>`;
+  return `<svg viewBox="0 0 ${N+2} ${N+2}" width="${px}" height="${px}" shape-rendering="crispEdges" style="display:block"><rect width="${N+2}" height="${N+2}" fill="#fff"/><g fill="#1F2630">${q}${f(0,0)}${f(N-7,0)}${f(0,N-7)}</g></svg>`;
+}
+const barra=(x,y,w,c='#E1E6EB',h=7)=>`<div class="ab" style="left:${x}px;top:${y}px;width:${w}px;height:${h}px;border-radius:4px;background:${c}"></div>`;
+function folhaA4(w=200){const h=Math.round(w*1.414);let lin='';            // comprovante A4 genérico, com o QR embaixo
+  for(let i=0;i<5;i++){const y=90+i*19;lin+=barra(18,y,Math.round(w*.42))+barra(Math.round(w*.64),y,Math.round(w*.22))}
+  return `<div style="position:relative;width:${w}px;height:${h}px;background:#fff;border:1px solid #E1E6EB;border-radius:6px;box-shadow:0 14px 30px rgba(16,24,40,.12)">
+    <div class="ab" style="left:18px;top:18px;width:36px;height:36px;border-radius:9px;background:var(--vc)"></div>
+    ${barra(64,22,Math.round(w*.5),'#CBD3DB',9)}${barra(64,39,Math.round(w*.34))}${barra(18,68,w-36,'#F1F4F7',11)}${lin}
+    ${barra(Math.round(w*.42),190,Math.round(w*.58)-18,'#CBD3DB',10)}
+    <div class="ab qrA" style="right:16px;bottom:16px">${qr(Math.round(w*.34),11)}</div></div>`;
+}
+function cupom(w=170,h=300){let z=`M0,0 L${w},0 L${w},${h-8}`;                 // cupom térmico do caixa, com o QR e "Ver no portal"
+  const n=Math.round(w/14);for(let i=1;i<=n;i++)z+=` L${(w-i*w/n+w/n/2).toFixed(1)},${i%2?h:h-8} L${(w-i*w/n).toFixed(1)},${h-8}`;
+  let lin='';for(let i=0;i<4;i++)lin+=barra(16,62+i*17,Math.round(w*(.5+.08*(i%2))))+barra(w-16-34,62+i*17,34);
+  return `<div style="position:relative;width:${w}px;height:${h}px;filter:drop-shadow(0 12px 18px rgba(16,24,40,.16))">
+    <svg class="ab" style="left:0;top:0" width="${w}" height="${h}"><path d="${z} Z" fill="#fff"/></svg>
+    ${barra(Math.round(w*.25),20,Math.round(w*.5),'#CBD3DB',9)}${barra(Math.round(w*.32),36,Math.round(w*.36))}${lin}
+    ${barra(16,138,w-32,'#CBD3DB',8)}
+    <div class="ab qrC" style="left:${Math.round((w-90)/2)}px;top:${h-146}px">${qr(90,23)}</div>
+    <div class="ab" style="left:0;top:${h-46}px;width:${w}px;text-align:center;font-weight:800;font-size:17px">Ver no portal</div></div>`;
+}
+function envelope(w=300){const k=w/300;                                     // envelope aberto com um pedido só (uma folha com foto)
+  return `<svg viewBox="0 -60 300 246" width="${w}" height="${Math.round(246*k)}" style="display:block;overflow:visible">
+    <path d="M0,48 L150,-24 L300,48 Z" fill="#BDE8CF"/>
+    <rect x="0" y="40" width="300" height="146" rx="12" fill="#CDEFD9"/>
+    <rect x="52" y="-44" width="196" height="150" rx="8" fill="#fff" stroke="#DCE3E8" stroke-width="2"/>
+    <rect x="72" y="-26" width="70" height="54" rx="5" fill="#E3EEF5"/><path d="M76,24 L98,0 L114,14 L124,6 L138,24 Z" fill="#9FB8C8"/>
+    <circle cx="128" cy="-12" r="6" fill="#F2B63D"/>
+    <rect x="154" y="-24" width="78" height="9" rx="4" fill="#CBD3DB"/><rect x="154" y="-6" width="60" height="7" rx="3.5" fill="#E1E6EB"/>
+    <rect x="154" y="10" width="70" height="7" rx="3.5" fill="#E1E6EB"/>
+    <path d="M0,70 L150,138 L300,70 L300,174 Q300,186 288,186 L12,186 Q0,186 0,174 Z" fill="#DDF3E6"/>
+    <path d="M0,174 L130,104 M300,174 L170,104" stroke="#BDE8CF" stroke-width="3" fill="none"/>
+  </svg>`;
+}
+function pasta(w=380){const k=w/380;                                        // pasta grossa: várias folhas por cima da frente
+  let fl='';[[34,34,312],[52,22,280],[70,12,250],[96,4,210]].forEach(([x,y,ww])=>{fl+=`<rect x="${x}" y="${y+18}" width="${ww}" height="120" rx="6" fill="#fff" stroke="#DCE3E8" stroke-width="2"/>`});
+  return `<svg viewBox="0 0 380 304" width="${w}" height="${Math.round(304*k)}" style="display:block;overflow:visible">
+    <path d="M0,40 Q0,28 12,28 L118,28 Q126,28 132,36 L144,52 L368,52 Q380,52 380,64 L380,292 Q380,304 368,304 L12,304 Q0,304 0,292 Z" fill="#BFE8D0"/>
+    ${fl}
+    <path d="M0,96 Q0,84 12,84 L368,84 Q380,84 380,96 L380,292 Q380,304 368,304 L12,304 Q0,304 0,292 Z" fill="#DDF3E6" stroke="#A9E9C6" stroke-width="2"/>
+  </svg>`;
+}
+function foto(tipo,w=120){const h=Math.round(w*.76), c={papelao:PAP,pet:PETc,latinha:LAT}[tipo];   // foto da carga (fardos)
+  return `<div style="width:${w}px;height:${h}px;background:#fff;border-radius:9px;padding:6px;box-shadow:0 8px 18px rgba(16,24,40,.16)">
+    <svg viewBox="0 0 108 70" width="${w-12}" height="${h-12}" preserveAspectRatio="xMidYMid slice" style="display:block;border-radius:5px">
+      <rect width="108" height="70" fill="#E3EEF5"/><rect y="50" width="108" height="20" fill="#CDD3CB"/>
+      ${fardo(10,30,30,22,...c)}${fardo(42,30,30,22,...c)}${fardo(26,9,30,22,...c)}${fardo(74,34,26,18,...c)}</svg></div>`;
+}
+function chip(txt,cls='',icone=null,px=22){return `<div class="chip ${cls}">${icone?ic(icone,px):''}${txt}</div>`}
+// o "x" do lucide tem nome de uma letra e o render_cenas.cjs só acha nomes com 2 ou mais: o X vai desenhado
+function xis(px){return `<svg viewBox="0 0 24 24" width="${px}" height="${px}" style="display:block"><path d="M6 6 L18 18 M18 6 L6 18" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>`}
+// voo em arco (canto de cima do elemento), sem mexer na opacidade
+function voo(t,a,d,x0,y0,x1,y1,h=-100){const p=eio(pr(t,a,d));return [lerp(x0,x1,p),lerp(y0,y1,p)+h*4*p*(1-p),p]}
+function poe(e,x,y,s=1,op=1,rot=0){e.style.opacity=op.toFixed(4);e.style.visibility=op<=.001?'hidden':'visible';
+  e.style.transform=`translate(${x.toFixed(2)}px,${y.toFixed(2)}px) rotate(${rot.toFixed(2)}deg) scale(${s.toFixed(4)})`}
+// vários pulsos no mesmo elemento (o pulse() do kit apaga o anterior quando é chamado duas vezes no mesmo elemento)
+function pulsos(e,t,as,amp=.045,dur=.9){let s=0;for(const a of as){const p=pr(t,a,dur);if(p>0&&p<1)s=Math.max(s,amp*Math.sin(Math.PI*p))}e.style.scale=s>0?(1+s).toFixed(4):''}
+// seta larga (em bloco), revelada da esquerda para a direita: s.style.width = len * p
+function setaLarga(pai,x,y,len,alt,cor='var(--v)'){const sh=alt*.46, hl=Math.min(70,alt*.85);
+  return el(`<div class="ab" style="left:${x}px;top:${y-alt/2}px;width:0;height:${alt}px;overflow:hidden">
+    <svg width="${len}" height="${alt}" style="display:block"><path d="M${sh/2},${(alt-sh)/2} L${len-hl},${(alt-sh)/2} L${len-hl},0 L${len},${alt/2}
+      L${len-hl},${alt} L${len-hl},${(alt+sh)/2} L${sh/2},${(alt+sh)/2} A${sh/2},${sh/2} 0 0 1 ${sh/2},${(alt-sh)/2} Z" fill="${cor}"/></svg></div>`,pai);
+}
+
+const CAPS={};
+// ------------------------------------------------------------------ CAPS[0] · Do print ao link (fala 0 a 2)
+// 0 "Oi! Neste tutorial a gente vai parar de mandar print pro parceiro no WhatsApp." 1 "Toda semana, a Cooperativa Recomeço
+// pergunta quanto tem pra receber da Recicla Vale Metais. E alguém do escritório para tudo pra tirar print." 2 "Com o portal,
+// ela abre um link e vê tudo sozinha: os pedidos, o saldo, as notas e o relatório."
+CAPS[0]=()=>{
+  const g=grupo();
+  const tit=titulo(g,'Portal','Do print ao link');
+  const chao=el('<div class="ab" style="left:40px;top:648px;width:1200px;height:4px;border-radius:2px;background:#DDE2E7"></div>',g);
+  const esc=el(`<div class="ab" style="left:40px;top:368px">${escritorio(280)}</div>`,g);         // 40-320, 368-648
+  const coop=el(`<div class="ab" style="left:886px;top:370px">${galpao(350)}</div>`,g);           // 886-1236, 370-648
+  const rE=el('<div class="ab rot" style="left:0;top:666px;width:360px">Recicla Vale Metais</div>',g);
+  const rC=el('<div class="ab rot" style="left:881px;top:666px;width:360px">Cooperativa Recomeço</div>',g);
+  const pes=el(`<div class="ab" style="left:324px;top:443px">${pessoa('#5C8FD6','#4A78BA',true,100)}</div>`,g);   // pés em 648
+  const flash=el(`<div class="ab" style="left:338px;top:468px;width:110px;height:110px;border-radius:50%;opacity:0;
+    background:radial-gradient(circle,#fff 0,#fff 22%,rgba(80,208,136,.55) 44%,rgba(80,208,136,0) 70%)"></div>`,g);
+  const perg=el(`<div class="bal" style="left:911px;top:228px;width:300px;padding:16px 20px;text-align:center;font-weight:800;font-size:23px;line-height:1.3">
+      Quanto eu tenho<br>pra receber?<div class="rabo" style="left:141px;bottom:-10px;transform:rotate(45deg)"></div></div>`,g);
+  const mkPrint=()=>el(`<div class="ab" style="left:0;top:0;width:196px;height:144px;visibility:hidden">
+      <div class="bal" style="left:0;top:0;width:196px;height:144px;padding:13px">
+        <div style="position:relative;width:167px;height:115px;border-radius:10px;background:#F1F4F7;border:1px solid #E1E6EB;overflow:hidden">
+          <div style="height:19px;background:#E3E8EE"></div>
+          <div style="margin:13px 0 0 14px;height:9px;width:104px;border-radius:5px;background:#C8D0D8"></div>
+          <div style="margin:9px 0 0 14px;height:9px;width:134px;border-radius:5px;background:#D9DFE5"></div>
+          <div style="margin:9px 0 0 14px;height:9px;width:76px;border-radius:5px;background:#D9DFE5"></div>
+          <div style="position:absolute;right:12px;bottom:11px;width:48px;height:18px;border-radius:6px;background:#BFE9D2"></div></div>
+        <div class="rabo" style="left:20px;bottom:-10px;transform:rotate(45deg)"></div></div></div>`,g);
+  const PR=[mkPrint(),mkPrint(),mkPrint(),mkPrint()];
+  const DEST=[[522,206,-7],[592,250,5],[536,302,-3],[606,346,6]];   // canto do print no monte e giro
+  const OE=[253-98,461-72], OC=[393-98,523-72], MC=[662,348];        // saída: janela do escritório, celular; centro do monte
+  const lk=el(`<div class="ab" style="left:0;top:0;width:262px;height:90px;visibility:hidden">
+      <div class="bal" style="left:0;top:0;width:262px;height:90px;padding:0 24px;display:flex;align-items:center;gap:16px;border:2px solid var(--v);background:#F4FBF7">
+        <div class="ico" style="width:54px;height:54px">${ic('link',30)}</div>
+        <div style="font-weight:800;font-size:27px;color:var(--ve)">um link</div>
+        <div class="rabo" style="left:26px;bottom:-11px;transform:rotate(45deg);border-right:2px solid var(--v);border-bottom:2px solid var(--v)"></div></div></div>`,g);
+  const LK0=[393-131,523-45], LK1=[531,262];
+  const chips=el('<div class="ab" style="left:452px;top:386px;width:420px;display:flex;flex-wrap:wrap;gap:12px;justify-content:center"></div>',g);
+  const CH=[['Pedidos','clipboard-list'],['Saldo','wallet'],['Notas','file-text'],['Relatório','chart-column']].map(([x,i])=>el(chip(x,'v',i),chips));
+
+  return t=>{
+    const t0=W(0,'Oi'), tpa=W(0,'parar'), tpr=W(0,'print'), tpc=W(0,'parceiro'), tco=W(1,'Cooperativa'), tpe=W(1,'pergunta'),
+      tre=W(1,'Recicla'), tal=W(1,'alguem'), tes=W(1,'escritorio'), tp2=W(1,'print'), tpo=W(2,'portal'), tli=W(2,'link'),
+      tch=[W(2,'pedidos'),W(2,'saldo'),W(2,'notas'),W(2,'relatorio')];
+    posTitulo(tit,t,t0-.85,tpa-.55);
+    vis(chao,t,tpa-.15,1e9,{dy:6}); vis(esc,t,tpa-.1,1e9,{dy:18}); vis(coop,t,tpr-.1,1e9,{dx:28,dy:0}); pulsos(coop,t,[tpc],.03,.8);
+    vis(rC,t,tco-.1,1e9,{dy:10}); vis(rE,t,tre-.1,1e9,{dy:10}); vis(perg,t,tpe-.05,1e9,{sc:.86,dy:14});
+    vis(pes,t,tal-.1,1e9,{dx:-20,dy:0}); pulsos(pes,t,[tes],.06,.8);
+    const fp=pr(t,tp2-.05,.55); flash.style.opacity=(fp>0&&fp<1?Math.sin(Math.PI*fp):0).toFixed(3); flash.style.transform=`scale(${(.5+1.1*fp).toFixed(3)})`;
+    // os prints: três na fala 0 (do escritório), um na fala 1 (do celular, com o flash); no "portal" eles se juntam e somem
+    const sai=[tpr-.05,tpr+.35,tpr+.75,tp2+.1], q=eio(pr(t,tpo,.6));
+    PR.forEach((e,i)=>{const o=i<3?OE:OC, [x1,y1,r]=DEST[i];
+      let [x,y,p]=voo(t,sai[i],1.0,o[0],o[1],x1,y1,-120);
+      x=lerp(x,MC[0]-98,q); y=lerp(y,MC[1]-72,q);
+      poe(e,x,y,lerp(.45,1,eo(p))*(1-.55*q),t<sai[i]?0:Math.min(eo(cl((t-sai[i])/.2)),1-q),r*p);});
+    // um link só, do celular para a cooperativa; e o que ela vê sozinha
+    const [lx,ly,lp]=voo(t,tli-.1,.9,LK0[0],LK0[1],LK1[0],LK1[1],-130);
+    poe(lk,lx,ly,lerp(.5,1,eo(lp)),t<tli-.1?0:eo(cl((t-(tli-.1))/.2)));
+    CH.forEach((c,i)=>vis(c,t,tch[i]-.12,1e9,{dy:12,sc:.88}));
+  };
+};
+
+// ------------------------------------------------------------------ CAPS[1] · Até onde vai o acesso (fala 3 e 4)
+// 3 "E até onde vai o acesso dele? O portal é só pra ver. O parceiro não muda nada no seu sistema." 4 "A única coisa que ele
+// manda é um pedido de coleta. E quem marca o dia, o horário, o motorista e o caminhão é você."
+CAPS[1]=()=>{
+  const g=grupo();
+  const tit=titulo(g,'Portal','Até onde vai o acesso');
+  const mon=el(`<div class="ab" style="left:64px;top:210px">${monitor(400)}</div>`,g);         // 64-464, 210-504
+  const cel=el(`<div class="ab" style="left:1060px;top:200px">${celular(156)}</div>`,g);      // 1060-1216, 200-488
+  const rM=el('<div class="ab rot" style="left:84px;top:522px;width:360px">Seu sistema</div>',g);
+  const rC=el('<div class="ab rot" style="left:958px;top:522px;width:360px">Parceiro</div>',g);
+  const SX=496, SL=540, SY=318;
+  const seta=setaLarga(g,SX,SY,SL,104);
+  const selo=el(`<div class="ab" style="left:${SX}px;top:${SY-24}px;width:${SL-74}px;display:flex;justify-content:center">${chip('só pra ver','','eye')}</div>`,g);
+  const nada=el(`<div class="ab" style="left:${SX}px;top:390px;width:${SL-74}px;display:flex;justify-content:center">${chip('não muda nada','c','pencil-off')}</div>`,g);
+  // a única coisa que volta: o pedido de coleta (seta fina, do celular para o sistema)
+  const volta=el(`<svg class="ab" style="left:0;top:0;overflow:visible" width="1280" height="800">
+      <path d="M1040 482 L498 482" fill="none" stroke="var(--a)" stroke-width="5" stroke-linecap="round"/>
+      <path d="M518 466 L497 482 L518 498" fill="none" stroke="var(--a)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg>`,g);
+  const [vp,vh]=volta.querySelectorAll('path');
+  const ped=el(`<div class="ab" style="left:${SX}px;top:458px;width:${SL}px;display:flex;justify-content:center">${chip('pedido de coleta','a','truck')}</div>`,g);
+  const grade=el('<div class="ab" style="left:64px;top:574px;width:400px;display:flex;flex-wrap:wrap;gap:12px;justify-content:center"></div>',g);
+  const QM=[['dia','calendar-days'],['horário','clock'],['motorista','user-round'],['caminhão','truck']].map(([x,i])=>el(chip(x,'v',i),grade));
+
+  return t=>{
+    const t0=W(3,'E'), tpo=W(3,'portal'), tso=W(3,'so'), tve=W(3,'ver'), tpa=W(3,'parceiro'), tna=W(3,'nada'), tse=W(3,'seu'),
+      tpe=W(4,'pedido'), tcl=W(4,'coleta'), tma=W(4,'marca'), tq=[W(4,'dia'),W(4,'horario'),W(4,'motorista'),W(4,'caminhao')], tvo=W(4,'voce');
+    posTitulo(tit,t,t0-.85,tpo-.55);
+    vis(mon,t,tpo-.1,1e9,{dy:18}); vis(cel,t,tpo+.05,1e9,{dy:18});
+    seta.style.width=(SL*eio(pr(t,tso-.1,.7))).toFixed(1)+'px';
+    vis(selo,t,tve-.1,1e9,{sc:.8,dy:0});
+    vis(rC,t,tpa-.1,1e9,{dy:10}); vis(nada,t,tna-.12,1e9,{dy:12}); vis(rM,t,tse-.1,1e9,{dy:10});
+    traco(vp,t,tpe-.1,.8); vh.style.opacity=eo(pr(t,tpe+.6,.2)).toFixed(3);
+    vis(ped,t,tcl-.15,1e9,{sc:.85,dy:0});
+    pulsos(mon,t,[tma,tvo],.03,.8);
+    QM.forEach((c,i)=>vis(c,t,tq[i]-.12,1e9,{dy:12,sc:.88}));
+    pulsos(rM,t,[tvo],.08,.8); rM.style.color=mix('#121212','#2E7D57',eo(pr(t,tvo,.4)));
+  };
+};
+
+// ------------------------------------------------------------------ CAPS[2] · Quem tem o link, entra (fala 4)
+// 4 "Uma dica: quem tem o link, entra. Então manda só pro contato certo da cooperativa, e evita mandar em grupo."
+CAPS[2]=()=>{
+  const g=grupo();
+  const tit=titulo(g,'Link','Quem tem o link, entra');
+  const chao=el('<div class="ab" style="left:80px;top:632px;width:420px;height:4px;border-radius:2px;background:#DDE2E7"></div>',g);
+  const pt=el(`<div class="ab" style="left:140px;top:222px">${porta(270,410)}</div>`,g);          // 140-410, 222-632
+  const rP=el('<div class="ab rot" style="left:95px;top:652px;width:360px">Cooperativa Recomeço</div>',g);
+  const chW=el('<div class="ab" style="left:0;top:0"></div>',g), ch=el(chave(230),chW);          // 230x92
+  const pc=el(`<div class="ab" style="left:888px;top:180px">${busto(176,'#5C8FD6')}</div>`,g);   // 888-1064, 180-356
+  const rPc=el('<div class="ab sub" style="left:826px;top:372px;width:300px">contato certo</div>',g);
+  const ok=el(`<div class="badge v" style="left:1020px;top:294px;width:56px;height:56px">${ic('check',30)}</div>`,g);
+  const gr=el(`<div class="bal" style="left:752px;top:446px;width:452px;height:176px;display:flex;align-items:center;justify-content:center;gap:30px">
+      ${busto(112,'#5C8FD6','#EEF1F4')}${busto(112,'#6AA7A0','#EDF4F3')}${busto(112,'#8E8AC4','#F0EFF8')}</div>`,g);
+  const rGr=el('<div class="ab sub" style="left:828px;top:638px;width:300px">em grupo</div>',g);
+  const no=el(`<div class="badge a" style="left:1174px;top:422px;width:56px;height:56px">${xis(28)}</div>`,g);
+  const cp=[0,1,2,3].map(()=>el(`<div class="ab" style="left:0;top:0;visibility:hidden">${chave(104)}</div>`,g));   // 104x42
+  const K0=[520,380], KL=[356,380];                       // chave solta / na fechadura (a ponta na maçaneta)
+  const DST=[[766,246],[784,560],[926,560],[1068,560]];
+
+  return t=>{
+    const t0=W(4,'Uma'), tli=W(4,'link'), ten=W(4,'entra'), tco=W(4,'contato'), tce=W(4,'certo'), tma=W(4,'mandar'), tgr=W(4,'grupo');
+    posTitulo(tit,t,t0-.85,tli-.55);
+    vis(chao,t,tli-.15,1e9,{dy:6}); vis(pt,t,tli-.15,1e9,{dy:18}); vis(rP,t,tli,1e9,{dy:10});
+    // a chave: aparece no "link", entra na fechadura no "entra", a porta abre e a chave volta
+    vis(ch,t,tli-.05,1e9,{dx:30,dy:0});
+    const pin=eio(pr(t,ten-.3,.4)), pout=eio(pr(t,ten+.35,.6));
+    chW.style.transform=`translate(${lerp(lerp(K0[0],KL[0],pin),K0[0],pout).toFixed(2)}px,${K0[1]}px)`;
+    abre(pt,pr(t,ten+.1,.65));
+    // manda só pro contato certo; em grupo, não
+    vis(pc,t,tco-.3,1e9,{sc:.85,dy:10}); vis(rPc,t,tce-.1,1e9,{dy:8}); vis(ok,t,tce+.15,1e9,{sc:.5,dy:0});
+    vis(gr,t,tma-.15,1e9,{sc:.9,dy:14}); vis(rGr,t,tma,1e9,{dy:8}); vis(no,t,tgr+.05,1e9,{sc:.5,dy:0});
+    gr.style.filter=`saturate(${(1-.6*eo(pr(t,tgr+.05,.5))).toFixed(3)})`;
+    const sai=[tco-.2,tma,tma+.12,tma+.24];
+    cp.forEach((e,i)=>{const [x,y,p]=voo(t,sai[i],.8,K0[0]+63,K0[1]+25,DST[i][0],DST[i][1],-90);
+      poe(e,x,y,lerp(.6,1,eo(p)),t<sai[i]?0:eo(cl((t-sai[i])/.2)),-12*p)});
+  };
+};
+
+// ------------------------------------------------------------------ CAPS[3] · Cliente e fornecedor (fala 6 e 7)
+// 6 "Uma dica: tem parceiro que é cliente e fornecedor ao mesmo tempo, como o Depósito Irmãos Siqueira. Os dois cadastros
+// mostram o mesmo portal, com as compras e as vendas juntas." 7 "Então, desligar uma aba num cadastro desliga nos dois links.
+// Vale sempre o que esconde mais."
+CAPS[3]=()=>{
+  const g=grupo();
+  const tit=titulo(g,'Exibição','Cliente e fornecedor');
+  const nome=el('<div class="ab rot" style="left:60px;top:166px;width:400px;font-size:24px">Depósito Irmãos Siqueira</div>',g);
+  const card=(y,txt,cls)=>el(`<div class="card" style="left:60px;top:${y}px;width:400px;height:104px;padding:0 26px;display:flex;align-items:center;gap:18px">
+      <div class="ico ${cls}" style="width:58px;height:58px">${ic('user-round',32)}</div>
+      <div style="font-weight:800;font-size:27px">${txt}</div></div>`,g);
+  const cC=card(210,'Cliente',''), cF=card(382,'Fornecedor','a');
+  const elo=el(`<div class="ab" style="left:232px;top:320px;width:56px;height:56px;border-radius:50%;background:#fff;border:2px solid #DDE5E0;
+      display:flex;align-items:center;justify-content:center;color:#4B5563;box-shadow:0 6px 14px rgba(16,24,40,.08)">${ic('link-2',28)}</div>`,g);
+  const chv=el(`<div class="card" style="left:84px;top:506px;width:352px;height:66px;padding:0 22px;display:flex;align-items:center;justify-content:space-between;
+      box-shadow:0 8px 18px rgba(16,24,40,.08)"><div style="font-weight:700;font-size:20px">Aba Relatório</div>
+      <div class="sw" style="position:relative;width:58px;height:32px;border-radius:16px;background:#50D088">
+        <div class="kn" style="position:absolute;top:3px;left:29px;width:26px;height:26px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.25)"></div></div></div>`,g);
+  const sw=chv.querySelector('.sw'), kn=chv.querySelector('.kn');
+  const ln=el(`<svg class="ab" style="left:0;top:0;overflow:visible" width="1280" height="800">
+      <path d="M460 262 C 640 262, 690 330, 800 346" fill="none" stroke="var(--v)" stroke-width="4" stroke-linecap="round"/>
+      <path d="M460 434 C 640 434, 690 418, 800 412" fill="none" stroke="var(--a)" stroke-width="4" stroke-linecap="round"/></svg>`,g);
+  const [l1,l2]=ln.querySelectorAll('path');
+  const elk=(p,cls)=>{const m=p.getPointAtLength(p.getTotalLength()*.5);
+    return el(`<div class="ab" style="left:${(m.x-27).toFixed(0)}px;top:${(m.y-27).toFixed(0)}px"><div class="ico ${cls}" style="width:54px;height:54px;border-radius:50%;
+      border:3px solid #fff;box-shadow:0 6px 14px rgba(16,24,40,.14)">${ic('link',26)}</div></div>`,g)};
+  const k1=elk(l1,''), k2=elk(l2,'a');
+  const pas=el(`<div class="ab" style="left:800px;top:192px">${pasta(420)}</div>`,g);            // 800-1220, 192-528 (frente de 285)
+  const rPa=el('<div class="ab rot" style="left:830px;top:544px;width:360px">Portal</div>',g);
+  const lista=el(`<div class="ab" style="left:834px;top:312px;width:352px;height:132px;background:#fff;border-radius:14px;border:1.5px solid #DDE5E0;overflow:hidden"></div>`,g);
+  const linha=(txt,cor)=>el(`<div style="height:65px;display:flex;align-items:center;gap:14px;padding:0 24px;font-weight:800;font-size:22px">
+      <span style="width:16px;height:16px;border-radius:50%;background:${cor};flex:none"></span>${txt}</div>`,lista);
+  const lC=linha('Compras','var(--a)'), lV=linha('Vendas','var(--v)'); lV.style.borderTop='1px solid var(--l)';
+  const relOn=el(`<div class="ab" style="left:834px;top:458px;width:352px;display:flex;justify-content:center">${chip('Relatório','v','eye')}</div>`,g);
+  const relOff=el(`<div class="ab" style="left:834px;top:458px;width:352px;display:flex;justify-content:center">
+      <div class="chip c" style="text-decoration:line-through;text-decoration-thickness:2px">${ic('eye-off',22)}Relatório</div></div>`,g);
+  const vale=el(`<div class="ab row" style="left:0;top:626px;width:1280px;justify-content:center;gap:16px">
+      <div class="ico a" style="width:56px;height:56px">${ic('eye-off',30)}</div>
+      <div style="font-weight:800;font-size:32px;color:var(--ae)">Vale o que esconde mais</div></div>`,g);
+
+  return t=>{
+    const t0=W(6,'Uma'), tcl=W(6,'cliente'), tfo=W(6,'fornecedor'), tme=W(6,'mesmo'), tde=W(6,'Deposito'), tca=W(6,'cadastros'),
+      tmo=W(6,'mostram'), tm2=W(6,'mesmo',2), tpo=W(6,'portal'), tcp=W(6,'compras'), tve=W(6,'vendas'), tju=W(6,'juntas'),
+      tab=W(7,'aba'), tcd=W(7,'cadastro'), tdl=W(7,'desliga'), tdo=W(7,'dois'), tes=W(7,'esconde');
+    posTitulo(tit,t,t0-.85,tcl-.55);
+    vis(cC,t,tcl-.1,1e9,{dx:-20,dy:0}); vis(cF,t,tfo-.1,1e9,{dx:-20,dy:0}); vis(elo,t,tme-.1,1e9,{sc:.5,dy:0});
+    vis(nome,t,tde-.1,1e9,{dy:10});
+    pulsos(cC,t,[tca],.035,.8); pulsos(cF,t,[tca+.12],.035,.8);
+    // os dois cadastros levam ao mesmo portal (um link de cada um), com as compras e as vendas na mesma lista
+    traco(l1,t,tmo-.1,.9); traco(l2,t,tmo,.9);
+    vis(pas,t,tm2-.15,1e9,{dx:24,dy:0}); vis(rPa,t,tpo-.1,1e9,{dy:8});
+    vis(k1,t,tmo+.3,1e9,{sc:.6,dy:0}); vis(k2,t,tmo+.4,1e9,{sc:.6,dy:0});
+    vis(lista,t,tcp-.25,1e9,{dy:10}); vis(lC,t,tcp-.1,1e9,{dx:-14,dy:0}); vis(lV,t,tve-.1,1e9,{dx:-14,dy:0});
+    pulsos(lista,t,[tju],.04,.8);
+    // desligar uma aba num cadastro: a chave do Fornecedor desliga e o Relatório some do portal, nos dois links
+    vis(chv,t,tab-.2,1e9,{dy:-10});
+    const off=eio(pr(t,tcd,.35)); kn.style.left=lerp(29,3,off).toFixed(1)+'px'; sw.style.background=mix('#50D088','#C3CAD2',off);
+    vis(relOn,t,tab-.1,tdl,{sc:.85,dy:0}); vis(relOff,t,tdl,1e9,{sc:.95,dy:0});
+    pulsos(k1,t,[tdo-.05],.14,.8); pulsos(k2,t,[tdo+.08],.14,.8);
+    vis(vale,t,tes-.15,1e9,{dy:14});
+  };
+};
+
+// ------------------------------------------------------------------ CAPS[4] · Cada aba, três jeitos (fala 4)
+// 4 "Oculto, a aba some do portal. Livre, ela abre pra quem tem o link. Com senha, só depois do login. Na cooperativa, fica
+// tudo com senha."
+CAPS[4]=()=>{
+  const g=grupo();
+  const tit=titulo(g,'Senha','Cada aba, três jeitos');
+  const col=(x,txt,cls)=>{const c=el(`<div class="card" style="left:${x}px;top:176px;width:350px;height:444px"></div>`,g);
+    el(`<div class="ab" style="left:0;top:26px;width:350px;display:flex;justify-content:center"><div class="tag ${cls}" style="font-size:22px">${txt}</div></div>`,c);return c};
+  const c1=col(70,'Oculto','c'), c2=col(465,'Livre','v'), c3=col(860,'Com senha','a');
+  // Oculto: a aba (uma folha) some e fica só o lugar vazio
+  let lin='';for(let i=0;i<6;i++)lin+=barra(20,66+i*24,[110,124,84,118,70,100][i],'#E1E6EB',9);
+  const fol=el(`<div class="ab" style="left:90px;top:98px;width:170px;height:226px;border-radius:14px;background:#fff;border:2px solid #DCE3E8;
+      box-shadow:0 8px 18px rgba(16,24,40,.08)">${barra(20,26,80,'#CBD3DB',11)}${lin}</div>`,c1);
+  const vazio=el(`<div class="ab" style="left:90px;top:98px;width:170px;height:226px;border-radius:14px;border:3px dashed #C3CAD2;
+      display:flex;align-items:center;justify-content:center;color:#6B7280;opacity:0">${ic('eye-off',54)}</div>`,c1);
+  const s1=el('<div class="ab sub" style="left:0;top:376px;width:350px">some do portal</div>',c1);
+  // Livre: a porta abre; Com senha: porta com cadeado, que abre depois do login
+  const p2=el(`<div class="ab" style="left:85px;top:96px">${porta(180,256)}</div>`,c2);
+  const s2=el('<div class="ab sub" style="left:0;top:376px;width:350px">abre pelo link</div>',c2);
+  const p3=el(`<div class="ab" style="left:85px;top:96px">${porta(180,256)}</div>`,c3);
+  const cad=el(`<div class="badge a" style="left:196px;top:196px;width:66px;height:66px">${ic('lock',32)}</div>`,c3);
+  const cadA=el(`<div class="badge v" style="left:196px;top:196px;width:66px;height:66px;opacity:0">${ic('lock-open',32)}</div>`,c3);
+  const s3=el('<div class="ab sub" style="left:0;top:376px;width:350px">depois do login</div>',c3);
+  const coop=el(`<div class="ab" style="left:860px;top:642px;width:350px;display:flex;justify-content:center">${chip('na cooperativa','a','check')}</div>`,g);
+
+  return t=>{
+    const t0=W(4,'Oculto'), tso=W(4,'some'), tli=W(4,'Livre'), tab=W(4,'abre'), tco=W(4,'Com'), tlo=W(4,'login'),
+      tcp=W(4,'cooperativa'), tse=W(4,'senha',2);
+    posTitulo(tit,t,t0-.85,t0-.3);
+    vis(c1,t,t0+.05,1e9,{dy:20}); vis(c2,t,tli-.15,1e9,{dy:20}); vis(c3,t,tco-.15,1e9,{dy:20});
+    const ps=eo(pr(t,tso,.6)); fol.style.opacity=(1-ps).toFixed(3); fol.style.transform=`scale(${(1-.08*ps).toFixed(3)})`; vazio.style.opacity=ps.toFixed(3);
+    vis(s1,t,tso-.05,1e9,{dy:8});
+    abre(p2,pr(t,tab-.1,.7)); vis(s2,t,tab,1e9,{dy:8});
+    const pl=eo(pr(t,tlo,.4)); cadA.style.opacity=pl.toFixed(3); cad.style.opacity=(1-pl).toFixed(3); abre(p3,pr(t,tlo+.2,.7),52);
+    vis(s3,t,tlo-.05,1e9,{dy:8});
+    contorno(c3,t,tcp,'#E1E8E4','#F2B63D'); c3.style.boxShadow=`0 0 0 ${(4*eo(pr(t,tcp,.45))).toFixed(2)}px rgba(242,182,61,.22),0 18px 40px rgba(16,24,40,.10)`;
+    vis(coop,t,tcp-.1,1e9,{dy:10}); pulsos(c3,t,[tse],.025,.8);
+  };
+};
+
+// ------------------------------------------------------------------ CAPS[6] · Um saldo, dois lados (fala 1)
+// 1 "No sistema, esse valor aparece em vermelho, porque a Recicla Vale deve. No portal, em verde, porque é a cooperativa que
+// recebe. É o mesmo saldo, visto de cada lado."   (R$ 1.350,00: o saldo da cooperativa, dito na fala 0 do capítulo)
+CAPS[6]=()=>{
+  const g=grupo();
+  const tit=titulo(g,'Saldo','Um saldo, dois lados');
+  const V=brl(1350), VERM='#B42318';                    // vermelho só aqui: a fala diz "em vermelho" (contraste 6,6 no branco)
+  const mon=el(`<div class="ab" style="left:60px;top:200px">${monitor(330)}</div>`,g);           // 60-390, 200-443
+  const cel=el(`<div class="ab" style="left:1010px;top:190px">${celular(140)}</div>`,g);        // 1010-1150, 190-448
+  const rM=el('<div class="ab rot" style="left:45px;top:462px;width:360px">No sistema</div>',g);
+  const rC=el('<div class="ab rot" style="left:900px;top:462px;width:360px">No portal</div>',g);
+  const cc=el(`<div class="card" style="left:440px;top:212px;width:400px;height:178px;padding:26px 30px">
+      <div class="row" style="gap:16px"><div class="ico" style="width:52px;height:52px;background:#EEF1F4;color:#4B5563">${ic('wallet',28)}</div>
+        <div style="font-weight:800;font-size:25px">Conta-corrente</div></div>
+      <div class="num" style="margin-top:16px;font-size:48px">${V}</div></div>`,g);
+  const lado=(x,cor)=>el(`<div class="card" style="left:${x}px;top:530px;width:350px;height:154px;padding:22px 28px">
+      <div class="num" style="font-size:42px;color:${cor}">${V}</div></div>`,g);
+  const lR=lado(50,VERM), lV=lado(905,'#2E7D57');
+  const tR=el(chip('a pagar','r'),lR), tV=el(chip('a receber','v'),lV);
+  for(const c of [tR,tV]){c.style.position='absolute';c.style.left='28px';c.style.top='86px'}
+  const cx=el(`<svg class="ab" style="left:0;top:0;overflow:visible" width="1280" height="800">
+      <path d="M560 390 C 560 470, 372 452, 352 530" fill="none" stroke="#C3CAD2" stroke-width="4" stroke-linecap="round"/>
+      <path d="M720 390 C 720 470, 908 452, 928 530" fill="none" stroke="#C3CAD2" stroke-width="4" stroke-linecap="round"/></svg>`,g);
+  const [c1,c2]=cx.querySelectorAll('path');
+
+  return t=>{
+    const t0=W(1,'No'), tsi=W(1,'sistema'), tva=W(1,'valor'), tvm=W(1,'vermelho'), tde=W(1,'deve'), tpo=W(1,'portal'), tvd=W(1,'verde'),
+      tre=W(1,'recebe'), tme=W(1,'mesmo'), tla=W(1,'lado');
+    posTitulo(tit,t,t0-.85,t0-.3);
+    vis(mon,t,tsi-.15,1e9,{dy:18}); vis(rM,t,tsi,1e9,{dy:8});
+    vis(cc,t,tva-.15,1e9,{dy:18,sc:.95});
+    traco(c1,t,tvm-.3,.5); vis(lR,t,tvm-.1,1e9,{dy:16}); vis(tR,t,tde-.1,1e9,{dy:8});
+    vis(cel,t,tpo-.15,1e9,{dy:18}); vis(rC,t,tpo,1e9,{dy:8});
+    traco(c2,t,tvd-.3,.5); vis(lV,t,tvd-.1,1e9,{dy:16}); vis(tV,t,tre-.1,1e9,{dy:8});
+    // o mesmo saldo: a conta do meio e os dois lados acendem juntos
+    const m=eo(pr(t,tme-.05,.45)); for(const p of [c1,c2]){p.style.stroke=mix('#C3CAD2','#50D088',m);p.style.strokeWidth=(4+2*m).toFixed(2)}
+    contorno(cc,t,tme-.05,'#E1E8E4','#50D088'); contorno(lR,t,tme-.05,'#E1E8E4','#F2A49B'); contorno(lV,t,tme-.05,'#E1E8E4','#50D088');
+    for(const c of [cc,lR,lV])c.style.borderWidth=(1+1.5*m).toFixed(2)+'px';
+    pulsos(cc,t,[tme],.035,.8); pulsos(lR,t,[tme+.05,tla],.035,.8); pulsos(lV,t,[tme+.05,tla],.035,.8);
+  };
+};
+
+// ------------------------------------------------------------------ CAPS[8] · Quem pede e quem decide (fala 6)
+// 6 "A cooperativa sugeriu o dia, mas quem confirma o dia, o horário, o motorista e o caminhão é a Recicla Vale, na tela de
+// Coletas. Isso fica pro tutorial de Coletas e Logística."   (o pedido das falas 2 e 3: papelão e PET, quinta de manhã)
+CAPS[8]=()=>{
+  const g=grupo();
+  const tit=titulo(g,'Coletas','Quem pede e quem decide');
+  const cel=el(`<div class="ab" style="left:90px;top:206px">${celular(140)}</div>`,g);            // 90-230, 206-464
+  const rC=el('<div class="ab rot" style="left:-20px;top:482px;width:360px">Cooperativa Recomeço</div>',g);
+  const ped=el(`<div class="bal" style="left:262px;top:226px;width:352px;height:172px;padding:24px 26px">
+      <div class="row" style="gap:16px"><div class="ico a" style="width:54px;height:54px">${ic('package',30)}</div>
+        <div style="font-weight:800;font-size:26px">Papelão e PET</div></div>
+      <div class="rabo" style="left:-10px;top:40px;transform:rotate(135deg)"></div></div>`,g);
+  const dia=el(chip('quinta · manhã','','calendar-days'),ped); dia.style.position='absolute'; dia.style.left='26px'; dia.style.top='100px';
+  const sel1=el('<div class="ab" style="left:262px;top:420px;width:352px;display:flex;justify-content:center"><div class="tag a" style="font-size:22px">Solicitada</div></div>',g);
+  const sel2=el('<div class="ab" style="left:262px;top:420px;width:352px;display:flex;justify-content:center"><div class="tag v" style="font-size:22px">Agendada</div></div>',g);
+  const seta=setaLarga(g,636,312,136,72);
+  const mon=el(`<div class="ab" style="left:792px;top:196px">${monitor(380)}</div>`,g);         // 792-1172, 196-475
+  const rM=el('<div class="ab rot" style="left:802px;top:494px;width:360px">Recicla Vale Metais</div>',g);
+  const grade=el('<div class="ab" style="left:782px;top:548px;width:400px;display:flex;flex-wrap:wrap;gap:12px;justify-content:center"></div>',g);
+  const QM=[['dia','calendar-days'],['horário','clock'],['motorista','user-round'],['caminhão','truck']].map(([x,i])=>el(chip(x,'v',i),grade));
+  const rip=el('<div class="rip"></div>',g); rip.style.left='438px'; rip.style.top='442px';
+
+  return t=>{
+    const t0=W(6,'A'), tco=W(6,'cooperativa'), tsu=W(6,'sugeriu'), td1=W(6,'dia'), tma=W(6,'mas'), tqu=W(6,'quem'), tcf=W(6,'confirma'),
+      tq=[W(6,'dia',2),W(6,'horario'),W(6,'motorista'),W(6,'caminhao')], tre=W(6,'Recicla');
+    posTitulo(tit,t,t0-.85,t0-.3);
+    vis(cel,t,tco-.15,1e9,{dy:18}); vis(rC,t,tco,1e9,{dy:8}); vis(ped,t,tco+.1,1e9,{dx:-16,dy:0,sc:.94});
+    vis(sel1,t,tsu-.1,tre+.4,{dy:8,dout:.35}); vis(dia,t,td1-.12,1e9,{dy:8});
+    seta.style.width=(136*eio(pr(t,tma-.05,.55))).toFixed(1)+'px';
+    vis(mon,t,tqu-.2,1e9,{dx:20,dy:0}); pulsos(mon,t,[tcf],.03,.8);
+    QM.forEach((c,i)=>vis(c,t,tq[i]-.12,1e9,{dy:12,sc:.88}));
+    vis(rM,t,tre-.1,1e9,{dy:8});
+    vis(sel2,t,tre+.4,1e9,{sc:.85,dy:0}); ripple(rip,t,tre+.45);
+  };
+};
+
+// ------------------------------------------------------------------ CAPS[10] · Fotos no pedido (fala 0 e 1) e Dois links (fala 5 e 6)
+// 0 "Agora, as fotos. Elas entram na compra ou na venda, em Opções avançadas, no Anexar." 1 "E quem aponta o celular pro QR Code
+// do comprovante cai numa página só com as fotos daquele pedido."
+// 5 "Uma dica: são dois links diferentes. O de fotos mostra só aquele pedido. O do portal mostra o histórico inteiro do parceiro,
+// então cuida mais dele." 6 "E no comprovante que sai no caixa, o QR Code leva o parceiro pro portal dele, já aberto naquele pedido."
+// As falas 0 e 1 viram uma cena só (as duas marcações vêm em linhas seguidas: duas janelas coladas piscariam a tela entre elas).
+CAPS[10]=()=>{
+  // ---- cena A: fotos no pedido e o QR do comprovante
+  const gA=grupo();
+  const titA=titulo(gA,'Fotos','Fotos no pedido');
+  const pedA=el(`<div class="card" style="left:56px;top:184px;width:388px;height:320px;padding:24px 28px">
+      <div class="row" style="gap:16px"><div class="ico" style="width:54px;height:54px;background:#EEF1F4;color:#4B5563">${ic('clipboard-list',30)}</div>
+        <div style="font-weight:800;font-size:26px">Pedido</div></div>
+      ${barra(28,98,230,'#E1E6EB',10)}${barra(28,120,170,'#EEF1F4',10)}
+      ${[0,1,2].map(i=>`<div class="ab" style="left:${28+i*110}px;top:152px;width:96px;height:72px;border-radius:9px;border:2px dashed #CBD3DB"></div>`).join('')}</div>`,gA);
+  const tC=el(chip('Compra','a'),pedA), tVd=el(chip('Venda','v'),pedA);
+  for(const [c,x] of [[tC,28],[tVd,150]]){c.style.position='absolute';c.style.left=x+'px';c.style.top='250px';c.style.fontSize='19px';c.style.padding='8px 16px'}
+  const cam=el(`<div class="ab row" style="left:20px;top:536px;width:460px;justify-content:center;gap:8px"></div>`,gA);
+  const op1=el(chip('Opções avançadas','c','sliders-horizontal'),cam), sv=el(`<div>${ic('chevron-right',26,'#9AA3AD')}</div>`,cam), op2=el(chip('Anexar','v','camera'),cam);
+  const TIP=['papelao','pet','latinha'];
+  const FT=TIP.map(k=>el(`<div class="ab" style="left:0;top:0;visibility:hidden">${foto(k,140)}</div>`,gA));     // 140x106
+  const F0=[[506,196,-6],[574,300,4],[512,404,-3]];                                // fotos soltas (canto, giro)
+  const SLOT=[0,1,2].map(i=>[56+1+28+i*110+48-70, 184+1+152+36-53]);               // canto da foto (escala .686) centrada na vaga
+  const a4=el(`<div class="ab" style="left:632px;top:194px">${folhaA4(224)}</div>`,gA);       // 632-856, 194-511; QR 76 px no canto
+  const ligA=el(`<svg class="ab" style="left:0;top:0;overflow:visible" width="1280" height="800">
+      <path d="M450 350 L622 350" fill="none" stroke="#9AA3AD" stroke-width="4" stroke-linecap="round"/>
+      <path d="M608 339 L623 350 L608 361" fill="none" stroke="#9AA3AD" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>`,gA);
+  const [lap,lah]=ligA.querySelectorAll('path');
+  const celW=el('<div class="ab" style="left:0;top:0;transform:translate(1046px,240px) rotate(-10deg);transform-origin:70px 129px"></div>',gA);
+  const celA=el(`<div>${celular(140)}</div>`,celW);
+  const brilho=el(`<div class="ab" style="left:9px;top:11px;width:122px;height:236px;border-radius:17px;opacity:0;
+      background:radial-gradient(120% 80% at 50% 40%,rgba(80,208,136,.6),rgba(80,208,136,0) 72%)"></div>`,celW);
+  const raio=el(`<svg class="ab" style="left:0;top:0;overflow:visible;opacity:0" width="1280" height="800">
+      <polygon points="1058,330 844,414 844,500 1058,358" fill="rgba(80,208,136,.22)"/></svg>`,gA);
+  const FC=TIP.map(k=>el(`<div class="ab" style="left:0;top:0;visibility:hidden">${foto(k,118)}</div>`,gA));     // 118x90
+  const FC1=[[880,144,-7],[994,130,3],[1108,146,7]];
+  // ---- cena B: dois links diferentes
+  const gB=grupo();
+  const titB=titulo(gB,'Fotos','Dois links diferentes');
+  const env=el(`<div class="ab" style="left:84px;top:210px">${envelope(330)}</div>`,gB);       // 84-414, 210-481
+  const tgEw=el('<div class="ab" style="left:84px;top:500px;width:330px"></div>',gB);
+  const tgE=el('<div style="display:flex;justify-content:center"><div class="tag v" style="font-size:22px">Link de fotos</div></div>',tgEw);
+  const sbE=el('<div class="ab sub" style="left:84px;top:558px;width:330px">só aquele pedido</div>',gB);
+  const pasW=el('<div class="ab" style="left:820px;top:200px"></div>',gB), pas=el(`<div>${pasta(400)}</div>`,pasW);   // 820-1220, 200-520
+  const tgPw=el('<div class="ab" style="left:820px;top:538px;width:400px"></div>',gB);
+  const tgP=el('<div style="display:flex;justify-content:center"><div class="tag a" style="font-size:22px">Link do portal</div></div>',tgPw);
+  const sbP=el('<div class="ab sub" style="left:820px;top:596px;width:400px">histórico inteiro</div>',gB);
+  const cadB=el(`<div class="badge a" style="left:988px;top:372px;width:64px;height:64px">${ic('lock',30)}</div>`,gB);
+  const cup=el(`<div class="ab" style="left:548px;top:300px">${cupom(184,320)}</div>`,gB);      // 548-732, 300-620
+  const ligB=el(`<svg class="ab" style="left:0;top:0;overflow:visible" width="1280" height="800">
+      <path d="M738 470 C 772 470, 784 440, 818 426" fill="none" stroke="var(--a)" stroke-width="4" stroke-linecap="round"/>
+      <path d="M802 419 L820 425 L810 441" fill="none" stroke="var(--a)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>`,gB);
+  const [lbp,lbh]=ligB.querySelectorAll('path');
+  const folB=el(`<div class="ab" style="left:914px;top:168px;width:212px;height:122px;background:#fff;border-radius:9px;border:2.5px solid var(--v);
+      box-shadow:0 10px 22px rgba(16,24,40,.12)">${barra(18,18,100,'#CBD3DB',10)}${barra(18,38,150)}</div>`,gB);
+  const pedB=el(chip('pedido','v','clipboard-list',20),folB); pedB.style.position='absolute'; pedB.style.left='18px'; pedB.style.top='60px';
+  // as duas etiquetas nascem lado a lado no meio ("dois links") e vão para baixo do desenho de cada uma
+  const TE=[515-249,404-523], TP=[757-1020,404-561];
+
+  return t=>{
+    // cena A
+    const a0=W(0,'Agora'), afo=W(0,'fotos'), aco=W(0,'compra'), ave=W(0,'venda'), aop=W(0,'Opcoes'), aan=W(0,'Anexar'),
+      ace=W(1,'celular'), aqr=W(1,'QR'), acp=W(1,'comprovante'), apg=W(1,'pagina'), af2=W(1,'fotos'), fimA=W(1,'pedido',1,'e')+.65;
+    gA.style.display=t<=fimA+.05?'block':'none';
+    posTitulo(titA,t,a0-.85,afo-.55);
+    FT.forEach((e,i)=>{const [x0,y0,r0]=F0[i], [x1,y1]=SLOT[i];
+      const p=eio(pr(t,aan+.05+i*.15,.75)), en=eo(pr(t,afo-.1+i*.12,.45));
+      poe(e,lerp(x0,x1,p),lerp(y0,y1,p)-60*4*p*(1-p)+(1-en)*16,lerp(.96+.04*en,.686,p),en,lerp(r0,0,p))});
+    vis(pedA,t,aco-.2,1e9,{dx:-20,dy:0}); vis(tC,t,aco-.05,1e9,{sc:.8,dy:0}); vis(tVd,t,ave-.05,1e9,{sc:.8,dy:0});
+    vis(op1,t,aop-.1,1e9,{dy:10}); vis(sv,t,aan-.25,1e9,{dx:-8,dy:0}); vis(op2,t,aan-.15,1e9,{dy:10}); pulsos(op2,t,[aan+.1],.06,.7);
+    vis(celA,t,ace-.15,1e9,{dx:30,dy:0});
+    vis(a4,t,aqr-.15,1e9,{dy:18}); pulsos(a4.querySelector('.qrA'),t,[aqr+.3],.1,.8);
+    raio.style.opacity=(eo(pr(t,aqr+.35,.4))*.95).toFixed(3);
+    traco(lap,t,acp-.1,.6); lah.style.opacity=eo(pr(t,acp+.4,.2)).toFixed(3);
+    brilho.style.opacity=eo(pr(t,apg-.1,.45)).toFixed(3);
+    FC.forEach((e,i)=>{const [x1,y1,r]=FC1[i], a=af2-.15+i*.14; const [x,y,p]=voo(t,a,.75,1057,324,x1,y1,-40);
+      poe(e,x,y,lerp(.4,1,eo(p)),t<a?0:eo(cl((t-a)/.2)),r*p)});
+    // cena B
+    const b0=W(5,'Uma'), bdo=W(5,'dois'), bfo=W(5,'fotos'), bpe=W(5,'pedido'), bpo=W(5,'portal'), bhi=W(5,'historico'), bcu=W(5,'cuida'),
+      bcp=W(6,'comprovante'), bcx=W(6,'caixa'), bqr=W(6,'QR'), ble=W(6,'leva'), bp2=W(6,'portal'), bab=W(6,'aberto'), bpd=W(6,'pedido');
+    gB.style.display=t>=b0-1.2?'block':'none';
+    posTitulo(titB,t,b0-.85,bdo-.55);
+    vis(tgE,t,bdo-.1,1e9,{dy:10}); vis(tgP,t,bdo+.05,1e9,{dy:10});
+    const me=eio(pr(t,bfo-.2,.7)), mp=eio(pr(t,bpo-.2,.7));
+    tgEw.style.transform=`translate(${(TE[0]*(1-me)).toFixed(1)}px,${(TE[1]*(1-me)).toFixed(1)}px)`;
+    tgPw.style.transform=`translate(${(TP[0]*(1-mp)).toFixed(1)}px,${(TP[1]*(1-mp)).toFixed(1)}px)`;
+    vis(env,t,bfo-.1,1e9,{dy:18}); vis(sbE,t,bpe-.1,1e9,{dy:8});
+    vis(pas,t,bpo-.1,1e9,{dy:18}); vis(sbP,t,bhi-.1,1e9,{dy:8});
+    vis(cadB,t,bcu-.05,1e9,{sc:.5,dy:0});
+    const cu=eo(pr(t,bcu-.05,.45)); pas.style.filter=`drop-shadow(0 0 ${(14*cu).toFixed(1)}px rgba(242,182,61,${(.55*cu).toFixed(3)}))`;
+    vis(cup,t,bcp-.15,1e9,{dy:20}); pulsos(cup,t,[bcx],.03,.7); pulsos(cup.querySelector('.qrC'),t,[bqr],.1,.8);
+    traco(lbp,t,ble-.1,.6); lbh.style.opacity=eo(pr(t,ble+.4,.2)).toFixed(3); pulsos(pasW,t,[bp2],.03,.8);
+    const ab=eio(pr(t,bab-.1,.6)); folB.style.opacity=ab.toFixed(3); folB.style.visibility=ab<=.001?'hidden':'visible';
+    folB.style.transform=`translateY(${lerp(120,0,ab).toFixed(2)}px)`;
+    vis(pedB,t,bpd-.15,1e9,{sc:.8,dy:0});
+  };
+};
+
+// ------------------------------------------------------------------ API para o renderizador
+let RENDER=null;
+window.setup=d=>{D=d;ST.innerHTML='';RENDER=CAPS[d.cap]();return true};
+window.R=t=>{RENDER(t);return true};
+</script></body></html>

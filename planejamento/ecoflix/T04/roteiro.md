@@ -171,7 +171,7 @@ código 1.59.154 (`T04/inventario.md`). Mundo, sementes e simulações: `T04/pla
 | Tela | Fala |
 | --- | --- |
 | Capítulo novo (semente `apos-cap09`), `/clientes-fornecedores`. Clique em "Relatório": janela "Relatório de Saldos" ("Visualize todos os saldos a receber e a pagar"). [BACKEND: `balances` com `balance_movements(created_at)` do mais novo, `.neq('balance', 0)`, ordem por saldo] | Pra fechar, a pergunta do dia a dia: quem te deve, e quanto? Lá em cima, Relatório. |
-| [ZOOM: o bloco "A Receber" (título, "Total: R$ 5.170,00" e as duas linhas), desta linha até o fim da terceira; o mouse aponta o total] | Em A Receber fica tudo que vai entrar: cinco mil cento e setenta reais. |
+| [ZOOM: o bloco "A Receber" (título, "Total: R$ 19.540,00" e as três linhas: "Fundição Bandeira do Vale" R$ 14.370,00, "Aços Quiririm Ltda" R$ 4.870,00 e "Valdir Pereira" -R$ 300,00), desta linha até o fim da terceira; o mouse aponta o total] | Em A Receber fica tudo que vai entrar: dezenove mil quinhentos e quarenta reais. A maior parte é da Fundição Bandeira do Vale, que comprou cobre em três vezes. |
 | (o zoom continua; o mouse aponta "Aços Quiririm Ltda", "Cliente", "R$ 4.870,00" em verde) | A Aços Quiririm é cliente, com saldo positivo e verde: ela te deve quatro mil oitocentos e setenta reais. |
 | (o zoom continua; o mouse aponta "Valdir Pereira", "Fornecedor", "-R$ 300,00" em verde) | O Valdir é fornecedor, com saldo negativo, também verde. A Recicla adiantou trezentos reais pra ele, e ele paga em sucata. |
 | Rola até "A Pagar". [ZOOM: o bloco "A Pagar" (título, "Total: R$ 3.690,00" e as três linhas), desta linha até o fim da quarta; o mouse aponta o total] | Em A Pagar fica o que vai sair: três mil seiscentos e noventa reais. |

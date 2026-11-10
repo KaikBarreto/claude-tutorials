@@ -1,0 +1,505 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<!-- T08 "Ticket de Pesagem" · ilustrações de conceito (kit perfis/ecoflix/cenas/cenas_ecoflix.html).
+     Uma janela por capítulo (ilustracoes.json): cap00 peso agora, preço depois · cap01 compra direta × ticket ·
+     cap03 o rascunho salvo sozinho · cap04 entrada e saída (o desenho do kit "Tara e peso líquido") · cap05 a conta do
+     líquido (os cartões do mesmo desenho) · cap06 uma aba por caminhão · cap07 só no Finalizar · cap08 pesagens mescladas.
+     Tudo função do tempo, preso às falas do narracao/tts_textos.py com W(linha, 'palavra').
+     Render só do trecho: node render_cenas.cjs <cap> capNN.json saida.mp4 --html cenas.html --de <at> --ate <at+dur>.
+     Utilidades novas (faltavam no kit): kgd() (kg com casas), setaD(), caminhao(cores, cabine, vazio), balanca(), no(). -->
+<style>
+@font-face{font-family:M;font-weight:500;src:url(../../../web/fonts/montserrat-latin-500-normal.woff2) format('woff2')}
+@font-face{font-family:M;font-weight:600;src:url(../../../web/fonts/montserrat-latin-600-normal.woff2) format('woff2')}
+@font-face{font-family:M;font-weight:700;src:url(../../../web/fonts/montserrat-latin-700-normal.woff2) format('woff2')}
+@font-face{font-family:M;font-weight:800;src:url(../../../web/fonts/montserrat-latin-800-normal.woff2) format('woff2')}
+@font-face{font-family:M;font-weight:500;src:url(../../../web/fonts/montserrat-latin-ext-500-normal.woff2) format('woff2');unicode-range:U+0100-024F}
+@font-face{font-family:M;font-weight:700;src:url(../../../web/fonts/montserrat-latin-ext-700-normal.woff2) format('woff2');unicode-range:U+0100-024F}
+/* paleta EcoFlix (igual ao kit): --v acento (só preenchimento, barra, contorno) · --ve texto verde · --ae texto âmbar */
+:root{--v:#50D088;--ve:#2E7D57;--vc:#EAF8F0;--vm:#A9E9C6;--a:#F2B63D;--ae:#8A5A00;--ac:#FFF5DF;
+  --t:#121212;--c:#6B7280;--l:#E6E9EE;--e:#121212;--r:#B42318;--rc:#FEF3F2}
+*{box-sizing:border-box;margin:0;padding:0;transition:none!important;animation:none!important}
+html,body{width:1280px;height:800px;overflow:hidden;background:#fff}
+body{font-family:M,sans-serif;color:var(--t);-webkit-font-smoothing:antialiased}
+#st{position:absolute;inset:0;overflow:hidden;background:
+  radial-gradient(1100px 650px at 92% -12%,rgba(80,208,136,.09),transparent 62%),
+  radial-gradient(900px 600px at -12% 112%,rgba(80,208,136,.06),transparent 60%),#fff}
+.g{position:absolute;left:0;top:0;width:1280px;height:800px;transform-origin:640px 400px}
+.ab{position:absolute}
+.row{display:flex;align-items:center}
+.kick{font-weight:700;font-size:15px;letter-spacing:.3em;color:var(--ve);text-transform:uppercase}
+.h{font-weight:800;font-size:46px;letter-spacing:-.01em;line-height:1.1}
+.card{position:absolute;background:#fff;border:1px solid #E1E8E4;border-radius:18px;
+  box-shadow:0 18px 40px rgba(16,24,40,.10),0 3px 8px rgba(16,24,40,.06)}
+.ic{display:inline-flex;align-items:center;justify-content:center;flex:none}
+.ic svg{width:100%;height:100%}
+.ico{display:flex;align-items:center;justify-content:center;flex:none;border-radius:14px;background:var(--vc);color:var(--ve)}
+.ico.a{background:var(--ac);color:var(--ae)}
+.ico.n{background:#F2F4F7;color:#4B5563}
+.tag{display:inline-flex;align-items:center;gap:8px;padding:9px 18px;border-radius:999px;font-weight:800;font-size:20px;white-space:nowrap}
+.tag.v{background:var(--vc);color:var(--ve)} .tag.a{background:var(--ac);color:var(--ae)} .tag.n{background:#F2F4F7;color:#374151}
+.lbl{font-weight:700;font-size:17px;color:var(--c)}
+.num{font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+.op{position:absolute;width:60px;height:60px;border-radius:50%;background:#F2F4F7;color:var(--t);display:flex;
+  align-items:center;justify-content:center;font-weight:800;font-size:34px;line-height:1}
+.most{background:var(--e);border-radius:16px;padding:16px 22px 18px;box-shadow:0 16px 34px rgba(16,24,40,.22)}
+.most .ml{position:relative;height:20px;font-weight:700;font-size:15px;letter-spacing:.22em;color:#A9E9C6;text-transform:uppercase}
+.most .ml span{position:absolute;left:0;top:0;white-space:nowrap}
+.most .mn{margin-top:6px;font-weight:800;font-size:44px;color:var(--v);font-variant-numeric:tabular-nums;white-space:nowrap}
+.rip{position:absolute;width:56px;height:56px;margin:-28px 0 0 -28px;border-radius:50%;border:3px solid var(--v);opacity:0}
+/* desta aula */
+.ttl{font-weight:800;font-size:22px;line-height:1.2;white-space:nowrap}
+.sub{font-weight:600;font-size:17px;line-height:1.3;color:#4B5563;white-space:nowrap}
+.chk{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex:none}
+.chk.v{background:var(--v);color:#fff} .chk.x{background:#EEF0F3;color:#6B7280}
+.pc{position:absolute;display:flex;align-items:center;gap:12px;padding:0 18px;height:64px;border-radius:16px;background:#fff;
+  border:2px solid #E1E8E4;box-shadow:0 8px 20px rgba(16,24,40,.07)}
+.pp{position:absolute;background:#fff;border-radius:6px;box-shadow:0 14px 30px rgba(16,24,40,.16),0 2px 6px rgba(16,24,40,.08)}
+.pp .t{position:absolute;white-space:nowrap}
+</style></head>
+<body><div id="st"></div>
+<script>
+// ------------------------------------------------------------------ utilidades (as do kit, sem mudança)
+const cl=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
+const eo=x=>1-Math.pow(1-cl(x),3);
+const eio=x=>{x=cl(x);return x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2};
+const pr=(t,a,d=.45)=>cl((t-a)/d);
+const lerp=(a,b,p)=>a+(b-a)*p;
+const $=s=>document.querySelector(s);
+const ST=document.getElementById('st');
+function el(html,parent=ST){const d=document.createElement('div');d.innerHTML=html.trim();let f=null;for(const n of [...d.childNodes]){parent.appendChild(n);if(!f&&n.nodeType===1)f=n}return f}
+function grupo(){return el('<div class="g"></div>')}
+function ic(n,px,cor){const s=(window.ICONS||{})[n]||'';return `<span class="ic" style="width:${px}px;height:${px}px;${cor?'color:'+cor:''}">${s}</span>`}
+function hex(c){c=c.replace('#','');return[0,2,4].map(i=>parseInt(c.substr(i,2),16))}
+function mix(a,b,p){const A=hex(a),B=hex(b);return `rgb(${A.map((v,i)=>Math.round(v+(B[i]-v)*cl(p))).join(',')})`}
+function vis(e,t,a,b=1e9,o={}){
+  const din=o.din??.5,dout=o.dout??.4,dy=o.dy??16,dx=o.dx??0,sc=o.sc??.985;
+  const p=eo(pr(t,a,din)),q=1-eo(pr(t,b,dout)),op=Math.min(p,q);
+  e.style.opacity=op.toFixed(4);e.style.visibility=op<=.001?'hidden':'visible';
+  const s=sc+(1-sc)*p - (1-q)*(1-sc);
+  e.style.transform=`translate(${((1-p)*dx).toFixed(2)}px,${((1-p)*dy-(1-q)*dy*.5).toFixed(2)}px) scale(${s.toFixed(4)})`;
+  return op;
+}
+function ripple(r,t,a){const p=pr(t,a,.7);r.style.opacity=(p>0&&p<1)?(.6*(1-p)).toFixed(3):0;r.style.transform=`scale(${(.4+2.0*eo(p)).toFixed(3)})`}
+function pulse(e,t,a,amp=.045,dur=.9){const p=pr(t,a,dur);e.style.scale=(p>0&&p<1)?(1+amp*Math.sin(Math.PI*p)).toFixed(4):''}
+const NF=new Intl.NumberFormat('pt-BR');
+const kg=v=>NF.format(Math.round(v))+' kg';
+const brl=v=>'R$ '+v.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
+function conta(e,t,a,d,v0,v1,fmt=kg){const p=eo(pr(t,a,d));const s=fmt(lerp(v0,v1,p));if(e.textContent!==s)e.textContent=s;return p}
+function traco(p,t,a,d=.8){if(!p._L){p._L=p.getTotalLength();p.style.strokeDasharray=p._L}const q=eio(pr(t,a,d));p.style.strokeDashoffset=(p._L*(1-q)).toFixed(2);p.style.opacity=q>0?1:0;return q}
+function arco(e,t,a,d,x0,y0,x1,y1,h=-80,rot=0){const p=eio(pr(t,a,d));const x=lerp(x0,x1,p),y=lerp(y0,y1,p)+h*4*p*(1-p);
+  e.style.transform=`translate(${x.toFixed(2)}px,${y.toFixed(2)}px) rotate(${(rot*p).toFixed(2)}deg)`;return p}
+function contorno(e,t,a,de,para,d=.45){e.style.borderColor=mix(de,para,eo(pr(t,a,d)))}
+function titulo(g,kick,txt){return el(`<div class="ab" style="left:0;top:0;width:1280px;text-align:center">
+  <div class="kick">${kick}</div><div class="h" style="margin-top:12px">${txt}</div></div>`,g)}
+function posTitulo(e,t,a,sobe,sai=1e9){vis(e,t,a,sai,{dy:14});const p=eio(pr(t,sobe,.7));
+  e.style.top=lerp(318,46,p).toFixed(2)+'px';e.style.scale=lerp(1.12,1,p).toFixed(4)}
+// ------------------------------------------------------------------ utilidades desta aula (faltavam no kit)
+const NFd=new Intl.NumberFormat('pt-BR',{maximumFractionDigits:3});
+const kgd=v=>NFd.format(v)+' kg';                       // kg com casas: 21,6 kg (o kg() do kit arredonda)
+const kg1=v=>v.toLocaleString('pt-BR',{minimumFractionDigits:1,maximumFractionDigits:1})+' kg';   // contagem com uma casa
+// seta (linha + ponta) num só <path>, para o traco() desenhar a ponta por último
+function setaD(x1,y1,x2,y2,h=13){const a=Math.atan2(y2-y1,x2-x1),f=s=>`${(x2-h*Math.cos(a+s*.55)).toFixed(1)} ${(y2-h*Math.sin(a+s*.55)).toFixed(1)}`;
+  return `M${x1} ${y1} L${x2} ${y2} M${f(1)} L${x2} ${y2} L${f(-1)}`}
+function svgTela(pai){return el('<svg class="ab" style="left:0;top:0;overflow:visible" width="1280" height="800"></svg>',pai)}
+function caminho(sv,d,cor='var(--v)',w=4,extra=''){const p=document.createElementNS('http://www.w3.org/2000/svg','path');
+  p.setAttribute('d',d);p.setAttribute('fill','none');p.setAttribute('stroke',cor);p.setAttribute('stroke-width',w);
+  p.setAttribute('stroke-linecap','round');p.setAttribute('stroke-linejoin','round');if(extra)p.setAttribute('stroke-dasharray',extra);
+  p.style.opacity=0;sv.appendChild(p);return p}
+// linha tracejada que se desenha (o traco() usa o dasharray): revela por clip
+function tracejado(p,t,a,d=.7){const q=eio(pr(t,a,d));p.style.opacity=q>0?1:0;p.style.clipPath=`inset(0 ${((1-q)*100).toFixed(2)}% 0 0)`;return q}
+// linha reta que cresce do começo ao fim mudando o próprio "d" (mantém o tracejado; serve para linha vertical)
+function linhaParcial(p,t,a,d,x0,y0,x1,y1){const q=eio(pr(t,a,d));p.setAttribute('d',`M${x0} ${y0} L${lerp(x0,x1,q).toFixed(2)} ${lerp(y0,y1,q).toFixed(2)}`);
+  p.style.opacity=q>0?1:0;return q}
+
+// ------------------------------------------------------------------ tempos da fala
+let D=null;
+const norm=w=>w.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9%./-]+/g,'');
+function W(linha,palavra,n=1,campo='s'){
+  const alvo=norm(palavra);let k=0;
+  for(const w of D.words){if(w.linha===linha&&norm(w.w).replace(/[.,]$/,'')===alvo){k++;if(k===n)return w[campo]}}
+  for(const w of D.words){if(w.linha===linha&&norm(w.w).startsWith(alvo)){k++;if(k>=n)return w[campo]}}
+  console.warn('palavra não achada',linha,palavra);return L(linha);
+}
+const L=i=>(D.linhas[i]||{s:0}).s, LE=i=>(D.linhas[i]||{e:D.dur}).e;
+
+// ------------------------------------------------------------------ desenhos genéricos (sem marca)
+const PECAS=[ // [forma, cor, centro da peça, destino no monte atrás do veículo] (as do kit)
+  ['<polygon points="28,90 44,52 88,42 100,90"/>','#8C5A3C',[64,66],[-224,148,6]],
+  ['<polygon points="82,90 102,36 146,48 154,90"/>','#6F7983',[118,63],[-318,122,12]],
+  ['<rect x="118" y="44" width="112" height="16" rx="8" transform="rotate(-8 174 52)"/>','#9AA3AD',[174,52],[-334,98,-18]],
+  ['<polygon points="148,90 170,54 212,44 232,90"/>','#A0694A',[190,67],[-425,148,-8]],
+  ['<polygon points="210,90 232,40 276,54 286,90"/>','#4F5861',[248,65],[-373,120,-10]],
+  ['<polygon points="258,90 282,60 308,66 312,90"/>','#8A949E',[285,75],[-375,148,4]],
+  ['<g><circle cx="192" cy="64" r="19"/><circle cx="192" cy="64" r="7" fill="#8A949E"/></g>','#5E6670',[192,64],[-242,155,200]],
+  ['<polygon points="40,70 60,50 84,64 64,86"/>','#B07A55',[62,68],[-307,100,30]]];
+// cores da carga: latinha (alumínio) e bateria; sem lista, as do kit (ferro)
+const LATINHA=['#C9D1D9','#AEB8C2','#DDE3E8','#B8C2CC','#9AA6B2','#CDD5DD','#A5B0BB','#D5DCE3'];
+const BATERIA=['#3D4651','#2F3640','#4F5861','#23282E','#3D4651','#2F3640','#4F5861','#2F3640'];
+// o caminhão do kit (frente para a direita), com a cor da carga e da cabine; vazio = sem carga
+function caminhao(cores,cabine='#2F3640',vazio=false){
+  const pecas=vazio?'':PECAS.map(([f,c,[cx,cy],[dx,dy,r]],i)=>`<g class="pd" data-cx="${cx}" data-cy="${cy}" data-dx="${dx}" data-dy="${dy}" data-r="${r}" fill="${cores?cores[i]:c}">${f}</g>`).join('');
+  const roda=x=>`<g class="roda" data-x="${x}" transform="translate(${x},196)"><circle r="26" fill="#1B1F24"/><circle r="12" fill="#9AA3AD"/>
+    <rect x="-2.5" y="-23" width="5" height="10" rx="2" fill="#5B636C"/><rect x="-2.5" y="13" width="5" height="10" rx="2" fill="#5B636C"/></g>`;
+  return `<svg viewBox="0 0 500 230" width="500" height="230" style="overflow:visible">
+    <g class="carga">${pecas}</g>
+    <rect x="18" y="86" width="304" height="88" rx="6" fill="#7E8994"/>
+    <rect x="16" y="82" width="308" height="11" rx="4" fill="#68727D"/>
+    <g stroke="#707A85" stroke-width="3">${[78,138,198,258].map(x=>`<line x1="${x}" y1="98" x2="${x}" y2="168"/>`).join('')}</g>
+    <path d="M334,176 L334,76 Q334,64 346,64 L412,64 L462,116 L472,121 Q480,124 480,134 L480,176 Z" fill="${cabine}"/>
+    <path d="M348,78 L406,78 L444,116 L348,116 Z" fill="#D7E5ED"/>
+    <rect x="470" y="142" width="10" height="11" rx="2" fill="#F2B63D"/>
+    <rect x="12" y="170" width="472" height="15" rx="4" fill="#23282E"/>
+    ${roda(92)}${roda(158)}${roda(416)}
+  </svg>`;
+}
+// balança de caminhão do kit (chão, plataforma, poste e mostrador escuro com dois rótulos), dentro de um "cena"
+function balanca(cena,r1,r2){
+  const chao=el('<div class="ab" style="left:70px;top:604px;width:1140px;height:4px;border-radius:2px;background:#DDE2E7"></div>',cena);
+  const plat=el('<div class="ab" style="left:318px;top:590px;width:580px;height:16px;border-radius:5px;background:#CBD1D8;border:2px solid #A8B0B9"></div>',cena);
+  const poste=el('<div class="ab" style="left:1055px;top:452px;width:10px;height:152px;border-radius:4px;background:#B9C1C9"></div>',cena);
+  const most=el(`<div class="ab most" style="left:910px;top:330px;width:300px">
+      <div class="ml"><span class="m1">${r1}</span><span class="m2">${r2||''}</span></div><div class="mn">0 kg</div></div>`,cena);
+  return {chao,plat,poste,most,mn:most.querySelector('.mn'),m1:most.querySelector('.m1'),m2:most.querySelector('.m2')};
+}
+// nó de um caminho (ícone + rótulo), com o ícone verde por cima do cinza para "acender"
+function no(pai,x,y,w,n,txt,o={}){
+  const e=el(`<div class="card" style="left:${x}px;top:${y}px;width:${w}px;height:${o.h||128}px;text-align:center;border-width:2px">
+      <div style="position:relative;width:54px;height:54px;margin:${o.mt||18}px auto 0">
+        <div class="ico n" style="position:absolute;inset:0">${ic(n,30)}</div><div class="ico ac ${o.a?'a':''}" style="position:absolute;inset:0;opacity:0">${ic(n,30)}</div></div>
+      <div class="ttl" style="font-size:${o.fs||19}px;margin-top:10px;white-space:normal;line-height:1.15">${txt}</div></div>`,pai);
+  e._ac=e.querySelector('.ac'); return e;
+}
+function acende(e,t,a,cor='#50D088'){const p=eo(pr(t,a,.45));e._ac.style.opacity=p.toFixed(3);contorno(e,t,a,'#E1E8E4',cor);return p}
+
+const CAPS={};
+
+// ------------------------------------------------------------------ CAPS[0] · Peso agora, preço depois (L1-L2)
+// 1 "Na Recicla Vale Metais, a Cooperativa Recomeço mandou um caminhão de latinha, e o preço só vai ser combinado depois."
+// 2 "Com o Ticket de Pesagem, você registra o peso agora e resolve o valor depois."
+// O caminhão e a balança do kit; o "9.460 kg" desce para o ticket e o "R$ ?" fica esperando ao lado dele.
+CAPS[0]=()=>{
+  const g=grupo();
+  const tit=titulo(g,'Ticket de Pesagem','Peso agora, preço depois');
+  const coop=el(`<div class="tag n ab" style="left:96px;top:166px">${ic('users',22)}Cooperativa Recomeço</div>`,g);
+  const cena=el('<div class="ab" style="left:0;top:0;width:1280px;height:800px;transform-origin:640px 168px;transform:translate(0,-60px) scale(.74)"></div>',g);
+  const B=balanca(cena,'Peso');
+  const cam=el(`<div class="ab" style="left:0;top:0;width:500px;height:230px">${caminhao(LATINHA)}</div>`,cena);
+  const rodas=[...cam.querySelectorAll('.roda')];
+  const X1=360, Y=366, X0=-900, BR=9460;
+  const precoW=el('<div class="ab" style="left:1086px;top:236px;width:150px;height:74px"></div>',g);
+  const preco=el(`<div class="ab" style="left:0;top:0;width:150px;height:74px">
+      <svg class="ab" style="left:0;top:0;overflow:visible" width="150" height="74"><path d="M24 4 L138 4 Q146 4 146 12 L146 62 Q146 70 138 70 L24 70 L4 37 Z" fill="#FFF5DF" stroke="#F2B63D" stroke-width="3" stroke-linejoin="round"/>
+        <circle cx="26" cy="37" r="6" fill="#fff" stroke="#F2B63D" stroke-width="3"/></svg>
+      <div class="ab num" style="left:46px;top:17px;font-size:30px;color:var(--ae)">R$ ?</div>
+      <div class="ab rel" style="left:120px;top:-20px;width:42px;height:42px;border-radius:50%;background:#fff;color:var(--ae);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(16,24,40,.16)">${ic('clock',24)}</div></div>`,precoW);
+  const rel=preco.querySelector('.rel');
+  const tk=el(`<div class="card" style="left:300px;top:470px;width:460px;height:236px">
+      <div class="row" style="position:absolute;left:26px;top:22px;gap:14px"><div class="ico" style="width:48px;height:48px">${ic('ticket',28)}</div>
+        <div class="ttl">Ticket de Pesagem</div></div>
+      <div class="ab sub" style="left:26px;top:88px">Cooperativa Recomeço</div>
+      <div class="ab sub" style="left:26px;top:116px">Alumínio latinha</div>
+      <div class="ab slot" style="left:26px;top:152px;width:408px;height:60px;border-radius:12px;border:2px dashed #CBD1D8"></div>
+      <div class="ab num pv" style="left:26px;top:158px;width:408px;text-align:center;font-size:36px;color:var(--ve);opacity:0">${kg(BR)}</div></div>`,g);
+  const pv=tk.querySelector('.pv'), slot=tk.querySelector('.slot');
+  const voa=el(`<div class="ab num" style="left:0;top:0;font-size:36px;color:var(--ve);white-space:nowrap;opacity:0">${kg(BR)}</div>`,g);
+
+  return t=>{
+    const j0=W(1,'na')-.3, tco=W(1,'cooperativa'), tca=W(1,'caminhao'), tla=W(1,'latinha'), tpr=W(1,'preco'), tde=W(1,'depois');
+    const tti=W(2,'ticket'), tre=W(2,'registra'), tpe=W(2,'peso'), trs=W(2,'resolve'), td2=W(2,'depois');
+    posTitulo(tit,t,j0-.6,tco-.15);
+    vis(coop,t,tco-.1,1e9,{dy:10});
+    for(const e of [B.chao,B.plat,B.poste,B.most]) vis(e,t,tco+.1,1e9,{dy:10});
+    const chegou=tca+Math.max(1.2,tla-tca+.4), pa=eo(pr(t,tca,chegou-tca)), x=lerp(X0,X1,pa);
+    cam.style.transform=`translate(${x.toFixed(2)}px,${Y}px)`;
+    rodas.forEach(r=>r.setAttribute('transform',`translate(${r.dataset.x},196) rotate(${((x-X1)/26*57.3).toFixed(2)})`));
+    conta(B.mn,t,chegou-.15,.9,0,BR); pulse(B.most,t,chegou+.8,.05,.7);
+    vis(preco,t,tpr-.1,1e9,{dy:0,sc:.6}); vis(rel,t,tde-.1,1e9,{dy:0,sc:.4}); pulse(preco,t,tde,.06,.7);
+    // linha 2: o peso desce para o ticket; o preço vai para o lado dele, esperando
+    vis(tk,t,tti-.15,1e9,{dy:20,sc:.95});
+    const dv=Math.max(.6,tpe-tre+.25), q=arco(voa,t,tre,dv,856,259,450,628,-70);
+    voa.style.opacity=(t>=tre-.05&&q<1)?1:0;
+    const ch=eo(pr(t,tre+dv-.05,.2)); pv.style.opacity=ch.toFixed(3); slot.style.opacity=(1-ch).toFixed(3);
+    arco(precoW,t,trs-.15,.8,0,0,-306,388,-70); pulse(preco,t,td2,.06,.7);
+  };
+};
+
+// ------------------------------------------------------------------ CAPS[1] · Compra direta × ticket (L1-L2)
+// 1 "Com o preço fechado, você faz a compra direto, como no tutorial anterior. Com o preço em aberto, você pesa no ticket e
+// transforma em compra ou venda depois."  2 "Ticket salvo é peso registrado, e só. Nenhum quilo entra no estoque e nenhum
+// centavo entra ou sai do caixa por causa dele. Isso só acontece quando o pedido que nasce dele é finalizado."
+// Dois caminhos com as colunas alinhadas: "Finalizar" e "Estoque e caixa" no mesmo lugar nos dois.
+CAPS[1]=()=>{
+  const g=grupo();
+  const tit=titulo(g,'Ticket','Quando usar o ticket');
+  const sv=svgTela(g);
+  const XS=[150,350,550,750,950], Y1=212, Y2=452, H=128;
+  const r1=el(`<div class="tag v ab" style="left:150px;top:164px;font-size:18px;padding:6px 14px">${ic('circle-check',20)}Preço fechado</div>`,g);
+  const r2=el(`<div class="tag a ab" style="left:150px;top:404px;font-size:18px;padding:6px 14px">${ic('hourglass',20)}Preço em aberto</div>`,g);
+  const fim=(x,y)=>{const e=el(`<div class="card" style="left:${x}px;top:${y}px;width:200px;height:${H}px;text-align:center;border-width:2px">
+      <div class="row" style="justify-content:center;gap:10px;margin-top:18px">
+        ${['warehouse','wallet'].map(n=>`<div class="pi" style="position:relative;width:54px;height:54px"><div class="ico n" style="position:absolute;inset:0">${ic(n,30)}</div>
+          <div class="ico ac" style="position:absolute;inset:0;opacity:0">${ic(n,30)}</div></div>`).join('')}</div>
+      <div class="ttl" style="font-size:19px;margin-top:10px">Estoque e caixa</div>
+      <div class="ab bd" style="right:-14px;top:-14px;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--ac);color:var(--ae);opacity:0">${ic('hourglass',20)}</div>
+      <div class="ab bk" style="right:-14px;top:-14px;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--v);color:#fff;opacity:0">${ic('check',22)}</div></div>`,g);
+    e._ac=[...e.querySelectorAll('.ac')]; e._pi=[...e.querySelectorAll('.pi')]; e._bd=e.querySelector('.bd'); e._bk=e.querySelector('.bk'); return e;};
+  const acendeFim=(e,t,a)=>{const p=eo(pr(t,a,.45)); e._ac.forEach(x=>x.style.opacity=p.toFixed(3)); contorno(e,t,a,'#E1E8E4','#50D088');
+    e._bk.style.opacity=p.toFixed(3); return p};
+  const a1=no(g,XS[0],Y1,160,'shopping-cart','Compra'), a4=no(g,XS[3],Y1,160,'circle-check','Finalizar'), a5=fim(XS[4],Y1);
+  const b1=no(g,XS[0],Y2,160,'ticket','Ticket',{a:1}), b2=no(g,XS[1],Y2,160,'badge-dollar-sign','Valorizar'),
+        b3=no(g,XS[2],Y2,160,'clipboard-list','Compra ou venda',{fs:18}), b4=no(g,XS[3],Y2,160,'circle-check','Finalizar'), b5=fim(XS[4],Y2);
+  const reg=el('<div class="ab lbl" style="left:150px;top:590px;width:160px;text-align:center;font-size:16px;color:var(--ae)">peso registrado</div>',g);
+  const s=(x0,x1,y,c='var(--v)')=>caminho(sv,setaD(x0+8,y,x1-8,y,12),c,4);
+  const sA=[s(310,750,Y1+64),s(910,950,Y1+64)], sB=[s(310,350,Y2+64,'#CBD1D8'),s(510,550,Y2+64,'#CBD1D8'),s(710,750,Y2+64,'#CBD1D8'),s(910,950,Y2+64,'#CBD1D8')];
+  const sBv=[s(910,950,Y2+64)];
+
+  return t=>{
+    const j0=W(1,'com')-.3, tfe=W(1,'fechado'), tcp=W(1,'compra'), tdi=W(1,'direto'), tab=W(1,'aberto'), tti=W(1,'ticket'),
+          ttr=W(1,'transforma'), tcv=W(1,'compra',2), tdp=W(1,'depois');
+    const tsa=W(2,'salvo'), tre=W(2,'registrado'), tes=W(2,'estoque'), tcx=W(2,'caixa'), tfi=W(2,'finalizado');
+    posTitulo(tit,t,j0-.6,tfe-.25);
+    // compra direta: tudo acende na hora
+    vis(r1,t,tfe-.15,1e9,{dx:-12,dy:0});
+    vis(a1,t,tcp-.15,1e9,{dy:14,sc:.95}); acende(a1,t,tcp);
+    traco(sA[0],t,tdi-.2,.5); vis(a4,t,tdi+.1,1e9,{dy:14,sc:.95}); acende(a4,t,tdi+.2);
+    traco(sA[1],t,tdi+.35,.3); vis(a5,t,tdi+.45,1e9,{dy:14,sc:.95}); acendeFim(a5,t,tdi+.55);
+    // ticket: pesa agora, valoriza depois, e só o Finalizar mexe no estoque e no caixa
+    vis(r2,t,tab-.15,1e9,{dx:-12,dy:0});
+    vis(b1,t,tti-.15,1e9,{dy:14,sc:.95}); acende(b1,t,tti,'#F2B63D');
+    traco(sB[0],t,ttr-.25,.3); vis(b2,t,ttr-.1,1e9,{dy:14,sc:.95});
+    traco(sB[1],t,tcv-.25,.3); vis(b3,t,tcv-.1,1e9,{dy:14,sc:.95});
+    traco(sB[2],t,tdp-.25,.3); vis(b4,t,tdp-.1,1e9,{dy:14,sc:.95});
+    traco(sB[3],t,tdp+.1,.3); vis(b5,t,tdp+.2,1e9,{dy:14,sc:.95});
+    pulse(b1,t,tsa-.1,.05,.8); vis(reg,t,tre-.15,1e9,{dy:8});
+    b5._bd.style.opacity=Math.min(eo(pr(t,tes-.15,.4)),1-eo(pr(t,tfi,.4))).toFixed(3);
+    pulse(b5._pi[0],t,tes-.1,.12,.7); pulse(b5._pi[1],t,tcx-.1,.12,.7);
+    acende(b4,t,tfi-.2); traco(sBv[0],t,tfi-.05,.3); acendeFim(b5,t,tfi+.1); pulse(b5,t,tfi+.1,.04,.8);
+  };
+};
+
+// ------------------------------------------------------------------ CAPS[3] · Salvo sozinho (L6)
+// 6 "E não precisa fazer mais nada: o ticket fica salvo sozinho, como rascunho, a cada mudança."
+CAPS[3]=()=>{
+  const g=grupo();
+  const tit=titulo(g,'Rascunho','Salvo sozinho');
+  const tk=el(`<div class="card" style="left:230px;top:168px;width:520px;height:420px">
+      <div class="row" style="position:absolute;left:28px;top:24px;gap:14px"><div class="ico" style="width:50px;height:50px">${ic('ticket',28)}</div>
+        <div class="ttl" style="font-size:24px">Ticket de Pesagem</div></div>
+      <div class="ab" style="left:28px;right:28px;top:96px;height:2px;background:var(--l)"></div></div>`,g);
+  const LIN=[['Fornecedor','Cooperativa Recomeço'],['Material','Alumínio latinha'],['Motorista','Edson Moura'],['Placa do Veículo','FKD2E41'],['1ª pesagem',kg(9460)]];
+  const lin=LIN.map(([k,v],i)=>el(`<div class="row ab" style="left:28px;top:${116+i*58}px;width:464px;height:46px">
+      <div class="lbl" style="font-size:16px;width:168px">${k}</div><div class="ttl" style="font-size:21px">${v}</div></div>`,tk));
+  const sal=el(`<div class="card" style="left:800px;top:220px;width:260px;height:160px;text-align:center;border-width:2px">
+      <div class="ico" style="width:66px;height:66px;margin:22px auto 0;border-radius:50%">${ic('cloud-check',38)}</div>
+      <div class="ttl" style="margin-top:12px;color:var(--ve)">salvo</div></div>`,g);
+  const rip=el('<div class="rip" style="left:130px;top:55px"></div>',sal);
+  const ras=el(`<div class="tag v ab" style="left:800px;top:412px;font-size:20px">${ic('file-pen',22)}Seu rascunho</div>`,g);
+
+  return t=>{
+    const j0=W(6,'e')-.3, tti=W(6,'ticket'), tsa=W(6,'salvo'), tra=W(6,'rascunho'), tca=W(6,'cada'), tmu=W(6,'mudanca');
+    posTitulo(tit,t,j0-.6,tti-.2);
+    vis(tk,t,tti-.15,1e9,{dy:20,sc:.95});
+    lin.forEach((l,i)=>vis(l,t,i<4?tti+i*.08:tca-.1,1e9,{dx:-12,dy:0}));
+    contorno(tk,t,tca,'#E1E8E4','#50D088');
+    vis(sal,t,tsa-.15,1e9,{dy:14,sc:.9}); contorno(sal,t,tsa,'#E1E8E4','#50D088');
+    vis(ras,t,tra-.1,1e9,{dy:10});
+    pulse(sal,t,tmu-.05,.06,.8); ripple(rip,t,tmu-.05);
+  };
+};
+
+// ------------------------------------------------------------------ CAPS[4] · Entrada e saída (L0)
+// 0 "O caminhão descarregou e voltou vazio pra balança. A diferença entre as duas pesagens é a latinha que ficou no pátio."
+// O desenho do kit "Tara e peso líquido" (caminhão, balança, mostrador, descarga e a conta em cartões), com os rótulos da
+// Pesagem avançada ("1ª pesagem", "2ª pesagem", "Bruto") e os números do ticket da cooperativa: 9.460 − 6.380 = 3.080 kg.
+CAPS[4]=()=>{
+  const g=grupo();
+  const tit=titulo(g,'Pesagem','Entrada e saída');
+  const cena=el('<div class="ab" style="left:0;top:0;width:1280px;height:800px;transform-origin:640px 168px;transform:translate(0,-84px) scale(.9)"></div>',g);
+  const B=balanca(cena,'1ª pesagem','2ª pesagem');
+  const cam=el(`<div class="ab" style="left:0;top:0;width:500px;height:230px">${caminhao(LATINHA)}</div>`,cena);
+  const pecas=[...cam.querySelectorAll('.pd')];
+  const X1=360, Y=366, R1=9460, R2=6380;
+  cam.style.transform=`translate(${X1}px,${Y}px)`;
+  const patio=el(`<div class="tag n ab" style="left:118px;top:356px;font-size:17px;padding:6px 14px">${ic('map-pin',18)}ficou no pátio</div>`,g);
+  const linha=el('<div class="ab" style="left:0;top:506px;width:1280px;height:170px"></div>',g);
+  const cartao=(x,rot,sub,v,res)=>el(`<div class="card" style="left:${x}px;top:0;width:318px;height:150px;padding:22px 26px;
+      ${res?'border:2px solid var(--v);background:#F4FBF7':''}">
+      <div style="font-weight:800;font-size:22px;${res?'color:var(--ve)':''}">${rot}</div>
+      <div class="lbl" style="margin-top:4px">${sub}</div>
+      <div class="num" style="margin-top:12px;font-size:40px;${res?'color:var(--ve)':''}">${kg(v)}</div></div>`,linha);
+  const c1=cartao(70,'1ª pesagem','caminhão cheio',R1), c2=cartao(481,'2ª pesagem','caminhão vazio',R2), c3=cartao(892,'Bruto','a latinha',R1-R2,true);
+  const oM=el('<div class="op" style="left:405px;top:45px">−</div>',linha), oI=el('<div class="op" style="left:816px;top:45px">=</div>',linha);
+  const rip=el('<div class="rip" style="left:159px;top:75px"></div>',c3);
+
+  return t=>{
+    const j0=W(0,'caminhao')-.3, tca=W(0,'caminhao'), tde=W(0,'descarregou'), tvo=W(0,'voltou'), tvz=W(0,'vazio'), tdi=W(0,'diferenca'),
+          tla=W(0,'latinha'), tfi=W(0,'ficou');
+    posTitulo(tit,t,j0-.6,tca-.15);
+    for(const e of [B.chao,B.plat,B.poste,B.most]) vis(e,t,tca-.1,1e9,{dy:10});
+    cam.style.opacity=eo(pr(t,tca-.1,.5)).toFixed(3);
+    // já pesou cheio (1ª pesagem); descarrega; volta vazio e o mostrador desce até a 2ª pesagem
+    if(t<tvz-.1) conta(B.mn,t,-9,.1,R1,R1); else conta(B.mn,t,tvz-.1,.65,R1,R2);
+    const lt=eo(pr(t,tvz-.1,.35)); B.m1.style.opacity=1-lt; B.m2.style.opacity=lt;
+    pulse(B.most,t,tvz+.6,.05,.7);
+    pecas.forEach((p,i)=>{const d=p.dataset;const q=eio(pr(t,tde+.1+i*.1,.65));
+      p.setAttribute('transform',`translate(${(d.dx*q).toFixed(2)},${(d.dy*q-130*4*q*(1-q)).toFixed(2)}) rotate(${(d.r*q).toFixed(2)} ${d.cx} ${d.cy})`)});
+    vis(c1,t,tca+.25,1e9,{dy:22}); vis(oM,t,tvo-.1,1e9,{sc:.6,dy:0}); vis(c2,t,tvz+.3,1e9,{dy:22});
+    vis(oI,t,tdi-.1,1e9,{sc:.6,dy:0}); vis(c3,t,tdi+.12,1e9,{dy:22,sc:.94});
+    pulse(c3,t,tla,.04,.8); ripple(rip,t,tla); vis(patio,t,tfi-.1,1e9,{dy:8});
+  };
+};
+
+// ------------------------------------------------------------------ CAPS[5] · A conta do líquido (L3)
+// 3 "E o líquido fecha a conta: o bruto, menos a tara, menos a impureza."
+// Os cartões da conta do kit, com os números do ticket da cooperativa: 3.080 − 0 − 61,6 = 3.018,4 kg.
+CAPS[5]=()=>{
+  const g=grupo();
+  const tit=titulo(g,'Pesagem','A conta do líquido');
+  const mat=el(`<div class="tag n ab" style="left:46px;top:252px">${ic('package',22)}Alumínio latinha</div>`,g);
+  const linha=el('<div class="ab" style="left:0;top:324px;width:1280px;height:170px"></div>',g);
+  const cartao=(x,rot,sub,v,cor,res)=>el(`<div class="card" style="left:${x}px;top:0;width:240px;height:156px;padding:22px 22px;
+      ${res?'border:2px solid var(--v);background:#F4FBF7':''}">
+      <div style="font-weight:800;font-size:22px;color:${cor}">${rot}</div>
+      <div class="lbl" style="margin-top:4px">${sub}</div>
+      <div class="num" style="margin-top:12px;font-size:34px;${res?'color:var(--ve)':''}">${kgd(v)}</div></div>`,linha);
+  const X=[46,362,678,994];
+  const cB=cartao(X[0],'Bruto','as duas pesagens',3080,'var(--t)'), cT=cartao(X[1],'Tara','em branco',0,'var(--ve)'),
+        cI=cartao(X[2],'Impureza','2%',61.6,'var(--ae)'), cL=cartao(X[3],'Líquido','o que vale',3018.4,'var(--ve)',true);
+  const op=(x,s)=>el(`<div class="op" style="left:${x}px;top:52px;width:52px;height:52px;font-size:30px">${s}</div>`,linha);
+  const o1=op(298,'−'), o2=op(614,'−'), o3=op(930,'=');
+  const rip=el('<div class="rip" style="left:120px;top:78px"></div>',cL);
+
+  return t=>{
+    const j0=W(3,'e')-.3, tli=W(3,'liquido'), tbr=W(3,'bruto'), tm1=W(3,'menos'), tta=W(3,'tara'), tm2=W(3,'menos',2), tim=W(3,'impureza');
+    posTitulo(tit,t,j0-.6,tli-.15);
+    vis(mat,t,tli-.1,1e9,{dy:10});
+    vis(cL,t,tli-.05,1e9,{dy:22,sc:.94}); vis(o3,t,tli+.2,1e9,{sc:.6,dy:0});
+    vis(cB,t,tbr-.15,1e9,{dy:22}); vis(o1,t,tm1-.1,1e9,{sc:.6,dy:0}); vis(cT,t,tta-.15,1e9,{dy:22});
+    vis(o2,t,tm2-.1,1e9,{sc:.6,dy:0}); vis(cI,t,tim-.15,1e9,{dy:22});
+    pulse(cL,t,tim+.45,.04,.8); ripple(rip,t,tim+.45);
+  };
+};
+
+// ------------------------------------------------------------------ CAPS[6] · Uma aba por caminhão (L0)
+// 0 "Enquanto isso, chega o Jair Lopes, com o caminhão três quartos da Auto Peças Vale Forte, trazendo bateria."
+// O truck da cooperativa (já pesado) na balança e o 3/4 da Auto Peças chegando atrás; cada um com a sua aba, #58 e #59.
+CAPS[6]=()=>{
+  const g=grupo();
+  const tit=titulo(g,'Abas','Uma aba por caminhão');
+  const chao=el('<div class="ab" style="left:60px;top:600px;width:1160px;height:4px;border-radius:2px;background:#DDE2E7"></div>',g);
+  const plat=el('<div class="ab" style="left:668px;top:588px;width:420px;height:14px;border-radius:5px;background:#CBD1D8;border:2px solid #A8B0B9"></div>',g);
+  const T1=el(`<div class="ab" style="left:0;top:0;width:500px;height:230px;transform-origin:0 0">${caminhao(null,'#2F3640',true)}</div>`,g);
+  const T2=el(`<div class="ab" style="left:0;top:0;width:500px;height:230px;transform-origin:0 0">${caminhao(BATERIA,'#3B5B7A')}</div>`,g);
+  const rodas2=[...T2.querySelectorAll('.roda')];
+  const S1=.7, S2=.56, X2=170, Y2=600-222*S2-2, X2a=-420;
+  T1.style.transform=`translate(704px,${(588-222*S1).toFixed(1)}px) scale(${S1})`;
+  const aba=(x,num,nome,cls)=>el(`<div class="ab" style="left:${x}px;top:206px;width:340px;height:126px">
+      <div class="ab" style="left:0;top:0;width:118px;height:40px;border-radius:14px 14px 0 0;background:var(--${cls}c);display:flex;align-items:center;justify-content:center">
+        <span class="num" style="font-size:22px;color:var(--${cls}e)">${num}</span></div>
+      <div class="card" style="left:0;top:38px;width:340px;height:86px;border-radius:0 18px 18px 18px;border:2px solid var(--${cls}c)">
+        <div class="ttl" style="position:absolute;left:22px;top:28px;font-size:21px">${nome}</div></div></div>`,g);
+  const A1=aba(700,'#58','Cooperativa Recomeço','v'), A2=aba(140,'#59','Auto Peças Vale Forte','a');
+  const sv=svgTela(g);
+  const l1=caminho(sv,'M870 336 L870 466','var(--vm)',3), l2=caminho(sv,'M310 336 L310 482','#F7DFA6',3);
+  const jair=el(`<div class="tag n ab" style="left:140px;top:628px;font-size:18px">${ic('user-round',20)}Jair Lopes</div>`,g);
+  const bat=el(`<div class="tag n ab" style="left:330px;top:628px;font-size:18px">${ic('battery',22)}Bateria automotiva</div>`,g);
+
+  return t=>{
+    const j0=W(0,'enquanto')-.3, tch=W(0,'chega'), tja=W(0,'jair'), tca=W(0,'caminhao'), tau=W(0,'auto'), tba=W(0,'bateria');
+    posTitulo(tit,t,j0-.6,tch-.2);
+    for(const e of [chao,plat]) vis(e,t,tch-.15,1e9,{dy:8});
+    T1.style.opacity=eo(pr(t,tch-.15,.5)).toFixed(3); vis(A1,t,tch,1e9,{dy:12}); traco(l1,t,tch+.15,.4);
+    // o 3/4 chega por trás e para na fila
+    const ch=tch+Math.max(1.4,tca-tch+.5), x=lerp(X2a,X2,eo(pr(t,tch,ch-tch)));
+    T2.style.transform=`translate(${x.toFixed(2)}px,${Y2.toFixed(1)}px) scale(${S2})`;
+    rodas2.forEach(r=>r.setAttribute('transform',`translate(${r.dataset.x},196) rotate(${((x-X2)/(26*S2)*57.3*S2).toFixed(2)})`));
+    vis(jair,t,tja-.1,1e9,{dy:8});
+    vis(A2,t,tau-.15,1e9,{dy:12}); traco(l2,t,tau,.4);
+    vis(bat,t,tba-.15,1e9,{dy:8});
+  };
+};
+
+// ------------------------------------------------------------------ CAPS[7] · Só no Finalizar (L4)
+// 4 "Repara: até aqui, nada entrou no estoque e nada saiu do caixa. A compra está em rascunho, e o efeito só acontece quando
+// ela for finalizada."
+CAPS[7]=()=>{
+  const g=grupo();
+  const tit=titulo(g,'Valorizar','Só no Finalizar');
+  const sv=svgTela(g);
+  const n1=no(g,80,300,170,'ticket','Ticket'), n2=no(g,310,300,170,'badge-dollar-sign','Valorizar'),
+        n3=no(g,540,286,210,'clipboard-list','Compra',{h:156}), n4=no(g,810,300,170,'circle-check','Finalizar');
+  const rasc=el('<div class="tag a" style="position:absolute;left:52px;top:112px;font-size:16px;padding:5px 12px">rascunho</div>',n3);
+  const fE=no(g,1040,196,170,'warehouse','Estoque'), fC=no(g,1040,404,170,'wallet','Caixa');
+  const badge=(e)=>({esp:el(`<div class="ab" style="right:-14px;top:-14px;width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--ac);color:var(--ae);opacity:0">${ic('hourglass',20)}</div>`,e),
+    ok:el(`<div class="ab" style="right:-14px;top:-14px;width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--v);color:#fff;opacity:0">${ic('check',22)}</div>`,e)});
+  const bE=badge(fE), bC=badge(fC);
+  const s=(x0,y0,x1,y1)=>({c:caminho(sv,setaD(x0,y0,x1,y1,12),'#CBD1D8',4),v:caminho(sv,setaD(x0,y0,x1,y1,12),'var(--v)',4)});
+  const s12=s(258,364,302,364), s23=s(488,364,532,364), s34=s(758,364,802,364), s4E=s(988,350,1032,262), s4C=s(988,378,1032,468);
+
+  return t=>{
+    const j0=W(4,'repara')-.3, taq=W(4,'aqui'), ten=W(4,'entrou'), tes=W(4,'estoque'), tcx=W(4,'caixa'), tra=W(4,'rascunho'), tfi=W(4,'finalizada');
+    posTitulo(tit,t,j0-.6,taq-.2);
+    vis(n1,t,taq-.15,1e9,{dy:14,sc:.95}); acende(n1,t,taq);
+    traco(s12.v,t,taq+.1,.25); vis(n2,t,taq+.2,1e9,{dy:14,sc:.95}); acende(n2,t,taq+.3);
+    traco(s23.v,t,taq+.45,.25); vis(n3,t,taq+.55,1e9,{dy:14,sc:.95}); acende(n3,t,taq+.65,'#F2B63D');
+    traco(s34.c,t,ten-.25,.3); vis(n4,t,ten-.1,1e9,{dy:14,sc:.95});
+    traco(s4E.c,t,tes-.35,.3); vis(fE,t,tes-.2,1e9,{dy:14,sc:.95}); bE.esp.style.opacity=Math.min(eo(pr(t,tes,.4)),1-eo(pr(t,tfi+.1,.4))).toFixed(3);
+    traco(s4C.c,t,tcx-.35,.3); vis(fC,t,tcx-.2,1e9,{dy:14,sc:.95}); bC.esp.style.opacity=Math.min(eo(pr(t,tcx,.4)),1-eo(pr(t,tfi+.1,.4))).toFixed(3);
+    pulse(n3,t,tra-.1,.05,.8); pulse(rasc,t,tra-.1,.1,.8);
+    // finalizada: o Finalizar acende e só então o estoque e o caixa
+    acende(n4,t,tfi-.25); traco(s34.v,t,tfi-.35,.25); traco(s4E.v,t,tfi-.05,.25); traco(s4C.v,t,tfi-.05,.25);
+    acende(fE,t,tfi+.1); acende(fC,t,tfi+.1); bE.ok.style.opacity=eo(pr(t,tfi+.1,.4)).toFixed(3); bC.ok.style.opacity=eo(pr(t,tfi+.1,.4)).toFixed(3);
+  };
+};
+
+// ------------------------------------------------------------------ CAPS[8] · Pesagens mescladas no papel (L4)
+// 4 "Uma dica: se o ticket tiver pesagens do mesmo material mescladas numa linha, o comprovante mostra só a soma. Pra conferir
+// cada pesagem no papel, use o Desmesclar pesagens antes de imprimir."
+CAPS[8]=()=>{
+  const g=grupo();
+  const tit=titulo(g,'Comprovante','Pesagens mescladas');
+  const tk=el(`<div class="card" style="left:100px;top:170px;width:540px;height:330px">
+      <div class="row" style="position:absolute;left:26px;top:22px;gap:14px"><div class="ico" style="width:48px;height:48px">${ic('ticket',28)}</div>
+        <div class="ttl">No ticket</div></div></div>`,g);
+  const linhaT=(y,v)=>el(`<div class="pc" style="left:126px;top:${y}px;width:488px;height:66px;justify-content:space-between">
+      <div class="ttl" style="font-size:20px">Ferro misto</div><div class="num" style="font-size:24px">${kg(v)}</div></div>`,g);
+  const YA=270, YB=356, YM=313;
+  const LA=linhaT(YA,1200), LB=linhaT(YB,800), LM=linhaT(YM,2000);
+  LM.style.borderColor='#A9E9C6';
+  const btn=el(`<div class="pc" style="left:100px;top:540px;height:66px;padding:0 24px 0 14px;border-color:#D6EFE1">
+      <div class="ico" style="width:42px;height:42px;border-radius:12px">${ic('split',24)}</div><div class="ttl" style="font-size:21px">Desmesclar pesagens</div></div>`,g);
+  const pap=el(`<div class="pp" style="left:720px;top:170px;width:440px;height:330px">
+      <div class="t" style="left:0;top:24px;width:440px;text-align:center;font-weight:800;font-size:21px">Recicla Vale Metais</div>
+      <div class="t" style="left:0;top:58px;width:440px;text-align:center;font-weight:800;font-size:15px;letter-spacing:.06em">TICKET DE PESAGEM</div>
+      <div class="ab" style="left:26px;top:94px;width:388px;height:1px;background:#CBD1D8"></div>
+      <div class="ab um" style="left:20px;top:116px;width:400px;height:52px;border-radius:10px">
+        <div class="t" style="left:12px;top:13px;font-weight:600;font-size:18px">Ferro misto</div><div class="t" style="right:12px;top:12px;font-weight:800;font-size:19px">${kg(2000)}</div></div>
+      <div class="ab dois" style="left:20px;top:116px;width:400px;height:104px">
+        <div class="t" style="left:12px;top:13px;font-weight:600;font-size:18px">Ferro misto</div><div class="t" style="right:12px;top:12px;font-weight:800;font-size:19px">${kg(1200)}</div>
+        <div class="t" style="left:12px;top:65px;font-weight:600;font-size:18px">Ferro misto</div><div class="t" style="right:12px;top:64px;font-weight:800;font-size:19px">${kg(800)}</div></div>
+    </div>`,g);
+  const um=pap.querySelector('.um'), dois=pap.querySelector('.dois');
+
+  return t=>{
+    const j0=W(4,'dica')-.3, tti=W(4,'ticket'), tpe=W(4,'pesagens'), tme=W(4,'mescladas'), tco=W(4,'comprovante'), tso=W(4,'soma'),
+          tcf=W(4,'conferir'), tde=W(4,'desmesclar'), tim=W(4,'imprimir');
+    posTitulo(tit,t,j0-.6,tti-.2);
+    vis(tk,t,tti-.15,1e9,{dy:18,sc:.95});
+    // duas pesagens; mesclar junta as duas numa linha; desmesclar separa de novo
+    const mj=eio(pr(t,tme-.1,.6)), sp=eio(pr(t,tde+.15,.6)), k=mj*(1-sp);
+    for(const [L,y0,a] of [[LA,YA,0],[LB,YB,.12]]){const op=eo(pr(t,tpe-.15+a,.45))*(1-k);
+      L.style.opacity=op.toFixed(3); L.style.visibility=op>.001?'visible':'hidden'; L.style.transform=`translateY(${((YM-y0)*k).toFixed(2)}px)`;}
+    const om=eo(pr(t,tme+.2,.4))*(1-eo(pr(t,tde+.15,.35))); LM.style.opacity=om.toFixed(3); LM.style.visibility=om>.001?'visible':'hidden';
+    // o papel: só a soma; depois do desmesclar, uma linha por pesagem
+    vis(pap,t,tco-.15,1e9,{dy:18,sc:.95});
+    const pd=eo(pr(t,tim-.2,.45)); um.style.opacity=(1-pd).toFixed(3); dois.style.opacity=pd.toFixed(3);
+    const hs=eo(pr(t,tso-.15,.4))*(1-pd); um.style.background=`rgba(80,208,136,${(.2*hs).toFixed(3)})`; pulse(um,t,tso-.1,.05,.7); pulse(um,t,tcf,.04,.7);
+    vis(btn,t,tde-.15,1e9,{dy:12}); contorno(btn,t,tde,'#D6EFE1','#50D088'); pulse(btn,t,tde+.1,.05,.7);
+  };
+};
+
+// ------------------------------------------------------------------ API para o renderizador
+let RENDER=null;
+window.setup=d=>{D=d;ST.innerHTML='';RENDER=CAPS[d.cap]();return true};
+window.R=t=>{RENDER(t);return true};
+</script></body></html>

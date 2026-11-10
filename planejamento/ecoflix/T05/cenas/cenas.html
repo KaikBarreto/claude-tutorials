@@ -1,17 +1,14 @@
 <!doctype html>
 <html lang="pt-BR"><head><meta charset="utf-8">
-<!-- Kit de ilustração da EcoFlix: estilo + utilidades + duas cenas de exemplo do ferro-velho. Mesmo formato do
-     cenas_modelo.html (docs/09-aula-ilustrada.md): 1280x800 CSS, renderizado quadro a quadro por render_cenas.cjs
-     (window.setup(dados) + window.R(t)); tudo é função do tempo t (nada de transição/animação CSS); cada mudança presa a
-     uma palavra da fala com W(linha, 'palavra'[, ocorrência, 's'|'e']).
-     Na EcoFlix a ilustração entra NO MEIO do capítulo gravado, cobrindo a janela do app, sempre que a fala explica um
-     conceito ([ILUSTRAÇÃO: ...] no roteiro): copie para <tutorial>/edit/cenas/cenas.html, escreva um CAPS[n] por capítulo
-     (várias ilustrações do mesmo capítulo cabem no mesmo CAPS[n], cada uma no seu trecho) e renderize só o trecho dela:
-       node render_cenas.cjs <n> ../../narracao/capNN.json <saida.mp4> --de <at> --ate <at + dur>
-     Antes da voz, tempos estimados: python3 tempos_estimados.py exemplo/cap01.json "fala 0" "fala 1" ...
-     Exemplos: CAPS[1] "Tara e peso líquido" (exemplo/cap01.json) e CAPS[2] "Caixa × competência" (exemplo/cap02.json).
-     Regras: rótulos exatos do app ("Peso bruto", "Tara", "Peso líquido", "Competência", "Regime de Caixa"), dados do
-     mundo da Recicla Vale Metais, objetos genéricos sem marca, nenhum logo de terceiros, texto medido (cabe no cartão). -->
+<!-- T05 "Balança e impressora: o EcoTray" · ilustrações de conceito (kit perfis/ecoflix/cenas/cenas_ecoflix.html).
+     Uma cena por [ILUSTRAÇÃO] do roteiro, presa às palavras com W(linha, 'palavra'); janelas e textos em ilustracoes.json.
+     CAPS[0] Hoje, tudo à mão → com o EcoTray · CAPS[1] A ponte do EcoTray · CAPS[3] O pareamento · CAPS[4] Impressora
+     térmica + Cupom de teste · CAPS[5] A largura do papel · CAPS[6] Leitura contínua · CAPS[7] Peso somente pela balança ·
+     CAPS[8] Peso ao vivo · CAPS[9] Sem o EcoTray · CAPS[10] O driver da impressora. As cenas de Windows (cap02, 04, 06,
+     09) não são ilustração: saem do código do EcoTray (docs/10-cena-windows.md).
+     Renderizar só o trecho: node render_cenas.cjs <n> <capNN.json> <saida.mp4> --html cenas.html --de <at> --ate <at+dur>
+     Desenhos genéricos sem marca (balança, carroça, saco, impressora de cupom, computador, navegador, celular); o único
+     ícone de marca é o do próprio EcoTray (assets/icon.png do app, embutido em ECO), o mesmo da bandeja nas cenas de Windows. -->
 <style>
 @font-face{font-family:M;font-weight:500;src:url(../../../web/fonts/montserrat-latin-500-normal.woff2) format('woff2')}
 @font-face{font-family:M;font-weight:600;src:url(../../../web/fonts/montserrat-latin-600-normal.woff2) format('woff2')}
@@ -286,6 +283,37 @@ function balaoHTML(txt,{cor='#D0D5DD',tx='var(--t)',fundo='#fff',ponta='be',fs=2
   return `<div style="position:relative;display:inline-block;padding:10px 22px;border-radius:18px;background:${fundo};border:2px solid ${cor};
     font-weight:800;font-size:${fs}px;color:${tx};white-space:nowrap;box-shadow:0 8px 20px rgba(16,24,40,.10)">${txt}
     <span style="position:absolute;${pt};width:16px;height:16px;background:${fundo};transform:rotate(45deg)"></span></div>`}
+// impressora de cupom mais baixa (para o cupom grande sair por cima): fenda em y = w*38/230
+function impressoraBaixaSVG(w=520){return `<svg viewBox="0 0 230 128" width="${w}" height="${w*128/230}">
+  <rect x="10" y="114" width="210" height="11" rx="5.5" fill="#101828" opacity=".08"/>
+  <rect x="8" y="44" width="214" height="76" rx="18" fill="#39424E"/>
+  <rect x="22" y="18" width="186" height="46" rx="16" fill="#4A5563"/>
+  <rect x="36" y="34" width="158" height="9" rx="4.5" fill="#1B1F24"/>
+  <rect x="26" y="88" width="40" height="14" rx="7" fill="#2B323B"/><circle cx="198" cy="94" r="6" fill="#50D088"/></svg>`}
+// cupom de teste do app (SettingsIntegrationsContent.tsx:158-176): PDF de 40 mm de altura, textos centrados na largura do
+// papel escolhido (80 mm de fábrica): "Teste de Impressão" (12 pt, linha de base a 15 mm), "Se você vê isso, está
+// funcionando!" (8 pt, 22 mm) e a data e hora (8 pt, 28 mm). k = px por mm; larg = largura do desenho em mm
+function cupomTesteHTML(k,larg,quando,cor='#111'){const pt=v=>v*.3528*k, L=(y,fs,txt)=>`<div style="position:absolute;left:0;width:${larg*k}px;
+  top:${(y*k-fs*.78).toFixed(1)}px;text-align:center;font-weight:500;font-size:${fs.toFixed(1)}px;line-height:1;white-space:nowrap;color:${cor}">${txt}</div>`;
+  return `<div style="position:relative;width:${larg*k}px;height:${40*k}px">${L(15,pt(12),'Teste de Impressão')}
+  ${L(22,pt(8),'Se você vê isso, está funcionando!')}<div class="dt">${L(28,pt(8),quando)}</div></div>`}
+// cupom genérico (cabeçalho, itens com valor à direita, total e rodapé), desenhado para a largura W (px)
+function cupomGenHTML(W,H,cor='#98A2B3',forte='#475467'){const p=Math.round(W*.07),b=(x,y,w,h,c)=>esq(x,y,w,h,c);let r='';
+  r+=b(W/2-W*.26,22,W*.52,16,forte)+b(W/2-W*.18,48,W*.36,10,cor);
+  for(let i=0;i<4;i++){const y=90+i*34;r+=b(p,y,W*(.34+(i%2)*.1),11,cor)+b(W-p-W*.2,y,W*.2,11,forte)}
+  r+=`<div style="position:absolute;left:${p}px;right:${p}px;top:${232}px;border-top:2px dashed #D0D5DD"></div>`;
+  r+=b(p,254,W*.28,15,forte)+b(W-p-W*.3,252,W*.3,18,'#344054')+b(W/2-W*.22,H-34,W*.44,10,cor);
+  return `<div style="position:relative;width:${W}px;height:${H}px">${r}</div>`}
+// régua de medida com as pontas marcadas (largura w px) e a etiqueta
+function reguaHTML(w,txt,cls){return `<div style="position:relative;width:${w}px;height:54px">
+  <div style="position:absolute;left:0;right:0;top:46px;height:3px;border-radius:2px;background:${cls==='a'?'#E0B45C':'#7FD9A6'}"></div>
+  <div style="position:absolute;left:0;top:38px;width:3px;height:16px;border-radius:2px;background:${cls==='a'?'#E0B45C':'#7FD9A6'}"></div>
+  <div style="position:absolute;right:0;top:38px;width:3px;height:16px;border-radius:2px;background:${cls==='a'?'#E0B45C':'#7FD9A6'}"></div>
+  <div style="position:absolute;left:0;right:0;top:0;text-align:center"><span class="tag ${cls}" style="font-size:19px;padding:5px 14px">${txt}</span></div></div>`}
+// viaja só até uma fração do caminho (para parar antes de um obstáculo) e some ali
+function viajaAte(e,path,t,a,d,frac=.7){const p=eio(pr(t,a,d)),L=path.getTotalLength(),pt=path.getPointAtLength(L*frac*p);
+  e.style.transform=`translate(${(pt.x-e.offsetWidth/2).toFixed(2)}px,${(pt.y-e.offsetHeight/2).toFixed(2)}px)`;
+  const op=t<a?0:Math.min(1,cl((t-a)/.18))*(1-eo(pr(t,a+d,.35)));e.style.opacity=op.toFixed(3);e.style.visibility=op<=.001?'hidden':'visible'}
 
 // ------------------------------------------------------------------ CAPS[0] · Hoje, tudo à mão → com o EcoTray
 // fala (cap00): 1 "Hoje, o Marcos lê o peso no visor da balança e digita no sistema. A balança marca trezentos e doze
@@ -420,14 +448,14 @@ CAPS[3]=()=>{
   const mv1=el('<div class="ab" style="left:0;top:0;width:800px;height:500px;transform-origin:0 0"></div>',g);
   const pc1=el(`<div class="ab" style="left:0;top:0">${monitor(true)}</div>`,mv1);
   const tela=pc1.querySelector('.tela'), bz=pc1.querySelector('.bz');
-  const lin=el(`<svg class="ab" style="left:0;top:0;overflow:visible" width="772" height="412"><path d="M 322 186 L 556 186" fill="none"
+  const lin=el(`<svg class="ab" style="left:0;top:0;overflow:visible" width="772" height="412"><path d="M 322 186 L 566 186" fill="none"
     stroke="var(--v)" stroke-width="7" stroke-linecap="round"/></svg>`,tela).querySelector('path');
   const nav=el(`<div class="ab" style="left:26px;top:60px;width:296px;height:252px">${navegadorHTML(296,252,'EcoSistema',24)}</div>`,tela);
   el(esq(24,30,200,14,'#EEF1F4')+esq(24,58,150,14,'#EEF1F4')+esq(24,110,240,14,'#EEF1F4')+esq(24,138,180,14,'#EEF1F4'),nav.querySelector('.navc'));
-  const eco=el(`<div class="card" style="left:556px;top:108px;width:196px;height:156px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px">
+  const eco=el(`<div class="card" style="left:566px;top:108px;width:188px;height:156px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px">
     <img src="${ECO}" width="62" height="62"><div style="font-weight:800;font-size:30px">EcoTray</div></div>`,tela);
   const b1=el(`<div class="ab" style="left:330px;top:58px">${balaoHTML('EcoTray?',{fs:30})}</div>`,tela);
-  const b2=el(`<div class="ab" style="left:316px;top:224px">${balaoHTML('Aqui! v1.7.22',{cor:'var(--v)',tx:'var(--ve)',fundo:'#F4FBF7',ponta:'cd',fs:30})}</div>`,tela);
+  const b2=el(`<div class="ab" style="left:330px;top:226px">${balaoHTML('Aqui! v1.7.22',{cor:'var(--v)',tx:'var(--ve)',fundo:'#F4FBF7',ponta:'cd',fs:27})}</div>`,tela);
   const scan=el('<div class="rip" style="width:120px;height:120px;margin:-60px 0 0 -60px;border-width:4px"></div>',tela); scan.style.left='322px'; scan.style.top='186px';
   // computador 2 (sem EcoTray e sem cabo): cinza, a pergunta fica sem resposta
   const mv2=el('<div class="ab" style="left:730px;top:172px;width:800px;height:500px;transform-origin:0 0;transform:scale(.62)"></div>',g);
@@ -471,6 +499,410 @@ CAPS[3]=()=>{
     vis(imp,t,tim-.15,1e9,{dy:12}); traco(cab2,t,tim-.1,.5);
     if(t>=tli){const k=Math.sin(Math.PI*pr(t,tli,1.0));lin.style.filter=`drop-shadow(0 0 ${(8*k).toFixed(2)}px rgba(80,208,136,.95))`}
     pulse(pc1,t,tli,.035,.8);
+  };
+};
+
+// ------------------------------------------------------------------ CAPS[4] · Impressora térmica (A) e cupom de teste (B)
+// fala (cap04): 0 "Agora a impressora. A impressora térmica, aquela de cupom, vai ligada no computador pelo cabo USB."
+// 4 "Na impressora sai um cupom de teste, com a data e a hora. Saiu o cupom? A ligação está funcionando. Mas repara: ele
+// saiu cortado do lado."
+CAPS[4]=()=>{
+  const QUANDO='10/11/2026, 08:41:07';                      // hora do teste no roteiro (casar com a cena de Windows 4)
+  const g=grupo();
+  // ---- A · a impressora térmica, ligada no computador pelo cabo USB (o EcoTray na bandeja)
+  const A=el('<div class="ab" style="left:0;top:0;width:1280px;height:800px"></div>',g);
+  const titA=titulo(A,'Impressora','Impressora térmica');
+  const usb=caminho('M 548 420 C 640 420, 680 520, 790 520',A,{cor:'#4B5563',lw:7});
+  const pcA=el(`<div class="ab" style="left:190px;top:236px">${pcHTML(360,230,true,24)}</div>`,A);
+  const trA=pcA.querySelector('.trayico');
+  const ripA=el('<div class="rip"></div>',A); ripA.style.left='520px'; ripA.style.top='452px';
+  const FA=fenda(300), gIA=el('<div class="ab" style="left:0;top:0;width:1280px;height:800px"></div>',A);
+  const janA=el(`<div class="ab" style="left:${790+FA.cx-75}px;top:${400+FA.y-150}px;width:150px;height:150px;overflow:hidden;visibility:hidden"></div>`,A);
+  const papA=el(`<div class="ab" style="left:5px;top:6px;width:140px;height:144px;background:#fff;border:1px solid #D0D5DD;border-radius:4px;
+    box-shadow:0 4px 10px rgba(16,24,40,.10)">${esq(16,18,84,10,'#98A2B3')}${esq(16,42,108,8)}${esq(16,60,92,8)}${esq(16,78,108,8)}${esq(16,104,64,10,'#98A2B3')}</div>`,janA);
+  gIA.appendChild(janA);
+  const impA=el(`<div class="ab" style="left:790px;top:400px">${impressoraSVG(300)}</div>`,gIA);
+  const chipU=el(`<div class="ab row" style="left:600px;top:500px;gap:8px;padding:8px 16px;border-radius:999px;background:#fff;border:2px solid #D0D5DD;
+    font-weight:800;font-size:20px;box-shadow:0 6px 14px rgba(16,24,40,.08)">${ic('usb',22,'#344054')}USB</div>`,A);
+  // ---- B · o cupom de teste sai cortado do lado: o desenho é de 80 mm e o papel, de 58 mm (k = 6,07 px por mm)
+  const B=el('<div class="ab" style="left:0;top:0;width:1280px;height:800px"></div>',g);
+  const titB=titulo(B,'Impressora','Cupom de teste');
+  const K=400/58, PX=640-29*K, PY=526;                       // papel de 58 mm centrado; fenda em y 526
+  const fant=el(`<div class="ab" style="left:${PX+58*K}px;top:${PY-40*K}px;width:${22*K}px;height:${40*K}px;overflow:hidden;
+    border:2px dashed #E0B45C;border-left:none;border-radius:0 6px 6px 0;background:rgba(255,245,223,.55)">
+    <div style="position:absolute;left:${-58*K}px;top:0">${cupomTesteHTML(K,80,QUANDO,'#C8A55F')}</div></div>`,B);
+  const janB=el(`<div class="ab" style="left:${PX}px;top:${PY-40*K-8}px;width:${58*K}px;height:${40*K+8}px;overflow:hidden;visibility:hidden"></div>`,B);
+  const papB=el(`<div class="ab" style="left:0;top:8px;width:${58*K}px;height:${40*K}px;background:#fff;border:1px solid #D0D5DD;border-radius:4px;
+    box-shadow:0 6px 16px rgba(16,24,40,.12);overflow:hidden"><div class="ab" style="left:0;top:0">${cupomTesteHTML(K,80,QUANDO)}</div></div>`,janB);
+  const dtB=el(`<div class="ab" style="left:${40*K-112}px;top:${28*K-27}px;width:224px;height:38px;border-radius:8px;background:rgba(80,208,136,.22)"></div>`,papB);
+  papB.querySelector('.ab').before(dtB);
+  const corte=el(`<div class="ab" style="left:${PX+58*K-2}px;top:${PY-40*K-14}px;width:4px;height:${40*K+14}px;border-radius:2px;background:#F2B63D"></div>`,B);
+  const impB=el(`<div class="ab" style="left:349px;top:${PY-582*38/230}px">${impressoraBaixaSVG(582)}</div>`,B);
+  const okB=el(`<div class="ab tag v" style="left:150px;top:364px">${ic('circle-check',24)}Funcionando</div>`,B);
+  const cortB=el(`<div class="ab tag a" style="left:${PX+80*K+24}px;top:364px">Cortado</div>`,B);
+
+  return t=>{
+    // A
+    const a0=W(0,'impressora',2)-.3, ate=W(0,'termica'), acu=W(0,'cupom'), aco=W(0,'computador'), aca=W(0,'cabo'), aus=W(0,'USB'), aF=LE(0)+.6;
+    const showA=t<aF+.5; A.style.display=showA?'':'none';
+    if(showA){
+      posTitulo(titA,t,a0-.6,ate-.15);
+      vis(impA,t,ate-.1,1e9,{dy:16}); papel(janA,papA,t,acu,.9);
+      gIA.style.transform=`translateX(${lerp(-300,0,eio(pr(t,aco-.55,.7))).toFixed(2)}px)`;
+      vis(pcA,t,aco-.15,1e9,{dy:16}); ripple(ripA,t,aco+.35); pulse(trA,t,aco+.35,.25,.8);
+      traco(usb,t,aca-.15,.6); vis(chipU,t,aus-.1,1e9,{dy:8,sc:.9});
+    }
+    // B
+    const b0=W(4,'Na')-.3, bim=W(4,'impressora'), bsa=W(4,'sai'), bda=W(4,'data'), bfu=W(4,'funcionando'), bco=W(4,'cortado'), bF=LE(4)+.8;
+    const showB=t>=b0-1&&t<bF+.5; B.style.display=showB?'':'none';
+    if(showB){
+      posTitulo(titB,t,b0-.6,bim-.15);
+      vis(impB,t,bim-.1,1e9,{dy:16}); papel(janB,papB,t,bsa,1.3);
+      dtB.style.opacity=(eo(pr(t,bda,.4))*(1-eo(pr(t,bfu,.5)))).toFixed(3);
+      vis(okB,t,bfu-.1,1e9,{dy:10});
+      vis(fant,t,bco-.05,1e9,{dy:0,dx:-14,sc:1}); vis(corte,t,bco-.1,1e9,{dy:0,sc:1}); vis(cortB,t,bco+.15,1e9,{dy:10});
+      pulse(corte,t,bco+.1,.06,.8);
+    }
+  };
+};
+
+// ------------------------------------------------------------------ CAPS[5] · A largura do papel
+// fala (cap05): 1 "Com o papel mais estreito que o cupom, o lado sai cortado. Uma dica: cupom cortado quase sempre é a
+// largura, e não a impressora."  (a linha 0, antes, diz: bobina de 58 mm e o sistema com 80 mm)
+CAPS[5]=()=>{
+  const K=5.6, H=360, Y=262;                                 // px por mm; altura do cupom; topo do papel
+  const g=grupo();
+  const tit=titulo(g,'Impressora','A largura do papel');
+  // à esquerda: o cupom de 80 mm desce na bobina de 58 mm e o lado direito fica de fora
+  const X1=100, LG=el('<div class="ab" style="left:0;top:0;width:1280px;height:800px"></div>',g);   // grupo da esquerda (entra no centro)
+  const pap1=el(`<div class="card" style="left:${X1}px;top:${Y}px;width:${58*K}px;height:${H}px;border-radius:6px;box-shadow:0 10px 24px rgba(16,24,40,.10)"></div>`,LG);
+  const r58a=el(`<div class="ab" style="left:${X1}px;top:${Y+H+8}px">${reguaHTML(58*K,'58 mm','v')}</div>`,LG);
+  r58a.firstElementChild.style.transform='scaleY(-1)'; r58a.querySelector('span').style.cssText+=';display:inline-block;transform:scaleY(-1)';
+  const fant=el(`<div class="ab" style="left:${X1+58*K}px;top:${Y}px;width:${22*K}px;height:${H}px;overflow:hidden;border:2px dashed #E0B45C;border-left:none;
+    border-radius:0 6px 6px 0;background:rgba(255,245,223,.6)"><div class="ab" style="left:${-58*K}px;top:0;opacity:.45">${cupomGenHTML(80*K,H)}</div></div>`,LG);
+  const cup1=el(`<div class="ab" style="left:${X1}px;top:${Y}px;width:${80*K}px;height:${H}px"></div>`,LG);
+  const cupL=el(`<div class="ab" style="left:0;top:0;width:${58*K}px;height:${H}px;overflow:hidden">${cupomGenHTML(80*K,H)}</div>`,cup1);
+  const cupR=el(`<div class="ab" style="left:${58*K}px;top:0;width:${22*K}px;height:${H}px;overflow:hidden"><div class="ab" style="left:${-58*K}px;top:0">${cupomGenHTML(80*K,H)}</div></div>`,cup1);
+  const borda=el(`<div class="ab" style="left:0;top:0;width:${80*K}px;height:${H}px;border:2px dashed #E0B45C;border-radius:6px;background:rgba(255,245,223,.35)"></div>`,cup1);
+  cup1.prepend(borda);
+  const r80=el(`<div class="ab" style="left:${X1}px;top:${Y-62}px">${reguaHTML(80*K,'80 mm','a')}</div>`,LG);
+  const corte=el(`<div class="ab" style="left:${X1+58*K-2}px;top:${Y-10}px;width:4px;height:${H+20}px;border-radius:2px;background:#F2B63D"></div>`,LG);
+  // à direita: o mesmo cupom, feito para 58 mm, cabe inteiro
+  const X2=850;
+  const seta=caminho(`M ${X1+80*K+40} ${Y+H/2} L ${X2-46} ${Y+H/2}`,g,{cor:'#98A2B3',lw:4});
+  const ponta=el(`<svg class="ab" style="left:${X2-62}px;top:${Y+H/2-14}px;overflow:visible" width="28" height="28"><path d="M4 2 L18 14 L4 26"
+    fill="none" stroke="#98A2B3" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>`,g);
+  const dir=el('<div class="ab" style="left:0;top:0;width:1280px;height:800px"></div>',g);
+  el(`<div class="card" style="left:${X2}px;top:${Y}px;width:${58*K}px;height:${H}px;border-radius:6px;box-shadow:0 10px 24px rgba(16,24,40,.10)">
+    ${cupomGenHTML(58*K,H)}</div>`,dir);
+  el(`<div class="ab" style="left:${X2}px;top:${Y-62}px">${reguaHTML(58*K,'58 mm','v')}</div>`,dir);
+  const ok=el(`<div class="ab" style="left:${X2}px;top:${Y+H+22}px;width:${58*K}px;text-align:center"><span class="tag v">${ic('circle-check',24)}Inteiro</span></div>`,g);
+
+  return t=>{
+    const t0=W(1,'Com')-.3, tpa=W(1,'papel'), tes=W(1,'estreito'), tcu=W(1,'cupom'), tco=W(1,'cortado'), tc2=W(1,'cortado',2),
+          tla=W(1,'largura'), tim=W(1,'impressora');
+    posTitulo(tit,t,t0-.6,tpa-.15);
+    LG.style.transform=`translateX(${lerp(640-(X1+40*K),0,eio(pr(t,tla-.75,.7))).toFixed(2)}px)`;   // centrado até a direita entrar
+    vis(pap1,t,tpa-.1,1e9,{dy:14}); vis(r58a,t,tpa+.1,1e9,{dy:-8}); pulse(r58a,t,tes,.06,.7);
+    // o cupom de 80 mm aparece por cima, mais largo, e desce no papel na palavra "cortado"
+    vis(r80,t,tcu-.1,1e9,{dy:8});
+    const op=eo(pr(t,tcu-.15,.5)), dn=eio(pr(t,tco-.35,.6));
+    cup1.style.opacity=op.toFixed(3); cup1.style.visibility=op<=.001?'hidden':'visible';
+    cup1.style.transform=`translateY(${lerp(-26,0,dn).toFixed(2)}px)`;
+    const fo=eo(pr(t,tco+.2,.5)); cupR.style.opacity=(1-fo).toFixed(3); borda.style.opacity=(1-fo).toFixed(3);
+    fant.style.opacity=fo.toFixed(3); fant.style.visibility=fo<=.001?'hidden':'visible';
+    vis(corte,t,tco+.15,1e9,{dy:0,sc:1}); pulse(corte,t,tc2,.06,.8);
+    // a largura certa: o mesmo cupom em 58 mm cabe inteiro
+    traco(seta,t,tla-.35,.5); ponta.style.opacity=eo(pr(t,tla-.05,.25)).toFixed(3);
+    vis(dir,t,tla-.1,1e9,{dy:16}); vis(ok,t,tla+.35,1e9,{dy:10}); pulse(ok,t,tim,.06,.8);
+  };
+};
+
+// ------------------------------------------------------------------ CAPS[6] · Leitura contínua
+// fala (cap06): 11 "Com a leitura contínua ligada, depois de capturar, o peso segue mudando até você incluir. Desligada, ele
+// fica fixo. Na Recicla Vale, fica desligada."  (a linha 10, antes: casas decimais = três; o campo mostra 3 casas, como o
+// InputPesoBalanca.tsx faz; o visor da balança tira os zeros, como o formatPesoLED)
+CAPS[6]=()=>{
+  const P0=18.6, PS=[18.9,19.2];                              // o saco de latinha da Dona Cida e duas leituras seguintes
+  const g=grupo();
+  const tit=titulo(g,'Balança','Leitura contínua');
+  const painel=(x,tag,cls)=>{const c=el(`<div class="ab" style="left:${x}px;top:170px;width:480px;height:520px"></div>`,g);
+    el(`<div class="ab" style="left:0;top:0;width:480px;text-align:center"><span class="tag ${cls}">${tag}</span></div>`,c);
+    const card=el(`<div class="card" style="left:0;top:62px;width:480px;height:430px"></div>`,c);
+    const most=el(`<div class="ab most" style="left:100px;top:28px;width:280px;text-align:center"><div class="ml" style="height:20px"><span style="position:static">Balança do pátio</span></div>
+      <div class="mn">${kgd(P0)}</div></div>`,card);
+    const seta=el(`<svg class="ab" style="left:228px;top:160px;overflow:visible" width="24" height="44"><path d="M12 2 L12 36 M4 28 L12 37 L20 28"
+      fill="none" stroke="#98A2B3" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="1 9"/></svg>`,card);
+    const cw=el(`<div class="ab" style="left:50px;top:214px">${campoHTML(380)}</div>`,card);
+    const bt=el(`<div class="ab" style="left:140px;top:320px;width:200px;height:56px;border-radius:12px;background:#2E7D57;color:#fff;font-weight:800;
+      font-size:20px;display:flex;align-items:center;justify-content:center">Incluir Item</div>`,card);
+    const ico=el(`<div class="ab" style="left:0;top:0">${ic('scale',28,'#667085')}</div>`,cw.querySelector('.ci'));
+    return {c,card,most,mn:most.querySelector('.mn'),cw,campo:cw.querySelector('.campo'),cv:cw.querySelector('.cv'),bt,ico}};
+  const A=painel(120,'Ligada','v'), B=painel(680,'Desligada','a');
+  const okA=el(`<div class="ab" style="left:0;top:0;opacity:0">${ic('circle-check',28,'#2E7D57')}</div>`,A.cw.querySelector('.ci'));
+  const ripCap=el('<div class="rip"></div>',A.card); ripCap.style.left='398px'; ripCap.style.top='248px';
+  const ripInc=el('<div class="rip"></div>',A.card); ripInc.style.left='240px'; ripInc.style.top='348px';
+  const rv=el(`<div class="ab" style="left:680px;top:706px;width:480px;text-align:center"><span class="tag v">${ic('circle-check',22)}Na Recicla Vale</span></div>`,g);
+
+  return t=>{
+    const t0=W(11,'Com')-.3, tli=W(11,'ligada'), tca=W(11,'capturar'), tmu=W(11,'mudando'), tin=W(11,'incluir'),
+          tde=W(11,'desligada'), tfi=W(11,'fixo'), tre=W(11,'Recicla'), tde2=W(11,'desligada',2);
+    posTitulo(tit,t,t0-.6,tli-.2);
+    // ligada: captura, e o peso segue a balança até o "Incluir Item"; aí fica
+    vis(A.c,t,tli-.1,1e9,{dy:16}); A.c.style.left=lerp(400,120,eio(pr(t,tde-.7,.7))).toFixed(2)+'px';   // centrado até a outra entrar
+    const m1=tmu, m2=Math.min(tmu+.6,tin-.35);
+    const vA=t<m1?P0:t<m2?PS[0]:PS[1];
+    const sA=kgd(vA); if(A.mn.textContent!==sA) A.mn.textContent=sA;
+    const capA=t>=tca+.15; const fA=capA?kgd(t<m1+.15?P0:t<m2+.15?PS[0]:PS[1],3).replace(' kg',''):'';
+    if(A.cv.textContent!==fA) A.cv.textContent=fA;
+    ripple(ripCap,t,tca); pulse(A.cw,t,tca+.15,.04,.6); pulse(A.most,t,m1,.04,.5); pulse(A.most,t,m2,.04,.5);
+    pulse(A.cw,t,m1+.15,.03,.5); pulse(A.cw,t,m2+.15,.03,.5);
+    ripple(ripInc,t,tin); pulse(A.bt,t,tin,.06,.6);
+    const fx=eo(pr(t,tin+.2,.4)); okA.style.opacity=fx.toFixed(3); A.ico.style.opacity=(1-fx).toFixed(3);
+    A.campo.style.borderColor=mix('#D0D5DD','#50D088',fx);
+    // desligada: captura uma vez e fica fixo, mesmo com a balança mudando
+    vis(B.c,t,tde-.1,1e9,{dy:16});
+    const n1=tfi-.35, n2=tfi+.3;
+    const vB=t<n1?P0:t<n2?PS[0]:PS[1]; const sB=kgd(vB); if(B.mn.textContent!==sB) B.mn.textContent=sB;
+    const fB=kgd(P0,3).replace(' kg',''); if(B.cv.textContent!==fB) B.cv.textContent=fB;
+    pulse(B.most,t,n1,.04,.5); pulse(B.most,t,n2,.04,.5); pulse(B.cw,t,tfi,.05,.8);
+    B.campo.style.borderColor=mix('#D0D5DD','#F2B63D',eo(pr(t,tfi,.4)));
+    // na Recicla Vale, desligada
+    vis(rv,t,tre-.1,1e9,{dy:10});
+    B.card.style.boxShadow=`0 0 0 ${(4*eo(pr(t,tre,.45))).toFixed(2)}px rgba(80,208,136,.35),0 18px 40px rgba(16,24,40,.10),0 3px 8px rgba(16,24,40,.06)`;
+    contorno(B.card,t,tre,'#E1E8E4','#50D088');
+  };
+};
+
+// ------------------------------------------------------------------ CAPS[7] · Peso somente pela balança
+// fala (cap07): 1 "Imagina a carroça do Valdir na balança: trezentos e doze quilos. Com a opção ligada, ninguém digita
+// outro número por cima. Só uma nova leitura da balança troca o peso."
+CAPS[7]=()=>{
+  const PESO=312, TENTA='321';
+  const g=grupo();
+  const tit=titulo(g,'Balança','Peso somente pela balança');
+  // a leitura: da balança até o campo (pontilhado), por onde o peso viaja
+  const rota=caminho('M 548 316 C 640 316, 660 370, 752 370',g,{cor:'#C3C9D0',lw:4,tr:'1 11'});
+  const rotaV=caminho('M 548 316 C 640 316, 660 370, 752 370',g,{op:0});
+  // a balança com a carroça do Valdir
+  const bal=el('<div class="ab" style="left:0;top:0;width:1280px;height:800px"></div>',g);
+  el(`<div class="ab" style="left:70px;top:508px">${plataformaSVG(380)}</div>`,bal);
+  el('<div class="ab" style="left:430px;top:358px;width:10px;height:156px;border-radius:4px;background:#B9C1C9"></div>',bal);
+  el(`<div class="ab" style="left:104px;top:391px">${carrocaSVG(240)}</div>`,bal);
+  const most=el(`<div class="ab most" style="left:330px;top:268px;width:218px;text-align:center"><div class="mn" style="margin-top:0">0 kg</div></div>`,bal);
+  const mn=most.querySelector('.mn');
+  const ripM=el('<div class="rip"></div>',bal); ripM.style.left='439px'; ripM.style.top='312px';
+  // o pedido: o campo de peso, que ganha o cadeado
+  const ped=el(`<div class="card" style="left:752px;top:266px;width:440px;height:172px;padding:22px 26px">
+    <div class="row" style="gap:12px"><div class="ico" style="width:40px;height:40px">${ic('clipboard-list',22)}</div>
+    <div style="font-weight:800;font-size:21px">Pedido</div></div><div style="margin-top:16px">${campoHTML(388)}</div></div>`,g);
+  const campo=ped.querySelector('.campo'), cv=ped.querySelector('.cv');
+  const cad=el(`<div class="ab" style="left:-6px;top:-6px;width:42px;height:42px;border-radius:50%;background:var(--vc);display:flex;align-items:center;
+    justify-content:center">${ic('lock',24,'#2E7D57')}</div>`,ped.querySelector('.ci'));
+  const lig=el(`<div class="ab tag v" style="left:300px;top:20px;font-size:18px;padding:7px 14px">${ic('lock',18)}Ligada</div>`,ped);
+  const ripC=el('<div class="rip"></div>',ped); ripC.style.left='220px'; ripC.style.top='118px';
+  // ninguém digita por cima: o teclado tenta "321" e não entra
+  const tec=el(`<div class="ab" style="left:862px;top:562px">${tecladoSVG(236)}</div>`,g);
+  const fan=el(`<div class="ab" style="left:0;top:0;padding:6px 16px;border-radius:12px;background:#fff;border:2px solid #D0D5DD;font-weight:800;font-size:30px;
+    font-variant-numeric:tabular-nums;color:#344054;white-space:nowrap">${TENTA}</div>`,g);
+  const rotaT=caminho('M 980 572 L 980 480',g,{op:0});
+  const nao=el(`<div class="ab" style="left:1040px;top:463px;opacity:0">${ic('circle-x',34,VERM)}</div>`,g);
+  const pill=el(pilulaHTML(kg(PESO)),g);
+
+  return t=>{
+    const t0=W(1,'Imagina')-.3, tca=W(1,'carroca'), tba=W(1,'balanca'), tqu=W(1,'quilos'), top_=W(1,'opcao'), tli=W(1,'ligada'),
+          tni=W(1,'ninguem'), tdi=W(1,'digita'), tnu=W(1,'numero'), tci=W(1,'cima'), tno=W(1,'nova'), tle=W(1,'leitura'), ttr=W(1,'troca');
+    posTitulo(tit,t,t0-.6,tca-.15);
+    vis(bal,t,tca-.1,1e9,{dy:14}); conta(mn,t,tca+.25,.9,0,PESO); pulse(most,t,tqu,.05,.6);
+    // o pedido entra e o peso viaja da balança até o campo
+    vis(ped,t,tba+.2,1e9,{dy:14}); pontilhado(rota,t,tba+.35,.6);
+    viaja(pill,rotaV,t,tqu-.1,.9);
+    const cheg1=tqu+.8, cheg2=tle+.75;
+    const v=t<cheg1?'':t<cheg2-.35?String(PESO):t<cheg2?'':String(PESO); if(cv.textContent!==v) cv.textContent=v;
+    pulse(campo,t,cheg1,.05,.6);
+    // a opção ligada: o cadeado no campo
+    vis(cad,t,tli-.1,1e9,{dy:0,sc:.6}); vis(lig,t,tli,1e9,{dy:6,sc:.9}); ripple(ripC,t,tli);
+    // o teclado tenta trocar o número e não entra
+    vis(tec,t,tni-.1,1e9,{dy:14});
+    const q=segue(fan,rotaT,t,tnu-.35,.75); const fo=t<tnu-.35?0:Math.min(1,cl((t-tnu+.35)/.2))*(1-eo(pr(t,tci+.1,.4)));
+    fan.style.opacity=fo.toFixed(3); fan.style.visibility=fo<=.001?'hidden':'visible';
+    const er=eo(pr(t,tnu+.35,.3))*(1-eo(pr(t,tci+.1,.4))); fan.style.borderColor=mix('#D0D5DD',VERMB,er); fan.style.color=mix('#344054',VERM,er);
+    nao.style.opacity=er.toFixed(3); pulse(cad,t,tnu+.35,.18,.6);
+    // só uma nova leitura troca o peso: o visor lê de novo e o peso viaja outra vez até o campo
+    ripple(ripM,t,tno); pulse(most,t,tno,.05,.6);
+    if(t>=tle-.2) viaja(pill,rotaV,t,tle-.1,.9);
+    pulse(campo,t,cheg2,.05,.7); campo.style.borderColor=mix('#D0D5DD','#50D088',eo(pr(t,cheg2,.4))*(1-eo(pr(t,ttr+1.6,.6))));
+  };
+};
+
+// ------------------------------------------------------------------ CAPS[8] · Peso ao vivo: computador × celular
+// fala (cap08): 5 "Uma dica: o peso ao vivo fica no computador do EcoTray. No celular, o sistema funciona normal, só sem
+// esse indicador."  (rodapé do app: BalancaStatusBar.tsx, "Balança do pátio · 312 kg" com o ponto verde; no celular não
+// há indicador: AppLayout.tsx:512)
+CAPS[8]=()=>{
+  const PESO=312;
+  const g=grupo();
+  const tit=titulo(g,'Balança','Peso ao vivo');
+  // o cabo da balança chega no computador do EcoTray
+  const GP=el('<div class="ab" style="left:0;top:0;width:1280px;height:800px"></div>',g);   // o computador (entra no centro)
+  const cabo=caminho('M 92 512 C 40 512, 40 640, 96 668',GP,{cor:'#4B5563',lw:5});
+  const bal=el(`<div class="ab" style="left:96px;top:636px;width:64px;height:64px;border-radius:50%;background:#fff;border:2px solid #D0D5DD;display:flex;
+    align-items:center;justify-content:center;box-shadow:0 6px 14px rgba(16,24,40,.08)">${ic('scale',32,'#344054')}</div>`,GP);
+  // o computador: a página do sistema, o rodapé com o peso ao vivo e a barra do Windows com o EcoTray perto do relógio
+  const pc=el(`<div class="ab" style="left:92px;top:176px;width:580px;height:440px">
+    <div style="position:absolute;left:0;top:0;width:580px;height:380px;border-radius:18px;background:#2F3640;padding:12px">
+     <div style="position:relative;width:100%;height:100%;border-radius:8px;background:#fff;overflow:hidden">
+      ${esq(26,26,220,16,'#E6EAEE')}${esq(26,58,420,12,'#EEF1F4')}${esq(26,80,360,12,'#EEF1F4')}
+      <div style="position:absolute;left:26px;top:112px;width:240px;height:120px;border-radius:12px;background:#F4F6F8"></div>
+      <div style="position:absolute;left:286px;top:112px;width:242px;height:120px;border-radius:12px;background:#F4F6F8"></div>
+      <div class="rod row" style="position:absolute;left:0;right:0;top:252px;height:50px;border-top:1px solid var(--l);background:#FAFBFC;padding:0 22px;
+        justify-content:flex-end;gap:10px">${ic('scale',20,'#344054')}<span style="width:11px;height:11px;border-radius:50%;background:#22C55E"></span>
+        <span style="font-weight:700;font-size:20px;white-space:nowrap">Balança do pátio · ${kg(PESO)}</span></div>
+      <div class="row" style="position:absolute;left:0;right:0;bottom:0;height:54px;background:#E1E5EA;justify-content:flex-end;gap:12px;padding:0 18px">
+       <img class="trayico" src="${ECO}" width="30" height="30">
+       <div><div style="width:46px;height:6px;border-radius:3px;background:#A9B1BB"></div><div style="width:34px;height:6px;border-radius:3px;background:#C3C9D0;margin-top:6px"></div></div>
+      </div></div></div>
+    <div style="position:absolute;left:266px;top:380px;width:48px;height:34px;background:#3B4450"></div>
+    <div style="position:absolute;left:196px;top:410px;width:188px;height:16px;border-radius:8px;background:#2F3640"></div></div>`,GP);
+  const rod=pc.querySelector('.rod'), tray=pc.querySelector('.trayico');
+  const ripT=el('<div class="rip"></div>',pc); ripT.style.left='527px'; ripT.style.top='351px';
+  const lPc=el(`<div class="ab" style="left:92px;top:636px;width:580px;text-align:center"><span class="tag v"><img src="${ECO}" width="22" height="22">Computador do EcoTray</span></div>`,GP);
+  // o celular: o sistema funciona, sem o rodapé do peso
+  const cel=el(`<div class="ab" style="left:850px;top:170px">${celularHTML(230,460)}</div>`,g);
+  const tela=cel.querySelector('.tela');
+  el(esq(20,44,150,16,'#E6EAEE')+esq(20,74,170,11,'#EEF1F4')+esq(20,94,130,11,'#EEF1F4')+
+     '<div style="position:absolute;left:20px;top:126px;width:170px;height:96px;border-radius:12px;background:#E9ECEF"></div>'+
+     '<div style="position:absolute;left:20px;top:236px;width:170px;height:96px;border-radius:12px;background:#E9ECEF"></div>',tela);
+  const vazio=el('<div class="ab" style="left:14px;top:388px;width:182px;height:30px;border-radius:9px;border:2px dashed #C3C9D0"></div>',tela);
+  const ok=el(`<div class="ab" style="left:1048px;top:150px;width:54px;height:54px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;
+    box-shadow:0 6px 16px rgba(16,24,40,.12)">${ic('circle-check',38,'#2E7D57')}</div>`,g);
+  const lCel=el(`<div class="ab" style="left:850px;top:650px;width:230px;text-align:center"><span class="tag" style="background:#F2F4F7;color:#344054">${ic('smartphone',20)}Celular</span></div>`,g);
+
+  return t=>{
+    const t0=W(5,'Uma')-.3, tpe=W(5,'peso'), tvi=W(5,'vivo'), tco=W(5,'computador'), tec=W(5,'EcoTray'), tce=W(5,'celular'),
+          tfu=W(5,'funciona'), tse=W(5,'sem'), tin=W(5,'indicador');
+    posTitulo(tit,t,t0-.6,tpe-.2);
+    vis(pc,t,tpe-.15,1e9,{dy:16}); GP.style.transform=`translateX(${lerp(258,0,eio(pr(t,tce-.7,.7))).toFixed(2)}px)`;
+    const r=eo(pr(t,tvi-.1,.4)); rod.style.background=mix('#FAFBFC','#EAF8F0',r); pulse(rod,t,tvi,.04,.7);
+    vis(lPc,t,tco-.1,1e9,{dy:10}); traco(cabo,t,tco,.6); vis(bal,t,tco+.3,1e9,{dy:0,sc:.7});
+    ripple(ripT,t,tec); pulse(tray,t,tec,.3,.7);
+    vis(cel,t,tce-.15,1e9,{dy:16}); vis(lCel,t,tce,1e9,{dy:10});
+    vis(ok,t,tfu-.05,1e9,{dy:0,sc:.6});
+    vis(vazio,t,tse-.05,1e9,{dy:0,sc:.96}); pulse(vazio,t,tin,.05,.7);
+  };
+};
+
+// ------------------------------------------------------------------ CAPS[9] · Sem o EcoTray
+// fala (cap09): 2 "Com o EcoTray fechado, o peso não chega e o cupom não vai pra impressora. Mas o sistema continua
+// funcionando."  3 "O comprovante abre em PDF, pra imprimir do jeito de sempre, e o peso você digita à mão. Com o Peso
+// somente pela balança ligado, a pesagem espera o EcoTray voltar."  (sem EcoTray o comprovante abre o PDF numa aba:
+// useSmartPrint.tsx:27,47-48; com a trava ligada o campo fica travado mesmo sem EcoTray: InputPesoBalanca.tsx:69,262)
+CAPS[9]=()=>{
+  const PESO=312;
+  const g=grupo();
+  const tit=titulo(g,'Conexão','Sem o EcoTray');
+  // do jeito de sempre: do PDF direto para a impressora (pontilhado)
+  const seta=caminho('M 432 560 C 580 560, 760 640, 924 640',g,{cor:'#98A2B3',lw:4,tr:'2 12'});
+  const P=ponte(g,{carga:'carroca'});
+  P.mn.textContent=kg(PESO);
+  const pill=el(pilulaHTML(kg(PESO)),P.viaj), tok=el(fichaHTML(),P.viaj);
+  const off=el(`<div class="ab" style="left:716px;top:322px;width:44px;height:44px;border-radius:50%;background:#F2F4F7;border:2px solid #D0D5DD;
+    display:flex;align-items:center;justify-content:center"><svg width="20" height="20" viewBox="0 0 20 20"><path d="M5 5 L15 15 M15 5 L5 15"
+    stroke="#667085" stroke-width="3" stroke-linecap="round"/></svg></div>`,g);
+  const okS=el(`<div class="ab" style="left:420px;top:150px;width:54px;height:54px;border-radius:50%;background:#fff;display:flex;align-items:center;
+    justify-content:center;box-shadow:0 6px 16px rgba(16,24,40,.12)">${ic('circle-check',38,'#2E7D57')}</div>`,g);
+  const btImp=el(`<div class="ab" style="left:398px;top:488px;width:46px;height:46px;border-radius:12px;background:#fff;border:2px solid #D0D5DD;display:flex;
+    align-items:center;justify-content:center;box-shadow:0 6px 14px rgba(16,24,40,.10)">${ic('printer',24,'#344054')}</div>`,g);
+  const icTec=el(`<div class="ab" style="left:0;top:0;opacity:0">${ic('keyboard',30,'#475467')}</div>`,P.ci);
+  const icCad=el(`<div class="ab" style="left:-38px;top:0;opacity:0">${ic('lock',30,'#8A5A00')}</div>`,P.ci);
+  const icRel=el(`<div class="ab" style="left:0;top:0;opacity:0">${ic('hourglass',30,'#8A5A00')}</div>`,P.ci);
+  const trava=el(`<div class="ab tag a" style="left:80px;top:368px;font-size:17px;padding:7px 14px">${ic('lock',18)}Peso somente pela balança</div>`,g);
+
+  return t=>{
+    const t0=W(2,'Com')-.3, tec=W(2,'EcoTray'), tfe=W(2,'fechado'), tpe=W(2,'peso'), tcu=W(2,'cupom'), tsi=W(2,'sistema'), tfu=W(2,'funcionando');
+    const tco=W(3,'comprovante'), tpdf=W(3,'PDF'), tim=W(3,'imprimir'), tse=W(3,'sempre'), tdi=W(3,'digita'), tps=W(3,'somente')-.3, tes=W(3,'espera'), tvo=W(3,'voltar');
+    posTitulo(tit,t,t0-.6,t0+.2);
+    // a ponte de sempre, acesa
+    for(const e of [P.nav,P.bal,P.imp,P.pc,P.pcl]) vis(e,t,t0+.15,1e9,{dy:14});
+    for(const [p,a] of [[P.cB,t0+.35],[P.cP,t0+.4],[P.vA,t0+.5],[P.vB,t0+.55]]) traco(p,t,a,.5);
+    // EcoTray fechado: o computador do meio apaga e as linhas ficam cinza
+    const f=eo(pr(t,tfe,.6));
+    P.pc.style.filter=`grayscale(${f.toFixed(3)})`; P.pc.style.opacity=(1-.55*f).toFixed(3); P.pcl.style.opacity=(1-.55*f).toFixed(3);
+    for(const p of [P.vA,P.vB]) p.style.stroke=mix('#50D088','#E4E7EC',f);
+    for(const p of [P.cB,P.cP]) p.style.stroke=mix('#4B5563','#D0D5DD',f);
+    vis(off,t,tfe+.2,1e9,{dy:0,sc:.6});
+    // o peso não chega e o cupom não vai: param no EcoTray fechado e somem
+    viajaAte(pill,P.r1,t,tpe-.1,.8,.62); viajaAte(tok,P.r3,t,tcu-.15,.7,.6);
+    // o sistema continua funcionando
+    vis(okS,t,tfu-.1,1e9,{dy:0,sc:.6}); contorno(P.nav.firstElementChild,t,tsi,'#E1E8E4','#50D088');
+    // o comprovante abre em PDF, com o botão de imprimir, e vai do jeito de sempre para a impressora
+    vis(P.tagPdf,t,tpdf-.1,1e9,{dy:0,sc:.9}); vis(btImp,t,tpdf+.15,1e9,{dy:0,sc:.7}); pulse(btImp,t,tim,.1,.7);
+    pontilhado(seta,t,tim+.1,.8); papel(P.jan,P.pap,t,tse,.8);
+    // o peso digitado à mão; com o Peso somente pela balança ligado, o campo trava e espera o EcoTray
+    const k0=tdi-.1, st=.22, nd=t<k0?0:Math.min(3,1+Math.floor((t-k0)/st));
+    const tr=eo(pr(t,tps,.5));
+    const txt=String(PESO).slice(0,nd); if(P.cv.textContent!==txt) P.cv.textContent=txt;
+    P.cv.style.opacity=(1-tr).toFixed(3);
+    icTec.style.opacity=(eo(pr(t,k0,.3))*(1-tr)).toFixed(3);
+    vis(trava,t,tps-.1,1e9,{dy:8}); icCad.style.opacity=tr.toFixed(3); icRel.style.opacity=eo(pr(t,tes-.1,.4)).toFixed(3);
+    P.campo.style.borderColor=mix('#D0D5DD','#F2B63D',tr); P.campo.style.background=mix('#FFFFFF','#FFF5DF',tr);
+    pulse(icRel,t,tes,.15,.8); pulse(P.pcl,t,tvo,.06,.8);
+  };
+};
+
+// ------------------------------------------------------------------ CAPS[10] · O driver da impressora
+// fala (cap10): 1 "Driver é o programa que ensina o computador a falar com a impressora. Essa foi instalada com o driver
+// genérico do Windows, que só imprime texto. E o cupom do sistema sai como imagem."
+// (nomes das impressoras como na lista do app, linha 0: "POS-58" e "Generic / Text Only"; motivo: print_manager.py:87-92)
+CAPS[10]=()=>{
+  const g=grupo();
+  const tit=titulo(g,'Impressora','O driver da impressora');
+  const cupImg=(w,h,vazio)=>`<div style="position:relative;width:${w}px;height:${h}px;background:#fff;border:1px solid #D0D5DD;border-radius:5px;
+    box-shadow:0 4px 10px rgba(16,24,40,.10);overflow:hidden">${vazio?'':`<div class="ci2" style="position:absolute;inset:0">
+    <div style="position:absolute;left:${w/2-w*.14}px;top:${h*.07}px;width:${w*.28}px;height:${w*.28}px;border-radius:50%;background:#98A2B3"></div>
+    ${esq(w*.12,h*.36,w*.76,h*.045,'#C3C9D0')}${esq(w*.12,h*.46,w*.5,h*.045,'#C3C9D0')}${esq(w*.12,h*.56,w*.62,h*.045,'#C3C9D0')}
+    ${esq(w*.12,h*.7,w*.3,h*.06,'#344054')}${esq(w*.58,h*.7,w*.3,h*.06,'#344054')}${esq(w*.3,h*.85,w*.4,h*.04,'#C3C9D0')}</div>`}</div>`;
+  // caminhos: do computador pelo driver até cada impressora
+  const lT=caminho('M 372 410 C 462 410, 468 290, 548 290 L 800 290 C 850 290, 860 298, 912 298',g,{op:0});   // rotas (invisíveis)
+  const lB=caminho('M 372 450 C 462 450, 468 590, 548 590 L 800 590 C 850 590, 860 588, 912 588',g,{op:0});
+  const lT1=caminho('M 372 410 C 462 410, 468 290, 560 290',g,{cor:'#98A2B3',lw:5}), lT2=caminho('M 790 290 C 850 290, 860 298, 912 298',g,{cor:'#98A2B3',lw:5});
+  const lB1=caminho('M 372 450 C 462 450, 468 590, 560 590',g,{cor:'#98A2B3',lw:5}), lB2=caminho('M 790 590 C 850 590, 860 588, 912 588',g,{cor:'#98A2B3',lw:5});
+  const vT=el('<div class="ab" style="left:0;top:0;width:1280px;height:800px"></div>',g);   // o que viaja, por trás dos drivers
+  const tokT=el(`<div class="ab" style="left:0;top:0">${cupImg(44,56)}</div>`,vT), tokB=el(`<div class="ab" style="left:0;top:0">${cupImg(44,56)}</div>`,vT);
+  const pc=el(`<div class="ab" style="left:72px;top:330px">${pcHTML(300,200,false)}</div>`,g);
+  const cup=el(`<div class="ab" style="left:166px;top:346px">${cupImg(112,150)}</div>`,g);
+  const tagImg=el(`<div class="ab" style="left:72px;top:586px;width:300px;text-align:center"><span class="tag v">${ic('image',22)}Imagem</span></div>`,g);
+  const drv=(y,txt,cls,ico)=>el(`<div class="card row" style="left:548px;top:${y-32}px;width:274px;height:64px;padding:0 18px;gap:12px;
+    ${cls==='a'?'border:2px solid #F2B63D;background:#FFFBF0':''}"><div class="ico ${cls}" style="width:38px;height:38px">${ic(ico,22)}</div>
+    <div style="font-weight:800;font-size:21px;white-space:nowrap">${txt}</div></div>`,g);
+  const dT=drv(290,'Driver','v','cog'), dB=drv(590,'Driver genérico','a','type');
+  const soTx=el(`<div class="ab" style="left:548px;top:634px;width:274px;text-align:center"><span class="tag a" style="font-size:18px;padding:6px 14px">só texto</span></div>`,g);
+  // as impressoras, com os nomes da lista do app; o papel sai por cima
+  const imp=(y,nome,cls)=>{const w=200,F=fenda(w);
+    const jan=el(`<div class="ab" style="left:${900+F.cx-52}px;top:${y+F.y-112}px;width:104px;height:112px;overflow:hidden;visibility:hidden"></div>`,g);
+    const pap=el(`<div class="ab" style="left:2px;top:4px">${cupImg(100,130,nome!=='POS-58')}</div>`,jan);
+    const i=el(`<div class="ab" style="left:900px;top:${y}px">${impressoraSVG(w)}</div>`,g);
+    const tg=el(`<div class="ab" style="left:860px;top:${y+156}px;width:280px;text-align:center"><span class="tag ${cls}" style="font-size:18px;padding:7px 14px">${nome}</span></div>`,g);
+    return {jan,pap,i,tg}};
+  const IT=imp(222,'POS-58','v'), IB=imp(512,'Generic / Text Only','a');
+
+  return t=>{
+    const t0=W(1,'Driver')-.3, tpr=W(1,'programa'), tco=W(1,'computador'), tim=W(1,'impressora'), tes=W(1,'Essa'), tge=W(1,'generico'),
+          ttx=W(1,'texto'), tcu=W(1,'cupom'), tsa=W(1,'sai'), tig=W(1,'imagem');
+    posTitulo(tit,t,t0-.6,t0+.25);
+    // o driver ensina o computador a falar com a impressora (um caminho)
+    vis(dT,t,t0+.35,1e9,{dy:10}); vis(pc,t,tco-.15,1e9,{dy:14}); vis(IT.i,t,tim-.15,1e9,{dy:14});
+    traco(lT1,t,tco+.1,.6); traco(lT2,t,tim-.25,.4);
+    // essa foi instalada com o driver genérico, que só imprime texto
+    vis(IB.i,t,tes-.1,1e9,{dy:14}); vis(IT.tg,t,tes,1e9,{dy:8}); vis(IB.tg,t,tes+.1,1e9,{dy:8});
+    traco(lB1,t,tge-.35,.6); traco(lB2,t,tge+.05,.4); vis(dB,t,tge-.1,1e9,{dy:10}); vis(soTx,t,ttx-.1,1e9,{dy:8}); pulse(dB,t,ttx,.05,.7);
+    // o cupom sai como imagem: pelo driver da POS-58 sai igual; pelo genérico a imagem não passa e o papel sai em branco
+    vis(cup,t,tcu-.1,1e9,{dy:10,sc:.9}); vis(tagImg,t,tig-.15,1e9,{dy:8});
+    const a=tsa-.1, d=.65;
+    viaja(tokT,lT,t,a,d); viaja(tokB,lB,t,a,d);
+    const qb=eio(pr(t,a,d)); const cb=tokB.querySelector('.ci2'); if(cb) cb.style.opacity=(1-cl((qb-.45)/.15)).toFixed(3);
+    papel(IT.jan,IT.pap,t,a+d-.05,.7); papel(IB.jan,IB.pap,t,a+d-.05,.7);
+    pulse(IB.tg,t,a+d+.5,.06,.7);
   };
 };
 // ------------------------------------------------------------------ API para o renderizador

@@ -1,0 +1,54 @@
+{
+ "_doc": "T1 (Sua conta e sua empresa), estado de partida dos caps 0 a 5: a empresa como sai de um cadastro novo (nome, o e-mail do Rafael e o telefone do cadastro; sem CNPJ, endereço, logo, ícone, frase nem condição de pagamento); o resto do mundo como está. Preferências do Rafael do plano do T1 (Usabilidade só mostrada: Perguntar sempre, impureza/tara no valor ligada, sem arredondar, sem lucro no comprovante) e o aceite dos termos em 03/08/2026 08:47:12. Ver planejamento/ecoflix/T01/plano.md, 'Mundo'.",
+ "_patch": {
+  "companies": [
+   {
+    "match": {"id": "@id:company.reciclavale"},
+    "set": {
+     "cnpj": null,
+     "email": "rafael@reciclavalemetais.example",
+     "phone": "(12) 90000-4410",
+     "address": null,
+     "address_2": null,
+     "address_visibility_settings": null,
+     "logo_url": null,
+     "icon_url": null,
+     "receipt_phrase": null,
+     "show_receipt_phrase": false,
+     "receipt_phrase_align_left": false,
+     "show_name_in_documents": true,
+     "show_cnpj_in_documents": true,
+     "show_phone_in_documents": true,
+     "show_email_in_documents": true,
+     "show_address_in_documents": true,
+     "order_number_reset": "none",
+     "order_number_scope": "shared",
+     "order_number_template": "#{NUM}",
+     "invert_customer_supplier_terms": false,
+     "multi_cash_enabled": true,
+     "require_entity_on_weighing_ticket": false
+    }
+   }
+  ],
+  "profiles": [
+   {
+    "match": {"id": "@id:user.rafael"},
+    "set": {
+     "terms_accepted_at": "2026-08-03T11:47:12.000Z",
+     "must_change_password": false,
+     "default_payment_method": "ask",
+     "allow_edit_order_items": true,
+     "round_payment_sale": false,
+     "round_payment_purchase": false,
+     "multiple_price_tables_enabled": true,
+     "impurity_deducts_from_value": true,
+     "show_profit_on_receipt": false,
+     "navigation_style": "sidebar"
+    }
+   }
+  ]
+ },
+ "_remove": {
+  "payment_conditions": [{"company_id": "@id:company.reciclavale"}]
+ }
+}

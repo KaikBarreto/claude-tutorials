@@ -36,7 +36,7 @@ Uma dica: não lance uma compra nova só com a diferença. Edite o pedido: o sis
 5: """E quando o pedido nem devia existir? A compra do Valdir saiu duas vezes, com um minuto de diferença.
 Em Excluir, antes de apagar, o sistema mostra tudo que vai desfazer: os duzentos e oitenta quilos de ferro misto saem do estoque, e os duzentos e dez reais voltam pro caixa.
 Excluir pedido. Como o caixa de hoje está aberto, o pedido sai de vez.
-Agora repara nesta compra de três de novembro, da Cooperativa Recomeço. Ela também saiu duas vezes, e a cópia foi excluída no dia cinco, com o caixa do dia três já fechado.
+Agora repara nesta compra de três de novembro, da Aparecida. Ela também saiu duas vezes, e a cópia foi excluída no dia cinco, com o caixa do dia três já fechado.
 Aí o sistema não mexe no caixa antigo. Ele lança a correção no caixa do dia em que excluiu, e deixa o pedido na lista, com o selo Estornado e a data.
 O pedido estornado não entra nos totais, e não dá mais pra editar nem excluir. Ele fica como o rastro de que existiu.
 E quem excluiu o quê, e quando, fica no Histórico de Exclusões. Só o administrador abre: em Configurações, Empresa, Ver histórico.""",

@@ -1,0 +1,608 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<!-- T26 · CRM/Kanban: as ilustrações de conceito, no kit da EcoFlix (perfis/ecoflix/cenas/cenas_ecoflix.html; docs/09-aula-ilustrada.md,
+     "Ilustração de conceito no meio do capítulo"). 1280x800 CSS, window.setup(dados) + window.R(t); tudo é função do tempo e cada
+     mudança fica presa a uma palavra com W(linha, 'palavra'). Uma janela por cena (ilustracoes.json); até a voz chegar, os tempos são
+     os estimados de tempos/capNN.json.
+     Cenas: CAPS[0] da conversa ao cartão · CAPS[1] o que é um funil · CAPS[2] o que cada cartão soma · CAPS[3] negociação, ganho e
+     perda · CAPS[5] a porta de saída · CAPS[6] gatilho e ações (fala 1) e só quando avança (fala 9) · CAPS[7] modelo e cópia ·
+     CAPS[9] a regra de onde sai · CAPS[11] uma tarefa, dois lugares.
+     O quadro aparece só em esquema (colunas e cartões sem texto, com os nomes das etapas): nunca a tela do app. Celular genérico,
+     com a tela lisa, sem logo de aplicativo. -->
+<style>
+@font-face{font-family:M;font-weight:500;src:url(../../../web/fonts/montserrat-latin-500-normal.woff2) format('woff2')}
+@font-face{font-family:M;font-weight:600;src:url(../../../web/fonts/montserrat-latin-600-normal.woff2) format('woff2')}
+@font-face{font-family:M;font-weight:700;src:url(../../../web/fonts/montserrat-latin-700-normal.woff2) format('woff2')}
+@font-face{font-family:M;font-weight:800;src:url(../../../web/fonts/montserrat-latin-800-normal.woff2) format('woff2')}
+@font-face{font-family:M;font-weight:500;src:url(../../../web/fonts/montserrat-latin-ext-500-normal.woff2) format('woff2');unicode-range:U+0100-024F}
+@font-face{font-family:M;font-weight:700;src:url(../../../web/fonts/montserrat-latin-ext-700-normal.woff2) format('woff2');unicode-range:U+0100-024F}
+/* ---------------------------------------------------------------- paleta EcoFlix (marca: acento #50D088, escuro #121212)
+   --v  acento: preenchimentos, barras, contornos de destaque (nunca texto sobre branco: contraste baixo)
+   --ve verde escuro: texto e ícone verde sobre branco (contraste 5,0)   --vc verde claro: fundo de ícone/resultado
+   --a  âmbar: o SEGUNDO conceito da cena (ex.: competência x caixa)     --ae texto âmbar (5,9)   --ac âmbar claro
+   --t  texto (o escuro da marca)   --c texto secundário (4,8)   --l linhas   --e painel escuro (mostrador) */
+:root{--v:#50D088;--ve:#2E7D57;--vc:#EAF8F0;--vm:#A9E9C6;--a:#F2B63D;--ae:#8A5A00;--ac:#FFF5DF;
+  --t:#121212;--c:#6B7280;--l:#E6E9EE;--e:#121212}
+*{box-sizing:border-box;margin:0;padding:0;transition:none!important;animation:none!important}
+html,body{width:1280px;height:800px;overflow:hidden;background:#fff}
+body{font-family:M,sans-serif;color:var(--t);-webkit-font-smoothing:antialiased}
+#st{position:absolute;inset:0;overflow:hidden;background:
+  radial-gradient(1100px 650px at 92% -12%,rgba(80,208,136,.09),transparent 62%),
+  radial-gradient(900px 600px at -12% 112%,rgba(80,208,136,.06),transparent 60%),#fff}
+.g{position:absolute;left:0;top:0;width:1280px;height:800px;transform-origin:640px 400px}
+.ab{position:absolute}
+.row{display:flex;align-items:center}
+/* título da cena: área (kicker) + conceito; sozinho fica grande no centro e sobe quando o desenho entra */
+.kick{font-weight:700;font-size:15px;letter-spacing:.3em;color:var(--ve);text-transform:uppercase}
+.h{font-weight:800;font-size:46px;letter-spacing:-.01em;line-height:1.1}
+/* cartão, chip, etiqueta, ícone */
+.card{position:absolute;background:#fff;border:1px solid #E1E8E4;border-radius:18px;
+  box-shadow:0 18px 40px rgba(16,24,40,.10),0 3px 8px rgba(16,24,40,.06)}
+.ic{display:inline-flex;align-items:center;justify-content:center;flex:none}
+.ic svg{width:100%;height:100%}
+.ico{display:flex;align-items:center;justify-content:center;flex:none;border-radius:14px;background:var(--vc);color:var(--ve)}
+.ico.a{background:var(--ac);color:var(--ae)}
+.tag{display:inline-flex;align-items:center;gap:8px;padding:9px 18px;border-radius:999px;font-weight:800;font-size:20px;white-space:nowrap}
+.tag.v{background:var(--vc);color:var(--ve)} .tag.a{background:var(--ac);color:var(--ae)}
+.lbl{font-weight:700;font-size:17px;color:var(--c)}
+.num{font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+.op{position:absolute;width:60px;height:60px;border-radius:50%;background:#F2F4F7;color:var(--t);display:flex;
+  align-items:center;justify-content:center;font-weight:800;font-size:34px;line-height:1}
+/* mostrador da balança (painel escuro, número no acento) */
+.most{background:var(--e);border-radius:16px;padding:16px 22px 18px;box-shadow:0 16px 34px rgba(16,24,40,.22)}
+.most .ml{position:relative;height:20px;font-weight:700;font-size:15px;letter-spacing:.22em;color:#A9E9C6;text-transform:uppercase}
+.most .ml span{position:absolute;left:0;top:0;white-space:nowrap}
+.most .mn{margin-top:6px;font-weight:800;font-size:44px;color:var(--v);font-variant-numeric:tabular-nums;white-space:nowrap}
+.rip{position:absolute;width:56px;height:56px;margin:-28px 0 0 -28px;border-radius:50%;border:3px solid var(--v);opacity:0}
+/* T20: rótulo embaixo do desenho, legenda curta, chips (1 a 3 palavras), balão de conversa, selo redondo */
+.rot{font-weight:800;font-size:23px;text-align:center;white-space:nowrap}
+.sub{font-weight:700;font-size:20px;color:#4B5563;text-align:center;white-space:nowrap}
+.tag.c{background:#F2F4F7;color:#4B5563}
+.chip{display:inline-flex;align-items:center;gap:9px;padding:10px 19px 10px 16px;border-radius:999px;font-weight:800;font-size:20px;
+  white-space:nowrap;background:#fff;border:1.5px solid #DDE5E0;color:var(--t);box-shadow:0 6px 14px rgba(16,24,40,.07)}
+.chip.v{background:var(--vc);border-color:var(--vm);color:var(--ve)}
+.chip.a{background:var(--ac);border-color:#F6D58E;color:var(--ae)}
+.chip.c{background:#F2F4F7;border-color:#E1E5EA;color:#4B5563}
+.chip.r{background:#FDECEA;border-color:#F6C5BF;color:#B42318}
+.bal{position:absolute;background:#fff;border:1.5px solid #DCE4DF;border-radius:18px;box-shadow:0 12px 26px rgba(16,24,40,.10)}
+.rabo{position:absolute;width:18px;height:18px;background:inherit;border-right:1.5px solid #DCE4DF;border-bottom:1.5px solid #DCE4DF}
+.badge{position:absolute;width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  box-shadow:0 6px 14px rgba(16,24,40,.16)}
+.badge.v{background:var(--vc);border:3px solid var(--v);color:var(--ve)}
+.badge.a{background:var(--ac);border:3px solid var(--a);color:var(--ae)}
+</style></head>
+<body><div id="st"></div>
+<script>
+// ------------------------------------------------------------------ utilidades (as do cenas_modelo.html + as da EcoFlix)
+const cl=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
+const eo=x=>1-Math.pow(1-cl(x),3);
+const eio=x=>{x=cl(x);return x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2};
+const pr=(t,a,d=.45)=>cl((t-a)/d);
+const lerp=(a,b,p)=>a+(b-a)*p;
+const $=s=>document.querySelector(s);
+const ST=document.getElementById('st');
+function el(html,parent=ST){const d=document.createElement('div');d.innerHTML=html.trim();let f=null;for(const n of [...d.childNodes]){parent.appendChild(n);if(!f&&n.nodeType===1)f=n}return f}
+function grupo(){return el('<div class="g"></div>')}
+function ic(n,px,cor){const s=(window.ICONS||{})[n]||'';return `<span class="ic" style="width:${px}px;height:${px}px;${cor?'color:'+cor:''}">${s}</span>`}
+function hex(c){c=c.replace('#','');return[0,2,4].map(i=>parseInt(c.substr(i,2),16))}
+function mix(a,b,p){const A=hex(a),B=hex(b);return `rgb(${A.map((v,i)=>Math.round(v+(B[i]-v)*cl(p))).join(',')})`}
+// aparece em a, some em b (opacidade + leve subida + escala): a entrada e a saída suaves de tudo
+function vis(e,t,a,b=1e9,o={}){
+  const din=o.din??.5,dout=o.dout??.4,dy=o.dy??16,dx=o.dx??0,sc=o.sc??.985;
+  const p=eo(pr(t,a,din)),q=1-eo(pr(t,b,dout)),op=Math.min(p,q);
+  e.style.opacity=op.toFixed(4);e.style.visibility=op<=.001?'hidden':'visible';
+  const s=sc+(1-sc)*p - (1-q)*(1-sc);
+  e.style.transform=`translate(${((1-p)*dx).toFixed(2)}px,${((1-p)*dy-(1-q)*dy*.5).toFixed(2)}px) scale(${s.toFixed(4)})`;
+  return op;
+}
+function ripple(r,t,a){const p=pr(t,a,.7);r.style.opacity=(p>0&&p<1)?(.6*(1-p)).toFixed(3):0;r.style.transform=`scale(${(.4+2.0*eo(p)).toFixed(3)})`}
+function pulse(e,t,a,amp=.045,dur=.9){const p=pr(t,a,dur);e.style.scale=(p>0&&p<1)?(1+amp*Math.sin(Math.PI*p)).toFixed(4):''}
+function digita(e,txt,t,a,b){const p=cl((t-a)/Math.max(.05,b-a));const n=Math.round(p*txt.length);
+  const car=(p>0&&p<1)||(Math.floor(t*2.2)%2===0&&p<1.2&&t>=a)?'<span style="color:var(--v);font-weight:500">|</span>':'';
+  e.innerHTML=(txt.slice(0,n)||'')+(t>=a&&t<b+.8?car:'');}
+// EcoFlix: números e dinheiro no jeito brasileiro; contagem suave de um número; traço que se desenha; arco; contorno
+const NF=new Intl.NumberFormat('pt-BR');
+const kg=v=>NF.format(Math.round(v))+' kg';
+const brl=v=>'R$ '+v.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
+function conta(e,t,a,d,v0,v1,fmt=kg){const p=eo(pr(t,a,d));const s=fmt(lerp(v0,v1,p));if(e.textContent!==s)e.textContent=s;return p}
+function traco(p,t,a,d=.8){if(!p._L){p._L=p.getTotalLength();p.style.strokeDasharray=p._L}const q=eio(pr(t,a,d));p.style.strokeDashoffset=(p._L*(1-q)).toFixed(2);p.style.opacity=q>0?1:0;return q}
+function arco(e,t,a,d,x0,y0,x1,y1,h=-80,rot=0){const p=eio(pr(t,a,d));const x=lerp(x0,x1,p),y=lerp(y0,y1,p)+h*4*p*(1-p);
+  e.style.transform=`translate(${x.toFixed(2)}px,${y.toFixed(2)}px) rotate(${(rot*p).toFixed(2)}deg)`;return p}
+function contorno(e,t,a,de,para,d=.45){e.style.borderColor=mix(de,para,eo(pr(t,a,d)))}
+// título padrão da cena: grande no centro enquanto está sozinho, sobe para o alto quando o desenho entra (em "sobe")
+function titulo(g,kick,txt){return el(`<div class="ab" style="left:0;top:0;width:1280px;text-align:center">
+  <div class="kick">${kick}</div><div class="h" style="margin-top:12px">${txt}</div></div>`,g)}
+function posTitulo(e,t,a,sobe,sai=1e9){vis(e,t,a,sai,{dy:14});const p=eio(pr(t,sobe,.7));
+  e.style.top=lerp(318,46,p).toFixed(2)+'px';e.style.scale=lerp(1.12,1,p).toFixed(4)}
+
+// ------------------------------------------------------------------ tempos da fala (capNN.json do proc.py ou estimado)
+let D=null;
+const norm=w=>w.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9%./-]+/g,'');
+function W(linha,palavra,n=1,campo='s'){
+  const alvo=norm(palavra);let k=0;
+  for(const w of D.words){if(w.linha===linha&&norm(w.w).replace(/[.,]$/,'')===alvo){k++;if(k===n)return w[campo]}}
+  for(const w of D.words){if(w.linha===linha&&norm(w.w).startsWith(alvo)){k++;if(k>=n)return w[campo]}}
+  console.warn('palavra não achada',linha,palavra);return L(linha);
+}
+const L=i=>(D.linhas[i]||{s:0}).s, LE=i=>(D.linhas[i]||{e:D.dur}).e;
+
+// ------------------------------------------------------------------ desenhos genéricos (sem marca)
+// caminhão de lado (frente para a direita), com a carga de sucata em pedaços (.pd) que podem ser descarregados
+function caminhao(){
+  const pd=[ // [forma, cor, centro da peça, destino no monte atrás do caminhão (deslocamento do centro e giro)]
+    ['<polygon points="28,90 44,52 88,42 100,90"/>','#8C5A3C',[64,66],[-224,148,6]],
+    ['<polygon points="82,90 102,36 146,48 154,90"/>','#6F7983',[118,63],[-318,122,12]],
+    ['<rect x="118" y="44" width="112" height="16" rx="8" transform="rotate(-8 174 52)"/>','#9AA3AD',[174,52],[-334,98,-18]],
+    ['<polygon points="148,90 170,54 212,44 232,90"/>','#A0694A',[190,67],[-425,148,-8]],
+    ['<polygon points="210,90 232,40 276,54 286,90"/>','#4F5861',[248,65],[-373,120,-10]],
+    ['<polygon points="258,90 282,60 308,66 312,90"/>','#8A949E',[285,75],[-375,148,4]],
+    ['<g><circle cx="192" cy="64" r="19"/><circle cx="192" cy="64" r="7" fill="#8A949E"/></g>','#5E6670',[192,64],[-242,155,200]],
+    ['<polygon points="40,70 60,50 84,64 64,86"/>','#B07A55',[62,68],[-307,100,30]]];
+  const pecas=pd.map(([f,c,[cx,cy],[dx,dy,r]])=>`<g class="pd" data-cx="${cx}" data-cy="${cy}" data-dx="${dx}" data-dy="${dy}" data-r="${r}" fill="${c}">${f}</g>`).join('');
+  const roda=x=>`<g class="roda" data-x="${x}" transform="translate(${x},196)"><circle r="26" fill="#1B1F24"/><circle r="12" fill="#9AA3AD"/>
+    <rect x="-2.5" y="-23" width="5" height="10" rx="2" fill="#5B636C"/><rect x="-2.5" y="13" width="5" height="10" rx="2" fill="#5B636C"/></g>`;
+  return `<svg viewBox="0 0 500 230" width="500" height="230" style="overflow:visible">
+    <g class="carga">${pecas}</g>
+    <rect x="18" y="86" width="304" height="88" rx="6" fill="#7E8994"/>
+    <rect x="16" y="82" width="308" height="11" rx="4" fill="#68727D"/>
+    <g stroke="#707A85" stroke-width="3">${[78,138,198,258].map(x=>`<line x1="${x}" y1="98" x2="${x}" y2="168"/>`).join('')}</g>
+    <path d="M334,176 L334,76 Q334,64 346,64 L412,64 L462,116 L472,121 Q480,124 480,134 L480,176 Z" fill="#2F3640"/>
+    <path d="M348,78 L406,78 L444,116 L348,116 Z" fill="#D7E5ED"/>
+    <rect x="470" y="142" width="10" height="11" rx="2" fill="#F2B63D"/>
+    <rect x="12" y="170" width="472" height="15" rx="4" fill="#23282E"/>
+    ${roda(92)}${roda(158)}${roda(416)}
+  </svg>`;
+}
+
+// ------------------------------------------------------------------ desenhos genéricos que faltavam no kit (os mesmos da T20)
+// celular com a tela lisa (nunca a tela de um app), porta que abre, barra, chip, X desenhado, voo, poe, pulsos, seta larga.
+let UID=0; const uid=p=>`${p}${++UID}`;
+function celular(w=130){const h=Math.round(w*240/130), g=uid('cg'), c=uid('cc');   // 130x240 na escala 1
+  return `<svg viewBox="0 0 130 240" width="${w}" height="${h}" style="display:block;overflow:visible">
+    <defs><linearGradient id="${g}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F6FBF8"/><stop offset="1" stop-color="#D9EEE2"/></linearGradient>
+      <clipPath id="${c}"><rect x="8" y="10" width="114" height="220" rx="16"/></clipPath></defs>
+    <rect x="0" y="0" width="130" height="240" rx="22" fill="#1F2630"/>
+    <g clip-path="url(#${c})"><rect x="8" y="10" width="114" height="220" fill="url(#${g})"/><polygon points="80,10 114,10 30,230 -4,230" fill="#fff" opacity=".45"/></g>
+    <rect x="49" y="17" width="32" height="7" rx="3.5" fill="#1F2630"/>
+  </svg>`;
+}
+function porta(w=200,h=300){                                                // moldura, vão iluminado e a folha (abre com abre())
+  const iw=w-28, ih=h-14;
+  return `<div style="position:relative;width:${w}px;height:${h}px">
+    <div class="ab" style="left:0;top:0;width:${w}px;height:${h}px;border-radius:12px 12px 0 0;background:#5B6670"></div>
+    <div class="ab" style="left:14px;top:14px;width:${iw}px;height:${ih}px;border-radius:5px 5px 0 0;background:radial-gradient(130% 95% at 50% 100%,#C9F0DA 0,#ECF9F2 50%,#FAFDFB 100%)"></div>
+    <div class="ab folha" style="left:14px;top:14px;width:${iw}px;height:${ih}px;transform-origin:0 50%;border-radius:5px 5px 0 0;background:#E7ECF1;border:2px solid #C9D1D9">
+      <div class="ab" style="left:14%;top:7%;width:72%;height:38%;border:2px solid #D3DAE1;border-radius:6px"></div>
+      <div class="ab" style="left:14%;top:52%;width:72%;height:41%;border:2px solid #D3DAE1;border-radius:6px"></div>
+      <div class="ab" style="right:9%;top:46%;width:16px;height:16px;border-radius:50%;background:#8A949E"></div></div></div>`;
+}
+function abre(pt,p,ang=72){const f=pt.querySelector('.folha'), q=eio(p);
+  f.style.transform=`perspective(${(f.offsetWidth*4)|0}px) rotateY(${(ang*q).toFixed(2)}deg)`;f.style.filter=`brightness(${(1-.1*q).toFixed(3)})`}
+const barra=(x,y,w,c='#E1E6EB',h=7)=>`<div class="ab" style="left:${x}px;top:${y}px;width:${w}px;height:${h}px;border-radius:4px;background:${c}"></div>`;
+function chip(txt,cls='',icone=null,px=22){return `<div class="chip ${cls}">${icone?ic(icone,px):''}${txt}</div>`}
+// o "x" do lucide tem nome de uma letra e o render_cenas.cjs só acha nomes com 2 ou mais: o X vai desenhado (e o visto também)
+function xis(px){return `<svg viewBox="0 0 24 24" width="${px}" height="${px}" style="display:block"><path d="M6 6 L18 18 M18 6 L6 18" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>`}
+function visto(px){return `<svg viewBox="0 0 24 24" width="${px}" height="${px}" style="display:block"><path d="M5 12.5 L10 17.5 L19 7" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg>`}
+function voo(t,a,d,x0,y0,x1,y1,h=-100){const p=eio(pr(t,a,d));return [lerp(x0,x1,p),lerp(y0,y1,p)+h*4*p*(1-p),p]}
+function poe(e,x,y,s=1,op=1,rot=0){e.style.opacity=op.toFixed(4);e.style.visibility=op<=.001?'hidden':'visible';
+  e.style.transform=`translate(${x.toFixed(2)}px,${y.toFixed(2)}px) rotate(${rot.toFixed(2)}deg) scale(${s.toFixed(4)})`}
+// vários pulsos no mesmo elemento (o pulse() do kit apaga o anterior quando é chamado duas vezes no mesmo elemento)
+function pulsos(e,t,as,amp=.045,dur=.9){let s=0;for(const a of as){const p=pr(t,a,dur);if(p>0&&p<1)s=Math.max(s,amp*Math.sin(Math.PI*p))}e.style.scale=s>0?(1+s).toFixed(4):''}
+// seta larga (em bloco), revelada da esquerda para a direita: s.style.width = len * p
+function setaLarga(pai,x,y,len,alt,cor='var(--v)'){const sh=alt*.46, hl=Math.min(70,alt*.85);
+  return el(`<div class="ab" style="left:${x}px;top:${y-alt/2}px;width:0;height:${alt}px;overflow:hidden">
+    <svg width="${len}" height="${alt}" style="display:block"><path d="M${sh/2},${(alt-sh)/2} L${len-hl},${(alt-sh)/2} L${len-hl},0 L${len},${alt/2}
+      L${len-hl},${alt} L${len-hl},${(alt+sh)/2} L${sh/2},${(alt+sh)/2} A${sh/2},${sh/2} 0 0 1 ${sh/2},${(alt-sh)/2} Z" fill="${cor}"/></svg></div>`,pai);
+}
+// sequência de posições: kfs = [[t, x, y, escala], ...]; cada trecho anda em d segundos a partir do seu t
+function trilha(t,kfs,d=.6){let [,x,y,s]=kfs[0];for(let k=1;k<kfs.length;k++){const p=eio(pr(t,kfs[k][0],d));x=lerp(x,kfs[k][1],p);y=lerp(y,kfs[k][2],p);s=lerp(s,kfs[k][3],p)}return [x,y,s]}
+
+// ------------------------------------------------------------------ T26: peças do quadro, em esquema (nunca a tela do app)
+// raia = coluna (painel claro, faixa de cor e o nome da etapa num chip); cartao = cartão sem texto (faixa de cor e duas linhas)
+function raia(pai,x,y,w,h,nome,cor='#9AA3AD',fs=18){
+  return el(`<div class="ab raia" style="left:${x}px;top:${y}px;width:${w}px;height:${h}px;border-radius:16px;background:#F5F7F9;border:1.5px solid #E2E7EB;overflow:hidden">
+    <div class="ab" style="left:0;top:0;width:100%;height:9px;background:${cor}"></div>
+    <div class="ab" style="left:0;top:24px;width:100%;display:flex;justify-content:center"><div class="chip" style="font-size:${fs}px;padding:7px 15px;box-shadow:none">${nome}</div></div></div>`,pai);
+}
+function cartao(w=150,h=60,cor='#5C8FD6'){
+  return `<div class="cartao" style="position:relative;width:${w}px;height:${h}px;background:#fff;border-radius:10px;border:2px solid #E1E6EB;box-shadow:0 6px 14px rgba(16,24,40,.08);overflow:hidden">
+    <div class="ab" style="left:0;top:0;width:7px;height:100%;background:${cor}"></div>
+    ${barra(20,Math.round(h*.27),Math.round(w*.56),'#CBD3DB',8)}${barra(20,Math.round(h*.27)+16,Math.round(w*.36),'#E1E6EB',7)}</div>`;
+}
+function domino(w=72,h=210){const pip=(x,y)=>`<div class="ab" style="left:${x-6}px;top:${y-6}px;width:12px;height:12px;border-radius:50%;background:#4B5563"></div>`;
+  return `<div style="position:relative;width:${w}px;height:${h}px;background:#fff;border-radius:12px;border:2px solid #C9D1D9;box-shadow:0 10px 20px rgba(16,24,40,.12)">
+    <div class="ab" style="left:10px;top:${h/2-1}px;width:${w-24}px;height:2px;background:#D3DAE1"></div>
+    ${pip(w*.3,h*.16)}${pip(w*.66,h*.34)}${pip(w*.3,h*.62)}${pip(w*.5,h*.73)}${pip(w*.66,h*.84)}</div>`;
+}
+const CORES=['#5C8FD6','#6AA7A0','#8E8AC4','#F2B63D','#C9A57C','#50D088','#9AA3AD'];
+
+const CAPS={};
+// ------------------------------------------------------------------ CAPS[0] · Da conversa ao cartão (fala 0 a 2)
+// 0 "Oi! Neste tutorial a gente vai organizar os negócios da Recicla Vale Metais num funil, pra nenhuma oportunidade se perder no
+// caminho." 1 "Sabe aquela indústria que avisou que tem sucata toda semana? A conversa fica no WhatsApp, ninguém retorna, e o
+// negócio esfria." 2 "No CRM, cada contato vira um cartão, com dono, valor e o próximo passo."
+CAPS[0]=()=>{
+  const g=grupo();
+  const tit=titulo(g,'CRM','Da conversa ao cartão');
+  const cel=el(`<div class="ab" style="left:92px;top:268px">${celular(150)}</div>`,g);          // 92-242, 268-545
+  const bal=(y,txt)=>el(`<div class="bal" style="left:266px;top:${y}px;padding:14px 22px;font-weight:700;font-size:21px;white-space:nowrap;visibility:hidden">${txt}
+      <div class="rabo" style="left:-10px;top:17px;transform:rotate(135deg)"></div></div>`,g);
+  const b1=bal(286,'Me liga depois'), b2=bal(372,'Tenho sucata toda semana'), b3=bal(458,'Preço do cobre?');
+  const relW=el(`<div class="ab" style="left:${266+b2.offsetWidth-28}px;top:${372-34-24}px"></div>`,g);
+  const rel=el(`<div class="badge a" style="position:relative;width:52px;height:52px">${ic('clock',27)}</div>`,relW);
+  const seta=setaLarga(g,632,428,96,60);
+  const cA=el(`<div class="card" style="left:742px;top:236px;width:490px;height:182px;padding:22px 24px">
+      <div class="row" style="gap:16px"><div class="ico" style="width:52px;height:52px">${ic('factory',28)}</div>
+        <div style="font-weight:800;font-size:24px">Sucata toda semana</div></div></div>`,g);
+  const fila=el('<div class="ab row" style="left:24px;top:106px;gap:10px"></div>',cA);
+  const CH=[['dono','user-round'],['valor','banknote'],['próximo passo','calendar-check']].map(([x,i])=>el(chip(x,'v',i,20),fila));
+  for(const c of CH){c.style.fontSize='18px';c.style.padding='8px 15px 8px 12px'}
+  const mk=(y,txt,icn)=>el(`<div class="card" style="left:742px;top:${y}px;width:490px;height:76px;padding:0 24px;display:flex;align-items:center;gap:14px">
+      <div class="ico" style="width:44px;height:44px;background:#EEF1F4;color:#4B5563">${ic(icn,24)}</div>
+      <div style="font-weight:800;font-size:21px">${txt}</div></div>`,g);
+  const cB=mk(440,'Preço do cobre?','message-circle'), cC=mk(532,'Me liga depois','phone');
+
+  return t=>{
+    const t0=W(0,'Oi'), tne=W(0,'negocios'), tpe=W(0,'perder'), tin=W(1,'industria'), tsu=W(1,'sucata'), tes=W(1,'esfria'),
+      tcr=W(2,'CRM'), tct=W(2,'contato'), tca=W(2,'cartao'), tq=[W(2,'dono'),W(2,'valor'),W(2,'passo')];
+    posTitulo(tit,t,t0-.85,tne-.55);
+    vis(cel,t,tne-.1,1e9,{dy:18});
+    // as conversas: três balões; no "perder" sobem, e o de cima some no alto
+    const r=eio(pr(t,tpe-.1,.8)), q=eio(pr(t,tpe+.25,.9));
+    [[b1,tne+.15],[b2,tne+.5],[b3,tne+.85]].forEach(([b,a],i)=>{
+      const p=eo(pr(t,a,.45)); let y=(1-p)*12-34*r, op=p; if(i===0){y-=95*q; op*=1-q}
+      b.style.opacity=op.toFixed(4); b.style.visibility=op<=.001?'hidden':'visible'; b.style.transform=`translateY(${y.toFixed(2)}px)`});
+    pulsos(b2,t,[tin,tsu,tct],.05,.8); pulsos(b3,t,[tct+.15],.05,.8);
+    // esfria: o balão da sucata fica cinza, parado, com o relógio
+    const f=eo(pr(t,tes-.05,.6)); b2.style.background=mix('#FFFFFF','#F1F3F5',f); b2.style.color=mix('#121212','#7A828C',f);
+    vis(rel,t,tes+.05,1e9,{sc:.5,dy:0});
+    // no CRM, cada contato vira um cartão (o que tinha sumido também), com dono, valor e o próximo passo
+    seta.style.width=(96*eio(pr(t,tcr-.1,.5))).toFixed(1)+'px';
+    vis(cA,t,tca-.2,1e9,{dx:24,dy:0}); vis(cB,t,tca,1e9,{dx:24,dy:0}); vis(cC,t,tca+.2,1e9,{dx:24,dy:0});
+    CH.forEach((c,i)=>vis(c,t,tq[i]-.12,1e9,{sc:.85,dy:8}));
+  };
+};
+
+// ------------------------------------------------------------------ CAPS[1] · O que é um funil (fala 2 e 3)
+// 2 "Funil é isso: entram muitos contatos em cima, alguns viram proposta, e uma parte fecha. O resto fica pelo caminho, no Perdido."
+// 3 "No sistema, o funil fica deitado. Cada etapa é uma coluna, e o cartão anda pra direita conforme o negócio avança."
+CAPS[1]=()=>{
+  const g=grupo();
+  const tit=titulo(g,'CRM','O que é um funil');
+  const fun=el('<div class="ab" style="left:0;top:0;width:1280px;height:800px;transform-origin:640px 380px"></div>',g);
+  const F=[[176,280,520,420,'#EAF8F0','Novo'],[288,392,420,320,'#D6F3E3','Em contato'],[400,504,320,220,'#C2EDD6','Proposta']];
+  let svg='';F.forEach(([y0,y1,w0,w1,c])=>{svg+=`<polygon points="${640-w0/2},${y0} ${640+w0/2},${y0} ${640+w1/2},${y1} ${640-w1/2},${y1}" fill="${c}" stroke="#A9E9C6" stroke-width="2" stroke-linejoin="round"/>`});
+  svg+='<rect x="598" y="512" width="84" height="40" rx="6" fill="#A9E9C6"/>';
+  el(`<svg class="ab" style="left:0;top:0" width="1280" height="800">${svg}</svg>`,fun);
+  const LAB=F.map(([y0,y1,w0,w1,c,n])=>el(`<div class="ab" style="left:0;top:${(y0+y1)/2-22}px;width:${Math.round(640-(w0+w1)/4-18)}px;display:flex;justify-content:flex-end">${chip(n,'')}</div>`,fun));
+  const ganho=el(`<div class="ab" style="left:0;top:604px;width:1280px;display:flex;justify-content:center">${chip('Ganho','v','trophy')}</div>`,fun);
+  const perd=el(`<div class="ab" style="left:888px;top:430px">${chip('Perdido','c','circle-x')}</div>`,fun);
+  // as colunas (o funil deitado)
+  const NOM=['Novo','Em contato','Proposta','Ganho','Perdido'], COR=['#9AA3AD','#5C8FD6','#F2B63D','#50D088','#C3CAD2'];
+  const R=NOM.map((n,i)=>raia(g,82+i*226,196,212,420,n,COR[i]));
+  // os cartões: entram no Novo; quatro passam a Em contato, três à Proposta, dois fecham (Ganho) e um vai pro Perdido
+  const CW=120, CHh=56, S=.36;
+  const C=CORES.map(c=>el(`<div class="ab" style="left:0;top:0;visibility:hidden">${cartao(CW,CHh,c)}</div>`,g));
+  const B1=[436,504,572,640,708,776,844].map(x=>[x,228]), B2={1:[535,340],2:[605,340],4:[675,340],5:[745,340]},
+        B3={1:[590,452],2:[640,452],4:[690,452]}, GA={1:[616,574],2:[664,574]}, PE=[846,452];
+  const LX=i=>82+i*226+106;
+  const LN={0:[LX(0),290],3:[LX(0),362],6:[LX(0),434],5:[LX(1),290],1:[LX(3),290],2:[LX(3),362],4:[LX(4),290]};
+
+  return t=>{
+    const t0=W(2,'Funil'), tco=W(2,'contatos'), tal=W(2,'alguns'), tpr=W(2,'proposta'), tfe=W(2,'fecha'), tpd=W(2,'Perdido'),
+      tde=W(3,'deitado'), tet=W(3,'etapa'), tcol=W(3,'coluna'), tan=W(3,'anda'), tav=W(3,'avanca');
+    posTitulo(tit,t,t0-.85,t0-.25);
+    // o funil em pé; deita no "deitado" e some enquanto as colunas entram
+    const pf=vis(fun,t,t0+.15,1e9,{dy:16}), dr=eio(pr(t,tde-.1,.8)), fo=1-eo(pr(t,tet-.25,.6));
+    fun.style.opacity=(pf*fo).toFixed(4); fun.style.visibility=pf*fo<=.001?'hidden':'visible';
+    fun.style.transform=`rotate(${(-90*dr).toFixed(2)}deg) scale(${(1-.12*dr).toFixed(4)})`;
+    R.forEach((r,i)=>vis(r,t,tet-.15+i*.08,1e9,{dy:14}));
+    pulsos(R[1],t,[tcol],.02,.8);
+    C.forEach((e,i)=>{
+      const k=[[0,B1[i][0],B1[i][1]-150,S],[tco-.1+i*.07,B1[i][0],B1[i][1],S]];
+      if(B2[i])k.push([tal+(i%3)*.06,...B2[i],S]);
+      if(B3[i])k.push([tpr+(i%3)*.06,...B3[i],S]);
+      if(GA[i])k.push([tfe+(i===2?.12:0),...GA[i],S]);
+      if(i===4)k.push([tpd-.15,...PE,S]);
+      k.push([tet-.1+(i%4)*.05,...LN[i],1]);
+      if(i===5)k.push([tan-.1,LX(2),290,1]);
+      if(i===0)k.push([tav-.1,LX(1),290,1]);
+      const [x,y,s]=trilha(t,k,.6);
+      poe(e,x-CW/2,y-CHh/2,s,eo(pr(t,tco-.1+i*.07,.3)));
+    });
+    vis(LAB[0],t,tco-.1,1e9,{dx:-10,dy:0}); vis(LAB[1],t,tal,1e9,{dx:-10,dy:0}); vis(LAB[2],t,tpr,1e9,{dx:-10,dy:0});
+    vis(ganho,t,tfe+.2,1e9,{dy:10}); vis(perd,t,tpd-.25,1e9,{dx:-10,dy:0});
+  };
+};
+
+// ------------------------------------------------------------------ CAPS[2] · O que cada cartão soma (fala 2)
+// 2 "O Total e o Valor total contam todos os cartões do funil. Ganhos soma só o que está na coluna Ganho. E Em negociação, o que
+// ainda não ganhou nem perdeu."
+CAPS[2]=()=>{
+  const g=grupo();
+  const tit=titulo(g,'CRM','O que cada cartão soma');
+  const NOM=['Novo','Em contato','Proposta','Ganho','Perdido'], COR=['#9AA3AD','#5C8FD6','#F2B63D','#50D088','#C3CAD2'];
+  const brd=el('<div class="ab" style="left:0;top:0;width:1280px;height:800px"></div>',g);
+  const R=NOM.map((n,i)=>raia(brd,82+i*226,262,212,400,n,COR[i]));   // y 262-662
+  const C=[];[3,2,2,2,1].forEach((n,i)=>{for(let k=0;k<n;k++){const c=el(`<div class="ab" style="left:${82+i*226+31}px;top:${336+k*82}px">${cartao(150,64,COR[i])}</div>`,brd);c._r=i;C.push(c)}});
+  const tags=el('<div class="ab row" style="left:0;top:178px;width:1280px;justify-content:center;gap:14px"></div>',g);
+  const T=[['Total','','layers'],['Valor total','','banknote'],['Ganhos','v','trophy'],['Em negociação','a','handshake']].map(([x,cl,i])=>el(chip(x,cl,i),tags));
+
+  return t=>{
+    const t0=W(2,'O'), tto=W(2,'Total'), tvt=W(2,'Valor'), tod=W(2,'todos'), tgs=W(2,'Ganhos'), tgo=W(2,'Ganho'), tne=W(2,'negociacao');
+    posTitulo(tit,t,t0-.85,t0-.25);
+    vis(brd,t,t0+.2,1e9,{dy:18});
+    const ini=t0+.55;
+    vis(T[0],t,Math.max(tto-.1,ini),1e9,{sc:.85,dy:8}); vis(T[1],t,Math.max(tvt-.1,ini+.25),1e9,{sc:.85,dy:8});
+    vis(T[2],t,tgs-.1,1e9,{sc:.85,dy:8}); vis(T[3],t,tne-.1,1e9,{sc:.85,dy:8});
+    // o que cada um soma: todos; só o Ganho; só os do meio (nem ganho nem perdido)
+    const a=eo(pr(t,tod,.4))*(1-eo(pr(t,tgo-.1,.4))), b=eo(pr(t,tgo-.1,.4))*(1-eo(pr(t,tne-.1,.4))), c=eo(pr(t,tne-.1,.4));
+    C.forEach(e=>{const r=e._r, cv=e.firstElementChild;
+      const v=Math.max(a, r===3?b:0), m=r<3?c:0, apaga=(b>0&&r!==3?b:0)+(c>0&&r>=3?c:0);
+      cv.style.borderColor=m>0?mix('#E1E6EB','#F2B63D',m):mix('#E1E6EB','#50D088',v);
+      cv.style.boxShadow=`0 0 0 ${(4*Math.max(v,m)).toFixed(2)}px ${m>0?'rgba(242,182,61,.25)':'rgba(80,208,136,.25)'},0 6px 14px rgba(16,24,40,.08)`;
+      e.style.opacity=(1-.55*Math.min(1,apaga)).toFixed(3)});
+    R.forEach((r,i)=>{const on=i===3?b:(i<3?c:0);r.style.borderColor=mix('#E2E7EB',i===3?'#50D088':'#F2B63D',on)});
+    T.forEach((x,i)=>{const on=i<2?a:(i===2?b:c);x.style.boxShadow=`0 0 0 ${(3*on).toFixed(2)}px ${i===3?'rgba(242,182,61,.35)':'rgba(80,208,136,.35)'},0 6px 14px rgba(16,24,40,.07)`});
+  };
+};
+
+// ------------------------------------------------------------------ CAPS[3] · Negociação, ganho e perda (fala 6)
+// 6 "Uma dica: estágio criado em Novo estágio é sempre de negociação. Só o Ganho e o Perdido que nascem com o funil contam como
+// ganho e como perda nos cartões lá de cima."
+CAPS[3]=()=>{
+  const g=grupo();
+  const tit=titulo(g,'Funis','Negociação, ganho e perda');
+  const NOM=['Novo','Em contato','Visita técnica','Proposta','Ganho','Perdido'], COR=['#9AA3AD','#5C8FD6','#0D9488','#F2B63D','#50D088','#C3CAD2'];
+  const brd=el('<div class="ab" style="left:0;top:0;width:1280px;height:800px"></div>',g);
+  const R=NOM.map((n,i)=>raia(brd,70+i*192,232,180,340,n,COR[i],17));   // x 70-1210, y 232-572
+  [[0,0],[0,1],[1,0],[2,0],[3,0]].forEach(([i,k])=>el(`<div class="ab" style="left:${70+i*192+20}px;top:${306+k*76}px">${cartao(140,60,COR[i])}</div>`,brd));
+  const novo=el(`<div class="ab" style="left:${70+2*192-20}px;top:174px;width:220px;display:flex;justify-content:center">${chip('Novo estágio','a','circle-plus',20)}</div>`,g);
+  for(const c of novo.children){c.style.fontSize='18px';c.style.padding='8px 15px 8px 12px'}
+  const band=el(`<div class="ab" style="left:70px;top:590px;width:${4*192-12}px;height:50px;border-radius:14px;background:var(--ac);border:2px solid var(--a);
+      display:flex;align-items:center;justify-content:center;gap:10px;font-weight:800;font-size:21px;color:var(--ae)">${ic('handshake',24)}negociação</div>`,g);
+  const tro=el(`<div class="badge v" style="left:${70+4*192+90-38}px;top:364px;width:76px;height:76px">${ic('trophy',38)}</div>`,g);
+  const per=el(`<div class="badge" style="left:${70+5*192+90-38}px;top:364px;width:76px;height:76px;background:#F2F4F7;border:3px solid #C3CAD2;color:#6B7280">${xis(36)}</div>`,g);
+
+  return t=>{
+    const t0=W(6,'Uma'), tes=W(6,'estagio'), tcr=W(6,'criado'), tno=W(6,'Novo'), tne=W(6,'negociacao'), tga=W(6,'Ganho'), tpe=W(6,'Perdido'),
+      tg2=W(6,'ganho',2), tpa=W(6,'perda');
+    posTitulo(tit,t,t0-.85,tes-.55);
+    vis(brd,t,tes-.1,1e9,{dy:18});
+    // o estágio criado em "Novo estágio" (a Visita técnica): é sempre de negociação
+    const vt=R[2]; vt.style.borderStyle=t>=tcr?'dashed':'solid'; contorno(vt,t,tcr,'#E2E7EB','#F2B63D');
+    vt.style.borderWidth=(1.5+1*eo(pr(t,tcr,.4))).toFixed(2)+'px'; vis(novo,t,tno-.15,1e9,{dy:10});
+    vis(band,t,tne-.1,1e9,{dy:12});
+    for(let i=0;i<4;i++)R[i].style.background=mix('#F5F7F9','#FFF8E8',eo(pr(t,tne+i*.06,.45)));
+    vis(tro,t,tga-.05,1e9,{sc:.5,dy:0}); vis(per,t,tpe-.05,1e9,{sc:.5,dy:0});
+    contorno(R[4],t,tga-.05,'#E2E7EB','#50D088'); contorno(R[5],t,tpe-.05,'#E2E7EB','#AEB6BF');
+    pulsos(tro,t,[tg2],.12,.8); pulsos(per,t,[tpa],.12,.8);
+  };
+};
+
+// ------------------------------------------------------------------ CAPS[5] · A porta de saída (fala 1)
+// 1 "Pensa numa porta na saída da coluna. O cartão só passa quando o que está na lista estiver feito."
+//   (a lista: as duas regras que o capítulo liga no Em contato, Tarefas e Responsável)
+CAPS[5]=()=>{
+  const g=grupo();
+  const tit=titulo(g,'Regras','A porta de saída');
+  const r1=raia(g,84,196,350,452,'Em contato','#5C8FD6');                 // 84-434, 196-648
+  const r2=raia(g,836,196,354,452,'Visita técnica','#0D9488');            // 836-1190
+  r2.style.borderStyle='dashed';
+  const pt=el(`<div class="ab" style="left:474px;top:248px">${porta(300,400)}</div>`,g);       // 474-774, 248-648
+  const folha=pt.querySelector('.folha');
+  const cb=()=>`<span class="cb" style="position:relative;width:24px;height:24px;flex:none;border-radius:7px;border:2.5px solid #C3CAD2;background:#fff">
+      <span class="ok" style="position:absolute;left:-2.5px;top:-2.5px;width:24px;height:24px;border-radius:7px;background:var(--v);color:#fff;
+      display:flex;align-items:center;justify-content:center;opacity:0">${visto(18)}</span></span>`;
+  const placa=el(`<div class="ab" style="left:18px;top:46px;width:236px;padding:16px 16px;background:#fff;border-radius:12px;border:1.5px solid #DDE5E0;
+      box-shadow:0 6px 14px rgba(16,24,40,.10)">
+      <div class="row" style="gap:10px;font-weight:700;font-size:17px">${cb()}tarefas encerradas</div>
+      <div class="row" style="gap:10px;margin-top:14px;font-weight:700;font-size:17px">${cb()}responsável</div></div>`,folha);
+  const [ok1,ok2]=placa.querySelectorAll('.ok');
+  const cad=el(`<div class="badge a" style="left:${474+300-14-34}px;top:${248+14+20}px;width:44px;height:44px">${ic('lock',22)}</div>`,g);
+  const cadA=el(`<div class="badge v" style="left:${474+300-14-34}px;top:${248+14+20}px;width:44px;height:44px;opacity:0">${ic('lock-open',22)}</div>`,g);
+  const cw=el(`<div class="ab" style="left:0;top:0;visibility:hidden">${cartao(250,84,'#5C8FD6')}</div>`,g);
+
+  return t=>{
+    const t0=W(1,'Pensa'), tpo=W(1,'porta'), tsa=W(1,'saida'), tco=W(1,'coluna'), tca=W(1,'cartao'), tpa=W(1,'passa'),
+      tli=W(1,'lista'), tfe=W(1,'feito');
+    posTitulo(tit,t,t0-.85,tpo-.55);
+    vis(pt,t,tpo-.1,1e9,{dy:18}); vis(cad,t,tpo+.2,1e9,{sc:.5,dy:0});
+    vis(r1,t,tsa-.1,1e9,{dx:-16,dy:0}); vis(r2,t,tco-.1,1e9,{dx:16,dy:0});
+    // o cartão chega na porta e espera; a lista fica feita, a porta abre e ele passa
+    ok1.style.opacity=eo(pr(t,tli,.35)).toFixed(3); ok2.style.opacity=eo(pr(t,tfe-.05,.35)).toFixed(3);
+    const ab=pr(t,tfe+.2,.6); abre(pt,ab,70); cadA.style.opacity=eo(pr(t,tfe+.1,.35)).toFixed(3); cad.style.opacity=(1-eo(pr(t,tfe+.1,.35))).toFixed(3);
+    const [x,y]=trilha(t,[[0,134,300,1],[tpa-.15,218,300,1],[tfe+.4,884,300,1]],.75);
+    poe(cw,x+(t>tpa+.45&&t<tfe?Math.sin((t-tpa)*9)*0:0),y,1,eo(pr(t,tca-.15,.45)));
+    pulsos(cw,t,[tpa+.55],.04,.6);
+  };
+};
+
+// ------------------------------------------------------------------ CAPS[6] · Gatilho e ações (fala 1) e Só quando avança (fala 9)
+// 1 "É sempre assim: um gatilho e as ações. Quando o gatilho acontece, o sistema faz as ações, na ordem."
+// 9 "Uma dica: Ao entrar nesta etapa só roda quando o cartão avança pra ela, muda de funil ou já nasce nela. Voltando de uma coluna
+// da frente, ela não roda."
+CAPS[6]=()=>{
+  // ---- cena A: o gatilho e as ações, como dominós
+  const gA=grupo();
+  const titA=titulo(gA,'Automações','Gatilho e ações');
+  const rA=raia(gA,84,230,300,380,'Em contato','#5C8FD6');                   // 84-384, 230-610
+  const gat=el(`<div class="ab" style="left:84px;top:630px;width:300px;display:flex;justify-content:center">${chip('gatilho','a','zap')}</div>`,gA);
+  const cwA=el(`<div class="ab" style="left:0;top:0;visibility:hidden">${cartao(230,78,'#C9A57C')}</div>`,gA);
+  const raio=el(`<div class="badge a" style="left:410px;top:356px;width:58px;height:58px">${ic('zap',30)}</div>`,gA);
+  const XC=[560,830,1100], DW=72, DH=210, BASE=480;
+  const DM=XC.map(cx=>{const w=el(`<div class="ab" style="left:${cx-DW/2}px;top:${BASE-DH}px;width:${DW}px;height:${DH}px;transform-origin:${DW}px ${DH}px"></div>`,gA);
+    el(domino(DW,DH),w);return w});
+  const AC=[['Atribuir responsável','user-round'],['Criar tarefa','list-checks'],['Adicionar etiqueta','tag']].map(([x,i],k)=>
+    el(`<div class="ab" style="left:${XC[k]-150}px;top:508px;width:300px;display:flex;justify-content:center">${chip(x,'',i)}</div>`,gA));
+  const acoes=el(`<div class="ab" style="left:${XC[0]-60}px;top:186px;width:${XC[2]-XC[0]+120}px;display:flex;justify-content:center">${chip('ações','v','layers')}</div>`,gA);
+  // ---- cena B: "Ao entrar nesta etapa" só roda avançando
+  const gB=grupo();
+  const titB=titulo(gB,'Automações','Só quando avança');
+  const RB=[['Novo','#9AA3AD'],['Em contato','#5C8FD6'],['Visita técnica','#0D9488']].map(([n,c],i)=>raia(gB,110+i*370,196,320,452,n,c));   // 110-430, 480-800, 850-1170
+  const zB=el(`<div class="ab" style="left:${480+320-56}px;top:208px;width:44px;height:44px;border-radius:50%;background:var(--ac);color:var(--ae);
+      display:flex;align-items:center;justify-content:center">${ic('zap',24)}</div>`,gB);
+  const k1=el(`<div class="ab" style="left:0;top:0;visibility:hidden">${cartao(260,84,'#C9A57C')}</div>`,gB);
+  const k2=el(`<div class="ab" style="left:0;top:0;visibility:hidden">${cartao(260,84,'#8E8AC4')}</div>`,gB);
+  const bz1=el(`<div class="badge v" style="left:${480+30+260-30}px;top:${290-18}px;width:48px;height:48px">${ic('zap',24)}</div>`,gB);
+  const bz2=el(`<div class="badge" style="left:${480+30+260-30}px;top:${470-18}px;width:48px;height:48px;background:#F2F4F7;border:3px solid #C3CAD2;color:#6B7280">${ic('zap-off',24)}</div>`,gB);
+  const c1=el(`<div class="ab" style="left:480px;top:390px;width:320px;display:flex;justify-content:center">${chip('roda','v','check')}</div>`,gB);
+  const c2=el(`<div class="ab" style="left:480px;top:570px;width:320px;display:flex;justify-content:center">${chip('não roda','c','zap-off')}</div>`,gB);
+
+  return t=>{
+    // cena A
+    const a0=W(1,'E'), aga=W(1,'gatilho'), aac=W(1,'acoes'), aat=W(1,'acontece'), afa=W(1,'faz'), aa2=W(1,'acoes',2), fimA=W(1,'ordem',1,'e')+.6;
+    gA.style.display=t<=fimA+.05?'block':'none';
+    posTitulo(titA,t,a0-.85,aga-.55);
+    vis(rA,t,aga-.1,1e9,{dx:-16,dy:0}); vis(gat,t,aga+.1,1e9,{dy:8});
+    DM.forEach((d,i)=>vis(d.firstElementChild,t,aac-.1+i*.12,1e9,{dy:14})); AC.forEach((c,i)=>vis(c,t,aac+i*.12,1e9,{dy:8}));
+    vis(acoes,t,aac+.2,1e9,{dy:8});
+    // o gatilho acontece: o cartão entra na coluna e acende o raio; as ações caem uma depois da outra, na ordem
+    const [cx,cy]=trilha(t,[[0,-120,330,1],[aat-.2,119,330,1]],.6); poe(cwA,cx,cy,1,eo(pr(t,aat-.2,.35)));
+    vis(raio,t,aat+.25,1e9,{sc:.5,dy:0}); pulsos(raio,t,[aat+.6],.12,.7);
+    const queda=[afa-.1,aa2-.1,aa2+.4];
+    DM.forEach((d,i)=>{const q=eio(pr(t,queda[i],.55)); d.style.transform=`rotate(${(84*q).toFixed(2)}deg)`;
+      const ch=AC[i].firstElementChild, on=eo(pr(t,queda[i]+.3,.35));
+      ch.style.background=mix('#FFFFFF','#EAF8F0',on); ch.style.borderColor=mix('#DDE5E0','#A9E9C6',on); ch.style.color=mix('#121212','#2E7D57',on)});
+    // cena B
+    const b0=W(9,'Uma'), bav=W(9,'avanca'), bvo=W(9,'Voltando'), bnr=W(9,'roda',2);
+    gB.style.display=t>=b0-1.2?'block':'none';
+    posTitulo(titB,t,b0-.85,b0-.25);
+    RB.forEach((r,i)=>vis(r,t,b0+.15+i*.1,1e9,{dy:16})); vis(zB,t,b0+.6,1e9,{sc:.5,dy:0});
+    const [x1,y1]=trilha(t,[[0,140,290,1],[bav-.1,510,290,1]],.7); poe(k1,x1,y1,1,eo(pr(t,b0+.4,.45)));
+    const [x2,y2]=trilha(t,[[0,880,470,1],[bvo-.1,510,470,1]],.7); poe(k2,x2,y2,1,eo(pr(t,b0+.5,.45)));
+    vis(bz1,t,bav+.55,1e9,{sc:.5,dy:0}); vis(c1,t,bav+.6,1e9,{dy:8}); pulsos(zB,t,[bav+.55],.15,.7);
+    vis(bz2,t,bvo+.55,1e9,{sc:.5,dy:0}); vis(c2,t,bvo+.6,1e9,{dy:8}); pulsos(bz2,t,[bnr],.1,.7);
+  };
+};
+
+// ------------------------------------------------------------------ CAPS[7] · Modelo e cópia (fala 2)
+// 2 "O modelo é o ponto de partida. Aplicado num cartão, ele vira uma cópia. Mudar o modelo depois não mexe no que já foi aplicado."
+CAPS[7]=()=>{
+  const g=grupo();
+  const tit=titulo(g,'Modelos','Modelo e cópia');
+  const item=(y,w,c='#CBD3DB')=>`<div class="ab" style="left:24px;top:${y}px;width:22px;height:22px;border-radius:6px;border:2.5px solid #C3CAD2"></div>${barra(58,y+7,w,c,9)}`;
+  const mod=el(`<div class="card" style="left:84px;top:212px;width:420px;height:330px;padding:22px 24px">
+      <div class="row" style="gap:14px"><div class="ico" style="width:48px;height:48px">${ic('list-checks',26)}</div>
+        <div style="font-weight:800;font-size:22px">Documentos do fornecedor</div></div>
+      ${item(98,190)}${item(146,250)}${item(194,220)}</div>`,g);
+  const novo=el(`<div class="ab" style="left:12px;top:234px;width:394px;height:48px;border-radius:10px;background:var(--ac);border:2px solid var(--a)">
+      <div class="ab" style="left:10px;top:11px;width:22px;height:22px;border-radius:6px;border:2.5px solid #D9A93A;background:#fff"></div>
+      ${barra(46,18,180,'#E7C47A',9)}<div class="ab" style="right:12px;top:9px;color:var(--ae)">${ic('circle-plus',26)}</div></div>`,mod);
+  const rM=el(`<div class="ab" style="left:84px;top:562px;width:420px;display:flex;justify-content:center">${chip('modelo','','stamp')}</div>`,g);
+  const op=(y)=>el(`<div class="card" style="left:742px;top:${y}px;width:420px;height:200px;padding:20px 22px">
+      ${barra(22,24,190,'#CBD3DB',10)}${barra(22,44,120)}</div>`,g);
+  const O=[op(196),op(436)];
+  const mini=()=>`<div style="position:relative;width:240px;height:120px;border-radius:10px;background:#F4FBF7;border:2px solid var(--vm)">
+      ${[0,1,2].map(k=>`<div class="ab" style="left:14px;top:${16+k*34}px;width:18px;height:18px;border-radius:5px;border:2.5px solid #A9D9BE;background:#fff"></div>${barra(42,21+k*34,[120,160,140][k],'#BFE3CF',8)}`).join('')}</div>`;
+  const CP=O.map(()=>el(`<div class="ab" style="left:0;top:0;visibility:hidden">${mini()}</div>`,g));
+  const DST=[[742+22,196+66],[742+22,436+66]];
+  const TC=O.map(o=>{const c=el(chip('cópia','v','copy',20),o);c.style.position='absolute';c.style.right='20px';c.style.top='18px';c.style.fontSize='18px';c.style.padding='7px 14px 7px 12px';return c});
+
+  return t=>{
+    const t0=W(2,'O'), tmo=W(2,'modelo'), tap=W(2,'Aplicado'), tca=W(2,'cartao'), tco=W(2,'copia'), tde=W(2,'depois'), tna=W(2,'nao'), tfa=W(2,'aplicado',2);
+    posTitulo(tit,t,t0-.85,t0-.25);
+    vis(mod,t,t0+.2,1e9,{dx:-20,dy:0}); vis(rM,t,tmo,1e9,{dy:8});
+    // aplicado num cartão: o modelo carimba uma cópia em cada cartão
+    O.forEach((o,i)=>vis(o,t,tap-.35+i*.15,1e9,{dx:20,dy:0}));
+    const sai=[tap,tca+.05];
+    CP.forEach((e,i)=>{const [x,y,p]=voo(t,sai[i],.75,84+24+60,212+98-20,DST[i][0],DST[i][1],-70);
+      const bate=1+.12*Math.sin(Math.PI*pr(t,sai[i]+.7,.3));
+      poe(e,x,y,lerp(.7,1,eo(p))*bate,t<sai[i]?0:eo(cl((t-sai[i])/.2)))});
+    TC.forEach((c,i)=>vis(c,t,tco-.1+i*.15,1e9,{sc:.8,dy:0}));
+    // mudar o modelo depois: o modelo ganha um item; as cópias continuam como estavam
+    vis(novo,t,tde-.1,1e9,{dy:10}); pulsos(mod,t,[tde],.02,.8);
+    CP.forEach((e,i)=>pulsos(e.firstElementChild,t,[tna+.1+i*.15,tfa],.04,.8));
+  };
+};
+
+// ------------------------------------------------------------------ CAPS[9] · A regra de onde sai (fala 4)
+// 4 "Uma dica: quem manda é a regra da etapa de onde o cartão sai. E ela vale pra qualquer troca: avançar, voltar uma coluna ou
+// mandar pro Perdido."
+CAPS[9]=()=>{
+  const g=grupo();
+  const tit=titulo(g,'Kanban','A regra de onde sai');
+  const rN=raia(g,70,196,280,380,'Novo','#9AA3AD'), rE=raia(g,450,196,380,380,'Em contato','#5C8FD6'), rV=raia(g,930,196,280,380,'Visita técnica','#0D9488');
+  for(const r of [rN,rV]){r.style.borderStyle='dashed'}
+  const cw=el(`<div class="ab" style="left:505px;top:394px">${cartao(270,86,'#C9A57C')}</div>`,g);           // 505-775, 394-480
+  const cb=()=>`<span style="width:22px;height:22px;flex:none;border-radius:6px;border:2.5px solid #D9A93A;background:#fff"></span>`;
+  const placa=el(`<div class="ab" style="left:490px;top:272px;width:300px;padding:13px 16px;background:#fff;border-radius:12px;border:1.5px solid #F6D58E;box-shadow:0 6px 14px rgba(16,24,40,.08)">
+      <div class="row" style="gap:10px;font-weight:700;font-size:17px">${cb()}tarefas encerradas</div>
+      <div class="row" style="gap:10px;margin-top:10px;font-weight:700;font-size:17px">${cb()}responsável</div></div>`,g);
+  const porta=el(`<div class="ab" style="left:442px;top:188px;width:396px;height:396px;border-radius:20px;border:4px dashed var(--a);opacity:0"></div>`,g);
+  const perd=el(`<div class="ab" style="left:450px;top:660px;width:380px;display:flex;justify-content:center">${chip('Perdido','c','circle-x')}</div>`,g);
+  const sv=el(`<svg class="ab" style="left:0;top:0;overflow:visible" width="1280" height="800">
+      <path d="M780 437 L 838 437" fill="none" stroke="var(--a)" stroke-width="6" stroke-linecap="round"/>
+      <path d="M500 437 L 442 437" fill="none" stroke="var(--a)" stroke-width="6" stroke-linecap="round"/>
+      <path d="M640 484 L 640 584" fill="none" stroke="var(--a)" stroke-width="6" stroke-linecap="round"/></svg>`,g);
+  const P=[...sv.querySelectorAll('path')];
+  const trava=(x,y)=>el(`<div class="badge a" style="left:${x-25}px;top:${y-25}px;width:50px;height:50px">${ic('lock',24)}</div>`,g);
+  const L=[trava(840,437),trava(440,437),trava(640,586)];
+  const fan=[[930,437,'Visita técnica'],[350,437,'Novo'],[640,640,'Perdido']];
+
+  return t=>{
+    const t0=W(4,'Uma'), tre=W(4,'regra'), tsa=W(4,'sai'), tqu=W(4,'qualquer'), tav=W(4,'avancar'), tvo=W(4,'voltar'), tpe=W(4,'Perdido');
+    posTitulo(tit,t,t0-.85,t0-.25);
+    vis(rE,t,t0+.2,1e9,{dy:16}); vis(rN,t,t0+.35,1e9,{dy:16}); vis(rV,t,t0+.45,1e9,{dy:16}); vis(cw,t,t0+.5,1e9,{dy:12});
+    vis(placa,t,tre-.1,1e9,{sc:.9,dy:8}); pulsos(cw,t,[tsa],.05,.8);
+    // qualquer troca passa pela mesma porta: a da etapa de onde o cartão sai
+    const pq=eo(pr(t,tqu-.05,.45)); porta.style.opacity=pq.toFixed(3); porta.style.transform=`scale(${lerp(1.04,1,pq).toFixed(4)})`;
+    vis(perd,t,tpe-.35,1e9,{dy:10});
+    [tav,tvo,tpe].forEach((a,i)=>{traco(P[i],t,a-.1,.45); vis(L[i],t,a+.3,1e9,{sc:.5,dy:0})});
+  };
+};
+
+// ------------------------------------------------------------------ CAPS[11] · Uma tarefa, dois lugares (fala 5)
+// 5 "É uma tarefa só, nos dois lugares. Concluiu num, aparece concluída no outro."   (a tarefa da fala 1: Enviar proposta, dia 12)
+CAPS[11]=()=>{
+  const g=grupo();
+  const tit=titulo(g,'Tarefas','Uma tarefa, dois lugares');
+  const cb=(cls)=>`<span class="${cls}" style="position:relative;width:26px;height:26px;flex:none;border-radius:7px;border:2.5px solid #C3CAD2;background:#fff">
+      <span class="ok" style="position:absolute;left:-2.5px;top:-2.5px;width:26px;height:26px;border-radius:7px;background:var(--v);color:#fff;
+      display:flex;align-items:center;justify-content:center;opacity:0">${visto(19)}</span></span>`;
+  const tar=el(`<div class="card" style="left:470px;top:182px;width:340px;height:84px;padding:0 24px;display:flex;align-items:center;gap:14px">
+      ${cb('c0')}<div class="tx" style="font-weight:800;font-size:23px">Enviar proposta</div></div>`,g);
+  // os dois lugares: a aba Tarefas do CRM e a Agenda (calendário genérico de novembro, que começa no domingo)
+  const pT=el(`<div class="card" style="left:80px;top:330px;width:440px;height:316px;padding:22px 24px">
+      <div class="row" style="gap:12px"><div class="ico" style="width:46px;height:46px">${ic('kanban',24)}</div><div style="font-weight:800;font-size:23px">Tarefas</div></div>
+      <div class="ab lin" style="left:24px;top:96px;width:392px;height:62px;border-radius:12px;border:1.5px solid #DDE5E0;background:#fff;display:flex;align-items:center;gap:12px;padding:0 16px">
+        ${cb('c1')}<div class="tx" style="font-weight:800;font-size:20px">Enviar proposta</div></div>
+      ${[0,1].map(k=>`<div class="ab" style="left:24px;top:${174+k*60}px;width:392px;height:48px;border-radius:12px;border:1.5px solid #EEF1F4;background:#FAFBFC">
+        ${barra(18,20,[150,110][k],'#E1E6EB',8)}</div>`).join('')}</div>`,g);
+  let cel='';for(let d=1;d<=30;d++){const r=Math.floor((d-1)/7), c=(d-1)%7, x=24+c*54, y=92+r*38;
+    cel+=d===12?`<div class="ab c12" style="left:${x}px;top:${y}px;width:46px;height:30px;border-radius:8px;background:var(--vc);border:2px solid var(--v);
+      display:flex;align-items:center;justify-content:center;font-weight:800;font-size:17px;color:var(--ve)">12</div>`
+      :`<div class="ab" style="left:${x}px;top:${y}px;width:46px;height:30px;border-radius:8px;background:#F3F5F7"></div>`}
+  const pA=el(`<div class="card" style="left:760px;top:330px;width:440px;height:316px;padding:22px 24px">
+      <div class="row" style="gap:12px"><div class="ico" style="width:46px;height:46px">${ic('calendar-days',24)}</div><div style="font-weight:800;font-size:23px">Agenda</div></div>
+      ${cel}</div>`,g);
+  const tA=el(`<div class="ab" style="left:0;top:0;width:212px;height:48px;border-radius:12px;border:1.5px solid #DDE5E0;background:#fff;box-shadow:0 6px 14px rgba(16,24,40,.10);
+      display:flex;align-items:center;gap:8px;padding:0 10px;visibility:hidden">${cb('c2')}<div class="tx" style="font-weight:800;font-size:17px">Enviar proposta</div></div>`,g);
+  // a tarefa da Agenda fica pendurada no dia 12 (2ª semana, quinta)
+  const X12=760+1+24+4*54, Y12=330+1+92+38;
+  const ln=el(`<svg class="ab" style="left:0;top:0;overflow:visible" width="1280" height="800">
+      <path d="M560 266 C 560 330, 330 360, 300 428" fill="none" stroke="var(--vm)" stroke-width="4" stroke-linecap="round"/>
+      <path d="M720 266 C 720 330, ${X12+23} 360, ${X12+23} ${Y12-2}" fill="none" stroke="var(--vm)" stroke-width="4" stroke-linecap="round"/></svg>`,g);
+  const [l1,l2]=ln.querySelectorAll('path');
+  const ok=(e,c)=>e.querySelector(`.${c} .ok`);
+
+  return t=>{
+    const t0=W(5,'E'), tta=W(5,'tarefa'), tdo=W(5,'dois'), tco=W(5,'Concluiu'), tcd=W(5,'concluida');
+    posTitulo(tit,t,t0-.85,t0-.25);
+    vis(tar,t,Math.max(tta-.15,t0+.3),1e9,{sc:.9,dy:12});
+    vis(pT,t,tdo-.15,1e9,{dx:-20,dy:0}); vis(pA,t,tdo,1e9,{dx:20,dy:0});
+    traco(l1,t,tdo+.05,.6); traco(l2,t,tdo+.15,.6);
+    poe(tA,X12-83,Y12+40+(1-eo(pr(t,tdo+.45,.45)))*10,1,eo(pr(t,tdo+.45,.45)));
+    // concluiu num lugar, aparece concluída no outro (e a tarefa é uma só)
+    const a=eo(pr(t,tco,.4)), b=eo(pr(t,tcd-.1,.4));
+    ok(pT,'c1').style.opacity=a.toFixed(3); ok(tar,'c0').style.opacity=eo(pr(t,tco+.35,.4)).toFixed(3); ok(tA,'c2').style.opacity=b.toFixed(3);
+    pT.querySelector('.lin .tx').style.color=mix('#121212','#6B7280',a); tA.querySelector('.tx').style.color=mix('#121212','#6B7280',b);
+    pulsos(tA,t,[tcd],.06,.7); pulsos(pT.querySelector('.lin'),t,[tco],.04,.7);
+  };
+};
+
+// ------------------------------------------------------------------ API para o renderizador
+let RENDER=null;
+window.setup=d=>{D=d;ST.innerHTML='';RENDER=CAPS[d.cap]();return true};
+window.R=t=>{RENDER(t);return true};
+</script></body></html>

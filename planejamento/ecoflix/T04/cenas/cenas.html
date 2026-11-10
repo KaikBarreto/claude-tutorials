@@ -203,7 +203,7 @@ function fardosPapelao(){
   return `<svg viewBox="0 0 300 380" width="300" height="380" style="overflow:visible">${[[308,8],[232,14],[156,4],[80,12],[4,6]].map(([y,dx])=>f(y,dx)).join('')}</svg>`;
 }
 // latinha (lata genérica, sem marca)
-function lata(){return `<svg viewBox="-12 -18 24 36" width="24" height="36"><rect x="-11" y="-16" width="22" height="32" rx="5" fill="#B9C1C9"/>
+function lata(w=24){return `<svg viewBox="-12 -18 24 36" width="${w}" height="${w*1.5}"><rect x="-11" y="-16" width="22" height="32" rx="5" fill="#B9C1C9"/>
   <rect x="-11" y="-6" width="22" height="7" fill="#fff" opacity=".4"/><ellipse cx="0" cy="-15.5" rx="10.5" ry="3.2" fill="#E3E8EC"/></svg>`}
 // saco de latinhas (pequeno, com latas saindo pela boca)
 function sacoLatinhas(){
@@ -216,9 +216,9 @@ function sacoLatinhas(){
   </svg>`;
 }
 // fardo de latinhas prensadas (cubo com os fundos das latas e duas cintas)
-function fardoLatinhas(){
+function fardoLatinhas(w=200){
   const c=[];for(let r=0;r<5;r++)for(let k=0;k<5;k++)c.push(`<circle cx="${30+k*28+(r%2)*10}" cy="${66+r*24}" r="9.5"/>`);
-  return `<svg viewBox="0 0 200 180" width="200" height="180">
+  return `<svg viewBox="0 0 200 180" width="${w}" height="${w*.9}">
     <polygon points="10,44 40,14 196,14 166,44" fill="#D7DEE4"/>
     <polygon points="166,44 196,14 196,150 166,178" fill="#9AA3AD"/>
     <rect x="10" y="44" width="156" height="134" fill="#B9C1C9"/>
@@ -277,24 +277,24 @@ CAPS[0]=()=>{
 CAPS[1]=()=>{
   const g=grupo();
   const tit=titulo(g,'Parceiros','Cliente × fornecedor');
-  const lado=(x,icone,cls,nome,sub)=>el(`<div class="card" style="left:${x}px;top:300px;width:260px;height:210px;display:flex;
-      flex-direction:column;align-items:center;padding-top:26px">
-      <div class="ico ${cls}" style="width:68px;height:68px;border-radius:18px">${ic(icone,36)}</div>
-      <div style="margin-top:16px;font-weight:800;font-size:28px">${nome}</div>
-      <div class="lbl sub" style="margin-top:6px;font-size:18px">${sub}</div></div>`,g);
+  const lado=(x,icone,cls,nome,sub)=>el(`<div class="card" style="left:${x}px;top:285px;width:260px;height:240px;display:flex;
+      flex-direction:column;align-items:center;padding-top:32px">
+      <div class="ico ${cls}" style="width:78px;height:78px;border-radius:20px">${ic(icone,42)}</div>
+      <div style="margin-top:18px;font-weight:800;font-size:30px">${nome}</div>
+      <div class="lbl sub" style="margin-top:6px;font-size:19px">${sub}</div></div>`,g);
   const cC=lado(60,'factory','','Cliente','a Recicla vende'), cF=lado(960,'users','a','Fornecedor','a Recicla compra');
-  const hub=el(`<div class="ab" style="left:560px;top:335px;width:160px;display:flex;flex-direction:column;align-items:center">
-      <div class="card" style="position:relative;width:140px;height:140px;border-radius:50%;display:flex;align-items:center;justify-content:center">
-        <div class="ico" style="width:86px;height:86px;border-radius:50%">${ic('warehouse',46)}</div></div>
-      <div style="margin-top:14px;font-weight:800;font-size:20px;white-space:nowrap">Recicla Vale</div></div>`,g);
+  const hub=el(`<div class="ab" style="left:550px;top:330px;width:180px;display:flex;flex-direction:column;align-items:center">
+      <div class="card" style="position:relative;width:150px;height:150px;border-radius:50%;display:flex;align-items:center;justify-content:center">
+        <div class="ico" style="width:94px;height:94px;border-radius:50%">${ic('warehouse',50)}</div></div>
+      <div style="margin-top:14px;font-weight:800;font-size:21px;white-space:nowrap">Recicla Vale</div></div>`,g);
   // as quatro pistas: material em cima, dinheiro embaixo (o rótulo é sempre do lado da Recicla Vale)
-  const YM=373, YD=437;
-  const sM1=seta(g,`M562 ${YM} L330 ${YM}`,'#AEB8C2'), sD1=seta(g,`M330 ${YD} L562 ${YD}`);
-  const sM2=seta(g,`M950 ${YM} L718 ${YM}`,'#AEB8C2'), sD2=seta(g,`M718 ${YD} L950 ${YD}`);
+  const YM=369, YD=441;
+  const sM1=seta(g,`M556 ${YM} L330 ${YM}`,'#AEB8C2'), sD1=seta(g,`M330 ${YD} L556 ${YD}`);
+  const sM2=seta(g,`M950 ${YM} L724 ${YM}`,'#AEB8C2'), sD2=seta(g,`M724 ${YD} L950 ${YD}`);
   const rot=(x,y,txt,cls)=>el(`<div class="ab" style="left:${x-110}px;top:${y}px;width:220px;text-align:center">
-      <span class="tag ${cls}" style="font-size:17px;padding:6px 14px">${txt}</span></div>`,g);
-  const rM1=rot(446,YM-56,'sai material','n'), rD1=rot(446,YD+22,'entra dinheiro','v');
-  const rM2=rot(834,YM-56,'entra material','n'), rD2=rot(834,YD+22,'sai dinheiro','v');
+      <span class="tag ${cls}" style="font-size:18px;padding:6px 14px">${txt}</span></div>`,g);
+  const rM1=rot(443,YM-60,'sai material','n'), rD1=rot(443,YD+24,'entra dinheiro','v');
+  const rM2=rot(837,YM-60,'entra material','n'), rD2=rot(837,YD+24,'sai dinheiro','v');
   const fM1=ficha(g,'truck',24,true), fD1=ficha(g,'banknote',24), fM2=ficha(g,'truck',24,true), fD2=ficha(g,'banknote',24);
 
   return t=>{
@@ -305,9 +305,9 @@ CAPS[1]=()=>{
     // a ficha percorre a pista e para perto da ponta da seta (fica lá até o fim da cena)
     const pista=(s,f,r,a,x0,x1,y)=>{s.draw(t,a-.1,.55); vis(r,t,a+.05,1e9,{dy:6,sc:.92});
       const q=arco(f,t,a,.8,x0,y-24,x1,y-24,0,0); f.style.opacity=(t>=a?1:0); f.style.visibility=t>=a?'visible':'hidden'; return q};
-    pista(sM1,fM1,rM1,ts1,520,360,YM); pista(sD1,fD1,rD1,te1,350,500,YD);
+    pista(sM1,fM1,rM1,ts1,512,362,YM); pista(sD1,fD1,rD1,te1,352,494,YD);
     vis(cF,t,tfo-.05,1e9,{dx:20,dy:0}); vis(cF.querySelector('.sub'),t,tcp-.2,1e9,{dy:6});
-    pista(sM2,fM2,rM2,te2,900,750,YM); pista(sD2,fD2,rD2,ts2,738,888,YD);
+    pista(sM2,fM2,rM2,te2,900,756,YM); pista(sD2,fD2,rD2,ts2,742,886,YD);
     pulse(hub,t,tdf,.03,.8);
   };
 };
@@ -346,8 +346,8 @@ CAPS[4]=()=>{
 
   return t=>{
     const tn=W(2,'nota',1), tl=W(2,'leva'), ten=W(2,'endereco'), tco=W(2,'completo'), tnu=W(2,'numero'), tse=W(2,'sefaz'), trc=W(2,'recusar');
-    tituloCena(tit,t,tn,tn-.15);
-    vis(nota,t,tn-.05,1e9,{dx:-20,dy:0});
+    tituloCena(tit,t,tn,tn-.3);
+    vis(nota,t,tn+.1,1e9,{dx:-20,dy:0});
     vis($('#n4-cab'),t,tl-.25,1e9,{dy:6}); vis($('#n4-nome'),t,tl-.15,1e9,{dy:8}); vis($('#n4-cnpj'),t,tl,1e9,{dy:8});
     ['#n4-l0','#n4-l1','#n4-l2','#n4-l3'].forEach((s,k)=>vis($(s),t,ten-.1+k*.14,1e9,{dy:8}));
     vis($('#n4-itens'),t,ten+.5,1e9,{dy:6});
@@ -387,8 +387,8 @@ CAPS[5]=()=>{
   return t=>{
     const tse=W(4,'semana'), tco=W(4,'comprou'), tpg=W(4,'pagar'), tve=W(4,'vendeu'), tac=W(4,'acertar');
     const tsa=W(5,'saldos'), tso=W(5,'so'), tct=W(5,'conta'), tcs=W(5,'coisas'), tde=W(5,'deve'), tdp=W(5,'deposito');
-    tituloCena(tit,t,tse,tse-.1);
-    vis(cab,t,tse+.1,1e9,{dy:14});
+    tituloCena(tit,t,tse,tse-.3);
+    vis(cab,t,tse+.3,1e9,{dy:14});
     vis(cC,t,tco-.1,1e9,{dy:22}); vis(cC.querySelector('.ch'),t,tpg-.1,1e9,{dy:6,sc:.9});
     vis(cV,t,tve-.1,1e9,{dy:22}); vis(cV.querySelector('.ch'),t,tac-.1,1e9,{dy:6,sc:.9});
     // um saldo só: as duas colunas abrem espaço e viram a conta
@@ -445,12 +445,12 @@ CAPS[8]=()=>{
       <div class="num" style="font-size:${dest?40:30}px;${dest?'color:var(--ve)':''}">${brl(v)}</div>
       <div class="lbl" style="margin-top:2px">o quilo</div></div>`,g);
   const fio=el('<div class="ab" style="left:899px;top:352px;width:2px;height:70px;background:#C9D1D8"></div>',g);
-  const pL=preco(790,232,6.2,true), pP=preco(574,330,0.55,false);
+  const pL=preco(790,232,6.2,true), pP=preco(468,236,0.55,false);
 
   return t=>{
     const tja=W(3,'ja'), tla=W(3,'latinha',1), tpe=W(3,'peso'), tva=W(3,'vale'), tpa=W(3,'papelao');
-    tituloCena(tit,t,tja,tja-.1);
-    vis(chao,t,tja,1e9,{dy:0}); vis(pap,t,tja+.05,1e9,{dy:24,sc:.96}); vis(rP,t,tja+.25,1e9,{dy:10});
+    tituloCena(tit,t,tja,tja-.3);
+    vis(chao,t,tja+.05,1e9,{dy:0}); vis(pap,t,tja+.12,1e9,{dy:24,sc:.96}); vis(rP,t,tja+.3,1e9,{dy:10});
     vis(saco,t,tla-.1,1e9,{dy:20,sc:.94}); vis(rL.firstElementChild,t,tla,1e9,{dy:8}); vis(rL.querySelector('.ch'),t,tpe-.2,1e9,{dy:8,sc:.9});
     vis(fio,t,tva-.1,1e9,{dy:0}); vis(pL,t,tva-.15,1e9,{dy:16}); pulse(pL,t,tva+.45,.04,.8);
     vis(pP,t,tpa-.1,1e9,{dy:16});
@@ -522,18 +522,19 @@ CAPS[10]=()=>{
   const VENDA=7.40, COMPRA=6.20, MARGEM=Math.round((VENDA-COMPRA)*100)/100;
   const g=grupo();
   const tit=titulo(g,'Ficha','Sucata é fungível');
+  // o desenho (origens, fardo, cliente) fica no meio; na fala 6 ele encolhe e sobe para a conta entrar embaixo
   const cena=el('<div class="ab" style="left:0;top:0;width:1280px;height:800px;transform-origin:640px 190px"></div>',g);
-  const orig=[['users','Cooperativa Recomeço'],['user-round','Dona Cida'],['users-round','todo mundo']].map(([i,txt],k)=>chipParc(cena,70,236+k*82,330,i,txt,'',20));
-  const latas=[]; for(let i=0;i<9;i++) latas.push(el(`<div class="ab" style="left:0;top:0;width:24px;height:36px;visibility:hidden">${lata()}</div>`,cena));
-  const far=el(`<div class="ab" style="left:540px;top:236px;width:200px">
-      <div class="fd" style="width:200px;height:180px">${fardoLatinhas()}</div>
-      <div style="margin-top:12px;text-align:center;font-weight:800;font-size:20px;white-space:nowrap">Alumínio latinha</div>
-      <div class="sep" style="margin-top:10px;text-align:center"><span class="tag n" style="font-size:16px;padding:6px 13px">ninguém separa</span></div></div>`,cena);
-  const sf=el(`<div class="card row" style="left:990px;top:290px;width:220px;height:104px;padding:0 18px;gap:14px">
+  const orig=[['users','Cooperativa Recomeço'],['user-round','Dona Cida'],['users-round','todo mundo']].map(([i,txt],k)=>chipParc(cena,60,330+k*82,356,i,txt,'',20));
+  const latas=[]; for(let i=0;i<9;i++) latas.push(el(`<div class="ab" style="left:0;top:0;width:30px;height:45px;visibility:hidden">${lata(30)}</div>`,cena));
+  const far=el(`<div class="ab" style="left:520px;top:318px;width:240px">
+      <div class="fd" style="width:240px;height:216px">${fardoLatinhas(240)}</div>
+      <div style="margin-top:12px;text-align:center;font-weight:800;font-size:21px;white-space:nowrap">Alumínio latinha</div>
+      <div class="sep" style="margin-top:10px;text-align:center"><span class="tag n" style="font-size:16px;padding:6px 17px">ninguém separa</span></div></div>`,cena);
+  const sf=el(`<div class="card row" style="left:990px;top:374px;width:220px;height:104px;padding:0 18px;gap:14px">
       <div class="ico" style="width:48px;height:48px;border-radius:14px">${ic('factory',26)}</div>
       <div><div style="font-weight:800;font-size:21px;white-space:nowrap">Serra Fina</div><div class="lbl" style="margin-top:2px">cliente</div></div></div>`,cena);
   // a conta da margem (entra embaixo quando o desenho encolhe)
-  const linha=el('<div class="ab" style="left:0;top:500px;width:1280px;height:160px"></div>',g);
+  const linha=el('<div class="ab" style="left:0;top:470px;width:1280px;height:160px"></div>',g);
   const cart=(x,rot,sub,v,res)=>el(`<div class="card" style="left:${x}px;top:0;width:318px;height:150px;padding:20px 24px;
       ${res?'border:2px solid var(--v);background:#F4FBF7':''}">
       <div style="font-weight:800;font-size:21px;${res?'color:var(--ve)':''}">${rot}</div>
@@ -546,24 +547,24 @@ CAPS[10]=()=>{
       transform:rotate(-6deg);box-shadow:0 6px 14px rgba(138,90,0,.16)">Estimativa</span></div>`,linha);
 
   return t=>{
-    const tfu=W(5,'fungivel'), tmi=W(5,'mistura'), tco=W(5,'cooperativa'), tfa=W(5,'fardo'), tci=W(5,'cida'), tto=W(5,'todo'), tmu=W(5,'mundo'),
+    const tfu=W(5,'fungivel'), tmi=W(5,'mistura'), tco=W(5,'cooperativa'), tci=W(5,'cida'), tmu=W(5,'mundo'), tto=W(5,'todo'),
           tve=W(5,'venda'), tsp=W(5,'separa');
     const tma=W(6,'margem'), tme=W(6,'medio'), tba=W(6,'bater'), tfo=W(6,'fornecedor'), tre=W(6,'rende');
-    tituloCena(tit,t,tfu,tmi-.5);
+    tituloCena(tit,t,tfu,tmi-.75);
     // as origens jogam latinhas no mesmo fardo
     vis(far,t,tmi-.15,1e9,{dy:20,sc:.94});
     [tco,tci,tto].forEach((a,k)=>vis(orig[k],t,a-.15,1e9,{dx:-20,dy:0}));
-    const voo=[tco+.3,tci+.2,tmu-.1], VOO=.7;
+    const voo=[tco+.3,tci+.2,tmu-.1], VOO=.75;
     latas.forEach((e,i)=>{const k=Math.floor(i/3), j=i%3, a=voo[k]+j*.13;
-      const q=arco(e,t,a,VOO,70+330-30,236+k*82+15,598+j*26,256,-80,140*(j-1));
+      const q=arco(e,t,a,VOO,378,330+k*82+10,602+j*30,322,-110,140*(j-1));
       const op=(t>=a&&q<1)?Math.min(1,q*8,(1-q)*7):0; e.style.opacity=op.toFixed(3); e.style.visibility=op>0?'visible':'hidden'});
     voo.forEach(a=>pulse(far.querySelector('.fd'),t,a+VOO+.2,.035,.5));
     // na venda: o fardo vai inteiro para o cliente (depois que a última lata caiu)
     const tmov=Math.max(tve+.05,voo[2]+.26+VOO+.1), pv=eio(pr(t,tmov,1.0));
-    far.style.left=lerp(540,760,pv).toFixed(2)+'px';
+    far.style.left=lerp(520,722,pv).toFixed(2)+'px';
     vis(sf,t,tve-.15,1e9,{dx:20,dy:0}); vis(far.querySelector('.sep'),t,tsp-.15,1e9,{dy:6,sc:.9});
     // a margem: o desenho encolhe e sobe; a conta entra embaixo
-    const enc=eio(pr(t,tma-.6,.8)); cena.style.transform=`translate(0,${(-28*enc).toFixed(2)}px) scale(${lerp(1,.8,enc).toFixed(4)})`;
+    const enc=eio(pr(t,tma-.6,.8)); cena.style.transform=`translate(0,${(-124*enc).toFixed(2)}px) scale(${lerp(1,.8,enc).toFixed(4)})`;
     vis(qV,t,tma-.05,1e9,{dy:22}); vis(oM,t,tma+.2,1e9,{sc:.6,dy:0}); vis(qC,t,tma+.35,1e9,{dy:22});
     vis(oI,t,tma+.6,1e9,{sc:.6,dy:0}); vis(qM,t,tma+.75,1e9,{dy:22,sc:.94});
     pulse(qV,t,tme,.035,.8); vis(selo,t,tba-.15,1e9,{dy:-10,sc:.8}); pulse(qC,t,tfo-.1,.035,.8); pulse(qM,t,tre-.1,.04,.8);

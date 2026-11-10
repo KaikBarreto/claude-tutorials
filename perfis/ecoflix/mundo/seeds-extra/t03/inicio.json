@@ -1,0 +1,420 @@
+{
+ "_doc": "T03 · estado de partida da aula (caps. 0 a 2) sobre o mundo base: sem a \"Tabela Depósitos\" (o cap07 cria) e sem o vínculo do Depósito Irmãos Siqueira com ela; cobre da semana passada (R$ 0,50 abaixo; o cap06 reajusta); preço personalizado do bronze (R$ 30,50) do Depósito Irmãos Siqueira, lado fornecedor; catálogo real de NCM (ncm_presets). Gerado por rec/t03/t03_sementes.py.",
+ "_remove": {
+  "price_tables": [
+   {
+    "id": "@id:tabela.depositos"
+   }
+  ],
+  "price_table_items": [
+   {
+    "price_table_id": "@id:tabela.depositos"
+   }
+  ]
+ },
+ "_patch": {
+  "suppliers": [
+   {
+    "match": {
+     "id": "@id:fornecedor.siqueira"
+    },
+    "set": {
+     "default_price_table_id": null
+    }
+   }
+  ],
+  "customers": [
+   {
+    "match": {
+     "id": "@id:cliente.siqueira"
+    },
+    "set": {
+     "default_price_table_id": null
+    }
+   }
+  ],
+  "materials": [
+   {
+    "match": {
+     "id": "@id:material.cobre_mel"
+    },
+    "set": {
+     "purchase_price": 42.0,
+     "sale_price": 47.4
+    }
+   },
+   {
+    "match": {
+     "id": "@id:material.cobre_misto"
+    },
+    "set": {
+     "purchase_price": 35.5,
+     "sale_price": 41.0
+    }
+   },
+   {
+    "match": {
+     "id": "@id:material.fio_cobre"
+    },
+    "set": {
+     "purchase_price": 17.5,
+     "sale_price": 21.5
+    }
+   }
+  ],
+  "price_table_items": [
+   {
+    "match": {
+     "id": "@id:pti.padrao.cobre_mel"
+    },
+    "set": {
+     "purchase_price": 42.0,
+     "sale_price": 47.4
+    }
+   },
+   {
+    "match": {
+     "id": "@id:pti.padrao.cobre_misto"
+    },
+    "set": {
+     "purchase_price": 35.5,
+     "sale_price": 41.0
+    }
+   },
+   {
+    "match": {
+     "id": "@id:pti.padrao.fio_cobre"
+    },
+    "set": {
+     "purchase_price": 17.5,
+     "sale_price": 21.5
+    }
+   }
+  ]
+ },
+ "entity_custom_prices": [
+  {
+   "id": "@id:ecp.siqueira.bronze",
+   "company_id": "@id:company.reciclavale",
+   "entity_type": "supplier",
+   "entity_id": "@id:fornecedor.siqueira",
+   "material_id": "@id:material.bronze",
+   "custom_price": 30.5,
+   "is_linked": false,
+   "is_override": false,
+   "price_table_id": null,
+   "variation_type": null,
+   "variation_amount": null,
+   "variation_direction": null,
+   "created_by": "@id:user.rafael",
+   "created_at": "2026-10-05T13:20:00.000Z",
+   "updated_at": "2026-10-05T13:20:00.000Z"
+  }
+ ],
+ "ncm_presets": [
+  {
+   "id": "@id:ncm.7204.10.00",
+   "ncm": "7204.10.00",
+   "description": "Sucata de Ferro Fundido - Alto teor de carbono (>2%), blocos de motores, bases de máquinas, tubulações, discos de freio",
+   "material_category": "Ferro Fundido",
+   "tax_notes": "II 0% / IPI 0% - PIS 2.1% COFINS 9.65% na importação",
+   "created_at": "2026-01-18T19:33:11.000Z"
+  },
+  {
+   "id": "@id:ncm.7204.21.00",
+   "ncm": "7204.21.00",
+   "description": "Sucata de Aço Inoxidável - Ligas 304/316 com níquel e cromo, alta resistência à corrosão",
+   "material_category": "Aço Inoxidável",
+   "tax_notes": "II 0% / IPI 0% - Alto valor agregado",
+   "created_at": "2026-01-18T19:33:11.000Z"
+  },
+  {
+   "id": "@id:ncm.7204.29.00",
+   "ncm": "7204.29.00",
+   "description": "Sucata de Outras Ligas de Aço - Aços ferramenta, aços especiais, ligas com molibdênio",
+   "material_category": "Aço Ligado",
+   "tax_notes": "II 0% / IPI 0% - Diferimento em operações internas",
+   "created_at": "2026-01-18T19:33:11.000Z"
+  },
+  {
+   "id": "@id:ncm.7204.30.00",
+   "ncm": "7204.30.00",
+   "description": "Sucata de Ferro ou Aço Estanhado - Folha de flandres, latas de alimentos, requer desestanhamento",
+   "material_category": "Ferro/Aço Estanhado",
+   "tax_notes": "II 0% / IPI 0% - Segregação obrigatória",
+   "created_at": "2026-01-18T19:33:11.000Z"
+  },
+  {
+   "id": "@id:ncm.7204.41.00",
+   "ncm": "7204.41.00",
+   "description": "Resíduos de Usinagem - Cavacos, aparas, lascas, limalhas, pó de serra, resíduos de estampagem (mesmo em fardos)",
+   "material_category": "Ferro/Aço",
+   "tax_notes": "II 0% / IPI 0% - Subprodutos industriais",
+   "created_at": "2026-01-18T19:33:11.000Z"
+  },
+  {
+   "id": "@id:ncm.7204.49.00",
+   "ncm": "7204.49.00",
+   "description": "Sucata Mista de Ferro/Aço - HMS 1&2, sucata triturada (shredded), vigas estruturais, chapas, obsolescência geral",
+   "material_category": "Ferro/Aço",
+   "tax_notes": "II 0% / IPI 0% - Código mais utilizado em volume",
+   "created_at": "2026-01-18T19:33:11.000Z"
+  },
+  {
+   "id": "@id:ncm.7404.00.00",
+   "ncm": "7404.00.00",
+   "description": "Sucata de Cobre - Fios, cabos, tubos, chapas, componentes elétricos",
+   "material_category": "Cobre",
+   "tax_notes": "II 0% / IPI 0% - Alto valor, fiscalização intensa",
+   "created_at": "2026-01-18T19:33:11.000Z"
+  },
+  {
+   "id": "@id:ncm.7503.00.00",
+   "ncm": "7503.00.00",
+   "description": "Sucata de Níquel - Ligas de níquel puro, essencial para aço inox e superligas aeroespaciais",
+   "material_category": "Níquel",
+   "tax_notes": "II 0% / IPI 0% - Material estratégico",
+   "created_at": "2026-01-18T19:33:11.000Z"
+  },
+  {
+   "id": "@id:ncm.7602.00.00",
+   "ncm": "7602.00.00",
+   "description": "Sucata de Alumínio - Latas de bebida, perfis, panelas, chapas, peças fundidas",
+   "material_category": "Alumínio",
+   "tax_notes": "II 0% / IPI 0% - Pode ter ST dependendo do estado",
+   "created_at": "2026-01-18T19:33:11.000Z"
+  },
+  {
+   "id": "@id:ncm.7802.00.00",
+   "ncm": "7802.00.00",
+   "description": "Sucata de Chumbo - Baterias automotivas (LABs), chapas, tubos. Material tóxico controlado por Basileia",
+   "material_category": "Chumbo",
+   "tax_notes": "II 3.6% - Controle rigoroso ambiental (IBAMA)",
+   "created_at": "2026-01-18T19:33:11.000Z"
+  },
+  {
+   "id": "@id:ncm.7902.00.00",
+   "ncm": "7902.00.00",
+   "description": "Sucata de Zinco - Peças fundidas (zamak), chapas galvanizadas, anodos",
+   "material_category": "Zinco",
+   "tax_notes": "II 0% / IPI 0% - Diferimento comum",
+   "created_at": "2026-01-18T19:33:11.000Z"
+  },
+  {
+   "id": "@id:ncm.8002.00.00",
+   "ncm": "8002.00.00",
+   "description": "Sucata de Estanho - Soldas eletrônicas, borras de estanhagem, ligas de bronze",
+   "material_category": "Estanho",
+   "tax_notes": "II 0% ou NT - Diferimento comum",
+   "created_at": "2026-01-18T19:33:11.000Z"
+  },
+  {
+   "id": "@id:ncm.3915.10.00",
+   "ncm": "3915.10.00",
+   "description": "Resíduos de Polietileno (PE) - PEAD (frascos), PEBD (filmes agrícolas, sacolas)",
+   "material_category": "Plástico - PE",
+   "tax_notes": "Segregação por tipo de polímero obrigatória",
+   "created_at": "2026-01-18T19:33:11.000Z"
+  },
+  {
+   "id": "@id:ncm.3915.20.00",
+   "ncm": "3915.20.00",
+   "description": "Resíduos de Poliestireno (PS) - Isopor, copos descartáveis, embalagens rígidas",
+   "material_category": "Plástico - PS",
+   "tax_notes": "Segregação por tipo de polímero obrigatória",
+   "created_at": "2026-01-18T19:33:11.000Z"
+  },
+  {
+   "id": "@id:ncm.3915.30.00",
+   "ncm": "3915.30.00",
+   "description": "Resíduos de PVC - Tubos, esquadrias, pisos vinílicos, mangueiras",
+   "material_category": "Plástico - PVC",
+   "tax_notes": "Segregação por tipo de polímero obrigatória",
+   "created_at": "2026-01-18T19:33:11.000Z"
+  },
+  {
+   "id": "@id:ncm.3915.90.00",
+   "ncm": "3915.90.00",
+   "description": "Outros Plásticos (incl. PET) - Garrafas PET, ABS (carcaças), Policarbonato (PC), Nylon",
+   "material_category": "Plástico - Outros",
+   "tax_notes": "II ~18% - Inclui PET que não tem código específico",
+   "created_at": "2026-01-18T19:33:11.000Z"
+  },
+  {
+   "id": "@id:ncm.4707.10.00",
+   "ncm": "4707.10.00",
+   "description": "Papel Kraft e Papelão Ondulado (OCC) - Caixas de papelão, embalagens kraft, fibras longas não branqueadas",
+   "material_category": "Papel/Papelão",
+   "tax_notes": "II 0% / IPI 0% - Base da indústria de embalagens",
+   "created_at": "2026-01-18T19:33:11.000Z"
+  },
+  {
+   "id": "@id:ncm.4707.20.00",
+   "ncm": "4707.20.00",
+   "description": "Papel Branco/Químico - Aparas de escritório (SOP), papel de impressora, arquivos brancos",
+   "material_category": "Papel Branco",
+   "tax_notes": "II 0% / IPI 0% - Valorizado pela brancura",
+   "created_at": "2026-01-18T19:33:11.000Z"
+  },
+  {
+   "id": "@id:ncm.4707.30.00",
+   "ncm": "4707.30.00",
+   "description": "Papel de Pasta Mecânica - Jornais (ONP), revistas, periódicos. Contém lignina, amarela com tempo",
+   "material_category": "Papel Jornal/Revista",
+   "tax_notes": "II 0% / IPI 0% - Commodity em declínio",
+   "created_at": "2026-01-18T19:33:11.000Z"
+  },
+  {
+   "id": "@id:ncm.4707.90.00",
+   "ncm": "4707.90.00",
+   "description": "Papéis Mistos/Não Selecionados - Resíduos não triados, papel misto contaminado",
+   "material_category": "Papel Misto",
+   "tax_notes": "II ~18% - Maior fiscalização, controle fitossanitário",
+   "created_at": "2026-01-18T19:33:11.000Z"
+  },
+  {
+   "id": "@id:ncm.7001.00.00",
+   "ncm": "7001.00.00",
+   "description": "Cacos e Fragmentos de Vidro - Vidro quebrado irregular, arestas cortantes. Se processado em pó vai p/ Cap. 32",
+   "material_category": "Vidro",
+   "tax_notes": "II 0% / IPI 0% - Distinção importante: caco vs pó",
+   "created_at": "2026-01-18T19:33:11.000Z"
+  },
+  {
+   "id": "@id:ncm.6310.10.00",
+   "ncm": "6310.10.00",
+   "description": "Trapos Têxteis Escolhidos - Material têxtil triado, selecionado por tipo de fibra",
+   "material_category": "Têxtil",
+   "tax_notes": "Triagem agrega valor",
+   "created_at": "2026-01-18T19:33:11.000Z"
+  },
+  {
+   "id": "@id:ncm.6310.90.00",
+   "ncm": "6310.90.00",
+   "description": "Trapos Têxteis Mistos - Cordéis, cordas, cabos, desperdícios não selecionados, desfibrados",
+   "material_category": "Têxtil",
+   "tax_notes": "Benefícios de ICMS em estados têxteis (SC)",
+   "created_at": "2026-01-18T19:33:11.000Z"
+  },
+  {
+   "id": "@id:ncm.4004.00.00",
+   "ncm": "4004.00.00",
+   "description": "Resíduos de Borracha - Borracha triturada, raspas de recauchutagem, pós e grânulos",
+   "material_category": "Borracha",
+   "tax_notes": "Matéria-prima para asfalto e pisos",
+   "created_at": "2026-01-18T19:33:11.000Z"
+  },
+  {
+   "id": "@id:ncm.4012.20.00",
+   "ncm": "4012.20.00",
+   "description": "Pneus Usados - Pneumáticos usados para recauchutagem ou reciclagem",
+   "material_category": "Pneus",
+   "tax_notes": "IMPORTAÇÃO GERALMENTE PROIBIDA (IBAMA/DECEX)",
+   "created_at": "2026-01-18T19:33:11.000Z"
+  },
+  {
+   "id": "@id:ncm.8549.11.00",
+   "ncm": "8549.11.00",
+   "description": "Baterias Chumbo-Ácido Usadas - Baterias automotivas e industriais, material tóxico",
+   "material_category": "E-Waste - Baterias",
+   "tax_notes": "II 16.2% - Controle ambiental rigoroso",
+   "created_at": "2026-01-18T19:33:11.000Z"
+  },
+  {
+   "id": "@id:ncm.8549.12.00",
+   "ncm": "8549.12.00",
+   "description": "Baterias de Níquel-Cádmio Usadas - Pilhas recarregáveis antigas",
+   "material_category": "E-Waste - Baterias",
+   "tax_notes": "II 16.2% - Material tóxico (cádmio)",
+   "created_at": "2026-01-18T19:33:11.000Z"
+  },
+  {
+   "id": "@id:ncm.8549.13.00",
+   "ncm": "8549.13.00",
+   "description": "Baterias de Lítio Usadas - Baterias de celulares, notebooks, veículos elétricos",
+   "material_category": "E-Waste - Baterias",
+   "tax_notes": "II 16.2% - Risco de incêndio, minerais críticos",
+   "created_at": "2026-01-18T19:33:11.000Z"
+  },
+  {
+   "id": "@id:ncm.8549.19.00",
+   "ncm": "8549.19.00",
+   "description": "Outras Baterias e Pilhas Usadas - Pilhas alcalinas, baterias diversas",
+   "material_category": "E-Waste - Baterias",
+   "tax_notes": "II 16.2%",
+   "created_at": "2026-01-18T19:33:11.000Z"
+  },
+  {
+   "id": "@id:ncm.8549.21.00",
+   "ncm": "8549.21.00",
+   "description": "E-Waste Rico em Metais Preciosos (Perigoso) - Contém Hg, Cd, Pb, vidro CRT, requer descontaminação",
+   "material_category": "E-Waste - Metais Preciosos",
+   "tax_notes": "NT ou Isento (Ex-tarifário) - Controle IBAMA/Basileia",
+   "created_at": "2026-01-18T19:33:11.000Z"
+  },
+  {
+   "id": "@id:ncm.8549.29.00",
+   "ncm": "8549.29.00",
+   "description": "E-Waste Rico em Metais Preciosos (Limpo) - Placas de circuito limpas, memórias, conectores dourados",
+   "material_category": "E-Waste - Metais Preciosos",
+   "tax_notes": "II 16.2% - \"Mina urbana\" para Au, Ag, Pd, Pt",
+   "created_at": "2026-01-18T19:33:11.000Z"
+  },
+  {
+   "id": "@id:ncm.8549.31.00",
+   "ncm": "8549.31.00",
+   "description": "Componentes Eletrônicos Perigosos - Contém pilhas, interruptores de mercúrio, vidro CRT",
+   "material_category": "E-Waste - Perigoso",
+   "tax_notes": "II 16.2% - Catch-all para e-waste tóxico",
+   "created_at": "2026-01-18T19:33:11.000Z"
+  },
+  {
+   "id": "@id:ncm.8549.39.00",
+   "ncm": "8549.39.00",
+   "description": "Placas e Montagens Eletrônicas (Limpas) - PCBs padrão, componentes sem contaminantes",
+   "material_category": "E-Waste - Eletrônicos",
+   "tax_notes": "II 16.2% - Sucata eletrônica padrão",
+   "created_at": "2026-01-18T19:33:11.000Z"
+  },
+  {
+   "id": "@id:ncm.8549.91.00",
+   "ncm": "8549.91.00",
+   "description": "Outros Resíduos Eletrônicos Perigosos - Equipamentos com substâncias controladas",
+   "material_category": "E-Waste - Outros",
+   "tax_notes": "II 16.2% - Controle ambiental",
+   "created_at": "2026-01-18T19:33:11.000Z"
+  },
+  {
+   "id": "@id:ncm.8549.99.00",
+   "ncm": "8549.99.00",
+   "description": "Outros Resíduos Eletrônicos - Equipamentos diversos sem classificação específica",
+   "material_category": "E-Waste - Outros",
+   "tax_notes": "II 16.2%",
+   "created_at": "2026-01-18T19:33:11.000Z"
+  },
+  {
+   "id": "@id:ncm.7112.91.00",
+   "ncm": "7112.91.00",
+   "description": "Resíduos de Ouro - Restos de joalheria, raspas, limalhas de ouro",
+   "material_category": "Metais Preciosos",
+   "tax_notes": "II 5.4% - Alto valor",
+   "created_at": "2026-01-18T19:33:11.000Z"
+  },
+  {
+   "id": "@id:ncm.7112.92.00",
+   "ncm": "7112.92.00",
+   "description": "Resíduos de Platina - Inclui paládio e ródio, catalisadores automotivos exauridos",
+   "material_category": "Metais Preciosos",
+   "tax_notes": "II 5.4% - Catalisadores têm alto teor",
+   "created_at": "2026-01-18T19:33:11.000Z"
+  },
+  {
+   "id": "@id:ncm.7112.99.00",
+   "ncm": "7112.99.00",
+   "description": "Outros Resíduos de Metais Preciosos - Catalisadores com PGMs, resíduos de refinaria",
+   "material_category": "Metais Preciosos",
+   "tax_notes": "II 5.4% - Inclui catalisadores automotivos",
+   "created_at": "2026-01-18T19:33:11.000Z"
+  }
+ ]
+}

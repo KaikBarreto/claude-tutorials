@@ -94,7 +94,7 @@ como no código (`T08/inventario.md`, 1.59.154).
 
 | Tela | Fala |
 | --- | --- |
-| Capítulo novo (semente `apos-cap05`; o `setup` reabre a aba). [ILUSTRAÇÃO: dois caminhões na fila da balança, o truck da cooperativa e o 3/4 da Auto Peças; cada um puxa uma aba própria na tela, "#58" e "#59".] | Enquanto isso, chega o Jair Lopes, com o caminhão três quartos da Auto Peças Vale Forte, trazendo bateria. |
+| Capítulo novo (semente `apos-cap05`; o `setup` reabre a aba). [ILUSTRAÇÃO: dois caminhões da Recicla Vale na fila da balança, o truck com a latinha da cooperativa e o 3/4 com a bateria da Auto Peças; cada um puxa uma aba própria na tela, "#58" e "#59".] | Enquanto isso, chega o Jair Lopes, com o caminhão três quartos, trazendo bateria da Auto Peças Vale Forte. |
 | Na barra de abas, clique em "+ Novo ticket": abre uma aba em branco ("#59", "Sem cliente/fornecedor"; a barra mostra "(2)"). | Cada caminhão ganha a sua aba. Em Novo ticket, abre uma aba em branco. |
 | Na aba nova (o preenchimento pode ser acelerado na edição): "Selecionar fornecedor" → "Auto Peças Vale Forte"; "Material" → "Bateria automotiva"; "Motorista" → "Jair Lopes"; "Placa do Veículo" → "GHT7B19"; "Pesagem avançada": "1ª Pesagem" 5640 → "Confirmar". | Fornecedor, material, motorista, placa e a primeira pesagem: cinco mil seiscentos e quarenta quilos. |
 | Clique na barra escura: a lista mostra "#58" "3.080 kg" "Cooperativa Recomeço" e "#59" "5.640 kg" "Auto Peças Vale Forte". [ZOOM: a lista das duas abas] | Na barra de cima, a gente troca de um caminhão pro outro. Cada aba guarda o seu rascunho, e nada se mistura. |

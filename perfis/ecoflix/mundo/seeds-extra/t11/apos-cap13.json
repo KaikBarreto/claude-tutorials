@@ -1,0 +1,90 @@
+{
+ "_doc": "T11 · Produção: apos-cap13 (gerado por rec/t11/t11_sementes.py; não editar à mão)",
+ "stock_movements": [
+  {
+   "id": "@id:t11.sm.2.cobre_mel.estorno",
+   "company_id": "@id:company.reciclavale",
+   "material_id": "@id:material.cobre_mel",
+   "type": "PRODUCAO",
+   "quantity": -50,
+   "stock_before": 212.5,
+   "stock_after": 162.5,
+   "description": "Estorno de produção (exclusão da OP)",
+   "order_id": "@id:t11.order.2",
+   "order_type": "production",
+   "entry_id": "@id:t11.entry.2",
+   "related_movement_id": "@id:t11.sm.2.cobre_mel",
+   "created_by": "@id:user.rafael",
+   "transaction_at": "2026-11-10T20:40:00.000Z",
+   "transaction_date": "2026-11-10",
+   "created_at": "2026-11-10T20:40:00.000Z"
+  },
+  {
+   "id": "@id:t11.sm.2.fio.estorno",
+   "company_id": "@id:company.reciclavale",
+   "material_id": "@id:material.fio_cobre",
+   "type": "PRODUCAO",
+   "quantity": 80,
+   "stock_before": 96,
+   "stock_after": 176,
+   "description": "Estorno de produção (exclusão da OP)",
+   "order_id": "@id:t11.order.2",
+   "order_type": "production",
+   "entry_id": "@id:t11.entry.2",
+   "related_movement_id": "@id:t11.sm.2.fio",
+   "created_by": "@id:user.rafael",
+   "transaction_at": "2026-11-10T20:40:00.000Z",
+   "transaction_date": "2026-11-10",
+   "created_at": "2026-11-10T20:40:00.000Z"
+  }
+ ],
+ "_remove": {
+  "production_orders": [
+   {
+    "id": "@id:t11.order.2"
+   }
+  ],
+  "production_order_entries": [
+   {
+    "id": "@id:t11.entry.2"
+   }
+  ],
+  "production_order_consumption": [
+   {
+    "production_order_id": "@id:t11.order.2"
+   }
+  ],
+  "production_order_outputs": [
+   {
+    "production_order_id": "@id:t11.order.2"
+   }
+  ],
+  "production_order_workers": [
+   {
+    "order_id": "@id:t11.order.2"
+   }
+  ]
+ },
+ "_patch": {
+  "materials": [
+   {
+    "match": {
+     "id": "@id:material.fio_cobre"
+    },
+    "set": {
+     "current_stock": 176,
+     "updated_at": "2026-11-10T20:40:00.000Z"
+    }
+   },
+   {
+    "match": {
+     "id": "@id:material.cobre_mel"
+    },
+    "set": {
+     "current_stock": 162.5,
+     "updated_at": "2026-11-10T20:40:00.000Z"
+    }
+   }
+  ]
+ }
+}

@@ -55,18 +55,19 @@ Além do `MUNDO_FICTICIO.md` (Recicla Vale Metais; Rafael, Juliana e Marcos; cof
 - **Contas:** cofre `bank_accounts` kind `cash` "DINHEIRO (COFRE)" com saldo total **R$ 18.500,00** às 08:30 de 10/11 e
   nenhum caixa aberto; duas contas bancárias sem logo de banco (`institution_code` nulo): "Conta Principal" (padrão) e
   "Conta Secundária" (os nomes da T13 e da T14; saldos do mundo base, sugestão R$ 46.870,35 e R$ 12.400,00; a fala não
-  diz nome de conta nem o saldo do banco). Categoria de despesa "Tarifas bancárias" (convive com "Combustível", da T14).
+  diz nome de conta nem o saldo do banco; saldos da junção: `MUNDO_LINHA_DO_TEMPO.md`, "Bancos"). Categoria de sistema "Tarifas"
+  (a junção tirou a "Tarifas bancárias"; convive com "Combustível", da T14).
 - **Últimos caixas fechados:** #84 Rafael Nogueira, 09/11 07:58 → 17:44, fechou com **R$ 1.250,00**; #83 Marcos Antunes,
-  09/11 07:04 → 17:36, fechou com R$ 640,00; os anteriores do histórico. A fala não diz número de caixa: se a sequência
+  09/11 07:02 → 17:36, fechou com R$ 640,00 (as três compras da T16); os anteriores do histórico. A fala não diz número de caixa: se a sequência
   do mundo der outros números, só a coluna Tela muda (#84 → último do Rafael, #85 e #86 → os dois de hoje).
-- **Categoria:** "Tarifas bancárias" (despesa), da rotina de despesas fixas do histórico.
+- **Categoria:** "Tarifas" (a de sistema), a das tarifas do histórico.
 - **Criado ao vivo (manhã):** caixa #85 do Rafael aberto com R$ 1.500,00 (08:31, linha "Abertura do Caixa #85"); caixa
   #86 do Marcos aberto pelo Rafael com R$ 17.000,00 (08:4x, "Usar disponível"); saque de R$ 3.000,00 da conta principal
   para o #86 com tarifa de R$ 6,50 ("Tarifa de Saque para o Caixa #86"), o #86 fica com R$ 20.000,00 e o cofre com
-  R$ 21.500,00 no total; saída bancária "Tarifa mensal do pacote de serviços" R$ 39,90, categoria "Tarifas bancárias",
-  com o caixa #85.
-- **Semente `dia-10` (entre o cap09 e o cap10), no caixa #85:** venda para Aços Quiririm Ltda, 8.000 kg de ferro pesado
-  a R$ 1,25 = **R$ 10.000,00** por Pix/transferência na conta principal (10:15); compra de Aparecida Ramos, 42 kg de
+  R$ 21.500,00 no total; saída bancária "Tarifa mensal do pacote de serviços" R$ 39,90 da Conta Secundária, categoria
+  "Tarifas", com o caixa #85.
+- **Semente `dia-10` (entre o cap09 e o cap10), no caixa #85:** venda para Aços Quiririm Ltda, 1.600 kg de ferro pesado
+  a R$ 1,25 = **R$ 2.000,00** por Pix/transferência na conta principal (10:15; junção: o pátio tem 2.180 kg às 08:30); compra de Aparecida Ramos, 42 kg de
   alumínio latinha a R$ 6,20 = **R$ 260,40** em dinheiro (11:20); compra de Valdir Pereira, 310 kg de ferro misto a
   R$ 0,75 = **R$ 232,50** em dinheiro (15:05). Esperado no fechamento: 1.500,00 − 492,90 = **R$ 1.007,10**. Nenhum
   pedido não finalizado no #85. O #86 do Marcos segue aberto com o movimento que o T7 quiser (não aparece aqui).

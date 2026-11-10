@@ -79,14 +79,14 @@ O pedido guarda todos os valores. Eles só ficam escondidos no comprovante e no 
 A Fundição Bandeira do Vale leva cento e cinquenta e dois quilos de latão, a trinta e um e noventa. Repara na coluna nova: o lucro de cada item. E embaixo do total, o lucro estimado da venda: seiscentos e sessenta e oito reais e oitenta.
 O lucro estimado compara o preço de venda com o preço de compra do material. No latão, são quatro e quarenta por quilo. E o olho do lado esconde o valor, se tiver alguém olhando a tela.
 Uma dica: o Estoque Disponível já desconta o que está nesta venda. Tinha duzentos e catorze quilos de latão. Com os cento e cinquenta e dois da venda, a tela mostra sessenta e dois. Não sumiu nada.
-Quem leva a carga é o Edson, no caminhão da Recicla Vale. Então, em Opções avançadas, eu ligo o Comprovante sem valores.""",
+Quem busca a carga é o motorista da Fundição. Então, em Opções avançadas, eu ligo o Comprovante sem valores.""",
 14: """A Fundição também quer sessenta quilos de cobre mel, mas no sistema tem quarenta e dois. Ao incluir, a tela avisa: faltam dezoito quilos, e propõe de onde puxar.
 Na origem, a lista mostra os outros materiais desta unidade que têm saldo. Uma dica: quem tem filial vê aqui também as outras unidades, o que depende do plano contratado, e aí a venda só fecha com internet.
 A equipe já limpou parte do cobre misto, que agora é cobre mel. Então eu puxo dezoito quilos do cobre misto.
 O cobre mel fica com os sessenta quilos que a venda precisa.
 Transferir e Adicionar. A transferência fica agendada e acontece junto com a venda: se alguma parte falhar, nada é gravado. A venda fecha em sete mil setecentos e vinte e dois reais e oitenta, com novecentos e noventa e dois e oitenta de lucro estimado.
 Se você preferir não transferir, no Cancelar a tela pergunta, e dá pra Inserir mesmo assim. Aí o estoque fica negativo até você lançar a compra que faltou.
-A Fundição paga no Pix. Confirmar pagamento, e venda registrada. Como o Comprovante sem valores está ligado, o comprovante sai só com o material e o peso. É esse papel que o Edson leva.""",
+A Fundição paga no Pix. Confirmar pagamento, e venda registrada. Como o Comprovante sem valores está ligado, o comprovante sai só com o material e o peso. É esse papel que o motorista leva.""",
 15: """E se a internet cair no meio do dia? A faixa no topo avisa, e o trabalho continua. A compra, a venda e o caixa funcionam sem internet.
 Chegou a Dona Cida com a latinha. A balança continua funcionando, porque o Ecotrêi está aqui no computador: catorze quilos e seiscentos. Finalizo em dinheiro, e a compra fica guardada no computador, com um número provisório.
 No caixa, ela aparece em Pendências de Sincronização, esperando a internet.

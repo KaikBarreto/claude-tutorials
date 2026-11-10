@@ -1,0 +1,1529 @@
+{
+ "_doc": "T11 · Produção: inicio (gerado por rec/t11/t11_sementes.py; não editar à mão)",
+ "materials": [
+  {
+   "id": "@id:t11.material.fardo",
+   "company_id": "@id:company.reciclavale",
+   "code": "16",
+   "name": "Fardo de alumínio",
+   "fiscal_name": null,
+   "group_id": "@id:grupo.aluminio",
+   "unit": "Kg",
+   "ncm": "7602.00.00",
+   "purchase_price": 6.2,
+   "sale_price": 7.9,
+   "purchase_price_currency": "BRL",
+   "sale_price_currency": "BRL",
+   "current_stock": 0,
+   "is_archived": false,
+   "created_by": "@id:user.rafael",
+   "created_at": "2026-11-01T12:00:00.000Z",
+   "updated_at": "2026-11-01T12:00:00.000Z"
+  }
+ ],
+ "employees": [
+  {
+   "id": "@id:employee.claudio",
+   "company_id": "@id:company.reciclavale",
+   "name": "Cláudio Ferraz",
+   "position": "Ajudante de pátio",
+   "cpf": "334.095.127-64",
+   "phone": "(12) 90000-4105",
+   "hire_date": "2022-01-11",
+   "salary": 2100,
+   "employment_regime": "clt",
+   "is_active": true,
+   "archived_at": null,
+   "created_by": "@id:user.rafael",
+   "created_at": "2026-08-01T12:00:00.000Z",
+   "updated_at": "2026-08-01T12:00:00.000Z"
+  },
+  {
+   "id": "@id:employee.diego",
+   "company_id": "@id:company.reciclavale",
+   "name": "Diego Morais",
+   "position": "Ajudante de pátio",
+   "cpf": "447.103.682-36",
+   "phone": "(12) 90000-4106",
+   "hire_date": "2025-07-07",
+   "salary": 1980,
+   "employment_regime": "informal",
+   "is_active": true,
+   "archived_at": null,
+   "created_by": "@id:user.rafael",
+   "created_at": "2026-08-01T12:00:00.000Z",
+   "updated_at": "2026-08-01T12:00:00.000Z"
+  }
+ ],
+ "production_kanban_columns": [
+  {
+   "id": "@id:t11.kanban.a_fazer",
+   "company_id": "@id:company.reciclavale",
+   "name": "A fazer",
+   "position": 0,
+   "color": "#EF4444",
+   "is_done": false,
+   "created_by": "@id:user.rafael",
+   "created_at": "2026-11-01T12:30:00.000Z",
+   "updated_at": "2026-11-01T12:30:00.000Z"
+  },
+  {
+   "id": "@id:t11.kanban.em_producao",
+   "company_id": "@id:company.reciclavale",
+   "name": "Em produção",
+   "position": 1,
+   "color": "#F59E0B",
+   "is_done": false,
+   "created_by": "@id:user.rafael",
+   "created_at": "2026-11-01T12:30:00.000Z",
+   "updated_at": "2026-11-01T12:30:00.000Z"
+  },
+  {
+   "id": "@id:t11.kanban.concluida",
+   "company_id": "@id:company.reciclavale",
+   "name": "Concluída",
+   "position": 2,
+   "color": "#10B981",
+   "is_done": true,
+   "created_by": "@id:user.rafael",
+   "created_at": "2026-11-01T12:30:00.000Z",
+   "updated_at": "2026-11-01T12:30:00.000Z"
+  }
+ ],
+ "production_recipes": [
+  {
+   "id": "@id:t11.recipe.cobre_mel",
+   "company_id": "@id:company.reciclavale",
+   "name": null,
+   "output_material_id": "@id:material.cobre_mel",
+   "production_unit": "Kg",
+   "output_qty_per_batch": 1,
+   "pieces_per_commercial_unit": null,
+   "is_active": true,
+   "created_by": "@id:user.rafael",
+   "created_at": "2026-11-01T13:00:00.000Z",
+   "updated_at": "2026-11-01T13:00:00.000Z"
+  }
+ ],
+ "production_recipe_inputs": [
+  {
+   "id": "@id:t11.recipe_input.cobre_mel.fio",
+   "recipe_id": "@id:t11.recipe.cobre_mel",
+   "company_id": "@id:company.reciclavale",
+   "material_id": "@id:material.fio_cobre",
+   "qty_per_output": 1.6,
+   "loss_pct": null,
+   "scrap_material_id": null,
+   "created_at": "2026-11-01T13:00:00.000Z"
+  }
+ ],
+ "production_orders": [
+  {
+   "id": "@id:t11.order.1",
+   "company_id": "@id:company.reciclavale",
+   "order_number": 1,
+   "recipe_id": "@id:t11.recipe.cobre_mel",
+   "output_material_id": "@id:material.cobre_mel",
+   "planned_qty": 50,
+   "produced_qty": 50,
+   "status": "completed",
+   "production_date": "2026-11-03",
+   "responsible": "Rafael Nogueira",
+   "notes": null,
+   "created_by": "@id:user.rafael",
+   "employee_id": null,
+   "kanban_column_id": "@id:t11.kanban.concluida",
+   "machine_id": null,
+   "total_material_cost": 1440,
+   "cost_per_unit": 28.8,
+   "completed_at": "2026-11-03T19:01:00.000Z",
+   "client_request_id": null,
+   "created_at": "2026-11-03T12:10:00.000Z",
+   "updated_at": "2026-11-03T19:01:00.000Z"
+  },
+  {
+   "id": "@id:t11.order.2",
+   "company_id": "@id:company.reciclavale",
+   "order_number": 2,
+   "recipe_id": "@id:t11.recipe.cobre_mel",
+   "output_material_id": "@id:material.cobre_mel",
+   "planned_qty": 50,
+   "produced_qty": 50,
+   "status": "completed",
+   "production_date": "2026-11-03",
+   "responsible": "Rafael Nogueira",
+   "notes": null,
+   "created_by": "@id:user.rafael",
+   "employee_id": null,
+   "kanban_column_id": "@id:t11.kanban.concluida",
+   "machine_id": null,
+   "total_material_cost": 1440,
+   "cost_per_unit": 28.8,
+   "completed_at": "2026-11-03T19:06:00.000Z",
+   "client_request_id": null,
+   "created_at": "2026-11-03T19:03:00.000Z",
+   "updated_at": "2026-11-03T19:06:00.000Z"
+  }
+ ],
+ "production_order_entries": [
+  {
+   "id": "@id:t11.entry.1",
+   "production_order_id": "@id:t11.order.1",
+   "company_id": "@id:company.reciclavale",
+   "entry_date": "2026-11-03",
+   "produced_qty": 50,
+   "posted": true,
+   "total_material_cost": 1440,
+   "note": null,
+   "client_request_id": null,
+   "created_by": "@id:user.rafael",
+   "created_at": "2026-11-03T19:00:00.000Z",
+   "updated_at": "2026-11-03T19:00:00.000Z"
+  },
+  {
+   "id": "@id:t11.entry.2",
+   "production_order_id": "@id:t11.order.2",
+   "company_id": "@id:company.reciclavale",
+   "entry_date": "2026-11-03",
+   "produced_qty": 50,
+   "posted": true,
+   "total_material_cost": 1440,
+   "note": null,
+   "client_request_id": null,
+   "created_by": "@id:user.rafael",
+   "created_at": "2026-11-03T19:05:00.000Z",
+   "updated_at": "2026-11-03T19:05:00.000Z"
+  }
+ ],
+ "production_order_consumption": [
+  {
+   "id": "@id:t11.cons.1.fio",
+   "production_order_id": "@id:t11.order.1",
+   "entry_id": "@id:t11.entry.1",
+   "company_id": "@id:company.reciclavale",
+   "material_id": "@id:material.fio_cobre",
+   "theoretical_qty": 80,
+   "actual_qty": 80,
+   "unit_cost": 18,
+   "line_cost": 1440,
+   "loss_qty": 0,
+   "loss_reason": null,
+   "created_at": "2026-11-03T19:00:00.000Z"
+  },
+  {
+   "id": "@id:t11.cons.2.fio",
+   "production_order_id": "@id:t11.order.2",
+   "entry_id": "@id:t11.entry.2",
+   "company_id": "@id:company.reciclavale",
+   "material_id": "@id:material.fio_cobre",
+   "theoretical_qty": 80,
+   "actual_qty": 80,
+   "unit_cost": 18,
+   "line_cost": 1440,
+   "loss_qty": 0,
+   "loss_reason": null,
+   "created_at": "2026-11-03T19:05:00.000Z"
+  }
+ ],
+ "production_order_outputs": [
+  {
+   "id": "@id:t11.out.1.cobre_mel",
+   "production_order_id": "@id:t11.order.1",
+   "entry_id": "@id:t11.entry.1",
+   "company_id": "@id:company.reciclavale",
+   "material_id": "@id:material.cobre_mel",
+   "is_primary": true,
+   "qty": 50,
+   "created_at": "2026-11-03T19:00:00.000Z"
+  },
+  {
+   "id": "@id:t11.out.2.cobre_mel",
+   "production_order_id": "@id:t11.order.2",
+   "entry_id": "@id:t11.entry.2",
+   "company_id": "@id:company.reciclavale",
+   "material_id": "@id:material.cobre_mel",
+   "is_primary": true,
+   "qty": 50,
+   "created_at": "2026-11-03T19:05:00.000Z"
+  }
+ ],
+ "production_order_workers": [
+  {
+   "id": "@id:t11.worker.1.diego.equipe",
+   "order_id": "@id:t11.order.1",
+   "entry_id": null,
+   "employee_id": "@id:employee.diego",
+   "company_id": "@id:company.reciclavale",
+   "produced_qty": null,
+   "created_at": "2026-11-03T12:10:00.000Z"
+  },
+  {
+   "id": "@id:t11.worker.1.diego.dia",
+   "order_id": "@id:t11.order.1",
+   "entry_id": "@id:t11.entry.1",
+   "employee_id": "@id:employee.diego",
+   "company_id": "@id:company.reciclavale",
+   "produced_qty": 50,
+   "created_at": "2026-11-03T19:00:00.000Z"
+  },
+  {
+   "id": "@id:t11.worker.2.diego.equipe",
+   "order_id": "@id:t11.order.2",
+   "entry_id": null,
+   "employee_id": "@id:employee.diego",
+   "company_id": "@id:company.reciclavale",
+   "produced_qty": null,
+   "created_at": "2026-11-03T19:03:00.000Z"
+  },
+  {
+   "id": "@id:t11.worker.2.diego.dia",
+   "order_id": "@id:t11.order.2",
+   "entry_id": "@id:t11.entry.2",
+   "employee_id": "@id:employee.diego",
+   "company_id": "@id:company.reciclavale",
+   "produced_qty": 50,
+   "created_at": "2026-11-03T19:05:00.000Z"
+  }
+ ],
+ "stock_movements": [
+  {
+   "id": "@id:t11.sm.1.fio",
+   "company_id": "@id:company.reciclavale",
+   "material_id": "@id:material.fio_cobre",
+   "type": "PRODUCAO",
+   "quantity": -80,
+   "stock_before": 234,
+   "stock_after": 154,
+   "description": "Consumo de produção (lançamento)",
+   "order_id": "@id:t11.order.1",
+   "order_type": "production",
+   "entry_id": "@id:t11.entry.1",
+   "related_movement_id": null,
+   "created_by": "@id:user.rafael",
+   "transaction_at": "2026-11-03T19:00:00.000Z",
+   "transaction_date": "2026-11-03",
+   "created_at": "2026-11-03T19:00:00.000Z"
+  },
+  {
+   "id": "@id:t11.sm.1.cobre_mel",
+   "company_id": "@id:company.reciclavale",
+   "material_id": "@id:material.cobre_mel",
+   "type": "PRODUCAO",
+   "quantity": 50,
+   "stock_before": 76,
+   "stock_after": 126,
+   "description": "Produto de produção (lançamento)",
+   "order_id": "@id:t11.order.1",
+   "order_type": "production",
+   "entry_id": "@id:t11.entry.1",
+   "related_movement_id": null,
+   "created_by": "@id:user.rafael",
+   "transaction_at": "2026-11-03T19:00:00.000Z",
+   "transaction_date": "2026-11-03",
+   "created_at": "2026-11-03T19:00:00.000Z"
+  },
+  {
+   "id": "@id:t11.sm.2.fio",
+   "company_id": "@id:company.reciclavale",
+   "material_id": "@id:material.fio_cobre",
+   "type": "PRODUCAO",
+   "quantity": -80,
+   "stock_before": 154,
+   "stock_after": 74,
+   "description": "Consumo de produção (lançamento)",
+   "order_id": "@id:t11.order.2",
+   "order_type": "production",
+   "entry_id": "@id:t11.entry.2",
+   "related_movement_id": null,
+   "created_by": "@id:user.rafael",
+   "transaction_at": "2026-11-03T19:05:00.000Z",
+   "transaction_date": "2026-11-03",
+   "created_at": "2026-11-03T19:05:00.000Z"
+  },
+  {
+   "id": "@id:t11.sm.2.cobre_mel",
+   "company_id": "@id:company.reciclavale",
+   "material_id": "@id:material.cobre_mel",
+   "type": "PRODUCAO",
+   "quantity": 50,
+   "stock_before": 126,
+   "stock_after": 176,
+   "description": "Produto de produção (lançamento)",
+   "order_id": "@id:t11.order.2",
+   "order_type": "production",
+   "entry_id": "@id:t11.entry.2",
+   "related_movement_id": null,
+   "created_by": "@id:user.rafael",
+   "transaction_at": "2026-11-03T19:05:00.000Z",
+   "transaction_date": "2026-11-03",
+   "created_at": "2026-11-03T19:05:00.000Z"
+  }
+ ],
+ "_patch": {
+  "companies": [
+   {
+    "match": {
+     "id": "@id:company.reciclavale"
+    },
+    "set": {
+     "production_loss_tolerance_pct": 2,
+     "production_daily_goal": 250
+    }
+   }
+  ],
+  "stock_movements": [
+   {
+    "match": {
+     "id": "@id:sm.inicial.fio_cobre"
+    },
+    "set": {
+     "stock_after": 219,
+     "quantity": 219
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.19"
+    },
+    "set": {
+     "stock_after": 298,
+     "stock_before": 219
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.35"
+    },
+    "set": {
+     "stock_after": 160,
+     "stock_before": 298
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.57"
+    },
+    "set": {
+     "stock_after": 178,
+     "stock_before": 160
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.65"
+    },
+    "set": {
+     "stock_after": 221,
+     "stock_before": 178
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.90"
+    },
+    "set": {
+     "stock_after": 275,
+     "stock_before": 221
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.104"
+    },
+    "set": {
+     "stock_after": 295,
+     "stock_before": 275
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.127"
+    },
+    "set": {
+     "stock_after": 333,
+     "stock_before": 295
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.130"
+    },
+    "set": {
+     "stock_after": 355,
+     "stock_before": 333
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.143"
+    },
+    "set": {
+     "stock_after": 167,
+     "stock_before": 355
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.154"
+    },
+    "set": {
+     "stock_after": 202,
+     "stock_before": 167
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.195"
+    },
+    "set": {
+     "stock_after": 232,
+     "stock_before": 202
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.216"
+    },
+    "set": {
+     "stock_after": 273,
+     "stock_before": 232
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.236"
+    },
+    "set": {
+     "stock_after": 296,
+     "stock_before": 273
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.245"
+    },
+    "set": {
+     "stock_after": 331,
+     "stock_before": 296
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.253"
+    },
+    "set": {
+     "stock_after": 355,
+     "stock_before": 331
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.259"
+    },
+    "set": {
+     "stock_after": 404,
+     "stock_before": 355
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.266"
+    },
+    "set": {
+     "stock_after": 250,
+     "stock_before": 404
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.285"
+    },
+    "set": {
+     "stock_after": 160,
+     "stock_before": 250
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.296"
+    },
+    "set": {
+     "stock_after": 200,
+     "stock_before": 160
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.305"
+    },
+    "set": {
+     "stock_after": 259,
+     "stock_before": 200
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.311"
+    },
+    "set": {
+     "stock_after": 281,
+     "stock_before": 259
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.313"
+    },
+    "set": {
+     "stock_after": 325,
+     "stock_before": 281
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.321"
+    },
+    "set": {
+     "stock_after": 367,
+     "stock_before": 325
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.359"
+    },
+    "set": {
+     "stock_after": 390,
+     "stock_before": 367
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.364"
+    },
+    "set": {
+     "stock_after": 426,
+     "stock_before": 390
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.394"
+    },
+    "set": {
+     "stock_after": 448,
+     "stock_before": 426
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.404"
+    },
+    "set": {
+     "stock_after": 233,
+     "stock_before": 448
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.410"
+    },
+    "set": {
+     "stock_after": 256,
+     "stock_before": 233
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.417"
+    },
+    "set": {
+     "stock_after": 332,
+     "stock_before": 256
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.440"
+    },
+    "set": {
+     "stock_after": 372,
+     "stock_before": 332
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.475"
+    },
+    "set": {
+     "stock_after": 402,
+     "stock_before": 372
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.481"
+    },
+    "set": {
+     "stock_after": 475,
+     "stock_before": 402
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.507"
+    },
+    "set": {
+     "stock_after": 504,
+     "stock_before": 475
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.513"
+    },
+    "set": {
+     "stock_after": 366,
+     "stock_before": 504
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.531"
+    },
+    "set": {
+     "stock_after": 220,
+     "stock_before": 366
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.540"
+    },
+    "set": {
+     "stock_after": 255,
+     "stock_before": 220
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.573"
+    },
+    "set": {
+     "stock_after": 344,
+     "stock_before": 255
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.585"
+    },
+    "set": {
+     "stock_after": 160,
+     "stock_before": 344
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.599"
+    },
+    "set": {
+     "stock_after": 197,
+     "stock_before": 160
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.604"
+    },
+    "set": {
+     "stock_after": 228,
+     "stock_before": 197
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.621"
+    },
+    "set": {
+     "stock_after": 249,
+     "stock_before": 228
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.642"
+    },
+    "set": {
+     "stock_after": 275,
+     "stock_before": 249
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.672"
+    },
+    "set": {
+     "stock_after": 329,
+     "stock_before": 275
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.673"
+    },
+    "set": {
+     "stock_after": 366,
+     "stock_before": 329
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.684"
+    },
+    "set": {
+     "stock_after": 431,
+     "stock_before": 366
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.700"
+    },
+    "set": {
+     "stock_after": 217,
+     "stock_before": 431
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.710"
+    },
+    "set": {
+     "stock_after": 245,
+     "stock_before": 217
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.739"
+    },
+    "set": {
+     "stock_after": 301,
+     "stock_before": 245
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.751"
+    },
+    "set": {
+     "stock_after": 353,
+     "stock_before": 301
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.782"
+    },
+    "set": {
+     "stock_after": 388,
+     "stock_before": 353
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.790"
+    },
+    "set": {
+     "stock_after": 422,
+     "stock_before": 388
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.801"
+    },
+    "set": {
+     "stock_after": 220,
+     "stock_before": 422
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.813"
+    },
+    "set": {
+     "stock_after": 234,
+     "stock_before": 220
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.inicial.cobre_mel"
+    },
+    "set": {
+     "stock_after": 237,
+     "quantity": 237
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.18"
+    },
+    "set": {
+     "stock_after": 272,
+     "stock_before": 237
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.33"
+    },
+    "set": {
+     "stock_after": 61,
+     "stock_before": 272
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.39"
+    },
+    "set": {
+     "stock_after": 115,
+     "stock_before": 61
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.40"
+    },
+    "set": {
+     "stock_after": 197,
+     "stock_before": 115
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.48"
+    },
+    "set": {
+     "stock_after": 211,
+     "stock_before": 197
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.58"
+    },
+    "set": {
+     "stock_after": 238,
+     "stock_before": 211
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.70"
+    },
+    "set": {
+     "stock_after": 267,
+     "stock_before": 238
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.107"
+    },
+    "set": {
+     "stock_after": 293,
+     "stock_before": 267
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.110"
+    },
+    "set": {
+     "stock_after": 369,
+     "stock_before": 293
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.119"
+    },
+    "set": {
+     "stock_after": 412,
+     "stock_before": 369
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.129"
+    },
+    "set": {
+     "stock_after": 428,
+     "stock_before": 412
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.138"
+    },
+    "set": {
+     "stock_after": 453,
+     "stock_before": 428
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.141"
+    },
+    "set": {
+     "stock_after": 209,
+     "stock_before": 453
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.164"
+    },
+    "set": {
+     "stock_after": 405,
+     "stock_before": 209
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.169"
+    },
+    "set": {
+     "stock_after": 425,
+     "stock_before": 405
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.175"
+    },
+    "set": {
+     "stock_after": 452,
+     "stock_before": 425
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.184"
+    },
+    "set": {
+     "stock_after": 478,
+     "stock_before": 452
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.193"
+    },
+    "set": {
+     "stock_after": 524,
+     "stock_before": 478
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.208"
+    },
+    "set": {
+     "stock_after": 562,
+     "stock_before": 524
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.218"
+    },
+    "set": {
+     "stock_after": 586,
+     "stock_before": 562
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.235"
+    },
+    "set": {
+     "stock_after": 613,
+     "stock_before": 586
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.254"
+    },
+    "set": {
+     "stock_after": 633,
+     "stock_before": 613
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.264"
+    },
+    "set": {
+     "stock_after": 418,
+     "stock_before": 633
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.276"
+    },
+    "set": {
+     "stock_after": 454,
+     "stock_before": 418
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.283"
+    },
+    "set": {
+     "stock_after": 161,
+     "stock_before": 454
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.294"
+    },
+    "set": {
+     "stock_after": 185,
+     "stock_before": 161
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.304"
+    },
+    "set": {
+     "stock_after": 229,
+     "stock_before": 185
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.306"
+    },
+    "set": {
+     "stock_after": 258,
+     "stock_before": 229
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.320"
+    },
+    "set": {
+     "stock_after": 298,
+     "stock_before": 258
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.323"
+    },
+    "set": {
+     "stock_after": 368,
+     "stock_before": 298
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.339"
+    },
+    "set": {
+     "stock_after": 388,
+     "stock_before": 368
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.345"
+    },
+    "set": {
+     "stock_after": 407,
+     "stock_before": 388
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.357"
+    },
+    "set": {
+     "stock_after": 439,
+     "stock_before": 407
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.377"
+    },
+    "set": {
+     "stock_after": 469,
+     "stock_before": 439
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.388"
+    },
+    "set": {
+     "stock_after": 517,
+     "stock_before": 469
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.402"
+    },
+    "set": {
+     "stock_after": 245,
+     "stock_before": 517
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.416"
+    },
+    "set": {
+     "stock_after": 288,
+     "stock_before": 245
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.427"
+    },
+    "set": {
+     "stock_after": 502,
+     "stock_before": 288
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.433"
+    },
+    "set": {
+     "stock_after": 525,
+     "stock_before": 502
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.467"
+    },
+    "set": {
+     "stock_after": 581,
+     "stock_before": 525
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.471"
+    },
+    "set": {
+     "stock_after": 598,
+     "stock_before": 581
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.476"
+    },
+    "set": {
+     "stock_after": 615,
+     "stock_before": 598
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.482"
+    },
+    "set": {
+     "stock_after": 711,
+     "stock_before": 615
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.489"
+    },
+    "set": {
+     "stock_after": 743,
+     "stock_before": 711
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.511"
+    },
+    "set": {
+     "stock_after": 547,
+     "stock_before": 743
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.522"
+    },
+    "set": {
+     "stock_after": 587,
+     "stock_before": 547
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.529"
+    },
+    "set": {
+     "stock_after": 358,
+     "stock_before": 587
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.554"
+    },
+    "set": {
+     "stock_after": 410,
+     "stock_before": 358
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.557"
+    },
+    "set": {
+     "stock_after": 429,
+     "stock_before": 410
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.563"
+    },
+    "set": {
+     "stock_after": 462,
+     "stock_before": 429
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.565"
+    },
+    "set": {
+     "stock_after": 524,
+     "stock_before": 462
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.572"
+    },
+    "set": {
+     "stock_after": 587,
+     "stock_before": 524
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.583"
+    },
+    "set": {
+     "stock_after": 246,
+     "stock_before": 587
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.594"
+    },
+    "set": {
+     "stock_after": 304,
+     "stock_before": 246
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.615"
+    },
+    "set": {
+     "stock_after": 321,
+     "stock_before": 304
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.631"
+    },
+    "set": {
+     "stock_after": 361,
+     "stock_before": 321
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.646"
+    },
+    "set": {
+     "stock_after": 457,
+     "stock_before": 361
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.654"
+    },
+    "set": {
+     "stock_after": 551,
+     "stock_before": 457
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.671"
+    },
+    "set": {
+     "stock_after": 579,
+     "stock_before": 551
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.676"
+    },
+    "set": {
+     "stock_after": 607,
+     "stock_before": 579
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.694"
+    },
+    "set": {
+     "stock_after": 623,
+     "stock_before": 607
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.698"
+    },
+    "set": {
+     "stock_after": 344,
+     "stock_before": 623
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.705"
+    },
+    "set": {
+     "stock_after": 367,
+     "stock_before": 344
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.714"
+    },
+    "set": {
+     "stock_after": 406,
+     "stock_before": 367
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.721"
+    },
+    "set": {
+     "stock_after": 540,
+     "stock_before": 406
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.744"
+    },
+    "set": {
+     "stock_after": 573,
+     "stock_before": 540
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.755"
+    },
+    "set": {
+     "stock_after": 609,
+     "stock_before": 573
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.764"
+    },
+    "set": {
+     "stock_after": 625,
+     "stock_before": 609
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.783"
+    },
+    "set": {
+     "stock_after": 699,
+     "stock_before": 625
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.788"
+    },
+    "set": {
+     "stock_after": 738,
+     "stock_before": 699
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.799"
+    },
+    "set": {
+     "stock_after": 358,
+     "stock_before": 738
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.817"
+    },
+    "set": {
+     "stock_after": 58,
+     "stock_before": 358
+    }
+   },
+   {
+    "match": {
+     "id": "@id:sm.818"
+    },
+    "set": {
+     "stock_after": 76,
+     "stock_before": 58
+    }
+   }
+  ]
+ }
+}

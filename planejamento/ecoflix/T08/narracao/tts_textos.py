@@ -43,7 +43,7 @@ Se preferir, troca pra quilos e digita direto o peso da impureza.
 E o líquido fecha a conta: o bruto, menos a tara, menos a impureza.
 Três mil e dezoito quilos e quatrocentos. É esse peso que vale na compra.
 Confirmar, e o ticket da cooperativa está pesado.""",
-6: """Enquanto isso, chega o Jair Lopes, com o caminhão três quartos da Auto Peças Vale Forte, trazendo bateria.
+6: """Enquanto isso, chega o Jair Lopes, com o caminhão três quartos, trazendo bateria da Auto Peças Vale Forte.
 Cada caminhão ganha a sua aba. Em Novo ticket, abre uma aba em branco.
 Fornecedor, material, motorista, placa e a primeira pesagem: cinco mil seiscentos e quarenta quilos.
 Na barra de cima, a gente troca de um caminhão pro outro. Cada aba guarda o seu rascunho, e nada se mistura.

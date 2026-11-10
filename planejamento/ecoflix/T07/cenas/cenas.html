@@ -1,0 +1,713 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<!-- T07 "Comprar e vender sucata" · ilustrações de conceito (kit perfis/ecoflix/cenas/cenas_ecoflix.html).
+     Uma janela por capítulo (ilustracoes.json): cap00 o dia no pátio · cap02 Não informado · cap04 qual preço vale ·
+     cap06 tara, impureza e líquido + dupla pesagem (o desenho do kit "Tara e peso líquido", com a carroça do Zé) ·
+     cap09 as três formas · cap11 as parcelas · cap12 o cupom · cap13 o lucro do latão · cap14 cobre misto → cobre mel ·
+     cap15 operação com Erro. Tudo função do tempo, preso às falas do narracao/tts_textos.py com W(linha, 'palavra').
+     Render só do trecho: node render_cenas.cjs <cap> capNN.json saida.mp4 --html cenas.html --de <at> --ate <at+dur>.
+     Utilidades novas desta aula (faltavam no kit): kgd() (kg com casas), setaD() (seta para o traco()), carroca(),
+     mini desenhos de tara (saco, tambor, caçamba) e o monte de impureza. -->
+<style>
+@font-face{font-family:M;font-weight:500;src:url(../../../web/fonts/montserrat-latin-500-normal.woff2) format('woff2')}
+@font-face{font-family:M;font-weight:600;src:url(../../../web/fonts/montserrat-latin-600-normal.woff2) format('woff2')}
+@font-face{font-family:M;font-weight:700;src:url(../../../web/fonts/montserrat-latin-700-normal.woff2) format('woff2')}
+@font-face{font-family:M;font-weight:800;src:url(../../../web/fonts/montserrat-latin-800-normal.woff2) format('woff2')}
+@font-face{font-family:M;font-weight:500;src:url(../../../web/fonts/montserrat-latin-ext-500-normal.woff2) format('woff2');unicode-range:U+0100-024F}
+@font-face{font-family:M;font-weight:700;src:url(../../../web/fonts/montserrat-latin-ext-700-normal.woff2) format('woff2');unicode-range:U+0100-024F}
+/* paleta EcoFlix (igual ao kit): --v acento (só preenchimento, barra, contorno) · --ve texto verde · --ae texto âmbar */
+:root{--v:#50D088;--ve:#2E7D57;--vc:#EAF8F0;--vm:#A9E9C6;--a:#F2B63D;--ae:#8A5A00;--ac:#FFF5DF;
+  --t:#121212;--c:#6B7280;--l:#E6E9EE;--e:#121212;--r:#B42318;--rc:#FEF3F2}
+*{box-sizing:border-box;margin:0;padding:0;transition:none!important;animation:none!important}
+html,body{width:1280px;height:800px;overflow:hidden;background:#fff}
+body{font-family:M,sans-serif;color:var(--t);-webkit-font-smoothing:antialiased}
+#st{position:absolute;inset:0;overflow:hidden;background:
+  radial-gradient(1100px 650px at 92% -12%,rgba(80,208,136,.09),transparent 62%),
+  radial-gradient(900px 600px at -12% 112%,rgba(80,208,136,.06),transparent 60%),#fff}
+.g{position:absolute;left:0;top:0;width:1280px;height:800px;transform-origin:640px 400px}
+.ab{position:absolute}
+.row{display:flex;align-items:center}
+.kick{font-weight:700;font-size:15px;letter-spacing:.3em;color:var(--ve);text-transform:uppercase}
+.h{font-weight:800;font-size:46px;letter-spacing:-.01em;line-height:1.1}
+.card{position:absolute;background:#fff;border:1px solid #E1E8E4;border-radius:18px;
+  box-shadow:0 18px 40px rgba(16,24,40,.10),0 3px 8px rgba(16,24,40,.06)}
+.ic{display:inline-flex;align-items:center;justify-content:center;flex:none}
+.ic svg{width:100%;height:100%}
+.ico{display:flex;align-items:center;justify-content:center;flex:none;border-radius:14px;background:var(--vc);color:var(--ve)}
+.ico.a{background:var(--ac);color:var(--ae)}
+.ico.n{background:#F2F4F7;color:#4B5563}
+.tag{display:inline-flex;align-items:center;gap:8px;padding:9px 18px;border-radius:999px;font-weight:800;font-size:20px;white-space:nowrap}
+.tag.v{background:var(--vc);color:var(--ve)} .tag.a{background:var(--ac);color:var(--ae)} .tag.n{background:#F2F4F7;color:#374151}
+.lbl{font-weight:700;font-size:17px;color:var(--c)}
+.num{font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+.op{position:absolute;width:60px;height:60px;border-radius:50%;background:#F2F4F7;color:var(--t);display:flex;
+  align-items:center;justify-content:center;font-weight:800;font-size:34px;line-height:1}
+.most{background:var(--e);border-radius:16px;padding:16px 22px 18px;box-shadow:0 16px 34px rgba(16,24,40,.22)}
+.most .ml{position:relative;height:20px;font-weight:700;font-size:15px;letter-spacing:.22em;color:#A9E9C6;text-transform:uppercase}
+.most .ml span{position:absolute;left:0;top:0;white-space:nowrap}
+.most .mn{margin-top:6px;font-weight:800;font-size:44px;color:var(--v);font-variant-numeric:tabular-nums;white-space:nowrap}
+.rip{position:absolute;width:56px;height:56px;margin:-28px 0 0 -28px;border-radius:50%;border:3px solid var(--v);opacity:0}
+/* desta aula */
+.ttl{font-weight:800;font-size:22px;line-height:1.2;white-space:nowrap}
+.sub{font-weight:600;font-size:17px;line-height:1.3;color:#4B5563;white-space:nowrap}
+.chk{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex:none}
+.chk.v{background:var(--v);color:#fff} .chk.x{background:#EEF0F3;color:#6B7280}
+.pc{position:absolute;display:flex;align-items:center;gap:12px;padding:0 18px;height:64px;border-radius:16px;background:#fff;
+  border:2px solid #E1E8E4;box-shadow:0 8px 20px rgba(16,24,40,.07)}
+.pp{position:absolute;background:#fff;border-radius:6px;box-shadow:0 14px 30px rgba(16,24,40,.16),0 2px 6px rgba(16,24,40,.08)}
+.pp .t{position:absolute;white-space:nowrap}
+</style></head>
+<body><div id="st"></div>
+<script>
+// ------------------------------------------------------------------ utilidades (as do kit, sem mudança)
+const cl=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
+const eo=x=>1-Math.pow(1-cl(x),3);
+const eio=x=>{x=cl(x);return x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2};
+const pr=(t,a,d=.45)=>cl((t-a)/d);
+const lerp=(a,b,p)=>a+(b-a)*p;
+const $=s=>document.querySelector(s);
+const ST=document.getElementById('st');
+function el(html,parent=ST){const d=document.createElement('div');d.innerHTML=html.trim();let f=null;for(const n of [...d.childNodes]){parent.appendChild(n);if(!f&&n.nodeType===1)f=n}return f}
+function grupo(){return el('<div class="g"></div>')}
+function ic(n,px,cor){const s=(window.ICONS||{})[n]||'';return `<span class="ic" style="width:${px}px;height:${px}px;${cor?'color:'+cor:''}">${s}</span>`}
+function hex(c){c=c.replace('#','');return[0,2,4].map(i=>parseInt(c.substr(i,2),16))}
+function mix(a,b,p){const A=hex(a),B=hex(b);return `rgb(${A.map((v,i)=>Math.round(v+(B[i]-v)*cl(p))).join(',')})`}
+function vis(e,t,a,b=1e9,o={}){
+  const din=o.din??.5,dout=o.dout??.4,dy=o.dy??16,dx=o.dx??0,sc=o.sc??.985;
+  const p=eo(pr(t,a,din)),q=1-eo(pr(t,b,dout)),op=Math.min(p,q);
+  e.style.opacity=op.toFixed(4);e.style.visibility=op<=.001?'hidden':'visible';
+  const s=sc+(1-sc)*p - (1-q)*(1-sc);
+  e.style.transform=`translate(${((1-p)*dx).toFixed(2)}px,${((1-p)*dy-(1-q)*dy*.5).toFixed(2)}px) scale(${s.toFixed(4)})`;
+  return op;
+}
+function ripple(r,t,a){const p=pr(t,a,.7);r.style.opacity=(p>0&&p<1)?(.6*(1-p)).toFixed(3):0;r.style.transform=`scale(${(.4+2.0*eo(p)).toFixed(3)})`}
+function pulse(e,t,a,amp=.045,dur=.9){const p=pr(t,a,dur);e.style.scale=(p>0&&p<1)?(1+amp*Math.sin(Math.PI*p)).toFixed(4):''}
+const NF=new Intl.NumberFormat('pt-BR');
+const kg=v=>NF.format(Math.round(v))+' kg';
+const brl=v=>'R$ '+v.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
+function conta(e,t,a,d,v0,v1,fmt=kg){const p=eo(pr(t,a,d));const s=fmt(lerp(v0,v1,p));if(e.textContent!==s)e.textContent=s;return p}
+function traco(p,t,a,d=.8){if(!p._L){p._L=p.getTotalLength();p.style.strokeDasharray=p._L}const q=eio(pr(t,a,d));p.style.strokeDashoffset=(p._L*(1-q)).toFixed(2);p.style.opacity=q>0?1:0;return q}
+function arco(e,t,a,d,x0,y0,x1,y1,h=-80,rot=0){const p=eio(pr(t,a,d));const x=lerp(x0,x1,p),y=lerp(y0,y1,p)+h*4*p*(1-p);
+  e.style.transform=`translate(${x.toFixed(2)}px,${y.toFixed(2)}px) rotate(${(rot*p).toFixed(2)}deg)`;return p}
+function contorno(e,t,a,de,para,d=.45){e.style.borderColor=mix(de,para,eo(pr(t,a,d)))}
+function titulo(g,kick,txt){return el(`<div class="ab" style="left:0;top:0;width:1280px;text-align:center">
+  <div class="kick">${kick}</div><div class="h" style="margin-top:12px">${txt}</div></div>`,g)}
+function posTitulo(e,t,a,sobe,sai=1e9){vis(e,t,a,sai,{dy:14});const p=eio(pr(t,sobe,.7));
+  e.style.top=lerp(318,46,p).toFixed(2)+'px';e.style.scale=lerp(1.12,1,p).toFixed(4)}
+// ------------------------------------------------------------------ utilidades desta aula (faltavam no kit)
+const NFd=new Intl.NumberFormat('pt-BR',{maximumFractionDigits:3});
+const kgd=v=>NFd.format(v)+' kg';                       // kg com casas: 21,6 kg (o kg() do kit arredonda)
+const kg1=v=>v.toLocaleString('pt-BR',{minimumFractionDigits:1,maximumFractionDigits:1})+' kg';   // contagem com uma casa
+// seta (linha + ponta) num só <path>, para o traco() desenhar a ponta por último
+function setaD(x1,y1,x2,y2,h=13){const a=Math.atan2(y2-y1,x2-x1),f=s=>`${(x2-h*Math.cos(a+s*.55)).toFixed(1)} ${(y2-h*Math.sin(a+s*.55)).toFixed(1)}`;
+  return `M${x1} ${y1} L${x2} ${y2} M${f(1)} L${x2} ${y2} L${f(-1)}`}
+function svgTela(pai){return el('<svg class="ab" style="left:0;top:0;overflow:visible" width="1280" height="800"></svg>',pai)}
+function caminho(sv,d,cor='var(--v)',w=4,extra=''){const p=document.createElementNS('http://www.w3.org/2000/svg','path');
+  p.setAttribute('d',d);p.setAttribute('fill','none');p.setAttribute('stroke',cor);p.setAttribute('stroke-width',w);
+  p.setAttribute('stroke-linecap','round');p.setAttribute('stroke-linejoin','round');if(extra)p.setAttribute('stroke-dasharray',extra);
+  p.style.opacity=0;sv.appendChild(p);return p}
+// linha tracejada que se desenha (o traco() usa o dasharray): revela por clip
+function tracejado(p,t,a,d=.7){const q=eio(pr(t,a,d));p.style.opacity=q>0?1:0;p.style.clipPath=`inset(0 ${((1-q)*100).toFixed(2)}% 0 0)`;return q}
+// linha reta que cresce do começo ao fim mudando o próprio "d" (mantém o tracejado; serve para linha vertical)
+function linhaParcial(p,t,a,d,x0,y0,x1,y1){const q=eio(pr(t,a,d));p.setAttribute('d',`M${x0} ${y0} L${lerp(x0,x1,q).toFixed(2)} ${lerp(y0,y1,q).toFixed(2)}`);
+  p.style.opacity=q>0?1:0;return q}
+
+// ------------------------------------------------------------------ tempos da fala
+let D=null;
+const norm=w=>w.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9%./-]+/g,'');
+function W(linha,palavra,n=1,campo='s'){
+  const alvo=norm(palavra);let k=0;
+  for(const w of D.words){if(w.linha===linha&&norm(w.w).replace(/[.,]$/,'')===alvo){k++;if(k===n)return w[campo]}}
+  for(const w of D.words){if(w.linha===linha&&norm(w.w).startsWith(alvo)){k++;if(k>=n)return w[campo]}}
+  console.warn('palavra não achada',linha,palavra);return L(linha);
+}
+const L=i=>(D.linhas[i]||{s:0}).s, LE=i=>(D.linhas[i]||{e:D.dur}).e;
+
+// ------------------------------------------------------------------ desenhos genéricos (sem marca)
+const PECAS=[ // [forma, cor, centro da peça, destino no monte atrás do veículo] (as do kit)
+  ['<polygon points="28,90 44,52 88,42 100,90"/>','#8C5A3C',[64,66],[-224,148,6]],
+  ['<polygon points="82,90 102,36 146,48 154,90"/>','#6F7983',[118,63],[-318,122,12]],
+  ['<rect x="118" y="44" width="112" height="16" rx="8" transform="rotate(-8 174 52)"/>','#9AA3AD',[174,52],[-334,98,-18]],
+  ['<polygon points="148,90 170,54 212,44 232,90"/>','#A0694A',[190,67],[-425,148,-8]],
+  ['<polygon points="210,90 232,40 276,54 286,90"/>','#4F5861',[248,65],[-373,120,-10]],
+  ['<polygon points="258,90 282,60 308,66 312,90"/>','#8A949E',[285,75],[-375,148,4]],
+  ['<g><circle cx="192" cy="64" r="19"/><circle cx="192" cy="64" r="7" fill="#8A949E"/></g>','#5E6670',[192,64],[-242,155,200]],
+  ['<polygon points="40,70 60,50 84,64 64,86"/>','#B07A55',[62,68],[-307,100,30]]];
+const pecasSVG=()=>PECAS.map(([f,c,[cx,cy],[dx,dy,r]])=>`<g class="pd" data-cx="${cx}" data-cy="${cy}" data-dx="${dx}" data-dy="${dy}" data-r="${r}" fill="${c}">${f}</g>`).join('');
+// carroça de mão de lado (frente para a direita): a mesma caçamba e a mesma carga do caminhão do kit, uma roda grande e
+// o varal (puxador); a roda gira com a distância (data-x/data-y/data-r)
+function carroca(){
+  return `<svg viewBox="0 0 500 230" width="500" height="230" style="overflow:visible">
+    <g class="carga">${pecasSVG()}</g>
+    <rect x="18" y="86" width="304" height="80" rx="6" fill="#7E8994"/>
+    <rect x="16" y="82" width="308" height="11" rx="4" fill="#68727D"/>
+    <g stroke="#707A85" stroke-width="3">${[78,138,198,258].map(x=>`<line x1="${x}" y1="98" x2="${x}" y2="158"/>`).join('')}</g>
+    <rect x="10" y="160" width="330" height="12" rx="5" fill="#23282E"/>
+    <path d="M326 104 L470 112" stroke="#5B636C" stroke-width="11" stroke-linecap="round"/>
+    <path d="M458 111 L488 113" stroke="#2F3640" stroke-width="16" stroke-linecap="round"/>
+    <g class="roda" data-x="170" data-y="186" data-r="36" transform="translate(170,186)"><circle r="36" fill="#1B1F24"/><circle r="17" fill="#9AA3AD"/>
+      <rect x="-3" y="-32" width="6" height="12" rx="2" fill="#5B636C"/><rect x="-3" y="20" width="6" height="12" rx="2" fill="#5B636C"/>
+      <rect x="-32" y="-3" width="12" height="6" rx="2" fill="#5B636C"/><rect x="20" y="-3" width="12" height="6" rx="2" fill="#5B636C"/></g>
+  </svg>`;
+}
+// mini desenhos de tara (110x96): saco de ráfia, tambor, caçamba
+const SACO=`<svg viewBox="0 0 110 96" width="110" height="96"><path d="M27 34 Q14 84 31 90 L79 90 Q96 84 83 34 Q69 27 55 31 Q41 27 27 34 Z" fill="#EFE6D2" stroke="#C2AE84" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M44 32 Q55 13 66 32" fill="none" stroke="#C2AE84" stroke-width="4" stroke-linecap="round"/>
+  <g stroke="#DACBA8" stroke-width="2.5" stroke-linecap="round"><line x1="25" y1="52" x2="85" y2="52"/><line x1="23" y1="66" x2="87" y2="66"/><line x1="24" y1="80" x2="86" y2="80"/></g></svg>`;
+const TAMBOR=`<svg viewBox="0 0 110 96" width="110" height="96"><rect x="27" y="16" width="56" height="76" rx="7" fill="#6F7983"/>
+  <ellipse cx="55" cy="17" rx="28" ry="7" fill="#8A949E"/><rect x="27" y="40" width="56" height="5" fill="#5B636C"/><rect x="27" y="66" width="56" height="5" fill="#5B636C"/></svg>`;
+const CACAMBA=`<svg viewBox="0 0 110 96" width="110" height="96"><polygon points="6,36 104,36 92,86 18,86" fill="#7E8994"/>
+  <rect x="2" y="29" width="106" height="9" rx="3" fill="#68727D"/><g stroke="#707A85" stroke-width="3"><line x1="40" y1="42" x2="42" y2="82"/><line x1="70" y1="42" x2="68" y2="82"/></g>
+  <rect x="16" y="86" width="16" height="6" rx="2" fill="#23282E"/><rect x="78" y="86" width="16" height="6" rx="2" fill="#23282E"/></svg>`;
+// monte de ferro com a impureza (300x124): terra, borracha e plástico em grupos que entram nas palavras
+const MONTE=`<svg viewBox="0 0 300 124" width="300" height="124" style="overflow:visible">
+  <path d="M16 120 Q38 74 78 62 Q118 24 160 32 Q206 20 238 62 Q270 80 286 120 Z" fill="#8A949E"/>
+  <g fill="#6F7983"><polygon points="70,92 96,66 128,74 118,104"/><polygon points="150,58 186,44 204,72 170,86"/><polygon points="214,96 236,74 262,92 240,112"/></g>
+  <g fill="#A0694A"><polygon points="112,50 140,40 150,62 124,70"/><polygon points="40,108 62,90 84,104 60,118"/></g>
+  <g class="terra" fill="#7A5233"><circle cx="96" cy="100" r="8"/><circle cx="138" cy="92" r="6"/><circle cx="196" cy="98" r="9"/><circle cx="58" cy="82" r="5"/><circle cx="236" cy="54" r="6"/><circle cx="168" cy="110" r="7"/></g>
+  <g class="borracha" fill="#1B1F24"><rect x="140" y="70" width="28" height="11" rx="5" transform="rotate(-18 154 75)"/><rect x="210" y="80" width="24" height="10" rx="5" transform="rotate(14 222 85)"/><rect x="84" y="56" width="22" height="9" rx="4" transform="rotate(8 95 60)"/></g>
+  <g class="plastico"><polygon points="118,84 132,80 128,94" fill="#4F8EDC"/><polygon points="248,100 262,94 262,108" fill="#4F8EDC"/><polygon points="176,40 190,46 180,54" fill="#E6EEF7" stroke="#9FB3C8" stroke-width="2"/><polygon points="64,98 76,94 74,106" fill="#E6EEF7" stroke="#9FB3C8" stroke-width="2"/></g>
+</svg>`;
+
+const CAPS={};
+
+// ------------------------------------------------------------------ CAPS[0] · O dia no pátio (L0-L1)
+// 0 "...faz o dia inteiro: pesar, comprar, pagar e imprimir o comprovante. E depois vender."  1 "A sucata chega no portão e
+// vai pra balança. Daí o peso tem que virar valor certo e pagamento na hora, sem anotar nada no papel."
+CAPS[0]=()=>{
+  const g=grupo();
+  const tit=titulo(g,'Recicla Vale Metais','O dia no pátio');
+  const sv=svgTela(g);
+  const linhaDia=caminho(sv,'M96 282 L1184 282','#DDE2E7',4);
+  const passos=[['scale','Pesar'],['clipboard-list','Comprar'],['banknote','Pagar'],['receipt-text','Comprovante'],['truck','Vender']];
+  const cards=passos.map(([n,txt],i)=>el(`<div class="card" style="left:${69+i*238}px;top:178px;width:190px;height:208px;border-width:2px">
+      <div class="ico" style="width:92px;height:92px;margin:30px auto 0;border-radius:24px">${ic(n,50)}</div>
+      <div class="ttl" style="text-align:center;margin-top:20px">${txt}</div></div>`,g));
+  const pix=el('<div class="tag v" style="position:absolute;left:112px;top:18px;font-size:15px;padding:5px 11px;border:2px solid #fff">Pix</div>',cards[2]);
+  const setas=[0,1,2,3].map(i=>caminho(sv,`M${69+i*238+190+18} 270 L${69+i*238+190+30} 282 L${69+i*238+190+18} 294`,'var(--v)',4));
+  // o portão, a balança com o visor e o computador (L1)
+  const chao=el('<div class="ab" style="left:84px;top:700px;width:1112px;height:4px;border-radius:2px;background:#DDE2E7"></div>',g);
+  const portao=el(`<div class="ab" style="left:96px;top:548px;width:110px;height:154px">
+      <div class="ab" style="left:0;top:0;width:14px;height:154px;border-radius:4px;background:#9AA3AD"></div>
+      <div class="ab" style="left:96px;top:0;width:14px;height:154px;border-radius:4px;background:#9AA3AD"></div>
+      <div class="ab" style="left:0;top:0;width:110px;height:12px;border-radius:4px;background:#7E8994"></div></div>`,g);
+  const plat=el('<div class="ab" style="left:236px;top:678px;width:232px;height:16px;border-radius:5px;background:#CBD1D8;border:2px solid #A8B0B9"></div>',g);
+  const col=el('<div class="ab" style="left:444px;top:540px;width:12px;height:140px;border-radius:4px;background:#B9C1C9"></div>',g);
+  const most=el(`<div class="ab most" style="left:330px;top:452px;width:240px">
+      <div class="ml"><span>Balança</span></div><div class="mn" style="font-size:38px">0 kg</div></div>`,g);
+  const mn=most.querySelector('.mn');
+  const saco=el(`<div class="ab" style="left:0;top:0;width:110px;height:96px">${SACO}
+      <svg class="ab" style="left:36px;top:12px" width="40" height="26"><polygon points="2,24 12,6 22,22" fill="#B87333"/><polygon points="16,24 28,4 38,24" fill="#C98A4B"/></svg></div>`,g);
+  const fio=caminho(sv,setaD(578,496,640,520),'var(--v)',4);
+  const pc=el(`<div class="ab" style="left:650px;top:446px;width:250px;height:240px">
+      <div class="ab" style="left:0;top:0;width:250px;height:166px;border-radius:14px;background:#2F3640"></div>
+      <div class="ab" style="left:11px;top:11px;width:228px;height:132px;border-radius:8px;background:#F4FBF7"></div>
+      <div class="ab" style="left:108px;top:166px;width:34px;height:40px;background:#4B5563"></div>
+      <div class="ab" style="left:66px;top:204px;width:118px;height:12px;border-radius:6px;background:#4B5563"></div></div>`,g);
+  const pcPeso=el('<div class="ab num" style="left:661px;top:494px;width:228px;text-align:center;font-size:36px;color:var(--ve)">12,4 kg</div>',g);
+  const mesa=el(`<div class="ab" style="left:616px;top:662px;width:318px;height:40px">
+      <div class="ab" style="left:0;top:0;width:318px;height:12px;border-radius:5px;background:#DDE2E7"></div>
+      <div class="ab" style="left:20px;top:12px;width:10px;height:28px;background:#DDE2E7"></div>
+      <div class="ab" style="left:288px;top:12px;width:10px;height:28px;background:#DDE2E7"></div></div>`,g);
+  const cV=el(`<div class="tag v ab" style="left:958px;top:462px;font-size:18px">${ic('badge-check',22)}valor certo</div>`,g);
+  const cP=el(`<div class="tag v ab" style="left:958px;top:530px;font-size:18px">${ic('banknote',22)}pagamento na hora</div>`,g);
+  const cS=el(`<div class="tag n ab" style="left:958px;top:598px;font-size:18px"><span style="position:relative;display:inline-flex">${ic('notebook-pen',22)}
+      <svg class="ab" style="left:-4px;top:-3px;overflow:visible" width="30" height="28"><path d="M2 26 L28 2" stroke="#B42318" stroke-width="3" stroke-linecap="round" fill="none"/></svg></span>sem papel</div>`,g);
+  const risco=cS.querySelector('path');
+
+  return t=>{
+    const j0=W(0,'oi')-.3, tdia=W(0,'dia');
+    const tw=['pesar','comprar','pagar','comprovante','vender'].map(w=>W(0,w));
+    const tsu=W(1,'sucata'), tpo=W(1,'portao'), tba=W(1,'balanca'), tpe=W(1,'peso'), tvi=W(1,'virar'), tva=W(1,'valor'),
+          tpg=W(1,'pagamento'), tsem=W(1,'sem'), tna=W(1,'nada'), tpa=W(1,'papel');
+    posTitulo(tit,t,j0-.6,tdia-.1);
+    traco(linhaDia,t,tdia-.05,1.0);
+    cards.forEach((c,i)=>vis(c,t,tw[i]-.15,1e9,{dy:18,sc:.94,dx:i===4?-26:0}));
+    setas.forEach((s,i)=>traco(s,t,tw[i+1]-.25,.35));
+    vis(pix,t,tw[2]+.15,1e9,{dy:6,sc:.7});
+    // L1: a sucata chega no portão, vai pra balança, o peso vai pro computador
+    for(const e of [chao,portao]) vis(e,t,tsu-.2,1e9,{dy:10});
+    vis(saco,t,tsu,1e9,{dy:0,sc:.9});
+    const pv=arco(saco,t,Math.max(tpo+.1,tba-.45),.8,112,604,298,582,-90);
+    if(pv<=0) saco.style.transform=`translate(${lerp(40,112,eo(pr(t,tsu,.8))).toFixed(2)}px,604px)`;
+    for(const e of [plat,col,most]) vis(e,t,tpo-.1,1e9,{dy:10});
+    conta(mn,t,tba+.35,.9,0,12.4,kg1);
+    pulse(most,t,tpe,.05,.7);
+    contorno(cards[0],t,tba,'#E1E8E4','#50D088');
+    traco(fio,t,tvi-.25,.45);
+    for(const e of [pc,mesa]) vis(e,t,tpe-.2,1e9,{dy:10});
+    vis(pcPeso,t,tvi+.05,1e9,{dy:8,sc:.8});
+    vis(cV,t,tva-.1,1e9,{dx:-14,dy:0}); contorno(cards[1],t,tva,'#E1E8E4','#50D088');
+    vis(cP,t,tpg-.1,1e9,{dx:-14,dy:0}); contorno(cards[2],t,tpg,'#E1E8E4','#50D088');
+    vis(cS,t,tsem-.1,1e9,{dx:-14,dy:0}); traco(risco,t,tna,.4); pulse(cS,t,tpa,.05,.7);
+  };
+};
+
+// ------------------------------------------------------------------ CAPS[2] · Pedido sem fornecedor (L2)
+// 2 "Só que esse pedido não entra no histórico nem no portal de ninguém. Uma dica: com Não informado, o pagamento não pode
+// ir pro saldo, que é o fiado. Pra isso, o pedido precisa de um fornecedor."
+// O cartão "Não informado" começa no meio (e cresce quando entra o saldo); em "Pra isso" ele vai pra esquerda e entra o
+// pedido com fornecedor (Aparecida Ramos), com tudo valendo.
+CAPS[2]=()=>{
+  const g=grupo();
+  const tit=titulo(g,'Fornecedor','Pedido sem fornecedor');
+  const XIS='<svg viewBox="0 0 24 24" width="22" height="22"><path d="M6.5 6.5 L17.5 17.5 M17.5 6.5 L6.5 17.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg>';
+  const lado=(x,nome,bom)=>{
+    const c=el(`<div class="card" style="left:${x}px;top:160px;width:500px;height:${bom?478:292}px;border-width:2px;overflow:hidden">
+      <div class="row" style="position:absolute;left:26px;top:24px;gap:16px">
+        <div class="ico ${bom?'':'n'}" style="width:58px;height:58px">${ic('clipboard-list',30)}</div>
+        <div><div class="lbl" style="font-size:16px">Fornecedor:</div><div class="ttl" style="font-size:25px;margin-top:2px">${nome}</div></div></div>
+      <div class="ab" style="left:26px;right:26px;top:110px;height:2px;background:var(--l)"></div></div>`,g);
+    const linha=(y,n,txt)=>el(`<div class="row ab" style="left:26px;top:${y}px;width:444px;height:56px;gap:14px">
+        <div class="ico n" style="width:46px;height:46px">${ic(n,24)}</div><div class="ttl" style="font-size:21px">${txt}</div>
+        <div class="chk ${bom?'v':'x'}" style="margin-left:auto">${bom?ic('check',24):XIS}</div></div>`,c);
+    const h=linha(134,'history','Histórico'), p=linha(206,'globe','Portal');
+    const s=el(`<div class="ab" style="left:26px;top:290px;width:444px;height:112px;border-radius:16px;
+        ${bom?'border:2px solid var(--v);background:#F4FBF7':'border:2px dashed #CBD1D8;background:#F7F8FA'}">
+        <div class="row" style="position:absolute;left:20px;top:20px;gap:14px;${bom?'':'opacity:.5'}">
+          <div class="ico ${bom?'':'n'}" style="width:46px;height:46px">${ic('notebook-pen',24)}</div>
+          <div><div class="ttl" style="font-size:21px">Saldo do Fornecedor</div>
+            <div class="sub fi" style="color:var(--ae);font-weight:700;margin-top:3px">o fiado</div></div></div>
+        ${bom?'':`<div class="ab" style="right:20px;top:34px;color:#6B7280">${ic('lock',34)}</div>`}</div>`,c);
+    return {c,h,p,s,fi:s.querySelector('.fi'),cab:c.querySelector('.row')};
+  };
+  const A=lado(390,'Não informado',false), B=lado(670,'Aparecida Ramos',true);
+  const rip=el('<div class="rip" style="left:250px;top:240px"></div>',B.c);
+
+  return t=>{
+    const j0=W(2,'so')-.3, tpd=W(2,'pedido'), thi=W(2,'historico'), tpo=W(2,'portal'), tni=W(2,'ninguem'), tin=W(2,'informado'),
+          tsa=W(2,'saldo'), tfi=W(2,'fiado'), tpr=W(2,'pra'), tpd2=W(2,'pedido',2), tfo=W(2,'fornecedor');
+    posTitulo(tit,t,j0-.6,tpd-.15);
+    vis(A.c,t,tpd-.1,1e9,{dy:20,sc:.95});
+    vis(A.h,t,thi-.1,1e9,{dx:-12,dy:0}); vis(A.p,t,tpo-.1,1e9,{dx:-12,dy:0});
+    pulse(A.cab,t,tni-.1,.05,.8); pulse(A.c,t,tin-.1,.025,.9);
+    A.c.style.height=lerp(292,478,eio(pr(t,tsa-.5,.5))).toFixed(2)+'px';
+    vis(A.s,t,tsa-.15,1e9,{dy:12}); vis(A.fi,t,tfi-.1,1e9,{dy:6});
+    // "Pra isso": o "Não informado" vai pra esquerda e entra o pedido com fornecedor
+    const sl=eio(pr(t,tpr-.05,.6)); A.c.style.left=lerp(390,110,sl).toFixed(2)+'px';
+    vis(B.c,t,tpd2-.2,1e9,{dy:20,sc:.95,dx:30});
+    vis(B.h,t,tpd2+.15,1e9,{dx:-12,dy:0}); vis(B.p,t,tpd2+.4,1e9,{dx:-12,dy:0});
+    vis(B.s,t,tpd2+.65,1e9,{dy:12}); vis(B.fi,t,tpd2+.65,1e9,{dy:0});
+    contorno(B.c,t,tfo,'#E1E8E4','#50D088'); ripple(rip,t,tfo+.1); pulse(B.c,t,tfo,.03,.8);
+  };
+};
+
+// ------------------------------------------------------------------ CAPS[4] · Qual preço vale (L1-L2)
+// 1 "Quando você escolhe o material, o sistema procura o preço nesta ordem. Primeiro, o preço especial combinado com aquele
+// fornecedor. Depois, a tabela do pedido. E por último, o preço do próprio material."  2 "Uma dica: a tela sempre avisa
+// quando valeu um preço especial ou o da tabela. E o preço é só uma sugestão: dá pra mudar na hora."
+// A escada fica no centro durante a linha 1 e vai pra esquerda em "avisa", quando entram os avisos reais da tela.
+CAPS[4]=()=>{
+  const g=grupo();
+  const tit=titulo(g,'Preço','Qual preço vale');
+  const pil=el('<div class="ab" style="left:0;top:0;width:1280px;height:800px"></div>',g);
+  const Y=[244,384,524], H=106, C=Y.map(y=>y+H/2);
+  const ini=el(`<div class="tag n ab" style="left:132px;top:160px">${ic('package',24)}Escolhe o material</div>`,pil);
+  const sv=svgTela(pil);
+  const guia=caminho(sv,`M190 216 L190 ${C[2]}`,'#CBD1D8',4);
+  const DEG=[[Y[0],250,'handshake','Preço especial','combinado com o fornecedor'],[Y[1],290,'tags','Tabela de Preços','a do pedido'],
+             [Y[2],330,'package','Preço do material','o do cadastro']];
+  const degs=DEG.map(([y,x,n,t1,t2])=>{
+    const c=el(`<div class="card" style="left:${x}px;top:${y}px;width:500px;height:${H}px;border-width:2px">
+        <div class="row" style="position:absolute;left:22px;top:22px;gap:18px">
+          <div style="position:relative;width:62px;height:62px"><div class="ico n" style="position:absolute;inset:0">${ic(n,32)}</div>
+            <div class="ico ac" style="position:absolute;inset:0;opacity:0">${ic(n,32)}</div></div>
+          <div><div class="ttl">${t1}</div><div class="sub" style="margin-top:4px">${t2}</div></div></div></div>`,pil);
+    return {c,acc:c.querySelector('.ac'),stub:caminho(sv,setaD(190,y+H/2,x-10,y+H/2,12),'var(--v)',4)};
+  });
+  const guiaV=caminho(sv,`M190 216 L190 ${C[2]}`,'var(--v)',4);
+  const sv2=svgTela(g);
+  const toast=(y,txt)=>el(`<div class="pc" style="left:862px;top:${y}px;height:58px;padding:0 18px 0 12px;border-color:#D6EFE1">
+      <div class="ico" style="width:36px;height:36px;border-radius:10px">${ic('bell',20)}</div><div style="font-weight:700;font-size:18px">${txt}</div></div>`,g);
+  const t1=toast(C[0]-29,'Preço especial aplicado'), t2=toast(C[1]-29,'Preço da tabela aplicado');
+  const lig1=caminho(sv2,`M758 ${C[0]} L852 ${C[0]}`,'var(--vm)',3), lig2=caminho(sv2,`M798 ${C[1]} L852 ${C[1]}`,'var(--vm)',3);
+  const sug=el(`<div class="tag a ab" style="left:862px;top:${C[2]-24}px;font-size:19px">${ic('pen-line',22)}só uma sugestão</div>`,g);
+
+  return t=>{
+    const j0=W(1,'quando')-.3, tma=W(1,'material'), tpc=W(1,'procura');
+    const tl=[W(1,'especial'),W(1,'tabela'),W(1,'material',2)];
+    const tav=W(2,'avisa'), ta1=W(2,'especial'), ta2=W(2,'tabela'), tsu=W(2,'sugestao'), tmu=W(2,'mudar');
+    posTitulo(tit,t,j0-.6,tma-.15);
+    pil.style.transform=`translate(${lerp(150,0,eio(pr(t,tav-.6,.8))).toFixed(2)}px,0)`;
+    vis(ini,t,tma-.1,1e9,{dy:10});
+    traco(guia,t,tpc-.25,.6);
+    degs.forEach((d,i)=>vis(d.c,t,tpc-.1+i*.16,1e9,{dy:16,sc:.96}));
+    // a seta desce: chega em cada degrau na palavra dele, que acende
+    const alvo=C.map(c=>c-216), Lg=C[2]-216;
+    let comp=0; tl.forEach((a,i)=>{comp=lerp(comp,alvo[i],eio(pr(t,a-.45,.45)))});
+    if(!guiaV._L){guiaV._L=guiaV.getTotalLength();guiaV.style.strokeDasharray=guiaV._L}
+    guiaV.style.strokeDashoffset=(guiaV._L*(1-comp/Lg)).toFixed(2); guiaV.style.opacity=comp>0?1:0;
+    degs.forEach((d,i)=>{traco(d.stub,t,tl[i]-.05,.35); const p=eo(pr(t,tl[i],.45));
+      d.acc.style.opacity=p.toFixed(3); contorno(d.c,t,tl[i],'#E1E8E4','#50D088'); pulse(d.c,t,tl[i],.03,.8)});
+    vis(t1,t,ta1-.1,1e9,{dx:-16,dy:0}); traco(lig1,t,ta1-.15,.3);
+    vis(t2,t,ta2-.1,1e9,{dx:-16,dy:0}); traco(lig2,t,ta2-.15,.3);
+    vis(sug,t,tsu-.1,1e9,{dy:10}); pulse(sug,t,tmu,.06,.7);
+  };
+};
+
+// ------------------------------------------------------------------ CAPS[6] · Tara, impureza e líquido + dupla pesagem (L0-L2)
+// 0 "Antes de seguir, três palavras do pátio. Tara é o peso do que não é material, como o saco, o tambor ou a caçamba.
+// Impureza é a sujeira que vem junto: terra, borracha, plástico."  1 "E o peso líquido é o que sobra: o bruto, menos a
+// tara, menos a impureza. É pelo líquido que o material entra no estoque."  2 "E quando a sucata vem numa carroça ou num
+// caminhão, tem a dupla pesagem. Pesa cheio, descarrega e pesa vazio. A diferença é a carga."
+// A parte 2 é o desenho do kit "Tara e peso líquido" (balança, mostrador, descarga e a conta em cartões) com a carroça do
+// Zé e os rótulos da Pesagem avançada ("1ª pesagem", "2ª pesagem", "Bruto"): 412 − 96 = 316 kg.
+CAPS[6]=()=>{
+  const g=grupo();
+  // ---- parte 1: as três palavras
+  const P1=el('<div class="ab" style="left:0;top:0;width:1280px;height:800px"></div>',g);
+  const tit=titulo(P1,'Pesagem','Tara, impureza e líquido');
+  const cTa=el(`<div class="card" style="left:110px;top:156px;width:500px;height:286px">
+      <div class="ab" style="left:28px;top:22px"><div style="font-weight:800;font-size:30px;color:var(--ve)">Tara</div>
+        <div class="sub st" style="margin-top:4px">o que não é material</div></div></div>`,P1);
+  const mini=[SACO,TAMBOR,CACAMBA].map((s,i)=>el(`<div class="ab" style="left:${34+i*150}px;top:118px;width:130px;text-align:center">
+      <div class="dz" style="height:96px;display:flex;justify-content:center">${s}</div><div class="lbl ml" style="margin-top:8px;font-size:16px;color:#4B5563">${['saco','tambor','caçamba'][i]}</div></div>`,cTa));
+  const cIm=el(`<div class="card" style="left:670px;top:156px;width:500px;height:286px">
+      <div class="ab" style="left:28px;top:22px"><div style="font-weight:800;font-size:30px;color:var(--ae)">Impureza</div>
+        <div class="sub si" style="margin-top:4px">a sujeira que vem junto</div></div>
+      <div class="ab" style="left:100px;top:104px;width:300px;height:124px">${MONTE}</div></div>`,P1);
+  const grp=['terra','borracha','plastico'].map(c=>cIm.querySelector('.'+c));
+  const chips=['terra','borracha','plástico'].map((txt,i)=>el(`<div class="tag n ab" style="left:${[86,196,330][i]}px;top:236px;font-size:15px;padding:5px 12px">${txt}</div>`,cIm));
+  // a conta: Bruto − Tara − Impureza = Líquido, e o líquido vai pro estoque
+  const conta4=el('<div class="ab" style="left:0;top:476px;width:1280px;height:250px"></div>',P1);
+  const cc=(x,rot,sub,cor,res)=>el(`<div class="card" style="left:${x}px;top:0;width:214px;height:108px;padding:20px 22px;
+      ${res?'border:2px solid var(--v);background:#F4FBF7':''}"><div style="font-weight:800;font-size:24px;color:${cor}">${rot}</div>
+      <div class="sub" style="margin-top:6px">${sub}</div></div>`,conta4);
+  const k1=cc(92,'Bruto','tudo junto','var(--t)'), k2=cc(386,'Tara','a embalagem','var(--ve)'), k3=cc(680,'Impureza','a sujeira','var(--ae)'),
+        k4=cc(974,'Líquido','o material','var(--ve)',true);
+  const o1=el('<div class="op" style="left:320px;top:26px;width:52px;height:52px;font-size:30px">−</div>',conta4),
+        o2=el('<div class="op" style="left:614px;top:26px;width:52px;height:52px;font-size:30px">−</div>',conta4),
+        o3=el('<div class="op" style="left:908px;top:26px;width:52px;height:52px;font-size:30px">=</div>',conta4);
+  const sv1=svgTela(conta4), desce=caminho(sv1,setaD(1081,116,1081,150,12),'var(--v)',4);
+  const est=el(`<div class="card" style="left:974px;top:158px;width:214px;height:70px;border-width:2px">
+      <div class="row" style="position:absolute;left:20px;top:12px;gap:14px"><div class="ico" style="width:46px;height:46px">${ic('warehouse',26)}</div>
+      <div class="ttl">Estoque</div></div></div>`,conta4);
+  const ripL=el('<div class="rip" style="left:107px;top:54px"></div>',k4);
+  // ---- parte 2: dupla pesagem (o desenho do kit, com a carroça)
+  const P2=el('<div class="ab" style="left:0;top:0;width:1280px;height:800px"></div>',g);
+  const tit2=el(`<div class="ab" style="left:0;top:46px;width:1280px;text-align:center"><div class="kick">Pesagem</div>
+      <div class="h" style="margin-top:12px">Dupla pesagem</div></div>`,P2);
+  const cena=el('<div class="ab" style="left:0;top:0;width:1280px;height:800px;transform-origin:640px 168px;transform:translate(0,-84px) scale(.9)"></div>',P2);
+  const chao=el('<div class="ab" style="left:70px;top:604px;width:1140px;height:4px;border-radius:2px;background:#DDE2E7"></div>',cena);
+  const plat=el('<div class="ab" style="left:318px;top:590px;width:580px;height:16px;border-radius:5px;background:#CBD1D8;border:2px solid #A8B0B9"></div>',cena);
+  const poste=el('<div class="ab" style="left:1055px;top:452px;width:10px;height:152px;border-radius:4px;background:#B9C1C9"></div>',cena);
+  const most=el(`<div class="ab most" style="left:910px;top:330px;width:300px">
+      <div class="ml"><span class="m1">1ª pesagem</span><span class="m2">2ª pesagem</span></div><div class="mn">0 kg</div></div>`,cena);
+  const mn=most.querySelector('.mn'), m1=most.querySelector('.m1'), m2=most.querySelector('.m2');
+  const car=el(`<div class="ab" style="left:0;top:0;width:500px;height:230px">${carroca()}</div>`,cena);
+  const roda=car.querySelector('.roda'), pecas=[...car.querySelectorAll('.pd')];
+  const X1=360, Y=366, X0=-780, R1=412, R2=96;              // kg: carroça cheia e vazia (Zé, T07 cap06)
+  const linha=el('<div class="ab" style="left:0;top:506px;width:1280px;height:170px"></div>',P2);
+  const cartao=(x,rot,sub,v,res)=>el(`<div class="card" style="left:${x}px;top:0;width:318px;height:150px;padding:22px 26px;
+      ${res?'border:2px solid var(--v);background:#F4FBF7':''}">
+      <div style="font-weight:800;font-size:22px;${res?'color:var(--ve)':''}">${rot}</div>
+      <div class="lbl" style="margin-top:4px">${sub}</div>
+      <div class="num" style="margin-top:12px;font-size:40px;${res?'color:var(--ve)':''}">${kg(v)}</div></div>`,linha);
+  const c1=cartao(70,'1ª pesagem','carroça cheia',R1), c2=cartao(481,'2ª pesagem','carroça vazia',R2), c3=cartao(892,'Bruto','a carga',R1-R2,true);
+  const oM=el('<div class="op" style="left:405px;top:45px">−</div>',linha), oI=el('<div class="op" style="left:816px;top:45px">=</div>',linha);
+  const rip=el('<div class="rip" style="left:159px;top:75px"></div>',c3);
+
+  return t=>{
+    const j0=W(0,'antes')-.3, tta=W(0,'tara'), tna=W(0,'nao'), tsa=W(0,'saco'), ttb=W(0,'tambor'), tcc=W(0,'cacamba'),
+          tim=W(0,'impureza'), tsj=W(0,'sujeira'), tte=W(0,'terra'), tbo=W(0,'borracha'), tpl=W(0,'plastico');
+    const tl1=W(1,'liquido'), tbr=W(1,'bruto'), tm1=W(1,'menos'), tt1=W(1,'tara'), tm2=W(1,'menos',2), ti1=W(1,'impureza'),
+          tl2=W(1,'liquido',2), ten=W(1,'entra'), tes=W(1,'estoque');
+    const tsu=W(2,'sucata'), tcr=W(2,'carroca'), tdu=W(2,'dupla'), tch=W(2,'cheio'), tde=W(2,'descarrega'), tp2=W(2,'pesa',2),
+          tvz=W(2,'vazio'), tdi=W(2,'diferenca'), tca=W(2,'carga');
+    const TX=tsu-.1;                                          // a troca da parte 1 pela 2
+    // parte 1
+    vis(P1,t,-9,TX,{dy:0,sc:1}); posTitulo(tit,t,j0-.6,tta-.15);
+    vis(cTa,t,tta-.1,1e9,{dy:20,sc:.95}); vis(cTa.querySelector('.st'),t,tna-.1,1e9,{dy:6});
+    cTa.style.left=lerp(390,110,eio(pr(t,tim-.4,.6))).toFixed(2)+'px';
+    mini.forEach((m,i)=>{const a=[tsa,ttb,tcc][i]-.15, p=eo(pr(t,a,.5)), dz=m.querySelector('.dz');
+      dz.style.filter=`grayscale(${(1-p).toFixed(3)}) opacity(${(.28+.72*p).toFixed(3)})`; pulse(dz,t,a,.08,.7);
+      vis(m.querySelector('.ml'),t,a,1e9,{dy:8})});
+    vis(cIm,t,tim-.1,1e9,{dy:20,sc:.95}); vis(cIm.querySelector('.si'),t,tsj-.1,1e9,{dy:6});
+    grp.forEach((e,i)=>{const p=eo(pr(t,[tte,tbo,tpl][i]-.1,.45));e.style.opacity=p.toFixed(3)});
+    chips.forEach((e,i)=>vis(e,t,[tte,tbo,tpl][i]-.1,1e9,{dy:8,sc:.85}));
+    vis(k4,t,tl1-.1,1e9,{dy:20,sc:.94}); vis(o3,t,tl1+.15,1e9,{sc:.6,dy:0});
+    vis(k1,t,tbr-.15,1e9,{dy:20}); vis(o1,t,tm1-.1,1e9,{sc:.6,dy:0}); vis(k2,t,tt1-.15,1e9,{dy:20});
+    vis(o2,t,tm2-.1,1e9,{sc:.6,dy:0}); vis(k3,t,ti1-.15,1e9,{dy:20});
+    pulse(k4,t,tl2,.04,.8); ripple(ripL,t,tl2);
+    traco(desce,t,ten-.3,.35); vis(est,t,ten-.05,1e9,{dy:12}); pulse(est,t,tes,.04,.7);
+    // parte 2: a carroça chega cheia, pesa, descarrega e pesa vazia; a conta em cartões, palavra a palavra
+    vis(P2,t,TX-.05,1e9,{dy:0,sc:1});
+    const chegou=tcr+Math.max(1.2,tdu-tcr+.3), pa=eo(pr(t,tcr,chegou-tcr)), x=lerp(X0,X1,pa);
+    car.style.transform=`translate(${x.toFixed(2)}px,${Y}px)`;
+    roda.setAttribute('transform',`translate(170,186) rotate(${((x-X1)/36*57.3).toFixed(2)})`);
+    if(t<tvz-.1) conta(mn,t,chegou-.15,.9,0,R1); else conta(mn,t,tvz-.1,.65,R1,R2);
+    const lt=eo(pr(t,tvz-.1,.35)); m1.style.opacity=1-lt; m2.style.opacity=lt;
+    pulse(most,t,tch,.05,.7); pulse(most,t,tvz+.7,.05,.7);
+    pecas.forEach((p,i)=>{const d=p.dataset;const q=eio(pr(t,tde+.1+i*.1,.65));
+      p.setAttribute('transform',`translate(${(d.dx*q).toFixed(2)},${(d.dy*q-130*4*q*(1-q)).toFixed(2)}) rotate(${(d.r*q).toFixed(2)} ${d.cx} ${d.cy})`)});
+    vis(c1,t,tch-.15,1e9,{dy:22}); vis(oM,t,tp2-.1,1e9,{sc:.6,dy:0}); vis(c2,t,tvz+.3,1e9,{dy:22});
+    vis(oI,t,tdi-.1,1e9,{sc:.6,dy:0}); vis(c3,t,tdi+.12,1e9,{dy:22,sc:.94});
+    pulse(c3,t,tca,.04,.8); ripple(rip,t,tca);
+  };
+};
+
+// ------------------------------------------------------------------ CAPS[9] · As três formas e quem deve a quem (L1)
+// 1 "São três formas. Dinheiro sai do caixa. Pix ou transferência sai da conta do banco. E o saldo é o fiado: na compra, a
+// Recicla Vale fica devendo ao fornecedor. Na venda, é o cliente que fica devendo."
+CAPS[9]=()=>{
+  const g=grupo();
+  const tit=titulo(g,'Pagamento','Três formas');
+  const forma=(x,n,rot,sub,cls)=>el(`<div class="card" style="left:${x}px;top:156px;width:340px;height:200px;text-align:center;border-width:2px">
+      <div class="ico ${cls}" style="width:64px;height:64px;margin:26px auto 0">${ic(n,34)}</div>
+      <div class="ttl" style="margin-top:14px">${rot}</div><div class="sub fs" style="margin-top:6px;font-size:18px">${sub}</div></div>`,g);
+  const fD=forma(110,'banknote','Dinheiro','sai do caixa',''), fP=forma(470,'landmark','Pix/Transferência','sai da conta do banco',''),
+        fS=forma(830,'notebook-pen','Saldo','o fiado','a');
+  const faixa=el('<div class="card" style="left:110px;top:388px;width:1060px;height:166px;border:2px solid #F7DFA6"></div>',g);
+  const sv=svgTela(g);
+  const lig=caminho(sv,'M1000 360 L1000 384','#F2B63D',4);
+  const parte=(x,y,n,nome,cls)=>el(`<div class="pc" style="left:${x}px;top:${y}px;width:250px">
+      <div class="ico ${cls}" style="width:42px;height:42px;border-radius:12px">${ic(n,24)}</div><div class="ttl" style="font-size:21px">${nome}</div></div>`,g);
+  const linhaQ=(y,tag,cls,a,an,ac,b,bn,bc)=>({
+    tag:el(`<div class="tag ${cls} ab" style="left:146px;top:${y+12}px;font-size:18px">${tag}</div>`,g),
+    a:parte(390,y,an,a,ac), b:parte(856,y,bn,b,bc),
+    seta:caminho(sv,setaD(652,y+32,842,y+32,14),cls==='v'?'var(--v)':'var(--a)',4),
+    rot:el(`<div class="ab" style="left:652px;top:${y-18}px;width:190px;text-align:center;font-weight:700;font-size:18px;color:#374151">fica devendo</div>`,g)});
+  const R1=linhaQ(432,'Na compra','v','Recicla Vale','store','','Fornecedor','user-round','n');
+  const R2=linhaQ(588,'Na venda','a','Cliente','user-round','n','Recicla Vale','store','');
+
+  return t=>{
+    const j0=W(1,'sao')-.3, tdi=W(1,'dinheiro'), ts1=W(1,'sai'), tpx=W(1,'pix'), ts2=W(1,'sai',2), tsa=W(1,'saldo'), tfi=W(1,'fiado'),
+          tco=W(1,'compra'), tre=W(1,'recicla'), tf1=W(1,'fica'), td1=W(1,'devendo'), tfo=W(1,'fornecedor'),
+          tve=W(1,'venda'), tcl=W(1,'cliente'), td2=W(1,'devendo',2);
+    posTitulo(tit,t,j0-.6,tdi-.2);
+    vis(fD,t,tdi-.12,1e9,{dy:20,sc:.95}); vis(fD.querySelector('.fs'),t,ts1-.1,1e9,{dy:6});
+    vis(fP,t,tpx-.12,1e9,{dy:20,sc:.95}); vis(fP.querySelector('.fs'),t,ts2-.1,1e9,{dy:6});
+    vis(fS,t,tsa-.12,1e9,{dy:20,sc:.95}); vis(fS.querySelector('.fs'),t,tfi-.1,1e9,{dy:6});
+    contorno(fS,t,tco-.2,'#E1E8E4','#F2B63D');
+    vis(faixa,t,tco-.25,1e9,{dy:16}); traco(lig,t,tco-.2,.3);
+    faixa.style.height=lerp(166,322,eio(pr(t,tve-.45,.5))).toFixed(2)+'px';
+    vis(R1.tag,t,tco-.15,1e9,{dx:-12,dy:0}); vis(R1.a,t,tre-.1,1e9,{dy:10});
+    traco(R1.seta,t,tf1-.15,.5); vis(R1.rot,t,td1-.15,1e9,{dy:6}); vis(R1.b,t,tfo-.1,1e9,{dy:10});
+    vis(R2.tag,t,tve-.15,1e9,{dx:-12,dy:0}); vis(R2.a,t,tcl-.1,1e9,{dy:10});
+    traco(R2.seta,t,tcl+.2,.45); vis(R2.b,t,tcl+.5,1e9,{dy:10}); vis(R2.rot,t,td2-.15,1e9,{dy:6});
+  };
+};
+
+// ------------------------------------------------------------------ CAPS[11] · Cada parcela no seu dia (L3)
+// 3 "Assim, cada parcela tem o seu dia, e você sabe quanto paga e quando."
+CAPS[11]=()=>{
+  const g=grupo();
+  const tit=titulo(g,'Pagamento','Cada parcela no seu dia');
+  const sv=svgTela(g);
+  const base=caminho(sv,'M170 420 L1110 420','#DDE2E7',6);
+  const NOS=[[220,'10/11','Compra',brl(2000),'no saldo',false],[640,'25/11','1ª parcela',brl(1000),'',true],[1060,'10/12','2ª parcela',brl(1000),'',true]];
+  const nos=NOS.map(([x,dt,rot,v,sub,par])=>({
+    dot:el(`<div class="ab" style="left:${x-16}px;top:404px;width:32px;height:32px;border-radius:50%;background:#fff;border:7px solid ${par?'var(--v)':'#9AA3AD'}"></div>`,g),
+    dt:el(`<div class="tag ${par?'v':'n'} ab" style="left:${x-92}px;top:326px;width:184px;justify-content:center;font-size:23px;border:2px solid transparent">${ic('calendar-days',24)}${dt}</div>`,g),
+    c:el(`<div class="card" style="left:${x-160}px;top:466px;width:320px;height:${sub?160:138}px;text-align:center;padding-top:22px">
+        <div class="ttl" style="font-size:24px">${rot}</div><div class="num vv" style="font-size:34px;margin-top:8px;display:inline-block;padding:2px 12px;border-radius:12px">${v}</div>
+        ${sub?`<div class="sub" style="margin-top:2px;font-size:18px">${sub}</div>`:''}</div>`,g)}));
+
+  return t=>{
+    const j0=W(3,'assim')-.3, tca=W(3,'cada'), tpa=W(3,'parcela'), tdi=W(3,'dia'), tqt=W(3,'quanto'), tqd=W(3,'quando');
+    posTitulo(tit,t,j0-.6,tca-.15);
+    traco(base,t,tca-.1,.8);
+    nos.forEach((n,i)=>{const a=[tca,tpa,tpa+.3][i]; vis(n.dot,t,a-.05,1e9,{dy:0,sc:.4}); vis(n.dt,t,a,1e9,{dy:10}); vis(n.c,t,a+.05,1e9,{dy:16,sc:.95})});
+    nos.slice(1).forEach(n=>{contorno(n.dt,t,tdi-.1,'#EAF8F0','#50D088'); pulse(n.dt,t,tdi-.1,.06,.7); pulse(n.dt,t,tqd-.1,.06,.7);
+      const v=n.c.querySelector('.vv'); const p=eo(pr(t,tqt-.1,.4)); v.style.background=`rgba(80,208,136,${(.22*p).toFixed(3)})`;
+      v.style.color=mix('#121212','#2E7D57',p); pulse(v,t,tqt-.1,.06,.7)});
+  };
+};
+
+// ------------------------------------------------------------------ CAPS[12] · O cupom (L2)
+// 2 "Pronto. O cupom sai com o material, o peso, o preço e como foi pago. Esse papel fica com o fornecedor."
+// O papel segue o comprovante térmico do app para a compra da Auto Peças Vale Forte (utils/thermalReceiptGenerator.ts):
+// empresa, "Fornecedor:", ITEM / QUANT. / PREÇO / TOTAL, "Peso total", "Total:", "Formas de Pagamento:" (o número do pedido,
+// o operador e a data ficam de fora; nada inventado).
+CAPS[12]=()=>{
+  const g=grupo();
+  const tit=titulo(g,'Comprovante','O cupom');
+  const PX=370, PY=228, PW=540, PH=470;
+  const COL=[[32,0,'left','ITEM'],[214,82,'center','QUANT.'],[296,106,'center','PREÇO'],[402,112,'center','TOTAL']];
+  const cel=(c,y,txt,peso,fs)=>{const [x,w,al]=COL[c];return `<div class="t" style="left:${x}px;top:${y}px;${w?'width:'+w+'px;':''}text-align:${al};font-weight:${peso};font-size:${fs}px">${txt}</div>`};
+  const papel=el(`<div class="pp" style="left:${PX}px;top:${PY}px;width:${PW}px;height:${PH}px">
+      <div class="t" style="left:0;top:18px;width:${PW}px;text-align:center;font-weight:800;font-size:22px">Recicla Vale Metais</div>
+      <div class="ab" style="left:26px;top:58px;width:488px;height:44px;border:2px solid #121212;border-radius:4px"></div>
+      <div class="t" style="left:26px;top:69px;width:488px;text-align:center;font-weight:800;font-size:17px">Fornecedor: Auto Peças Vale Forte</div>
+      <div class="ab" style="left:26px;top:116px;width:488px;height:32px;background:#EEF0F3;border-radius:3px"></div>
+      ${COL.map((c,i)=>cel(i,123,c[3],800,14)).join('')}
+      ${[['Bateria automotiva','186 kg',brl(3.4),brl(632.4)],['Cobre misto','64 kg',brl(36),brl(2304)]].map((r,k)=>
+        cel(0,160+k*40,r[0],600,16)+cel(1,160+k*40,r[1],800,16)+cel(2,160+k*40,r[2],600,16)+cel(3,160+k*40,r[3],600,16)).join('')}
+      <div class="ab" style="left:26px;top:238px;width:488px;height:1px;background:#CBD1D8"></div>
+      <div class="t" style="left:32px;top:248px;font-weight:800;font-size:15px">Peso total: 250 Kg</div>
+      <div class="ab" style="left:26px;top:280px;width:488px;height:46px;background:#121212;border-radius:3px"></div>
+      <div class="t" style="left:26px;top:290px;width:488px;text-align:center;font-weight:800;font-size:22px;color:#fff">Total: ${brl(2936.4)}</div>
+      <div class="t" style="left:0;top:342px;width:${PW}px;text-align:center;font-weight:800;font-size:17px">Formas de Pagamento:</div>
+      ${['Dinheiro: '+brl(200),'PIX/Transferência: '+brl(736.4),'Saldo: '+brl(2000)].map((s,i)=>
+        `<div class="t" style="left:0;top:${372+i*27}px;width:${PW}px;text-align:center;font-weight:600;font-size:16px">${s}</div>`).join('')}
+      <div class="ab mk" style="left:0;top:0;border:3px solid var(--v);background:rgba(80,208,136,.16);border-radius:10px;opacity:0"></div>
+    </div>`,g);
+  const mk=papel.querySelector('.mk');
+  const imp=el(`<div class="ab" style="left:350px;top:146px;width:580px;height:92px">
+      <div class="ab" style="left:0;top:0;width:580px;height:92px;border-radius:20px;background:#2F3640;box-shadow:0 14px 30px rgba(16,24,40,.22)"></div>
+      <div class="ab" style="left:26px;top:20px;width:130px;height:10px;border-radius:5px;background:#4B5563"></div>
+      <div class="ab" style="left:536px;top:18px;width:14px;height:14px;border-radius:50%;background:var(--v)"></div>
+      <div class="ab" style="left:14px;top:72px;width:552px;height:10px;border-radius:5px;background:#121212"></div></div>`,g);
+  // alvos do marcador: [x, y, largura, altura] no papel: ITEM, QUANT., PREÇO, as formas de pagamento e o fornecedor
+  const ALVO=[[22,150,196,80],[210,150,90,80],[292,150,114,80],[80,334,380,124],[16,50,508,60]];
+
+  return t=>{
+    const j0=W(2,'pronto')-.3, tpr=W(2,'pronto'), tma=W(2,'material'), tpe=W(2,'peso'), tpc=W(2,'preco'), tpg=W(2,'pago'), tfo=W(2,'fornecedor');
+    posTitulo(tit,t,j0-.6,tpr-.1);
+    vis(imp,t,tpr-.1,1e9,{dy:-10});
+    // o papel desce com a fala: os itens já estão fora quando a fala diz "material"
+    const a0=tpr+.25, dur=Math.max(1.6,Math.min(3.4,(tma-.1-a0)/.5)), p=cl((t-a0)/dur);
+    papel.style.opacity=p>0?1:0; papel.style.clipPath=`inset(0 0 ${((1-p)*100).toFixed(2)}% 0)`;
+    papel.style.transform=`translateY(${(-6*(1-p)).toFixed(2)}px)`;
+    // o marcador passa por material, peso, preço, como foi pago e o fornecedor
+    const ts=[tma,tpe,tpc,tpg,tfo]; let k=-1,q=1;
+    ts.forEach((a,i)=>{if(t>=a-.15){k=i;q=eio(pr(t,a-.15,.4))}});
+    if(k<0){mk.style.opacity=0}else{
+      const A=ALVO[k], B=ALVO[Math.max(0,k-1)], u=k===0?1:q, r=[0,1,2,3].map(j=>lerp(B[j],A[j],u));
+      mk.style.left=r[0]+'px'; mk.style.top=r[1]+'px'; mk.style.width=r[2]+'px'; mk.style.height=r[3]+'px';
+      mk.style.opacity=(k===0?eo(pr(t,tma-.15,.35)):1).toFixed(3);
+    }
+  };
+};
+
+// ------------------------------------------------------------------ CAPS[13] · O lucro do latão (L2, até "quilo")
+// 2 "O lucro estimado compara o preço de venda com o preço de compra do material. No latão, são quatro e quarenta por quilo."
+// (a frase seguinte, do olho que esconde o valor, é na tela: a janela fecha antes dela)
+CAPS[13]=()=>{
+  const g=grupo();
+  const tit=titulo(g,'Venda','Lucro estimado');
+  const VEN=31.9, COM=27.5, K=700/VEN, X=330, YV=344, YC=476, HB=100;
+  const mat=el(`<div class="tag n ab" style="left:150px;top:196px">${ic('package',24)}Metal amarelo (latão)</div>`,g);
+  const barra=(y,rot,cor,v)=>{
+    const lb=el(`<div class="ab ttl" style="left:150px;top:${y+34}px;font-size:26px">${rot}</div>`,g);
+    const b=el(`<div class="ab" style="left:${X}px;top:${y}px;width:0;height:${HB}px;border-radius:16px;background:${cor};overflow:hidden">
+        <div class="num" style="position:absolute;left:26px;top:31px;font-size:30px;white-space:nowrap">${brl(v)}/kg</div></div>`,g);
+    return {lb,b,w:v*K};
+  };
+  const bV=barra(YV,'Venda','var(--v)',VEN), bC=barra(YC,'Compra','var(--a)',COM);
+  const xC=X+COM*K, xV=X+VEN*K;
+  const lucro=el(`<div class="ab" style="left:${xC.toFixed(1)}px;top:${YV}px;width:${(xV-xC).toFixed(1)}px;height:${HB}px;border-radius:0 16px 16px 0;
+      background:repeating-linear-gradient(135deg,rgba(255,255,255,.6) 0 9px,transparent 9px 18px);opacity:0"></div>`,g);
+  const sv=svgTela(g);
+  const tr=caminho(sv,`M${xC} ${YV-6} L${xC} ${YC+HB+14}`,'#6B7280',3,'7 7');
+  const ch=caminho(sv,`M${xC} ${YV-8} L${xC} ${YV-26} L${xV} ${YV-26} L${xV} ${YV-8}`,'var(--ve)',4);
+  const dif=el(`<div class="ab" style="left:${((xC+xV)/2-180).toFixed(1)}px;top:${YV-78}px;width:360px;text-align:center">
+      <span class="num" style="font-size:30px;color:var(--ve)">${brl(VEN-COM)} por quilo</span></div>`,g);
+
+  return t=>{
+    const j0=W(2,'lucro')-.3, tco=W(2,'compara'), tve=W(2,'venda'), tcp=W(2,'compra'), tma=W(2,'material'), tla=W(2,'latao'),
+          tq=W(2,'quatro'), tqu=W(2,'quilo');
+    posTitulo(tit,t,j0-.6,tco-.15);
+    vis(mat,t,tco-.1,1e9,{dy:10}); pulse(mat,t,tma,.04,.7); pulse(mat,t,tla,.05,.7);
+    for(const [r,a] of [[bV,tve],[bC,tcp]]){vis(r.lb,t,a-.2,1e9,{dx:-12,dy:0});
+      const p=eio(pr(t,a-.15,.7)); r.b.style.width=(r.w*p).toFixed(2)+'px'; r.b.style.opacity=p>0?1:0;}
+    linhaParcial(tr,t,tq-.4,.45,xC,YV-6,xC,YC+HB+14);
+    lucro.style.opacity=eo(pr(t,tq-.2,.45)).toFixed(3);
+    traco(ch,t,tq-.1,.45); vis(dif,t,tq+.05,1e9,{dy:10,sc:.9}); pulse(dif,t,tqu,.05,.7);
+  };
+};
+
+// ------------------------------------------------------------------ CAPS[14] · Cobre misto vira cobre mel (L3)
+// 3 "O cobre mel fica com os sessenta quilos que a venda precisa."
+CAPS[14]=()=>{
+  const g=grupo();
+  const tit=titulo(g,'Estoque','Transferência entre materiais');
+  const monte=cores=>`<svg viewBox="0 0 300 150" width="345" height="172" style="overflow:visible">
+      <path d="M10 146 Q36 92 82 78 Q124 30 166 40 Q214 28 246 76 Q276 96 292 146 Z" fill="${cores[0]}"/>
+      <g fill="${cores[1]}"><polygon points="64,120 92,90 128,100 116,134"/><polygon points="150,70 190,54 210,86 172,100"/><polygon points="214,122 240,96 268,116 244,138"/></g>
+      <g fill="${cores[2]}"><polygon points="110,64 142,52 152,78 124,86"/><polygon points="36,136 60,114 86,130 60,144"/><polygon points="178,118 204,106 210,132"/></g></svg>`;
+  const misto=el(`<div class="ab" style="left:150px;top:300px;width:345px;text-align:center">
+      <div class="pm" style="height:172px;transform-origin:172px 172px">${monte(['#A86B40','#6F7983','#C98A4B'])}</div>
+      <div class="ttl" style="margin-top:16px;font-size:28px">Cobre misto</div></div>`,g);
+  const mel=el(`<div class="ab" style="left:785px;top:300px;width:345px;text-align:center">
+      <div style="height:172px">${monte(['#C67A3E','#D9894A','#E7A15F'])}</div>
+      <div class="ttl" style="margin-top:16px;font-size:28px">Cobre mel</div>
+      <div class="num mk" style="font-size:40px;margin-top:6px;color:var(--ve)">42 kg</div></div>`,g);
+  const pm=misto.querySelector('.pm'), mk=mel.querySelector('.mk');
+  const sv=svgTela(g);
+  const P0=[262,250], P1=[898,246], HA=-120;                 // o pedaço sai do topo do misto e pousa no topo do mel
+  const rota=caminho(sv,`M${P0[0]+60} ${P0[1]+72} Q${(P0[0]+P1[0])/2+60} ${(P0[1]+P1[1])/2+2*HA+72} ${P1[0]+60} ${P1[1]+72}`,'#E7A15F',4,'3 10');
+  const peca=el(`<div class="ab" style="left:0;top:0;width:120px;height:110px">
+      <svg class="ab" style="left:10px;top:44px;overflow:visible" width="100" height="56"><path d="M4 54 Q20 22 46 16 Q72 6 90 30 Q98 42 98 54 Z" fill="#D9894A"/>
+        <polygon points="30,48 44,30 60,40 50,54" fill="#E7A15F"/></svg>
+      <div class="tag a" style="position:absolute;left:14px;top:0;font-size:19px;padding:6px 14px">18 kg</div></div>`,g);
+  const s=caminho(sv,setaD(957,618,957,646,12),'var(--v)',4);
+  const ven=el(`<div class="tag v ab" style="left:847px;top:656px;font-size:21px">${ic('shopping-cart',24)}Venda: 60 kg</div>`,g);
+
+  return t=>{
+    const j0=W(3,'cobre')-.3, tco=W(3,'cobre'), tme=W(3,'mel'), tse=W(3,'sessenta'), tve=W(3,'venda'), tpr=W(3,'precisa');
+    posTitulo(tit,t,j0-.6,tco-.15);
+    vis(misto,t,tco-.1,1e9,{dy:16,sc:.95}); vis(mel,t,tco+.1,1e9,{dy:16,sc:.95});
+    const dv=Math.max(.8,tse-tme-.1);
+    tracejado(rota,t,tme+.05,dv);
+    arco(peca,t,tme+.05,dv,P0[0],P0[1],P1[0],P1[1],HA);
+    const op=eo(pr(t,tme-.15,.3)); peca.style.opacity=op.toFixed(3); peca.style.visibility=op>.001?'visible':'hidden';
+    pm.style.transform=`scale(${lerp(1,.9,eio(pr(t,tme+.05,dv))).toFixed(4)})`;
+    conta(mk,t,tse-.15,.8,42,60);
+    pulse(mel,t,tse+.65,.03,.7);
+    traco(s,t,tve-.25,.3); vis(ven,t,tve-.1,1e9,{dy:10}); pulse(ven,t,tpr,.05,.7);
+  };
+};
+
+// ------------------------------------------------------------------ CAPS[15] · Operação com Erro (L4)
+// 4 "Uma dica: se uma operação ficar com Erro, ela não vai de novo sozinha, pra não lançar em dobro. Use o Tentar novamente,
+// o ícone de atualizar do lado: ele reenvia sem duplicar. Sem esse botão, remova pela lixeira e refaça a operação
+// normalmente." Rótulos do app: "Compra", "Venda", "Erro", o ícone de atualizar ("Tentar novamente") e a lixeira
+// ("Remover da fila"), em components/OfflinePendingSyncTabs.tsx.
+CAPS[15]=()=>{
+  const g=grupo();
+  const tit=titulo(g,'Sem internet','Operação com Erro');
+  const caixa=el(`<div class="card" style="left:110px;top:156px;width:370px;height:350px">
+      <div class="row" style="position:absolute;left:26px;top:22px;gap:12px"><div class="ico n" style="width:42px;height:42px;border-radius:12px">${ic('laptop',24)}</div>
+      <div class="ttl" style="font-size:20px">No computador</div></div></div>`,g);
+  const nuvem=el(`<div class="ab" style="left:836px;top:150px;width:330px;text-align:center;color:#9AA3AD">${ic('cloud',96)}</div>`,g);
+  const fila=[['Compra','shopping-cart'],['Venda','circle-dollar-sign'],['Compra','shopping-cart']].map(([txt,n],i)=>{
+    const w=el('<div class="ab" style="left:0;top:0;width:310px;height:74px"></div>',g);
+    const c=el(`<div class="pc" style="left:0;top:0;width:310px;height:74px;border-radius:16px">
+        <div class="ico ${i===1?'n':''}" style="width:44px;height:44px;border-radius:50%">${ic(n,24)}</div>
+        <div class="ttl" style="font-size:21px">${txt}</div>
+        <div class="ok chk v" style="margin-left:auto;width:36px;height:36px;opacity:0">${ic('check',22)}</div>
+        <div class="er tag" style="margin-left:auto;font-size:16px;padding:6px 12px;background:var(--rc);color:var(--r);opacity:0;position:absolute;right:14px">${ic('circle-alert',18)}Erro</div></div>`,w);
+    return {w,c,ok:c.querySelector('.ok'),er:c.querySelector('.er')};
+  });
+  const POS=[[140,236],[140,322],[140,408]], DEST=[[846,262],[846,348]];
+  const sv=svgTela(g);
+  const tent=caminho(sv,'M462 445 Q650 420 830 400','#9AA3AD',4,'8 9');
+  const ban=el(`<div class="ab" style="left:618px;top:398px;width:56px;height:56px;border-radius:50%;background:#fff;color:var(--r);
+      display:flex;align-items:center;justify-content:center;box-shadow:0 6px 16px rgba(16,24,40,.12)">${ic('ban',34)}</div>`,g);
+  const opc=(x,n,cls,rot,sub)=>el(`<div class="card" style="left:${x}px;top:546px;width:500px;height:150px;border-width:2px">
+      <div class="row" style="position:absolute;left:26px;top:28px;gap:18px">
+        <div class="ico ${cls} gi" style="width:64px;height:64px;border-radius:18px">${ic(n,34)}</div>
+        <div><div class="ttl" style="font-size:23px">${rot}</div><div class="sub ss" style="margin-top:6px;font-size:18px;font-weight:700;color:${cls?'var(--ae)':'var(--ve)'}">${sub}</div></div></div>
+      <div class="chk v ck" style="position:absolute;right:24px;top:52px;opacity:0">${ic('check',24)}</div></div>`,g);
+  const oA=opc(110,'refresh-cw','','Tentar novamente','reenvia sem duplicar'), oB=opc(670,'trash-2','a','Remover da fila','e refaça a operação');
+
+  return t=>{
+    const j0=W(4,'dica')-.3, top=W(4,'operacao'), ter=W(4,'erro'), tna=W(4,'nao'), tso=W(4,'sozinha'), tdo=W(4,'dobro'),
+          tte=W(4,'tentar'), tat=W(4,'atualizar'), tre=W(4,'reenvia'), tdu=W(4,'duplicar'), tse=W(4,'sem',2), tli=W(4,'lixeira'), trf=W(4,'refaca');
+    posTitulo(tit,t,j0-.6,top-.15);
+    vis(caixa,t,top-.12,1e9,{dy:16}); vis(nuvem,t,top,1e9,{dy:10});
+    // depois que as duas sobem, a caixa do computador encolhe em volta da que ficou
+    const fe=eio(pr(t,top+1.6,.6)); caixa.style.top=lerp(156,312,fe).toFixed(2)+'px'; caixa.style.height=lerp(350,194,fe).toFixed(2)+'px';
+    fila.forEach((f,i)=>{
+      vis(f.c,t,top-.02+i*.1,1e9,{dy:12});
+      if(i<2){const a=top+.45+i*.3; arco(f.w,t,a,.75,POS[i][0],POS[i][1],DEST[i][0],DEST[i][1],-70);
+        f.ok.style.opacity=eo(pr(t,a+.7,.3)).toFixed(3);}
+      else f.w.style.transform=`translate(${POS[2][0]}px,${POS[2][1]}px)`;
+    });
+    const e=fila[2], pe=eo(pr(t,ter-.1,.4));
+    e.c.style.borderColor=mix('#E1E8E4','#F3B8B0',pe); e.c.style.background=mix('#FFFFFF','#FEF3F2',pe); e.er.style.opacity=pe.toFixed(3);
+    pulse(e.c,t,ter-.1,.04,.7);
+    tracejado(tent,t,tna-.15,.7); vis(ban,t,tso-.15,1e9,{dy:0,sc:.5}); pulse(ban,t,tdo-.1,.12,.7);
+    vis(oA,t,tte-.15,1e9,{dy:18,sc:.95}); vis(oA.querySelector('.ss'),t,tre-.1,1e9,{dy:6});
+    const gi=oA.querySelector('.gi svg'); gi.style.transform=`rotate(${(360*eio(pr(t,tat-.1,.9))).toFixed(1)}deg)`;
+    vis(oA.querySelector('.ck'),t,tdu-.1,1e9,{dy:0,sc:.5});
+    vis(oB,t,tse-.15,1e9,{dy:18,sc:.95}); pulse(oB.querySelector('.gi'),t,tli-.1,.12,.7); vis(oB.querySelector('.ss'),t,trf-.1,1e9,{dy:6});
+  };
+};
+
+// ------------------------------------------------------------------ API para o renderizador
+let RENDER=null;
+window.setup=d=>{D=d;ST.innerHTML='';RENDER=CAPS[d.cap]();return true};
+window.R=t=>{RENDER(t);return true};
+</script></body></html>

@@ -17,6 +17,16 @@ const LUCIDE = path.join(path.dirname(require.resolve('lucide-static/package.jso
 // ícones: todo texto entre aspas na página que for nome de um ícone do lucide (pega também os que vêm de listas)
 const ICONS = [...new Set([...fs.readFileSync(HTML, 'utf8').matchAll(/['"]([a-z][a-z0-9-]{1,40})['"]/g)].map(m => m[1]))]
   .filter(n => fs.existsSync(path.join(LUCIDE, n + '.svg')));
+// Vigia: cena travada (promessa que nunca resolve, laço sem fim no setup ou no R) sai com erro em vez de segurar a trava
+// pesada dos outros (10/11: um render de quadros parado prendeu a fila de 18 agentes por 10 min). --vigia S (padrão 90).
+const VIGIA_S = parseFloat(opt('--vigia', '90'));
+let vigia = null;
+const vivo = () => {
+  clearTimeout(vigia);
+  vigia = setTimeout(() => { console.error(`render_cenas: nada andou em ${VIGIA_S} s (cena travada?); saindo`); process.exit(3); }, VIGIA_S * 1000);
+  vigia.unref();
+};
+vivo();
 
 (async () => {
   const N = JSON.parse(fs.readFileSync(tempos, 'utf8'));
@@ -44,14 +54,17 @@ const ICONS = [...new Set([...fs.readFileSync(HTML, 'utf8').matchAll(/['"]([a-z]
     await document.fonts.ready;
   }, path.resolve(HERE, '../../web/fonts'));
   await page.evaluate(async () => { await Promise.all([...document.images].map(i => i.complete ? 0 : new Promise(r => { i.onload = i.onerror = r; }))); });
+  vivo();
   await page.evaluate(d => window.setup(d), dados);
   await page.evaluate(async () => { await Promise.all([...document.images].map(i => i.complete ? 0 : new Promise(r => { i.onload = i.onerror = r; }))); });
+  vivo();
   const avisos = []; page.on('console', m => { if (m.type() === 'warning') avisos.push(m.text()); });
   if (STILLS) {
     fs.mkdirSync(saida, { recursive: true });
     for (const s of STILLS.split(',')) {
       const t = parseFloat(s); await page.evaluate(t => window.R(t), t);
       await page.screenshot({ path: path.join(saida, `cap${String(cap).padStart(2, '0')}_${t.toFixed(2)}.jpg`), type: 'jpeg', quality: 90 });
+      vivo();
     }
     if (avisos.length) console.log('AVISOS:', [...new Set(avisos)].join(' | '));
     await b.close(); return;
@@ -66,6 +79,7 @@ const ICONS = [...new Set([...fs.readFileSync(HTML, 'utf8').matchAll(/['"]([a-z]
     await page.evaluate(t => window.R(t), (i0 + i) / FPS);
     const buf = await page.screenshot({ type: 'jpeg', quality: 92 });
     if (!ff.stdin.write(buf)) await new Promise(r => ff.stdin.once('drain', r));
+    vivo();
     if (i % 300 === 0) console.log(`cap${cap}: ${i}/${n} quadros (${((Date.now() - t0) / 1000).toFixed(0)} s)`);
   }
   ff.stdin.end();
