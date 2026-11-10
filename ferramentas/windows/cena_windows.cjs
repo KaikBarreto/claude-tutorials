@@ -116,7 +116,8 @@ class Quadros { // lê a gravação em sequência, já na escala da área da pá
       const f = path.join(SAIDA, `${spec.nome || 'cena'}_${t.toFixed(2)}.jpg`); await page.screenshot({ path: f, type: 'jpeg', quality: 92 });
     }
     if (avisos.length) console.log('AVISOS:', [...new Set(avisos)].join(' | '));
-    await browser.close(); console.log(`ok: ${STILLS.split(',').length} quadros em ${SAIDA}`); return;
+    await browser.close(); if (leitor && leitor.p) { leitor.p.stdout.destroy(); leitor.p.kill('SIGKILL'); }
+    console.log(`ok: ${STILLS.split(',').length} quadros em ${SAIDA}`); process.exit(0);
   }
 
   const n = Math.round(dur * FPS), tmp = SAIDA.replace(/\.mp4$/, '.parcial.mp4');
@@ -138,7 +139,7 @@ class Quadros { // lê a gravação em sequência, já na escala da área da pá
   fs.renameSync(tmp, SAIDA);
   const ex = await page.evaluate(() => window.exportar());
   await browser.close();
-  if (leitor && leitor.p) leitor.p.kill();
+  if (leitor && leitor.p) { leitor.p.stdout.destroy(); leitor.p.kill('SIGKILL'); }  // pausado, o ffmpeg ficaria preso no pipe
   const video = { width: saidaPx[0], height: saidaPx[1], fps: FPS, durationS: dur, dsf, viewportCss: { width: tela[0], height: tela[1] } };
   const base = SAIDA.replace(/\.mp4$/, '');
   const conta = ex.samples.reduce((o, s) => (o[s.type] = (o[s.type] || 0) + 1, o), {});
@@ -148,4 +149,5 @@ class Quadros { // lê a gravação em sequência, já na escala da área da pá
     clock: 't = segundos desde o 1o quadro do video', actions: ex.actions, marks: [], late: [], pageIssues: [], stats: { frames: n } }, null, 1));
   if (avisos.length) console.log('AVISOS:', [...new Set(avisos)].join(' | '));
   console.log(`ok ${SAIDA}: ${n} quadros, ${dur.toFixed(2)} s, ${((Date.now() - t0) / 1000).toFixed(0)} s de render; ${ex.actions.length} passos com rótulo, ${conta.click || 0} cliques`);
+  process.exit(0);
 })().catch(e => { console.error(e); process.exit(1); });

@@ -90,7 +90,8 @@ python3 ferramentas/windows/capturar_ecotray.py capturas.json capturas/ --app $A
    "favicon": "app/icon.png",
    "pagina": {"gravacao": {"video": "../rec/t5-cap02-app.mp4", "telemetria": "...telemetry.json", "acoes": "...actions.json",
               "de": 0.0, "inicio": 0.0, "ate": 9.0}}},                  // ou {"imagem", "recorte", "escala", "pos", "fundo"}
- "download": {"arquivo": "EcoTray - Instalador.exe", "tamanho": "19,4 MB"},
+ "download": {"arquivo": "EcoTray - Instalador.exe", "tamanho": "19,4 MB", "velocidade": 70},   // % por segundo
+ "smartscreen": {"titulo": ..., "corpo": ..., "rotulo_editor": "Editor", "editor": "Editor desconhecido"},  // opcional
  "passos": [{"at": 2.0, "do": "clicar", "alvo": "bandeja:ecotray", "botao": "direito", "label": "bandeja", "mostra": "menu"}, ...]}
 ```
 - `at` em segundos da cena; o cursor chega sozinho antes (curva leve, acelera e freia, 0,4 a 1 s conforme a distância) e
@@ -126,6 +127,8 @@ Conferir antes do vídeo (obrigatório, como nas cenas ilustradas): `node cena_w
 2. **Capturas** da aula em `<tutorial>/edit/windows/capturas.json`, com o mundo dela (impressora, balança, horários do
    relógio do app): um passo por estado que a cena mostra.
 3. **Gravação** do trecho de navegador com `"device": "windows"` no roteiro do robô (1280x712), quando a cena mostra o app.
+   Ela enche a página do navegador maximizado na escala 1,5; uma gravação comum (1280x800) também entra, na largura toda,
+   com o pé cortado. A telemetria e as ações do robô entram na cena deslocadas no tempo (`de`, `inicio`, `ate`) e na tela.
 4. **Cena** `<tutorial>/edit/windows/capNN.json`, com os `at` casados com a narração (tempo das palavras no `capNN.json`
    da voz) e `label` nos cliques que terão zoom; `node cena_windows.cjs capNN.json $TUT_HOME/rec/<tut>/<tut>-capNN.mp4`.
    Sai como se fosse a gravação do robô (vídeo, telemetria e ações).
@@ -133,7 +136,8 @@ Conferir antes do vídeo (obrigatório, como nas cenas ilustradas): `node cena_w
    `auditar_camera.py` com 0 problema → `render_chapter.py`. A câmera mira os cliques da cena; o cursor é o da skill.
    Unidades: px do vídeo = px da tela × 4/3 (`dsf` 1,333 na telemetria). O cursor sai do tamanho certo para a tela simulada
    (um pouco menor que nas aulas com o app a 1280x800); `"cursor": {"dpr": 2.0}` no capítulo o deixa igual ao das outras.
-   Zoom na bandeja (canto da tela) passa na checagem até ~1,8x.
+   Zoom na bandeja (canto da tela): o alvo fica perto da borda de baixo e a checagem só passa com zoom a partir de ~1,55x
+   (na prévia, 1,6x); com zoom menor, deixe o clique na bandeja sem zoom.
 Exemplo encadeado: `exemplos/ecoflix-ecotray/previa.sh` (capturas → cena → palco, cursor e câmera), ~15 s de vídeo.
 
 ## Lições (10/11)
@@ -143,3 +147,6 @@ Exemplo encadeado: `exemplos/ecoflix-ecotray/previa.sh` (capturas → cena → p
 - O Xft dá a toda letra de uma fonte "mono" a largura do maior glifo (Inconsolata: 20 px por letra, "1 2 7 . 0"):
   o `fonts.conf` da cena marca a Inconsolata como proporcional. Emoji colorido derruba o Xft: rejeitado no `fonts.conf`.
 - Fonte variável no Xft também sai com espaçamento errado: só fontes estáticas no Tk.
+- Diálogo modal do app (`wait_window`) roda um laço de eventos aninhado: clique feito direto pelo roteiro trava ali dentro.
+  O `ecotray_sim.py` clica pelo `after`, e o roteiro segue no laço do diálogo.
+- `cget("text")` num `ttk.Entry` devolve o `-textvariable` (o Tk aceita abreviação): campos viram alvo pelo rótulo da linha.

@@ -1,16 +1,19 @@
 """Roda as janelas de verdade do EcoTray (o código do app, só leitura) num display virtual e captura cada estado pedido.
 
 - Painel: `dashboard.py` (show_dashboard), com um EcoTray falso no WebSocket de comandos (127.0.0.1:8054) que responde
-  get_status, list_printers, set_default_printer, check_update e get_activity no formato do ecotray.py, e manda pela
-  conexão ao vivo do painel os eventos que o plano pede (peso, atividade, impressão, trava da balança).
+  como o ecotray.py (get_status, list_printers, set_default_printer, check_update, get_activity e, para a janela
+  "Configurar Balanças", list_ports, list_scale_protocols, run_diagnostics e set_scale) e manda pela conexão ao vivo do
+  painel os eventos que o plano pede (peso, atividade, impressão, trava da balança). Janelas filhas (Toplevel) e a lista
+  aberta de um combobox também são capturadas, com clique, digitação e escolha feitos nos widgets do próprio código.
 - Instalador: `installer_win/installer_gui.py` (InstallerWindow), sem baixar nada: os textos e as porcentagens de cada
   etapa são os do próprio `_run_install` (STEPS e detalhes), aplicados pelo `_set_status` dele; o fim é o `_finish` dele.
+- Bandeja: `tray_app.py` monta o menu (com um pystray de mentira que só anota os itens) e o ícone com a bolinha do status.
 Saída: um PNG por captura (só a janela, no tamanho real) e `quadros.json` com a posição da janela na tela e os alvos
 (texto, retângulo relativo à janela e tipo de cursor do widget) para a cena mirar o cursor.
 
 Roda no Python com Tk preparado por `preparar.sh`, dentro do `capturar_ecotray.py` (rede própria + Xvfb).
 uso: python ecotray_sim.py <pasta ecotray do app> <plano.json> <saida/>
-Plano: {"tela": [1920, 1200], "usuario_windows": "Rafael", "sessoes": [ {"programa": "painel"|"instalador", ...} ]}
+Plano: {"tela": [1920, 1200], "usuario_windows": "Rafael", "sessoes": [ {"programa": "painel"|"instalador"|"bandeja", ...} ]}
 (formato completo em docs/10-cena-windows.md)."""
 import asyncio
 import json
