@@ -26,6 +26,28 @@ navegador. Detalhes (rotas em subcaminho, `"spa": true`, aviso de cookies via `"
 - Estado inicial de cada capítulo = o que os capítulos anteriores criaram (no fakebase: `seeds-extra/<id>/apos-capNN.json`;
   no modo url: prepare na conta de demonstração ou recrie no `setup`).
 
+## Mundo de uma série no perfil (`perfis/<série>/mundo`)
+O mundo da Dominex mora dentro de `rec/fakebase` (é o padrão). Outra série leva o mundo dela no perfil, e o instalador o
+copia para `$TUT_HOME/rec/mundo`; com essa pasta (ou `FAKE_MUNDO=<pasta>`) o `rec/run.sh`, o Supabase falso e o robô
+usam só ela. Exemplo inteiro: `perfis/ecoflix/mundo` (EcoSistema, Recicla Vale Metais).
+- `mundo.json`: identidade (`config`: empresa e usuário logado), endereços (`env`: porta e chave gravadas no build,
+  `fakeNow` e `fakeClock: "anda"`), `navegador` (localStorage da sessão, local do celular) e `smoke` (rota do 1º acesso,
+  textos de erro, rótulos em que R$ 0,00 é o valor certo).
+- `schema.json` (`node rec/fakebase/tools/gen-schema.mjs <app>/src/integrations/supabase/types.ts --out <mundo>/schema.json`)
+  e `defaults.json` (DEFAULT de cada coluna lido das migrations: `node <mundo>/gerar/defaults-do-sql.mjs <app>/supabase/migrations`).
+- `seeds/` (gerado por `gerar/sementes.mjs`, nunca à mão), `seeds-extra/` (estado de partida por aula), `handlers/{rpc,
+  functions,ext,views}` (um arquivo por função; recebem `RpcError`/`FunctionError` no ctx), `hooks/` (os triggers do banco)
+  e `lib/` (contas compartilhadas).
+- `app/ajustes.json`: o que o `rec/setup-app.sh` troca na cópia do app para o build falar com o Supabase falso (regex que
+  tem de casar 1 vez; o EcoSistema fixa o endereço de produção no `vite.config.ts`).
+- Relógio: com `fakeClock: "anda"` o backend parte de `FAKE_NOW` e corre, recomeçando a cada reset (o robô reseta no
+  início de cada gravação), igual ao relógio do navegador; registro novo sai com a hora certa.
+- Mudou handler ou `lib/`: `rec/run.sh fake` (o `/__dev/reset` só recarrega sementes).
+
+App fora do disco (pouco espaço em `/home`): `git archive` em `/dev/shm`, `APP_SRC=APP_WORK=/dev/shm/<app> rec/setup-app.sh`
+(trabalha na própria cópia, recusa pasta com `.git`), `npm ci` lá, e `APP_WORK=/dev/shm/<app> rec/run.sh build`: o build roda
+em `/dev/shm` e só o `dist` vai para `$TUT_HOME/app` (menos as pastas de `foraDoBuild`, ex. vídeos do site).
+
 ## Roteiro do robô — `rec/<tutorial>/capNN.json`
 ```json
 {"name": "t1-cap02", "mode": "url",

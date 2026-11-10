@@ -9,11 +9,12 @@ import { isKnown, columnsOf } from './schema.mjs';
 import { rowsOf, resolveRelated } from './query.mjs';
 import { nowIso, uuid, pgError } from './util.mjs';
 import { config } from './config.mjs';
+import { doMundo } from './mundo.mjs';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const hooks = new Map();
 
-export async function loadHooks(dir = path.resolve(here, '../hooks')) {
+export async function loadHooks(dir = doMundo('hooks')) {
   hooks.clear();
   if (!fs.existsSync(dir)) return;
   for (const f of fs.readdirSync(dir).filter((x) => x.endsWith('.mjs'))) {

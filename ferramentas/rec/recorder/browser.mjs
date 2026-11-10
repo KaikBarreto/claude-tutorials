@@ -5,7 +5,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { chromium } from './pw.mjs';
-import { APP_URL, APP_ORIGIN, FAKE_URL, ANON_KEY, USER_EMAIL, REC_DIR } from './env.mjs';
+import { APP_URL, APP_ORIGIN, FAKE_URL, ANON_KEY, USER_EMAIL, REC_DIR, MUNDO } from './env.mjs';
 import { isolateNetwork } from './net.mjs';
 import { serveAppAtOrigin, withAppOriginArgs } from './app-origin.mjs';
 import { Telemetry } from './telemetry.mjs';
@@ -17,7 +17,7 @@ export const DEVICES = {
   phone: {
     width: 390, height: 844, isMobile: true, hasTouch: true,
     userAgent: 'Mozilla/5.0 (Linux; Android 14; Pixel 8) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Mobile Safari/537.36',
-    geolocation: { latitude: -22.9035, longitude: -43.1038, accuracy: 15 }, // Niterói (mundo fictício)
+    geolocation: MUNDO.navegador?.geolocalizacao || { latitude: -22.9035, longitude: -43.1038, accuracy: 15 }, // Niterói (mundo fictício)
   },
 };
 export const TZ = 'America/Sao_Paulo';
@@ -38,7 +38,7 @@ export async function fakeLogin(email = USER_EMAIL) {
   const res = await fetch(`${FAKE_URL}/auth/v1/token?grant_type=password`, {
     method: 'POST',
     headers: { 'content-type': 'application/json', apikey: ANON_KEY },
-    body: JSON.stringify({ email, password: 'domiflix' }),
+    body: JSON.stringify({ email, password: process.env.FAKE_SENHA || process.env.TUT_SENHA || 'domiflix' }),
   });
   if (!res.ok) throw new Error(`login falso falhou (${res.status}): ${await res.text()} — o fakebase esta no ar em ${FAKE_URL}?`);
   return res.json();
@@ -49,13 +49,26 @@ function appVersion() {
     const src = fs.readFileSync(path.resolve(REC_DIR, '../app/src/config/version.ts'), 'utf8');
     return src.match(/APP_VERSION\s*=\s*["']([^"']+)["']/)?.[1] || '0.0.0';
   } catch {
-    return '0.0.0';
+    // app/ so com o build (APP_WORK fora do disco): o rec/run.sh build anota a versao em app/dist/.versao-app
+    try {
+      return fs.readFileSync(path.resolve(REC_DIR, '../app/dist/.versao-app'), 'utf8').trim() || '0.0.0';
+    } catch {
+      return '0.0.0';
+    }
   }
 }
 
 /** Hoje (AAAA-MM-DD) no fuso da empresa — mesma conta do app para o pop-up de tarefas do dia. */
 export function todayBR(date = new Date()) {
   return new Intl.DateTimeFormat('en-CA', { timeZone: TZ, year: 'numeric', month: '2-digit', day: '2-digit' }).format(date);
+}
+
+/** localStorage da sessao pedido pelo mundo (mundo.json "navegador.localStorage"), com {user_id} {company_id} {hoje} {versao}. */
+function mundoStorage(session, versao) {
+  const pedidos = MUNDO.navegador?.localStorage || {};
+  const t = { user_id: session.user.id, company_id: MUNDO.companyId || '', hoje: todayBR(FAKE_NOW_DATE || new Date()), versao };
+  const troca = (s) => String(s).replace(/\{(\w+)\}/g, (m, k) => (k in t ? t[k] : m));
+  return Object.fromEntries(Object.entries(pedidos).map(([k, v]) => [troca(k), troca(typeof v === 'string' ? v : JSON.stringify(v))]));
 }
 
 /** localStorage inicial: sessao + "ja vi" dos avisos que atrapalhariam a gravacao. */
@@ -68,6 +81,7 @@ export function buildStorageState(session, extra = {}) {
     [`dominex:daily-tasks-shown:${session.user.id}`]: todayBR(FAKE_NOW_DATE || new Date()),
     'pwa-install-dismissed': 'true',
     theme: 'light',
+    ...mundoStorage(session, v),
     ...extra,
   };
   return {

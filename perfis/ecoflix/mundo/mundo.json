@@ -1,0 +1,45 @@
+{
+  "_doc": "Mundo fictício da EcoFlix (Recicla Vale Metais) no Supabase falso. Lido pelo fakebase (FAKE_MUNDO), pelo rec/run.sh e pelo robô. Tudo inventado: ver planejamento/ecoflix/MUNDO_FICTICIO.md.",
+  "config": {
+    "empresa": "company.reciclavale",
+    "usuario": "user.rafael",
+    "email": "rafael@reciclavalemetais.example",
+    "nome": "Rafael Nogueira"
+  },
+  "env": {
+    "fakeUrl": "http://127.0.0.1:54340",
+    "fakePort": 54340,
+    "appUrl": "http://127.0.0.1:8080",
+    "appPort": 8080,
+    "anonKey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlzcyI6ImVjb2ZsaXgtZmFrZSIsImlhdCI6MTcwMDAwMDAwMCwiZXhwIjo0MTAyNDQ0ODAwfQ.rY1tN2278kUMFX6Wfm3N3PVpbWHbwP-QAgUZYNLmSLM",
+    "projectId": "ecoflix-fake",
+    "fakeNow": "2026-11-10T08:30:00-03:00",
+    "fakeClock": "anda"
+  },
+  "navegador": {
+    "_doc": "localStorage da sessão logada (por cima do padrão do robô). Tokens: {user_id}, {company_id}, {hoje} (AAAA-MM-DD do FAKE_NOW), {versao} (versão do app).",
+    "localStorage": {
+      "daily-tasks-reminder-last-shown-{user_id}": "{hoje}",
+      "initial-preferences-set": "true"
+    },
+    "geolocalizacao": {
+      "latitude": -23.0262,
+      "longitude": -45.5559,
+      "accuracy": 15
+    }
+  },
+  "defaults": {},
+  "smoke": {
+    "_doc": "rec/recorder/smoke.mjs: rota do 1o acesso (a raiz / é o site de vendas, com vídeos fora do build), textos de erro e rótulos de cartão em que R$ 0,00 é o valor certo.",
+    "aquecimento": "/dashboard",
+    "erros": [
+      "N[ãa]o foi poss[íi]vel",
+      "Tente novamente",
+      "Erro ao carregar",
+      "Algo deu errado",
+      "Something went wrong",
+      "Falha ao carregar"
+    ],
+    "zeroOk": []
+  }
+}

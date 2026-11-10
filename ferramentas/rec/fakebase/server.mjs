@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Supabase falso para gravar tutoriais da Dominex.
+// Supabase falso para gravar tutoriais (padrao: o mundo da Dominex; outro mundo com FAKE_MUNDO=<pasta>, ver core/mundo.mjs).
 //   node rec/fakebase/server.mjs            (porta 54321, 127.0.0.1)
 // Ver rec/README.md.
 import http from 'node:http';
@@ -19,6 +19,7 @@ import { handleExt, extHandlers } from './http/ext.mjs';
 import { handleDev } from './http/dev.mjs';
 import { handleTiles } from './http/tiles.mjs';
 import { attachRealtime } from './http/realtime.mjs';
+import { doMundo, MUNDO_DIR } from './core/mundo.mjs';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 
@@ -29,10 +30,14 @@ async function loadAll() {
     target.clear();
     for (const [k, v] of map) target.set(k, v);
   };
-  replace(rpcHandlers, await loadHandlerDir(path.join(here, 'handlers/rpc')));
-  replace(fnHandlers, await loadHandlerDir(path.join(here, 'handlers/functions')));
-  replace(extHandlers, await loadHandlerDir(path.join(here, 'handlers/ext')));
-  const views = await loadHandlerDir(path.join(here, 'handlers/views'));
+  // handlers do mundo (FAKE_MUNDO/handlers ou rec/fakebase/handlers); os externos genericos (CEP, mapa...) do nucleo
+  // valem para todo mundo, e o mundo pode sobrescrever um host com o arquivo de mesmo nome em handlers/ext
+  replace(rpcHandlers, await loadHandlerDir(doMundo('handlers/rpc')));
+  replace(fnHandlers, await loadHandlerDir(doMundo('handlers/functions')));
+  const ext = await loadHandlerDir(path.join(here, 'handlers/ext'));
+  if (MUNDO_DIR) for (const [k, v] of await loadHandlerDir(doMundo('handlers/ext'))) ext.set(k, v);
+  replace(extHandlers, ext);
+  const views = await loadHandlerDir(doMundo('handlers/views'));
   viewProviders.clear();
   for (const [k, v] of views) viewProviders.set(k, v);
 }
@@ -83,6 +88,7 @@ server.listen(config.port, config.host, () => {
   const seeded = [...store.tables.values()].filter((t) => t.rows.length).length;
   console.log(`fakebase pronto em http://${config.host}:${config.port}  (${seeded} tabelas com seed, ${rpcHandlers.size} rpcs, ${fnHandlers.size} functions, ${extHandlers.size} externos)`);
   console.log(`desconhecidos -> ${LOG_PATH}`);
+  if (MUNDO_DIR) console.log(`mundo -> ${MUNDO_DIR}`);
 });
 
 function shutdown() {

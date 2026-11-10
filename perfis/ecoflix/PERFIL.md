@@ -13,7 +13,9 @@ Decisões e pendências: `planejamento/ecoflix/PRODUCAO.md`.
 ```bash
 TUT_HOME=~/ecoflix TUTORIAL=t3 PERFIL=ecoflix bash <pasta-da-skill>/instalar.sh
 ```
-O mundo da Recicla Vale Metais no Supabase falso ainda não existe (PRODUCAO.md, "Preparação").
+O instalador copia o mundo da Recicla Vale Metais (`perfis/ecoflix/mundo`) para `$TUT_HOME/rec/mundo`. Religar tudo
+depois de um reinício: `$TUT_HOME/RELIGAR.md` (app 1.59.154 em `/dev/shm`, build em `$TUT_HOME/app`, porta 8080; Supabase
+falso na 54340, `FAKE_NOW` do `mundo.json`).
 
 ## O que fica igual à Domiflix
 Formato (1920×1080, 30 fps, H.264 CRF 20 + AAC, ~−16 LUFS, pico ≤ −1 dBTP); palco escuro com a luz na cor da marca;

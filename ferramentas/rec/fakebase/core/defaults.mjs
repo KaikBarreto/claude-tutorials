@@ -3,7 +3,8 @@
 // pelo tipo e pelo nome, e cada tabela pode sobrescrever em TABLE_DEFAULTS.
 import { columnsOf, enums } from './schema.mjs';
 import { config } from './config.mjs';
-import { uuid, nowIso, shortCode } from './util.mjs';
+import { uuid, nowIso, shortCode, resolveTokens } from './util.mjs';
+import { mundo } from './mundo.mjs';
 
 /**
  * Defaults por tabela: { coluna: valor | (row, ctx) => valor }.
@@ -49,9 +50,9 @@ export function applyDefaults(table, input, ctx = {}) {
   if (has('updated_at') && absent('updated_at')) row.updated_at = stamp;
   if (has('company_id') && absent('company_id')) row.company_id = ctx.companyId || config.companyId;
 
-  const specific = TABLE_DEFAULTS[table] || {};
+  const specific = (mundo.defaults ? mundo.defaults[table] : TABLE_DEFAULTS[table]) || {}; // FAKE_MUNDO: os do mundo.json
   for (const [k, v] of Object.entries(specific)) {
-    if (absent(k)) row[k] = typeof v === 'function' ? v(row, ctx) : v;
+    if (absent(k)) row[k] = typeof v === 'function' ? v(row, ctx) : resolveTokens(v);
   }
 
   for (const [k, def] of Object.entries(cols)) {

@@ -35,7 +35,7 @@ export async function handleFunctions(req, res, url, ctx) {
     return sendJson(res, 200, {});
   }
   try {
-    const out = await handler(body, { ...ctx, store, db, req, url });
+    const out = await handler(body, { ...ctx, store, db, req, url, FunctionError });
     return sendJson(res, 200, out === undefined ? {} : out);
   } catch (e) {
     if (e instanceof FunctionError) return sendJson(res, e.status, { error: e.message, ...e.extra });

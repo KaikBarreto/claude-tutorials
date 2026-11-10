@@ -7,9 +7,10 @@ import { fileURLToPath } from 'node:url';
 import { unknown } from '../core/log.mjs';
 import { uuid, nowIso } from '../core/util.mjs';
 import { readBody, readJson, send, sendJson } from './common.mjs';
+import { doMundo } from '../core/mundo.mjs';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
-export const STORAGE_DIR = process.env.FAKE_STORAGE_DIR || path.resolve(here, '../storage');
+export const STORAGE_DIR = process.env.FAKE_STORAGE_DIR || doMundo('storage');
 
 const uploaded = new Map(); // "bucket/caminho" -> { buf, type, updated_at, id }
 const KNOWN_BUCKETS = [

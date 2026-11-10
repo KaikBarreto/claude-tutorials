@@ -9,6 +9,8 @@
 #             As gravações do robô se chamam <id>-capNN (ex.: t1-cap03).
 #   PERFIL    perfil pronto de uma série (pasta perfis/<nome>): marca, voz, pronúncias e padrão de montagem.
 #             PERFIL=domiflix = o padrão do T3 da Dominex, idêntico. Sem perfil: modelos neutros.
+#             Perfil com mundo fictício próprio (perfis/<nome>/mundo: schema, sementes, handlers do Supabase falso) instala
+#             em $TUT_HOME/rec/mundo, e o rec/run.sh e o robô passam a usar esse mundo (PERFIL=ecoflix).
 #   MARCA     pasta com marca.json + arquivos da marca (logo, fontes). Padrão: a do PERFIL, senão modelos/.
 #
 # Rode de novo para outro tutorial (só TUTORIAL muda); arquivos que já existem não são sobrescritos.
@@ -36,6 +38,11 @@ fi
 # gravador, editor e narração do tutorial
 mkdir -p "$TUT_HOME/rec/$TUTORIAL" "$TUT_HOME/$TUTORIAL/edit/caps" "$TUT_HOME/$TUTORIAL/edit/out" "$TUT_HOME/$TUTORIAL/narracao"
 cp -r --update=none "$F/rec/." "$TUT_HOME/rec/"
+# mundo fictício do perfil (sem ele, o Supabase falso usa o mundo que mora em rec/fakebase, o da Dominex)
+if [ -n "$P" ] && [ -d "$P/mundo" ]; then
+  mkdir -p "$TUT_HOME/rec/mundo"
+  cp -r --update=none "$P/mundo/." "$TUT_HOME/rec/mundo/"
+fi
 cp -r --update=none "$F/edit/." "$TUT_HOME/$TUTORIAL/edit/"
 cp -r --update=none "$F/narracao/." "$TUT_HOME/$TUTORIAL/narracao/"
 pega() { [ -n "$P" ] && [ -f "$P/$1" ] && echo "$P/$1" || echo "$SKILL/modelos/$(basename "$1")"; }  # perfil > modelo

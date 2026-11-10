@@ -1,0 +1,13 @@
+{
+  "_doc": "Ajustes que o rec/setup-app.sh aplica na CÓPIA do código do EcoSistema (nunca no repositório) para o build falar com o Supabase falso. Cada regex tem de casar uma vez: se o app mudou, o setup para e avisa. Tokens: {FAKE_URL} {FAKE_HOST} {ANON_KEY} (env do mundo.json).",
+  "substituir": [
+    { "arquivo": "vite.config.ts", "regex": "const CURRENT_SUPABASE_URL = \"[^\"]+\";", "por": "const CURRENT_SUPABASE_URL = \"{FAKE_URL}\";",
+      "porque": "o vite.config fixa o endereço do Supabase de produção no define, por cima do VITE_SUPABASE_URL" },
+    { "arquivo": "vite.config.ts", "regex": "const CURRENT_SUPABASE_PUBLISHABLE_KEY = \"[^\"]+\";", "por": "const CURRENT_SUPABASE_PUBLISHABLE_KEY = \"{ANON_KEY}\";",
+      "porque": "chave pública do projeto de produção fixada no define" },
+    { "arquivo": "src/main.tsx", "regex": "const EXPECTED_SUPABASE_HOST = \"[^\"]+\";", "por": "const EXPECTED_SUPABASE_HOST = \"{FAKE_HOST}\";",
+      "porque": "o main.tsx recarrega a página uma vez quando o endereço do Supabase não é o de produção (bundle antigo)" }
+  ],
+  "antesDoBuild": ["node scripts/prepare-face-models.mjs"],
+  "foraDoBuild": ["videos"]
+}
