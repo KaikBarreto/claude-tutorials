@@ -178,7 +178,7 @@ CAPS[1]=()=>{
 
   return t=>{
     const tc=W(0,'caminhao'), tb=W(0,'balanca'), tbr=W(0,'bruto'), td=W(1,'descarregar'), tv=W(1,'vazio'), tt=W(1,'tara');
-    const tl=W(2,'liquido'), tch=W(2,'cheio'), tme=W(2,'menos'), tva=W(2,'vazio'), tsu=W(3,'sucata'), tpe=W(3,'pedido');
+    const tco=W(2,'conta'), tch=W(2,'cheio'), tme=W(2,'menos'), tva=W(2,'vazio'), tsu=W(3,'sucata'), tpe=W(3,'pedido');
     posTitulo(tit,t,L(0)-.4,tc-.1);
     // chega: anda até a balança e para (rodas girando com a distância)
     for(const e of [chao,plat,poste,most]) vis(e,t,tc-.2,1e9,{dy:10});
@@ -193,8 +193,8 @@ CAPS[1]=()=>{
     // descarrega: cada pedaço salta da caçamba para o monte, um depois do outro
     pecas.forEach((p,i)=>{const d=p.dataset;const q=eio(pr(t,td+.1+i*.12,.7));
       p.setAttribute('transform',`translate(${(d.dx*q).toFixed(2)},${(d.dy*q-130*4*q*(1-q)).toFixed(2)}) rotate(${(d.r*q).toFixed(2)} ${d.cx} ${d.cy})`)});
-    // conta: o desenho encolhe e sobe; os três cartões entram nas palavras
-    const enc=eio(pr(t,tl-.2,.8)); cena.style.transform=`translate(0,${(-26*enc).toFixed(2)}px) scale(${lerp(1,.62,enc).toFixed(4)})`;
+    // conta: o desenho encolhe e sobe logo antes do 1º cartão (a metade de baixo não fica vazia); os cartões nas palavras
+    const enc=eio(pr(t,Math.max(tco,tch-.75),.8)); cena.style.transform=`translate(0,${(-26*enc).toFixed(2)}px) scale(${lerp(1,.62,enc).toFixed(4)})`;
     vis(cB,t,tch-.15,1e9,{dy:22}); vis(oM,t,tme-.1,1e9,{sc:.6,dy:0}); vis(cT,t,tva-.15,1e9,{dy:22});
     vis(oI,t,tva+.45,1e9,{sc:.6,dy:0}); vis(cL,t,tva+.6,1e9,{dy:22,sc:.94});
     pulse(cL,t,tsu,.04,.8); ripple(rip,t,tsu);
