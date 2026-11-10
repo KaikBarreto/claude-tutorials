@@ -2,9 +2,10 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { doMundo } from './mundo.mjs';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
-const raw = JSON.parse(fs.readFileSync(path.resolve(here, '../schema.json'), 'utf8'));
+const raw = JSON.parse(fs.readFileSync(doMundo('schema.json'), 'utf8')); // FAKE_MUNDO/schema.json ou rec/fakebase/schema.json
 
 export const schema = raw;
 export const tables = raw.tables;

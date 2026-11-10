@@ -2,15 +2,16 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { stableId, resolveTokens, resetSeq } from './util.mjs';
+import { stableId, resolveTokens, resetSeq, reiniciaRelogio } from './util.mjs';
 import { applyDefaults, resetSeqs } from './defaults.mjs';
 import { isKnown, columnsOf } from './schema.mjs';
+import { doMundo } from './mundo.mjs';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
-export const SEEDS_DIR = process.env.FAKE_SEEDS_DIR || path.resolve(here, '../seeds');
+export const SEEDS_DIR = process.env.FAKE_SEEDS_DIR || doMundo('seeds'); // FAKE_MUNDO/seeds ou rec/fakebase/seeds
 // Seeds EXTRAS (nao entram no carregamento normal): estados prontos de um tutorial, aplicados sob demanda por
 // POST /__dev/seed { files: ["t3/apos-cap02", ...] } (ou pelo campo `seedExtra` do roteiro do robo). Ver rec/README.md.
-export const EXTRA_DIR = process.env.FAKE_SEEDS_EXTRA_DIR || path.resolve(here, '../seeds-extra');
+export const EXTRA_DIR = process.env.FAKE_SEEDS_EXTRA_DIR || doMundo('seeds-extra');
 
 class Table {
   constructor(name) {
@@ -74,6 +75,7 @@ export const store = {
   clear() {
     this.tables.clear();
     this.seedFiles = [];
+    reiniciaRelogio();
     resetSeq();
     resetSeqs();
   },
@@ -82,7 +84,9 @@ export const store = {
    * Aplica seeds extras (EXTRA_DIR/<nome>.json) por cima do estado atual, sem apagar nada, na ordem dada. Mesmo formato
    * dos seeds normais ({ tabela: [linhas] }, tokens @id:/@now.../@storage:), mais:
    *   { "_patch": { "tabela": [ { "match": { coluna: valor }, "set": { coluna: novoValor } } ] } }
-   * que altera linhas que ja existem (ex.: o contador de identificadores do equipamento).
+   * que altera linhas que ja existem (ex.: o contador de identificadores do equipamento), e
+   *   { "_remove": { "tabela": [ { coluna: valor } ] } }
+   * que tira do estado as linhas que batem (ex.: a aula que cria na tela algo que o mundo base ja traz).
    */
   applyExtra(names, dir = EXTRA_DIR) {
     const done = [];
@@ -100,6 +104,17 @@ export const store = {
               const match = resolveTokens(it.match || {});
               const set = resolveTokens(it.set || {});
               for (const r of t.rows) if (Object.entries(match).every(([k, v]) => String(r[k]) === String(v))) Object.assign(r, set);
+            }
+            t.touch();
+          }
+          continue;
+        }
+        if (table === '_remove' && rows && typeof rows === 'object') {
+          for (const [rt, matches] of Object.entries(rows)) {
+            const t = this.table(rt);
+            for (const m of matches) {
+              const match = resolveTokens(m || {});
+              for (let i = t.rows.length - 1; i >= 0; i--) if (Object.entries(match).every(([k, v]) => String(t.rows[i][k]) === String(v))) t.rows.splice(i, 1);
             }
             t.touch();
           }

@@ -15,8 +15,11 @@ function findUserByEmail(email) {
   return null;
 }
 
+// Dominex: profiles.user_id e o usuario; app sem a coluna user_id (EcoSistema): o proprio profiles.id
+const userIdOf = (p) => ('user_id' in p ? p.user_id : p.id);
+
 function findUserById(id) {
-  const prof = store.rows('profiles').find((p) => p.user_id === id);
+  const prof = store.rows('profiles').find((p) => userIdOf(p) === id);
   if (prof) return userFromProfile(prof);
   if (id === config.userId) return defaultUser();
   return null;
@@ -27,7 +30,7 @@ function defaultUser() {
 }
 
 function userFromProfile(p) {
-  return { id: p.user_id, email: p.email || config.userEmail, name: p.full_name || config.userName };
+  return { id: userIdOf(p), email: p.email || config.userEmail, name: p.full_name || config.userName };
 }
 
 export function toAuthUser(u) {
@@ -122,6 +125,8 @@ export async function handleAuth(req, res, url, ctx) {
     if (grant === 'password') {
       const u = findUserByEmail(body.email);
       if (!u) return authError(res, 400, 'invalid_credentials', 'Invalid login credentials');
+      // FAKE_SENHA definida (ex.: FAKE_SENHA="$TUT_SENHA"): so ela entra, para a aula mostrar a senha errada; sem ela, qualquer senha
+      if (process.env.FAKE_SENHA && body.password !== process.env.FAKE_SENHA) return authError(res, 400, 'invalid_credentials', 'Invalid login credentials');
       return sendJson(res, 200, buildSession(u));
     }
     if (grant === 'refresh_token') {

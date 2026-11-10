@@ -3,9 +3,10 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { doMundo } from './mundo.mjs';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
-export const LOG_PATH = process.env.FAKE_UNKNOWN_LOG || path.resolve(here, '../desconhecidos.log');
+export const LOG_PATH = process.env.FAKE_UNKNOWN_LOG || doMundo('desconhecidos.log');
 
 const seen = new Map(); // "KIND\tnome" -> { count, first, sample }
 let started = false;

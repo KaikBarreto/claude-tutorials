@@ -1,11 +1,27 @@
 // Enderecos e chave falsa compartilhados (fonte unica: rec/env.json, lido tambem por rec/run.sh).
+// Mundo de outra serie (rec/mundo ou FAKE_MUNDO, com mundo.json): o "env" dele vale por cima do env.json, e o usuario
+// logado, o localStorage da sessao e o local do celular vem dele (ver rec/fakebase/core/mundo.mjs).
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 export const REC_DIR = path.resolve(here, '..');
-const file = JSON.parse(fs.readFileSync(path.join(REC_DIR, 'env.json'), 'utf8'));
+export const MUNDO_DIR = (() => {
+  const d = process.env.FAKE_MUNDO || path.join(REC_DIR, 'mundo');
+  return fs.existsSync(path.join(d, 'schema.json')) ? path.resolve(d) : null;
+})();
+/** mundo.json do mundo ativo ({} no mundo padrao da Dominex). */
+export const MUNDO = (() => {
+  try {
+    return MUNDO_DIR ? JSON.parse(fs.readFileSync(path.join(MUNDO_DIR, 'mundo.json'), 'utf8')) : {};
+  } catch {
+    return {};
+  }
+})();
+const file = { ...JSON.parse(fs.readFileSync(path.join(REC_DIR, 'env.json'), 'utf8')), ...(MUNDO.env || {}) };
+// data do mundo (mundo.json "env.fakeNow") quando FAKE_NOW nao veio do ambiente: robo e fakebase sempre na mesma data
+if (!process.env.FAKE_NOW && file.fakeNow) process.env.FAKE_NOW = file.fakeNow;
 
 export const FAKE_URL = process.env.FAKE_URL || file.fakeUrl;
 /** Endereço do Supabase falso gravado no build do app (o robô desvia para FAKE_URL quando for outra instância). */
@@ -46,7 +62,7 @@ function resolveAppOrigin(raw) {
 }
 export const ANON_KEY = file.anonKey;
 export const RUNTIME_DIR = path.join(REC_DIR, '.runtime');
-export const USER_EMAIL = process.env.FAKE_USER_EMAIL || 'camila.duarte@glacialcold.example';
+export const USER_EMAIL = process.env.FAKE_USER_EMAIL || MUNDO.config?.email || 'camila.duarte@glacialcold.example';
 fs.mkdirSync(RUNTIME_DIR, { recursive: true });
 
 export const MODES = ['fakebase', 'url'];

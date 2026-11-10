@@ -1,0 +1,68 @@
+{
+  "_doc": "Mundo fictício da EcoFlix (Recicla Vale Metais) no Supabase falso. Lido pelo fakebase (FAKE_MUNDO), pelo rec/run.sh e pelo robô. Tudo inventado: ver planejamento/ecoflix/MUNDO_FICTICIO.md.",
+  "config": {
+    "empresa": "company.reciclavale",
+    "usuario": "user.rafael",
+    "email": "rafael@reciclavalemetais.example",
+    "nome": "Rafael Nogueira"
+  },
+  "env": {
+    "fakeUrl": "http://127.0.0.1:54340",
+    "fakePort": 54340,
+    "appUrl": "http://127.0.0.1:8080",
+    "appPort": 8080,
+    "anonKey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlzcyI6ImVjb2ZsaXgtZmFrZSIsImlhdCI6MTcwMDAwMDAwMCwiZXhwIjo0MTAyNDQ0ODAwfQ.rY1tN2278kUMFX6Wfm3N3PVpbWHbwP-QAgUZYNLmSLM",
+    "projectId": "ecoflix-fake",
+    "fakeNow": "2026-11-10T08:30:00-03:00",
+    "fakeClock": "anda"
+  },
+  "navegador": {
+    "_doc": "localStorage da sessão logada (por cima do padrão do robô). Tokens: {user_id}, {company_id}, {hoje} (AAAA-MM-DD do FAKE_NOW), {versao} (versão do app).",
+    "localStorage": {
+      "daily-tasks-reminder-last-shown-{user_id}": "{hoje}",
+      "initial-preferences-set": "true"
+    },
+    "geolocalizacao": {
+      "latitude": -23.0262,
+      "longitude": -45.5559,
+      "accuracy": 15
+    },
+    "ecotray": {
+      "_doc": "EcoTray falso do robô (rec/recorder/ecotray-falso.mjs), como no T5: versão 1.7.22, a \"Balança do pátio\" na COM3 e a térmica POS-58. O roteiro troca com \"ecotray\": {...} (ex.: a segunda impressora do cap10) ou desliga com false.",
+      "ligado": true
+    },
+    "css": "*,*::before,*::after{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}",
+    "_css": "O app usa backdrop-blur-sm no fundo das janelas (bg-black/80). No Chromium sem janela a 2x o desfoque sai espelhado e sem o preto (só o quarto de cima à esquerda é a tela de verdade); sem o desfoque o fundo fica o preto 80% do app, como num navegador comum.",
+    "ruidoConsole": [
+      "NENHUM REGISTRO DE SALDO ENCONTRADO",
+      "Isso pode significar que o saldo não foi registrado",
+      "sendCommand('list_printers'): timeout",
+      "list_printers failed, trying get_status fallback"
+    ],
+    "_ruidoConsole": "Avisos que o próprio app escreve no console: em toda compra em dinheiro (utils/paymentMethodsHelper.ts) e quando duas telas pedem a lista de impressoras ao EcoTray ao mesmo tempo (services/ecotrayService.ts guarda uma espera por tipo de resposta: a primeira vence o tempo e cai no get_status). Não contam como problema da gravação."
+  },
+  "defaults": {},
+  "smoke": {
+    "_doc": "rec/recorder/smoke.mjs: rota do 1o acesso (a raiz / é o site de vendas, com vídeos fora do build), textos de erro e rótulos de cartão em que R$ 0,00 é o valor certo.",
+    "aquecimento": "/dashboard",
+    "erros": [
+      "N[ãa]o foi poss[íi]vel",
+      "Tente novamente",
+      "Erro ao carregar",
+      "Algo deu errado",
+      "Something went wrong",
+      "Falha ao carregar"
+    ],
+    "zeroOk": [
+      "^\\d+ .+ [\\d.,]+Kg R\\$ [\\d.,]+ R\\$ [\\d.,]+ [\\d.,]+Kg R\\$",
+      "^Poupança antiga R\\$ 0,00$",
+      "^TOTAL (COMPRADO|VENDIDO) R\\$ 0,00$",
+      "^PROJEÇÃO DE LUCRO R\\$ 0,00",
+      "^#\\d+ R\\$ 0,00 Sem (fornecedor|cliente)$",
+      "^VALOR TOTAL DO ITEM R\\$ 0,00$",
+      "^Total da (Compra|Venda) R\\$ 0,00",
+      "^(Projeção de Lucro|Lucro estimado) R\\$ 0,00$"
+    ],
+    "_zeroOk": "Linhas do Relatório de Estoque (material sem venda no período), a \"Poupança antiga\" zerada de propósito (o T14 a arquiva), o caixa recém-aberto sem lançamento e o formulário de compra/venda vazio."
+  }
+}

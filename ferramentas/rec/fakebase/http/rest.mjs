@@ -170,7 +170,8 @@ async function handleRpc(req, res, url, ctx, name) {
   const handler = rpcHandlers.get(name);
   let result;
   if (handler) {
-    result = await handler(args ?? {}, { ...ctx, store, db, url, req });
+    // RpcError no ctx: handlers de um mundo fora de rec/fakebase (FAKE_MUNDO) levantam erro de negocio sem importar o nucleo
+    result = await handler(args ?? {}, { ...ctx, store, db, url, req, RpcError });
   } else {
     unknown('RPC_SEM_HANDLER', name, `args=${JSON.stringify(args).slice(0, 160)}${info ? '' : ' (fora do schema)'}`);
     result = S.emptyRpcResult(name);

@@ -5,7 +5,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { chromium } from './pw.mjs';
-import { APP_URL, APP_ORIGIN, FAKE_URL, ANON_KEY, USER_EMAIL, REC_DIR } from './env.mjs';
+import { APP_URL, APP_ORIGIN, FAKE_URL, BAKED_FAKE_URL, ANON_KEY, USER_EMAIL, REC_DIR, MUNDO } from './env.mjs';
+import { instalarEcoTray } from './ecotray-falso.mjs';
 import { isolateNetwork } from './net.mjs';
 import { serveAppAtOrigin, withAppOriginArgs } from './app-origin.mjs';
 import { Telemetry } from './telemetry.mjs';
@@ -17,7 +18,7 @@ export const DEVICES = {
   phone: {
     width: 390, height: 844, isMobile: true, hasTouch: true,
     userAgent: 'Mozilla/5.0 (Linux; Android 14; Pixel 8) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Mobile Safari/537.36',
-    geolocation: { latitude: -22.9035, longitude: -43.1038, accuracy: 15 }, // Niterói (mundo fictício)
+    geolocation: MUNDO.navegador?.geolocalizacao || { latitude: -22.9035, longitude: -43.1038, accuracy: 15 }, // Niterói (mundo fictício)
   },
   // computador, na área da página do navegador maximizado da cena de Windows (1920x1200 com barra de tarefas):
   // 1920x1068 = 1280x712 na escala 1,5 (docs/10-cena-windows.md)
@@ -41,7 +42,7 @@ export async function fakeLogin(email = USER_EMAIL) {
   const res = await fetch(`${FAKE_URL}/auth/v1/token?grant_type=password`, {
     method: 'POST',
     headers: { 'content-type': 'application/json', apikey: ANON_KEY },
-    body: JSON.stringify({ email, password: 'domiflix' }),
+    body: JSON.stringify({ email, password: process.env.FAKE_SENHA || process.env.TUT_SENHA || 'domiflix' }),
   });
   if (!res.ok) throw new Error(`login falso falhou (${res.status}): ${await res.text()} — o fakebase esta no ar em ${FAKE_URL}?`);
   return res.json();
@@ -52,13 +53,26 @@ function appVersion() {
     const src = fs.readFileSync(path.resolve(REC_DIR, '../app/src/config/version.ts'), 'utf8');
     return src.match(/APP_VERSION\s*=\s*["']([^"']+)["']/)?.[1] || '0.0.0';
   } catch {
-    return '0.0.0';
+    // app/ so com o build (APP_WORK fora do disco): o rec/run.sh build anota a versao em app/dist/.versao-app
+    try {
+      return fs.readFileSync(path.resolve(REC_DIR, '../app/dist/.versao-app'), 'utf8').trim() || '0.0.0';
+    } catch {
+      return '0.0.0';
+    }
   }
 }
 
 /** Hoje (AAAA-MM-DD) no fuso da empresa — mesma conta do app para o pop-up de tarefas do dia. */
 export function todayBR(date = new Date()) {
   return new Intl.DateTimeFormat('en-CA', { timeZone: TZ, year: 'numeric', month: '2-digit', day: '2-digit' }).format(date);
+}
+
+/** localStorage da sessao pedido pelo mundo (mundo.json "navegador.localStorage"), com {user_id} {company_id} {hoje} {versao}. */
+function mundoStorage(session, versao) {
+  const pedidos = MUNDO.navegador?.localStorage || {};
+  const t = { user_id: session.user.id, company_id: MUNDO.companyId || '', hoje: todayBR(FAKE_NOW_DATE || new Date()), versao };
+  const troca = (s) => String(s).replace(/\{(\w+)\}/g, (m, k) => (k in t ? t[k] : m));
+  return Object.fromEntries(Object.entries(pedidos).map(([k, v]) => [troca(k), troca(typeof v === 'string' ? v : JSON.stringify(v))]));
 }
 
 /** localStorage inicial: sessao + "ja vi" dos avisos que atrapalhariam a gravacao. */
@@ -71,6 +85,7 @@ export function buildStorageState(session, extra = {}) {
     [`dominex:daily-tasks-shown:${session.user.id}`]: todayBR(FAKE_NOW_DATE || new Date()),
     'pwa-install-dismissed': 'true',
     theme: 'light',
+    ...mundoStorage(session, v),
     ...extra,
   };
   return {
@@ -94,6 +109,8 @@ const NOISE_CONSOLE = [
   /\[vite\] (connecting|connected)/,
   /GL Driver Message/, // aviso de desempenho do WebGL por software
   /Missing `Description` or `aria-describedby/, // aviso de acessibilidade do Radix (janelas sem descricao), do proprio app
+  // ruído do app de um mundo (mundo.json "navegador.ruidoConsole"): avisos que o próprio app escreve
+  ...(MUNDO.navegador?.ruidoConsole || []).map((s) => new RegExp(s)),
 ];
 const NOISE_FAILED = /ERR_ABORTED/; // requisicao cancelada pelo proprio app (troca de tela / AbortController)
 
@@ -113,6 +130,17 @@ function sameTabLinks() {
       if (a && a.target !== '_self' && a.href) a.target = '_self';
     }, true);
   } catch (e) { /* ignora */ }
+}
+
+function injectCss(css) {
+  const add = () => {
+    const st = document.createElement('style');
+    st.setAttribute('data-robo', 'mundo');
+    st.textContent = css;
+    (document.head || document.documentElement).appendChild(st);
+  };
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', add);
+  else add();
 }
 
 function stubServiceWorker() {
@@ -173,6 +201,10 @@ export async function openSession({
   isolate = true,
   locale = 'pt-BR',
   timezone = TZ,
+  // EcoTray falso (balança e impressora térmica, ws://127.0.0.1:8053/8054): objeto de configuração, true, ou false para não
+  // simular; sem a opção, vale o "navegador.ecotray" do mundo (rec/recorder/ecotray-falso.mjs). Só no modo fakebase.
+  ecotray = undefined,
+  dirImpressoes = null, // onde o EcoTray falso guarda o que foi "impresso" (PDF/PNG)
 } = {}) {
   const own = !browser;
   browser = browser || (await launchBrowser({ headed }));
@@ -199,10 +231,14 @@ export async function openSession({
   // envelhecem entre o planejamento e a gravação. O tempo continua correndo normalmente a partir dali.
   if (FAKE_NOW_DATE) await context.clock.install({ time: FAKE_NOW_DATE });
   await context.addInitScript(stubServiceWorker);
+  // CSS do mundo (mundo.json "navegador.css"): correção de renderização do Chromium sem janela, nunca mudança de tela
+  if (isolate && MUNDO.navegador?.css) await context.addInitScript(injectCss, MUNDO.navegador.css);
   if (sameTab) await context.addInitScript(sameTabLinks);
   const tel = new Telemetry({ dsf: SCALE });
   if (telemetry || cursorOverlay) await tel.install(context, { overlay: cursorOverlay });
   const externos = isolate ? await isolateNetwork(context, { verbose: verboseNet }) : [];
+  const cfgEcoTray = ecotray === undefined ? MUNDO.navegador?.ecotray : ecotray;
+  const ecotrayCtl = isolate && cfgEcoTray ? await instalarEcoTray(context, cfgEcoTray, { fakeUrl: FAKE_URL, bakedUrl: BAKED_FAKE_URL, dirImpressoes, log: verboseNet ? console.log : () => {} }) : null;
   // APP_ORIGIN (opcional): o app abre em https://www.dominex.app, servido pelo app local (vem DEPOIS do desvio de rede: vale primeiro)
   const appOrigin = isolate && APP_ORIGIN ? await serveAppAtOrigin(context, { verbose: verboseNet }) : null;
   const page = await context.newPage();
@@ -255,7 +291,7 @@ export async function openSession({
   page.on('response', (r) => {
     if (r.status() >= 400) diag.bad.push(`${r.status()} ${r.request().method()} ${r.url().slice(0, 220)}`);
   });
-  return { browser, context, page, session, diag, tel, appOrigin, ownsBrowser: own };
+  return { browser, context, page, session, diag, tel, appOrigin, ecotray: ecotrayCtl, ownsBrowser: own };
 }
 
 /**
@@ -279,6 +315,7 @@ export async function settle(s, { quietMs = 600, timeoutMs = 20000, staleMs = 80
 }
 
 export async function closeSession(s) {
+  s.ecotray?.parar();
   try {
     await s.context.close();
   } finally {

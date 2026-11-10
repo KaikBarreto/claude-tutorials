@@ -5,10 +5,14 @@
 //                                               e criar um cliente pela tela (confere que aparece na lista)
 //   node rec/recorder/smoke.mjs /os /contratos  rotas avulsas
 //   opcoes: --headed  --shots (salva PNG em rec/.runtime/smoke/)  --no-create (pula a criacao do cliente)
+//           --seed <extra>   aplica uma semente extra (seeds-extra/<extra>) antes de abrir as telas (ex.: base/caixa-aberto)
 // Termina com codigo 1 se houve erro de console, falha de rede, http >= 400 ou o cliente criado nao apareceu.
+// Tela de erro do app tambem conta: textos de erro visiveis ("Não foi possível", "Tente novamente"...) e "R$ 0,00" num
+// cartao que devia ter valor. Mundo de outra serie (mundo.json "smoke"): "aquecimento" (rota do 1o acesso, padrao "/"),
+// "erros" (regex de texto de erro) e "zeroOk" (regex do rotulo de cartao em que R$ 0,00 e o valor certo).
 import fs from 'node:fs';
 import path from 'node:path';
-import { APP_URL, FAKE_URL, RUNTIME_DIR } from './env.mjs';
+import { APP_URL, FAKE_URL, RUNTIME_DIR, MUNDO } from './env.mjs';
 import { openSession, closeSession, settle } from './browser.mjs';
 
 const args = process.argv.slice(2);
@@ -19,6 +23,39 @@ const SHOT_DIR = path.join(RUNTIME_DIR, 'smoke');
 if (SHOTS) fs.mkdirSync(SHOT_DIR, { recursive: true });
 
 const getJson = async (p) => (await fetch(`${FAKE_URL}${p}`)).json();
+const SMK = MUNDO.smoke || {};
+const ERROS = new RegExp((SMK.erros || ['N[ãa]o foi poss[íi]vel', 'Tente novamente', 'Erro ao carregar', 'Algo deu errado', 'Something went wrong']).join('|'), 'i');
+const ZERO_OK = SMK.zeroOk?.length ? new RegExp(SMK.zeroOk.join('|'), 'i') : null;
+const seedIdx = args.indexOf('--seed');
+const SEED_EXTRA = seedIdx >= 0 ? args[seedIdx + 1] : null;
+
+// textos de erro visiveis e "R$ 0,00" em cartao (com o rotulo do cartao, para decidir se o zero e legitimo)
+async function telaComErro() {
+  const achados = await page.evaluate((src) => {
+    const re = new RegExp(src, 'i');
+    const vis = (el) => { const r = el.getBoundingClientRect(); const st = getComputedStyle(el); return r.width > 0 && r.height > 0 && st.visibility !== 'hidden' && st.display !== 'none'; };
+    const out = { erros: [], zeros: [] };
+    const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+    for (let n = walker.nextNode(); n; n = walker.nextNode()) {
+      const t = (n.textContent || '').trim();
+      if (!t || !n.parentElement || !vis(n.parentElement)) continue;
+      if (re.test(t)) out.erros.push(t.slice(0, 120));
+    }
+    // "R$ 0,00" pode vir partido em spans ("R$" + "0,00"): o menor elemento visível cujo texto inteiro é o valor zerado
+    const zero = (s) => /^-?R\$\s?0,00$/.test(String(s || '').replace(/[\u00a0\s]+/g, ' ').trim());
+    for (const el of document.body.querySelectorAll('*')) {
+      if (!vis(el) || !zero(el.innerText) || [...el.children].some((c) => zero(c.innerText))) continue;
+      let p = el.parentElement, rot = '';
+      for (let i = 0; i < 4 && p; i++, p = p.parentElement) { rot = (p.innerText || '').replace(/\s+/g, ' ').trim(); if (rot.length > 14) break; }
+      out.zeros.push(rot.slice(0, 90));
+    }
+    return out;
+  }, ERROS.source);
+  const zeros = achados.zeros.filter((z) => !(ZERO_OK && ZERO_OK.test(z)));
+  for (const e of achados.erros) console.log(`      tela: texto de erro "${e}"`);
+  for (const z of zeros) console.log(`      tela: R$ 0,00 em "${z}"`);
+  return achados.erros.length + zeros.length;
+}
 let knownUnknowns = new Set();
 async function newUnknowns() {
   const { items } = await getJson('/__dev/unknowns');
@@ -62,7 +99,8 @@ async function visit(label, url, { wait = null, tabs = false } = {}) {
   await page.waitForTimeout(500);
   if (SHOTS) await page.screenshot({ path: path.join(SHOT_DIR, label.replace(/\W+/g, '_') + '.png'), scale: 'css' });
   delta(`${label}  [${url}]  ${Date.now() - t0}ms  -> ${page.url().replace(APP_URL, '')}`);
-  for (const u of await newUnknowns()) console.log(`      desconhecido: ${u}`);
+  problems += await telaComErro();
+  for (const u of await newUnknowns()) { console.log(`      desconhecido: ${u}`); if (MUNDO.config) problems++; }
 
   if (tabs) {
     // abas da ficha (as duas primeiras, "Clientes" e "Fornecedores", sao da tela e nao da ficha)
@@ -111,10 +149,15 @@ async function createCustomer() {
 try {
   // primeira visita: aquece o app antes de medir (no vite dev ele pode recarregar sozinho ao otimizar dependencias)
   console.log('— aquecimento —');
-  await page.goto(APP_URL + '/', { waitUntil: 'load', timeout: 120000 }).catch((e) => console.log('aquecimento:', e.message));
+  if (SEED_EXTRA) {
+    const r = await fetch(`${FAKE_URL}/__dev/seed`, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ files: [SEED_EXTRA] }) });
+    console.log(`semente extra ${SEED_EXTRA}: ${r.ok ? 'aplicada' : 'FALHOU ' + (await r.text())}`);
+  }
+  const AQ = SMK.aquecimento || '/';
+  await page.goto(APP_URL + AQ, { waitUntil: 'load', timeout: 120000 }).catch((e) => console.log('aquecimento:', e.message));
   await settle(s, { quietMs: 1500, timeoutMs: 60000 });
   await page.waitForTimeout(1500);
-  delta('aquecimento  [/]  -> ' + page.url().replace(APP_URL, ''));
+  delta(`aquecimento  [${AQ}]  -> ` + page.url().replace(APP_URL, ''));
   for (const u of await newUnknowns()) console.log(`      desconhecido: ${u}`);
 
   if (routes.length) {
@@ -133,5 +176,6 @@ try {
 } finally {
   console.log(`\n${problems ? 'COM PROBLEMAS' : 'SEM PROBLEMAS'}: ${problems} ocorrencia(s). externos desviados: ${new Set(diag.externos.map((x) => new URL(x.url).hostname)).size} host(s) ${[...new Set(diag.externos.map((x) => new URL(x.url).hostname))].join(', ')}`);
   await closeSession(s);
+  if (SEED_EXTRA) await fetch(`${FAKE_URL}/__dev/reset`, { method: 'POST' }).catch(() => {}); // volta ao mundo base
   if (problems) process.exitCode = 1;
 }

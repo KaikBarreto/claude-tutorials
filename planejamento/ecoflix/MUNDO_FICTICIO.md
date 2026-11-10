@@ -157,3 +157,37 @@ vendeu pouco num mês) cabem num dos meses.
   "Grupo Recicla Vale", código GRP-7KQ4TX; Sandra Pires, MASTER da filial (cap03). Outubro na T22: matriz vendeu
   R$ 186 mil e gastou R$ 180 mil, filial vendeu R$ 72 mil e gastou R$ 71 mil, CMV R$ 194 mil (**conferir com a T15 e a T25
   na junção**). Latinha: matriz 4.300 kg e filial 1.850 kg, depois 5.500 kg e 650 kg.
+
+## Semente do mundo base (`perfis/ecoflix/mundo`, gerada por `gerar/sementes.mjs`)
+O estado de 10/11 08:30 que todas as aulas recebem. O gerador confere os números falados abaixo e para se algum não bater.
+- **Pessoas e plano**: identidade do T1; Rafael (`rafael@reciclavalemetais.example`, MASTER), Juliana e Marcos como o T2 os
+  deixa (3/3, permissões do T2); Personalizado com os 10 módulos, vence em 05/12/2026; NF-e no Nível 1 (catálogo do app:
+  1.000, 3.000 e 5.000 documentos).
+- **Materiais** 1 a 15 com preço único (custo médio = preço de compra); tabela "Principal" e a "Tabela Depósitos" (+4 %)
+  ligada ao Depósito Irmãos Siqueira (estado do T3).
+- **Histórico**: dias úteis de 03/08 a 09/11 (sábado e feriado sem caixa), 468 compras e 49 vendas, pedidos #1241 a #1758;
+  um caixa do Marcos por dia útil e o do Rafael às segundas e em 4 dias de carga (#70 Marcos 21/10; em 09/11 o #83 do Marcos
+  fecha com R$ 640,00 e o #84 do Rafael com R$ 1.250,00).
+- **Outubro** no centavo do T15 (compras R$ 256.860,00, vendas R$ 269.240,00, DRE +R$ 10.350,00 competência e −R$ 27.650,00
+  caixa: a energia em dobro é semente do T15); setembro +12.808,70 / +31.958,70; agosto +85,31 / −24.147,49.
+- **Estoque de hoje** = tabela do T21 (R$ 52.112,25). Ferro pesado: 41.860 kg em 31/10 (depois do −14 kg), venda de
+  38.592 kg à Aços Quiririm em 04/11 (Pix, R$ 48.240,00) e o resto da trilha do T10 até os 2.180 kg.
+- **Saldos** do T4 mais a Fundição (+R$ 14.370,00 nas 3 parcelas de R$ 4.790,00 do T13); contas do T13 (água vencida, aluguel
+  do galpão pago, energia de outubro); cofre R$ 18.500,00; ticket #57 em rascunho (próximo 58).
+- **Inventado aqui**: bairro "Parque Industrial" da Rua das Oficinas; Serra Fina na Rodovia BR-354, 4100, Itamonte/MG,
+  CEP 37466-000 (código IBGE em branco, a busca de CEP do app preenche); CPF gerado da Dona Cida; centros "Escritório" e
+  "Frota" (T13) além de "Pátio" e "Coleta"; aluguel de caçamba também em agosto e setembro; folha no 5º dia útil.
+
+**Para a junção** (o mundo seguiu a primeira opção de cada item):
+1. T25 (novembro com compras maiores que vendas) não cabe junto de T15 + T21 + T10: as 40 t de 31/10 só saem vendidas em
+   novembro e o estoque de hoje é o do T21, então novembro tem vendas de R$ 70.215,00 e compras de R$ 19.088,15.
+2. Saldo da Aços Quiririm: T4 (+4.870,00, venda no saldo em 05/11) × T13 (fiado de R$ 3.150,00 em 06/11).
+3. T10 fala 1.860 kg em 31/10 e 2.500 kg em 03/11: com a proposta da junção ficam 41.860 e 42.500 (os 1.320 de 06/11 e os
+   2.180 de hoje batem).
+4. "Tarifas" (T15) × "Tarifas bancárias" (T6, T13, T14): existem as duas; as do histórico, inclusive os R$ 186,00 de
+   outubro, estão em "Tarifas bancárias".
+5. O "A Receber" do T4 muda com o saldo da Fundição, como o próprio T4 previu.
+6. T16 fala de cota de 100 e 300 documentos; o catálogo do app tem 1.000, 3.000 e 5.000.
+7. T2 e T3 criam na tela o que o mundo base já traz: a semente delas tira com `_remove` (Juliana, Marcos, Tabela Depósitos).
+8. T7 "214 kg de latão e 42 kg de cobre mel" × T21 (74 e 212,5 kg): ficou o T21 (o do T7 seria depois das compras e vendas
+   da aula). As 2 fotos da compra de 09/11 (T10) não estão na semente.

@@ -17,14 +17,22 @@ export function stableId(key) {
   return `${x.slice(0, 8)}-${x.slice(8, 12)}-${x.slice(12, 16)}-${x.slice(16, 20)}-${x.slice(20, 32)}`;
 }
 
-/** "Agora" do mundo falso. FAKE_NOW=2026-10-29T14:00:00-03:00 congela o relogio do servidor. */
+/** "Agora" do mundo falso. FAKE_NOW=2026-10-29T14:00:00-03:00 congela o relogio do servidor; com FAKE_CLOCK=anda ele
+ *  parte de FAKE_NOW e corre, recomecando a cada reset (/__dev/reset, que o robo chama no inicio de cada gravacao), como o
+ *  relogio do navegador do robo. */
+let ORIGEM = Date.now();
+export function reiniciaRelogio() {
+  ORIGEM = Date.now();
+}
 export function now() {
   if (process.env.FAKE_NOW) {
     const d = new Date(process.env.FAKE_NOW);
-    if (!Number.isNaN(d.getTime())) return d;
+    if (!Number.isNaN(d.getTime())) return process.env.FAKE_CLOCK === 'anda' ? new Date(d.getTime() + Date.now() - ORIGEM) : d;
   }
   return new Date();
 }
+// o mesmo relogio para o codigo de um mundo fora de rec/fakebase (handlers que nao importam o nucleo)
+globalThis.__fakebaseAgora = () => now().getTime();
 export const nowIso = () => now().toISOString();
 
 const pad = (n) => String(n).padStart(2, '0');
@@ -50,7 +58,7 @@ export function resetSeq() {
 
 /**
  * Tokens de seed (strings dentro dos JSON em seeds/):
- *   "@id:cliente.padaria"   UUID estavel para a chave (use em id e nas FKs)
+ *   "@id:cliente.padaria"   UUID estavel para a chave (use em id e nas FKs)      "@uuid"   UUID novo
  *   "@storage:company-logos/glacial/logo-horizontal.png"   URL publica de um arquivo em rec/fakebase/storage/
  *   "@today" "@today+3d" "@today-10d"      data (YYYY-MM-DD) relativa a hoje
  *   "@now" "@now-2h" "@now+30m" "@now-3d"  instante ISO relativo a agora
@@ -62,6 +70,7 @@ export function resolveToken(str) {
   if (typeof str !== 'string' || str[0] !== '@') return str;
   let m;
   if ((m = str.match(/^@id:(.+)$/))) return stableId(m[1]);
+  if (str === '@uuid') return uuid(); // novo a cada linha (DEFAULT gen_random_uuid() de coluna que nao e o id)
   if ((m = str.match(/^@storage:(.+)$/))) return `http://${process.env.FAKE_HOST || '127.0.0.1'}:${process.env.FAKE_PORT || 54321}/storage/v1/object/public/${m[1]}`;
   if ((m = str.match(/^@today(?:([+-]\d+)d)?$/))) return dateBR(Number(m[1] || 0));
   if ((m = str.match(/^@now(?:([+-]\d+)([dhm]))?$/))) {

@@ -7,7 +7,8 @@
 //   - assinatura das RPCs (para devolver o "vazio" certo quando a RPC ainda não tem handler);
 //   - enums.
 //
-// Uso:  node rec/fakebase/tools/gen-schema.mjs [caminho/do/types.ts]
+// Uso:  node rec/fakebase/tools/gen-schema.mjs [caminho/do/types.ts] [--out <mundo>/schema.json]
+//       (sem --out: FAKE_MUNDO/schema.json com FAKE_MUNDO ligado, senão rec/fakebase/schema.json)
 // Rode de novo quando copiar uma versão nova do app para app/.
 import fs from 'node:fs';
 import path from 'node:path';
@@ -17,11 +18,29 @@ import { fileURLToPath } from 'node:url';
 const here = path.dirname(fileURLToPath(import.meta.url));
 const REC = path.resolve(here, '../..');
 const APP = path.resolve(REC, '../app');
-const typesPath = process.argv[2] || path.join(APP, 'src/integrations/supabase/types.ts');
-const outPath = path.join(here, '../schema.json');
+const argv = process.argv.slice(2);
+const outIdx = argv.indexOf('--out');
+const outArg = outIdx >= 0 ? argv.splice(outIdx, 2)[1] : null;
+const typesPath = path.resolve(argv[0] || path.join(APP, 'src/integrations/supabase/types.ts'));
+const outPath = path.resolve(outArg || (process.env.FAKE_MUNDO ? path.join(process.env.FAKE_MUNDO, 'schema.json') : path.join(here, '../schema.json')));
 
+// TypeScript: TS_MODULE, o node_modules do projeto do types.ts (subindo as pastas), o de app/ ou o global
 const require = createRequire(import.meta.url);
-const ts = require(path.join(APP, 'node_modules/typescript'));
+function loadTs() {
+  const tries = [process.env.TS_MODULE].filter(Boolean);
+  for (let d = path.dirname(typesPath); ; d = path.dirname(d)) {
+    tries.push(path.join(d, 'node_modules/typescript'));
+    if (path.dirname(d) === d) break;
+  }
+  tries.push(path.join(APP, 'node_modules/typescript'), 'typescript');
+  for (const t of tries) {
+    try {
+      return require(t);
+    } catch {}
+  }
+  throw new Error('typescript nao encontrado (defina TS_MODULE=/caminho/node_modules/typescript)');
+}
+const ts = loadTs();
 
 const text = fs.readFileSync(typesPath, 'utf8');
 const sf = ts.createSourceFile('types.ts', text, ts.ScriptTarget.Latest, true);
