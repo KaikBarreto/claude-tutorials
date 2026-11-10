@@ -16,7 +16,7 @@
 | # | Vinheta (área / título) | O que a tela mostra | Cuidados falados | Fala |
 |---|---|---|---|---|
 | 0 | (sem vinheta) | Dashboard → menu "Funcionários (RH)"; [ILUSTRAÇÃO: o caderninho do pátio] | 🔒 · "Antes: Relatório Financeiro e DRE" | 0:30 |
-| 1 | FUNCIONÁRIOS / A tela Funcionários e suas abas | As 7 abas; "Ativos"/"Inativos"; botões; lista "Equipe" com o saldo; ficha do Diego; aba "Dashboard" | o saldo = o que falta pagar | 0:55 |
+| 1 | FUNCIONÁRIOS / A tela Funcionários e suas abas | As 7 abas; "Ativos"/"Inativos"; botões; lista "Equipe" com o saldo; ficha do Diego; aba "Dashboard" | ⚠️ abas do ponto só com "Gerenciar Ponto Eletrônico"; o saldo = o que falta pagar | 1:05 |
 | 2 | CADASTRO / Cadastrar o funcionário | "Novo Funcionário": Gabriel Rocha, CPF, telefone, cargo, "Pátio", admissão 10/11; "Salário *" R$ 1.980,00; "Calcular" (Lucro Real, EPI R$ 600,00/ano → "Custo total mensal" R$ 3.361,00); "Chave PIX"; "Cadastrar" | ⚠️ funcionário novo nasce com saldo = salário; estimativa → contador | 1:50 |
 | 3 | CADASTRO / Campos de folha | "Editar" Gabriel → "CLT" → "Nº de dependentes (IRRF)" 1, "Desconta vale-transporte (até 6%)", VT R$ 220,00 → "Atualizar"; [ILUSTRAÇÃO: Informal × CLT] | | 1:00 |
 | 4 | DEPARTAMENTOS / Departamentos | "Gerenciar departamentos": cria "Transporte" (laranja, caminhão) → Edson nele | | 0:45 |
@@ -79,7 +79,8 @@ Cadastro fiscal: `is_simples_nacional = false` (Lucro Real), Taubaté/SP.
 Edson, Cláudio e Diego, dias completos (entrada ~06:55, intervalo 11:00 às 12:00, saída ~16:00), endereço "Rua Projetada Doze,
 1450 - Parque Industrial Vale Verde - Taubaté", "Mobile - Chrome", foto = avatar ilustrado genérico. Exceções: **Cláudio sem batida
 em 05/11** (vira "Falta"; atestado no cap. 10) e **Diego sem batida em 06/11** (fica "Falta", com o desconto do cap. 5). Hoje
-(10/11): entradas Edson 06:47, Marcos 06:52, Cláudio 06:58, Diego 07:03 (dias em aberto). Sem ausências lançadas em novembro.
+(10/11): entradas Edson 06:47, Marcos 06:52, Cláudio 06:58, Diego 07:03 (`time_sheets` do dia com status `open` e `balance_min`
+nulo, para o aviso "1 dia(s) sem saída registrada não entram no saldo"). Sem ausências lançadas em novembro.
 
 **Celular (cap. 9):** posição `{"lat": -23.0105, "lng": -45.5412}`; o Nominatim devolve `road` "Rua Projetada Doze", `house_number`
 "1450", `suburb` "Parque Industrial Vale Verde", `city` "Taubaté".

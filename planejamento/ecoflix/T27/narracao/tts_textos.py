@@ -4,7 +4,7 @@
 #   EcoSistema -> "Ecossistema" | White Label -> "uáit lêibou" | PDF -> "pê-dê-éfe"
 #   números: "cinco megas" -> legenda "5 MB"
 CAPS = {
-0: """Oi! Neste tutorial a gente vai deixar o Ecossistema com a cara da Recicla Vale Metais: o logo dela, a cor dela, e sem a marca Ecossistema aparecendo pra equipe.
+0: """Oi! Neste tutorial a gente vai deixar o Ecossistema com a cara da Recicla Vale Metais: o logo dela no menu, a cor dela, e os documentos sem o rodapé do Ecossistema.
 Hoje, quem abre o sistema vê o logo do Ecossistema aqui no menu. E o comprovante sai com o rodapé do Ecossistema.
 Com o uáit lêibou, a equipe e os parceiros passam a ver a marca da Recicla Vale.
 O uáit lêibou é um módulo, então ele depende do plano contratado.
@@ -12,7 +12,7 @@ Se você ainda não viu o tutorial Sua conta e sua empresa, dá uma olhada antes
 1: """O uáit lêibou fica nas Configurações, na aba Empresa, aqui na Identidade Visual.
 Ele não tem tela própria: é esta gaveta aqui. Por enquanto, está desativado.
 Ligado, ele troca o logo do menu, o ícone do menu recolhido e a cor principal. E tira o rodapé do Ecossistema dos documentos.
-O endereço do sistema, os e-mails e a tela de login continuam os do Ecossistema. E é uma cor só: no tema escuro, o sistema usa a mesma cor, um pouco mais clara.""",
+O endereço do sistema, a aba do navegador, os e-mails e a tela de login continuam os do Ecossistema. E é uma cor só: no tema escuro, o sistema usa a mesma cor, um pouco mais clara.""",
 2: """Tudo começa pelas imagens. O logo horizontal a Recicla Vale já mandou, no tutorial da empresa. É ele que aparece no menu aberto.
 Se a marca mudar um dia, é só clicar em Substituir e mandar a nova.
 São duas imagens. O logo, comprido, vai no menu aberto. O ícone, quadrado, vai no menu recolhido, onde só cabe um quadradinho.

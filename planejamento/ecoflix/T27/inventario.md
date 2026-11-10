@@ -70,3 +70,9 @@ recebe a troca sem sair. O hook lê o módulo **só** de `company_modules` (`rem
 4. "Sem logo, o interruptor fica bloqueado": é aviso fixo (âmbar), não mensagem de erro; o toast de erro não tem como
    aparecer pela tela.
 5. O botão de recolher o menu não tem texto nem `aria-label` (o robô acha pelo ícone).
+6. Continuam do EcoSistema com o White Label ligado: o título da aba do navegador (" | EcoSistema",
+   `hooks/usePageTitle.ts:55-56,113`) e o favicon (`index.html:93,154`). A abertura da fonte ("sem a marca EcoSistema
+   aparecendo") promete demais; o roteiro diz o que muda.
+7. O menu do app é escuro por padrão (`hooks/useNavThemePreference.tsx:29`): o logo da empresa precisa ler bem no fundo
+   quase preto do menu e no papel do comprovante. Dentro do menu escuro, a cor entra só na barrinha do item ativo
+   (`index.css:301-343,589-591`).

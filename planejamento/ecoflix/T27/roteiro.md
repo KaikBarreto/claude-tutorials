@@ -10,7 +10,8 @@ novo, com o mundo do fim do capítulo anterior (sementes em `plano.md` → "Grav
 - **Antes:** Sua conta e sua empresa (T1)
 - **Próximo:** Portal do Cliente e Fornecedor (T20)
 - **Vinhetas (áreas):** WHITE LABEL · MARCA · WHITE LABEL · COR · DOCUMENTOS · EQUIPE · RESUMO
-- **Duração estimada:** ~6 min de vídeo (calculada no fim deste cabeçalho pelo `tts_textos.py`; alvo da fonte: 7 min)
+- **Duração estimada:** ~6 min de vídeo (793 palavras de fala, ~5,1 min de voz a 2,6 palavras/s, mais 7 vinhetas, os
+  envios e a janela do comprovante; alvo da fonte: 7 min; 4.292 caracteres de TTS com os títulos)
 - **FAKE_NOW:** `2026-11-10T08:30:00-03:00` (terça).
 - **Estado inicial:** logo horizontal da Recicla Vale (do T1), sem ícone, White Label desligado, sem cor; módulo
   `white_label` contratado; menu lateral aberto e escuro (o padrão do app).
@@ -26,7 +27,7 @@ novo, com o mundo do fim do capítulo anterior (sementes em `plano.md` → "Grav
 | Tela | Fala |
 | --- | --- |
 | Vinheta EcoFlix com o título "White Label". | (sem fala) |
-| Dashboard da Recicla Vale Metais, logado como Rafael Nogueira. [ILUSTRAÇÃO: o sistema trocando de marca: um cartão "sistema" com o logo do EcoSistema no canto e uma barra verde; na palavra "logo", entra o logo da Recicla Vale; na palavra "cor", a barra fica azul-aço; no cartão branco da ilustração, Montserrat.] | Oi! Neste tutorial a gente vai deixar o EcoSistema com a cara da Recicla Vale Metais: o logo dela, a cor dela, e sem a marca EcoSistema aparecendo pra equipe. |
+| Dashboard da Recicla Vale Metais, logado como Rafael Nogueira. [ILUSTRAÇÃO: o sistema trocando de marca: um cartão "sistema" com o logo do EcoSistema no canto e uma barra verde; na palavra "logo", entra o logo da Recicla Vale; na palavra "cor", a barra fica azul-aço; no cartão branco da ilustração, Montserrat.] | Oi! Neste tutorial a gente vai deixar o EcoSistema com a cara da Recicla Vale Metais: o logo dela no menu, a cor dela, e os documentos sem o rodapé do EcoSistema. |
 | A câmera vai ao topo do menu lateral: o logo do EcoSistema. | Hoje, quem abre o sistema vê o logo do EcoSistema aqui no menu. E o comprovante sai com o rodapé do EcoSistema. |
 | A câmera fica no menu. | Com o White Label, a equipe e os parceiros passam a ver a marca da Recicla Vale. |
 | Cartão discreto: "Módulo White Label". | O White Label é um módulo, então ele depende do plano contratado. |
@@ -39,7 +40,7 @@ novo, com o mundo do fim do capítulo anterior (sementes em `plano.md` → "Grav
 | Capítulo novo (semente `inicio`), no Dashboard; clica em "Configurações" no rodapé do menu (ao lado de "Sair"): abre "Configurações do Sistema" na aba "Empresa", com o cartão "Empresa" ("Informações e configurações da sua empresa") e a seção "Identidade Visual". | O White Label fica nas Configurações, na aba Empresa, aqui na Identidade Visual. |
 | Na coluna da direita, a gaveta "White Label" ("Personalize o sistema com sua marca"); clica e ela abre: "White Label Desativado", "O logo da EcoSistema está sendo exibido" e o interruptor desligado. [BACKEND: `company_modules` com `white_label` (`removed_at` nulo)] | Ele não tem tela própria: é esta gaveta aqui. Por enquanto, está desativado. |
 | [ILUSTRAÇÃO: o que muda e o que continua: à esquerda, "Muda", entram um a um "Logo no menu", "Ícone do menu recolhido", "Cor Primária" e "Rodapé do EcoSistema nos documentos" (que sai riscado), cada um na palavra dita.] | Ligado, ele troca o logo do menu, o ícone do menu recolhido e a cor principal. E tira o rodapé do EcoSistema dos documentos. |
-| (ilustração) À direita, "Continua": "Endereço do sistema", "E-mails", "Tela de login" e "Uma cor só", na palavra "continuam". | O endereço do sistema, os e-mails e a tela de login continuam os do EcoSistema. E é uma cor só: no tema escuro, o sistema usa a mesma cor, um pouco mais clara. |
+| (ilustração) À direita, "Continua": "Endereço do sistema", "Aba do navegador", "E-mails", "Tela de login" e "Uma cor só", na palavra "continuam". | O endereço do sistema, a aba do navegador, os e-mails e a tela de login continuam os do EcoSistema. E é uma cor só: no tema escuro, o sistema usa a mesma cor, um pouco mais clara. |
 
 ### cap02 · O logo e o ícone (vinheta: MARCA)
 

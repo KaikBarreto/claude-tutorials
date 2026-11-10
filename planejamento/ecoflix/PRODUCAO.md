@@ -125,3 +125,10 @@ Decisões:
 - 10/11 01:12 Kaik sobre o IPA: "esse ɛfi não tá bom, faça ser algo mais vocal como "éfi" com acento , mesma coisa em
   éssi / e no ICMS tá ISE ao invés de ICÊ". Sexto teste: acento tônico em cada letra (/ˈẽniˈɛfiˈe/, /ˈẽniˈɛfiˈɛsiˈe/,
   /iˈseˈɛmiˈɛsi/) e a mesma coisa com vogal longa (ː), sozinhas e numa frase.
+- 10/11 01:16 Kaik: "show, avance / os melhores: 1, 4 / Mas o "S" ainda tá "êsse" ao invés de "éssi"". NF-e fechada em
+  /ˈẽniˈɛfiˈe/; NFS-e /ˈẽːniˈɛːfiˈɛːsiˈeː/ e ICMS /iˈseˈɛmiˈɛsi/ provisórias até o sétimo teste (três jeitos do S:
+  ɛːsːi, ɛsːi, æːsi). Na revisão geral, as grafias antigas dessas três viram o IPA final.
+- 10/11 01:18 O agente do T03 gravou o texto da voz dele por cima de `perfis/ecoflix/narracao/config_narracao.json` (o
+  arquivo do perfil), e isso entrou no commit 5b3a506. Restaurado da versão boa (234acde) com o IPA novo; a cópia do que
+  ele escreveu está no scratchpad. O `tts_textos.py` dele está certo na pasta do T03. Agente avisado. **Na junção dos
+  roteiros, conferir `git diff` de `perfis/` contra o que eu mudei.**

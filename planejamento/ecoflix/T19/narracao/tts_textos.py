@@ -9,7 +9,8 @@ Num ferro-velho, vale sai do caixa quase toda semana. Se fica só no caderno, no
 Tudo isso fica em Funcionários érre-agá, que depende do plano contratado.
 Os vales e os pagamentos saem do caixa e entram no relatório financeiro. Então, se você ainda não viu o tutorial Relatório Financeiro e dê-érri-ê, dá uma olhada antes. [pause] Vamos conhecer a tela.""",
 1: """Lá em cima ficam as abas. Em Funcionários ficam o cadastro e o dinheiro de cada um. Registro de Ponto, Folha de Ponto, Ausências e Configurações de Ponto são do ponto eletrônico.
-No fim, as Configurações de érre-agá e o Dashboard. Na aba Funcionários, a lista abre nos Ativos, e do lado ficam os departamentos, o relatório e o botão Novo Funcionário.
+Uma dica: essas quatro só aparecem pra quem tem a permissão Gerenciar Ponto Eletrônico.
+No fim, as Configurações de érre-agá, com a automação da folha, e o Dashboard. Na aba Funcionários, a lista abre nos Ativos, e do lado ficam os departamentos, o relatório e o botão Novo Funcionário.
 Cada pessoa aparece com o cargo e, do lado, o saldo: o que a empresa ainda vai pagar pra ela. Em cima, dá pra buscar pelo nome ou pelo cargo.
 Clicando no Diego, o ajudante do pátio, abre a ficha dele: os botões de vale, bônus, falta, recebimento e pagamento, o resumo do salário e do saldo e os dados do cadastro.
 E o Dashboard resume a equipe inteira: quantos estão ativos, a soma dos salários e o saldo total a pagar.""",
