@@ -57,9 +57,9 @@ Levantado em 10/11/2026 contra o código gravado (`APP_VERSION = "1.59.154"`), c
   balança ligada, escolher o material já puxa o peso da balança (`InputPesoBalanca.tsx:133-141`).
 - **"Pesagem avançada"** ("Registre pesagem dupla, tara, impureza e dados do transporte";
   `components/AdvancedWeighingDialog.tsx:382-729`): **"1ª Pesagem"**, **"2ª Pesagem"**, **"Peso Bruto (Kg)"** (=
-  |1ª − 2ª| com "|14.820,000 − 6.380,000|" embaixo; só a 1ª: "= 1ª pesagem") `:244-257,407-480`; dica "Preencha 1ª e 2ª
+  |1ª − 2ª| com "|9.460 − 6.380|" embaixo; números em `formatNumberBR`, sem casas fixas; só a 1ª: "= 1ª pesagem") `:244-257,407-480`; dica "Preencha 1ª e 2ª
   pesagem para o bruto, informe só a 1ª (conta como bruto) ou digite o bruto direto."; **"Tara (Kg)"**; **"Impureza"**
-  com "kg" | "%" ("= 253,200 Kg (sobre bruto − tara)") `:491-549`; **"Líquido (Kg)"** = Bruto − Tara − Impureza `:274,555`;
+  com "kg" | "%" ("= 61,6 Kg (sobre bruto − tara)") `:491-549`; **"Líquido (Kg)"** = Bruto − Tara − Impureza `:274,555`;
   "Valor/Kg", "Valor estimado", "Desconto (R$)", "Valor final" (aparecem mesmo sem valores; ficam vazios);
   **"Como exibir no comprovante"**: "Resumido", "Detalhado", **"Completo"** ("1ª e 2ª pesagem, bruto, tara, impureza e
   líquido."); "Motorista", "Placa do veículo"; "Cancelar", **"Confirmar"**. Só com a 1ª, o item entra com ela como bruto

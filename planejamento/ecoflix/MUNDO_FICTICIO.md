@@ -123,3 +123,11 @@ vendeu pouco num mês) cabem num dos meses.
   venda grande à Aços Quiririm no começo de novembro deixa os 2.180 kg de hoje.
 - **Cato** (T21): estoque de 15 materiais somando R$ 52.112,25 (conferido na tela de Posição); respostas simuladas R1 a R9
   no `T21/plano.md`; um corte logado como Marcos.
+- **Transporte e serviço** (T17): Serra Fina Alumínio Reciclagem fica em Itamonte, MG (a carga sai de Taubaté e atravessa
+  o RJ por Resende: pede MDF-e); duas NF-e de hoje somando R$ 55.380,00 e 5.800 kg; outubro com 12 notas de saída e 9 de
+  entrada, saldo R$ 71.625,00 (pode ser dito na fala: é dado do mundo); Metal amarelo com 600 kg de diferença entre o
+  estoque fiscal e o operacional. As NF-e da T17 seguem a numeração da T16 (conferir na junção).
+- **Ambiental** (T18): acesso do Rafael ao SIGOR com o CPF fictício 274.913.508-79; resíduo "Sucata de ferro" em TON,
+  código 19 12 02 (metais ferrosos) e Classe II B no exemplo (a fala diz que quem classifica é o responsável técnico);
+  NF-e de 3.600 kg de chaparia para a Aços Quiririm; dois MTR (um cancelado) e um CDF de outubro da Auto Peças Vale
+  Forte; a carga vai no GHT7B19 com o Jair Lopes (o FKD2E41 está na viagem da T17).

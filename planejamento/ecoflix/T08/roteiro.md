@@ -9,7 +9,7 @@ como no código (`T08/inventario.md`, 1.59.154).
 - **Próximo:** Pedidos e histórico do caixa (T9)
 - **Vinhetas (áreas):** TICKET · TICKET · PESAGEM · PESAGEM · PESAGEM · ABAS · VALORIZAR · COMPROVANTE · VALORIZAR ·
   RESUMO (todos os capítulos menos o 0)
-- **Duração estimada:** ~10 min (1.242 palavras de fala, ~8 min a 2,6 palavras/s, mais 10 vinhetas, a digitação nas
+- **Duração estimada:** ~10 min (1.243 palavras de fala, ~8 min a 2,6 palavras/s, mais 10 vinhetas, a digitação nas
   janelas, a aba do PDF e as ilustrações); alvo da fonte, 11 min.
 - **Gravação:** computador 1280×800, logado como Rafael Nogueira; `FAKE_NOW=2026-11-10T08:30:00-03:00`; EcoTray falso
   ligado como no fim do T5 ("Balança do pátio" com 0 kg), sem cena de Windows. Cada capítulo parte de um navegador novo

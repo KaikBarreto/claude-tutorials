@@ -225,3 +225,14 @@ Decisões:
   40 perguntas por dia por usuário é da fonte; o "caixa" do Cato soma banco e saldo de parceiro das sessões do dia.
   **Pergunta ao Kaik**: o Cato propõe reajuste de preço por cartão de confirmação, e a fonte diz que ele só consulta:
   mostrar ou não? **Conflito T10 × T15** (Ferro pesado) anotado no MUNDO, com proposta.
+- 10/11 03:0x **T17 e T18 prontas** (roteiro). T17: 14 capítulos, 1.846 palavras, ~13 min; a pendência 3 da fonte está
+  resolvida (Frota e NFS-e recebida existem, caps 2 e 8); "Configurações do MDF-e" só tem série e número (o percurso vai
+  em cada manifesto); o Relatório Fiscal virou aba do Estoque Fiscal; o sistema não envia nada ao contador (o pacote
+  sai em ZIP). Pronúncias a testar: MDF-e e ISS em IPA, "trúqui" (truck), "Fiscal & Ambiental". Backend: edges do MDF-e,
+  NFS-e emitida e recebida, download; RPCs dos relatórios; cidades do IBGE locais. T18: 11 capítulos, 1.403 palavras,
+  ~10,5 min; no MTR a empresa é a geradora e no CDF a destinadora (a ilustração mostra os dois papéis); a unidade "SIGLA -
+  Nome" vem de uma lista; não existe status "recebido"; o cancelamento só vale para MTR emitido; o CDF é definitivo.
+  Pronúncias a testar: "Sigôr" (SIGOR), "Ibama". Backend: edges `sigor-mtr-sync-ref`, `sigor-mtr-emit`,
+  `sigor-mtr-cancel`, `sigor-cdf-emit`, RPC `mtr_set_credential`, rota SP → SIGOR. Decisões do coordenador: Serra Fina
+  em Itamonte, MG; números de outubro podem ser falados; IBAMA 19 12 02 e Classe II B no exemplo, sem recomendação.
+  **Teste de pronúncia 2**: juntar todas as palavras novas das aulas num nó só quando os roteiros fecharem.
