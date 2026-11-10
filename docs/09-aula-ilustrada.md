@@ -5,6 +5,11 @@ Dominex · T0 "Boas-vindas à Dominex", 3 min 25 s). Cada capítulo vira uma **a
 palavras da narração, que entra no lugar da gravação de tela: o resto do pipeline é o mesmo (palco escuro, vinheta da
 aula, vinhetas de capítulo faladas, trilha, SFX, legendas, cartela). Exemplo completo: `exemplos/dominex-t0/`.
 
+Programa do computador junto do app (EcoFlix: o EcoTray, com a bandeja, o instalador, o aviso do navegador e o
+SmartScreen): não se desenha à mão. As janelas do programa saem do próprio código dele num display virtual, a área de
+trabalho é uma recriação genérica no estilo do Windows e a cena entra na montagem como uma gravação do robô (vídeo +
+telemetria + ações): `docs/10-cena-windows.md`, exemplo em `exemplos/ecoflix-ecotray/`.
+
 ## Roteiro
 Tabela **Ilustração × Fala** (em vez de Tela × Fala): cada linha é um momento, a cena muda junto com a frase ao lado.
 Mesmas regras de fala (só possibilidades, rótulos exatos). As cenas **não imitam telas**: mostram o caminho com

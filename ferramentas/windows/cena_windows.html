@@ -1,0 +1,644 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<!-- Cena de Windows (docs/10-cena-windows.md): área de trabalho genérica no estilo do Windows 11, sem logo nem ícone da
+     Microsoft, com o navegador (a gravação do app entra na área da página), a bandeja com o ícone do EcoTray e as janelas
+     de verdade do EcoTray (PNGs do capturar_ecotray.py). Tudo é função do tempo: window.setup(cfg) e window.R(t).
+     O cursor NÃO é desenhado aqui (é o cursor da skill, desenhado na edição a partir da telemetria exportada). -->
+<style>
+  :root { --ui: 'UI', 'Noto Sans', 'Inter', sans-serif; --acento: #005FB8; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 100%; height: 100%; overflow: hidden; background: #000; }
+  #tela { position: absolute; left: 0; top: 0; overflow: hidden; font-family: var(--ui); color: #1b1b1b;
+          -webkit-font-smoothing: antialiased; }
+  .camada { position: absolute; }
+  .oculto { display: none !important; }
+  svg { display: block; }
+
+  /* papel de parede genérico */
+  #parede { inset: 0; background:
+      radial-gradient(1100px 760px at 72% 26%, rgba(120, 178, 255, .55) 0%, rgba(120,178,255,0) 62%),
+      radial-gradient(900px 700px at 18% 82%, rgba(36, 112, 196, .65) 0%, rgba(36,112,196,0) 66%),
+      radial-gradient(700px 520px at 50% 55%, rgba(170, 214, 255, .35) 0%, rgba(170,214,255,0) 70%),
+      linear-gradient(140deg, #0c2546 0%, #17508f 48%, #0a2142 100%); }
+
+  /* atalho na área de trabalho */
+  .atalho { position: absolute; width: 84px; padding: 6px 2px 4px; border-radius: 4px; text-align: center;
+            border: 1px solid transparent; }
+  .atalho img { width: 48px; height: 48px; display: block; margin: 0 auto 4px; }
+  .atalho span { color: #fff; font-size: 12px; line-height: 15px; text-shadow: 0 1px 2px rgba(0,0,0,.9), 0 0 4px rgba(0,0,0,.5); }
+  .atalho.hv-on { background: rgba(255,255,255,.14); border-color: rgba(255,255,255,.22); }
+  .atalho.sel { background: rgba(140,190,255,.32); border-color: rgba(170,210,255,.55); }
+
+  /* janela do navegador (genérica, no molde dos navegadores Chromium, sem logo de terceiros) */
+  #nav { background: #fff; overflow: hidden; }
+  #nav.janela { border-radius: 8px; box-shadow: 0 0 0 1px rgba(0,0,0,.25), 0 18px 50px rgba(0,0,0,.45); }
+  #abas { position: absolute; left: 0; right: 0; top: 0; height: 40px; background: #dee3ea; }
+  #nav.inativo #abas { background: #e9ecf0; }
+  .aba { position: absolute; left: 8px; top: 6px; height: 34px; width: 248px; background: #fff; border-radius: 8px 8px 0 0;
+         display: flex; align-items: center; padding: 0 10px 0 12px; gap: 8px; font-size: 12px; color: #1f1f1f; }
+  .aba img { width: 16px; height: 16px; }
+  .aba .t { flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .aba .x { width: 20px; height: 20px; border-radius: 10px; display: grid; place-items: center; color: #444; }
+  .nova { position: absolute; top: 9px; width: 28px; height: 28px; border-radius: 14px; display: grid; place-items: center; color: #3c3c3c; }
+  .cap { position: absolute; top: 0; height: 40px; width: 46px; display: grid; place-items: center; color: #1b1b1b; }
+  .cap.hv-on { background: rgba(0,0,0,.07); }
+  .cap.fechar.hv-on { background: #c42b1c; color: #fff; }
+  #barra-nav { position: absolute; left: 0; right: 0; top: 40px; height: 44px; background: #fff; border-bottom: 1px solid #d5dae1; }
+  .bn { position: absolute; top: 6px; width: 32px; height: 32px; border-radius: 16px; display: grid; place-items: center; color: #474747; }
+  .bn.hv-on { background: rgba(0,0,0,.06); }
+  .bn.apagado { color: #b9b9b9; }
+  #omni { position: absolute; top: 6px; height: 32px; left: 124px; border-radius: 16px; background: #eef1f4;
+          display: flex; align-items: center; gap: 10px; padding: 0 14px 0 12px; font-size: 14px; color: #1f1f1f; }
+  #omni .url { flex: 1; white-space: nowrap; overflow: hidden; }
+  #omni .url b { font-weight: 400; color: #1f1f1f; }
+  #omni .url i { font-style: normal; color: #5f6368; }
+  #perfil { position: absolute; top: 10px; width: 24px; height: 24px; border-radius: 12px; background: #6b8e7b; color: #fff;
+            font-size: 12px; font-weight: 600; display: grid; place-items: center; }
+  #pagina { position: absolute; left: 0; right: 0; top: 84px; bottom: 0; overflow: hidden; background: #fff; }
+  #pagina img.app { position: absolute; }
+  #pagina .recorte { position: absolute; overflow: hidden; }
+  #pagina .recorte img { position: absolute; left: 0; top: 0; }
+  .campo { position: absolute; overflow: hidden; white-space: nowrap; }
+
+  /* balão de downloads (genérico) */
+  #down { width: 372px; background: #fff; border-radius: 10px; padding: 8px 0;
+          box-shadow: 0 0 0 1px rgba(0,0,0,.08), 0 10px 28px rgba(0,0,0,.22); font-size: 13px; }
+  #down .cab { padding: 6px 16px 8px; font-size: 14px; font-weight: 600; color: #1f1f1f; }
+  #down .item { display: flex; gap: 12px; padding: 8px 12px 8px 16px; align-items: flex-start; }
+  #down .ic { width: 32px; height: 32px; flex: none; display: grid; place-items: center; border-radius: 6px; background: #eef2f6; color: #3d4b5c; }
+  #down .ic.aviso { background: #fdf0d8; color: #b36b00; }
+  #down .txt { flex: 1; min-width: 0; }
+  #down .nome { font-size: 13px; color: #1f1f1f; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  #down .sub { font-size: 12px; color: #5f6368; margin-top: 2px; line-height: 16px; }
+  #down .sub.aviso { color: #b45309; }
+  #down .barra { height: 4px; background: #e3e7ec; border-radius: 2px; margin-top: 7px; overflow: hidden; }
+  #down .barra i { display: block; height: 100%; background: #0b57d0; }
+  #down .acoes { display: flex; gap: 8px; padding: 2px 16px 6px 60px; }
+  .bt { height: 30px; padding: 0 14px; border-radius: 15px; display: inline-flex; align-items: center; font-size: 13px; font-weight: 500; }
+  .bt.cont { border: 1px solid #c4c9d0; color: #0b57d0; background: #fff; }
+  .bt.cheio { background: #0b57d0; color: #fff; }
+  .bt.hv-on { filter: brightness(.94); }
+  .bt.cont.hv-on { background: #f1f5fb; filter: none; }
+  #down .mais { width: 30px; height: 30px; border-radius: 15px; display: grid; place-items: center; color: #444; flex: none; }
+  #down .mais.hv-on, #down .mais.aberto { background: rgba(0,0,0,.07); }
+  #down-menu { width: 168px; background: #fff; border-radius: 8px; padding: 6px 0; font-size: 13px;
+               box-shadow: 0 0 0 1px rgba(0,0,0,.08), 0 8px 22px rgba(0,0,0,.22); }
+  #down-menu .op { height: 32px; display: flex; align-items: center; padding: 0 16px; color: #1f1f1f; }
+  #down-menu .op.hv-on { background: #eef1f4; }
+  #bn-down.ativo { color: #0b57d0; }
+
+  /* janelas do EcoTray (PNGs do código de verdade): a raiz overrideredirect do Tk fica sem sombra nem cantos; o Toplevel
+     ganha a moldura do Windows 11 (barra de título clara, que o Tk não escurece); a lista de um combobox, sombra leve */
+  .win { position: absolute; }
+  .win > img { display: block; }
+  .win.lista { box-shadow: 0 4px 10px rgba(0,0,0,.28); }
+  .win.moldura { border-radius: 8px; overflow: hidden; background: #f3f3f3;
+                 box-shadow: 0 0 0 1px rgba(0,0,0,.40), 0 14px 42px rgba(0,0,0,.42); }
+  .win.moldura.inativa .tbar { color: #8a8a8a; }
+  .tbar { height: 32px; display: flex; align-items: center; font-size: 12px; color: #1b1b1b; background: #f3f3f3; }
+  .tbar .ico { width: 16px; height: 16px; margin: 0 9px 0 10px; }
+  .tbar .tt { flex: 1; white-space: nowrap; overflow: hidden; }
+  .tbar .cbt { width: 46px; height: 32px; display: grid; place-items: center; color: #1b1b1b; }
+  .tbar .cbt.off { color: #b4b4b4; }
+  .tbar .cbt.hv-on { background: rgba(0,0,0,.06); }
+  .tbar .cbt.fx.hv-on { background: #c42b1c; color: #fff; }
+
+  /* SmartScreen (recriação genérica, sem logo) */
+  #smart { width: 660px; height: 560px; background: #1268c4; color: #fff;
+           box-shadow: 0 0 0 1px #0b4f99, 0 22px 60px rgba(0,0,0,.45); font-family: var(--ui); }
+  #smart .fx { position: absolute; right: 0; top: 0; width: 46px; height: 32px; display: grid; place-items: center; color: #fff; }
+  #smart .fx.hv-on { background: #c42b1c; }
+  #smart h1 { position: absolute; left: 48px; top: 62px; right: 48px; font-size: 30px; font-weight: 300; line-height: 38px; }
+  #smart .corpo { position: absolute; left: 48px; top: 132px; right: 56px; font-size: 15px; line-height: 23px; font-weight: 400; }
+  #smart .link { display: inline-block; margin-top: 18px; text-decoration: underline; text-underline-offset: 3px; }
+  #smart .link.hv-on { color: #d6e9ff; }
+  #smart .det { margin-top: 26px; display: grid; grid-template-columns: 110px 1fr; row-gap: 6px; font-size: 15px; }
+  #smart .det span:nth-child(odd) { color: #dbe9fa; }
+  #smart .rodape { position: absolute; left: 0; right: 0; bottom: 0; height: 86px; border-top: 1px solid rgba(255,255,255,.22);
+                   display: flex; justify-content: flex-end; align-items: center; gap: 10px; padding: 0 36px; }
+  #smart .bs { height: 34px; padding: 0 22px; min-width: 138px; display: grid; place-items: center; font-size: 15px;
+               background: rgba(255,255,255,.10); border: 1px solid rgba(255,255,255,.75); }
+  #smart .bs.hv-on { background: rgba(255,255,255,.24); }
+  #smart .bs.pressed { background: rgba(255,255,255,.34); }
+
+  /* barra de tarefas (Windows 11, tema claro) */
+  #barra { left: 0; right: 0; bottom: 0; height: 48px; background: rgba(237, 241, 247, .88);
+           backdrop-filter: blur(28px) saturate(1.5); border-top: 1px solid rgba(0,0,0,.08); }
+  #centro { position: absolute; top: 4px; height: 40px; left: 50%; transform: translateX(-50%); display: flex; gap: 2px; align-items: center; }
+  .tb { width: 40px; height: 40px; border-radius: 4px; display: grid; place-items: center; position: relative; }
+  .tb.hv-on { background: rgba(255,255,255,.66); box-shadow: inset 0 0 0 1px rgba(0,0,0,.04); }
+  .tb .ind { position: absolute; bottom: 1px; left: 50%; width: 6px; height: 3px; border-radius: 2px; background: #8a8a8a; transform: translateX(-50%); }
+  .tb.foco .ind { width: 16px; background: var(--acento); }
+  #busca { height: 32px; width: 196px; margin: 0 4px; border-radius: 16px; background: rgba(255,255,255,.78); border: 1px solid rgba(0,0,0,.06);
+           display: flex; align-items: center; gap: 9px; padding: 0 12px; font-size: 13px; color: #5d5d5d; }
+  #direita { position: absolute; right: 0; top: 4px; height: 40px; display: flex; align-items: center; }
+  .bj { height: 40px; min-width: 28px; padding: 0 6px; border-radius: 4px; display: grid; place-items: center; color: #1b1b1b; }
+  .bj.hv-on, .bj.aberto { background: rgba(255,255,255,.66); box-shadow: inset 0 0 0 1px rgba(0,0,0,.04); }
+  .bj img { width: 16px; height: 16px; }
+  #rapidos { display: flex; gap: 10px; padding: 0 10px; }
+  #relogio { text-align: right; font-size: 12px; line-height: 16px; padding: 0 10px; color: #1b1b1b; }
+  #sino { padding: 0 10px; }
+  #mostrar { width: 8px; height: 40px; border-left: 1px solid rgba(0,0,0,.18); margin-left: 4px; }
+
+  /* ícones ocultos (^), menu da bandeja (nativo do Windows 11, tema claro) e dica */
+  #ocultos { padding: 8px; background: rgba(243,244,247,.94); border-radius: 8px; backdrop-filter: blur(28px);
+             box-shadow: 0 0 0 1px rgba(0,0,0,.10), 0 8px 24px rgba(0,0,0,.20); display: grid; grid-template-columns: repeat(4, 40px); gap: 0; }
+  #ocultos .bj { width: 40px; height: 40px; }
+  #menu { background: #f9f9f9; border-radius: 8px; padding: 4px 0; font-size: 12px; min-width: 210px;
+          box-shadow: 0 0 0 1px rgba(0,0,0,.12), 0 8px 20px rgba(0,0,0,.18); white-space: nowrap; }
+  #menu .mi { height: 30px; margin: 0 4px; padding: 0 30px 0 32px; border-radius: 4px; display: flex; align-items: center; color: #1b1b1b; }
+  #menu .mi.padrao { font-weight: 700; }
+  #menu .mi.inativo { color: #8b8b8b; }
+  #menu .mi.hv-on:not(.inativo) { background: #e6e6e6; }
+  #menu .ms { height: 1px; background: #e2e2e2; margin: 4px 0; }
+  #dica { background: #f9f9f9; border-radius: 4px; padding: 5px 9px; font-size: 12px; color: #1b1b1b;
+          box-shadow: 0 0 0 1px rgba(0,0,0,.12), 0 4px 10px rgba(0,0,0,.14); white-space: nowrap; }
+  /* empilhamento: janelas do programa (100+, topmost) < balão/SmartScreen < barra de tarefas < menus e dica */
+  #down, #down-menu, #smart { z-index: 950; }
+  #barra { z-index: 900; }
+  #ocultos, #menu, #dica { z-index: 1000; }
+  #mira { z-index: 2000; }
+  #mira { width: 14px; height: 14px; margin: -7px 0 0 -7px; border-radius: 7px; border: 2px solid #ff2d55; background: rgba(255,45,85,.25); }
+</style>
+</head>
+<body>
+<div id="tela"></div>
+<script>
+'use strict';
+// ───────────────────────────── ícones (traço simples, genéricos) ─────────────────────────────
+const P = {
+  busca: '<circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/>',
+  chevup: '<path d="M6 15l6-6 6 6"/>', wifi: '<path d="M2.5 8.8a14 14 0 0 1 19 0M5.6 12.3a9.5 9.5 0 0 1 12.8 0M8.7 15.7a5 5 0 0 1 6.6 0"/><circle cx="12" cy="19" r="1.1" fill="currentColor"/>',
+  som: '<path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path d="M15.5 9a4.5 4.5 0 0 1 0 6M18.2 6.6a8 8 0 0 1 0 10.8"/>',
+  sino: '<path d="M6.5 16.5V11a5.5 5.5 0 0 1 11 0v5.5l1.5 1.5H5z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/>',
+  voltar: '<path d="M19 12H5M11 6l-6 6 6 6"/>', avancar: '<path d="M5 12h14M13 6l6 6-6 6"/>',
+  recarregar: '<path d="M19.5 12a7.5 7.5 0 1 1-2.2-5.3"/><path d="M19.5 4.5v4h-4"/>',
+  estrela: '<path d="M12 4.3l2.3 4.8 5.2.7-3.8 3.6.9 5.2L12 16.1l-4.6 2.5.9-5.2-3.8-3.6 5.2-.7z"/>',
+  download: '<path d="M12 4v11M7 10.5l5 5 5-5M5 19.5h14"/>', kebab: '<circle cx="12" cy="5.5" r="1.3" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.3" fill="currentColor" stroke="none"/><circle cx="12" cy="18.5" r="1.3" fill="currentColor" stroke="none"/>',
+  mais: '<circle cx="5.5" cy="12" r="1.4" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.4" fill="currentColor" stroke="none"/><circle cx="18.5" cy="12" r="1.4" fill="currentColor" stroke="none"/>',
+  ajuste: '<path d="M4 8h9M17 8h3M4 16h3M11 16h9"/><circle cx="15" cy="8" r="2"/><circle cx="9" cy="16" r="2"/>',
+  x: '<path d="M6 6l12 12M18 6 6 18"/>', min: '<path d="M6 12h12"/>', max: '<rect x="6.5" y="6.5" width="11" height="11" rx="1.2"/>',
+  restaurar: '<rect x="5.5" y="8.5" width="10" height="10" rx="1.2"/><path d="M8.5 8.5V6.7c0-.7.5-1.2 1.2-1.2h7.6c.7 0 1.2.5 1.2 1.2v7.6c0 .7-.5 1.2-1.2 1.2h-1.8"/>',
+  arquivo: '<path d="M7 3.5h7l4.5 4.5v12.5H7z"/><path d="M14 3.5V8h4.5"/>', aviso: '<path d="M12 4 21 19.5H3z"/><path d="M12 10v4.5"/><circle cx="12" cy="17" r=".9" fill="currentColor"/>',
+  mais_aba: '<path d="M12 6v12M6 12h12"/>',
+  setinha: '<path d="M6 9.5l6 6 6-6"/>',
+};
+const ic = (n, px, cor, sw) => `<svg width="${px}" height="${px}" viewBox="0 0 24 24" fill="none" stroke="${cor || 'currentColor'}" stroke-width="${sw || 1.6}" stroke-linecap="round" stroke-linejoin="round">${P[n]}</svg>`;
+// ícones coloridos da barra de tarefas (genéricos: pasta e globo, sem marca de ninguém)
+const IC_INICIAR = `<svg width="22" height="22" viewBox="0 0 22 22">${[0, 1, 2].map(i => [0, 1, 2].map(j => `<circle cx="${4 + j * 7}" cy="${4 + i * 7}" r="2.5" fill="#2f6fd6"/>`).join('')).join('')}</svg>`;
+const IC_PASTA = `<svg width="24" height="24" viewBox="0 0 24 24"><path d="M2.5 6.2c0-.9.7-1.7 1.7-1.7h5.1l2.1 2.2h8.4c.9 0 1.7.8 1.7 1.7v9.4c0 .9-.8 1.7-1.7 1.7H4.2c-1 0-1.7-.8-1.7-1.7z" fill="#e8a93a"/><path d="M2.5 9.2h19v8.6c0 .9-.8 1.7-1.7 1.7H4.2c-1 0-1.7-.8-1.7-1.7z" fill="#f6c552"/></svg>`;
+const IC_GLOBO = `<svg width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5" fill="#2f7be6"/><path d="M2.6 12h18.8M12 2.5c2.6 2.8 3.9 6 3.9 9.5S14.6 18.7 12 21.5M12 2.5C9.4 5.3 8.1 8.5 8.1 12s1.3 6.7 3.9 9.5" stroke="#dbeaff" stroke-width="1.3" fill="none"/></svg>`;
+
+// ───────────────────────────── utilidades ─────────────────────────────
+const $ = s => document.querySelector(s);
+const el = (html, pai) => { const t = document.createElement('template'); t.innerHTML = html.trim(); const n = [...t.content.childNodes]; n.forEach(x => (pai || TELA).appendChild(x)); return n[0]; };
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+const suave = u => { u = clamp(u, 0, 1); return u * u * u * (u * (u * 6 - 15) + 10); }; // mínimo solavanco (5ª ordem)
+const fade = (t, t0, d) => clamp((t - t0) / d, 0, 1);
+let TELA, CFG, SPEC, Q, W, H, DSF, EV = [], INI, SEG = [], CLIQUES = [], ARRASTOS = [], ACOES = [], ROBO = null;
+
+// ───────────────────────────── estado ─────────────────────────────
+function estadoInicial() {
+  const n = SPEC.navegador || {};
+  const b = SPEC.bandeja || {};
+  return {
+    nav: { visivel: n.visivel !== false, modo: n.modo || 'maximizado', rect: n.rect || null, url: n.url || 'ecosistematecnologia.com.br',
+           aba: n.aba || 'EcoSistema | Sistema para Reciclagens', downIcone: false, desde: -9 },
+    campos: Object.fromEntries((SPEC.campos || []).map(c => [c.id, c.texto || ''])),
+    jan: {},  // janelas do programa por "vaga" (painel, instalador, config, dialogo, lista...): {q, desde, pos, arr}
+    bandeja: { q: b.icone === undefined ? null : b.icone, fixado: b.fixado !== false },
+    menu: { vis: false, x: 0, y: 0, desde: -9 }, ocultos: { vis: false, desde: -9 }, dica: { vis: false, texto: '', alvo: '', desde: -9 },
+    smart: { estado: null, desde: -9 }, down: { estado: null, desde: -9, pct: 0, aberto: false },
+    atalho: !!(SPEC.area_de_trabalho || {}).atalho, selAtalho: false,
+  };
+}
+const ESTADOS_DOWN = ['baixando', 'aviso', 'opcoes', 'concluido'];
+function aplicaPasso(s, p, t) {
+  const o = p.o || p.do;
+  switch (p.do) {
+    case 'painel': case 'instalador': case 'janela': {  // troca a captura mostrada na vaga (null = a janela some)
+      const v = p.do === 'janela' ? (p.slot || p.janela || 'janela') : p.do, a = s.jan[v] || { q: null, desde: -9, pos: null, arr: null };
+      s.jan[v] = p.quadro ? { ...a, q: p.quadro, desde: a.q ? a.desde : t, pos: p.pos || a.pos } : { ...a, q: null, desde: t };
+      break;
+    }
+    case 'arrastar': {  // a janela vai até "para" (canto de cima à esquerda) em "dur" s, presa ao cursor
+      const v = p.janela || 'painel', a = s.jan[v]; if (!a || !a.q) break;
+      const de = posJanela(a, t, s.jan), dur = p.dur || 0.9;
+      s.jan[v] = { ...a, pos: p.para.slice(), arr: { t0: t, t1: t + dur, de, para: p.para.slice() } };
+      break;
+    }
+    case 'bandeja': if ('icone' in p) s.bandeja.q = p.icone; if ('fixado' in p) s.bandeja.fixado = !!p.fixado; break;
+    case 'campo': s.campos[p.id] = String(p.texto); break;
+    case 'navegador': Object.assign(s.nav, Object.fromEntries(Object.entries(p).filter(([k]) => !['at', 'do'].includes(k)))); break;
+    case 'smartscreen': s.smart = { estado: p.estado || null, desde: s.smart.estado && p.estado ? s.smart.desde : t }; break;
+    case 'download': s.down = { ...s.down, estado: p.estado || null, desde: s.down.estado && p.estado ? s.down.desde : t,
+                                pct: p.pct ?? s.down.pct, aberto: p.estado === 'opcoes' }; if (p.estado) s.nav.downIcone = true; break;
+    case 'atalho': s.atalho = p.visivel !== false; break;
+    case 'dica': s.dica = { vis: p.visivel !== false, texto: p.texto || 'EcoTray', alvo: p.alvo || 'bandeja:ecotray', desde: t }; break;
+    case 'mostrar': case 'esconder': {
+      const v = p.do === 'mostrar';
+      if (o === 'menu' || p.o === 'menu') s.menu = { vis: v, x: p.x ?? s.menu.x, y: p.y ?? s.menu.y, desde: t };
+      else if (p.o === 'ocultos') s.ocultos = { vis: v, desde: t };
+      else if (p.o === 'dica') s.dica = { vis: v, texto: p.texto || s.dica.texto || 'EcoTray', alvo: p.alvo || s.dica.alvo || 'bandeja:ecotray', desde: t };
+      else if (p.o === 'atalho') s.atalho = v;
+      else if (p.o === 'navegador') s.nav.visivel = v;
+      else if (s.jan[p.o] && !v) s.jan[p.o] = { ...s.jan[p.o], q: null, desde: t };
+      else if (p.o === 'smartscreen') s.smart = v ? { estado: p.estado || 'aviso', desde: t } : { estado: null, desde: t };
+      else if (p.o === 'download') { if (v) { s.down = { ...s.down, estado: p.estado || 'concluido', desde: t }; s.nav.downIcone = true; } else s.down = { ...s.down, estado: null, desde: t }; }
+      break;
+    }
+  }
+}
+function estadoEm(t) {
+  const s = JSON.parse(JSON.stringify(INI));
+  for (const e of EV) { if (e.t > t + 1e-9) break; aplicaPasso(s, e.p, e.t); }
+  return s;
+}
+
+// ───────────────────────────── montagem do DOM ─────────────────────────────
+function montar() {
+  TELA.innerHTML = '';
+  el('<div id="parede" class="camada"></div>');
+  el(`<div id="atalhos" class="camada" style="left:0;top:0"><div class="atalho" data-alvo="atalho:EcoTray" data-hv style="left:10px;top:8px">
+        <img src="${CFG.icone_app}"><span>EcoTray</span></div></div>`);
+  // navegador
+  const n = el(`<div id="nav" class="camada">
+      <div id="abas"><div class="aba"><img src="${CFG.favicon}"><span class="t"></span><span class="x">${ic('x', 12, '#444', 1.8)}</span></div>
+        <div class="nova" style="left:264px">${ic('mais_aba', 16, '#3c3c3c', 1.7)}</div>
+        <div class="cap" data-alvo="navegador:minimizar" data-hv>${ic('min', 16, null, 1.2)}</div>
+        <div class="cap" data-alvo="navegador:maximizar" data-hv>${ic('restaurar', 15, null, 1.2)}</div>
+        <div class="cap fechar" data-alvo="navegador:fechar" data-hv>${ic('x', 16, null, 1.2)}</div></div>
+      <div id="barra-nav">
+        <div class="bn" style="left:10px" data-alvo="navegador:voltar" data-hv>${ic('voltar', 18)}</div>
+        <div class="bn apagado" style="left:46px">${ic('avancar', 18)}</div>
+        <div class="bn" style="left:82px" data-alvo="navegador:recarregar" data-hv>${ic('recarregar', 18)}</div>
+        <div id="omni" data-alvo="navegador:url">${ic('ajuste', 16, '#5f6368')}<span class="url"></span>${ic('estrela', 16, '#5f6368')}</div>
+        <div class="bn" id="bn-down" data-alvo="download:botao" data-hv>${ic('download', 18)}</div>
+        <div id="perfil">${(CFG.perfil || 'R').slice(0, 1)}</div>
+        <div class="bn" id="bn-menu">${ic('kebab', 18)}</div>
+      </div>
+      <div id="pagina" data-alvo="navegador:pagina"></div></div>`);
+  const pg = $('#pagina'), pag = (SPEC.navegador || {}).pagina || {};
+  if (pag.imagem) {
+    const r = pag.recorte, s = pag.escala || 1, pos = pag.pos || [0, 0];
+    pg.style.background = pag.fundo || '#fff';
+    if (r) el(`<div class="recorte" style="left:${pos[0]}px;top:${pos[1]}px;width:${r[2] * s}px;height:${r[3] * s}px">
+                 <img class="app" src="${CFG.pagina_img}" style="width:${CFG.pagina_img_w * s}px;height:${CFG.pagina_img_h * s}px;left:${-r[0] * s}px;top:${-r[1] * s}px"></div>`, pg);
+    else el(`<img class="app" src="${CFG.pagina_img}" style="left:${pos[0]}px;top:${pos[1]}px;width:${CFG.pagina_img_w * s}px;height:${CFG.pagina_img_h * s}px">`, pg);
+  }
+  if (pag.gravacao) el(`<img id="grav" class="app" style="left:0;top:0">`, pg);
+  for (const c of SPEC.campos || []) {
+    const R = campoRect(c), e = c.estilo || {}, s = (pag.escala || 1);
+    el(`<div class="campo" id="campo-${c.id}" data-alvo="campo:${c.id}" style="left:${R[0]}px;top:${R[1]}px;width:${R[2]}px;height:${R[3]}px;
+          background:${e.fundo || '#fff'};color:${e.cor || '#18181b'};font-family:'${e.fonte || 'Montserrat'}';font-weight:${e.peso || 500};
+          font-size:${(e.tamanho || 11.5) * s}px;line-height:${R[3]}px;padding-left:${(e.recuo || 9) * s}px"></div>`, pg);
+  }
+  // janelas do programa: um elemento por captura (a imagem já carregada; a vaga escolhe qual aparece). Toplevel do Tk =
+  // janela com moldura do Windows 11 (barra de título clara, ícone do app, — ▢ ✕); a raiz overrideredirect fica sem moldura.
+  for (const [nome, q] of Object.entries(Q)) {
+    if (q.tipo === 'bandeja') continue;
+    const [, , w, h] = q.janela, img = `<img src="${CFG.capturas}/${q.arquivo}" style="width:${w}px;height:${h}px">`;
+    if (q.tipo === 'toplevel') el(`<div class="win moldura oculto" data-q="${nome}" style="width:${w}px;height:${h + TB}px">
+        <div class="tbar"><img class="ico" src="${CFG.icone_app}"><span class="tt">${q.titulo || ''}</span>
+          <div class="cbt" data-alvo="${nome}::minimizar" data-hv>${ic('min', 16, null, 1.1)}</div>
+          <div class="cbt off">${ic('max', 14, null, 1.1)}</div>
+          <div class="cbt fx" data-alvo="${nome}::fechar" data-hv>${ic('x', 16, null, 1.1)}</div></div>${img}</div>`);
+    else el(`<div class="win${q.tipo === 'lista' ? ' lista' : ''} oculto" data-q="${nome}" style="width:${w}px;height:${h}px">${img}</div>`);
+  }
+  // SmartScreen (textos da pessoa ler e clicar; trocáveis em "smartscreen" na cena)
+  const SM = { titulo: 'O Windows protegeu o computador', corpo: 'O Microsoft Defender SmartScreen impediu a inicialização de um '
+    + 'aplicativo não reconhecido. A execução deste aplicativo pode colocar o computador em risco.', rotulo_editor: 'Editor',
+    editor: 'Editor desconhecido', ...(SPEC.smartscreen || {}) };
+  el(`<div id="smart" class="camada oculto"><div class="fx" data-alvo="smartscreen:fechar" data-hv>${ic('x', 16, '#fff', 1.3)}</div>
+       <h1>${SM.titulo}</h1>
+       <div class="corpo">${SM.corpo}<br><span class="link" data-alvo="smartscreen:Mais informações" data-hv>Mais informações</span>
+         <div class="det oculto"><span>Aplicativo:</span><span class="app-nome"></span><span>${SM.rotulo_editor}:</span><span>${SM.editor}</span></div></div>
+       <div class="rodape"><div class="bs exec oculto" data-alvo="smartscreen:Executar assim mesmo" data-hv>Executar assim mesmo</div>
+         <div class="bs" data-alvo="smartscreen:Não executar" data-hv>Não executar</div></div></div>`);
+  // balão de downloads
+  el(`<div id="down" class="camada oculto"><div class="cab">Downloads recentes</div>
+       <div class="item"><div class="ic">${ic('arquivo', 20)}</div><div class="txt"><div class="nome"></div><div class="sub"></div><div class="barra"><i></i></div></div>
+         <div class="mais" data-alvo="download:opcoes" data-hv>${ic('setinha', 18, null, 1.8)}</div></div>
+       <div class="acoes"></div></div>`);
+  el(`<div id="down-menu" class="camada oculto"><div class="op" data-alvo="download:Manter" data-hv>Manter</div><div class="op" data-alvo="download:Excluir" data-hv>Excluir</div></div>`);
+  // barra de tarefas
+  el(`<div id="barra" class="camada"><div id="centro">
+        <div class="tb" data-alvo="barra:iniciar" data-hv>${IC_INICIAR}</div>
+        <div id="busca" data-alvo="barra:pesquisar">${ic('busca', 16, '#4a4a4a', 1.8)}<span>Pesquisar</span></div>
+        <div class="tb" data-alvo="barra:arquivos" data-hv>${IC_PASTA}</div>
+        <div class="tb" id="tb-nav" data-alvo="barra:navegador" data-hv>${IC_GLOBO}<span class="ind"></span></div></div>
+      <div id="direita"><div class="bj" id="bj-chev" data-alvo="bandeja:^" data-hv>${ic('chevup', 16, '#1b1b1b', 1.7)}</div>
+        <div class="bj" id="bj-eco" data-alvo="bandeja:ecotray" data-hv><img></div>
+        <div class="bj" id="rapidos" data-alvo="bandeja:rede" data-hv>${ic('wifi', 17, '#1b1b1b', 1.6)}${ic('som', 17, '#1b1b1b', 1.6)}</div>
+        <div class="bj" id="relogio" data-alvo="relogio" data-hv><div class="h"></div><div class="d"></div></div>
+        <div class="bj" id="sino">${ic('sino', 16, '#1b1b1b', 1.6)}</div><div id="mostrar"></div></div></div>`);
+  el(`<div id="ocultos" class="camada oculto"><div class="bj" id="oc-eco" data-alvo="bandeja:ecotray" data-hv><img></div></div>`);
+  el(`<div id="menu" class="camada oculto"></div>`);
+  el(`<div id="dica" class="camada oculto"></div>`);
+  el(`<div id="mira" class="camada oculto"></div>`);
+}
+
+function campoRect(c) {
+  const pag = (SPEC.navegador || {}).pagina || {}, s = pag.escala || 1, pos = pag.pos || [0, 0], r0 = pag.recorte || [0, 0];
+  if (c.rect) return c.rect;
+  const r = c.rect_imagem; return [pos[0] + (r[0] - r0[0]) * s, pos[1] + (r[1] - r0[1]) * s, r[2] * s, r[3] * s];
+}
+
+// ───────────────────────────── aplicar o estado na tela ─────────────────────────────
+function relogio(t) {
+  const r = SPEC.relogio || {}; const [hh, mm] = (r.hora || '08:31').split(':').map(Number);
+  const seg = (r.segundos || 0) + t; const tot = hh * 60 + mm + Math.floor(seg / 60);
+  return [`${String(Math.floor(tot / 60) % 24).padStart(2, '0')}:${String(tot % 60).padStart(2, '0')}`, r.data || '10/11/2026'];
+}
+function mostra(e, v) { e.classList.toggle('oculto', !v); }
+function aplicar(s, t) {
+  // navegador
+  const nav = $('#nav'); mostra(nav, s.nav.visivel);
+  const nr = s.nav.modo === 'janela' && s.nav.rect ? s.nav.rect : [0, 0, W, H - 48];
+  Object.assign(nav.style, { left: nr[0] + 'px', top: nr[1] + 'px', width: nr[2] + 'px', height: nr[3] + 'px' });
+  nav.classList.toggle('janela', s.nav.modo === 'janela');
+  const caps = [...nav.querySelectorAll('.cap')]; caps.forEach((c, i) => c.style.left = (nr[2] - 46 * (3 - i)) + 'px');
+  const tbW = nr[2];
+  $('#bn-menu').style.left = (tbW - 42) + 'px'; $('#perfil').style.left = (tbW - 76) + 'px';
+  $('#bn-down').style.left = (tbW - 116) + 'px'; mostra($('#bn-down'), s.nav.downIcone);
+  $('#omni').style.width = (tbW - 124 - (s.nav.downIcone ? 128 : 92)) + 'px';
+  const host = s.nav.url.split('/')[0], resto = s.nav.url.slice(host.length);
+  $('#omni .url').innerHTML = `<b>${host}</b><i>${resto}</i>`; $('#abas .aba .t').textContent = s.nav.aba;
+  const vagas = Object.entries(s.jan).filter(([, j]) => j.q && Q[j.q]);
+  const focoEco = !!(vagas.length || s.smart.estado);
+  nav.classList.toggle('inativo', focoEco);
+  // campo sem texto = não cobre nada (a imagem mostra o campo como está)
+  for (const c of SPEC.campos || []) { const e = $('#campo-' + c.id), v = s.campos[c.id]; e.textContent = v ?? ''; mostra(e, v != null && v !== ''); }
+  // atalho
+  mostra($('#atalhos'), s.atalho);
+  // janelas do programa: a captura atual de cada vaga, na posição dela (arrastada ou a do código), empilhadas pela ordem
+  // em que abriram; a lista de combobox sempre por cima. Entrada de 0,12 s (o Tk aparece de uma vez; só tira o "estalo").
+  const ordem = vagas.slice().sort((a, b) => (Q[a[1].q].tipo === 'lista') - (Q[b[1].q].tipo === 'lista') || a[1].desde - b[1].desde);
+  const ativos = new Map(ordem.map(([v, j], i) => [j.q, { j, z: 100 + i, ultimo: i === ordem.length - 1 }]));
+  for (const w of document.querySelectorAll('.win')) {
+    const a = ativos.get(w.dataset.q); mostra(w, !!a); if (!a) continue;
+    const [x, y] = posJanela(a.j, t);
+    Object.assign(w.style, { left: x + 'px', top: y + 'px', zIndex: a.z, opacity: fade(t, a.j.desde, 0.12) });
+    w.classList.toggle('inativa', !a.ultimo);
+  }
+  // SmartScreen
+  const sm = $('#smart'); mostra(sm, !!s.smart.estado);
+  if (s.smart.estado) {
+    const w = 660, h = 560; Object.assign(sm.style, { left: Math.round((W - w) / 2) + 'px', top: Math.round((H - 48 - h) / 2) + 'px', opacity: fade(t, s.smart.desde, 0.15) });
+    const det = s.smart.estado === 'detalhes'; mostra(sm.querySelector('.det'), det); mostra(sm.querySelector('.exec'), det);
+    mostra(sm.querySelector('.link'), !det); sm.querySelector('.app-nome').textContent = CFG.arquivo_download || 'EcoTray - Instalador.exe';
+  }
+  // balão de downloads
+  const dw = $('#down'), dm = $('#down-menu'); mostra(dw, !!s.down.estado); mostra(dm, s.down.estado === 'opcoes');
+  if (s.down.estado) {
+    const bd = $('#bn-down').getBoundingClientRect(), x = clamp(bd.right - 372 + 8, 8, W - 380), y = bd.bottom + 6;
+    Object.assign(dw.style, { left: x + 'px', top: y + 'px', opacity: fade(t, s.down.desde, 0.15) });
+    const nome = CFG.arquivo_download || 'EcoTray - Instalador.exe', tam = CFG.tamanho_download || '17,9 MB';
+    dw.querySelector('.nome').textContent = nome;
+    const sub = dw.querySelector('.sub'), ic_ = dw.querySelector('.ic'), barra = dw.querySelector('.barra'), acoes = dw.querySelector('.acoes');
+    const est = s.down.estado; const aviso = est === 'aviso' || est === 'opcoes';
+    ic_.classList.toggle('aviso', aviso); ic_.innerHTML = aviso ? ic('aviso', 20) : ic('arquivo', 20);
+    sub.classList.toggle('aviso', aviso); mostra(barra, est === 'baixando'); mostra(dw.querySelector('.mais'), aviso);
+    dw.querySelector('.mais').classList.toggle('aberto', est === 'opcoes');
+    if (est === 'baixando') {
+      const tot = parseFloat(tam.replace(',', '.')), pct = clamp(s.down.pct + (t - s.down.desde) * (CFG.download_vel || 60), 0, 100);
+      sub.textContent = `${(tot * pct / 100).toFixed(1).replace('.', ',')} MB de ${tam}`; barra.firstElementChild.style.width = pct + '%';
+      acoes.innerHTML = '';
+    } else if (aviso) {
+      sub.textContent = 'Este arquivo não costuma ser baixado e pode ser perigoso.';
+      acoes.innerHTML = `<span class="bt cont" data-alvo="download:Excluir" data-hv>Excluir</span>`;
+    } else {
+      sub.textContent = `${tam} • Concluído`;
+      acoes.innerHTML = `<span class="bt cont" data-alvo="download:Abrir arquivo" data-hv>Abrir arquivo</span>`;
+    }
+    if (est === 'opcoes') { const m = dw.querySelector('.mais').getBoundingClientRect(); Object.assign(dm.style, { left: (m.right - 168) + 'px', top: (m.bottom + 4) + 'px' }); }
+  }
+  // barra de tarefas e bandeja
+  $('#tb-nav').classList.toggle('foco', s.nav.visivel && !focoEco); mostra($('#tb-nav .ind'), s.nav.visivel);
+  const qb = s.bandeja.q && Q[s.bandeja.q]; const src = qb ? `${CFG.capturas}/${qb.arquivo}` : '';
+  mostra($('#bj-eco'), !!qb && s.bandeja.fixado); $('#bj-eco img').src = src; $('#oc-eco img').src = src; mostra($('#oc-eco'), !!qb);
+  const [hora, data] = relogio(t); $('#relogio .h').textContent = hora; $('#relogio .d').textContent = data;
+  $('#bj-chev').classList.toggle('aberto', s.ocultos.vis);
+  const oc = $('#ocultos'); mostra(oc, s.ocultos.vis);
+  if (s.ocultos.vis) { const c = $('#bj-chev').getBoundingClientRect(); Object.assign(oc.style, { left: (c.left + c.width / 2 - 28) + 'px', top: (H - 48 - 8 - 56) + 'px', opacity: fade(t, s.ocultos.desde, 0.12) }); }
+  // menu da bandeja: itens do tray_app.py (capturar_ecotray.py, sessão "bandeja"); canto inferior direito no cursor
+  const mn = $('#menu'); mostra(mn, s.menu.vis && !!qb);
+  if (s.menu.vis && qb) {
+    if (mn.dataset.q !== s.bandeja.q) {
+      mn.dataset.q = s.bandeja.q;
+      mn.innerHTML = qb.menu.map(it => it.sep ? '<div class="ms"></div>' :
+        `<div class="mi${it.padrao ? ' padrao' : ''}${it.ativo ? '' : ' inativo'}" data-alvo="menu:${it.texto}" data-hv>${it.texto}</div>`).join('');
+    }
+    const r = mn.getBoundingClientRect();
+    Object.assign(mn.style, { left: (s.menu.x - r.width) + 'px', top: (s.menu.y - r.height) + 'px', opacity: fade(t, s.menu.desde, 0.10) });
+  }
+  const dc = $('#dica'); mostra(dc, s.dica.vis);
+  if (s.dica.vis) {
+    dc.textContent = s.dica.texto; const a = alvoRectAtual(s.dica.alvo); const r = dc.getBoundingClientRect();
+    if (a) Object.assign(dc.style, { left: (a[0] + a[2] / 2 - r.width / 2) + 'px', top: (a[1] - r.height - 10) + 'px', opacity: fade(t, s.dica.desde, 0.15) });
+  }
+}
+
+// ───────────────────────────── alvos ─────────────────────────────
+function visivel(e) { for (let n = e; n && n !== document.body; n = n.parentElement) if (n.classList.contains('oculto')) return false; return true; }
+function alvoRectAtual(nome) {
+  // janelas do programa: "<vaga>:<alvo>" com os alvos do quadros.json da captura visível naquela vaga
+  // (Toplevel: a área do Tk começa abaixo da barra de título; "<vaga>:fechar" é o ✕ da moldura)
+  const m = /^([^:]+):(.+)$/.exec(nome);
+  if (m && CUR_JAN[m[1]] && CUR_JAN[m[1]].q && Q[CUR_JAN[m[1]].q]) {
+    const j = CUR_JAN[m[1]], q = Q[j.q], [x, y] = posJanela(j, CUR_T), top = q.tipo === 'toplevel';
+    if (top && (m[2] === 'fechar' || m[2] === 'minimizar')) {
+      const e = document.querySelector(`[data-alvo="${CSS.escape(j.q + '::' + m[2])}"]`); if (!e) return null;
+      const r = e.getBoundingClientRect(); return [r.left, r.top, r.width, r.height, 'arrow'];
+    }
+    const a = (q.alvos || {})[m[2]]; const dy = top ? TB : 0;
+    return a ? [x + a.r[0], y + dy + a.r[1], a.r[2], a.r[3], a.cursor] : null;
+  }
+  const mt = /^tela:(-?[\d.]+),(-?[\d.]+)$/.exec(nome); if (mt) return [+mt[1] - 1, +mt[2] - 1, 2, 2];
+  const mp = /^navegador:(-?[\d.]+),(-?[\d.]+)$/.exec(nome);
+  if (mp) { const p = $('#pagina').getBoundingClientRect(); return [p.left + +mp[1] - 1, p.top + +mp[2] - 1, 2, 2]; }
+  const mi = /^navegador:imagem:(-?[\d.]+),(-?[\d.]+)$/.exec(nome);
+  if (mi) { const p = $('#pagina').getBoundingClientRect(), pag = SPEC.navegador.pagina, s = pag.escala || 1, pos = pag.pos || [0, 0], r0 = pag.recorte || [0, 0];
+    return [p.left + pos[0] + (+mi[1] - r0[0]) * s - 1, p.top + pos[1] + (+mi[2] - r0[1]) * s - 1, 2, 2]; }
+  const cands = [...document.querySelectorAll(`[data-alvo="${CSS.escape(nome)}"]`)].filter(visivel);
+  if (!cands.length) return null;
+  const r = cands[cands.length - 1].getBoundingClientRect();
+  const link = nome === 'smartscreen:Mais informações';
+  return [r.left, r.top, r.width, r.height, link ? 'pointer' : 'arrow'];
+}
+let CUR_JAN = {}, CUR_T = 0; const TB = 32;  // altura da barra de título do Windows 11 a 100%
+function posJanela(j, t, jan = CUR_JAN) {  // canto de cima à esquerda: arrastando, a posição arrastada, ou a do código
+  if (j.arr && t < j.arr.t1) { const u = suave((t - j.arr.t0) / (j.arr.t1 - j.arr.t0)); return [0, 1].map(k => j.arr.de[k] + (j.arr.para[k] - j.arr.de[k]) * u); }
+  if (j.pos) return j.pos.slice();
+  const q = Q[j.q]; if (!q) return [0, 0];
+  if (q.tipo === 'lista' && q.rel) {  // a lista do combobox acompanha a janela dona (que pode ter moldura ou ter sido arrastada)
+    const dona = Object.values(jan || {}).find(o => o.q && Q[o.q] && (q.dona ? Q[o.q].titulo === q.dona : Q[o.q].tipo === 'raiz'));
+    if (dona) { const b = posJanela(dona, t, jan); return [b[0] + q.rel[0], b[1] + (Q[dona.q].tipo === 'toplevel' ? TB : 0) + q.rel[1]]; }
+  }
+  return [q.janela[0], q.janela[1]];
+}
+function irPara(t) { const s = estadoEm(t); CUR_JAN = s.jan; CUR_T = t; aplicar(s, t); return s; }
+
+// ───────────────────────────── cursor: trajetórias e cliques ─────────────────────────────
+function rng(seed) { let x = seed >>> 0 || 1; return () => ((x = (x * 1664525 + 1013904223) >>> 0) / 4294967296); }
+function planejarCursor() {
+  const passos = (SPEC.passos || []).map((p, i) => ({ ...p, i })).sort((a, b) => a.at - b.at || a.i - b.i);
+  let pos = (SPEC.cursor || {}).inicio || [W * 0.42, H * 0.5], livre = 0; const r = rng(SPEC.semente || 7);
+  for (const p of passos) {
+    if (p.do === 'arrastar') {  // pega a janela pelo alvo (padrão: o meio do topo dela), arrasta junto e solta
+      if (ROBO) { const q = posRobo(p.at - 0.9); if (q) pos = q; }
+      irPara(p.at - 0.001); const v = p.janela || 'painel', j = CUR_JAN[v];
+      if (!j || !j.q) { ERROS.push(`arrastar: a janela "${v}" não está aberta em ${p.at} s`); continue; }
+      const de = posJanela(j, p.at), q = Q[j.q], top = q.tipo === 'toplevel';
+      const a = p.alvo ? alvoRectAtual(p.alvo) : [de[0] + q.janela[2] * 0.3, de[1] + (top ? 8 : 12), 2, 2, 'arrow'];
+      if (!a) { ERROS.push(`alvo não achado: ${p.alvo} (passo em ${p.at} s)`); continue; }
+      const g = [a[0] + a[2] / 2, a[1] + a[3] / 2], dur = p.dur || 0.9, d = Math.hypot(g[0] - pos[0], g[1] - pos[1]);
+      const ida = clamp(0.38 + d / 2600, 0.38, 1.05), t0 = Math.max(livre, p.at - 0.12 - ida);
+      if (d > 0.5) SEG.push({ t0, t1: p.at - 0.12, p0: pos.slice(), p1: g, curva: (r() - 0.5) * 0.16 * d, tipo: 'arrow' });
+      const fim = [g[0] + p.para[0] - de[0], g[1] + p.para[1] - de[1]];
+      SEG.push({ t0: p.at, t1: p.at + dur, p0: g, p1: fim, curva: 0, tipo: 'arrow' });
+      ARRASTOS.push({ td: p.at, tu: p.at + dur, p0: g, p1: fim });
+      if (p.label) ACOES.push({ i: ACOES.length, do: 'drag', label: p.label, at: p.at, tStart: t0, tEnd: p.at + dur + 0.2, tAct: p.at,
+                                rect: [Math.min(g[0], fim[0]) - 4, Math.min(g[1], fim[1]) - 4, Math.abs(fim[0] - g[0]) + 8, Math.abs(fim[1] - g[1]) + 8], point: fim, ok: true });
+      pos = fim; livre = p.at + dur + 0.05; continue;
+    }
+    if (!['mover', 'clicar', 'duplo'].includes(p.do)) continue;
+    if (ROBO) { const q = posRobo(p.at - (p.dur || 0.7) - 0.2); if (q) pos = q; }
+    irPara(p.at - 0.001);
+    const a = alvoRectAtual(p.alvo);
+    if (!a) { console.warn(`alvo não achado: ${p.alvo} em ${p.at}s`); ERROS.push(`alvo não achado: ${p.alvo} (passo em ${p.at} s)`); continue; }
+    const f = p.ponto || [0.5, 0.5], alvo = [a[0] + a[2] * f[0], a[1] + a[3] * f[1]];
+    const pousa = p.do === 'mover' ? p.at : p.at - (p.do === 'duplo' ? 0.42 : 0.16);
+    const dist = Math.hypot(alvo[0] - pos[0], alvo[1] - pos[1]);
+    const dur = p.dur || clamp(0.38 + dist / 2600, 0.38, 1.05);
+    const t0 = Math.max(livre, pousa - dur);
+    if (dist > 0.5) SEG.push({ t0, t1: Math.max(t0 + 0.05, pousa), p0: pos.slice(), p1: alvo, curva: (r() - 0.5) * 0.16 * dist, tipo: a[4] || 'arrow' });
+    if (p.do !== 'mover') {
+      const bot = p.botao === 'direito' ? 2 : 0;
+      const ups = p.do === 'duplo' ? [p.at - 0.2, p.at] : [p.at];
+      for (const tu of ups) CLIQUES.push({ td: tu - 0.08, tu, x: alvo[0], y: alvo[1], botao: bot, rect: a.slice(0, 4), alvo: p.alvo });
+      // o menu da bandeja abre onde o botão soltou (pystray: TPM_RIGHTALIGN | TPM_BOTTOMALIGN no ponto do cursor)
+      for (const e of EV) if (e.p.do === 'mostrar' && e.p.o === 'menu' && e.p.x == null && e.t >= p.at - 1e-6 && e.t <= p.at + 1.5) { e.p.x = alvo[0]; e.p.y = alvo[1]; }
+    }
+    if (p.label) ACOES.push({ i: ACOES.length, do: p.do === 'mover' ? 'move' : (p.do === 'duplo' ? 'dblclick' : 'click'), label: p.label, at: p.at,
+                              tStart: t0, tEnd: p.at + 0.3, tAct: p.at, rect: a.slice(0, 4), point: alvo, ok: true, alvo: p.alvo });
+    pos = alvo; livre = p.at + 0.05;
+  }
+}
+function curvaPonto(s, u) {
+  const e = suave(u), dx = s.p1[0] - s.p0[0], dy = s.p1[1] - s.p0[1], L = Math.hypot(dx, dy) || 1, nx = -dy / L, ny = dx / L;
+  const b = 4 * e * (1 - e) * s.curva; // desvio lateral máximo no meio do caminho
+  return [s.p0[0] + dx * e + nx * b, s.p0[1] + dy * e + ny * b];
+}
+function cursorEm(t) {
+  let pos = (SPEC.cursor || {}).inicio || [W * 0.42, H * 0.5], tipo = 'arrow';
+  for (const s of SEG) {
+    if (t < s.t0) break;
+    if (t <= s.t1) { pos = curvaPonto(s, (t - s.t0) / (s.t1 - s.t0)); tipo = (t - s.t0) / (s.t1 - s.t0) > 0.85 ? s.tipo : 'arrow'; return { pos, tipo, mov: true }; }
+    pos = s.p1; tipo = s.tipo;
+  }
+  if (ROBO) { const q = posRobo(t, true); if (q) return { pos: q, tipo: 'arrow', mov: false, robo: true }; }
+  return { pos, tipo, mov: false };
+}
+
+// ───────────────────────────── gravação do robô na área da página ─────────────────────────────
+// Mapeia a telemetria/ações do robô (px do vídeo dele) para a tela da cena (px CSS): x = página.x + x/dsf * escala.
+function mapaRobo() {
+  const g = SPEC.navegador.pagina.gravacao; const p = $('#pagina').getBoundingClientRect();
+  const vw = CFG.gravacao.viewport[0], esc = p.width / vw;
+  return { de: g.de || 0, ini: g.inicio || 0, ate: g.ate ?? 1e9, dsf: CFG.gravacao.dsf, esc, x0: p.left, y0: p.top };
+}
+function posRobo(t, soDentro) {
+  if (!ROBO || !CFG.gravacao.amostras) return null; const M = ROBO;
+  const tr = t - M.de + M.ini; if (soDentro && (t < M.de || tr > M.ate)) return null;
+  const A = CFG.gravacao.amostras; let q = null;
+  for (const s of A) { if (s.t > tr) break; if (s.x != null && !(s.x === 0 && s.y === 0)) q = s; }
+  return q ? [M.x0 + q.x / M.dsf * M.esc, M.y0 + q.y / M.dsf * M.esc] : null;
+}
+
+// ───────────────────────────── API para o renderizador ─────────────────────────────
+let ERROS = [];
+window.setup = async (cfg) => {
+  CFG = cfg; SPEC = cfg.spec; Q = cfg.quadros; [W, H] = SPEC.tela || cfg.tela || [1920, 1200]; DSF = cfg.dsf;
+  if (cfg.fonte_ui) { const f = new FontFace('UI', `url(${cfg.fonte_ui})`, { weight: '100 900' }); document.fonts.add(await f.load()); }
+  for (const [fam, url, peso] of cfg.fontes_extra || []) { const f = new FontFace(fam, `url(${url})`, { weight: String(peso) }); document.fonts.add(await f.load()); }
+  TELA = $('#tela'); Object.assign(TELA.style, { width: W + 'px', height: H + 'px' });
+  if (cfg.pagina_img) { const im = new Image(); im.src = cfg.pagina_img; await im.decode(); CFG.pagina_img_w = im.naturalWidth; CFG.pagina_img_h = im.naturalHeight; }
+  INI = estadoInicial();
+  EV = (SPEC.passos || []).map((p, i) => ({ t: p.at + (p.atraso || 0), p, i })).flatMap(e => {
+    const out = [e];
+    const extra = (k, mostrar) => [].concat(e.p[k] || []).forEach(x => out.push({ t: e.t + (x.atraso ?? 0.06), p: typeof x === 'string' ? { do: mostrar ? 'mostrar' : 'esconder', o: x } : { do: mostrar ? 'mostrar' : 'esconder', ...x }, i: e.i + 0.5 }));
+    extra('mostra', true); extra('esconde', false);
+    if (e.p.do === 'sequencia') return (e.p.quadros || []).map(([dt, q], k) => ({ t: e.t + dt, p: { do: 'janela', slot: e.p.janela || 'painel', quadro: q }, i: e.i + k / 100 }));
+    if (e.p.do === 'campos') return (e.p.valores || []).map(([dt, v], k) => ({ t: e.t + dt, p: { do: 'campo', id: e.p.id, texto: v }, i: e.i + k / 100 }));
+    return out;
+  }).sort((a, b) => a.t - b.t || a.i - b.i);
+  montar();
+  await Promise.all([...document.images].map(i => i.complete ? 0 : new Promise(r => { i.onload = i.onerror = r; })));
+  if (SPEC.navegador && SPEC.navegador.pagina && SPEC.navegador.pagina.gravacao) {
+    irPara(0); ROBO = mapaRobo();
+    const g = $('#grav'); g.style.width = (CFG.gravacao.viewport[0] * ROBO.esc) + 'px'; g.style.height = (CFG.gravacao.viewport[1] * ROBO.esc) + 'px';
+  }
+  planejarCursor();
+  return { erros: ERROS, dur: SPEC.duracao };
+};
+
+window.R = (t) => {
+  const s = irPara(t); const c = cursorEm(t);
+  // hover e pressionado: elementos marcados com data-hv sob o cursor
+  for (const e of document.querySelectorAll('[data-hv]')) {
+    const v = visivel(e); if (!v) { e.classList.remove('hv-on', 'pressed'); continue; }
+    const r = e.getBoundingClientRect(); const dentro = c.pos[0] >= r.left && c.pos[0] <= r.right && c.pos[1] >= r.top && c.pos[1] <= r.bottom;
+    e.classList.toggle('hv-on', dentro);
+    e.classList.toggle('pressed', dentro && CLIQUES.some(k => t >= k.td && t <= k.tu + 0.05));
+  }
+  const mira = $('#mira'); mostra(mira, !!CFG.mira); if (CFG.mira) Object.assign(mira.style, { left: c.pos[0] + 'px', top: c.pos[1] + 'px' });
+  let quadroGrav = null;
+  if (ROBO && t >= ROBO.de - 1e-6) quadroGrav = Math.max(0, Math.round((Math.min(t - ROBO.de + ROBO.ini, ROBO.ate)) * (CFG.gravacao.fps || 30)));
+  else if (ROBO) quadroGrav = Math.round(ROBO.ini * (CFG.gravacao.fps || 30));
+  return { quadroGrav };
+};
+
+window.exportar = (fps) => {
+  // telemetria no formato do robô (rec/README.md), em px do vídeo (CSS x dsf)
+  const k = DSF, S = [], passo = 1 / 60;
+  const r4 = v => Math.round(v * 1000) / 1000, px = v => Math.round(v * k * 10) / 10;
+  for (const s of SEG) for (let t = s.t0; t <= s.t1 + 1e-9; t += passo) { const c = cursorEm(t); S.push({ t: r4(t), x: px(c.pos[0]), y: px(c.pos[1]), type: 'move', cursor: c.tipo }); }
+  const rect = a => ({ x: px(a[0]), y: px(a[1]), w: px(a[2]), h: px(a[3]) });
+  for (const c of CLIQUES) {
+    const tgt = { tag: 'cena', text: c.alvo };
+    S.push({ t: r4(c.td), x: px(c.x), y: px(c.y), type: 'down', button: c.botao, rect: rect(c.rect), target: tgt });
+    S.push({ t: r4(c.tu), x: px(c.x), y: px(c.y), type: 'up', button: c.botao, rect: rect(c.rect), target: tgt });
+    S.push({ t: r4(c.tu), x: px(c.x), y: px(c.y), type: 'click', button: c.botao, rect: rect(c.rect), target: tgt });
+  }
+  for (const d of ARRASTOS) {  // arrastar: botão preso do começo ao fim, sem "click" (sem anel nem quique)
+    S.push({ t: r4(d.td), x: px(d.p0[0]), y: px(d.p0[1]), type: 'down', button: 0 });
+    S.push({ t: r4(d.tu), x: px(d.p1[0]), y: px(d.p1[1]), type: 'up', button: 0 });
+  }
+  const A = ACOES.map(a => ({ ...a, rect: rect(a.rect), point: { x: px(a.point[0]), y: px(a.point[1]) } }));
+  // gravação do robô: as amostras e ações dele, deslocadas no tempo e na tela
+  if (ROBO) {
+    const M = ROBO, mx = x => (M.x0 + x / M.dsf * M.esc) * k, my = y => (M.y0 + y / M.dsf * M.esc) * k, ms = v => v / M.dsf * M.esc * k;
+    const dt = M.de - M.ini, dentro = t => t >= M.ini && t <= M.ate;
+    for (const s of CFG.gravacao.amostras || []) {
+      if (!dentro(s.t)) continue; const n = { ...s, t: r4(s.t + dt) };
+      if (s.x != null && !(s.x === 0 && s.y === 0)) { n.x = Math.round(mx(s.x) * 10) / 10; n.y = Math.round(my(s.y) * 10) / 10; }
+      if (s.rect) n.rect = { x: mx(s.rect.x), y: my(s.rect.y), w: ms(s.rect.w), h: ms(s.rect.h) };
+      S.push(n);
+    }
+    for (const a of CFG.gravacao.acoes || []) {
+      if (!dentro(a.tAct ?? a.tStart ?? 0)) continue;
+      const n = { ...a, i: A.length, origem: 'robo' }; for (const kk of ['at', 'tStart', 'tEnd', 'tAct']) if (a[kk] != null) n[kk] = r4(a[kk] + dt);
+      if (a.rect) n.rect = { x: mx(a.rect.x), y: my(a.rect.y), w: ms(a.rect.w), h: ms(a.rect.h) };
+      if (a.point) n.point = { x: mx(a.point.x), y: my(a.point.y) };
+      A.push(n);
+    }
+  }
+  S.sort((a, b) => a.t - b.t);
+  return { samples: S, actions: A, erros: ERROS };
+};
+</script>
+</body>
+</html>
