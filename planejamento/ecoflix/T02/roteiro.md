@@ -11,8 +11,8 @@ do robô a reabre fora do vídeo.
 - **Antes:** Sua conta e sua empresa (T1)
 - **Próximo:** Materiais e tabelas de preço (T3)
 - **Vinhetas (áreas):** USUÁRIOS · USUÁRIOS · PERMISSÕES · PERMISSÕES · PERMISSÕES · USUÁRIOS · MASTER · PLANO · VALORES · RESUMO
-- **Duração estimada:** ~11 min de vídeo (1.490 palavras de fala, ~9,6 min de voz a 2,6 palavras/s, mais 10 vinhetas e as
-  esperas da tela; alvo da fonte: 13 min; 7.986 caracteres de TTS com os títulos)
+- **Duração estimada:** ~11 min de vídeo (1.483 palavras de fala, ~9,5 min de voz a 2,6 palavras/s, mais 10 vinhetas e as
+  esperas da tela; alvo da fonte: 13 min; 7.970 caracteres de TTS com os títulos)
 - **FAKE_NOW:** `2026-11-10T08:30:00-03:00` (terça).
 - **Estado inicial (fim do T1):** só o Rafael (master, "Acesso Total"); plano `personalizado` com `max_users` 3.
 - **Criado ao vivo:** Marcos Antunes ("Operador Padrão" sem "Ver Projeção de Lucro", tela inicial "Caixa", foto) e
@@ -30,7 +30,7 @@ do robô a reabre fora do vídeo.
 | Dashboard da Recicla Vale Metais, logado como Rafael Nogueira. [ILUSTRAÇÃO: a equipe da Recicla Vale: entram, um a um, três cartões de pessoa (Rafael Nogueira "dono", Marcos Antunes "balança e caixa", Juliana Prado "escritório"), no cartão branco da ilustração, Montserrat, o verde da marca; o título "A equipe" grande no centro sobe quando os cartões entram.] | Oi! Neste tutorial a gente vai colocar a equipe da Recicla Vale Metais dentro do EcoSistema, cada um com o acesso certo. |
 | (ilustração) Embaixo do Marcos entram as portas "Caixa", "Estoque" e "Ticket de Pesagem", e um cifrão de lucro riscado, na palavra "lucro". | O Marcos pesa o material e opera o caixa, mas não precisa ver o lucro. |
 | (ilustração) Embaixo da Juliana entram "Contas a Pagar/Receber", "Movimentações Bancárias" e "Fiscal & Ambiental", e a porta "Caixa" fechada, na palavra "caixa". | A Juliana cuida das contas e das notas, e não mexe no caixa. |
-| (ilustração) Embaixo do Rafael, todas as portas abertas. | É aqui que o dono decide quem vê valor, quem abre caixa e quem não vê nada. |
+| (ilustração) Embaixo do Rafael, todas as portas abertas. | O dono decide quem vê valor, quem abre caixa e quem não vê nada. |
 | Cartão discreto: "Antes: Sua conta e sua empresa". | Se você ainda não viu o tutorial Sua conta e sua empresa, dá uma olhada antes. [pause] Vamos ver onde fica. |
 
 ### cap01 · Onde fica (vinheta: USUÁRIOS)
@@ -122,7 +122,7 @@ do robô a reabre fora do vídeo.
 
 | Tela | Fala |
 | --- | --- |
-| Capítulo novo (semente `apos-cap05`), na aba "Usuários e Permissões". [ZOOM: o selo "3 / 3 usuários", a frase inteira] [BACKEND: `companies.subscription_plan` `personalizado`, `max_users` 3] | Agora o tamanho da equipe. Cada plano tem um número de usuários, e ele depende do plano contratado. A Recicla Vale está com três de três: o Rafael, a Juliana e o Marcos. |
+| Capítulo novo (semente `apos-cap05`), na aba "Usuários e Permissões". [ZOOM: o selo "3 / 3 usuários", a frase inteira] [BACKEND: `companies.subscription_plan` `personalizado`, `max_users` 3] | Agora o tamanho da equipe. O número de usuários depende do plano contratado. A Recicla Vale está com três de três: o Rafael, a Juliana e o Marcos. |
 | [ILUSTRAÇÃO: as vagas do plano: três cadeiras com os nomes Rafael, Juliana e Marcos; na palavra "desativado", o crachá do Marcos sai e a cadeira dele fica livre; volta em seguida; uma quarta cadeira tracejada, com um "+", entra no fim da frase.] | Pensa em cadeiras: cada usuário ativo ocupa uma. Quem está desativado libera a dele. |
 | Clica em "Criar Usuário": abre "Sua equipe cresceu! 🎉", com "3 / 3" e "Usuários cadastrados", e o quadro "Adicionar usuários extras". | Com todas ocupadas, o Criar Usuário abre esta janela. |
 | Clica no "+" uma vez ("2", "usuários") e no "−" uma vez ("1", "usuário"); a câmera fica em "Adicionar usuários extras" e em "Novo limite de usuários:" ("4 usuários"), sem zoom nos valores em reais. | Aqui você escolhe quantos usuários a mais quer. Cada usuário extra entra na mensalidade, e a tela já mostra a estimativa. |

@@ -7,7 +7,7 @@ CAPS = {
 0: """Oi! Neste tutorial a gente vai colocar a equipe da Recicla Vale Metais dentro do Ecossistema, cada um com o acesso certo.
 O Marcos pesa o material e opera o caixa, mas não precisa ver o lucro.
 A Juliana cuida das contas e das notas, e não mexe no caixa.
-É aqui que o dono decide quem vê valor, quem abre caixa e quem não vê nada.
+O dono decide quem vê valor, quem abre caixa e quem não vê nada.
 Se você ainda não viu o tutorial Sua conta e sua empresa, dá uma olhada antes. [pause] Vamos ver onde fica.""",
 1: """Tudo começa nas Configurações, no rodapé do menu, do lado do Sair.
 A equipe fica nesta aba aqui, Usuários e Permissões.
@@ -59,7 +59,7 @@ Pensa num dono que vende o ferro-velho, ou num sócio que assume a empresa. É p
 No menu da pessoa, Tornar master. A janela explica o que muda: ela passa a ter o controle total, e a troca é na hora.
 Uma dica: passe o controle só pra quem você confiaria a empresa inteira. Você continua com as suas permissões, mas perde a proteção: o novo master pode até desativar ou excluir a sua conta.
 Aqui eu cancelo, e o Rafael continua como master.""",
-8: """Agora o tamanho da equipe. Cada plano tem um número de usuários, e ele depende do plano contratado. A Recicla Vale está com três de três: o Rafael, a Juliana e o Marcos.
+8: """Agora o tamanho da equipe. O número de usuários depende do plano contratado. A Recicla Vale está com três de três: o Rafael, a Juliana e o Marcos.
 Pensa em cadeiras: cada usuário ativo ocupa uma. Quem está desativado libera a dele.
 Com todas ocupadas, o Criar Usuário abre esta janela.
 Aqui você escolhe quantos usuários a mais quer. Cada usuário extra entra na mensalidade, e a tela já mostra a estimativa.
