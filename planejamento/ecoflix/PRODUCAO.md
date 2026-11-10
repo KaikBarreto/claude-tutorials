@@ -105,3 +105,5 @@ Decisões:
   `config_narracao.json` (agora com todas as trocas); reteste curto das seis no fluxo de teste (188 créditos). Cena de
   Windows no PERFIL e no briefing; código do EcoTray 1.59.154 em `/home/claude/ecoflix/app-src-1.59.154/ecotray/`
   (Tkinter; aqui não há tkinter, há Xvfb). 21 agentes relançados (os 20 + EcoTray: cena do Windows).
+- 10/11 00:4x Relançados 20 agentes (o limite da sessão é 20 ao mesmo tempo): Ferramentas, Mundo, Marca, EcoTray (cena do
+  Windows) e 16 de roteiro. **Falta lançar o de T20 + T26** (bateu no limite): lançar assim que um agente terminar.
