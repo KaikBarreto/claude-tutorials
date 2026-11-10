@@ -10,8 +10,8 @@ código 1.59.154 (`T04/inventario.md`). Mundo, sementes e simulações: `T04/pla
 - **Próximo:** Balança e impressora: o EcoTray (T5)
 - **Vinhetas (áreas):** PARCEIROS · CADASTRO · CADASTRO · FISCAL · SALDO · PREÇOS · FICHA · FICHA · SALDO · FICHA · FICHA ·
   SALDO · RESUMO (todos os capítulos, menos o 0)
-- **Duração estimada:** ~15 min de vídeo (1.964 palavras, ~12,6 min de fala, mais vinhetas, ilustrações e esperas de tela;
-  alvo da fonte: 17 min)
+- **Duração estimada:** ~15 min de vídeo (1.966 palavras e 10.708 caracteres de fala, ~12,6 min de voz, mais vinhetas,
+  ilustrações e esperas de tela; alvo da fonte: 17 min). Voz: 11.052 caracteres com os títulos das vinhetas.
 - **Gravação:** computador, janela 1280×800 (modo compacto da tela: selos da lista só com ícone), Rafael Nogueira
   (administrador), `FAKE_NOW=2026-11-10T08:30:00-03:00`. Do cap. 1 em diante o `setup` recolhe o menu lateral e cada
   capítulo abre um navegador novo na semente indicada.

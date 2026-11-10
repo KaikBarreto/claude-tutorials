@@ -6,8 +6,8 @@
   SEM INTERNET · RESUMO.
 - **Objetivo:** fechar uma compra com o peso vindo da balança, tara, impureza e dupla pesagem, pagar em dinheiro, Pix e fiado
   parcelado, imprimir o cupom, vender com lucro estimado e cupom sem valor, cobrir o estoque que falta e comprar sem internet.
-- **Duração:** alvo da fonte ~22 min; fala ~2.600 palavras (~17 min a 2,6 palavras/s) + 15 vinhetas, ilustrações e o
-  preenchimento acelerado: ~20 min. Ver o total exato no rodapé do `roteiro.md`.
+- **Duração:** alvo da fonte ~22 min; fala 2.520 palavras e 13.503 caracteres (~16 a 17 min) + 16 vinhetas e as ações sem
+  fala (preenchimento acelerado): ~19 min. `python3 -I narracao/tts_textos.py` mostra a conta por capítulo.
 - Base: `inventario.md` (código 1.59.154). Logado como **Rafael Nogueira** (MASTER, vê lucro), desktop 1280×800, tema claro.
   `FAKE_NOW=2026-11-10T08:30:00-03:00`.
 - 🔒: só a leitura da balança (módulo `balanca_integration`) e as outras unidades na falta de estoque (filial, módulo gerencial);
@@ -31,8 +31,8 @@
 | 11 | PAGAMENTO · Fiado com parcelas | "Vencimento (opcional)"; "Configurar faturamento": 2 parcelas (25/11 e 10/12); ilustração; "Aplicar faturamento"; confirmar | Saldo mudou → refazer parcelas | 1:30 |
 | 12 | COMPROVANTE · O cupom e o cupom sem valor | "Imprimir Comprovante" → "Imprimir direto"; ilustração do cupom; "Opções avançadas" → "Comprovante sem valores" + balão | Vale só para o pedido | 1:30 |
 | 13 | VENDA · A tela de venda | Shift+V; Fundição Bandeira do Vale; latão; coluna "Lucro", "Lucro estimado"; ilustração; "Estoque Disponível"; liga "Comprovante sem valores" | Estoque Disponível já desconta a venda | 1:30 |
-| 14 | VENDA · Estoque insuficiente | Cobre mel 60 kg × 42 em estoque → "Estoque insuficiente" → origem "Cobre misto" 18 → "Transferir e Adicionar"; Pix; PDF sem valores | Agendada e gravada junto; "Inserir mesmo assim"; 🔒 outras unidades e internet | 1:00 |
-| 15 | SEM INTERNET · Sem internet | Faixa "Sem conexão…"; compra da Dona Cida → "Compra salva localmente…"; "Pendências de Sincronização"; volta: "Operações sincronizadas com sucesso!"; ilustração da fila | Erro não reenvia sozinho; "Tentar novamente"; venda com outra unidade precisa de internet | 1:00 |
+| 14 | VENDA · Estoque insuficiente | Cobre mel 60 kg × 42 em estoque → "Estoque insuficiente" → origem "Cobre misto" 18 → "Transferir e Adicionar"; Pix; PDF sem valores | 🔒 outras unidades e, com elas, só com internet; agendada e gravada junto; "Inserir mesmo assim" | 1:00 |
+| 15 | SEM INTERNET · Sem internet | Faixa "Sem conexão…"; compra da Dona Cida → "Compra salva localmente…"; "Pendências de Sincronização"; volta: "Operações sincronizadas com sucesso!"; ilustração da fila | Erro não reenvia sozinho; "Tentar novamente" | 1:00 |
 | 16 | RESUMO · Recapitulando | Montagem; "Próximo: Ticket de Pesagem" | | 0:50 |
 
 Transições faladas: 1→2 "Primeiro, quem está vendendo pra gente"; 2→3 "Hoje chegou um carroceiro novo"; 3→4 "Agora o preço";

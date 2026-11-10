@@ -14,16 +14,16 @@ No fim, as Configurações de érre-agá, com a automação da folha, e o Dashbo
 Cada pessoa aparece com o cargo e, do lado, o saldo: o que a empresa ainda vai pagar pra ela. Em cima, dá pra buscar pelo nome ou pelo cargo.
 Clicando no Diego, o ajudante do pátio, abre a ficha dele: os botões de vale, bônus, falta, recebimento e pagamento, o resumo do salário e do saldo e os dados do cadastro.
 E o Dashboard resume a equipe inteira: quantos estão ativos, a soma dos salários e o saldo total a pagar.""",
-2: """Começando pelo cadastro. O Gabriel Rocha começou hoje como ajudante de pátio. Em Novo Funcionário, a janela abre na aba Dados.
+2: """Começando pelo cadastro. O Gabriel Rocha começou hoje como operador de empilhadeira. Em Novo Funcionário, a janela abre na aba Dados.
 Coloco o nome, o CPF e o telefone. O CPF é conferido assim que você sai do campo.
-O cargo é ajudante de pátio, no departamento Pátio, e a admissão é hoje, dez de novembro.
-Na aba Remuneração vai o salário: mil novecentos e oitenta reais.
+O cargo é operador de empilhadeira, no departamento Pátio, e a admissão é hoje, dez de novembro.
+Na aba Remuneração vai o salário: dois mil quinhentos e vinte reais.
 E quanto ele custa de verdade pra empresa? O salário é só a ponta.
 O botão Calcular abre a conta, e o regime tributário já vem do cadastro fiscal: Lucro Real. Quem define isso é o contador.
-Coloco seiscentos reais por ano de é-pê-í e uniforme, a luva e a botina. A calculadora soma o fundo de garantia, o décimo terceiro, as férias e o i-ene-ésse-ésse da empresa. Custo total mensal: três mil trezentos e sessenta e um reais.
+Coloco seiscentos reais por ano de é-pê-í e uniforme, a luva e a botina. A calculadora soma o fundo de garantia, o décimo terceiro, as férias e o i-ene-ésse-ésse da empresa. Custo total mensal: quatro mil duzentos e sessenta e quatro reais.
 São valores estimados, e o contador confirma. Clico em Aplicar, e o custo fica no cadastro, pra você enxergar quanto a equipe pesa.
 Por último, a chave Pix, que aqui é o celular dele. Cadastrar. Pronto, o Gabriel já está na lista.
-Uma dica: funcionário novo já nasce com o saldo igual ao salário, mil novecentos e oitenta. Daqui pra frente, cada vale, bônus e falta mexe nesse número.""",
+Uma dica: funcionário novo já nasce com o saldo igual ao salário, dois mil quinhentos e vinte. Daqui pra frente, cada vale, bônus e falta mexe nesse número.""",
 3: """Agora os campos de folha. O Gabriel vai ser registrado em carteira. Então, editando o cadastro, em Regime de contratação, eu marco cê-éle-tê.
 Aparecem os campos de folha. Em Número de dependentes, coloco um, o filho dele. É o número que entra no cálculo do imposto de renda.
 Ele vem de ônibus, então ligo o desconto do vale-transporte. O vale dele custa duzentos e vinte reais por mês, e o desconto vai até seis por cento do salário, como diz a tela.
@@ -41,7 +41,7 @@ Uma dica: o vale lançado aqui já mexe no caixa ou no banco. Então não lance 
 Na sexta, o Diego faltou sem avisar. Na Falta, lanço o desconto de um dia: noventa reais.
 Repara na conta: mil novecentos e oitenta de salário, menos duzentos de vale, menos noventa da falta. Saldo: mil seiscentos e noventa.
 Uma dica: o saldo é sempre o salário, mais os bônus, menos as faltas e os vales, contando só o que aconteceu depois do último pagamento. Pagou, ele recomeça do salário.
-E o bônus soma. O Cláudio, da empilhadeira, bateu a meta de prensagem de outubro: cento e cinquenta reais. O saldo dele sobe pra dois mil setecentos e cinquenta.""",
+E o bônus soma. O Cláudio, o outro ajudante do pátio, bateu a meta de prensagem de outubro: cento e cinquenta reais. O saldo dele sobe pra dois mil duzentos e cinquenta.""",
 6: """Hora de pagar. O Edson estava na estrada ontem, dia do pagamento, e recebe hoje. Em outubro ele pegou quinhentos reais de vale e ganhou duzentos e cinquenta de bônus.
 Antes, ele devolveu cem reais de um vale que não usou. Isso é o Recebimento: o dinheiro entra no caixa e abate dos vales.
 Confirmado: dos quinhentos de vale, sobram quatrocentos.
