@@ -149,3 +149,11 @@ vendeu pouco num mês) cabem num dos meses.
   bateria (R$ 744,00) lançados no fornecedor errado, reaberto, corrigido para a Auto Peças Vale Forte e fechado de novo
   com a data de 21/10; um pedido estornado em 05/11; a latinha da Aparecida vai de 24 para 42 kg; uma compra duplicada do
   Valdir é excluída.
+- **RH** (T19; lista no `T19/plano.md`): 8 funcionários, com Cláudio Ferraz e Diego Morais (da T11), Rogério Batista
+  (ex-ajudante, arquivado) e Gabriel Rocha (cadastrado na aula); departamentos Escritório, Pátio e Transporte; ponto
+  pelo celular com a localização do pátio. As tabelas CLT de 2026 no app são provisórias: os valores não são falados.
+- **Gerencial** (T22): matriz = a Recicla Vale Metais da T1 (**CNPJ 47.318.506/0001-07**); "Filial Pindamonhangaba"
+  com **CNPJ 47.318.506/0002-98** (mesma raiz; o roteiro da T22 propôs outra raiz, 48.731.296, e é corrigido na junção);
+  "Grupo Recicla Vale", código GRP-7KQ4TX; Sandra Pires, MASTER da filial (cap03). Outubro na T22: matriz vendeu
+  R$ 186 mil e gastou R$ 180 mil, filial vendeu R$ 72 mil e gastou R$ 71 mil, CMV R$ 194 mil (**conferir com a T15 e a T25
+  na junção**). Latinha: matriz 4.300 kg e filial 1.850 kg, depois 5.500 kg e 650 kg.

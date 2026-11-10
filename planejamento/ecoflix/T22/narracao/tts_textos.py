@@ -12,7 +12,7 @@ Como ele junta a dê-érri-ê das unidades, se você ainda não viu o tutorial R
 O grupo junta as unidades. Cada unidade é uma empresa própria no sistema, com login e assinatura próprios. A matriz é a dona do grupo, e a filial entra nele.
 A matriz enxerga os números de todas, manda o mesmo padrão de cadastro pras filiais e transfere material entre elas.
 Uma dica: o Gerencial junta e padroniza, mas quem opera a filial é a filial. O caixa, as compras e as notas dela continuam com quem trabalha lá.""",
-2: """Começando pela matriz. No Configurar Grupo, a gente cria o grupo.
+2: """Começando pela matriz. Clico em Configurar Grupo pra criar o grupo.
 Dou o nome, Grupo Recicla Vale, e clico em Criar Grupo.
 Pronto. Aqui ficam as abas do grupo e um passo a passo do que falta configurar.
 E esse é o código de convite. É ele que liga a filial ao grupo, e vale por trinta dias. Se vencer, o botão do lado gera outro.
@@ -51,7 +51,7 @@ E no Relatório de Estoque, quanto o grupo comprou e vendeu de cada material, co
 9: """Agora a padronização. A matriz monta o padrão do grupo, e a filial recebe. Começa pelo catálogo de materiais.
 Com um clique, o Importar do Estoque da Matriz traz os materiais que a matriz já usa.
 As tabelas de preço da matriz entram sozinhas, assim que você abre a aba.
-Nos clientes e fornecedores, você marca quem a filial também atende. A Fundição Bandeira do Vale compra das duas, então eu marco.
+Em Clientes e Fornecedores, você marca quem também faz negócio com a filial. A Fundição Bandeira do Vale compra das duas unidades, então eu marco.
 E as categorias financeiras também vêm prontas da matriz.
 Com tudo pronto, na aba Unidades, o Enviar Ativos manda o padrão pra filial. O que ela já tinha fica como está, e o que faltava entra. Os preços dela só mudam se você ligar o Sobrescrever preços existentes.
 Confirmar Envio. Agora as duas unidades falam a mesma língua: o mesmo material, com o mesmo nome.
@@ -59,7 +59,7 @@ Uma dica: se tirar uma filial do grupo por engano, nenhum dado dela se perde. Pr
 10: """Agora as transferências. A filial juntou alumínio latinha, e a matriz vai vender um lote grande. Primeiro, eu ligo o Exigir aprovação em transferências.
 Assim, nenhum estoque se move sem confirmação. Em Nova, a origem é a filial e o destino, a matriz.
 O material é o alumínio latinha: mil e duzentos quilos.
-Repara no aviso do resumo: com a aprovação ligada, o estoque ainda não se move. Clico em Solicitar.
+Repara no aviso do resumo: com a aprovação ligada, o estoque ainda não se move. Clico em Solicitar uma transferência.
 A transferência fica pendente. Quando o caminhão chega na matriz e o material é conferido, aí sim, Executar. A tela pede pra confirmar que o destino está de acordo.
 Confirmar e Executar. Pronto: a matriz fica com cinco mil e quinhentos quilos, e a filial com seiscentos e cinquenta. O total do grupo continua o mesmo.
 Uma dica: um material do grupo pode juntar mais de um material de uma unidade. O total do grupo soma todos, e a transferência tira de um só. Se o número do grupo parecer estranho, confira material por material.""",
@@ -71,7 +71,7 @@ Escolho o Pix, e a cobrança única aparece.
 Pagou, e pronto: as cobranças das unidades passam a vir nessa fatura da matriz.""",
 12: """Pronto! Recapitulando: a gente criou o grupo na matriz, gerou o código de convite e vinculou a filial de Pindamonhangaba.
 Leu o Dashboard Gerencial, com o ranking e o resumo de cada unidade.
-Leu a dê-érri-ê do grupo nos dois regimes e comparou unidade por unidade.
+Viu a dê-érri-ê do grupo nos dois regimes e comparou unidade por unidade.
 Conferiu o estoque do grupo e mandou o mesmo catálogo pra filial.
 Transferiu o alumínio com aprovação e pagou as assinaturas numa fatura só.
 No próximo tutorial, o caminhão sai do pátio pra buscar material. Até lá!""",

@@ -17,6 +17,14 @@ as gravações). Cada item diz a aula em que apareceu. **No fim da produção, v
 - **Aviso de IBS/CBS não aparece** (T16): o aviso do topo da tela de notas não é renderizado.
 - **"Observação" não grava na Produção** (T11).
 - **Kardex com filtro de fornecedor mostra vendas** (T10): o filtro mantém as vendas na lista.
+- **Folha marca "Falta" antes da admissão** (T19).
+- **Recibo do pagamento do funcionário nunca abre** (T19).
+- **Funcionário arquivado ainda bate ponto pelo link** (T19).
+- **"Saldo: R$ 1500.00" sem formato** (T19): falta a máscara de moeda.
+- **Aviso duplicado na tela de funcionários** (T19).
+- **Cartão "Lucro Líquido" do Gerencial é vendas menos compras** (T22): o número não fecha com o resultado.
+- **Comparativo do Gerencial usa as compras nos dois regimes** (T22): em competência devia usar o custo do vendido.
+- **Matriz consegue "Corrigir saldo" do estoque da filial** (T22): conferir se a permissão é desejada.
 
 ## 2. Melhorias de uso
 - **Produção diz "peça" em produto vendido por quilo** (T11).
@@ -28,6 +36,7 @@ as gravações). Cada item diz a aula em que apareceu. **No fim da produção, v
 - **Peso da balança some no celular** (T5): o indicador não aparece em telas menores que 1024 px.
 - **Trava de peso com o EcoTray fechado** (T5): com a trava ligada, não dá para digitar o peso nem em emergência.
 - **Pix Automático já vem ligado** (T0): confirmar se é o padrão desejado.
+- **Gráficos do Gerencial cortam nomes longos** (T22): a filial teve de se chamar "Filial Pindamonhangaba".
 
 ## 3. Textos desatualizados (Central de Ajuda, Guia de Instalação e a fonte da Trilha EcoFlix)
 - **Guia de Instalação do EcoTray** ainda fala em arquivo ZIP (T5).
@@ -51,6 +60,8 @@ as gravações). Cada item diz a aula em que apareceu. **No fim da produção, v
   - T18: não existe status "recebido"; o cancelamento só vale para MTR emitido; o CDF é definitivo.
   - T21: o Cato só aparece com a liberação da empresa e a permissão de uso; o limite de 40 perguntas por dia está só na
     fonte.
+  - T19: a pausa da jornada individual funciona diferente do que a fonte descreve.
+  - T22: a volta da filial pelo mesmo código só dá para conferir no banco, não no código da tela.
   - T25: a Agenda já não conta o fiado em dobro; o gráfico de 6 meses termina no fim do período do filtro; o
     Marketplace saiu da rotina semanal.
   - Ordem de gravação lista a T25 duas vezes; as pendências pulam do 9 para o 11.

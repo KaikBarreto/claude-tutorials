@@ -274,3 +274,21 @@ Decisões:
 - 10/11 01:42 Kaik: "esses levantamentos de bugs vá anotando pra no final me dar um report do que melhorar no sistema
   desses problemas". Lista em `MELHORIAS_ECOSISTEMA.md` (prováveis bugs, melhorias de uso, textos desatualizados), com
   tudo o que os roteiros acharam até agora. Os ensaios e as gravações vão somando nela; no fim, vira o report.
+- 10/11 04:0x **T19 e T22 prontas** (roteiro). T19: 14 capítulos, 2.062 palavras, ~13 min de fala (~16 min de vídeo), 11
+  ilustrações; pronúncias a testar RH "érre-agá", CLT "cê-éle-tê", INSS "i-ene-ésse-ésse", EPI "é-pê-í", PIN "pin";
+  backend: ajuste de salário e vale, bônus, falta, pagamento e recebimento, ponto pelo servidor (hora do servidor,
+  selfie e local) com mapa e câmera simulados no celular. T22: 13 capítulos, 1.410 palavras, ~9 min de fala (~12 min de
+  vídeo; todos os capítulos da fonte cobertos), 9 ilustrações; CMV "cê-ême-vê" (como na T15); backend: criar o grupo,
+  vincular a filial, Enviar Ativos, transferência pendente e executada, pagamento do grupo simulado; cap03 gravado como
+  Sandra Pires. Achados de sistema no `MELHORIAS_ECOSISTEMA.md`. **Na junção**: CNPJ da filial na T22 vira
+  47.318.506/0002-98 (raiz da T1); números de outubro da T22 × T15 × T25.
+- 10/11 03:5x **Ferramentas na skill**: o branch `consolidacao-domiflix` (6 commits) entrou no main (d0702be): `montar_cap.py`
+  (computador ou celular pelo tamanho do vídeo, voz_de, zoom e destaque por rect sem passo, acelera, rótulo#k, destino),
+  `finish.py` (acelera; apaga stems e music.wav depois do mix), `remendar_aula.py` (9:16, cortes em capítulo novo),
+  `celular_vertical.py`, `legendas_aula.py`; novas `folhas3s.sh`, `pico_aac.py`, `lacunas.py`, `confere_render.py`,
+  `compor_ilus_vertical.py`, `ilustracoes/ilu_comum.py`; os 3 ajustes do Supabase falso; `rec/molde/` (prever, resumo,
+  ensaio, explorar) copiado pelo `instalar.sh`. Testes: identidade da Domiflix idêntica ao T3; `montar_cap.py` igual às
+  cópias em 136 capítulos; `finish.py` igual bit a bit; legendas do T15 reproduzidas.
+- 10/11 04:0x **Cópia de segurança da Domiflix** no branch `backup-domiflix-maquina` (8b74fe7): mundo da Dominex 1.38.24,
+  roteiros do robô e projetos de edição, só texto (75 MB, sem a telemetria `*.actions.json`, que tinha a chave pública do
+  app); serve aos remendos pendentes.

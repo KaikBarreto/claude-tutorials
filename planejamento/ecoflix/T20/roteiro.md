@@ -10,7 +10,7 @@ vai em `narracao/tts_textos.py`. Coluna Tela = o que o robô faz e onde a câmer
 - **Próximo:** Gerencial: matriz e filiais (T22)
 - **Vinhetas (áreas):** PORTAL · LINK · EXIBIÇÃO · SENHA · HISTÓRICO · SALDO · NOTAS E RELATÓRIO · COLETAS · COMPROVANTE · FOTOS ·
   RESUMO (todos os capítulos menos o 0)
-- **Duração estimada:** ~12 min de vídeo (1.493 palavras de fala, ~9,6 min de voz a 2,6 palavras/s, mais 11 vinhetas, 10
+- **Duração estimada:** ~12 min de vídeo (1.515 palavras de fala, ~9,7 min de voz a 2,6 palavras/s, mais 11 vinhetas, 10
   ilustrações e o tempo das ações; a fonte pede ~12 min)
 - **FAKE_NOW:** `2026-11-10T15:00:00-03:00` (terça à tarde, depois da venda sem valor da T7 e da nota 1250 da T16). Desktop,
   janela 1280×800, tema claro. Dois navegadores: o **do sistema** (Rafael Nogueira, MASTER) e o **do parceiro** (sem login no
@@ -109,10 +109,10 @@ vai em `narracao/tts_textos.py`. Coluna Tela = o que o robô faz e onde a câmer
 | --- | --- |
 | Capítulo novo (semente `apos-cap06`), portal da Fundição Bandeira do Vale; clique em "Notas Fiscais": "Todas as NF-e relacionadas a você (entrada e saída) em ordem do mais recente."; a linha "Saída", "1250", "1", "10/11/2026", "R$ 23.950,00", "Autorizada". [ZOOM: o número "1250" e o valor] [BACKEND: `invoices` da Fundição: NF-e 1250, série 1, `emitida`, `invoice_type` saída] | Na aba Notas Fiscais, o parceiro vê as notas emitidas pra ele. Na Fundição, aparece a nota mil duzentos e cinquenta, do cobre mel de hoje, autorizada. |
 | A câmera abre para a tabela inteira ("Tipo", "Nº", "Série", "Data", "Valor", "Status"). | Ele confere o número, a série, a data, o valor e a situação. O arquivo da nota, o XML ou o DANFE, você manda pelo caminho de sempre, nas Notas Fiscais do sistema. |
-| Navegador da cooperativa (com sessão): clique em "Relatório": "Período" em "Últimos 30 dias", "Material", "Baixar PDF" e "Relatório por Material". | Já o Relatório soma o que o parceiro entregou, material por material. |
+| Navegador da cooperativa (com sessão): clique em "Relatório": "Período" em "Últimos 30 dias", "Material", "Baixar PDF" e "Relatório por Material". | Já o Relatório soma os pedidos do parceiro, material por material. |
 | Clique em "Período" e escolhe "Mês passado": a tabela mostra "Alumínio latinha", "Chaparia", "Ferro misto", "Papelão" e "Plástico PET", com "Qtd. Comprada", "Valor Compra" e "Preço Médio Compra". [BACKEND: edge `entity-portal-report` com as compras de outubro da cooperativa] | Na cooperativa, eu escolho o mês passado. Em outubro, foram oito mil e quatrocentos quilos de papelão e dois mil e seiscentos de PET, entre outros. |
 | [ZOOM: a linha "Total", com o valor "R$ 18.755,00"] | No total, dezoito mil setecentos e cinquenta e cinco reais. |
-| [ZOOM: o botão "Baixar PDF"], sem clicar. | No Baixar PDF, o relatório sai pronto pra salvar ou imprimir. E se você não quiser mostrar os valores aqui, é só desligar Mostrar valores, na aba Portal. |
+| [ZOOM: o botão "Baixar PDF"], sem clicar. | No Baixar PDF, o relatório abre pronto pra salvar. E se você não quiser mostrar os valores aqui, é só desligar Mostrar valores, na aba Portal. |
 
 ### cap08 · O parceiro pede a coleta (vinheta: COLETAS)
 
@@ -122,7 +122,7 @@ vai em `narracao/tts_textos.py`. Coluna Tela = o que o robô faz e onde a câmer
 | Clique em "Solicitar coleta": janela "Solicitar coleta" ("Peça a coleta do seu material. A empresa confirma o dia e o horário."), "Tipo" "Coletar material". | Essa semana, o galpão dela encheu antes de sexta. Então ela clica em Solicitar coleta. |
 | Em "Material *" digita "Papelão e PET prensados"; em "Quantidade estimada" digita "2.500 kg". [ZOOM: "Quantidade estimada" com o valor] | Ela escreve o material, papelão e PET prensados, e a quantidade, uns dois mil e quinhentos quilos. |
 | Em "Data preferida" escolhe 12/11/2026; em "Período" escolhe "Manhã"; a câmera passa por "Endereço da coleta", já preenchido com o endereço do cadastro; em "Observações" digita "Os fardos ficam na doca do galpão.". | Escolhe o dia que prefere, quinta de manhã. O endereço já vem do cadastro. E nas observações, onde estão os fardos. |
-| Clique em "Solicitar coleta": toast "Solicitação enviada (#<n>)"; em "Minhas coletas", o cartão "#<n>" com o selo "Solicitada", "Papelão e PET prensados — 2.500 kg", "12/11/2026 · Manhã", "Solicitada em 10/11/2026" e a observação. [BACKEND: edge `collection-request`: `collection_orders` com `origem` "portal", `status` "solicitada", sem motorista e veículo; `user_notifications` para os usuários da empresa; vira `apos-cap08`] | Solicitar coleta, e pronto. O pedido entra como Solicitada. |
+| Clique em "Solicitar coleta": toast "Solicitação enviada (#<n>)"; em "Minhas coletas", o cartão "#<n>" com o selo "Solicitada", o material junto da quantidade (o app junta os dois com um traço), "12/11/2026 · Manhã", "Solicitada em 10/11/2026" e a observação. [BACKEND: edge `collection-request`: `collection_orders` com `origem` "portal", `status` "solicitada", sem motorista e veículo; `user_notifications` para os usuários da empresa; vira `apos-cap08`] | Solicitar coleta, e pronto. O pedido entra como Solicitada. |
 | Navegador do sistema (Rafael; o `setup` recarrega a tela, o backend falso não tem realtime): o sino de notificações com o aviso; clique no sino: "Nova solicitação de coleta" · "Cooperativa Recomeço solicitou uma coleta (#<n>)."; fecha. | E no sistema, o aviso chega no sino: nova solicitação de coleta. |
 | [ILUSTRAÇÃO: quem pede e quem decide: à esquerda, o celular da cooperativa com "papelão e PET · quinta, manhã"; uma seta leva ao sistema da Recicla Vale; ali, na palavra "confirma", acendem "dia", "horário", "motorista" e "caminhão", e o selo passa de "Solicitada" para "Agendada"] | A cooperativa sugeriu o dia, mas quem confirma o dia, o horário, o motorista e o caminhão é a Recicla Vale, na tela de Coletas. Isso fica pro tutorial de Coletas e Logística. |
 
