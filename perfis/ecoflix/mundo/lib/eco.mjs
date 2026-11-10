@@ -176,7 +176,7 @@ export function resumoDRE(store, cid, j, regime = 'caixa') {
     const acc = new Map();
     for (const p of lista) {
       const pid = (tipo === 'sale' ? p.customer_id : p.supplier_id) || null;
-      const e = acc.get(pid) || { id: pid, name: pid ? nomes.get(pid) : tipo === 'sale' ? 'Sem cliente' : 'Sem fornecedor', value: 0, count: 0, quantity: 0 };
+      const e = acc.get(pid) || { id: pid, name: pid ? nomes.get(pid) : 'Não informado', value: 0, count: 0, quantity: 0 };
       e.value += num(p.total_amount); e.count += 1;
       for (const it of its.get(p.id) || []) e.quantity += liquido(it);
       acc.set(pid, e);
