@@ -141,3 +141,6 @@ Decisões:
   de pedido da Usabilidade gravam por usuário (a fala avisa); `/instalar` fora. **Pergunta ao Kaik**: Usabilidade e
   numeração só mostradas, sem mudar (para não alterar o que T7 e T8 esperam), ou ligar "Exigir cliente/fornecedor no
   Ticket de Pesagem"? Agente de T20 + T26 lançado na vaga.
+- 10/11 01:19 Kaik: "o "S" em ICMS tá ótimo na 4 / mas o "S" em NFS-e tá ruim". ICMS fechada em /iˈseˈɛmiˈɛːsːi/.
+  Oitavo teste só da NFS-e: S separado do "ê" final por ponto, por oclusiva glotal e por "j", e a grafia de corrido numa
+  frase para comparar.

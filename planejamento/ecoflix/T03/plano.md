@@ -5,7 +5,7 @@
   NCM, grupo), reajustar preços em massa, criar uma tabela de preço vinculada e ligá-la a um fornecedor, entender a ordem
   do preço no pedido, mexer no estoque na mão, exportar e ver o que o "Excluir" faz.
 - **Antes:** T2 Usuários e permissões. **Próximo:** T4 Clientes, fornecedores e a ficha do parceiro.
-- **Duração:** alvo da fonte ~15 min; fala de ~1.900 palavras (~12 min) + vinhetas e ações ≈ 14 min (`tts_textos.py`).
+- **Duração:** alvo da fonte ~15 min; fala de 1.957 palavras (~12,5 min) + vinhetas e ações ≈ 14 min (`tts_textos.py`).
 - Base: `T03/inventario.md` (código 1.59.154). Sem 🔒 na aula; a aba "Produção" do material é citada como do módulo de
   produção (depende do plano). Nenhuma edge function; nenhuma integração externa.
 
@@ -95,5 +95,6 @@ sem caixa), `apos-cap08` (radiador 110 kg; entrada dos caps. 9 a 11). O cap. 9 s
   Projeção de Vendas; 3 código automático e o caderno; 4 o NCM na nota, o nome fiscal (três alumínios) e material ×
   cenário fiscal; 5 grupos como gavetas; 7 tabela vinculada (+4%) e a escada da prioridade; 8 transferência (o radiador e o
   ferro das cintas); 10 arquivar × apagar.
-- **Pronúncias:** as do PERFIL que a aula usa (NCM, PDF, CFOP, CST, ICMS); nenhuma nova. "Excel" e "Siqueira" a conferir
-  no ensaio. Números por extenso na fala, com legenda em algarismo (`numeros` do `config_narracao.json`).
+- **Pronúncias:** as do PERFIL que a aula usa (NCM, PDF, CFOP, CST e ICMS em IPA, provisório); troca nova "á-quatro" →
+  "A4". "Excel" e "Siqueira" a conferir no ensaio. Números por extenso na fala, com legenda em algarismo (`numeros` do
+  `T03/narracao/config_narracao.json`).

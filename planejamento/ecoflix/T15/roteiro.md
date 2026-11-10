@@ -10,7 +10,7 @@ fala). Coluna Tela = o que o robô faz e onde a câmera foca, com os rótulos en
 - **Próximo:** Cato, o assistente (T21)
 - **Vinhetas (áreas):** CATEGORIAS · CENTROS DE CUSTO · RELATÓRIO · DASHBOARD · DASHBOARD · DRE · DRE · PATRIMÔNIO · EVOLUÇÃO ·
   HISTÓRICO · EXPORTAR · RESUMO (todos os capítulos menos o 0)
-- **Duração estimada:** ~16 min de vídeo (2.236 palavras e 12.232 caracteres de fala, ~14,3 min de voz a 2,6 palavras/s,
+- **Duração estimada:** ~16 min de vídeo (2.250 palavras e 12.312 caracteres de fala, ~14,4 min de voz a 2,6 palavras/s,
   mais 12 vinhetas e as ações sem fala; alvo da fonte, ~17 min)
 - **Aula:** computador, janela de 1280×800, logado como Rafael Nogueira (MASTER) do começo ao fim. `FAKE_NOW`
   2026-11-10T08:30:00-03:00; o mês lido é outubro ("Mês passado"). Cada capítulo abre um navegador novo, com o mundo do fim do

@@ -13,7 +13,7 @@ Se você ainda não viu o tutorial Sua conta e sua empresa, dá uma olhada antes
 Ele não tem tela própria: é esta gaveta aqui. Por enquanto, está desativado.
 Ligado, ele troca o logo do menu, o ícone do menu recolhido e a cor principal. E tira o rodapé do Ecossistema dos documentos.
 O endereço do sistema, a aba do navegador, os e-mails e a tela de login continuam os do Ecossistema. E é uma cor só: no tema escuro, o sistema usa a mesma cor, um pouco mais clara.""",
-2: """Tudo começa pelas imagens. O logo horizontal a Recicla Vale já mandou, no tutorial da empresa. É ele que aparece no menu aberto.
+2: """Tudo começa pelas imagens. O logo horizontal a Recicla Vale já mandou, no tutorial da empresa. Com o uáit lêibou ligado, é ele que aparece no menu aberto.
 Se a marca mudar um dia, é só clicar em Substituir e mandar a nova.
 São duas imagens. O logo, comprido, vai no menu aberto. O ícone, quadrado, vai no menu recolhido, onde só cabe um quadradinho.
 Falta o ícone. Ele fica logo abaixo, no Ícone da Empresa.

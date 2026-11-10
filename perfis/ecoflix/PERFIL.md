@@ -59,10 +59,10 @@ com o mesmo número de palavras dos dois lados (o IPA conta como uma).
 | EcoSistema | Ecossistema | ok (sem o "ss" o TTS erra) |
 | EcoFlix / EcoTray / Cato | Écoflix / Ecotrêi / Cáto | ok (Kaik ouviu, 10/11) |
 | NF-e | /ˈẽniˈɛfiˈe/ (IPA) | Kaik, 10/11 01:16: o melhor do teste 6 (o guia do eleven_v4 aceita IPA entre barras) |
-| NFS-e | /ˈẽːniˈɛːfiˈɛːsiˈeː/ (IPA, provisório) | Kaik, 10/11 01:16: o melhor do teste 6, mas o S ainda sai "êsse"; teste 7 |
+| NFS-e | /ˈẽːniˈɛːfiˈɛːsiˈeː/ (IPA, provisório) | Kaik, 10/11 01:19: o S ainda ruim nos três do teste 7; teste 8 |
 | SEFAZ | sefás | Kaik, 10/11: é "SEFÁS" ("séfaz" saía "séfas") |
 | CFOP | cê-éfe-ó-pê | Kaik, 10/11: soletrada ("cê-fópi" saía "cêfop") |
-| ICMS | /iˈseˈɛmiˈɛsi/ (IPA, provisório) | Kaik, 10/11 01:16: o S ainda sai "êsse"; teste 7 |
+| ICMS | /iˈseˈɛmiˈɛːsːi/ (IPA) | Kaik, 10/11 01:19: a 4 do teste 7 ("o S tá ótimo") |
 | Kardex | cardécs | Kaik, 10/11: é "CARDÉX" ("cárdecs" saía "cárdex") |
 | DANFE / NCM | dânfi / ene-cê-ême | ok (10/11) |
 | CST / CSOSN | cê-ésse-tê / cê-ésse-ó-ésse-ene | ok (10/11) |

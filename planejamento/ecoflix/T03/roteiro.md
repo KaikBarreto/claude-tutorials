@@ -11,8 +11,8 @@ da 1.59.154 (`T03/inventario.md`). Mundo, sementes e o que o backend falso preci
 - **Próximo:** Clientes, fornecedores e a ficha do parceiro (T4)
 - **Vinhetas (áreas):** ESTOQUE · MATERIAIS · MATERIAIS · NOTA FISCAL · GRUPOS · PREÇOS · PREÇOS · ESTOQUE · EXPORTAR ·
   MATERIAIS · RESUMO (todos os capítulos menos o 0)
-- **Duração estimada:** ~14 min de vídeo (1.865 palavras de fala, ~12 min de voz a 2,6 palavras/s, mais 11 vinhetas, as
-  ilustrações e as ações na tela; alvo da fonte: 15 min)
+- **Duração estimada:** ~14 min de vídeo (1.957 palavras de fala, ~12,5 min de voz a 2,6 palavras/s; 10.571 caracteres,
+  ~13,4 min a 790 por minuto; mais 11 vinhetas e as ações na tela; alvo da fonte: 15 min)
 - **Aula no computador** (janela 1280×800), logado como Rafael Nogueira, `FAKE_NOW=2026-11-10T08:30:00-03:00`. Cada
   capítulo abre num navegador novo, com a semente do fim do capítulo anterior (`plano.md` › "Sementes"). A lista mostra 10
   materiais por página: o radiador fica na página 2, então o robô o acha pela busca.

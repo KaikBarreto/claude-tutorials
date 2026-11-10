@@ -10,8 +10,8 @@ novo, com o mundo do fim do capítulo anterior (sementes em `plano.md` → "Grav
 - **Antes:** Sua conta e sua empresa (T1)
 - **Próximo:** Portal do Cliente e Fornecedor (T20)
 - **Vinhetas (áreas):** WHITE LABEL · MARCA · WHITE LABEL · COR · DOCUMENTOS · EQUIPE · RESUMO
-- **Duração estimada:** ~6 min de vídeo (793 palavras de fala, ~5,1 min de voz a 2,6 palavras/s, mais 7 vinhetas, os
-  envios e a janela do comprovante; alvo da fonte: 7 min; 4.292 caracteres de TTS com os títulos)
+- **Duração estimada:** ~6 min de vídeo (798 palavras de fala, ~5,1 min de voz a 2,6 palavras/s, mais 7 vinhetas, os
+  envios e a janela do comprovante; alvo da fonte: 7 min; 4.318 caracteres de TTS com os títulos)
 - **FAKE_NOW:** `2026-11-10T08:30:00-03:00` (terça).
 - **Estado inicial:** logo horizontal da Recicla Vale (do T1), sem ícone, White Label desligado, sem cor; módulo
   `white_label` contratado; menu lateral aberto e escuro (o padrão do app).
@@ -46,7 +46,7 @@ novo, com o mundo do fim do capítulo anterior (sementes em `plano.md` → "Grav
 
 | Tela | Fala |
 | --- | --- |
-| Capítulo novo (semente `inicio`); Configurações, aba "Empresa"; a câmera vai à coluna da esquerda: "Logo da Empresa" com o logo da Recicla Vale, os botões "Substituir" e "Remover" e "Recomendado: formato horizontal, PNG ou JPG, máximo 5MB". | Tudo começa pelas imagens. O logo horizontal a Recicla Vale já mandou, no tutorial da empresa. É ele que aparece no menu aberto. |
+| Capítulo novo (semente `inicio`); Configurações, aba "Empresa"; a câmera vai à coluna da esquerda: "Logo da Empresa" com o logo da Recicla Vale, os botões "Substituir" e "Remover" e "Recomendado: formato horizontal, PNG ou JPG, máximo 5MB". | Tudo começa pelas imagens. O logo horizontal a Recicla Vale já mandou, no tutorial da empresa. Com o White Label ligado, é ele que aparece no menu aberto. |
 | A câmera passa pelos botões "Substituir" e "Remover" do logo, sem clicar. | Se a marca mudar um dia, é só clicar em Substituir e mandar a nova. |
 | [ILUSTRAÇÃO: qual imagem vai onde: o logo horizontal da Recicla Vale entra numa faixa larga, "menu aberto", na palavra "comprido"; o ícone quadrado entra numa faixa estreita, "menu recolhido", na palavra "quadrado".] | São duas imagens. O logo, comprido, vai no menu aberto. O ícone, quadrado, vai no menu recolhido, onde só cabe um quadradinho. |
 | Desce até "Ícone da Empresa (1:1)" ("Usado no menu lateral quando recolhido (White Label)") e o quadrado tracejado "1:1". | Falta o ícone. Ele fica logo abaixo, no Ícone da Empresa. |
