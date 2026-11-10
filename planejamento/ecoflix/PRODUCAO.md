@@ -169,3 +169,9 @@ Decisões:
   `gera_tts.py` de mesmo nome que o do T03 no scratchpad compartilhado. Todos os agentes avisados: script com nome único
   (prefixo da aula), nunca rodar script alheio, nada em `perfis/`. Histórico semeado do cobre aceito (coordenador);
   ajudantes Cláudio Ferraz e Diego Morais passados ao agente da T19.
+- 10/11 01:5x **T15 pronta** (roteiro): 13 blocos, 2.259 palavras, ~14,5 min de voz (~16 min 45 s de vídeo); pronúncias a
+  testar: CMV "cê-ême-vê", Excel "ékisel". Backend: RPCs do DRE, patrimônio, evolução, Histórico sem espelhos, exclusão
+  bancária; PDF em aba nova. Código × fonte: são cinco abas (há DFC); o botão do DRE é "Organizar categorias".
+  Decisões do coordenador: a DFC entra no tour das abas numa frase (existe no código; sem aprofundar); a energia em
+  dobro só existe do estado da T15 em diante. **Risco de precisão**: os números falados (DRE de outubro) precisam sair
+  iguais das sementes e dos handlers; conferir no ensaio, antes da voz.

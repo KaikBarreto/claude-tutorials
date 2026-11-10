@@ -89,3 +89,7 @@ vendeu pouco num mês) cabem num dos meses.
   as ordens #1 e #2 (a #2 em dobro, excluída no cap13); tolerância 2 %, meta 250; FAKE_NOW 17:30 do cap07 da T11 em
   diante.
 - **Ajudantes do pátio** (T11, valem para a T19): Cláudio Ferraz e Diego Morais.
+- **Outubro calibrado** (T15, conferir no centavo no ensaio): Ferro pesado com 50 t compradas e 10 t vendidas no mês; DRE
+  de outubro +R$ 6.500 em competência e −R$ 31.500 em caixa; a diferença de R$ 38.000 é o ferro parado no pátio.
+  Categorias e centros de custo "Coleta" e "Pátio". Energia de R$ 3.850 lançada em dobro **só a partir do estado da T15**
+  (excluída no cap10; a T14 não vê a duplicata). Fiado da Fundição Bandeira do Vale.
