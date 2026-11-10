@@ -183,3 +183,8 @@ Decisões:
   **Para o Kaik (bugs do EcoSistema achados no código)**: a coluna "Peso Líquido" mostra o peso bruto; a Central de
   Ajuda erra o nome do cadastro e diz que o cupom sem valor fica gravado. Se a coluna aparecer na aula, ela mostra o
   erro: ou o Kaik corrige antes da gravação, ou a aula não mostra a coluna.
+- 10/11 02:1x **T4 pronta** (roteiro): abertura e 13 capítulos, 1.966 palavras, ~12,6 min de fala (~15 min de vídeo; alvo
+  17), 8 ilustrações. Pronúncias a testar: "Cliente-mais-Fornecedor" (Cliente+Fornecedor), "pét" (PET). Backend: busca de
+  CNPJ simulada, lista de cidades, RPCs de vínculo cliente+fornecedor, pagamento por Pix, lucro estimado. Código × fonte:
+  a ficha abre ao lado da lista, com 7 abas; telefone repetido dá "Mesmo telefone", não "Duplicado". Decisão do
+  coordenador: o saldo do Valdir é um vale que a Recicla adiantou (MUNDO).

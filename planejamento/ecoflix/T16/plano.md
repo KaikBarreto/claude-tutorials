@@ -6,7 +6,7 @@
 - **Antes:** Relatório Financeiro e DRE (T15). **Próximo:** Transporte, serviço e o contador (T17).
 - **Regime do exemplo:** Lucro Real (Kaik, 10/11). A fala mostra os campos e diz que quem define é o contador; nenhum
   valor de imposto é explicado. **Emissão simulada:** não há SEFAZ, provedor, cota real nem numeração a queimar.
-- **Duração:** alvo da fonte ~25 min; fala estimada ~21 min + 18 vinhetas e as esperas de tela (ver `roteiro.md`).
+- **Duração:** alvo da fonte ~25 min; fala de ~18,3 min (2.858 palavras) e ~22 min de vídeo com as vinhetas e as esperas (`roteiro.md`).
 - Base: `inventario.md` (código 1.59.154). Usuário logado: Rafael Nogueira (MASTER), desktop 1280×800, tema claro.
   `FAKE_NOW=2026-11-10T08:30:00-03:00`; todos os capítulos no mesmo dia, em ordem.
 
@@ -114,6 +114,18 @@ NFS-e, pacote do contador). Atualizar o `MUNDO_FICTICIO.md`.
   da nota (base: os 4 passos de `EmissionFlowTimeline.tsx`); 10 bruto, desconto, líquido; 11 várias compras, uma nota; 12
   cancelar × corrigir; 13 números com cadeado; 14 DANFE e XML; 15 a nota chega pela SEFAZ; 16 as respostas; 17 o
   casamento. Detalhe de cada uma na coluna Tela do roteiro.
+
+## Pronúncias
+- Da tabela do PERFIL (versão de 10/11 01:20): NF-e e ICMS em IPA (`/ˈẽniˈɛfiˈe/`, `/iˈseˈɛmiˈɛːsːi/`), NFS-e em IPA
+  provisório (`/ˈẽːniˈɛːfiˈɛːsiˈeː/`, teste 8 do Kaik), SEFAZ "sefás", CFOP "cê-éfe-ó-pê", DANFE "dânfi", NCM, XML, PDF,
+  MTR, CDF, DRE e EcoSistema como na tabela. Se o PERFIL mudar de novo, é só rodar o gerador outra vez: ele lê a config
+  do perfil.
+- Novas desta aula (testar num trecho curto antes da voz): **CC-e** "cê-cê-ê", **A1** "á-um", **pfx** "pê-éfe-xis"
+  (dito "ponto pfx"), **IBS** "i-bê-ésse", **CBS** "cê-bê-ésse", **Fiscal & Ambiental** "Fiscal e Ambiental".
+- Ditas por extenso, sem troca: PIS, COFINS, CNPJ, PET. Evitadas na fala: MDF-e (vira "manifesto de transporte"), DF-e,
+  cClassTrib, RNTC, CST.
+- Gerador: `T16_gera_tts.py` (na pasta T16 do scratchpad) lê o `roteiro.md` e a config do perfil (só leitura) e escreve
+  `narracao/tts_textos.py` e `narracao/config_narracao.json` (37 trocas, 28 números para a legenda).
 
 ## Riscos e decisões para o Kaik
 1. **Cancelar a 1249** (a Serra Fina desistiu antes de a carga sair) e **CC-e da placa na 1250**: os dois são casos

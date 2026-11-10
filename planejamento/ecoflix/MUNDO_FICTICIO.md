@@ -96,3 +96,8 @@ vendeu pouco num mês) cabem num dos meses.
 - **Compra e venda** (T7): caixa aberto com R$ 2.500; bateria a R$ 3,40 para a Auto Peças Vale Forte; 214 kg de latão
   (Metal amarelo) e 42 kg de Cobre mel no estoque; Valdir Pereira sem CPF nem endereço; o carroceiro "Zé Moreira" é
   cadastrado na tela da T7. Uma balança só no EcoTray.
+- **Saldos dos parceiros** (T4; sinal na convenção do app): Aços Quiririm +4.870; Serra Fina Alumínio −1.500; Cooperativa
+  Recomeço +2.550; Valdir Pereira −300; Depósito Irmãos Siqueira −840. **Valdir**: os R$ 300 são um vale que a Recicla
+  adiantou a ele (ele desconta na próxima entrega de material). 14 compras da Cooperativa no histórico. A T4 cadastra
+  pela busca de CNPJ a "Serralheria Bem-Te-Vi" (número em branco, campo em vermelho) e tenta "Cida Ramos" com o telefone
+  da Aparecida (o app avisa "Mesmo telefone").

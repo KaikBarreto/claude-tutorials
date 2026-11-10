@@ -15,7 +15,7 @@ são simulados no backend falso (`plano.md`, "Gravação"): nenhum certificado, 
 - **Vinhetas (áreas):** FISCAL · CONFIGURAÇÃO · CERTIFICADO · CONFIGURAÇÃO · CENÁRIOS · NUMERAÇÃO · CONFIGURAÇÃO · COTA ·
   EMISSÃO · EMISSÃO · EMISSÃO · CORREÇÕES · NUMERAÇÃO · DOCUMENTOS · NOTAS RECEBIDAS · NOTAS RECEBIDAS · NOTAS RECEBIDAS ·
   RESUMO (todo capítulo menos o 00)
-- **Duração estimada:** ~22 min de vídeo (2.853 palavras de fala, ~18,3 min a 2,6 palavras/s; mais a vinheta de abertura,
+- **Duração estimada:** ~22 min de vídeo (2.858 palavras de fala, ~18,3 min a 2,6 palavras/s; mais a vinheta de abertura,
   18 vinhetas de ~3,5 s, a cartela, as esperas de tela como o "Aguardando SEFAZ" e o "Processando a nota", e os
   preenchimentos acelerados). Alvo da fonte: ~25 min; como na Domiflix, a fala natural fecha abaixo.
 - **FAKE_NOW:** `2026-11-10T08:30:00-03:00` (terça) em todos os capítulos. Regime do exemplo: Lucro Real.
