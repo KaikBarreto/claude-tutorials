@@ -156,3 +156,9 @@ Decisões:
   **Decisões do coordenador** (no MUNDO, "Decidido pelas aulas"): `max_users` 3 e preço do extra visível sem fala
   (regra da Domiflix); White Label só na T27; **o ícone já vem da T1 (cap05)**: na junção, ajustar a T27 para não subir
   o ícone de novo; o Portal na T27 é a página real (não ilustração de tela), então **a T20 é gravada antes da T27**.
+- 10/11 01:3x **T3 pronta** (roteiro, a aula-molde): 12 capítulos, 1.959 palavras, ~12,6 min de voz (~14 min de vídeo);
+  troca nova "á-quatro" → A4; "Excel" e "Siqueira" para o ensaio. Código × fonte: venda abaixo do custo pede confirmação,
+  não bloqueia (fora da fala). Backend: `/compra` com o caixa do Rafael aberto (só no cap07), `ncm_presets`, RPCs de
+  estoque, preços e transferência, login do Marcos, PDFs em aba nova. Decisões do coordenador: abrir uma compra no cap07
+  só para mostrar "Preço especial aplicado" (sem finalizar; exemplo concreto); a tabela ligada ao depósito vale na venda
+  também (é o que o código faz); permissões do Marcos = as da T2.

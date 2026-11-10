@@ -79,3 +79,9 @@ vendeu pouco num mês) cabem num dos meses.
   extra como está, a fala não diz o valor); e-mails `@reciclavalemetais.example`; Marcos "Operador Padrão" sem "Ver
   Projeção de Lucro", tela inicial "Caixa", foto desenhada; Juliana com 7 telas e 8 ações.
 - **White Label** (T27): só na T27 (cor #1F5FAD); o mundo base das outras aulas fica com o White Label desligado.
+- **Materiais** (T3): códigos 1 a 15 na ordem da tabela acima; até o cap06 da T3 o cobre está R$ 0,50 abaixo (a aula
+  corrige); bronze a R$ 30,50 para o Depósito Irmãos Siqueira; a T3 cria "Radiador de cobre" (código 70, 110 kg), soma
+  8 kg ao Ferro misto e cria a "Tabela Depósitos" (+4 %), ligada ao Depósito Irmãos Siqueira (vale na compra e na venda,
+  como o código faz).
+- **Permissões do Marcos**: as do T2 (perfil "Operador Padrão" sem "Ver Projeção de Lucro"); as aulas seguintes não
+  mudam isso.
