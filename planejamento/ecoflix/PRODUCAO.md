@@ -96,3 +96,12 @@ Decisões:
 - 10/11 00:3x 20 agentes lançados (opus). Teste de pronúncia na voz Kaik Barreto (16 itens numerados, 634 créditos) no
   fluxo "EcoFlix · teste de voz masculina". Os 20 lembretes de retomada criados (`RETOMADAS.md`; o limite de criação
   aceita uns 10 por minuto).
+- 10/11 00:40 **Container reiniciou** e derrubou os 20 agentes (~10 min de leitura perdidos; nenhuma pasta de aula
+  tinha sido salva). Kaik, 00:40: "nf-e e nfs-e tem que ser falado (ENE ÉFE Ê e ENE ÉFE ÉSSE Ê) SEFAZ está (séfas, mas é
+  SEFÁS) / CFOP tá falando CÊFOP mas deveria ser CÊ ÉFE Ó PÊ, ICMS tá meio estranho, tem que falar I CÊ EME ÉSSE como
+  sigla / kardex tá "cárdex" mas é "CARDÉX" / nas aulas do ecotray para integração com impressora e balança você vai
+  pegar exatamente como o ecotray é num windows e simular uma tela de windows a pessoa usando, junto do sistema,
+  baseado no dashboard.py (ou a tela que monta a UI do cato usando)". Pronúncias corrigidas no PERFIL e no
+  `config_narracao.json` (agora com todas as trocas); reteste curto das seis no fluxo de teste (188 créditos). Cena de
+  Windows no PERFIL e no briefing; código do EcoTray 1.59.154 em `/home/claude/ecoflix/app-src-1.59.154/ecotray/`
+  (Tkinter; aqui não há tkinter, há Xvfb). 21 agentes relançados (os 20 + EcoTray: cena do Windows).

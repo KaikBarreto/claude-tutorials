@@ -71,9 +71,14 @@ cada capítulo que explica conceito; a abertura também pode ter uma (o problema
 
 ## Gravável
 A coluna Tela tem de ser executável pelo robô no app real (1.59.154) com o backend falso: só telas e rótulos que existem
-no código, com os dados do mundo fictício. O que não dá para gravar com verdade (tela do Windows, papel saindo da
-impressora) fica na fala ou vira `[GRAVAÇÃO REAL: ...]`; nunca tela inventada. Dados novos plausíveis para ferro-velho
+no código, com os dados do mundo fictício. O que acontece no Windows com o EcoTray (baixar, instalar, a janela do
+EcoTray, a bandeja, os avisos do navegador e do Windows) vira **cena de Windows simulada**, fiel ao código do EcoTray
+(Kaik, 10/11; código em `/home/claude/ecoflix/app-src-1.59.154/ecotray/`: `dashboard.py`, `tray_app.py`,
+`installer_win/installer_gui.py`), junto do sistema no navegador: marque `[CENA WINDOWS: passo a passo, com os textos
+exatos do código do EcoTray]` (outro agente constrói a cena). O resto que não dá para gravar com verdade (papel saindo
+da impressora) fica na fala ou vira ilustração; nunca tela inventada do app. Dados novos plausíveis para ferro-velho
 em Taubaté, SP; CPF e CNPJ com dígito verificador válido (calcule); e-mails `.example`; nada real.
+Salve cada arquivo assim que tiver o conteúdo (inventário primeiro): a máquina pode reiniciar no meio (já aconteceu).
 
 ## Relatório (≤ 150 palavras)
 Arquivos; capítulos, palavras e duração estimada; pronúncias novas; resumo dos `[BACKEND: ...]` e do "Mundo: o que esta

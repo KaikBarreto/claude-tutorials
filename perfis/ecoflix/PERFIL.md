@@ -53,18 +53,21 @@ de plano na fala.
 A troca fala → legenda precisa do mesmo número de palavras: sigla soletrada vai com hífen ("ene-éfe-é" → "NF-e").
 | Tela / legenda | Texto do TTS | Situação |
 |---|---|---|
-| EcoSistema | Ecossistema | sabido (sem o "ss" o TTS erra) |
-| EcoFlix / EcoTray / Cato | Écoflix / Ecotrêi / Cáto | testar |
-| NF-e / NFS-e | ene-éfe-é / ene-éfe-ésse-é | testar |
-| DANFE / SEFAZ | dânfi / séfaz | testar |
-| NCM / CFOP / ICMS | ene-cê-ême / cê-fópi / i-cê-ême-ésse | testar |
-| CST / CSOSN | cê-ésse-tê / cê-ésse-ó-ésse-ene | testar |
-| MTR / CDF | ême-tê-érre / cê-dê-éfe | testar |
-| OFX / XML / PDF | ó-éfe-xis / xis-ême-éle / pê-dê-éfe | testar |
-| Kardex / Kanban / CRM | cárdecs / canban / cê-érre-ême | testar |
-| CAPEX / OPEX | cápecs / ópecs | testar |
-| Ctrl+K / SmartScreen / USB | contról-cá / smárti-scrím / u-ésse-bê | testar |
-| QR Code / White Label / Asaas / DRE | quê-érre côde / uáit lêibou / asas / dê-érri-ê | herdado da Domiflix |
+| EcoSistema | Ecossistema | ok (sem o "ss" o TTS erra) |
+| EcoFlix / EcoTray / Cato | Écoflix / Ecotrêi / Cáto | ok (Kaik ouviu, 10/11) |
+| NF-e / NFS-e | ene-éfe-ê / ene-éfe-ésse-ê | Kaik, 10/11: "ENE ÉFE Ê", "ENE ÉFE ÉSSE Ê" |
+| SEFAZ | sefás | Kaik, 10/11: é "SEFÁS" ("séfaz" saía "séfas") |
+| CFOP | cê-éfe-ó-pê | Kaik, 10/11: soletrada ("cê-fópi" saía "cêfop") |
+| ICMS | i-cê-eme-ésse | Kaik, 10/11: soletrada, como sigla |
+| Kardex | cardécs | Kaik, 10/11: é "CARDÉX" ("cárdecs" saía "cárdex") |
+| DANFE / NCM | dânfi / ene-cê-ême | ok (10/11) |
+| CST / CSOSN | cê-ésse-tê / cê-ésse-ó-ésse-ene | ok (10/11) |
+| MTR / CDF | ême-tê-érre / cê-dê-éfe | ok (10/11) |
+| OFX / XML / PDF | ó-éfe-xis / xis-ême-éle / pê-dê-éfe | ok (10/11) |
+| Kanban / CRM | canban / cê-érre-ême | ok (10/11) |
+| CAPEX / OPEX | cápecs / ópecs | ok (10/11) |
+| Ctrl+K / SmartScreen / USB | contról-cá / smárti-scrím / u-ésse-bê | ok (10/11) |
+| QR Code / White Label / Asaas / DRE | quê-érre côde / uáit lêibou / asas / dê-érri-ê | ok (Domiflix e 10/11) |
 CNPJ, CPF, CEP, Pix: escrita normal. Números por extenso como se fala ("quarenta e dois reais e cinquenta", "mil e
 duzentos quilos"); na legenda: kg, t, mm, %. Palavra nova difícil: testar num trecho curto e anotar aqui.
 
@@ -100,8 +103,11 @@ A minutagem da fonte é alvo; a duração é a da fala (~790 caracteres de narra
 - Integrações simuladas no backend falso, com a tela fiel ao código: EcoTray (peso e impressão), NF-e, NFS-e, MTR e CDF
   (sem SEFAZ, sem cota, sem queimar numeração), cobrança da assinatura, extrato OFX, respostas do Cato.
 - Celular (`device: phone`): T0 vertical; trechos do T5 (indicador de peso) e do T19 (ponto).
-- O que o robô não grava com verdade (instalador do EcoTray, avisos do navegador e do SmartScreen, papel saindo da
-  impressora): gravação real curta feita pelo Kaik, ou só na fala. Nunca tela inventada. Comprovante: o PDF do app.
+- **Cena de Windows** (Kaik, 10/11): nas aulas do EcoTray, o que acontece no Windows (baixar, instalar, a janela do
+  EcoTray, a bandeja, os avisos) é uma tela de Windows simulada com a pessoa usando, junto do sistema no navegador. A
+  janela do EcoTray é a do código (`ecotray/dashboard.py`, `tray_app.py`, `installer_win/installer_gui.py`): textos,
+  cores, fonte e medidas exatos. A área de trabalho é genérica no estilo Windows, sem logo nem ícones da Microsoft.
+- Papel saindo da impressora: só na fala ou ilustração. Nunca tela inventada do app. Comprovante: o PDF do app.
 
 ## Edição
 Igual à Domiflix (specs.json do T3, zooms por `label`, `min_w` 1300, folha de zooms, folha de 3 s do vídeo inteiro).
