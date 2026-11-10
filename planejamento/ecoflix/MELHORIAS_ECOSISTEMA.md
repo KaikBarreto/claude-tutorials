@@ -25,6 +25,15 @@ as gravações). Cada item diz a aula em que apareceu. **No fim da produção, v
 - **Cartão "Lucro Líquido" do Gerencial é vendas menos compras** (T22): o número não fecha com o resultado.
 - **Comparativo do Gerencial usa as compras nos dois regimes** (T22): em competência devia usar o custo do vendido.
 - **Matriz consegue "Corrigir saldo" do estoque da filial** (T22): conferir se a permissão é desejada.
+- **Relatório do portal mostra o valor do pedido "sem valor"** (T20): a edge `entity-portal-report` soma o valor de todo
+  pedido do período; o "sem valor" só esconde os números no Histórico, no comprovante e nas fotos.
+- **Saldo do portal diferente da tela de Saldo** (T20): o portal desconta os movimentos de pedido "sem valor" dos últimos
+  90 dias; com um pedido desses lançado no saldo, o parceiro vê um número e a empresa outro. Conferir se é desejado.
+- **CRM: cartão barrado pela trava fica na coluna de destino** (T26): no erro, o quadro não volta ao estado certo; só
+  recarregando a página.
+- **CRM: automação vira linha sem texto no Histórico** (T26).
+- **CRM: selo de tarefas abertas não atualiza depois do arraste** que dispara a automação (T26): só com outra mudança de
+  tarefa ou depois de 30 s.
 
 ## 2. Melhorias de uso
 - **Produção diz "peça" em produto vendido por quilo** (T11).
@@ -37,6 +46,8 @@ as gravações). Cada item diz a aula em que apareceu. **No fim da produção, v
 - **Trava de peso com o EcoTray fechado** (T5): com a trava ligada, não dá para digitar o peso nem em emergência.
 - **Pix Automático já vem ligado** (T0): confirmar se é o padrão desejado.
 - **Gráficos do Gerencial cortam nomes longos** (T22): a filial teve de se chamar "Filial Pindamonhangaba".
+- **Portal diz "Portal do Cliente" também para fornecedor** (T20).
+- **"Orientação para o time" só aparece na janela da etapa** (T26): nem o quadro nem o cartão do CRM mostram.
 
 ## 3. Textos desatualizados (Central de Ajuda, Guia de Instalação e a fonte da Trilha EcoFlix)
 - **Guia de Instalação do EcoTray** ainda fala em arquivo ZIP (T5).
@@ -62,6 +73,9 @@ as gravações). Cada item diz a aula em que apareceu. **No fim da produção, v
     fonte.
   - T19: a pausa da jornada individual funciona diferente do que a fonte descreve.
   - T22: a volta da filial pelo mesmo código só dá para conferir no banco, não no código da tela.
+  - T20: o pedido sem valor esconde os números no portal, menos no Relatório (bug acima); a aba "Preços" do fornecedor
+    existe e a fonte não cita.
+  - T26: todo funil criado em "Novo funil" também nasce com "Ganho" e "Perdido" com status (a fonte diz que só o padrão).
   - T25: a Agenda já não conta o fiado em dobro; o gráfico de 6 meses termina no fim do período do filtro; o
     Marketplace saiu da rotina semanal.
   - Ordem de gravação lista a T25 duas vezes; as pendências pulam do 9 para o 11.

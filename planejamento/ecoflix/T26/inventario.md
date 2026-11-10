@@ -36,7 +36,8 @@ pendência 9 da fonte. Na gravação com o backend falso, não importa.)
 ## 2. Cartão (`components/crm/OpportunityCard.tsx`)
 Etiquetas no topo, alça "Mover oportunidade", título, contato, empresa, material · quantidade, lixeira "Excluir oportunidade",
 valor, "Probabilidade" com barra, progresso de checklist, origem, tarefas abertas ("<n> tarefa(s) aberta(s)"), inicial do
-responsável, previsão de fechamento. Clique no título abre a ficha.
+responsável, previsão de fechamento. Clique no título abre a ficha. **Achado:** o selo de tarefas abertas só se atualiza com
+mudança de tarefa ou 30 s depois (`hooks/useCrmTasks.ts:183-202`): a tarefa criada pela automação no arraste não aparece na hora.
 
 ## 3. Configurações (`components/crm/settings/`)
 - **"Configurações do CRM/Kanban"** · "Gerencie funis, checklists e etiquetas usados no seu processo comercial."; menu **"Funis"**,
@@ -129,4 +130,5 @@ Janela "Nova tarefa": "Título *", **"Oportunidade *"**, "Descrição", "Respons
 2. "Orientação para o time" não aparece no quadro nem no cartão: só na janela da etapa.
 3. Trava no arraste: o cartão fica desenhado no destino até a próxima busca (sem ressincronizar no erro).
 4. Histórico: execução de automação vira linha sem texto.
-5. Aba Tarefas do admin (`/admin/crm-tarefas`): fora da aula, como a fonte manda.
+5. O selo de tarefas abertas não se atualiza depois do arraste que dispara a automação (só com mudança de tarefa ou 30 s).
+6. Aba Tarefas do admin (`/admin/crm-tarefas`): fora da aula, como a fonte manda.

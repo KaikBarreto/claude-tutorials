@@ -75,7 +75,8 @@ Decisões:
 - Retomadas automáticas: `RETOMADAS.md`.
 
 ## Fila
-1. **Agora (10/11 00:3x)**: 17 agentes de roteiro (26 aulas, `_BRIEF_ROTEIRO.md`) e 3 de estrutura: Ferramentas
+1. ✅ **10/11 00:3x a 02:1x** (roteiros das 26 aulas, Ferramentas e Marca prontos; Mundo, Junção do mundo e vinheta
+   9:16 em andamento): 17 agentes de roteiro (26 aulas, `_BRIEF_ROTEIRO.md`) e 3 de estrutura: Ferramentas
    (melhorias da Domiflix na skill, branch `consolidacao-domiflix`), Mundo (EcoSistema 1.59.154 no Supabase falso, mundo
    da Recicla Vale Metais, EcoTray falso; branch `ecoflix-mundo`), Marca (vinheta, cartela, cartões e kit de ilustração;
    branch `ecoflix-marca`, prévia em `/home/claude/ecoflix/previa_marca/`).
@@ -282,17 +283,17 @@ Decisões:
   vincular a filial, Enviar Ativos, transferência pendente e executada, pagamento do grupo simulado; cap03 gravado como
   Sandra Pires. Achados de sistema no `MELHORIAS_ECOSISTEMA.md`. **Na junção**: CNPJ da filial na T22 vira
   47.318.506/0002-98 (raiz da T1); números de outubro da T22 × T15 × T25.
-- 10/11 03:5x **Ferramentas na skill**: o branch `consolidacao-domiflix` (6 commits) entrou no main (d0702be): `montar_cap.py`
+- 10/11 01:4x **Ferramentas na skill**: o branch `consolidacao-domiflix` (6 commits) entrou no main (d0702be): `montar_cap.py`
   (computador ou celular pelo tamanho do vídeo, voz_de, zoom e destaque por rect sem passo, acelera, rótulo#k, destino),
   `finish.py` (acelera; apaga stems e music.wav depois do mix), `remendar_aula.py` (9:16, cortes em capítulo novo),
   `celular_vertical.py`, `legendas_aula.py`; novas `folhas3s.sh`, `pico_aac.py`, `lacunas.py`, `confere_render.py`,
   `compor_ilus_vertical.py`, `ilustracoes/ilu_comum.py`; os 3 ajustes do Supabase falso; `rec/molde/` (prever, resumo,
   ensaio, explorar) copiado pelo `instalar.sh`. Testes: identidade da Domiflix idêntica ao T3; `montar_cap.py` igual às
   cópias em 136 capítulos; `finish.py` igual bit a bit; legendas do T15 reproduzidas.
-- 10/11 04:0x **Cópia de segurança da Domiflix** no branch `backup-domiflix-maquina` (8b74fe7): mundo da Dominex 1.38.24,
+- 10/11 01:4x **Cópia de segurança da Domiflix** no branch `backup-domiflix-maquina` (8b74fe7): mundo da Dominex 1.38.24,
   roteiros do robô e projetos de edição, só texto (75 MB, sem a telemetria `*.actions.json`, que tinha a chave pública do
   app); serve aos remendos pendentes.
-- 10/11 04:1x **Marca pronta** (branch `ecoflix-marca`, 5 commits, no main): peças e nome separados do PNG oficial sem
+- 10/11 01:5x **Marca pronta** (branch `ecoflix-marca`, 5 commits, no main): peças e nome separados do PNG oficial sem
   redesenhar (juntas refazem o PNG pixel a pixel); vinheta `ecosistema-reciclagem` com os tempos, curvas e sons do
   capacete, escura em 4,30 s; cartela; vinheta de capítulo e cartões "Antes:"/"Próximo:" com o acento; kit de ilustração
   com "Tara e peso líquido" e "Caixa × competência" presas às palavras da fala; recorte de trecho no render de cenas.
@@ -306,7 +307,7 @@ Decisões:
   uma versão por fala); com ~5 % de folga para refazer falas, **~270 mil créditos**. O T0 vertical usa o mesmo áudio.
   Os textos ainda mudam um pouco no ensaio (±5 %). Teste de pronúncia 2 (24 frases com as palavras novas das aulas) no
   fluxo de teste. Diferenças a unificar depois do teste: Shift+C "xíft-cê" (T07) × "xífti-cê" (T25).
-- 10/11 04:3x **Cena de Windows do EcoTray pronta** (branch `ecoflix-ecotray`, no main): `dashboard.py` e
+- 10/11 02:0x **Cena de Windows do EcoTray pronta** (branch `ecoflix-ecotray`, no main): `dashboard.py` e
   `installer_gui.py` de verdade, sem alteração, num Xvfb 1920×1200 a 96 dpi (Tk 8.6 com Xft extraído de pacotes do Ubuntu
   em /dev/shm, nada instalado: refazer depois de reinício com `ferramentas/windows/preparar.sh`), Montserrat, EcoTray
   falso na porta 8054 numa rede própria; o menu e o ícone da bandeja saem do `tray_app.py`. Área de trabalho genérica
@@ -321,3 +322,21 @@ Decisões:
   página do navegador é sempre a gravação do app na versão 1.59.154; imagem de divulgação do app nunca vira tela. Teste
   de pronúncia 2 aceito por enquanto (algumas palavras a refinar quando o Kaik apontar). Shift+C/V unificados em
   "xífti-cê"/"xífti-vê" (a T07 usava "xíft-").
+- 10/11 02:1x **Roteiros T20 e T26 prontos: as 26 aulas têm roteiro.** T20 (Portal do Cliente e Fornecedor): 12 blocos,
+  1.515 palavras, ~9,7 min de voz (~12 min de vídeo), 10 ilustrações; dois navegadores (o do sistema e o do parceiro, sem
+  login); backend: edges `entity-portal`, `entity-portal-report`, `portal-set-credentials`, `portal-login`,
+  `portal-order-receipt`, `collection-request` (aviso no sino) e `order-photos-public`, um Pix no sistema; mundo: saldo
+  da cooperativa R$ 1.350,00 (o do fim da T4), 3 fotos fictícias com token fixo, senha do portal, Pix de R$ 1.350,00,
+  coleta pedida para 12/11. **Decidido**: a T20 grava com `FAKE_NOW` 10/11 15:00 (a venda sem valor da T7 e a NF-e 1250
+  da T16 já existem nessa hora; a hora não muda nada para quem assiste), em vez de mudar as datas dessas aulas. T26
+  (CRM/Kanban): as automações estão na 1.59.154 (entraram na 1.59.151; migration `20261106170000` no commit de release);
+  14 blocos, 1.817 palavras, ~11,6 min de voz (~15 min de vídeo), 10 ilustrações (o funil de vendas no cap01); backend:
+  RPCs `ensure_company_crm_default_pipeline` e `reorder_company_crm_opportunities` e as regras do banco (trava pela etapa
+  de origem, automação só ao avançar, prazo em dias úteis, histórico, contagem de tarefas, Agenda); mundo: CRM vazio no
+  início, funil "Sucata industrial", oportunidade da Metalúrgica Jequitibá de R$ 8.400,00 e, no cap12 (17:30), mais 5
+  cartões (R$ 62.300,00 no total); o cartão barrado pela trava pede recarregar a página fora do vídeo. Achados no
+  `MELHORIAS_ECOSISTEMA.md`. **Mostrar ao Kaik junto com a estimativa**: o funil da T26 e os nomes fictícios. **Para a
+  revisão geral**: o QR do comprovante do caixa leva ao portal (todo parceiro do mundo tem link), conferir a ilustração
+  do cupom na T7; pronúncias a testar: WhatsApp e Siqueira (T20), checklist, Jequitibá e "cê-érre-ême-canban"
+  (CRM/Kanban, T26). **Estimativa da voz com as 26 aulas**: 259.103 caracteres ≈ 259 mil créditos; com 5 % de folga,
+  **~272 mil**. Carimbos 03:5x a 04:3x deste registro corrigidos para 01:4x a 02:0x (os commits mostram a hora certa).
