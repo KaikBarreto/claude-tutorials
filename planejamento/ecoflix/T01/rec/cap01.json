@@ -1,0 +1,400 @@
+{
+ "name": "t01-cap01",
+ "title": "T01 · Cap. 1 · Criar a conta (narração 73,4 s ESTIMADA; marcas L1..L9 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
+ "seed": "t01-cap01",
+ "pace": 0.5,
+ "cps": 14,
+ "tail": 1.5,
+ "start": {
+  "x": 1040,
+  "y": 300
+ },
+ "anonymous": true,
+ "seedExtra": [
+  "t01/inicio"
+ ],
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "initial-preferences-set": "true",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10"
+ },
+ "prewarm": [
+  "/cadastro"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/cadastro"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "placeholder": "Ex: Minha Empresa Ltda"
+   },
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel|Algo deu errado|Falha ao carregar|Personalize sua experi[êe]ncia|Voc[êe] j[áa] est[áa] conectado|Sistema atualizado|O rel[óo]gio deste computador|Sess[ãa]o expirou/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');if(f&&window.__avisos.length<10&&!window.__avisos.includes('LEMBRETE DA TRILHA'))window.__avisos.push('LEMBRETE DA TRILHA')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Cadastro\", \"Teste grátis por 7 dias · Sem compromisso · Acesso total\", \"Dados\", \"Acesso\", \"Preenchimento obrigatório\", \"0%\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"body\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere etapas Dados e Acesso e a barra em 0%"
+  },
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0.4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Dados",
+    "exact": true
+   },
+   "seconds": 0.3,
+   "at": 2.08,
+   "label": "etapa Dados",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Acesso",
+    "exact": true
+   },
+   "seconds": 0.5,
+   "at": 2.78,
+   "label": "etapa Acesso",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Preenchimento obrigatório",
+    "exact": true
+   },
+   "seconds": 1.6,
+   "at": 3.95,
+   "label": "barra Preenchimento obrigatório em 0%",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 7.67
+  },
+  {
+   "do": "click",
+   "target": {
+    "placeholder": "Ex: Minha Empresa Ltda"
+   },
+   "at": 8.73,
+   "label": "Nome da Empresa"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Ex: Minha Empresa Ltda"
+   },
+   "text": "Recicla Vale Metais",
+   "cps": 16,
+   "at": 10.97,
+   "label": "digita Recicla Vale Metais",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "placeholder": "Ex: João Silva"
+   },
+   "at": 13.08,
+   "label": "Seu Nome Completo"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Ex: João Silva"
+   },
+   "text": "Rafael Nogueira",
+   "cps": 16,
+   "at": 15.5,
+   "label": "digita Rafael Nogueira (a barra sobe)",
+   "noClick": true
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 18.34
+  },
+  {
+   "do": "click",
+   "target": {
+    "placeholder": "email@exemplo.com"
+   },
+   "at": 18.59,
+   "label": "Email"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "email@exemplo.com"
+   },
+   "text": "$TUT_USER",
+   "cps": 40,
+   "at": 20.13,
+   "label": "digita o e-mail do Rafael",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "placeholder": "(21) 98765-4321"
+   },
+   "at": 22.95,
+   "label": "Telefone"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "(21) 98765-4321"
+   },
+   "text": "12900004410",
+   "cps": 12,
+   "at": 24.26,
+   "label": "digita o telefone (a máscara forma (12) 90000-4410)",
+   "noClick": true
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const esp=[\"Recicla Vale Metais\", \"Rafael Nogueira\", \"rafael@reciclavalemetais.example\", \"(12) 90000-4410\"];let out='';for(let i=0;i<12;i++){const v=[...document.querySelectorAll(\"body\"+' input, '+\"body\"+' textarea')].map(e=>e.value).join(' | ');const falta=esp.filter(e=>!v.includes(e));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+v.slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere os quatro campos da etapa Dados"
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 26.82
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Recebeu um código de indicação?",
+    "exact": true
+   },
+   "seconds": 2.2,
+   "at": 30.05,
+   "label": "link Recebeu um código de indicação? (sem clicar)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 33.24
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 1120,
+    "y": 470
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "at": 33.74,
+   "label": "a etapa Dados inteira (sem campo de CNPJ)"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{await new Promise(r=>setTimeout(r,200));const el=document.querySelector(\"body\");const t=(el?el.innerText:'').replace(/[\\s\\u00a0]+/g,' ').toLowerCase();return t.includes(\"cnpj\")?'DIFERENTE: apareceu '+\"CNPJ\":'OK: ausente '+\"CNPJ\"})()",
+   "label": "confere nenhum campo de CNPJ no cadastro"
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 41.56
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Continuar"
+   },
+   "at": 42.35,
+   "label": "Continuar"
+  },
+  {
+   "do": "waitFor",
+   "text": "Email de acesso:",
+   "timeout": 12
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 45.03
+  },
+  {
+   "do": "click",
+   "target": {
+    "placeholder": "Mínimo 8 caracteres"
+   },
+   "at": 45.28,
+   "label": "Senha"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Mínimo 8 caracteres"
+   },
+   "text": "$TUT_SENHA",
+   "cps": 14,
+   "at": 47.8,
+   "label": "digita a senha (pontinhos; o indicador de força enche)",
+   "noClick": true
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Senha forte.\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"body\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere indicador Senha forte"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Senha forte."
+   },
+   "seconds": 1.2,
+   "at": 49.35,
+   "label": "indicador de força: Senha forte",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "placeholder": "Digite a senha novamente"
+   },
+   "at": 52.95,
+   "label": "Confirmar Senha"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Digite a senha novamente"
+   },
+   "text": "$TUT_SENHA",
+   "cps": 20,
+   "at": 54.23,
+   "label": "repete a senha",
+   "noClick": true
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 55.93
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 640,
+    "y": 520
+   },
+   "by": 380,
+   "duration": 0.5,
+   "after": 100,
+   "at": 55.93,
+   "label": "desce até o aviso dos termos"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Ao criar sua conta, você concorda com os"
+   },
+   "seconds": 1.0,
+   "at": 58.13,
+   "label": "aviso Termos de Uso e Política de Privacidade",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Termos de Uso",
+    "exact": true
+   },
+   "seconds": 0.6,
+   "at": 59.34,
+   "label": "Termos de Uso (sem clicar)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "link",
+    "name": "Política de Privacidade",
+    "exact": true
+   },
+   "seconds": 1.2,
+   "at": 60.71,
+   "label": "Política de Privacidade (sem clicar)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L9",
+   "at": 65.69
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Criar Conta",
+    "exact": true
+   },
+   "at": 66.48,
+   "label": "Criar Conta"
+  },
+  {
+   "do": "waitFor",
+   "text": "Cadastro realizado com sucesso! Redirecionando...",
+   "timeout": 12
+  },
+  {
+   "do": "type",
+   "target": {
+    "text": "Cadastro realizado com sucesso! Redirecionando...",
+    "exact": true
+   },
+   "text": "",
+   "noClick": true,
+   "optional": true,
+   "timeout": 4,
+   "label": "toast Cadastro realizado com sucesso! Redirecionando..."
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 73.42
+  }
+ ]
+}

@@ -1,0 +1,617 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<!-- T22 · Gerencial: matriz e filiais: as cenas de conceito da aula. Cópia do kit perfis/ecoflix/cenas/cenas_ecoflix.html
+     (estilo e utilidades iguais) com os utilitários da T15; os dois exemplos saíram e o desenho do "Caixa × competência"
+     (o mesmo da T15) ficou na cena ilu07_caixa do CAPS[7]. Cenas, janelas e textos: ilustracoes.json; tempos estimados:
+     tempos/capNN.json (até a voz chegar).
+     Do kit: mesmo formato do cenas_modelo.html (docs/09-aula-ilustrada.md): 1280x800 CSS, renderizado quadro a quadro por render_cenas.cjs
+     (window.setup(dados) + window.R(t)); tudo é função do tempo t (nada de transição/animação CSS); cada mudança presa a
+     uma palavra da fala com W(linha, 'palavra'[, ocorrência, 's'|'e']).
+     Na EcoFlix a ilustração entra NO MEIO do capítulo gravado, cobrindo a janela do app, sempre que a fala explica um
+     conceito ([ILUSTRAÇÃO: ...] no roteiro): copie para <tutorial>/edit/cenas/cenas.html, escreva um CAPS[n] por capítulo
+     (várias ilustrações do mesmo capítulo cabem no mesmo CAPS[n], cada uma no seu trecho) e renderize só o trecho dela:
+       node render_cenas.cjs <n> ../../narracao/capNN.json <saida.mp4> --de <at> --ate <at + dur>
+     Antes da voz, tempos estimados: python3 tempos_estimados.py exemplo/cap01.json "fala 0" "fala 1" ...
+     Regras: rótulos exatos do app ("Peso bruto", "Tara", "Peso líquido", "Competência", "Regime de Caixa"), dados do
+     mundo da Recicla Vale Metais, objetos genéricos sem marca, nenhum logo de terceiros, texto medido (cabe no cartão). -->
+<style>
+@font-face{font-family:M;font-weight:500;src:url(../../../web/fonts/montserrat-latin-500-normal.woff2) format('woff2')}
+@font-face{font-family:M;font-weight:600;src:url(../../../web/fonts/montserrat-latin-600-normal.woff2) format('woff2')}
+@font-face{font-family:M;font-weight:700;src:url(../../../web/fonts/montserrat-latin-700-normal.woff2) format('woff2')}
+@font-face{font-family:M;font-weight:800;src:url(../../../web/fonts/montserrat-latin-800-normal.woff2) format('woff2')}
+@font-face{font-family:M;font-weight:500;src:url(../../../web/fonts/montserrat-latin-ext-500-normal.woff2) format('woff2');unicode-range:U+0100-024F}
+@font-face{font-family:M;font-weight:700;src:url(../../../web/fonts/montserrat-latin-ext-700-normal.woff2) format('woff2');unicode-range:U+0100-024F}
+/* ---------------------------------------------------------------- paleta EcoFlix (marca: acento #50D088, escuro #121212)
+   --v  acento: preenchimentos, barras, contornos de destaque (nunca texto sobre branco: contraste baixo)
+   --ve verde escuro: texto e ícone verde sobre branco (contraste 5,0)   --vc verde claro: fundo de ícone/resultado
+   --a  âmbar: o SEGUNDO conceito da cena (ex.: competência x caixa)     --ae texto âmbar (5,9)   --ac âmbar claro
+   --t  texto (o escuro da marca)   --c texto secundário (4,8)   --l linhas   --e painel escuro (mostrador) */
+:root{--v:#50D088;--ve:#2E7D57;--vc:#EAF8F0;--vm:#A9E9C6;--a:#F2B63D;--ae:#8A5A00;--ac:#FFF5DF;
+  --t:#121212;--c:#6B7280;--l:#E6E9EE;--e:#121212}
+*{box-sizing:border-box;margin:0;padding:0;transition:none!important;animation:none!important}
+html,body{width:1280px;height:800px;overflow:hidden;background:#fff}
+body{font-family:M,sans-serif;color:var(--t);-webkit-font-smoothing:antialiased}
+#st{position:absolute;inset:0;overflow:hidden;background:
+  radial-gradient(1100px 650px at 92% -12%,rgba(80,208,136,.09),transparent 62%),
+  radial-gradient(900px 600px at -12% 112%,rgba(80,208,136,.06),transparent 60%),#fff}
+.g{position:absolute;left:0;top:0;width:1280px;height:800px;transform-origin:640px 400px}
+.ab{position:absolute}
+.row{display:flex;align-items:center}
+/* título da cena: área (kicker) + conceito; sozinho fica grande no centro e sobe quando o desenho entra */
+.kick{font-weight:700;font-size:15px;letter-spacing:.3em;color:var(--ve);text-transform:uppercase}
+.h{font-weight:800;font-size:46px;letter-spacing:-.01em;line-height:1.1}
+/* cartão, chip, etiqueta, ícone */
+.card{position:absolute;background:#fff;border:1px solid #E1E8E4;border-radius:18px;
+  box-shadow:0 18px 40px rgba(16,24,40,.10),0 3px 8px rgba(16,24,40,.06)}
+.ic{display:inline-flex;align-items:center;justify-content:center;flex:none}
+.ic svg{width:100%;height:100%}
+.ico{display:flex;align-items:center;justify-content:center;flex:none;border-radius:14px;background:var(--vc);color:var(--ve)}
+.ico.a{background:var(--ac);color:var(--ae)}
+.tag{display:inline-flex;align-items:center;gap:8px;padding:9px 18px;border-radius:999px;font-weight:800;font-size:20px;white-space:nowrap}
+.tag.v{background:var(--vc);color:var(--ve)} .tag.a{background:var(--ac);color:var(--ae)}
+.lbl{font-weight:700;font-size:17px;color:var(--c)}
+.num{font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+.op{position:absolute;width:60px;height:60px;border-radius:50%;background:#F2F4F7;color:var(--t);display:flex;
+  align-items:center;justify-content:center;font-weight:800;font-size:34px;line-height:1}
+/* mostrador da balança (painel escuro, número no acento) */
+.most{background:var(--e);border-radius:16px;padding:16px 22px 18px;box-shadow:0 16px 34px rgba(16,24,40,.22)}
+.most .ml{position:relative;height:20px;font-weight:700;font-size:15px;letter-spacing:.22em;color:#A9E9C6;text-transform:uppercase}
+.most .ml span{position:absolute;left:0;top:0;white-space:nowrap}
+.most .mn{margin-top:6px;font-weight:800;font-size:44px;color:var(--v);font-variant-numeric:tabular-nums;white-space:nowrap}
+.rip{position:absolute;width:56px;height:56px;margin:-28px 0 0 -28px;border-radius:50%;border:3px solid var(--v);opacity:0}
+/* ---------------------------------------------------------------- T22: o que faltou no kit (igual ao da T15) (escrito na cena da aula)
+   --r vermelho do resultado negativo (só em valor negativo, "Prejuízo?", "saiu")  --re texto vermelho (6,6)  --rc fundo
+   --az azul do centro de custo "Coleta" (a cor dele no app)  --aze texto azul (6,7)  --azc fundo
+   --n cinza neutro (ícone e chip apagado)  .risco = traço que risca um chip ("não é despesa") */
+:root{--r:#E5484D;--re:#B42318;--rc:#FDECEC;--az:#3B82F6;--aze:#1D4ED8;--azc:#EAF1FE;--n:#4B5563;--nc:#F2F4F7}
+.tag.r{background:var(--rc);color:var(--re)} .tag.n{background:var(--nc);color:var(--n)} .tag.az{background:var(--azc);color:var(--aze)}
+.ico.r{background:var(--rc);color:var(--re)} .ico.n{background:var(--nc);color:var(--n)} .ico.az{background:var(--azc);color:var(--aze)}
+.cab{display:flex;align-items:center;height:72px;padding:0 22px;gap:12px;border-bottom:1px solid var(--l);background:#FAFBFC}
+.cab b{font-weight:800;font-size:22px;white-space:nowrap}
+.ch{position:relative;display:inline-flex}
+.risco{position:absolute;left:-5px;top:50%;height:3px;margin-top:-1px;border-radius:2px;background:var(--re);width:0;opacity:0}
+.cx{position:absolute;left:0;width:100%;display:flex;justify-content:center}
+.lin{display:flex;align-items:center;justify-content:space-between}
+.lin .k{font-weight:700;font-size:19px;color:var(--n);white-space:nowrap}
+.lin .v{font-weight:800;font-size:23px;font-variant-numeric:tabular-nums;white-space:nowrap}
+</style></head>
+<body><div id="st"></div>
+<script>
+// ------------------------------------------------------------------ utilidades (as do cenas_modelo.html + as da EcoFlix)
+const cl=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
+const eo=x=>1-Math.pow(1-cl(x),3);
+const eio=x=>{x=cl(x);return x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2};
+const pr=(t,a,d=.45)=>cl((t-a)/d);
+const lerp=(a,b,p)=>a+(b-a)*p;
+const $=s=>document.querySelector(s);
+const ST=document.getElementById('st');
+function el(html,parent=ST){const d=document.createElement('div');d.innerHTML=html.trim();let f=null;for(const n of [...d.childNodes]){parent.appendChild(n);if(!f&&n.nodeType===1)f=n}return f}
+function grupo(){return el('<div class="g"></div>')}
+function ic(n,px,cor){const s=(window.ICONS||{})[n]||'';return `<span class="ic" style="width:${px}px;height:${px}px;${cor?'color:'+cor:''}">${s}</span>`}
+function hex(c){c=c.replace('#','');return[0,2,4].map(i=>parseInt(c.substr(i,2),16))}
+function mix(a,b,p){const A=hex(a),B=hex(b);return `rgb(${A.map((v,i)=>Math.round(v+(B[i]-v)*cl(p))).join(',')})`}
+// aparece em a, some em b (opacidade + leve subida + escala): a entrada e a saída suaves de tudo
+function vis(e,t,a,b=1e9,o={}){
+  const din=o.din??.5,dout=o.dout??.4,dy=o.dy??16,dx=o.dx??0,sc=o.sc??.985;
+  const p=eo(pr(t,a,din)),q=1-eo(pr(t,b,dout)),op=Math.min(p,q);
+  e.style.opacity=op.toFixed(4);e.style.visibility=op<=.001?'hidden':'visible';
+  const s=sc+(1-sc)*p - (1-q)*(1-sc);
+  e.style.transform=`translate(${((1-p)*dx).toFixed(2)}px,${((1-p)*dy-(1-q)*dy*.5).toFixed(2)}px) scale(${s.toFixed(4)})`;
+  return op;
+}
+function ripple(r,t,a){const p=pr(t,a,.7);r.style.opacity=(p>0&&p<1)?(.6*(1-p)).toFixed(3):0;r.style.transform=`scale(${(.4+2.0*eo(p)).toFixed(3)})`}
+function pulse(e,t,a,amp=.045,dur=.9){const p=pr(t,a,dur);e.style.scale=(p>0&&p<1)?(1+amp*Math.sin(Math.PI*p)).toFixed(4):''}
+function digita(e,txt,t,a,b){const p=cl((t-a)/Math.max(.05,b-a));const n=Math.round(p*txt.length);
+  const car=(p>0&&p<1)||(Math.floor(t*2.2)%2===0&&p<1.2&&t>=a)?'<span style="color:var(--v);font-weight:500">|</span>':'';
+  e.innerHTML=(txt.slice(0,n)||'')+(t>=a&&t<b+.8?car:'');}
+// EcoFlix: números e dinheiro no jeito brasileiro; contagem suave de um número; traço que se desenha; arco; contorno
+const NF=new Intl.NumberFormat('pt-BR');
+const kg=v=>NF.format(Math.round(v))+' kg';
+const brl=v=>'R$ '+v.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
+function conta(e,t,a,d,v0,v1,fmt=kg){const p=eo(pr(t,a,d));const s=fmt(lerp(v0,v1,p));if(e.textContent!==s)e.textContent=s;return p}
+function traco(p,t,a,d=.8){if(!p._L){p._L=p.getTotalLength();p.style.strokeDasharray=p._L}const q=eio(pr(t,a,d));p.style.strokeDashoffset=(p._L*(1-q)).toFixed(2);p.style.opacity=q>0?1:0;return q}
+function arco(e,t,a,d,x0,y0,x1,y1,h=-80,rot=0){const p=eio(pr(t,a,d));const x=lerp(x0,x1,p),y=lerp(y0,y1,p)+h*4*p*(1-p);
+  e.style.transform=`translate(${x.toFixed(2)}px,${y.toFixed(2)}px) rotate(${(rot*p).toFixed(2)}deg)`;return p}
+function contorno(e,t,a,de,para,d=.45){e.style.borderColor=mix(de,para,eo(pr(t,a,d)))}
+// título padrão da cena: grande no centro enquanto está sozinho, sobe para o alto quando o desenho entra (em "sobe")
+function titulo(g,kick,txt){return el(`<div class="ab" style="left:0;top:0;width:1280px;text-align:center">
+  <div class="kick">${kick}</div><div class="h" style="margin-top:12px">${txt}</div></div>`,g)}
+function posTitulo(e,t,a,sobe,sai=1e9){vis(e,t,a,sai,{dy:14});const p=eio(pr(t,sobe,.7));
+  e.style.top=lerp(318,46,p).toFixed(2)+'px';e.style.scale=lerp(1.12,1,p).toFixed(4)}
+
+// ------------------------------------------------------------------ tempos da fala (capNN.json do proc.py ou estimado)
+let D=null;
+const norm=w=>w.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9%./-]+/g,'');
+function W(linha,palavra,n=1,campo='s'){
+  const alvo=norm(palavra);let k=0;
+  for(const w of D.words){if(w.linha===linha&&norm(w.w).replace(/[.,]$/,'')===alvo){k++;if(k===n)return w[campo]}}
+  for(const w of D.words){if(w.linha===linha&&norm(w.w).startsWith(alvo)){k++;if(k>=n)return w[campo]}}
+  console.warn('palavra não achada',linha,palavra);return L(linha);
+}
+const L=i=>(D.linhas[i]||{s:0}).s, LE=i=>(D.linhas[i]||{e:D.dur}).e;
+
+// ------------------------------------------------------------------ desenhos genéricos (sem marca)
+// caminhão de lado (frente para a direita), com a carga de sucata em pedaços (.pd) que podem ser descarregados
+function caminhao(){
+  const pd=[ // [forma, cor, centro da peça, destino no monte atrás do caminhão (deslocamento do centro e giro)]
+    ['<polygon points="28,90 44,52 88,42 100,90"/>','#8C5A3C',[64,66],[-224,148,6]],
+    ['<polygon points="82,90 102,36 146,48 154,90"/>','#6F7983',[118,63],[-318,122,12]],
+    ['<rect x="118" y="44" width="112" height="16" rx="8" transform="rotate(-8 174 52)"/>','#9AA3AD',[174,52],[-334,98,-18]],
+    ['<polygon points="148,90 170,54 212,44 232,90"/>','#A0694A',[190,67],[-425,148,-8]],
+    ['<polygon points="210,90 232,40 276,54 286,90"/>','#4F5861',[248,65],[-373,120,-10]],
+    ['<polygon points="258,90 282,60 308,66 312,90"/>','#8A949E',[285,75],[-375,148,4]],
+    ['<g><circle cx="192" cy="64" r="19"/><circle cx="192" cy="64" r="7" fill="#8A949E"/></g>','#5E6670',[192,64],[-242,155,200]],
+    ['<polygon points="40,70 60,50 84,64 64,86"/>','#B07A55',[62,68],[-307,100,30]]];
+  const pecas=pd.map(([f,c,[cx,cy],[dx,dy,r]])=>`<g class="pd" data-cx="${cx}" data-cy="${cy}" data-dx="${dx}" data-dy="${dy}" data-r="${r}" fill="${c}">${f}</g>`).join('');
+  const roda=x=>`<g class="roda" data-x="${x}" transform="translate(${x},196)"><circle r="26" fill="#1B1F24"/><circle r="12" fill="#9AA3AD"/>
+    <rect x="-2.5" y="-23" width="5" height="10" rx="2" fill="#5B636C"/><rect x="-2.5" y="13" width="5" height="10" rx="2" fill="#5B636C"/></g>`;
+  return `<svg viewBox="0 0 500 230" width="500" height="230" style="overflow:visible">
+    <g class="carga">${pecas}</g>
+    <rect x="18" y="86" width="304" height="88" rx="6" fill="#7E8994"/>
+    <rect x="16" y="82" width="308" height="11" rx="4" fill="#68727D"/>
+    <g stroke="#707A85" stroke-width="3">${[78,138,198,258].map(x=>`<line x1="${x}" y1="98" x2="${x}" y2="168"/>`).join('')}</g>
+    <path d="M334,176 L334,76 Q334,64 346,64 L412,64 L462,116 L472,121 Q480,124 480,134 L480,176 Z" fill="#2F3640"/>
+    <path d="M348,78 L406,78 L444,116 L348,116 Z" fill="#D7E5ED"/>
+    <rect x="470" y="142" width="10" height="11" rx="2" fill="#F2B63D"/>
+    <rect x="12" y="170" width="472" height="15" rx="4" fill="#23282E"/>
+    ${roda(92)}${roda(158)}${roda(416)}
+  </svg>`;
+}
+
+// ================================================================== T22 · Gerencial: matriz e filiais (ilustrações de conceito)
+// Uma cena por [ILUSTRAÇÃO] do roteiro, presa às palavras do narracao/tts_textos.py (tempos em cenas/tempos/capNN.json).
+// Janela de cada cena = ilustracoes.json: começa 0,3 s antes da palavra "de" e fecha "cauda" s depois do fim da "ate".
+// Números de outubro só nas constantes do topo da cena (a junção do mundo pode mudar a fala: conferir aqui).
+// ------------------------------------------------------------------ utilidades desta aula (faltaram no kit)
+const ton=v=>NF.format(v)+' t';
+function contaS(e,t,a,d,v1){const p=eo(pr(t,a,d));const s=(v1<0?'−':'+')+brl(Math.abs(v1)*p);if(e.textContent!==s)e.textContent=s;return p}
+function risca(r,t,a,d=.45){const p=eio(pr(t,a,d));r.style.width=`calc(${(p*100).toFixed(2)}% + ${(10*p).toFixed(2)}px)`;r.style.opacity=p>0?1:0;return p}
+function chipR(cls,txt,fs=19){return `<div class="ch"><div class="tag ${cls}" style="font-size:${fs}px;padding:8px 16px">${txt}</div><div class="risco"></div></div>`}
+// só desenha a cena perto da janela dela (várias cenas no mesmo CAPS[n])
+function janela(g,t,a,b){const on=t>a-1.5&&t<b+1.5;g.style.opacity=on?'1':'0';return on}
+// voo de um elemento (posição por transform): entra em "ent", viaja de (x0,y0) a (x1,y1) entre a e a+d, gira e encolhe
+function voa(e,t,ent,a,d,x0,y0,r0,x1,y1,r1,s1=1,h=-70){
+  const p=eio(pr(t,a,d)), q=eo(pr(t,ent,.45));
+  const x=lerp(x0,x1,p), y=lerp(y0,y1,p)+h*4*p*(1-p)+(1-q)*14;
+  e.style.transform=`translate(${x.toFixed(2)}px,${y.toFixed(2)}px) rotate(${lerp(r0,r1,p).toFixed(2)}deg) scale(${lerp(1,s1,p).toFixed(4)})`;
+  e.style.opacity=q.toFixed(4);e.style.visibility=q<=.001?'hidden':'visible';return p;
+}
+// seta reta que se desenha (comprimento calculado: não depende de getTotalLength)
+function seta(pai,x1,y1,x2,y2,cor='var(--ve)',w=4){
+  const a=Math.atan2(y2-y1,x2-x1),L=12,h1=[x2-L*Math.cos(a-.55),y2-L*Math.sin(a-.55)],h2=[x2-L*Math.cos(a+.55),y2-L*Math.sin(a+.55)];
+  const s=el(`<svg class="ab" style="left:0;top:0;overflow:visible" width="1" height="1">
+    <path d="M${x1} ${y1} L${x2} ${y2}" fill="none" stroke="${cor}" stroke-width="${w}" stroke-linecap="round"/>
+    <path d="M${h1[0].toFixed(1)} ${h1[1].toFixed(1)} L${x2} ${y2} L${h2[0].toFixed(1)} ${h2[1].toFixed(1)}" fill="none" stroke="${cor}" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round"/></svg>`,pai);
+  const [l,hd]=s.querySelectorAll('path'),len=Math.hypot(x2-x1,y2-y1);l.style.strokeDasharray=len;
+  return (t,a0,d=.5)=>{const q=eio(pr(t,a0,d));l.style.strokeDashoffset=(len*(1-q)).toFixed(2);l.style.opacity=q>0?1:0;hd.style.opacity=cl((q-.7)/.3).toFixed(3);return q};
+}
+// desenhos genéricos desta aula: monte de sucata, prensa, caçamba, balança
+function monte(){return `<svg viewBox="0 0 220 90" width="220" height="90" style="overflow:visible;display:block">
+  <path d="M2 90 Q26 52 62 40 Q96 14 136 26 Q186 40 218 90 Z" fill="#7E8994"/>
+  <polygon points="22,86 40,60 70,66 62,88" fill="#8C5A3C"/><polygon points="62,52 90,28 124,40 112,66" fill="#6F7983"/>
+  <rect x="112" y="44" width="76" height="13" rx="6.5" fill="#9AA3AD" transform="rotate(-16 150 50)"/>
+  <polygon points="142,84 160,58 192,68 184,88" fill="#A0694A"/>
+  <circle cx="96" cy="72" r="14" fill="#5E6670"/><circle cx="96" cy="72" r="5.5" fill="#8A949E"/>
+  <polygon points="44,44 62,30 80,42 62,54" fill="#B07A55"/><polygon points="124,76 136,62 150,80" fill="#4F5861"/></svg>`}
+function prensa(){return `<svg viewBox="0 0 100 130" width="100" height="130" style="display:block">
+  <rect x="6" y="116" width="88" height="12" rx="3" fill="#4F5861"/><rect x="12" y="12" width="10" height="106" rx="3" fill="#6F7983"/>
+  <rect x="78" y="12" width="10" height="106" rx="3" fill="#6F7983"/><rect x="4" y="4" width="92" height="16" rx="4" fill="#4F5861"/>
+  <rect x="45" y="20" width="10" height="30" fill="#9AA3AD"/><rect x="24" y="50" width="52" height="11" rx="3" fill="#2F3640"/>
+  <rect x="28" y="74" width="44" height="42" rx="4" fill="#9AA3AD"/>
+  <g stroke="#6F7983" stroke-width="2.5"><line x1="28" y1="88" x2="72" y2="88"/><line x1="28" y1="102" x2="72" y2="102"/></g></svg>`}
+function cacamba(){return `<svg viewBox="0 0 190 96" width="190" height="96" style="display:block">
+  <polygon points="8,14 182,14 164,86 26,86" fill="#8A949E"/><rect x="0" y="6" width="190" height="12" rx="4" fill="#6F7983"/>
+  <g stroke="#6F7983" stroke-width="3"><line x1="58" y1="22" x2="62" y2="80"/><line x1="95" y1="22" x2="95" y2="80"/><line x1="132" y1="22" x2="128" y2="80"/></g>
+  <rect x="20" y="86" width="22" height="9" rx="2" fill="#4F5861"/><rect x="148" y="86" width="22" height="9" rx="2" fill="#4F5861"/></svg>`}
+function balanca(){return `<svg viewBox="0 0 262 120" width="262" height="120" style="display:block">
+  <rect x="2" y="104" width="226" height="14" rx="4" fill="#CBD1D8" stroke="#A8B0B9" stroke-width="2"/>
+  <rect x="238" y="36" width="8" height="82" rx="3" fill="#B9C1C9"/><rect x="202" y="0" width="58" height="40" rx="8" fill="#121212"/>
+  <rect x="212" y="14" width="38" height="12" rx="3" fill="#50D088"/></svg>`}
+// caminhão do kit num invólucro com escala própria (docs/09, regra 5): anda(x) põe no lugar e gira as rodas; descarrega(t,td)
+function caminhaoEm(pai,esc,y){
+  const w=el(`<div class="ab" style="left:0;top:0;width:${500*esc}px;height:${230*esc}px">
+    <div style="width:500px;height:230px;transform:scale(${esc});transform-origin:0 0">${caminhao()}</div></div>`,pai);
+  const rodas=[...w.querySelectorAll('.roda')],pecas=[...w.querySelectorAll('.pd')];
+  return {w,pecas,
+    anda(x,X1){w.style.transform=`translate(${x.toFixed(2)}px,${y}px)`;
+      rodas.forEach(r=>r.setAttribute('transform',`translate(${r.dataset.x},196) rotate(${((x-X1)/esc/26*57.3).toFixed(2)})`))},
+    // ajY: o pouso do kit fica 16 px abaixo da roda (balança do exemplo); aqui o chão é a linha da roda
+    descarrega(t,td,gap=.12,ajY=-22){pecas.forEach((p,i)=>{const d=p.dataset;const q=eio(pr(t,td+i*gap,.7));
+      p.setAttribute('transform',`translate(${(d.dx*q).toFixed(2)},${((+d.dy+ajY)*q-130*4*q*(1-q)).toFixed(2)}) rotate(${(d.r*q).toFixed(2)} ${d.cx} ${d.cy})`)})}};
+}
+// desenhos desta aula (T22): galpão de uma unidade, fardo de latinha, monitor genérico, caminho de contorno
+function galpao(){return `<svg viewBox="0 0 200 140" width="200" height="140" style="display:block">
+  <polygon points="8,60 100,14 192,60" fill="#6F7983"/><rect x="20" y="58" width="160" height="80" rx="3" fill="#EEF1F4" stroke="#C9D0D8" stroke-width="2"/>
+  <rect x="76" y="82" width="48" height="56" rx="2" fill="#9AA3AD"/>
+  <g stroke="#7E8994" stroke-width="2"><line x1="76" y1="96" x2="124" y2="96"/><line x1="76" y1="110" x2="124" y2="110"/><line x1="76" y1="124" x2="124" y2="124"/></g>
+  <rect x="34" y="76" width="30" height="20" rx="3" fill="#CFE8DA"/><rect x="136" y="76" width="30" height="20" rx="3" fill="#CFE8DA"/></svg>`}
+function fardo(w=90){return `<svg viewBox="0 0 90 70" width="${w}" height="${w*70/90}" style="display:block">
+  <rect x="4" y="8" width="82" height="58" rx="6" fill="#B8C0C8"/>
+  <g fill="#9AA3AD"><rect x="12" y="16" width="20" height="12" rx="3"/><rect x="38" y="20" width="22" height="10" rx="3"/><rect x="64" y="16" width="16" height="12" rx="3"/>
+  <rect x="14" y="38" width="18" height="10" rx="3"/><rect x="40" y="42" width="18" height="12" rx="3"/><rect x="64" y="40" width="14" height="10" rx="3"/></g>
+  <g stroke="#6F7983" stroke-width="3"><line x1="31" y1="6" x2="31" y2="68"/><line x1="59" y1="6" x2="59" y2="68"/></g></svg>`}
+// monitor sem marca: tela branca com moldura escura e pé; o conteúdo vai dentro de .tl
+function monitor(pai,x,y,w,h){return el(`<div class="ab" style="left:${x}px;top:${y}px;width:${w}px;height:${h+26}px">
+    <div class="tl" style="position:absolute;left:0;top:0;width:${w}px;height:${h}px;border-radius:12px;border:6px solid #2F3640;background:#fff;overflow:hidden"></div>
+    <div style="position:absolute;left:${w/2-22}px;top:${h}px;width:44px;height:16px;background:#4F5861"></div>
+    <div style="position:absolute;left:${w/2-46}px;top:${h+14}px;width:92px;height:10px;border-radius:5px;background:#2F3640"></div></div>`,pai)}
+// contorno tracejado arredondado que se desenha (o grupo); comprimento calculado
+function contornoGrupo(pai,x,y,w,h,r=30,cor='#50D088'){
+  const s=el(`<svg class="ab" style="left:0;top:0;overflow:visible" width="1" height="1"><path d="M${x+r} ${y} H${x+w-r} A${r} ${r} 0 0 1 ${x+w} ${y+r} V${y+h-r} A${r} ${r} 0 0 1 ${x+w-r} ${y+h} H${x+r} A${r} ${r} 0 0 1 ${x} ${y+h-r} V${y+r} A${r} ${r} 0 0 1 ${x+r} ${y} Z"
+    fill="rgba(80,208,136,.035)" stroke="${cor}" stroke-width="3"/></svg>`,pai).querySelector('path');
+  const len=2*(w+h)-8*r+2*Math.PI*r;
+  return (t,a,d=1)=>{const q=eio(pr(t,a,d));s.style.strokeDasharray=`${(len*q).toFixed(1)} ${len}`;s.style.opacity=q>0?1:0;s.style.fillOpacity=q.toFixed(3);return q};
+}
+// cartão de uma unidade: galpão, nome e cidade
+function unidade(pai,x,y,w,h,nome,cidade){return el(`<div class="card" style="left:${x}px;top:${y}px;width:${w}px;height:${h}px;overflow:hidden">
+    <div style="position:absolute;left:${w/2-100}px;top:18px">${galpao()}</div>
+    <div style="position:absolute;left:0;top:166px;width:${w}px;text-align:center;font-weight:800;font-size:24px">${nome}</div>
+    <div class="lbl" style="position:absolute;left:0;top:200px;width:${w}px;text-align:center">${cidade}</div></div>`,pai)}
+const CAPS={};
+
+// ------------------------------------------------------------------ CAPS[0] · Somar na mão (ilu00_somar, linha 1)
+// "Com duas unidades, pra saber quanto o grupo vendeu no mês, alguém precisava abrir os dois sistemas e somar na mão.
+// Aqui, os números das duas chegam juntos numa tela só."
+CAPS[0]=()=>{
+  const g=grupo();
+  const tit=titulo(g,'Gerencial','Duas unidades, uma tela');
+  const uni=(x,nome,cidade)=>{const c=unidade(g,x,232,300,340,nome,cidade);
+    const m=monitor(c,90,238,120,62), tl=m.querySelector('.tl');
+    const bs=[0,1,2].map(i=>el(`<div style="position:absolute;left:${14+i*30}px;bottom:8px;width:18px;height:0;border-radius:3px;background:#A9B3BD"></div>`,tl));
+    return {c,m,tl,bs}};
+  const uA=uni(60,'Matriz','Taubaté'), uB=uni(920,'Filial','Pindamonhangaba');
+  // na mão: o papel com os números copiados e a calculadora (fica, apagado, quando a tela única entra)
+  const mao=el(`<div class="card" style="left:470px;top:448px;width:340px;height:172px;padding:20px 24px">
+      <div class="row" style="gap:16px"><div style="flex:1">${[78,64,86].map(w=>`<div style="height:9px;width:${w}%;margin:6px 0 14px;border-radius:5px;background:#D5DBE1"></div>`).join('')}
+        <div style="height:3px;background:#AEB6BF;margin-top:-4px"></div></div>
+        <div class="ico n" style="width:64px;height:64px;border-radius:16px">${ic('calculator',34)}</div></div>
+      <div class="ab" style="left:24px;top:118px"><div class="tag a" style="font-size:17px;padding:6px 14px">na mão</div></div></div>`,g);
+  const mTag=mao.querySelector('.tag');
+  const cpA=seta(g,366,532,462,532,'#AEB6BF',3), cpB=seta(g,914,532,818,532,'#AEB6BF',3);
+  // a tela só: os números das duas unidades chegam juntos
+  const tela=monitor(g,480,176,320,180), tt=tela.querySelector('.tl');
+  const cor=['#50D088','#3FA7A0'], LB=[150,96];
+  const lin=[0,1].map(i=>el(`<div style="position:absolute;left:22px;top:${24+i*40}px;height:26px;width:0;border-radius:6px;background:${cor[i]}"></div>`,tt));
+  const tot=el('<div style="position:absolute;left:22px;top:110px;height:30px;width:0;border-radius:6px;background:#2E7D57"></div>',tt);
+  const chA=seta(g,366,470,472,330,'var(--ve)',4), chB=seta(g,914,470,808,330,'var(--ve)',4);
+  return t=>{
+    const T0=W(1,'com')-.3, T1=W(1,'so',1,'e')+.6;
+    if(!janela(g,t,T0,T1))return;
+    const tu=W(1,'unidades'), tve=W(1,'vendeu'), tab=W(1,'abrir'), tsi=W(1,'sistemas'), tso=W(1,'somar'), tma=W(1,'mao'),
+          taq=W(1,'aqui'), tnu=W(1,'numeros'), tch=W(1,'chegam'), tju=W(1,'juntos'), tte=W(1,'tela');
+    posTitulo(tit,t,T0-.6,tu-.6);
+    vis(uA.c,t,tu-.1,1e9,{dy:22}); vis(uB.c,t,tu+.05,1e9,{dy:22});
+    for(const u of [uA,uB]){u.bs.forEach((b,i)=>b.style.height=(lerp(0,[22,34,28][i],eo(pr(t,tve-.1+i*.1,.5)))).toFixed(1)+'px');
+      contorno(u.tl,t,tab-.1,'#2F3640','#50D088'); pulse(u.m,t,tsi-.1,.06,.7);}
+    // somar na mão: copia dos dois sistemas para o papel e a calculadora
+    vis(mao,t,tso-.2,1e9,{dy:16}); cpA(t,tso-.1,.5); cpB(t,tso,.5); vis(mTag,t,tma-.15,1e9,{dy:6});
+    const ap=eo(pr(t,taq,.6)); if(t>=taq){mao.style.opacity=(1-.5*ap).toFixed(3);}
+    for(const s of g.querySelectorAll('svg path[stroke="#AEB6BF"]')) if(t>=taq) s.parentNode.style.opacity=(1-.6*ap).toFixed(3);
+    // aqui: tudo chega junto numa tela só
+    vis(tela,t,taq-.1,1e9,{dy:18}); chA(t,tnu-.1,.6); chB(t,tnu,.6);
+    lin.forEach((l,i)=>l.style.width=(LB[i]*eo(pr(t,tch-.1+i*.2,.6))).toFixed(1)+'px');
+    tot.style.width=((LB[0]+LB[1]+14)*eo(pr(t,tju,.7))).toFixed(1)+'px'; pulse(tela,t,tte-.1,.04,.8);
+  };
+};
+
+// ------------------------------------------------------------------ CAPS[1] · Matriz e filial (ilu01_grupo, linhas 1 a 3)
+// 1 "O grupo junta as unidades. Cada unidade é uma empresa própria no sistema, com login e assinatura próprios. A matriz
+//   é a dona do grupo, e a filial entra nele."  2 "A matriz enxerga os números de todas, manda o mesmo padrão de cadastro
+//   pras filiais e transfere material entre elas."  3 "Uma dica: o Gerencial junta e padroniza, mas quem opera a filial é a
+//   filial. O caixa, as compras e as notas dela continuam com quem trabalha lá."
+CAPS[1]=()=>{
+  const g=grupo();
+  const tit=titulo(g,'Gerencial','Matriz e filial');
+  const gc=contornoGrupo(g,60,152,1160,560);
+  const gn=el(`<div class="ab" style="left:92px;top:134px"><div class="tag v" style="font-size:18px;padding:7px 16px;background:#fff;border:2px solid var(--v)">${ic('network',18)}Grupo Recicla Vale</div></div>`,g);
+  const uM=unidade(g,110,216,340,306,'Matriz','Taubaté'), uF=unidade(g,830,216,340,306,'Filial','Pindamonhangaba');
+  // login e assinatura próprios, nas duas
+  const proprios=[uM,uF].map(u=>el(`<div class="ab row" style="left:0;top:240px;width:340px;justify-content:center;gap:10px">
+      <div class="tag n lg" style="font-size:16px;padding:6px 12px">${ic('key-round',16)}login</div>
+      <div class="tag n as" style="font-size:16px;padding:6px 12px">${ic('credit-card',16)}assinatura</div></div>`,u));
+  const coroa=el(`<div class="ab ico a" style="left:412px;top:196px;width:54px;height:54px;border-radius:50%;box-shadow:0 6px 16px rgba(16,24,40,.12)">${ic('crown',28)}</div>`,g);
+  // as três faixas do meio: números sobem para a matriz, o padrão desce para a filial, o material vai e volta
+  const faixa=(y,x1,x2,cor,dupla)=>{const s=seta(g,x1,y,x2,y,cor,4);let s2=null;if(dupla)s2=seta(g,x2,y,x1,y,cor,4);return (t,a,d)=>{s(t,a,d);if(s2)s2(t,a,d)}};
+  const fN=faixa(278,822,458,'var(--ve)'), fP=faixa(370,458,822,'var(--ve)'), fM=faixa(462,470,810,'#AEB6BF',true);
+  const chip=(y,html,cls='v')=>el(`<div class="ab" style="left:470px;top:${y-21}px;width:340px;display:flex;justify-content:center"><div class="tag ${cls}" style="font-size:18px;padding:8px 16px;box-shadow:0 4px 12px rgba(16,24,40,.08)">${html}</div></div>`,g);
+  const cN=chip(278,`${ic('chart-column',18)}números`), cP=chip(370,`${ic('clipboard-list',18)}padrão de cadastro`),
+        cM=el(`<div class="ab" style="left:470px;top:${462-30}px;width:340px;display:flex;justify-content:center"><div class="row" style="gap:10px;padding:6px 14px;border-radius:999px;background:#fff;border:1px solid #E1E8E4;box-shadow:0 4px 12px rgba(16,24,40,.08)">${fardo(44)}<div style="font-weight:800;font-size:18px">material</div></div></div>`,g);
+  // quem opera a filial é a filial: o caixa, as compras e as notas dela; a matriz não opera (cadeado)
+  const op=[['wallet','caixa'],['scale','compras'],['receipt-text','notas']].map(([n,txt],i)=>el(`<div class="ab" style="left:${852+i*104}px;top:548px;width:88px;text-align:center">
+      <div class="ico" style="width:56px;height:56px;margin:0 auto;border-radius:16px">${ic(n,28)}</div>
+      <div style="margin-top:6px;font-weight:700;font-size:17px;color:#374151">${txt}</div></div>`,g));
+  const lk=el(`<svg class="ab" style="left:0;top:0;overflow:visible" width="1" height="1"><path d="M452 512 Q640 600 836 590" fill="none" stroke="#C3CAD2" stroke-width="3" stroke-dasharray="8 8"/></svg>`,g);
+  const cad=el(`<div class="ab ico n" style="left:614px;top:540px;width:54px;height:54px;border-radius:50%;background:#fff;border:2px solid #C3CAD2">${ic('lock',26)}</div>`,g);
+  return t=>{
+    const T0=W(1,'o')-.3, T1=W(3,'la',1,'e')+.6;
+    if(!janela(g,t,T0,T1))return;
+    const tg=W(1,'grupo'), tj=W(1,'junta'), tc=W(1,'cada'), tlo=W(1,'login'), tas=W(1,'assinatura'), tdo=W(1,'dona'), ten=W(1,'entra'),
+          ten2=W(2,'enxerga'), tnu=W(2,'numeros'), tpa=W(2,'padrao'), ttr=W(2,'transfere'),
+          tju=W(3,'junta'), tpz=W(3,'padroniza'), top=W(3,'opera'), tcx=W(3,'caixa'), tco=W(3,'compras'), tno=W(3,'notas'), ttb=W(3,'trabalha');
+    posTitulo(tit,t,T0-.6,tg-.6);
+    vis(uM,t,tg-.1,1e9,{dy:22}); vis(uF,t,tg+.05,1e9,{dy:22});
+    gc(t,tj-.1,1.0); vis(gn,t,tj+.2,1e9,{dy:8});
+    pulse(uM,t,tc,.025,.7); pulse(uF,t,tc+.1,.025,.7);
+    proprios.forEach(p=>{vis(p.querySelector('.lg'),t,tlo-.15,1e9,{dy:8}); vis(p.querySelector('.as'),t,tas-.15,1e9,{dy:8})});
+    vis(coroa,t,tdo-.2,1e9,{dy:-14,sc:.6}); contorno(uM,t,tdo,'#E1E8E4','#F2B63D'); contorno(uF,t,ten,'#E1E8E4','#50D088'); pulse(uF,t,ten,.03,.7);
+    fN(t,ten2-.1,.7); vis(cN,t,tnu-.15,1e9,{dy:0,dx:30}); fP(t,tpa-.3,.7); vis(cP,t,tpa-.15,1e9,{dy:0,dx:-30});
+    fM(t,ttr-.1,.6); vis(cM,t,ttr,1e9,{dy:8});
+    pulse(cN,t,tju,.06,.8); pulse(cP,t,tpz,.06,.8);
+    const q=eio(pr(t,top-.1,.8)); lk.style.opacity=q.toFixed(3); vis(cad,t,top-.05,1e9,{dy:0,sc:.6});
+    [tcx,tco,tno].forEach((a,i)=>vis(op[i],t,a-.15,1e9,{dy:12}));
+    op.forEach((e,i)=>pulse(e,t,ttb+i*.12,.06,.7));
+  };
+};
+
+// ------------------------------------------------------------------ CAPS[3] · O dia a dia segue igual (ilu03_dia, linha 4)
+// "Do lado dela, o dia a dia segue igual: a filial continua usando o próprio sistema, e a matriz passa a enxergar os números."
+CAPS[3]=()=>{
+  const CODIGO='GRP-7KQ4TX';                                  // código do grupo (MUNDO_FICTICIO.md, T22)
+  const g=grupo();
+  const tit=titulo(g,'Filial','Nada muda na filial');
+  const gc=contornoGrupo(g,60,160,1160,540);
+  const gn=el(`<div class="ab" style="left:92px;top:142px"><div class="tag v" style="font-size:18px;padding:7px 16px;background:#fff;border:2px solid var(--v)">${ic('network',18)}Grupo Recicla Vale</div></div>`,g);
+  const uM=unidade(g,110,262,300,250,'Matriz','Taubaté');
+  const uF=el(`<div class="card" style="left:640px;top:222px;width:520px;height:400px;overflow:hidden">
+      <div style="position:absolute;left:14px;top:22px">${galpao()}</div>
+      <div style="position:absolute;left:14px;top:170px;width:200px;text-align:center;font-weight:800;font-size:24px">Filial</div>
+      <div class="lbl" style="position:absolute;left:14px;top:204px;width:200px;text-align:center">Pindamonhangaba</div></div>`,g);
+  const mon=monitor(uF,236,30,262,170), tl=mon.querySelector('.tl');
+  const dia=[['wallet','caixa'],['scale','balança']].map(([n,txt],i)=>el(`<div style="position:absolute;left:${22+i*118}px;top:22px;width:96px;text-align:center">
+      <div class="ico" style="width:58px;height:58px;margin:0 auto;border-radius:16px">${ic(n,30)}</div>
+      <div style="margin-top:8px;font-weight:700;font-size:17px;color:#374151">${txt}</div></div>`,tl));
+  const igual=el(`<div class="ab" style="left:0;top:270px;width:520px;display:flex;justify-content:center"><div class="tag v" style="font-size:19px;padding:8px 18px">${ic('check',20)}segue igual</div></div>`,uF);
+  const prop=el(`<div class="ab" style="left:0;top:330px;width:520px;text-align:center;font-weight:700;font-size:18px;color:#4B5563">o próprio sistema</div>`,uF);
+  const cod=el(`<div class="ab" style="left:0;top:0"><div class="tag n" style="font-size:18px;padding:8px 16px;background:#fff;border:2px solid #C3CAD2;box-shadow:0 6px 16px rgba(16,24,40,.10)">${ic('key-round',18)}${CODIGO}</div></div>`,g);
+  const sN=seta(g,632,420,420,420,'var(--ve)',4);
+  const cN=el(`<div class="ab" style="left:420px;top:${420-62}px;width:212px;display:flex;justify-content:center"><div class="tag v" style="font-size:18px;padding:8px 16px">${ic('chart-column',18)}números</div></div>`,g);
+  const olho=el(`<div class="ab ico" style="left:372px;top:244px;width:54px;height:54px;border-radius:50%;box-shadow:0 6px 16px rgba(16,24,40,.12)">${ic('eye',26)}</div>`,g);
+  return t=>{
+    const T0=W(4,'do')-.3, T1=W(4,'numeros',1,'e')+.6;
+    if(!janela(g,t,T0,T1))return;
+    const tla=W(4,'lado'), tde=W(4,'dela'), tdi=W(4,'dia'), tig=W(4,'igual'), tco=W(4,'continua'), tpr=W(4,'proprio'),
+          tma=W(4,'matriz'), ten=W(4,'enxergar'), tnu=W(4,'numeros');
+    posTitulo(tit,t,T0-.6,tla-.6);
+    vis(uM,t,tla-.1,1e9,{dy:22}); vis(uF,t,tla+.05,1e9,{dy:22}); gc(t,tla,.9); vis(gn,t,tla+.3,1e9,{dy:8});
+    // o código que ligou a filial ao grupo encaixa no contorno, entre as duas
+    const p=arco(cod,t,tde-.2,.9,170,560,520,682,-90,0); const op=eo(pr(t,tde-.2,.3)); cod.style.opacity=op.toFixed(3);
+    cod.style.visibility=op<=.001?'hidden':'visible'; pulse(cod,t,tde+.7,.06,.6);
+    dia.forEach((e,i)=>vis(e,t,tdi-.15+i*.2,1e9,{dy:10})); vis(igual,t,tig-.2,1e9,{dy:10});
+    vis(mon,t,tla+.2,1e9,{dy:10}); vis(prop,t,tpr-.2,1e9,{dy:8}); pulse(mon,t,tco,.035,.8);
+    sN(t,tma-.1,.7); vis(cN,t,tnu-.2,1e9,{dy:0,dx:24}); vis(olho,t,ten-.15,1e9,{dy:0,sc:.6}); pulse(uM,t,ten,.03,.7);
+  };
+};
+
+// ------------------------------------------------------------------ CAPS[5] · A compra inteira do mês (ilu05_compra, linha 4)
+// "Repara que a margem é pequena. É que aqui entra a compra inteira do mês, até o material que ainda está no pátio
+// esperando venda. Isso fica claro na DRE, com o regime de competência."  Sem número na tela: as barras só comparam.
+CAPS[5]=()=>{
+  const g=grupo();
+  const tit=titulo(g,'Dashboard','A compra inteira do mês');
+  // o mês: Receita Total e Despesa Total (rótulos do Dashboard Gerencial), quase da mesma altura
+  const bc=el(`<div class="card" style="left:660px;top:166px;width:560px;height:452px;overflow:hidden">
+      <div class="cab"><div class="ico" style="width:42px;height:42px">${ic('chart-column',22)}</div><b>Outubro</b></div></div>`,g);
+  const BASE=388, HR=258, HD=244, HP=70;
+  el(`<div class="ab" style="left:60px;top:${BASE}px;width:440px;height:3px;border-radius:2px;background:#DDE2E7"></div>`,bc);
+  const col=(x,c)=>el(`<div class="ab" style="left:${x}px;top:${BASE}px;width:130px;height:0;border-radius:10px 10px 3px 3px;background:${c};overflow:hidden"></div>`,bc);
+  const cR=col(110,'var(--v)'), cD=col(300,'var(--r)');
+  const cDp=el('<div style="position:absolute;left:0;top:0;width:130px;height:0;background:var(--a)"></div>',cD);
+  const lR=el(`<div class="ab" style="left:80px;top:${BASE+12}px;width:190px;text-align:center;font-weight:800;font-size:18px;color:var(--ve)">Receita Total</div>`,bc);
+  const lD=el(`<div class="ab" style="left:270px;top:${BASE+12}px;width:190px;text-align:center;font-weight:800;font-size:18px;color:var(--re)">Despesa Total</div>`,bc);
+  const brk=el(`<div class="ab" style="left:244px;top:${BASE-HR}px;width:52px;height:${HR-HD}px;border:3px solid var(--ve);border-left:none;border-radius:0 6px 6px 0"></div>`,bc);
+  const mg=el(`<div class="ab" style="left:300px;top:${BASE-HR-46}px;width:160px"><div class="tag v" style="font-size:16px;padding:6px 14px">margem pequena</div></div>`,bc);
+  // o pátio: o caminhão traz a compra; parte sai vendida; o resto fica esperando venda
+  const pat=el(`<div class="card" style="left:60px;top:166px;width:560px;height:452px;overflow:hidden">
+      <div class="cab"><div class="ico n" style="width:42px;height:42px">${ic('warehouse',22)}</div><b>Pátio</b><div class="lbl" style="margin-left:auto">compras de outubro</div></div></div>`,g);
+  el('<div class="ab" style="left:20px;top:388px;width:520px;height:4px;border-radius:2px;background:#DDE2E7"></div>',pat);
+  const mt=el(`<div class="ab" style="left:36px;top:298px;width:220px;height:90px;transform-origin:50% 100%">${monte()}</div>`,pat);
+  const cam=caminhaoEm(pat,.5,277);
+  const lote=el(`<div class="ab" style="left:0;top:0;width:84px;height:40px"><svg viewBox="0 0 84 40" width="84" height="40">
+      <path d="M2 40 Q20 10 44 8 Q70 10 82 40 Z" fill="#7E8994"/><polygon points="16,36 30,18 50,24 42,38" fill="#6F7983"/>
+      <polygon points="44,22 60,12 74,30 56,36" fill="#A0694A"/></svg></div>`,pat);
+  const vend=el(`<div class="ab" style="left:400px;top:96px"><div class="tag v" style="font-size:16px;padding:6px 14px">${ic('arrow-up-right',16)}vendido</div></div>`,pat);
+  const esp=el(`<div class="ab" style="left:44px;top:96px"><div class="tag a" style="font-size:18px;padding:8px 16px">esperando venda</div></div>`,pat);
+  // a compra inteira entra na despesa: um monte pequeno sai do pátio e cai na coluna da despesa
+  const voo=el(`<div class="ab" style="left:0;top:0;width:84px;height:40px"><svg viewBox="0 0 84 40" width="84" height="40">
+      <path d="M2 40 Q20 10 44 8 Q70 10 82 40 Z" fill="#7E8994"/><polygon points="16,36 30,18 50,24 42,38" fill="#6F7983"/>
+      <polygon points="44,22 60,12 74,30 56,36" fill="#A0694A"/></svg></div>`,g);
+  const reg=el(`<div class="ab" style="left:660px;top:640px;width:560px;display:flex;justify-content:center"><div class="tag a" style="font-size:19px;padding:8px 18px">${ic('scale',19)}Regime de Competência</div></div>`,g);
+  return t=>{
+    const T0=W(4,'repara')-.3, T1=W(4,'competencia',1,'e')+.6;
+    if(!janela(g,t,T0,T1))return;
+    const tre=W(4,'repara'), tmg=W(4,'margem'), tpe=W(4,'pequena'), taq=W(4,'aqui'), tcp=W(4,'compra'), tin=W(4,'inteira'),
+          tmt=W(4,'material'), tpa=W(4,'patio'), tes=W(4,'esperando'), trg=W(4,'regime');
+    posTitulo(tit,t,T0-.6,tre-.3);
+    vis(bc,t,tre,1e9,{dy:22});
+    const hr=HR*eo(pr(t,tre+.2,.8)), hd=HD*eo(pr(t,tre+.35,.8));
+    cR.style.height=hr.toFixed(1)+'px'; cR.style.top=(BASE-hr).toFixed(1)+'px'; cD.style.height=hd.toFixed(1)+'px'; cD.style.top=(BASE-hd).toFixed(1)+'px';
+    vis(lR,t,tre+.3,1e9,{dy:6}); vis(lD,t,tre+.45,1e9,{dy:6});
+    vis(brk,t,tmg-.1,1e9,{dy:0,dx:-6}); vis(mg,t,tpe-.25,1e9,{dy:8});
+    vis(pat,t,taq-.3,1e9,{dy:22});
+    const chega=taq+1.3; cam.anda(lerp(600,250,eo(pr(t,taq-.2,1.5))),250);
+    const td=Math.max(chega,tcp); cam.descarrega(t,td,.1);
+    mt.style.transform=`scale(${lerp(.25,1,eio(pr(t,td+.25,1.0))).toFixed(4)})`;
+    // a compra inteira: o monte inteiro também está na despesa
+    const pv=arco(voo,t,tin-.1,1.0,166,428,983,166+BASE-HD-14,-120,0); const vo=t<tin-.1?0:(pv<.85?1:1-eo((pv-.85)/.15));
+    voo.style.opacity=vo.toFixed(3); voo.style.visibility=vo<=.001?'hidden':'visible'; pulse(cD,t,tin+.85,.05,.8);
+    // parte sai vendida; o resto espera venda e é a ponta âmbar da despesa
+    const pl=arco(lote,t,tmt-.1,1.1,130,262,610,180,-120,0); const lo=t<tmt-.1?0:(pl<.8?1:1-eo((pl-.8)/.2));
+    lote.style.opacity=lo.toFixed(3); lote.style.visibility=lo<=.001?'hidden':'visible'; vis(vend,t,tmt+.4,1e9,{dy:8});
+    vis(esp,t,tpa-.2,1e9,{dy:8}); pulse(mt,t,tpa,.05,.8); contorno(pat,t,tes,'#E1E8E4','#F2B63D');
+    cDp.style.height=(HP*eo(pr(t,tes-.1,.6))).toFixed(1)+'px';
+    vis(reg,t,trg-.2,1e9,{dy:10});
+  };
+};
+
+// ------------------------------------------------------------------ CAPS[7] · duas cenas
+// ilu07_caixa (linha 2): o desenho do "Caixa × competência" do kit (o mesmo da T15): cartões dos dois regimes, Regime de
+// Caixa em verde, Regime de Competência em âmbar, contorno e anel na cor do regime.
+// "A diferença, vinte e seis mil, é o material que a gente comprou em outubro e ainda está no pátio. No caixa, ele já pesa
+// no mês. Na competência, ele só vira custo quando for vendido."
+function cena07caixa(){
+  // números de outubro do grupo (fala dos capítulos 6 e 7; conferir na junção do mundo)
+  const COMPRAS=220000, CMV=194000, DIF=COMPRAS-CMV;
+  const g=grupo();
+  const tit=titulo(g,'Financeiro','Caixa × competência');
+  const r1=el('<div class="ab" style="left:0;top:0;width:1280px;height:800px"></div>',g);
+  const pat=el(`<div class="card" style="left:330px;top:156px;width:620px;height:258px;overflow:hidden">
+      <div class="cab" style="height:64px"><div class="ico n" style="width:40px;height:40px">${ic('warehouse',21)}</div><b>Pátio</b>
+        <div class="lbl" style="margin-left:auto">comprado em outubro</div></div></div>`,r1);
+  el('<div class="ab" style="left:16px;top:236px;width:588px;height:4px;border-radius:2px;background:#DDE2E7"></div>',pat);
+  const mt=el(`<div class="ab" style="left:40px;top:146px;width:220px;height:90px">${monte()}</div>`,pat);
+  const cam=caminhaoEm(pat,.45,136); cam.anda(330,330); cam.descarrega(0,-1e3);   // parado e já descarregado no monte
+  const tv=el(`<div class="ab row" style="left:28px;top:84px;gap:10px"><div class="tag a" style="font-size:19px;padding:7px 15px">${brl(DIF)}</div>
+      <div class="tag a ap" style="font-size:19px;padding:7px 15px">ainda no pátio</div></div>`,pat), tvAp=tv.querySelector('.ap');
+  const reg=(x,icone,cls,nome,rot,val,cor,cap)=>el(`<div class="card" style="left:${x}px;top:446px;width:560px;height:236px;overflow:hidden">
+      <div class="cab" style="height:66px"><div class="ico ${cls}" style="width:40px;height:40px">${ic(icone,21)}</div><b>${nome}</b></div>
+      <div style="padding:16px 26px 0"><div class="lin" style="height:40px"><div class="k">${rot}</div><div class="v">− ${brl(val)}</div></div>
+        <div class="trk" style="position:relative;margin-top:12px;height:34px;border-radius:9px;background:#F2F4F7"></div>
+        <div class="cp" style="margin-top:10px;text-align:right;font-weight:700;font-size:18px;color:var(--ae)">${cap}</div></div></div>`,g);
+  const rC=reg(60,'wallet','','Regime de Caixa','Compras de Material',COMPRAS,'#50D088','pesa no mês');
+  const rK=reg(660,'scale','a','Regime de Competência','CMV',CMV,'#F2B63D','quando for vendido');
+  const TW=508, WV=TW*CMV/COMPRAS, WD=TW-WV;                       // a barra inteira = as compras do mês
+  const seg=(r,x,w,est)=>el(`<div style="position:absolute;left:${x}px;top:0;height:34px;width:0;border-radius:9px;${est}"></div>`,r.querySelector('.trk'));
+  const cV=seg(rC,0,WV,'background:#8A949E'), cP=seg(rC,WV+4,WD-4,'background:var(--a)');
+  const kV=seg(rK,0,WV,'background:#8A949E'), kP=seg(rK,WV+4,WD-4,'background:var(--ac);border:2px dashed var(--a)');
+  const capC=rC.querySelector('.cp'), capK=rK.querySelector('.cp');
+  return t=>{
+    const T0=W(2,'a')-.3, T1=W(2,'vendido',1,'e')+.6;
+    if(!janela(g,t,T0,T1))return;
+    const tdf=W(2,'diferenca'), tmt=W(2,'material'), tpa=W(2,'patio'), tcx=W(2,'caixa'), tpe=W(2,'pesa'), tcp=W(2,'competencia'),
+          tcu=W(2,'custo'), tvd=W(2,'vendido');
+    posTitulo(tit,t,T0-.6,tdf-.6);
+    r1.style.transform=`translate(0,${lerp(150,0,eio(pr(t,tcx-.9,.8))).toFixed(2)}px)`;
+    vis(pat,t,tdf-.1,1e9,{dy:22}); vis(tv,t,tdf+.1,1e9,{dy:8}); vis(tvAp,t,tpa-.2,1e9,{dx:-10,dy:0});
+    pulse(mt,t,tmt,.05,.8); contorno(pat,t,tpa,'#E1E8E4','#F2B63D');
+    // regime de caixa: a compra inteira pesa no mês (o pedaço do pátio dentro da barra)
+    vis(rC,t,tcx-.3,1e9,{dy:22}); contorno(rC,t,tcx,'#E1E8E4','#50D088');
+    rC.style.boxShadow=`0 0 0 ${(4*eo(pr(t,tcx,.45))).toFixed(2)}px rgba(80,208,136,.25),0 18px 40px rgba(16,24,40,.10)`;
+    cV.style.width=(WV*eo(pr(t,tcx+.15,.7))).toFixed(1)+'px'; cP.style.width=((WD-4)*eo(pr(t,tpe-.25,.5))).toFixed(1)+'px';
+    vis(capC,t,tpe-.15,1e9,{dy:6});
+    // regime de competência: só o vendido; o pedaço do pátio fica de fora até ser vendido
+    vis(rK,t,tcp-.3,1e9,{dy:22}); contorno(rK,t,tcp,'#E1E8E4','#F2B63D');
+    rK.style.boxShadow=`0 0 0 ${(4*eo(pr(t,tcp,.45))).toFixed(2)}px rgba(242,182,61,.22),0 18px 40px rgba(16,24,40,.10)`;
+    kV.style.width=(WV*eo(pr(t,tcp+.15,.7))).toFixed(1)+'px';
+    kP.style.width=((WD-4)*eo(pr(t,tcu-.2,.5))).toFixed(1)+'px'; kP.style.opacity=(t<tcu-.2?0:1).toString();
+    vis(capK,t,tvd-.35,1e9,{dy:6});
+  };
+}
+// ilu07_semcusto (linha 4): "Uma dica: se aparecer aqui o aviso de material em estoque sem custo de compra, o lucro em
+// competência pode estar maior do que é. Confira as entradas do período antes de decidir em cima do número."
+// (o texto do aviso do app tem travessão: a cena mostra só o sinal de aviso)
+function cena07semcusto(){
+  const g=grupo();
+  const tit=titulo(g,'Financeiro','Material sem custo');
+  const est=el(`<div class="card" style="left:60px;top:166px;width:540px;height:300px;overflow:hidden">
+      <div class="cab"><div class="ico n" style="width:42px;height:42px">${ic('package',22)}</div><b>Estoque</b></div></div>`,g);
+  const av=el(`<div class="ab ico a" style="left:478px;top:14px;width:44px;height:44px;border-radius:50%">${ic('triangle-alert',24)}</div>`,est);
+  el('<div class="ab" style="left:20px;top:262px;width:500px;height:4px;border-radius:2px;background:#DDE2E7"></div>',est);
+  const f1=el(`<div class="ab" style="left:52px;top:150px">${fardo(140)}</div>`,est);
+  const t1=el(`<div class="ab" style="left:78px;top:104px"><div class="tag v" style="font-size:17px;padding:6px 14px">${ic('tag',17)}com custo</div></div>`,est);
+  const f2=el(`<div class="ab" style="left:300px;top:150px">${fardo(140)}</div>`,est);
+  const t2=el(`<div class="ab" style="left:318px;top:104px"><div class="tag a" style="font-size:17px;padding:6px 14px;border:2px dashed var(--a)">${ic('tag',17)}sem custo</div></div>`,est);
+  // competência: com o custo faltando, o CMV fica menor e o lucro maior do que é
+  const cp=el(`<div class="card" style="left:640px;top:166px;width:580px;height:300px;overflow:hidden">
+      <div class="cab"><div class="ico a" style="width:42px;height:42px">${ic('scale',22)}</div><b>Regime de Competência</b></div></div>`,g);
+  const barra=(y,txt,cor)=>{const b=el(`<div class="ab" style="left:26px;top:${y}px;width:528px">
+      <div style="font-weight:800;font-size:19px">${txt}</div><div class="tk" style="position:relative;margin-top:10px;height:34px;border-radius:9px;background:#F2F4F7"></div></div>`,cp);
+    const k=b.querySelector('.tk');return {b,k,f:el(`<div style="position:absolute;left:0;top:0;height:34px;width:0;border-radius:9px;background:${cor}"></div>`,k)}};
+  const bC=barra(96,'CMV','#8A949E'), bL=barra(188,'lucro','var(--v)');
+  const fal=el('<div style="position:absolute;left:0;top:0;height:34px;width:0;border-radius:9px;border:2px dashed #AEB6BF"></div>',bC.k);
+  const qq=el('<div class="ab" style="left:0;top:-4px;width:42px;height:42px;border-radius:50%;background:#121212;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:24px">?</div>',bL.k);
+  const WC=380, WL=110, DX=90;                                   // proporções ilustrativas (sem número na tela)
+  // conferir as entradas do período, uma por uma
+  const en=el(`<div class="card" style="left:60px;top:494px;width:1160px;height:196px;overflow:hidden">
+      <div class="row" style="height:58px;padding:0 24px;gap:12px;border-bottom:1px solid var(--l);background:#FAFBFC">${ic('list',22,'#4B5563')}
+        <div style="font-weight:800;font-size:20px">entradas do período</div></div></div>`,g);
+  const lin=[0,1,2].map(i=>el(`<div class="ab row" style="left:${24+i*376}px;top:84px;width:352px;height:84px;padding:0 16px;gap:14px;border-radius:14px;border:1px solid #E6E9EE;background:#fff">
+      <div style="flex:none">${fardo(54)}</div><div style="flex:1"><div style="height:8px;width:80%;border-radius:4px;background:#E3E7EC"></div><div style="margin-top:9px;height:8px;width:50%;border-radius:4px;background:#EDF0F3"></div></div>
+      ${i<2?`<div class="tag v" style="font-size:15px;padding:5px 10px">${ic('tag',15)}com custo</div>`:`<div class="tag a" style="font-size:15px;padding:5px 10px;border:2px dashed var(--a)">${ic('tag',15)}sem custo</div>`}</div>`,en));
+  const lupa=el(`<div class="ab" style="left:0;top:0;width:76px;height:76px;border-radius:50%;background:rgba(255,255,255,.35);border:5px solid #2F3640;box-shadow:0 8px 18px rgba(16,24,40,.18)">
+      <div style="position:absolute;left:62px;top:62px;width:34px;height:12px;border-radius:6px;background:#2F3640;transform:rotate(45deg);transform-origin:0 50%"></div></div>`,g);
+  return t=>{
+    const T0=W(4,'uma')-.3, T1=W(4,'numero',1,'e')+.6;
+    if(!janela(g,t,T0,T1))return;
+    const tap=W(4,'aparecer'), tav=W(4,'aviso'), tmt=W(4,'material'), tsm=W(4,'sem'), tlu=W(4,'lucro'), tma=W(4,'maior'),
+          tcf=W(4,'confira'), ten=W(4,'entradas'), tpe=W(4,'periodo'), tde=W(4,'decidir');
+    posTitulo(tit,t,T0-.6,tap-.6);
+    vis(est,t,tap-.1,1e9,{dy:22}); vis(f1,t,tap+.1,1e9,{dy:10}); vis(t1,t,tap+.3,1e9,{dy:8});
+    vis(av,t,tav-.15,1e9,{dy:0,sc:.6}); pulse(av,t,tav+.4,.12,.8);
+    vis(f2,t,tmt-.15,1e9,{dx:60,dy:0}); vis(t2,t,tsm-.15,1e9,{dy:8});
+    vis(cp,t,tlu-.3,1e9,{dy:22});
+    const m=eio(pr(t,tma-.15,.8));
+    bC.f.style.width=(lerp(0,WC,eo(pr(t,tlu-.1,.7)))-DX*m).toFixed(1)+'px'; fal.style.left=(WC-DX).toFixed(1)+'px';
+    fal.style.width=(DX*m).toFixed(1)+'px'; fal.style.opacity=m>0?1:0;
+    bL.f.style.width=(lerp(0,WL,eo(pr(t,tlu,.7)))+DX*m).toFixed(1)+'px';
+    qq.style.left=(WL+DX+12).toFixed(1)+'px'; vis(qq,t,tma+.3,1e9,{dy:0,sc:.6});
+    vis(en,t,tcf-.2,1e9,{dy:20}); lin.forEach((e,i)=>vis(e,t,tcf+i*.15,1e9,{dy:10}));
+    // a lupa passa pelas entradas e para na que está sem custo
+    const lp=eio(pr(t,ten-.1,Math.max(1.2,tpe-ten+.8))); const lx=lerp(96,96+2*376+190,lp), ly=494+84+2;
+    lupa.style.transform=`translate(${lx.toFixed(2)}px,${ly}px)`; const lo=eo(pr(t,ten-.3,.4)); lupa.style.opacity=lo.toFixed(3);
+    lupa.style.visibility=lo<=.001?'hidden':'visible';
+    contorno(lin[2],t,tde-.2,'#E6E9EE','#F2B63D');
+  };
+}
+CAPS[7]=()=>{const a=cena07caixa(), b=cena07semcusto(); return t=>{a(t);b(t)}};
+
+// ------------------------------------------------------------------ CAPS[10] · Um material do grupo (ilu10_vinculos, linha 6)
+// "Uma dica: um material do grupo pode juntar mais de um material de uma unidade. O total do grupo soma todos, e a
+// transferência tira de um só. Se o número do grupo parecer estranho, confira material por material."
+// "Latinha prensada" vem do roteiro (exemplo de um segundo cadastro da filial ligado ao mesmo material do grupo).
+CAPS[10]=()=>{
+  const g=grupo();
+  const tit=titulo(g,'Transferências','Um material do grupo');
+  const gm=el(`<div class="card" style="left:310px;top:156px;width:520px;height:150px;overflow:hidden;border:2px solid var(--v)">
+      <div class="row" style="height:70px;padding:0 22px;gap:12px;border-bottom:1px solid var(--l);background:#F4FBF7">
+        <div class="ico" style="width:42px;height:42px">${ic('boxes',22)}</div><b style="font-weight:800;font-size:22px">Alumínio latinha</b>
+        <div class="tag v" style="margin-left:auto;font-size:16px;padding:6px 14px">do grupo</div></div></div>`,g);
+  const tl=el('<div class="ab lbl" style="left:22px;top:94px">total</div>',gm);
+  const tk=el('<div class="ab" style="left:84px;top:90px;width:410px;height:30px;border-radius:9px;background:#F2F4F7;overflow:hidden;display:flex"></div>',gm);
+  const S1=230, S2=150;
+  const ts1=el('<div style="height:100%;width:0;background:#50D088"></div>',tk), ts2=el('<div style="height:100%;width:0;background:#A9E9C6;border-left:3px solid #fff"></div>',tk);
+  const qq=el('<div class="ab" style="left:792px;top:206px;width:44px;height:44px;border-radius:50%;background:#121212;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:24px">?</div>',g);
+  // a unidade (filial) com dois materiais ligados ao mesmo material do grupo
+  const ub=el(`<div class="ab" style="left:130px;top:356px;width:800px;height:340px;border-radius:22px;border:2px dashed #C3CAD2;background:#FAFBFC"></div>`,g);
+  const ul=el(`<div class="ab" style="left:156px;top:338px"><div class="tag n" style="font-size:17px;padding:7px 14px;background:#fff;border:2px solid #C3CAD2">${ic('warehouse',18)}Filial Pindamonhangaba</div></div>`,g);
+  const mat=(y,nome,cor,w)=>el(`<div class="card row" style="left:240px;top:${y}px;width:640px;height:104px;padding:0 24px;gap:18px">
+      <div style="flex:none">${fardo(76)}</div><div style="font-weight:800;font-size:22px;white-space:nowrap">${nome}</div>
+      <div style="margin-left:auto;width:${w}px;height:22px;border-radius:7px;background:${cor}"></div></div>`,g);
+  const m1=mat(406,'Alumínio latinha','#50D088',S1*.62), m2=mat(552,'Latinha prensada','#A9E9C6',S2*.62);
+  const lig=el(`<svg class="ab" style="left:0;top:0;overflow:visible" width="1" height="1">
+      <path d="M340 306 V330 H186 V458 H240" fill="none" stroke="var(--v)" stroke-width="4" stroke-linejoin="round"/>
+      <path d="M186 458 V604 H240" fill="none" stroke="var(--v)" stroke-width="4" stroke-linejoin="round"/></svg>`,g);
+  const [l1,l2]=lig.querySelectorAll('path');
+  // a transferência tira de um só
+  const sT=seta(g,884,458,1058,458,'var(--ae)',5);
+  const cT=el(`<div class="ab" style="left:900px;top:400px;width:150px;display:flex;justify-content:center"><div class="tag a" style="font-size:16px;padding:6px 12px">${ic('truck',16)}transferência</div></div>`,g);
+  const dst=el(`<div class="card" style="left:1068px;top:398px;width:160px;height:120px;overflow:hidden">
+      <div style="position:absolute;left:30px;top:10px;transform:scale(.5);transform-origin:0 0">${galpao()}</div>
+      <div class="lbl" style="position:absolute;left:0;top:86px;width:160px;text-align:center">Matriz</div></div>`,g);
+  const lupa=el(`<div class="ab" style="left:0;top:0;width:70px;height:70px;border-radius:50%;background:rgba(255,255,255,.3);border:5px solid #2F3640;box-shadow:0 8px 18px rgba(16,24,40,.18)">
+      <div style="position:absolute;left:57px;top:57px;width:30px;height:11px;border-radius:6px;background:#2F3640;transform:rotate(45deg);transform-origin:0 50%"></div></div>`,g);
+  return t=>{
+    const T0=W(6,'uma')-.3, T1=W(6,'material',4,'e')+.6;
+    if(!janela(g,t,T0,T1))return;
+    const tgr=W(6,'grupo'), tju=W(6,'juntar'), tma=W(6,'mais'), tm2=W(6,'material',2), tun=W(6,'unidade'), tto=W(6,'total'), tso=W(6,'soma'),
+          ttr=W(6,'transferencia'), tti=W(6,'tira'), tsx=W(6,'so'), tes=W(6,'estranho'), tcf=W(6,'confira'), tm3=W(6,'material',3), tm4=W(6,'material',4);
+    posTitulo(tit,t,T0-.6,tgr-.7);
+    vis(gm,t,tgr-.2,1e9,{dy:20});
+    vis(ub,t,tju-.1,1e9,{dy:16}); vis(ul,t,tju,1e9,{dy:8});
+    vis(m1,t,tma-.1,1e9,{dy:14}); vis(m2,t,tm2-.1,1e9,{dy:14});
+    traco(l1,t,tun-.3,.7); traco(l2,t,tun,.5);
+    vis(tl,t,tto-.15,1e9,{dy:6}); ts1.style.width=(S1*eo(pr(t,tso-.1,.6))).toFixed(1)+'px';
+    const w2=S2*eo(pr(t,tso+.2,.6)); ts2.style.width=w2.toFixed(1)+'px'; ts2.style.borderLeftWidth=w2>4?'3px':'0';
+    sT(t,ttr-.1,.6); vis(cT,t,ttr+.1,1e9,{dy:8}); vis(dst,t,ttr-.1,1e9,{dy:0,dx:20});
+    contorno(m1,t,tti-.1,'#E1E8E4','#F2B63D'); pulse(m1,t,tsx-.2,.03,.7);
+    vis(qq,t,tes-.2,1e9,{dy:0,sc:.6}); pulse(qq,t,tes+.4,.1,.8);
+    const lp2=eio(pr(t,tm4-.6,.7)); pulse(lupa,t,tm3-.1,.08,.6);
+    const lx=lerp(752,770,lp2), ly=lerp(422,568,lp2);
+    lupa.style.transform=`translate(${lx.toFixed(2)}px,${ly.toFixed(2)}px)`; const lo=eo(pr(t,tcf-.3,.4)); lupa.style.opacity=lo.toFixed(3);
+    lupa.style.visibility=lo<=.001?'hidden':'visible';
+  };
+};
+// ------------------------------------------------------------------ API para o renderizador
+let RENDER=null;
+window.setup=d=>{D=d;ST.innerHTML='';RENDER=CAPS[d.cap]();return true};
+window.R=t=>{RENDER(t);return true};
+</script></body></html>

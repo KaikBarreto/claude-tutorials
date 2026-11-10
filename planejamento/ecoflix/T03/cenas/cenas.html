@@ -412,8 +412,8 @@ S.ilu03_codigo=g=>{
     contorno(fic,t,A.ap-.1,'#E1E8E4','#50D088'); anel(fic,t,A.ap-.1,'rgba(80,208,136,.25)',SOMBRA,4); pulse(fic,t,A.ap-.1,.05,.8);
     luz(nbox,'background',t,A.ap-.1,'#F2F4F7','#EAF8F0'); luz(fa,'color',t,A.ap-.1,'#121212','#2E7D57');
     // o caderno entra e o balcão abre espaço; pode usar os mesmos: a linha do radiador acende; o Rafael
-    const sl=eio(pr(t,A.ca-.35,.8)); bal.style.left=lerp(BX0,BX1,sl).toFixed(2)+'px';
-    vis(cad,t,A.ca-.1,1e9,{dx:24,dy:0});
+    const sl=eio(pr(t,A.ca-.5,.8)); bal.style.left=lerp(BX0,BX1,sl).toFixed(2)+'px';
+    vis(cad,t,A.ca+.15,1e9,{dx:24,dy:0});
     mk.style.opacity=eo(pr(t,A.us-.1,.45)).toFixed(3); pulse(raf,t,A.ra-.1,.1,.7);
     // sempre foi o 70: o número voa do caderno para a ficha, que vira de 16 para 70 (e o balcão também)
     const q=arco(voa,t,A.fo-.1,.7,V0[0],V0[1],V1[0],V1[1],-110);
@@ -444,12 +444,12 @@ S.ilu04_ncm=g=>{
       <div class="barra" style="margin-top:28px;width:56%"></div><div class="barra" style="margin-top:12px;width:44%"></div></div>`,g);
   const hl=nota.querySelector('.hl'), slot=nota.querySelector('.slot');
   const DIG='7404.00.00';
-  const ncm=el(`<div class="card" style="left:646px;top:250px;width:520px;height:214px;padding:28px 34px">
+  const ncm=el(`<div class="card" style="left:646px;top:296px;width:520px;height:214px;padding:28px 34px">
       <div class="kick" style="color:#6B7280;font-size:16px">NCM</div>
       <div class="num dd" style="margin-top:8px;font-size:64px;line-height:1.15;white-space:nowrap">${[...DIG].map(c=>`<span class="${c==='.'?'pt':'dgt'}" style="color:#C4CBD3">${c}</span>`).join('')}</div>
       <div class="lbl desc" style="margin-top:10px;font-size:19px;white-space:nowrap">Desperdícios e resíduos de cobre</div></div>`,g);
   const dgt=[...ncm.querySelectorAll('.dgt')], pts=[...ncm.querySelectorAll('.pt')], desc=ncm.querySelector('.desc');
-  const oito=el(`<div class="ab" style="left:680px;top:490px"><span class="tag v" style="font-size:21px">${ic('hash',22)}8 dígitos</span></div>`,g);
+  const oito=el(`<div class="ab" style="left:680px;top:536px"><span class="tag v" style="font-size:21px">${ic('hash',22)}8 dígitos</span></div>`,g);
   const voo=el(`<div class="ab" style="left:0;top:0"><span class="tag v" style="font-size:17px;padding:7px 13px">${DIG}</span></div>`,g);
   // a cópia sai do número do cartão e pousa na vaga da linha do radiador (posições medidas)
   const [sx,sy,sw,sh]=caixa(slot), [,,vw,vh]=caixa(voo.firstElementChild), [nx,ny]=caixa(ncm.querySelector('.dd'));
@@ -540,8 +540,8 @@ S.ilu04_onde=g=>{
   const tit=titulo(g,'Nota fiscal','O que fica onde');
   const MX0=405,MX1=70,MY=262;
   const mw=el(`<div class="ab" style="left:${MX0}px;top:${MY}px;width:470px;height:296px"></div>`,g);
-  const item=(icn,txt,cls)=>`<div class="row ${cls}" style="margin-top:14px;height:64px;padding:0 18px;gap:14px;border:1px solid #E1E8E4;border-radius:14px;background:#FBFDFC">
-      <div class="ico" style="width:40px;height:40px;border-radius:11px">${ic(icn,22)}</div><div style="font-weight:800;font-size:23px;white-space:nowrap">${txt}</div></div>`;
+  const item=(icn,txt,cls)=>`<div class="row ${cls}" style="margin-top:14px;height:64px;padding:0 18px;border:2px dashed #D7DDE3;border-radius:14px;background:#fff">
+      <div class="in row" style="gap:14px"><div class="ico" style="width:40px;height:40px;border-radius:11px">${ic(icn,22)}</div><div style="font-weight:800;font-size:23px;white-space:nowrap">${txt}</div></div></div>`;
   const mat=el(`<div class="card" style="left:0;top:0;width:470px;height:296px;padding:28px">
       <div class="row" style="gap:16px"><div class="ico" style="width:60px;height:60px">${ic('package',30)}</div>
         <div><div style="font-weight:800;font-size:28px;white-space:nowrap">No material</div>
@@ -566,7 +566,8 @@ S.ilu04_onde=g=>{
       qu:W(8,'quem'),ct:W(8,'contador'),tu:W(8,'tutorial')};
     posTitulo(tit,t,J[0]-.6,A.ma-.25);
     vis(mat,t,A.ma-.1,1e9,{dy:18}); vis(pl,t,A.pl-.1,1e9,{dy:6});
-    vis(m1,t,A.nc-.1,1e9,{dx:-12,dy:0}); vis(m2,t,A.no-.1,1e9,{dx:-12,dy:0});
+    [[m1,A.nc],[m2,A.no]].forEach(([m,a])=>{vis(m.querySelector('.in'),t,a-.1,1e9,{dx:-12,dy:0});const f=eo(pr(t,a-.1,.45));
+      m.style.borderStyle=f>.5?'solid':'dashed';m.style.borderColor=mix('#D7DDE3','#A9E9C6',f);m.style.background=mix('#FFFFFF','#FBFDFC',f)});
     contorno(mat,t,A.no+.3,'#E1E8E4','#50D088');
     // os impostos: o material abre espaço; os impostos entram soltos e o cartão dos cenários fiscais se forma em volta deles
     const sl=eio(pr(t,A.im-.2,.8)); mw.style.left=lerp(MX0,MX1,sl).toFixed(2)+'px';
@@ -584,10 +585,10 @@ S.ilu04_onde=g=>{
 //   vale uma gaveta nova."  Grupos e cores da semente (02-cadastros.json); Radiadores com a cor do plano (#0F766E).
 S.ilu05_gavetas=g=>{
   const tit=titulo(g,'Grupos','Grupo é uma gaveta');
-  const GX=[115,475,835], GY=[384,574];
+  const GX=[115,475,835], GY=[344,534];
   const GR=[['Ferrosos','#64748B','Ferro pesado'],['Cobre','#C2410C','Cobre mel'],['Alumínio','#0EA5E9','Alumínio latinha'],
             ['Metais','#CA8A04','Bronze'],['Outros','#16A34A','Papelão']];
-  const mov=el('<div class="ab" style="left:95px;top:364px;width:1090px;height:350px;border-radius:24px;background:#F2F4F7;border:1px solid #E1E8E4"></div>',g);
+  const mov=el('<div class="ab" style="left:95px;top:324px;width:1090px;height:350px;border-radius:24px;background:#F2F4F7;border:1px solid #E1E8E4"></div>',g);
   const pos=i=>[GX[i%3],GY[Math.floor(i/3)]];
   // fichas (atrás das gavetas depois que caem: a camada muda quando a base da ficha chega na boca da gaveta)
   const FW=230,FH=58;
@@ -600,7 +601,7 @@ S.ilu05_gavetas=g=>{
   const vaga=el(`<div class="ab" style="left:${x6}px;top:${y6}px;width:330px;height:120px;border:2px dashed #CBD2D9;border-radius:16px"></div>`,g);
   const rad=el(`<div class="ficha" style="left:0;top:0;width:${FW+30}px;height:${FH}px;align-items:flex-start;padding-top:16px;justify-content:center">
       <span class="dot" style="background:#0F766E;margin-top:4px"></span>Radiador de cobre</div>`,g);
-  const fan=[0,1].map(()=>el(`<div class="ab" style="left:0;top:0;width:${FW+30}px;height:${FH}px;border-radius:14px;border:2px dashed #B9C1C9;background:rgba(255,255,255,.85)"></div>`,g));
+  const fan=[0,1].map(()=>el(`<div class="ab" style="left:0;top:0;width:${FW+30}px;height:${FH}px;border-radius:14px;border:1px solid #D7DDE3;background:#EEF1F4"></div>`,g));
   const nova=el(`<div class="gav" style="left:${x6}px;top:${y6}px"><div class="cor" style="background:#0F766E"></div>
       <div class="nome">Radiadores</div><div class="puxa"></div></div>`,g);
   // camadas: fichas caindo na frente; já na gaveta, atrás da frente dela
@@ -625,7 +626,7 @@ S.ilu05_gavetas=g=>{
     const pR=eio(pr(t,A.g2-.1,.85));
     const xR=lerp(xr,xd,pR), yR=lerp(204,y6-46,pR)-90*4*pR*(1-pR);
     rad.style.transform=`translate(${xR.toFixed(2)}px,${yR.toFixed(2)}px)`; z(rad,(yR+FH)>=y6+2?3:9);
-    fan.forEach((f,i)=>{const dx=(i?1:-1)*30,dy=-6;const p=eio(pr(t,A.g2-.18+i*.05,.85));
+    fan.forEach((f,i)=>{const dx=(i?1:-1)*24,dy=-6;const p=eio(pr(t,A.g2-.18+i*.05,.85));
       const xf=lerp(xr,xd,p)+dx,yf=lerp(204,y6-46,p)-90*4*p*(1-p)+dy;
       f.style.transform=`translate(${xf.toFixed(2)}px,${yf.toFixed(2)}px)`;z(f,(yf+FH)>=y6+2?2:7)});
     vis(nova,t,A.va-.1,1e9,{dy:12,sc:.96});
@@ -692,8 +693,9 @@ S.ilu07_ordem=g=>{
   const chao=el(`<div class="ab" style="left:56px;top:${CHAO}px;width:1168px;height:4px;border-radius:2px;background:#DDE2E7"></div>`,g);
   const deg=DG.map(([k,l,s,c,i],j)=>el(`<div class="deg" style="left:${DX[j]}px;top:${CHAO-DH[j]}px;width:${DW}px;height:${DH[j]}px">
       <div class="dk">${k}</div><div class="dl">${l}</div>${s?`<div class="ds">${s}</div>`:''}
-      <span class="dic" style="position:absolute;right:22px;bottom:20px;opacity:0">${ic(i,46,'#14532D')}</span></div>`,g));
-  const txt=deg.map(d=>[...d.querySelectorAll('.dk,.dl,.ds')]), dic=deg.map(d=>d.querySelector('.dic'));
+      <span class="dic" style="position:absolute;right:22px;bottom:20px;opacity:0">${ic(i,46,'#14532D')}</span>
+      <div class="qm" style="position:absolute;left:0;right:0;top:${DH[j]/2-46}px;text-align:center;font-weight:800;font-size:72px;line-height:1;color:#6B7280;opacity:0">?</div></div>`,g));
+  const txt=deg.map(d=>[...d.querySelectorAll('.dk,.dl,.ds')]), dic=deg.map(d=>d.querySelector('.dic')), qm=deg.map(d=>d.querySelector('.qm'));
   const bolas=DG.map(()=>el(`<div class="bola" style="left:0;top:0;width:76px;height:76px">${ic('tag',34)}</div>`,g));
   let A=null;
   return (t,J)=>{
@@ -706,6 +708,7 @@ S.ilu07_ordem=g=>{
       b.style.opacity=eo(pr(t,A.ma+.55+i*.15,.4)).toFixed(3)});
     // qual vale? as etiquetas pulsam uma depois da outra
     bolas.forEach((b,i)=>pulse(b,t,A.qu-.05+i*.22,.12,.5));
+    [A.p1,A.de,A.ul].forEach((a,i)=>{qm[i].style.opacity=(eo(pr(t,A.qu-.05+i*.22,.45))*(1-eo(pr(t,a-.2,.3)))).toFixed(3)});
     // cada degrau acende na sua palavra (o primeiro mais forte)
     [A.p1,A.de,A.ul].forEach((a,i)=>{luz(deg[i],'background',t,a-.1,'#F2F4F7',DG[i][3]);
       contorno(deg[i],t,a-.1,'#E1E8E4',i===2?'#CFEBDD':DG[i][3]);
@@ -747,11 +750,11 @@ S.ilu08_transferir=g=>{
   const chR=el(`<div class="ab" style="left:0;top:${CY+152}px;width:400px;text-align:center"><span class="tag v">Radiador de cobre</span></div>`,g);
   const chF=el(`<div class="ab" style="left:${PX-200}px;top:${CY+152}px;width:400px;text-align:center"><span class="tag a">Ferro misto</span></div>`,g);
   const kgc=el(`<div class="ab" style="left:0;top:0"><span class="tag n" style="background:#fff;border:2px solid #9AA3AD">${ic('weight',20)}${kg(8)} de ferro</span></div>`,g);
-  const sT=seta(g,`M772,${CY+20} C820,${CY-70} 880,${CY-70} 900,${CY-6}`,'#50D088',4);
+  const sT=seta(g,`M496,${CY-40} C610,${CY-190} 790,${CY-190} 884,${CY-24}`,'#50D088',4);
   // posições das peças: montada → separada → pilha ao lado → em cima do Ferro misto
   const SEP=[[-176,0,0],[176,0,0],[-120,148,0],[120,148,0]];
   const PIL=[[262,96,90],[262,78,90],[236,52,0],[292,52,0]];   // relativas ao centro do radiador
-  const FIM=[[PX-34,CY+36,90],[PX+26,CY+22,92],[PX-28,CY+4,-14],[PX+50,CY+8,12]];
+  const FIM=[[PX-30,CY+44,86],[PX+28,CY+32,94],[PX-30,CY+10,-14],[PX+52,CY+14,12]];
   let A=null;
   return (t,J)=>{
     if(!A)A={tr:W(3,'transferir'),de:W(3,'desmontagem'),ra:W(3,'radiadores'),sa:W(3,'sairam'),qu:W(3,'quilos'),fe:W(3,'ferro',1),
@@ -789,27 +792,29 @@ S.ilu08_transferir=g=>{
 S.ilu10_arquivar=g=>{
   const tit=titulo(g,'Materiais','Excluir é arquivar');
   const LX=80,LY=262,RW=400,OY=LY-200;                       // OY: tudo desce junto com a lista
+  // lista, lixeira e arquivo num invólucro: começa 150 px à direita (centrado) e abre espaço quando entra o histórico
+  const gA=el('<div class="ab" style="left:0;top:0;width:1280px;height:800px"></div>',g);
   const lista=el(`<div class="card" style="left:${LX}px;top:${LY}px;width:${RW}px;height:300px;padding:22px 24px">
       <div class="row" style="gap:12px;height:40px">${ic('list',26,'#4B5563')}<div style="font-weight:800;font-size:22px">Lista e buscas</div>
         <span class="lupa" style="margin-left:auto">${ic('search',24,'#6B7280')}</span></div>
-      <div style="margin-top:14px;height:1px;background:#E6E9EE"></div></div>`,g);
+      <div style="margin-top:14px;height:1px;background:#E6E9EE"></div></div>`,gA);
   const lupa=lista.querySelector('.lupa');
   const ROWY=i=>LY+22+40+15+12+i*66;
   const lin=[['Ferro misto','#64748B'],['Cobre mel','#C2410C']].map(([n,c],i)=>el(`<div class="ficha" style="left:${LX+18}px;top:${ROWY(i)}px;width:${RW-36}px;box-shadow:none">
-      <span class="dot" style="background:${c}"></span>${n}</div>`,g));
-  const vaga=el(`<div class="ab" style="left:${LX+18}px;top:${ROWY(2)}px;width:${RW-36}px;height:58px;border:2px dashed #CBD2D9;border-radius:14px;opacity:0"></div>`,g);
+      <span class="dot" style="background:${c}"></span>${n}</div>`,gA));
+  const vaga=el(`<div class="ab" style="left:${LX+18}px;top:${ROWY(2)}px;width:${RW-36}px;height:58px;border:2px dashed #CBD2D9;border-radius:14px;opacity:0"></div>`,gA);
   // apagar (riscado) × arquiva
   const lix=el(`<div class="ab row" style="left:556px;top:${206+OY}px;gap:14px"><div class="lixc" style="position:relative;width:76px;height:76px;border-radius:50%;background:#F2F4F7;
       display:flex;align-items:center;justify-content:center">${ic('trash-2',36,'#6B7280')}
       <svg class="ab" style="left:0;top:0;overflow:visible" width="76" height="76"><path class="risco" d="M14,62 L62,14" fill="none" stroke="#8A5A00" stroke-width="6" stroke-linecap="round"/></svg></div>
-      <div class="lbl" style="font-size:20px">apagar</div></div>`,g);
+      <div class="lbl" style="font-size:20px">apagar</div></div>`,gA);
   const risco=lix.querySelector('.risco'), lixc=lix.querySelector('.lixc');
   const AW=320,AX=556,AY=312+OY;
-  const arq=el(`<div class="card" style="left:${AX}px;top:${AY}px;width:${AW}px;height:188px;padding:20px 22px">
+  const arq=el(`<div class="card" style="left:${AX}px;top:${AY}px;width:${AW}px;height:160px;padding:20px 22px">
       <div class="row" style="gap:14px"><div class="ico" style="width:52px;height:52px">${ic('archive',28)}</div>
-        <div style="font-weight:800;font-size:23px;color:#2E7D57">arquiva</div></div></div>`,g);
+        <div style="font-weight:800;font-size:23px;color:#2E7D57">arquiva</div></div></div>`,gA);
   // o radiador: sai da lista e entra no arquivo (menor, apagadinho)
-  const rad=el(`<div class="ficha" style="left:0;top:0;width:${RW-36}px;transform-origin:0 0"><span class="dot" style="background:#0F766E"></span>Radiador de cobre</div>`,g);
+  const rad=el(`<div class="ficha" style="left:0;top:0;width:${RW-36}px;transform-origin:0 0"><span class="dot" style="background:#0F766E"></span>Radiador de cobre</div>`,gA);
   const ESC=(AW-44)/(RW-36);
   // o que continua lá
   const HX=920, HY=[236+OY,320+OY,404+OY];
@@ -823,6 +828,7 @@ S.ilu10_arquivar=g=>{
     if(!A)A={ex:W(0,'excluir'),ap:W(0,'apagar'),ar:W(0,'arquiva'),sa:W(0,'sai'),bu:W(0,'buscas'),
       co:W(0,'compras'),ve:W(0,'vendas'),hi:W(0,'historico'),cn:W(0,'continuam'),la:W(0,'la')};
     posTitulo(tit,t,J[0]-.6,A.ex-.3);
+    gA.style.transform=`translateX(${lerp(150,0,eio(pr(t,A.co-.9,.8))).toFixed(2)}px)`;
     vis(lista,t,A.ex-.1,1e9,{dx:-20,dy:0}); lin.forEach((e,i)=>vis(e,t,A.ex+.05+i*.08,1e9,{dx:-20,dy:0}));
     // o radiador: na lista (acende em "Excluir"), depois voa para o arquivo
     const qa=eio(pr(t,A.sa-.15,.9));

@@ -46,6 +46,8 @@ node render_cenas.cjs 2 ../../narracao/cap02.json stills --stills 3.4,11.3,20.6 
 ```
 Pegue 2 instantes por linha (meio e fim), monte uma folha de contato e olhe tudo: texto cortado, sobreposição, elemento
 que não entrou, composição vazia. No piloto, a revisão pegou 9 problemas antes do render.
+Cena travada (promessa que nunca resolve, laço sem fim no `setup` ou no `R`): o `render_cenas.cjs` sai com código 3 quando
+nada anda em 90 s (`--vigia S`), em vez de segurar a trava pesada dos outros.
 
 ## Render e montagem
 ```bash

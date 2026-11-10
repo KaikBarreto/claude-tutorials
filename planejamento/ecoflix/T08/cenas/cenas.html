@@ -412,7 +412,7 @@ CAPS[6]=()=>{
     // o 3/4 chega por trás e para na fila
     const ch=tch+Math.max(1.4,tca-tch+.5), x=lerp(X2a,X2,eo(pr(t,tch,ch-tch)));
     T2.style.transform=`translate(${x.toFixed(2)}px,${Y2.toFixed(1)}px) scale(${S2})`;
-    rodas2.forEach(r=>r.setAttribute('transform',`translate(${r.dataset.x},196) rotate(${((x-X2)/(26*S2)*57.3*S2).toFixed(2)})`));
+    rodas2.forEach(r=>r.setAttribute('transform',`translate(${r.dataset.x},196) rotate(${((x-X2)/S2/26*57.3).toFixed(2)})`));
     vis(jair,t,tja-.1,1e9,{dy:8});
     vis(A2,t,tau-.15,1e9,{dy:12}); traco(l2,t,tau,.4);
     vis(bat,t,tba-.15,1e9,{dy:8});

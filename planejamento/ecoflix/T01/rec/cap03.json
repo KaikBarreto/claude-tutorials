@@ -1,0 +1,324 @@
+{
+ "name": "t01-cap03",
+ "title": "T01 · Cap. 3 · Entrar no sistema (narração 78,3 s ESTIMADA; marcas L1..L9 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
+ "seed": "t01-cap03",
+ "pace": 0.5,
+ "cps": 14,
+ "tail": 1.5,
+ "start": {
+  "x": 300,
+  "y": 560
+ },
+ "anonymous": true,
+ "seedExtra": [
+  "t01/inicio"
+ ],
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "initial-preferences-set": "true",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10"
+ },
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/login"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel|Algo deu errado|Falha ao carregar|Personalize sua experi[êe]ncia|Voc[êe] j[áa] est[áa] conectado|Sistema atualizado|O rel[óo]gio deste computador|Sess[ãa]o expirou/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');if(f&&window.__avisos.length<10&&!window.__avisos.includes('LEMBRETE DA TRILHA'))window.__avisos.push('LEMBRETE DA TRILHA')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Acesse sua conta\", \"Entre para continuar no EcoSistema.\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"body\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere tela de login"
+  },
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0.4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Acesse sua conta",
+    "exact": true
+   },
+   "seconds": 0.8,
+   "at": 1.62,
+   "label": "Acesse sua conta",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "at": 4.38,
+   "label": "E-mail"
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 5.39
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "text": "$TUT_USER",
+   "cps": 40,
+   "at": 5.39,
+   "label": "digita o e-mail do Rafael",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "input[type=password]"
+   },
+   "at": 8.05,
+   "label": "Senha"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "input[type=password]"
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40,
+   "at": 8.81,
+   "label": "digita a senha (pontinhos)",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "checkbox",
+    "name": "Lembrar de mim"
+   },
+   "at": 9.59,
+   "label": "marca Lembrar de mim"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 14.48
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Entrar com Google",
+    "exact": true
+   },
+   "seconds": 2.4,
+   "at": 16.95,
+   "label": "Entrar com Google (sem clicar)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Entrar com Google",
+    "exact": true
+   },
+   "seconds": 1.6,
+   "at": 22.39,
+   "label": "Entrar com Google: entra na conta que já existe",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "link",
+    "name": "Cadastre-se",
+    "exact": true
+   },
+   "seconds": 1.0,
+   "at": 26.01,
+   "label": "Cadastre-se",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 27.05
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   },
+   "at": 27.83,
+   "label": "Entrar"
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Rafael!",
+   "timeout": 20
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 31.35
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[aria-label='Menu da conta']"
+   },
+   "seconds": 2.6,
+   "at": 34.07,
+   "label": "card da conta: Rafael Nogueira e Recicla Vale Metais",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 40.58
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[aria-label='Menu da conta']"
+   },
+   "at": 40.98,
+   "label": "abre o menu da conta",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "role": "menuitem",
+    "name": "Meu Perfil"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "menuitem",
+    "name": "Meu Perfil"
+   },
+   "seconds": 1.2,
+   "at": 43.61,
+   "label": "Meu Perfil",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 46.55
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[aria-label='Trocar de conta']",
+    "nth": 0
+   },
+   "at": 48.57,
+   "label": "trocador de contas (o card cresce)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Adicionar conta",
+   "timeout": 8
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Apenas essa conta está salva.\", \"Adicionar conta\", \"Sair de todas as contas\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"body\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere trocador aberto com a conta ativa"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Apenas essa conta está salva"
+   },
+   "seconds": 1.4,
+   "at": 50.49,
+   "label": "Apenas essa conta está salva",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 54.04
+  },
+  {
+   "do": "mark",
+   "name": "L9",
+   "at": 66.76
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Adicionar conta",
+    "exact": true
+   },
+   "seconds": 2.4,
+   "at": 69.24,
+   "label": "Adicionar conta (sem clicar)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Adicionar conta",
+    "exact": true
+   },
+   "seconds": 1.2,
+   "at": 75.2,
+   "label": "Adicionar conta: até cinco contas",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 77.22,
+   "label": "Esc fecha o menu"
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 78.28
+  }
+ ]
+}

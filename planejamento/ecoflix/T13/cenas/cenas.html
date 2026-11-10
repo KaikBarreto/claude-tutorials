@@ -181,7 +181,7 @@ const ANC=/*ANC*/{
       "mostra":["Energia elétrica de outubro","Energia elétrica","Pendente","Paga","Pix","Conta Principal","Saída","Dinheiro","Caixa aberto","DRE","Resultado da empresa","Tudo junto"]}],
 "10":[{"id":"ilu10_fiado","de":[6,"Uma",1],"ate":[7,"sobra",1],"cauda":0.5,
       "resumo":"Saldo − Parcelas = o que fica na lista: na venda a prazo em parcelas a linha de saldo some (já está nas parcelas); se só uma parte virou parcela, ela mostra só a sobra",
-      "mostra":["Na lista","Saldo","Fundição Bandeira do Vale","Venda a prazo","3x","300 kg de cobre mel","R$ 14.370,00","Parcelas","R$ 4.790,00","Já está nas parcelas","Só uma parte","Só o que sobra"]}]
+      "mostra":["Na lista","Saldo","Fundição Bandeira do Vale","Venda a prazo","3x","300 kg de cobre mel","R$ 14.370,00","Parcelas","3x de R$ 4.790,00","Já está nas parcelas","Só uma parte","Só o que sobra"]}]
 }/*FIM*/;
 function jan(cap,id){const a=ANC[cap].find(x=>x.id===id);return[WS(a.de[0],a.de[1],a.de[2])-.3,WS(a.ate[0],a.ate[1],a.ate[2],'e')+a.cauda]}
 // posição absoluta por transform (o elemento fica em left:0;top:0); opacidade direta; destaque de borda + anel de luz
@@ -437,16 +437,16 @@ CAPS[8]=()=>{
   const fios=el(`<svg class="ab" style="left:0;top:0;overflow:visible" width="1280" height="800">${BX.map(x=>`<path d="M640 392 C 640 440, ${x} 430, ${x} ${BY-2}"
       fill="none" stroke="#D5DAE0" stroke-width="2.5" stroke-linecap="round"/>`).join('')}</svg>`,g);
   const fioL=[...fios.querySelectorAll('path')];
-  const molde=el(`<div class="card b2" style="left:380px;top:288px;width:520px;height:104px;padding:0 24px;display:flex;align-items:center;gap:14px">
-      <div class="ico" style="width:46px;height:46px">${ic('repeat',24)}</div>
-      <div><div class="kick" style="font-size:13px;letter-spacing:.24em">Molde</div><div style="font-weight:800;font-size:22px;margin-top:2px">Aluguel da empilhadeira</div></div></div>`,g);
   const vagaF=el(`<div class="ab" style="left:${BX[3]-120}px;top:${BY}px;width:240px;height:150px;border-radius:18px;border:2px dashed #CBD2D9;padding:24px 24px">
       <div class="row" style="gap:12px"><div class="ico cz" style="width:40px;height:40px">${ic('calendar-days',22)}</div><div style="font-weight:800;font-size:22px;color:#6B7280">${MES[3]}</div></div></div>`,g);
   const conta=(m,x,y)=>el(`<div class="card b2" style="left:${x}px;top:${y}px;width:240px;height:150px;padding:24px 24px">
       <div class="row" style="gap:12px"><div class="ico cz" style="width:40px;height:40px">${ic('calendar-days',22)}</div><div style="font-weight:800;font-size:22px">${m}</div></div>
       <div class="tag cz sm" style="margin-top:16px">Pendente</div></div>`,g);
+  const fev=conta(MES[3],0,0);                     // a nova: nasce atrás do molde (por isso vem antes dele na página) e desce para a vaga
+  const molde=el(`<div class="card b2" style="left:380px;top:288px;width:520px;height:104px;padding:0 24px;display:flex;align-items:center;gap:14px">
+      <div class="ico" style="width:46px;height:46px">${ic('repeat',24)}</div>
+      <div><div class="kick" style="font-size:13px;letter-spacing:.24em">Molde</div><div style="font-weight:800;font-size:22px;margin-top:2px">Aluguel da empilhadeira</div></div></div>`,g);
   const contas=MES.slice(0,3).map((m,i)=>conta(m,BX[i]-120,BY));
-  const fev=conta(MES[3],0,0);                                                       // a nova, que nasce do molde
   const bdg=(x,y,icn)=>el(`<div class="bdg" style="left:${x}px;top:${y}px;width:42px;height:42px;background:#fff;border:2px solid #E1E8E4;color:#4B5563">${ic(icn,20)}</div>`,g);
   const lDez=bdg(BX[1]+120-30,BY-16,'pencil'), lJan=bdg(BX[2]+120-30,BY-16,'pencil'), lMol=bdg(900-30,288-16,'pencil'), ok=bdg(BX[3]+120-30,BY-16,'check');
   const cor=(e,pV,pA)=>{if(pA>0){e.style.borderColor=mix(pV>0?VERDE[0]:BASE,AMBAR[0],pA);e.style.boxShadow=`0 0 0 ${(5*Math.max(pA,pV)).toFixed(2)}px ${AMBAR[1]},0 18px 40px rgba(16,24,40,.10)`}
@@ -471,7 +471,7 @@ CAPS[8]=()=>{
     vis(lJan,t,tPx,1e9,{sc:.7,dy:0}); corB(lJan,0,1); vis(lMol,t,tMo,1e9,{sc:.7,dy:0}); corB(lMol,0,1);
     fioL.forEach((p,i)=>{p.style.stroke=i===1?(aD>0?mix('#50D088','#F2B63D',aD):mix('#D5DAE0','#50D088',m1)):mix('#D5DAE0','#F2B63D',i===2?aJ:0)});
     // as novas já nascem certas: fevereiro sai do molde e ocupa a vaga
-    const p=arco(fev,t,tNo-.1,.8,520,260,BX[3]-120,BY,-40); op(fev,eo(cl((p-.05)/.3))); cor(fev,0,eo(cl((p-.5)/.5)));
+    const p=arco(fev,t,tNo-.1,.8,520,286,BX[3]-120,BY,-30); op(fev,eo(cl(p/.25))); cor(fev,0,eo(cl((p-.5)/.5)));
     fioL[3].style.stroke=mix('#D5DAE0','#F2B63D',eo(cl((p-.5)/.5)));
     vis(ok,t,tCe-.1,1e9,{sc:.7,dy:0}); corB(ok,0,1);
   };
@@ -578,13 +578,16 @@ CAPS[10]=()=>{
       <path d="M540 244 C 540 268, 640 262, 640 286 M632 278 L640 287 L648 278" fill="none" stroke="#9AA3AD" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`,g);
   const [sa1,sa2]=setas.querySelectorAll('path');
   // primeira conta: a Fundição
-  const saldo=el(`<div class="card b2" style="left:${CX[0]}px;top:${R1}px;width:${CW}px;height:170px;padding:22px 22px">
-      ${chipSaldo}<div class="num" style="margin-top:12px;font-size:28px;color:var(--p)">${brl(VALOR)}</div><div style="margin-top:16px">${barraS}</div></div>`,g);
-  const parcs=el(`<div class="card b2" style="left:${CX[1]}px;top:${R1}px;width:${CW}px;height:170px;padding:22px 22px">
-      <div class="row" style="gap:10px;height:30px"><div style="font-weight:700;font-size:17px;color:#4B5563">Parcelas</div><div class="tag a sm">${N}x</div></div>
-      <div class="num" style="margin-top:12px;font-size:28px;color:var(--ae)">${brl(VALOR/N)}</div><div class="row" style="margin-top:16px;gap:${SG}px">${segs(N)}</div></div>`,g);
+  // o saldo e as parcelas guardam o mesmo dinheiro: os dois cartões mostram o total (a conta fecha: total − total = nada)
+  const saldo=el(`<div class="card b2" style="left:${CX[0]}px;top:${R1}px;width:${CW}px;height:176px;padding:22px 22px">
+      <div style="height:30px">${chipSaldo}</div><div class="num" style="margin-top:8px;font-size:28px;color:var(--p)">${brl(VALOR)}</div>
+      <div class="lbl" style="margin-top:4px">Fundição Bandeira do Vale</div><div style="margin-top:12px">${barraS}</div></div>`,g);
+  const parcs=el(`<div class="card b2" style="left:${CX[1]}px;top:${R1}px;width:${CW}px;height:176px;padding:22px 22px">
+      <div style="height:30px;display:flex;align-items:center;font-weight:700;font-size:17px;color:#4B5563">Parcelas</div>
+      <div class="num" style="margin-top:8px;font-size:28px;color:var(--ae)">${brl(VALOR)}</div>
+      <div class="lbl" style="margin-top:4px">${N}x de ${brl(VALOR/N)}</div><div class="row" style="margin-top:12px;gap:${SG}px">${segs(N)}</div></div>`,g);
   const mvLista=el(`<div class="ab" style="left:0;top:0;width:1280px;height:800px"></div>`,g);   // a lista começa no meio e vai para a direita
-  const lista=el(`<div class="card b2" style="left:${CX[2]}px;top:${R1}px;width:${CW}px;height:170px;padding:18px 22px">
+  const lista=el(`<div class="card b2" style="left:${CX[2]}px;top:${R1}px;width:${CW}px;height:176px;padding:18px 22px">
       <div style="font-weight:700;font-size:17px;color:var(--ve)">Na lista</div>
       <div class="ab" style="left:22px;top:48px;width:${BW}px;height:78px;border-radius:12px;border:2px solid #E1E8E4;background:#FAFBFC">
         <div class="ab" style="left:12px;top:9px">${chipSaldo}</div>
@@ -592,7 +595,7 @@ CAPS[10]=()=>{
         <div class="ab" style="left:0;top:20px;width:${BW-4}px;text-align:center"><div class="tag a sm">Já está nas parcelas</div></div></div>
       <div class="ab" style="left:22px;top:138px;width:${BW}px;height:18px;border-radius:9px;border:2px dashed #CBD2D9"></div></div>`,mvLista);
   const pill=lista.children[1], [pChip,pNome,pTag]=[...pill.children], vazio=lista.children[2];
-  const menos1=op1(CX[1]-40,R1+85,'−'), igual1=op1(CX[2]-40,R1+85,'=');
+  const menos1=op1(CX[1]-40,R1+88,'−'), igual1=op1(CX[2]-40,R1+88,'=');
   // segundo caso, sem número: só uma parte virou parcela, e a lista mostra só a sobra
   const parte=el(`<div class="ab" style="left:${CX[0]}px;top:${R2-46}px"><div class="tag cz sm">Só uma parte</div></div>`,g);
   const saldo2=el(`<div class="card b2" style="left:${CX[0]}px;top:${R2}px;width:${CW}px;height:150px;padding:22px 22px">${chipSaldo}<div style="margin-top:58px">${barraS}</div></div>`,g);

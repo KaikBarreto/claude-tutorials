@@ -1,0 +1,172 @@
+{
+ "name": "t01-cap00",
+ "title": "T01 · Cap. 0 · Abertura (narração 42,2 s ESTIMADA; marcas L1..L4 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
+ "seed": "t01-cap00",
+ "pace": 0.6,
+ "cps": 14,
+ "tail": 1.5,
+ "start": {
+  "x": 1040,
+  "y": 300
+ },
+ "anonymous": true,
+ "seedExtra": [
+  "t01/inicio"
+ ],
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "initial-preferences-set": "true",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10"
+ },
+ "prewarm": [
+  "/cadastro"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/cadastro"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "placeholder": "Ex: Minha Empresa Ltda"
+   },
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel|Algo deu errado|Falha ao carregar|Personalize sua experi[êe]ncia|Voc[êe] j[áa] est[áa] conectado|Sistema atualizado|O rel[óo]gio deste computador|Sess[ãa]o expirou/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');if(f&&window.__avisos.length<10&&!window.__avisos.includes('LEMBRETE DA TRILHA'))window.__avisos.push('LEMBRETE DA TRILHA')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0.4
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 8.05
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 17.74
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Cadastro",
+    "exact": true
+   },
+   "seconds": 1.0,
+   "at": 19.54,
+   "label": "título Cadastro",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Teste grátis por 7 dias"
+   },
+   "seconds": 1.6,
+   "at": 20.29,
+   "label": "Teste grátis por 7 dias · Sem compromisso · Acesso total",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Dados",
+    "exact": true
+   },
+   "seconds": 0.8,
+   "at": 21.58,
+   "label": "etapas Dados e Acesso",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "placeholder": "Ex: Minha Empresa Ltda"
+   },
+   "seconds": 1.2,
+   "at": 23.1,
+   "label": "Nome da Empresa (o cursor desce pelo formulário)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "placeholder": "email@exemplo.com"
+   },
+   "seconds": 1.0,
+   "at": 25.46,
+   "label": "Email",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "placeholder": "(21) 98765-4321"
+   },
+   "seconds": 1.0,
+   "at": 27.12,
+   "label": "Telefone",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Continuar"
+   },
+   "seconds": 1.4,
+   "at": 28.72,
+   "label": "Continuar (sem clicar)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 32.21
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 1060,
+    "y": 330
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "at": 32.51,
+   "label": "cursor sai do formulário (cartão Antes: Bem-vindo ao EcoSistema)"
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 42.18
+  }
+ ]
+}

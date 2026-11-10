@@ -240,7 +240,7 @@ function dExclusao(){return `<svg viewBox="0 0 222 150" width="222" height="150"
     <path class="volta" d="M166,112 C204,100 204,48 166,42 M178,30 L164,42 L178,54" fill="none" stroke="#50D088" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></svg>`}
 function dProducao(){return `<svg viewBox="0 0 222 150" width="222" height="150" style="overflow:visible">${CHAO}
     <g class="latas">${[[14,96],[42,96],[28,60]].map(([x,y])=>`<g transform="translate(${x},${y})"><rect width="24" height="36" rx="4" fill="#C7CDD3"/><rect y="9" width="24" height="9" fill="#9AA3AD"/><ellipse cx="12" cy="1" rx="12" ry="4" fill="#E3E7EB"/></g>`).join('')}</g>
-    <path d="M78,94 H108 M98,84 L110,94 L98,104" fill="none" stroke="#50D088" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path class="seta" d="M78,94 H108 M98,84 L110,94 L98,104" fill="none" stroke="#50D088" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
     <g class="fardo"><rect x="122" y="56" width="88" height="76" rx="6" fill="#B9C1C9"/>
       <path d="M128,74 H204 M128,92 H204 M128,110 H204" stroke="#A3ACB5" stroke-width="3"/>
       <rect x="142" y="56" width="7" height="76" fill="#5E6670"/><rect x="183" y="56" width="7" height="76" fill="#5E6670"/></g></svg>`}
@@ -251,17 +251,17 @@ function dSaldoIni(){let q='';for(let r=0;r<3;r++)for(let c=0;c<5;c++)q+=`<rect 
     <g class="band">${q}<rect x="113" y="22" width="45" height="27" fill="none" stroke="#2F3640" stroke-width="1.5"/></g></svg>`}
 // saco de latinha (cap08): as latas inteiras por baixo, o saco por cima e a sujeira; 260 x 226, fundo em y = 226
 function dSaco(){
-  const r=rnd(77),cores=['#C7CDD3','#AEB6BE','#D9DEE3','#9AA3AD','#BCC3CA'];let latas='';
+  const r=rnd(77),cores=['#C7CDD3','#AEB6BE','#D9DEE3','#BCC3CA'],faixa=['#C0504D','#4F81BD','#9BBB59','#8064A2','#E0A030'];let latas='';
   for(let y=196;y>=34;y-=21){const meia=Math.max(26,100-Math.pow((196-y)/162,1.6)*72);
-    for(let x=130-meia;x<=130+meia-16;x+=21){const c=cores[Math.floor(r()*cores.length)],rot=(r()*40-20).toFixed(0),xx=(x+r()*6).toFixed(1);
-      latas+=`<g transform="translate(${xx},${y}) rotate(${rot} 9 13)"><rect width="18" height="26" rx="3" fill="${c}"/><rect y="7" width="18" height="6" fill="#8E979F" opacity=".55"/><ellipse cx="9" cy="1" rx="9" ry="3" fill="#EEF1F4"/></g>`}}
-  const suj=[[64,196],[86,206],[112,200],[150,208],[176,198],[198,206],[96,184],[164,186]].map(([x,y],i)=>`<ellipse cx="${x}" cy="${y}" rx="${5+i%3*2}" ry="${3+i%2}" fill="#8C6A4A"/>`).join('');
+    for(let x=130-meia;x<=130+meia-16;x+=21){const c=cores[Math.floor(r()*cores.length)],f=faixa[Math.floor(r()*faixa.length)],rot=(r()*40-20).toFixed(0),xx=(x+r()*6).toFixed(1);
+      latas+=`<g transform="translate(${xx},${y}) rotate(${rot} 9 13)"><rect width="18" height="26" rx="3" fill="${c}"/><rect y="8" width="18" height="9" fill="${f}" opacity=".85"/><ellipse cx="9" cy="1" rx="9" ry="3" fill="#EEF1F4"/></g>`}}
+  const suj=[[64,196],[86,206],[112,200],[150,208],[176,198],[198,206],[96,184],[164,186]].map(([x,y],i)=>`<ellipse cx="${x}" cy="${y}" rx="${5+i%3*2}" ry="${3+i%2}" fill="#7A5A3C"/>`).join('');
   return `<svg viewBox="0 0 260 226" width="260" height="226" style="overflow:visible">
     <g class="latas">${latas}</g>
-    <g class="bolsa"><path d="M26,92 Q14,172 36,216 Q130,236 224,216 Q246,172 234,92 Q204,80 130,84 Q56,80 26,92 Z" fill="#D8C3A0" stroke="#B89F78" stroke-width="3"/>
-      <path d="M26,92 Q56,104 130,100 Q204,104 234,92" fill="none" stroke="#B89F78" stroke-width="3"/>
-      <path d="M70,128 Q76,160 66,196 M190,124 Q184,162 196,198" fill="none" stroke="#C6AE88" stroke-width="3" stroke-linecap="round"/></g>
-    <g class="topo">${latas.split('</g>').slice(-9,-1).map(s=>s+'</g>').join('')}</g>
+    <g class="bolsa"><path d="M34,100 C18,150 22,196 40,218 Q130,236 220,218 C238,196 242,150 226,100 Q130,114 34,100 Z" fill="#DCC7A1" stroke="#B39A70" stroke-width="3" stroke-linejoin="round"/>
+      <path d="M44,132 Q130,144 216,132 M40,168 Q130,180 220,168 M44,202 Q130,212 216,202" fill="none" stroke="#C9B28A" stroke-width="2.5" opacity=".8"/>
+      <path d="M28,98 Q130,116 232,98" fill="none" stroke="#B39A70" stroke-width="9" stroke-linecap="round"/></g>
+    <g class="topo">${latas.split('</g>').slice(-9,-1).map(q=>q+'</g>').join('')}</g>
     <g class="suj">${suj}</g></svg>`;
 }
 
@@ -291,8 +291,8 @@ CAPS[0]=()=>{
     const a0=W(0,'Oi')-.3, tp=W(0,'perguntas'), tc=W(0,'contador'), tr=W(0,'Recicla'), tm=W(0,'mes');
     const ent=[W(1,'Quanto'),W(1,'onde')-.2,W(1,'quanto',2)], acc=[W(1,'hoje'),W(1,'veio'),W(1,'dia')];
     posTitulo(tit,t,a0-.6,tp-.1);
-    vis(bal,t,tp-.05,1e9,{dy:18,sc:.96});
-    rows.forEach((o,i)=>vis(o.r,t,tp+.15+.14*i,1e9,{dy:14}));
+    vis(bal,t,tp+.3,1e9,{dy:18,sc:.96});
+    rows.forEach((o,i)=>vis(o.r,t,tp+.45+.14*i,1e9,{dy:14}));
     vis(av,t,tc-.2,1e9,{dy:16,sc:.94}); vis(tC,t,tc+.1,1e9,{dy:10}); vis(tE,t,tr-.05,1e9,{dy:8});
     pulse(bal,t,tm,.015,.9);
     rows.forEach((o,i)=>{
@@ -327,10 +327,10 @@ CAPS[1]=()=>{
   return t=>{
     const a0=W(2,'O')-.3, nm=[W(2,'Estoque'),W(2,'Historico'),W(2,'Relatorio'),W(2,'Posicao')],
           rs=[W(2,'quanto'),W(2,'entrada'),W(2,'comprou'),W(2,'tinha')];
-    posTitulo(tit,t,a0-.6,a0+.2);
-    vis(chao,t,a0+.15,1e9,{dy:0});
+    posTitulo(tit,t,a0-.6,a0);
+    vis(chao,t,a0+.3,1e9,{dy:0});
     portas.forEach((o,i)=>{
-      vis(o.w,t,a0+.2+.12*i,1e9,{dy:20});
+      vis(o.w,t,a0+.35+.12*i,1e9,{dy:20});
       const ab=eio(pr(t,nm[i]-.1,.8)); o.folha.style.transform=`perspective(900px) rotateY(${(62*ab).toFixed(2)}deg)`;
       luz(o.placa,t,nm[i]-.1,i<3?nm[i+1]-.1:1e9,{fundo:false});
       vis(o.chip,t,rs[i]-.1,1e9,{dy:12});
@@ -361,7 +361,7 @@ CAPS[2]=()=>{
   return t=>{
     const a0=W(5,'O')-.3, te=W(5,'Estoque'), ts=W(5,'saldo'), ten=W(5,'entra'), tsa=W(5,'sai');
     const K={compra:W(5,'compra'),venda:W(5,'venda'),transf:W(5,'transferencia'),ajuste:W(5,'ajuste'),exc:W(5,'exclusao'),prod:W(5,'producao')};
-    posTitulo(tit,t,a0-.6,te-.15);
+    posTitulo(tit,t,a0-.6,Math.min(a0,te-.5));
     vis(sombra,t,te-.1,1e9,{dy:0}); vis(pilha,t,te-.1,1e9,{dy:18,sc:.94}); vis(card,t,te+.05,1e9,{dy:16}); vis(sub,t,ts-.05,1e9,{dy:6});
     vis(hE,t,ten-.1,1e9,{dy:0,dx:-14}); vis(sE,t,ten-.05,1e9,{dy:0,dx:-14});
     vis(hS,t,tsa-.1,1e9,{dy:0,dx:14}); vis(sS,t,tsa-.05,1e9,{dy:0,dx:14});
@@ -403,7 +403,7 @@ CAPS[3]=()=>{
   return t=>{
     const a0=W(0,'Agora')-.3, tse=W(0,'separacao'), tma=W(0,'Marcos'), tl=W(0,'tirou'), tpz=W(0,'pesado');
     const tme=W(1,'mesmo'), tmu=W(1,'mudou'), ttr=W(1,'transferencia'), trg=W(1,'registra'), tsa=W(1,'sai'), ten=W(1,'entra');
-    posTitulo(tit,t,a0-.6,tse-.15);
+    posTitulo(tit,t,a0-.6,tse-.55);
     vis(chao,t,tse-.1,1e9,{dy:0}); vis(pM,t,tse-.1,1e9,{dy:18,sc:.95}); vis(cM,t,tse+.1,1e9,{dy:16});
     vis(av,t,tma-.15,1e9,{dy:14,sc:.92}); vis(tMa,t,tma+.1,1e9,{dy:8});
     vis(pP,t,tpz-.1,1e9,{dy:18,sc:.95}); vis(cP,t,tpz+.05,1e9,{dy:16});
@@ -482,7 +482,7 @@ CAPS[4]=()=>{
       const tk=W(1,'Kardex'), tf=W(1,'ficha'), tco=W(1,'como'), tex=W(1,'extrato'), tba=W(1,'banco'),
             ten=W(1,'entrada'), tsa=W(1,'saida'), tan=W(1,'antes'), tde=W(1,'depois');
       posTitulo(titA,t,a0-.6,tk-.15);
-      vis(K.c,t,tk-.1,1e9,{dy:18}); K.c.style.left=lerp(390,675,eio(pr(t,tco,.7))).toFixed(2)+'px'; pulse(subK,t,tf,.06,.7);
+      vis(K.c,t,tk+.3,1e9,{dy:18}); K.c.style.left=lerp(390,675,eio(pr(t,tco,.7))).toFixed(2)+'px'; pulse(subK,t,tf,.06,.7);
       vis(B.c,t,tex-.2,1e9,{dx:-24,dy:0}); vis(opA,t,tba-.1,1e9,{sc:.6,dy:0});
       for(const F of [B,K]){
         vis(F.sg[0],t,ten-.1,1e9,{dy:0,sc:.6}); vis(F.sg[1],t,tsa-.1,1e9,{dy:0,sc:.6});
@@ -494,8 +494,8 @@ CAPS[4]=()=>{
     gB.style.display=t>=b0-1?'':'none';
     if(t>=b0-1){
       const tco=W(5,'corrente'), tfi=W(5,'final'), tcm=W(5,'comeco'), tsg=W(5,'seguir'), tq=W(5,'quilo');
-      posTitulo(titB,t,b0-.6,tco-.25);
-      vis(cab,t,tco-.2,1e9,{dy:8}); vis(R1.r,t,tco-.15,1e9,{dy:16}); vis(R2.r,t,tco,1e9,{dy:16});
+      posTitulo(titB,t,b0-.6,tco-.6);
+      vis(cab,t,tco-.05,1e9,{dy:8}); vis(R1.r,t,tco,1e9,{dy:16}); vis(R2.r,t,tco+.15,1e9,{dy:16});
       anel(R2.cel[2],t,tfi-.1); pulse(R2.cel[2],t,tfi,.06,.7);
       traco(c1,t,tfi+.25,Math.max(.6,tcm-tfi-.2)); vis(c1h,t,tcm-.05,1e9,{dy:0,sc:1,din:.3});
       anel(R1.cel[0],t,tcm-.05); pulse(R1.cel[0],t,tcm+.1,.06,.7);
@@ -521,13 +521,13 @@ CAPS[5]=()=>{
         <div class="ab" style="left:0;top:192px;width:262px;text-align:center;font-weight:800;font-size:23px">${nome}</div></div>`,g)});
   const q=(i,s)=>cards[i].querySelector(s);
   const mvC=q(0,'.mv'), rodaC=q(0,'.rodaC'), mvV=q(1,'.mv'), mvT=q(2,'.mv'), chk=q(3,'.chk'), lapis=q(3,'.mv'),
-        risco=q(4,'.risco'), volta=q(4,'.volta'), latas=q(5,'.latas'), band=q(6,'.band');
+        risco=q(4,'.risco'), volta=q(4,'.volta'), latas=q(5,'.latas'), setaP=q(5,'.seta'), fardo=q(5,'.fardo'), band=q(6,'.band');
   const cad=el(`<div class="ab" style="left:204px;top:14px;width:44px;height:44px;border-radius:12px;background:var(--ac);color:var(--ae);display:flex;align-items:center;justify-content:center">${ic('lock',24)}</div>`,cards[5]);
   return t=>{
     const a0=W(2,'Compra')-.3;
     const T=[W(2,'Compra'),W(2,'Venda'),W(2,'Transferencia'),W(3,'Edicao'),W(3,'Exclusao'),W(4,'Producao'),W(4,'Saldo')];
-    posTitulo(tit,t,a0-.6,a0+.15);
-    cards.forEach((c,i)=>{vis(c,t,a0+.12+.07*i,1e9,{dy:18}); luz(c,t,T[i]-.1,i<6?T[i+1]-.1:1e9);});
+    posTitulo(tit,t,a0-.6,a0);
+    cards.forEach((c,i)=>{vis(c,t,a0+.4+.07*i,1e9,{dy:18}); luz(c,t,T[i]-.1,i<6?T[i+1]-.1:1e9);});
     // cada desenho se mexe na palavra que explica o tipo
     const pc=eio(pr(t,W(2,'entrou')-.1,.9)); mvC.setAttribute('transform',`translate(${(-14+20*pc).toFixed(2)},22)`);
     rodaC.setAttribute('transform',`translate(78,92) rotate(${(pc*90).toFixed(1)})`);
@@ -539,7 +539,8 @@ CAPS[5]=()=>{
     lapis.setAttribute('transform',`translate(${(-6*pe).toFixed(2)},${(-4*pe).toFixed(2)})`);
     traco(risco,t,W(3,'excluido')-.1,.6); traco(volta,t,W(3,'volta')-.3,.7);
     const pl=eio(pr(t,W(4,'vira')-.15,.9)); latas.setAttribute('transform',`translate(${(92*pl).toFixed(2)},${(-6*pl).toFixed(2)})`);
-    latas.style.opacity=(1-eo(cl((pl-.55)/.45))).toFixed(3);
+    latas.style.opacity=(1-eo(cl((pl-.55)/.45))).toFixed(3); setaP.style.opacity=(1-eo(cl((pl-.3)/.5))).toFixed(3);
+    const pf=eio(pr(t,W(4,'vira')+.55,.7)); fardo.setAttribute('transform',`translate(${(-55*pf).toFixed(2)},0) scale(1)`);
     vis(cad,t,W(4,'depende')-.1,1e9,{dy:0,sc:.6});
     const pb=eo(pr(t,W(4,'Saldo')+.1,.9)); band.setAttribute('transform',`translate(0,${(40*(1-pb)).toFixed(2)})`);
   };
@@ -577,15 +578,15 @@ CAPS[7]=()=>{
   const cE=cardB(415,'package','Estoque'), cR=cardB(720,'chart-column','Relatório');
   const op=el('<div class="op" style="left:602px;top:380px;width:76px;height:76px;font-size:40px">≠</div>',gB);
   const sE=el(`<div class="ab" style="left:0;top:98px;width:450px;text-align:center">
-      <div style="display:inline-block">${monte(190,84,TONS.ferro,{seed:61,n:14,base:'#AEB6BE'})}</div>
-      <div style="font-weight:800;font-size:30px;margin-top:6px">Saldo</div></div>`,cE);
-  const tC=el(`<div class="ab" style="left:0;top:246px;width:450px;text-align:center"><div class="tag v" style="font-size:17px;padding:7px 14px">${ic('history',18)}desde o começo</div></div>`,cE);
-  const X=['Transferência','Ajuste manual','Exclusão','Produção'].map((n,i)=>el(`<div class="ab" style="left:${i%2?228:28}px;top:${316+58*Math.floor(i/2)}px;width:194px;text-align:center"><div class="tag a" style="font-size:17px;padding:7px 12px">${n}</div></div>`,cE));
+      <div style="display:inline-block">${monte(220,96,TONS.ferro,{seed:61,n:16,base:'#AEB6BE'})}</div>
+      <div style="font-weight:800;font-size:32px;margin-top:4px">Saldo</div></div>`,cE);
+  const tC=el(`<div class="ab" style="left:0;top:252px;width:450px;text-align:center"><div class="tag v" style="font-size:19px;padding:8px 16px">${ic('history',20)}desde o começo</div></div>`,cE);
+  const X=['Transferência','Ajuste manual','Exclusão','Produção'].map((n,i)=>el(`<div class="ab" style="left:${i%2?226:24}px;top:${320+58*Math.floor(i/2)}px;width:200px;text-align:center"><div class="tag a" style="font-size:19px;padding:8px 14px">${n}</div></div>`,cE));
   const fR=el(`<div class="ab row" style="left:0;top:104px;width:450px;justify-content:center;gap:10px">
-      <div class="tag n" style="font-size:19px">Comprado</div><div class="op" style="position:static;width:44px;height:44px;font-size:26px">−</div><div class="tag n" style="font-size:19px">Vendido</div></div>`,cR);
+      <div class="tag n" style="font-size:21px">Comprado</div><div class="op" style="position:static;width:46px;height:46px;font-size:28px">−</div><div class="tag n" style="font-size:21px">Vendido</div></div>`,cR);
   const [fC,fO,fV]=fR.children;
-  const cal=el(`<div class="ab" style="left:150px;top:178px">${folhinhaMes('OUTUBRO',150)}</div>`,cR);
-  const tP=el(`<div class="ab" style="left:0;top:356px;width:450px;text-align:center"><div class="tag v" style="font-size:17px;padding:7px 14px">${ic('calendar-days',18)}só o período</div></div>`,cR);
+  const cal=el(`<div class="ab" style="left:145px;top:180px">${folhinhaMes('OUTUBRO',160)}</div>`,cR);
+  const tP=el(`<div class="ab" style="left:0;top:362px;width:450px;text-align:center"><div class="tag v" style="font-size:19px;padding:8px 16px">${ic('calendar-days',20)}só o período</div></div>`,cR);
   return t=>{
     const tU=W(7,'Uma');
     // cena A (some em "Uma", quando a B entra)
@@ -593,7 +594,7 @@ CAPS[7]=()=>{
     if(t<tU+.6){
       vis(gA,t,-1e9,tU,{dy:0,sc:1,dout:.4});
       const a0=W(6,'Ela')-.3, tim=W(6,'imagina'), tve=W(6,'vendeu'), tcp=W(6,'comprou'), tpm=W(6,'preco'), ttb=W(6,'tabela'), tlu=W(6,'lucro'), tds=W(6,'despesas');
-      posTitulo(titA,t,a0-.6,tim-.15);
+      posTitulo(titA,t,a0-.6,a0);
       vis(fr,t,tim-.05,1e9,{dy:14,sc:.97}); vis(nuvem,t,tim+.1,1e9,{dy:0,sc:.7});
       // a pilha do mês vai inteira para o "vendido"; no lugar dela fica o contorno
       const pv=arco(pil,t,tve-.05,1.2,150,300,800,300,-120);
@@ -610,7 +611,7 @@ CAPS[7]=()=>{
       const trl=W(8,'Relatorio'), tpe=W(8,'periodo'), tac=W(8,'acumulado');
       const tx=[W(8,'transferencia'),W(8,'ajuste'),W(8,'exclusao'),W(8,'producao')], tba=W(8,'batem'), tis=W(8,'isso');
       posTitulo(titB,t,tU+.1,tsa-.1);
-      vis(cE,t,tsa-.05,1e9,{dy:18}); cE.style.left=lerp(415,110,eio(pr(t,tna-.25,.7))).toFixed(2)+'px'; pulse(cE,t,tes,.02,.7);
+      vis(cE,t,tsa+.35,1e9,{dy:18}); cE.style.left=lerp(415,110,eio(pr(t,tna-.25,.7))).toFixed(2)+'px'; pulse(cE,t,tes,.02,.7);
       vis(cR,t,tna+.05,1e9,{dx:24,dy:0}); vis(op,t,tna+.3,1e9,{sc:.6,dy:0});
       vis(fC,t,tco-.1,1e9,{dy:8}); vis(fO,t,tme-.1,1e9,{sc:.6,dy:0}); vis(fV,t,tvd-.1,1e9,{dy:8});
       pulse(cR,t,trl,.02,.7); vis(cal,t,tpe-.3,1e9,{dy:10}); vis(tP,t,tpe-.05,1e9,{dy:8});
@@ -653,21 +654,21 @@ CAPS[8]=()=>{
   // ---- cena B
   const gB=grupo();
   const titB=titulo(gB,'Relatório','Resultado e Margem');
-  const X0=240, WB=640, wc=WB*COMP/VEND;
-  const rot=(y,txt)=>el(`<div class="ab" style="left:30px;top:${y}px;width:190px;height:60px;display:flex;align-items:center;justify-content:flex-end;font-weight:800;font-size:24px">${txt}</div>`,gB);
-  const rV=rot(370,'Vendido'), rC=rot(490,'Comprado');
-  const bar=(y,w,cor)=>el(`<div class="ab" style="left:${X0}px;top:${y}px;width:${w.toFixed(1)}px;height:60px;border-radius:12px;background:${cor};transform-origin:0 50%"></div>`,gB);
-  const bV=bar(370,WB,'#A9E9C6'), bC=bar(490,wc,'#DDE3E8');
-  const fat=el(`<div class="ab" style="left:${(X0+wc).toFixed(1)}px;top:370px;width:${(WB-wc).toFixed(1)}px;height:60px;border-radius:0 12px 12px 0;background:var(--v)"></div>`,gB);
-  const vV=el(`<div class="ab num" style="left:${X0+20}px;top:370px;height:60px;display:flex;align-items:center;font-size:26px">${brl(0)}</div>`,gB);
-  const vC=el(`<div class="ab num" style="left:${X0+20}px;top:490px;height:60px;display:flex;align-items:center;font-size:26px">${brl(0)}</div>`,gB);
-  const guia=el(`<div class="ab" style="left:${(X0+wc-1.5).toFixed(1)}px;top:430px;width:0;height:60px;border-left:3px dashed #8E979F"></div>`,gB);
-  const lig=el(`<div class="ab" style="left:${X0+WB}px;top:399px;width:30px;height:3px;background:var(--v)"></div>`,gB);
-  const cRes=el(`<div class="card" style="left:910px;top:350px;width:300px;padding:14px 22px 16px">
-      <div class="tag v" style="font-size:17px;padding:6px 14px">Resultado</div>
-      <div class="num" style="margin-top:8px;font-size:32px;color:var(--ve)">${brl(RES)}</div></div>`,gB);
-  const contV=el(`<div class="ab" style="left:${X0-8}px;top:362px;width:${WB+16}px;height:76px;border-radius:16px;border:3px solid var(--a)"></div>`,gB);
-  const mg=el(`<div class="ab" style="left:${(X0+wc+(WB-wc)/2-140).toFixed(1)}px;top:286px;width:280px;text-align:center"><div class="tag a">Margem<span class="mgv">≈ ${Math.round(100*RES/VEND)}%</span></div></div>`,gB);
+  const X0=262, WB=620, wc=WB*COMP/VEND, YV=330, YC=470, HB=72;
+  const rot=(y,txt)=>el(`<div class="ab" style="left:20px;top:${y}px;width:222px;height:${HB}px;display:flex;align-items:center;justify-content:flex-end;font-weight:800;font-size:27px">${txt}</div>`,gB);
+  const rV=rot(YV,'Vendido'), rC=rot(YC,'Comprado');
+  const bar=(y,w,cor)=>el(`<div class="ab" style="left:${X0}px;top:${y}px;width:${w.toFixed(1)}px;height:${HB}px;border-radius:14px;background:${cor};transform-origin:0 50%"></div>`,gB);
+  const bV=bar(YV,WB,'#A9E9C6'), bC=bar(YC,wc,'#DDE3E8');
+  const fat=el(`<div class="ab" style="left:${(X0+wc).toFixed(1)}px;top:${YV}px;width:${(WB-wc).toFixed(1)}px;height:${HB}px;border-radius:0 14px 14px 0;background:var(--v)"></div>`,gB);
+  const vV=el(`<div class="ab num" style="left:${X0+22}px;top:${YV}px;height:${HB}px;display:flex;align-items:center;font-size:29px">${brl(0)}</div>`,gB);
+  const vC=el(`<div class="ab num" style="left:${X0+22}px;top:${YC}px;height:${HB}px;display:flex;align-items:center;font-size:29px">${brl(0)}</div>`,gB);
+  const guia=el(`<div class="ab" style="left:${(X0+wc-1.5).toFixed(1)}px;top:${YV+HB}px;width:0;height:${YC-YV-HB}px;border-left:3px dashed #8E979F"></div>`,gB);
+  const lig=el(`<div class="ab" style="left:${X0+WB}px;top:${YV+HB/2-1.5}px;width:28px;height:3px;background:var(--v)"></div>`,gB);
+  const cRes=el(`<div class="card" style="left:910px;top:${YV-14}px;width:310px;padding:14px 22px 16px">
+      <div class="tag v" style="font-size:18px;padding:6px 14px">Resultado</div>
+      <div class="num" style="margin-top:8px;font-size:34px;color:var(--ve)">${brl(RES)}</div></div>`,gB);
+  const contV=el(`<div class="ab" style="left:${X0-8}px;top:${YV-8}px;width:${WB+16}px;height:${HB+16}px;border-radius:18px;border:3px solid var(--a)"></div>`,gB);
+  const mg=el(`<div class="ab" style="left:${(X0+wc+(WB-wc)/2-160).toFixed(1)}px;top:${YV-82}px;width:320px;text-align:center"><div class="tag a" style="font-size:23px;padding:9px 20px">Margem<span class="mgv">≈ ${Math.round(100*RES/VEND)}%</span></div></div>`,gB);
   const mgv=mg.querySelector('.mgv');
   return t=>{
     // cena A
@@ -676,8 +677,8 @@ CAPS[8]=()=>{
     if(t<=fimA+.5){
       const tq=W(2,'quantidade'), tta=W(2,'tara'), tim=W(2,'impureza'), tci=W(2,'Cida'), tpo=W(2,'pos'),
             tti=W(2,'Tirando'), tsc=W(2,'saco'), tsj=W(2,'sujeira'), ten=W(2,'entraram'), tmn=W(2,'menor'), tpe=W(2,'pesado');
-      posTitulo(titA,t,a0-.6,tq-.15);
-      for(const e of [plat,poste,most]) vis(e,t,tq-.1,1e9,{dy:10}); vis(saco,t,tq,1e9,{dy:16,sc:.95});
+      posTitulo(titA,t,a0-.6,tq-.5);
+      for(const e of [plat,poste]) vis(e,t,tq-.05,1e9,{dy:10}); vis(most,t,tq+.25,1e9,{dy:10}); vis(saco,t,tq,1e9,{dy:16,sc:.95});
       vis(pT,t,tta-.1,tsc,{dx:-12,dy:0}); vis(pI,t,tim-.1,tsj,{dx:-12,dy:0}); vis(pC,t,tci-.15,1e9,{dy:8});
       conta(mn,t,tpo+.15,1.1,0,BAL); pulse(most,t,tpo+1.3,.05,.7);
       vis(c1,t,tti-.1,1e9,{dy:20});
@@ -696,7 +697,7 @@ CAPS[8]=()=>{
     gB.style.display=t>=b0-1?'':'none';
     if(t>=b0-1){
       const tvd=W(4,'vendido'), tcp=W(4,'comprado'), tms=W(4,'mes'), tmg=W(4,'Margem'), trs=W(4,'resultado',2), tv2=W(4,'vendido',2);
-      posTitulo(titB,t,b0-.6,tvd-.25);
+      posTitulo(titB,t,b0-.6,tvd-.65);
       vis(rV,t,tvd-.2,1e9,{dx:-12,dy:0}); cresce(bV,t,tvd-.15,.8); vV.style.opacity=eo(pr(t,tvd,.4)).toFixed(3); conta(vV,t,tvd,.9,0,VEND,brl);
       vis(rC,t,tcp-.2,1e9,{dx:-12,dy:0}); cresce(bC,t,tcp-.15,.8); vC.style.opacity=eo(pr(t,tcp,.4)).toFixed(3); conta(vC,t,tcp,.9,0,COMP,brl);
       fat.style.opacity=eo(pr(t,tms-.15,.5)).toFixed(3); vis(guia,t,tms-.15,1e9,{dy:0,sc:1});
@@ -732,12 +733,12 @@ CAPS[9]=()=>{
   const PS=[[560,350],[604,336],[648,330],[690,344]].map((dst,i)=>({...peca(['#B8733C','#C9884B','#A0602E','#D59A5E'][i],'#50D088'),o:[392,276],dst,i}));
   const PV=[[580,384],[624,370],[668,374],[712,390]].map((dst,i)=>({...peca(['#C9884B','#9A5B2E','#B8733C','#D59A5E'][i],'#F2B63D'),o:[392,508],dst,i}));
   const PF=[[640,338],[676,346],[700,360]].map((o,i)=>({...peca(['#B8733C','#C9884B','#A0602E'][i],'#B8733C'),o,dst:[968+36*i,326],i}));
-  const pq=el(`<div class="ab" style="left:0;top:204px;width:1280px;text-align:center"><div style="display:inline-flex;align-items:center;gap:10px;padding:10px 22px;border-radius:999px;background:#fff;border:2px solid var(--a);font-weight:800;font-size:23px;box-shadow:0 10px 24px rgba(16,24,40,.08)">${ic('circle-help',24,'#8A5A00')}De quem era cada quilo?</div></div>`,g);
+  const pq=el(`<div class="ab" style="left:0;top:204px;width:1280px;text-align:center"><div style="display:inline-flex;align-items:center;gap:10px;padding:10px 22px;border-radius:999px;background:#fff;border:2px solid var(--a);font-weight:800;font-size:26px;box-shadow:0 10px 24px rgba(16,24,40,.08)">${ic('circle-help',28,'#8A5A00')}De quem era cada quilo?</div></div>`,g);
   const voa=(o,t,a,d,h)=>{const q=arco(o.d,t,a,d,o.o[0],o.o[1],o.dst[0],o.dst[1],h,30);const op=q>0?eo(cl(q/.15)):0;o.d.style.opacity=op.toFixed(3);o.d.style.visibility=op<=.001?'hidden':'visible';return q};
   return t=>{
     const a0=W(1,'proposito')-.3, tco=W(1,'cobre'), tsq=W(1,'Siqueira'), tfo=W(1,'foi'), tpi=W(1,'pilha'), tva=W(1,'Valdir'),
           tfu=W(1,'Fundicao'), tcp=W(1,'compra'), tqu=W(1,'quem');
-    posTitulo(tit,t,a0-.6,tco-.15);
+    posTitulo(tit,t,a0-.6,tco-.55);
     vis(pil,t,tco-.1,1e9,{dy:16,sc:.95}); vis(tPil,t,tco+.15,1e9,{dy:8});
     vis(aS,t,tsq-.2,1e9,{dx:-18,dy:0}); traco(a1,t,tfo-.15,.5);
     vis(aV,t,tva-.25,1e9,{dx:-18,dy:0}); traco(a2,t,tva-.05,.5);
@@ -764,7 +765,7 @@ CAPS[10]=()=>{
   const lin=el('<div class="ab" style="left:90px;top:354px;width:1100px;height:4px;border-radius:2px;background:#C9D1D9"></div>',g);
   const mO=el(`<div class="ab kick" style="left:90px;top:396px;width:${XC-90}px;text-align:center;color:#6B7280">Outubro</div>`,g);
   const mN=el(`<div class="ab kick" style="left:${XC}px;top:396px;width:${1190-XC}px;text-align:center;color:#6B7280">Novembro</div>`,g);
-  const ponto=([x,s])=>el(`<div class="ab" style="left:${x-18}px;top:338px;width:36px;height:36px;border-radius:50%;background:${s==='+'?'#2E7D57':'#8A5A00'};color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:22px;line-height:1">${s}</div>`,g);
+  const ponto=([x,s])=>el(`<div class="ab" style="left:${x-22}px;top:334px;width:44px;height:44px;border-radius:50%;background:${s==='+'?'#2E7D57':'#8A5A00'};color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:24px;line-height:1">${s}</div>`,g);
   const pO=[[170,'+'],[280,'+'],[390,'−'],[500,'+'],[610,'−'],[700,'−']].map(ponto), pN=[[830,'+'],[930,'−'],[1030,'+'],[1130,'+']].map(ponto);
   const corte=el(`<div class="ab" style="left:${XC-1.5}px;top:236px;width:0;height:236px;border-left:3px dashed #8E979F"></div>`,g);
   const tCo=el(`<div class="ab" style="left:${XC-150}px;top:178px;width:300px;text-align:center"><div class="tag v">${ic('calendar-clock',20)}31/10 23:59</div></div>`,g);
@@ -772,15 +773,15 @@ CAPS[10]=()=>{
       <path d="M${XC-50},250 H${XC-14} V286"/><path d="M84,446 V482 H120"/><path d="M${XC-14},446 V482 H${XC-50}"/></g></svg>`,g);
   const cam=el(`<div class="ab" style="left:56px;top:222px;width:56px;height:56px;border-radius:50%;background:#fff;border:3px solid var(--v);display:flex;align-items:center;justify-content:center;color:var(--ve)">${ic('camera',28)}</div>`,g);
   const fora=el(`<div class="ab" style="left:${XC+20}px;top:262px;width:${1190-XC-20}px;text-align:center"><div class="tag a">fora da foto</div></div>`,g);
-  const pol=el(`<div class="card" style="left:380px;top:524px;width:520px;height:218px;padding:16px 16px 0">
-      <div style="height:162px;border-radius:10px;background:#F1FAF5;display:flex;justify-content:space-around;align-items:flex-end;padding:0 8px 14px">
+  const pol=el(`<div class="card" style="left:340px;top:520px;width:600px;height:232px;padding:16px 16px 0">
+      <div style="height:176px;border-radius:10px;background:#F1FAF5;display:flex;justify-content:space-around;align-items:flex-end;padding:0 8px 16px">
         ${[['Ferro pesado',TONS.pesado,'#7E8790',3],['Ferro misto',TONS.ferro,'#AEB6BE',4],['Cobre mel',TONS.cobre,'#C9965F',5]].map(([n,tn,b,s])=>`<div style="width:150px;text-align:center">
-          ${monte(116,58,tn,{seed:80+s,n:10,base:b})}<div style="font-weight:700;font-size:17px;margin-top:8px;white-space:nowrap">${n}</div></div>`).join('')}</div></div>`,g);
+          ${monte(132,64,tn,{seed:80+s,n:11,base:b})}<div style="font-weight:700;font-size:19px;margin-top:8px;white-space:nowrap">${n}</div></div>`).join('')}</div></div>`,g);
   return t=>{
     const a0=W(2,'Posicao')-.3, tfo=W(2,'foto'), tda=W(2,'data'), tho=W(2,'hora'), tsa=W(2,'saldo'), tin=W(2,'instante'), tdp=W(2,'depois'), tfr=W(2,'fora');
-    posTitulo(tit,t,a0-.6,a0+.35);
-    vis(lin,t,a0+.3,1e9,{dy:0}); vis(mO,t,a0+.4,1e9,{dy:6}); vis(mN,t,a0+.5,1e9,{dy:6});
-    [...pO,...pN].forEach((p,i)=>vis(p,t,a0+.45+.05*i,1e9,{dy:0,sc:.5}));
+    posTitulo(tit,t,a0-.6,a0);
+    vis(lin,t,a0+.35,1e9,{dy:0}); vis(mO,t,a0+.45,1e9,{dy:6}); vis(mN,t,a0+.55,1e9,{dy:6});
+    [...pO,...pN].forEach((p,i)=>vis(p,t,a0+.5+.05*i,1e9,{dy:0,sc:.5}));
     vis(cam,t,tfo-.15,1e9,{dy:0,sc:.6}); vis(visor,t,tfo-.05,1e9,{dy:0,sc:1});
     vis(corte,t,tda-.15,1e9,{dy:0}); vis(tCo,t,tda-.1,1e9,{dy:8}); pulse(tCo,t,tho,.05,.7);
     vis(pol,t,tsa-.2,1e9,{dy:-24}); tinta.style.opacity=(.8*eo(pr(t,tin-.2,.5))).toFixed(3);

@@ -300,8 +300,9 @@ CAPS[2]=()=>{
   const s31=sub(130,'31 dias'), s10=sub(770,'10 dias');
   const tagH=el('<div class="ab" style="left:770px;top:604px;width:380px;text-align:center"><div class="tag v">até hoje</div></div>',g);
   const seta=el(`<div class="ab" style="left:560px;top:292px;width:160px;height:200px;transform-origin:80px 70px">
-      <div class="cx" style="position:absolute;left:20px;top:0;width:120px;height:120px;background:var(--ac);color:var(--ae);border:3px solid #F2B63D">${ic('arrow-down',70)}</div>
-      <div class="ab" style="left:0;top:132px;width:160px;text-align:center"><div class="tag a">queda</div></div></div>`,g);
+      <div class="cx circ" style="position:absolute;left:20px;top:0;width:120px;height:120px;background:var(--ac);color:var(--ae);border:3px solid #F2B63D;transform-origin:60px 60px">${ic('arrow-down',70)}</div>
+      <div class="ab tq" style="left:0;top:132px;width:160px;text-align:center"><div class="tag a">queda</div></div></div>`,g);
+  const circ=seta.querySelector('.circ'), tq=seta.querySelector('.tq');
   return t=>{
     const J=janela([4,'uma'],[4,'justa'],.6); if(!naJanela(g,t,J))return;
     const tho=W(4,'hoje'),tqu=W(4,'queda'),tgr=W(4,'grande'),tco=W(4,'comeco'),tdi=W(4,'dias'),tct=W(4,'contra'),tfi=W(4,'fim'),tju=W(4,'justa');
@@ -315,7 +316,8 @@ CAPS[2]=()=>{
     const span=Math.max(1.2,tju-tfi);
     N.q.slice(10).forEach((e,k)=>{const p=eo(pr(t,tfi+k*span/20,.35));
       e.style.background=mix('#F2F4F7','#DDF4E6',p); e.style.borderColor=mix('#E6E9EE','#A9E9C6',p)});
-    const enc=eio(pr(t,tfi,span+.3)); seta.style.transform+=` scale(${lerp(1,.5,enc).toFixed(4)})`;
+    const enc=eio(pr(t,tfi,span+.3)), sc=lerp(1,.5,enc);              // só o círculo encolhe; a etiqueta acompanha a borda dele
+    circ.style.transform=`scale(${sc.toFixed(4)})`; tq.style.top=(72+60*sc).toFixed(2)+'px';
   };
 };
 
@@ -325,9 +327,9 @@ CAPS[2]=()=>{
 CAPS[6]=()=>{
   const g=grupo();
   const tit=titulo(g,'Agenda','Cada parcela no seu dia');
-  const venda=el(`<div class="card row" style="left:350px;top:170px;width:580px;height:112px;padding:0 26px;gap:16px">
+  const venda=el(`<div class="card row" style="left:320px;top:170px;width:640px;height:112px;padding:0 26px;gap:16px">
       <div class="ico a" style="width:56px;height:56px">${ic('receipt-text',30)}</div>
-      <div><div class="nm" style="font-size:24px">Venda a prazo</div><div class="lbl" style="margin-top:3px;font-size:18px">Fundição Bandeira do Vale</div></div>
+      <div><div class="nm" style="font-size:24px">Venda a prazo</div><div class="lbl" style="margin-top:3px;font-size:18px;white-space:nowrap">Fundição Bandeira do Vale</div></div>
       <div class="num" style="margin-left:auto;font-size:28px">${brl(14370)}</div></div>`,g);
   const PAG=[['nov 2026','17'],['dez 2026','17'],['jan 2027','18']];
   const X=[230,510,790];

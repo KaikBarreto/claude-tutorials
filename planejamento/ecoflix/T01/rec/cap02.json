@@ -1,0 +1,201 @@
+{
+ "name": "t01-cap02",
+ "title": "T01 · Cap. 2 · Os 7 dias de teste (narração 37,2 s ESTIMADA; marcas L1..L4 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
+ "seed": "t01-cap02",
+ "pace": 0.5,
+ "cps": 14,
+ "tail": 1.5,
+ "start": {
+  "x": 1060,
+  "y": 420
+ },
+ "anonymous": true,
+ "seedExtra": [
+  "t01/inicio"
+ ],
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "initial-preferences-set": "true",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10"
+ },
+ "prewarm": [
+  "/cadastro"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/cadastro"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "placeholder": "Ex: Minha Empresa Ltda"
+   },
+   "timeout": 30
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Ex: Minha Empresa Ltda"
+   },
+   "text": "Recicla Vale Metais",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Ex: João Silva"
+   },
+   "text": "Rafael Nogueira",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "email@exemplo.com"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "(21) 98765-4321"
+   },
+   "text": "12900004410",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Continuar"
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Email de acesso:",
+   "timeout": 15
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const el=[...document.querySelectorAll('body *')].filter(e=>e.textContent.trim().startsWith(\"Teste Grátis · Acesso Total\")&&e.offsetParent).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';el.scrollIntoView({block:'center'});return Math.round(el.getBoundingClientRect().top)})()"
+  },
+  {
+   "do": "wait",
+   "seconds": 0.4
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel|Algo deu errado|Falha ao carregar|Personalize sua experi[êe]ncia|Voc[êe] j[áa] est[áa] conectado|Sistema atualizado|O rel[óo]gio deste computador|Sess[ãa]o expirou/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');if(f&&window.__avisos.length<10&&!window.__avisos.includes('LEMBRETE DA TRILHA'))window.__avisos.push('LEMBRETE DA TRILHA')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Teste Grátis · Acesso Total\", \"7 dias grátis\", \"com acesso a todos os módulos\", \"5 usuários\", \"inclusos durante o teste\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"body\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere cartão do teste grátis"
+  },
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0.4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Teste Grátis · Acesso Total",
+    "exact": true
+   },
+   "seconds": 0.6,
+   "at": 0.69,
+   "label": "cartão Teste Grátis · Acesso Total",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Criar Conta",
+    "exact": true
+   },
+   "seconds": 0.6,
+   "at": 2.96,
+   "label": "botão Criar Conta, logo abaixo",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "7 dias grátis"
+   },
+   "seconds": 1.4,
+   "at": 4.36,
+   "label": "7 dias grátis e 5 usuários",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 6.15
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 15.54
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 25.3
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const c=document.scrollingElement;const y0=c.scrollTop,t0=performance.now();if(y0<3)return 'ok';await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0*(1-e),behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'topo:'+Math.round(c.scrollTop)})()",
+   "at": 25.3,
+   "label": "a página sobe ao subtítulo"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Teste grátis por 7 dias"
+   },
+   "seconds": 3.0,
+   "at": 28.18,
+   "label": "subtítulo Teste grátis por 7 dias · Sem compromisso · Acesso total",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Teste grátis por 7 dias"
+   },
+   "seconds": 1.6,
+   "at": 34.28,
+   "label": "subtítulo: o que vale é o que está escrito aqui",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 37.2
+  }
+ ]
+}

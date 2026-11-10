@@ -553,17 +553,17 @@ CAPS[6]=()=>{
 // 2 "No bloco Veículo vai a placa do caminhão que costuma fazer a entrega."
 CAPS[7]=()=>{
   const [A,B]=janela('ilu07_placa'), g=grupo();
-  const tit=titulo(g,'Transportadora','O caminhão na nota');
+  const tit=titulo(g,'Transportadora','O caminhão na nota'), cc=palco(g,36);
   const Y0=596, XP=170, YC=Y0-178, ESC=.8;
-  const chao=el(`<div class="ab" style="left:30px;top:${Y0}px;width:640px;height:4px;border-radius:2px;background:#DDE2E7"></div>`,g);
-  const cam=caminhaoEm(g,ESC);
+  const chao=el(`<div class="ab" style="left:30px;top:${Y0}px;width:640px;height:4px;border-radius:2px;background:#DDE2E7"></div>`,cc);
+  const cam=caminhaoEm(cc,ESC);
   const fo=el(folha(350,372,`${cab()}${barras(88,70,80)}
     <div class="ab" style="left:20px;top:176px;width:310px;height:170px;border-radius:14px;border:2.5px solid #DCE3DF;padding:16px 18px" id="cx7">
       <div class="row" style="gap:10px;font-weight:800;font-size:20px">${ic('truck',28,'var(--ve)')}Transporte</div>
-      <div class="ab" style="left:78px;top:76px;width:154px;height:58px;border-radius:10px;border:2.5px dashed #C7CFD7"></div></div>`,'left:760px;top:196px'),g);
+      <div class="ab" style="left:78px;top:76px;width:154px;height:58px;border-radius:10px;border:2.5px dashed #C7CFD7"></div></div>`,'left:760px;top:196px'),cc);
   const cx=fo.querySelector('#cx7');
   const okB=el(`<div class="ab" style="left:244px;top:-20px">${visto(46)}</div>`,cx);
-  const pl=el(placaV(PLACA.antiga,0,0),g); pl.style.left='0px'; pl.style.top='0px';
+  const pl=el(placaV(PLACA.antiga,0,0),cc); pl.style.left='0px'; pl.style.top='0px';
   const DEST=[760+20+78+7, 196+176+76+5];
   return t=>{
     if(!cena(g,t,A,B)) return;
@@ -614,11 +614,12 @@ CAPS[8]=()=>{
   const X0=120, WB=860, WT=110, YB=380;
   const trilho=el(`<div class="ab" style="left:${X0}px;top:${YB}px;width:${WB}px;height:68px;border-radius:34px 0 0 34px;background:#EEF1F4;border:2px solid #DCE3DF;border-right:none"></div>`,p2);
   const zona=el(`<div class="ab" style="left:${X0+WB}px;top:${YB}px;width:${WT}px;height:68px;border-radius:0 34px 34px 0;border:3px dashed #C7CFD7;border-left:none"></div>`,p2);
-  const marca80=el(`<div class="ab" style="left:${X0+.8*WB-1}px;top:${YB-16}px;width:3px;height:100px;background:repeating-linear-gradient(#C7CFD7 0 6px,transparent 6px 12px)"></div>`,p2);
-  const lim=el(`<div class="ab" style="left:${X0+WB-2}px;top:${YB-14}px;width:4px;height:96px;border-radius:2px;background:#6B7280"></div>`,p2);
   const enche=el(`<div class="ab" style="left:${X0}px;top:${YB}px;width:0;height:68px;border-radius:34px;background:#50D088"></div>`,p2);
+  const marca80=el(`<div class="ab" style="left:${X0+.8*WB-1}px;top:${YB-16}px;width:3px;height:100px;background:repeating-linear-gradient(#9AA3AD 0 6px,transparent 6px 12px)"></div>`,p2);
+  const lim=el(`<div class="ab" style="left:${X0+WB-2}px;top:${YB-14}px;width:4px;height:96px;border-radius:2px;background:#4B5563"></div>`,p2);
   const n0=centra(el(`<div class="ab num" style="left:0;top:${YB+84}px;font-size:24px;color:var(--ge)">0</div>`,p2),X0+20);
-  const n100=centra(el(`<div class="ab num" style="left:0;top:${YB+84}px;font-size:24px;color:var(--ge)">100</div>`,p2),X0+WB);
+  // o limite sem número: o tamanho da cota depende do nível e a junção do mundo ainda acerta 100 × 1.000 (MUNDO, "Para a junção" 6)
+  const n100=centra(el(`<div class="ab" style="left:0;top:${YB+84}px;font-weight:800;font-size:22px;color:var(--ge)">limite</div>`,p2),X0+WB);
   const mais5=centra(el(`<div class="ab tag r" style="left:0;top:${YB-62}px">+5</div>`,p2),X0+WB+WT/2);
   const tol=centra(el(`<div class="ab tag c" style="left:0;top:${YB+130}px">tolerância</div>`,p2),X0+WB+WT/2-20);
   const cad=el(`<div class="ab okc" style="left:${X0+WB+WT+26}px;top:${YB-4}px;width:76px;height:76px;background:#fff;border:3px solid var(--r);box-shadow:0 8px 18px rgba(16,24,40,.10)">
@@ -829,6 +830,209 @@ CAPS[12]=()=>{
     pulse(ct,t,tCa-.05,.25,.8);
     vis(cc,t,tCt-.15,1e9,{dx:40,dy:0}); vis(clip,t,tCt+.35,1e9,{dy:-12,sc:.7});
     pulse(cc,t,tJu,.03,.8); pulse(fV,t,tJu+.1,.03,.8);
+  };
+};
+// ------------------------------------------------------------------ CAPS[13] · números em aberto, inutilizar (linhas 0 e 1)
+// 0 "... No sistema antigo, as notas <A> e <B> foram recusadas e ficaram pra trás. Esses números estão em aberto na SEFAZ."
+// 1 "Inutilizar é avisar a SEFAZ que esses números não vão virar nota."  (começa em "Esses": a cena precisa do "em aberto")
+CAPS[13]=()=>{
+  const [A,B]=janela('ilu13_inutilizar'), g=grupo();
+  const tit=titulo(g,'Numeração','Inutilizar numeração');
+  const nums=[...NUM.recusadas,NUM.ultimaAntigo,NUM.ultimaAntigo+1,NUM.ultimaAntigo+2,NUM.ultimaAntigo+3];
+  const X=i=>100+i*184, Y=236;
+  const rotulo=(n,cor)=>`<div class="num" style="font-size:23px;white-space:nowrap;${cor?'color:'+cor:''}">Nº ${n}</div>`;
+  const vagas=[0,1].map(i=>el(`<div class="ab" style="left:${X(i)}px;top:${Y}px;width:160px;height:214px;border-radius:14px;border:3px dashed #C7CFD7;padding:20px">${rotulo(nums[i],'var(--ge)')}</div>`,g));
+  const folhas=[2,3,4,5].map(i=>{const f=el(folha(160,214,`${rotulo(nums[i])}${barras(84,66,76)}`,`left:${X(i)}px;top:${Y}px`),g);
+    if(nums[i]===NUM.cancelada){el(carimbo('Cancelada',6,104,-14,17),f.querySelector('.fc'));corFolha(f,'#D5DCE2','#F7F8FA')}
+    else el(`<div class="ab" style="left:58px;top:136px">${visto(44)}</div>`,f.querySelector('.fc'));
+    return f});
+  const CX=X(0)+172;
+  const aberto=centra(el(`<div class="ab tag a" style="left:0;top:470px">em aberto</div>`,g),CX);
+  const inut=centra(el(`<div class="ab tag c" style="left:0;top:470px">${ic('lock',20)}Inutilizada</div>`,g),CX);
+  const liga=seta(g,`M ${CX} 520 L ${CX} 580`,{cor:'#9AA3AD',w:4,trac:'6 9'});
+  const sef=el(`<div class="placa" style="left:0;top:592px;display:flex;align-items:center;gap:10px">${ic('landmark',24,'var(--ge)')}SEFAZ</div>`,g); centra(sef,CX);
+  const cads=[0,1].map(i=>el(`<div class="ab okc" style="left:${X(i)+48}px;top:${Y+92}px;width:64px;height:64px;background:#fff;border:3px solid #6B7280;box-shadow:0 6px 14px rgba(16,24,40,.12)">${ic('lock',30,'#374151')}</div>`,g));
+  return t=>{
+    if(!cena(g,t,A,B)) return;
+    const tNu=W(0,'números'), tAb=W(0,'aberto'), tIn=W(1,'Inutilizar'), tAv=W(1,'avisar'), tVi=W(1,'virar');
+    posTitulo(tit,t,A-.6,tNu-.2); pulse(tit,t,tIn,.03,.8);
+    vagas.forEach((v,i)=>vis(v,t,tNu-.1+i*.08,1e9,{dy:16})); folhas.forEach((f,i)=>vis(f,t,tNu+.06+i*.08,1e9,{dy:16}));
+    const am=eo(pr(t,tAb-.1,.45)), fe=eo(pr(t,tVi-.2,.45));
+    vagas.forEach(v=>{v.style.borderColor=fe>0?mix('#F2B63D','#9AA3AD',fe):mix('#C7CFD7','#F2B63D',am);v.style.background=mix('#FFFFFF','#FFF9EC',am*(1-fe))});
+    const va=vis(aberto,t,tAb,1e9,{dy:10}); aberto.style.opacity=(va*(1-fe)).toFixed(3);
+    vis(inut,t,tVi-.1,1e9,{dy:0});
+    liga.desenha(t,tAv-.1,.5); vis(sef,t,tAv+.2,1e9,{dy:10});
+    cads.forEach((c,i)=>vis(c,t,tVi-.3+i*.12,1e9,{dy:0,sc:.5}));
+  };
+};
+
+// ------------------------------------------------------------------ CAPS[14] · DANFE e XML (linhas 0 e 1)
+// 0 "Agora, os arquivos da nota. Toda nota autorizada tem dois: o DANFE e o XML."
+// 1 "O DANFE é a folha impressa que acompanha a carga no caminhão. O XML é o arquivo oficial da nota, que o contador guarda."
+function pasta(w=240){return `<svg viewBox="0 0 240 170" width="${w}" height="${w*170/240}" style="overflow:visible">
+  <path d="M0 22 Q0 10 12 10 H84 L100 26 H228 Q240 26 240 38 V158 Q240 170 228 170 H12 Q0 170 0 158 Z" fill="#E9A92C"/></svg>`}
+function pastaFrente(w=240){return `<svg viewBox="0 0 240 170" width="${w}" height="${w*170/240}" style="overflow:visible">
+  <path d="M0 62 Q0 50 12 50 H228 Q240 50 240 62 V158 Q240 170 228 170 H12 Q0 170 0 158 Z" fill="#F2B63D"/></svg>`}
+CAPS[14]=()=>{
+  const [A,B]=janela('ilu14_danfe_xml'), g=grupo();
+  const tit=titulo(g,'Documentos','DANFE e XML');
+  const Y0=690, XT=80, YT=Y0-122, ESC=.55, PC=[540,196];
+  const chao=el(`<div class="ab" style="left:30px;top:${Y0}px;width:560px;height:4px;border-radius:2px;background:#DDE2E7"></div>`,g);
+  const cam=caminhaoEm(g,ESC);
+  const pB=el(`<div class="ab" style="left:930px;top:${Y0-170}px;width:240px;height:170px">${pasta()}</div>`,g);
+  const dW=el('<div class="ab" style="left:0;top:0;width:200px;height:250px;transform-origin:0 0"></div>',g);
+  const danfe=el(folha(200,250,`${cab('DANFE','printer')}${barras(86,64,78)}
+    <div class="ab" style="left:20px;top:180px;width:160px;height:40px;background:repeating-linear-gradient(90deg,#2F3640 0 3px,transparent 3px 6px,#2F3640 6px 7px,transparent 7px 11px)"></div>`),dW);
+  const xW=el('<div class="ab" style="left:0;top:0;width:200px;height:250px;transform-origin:0 0"></div>',g);
+  const xml=el(folha(200,250,`${cab('XML','file-code')}${[[0,70,'#BFE9D1'],[14,56,'#E6E9EE'],[14,64,'#FBE3B0'],[28,40,'#E6E9EE'],[14,52,'#BFE9D1'],[0,60,'#E6E9EE']].map(([m,w,c])=>
+    `<div style="height:9px;border-radius:5px;background:${c};margin:12px 0 0 ${m}px;width:${w}%"></div>`).join('')}`),xW);
+  corFolha(xml,'#F2B63D');
+  const nota=el(folha(200,252,`${cab()}${barras(86,68,80,58)}<div class="tag v" id="au14" style="margin-top:28px;font-size:17px;padding:6px 14px">${ic('check',18)}Autorizada</div>`,`left:${PC[0]}px;top:${PC[1]}px`),g);
+  corFolha(nota,'#50D088');
+  const au=nota.querySelector('#au14');
+  const pF=el(`<div class="ab" style="left:930px;top:${Y0-170}px;width:240px;height:170px">${pastaFrente()}</div>`,g);
+  const cont=legenda(g,'Contador',1050,Y0-82,20);
+  return t=>{
+    if(!cena(g,t,A,B)) return;
+    const tTo=W(0,'Toda'), tAu=W(0,'autorizada'), tDo=W(0,'dois'), tDa=W(0,'DANFE'), tXm=W(0,'XML'),
+          tIm=W(1,'impressa'), tCg=W(1,'carga'), tCm=W(1,'caminhão'), tX2=W(1,'XML'), tOf=W(1,'oficial'), tCo=W(1,'contador'), tGu=W(1,'guarda');
+    posTitulo(tit,t,A-.6,tTo-.15);
+    vis(nota,t,tTo-.05,1e9,{dy:20}); vis(au,t,tAu-.1,1e9,{dy:0,sc:.7}); pulse(nota,t,tDo,.04,.7);
+    // os dois saem de trás da nota: o DANFE para a esquerda, o XML para a direita
+    const qd=eio(pr(t,tDa-.1,.7)), qx=eio(pr(t,tXm-.1,.7));
+    danfe.style.opacity=eo(pr(t,tDa-.1,.3)).toFixed(3); xml.style.opacity=eo(pr(t,tXm-.1,.3)).toFixed(3);
+    // o DANFE vai com a carga (pousa na carroceria); o XML entra na pasta do contador
+    const X=lerp(-320,XT,eo(pr(t,tCg-.25,1.0)));
+    vis(chao,t,tCg-.3,1e9,{dy:0}); vis(cam,t,tCg-.25,1e9,{dy:0}); poeCaminhao(cam,X,YT,XT);
+    const vd=eio(pr(t,tCm,.85)), dx0=lerp(PC[0],300,qd), dy0=lerp(PC[1],206,qd);
+    const dx=lerp(dx0,X+64,vd), dy=lerp(dy0,YT-62,vd)-80*4*vd*(1-vd), ds=lerp(1,.45,vd);
+    dW.style.transform=`translate(${dx.toFixed(2)}px,${dy.toFixed(2)}px) scale(${ds.toFixed(4)})`; pulse(danfe,t,tIm,.05,.8);
+    vis(pB,t,tCo-.15,1e9,{dy:16}); vis(pF,t,tCo-.15,1e9,{dy:16}); vis(cont,t,tCo,1e9,{dy:10});
+    const vx=eio(pr(t,tGu-.15,.8)), xx0=lerp(PC[0],800,qx), xy0=lerp(PC[1],206,qx);
+    const xx=lerp(xx0,1005,vx), xy=lerp(xy0,Y0-196,vx)-70*4*vx*(1-vx), xs=lerp(1,.45,vx);
+    xW.style.transform=`translate(${xx.toFixed(2)}px,${xy.toFixed(2)}px) scale(${xs.toFixed(4)})`; pulse(xml,t,tX2,.05,.8); pulse(xml,t,tOf,.04,.8);
+  };
+};
+
+// ------------------------------------------------------------------ CAPS[15] · a nota chega pela SEFAZ (linha 1)
+// 1 "Quando um fornecedor emite uma nota com o CNPJ da Recicla Vale como destinatário, a nota passa pela SEFAZ. Com o recurso
+//   ativo, ela aparece sozinha aqui."
+CAPS[15]=()=>{
+  const [A,B]=janela('ilu15_recebida'), g=grupo();
+  const tit=titulo(g,'Notas recebidas','A nota chega pela SEFAZ');
+  const Y0=600;
+  const chao=el(`<div class="ab" style="left:30px;top:${Y0}px;width:830px;height:4px;border-radius:2px;background:#DDE2E7"></div>`,g);
+  const lj=el(`<div class="ab" style="left:60px;top:${Y0-181}px;width:200px;height:181px">${loja(200)}</div>`,g);
+  const cFo=legenda(g,'Fornecedor',160,Y0+14);
+  const pre=el(`<div class="ab" style="left:520px;top:${Y0-183}px;width:210px;height:183px">${predioGov(210)}</div>`,g);
+  const cS=legenda(g,'SEFAZ',625,Y0+14);
+  const cx=el(`<div class="card" style="left:906px;top:326px;width:340px;height:330px;padding:22px 22px">
+    <div class="row" style="gap:12px"><div class="ico" style="width:52px;height:52px">${ic('inbox',28)}</div><div style="font-weight:800;font-size:21px;white-space:nowrap">Notas Recebidas</div></div>
+    <div class="row" style="gap:12px;margin-top:16px"><div id="sw15" style="position:relative;width:48px;height:28px;border-radius:14px;background:#D5DCE2">
+      <div id="kn15" style="position:absolute;left:4px;top:4px;width:20px;height:20px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.25)"></div></div>
+      <div style="font-weight:700;font-size:17px;color:var(--ge)">Recurso ativo</div></div>
+    <div class="ab" style="left:20px;top:150px;width:298px;height:160px;border-radius:12px;background:#F6F8F7;border:1.5px solid #E6E9EE"></div></div>`,g);
+  const sw=cx.querySelector('#sw15'), kn=cx.querySelector('#kn15');
+  const rip=el(`<div class="rip" style="left:1075px;top:556px"></div>`,g);
+  const fW=el('<div class="ab" style="left:0;top:0;width:230px;height:262px;transform-origin:0 0"></div>',g);
+  const fo=el(folha(230,262,`${cab()}${barras(84,62)}<div id="de15" style="margin-top:20px"><div class="lbl" style="font-size:14px">Destinatário</div>
+    <div style="font-weight:800;font-size:16px;margin-top:3px;white-space:nowrap">Recicla Vale Metais</div><div class="lbl" style="font-size:14px;margin-top:3px">CNPJ</div></div>${barras(70)}`),fW);
+  const de=fo.querySelector('#de15');
+  const P=[[132,520,.25],[46,146,1],[510,146,1],[1013,478,.52]];
+  return t=>{
+    if(!cena(g,t,A,B)) return;
+    const tFo=W(1,'fornecedor'), tEm=W(1,'emite'), tCn=W(1,'CNPJ'), tDs=W(1,'destinatário'), tPa=W(1,'passa'), tSf=W(1,'SEFAZ'),
+          tRe=W(1,'recurso'), tAt=W(1,'ativo'), tAp=W(1,'aparece'), tAq=W(1,'aqui');
+    posTitulo(tit,t,A-.6,tFo-.2);
+    vis(chao,t,tFo-.1,1e9,{dy:0}); vis(lj,t,tFo-.1,1e9,{dy:14}); vis(cFo,t,tFo+.1,1e9,{dy:10});
+    vis(pre,t,tPa-.35,1e9,{dy:14}); vis(cS,t,tPa-.15,1e9,{dy:10}); pulse(cS,t,tSf,.08,.8);
+    vis(cx,t,tRe-.15,1e9,{dx:30,dy:0});
+    const on=eo(pr(t,tAt-.1,.35)); kn.style.left=(4+20*on).toFixed(2)+'px'; sw.style.background=mix('#D5DCE2','#50D088',on);
+    // a nota: sai do fornecedor, passa pela SEFAZ e desce sozinha para as Notas Recebidas
+    const q1=eio(pr(t,tEm,.8)), q2=eio(pr(t,tPa,.9)), q3=eio(pr(t,tAp-.1,.8));
+    let [x,y,s]=P[0]; const seg=(a,b,q)=>[lerp(a[0],b[0],q),lerp(a[1],b[1],q),lerp(a[2],b[2],q)];
+    if(q3>0) [x,y,s]=seg(P[2],P[3],q3); else if(q2>0) [x,y,s]=seg(P[1],P[2],q2); else [x,y,s]=seg(P[0],P[1],q1);
+    if(q2>0&&q3===0) y-=50*4*q2*(1-q2);
+    fW.style.transform=`translate(${x.toFixed(2)}px,${y.toFixed(2)}px) scale(${s.toFixed(4)})`;
+    fo.style.opacity=eo(pr(t,tEm,.3)).toFixed(3);
+    vis(de,t,tCn-.1,1e9,{dy:6}); pulse(de,t,tDs,.06,.8);
+    ripple(rip,t,tAq); pulse(cx,t,tAq,.025,.8);
+  };
+};
+
+// ------------------------------------------------------------------ CAPS[16] · manifestar: as respostas e a ciência (linha 1)
+// 1 "Manifestar é responder à SEFAZ sobre a nota que chegou. A ciência não é um botão: ela já vem sozinha, quando a nota entra."
+//   (começa em "responder": a linha 0 tem zoom na coluna Manifestação; a escolha é feita na tela, nas falas seguintes)
+CAPS[16]=()=>{
+  const [A,B]=janela('ilu16_manifestar'), g=grupo();
+  const tit=titulo(g,'Notas recebidas','Manifestar a nota');
+  const fo=el(folha(330,312,`${cab()}<div class="lbl" style="margin-top:14px;font-size:15px">Emitente</div>
+    <div style="font-weight:800;font-size:19px;margin-top:2px;white-space:nowrap">Auto Peças Vale Forte</div>${barras(80,62)}
+    <div class="ab" id="sl16" style="left:20px;top:226px;width:160px;height:48px;border-radius:999px;border:2.5px dashed #C7CFD7"></div>
+    <div class="ab tag v" id="ci16" style="left:20px;top:226px;height:48px">${ic('check',20)}Ciência</div>`,'left:52px;top:236px'),g);
+  const sl=fo.querySelector('#sl16'), ci=fo.querySelector('#ci16');
+  const rip=el('<div class="rip" style="left:152px;top:486px"></div>',g);
+  const RS=[['circle-check','Confirmar operação'],['circle-help','Desconhecer operação'],['circle-x','Operação não realizada']], YR=[244,350,456];
+  const resp=RS.map(([icn,txt],i)=>el(`<div class="chip" style="left:476px;top:${YR[i]}px;width:372px;height:66px;border-style:dashed;color:var(--ge);font-size:20px">${ic(icn,26,'#6B7280')}${txt}</div>`,g));
+  const leque=YR.map(y=>seta(g,`M 386 392 C 430 392, 430 ${y+33}, 470 ${y+33}`,{cor:'#C7CFD7',w:3,ponta:false}));
+  const pre=el(`<div class="ab" style="left:990px;top:290px;width:220px;height:191px">${predioGov(220)}</div>`,g);
+  const cS=legenda(g,'SEFAZ',1100,496);
+  const junta=YR.map(y=>seta(g,`M 852 ${y+33} C 920 ${y+33}, 930 392, 984 392`,{cor:'#C7CFD7',w:3,trac:'7 8'}));
+  return t=>{
+    if(!cena(g,t,A,B)) return;
+    const tRe=W(1,'responder'), tSf=W(1,'SEFAZ'), tCh=W(1,'chegou'), tCi=W(1,'ciência'), tSo=W(1,'sozinha'), tEn=W(1,'entra');
+    posTitulo(tit,t,A-.6,tRe-.15);
+    vis(fo,t,tRe-.1,1e9,{dy:18});
+    leque.forEach((s,i)=>s.desenha(t,tRe+.1+i*.1,.5));
+    resp.forEach((r,i)=>{const o=vis(r,t,tRe+.3+i*.12,1e9,{dx:-12,dy:0});r.style.opacity=(o*.62).toFixed(3)});
+    vis(pre,t,tSf-.25,1e9,{dx:24,dy:0}); vis(cS,t,tSf-.05,1e9,{dy:10});
+    junta.forEach((s,i)=>s.desenha(t,tSf+i*.1,.6));
+    pulse(fo,t,tCh,.03,.8);
+    const am=eo(pr(t,tCi-.1,.45)); sl.style.borderColor=mix('#C7CFD7','#F2B63D',am); sl.style.background=mix('#FFFFFF','#FFF9EC',am);
+    vis(ci,t,tSo-.1,1e9,{dy:-34,sc:.8}); ripple(rip,t,tSo+.3);
+    pulse(fo,t,tEn,.03,.8);
+  };
+};
+
+// ------------------------------------------------------------------ CAPS[17] · o casamento: nome do XML × material (linhas 4 e 5)
+// 4 "E casa cada item com um material do cadastro. A latinha do XML tem o mesmo nome do material, então a confiança é alta."
+// 5 "O PET prensado tem palavras em comum com o Plástico PET, e o selo pede pra conferir. Quando a confiança é baixa, o material
+//   fica pra você escolher."  (os nomes do XML da Cooperativa Recomeço; o 3º caso não tem nome: só mostra o "baixa")
+CAPS[17]=()=>{
+  const [A,B]=janela('ilu17_casamento'), g=grupo();
+  const tit=titulo(g,'Notas recebidas','Do XML ao cadastro');
+  const pet='<span class="pet" style="border-radius:6px;padding:0 3px;margin:0 -3px">PET</span>';
+  const hdr=[el(`<div class="ab row" style="left:84px;top:184px;gap:8px;font-weight:800;font-size:18px;color:var(--ge)">${ic('file-code',24)}No XML</div>`,g),
+             el(`<div class="ab row" style="left:794px;top:184px;gap:8px;font-weight:800;font-size:18px;color:var(--ge)">${ic('boxes',24)}No cadastro</div>`,g)];
+  const YR=[226,344,462];
+  const card=(x,y,html,est='')=>el(`<div class="card" style="left:${x}px;top:${y}px;width:404px;height:88px;padding:0 24px;display:flex;align-items:center;
+    border-radius:16px;font-weight:800;font-size:21px;white-space:nowrap;border:2.5px solid #DCE3DF;${est}">${html}</div>`,g);
+  const L1=card(80,YR[0],'ALUMINIO LATINHA'), L2=card(80,YR[1],`PLASTICO ${pet} PRENSADO`);
+  const R1=card(794,YR[0],'Alumínio latinha'), R2=card(794,YR[1],`Plástico ${pet}`);
+  const L3=card(80,YR[2],`<div style="width:100%"><div class="fl" style="width:70%;margin-top:0"></div><div class="fl" style="width:45%"></div></div>`,'box-shadow:none;background:#FAFBFC');
+  const R3=el(`<div class="ab" style="left:794px;top:${YR[2]}px;width:404px;height:88px;border-radius:16px;border:3px dashed #C7CFD7;display:flex;align-items:center;justify-content:center">${ic('circle-help',34,'#9AA3AD')}</div>`,g);
+  const c1=seta(g,`M 490 ${YR[0]+44} L 786 ${YR[0]+44}`,{w:5,ponta:false});
+  const c2=seta(g,`M 490 ${YR[1]+44} L 786 ${YR[1]+44}`,{cor:'var(--a)',w:5,trac:'12 10',ponta:false});
+  const c3=seta(g,`M 490 ${YR[2]+44} L 786 ${YR[2]+44}`,{cor:'#C7CFD7',w:4,trac:'2 12',ponta:false});
+  const selo=(cls,txt,y)=>centra(el(`<div class="ab tag ${cls}" style="left:0;top:${y+22}px">${txt}</div>`,g),638);
+  const sA=selo('v','alta',YR[0]), sC=selo('a','confira',YR[1]), sB=selo('c','baixa',YR[2]);
+  const voce=centra(el(`<div class="ab tag v" style="left:0;top:${YR[2]+108}px">${ic('mouse-pointer-click',22)}você escolhe</div>`,g),996);
+  const pets=[...g.querySelectorAll('.pet')];
+  return t=>{
+    if(!cena(g,t,A,B)) return;
+    const tIt=W(4,'item'), tMa=W(4,'material'), tLa=W(4,'latinha'), tNo=W(4,'nome'), tAl=W(4,'alta'),
+          tPe=W(5,'PET'), tCm=W(5,'comum'), tSe=W(5,'selo'), tCf=W(5,'conferir'), tBx=W(5,'baixa'), tEs=W(5,'escolher');
+    posTitulo(tit,t,A-.6,tIt-.15);
+    hdr.forEach((h,i)=>vis(h,t,i?tMa-.15:tIt-.1,1e9,{dy:8}));
+    vis(L1,t,tIt-.1,1e9,{dy:16}); vis(L2,t,tIt+.02,1e9,{dy:16}); vis(R1,t,tMa-.1,1e9,{dy:16}); vis(R2,t,tMa+.02,1e9,{dy:16});
+    const h1=eo(pr(t,tLa-.1,.45)), h2=eo(pr(t,tPe-.1,.45));
+    for(const c of [L1,R1]) c.style.borderColor=mix('#DCE3DF','#50D088',h1);
+    for(const c of [L2,R2]) c.style.borderColor=mix('#DCE3DF','#F2B63D',h2);
+    c1.desenha(t,tNo-.1,.7); vis(sA,t,tAl-.15,1e9,{dy:0,sc:.6});
+    const hp=eo(pr(t,tCm-.1,.45)); pets.forEach(p=>{p.style.background=mix('#FFFFFF','#FBE3B0',hp)});
+    c2.desenha(t,tSe-.1,.7); vis(sC,t,tCf-.15,1e9,{dy:0,sc:.6});
+    vis(L3,t,tBx-.25,1e9,{dy:16}); vis(R3,t,tBx-.15,1e9,{dy:16}); c3.desenha(t,tBx,.6); vis(sB,t,tBx+.1,1e9,{dy:0,sc:.6});
+    vis(voce,t,tEs-.2,1e9,{dy:12}); pulse(R3,t,tEs,.03,.8);
   };
 };
 //@@CENAS@@

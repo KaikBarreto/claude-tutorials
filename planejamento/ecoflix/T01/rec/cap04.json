@@ -1,0 +1,308 @@
+{
+ "name": "t01-cap04",
+ "title": "T01 · Cap. 4 · Esqueci minha senha (narração 47,4 s ESTIMADA; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
+ "seed": "t01-cap04",
+ "pace": 0.5,
+ "cps": 14,
+ "tail": 1.5,
+ "start": {
+  "x": 300,
+  "y": 560
+ },
+ "anonymous": true,
+ "seedExtra": [
+  "t01/inicio"
+ ],
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "initial-preferences-set": "true",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10"
+ },
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/login"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel|Algo deu errado|Falha ao carregar|Personalize sua experi[êe]ncia|Voc[êe] j[áa] est[áa] conectado|Sistema atualizado|O rel[óo]gio deste computador|Sess[ãa]o expirou/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');if(f&&window.__avisos.length<10&&!window.__avisos.includes('LEMBRETE DA TRILHA'))window.__avisos.push('LEMBRETE DA TRILHA')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0.4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Acesse sua conta",
+    "exact": true
+   },
+   "seconds": 0.8,
+   "at": 1.09,
+   "label": "tela de login",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Esqueci minha senha",
+    "exact": true
+   },
+   "at": 4.92,
+   "label": "Esqueci minha senha"
+  },
+  {
+   "do": "waitFor",
+   "text": "Recuperar Senha",
+   "timeout": 8
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 6.76
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "input[type=email]"
+   },
+   "at": 6.86,
+   "label": "E-mail"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "input[type=email]"
+   },
+   "text": "$TUT_USER",
+   "cps": 40,
+   "at": 7.94,
+   "label": "digita o e-mail da conta",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Enviar Código",
+    "exact": true
+   },
+   "at": 9.89,
+   "label": "Enviar Código"
+  },
+  {
+   "do": "waitFor",
+   "text": "Verificar Código",
+   "timeout": 10
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Se o email existir no sistema, um código será enviado.\", \"Digite o código de 6 dígitos enviado para\", \"rafael@reciclavalemetais.example\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"body\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere toast e o passo Verificar Código"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 10.98
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Digite o código de 6 dígitos"
+   },
+   "seconds": 1.0,
+   "at": 12.73,
+   "label": "Digite o código de 6 dígitos enviado para o e-mail",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "input[autocomplete='one-time-code']"
+   },
+   "seconds": 1.4,
+   "at": 13.49,
+   "label": "as seis casas do código",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 15.74
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 22.08
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "input[autocomplete='one-time-code']"
+   },
+   "at": 22.18,
+   "label": "primeira casa do código"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "input[autocomplete='one-time-code']"
+   },
+   "text": "481207",
+   "cps": 10,
+   "at": 23.09,
+   "label": "digita 481207 nas seis casas",
+   "noClick": true
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Não recebeu? Confira também a pasta de"
+   },
+   "seconds": 2.0,
+   "at": 25.27,
+   "label": "caixa laranja Não recebeu? Confira a pasta de Spam",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Reenviar código em"
+   },
+   "seconds": 2.0,
+   "at": 28.84,
+   "label": "Reenviar código em ...s",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 31.69
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Verificar",
+    "exact": true
+   },
+   "at": 32.48,
+   "label": "Verificar"
+  },
+  {
+   "do": "waitFor",
+   "text": "Nova Senha",
+   "timeout": 10
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 36.45
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "input[type=password]",
+    "nth": 0
+   },
+   "at": 36.55,
+   "label": "Nova Senha"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "input[type=password]",
+    "nth": 0
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40,
+   "at": 37.73,
+   "label": "digita a nova senha",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "input[type=password]",
+    "nth": 1
+   },
+   "at": 38.29,
+   "label": "Confirmar Nova Senha"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "input[type=password]",
+    "nth": 1
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40,
+   "at": 39.15,
+   "label": "repete a nova senha",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Alterar Senha e Entrar",
+    "exact": true
+   },
+   "at": 39.48,
+   "label": "Alterar Senha e Entrar"
+  },
+  {
+   "do": "waitFor",
+   "text": "Senha alterada com sucesso! Você já está logado.",
+   "timeout": 12
+  },
+  {
+   "do": "type",
+   "target": {
+    "text": "Senha alterada com sucesso! Você já está logado.",
+    "exact": true
+   },
+   "text": "",
+   "noClick": true,
+   "optional": true,
+   "timeout": 4,
+   "label": "toast Senha alterada com sucesso! Você já está logado."
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 47.36
+  }
+ ]
+}
