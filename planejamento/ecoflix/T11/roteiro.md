@@ -96,7 +96,7 @@ preço) não é gravada.
 | Tela | Fala |
 | --- | --- |
 | Capítulo novo (semente `apos-cap05`); o quadro; a câmera passa pelos cabeçalhos "A fazer", "Em produção" e "Concluída". | As ordens ficam neste quadro, o Kanban: cada coluna é uma etapa, e cada cartão anda de uma pra outra. Ele já vem com três: A fazer, Em produção e Concluída. |
-| Clique no nome "Em produção" (ação antes da frase): abre "Editar coluna"; em "Nome", apaga e digita "Na prensa"; a "Cor" fica a laranja. | As colunas são suas. Clicando no nome, você muda o nome e a cor. Aqui, Em produção vira Na prensa. |
+| Clique no nome "Em produção" (ação antes da frase): abre "Editar coluna"; em "Nome", apaga e digita "Na prensa"; a "Cor" continua laranja. | As colunas são suas. Clicando no nome, você muda o nome e a cor. Aqui, Em produção vira Na prensa. |
 | [ZOOM: a chave "Coluna de conclusão", desligada, com "As ordens finalizadas vão automaticamente para esta coluna. Só uma coluna pode ser a de conclusão."] | Nessa janela fica também a chave Coluna de conclusão. É pra coluna marcada que vão as ordens finalizadas, e só uma pode ter. |
 | Clique em "Salvar": aviso "Coluna atualizada"; o cabeçalho passa a "Na prensa". [BACKEND: `UPDATE production_kanban_columns` (nome)] | Salvar. Pronto, a coluna mudou de nome. |
 | [ZOOM: o sinal de check no cabeçalho "Concluída" (título "Coluna de conclusão")] | Na Recicla Vale, a coluna de conclusão é a Concluída. Repara no sinal de check do lado do nome. |

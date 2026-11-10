@@ -55,7 +55,9 @@ marcados com **(falado)**: o mundo tem de bater no centavo.
 - Receita: **Aluguel de caçamba** (outras receitas / Atividades operacionais) e as do sistema (cadeado), como "Outras Receitas".
 - Despesa: **Impostos sobre vendas** (Impostos e deduções); **Frete** (Custos adicionais: o frete de compra); **Folha salarial**,
   **Aluguel**, **Energia elétrica**, **Combustível**, **Manutenção de veículos**, **Telefone e internet** (Despesas
-  operacionais) e as do sistema ("Tarifas", "Outras Despesas"; nomes da ajuda do app, conferir na criação da empresa). Todas
+  operacionais) e as do sistema ("Tarifas", "Outras Despesas", também em Despesas operacionais, para a lista ter só as
+  divisórias "Impostos e deduções", "Custos adicionais" e "Despesas operacionais (OPEX)"; nomes da ajuda do app, conferir na
+  criação da empresa). Todas
   com `dre_group_id` apontando para o grupo do sistema da natureza certa em `dre_groups` (um por natureza; nomes de produção
   ou, na falta, os de `lib/dreHierarchy.ts:119-125`). Nenhuma categoria em "Não compõe o DRE" antes da aula.
 

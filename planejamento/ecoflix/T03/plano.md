@@ -5,7 +5,7 @@
   NCM, grupo), reajustar preços em massa, criar uma tabela de preço vinculada e ligá-la a um fornecedor, entender a ordem
   do preço no pedido, mexer no estoque na mão, exportar e ver o que o "Excluir" faz.
 - **Antes:** T2 Usuários e permissões. **Próximo:** T4 Clientes, fornecedores e a ficha do parceiro.
-- **Duração:** alvo da fonte ~15 min; fala de 1.957 palavras (~12,5 min) + vinhetas e ações ≈ 14 min (`tts_textos.py`).
+- **Duração:** alvo da fonte ~15 min; fala de 1.959 palavras (~12,6 min) + vinhetas e ações ≈ 14 min (`tts_textos.py`).
 - Base: `T03/inventario.md` (código 1.59.154). Sem 🔒 na aula; a aba "Produção" do material é citada como do módulo de
   produção (depende do plano). Nenhuma edge function; nenhuma integração externa.
 

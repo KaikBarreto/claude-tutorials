@@ -42,7 +42,7 @@ diferença, apareceu o campo Motivo da perda"; 9→10 "Lote prensado, hora de fe
 
 Cuidados da fonte e onde entram: 🔒 (cap00); ⚠️ tela desfocada (cap01, só falado: a tela mostra preço); ⚠️ permissões
 separadas (cap05, "Uma dica:"); ⚠️ quem baixa é o real (cap08, "Uma dica:", com a diferença na tela); ⚠️ tolerância (cap09:
-o bloqueio e o motivo na tela, que é o ponto); ⚠️ Kardex (cap13, "Uma dica:", com o selo "Produção" na tela).
+o bloqueio e o motivo na tela, que é o ponto, e depois "Uma dica:" sobre o botão apagado); ⚠️ Kardex (cap13, "Uma dica:", com o selo "Produção" na tela).
 
 ## Estado de partida
 Mundo base da Recicla Vale (`MUNDO_FICTICIO.md`), `FAKE_NOW=2026-11-10T08:30:00-03:00` nos capítulos 0 a 6 e

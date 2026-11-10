@@ -70,3 +70,12 @@ Compras quase todo dia dos fornecedores, vendas semanais aos três clientes, des
 combustível, tarifa bancária), contas a pagar e a receber abertas em novembro, um fiado parcelado, um ticket de
 pesagem aguardando valorização e um caixa por operador por dia. Números do exemplo do pátio do T15 (comprou muito e
 vendeu pouco num mês) cabem num dos meses.
+
+## Decidido pelas aulas (consolidado pelo coordenador; as aulas não editam este arquivo)
+- **Identidade** (T1): CNPJ 47.318.506/0001-07; Rua das Oficinas, 1250, CEP 12086-410, Taubaté, SP; logo
+  `recicla-vale-logo` e ícone `recicla-vale-icone.png` (1:1) fictícios, os dois enviados no T1 (cap05); frase do
+  comprovante e condição de pagamento 30/60/90 (T1).
+- **Usuários** (T2): plano com `max_users` 3 (a empresa fecha a T2 em 3/3; a janela do limite mostra o preço do usuário
+  extra como está, a fala não diz o valor); e-mails `@reciclavalemetais.example`; Marcos "Operador Padrão" sem "Ver
+  Projeção de Lucro", tela inicial "Caixa", foto desenhada; Juliana com 7 telas e 8 ações.
+- **White Label** (T27): só na T27 (cor #1F5FAD); o mundo base das outras aulas fica com o White Label desligado.

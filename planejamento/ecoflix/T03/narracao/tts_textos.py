@@ -38,7 +38,7 @@ Outro campo da nota é a Identificação, Produto Fiscal. Ele serve pra quando o
 Por exemplo: latinha, perfil e bloco podem sair na nota como sucata de alumínio.
 Uma dica: esse campo muda só a nota. A tela, os pedidos e os comprovantes continuam com o nome normal, de propósito: senão os três alumínios virariam linhas iguais.
 No radiador, eu deixo vazio, e a nota sai com o nome normal. Atualizar.
-No material, e na planilha de importação também, vão o ene-cê-ême e o nome da nota. Os impostos, como cê-éfe-ó-pê, cê-ésse-tê e /iˈseˈɛmiˈɛsi/, ficam nos cenários fiscais, que o contador define, porque mudam conforme a operação, o regime da empresa e o parceiro. Isso a gente vê no tutorial de nota fiscal.""",
+No material, e na planilha de importação também, vão o ene-cê-ême e o nome da nota. Os impostos, como cê-éfe-ó-pê, cê-ésse-tê e /iˈseˈɛmiˈɛsi/, ficam nos cenários fiscais. Eles mudam conforme a operação, o regime da empresa e o parceiro, e quem define é o contador. Isso a gente vê no tutorial de nota fiscal.""",
 5: """Agora, os grupos. A Recicla Vale já separa os materiais em cinco: ferrosos, cobre, alumínio, metais e outros.
 Grupo é como uma gaveta: junta os materiais parecidos. Com o radiador vão chegar outros, de alumínio e misto, então vale uma gaveta nova.
 No grupo novo vão o nome, a cor e o ícone. Escolho o carro, porque radiador sai de carro.

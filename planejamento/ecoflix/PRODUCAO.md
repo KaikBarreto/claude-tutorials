@@ -144,3 +144,15 @@ Decisões:
 - 10/11 01:19 Kaik: "o "S" em ICMS tá ótimo na 4 / mas o "S" em NFS-e tá ruim". ICMS fechada em /iˈseˈɛmiˈɛːsːi/.
   Oitavo teste só da NFS-e: S separado do "ê" final por ponto, por oclusiva glotal e por "j", e a grafia de corrido numa
   frase para comparar.
+- 10/11 01:2x **T2 e T27 prontas** (roteiro). T2: 11 blocos, 1.483 palavras, ~9,5 min de fala (~11 min de vídeo);
+  troca nova "Fiscal e Ambiental" → "Fiscal & Ambiental"; testar "master". Backend: edges `create-company-user` (resposta
+  igual à real, sem `userId`) e `manage-company-users` (`update_email`), RPC `save_user_permissions`, storage `avatars`,
+  sessão em `active_sessions`. Código × fonte: foto e tela inicial escolhidas na criação nunca gravam (a tela lê
+  `result.userId`, que a edge não devolve: a aula usa o "Editar"); o perfil rápido não grava na criação. T27: 8 blocos,
+  798 palavras, ~5,1 min; "cinco megas" → "5 MB"; testar "Reset". Backend: `company_modules` com `white_label`,
+  `avatars`, updates em `companies`, um pedido para "Ver comprovante", sessão da Juliana no cap06. Código × fonte: com o
+  White Label ligado, a aba e o favicon continuam "EcoSistema" (a abertura foi corrigida); o Portal só muda depois que a
+  cor é salva.
+  **Decisões do coordenador** (no MUNDO, "Decidido pelas aulas"): `max_users` 3 e preço do extra visível sem fala
+  (regra da Domiflix); White Label só na T27; **o ícone já vem da T1 (cap05)**: na junção, ajustar a T27 para não subir
+  o ícone de novo; o Portal na T27 é a página real (não ilustração de tela), então **a T20 é gravada antes da T27**.

@@ -11,7 +11,7 @@ da 1.59.154 (`T03/inventario.md`). Mundo, sementes e o que o backend falso preci
 - **Próximo:** Clientes, fornecedores e a ficha do parceiro (T4)
 - **Vinhetas (áreas):** ESTOQUE · MATERIAIS · MATERIAIS · NOTA FISCAL · GRUPOS · PREÇOS · PREÇOS · ESTOQUE · EXPORTAR ·
   MATERIAIS · RESUMO (todos os capítulos menos o 0)
-- **Duração estimada:** ~14 min de vídeo (1.957 palavras de fala, ~12,5 min de voz a 2,6 palavras/s; 10.571 caracteres,
+- **Duração estimada:** ~14 min de vídeo (1.959 palavras de fala, ~12,6 min de voz a 2,6 palavras/s; 10.574 caracteres,
   ~13,4 min a 790 por minuto; mais 11 vinhetas e as ações na tela; alvo da fonte: 15 min)
 - **Aula no computador** (janela 1280×800), logado como Rafael Nogueira, `FAKE_NOW=2026-11-10T08:30:00-03:00`. Cada
   capítulo abre num navegador novo, com a semente do fim do capítulo anterior (`plano.md` › "Sementes"). A lista mostra 10
@@ -78,7 +78,7 @@ da 1.59.154 (`T03/inventario.md`). Mundo, sementes e o que o backend falso preci
 | [ILUSTRAÇÃO: o nome fiscal: três fichas, "Alumínio latinha", "Alumínio perfil" e "Alumínio bloco"; à direita, numa nota genérica, as três viram "SUCATA DE ALUMÍNIO".] | Por exemplo: latinha, perfil e bloco podem sair na nota como sucata de alumínio. |
 | [ILUSTRAÇÃO, continuação: à esquerda, numa lista, num pedido e num comprovante genéricos, as três fichas continuam com o nome de cada uma; um "X" sobre três linhas iguais "SUCATA DE ALUMÍNIO".] | Uma dica: esse campo muda só a nota. A tela, os pedidos e os comprovantes continuam com o nome normal, de propósito: senão os três alumínios virariam linhas iguais. |
 | De volta ao cadastro, com o campo vazio; clique em "Atualizar": aviso "Material atualizado!". [BACKEND: `UPDATE materials` (`ncm` 74040000); vira `apos-cap04`] | No radiador, eu deixo vazio, e a nota sai com o nome normal. Atualizar. |
-| [ILUSTRAÇÃO: o que fica onde: dois cartões; "No material", com "NCM" e "Nome na nota"; "Nos cenários fiscais", com "CFOP", "CST" e "ICMS" e o selo "contador".] | No material, e na planilha de importação também, vão o NCM e o nome da nota. Os impostos, como CFOP, CST e ICMS, ficam nos cenários fiscais, que o contador define, porque mudam conforme a operação, o regime da empresa e o parceiro. Isso a gente vê no tutorial de nota fiscal. |
+| [ILUSTRAÇÃO: o que fica onde: dois cartões; "No material", com "NCM" e "Nome na nota"; "Nos cenários fiscais", com "CFOP", "CST" e "ICMS" e o selo "contador".] | No material, e na planilha de importação também, vão o NCM e o nome da nota. Os impostos, como CFOP, CST e ICMS, ficam nos cenários fiscais. Eles mudam conforme a operação, o regime da empresa e o parceiro, e quem define é o contador. Isso a gente vê no tutorial de nota fiscal. |
 
 ### cap05 · Grupos de material (vinheta: GRUPOS)
 
