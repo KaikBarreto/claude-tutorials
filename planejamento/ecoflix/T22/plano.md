@@ -8,7 +8,8 @@
   material").
 - **Vinhetas (áreas):** GERENCIAL · GRUPO · FILIAL · DASHBOARD · DASHBOARD · FINANCEIRO · FINANCEIRO · ESTOQUE · PADRONIZAÇÃO ·
   TRANSFERÊNCIAS · ASSINATURAS · RESUMO.
-- **Alvo da fonte:** 16 min. **Fala:** ~1.800 palavras, ~11,5 min de voz + 12 vinhetas e as ilustrações (≈ 13 a 14 min de vídeo).
+- **Alvo da fonte:** 16 min. **Fala:** 1.405 palavras, ~9 min de voz + 12 vinhetas, as ilustrações e as esperas (≈ 12 min de
+  vídeo; a fala fecha abaixo da fonte, como na Domiflix).
 - **FAKE_NOW:** `2026-11-10T08:30:00-03:00` em todos os capítulos. Desktop 1280×800, menu lateral aberto. Logado: Rafael Nogueira
   (matriz) em todos, menos o **cap. 3**, gravado como **Sandra Pires** (gerente da filial, outro usuário).
 - Base: `T22/inventario.md` (código 1.59.154).

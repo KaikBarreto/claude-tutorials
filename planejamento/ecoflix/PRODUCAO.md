@@ -271,3 +271,6 @@ Decisões:
   Decisões do coordenador: abrir com zero só no diálogo; numeração dos caixas #84 a #88 no mundo; `FAKE_NOW` 11/11 na T9;
   o caixa reaberto fecha com a data de 21/10 (é o que o código faz). **Para o Kaik (possível bug)**: "Reabrir Último
   Caixa?" aparece também para caixa antigo.
+- 10/11 01:42 Kaik: "esses levantamentos de bugs vá anotando pra no final me dar um report do que melhorar no sistema
+  desses problemas". Lista em `MELHORIAS_ECOSISTEMA.md` (prováveis bugs, melhorias de uso, textos desatualizados), com
+  tudo o que os roteiros acharam até agora. Os ensaios e as gravações vão somando nela; no fim, vira o report.

@@ -12,8 +12,8 @@ filial (outro usuário). Cada capítulo parte de um navegador novo com a semente
 - **Vinhetas (áreas):** GERENCIAL · GRUPO · FILIAL · DASHBOARD · DASHBOARD · FINANCEIRO · FINANCEIRO · ESTOQUE · PADRONIZAÇÃO ·
   TRANSFERÊNCIAS · ASSINATURAS · RESUMO
 - **FAKE_NOW:** `2026-11-10T08:30:00-03:00` (terça) em todos os capítulos, no backend falso e no robô.
-- **Duração estimada:** ~14 min de vídeo (≈ 1.800 palavras, ~11,5 min de voz a 2,6 palavras/s, mais 12 vinhetas, as ilustrações e
-  as esperas). Alvo da fonte: 16 min (a fala fecha abaixo, como na Domiflix).
+- **Duração estimada:** ~12 min de vídeo (1.405 palavras, ~9 min de voz a 2,6 palavras/s, mais 12 vinhetas, as ilustrações e as
+  esperas). Alvo da fonte: 16 min (a fala fecha abaixo, como na Domiflix).
 - 🔒 Módulo Gerencial: dito no cap. 0 (depende do plano, contratado na matriz). Valores de plano só na tela, sem fala nem zoom.
 - Marcas na Tela: `[BACKEND: ...]`, `[ZOOM: ...]` (dura a frase inteira), `[ILUSTRAÇÃO: ...]`, `[TESTAR: ...]`.
 - Pronúncias (TTS): DRE "dê-érri-ê" (do perfil); nova: CMV "cê-ême-vê" (testar no nó de pronúncia). Pix, CNPJ, Taubaté e
@@ -57,7 +57,7 @@ filial (outro usuário). Cada capítulo parte de um navegador novo com a semente
 | Desce até o cartão "Filial" · "Se esta empresa é uma filial, vincule-a à empresa-mãe usando o código de convite"; liga "É Filial" ("Ative para vincular esta empresa a um grupo gerencial"): aparece "Código de Convite" · "Solicite o código ao administrador da empresa-mãe". | Lá embaixo fica o cartão Filial. Ela liga o É Filial. |
 | Cola "GRP-7KQ4TX" no campo "GRP-XXXXXX". [ZOOM: o campo com o código] | E cola o código que recebeu da matriz. |
 | Clique em "Vincular": aviso "Empresa vinculada ao grupo com sucesso!"; o cartão mostra "Vinculada ao grupo" · "Grupo Recicla Vale" e o selo "Ativa". [BACKEND: RPC `join_group_by_invite_code`; vira `apos-cap03`] | Vincular. Pronto, a filial está no Grupo Recicla Vale. |
-| [ILUSTRAÇÃO: o código liga as unidades: o código "GRP" sai da matriz, viaja até a filial e encaixa como uma peça no contorno do grupo; na palavra "própria", a tela da filial segue aberta ao lado, com o caixa e a balança dela] | Do lado dela, o dia a dia segue igual: a filial continua usando o sistema própria dela, e a matriz passa a enxergar os números. |
+| [ILUSTRAÇÃO: o código liga as unidades: o código "GRP" sai da matriz, viaja até a filial e encaixa como uma peça no contorno do grupo; na palavra "próprio", a tela da filial segue aberta ao lado, com o caixa e a balança dela] | Do lado dela, o dia a dia segue igual: a filial continua usando o próprio sistema, e a matriz passa a enxergar os números. |
 
 ### cap04 · O Dashboard Gerencial (vinheta: DASHBOARD)
 
@@ -120,7 +120,7 @@ filial (outro usuário). Cada capítulo parte de um navegador novo com a semente
 | Aba "Categorias Financeiras": "Categorias Financeiras da Matriz", já compartilhadas ao abrir. [BACKEND: RPC `import_company_categories_to_group`] | E as categorias financeiras também vêm prontas da matriz. |
 | Aba "Unidades": na linha da "Filial Pindamonhangaba", clique em "Enviar Ativos": "Enviar Ativos para Filial Pindamonhangaba" · "Selecione quais categorias enviar. Itens já existentes na filial serão ignorados.", com "Materiais", "Categorias Financeiras", "Tabelas de Preço", "Clientes" e "Fornecedores" e o "n disponível(is)" de cada um; "Sobrescrever preços existentes" desligado. | Com tudo pronto, na aba Unidades, o Enviar Ativos manda o padrão pra filial. O que ela já tinha fica como está, e o que faltava entra. Os preços dela só mudam se você ligar o Sobrescrever preços existentes. |
 | Clique em "Confirmar Envio": cada linha mostra "n novo(s)"; aviso "n ativo(s) enviado(s) para Filial Pindamonhangaba"; clique em "Fechar". [BACKEND: RPC `push_group_assets_to_company` (liga os materiais de mesmo nome da filial ao catálogo do grupo e cria o que faltava); vira `apos-cap09`] | Confirmar Envio. Agora as duas unidades falam a mesma língua: o mesmo material, com o mesmo nome. |
-| Zoom na lixeira da linha da filial, sem clicar. | Uma dica: se tirar uma filial do grupo por engano, nenhum dado dela se perde. Pra voltar, é só a filial colar o código de novo. |
+| Zoom na lixeira da linha da filial, sem clicar. (Remover só marca o vínculo como removido, `useCompanyGroup.ts:137-150`; a volta com o mesmo código vem da fonte: a RPC `join_group_by_invite_code` fica no banco, fora do código lido, ver plano.md, riscos.) | Uma dica: se tirar uma filial do grupo por engano, nenhum dado dela se perde. Pra voltar, é só a filial colar o código de novo. |
 
 ### cap10 · Transferência com aprovação (vinheta: TRANSFERÊNCIAS)
 

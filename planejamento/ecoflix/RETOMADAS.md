@@ -19,7 +19,8 @@ Lembretes `send_later` nesta mesma sessão, "EcoFlix: retomar produção (N/20)"
 4. Seguir a fila de PRODUCAO.md ("Fila"), anotando cada passo no "Registro".
 5. Commit e push do que houver nas pastas das aulas, mesmo em andamento: é a cópia de segurança contra reinício da
    máquina (a mensagem diz "em andamento"). Nunca stash, reset ou clean.
-6. Fim de tudo: ZIP das legendas e capítulos, avisar o Kaik e apagar com `delete_trigger` os lembretes que sobrarem.
+6. Fim de tudo: ZIP das legendas e capítulos, o **report de melhorias do sistema** (`MELHORIAS_ECOSISTEMA.md`),
+   avisar o Kaik e apagar com `delete_trigger` os lembretes que sobrarem.
 
 | N | Dispara (UTC) | trigger_id |
 |---|---|---|
