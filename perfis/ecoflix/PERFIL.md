@@ -50,15 +50,17 @@ de plano na fala.
 - Antes da primeira aula: um nó só com todas as palavras da tabela abaixo, na voz escolhida, para conferir.
 
 ### Pronúncia (no texto do TTS; a legenda usa a grafia da tela; `narracao/config_narracao.json`)
-A troca fala → legenda precisa do mesmo número de palavras: sigla soletrada vai com hífen ("ene-éfe-é" → "NF-e").
+Sigla soletrada: com hífen quando a voz lê bem (CFOP, MTR); com espaço quando o hífen faz a voz emendar as letras
+(NF-e, NFS-e, ICMS). A troca de N palavras faladas para 1 da legenda ("éne éfe é" → "NF-e") entra no `proc.py` antes
+da voz (PRODUCAO.md).
 | Tela / legenda | Texto do TTS | Situação |
 |---|---|---|
 | EcoSistema | Ecossistema | ok (sem o "ss" o TTS erra) |
 | EcoFlix / EcoTray / Cato | Écoflix / Ecotrêi / Cáto | ok (Kaik ouviu, 10/11) |
-| NF-e / NFS-e | ene-éfe-ê / ene-éfe-ésse-ê | Kaik, 10/11: "ENE ÉFE Ê", "ENE ÉFE ÉSSE Ê" |
+| NF-e / NFS-e | éne éfe é / éne éfe ésse é | Kaik, 10/11 00:49: com espaço (com hífen soava ruim); reteste 3 |
 | SEFAZ | sefás | Kaik, 10/11: é "SEFÁS" ("séfaz" saía "séfas") |
 | CFOP | cê-éfe-ó-pê | Kaik, 10/11: soletrada ("cê-fópi" saía "cêfop") |
-| ICMS | i-cê-eme-ésse | Kaik, 10/11: soletrada, como sigla |
+| ICMS | i cê eme éssi | Kaik, 10/11 00:49: "i-cê-eme-ésse" saía "icêemess ÊSSE"; reteste 3 |
 | Kardex | cardécs | Kaik, 10/11: é "CARDÉX" ("cárdecs" saía "cárdex") |
 | DANFE / NCM | dânfi / ene-cê-ême | ok (10/11) |
 | CST / CSOSN | cê-ésse-tê / cê-ésse-ó-ésse-ene | ok (10/11) |

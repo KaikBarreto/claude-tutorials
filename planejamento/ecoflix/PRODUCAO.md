@@ -107,3 +107,9 @@ Decisões:
   (Tkinter; aqui não há tkinter, há Xvfb). 21 agentes relançados (os 20 + EcoTray: cena do Windows).
 - 10/11 00:4x Relançados 20 agentes (o limite da sessão é 20 ao mesmo tempo): Ferramentas, Mundo, Marca, EcoTray (cena do
   Windows) e 16 de roteiro. **Falta lançar o de T20 + T26** (bateu no limite): lançar assim que um agente terminar.
+- 10/11 00:49 Kaik: "nf-e e nfs-e ainda tá ruim / tenta botar "éne éfe é" e "éne éfe ésse é" / o CMS ficou icêemess
+  ÊSSE ao invés de icêeme éssi". Grafias novas no PERFIL e no `config_narracao.json`: "éne éfe é", "éne éfe ésse é",
+  "i cê eme éssi" (com espaço). Terceiro teste no fluxo de teste. **Antes da voz**: (a) o `proc.py` passa a aceitar troca
+  de N palavras faladas para 1 da legenda (hoje junta par a par); (b) na revisão geral, trocar nos `tts_textos.py` as
+  grafias antigas ("ene-éfe-ê", "ene-éfe-ésse-ê", "i-cê-eme-ésse", "ene-éfe-é", "séfaz", "cê-fópi", "cárdecs") pelas da
+  tabela do PERFIL.
