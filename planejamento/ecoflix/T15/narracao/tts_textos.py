@@ -6,11 +6,11 @@ CAPS = {
 0: """Oi! Neste tutorial a gente vai responder a pergunta que todo dono faz no fim do mês: eu ganhei ou perdi dinheiro? E por quê?
 Em outubro, a Recicla Vale Metais vendeu bem e ainda encheu o pátio de ferro. Mesmo assim, saiu mais dinheiro do que entrou. Afinal, ela ganhou ou perdeu?
 Pra responder, a gente vai arrumar as categorias e os centros de custo, ler o Relatório Financeiro e o dê-érri-ê, e exportar tudo pro contador.
-Se você ainda não viu o tutorial Bancos, cofre e conciliação bancária, dá uma olhada antes. [pause] Tudo começa pelas categorias.""",
-1: """No menu, Financeiro, Categorias Financeiras.
+Se você ainda não viu o tutorial Bancos, cofre e conciliação bancária, dá uma olhada antes.""",
+1: """Tudo começa pelas categorias. No menu, Financeiro, Categorias Financeiras.
 As categorias são o plano de contas da empresa: a lista que diz de onde vem e pra onde vai cada real. Em cima ficam as de receita, como o aluguel de caçamba. Embaixo, as de despesa, como a folha, a energia e o combustível.
 É pela categoria que o relatório separa o dinheiro. Despesa lançada sem categoria cai num monte só, e aí ninguém sabe o que ela é.
-Repara que as despesas ficam separadas pelo lugar onde entram no dê-érri-ê. dê-érri-ê é o relatório do resultado do mês, que a gente lê daqui a pouco.
+Repara que as despesas ficam separadas pelo lugar onde entram no dê-érri-ê, o relatório do resultado do mês, que a gente lê daqui a pouco.
 O Frete que já existe é o frete de compra, o de buscar a sucata no fornecedor. Ele entra como custo do material. Agora vou criar uma subcategoria nele: o frete de entrega.
 A subcategoria herda tudo da principal, mas pode mudar de lugar no dê-érri-ê. Levar o material até o cliente é gasto do dia a dia da operação. Então eu escolho Despesas operacionais, o ópecs. A prévia embaixo já mostra onde ela vai entrar.
 Uma dica: cada subcategoria tem o seu lugar no dê-érri-ê. Os lançamentos do frete de entrega vão pras despesas operacionais, mesmo com a principal em Custos adicionais. E a tela marca com um selo quando os dois são diferentes.
@@ -25,14 +25,14 @@ Na Recicla Vale Metais, o pátio fica com a energia e o aluguel, e a coleta fica
 A terceira frente vai ser a produção, a prensa que enfarda latinha e papelão. Coloco o nome, uma cor pra achar rápido nos gráficos e uma descrição.
 Uma dica: quando uma frente parar, é só desligar o Ativo. Ela sai dos formulários e continua nos lançamentos antigos. Excluir não apaga lançamento nenhum, só tira a marcação, e eles ficam sem centro de custo.
 Salvei. Daqui pra frente, o Centro de custo aparece como opção nos lançamentos de despesa e de receita, no caixa, no banco e nas contas a pagar e receber.""",
-3: """Agora o relatório. No menu, Financeiro, Relatório Financeiro.
+3: """Plano de contas pronto. Agora, o relatório. No menu, Financeiro, Relatório Financeiro.
 Em cima fica o período. A tela sempre abre em Este mês, e novembro mal começou. Então eu escolho Mês passado, e a tela inteira passa a mostrar outubro.
 Se um dia o relatório parecer vazio, confere o período primeiro.
 Embaixo ficam as abas. Nesta aula, a gente passa pelo Dashboard, pelo dê-érri-ê, pelos Centros de Custo e pelo Histórico. E a tela volta sempre na última aba que você abriu.
 Nos Centros de Custo aparece o resultado de cada frente. Em outubro, quem mais gastou foi o pátio, com a folha, o aluguel e a energia. A coleta gastou menos, e ainda trouxe a receita do aluguel de caçamba.
 Repara no aviso: aqui entram as receitas e as despesas lançadas no financeiro. A compra e a venda de material ficam fora desta conta.
 Uma dica: pra ver os valores do relatório, a pessoa precisa da permissão Ver Totais e Valores Financeiros. Sem ela, a tela abre só com o aviso Acesso Restrito. Quem libera é o administrador, em Usuários e Permissões.""",
-4: """O Dashboard é a aba pra bater o olho. Em cima vem o Resultado do Período: outubro fechou com seis mil e quinhentos reais positivos, um superávit.
+4: """Começando pelo Dashboard, a aba pra bater o olho. Em cima vem o Resultado do Período: outubro fechou no positivo, com seis mil e quinhentos reais. Um superávit.
 Quando o mês fecha negativo, o bloco fica vermelho e mostra déficit. E esse número é o mesmo do fim do dê-érri-ê.
 Logo abaixo, as despesas por categoria, da maior pra menor. A folha salarial vem primeiro, com dezenove mil e oitocentos reais.
 E olha a energia elétrica: sete mil e setecentos reais, o dobro de um mês normal. Guarda essa, que a gente volta nela no Histórico.
@@ -55,7 +55,7 @@ Clicando num grupo, ele abre as categorias, com o valor de cada uma.
 E do lado de cada valor vem quanto ele pesa na receita do mês.
 No fim, o resultado de outubro: seis mil e quinhentos reais, na faixa verde.
 E lembra da categoria das máquinas? O que fica em Não compõe o dê-érri-ê não aparece aqui.""",
-7: """Agora, o botão que mais gera dúvida: Regime de Caixa ou Regime de Competência. O dê-érri-ê abre em competência.
+7: """No cabeçalho do dê-érri-ê fica o botão que mais gera dúvida: Regime de Caixa ou Regime de Competência. O dê-érri-ê abre em competência.
 No caixa, conta todo o dinheiro que entrou e saiu no mês. O material comprado já vira custo, mesmo que ainda esteja no pátio.
 Na competência, conta só o custo do material que foi vendido. O que está parado no estoque espera a venda.
 Pensa no ferro pesado de outubro. A Recicla Vale Metais comprou cinquenta toneladas, a noventa e cinco centavos o quilo. Saíram quarenta e sete mil e quinhentos reais.
@@ -65,7 +65,7 @@ Na competência, o custo é só o das dez toneladas vendidas: nove mil e quinhen
 Nenhum dos dois está errado. O caixa responde quanto dinheiro sobrou. A competência responde se você está ganhando no que vende.
 Agora no dê-érri-ê de verdade, com o mês inteiro. Em competência, outubro deu seis mil e quinhentos reais de lucro.
 Clico em Regime de Caixa, e o mesmo mês vira um prejuízo de trinta e um mil e quinhentos reais.
-A diferença está na linha cê-ême-vê, Compras de materiais. cê-ême-vê é o custo da mercadoria vendida. Em competência, a linha traz só o custo do que saiu. Em caixa, traz tudo o que foi comprado no mês.
+A diferença está na linha cê-ême-vê, Compras de materiais. O cê-ême-vê é o custo da mercadoria vendida. Em competência, a linha traz só o custo do que saiu. Em caixa, traz tudo o que foi comprado no mês.
 E a diferença entre os dois resultados é de trinta e oito mil reais: o ferro que ficou no pátio, pelo preço de compra.
 Quem compra muito e segura o material esperando preço vê prejuízo no caixa e lucro na competência. É normal, e é pra isso que existem os dois.""",
 8: """No pé do dê-érri-ê fica o Patrimônio Operacional Atual. Clico pra abrir. Ele mostra do que a empresa é feita hoje.
@@ -74,7 +74,7 @@ O estoque entra pela projeção de venda: quanto o material do pátio renderia, 
 Uma dica: o patrimônio não segue o filtro de período. Ele é a foto de agora, e trocar o mês não muda nada aqui.
 E ele é uma projeção. O estoque só vira dinheiro quando for vendido, e pelo preço do dia.
 No canto, o Exportar Patrimônio abre esse bloco numa aba nova, pra imprimir ou guardar.""",
-9: """Mais embaixo fica a Evolução Mensal, com os últimos seis meses. Ela não segue o filtro de período, porque a ideia é comparar um mês com o outro.
+9: """Descendo mais, a Evolução Mensal, com os últimos seis meses. Ela não segue o filtro de período, porque a ideia é comparar um mês com o outro.
 Repara em outubro: as compras foram as maiores dos seis meses, e o resultado caiu. É o ferro do pátio de novo.
 Pra comparar o dê-érri-ê inteiro, tem o Comparar períodos. Escolho Período anterior, que aqui é setembro.
 Aplico, e os dois meses ficam lado a lado, linha por linha.
@@ -110,7 +110,7 @@ TITULOS = {1: "O plano de contas.",
            8: "O patrimônio de hoje.",
            9: "Mês a mês.",
            10: "O Histórico.",
-           11: "ékisel e pê-dê-éfe.",
+           11: "Exportar em ékisel e pê-dê-éfe.",
            12: "Recapitulando."}
 # Rótulo de área em cima do título (vinheta).
 KICKERS = {1: "Categorias",

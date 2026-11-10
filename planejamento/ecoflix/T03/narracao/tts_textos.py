@@ -10,8 +10,8 @@ Tudo isso fica no menu Materiais, em Estoque.
 Se você ainda não viu o tutorial Usuários e permissões, dá uma olhada antes. [pause] Vamos conhecer a tela.""",
 1: """A tela tem quatro partes. Na coluna da esquerda ficam as tabelas de preço. Por enquanto, só a principal, com a estrela. Daqui a pouco a gente cria outra.
 Em cima, os botões do dia a dia: Movimentar estoque, Editar Tabela, Grupos, Exportar e Zerar Estoque. Cada um tem a sua vez neste tutorial.
-Os três cartões resumem o pátio: o peso total em estoque, quanto você pagou por ele e quanto ele vale pelo preço de venda.
-O Total Pago é o estoque vezes o preço médio que você pagou nas compras. A Projeção de Vendas é o mesmo estoque vezes o preço de venda: quanto entraria se você vendesse tudo hoje.
+Os três cartões resumem o pátio. O primeiro é o peso total em estoque.
+O Total Pago é esse estoque vezes o preço médio que você pagou nas compras. E a Projeção de Vendas é o mesmo estoque vezes o preço de venda: quanto entraria se você vendesse tudo hoje.
 Embaixo, a lista de materiais: o código, o nome, o estoque atual e os preços de cada um. O preço médio pago vem marcado como estimativa, porque é uma média das compras.
 Uma dica: quem não tem permissão de ver valores, como o Marcos, que é balanceiro, continua vendo os pesos. No lugar do dinheiro, aparece um cadeado.
 Em cima da lista ficam o filtro, a importação por planilha, o botão Novo Material e a busca. É pelo Novo Material que a gente começa.""",
@@ -32,7 +32,7 @@ Uma dica: o código é só número, e zero na frente não é guardado. Se no cad
 Atualizar, e o radiador agora é o setenta. Cada número vale pra um material só: se ele já estiver em uso, o sistema avisa na hora de salvar.""",
 4: """Pra quem emite nota fiscal, cada material precisa do ene-cê-ême. É um código de oito dígitos que diz pra Receita que mercadoria é aquela, e ele vai dentro da nota.
 No cadastro, ele fica no campo ene-cê-ême. Dá pra digitar, ou clicar na interrogação do lado pra buscar.
-A janela traz os códigos mais usados na reciclagem. Busco cobre e escolho o de resíduos de cobre.
+A janela traz os códigos comuns da reciclagem. Busco cobre e escolho o de resíduos de cobre.
 Uma dica: o ene-cê-ême certo de cada material é decisão do contador da empresa. A lista ajuda a achar rápido, mas quem confirma é a contabilidade.
 Outro campo da nota é a Identificação, Produto Fiscal. Ele serve pra quando o nome que sai na nota é diferente do nome que vocês usam no pátio.
 Por exemplo: latinha, perfil e bloco podem sair na nota como sucata de alumínio.
@@ -43,7 +43,7 @@ No material, e na planilha de importação também, vão o ene-cê-ême e o nome
 Grupo é como uma gaveta: junta os materiais parecidos. Com o radiador vão chegar outros, de alumínio e misto, então vale uma gaveta nova.
 No grupo novo vão o nome, a cor e o ícone. Escolho o carro, porque radiador sai de carro.
 Adicionar, e o grupo está criado.
-Agora é só pôr o radiador nele, no campo Grupo. E repara no mais do lado: por ele dá pra criar um grupo sem sair do cadastro.
+Agora é só pôr o radiador nele, no campo Grupo. E repara no botão de mais, do lado: por ele dá pra criar um grupo sem sair do cadastro.
 Atualizar. O grupo aparece embaixo do nome, com a cor dele.
 E por que agrupar ajuda? No filtro, deixo marcado só o cobre.
 Os cartões lá em cima passam a mostrar o peso e o valor só do cobre que está no pátio. A exportação do estoque segue esse mesmo filtro.
