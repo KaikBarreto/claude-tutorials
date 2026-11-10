@@ -299,3 +299,10 @@ Decisões:
   Domiflix idêntica ao T3. **Som escolhido: o sintetizado em Mi maior**, porque o player da EcoFlix já toca o oficial
   antes de cada vídeo (soaria duas vezes). Prévia em `/home/claude/ecoflix/previa_marca/` enviada ao Kaik. Falta a
   vinheta vertical 9:16 desse estilo (para o T0 vertical).
+- 10/11 02:0x Kaik: "gostei do vinheta som sintetizado alternativa / E avance com tudo". Junção mecânica dos textos:
+  grafias antigas trocadas (T02: NF-e e NFS-e; T03: ICMS final), `config_narracao.json` de cada aula refeito = o do perfil
+  + as trocas próprias da aula; sem sigla crua nem travessão no texto da voz. **Estimativa da voz**: 248.602 caracteres
+  em 25 aulas (falta a T26, ~9 mil) → ~258 mil caracteres ≈ **258 mil créditos** no eleven_v4 (~1 crédito por caractere,
+  uma versão por fala); com ~5 % de folga para refazer falas, **~270 mil créditos**. O T0 vertical usa o mesmo áudio.
+  Os textos ainda mudam um pouco no ensaio (±5 %). Teste de pronúncia 2 (24 frases com as palavras novas das aulas) no
+  fluxo de teste. Diferenças a unificar depois do teste: Shift+C "xíft-cê" (T07) × "xífti-cê" (T25).

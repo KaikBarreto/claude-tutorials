@@ -1,7 +1,7 @@
 # Texto enviado ao ElevenLabs (eleven_v4, voz Kaik Barreto) por capítulo do T2 "Usuários e permissões".
 # Cada linha do texto é uma linha da tabela Tela × Fala do roteiro.md (a vinheta de abertura não tem fala).
 # Trocas de pronúncia em relação ao roteiro (a legenda segue a grafia do roteiro, ver config_narracao.json):
-#   EcoSistema -> "Ecossistema" | NF-e -> "éne éfe é" | NFS-e -> "éne éfe ésse é" (PERFIL 00:50: com espaço;
+#   EcoSistema -> "Ecossistema" | NF-e -> "/ˈẽniˈɛfiˈe/" | NFS-e -> "/ˈẽːniˈɛːfiˈɛːsiˈeː/" (PERFIL 00:50: com espaço;
 #   troca de N palavras para 1 no proc.py) | Fiscal & Ambiental -> "Fiscal e Ambiental" (nova)
 CAPS = {
 0: """Oi! Neste tutorial a gente vai colocar a equipe da Recicla Vale Metais dentro do Ecossistema, cada um com o acesso certo.
@@ -33,7 +33,7 @@ A lista é separada em grupos. Cada linha é uma tela do sistema, com o interrup
 Pensa assim: a tela é a porta, e as ações são o que a pessoa pode fazer lá dentro.
 Pra Juliana, eu ligo a tela Contas a Pagar e Receber. Abro as ações dela e ligo duas: Criar Conta e Dar Baixa em Conta. O contador mostra duas de quatro.
 Uma dica: primeiro a tela, depois as ações. Ligar só a ação não abre a tela. Com a tela Caixa desligada, o Registrar Venda sozinho não leva ninguém até o caixa.
-Pra achar mais rápido, tem a busca. Digito nota, e aparece o Fiscal e Ambiental. Ligo a tela e as ações de emitir éne éfe é e éne éfe ésse é.
+Pra achar mais rápido, tem a busca. Digito nota, e aparece o Fiscal e Ambiental. Ligo a tela e as ações de emitir /ˈẽniˈɛfiˈe/ e /ˈẽːniˈɛːfiˈɛːsiˈeː/.
 Do mesmo jeito, ligo o resto do escritório: o banco, o relatório financeiro, os pedidos e os clientes e fornecedores. O Caixa fica desligado.
 Uma dica: duas travas mandam mais que qualquer chave daqui. A primeira é o plano. Tela de módulo que a empresa não contratou nem aparece nesta lista, nem pro dono. Sem o módulo de Funcionários, por exemplo, ninguém vê a tela de Funcionários.
 A segunda é o próprio sistema, que confere a permissão de novo a cada operação, lá no servidor. Então não tem como contornar por fora.
