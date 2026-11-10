@@ -43,6 +43,22 @@ usam só ela. Exemplo inteiro: `perfis/ecoflix/mundo` (EcoSistema, Recicla Vale 
 - Relógio: com `fakeClock: "anda"` o backend parte de `FAKE_NOW` e corre, recomeçando a cada reset (o robô reseta no
   início de cada gravação), igual ao relógio do navegador; registro novo sai com a hora certa.
 - Mudou handler ou `lib/`: `rec/run.sh fake` (o `/__dev/reset` só recarrega sementes).
+- Sementes extras (`seeds-extra/<aula>/<estado>.json`, pelo `"seedExtra"` do roteiro) somam linhas por cima do mundo base;
+  `{"_patch": {"tabela": [{"match": {...}, "set": {...}}]}}` altera linhas e `{"_remove": {"tabela": [{"coluna": valor}]}}`
+  tira linhas (a aula que cria na tela o que o mundo base já traz: na EcoFlix, o T2 tira Juliana e Marcos, o T3 a "Tabela
+  Depósitos").
+- O gerador do mundo confere os números que as aulas falam (`gerar/sementes.mjs` para com `sementes: <o que não bateu>`):
+  mexeu numa aula que fala número do mundo, rode o gerador antes de gravar.
+
+### EcoTray falso (balança e impressora térmica sem hardware)
+O EcoSistema conversa com o EcoTray (programa de Windows) por WebSocket em `ws://127.0.0.1:8053` (peso) e `:8054`
+(comandos: status, impressoras, imprimir, destravar a balança). O robô responde no lugar dele
+(`rec/recorder/ecotray-falso.mjs`, `context.routeWebSocket`): uma "Balança do pátio" na COM3, a térmica POS-58, versão do
+`mundo.json` (`navegador.ecotray`) ou do roteiro (`"ecotray": {...}`, `false` = sem EcoTray). O peso só aparece com a
+integração ligada no perfil (semente `base/balanca-ativada`). Passos: `{"do": "balanca", "peso": 312, "subir": 0.8}` (o peso
+sobe e assenta, 5 leituras por segundo), `{"do": "balanca", "peso": 0}` e `{"do": "ecotray", "ligado": false}` (fecha: o app
+avisa que o EcoTray não está aberto). "Testar impressão" e o comprovante saem como arquivo em
+`<saída>/<cap>.impressoras/` (PDF ou PNG, como o app mandou), com a resposta de sucesso do EcoTray.
 
 App fora do disco (pouco espaço em `/home`): `git archive` em `/dev/shm`, `APP_SRC=APP_WORK=/dev/shm/<app> rec/setup-app.sh`
 (trabalha na própria cópia, recusa pasta com `.git`), `npm ci` lá, e `APP_WORK=/dev/shm/<app> rec/run.sh build`: o build roda

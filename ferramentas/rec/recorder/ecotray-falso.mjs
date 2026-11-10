@@ -19,23 +19,21 @@
 //   {"do": "balanca", "peso": 0}                              tira o material da balança
 //   {"do": "ecotray", "ligado": false}                        fecha o EcoTray (some o peso; o app avisa)   | true: abre de novo
 // Configuração (raiz do roteiro "ecotray": {...} ou mundo.json "navegador.ecotray"; false desliga a simulação):
-//   ligado (true), balancas [{id, name, connected}], padrao (id), impressoras [{name, driver, is_compatible}],
+//   ligado (true), balancas [{id, name, connected, porta}], padrao (id), impressoras [{name, driver, is_compatible} ou "nome"],
 //   impressora (padrão), versao, pesoInicial (0), casas (2), travada (false: destrava pelo módulo da empresa).
 import fs from 'node:fs';
 import path from 'node:path';
 
 const PADRAO = {
   ligado: true,
-  versao: '1.7.24',
+  versao: '1.7.22', // T5: ecotray_version 1.7.22
   casas: 2,
   pesoInicial: 0,
-  balancas: [{ id: 'patio', name: 'Balança do pátio', connected: true }],
+  balancas: [{ id: 'patio', name: 'Balança do pátio', connected: true, porta: 'COM3' }],
   padrao: 'patio',
-  impressoras: [
-    { name: 'Elgin i9 (USB)', driver: 'ELGIN i9', is_compatible: true, incompatible_reason: null },
-    { name: 'Impressora do escritório', driver: 'HP Universal Printing PCL 6', is_compatible: true, incompatible_reason: null },
-  ],
-  impressora: 'Elgin i9 (USB)',
+  // T5: a térmica POS-58 (58 mm); a segunda impressora do cap10 entra pelo roteiro ("ecotray": {"impressoras": [...]})
+  impressoras: [{ name: 'POS-58', driver: 'POS-58 Printer', is_compatible: true, incompatible_reason: null }],
+  impressora: 'POS-58',
 };
 
 const agoraHMS = () => new Date().toTimeString().slice(0, 8);
@@ -46,6 +44,7 @@ const agoraHMS = () => new Date().toTimeString().slice(0, 8);
  */
 export async function instalarEcoTray(context, cfgEntrada = {}, { fakeUrl, bakedUrl, dirImpressoes, log = () => {} } = {}) {
   const cfg = { ...PADRAO, ...(cfgEntrada === true ? {} : cfgEntrada || {}) };
+  cfg.impressoras = cfg.impressoras.map((p) => (typeof p === 'string' ? { name: p, driver: p, is_compatible: true, incompatible_reason: null } : p));
   const est = {
     ligado: cfg.ligado !== false,
     destravada: false,
@@ -82,7 +81,7 @@ export async function instalarEcoTray(context, cfgEntrada = {}, { fakeUrl, baked
     printers: cfg.impressoras.map((p) => p.name), printers_meta: cfg.impressoras, printers_stale: false, default_printer: est.impressora,
     client_count: est.clientes[8053].size + est.clientes[8054].size, activity_log: est.atividade,
     ...(est.destravada
-      ? { scales: listaBalancas().scales, scales_full: est.balancas.map((b) => ({ id: b.id, name: b.name, port: 'COM3', baudrate: 9600, protocol: 'toledo' })), default_scale_id: est.padrao, last_weight_by_scale: Object.fromEntries(Object.entries(est.peso).map(([k, v]) => [k, fmt(v)])), last_weight: fmt(est.peso[est.padrao] || 0) }
+      ? { scales: listaBalancas().scales, scales_full: est.balancas.map((b) => ({ id: b.id, name: b.name, port: b.porta || 'COM3', baudrate: 9600, protocol: 'toledo' })), default_scale_id: est.padrao, last_weight_by_scale: Object.fromEntries(Object.entries(est.peso).map(([k, v]) => [k, fmt(v)])), last_weight: fmt(est.peso[est.padrao] || 0) }
       : { scales: [], scales_full: [], default_scale_id: null, last_weight_by_scale: {}, last_weight: '' }),
   });
 
@@ -206,7 +205,7 @@ export async function instalarEcoTray(context, cfgEntrada = {}, { fakeUrl, baked
         r({ type: 'update_check', status: 'checking' });
         return setTimeout(() => manda(8054, { type: 'update_check', status: 'up_to_date', current: cfg.versao, latest: cfg.versao }), 600);
       case 'list_ports':
-        return est.destravada ? r({ type: 'ports', data: [{ port: 'COM3', description: 'USB-SERIAL CH340 (COM3)' }] }) : r({ type: 'error', message: 'Balança travada: módulo Integração com Balança não está ativo' });
+        return est.destravada ? r({ type: 'ports', data: [...new Set(est.balancas.map((b) => b.porta || 'COM3'))].map((port) => ({ port, description: `USB-SERIAL CH340 (${port})` })) }) : r({ type: 'error', message: 'Balança travada: módulo Integração com Balança não está ativo' });
       case 'list_scale_protocols':
         return r({ type: 'scale_protocols', data: ['auto', 'toledo', 'filizola', 'micheletti', 'weightech', 'urano'] });
       case 'restore_dashboard':

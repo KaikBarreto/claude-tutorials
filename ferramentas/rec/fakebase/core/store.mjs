@@ -84,7 +84,9 @@ export const store = {
    * Aplica seeds extras (EXTRA_DIR/<nome>.json) por cima do estado atual, sem apagar nada, na ordem dada. Mesmo formato
    * dos seeds normais ({ tabela: [linhas] }, tokens @id:/@now.../@storage:), mais:
    *   { "_patch": { "tabela": [ { "match": { coluna: valor }, "set": { coluna: novoValor } } ] } }
-   * que altera linhas que ja existem (ex.: o contador de identificadores do equipamento).
+   * que altera linhas que ja existem (ex.: o contador de identificadores do equipamento), e
+   *   { "_remove": { "tabela": [ { coluna: valor } ] } }
+   * que tira do estado as linhas que batem (ex.: a aula que cria na tela algo que o mundo base ja traz).
    */
   applyExtra(names, dir = EXTRA_DIR) {
     const done = [];
@@ -102,6 +104,17 @@ export const store = {
               const match = resolveTokens(it.match || {});
               const set = resolveTokens(it.set || {});
               for (const r of t.rows) if (Object.entries(match).every(([k, v]) => String(r[k]) === String(v))) Object.assign(r, set);
+            }
+            t.touch();
+          }
+          continue;
+        }
+        if (table === '_remove' && rows && typeof rows === 'object') {
+          for (const [rt, matches] of Object.entries(rows)) {
+            const t = this.table(rt);
+            for (const m of matches) {
+              const match = resolveTokens(m || {});
+              for (let i = t.rows.length - 1; i >= 0; i--) if (Object.entries(match).every(([k, v]) => String(t.rows[i][k]) === String(v))) t.rows.splice(i, 1);
             }
             t.touch();
           }
