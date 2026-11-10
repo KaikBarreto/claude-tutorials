@@ -259,3 +259,15 @@ Decisões:
   filtro; o Marketplace saiu da rotina semanal. Decisões do coordenador: o "20 %" do anual não é falado (regra de
   preço); o CRM sai do plano só no cap03 da T0; o cartão final da T25 é "Próximo: os módulos do seu plano". **Para o
   Kaik (possível bug)**: o atalho "?" não abre a lista de atalhos.
+- 10/11 03:3x **T6 e T9 prontas** (roteiro). T6: 13 capítulos, 2.044 palavras, ~13,1 min de fala (~14,5 min de vídeo); sem
+  pronúncia nova; backend `get_dinheiro_balance`, `register_number` sequencial, `create_manual_bank_transaction`,
+  `adjust_cash_register_balance`; cap08 com trecho logado como Marcos. Código × fonte: o botão do aviso do cofre é "Usar
+  disponível"; o gestor sem caixa aberto vê a aba Início ("Meu Caixa"); sem caixa aberto, o saldo de parceiro só trava
+  em dinheiro (Pix segue). T9: 11 capítulos, 1.702 palavras, ~10,9 min de fala (~12,5 min de vídeo); pronúncias a testar
+  "pópâp" (Popup), "pópâps" (Pop-ups); backend `preview_order_deletion`, `delete_purchase_atomic` com auditoria,
+  `revert_consolidated_order_atomic`, `create_purchase_atomic`, `set_order_hide_financials`; o "Popup bloqueado" é
+  simulado pelo robô (`window.open` devolve `null`). Código × Central de Ajuda: o pedido estornado continua na lista; o
+  selo do cupom é "Comprovante sem valores"; a confirmação diz "Reabrir Último Caixa?" mesmo para caixa antigo.
+  Decisões do coordenador: abrir com zero só no diálogo; numeração dos caixas #84 a #88 no mundo; `FAKE_NOW` 11/11 na T9;
+  o caixa reaberto fecha com a data de 21/10 (é o que o código faz). **Para o Kaik (possível bug)**: "Reabrir Último
+  Caixa?" aparece também para caixa antigo.

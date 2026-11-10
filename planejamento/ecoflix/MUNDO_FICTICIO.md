@@ -142,3 +142,10 @@ vendeu pouco num mês) cabem num dos meses.
   "Não tem no seu plano" aparecer); o catálogo das 26 aulas. A fala não diz o desconto do plano anual (regra de preço).
 - **Rotina** (T25): outubro com os números da T15 (margem de R$ 12.380,00, falada; conferir junto da DRE de +R$ 6.500 na
   junção) e novembro com compras maiores que vendas; as contas da T13; 2 tarefas na Agenda; feriados de Taubaté.
+- **Caixas** (T6, T9): numeração sequencial no histórico; o último antes da T6 é o #84. T6 (10/11): Rafael abre o #85 com
+  R$ 1.500,00; para o #86 do Marcos tenta R$ 20.000,00, o cofre bloqueia e ele usa o disponível (R$ 17.000,00); saque
+  de R$ 3.000,00 + tarifa R$ 6,50; saída "Tarifas bancárias" R$ 39,90; corte às 17:40, fecha sem diferença
+  (R$ 1.007,10) e reabre. T9 (`FAKE_NOW` 11/11 08:30): o #88 do Rafael aberto; o #70 do Marcos (21/10) com 240 kg de
+  bateria (R$ 744,00) lançados no fornecedor errado, reaberto, corrigido para a Auto Peças Vale Forte e fechado de novo
+  com a data de 21/10; um pedido estornado em 05/11; a latinha da Aparecida vai de 24 para 42 kg; uma compra duplicada do
+  Valdir é excluída.
