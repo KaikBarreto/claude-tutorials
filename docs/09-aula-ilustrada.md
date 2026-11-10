@@ -61,4 +61,5 @@ texto >= 44 px, até 2 linhas, telas reais = captura do celular (390x844) recort
   `--stills t1,t2 [--guias]` mostra a área segura (magenta) e a faixa (laranja); `--auditar` confere texto, caixas e faixa (exit 2 se houver erro).
 - `bash render_todos_vertical.sh [NN ...]` (uma trava por capítulo); `python3 capitulos_ilustrados.py "<Título>" --formato 9x16`
   gera `capNN.9x16.chapter.json` e `<AULA>.9x16.aula.json` a partir da MESMA narração do 16:9, então os tempos saem iguais.
-- Montagem: `finish.py caps/<AULA>.9x16.aula.json`; legenda única: `legendas_aula.py ... --linha 32`. Exemplo: `previa_vertical.sh` do T0 v2.
+- Montagem: `finish.py caps/<AULA>.9x16.aula.json`; legenda única: `legendas_aula.py ... --linha 32`. Exemplo: `exemplos/dominex-t0/edicao/previa_vertical.sh` (prévia vertical de ~20 s do T0 v2: cena do cap04 de 20,45 a
+  29,45 s com `--de/--ate`, auditoria e `finish.py` com `PREVIA.9x16.aula.json`, `"card_no_primeiro": true`).
