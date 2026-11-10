@@ -273,8 +273,8 @@ CAPS[0]=()=>{
   const cof=el(`<div class="ab" style="left:575px;top:530px;width:130px;text-align:center">${cofre(130)}
       <div style="margin-top:6px;font-weight:800;font-size:22px">Cofre</div></div>`,g);
   const sAb=seta(g,'M570 590 C 516 586, 498 530, 522 454'), sFe=seta(g,'M758 454 C 782 530, 764 586, 710 590','var(--a)');
-  const tAb=el('<div class="ab" style="left:380px;top:530px"><span class="tag v" style="font-size:17px;padding:6px 15px">abre</span></div>',g);
-  const tFe=el('<div class="ab" style="left:800px;top:530px"><span class="tag a" style="font-size:17px;padding:6px 15px">fecha</span></div>',g);
+  const tAb=el('<div class="ab" style="left:418px;top:530px"><span class="tag v" style="font-size:17px;padding:6px 15px">abre</span></div>',g);
+  const tFe=el('<div class="ab" style="left:786px;top:530px"><span class="tag a" style="font-size:17px;padding:6px 15px">fecha</span></div>',g);
 
   return t=>{
     const t0=W(0,'oi'), tdi=W(0,'dinheiro'), tdia=W(0,'dia'), tre=W(0,'recicla');
@@ -353,7 +353,7 @@ CAPS[4]=()=>{
   const TOTAL=18500, NO_CAIXA=1500, DISP=TOTAL-NO_CAIXA;      // R$ (MUNDO: cofre 18.500; caixa #85 do Rafael aberto com 1.500)
   const g=grupo();
   const tit=titulo(g,'Cofre','Cofre × caixa');
-  const car=el(`<div class="card" style="left:80px;top:172px;width:520px;height:404px">
+  const car=el(`<div class="card" style="left:80px;top:208px;width:520px;height:404px">
       <div class="ab" style="left:26px;top:28px;width:160px;height:160px">${cofre(160)}</div>
       <div class="ab" style="left:212px;top:32px;width:290px">
         <div id="c4-nome" style="font-weight:800;font-size:26px">Cofre</div>
@@ -372,12 +372,12 @@ CAPS[4]=()=>{
         <span style="width:14px;height:14px;border-radius:50%;background:var(--v);flex:none"></span>
         <span style="font-weight:700;font-size:19px">Disponível no cofre</span>
         <span class="num" style="margin-left:auto;font-size:24px;color:var(--ve)">${brl(DISP)}</span></div></div>`,g);
-  const gav=el(`<div class="ab" style="left:830px;top:232px;width:300px">${gaveta(true)}
+  const gav=el(`<div class="ab" style="left:830px;top:268px;width:300px">${gaveta(true)}
       <div style="margin-top:12px;text-align:center;font-weight:800;font-size:22px">Caixa do Rafael</div>
       <div class="gv num" style="margin-top:6px;text-align:center;font-size:30px">${brl(NO_CAIXA)}</div></div>`,g);
-  const sAb=seta(g,'M612 292 C 680 222, 760 222, 822 292'), sFe=seta(g,'M822 392 C 760 462, 680 462, 612 392','var(--a)');
-  const tAb=el('<div class="ab" style="left:648px;top:178px"><span class="tag v" style="font-size:17px;padding:6px 14px">abre o caixa</span></div>',g);
-  const tFe=el('<div class="ab" style="left:650px;top:470px"><span class="tag a" style="font-size:17px;padding:6px 14px">fecha o caixa</span></div>',g);
+  const sAb=seta(g,'M612 328 C 680 258, 760 258, 822 328'), sFe=seta(g,'M822 428 C 760 498, 680 498, 612 428','var(--a)');
+  const tAb=el('<div class="ab" style="left:648px;top:214px"><span class="tag v" style="font-size:17px;padding:6px 14px">abre o caixa</span></div>',g);
+  const tFe=el('<div class="ab" style="left:650px;top:506px"><span class="tag a" style="font-size:17px;padding:6px 14px">fecha o caixa</span></div>',g);
   const mac=el(`<div class="ab" style="left:0;top:0">${maco(brl(NO_CAIXA))}</div>`,g);
   const fVolta=ficha(g,'banknote',24);
   const bv=$('#c4-bv'), ba=$('#c4-ba'), lv=$('#c4-lv');
@@ -394,7 +394,7 @@ CAPS[4]=()=>{
     pulse($('#c4-sis'),t,tct,.05,.7);
     // abri o meu caixa: o maço sai do cofre e vai pra gaveta (continua sendo da empresa)
     vis(gav,t,tca-.15,1e9,{dx:20,dy:0}); const gv=gav.querySelector('.gv');
-    const dv=Math.max(1,tga-tdi+.3), q=arco(mac,t,tdi-.1,dv,118,262,898,268,-120,0);
+    const dv=Math.max(1,tga-tdi+.3), q=arco(mac,t,tdi-.1,dv,118,298,898,304,-120,0);
     const om=t<tdi-.1?0:Math.min(1,q*6,(1-q)*5+.0001*(q<1)); mac.style.opacity=om.toFixed(3); mac.style.visibility=om>0?'visible':'hidden';
     vis(gv,t,tdi-.1+dv*.85,1e9,{dy:6});
     const pa=eo(pr(t,te2-.2,.8)), fa=NO_CAIXA/TOTAL*pa;
@@ -406,7 +406,7 @@ CAPS[4]=()=>{
     // abre: o caixa sai do cofre; fecha: o dinheiro contado volta pro cofre
     sAb.draw(t,tab-.15,.7); vis(tAb,t,tab,1e9,{dy:8,sc:.9});
     sFe.draw(t,tfe-.15,.7); vis(tFe,t,tfe,1e9,{dy:8,sc:.9});
-    viagem(fVolta,t,tvo-.15,1.0,800,360,604,360,64,true);
+    viagem(fVolta,t,tvo-.15,1.0,800,396,604,396,64,true);
     pulse(car,t,tl4,.02,.7); pulse(gav,t,tl4+.1,.03,.7);
   };
 };
@@ -425,8 +425,9 @@ CAPS[9]=()=>{
       <div style="margin-top:8px;font-weight:800;font-size:22px">Banco</div></div>`,g);
   const gav=el(`<div class="ab" style="left:490px;top:196px;width:300px">${gaveta(true)}
       <div style="margin-top:10px;text-align:center;font-weight:800;font-size:22px">Caixa do Marcos</div>
-      <div class="row" style="margin-top:6px;justify-content:center;gap:10px;align-items:baseline">
-        <span class="g9a num" style="font-size:30px">${brl(ABRIU)}</span><span class="g9q lbl" style="font-size:17px">de ${brl(QUERIA)}</span></div>
+      <div class="g9q lbl" style="margin-top:4px;text-align:center;font-size:17px;white-space:nowrap">queria ${brl(QUERIA)}</div>
+      <div class="g9a row" style="margin-top:2px;justify-content:center;gap:8px;align-items:baseline;white-space:nowrap">
+        <span class="lbl" style="font-size:17px">abriu com</span><span class="num" style="font-size:28px">${brl(ABRIU)}</span></div>
       <div class="g9f" style="margin-top:10px;text-align:center"><span class="tag a" style="font-size:17px;padding:6px 14px">faltam ${brl(FALTAM)}</span></div></div>`,g);
   const cof=el(`<div class="ab" style="left:1010px;top:226px;width:180px;text-align:center">${cofre(180)}
       <div style="margin-top:6px;font-weight:800;font-size:22px">Cofre</div></div>`,g);
@@ -435,7 +436,7 @@ CAPS[9]=()=>{
   const sCof=seta(g,'M1100 448 C 1100 640, 210 650, 186 476','var(--a)');
   const fSup=ficha(g,'banknote',24);
   const rSup=el('<div class="ab" style="left:316px;top:208px;width:150px;text-align:center"><span class="tag v" style="font-size:17px;padding:6px 14px">suprimento</span></div>',g);
-  const rSaq=el(`<div class="ab row" style="left:306px;top:282px;width:170px;justify-content:center;gap:6px">
+  const rSaq=el(`<div class="ab row" style="left:306px;top:298px;width:170px;justify-content:center;gap:6px">
       <span class="lbl" style="font-size:15px">no sistema:</span><span style="font-weight:800;font-size:17px;color:var(--ve)">Saque</span></div>`,g);
   const rSan=el('<div class="ab" style="left:316px;top:364px;width:150px;text-align:center"><span class="tag a" style="font-size:17px;padding:6px 14px">Sangria</span></div>',g);
   // nos dois casos: o dinheiro só muda de lugar; a tarifa é despesa
@@ -458,7 +459,7 @@ CAPS[9]=()=>{
     vis(gav.querySelector('.g9f'),t,tfa-.15,1e9,{dy:6,sc:.9});
     vis(ban,t,tbc-.3,1e9,{dx:-20,dy:0});
     // suprimento: pôr dinheiro na gaveta; vindo do banco, no sistema é um Saque
-    sSup.draw(t,tga-.25,.6); viagem(fSup,t,tga+.1,.9,318,244,420,244);
+    sSup.draw(t,tga-.25,.6); viagem(fSup,t,tga+.1,.9,318,244,404,244);
     vis(rSup,t,tsu-.15,1e9,{dy:8,sc:.9}); vis(rSaq,t,tsq-.3,1e9,{dy:6});
     // sangria: o caminho contrário, de um caixa ou do cofre para o banco
     vis(rSan,t,tsg-.1,1e9,{dy:8,sc:.9}); sSan.draw(t,tco-.1,.6); pulse(gav,t,tcx,.03,.6);

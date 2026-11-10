@@ -181,8 +181,8 @@ CAPS[0]=()=>{
   const linhaDia=caminho(sv,'M96 282 L1184 282','#DDE2E7',4);
   const passos=[['scale','Pesar'],['clipboard-list','Comprar'],['banknote','Pagar'],['receipt-text','Comprovante'],['truck','Vender']];
   const cards=passos.map(([n,txt],i)=>el(`<div class="card" style="left:${69+i*238}px;top:178px;width:190px;height:208px;border-width:2px">
-      <div class="ico" style="width:92px;height:92px;margin:30px auto 0;border-radius:24px">${ic(n,50)}</div>
-      <div class="ttl" style="text-align:center;margin-top:20px">${txt}</div></div>`,g));
+      <div class="ico dz" style="width:92px;height:92px;margin:30px auto 0;border-radius:24px">${ic(n,50)}</div>
+      <div class="ttl ml" style="text-align:center;margin-top:20px">${txt}</div></div>`,g));
   const pix=el('<div class="tag v" style="position:absolute;left:112px;top:18px;font-size:15px;padding:5px 11px;border:2px solid #fff">Pix</div>',cards[2]);
   const setas=[0,1,2,3].map(i=>caminho(sv,`M${69+i*238+190+18} 270 L${69+i*238+190+30} 282 L${69+i*238+190+18} 294`,'var(--v)',4));
   // o portão, a balança com o visor e o computador (L1)
@@ -216,13 +216,17 @@ CAPS[0]=()=>{
   const risco=cS.querySelector('path');
 
   return t=>{
-    const j0=W(0,'oi')-.3, tdia=W(0,'dia');
+    const j0=W(0,'oi')-.3, trc=W(0,'recicla');
     const tw=['pesar','comprar','pagar','comprovante','vender'].map(w=>W(0,w));
     const tsu=W(1,'sucata'), tpo=W(1,'portao'), tba=W(1,'balanca'), tpe=W(1,'peso'), tvi=W(1,'virar'), tva=W(1,'valor'),
           tpg=W(1,'pagamento'), tsem=W(1,'sem'), tna=W(1,'nada'), tpa=W(1,'papel');
-    posTitulo(tit,t,j0-.6,tdia-.1);
-    traco(linhaDia,t,tdia-.05,1.0);
-    cards.forEach((c,i)=>vis(c,t,tw[i]-.15,1e9,{dy:18,sc:.94,dx:i===4?-26:0}));
+    posTitulo(tit,t,j0-.6,trc-.15);
+    traco(linhaDia,t,trc-.05,1.0);
+    // os cinco passos do dia entram como silhuetas e cada um acende (ícone e nome) na sua palavra
+    cards.forEach((c,i)=>{vis(c,t,trc+i*.1,1e9,{dy:18,sc:.94});
+      const p=eo(pr(t,tw[i]-.15,.45)), dz=c.querySelector('.dz');
+      dz.style.filter=`grayscale(${(1-p).toFixed(3)}) opacity(${(.3+.7*p).toFixed(3)})`; pulse(dz,t,tw[i]-.15,.08,.7);
+      vis(c.querySelector('.ml'),t,tw[i]-.15,1e9,{dy:8,dx:i===4?-14:0})});
     setas.forEach((s,i)=>traco(s,t,tw[i+1]-.25,.35));
     vis(pix,t,tw[2]+.15,1e9,{dy:6,sc:.7});
     // L1: a sucata chega no portão, vai pra balança, o peso vai pro computador
@@ -525,7 +529,9 @@ CAPS[12]=()=>{
   const PX=370, PY=228, PW=540, PH=470;
   const COL=[[32,0,'left','ITEM'],[214,82,'center','QUANT.'],[296,106,'center','PREÇO'],[402,112,'center','TOTAL']];
   const cel=(c,y,txt,peso,fs)=>{const [x,w,al]=COL[c];return `<div class="t" style="left:${x}px;top:${y}px;${w?'width:'+w+'px;':''}text-align:${al};font-weight:${peso};font-size:${fs}px">${txt}</div>`};
-  const papel=el(`<div class="pp" style="left:${PX}px;top:${PY}px;width:${PW}px;height:${PH}px">
+  // o papel corre dentro de um recorte mais largo que ele (a sombra e as bordas aparecem) e cresce para baixo
+  const recorte=el(`<div class="ab" style="left:${PX-40}px;top:${PY}px;width:${PW+80}px;height:0;overflow:hidden"></div>`,g);
+  const papel=el(`<div class="pp" style="left:40px;top:0;width:${PW}px;height:${PH}px;border:1px solid #E6E9EE">
       <div class="t" style="left:0;top:18px;width:${PW}px;text-align:center;font-weight:800;font-size:22px">Recicla Vale Metais</div>
       <div class="ab" style="left:26px;top:58px;width:488px;height:44px;border:2px solid #121212;border-radius:4px"></div>
       <div class="t" style="left:26px;top:69px;width:488px;text-align:center;font-weight:800;font-size:17px">Fornecedor: Auto Peças Vale Forte</div>
@@ -541,7 +547,7 @@ CAPS[12]=()=>{
       ${['Dinheiro: '+brl(200),'PIX/Transferência: '+brl(736.4),'Saldo: '+brl(2000)].map((s,i)=>
         `<div class="t" style="left:0;top:${372+i*27}px;width:${PW}px;text-align:center;font-weight:600;font-size:16px">${s}</div>`).join('')}
       <div class="ab mk" style="left:0;top:0;border:3px solid var(--v);background:rgba(80,208,136,.16);border-radius:10px;opacity:0"></div>
-    </div>`,g);
+    </div>`,recorte);
   const mk=papel.querySelector('.mk');
   const imp=el(`<div class="ab" style="left:350px;top:146px;width:580px;height:92px">
       <div class="ab" style="left:0;top:0;width:580px;height:92px;border-radius:20px;background:#2F3640;box-shadow:0 14px 30px rgba(16,24,40,.22)"></div>
@@ -557,7 +563,7 @@ CAPS[12]=()=>{
     vis(imp,t,tpr-.1,1e9,{dy:-10});
     // o papel desce com a fala: os itens já estão fora quando a fala diz "material"
     const a0=tpr+.25, dur=Math.max(1.6,Math.min(3.4,(tma-.1-a0)/.5)), p=cl((t-a0)/dur);
-    papel.style.opacity=p>0?1:0; papel.style.clipPath=`inset(0 0 ${((1-p)*100).toFixed(2)}% 0)`;
+    recorte.style.height=((PH+50)*p).toFixed(2)+'px'; recorte.style.opacity=p>0?1:0;
     papel.style.transform=`translateY(${(-6*(1-p)).toFixed(2)}px)`;
     // o marcador passa por material, peso, preço, como foi pago e o fornecedor
     const ts=[tma,tpe,tpc,tpg,tfo]; let k=-1,q=1;
@@ -625,7 +631,7 @@ CAPS[14]=()=>{
       <div class="num mk" style="font-size:40px;margin-top:6px;color:var(--ve)">42 kg</div></div>`,g);
   const pm=misto.querySelector('.pm'), mk=mel.querySelector('.mk');
   const sv=svgTela(g);
-  const P0=[262,250], P1=[898,246], HA=-120;                 // o pedaço sai do topo do misto e pousa no topo do mel
+  const P0=[262,266], P1=[898,246], HA=-120;                 // o pedaço sai do topo do misto e pousa no topo do mel
   const rota=caminho(sv,`M${P0[0]+60} ${P0[1]+72} Q${(P0[0]+P1[0])/2+60} ${(P0[1]+P1[1])/2+2*HA+72} ${P1[0]+60} ${P1[1]+72}`,'#E7A15F',4,'3 10');
   const peca=el(`<div class="ab" style="left:0;top:0;width:120px;height:110px">
       <svg class="ab" style="left:10px;top:44px;overflow:visible" width="100" height="56"><path d="M4 54 Q20 22 46 16 Q72 6 90 30 Q98 42 98 54 Z" fill="#D9894A"/>
