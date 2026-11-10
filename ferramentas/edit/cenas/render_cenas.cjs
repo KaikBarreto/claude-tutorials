@@ -33,7 +33,16 @@ const ICONS = [...new Set([...fs.readFileSync(HTML, 'utf8').matchAll(/['"]([a-z]
   await page.route('**/*', r => r.request().url().startsWith('file:') ? r.continue() : r.abort());
   await page.addInitScript(`window.ICONS=${JSON.stringify(icons)};`);
   await page.goto('file://' + HTML);
-  await page.evaluate(async () => { for (const w of [500, 600, 700, 800]) await document.fonts.load(`${w} 20px M`); await document.fonts.ready; });
+  // Montserrat: a do cenas.html (../../../web/fonts no $TUT_HOME); se não achar (cena guardada fora do $TUT_HOME, ex.:
+  // planejamento/<serie>/Tnn/cenas/), a da skill (ferramentas/web/fonts), sem mudar nada quando a da página carrega.
+  await page.evaluate(async dir => {
+    for (const w of [500, 600, 700, 800]) {
+      let ok = false;
+      try { ok = (await document.fonts.load(`${w} 20px M`)).some(f => f.status === 'loaded'); } catch (e) { ok = false; }
+      if (!ok) document.fonts.add(await new FontFace('M', `url("file://${dir}/montserrat-latin-${w}-normal.woff2")`, { weight: String(w) }).load());
+    }
+    await document.fonts.ready;
+  }, path.resolve(HERE, '../../web/fonts'));
   await page.evaluate(async () => { await Promise.all([...document.images].map(i => i.complete ? 0 : new Promise(r => { i.onload = i.onerror = r; }))); });
   await page.evaluate(d => window.setup(d), dados);
   await page.evaluate(async () => { await Promise.all([...document.images].map(i => i.complete ? 0 : new Promise(r => { i.onload = i.onerror = r; }))); });

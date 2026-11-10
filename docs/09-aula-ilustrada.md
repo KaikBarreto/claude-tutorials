@@ -71,7 +71,9 @@ conceito (`[ILUSTRAÇÃO: ...]` no roteiro), e depois volta para a tela. Kit pro
   quando o desenho entra). Tudo preso a palavras com `W(linha, 'palavra')`.
 - **Exemplos**: `CAPS[1]` "Tara e peso líquido" (Peso bruto − Tara = Peso líquido) e `CAPS[2]` "Caixa × competência",
   com as falas e tempos estimados em `exemplo/`. Antes da voz, `python3 tempos_estimados.py capNN.json "fala 0" ...`
-  faz um `capNN.json` estimado (790 caracteres/min); quando a voz chega, as cenas se ajustam às palavras.
+  faz um `capNN.json` estimado (790 caracteres/min); com o texto da aula, `--tts narracao/tts_textos.py --cap N` lê o
+  `CAPS[N]` como o `proc.py` (tira as tags `[pause]`, que contam 0,5 s, e aplica as trocas: o `W()` procura a grafia da
+  legenda, "QR" e não "quê-érre"); quando a voz chega, as cenas se ajustam às palavras.
 - Um conceito por ilustração; várias do mesmo capítulo cabem no mesmo `CAPS[n]`, cada uma no seu trecho. Rótulos
   exatamente como no app. Renderize só o trecho e encaixe no capítulo:
 ```bash
