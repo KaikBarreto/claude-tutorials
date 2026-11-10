@@ -32,8 +32,8 @@ camadas. Saída: MP4 1920×1080 30 fps (bt709, faixa TV) + WAV da narração ali
 Velocidade: ~9–15 quadros/s na máquina de 2 núcleos (um capítulo de 110 s leva ~5 min).
 
 ## Marca: `$TUT_HOME/marca/marca.json`
-Cores (acento, escuro, claro), fonte, logo (arquivo, símbolo, wordmark), nome da série, estilo da vinheta (`logo` ou
-`dominex-capacete`) e frase da cartela. Lida por `kit/ui.py` e usada por tudo que desenha: palco (`fundo_escuro.py`),
+Cores (acento, escuro, claro), fonte, logo (arquivo, símbolo, wordmark), nome da série, estilo da vinheta (`logo`,
+`dominex-capacete` ou `ecosistema-reciclagem`), som próprio da vinheta (opcional) e frase da cartela. Lida por `kit/ui.py` e usada por tudo que desenha: palco (`fundo_escuro.py`),
 cursor, destaques, avisos, vinhetas de capítulo, abertura e cartela. Guia: [`modelos/MARCA.md`](../modelos/MARCA.md).
 Trocou a marca? Apague `edit/assets/fundo_escuro.png` (o `montar_cap.py` gera de novo na cor nova).
 
@@ -97,7 +97,7 @@ ilustração por arquivo, `edit/ilustracoes/ilustra_<assunto>.py`, com `--stills
 ## Montagem final: `finish.py caps/<AULA>.aula.json` (modelo em `modelos/aula.json`)
 - Vinheta da aula e cartela (`kit/brand_clips.sh`, a partir de `marca/marca.json`): logo da marca + "▶ SÉRIE" +
   título da aula; cartela com o logo e a frase final (`outro_line`, padrão "Até a próxima aula!"). No perfil Domiflix:
-  o capacete em 3 peças que se encaixam.
+  o capacete em 3 peças que se encaixam; no EcoFlix, as 3 peças do símbolo de reciclagem girando, com o som oficial.
 - **Vinheta de capítulo** (`vinheta_cap.py`) antes de cada capítulo com `card` (menos o primeiro): fusão de entrada
   0,4 s, área + título sobem com a barra na cor de acento, voz do título em 0,70 s (`card_voices` = `titulos.json`), saída por
   fusão no 1º quadro do capítulo seguinte; ≥ 3,2 s. SFX por cima do mix: whoosh na entrada (−15 dB), pop quando o

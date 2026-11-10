@@ -1,7 +1,9 @@
 // Renderiza um capítulo ilustrado (cenas.html) no lugar da gravação de tela: vídeo 2560x1600 a 30 q/s, mesmo formato
 // do robô, para o render_chapter.py tratar igual (palco, vinheta, trilha, legendas).
-// uso: node render_cenas.cjs <cap> <capNN.json da narração> <saida.mp4> [--cauda 1.2] [--html cenas.html]
+// uso: node render_cenas.cjs <cap> <capNN.json da narração> <saida.mp4> [--cauda 1.2] [--html cenas.html] [--de S --ate S]
 //      node render_cenas.cjs <cap> <capNN.json> <pasta> --stills 1.5,6,12.3      (quadros JPEG para conferir)
+//      --de/--ate: só esse trecho do relógio da narração (o 1º quadro do vídeo é o instante --de). É o caso da ilustração
+//      de conceito no meio de um capítulo gravado: --de = o "at" dela no specs.json, --ate = at + dur.
 // A página (padrão: cenas.html ao lado) expõe window.setup(dados) e window.R(t); ícones lucide usados como ic('nome',...)
 // são achados sozinhos no HTML (npm i na pasta: lucide-static). Ver docs/09-aula-ilustrada.md.
 const { chromium } = require('playwright');
@@ -45,13 +47,14 @@ const ICONS = [...new Set([...fs.readFileSync(HTML, 'utf8').matchAll(/['"]([a-z]
     if (avisos.length) console.log('AVISOS:', [...new Set(avisos)].join(' | '));
     await b.close(); return;
   }
-  const dur = N.dur + CAUDA, n = Math.round(dur * FPS), tmp = saida.replace(/\.mp4$/, '.parcial.mp4');
+  const de = parseFloat(opt('--de', '0')), ate = parseFloat(opt('--ate', String(N.dur + CAUDA)));
+  const i0 = Math.round(de * FPS), n = Math.round(ate * FPS) - i0, dur = n / FPS, tmp = saida.replace(/\.mp4$/, '.parcial.mp4');
   const ff = spawn('ffmpeg', ['-y', '-loglevel', 'error', '-f', 'image2pipe', '-framerate', String(FPS), '-c:v', 'mjpeg', '-i', '-',
     '-c:v', 'libx264', '-preset', 'veryfast', '-crf', '14', '-pix_fmt', 'yuv420p', '-r', String(FPS), '-movflags', '+faststart', tmp],
     { stdio: ['pipe', 'inherit', 'inherit'] });
   const t0 = Date.now();
   for (let i = 0; i < n; i++) {
-    await page.evaluate(t => window.R(t), i / FPS);
+    await page.evaluate(t => window.R(t), (i0 + i) / FPS);
     const buf = await page.screenshot({ type: 'jpeg', quality: 92 });
     if (!ff.stdin.write(buf)) await new Promise(r => ff.stdin.once('drain', r));
     if (i % 300 === 0) console.log(`cap${cap}: ${i}/${n} quadros (${((Date.now() - t0) / 1000).toFixed(0)} s)`);
