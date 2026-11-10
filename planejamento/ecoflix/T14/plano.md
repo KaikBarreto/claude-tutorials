@@ -7,8 +7,8 @@
   até a diferença zerar e a conciliação ser finalizada.
 - **Antes:** T13 "Contas a Pagar e Receber". **Próximo:** T15 "Relatório Financeiro e DRE" (fonte: "eu ganhei ou perdi
   dinheiro esse mês?").
-- **Duração:** alvo da fonte ~18 min; fala estimada ~13 min (2.000 a 2.100 palavras a 2,6 palavras/s) + 15 vinhetas,
-  9 ilustrações e as esperas aceleradas → **~16 min** de vídeo.
+- **Duração:** alvo da fonte ~18 min; fala ~14,2 min (2.211 palavras a 2,6 palavras/s; 12.529 caracteres com os
+  títulos) + 15 vinhetas, 9 ilustrações e as esperas aceleradas → **~16,5 min** de vídeo.
 - **Módulo:** nenhum (Fase 1). O "Funcionário" do painel só é citado, não aberto.
 - Base: `T14/inventario.md` (código 1.59.154). Banco, OFX e o site do banco **simulados**: nenhum banco, conta ou arquivo
   real; contas sem instituição (sem logo de terceiros).

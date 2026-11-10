@@ -10,8 +10,9 @@ instituição (ícone genérico, sem logo de banco).
 - **Antes:** Contas a Pagar e Receber (T13)
 - **Próximo:** Relatório Financeiro e DRE (T15)
 - **Vinhetas (áreas):** BANCOS · COFRE · MOVIMENTAÇÕES · CONCILIAÇÃO · FECHAMENTO · RESUMO (todos os capítulos menos o 0)
-- **Duração estimada:** ~16 min de vídeo (2.095 palavras de fala, ~13,4 min de voz a 2,6 palavras/s, mais a vinheta de
-  abertura, 15 vinhetas de capítulo, as ilustrações e as esperas aceleradas; alvo da fonte ~18 min)
+- **Duração estimada:** ~16,5 min de vídeo (2.211 palavras de fala, ~14,2 min de voz a 2,6 palavras/s; 12.529 caracteres
+  com os títulos das vinhetas; mais a vinheta de abertura, 15 vinhetas de capítulo, as ilustrações e as esperas
+  aceleradas; alvo da fonte ~18 min)
 - **FAKE_NOW:** `2026-11-10T08:30:00-03:00` em todos os capítulos. Logado: Rafael Nogueira (admin MASTER). Desktop
   1280×800. Cada capítulo abre um navegador novo na semente indicada (`plano.md`, "Gravação"); o `setup` reabre fora do
   vídeo a tela onde o capítulo começa.
@@ -72,7 +73,7 @@ instituição (ícone genérico, sem logo de banco).
 | Nos três pontinhos de "DINHEIRO (COFRE)", o único item "Ajustar saldo"; clique: janela "Ajustar saldo da Conta DINHEIRO", com "Saldo atual" R$ 18.500,00. | Pra acertar, é nos três pontinhos do cofre: Ajustar saldo. É a única opção dele, porque o cofre não se edita nem se arquiva. |
 | Em "Novo saldo" digita 18.560,00: "Diferença" mostra +R$ 60,00 em verde. [ZOOM: "Novo saldo" e "Diferença" +R$ 60,00] | Em Novo saldo, o valor contado. A Diferença aparece na hora: mais sessenta reais, em verde. |
 | Em "Motivo *" digita "Contagem do cofre"; clique em "Confirmar ajuste": aviso "Saldo ajustado" ("+R$ 60,00 registrado no histórico"); o cartão passa a R$ 18.560,00. [BACKEND: insert em `cash_transactions` (`type` adjustment, `amount` 60,00, `excluded_from_dre` true); `get_dinheiro_balance` passa a 18.560,00] | O motivo é obrigatório: contagem do cofre. Confirmar ajuste. |
-| Desce ao histórico do cofre: a linha do ajuste, "Entrada" de R$ 60,00, com a etiqueta preta "Ajuste". [BACKEND: `get_financial_movements` do cofre devolve o ajuste de `cash_transactions`; vira `apos-cap03`] | O ajuste fica no histórico com a etiqueta Ajuste. É acerto de contagem: não entra como receita nem como despesa. |
+| Desce ao histórico do cofre: a linha do ajuste, +R$ 60,00, com a etiqueta preta "Ajuste" na coluna do tipo. [BACKEND: `get_financial_movements` do cofre devolve o ajuste de `cash_transactions`; vira `apos-cap03`] | O ajuste fica no histórico com a etiqueta Ajuste. É acerto de contagem: não entra como receita nem como despesa. |
 
 ### cap04 · Movimentação, transferência e saque (vinheta: MOVIMENTAÇÕES)
 
@@ -185,7 +186,7 @@ instituição (ícone genérico, sem logo de banco).
 | Capítulo novo (semente `apos-cap12`). Na linha do Depósito Irmãos Siqueira ("Casada"), clique em "Desfazer": aviso "Conciliação desfeita"; a linha volta a pendente, com a sugestão verde. [BACKEND: `reconcile_unmatch_entry` (sem confirmação: casamento com lançamento que já existia)] | Errou alguma? Toda linha resolvida tem o Desfazer, que devolve a linha pra pendente. Casada e Ignorada desfazem na hora. |
 | Clique em "Casar com Compra #(nº) • Depósito Irmãos Siqueira": selo "Casada" de novo. | Aqui eu só desfiz pra mostrar, então caso de novo. |
 | A câmera vai à linha da tarifa ("Criada") e para no "Desfazer", sem clicar. | Já a Criada e a Baixada mexem em dinheiro. O Desfazer delas pede confirmação, porque apaga o lançamento criado ou estorna a baixa. |
-| Clique em "Cancelar conciliação" (no alto, à direita): janela "Cancelar esta conciliação?", com "17 linha(s) do extrato serão canceladas", "13 vínculo(s) com lançamento existente serão removidos; os lançamentos serão preservados", "1 lançamento(s) criado(s) pela conciliação serão excluídos", "1 conta(s) a pagar/receber serão reabertas", "2 linha(s) ignorada(s) voltarão ao estado anterior" e "Digite CANCELAR para confirmar"; clique em "Manter conciliação". [ZOOM: a lista e o campo do CANCELAR] | E o Cancelar conciliação desfaz o arquivo inteiro de uma vez: os vínculos, os lançamentos criados e as baixas. Por segurança, pede pra digitar a palavra cancelar. Aqui eu mantenho a conciliação. |
+| Clique em "Cancelar conciliação" (no alto, à direita): janela "Cancelar esta conciliação?", com "17 linha(s) do extrato serão canceladas", "13 vínculo(s) com lançamento existente serão removidos; os lançamentos serão preservados", "1 conta(s) a pagar/receber serão reabertas", "1 lançamento(s) criado(s) pela conciliação serão excluídos", "2 linha(s) ignorada(s) voltarão ao estado anterior" (a ordem segue a primeira linha de cada tipo) e "Digite CANCELAR para confirmar"; clique em "Manter conciliação". [ZOOM: a lista e o campo do CANCELAR] | E o Cancelar conciliação desfaz o arquivo inteiro de uma vez: os vínculos, os lançamentos criados e as baixas. Por segurança, pede pra digitar a palavra cancelar. Aqui eu mantenho a conciliação. |
 | Clique em "Voltar" (no alto): a entrada da aba com o cartão "Continuar conciliação", "Todas as linhas resolvidas" (falta finalizar), o nome do arquivo e o período; clique em "Continuar": a tabela volta. [BACKEND: `get_statement_imports` com o import aberto e `pending_count` 0] | Já o Voltar só sai da tela. O progresso fica salvo, e o Continuar retoma de onde parou, até no dia seguinte. |
 | A câmera fica na tabela, com os selos das linhas. | Uma dica: lançamento conciliado não sai pelo Excluir das movimentações. Primeiro você desfaz a linha aqui, e depois exclui lá. |
 
