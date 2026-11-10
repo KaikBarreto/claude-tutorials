@@ -222,6 +222,7 @@ são simulados no backend falso (`plano.md`, "Gravação"): nenhum certificado, 
 | Clique em "Ativar Notas Recebidas": diálogo "Ativar consulta de notas recebidas?". [ZOOM: o texto "Ao ativar, cada nota fiscal recebida dos seus fornecedores passa a contar na sua cota mensal de documentos fiscais...", a frase inteira] | Clico em Ativar Notas Recebidas. A tela avisa: daqui pra frente, cada nota recebida conta na mesma cota das notas que você emite. |
 | Clique em "Ativar mesmo assim": toast "Notas Recebidas ativado"; a tela vira "Notas emitidas contra o seu CNPJ", com "Recurso ativo", "Importar nota" e "Sincronizar agora"; chegam "Auto Peças Vale Forte" (R$ 1.984,00, 09/11/2026) e "Depósito Irmãos Siqueira" (R$ 2.185,00, 06/11/2026), as duas "Autorizada" e "Ciência". [BACKEND: edges `plugnotas-enable-dfe` e `plugnotas-dfe-sync` (o sync inicial é silencioso); as duas notas do "Mundo"] | Ativar mesmo assim. Em instantes chegam as notas emitidas contra o CNPJ da Recicla Vale: a da Auto Peças Vale Forte, de mil novecentos e oitenta e quatro reais, e a do Depósito Irmãos Siqueira. |
 | Zoom nas colunas "Emitente", "Valor", "Emissão", "SEFAZ" e "Manifestação". | Cada linha mostra quem emitiu, o valor, a data, a situação na SEFAZ e a manifestação. |
+| Zoom em "Sincronizar agora" (sem clicar). | Daqui pra frente, as notas entram sozinhas. E o Sincronizar agora faz a busca na hora. |
 
 ### cap16 · Manifestar a nota (vinheta: NOTAS RECEBIDAS)
 
