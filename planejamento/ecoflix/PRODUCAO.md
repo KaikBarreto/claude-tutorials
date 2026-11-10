@@ -81,7 +81,9 @@ Decisões:
    da Recicla Vale Metais, EcoTray falso; branch `ecoflix-mundo`), Marca (vinheta, cartela, cartões e kit de ilustração;
    branch `ecoflix-marca`, prévia em `/home/claude/ecoflix/previa_marca/`).
 2. Juntar: conferir os roteiros (tom, precisão, ilustrações), juntar os branches no main, consolidar no
-   `MUNDO_FICTICIO.md` e nas sementes o que cada aula pediu, handlers do que faltar.
+   `MUNDO_FICTICIO.md` e nas sementes o que cada aula pediu, handlers do que faltar. Em paralelo (desde 10/11 02:3x): as
+   cenas ilustradas de todas as aulas (`_BRIEF_ILUSTRACOES.md`); depois da junção, conferir as âncoras e o que cada cena
+   mostra contra a fala final.
 3. Robôs de todas as aulas e **ensaio gravado sem voz** (tempos estimados), corrigindo texto e tela.
 4. **Revisão geral** dos textos numa passada só, aplicando o teste de pronúncia; **estimativa de créditos** (caracteres
    de todos os `CAPS` e `TITULOS`, ~1 crédito por caractere no eleven_v4) → avisar o Kaik e esperar os créditos.
@@ -340,3 +342,16 @@ Decisões:
   do cupom na T7; pronúncias a testar: WhatsApp e Siqueira (T20), checklist, Jequitibá e "cê-érre-ême-canban"
   (CRM/Kanban, T26). **Estimativa da voz com as 26 aulas**: 259.103 caracteres ≈ 259 mil créditos; com 5 % de folga,
   **~272 mil**. Carimbos 03:5x a 04:3x deste registro corrigidos para 01:4x a 02:0x (os commits mostram a hora certa).
+- 10/11 02:2x **Vinheta e cartela verticais 9:16 prontas** (branch `ecoflix-marca-9x16`, no main em e08bf3c): molde e
+  tempos do capacete vertical, área segura, título em até 2 linhas que diminui até caber; som sintetizado idêntico ao do
+  16:9; Domiflix idêntica ao T3 e a vertical dela igual pixel a pixel; `testes/vertical_9x16.sh` confere também a EcoFlix.
+  Prévias em `/home/claude/ecoflix/previa_marca/`. Resolve a nota "Falta a vinheta vertical" da Marca (01:5x).
+- 10/11 02:3x **Ilustrações em andamento**, 14 agentes (`_BRIEF_ILUSTRACOES.md`): T00 · T01+T02 · T03+T09 · T04+T06 ·
+  T05+T27 · T07+T08 · T10+T12 · T11+T21 · T13+T14 · T15+T22 · T16 · T17+T18 · T19+T25 · T20+T26. Cada aula ganha
+  `Tnn/cenas/` (`cenas.html`, `tempos/` estimados, manifesto `ilustracoes.json` com as âncoras e o que a cena mostra);
+  folha de contato em `/home/claude/ecoflix/previa_ilustracoes/Tnn.jpg`; quadros sob a trava pesada (2 CPUs). Ferramentas:
+  `tempos_estimados.py --tts <tts_textos.py> --cap N` (lê o CAPS da aula como o `proc.py`: tags fora, trocas aplicadas) e
+  Montserrat da skill no `render_cenas.cjs` quando a cena fica fora do `$TUT_HOME` (antes o render quebrava; os quadros
+  saem idênticos aos de dentro). Disco com 1,1 GB livres: perguntar ao Kaik se pode apagar as pastas de trabalho de 29 a
+  31/10 (`/home/claude/fix-29out` e `/home/claude/brand-fix`, 7,7 GB) antes do ensaio (trocar a cópia duplicada do modelo
+  de voz por um atalho foi barrado pela trava automática de segurança).
