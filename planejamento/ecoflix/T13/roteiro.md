@@ -13,7 +13,7 @@ capítulo continua uma janela do anterior, o `setup` do robô a reabre fora do v
 - **Próximo:** Bancos, cofre e conciliação bancária (T14)
 - **Vinhetas (áreas):** CONTAS · LANÇAMENTO · RECORRÊNCIA · BAIXA · FIADO · COMPROVANTE · FILTROS · RESUMO (todos os
   capítulos menos o 0)
-- **Duração estimada:** ~14,5 min de vídeo (1.952 palavras de fala, ~12,5 min de voz a 2,6 palavras/s, mais a vinheta
+- **Duração estimada:** ~14,5 min de vídeo (1.951 palavras de fala, ~12,5 min de voz a 2,6 palavras/s, mais a vinheta
   de abertura, 13 vinhetas de capítulo, a cartela e as esperas dos formulários; as 7 ilustrações correm junto da fala;
   alvo da fonte: 16 min)
 - **FAKE_NOW:** `2026-11-10T08:30:00-03:00` (terça) em todos os capítulos.
@@ -72,7 +72,7 @@ capítulo continua uma janela do anterior, o `setup` do robô a reabre fora do v
 
 | Tela | Fala |
 | --- | --- |
-| Capítulo novo (semente `t13/inicio`), aba "Todas"; clique em "Nova conta": janela "Nova conta" ("Cadastre uma conta a pagar ou a receber com vencimento."), bloco "O que é". | Agora, lançar uma conta nova. A Hidráulica Moretti vai fazer a manutenção da prensa, e o serviço vence dia dezenove. Clico em Nova conta. |
+| Capítulo novo (semente `t13/inicio`), aba "Todas"; clique em "Nova conta": janela "Nova conta" ("Cadastre uma conta a pagar ou a receber com vencimento."), bloco "O que é". | Agora, lançar uma conta nova. A Hidráulica Moretti vai fazer a manutenção da prensa, com vencimento no dia dezenove. Clico em Nova conta. |
 | A câmera mostra o "Tipo" em "A pagar (despesa)". | O Tipo já vem como A pagar. Se fosse dinheiro entrando, seria A receber. |
 | Em "Valor" digita 3.480,00. [ZOOM: "Valor" com 3.480,00] | No Valor, três mil quatrocentos e oitenta reais. |
 | Em "Descrição" ("Ex: Aluguel do galpão") digita "Manutenção da prensa enfardadeira"; em "Vencimento" abre o calendário e escolhe 19 (19/11/2026). | Na Descrição, o que é a conta: manutenção da prensa enfardadeira. E o Vencimento, dezenove de novembro. |

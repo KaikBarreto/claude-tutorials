@@ -10,7 +10,7 @@ CAPS = {
 Na Recicla Vale Metais, buscar material vivia no caderno e na troca de mensagens. Aqui, cada coleta vira uma ordem, com o parceiro, o dia, o motorista e o caminhão.
 Essa parte depende do plano contratado: ela vem no módulo de Coletas.
 Se você ainda não viu o tutorial de clientes e fornecedores, dá uma olhada antes.
-Tudo fica no menu Coletas e Logística, a começar pelas Ordens de Coleta. [pause] Antes de clicar em qualquer coisa, o que o módulo resolve.""",
+Tudo fica no menu Coletas e Logística, a começar pelas Ordens de Coleta. [pause] Antes de clicar em qualquer coisa, vamos ver o que o módulo resolve.""",
 1: """O módulo é pra quem vai buscar o material: quem tem caminhão, quem deixa caçamba no parceiro, quem combina de passar na empresa dele.
 Cada coleta vira uma ordem, que passa por etapas: alguém pede, a gente agenda o dia e o período, escala o motorista e o caminhão, ele sai, e a coleta é concluída.
 Uma coisa importante: a ordem de coleta organiza o serviço. Quem mexe no estoque e no caixa é a compra.
@@ -58,7 +58,7 @@ Aprovar. A data e a janela vêm do pedido, mas quem confirma é você.
 Agendar. Pronto: a coleta da cooperativa está marcada pra sexta à tarde.""",
 8: """Quem faz tudo isso é a frota. Em Frota ficam os veículos e os motoristas, os mesmos da pesagem de compra e venda.
 No caminhão truck, a ficha mostra a tara e a capacidade.
-A tara é o peso do caminhão vazio. Quando ele passa carregado na balança, o que passa da tara é o peso do material.
+A tara é o peso do caminhão vazio. Carregado, ele pesa mais na balança, e essa diferença é o peso do material.
 A Recicla Vale comprou um caminhão poliguindaste, o que leva e busca caçamba. Em Novo veículo, eu digito a placa e um apelido.
 Os dados de transporte servem pros documentos de transporte. Aqui, São Paulo, veículo único e toco.
 A tara dele é sete mil e cem quilos, e a capacidade, oito mil e quinhentos.
@@ -82,7 +82,7 @@ Uma dica: a coleta cancelada sai da conta. Das cinco que ficaram, as cinco foram
 Embaixo, as coletas por status, por motorista, por veículo e por parceiro. Dá pra ver quem rodou mais e onde a Recicla Vale mais busca.
 Uma dica: cada coleta entra no mês em que foi concluída. A que ainda não foi conta pelo dia agendado, e a que não tem data, pelo dia em que foi pedida.""",
 11: """Por último, as regras. Em Configurações, o primeiro bloco é o da operação.
-O Prefixo da numeração vai na frente do número de cada ordem. Coloco COL e um traço, e as ordens passam a aparecer com ele.
+O Prefixo da numeração vai na frente do número de cada ordem. Aqui eu coloco um prefixo de coleta, e as ordens passam a aparecer com ele na frente.
 Nas Janelas de coleta oferecidas, você escolhe os períodos que aparecem pra agendar. E aqui dá pra exigir motorista e veículo antes de agendar.
 No bloco do portal, o Exigir aprovação faz o pedido do parceiro esperar na coluna Solicitada, como o da cooperativa. Desligado, ele já entra agendado.
 A Antecedência mínima diz com quantas horas o parceiro precisa pedir: coloco vinte e quatro. E nos Dias aceitos, ele pede de segunda a sábado.

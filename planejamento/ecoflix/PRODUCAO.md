@@ -201,3 +201,15 @@ Decisões:
   de realizar saques" não existe (com o cofre, o saque não pede caixa); o selo da linha é "Casada"; o menu diz
   "Movimentações Financeiras". Conflito com a T6 ("Conta Reserva") resolvido: "Conta Secundária" (agente da T6 avisado).
   "Tornar principal" só mostrado (coordenador).
+- 10/11 02:4x **T13 e T12 prontas** (roteiro). T13: 14 blocos, 1.951 palavras, ~12,5 min de voz (~14,5 min de vídeo), 7
+  ilustrações; pronúncias a testar "Moréti" (Moretti), "Vence em sete dias"; backend `pay_financial_bill`,
+  `pay_partner_balance`, `create_installment_bills`, `create_recurring_bill_template` (molde e janela de 3 meses),
+  `shift_recurring_bills_due_date`, anexos; fora: o ⚠️ do subtotal do cartão (o mundo não tem cartão). T12: 13 blocos,
+  1.716 palavras, ~11 min de voz (~13 min de vídeo); pronúncias a testar "bégue" (bag), "pét" (PET), "cê-ene-agá" (CNH),
+  "Tíquete" (Ticket), "categoria cê"; backend `change_collection_order_status` e as edges `collection-request`,
+  `entity-portal`, `collection-report`. Código × fonte: o Rastreamento já abre um mapa; "Caçambas" virou
+  "Equipamentos"; a ordem registra "Entreguei/Recolhi", que vale quando a coleta é concluída; o relatório conta a ordem
+  sem data pelo dia em que foi criada. **Pergunta ao Kaik**: a T12 cobre o Rastreamento, já que ele funciona? (a fonte o
+  deixava de fora como "Em breve"). **Na junção**: refazer o `config_narracao.json` de cada aula a partir do do perfil
+  final + as trocas da aula (vários agentes copiaram versões intermediárias); um agente rodou sem querer o script de
+  outro (falhou sem efeito).

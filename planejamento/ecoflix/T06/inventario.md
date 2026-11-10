@@ -156,3 +156,7 @@ finalizados") → diálogo `:3377-3605`.
   abre o caixa de outra pessoa (`Caixa.tsx:605-633,3345-3350`).
 - H2. "Diminuirá em R$ 3006,50" no saque sai sem separador de milhar (`WithdrawalForm.tsx:798`).
 - H3. Botão do aviso de saldo insuficiente é "Usar disponível", e a central de ajuda diz "Abrir com valor menor".
+- H4. "Nova Receita" sugere "Ex: Suprimento de caixa" (`i18n/locales/pt-BR/caixa.json`, `depositModal.reasonPlaceholder`),
+  e a aula ensina que dinheiro mudando de lugar (saque, sangria, suprimento) não é receita.
+- H5. Nos modais lidos não achei movimento direto cofre → caixa aberto no meio do dia (o dinheiro entra no caixa na
+  abertura ou por saque do banco); a fala não fala desse caminho. Conferir com o time.

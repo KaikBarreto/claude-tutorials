@@ -53,9 +53,9 @@ Além do `MUNDO_FICTICIO.md` (Recicla Vale Metais; Rafael, Juliana e Marcos; cof
   Juliana Prado; Marcos Antunes com o acesso que o T2 der, **sem** "Ver e Operar Todos os Caixas" e sem "Gerenciar
   Contas Bancárias" (o "Operador Padrão" já é assim). Senha do Marcos no backend falso para o trecho do cap08.
 - **Contas:** cofre `bank_accounts` kind `cash` "DINHEIRO (COFRE)" com saldo total **R$ 18.500,00** às 08:30 de 10/11 e
-  nenhum caixa aberto; duas contas bancárias sem logo de banco (`institution_code` nulo), sugestão "Conta Principal"
-  (padrão, R$ 46.870,35) e "Conta Reserva" (R$ 12.400,00); se o mundo base já tiver nomes e saldos, valem os dele (a
-  fala não diz nome de conta nem o saldo do banco).
+  nenhum caixa aberto; duas contas bancárias sem logo de banco (`institution_code` nulo): "Conta Principal" (padrão) e
+  "Conta Secundária" (os nomes da T13 e da T14; saldos do mundo base, sugestão R$ 46.870,35 e R$ 12.400,00; a fala não
+  diz nome de conta nem o saldo do banco). Categoria de despesa "Tarifas bancárias" (convive com "Combustível", da T14).
 - **Últimos caixas fechados:** #84 Rafael Nogueira, 09/11 07:58 → 17:44, fechou com **R$ 1.250,00**; #83 Marcos Antunes,
   09/11 07:04 → 17:36, fechou com R$ 640,00; os anteriores do histórico. A fala não diz número de caixa: se a sequência
   do mundo der outros números, só a coluna Tela muda (#84 → último do Rafael, #85 e #86 → os dois de hoje).

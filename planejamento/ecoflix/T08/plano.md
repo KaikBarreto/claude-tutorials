@@ -6,7 +6,8 @@
   antigo").
 - **Objetivo:** pesar o caminhão da Cooperativa Recomeço na entrada e na saída sem preço fechado, aplicar a impureza,
   atender um segundo caminhão em outra aba, imprimir o comprovante e valorizar o ticket até ele virar compra.
-- **Duração:** alvo da fonte 11 min; fala ~1.450 palavras (~9,3 min) + 10 vinhetas e ilustrações ≈ 11 min.
+- **Duração:** alvo da fonte 11 min; fala ~1.240 palavras (~8 min) + 10 vinhetas, digitação, a aba do PDF e as
+  ilustrações ≈ 10 min.
 - **Base:** `T08/inventario.md` (código 1.59.154). Computador 1280×800, logado como **Rafael Nogueira**.
   `FAKE_NOW=2026-11-10T08:30:00-03:00` (terça); horários na tela entre 08:40 e 09:00.
 

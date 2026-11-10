@@ -6,7 +6,7 @@
 - **Antes:** T10 "Estoque: saldo, histórico e posição". **Próximo:** T14 "Bancos, cofre e conciliação bancária"
   (fonte: "fazer o extrato do banco bater com o sistema").
 - **Vinhetas (áreas):** CONTAS · LANÇAMENTO · RECORRÊNCIA · BAIXA · FIADO · COMPROVANTE · FILTROS · RESUMO.
-- **Alvo da fonte:** ~16 min. Estimativa: 1.952 palavras de fala (~12,5 min de voz) + vinhetas, cartela e as esperas dos
+- **Alvo da fonte:** ~16 min. Estimativa: 1.951 palavras de fala (~12,5 min de voz) + vinhetas, cartela e as esperas dos
   formulários (acelerados sem fala) ≈ 14,5 min.
 - Base: `T13/inventario.md` (código 1.59.154). Sem 🔒 (Fase 1) e sem 🚫 na fonte desta aula.
 - **FAKE_NOW:** `2026-11-10T08:30:00-03:00` (terça) em todos os capítulos. Desktop, Rafael Nogueira (MASTER) logado.

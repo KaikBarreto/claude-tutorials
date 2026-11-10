@@ -14,7 +14,7 @@ Cooperativa Recomeço.
 - **Próximo:** Produção (T11)
 - **Vinhetas (áreas):** COLETAS · ORDENS · AGENDA · ACOMPANHAMENTO · PORTAL · FROTA · EQUIPAMENTOS · RELATÓRIO ·
   CONFIGURAÇÕES · RESUMO (todos os capítulos menos o 0)
-- **Duração estimada:** ~13 min de vídeo (1.712 palavras de fala, ~11 min de voz a 2,6 palavras/s, mais a vinheta de
+- **Duração estimada:** ~13 min de vídeo (1.716 palavras de fala, ~11 min de voz a 2,6 palavras/s, mais a vinheta de
   abertura, 12 vinhetas de capítulo, a cartela, a troca de janela do portal e as esperas dos formulários; as 7
   ilustrações correm junto da fala; alvo da fonte: 15 min)
 - **FAKE_NOW:** `2026-11-10T08:30:00-03:00` (terça) em todos os capítulos.
@@ -35,7 +35,7 @@ Cooperativa Recomeço.
 | (a ilustração: o caderno e o balão se juntam num cartão de ordem com "parceiro", "dia", "janela", "motorista" e "caminhão") | Na Recicla Vale Metais, buscar material vivia no caderno e na troca de mensagens. Aqui, cada coleta vira uma ordem, com o parceiro, o dia, o motorista e o caminhão. |
 | Cartão discreto: "Módulo Coletas". | Essa parte depende do plano contratado: ela vem no módulo de Coletas. |
 | Cartão discreto: "Antes: Clientes, fornecedores e a ficha do parceiro". | Se você ainda não viu o tutorial de clientes e fornecedores, dá uma olhada antes. |
-| Dashboard da Recicla Vale Metais (sem enquadrar os números); o cursor abre no menu lateral "Coletas & Logística" e clica em "Ordens de Coleta" (a câmera não para nos outros itens); a tela "Ordens de Coleta" abre. [BACKEND: semente `t12/inicio`] | Tudo fica no menu Coletas & Logística, a começar pelas Ordens de Coleta. [pause] Antes de clicar em qualquer coisa, o que o módulo resolve. |
+| Dashboard da Recicla Vale Metais (sem enquadrar os números); o cursor abre no menu lateral "Coletas & Logística" e clica em "Ordens de Coleta" (a câmera não para nos outros itens); a tela "Ordens de Coleta" abre. [BACKEND: semente `t12/inicio`] | Tudo fica no menu Coletas & Logística, a começar pelas Ordens de Coleta. [pause] Antes de clicar em qualquer coisa, vamos ver o que o módulo resolve. |
 
 ### cap01 · O que o módulo de Coletas resolve (vinheta: COLETAS)
 
@@ -112,7 +112,7 @@ Cooperativa Recomeço.
 | Clique em "Solicitar coleta": janela "Solicitar coleta" ("Peça a coleta do seu material. A empresa confirma o dia e o horário."); em "Material *" digita "PET prensado"; em "Quantidade estimada" digita "800 kg". [ZOOM: "Material *" e "Quantidade estimada" 800 kg] | A cooperativa tem oitocentos quilos de PET prensado pra sair. Ela preenche o material e a quantidade. |
 | Em "Data preferida" digita 13/11/2026; em "Período" escolhe "Tarde"; o "Endereço da coleta" já vem do cadastro. | Escolhe o dia que prefere, sexta, e o período da tarde. O endereço já vem do cadastro. |
 | Clique em "Solicitar coleta": aviso "Solicitação enviada (#10)"; o pedido aparece em "Minhas coletas". [BACKEND: edge `collection-request` (antecedência e dias aceitos conferidos; "Exigir aprovação da solicitação" ligado → status solicitada; número 10; aviso em `user_notifications`)] | Solicitar coleta. O pedido saiu, com o número dez. |
-| De volta à janela do sistema: o menu "Coletas & Logística" com o ponto vermelho; clique em "Ordens de Coleta": na "Solicitada", o cartão "#10" com "via portal", "Cooperativa Recomeço", "PET prensado — 800 kg", "13/11/2026 · Tarde", "Solicitada em: 10/11/2026 ..." e os botões "Aprovar" e "Recusar". | Agora, do lado da Recicla Vale. O menu ganhou um pontinho vermelho de aviso. E na coluna Solicitada está o pedido da cooperativa, marcado como via portal. |
+| De volta à janela do sistema (o robô recarrega a tela "Frota" fora do vídeo para o menu atualizar; a consulta das solicitações não vistas só revalida a cada 60 s): o menu "Coletas & Logística" com o ponto vermelho; clique em "Ordens de Coleta": [TESTAR: o ponto aparece depois de recarregar e some ao abrir o quadro] na "Solicitada", o cartão "#10" com "via portal", "Cooperativa Recomeço", "PET prensado — 800 kg", "13/11/2026 · Tarde", "Solicitada em: 10/11/2026 ..." e os botões "Aprovar" e "Recusar". | Agora, do lado da Recicla Vale. O menu ganhou um pontinho vermelho de aviso. E na coluna Solicitada está o pedido da cooperativa, marcado como via portal. |
 | A câmera fica nos botões "Aprovar" e "Recusar". | Quem decide é a Recicla Vale. Dá pra aprovar ou recusar, e na recusa você escreve o motivo, que fica no histórico da ordem. |
 | Clique em "Aprovar": janela "Agendar coleta" ("Ordem #10 — informe a data e a janela da coleta."), "Data da coleta *" com 13/11/2026 e "Janela *" com "Tarde". | Aprovar. A data e a janela vêm do pedido, mas quem confirma é você. |
 | Clique em "Agendar": aviso "Status alterado para Agendada"; o cartão "#10" vai para "Agendada". [BACKEND: rpc `change_collection_order_status` (solicitada → agendada, 13/11, tarde)] | Agendar. Pronto: a coleta da cooperativa está marcada pra sexta à tarde. |
@@ -123,7 +123,7 @@ Cooperativa Recomeço.
 | --- | --- |
 | Capítulo novo (semente `t12/apos-cap07`); menu "Coletas & Logística" → "Frota": abas "Veículos" e "Motoristas"; em "Veículos" ("Mesma frota usada na pesagem de compra/venda."), a lista "Veículos da frota" com EZR4C63, FKD2E41 e GHT7B19. | Quem faz tudo isso é a frota. Em Frota ficam os veículos e os motoristas, os mesmos da pesagem de compra e venda. |
 | Clique em "FKD2E41": o detalhe com a placa no modelo Mercosul, "Caminhão truck" e "Capacidade operacional". [ZOOM: "Tara" 9.200 kg e "Capacidade" 14.000 kg] | No caminhão truck, a ficha mostra a tara e a capacidade. |
-| [ILUSTRAÇÃO: tara, bruto e líquido: um caminhão vazio numa balança de pátio, "tara 9.200 kg"; o mesmo caminhão carregado de sucata, "bruto"; a diferença acende como "líquido", o peso do material] | A tara é o peso do caminhão vazio. Quando ele passa carregado na balança, o que passa da tara é o peso do material. |
+| [ILUSTRAÇÃO: tara, bruto e líquido: um caminhão vazio numa balança de pátio, "tara 9.200 kg"; o mesmo caminhão carregado de sucata, "bruto"; a diferença acende como "líquido", o peso do material] | A tara é o peso do caminhão vazio. Carregado, ele pesa mais na balança, e essa diferença é o peso do material. |
 | Clique em "Novo veículo": janela "Novo veículo"; em "Placa *" digita FVL8A52 (o desenho da placa aparece embaixo); em "Descrição / Apelido" digita "Caminhão poliguindaste". | A Recicla Vale comprou um caminhão poliguindaste, o que leva e busca caçamba. Em Novo veículo, eu digito a placa e um apelido. |
 | Em "UF de licenciamento" escolhe "SP"; em "Tipo" escolhe "Veículo único (truck, toco, utilitário)"; em "Tipo de rodado" escolhe "Toco" (o que passar da fala vai acelerado). | Os dados de transporte servem pros documentos de transporte. Aqui, São Paulo, veículo único e toco. |
 | Em "Tara (kg)" digita 7100 e em "Capacidade (kg)" digita 8500. [ZOOM: "Tara (kg)" 7100 e "Capacidade (kg)" 8500] | A tara dele é sete mil e cem quilos, e a capacidade, oito mil e quinhentos. |
@@ -162,7 +162,7 @@ Cooperativa Recomeço.
 | Tela | Fala |
 | --- | --- |
 | Capítulo novo (semente `t12/apos-cap10`); menu "Coletas & Logística" → "Configurações" ("Ajuste a numeração, as janelas e as regras do portal de coletas"); a câmera no bloco "Operação". | Por último, as regras. Em Configurações, o primeiro bloco é o da operação. |
-| Em "Prefixo da numeração" ('Ex.: "COL-"') digita COL- e sai do campo: aviso "Prefixo da numeração salvo". | O Prefixo da numeração vai na frente do número de cada ordem. Coloco COL e um traço, e as ordens passam a aparecer com ele. |
+| Em "Prefixo da numeração" ('Ex.: "COL-"') digita COL- e sai do campo: aviso "Prefixo da numeração salvo". | O Prefixo da numeração vai na frente do número de cada ordem. Aqui eu coloco um prefixo de coleta, e as ordens passam a aparecer com ele na frente. |
 | A câmera vai a "Janelas de coleta oferecidas" ("Manhã", "Tarde" e "Dia todo", marcadas) e a "Exigir motorista e veículo para agendar" (desligado). | Nas Janelas de coleta oferecidas, você escolhe os períodos que aparecem pra agendar. E aqui dá pra exigir motorista e veículo antes de agendar. |
 | A câmera desce ao bloco "Portal e solicitações": "Exigir aprovação da solicitação" (ligado). | No bloco do portal, o Exigir aprovação faz o pedido do parceiro esperar na coluna Solicitada, como o da cooperativa. Desligado, ele já entra agendado. |
 | Em "Antecedência mínima (horas)" digita 24 e sai do campo: aviso "Antecedência mínima salva"; a câmera passa por "Dias aceitos para coleta" ("Seg" a "Sáb" marcados, "Dom" não). | A Antecedência mínima diz com quantas horas o parceiro precisa pedir: coloco vinte e quatro. E nos Dias aceitos, ele pede de segunda a sábado. |

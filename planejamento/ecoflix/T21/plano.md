@@ -47,7 +47,7 @@ Além do `MUNDO_FICTICIO.md` (e alinhado com os números do T10: ferro misto 6.4
 | Estoque em 10/11 08:30 (15 materiais, saldo × preço de compra = valor; × preço de venda = projeção) | Ferro pesado 2.180 kg · Ferro misto 6.420 · Chaparia 3.150 · Cobre mel 212,5 · Cobre misto 148 · Fio de cobre encapado 96 · Alumínio latinha 640 · Alumínio perfil 185 · Alumínio bloco 230 · Metal amarelo (latão) 74 · Bronze 38 · Inox 260 · Bateria automotiva 3.960 · Papelão 1.850 · Plástico PET 920. **Total 20.363,5 kg, valor R$ 52.112,25, projeção R$ 64.422,35** (o "Radiador de cobre" do T3 com saldo zero, ou some dos totais) | R3, R8 e a tela "Posição de Estoque" (cap. 6: o "Total geral" tem de bater) |
 | Novembro, 1 a 10 | vendas R$ 34.215,00 (Fundição Bandeira do Vale 16.283,00; Aços Quiririm 14.380,00; Serra Fina 3.552,00); compras R$ 22.890,00; despesas R$ 6.240,00; resultado R$ 5.085,00 | R1, R6 |
 | Saldos a receber (clientes) | Fundição Bandeira do Vale R$ 23.950,00 (sugestão: 2ª parcela da venda de cobre mel de outubro, R$ 47.900,00 em 2×); Serra Fina Alumínio Reciclagem R$ 3.552,00 (venda de 05/11, 480 kg de latinha); Aços Quiririm Ltda R$ 1.475,00 (venda de 06/11, 1.180 kg de ferro pesado, a mesma do T10) | R2, R7 |
-| Bancos | "Conta Principal" R$ 41.380,25; "Conta Reserva" R$ 6.120,00 (total R$ 47.500,25); novembro: entradas R$ 29.870,00, saídas R$ 24.615,40 | R4 |
+| Bancos | "Conta Principal" R$ 41.380,00; "Conta Reserva" R$ 6.120,00 (total R$ 47.500,00); novembro: entradas R$ 29.870,00, saídas R$ 24.615,40 | R4 |
 | Caixa de hoje | caixa do Marcos aberto às 07:30 com R$ 1.500,00; duas compras em dinheiro até 08:30 (Dona Cida R$ 186,00; Valdir Pereira R$ 132,00); saldo R$ 1.182,00 | R5 |
 | Meses | setembro: compras R$ 112.870,00, vendas R$ 79.450,00 (o mês "comprou muito e vendeu pouco" do T15); outubro: compras R$ 94.215,60 (Depósito Irmãos Siqueira 31.480,00; Cooperativa Recomeço 22.640,00; Auto Peças Vale Forte 18.905,60; Valdir Pereira 12.370,00; Dona Cida 8.820,00), vendas R$ 118.940,00 (Fundição 61.380,00; Aços Quiririm 39.820,00; Serra Fina 17.740,00) | R6, R7 |
 
@@ -76,7 +76,8 @@ trocar nas respostas e nas falas dos caps. 3 a 6.
 
 ### Respostas simuladas (formato do `response_payload`, `hooks/useCato.tsx:32-46`)
 Todas com `interactionId` (uuid novo), `cacheHit: false`, sem `images`, `action` nem `budgetNotice`. `context.period`
-em AAAA-MM-DD. O texto usa só o markdown que o painel desenha (negrito, listas).
+em AAAA-MM-DD. O texto usa só o markdown que o painel desenha (negrito, listas). O campo `followups` abaixo **não** vai
+no `response_payload`: é o que a edge `cato-assist` (`mode: "followups"`) devolve em `suggestions` depois da resposta.
 
 R1 · "Como tá indo meu negócio esse mês?" (pergunta pronta)
 ```json
@@ -100,7 +101,7 @@ R3 · "Quanto tenho em estoque agora?"
 R4 · "Qual o saldo das minhas contas no banco?"
 ```json
 {"toolsUsed":["resumo_bancario"],"context":{"period":{"start":"2026-11-01","end":"2026-11-10"},"updatedAt":"<agora>"},
- "answer":"Agora, suas contas no banco somam **R$ 47.500,25**:\n\n- **Conta Principal:** R$ 41.380,25\n- **Conta Reserva:** R$ 6.120,00\n\nEsse é o saldo de agora. Em novembro, até hoje, entraram **R$ 29.870,00** e saíram **R$ 24.615,40** nas contas, sem contar as transferências entre elas.",
+ "answer":"Agora, suas contas no banco somam **R$ 47.500,00**:\n\n- **Conta Principal:** R$ 41.380,00\n- **Conta Reserva:** R$ 6.120,00\n\nEsse é o saldo de agora. Em novembro, até hoje, entraram **R$ 29.870,00** e saíram **R$ 24.615,40** nas contas, sem contar as transferências entre elas.",
  "followups":["Quais pagamentos saíram do banco esse mês?","Quanto tenho no cofre?","Compara as entradas com outubro"]}
 ```
 R5 · "Como tá meu caixa hoje?"

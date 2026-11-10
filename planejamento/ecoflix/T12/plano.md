@@ -9,7 +9,7 @@
   entrou no pátio em produto de maior valor").
 - **Vinhetas (áreas):** COLETAS · ORDENS · AGENDA · ACOMPANHAMENTO · PORTAL · FROTA · EQUIPAMENTOS · RELATÓRIO ·
   CONFIGURAÇÕES · RESUMO.
-- **Alvo da fonte:** ~15 min. Estimativa: 1.712 palavras de fala (~11 min de voz) + vinhetas, cartela, a troca de janela
+- **Alvo da fonte:** ~15 min. Estimativa: 1.716 palavras de fala (~11 min de voz) + vinhetas, cartela, a troca de janela
   do portal e as esperas dos formulários ≈ 13 min.
 - **FAKE_NOW:** `2026-11-10T08:30:00-03:00` (terça). Desktop, Rafael Nogueira (MASTER); no cap07, uma segunda janela sem
   login com o portal da Cooperativa Recomeço.
@@ -76,7 +76,10 @@ Além do `MUNDO_FICTICIO.md` (proposta; conferir na semente que nenhum nome novo
   | 6 | Depósito Irmãos Siqueira | Concluída 27/10 (Entreguei Caçamba 03) | 27/10 · Manhã | Edson Moura · FKD2E41 | Entrega de caçamba |
   | 7 | Marcelo Tavares ("Sem cadastro", (12) 9 0000-5821, Rua das Paineiras, 215, Taubaté/SP) | A caminho desde 08:10 | 10/11 · Manhã | Tiago Freitas · EZR4C63 | ~300 kg de ferro de demolição |
   | 8 | Depósito Irmãos Siqueira | Agendada (criada em 05/11) | 10/11 · Manhã | Edson Moura · FKD2E41 | Troca da Caçamba 03: ferro misto, ~2 t |
-  O endereço de cada parceiro cadastrado é o do cadastro (T4). Próximo número: 9.
+  O endereço de cada parceiro cadastrado é o do cadastro (T4). Próximo número: 9. Nenhuma outra ordem de coleta no
+  mundo (se o T20 mostrar um pedido de coleta pelo portal, a T12 parte dele e os números andam).
+- **Janela do sistema no cap07:** antes de voltar a ela, o robô deixa o Rafael numa tela de Coletas que não seja o quadro
+  (ex.: "Frota") e recarrega, para o ponto vermelho aparecer no menu (a consulta revalida a cada 60 s).
 - **Portal:** link do portal da Cooperativa Recomeço (o do T20), aba "Coletas" sem senha, "solicitar coleta" ligado.
 - **Esta aula cria:** a ordem 9 (Auto Peças Vale Forte, 12/11 · Manhã, Jair Lopes · GHT7B19, "~400 kg de radiadores e
   baterias", observação "Retirar pelo portão lateral"); a conclusão da 8 (Recolhi Caçamba 03, Entreguei Caçamba 05); a

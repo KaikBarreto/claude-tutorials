@@ -109,3 +109,10 @@ vendeu pouco num mês) cabem num dos meses.
   para arquivar na T14; categorias "Combustível" e "Tarifas bancárias". Extrato OFX fictício de 17 linhas, de 01/11 a
   10/11, casando com os Pix da T13 e com o que a T14 cria (tabela no `T14/plano.md`). "Tornar principal" só é mostrado,
   sem clicar (a conta padrão não muda na trilha).
+- **Contas a pagar e receber** (T13): fornecedor novo "Hidráulica Moretti" (CNPJ válido, cadastrado na T13); contas
+  bancárias sem logo de banco; fiado da Aços Quiririm R$ 3.150,00; venda parcelada da Fundição Bandeira do Vale em 3x
+  R$ 4.790,00; centros de custo e categorias do `T13/plano.md`. **Conferir na junção**: saldos da T4 × fiados da T13 ×
+  números da T15 contam a mesma história.
+- **Coletas** (T12): ordens 1 a 8; frota com tara (CPF e CNH dos motoristas gerados); equipamentos (o app chama
+  "Equipamentos", não "Caçambas") 01 a 05 e 40 bags; o portal da Cooperativa Recomeço abre numa segunda janela sem login
+  (o robô concede a geolocalização).

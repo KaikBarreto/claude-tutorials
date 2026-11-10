@@ -27,7 +27,7 @@ O triângulo avisa que tem conta vencida naquele dia. É a água, do dia cinco.
 Clicando no dia, aparecem as contas dele, já com os botões de pagar e de editar.
 Uma dica: o calendário mostra só conta com vencimento. O saldo dos clientes e fornecedores não tem data, então ele fica na Lista, como a própria tela avisa.
 Pra voltar, é só clicar em Lista.""",
-4: """Agora, lançar uma conta nova. A Hidráulica Moréti vai fazer a manutenção da prensa, e o serviço vence dia dezenove. Clico em Nova conta.
+4: """Agora, lançar uma conta nova. A Hidráulica Moréti vai fazer a manutenção da prensa, com vencimento no dia dezenove. Clico em Nova conta.
 O Tipo já vem como A pagar. Se fosse dinheiro entrando, seria A receber.
 No Valor, três mil quatrocentos e oitenta reais.
 Na Descrição, o que é a conta: manutenção da prensa enfardadeira. E o Vencimento, dezenove de novembro.
