@@ -36,8 +36,9 @@ de plano na fala.
   Ré com cauda que morre sozinha), inteiro: o 1º golpe cai quando a última peça assenta (0,88 s) e o 2º no encaixe
   (1,02 s); por baixo, o respiro e os whooshes das peças; −19 LUFS com 0,3 dB de limitador. Casou em duração, final e
   volume. Mídia fora do git: `APP_SRC=<código do app> bash instalar.sh` copia; sem o arquivo, vai o sintetizado da
-  Domiflix 2 semitons acima (Mi maior). Atenção: o player da EcoFlix já toca esse som antes de cada vídeo, então ele soa
-  duas vezes seguidas; para trocar, `"som": ""` no marca.json (decide-se na prévia).
+  Domiflix 2 semitons acima (Mi maior). **Escolha (10/11): o sintetizado em Mi maior** (`"som": ""` no marca.json),
+  porque o player da EcoFlix já toca o som oficial antes de cada vídeo e ele soaria duas vezes seguidas. Para voltar ao
+  oficial (ex.: vídeo usado fora do player), `"som": "assets/ecoflix-intro.mp3"`.
 - **Cartela final** (3,85 s): a mesma montagem do logo + fio + "Até a próxima aula!"; o encaixe em 1,20 s e a cauda do
   som some com o preto.
 - Vinheta de capítulo, cartões "Antes:"/"Próximo:", avisos, destaques, cursor e palco: o layout da Domiflix nas cores

@@ -292,3 +292,10 @@ Decisões:
 - 10/11 04:0x **Cópia de segurança da Domiflix** no branch `backup-domiflix-maquina` (8b74fe7): mundo da Dominex 1.38.24,
   roteiros do robô e projetos de edição, só texto (75 MB, sem a telemetria `*.actions.json`, que tinha a chave pública do
   app); serve aos remendos pendentes.
+- 10/11 04:1x **Marca pronta** (branch `ecoflix-marca`, 5 commits, no main): peças e nome separados do PNG oficial sem
+  redesenhar (juntas refazem o PNG pixel a pixel); vinheta `ecosistema-reciclagem` com os tempos, curvas e sons do
+  capacete, escura em 4,30 s; cartela; vinheta de capítulo e cartões "Antes:"/"Próximo:" com o acento; kit de ilustração
+  com "Tara e peso líquido" e "Caixa × competência" presas às palavras da fala; recorte de trecho no render de cenas.
+  Domiflix idêntica ao T3. **Som escolhido: o sintetizado em Mi maior**, porque o player da EcoFlix já toca o oficial
+  antes de cada vídeo (soaria duas vezes). Prévia em `/home/claude/ecoflix/previa_marca/` enviada ao Kaik. Falta a
+  vinheta vertical 9:16 desse estilo (para o T0 vertical).
