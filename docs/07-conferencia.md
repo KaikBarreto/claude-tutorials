@@ -17,11 +17,21 @@
 - [ ] Destaques no botão certo, com o rótulo igual ao da tela.
 - [ ] Ilustração entra e sai na fala certa, sem zoom por baixo.
 - [ ] Vinhetas de capítulo: título certo, voz lendo o título, whoosh na entrada e na saída.
+- [ ] Depois do render (antes da limpeza): `python3 -I lacunas.py` (nenhum trecho > ~20 s sem zoom, destaque ou ilustração),
+      `python3 -I confere_render.py` (zoom engolido; aviso sob zoom > 2,6× no celular; no computador `--toast R,G,B` acha o aviso
+      da edição por cima do aviso do app: Dominex `--toast 4,150,105`) e a folha de destaques (`folha_destaques_16x9.py`; no 9:16
+      do celular, `folha_destaques.py`, com OCR do rótulo).
 
 ## Final
 - [ ] `ffprobe`: 1920×1080, 30 fps, H.264 yuv420p bt709 TV + AAC 48 kHz estéreo; duração = esperada.
-- [ ] Loudness ~−16 LUFS, pico ≤ −1 dBTP; SFX audíveis mas abaixo da voz.
+- [ ] Loudness ~−16 LUFS, pico ≤ −1 dBTP; SFX audíveis mas abaixo da voz. Pico acima: `python3 -I pico_aac.py
+      out/<AULA>/aula_final.mp4 out/<AULA>/proj/build/mix.wav mix_novo.wav --mux aula_nova.mp4` (−3 dB só no trecho, vídeo
+      copiado com MD5 conferido; troque o arquivo à mão e rode o `entregar.py` de novo).
 - [ ] Tira de quadros do final: vinheta, 1º quadro, uma vinheta de capítulo, um zoom, a ilustração, a cartela.
+- [ ] **Folha de 3 s do vídeo INTEIRO, olhada do começo ao fim** (obrigatória; pega mês errado no calendário, aviso de erro do app,
+      tela que a fala não descreve): `flock $TUT_HOME/.heavy.lock nice -n 10 bash folhas3s.sh out/<AULA>/aula_final.mp4
+      out/<AULA>/folhas3s` (6×5 = 90 s por folha; o rótulo é o tempo do próprio quadro, `round=up`; no 9:16, 180×320 em 10×3).
+      Nas duas proporções quando houver a vertical.
 - [ ] Legendas abrem no player, sem sobreposição, no tempo da fala (conferir 3 pontos: início, meio, fim).
 - [ ] Entrega: o vídeo completo 1080p + .srt + .vtt com o mesmo nome, enviados direto no chat (187 MB passou).
 

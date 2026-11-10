@@ -64,6 +64,22 @@ Trocou a marca? Apague `edit/assets/fundo_escuro.png` (o `montar_cap.py` gera de
 - `titulo`/`kicker` viram a vinheta de capítulo (não há mais cartão pequeno de título).
 - Zoom manual não pode coincidir com ilustração que cobre a janela (a ilustração usa a janela em repouso); a saída do
   zoom leva ~1 s, então termine-o pelo menos 1 s antes do `at` da ilustração.
+- **Computador ou celular** sai do tamanho do vídeo no `actions.json` (mais alto que largo = celular, `"device": "phone"`):
+  o celular ganha o aparelho no palco, o toque como anel, câmera `depth` 2,3 e `min_w` em px do vídeo do celular (1100 ≈ 2,4×);
+  o computador segue o T3 (`depth` 1,8, `min_w` 1150). A mesma aula pode misturar os dois (T15, T22).
+- Rótulo repetido no capítulo (o cursor que rola até o alvo repete o rótulo do passo): `"rótulo#2"` = a 2ª ocorrência com
+  retângulo (T2). Destaque usa sempre o primeiro passo do rótulo que tem retângulo.
+- Área que só a fala cita (gráfico, aviso, texto sem passo do robô): zoom `{"rect": [x, y, w, h], "at": s, "end": s}` e destaque
+  `{"rect": [...], "at": s, "dur": s}`, em px do vídeo gravado (T22). Zoom com passos e `"rect"`: o retângulo é o do spec e os
+  tempos seguem os passos. Zoom de arrasto: `"destino": true` cabe também o destino (`toRect` do passo `drag`, T7).
+- `"camera": {...}` sobrepõe a câmera do capítulo (ex.: `{"guard": 1.0}`, T7 cap09), no computador e no celular.
+- Capítulo gravado em dois trechos com a MESMA voz (T15: `09` no computador, `09b` no celular, os dois com `narracao/cap09.json`):
+  `"voz_ate": s` no primeiro corta nesse instante da voz (sem cauda) e `"voz_de": s` no segundo começa a voz ali
+  (`audio_offset` = −voz_de; avisos por palavra descontados). `montar_cap.py 09b`; o `legendas_aula.py` lê o `audio_offset`.
+- `"acelera": [[de, até, fator], ...]` (T14): trecho SEM fala com a tela mexendo (digitação, formulário) que o `finish.py`
+  acelera (mistura de quadros + selo "4x" do kit); s do vídeo do capítulo, fator inteiro ≥ 2, sem cruzar um corte. Tela parada
+  vai em `cortes`; a fala nunca é acelerada.
+- `TUT_REC=rec/tN/_ens python3 -I montar_cap.py NN` confere os rótulos do specs contra um ensaio, sem a gravação final.
 
 ## Ilustração na tela (ex.: `ilustra_qr.py`)
 Sequência PNG 1587×992 com alfa (cantos de 16 px) desenhada por código (PIL, 2× para anti-serrilhado), fundo
@@ -72,6 +88,11 @@ branco, fonte e cor de acento da marca, objetos genéricos sem marca de terceiro
 Todo texto dentro de cartão/aparelho é medido antes de desenhar (`font.getlength(texto)`): termina pelo menos
 12 px antes da borda; se não couber, diminua a fonte ou o ícone ao lado. Confira 1 quadro 1:1 de cada cena da
 ilustração antes de renderizar o capítulo (no T3 o nome do aparelho passou 20 px da borda e custou um re-render).
+**Em MP4** (padrão desde o T19/T20): `edit/ilustracoes/ilu_comum.py` dá o fundo, a fonte, as cores (o verde de referência
+segue o acento da marca por `ui.tom`), chips, setas, sombra, `palavra()` para casar com a fala e `gravar()`, que desenha só os
+quadros que mudam e escreve um MP4 1586×992 (22,5 s em ~1,7 MB; a sequência PNG com alfa passava de 100 MB). No JSON:
+`"box": [166, 44, 1587, 992], "radius": 16, "shadow": false, "scale_in": 0` (o editor arredonda os cantos, sem alfa). Uma
+ilustração por arquivo, `edit/ilustracoes/ilustra_<assunto>.py`, com `--stills t1,t2` para conferir antes do render.
 
 ## Montagem final: `finish.py caps/<AULA>.aula.json` (modelo em `modelos/aula.json`)
 - Vinheta da aula e cartela (`kit/brand_clips.sh`, a partir de `marca/marca.json`): logo da marca + "▶ SÉRIE" +
@@ -83,6 +104,12 @@ ilustração antes de renderizar o capítulo (no T3 o nome do aparelho passou 20
   título pousa (−22 dB), whoosh descendente na saída (−16 dB).
 - **Cortes**: `cortes` do capítulo tiram vídeo e voz juntos (só em trecho parado e sem fala; medir antes com a
   diferença entre quadros) e deslocam os SFX e as legendas.
+- **Aceleração** (`acelera` do capítulo, T14): cada quadro de saída é a média de `fator` quadros seguidos (como o `kit/render.py`)
+  com o selo de velocidade do kit no canto superior direito (no 9:16, no canto da área segura); a voz do trecho (silêncio) encolhe
+  junto e o tempo tirado entra nos `cortes` do `capitulos.json` (legendas e `entregar.py` contam igual). O `remendar_aula.py`
+  não refaz capítulo acelerado (use o `finish.py`).
+- Depois do `mix.py`, `proj/build/stems` e `music.wav` somem (~1,3 GB no pico de uma aula longa, T11; `--manter-stems` mantém).
+  Stems em link para `/dev/shm` não são apagados (apague à mão depois da entrega).
 - Trilha lo-fi (`kit/mix.py`): começa no fim da vinheta, ~−27 LUFS sem fala, cai sob a voz (ducking), termina num
   acorde na cartela. Mix final ~−16 LUFS, teto −1 dBTP.
 - Saídas: `aula_final.mp4`, `capitulos.json` (início de cada item no conteúdo, cortes, título falado).
@@ -100,6 +127,15 @@ introdução obrigatória). Por isso o vertical tem de ter **a mesma linha do te
   câmera v2 (alvos do actions/telemetria; só desliza, e fica no alvo entre uma ação e outra), anel do toque, destaques e avisos como
   no 16:9. Usa `camera.py`/`cursor.py`/`overlay.py` por cópia privada (`celular_vertical.py`): os do 16:9 não mudam. Mesmo JSON do
   capítulo de celular do 16:9, mais `"camera_9x16"` e `"scale9"` (opcionais). Alvo fora da janela = erro (`--aceitar-camera`).
+  - A vista da câmera fica sempre DENTRO da tela gravada (T0 v2, 06/11: o "seguir" de um toque perto da borda deslocava a vista
+    até 21 px e repetia a última coluna da tela numa faixa da janela).
+  - Aviso com `"y9": px` (topo do cartão, em px da janela 0 a 1160) e `"fs9"` (texto, padrão 44): posição própria no vertical,
+    centrado na largura, numa faixa livre da tela em vez do pé (onde cobria o app). Os outros avisos seguem o `overlay.py`.
+  - O render do celular NÃO desenha as `illustrations`: depois do render, `python3 -I compor_ilus_vertical.py caps/capNN.9x16.chapter.json`
+    cobre o capítulo com cada ilustração de quadro cheio (1080×1920, já com palco e painel) na janela [at, at+dur), áudio intacto;
+    o render limpo fica em `.sem_ilus_<nome>.mp4` e rodar de novo parte dele.
+  - Conferência: `python3 -I folha_destaques.py` (todos os destaques e zooms dos `capNN.9x16.chapter.json` sobre a gravação do
+    celular, com OCR do rótulo; `folha_destaques_16x9.py` é a do computador, sobre o MP4 renderizado).
 - Geometria única em `formato_9x16.json`: painel 1008x1700 em (36,110); conteúdo em x 72-1008, **y 180-1420**; texto >= 44 px;
   até 2 linhas. **Faixa da legenda do player: y 1420-1600** (18% do pé no celular; 15% no computador, y 800-930 do 16:9): nada essencial.
 - Vinheta e cartela verticais não levam o logo da DomiFlix (pedido do Kaik): capacete + DOMINEX + título; `SERIE_LOGO=assets/<png>` o devolve.
@@ -140,6 +176,9 @@ os stems (o `rmtree` ignora o symlink): apague `/dev/shm/<aula>_*` depois da ent
   capítulo de antes com a do de depois) e, no máximo, ~2 s de cada lado até o IDR vizinho. Os quadros copiados saem idênticos.
 - `--plano` mostra a linha do tempo nova e o que é copiado/recodificado, sem escrever nada e sem pedir a trava
   (`--frames cap05=1954` simula capítulo ainda sem render).
+- `--formato 9x16` (ou `"formato": "9x16"` no aula.json): aula vertical, com a vinheta de capítulo do vertical (T0 v2).
+- Capítulo novo (`--novos`/`--inserir`) com `cortes` no JSON: valem os dele, como no `finish.py` (quadros, voz e eventos). Com
+  `--audio`, capítulo com cortes é recusado; capítulo com `acelera` também (refaça a aula com o `finish.py`).
 - `--manter-stems`: por padrão, depois do mix, `proj/build/stems` e `music.wav` somem (~1,1 GB numa aula de 12 min; a trilha sai
   igual de novo, `--seed 3`). O `mix.wav` fica: apague-o depois de entregar.
 - **Depois**: `legendas_aula.py` e `entregar.py` como sempre (cada um sob a trava, ou a cadeia toda numa posse só:
@@ -167,7 +206,7 @@ os stems (o `rmtree` ignora o symlink): apague `/dev/shm/<aula>_*` depois da ent
 - **Hardlinks**: `aula_final.mp4` tem links em `entrega/` e `entrega_final/`; o script escreve em arquivo temporário e troca no
   fim (`ffmpeg -y` no mesmo nome truncaria a entrega antiga). Já `legendas_aula.py` + `entregar.py` reescrevem `.srt`/`.vtt` no mesmo
   arquivo: a legenda nova já vale em `entrega_final/` antes do MP4. Troque o MP4 logo depois (`ln -f entrega/<nome>.mp4 entrega_final/`).
-- Se cair no meio, o estado antigo fica em `out/<AULA>/_base` e a execução seguinte parte dele. Capítulo com `cortes` não é
+- Se cair no meio, o estado antigo fica em `out/<AULA>/_base` e a execução seguinte parte dele. Capítulo com `acelera` não é
   suportado (use o `finish.py`). H.264 bruto (`-f h264`) perde a ordem dos quadros B: por isso o remendo trabalha com pacotes de MP4.
 - **Mexeu na emenda de pacotes? Teste antes numa amostra** (copia `[0, IDR)` + recodifica um trecho + copia o resto, tirado do vídeo
   antigo): conferir pts/dts estritamente crescentes (passo 512), md5 dos quadros copiados idêntico ao antigo e PSNR dos recodificados

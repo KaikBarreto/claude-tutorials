@@ -145,6 +145,14 @@ for (const m of members(member(pub, 'Enums')?.type)) {
   else enums[nameOf(m)] = [literalValue(node)];
 }
 
+// types.ts da 1.38.19 poe status_fiscal_* em affiliate_commissions por engano; no banco (migration 20261101193000) sao de nfse_emissions.
+if (tables.affiliate_commissions && tables.nfse_emissions) {
+  for (const c of Object.keys(tables.affiliate_commissions.columns).filter((k) => k.startsWith('status_fiscal_'))) {
+    tables.nfse_emissions.columns[c] = tables.affiliate_commissions.columns[c];
+    delete tables.affiliate_commissions.columns[c];
+  }
+}
+
 const out = {
   _geradoDe: 'app/src/integrations/supabase/types.ts (rec/fakebase/tools/gen-schema.mjs)',
   tables,

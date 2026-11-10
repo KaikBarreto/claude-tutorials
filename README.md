@@ -139,7 +139,7 @@ Detalhes e exemplo de roteiro do robô: [`docs/04-gravacao.md`](docs/04-gravacao
 | 7 | Títulos falados | `narracao/titulos.py` | `narracao/titulos/` | [03](docs/03-narracao.md) |
 | 8 | Montagem | `edit/finish.py` | `edit/out/<AULA>/aula_final.mp4` | [05](docs/05-edicao.md) |
 | 9 | Legendas | `narracao/legendas_aula.py` | `.srt` + `.vtt` | [06](docs/06-legendas.md) |
-| 10 | Conferência e entrega | `folha_zooms.py`, `entregar.py` | vídeo completo + legendas com o mesmo nome | [07](docs/07-conferencia.md) |
+| 10 | Conferência e entrega | `folha_zooms.py`, `lacunas.py`, `confere_render.py`, `entregar.py`, `folhas3s.sh` (folha de 3 s do vídeo inteiro) | vídeo completo + legendas com o mesmo nome | [07](docs/07-conferencia.md) |
 
 Comandos de cada etapa estão nos guias. Toda tarefa pesada (gravar, renderizar, montar) roda sozinha, sob
 `flock $TUT_HOME/.heavy.lock`.

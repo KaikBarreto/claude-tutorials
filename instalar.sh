@@ -36,6 +36,8 @@ fi
 # gravador, editor e narração do tutorial
 mkdir -p "$TUT_HOME/rec/$TUTORIAL" "$TUT_HOME/$TUTORIAL/edit/caps" "$TUT_HOME/$TUTORIAL/edit/out" "$TUT_HOME/$TUTORIAL/narracao"
 cp -r --update=none "$F/rec/." "$TUT_HOME/rec/"
+# kit do robô por aula (ensaio rápido, resumo com a palavra falada, prévia do ritmo, explorador): o id da aula é o nome da pasta
+cp --update=none "$F/rec/molde/"*.py "$F/rec/molde/"*.mjs "$TUT_HOME/rec/$TUTORIAL/"
 cp -r --update=none "$F/edit/." "$TUT_HOME/$TUTORIAL/edit/"
 cp -r --update=none "$F/narracao/." "$TUT_HOME/$TUTORIAL/narracao/"
 pega() { [ -n "$P" ] && [ -f "$P/$1" ] && echo "$P/$1" || echo "$SKILL/modelos/$(basename "$1")"; }  # perfil > modelo

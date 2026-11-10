@@ -1,5 +1,5 @@
 """Passo final da aula: vinheta (com o titulo) + capitulos + cartela, e a trilha lo-fi com ducking sob a voz (kit/mix.py).
-uso: python3 <tutorial>/edit/finish.py <aula.json> [--render] [--skip-brand] [--crf 20] [--formato 16x9|9x16]
+uso: python3 <tutorial>/edit/finish.py <aula.json> [--render] [--skip-brand] [--crf 20] [--formato 16x9|9x16] [--manter-stems]
   aula.json: {"title": "titulo da vinheta", "outro_line": "Ate a proxima aula!", "out": "out/aula",
               "chapters": ["cap1.chapter.json", ...],            # na ordem; cada um ja renderizado (ou use --render)
               "mix": {"music_db": -7, "music_duck_db": -8, "music_seed": 3}, "sfx": true,
@@ -8,6 +8,9 @@ Reaproveita do kit sem alterar: kit/brand_clips.sh (vinheta/cartela) e kit/mix.p
 "sem_domiflix": true no JSON da aula tira o \"▶ DOMIFLIX\" da vinheta e da cartela 16:9 (padrao: com; o vertical nunca o tem).
 Com --formato 9x16 (ou "formato" no JSON) so troca as pecas de imagem: kit/brand_clips_vertical.sh, vinheta_cap_vertical.py e
 render_chapter_vertical.py; a voz, a trilha, o SFX e o mix.py sao os mesmos (mesmo som do 16:9). Sem a opcao, nada muda.
+No JSON do capitulo: "cortes": [[t0, t1], ...] tira video e voz (tela parada e sem fala) e "acelera": [[t0, t1, fator], ...] acelera
+um trecho sem fala com a tela mexendo (digitacao, formulario): mistura de quadros e o selo de velocidade do kit ("4x"), como o kit/render.py.
+Depois do mix, proj/build/stems e music.wav somem (so servem ao mix; --manter-stems mantem); o mix.wav fica.
 Monta um "projeto do kit" em <out>/proj (audio48k.wav = narracoes em sequencia, edl.json, render.json) e o mix.py roda em cima dele.
 Saidas: <out>/aula_final.mp4 (H.264 yuv420p bt709 TV + AAC 192k) e <out>/proj/build/mix.wav. Sempre sob flock .heavy.lock + nice."""
 import json, os, socket, subprocess, sys, time
@@ -43,16 +46,33 @@ print(f"{len(chs)} capitulos, {sum(c['frames'] for c in chs) / FPS:.1f} s de con
 
 # ---------------------------------------------------------------- cortes: trechos com a tela parada e sem fala (ex.: a pausa que sobrou
 # de uma frase trocada por outra mais curta). "cortes": [[t0, t1], ...] no JSON do capitulo, em s do video do capitulo.
+# T14 (06/11): "acelera": [[t0, t1, fator], ...] = trecho sem fala com a tela mexendo (digitacao) acelerado: cada quadro de saida e a media
+# de `fator` quadros seguidos da fonte (mistura, como o kit/render.py) com o selo de velocidade do kit (ui.speed_badge) no canto superior
+# direito. A voz do trecho (silencio) encolhe junto: sai [t0 + (t1 - t0) / fator, t1), que entra em "cortes" do capitulos.json para as
+# legendas e o entregar.py contarem o mesmo tempo.
 for c in chs:
-    cut = c["ch"].get("cortes") or []
-    if not cut: continue
-    n0 = c["frames"]; keep = [i for i in range(n0) if not any(a_ <= i / FPS < b_ for a_, b_ in cut)]
-    mp = lambda t, cut=cut: t - sum(min(max(t - a_, 0.0), b_ - a_) for a_, b_ in cut)
-    c.update(keep=set(keep), frames_src=n0, frames=len(keep), cortes=cut)
+    cut = c["ch"].get("cortes") or []; acc = [(float(a_), float(b_), int(k_)) for a_, b_, k_ in (c["ch"].get("acelera") or [])]
+    if not cut and not acc: continue
+    n0 = c["frames"]; grupos = []; i = 0
+    while i < n0:
+        t_ = i / FPS
+        if any(a_ <= t_ < b_ for a_, b_ in cut): i += 1; continue
+        ac = next((x for x in acc if x[0] <= t_ < x[1]), None)
+        if ac:  # o grupo tem pelo menos o quadro i (que já está no trecho): nunca fica vazio
+            g = [j for j in range(i, min(i + ac[2], n0)) if ac[0] <= j / FPS < ac[1]] or [i]; grupos.append(g); i = g[-1] + 1
+        else:
+            grupos.append([i]); i += 1
+    pseudo = [[round(a_ + (b_ - a_) / k_, 3), b_] for a_, b_, k_ in acc]  # o tempo que a aceleracao tira, como corte (audio, legendas)
+
+    def mp(t, cut=cut, acc=acc):
+        r = t - sum(min(max(t - a_, 0.0), b_ - a_) for a_, b_ in cut)
+        return r - sum(min(max(t - a_, 0.0), b_ - a_) * (1 - 1 / k_) for a_, b_, k_ in acc)
+    c.update(grupos=grupos, frames_src=n0, frames=len(grupos), cortes=sorted([list(x) for x in cut] + pseudo), acelera=[list(x) for x in acc],
+             selo=[(mp(a_), mp(b_), k_) for a_, b_, k_ in acc])
     c["zoom_in"] = [mp(float(z)) for z in c.get("zoom_in", [])]
     c["callouts"] = [dict(k, at=mp(float(k["at"]))) for k in c.get("callouts", [])]
     c["spots"] = [dict(k, at=mp(float(k["at"]))) for k in c.get("spots", [])]
-    print(f"{c['name']}: cortes {cut} -> {(n0 - len(keep)) / FPS:.2f} s a menos", flush=True)
+    print(f"{c['name']}: cortes {cut}, acelera {acc} -> {(n0 - len(grupos)) / FPS:.2f} s a menos", flush=True)
 
 # ---------------------------------------------------------------- vinhetas de capitulo (vinheta_cap.py): antes de cada capitulo com "card"
 # (exceto o primeiro, que ja vem depois da vinheta da aula). Entram como itens da linha do tempo: video gerado aqui,
@@ -123,7 +143,8 @@ edl = dict(fps=FPS, src_dur=CDUR, out_dur=CDUR, segments=S, noise_floor_db=round
            spots=[dict(s_out=round(st + float(k["at"]), 3)) for st, c in zip(starts, chs) for k in (c["spots"] if sfx else [])])
 json.dump(edl, open(os.path.join(PROJ, "edl.json"), "w"), ensure_ascii=False, indent=1)
 json.dump(L.get("mix", {}), open(os.path.join(PROJ, "render.json"), "w"))
-json.dump(dict(chapters=[dict(name=c["name"], start=s, dur=c["frames"] / FPS, cortes=c.get("cortes", []), voz=(c.get("voz") or {}).get("texto"))
+json.dump(dict(chapters=[dict(name=c["name"], start=s, dur=c["frames"] / FPS, cortes=c.get("cortes", []), voz=(c.get("voz") or {}).get("texto"),
+                              **({"acelera": c["acelera"]} if c.get("acelera") else {}))
                          for s, c in zip(starts, chs)]), open(os.path.join(OUT, "capitulos.json"), "w"), indent=1, ensure_ascii=False)
 print(f"voz: {len(speech)} blocos de fala | limiar {thr:.1f} dB, piso {floor:.1f} dB", flush=True)
 
@@ -139,6 +160,12 @@ if "--skip-brand" not in argv or not os.path.exists(os.path.join(BUILD, "intro_v
 
 # ---------------------------------------------------------------- trilha + ducking + SFX (kit/mix.py)
 run([sys.executable, os.path.join(KIT, "mix.py"), PROJ])
+if "--manter-stems" not in argv:  # stems e trilha so servem ao mix (como no remendar_aula.py): poupa ~1,3 GB no pico do finish (T11, 05/11)
+    import shutil
+    assert os.path.basename(BUILD) == "build" and os.path.basename(PROJ) == "proj"
+    shutil.rmtree(os.path.join(BUILD, "stems"), ignore_errors=True)
+    if os.path.exists(os.path.join(BUILD, "music.wav")):
+        os.remove(os.path.join(BUILD, "music.wav"))
 if any(c.get("card") for c in chs):  # Kaik 15:43: SFX tambem na saida da vinheta
     sys.path.insert(0, os.path.join(DOMI, "audio")); from kit import whoosh, pop, limit  # noqa: E402
     mw, _ = sf.read(os.path.join(BUILD, "mix.wav"), dtype="float64")
@@ -157,6 +184,27 @@ if any(c.get("card") for c in chs):  # Kaik 15:43: SFX tambem na saida da vinhet
         put(whoosh(0.45, 2600, 600, 1.0, 0.3, seed=9), t0 + c["frames"] / FPS - 0.62, -16)
     sf.write(os.path.join(BUILD, "mix.wav"), limit(mw, -1.0).astype(np.float32), SR, subtype="FLOAT")
     print("SFX das vinhetas de capitulo: ok", flush=True)
+
+# ---------------------------------------------------------------- selo de velocidade do trecho acelerado (T14): o mesmo do kit/render.py
+# (ui.speed_badge: pilula escura, icone de avanco, "4x"), no canto superior direito do quadro, entrando em 0,15 s e saindo em 0,12 s.
+# No vertical, no canto superior direito da area segura (x 1008, y 180: fora dos 180 px de cima, docs/05-edicao.md "Vertical 9:16").
+_SELO = {}
+SELO_X1, SELO_Y = (V.SEGURA[2], V.SEGURA[1]) if VERT else (W - 44, 34)
+
+
+def selo(img, kf, al):
+    if al <= 0.003: return img
+    if kf not in _SELO:
+        sys.path.insert(0, KIT); import ui  # noqa: E402
+        spr, pad = ui.speed_badge(kf); _SELO[kf] = (np.asarray(spr.convert("RGBA"), np.float32), pad)
+    a, pad = _SELO[kf]; h_, w_ = a.shape[:2]; bw = w_ - 2 * pad
+    x = int(round(SELO_X1 - bw - pad)); y = int(round(SELO_Y - 6 * (1 - al) - pad))
+    x0, y0, x1, y1 = max(0, x), max(0, y), min(W, x + w_), min(H, y + h_)
+    s = a[y0 - y:y1 - y, x0 - x:x1 - x]; m = s[..., 3:4] / 255 * al
+    out = np.array(img); reg = out[y0:y1, x0:x1].astype(np.float32)
+    out[y0:y1, x0:x1] = np.clip(reg * (1 - m) + s[..., :3] * m + 0.5, 0, 255).astype(np.uint8)
+    return out
+
 
 # ---------------------------------------------------------------- video: vinheta + capitulos + cartela (mesmos fundidos do kit/render.py)
 intro_p, outro_p = os.path.join(BUILD, "intro_v.mp4"), os.path.join(BUILD, "outro_v.mp4")
@@ -183,10 +231,21 @@ for k, c in enumerate(chs):
             enc.stdin.write(np.ascontiguousarray(img).tobytes()); c_idx += 1; f += 1
         continue
     rd = Reader(c["video"], W, H, explicit=False)  # o MP4 do capitulo ja carrega bt709/TV
-    keep = c.get("keep"); src_i = -1
-    for _ in range(c["frames"]):
-        img = rd.next(); src_i += 1
-        while keep is not None and src_i not in keep: img = rd.next(); src_i += 1
+    grupos = c.get("grupos"); src_i = -1
+    for oi in range(c["frames"]):
+        if grupos is None:
+            img = rd.next(); src_i += 1
+        else:  # cortes pulam quadros; aceleracao = media dos quadros do grupo (T14)
+            soma = None
+            for j in grupos[oi]:
+                while src_i < j: img = rd.next(); src_i += 1
+                if len(grupos[oi]) > 1: soma = img.astype(np.float32) if soma is None else soma + img
+            if soma is not None:
+                img = np.clip(soma / len(grupos[oi]) + 0.5, 0, 255).astype(np.uint8)
+            for s0, s1, kf in c.get("selo", []):
+                tt = oi / FPS
+                if s0 - 0.001 <= tt < s1:
+                    img = selo(img, kf, min(1.0, (tt - s0 + 1 / FPS) / 0.15, (s1 - tt) / 0.12))
         last_img = np.array(img)
         if last_intro is not None and c_idx < int(round(XF_IN * FPS)):
             p = c_idx / (XF_IN * FPS); img = (img.astype(np.float32) * p + last_intro.astype(np.float32) * (1 - p)).astype(np.uint8)
