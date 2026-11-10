@@ -24,10 +24,14 @@ para o render da edição. Sem aprovação no meio: termine e relate.
    `python3 ferramentas/edit/cenas/tempos_estimados.py planejamento/ecoflix/Tnn/cenas/tempos/capNN.json --tts planejamento/ecoflix/Tnn/narracao/tts_textos.py --cap N`
    O `W()` procura a grafia da legenda (já com as trocas: "QR", não "quê-érre"); número por extenso vira palavras soltas.
 3. `ilustracoes.json`: uma entrada por cena, na ordem da aula:
-   `{"cap": 3, "id": "ilu03_chave", "de": [2, "link", 1], "ate": [4, "fechada", 1], "cauda": 0.6, "resumo": "o link é uma chave"}`
+   `{"cap": 3, "id": "ilu03_chave", "de": [2, "link", 1], "ate": [4, "fechada", 1], "cauda": 0.6, "resumo": "o link é uma chave", "mostra": ["Cooperativa Recomeço", "Fundição Bandeira do Vale"]}`
    `de` = [linha, palavra, ocorrência] em cujo início a cena começa (a janela abre 0,3 s antes); `ate` = a palavra em cujo
    fim a cena pode sair; a janela fecha `cauda` segundos depois. A cena usa exatamente essas âncoras: é com elas que a
-   edição calcula o `at`, o `dur` e o `repouso` do `specs.json`.
+   edição calcula o `at`, o `dur` e o `repouso` do `specs.json`. `mostra` = todo nome, número e rótulo do app ou do mundo
+   que aparece escrito na cena, do jeito que aparece (a conferência final compara com a fala e o mundo).
+   **Ao mesmo tempo, o agente "Junção do mundo" acerta números e nomes entre as aulas** (caixas, saldos, CNPJ, outubro,
+   notas, veículos) e pode mudar algumas falas. Prenda as cenas de preferência em palavras que não são número, e antes de
+   dar a aula por pronta releia o `tts_textos.py`: se mudou, refaça os `tempos/` e confira de novo.
 
 ## Como a cena deve ser (PERFIL e Domiflix, sem exceção)
 - **Uma ideia por cena**, fácil de entender para quem não é técnico: a cena mostra, a fala explica. Texto curto (título
