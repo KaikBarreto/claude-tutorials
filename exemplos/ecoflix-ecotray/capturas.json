@@ -233,10 +233,6 @@
      "capturar": "inst_pronto"
     },
     {
-     "ponteiro": "Instalar",
-     "capturar": "inst_pronto_hover"
-    },
-    {
      "instalar": true,
      "etapa": [
       0,
@@ -325,6 +321,162 @@
      "concluir": true,
      "espera": 0.5,
      "capturar": "inst_fim"
+    }
+   ],
+   "_leia": "Sem captura de hover no botão: no Windows o tk.Button não muda de cor com o mouse em cima (só enquanto está pressionado); no X11 mudaria."
+  },
+  {
+   "nome": "painel_configurar",
+   "programa": "painel",
+   "_leia": "T5, cenas 5 e 6: balança liberada e nenhuma configurada; Configurar Balanças detecta a COM3; Adicionar, nome, porta, OK e Gravar. Com a detecção 'sucesso' o próprio diálogo troca o Protocolo para o detectado (aqui, Toledo).",
+   "abrir": {
+    "status": "warn",
+    "scale_info": "Sem balança conectada",
+    "printer_info": "Impressora: POS-58",
+    "printers_list": [
+     "POS-58"
+    ],
+    "version": "1.7.22"
+   },
+   "servidor": {
+    "versao": "1.7.22",
+    "trava": "unlocked",
+    "balancas": [],
+    "balanca_padrao": null,
+    "pesos": {},
+    "impressoras": [
+     "POS-58"
+    ],
+    "impressora_padrao": "POS-58",
+    "navegadores": 1,
+    "hora": "08:44:08",
+    "atividade": [
+     {
+      "ts": "08:44:10",
+      "msg": "Módulo Integração com Balança destravado",
+      "kind": "ok"
+     },
+     {
+      "ts": "08:41:07",
+      "msg": "Impresso em POS-58",
+      "kind": "ok"
+     },
+     {
+      "ts": "08:35:12",
+      "msg": "Impressora padrão: POS-58",
+      "kind": "info"
+     }
+    ],
+    "portas": [
+     {
+      "port": "COM3",
+      "desc": "USB-SERIAL CH340 (COM3)"
+     }
+    ],
+    "diagnostico": [
+     {
+      "port": "COM3",
+      "description": "USB-SERIAL CH340 (COM3)",
+      "hardware": "USB VID:PID=1A86:7523",
+      "hw_type": "usb",
+      "category": "sucesso",
+      "verdict": "Balança reconhecida",
+      "advice": "",
+      "raw": "",
+      "weight": "0.000",
+      "protocol": "toledo",
+      "baudrate": 9600,
+      "bytesize": 8,
+      "parity": "N",
+      "stopbits": 1
+     }
+    ],
+    "diagnostico_seg": 2.0
+   },
+   "passos": [
+    {
+     "capturar": "cfg_painel"
+    },
+    {
+     "clique": "Configurar Balanças",
+     "espera": 0.3
+    },
+    {
+     "janela": "Configurar Balanças",
+     "espera": 0.5,
+     "capturar": "cfg_detectando"
+    },
+    {
+     "janela": "Configurar Balanças",
+     "espera": 2.4,
+     "capturar": "cfg_detectado"
+    },
+    {
+     "janela": "Configurar Balanças",
+     "clique": "Adicionar",
+     "espera": 0.2
+    },
+    {
+     "janela": "Nova balança",
+     "espera": 0.4,
+     "capturar": "nova_vazia"
+    },
+    {
+     "janela": "Nova balança",
+     "digitar": {
+      "campo": "Nome",
+      "texto": "Balança do pátio",
+      "letras": 8
+     },
+     "capturar": "nova_nome_1"
+    },
+    {
+     "janela": "Nova balança",
+     "digitar": {
+      "campo": "Nome",
+      "texto": "Balança do pátio"
+     },
+     "capturar": "nova_nome"
+    },
+    {
+     "janela": "Nova balança",
+     "abrir_lista": "Porta Serial",
+     "espera": 0.4,
+     "capturar": "nova_lista_aberta"
+    },
+    {
+     "janela": "lista",
+     "capturar": "nova_lista"
+    },
+    {
+     "janela": "Nova balança",
+     "escolher": {
+      "campo": "Porta Serial",
+      "valor": "COM3  ✓ balança"
+     },
+     "capturar": "nova_porta"
+    },
+    {
+     "janela": "Nova balança",
+     "clique": "OK",
+     "espera": 0.2
+    },
+    {
+     "janela": "Configurar Balanças",
+     "espera": 0.4,
+     "capturar": "cfg_com_balanca"
+    },
+    {
+     "janela": "Configurar Balanças",
+     "estado": {
+      "hora": "08:45:02"
+     },
+     "clique": "Gravar",
+     "espera": 0.2
+    },
+    {
+     "espera": 1.2,
+     "capturar": "painel_balanca_do_patio"
     }
    ]
   }

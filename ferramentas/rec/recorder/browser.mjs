@@ -19,6 +19,9 @@ export const DEVICES = {
     userAgent: 'Mozilla/5.0 (Linux; Android 14; Pixel 8) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Mobile Safari/537.36',
     geolocation: { latitude: -22.9035, longitude: -43.1038, accuracy: 15 }, // Niterói (mundo fictício)
   },
+  // computador, na área da página do navegador maximizado da cena de Windows (1920x1200 com barra de tarefas):
+  // 1920x1068 = 1280x712 na escala 1,5 (docs/10-cena-windows.md)
+  windows: { width: 1280, height: 712 },
 };
 export const TZ = 'America/Sao_Paulo';
 /** "Agora" do mundo falso (FAKE_NOW, o mesmo do backend falso): congela a data do navegador na gravação. */

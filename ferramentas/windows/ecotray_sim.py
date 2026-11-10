@@ -95,6 +95,40 @@ class EcoTrayFalso:
                     await ws.send(json.dumps({"type": "activity_log", "data": list(self.e["atividade"])}, ensure_ascii=False))
                 elif a == "restore_dashboard":
                     await self._enviar(json.dumps({"type": "restore_window"}))
+                # ── janela "Configurar Balanças" (gate igual ao do ecotray.py: travado responde erro) ──
+                elif a in ("list_ports", "list_scale_protocols", "run_diagnostics", "set_scale") and self.e["trava"] != "unlocked":
+                    await ws.send(json.dumps({"type": "error", "message": "Módulo Integração com Balança não contratado"}, ensure_ascii=False))
+                elif a == "list_ports":  # [{"port": "COM3", "desc": "USB-SERIAL CH340 (COM3)"}, ...] do plano
+                    await ws.send(json.dumps({"type": "ports", "data": self.e.get("portas", [])}, ensure_ascii=False))
+                elif a == "list_scale_protocols":  # o catálogo de verdade (protocols/__init__.py)
+                    try:
+                        from protocols import list_protocols
+                        dados = list_protocols()
+                    except Exception:
+                        dados = [{"id": "auto", "vendor": "Automático (recomendado)"}]
+                    await ws.send(json.dumps({"type": "scale_protocols", "data": dados}, ensure_ascii=False))
+                elif a == "run_diagnostics":  # resultados do plano; o relatório sai do format_diagnosis_report de verdade
+                    await asyncio.sleep(float(self.e.get("diagnostico_seg", 2.5)))
+                    res = list(self.e.get("diagnostico", []))
+                    try:
+                        from scale_reader import format_diagnosis_report
+                        rel = format_diagnosis_report(res)
+                    except Exception:
+                        rel = ""
+                    await ws.send(json.dumps({"type": "diagnostics", "report": rel, "results": res}, ensure_ascii=False))
+                elif a == "set_scale":  # Gravar: a lista nova vira a do EcoTray falso; cada balança com porta "conecta"
+                    sc = d.get("scales") if isinstance(d.get("scales"), list) else []
+                    self.e["balancas"] = [{"id": s.get("id"), "nome": s.get("name") or "Balança", "porta": s.get("port"),
+                                           "baud": s.get("baudrate", 9600), "protocolo": s.get("protocol", "auto"),
+                                           "conectada": bool(s.get("port"))} for s in sc]
+                    self.e["balanca_padrao"] = d.get("default_scale_id") or (sc[0].get("id") if sc else None)
+                    await ws.send(json.dumps({"type": "scale_config", "success": True}))
+                    for s in self.e["balancas"]:
+                        if s["conectada"]:
+                            self.e["pesos"].setdefault(s["id"], "0.000")
+                            a_ = {"ts": self.e.get("hora", "08:30:00"), "msg": f"[scale:{s['nome']}] conectada", "kind": "ok"}
+                            self.e["atividade"].insert(0, a_); del self.e["atividade"][20:]
+                            await self._enviar(json.dumps({"type": "activity", **a_}, ensure_ascii=False))
                 else:
                     await ws.send(json.dumps({"type": "error", "message": f"Ação desconhecida: {a}"}, ensure_ascii=False))
         except Exception:
@@ -145,6 +179,14 @@ def preparar_tk():
         self.option_add("*Button.highlightBackground", "#f0f0f0", "widgetDefault")
         self.option_add("*Button.disabledForeground", "#6d6d6d", "widgetDefault")
         self.option_add("*Label.disabledForeground", "#6d6d6d", "widgetDefault")
+        # fontes padrão do Tk no Windows: Segoe UI 9 (aqui Noto Sans 9) para o que o app não define (campos, listas)
+        import tkinter.font as tkfont
+        for nome, peso in (("TkDefaultFont", "normal"), ("TkTextFont", "normal"), ("TkMenuFont", "normal"),
+                           ("TkHeadingFont", "bold"), ("TkCaptionFont", "bold"), ("TkTooltipFont", "normal")):
+            try:
+                tkfont.nametofont(nome, root=self).configure(family="Noto Sans", size=9, weight=peso)
+            except Exception:
+                pass
         RAIZES.append(self)
         self.after(700, iniciar_roteiro)
 
@@ -186,6 +228,13 @@ def alvos(root):
             r = [c.winfo_rootx() - rx, c.winfo_rooty() - ry, c.winfo_width(), c.winfo_height()]
             if isinstance(c, ttk.Notebook):
                 abas(c, r)
+            if c.winfo_class() in ("TEntry", "TCombobox", "Entry", "Text"):
+                # campo: o nome é o rótulo da mesma linha do grid ("campo:Nome"). Não ler "text" dele: o Tk aceita
+                # abreviação e devolve o -textvariable ("PY_VAR3").
+                rot = rotulo_da_linha(c) if c.winfo_manager() == "grid" else ""
+                if rot:
+                    add("campo:" + rot, r, "arrow" if c.winfo_class() == "TCombobox" and str(c.cget("state")) == "readonly" else "text")
+                anda(c); continue
             try:
                 t = c.cget("text")
             except Exception:
@@ -212,25 +261,103 @@ def alvos(root):
     return out
 
 
-def capturar(root, nome):
+class Lista:
+    """a lista aberta de um ttk.Combobox (popdown): uma janela do Tcl, sem objeto Python"""
+
+    def __init__(self, cb, caminho):
+        self.cb, self.p, self.t = cb, caminho, cb.tk
+
+    def winfo(self, k, w=None):
+        return int(self.t.call("winfo", k, w or self.p))
+
+    def rect(self):
+        return [self.winfo("rootx"), self.winfo("rooty"), self.winfo("width"), self.winfo("height")]
+
+    def alvos(self):
+        lb = self.p + ".f.l"; rx, ry = self.winfo("rootx"), self.winfo("rooty"); out = {}
+        lx, ly, lw = self.winfo("rootx", lb) - rx, self.winfo("rooty", lb) - ry, self.winfo("width", lb)
+        for i in range(int(self.t.call(lb, "size"))):
+            bb = self.t.splitlist(self.t.call(lb, "bbox", i))
+            if bb:
+                y, h = int(bb[1]), int(bb[3])
+                out["item:" + " ".join(str(self.t.call(lb, "get", i)).split())] = {"r": [lx, ly + y - 1, lw, h + 2], "cursor": "arrow"}
+        return out
+
+
+def achar_janela(root, titulo):
+    """None = a janela principal; "lista" = a lista aberta de um combobox; senão o Toplevel com esse título"""
+    import tkinter as tk
+    if not titulo:
+        return root
+    if titulo == "lista":
+        for w in _todos(root):
+            if w.winfo_class() == "TCombobox":
+                pd = str(w.tk.call("ttk::combobox::PopdownWindow", w))
+                if int(w.tk.call("winfo", "ismapped", pd)):
+                    return Lista(w, pd)
+        return None
+    for w in _todos(root):
+        if isinstance(w, tk.Toplevel) and w.winfo_ismapped() and w.title() == titulo:
+            return w
+    return None
+
+
+def capturar(root, nome, jan=None):
+    """PNG da janela (só ela, no tamanho real) + posição na tela + alvos. Toplevel = janela com moldura do Windows na cena"""
     from PIL import ImageGrab
     root.update(); time.sleep(0.05); root.update()
-    x, y, w, h = janela_rect(root)
+    jan = jan or root
+    extra = {}
+    if isinstance(jan, Lista):
+        x, y, w, h = jan.rect(); al, tipo, tit = jan.alvos(), "lista", ""
+        dona = jan.cb.winfo_toplevel()  # a cena põe a lista no mesmo lugar em relação à janela dona (que ganha moldura)
+        extra = {"dona": dona.title() if dona is not root else "", "rel": [x - dona.winfo_rootx(), y - dona.winfo_rooty()]}
+    else:
+        x, y, w, h = janela_rect(jan); al = alvos(jan)
+        tipo, tit = ("raiz", "") if jan is root else ("toplevel", jan.title())
     img = ImageGrab.grab(bbox=(x, y, x + w, y + h), xdisplay=DISPLAY)
     arq = f"{nome}.png"; img.save(SAIDA / arq, optimize=True)
-    QUADROS[nome] = {"arquivo": arq, "janela": [x, y, w, h], "alvos": alvos(root)}
-    print(f"  {nome}: janela {w}x{h} em ({x}, {y})", flush=True)
+    QUADROS[nome] = {"arquivo": arq, "janela": [x, y, w, h], "alvos": al, "tipo": tipo, **({"titulo": tit} if tit else {}), **extra}
+    print(f"  {nome}: {tipo}{' ' + repr(tit) if tit else ''} {w}x{h} em ({x}, {y})", flush=True)
 
 
-def ponteiro(root, alvo):
+def ponteiro(win, alvo):
     """leva o ponteiro do X até o centro do alvo (dispara Enter/Leave de verdade) ou para fora da janela"""
     if alvo is None:
-        root.event_generate("<Motion>", warp=True, x=-400, y=-400); return
-    a = alvos(root).get(alvo)
+        win.event_generate("<Motion>", warp=True, x=-400, y=-400); return
+    a = alvos(win).get(alvo)
     if not a:
         ERROS.append(f"alvo {alvo!r} não achado na janela"); return
     x, y, w, h = a["r"]
-    root.event_generate("<Motion>", warp=True, x=x + w // 2, y=y + h // 2)
+    win.event_generate("<Motion>", warp=True, x=x + w // 2, y=y + h // 2)
+
+
+def rotulo_da_linha(w):
+    """texto do rótulo na coluna 0 da mesma linha do grid do campo w"""
+    try:
+        r = int(w.grid_info()["row"])
+        for c in w.master.grid_slaves(row=r, column=0):
+            t = c.cget("text")
+            if isinstance(t, str) and t.strip():
+                return " ".join(t.split())
+    except Exception:
+        pass
+    return ""
+
+
+def achar_campo(win, rotulo, tipo=None):
+    """o campo (Entry/Combobox) na coluna ao lado do rótulo, na mesma linha do grid (ex.: "Nome", "Porta Serial")"""
+    for w in _todos(win):
+        try:
+            t = w.cget("text")
+        except Exception:
+            continue
+        if isinstance(t, str) and t.strip() == rotulo and w.winfo_manager() == "grid":
+            r = int(w.grid_info()["row"])
+            for c in w.master.grid_slaves(row=r):
+                if c is not w and (tipo is None or c.winfo_class() == tipo):
+                    return c
+    return None
 
 
 # ───────────────────────────── roteiro das sessões ─────────────────────────────
@@ -288,9 +415,6 @@ def roteiro_painel(srv, s):
                 srv.enviar({"type": "print_notification", "success": True, "printer": p["impresso"]})
             if "enviar" in p:
                 srv.enviar(p["enviar"])
-            if p.get("atualizar"):  # clique no ↻ da seção Balanças (get_status de novo)
-                ponteiro(root, None)
-                yield 0.05
             if "aba" in p:
                 import tkinter.ttk as ttk
                 for w in _todos(root):
@@ -299,16 +423,48 @@ def roteiro_painel(srv, s):
                             if w.tab(i, "text").strip() == p["aba"]:
                                 w.select(i)
                         break
-            if "clique" in p:  # clique de verdade num alvo (ex.: ↻, uma impressora): ButtonPress/Release no widget
-                _clicar(root, p["clique"])
+            jan = achar_janela(root, p.get("janela")) if p.get("janela") != "lista" else None
+            if p.get("janela") and p["janela"] != "lista" and jan is None:
+                ERROS.append(f"janela {p['janela']!r} não está aberta (passo {p})"); yield 0.1; continue
+            jan = jan or root
+            if "clique" in p:  # clique de verdade num alvo (ex.: ↻, "Configurar Balanças", "Adicionar"): ButtonPress/Release.
+                # Pelo after: um diálogo modal do app (wait_window) roda um laço de eventos aninhado e o roteiro segue nele.
+                root.after(0, lambda j=jan, a=p["clique"]: _clicar(j, a))
+            if "digitar" in p:  # {"campo": "Nome", "texto": "Balança do pátio", "letras": 7?}: digita no Entry do rótulo
+                d_ = p["digitar"]; c = achar_campo(jan, d_["campo"])
+                if c is None:
+                    ERROS.append(f"campo {d_['campo']!r} não achado")
+                else:
+                    tx = d_["texto"][:d_["letras"]] if d_.get("letras") is not None else d_["texto"]
+                    c.focus_force(); c.delete(0, "end"); c.insert(0, tx); c.icursor("end")
+            if "abrir_lista" in p:  # abre a lista do combobox do rótulo (ttk::combobox::Post)
+                c = achar_campo(jan, p["abrir_lista"], "TCombobox")
+                if c is None:
+                    ERROS.append(f"combobox {p['abrir_lista']!r} não achado")
+                else:
+                    c.focus_force(); c.tk.call("ttk::combobox::Post", c)
+            if "escolher" in p:  # {"campo": "Porta Serial", "valor": "COM3  ✓ balança"}: fecha a lista e seleciona
+                d_ = p["escolher"]; c = achar_campo(jan, d_["campo"], "TCombobox")
+                if c is None:
+                    ERROS.append(f"combobox {d_['campo']!r} não achado")
+                else:
+                    try:
+                        c.tk.call("ttk::combobox::Unpost", c)
+                    except Exception:
+                        pass
+                    c.set(d_["valor"]); c.event_generate("<<ComboboxSelected>>")
             yield float(p.get("espera", 0.45))
-            if "ponteiro" in p:
-                ponteiro(root, p["ponteiro"])
+            if p.get("janela") == "lista":
+                jan = achar_janela(root, "lista")
+                if jan is None:
+                    ERROS.append("nenhuma lista de combobox aberta"); continue
+            if "ponteiro" in p and not isinstance(jan, Lista):
+                ponteiro(jan, p["ponteiro"])
                 yield 0.25
             if "capturar" in p:
-                capturar(root, p["capturar"])
-            if p.get("soltar_ponteiro", "ponteiro" in p):
-                ponteiro(root, None)
+                capturar(root, p["capturar"], jan)
+            if p.get("soltar_ponteiro", "ponteiro" in p) and not isinstance(jan, Lista):
+                ponteiro(jan, None)
                 yield 0.15
         yield 0.1
     SESSAO.update(gerador=gerador, nome=nome_s)
@@ -328,7 +484,15 @@ def _clicar(root, alvo):
     root.event_generate("<Motion>", warp=True, x=cx, y=cy); root.update()
     alvo_w = root.winfo_containing(root.winfo_rootx() + cx, root.winfo_rooty() + cy)
     if alvo_w is not None:
-        alvo_w.event_generate("<ButtonPress-1>", x=1, y=1); alvo_w.event_generate("<ButtonRelease-1>", x=1, y=1)
+        alvo_w.event_generate("<ButtonPress-1>", x=1, y=1)
+        try:  # o clique pode ter fechado a janela (OK, Gravar): aí não há onde soltar o botão
+            alvo_w.event_generate("<ButtonRelease-1>", x=1, y=1)
+        except Exception:
+            pass
+    try:
+        root.event_generate("<Motion>", warp=True, x=-400, y=-400)  # captura sem hover; hover só com "ponteiro"
+    except Exception:
+        pass
 
 
 class CaminhoWindows(PosixPath):

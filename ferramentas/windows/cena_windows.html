@@ -89,8 +89,21 @@
   #down-menu .op.hv-on { background: #eef1f4; }
   #bn-down.ativo { color: #0b57d0; }
 
-  /* janelas do EcoTray (PNGs do código de verdade: sem sombra nem cantos, como uma janela overrideredirect do Tk) */
-  .tk { position: absolute; image-rendering: auto; }
+  /* janelas do EcoTray (PNGs do código de verdade): a raiz overrideredirect do Tk fica sem sombra nem cantos; o Toplevel
+     ganha a moldura do Windows 11 (barra de título clara, que o Tk não escurece); a lista de um combobox, sombra leve */
+  .win { position: absolute; }
+  .win > img { display: block; }
+  .win.lista { box-shadow: 0 4px 10px rgba(0,0,0,.28); }
+  .win.moldura { border-radius: 8px; overflow: hidden; background: #f3f3f3;
+                 box-shadow: 0 0 0 1px rgba(0,0,0,.40), 0 14px 42px rgba(0,0,0,.42); }
+  .win.moldura.inativa .tbar { color: #8a8a8a; }
+  .tbar { height: 32px; display: flex; align-items: center; font-size: 12px; color: #1b1b1b; background: #f3f3f3; }
+  .tbar .ico { width: 16px; height: 16px; margin: 0 9px 0 10px; }
+  .tbar .tt { flex: 1; white-space: nowrap; overflow: hidden; }
+  .tbar .cbt { width: 46px; height: 32px; display: grid; place-items: center; color: #1b1b1b; }
+  .tbar .cbt.off { color: #b4b4b4; }
+  .tbar .cbt.hv-on { background: rgba(0,0,0,.06); }
+  .tbar .cbt.fx.hv-on { background: #c42b1c; color: #fff; }
 
   /* SmartScreen (recriação genérica, sem logo) */
   #smart { width: 660px; height: 560px; background: #1268c4; color: #fff;
@@ -142,6 +155,11 @@
   #menu .ms { height: 1px; background: #e2e2e2; margin: 4px 0; }
   #dica { background: #f9f9f9; border-radius: 4px; padding: 5px 9px; font-size: 12px; color: #1b1b1b;
           box-shadow: 0 0 0 1px rgba(0,0,0,.12), 0 4px 10px rgba(0,0,0,.14); white-space: nowrap; }
+  /* empilhamento: janelas do programa (100+, topmost) < balão/SmartScreen < barra de tarefas < menus e dica */
+  #down, #down-menu, #smart { z-index: 950; }
+  #barra { z-index: 900; }
+  #ocultos, #menu, #dica { z-index: 1000; }
+  #mira { z-index: 2000; }
   #mira { width: 14px; height: 14px; margin: -7px 0 0 -7px; border-radius: 7px; border: 2px solid #ff2d55; background: rgba(255,45,85,.25); }
 </style>
 </head>
@@ -165,6 +183,7 @@ const P = {
   restaurar: '<rect x="5.5" y="8.5" width="10" height="10" rx="1.2"/><path d="M8.5 8.5V6.7c0-.7.5-1.2 1.2-1.2h7.6c.7 0 1.2.5 1.2 1.2v7.6c0 .7-.5 1.2-1.2 1.2h-1.8"/>',
   arquivo: '<path d="M7 3.5h7l4.5 4.5v12.5H7z"/><path d="M14 3.5V8h4.5"/>', aviso: '<path d="M12 4 21 19.5H3z"/><path d="M12 10v4.5"/><circle cx="12" cy="17" r=".9" fill="currentColor"/>',
   mais_aba: '<path d="M12 6v12M6 12h12"/>',
+  setinha: '<path d="M6 9.5l6 6 6-6"/>',
 };
 const ic = (n, px, cor, sw) => `<svg width="${px}" height="${px}" viewBox="0 0 24 24" fill="none" stroke="${cor || 'currentColor'}" stroke-width="${sw || 1.6}" stroke-linecap="round" stroke-linejoin="round">${P[n]}</svg>`;
 // ícones coloridos da barra de tarefas (genéricos: pasta e globo, sem marca de ninguém)
@@ -178,7 +197,7 @@ const el = (html, pai) => { const t = document.createElement('template'); t.inne
 const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
 const suave = u => { u = clamp(u, 0, 1); return u * u * u * (u * (u * 6 - 15) + 10); }; // mínimo solavanco (5ª ordem)
 const fade = (t, t0, d) => clamp((t - t0) / d, 0, 1);
-let TELA, CFG, SPEC, Q, W, H, DSF, EV = [], INI, SEG = [], CLIQUES = [], ACOES = [], ROBO = null, ULT = null;
+let TELA, CFG, SPEC, Q, W, H, DSF, EV = [], INI, SEG = [], CLIQUES = [], ARRASTOS = [], ACOES = [], ROBO = null;
 
 // ───────────────────────────── estado ─────────────────────────────
 function estadoInicial() {
@@ -188,7 +207,7 @@ function estadoInicial() {
     nav: { visivel: n.visivel !== false, modo: n.modo || 'maximizado', rect: n.rect || null, url: n.url || 'ecosistematecnologia.com.br',
            aba: n.aba || 'EcoSistema | Sistema para Reciclagens', downIcone: false, desde: -9 },
     campos: Object.fromEntries((SPEC.campos || []).map(c => [c.id, c.texto || ''])),
-    painel: { q: null, desde: -9 }, instalador: { q: null, desde: -9 },
+    jan: {},  // janelas do programa por "vaga" (painel, instalador, config, dialogo, lista...): {q, desde, pos, arr}
     bandeja: { q: b.icone === undefined ? null : b.icone, fixado: b.fixado !== false },
     menu: { vis: false, x: 0, y: 0, desde: -9 }, ocultos: { vis: false, desde: -9 }, dica: { vis: false, texto: '', alvo: '', desde: -9 },
     smart: { estado: null, desde: -9 }, down: { estado: null, desde: -9, pct: 0, aberto: false },
@@ -199,8 +218,17 @@ const ESTADOS_DOWN = ['baixando', 'aviso', 'opcoes', 'concluido'];
 function aplicaPasso(s, p, t) {
   const o = p.o || p.do;
   switch (p.do) {
-    case 'painel': s.painel = { q: p.quadro || null, desde: s.painel.q && p.quadro ? s.painel.desde : t }; break;
-    case 'instalador': s.instalador = { q: p.quadro || null, desde: s.instalador.q && p.quadro ? s.instalador.desde : t }; break;
+    case 'painel': case 'instalador': case 'janela': {  // troca a captura mostrada na vaga (null = a janela some)
+      const v = p.do === 'janela' ? (p.slot || p.janela || 'janela') : p.do, a = s.jan[v] || { q: null, desde: -9, pos: null, arr: null };
+      s.jan[v] = p.quadro ? { ...a, q: p.quadro, desde: a.q ? a.desde : t, pos: p.pos || a.pos } : { ...a, q: null, desde: t };
+      break;
+    }
+    case 'arrastar': {  // a janela vai até "para" (canto de cima à esquerda) em "dur" s, presa ao cursor
+      const v = p.janela || 'painel', a = s.jan[v]; if (!a || !a.q) break;
+      const de = posJanela(a, t, s.jan), dur = p.dur || 0.9;
+      s.jan[v] = { ...a, pos: p.para.slice(), arr: { t0: t, t1: t + dur, de, para: p.para.slice() } };
+      break;
+    }
     case 'bandeja': if ('icone' in p) s.bandeja.q = p.icone; if ('fixado' in p) s.bandeja.fixado = !!p.fixado; break;
     case 'campo': s.campos[p.id] = String(p.texto); break;
     case 'navegador': Object.assign(s.nav, Object.fromEntries(Object.entries(p).filter(([k]) => !['at', 'do'].includes(k)))); break;
@@ -216,8 +244,7 @@ function aplicaPasso(s, p, t) {
       else if (p.o === 'dica') s.dica = { vis: v, texto: p.texto || s.dica.texto || 'EcoTray', alvo: p.alvo || s.dica.alvo || 'bandeja:ecotray', desde: t };
       else if (p.o === 'atalho') s.atalho = v;
       else if (p.o === 'navegador') s.nav.visivel = v;
-      else if (p.o === 'painel') s.painel = v ? s.painel : { q: null, desde: t };
-      else if (p.o === 'instalador') s.instalador = v ? s.instalador : { q: null, desde: t };
+      else if (s.jan[p.o] && !v) s.jan[p.o] = { ...s.jan[p.o], q: null, desde: t };
       else if (p.o === 'smartscreen') s.smart = v ? { estado: p.estado || 'aviso', desde: t } : { estado: null, desde: t };
       else if (p.o === 'download') { if (v) { s.down = { ...s.down, estado: p.estado || 'concluido', desde: t }; s.nav.downIcone = true; } else s.down = { ...s.down, estado: null, desde: t }; }
       break;
@@ -268,23 +295,32 @@ function montar() {
           background:${e.fundo || '#fff'};color:${e.cor || '#18181b'};font-family:'${e.fonte || 'Montserrat'}';font-weight:${e.peso || 500};
           font-size:${(e.tamanho || 11.5) * s}px;line-height:${R[3]}px;padding-left:${(e.recuo || 9) * s}px"></div>`, pg);
   }
-  // janelas do EcoTray (uma <img> por quadro capturado, só uma visível por vez)
+  // janelas do programa: um elemento por captura (a imagem já carregada; a vaga escolhe qual aparece). Toplevel do Tk =
+  // janela com moldura do Windows 11 (barra de título clara, ícone do app, — ▢ ✕); a raiz overrideredirect fica sem moldura.
   for (const [nome, q] of Object.entries(Q)) {
     if (q.tipo === 'bandeja') continue;
-    el(`<img class="tk oculto" data-q="${nome}" src="${CFG.capturas}/${q.arquivo}" style="left:${q.janela[0]}px;top:${q.janela[1]}px;width:${q.janela[2]}px;height:${q.janela[3]}px">`);
+    const [, , w, h] = q.janela, img = `<img src="${CFG.capturas}/${q.arquivo}" style="width:${w}px;height:${h}px">`;
+    if (q.tipo === 'toplevel') el(`<div class="win moldura oculto" data-q="${nome}" style="width:${w}px;height:${h + TB}px">
+        <div class="tbar"><img class="ico" src="${CFG.icone_app}"><span class="tt">${q.titulo || ''}</span>
+          <div class="cbt" data-alvo="${nome}::minimizar" data-hv>${ic('min', 16, null, 1.1)}</div>
+          <div class="cbt off">${ic('max', 14, null, 1.1)}</div>
+          <div class="cbt fx" data-alvo="${nome}::fechar" data-hv>${ic('x', 16, null, 1.1)}</div></div>${img}</div>`);
+    else el(`<div class="win${q.tipo === 'lista' ? ' lista' : ''} oculto" data-q="${nome}" style="width:${w}px;height:${h}px">${img}</div>`);
   }
-  // SmartScreen
+  // SmartScreen (textos da pessoa ler e clicar; trocáveis em "smartscreen" na cena)
+  const SM = { titulo: 'O Windows protegeu o computador', corpo: 'O Microsoft Defender SmartScreen impediu a inicialização de um '
+    + 'aplicativo não reconhecido. A execução deste aplicativo pode colocar o computador em risco.', rotulo_editor: 'Editor',
+    editor: 'Editor desconhecido', ...(SPEC.smartscreen || {}) };
   el(`<div id="smart" class="camada oculto"><div class="fx" data-alvo="smartscreen:fechar" data-hv>${ic('x', 16, '#fff', 1.3)}</div>
-       <h1>O Windows protegeu o computador</h1>
-       <div class="corpo">O Microsoft Defender SmartScreen impediu a inicialização de um aplicativo não reconhecido. A execução deste
-         aplicativo pode colocar seu computador em risco.<br><span class="link" data-alvo="smartscreen:Mais informações" data-hv>Mais informações</span>
-         <div class="det oculto"><span>Aplicativo:</span><span class="app-nome"></span><span>Fornecedor:</span><span>Fornecedor desconhecido</span></div></div>
+       <h1>${SM.titulo}</h1>
+       <div class="corpo">${SM.corpo}<br><span class="link" data-alvo="smartscreen:Mais informações" data-hv>Mais informações</span>
+         <div class="det oculto"><span>Aplicativo:</span><span class="app-nome"></span><span>${SM.rotulo_editor}:</span><span>${SM.editor}</span></div></div>
        <div class="rodape"><div class="bs exec oculto" data-alvo="smartscreen:Executar assim mesmo" data-hv>Executar assim mesmo</div>
          <div class="bs" data-alvo="smartscreen:Não executar" data-hv>Não executar</div></div></div>`);
   // balão de downloads
   el(`<div id="down" class="camada oculto"><div class="cab">Downloads recentes</div>
        <div class="item"><div class="ic">${ic('arquivo', 20)}</div><div class="txt"><div class="nome"></div><div class="sub"></div><div class="barra"><i></i></div></div>
-         <div class="mais" data-alvo="download:opcoes" data-hv>${ic('mais', 18)}</div></div>
+         <div class="mais" data-alvo="download:opcoes" data-hv>${ic('setinha', 18, null, 1.8)}</div></div>
        <div class="acoes"></div></div>`);
   el(`<div id="down-menu" class="camada oculto"><div class="op" data-alvo="download:Manter" data-hv>Manter</div><div class="op" data-alvo="download:Excluir" data-hv>Excluir</div></div>`);
   // barra de tarefas
@@ -330,17 +366,22 @@ function aplicar(s, t) {
   $('#omni').style.width = (tbW - 124 - (s.nav.downIcone ? 128 : 92)) + 'px';
   const host = s.nav.url.split('/')[0], resto = s.nav.url.slice(host.length);
   $('#omni .url').innerHTML = `<b>${host}</b><i>${resto}</i>`; $('#abas .aba .t').textContent = s.nav.aba;
-  const focoEco = !!(s.painel.q || s.instalador.q || s.smart.estado);
+  const vagas = Object.entries(s.jan).filter(([, j]) => j.q && Q[j.q]);
+  const focoEco = !!(vagas.length || s.smart.estado);
   nav.classList.toggle('inativo', focoEco);
   // campo sem texto = não cobre nada (a imagem mostra o campo como está)
   for (const c of SPEC.campos || []) { const e = $('#campo-' + c.id), v = s.campos[c.id]; e.textContent = v ?? ''; mostra(e, v != null && v !== ''); }
   // atalho
   mostra($('#atalhos'), s.atalho);
-  // janelas do EcoTray: a imagem do quadro atual, entrada rápida (o Tk aparece de uma vez; 0,12 s só tira o "estalo")
-  const vis = { [s.painel.q]: s.painel.desde, [s.instalador.q]: s.instalador.desde };
-  for (const img of document.querySelectorAll('img.tk')) {
-    const q = img.dataset.q, on = q in vis && q !== 'null';
-    mostra(img, on); if (on) img.style.opacity = fade(t, vis[q], 0.12);
+  // janelas do programa: a captura atual de cada vaga, na posição dela (arrastada ou a do código), empilhadas pela ordem
+  // em que abriram; a lista de combobox sempre por cima. Entrada de 0,12 s (o Tk aparece de uma vez; só tira o "estalo").
+  const ordem = vagas.slice().sort((a, b) => (Q[a[1].q].tipo === 'lista') - (Q[b[1].q].tipo === 'lista') || a[1].desde - b[1].desde);
+  const ativos = new Map(ordem.map(([v, j], i) => [j.q, { j, z: 100 + i, ultimo: i === ordem.length - 1 }]));
+  for (const w of document.querySelectorAll('.win')) {
+    const a = ativos.get(w.dataset.q); mostra(w, !!a); if (!a) continue;
+    const [x, y] = posJanela(a.j, t);
+    Object.assign(w.style, { left: x + 'px', top: y + 'px', zIndex: a.z, opacity: fade(t, a.j.desde, 0.12) });
+    w.classList.toggle('inativa', !a.ultimo);
   }
   // SmartScreen
   const sm = $('#smart'); mostra(sm, !!s.smart.estado);
@@ -403,12 +444,17 @@ function aplicar(s, t) {
 // ───────────────────────────── alvos ─────────────────────────────
 function visivel(e) { for (let n = e; n && n !== document.body; n = n.parentElement) if (n.classList.contains('oculto')) return false; return true; }
 function alvoRectAtual(nome) {
-  // janelas do EcoTray: os alvos vêm do quadros.json do quadro visível
-  const m = /^(painel|instalador):(.+)$/.exec(nome);
-  if (m) {
-    const qn = CUR_JANELA[m[1]]; if (!qn || !Q[qn]) return null;
-    const q = Q[qn], a = (q.alvos || {})[m[2]];
-    return a ? [q.janela[0] + a.r[0], q.janela[1] + a.r[1], a.r[2], a.r[3], a.cursor] : null;
+  // janelas do programa: "<vaga>:<alvo>" com os alvos do quadros.json da captura visível naquela vaga
+  // (Toplevel: a área do Tk começa abaixo da barra de título; "<vaga>:fechar" é o ✕ da moldura)
+  const m = /^([^:]+):(.+)$/.exec(nome);
+  if (m && CUR_JAN[m[1]] && CUR_JAN[m[1]].q && Q[CUR_JAN[m[1]].q]) {
+    const j = CUR_JAN[m[1]], q = Q[j.q], [x, y] = posJanela(j, CUR_T), top = q.tipo === 'toplevel';
+    if (top && (m[2] === 'fechar' || m[2] === 'minimizar')) {
+      const e = document.querySelector(`[data-alvo="${CSS.escape(j.q + '::' + m[2])}"]`); if (!e) return null;
+      const r = e.getBoundingClientRect(); return [r.left, r.top, r.width, r.height, 'arrow'];
+    }
+    const a = (q.alvos || {})[m[2]]; const dy = top ? TB : 0;
+    return a ? [x + a.r[0], y + dy + a.r[1], a.r[2], a.r[3], a.cursor] : null;
   }
   const mt = /^tela:(-?[\d.]+),(-?[\d.]+)$/.exec(nome); if (mt) return [+mt[1] - 1, +mt[2] - 1, 2, 2];
   const mp = /^navegador:(-?[\d.]+),(-?[\d.]+)$/.exec(nome);
@@ -422,8 +468,18 @@ function alvoRectAtual(nome) {
   const link = nome === 'smartscreen:Mais informações';
   return [r.left, r.top, r.width, r.height, link ? 'pointer' : 'arrow'];
 }
-let CUR_JANELA = {};
-function irPara(t) { const s = estadoEm(t); CUR_JANELA = { painel: s.painel.q, instalador: s.instalador.q }; aplicar(s, t); return s; }
+let CUR_JAN = {}, CUR_T = 0; const TB = 32;  // altura da barra de título do Windows 11 a 100%
+function posJanela(j, t, jan = CUR_JAN) {  // canto de cima à esquerda: arrastando, a posição arrastada, ou a do código
+  if (j.arr && t < j.arr.t1) { const u = suave((t - j.arr.t0) / (j.arr.t1 - j.arr.t0)); return [0, 1].map(k => j.arr.de[k] + (j.arr.para[k] - j.arr.de[k]) * u); }
+  if (j.pos) return j.pos.slice();
+  const q = Q[j.q]; if (!q) return [0, 0];
+  if (q.tipo === 'lista' && q.rel) {  // a lista do combobox acompanha a janela dona (que pode ter moldura ou ter sido arrastada)
+    const dona = Object.values(jan || {}).find(o => o.q && Q[o.q] && (q.dona ? Q[o.q].titulo === q.dona : Q[o.q].tipo === 'raiz'));
+    if (dona) { const b = posJanela(dona, t, jan); return [b[0] + q.rel[0], b[1] + (Q[dona.q].tipo === 'toplevel' ? TB : 0) + q.rel[1]]; }
+  }
+  return [q.janela[0], q.janela[1]];
+}
+function irPara(t) { const s = estadoEm(t); CUR_JAN = s.jan; CUR_T = t; aplicar(s, t); return s; }
 
 // ───────────────────────────── cursor: trajetórias e cliques ─────────────────────────────
 function rng(seed) { let x = seed >>> 0 || 1; return () => ((x = (x * 1664525 + 1013904223) >>> 0) / 4294967296); }
@@ -431,6 +487,23 @@ function planejarCursor() {
   const passos = (SPEC.passos || []).map((p, i) => ({ ...p, i })).sort((a, b) => a.at - b.at || a.i - b.i);
   let pos = (SPEC.cursor || {}).inicio || [W * 0.42, H * 0.5], livre = 0; const r = rng(SPEC.semente || 7);
   for (const p of passos) {
+    if (p.do === 'arrastar') {  // pega a janela pelo alvo (padrão: o meio do topo dela), arrasta junto e solta
+      if (ROBO) { const q = posRobo(p.at - 0.9); if (q) pos = q; }
+      irPara(p.at - 0.001); const v = p.janela || 'painel', j = CUR_JAN[v];
+      if (!j || !j.q) { ERROS.push(`arrastar: a janela "${v}" não está aberta em ${p.at} s`); continue; }
+      const de = posJanela(j, p.at), q = Q[j.q], top = q.tipo === 'toplevel';
+      const a = p.alvo ? alvoRectAtual(p.alvo) : [de[0] + q.janela[2] * 0.3, de[1] + (top ? 8 : 12), 2, 2, 'arrow'];
+      if (!a) { ERROS.push(`alvo não achado: ${p.alvo} (passo em ${p.at} s)`); continue; }
+      const g = [a[0] + a[2] / 2, a[1] + a[3] / 2], dur = p.dur || 0.9, d = Math.hypot(g[0] - pos[0], g[1] - pos[1]);
+      const ida = clamp(0.38 + d / 2600, 0.38, 1.05), t0 = Math.max(livre, p.at - 0.12 - ida);
+      if (d > 0.5) SEG.push({ t0, t1: p.at - 0.12, p0: pos.slice(), p1: g, curva: (r() - 0.5) * 0.16 * d, tipo: 'arrow' });
+      const fim = [g[0] + p.para[0] - de[0], g[1] + p.para[1] - de[1]];
+      SEG.push({ t0: p.at, t1: p.at + dur, p0: g, p1: fim, curva: 0, tipo: 'arrow' });
+      ARRASTOS.push({ td: p.at, tu: p.at + dur, p0: g, p1: fim });
+      if (p.label) ACOES.push({ i: ACOES.length, do: 'drag', label: p.label, at: p.at, tStart: t0, tEnd: p.at + dur + 0.2, tAct: p.at,
+                                rect: [Math.min(g[0], fim[0]) - 4, Math.min(g[1], fim[1]) - 4, Math.abs(fim[0] - g[0]) + 8, Math.abs(fim[1] - g[1]) + 8], point: fim, ok: true });
+      pos = fim; livre = p.at + dur + 0.05; continue;
+    }
     if (!['mover', 'clicar', 'duplo'].includes(p.do)) continue;
     if (ROBO) { const q = posRobo(p.at - (p.dur || 0.7) - 0.2); if (q) pos = q; }
     irPara(p.at - 0.001);
@@ -498,7 +571,7 @@ window.setup = async (cfg) => {
     const out = [e];
     const extra = (k, mostrar) => [].concat(e.p[k] || []).forEach(x => out.push({ t: e.t + (x.atraso ?? 0.06), p: typeof x === 'string' ? { do: mostrar ? 'mostrar' : 'esconder', o: x } : { do: mostrar ? 'mostrar' : 'esconder', ...x }, i: e.i + 0.5 }));
     extra('mostra', true); extra('esconde', false);
-    if (e.p.do === 'sequencia') return (e.p.quadros || []).map(([dt, q], k) => ({ t: e.t + dt, p: { do: e.p.janela || 'painel', quadro: q }, i: e.i + k / 100 }));
+    if (e.p.do === 'sequencia') return (e.p.quadros || []).map(([dt, q], k) => ({ t: e.t + dt, p: { do: 'janela', slot: e.p.janela || 'painel', quadro: q }, i: e.i + k / 100 }));
     if (e.p.do === 'campos') return (e.p.valores || []).map(([dt, v], k) => ({ t: e.t + dt, p: { do: 'campo', id: e.p.id, texto: v }, i: e.i + k / 100 }));
     return out;
   }).sort((a, b) => a.t - b.t || a.i - b.i);
@@ -539,6 +612,10 @@ window.exportar = (fps) => {
     S.push({ t: r4(c.td), x: px(c.x), y: px(c.y), type: 'down', button: c.botao, rect: rect(c.rect), target: tgt });
     S.push({ t: r4(c.tu), x: px(c.x), y: px(c.y), type: 'up', button: c.botao, rect: rect(c.rect), target: tgt });
     S.push({ t: r4(c.tu), x: px(c.x), y: px(c.y), type: 'click', button: c.botao, rect: rect(c.rect), target: tgt });
+  }
+  for (const d of ARRASTOS) {  // arrastar: botão preso do começo ao fim, sem "click" (sem anel nem quique)
+    S.push({ t: r4(d.td), x: px(d.p0[0]), y: px(d.p0[1]), type: 'down', button: 0 });
+    S.push({ t: r4(d.tu), x: px(d.p1[0]), y: px(d.p1[1]), type: 'up', button: 0 });
   }
   const A = ACOES.map(a => ({ ...a, rect: rect(a.rect), point: { x: px(a.point[0]), y: px(a.point[1]) } }));
   // gravação do robô: as amostras e ações dele, deslocadas no tempo e na tela

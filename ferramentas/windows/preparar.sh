@@ -50,6 +50,9 @@ baixa Montserrat-Bold.ttf "https://raw.githubusercontent.com/JulietaUla/Montserr
 # Inconsolata estática (a variável sai com o espaçamento errado no Xft)
 baixa Inconsolata-Regular.ttf "https://raw.githubusercontent.com/googlefonts/Inconsolata/main/fonts/ttf/Inconsolata-Regular.ttf"
 baixa Inconsolata-Bold.ttf "https://raw.githubusercontent.com/googlefonts/Inconsolata/main/fonts/ttf/Inconsolata-Bold.ttf"
+# fonte padrão do Tk no Windows é a Segoe UI 9 (campos e listas sem fonte própria): Noto Sans estática no lugar
+baixa NotoSans-Regular.ttf "https://raw.githubusercontent.com/notofonts/notofonts.github.io/main/fonts/NotoSans/hinted/ttf/NotoSans-Regular.ttf"
+baixa NotoSans-Bold.ttf "https://raw.githubusercontent.com/notofonts/notofonts.github.io/main/fonts/NotoSans/hinted/ttf/NotoSans-Bold.ttf"
 # fonte da interface do "Windows" da cena (cena_windows.html): Noto Sans, humanista e livre (a Segoe UI não é)
 mkdir -p "$C/web"
 [ -s "$C/web/NotoSans.ttf" ] || curl -sSfL --retry 3 -o "$C/web/NotoSans.ttf" "https://raw.githubusercontent.com/google/fonts/main/ofl/notosans/NotoSans%5Bwdth%2Cwght%5D.ttf"
