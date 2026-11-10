@@ -15,6 +15,14 @@
                  em até 2 linhas a partir de y 1210;
        cartela:  capacete 280 px em y 600, DOMINEX 580 px em y 930, logo da série 380 px em y 1100, frase de 72 px em y 1230.
      Tudo entre y 180 e 1420 e x 72 a 1008 (formato_9x16.json); texto sempre >= 44 px.
+     Estilo "ecosistema-reciclagem" (perfil EcoFlix), o mesmo molde: as 3 peças do símbolo giram em volta do centro e se
+     encaixam (como no intro.html), o símbolo sobe e o "EcoFlix" sai de trás dele PARA BAIXO; depois o fio e o título. Sem
+     rótulo nem logo da série (o nome já é o logo). Mesma linha do tempo e mesmos CUES do intro.html (som idêntico ao do 16:9).
+       abertura: símbolo 360 px de largura em y 524, EcoFlix 580 px em y 868 (centrado nas letras: o ® fica pendurado à
+                 direita), título de 88 px em até 2 linhas logo abaixo;  montagem: símbolo 1,44x (o crescimento do capacete
+                 do 16:9 para o 9:16) com o centro em y 880;
+       cartela:  símbolo 336 px em y 601, EcoFlix 540 px em y 923, frase de 72 px logo abaixo.
+     Com título de 2 linhas o bloco fica centrado em y ~915, como o do capacete.
      Parâmetros: ?title=...&sub=...&mode=outro&fps=30&marca=_marca/<hash>/marca.json&serie_logo=assets/<logo branco>.png&sem_serie=1 -->
 <style>
 @font-face{font-family:Montserrat;font-weight:500;src:url(fonts/montserrat-latin-500-normal.woff2) format('woff2')}
@@ -47,6 +55,16 @@ html,body{width:var(--W);height:var(--H);overflow:hidden;background:#000}
   background-size:300% 100%;mix-blend-mode:screen}
 #word{position:absolute;left:0;top:0;transform-origin:0 0}
 #word img{display:block;width:100%;height:100%}
+/* estilo "ecosistema-reciclagem": as peças do símbolo (cores originais, kit/brand_extract.py --pecas) se encaixam girando */
+#rc,#rcw{position:absolute;left:0;top:0;transform-origin:0 0;display:none}
+#rc img,#rcw img{position:absolute;left:0;top:0;display:block;width:100%;height:100%}
+#rc .rp{position:absolute;left:0;top:0;width:100%;height:100%}
+#rcglow{position:absolute;background-size:100% 100%;background-repeat:no-repeat}
+#rcsheen{position:absolute;inset:0;-webkit-mask-size:100% 100%;mask-size:100% 100%;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
+  background:linear-gradient(112deg,rgba(255,255,255,0) 0%,rgba(255,255,255,0) 42%,rgba(255,255,255,.6) 50%,rgba(255,255,255,0) 58%,rgba(255,255,255,0) 100%);
+  background-size:300% 100%;mix-blend-mode:screen;opacity:0}
+body.reciclagem #helm,body.reciclagem #word,body.reciclagem #lbl,body.reciclagem #sl{display:none}
+body.reciclagem #rc,body.reciclagem #rcw{display:block}
 #title{position:absolute;left:72px;right:72px;text-align:center;font-family:Montserrat,sans-serif;color:var(--light)}
 #sl{display:none;margin:0 auto;height:auto}
 #lbl{display:inline-flex;align-items:center;gap:20px;font-weight:700;font-size:44px;letter-spacing:.30em;color:var(--acc-txt);text-indent:.30em}
@@ -71,6 +89,8 @@ html,body{width:var(--W);height:var(--H);overflow:hidden;background:#000}
       <div id="sheen"></div>
     </div>
     <div id="word"><img src="assets/wordmark_light.png" alt=""></div>
+    <div id="rcw"><img id="rcwimg" alt=""></div>
+    <div id="rc"><div id="rcglow"></div><div id="rcsheen"></div></div>
     <div id="title">
       <img id="sl" alt="">
       <div id="lbl"><svg viewBox="0 0 18 18"><path d="M4 2.2v13.6c0 .7.8 1.1 1.4.7l10-6.8c.5-.4.5-1.1 0-1.4l-10-6.8C4.8 1.1 4 1.5 4 2.2z" fill="currentColor"/></svg><span id="serie"></span></div>
@@ -225,6 +245,129 @@ function capacete() {
   };
 }
 
+// ------------------------------------------------------------------ estilo "ecosistema-reciclagem" (perfil EcoFlix, empilhado)
+// O movimento das peças é o do intro.html (giram em volta do centro do símbolo, no sentido das setas, e param no lugar
+// exato do logo oficial); o resto é o molde do capacete vertical: o símbolo sobe e encolhe, o nome sai de trás dele para
+// baixo e o fio e o título entram logo abaixo do nome (sem rótulo nem logo da série: o nome já é o logo).
+// Geometria em M.pecas (kit/brand_extract.py --pecas, publicada pelo kit/ui.py --web).
+function centroDasLetras(img) {  // fração da largura no centro das letras do nome: um ®/™ pendurado no fim não conta
+  const w = img.naturalWidth, h = img.naturalHeight, c = document.createElement('canvas');
+  c.width = w; c.height = h; const g = c.getContext('2d'); g.drawImage(img, 0, 0);
+  const d = g.getImageData(0, 0, w, h).data, lo = new Array(w).fill(h), hi = new Array(w).fill(-1);
+  for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) if (d[(y * w + x) * 4 + 3] > 8) { lo[x] = Math.min(lo[x], y); hi[x] = Math.max(hi[x], y); }
+  const segs = []; let a = -1;  // trechos de colunas com tinta
+  for (let x = 0; x <= w; x++) { const on = x < w && hi[x] >= 0; if (on && a < 0) a = x; if (!on && a >= 0) { segs.push([a, x - 1]); a = -1; } }
+  if (!segs.length) return .5;
+  let fim = segs.length - 1;
+  const [u0, u1] = segs[fim], alt = Math.max(...hi.slice(u0, u1 + 1)) - Math.min(...lo.slice(u0, u1 + 1)) + 1;
+  if (fim > 0 && alt < .35 * h && u1 - u0 + 1 < .1 * w) fim--;  // marca registrada: baixa e estreita, no fim
+  return (segs[0][0] + segs[fim][1] + 1) / 2 / w;
+}
+
+async function reciclagem(M, base) {
+  document.body.classList.add('reciclagem');
+  $('lbl').style.display = $('sl').style.display = 'none';  // nem "▶ SÉRIE" nem ?serie_logo=: o nome já é o logo
+  const G0 = M.pecas, S = G0.simbolo, N = G0.pecas.length;
+  // Linha do tempo (s) e CUES: IDÊNTICOS aos do estilo "ecosistema-reciclagem" do intro.html (o som sai igual ao do 16:9)
+  const T = OUTRO
+    ? {fadeIn: [-1, -.5], p: [[.55, 1.05], [.62, 1.12], [.72, 1.20]], clank: 1.20, sheen: [1.30, 2.05],
+       move: [-2, -1], word: [1.05, 1.75], lbl: [1.55, 2.0], rule: [1.6, 2.1], ttl: [1.68, 2.2], exit: [3.3, 3.85], end: 3.85}
+    : {fadeIn: [0, .35], p: [[.18, .80], [.30, .92], [.46, 1.02]], clank: 1.02, sheen: [1.08, 1.85],
+       move: [1.62, 2.34], word: [1.80, 2.62], lbl: [2.40, 2.88], rule: [2.46, 3.06], ttl: [2.56, 3.14],
+       exit: [3.80, 4.30], end: 4.42};
+  while (T.p.length < N) T.p.push(T.p[T.p.length - 1]);  // símbolo com mais de 3 peças: as extras com a última
+  const ROT = 120;                                        // giro de cada peça até o lugar (graus, horário)
+  const ANG = G0.pecas.map(p => p.angulo - ROT);          // de onde cada peça vem (0 = alto, horário)
+  const PAN = ANG.map(a => +(0.5 * Math.sin(a * Math.PI / 180)).toFixed(2));
+  window.DURATION = T.end;
+  window.CUES = OUTRO
+    ? [{t: T.p[0][0], id: 'whoosh', pan: 0}, {t: T.clank, id: 'encaixe'}, {t: T.sheen[0] + .08, id: 'shine'},
+       {t: T.word[0], id: 'swoosh'}, {t: T.ttl[0], id: 'pop'}]
+    : [{t: 0.02, id: 'swell'}, ...T.p.slice(0, 3).map((p, i) => ({t: p[0], id: 'whoosh', pan: PAN[i]})),
+       {t: T.clank, id: 'encaixe'}, {t: T.sheen[0] + .08, id: 'shine'}, {t: T.move[0] + .05, id: 'swoosh'},
+       {t: T.ttl[0], id: 'pop'}, {t: T.exit[0] - .1, id: 'out'}];
+
+  // peças (img no quadro do símbolo), brilho e reflexo
+  const rc = $('rc'), sh = $('rcsheen'), url = f => base + f;
+  rc.style.width = S.W + 'px'; rc.style.height = S.H + 'px';
+  const gl = $('rcglow'), gp = G0.brilho.pad;
+  Object.assign(gl.style, {left: -gp + 'px', top: -gp + 'px', width: S.W + 2 * gp + 'px', height: S.H + 2 * gp + 'px',
+                           backgroundImage: `url("${url(G0.brilho.arquivo)}")`});
+  sh.style.webkitMaskImage = sh.style.maskImage = `url("${url(S.arquivo)}")`;
+  const pcs = G0.pecas.map((p, i) => {
+    const d = document.createElement('div'); d.className = 'rp'; d.id = 'r' + i;
+    d.style.transformOrigin = `${S.centro[0]}px ${S.centro[1]}px`;
+    const im = document.createElement('img'); im.src = url(p.arquivo); d.appendChild(im); rc.insertBefore(d, sh);
+    return {el: d, img: im, v: [p.cx - S.centro[0], p.cy - S.centro[1]]};
+  });
+  $('rcwimg').src = url(G0.wordmark.arquivo);
+  const pre = [G0.brilho.arquivo, S.arquivo].map(f => { const im = new Image(); im.src = url(f); return im.decode(); });  // brilho e máscara do reflexo já carregados no 1º quadro
+  await Promise.all([...pcs.map(p => p.img.decode()), $('rcwimg').decode(), ...pre]);
+
+  // geometria (px do vídeo 1080x1920): símbolo e nome empilhados e centrados em x = 540
+  const CX = 540;
+  const G = OUTRO
+    ? {symW: 336, symTop: 601, wordW: 540, wordTop: 923, ttlPx: 72}
+    : {symW: 360, symTop: 524, wordW: 580, wordTop: 868, ttlPx: 88};
+  const SMALL = {s: G.symW / S.W, x: CX - G.symW / 2, y: G.symTop};   // símbolo no lugar final
+  const BIG = {s: 1.44, cx: CX, cy: 880};                             // montagem: 1,44x (o capacete cresce assim do 16:9 p/ o 9:16)
+  const WW = G0.wordmark.W, WH = G0.wordmark.H;
+  const WORD = {w: G.wordW, h: G.wordW * WH / WW};
+  WORD.x = CX - centroDasLetras($('rcwimg')) * WORD.w;               // as letras no centro; o ® fica pendurado à direita
+  $('rcw').style.width = WORD.w + 'px'; $('rcw').style.height = WORD.h + 'px';
+  const K = OUTRO ? 1.5 : 1;  // na cartela o símbolo já está pequeno: as peças vêm de mais longe (em px do símbolo)
+
+  // fio e título logo abaixo do nome (como o capacete vertical sem o logo da série)
+  $('ttl').style.fontSize = ajustarTitulo(G.ttlPx) + 'px';
+  $('title').style.top = (G.wordTop + WORD.h + 62) + 'px';
+  $('rule').style.marginTop = '0px'; $('rule').style.marginBottom = '40px';
+
+  function peca(pc, t, span) {  // gira em volta do centro do símbolo e se aproxima; o centro da peça termina no lugar
+    const p = seg(t, span), e = E.outQuint(p);
+    const th = lerp(-ROT, 0, e), k = lerp(1 + .9 * K, 1, e), sc = lerp(.82, 1, e);
+    pc.el.style.opacity = clamp(p * 3);
+    pc.el.style.transform = `rotate(${th.toFixed(3)}deg) translate(${((k - sc) * pc.v[0]).toFixed(2)}px, ${((k - sc) * pc.v[1]).toFixed(2)}px) scale(${sc.toFixed(4)})`;
+    pc.el.style.filter = p < 1 ? `blur(${lerp(10 * K, 0, E.outCubic(p)).toFixed(2)}px)` : 'none';
+  }
+
+  window.renderFrame = function (n) {
+    const t = n / FPS;
+    if (!OUTRO) $('black').style.opacity = 1 - E.outCubic(seg(t, T.fadeIn));
+    pcs.forEach((pc, i) => peca(pc, t, T.p[i]));
+
+    // encaixe: soco de escala + flash do brilho; depois o símbolo sobe e encolhe até o lugar final
+    const k = t - T.clank;
+    const punch = k > 0 ? Math.exp(-k * 7) * Math.sin(Math.min(k * 22, Math.PI)) * 0.022 : 0;
+    const mv = OUTRO ? 1 : E.inOut(seg(t, T.move));
+    const s0 = lerp(BIG.s, SMALL.s, mv), s = s0 * (1 + punch);
+    const bigX = BIG.cx - S.W * BIG.s / 2, bigY = BIG.cy - S.H * BIG.s / 2;
+    const x = lerp(bigX, SMALL.x, mv) - S.W * (s - s0) / 2;
+    const y = lerp(bigY, SMALL.y, mv) - S.H * (s - s0) / 2;
+    rc.style.transform = `translate(${x}px, ${y}px) scale(${s})`;
+    const flash = k > 0 ? Math.exp(-k * 3.2) : 0;
+    gl.style.opacity = clamp(.16 + .55 * flash) * clamp(seg(t, [T.p[0][0], T.p[N - 1][1]]) * 1.2);
+    // brilho de fundo: acompanha o centro do símbolo
+    const gcy = lerp(BIG.cy, SMALL.y + S.H * SMALL.s / 2, mv);
+    $('glow').style.opacity = (.35 + .45 * flash) * E.outCubic(seg(t, [0, .9]));
+    $('glow').style.transform = `translate(0px, ${gcy - 1920 * .44}px) scale(${lerp(.75, 1, mv) + .08 * flash})`;
+    const sp = seg(t, T.sheen);
+    sh.style.opacity = sp > 0 && sp < 1 ? 1 : 0;
+    sh.style.backgroundPosition = `${lerp(100, 0, E.inOut(sp))}% 0`;
+
+    // o nome sai de trás do símbolo PARA BAIXO: só aparece abaixo da borda de baixo atual do símbolo
+    const wp = E.outCubic(seg(t, T.word));
+    const wy = G.wordTop + lerp(-110, 0, wp);
+    const edge = y + S.H * s + 14;                     // borda de baixo do símbolo + respiro
+    $('rcw').style.transform = `translate(${WORD.x}px, ${wy}px)`;
+    $('rcw').style.clipPath = `inset(${clamp(edge - wy, 0, WORD.h)}px 0 -10% 0)`;
+    $('rcw').style.opacity = clamp(seg(t, T.word) * 2.2);
+
+    titulo(t, T);
+    saida(t, T);
+    return true;
+  };
+}
+
 // ------------------------------------------------------------------ comum: logo da série (ou rótulo) + fio + título e saída
 function titulo(t, T) {
   const lp = E.outCubic(seg(t, T.lbl)), rp = E.inOut(seg(t, T.rule)), tp = E.outCubic(seg(t, T.ttl));
@@ -242,11 +385,18 @@ function saida(t, T) {  // leve avanço + escurece (a cartela termina preta)
 }
 
 (async () => {
-  if (!Q.get('marca')) throw new Error('falta ?marca= (kit/ui.py --web); a vinheta vertical só existe para o estilo dominex-capacete');
+  if (!Q.get('marca')) throw new Error('falta ?marca= (kit/ui.py --web); a vinheta vertical só existe para os estilos dominex-capacete e ecosistema-reciclagem');
   const r = await fetch(Q.get('marca'));
   if (!r.ok) throw new Error(`não achei ${Q.get('marca')} (${r.status})`);
   const M = await r.json();
-  if (M.estilo !== 'dominex-capacete') throw new Error(`estilo "${M.estilo}": a vinheta vertical só existe para o estilo dominex-capacete (perfil Domiflix)`);
+  if (M.estilo === 'ecosistema-reciclagem') {  // perfil EcoFlix: sem rótulo nem logo da série (o nome já é o logo)
+    aplicarMarca(M);
+    await carregarFontes(M);
+    await reciclagem(M, Q.get('marca').replace(/[^/]*$/, ''));
+    window.renderFrame(0); window.READY = true;
+    return;
+  }
+  if (M.estilo !== 'dominex-capacete') throw new Error(`estilo "${M.estilo}": a vinheta vertical só existe para os estilos dominex-capacete (Domiflix) e ecosistema-reciclagem (EcoFlix)`);
   aplicarMarca(M);
   await carregarFontes(M);
   if (SERIE_LOGO) { $('sl').src = SERIE_LOGO; await $('sl').decode(); }
