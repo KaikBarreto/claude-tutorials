@@ -3,6 +3,7 @@
 deixa em <out>: capitulos.json, video_sem_audio.mp4 e proj/{audio48k.wav, edl.json, render.json, build/{intro_v.mp4, outro_v.mp4}}.)
 
 uso: python3 -I remendar_aula.py <aula.json> [--audio cap03,cap07] [--novos cap05,cap06,cap13] [--inserir cap14:depois=cap00] [--plano] [--crf 20]
+                                  [--formato 16x9|9x16]
                                   [--frames cap05=1954,cap06=1846]   (só com --plano: quadros de capítulos novos ainda sem render)
   --audio  capítulos que só ganharam narração nova, com a MESMA duração (o "narration" do caps/capNN.chapter.json aponta
            para a emenda); o vídeo deles não muda
@@ -13,6 +14,8 @@ uso: python3 -I remendar_aula.py <aula.json> [--audio cap03,cap07] [--novos cap0
            se o capítulo tem "card", ganha a vinheta falada (titulos.json do `card_voices`, como no finish.py). O que vem depois se
            desloca; a vinheta do capítulo que passa a seguir o inserido é refeita (ela funde a tela do capítulo de antes com a de depois)
   --plano  só imprime o plano (linha do tempo nova, o que é copiado e o que é recodificado); não escreve nada e não pede a trava
+  --formato  9x16 = aula vertical (1080x1920; ou "formato": "9x16" no aula.json), com a vinheta de capítulo do vertical; padrão 16x9
+  Capítulo novo (ou inserido) com "cortes" no JSON: valem os dele, como no finish.py. Com "acelera" (finish.py): não suportado.
   --manter-stems  não apaga proj/build/stems e music.wav depois do mix (por padrão somem: ~1,1 GB numa aula de 12 min)
 
 O que faz (na ordem do finish.py, mas só no que mudou):
@@ -80,6 +83,15 @@ for _x in (opt("--inserir") or "").split(","):
 FRAMES_TESTE = {k: int(v) for k, v in (kv.split("=") for kv in (opt("--frames") or "").split(",") if kv)}
 CRF = int(opt("--crf", L.get("crf", 20)))
 SFX = L.get("sfx", True)
+# 06/11 (T0 v2 9:16): formato vertical como no finish.py ("formato": "9x16" na aula ou --formato 9x16): quadro 1080x1920 e vinheta de
+# capítulo do vertical (vinheta_cap_vertical.py); voz, mix, SFX e emenda de pacotes são os mesmos. Sem a opção, nada muda.
+FORMATO = opt("--formato", L.get("formato", "16x9"))
+if FORMATO not in ("16x9", "9x16"):
+    sys.exit(f"formato {FORMATO!r}: use 16x9 (padrão) ou 9x16")
+VERT = FORMATO == "9x16"
+if VERT:
+    import vertical as _V  # noqa: E402
+    W, H = _V.W, _V.H
 
 # estado antigo: <out>/_base guarda hardlinks dos 4 arquivos que este script reescreve
 ARQS = {"capitulos.json": os.path.join(OUT, "capitulos.json"), "audio48k.wav": os.path.join(PROJ, "audio48k.wav"),
@@ -109,13 +121,33 @@ intro_p, outro_p = os.path.join(BUILD, "intro_v.mp4"), os.path.join(BUILD, "outr
 n_in, n_out, n_xo = (int(round(probe(intro_p)["dur"] * FPS)), int(round(probe(outro_p)["dur"] * FPS)), int(round(XF_OUT * FPS)))
 
 # ------------------------------------------------------------------ linha do tempo antiga e nova
+def vinheta_mod():
+    """vinheta de capítulo no formato da aula (16:9 ou 9:16; mesmas durações e o mesmo VOZ_AT)"""
+    if VERT:
+        import vinheta_cap_vertical as VC  # noqa: E402
+    else:
+        import vinheta_cap as VC  # noqa: E402
+    return VC
+
+
 def ler_side(it, nm):
     """render do capítulo novo (out/<nm>/<nm>.edit.json): quadros, wav e eventos"""
     outd = os.path.normpath(os.path.join(os.path.dirname(CJ[nm][0]), CJ[nm][1].get("output", {}).get("dir", "out")))
     side = os.path.join(outd, nm + ".edit.json")
+    if CJ[nm][1].get("acelera"):
+        sys.exit(f"{nm}: capítulo com \"acelera\" não é suportado aqui (use o finish.py com todos os capítulos renderizados)")
     if os.path.exists(side):
         it["side"] = json.load(open(side))
         it["frames"] = int(it["side"]["frames"])
+        # 06/11 (T0 v2): capítulo novo com "cortes" no JSON (os do capítulo valem, como no finish.py): os quadros desses trechos saem do
+        # vídeo, a voz é cortada nos mesmos instantes e os eventos (zoom, aviso, destaque) andam para trás o tanto que foi cortado antes deles
+        cut = CJ[nm][1].get("cortes") or []
+        it["cortes"] = cut
+        if cut:
+            n0 = it["frames"]
+            keep = [i for i in range(n0) if not any(a_ <= i / FPS < b_ for a_, b_ in cut)]
+            it.update(keep=set(keep), frames_src=n0, frames=len(keep))
+            log(f"  {nm}: cortes {cut} -> {n0} -> {len(keep)} quadros")
     elif PLANO and nm in FRAMES_TESTE:
         it["frames"] = FRAMES_TESTE[nm]
     else:
@@ -127,7 +159,7 @@ def itens_inseridos(nm):
     out = []
     cd = CJ[nm][1].get("card")
     if cd and L.get("cards", True):
-        import vinheta_cap as VC  # noqa: E402
+        VC = vinheta_mod()
         vozes = json.load(open(rp(L["card_voices"]))) if L.get("card_voices") else {}
         voz = vozes.get(nm[-2:])
         dur = VC.dur_for(voz["dur"]) if voz else VC.DUR
@@ -144,9 +176,9 @@ items = []
 for c in json.load(open(OLD("capitulos.json")))["chapters"]:
     nm = c["name"]
     it = dict(name=nm, card=nm.startswith("vinheta-"), voz=c.get("voz"), cortes=c.get("cortes") or [], o_frames=int(round(c["dur"] * FPS)),
-              o_start_s=float(c["start"]), novo=nm in NOVOS, audio=nm in AUDIO, side=None)
-    if it["cortes"] and (it["novo"] or it["audio"]):
-        sys.exit(f"{nm}: capítulo com cortes não é suportado aqui (use o finish.py com todos os capítulos renderizados)")
+              o_start_s=float(c["start"]), novo=nm in NOVOS, audio=nm in AUDIO, side=None, acelera=c.get("acelera"))
+    if it["cortes"] and it["audio"]:
+        sys.exit(f"{nm}: capítulo com cortes não é suportado com --audio (use --novos com o render do capítulo, ou o finish.py)")
     it["frames"] = it["o_frames"]
     if it["novo"]:
         ler_side(it, nm)
@@ -266,10 +298,16 @@ def refazer_voz():
                 wav = (it["side"] or {}).get("wav")
                 x = sf.read(wav, dtype="float32")[0] if wav else np.zeros(n, np.float32)
                 x = x.mean(1) if x.ndim == 2 else x
+                if it.get("keep") is not None and wav:  # cortes: as mesmas amostras que o finish.py tira
+                    tt = np.arange(len(x)) / SR
+                    m_ = np.ones(len(x), bool)
+                    for a_, b_ in it["cortes"]:
+                        m_ &= ~((tt >= a_) & (tt < b_))
+                    x = x[m_]
             elif it["audio"]:
                 x = narracao_alinhada(CJ[it["name"]][0], CJ[it["name"]][1], it["frames"])
             elif it.get("inserido"):  # vinheta falada de capítulo inserido: silêncio com o título em VOZ_AT (como no finish.py)
-                import vinheta_cap as VC  # noqa: E402
+                VC = vinheta_mod()
                 x = np.zeros(n, np.float32)
                 if it.get("voz_wav"):
                     v_ = sf.read(it["voz_wav"], dtype="float32")[0]
@@ -302,10 +340,12 @@ def refazer_voz():
                 continue
             if it["novo"]:
                 sd = it["side"] or {}
+                cut = it["cortes"] if it.get("keep") is not None else []
+                mp = lambda t, cut=cut: t - sum(min(max(t - a_, 0.0), b_ - a_) for a_, b_ in cut)  # noqa: E731  (a do finish.py)
                 if chave == "zooms":
-                    out += [dict(s_out=round(st + z, 3)) for z in sd.get("zoom_in", [])]
+                    out += [dict(s_out=round(st + mp(float(z)), 3)) for z in sd.get("zoom_in", [])]
                 else:
-                    out += [dict(s_out=round(st + float(k["at"]), 3)) for k in sd.get(chave, [])]
+                    out += [dict(s_out=round(st + mp(float(k["at"])), 3)) for k in sd.get(chave, [])]
             else:
                 a, b = it["o_start_s"] - 1e-6, it["o_start_s"] + it["o_frames"] / FPS - 1e-6
                 out += [dict(e, s_out=round(e["s_out"] - it["o_start_s"] + st, 3)) for e in edl_old.get(chave, []) if a <= e["s_out"] < b]
@@ -318,7 +358,8 @@ def refazer_voz():
     json.dump(edl, open(os.path.join(PROJ, "edl.json.novo"), "w"), ensure_ascii=False, indent=1)
     os.replace(os.path.join(PROJ, "edl.json.novo"), os.path.join(PROJ, "edl.json"))
     json.dump(L.get("mix", {}), open(os.path.join(PROJ, "render.json"), "w"))
-    caps = dict(chapters=[dict(name=it["name"], start=s, dur=it["frames"] / FPS, cortes=it["cortes"], voz=it["voz"]) for s, it in zip(starts, items)])
+    caps = dict(chapters=[dict(name=it["name"], start=s, dur=it["frames"] / FPS, cortes=it["cortes"], voz=it["voz"],
+                               **({"acelera": it["acelera"]} if it.get("acelera") and not it["novo"] else {})) for s, it in zip(starts, items)])
     json.dump(caps, open(os.path.join(OUT, "capitulos.json.novo"), "w"), indent=1, ensure_ascii=False)
     os.replace(os.path.join(OUT, "capitulos.json.novo"), os.path.join(OUT, "capitulos.json"))
     log(f"voz: {len(speech)} blocos de fala | limiar {thr:.1f} dB, piso {floor:.1f} dB | eventos: {len(edl['zooms'])} zooms, "
@@ -382,8 +423,7 @@ class Gerador:
 
     def __init__(self, video_antigo):
         import cv2  # noqa: E402
-        import vinheta_cap as VC  # noqa: E402
-        self.cv2, self.VC, self.vo = cv2, VC, video_antigo
+        self.cv2, self.VC, self.vo = cv2, vinheta_mod(), video_antigo
         self.last_img, self.last_k, self.bgi = None, -1, None
 
     def fundo(self):
@@ -412,8 +452,13 @@ class Gerador:
         rd = Reader(it["side"]["video"], W, H, explicit=False)
         last_intro = next(quadros_antigos(intro_p, n_in - 1, 1)) if k == 0 else None
         r_out = Reader(outro_p, W, H, explicit=False) if k == len(items) - 1 and n_out else None
+        keep, src_i = it.get("keep"), -1  # cortes: pula os quadros cortados, como o laço do finish.py
         for f in range(it["frames"]):
             img = rd.next()
+            src_i += 1
+            while keep is not None and src_i not in keep:
+                img = rd.next()
+                src_i += 1
             self.last_img, self.last_k = np.array(img), k
             c_idx = base_idx + f
             if last_intro is not None and c_idx < int(round(XF_IN * FPS)):

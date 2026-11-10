@@ -1,10 +1,14 @@
 """Legendas da aula inteira (.srt e .vtt) no relógio do vídeo final:
 vinheta da aula (T_IN) + capítulos e vinhetas de capítulo na ordem de out/T3/capitulos.json, descontando os cortes.
 O título falado de cada vinheta de capítulo também vira legenda.
+T15: capítulo gravado em dois trechos com a MESMA voz (cap09 no computador, cap09b no celular): o `audio_offset` do JSON do capítulo
+(../edit/caps/<nome>.chapter.json; -voz_de) diz de que segundo da voz de origem (cap09.json) o trecho parte; a voz de origem vem dos
+2 dígitos depois de "cap" no nome. Sem JSON de capítulo, offset 0 (igual à skill).
 uso: python3 -I legendas_aula.py <capitulos.json> <intro_v.mp4> <saida_sem_extensao> [--linha N]
   --linha N: caracteres por linha (padrão 42, o do 16:9; vertical 9:16: --linha 32, docs/05-edicao.md). O relógio é o mesmo; só a quebra em legendas muda."""
 import json
 import os
+import re
 import subprocess
 import sys
 
@@ -21,6 +25,7 @@ capj, intro, out = argv[:3]
 T_IN = float(subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", intro],
                             capture_output=True, text=True).stdout.strip())
 TIT = json.load(open(os.path.join(HERE, "titulos", "titulos.json")))
+CAPS_EDIT = os.path.join(os.path.dirname(HERE), "edit", "caps")
 VOZ_AT = 0.70
 
 itens = []
@@ -31,8 +36,10 @@ for c in json.load(open(capj))["chapters"]:
         if nn in TIT:
             itens.append([st + VOZ_AT, st + VOZ_AT + TIT[nn]["dur"], TIT[nn]["texto"]])
         continue
-    nn = c["name"][-2:]
+    nn = re.match(r"cap(\d\d)", c["name"]).group(1)
     cap = json.load(open(os.path.join(HERE, f"cap{nn}.json")))
+    cj = os.path.join(CAPS_EDIT, c["name"] + ".chapter.json")
+    voz_de = -float(json.load(open(cj)).get("audio_offset", 0.0)) if os.path.exists(cj) else 0.0
     cortes = c.get("cortes") or []
 
     def mp(t):
@@ -40,9 +47,10 @@ for c in json.load(open(capj))["chapters"]:
 
     ws = []
     for w in L.juntar_numeros(cap["words"]):
-        if w["s"] >= c["dur"] + sum(b - a for a, b in cortes):
+        s_, e_ = w["s"] - voz_de, w["e"] - voz_de          # relógio do trecho (cap09b: a voz do cap. 9 a partir do corte)
+        if s_ < -0.05 or s_ >= c["dur"] + sum(b - a for a, b in cortes):
             continue
-        ws.append(dict(w, s=mp(w["s"]), e=mp(w["e"])))
+        ws.append(dict(w, s=mp(s_), e=mp(e_)))
     for b in L.blocos(ws):
         itens.append([st + b[0]["s"], st + b[-1]["e"], " ".join(w["w"] for w in b)])
 
