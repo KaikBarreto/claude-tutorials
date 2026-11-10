@@ -6,7 +6,8 @@
 #   MANTER=<pasta> bash testes/vertical_9x16.sh    copia os quadros conferidos (e uma amostra da animação) para a pasta, para olhar
 # Confere: 1) palco vertical = o palco do 16:9 girado 90° (bit a bit); 2) vinheta de capítulo: mesma duração e voz do 16:9, texto
 # na área segura, título >= 44 px em até 3 linhas; 3) vinheta de abertura e cartela: 1080x1920, mesmo número de quadros e SOM
-# IDÊNTICO ao do 16:9 (testes/referencias_domiflix/audio.sha256), conteúdo claro só dentro da área segura; 4) legendas de 32
+# IDÊNTICO ao do 16:9 (testes/referencias_domiflix/audio.sha256), conteúdo claro só dentro da área segura; 3b) as mesmas
+# checagens na vinheta e na cartela verticais da EcoFlix (estilo ecosistema-reciclagem; som igual ao do 16:9 dela); 4) legendas de 32
 # caracteres por linha; 5) o adaptador render_chapter_vertical.py; 6) o molde das cenas verticais: render, guias e a auditoria
 # (aprova o exemplo e reprova texto pequeno).
 set -euo pipefail
@@ -73,6 +74,33 @@ for nome, quadros in (("intro_v.mp4", 133), ("outro_v.mp4", 116)):
 for f in sorted(x for x in os.listdir(out) if x.startswith(("abertura_v", "cartela_v"))):
     r = V.fora_da_area_segura(cv2.cvtColor(cv2.imread(os.path.join(out, f)), cv2.COLOR_BGR2RGB))
     print(f"    {f:22s} {'conteúdo dentro da área segura' if not r else 'FORA DA ÁREA SEGURA ' + str(r)}"); ruim += bool(r)
+sys.exit(1 if ruim else 0)
+EOF
+
+echo "3b) vinheta de abertura e cartela verticais da EcoFlix (estilo ecosistema-reciclagem, navegador)"
+for f in 9x16 16x9; do  # a do 16:9 só serve de referência do som (mesma linha do tempo = mesmas amostras)
+  S="brand_clips.sh"; [ "$f" = 9x16 ] && S="brand_clips_vertical.sh"; mkdir -p "$TMP/eco$f"
+  PORT="$(python3 -c 'import socket; s=socket.socket(); s.bind(("127.0.0.1", 0)); print(s.getsockname()[1])')" \
+    MARCA_JSON="$SKILL/perfis/ecoflix/marca" bash "$H/kit/$S" "$TMP/eco$f" "Bem-vindo ao EcoSistema" "Até a próxima aula!" >/dev/null
+done
+B9="$TMP/eco9x16/build"
+for t in 1.0 2.2 3.4; do ffmpeg -v error -y -ss "$t" -i "$B9/intro_v.mp4" -frames:v 1 "$OUT/eco_abertura_v_$t.png"; done
+ffmpeg -v error -y -ss 2.6 -i "$B9/outro_v.mp4" -frames:v 1 "$OUT/eco_cartela_v_2.6.png"
+python3 -I - "$TMP/eco16x9/build" "$B9" "$OUT" "$H/t/edit" <<'EOF' && ok "EcoFlix: 1080x1920, mesma duração, som idêntico ao do 16:9 dela, conteúdo na área segura" || falha "vinhetas verticais da EcoFlix"
+import hashlib, os, subprocess, sys, json, numpy as np, cv2, soundfile as sf
+b16, b9, out, edit = sys.argv[1:5]; sys.path.insert(0, edit); import vertical as V
+som = lambda p: hashlib.sha256(np.ascontiguousarray(sf.read(p, dtype="float32", always_2d=True)[0]).tobytes()).hexdigest()  # noqa: E731
+ruim = 0
+for nome in ("intro_audio.wav", "outro_audio.wav"):
+    igual = som(os.path.join(b16, nome)) == som(os.path.join(b9, nome))
+    print(f"    {nome:18s} amostras {'idênticas às do 16:9' if igual else 'DIFERENTES das do 16:9'}"); ruim += not igual
+for nome, quadros in (("intro_v.mp4", 133), ("outro_v.mp4", 116)):
+    j = json.loads(subprocess.run(["ffprobe", "-v", "error", "-select_streams", "v:0", "-count_frames", "-show_entries", "stream=width,height,nb_read_frames,r_frame_rate", "-of", "json", os.path.join(b9, nome)], capture_output=True, text=True, check=True).stdout)["streams"][0]
+    igual = (j["width"], j["height"], int(j["nb_read_frames"]), j["r_frame_rate"]) == (1080, 1920, quadros, "30/1")
+    print(f"    {nome:18s} {j['width']}x{j['height']} {j['nb_read_frames']} quadros {j['r_frame_rate']}  {'ok' if igual else 'DIFERENTE (esperado 1080x1920, %d quadros, 30/1)' % quadros}"); ruim += not igual
+for f in sorted(x for x in os.listdir(out) if x.startswith("eco_")):
+    r = V.fora_da_area_segura(cv2.cvtColor(cv2.imread(os.path.join(out, f)), cv2.COLOR_BGR2RGB))
+    print(f"    {f:26s} {'conteúdo dentro da área segura' if not r else 'FORA DA ÁREA SEGURA ' + str(r)}"); ruim += bool(r)
 sys.exit(1 if ruim else 0)
 EOF
 
