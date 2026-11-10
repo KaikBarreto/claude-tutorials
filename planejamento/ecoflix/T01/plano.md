@@ -91,7 +91,7 @@ identidade da empresa que todas as outras aulas usam: consolidar no `MUNDO_FICTI
   3. `cep-lookup` (12086410 → Rua das Oficinas, Jardim Vale do Sol, Taubaté, SP, `codigoIbge` 3554102); `geocode-company` e
      `sync-asaas-customer` sem efeito (esta só é chamada se a empresa do mundo tiver `asaas_customer_id`).
   4. `fetch` direto do navegador para `servicodados.ibge.gov.br/api/v1/localidades/estados/SP/municipios`: responder por fixture
-     (lista de SP com Taubaté 3554102 e Pindamonhangaba 3538006).
+     (a lista de SP do próprio IBGE, salva uma vez; tem de trazer Taubaté 3554102 e Pindamonhangaba, para o T22).
   5. Storage `avatars`: upload e URL pública dos dois PNGs (o logo tem de aparecer na tela).
   6. Tabelas: `companies` (update com auto-save), `company_fiscal_config` (insert/update), `payment_conditions` (insert),
      `profiles` (preferências, `navigation_style`, `terms_accepted_at`), `active_sessions` sem acesso na última hora (para não

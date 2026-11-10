@@ -44,7 +44,7 @@ Não tem tela própria: é um painel dentro de Configurações → "Empresa".
 | Comprovante térmico e A4 | rodapé do EcoSistema (logo + "ecosistematecnologia.com.br") some com `white_label_enabled` (`utils/thermalReceiptGenerator.ts:2428-2447`, `utils/orderReceiptA4Generator.ts:520-523`, `components/ThermalReceipt.tsx:365-380`); o logo da empresa no topo já aparecia sem White Label (`utils/thermalReceiptGenerator.ts:1189-1191`); com White Label, o QR das fotos leva o logo da empresa (`:2402`) |
 | PDFs e relatórios | mesma regra do rodapé (`utils/cashClosingPdfGenerator.ts:476`, `utils/financialHistoricoPdfGenerator.ts:216,626`, `utils/materialsExport.ts:168,384`, `components/TransactionHistory.tsx:3254`, entre outros) |
 | Portal do parceiro | `pages/EntityPortal.tsx:931-959,1962-1979`: topo na cor e rodapé do EcoSistema fora **só com White Label e Cor Primária** (dados da edge `entity-portal`, `supabase/functions/entity-portal/index.ts:154,766`) |
-| Abrir o comprovante | "Pedidos" → botão "Ver comprovante" (ícone de olho) abre janela nova (`pages/Orders.tsx:1146-1157,2223-2227`); sem pop-up: "Popup bloqueado. Permita popups para gerar comprovantes." |
+| Abrir o comprovante | "Pedidos" → no desktop (acima de 1024 px, `hooks/use-mobile.tsx:3`), menu "⋮" da linha (abre no passar do mouse) → "Ver comprovante" (`pages/Orders.tsx:2595-2634`); no celular, botão de olho com o mesmo título (`:2223-2227`); abre janela nova (`:1146-1157`); sem pop-up: "Popup bloqueado. Permita popups para gerar comprovantes." |
 
 ## 5. Todos os usuários
 `hooks/useWhiteLabel.tsx:28-106`: cache por empresa e realtime em `companies` (UPDATE): quem estiver com o sistema aberto
