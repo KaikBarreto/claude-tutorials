@@ -355,3 +355,18 @@ Decisões:
   saem idênticos aos de dentro). Disco com 1,1 GB livres: perguntar ao Kaik se pode apagar as pastas de trabalho de 29 a
   31/10 (`/home/claude/fix-29out` e `/home/claude/brand-fix`, 7,7 GB) antes do ensaio (trocar a cópia duplicada do modelo
   de voz por um atalho foi barrado pela trava automática de segurança).
+- 10/11 02:4x **Mundo pronto** (branch `ecoflix-mundo`, no main em 51224e1): app 1.59.154 em build na 8080 e Supabase
+  falso na 54340 (subir de novo: `/home/claude/ecoflix/RELIGAR.md`), login do Rafael (MASTER); 17 rotas da Fase 1 com 0
+  problema (mais /caixa, /compra e /venda com `base/caixa-aberto`); `rec/mundo/gerar/sementes.mjs` gera o mundo base e para
+  se um número falado não bater (outubro do T15 no centavo, estoque do T21 R$ 52.112,25, saldos do T4, contas do T13,
+  caixas #70, #83 e #84, cofre R$ 18.500,00); 37 RPCs, 1 function e 7 hooks; `_remove` nas sementes extras; EcoTray
+  falso no robô (8053/8054, "Balança do pátio" COM3, POS-58, versão 1.7.22; passos `balanca` e `ecotray`; semente
+  `base/balanca-ativada`). Falta: as sementes de cada aula (ficam com os agentes do robô). Os 8 conflitos entre aulas
+  ("Para a junção" no `MUNDO_FICTICIO.md`) foram para a junção, com a cota da NF-e da T16 de preferência fora da fala.
+  Identidade da Domiflix idêntica. O `browser.mjs` da área de trabalho recebeu o `device: windows` da cena do EcoTray.
+- 10/11 02:5x **Robô e ensaio começaram** (`_BRIEF_ROBO.md`), 5 agentes: T03 (molde), T01, T02, T11 e T26, cada um com o
+  seu Supabase falso na porta 54300 + aula. `preparar_aula.sh Tnn` monta a área leve da aula (kit do robô, atalhos para a
+  fala do git e `capNN.json` estimados; sem a pasta edit/ de 70 MB por aula, que só entra na edição);
+  `copiar_robos.py` copia para o git o robô de cada aula (`Tnn/rec/`) e o mundo vivo (`perfis/ecoflix/mundo`) antes de
+  cada commit. Propostas de mudança de fala e achados do app de cada aula: `Tnn/propostas_fala.md` (a revisão geral
+  aplica). Próximos lotes do robô conforme os agentes de ilustração forem terminando (máximo de 20 ao mesmo tempo).

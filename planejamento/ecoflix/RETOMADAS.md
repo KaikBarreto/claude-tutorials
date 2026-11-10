@@ -14,11 +14,13 @@ Lembretes `send_later` nesta mesma sessão, "EcoFlix: retomar produção (N/20)"
    existe na pasta. Modelo: opus até o limite do Sonnet voltar (11/11); depois sonnet no trabalho mecânico. Até 20 ao
    mesmo tempo quando o limite está novo (pedido do Kaik); trabalho pesado sempre um por vez
    (`flock /home/claude/ecoflix/.heavy.lock`).
-3. App e Supabase falso: se o container reiniciou (/dev/shm vazio), religar com os comandos do relatório do agente
-   Mundo (anotados em PRODUCAO.md).
+3. App e Supabase falso: se o container reiniciou (/dev/shm vazio), religar com `/home/claude/ecoflix/RELIGAR.md`
+   (app na 8080, Supabase falso padrão na 54340; cada agente do robô sobe o seu na 54300 + aula). Aula nova para o robô:
+   `bash planejamento/ecoflix/preparar_aula.sh Tnn` antes de lançar o agente (`_BRIEF_ROBO.md`).
 4. Seguir a fila de PRODUCAO.md ("Fila"), anotando cada passo no "Registro".
 5. Commit e push do que houver nas pastas das aulas, mesmo em andamento: é a cópia de segurança contra reinício da
-   máquina (a mensagem diz "em andamento"). Nunca stash, reset ou clean.
+   máquina (a mensagem diz "em andamento"). Antes, `python3 -I planejamento/ecoflix/copiar_robos.py` (robôs e mundo vivo
+   para o git) e confira que não entra mídia nem arquivo grande. Nunca stash, reset ou clean.
 6. Fim de tudo: ZIP das legendas e capítulos, o **report de melhorias do sistema** (`MELHORIAS_ECOSISTEMA.md`),
    avisar o Kaik e apagar com `delete_trigger` os lembretes que sobrarem.
 
