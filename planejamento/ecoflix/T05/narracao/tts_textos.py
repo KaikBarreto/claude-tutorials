@@ -37,14 +37,14 @@ E se um dia esse selo avisar que o Ecotrêi está desatualizado, é só fechar e
 No sistema, eu ligo a Integração com Impressora. Pronto: Conectado ao Ecotrêi.
 A lista traz as impressoras deste computador. Escolho a nossa, a de cupom.
 Clico em Testar. O comprovante vai pra impressora, e o Ecotrêi avisa que imprimiu.
-Na impressora sai um cupom de teste, com a data e a hora. Saiu o cupom? Está tudo funcionando.
+Na impressora sai um cupom de teste, com a data e a hora. Saiu o cupom? A ligação está funcionando. Mas repara: ele saiu cortado do lado.
 Se a impressora não aparecer na lista, confira o cabo e clique em Atualizar.""",
-5: """A bobina da impressora da Recicla Vale é a pequena, de cinquenta e oito milímetros. E o sistema vem com oitenta milímetros.
-Com a largura errada, o cupom sai cortado. Uma dica: cupom cortado quase sempre é a largura, e não a impressora.
+5: """Aquele corte é a largura do papel. A bobina da impressora da Recicla Vale é a pequena, de cinquenta e oito milímetros, e o sistema vem com oitenta milímetros.
+Com o papel mais estreito que o cupom, o lado sai cortado. Uma dica: cupom cortado quase sempre é a largura, e não a impressora.
 Em Ajustar Escala, eu escolho cinquenta e oito milímetros. A prévia já mostra o cupom do tamanho da bobina.
 O sistema manda essa largura pro Ecotrêi, e ele imprime exatamente nela. Então, se o cupom sair cortado, confira aqui primeiro.
 A escala fina diminui o conteúdo dentro do papel, se precisar. Aqui fica em cem por cento.
-Testar impressão manda um cupom de exemplo. Saiu inteiro, então eu salvo.
+Testar impressão manda um cupom de exemplo. Agora ele sai inteiro, então eu salvo.
 E a impressão térmica turbo gera o comprovante mais rápido. Ela ainda está em teste: se algo sair diferente do normal, é só desligar.""",
 6: """Agora a balança. Essa parte depende do plano contratado. Sem ela no plano, aqui aparece um cartão pra contratar, com o botão Pesar automático.
 Uma dica: essa chave começa desligada, então ligue aqui pro peso começar a chegar. Na empresa em teste, a balança já vem liberada.

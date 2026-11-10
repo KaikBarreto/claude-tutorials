@@ -14,12 +14,12 @@
 
 | # | Vinheta (área / título) | O que se mostra | Estado de partida |
 |---|---|---|---|
-| 0 | (sem vinheta) | Ilustração: o caminho do pátio, as três partes da aula, a Recicla Vale Metais como empresa de exemplo. | — |
+| 0 | (sem vinheta) | Ilustração: o caminho do pátio, as três partes da aula, a Recicla Vale Metais como empresa de exemplo. | (só ilustração) |
 | 1 | COMEÇANDO / Os combinados | O portão do primeiro acesso no teste: "Primeiro passo", "Antes de usar o sistema", "Bem-vindo, Rafael", o quadro "Você pode pular durante o teste", a caixa "Assisti ao vídeo até o final e entendi os combinados.", "Assista até o final para confirmar", "Pular por agora". Ilustração teste × assinatura. | S1 |
 | 2 | TRILHA / Como funciona a trilha | Menu da conta → "Tutoriais \| EcoFlix" → trilha: "Aprenda a usar o EcoSistema", "Trilha do seu plano", selos "Formação básica" e "Tem no seu plano", "Concluída" no T0 e "Próxima aula recomendada" no T1; clique numa aula adiante → "Consultar fora da ordem?" → "Voltar à trilha". | S2 |
 | 3 | TRILHA / Aulas de outros módulos | Fim da trilha: CRM/Kanban com "Não tem no seu plano" e "Conheça este módulo" → "Consultar esta aula" → painel "Conheça outros módulos" e o cartão "Conheça agora. Ative quando fizer sentido.". Ilustração da barra de progresso. | S3 |
 | 4 | AJUDA / Dúvida depois da aula | Página da aula T1: botão "Tirar dúvidas com o suporte" (sem clicar). Ilustração da mensagem pronta. | S2 |
-| 5 | O SISTEMA / Do portão até a conta | Ilustração: Dona Cida, 38 kg de latinha, R$ 235,60 no caixa, o estoque, a venda à Serra Fina com nota, o dinheiro na conta. | — |
+| 5 | O SISTEMA / Do portão até a conta | Ilustração: Dona Cida, 38 kg de latinha, R$ 235,60 no caixa, o estoque, a venda à Serra Fina com nota, o dinheiro na conta. | (só ilustração) |
 | 6 | MENU / Um passeio pelo menu | Dashboard e o menu lateral: "Financeiro" e "Materiais" abertos, os demais só com destaque; "Configurações" no rodapé. | S2 |
 | 7 | MENU / Os menus e a sua conta | Menu da conta ("Meu Perfil", "Assinatura", "Tema", "Tutoriais \| EcoFlix", "Central de Ajuda", "Falar com o Suporte"); Configurações → "Aparência" → "Menu Superior" (o layout troca); o celular: barra de baixo e "Menu". | S2 |
 | 8 | VOCABULÁRIO / As palavras do pátio | Ilustração cliente × fornecedor; Configurações → "Usabilidade" → "Inverter os termos Cliente e Fornecedor" (só olhar); glossário ilustrado: pedido, caixa, saldo (fiado), tabela de preço, ficha técnica, ordem de coleta, MTR. | S2 |

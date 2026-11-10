@@ -58,7 +58,7 @@ relativos a `src/`, exceto `ecotray/...`. Rótulo entre aspas = texto exato.
   - Cartão de teste (`components/configuracoes/TesteConexaoBalanca.tsx:31-151`): "Desconectada" | "Conectando..." |
     "Conectada, aguardando peso da balança" (âmbar: "Conectada, mas sem peso chegando ainda" / "Verifique se a balança está
     ligada e configurada para envio contínuo de peso.") | "Conectada" (verde: "Peso atual: **18,600 kg** — última leitura
-    às 08:47:12") | "Erro na conexão"; botões "Testar conexão", "Testar novamente", "Desconectar".
+    às 08:45:20") | "Erro na conexão"; botões "Testar conexão", "Testar novamente", "Desconectar".
   - "Balanças" ("Escolha a balança padrão desta máquina. É ela que o botão de captura de peso usa quando há mais de uma
     conectada.") `:754-847`: "EcoTray não conectado. Abra o app EcoTray na bandeja do sistema para listar as balanças." |
     "Nenhuma balança configurada no EcoTray. Abra as configurações do EcoTray (ícone na bandeja) para cadastrar." | lista

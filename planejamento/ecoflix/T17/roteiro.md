@@ -5,8 +5,8 @@
 - **Próximo:** Ambiental: MTR e CDF (T18)
 - **Vinhetas (áreas):** TRANSPORTE · FROTA · MANIFESTO · SERVIÇO · RELATÓRIO FISCAL · ESTOQUE FISCAL · CONTADOR · RESUMO (todo
   capítulo menos o 0)
-- **Duração estimada:** ~14 min de vídeo (2.000 palavras de fala, ~12,8 min a 2,6 palavras/s, mais 13 vinhetas e as esperas da
-  SEFAZ simulada; alvo da fonte ~16 min)
+- **Duração estimada:** ~13 min de vídeo (1.841 palavras de fala, ~11,8 min a 2,6 palavras/s, mais a vinheta de abertura, 13
+  vinhetas de capítulo, as esperas da SEFAZ simulada e a cartela; alvo da fonte ~16 min)
 - Coluna Fala = texto da narração na grafia da legenda; a grafia de pronúncia do TTS está em `narracao/tts_textos.py`. Coluna Tela =
   o que o robô faz e onde a câmera foca, rótulos entre aspas como no código 1.59.154 (`T17/inventario.md`). Logado como Rafael
   Nogueira (MASTER), desktop. Mundo e sementes: `T17/plano.md`. FAKE_NOW 10/11/2026 08:30 nos capítulos 0 a 4 e 14:20 do 5 em diante.
@@ -90,8 +90,8 @@
 | Tela | Fala |
 | --- | --- |
 | Menu "Fiscal & Ambiental" › "Notas de Serviço (NFS-e)": título "Nota Fiscal de Serviço (NFS-e)", lista com o nº 13 (Aços Quiririm Ltda, R$ 1.850,00) e o nº 12 (Fundição Bandeira do Vale, R$ 1.200,00), os dois "Autorizada"; a câmera não para nos cartões de cima. [BACKEND: NFS-e 12 e 13 na semente] | Agora, a nota de serviço. Ela fica em Notas de Serviço. |
-| [ILUSTRAÇÃO: mercadoria × serviço, lado esquerdo: fardos de sucata saindo do pátio no caminhão, com a folha "NF-e", uma seta descendo no "Estoque" e o rótulo "SEFAZ".] | Pensa assim: quando a Recicla Vale vende sucata, a mercadoria sai do pátio e baixa do estoque. Isso é a nota fiscal de mercadoria, a NF-e. |
-| (ilustração, lado direito: uma caçamba recolhida no pátio da "Aços Quiririm", com a folha "NFS-e", o "Estoque" parado e o rótulo "Prefeitura") | Quando ela cobra um trabalho, como a coleta com caçamba, nada sai do estoque. Isso é a nota de serviço, a NFS-e, que é da prefeitura. |
+| [ILUSTRAÇÃO: mercadoria × serviço, lado esquerdo "Mercadoria": fardos de sucata saindo do pátio no caminhão, com a folha "NF-e" e o rótulo "SEFAZ".] | Pensa assim: quando a Recicla Vale vende sucata, a mercadoria sai do pátio. A nota dessa venda é a nota fiscal de mercadoria, a NF-e. |
+| (ilustração, lado direito "Serviço": uma caçamba recolhida no pátio da "Aços Quiririm", com a folha "NFS-e", o rótulo "Prefeitura" e um pátio sem nenhuma mercadoria saindo) | Quando ela cobra um trabalho, como a coleta com caçamba, não sai mercadoria nenhuma. Essa é a nota de serviço, a NFS-e, que é da prefeitura. |
 | A ilustração sai; zoom nas colunas "Número", "Tomador", "Valor" e "Status" da lista. | Na lista ficam as notas de serviço emitidas: o número, quem contratou, que aqui se chama tomador, o valor e o status. |
 | Zoom no botão "Configurações Fiscais" do cabeçalho, sem clicar. | E os dados da empresa que a nota de serviço usa, como a inscrição municipal, ficam nas Configurações Fiscais. Quem confere esses dados é o contador. |
 
@@ -99,11 +99,11 @@
 
 | Tela | Fala |
 | --- | --- |
-| Clica em "Nova NFS-e": "Nova NFS-e", aba "Pessoas", "Data de competência" 10/11/2026 e o selo vermelho de pendências na barra de cima. | Vou cobrar a coleta com caçamba que a Recicla Vale fez na Aços Quiririm. Nova NFS-e. |
-| Em "Tomador do serviço", clica em "Cliente ou fornecedor": "Selecionar tomador"; digita "Aços" em "Buscar por nome, CNPJ/CPF ou código..." e escolhe "Aços Quiririm Ltda". | A data de competência é a do serviço, hoje. No tomador, quem contratou, eu escolho a Aços Quiririm no cadastro. |
+| Clica em "Nova NFS-e": "Nova NFS-e", aba "Pessoas", "Data de competência" com 10/11/2026 e o selo vermelho de pendências na barra de cima. | Vou cobrar a coleta com caçamba que a Recicla Vale fez na Aços Quiririm. Nova NFS-e. |
+| Troca a "Data de competência" para 07/11/2026. Em "Tomador do serviço", clica em "Cliente ou fornecedor": "Selecionar tomador"; digita "Aços" em "Buscar por nome, CNPJ/CPF ou código..." e escolhe "Aços Quiririm Ltda". | Na data de competência vai o dia do serviço: sete de novembro. No tomador, quem contratou, eu escolho a Aços Quiririm no cadastro. |
 | Clica em "Avançar": aba "Serviço"; "Município" já com "Taubaté"; clica em "Selecionar código de tributação", digita "coleta" em "Buscar por código ou descrição..." e escolhe o código de coleta e remoção de resíduos; "Código do serviço (LC116)" se preenche sozinho. [BACKEND: `plugnotas-nfse-servicos-municipio` com a lista de Taubaté] | Avançar. O município já vem como Taubaté. O código do serviço é o seu contador que passa. Aqui, coleta e remoção de resíduos. |
 | Zoom em "Puxar serviço salvo", sem clicar. | Se a empresa emite sempre o mesmo serviço, ele pode ficar salvo, e aí é só puxar por aqui. |
-| Digita em "Descrição do serviço": "Coleta e remoção de resíduos metálicos com caçamba no pátio da Aços Quiririm, de 3 a 7 de novembro de 2026." | Na descrição, o que foi feito, do jeito que vai aparecer na nota. |
+| Digita em "Descrição do serviço": "Coleta e remoção de resíduos metálicos com caçamba no pátio da Aços Quiririm em 07/11/2026." | Na descrição, o que foi feito, do jeito que vai aparecer na nota. |
 | Clica em "Avançar": aba "Valores"; digita "1850" em "Valor do serviço"; a barra de cima mostra "Total da nota" R$ 1.850,00. [ZOOM: "Valor do serviço"] | Avançar. O valor do serviço: mil oitocentos e cinquenta reais. |
 | A câmera vai a "Alíquota ISS %", com 3 vindo da lista do município, e "ISS retido na fonte" desligado. [ZOOM: "Alíquota ISS %"] | A alíquota do ISS veio da lista do município. Quem confirma esse número é o contador. |
 | Clica em "Avançar": aba "Pré-visualização", o espelho da nota com a Aços Quiririm, o serviço e R$ 1.850,00; selo "Pronta pra emitir". | Na pré-visualização, a nota aparece como vai sair. E o selo mostra que ela está pronta pra emitir. |
@@ -132,7 +132,7 @@
 | Zoom suave nos cartões "Entrada" e "Saída". | Aqui em cima, o que entrou e o que saiu em notas no mês. |
 | A câmera passa para o cartão "Saldo (Saída − Entrada)", com R$ 71.625,00 e "Positivo". [ZOOM: cartão "Saldo (Saída − Entrada)"] | O saldo é a saída menos a entrada. Em outubro, ficou positivo: setenta e um mil, seiscentos e vinte e cinco reais. |
 | A câmera passa para o cartão "Pendentes + Rejeitadas", com 0 e "Tudo em dia". [ZOOM: cartão "Pendentes + Rejeitadas"] | E o último cartão junta as notas pendentes e as rejeitadas. Aqui está tudo em dia. Se aparecer um número, resolve antes de fechar o mês. |
-| Rola até "Entrada × Saída no período", "Distribuição por status", "Top Fornecedores" e "Top Clientes". | Embaixo, o gráfico do mês, a divisão por status e os fornecedores e clientes com mais notas. |
+| Rola até "Entrada × Saída no período", "Distribuição por status", "Top Fornecedores" e "Top Clientes". | Embaixo, o gráfico do mês, a divisão por status e o ranking dos fornecedores e dos clientes. |
 
 ### cap10 · O estoque pelas notas (vinheta: ESTOQUE FISCAL)
 
@@ -141,7 +141,7 @@
 | Sub-aba "Posição do estoque": "Saldo fiscal agora, por material. Não altera o estoque operacional."; a tabela "Código", "Material", "Saldo fiscal". [BACKEND: saldo inicial fiscal de 01/08 e notas de agosto a novembro] | Agora, o estoque fiscal: o estoque contado só pelas notas. Na Posição do estoque, aparece o saldo fiscal de cada material, agora. |
 | Em "Data e hora da posição", escolhe 31/10/2026 e 18:00; clica em "Ver posição": o subtítulo passa a "Saldo fiscal em ..." com a data escolhida. | Pra ver um dia do passado, escolho a data e a hora, aqui o fim de outubro, e clico em Ver posição. |
 | A câmera fica na tabela e no botão "Voltar para agora". | Uma dica: essa posição é só consulta. Ela não muda saldo, nota, movimentação nem o estoque de hoje. E a data é sempre do passado, nunca do futuro. |
-| Clica em "Voltar para agora"; sub-aba "Histórico fiscal"; na lista "Materiais", escolhe "Metal amarelo (latão)": o "KARDEX FISCAL" dele, com as linhas de outubro (a de 30/10, saída de 600 kg). | No Histórico fiscal fica o Kardex fiscal de cada material. Escolho o metal amarelo: cada linha é uma nota, com o saldo antes e depois. |
+| Clica em "Voltar para agora"; sub-aba "Histórico fiscal"; na lista "Materiais", escolhe "Metal amarelo (latão)": o "KARDEX FISCAL" dele, com as linhas de outubro (a de 30/10, saída de 600 kg). | No Histórico fiscal fica o Kardex fiscal de cada material. Escolho o metal amarelo: cada linha é uma entrada ou uma saída, com o saldo antes e depois. |
 | Sub-aba "Fiscal × operacional" (período "Mês passado"): os cartões e "Comparação por material"; a linha "Metal amarelo (latão)" com "Delta" −600. [ZOOM: linha do metal amarelo, colunas "Mov. Fiscal", "Mov. Operacional" e "Delta"] | Na última aba, o fiscal e o operacional ficam lado a lado. Repara no metal amarelo: seiscentos quilos de diferença. |
 | [ILUSTRAÇÃO: fiscal × operacional: duas réguas do calendário, de outubro a novembro; em cima, "Notas (fiscal)": a nota de 600 kg de metal amarelo para a "Fundição Bandeira do Vale" cai em 30/10; embaixo, "Pedidos e pátio (operacional)": o pedido da mesma venda só fecha em 03/11, depois da linha "fim de outubro"; os 600 kg acendem na diferença.] | Foi uma venda pra Fundição Bandeira do Vale. A nota saiu no dia trinta de outubro, mas o pedido só foi finalizado no dia três de novembro. |
 | (ilustração: as réguas ganham os rótulos "segue as notas" e "segue compras, pedidos e pátio") | O fiscal segue as notas. O operacional segue as compras, os pedidos e o pátio. Por isso, os dois podem dar diferente. |

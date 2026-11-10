@@ -14,7 +14,7 @@ Sem preço na fala: o valor da mensalidade e o da economia anual ficam na tela, 
 - **Vinhetas (áreas):** COMEÇANDO · TRILHA · TRILHA · AJUDA · O SISTEMA · MENU · MENU · VOCABULÁRIO · ASSINATURA ·
   ASSINATURA · ASSINATURA · ASSINATURA · RESUMO (todos os capítulos menos o 0)
 - **Formatos:** 16:9 e 9:16 (vertical), mesmo áudio e mesma legenda
-- **Duração estimada:** ~11 min de vídeo (1.533 palavras de fala, ~9,8 min de voz a 2,6 palavras/s, mais a vinheta de abertura,
+- **Duração estimada:** ~11,5 min de vídeo (1.544 palavras de fala, ~9,9 min de voz a 2,6 palavras/s; 8.307 caracteres, ~10,5 min a 790 por minuto, mais a vinheta de abertura,
   13 vinhetas de capítulo e a cartela); alvo da fonte ~12 min
 
 ### cap00 · Abertura
@@ -133,7 +133,7 @@ Sem preço na fala: o valor da mensalidade e o da economia anual ficam na tela, 
 | Tela | Fala |
 | --- | --- |
 | Capítulo novo (S2), em "Assinatura"; a câmera desce até "Plano & módulos" ("Plano Personalizado • 10 módulos • Mensal") e para em "Módulos ativos". | Mais abaixo ficam os Módulos ativos. Cada módulo libera uma parte do sistema, como as notas fiscais, as coletas ou o Gerencial. |
-| [ILUSTRAÇÃO: dois cartões lado a lado; acende o primeiro, "Módulo fora do plano": uma tela com um cadeado e a frase "o que o módulo faz e como ativar"] | Se uma tela não aparece pra você, são dois motivos. Ou ela é de um módulo que não está no plano: aí, no lugar da função, a tela mostra o que o módulo faz e como ativar. |
+| [ILUSTRAÇÃO: dois cartões lado a lado; acende o primeiro, "Módulo fora do plano": uma tela com um cadeado e a frase "o que o módulo faz e como ativar"] | Se uma tela não aparece pra você, pode ser por dois motivos. Ou ela é de um módulo que não está no plano: aí, no lugar da função, a tela mostra o que o módulo faz e como ativar. |
 | [ILUSTRAÇÃO: acende o segundo cartão, "Usuário sem permissão": o item sai do menu; embaixo, "Quem libera: o administrador, em Usuários e Permissões"] | Ou o seu usuário não tem permissão pra ela. Quem libera é o administrador, em Usuários e Permissões. |
 | [ILUSTRAÇÃO: linha do tempo "Período de teste", com todos os módulos acesos, → "Assinatura ativa", com só os contratados acesos; na frase "é só ligar", um módulo apagado acende de novo com a etiqueta "Módulo ligado"] | Uma dica: no teste, todos os módulos ficam liberados. Com a assinatura ativa, ficam os que você contratou. Pra ter de volta uma tela do teste, é só ligar o módulo. |
 

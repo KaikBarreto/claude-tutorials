@@ -69,7 +69,7 @@ discordam, vale o código (lista no fim).
   automaticamente para esta coluna. Só uma coluna pode ser a de conclusão."), "Cancelar" / **"Salvar"** → toast
   **"Coluna atualizada"** (`:942`).
 - Cartão (`:217-344`): "#N" + selo ("Rascunho", "Em andamento", "Concluída", "Cancelada", `:111-116`); produto;
-  rascunho: "planejado: 500 kg"; senão "480 kg produzido"; concluída: "R$ 3.087,60 · R$ 6,43/peça" (rótulo "/peça"
+  rascunho: "planejado: 500 Kg"; senão "480 Kg produzido"; concluída: "R$ 3.087,60 · R$ 6,43/peça" (rótulo "/peça"
   mesmo em kg, `:279`); quem criou + data; "Equipe:" / "Produziu:" (`:302`); botão **"Finalizar"** nas vivas (`:342`);
   no passar do mouse, lápis "Editar ordem" e lixeira **"Excluir ordem"** (`:188,202`).
 - Arrastar (`:840-883`): entre colunas grava `kanban_column_id`; ordem viva solta na coluna de conclusão **abre
@@ -104,9 +104,9 @@ discordam, vale o código (lista no fim).
 
 ### Detalhe da ordem (`components/producao/ProductionOrderDetail.tsx`, clique no cartão)
 - Título "Produção #N" + produto (`:328-334`); "Data", "Responsável", "Máquina" (`:410-419`); **"Meta (referência)"**,
-  **"Produzido até agora"** (ou "Produzido"), barra "480 de 500 kg" e % (`:428-453`); **"Lançamentos"** (vazio: "Nenhum
-  dia lançado ainda. Comece lançando a produção do dia.", `:467-476`); linha do dia: "10/11", "480 kg", fotos, "Cláudio
-  Ferraz e Diego Moraes", menu "Editar este dia" / "Excluir este dia" (`:480-535`); botões **"Lançar produção do dia"**
+  **"Produzido até agora"** (ou "Produzido"), barra "480 de 500 Kg" e % (`:428-453`); **"Lançamentos"** (vazio: "Nenhum
+  dia lançado ainda. Comece lançando a produção do dia.", `:467-476`); linha do dia: "10/11", "480 Kg", fotos, "Cláudio
+  Ferraz e Diego Morais", menu "Editar este dia" / "Excluir este dia" (`:480-535`); botões **"Lançar produção do dia"**
   e "Finalizar ordem" (`:546,558`).
 - Backend: `production_orders`, `production_order_consumption`, `production_order_outputs`, `production_order_entries`,
   `production_order_workers`, `employees` (`:146-211`); RPC `delete_production_entry_atomic` (`:349`).
@@ -117,9 +117,9 @@ discordam, vale o código (lista no fim).
   `:887,939-968`; sem equipe: "Esta ordem não tem equipe. Edite a ordem e adicione os funcionários que vão produzir.",
   `:934`); **"Total do dia"** (`:970`). O seletor "Peças" / "jogos" só aparece com pack (`:205`; não aparece no fardo).
 - **"Subprodutos (se sobrar algo aproveitável)"**, botão **"+ Adicionar"**, vazio "Nenhum subproduto neste dia."; linha:
-  "Material" ("Selecione o subproduto", qualquer material menos o produto) e "Qtd (kg)" (`:989-1056`). O coproduto avulso
+  "Material" ("Selecione o subproduto", qualquer material menos o produto) e "Qtd (Kg)" (`:989-1056`). O coproduto avulso
   da ficha **não** vem preenchido: o operador adiciona.
-- **"Matéria-prima usada"** (`:1085`): por insumo, **"Sugerido pela ficha: 480 kg"** (`:1119-1126`), campo **"Real (kg)"**
+- **"Matéria-prima usada"** (`:1085`): por insumo, **"Sugerido pela ficha: 480 Kg"** (`:1119-1126`), campo **"Real (Kg)"**
   já com o sugerido (`:1130-1141`, `:605-624`), diferença ao lado em vermelho com "+" ou verde com "−" (`:1094-1149`).
 - Tolerância (`lib/producao.ts:590-603`): pede motivo quando |real − teórico| > teórico × tolerância%. Acima:
   **"Motivo da perda \*"** (placeholder "Motivo") com "Perda de corte", "Sucata", "Retrabalho", "Peça rejeitada",

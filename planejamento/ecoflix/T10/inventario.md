@@ -69,7 +69,7 @@ Rotas: `App.tsx:390,410,415,483`.
   Pix; "Total do Pedido:"; **"Fotos anexadas"** (miniaturas que ampliam; sem foto: "Nenhuma foto anexada.").
   Movimento manual: "Entrada"/"Saída", "Observação" ("Sem observação"), "Estoque" antes → depois, usuário e hora.
 - Ajuda "Como funciona o Kardex" (`:1500-1600`): "Move quantidade de um material para outro.", "Ajuste feito direto no
-  estoque, sem compra ou venda.", "Estorno — um pedido foi excluído e o estoque voltou ao que era." (não ler: travessão).
+  estoque, sem compra ou venda.", "Estorno" + "um pedido foi excluído e o estoque voltou ao que era." (o texto da tela tem travessão entre os dois: não ler).
 - Backend: `stock_movements` (+ `materials`, `profiles`), `suppliers`, `customers`, `purchases`/`sales` (filtro de parte);
   ao abrir: `purchase_items`/`sale_items`, view `orders_with_payments`, `cash_transactions`/`bank_transactions`/
   `balance_movements` (`utils/paymentMethodsHelper.ts`), `order_attachments` + bucket `order-attachments`.

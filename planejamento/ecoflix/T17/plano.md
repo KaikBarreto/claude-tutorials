@@ -3,7 +3,8 @@
 - **Título:** Transporte, serviço e o contador (fonte). 🔒 módulo **Notas Fiscais** (dito na abertura, sem preço).
 - **Antes:** T16 Nota Fiscal de mercadoria (NF-e). **Próximo:** T18 Ambiental: MTR e CDF.
 - **Áreas das vinhetas:** TRANSPORTE · FROTA · MANIFESTO · SERVIÇO · RELATÓRIO FISCAL · ESTOQUE FISCAL · CONTADOR · RESUMO.
-- **Alvo da fonte:** ~16 min. **Estimativa:** ~14 min de vídeo (fala natural + 13 vinhetas + esperas da SEFAZ simulada).
+- **Alvo da fonte:** ~16 min. **Estimativa:** ~13 min de vídeo (1.841 palavras, ~11,8 min de fala, + 13 vinhetas + esperas da
+  SEFAZ simulada).
 - Regime do exemplo **Lucro Real**; a fala mostra os campos e diz que quem define tributação (código do serviço, alíquota) é o
   contador. Nada de SEFAZ, prefeitura nem numeração de verdade: tudo no backend falso.
 - Base: `T17/inventario.md` (código 1.59.154). Desktop, logado como **Rafael Nogueira** (MASTER).
@@ -61,8 +62,9 @@ Além do `MUNDO_FICTICIO.md` (a consolidar lá):
 - **MDF-e:** nenhum antes; `last_mdfe_number` 0, série 1. **Criado na tela:** MDF-e **nº 1** (cap04, autorizado ~08:40), encerrado no
   cap05 (14:2x).
 - **NFS-e:** série configurada; emitidas antes: **nº 12** (13/10, Fundição Bandeira do Vale, coleta com caçamba, R$ 1.200,00,
-  "Autorizada") e **nº 13** (29/10, Aços Quiririm Ltda, R$ 1.850,00, "Autorizada"). **Criada na tela:** **nº 14** (10/11, Aços Quiririm
-  Ltda, "Coleta e remoção de resíduos metálicos com caçamba no pátio da Aços Quiririm, de 3 a 7 de novembro de 2026.", R$ 1.850,00).
+  "Autorizada") e **nº 13** (29/10, Aços Quiririm Ltda, R$ 1.850,00, "Autorizada"). **Criada na tela:** **nº 14** (emitida em 10/11, competência
+  07/11/2026, Aços Quiririm Ltda, "Coleta e remoção de resíduos metálicos com caçamba no pátio da Aços Quiririm em 07/11/2026.",
+  R$ 1.850,00).
   Lista de códigos de Taubaté (simulada) com o de coleta e remoção de resíduos (subitem 7.09 da lista nacional) e alíquota **3,00%**.
 - **NFS-e recebidas:** recurso **desligado** no início (`nfse_dfe_ativo` false). A sincronização traz duas, tomador = Recicla Vale:
   **Contabilidade Jequitibá Ltda** (CNPJ **47.291.836/0001-56**, Taubaté), "Honorários contábeis de outubro de 2026", competência

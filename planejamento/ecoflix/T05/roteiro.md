@@ -9,7 +9,7 @@ como no código (`T05/inventario.md`, 1.59.154 e EcoTray 1.7.22).
 - **Próximo:** Caixa: abrir, fechar e o cofre (T6)
 - **Vinhetas (áreas):** ECOTRAY · INSTALAÇÃO · CONEXÃO · IMPRESSORA · IMPRESSORA · BALANÇA · BALANÇA · BALANÇA ·
   CONEXÃO · IMPRESSORA · RESUMO (todos os capítulos menos o 0)
-- **Duração estimada:** ~12 min (1.625 palavras de fala, ~10,4 min a 2,6 palavras/s, mais 11 vinhetas, as cenas de
+- **Duração estimada:** ~12 min (1.645 palavras de fala, ~10,5 min a 2,6 palavras/s, mais 11 vinhetas, as cenas de
   Windows e as ilustrações); alvo da fonte, 13 min.
 - **Gravação:** computador 1280×800, logado como Rafael Nogueira; `FAKE_NOW=2026-11-10T08:30:00-03:00`; cada capítulo
   parte de um navegador novo com a semente do fim do anterior (`inicio`, `apos-cap02`, `apos-cap04`, `apos-cap05`,
@@ -85,7 +85,7 @@ como no código (`T05/inventario.md`, 1.59.154 e EcoTray 1.7.22).
 
 | Tela | Fala |
 | --- | --- |
-| Capítulo novo (semente `apos-cap04`: impressão direta ligada com "POS-58"). [ZOOM: "Escala e Largura do Comprovante", com "Papel 80mm · Escala 100%"] | Isso é a largura do papel. A bobina da impressora da Recicla Vale é a pequena, de cinquenta e oito milímetros, e o sistema vem com oitenta milímetros. |
+| Capítulo novo (semente `apos-cap04`: impressão direta ligada com "POS-58"). [ZOOM: "Escala e Largura do Comprovante", com "Papel 80mm · Escala 100%"] | Aquele corte é a largura do papel. A bobina da impressora da Recicla Vale é a pequena, de cinquenta e oito milímetros, e o sistema vem com oitenta milímetros. |
 | [ILUSTRAÇÃO: A largura do papel: duas réguas, "80 mm" (o cupom) e "58 mm" (a bobina); o cupom desenhado para 80 mm desce na bobina de 58 mm e o lado direito passa do papel e some, na palavra "cortado"; depois o mesmo cupom, refeito em 58 mm, cabe inteiro.] | Com o papel mais estreito que o cupom, o lado sai cortado. Uma dica: cupom cortado quase sempre é a largura, e não a impressora. |
 | Clique em "Ajustar Escala": janela "Ajuste do Comprovante Térmico"; em "Largura do papel da impressora", clique em "58 mm" ("bobina pequena"); a régua passa a "Papel: 58 mm" e a "Prévia do comprovante" estreita. | Em Ajustar Escala, eu escolho cinquenta e oito milímetros. A prévia já mostra o cupom do tamanho da bobina. |
 | Zoom na nota "O comprovante será gerado no tamanho exato do papel selecionado, ocupando 100% da largura quando a escala estiver em 100%." | O sistema manda essa largura pro EcoTray, e ele imprime exatamente nela. Então, se o cupom sair cortado, confira aqui primeiro. |

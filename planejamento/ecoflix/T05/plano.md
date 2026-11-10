@@ -5,7 +5,7 @@
   ("abrir o caixa e começar o dia").
 - **Objetivo:** instalar o EcoTray no computador do escritório da Recicla Vale Metais, ligar a impressora de cupom (58 mm)
   e a balança do pátio, e saber ler o rodapé e o que fazer quando o EcoTray fecha ou o driver da impressora é o errado.
-- **Duração:** alvo da fonte 13 min; fala ~1.625 palavras (~10,4 min) + 11 vinhetas, cenas de Windows e ilustrações ≈ 12 min.
+- **Duração:** alvo da fonte 13 min; fala ~1.645 palavras (~10,5 min) + 11 vinhetas, cenas de Windows e ilustrações ≈ 12 min.
 - **Base:** `T05/inventario.md` (código 1.59.154 e EcoTray 1.7.22). Computador 1280×800, logado como **Rafael Nogueira**
   (MASTER). `FAKE_NOW=2026-11-10T08:30:00-03:00` em todos os capítulos.
 

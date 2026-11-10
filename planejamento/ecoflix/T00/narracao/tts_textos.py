@@ -65,7 +65,7 @@ Embaixo, o valor da mensalidade e as formas de pagamento.
 Em Uso da conta, você vê quantos usuários estão cadastrados e quantas notas fiscais saíram no mês.
 Uma dica: ver esta tela é uma coisa, mexer é outra. Pagar e mudar o plano ficam com o administrador, ou com quem tem a permissão de gerenciar a assinatura.""",
 10: """Mais abaixo ficam os Módulos ativos. Cada módulo libera uma parte do sistema, como as notas fiscais, as coletas ou o Gerencial.
-Se uma tela não aparece pra você, são dois motivos. Ou ela é de um módulo que não está no plano: aí, no lugar da função, a tela mostra o que o módulo faz e como ativar.
+Se uma tela não aparece pra você, pode ser por dois motivos. Ou ela é de um módulo que não está no plano: aí, no lugar da função, a tela mostra o que o módulo faz e como ativar.
 Ou o seu usuário não tem permissão pra ela. Quem libera é o administrador, em Usuários e Permissões.
 Uma dica: no teste, todos os módulos ficam liberados. Com a assinatura ativa, ficam os que você contratou. Pra ter de volta uma tela do teste, é só ligar o módulo.""",
 11: """E quando a empresa cresce, o plano cresce junto. Em Gerenciar plano, você liga um módulo novo ou mais usuários.

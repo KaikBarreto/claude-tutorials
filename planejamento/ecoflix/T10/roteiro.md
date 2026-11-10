@@ -10,8 +10,8 @@ com a semente indicada; quando um capítulo continua uma tela do anterior, o `se
 - **Antes:** Pedidos e histórico do caixa (T9)
 - **Próximo:** Contas a Pagar e Receber (T13)
 - **Vinhetas (áreas):** ESTOQUE · HISTÓRICO · RELATÓRIO · POSIÇÃO · RESUMO (todos os capítulos menos o 0)
-- **Duração estimada:** ~15 min de vídeo (2.130 palavras de fala, ~13,7 min de voz a 2,6 palavras/s, mais 12 vinhetas,
-  as ilustrações e as ações; alvo da fonte: 16 min)
+- **Duração estimada:** ~14 min de vídeo (1.775 palavras e 9.516 caracteres de fala, ~11,4 min de voz a 2,6 palavras/s,
+  mais 12 vinhetas, as ilustrações e as ações; alvo da fonte: 16 min, a fala segue o tempo natural)
 - **FAKE_NOW:** `2026-11-10T08:30:00-03:00` (terça). O "dia 31" é 31/10, um sábado.
 - **Sementes:** `inicio` (mundo base com a "Tabela Depósitos" do T3 e os valores de `plano.md` → "Mundo"; caps. 0 a 3) e
   `apos-cap03` (mais a transferência de 320 kg; caps. 4 a 12). Números falados que dependem da semente: caps. 2, 3, 4, 5,

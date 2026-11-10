@@ -122,3 +122,6 @@ Decisões:
   sozinha, não. O guia do eleven_v4 aceita o som exato em IPA entre barras ("/ʃɪˈvɔːn/"). Quinto teste em IPA, sozinhas e
   em frases: NF-e /ˌẽniˌɛfiˈe/, NFS-e /ˌẽniˌɛfiˌɛsiˈe/, ICMS /iseˌɛmiˈɛsi/. Se o Kaik aprovar, o IPA vira a grafia
   do TTS dessas três (a troca IPA → sigla é 1 para 1) e vale para outras siglas difíceis.
+- 10/11 01:12 Kaik sobre o IPA: "esse ɛfi não tá bom, faça ser algo mais vocal como "éfi" com acento , mesma coisa em
+  éssi / e no ICMS tá ISE ao invés de ICÊ". Sexto teste: acento tônico em cada letra (/ˈẽniˈɛfiˈe/, /ˈẽniˈɛfiˈɛsiˈe/,
+  /iˈseˈɛmiˈɛsi/) e a mesma coisa com vogal longa (ː), sozinhas e numa frase.
