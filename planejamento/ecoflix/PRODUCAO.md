@@ -113,3 +113,7 @@ Decisões:
   de N palavras faladas para 1 da legenda (hoje junta par a par); (b) na revisão geral, trocar nos `tts_textos.py` as
   grafias antigas ("ene-éfe-ê", "ene-éfe-ésse-ê", "i-cê-eme-ésse", "ene-éfe-é", "séfaz", "cê-fópi", "cárdecs") pelas da
   tabela do PERFIL.
+- 10/11 01:05 Kaik: "nf-e e nfs-e e ICMS ainda tá muito blocado / tinha que ser algo mais como êniéfiê, êniéfiéssiê,
+  Icêémiésse". Grafias de corrido, numa palavra (a troca volta a ser 1 para 1: o ajuste no `proc.py` deixa de ser
+  necessário). Quarto teste no fluxo de teste. Na revisão geral, trocar também "éne éfe é", "éne éfe ésse é" e
+  "i cê eme éssi" pelas grafias novas.
