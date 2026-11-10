@@ -41,6 +41,11 @@ de plano na fala.
   oficial (ex.: vídeo usado fora do player), `"som": "assets/ecoflix-intro.mp3"`.
 - **Cartela final** (3,85 s): a mesma montagem do logo + fio + "Até a próxima aula!"; o encaixe em 1,20 s e a cauda do
   som some com o preto.
+- **Vertical 9:16** (T0 vertical; `web/intro_vertical.html` pelo `kit/brand_clips_vertical.sh`): o molde do capacete
+  vertical da Domiflix, com os mesmos tempos e o som idêntico ao do 16:9. As peças se encaixam grandes no meio, o símbolo
+  sobe e o "EcoFlix" sai de trás dele para baixo (centrado pelas letras; o ® fica pendurado), fio e título embaixo (88 px
+  em até 2 linhas, encolhe até caber, nunca abaixo de 44 px); cartela com a frase de 72 px. Tudo na área segura
+  (x 72 a 1008, y 180 a 1420). Sem rótulo nem logo da série.
 - Vinheta de capítulo, cartões "Antes:"/"Próximo:", avisos, destaques, cursor e palco: o layout da Domiflix nas cores
   daqui (tudo lê o marca.json).
 - Cores: acento **#50D088** (o verde do símbolo), escuro **#121212** (fundo do tema escuro do app), claro **#F3F4F6**.

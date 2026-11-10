@@ -97,7 +97,8 @@ ilustração por arquivo, `edit/ilustracoes/ilustra_<assunto>.py`, com `--stills
 ## Montagem final: `finish.py caps/<AULA>.aula.json` (modelo em `modelos/aula.json`)
 - Vinheta da aula e cartela (`kit/brand_clips.sh`, a partir de `marca/marca.json`): logo da marca + "▶ SÉRIE" +
   título da aula; cartela com o logo e a frase final (`outro_line`, padrão "Até a próxima aula!"). No perfil Domiflix:
-  o capacete em 3 peças que se encaixam; no EcoFlix, as 3 peças do símbolo de reciclagem girando, com o som oficial.
+  o capacete em 3 peças que se encaixam; no EcoFlix, as 3 peças do símbolo de reciclagem girando, com o som sintetizado
+  em Mi maior (o oficial do app é opcional: `vinheta.som` no marca.json).
 - **Vinheta de capítulo** (`vinheta_cap.py`) antes de cada capítulo com `card` (menos o primeiro): fusão de entrada
   0,4 s, área + título sobem com a barra na cor de acento, voz do título em 0,70 s (`card_voices` = `titulos.json`), saída por
   fusão no 1º quadro do capítulo seguinte; ≥ 3,2 s. SFX por cima do mix: whoosh na entrada (−15 dB), pop quando o
@@ -120,7 +121,7 @@ A 9:16 é a "Versão para celular" da MESMA aula: a DomiFlix troca sozinha o ví
 introdução obrigatória). Por isso o vertical tem de ter **a mesma linha do tempo** do 16:9 (mesmas vinhetas, cortes, tempos e
 áudio) e **uma única legenda por aula** (SRT/VTT iguais nas duas versões). É opção nova; o 16:9 não muda (`identidade_domiflix.sh`).
 - Peças: `fundo_escuro_vertical.py` (palco = o do 16:9 girado 90°), `web/intro_vertical.html` + `kit/brand_clips_vertical.sh`
-  (vinheta e cartela, logo DomiFlix todo branco, mesmo som e mesma duração), `vinheta_cap_vertical.py` (vinheta de capítulo),
+  (vinheta e cartela da Domiflix e da EcoFlix, mesmo som e mesma duração do 16:9), `vinheta_cap_vertical.py` (vinheta de capítulo),
   `render_chapter_vertical.py` (cena ilustrada 1080x1920 pronta, sem recodificar; ou tela real do celular, abaixo), `finish.py --formato 9x16` (ou `"formato": "9x16"` na aula; mesma mixagem), `entregar.py --unico` (720x1280).
 - **Tela real do celular** (gravação 390x844, `"telemetry"` no JSON): `render_chapter_vertical.py` recorta a área que a fala cita e amplia
   2,4x (390 -> 936 px) na janela `tela_real` do painel (x 72, y 240, 936x1160, acima da faixa da legenda), sem moldura de aparelho;
@@ -140,6 +141,10 @@ introdução obrigatória). Por isso o vertical tem de ter **a mesma linha do te
   até 2 linhas. **Faixa da legenda do player: y 1420-1600** (18% do pé no celular; 15% no computador, y 800-930 do 16:9): nada essencial.
 - Vinheta e cartela verticais não levam o logo da DomiFlix (pedido do Kaik): capacete + DOMINEX + título; `SERIE_LOGO=assets/<png>` o devolve.
   No 16:9, `"sem_domiflix": true` na aula (ou `brand_clips.sh --sem-domiflix`) tira o "▶ DOMIFLIX"; o padrão continua com ele.
+- Vinheta e cartela verticais da EcoFlix (estilo `ecosistema-reciclagem`), no mesmo molde: as peças giram e se encaixam como
+  no 16:9, o símbolo sobe e o "EcoFlix" sai de trás dele para baixo (centrado pelas letras, com o ® pendurado à direita), fio
+  e título logo abaixo; sem rótulo nem logo da série (`SERIE_LOGO` não vale: o nome já é o logo). Mesma linha do tempo do
+  16:9, então o som sai idêntico. O estilo `logo` não tem vertical (a página recusa).
 - Legenda única com linhas curtas, que servem às duas proporções: `legendas_aula.py ... --linha 32`; gere uma vez e use o mesmo
   arquivo nas duas entregas. Nomes: `<Aula>.mp4` e `<Aula> (vertical).mp4`, cada um com `.srt` e `.vtt`.
 - Teste: `flock $TUT_HOME/.heavy.lock nice -n 10 bash testes/vertical_9x16.sh`. Ver também `docs/09-aula-ilustrada.md` (cenas).

@@ -2,10 +2,12 @@
 # Vinheta de abertura (com o título da aula) e cartela final no formato VERTICAL 9:16 (1080x1920), com áudio, na identidade
 # da marca (<TUT_HOME>/marca/marca.json ou $MARCA_JSON). Faz o que o kit/brand_clips.sh faz no 16:9, com a página
 # web/intro_vertical.html: a mesma linha do tempo e os mesmos CUES, então o som sai idêntico bit a bit ao do 16:9
-# (a vinheta e a cartela têm a mesma duração: 4,42 s e 3,85 s).
+# (a vinheta e a cartela têm a mesma duração: 4,42 s e 3,85 s). Estilos: "dominex-capacete" (Domiflix) e
+# "ecosistema-reciclagem" (EcoFlix: símbolo, o EcoFlix sai de trás dele para baixo, título); o "logo" não tem vertical.
 # uso: bash kit/brand_clips_vertical.sh <projeto> "<título da aula>" ["<frase da cartela>"]   (sem frase: a do marca.json)
 #   SERIE_LOGO=assets/<logo>.png   opcional: logo da série todo branco entre o DOMINEX e o título (ex.: assets/domiflix_logo_branco.png).
 #                                  Padrão (pedido do Kaik): sem logo nem rótulo da série; o título sobe logo abaixo do DOMINEX.
+#                                  Só no capacete: na EcoFlix o nome já é o logo (a página ignora).
 # Saídas em <projeto>/build: intro_v.mp4, outro_v.mp4, intro_audio.wav, outro_audio.wav (+ *_meta.json), como no 16:9,
 # para o edit/finish.py (--formato 9x16) montar a aula sem outro caminho. Pesado (dois Chromium): rode sob
 # `flock $TUT_HOME/.heavy.lock nice -n 10` (o finish.py já roda assim).
