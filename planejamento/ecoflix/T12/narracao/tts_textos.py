@@ -28,7 +28,7 @@ Repara: o endereço veio do cadastro dela. Se a coleta for em outro lugar, é s�
 Avançar. Na etapa Coleta, o Material estimado: uns quatrocentos quilos de radiadores e baterias.
 E nas Observações, o que ajuda o motorista a achar e a carregar: retirar pelo portão lateral.""",
 4: """Agora, o dia e o período. Ainda na etapa Coleta, ficam a Data agendada e o Período.
-A Auto Peças pediu pra quinta, doze de novembro.
+A Auto Peças pediu pra amanhã, quarta, onze de novembro.
 O Período é a janela do dia: manhã, tarde ou dia todo. Assim o motorista sabe quando passar, e o parceiro, quando esperar.
 Escolho manhã. E as janelas que aparecem aqui você define nas Configurações, no fim da aula.
 Avanço pra última etapa.""",
@@ -64,7 +64,7 @@ Os dados de transporte servem pros documentos de transporte. Aqui, São Paulo, v
 A tara dele é sete mil e cem quilos, e a capacidade, oito mil e quinhentos.
 Cadastrar. Pronto, o poliguindaste já está na frota.
 Agora o motorista dele. Na aba Motoristas, clico em Novo motorista.
-O Rogério Batista foi contratado pro poliguindaste. Nome, CPF e telefone.
+O Sérgio Paiva foi contratado pro poliguindaste. Nome, CPF e telefone.
 E a carteira de motorista, a cê-ene-agá: o número, a categoria cê, que é a de caminhão, e a validade.
 Cadastrar. Agora ele já pode ser escalado nas ordens.""",
 9: """E as caçambas. Elas ficam em Equipamentos, junto com bégues, caixas e paletes.

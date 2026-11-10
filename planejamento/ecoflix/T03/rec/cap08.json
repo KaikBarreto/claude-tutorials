@@ -1,0 +1,482 @@
+{
+ "name": "t03-cap08",
+ "title": "T03 · Cap. 8 · Movimentar, transferir e zerar (narração 92,0 s ESTIMADA; marcas L1..L8 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; usuário rafael)",
+ "seed": "t03-cap08",
+ "pace": 0.5,
+ "cps": 14,
+ "tail": 1.5,
+ "start": {
+  "x": 700,
+  "y": 300
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true"
+ },
+ "seedExtra": [
+  "t03/inicio",
+  "t03/apos-cap07"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/login"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "input[type=email]"
+   },
+   "timeout": 30
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "input[type=email]"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "input[type=password]"
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "button[type=submit]"
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Rafael!",
+   "timeout": 40
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/materiais"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie os materiais do estoque",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "header button:has(svg.lucide-panel-left-close), header button:has(svg.lucide-panel-left)"
+   },
+   "noScroll": true
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=new RegExp(\"N[\\u00e3a]o foi poss[i\\u00ed]vel|Erro ao|Tente novamente|indispon[i\\u00ed]vel|Algo deu errado|Something went wrong|Falha ao|Pop-up bloqueado|Sem permiss[\\u00e3a]o\",'i');const ign=new RegExp(\"$^\",'i');const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&!ign.test(m[0])&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0.0
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Movimentar estoque",
+    "exact": true
+   },
+   "seconds": 1.2,
+   "at": 7.59,
+   "label": "Movimentar estoque",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 15.34
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Movimentar estoque",
+    "exact": true
+   },
+   "at": 15.54,
+   "label": "Movimentar estoque"
+  },
+  {
+   "do": "waitFor",
+   "text": "Registre uma entrada ou saída manual",
+   "timeout": 8
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Saída",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 16.0,
+   "label": "Saída"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Escreva o nome ou código do material"
+   },
+   "text": "radiador",
+   "cps": 40,
+   "at": 17.18,
+   "label": "Material: radiador"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Radiador de cobre",
+    "exact": false
+   },
+   "label": "Radiador de cobre"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#movement-quantity"
+   },
+   "text": "2",
+   "at": 19.46,
+   "label": "Quantidade 2"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Estoque de Radiador de cobre\", \"Estoque atual\", \"120\", \"2 Kg\", \"Após a movimentação\", \"118\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere antes 120, -2 Kg, depois 118"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Após a movimentação",
+    "within": "[role=dialog]"
+   },
+   "seconds": 2.0,
+   "at": 22.21,
+   "label": "Estoque de Radiador de cobre: 120 > -2 Kg > 118 (zoom)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 27.15
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#movement-description"
+   },
+   "text": "Ajuste de inventário",
+   "cps": 40,
+   "at": 28.62,
+   "label": "Descrição: Ajuste de inventário"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Registrar saída",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 34.86,
+   "label": "Registrar saída"
+  },
+  {
+   "do": "waitFor",
+   "text": "Saída de 2 Kg de Radiador de cobre",
+   "timeout": 10
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 36.3
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const el=document.querySelector(\"main input[placeholder=\\\"Buscar material por c\\u00f3digo ou nome...\\\"]\");if(!el)return 'SEM ALVO';const set=Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set;set.call(el,\"radiador\");el.dispatchEvent(new Event('input',{bubbles:true}));el.dispatchEvent(new Event('change',{bubbles:true}));return el.value})()",
+   "at": 38.8,
+   "label": "busca radiador (por baixo da ilustração)"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "text": "Radiador de cobre",
+    "within": "main"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 48.95
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('Radiador de cobre') td:last-child button"
+   },
+   "seconds": 0.4,
+   "at": 49.99,
+   "label": "\"...\" da linha Radiador de cobre",
+   "optional": false,
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('Radiador de cobre') td:last-child button"
+   },
+   "seconds": 0.3,
+   "label": "\"...\" de novo (só se não abriu)",
+   "unless": {
+    "role": "menuitem",
+    "name": "Transferir estoque"
+   },
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "role": "menuitem",
+    "name": "Transferir estoque"
+   },
+   "timeout": 6
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Transferir estoque"
+   },
+   "at": 51.73,
+   "label": "Transferir estoque"
+  },
+  {
+   "do": "waitFor",
+   "text": "Transferir quantidade de Radiador de cobre",
+   "timeout": 8
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Transferir quantidade de Radiador de cobre (Código: 70)\", \"118 Kg\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Transferir Estoque: código 70, 118 Kg"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Escreva o nome ou código do material"
+   },
+   "text": "ferro misto",
+   "cps": 40,
+   "at": 53.0,
+   "label": "Material de Destino: ferro misto"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Ferro misto",
+    "exact": false
+   },
+   "label": "Ferro misto"
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 56.03
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#transfer-quantity"
+   },
+   "text": "8",
+   "at": 56.03,
+   "label": "Quantidade a Transferir 8 (zoom)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Transferir",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 57.62,
+   "label": "Transferir"
+  },
+  {
+   "do": "waitFor",
+   "text": "Transferido 8 Kg de Radiador de cobre para Ferro misto",
+   "timeout": 10
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"110\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main tbody tr\")].filter(e=>!true||e.innerText.includes(\"Radiador de cobre\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere radiador com 110 Kg"
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 63.62
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const el=document.querySelector(\"main input[placeholder=\\\"Buscar material por c\\u00f3digo ou nome...\\\"]\");if(!el)return 'SEM ALVO';const set=Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set;set.call(el,\"\");el.dispatchEvent(new Event('input',{bubbles:true}));el.dispatchEvent(new Event('change',{bubbles:true}));return el.value})()",
+   "at": 63.62,
+   "label": "limpa a busca (sem cursor)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Zerar Estoque",
+    "exact": true
+   },
+   "at": 64.12,
+   "label": "Zerar Estoque"
+  },
+  {
+   "do": "waitFor",
+   "text": "Zerar Todo o Estoque",
+   "timeout": 8
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Atenção: Ação irreversível\", \"16 de 16 selecionados\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere todos marcados: 16 de 16 selecionados"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "selecionados",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.0,
+   "at": 72.7,
+   "label": "16 de 16 selecionados",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] label:has-text('Ferro pesado')"
+   },
+   "seconds": 0.8,
+   "at": 74.14,
+   "label": "um material (dá para desmarcar)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 75.89
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Para confirmar, digite",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.6,
+   "at": 76.54,
+   "label": "Para confirmar, digite Zerar todo o meu estoque (zoom)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Zerar selecionados"
+   },
+   "seconds": 1.0,
+   "at": 81.32,
+   "label": "Zerar selecionados apagado",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Cancelar",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 89.82,
+   "label": "Cancelar"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 91.96
+  }
+ ]
+}

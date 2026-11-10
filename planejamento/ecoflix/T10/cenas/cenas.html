@@ -394,7 +394,7 @@ CAPS[3]=()=>{
   const card=(x,nome,v,cls,d)=>el(`<div class="card" style="left:${x}px;top:492px;width:340px;padding:16px 22px 18px">
       <div style="font-weight:800;font-size:22px">${nome}</div>
       <div class="row" style="margin-top:6px;gap:12px"><div class="num" style="font-size:34px">${kg(v)}</div>
-        <div class="tag ${cls}" style="font-size:17px;padding:6px 12px">${d}</div></div></div>`,g);
+        <div class="tag ${cls}" style="font-size:17px;padding:6px 14px">${d}</div></div></div>`,g);
   const cM=card(250,'Ferro misto',MISTO,'a','−'+kg(TR)), cP=card(800,'Ferro pesado',PESADO,'v','+'+kg(TR));
   const nM=cM.querySelector('.num'), nP=cP.querySelector('.num'), dM=cM.querySelector('.tag'), dP=cP.querySelector('.tag');
   const tT=el('<div class="ab" style="left:590px;top:506px;width:210px;text-align:center"><div class="tag v" style="font-size:17px;padding:6px 12px">Transferência</div></div>',g);
@@ -746,17 +746,17 @@ CAPS[9]=()=>{
     const mistura=Math.max(tfo+.05+.36+.85,tva+.15+.36+.85)+.2, sem=eo(pr(t,mistura,.6));
     PS.forEach(o=>{voa(o,t,tfo+.05+.12*o.i,.85,-70); o.p.setAttribute('stroke-opacity',(1-sem).toFixed(3));});
     PV.forEach(o=>{voa(o,t,tva+.15+.12*o.i,.85,-50); o.p.setAttribute('stroke-opacity',(1-sem).toFixed(3));});
-    pulse(pil,t,tpi,.025,.8);
     vis(aF,t,tfu-.2,1e9,{dx:18,dy:0}); traco(a3,t,tcp-.25,.5);
     PF.forEach(o=>{voa(o,t,tcp+.1+.14*o.i,.9,-90); o.p.setAttribute('stroke-opacity','0');});
-    vis(pq,t,tqu-.25,1e9,{dy:10}); pulse(pil,t,tqu+.1,.025,.8);
+    vis(pq,t,tqu-.25,1e9,{dy:10}); pulsos(pil,t,[tpi,tqu+.1],.025,.8);
   };
 };
 
 // ================================================================== CAPS[10] · Uma foto do estoque (ilu10_foto)
 // fala 2: "A Posição é uma foto do estoque. Você escolhe a data e a hora, e ela mostra o saldo de cada material naquele
 // instante. O que entrou ou saiu depois fica fora da foto."
-// Pontos sem número (as entradas e saídas do ferro pesado): novembro com as compras, a venda e a transferência da fala.
+// Pontos sem número (as entradas e saídas do ferro pesado): novembro com as compras, as vendas e a transferência da fala
+// (03/11 compra, 04/11 e 06/11 vendas, 09/11 compra, 10/11 transferência: MUNDO_FICTICIO.md, semente do mundo base).
 CAPS[10]=()=>{
   const g=grupo();
   const tit=titulo(g,'Posição','Uma foto do estoque');
@@ -766,7 +766,7 @@ CAPS[10]=()=>{
   const mO=el(`<div class="ab kick" style="left:90px;top:396px;width:${XC-90}px;text-align:center;color:#6B7280">Outubro</div>`,g);
   const mN=el(`<div class="ab kick" style="left:${XC}px;top:396px;width:${1190-XC}px;text-align:center;color:#6B7280">Novembro</div>`,g);
   const ponto=([x,s])=>el(`<div class="ab" style="left:${x-22}px;top:334px;width:44px;height:44px;border-radius:50%;background:${s==='+'?'#2E7D57':'#8A5A00'};color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:24px;line-height:1">${s}</div>`,g);
-  const pO=[[170,'+'],[280,'+'],[390,'−'],[500,'+'],[610,'−'],[700,'−']].map(ponto), pN=[[830,'+'],[930,'−'],[1030,'+'],[1130,'+']].map(ponto);
+  const pO=[[170,'+'],[280,'+'],[390,'−'],[500,'+'],[610,'−'],[700,'−']].map(ponto), pN=[[810,'+'],[890,'−'],[970,'−'],[1050,'+'],[1130,'+']].map(ponto);
   const corte=el(`<div class="ab" style="left:${XC-1.5}px;top:236px;width:0;height:236px;border-left:3px dashed #8E979F"></div>`,g);
   const tCo=el(`<div class="ab" style="left:${XC-150}px;top:178px;width:300px;text-align:center"><div class="tag v">${ic('calendar-clock',20)}31/10 23:59</div></div>`,g);
   const visor=el(`<svg class="ab" style="left:0;top:0;overflow:visible" width="1280" height="800"><g fill="none" stroke="var(--v)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">

@@ -1,0 +1,218 @@
+{
+ "name": "t11-cap14",
+ "title": "T11 · Cap. 14 · Recapitulando (narração 54,2 s ESTIMADA; marcas L1..L5 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T17:30:00-03:00)",
+ "seed": "t11-cap14",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 900,
+  "y": 440
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true"
+ },
+ "seedExtra": [
+  "t11/inicio",
+  "t11/apos-cap03",
+  "t11/apos-cap04",
+  "t11/apos-cap05",
+  "t11/apos-cap06",
+  "t11/apos-cap09",
+  "t11/apos-cap10",
+  "t11/apos-cap12",
+  "t11/apos-cap13"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "waitFor",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "timeout": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "••••••••"
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "url": "/dashboard",
+   "timeout": 40
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 25
+  },
+  {
+   "do": "goto",
+   "url": "/producao"
+  },
+  {
+   "do": "waitFor",
+   "text": "Fichas técnicas, ordens de produção e custo por peça",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 25
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const b=document.querySelector('header svg.lucide-panel-left-close')?.closest('button');if(!b)return document.querySelector('header svg.lucide-panel-left')?'ja recolhido':'sem botao';b.click();return 'recolhido'})()"
+  },
+  {
+   "do": "wait",
+   "seconds": 0.8
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel|Algo deu errado|Falha ao/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');if(f&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA ECOFLIX'))window.__avisos.push('TRILHA ECOFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "main div.overflow-x-auto"
+   },
+   "text": "",
+   "noClick": true,
+   "optional": true,
+   "timeout": 4,
+   "at": 0.4,
+   "label": "o quadro no estado final (base da montagem)"
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 11.18
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main div.group:has(span:text-is('#3')) p.font-medium"
+   },
+   "seconds": 1.0,
+   "at": 11.38,
+   "label": "a ordem #3 (500 kg)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Na prensa",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.8,
+   "at": 16.17,
+   "label": "a coluna Na prensa",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 19.73
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 29.8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "R$ 6,43/peça",
+    "exact": false,
+    "within": "main"
+   },
+   "seconds": 1.0,
+   "at": 31.22,
+   "label": "o custo de cada quilo no cartão",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Concluída",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.8,
+   "at": 38.05,
+   "label": "a Concluída sem a ordem lançada em dobro",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 780,
+    "y": 600
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "at": 41.79,
+   "label": "cursor descansa"
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 43.66
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 54.18
+  }
+ ]
+}

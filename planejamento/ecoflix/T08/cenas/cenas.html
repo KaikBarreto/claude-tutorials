@@ -206,7 +206,7 @@ CAPS[0]=()=>{
   return t=>{
     const j0=W(1,'na')-.3, tco=W(1,'cooperativa'), tca=W(1,'caminhao'), tla=W(1,'latinha'), tpr=W(1,'preco'), tde=W(1,'depois');
     const tti=W(2,'ticket'), tre=W(2,'registra'), tpe=W(2,'peso'), trs=W(2,'resolve'), td2=W(2,'depois');
-    posTitulo(tit,t,j0-.6,tco-.15);
+    posTitulo(tit,t,j0-.6,tco-.45);
     vis(coop,t,tco-.1,1e9,{dy:10});
     for(const e of [B.chao,B.plat,B.poste,B.most]) vis(e,t,tco+.1,1e9,{dy:10});
     const chegou=tca+Math.max(1.2,tla-tca+.4), pa=eo(pr(t,tca,chegou-tca)), x=lerp(X0,X1,pa);
@@ -297,7 +297,7 @@ CAPS[3]=()=>{
 
   return t=>{
     const j0=W(6,'e')-.3, tti=W(6,'ticket'), tsa=W(6,'salvo'), tra=W(6,'rascunho'), tca=W(6,'cada'), tmu=W(6,'mudanca');
-    posTitulo(tit,t,j0-.6,tti-.2);
+    posTitulo(tit,t,j0-.6,tti-.55);
     vis(tk,t,tti-.15,1e9,{dy:20,sc:.95});
     lin.forEach((l,i)=>vis(l,t,i<4?tti+i*.08:tca-.1,1e9,{dx:-12,dy:0}));
     contorno(tk,t,tca,'#E1E8E4','#50D088');
@@ -334,7 +334,7 @@ CAPS[4]=()=>{
   return t=>{
     const j0=W(0,'caminhao')-.3, tca=W(0,'caminhao'), tde=W(0,'descarregou'), tvo=W(0,'voltou'), tvz=W(0,'vazio'), tdi=W(0,'diferenca'),
           tla=W(0,'latinha'), tfi=W(0,'ficou');
-    posTitulo(tit,t,j0-.6,tca-.15);
+    posTitulo(tit,t,j0-.6,tca-.45);
     for(const e of [B.chao,B.plat,B.poste,B.most]) vis(e,t,tca-.1,1e9,{dy:10});
     cam.style.opacity=eo(pr(t,tca-.1,.5)).toFixed(3);
     // já pesou cheio (1ª pesagem); descarrega; volta vazio e o mostrador desce até a 2ª pesagem
@@ -406,7 +406,7 @@ CAPS[6]=()=>{
 
   return t=>{
     const j0=W(0,'enquanto')-.3, tch=W(0,'chega'), tja=W(0,'jair'), tca=W(0,'caminhao'), tau=W(0,'auto'), tba=W(0,'bateria');
-    posTitulo(tit,t,j0-.6,tch-.2);
+    posTitulo(tit,t,j0-.6,tch-.55);
     for(const e of [chao,plat]) vis(e,t,tch-.15,1e9,{dy:8});
     T1.style.opacity=eo(pr(t,tch-.15,.5)).toFixed(3); vis(A1,t,tch,1e9,{dy:12}); traco(l1,t,tch+.15,.4);
     // o 3/4 chega por trás e para na fila
@@ -438,7 +438,7 @@ CAPS[7]=()=>{
 
   return t=>{
     const j0=W(4,'repara')-.3, taq=W(4,'aqui'), ten=W(4,'entrou'), tes=W(4,'estoque'), tcx=W(4,'caixa'), tra=W(4,'rascunho'), tfi=W(4,'finalizada');
-    posTitulo(tit,t,j0-.6,taq-.2);
+    posTitulo(tit,t,j0-.6,taq-.35);
     vis(n1,t,taq-.15,1e9,{dy:14,sc:.95}); acende(n1,t,taq);
     traco(s12.v,t,taq+.1,.25); vis(n2,t,taq+.2,1e9,{dy:14,sc:.95}); acende(n2,t,taq+.3);
     traco(s23.v,t,taq+.45,.25); vis(n3,t,taq+.55,1e9,{dy:14,sc:.95}); acende(n3,t,taq+.65,'#F2B63D');
@@ -483,7 +483,7 @@ CAPS[8]=()=>{
   return t=>{
     const j0=W(4,'dica')-.3, tti=W(4,'ticket'), tpe=W(4,'pesagens'), tme=W(4,'mescladas'), tco=W(4,'comprovante'), tso=W(4,'soma'),
           tcf=W(4,'conferir'), tde=W(4,'desmesclar'), tim=W(4,'imprimir');
-    posTitulo(tit,t,j0-.6,tti-.2);
+    posTitulo(tit,t,j0-.6,tti-.55);
     vis(tk,t,tti-.15,1e9,{dy:18,sc:.95});
     // duas pesagens; mesclar junta as duas numa linha; desmesclar separa de novo
     const mj=eio(pr(t,tme-.1,.6)), sp=eio(pr(t,tde+.15,.6)), k=mj*(1-sp);

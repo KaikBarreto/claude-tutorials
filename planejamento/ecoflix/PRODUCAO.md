@@ -370,3 +370,12 @@ Decisões:
   `copiar_robos.py` copia para o git o robô de cada aula (`Tnn/rec/`) e o mundo vivo (`perfis/ecoflix/mundo`) antes de
   cada commit. Propostas de mudança de fala e achados do app de cada aula: `Tnn/propostas_fala.md` (a revisão geral
   aplica). Próximos lotes do robô conforme os agentes de ilustração forem terminando (máximo de 20 ao mesmo tempo).
+- 10/11 03:2x **Trava presa 10 min** por um render de quadros parado da T0 (18 agentes na fila): o processo saiu sozinho;
+  `render_cenas.cjs` ganhou vigia (sai com código 3 se nada anda em 90 s, testado), lição em `docs/08-licoes.md`.
+- 10/11 03:5x **Ilustrações T04 e T06 prontas** (8 + 5 cenas, conferidas em quadros; folhas em
+  `/home/claude/ecoflix/previa_ilustracoes/`). Sem contador de etapas; valores em constantes no topo de cada cena; a
+  junção mudou as duas falas no meio e os tempos foram refeitos. Nenhuma mudança de fala. **Para a revisão geral**: o app
+  escreve "Conta DINHEIRO" e a legenda terá "Conta Dinheiro" (decidir); desenhos que faltaram no kit e cada aula fez o
+  seu (vermelho de saldo e despesa, seta com ponta, ficha que viaja, chip de parceiro, pátio, fardos, latinhas, gaveta,
+  cofre, banco, carroça, notas): unificar no kit depois que todas terminarem, para o mesmo objeto sair igual em todas as
+  aulas. Robô da T04 lançado no lugar.

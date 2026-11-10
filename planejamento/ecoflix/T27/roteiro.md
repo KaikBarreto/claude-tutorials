@@ -13,9 +13,10 @@ novo, com o mundo do fim do capítulo anterior (sementes em `plano.md` → "Grav
 - **Duração estimada:** ~6 min de vídeo (798 palavras de fala, ~5,1 min de voz a 2,6 palavras/s, mais 7 vinhetas, os
   envios e a janela do comprovante; alvo da fonte: 7 min; 4.318 caracteres de TTS com os títulos)
 - **FAKE_NOW:** `2026-11-10T08:30:00-03:00` (terça).
-- **Estado inicial:** logo horizontal da Recicla Vale (do T1), sem ícone, White Label desligado, sem cor; módulo
+- **Estado inicial:** logo horizontal e ícone quadrado da Recicla Vale (os dois enviados no T1, junção), White Label
+  desligado, sem cor; módulo
   `white_label` contratado; menu lateral aberto e escuro (o padrão do app).
-- **Criado ao vivo:** o ícone quadrado, o White Label ligado e a "Cor Primária" `#1F5FAD`. **Estado final:** a Recicla
+- **Criado ao vivo:** o White Label ligado e a "Cor Primária" `#1F5FAD`. **Estado final:** a Recicla
   Vale com a marca dela no menu, na cor e nos documentos.
 - Marcas na coluna Tela: `[BACKEND: ...]`, `[ZOOM: ...]` (zoom suave, a frase inteira), `[ILUSTRAÇÃO: ...]` (desenho por
   código no estilo da marca, nunca tela inventada do app).
@@ -49,15 +50,15 @@ novo, com o mundo do fim do capítulo anterior (sementes em `plano.md` → "Grav
 | Capítulo novo (semente `inicio`); Configurações, aba "Empresa"; a câmera vai à coluna da esquerda: "Logo da Empresa" com o logo da Recicla Vale, os botões "Substituir" e "Remover" e "Recomendado: formato horizontal, PNG ou JPG, máximo 5MB". | Tudo começa pelas imagens. O logo horizontal a Recicla Vale já mandou, no tutorial da empresa. Com o White Label ligado, é ele que aparece no menu aberto. |
 | A câmera passa pelos botões "Substituir" e "Remover" do logo, sem clicar. | Se a marca mudar um dia, é só clicar em Substituir e mandar a nova. |
 | [ILUSTRAÇÃO: qual imagem vai onde: o logo horizontal da Recicla Vale entra numa faixa larga, "menu aberto", na palavra "comprido"; o ícone quadrado entra numa faixa estreita, "menu recolhido", na palavra "quadrado".] | São duas imagens. O logo, comprido, vai no menu aberto. O ícone, quadrado, vai no menu recolhido, onde só cabe um quadradinho. |
-| Desce até "Ícone da Empresa (1:1)" ("Usado no menu lateral quando recolhido (White Label)") e o quadrado tracejado "1:1". | Falta o ícone. Ele fica logo abaixo, no Ícone da Empresa. |
-| Clica no quadrado "1:1" e escolhe `recicla-vale-icone.png`; aviso "Ícone atualizado com sucesso!"; o ícone aparece com "Substituir" e "Remover", e "Recomendado: formato quadrado (1:1), PNG transparente, 128×128px". [BACKEND: storage `avatars` (`upload`, `getPublicUrl`) e update de `companies.icon_url`; vira `apos-cap02`] | Clico no quadrado e escolho o arquivo do ícone. Pronto, subiu. A tela recomenda uma imagem quadrada, com fundo transparente. |
+| Desce até "Ícone da Empresa (1:1)" ("Usado no menu lateral quando recolhido (White Label)"): o ícone da Recicla Vale, enviado no T1, com "Substituir" e "Remover". | O ícone fica logo abaixo, no Ícone da Empresa. Ele também veio no tutorial da empresa. |
+| [ZOOM: "Recomendado: formato quadrado (1:1), PNG transparente, 128×128px", embaixo do ícone] (sem clicar em "Substituir") | Pra trocar, é o mesmo Substituir. A tela recomenda uma imagem quadrada, com fundo transparente. |
 | [ZOOM: "Recomendado: formato horizontal, PNG ou JPG, máximo 5MB", a frase inteira] | Uma dica: as duas imagens podem ter até cinco megas. Arquivo maior, ou que não seja imagem, a tela recusa e avisa na hora. |
 
 ### cap03 · Ligar o White Label (vinheta: WHITE LABEL)
 
 | Tela | Fala |
 | --- | --- |
-| Capítulo novo (semente `apos-cap02`); o `setup` abre Configurações, aba "Empresa", e a gaveta "White Label" fora do vídeo: "White Label Desativado" e o interruptor. | Com as imagens no lugar, é hora de ligar. |
+| Capítulo novo (semente `inicio`: o cap02 não muda nada); o `setup` abre Configurações, aba "Empresa", e a gaveta "White Label" fora do vídeo: "White Label Desativado" e o interruptor. | Com as imagens no lugar, é hora de ligar. |
 | [ZOOM: o cartão do interruptor ("White Label Desativado"), a frase inteira] | Uma dica: quem libera esse interruptor é o logo. Sem logo enviado, ele fica travado, e a tela pede o upload antes. |
 | Clica no interruptor: aviso "White Label ativado! Seu logo agora será exibido em todo o sistema."; o cartão vira "White Label Ativo" ("Seu logo está sendo exibido no lugar do logo EcoSistema") e a gaveta ganha o selo "Ativo". [BACKEND: update de `companies.white_label_enabled`] | Ligo o interruptor. Pronto: White Label Ativo. |
 | A câmera vai ao topo do menu lateral: o logo da Recicla Vale no lugar do logo do EcoSistema. | Olha o menu: o logo da Recicla Vale já entrou no lugar do logo do EcoSistema. |
@@ -98,7 +99,7 @@ novo, com o mundo do fim do capítulo anterior (sementes em `plano.md` → "Grav
 
 | Tela | Fala |
 | --- | --- |
-| Montagem rápida: a gaveta "White Label" e o "Ícone da Empresa (1:1)" com o ícone (capítulos 1 e 2). | Pronto! Recapitulando: a gente achou o White Label na aba Empresa, viu o que ele troca e mandou o ícone quadrado pro menu recolhido. |
+| Montagem rápida: a gaveta "White Label" e o "Ícone da Empresa (1:1)" com o ícone (capítulos 1 e 2). | Pronto! Recapitulando: a gente achou o White Label na aba Empresa, viu o que ele troca e conferiu o logo e o ícone quadrado, que já tinham vindo do tutorial da empresa. |
 | Montagem rápida: "White Label Ativo" e o logo no menu (capítulo 3). | Ligou o interruptor, e o logo da Recicla Vale entrou no menu. |
 | Montagem rápida: "Cor Primária" com o azul (capítulo 4). | Salvou a cor da marca nas Personalizações. |
 | Montagem rápida: o fim do comprovante, sem o rodapé (capítulo 5). | Viu os documentos saindo sem o rodapé do EcoSistema. |

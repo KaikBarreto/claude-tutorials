@@ -1,0 +1,313 @@
+{
+ "name": "t02-cap02",
+ "title": "T2 · Cap. 2 · Criar o usuário (narração ESTIMADA 47,5 s; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "seed": "t02-cap02",
+ "pace": 0.5,
+ "cps": 30,
+ "tail": 1.5,
+ "start": {
+  "x": 900,
+  "y": 470
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true"
+ },
+ "seedExtra": [
+  "t02/inicio"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "waitFor",
+   "target": {
+    "label": "E-mail"
+   },
+   "timeout": 30
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "E-mail"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "Senha",
+    "exact": true
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Rafael!",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/configuracoes?tab=users"
+  },
+  {
+   "do": "waitFor",
+   "text": "Empresa: Recicla Vale Metais",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|Algo deu errado|Falha ao|Something went wrong/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{document.querySelectorAll('[data-sonner-toast][data-type=error]').forEach(t=>{const s='TOAST DE ERRO: '+t.textContent.trim().slice(0,90);if(!window.__avisos.includes(s)&&window.__avisos.length<10)window.__avisos.push(s)})},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0.4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Criar Usuário",
+    "exact": true,
+    "within": "main"
+   },
+   "at": 3.9,
+   "label": "Criar Usuário"
+  },
+  {
+   "do": "waitFor",
+   "text": "Preencha os dados do novo usuário",
+   "timeout": 10
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 7.74
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#fullName"
+   },
+   "at": 8.48,
+   "label": "campo Nome Completo"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#fullName"
+   },
+   "text": "Marcos Antunes",
+   "cps": 30,
+   "at": 10.72,
+   "label": "Nome Completo: Marcos Antunes",
+   "noClick": true
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 11.44
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#email"
+   },
+   "at": 12.42,
+   "label": "campo Email"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#email"
+   },
+   "text": "marcos.antunes@reciclavalemetais.example",
+   "cps": 40,
+   "at": 13.37,
+   "label": "Email do Marcos",
+   "noClick": true
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 16.57
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#password"
+   },
+   "at": 17.17,
+   "label": "campo Senha"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#password"
+   },
+   "text": "Balanca#2026",
+   "cps": 10,
+   "at": 19.02,
+   "label": "Senha (aparece em pontinhos)",
+   "noClick": true
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Senha forte. Deve conter:\", \"Pelo menos 8 caracteres\", \"Pelo menos 1 número\", \"Pelo menos 1 letra minúscula\", \"Pelo menos 1 letra maiúscula\", \"Pelo menos 1 caractere especial\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog],[role=alertdialog]\")];const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Senha forte e os cinco itens"
+  },
+  {
+   "do": "type",
+   "target": {
+    "text": "Senha forte. Deve conter:",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "text": "",
+   "noClick": true,
+   "optional": true,
+   "timeout": 4,
+   "at": 20.89,
+   "label": "ZOOM indicador Senha forte e os cinco itens"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Pelo menos 8 caracteres",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.3,
+   "at": 23.88,
+   "label": "Pelo menos 8 caracteres",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Pelo menos 1 número",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.3,
+   "at": 25.32,
+   "label": "Pelo menos 1 número",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Pelo menos 1 letra minúscula",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.3,
+   "at": 26.53,
+   "label": "Pelo menos 1 letra minúscula",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Pelo menos 1 letra maiúscula",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.3,
+   "at": 27.52,
+   "label": "Pelo menos 1 letra maiúscula",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Pelo menos 1 caractere especial",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.8,
+   "at": 28.66,
+   "label": "Pelo menos 1 caractere especial",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 30.12
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Selecionar foto",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 2.0,
+   "at": 31.59,
+   "label": "Foto do Usuário: Selecionar foto (sem clicar)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 37.0
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Permissões",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.6,
+   "at": 43.47,
+   "label": "coluna Permissões (sem clicar)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 47.46
+  }
+ ]
+}

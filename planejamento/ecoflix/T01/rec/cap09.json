@@ -1,0 +1,712 @@
+{
+ "name": "t01-cap09",
+ "title": "T01 · Cap. 9 · O jeito do pátio (narração 200,3 s ESTIMADA; marcas L1..L18 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
+ "seed": "t01-cap09",
+ "pace": 0.5,
+ "cps": 14,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "anonymous": true,
+ "seedExtra": [
+  "t01/inicio",
+  "t01/apos-cap05",
+  "t01/apos-cap06",
+  "t01/apos-cap08"
+ ],
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "initial-preferences-set": "true",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10"
+ },
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/login"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "timeout": 30
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "input[type=password]"
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Rafael!",
+   "timeout": 40
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/configuracoes"
+  },
+  {
+   "do": "waitFor",
+   "text": "Configurações do Sistema",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel|Algo deu errado|Falha ao carregar|Personalize sua experi[êe]ncia|Voc[êe] j[áa] est[áa] conectado|Sistema atualizado|O rel[óo]gio deste computador|Sess[ãa]o expirou/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');if(f&&window.__avisos.length<10&&!window.__avisos.includes('LEMBRETE DA TRILHA'))window.__avisos.push('LEMBRETE DA TRILHA')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0.4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#tab-btn-usability"
+   },
+   "at": 0.74,
+   "label": "aba Usabilidade"
+  },
+  {
+   "do": "waitFor",
+   "text": "Configure preferências gerais de usabilidade do sistema",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Configure preferências gerais de usabilidade do sistema",
+    "exact": true
+   },
+   "seconds": 1.6,
+   "at": 3.75,
+   "label": "Usabilidade: preferências gerais do sistema",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 6.53
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Nomenclatura de clientes e fornecedores",
+    "exact": true
+   },
+   "seconds": 1.8,
+   "at": 8.12,
+   "label": "Nomenclatura de clientes e fornecedores",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "#invert-customer-supplier-terms"
+   },
+   "seconds": 2.2,
+   "at": 17.39,
+   "label": "chave Inverter os termos Cliente e Fornecedor (desligada, sem clicar)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Inverter os termos Cliente e Fornecedor",
+    "exact": true
+   },
+   "seconds": 1.0,
+   "at": 20.52,
+   "label": "troca as palavras na tela",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 22.53
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "continuam com a mesma lógica"
+   },
+   "seconds": 4.0,
+   "at": 22.82,
+   "label": "descrição: compras, vendas, vínculos, saldos e documentos fiscais continuam iguais",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 31.3
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const m=[...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);return m||document.scrollingElement};const el=[...document.querySelectorAll('main *')].filter(e=>e.textContent.trim().startsWith(\"Caixa\")&&e.offsetParent).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-120);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 31.3,
+   "label": "desce até a seção Caixa"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Multi-Caixas",
+    "exact": true
+   },
+   "seconds": 1.6,
+   "at": 33.12,
+   "label": "Multi-Caixas (ligado)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Cada operador abre e gerencia seu próprio caixa"
+   },
+   "seconds": 3.4,
+   "at": 34.28,
+   "label": "Multi-Caixas: cada operador, o próprio caixa",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main div:has(> div > div > label:text-is(\"Multi-Caixas\")) > button[role=switch]"
+   },
+   "seconds": 1.0,
+   "at": 41.77,
+   "label": "chave Multi-Caixas ligada",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 43.19
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Rastreabilidade do dinheiro físico (Cofre)",
+    "exact": true
+   },
+   "seconds": 2.4,
+   "at": 44.93,
+   "label": "Rastreabilidade do dinheiro físico (Cofre), ligada",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 48.48
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Formato do Comprovante",
+    "exact": true
+   },
+   "seconds": 0.8,
+   "at": 49.0,
+   "label": "Formato do Comprovante",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main div:has(> span:text-is(\"Computador\")) button[role=combobox]"
+   },
+   "at": 51.92,
+   "label": "abre o formato do Computador"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "role": "option",
+    "name": "A4 (PDF em folha)",
+    "exact": true
+   },
+   "timeout": 6
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "option",
+    "name": "Térmico (58/80mm)",
+    "exact": true
+   },
+   "seconds": 1.6,
+   "at": 52.95,
+   "label": "Térmico (58/80mm)",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "option",
+    "name": "A4 (PDF em folha)",
+    "exact": true
+   },
+   "seconds": 2.0,
+   "at": 56.14,
+   "label": "A4 (PDF em folha)",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Térmico (58/80mm)",
+    "exact": true
+   },
+   "at": 59.8,
+   "label": "fica no Térmico (58/80mm)",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "option",
+    "name": "A4 (PDF em folha)",
+    "exact": true
+   },
+   "timeout": 6
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 60.29
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main div:has(> span:text-is(\"Computador\")) button[role=combobox]"
+   },
+   "seconds": 0.6,
+   "at": 61.88,
+   "label": "Computador: Térmico",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main div:has(> span:text-is(\"Celular/Tablet\")) button[role=combobox]"
+   },
+   "seconds": 1.0,
+   "at": 63.55,
+   "label": "Celular/Tablet: Térmico",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "(preferência por usuário)"
+   },
+   "seconds": 1.2,
+   "at": 64.91,
+   "label": "(preferência por usuário)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 66.63
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Pedidos e Pagamentos",
+    "exact": true
+   },
+   "seconds": 0.8,
+   "at": 67.16,
+   "label": "Pedidos e Pagamentos",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Forma de Pagamento Padrão",
+    "exact": true
+   },
+   "seconds": 1.6,
+   "at": 69.14,
+   "label": "Forma de Pagamento Padrão",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#default-payment"
+   },
+   "at": 73.57,
+   "label": "abre a Forma de Pagamento Padrão"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "role": "option",
+    "name": "Dinheiro",
+    "exact": true
+   },
+   "timeout": 6
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "option",
+    "name": "Dinheiro",
+    "exact": true
+   },
+   "seconds": 0.4,
+   "at": 75.54,
+   "label": "Dinheiro",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "option",
+    "name": "Pix/Transferência",
+    "exact": true
+   },
+   "seconds": 1.0,
+   "at": 76.45,
+   "label": "Pix/Transferência",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "option",
+    "name": "Perguntar sempre",
+    "exact": true
+   },
+   "seconds": 0.6,
+   "at": 78.5,
+   "label": "Perguntar sempre",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L9",
+   "at": 79.81
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Perguntar sempre",
+    "exact": true
+   },
+   "at": 81.71,
+   "label": "fica em Perguntar sempre",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "option",
+    "name": "Dinheiro",
+    "exact": true
+   },
+   "timeout": 6
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "#default-payment"
+   },
+   "seconds": 1.6,
+   "at": 84.14,
+   "label": "Perguntar sempre: cada fornecedor recebe de um jeito",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L10",
+   "at": 86.54
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const m=[...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);return m||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"Arredondar Pagamentos\"&&e.offsetParent);if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-300);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 86.54,
+   "label": "desce até Arredondar Pagamentos"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main div:has(> label:text-is(\"Arredondar Pagamentos\")) > svg"
+   },
+   "seconds": 2.0,
+   "at": 87.09,
+   "label": "Arredondar Pagamentos: a dica aparece",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main div:has(> label:text-is(\"Na Venda\")) > button[role=switch]"
+   },
+   "seconds": 0.4,
+   "at": 93.52,
+   "label": "Na Venda (desligada)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main div:has(> label:text-is(\"Na Compra\")) > button[role=switch]"
+   },
+   "seconds": 0.8,
+   "at": 94.45,
+   "label": "Na Compra (desligada)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L11",
+   "at": 95.01
+  },
+  {
+   "do": "mark",
+   "name": "L12",
+   "at": 114.65
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Impureza/Tara Desconta no Valor",
+    "exact": true
+   },
+   "seconds": 1.6,
+   "at": 117.0,
+   "label": "Impureza/Tara Desconta no Valor (ligada)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main div:has(> label:text-is(\"Impureza/Tara Desconta no Valor\")) > svg"
+   },
+   "seconds": 3.4,
+   "at": 120.64,
+   "label": "Impureza/Tara: a dica (Ex: compra de 100kg com 5kg de impureza)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main div:has(> div > div > label:text-is(\"Impureza/Tara Desconta no Valor\")) > button[role=switch]"
+   },
+   "seconds": 1.6,
+   "at": 126.56,
+   "label": "chave Impureza/Tara ligada",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L13",
+   "at": 129.8
+  },
+  {
+   "do": "mark",
+   "name": "L14",
+   "at": 141.31
+  },
+  {
+   "do": "mark",
+   "name": "L15",
+   "at": 155.48
+  },
+  {
+   "do": "mark",
+   "name": "L16",
+   "at": 169.04
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Lucro no Comprovante",
+    "exact": true
+   },
+   "seconds": 1.6,
+   "at": 169.49,
+   "label": "Lucro no Comprovante (desligado)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Exibe o lucro estimado no PDF do comprovante de venda"
+   },
+   "seconds": 2.0,
+   "at": 172.23,
+   "label": "Exibe o lucro estimado no comprovante de venda",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main div:has(> label:text-is(\"Lucro no Comprovante\")) > svg"
+   },
+   "seconds": 1.4,
+   "at": 176.17,
+   "label": "Lucro no Comprovante: só para quem vê a projeção de lucro",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L17",
+   "at": 178.2
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const m=[...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);return m||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"Forma de Pagamento Padrão\"&&e.offsetParent);if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-120);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 178.2,
+   "label": "as opções de pedido, de Forma de Pagamento Padrão a Lucro no Comprovante"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[aria-label='Menu da conta']"
+   },
+   "seconds": 1.2,
+   "at": 185.41,
+   "label": "aqui o Rafael (o card da conta)",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L18",
+   "at": 186.06
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const m=[...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);return m||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"Exigir cliente/fornecedor no Ticket de Pesagem\"&&e.offsetParent);if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-300);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/1100),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 186.06,
+   "label": "desce até Exigir cliente/fornecedor no Ticket de Pesagem"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Exigir cliente/fornecedor no Ticket de Pesagem",
+    "exact": true
+   },
+   "seconds": 2.0,
+   "at": 187.58,
+   "label": "Exigir cliente/fornecedor no Ticket de Pesagem (desligado)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Quando ligado, o funcionário não consegue salvar um ticket"
+   },
+   "seconds": 3.0,
+   "at": 191.45,
+   "label": "Quando ligado, ninguém salva um ticket sem escolher com quem foi",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main div:has(> div > div > label:text-is(\"Exigir cliente/fornecedor no Ticket de Pesagem\")) > button[role=switch]"
+   },
+   "seconds": 1.2,
+   "at": 196.84,
+   "label": "chave Exigir cliente/fornecedor (vale pra empresa toda)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify([...document.querySelectorAll('main button[role=switch]')].map(s=>s.getAttribute('data-state')[0]).join(''))",
+   "label": "estado das chaves da Usabilidade (nada mudou)"
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 200.32
+  }
+ ]
+}

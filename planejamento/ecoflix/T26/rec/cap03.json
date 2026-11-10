@@ -1,0 +1,468 @@
+{
+ "name": "t26-cap03",
+ "title": "T26 · Cap. 3 · Funis e estágios (narração 69,8 s, ESTIMADA; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
+ "fakeNow": "2026-11-10T08:30:00-03:00",
+ "seed": "t26-cap03",
+ "pace": 0.5,
+ "cps": 22,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 470
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true",
+  "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10"
+ },
+ "seedExtra": [
+  "t26/apos-cap01"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/login"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "timeout": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "••••••••"
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Rafael",
+   "timeout": 45
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 20
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const sb=document.querySelector('[data-state][data-collapsible]');if(sb&&sb.getAttribute('data-state')==='collapsed')return 'ja recolhido';const b=document.querySelector('header button.h-8.w-8');if(!b)return 'SEM ALVO';b.click();return 'recolhido'})()"
+  },
+  {
+   "do": "wait",
+   "seconds": 0.7
+  },
+  {
+   "do": "goto",
+   "url": "/crm"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie oportunidades e acompanhe seu processo comercial.",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 15
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel|Algo deu errado|Falha ao|Something went wrong/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Configurações do CRM/Kanban",
+    "exact": true
+   },
+   "at": 1.68,
+   "label": "Configurações do CRM/Kanban"
+  },
+  {
+   "do": "waitFor",
+   "text": "Organize os funis comerciais e as etapas de cada Kanban.",
+   "timeout": 12
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "#tab-btn-funis"
+   },
+   "seconds": 0.21,
+   "at": 5.72,
+   "label": "menu Funis",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog]:has(#tab-btn-funis) div[draggable=true]:has(span.truncate:text-is('Funil de vendas'))"
+   },
+   "seconds": 0.4,
+   "at": 6.93,
+   "label": "linha Funil de vendas",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Padrão",
+    "exact": true,
+    "within": "[role=dialog]:has(#tab-btn-funis) div[draggable=true]:has(span.truncate:text-is('Funil de vendas'))"
+   },
+   "seconds": 0.1,
+   "at": 9.36,
+   "label": "selo Padrão",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 10.02
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Novo funil",
+    "exact": true
+   },
+   "at": 15.03,
+   "label": "Novo funil"
+  },
+  {
+   "do": "waitFor",
+   "selector": "#crm-pipeline-name",
+   "timeout": 8
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#crm-pipeline-name"
+   },
+   "text": "Sucata industrial",
+   "cps": 22,
+   "at": 17.38,
+   "label": "Nome: Sucata industrial",
+   "noClick": true
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "#crm-pipeline-color"
+   },
+   "seconds": 0.1,
+   "at": 19.13,
+   "label": "Cor (o seletor de cor)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const i=document.querySelector(\"#crm-pipeline-color\");if(!i)return 'SEM ALVO';const set=Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set;set.call(i,\"#0ea5e9\");i.dispatchEvent(new Event('input',{bubbles:true}));i.dispatchEvent(new Event('change',{bubbles:true}));return i.value})()",
+   "label": "Cor: azul #0ea5e9"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Salvar",
+    "exact": true,
+    "within": "[role=dialog]:has(#crm-pipeline-name)"
+   },
+   "at": 19.41,
+   "label": "Salvar (Novo funil)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Funil criado",
+   "timeout": 10
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 20.16
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog]:has(#tab-btn-funis) div[draggable=true]:has(span.truncate:text-is('Sucata industrial')) span.block"
+   },
+   "seconds": 0.55,
+   "at": 22.51,
+   "label": "Sucata industrial: 5 etapas",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Tornar \"Sucata industrial\" o funil padrão",
+    "exact": true
+   },
+   "at": 24.06,
+   "label": "Tornar padrão"
+  },
+  {
+   "do": "waitFor",
+   "text": "Funil padrão atualizado",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Padrão",
+    "exact": true,
+    "within": "[role=dialog]:has(#tab-btn-funis) div[draggable=true]:has(span.truncate:text-is('Sucata industrial'))"
+   },
+   "seconds": 0.8,
+   "at": 27.07,
+   "label": "selo Padrão no Sucata industrial",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 29.02
+  },
+  {
+   "do": "drag",
+   "target": {
+    "selector": "[role=dialog]:has(#tab-btn-funis) div[draggable=true]:has(span.truncate:text-is('Sucata industrial'))"
+   },
+   "to": {
+    "selector": "[role=dialog]:has(#tab-btn-funis) div[draggable=true]:has(span.truncate:text-is('Funil de vendas'))"
+   },
+   "at": 29.62,
+   "label": "arrasta a linha Sucata industrial para cima do Funil de vendas",
+   "hold": 0.45
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "[role=dialog]:has(#tab-btn-funis) div[draggable=true]:first-of-type:has(span.truncate:text-is('Sucata industrial'))"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog]:has(#tab-btn-funis) div[draggable=true]:has(span.truncate:text-is('Sucata industrial'))"
+   },
+   "seconds": 1.2,
+   "at": 33.87,
+   "label": "Sucata industrial vai pra frente",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 36.51
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog]:has(#tab-btn-funis) div[draggable=true]:has(span.truncate:text-is('Sucata industrial')) button:has(span.truncate)"
+   },
+   "at": 36.61,
+   "label": "abre o funil Sucata industrial"
+  },
+  {
+   "do": "waitFor",
+   "text": "Estágios deste funil",
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Estágios deste funil",
+    "within": "[role=dialog]:has(#tab-btn-funis)"
+   },
+   "seconds": 0.36,
+   "at": 39.16,
+   "label": "Estágios deste funil",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog]:has(#tab-btn-funis) div[draggable=true]:has(> span.flex-1:text-is('Em contato'))"
+   },
+   "seconds": 0.1,
+   "at": 40.52,
+   "label": "estágio Em contato",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog]:has(#tab-btn-funis) div[draggable=true]:has(> span.flex-1:text-is('Proposta'))"
+   },
+   "seconds": 0.5,
+   "at": 41.44,
+   "label": "estágio Proposta",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Novo estágio",
+    "exact": true
+   },
+   "at": 45.92,
+   "label": "Novo estágio"
+  },
+  {
+   "do": "waitFor",
+   "selector": "#crm-stage-name",
+   "timeout": 8
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#crm-stage-name"
+   },
+   "text": "Visita técnica",
+   "cps": 22,
+   "at": 47.73,
+   "label": "Nome: Visita técnica",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Salvar etapa",
+    "exact": true
+   },
+   "at": 48.45,
+   "label": "Salvar etapa (Novo estágio)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Estágio criado.",
+   "timeout": 10
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 49.76
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog]:has(#tab-btn-funis) div[draggable=true]:has(> span.flex-1:text-is('Visita técnica'))"
+   },
+   "seconds": 0.1,
+   "at": 51.88,
+   "label": "Visita técnica entra no fim da lista",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "drag",
+   "target": {
+    "selector": "[role=dialog]:has(#tab-btn-funis) div[draggable=true]:has(> span.flex-1:text-is('Visita técnica'))"
+   },
+   "to": {
+    "selector": "[role=dialog]:has(#tab-btn-funis) div[draggable=true]:has(> span.flex-1:text-is('Proposta'))"
+   },
+   "at": 52.69,
+   "label": "arrasta Visita técnica para depois de Em contato",
+   "hold": 0.45
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Novo\\nEm contato\\nVisita técnica\\nProposta\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]:has(#tab-btn-funis)\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere ordem Novo, Em contato, Visita técnica, Proposta"
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 55.43
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Ganho",
+    "exact": true,
+    "within": "[role=dialog]:has(#tab-btn-funis) div[draggable=true]:has(> span.flex-1:text-is('Ganho'))"
+   },
+   "seconds": 0.1,
+   "at": 61.19,
+   "label": "selo Ganho",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Perdido",
+    "exact": true,
+    "within": "[role=dialog]:has(#tab-btn-funis) div[draggable=true]:has(> span.flex-1:text-is('Perdido'))"
+   },
+   "seconds": 0.8,
+   "at": 61.95,
+   "label": "selo Perdido",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 69.83
+  }
+ ]
+}

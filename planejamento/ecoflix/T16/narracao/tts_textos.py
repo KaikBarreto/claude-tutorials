@@ -48,7 +48,7 @@ Clico em Criar cenário. Ele nasce como não revisado, e depois de conferir com 
 Uma dica: não precisa criar um cenário pra cada combinação. Cadastre a regra geral e, depois, só a exceção mais estreita. Quando duas servem pra mesma nota, vale a mais específica.""",
 6: """Agora, de qual número a primeira nota sai. Toda nota tem uma série e um número. A série é a sequência, e o número sobe de um em um.
 Aqui, entrada e saída usam a mesma série, a série um. Pra quem usa uma série só, é deixar assim.
-A Recicla Vale já emitia nota em outro sistema, na série um. A última foi a mil duzentos e quarenta e oito, então a numeração precisa continuar dali.
+Quem já emite nota continua a sequência. A Recicla Vale usa a série um, e a última foi a mil duzentos e quarenta e oito, então a numeração precisa continuar dali.
 Em Adicionar série, informo a série um e a última nota emitida nela, a mil duzentos e quarenta e oito.
 Se a empresa nunca emitiu nota, é deixar em zero, e a primeira sai com o número um.
 Clico em Adicionar. Pronto: a próxima nota sai com o número mil duzentos e quarenta e nove.""",
@@ -57,7 +57,7 @@ Aqui vai a Cargas Vale do Sol: razão social, CNPJ, inscrição estadual e ender
 No bloco Veículo vai a placa do caminhão que costuma fazer a entrega.
 Clico em Adicionar, e ela entra na lista.
 E Serviços é o cadastro da nota de serviço, a /ˈẽːniˈɛːfiˈɛːsiˈeː/, pra quando a empresa presta um serviço, como uma coleta. Isso fica pro próximo tutorial.""",
-8: """Antes de emitir, a cota. Cada nível do módulo tem um limite de documentos por mês, e o selo mostra quantos já foram usados: zero de cem.
+8: """Antes de emitir, a cota. Cada nível do módulo tem um limite de documentos por mês, e o selo mostra quantos já foram usados: por enquanto, nenhum.
 Passando o mouse, aparecem o nível contratado e quanto você emitiu no mês. O tamanho da cota depende do plano.
 Toda nota que você emite conta: a de mercadoria, a de serviço, o manifesto de transporte, o ême-tê-érre e o cê-dê-éfe. E as notas recebidas, depois que você ativa esse recurso.
 Uma dica: nota cancelada continua contando. Cancelar não devolve o documento pra cota.
@@ -76,7 +76,7 @@ Quando você emite, o certificado assina a nota e ela vai pra sefás. A sefás c
 Clico em Emitir Nota, e ela entra na lista como Aguardando sefás.
 Uma dica: enviada pra processamento ainda não é autorizada. A nota só está autorizada quando aparecem o número, o protocolo e a chave de acesso.
 Em Visualizar está tudo: a nota mil duzentos e quarenta e nove, autorizada, com a chave de acesso, os quarenta e quatro números que identificam a nota, e o protocolo da sefás.""",
-10: """Muitas vezes a nota nasce de uma venda que já está no sistema. Hoje cedo, a Fundição Bandeira do Vale comprou cobre mel. Em vez de digitar tudo de novo, a gente puxa o pedido.
+10: """Muitas vezes a nota nasce de uma venda que já está no sistema. Ontem, a Fundição Bandeira do Vale comprou cobre mel, e a carga sai hoje. Em vez de digitar tudo de novo, a gente puxa o pedido.
 Em Importar de, clico em Pedido, e aparecem as vendas. Esta é a da Fundição.
 Clico em Importar. O cliente e os itens vêm do pedido.
 Repara na quantidade: quinhentos quilos. A balança marcou quinhentos e seis, mas seis quilos foram de tara e impureza.
@@ -92,14 +92,14 @@ Em Como as notas serão geradas, escolho Uma nota consolidada. A tela mostra a f
 Ela junta os itens iguais: sessenta e quatro quilos de latinha, cento e oitenta de papelão e quatrocentos e dez de ferro misto. Quem prefere uma nota por compra usa a outra opção, Uma nota por pedido.
 Clico em Montar nota consolidada. A nota fica em nome da própria Recicla Vale, como consumidor final, e a natureza é entrada de sucata para revenda, de pessoa física.
 Confiro os itens e clico em Emitir Nota. Pronto: a mil duzentos e cinquenta e um está autorizada, com as compras do dia inteiro.""",
-12: """Nota emitida, e se algo mudar? A Serra Fina ligou: desistiu do alumínio, e a carga nem saiu do pátio. Então a nota mil duzentos e quarenta e nove vai ser cancelada.
+12: """Nota emitida, e se algo mudar? A Serra Fina ligou: mudou o pedido, e a carga nem saiu do pátio. Então a nota mil duzentos e quarenta e nove vai ser cancelada.
 No menu da nota, Cancelar. O motivo é obrigatório, com pelo menos quinze caracteres.
 Confirmar Cancelamento. Pronto, cancelada. Passadas vinte e quatro horas da autorização, a própria tela avisa que o prazo normal acabou.
 Já a mil duzentos e cinquenta continua valendo. Só mudou um detalhe: a transportadora trocou o caminhão da carga. Pra isso existe a carta de correção, um aviso que fica junto da nota.
 Ela corrige erros em campos específicos. E a própria tela diz o que não dá pra corrigir: valores, quantidade, quem vende e quem compra, a data e qualquer coisa que mude o imposto.
 No texto, uso o formato que a tela sugere: onde se lê a placa antiga, leia-se a placa nova.
 Clico em Enviar cê-cê-ê. Pronto: a correção fica registrada junto da nota.""",
-13: """E o número que nunca virou nota? No sistema antigo, as notas mil duzentos e quarenta e seis e mil duzentos e quarenta e sete foram recusadas e ficaram pra trás. Esses números estão em aberto na sefás.
+13: """E o número que nunca virou nota? Em outubro, a sequência pulou dois números: a mil duzentos e quarenta e seis e a mil duzentos e quarenta e sete nunca viraram nota. Esses números estão em aberto na sefás.
 Inutilizar é avisar a sefás que esses números não vão virar nota.
 Fica nos três pontinhos, em Inutilizar numeração. Repara no aviso: é pra sempre, e só vale pra número que nunca foi autorizado. Nota autorizada se resolve com o cancelamento.
 Em Por Faixa vai a série um, do mil duzentos e quarenta e seis ao mil duzentos e quarenta e sete. Dá pra fechar um número só ou uma faixa inteira de uma vez.
@@ -134,7 +134,7 @@ E casa cada item com um material do cadastro. A latinha do xis-ême-éle tem o m
 O PET prensado tem palavras em comum com o Plástico PET, e o selo pede pra conferir. Quando a confiança é baixa, o material fica pra você escolher.
 A nota traz só o peso líquido. E Conferir na tela de compra leva os itens pra tela de Compra. Nada é lançado agora: lá você confere os valores e escolhe como pagou.""",
 18: """Pronto! Recapitulando: a gente subiu o certificado á-um, preencheu a empresa e os impostos no Lucro Real e criou um cenário, sempre com o que o contador passou.
-Continuou a numeração do sistema antigo, cadastrou a transportadora e viu a cota do mês, com a tolerância de cinco documentos.
+Continuou a numeração da série um, cadastrou a transportadora e viu a cota do mês, com a tolerância de cinco documentos.
 Emitiu a nota pelos três caminhos: do zero, a partir de um pedido e a partir de um caixa fechado.
 Cancelou uma nota, mandou uma carta de correção, inutilizou os números que tinham ficado em aberto e baixou o dânfi e o xis-ême-éle.
 E ativou as notas recebidas, confirmou uma operação e importou uma nota pelo xis-ême-éle.

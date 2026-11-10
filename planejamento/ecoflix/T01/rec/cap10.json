@@ -1,0 +1,459 @@
+{
+ "name": "t01-cap10",
+ "title": "T01 · Cap. 10 · Condições de pagamento (narração 82,6 s ESTIMADA; marcas L1..L8 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
+ "seed": "t01-cap10",
+ "pace": 0.5,
+ "cps": 14,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "anonymous": true,
+ "seedExtra": [
+  "t01/inicio",
+  "t01/apos-cap05",
+  "t01/apos-cap06",
+  "t01/apos-cap08"
+ ],
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "initial-preferences-set": "true",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10"
+ },
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/login"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "timeout": 30
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "input[type=password]"
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Rafael!",
+   "timeout": 40
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/configuracoes"
+  },
+  {
+   "do": "waitFor",
+   "text": "Configurações do Sistema",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel|Algo deu errado|Falha ao carregar|Personalize sua experi[êe]ncia|Voc[êe] j[áa] est[áa] conectado|Sistema atualizado|O rel[óo]gio deste computador|Sess[ãa]o expirou/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');if(f&&window.__avisos.length<10&&!window.__avisos.includes('LEMBRETE DA TRILHA'))window.__avisos.push('LEMBRETE DA TRILHA')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0.4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#tab-btn-condicoes-pagamento"
+   },
+   "at": 0.51,
+   "label": "aba Condições de Pagamento"
+  },
+  {
+   "do": "waitFor",
+   "text": "Nenhuma condição cadastrada ainda.",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Defina parcelamentos padrão"
+   },
+   "seconds": 2.0,
+   "at": 3.06,
+   "label": "Defina parcelamentos padrão (à vista, 30/60/90…)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Nenhuma condição cadastrada ainda.",
+    "exact": true
+   },
+   "seconds": 1.4,
+   "at": 6.1,
+   "label": "Nenhuma condição cadastrada ainda.",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 9.19
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 18.04
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Nova condição",
+    "exact": true
+   },
+   "at": 18.34,
+   "label": "Nova condição"
+  },
+  {
+   "do": "waitFor",
+   "text": "Nova condição de pagamento",
+   "timeout": 8
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#pc-name"
+   },
+   "text": "30/60/90 dias",
+   "cps": 14,
+   "at": 21.6,
+   "label": "digita 30/60/90 dias (Nome)",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "checkbox",
+    "name": "Definir como condição padrão"
+   },
+   "at": 24.06,
+   "label": "marca Definir como condição padrão"
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 29.78
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "checkbox",
+    "name": "À vista (parcela única, 0 dias, 100%)"
+   },
+   "seconds": 1.2,
+   "at": 30.18,
+   "label": "À vista (parcela única, 0 dias, 100%) marcada",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "checkbox",
+    "name": "À vista (parcela única, 0 dias, 100%)"
+   },
+   "at": 34.66,
+   "label": "desmarca À vista (as linhas destravam)"
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 36.43
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Dias após emissão",
+    "exact": true
+   },
+   "seconds": 0.6,
+   "at": 38.48,
+   "label": "Dias após emissão",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "% do total",
+    "exact": true
+   },
+   "seconds": 0.6,
+   "at": 41.82,
+   "label": "% do total",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[inputmode=numeric]",
+    "nth": 0
+   },
+   "text": "30",
+   "cps": 8,
+   "at": 42.15,
+   "label": "1ª parcela: 30 dias",
+   "clear": true
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[inputmode=decimal]",
+    "nth": 0
+   },
+   "text": "33,33",
+   "cps": 10,
+   "at": 43.59,
+   "label": "1ª parcela: 33,33%",
+   "clear": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Adicionar parcela"
+   },
+   "at": 47.06,
+   "label": "Adicionar parcela (2ª)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[inputmode=numeric]",
+    "nth": 1
+   },
+   "text": "60",
+   "cps": 8,
+   "at": 48.16,
+   "label": "2ª parcela: 60 dias"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[inputmode=decimal]",
+    "nth": 1
+   },
+   "text": "33,33",
+   "cps": 10,
+   "at": 49.41,
+   "label": "2ª parcela: 33,33%"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Adicionar parcela"
+   },
+   "at": 51.14,
+   "label": "Adicionar parcela (3ª)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[inputmode=numeric]",
+    "nth": 2
+   },
+   "text": "90",
+   "cps": 8,
+   "at": 52.04,
+   "label": "3ª parcela: 90 dias"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[inputmode=decimal]",
+    "nth": 2
+   },
+   "text": "33,34",
+   "cps": 10,
+   "at": 52.65,
+   "label": "3ª parcela: 33,34%"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Soma dos percentuais\", \"100%\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")];const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Soma dos percentuais 100%"
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 56.44
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Soma dos percentuais",
+    "exact": true
+   },
+   "seconds": 3.2,
+   "at": 56.89,
+   "label": "Soma dos percentuais 100%, em verde",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 64.69
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Criar condição",
+    "exact": true
+   },
+   "at": 65.47,
+   "label": "Criar condição"
+  },
+  {
+   "do": "waitFor",
+   "text": "Condição criada",
+   "timeout": 10
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "text": "Nova condição de pagamento",
+    "exact": true
+   },
+   "timeout": 8
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"30/60/90 dias\", \"Padrão\", \"30 / 60 / 90 dias · 3 parcelas\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere a condição na lista com o selo Padrão"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "30/60/90 dias",
+    "exact": true
+   },
+   "seconds": 1.0,
+   "at": 68.63,
+   "label": "30/60/90 dias na lista",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "3 parcelas"
+   },
+   "seconds": 0.8,
+   "at": 69.92,
+   "label": "selo Padrão e 30 / 60 / 90 dias · 3 parcelas",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 70.58
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main [role=switch]"
+   },
+   "seconds": 2.0,
+   "at": 71.03,
+   "label": "chave da condição (desliga sem apagar, sem clicar)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main button:has-text(\"Editar\"), main button[aria-label=\"Editar\"], main button[title=\"Editar\"]"
+   },
+   "seconds": 0.5,
+   "at": 74.45,
+   "label": "Editar (sem clicar)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main button:has-text(\"Excluir\"), main button[aria-label=\"Excluir\"], main button[title=\"Excluir\"]"
+   },
+   "seconds": 0.6,
+   "label": "Excluir (sem clicar)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "30/60/90 dias",
+    "exact": true
+   },
+   "seconds": 1.4,
+   "at": 79.99,
+   "label": "a condição padrão aparece no alto da lista",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 82.63
+  }
+ ]
+}

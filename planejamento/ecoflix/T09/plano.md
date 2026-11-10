@@ -55,8 +55,10 @@ Além do `MUNDO_FICTICIO.md` e do fim do T6 (caixas #85 e #86 de 10/11 fechados 
   final **R$ 612,50**; dentro dele: 09:15 Aparecida Ramos, 18 kg de alumínio latinha (R$ 111,60) e 138 kg de papelão
   (R$ 75,90), em dinheiro; 10:12 **"Depósito Irmãos Siqueira"** (errado: era a Auto Peças Vale Forte), **240 kg de
   bateria automotiva** a R$ 3,10 = **R$ 744,00**, Pix/Transferência na "Conta Principal". Nenhuma diferença no fechamento.
-- **Auto Peças Vale Forte:** compra de 08/10 (caixa do dia), 850 kg de chaparia a R$ 0,70 = R$ 595,00, Pix (aparece na
-  busca do cap03). Nenhuma compra de bateria no nome dela em outubro.
+- **Auto Peças Vale Forte:** três compras em outubro, as três cargas do CDF da T18 (junção): 08/10 (caixa do dia), 850 kg de
+  chaparia a R$ 0,70 = R$ 595,00, Pix; 15/10 e 29/10 com cobre mel, cobre misto, alumínio perfil e bloco (`MUNDO_LINHA_DO_TEMPO.md`).
+  As três aparecem na busca do cap03. Nenhuma compra de bateria no nome dela em outubro, e nenhuma outra compra de bateria
+  paga em Pix no mês (a do balcão é em dinheiro): o filtro do cap03 deixa só a de 21/10.
 - **Tabela de preço:** Depósito Irmãos Siqueira e Auto Peças Vale Forte compram bateria pela mesma tabela (a padrão, R$ 3,10).
   A Vale Forte tem o preço especial de R$ 3,40 na bateria (T7) desde 09/11 18:00; trocar o fornecedor de um pedido salvo
   não refaz o preço dos itens já lançados (`Purchase.tsx:2180-2205` só mexe no item que está sendo digitado), então os

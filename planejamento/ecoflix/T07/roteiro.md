@@ -12,7 +12,7 @@ tabela). Coluna Tela = o que o robô faz e onde a câmera foca, com os rótulos 
   RESUMO (todos os capítulos menos o 0)
 - **Duração estimada:** ~19 min de vídeo (2.520 palavras e 13.503 caracteres de fala, ~16 a 17 min de voz, mais 16 vinhetas
   e as ações sem fala, com o preenchimento acelerado; alvo da fonte: 22 min)
-- **Logado:** Rafael Nogueira (MASTER, vê lucro), desktop 1280×800, tema claro, `FAKE_NOW=2026-11-10T08:30:00-03:00`.
+- **Logado:** Rafael Nogueira (MASTER, vê lucro), desktop 1280×800, tema claro, `FAKE_NOW=2026-11-10T08:35:00-03:00` (junção: depois do #85 da T6).
 - **Marcas:** `[BACKEND: ...]` o que o backend falso ou o EcoTray falso ainda não têm · `[ZOOM: ...]` zoom que dura a frase inteira
   (≥ 2,5 s, nunca zoom em cima de zoom) · `[ILUSTRAÇÃO: ...]` desenho por código no estilo da marca · `[CENA WINDOWS: ...]` cena
   simulada do Windows com o EcoTray do código · `[TESTAR: ...]` o robô confere antes de gravar · `[handoff: ...]` texto do app

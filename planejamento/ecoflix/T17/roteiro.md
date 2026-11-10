@@ -9,7 +9,8 @@
   vinhetas de capítulo, as esperas da SEFAZ simulada e a cartela; alvo da fonte ~16 min)
 - Coluna Fala = texto da narração na grafia da legenda; a grafia de pronúncia do TTS está em `narracao/tts_textos.py`. Coluna Tela =
   o que o robô faz e onde a câmera foca, rótulos entre aspas como no código 1.59.154 (`T17/inventario.md`). Logado como Rafael
-  Nogueira (MASTER), desktop. Mundo e sementes: `T17/plano.md`. FAKE_NOW 10/11/2026 08:30 nos capítulos 0 a 4 e 14:20 do 5 em diante.
+  Nogueira (MASTER), desktop. Mundo e sementes: `T17/plano.md`. FAKE_NOW 10/11/2026 09:30 nos capítulos 0 a 4 e 14:20 do 5 em diante (junção: depois das notas
+  1249 a 1251 do T16).
 - Marcas: `[BACKEND: ...]` o que o backend falso ainda não tem; `[ZOOM: ...]` zoom suave que dura a frase inteira (sem zoom em cima de
   zoom); `[ILUSTRAÇÃO: ...]` desenho por código no estilo da marca, nunca tela inventada.
 
@@ -38,10 +39,10 @@
 
 | Tela | Fala |
 | --- | --- |
-| Clica na sub-aba "Frota": "Frota (veículos e motoristas do MDF-e)", aba "Veículos"; a lista "Veículos da frota" com FKD2E41 (Caminhão truck), GHT7B19 (Caminhão 3/4) e EZR4C63 (Picape), selo "Sem tipo"; o painel do FKD2E41 aberto. [BACKEND: frota da base, só placa e descrição] | Antes do primeiro manifesto, o caminhão e o motorista precisam estar na Frota. Os caminhões da Recicla Vale já estão aqui: é a mesma frota da pesagem. |
+| Clica na sub-aba "Frota": "Frota (veículos e motoristas do MDF-e)", aba "Veículos"; a lista "Veículos da frota" com FKD2E41 (Caminhão truck), GHT7B19 (Caminhão 3/4) e EZR4C63 (Picape), selo "Sem tipo"; o painel do FKD2E41 aberto. [BACKEND: frota da base: placa, descrição, tara e capacidade (T12), sem dados de transporte] | Antes do primeiro manifesto, o caminhão e o motorista precisam estar na Frota. Os caminhões da Recicla Vale já estão aqui: é a mesma frota da pesagem. |
 | Clica em "Editar" no painel do FKD2E41: "Editar veículo"; a câmera desce até "Dados de transporte (MDF-e / NF-e)". | Pro manifesto, faltam os dados de transporte do caminhão truck. Clico em Editar. |
 | "UF de licenciamento" → "SP"; "Tipo" → "Veículo único (truck, toco, utilitário)"; "Tipo de rodado" → "Truck"; "Tipo de carroceria" → "Aberta". | Ele é emplacado em São Paulo. No Tipo, é um veículo único, sem carreta. O rodado é truck, e a carroceria é aberta. |
-| Digita "7800" em "Tara (kg)" e "14000" em "Capacidade (kg)". [ZOOM: "Tara (kg)" e "Capacidade (kg)"] | A tara é o peso do caminhão vazio: sete mil e oitocentos quilos. E ele leva até catorze mil quilos de carga. |
+| A câmera para em "Tara (kg)" 6380 e "Capacidade (kg)" 14000, já preenchidos (vieram da frota das coletas). [ZOOM: "Tara (kg)" e "Capacidade (kg)"] | A tara, o peso do caminhão vazio, já veio da frota: seis mil trezentos e oitenta quilos. E ele leva até catorze mil quilos de carga. |
 | Digita "30" em "Capacidade (m³)"; a câmera mostra a ajuda "máx. 999 m³" embaixo do campo. | Uma dica: peso aqui é sempre em quilos. Se o número parecer tonelada, a própria tela avisa. |
 | Clica em "Salvar": toast "Veículo atualizado"; o painel mostra "Dados de transporte" preenchido e o selo "Veículo único". | Salvar, e o caminhão está pronto pro manifesto. |
 | Aba "Motoristas": "Edson Moura" na lista; clica em "Editar": "Editar motorista". | Agora o motorista. O Edson Moura já está na lista. Clico em Editar. |
@@ -89,7 +90,7 @@
 
 | Tela | Fala |
 | --- | --- |
-| Menu "Fiscal & Ambiental" › "Notas de Serviço (NFS-e)": título "Nota Fiscal de Serviço (NFS-e)", lista com o nº 13 (Aços Quiririm Ltda, R$ 1.850,00) e o nº 12 (Fundição Bandeira do Vale, R$ 1.200,00), os dois "Autorizada"; a câmera não para nos cartões de cima. [BACKEND: NFS-e 12 e 13 na semente] | Agora, a nota de serviço. Ela fica em Notas de Serviço. |
+| Menu "Fiscal & Ambiental" › "Notas de Serviço (NFS-e)": título "Nota Fiscal de Serviço (NFS-e)", lista com o nº 13 (Aços Quiririm Ltda, R$ 1.850,00) e o nº 12 (Fundição Bandeira do Vale, R$ 950,00), os dois "Autorizada"; a câmera não para nos cartões de cima. [BACKEND: NFS-e 12 e 13 na semente] | Agora, a nota de serviço. Ela fica em Notas de Serviço. |
 | [ILUSTRAÇÃO: mercadoria × serviço, lado esquerdo "Mercadoria": fardos de sucata saindo do pátio no caminhão, com a folha "NF-e" e o rótulo "SEFAZ".] | Pensa assim: quando a Recicla Vale vende sucata, a mercadoria sai do pátio. A nota dessa venda é a nota fiscal de mercadoria, a NF-e. |
 | (ilustração, lado direito "Serviço": uma caçamba recolhida no pátio da "Aços Quiririm", com a folha "NFS-e", o rótulo "Prefeitura" e um pátio sem nenhuma mercadoria saindo) | Quando ela cobra um trabalho, como a coleta com caçamba, não sai mercadoria nenhuma. Essa é a nota de serviço, a NFS-e, que é da prefeitura. |
 | A ilustração sai; zoom nas colunas "Número", "Tomador", "Valor" e "Status" da lista. | Na lista ficam as notas de serviço emitidas: o número, quem contratou, que aqui se chama tomador, o valor e o status. |
@@ -100,10 +101,10 @@
 | Tela | Fala |
 | --- | --- |
 | Clica em "Nova NFS-e": "Nova NFS-e", aba "Pessoas", "Data de competência" com 10/11/2026 e o selo vermelho de pendências na barra de cima. | Vou cobrar a coleta com caçamba que a Recicla Vale fez na Aços Quiririm. Nova NFS-e. |
-| Troca a "Data de competência" para 07/11/2026. Em "Tomador do serviço", clica em "Cliente ou fornecedor": "Selecionar tomador"; digita "Aços" em "Buscar por nome, CNPJ/CPF ou código..." e escolhe "Aços Quiririm Ltda". | Na data de competência vai o dia do serviço: sete de novembro. No tomador, quem contratou, eu escolho a Aços Quiririm no cadastro. |
+| Troca a "Data de competência" para 06/11/2026 (junção: 07/11 é sábado, e o pátio não abre). Em "Tomador do serviço", clica em "Cliente ou fornecedor": "Selecionar tomador"; digita "Aços" em "Buscar por nome, CNPJ/CPF ou código..." e escolhe "Aços Quiririm Ltda". | Na data de competência vai o dia do serviço: seis de novembro. No tomador, quem contratou, eu escolho a Aços Quiririm no cadastro. |
 | Clica em "Avançar": aba "Serviço"; "Município" já com "Taubaté"; clica em "Selecionar código de tributação", digita "coleta" em "Buscar por código ou descrição..." e escolhe o código de coleta e remoção de resíduos; "Código do serviço (LC116)" se preenche sozinho. [BACKEND: `plugnotas-nfse-servicos-municipio` com a lista de Taubaté] | Avançar. O município já vem como Taubaté. O código do serviço é o seu contador que passa. Aqui, coleta e remoção de resíduos. |
 | Zoom em "Puxar serviço salvo", sem clicar. | Se a empresa emite sempre o mesmo serviço, ele pode ficar salvo, e aí é só puxar por aqui. |
-| Digita em "Descrição do serviço": "Coleta e remoção de resíduos metálicos com caçamba no pátio da Aços Quiririm em 07/11/2026." | Na descrição, o que foi feito, do jeito que vai aparecer na nota. |
+| Digita em "Descrição do serviço": "Coleta e remoção de resíduos metálicos com caçamba no pátio da Aços Quiririm em 06/11/2026." | Na descrição, o que foi feito, do jeito que vai aparecer na nota. |
 | Clica em "Avançar": aba "Valores"; digita "1850" em "Valor do serviço"; a barra de cima mostra "Total da nota" R$ 1.850,00. [ZOOM: "Valor do serviço"] | Avançar. O valor do serviço: mil oitocentos e cinquenta reais. |
 | A câmera vai a "Alíquota ISS %", com 3 vindo da lista do município, e "ISS retido na fonte" desligado. [ZOOM: "Alíquota ISS %"] | A alíquota do ISS veio da lista do município. Quem confirma esse número é o contador. |
 | Clica em "Avançar": aba "Pré-visualização", o espelho da nota com a Aços Quiririm, o serviço e R$ 1.850,00; selo "Pronta pra emitir". | Na pré-visualização, a nota aparece como vai sair. E o selo mostra que ela está pronta pra emitir. |
@@ -119,7 +120,7 @@
 | Zoom no texto "...as notas de serviço (NFS-e) que prestadores emitem contra o CNPJ da sua empresa... passam a entrar aqui automaticamente, prontas pra virar despesa." | São as notas que outras empresas emitem contra o seu CNPJ: o contador, a manutenção, um frete. Elas entram aqui sozinhas, prontas pra virar despesa. |
 | Clica em "Ativar NFS-e Recebidas": diálogo "Ativar o recebimento de notas de serviço?". [ZOOM: "Ao ativar, cada nota de serviço recebida passa a contar na sua cota mensal de documentos fiscais..."] | Clico em Ativar NFS-e Recebidas. Repara no aviso: cada nota recebida conta na cota mensal de documentos fiscais, a mesma das notas que você emite. |
 | Clica em "Ativar mesmo assim": toasts "Notas de serviço recebidas ativado" e "2 nota(s) de serviço sincronizada(s)"; a tela vira "Notas de serviço emitidas contra o seu CNPJ", com "Recurso ativo". [BACKEND: `plugnotas-enable-nfse-dfe` e `plugnotas-nfse-dfe-sync` → 2 notas] | Ativar mesmo assim. Pronto, ele já buscou as notas, e chegaram duas. |
-| Zoom nas duas linhas: "Contabilidade Jequitibá Ltda" R$ 1.650,00 e "Balanças Tremembé Manutenção Ltda" R$ 980,00. [ZOOM: colunas "Prestador" e "Valor"] | Os honorários do escritório de contabilidade, de mil seiscentos e cinquenta reais, e a aferição da balança rodoviária, de novecentos e oitenta. |
+| Zoom nas duas linhas: "Contabilidade Manacá Ltda" R$ 1.650,00 e "Balanças Tremembé Manutenção Ltda" R$ 980,00. [ZOOM: colunas "Prestador" e "Valor"] | Os honorários do escritório de contabilidade, de mil seiscentos e cinquenta reais, e a aferição da balança rodoviária, de novecentos e oitenta. |
 | Zoom no aviso fixo "A NFS-e é da prefeitura, e só chega aqui a nota de cidade que entrou no sistema nacional...". | Uma dica: só chega aqui a nota de cidade que já entrou no sistema nacional. Se uma nota não aparecer, peça o PDF ao prestador e lance a despesa na mão. |
 | Abre "Ações" na linha da Balanças Tremembé; no grupo "Financeiro", clica em "Lançar despesa / conta": "Nova conta" com "A pagar (despesa)", "Valor" R$ 980,00 e "Descrição" "Balanças Tremembé Manutenção Ltda" já preenchidos. | Serviço não entra no estoque, então aqui o caminho é a despesa. Na linha da balança, Lançar despesa ou conta. |
 | Escolhe 20/11/2026 em "Vencimento" e "Manutenção" em "Categoria"; clica em "Criar conta": toast "Conta criada"; a linha ganha o selo "Lançada". [BACKEND: categoria de despesa de manutenção na base] | A conta já vem com o valor e os dados da nota. Falta o vencimento, dia vinte, e a categoria. Criar conta. E a nota fica marcada como lançada. |

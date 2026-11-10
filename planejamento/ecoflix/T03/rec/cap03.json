@@ -1,0 +1,334 @@
+{
+ "name": "t03-cap03",
+ "title": "T03 · Cap. 3 · O código do material (narração 59,1 s ESTIMADA; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; usuário rafael)",
+ "seed": "t03-cap03",
+ "pace": 0.5,
+ "cps": 14,
+ "tail": 1.5,
+ "start": {
+  "x": 700,
+  "y": 300
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true"
+ },
+ "seedExtra": [
+  "t03/inicio",
+  "t03/apos-cap02"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/login"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "input[type=email]"
+   },
+   "timeout": 30
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "input[type=email]"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "input[type=password]"
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "button[type=submit]"
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Rafael!",
+   "timeout": 40
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/materiais"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie os materiais do estoque",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "header button:has(svg.lucide-panel-left-close), header button:has(svg.lucide-panel-left)"
+   },
+   "noScroll": true
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=new RegExp(\"N[\\u00e3a]o foi poss[i\\u00ed]vel|Erro ao|Tente novamente|indispon[i\\u00ed]vel|Algo deu errado|Something went wrong|Falha ao|Pop-up bloqueado|Sem permiss[\\u00e3a]o\",'i');const ign=new RegExp(\"$^\",'i');const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&!ign.test(m[0])&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0.0
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Buscar material por código ou nome..."
+   },
+   "text": "radiador",
+   "cps": 14,
+   "at": 0.0,
+   "label": "busca radiador"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "text": "Radiador de cobre",
+    "within": "main"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('Radiador de cobre') td:nth-child(2)"
+   },
+   "seconds": 1.6,
+   "at": 2.81,
+   "label": "célula Código 16 (zoom)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"16\", \"Radiador de cobre\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main tbody tr\")].filter(e=>!true||e.innerText.includes(\"Radiador de cobre\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere código 16"
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 10.4
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 18.34
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 29.78
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('Radiador de cobre') td:last-child button"
+   },
+   "seconds": 0.1,
+   "at": 29.78,
+   "label": "\"...\" da linha Radiador de cobre",
+   "optional": false,
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('Radiador de cobre') td:last-child button"
+   },
+   "seconds": 0.31,
+   "at": 29.78,
+   "label": "\"...\" da linha Radiador de cobre (continua)",
+   "optional": false,
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('Radiador de cobre') td:last-child button"
+   },
+   "seconds": 0.3,
+   "label": "\"...\" de novo (só se não abriu)",
+   "unless": {
+    "role": "menuitem",
+    "name": "Editar"
+   },
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "role": "menuitem",
+    "name": "Editar"
+   },
+   "timeout": 6
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Editar"
+   },
+   "at": 30.51,
+   "label": "Editar"
+  },
+  {
+   "do": "waitFor",
+   "text": "Editar Material",
+   "timeout": 8
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] #code"
+   },
+   "at": 30.89,
+   "label": "campo Código"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] #code"
+   },
+   "text": "0",
+   "noClick": true,
+   "at": 32.07,
+   "label": "apaga o 16 e digita 0: o campo fica vazio (zoom: Código e Fica assim)",
+   "clear": true
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] #code"
+   },
+   "text": "7",
+   "noClick": true,
+   "at": 32.98,
+   "label": "digita 7"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] #code"
+   },
+   "text": "0",
+   "noClick": true,
+   "at": 33.59,
+   "label": "digita 0: 70"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const esp=[\"70\"];let out='';for(let i=0;i<12;i++){const v=[...document.querySelectorAll(\"[role=dialog]\"+' input, '+\"[role=dialog]\"+' textarea')].map(e=>e.value).join(' | ');const falta=esp.filter(e=>!v.includes(e));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+v.slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere campo Código 70"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Fica assim: 70\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Fica assim: 70"
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 36.43
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Fica assim:",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.4,
+   "at": 37.84,
+   "label": "Fica assim: 70",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 46.34
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Atualizar",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 46.54,
+   "label": "Atualizar"
+  },
+  {
+   "do": "waitFor",
+   "text": "Material atualizado!",
+   "timeout": 10
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('Radiador de cobre') td:nth-child(2)"
+   },
+   "seconds": 1.4,
+   "at": 49.42,
+   "label": "célula Código 70",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"70\", \"Radiador de cobre\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main tbody tr\")].filter(e=>!true||e.innerText.includes(\"Radiador de cobre\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere código 70"
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 59.15
+  }
+ ]
+}

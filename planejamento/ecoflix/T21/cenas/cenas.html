@@ -42,6 +42,7 @@ body{font-family:M,sans-serif;color:var(--t);-webkit-font-smoothing:antialiased}
 .tag{display:inline-flex;align-items:center;gap:8px;padding:9px 18px;border-radius:999px;font-weight:800;font-size:20px;white-space:nowrap}
 .tag.v{background:var(--vc);color:var(--ve)} .tag.a{background:var(--ac);color:var(--ae)}
 .tag.c{background:#EEF1F4;color:#4B5563} /* T21: etiqueta neutra (cinza) */
+.tag.tg{font-size:24px;padding:11px 22px} /* T21: etiqueta maior */
 .lbl{font-weight:700;font-size:17px;color:var(--c)}
 .num{font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
 .op{position:absolute;width:60px;height:60px;border-radius:50%;background:#F2F4F7;color:var(--t);display:flex;
@@ -145,7 +146,7 @@ const CAPS={};
 const ILU=[
  {cap:0,id:'ilu00_problema',de:[0,'Oi',1],ate:[1,'número',1],cauda:.8,
   resumo:'em vez de procurar o número nos relatórios, o Rafael pergunta em português e a resposta vem com o número',
-  mostra:['Cato','Tirar dúvida simples','Rafael','Quem tá me devendo?','3 clientes','R$ 28.977,00']},
+  mostra:['Cato','Tirar dúvida simples','Rafael','Quem tá me devendo?','3 parceiros','R$ 17.540,00']},
  {cap:1,id:'ilu01_onde',de:[1,'No',1],ate:[1,'baixo',1],cauda:.6,
   resumo:'o botão redondo do Cato: no computador, canto de baixo à direita; no celular, à esquerda, acima da barra de baixo',
   mostra:['Cato','Onde fica o botão','computador','celular']},
@@ -158,15 +159,15 @@ const ILU=[
   mostra:['Perguntas','Caixa é o de hoje','Como tá meu caixa hoje?','hoje','Compras e vendas dos últimos três meses','o mês']},
  {cap:5,id:'ilu05_saldo_vendido',de:[3,'Uma',1],ate:[4,'diferentes',1],cauda:.8,
   resumo:'saldo (o que a Fundição deve hoje) × valor movimentado (o que ela comprou em outubro): duas perguntas diferentes',
-  mostra:['Respostas','Saldo × valor movimentado','Fundição Bandeira do Vale','cliente','vendido em outubro','R$ 61.380,00',
-   'deve hoje','em aberto','R$ 23.950,00','quanto ela me deve?','pra quem eu mais vendi?']},
+  mostra:['Respostas','Saldo × valor movimentado','Fundição Bandeira do Vale','cliente','vendido em outubro','R$ 112.800,00',
+   'deve hoje','em aberto','R$ 14.370,00','quanto ela me deve?','pra quem eu mais vendi?']},
  {cap:5,id:'ilu05_regra',de:[6,'A',1],ate:[6,'antes',1],cauda:.8,
   resumo:'a regra das respostas: distribuição vira pizza, ranking vira barra, o que muda no tempo vira linha, lista vira tabela; o texto vem antes',
   mostra:['Respostas','Gráfico ou tabela','pizza','distribuição','barra','ranking','linha','muda no tempo','tabela','lista',
    'o texto vem sempre antes']},
  {cap:6,id:'ilu06_mesmo_dado',de:[3,'É',1],ate:[3,'dados',1],cauda:.8,
   resumo:'a tela do sistema e a resposta do Cato mostram o mesmo número porque leem os mesmos dados',
-  mostra:['Respostas','O mesmo número','tela do sistema','R$ 52.112,25','Cato','resposta do Cato','os dados da empresa']},
+  mostra:['Respostas','O mesmo número','tela do sistema','R$ 96.076,00','Cato','resposta do Cato','os dados da empresa']},
  {cap:7,id:'ilu07_consulta',de:[2,'O',1],ate:[3,'Uma',1],cauda:.4,
   resumo:'o Cato consulta e responde; emitir nota, pagar conta e cadastrar seguem com você, nas telas do sistema',
   mostra:['Limites','O Cato consulta, você executa','o Cato','consulta','responde','você','emitir nota','pagar conta','cadastrar',
@@ -204,30 +205,31 @@ CAPS[0]=()=>{
   const i=I('ilu00_problema'), g=grupo();
   const tit=titulo(g,'Cato','Tirar dúvida simples');
   // a pessoa (silhueta genérica) e três relatórios genéricos na frente dela; uma lupa procura o número
+  const esq=el('<div class="ab" style="left:0;top:0;width:1280px;height:800px"></div>',g);
   const pes=el(`<div class="ab" style="left:200px;top:226px">${svg(200,190,`<circle cx="100" cy="58" r="44" fill="#B9C1C9"/>
-     <path d="M14 190 C 14 128, 52 104, 100 104 C 148 104, 186 128, 186 190 Z" fill="#B9C1C9"/>`)}</div>`,g);
-  const nome=tagC('c','Rafael',350,620,g);
+     <path d="M14 190 C 14 128, 52 104, 100 104 C 148 104, 186 128, 186 190 Z" fill="#B9C1C9"/>`)}</div>`,esq);
+  const nome=tagC('c','Rafael',350,620,esq);
   const rel=(x,y,r,tipo)=>el(`<div class="card rl" style="left:${x}px;top:${y}px;width:178px;height:150px;padding:16px 18px;transform-origin:50% 100%;rotate:${r}deg">
      ${linhas([96],10)}<div style="margin-top:14px">${tipo==='b'?svg(142,64,`<g fill="#D5DAE0"><rect x="6" y="34" width="22" height="30" rx="3"/>
        <rect x="40" y="14" width="22" height="50" rx="3"/><rect x="74" y="26" width="22" height="38" rx="3"/><rect x="108" y="6" width="22" height="58" rx="3"/></g>`)
        :tipo==='l'?svg(142,64,`<polyline points="4,54 34,34 64,42 96,14 138,24" fill="none" stroke="#C5CBD3" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>`)
-       :linhas([142,120,138,100],8,9)}</div></div>`,g);
+       :linhas([142,120,138,100],8,9)}</div></div>`,esq);
   const R=[rel(84,452,-7,'b'),rel(262,438,0,'t'),rel(440,452,7,'l')];
   const lupa=el(`<div class="ab ico" style="left:0;top:0;width:64px;height:64px;border-radius:50%;background:#fff;color:#4B5563;
-     border:2px solid #C5CBD3;box-shadow:0 8px 18px rgba(16,24,40,.12)">${ic('search',32)}</div>`,g);
+     border:2px solid #C5CBD3;box-shadow:0 8px 18px rgba(16,24,40,.12)">${ic('search',32)}</div>`,esq);
   const duv=el(`<div class="ab" style="left:384px;top:204px;width:64px;height:64px;border-radius:50%;background:var(--ac);border:2px solid var(--a);
-     display:flex;align-items:center;justify-content:center;font-weight:800;font-size:34px;color:var(--ae)">?</div>`,g);
+     display:flex;align-items:center;justify-content:center;font-weight:800;font-size:34px;color:var(--ae)">?</div>`,esq);
   // a conversa: a pergunta em português e a resposta com o número
   const per=balao(g,780,240,400,'<div style="font-weight:800;font-size:26px">Quem tá me devendo?</div>','p');
-  const res=balao(g,700,370,420,`<div class="lbl" style="font-size:18px">3 clientes</div>
-     <div class="num rn" style="font-size:44px;margin-top:4px">${brl(28977)}</div>`,'r');
+  const res=balao(g,700,370,420,`<div class="lbl" style="font-size:18px">3 parceiros</div>
+     <div class="num rn" style="font-size:44px;margin-top:4px">${brl(17540)}</div>`,'r');
   const rb=res.querySelector('.bl'), rn=res.querySelector('.rn');
   return t=>{
     const [A]=janela(i);
     const tab=W(0,'abrir'), tre=W(0,'relatorio'), tdu=W(0,'duvida'), tra=W(1,'rafael'), tpe=W(1,'pergunta'), tre2=W(1,'resposta'),
           tnu=W(1,'numero');
-    posTitulo(tit,t,A-.5,tab-.3);
-    vis(pes,t,tab-.15,1e9,{dy:16}); R.forEach((r,k)=>vis(r,t,tre-.25+k*.12,1e9,{dy:22}));
+    posTitulo(tit,t,A-.5,tab-.35);
+    vis(pes,t,tab+.2,1e9,{dy:16}); R.forEach((r,k)=>vis(r,t,tre-.25+k*.12,1e9,{dy:22}));
     vis(duv,t,tdu-.1,1e9,{dy:10,sc:.7}); vis(nome,t,tra-.15);
     // a lupa passeia pelos relatórios até a pergunta (procurando o número)
     const pl=cl((t-tre)/Math.max(1,tpe-tre)), lx=150+330*(.5-.5*Math.cos(pl*Math.PI*2.2)), ly=470+30*Math.sin(pl*Math.PI*3.1);
@@ -235,6 +237,7 @@ CAPS[0]=()=>{
     // ao perguntar, os relatórios ficam em segundo plano (cinza) e a conversa entra
     const cz=eo(pr(t,tpe-.2,.6)); R.forEach(r=>{r.style.filter=cz>.001?`grayscale(1) opacity(${(1-.55*cz).toFixed(3)})`:''});
     lupa.style.filter=cz>.001?`opacity(${(1-.6*cz).toFixed(3)})`:''; duv.style.filter=cz>.001?`opacity(${(1-.6*cz).toFixed(3)})`:'';
+    esq.style.transform=`translate(${lerp(290,0,eio(pr(t,tpe-.45,.8))).toFixed(2)}px,0)`;
     vis(per,t,tpe-.15,1e9,{dx:24,dy:0}); vis(res,t,tre2-.15,1e9,{dx:-24,dy:0});
     const ac=eo(pr(t,tnu-.1,.45)); rb.style.boxShadow=`0 0 0 ${(6*ac).toFixed(2)}px rgba(80,208,136,.22),0 10px 24px rgba(16,24,40,.08)`;
     rn.style.color=mix('#121212','#2E7D57',ac); pulse(rn,t,tnu-.05,.06,.8);
@@ -250,7 +253,7 @@ CAPS[1]=()=>{
      display:flex;align-items:center;justify-content:center;box-shadow:0 6px 14px rgba(46,125,87,.35)">${ic('message-circle',d*.5)}</div>
      <div class="rip" style="left:${x+d/2}px;top:${y+d/2}px"></div>`;
   // computador genérico (tela com blocos neutros, sem imitar o app) e o botão no canto de baixo à direita
-  const pc=el(`<div class="ab" style="left:90px;top:206px;width:600px;height:440px">
+  const pc=el(`<div class="ab" style="left:150px;top:206px;width:600px;height:440px">
      <div class="ab" style="left:0;top:0;width:600px;height:370px;border-radius:20px;background:#2F3640"></div>
      <div class="ab" style="left:16px;top:16px;width:568px;height:338px;border-radius:8px;background:#F3F4F6;overflow:hidden">
        <div class="ab" style="left:0;top:0;width:110px;height:338px;background:#E6E9EE"></div>
@@ -261,9 +264,9 @@ CAPS[1]=()=>{
        ${bot(496,266,54)}</div>
      <div class="ab" style="left:262px;top:370px;width:76px;height:50px;background:#4F5861"></div>
      <div class="ab" style="left:200px;top:418px;width:200px;height:16px;border-radius:8px;background:#5E6670"></div></div>`,g);
-  const nPc=tagC('c','computador',390,668,g);
+  const nPc=tagC('c','computador',450,668,g);
   // celular genérico: barra de baixo e o botão à esquerda, logo acima dela
-  const cel=el(`<div class="ab" style="left:820px;top:196px;width:250px;height:470px">
+  const cel=el(`<div class="ab" style="left:880px;top:196px;width:250px;height:470px">
      <div class="ab" style="left:0;top:0;width:250px;height:470px;border-radius:38px;background:#2F3640"></div>
      <div class="ab" style="left:12px;top:12px;width:226px;height:446px;border-radius:28px;background:#F3F4F6;overflow:hidden">
        <div class="ab" style="left:18px;top:30px">${linhas([120],12)}</div>
@@ -273,7 +276,7 @@ CAPS[1]=()=>{
          ${[0,1,2,3].map(()=>'<div style="width:26px;height:26px;border-radius:8px;background:#D5DAE0"></div>').join('')}</div>
        ${bot(16,318,50)}</div></div>`,g);
   const barra=cel.querySelector('.barra');
-  const nCe=tagC('c','celular',945,688,g);
+  const nCe=tagC('c','celular',1005,688,g);
   const [bPc,bCe]=[pc.querySelector('.bt'),cel.querySelector('.bt')], [rPc,rCe]=[pc.querySelector('.rip'),cel.querySelector('.rip')];
   return t=>{
     const [A]=janela(i);
@@ -283,6 +286,8 @@ CAPS[1]=()=>{
     pulse(bPc,t,tdi,.18,.8); ripple(rPc,t,tdi); ripple(rPc,t,tdi+.5);
     vis(cel,t,tce-.2,1e9,{dy:22}); vis(nCe,t,tce,1e9,{dy:8});
     pulse(bCe,t,tes,.18,.8); ripple(rCe,t,tes); ripple(rCe,t,tes+.5);
+    for(const [b,a] of [[bPc,tdi],[bCe,tes]]){const v=eo(pr(t,a-.05,.45));
+      b.style.boxShadow=`0 0 0 ${(9*v).toFixed(2)}px rgba(80,208,136,.28),0 6px 14px rgba(46,125,87,.35)`;}
     const bb=eo(pr(t,tba-.1,.45)); barra.style.background=mix('#FFFFFF','#EAF8F0',bb); barra.style.borderTopColor=mix('#E3E7EC','#50D088',bb);
   };
 };
@@ -293,12 +298,12 @@ CAPS[1]=()=>{
 CAPS[2]=()=>{
   const i=I('ilu02_caminho'), g=grupo();
   const tit=titulo(g,'Autorização','O caminho da pergunta');
-  const per=balao(g,60,214,330,'<div style="font-weight:800;font-size:24px">Quem tá me devendo?</div>','p');
+  const per=balao(g,36,224,370,'<div style="font-weight:800;font-size:23px;white-space:nowrap">Quem tá me devendo?</div>','p');
   const cato=el(`<div class="card" style="left:470px;top:228px;width:200px;height:130px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px">
      <div class="ico" style="width:56px;height:56px;border-radius:50%;background:var(--v);color:#fff">${ic('message-circle',30)}</div>
      <div style="font-weight:800;font-size:24px">Cato</div></div>`,g);
   const fios=el(`<svg class="ab" style="left:0;top:0;overflow:visible" width="1280" height="800">
-     <path class="f1" d="M394 268 C 428 268, 436 290, 464 292" fill="none" stroke="var(--v)" stroke-width="4" stroke-linecap="round"/>
+     <path class="f1" d="M412 258 C 436 262, 444 288, 464 292" fill="none" stroke="var(--v)" stroke-width="4" stroke-linecap="round"/>
      <path class="f2" d="M570 436 L570 368" fill="none" stroke="var(--v)" stroke-width="4" stroke-linecap="round"/>
      <path class="f3" d="M676 293 L870 293" fill="none" stroke="#9AA3AD" stroke-width="4" stroke-linecap="round" stroke-dasharray="3 11"/>
      <path class="f4" d="M466 330 C 430 360, 410 380, 386 392" fill="none" stroke="var(--v)" stroke-width="4" stroke-linecap="round"/></svg>`,g);
@@ -351,13 +356,13 @@ CAPS[4]=()=>{
   const dl=el(`<div class="ab" style="left:318px;top:290px">${svg(24,60,`<path d="M12 2 L12 52 M4 42 L12 54 L20 42" fill="none" stroke="var(--v)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>`)}</div>`,g);
   const dr=el(`<div class="ab" style="left:933px;top:300px">${svg(24,50,`<path d="M12 2 L12 42 M4 32 L12 44 L20 32" fill="none" stroke="var(--a)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>`)}</div>`,g);
   // a gaveta do caixa (notas e moedas) e o calendário do mês
-  const gav=el(`<div class="ab" style="left:190px;top:366px">${svg(280,170,`
+  const gav=el(`<div class="ab" style="left:169px;top:362px">${svg(280,170,`
      <polygon points="30,20 250,20 272,84 8,84" fill="#E6E9EE" stroke="#B9C1C9" stroke-width="3" stroke-linejoin="round"/>
      <g stroke="#B9C1C9" stroke-width="3"><line x1="85" y1="20" x2="74" y2="84"/><line x1="140" y1="20" x2="140" y2="84"/><line x1="195" y1="20" x2="206" y2="84"/></g>
      <g fill="var(--vm)" stroke="#50D088" stroke-width="2"><rect x="38" y="30" width="38" height="44" rx="4"/><rect x="92" y="30" width="40" height="44" rx="4"/></g>
      <g fill="#F2B63D" stroke="#D99A1E" stroke-width="2"><circle cx="164" cy="44" r="9"/><circle cx="176" cy="60" r="9"/><circle cx="222" cy="46" r="9"/><circle cx="234" cy="62" r="9"/></g>
-     <rect x="4" y="84" width="272" height="80" rx="10" fill="#5E6670"/><rect x="110" y="114" width="60" height="16" rx="8" fill="#9AA3AD"/>`)}</div>`,g);
-  const tHoje=tagC('v','hoje',330,556,g);
+     <rect x="4" y="84" width="272" height="80" rx="10" fill="#5E6670"/><rect x="110" y="114" width="60" height="16" rx="8" fill="#9AA3AD"/>`,'',1.15)}</div>`,g);
+  const tHoje=tagC('v','hoje',330,570,g);
   const cal=el(`<div class="ab" style="left:835px;top:356px">${CALEND()}</div>`,g);
   const dd=[...cal.querySelectorAll('.dd')];
   const tMes=tagC('a','o mês',945,584,g);
@@ -390,9 +395,9 @@ CAPS[5]=()=>{
   const mesV=el(`<div class="ab" style="left:24px;top:76px">${svg(400,56,`<line x1="4" y1="44" x2="396" y2="44" stroke="#B9C1C9" stroke-width="4" stroke-linecap="round"/>
      ${[30,92,150,214,276,340].map((x,k)=>`<g class="sv"><path d="M${x} 38 L${x} 10 M${x-8} 18 L${x} 8 L${x+8} 18" fill="none" stroke="var(--v)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></g>`).join('')}`)}</div>`,cV);
   const sv=[...mesV.querySelectorAll('.sv')];
-  const vV=el(`<div class="ab num" style="left:24px;top:146px;font-size:38px;color:var(--ve)">${brl(61380)}</div>`,cV);
+  const vV=el(`<div class="ab num" style="left:24px;top:146px;font-size:38px;color:var(--ve)">${brl(112800)}</div>`,cV);
   const abD=el(`<div class="ab lbl" style="left:24px;top:82px;font-size:18px">em aberto</div>`,cD);
-  const vD=el(`<div class="ab num" style="left:24px;top:146px;font-size:38px;color:var(--ae)">${brl(23950)}</div>`,cD);
+  const vD=el(`<div class="ab num" style="left:24px;top:146px;font-size:38px;color:var(--ae)">${brl(14370)}</div>`,cD);
   const qD=balao(g1,700,560,380,'<div style="font-weight:800;font-size:22px">quanto ela me deve?</div>','p');
   const qV=balao(g1,182,560,380,'<div style="font-weight:800;font-size:22px">pra quem eu mais vendi?</div>','p');
   // ---- cena 2 (fundo opaco próprio)
@@ -416,10 +421,10 @@ CAPS[5]=()=>{
     const [A1,B1]=janela(i1), [A2,B2]=janela(i2);
     perto(g1,t,A1,B1); perto(g2,t,A2,B2);
     // cena 1
-    const tva=W(3,'valor'), tve=W(3,'vendido'), tde=W(3,'deve'), tsa=W(3,'saldo'), tab=W(3,'aberto'), tap=W(3,'apareceu'),
+    const tva=W(3,'valor'), tve=W(3,'vendido'), tde=W(3,'deve'), tsa=W(3,'saldo'), tab=W(3,'aberto'), tap=W(3,'cima')+.45,
           td2=W(4,'deve'), tvd=W(4,'vendeu'), tdf=W(4,'diferentes');
-    posTitulo(tit1,t,A1-.5,tva-.35);
-    vis(fic,t,tva-.2,1e9,{dy:20}); vis(cV,t,tve-.15,1e9,{dy:12}); sv.forEach((s,k)=>vis(s,t,tve+.1+k*.1,1e9,{dy:10}));
+    posTitulo(tit1,t,A1-.5,tva-.6);
+    vis(fic,t,tva-.05,1e9,{dy:20}); vis(cV,t,Math.max(tve-.15,tva+.3),1e9,{dy:12}); sv.forEach((s,k)=>vis(s,t,tve+.1+k*.1,1e9,{dy:10}));
     vis(vV,t,tve+.5,1e9,{dy:8});
     vis(cD,t,tde-.15,1e9,{dy:12}); pulse(cD,t,tsa,.03,.7); vis(abD,t,tab-.15,1e9,{dy:6}); vis(vD,t,tap-.15,1e9,{dy:8});
     vis(qD,t,td2-.2,1e9,{dy:12}); vis(qV,t,tvd-.2,1e9,{dy:12});
@@ -445,8 +450,8 @@ CAPS[6]=()=>{
   const tela=el(`<div class="card" style="left:150px;top:440px;width:400px;height:170px;padding:22px 26px">
      <div class="row" style="gap:12px"><div class="ico" style="width:42px;height:42px;background:#EEF1F4;color:#4B5563">${ic('monitor',22)}</div>
      <div style="font-weight:800;font-size:21px">tela do sistema</div></div>
-     <div class="num vn" style="font-size:40px;margin-top:20px">${brl(52112.25)}</div></div>`,g);
-  const resp=balao(g,730,412,400,`<div class="lbl" style="font-size:18px">resposta do Cato</div><div class="num vn" style="font-size:40px;margin-top:10px">${brl(52112.25)}</div>`,'r');
+     <div class="num vn" style="font-size:40px;margin-top:20px">${brl(96076)}</div></div>`,g);
+  const resp=balao(g,730,412,400,`<div class="lbl" style="font-size:18px">resposta do Cato</div><div class="num vn" style="font-size:40px;margin-top:10px">${brl(96076)}</div>`,'r');
   const cen=el(`<div class="ab" style="left:440px;top:186px;width:400px;text-align:center">
      <div class="ico cc" style="width:84px;height:84px;border-radius:50%;margin:0 auto;background:var(--v);color:#fff">${ic('database',42)}</div>
      <div style="font-weight:800;font-size:22px;margin-top:12px">os dados da empresa</div></div>`,g);
@@ -485,25 +490,25 @@ CAPS[7]=()=>{
   // ---- cena 2 (fundo opaco próprio)
   const i2=I('ilu07_limites'), g2=grupo(); fundo(g2);
   const tit2=titulo(g2,'Limites','Limite de perguntas');
-  const rel=el(`<div class="ab" style="left:250px;top:212px">${svg(170,170,`<circle cx="85" cy="85" r="76" fill="#fff" stroke="#4F5861" stroke-width="8"/>
+  const rel=el(`<div class="ab" style="left:228px;top:196px">${svg(170,170,`<circle cx="85" cy="85" r="76" fill="#fff" stroke="#4F5861" stroke-width="8"/>
      ${[...Array(12)].map((_,k)=>{const a=k*Math.PI/6;return `<line x1="${85+62*Math.sin(a)}" y1="${85-62*Math.cos(a)}" x2="${85+54*Math.sin(a)}" y2="${85-54*Math.cos(a)}" stroke="#9AA3AD" stroke-width="4" stroke-linecap="round"/>`}).join('')}
      <line class="pt" x1="85" y1="85" x2="85" y2="30" stroke="var(--v)" stroke-width="6" stroke-linecap="round"/>
-     <line x1="85" y1="85" x2="118" y2="85" stroke="#4F5861" stroke-width="7" stroke-linecap="round"/><circle cx="85" cy="85" r="7" fill="#4F5861"/>`)}</div>`,g2);
+     <line x1="85" y1="85" x2="118" y2="85" stroke="#4F5861" stroke-width="7" stroke-linecap="round"/><circle cx="85" cy="85" r="7" fill="#4F5861"/>`,'',1.2)}</div>`,g2);
   const pt=rel.querySelector('.pt');
-  const tMin=tagC('v','por minuto',335,400,g2);
-  const cal=el(`<div class="ab" style="left:840px;top:212px">${CALEND(.81)}</div>`,g2);
-  const tDia=tagC('v','por dia',929,400,g2);
-  const esc=tagC('c',`${ic('shield-check',20)}protege o custo`,640,276,g2);
-  const esp=balao(g2,250,520,380,`<div class="row" style="gap:10px;font-weight:800;font-size:24px">${ic('hourglass',24)}Espera um minutinho</div>`,'r');
-  const volta=el(`<svg class="ab" style="left:0;top:0;overflow:visible" width="1280" height="800"><path d="M652 618 C 720 640, 780 640, 846 612"
-     fill="none" stroke="var(--v)" stroke-width="4" stroke-linecap="round"/><path class="vh" d="M832 600 L848 611 L834 626" fill="none" stroke="var(--v)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>`,g2);
+  const tMin=tagC('v tg','por minuto',330,420,g2);
+  const cal=el(`<div class="ab" style="left:840px;top:196px">${CALEND()}</div>`,g2);
+  const tDia=tagC('v tg','por dia',950,428,g2);
+  const esc=tagC('c tg',`${ic('shield-check',22)}protege o custo`,640,272,g2);
+  const esp=balao(g2,206,524,440,`<div class="row" style="gap:12px;font-weight:800;font-size:27px;white-space:nowrap">${ic('hourglass',26)}Espera um minutinho</div>`,'r');
+  const volta=el(`<svg class="ab" style="left:0;top:0;overflow:visible" width="1280" height="800"><path d="M662 598 C 730 632, 790 652, 852 634"
+     fill="none" stroke="var(--v)" stroke-width="4" stroke-linecap="round"/><path class="vh" d="M836 622 L854 633 L840 649" fill="none" stroke="var(--v)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>`,g2);
   const vp=volta.querySelector('path'), vh=volta.querySelector('.vh');
-  const chat=el(`<div class="ab" style="left:862px;top:560px;width:240px;height:110px;border-radius:22px;background:#EEF1F4;border-bottom-right-radius:6px;
+  const chat=el(`<div class="ab" style="left:868px;top:580px;width:250px;height:110px;border-radius:22px;background:#EEF1F4;border-bottom-right-radius:6px;
      display:flex;align-items:center;justify-content:center;gap:12px"><div class="ico" style="width:48px;height:48px;border-radius:50%;background:var(--v);color:#fff">${ic('message-circle',26)}</div>
      ${linhas([90],10)}</div>`,g2);
   return t=>{
     const [A1,B1]=janela(i1), [A2,B2]=janela(i2);
-    perto(g1,t,A1,B1); perto(g2,t,A2,B2);
+    perto(g1,t,A1,B1); perto(g2,t,A2,B2); if(t>A2-.05) g1.style.visibility='hidden';   // a cena 2 já cobre a 1
     // cena 1
     const tca=W(2,'cato'), tco=W(2,'consulta'), tre=W(2,'responde'), tem=W(2,'emitir'), tpa=W(2,'pagar'), tcd=W(2,'cadastrar'),
           tvo=W(2,'voce'), tte=W(2,'telas');

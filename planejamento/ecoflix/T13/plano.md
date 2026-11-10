@@ -25,7 +25,7 @@
 | 7 | RECORRÊNCIA / A conta que se repete | "Repete?": aluguel da empilhadeira, R$ 2.300,00, mensal, dia 12, até 12/04/2027. | [ILUSTRAÇÃO: o molde e a janela de três meses] | `apos-cap06` |
 | 8 | RECORRÊNCIA / Só esta ou esta e as futuras | Editar a de dezembro: "Esta e as futuras", vencimento 12/12 → 15/12 (dezembro e janeiro mudam); diálogo de excluir mostrado e cancelado. | [ILUSTRAÇÃO: só esta × esta e as futuras] | `apos-cap07` |
 | 9 | BAIXA / Dar baixa | Energia R$ 1.874,30 inteira por Pix; manutenção da prensa: R$ 1.740,00 agora e o resto para 30/11 ("Parcial"). | ⚠️ baixa mexe em dinheiro (dica) + [ILUSTRAÇÃO: o caminho do dinheiro]; ⚠️ sem permissão bancária (dica) | `apos-cap08` |
-| 10 | FIADO / O fiado na mesma lista | Aba "A Receber", busca "Quiririm": linha "Saldo" R$ 3.150,00 → "Receber" R$ 2.000,00 por Pix, sobra R$ 1.150,00; busca "Fundição": só as três parcelas. | ⚠️ fiado some quando vira parcela (dica) + [ILUSTRAÇÃO: fiado parcelado]; ⚠️ título de pedido (dica) | `apos-cap09` |
+| 10 | FIADO / O fiado na mesma lista | Aba "A Receber", busca "Quiririm": linha "Saldo" R$ 4.870,00 → "Receber" R$ 2.000,00 por Pix, sobra R$ 2.870,00; busca "Fundição": só as três parcelas. | ⚠️ fiado some quando vira parcela (dica) + [ILUSTRAÇÃO: fiado parcelado]; ⚠️ título de pedido (dica) | `apos-cap09` |
 | 11 | COMPROVANTE / Anexar o comprovante | Energia paga → "Editar" → "Mais detalhes" → "Anexar" o PDF do Pix → "Salvar"; reabre e o PDF está lá. | dica: comprovante na hora da baixa vai também para o lançamento do banco ou do caixa | `apos-cap10` |
 | 12 | FILTROS / Filtrar a lista | "Filtros": "Status" "Pendente" + "Cliente/Fornecedor" "Auto Peças Vale Forte" → as três parcelas dos pneus; passa por "Categoria", "Centro de custo", "Vencimento (período)"; "Limpar filtros". | ⚠️ cartões não mudam (dica); ⚠️ saldo sai com filtro (dica) | `apos-cap11` |
 | 13 | RESUMO / Recapitulando | Montagem dos capítulos; cartão "Próximo". | | (montagem) |
@@ -67,8 +67,9 @@ Além do `MUNDO_FICTICIO.md` (proposta; nomes de parceiro novos a conferir na se
   | 3 parcelas do pedido de venda à Fundição | a receber | R$ 4.790,00 cada | 17/11/2026, 17/12/2026, 18/01/2027 | pendentes, com `order_id` | Venda de sucata | Fundição Bandeira do Vale |
 - **Pedido da Fundição:** venda de 300 kg de cobre mel a R$ 47,90 = R$ 14.370,00 em 03/11/2026, a prazo em 3x; saldo da
   Fundição em `balances` (customer) +14.370,00 (todo itemizado nas parcelas: a linha de saldo não aparece).
-- **Fiado da Aços Quiririm:** venda de 3.000 kg de ferro misto a R$ 1,05 = R$ 3.150,00 em 06/11/2026, a prazo sem parcelas;
-  `balances` (customer) +3.150,00 e nenhum título.
+- **Fiado da Aços Quiririm** (junção: é o saldo do T4, `MUNDO_LINHA_DO_TEMPO.md`): venda no saldo em 05/11/2026 de ferro
+  pesado 2.608 kg, chaparia 1.000 kg e ferro misto 600 kg = R$ 4.870,00, a prazo sem parcelas; `balances` (customer)
+  +4.870,00 e nenhum título.
 - Outras contas e saldos do mundo (histórico pago de agosto a outubro, os saldos do T4) podem aparecer: a fala não depende
   deles; o robô usa a busca para isolar as linhas.
 - **Esta aula cria:** a manutenção da prensa (Hidráulica Moretti, R$ 3.480,00, 19/11 → depois parcial, R$ 1.740,00 pagos
@@ -76,7 +77,7 @@ Além do `MUNDO_FICTICIO.md` (proposta; nomes de parceiro novos a conferir na se
   truck (Auto Peças Vale Forte, 3x R$ 2.360,00: 23/11/2026, 23/12/2026, 23/01/2027); a recorrência "Aluguel da
   empilhadeira" (R$ 2.300,00, mensal, 12/11/2026 até 12/04/2027; dezembro e janeiro passam para 15/12 e 15/01); a baixa da
   energia (Pix, 10/11, com o PDF "comprovante-pix-energia-outubro.pdf" anexado, fictício); a baixa de R$ 2.000,00 no
-  saldo da Aços Quiririm (sobra R$ 1.150,00). Atualizar o `MUNDO_FICTICIO.md` (o T14 concilia esses Pix com o extrato).
+  saldo da Aços Quiririm (sobra R$ 2.870,00). Atualizar o `MUNDO_FICTICIO.md` (o T14 concilia esses Pix com o extrato).
 
 ## Gravação
 - **Rotas:** `/dashboard` (só no cap00), `/contas-pagar-receber`. Desktop, sem celular, sem página pública, um usuário só.

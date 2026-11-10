@@ -1,0 +1,239 @@
+{
+ "name": "t03-cap10",
+ "title": "T03 · Cap. 10 · Excluir um material (narração 41,5 s ESTIMADA; marcas L1..L4 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; usuário rafael)",
+ "seed": "t03-cap10",
+ "pace": 0.5,
+ "cps": 14,
+ "tail": 1.5,
+ "start": {
+  "x": 700,
+  "y": 300
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true"
+ },
+ "seedExtra": [
+  "t03/inicio",
+  "t03/apos-cap08"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/login"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "input[type=email]"
+   },
+   "timeout": 30
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "input[type=email]"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "input[type=password]"
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "button[type=submit]"
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Rafael!",
+   "timeout": 40
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/materiais"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie os materiais do estoque",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "header button:has(svg.lucide-panel-left-close), header button:has(svg.lucide-panel-left)"
+   },
+   "noScroll": true
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Buscar material por código ou nome..."
+   },
+   "text": "radiador",
+   "cps": 40
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "text": "Radiador de cobre",
+    "within": "main"
+   },
+   "timeout": 10
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=new RegExp(\"N[\\u00e3a]o foi poss[i\\u00ed]vel|Erro ao|Tente novamente|indispon[i\\u00ed]vel|Algo deu errado|Something went wrong|Falha ao|Pop-up bloqueado|Sem permiss[\\u00e3a]o\",'i');const ign=new RegExp(\"$^\",'i');const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&!ign.test(m[0])&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0.0
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const tr=[...document.querySelectorAll('main tbody tr')].find(r=>r.innerText.includes(\"Radiador de cobre\"));if(!tr)return 'SEM ALVO: linha';const b=tr.querySelector('td:last-child button');if(!b)return 'SEM ALVO: botao';b.dispatchEvent(new PointerEvent('pointerdown',{bubbles:true,cancelable:true,button:0,pointerType:'mouse'}));for(let i=0;i<30;i++){const it=[...document.querySelectorAll('[role=menuitem]')].find(e=>e.textContent.trim()===\"Excluir\");if(it){it.click();return 'ok'}await new Promise(r=>setTimeout(r,100));}return 'SEM ALVO: item'})()",
+   "at": 12.62,
+   "label": "abre o Excluir do radiador (fim da ilustração, sem cursor)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Confirmar Exclusão",
+   "timeout": 8
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Radiador de cobre\", \"Código: 70\", \"Atenção: Este material possui 110 Kg em estoque.\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere aviso 110 Kg em estoque"
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 13.44
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Atenção: Este material possui",
+    "within": "[role=dialog]"
+   },
+   "seconds": 2.4,
+   "at": 16.82,
+   "label": "aviso: possui 110 Kg em estoque (zoom)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 25.55
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Sim, Excluir",
+    "exact": true
+   },
+   "at": 25.75,
+   "label": "Sim, Excluir"
+  },
+  {
+   "do": "waitFor",
+   "text": "excluído",
+   "timeout": 10
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 30.53
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[data-sonner-toast] button:has-text(\"Desfazer\")"
+   },
+   "seconds": 0.4,
+   "at": 30.53,
+   "label": "aviso \"Radiador de cobre\" excluído com Desfazer (o mouse segura o aviso)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[data-sonner-toast] button:has-text(\"Desfazer\")"
+   },
+   "at": 30.73,
+   "label": "Desfazer"
+  },
+  {
+   "do": "waitFor",
+   "text": "restaurado!",
+   "timeout": 10
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "text": "Radiador de cobre",
+    "within": "main"
+   },
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('Radiador de cobre') td:nth-child(4)"
+   },
+   "seconds": 1.4,
+   "at": 33.92,
+   "label": "o radiador volta com 110 Kg",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"70\", \"Radiador de cobre\", \"110\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main tbody tr\")].filter(e=>!true||e.innerText.includes(\"Radiador de cobre\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere radiador de volta, 110 Kg"
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 41.52
+  }
+ ]
+}

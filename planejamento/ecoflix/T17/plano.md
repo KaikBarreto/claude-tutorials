@@ -51,23 +51,27 @@ Além do `MUNDO_FICTICIO.md` (a consolidar lá):
 - **Endereços:** Serra Fina Alumínio Reciclagem em **Itamonte, MG** (o nome vem da Serra Fina, ali do lado); Recicla Vale em
   Taubaté, SP (`company_fiscal_config`: UF SP, cidade Taubaté, código IBGE de Taubaté, Inscrição Municipal preenchida, certificado
   "configurado" no falso).
-- **Frota (base, desde a pesagem):** FKD2E41 "Caminhão truck", GHT7B19 "Caminhão 3/4", EZR4C63 "Picape", só com placa e descrição;
+- **Frota (base, desde a pesagem):** FKD2E41 "Caminhão truck", GHT7B19 "Caminhão 3/4", EZR4C63 "Picape", com placa, descrição, tara e
+  capacidade (junção: as da T12; FKD2E41 com tara 6.380 kg, a 2ª pesagem do T8) e sem dados de transporte;
   motoristas Edson Moura, Jair Lopes, Tiago Freitas só com nome e telefone ((12) 90000-xxxx).
   **Criado na tela (cap02):** FKD2E41 com UF de licenciamento SP, Tipo "Veículo único (truck, toco, utilitário)", rodado "Truck",
-  carroceria "Aberta", tara 7.800 kg, capacidade 14.000 kg, 30 m³; Edson Moura com CPF **318.472.650-90**, CNH **04728193604**,
+  carroceria "Aberta", 30 m³ (tara 6.380 kg e capacidade 14.000 kg já vêm da base); Edson Moura com CPF **318.472.650-90**, CNH **04728193604**,
   categoria "C", validade 18/03/2029.
-- **Duas NF-e de saída autorizadas hoje** (10/11, 08h05 e 08h12, com chave, ambiente produção do falso) para a **Serra Fina Alumínio
+- **Duas NF-e de saída autorizadas hoje** (10/11, 09h05 e 09h12, com chave, ambiente produção do falso; FAKE_NOW 09:30 nos caps. 0 a 4) para a **Serra Fina Alumínio
   Reciclagem**: alumínio perfil 3.200 kg × R$ 10,40 = **R$ 33.280,00** e alumínio bloco 2.600 kg × R$ 8,50 = **R$ 22.100,00**
-  (soma **R$ 55.380,00**, **5.800 kg**; itens em kg). Números: os dois seguintes aos que o T16 usar.
-- **MDF-e:** nenhum antes; `last_mdfe_number` 0, série 1. **Criado na tela:** MDF-e **nº 1** (cap04, autorizado ~08:40), encerrado no
+  (soma **R$ 55.380,00**, **5.800 kg**; itens em kg). Números **1252** e **1253** (junção: depois das 1249 a 1251 do T16; 1246 e 1247 inutilizadas). Emitidas sem pedido: os
+  pedidos de venda só fecham na entrega, à tarde (como o latão de outubro), então os 5.800 kg estão no estoque operacional de
+  10/11 08:30 (o lote de alumínio de Minas, `MUNDO_LINHA_DO_TEMPO.md`).
+- **MDF-e:** nenhum antes; `last_mdfe_number` 0, série 1. **Criado na tela:** MDF-e **nº 1** (cap04, autorizado ~09:40), encerrado no
   cap05 (14:2x).
-- **NFS-e:** série configurada; emitidas antes: **nº 12** (13/10, Fundição Bandeira do Vale, coleta com caçamba, R$ 1.200,00,
+- **NFS-e:** série configurada; emitidas antes: **nº 12** (13/10, Fundição Bandeira do Vale, coleta com caçamba, R$ 950,00 (junção: as nº 12 e 13 somam os
+  R$ 2.800,00 de aluguel de caçamba de outubro da T15),
   "Autorizada") e **nº 13** (29/10, Aços Quiririm Ltda, R$ 1.850,00, "Autorizada"). **Criada na tela:** **nº 14** (emitida em 10/11, competência
-  07/11/2026, Aços Quiririm Ltda, "Coleta e remoção de resíduos metálicos com caçamba no pátio da Aços Quiririm em 07/11/2026.",
+  06/11/2026 (junção: 07/11 é sábado), Aços Quiririm Ltda, "Coleta e remoção de resíduos metálicos com caçamba no pátio da Aços Quiririm em 06/11/2026.",
   R$ 1.850,00).
   Lista de códigos de Taubaté (simulada) com o de coleta e remoção de resíduos (subitem 7.09 da lista nacional) e alíquota **3,00%**.
 - **NFS-e recebidas:** recurso **desligado** no início (`nfse_dfe_ativo` false). A sincronização traz duas, tomador = Recicla Vale:
-  **Contabilidade Jequitibá Ltda** (CNPJ **47.291.836/0001-56**, Taubaté), "Honorários contábeis de outubro de 2026", competência
+  **Contabilidade Manacá Ltda** (junção: "Jequitibá" é a metalúrgica da T26) (CNPJ **47.291.836/0001-56**, Taubaté), "Honorários contábeis de outubro de 2026", competência
   10/2026, emissão 05/11/2026, **R$ 1.650,00**; **Balanças Tremembé Manutenção Ltda** (CNPJ **39.506.417/0001-66**, Tremembé),
   "Aferição e manutenção preventiva da balança rodoviária", competência 11/2026, emissão 07/11/2026, **R$ 980,00** (ISS não retido).
   Nenhum dos dois é fornecedor cadastrado. **Criado na tela:** conta a pagar "Balanças Tremembé Manutenção Ltda", R$ 980,00, vencimento

@@ -1,0 +1,351 @@
+{
+ "name": "t03-cap04",
+ "title": "T03 · Cap. 4 · O NCM e a nota fiscal (narração 104,7 s ESTIMADA; marcas L1..L9 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; usuário rafael)",
+ "seed": "t03-cap04",
+ "pace": 0.5,
+ "cps": 14,
+ "tail": 1.5,
+ "start": {
+  "x": 700,
+  "y": 300
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true"
+ },
+ "seedExtra": [
+  "t03/inicio",
+  "t03/apos-cap03"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/login"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "input[type=email]"
+   },
+   "timeout": 30
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "input[type=email]"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "input[type=password]"
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "button[type=submit]"
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Rafael!",
+   "timeout": 40
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/materiais"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie os materiais do estoque",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "header button:has(svg.lucide-panel-left-close), header button:has(svg.lucide-panel-left)"
+   },
+   "noScroll": true
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Buscar material por código ou nome..."
+   },
+   "text": "radiador",
+   "cps": 40
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "text": "Radiador de cobre",
+    "within": "main"
+   },
+   "timeout": 10
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=new RegExp(\"N[\\u00e3a]o foi poss[i\\u00ed]vel|Erro ao|Tente novamente|indispon[i\\u00ed]vel|Algo deu errado|Something went wrong|Falha ao|Pop-up bloqueado|Sem permiss[\\u00e3a]o\",'i');const ign=new RegExp(\"$^\",'i');const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&!ign.test(m[0])&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0.0
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const tr=[...document.querySelectorAll('main tbody tr')].find(r=>r.innerText.includes(\"Radiador de cobre\"));if(!tr)return 'SEM ALVO: linha';const b=tr.querySelector('td:last-child button');if(!b)return 'SEM ALVO: botao';b.dispatchEvent(new PointerEvent('pointerdown',{bubbles:true,cancelable:true,button:0,pointerType:'mouse'}));for(let i=0;i<30;i++){const it=[...document.querySelectorAll('[role=menuitem]')].find(e=>e.textContent.trim()===\"Editar\");if(it){it.click();return 'ok'}await new Promise(r=>setTimeout(r,100));}return 'SEM ALVO: item'})()",
+   "at": 11.94,
+   "label": "abre o Editar do radiador (por baixo da ilustração, sem cursor)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Editar Material",
+   "timeout": 8
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 12.61
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.offsetParent!==null&&e.textContent.trim()===\"Fiscal e organização\").sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-380);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=()=>{const p=Math.min(1,(performance.now()-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 13.43,
+   "label": "desce até Fiscal e organização"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] #ncm"
+   },
+   "seconds": 0.6,
+   "at": 15.46,
+   "label": "NCM (Nota Fiscal), vazio",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] button[title='Selecionar NCM padrão']"
+   },
+   "seconds": 0.6,
+   "at": 18.72,
+   "label": "interrogação Selecionar NCM padrão",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 21.23
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[title='Selecionar NCM padrão']"
+   },
+   "at": 21.58,
+   "label": "abre Selecionar NCM para Materiais Recicláveis"
+  },
+  {
+   "do": "waitFor",
+   "text": "Selecionar NCM para Materiais Recicláveis",
+   "timeout": 8
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Buscar por código NCM ou descrição..."
+   },
+   "text": "cobre",
+   "cps": 14,
+   "at": 24.75,
+   "label": "busca cobre"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Cobre\", \"7404.00.00\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere cartão Cobre 7404.00.00"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] div.space-y-2:has(span:text-is('7404.00.00')) button:has-text('Selecionar')"
+   },
+   "at": 26.06,
+   "label": "Selecionar 7404.00.00"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "text": "Selecionar NCM para Materiais Recicláveis",
+    "exact": true
+   },
+   "timeout": 8
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const esp=[\"7404.00.00\"];let out='';for(let i=0;i<12;i++){const v=[...document.querySelectorAll(\"[role=dialog]\"+' input, '+\"[role=dialog]\"+' textarea')].map(e=>e.value).join(' | ');const falta=esp.filter(e=>!v.includes(e));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+v.slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere NCM 7404.00.00 no campo"
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 28.64
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] #ncm"
+   },
+   "seconds": 2.0,
+   "at": 30.05,
+   "label": "NCM (Nota Fiscal) 7404.00.00 (zoom)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 40.46
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.offsetParent!==null&&e.textContent.trim()===\"Identificação/Produto Fiscal\").sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-330);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=()=>{const p=Math.min(1,(performance.now()-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 40.76,
+   "label": "sobe até Identificação/Produto Fiscal"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] #fiscal_name"
+   },
+   "seconds": 0.6,
+   "at": 42.63,
+   "label": "Identificação/Produto Fiscal, vazio",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] button[aria-label='Para que serve este campo']"
+   },
+   "seconds": 4.0,
+   "at": 45.14,
+   "label": "ajuda: Como funciona, Para que serve, Exemplo, Se deixar vazio",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Para que serve\", \"Exemplo\", \"Se deixar vazio\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"body\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere ajuda aberta"
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 51.9
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Fiscal e organização",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.4,
+   "at": 52.25,
+   "label": "cursor sai da ajuda (ilustração do nome fiscal)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 58.7
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 72.18
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] #fiscal_name"
+   },
+   "seconds": 0.8,
+   "at": 74.35,
+   "label": "Identificação/Produto Fiscal fica vazio",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Atualizar",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 77.31,
+   "label": "Atualizar"
+  },
+  {
+   "do": "waitFor",
+   "text": "Material atualizado!",
+   "timeout": 10
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "mark",
+   "name": "L9",
+   "at": 78.3
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 104.69
+  }
+ ]
+}

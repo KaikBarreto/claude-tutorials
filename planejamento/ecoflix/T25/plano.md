@@ -14,7 +14,7 @@
 | # | Vinheta (área / título) | O que se mostra | Estado de partida |
 |---|---|---|---|
 | 0 | (sem vinheta) | Dashboard; ilustração do Rafael com as três perguntas do dia; destaque em "Dashboard" e "Agenda" no menu; cartão "Antes: Cato, o assistente". | `inicio` |
-| 1 | DASHBOARD / Comprado, vendido e margem | Cartões em "Este mês" (margem de novembro negativa, vermelha); ilustração margem × lucro; filtro "Mês passado" (outubro, margem R$ 12.380,00); "Ver detalhes" → "Como é calculado". | `inicio` |
+| 1 | DASHBOARD / Comprado, vendido e margem | Cartões em "Este mês" (margem de novembro alta e verde: o ferro de outubro vendido; junção); ilustração margem × lucro; filtro "Mês passado" (outubro, margem R$ 12.380,00); "Ver detalhes" → "Como é calculado". | `inicio` |
 | 2 | DASHBOARD / Seis meses e o comparativo | "Compras vs Vendas (Últimos 6 Meses)" e "Evolução da Margem"; os comparativos "Mês Anterior" × "Mês Atual"; ilustração 31 dias × 10 dias. | `inicio` |
 | 3 | DASHBOARD / Semanas e rankings | "Volume Semanal de Compras" (8 semanas, dica "Peso"); filtro "Mês passado"; "Materiais Mais Comprados" (R$ e Kg); "Principais Fornecedores"; "Principais Clientes" (R$ e Kg); "Ver todos os clientes". | `inicio` |
 | 4 | DASHBOARD / O painel do seu jeito | "Configurações" → "Configurações do Dashboard": desliga "Métodos de Pagamento"; arrasta "Volume Semanal" para logo depois dos cartões; "Voltar ordem ao normal" em destaque. | `inicio` (layout padrão) |
@@ -35,7 +35,7 @@ números lidos e agenda em uso: agora, a rotina"; 8→9 "Uma vez por semana"; 9�
 
 | ⚠️ | Onde | Como |
 |---|---|---|
-| Margem (Vendas − Compras) não é lucro; mês de compra forte fica vermelho e está certo | cap01 | a margem de novembro, vermelha na tela + "Uma dica:" + ilustração; o lucro "fica no Relatório Financeiro" |
+| Margem (Vendas − Compras) não é lucro; o mês que vende o estoque comprado antes fica alto, e o de compra forte, baixo | cap01 | a margem de novembro, alta e verde na tela (o ferro de outubro), + "Uma dica:" + ilustração; outubro, o mês da compra, com margem pequena; o lucro "fica no Relatório Financeiro" |
 | Gráfico sempre de 6 meses; o filtro manda nos cartões e rankings | cap02 | "Uma dica:" (vale para o código: 6 meses que terminam no fim do período) |
 | Comparativo: mês passado inteiro × mês atual até hoje; queda grande no começo do mês | cap02 | "Uma dica:" + ilustração 31 × 10 dias |
 | Agenda contando saldo e título duas vezes | cap06 | **não vale na 1.59.154** (o código abate o fiado dos títulos): a fala diz o positivo, "uma vez só, cada parcela no seu dia", e o clique que leva às Contas |
@@ -51,11 +51,11 @@ no dia 13), `apos-cap10` (o fechamento de novembro no dia 1º de dezembro = esta
 |---|---|
 | Dashboard, outubro ("Mês passado") | os números do T15: Total Compras **R$ 256.860,00**, Total Vendas **R$ 269.240,00**, Margem **R$ 12.380,00 (falado)**, verde |
 | Rankings de outubro | os do T15: "Materiais Mais Comprados" 1º **Ferro pesado, 50.000 kg (falado)** (e 1º também em R$, R$ 47.500,00); "Principais Fornecedores" 1º **Depósito Irmãos Siqueira (falado)**; "Principais Clientes" 1º em R$ **Fundição Bandeira do Vale (falado)**, 1º em kg **Aços Quiririm Ltda (falado)** |
-| Dashboard, novembro ("Este mês", 01 a 10/11) | **compras maiores que vendas**: Margem negativa, cartão vermelho (os valores são os do mundo e não são falados); comparativos com queda grande em % |
+| Dashboard, novembro ("Este mês", 01 a 10/11) | junção (item 1, `MUNDO_LINHA_DO_TEMPO.md`): as 40 t de ferro pesado de outubro saem em novembro, então **vendas maiores que compras**: Total Compras R$ 18.781,45, Total Vendas R$ 118.620,20, Margem R$ 99.838,75, cartão verde (não falados); comparativos conforme a semente |
 | Gráficos | 6 meses de junho a novembro (junho e julho zerados se o histórico começa em agosto); volume semanal das 8 semanas de 20/09 a 08/11 |
 | Contas (do T13) | "A Receber: R$ 4.790,00" Fundição Bandeira do Vale em **17/11 (falado)**; "A Pagar: R$ 2.360,00" Auto Peças Vale Forte em **23/11 (falado)**; o resto do mundo pode aparecer |
 | Assinatura | `subscription_expires_at` 2026-12-05 (o do T0): "Vencimento - Assinatura EcoSistema" no sábado, 05/12 **(falado)** |
-| Agenda, semente | `schedule_tasks`: 10/11 14:00 "Cotação do cobre com a Fundição Bandeira do Vale" (Tarefa, "Lembrar no dia", pendente, criada pelo Rafael); 11/11 08:00 "Coleta na Auto Peças Vale Forte" (Coleta, fornecedor Auto Peças Vale Forte, "Lembrar no dia", pendente) **(falado)** |
+| Agenda, semente | `schedule_tasks`: 10/11 14:00 "Cotação do cobre com a Fundição Bandeira do Vale" (Tarefa, "Lembrar no dia", pendente, criada pelo Rafael); 11/11 08:00 "Coleta na Auto Peças Vale Forte" (Coleta, fornecedor Auto Peças Vale Forte, "Lembrar no dia", pendente; junção: o lembrete da ordem 9 que a T12 agenda pra 11/11 de manhã) **(falado)** |
 | Agenda, criada ao vivo | cap05: "Revisão do caminhão FKD2E41" (Tarefa, 12/11 09:00 → **13/11**, "Lembrar no dia"); cap10: "Fechamento de novembro" (Tarefa, 01/12 08:00, descrição "Conciliar o banco, conferir o DRE, mandar o pacote ao contador e ver MTR e CDF pendentes", "Lembrar no dia") |
 | Feriados | `company_fiscal_config` com `cidade` "Taubaté", `uf` "SP": novembro mostra "Finados" (02), "Proclamação da República" (15) e "Consciência Negra" (20) |
 | Histórico do Caixa | os caixas fechados de 09/11 do histórico base (sem números falados) |

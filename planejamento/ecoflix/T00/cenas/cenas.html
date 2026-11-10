@@ -57,11 +57,11 @@ body{font-family:M,sans-serif;color:var(--t);-webkit-font-smoothing:antialiased}
 .tag.s{font-size:17px;padding:7px 14px;gap:7px}
 .tag.n{background:#EEF1F4;color:#374151}
 /* estações do caminho do pátio */
-.est{position:absolute;width:84px;height:84px;border-radius:50%;background:#fff;border:3px solid #D5DCD8;display:flex;
+.est{position:absolute;width:96px;height:96px;border-radius:50%;background:#fff;border:3px solid #D5DCD8;display:flex;
   align-items:center;justify-content:center;color:#9AA3AD}
 .est .fill{position:absolute;inset:-3px;border-radius:50%;background:var(--v);opacity:0}
 .est .ic{position:relative}
-.estl{position:absolute;width:172px;text-align:center;font-weight:700;font-size:21px;line-height:1.2;color:#6B7280}
+.estl{position:absolute;width:172px;text-align:center;font-weight:700;font-size:22px;line-height:1.2;color:#6B7280}
 .aula{position:absolute;width:38px;height:38px;border-radius:50%;background:var(--ve);color:#fff;display:flex;
   align-items:center;justify-content:center;box-shadow:0 6px 14px rgba(16,24,40,.22);border:3px solid #fff}
 .aula svg{fill:currentColor}
@@ -85,7 +85,7 @@ body{font-family:M,sans-serif;color:var(--t);-webkit-font-smoothing:antialiased}
 .barra{border-radius:18px;background:#F4F6F8;border:2px solid #E1E8E4}
 .bl{position:absolute;border-radius:6px}
 /* mensagem pronta */
-.ln{font-size:20px;font-weight:500;color:#1F2933;white-space:nowrap;line-height:1.3}
+.ln{font-size:24px;font-weight:500;color:#1F2933;white-space:nowrap;line-height:1.3}
 .ln b{font-weight:800}
 /* ladrilho de módulo */
 .mod{position:absolute;width:128px;height:96px;border-radius:16px;background:#fff;border:2px solid #E1E8E4;display:flex;
@@ -223,7 +223,7 @@ function escala(html,w,h,s,x,y,par){return el(`<div class="ab" style="left:${x}p
 
 // ------------------------------------------------------------------ T00: o caminho do pátio (cap00 e cap05)
 const EST=[['fence','Portão'],['weight','Balança'],['wallet','Caixa'],['warehouse','Estoque'],['handshake','Venda'],['landmark','Dinheiro<br>na conta']];
-const EX=k=>205+178*k, EY=400, ELEN=EX(5)-EX(0);
+const EX=k=>215+176*k, EY=440, ELEN=EX(5)-EX(0);
 function caminho(par){
   const g=el('<div class="ab" style="left:0;top:0;width:1280px;height:800px;transform-origin:640px 400px"></div>',par);
   const svg=el(`<svg class="ab" style="left:0;top:0;overflow:visible" width="1280" height="800">
@@ -231,9 +231,9 @@ function caminho(par){
      <line class="lv" x1="${EX(0)}" y1="${EY}" x2="${EX(5)}" y2="${EY}" stroke="#50D088" stroke-width="8" stroke-linecap="round"
        style="stroke-dasharray:${ELEN};stroke-dashoffset:${ELEN}"/></svg>`,g);
   const st=EST.map(([i,n],k)=>{
-    const c=el(`<div class="est" style="left:${EX(k)-42}px;top:${EY-42}px"><div class="fill"></div>${ic(i,36)}</div>`,g);
-    const l=el(`<div class="estl" style="left:${EX(k)-86}px;top:${EY+54}px">${n}</div>`,g);
-    const b=el(`<div class="aula" style="left:${EX(k)+22}px;top:${EY-62}px;opacity:0;visibility:hidden">${ic('play',16)}</div>`,g);
+    const c=el(`<div class="est" style="left:${EX(k)-48}px;top:${EY-48}px"><div class="fill"></div>${ic(i,42)}</div>`,g);
+    const l=el(`<div class="estl" style="left:${EX(k)-86}px;top:${EY+62}px">${n}</div>`,g);
+    const b=el(`<div class="aula" style="left:${EX(k)+26}px;top:${EY-70}px;opacity:0;visibility:hidden">${ic('play',16)}</div>`,g);
     return {c,l,b,fill:c.querySelector('.fill')};});
   return {g,svg,lv:svg.querySelector('.lv'),st};
 }
@@ -354,11 +354,11 @@ CAPS[0]=()=>{
   const g=grupo();
   const tit=titulo(g,'Primeira aula','Bem-vindo ao <span style="color:var(--ve)">EcoSistema</span>');
   const E=caminho(g);
-  const cam=escala(caminhao(),500,230,.28,0,370,E.g), rodas=[...cam.querySelectorAll('.roda')];
+  const cam=escala(caminhao(),500,230,.28,0,EY-32,E.g), rodas=[...cam.querySelectorAll('.roda')];
   const P=[['list-checks','Os combinados'],['compass','O sistema por cima'],['credit-card','O seu plano']].map(([i,n],k)=>
-    el(`<div class="card" style="left:${95+380*k}px;top:368px;width:330px;height:204px;text-align:center;padding-top:32px">
-      <div class="ico" style="width:76px;height:76px;margin:0 auto;border-radius:20px">${ic(i,38)}</div>
-      <div style="margin-top:22px;font-weight:800;font-size:25px">${n}</div></div>`,g));
+    el(`<div class="card" style="left:${95+380*k}px;top:384px;width:330px;height:226px;text-align:center;padding-top:36px">
+      <div class="ico" style="width:86px;height:86px;margin:0 auto;border-radius:22px">${ic(i,44)}</div>
+      <div style="margin-top:24px;font-weight:800;font-size:26px">${n}</div></div>`,g));
   const emp=el(`<div class="card row" style="left:190px;top:262px;width:900px;height:300px;padding:0 44px;gap:40px">
       <div class="ico" style="width:156px;height:156px;border-radius:30px">${ic('warehouse',80)}</div>
       <div style="flex:1;min-width:0">
@@ -374,14 +374,14 @@ CAPS[0]=()=>{
     const te=W(2,'empresa'),tr=W(2,'Recicla'),tf=W(2,'ferro-velho'),td=W(2,'dados'),tg=W(3,'seguir');
     posTitulo(tit,t,Math.min(-.6,A.a-.55),tl-.1);
     // o caminho entra cinza em "lugar"; o caminhão de sucata chega em "sucata"; de "portão" a "conta", acende estação por estação
-    caminhoEntra(E,t,tl);
+    caminhoEntra(E,t,tl+.15);
     const x=lerp(-170,12,eo(pr(t,ts,1.4)));
     cam.style.transform=`translate(${x.toFixed(2)}px,0)`;
     rodas.forEach(r=>r.setAttribute('transform',`translate(${r.dataset.x},196) rotate(${((x-12)/.28/26*57.3).toFixed(2)})`));
     const d=Math.max(1,tc-tp);caminhoAte(E,t,[0,1,2,3,4,5].map(k=>tp+d*k/5));
     // "Neste tutorial": o caminho sobe e diminui; as três partes entram, cada uma na sua expressão
     const enc=eio(pr(t,tn,.8));
-    E.g.style.transform=`translate(0,${(-195*enc).toFixed(2)}px) scale(${lerp(1,.72,enc).toFixed(4)})`;
+    E.g.style.transform=`translate(0,${(-224*enc).toFixed(2)}px) scale(${lerp(1,.72,enc).toFixed(4)})`;
     E.g.style.opacity=(1-eo(pr(t,te-.25,.45))).toFixed(4);
     P.forEach((p,k)=>vis(p,t,tk[k]-.1,te-.25,{dy:22}));
     // a empresa de exemplo (fica até o fim do capítulo)
@@ -420,8 +420,8 @@ CAPS[1]=()=>{
     const ta=W(4,'assistir'),tf=W(4,'fim'),tt=W(4,'teste'),tco=W(4,'confirma'),tn=W(4,'não'),tct=W(4,'contratar');
     const tpu=W(4,'pula'),tv=W(4,'voltar'),tet=W(4,'etapa');
     posTitulo(tit,t,A.a-.55,ta-.1);
-    vis(zE,t,ta-.1,1e9,{dy:10,sc:1});vis(zD,t,ta,1e9,{dy:10,sc:1});vis(hE,t,ta,1e9,{dy:8});vis(hD,t,ta+.1,1e9,{dy:8});vis(sT,t,ta+.2,1e9,{dy:0,dx:-10});
-    vis(vA,t,ta+.1,1e9,{dy:14});vA.querySelector('.pg').style.width=(200*eio(pr(t,tf-.1,.9))).toFixed(1)+'px';
+    vis(zE,t,ta+.3,1e9,{dy:10,sc:1});vis(zD,t,ta+.4,1e9,{dy:10,sc:1});vis(hE,t,ta+.45,1e9,{dy:8});vis(hD,t,ta+.55,1e9,{dy:8});vis(sT,t,ta+.65,1e9,{dy:0,dx:-10});
+    vis(vA,t,ta+.5,1e9,{dy:14});vA.querySelector('.pg').style.width=(200*eio(pr(t,tf-.1,.9))).toFixed(1)+'px';
     pulse(hE,t,tt,.05,.7);
     vis(l1,t,tco-.1,1e9,{dy:8});vis(vA.querySelector('.bd'),t,tco,1e9,{sc:.4,dy:0});
     op(selo,t,tco+.05);arco(selo,t,tn+.1,Math.max(1,tct-tn),150,413,770,413,-70);
@@ -438,25 +438,29 @@ CAPS[1]=()=>{
 CAPS[3]=()=>{
   const g=grupo();
   const tit=titulo(g,'Trilha','O que conta no progresso');
-  const NB=16,NP=9,X0=118,TW=28,TG=4.5;                     // 16 aulas da formação básica + 9 dos módulos do plano (S3)
-  const rot=el('<div class="ab" style="left:106px;top:300px;font-weight:800;font-size:23px">Trilha do seu plano</div>',g);
-  const barra=el('<div class="ab barra" style="left:104px;top:344px;width:836px;height:110px"></div>',g);
-  const bl=[];for(let i=0;i<NB+NP;i++)bl.push(el(`<div class="bl" style="left:${(X0+i*(TW+TG)).toFixed(1)}px;top:358px;width:${TW}px;height:82px;
+  const NB=16,NP=9,X0=102,TW=29,TG=4.5;                      // 16 aulas da formação básica + 9 dos módulos do plano (S3)
+  const rot=el('<div class="ab" style="left:90px;top:318px;font-weight:800;font-size:23px">Trilha do seu plano</div>',g);
+  const barra=el('<div class="ab barra" style="left:88px;top:362px;width:861px;height:128px"></div>',g);
+  const bl=[];for(let i=0;i<NB+NP;i++)bl.push(el(`<div class="bl" style="left:${(X0+i*(TW+TG)).toFixed(1)}px;top:376px;width:${TW}px;height:100px;
      background:${i<NB?'var(--v)':'var(--vm)'}"></div>`,g));
   const cx=(a,b)=>(X0+a*(TW+TG)+X0+b*(TW+TG)-TG)/2;
-  const tB=el(`<div class="ab" style="left:${cx(0,NB)-160}px;top:478px;width:320px;text-align:center"><span class="tag v s">Formação básica</span></div>`,g);
-  const tP=el(`<div class="ab" style="left:${cx(NB,NB+NP)-160}px;top:478px;width:320px;text-align:center"><span class="tag v s">Tem no seu plano</span></div>`,g);
-  const fora=el(`<div class="ab" style="left:1046px;top:344px;width:68px;height:110px;border-radius:18px;border:2px dashed #C9D0D6;background:#fff">
-     <div class="bl" style="left:18px;top:12px;width:${TW}px;height:82px;background:#E6E9EE"></div></div>`,g);
-  const tF=el('<div class="ab" style="left:920px;top:478px;width:320px;text-align:center"><span class="tag n s">Não tem no seu plano</span></div>',g);
-  const nC=el(`<div class="ab" style="left:920px;top:532px;width:320px;text-align:center"><span class="tag a s">${ic('circle-slash',18)}Não conta</span></div>`,g);
+  const tB=el(`<div class="ab" style="left:${cx(0,NB)-160}px;top:514px;width:320px;text-align:center"><span class="tag v s">Formação básica</span></div>`,g);
+  const tP=el(`<div class="ab" style="left:${cx(NB,NB+NP)-160}px;top:514px;width:320px;text-align:center"><span class="tag v s">Tem no seu plano</span></div>`,g);
+  // fora da barra: a aula do módulo que não está no plano (no S3, o CRM/Kanban)
+  const fora=el(`<div class="ab" style="left:1000px;top:362px;width:180px;height:128px;border-radius:18px;border:2px dashed #C9D0D6;background:#fff">
+     <div class="bl" style="left:18px;top:12px;width:${TW}px;height:100px;background:#E6E9EE"></div>
+     <div class="ab" style="left:62px;top:0;height:124px;display:flex;align-items:center;font-weight:800;font-size:18px;line-height:1.25;color:#4B5563">CRM/<br>Kanban</div></div>`,g);
+  const tF=el('<div class="ab" style="left:930px;top:514px;width:320px;text-align:center"><span class="tag n s">Não tem no seu plano</span></div>',g);
+  const nC=el(`<div class="ab" style="left:930px;top:568px;width:320px;text-align:center"><span class="tag a s">${ic('circle-slash',18)}Não conta</span></div>`,g);
   return t=>{
     const A=J('ilu03_progresso');
     const te=W(3,'essas'),tm=W(3,'mexem'),tpg=W(3,'progresso'),tb=W(3,'barra'),tc=W(3,'contam'),tfb=W(3,'Formação'),tmp=W(3,'módulos');
     posTitulo(tit,t,A.a-.55,te-.1);
-    vis(fora,t,te,1e9,{dy:14});vis(tF,t,te+.15,1e9,{dy:8});vis(nC,t,tm,1e9,{dy:8});
-    vis(barra,t,tpg-.1,1e9,{dy:12,sc:1});vis(rot,t,tpg,1e9,{dy:8});pulse(barra,t,tb,.025,.7);
-    contorno(barra,t,tc,'#E1E8E4','#50D088');
+    // "essas aulas" ficam fora; "não mexem no seu progresso": a barra aparece vazia
+    vis(fora,t,te+.35,1e9,{dy:14});vis(tF,t,te+.5,1e9,{dy:8});
+    vis(barra,t,tm-.1,1e9,{dy:12,sc:1});vis(rot,t,tm,1e9,{dy:8});vis(nC,t,tpg-.1,1e9,{dy:8});
+    pulse(barra,t,tb,.025,.7);contorno(barra,t,tc,'#E1E8E4','#50D088');
+    // contam só a Formação básica e os módulos do seu plano: as aulas entram na barra
     bl.forEach((b,i)=>vis(b,t,i<NB?tfb+i*.035:tmp+(i-NB)*.045,1e9,{dy:24,sc:.7,din:.4}));
     vis(tB,t,tfb+.2,1e9,{dy:8});vis(tP,t,tmp+.2,1e9,{dy:8});
   };
@@ -468,21 +472,21 @@ CAPS[3]=()=>{
 CAPS[4]=()=>{
   const g=grupo();
   const tit=titulo(g,'Ajuda','Mensagem pronta para o suporte');
-  const chat=el(`<div class="card" style="left:120px;top:172px;width:1040px;height:500px;overflow:hidden">
+  const chat=el(`<div class="card" style="left:120px;top:176px;width:1040px;height:540px;overflow:hidden">
      <div class="row" style="height:78px;padding:0 30px;gap:16px;border-bottom:1px solid var(--l);background:#FAFBFC">
        <div style="width:48px;height:48px;border-radius:50%;background:var(--vc);color:var(--ve);display:flex;align-items:center;justify-content:center">${ic('headset',26)}</div>
        <div style="font-weight:800;font-size:22px">Suporte</div></div></div>`,g);
-  const cx=el('<div class="ab" style="left:30px;top:110px;width:870px;height:356px;border-radius:20px;border:2px solid #E1E8E4;background:#fff;padding:28px 36px"></div>',chat);
+  const cx=el('<div class="ab" style="left:30px;top:106px;width:870px;height:400px;border-radius:20px;border:2px solid #E1E8E4;background:#fff;padding:38px 40px"></div>',chat);
   const LN=['<b>E-mail do usuário:</b> rafael.nogueira@reciclavalemetais.example','<b>Empresa:</b> Recicla Vale Metais Ltda',
     '<b>Trilha:</b> Tutoriais do sistema','<b>Módulo:</b> Sua conta e sua empresa','<b>Minha dúvida:</b> <span class="car" style="color:var(--v);font-weight:500">|</span>'];
-  const ln=LN.map((h,k)=>el(`<div class="ln" style="margin-top:${k==4?30:k?16:0}px">${h}</div>`,cx));
-  const env=el(`<div class="ab" style="left:930px;top:394px;width:72px;height:72px;border-radius:50%;background:var(--v);display:flex;align-items:center;justify-content:center;color:#12452B">${ic('send-horizontal',32)}</div>`,chat);
+  const ln=LN.map((h,k)=>el(`<div class="ln" style="margin-top:${k==4?36:k?20:0}px">${h}</div>`,cx));
+  const env=el(`<div class="ab" style="left:930px;top:434px;width:72px;height:72px;border-radius:50%;background:var(--v);display:flex;align-items:center;justify-content:center;color:#12452B">${ic('send-horizontal',32)}</div>`,chat);
   const rip=el('<div class="rip" style="left:36px;top:36px"></div>',env);
   return t=>{
     const A=J('ilu04_mensagem');
     const tab=W(1,'abre'),tme=W(1,'mensagem'),tk=[W(1,'e-mail'),W(1,'empresa'),W(1,'trilha'),W(1,'aula'),W(1,'escrever')],ten=W(1,'enviar');
     posTitulo(tit,t,A.a-.55,tab-.1);
-    vis(chat,t,tab,1e9,{dy:24});contorno(cx,t,tme,'#E1E8E4','#50D088');
+    vis(chat,t,tab+.45,1e9,{dy:24});contorno(cx,t,tme,'#E1E8E4','#50D088');
     ln.forEach((l,k)=>vis(l,t,tk[k]-.05,1e9,{dy:10,sc:1}));
     pulse(env,t,ten,.12,.8);ripple(rip,t,ten);
   };
@@ -500,6 +504,7 @@ CAPS[5]=()=>{
   const tit=titulo(g,'O sistema','Do portão até a conta');
   const E=caminho(g);
   const chao=el('<div class="ab" style="left:90px;top:690px;width:1100px;height:4px;border-radius:2px;background:#DDE2E7"></div>',g);
+  const chao2=el('<div class="ab" style="left:90px;top:690px;width:1100px;height:4px;border-radius:2px;background:#DDE2E7"></div>',g);
   // portão (com a placa da Recicla Vale)
   const portao=el(`<div class="ab" style="left:480px;top:370px;width:420px;height:320px">${svgPortao()}
      <div class="ab" style="left:72px;top:36px;width:276px;height:54px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:19px;white-space:nowrap">Recicla Vale Metais</div></div>`,g);
@@ -511,7 +516,7 @@ CAPS[5]=()=>{
   const nLat=el('<div class="ab" style="left:150px;top:590px;width:200px;text-align:center"><span class="tag a s">Latinha</span></div>',g);
   // balança: plataforma e mostrador (o mostrador cresce durante a frase)
   const plat=el('<div class="ab" style="left:560px;top:674px;width:320px;height:18px;border-radius:6px;background:#CBD1D8;border:2px solid #A8B0B9"></div>',g);
-  const poste=el('<div class="ab" style="left:1012px;top:520px;width:12px;height:172px;border-radius:4px;background:#B9C1C9"></div>',g);
+  const poste=el('<div class="ab" style="left:1012px;top:498px;width:12px;height:194px;border-radius:4px;background:#B9C1C9"></div>',g);
   const most=el('<div class="ab" style="left:898px;top:418px;width:240px;height:100px"></div>',g);
   const mostIn=el(`<div class="most" style="width:240px;transform-origin:50% 100%;text-align:center"><div class="mn" style="margin-top:0">0 kg</div></div>`,most);
   const mn=mostIn.querySelector('.mn');
@@ -561,13 +566,13 @@ CAPS[5]=()=>{
     const tCd=W(6,'Cada'),tPa=W(6,'parte'),tAu=W(6,'aula');
     posTitulo(tit,t,-.6,tPe-.1);
     // o caminho fica pequeno no alto até a última frase e acende uma estação por frase
-    caminhoEntra(E,t,tPe);
+    caminhoEntra(E,t,tPe+.45);
     caminhoAte(E,t,[tCh,tBa,tCx,tEs,tVe,tCo]);
     const gr=eio(pr(t,tCd,.9));
-    E.g.style.transform=`translate(0,${lerp(-195,0,gr).toFixed(2)}px) scale(${lerp(.72,1,gr).toFixed(4)})`;
+    E.g.style.transform=`translate(0,${lerp(-224,0,gr).toFixed(2)}px) scale(${lerp(.72,1,gr).toFixed(4)})`;
     caminhoAulas(E,t,[0,1,2,3,4,5].map(k=>tPa+(tAu-tPa)*k/5));
     pulse(E.g,t,W(6,'trilha'),.02,.9);
-    vis(chao,t,tRe-.1,tDi-.3,{dy:0,sc:1});
+    vis(chao,t,tRe-.1,tMt-.25,{dy:0,sc:1});vis(chao2,t,tDe,tDi-.3,{dy:0,sc:1});
     // 1 portão: a Dona Cida chega com latinha
     vis(portao,t,tRe,tBa-.2,{dy:14});
     const pc=eo(pr(t,tDo-.1,1.1)),cx=lerp(-140,CX,pc),sai=tMt-.25;
@@ -704,7 +709,7 @@ CAPS[8]=()=>{
     const tim=W(0,'importante'),tcl=W(0,'cliente'),tve=W(0,'vende'),tma=W(0,'material'),tfo=W(0,'Fornecedor'),tco=W(0,'compra');
     const tf=[W(0,'catador'),W(0,'carroceiro'),W(0,'depósito')];
     posTitulo(tit1,t,A.a-.55,tim-.1,s1);
-    vis(pat,t,tim,s1,{dy:16});
+    vis(pat,t,tim+.35,s1,{dy:16});
     vis(cCli,t,tcl-.1,s1,{dy:22});traco(sV.querySelector('path'),t,tve-.1,.5);sV.style.opacity=t<s1?1:0;
     const xt=lerp(-150,32,eo(pr(t,tve,1.2)));camC.style.transform=`translate(${xt.toFixed(1)}px,152px)`;op(camC,t,tve-.05,s1,.3);
     rodasC.forEach(r=>r.setAttribute('transform',`translate(${r.dataset.x},196) rotate(${((xt-32)/.62/26*57.3).toFixed(2)})`));
@@ -713,10 +718,10 @@ CAPS[8]=()=>{
     [fCat,fCar,fDep].forEach((f,k)=>vis(f,t,tf[k]-.1,s1,{dy:14}));
     // cena 2
     const tk=[W(2,'Pedido'),W(3,'Caixa'),W(4,'Saldo'),W(5,'Tabela'),W(6,'Ficha'),W(7,'Ordem'),W(8,'MTR')],tg=W(9,'Cada'),tau=W(9,'aula');
-    posTitulo(tit2,t,B.a-.55,tk[0]-.1);
-    C.forEach((c,k)=>vis(c,t,tk[k]-.15,k<6?tk[k+1]-.2:tg-.2,{dy:20}));
+    posTitulo(tit2,t,B.a-.55,B.a);
+    C.forEach((c,k)=>vis(c,t,k?tk[k]-.15:B.a+.5,k<6?tk[k+1]-.2:tg-.2,{dy:20}));
     // pedido
-    vis(pp,t,tk[0]+.1,1e9,{dy:12});vis(P[0],t,W(2,'compra')-.05,1e9,{dy:6,sc:1});
+    vis(pp,t,B.a+.75,1e9,{dy:12});vis(P[0],t,W(2,'compra')-.05,1e9,{dy:6,sc:1});
     vis(P[1],t,W(2,'material')-.05,1e9,{dy:6,sc:1});vis(P[2],t,W(2,'peso')-.05,1e9,{dy:6,sc:1});vis(P[3],t,W(2,'valor')-.05,1e9,{dy:6,sc:1});
     // caixa
     vis(rg,t,tk[1]+.1,1e9,{dy:12});vis(cEn,t,W(3,'entra')-.05,1e9,{dx:-10,dy:0});vis(cSa,t,W(3,'sai')-.05,1e9,{dx:-10,dy:0});
@@ -792,7 +797,7 @@ CAPS[10]=()=>{
     const tdo=W(1,'dois'),tmo=W(1,'módulo'),tlu=W(1,'lugar'),tfa=W(1,'faz'),tat=W(1,'ativar');
     const tus=W(2,'usuário'),tpe=W(2,'permissão'),tad=W(2,'administrador'),tup=W(2,'Usuários');
     posTitulo(tit1,t,A.a-.55,tdo-.1,T);
-    vis(m1,t,tdo-.05,T,{dy:20});vis(m2,t,tdo+.1,T,{dy:20});
+    vis(m1,t,tdo+.4,T,{dy:20});vis(m2,t,tdo+.55,T,{dy:20});
     const acC=(m,p,cor,fundo,ico)=>{m.style.borderColor=mix('#E1E8E4',cor,p);m.querySelector('.hd').style.color=mix('#6B7280','#121212',p);
       const i=m.querySelector('.ii');i.style.background=mix('#F2F4F7',fundo,p);i.style.color=mix('#9AA3AD',ico,p)};
     acC(m1,eo(pr(t,tmo,.45)),'#50D088','#EAF8F0','#2E7D57');acC(m2,eo(pr(t,tus,.45)),'#F2B63D','#FFF5DF','#8A5A00');
@@ -804,7 +809,7 @@ CAPS[10]=()=>{
     // cena 2
     const tte=W(3,'teste'),tto=W(3,'todos'),tli=W(3,'liberados'),tas=W(3,'assinatura'),tct=W(3,'contratou'),tvo=W(3,'volta'),tlg=W(3,'ligar');
     posTitulo(tit2,t,T,tte-.1);
-    vis(zT.z,t,tte-.05,1e9,{dy:16});
+    vis(zT.z,t,tte+.4,1e9,{dy:16});
     const dl=Math.max(.6,tli-tto);zT.ms.forEach((m,k)=>acM(m,eo(pr(t,tto+dl*k/6,.35))));
     vis(sZ,t,tas-.2,1e9,{dy:0,dx:-10});vis(zA.z,t,tas-.05,1e9,{dy:16});
     const ON=[0,1,3,4];zA.ms.forEach((m,k)=>{const i=ON.indexOf(k);let p=i<0?0:eo(pr(t,tct-.1+i*.12,.35));
@@ -888,7 +893,7 @@ CAPS[11]=()=>{
     // cena 2
     const tli=W(3,'limite'),tca=W(3,'cadastros'),tus=W(3,'usuário'),tco=W(3,'computador'),tce=W(3,'celular');
     posTitulo(tit2,t,T1,tli-.1,T2);
-    vis(cont,t,tli-.05,1e9,{dy:16});vis(cad,t,tca-.05,T2,{dy:8});
+    vis(cont,t,tli+.4,1e9,{dy:16});vis(cad,t,tca-.05,T2,{dy:8});
     vis(usu,t,tus-.1,T2,{dy:14});vis(sU,t,tus+.2,T2,{dy:0,dx:-10});
     vis(note,t,tco-.1,T2,{dy:14});traco(f1,t,tco+.15,.5);f1.style.opacity=t>=tco+.15&&t<T2+.4?(1-eo(pr(t,T2,.4))).toFixed(3):0;
     vis(cel,t,tce-.1,T2,{dy:14});traco(f2,t,tce+.15,.5);f2.style.opacity=t>=tce+.15&&t<T2+.4?(1-eo(pr(t,T2,.4))).toFixed(3):0;
@@ -897,7 +902,7 @@ CAPS[11]=()=>{
     const tl4=W(4,'limite'),tcr=W(4,'criar'),tav=W(4,'aviso'),tno=W(4,'nova'),tpe=W(4,'Personalizado');
     posTitulo(tit3,t,T2,tl4-.1);
     if(t<tl4-.1)contV.textContent='1 / 3';else conta(contV,t,tl4,.9,1,3,v=>Math.round(v)+' / 3');
-    av.forEach((a,k)=>vis(a,t,k<3?tl4-.1+k*.12:tcr-.05,1e9,{sc:.6,dy:0}));
+    av.forEach((a,k)=>vis(a,t,k<3?tl4+.4+k*.12:tcr-.05,1e9,{sc:.6,dy:0}));
     vis(avis,t,tav-.1,1e9,{dy:20});vis(avNm,t,tno-.1,1e9,{dy:8,sc:1});vis(pers,t,tpe-.1,1e9,{dy:10});
   };
 };
@@ -929,8 +934,8 @@ CAPS[12]=()=>{
     const A=J('ilu12_formas');
     const tbo=W(2,'boleto'),tpa=W(2,'paga'),tpx=W(2,'Pix'),tta=W(2,'também'),tau=W(2,'Automático'),tli=W(2,'ligado'),tre=W(2,'repete'),tba=W(2,'banco');
     const tqr=W(3,'QR'),tb3=W(3,'boleto'),tra=W(3,'rápido');
-    posTitulo(tit,t,A.a-.55,tbo-.25);
-    vis(cC.c,t,tbo-.25,1e9,{dy:22});vis(cB.c,t,tbo-.05,1e9,{dy:22});vis(cP.c,t,tpx-.1,1e9,{dy:22});
+    posTitulo(tit,t,A.a-.55,A.a+.05);
+    vis(cC.c,t,A.a+.5,1e9,{dy:22});vis(cB.c,t,tbo+.35,1e9,{dy:22});vis(cP.c,t,tpx-.1,1e9,{dy:22});
     // cartão: repete sozinha, todos os meses
     cC.ta.style.opacity=1;cC.tm.style.opacity=0;cC.ms.forEach((m,k)=>{m.a.style.opacity=eo(pr(t,tbo+.1+k*.15,.35)).toFixed(3);m.m.style.opacity=0});
     // boleto: cada mês

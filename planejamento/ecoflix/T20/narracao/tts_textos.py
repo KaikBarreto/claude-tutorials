@@ -40,7 +40,7 @@ Agora, quando a cooperativa abre o link, aparece o Acesso restrito.
 Ela digita o usuário e a senha, clica em Entrar, e o portal abre. Nesse navegador, ela fica conectada, sem digitar a senha toda vez.
 Pra sair, é esse ícone. E no parceiro que é cliente e fornecedor, o mesmo usuário e a mesma senha valem pros dois links.""",
 5: """Com o portal aberto, a primeira aba é o Histórico. Nos cartões, a cooperativa vê quanto a Recicla Vale já comprou dela.
-São cinquenta e dois mil novecentos e trinta e sete reais e cinquenta, em catorze entregas.
+São setenta e um mil seiscentos e cinquenta e um reais e cinquenta e oito, em quinze entregas.
 No gráfico, os materiais que ela mais entrega, pelo peso. O papelão passa da metade, e depois vêm o pét e a latinha.
 Embaixo, cada pedido. Clicando na entrega de sexta, abrem os materiais, com o peso e o valor de cada um.
 E as fotos da carga, que a Recicla Vale anexou no pedido.
@@ -54,7 +54,7 @@ Agora a Recicla Vale acerta o resto. No sistema, em Movimentação, eu pago os m
 Confirmar, e o saldo da cooperativa zerou no sistema.
 E no portal, sem mandar link nenhum, o saldo já está em dia.
 Uma dica: o saldo do portal vem da mesma conta-corrente da ficha. Com o portal aberto, ele se atualiza sozinho em até trinta segundos, e esse botão atualiza na hora.""",
-7: """Na aba Notas Fiscais, o parceiro vê as notas emitidas pra ele. Na Fundição, aparece a nota mil duzentos e cinquenta, do cobre mel de hoje, autorizada.
+7: """Na aba Notas Fiscais, o parceiro vê as notas emitidas pra ele. Na Fundição, aparece a nota mil duzentos e cinquenta, do cobre mel que saiu hoje, autorizada.
 Ele confere o número, a série, a data, o valor e a situação. O arquivo da nota, o xis-ême-éle ou o dânfi, você manda pelo caminho de sempre, nas Notas Fiscais do sistema.
 Já o Relatório soma os pedidos do parceiro, material por material.
 Na cooperativa, eu escolho o mês passado. Em outubro, foram oito mil e quatrocentos quilos de papelão e dois mil e seiscentos de pét, entre outros.

@@ -9,7 +9,8 @@
 - **Duração:** alvo da fonte ~22 min; fala 2.520 palavras e 13.503 caracteres (~16 a 17 min) + 16 vinhetas e as ações sem
   fala (preenchimento acelerado): ~19 min. `python3 -I narracao/tts_textos.py` mostra a conta por capítulo.
 - Base: `inventario.md` (código 1.59.154). Logado como **Rafael Nogueira** (MASTER, vê lucro), desktop 1280×800, tema claro.
-  `FAKE_NOW=2026-11-10T08:30:00-03:00`.
+  `FAKE_NOW=2026-11-10T08:35:00-03:00` (junção: depois do #85 da T6, aberto às 08:31, e antes do #86, às 08:4x; a pesagem
+  da T8 vem às 08:40).
 - 🔒: só a leitura da balança (módulo `balanca_integration`) e as outras unidades na falta de estoque (filial, módulo gerencial);
   a fala diz "depende do plano contratado", sem preço.
 

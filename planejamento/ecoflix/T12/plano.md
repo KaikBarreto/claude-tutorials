@@ -11,7 +11,7 @@
   CONFIGURAÇÕES · RESUMO.
 - **Alvo da fonte:** ~15 min. Estimativa: 1.716 palavras de fala (~11 min de voz) + vinhetas, cartela, a troca de janela
   do portal e as esperas dos formulários ≈ 13 min.
-- **FAKE_NOW:** `2026-11-10T08:30:00-03:00` (terça). Desktop, Rafael Nogueira (MASTER); no cap07, uma segunda janela sem
+- **FAKE_NOW:** `2026-11-10T07:00:00-03:00` (terça; junção: a troca da caçamba é antes da balança do T8, 08:40, e da viagem do T17, 09:40). Desktop, Rafael Nogueira (MASTER); no cap07, uma segunda janela sem
   login com o portal da Cooperativa Recomeço.
 - **Fora da aula (fonte):** "Rastreamento" e "Rotas". A fala não cita nem promete nada; a câmera não para nesses itens do
   menu. Na 1.59.154 o Rastreamento já abre um mapa (relatório ao Kaik).
@@ -28,7 +28,7 @@
 | 5 | AGENDA / Motorista e veículo | Etapa "Frota": "Jair Lopes" e "GHT7B19", "Revisão", "Criar ordem"; o cartão #9 em "Agendada". | | `inicio` + `setup` reabre na etapa 3 |
 | 6 | ACOMPANHAMENTO / Até concluir | #8: "A caminho" → "Preencher" → "Recolhi" Caçamba 03 e "Entreguei" Caçamba 05 → "Concluir coleta" → "Voltar às ordens" → detalhe com "Equipamentos movimentados" e "Histórico". | ⚠️ concluir não cria compra (dica) | `apos-cap05` |
 | 7 | PORTAL / A coleta pedida pelo portal | Portal da Cooperativa Recomeço → "Coletas" → "Solicitar coleta" (PET prensado, 800 kg, 13/11, "Tarde") → no sistema: ponto vermelho, cartão #10 "via portal" → "Aprovar" → "Agendar coleta" → "Agendar". | 🔒 portal dito; [ILUSTRAÇÃO: os dois lados do pedido] | `apos-cap06` |
-| 8 | FROTA / Veículos e motoristas | "Frota" → "Veículos": detalhe do FKD2E41; "Novo veículo" FVL8A52 poliguindaste (tara 7.100, capacidade 8.500) → "Motoristas": "Novo motorista" Rogério Batista (CNH C). | [ILUSTRAÇÃO: tara, bruto e líquido] | `apos-cap07` |
+| 8 | FROTA / Veículos e motoristas | "Frota" → "Veículos": detalhe do FKD2E41; "Novo veículo" FVL8A52 poliguindaste (tara 7.100, capacidade 8.500) → "Motoristas": "Novo motorista" Sérgio Paiva (CNH C). | [ILUSTRAÇÃO: tara, bruto e líquido] | `apos-cap07` |
 | 9 | EQUIPAMENTOS / As caçambas e onde estão | "Equipamentos": "Tipos de equipamento" (uma a uma × por quantidade), "Unidades identificáveis", "Nova unidade" Caçamba 06 → "Movimentar" de "Externo" para "Minha base"; "Onde tudo está agora"; aba "Movimentações" com "Ordem 8". | ⚠️ caçamba só muda de lugar quando alguém registra (dica, ajustada ao código) + [ILUSTRAÇÃO: o caminho da caçamba] | `apos-cap08` |
 | 10 | RELATÓRIO / O relatório das coletas | "Relatório": "Este mês" e "Mês passado"; totais, "Taxa de conclusão", "Por status", "Por motorista", "Por veículo", "Por parceiro". | ⚠️ cancelada sai da taxa (dica) + [ILUSTRAÇÃO: a conta da taxa]; ⚠️ em que dia cada coleta entra (dica, pelo código) | `apos-cap09` |
 | 11 | CONFIGURAÇÕES / As regras das coletas | "Prefixo da numeração" "COL-", "Janelas de coleta oferecidas", "Exigir motorista e veículo para agendar", "Exigir aprovação da solicitação", "Antecedência mínima (horas)" 24, "Dias aceitos para coleta". | ⚠️ regras do portal não travam o operador (dica) + [ILUSTRAÇÃO: as regras só na porta do portal] | `apos-cap10` |
@@ -56,35 +56,37 @@ Além do `MUNDO_FICTICIO.md` (proposta; conferir na semente que nenhum nome novo
 - **Módulos** `coletas` e `portal_cliente` ativos. `collection_settings` nos padrões do código (sem prefixo; as três
   janelas; sem exigir frota; com aprovação; antecedência 0; segunda a sábado; aviso ligado; sem checklist nem assinatura).
 - **Frota** (os veículos do MUNDO, com os dados que o detalhe mostra):
-  | Placa | Descrição | Tipo de rodado | Tara | Capacidade | Motorista (CPF · CNH · categoria · validade) |
-  |---|---|---|---|---|---|
-  | FKD2E41 | Caminhão truck | Truck | 9.200 kg | 14.000 kg | Edson Moura (284.559.130-61 · 73190528479 · E · 22/03/2029) |
-  | GHT7B19 | Caminhão 3/4 | Toco | 3.900 kg | 4.000 kg | Jair Lopes (917.362.048-31 · 56204719334 · C · 09/09/2028) |
-  | EZR4C63 | Picape | Utilitário | 1.750 kg | 1.000 kg | Tiago Freitas (650.193.827-95 · 31864057226 · B · 14/01/2031) |
-  Todos com "UF de licenciamento" SP e "Tipo" "Veículo único". (Alinhar com o T8 e o T17, que também usam a frota.)
+  | Placa | Descrição | Tara | Capacidade | Motorista |
+  |---|---|---|---|---|
+  | FKD2E41 | Caminhão truck | 6.380 kg | 14.000 kg | Edson Moura |
+  | GHT7B19 | Caminhão 3/4 | 3.900 kg | 4.000 kg | Jair Lopes |
+  | EZR4C63 | Picape | 1.750 kg | 1.000 kg | Tiago Freitas |
+  Junção (`MUNDO_LINHA_DO_TEMPO.md`, "Frota"): a tara do FKD2E41 é a 2ª pesagem do T8 (6.380 kg). Sem "UF de licenciamento",
+  "Tipo", rodado e carroceria (a T17 completa o FKD2E41 na tela, que abre com o selo "Sem tipo"); motoristas só com nome e
+  telefone (a T17 completa o CPF e a CNH do Edson na tela).
 - **Equipamentos:** tipo "Caçamba 5 m³" (uma a uma; unidades "Caçamba 01" a "Caçamba 05", condição OK) e tipo "Bag 1 m³"
   (por quantidade, 40). Movimentações: 01/08/2026 "Externo" → "Minha base" (as 5 caçambas e os 40 bags); 23/10 (ordem 5)
   "Minha base" → Cooperativa Recomeço, 10 bags; 27/10 (ordem 6) "Minha base" → Depósito Irmãos Siqueira, Caçamba 03.
 - **Ordens de coleta** (com os eventos do histórico):
-  | Nº | Parceiro | Situação em 10/11 08:30 | Data · janela | Motorista · placa | Material estimado |
+  | Nº | Parceiro | Situação em 10/11 07:00 | Data · janela | Motorista · placa | Material estimado |
   |---|---|---|---|---|---|
   | 1 | Cooperativa Recomeço | Concluída 02/10 | 02/10 · Manhã | Tiago Freitas · EZR4C63 | ~500 kg de latinha |
-  | 2 | Auto Peças Vale Forte | Concluída 09/10 | 09/10 · Tarde | Jair Lopes · GHT7B19 | ~350 kg de radiadores |
+  | 2 | Auto Peças Vale Forte | Concluída 08/10 | 08/10 · Manhã | Jair Lopes · GHT7B19 | ~850 kg de chaparia (a compra de 08/10 da T9; junção) |
   | 3 | Depósito Irmãos Siqueira | Concluída 16/10 | 16/10 · Dia todo | Edson Moura · FKD2E41 | ~3 t de ferro misto |
   | 4 | Auto Peças Vale Forte | Cancelada 20/10 (motivo "Material ainda não separado") | 21/10 · Manhã | Jair Lopes · GHT7B19 | ~200 kg de baterias |
   | 5 | Cooperativa Recomeço | Concluída 23/10 (Entreguei 10 bags) | 23/10 · Tarde | Tiago Freitas · EZR4C63 | ~700 kg de PET |
   | 6 | Depósito Irmãos Siqueira | Concluída 27/10 (Entreguei Caçamba 03) | 27/10 · Manhã | Edson Moura · FKD2E41 | Entrega de caçamba |
-  | 7 | Marcelo Tavares ("Sem cadastro", (12) 9 0000-5821, Rua das Paineiras, 215, Taubaté/SP) | A caminho desde 08:10 | 10/11 · Manhã | Tiago Freitas · EZR4C63 | ~300 kg de ferro de demolição |
+  | 7 | Marcelo Tavares ("Sem cadastro", (12) 9 0000-5821, Rua das Paineiras, 215, Taubaté/SP) | A caminho desde 06:40 | 10/11 · Manhã | Tiago Freitas · EZR4C63 | ~300 kg de ferro de demolição |
   | 8 | Depósito Irmãos Siqueira | Agendada (criada em 05/11) | 10/11 · Manhã | Edson Moura · FKD2E41 | Troca da Caçamba 03: ferro misto, ~2 t |
   O endereço de cada parceiro cadastrado é o do cadastro (T4). Próximo número: 9. Nenhuma outra ordem de coleta no
-  mundo (se o T20 mostrar um pedido de coleta pelo portal, a T12 parte dele e os números andam).
+  mundo (junção: a T12 cria a 9 e a 10; a T20, às 15:00, mostra a 10 no portal e cria a 11).
 - **Janela do sistema no cap07:** antes de voltar a ela, o robô deixa o Rafael numa tela de Coletas que não seja o quadro
   (ex.: "Frota") e recarrega, para o ponto vermelho aparecer no menu (a consulta revalida a cada 60 s).
 - **Portal:** link do portal da Cooperativa Recomeço (o do T20), aba "Coletas" sem senha, "solicitar coleta" ligado.
-- **Esta aula cria:** a ordem 9 (Auto Peças Vale Forte, 12/11 · Manhã, Jair Lopes · GHT7B19, "~400 kg de radiadores e
+- **Esta aula cria:** a ordem 9 (Auto Peças Vale Forte, 11/11 · Manhã (junção: a Agenda da T25 lembra dela), Jair Lopes · GHT7B19, "~400 kg de radiadores e
   baterias", observação "Retirar pelo portão lateral"); a conclusão da 8 (Recolhi Caçamba 03, Entreguei Caçamba 05); a
   ordem 10 pelo portal (Cooperativa Recomeço, "PET prensado — 800 kg", 13/11 · Tarde), aprovada e agendada; o veículo
-  FVL8A52 "Caminhão poliguindaste" (Toco, SP, tara 7.100 kg, capacidade 8.500 kg); o motorista Rogério Batista (CPF
+  FVL8A52 "Caminhão poliguindaste" (Toco, SP, tara 7.100 kg, capacidade 8.500 kg); o motorista Sérgio Paiva (CPF
   463.718.205-08, (12) 9 0000-4417, CNH 04581273671, categoria C, validade 18/06/2030); a unidade "Caçamba 06" (OK, de
   "Externo" para "Minha base" em 10/11); as configurações prefixo "COL-" e antecedência de 24 h. Atualizar o
   `MUNDO_FICTICIO.md`.

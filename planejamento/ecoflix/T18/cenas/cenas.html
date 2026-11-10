@@ -217,8 +217,8 @@ CAPS[0]=()=>{
   // 2 · o certificado do destino: a Auto Peças Vale Forte espera o certificado de outubro
   const c2=cartao(660,ic('file-badge',22),'Certificado do destino','a');
   const ofi=el(`<div class="ab" style="left:40px;top:${248-150}px">${oficinaSvg(200)}</div>`,c2);
-  const cert=el(`<div class="ab" style="left:286px;top:84px;width:150px">
-      <div class="card" style="position:relative;width:150px;height:150px;border-radius:12px;padding:16px 18px;border:2px dashed #F2B63D;box-shadow:none">
+  const cert=el(`<div class="ab" style="left:280px;top:84px;width:170px">
+      <div class="card" style="position:relative;width:170px;height:150px;border-radius:12px;padding:16px 18px;border:2px dashed #F2B63D;box-shadow:none">
         <div class="row" style="gap:8px"><div class="ico a" style="width:32px;height:32px;border-radius:9px">${ic('file-badge',18)}</div>
           <div class="lbl" style="font-size:14px;color:var(--ae)">certificado</div></div>
         <div style="margin-top:14px;height:8px;border-radius:4px;background:#F1E6CC;width:100px"></div>
@@ -260,35 +260,35 @@ CAPS[1]=()=>{
   const gA=grupo();
   const titA=titulo(gA,'Ambiental','A cadeia do resíduo');
   const cena=el('<div class="ab" style="left:0;top:0;width:1280px;height:800px;transform-origin:640px 150px"></div>',gA);
-  const YC=486;                                                 // o chão das três estações
+  const YC=520;                                                 // o chão das três estações
   const chao=el(`<div class="ab" style="left:70px;top:${YC}px;width:1140px;height:6px;border-radius:3px;background:#E3E7EC"></div>`,cena);
   const estacao=(x,w,h,desenho,nome,sub)=>el(`<div class="ab" style="left:${x}px;top:0;width:${w}px;height:800px">
       <div class="ab" style="left:0;top:${YC-h+1}px;width:${w}px;height:${h}px">${desenho}</div>
       <div class="ab" style="left:0;top:${YC+22}px;width:${w}px;text-align:center"><div class="tag v nome" style="font-size:20px;padding:8px 18px">${nome}</div></div>
       <div class="ab lbl sub" style="left:0;top:${YC+76}px;width:${w}px;text-align:center;font-size:18px;color:#4B5563">${sub}</div></div>`,cena);
-  const eG=estacao(80,200,150,oficinaSvg(200),'Gerador','produz o resíduo');
-  const eD=estacao(1000,200,136,patioSvg(200),'Destinador','dá o destino');
+  const eG=estacao(60,240,180,oficinaSvg(240),'Gerador','produz o resíduo');
+  const eD=estacao(980,240,164,patioSvg(240),'Destinador','dá o destino');
   // o transportador: o caminhão (com o nome embaixo) que leva a carga do gerador ao destinador
-  const tr=el(`<div class="ab" style="left:0;top:0;width:300px;height:800px">
-      <div class="ab" style="left:0;top:${YC-153}px;width:300px;height:138px">${escala(caminhao(),300)}</div>
-      <div class="ab" style="left:0;top:${YC+22}px;width:300px;text-align:center"><div class="tag v nome" style="font-size:20px;padding:8px 18px">Transportador</div></div>
-      <div class="ab lbl sub" style="left:0;top:${YC+76}px;width:300px;text-align:center;font-size:18px;color:#4B5563">leva</div></div>`,cena);
-  const XT0=330, XT1=650;
+  const tr=el(`<div class="ab" style="left:0;top:0;width:360px;height:800px">
+      <div class="ab" style="left:0;top:${YC-160}px;width:360px;height:166px">${escala(caminhao(),360)}</div>
+      <div class="ab" style="left:0;top:${YC+22}px;width:360px;text-align:center"><div class="tag v nome" style="font-size:20px;padding:8px 18px">Transportador</div></div>
+      <div class="ab lbl sub" style="left:0;top:${YC+76}px;width:360px;text-align:center;font-size:18px;color:#4B5563">leva</div></div>`,cena);
+  const XT0=316, XT1=600;
   const doc=(sigla,cls)=>el(`<div class="ab" style="left:0;top:0"><div class="row" style="width:104px;height:58px;gap:8px;padding:0 12px;border-radius:12px;background:#fff;
       border:2px solid ${cls==='a'?'#F2B63D':'#50D088'};box-shadow:0 10px 22px rgba(16,24,40,.12)"><span class="row" style="color:var(--${cls}e)">${cls==='a'?ic('file-check',22):ic('file-text',22)}</span>
       <div style="font-weight:800;font-size:20px;color:var(--${cls}e)">${sigla}</div></div></div>`,cena);
   const mtr=doc('MTR','v'), cdf=doc('CDF','a');
   // os dois papéis da Recicla Vale, em duas faixas
   const faixa=(y,esq,dir,papel,lado,sig,cls)=>{const f=el(`<div class="ab" style="left:0;top:${y}px;width:1280px;height:110px"></div>`,gA);
-    const nome=(x,txt,id)=>el(`<div class="ab" style="left:${x}px;top:0;width:300px;text-align:center"><div class="tag ${id}" style="font-size:19px;padding:8px 16px;background:#F3F5F7;color:#121212">${ic('building-2',19)}${txt}</div></div>`,f);
+    const nome=(x,txt,id)=>el(`<div class="ab" style="left:${x}px;top:0;width:300px;text-align:center"><div class="tag ${id}" style="font-size:21px;padding:9px 18px;background:#F3F5F7;color:#121212">${ic('building-2',21)}${txt}</div></div>`,f);
     const a=nome(130,esq,'fe'), b=nome(850,dir,'fd');
-    const p=el(`<div class="ab" style="left:${lado==='e'?130:850}px;top:48px;width:300px;text-align:center"><div class="tag ${cls}" style="font-size:16px;padding:5px 13px">${papel}</div></div>`,f);
-    const s=seta(f,450,21,830,21,'#C9D2DA',4);
-    const d=el(`<div class="ab" style="left:0;top:0"><div class="row" style="width:96px;height:44px;gap:7px;padding:0 11px;border-radius:11px;background:#fff;
+    const p=el(`<div class="ab" style="left:${lado==='e'?130:850}px;top:56px;width:300px;text-align:center"><div class="tag ${cls}" style="font-size:17px;padding:6px 14px">${papel}</div></div>`,f);
+    const s=seta(f,462,24,818,24,'#C9D2DA',4);
+    const d=el(`<div class="ab" style="left:0;top:0"><div class="row" style="width:104px;height:48px;gap:7px;padding:0 12px;border-radius:12px;background:#fff;
         border:2px solid ${sig==='CDF'?'#F2B63D':'#50D088'}"><span class="row" style="color:var(--${sig==='CDF'?'a':'v'}e)">${sig==='CDF'?ic('file-check',19):ic('file-text',19)}</span>
         <div style="font-weight:800;font-size:18px;color:var(--${sig==='CDF'?'a':'v'}e)">${sig}</div></div></div>`,f);
     return {f,a,b,p,s,d}};
-  const F1=faixa(500,'Recicla Vale','Aços Quiririm','geradora','e','MTR','v'), F2=faixa(632,'Auto Peças Vale Forte','Recicla Vale','destinadora','d','CDF','a');
+  const F1=faixa(492,'Recicla Vale','Aços Quiririm','geradora','e','MTR','v'), F2=faixa(628,'Auto Peças Vale Forte','Recicla Vale','destinadora','d','CDF','a');
 
   // ---------------- cena B · a ordem no tempo
   const gB=grupo();
@@ -308,10 +308,12 @@ CAPS[1]=()=>{
   const per=el(`<div class="ab" style="left:${X0}px;top:${YR-196}px;width:${X1-X0}px;height:40px">
       <div class="ab" style="left:0;top:22px;width:100%;height:14px;border:3px solid #F2B63D;border-bottom:none;border-radius:8px 8px 0 0"></div>
       <div class="ab" style="left:0;top:0;width:100%;text-align:center"><div class="tag a" style="font-size:16px;padding:5px 13px">um período</div></div></div>`,gB);
-  const cB=el(`<div class="ab" style="left:1040px;top:${YR-150}px;width:150px">${folha('CDF','do período','a',150,150)}</div>`,gB);
-  const liga=el(`<svg class="ab" style="left:0;top:0;overflow:visible" width="1280" height="800"><g fill="none" stroke="#F2B63D" stroke-width="3" stroke-linecap="round">
-      ${DIAS.map(d=>`<path d="M${dia(d)+60} ${YR-97} C ${dia(d)+200} ${YR-97}, 960 ${YR-75}, 1036 ${YR-75}"/>`).join('')}</g></svg>`,gB);
-  const ligas=[...liga.querySelectorAll('path')];
+  const cB=el(`<div class="card" style="left:1036px;top:${YR-196}px;width:180px;height:196px;padding:16px 18px">
+      <div class="row" style="gap:8px"><div class="ico a" style="width:34px;height:34px;border-radius:9px">${ic('file-check',19)}</div>
+        <div style="font-weight:800;font-size:22px;color:var(--ae)">CDF</div></div>
+      <div style="margin-top:8px;font-weight:700;font-size:15px">do período</div></div>`,gB);
+  const mini=DIAS.map((d,i)=>el(`<div class="ab" style="left:0;top:0"><div class="row" style="width:76px;height:30px;gap:5px;padding:0 9px;border-radius:8px;background:#fff;
+      border:2px solid #50D088"><span class="row" style="color:var(--ve)">${ic('file-text',15)}</span><div style="font-weight:800;font-size:14px;color:var(--ve)">MTR</div></div></div>`,gB));
 
   return t=>{
     // tempos da cena A
@@ -320,10 +322,10 @@ CAPS[1]=()=>{
     const tc=W(2,'CDF'), tcf=W(2,'confirmando'), tre=W(2,'recebeu'), td2=W(2,'destino');
     const tpa=W(3,'papeis'), tma=W(3,'manda'), taq=W(3,'Acos'), tgr=W(3,'geradora'), tm3=W(3,'MTR'), tau=W(3,'Auto'), tcc=W(3,'ca'), tdn=W(3,'destinadora'), tc3=W(3,'CDF');
     // tempos da cena B
-    const atB=W(4,'Uma')-.3, tor=W(4,'ordem'), tte=W(4,'tempo'), tm4=W(4,'MTR'), tc4=W(4,'carga'), trc=W(4,'recebe'), tbx=W(4,'baixa'), tcd=W(4,'CDF'),
+    const atB=W(4,'ordem')-.3, tor=W(4,'ordem'), tte=W(4,'tempo'), tm4=W(4,'MTR'), tc4=W(4,'carga'), trc=W(4,'recebe'), tbx=W(4,'baixa'), tcd=W(4,'CDF'),
           tpe=W(4,'periodo'), tju=W(4,'junta'), tsu=W(4,'substitui');
     // a A sai quando a B entra (o mesmo quadro nas duas janelas)
-    const troca=eo(pr(t,atB-.35,.35)); gA.style.opacity=(1-troca).toFixed(4); gA.style.visibility=troca>=1?'hidden':'visible';
+    const troca=eo(pr(t,atB-.5,.4)); gA.style.opacity=(1-troca).toFixed(4); gA.style.visibility=troca>=1?'hidden':'visible';
     gB.style.visibility=troca<=0?'hidden':'visible';
     // --- cena A
     posTitulo(titA,t,atA-.6,tg-.25);
@@ -333,33 +335,33 @@ CAPS[1]=()=>{
     vis(eD,t,tde-.15,1e9,{dy:18}); vis(eD.querySelector('.sub'),t,tdo-.15,1e9,{dy:6});
     // o MTR sai do gerador, sobe no caminhão e vai com a carga até o destinador
     const mv=eio(pr(t,tca-.1,Math.max(1.2,tds-tca+.2))), xt=lerp(XT0,XT1,mv);
-    tr.style.left=xt.toFixed(2)+'px'; rodas(tr,xt-XT0,.6);
-    const camX=xt+150-52, camY=YC-153-50;                     // a folha em cima da carga
+    tr.style.left=xt.toFixed(2)+'px'; rodas(tr,xt-XT0,.72);
+    const camX=xt+180-52, camY=YC-198;                         // a folha em cima da carga
     let mx,my;
-    if(t<tac){mx=180-52;my=YC-152-74}                          // em cima do gerador
-    else{const p=eio(pr(t,tac,.7));mx=lerp(180-52,camX,p);my=lerp(YC-152-74,camY,p)-60*4*p*(1-p)}
-    const pf=eio(pr(t,tds+.05,.6)); if(pf>0){mx=lerp(camX,1100-52,pf);my=lerp(camY,YC-150-74,pf)-50*4*pf*(1-pf)}
+    if(t<tac){mx=180-52;my=YC-180-74}                          // em cima do gerador
+    else{const p=eio(pr(t,tac,.7));mx=lerp(180-52,camX,p);my=lerp(YC-180-74,camY,p)-60*4*p*(1-p)}
+    const pf=eio(pr(t,tds+.05,.6)); if(pf>0){mx=lerp(camX,1100-52,pf);my=lerp(camY,YC-164-74,pf)-50*4*pf*(1-pf)}
     mtr.style.transform=`translate(${mx.toFixed(2)}px,${my.toFixed(2)}px)`; vis(mtr.firstElementChild,t,tm-.15,1e9,{dy:0,sc:.7});
     // o CDF volta do destinador para o gerador, com o visto
-    const q=arco(cdf,t,tcf-.05,Math.max(1.2,td2-tcf+.3),1100-52,YC-150-74-70,180-52,YC-152-74,-90,0);
+    const q=arco(cdf,t,tcf-.05,Math.max(1.2,td2-tcf+.3),1100-52,YC-164-74-70,180-52,YC-180-74,-90,0);
     vis(cdf.firstElementChild,t,tc-.15,1e9,{dy:0,sc:.7}); pulse(cdf.firstElementChild,t,tre,.08,.7);
     // os dois papéis: o desenho encolhe e sobe; as faixas com os nomes entram embaixo
-    const enc=eio(pr(t,tpa-.6,.8)); cena.style.transform=`translate(0,${(-16*enc).toFixed(2)}px) scale(${lerp(1,.6,enc).toFixed(4)})`;
+    const enc=eio(pr(t,tpa-.6,.8)); cena.style.transform=`translate(0,${(-22*enc).toFixed(2)}px) scale(${lerp(1,.6,enc).toFixed(4)})`;
     vis(F1.a,t,tma-.15,1e9,{dy:10}); vis(F1.b,t,taq-.15,1e9,{dy:10}); traco(F1.s.p,t,taq+.1,.5); vis(F1.s.ponta,t,taq+.5,1e9,{dy:0,din:.25});
     vis(F1.p,t,tgr-.15,1e9,{dy:8});
-    arco(F1.d,t,tm3-.15,.9,460,-1,720,-1,0,0); vis(F1.d.firstElementChild,t,tm3-.15,1e9,{dy:0,sc:.7});
+    arco(F1.d,t,tm3-.15,.9,476,0,700,0,0,0); vis(F1.d.firstElementChild,t,tm3-.15,1e9,{dy:0,sc:.7});
     vis(F2.a,t,tau-.15,1e9,{dy:10}); vis(F2.b,t,tcc-.2,1e9,{dy:10}); traco(F2.s.p,t,tcc,.5); vis(F2.s.ponta,t,tcc+.4,1e9,{dy:0,din:.25});
     vis(F2.p,t,tdn-.15,1e9,{dy:8});
-    arco(F2.d,t,tc3-.15,.9,720,-1,460,-1,0,0); vis(F2.d.firstElementChild,t,tc3-.15,1e9,{dy:0,sc:.7});
+    arco(F2.d,t,tc3-.15,.9,700,0,476,0,0,0); vis(F2.d.firstElementChild,t,tc3-.15,1e9,{dy:0,sc:.7});
     // --- cena B
-    posTitulo(titB,t,atB-.35,tor-.2);
-    vis(regua,t,tor-.15,1e9,{dy:10});
+    posTitulo(titB,t,atB-.6,tte-.2);
+    vis(regua,t,tte-.15,1e9,{dy:10});
     mB.forEach((m,i)=>{vis(m.querySelector('.mk'),t,tm4-.15+i*.22,1e9,{dy:-16}); vis(m.querySelector('.cam'),t,tc4-.15+i*.18,1e9,{dy:-8,sc:.8});
       vis(m.querySelector('.ok'),t,trc+i*.25,1e9,{dy:0,sc:.5}); pulse(m.querySelector('.mk'),t,tsu,.05,.8)});
     vis(baixa,t,tbx-.15,1e9,{dy:8});
     vis(cB,t,tcd-.15,1e9,{dy:16}); pulse(cB,t,tsu+.25,.05,.8);
     vis(per,t,tpe-.15,1e9,{dy:-8});
-    ligas.forEach((p,i)=>traco(p,t,tju-.1+i*.12,.6));
+    mini.forEach((m,i)=>{arco(m,t,tju-.1+i*.18,.8,dia(DIAS[i])-38,YR-112,1054+i*14,YR-104+i*22,-70,0); vis(m.firstElementChild,t,tju-.1+i*.18,1e9,{dy:0,sc:.8})});
   };
 };
 
@@ -371,18 +373,18 @@ CAPS[1]=()=>{
 CAPS[2]=()=>{
   const g=grupo();
   const tit=titulo(g,'Ambiental','Licença e fiscalização');
-  const pasta=pastaLicenca(490,214,g);
+  const pasta=pastaLicenca(330,214,g);
   const dM=el(`<div class="ab" style="left:0;top:0">${folha('MTR','',  'v',150,120)}</div>`,g);
   const dC=el(`<div class="ab" style="left:0;top:0">${folha('CDF','','a',150,120)}</div>`,g);
-  const pr1=el(`<div class="card" style="left:900px;top:214px;width:280px;height:300px;padding:24px 26px">
+  const pr1=el(`<div class="card" style="left:770px;top:214px;width:280px;height:300px;padding:24px 26px">
       <div class="row" style="gap:12px"><div class="ico a" style="width:52px;height:52px">${ic('clipboard-check',28)}</div>
         <div style="font-weight:800;font-size:22px">Fiscalização</div></div></div>`,g);
   const linha=(y,txt,cls)=>el(`<div class="ab row" style="left:26px;top:${y}px;width:228px;height:50px;gap:12px;padding:0 14px;border-radius:12px;background:#F7F9FA">
       <div class="cx" style="width:26px;height:26px;border-radius:7px;border:2.5px solid #C3CAD2;display:flex;align-items:center;justify-content:center;color:#fff">${ic('check',18)}</div>
       <div style="font-weight:800;font-size:19px;color:var(--${cls}e)">${txt}</div></div>`,pr1);
   const l1=linha(150,'MTR','v'), l2=linha(214,'CDF','a');
-  const s1=seta(g,800,364,890,364,'#C9D2DA',4);
-  const P0=[[150,250],[150,410]], P1=[[520,250],[600,276]];
+  const s1=seta(g,642,364,758,364,'#C9D2DA',4);
+  const P0=[[110,250],[110,410]], P1=[[380,250],[440,276]];
 
   return t=>{
     const at=W(0,'Quem')-.3, tli=W(0,'licenca'), tm=W(1,'MTR'), tc=W(1,'CDF'), tmo=W(1,'mostra'), tca=W(1,'carga'), tfi=W(1,'fiscalizacao'),
@@ -407,14 +409,14 @@ CAPS[2]=()=>{
 CAPS[5]=()=>{
   const g=grupo();
   const tit=titulo(g,'MTR','O PDF vai com o motorista');
-  const chao=el('<div class="ab" style="left:90px;top:578px;width:1100px;height:6px;border-radius:3px;background:#E3E7EC"></div>',g);
-  const cam=el(`<div class="ab" style="left:120px;top:${578-224}px;width:500px;height:230px">${caminhaoCom(cargaChaparia(),true)}</div>`,g);
-  const pl=el(`<div class="ab" style="left:470px;top:596px">${placa('GHT7B19',18)}</div>`,g);
-  const mot=el(`<div class="ab" style="left:690px;top:${578-218}px;width:120px;height:220px">${motoristaSvg()}</div>`,g);
-  const nm=el(`<div class="ab" style="left:650px;top:596px;width:200px;text-align:center;font-weight:800;font-size:18px">Motorista</div>`,g);
+  const chao=el('<div class="ab" style="left:160px;top:578px;width:960px;height:6px;border-radius:3px;background:#E3E7EC"></div>',g);
+  const cam=el(`<div class="ab" style="left:250px;top:${578-224}px;width:500px;height:230px">${caminhaoCom(cargaChaparia(),true)}</div>`,g);
+  const pl=el(`<div class="ab" style="left:600px;top:596px">${placa('GHT7B19',18)}</div>`,g);
+  const mot=el(`<div class="ab" style="left:820px;top:${578-218}px;width:120px;height:220px">${motoristaSvg()}</div>`,g);
+  const nm=el(`<div class="ab" style="left:780px;top:596px;width:200px;text-align:center;font-weight:800;font-size:18px">Motorista</div>`,g);
   const pdf=el(`<div class="ab" style="left:0;top:0;transform-origin:0 0">${folha('MTR','','v',150,160)}
       <div class="ab" style="right:-14px;top:-14px"><div class="tag a" style="font-size:15px;padding:5px 11px">PDF</div></div></div>`,g);
-  const A=[566,190], B=[770,450];                                // a folha sozinha / na mão do motorista
+  const A=[566,190], B=[900,450];                                // a folha sozinha / na mão do motorista
 
   return t=>{
     const at=W(2,'PDF',2)-.3, tp=W(2,'PDF',2), tmo=W(2,'motorista'), tca=W(2,'carga');

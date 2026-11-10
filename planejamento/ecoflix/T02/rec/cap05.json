@@ -1,0 +1,447 @@
+{
+ "name": "t02-cap05",
+ "title": "T2 · Cap. 5 · O balanceiro e o escritório (narração ESTIMADA 66,2 s; marcas L1..L8 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "seed": "t02-cap05",
+ "pace": 0.5,
+ "cps": 30,
+ "tail": 1.5,
+ "start": {
+  "x": 560,
+  "y": 470
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true"
+ },
+ "seedExtra": [
+  "t02/inicio",
+  "t02/apos-cap03",
+  "t02/apos-cap04"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "waitFor",
+   "target": {
+    "label": "E-mail"
+   },
+   "timeout": 30
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "E-mail"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "Senha",
+    "exact": true
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Rafael!",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/configuracoes?tab=users"
+  },
+  {
+   "do": "waitFor",
+   "text": "Empresa: Recicla Vale Metais",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|Algo deu errado|Falha ao|Something went wrong/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{document.querySelectorAll('[data-sonner-toast][data-type=error]').forEach(t=>{const s='TOAST DE ERRO: '+t.textContent.trim().slice(0,90);if(!window.__avisos.includes(s)&&window.__avisos.length<10)window.__avisos.push(s)})},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0.4
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Marcos Antunes",
+    "exact": true,
+    "within": "main"
+   },
+   "at": 2.91,
+   "label": "clica no Marcos"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "text": "Perfil de acesso",
+    "exact": true,
+    "within": "main"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Editar",
+    "exact": true,
+    "within": "main"
+   },
+   "at": 4.13,
+   "label": "Editar (detalhe do Marcos)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Atualize os dados e permissões deste usuário",
+   "timeout": 10
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Editar Usuário\", \"Operador Padrão\", \"Nova Senha (opcional)\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog],[role=alertdialog]\")];const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Editar Usuário com o Operador Padrão marcado"
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 9.19
+  },
+  {
+   "do": "upload",
+   "target": {
+    "role": "button",
+    "name": "Selecionar foto",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "file": "assets/marcos-antunes.jpg",
+   "at": 10.78,
+   "label": "Selecionar foto: marcos-antunes.jpg"
+  },
+  {
+   "do": "waitFor",
+   "text": "Foto atualizada com sucesso!",
+   "timeout": 10
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 14.32
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] #initial-screen"
+   },
+   "at": 14.85,
+   "label": "Tela inicial (Automática)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Caixa",
+    "exact": true
+   },
+   "at": 16.82,
+   "label": "Tela inicial: Caixa"
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 22.18
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=document.querySelector(\"[role=dialog] input[placeholder=\\\"Buscar tela ou a\\u00e7\\u00e3o...\\\"]\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-150);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 22.98,
+   "label": "desce o corpo da janela"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] #password"
+   },
+   "seconds": 1.4,
+   "at": 26.83,
+   "label": "Nova Senha (opcional) (sem digitar)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 29.29
+  },
+  {
+   "do": "click",
+   "target": {
+    "placeholder": "Buscar tela ou ação...",
+    "within": "[role=dialog]"
+   },
+   "at": 29.59,
+   "label": "Buscar tela ou ação..."
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Buscar tela ou ação...",
+    "within": "[role=dialog]"
+   },
+   "text": "lucro",
+   "cps": 20,
+   "at": 30.59,
+   "label": "busca: lucro",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Ver ações de Caixa",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 31.48,
+   "label": "Clique para ver 1 ação (Caixa)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] div.items-start:has(> [role=switch][aria-label='Ver Projeção de Lucro'])"
+   },
+   "seconds": 1.6,
+   "at": 32.14,
+   "label": "aparece o Ver Projeção de Lucro, dentro do Caixa",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "switch",
+    "name": "Ver Projeção de Lucro",
+    "exact": true
+   },
+   "at": 34.82,
+   "label": "desliga Ver Projeção de Lucro"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const p=document.querySelector('[role=dialog] span.bg-amber-500');const a=[...document.querySelectorAll('[role=dialog] button.bg-primary')].filter(b=>['Acesso Total','Operador Padrão','Somente Visualização'].includes(b.textContent.trim()));return (p&&!a.length?'OK: ':'DIFERENTE: ')+'Personalizado '+!!p+', perfis marcados '+a.length})()",
+   "label": "confere perfil virou Personalizado"
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 35.56
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] span.bg-amber-500"
+   },
+   "seconds": 1.2,
+   "at": 37.93,
+   "label": "ZOOM Perfis rápidos com o selo Personalizado",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Operador Padrão",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.0,
+   "at": 39.83,
+   "label": "Operador Padrão (desmarcado)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 42.14
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Atualizar",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 42.44,
+   "label": "Atualizar"
+  },
+  {
+   "do": "waitFor",
+   "text": "Permissões atualizadas!",
+   "timeout": 12
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Permissões atualizadas! O usuário precisa fazer login novamente para ver as mudanças.\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"body\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere aviso de permissões"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "text": "31 permissões · Ativo",
+    "exact": true,
+    "within": "main"
+   },
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Marcos Antunes",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 1.2,
+   "at": 48.99,
+   "label": "Marcos na lista: foto e 31 permissões",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 53.5
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Juliana Prado",
+    "exact": true,
+    "within": "main"
+   },
+   "at": 54.1,
+   "label": "clica na Juliana"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "text": "Telas (7)",
+    "exact": true,
+    "within": "main"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Personalizado\", \"15 permissões configuradas individualmente.\", \"Telas (7)\", \"Ações (8)\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere detalhe da Juliana"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=[...document.querySelectorAll(\"main *\")].filter(e=>e.textContent.trim()===\"Telas (7)\").sort((a,b)=>a.textContent.length-b.textContent.length||a.children.length-b.children.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-420);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/500),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 55.0,
+   "label": "o detalhe desce até Telas (7)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Contas a Pagar/Receber",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.2,
+   "at": 56.41,
+   "label": "Contas a Pagar/Receber (as contas)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Movimentações Bancárias",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.2,
+   "at": 57.31,
+   "label": "Movimentações Bancárias (o banco)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Relatório Financeiro",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.2,
+   "at": 58.15,
+   "label": "Relatório Financeiro",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=[...document.querySelectorAll(\"main *\")].filter(e=>e.textContent.trim()===\"Telas (7)\").sort((a,b)=>a.textContent.length-b.textContent.length||a.children.length-b.children.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-330);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/350),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 59.0,
+   "label": "o detalhe desce mais um pouco (Fiscal & Ambiental)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Fiscal & Ambiental",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 2.0,
+   "at": 59.29,
+   "label": "Fiscal & Ambiental (as notas); a lista não tem o Caixa",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 66.23
+  }
+ ]
+}

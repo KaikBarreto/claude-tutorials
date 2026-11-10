@@ -38,7 +38,7 @@ master?"; 7→8 "Agora o tamanho da equipe"; 8→9 "Pra fechar, os valores".
 |---|---|
 | Plano da empresa | `companies.subscription_plan` `personalizado`, **`max_users` 3** (Rafael, Juliana e Marcos: no fim do T2 a empresa fica em 3/3, e o cap08 mostra a janela de usuário extra) |
 | Nome na aba | `companies.name` "Recicla Vale Metais" (a linha "Empresa: ...") |
-| E-mails | `rafael.nogueira@reciclavalemetais.example` (se o T1 não definir outro), `marcos.antunes@reciclavalemetais.example`, `juliana.prado@reciclavalemetais.example` |
+| E-mails | `rafael@reciclavalemetais.example` (o do T1; junção), `marcos.antunes@reciclavalemetais.example`, `juliana.prado@reciclavalemetais.example` |
 | Senhas (digitadas, nunca faladas) | Marcos `Balanca#2026`, Juliana `Escritorio#2026` (as duas dão "Senha forte") |
 | Marcos Antunes (criado no cap02-03, ajustado no cap05) | "Operador Padrão" menos "Ver Projeção de Lucro" = 31 permissões, `permission_preset` nulo ("Personalizado"); tela inicial `/caixa`; foto (avatar desenhado, sem rosto real); ativo; role `operator` |
 | Juliana Prado (criada no cap04) | 7 telas: "Dashboard", "Movimentações Bancárias", "Relatório Financeiro", "Contas a Pagar/Receber", "Pedidos", "Fiscal & Ambiental", "Clientes e Fornecedores"; 8 ações: "Ver Totais e Valores Financeiros", "Gerenciar Contas Bancárias", "Conciliar Extrato Bancário", "Criar Conta a Pagar/Receber", "Dar Baixa em Conta", "Emitir NF-e (Produto)", "Emitir NFS-e (Serviço)", "Ver saldos de cliente/fornecedor"; tela inicial automática; sem foto; ativa; role `operator` |

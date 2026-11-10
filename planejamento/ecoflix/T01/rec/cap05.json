@@ -1,0 +1,425 @@
+{
+ "name": "t01-cap05",
+ "title": "T01 · Cap. 5 · Logo, ícone, nome e CNPJ (narração 94,1 s ESTIMADA; marcas L1..L9 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
+ "seed": "t01-cap05",
+ "pace": 0.5,
+ "cps": 14,
+ "tail": 1.5,
+ "start": {
+  "x": 720,
+  "y": 150
+ },
+ "anonymous": true,
+ "seedExtra": [
+  "t01/inicio"
+ ],
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "initial-preferences-set": "true",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10"
+ },
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/login"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "timeout": 30
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "input[type=password]"
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Rafael!",
+   "timeout": 40
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel|Algo deu errado|Falha ao carregar|Personalize sua experi[êe]ncia|Voc[êe] j[áa] est[áa] conectado|Sistema atualizado|O rel[óo]gio deste computador|Sess[ãa]o expirou/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');if(f&&window.__avisos.length<10&&!window.__avisos.includes('LEMBRETE DA TRILHA'))window.__avisos.push('LEMBRETE DA TRILHA')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0.4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "button[aria-label='Configurações']"
+   },
+   "seconds": 1.4,
+   "at": 3.04,
+   "label": "botão Configurações no rodapé do menu",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[aria-label='Menu da conta']"
+   },
+   "seconds": 0.49,
+   "at": 6.48,
+   "label": "card com o seu nome, logo acima",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "button[aria-label='Configurações']"
+   },
+   "at": 7.62,
+   "label": "Configurações (rodapé do menu)",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "text": "Configurações do Sistema",
+   "timeout": 15
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 8.13
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "#tab-btn-company"
+   },
+   "seconds": 0.6,
+   "at": 9.84,
+   "label": "abas das Configurações",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "#tab-btn-company"
+   },
+   "seconds": 0.2,
+   "at": 12.91,
+   "label": "aba Empresa",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "#tab-btn-usability"
+   },
+   "seconds": 0.4,
+   "at": 13.74,
+   "label": "aba Usabilidade",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "#tab-btn-condicoes-pagamento"
+   },
+   "seconds": 0.8,
+   "at": 14.88,
+   "label": "aba Condições de Pagamento",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "#tab-btn-appearance"
+   },
+   "seconds": 0.26,
+   "at": 16.85,
+   "label": "aba Aparência",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "#tab-btn-shortcuts svg"
+   },
+   "seconds": 0.2,
+   "at": 17.76,
+   "label": "aba Atalhos (na borda da faixa)",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "#tab-btn-users"
+   },
+   "seconds": 1.6,
+   "at": 18.54,
+   "label": "aba Usuários e Permissões (próximo tutorial)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 21.84
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Identidade Visual",
+    "exact": true
+   },
+   "seconds": 0.7,
+   "at": 23.27,
+   "label": "Identidade Visual",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "upload",
+   "target": {
+    "text": "Nenhum logo enviado",
+    "exact": true
+   },
+   "file": "assets/recicla-vale-logo.png",
+   "at": 24.62,
+   "label": "escolhe o logo recicla-vale-logo.png"
+  },
+  {
+   "do": "waitFor",
+   "text": "Logo atualizado com sucesso!",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main img[alt='Logo']"
+   },
+   "seconds": 1.4,
+   "at": 29.05,
+   "label": "o logo da Recicla Vale na tela",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 31.45
+  },
+  {
+   "do": "upload",
+   "target": {
+    "text": "1:1",
+    "exact": true
+   },
+   "file": "assets/recicla-vale-icone.png",
+   "at": 32.54,
+   "label": "escolhe o ícone recicla-vale-icone.png"
+  },
+  {
+   "do": "waitFor",
+   "text": "Ícone atualizado com sucesso!",
+   "timeout": 10
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify([...document.querySelectorAll('main img')].map(i=>[i.alt,i.naturalWidth]))",
+   "label": "confere logo e ícone carregados (largura > 0)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Usado no menu lateral quando recolhido"
+   },
+   "seconds": 1.8,
+   "at": 35.09,
+   "label": "Usado no menu lateral quando recolhido (White Label)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 38.86
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "White Label"
+   },
+   "seconds": 2.6,
+   "at": 40.3,
+   "label": "cartão White Label (recolhido, sem abrir)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "White Label"
+   },
+   "seconds": 2.4,
+   "at": 46.1,
+   "label": "White Label: depende do plano contratado",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 50.45
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const m=[...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);return m||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"Nome da Empresa\"&&e.offsetParent);if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-330);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 50.45,
+   "label": "desce até o nome e o CNPJ"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "#company-name"
+   },
+   "seconds": 1.2,
+   "at": 51.0,
+   "label": "Nome da Empresa: Recicla Vale Metais",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "#show-name"
+   },
+   "seconds": 2.8,
+   "at": 53.18,
+   "label": "chave Exibir nos documentos (ligada)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 58.54
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#company-cnpj"
+   },
+   "at": 59.25,
+   "label": "CNPJ/CPF"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#company-cnpj"
+   },
+   "text": "47318506000107",
+   "cps": 10,
+   "at": 60.81,
+   "label": "digita o CNPJ: 47.318.506/0001-07",
+   "noClick": true
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const esp=[\"47.318.506/0001-07\"];let out='';for(let i=0;i<12;i++){const v=[...document.querySelectorAll(\"main\"+' input, '+\"main\"+' textarea')].map(e=>e.value).join(' | ');const falta=esp.filter(e=>!v.includes(e));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+v.slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere máscara do CNPJ"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "#company-cnpj"
+   },
+   "seconds": 1.8,
+   "at": 69.47,
+   "label": "CNPJ conferido número por número",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 71.57
+  },
+  {
+   "do": "mark",
+   "name": "L9",
+   "at": 80.95
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const m=[...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);return m||document.scrollingElement};const el=[...document.querySelectorAll('main *')].filter(e=>e.textContent.trim().startsWith(\"Salvar alterações\")&&e.offsetParent).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-560);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/1400),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 80.95,
+   "label": "desce ao rodapé do cartão Empresa"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Salvar alterações",
+    "exact": true
+   },
+   "seconds": 2.2,
+   "at": 82.17,
+   "label": "botão Salvar alterações (sem clicar)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 94.14
+  }
+ ]
+}

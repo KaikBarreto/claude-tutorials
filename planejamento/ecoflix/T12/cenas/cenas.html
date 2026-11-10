@@ -1,0 +1,557 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<!-- T12 · Coletas e Logística · cenas de conceito (EcoFlix). Cópia do kit perfis/ecoflix/cenas/cenas_ecoflix.html (estilo,
+     utilidades e o caminhão do kit; os dois exemplos saíram, o desenho do "Tara e peso líquido" volta no CAPS[8], em barras).
+     Uma cena por [ILUSTRAÇÃO] do roteiro, presa às palavras da fala com W(linha, 'palavra'); janelas, resumo e o que aparece
+     escrito em ilustracoes.json. Tempos estimados em tempos/capNN.json (quando a voz chegar, o capNN.json de verdade entra no
+     lugar e as cenas se ajustam). Utilidades que faltavam no kit (luz, tinge, pulsos, monte, busto, carroça, folhinha) vêm da T10.
+     Render de uma cena: node render_cenas.cjs <cap> <capNN.json> <saida.mp4> --html cenas.html --de <at> --ate <at+dur> -->
+<style>
+@font-face{font-family:M;font-weight:500;src:url(../../../web/fonts/montserrat-latin-500-normal.woff2) format('woff2')}
+@font-face{font-family:M;font-weight:600;src:url(../../../web/fonts/montserrat-latin-600-normal.woff2) format('woff2')}
+@font-face{font-family:M;font-weight:700;src:url(../../../web/fonts/montserrat-latin-700-normal.woff2) format('woff2')}
+@font-face{font-family:M;font-weight:800;src:url(../../../web/fonts/montserrat-latin-800-normal.woff2) format('woff2')}
+@font-face{font-family:M;font-weight:500;src:url(../../../web/fonts/montserrat-latin-ext-500-normal.woff2) format('woff2');unicode-range:U+0100-024F}
+@font-face{font-family:M;font-weight:700;src:url(../../../web/fonts/montserrat-latin-ext-700-normal.woff2) format('woff2');unicode-range:U+0100-024F}
+/* ---------------------------------------------------------------- paleta EcoFlix (marca: acento #50D088, escuro #121212)
+   --v  acento: preenchimentos, barras, contornos de destaque (nunca texto sobre branco: contraste baixo)
+   --ve verde escuro: texto e ícone verde sobre branco (contraste 5,0)   --vc verde claro: fundo de ícone/resultado
+   --a  âmbar: o SEGUNDO conceito da cena (ex.: competência x caixa)     --ae texto âmbar (5,9)   --ac âmbar claro
+   --t  texto (o escuro da marca)   --c texto secundário (4,8)   --l linhas   --e painel escuro (mostrador) */
+:root{--v:#50D088;--ve:#2E7D57;--vc:#EAF8F0;--vm:#A9E9C6;--a:#F2B63D;--ae:#8A5A00;--ac:#FFF5DF;
+  --t:#121212;--c:#6B7280;--l:#E6E9EE;--e:#121212}
+*{box-sizing:border-box;margin:0;padding:0;transition:none!important;animation:none!important}
+html,body{width:1280px;height:800px;overflow:hidden;background:#fff}
+body{font-family:M,sans-serif;color:var(--t);-webkit-font-smoothing:antialiased}
+#st{position:absolute;inset:0;overflow:hidden;background:
+  radial-gradient(1100px 650px at 92% -12%,rgba(80,208,136,.09),transparent 62%),
+  radial-gradient(900px 600px at -12% 112%,rgba(80,208,136,.06),transparent 60%),#fff}
+.g{position:absolute;left:0;top:0;width:1280px;height:800px;transform-origin:640px 400px}
+.ab{position:absolute}
+.row{display:flex;align-items:center}
+/* título da cena: área (kicker) + conceito; sozinho fica grande no centro e sobe quando o desenho entra */
+.kick{font-weight:700;font-size:15px;letter-spacing:.3em;color:var(--ve);text-transform:uppercase}
+.h{font-weight:800;font-size:46px;letter-spacing:-.01em;line-height:1.1}
+/* cartão, chip, etiqueta, ícone */
+.card{position:absolute;background:#fff;border:1px solid #E1E8E4;border-radius:18px;
+  box-shadow:0 18px 40px rgba(16,24,40,.10),0 3px 8px rgba(16,24,40,.06)}
+.ic{display:inline-flex;align-items:center;justify-content:center;flex:none}
+.ic svg{width:100%;height:100%}
+.ico{display:flex;align-items:center;justify-content:center;flex:none;border-radius:14px;background:var(--vc);color:var(--ve)}
+.ico.a{background:var(--ac);color:var(--ae)}
+.tag{display:inline-flex;align-items:center;gap:8px;padding:9px 18px;border-radius:999px;font-weight:800;font-size:20px;white-space:nowrap}
+.tag.v{background:var(--vc);color:var(--ve)} .tag.a{background:var(--ac);color:var(--ae)}
+.lbl{font-weight:700;font-size:17px;color:var(--c)}
+.num{font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+.op{position:absolute;width:60px;height:60px;border-radius:50%;background:#F2F4F7;color:var(--t);display:flex;
+  align-items:center;justify-content:center;font-weight:800;font-size:34px;line-height:1}
+/* mostrador da balança (painel escuro, número no acento) */
+.most{background:var(--e);border-radius:16px;padding:16px 22px 18px;box-shadow:0 16px 34px rgba(16,24,40,.22)}
+.most .ml{position:relative;height:20px;font-weight:700;font-size:15px;letter-spacing:.22em;color:#A9E9C6;text-transform:uppercase}
+.most .ml span{position:absolute;left:0;top:0;white-space:nowrap}
+.most .mn{margin-top:6px;font-weight:800;font-size:44px;color:var(--v);font-variant-numeric:tabular-nums;white-space:nowrap}
+.rip{position:absolute;width:56px;height:56px;margin:-28px 0 0 -28px;border-radius:50%;border:3px solid var(--v);opacity:0}
+/* etiqueta neutra, placa de porta, chip com seta, sinal +/- (os da T10) */
+.tag.n{background:#F2F4F7;color:#374151}
+.placa{display:inline-block;padding:9px 18px;border-radius:12px;background:#fff;border:2px solid #E1E8E4;font-weight:800;
+  font-size:21px;white-space:nowrap;box-shadow:0 6px 14px rgba(16,24,40,.06)}
+.chip{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;border-radius:999px;background:#fff;border:2px solid #E1E8E4;
+  font-weight:800;font-size:19px;white-space:nowrap}
+.chip.e .ic{color:var(--ve)} .chip.s .ic{color:var(--ae)}
+.sgn{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:50%;font-weight:800;font-size:22px;line-height:1}
+.sgn.v{background:var(--vc);color:var(--ve)} .sgn.a{background:var(--ac);color:var(--ae)}
+</style></head>
+<body><div id="st"></div>
+<script>
+// ------------------------------------------------------------------ utilidades (as do cenas_modelo.html + as da EcoFlix)
+const cl=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
+const eo=x=>1-Math.pow(1-cl(x),3);
+const eio=x=>{x=cl(x);return x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2};
+const pr=(t,a,d=.45)=>cl((t-a)/d);
+const lerp=(a,b,p)=>a+(b-a)*p;
+const $=s=>document.querySelector(s);
+const ST=document.getElementById('st');
+function el(html,parent=ST){const d=document.createElement('div');d.innerHTML=html.trim();let f=null;for(const n of [...d.childNodes]){parent.appendChild(n);if(!f&&n.nodeType===1)f=n}return f}
+function grupo(){return el('<div class="g"></div>')}
+function ic(n,px,cor){const s=(window.ICONS||{})[n]||'';return `<span class="ic" style="width:${px}px;height:${px}px;${cor?'color:'+cor:''}">${s}</span>`}
+function hex(c){c=c.replace('#','');return[0,2,4].map(i=>parseInt(c.substr(i,2),16))}
+function mix(a,b,p){const A=hex(a),B=hex(b);return `rgb(${A.map((v,i)=>Math.round(v+(B[i]-v)*cl(p))).join(',')})`}
+// aparece em a, some em b (opacidade + leve subida + escala): a entrada e a saída suaves de tudo
+function vis(e,t,a,b=1e9,o={}){
+  const din=o.din??.5,dout=o.dout??.4,dy=o.dy??16,dx=o.dx??0,sc=o.sc??.985;
+  const p=eo(pr(t,a,din)),q=1-eo(pr(t,b,dout)),op=Math.min(p,q);
+  e.style.opacity=op.toFixed(4);e.style.visibility=op<=.001?'hidden':'visible';
+  const s=sc+(1-sc)*p - (1-q)*(1-sc);
+  e.style.transform=`translate(${((1-p)*dx).toFixed(2)}px,${((1-p)*dy-(1-q)*dy*.5).toFixed(2)}px) scale(${s.toFixed(4)})`;
+  return op;
+}
+function ripple(r,t,a){const p=pr(t,a,.7);r.style.opacity=(p>0&&p<1)?(.6*(1-p)).toFixed(3):0;r.style.transform=`scale(${(.4+2.0*eo(p)).toFixed(3)})`}
+function pulse(e,t,a,amp=.045,dur=.9){const p=pr(t,a,dur);e.style.scale=(p>0&&p<1)?(1+amp*Math.sin(Math.PI*p)).toFixed(4):''}
+function digita(e,txt,t,a,b){const p=cl((t-a)/Math.max(.05,b-a));const n=Math.round(p*txt.length);
+  const car=(p>0&&p<1)||(Math.floor(t*2.2)%2===0&&p<1.2&&t>=a)?'<span style="color:var(--v);font-weight:500">|</span>':'';
+  e.innerHTML=(txt.slice(0,n)||'')+(t>=a&&t<b+.8?car:'');}
+// EcoFlix: números e dinheiro no jeito brasileiro; contagem suave de um número; traço que se desenha; arco; contorno
+const NF=new Intl.NumberFormat('pt-BR');
+const kg=v=>NF.format(Math.round(v))+' kg';
+const brl=v=>'R$ '+v.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
+function conta(e,t,a,d,v0,v1,fmt=kg){const p=eo(pr(t,a,d));const s=fmt(lerp(v0,v1,p));if(e.textContent!==s)e.textContent=s;return p}
+function traco(p,t,a,d=.8){if(!p._L){p._L=p.getTotalLength();p.style.strokeDasharray=p._L}const q=eio(pr(t,a,d));p.style.strokeDashoffset=(p._L*(1-q)).toFixed(2);p.style.opacity=q>0?1:0;return q}
+function arco(e,t,a,d,x0,y0,x1,y1,h=-80,rot=0){const p=eio(pr(t,a,d));const x=lerp(x0,x1,p),y=lerp(y0,y1,p)+h*4*p*(1-p);
+  e.style.transform=`translate(${x.toFixed(2)}px,${y.toFixed(2)}px) rotate(${(rot*p).toFixed(2)}deg)`;return p}
+function contorno(e,t,a,de,para,d=.45){e.style.borderColor=mix(de,para,eo(pr(t,a,d)))}
+// título padrão da cena: grande no centro enquanto está sozinho, sobe para o alto quando o desenho entra (em "sobe")
+function titulo(g,kick,txt){return el(`<div class="ab" style="left:0;top:0;width:1280px;text-align:center">
+  <div class="kick">${kick}</div><div class="h" style="margin-top:12px">${txt}</div></div>`,g)}
+function posTitulo(e,t,a,sobe,sai=1e9){vis(e,t,a,sai,{dy:14});const p=eio(pr(t,sobe,.7));
+  e.style.top=lerp(318,46,p).toFixed(2)+'px';e.style.scale=lerp(1.12,1,p).toFixed(4)}
+
+// ------------------------------------------------------------------ tempos da fala (capNN.json do proc.py ou estimado)
+let D=null;
+const norm=w=>w.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9%./-]+/g,'');
+function W(linha,palavra,n=1,campo='s'){
+  const alvo=norm(palavra);let k=0;
+  for(const w of D.words){if(w.linha===linha&&norm(w.w).replace(/[.,]$/,'')===alvo){k++;if(k===n)return w[campo]}}
+  for(const w of D.words){if(w.linha===linha&&norm(w.w).startsWith(alvo)){k++;if(k>=n)return w[campo]}}
+  console.warn('palavra não achada',linha,palavra);return L(linha);
+}
+const L=i=>(D.linhas[i]||{s:0}).s, LE=i=>(D.linhas[i]||{e:D.dur}).e;
+
+// ------------------------------------------------------------------ desenhos genéricos (sem marca)
+// caminhão de lado (frente para a direita), com a carga de sucata em pedaços (.pd) que podem ser descarregados
+function caminhao(){
+  const pd=[ // [forma, cor, centro da peça, destino no monte atrás do caminhão (deslocamento do centro e giro)]
+    ['<polygon points="28,90 44,52 88,42 100,90"/>','#8C5A3C',[64,66],[-224,148,6]],
+    ['<polygon points="82,90 102,36 146,48 154,90"/>','#6F7983',[118,63],[-318,122,12]],
+    ['<rect x="118" y="44" width="112" height="16" rx="8" transform="rotate(-8 174 52)"/>','#9AA3AD',[174,52],[-334,98,-18]],
+    ['<polygon points="148,90 170,54 212,44 232,90"/>','#A0694A',[190,67],[-425,148,-8]],
+    ['<polygon points="210,90 232,40 276,54 286,90"/>','#4F5861',[248,65],[-373,120,-10]],
+    ['<polygon points="258,90 282,60 308,66 312,90"/>','#8A949E',[285,75],[-375,148,4]],
+    ['<g><circle cx="192" cy="64" r="19"/><circle cx="192" cy="64" r="7" fill="#8A949E"/></g>','#5E6670',[192,64],[-242,155,200]],
+    ['<polygon points="40,70 60,50 84,64 64,86"/>','#B07A55',[62,68],[-307,100,30]]];
+  const pecas=pd.map(([f,c,[cx,cy],[dx,dy,r]])=>`<g class="pd" data-cx="${cx}" data-cy="${cy}" data-dx="${dx}" data-dy="${dy}" data-r="${r}" fill="${c}">${f}</g>`).join('');
+  const roda=x=>`<g class="roda" data-x="${x}" transform="translate(${x},196)"><circle r="26" fill="#1B1F24"/><circle r="12" fill="#9AA3AD"/>
+    <rect x="-2.5" y="-23" width="5" height="10" rx="2" fill="#5B636C"/><rect x="-2.5" y="13" width="5" height="10" rx="2" fill="#5B636C"/></g>`;
+  return `<svg viewBox="0 0 500 230" width="500" height="230" style="overflow:visible">
+    <g class="carga">${pecas}</g>
+    <rect x="18" y="86" width="304" height="88" rx="6" fill="#7E8994"/>
+    <rect x="16" y="82" width="308" height="11" rx="4" fill="#68727D"/>
+    <g stroke="#707A85" stroke-width="3">${[78,138,198,258].map(x=>`<line x1="${x}" y1="98" x2="${x}" y2="168"/>`).join('')}</g>
+    <path d="M334,176 L334,76 Q334,64 346,64 L412,64 L462,116 L472,121 Q480,124 480,134 L480,176 Z" fill="#2F3640"/>
+    <path d="M348,78 L406,78 L444,116 L348,116 Z" fill="#D7E5ED"/>
+    <rect x="470" y="142" width="10" height="11" rx="2" fill="#F2B63D"/>
+    <rect x="12" y="170" width="472" height="15" rx="4" fill="#23282E"/>
+    ${roda(92)}${roda(158)}${roda(416)}
+  </svg>`;
+}
+
+// ------------------------------------------------------------------ utilidades e desenhos que faltavam no kit (os mesmos da T10)
+// destaque de um cartão ou chip: borda no acento, fundo verde claro e anel suave, de a até b
+function luz(e,t,a,b=1e9,o={}){const d=o.d??.35,p=Math.min(eo(pr(t,a,d)),1-eo(pr(t,b,d)));
+  e.style.borderColor=mix(o.de||'#E1E8E4',o.cor||'#50D088',p);
+  if(o.fundo!==false)e.style.background=mix('#FFFFFF',o.bg||'#F4FBF7',p);
+  e.style.boxShadow=`0 0 0 ${(4*p).toFixed(2)}px rgba(${o.anel||'80,208,136'},.22)`+(o.sombra===false?'':',0 18px 40px rgba(16,24,40,.10),0 3px 8px rgba(16,24,40,.06)');
+  return p}
+// fundo verde claro de uma linha (sem borda), de a até b
+function tinge(e,t,a,b=1e9,cor='#EAF8F0'){const p=Math.min(eo(pr(t,a,.35)),1-eo(pr(t,b,.35)));e.style.background=mix('#FFFFFF',cor,p);return p}
+// anel no acento em volta de uma célula (borda transparente por padrão)
+function anel(e,t,a,b=1e9){const p=Math.min(eo(pr(t,a,.4)),1-eo(pr(t,b,.4)));e.style.borderColor=`rgba(80,208,136,${p.toFixed(3)})`;e.style.background=mix('#FFFFFF','#EEF9F2',p);return p}
+// vários pulsos no mesmo elemento (o pulse do kit sobrescreve o anterior)
+function pulsos(e,t,as,amp=.045,dur=.9){let m=0;for(const a of as){const p=pr(t,a,dur);if(p>0&&p<1)m=Math.max(m,Math.sin(Math.PI*p))}e.style.scale=m>0?(1+amp*m).toFixed(4):''}
+// barra que cresce da esquerda (transform-origin no início)
+function cresce(e,t,a,d=.8){const p=eio(pr(t,a,d));e.style.transform=`scaleX(${p.toFixed(4)})`;e.style.opacity=p>0?1:0;e.style.visibility=p>0?'visible':'hidden';return p}
+// aleatório com semente (desenhos iguais em todo quadro)
+function rnd(seed){let a=seed>>>0;return()=>{a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+const TONS={ferro:['#6F7983','#8C5A3C','#9AA3AD','#4F5861','#A0694A','#7E8994','#B07A55'],
+  pesado:['#3E464F','#4F5861','#5E6670','#2F3640','#6F7983'],cobre:['#B8733C','#C9884B','#A0602E','#D59A5E','#9A5B2E']};
+// monte de sucata: morro na cor da base + peças por cima (w x h, base em y = h)
+function monteG(w,h,tons,o={}){
+  const r=rnd(o.seed||1),n=o.n||16,esc=o.esc||1,base=o.base||'#AEB6BE';let ps='';
+  for(let i=0;i<n;i++){
+    const u=.14+.72*r(),ys=h*(1-3.8*u*(1-u)),x=w*u,s=esc*(7+11*r())*Math.max(.55,Math.min(1.4,w/220));
+    const y=Math.min(h-s*.6,ys+s*.5+(h-ys-s)*Math.pow(r(),1.3)),c=tons[Math.floor(r()*tons.length)],rot=(r()*180-90).toFixed(0);
+    if(r()<.45)ps+=`<rect x="${(x-s).toFixed(1)}" y="${(y-s*.32).toFixed(1)}" width="${(2*s).toFixed(1)}" height="${(s*.64).toFixed(1)}" rx="${(s*.2).toFixed(1)}" fill="${c}" transform="rotate(${rot} ${x.toFixed(1)} ${y.toFixed(1)})"/>`;
+    else{const k=[0,1,2,3].map(j=>{const a=j*Math.PI/2+r()*.9,rr=s*(.55+.55*r());return (x+Math.cos(a)*rr).toFixed(1)+','+(y+Math.sin(a)*rr).toFixed(1)}).join(' ');ps+=`<polygon points="${k}" fill="${c}"/>`}
+  }
+  return `<path d="M0,${h} Q${w/2},${(-.9*h).toFixed(1)} ${w},${h} Z" fill="${base}"/>${ps}`;
+}
+function monte(w,h,tons,o={}){return `<svg viewBox="0 0 ${w} ${h}" width="${w}" height="${h}" style="overflow:visible">${monteG(w,h,tons,o)}</svg>`}
+function contornoMonte(w,h){return `<svg viewBox="0 0 ${w} ${h}" width="${w}" height="${h}" style="overflow:visible"><path d="M2,${h} Q${w/2},${(-.9*h).toFixed(1)} ${w-2},${h} Z" fill="#F6F8F9" stroke="#B5BFC8" stroke-width="3" stroke-dasharray="10 8"/></svg>`}
+// pessoa genérica (busto sem rosto): gravata (contador) ou capacete (pátio)
+function busto(o={}){const c=o.cor||'#3A4450',w=o.w||160;
+  return `<svg viewBox="0 0 200 210" width="${w}" height="${(w*1.05).toFixed(1)}">
+    <circle cx="100" cy="74" r="42" fill="${c}"/><path d="M20,210 Q22,130 100,124 Q178,130 180,210 Z" fill="${c}"/>
+    ${o.gravata?'<path d="M80,126 L100,150 L120,126 Z" fill="#fff"/><path d="M95,146 L105,146 L111,198 L100,210 L89,198 Z" fill="#2E7D57"/>':''}
+    ${o.capacete?'<path d="M54,70 Q56,24 100,22 Q144,24 146,70 Z" fill="#F2B63D"/><rect x="44" y="64" width="112" height="12" rx="6" fill="#D99A1E"/>':''}</svg>`}
+// carroça de carroceiro (de lado, cabo para a direita), num quadro de 162 x 112
+function carrocaG(){return `<polygon points="34,44 48,20 76,28 84,44" fill="#8C5A3C"/><polygon points="70,44 86,16 116,26 122,44" fill="#6F7983"/>
+    <rect x="92" y="22" width="44" height="10" rx="5" fill="#9AA3AD" transform="rotate(-10 114 27)"/>
+    <path d="M18,42 H134 L126,82 H26 Z" fill="#7E8994"/><rect x="14" y="38" width="124" height="9" rx="4" fill="#68727D"/>
+    <path d="M132,50 L160,38" stroke="#5B636C" stroke-width="6" stroke-linecap="round"/><path d="M32,82 L26,106" stroke="#5B636C" stroke-width="5" stroke-linecap="round"/>
+    <g class="rodaC" transform="translate(78,92)"><circle r="18" fill="#1B1F24"/><circle r="7" fill="#9AA3AD"/><rect x="-2" y="-16" width="4" height="7" rx="2" fill="#5B636C"/></g>`}
+function carrocaSvg(w){return `<svg viewBox="0 0 162 112" width="${w}" height="${(w*112/162).toFixed(1)}" style="overflow:visible">${carrocaG()}</svg>`}
+// o caminhão do kit em outro tamanho: dentro de outro svg (x, y, largura) ou solto; vazio = sem a carga
+function caminhaoEm(x,y,w,vazio){return caminhao().replace('<svg viewBox="0 0 500 230" width="500" height="230"',`<svg x="${x}" y="${y}" width="${w}" height="${(w*.46).toFixed(1)}" viewBox="0 0 500 230"`).replace('<g class="carga">',vazio?'<g class="carga" style="display:none">':'<g class="carga">')}
+function caminhaoSvg(w,vazio){return caminhaoEm(0,0,w,vazio).replace(' x="0" y="0"','')}
+// folha de calendário: faixa com o mês e o dia marcado no âmbar
+function folhinha(mes,dia,w=110){const fs=Math.round(w*.115);
+  return `<div style="width:${w}px;border-radius:12px;overflow:hidden;background:#fff;border:2px solid #D5DBE1;box-shadow:0 4px 10px rgba(16,24,40,.08)">
+    <div style="background:#2F3640;color:#fff;font-weight:800;font-size:${fs}px;letter-spacing:.06em;text-align:center;padding:${Math.round(w*.05)}px 0">${mes}</div>
+    <div style="display:flex;justify-content:center;padding:${Math.round(w*.06)}px 0 ${Math.round(w*.07)}px">
+      <div class="num" style="font-size:${Math.round(w*.32)}px;line-height:1;padding:${Math.round(w*.065)}px ${Math.round(w*.12)}px;border:3px solid var(--a);border-radius:999px">${dia}</div></div></div>`}
+// folha de calendário do mês inteiro (outubro de 2026 começa na quinta; o 31 é sábado)
+function folhinhaMes(mes,w=150,ini=4,dias=31){let q='';for(let i=0;i<35;i++)q+=`<div style="width:13px;height:13px;border-radius:3px;background:${i>=ini&&i<ini+dias?'#BFE9D0':'transparent'}"></div>`;
+  return `<div style="width:${w}px;border-radius:12px;overflow:hidden;background:#fff;border:2px solid #D5DBE1;box-shadow:0 4px 10px rgba(16,24,40,.08)">
+    <div style="background:#2F3640;color:#fff;font-weight:800;font-size:15px;letter-spacing:.06em;text-align:center;padding:7px 0">${mes}</div>
+    <div style="display:grid;grid-template-columns:repeat(7,13px);gap:5px;justify-content:center;padding:13px 0 15px">${q}</div></div>`}
+
+// ------------------------------------------------------------------ T12: desenhos desta aula (faltavam no kit)
+// caçamba de lado (mais larga em cima, alças nos lados); a sucata (.carga) aparece por cima quando ela está cheia
+function cacamba(w,cheia){return `<svg viewBox="0 0 180 112" width="${w}" height="${(w*112/180).toFixed(1)}" style="overflow:visible">
+    <g class="carga" style="opacity:${cheia?1:0}"><g transform="translate(22,2)">${monteG(136,34,TONS.ferro,{seed:93,n:14,base:'#8E979F',esc:.9})}</g></g>
+    <path d="M12,32 H168 L150,104 H30 Z" fill="#6F7E8C"/><rect x="6" y="26" width="168" height="12" rx="4" fill="#56636F"/>
+    <path d="M58,46 V96 M90,46 V96 M122,46 V96" stroke="#5E6B78" stroke-width="4"/>
+    <circle cx="22" cy="62" r="7" fill="#56636F"/><circle cx="158" cy="62" r="7" fill="#56636F"/>
+    <rect x="34" y="104" width="22" height="6" rx="2" fill="#3E464F"/><rect x="124" y="104" width="22" height="6" rx="2" fill="#3E464F"/></svg>`}
+// caderno aberto (anotação a lápis) e notebook genérico (sem marca)
+function caderno(txt){return `<div style="position:relative;width:250px;height:184px">
+    <svg viewBox="0 0 250 184" width="250" height="184" style="position:absolute;left:0;top:0;overflow:visible">
+      <rect x="2" y="10" width="246" height="172" rx="10" fill="#E0A030"/><rect x="12" y="4" width="226" height="168" rx="6" fill="#FFFDF6" stroke="#E6DCC4" stroke-width="2"/>
+      <path d="M28,58 H222 M28,88 H222 M28,118 H222 M28,148 H222" stroke="#E3E8EC" stroke-width="2"/>
+      ${[40,80,120,160,200].map(x=>`<circle cx="${x}" cy="4" r="6" fill="none" stroke="#8E979F" stroke-width="3"/>`).join('')}</svg>
+    <div style="position:absolute;left:28px;top:56px;width:200px;font-weight:600;font-size:23px;line-height:1.35;color:#374151;transform:rotate(-3deg)">${txt}</div></div>`}
+function notebookG(){return `<svg viewBox="0 0 240 170" width="240" height="170" style="overflow:visible">
+    <rect x="22" y="6" width="196" height="132" rx="10" fill="#2F3640"/><rect x="32" y="16" width="176" height="110" rx="4" fill="#EAF8F0"/>
+    <path d="M4,140 H236 L224,160 Q222,164 216,164 H24 Q18,164 16,160 Z" fill="#9AA3AD"/><rect x="100" y="140" width="40" height="6" rx="3" fill="#7E8994"/></svg>`}
+
+const CAPS={};
+// ================================================================== CAPS[0] · Do improviso à ordem (ilu00_improviso)
+// fala 0: "Oi! Neste tutorial o caminhão sai do pátio: a gente agenda a coleta, manda o motorista e fecha o serviço."
+// 1: "Na Recicla Vale Metais, buscar material vivia no caderno e na troca de mensagens. Aqui, cada coleta vira uma ordem, com o
+// parceiro, o dia, o motorista e o caminhão."
+CAPS[0]=()=>{
+  const g=grupo();
+  const tit=titulo(g,'Coletas','Do improviso à ordem');
+  const chao=el('<div class="ab" style="left:60px;top:590px;width:1160px;height:4px;border-radius:2px;background:#DDE2E7"></div>',g);
+  const patio=el('<div class="ab" style="left:0;top:0;width:1280px;height:800px"></div>',g);
+  const placa=el(`<div class="ab" style="left:262px;top:434px;width:170px;height:156px">
+      <div class="ab" style="left:80px;top:60px;width:10px;height:96px;border-radius:3px;background:#9AA3AD"></div>
+      <div class="ab" style="left:0;top:0;width:170px;padding:9px 12px;border-radius:10px;background:#fff;border:2px solid #C9D1D9;text-align:center;font-weight:800;font-size:18px;line-height:1.2">Recicla Vale<br>Metais</div></div>`,patio);
+  const cam=el(`<div class="ab" style="left:0;top:0;width:340px;height:157px">${caminhaoSvg(340)}</div>`,patio);
+  const rodas=[...cam.querySelectorAll('.roda')];
+  const duv=el(`<div class="ab" style="left:716px;top:396px;width:66px;height:66px;border-radius:50%;background:#fff;border:3px solid var(--a);box-shadow:0 8px 18px rgba(16,24,40,.10)">
+      <div class="ab q" style="left:0;top:0;width:60px;height:60px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:36px;color:var(--ae)">?</div>
+      <div class="ab ok" style="left:0;top:0;width:60px;height:60px;display:flex;align-items:center;justify-content:center;color:var(--ve)">${ic('check',34)}</div></div>`,patio);
+  const dq=duv.querySelector('.q'), dk=duv.querySelector('.ok');
+  const cad=el(`<div class="ab" style="left:660px;top:280px">${caderno('buscar ferro,<br>terça?')}</div>`,g);
+  const msg=el(`<div class="ab" style="left:948px;top:244px;padding:16px 22px;border-radius:22px 22px 22px 6px;background:#fff;border:2px solid #D5DBE1;box-shadow:0 10px 24px rgba(16,24,40,.08)">
+      <div class="row" style="gap:10px">${ic('message-circle',26,'#6B7280')}<div style="font-weight:800;font-size:22px;white-space:nowrap">caçamba cheia</div></div></div>`,g);
+  const ord=el(`<div class="card" style="left:690px;top:206px;width:510px;height:360px;overflow:hidden">
+      <div class="row" style="height:74px;padding:0 24px;gap:14px;border-bottom:1px solid var(--l);background:#FAFBFC">
+        <div class="ico" style="width:44px;height:44px">${ic('clipboard-list',24)}</div><div style="font-weight:800;font-size:24px">Ordem de coleta</div></div></div>`,g);
+  const campos=[['building-2','parceiro'],['calendar-days','dia'],['user-round','motorista'],['truck','caminhão']].map(([icn,txt],i)=>
+    el(`<div class="ab row" style="left:16px;top:${88+66*i}px;width:478px;height:58px;padding:0 16px;gap:14px;border-radius:12px">
+      <div class="ico" style="width:40px;height:40px">${ic(icn,22)}</div><div style="font-weight:800;font-size:23px">${txt}</div></div>`,ord));
+  return t=>{
+    const a0=W(0,'Oi')-.3, tca=W(0,'caminhao'), tpa=W(0,'patio'), tag=W(0,'agenda'), tse=W(0,'servico');
+    const tre=W(1,'Recicla'), tcd=W(1,'caderno'), tms=W(1,'mensagens'), tor=W(1,'ordem');
+    const tc=[W(1,'parceiro'),W(1,'dia'),W(1,'motorista'),W(1,'caminhao')];
+    posTitulo(tit,t,a0-.6,tca-.5);
+    vis(chao,t,tca-.05,1e9,{dy:0});
+    // o caminhão sai do pátio e para, sem saber quando nem aonde (o "?")
+    const pc=eo(pr(t,tca,Math.max(1,tpa-tca+.3))), xc=lerp(-380,470,pc);
+    cam.style.transform=`translate(${xc.toFixed(2)}px,438px)`; cam.style.opacity=pc>0?1:0;
+    rodas.forEach(r=>r.setAttribute('transform',`translate(${r.dataset.x},196) rotate(${((xc-470)/26*57.3).toFixed(1)})`));
+    vis(duv,t,tag-.1,1e9,{dy:10,sc:.6}); pulse(duv,t,tse,.08,.7);
+    vis(placa,t,tre-.1,1e9,{dy:12});
+    // o pátio vai para a esquerda quando o caderno e as mensagens entram
+    patio.style.transform=`translateX(${(-200*eio(pr(t,tcd-.5,.7))).toFixed(2)}px)`;
+    const jun=eio(pr(t,tor-.05,.6));
+    const op1=Math.min(vis(cad,t,tcd-.1,1e9,{dx:24,dy:0}),1-jun); cad.style.opacity=op1.toFixed(3);
+    cad.style.transform+=` translate(${(150*jun).toFixed(1)}px,${(-30*jun).toFixed(1)}px) scale(${(1-.4*jun).toFixed(3)})`;
+    const op2=Math.min(vis(msg,t,tms-.1,1e9,{dx:24,dy:0}),1-jun); msg.style.opacity=op2.toFixed(3);
+    msg.style.transform+=` translate(${(-90*jun).toFixed(1)}px,${(80*jun).toFixed(1)}px) scale(${(1-.4*jun).toFixed(3)})`;
+    cad.style.visibility=op1<=.001?'hidden':'visible'; msg.style.visibility=op2<=.001?'hidden':'visible';
+    vis(ord,t,tor+.15,1e9,{dy:0,sc:.9});
+    campos.forEach((c,i)=>{vis(c,t,tc[i]-.1,1e9,{dy:0,dx:-14}); tinge(c,t,tc[i]-.1,tc[i]+.9);});
+    // agora o caminhão sabe: o "?" vira o sinal de ok
+    const ok=eo(pr(t,tc[3],.4)); dq.style.opacity=(1-ok).toFixed(3); dk.style.opacity=ok.toFixed(3);
+    duv.style.borderColor=mix('#F2B63D','#50D088',ok);
+  };
+};
+
+// ================================================================== CAPS[1] · O caminho da coleta (ilu01_caminho)
+// fala 1: "Cada coleta vira uma ordem, que passa por etapas: alguém pede, a gente agenda o dia e o período, escala o motorista e o
+// caminhão, ele sai, e a coleta é concluída."  2: "Uma coisa importante: a ordem de coleta organiza o serviço. Quem mexe no
+// estoque e no caixa é a compra."  3: "Quando o caminhão volta, você registra a compra do material como sempre, ou faz um Ticket de
+// Pesagem. Concluir a coleta fecha o serviço, e a compra entra por lá."
+CAPS[1]=()=>{
+  const g=grupo();
+  const tit=titulo(g,'Coletas','O caminho da coleta');
+  const ET=[['phone','alguém pede'],['calendar-days','dia e período'],['user-round','motorista e caminhão'],['navigation','a caminho'],['circle-check','concluída']];
+  const XS=[170,405,640,875,1110], YN=322;
+  const g1=el('<div class="ab" style="left:0;top:0;width:1280px;height:800px"></div>',g);
+  const r1=el('<div class="ab row" style="left:60px;top:196px;gap:14px"></div>',g1);
+  const lbl1=el(`<div class="tag v">${ic('clipboard-list',20)}Ordem de coleta</div>`,r1);
+  const org=el('<div class="tag n" style="font-size:18px;padding:8px 16px">organiza o serviço</div>',r1);
+  const linha=el(`<svg class="ab" style="left:0;top:0;overflow:visible" width="1280" height="800">${XS.slice(0,4).map((x,i)=>
+      `<path d="M${x+42},${YN} H${XS[i+1]-42}" stroke="#50D088" stroke-width="5" stroke-linecap="round" fill="none"/>`).join('')}</svg>`,g1);
+  const seg=[...linha.querySelectorAll('path')];
+  const nos=ET.map(([icn,txt],i)=>({
+    n:el(`<div class="ab" style="left:${XS[i]-38}px;top:${YN-38}px;width:76px;height:76px;border-radius:50%;background:#F2F4F7;color:#9AA3AD;display:flex;align-items:center;justify-content:center;border:3px solid #E1E8E4">${ic(icn,34)}</div>`,g1),
+    c:el(`<div class="ab" style="left:${XS[i]-130}px;top:${YN+52}px;width:260px;text-align:center"><div class="tag v" style="font-size:17px;padding:7px 14px">${txt}</div></div>`,g1)}));
+  const faixa=el('<div class="ab" style="left:60px;top:452px;width:1160px;height:0;border-top:3px dashed #D5DBE1"></div>',g);
+  const lbl2=el(`<div class="ab" style="left:230px;top:526px;width:250px;text-align:center"><div class="tag a">${ic('receipt-text',20)}Compra</div></div>`,g);
+  const tkt=el('<div class="ab" style="left:210px;top:584px;width:290px;text-align:center"><div class="tag n" style="font-size:18px;padding:8px 16px">ou Ticket de Pesagem</div></div>',g);
+  const s2=el('<svg class="ab" style="left:0;top:0;overflow:visible" width="1280" height="800"><path d="M500,547 H640 M628,535 L642,547 L628,559" fill="none" stroke="#F2B63D" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg>',g).querySelector('path');
+  const dest=(x,icn,txt)=>el(`<div class="ab row" style="left:${x}px;top:521px;gap:12px"><div class="ico" style="width:52px;height:52px">${ic(icn,28)}</div><div style="font-weight:800;font-size:24px">${txt}</div></div>`,g);
+  const dE=dest(666,'package','Estoque'), dC=dest(900,'wallet','Caixa');
+  const cam=el(`<div class="ab" style="left:0;top:0;width:120px;height:56px">${caminhaoSvg(120)}</div>`,g1);
+  return t=>{
+    const a0=W(1,'Cada')-.3, tor=W(1,'ordem'), tet=W(1,'etapas');
+    const T=[W(1,'alguem'),W(1,'agenda'),W(1,'escala'),W(1,'sai'),W(1,'concluida')];
+    const tim=W(2,'importante'), tog=W(2,'organiza'), tes=W(2,'estoque'), tcx=W(2,'caixa'), tcp=W(2,'compra');
+    const tvo=W(3,'volta'), tre=W(3,'registra'), ttk=W(3,'Ticket'), tcl=W(3,'Concluir'), tc2=W(3,'compra',2);
+    posTitulo(tit,t,a0-.6,tor-.6);
+    g1.style.transform=`translateY(${(110*(1-eio(pr(t,tim-.3,.8)))).toFixed(2)}px)`;
+    vis(lbl1,t,tor-.1,1e9,{dy:10});
+    nos.forEach((o,i)=>{vis(o.n,t,tor+.15+.08*i,1e9,{dy:0,sc:.7});
+      const p=eo(pr(t,T[i]-.1,.4)); o.n.style.background=mix('#F2F4F7','#EAF8F0',p); o.n.style.color=mix('#9AA3AD','#2E7D57',p);
+      o.n.style.borderColor=mix('#E1E8E4','#50D088',p); vis(o.c,t,T[i]-.05,1e9,{dy:8});});
+    seg.forEach((s,i)=>traco(s,t,T[i+1]-.45,.5));
+    pulse(nos[4].n,t,tcl,.08,.8);
+    // o caminhão: escalado, sai, conclui; na volta, passa para o trilho da compra
+    const yc=YN-38-60, p34=eio(pr(t,T[3]-.1,.9)), p45=eio(pr(t,T[4]-.1,.9));
+    let x=lerp(lerp(XS[2]-60,XS[3]-60,p34),XS[4]-60,p45), y=yc;
+    const pv=eio(pr(t,tvo-.1,1.2)); x=lerp(x,295,pv); y=lerp(yc,462,pv)-60*4*pv*(1-pv);
+    cam.style.transform=`translate(${x.toFixed(2)}px,${y.toFixed(2)}px)`;
+    const oc=eo(pr(t,T[2]+.1,.45)); cam.style.opacity=oc.toFixed(3); cam.style.visibility=oc<=.001?'hidden':'visible';
+    // o outro trilho: a compra mexe no estoque e no caixa
+    vis(faixa,t,tim-.1,1e9,{dy:0}); vis(org,t,tog-.1,1e9,{dx:-12,dy:0});
+    vis(dE,t,tes-.1,1e9,{dy:10}); vis(dC,t,tcx-.1,1e9,{dy:10}); vis(lbl2,t,tcp-.15,1e9,{dy:10}); traco(s2,t,tcp+.1,.5);
+    vis(tkt,t,ttk-.1,1e9,{dx:-12,dy:0});
+    pulsos(lbl2,t,[tre,tc2],.06,.8); pulsos(dE,t,[tc2+.25],.06,.8); pulsos(dC,t,[tc2+.4],.06,.8);
+  };
+};
+
+// ================================================================== CAPS[7] · O pedido pelo portal (ilu07_portal)
+// fala 0: "E quando o próprio parceiro pede? Ele usa o portal, o link que a Recicla Vale mandou pra ele. Do outro lado, o pedido
+// cai no quadro pra aprovação."
+CAPS[7]=()=>{
+  const g=grupo();
+  const tit=titulo(g,'Portal','O pedido pelo portal');
+  const lado=(x,icn,nome)=>el(`<div class="card" style="left:${x}px;top:190px;width:360px;height:420px;overflow:hidden">
+      <div class="row" style="height:72px;padding:0 22px;gap:14px;border-bottom:1px solid var(--l);background:#FAFBFC">
+        <div class="ico" style="width:44px;height:44px">${ic(icn,24)}</div><div style="font-weight:800;font-size:24px">${nome}</div></div></div>`,g);
+  const cP=lado(80,'user-round','Parceiro'), cR=lado(840,'warehouse','Recicla Vale');
+  const nb=el(`<div class="ab" style="left:60px;top:118px">${notebookG()}</div>`,cP);
+  const tela=el(`<div class="ab row" style="left:92px;top:152px;width:176px;height:76px;justify-content:center;gap:10px;color:var(--ve)">${ic('link',26)}<div style="font-weight:800;font-size:23px">portal</div></div>`,cP);
+  const col=el('<div class="ab" style="left:28px;top:96px;width:304px;height:296px;border-radius:14px;border:3px dashed #D5DBE1;background:#FAFBFC"></div>',cR);
+  const colT=el('<div class="ab" style="left:0;top:14px;width:298px;text-align:center;font-weight:800;font-size:21px;color:#374151">Solicitada</div>',col);
+  const set=el(`<svg class="ab" style="left:0;top:0;overflow:visible" width="1280" height="800"><g fill="none" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M830,272 H452 M466,260 L452,272 L466,284" stroke="#B5BFC8" stroke-dasharray="2 10"/>
+      <path d="M452,452 H830 M816,440 L830,452 L816,464" stroke="#50D088"/></g></svg>`,g);
+  const [aL,aP]=set.querySelectorAll('path');
+  const lk=el(`<div class="ab" style="left:0;top:0"><div class="tag n" style="font-size:18px;padding:7px 14px">${ic('link',18)}link</div></div>`,g);
+  const ped=el(`<div class="ab" style="left:0;top:0;width:274px;height:76px;border-radius:14px;background:#fff;border:2px solid #E1E8E4;box-shadow:0 10px 22px rgba(16,24,40,.10);display:flex;align-items:center;gap:12px;padding:0 16px">
+      <div class="ico" style="width:44px;height:44px">${ic('package',24)}</div><div style="font-weight:800;font-size:20px;white-space:nowrap">Pedido de coleta</div></div>`,g);
+  const apr=el(`<div class="ab" style="left:868px;top:452px;width:304px;text-align:center"><div class="tag a" style="font-size:18px;padding:7px 14px">${ic('clock',18)}aprovação</div></div>`,g);
+  return t=>{
+    const a0=W(0,'quando')-.3, tpa=W(0,'parceiro'), tpo=W(0,'portal'), tre=W(0,'Recicla'), tma=W(0,'mandou'), tou=W(0,'outro'),
+          tpe=W(0,'pedido'), tca=W(0,'cai'), tqu=W(0,'quadro'), tap=W(0,'aprovacao');
+    posTitulo(tit,t,a0-.6,tpa-.55);
+    vis(cP,t,tpa-.05,1e9,{dy:18}); vis(tela,t,tpo-.1,1e9,{dy:0,sc:.8});
+    vis(cR,t,tre-.1,1e9,{dy:18}); vis(col,t,tre+.1,1e9,{dy:0});
+    // o link vai da Recicla Vale para o parceiro
+    vis(aL,t,tma-.2,1e9,{dy:0,sc:1});
+    const pl=eio(pr(t,tma-.1,1.0)); lk.style.transform=`translate(${lerp(730,470,pl).toFixed(1)}px,${(222-16*4*pl*(1-pl)).toFixed(1)}px)`;
+    const ol=eo(pr(t,tma-.1,.3)); lk.style.opacity=ol.toFixed(3); lk.style.visibility=ol<=.001?'hidden':'visible';
+    pulse(cR,t,tou,.02,.8);
+    // o pedido sai do portal e cai na coluna Solicitada
+    traco(aP,t,tpe-.1,.6);
+    const pp=eio(pr(t,tca-.1,1.1)); ped.style.transform=`translate(${lerp(320,855,pp).toFixed(1)}px,${(lerp(470,356,pp)-20*4*pp*(1-pp)).toFixed(1)}px) scale(${lerp(.85,1,eo(cl(pp*3))).toFixed(3)})`;
+    const op=eo(pr(t,tpe-.1,.35)); ped.style.opacity=op.toFixed(3); ped.style.visibility=op<=.001?'hidden':'visible';
+    contorno(col,t,tqu,'#D5DBE1','#F2B63D'); col.style.background=mix('#FAFBFC','#FFF8EA',eo(pr(t,tqu,.45)));
+    vis(apr,t,tap-.1,1e9,{dy:8});
+  };
+};
+
+// ================================================================== CAPS[8] · Tara e peso líquido (ilu08_tara)
+// fala 2: "A tara é o peso do caminhão vazio. Carregado, ele pesa mais na balança, e essa diferença é o peso do material."
+// O desenho do kit (caminhão na balança, "Tara", "Peso bruto", "Peso líquido"); só a tara tem número (a do FKD2E41, 6.380 kg,
+// que a tela acabou de mostrar; junção: a 2ª pesagem do T8): o peso bruto não tem número na fala, então a conta vira barras.
+CAPS[8]=()=>{
+  const TARA=6380;   // kg: tara do FKD2E41 (T12/plano.md, depois da junção)
+  const g=grupo();
+  const tit=titulo(g,'Balança','Tara e peso líquido');
+  const chao=el('<div class="ab" style="left:50px;top:570px;width:1180px;height:4px;border-radius:2px;background:#DDE2E7"></div>',g);
+  const plat=el('<div class="ab" style="left:90px;top:556px;width:560px;height:16px;border-radius:5px;background:#CBD1D8;border:2px solid #A8B0B9"></div>',g);
+  const cam=el(`<div class="ab" style="left:0;top:0;width:450px;height:207px">${caminhaoSvg(450)}</div>`,g);
+  const rodas=[...cam.querySelectorAll('.roda')], pecas=[...cam.querySelectorAll('.pd')];
+  const B0=556, BX=[780,970], HT=180, HB=292;
+  const bT=el(`<div class="ab" style="left:${BX[0]}px;top:${B0-HT}px;width:96px;height:${HT}px;border-radius:12px 12px 0 0;background:#C9D1D9;transform-origin:50% 100%"></div>`,g);
+  const bB=el(`<div class="ab" style="left:${BX[1]}px;top:${B0-HB}px;width:96px;height:${HB}px;border-radius:12px 12px 0 0;background:#C9D1D9;transform-origin:50% 100%;overflow:hidden">
+      <div class="ab dif" style="left:0;top:0;width:96px;height:${HB-HT}px;background:var(--v);opacity:0"></div></div>`,g);
+  const dif=bB.querySelector('.dif');
+  const nT=el(`<div class="ab num" style="left:${BX[0]-52}px;top:${B0-HT-48}px;width:200px;text-align:center;font-size:27px">0 kg</div>`,g);
+  const lb=(x,txt)=>el(`<div class="ab" style="left:${x-82}px;top:${B0+26}px;width:260px;text-align:center;font-weight:800;font-size:22px">${txt}</div>`,g);
+  const lT=lb(BX[0],'Tara'), lB=lb(BX[1],'Peso bruto');
+  const nivel=el(`<div class="ab" style="left:${BX[0]+96}px;top:${B0-HT-1.5}px;width:${BX[1]-BX[0]-96}px;height:0;border-top:3px dashed #8E979F"></div>`,g);
+  const lL=el(`<div class="ab" style="left:${BX[1]+112}px;top:${B0-HB+16}px"><div style="font-weight:800;font-size:23px;color:var(--ve);white-space:nowrap">Peso líquido</div>
+      <div class="row lm" style="margin-top:6px;gap:8px">${ic('package',20,'#2E7D57')}<div class="lbl" style="font-size:18px">o material</div></div></div>`,g);
+  const lm=lL.querySelector('.lm');
+  return t=>{
+    const a0=W(2,'A')-.3, tta=W(2,'tara'), tca=W(2,'caminhao'), tva=W(2,'vazio'), tcg=W(2,'Carregado'), tpe=W(2,'pesa'),
+          tba=W(2,'balanca'), tdi=W(2,'diferenca'), tma=W(2,'material');
+    posTitulo(tit,t,a0-.6,a0+.1);
+    for(const e of [chao,plat]) vis(e,t,a0+.55,1e9,{dy:8});
+    // o caminhão vazio chega e para na balança
+    const pc=eo(pr(t,tta,Math.max(1,tca-tta+.4))), x=lerp(-520,150,pc);
+    cam.style.transform=`translate(${x.toFixed(2)}px,${B0-200}px)`; cam.style.opacity=pc>0?1:0;
+    rodas.forEach(r=>r.setAttribute('transform',`translate(${r.dataset.x},196) rotate(${((x-150)/26*57.3).toFixed(1)})`));
+    // carregado: as peças caem na caçamba, uma depois da outra
+    pecas.forEach((p,i)=>{const q=eio(pr(t,tcg+.05+i*.1,.6));p.setAttribute('transform',`translate(0,${(-170*(1-q)).toFixed(1)})`);p.style.opacity=q.toFixed(3)});
+    // as barras: a tara (com número) e o peso bruto; a diferença é o peso líquido
+    const ht=eio(pr(t,tva-.15,.8)); bT.style.transform=`scaleY(${ht.toFixed(4)})`; bT.style.opacity=ht>0?1:0;
+    nT.style.opacity=eo(pr(t,tva,.4)).toFixed(3); conta(nT,t,tva,.9,0,TARA); vis(lT,t,tva-.1,1e9,{dy:8});
+    const hb=eio(pr(t,tpe-.1,1.0)); bB.style.transform=`scaleY(${hb.toFixed(4)})`; bB.style.opacity=hb>0?1:0; vis(lB,t,tpe,1e9,{dy:8});
+    vis(nivel,t,tba-.1,1e9,{dy:0,sc:1});
+    dif.style.opacity=eo(pr(t,tdi-.1,.45)).toFixed(3); vis(lL,t,tdi,1e9,{dx:-12,dy:0}); vis(lm,t,tma-.15,1e9,{dy:6});
+    pulse(bB,t,tma,.03,.8);
+  };
+};
+
+// ================================================================== CAPS[9] · O caminho da caçamba (ilu09_cacamba)
+// fala 6: "Uma dica: a caçamba só muda de lugar quando alguém registra. Na coleta, é o Entreguei e o Recolhi da ordem, que valem
+// quando ela é concluída. Fora da coleta, é o Movimentar, aqui."
+// A troca da ordem 8 (Entreguei a Caçamba 05, Recolhi a Caçamba 03), cada uma na sua faixa, e a Caçamba 06 que entra na base pelo
+// Movimentar (de Externo).
+CAPS[9]=()=>{
+  const g=grupo();
+  const tit=titulo(g,'Equipamentos','O caminho da caçamba');
+  const lugar=(x,icn,nome)=>el(`<div class="card" style="left:${x}px;top:220px;width:330px;height:392px;overflow:hidden">
+      <div class="row" style="height:68px;padding:0 20px;gap:12px;border-bottom:1px solid var(--l);background:#FAFBFC">
+        <div class="ico" style="width:44px;height:44px">${ic(icn,24)}</div><div style="font-weight:800;font-size:24px;white-space:nowrap">${nome}</div></div></div>`,g);
+  const cBase=lugar(60,'warehouse','Minha base'), cPar=lugar(890,'building-2','Parceiro');
+  const SL={At:[145,302],Ab:[145,450],Pt:[975,302],Pb:[975,450]};
+  const cac=(nome,cheia)=>el(`<div class="ab" style="left:0;top:0;width:160px;height:126px">${cacamba(160,cheia)}
+      <div class="ab" style="left:-20px;top:102px;width:200px;text-align:center;font-weight:700;font-size:18px;white-space:nowrap">${nome}</div></div>`,g);
+  const c05=cac('Caçamba 05',false), c03=cac('Caçamba 03',true), c06=cac('Caçamba 06',false);
+  const set=el(`<svg class="ab" style="left:0;top:0;overflow:visible" width="1280" height="800"><g fill="none" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M402,280 H876 M862,268 L876,280 L862,292" stroke="#C9D1D9" stroke-dasharray="2 10"/>
+      <path d="M402,280 H876 M862,268 L876,280 L862,292" stroke="#50D088"/>
+      <path d="M876,592 H402 M416,580 L402,592 L416,604" stroke="#C9D1D9" stroke-dasharray="2 10"/>
+      <path d="M876,592 H402 M416,580 L402,592 L416,604" stroke="#50D088"/>
+      <path d="M462,680 H225 V626 M213,640 L225,626 L237,640" stroke="#C9D1D9" stroke-dasharray="2 10"/>
+      <path d="M462,680 H225 V626 M213,640 L225,626 L237,640" stroke="#50D088"/></g></svg>`,g);
+  const [eT,eTv,eB,eBv,eM,eMv]=set.querySelectorAll('path');
+  const tagC=(x,y,txt,cls,icn)=>el(`<div class="ab" style="left:${x-160}px;top:${y}px;width:320px;text-align:center"><div class="tag ${cls}" style="font-size:19px;padding:8px 16px;box-shadow:0 0 0 6px #fff">${icn?ic(icn,19):''}${txt}</div></div>`,g);
+  const tEn=tagC(640,258,'Entreguei','v'), tRe=tagC(640,570,'Recolhi','v'), tMo=tagC(344,658,'Movimentar','v');
+  const tReg=tagC(640,182,'alguém registra','n','pencil'), tCon=tagC(640,414,'ordem concluída','v','circle-check');
+  const ext=el(`<div class="ab row" style="left:476px;top:648px;padding:10px 18px;gap:12px;border-radius:14px;background:#fff;border:2px solid #E1E8E4;box-shadow:0 10px 22px rgba(16,24,40,.08)">
+      <div class="ico" style="width:40px;height:40px">${ic('package',22)}</div><div style="font-weight:800;font-size:22px">Externo</div></div>`,g);
+  const pos=(e,[x,y])=>{e.style.transform=`translate(${x.toFixed(1)}px,${y.toFixed(1)}px)`};
+  const via=(a,b,p,h)=>[lerp(a[0],b[0],p),lerp(a[1],b[1],p)+h*4*p*(1-p)];
+  return t=>{
+    const a0=W(6,'Uma')-.3, tcc=W(6,'cacamba'), tlu=W(6,'lugar'), trg=W(6,'registra'), ten=W(6,'Entreguei'), trc=W(6,'Recolhi'),
+          tco=W(6,'concluida'), tfo=W(6,'Fora'), tmv=W(6,'Movimentar'), taq=W(6,'aqui');
+    posTitulo(tit,t,a0-.6,tcc-.6);
+    vis(cBase,t,tcc-.1,1e9,{dy:18}); vis(cPar,t,tcc+.05,1e9,{dy:18});
+    vis(c05,t,tcc+.2,1e9,{dy:0,sc:1}); vis(c03,t,tcc+.3,1e9,{dy:0,sc:1});
+    vis(eT,t,tlu-.1,1e9,{dy:0,sc:1}); vis(eB,t,tlu,1e9,{dy:0,sc:1}); vis(tReg,t,trg-.1,1e9,{dy:8});
+    // Entreguei: a 05 (vazia) vai da base para o parceiro pela faixa de cima; Recolhi: a 03 (cheia) volta pela de baixo
+    traco(eTv,t,ten-.1,.6); vis(tEn,t,ten-.1,1e9,{dy:0,sc:.8});
+    pos(c05,via(SL.At,SL.Pt,eio(pr(t,ten,1.2)),14));
+    traco(eBv,t,trc-.1,.6); vis(tRe,t,trc-.1,1e9,{dy:0,sc:.8});
+    pos(c03,via(SL.Pb,SL.Ab,eio(pr(t,trc,1.2)),-14));
+    vis(tCon,t,tco-.15,1e9,{dy:8}); pulse(tCon,t,tco+.3,.05,.8);
+    // fora da coleta: a 06 entra na base pelo Movimentar, de Externo
+    vis(ext,t,tfo-.1,1e9,{dx:16,dy:0}); vis(eM,t,tfo,1e9,{dy:0,sc:1}); traco(eMv,t,tmv-.15,.7); vis(tMo,t,tmv-.1,1e9,{dy:0,sc:.8});
+    vis(c06,t,tmv+.45,1e9,{dy:-14,sc:.9}); c06.style.transform=`translate(${SL.At[0]}px,${SL.At[1]}px) `+c06.style.transform;
+    pulse(c06,t,taq,.05,.7);
+  };
+};
+
+// ================================================================== CAPS[10] · Taxa de conclusão (ilu10_taxa)
+// fala 2: "Uma dica: a coleta cancelada sai da conta. Das cinco que ficaram, as cinco foram concluídas."
+// Outubro (T12/plano.md): ordens 1 a 6, a 4 cancelada; taxa = concluídas / (total - canceladas) = 5 de 5.
+CAPS[10]=()=>{
+  const ORD=[1,2,3,4,5,6], CANC=4;
+  const g=grupo();
+  const tit=titulo(g,'Relatório','Taxa de conclusão');
+  const X6=i=>80+190*i, X5=i=>180+190*i;
+  const cards=ORD.map(n=>el(`<div class="card" style="left:0;top:0;width:160px;height:150px;padding:18px 14px;text-align:center">
+      <div class="num" style="font-size:34px">#${n}</div>
+      <div class="tag ${n===CANC?'a':'v'}" style="margin-top:22px;font-size:16px;padding:6px 14px">${n===CANC?'Cancelada':'Concluída'}</div></div>`,g));
+  const fora=el('<div class="ab" style="left:366px;top:510px"><div class="tag a" style="font-size:19px;padding:8px 16px">fora da conta</div></div>',g);
+  const res=el(`<div class="card" style="left:740px;top:448px;width:400px;padding:20px 26px">
+      <div class="lbl">Taxa de conclusão</div>
+      <div class="row" style="margin-top:8px;gap:16px"><div class="num" style="font-size:34px">5 de 5</div><div class="num" style="font-size:46px;color:var(--ve);margin-left:auto">100%</div></div></div>`,g);
+  return t=>{
+    const a0=W(2,'Uma')-.3, tcl=W(2,'coleta'), tca=W(2,'cancelada'), tsa=W(2,'sai'), tct=W(2,'conta'), tfi=W(2,'ficaram'), tfo=W(2,'foram'), tcs=W(2,'concluidas');
+    posTitulo(tit,t,a0-.6,tcl-.55);
+    const pf=eio(pr(t,tfi-.1,.8)), ps=pr(t,tsa-.05,1.2);
+    cards.forEach((c,i)=>{vis(c,t,tcl-.05+.06*i,1e9,{dy:18});
+      let x=X6(i), y=220;
+      if(ORD[i]===CANC){const pd=eio(cl(ps/.5)),pe=eio(cl((ps-.45)/.55)); x=lerp(X6(i),180,pe); y=lerp(220,460,pd); c.style.opacity=Math.min(+c.style.opacity,1-.45*ps).toFixed(3);}
+      else {const k=i<3?i:i-1; x=lerp(X6(i),X5(k),pf);}
+      c.style.transform=`translate(${x.toFixed(1)}px,${y.toFixed(1)}px) `+c.style.transform;
+    });
+    pulse(cards[CANC-1].querySelector('.tag'),t,tca,.08,.7);
+    vis(fora,t,tct-.15,1e9,{dx:-12,dy:0});
+    cards.forEach((c,i)=>{if(ORD[i]!==CANC) pulse(c.querySelector('.tag'),t,tcs+.06*i,.08,.7)});
+    vis(res,t,tfo-.2,1e9,{dy:14});
+  };
+};
+
+// ================================================================== CAPS[11] · Regras só no portal (ilu11_regras)
+// fala 5: "Uma dica: essas regras valem só pro que o parceiro pede pelo portal. Aqui dentro, a Recicla Vale agenda pra qualquer
+// dia, até pra hoje."  (24 h e segunda a sábado: a Antecedência mínima e os Dias aceitos da linha anterior)
+CAPS[11]=()=>{
+  const g=grupo();
+  const tit=titulo(g,'Configurações','Regras só no portal');
+  const quadro=el(`<div class="card" style="left:880px;top:196px;width:320px;height:420px;overflow:hidden">
+      <div class="row" style="height:70px;padding:0 18px;gap:12px;border-bottom:1px solid var(--l);background:#FAFBFC">
+        <div class="ico" style="width:42px;height:42px">${ic('square-kanban',22)}</div><div style="font-weight:800;font-size:20px;white-space:nowrap">Ordens de Coleta</div></div>
+      ${[0,1,2].map(i=>`<div class="ab" style="left:24px;top:${96+100*i}px;width:272px;height:80px;border-radius:12px;border:2px solid #E6E9EE;background:#FAFBFC">
+        <div class="ab" style="left:16px;top:20px;width:150px;height:14px;border-radius:7px;background:#DDE3E8"></div>
+        <div class="ab" style="left:16px;top:46px;width:96px;height:12px;border-radius:6px;background:#E9EDF0"></div></div>`).join('')}</div>`,g);
+  const fonte=(y,icn,nome,sub)=>el(`<div class="card" style="left:70px;top:${y}px;width:270px;height:100px;padding:18px 20px">
+      <div class="row" style="gap:14px"><div class="ico" style="width:52px;height:52px">${ic(icn,28)}</div>
+        <div><div style="font-weight:800;font-size:22px;white-space:nowrap">${nome}</div><div class="lbl" style="margin-top:2px">${sub}</div></div></div></div>`,g);
+  const fP=fonte(214,'user-round','Parceiro','pelo portal'), fR=fonte(484,'warehouse','Recicla Vale','aqui dentro');
+  const porta=el(`<div class="card" style="left:470px;top:196px;width:250px;height:148px;padding:16px 18px;border:2px solid #E1E8E4">
+      <div class="row" style="gap:10px;color:var(--ae)">${ic('funnel',22)}<div style="font-weight:800;font-size:20px;color:var(--t)">regras</div></div>
+      <div class="row" style="margin-top:14px;gap:10px"><div class="tag a" style="font-size:18px;padding:7px 14px">24 h</div><div class="tag a" style="font-size:18px;padding:7px 14px">seg a sáb</div></div></div>`,g);
+  const set=el(`<svg class="ab" style="left:0;top:0;overflow:visible" width="1280" height="800"><g fill="none" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M350,264 H458 M446,252 L460,264 L446,276" stroke="#F2B63D"/>
+      <path d="M732,264 H866 M854,252 L868,264 L854,276" stroke="#F2B63D"/>
+      <path d="M350,534 H866 M854,522 L868,534 L854,546" stroke="#50D088"/></g></svg>`,g);
+  const [s1,s2,s3]=set.querySelectorAll('path');
+  const ficha=()=>el(`<div class="ab" style="left:0;top:0;width:56px;height:44px;border-radius:10px;background:#fff;border:2px solid #E1E8E4;box-shadow:0 6px 14px rgba(16,24,40,.12);display:flex;align-items:center;justify-content:center;color:var(--ve)">${ic('clipboard-list',22)}</div>`,g);
+  const k1=ficha(), k2=ficha(), k3=ficha();
+  const livre=el('<div class="ab row" style="left:430px;top:556px;gap:12px"></div>',g);
+  const q1=el('<div class="tag v" style="font-size:19px;padding:8px 16px">qualquer dia</div>',livre), q2=el('<div class="tag v" style="font-size:19px;padding:8px 16px">até hoje</div>',livre);
+  const mv=(e,t,a,d,pts)=>{const p=eio(pr(t,a,d)),n=pts.length-1,k=Math.min(n-1,Math.floor(p*n)),f=p*n-k;
+    const x=lerp(pts[k][0],pts[k+1][0],f),y=lerp(pts[k][1],pts[k+1][1],f);e.style.transform=`translate(${x.toFixed(1)}px,${y.toFixed(1)}px)`;
+    const o=p>0&&p<1?1:(p>=1?1:0);e.style.opacity=o;e.style.visibility=o?'visible':'hidden';return p};
+  return t=>{
+    const a0=W(5,'Uma')-.3, trg=W(5,'regras'), tpa=W(5,'parceiro'), tpo=W(5,'portal'), taq=W(5,'Aqui'), tag=W(5,'agenda'), tqd=W(5,'qualquer'), tho=W(5,'hoje');
+    posTitulo(tit,t,a0-.6,trg-.6);
+    vis(quadro,t,trg-.1,1e9,{dy:18}); vis(porta,t,trg+.05,1e9,{dy:14}); vis(s2,t,trg+.2,1e9,{dy:0,sc:1});
+    vis(fP,t,tpa-.1,1e9,{dx:-16,dy:0}); traco(s1,t,tpa+.1,.5);
+    // o pedido do parceiro passa pelas regras (a porta acende) e só então chega ao quadro
+    mv(k1,t,tpo-.1,.6,[[300,242],[402,242]]); const e1=eo(pr(t,tpo+.45,.25)); if(e1>0){k1.style.opacity=(1-e1).toFixed(3);k1.style.visibility=e1>=.999?'hidden':'visible'}
+    luz(porta,t,tpo+.4,tpo+1.5,{cor:'#F2B63D',bg:'#FFF8EA',anel:'242,182,61'});
+    mv(k3,t,tpo+.95,.7,[[738,242],[812,242],[960,300]]);
+    // aqui dentro: a Recicla Vale agenda direto, qualquer dia, até hoje
+    vis(fR,t,taq-.1,1e9,{dx:-16,dy:0}); traco(s3,t,taq+.1,.6);
+    mv(k2,t,tag-.1,1.1,[[300,512],[812,512],[960,420]]);
+    vis(q1,t,tqd-.1,1e9,{dy:8}); vis(q2,t,tho-.15,1e9,{dy:8});
+  };
+};
+
+// ------------------------------------------------------------------ API para o renderizador
+let RENDER=null;
+window.setup=d=>{D=d;ST.innerHTML='';RENDER=CAPS[d.cap]();return true};
+window.R=t=>{RENDER(t);return true};
+</script></body></html>

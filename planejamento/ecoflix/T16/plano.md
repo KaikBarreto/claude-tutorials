@@ -20,14 +20,14 @@
 | 03 | CERTIFICADO / Subindo o certificado A1 | "Selecionar arquivo" (.pfx), "Senha do Certificado", "Validar Certificado" → "Certificado validado!", "Válido até 14/09/2027"; dica da validade. [ILUSTRAÇÃO: régua de um ano] | `inicio` |
 | 04 | CONFIGURAÇÃO / Empresa e impostos | "Empresa": "Importar dados", Razão Social, IE; "Impostos (padrão)": "Lucro Real" e o quadro, ICMS, CFOPs Padrão, "Reforma Tributária (IBS/CBS)"; "Salvar configuração" → "Empresa cadastrada no sistema de NF-e!". [ILUSTRAÇÃO: o padrão vale para toda nota] | `apos-cap03` |
 | 05 | CENÁRIOS / Cenários fiscais | Aviso fixo; "Criar o primeiro cenário": "Venda para a Fundição Bandeira do Vale" (Venda, cliente específico); "O que aplicar" como o contador passou; "Criar cenário". [ILUSTRAÇÃO: regra geral × exceção estreita] | `apos-cap04` |
-| 06 | NUMERAÇÃO / Série e numeração | "Série padrão das suas notas"; "Adicionar série": Série 1, última 1248 → "Série adicionada com sucesso". [ILUSTRAÇÃO: a sequência continua do sistema antigo] | `apos-cap05` |
+| 06 | NUMERAÇÃO / Série e numeração | "Série padrão das suas notas"; "Adicionar série": Série 1, última 1248 → "Série adicionada com sucesso". [ILUSTRAÇÃO: a sequência continua] | `apos-cap05` |
 | 07 | CONFIGURAÇÃO / Transportadora e serviços | "Nova transportadora": Cargas Vale do Sol Ltda + placa FJR3B27 → "Transportadora cadastrada!"; "Serviços" vazio (é da NFS-e, T17). [ILUSTRAÇÃO: os dados do caminhão vão na nota] | `apos-cap06` |
-| 08 | COTA / A cota de documentos | Selo "0/100 Documentos" e a dica do mouse; o que conta; tolerância de 5. [ILUSTRAÇÃO: a barra da cota] | `apos-cap07` |
+| 08 | COTA / A cota de documentos | Selo "0/1.000 Documentos" e a dica do mouse (a fala não diz a cota: depende do plano); o que conta; tolerância de 5. [ILUSTRAÇÃO: a barra da cota] | `apos-cap07` |
 | 09 | EMISSÃO / Nota avulsa, do zero | "Nova Nota" → "NF-e de Saída" → Dados (Serra Fina, "Venda de mercadorias", Série 1 / Nº 1249) → Itens (Alumínio perfil 320 kg) → "Emitir Nota" → "Aguardando SEFAZ" → "Autorizada"; "Visualizar": chave e protocolo. [ILUSTRAÇÃO: o caminho da nota] | `apos-cap07` |
-| 10 | EMISSÃO / Nota a partir de um pedido | "Importar de" → "Pedido" → venda de hoje à Fundição (Cobre mel, 500 kg líquidos) → Transporte (Cargas Vale do Sol) → nº 1250 autorizada. [ILUSTRAÇÃO: bruto, desconto e líquido] | `apos-cap09` |
+| 10 | EMISSÃO / Nota a partir de um pedido | "Importar de" → "Pedido" → venda de ontem (09/11) à Fundição (Cobre mel, 500 kg líquidos) → Transporte (Cargas Vale do Sol) → nº 1250 autorizada. [ILUSTRAÇÃO: bruto, desconto e líquido] | `apos-cap09` |
 | 11 | EMISSÃO / Nota de um caixa fechado | "NF-e de Entrada" → "Emissão em Massa (Caixa)" → "Por Caixa", 09/11, caixa do Marcos "Fechado" → "Uma nota consolidada" → "Montar nota consolidada" → nº 1251 autorizada. [ILUSTRAÇÃO: várias compras viram uma nota] | `apos-cap10` |
-| 12 | CORREÇÕES / Cancelar e corrigir | Cancelar a 1249 (a Serra Fina desistiu antes de a carga sair) → "Cancelada"; "Carta de Correção" na 1250 (troca da placa) → "Carta de Correção enviada com sucesso!". [ILUSTRAÇÃO: cancelar × corrigir] | `apos-cap11` |
-| 13 | NUMERAÇÃO / Inutilizar numeração | Três pontinhos → "Inutilizar numeração" → "Por Faixa" 1246 a 1247 (recusadas no sistema antigo) → "Inutilizar na SEFAZ"; sub-aba "Inutilizadas". [ILUSTRAÇÃO: números fechados com cadeado] | `apos-cap12` |
+| 12 | CORREÇÕES / Cancelar e corrigir | Cancelar a 1249 (a Serra Fina mudou o pedido antes de a carga sair; a carga grande sai na T17) → "Cancelada"; "Carta de Correção" na 1250 (troca da placa) → "Carta de Correção enviada com sucesso!". [ILUSTRAÇÃO: cancelar × corrigir] | `apos-cap11` |
+| 13 | NUMERAÇÃO / Inutilizar numeração | Três pontinhos → "Inutilizar numeração" → "Por Faixa" 1246 a 1247 (puladas em outubro) → "Inutilizar na SEFAZ"; sub-aba "Inutilizadas". [ILUSTRAÇÃO: números fechados com cadeado] | `apos-cap12` |
 | 14 | DOCUMENTOS / DANFE e XML | Menu da 1250: "Download DANFE" (PDF em aba nova), "Download XML"; na 1249, "XML de Cancelamento". [ILUSTRAÇÃO: DANFE viaja com a carga, XML vai pro contador] | `apos-cap13` |
 | 15 | NOTAS RECEBIDAS / As notas recebidas | "Notas Recebidas" → "Ativar Notas Recebidas" → "Ativar mesmo assim" → "Notas emitidas contra o seu CNPJ" (Auto Peças Vale Forte e Depósito Irmãos Siqueira). [ILUSTRAÇÃO: o fornecedor emite contra o seu CNPJ] | `apos-cap14` |
 | 16 | NOTAS RECEBIDAS / Manifestar a nota | Selo "Ciência"; "Buscar documento"; "Confirmar operação" na Auto Peças → "Confirmada"; "Desconhecer operação" e "Operação não realizada" só mostrados. [ILUSTRAÇÃO: as respostas possíveis] | `apos-cap15` |
@@ -66,21 +66,21 @@ Recebidas desligado (`dfe_ativo` false); `companies.nfe_tier` 1. Endereço da em
 
 | Item | Valores (fictícios) |
 |---|---|
-| Níveis (`nfe_module_tiers`) | nível 1 "Nível 1", 100 documentos/mês; nível 2 "Nível 2", 300 (preço na tabela, nunca na tela) |
+| Níveis (`nfe_module_tiers`) | o catálogo do app (junção, item 6): "Nível 1" 1.000 documentos/mês, "Nível 2" 3.000, "Nível 3" 5.000 (preço na tabela, nunca na tela); a empresa no Nível 1 (`useNfeTier.tsx`: tolerância de 5; âmbar a partir de 80 %; o selo `0/1.000 Documentos`). A fala não diz a cota |
 | Certificado (cap 03) | arquivo `recicla-vale-metais-a1.pfx` (bytes falsos, < 200 KB), senha fictícia digitada mascarada; `plugnotas-certificate-info` devolve `certificateName` "RECICLA VALE METAIS LTDA", `vencimento` 2027-09-14, `daysRemaining` 308 |
 | Empresa (cap 04) | Razão Social "Recicla Vale Metais Ltda", Nome Fantasia "Recicla Vale Metais", CNPJ da semente, **IE 688.047.314.106** (SP, dígitos válidos) |
 | Impostos (cap 04) | "Lucro Real" (o quadro preenche PIS 1,65, COFINS 7,6, CST 01, não cumulativo); "Contribuinte de ICMS" ligado, ICMS interno 18 (padrão), CST e CFOPs no padrão da tela (1102, 2102, 5102, 6102, 5101, 5502); IBS/CBS ligado com CST-IBS/CBS 000 e cClassTrib 000001 em Saída e Entrada ("o que o contador passou") |
 | Cenário (cap 05) | "Venda para a Fundição Bandeira do Vale": Operação "Venda"; "Cliente da nota" "Um cliente/fornecedor específico" = CNPJ da Fundição; o resto "Qualquer"; "CST do ICMS" 51 e "Diferimento (%)" 100 (do contador; a fala não lê os números) |
-| Série (cap 06) | Série 1, "Última nota emitida nessa série" 1248 (o sistema antigo); a próxima é 1249. No sistema antigo, 1246 e 1247 foram recusadas e abandonadas (cap 13) |
+| Série (cap 06) | Série 1, "Última nota emitida nessa série" 1248 (a Recicla emite pelo EcoSistema desde agosto; a semente desta aula tira a configuração fiscal e as notas para mostrar a configuração do zero); a próxima é 1249. Em outubro, o "Última nota emitida" da série foi acertado errado (1247 em vez de 1245; o número da nota não se digita na emissão) e a 1248 saiu depois da 1245: 1246 e 1247 nunca viraram nota (cap 13) |
 | Transportadora (cap 07) | **Cargas Vale do Sol Ltda**, CNPJ **41.826.537/0001-92**, IE **688.115.922.408**, SP, Rua dos Ferroviários, 380, Vila São José, Taubaté; placa **FJR3B27**, UF SP (conferir na semente que o nome não é de empresa real) |
 | Clientes | Serra Fina Alumínio Reciclagem e Fundição Bandeira do Vale: PJ em SP, CNPJ e IE válidos, endereço completo, cadastro fiscal completo (sem selo "Incompleto") |
-| Venda (cap 10) | pedido de venda de **hoje, 08:10**, Fundição Bandeira do Vale, Cobre mel: bruto 506 kg, tara e impureza 6 kg, **líquido 500 kg × R$ 47,90 = R$ 23.950,00**, sem nota |
+| Venda (cap 10) | pedido de venda de **ontem, 09/11 10:40** (junção: o T6 não tem caixa aberto em 10/11 antes das 08:31), no caixa #84 do Rafael, Pix na Conta Secundária, Fundição Bandeira do Vale, Cobre mel: bruto 506 kg, tara e impureza 6 kg, **líquido 500 kg × R$ 47,90 = R$ 23.950,00**, sem nota |
 | Caixa fechado (cap 11) | caixa do **Marcos Antunes de 09/11** (segunda), aberto 07:02, **Fechado**, com 3 compras sem nota de pessoa física: Dona Cida (Alumínio latinha 38 kg, Papelão 120 kg), Valdir Pereira (Ferro misto 410 kg), Dona Cida (Alumínio latinha 26 kg, Papelão 60 kg). Consolidado: latinha 64 kg (R$ 396,80), papelão 180 kg (R$ 99,00), ferro misto 410 kg (R$ 307,50) = **R$ 803,30**, 3 itens. Se o histórico do Mundo já tiver esse caixa, usar o dele e ajustar a fala |
-| Notas emitidas | 1249 Serra Fina, Alumínio perfil 320 kg × R$ 10,40 = **R$ 3.328,00**, CFOP 5102; 1250 Fundição, Cobre mel 500 kg = R$ 23.950,00, frete "0 - Frete por conta do Remetente (CIF)", Cargas Vale do Sol (FJR3B27); 1251 entrada, Consumidor Final, "Entrada de sucata para revenda (pessoa física)", R$ 803,30. Chave de 44 dígitos: `35` + `2611` + CNPJ + `55` + `001` + número com 9 dígitos + `1` + código de 8 dígitos + DV (módulo 11); protocolo de 15 dígitos (`13526000…`); `authorized_at` no mesmo dia |
-| Cancelamento (cap 12) | 1249, motivo "Venda desfeita pelo cliente antes de a mercadoria sair do pátio" |
+| Notas emitidas | 1249 Serra Fina, Alumínio perfil 320 kg × R$ 10,40 = **R$ 3.328,00**, CFOP 6102 (Serra Fina em Itamonte, MG); 1250 Fundição, Cobre mel 500 kg = R$ 23.950,00, frete "0 - Frete por conta do Remetente (CIF)", Cargas Vale do Sol (FJR3B27); 1251 entrada, Consumidor Final, "Entrada de sucata para revenda (pessoa física)", R$ 803,30. Chave de 44 dígitos: `35` + `2611` + CNPJ + `55` + `001` + número com 9 dígitos + `1` + código de 8 dígitos + DV (módulo 11); protocolo de 15 dígitos (`13526000…`); `authorized_at` no mesmo dia |
+| Cancelamento (cap 12) | 1249, motivo "Pedido alterado pelo cliente antes de a mercadoria sair do pátio" |
 | CC-e (cap 12) | 1250: "Onde se lê 'Placa FJR3B27', leia-se 'Placa GKM5D18'. A transportadora trocou o veículo da carga." |
-| Inutilização (cap 13) | Série 1, ano 2026, 1246 a 1247, justificativa "Numeração recusada no sistema anterior e não utilizada" |
-| Notas recebidas (cap 15) | Auto Peças Vale Forte, NF-e nº 2157 de 09/11, "SUCATA DE BATERIA AUTOMOTIVA" 640 kg × R$ 3,10 = R$ 1.984,00; Depósito Irmãos Siqueira, nº 884 de 06/11, "FERRO PESADO" 2.300 kg × R$ 0,95 = R$ 2.185,00. As duas "Autorizada", manifestação "Ciência", com XML |
+| Inutilização (cap 13) | Série 1, ano 2026, 1246 a 1247, justificativa "Numeração pulada na emissão de outubro e não utilizada" |
+| Notas recebidas (cap 15) | Auto Peças Vale Forte, NF-e nº 2157 de 05/11, "SUCATA DE BATERIA AUTOMOTIVA" 640 kg × R$ 3,10 = R$ 1.984,00 (a compra de 05/11, Pix da Conta Secundária); Depósito Irmãos Siqueira, nº 884 de 06/11, "FERRO PESADO" 1.200 kg × R$ 0,95, "FERRO MISTO" 320 kg × R$ 0,75 e "COBRE MISTO" 20 kg × R$ 36,00 = R$ 2.100,00 (a compra no saldo do T4). As duas "Autorizada", manifestação "Ciência", com XML |
 | XML importado (cap 17) | `NFe-3871-Cooperativa-Recomeco.xml`: Cooperativa Recomeço (CNPJ da semente), nº 3871 de 09/11, "ALUMINIO LATINHA" 850 KG × 6,20 e "PLASTICO PET PRENSADO" 1.200 KG × 1,90 = R$ 7.550,00 (dá "alta" e "confira" pela regra do inventário 13) |
 
 **Fica para as próximas:** as três notas (1249 cancelada, 1250 com CC-e, 1251), a série em 1251, a transportadora, o
@@ -128,9 +128,9 @@ NFS-e, pacote do contador). Atualizar o `MUNDO_FICTICIO.md`.
   `narracao/tts_textos.py` e `narracao/config_narracao.json` (37 trocas, 28 números para a legenda).
 
 ## Riscos e decisões para o Kaik
-1. **Cancelar a 1249** (a Serra Fina desistiu antes de a carga sair) e **CC-e da placa na 1250**: os dois são casos
+1. **Cancelar a 1249** (a Serra Fina mudou o pedido antes de a carga sair) e **CC-e da placa na 1250**: os dois são casos
    comuns e não encenam erro do sistema. Alternativa: cancelar uma nota extra criada só para isso.
-2. **Inutilizar 1246 e 1247 do sistema antigo** (recusadas lá e abandonadas): é o único caso de inutilização que não
+2. **Inutilizar 1246 e 1247** (puladas em outubro, por um acerto errado do último número da série): é o único caso de inutilização que não
    exige encenar uma recusa na gravação. Alternativa: semear uma nota "Rejeitada" e usar "Inutilizar Rejeitadas".
 3. **Cenário da Fundição com CST 51 e diferimento 100**: valores "do contador", sem explicação na fala. Alternativa:
    cenário só com texto nas informações complementares.

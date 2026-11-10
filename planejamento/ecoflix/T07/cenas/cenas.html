@@ -220,7 +220,7 @@ CAPS[0]=()=>{
     const tw=['pesar','comprar','pagar','comprovante','vender'].map(w=>W(0,w));
     const tsu=W(1,'sucata'), tpo=W(1,'portao'), tba=W(1,'balanca'), tpe=W(1,'peso'), tvi=W(1,'virar'), tva=W(1,'valor'),
           tpg=W(1,'pagamento'), tsem=W(1,'sem'), tna=W(1,'nada'), tpa=W(1,'papel');
-    posTitulo(tit,t,j0-.6,trc-.15);
+    posTitulo(tit,t,j0-.6,trc-.45);
     traco(linhaDia,t,trc-.05,1.0);
     // os cinco passos do dia entram como silhuetas e cada um acende (ícone e nome) na sua palavra
     cards.forEach((c,i)=>{vis(c,t,trc+i*.1,1e9,{dy:18,sc:.94});
@@ -281,7 +281,7 @@ CAPS[2]=()=>{
   return t=>{
     const j0=W(2,'so')-.3, tpd=W(2,'pedido'), thi=W(2,'historico'), tpo=W(2,'portal'), tni=W(2,'ninguem'), tin=W(2,'informado'),
           tsa=W(2,'saldo'), tfi=W(2,'fiado'), tpr=W(2,'pra'), tpd2=W(2,'pedido',2), tfo=W(2,'fornecedor');
-    posTitulo(tit,t,j0-.6,tpd-.15);
+    posTitulo(tit,t,j0-.6,tpd-.55);
     vis(A.c,t,tpd-.1,1e9,{dy:20,sc:.95});
     vis(A.h,t,thi-.1,1e9,{dx:-12,dy:0}); vis(A.p,t,tpo-.1,1e9,{dx:-12,dy:0});
     pulse(A.cab,t,tni-.1,.05,.8); pulse(A.c,t,tin-.1,.025,.9);
@@ -420,7 +420,7 @@ CAPS[6]=()=>{
           tvz=W(2,'vazio'), tdi=W(2,'diferenca'), tca=W(2,'carga');
     const TX=tsu-.1;                                          // a troca da parte 1 pela 2
     // parte 1
-    vis(P1,t,-9,TX,{dy:0,sc:1}); posTitulo(tit,t,j0-.6,tta-.15);
+    vis(P1,t,-9,TX,{dy:0,sc:1}); posTitulo(tit,t,j0-.6,tta-.55);
     vis(cTa,t,tta-.1,1e9,{dy:20,sc:.95}); vis(cTa.querySelector('.st'),t,tna-.1,1e9,{dy:6});
     cTa.style.left=lerp(390,110,eio(pr(t,tim-.4,.6))).toFixed(2)+'px';
     mini.forEach((m,i)=>{const a=[tsa,ttb,tcc][i]-.15, p=eo(pr(t,a,.5)), dz=m.querySelector('.dz');
@@ -642,8 +642,8 @@ CAPS[14]=()=>{
 
   return t=>{
     const j0=W(3,'cobre')-.3, tco=W(3,'cobre'), tme=W(3,'mel'), tse=W(3,'sessenta'), tve=W(3,'venda'), tpr=W(3,'precisa');
-    posTitulo(tit,t,j0-.6,tco-.15);
-    vis(misto,t,tco-.1,1e9,{dy:16,sc:.95}); vis(mel,t,tco+.1,1e9,{dy:16,sc:.95});
+    posTitulo(tit,t,j0-.6,tco-.45);
+    vis(misto,t,tco,1e9,{dy:16,sc:.95}); vis(mel,t,tco+.2,1e9,{dy:16,sc:.95});
     const dv=Math.max(.8,tse-tme-.1);
     tracejado(rota,t,tme+.05,dv);
     arco(peca,t,tme+.05,dv,P0[0],P0[1],P1[0],P1[1],HA);
@@ -691,7 +691,7 @@ CAPS[15]=()=>{
   return t=>{
     const j0=W(4,'dica')-.3, top=W(4,'operacao'), ter=W(4,'erro'), tna=W(4,'nao'), tso=W(4,'sozinha'), tdo=W(4,'dobro'),
           tte=W(4,'tentar'), tat=W(4,'atualizar'), tre=W(4,'reenvia'), tdu=W(4,'duplicar'), tse=W(4,'sem',2), tli=W(4,'lixeira'), trf=W(4,'refaca');
-    posTitulo(tit,t,j0-.6,top-.15);
+    posTitulo(tit,t,j0-.6,top-.5);
     vis(caixa,t,top-.12,1e9,{dy:16}); vis(nuvem,t,top,1e9,{dy:10});
     // depois que as duas sobem, a caixa do computador encolhe em volta da que ficou
     const fe=eio(pr(t,top+1.6,.6)); caixa.style.top=lerp(156,312,fe).toFixed(2)+'px'; caixa.style.height=lerp(350,194,fe).toFixed(2)+'px';

@@ -1,0 +1,504 @@
+{
+ "name": "t02-cap06",
+ "title": "T2 · Cap. 6 · Desativar ou excluir (narração ESTIMADA 71,5 s; marcas L1..L8 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "seed": "t02-cap06",
+ "pace": 0.5,
+ "cps": 30,
+ "tail": 1.5,
+ "start": {
+  "x": 560,
+  "y": 470
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true"
+ },
+ "seedExtra": [
+  "t02/inicio",
+  "t02/apos-cap03",
+  "t02/apos-cap04",
+  "t02/apos-cap05"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "waitFor",
+   "target": {
+    "label": "E-mail"
+   },
+   "timeout": 30
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "E-mail"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "Senha",
+    "exact": true
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Rafael!",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/configuracoes?tab=users"
+  },
+  {
+   "do": "waitFor",
+   "text": "Empresa: Recicla Vale Metais",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|Algo deu errado|Falha ao|Something went wrong/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{document.querySelectorAll('[data-sonner-toast][data-type=error]').forEach(t=>{const s='TOAST DE ERRO: '+t.textContent.trim().slice(0,90);if(!window.__avisos.includes(s)&&window.__avisos.length<10)window.__avisos.push(s)})},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0.4
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Marcos Antunes",
+    "exact": true,
+    "within": "main"
+   },
+   "at": 0.48,
+   "label": "clica no Marcos"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "text": "Perfil de acesso",
+    "exact": true,
+    "within": "main"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main button[aria-label='Ações de Marcos Antunes']",
+    "nth": 1
+   },
+   "seconds": 0.35,
+   "at": 4.08,
+   "label": "menu ... do Marcos (Tornar master, Desativar, Excluir)",
+   "optional": false,
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main button[aria-label='Ações de Marcos Antunes']",
+    "nth": 1
+   },
+   "seconds": 0.3,
+   "label": "menu ... de Marcos Antunes de novo (só se não abriu)",
+   "unless": {
+    "role": "menuitem",
+    "name": "Desativar"
+   },
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "role": "menuitem",
+    "name": "Desativar"
+   },
+   "timeout": 6
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "menuitem",
+    "name": "Desativar"
+   },
+   "seconds": 0.25,
+   "at": 7.26,
+   "label": "Desativar",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "menuitem",
+    "name": "Excluir"
+   },
+   "seconds": 0.2,
+   "at": 8.03,
+   "label": "Excluir",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 8.81
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 980,
+    "y": 600
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "at": 10.01,
+   "label": "cursor sai do menu (fecha)"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 18.42
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main button[aria-label='Ações de Marcos Antunes']",
+    "nth": 1
+   },
+   "seconds": 0.35,
+   "at": 18.42,
+   "label": "menu ... do Marcos",
+   "optional": false,
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main button[aria-label='Ações de Marcos Antunes']",
+    "nth": 1
+   },
+   "seconds": 0.3,
+   "label": "menu ... de Marcos Antunes de novo (só se não abriu)",
+   "unless": {
+    "role": "menuitem",
+    "name": "Desativar"
+   },
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "role": "menuitem",
+    "name": "Desativar"
+   },
+   "timeout": 6
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Desativar"
+   },
+   "at": 19.02,
+   "label": "Desativar"
+  },
+  {
+   "do": "waitFor",
+   "text": "Usuário desativado!",
+   "timeout": 8
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "text": "2 / 3 usuários",
+    "exact": true,
+    "within": "main"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Inativo\", \"A conta está impedida de entrar.\", \"2 / 3 usuários\", \"31 permissões · Inativo\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Marcos inativo e o selo 2 / 3"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "A conta está impedida de entrar.",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 1.0,
+   "at": 21.25,
+   "label": "A conta está impedida de entrar.",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "2 / 3 usuários",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 2.4,
+   "at": 25.88,
+   "label": "ZOOM selo 2 / 3 usuários",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 30.62
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main button[aria-label='Ações de Marcos Antunes']",
+    "nth": 1
+   },
+   "seconds": 0.35,
+   "at": 32.73,
+   "label": "menu ... do Marcos",
+   "optional": false,
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main button[aria-label='Ações de Marcos Antunes']",
+    "nth": 1
+   },
+   "seconds": 0.3,
+   "label": "menu ... de Marcos Antunes de novo (só se não abriu)",
+   "unless": {
+    "role": "menuitem",
+    "name": "Ativar"
+   },
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "role": "menuitem",
+    "name": "Ativar"
+   },
+   "timeout": 6
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Ativar"
+   },
+   "at": 33.54,
+   "label": "Ativar"
+  },
+  {
+   "do": "waitFor",
+   "text": "Usuário ativado!",
+   "timeout": 8
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "text": "3 / 3 usuários",
+    "exact": true,
+    "within": "main"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "3 / 3 usuários",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.8,
+   "at": 36.1,
+   "label": "selo 3 / 3 usuários (de volta)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 36.58
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main button[aria-label='Ações de Marcos Antunes']",
+    "nth": 1
+   },
+   "seconds": 0.35,
+   "at": 36.96,
+   "label": "menu ... do Marcos",
+   "optional": false,
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main button[aria-label='Ações de Marcos Antunes']",
+    "nth": 1
+   },
+   "seconds": 0.3,
+   "label": "menu ... de Marcos Antunes de novo (só se não abriu)",
+   "unless": {
+    "role": "menuitem",
+    "name": "Excluir"
+   },
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "role": "menuitem",
+    "name": "Excluir"
+   },
+   "timeout": 6
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Excluir"
+   },
+   "at": 37.76,
+   "label": "Excluir"
+  },
+  {
+   "do": "waitFor",
+   "text": "Esta ação é irreversível",
+   "timeout": 8
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Excluir usuário\", \"Esta ação é irreversível\", \"Para confirmar, digite o email do usuário:\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=alertdialog]\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere janela Excluir usuário"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const b=[...document.querySelectorAll('[role=alertdialog] button')].find(x=>x.textContent.trim()==='Excluir Usuário');return b?(b.disabled?'OK: Excluir Usuário apagado':'DIFERENTE: Excluir Usuário ligado'):'DIFERENTE: sem o botão'})()",
+   "label": "confere Excluir Usuário apagado"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "#confirmEmail"
+   },
+   "seconds": 1.4,
+   "at": 42.9,
+   "label": "Email de confirmação",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 45.28
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Cancelar",
+    "exact": true,
+    "within": "[role=alertdialog]"
+   },
+   "at": 46.19,
+   "label": "Cancelar"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "selector": "[role=alertdialog]"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 52.39
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main svg[aria-label=\"Usuário master\"]"
+   },
+   "seconds": 1.6,
+   "at": 59.85,
+   "label": "coroa do Rafael (o master)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 64.13
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Rafael Nogueira",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 1.0,
+   "at": 67.64,
+   "label": "Rafael na lista",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 71.47
+  }
+ ]
+}

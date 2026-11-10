@@ -1,0 +1,605 @@
+{
+ "name": "t26-cap06",
+ "title": "T26 · Cap. 6 · Automações (narração 95,9 s, ESTIMADA; marcas L1..L10 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
+ "fakeNow": "2026-11-10T08:30:00-03:00",
+ "seed": "t26-cap06",
+ "pace": 0.5,
+ "cps": 22,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 470
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true",
+  "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10"
+ },
+ "seedExtra": [
+  "t26/apos-cap05"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/login"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "timeout": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "••••••••"
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Rafael",
+   "timeout": 45
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 20
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const sb=document.querySelector('[data-state][data-collapsible]');if(sb&&sb.getAttribute('data-state')==='collapsed')return 'ja recolhido';const b=document.querySelector('header button.h-8.w-8');if(!b)return 'SEM ALVO';b.click();return 'recolhido'})()"
+  },
+  {
+   "do": "wait",
+   "seconds": 0.7
+  },
+  {
+   "do": "goto",
+   "url": "/crm"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie oportunidades e acompanhe seu processo comercial.",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 15
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Configurações do CRM/Kanban",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Organize os funis comerciais e as etapas de cada Kanban.",
+   "timeout": 15
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Expandir Sucata industrial",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Estágios deste funil",
+   "timeout": 10
+  },
+  {
+   "do": "wait",
+   "seconds": 0.4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Editar estágio Em contato",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Configurar Em contato",
+   "timeout": 10
+  },
+  {
+   "do": "wait",
+   "seconds": 0.5
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel|Algo deu errado|Falha ao|Something went wrong/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Automações"
+   },
+   "at": 0.0,
+   "label": "aba Automações"
+  },
+  {
+   "do": "waitFor",
+   "text": "Fluxos desta etapa",
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Novas automações nascem pausadas para revisão.",
+    "exact": true
+   },
+   "seconds": 0.6,
+   "at": 1.47,
+   "label": "Novas automações nascem pausadas para revisão.",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Nenhuma automação nesta etapa",
+    "exact": true
+   },
+   "seconds": 1.0,
+   "at": 4.36,
+   "label": "Nenhuma automação nesta etapa",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 7.44
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 640,
+    "y": 300
+   },
+   "by": 0,
+   "duration": 0.2,
+   "after": 0,
+   "at": 8.29,
+   "label": "cursor descansa (ilustração)"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 15.84
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Nova automação",
+    "exact": true
+   },
+   "at": 15.84,
+   "label": "Nova automação"
+  },
+  {
+   "do": "waitFor",
+   "text": "Use {NOME} e {CLIENTE} nos textos dinâmicos.",
+   "timeout": 8
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog]:has(#crm-stage-name) input[placeholder='Ex.: Preparar contato comercial']"
+   },
+   "text": "Agendar a visita",
+   "cps": 22,
+   "at": 17.74,
+   "label": "Nome: Agendar a visita"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog]:has(#crm-stage-name) button[role=combobox]",
+    "hasText": "Ao entrar nesta etapa"
+   },
+   "at": 19.43,
+   "label": "Gatilho (abre a lista)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=option]:has-text('Ao entrar nesta etapa')"
+   },
+   "seconds": 0.3,
+   "at": 22.9,
+   "label": "Ao entrar nesta etapa",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=option]:has-text('Ao concluir uma tarefa')"
+   },
+   "seconds": 0.1,
+   "at": 25.1,
+   "label": "Ao concluir uma tarefa",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=option]:has-text('Ao concluir um checklist')"
+   },
+   "seconds": 0.3,
+   "at": 26.08,
+   "label": "Ao concluir um checklist",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=option]:has-text('Quando tudo estiver concluído')"
+   },
+   "seconds": 0.6,
+   "at": 28.74,
+   "label": "Quando tudo estiver concluído",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=option]:has-text('Ao entrar nesta etapa')"
+   },
+   "at": 30.56,
+   "label": "fica em Ao entrar nesta etapa",
+   "noScroll": true
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 33.04
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog]:has(#crm-stage-name) button[role=combobox]",
+    "hasText": "Criar tarefa"
+   },
+   "at": 33.37,
+   "label": "ação 1 (abre a lista das ações)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=option]:has-text('Criar tarefa')"
+   },
+   "seconds": 0.1,
+   "at": 35.01,
+   "label": "Criar tarefa",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=option]:has-text('Aplicar checklist')"
+   },
+   "seconds": 0.3,
+   "at": 36.23,
+   "label": "Aplicar checklist",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=option]:has-text('Definir prazo do cartão')"
+   },
+   "seconds": 0.5,
+   "at": 37.82,
+   "label": "Definir prazo do cartão",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=option]:has-text('Atribuir responsável')"
+   },
+   "seconds": 0.5,
+   "at": 39.87,
+   "label": "Atribuir responsável",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=option]:has-text('Adicionar etiqueta')"
+   },
+   "seconds": 0.4,
+   "at": 41.69,
+   "label": "Adicionar etiqueta",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=option]:has-text('Mover cartão')"
+   },
+   "seconds": 0.14,
+   "at": 43.36,
+   "label": "Mover cartão",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=option]:has-text('Copiar cartão')"
+   },
+   "seconds": 0.4,
+   "at": 44.5,
+   "label": "Copiar cartão",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=option]:has-text('Criar tarefa')"
+   },
+   "at": 47.08,
+   "label": "fica em Criar tarefa",
+   "noScroll": true
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 48.19
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog]:has(#crm-stage-name) input[placeholder='Ex.: Ligar para {NOME}']"
+   },
+   "at": 48.52,
+   "label": "Título da tarefa *"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog]:has(#crm-stage-name) input[placeholder='Ex.: Ligar para {NOME}']"
+   },
+   "text": "Agendar visita na ",
+   "cps": 30,
+   "at": 51.37,
+   "label": "título: Agendar visita na",
+   "noClick": true,
+   "clear": true
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog]:has(#crm-stage-name) input[placeholder='Ex.: Ligar para {NOME}']"
+   },
+   "text": "{CLIENTE}",
+   "cps": 22,
+   "at": 53.47,
+   "label": "título: {CLIENTE}",
+   "noClick": true
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const esp=[\"Agendar visita na {CLIENTE}\"];let out='';for(let i=0;i<12;i++){const sc=[...document.querySelectorAll(\"[role=dialog]:has(#crm-stage-name)\")].pop();const v=sc?[...sc.querySelectorAll('input, textarea')].map(e=>e.value).join(' | '):'';const falta=esp.filter(e=>!v.includes(e));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+v.slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere título da tarefa"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Use {NOME} e {CLIENTE} nos textos dinâmicos.",
+    "exact": true
+   },
+   "seconds": 1.6,
+   "at": 55.85,
+   "label": "Use {NOME} e {CLIENTE} nos textos dinâmicos. (zoom)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 58.48
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog]:has(#crm-stage-name) input[type=number]"
+   },
+   "seconds": 0.1,
+   "at": 58.93,
+   "label": "Prazo em dias: 1",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "select",
+   "target": {
+    "selector": "[role=dialog]:has(#crm-stage-name) button[role=combobox]",
+    "hasText": "Dias corridos"
+   },
+   "option": "Dias úteis",
+   "at": 59.6,
+   "label": "Contagem: Dias úteis"
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 60.81
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog]:has(#crm-stage-name) div.rounded-xl.shadow-sm:has(input[type=number])"
+   },
+   "seconds": 3.0,
+   "at": 61.26,
+   "label": "a ação inteira (título, prazo e contagem)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 69.89
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog]:has(#crm-stage-name) label[for=automation-enabled]"
+   },
+   "seconds": 1.6,
+   "at": 73.08,
+   "label": "chave em Pausada (zoom)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#automation-enabled"
+   },
+   "at": 76.67,
+   "label": "liga a chave (Ativa)"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "text": "Ativa",
+    "exact": true,
+    "within": "[role=dialog]:has(#crm-stage-name)"
+   },
+   "timeout": 6
+  },
+  {
+   "do": "mark",
+   "name": "L9",
+   "at": 78.13
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Salvar automação",
+    "exact": true
+   },
+   "at": 78.23,
+   "label": "Salvar automação"
+  },
+  {
+   "do": "waitFor",
+   "text": "Automação salva e ativa",
+   "timeout": 10
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Agendar a visita\", \"Ativa\", \"Ao entrar nesta etapa · 1 ação\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]:has(#crm-stage-name)\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere a automação ativa na lista"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog]:has(#crm-stage-name) div.rounded-xl:has(p:text-is('Agendar a visita'))"
+   },
+   "seconds": 0.26,
+   "at": 81.02,
+   "label": "Agendar a visita, Ativa (zoom)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L10",
+   "at": 82.28
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 640,
+    "y": 300
+   },
+   "by": 0,
+   "duration": 0.2,
+   "after": 0,
+   "at": 82.98,
+   "label": "cursor descansa (ilustração)"
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 95.92
+  }
+ ]
+}

@@ -1,0 +1,433 @@
+{
+ "name": "t01-cap07",
+ "title": "T01 · Cap. 7 · Numeração de pedidos (narração 87,3 s ESTIMADA; marcas L1..L9 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
+ "seed": "t01-cap07",
+ "pace": 0.5,
+ "cps": 14,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "anonymous": true,
+ "seedExtra": [
+  "t01/inicio",
+  "t01/apos-cap05",
+  "t01/apos-cap06"
+ ],
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "initial-preferences-set": "true",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10"
+ },
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/login"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "timeout": 30
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "input[type=password]"
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Rafael!",
+   "timeout": 40
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/configuracoes"
+  },
+  {
+   "do": "waitFor",
+   "text": "Configurações do Sistema",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel|Algo deu errado|Falha ao carregar|Personalize sua experi[êe]ncia|Voc[êe] j[áa] est[áa] conectado|Sistema atualizado|O rel[óo]gio deste computador|Sess[ãa]o expirou/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');if(f&&window.__avisos.length<10&&!window.__avisos.includes('LEMBRETE DA TRILHA'))window.__avisos.push('LEMBRETE DA TRILHA')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0.4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const m=[...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);return m||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"Numeração de pedidos\"&&e.offsetParent);if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-120);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/1200),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 0.4,
+   "label": "desce até Numeração de pedidos"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Numeração de pedidos",
+    "exact": true
+   },
+   "seconds": 1.2,
+   "at": 5.8,
+   "label": "Numeração de pedidos",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "#order-number-template"
+   },
+   "seconds": 1.6,
+   "at": 8.0,
+   "label": "o formato do número",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 10.63
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#order-number-reset"
+   },
+   "at": 11.79,
+   "label": "Reinício da numeração (abre a lista)"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "role": "option",
+    "name": "Nenhum (segue direto)",
+    "exact": true
+   },
+   "timeout": 6
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "option",
+    "name": "Nenhum (segue direto)",
+    "exact": true
+   },
+   "seconds": 1.6,
+   "at": 13.97,
+   "label": "Nenhum (segue direto)",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "option",
+    "name": "Mensal (zera todo mês)",
+    "exact": true
+   },
+   "seconds": 1.6,
+   "at": 17.69,
+   "label": "Mensal (zera todo mês)",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "option",
+    "name": "Anual (zera todo ano)",
+    "exact": true
+   },
+   "seconds": 0.4,
+   "at": 21.25,
+   "label": "Anual (zera todo ano)",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Nenhum (segue direto)",
+    "exact": true
+   },
+   "at": 22.71,
+   "label": "fica em Nenhum (segue direto)",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "option",
+    "name": "Anual (zera todo ano)",
+    "exact": true
+   },
+   "timeout": 6
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 22.74
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 33.42
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Formato do número",
+    "exact": true
+   },
+   "seconds": 0.8,
+   "at": 34.63,
+   "label": "Formato do número",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Padrão"
+   },
+   "seconds": 0.4,
+   "at": 36.45,
+   "label": "modelo Padrão #30",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Pontos"
+   },
+   "seconds": 0.5,
+   "at": 37.74,
+   "label": "os modelos, cada um com o exemplo",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 39.08
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Barras"
+   },
+   "at": 39.41,
+   "label": "modelo Barras"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Exemplo: 30/11/26\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere exemplo do Barras"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "main span:text-is('Exemplo:') >> xpath=.."
+   },
+   "text": "",
+   "noClick": true,
+   "optional": true,
+   "timeout": 4,
+   "label": "Exemplo: 30/11/26"
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 44.44
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Zeros"
+   },
+   "at": 44.77,
+   "label": "modelo Zeros"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Exemplo: 0030\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere exemplo do Zeros"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Padrão"
+   },
+   "at": 49.63,
+   "label": "volta ao Padrão"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Exemplo: #30\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere de volta ao Padrão"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const esp=[\"#{NUM}\"];let out='';for(let i=0;i<12;i++){const v=[...document.querySelectorAll(\"main\"+' input, '+\"main\"+' textarea')].map(e=>e.value).join(' | ');const falta=esp.filter(e=>!v.includes(e));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+v.slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere formato #{NUM}"
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 53.9
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Numeração separada para compras e vendas",
+    "exact": true
+   },
+   "seconds": 1.6,
+   "at": 55.41,
+   "label": "Numeração separada para compras e vendas (desligada)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Cada tipo passa a ter sua própria contagem.",
+    "exact": true
+   },
+   "seconds": 2.0,
+   "at": 58.6,
+   "label": "Cada tipo passa a ter sua própria contagem.",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 62.98
+  },
+  {
+   "do": "mark",
+   "name": "L9",
+   "at": 72.44
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#order-number-scope"
+   },
+   "at": 73.37,
+   "label": "chave Numeração separada (pede confirmação)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Ativar numeração separada?",
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Compras e vendas passarão a contar separadamente"
+   },
+   "seconds": 2.6,
+   "at": 76.84,
+   "label": "janela Ativar numeração separada?",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Compras e vendas passarão a contar separadamente"
+   },
+   "seconds": 1.4,
+   "at": 79.97,
+   "label": "Os pedidos que você já fez não mudam",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Cancelar",
+    "exact": true
+   },
+   "at": 84.99,
+   "label": "Cancelar (a chave fica desligada)"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "text": "Ativar numeração separada?",
+    "exact": true
+   },
+   "timeout": 8
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const s=document.querySelector('#order-number-scope');return s?s.getAttribute('data-state'):'sem chave'})()",
+   "label": "confere chave desligada (unchecked)"
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 87.3
+  }
+ ]
+}

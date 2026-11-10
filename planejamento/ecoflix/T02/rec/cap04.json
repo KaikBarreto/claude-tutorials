@@ -1,0 +1,629 @@
+{
+ "name": "t02-cap04",
+ "title": "T2 · Cap. 4 · Telas e ações (narração ESTIMADA 107,5 s; marcas L1..L10 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "seed": "t02-cap04",
+ "pace": 0.5,
+ "cps": 30,
+ "tail": 1.5,
+ "start": {
+  "x": 1000,
+  "y": 360
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true"
+ },
+ "seedExtra": [
+  "t02/inicio",
+  "t02/apos-cap03"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "waitFor",
+   "target": {
+    "label": "E-mail"
+   },
+   "timeout": 30
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "E-mail"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "Senha",
+    "exact": true
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Rafael!",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/configuracoes?tab=users"
+  },
+  {
+   "do": "waitFor",
+   "text": "Empresa: Recicla Vale Metais",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|Algo deu errado|Falha ao|Something went wrong/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{document.querySelectorAll('[data-sonner-toast][data-type=error]').forEach(t=>{const s='TOAST DE ERRO: '+t.textContent.trim().slice(0,90);if(!window.__avisos.includes(s)&&window.__avisos.length<10)window.__avisos.push(s)})},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0.4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Criar Usuário",
+    "exact": true,
+    "within": "main"
+   },
+   "at": 0.4,
+   "label": "Criar Usuário"
+  },
+  {
+   "do": "waitFor",
+   "text": "Preencha os dados do novo usuário",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#fullName"
+   },
+   "label": "campo Nome Completo"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#fullName"
+   },
+   "text": "Juliana Prado",
+   "cps": 30,
+   "label": "Nome Completo: Juliana Prado",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#email"
+   },
+   "label": "campo Email"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const e=document.activeElement;if(!e||!/^(INPUT|TEXTAREA)$/.test(e.tagName))return 'SEM ALVO (nada em foco)';document.execCommand('insertText',false,\"juliana.prado@reciclavalemetais.example\");return e.value})()",
+   "label": "Email da Juliana (colado: 39 letras não cabem na fala)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#password"
+   },
+   "label": "campo Senha"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#password"
+   },
+   "text": "Escritorio#2026",
+   "cps": 30,
+   "label": "Senha (Senha forte)",
+   "noClick": true
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Senha forte\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog],[role=alertdialog]\")];const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Senha forte da Juliana"
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 8.58
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=document.querySelector(\"[role=dialog] input[placeholder=\\\"Buscar tela ou a\\u00e7\\u00e3o...\\\"]\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-150);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 9.13,
+   "label": "desce o corpo da janela: a lista aparece inteira"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Geral",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.3,
+   "at": 9.84,
+   "label": "grupo Geral",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Financeiro",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.2,
+   "at": 10.65,
+   "label": "grupo Financeiro",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.textContent.trim()===\"Cadastros\").sort((a,b)=>a.textContent.length-b.textContent.length||a.children.length-b.children.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-330);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/1600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "label": "a lista desce pelos grupos (Materiais, Cadastros)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Clientes e Fornecedores",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.4,
+   "at": 13.16,
+   "label": "uma linha = uma tela (Clientes e Fornecedores)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "switch",
+    "name": "Acesso à tela Clientes e Fornecedores",
+    "exact": true
+   },
+   "seconds": 1.0,
+   "at": 14.45,
+   "label": "o interruptor do lado",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 15.99
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=document.querySelector(\"[role=dialog] [role=switch][aria-label=\\\"Acesso \\u00e0 tela Contas a Pagar/Receber\\\"]\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-330);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 17.69,
+   "label": "a lista volta até Contas a Pagar/Receber (sob a ilustração)"
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 22.95
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "switch",
+    "name": "Acesso à tela Contas a Pagar/Receber",
+    "exact": true
+   },
+   "at": 25.52,
+   "label": "liga a tela Contas a Pagar/Receber"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Ver ações de Contas a Pagar/Receber",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 27.5,
+   "label": "Clique para ver 4 ações (Contas a Pagar/Receber)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "switch",
+    "name": "Criar Conta a Pagar/Receber",
+    "exact": true
+   },
+   "at": 30.08,
+   "label": "liga Criar Conta a Pagar/Receber"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "switch",
+    "name": "Dar Baixa em Conta",
+    "exact": true
+   },
+   "at": 31.14,
+   "label": "liga Dar Baixa em Conta"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const b=document.querySelector(\"[role=dialog] button[aria-label='Ver ações de Contas a Pagar/Receber'] div.tabular-nums\");const t=b?b.textContent.trim():'sem selo';return (t===\"2/4\"?'OK: ':'DIFERENTE: ')+'Contas a Pagar/Receber '+t})()",
+   "label": "confere selo 2/4"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] button[aria-label='Ver ações de Contas a Pagar/Receber'] div.tabular-nums"
+   },
+   "seconds": 1.8,
+   "at": 32.91,
+   "label": "ZOOM selo 2/4 e as duas ações ligadas",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 35.29
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "switch",
+    "name": "Acesso à tela Contas a Pagar/Receber",
+    "exact": true
+   },
+   "seconds": 0.8,
+   "at": 37.44,
+   "label": "primeiro a tela (interruptor de Contas a Pagar/Receber)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "switch",
+    "name": "Criar Conta a Pagar/Receber",
+    "exact": true
+   },
+   "seconds": 0.8,
+   "at": 38.8,
+   "label": "depois as ações",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=document.querySelector(\"[role=dialog] [role=switch][aria-label=\\\"Acesso \\u00e0 tela Caixa\\\"]\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-400);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 41.88,
+   "label": "a lista sobe até o Caixa"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "switch",
+    "name": "Acesso à tela Caixa",
+    "exact": true
+   },
+   "seconds": 1.6,
+   "at": 42.67,
+   "label": "a tela Caixa, desligada (sem abrir as ações)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 48.32
+  },
+  {
+   "do": "click",
+   "target": {
+    "placeholder": "Buscar tela ou ação...",
+    "within": "[role=dialog]"
+   },
+   "at": 50.97,
+   "label": "Buscar tela ou ação..."
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Buscar tela ou ação...",
+    "within": "[role=dialog]"
+   },
+   "text": "nota",
+   "cps": 12,
+   "at": 52.59,
+   "label": "busca: nota",
+   "noClick": true
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Fiscal & Ambiental",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.4,
+   "at": 53.65,
+   "label": "aparece o Fiscal & Ambiental",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "switch",
+    "name": "Acesso à tela Fiscal & Ambiental",
+    "exact": true
+   },
+   "at": 55.6,
+   "label": "liga a tela Fiscal & Ambiental"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Ver ações de Fiscal & Ambiental",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 56.36,
+   "label": "Clique para ver 4 ações (Fiscal & Ambiental)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "switch",
+    "name": "Emitir NF-e (Produto)",
+    "exact": true
+   },
+   "at": 57.58,
+   "label": "liga Emitir NF-e (Produto)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "switch",
+    "name": "Emitir NFS-e (Serviço)",
+    "exact": true
+   },
+   "at": 58.72,
+   "label": "liga Emitir NFS-e (Serviço)"
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 60.44
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Limpar busca"
+   },
+   "at": 60.97,
+   "label": "Limpar busca"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const r=[];for(const n of [\"Ver Totais e Valores Financeiros\", \"Acesso à tela Dashboard\"]){const s=document.querySelector('[role=dialog] [role=switch][aria-label=\"'+n+'\"]');if(!s){r.push('SEM ALVO '+n);continue}if(s.getAttribute('data-state')!=='checked'){s.click();r.push('ligou '+n)}else r.push('já '+n)}return r.join(' | ')})()",
+   "at": 62.84,
+   "label": "liga Ver Totais e Dashboard (sem cursor)"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=document.querySelector(\"[role=dialog] [role=switch][aria-label=\\\"Acesso \\u00e0 tela Movimenta\\u00e7\\u00f5es Banc\\u00e1rias\\\"]\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-300);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/450),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 63.42,
+   "label": "a lista desce até o banco"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "switch",
+    "name": "Acesso à tela Movimentações Bancárias",
+    "exact": true
+   },
+   "at": 64.53,
+   "label": "liga Movimentações Bancárias (o banco)"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const r=[];for(const n of [\"Movimentações Bancárias\"]){const b=document.querySelector('[role=dialog] button[aria-label=\"Ver ações de '+n+'\"]');if(!b){r.push('SEM ALVO '+n);continue}if(b.getAttribute('data-state')!=='open'){b.click();r.push('abriu '+n)}else r.push('já '+n)}return r.join(' | ')})()",
+   "label": "abre as ações do banco (sem cursor)"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const r=[];for(const n of [\"Gerenciar Contas Bancárias\", \"Conciliar Extrato Bancário\"]){const s=document.querySelector('[role=dialog] [role=switch][aria-label=\"'+n+'\"]');if(!s){r.push('SEM ALVO '+n);continue}if(s.getAttribute('data-state')!=='checked'){s.click();r.push('ligou '+n)}else r.push('já '+n)}return r.join(' | ')})()",
+   "label": "liga Gerenciar Contas e Conciliar Extrato (sem cursor)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "switch",
+    "name": "Acesso à tela Relatório Financeiro",
+    "exact": true
+   },
+   "at": 65.37,
+   "label": "liga Relatório Financeiro"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=document.querySelector(\"[role=dialog] [role=switch][aria-label=\\\"Acesso \\u00e0 tela Pedidos\\\"]\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-400);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/400),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "label": "a lista desce até Pedidos"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "switch",
+    "name": "Acesso à tela Pedidos",
+    "exact": true
+   },
+   "at": 67.41,
+   "label": "liga Pedidos"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=document.querySelector(\"[role=dialog] [role=switch][aria-label=\\\"Acesso \\u00e0 tela Clientes e Fornecedores\\\"]\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-400);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/500),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "label": "a lista desce até Clientes e Fornecedores"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "switch",
+    "name": "Acesso à tela Clientes e Fornecedores",
+    "exact": true
+   },
+   "at": 68.4,
+   "label": "liga Clientes e Fornecedores"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const r=[];for(const n of [\"Clientes e Fornecedores\"]){const b=document.querySelector('[role=dialog] button[aria-label=\"Ver ações de '+n+'\"]');if(!b){r.push('SEM ALVO '+n);continue}if(b.getAttribute('data-state')!=='open'){b.click();r.push('abriu '+n)}else r.push('já '+n)}return r.join(' | ')})()",
+   "label": "abre as ações de Clientes e Fornecedores (sem cursor)"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const r=[];for(const n of [\"Ver saldos de cliente/fornecedor\"]){const s=document.querySelector('[role=dialog] [role=switch][aria-label=\"'+n+'\"]');if(!s){r.push('SEM ALVO '+n);continue}if(s.getAttribute('data-state')!=='checked'){s.click();r.push('ligou '+n)}else r.push('já '+n)}return r.join(' | ')})()",
+   "label": "liga Ver saldos de cliente/fornecedor (sem cursor)"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=document.querySelector(\"[role=dialog] [role=switch][aria-label=\\\"Acesso \\u00e0 tela Caixa\\\"]\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-400);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 70.05,
+   "label": "a lista sobe até o Caixa"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "switch",
+    "name": "Acesso à tela Caixa",
+    "exact": true
+   },
+   "seconds": 1.2,
+   "at": 70.75,
+   "label": "o Caixa fica desligado",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const r=[];let ok=true;for(let n of [\"Acesso à tela Contas a Pagar/Receber\", \"Criar Conta a Pagar/Receber\", \"Dar Baixa em Conta\", \"Acesso à tela Fiscal & Ambiental\", \"Ver Totais e Valores Financeiros\", \"Acesso à tela Dashboard\", \"Acesso à tela Movimentações Bancárias\", \"Gerenciar Contas Bancárias\", \"Conciliar Extrato Bancário\", \"Acesso à tela Relatório Financeiro\", \"Acesso à tela Pedidos\", \"Acesso à tela Clientes e Fornecedores\", \"Ver saldos de cliente/fornecedor\", \"-Acesso à tela Caixa\"]){const off=n.startsWith('-');if(off)n=n.slice(1);const s=document.querySelector('[role=dialog] [role=switch][aria-label=\"'+n+'\"]');const st=s?s.getAttribute('data-state'):'sem';if(st!==(off?'unchecked':'checked'))ok=false;r.push(n+'='+st)}return (ok?'OK: ':'DIFERENTE: ')+r.join(' | ')})()",
+   "label": "confere as permissões da Juliana, sem o Caixa"
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 72.17
+  },
+  {
+   "do": "mark",
+   "name": "L9",
+   "at": 91.5
+  },
+  {
+   "do": "mark",
+   "name": "L10",
+   "at": 102.41
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Criar Usuário",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 102.71,
+   "label": "Criar Usuário (rodapé da janela)"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "text": "Juliana Prado",
+    "exact": true,
+    "within": "main"
+   },
+   "timeout": 12
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"3 / 3 usuários\", \"Juliana Prado\", \"15 permissões · Ativo\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Juliana na lista (15 permissões) e o selo 3 / 3"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Juliana Prado",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.8,
+   "at": 104.4,
+   "label": "Juliana entra na equipe",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "3 / 3 usuários",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.8,
+   "at": 105.79,
+   "label": "selo 3 / 3 usuários",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 107.55
+  }
+ ]
+}

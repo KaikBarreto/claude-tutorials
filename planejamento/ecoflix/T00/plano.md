@@ -84,7 +84,7 @@ em vez de "Meu Perfil", porque no celular o item é "Perfil"). Por capítulo:
 
 | Item | Valor |
 |---|---|
-| Rafael | `rafael.nogueira@reciclavalemetais.example` (o mesmo do T2), primeiro nome "Rafael", papel `company_admin` (selo "MASTER") |
+| Rafael | `rafael@reciclavalemetais.example` (o do T1 e da semente; junção), primeiro nome "Rafael", papel `company_admin` (selo "MASTER") |
 | Assinatura (S2) | `subscription_status` active, `subscription_plan` personalizado, `billing_cycle` monthly, `subscription_expires_at` 2026-12-05 ("25 dias restantes", "Vencimento" 05/12/2026), **`max_users` 3** (o do T2; 1 cadastrado no T0, só o Rafael), `extra_users` como o T2 definir, `asaas_subscription_id` preenchido, `cnpj`, `email`, `contact_name`, `phone` preenchidos (sem a faixa "Dados pendentes…"), sem indicação nem preço promocional |
 | Módulos (S2) | os da trilha em `company_modules`: `kit_basico`, `notas_fiscais`, `balanca_integration`, `funcionarios`, `white_label`, `portal_cliente`, `modulo_gerencial`, `coletas`, `producao`, `crm_kanban` ("Plano Personalizado • 10 módulos"; a fala não diz o número), com nomes e preços no catálogo `subscription_modules` / `subscription_plans` (o valor aparece na tela, nunca na fala) |
 | Pagamentos | 4 renovações pagas, "Renovação • Recicla Vale Metais Ltda", selo "Pago", nota emitida ("Baixar PDF"): 05/08/2026 Boleto, 05/09/2026 PIX, 05/10/2026 Cartão, 05/11/2026 Cartão (cobrança recorrente do cartão, para a faixa "Débito recorrente ativo no cartão de crédito") |

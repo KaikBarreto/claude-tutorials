@@ -196,6 +196,9 @@ function viaja(e,path,t,a,d,r=8){const p=eio(pr(t,a,d));const Lp=path.getTotalLe
 // número que vira no lugar (16 → 70): a = o de antes, b = o novo, empilhados
 function vira(a,b,t,t0,d=.5){const p=eio(pr(t,t0,d));a.style.transform=`scaleY(${Math.max(0,1-2*p).toFixed(3)})`;
   b.style.transform=`scaleY(${Math.max(0,2*p-1).toFixed(3)})`;a.style.opacity=p<.5?1:0;b.style.opacity=p>=.5?1:0;return p}
+// fator de um pulso para quem já é posicionado por transform (entra no próprio transform): o pulse do kit usa a propriedade
+// scale, que escala também a translação e faz o elemento pular de lugar
+function fpulso(t,a,amp=.045,dur=.9){const p=pr(t,a,dur);return (p>0&&p<1)?1+amp*Math.sin(Math.PI*p):1}
 // cor que acende em qualquer propriedade (fundo, texto), como o contorno do kit
 function luz(e,prop,t,a,de,para,d=.45){e.style[prop]=mix(de,para,eo(pr(t,a,d)))}
 // anel de destaque em volta de um cartão (sem mexer na sombra dele)
@@ -210,37 +213,37 @@ function escreve(e,txt,t,a,b){const p=cl((t-a)/Math.max(.05,b-a));const s=txt.sl
 const ILU=[
  {cap:0,id:'ilu00_cardapio',de:[0,'Oi',1],ate:[1,'primeiro',1],cauda:.6,
   resumo:'o cadastro de materiais é o cardápio do pátio, e a compra, a venda e a nota fiscal puxam dele',
-  mostra:['Recicla Vale Metais','Compra','Venda','Cobre mel','Ferro pesado','Alumínio latinha','R$ 42,00','R$ 47,40','R$ 0,95','R$ 1,25','R$ 6,20','R$ 7,40','Nota fiscal']},
+  mostra:['Materiais','O cardápio do pátio','Recicla Vale Metais','Compra','Venda','Cobre mel','Ferro pesado','Alumínio latinha','R$ 42,00','R$ 47,40','R$ 0,95','R$ 1,25','R$ 6,20','R$ 7,40','Nota fiscal']},
  {cap:1,id:'ilu01_totais',de:[3,'Total',1],ate:[3,'hoje',1],cauda:.6,
   resumo:'Total Pago é o estoque vezes o preço médio pago; Projeção de Vendas é o mesmo estoque vezes o preço de venda',
-  mostra:['Total Pago','Projeção de Vendas','Estoque','Preço médio pago','Preço de Venda','o que você pagou','se vender tudo hoje']},
+  mostra:['Total Pago × Projeção de Vendas','Total Pago','Projeção de Vendas','Estoque','Preço médio pago','Preço de Venda','o que você pagou','se vender tudo hoje']},
  {cap:3,id:'ilu03_codigo',de:[1,'atalho',1],ate:[2,'setenta',1],cauda:.6,
   resumo:'o código é o atalho do balcão (digita o número, o material aparece); dá para usar o do caderno: 16 vira 70',
-  mostra:['1','2','3','4','13','14','15','16','70','Radiador de cobre','Compra','Venda','Radiador','Rafael']},
+  mostra:['Materiais','O código é um atalho','1','2','3','4','13','14','15','16','70','Radiador de cobre','Compra','Venda','Radiador','Rafael']},
  {cap:4,id:'ilu04_ncm',de:[0,'Pra',1],ate:[0,'nota',2],cauda:.6,
   resumo:'o NCM é um código de 8 dígitos que vai dentro da nota',
-  mostra:['Nota fiscal','Radiador de cobre','NCM','7404.00.00','8 dígitos','Desperdícios e resíduos de cobre']},
+  mostra:['O NCM na nota','Nota fiscal','Radiador de cobre','NCM','7404.00.00','8 dígitos','Desperdícios e resíduos de cobre']},
  {cap:4,id:'ilu04_nomefiscal',de:[5,'Por',1],ate:[6,'iguais',1],cauda:.6,
   resumo:'os três alumínios saem na nota como SUCATA DE ALUMÍNIO; a tela, os pedidos e os comprovantes ficam com o nome normal',
-  mostra:['Alumínio latinha','Alumínio perfil','Alumínio bloco','Nota fiscal','SUCATA DE ALUMÍNIO','Tela','Pedidos','Comprovantes','linhas iguais']},
+  mostra:['Nome na nota','Alumínio latinha','Alumínio perfil','Alumínio bloco','Nota fiscal','SUCATA DE ALUMÍNIO','Tela','Pedidos','Comprovantes','linhas iguais']},
  {cap:4,id:'ilu04_onde',de:[8,'No',1],ate:[8,'fiscal',1],cauda:.6,
   resumo:'no material (e na planilha) vão o NCM e o nome na nota; CFOP, CST e ICMS ficam nos cenários fiscais, definidos pelo contador',
-  mostra:['No material','e na planilha','NCM','Nome na nota','Nos cenários fiscais','CFOP','CST','ICMS','mudam conforme','Operação','Regime','Parceiro','quem define','Contador']},
+  mostra:['Nota fiscal','O que fica onde','No material','e na planilha','NCM','Nome na nota','Nos cenários fiscais','CFOP','CST','ICMS','mudam conforme','Operação','Regime','Parceiro','quem define','Contador']},
  {cap:5,id:'ilu05_gavetas',de:[1,'Grupo',1],ate:[1,'nova',1],cauda:.6,
   resumo:'grupo é uma gaveta: cada material na sua; o radiador ganha a gaveta nova Radiadores',
-  mostra:['Ferrosos','Cobre','Alumínio','Metais','Outros','Radiadores','Ferro pesado','Cobre mel','Alumínio latinha','Bronze','Papelão','Radiador de cobre']},
+  mostra:['Grupos','Grupo é uma gaveta','Ferrosos','Cobre','Alumínio','Metais','Outros','Radiadores','Ferro pesado','Cobre mel','Alumínio latinha','Bronze','Papelão','Radiador de cobre']},
  {cap:7,id:'ilu07_vinculada',de:[3,'Vinculada',1],ate:[3,'também',1],cauda:.6,
   resumo:'a Tabela Depósitos é vinculada: acompanha a Principal com +4%, e quando o preço muda lá muda aqui também',
-  mostra:['Principal','Tabela Depósitos','+4%','Cobre mel','R$ 42,50','R$ 44,20','R$ 42,00']},
+  mostra:['Preços','Tabela vinculada','Principal','Tabela Depósitos','+4%','Cobre mel','R$ 42,50','R$ 44,20','R$ 42,00']},
  {cap:7,id:'ilu07_ordem',de:[7,'quando',1],ate:[7,'material',2],cauda:.6,
   resumo:'a ordem do preço: primeiro o personalizado do parceiro, depois a tabela do pedido, por último o preço do material',
-  mostra:['Primeiro','Preço personalizado','do cliente ou fornecedor','Depois','Tabela escolhida','no pedido','Por último','Preço do material']},
+  mostra:['Preços','A ordem do preço','Primeiro','Preço personalizado','do cliente ou fornecedor','Depois','Tabela escolhida','no pedido','Por último','Preço do material']},
  {cap:8,id:'ilu08_transferir',de:[3,'transferir',1],ate:[3,'misto',1],cauda:.6,
   resumo:'na desmontagem, os 8 kg de ferro das cintas e suportes saem do Radiador de cobre e vão para o Ferro misto',
-  mostra:['Radiador de cobre','Ferro misto','8 kg de ferro']},
+  mostra:['Estoque','Transferir entre materiais','Radiador de cobre','Ferro misto','8 kg de ferro']},
  {cap:10,id:'ilu10_arquivar',de:[0,'Por',1],ate:[0,'lá',1],cauda:.6,
   resumo:'excluir arquiva: o material sai da lista e das buscas, e as compras, as vendas e o histórico continuam',
-  mostra:['Lista e buscas','Ferro misto','Cobre mel','Radiador de cobre','apagar','arquiva','Compras','Vendas','Histórico']},
+  mostra:['Materiais','Excluir é arquivar','Lista e buscas','Ferro misto','Cobre mel','Radiador de cobre','apagar','arquiva','Compras','Vendas','Histórico']},
 ];
 // várias cenas num capítulo: cada uma no seu grupo, visível só na sua janela (a mesma conta da edição)
 function janela(c){return [W(c.de[0],c.de[1],c.de[2],'s')-.3, W(c.ate[0],c.ate[1],c.ate[2],'e')+c.cauda]}
@@ -704,16 +707,16 @@ S.ilu07_ordem=g=>{
     // mais de um preço possível: o pódio sobe apagado, com uma etiqueta de preço em cada degrau
     vis(chao,t,A.ma-.2,1e9,{dy:0});
     deg.forEach((d,i)=>{const s=eio(pr(t,A.ma-.1+i*.12,.8));d.style.transform=`scaleY(${s.toFixed(4)})`;d.style.opacity=s>0?1:0;
-      const b=bolas[i];b.style.transform=`translate(${(DX[i]+DW/2-38).toFixed(2)}px,${(CHAO-DH[i]-90).toFixed(2)}px)`;
+      const b=bolas[i], f=fpulso(t,A.qu-.05+i*.22,.12,.5)*fpulso(t,[A.p1,A.de,A.ul][i]-.1,.1,.6);
+      b.style.transform=`translate(${(DX[i]+DW/2-38).toFixed(2)}px,${(CHAO-DH[i]-90).toFixed(2)}px) scale(${f.toFixed(4)})`;
       b.style.opacity=eo(pr(t,A.ma+.55+i*.15,.4)).toFixed(3)});
     // qual vale? as etiquetas pulsam uma depois da outra
-    bolas.forEach((b,i)=>pulse(b,t,A.qu-.05+i*.22,.12,.5));
     [A.p1,A.de,A.ul].forEach((a,i)=>{qm[i].style.opacity=(eo(pr(t,A.qu-.05+i*.22,.45))*(1-eo(pr(t,a-.2,.3)))).toFixed(3)});
     // cada degrau acende na sua palavra (o primeiro mais forte)
     [A.p1,A.de,A.ul].forEach((a,i)=>{luz(deg[i],'background',t,a-.1,'#F2F4F7',DG[i][3]);
       contorno(deg[i],t,a-.1,'#E1E8E4',i===2?'#CFEBDD':DG[i][3]);
       vis(txt[i][0],t,a,1e9,{dy:8}); vis(txt[i][1],t,a+.18,1e9,{dy:8}); dic[i].style.opacity=(.55*eo(pr(t,a+.3,.45))).toFixed(3);
-      contorno(bolas[i],t,a-.1,'#E1E8E4','#50D088'); luz(bolas[i],'color',t,a-.1,'#9AA3AD','#2E7D57'); pulse(bolas[i],t,a-.1,.1,.6)});
+      contorno(bolas[i],t,a-.1,'#E1E8E4','#50D088'); luz(bolas[i],'color',t,a-.1,'#9AA3AD','#2E7D57')});
     if(txt[0][2])vis(txt[0][2],t,A.cl-.2,1e9,{dy:8});
     if(txt[1][2])vis(txt[1][2],t,A.pe-.2,1e9,{dy:8});
   };
@@ -770,7 +773,7 @@ S.ilu08_transferir=g=>{
     const s1=eio(pr(t,A.ra-.1,.7)), s2=eio(pr(t,A.sa,.8)), s3=eio(pr(t,A.f2-.25,.95));
     pecas.forEach((p,i)=>{const H=ferro[i][1],Sp=SEP[i],P=PIL[i],F=FIM[i];
       let x=lerp(H[0],Sp[0],s1),y=lerp(H[1],Sp[1],s1),r=0;
-      x=lerp(x,P[0],s2);y=lerp(y,P[1],s2)-(i%2?60:190)*4*s2*(1-s2);r=lerp(0,P[2],s2);
+      x=lerp(x,P[0],s2);y=lerp(y,P[1],s2)-(i%2?60:260)*4*s2*(1-s2);r=lerp(0,P[2],s2);
       let X=cx+x,Y=CY+y; X=lerp(X,F[0],s3);Y=lerp(Y,F[1],s3)-150*4*s3*(1-s3);r=lerp(r,F[2],s3);
       p.setAttribute('transform',`translate(${X.toFixed(2)},${Y.toFixed(2)}) rotate(${r.toFixed(2)})`);p.style.opacity=op;
       const destaque=i<2?eo(pr(t,A.ci-.1,.4))*(1-eo(pr(t,A.ci+.9,.5))):eo(pr(t,A.su-.1,.4))*(1-eo(pr(t,A.su+.9,.5)));
@@ -834,7 +837,8 @@ S.ilu10_arquivar=g=>{
     const qa=eio(pr(t,A.sa-.15,.9));
     const x=lerp(LX+18,AX+22,qa), y=lerp(ROWY(2),AY+94,qa)-90*4*qa*(1-qa), s=lerp(1,ESC,qa);
     const ent=eo(pr(t,A.ex+.2,.45));
-    rad.style.transform=`translate(${(x-20*(1-ent)).toFixed(2)}px,${y.toFixed(2)}px) scale(${s.toFixed(4)})`;
+    const f=fpulso(t,A.la-.1,.04,.8), RWf=RW-36, RHf=58;
+    rad.style.transform=`translate(${(x-20*(1-ent)-RWf*s*(f-1)/2).toFixed(2)}px,${(y-RHf*s*(f-1)/2).toFixed(2)}px) scale(${(s*f).toFixed(4)})`;
     rad.style.opacity=ent.toFixed(3);
     rad.style.background=qa>0?mix('#FFF5DF','#F6F7F9',qa):mix('#FFFFFF','#FFF5DF',eo(pr(t,A.ex+.5,.45)));
     vaga.style.opacity=eo(pr(t,A.sa+.1,.4)).toFixed(3);
@@ -846,7 +850,6 @@ S.ilu10_arquivar=g=>{
     [A.co,A.ve,A.hi].forEach((a,i)=>vis(his[i],t,a-.1,1e9,{dx:16,dy:0}));
     liga.forEach((l,i)=>traco(l.p,t,A.cn-.15+i*.1,.5));
     oks.forEach((o,i)=>{o.style.opacity=eo(pr(t,A.cn+.2+i*.15,.4)).toFixed(3)});
-    pulse(rad,t,A.la-.1,.04,.8);
   };
 };
 

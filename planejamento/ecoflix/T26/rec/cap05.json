@@ -1,0 +1,354 @@
+{
+ "name": "t26-cap05",
+ "title": "T26 · Cap. 5 · Regras do estágio (narração 55,8 s, ESTIMADA; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
+ "fakeNow": "2026-11-10T08:30:00-03:00",
+ "seed": "t26-cap05",
+ "pace": 0.5,
+ "cps": 22,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 470
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true",
+  "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10"
+ },
+ "seedExtra": [
+  "t26/apos-cap04"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/login"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "timeout": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "••••••••"
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Rafael",
+   "timeout": 45
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 20
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const sb=document.querySelector('[data-state][data-collapsible]');if(sb&&sb.getAttribute('data-state')==='collapsed')return 'ja recolhido';const b=document.querySelector('header button.h-8.w-8');if(!b)return 'SEM ALVO';b.click();return 'recolhido'})()"
+  },
+  {
+   "do": "wait",
+   "seconds": 0.7
+  },
+  {
+   "do": "goto",
+   "url": "/crm"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie oportunidades e acompanhe seu processo comercial.",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 15
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Configurações do CRM/Kanban",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Organize os funis comerciais e as etapas de cada Kanban.",
+   "timeout": 15
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Expandir Sucata industrial",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Estágios deste funil",
+   "timeout": 10
+  },
+  {
+   "do": "wait",
+   "seconds": 0.4
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel|Algo deu errado|Falha ao|Something went wrong/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Editar estágio Em contato",
+    "exact": true
+   },
+   "at": 6.81,
+   "label": "lápis Editar estágio Em contato"
+  },
+  {
+   "do": "waitFor",
+   "text": "Configurar Em contato",
+   "timeout": 8
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Regras"
+   },
+   "at": 9.01,
+   "label": "aba Regras"
+  },
+  {
+   "do": "waitFor",
+   "text": "Antes de sair desta etapa",
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Antes de sair desta etapa",
+    "exact": true
+   },
+   "seconds": 0.8,
+   "label": "Antes de sair desta etapa",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 9.87
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 640,
+    "y": 300
+   },
+   "by": 0,
+   "duration": 0.2,
+   "after": 0,
+   "at": 10.57,
+   "label": "cursor descansa (ilustração)"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 17.59
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog]:has(#crm-stage-name) div.rounded-xl:has(> div > label:text-is('Tarefas'))"
+   },
+   "seconds": 0.4,
+   "at": 19.18,
+   "label": "chave Tarefas",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog]:has(#crm-stage-name) div.rounded-xl:has(> div > label:text-is('Checklists'))"
+   },
+   "seconds": 0.4,
+   "at": 21.08,
+   "label": "chave Checklists",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog]:has(#crm-stage-name) div.rounded-xl:has(> div > label:text-is('Responsável'))"
+   },
+   "seconds": 0.29,
+   "at": 23.05,
+   "label": "chave Responsável",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog]:has(#crm-stage-name) div.rounded-xl:has(> div > label:text-is('Prazo'))"
+   },
+   "seconds": 0.4,
+   "at": 24.34,
+   "label": "chave Prazo",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog]:has(#crm-stage-name) div.rounded-xl:has(> div > label:text-is('Empresa'))"
+   },
+   "seconds": 0.1,
+   "at": 26.46,
+   "label": "chave Empresa",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog]:has(#crm-stage-name) div.rounded-xl:has(> div > label:text-is('Observações'))"
+   },
+   "seconds": 0.6,
+   "at": 27.45,
+   "label": "chave Observações",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 29.25
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "switch",
+    "name": "Tarefas",
+    "exact": true
+   },
+   "at": 31.85,
+   "label": "liga Tarefas"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "switch",
+    "name": "Responsável",
+    "exact": true
+   },
+   "at": 32.61,
+   "label": "liga Responsável"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>[...document.querySelectorAll('[role=dialog]:has(#crm-stage-name) button[role=switch]')].map(s=>s.id+'='+s.getAttribute('aria-checked')).join(' '))()",
+   "label": "confere chaves: Tarefas e Responsável ligadas"
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 39.16
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "#required-task-names"
+   },
+   "seconds": 0.1,
+   "at": 41.36,
+   "label": "Tarefas obrigatórias por nome (zoom)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "#required-checklist-names"
+   },
+   "seconds": 2.0,
+   "at": 42.35,
+   "label": "Checklists obrigatórios por nome (zoom)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 53.1
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Salvar etapa",
+    "exact": true
+   },
+   "at": 53.2,
+   "label": "Salvar etapa"
+  },
+  {
+   "do": "waitFor",
+   "text": "Configuração da etapa salva",
+   "timeout": 10
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 55.81
+  }
+ ]
+}

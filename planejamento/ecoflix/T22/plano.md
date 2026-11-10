@@ -23,10 +23,10 @@
 | 2 | GRUPO / Criar o grupo e o código | "Configurar Grupo" → "Grupo Recicla Vale" → "Criar Grupo"; abas; "Código de Convite" GRP-7KQ4TX, "Válido até 10/12/2026", copiar; "Unidades Ativas" só com a matriz | código vale 30 dias | 1:00 |
 | 3 | FILIAL / Do lado da filial | Sandra Pires: "Configurações" › "Empresa" › "Filial" → "É Filial" → código → "Vincular" → "Vinculada ao grupo"; [ILUSTRAÇÃO: o código liga as unidades] | | 0:45 |
 | 4 | DASHBOARD / O Dashboard Gerencial | "Dashboard Gerencial", "Mês passado", "Todas as Unidades", cartões "Receita Total" e "Despesa Total", "Estoque Total", gráfico por unidade | (sem citar o "Lucro Líquido": risco 1) | 0:55 |
-| 5 | DASHBOARD / Ranking e resumo por unidade | "Ranking por Lucro"; "Resumo por Unidade" (matriz R$ 6.000,00 3.2%; filial R$ 1.000,00 1.4%); [ILUSTRAÇÃO: a compra que ainda está no pátio] | | 0:55 |
-| 6 | FINANCEIRO / A DRE do grupo | "Financeiro" › "DRE" › "Consolidado" em "Regime de Caixa" (vendas 258 mil, compras 220 mil, resultado 7 mil); "Comparativo" (6 mil + 1 mil) | | 1:00 |
-| 7 | FINANCEIRO / Caixa e competência | "Regime de Competência" (CMV 194 mil, Lucro Bruto 64 mil, resultado 33 mil); [ILUSTRAÇÃO: caixa × competência]; [ILUSTRAÇÃO: o aviso do material sem custo] | ⚠️ "o CMV pode estar subestimado" | 1:10 |
-| 8 | ESTOQUE / O estoque do grupo | "Visão Geral" (latinha 4.300 + 1.850 = 6.150 kg), "Posição de Estoque", "Histórico de Materiais", "Relatório de Estoque" | | 0:55 |
+| 5 | DASHBOARD / Ranking e resumo por unidade | "Ranking por Lucro"; "Resumo por Unidade" (matriz -R$ 27.650,00 -10.2%; filial R$ 1.000,00 1.4%); [ILUSTRAÇÃO: a compra que ainda está no pátio] | | 0:55 |
+| 6 | FINANCEIRO / A DRE do grupo | "Financeiro" › "DRE" › "Consolidado" em "Regime de Caixa" (vendas 341.240, compras 318.860, resultado -26.650); "Comparativo" (-27.650 + 1.000) | | 1:00 |
+| 7 | FINANCEIRO / Caixa e competência | "Regime de Competência" (CMV 273.860, Lucro Bruto 64.980, resultado 18.350); [ILUSTRAÇÃO: caixa × competência]; [ILUSTRAÇÃO: o aviso do material sem custo] | ⚠️ "o CMV pode estar subestimado" | 1:10 |
+| 8 | ESTOQUE / O estoque do grupo | "Visão Geral" (latinha 640 + 1.850 = 2.490 kg), "Posição de Estoque", "Histórico de Materiais", "Relatório de Estoque" | | 0:55 |
 | 9 | PADRONIZAÇÃO / Enviar Ativos | "Importar do Estoque da Matriz"; tabelas e categorias entram sozinhas; marca a Fundição Bandeira do Vale; "Enviar Ativos" → "Confirmar Envio"; lixeira | ⚠️ remover por engano não apaga nada | 1:15 |
 | 10 | TRANSFERÊNCIAS / Transferência com aprovação | Liga "Exigir aprovação em transferências"; "Nova": filial → matriz, alumínio latinha 1.200 kg → "Solicitar" → "Pendente" → "Executar" → "Confirmar e Executar" → "Concluída"; [ILUSTRAÇÃO: um material do grupo, dois da unidade] | ⚠️ o total do grupo soma N materiais, a transferência tira de um | 1:20 |
 | 11 | ASSINATURAS / Assinaturas numa fatura só | "Assinaturas do grupo"; "Pagar tudo de uma vez"; aviso das cobranças canceladas; "PIX"; "Pagamento Confirmado!" | ⚠️ a filial não paga mais o boleto ou Pix antigo (dito com todas as letras) | 1:00 |
@@ -42,12 +42,11 @@ dados próprios.
 
 ## Mundo: o que esta aula precisa
 **Empresas**
-- Matriz: "Recicla Vale Metais" (Taubaté/SP), CNPJ proposto **48.731.296/0001-47** (se o T1 já definiu outro, a filial usa a mesma
-  raiz com /0002); plano "Personalizado" · "Mensal" · "Ativa", com o módulo Gerencial; CNPJ gravado (o checkout não pede documento).
-- Filial: nome no sistema **"Filial Pindamonhangaba"** (razão "Recicla Vale Metais Ltda", CNPJ **48.731.296/0002-28**,
+- Matriz: "Recicla Vale Metais" (Taubaté/SP), CNPJ **47.318.506/0001-07** (o do T1; junção); plano "Personalizado" · "Mensal" · "Ativa", com o módulo Gerencial; CNPJ gravado (o checkout não pede documento).
+- Filial: nome no sistema **"Filial Pindamonhangaba"** (razão "Recicla Vale Metais Ltda", CNPJ **47.318.506/0002-98** (mesma raiz da matriz; junção),
   Pindamonhangaba/SP), plano próprio sem o Gerencial (ex.: "Avançado") · "Mensal" · "Ativa" · vence em 15/11/2026. O nome curto evita
   que os gráficos e o comparativo cortem as duas como "Recicla Vale…" (risco 3).
-- Usuária da filial: **Sandra Pires**, gerente, MASTER da filial, `sandra.pires@reciclavale.example`.
+- Usuária da filial: **Sandra Pires**, gerente, MASTER da filial, `sandra.pires@reciclavalemetais.example` (domínio do T2, junção).
 
 **Grupo (criado na aula):** "Grupo Recicla Vale"; RPC `generate_group_invite_code` devolve **GRP-7KQ4TX**, válido até 10/12/2026;
 `require_transfer_approval` desligado ao criar (liga no cap. 10). Vínculo da filial em 10/11/2026 (cap. 3).
@@ -56,24 +55,27 @@ dados próprios.
 
 | | Vendas | Compras | CMV (competência) | Despesas da operação | Receita / Despesa no Dashboard | Lucro | Margem |
 |---|---|---|---|---|---|---|---|
-| Recicla Vale Metais | 186.000,00 | 158.000,00 | 139.000,00 | 22.000,00 | 186.000,00 / 180.000,00 | 6.000,00 | 3.2% |
+| Recicla Vale Metais | 269.240,00 | 256.860,00 | 218.860,00 | 36.855,90 | 272.040,00 / 299.690,00 | -27.650,00 | -10.2% |
 | Filial Pindamonhangaba | 72.000,00 | 62.000,00 | 55.000,00 | 9.000,00 | 72.000,00 / 71.000,00 | 1.000,00 | 1.4% |
-| Grupo | 258.000,00 | 220.000,00 | 194.000,00 | 31.000,00 | 258.000,00 / 251.000,00 | 7.000,00 | |
+| Grupo | 341.240,00 | 318.860,00 | 273.860,00 | 45.855,90 | 344.040,00 / 370.690,00 | -26.650,00 | |
 
-Sem outras receitas nem impostos lançados em outubro (as linhas "(+) Outras Receitas" e "(-) Impostos e Deduções" não aparecem).
-DRE do grupo: caixa = Resultado de Caixa 38.000,00 ("Margem Bruta: 14.7%") e Resultado do Período 7.000,00; competência = Lucro
-Bruto 64.000,00 ("Margem Bruta: 24.8%") e Resultado do Período 33.000,00 (diferença 26.000,00 = compras − CMV). Estoque com custo
-em todas as entradas (`stockCostReliable` verdadeiro: o aviso do CMV não aparece). Setembro: matriz vendas 174.000,00, compras
-150.000,00, despesas 21.000,00; filial 66.000,00, 57.000,00, 9.000,00. **Atenção:** a matriz em outubro também aparece no T15
-(DRE): os dois roteiros precisam da mesma semente; se o T15 fixou outros números, ajustar aqui (fala e tabela).
+Junção (`MUNDO_LINHA_DO_TEMPO.md`): a matriz é a Recicla Vale do T15, com o outubro da semente (sem a energia em dobro, que só
+existe no estado do T15): vendas 269.240,00, compras 256.860,00, CMV 218.860,00, frete 2.400,00 ("Custos adicionais"), impostos
+3.574,10 ("(-) Impostos e Deduções"), despesas da operação 36.855,90 e aluguel de caçamba 2.800,00 ("(+) Outras Receitas"). No
+Dashboard, receita = vendas + outras receitas e despesa = compras + frete + impostos + despesas da operação. A filial não tem frete,
+impostos nem outras receitas. DRE do grupo: caixa = Resultado de Caixa 19.980,00 ("Margem Bruta: 5.9%") e Resultado do Período
+-26.650,00 ("Déficit"); competência = Lucro Bruto 64.980,00 ("Margem Bruta: 19.0%") e Resultado do Período 18.350,00 (diferença
+45.000,00 = compras − CMV: 38.000,00 do ferro pesado parado na matriz e 7.000,00 na filial). Estoque com custo em todas as
+entradas (`stockCostReliable` verdadeiro: o aviso do CMV não aparece). Setembro (só para as setinhas): a matriz com o setembro da
+semente (vendas 273.047,73, compras 201.784,25); filial 66.000,00, 57.000,00, 9.000,00.
 
 **Estoque (10/11):** a filial tem os 15 materiais do mundo com os mesmos nomes (cadastro dela), sem o "Radiador de cobre" do T3.
-**Alumínio latinha: matriz 4.300 kg, filial 1.850 kg** (depois da transferência do cap. 10: 5.500 e 650). Histórico de novembro
+**Alumínio latinha: matriz 640 kg (o estoque de 10/11 do mundo base, junção), filial 1.850 kg** (depois da transferência do cap. 10: 1.840 e 650). Histórico de novembro
 (03 a 09/11) com algumas compras e vendas nas duas unidades.
 
 **Padronização (cap. 9):** a matriz tem as tabelas de preço do mundo (a "Tabela Depósitos" do T3 e a principal) e as categorias
 financeiras; "Fundição Bandeira do Vale" é cliente das duas unidades. O envio liga os materiais de mesmo nome da filial ao catálogo
-do grupo e cria só o que faltava (ex.: "Radiador de cobre").
+do grupo e cria só o que faltava (junção: no mundo base as duas têm os mesmos 15 materiais; o "Radiador de cobre" só existe na T3).
 
 **Transferência (cap. 10):** "Alumínio latinha", 1.200 kg, origem "Filial Pindamonhangaba", destino "Recicla Vale Metais", observação
 "Lote para a Serra Fina Alumínio Reciclagem".

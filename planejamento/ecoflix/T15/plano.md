@@ -69,13 +69,14 @@ marcados com **(falado)**: o mundo tem de bater no centavo.
 com custo de compra, para não aparecer o aviso do CMV; preço único por material, o da tabela do mundo):
 | Material | Comprado (kg) | Vendido (kg) |
 |---|---|---|
-| Ferro pesado | **50.000 (falado)**: 42.000 do Depósito Irmãos Siqueira (dois lotes de 21.000, 14/10 e 21/10) + 8.000 de carroceiros | **10.000 (falado)**, para a Aços Quiririm |
-| Os outros 14 materiais | comprado = vendido no mês: ferro misto 40.000, chaparia 15.000, cobre mel 1.000, cobre misto 700, fio de cobre encapado 600, latinha 4.000, perfil 1.500, bloco 1.000, metal amarelo 500, bronze 200, inox 1.200, bateria 3.000, papelão 10.000, PET 2.000 | |
+| Ferro pesado | **50.000 (falado)**: 42.000 do Depósito Irmãos Siqueira (dois lotes de 21.000, 14/10 e 21/10), 4.180 do Valdir (com os 180 de 22/10, a do T10) e 3.820 do balcão | **10.000 (falado)**, para a Aços Quiririm |
+| Os outros 14 materiais (junção: o outubro do T10 e do T4, `MUNDO_LINHA_DO_TEMPO.md`) | ferro misto 40.900, chaparia 16.850, cobre mel 980, cobre misto 700, fio de cobre encapado 600, latinha 3.250, perfil 2.020, bloco 1.000, metal amarelo 500, bronze 200, inox 1.200, bateria 1.320, papelão 15.400, PET 2.600 | ferro misto 38.612, chaparia 16.100, cobre mel 1.000, cobre misto 700, fio 600, latinha 3.250, perfil 2.673, bloco 1.000, metal amarelo 500, bronze 200, inox 1.200, bateria 0, papelão 15.400, PET 2.427 (a sobra e a falta desses 14 se anulam a custo: o estoque a mais é o do ferro pesado) |
 
 Daí: compras R$ 256.860,00; vendas R$ 269.240,00; CMV R$ 218.860,00; estoque a mais no mês, a custo, **R$ 38.000,00
 (falado)** (só o ferro pesado). Clientes de outubro (vendas): Fundição Bandeira do Vale R$ 112.800,00 / 3.000 kg (cobres, metal
-amarelo, bronze); Aços Quiririm Ltda R$ 77.840,00 / 66.200 kg (ferros, chaparia, inox); Serra Fina Alumínio Reciclagem
-R$ 53.700,00 / 6.500 kg; Depósito Irmãos Siqueira R$ 24.900,00 / 15.000 kg (bateria, papelão, PET).
+amarelo, bronze); Aços Quiririm Ltda R$ 77.460,60 / 65.912 kg (ferros, chaparia, inox); Serra Fina Alumínio Reciclagem
+R$ 60.349,20 / 6.923 kg (alumínio); Depósito Irmãos Siqueira R$ 18.630,20 / 17.827 kg (papelão e PET; a bateria de outubro
+ficou no pátio, como mostra o T10).
 **(falado)** "Top Fornecedores" em R$: 1º Depósito Irmãos Siqueira (nenhum outro, nem "Não informado", passa dele).
 "Top Clientes": 1º em R$ Fundição Bandeira do Vale; 1º em kg Aços Quiririm Ltda. "Materiais + Comprados": 1º Ferro pesado,
 50.000 kg, R$ 47.500,00; "Materiais + Vendidos": 1º Cobre mel, e o ferro pesado fora dos cinco primeiros.
@@ -85,7 +86,7 @@ Lançamentos de outubro (caixa ou banco, todos pagos no mês, com categoria):
 |---|---|---|
 | Folha salarial | R$ 19.800,00 **(falado)** | Pátio 14.300,00 · Coleta 3.100,00 · sem centro 2.400,00 |
 | Aluguel | R$ 6.500,00 | Pátio |
-| Energia elétrica | **R$ 3.850,00 duas vezes (falado)**: "Conta de energia", banco, 13/10/2026 09:12 e 16:40, iguais; nenhuma conciliada (T14) nem ligada a conta a pagar | Pátio |
+| Energia elétrica | **R$ 3.850,00 duas vezes (falado)**: "Conta de energia", Conta Principal, 13/10/2026 09:12 e 16:40, iguais (a das 16:40 só no estado do T15); nenhuma conciliada (T14) nem ligada a conta a pagar | Pátio |
 | Combustível | R$ 4.280,00 | Coleta |
 | Manutenção de veículos | R$ 1.950,00 | Coleta |
 | Telefone e internet | R$ 289,90 | sem centro |

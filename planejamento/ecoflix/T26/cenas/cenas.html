@@ -224,11 +224,13 @@ const CAPS={};
 CAPS[0]=()=>{
   const g=grupo();
   const tit=titulo(g,'CRM','Da conversa ao cartão');
-  const cel=el(`<div class="ab" style="left:92px;top:268px">${celular(150)}</div>`,g);          // 92-242, 268-545
-  const bal=(y,txt)=>el(`<div class="bal" style="left:266px;top:${y}px;padding:14px 22px;font-weight:700;font-size:21px;white-space:nowrap;visibility:hidden">${txt}
-      <div class="rabo" style="left:-10px;top:17px;transform:rotate(135deg)"></div></div>`,g);
-  const b1=bal(286,'Me liga depois'), b2=bal(372,'Tenho sucata toda semana'), b3=bal(458,'Preço do cobre?');
-  const relW=el(`<div class="ab" style="left:${266+b2.offsetWidth-28}px;top:${372-34-24}px"></div>`,g);
+  // a conversa (celular e balões) fica no meio nas falas 0 e 1 e vai para a esquerda no "CRM", quando os cartões entram
+  const conv=el('<div class="ab" style="left:0;top:0;width:1280px;height:800px"></div>',g);
+  const cel=el(`<div class="ab" style="left:80px;top:250px">${celular(160)}</div>`,conv);        // 80-240, 250-545
+  const bal=(y,txt)=>el(`<div class="bal" style="left:264px;top:${y}px;padding:15px 22px;font-weight:700;font-size:22px;white-space:nowrap;visibility:hidden">${txt}
+      <div class="rabo" style="left:-10px;top:18px;transform:rotate(135deg)"></div></div>`,conv);
+  const b1=bal(276,'Me liga depois'), b2=bal(366,'Tenho sucata toda semana'), b3=bal(456,'Preço do cobre?');
+  const relW=el(`<div class="ab" style="left:${264+b2.offsetWidth-28}px;top:${366-34-24}px"></div>`,conv);
   const rel=el(`<div class="badge a" style="position:relative;width:52px;height:52px">${ic('clock',27)}</div>`,relW);
   const seta=setaLarga(g,632,428,96,60);
   const cA=el(`<div class="card" style="left:742px;top:236px;width:490px;height:182px;padding:22px 24px">
@@ -246,6 +248,7 @@ CAPS[0]=()=>{
     const t0=W(0,'Oi'), tne=W(0,'negocios'), tpe=W(0,'perder'), tin=W(1,'industria'), tsu=W(1,'sucata'), tes=W(1,'esfria'),
       tcr=W(2,'CRM'), tct=W(2,'contato'), tca=W(2,'cartao'), tq=[W(2,'dono'),W(2,'valor'),W(2,'passo')];
     posTitulo(tit,t,t0-.85,tne-.55);
+    conv.style.transform=`translateX(${(240*(1-eio(pr(t,tcr-.35,.8)))).toFixed(2)}px)`;
     vis(cel,t,tne-.1,1e9,{dy:18});
     // as conversas: três balões; no "perder" sobem, e o de cima some no alto
     const r=eio(pr(t,tpe-.1,.8)), q=eio(pr(t,tpe+.25,.9));
@@ -258,7 +261,7 @@ CAPS[0]=()=>{
     vis(rel,t,tes+.05,1e9,{sc:.5,dy:0});
     // no CRM, cada contato vira um cartão (o que tinha sumido também), com dono, valor e o próximo passo
     seta.style.width=(96*eio(pr(t,tcr-.1,.5))).toFixed(1)+'px';
-    vis(cA,t,tca-.2,1e9,{dx:24,dy:0}); vis(cB,t,tca,1e9,{dx:24,dy:0}); vis(cC,t,tca+.2,1e9,{dx:24,dy:0});
+    vis(cA,t,tct-.1,1e9,{dx:24,dy:0}); vis(cB,t,tca-.1,1e9,{dx:24,dy:0}); vis(cC,t,tca+.15,1e9,{dx:24,dy:0});
     CH.forEach((c,i)=>vis(c,t,tq[i]-.12,1e9,{sc:.85,dy:8}));
   };
 };
@@ -281,10 +284,10 @@ CAPS[1]=()=>{
   const NOM=['Novo','Em contato','Proposta','Ganho','Perdido'], COR=['#9AA3AD','#5C8FD6','#F2B63D','#50D088','#C3CAD2'];
   const R=NOM.map((n,i)=>raia(g,82+i*226,196,212,420,n,COR[i]));
   // os cartões: entram no Novo; quatro passam a Em contato, três à Proposta, dois fecham (Ganho) e um vai pro Perdido
-  const CW=120, CHh=56, S=.36;
+  const CW=120, CHh=56, S=.5;
   const C=CORES.map(c=>el(`<div class="ab" style="left:0;top:0;visibility:hidden">${cartao(CW,CHh,c)}</div>`,g));
   const B1=[436,504,572,640,708,776,844].map(x=>[x,228]), B2={1:[535,340],2:[605,340],4:[675,340],5:[745,340]},
-        B3={1:[590,452],2:[640,452],4:[690,452]}, GA={1:[616,574],2:[664,574]}, PE=[846,452];
+        B3={1:[576,452],2:[640,452],4:[704,452]}, GA={1:[610,574],2:[670,574]}, PE=[846,452];
   const LX=i=>82+i*226+106;
   const LN={0:[LX(0),290],3:[LX(0),362],6:[LX(0),434],5:[LX(1),290],1:[LX(3),290],2:[LX(3),362],4:[LX(4),290]};
 

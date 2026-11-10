@@ -1,0 +1,318 @@
+{
+ "name": "t02-cap08",
+ "title": "T2 · Cap. 8 · O limite de usuários (narração ESTIMADA 41,3 s; marcas L1..L5 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "seed": "t02-cap08",
+ "pace": 0.5,
+ "cps": 30,
+ "tail": 1.5,
+ "start": {
+  "x": 700,
+  "y": 470
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true"
+ },
+ "seedExtra": [
+  "t02/inicio",
+  "t02/apos-cap03",
+  "t02/apos-cap04",
+  "t02/apos-cap05"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "waitFor",
+   "target": {
+    "label": "E-mail"
+   },
+   "timeout": 30
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "E-mail"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "Senha",
+    "exact": true
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Rafael!",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/configuracoes?tab=users"
+  },
+  {
+   "do": "waitFor",
+   "text": "Empresa: Recicla Vale Metais",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|Algo deu errado|Falha ao|Something went wrong/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{document.querySelectorAll('[data-sonner-toast][data-type=error]').forEach(t=>{const s='TOAST DE ERRO: '+t.textContent.trim().slice(0,90);if(!window.__avisos.includes(s)&&window.__avisos.length<10)window.__avisos.push(s)})},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"3 / 3 usuários\", \"Juliana Prado\", \"Marcos Antunes\", \"Rafael Nogueira\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere selo 3 / 3 e os três usuários"
+  },
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0.4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "3 / 3 usuários",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 2.0,
+   "at": 2.1,
+   "label": "ZOOM selo 3 / 3 usuários",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "3 / 3 usuários",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.6,
+   "at": 7.57,
+   "label": "três de três",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Rafael Nogueira",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.3,
+   "at": 8.94,
+   "label": "o Rafael",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Juliana Prado",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.3,
+   "at": 9.85,
+   "label": "a Juliana",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Marcos Antunes",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.15,
+   "at": 10.66,
+   "label": "o Marcos",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 11.31
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 18.27
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Criar Usuário",
+    "exact": true,
+    "within": "main"
+   },
+   "at": 20.39,
+   "label": "Criar Usuário (sem vaga)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Sua equipe cresceu!",
+   "timeout": 8
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Sua equipe cresceu!\", \"3 / 3\", \"Usuários cadastrados\", \"Adicionar usuários extras\", \"Novo limite de usuários:\", \"4 usuários\", \"Seu plano será convertido para Personalizado\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog],[role=alertdialog]\")];const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere janela do limite"
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 22.87
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Usuários cadastrados",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.3,
+   "at": 22.87,
+   "label": "3 / 3 Usuários cadastrados",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Adicionar usuários extras",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.25,
+   "at": 24.03,
+   "label": "Adicionar usuários extras",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:has(svg.lucide-plus)"
+   },
+   "at": 24.64,
+   "label": "+ (2 usuários)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:has(svg.lucide-minus)"
+   },
+   "at": 26.36,
+   "label": "- (1 usuário)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Novo limite de usuários:",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.6,
+   "at": 27.9,
+   "label": "Novo limite de usuários: 4 usuários",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] p:has(> span.font-medium)"
+   },
+   "seconds": 0.5,
+   "at": 31.78,
+   "label": "Seu plano será convertido para Personalizado",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 32.64
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Continuar",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.4,
+   "at": 33.19,
+   "label": "Continuar (sem clicar)",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Cancelar",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 39.24,
+   "label": "Cancelar",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "selector": "[role=dialog]"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 41.27
+  }
+ ]
+}

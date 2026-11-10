@@ -8,7 +8,7 @@
 - Tudo simulado: nenhum acesso real ao SIGOR (órgão ambiental de SP) nem à SEFAZ. A fala mostra os campos e diz que quem define a
   obrigação e a classificação é o órgão ambiental e a licença da empresa; não ensina norma. Regime do exemplo Lucro Real (não aparece).
 - Base: `T18/inventario.md` (código 1.59.154). Desktop, logado como **Rafael Nogueira** (MASTER).
-- **FAKE_NOW:** `2026-11-10T08:30:00-03:00` nos capítulos 0 a 5; **corte** para `2026-11-10T10:40:00-03:00` do 6 ao 10 (o MTR da
+- **FAKE_NOW:** `2026-11-10T09:30:00-03:00` nos capítulos 0 a 5 (junção: depois das NF-e do T16 e do T17); **corte** para `2026-11-10T10:40:00-03:00` do 6 ao 10 (o MTR da
   carga da tarde já foi emitido, fora do vídeo). Mesma terça do T17: a carga aqui usa o **GHT7B19 com o Jair Lopes**, porque o
   FKD2E41 e o Edson estão na viagem a Itamonte do T17.
 - **Os dois papéis da Recicla Vale** (é o que a ilustração do cap01 explica): no MTR ela é a **geradora** (manda chaparia para a
@@ -58,8 +58,9 @@ Além do `MUNDO_FICTICIO.md` (a consolidar lá):
   "Lt - Litro", "M³ - M³".
 - **Resíduo salvo criado na tela:** "Sucata de ferro" (metais ferrosos, sólido, granel, reciclagem, "TON - Tonelada"); ligado em
   Materiais a **Ferro pesado, Ferro misto e Chaparia**.
-- **NF-e da carga:** saída autorizada hoje (10/11, 08h10, com chave) para a **Aços Quiririm Ltda**: chaparia **3.600 kg** × R$ 0,98 =
-  **R$ 3.528,00** (item em kg). Número: o seguinte aos do T17.
+- **NF-e da carga:** saída autorizada hoje (10/11, 09h20, com chave) para a **Aços Quiririm Ltda**: chaparia **3.600 kg** × R$ 0,98 =
+  **R$ 3.528,00** (item em kg). Número **1254** (o seguinte aos do T17). Emitida sem pedido (o pedido fecha na entrega); o
+  pátio tem 3.750 kg de chaparia em 10/11 08:30 (junção, `MUNDO_LINHA_DO_TEMPO.md`).
 - **Parceiros criados na tela (cap04):** transportador **Recicla Vale Metais Ltda** (CNPJ da semente, unidade 203918) e destinador
   **Aços Quiririm Ltda** (CNPJ da semente, unidade **187402**).
 - **MTR:** nº **2611000318** (cap04, Jair Lopes, GHT7B19, expedição 10/11/2026, 3,6 TON, responsável Rafael Nogueira, cargo

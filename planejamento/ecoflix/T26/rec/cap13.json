@@ -1,0 +1,427 @@
+{
+ "name": "t26-cap13",
+ "title": "T26 · Cap. 13 · Recapitulando (narração 53,0 s, ESTIMADA; marcas L1..L5 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T17:30:00-03:00)",
+ "fakeNow": "2026-11-10T17:30:00-03:00",
+ "seed": "t26-cap13",
+ "pace": 0.5,
+ "cps": 22,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 470
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true",
+  "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10"
+ },
+ "seedExtra": [
+  "t26/apos-cap11-dia"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/login"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "timeout": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "••••••••"
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Rafael",
+   "timeout": 45
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 20
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const sb=document.querySelector('[data-state][data-collapsible]');if(sb&&sb.getAttribute('data-state')==='collapsed')return 'ja recolhido';const b=document.querySelector('header button.h-8.w-8');if(!b)return 'SEM ALVO';b.click();return 'recolhido'})()"
+  },
+  {
+   "do": "wait",
+   "seconds": 0.7
+  },
+  {
+   "do": "goto",
+   "url": "/crm"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie oportunidades e acompanhe seu processo comercial.",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 15
+  },
+  {
+   "do": "goto",
+   "url": "/agenda"
+  },
+  {
+   "do": "waitFor",
+   "text": "Agenda",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 15
+  },
+  {
+   "do": "goto",
+   "url": "/crm"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie oportunidades e acompanhe seu processo comercial.",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 15
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel|Algo deu errado|Falha ao|Something went wrong/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main button:has-text('Funil de vendas')"
+   },
+   "seconds": 0.8,
+   "at": 4.05,
+   "label": "Funil de vendas (montado sozinho)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Funil",
+    "exact": true
+   },
+   "seconds": 0.1,
+   "at": 7.16,
+   "label": "abas Funil e Tarefas",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main div.rounded-lg:has(> div > p:text-is('Total de oportunidades'))"
+   },
+   "seconds": 0.27,
+   "at": 7.92,
+   "label": "os quatro cartões",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 9.19
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Configurações do CRM/Kanban",
+    "exact": true
+   },
+   "at": 9.19,
+   "label": "Configurações do CRM/Kanban"
+  },
+  {
+   "do": "waitFor",
+   "text": "Organize os funis comerciais e as etapas de cada Kanban.",
+   "timeout": 12
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Padrão",
+    "exact": true,
+    "within": "[role=dialog]:has(#tab-btn-funis) div[draggable=true]:has(span.truncate:text-is('Sucata industrial'))"
+   },
+   "seconds": 0.1,
+   "at": 12.68,
+   "label": "Sucata industrial, Padrão",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Expandir Sucata industrial",
+    "exact": true
+   },
+   "at": 13.23,
+   "label": "abre o Sucata industrial"
+  },
+  {
+   "do": "waitFor",
+   "text": "Estágios deste funil",
+   "timeout": 8
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Editar estágio Visita técnica",
+    "exact": true
+   },
+   "at": 15.97,
+   "label": "Configurar Visita técnica (cor e orientação)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Configurar Visita técnica",
+   "timeout": 8
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 18.19
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 18.69,
+   "label": "fecha a Visita técnica"
+  },
+  {
+   "do": "wait",
+   "seconds": 0.4
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const d=[...document.querySelectorAll(\"[role=dialog]:has(#crm-stage-name)\")].pop();if(!d)return 'ja fechada';const b=[...d.querySelectorAll('button')].find(x=>[x.textContent,x.getAttribute('aria-label')].some(v=>/^\\s*fechar\\s*$/i.test(v||'')));if(!b)return 'sem botao Fechar';b.click();return 'fechada pelo botao'})()",
+   "label": "fecha a Visita técnica (plano B)"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "selector": "[role=dialog]:has(#crm-stage-name)"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Editar estágio Em contato",
+    "exact": true
+   },
+   "label": "Configurar Em contato"
+  },
+  {
+   "do": "waitFor",
+   "text": "Configurar Em contato",
+   "timeout": 8
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Regras"
+   },
+   "at": 19.73,
+   "label": "aba Regras (Tarefas e Responsável ligadas)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Automações"
+   },
+   "at": 22.7,
+   "label": "aba Automações (Agendar a visita, Ativa)"
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 25.5,
+   "label": "fecha o Em contato"
+  },
+  {
+   "do": "wait",
+   "seconds": 0.4
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const d=[...document.querySelectorAll(\"[role=dialog]:has(#crm-stage-name)\")].pop();if(!d)return 'ja fechada';const b=[...d.querySelectorAll('button')].find(x=>[x.textContent,x.getAttribute('aria-label')].some(v=>/^\\s*fechar\\s*$/i.test(v||'')));if(!b)return 'sem botao Fechar';b.click();return 'fechada pelo botao'})()",
+   "label": "fecha o Em contato (plano B)"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "selector": "[role=dialog]:has(#crm-stage-name)"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#tab-btn-checklists"
+   },
+   "at": 25.81,
+   "label": "Checklists"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#tab-btn-etiquetas"
+   },
+   "at": 26.95,
+   "label": "Etiquetas"
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 27.96
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 28.26,
+   "label": "fecha as Configurações"
+  },
+  {
+   "do": "wait",
+   "seconds": 0.4
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const d=[...document.querySelectorAll(\"[role=dialog]:has(#tab-btn-funis)\")].pop();if(!d)return 'ja fechada';const b=[...d.querySelectorAll('button')].find(x=>[x.textContent,x.getAttribute('aria-label')].some(v=>/^\\s*fechar\\s*$/i.test(v||'')));if(!b)return 'sem botao Fechar';b.click();return 'fechada pelo botao'})()",
+   "label": "fecha as Configurações (plano B)"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "selector": "[role=dialog]:has(#tab-btn-funis)"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main section div.rounded-lg:has(> div p:text-is('Retalho de chapa da Metalúrgica Jequitibá'))"
+   },
+   "seconds": 1.2,
+   "at": 30.38,
+   "label": "o cartão da Jequitibá em Visita técnica",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Tarefas",
+    "exact": true
+   },
+   "at": 37.75,
+   "label": "aba Tarefas"
+  },
+  {
+   "do": "waitFor",
+   "text": "Tarefas vinculadas às oportunidades do funil",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "a[href='/agenda']"
+   },
+   "at": 38.74,
+   "label": "Agenda",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "main button:has-text('Enviar proposta')"
+   },
+   "timeout": 15
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 900,
+    "y": 300
+   },
+   "by": 0,
+   "duration": 0.2,
+   "after": 0,
+   "label": "cursor sai do menu"
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 42.28
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 53.04
+  }
+ ]
+}

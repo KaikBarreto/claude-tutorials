@@ -11,9 +11,9 @@ Na Recicla Vale Metais, o Rafael começa o dia com três perguntas: como vai o m
 As respostas ficam em duas telas do menu: o Dashboard, no alto, e a Agenda, no fim.
 Se você ainda não viu o tutorial do Cáto, o assistente, dá uma olhada antes. [pause] Vamos aos números.""",
 1: """Lá em cima ficam três cartões: Total Compras, Total Vendas e a Margem. Eles seguem o filtro de período, que abre em Este mês.
-Repara na margem: ela é só vendas menos compras, no período. Em novembro, até hoje, a Recicla Vale comprou mais do que vendeu, e ela aparece negativa, em vermelho.
-Uma dica: margem não é lucro. Esse vermelho é material comprado que ainda está no pátio, esperando a venda. O lucro de verdade, com custo, imposto e despesa, fica no Relatório Financeiro.
-Agora, outubro inteiro. As vendas passaram as compras, e a margem ficou positiva: doze mil trezentos e oitenta reais.
+Repara na margem: ela é só vendas menos compras, no período. Em novembro, até hoje, a Recicla Vale vendeu bem mais do que comprou, e ela aparece alta, em verde.
+Uma dica: margem não é lucro. Boa parte dessa venda é o ferro que foi comprado em outubro e ficou no pátio. O lucro de verdade, com custo, imposto e despesa, fica no Relatório Financeiro.
+Agora, outubro inteiro. As vendas passaram as compras por pouco, e a margem ficou em doze mil trezentos e oitenta reais. Foi o mês em que esse ferro entrou.
 Em Ver detalhes, a conta aparece aberta: o total de vendas, menos o total de compras, dá a margem.""",
 2: """Mais abaixo, os gráficos. Em Compras versus Vendas, cada mês tem duas barras: o que a empresa comprou e o que vendeu.
 Do lado, a Evolução da Margem mostra como a margem andou, mês a mês.

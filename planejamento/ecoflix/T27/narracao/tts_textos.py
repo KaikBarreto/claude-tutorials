@@ -16,8 +16,8 @@ O endereço do sistema, a aba do navegador, os e-mails e a tela de login continu
 2: """Tudo começa pelas imagens. O logo horizontal a Recicla Vale já mandou, no tutorial da empresa. Com o uáit lêibou ligado, é ele que aparece no menu aberto.
 Se a marca mudar um dia, é só clicar em Substituir e mandar a nova.
 São duas imagens. O logo, comprido, vai no menu aberto. O ícone, quadrado, vai no menu recolhido, onde só cabe um quadradinho.
-Falta o ícone. Ele fica logo abaixo, no Ícone da Empresa.
-Clico no quadrado e escolho o arquivo do ícone. Pronto, subiu. A tela recomenda uma imagem quadrada, com fundo transparente.
+O ícone fica logo abaixo, no Ícone da Empresa. Ele também veio no tutorial da empresa.
+Pra trocar, é o mesmo Substituir. A tela recomenda uma imagem quadrada, com fundo transparente.
 Uma dica: as duas imagens podem ter até cinco megas. Arquivo maior, ou que não seja imagem, a tela recusa e avisa na hora.""",
 3: """Com as imagens no lugar, é hora de ligar.
 Uma dica: quem libera esse interruptor é o logo. Sem logo enviado, ele fica travado, e a tela pede o upload antes.
@@ -40,7 +40,7 @@ Uma dica: pra desligar o uáit lêibou, use o interruptor. Se você só remover 
 Mesmo logo, mesma cor, e ela não precisou mexer em nada.
 Quando o uáit lêibou é ligado, ou a cor é salva, quem estiver com o sistema aberto vê a mudança na hora, sem sair e entrar de novo.
 E quem muda o uáit lêibou é quem pode mexer na aba Empresa. A Juliana só vê o resultado.""",
-7: """Pronto! Recapitulando: a gente achou o uáit lêibou na aba Empresa, viu o que ele troca e mandou o ícone quadrado pro menu recolhido.
+7: """Pronto! Recapitulando: a gente achou o uáit lêibou na aba Empresa, viu o que ele troca e conferiu o logo e o ícone quadrado, que já tinham vindo do tutorial da empresa.
 Ligou o interruptor, e o logo da Recicla Vale entrou no menu.
 Salvou a cor da marca nas Personalizações.
 Viu os documentos saindo sem o rodapé do Ecossistema.

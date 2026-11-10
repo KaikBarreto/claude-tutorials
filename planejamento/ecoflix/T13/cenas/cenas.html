@@ -191,6 +191,8 @@ const VERDE=['#50D088','rgba(80,208,136,.24)'], AMBAR=['#F2B63D','rgba(242,182,6
 function anel(e,p,cor=VERDE,de=BASE,px=5,sombra=true){p=cl(p);e.style.borderColor=mix(de,cor[0],p);
   e.style.boxShadow=`0 0 0 ${(px*p).toFixed(2)}px ${cor[1]}`+(sombra?',0 18px 40px rgba(16,24,40,.10),0 3px 8px rgba(16,24,40,.06)':'')}
 const sobe=(t,a,b)=>eo(pr(t,a,.4))*(1-eo(pr(t,b,.4)));   // vai a 1 em a e volta a 0 em b
+// título: já inteiro no 1º quadro da janela (entra 0,6 s antes) e só sobe depois dele (nunca antes de ini + 0,15 s)
+function posT(e,t,ini,sobe){posTitulo(e,t,ini-.6,Math.max(ini+.15,sobe))}
 
 // ------------------------------------------------------------------ CAPS[0] · Do papel para a lista (abertura)
 // fala 0 "Oi! Neste tutorial a gente vai organizar o que a Recicla Vale Metais tem pra pagar e pra receber."
@@ -249,7 +251,7 @@ CAPS[0]=()=>{
     const tOr=WS(0,'organizar'), tLu=WS(1,'luz'), tVe=WS(1,'vencimento'), tCl=WS(1,'cliente'), tQu=WS(1,'quando'),
           tAq=WS(2,'Aqui'), tTu=WS(2,'tudo'), tDa=WS(2,'data'), tCa=WS(2,'categoria'), tQm=WS(2,'quem'),
           tPg=WS(2,'paga'), tRc=WS(2,'recebe'), tTe=WS(2,'tela');
-    posTitulo(tit,t,INI-.6,tOr-.35);
+    posT(tit,t,INI,tOr-.7);
     // a mesa entra com os papéis e clareia quando a lista entra
     const vm=vis(mesa,t,tOr-.2,1e9,{dy:12}); op(mesa,vm*(1-eo(pr(t,tAq,.8))));
     vis(lista,t,tAq+.1,1e9,{dy:14,sc:.97}); anel(lista,eo(pr(t,tTe,.5)));
@@ -309,11 +311,11 @@ CAPS[2]=()=>{
   return t=>{
     const tV=WS(2,'Vencidas'), tPa=WS(2,'passou'), tVe=WS(2,'vencimento'), tAg=WS(2,'agua'), tVn=WS(2,'vence',1),
           tHo=WS(2,'hoje'), tDi=WS(2,'dias',2,'e'), tEn=WS(2,'energia');
-    posTitulo(tit,t,INI-.6,tV-.45);
+    posT(tit,t,INI,tV-.45);
     dias.forEach((e,i)=>vis(e,t,tV-.15+i*.025,1e9,{dy:10}));
     vis(mes,t,tV+.2,1e9,{dy:8}); vis(hoje,t,tV+.3,1e9,{dy:-8}); pulse(hoje,t,tHo,.1,.8);
     // Vencidas: a zona cresce de hoje para trás em "passou do vencimento"
-    vis(chA,t,tV+.05,1e9,{dy:12});
+    vis(chA,t,Math.max(tV+.05,INI+.65),1e9,{dy:12});          // no caminho do título: só depois que ele subiu
     const pA=eio(pr(t,tPa,Math.max(.8,tVe+.6-tPa))), wA=(A1-A0)*pA;
     zA.style.width=wA.toFixed(1)+'px'; zA.style.left=(A1-wA).toFixed(1)+'px'; op(zA,wA>6?1:0);
     vis(agua,t,tAg-.15,1e9,{dy:-14}); traco(fA,t,tAg+.05,.45);
@@ -362,8 +364,8 @@ CAPS[6]=()=>{
   return t=>{
     const tCa=WS(7,'Cada'), tVi=WS(7,'vira'), tPg=WS(7,'pagar'), tOu=WS(7,'outras'),
           tPa=WS(8,'Parcelar'), tDv=WS(8,'divida'), tFi=WS(8,'fim'), tPn=WS(8,'pneus'), tGa=WS(8,'gasto'), tVo=WS(8,'volta'), tRe=WS(8,'Repetir');
-    posTitulo(tit,t,INI-.6,tCa-.45);
-    vis(compra,t,tCa,1e9,{dy:18});
+    posT(tit,t,INI,tCa-.45);
+    vis(compra,t,Math.max(tCa,INI+.65),1e9,{dy:18});          // no caminho do título: só depois que ele subiu
     // as parcelas saem de trás da compra, uma por uma, e ficam separadas
     parc.forEach((c,i)=>{const p=eio(pr(t,tVi+i*.2,.75)); pos(c,lerp(150,PX(i),p),Y,lerp(.92,1,p)); op(c,eo(cl(p*1.8)));});
     const q=eo(pr(t,tPg,.45)); op(st[0][0],1-q); op(st[0][1],q); anel(parc[0],q);   // a primeira é paga; as outras seguem
@@ -408,7 +410,7 @@ CAPS[7]=()=>{
   return t=>{
     const tMo=WS(6,'molde'), tMa=WS(6,'mantem'), tPr=WS(6,'proximos'), tMe=WS(6,'meses'), tLi=WS(6,'lista'),
           tTe=WS(6,'tempo'), tSg=WS(6,'seguinte'), tDa=WS(6,'data');
-    posTitulo(tit,t,INI-.6,tMo-.6);
+    posT(tit,t,INI,tMo-.6);
     vis(molde,t,tMo-.1,1e9,{dy:16});
     nomes.forEach((e,i)=>vis(e,t,tMa+i*.06,1e9,{dy:10})); vagas.forEach((e,i)=>vis(e,t,tMa+.05+i*.06,1e9,{dy:10}));
     // a janela dos próximos três meses; o tempo passa um mês e ela anda junto com o "Hoje"
@@ -457,12 +459,13 @@ CAPS[8]=()=>{
   return t=>{
     const tS1=WS(2,'so',1), tDz=WS(2,'dezembro'), tE2=WS(2,'esta',2), tE3=WS(2,'esta',3), tPx=WS(2,'proximas'), tMo=WS(2,'molde'),
           tNo=WS(2,'novas'), tCe=WS(2,'certas');
-    posTitulo(tit,t,INI-.6,tS1-.45);
-    vis(molde,t,tS1-.05,1e9,{dy:14}); contas.forEach((c,i)=>vis(c,t,tS1+.05+i*.08,1e9,{dy:16})); vis(vagaF,t,tS1+.29,1e9,{dy:16});
+    posT(tit,t,INI,tS1-.45);
+    const ent=Math.max(tS1-.05,INI+.6);                          // molde e escolhas ficam no caminho do título: entram depois que ele subiu
+    vis(molde,t,ent,1e9,{dy:14}); contas.forEach((c,i)=>vis(c,t,tS1+.05+i*.08,1e9,{dy:16})); vis(vagaF,t,tS1+.29,1e9,{dy:16});
     fioL.forEach((p,i)=>traco(p,t,tS1+.15+i*.08,.6));
     // as duas escolhas: a segunda acende e a primeira fica de lado (cinza)
     const m1=eo(pr(t,tDz-.15,.45)), m2=eo(pr(t,tE2,.45));
-    vis(o1,t,tS1+.1,1e9,{dy:10}); vis(o2,t,tE2-.05,1e9,{dy:10});
+    vis(o1,t,ent+.1,1e9,{dy:10}); vis(o2,t,tE2-.05,1e9,{dy:10});
     o1.style.color=mix('#2E7D57','#6B7280',m2); o1.style.background=mix('#EAF8F0','#F3F4F6',m2); o1.style.borderColor=mix('#A9E9C6','#D5DAE0',m2);
     // Só esta conta: só dezembro (verde). Esta e as futuras: dezembro, janeiro e o molde (âmbar); novembro não muda
     const aD=eo(pr(t,tE3,.45)), aJ=eo(pr(t,tPx,.45)), aM=eo(pr(t,tMo,.45));
@@ -524,7 +527,7 @@ CAPS[9]=()=>{
     const tBx=WS(5,'baixa'), tPx=WS(5,'Pix'), tSa1=WS(5,'sai',1), tBa=WS(5,'banco'), tDi2=WS(5,'dinheiro',2), tSa2=WS(5,'sai',2), tCx=WS(5,'caixa'),
           tLa=WS(5,'lancamento'), tLe=WS(5,'leva'), tAp=WS(5,'aparece'), tDR=WS(5,'DRE'), tRs=WS(5,'resultado'),
           tTu=WS(6,'tudo'), tJu=WS(6,'junto'), tIn=WS(6,'inteira');
-    posTitulo(tit,t,INI-.6,tBx-.5);
+    posT(tit,t,INI,tBx-.5);
     vis(conta,t,tBx-.15,1e9,{dy:18});
     // Pix: da conta para a Conta Principal; dinheiro: para o caixa aberto
     traco(tPixL,t,tPx-.1,.7); vis(chPix,t,tPx,1e9,{dy:8}); vis(banco,t,tPx+.3,1e9,{dx:-14,dy:0});
@@ -614,7 +617,7 @@ CAPS[10]=()=>{
     const tSa1=WS(6,'saldo',1), tSu=WS(6,'sumir'), tVe=WS(6,'venda',1), tPc=WS(6,'parcelada'), tVe2=WS(6,'venda',2), tPs1=WS(6,'parcelas',1),
           tSa2=WS(6,'saldo',2), tPs2=WS(6,'parcelas',2), tDu=WS(6,'duas'), tDe=WS(6,'desconta'), tVi=WS(6,'virou'),
           tTu=WS(7,'tudo'), tLi=WS(7,'linha'), tSo=WS(7,'some'), tPt=WS(7,'parte'), tMo=WS(7,'mostra'), tSb=WS(7,'sobra');
-    posTitulo(tit,t,INI-.6,tSa1-.75);
+    posT(tit,t,INI,tSa1-.75);
     // a linha de saldo da lista: aparece, some (fica só o contorno) e, no fim, diz por quê
     vis(lista,t,tSa1-.1,1e9,{dy:14});
     mvLista.style.transform=`translate(${(-(CX[2]-CX[1])*(1-eio(pr(t,tVe-.25,.8)))).toFixed(2)}px,0)`;

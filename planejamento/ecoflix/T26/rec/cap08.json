@@ -1,0 +1,474 @@
+{
+ "name": "t26-cap08",
+ "title": "T26 · Cap. 8 · Nova oportunidade (narração 81,3 s, ESTIMADA; marcas L1..L9 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
+ "fakeNow": "2026-11-10T08:30:00-03:00",
+ "seed": "t26-cap08",
+ "pace": 0.5,
+ "cps": 22,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 470
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true",
+  "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10"
+ },
+ "seedExtra": [
+  "t26/apos-cap07"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/login"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "timeout": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "••••••••"
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Rafael",
+   "timeout": 45
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 20
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const sb=document.querySelector('[data-state][data-collapsible]');if(sb&&sb.getAttribute('data-state')==='collapsed')return 'ja recolhido';const b=document.querySelector('header button.h-8.w-8');if(!b)return 'SEM ALVO';b.click();return 'recolhido'})()"
+  },
+  {
+   "do": "wait",
+   "seconds": 0.7
+  },
+  {
+   "do": "goto",
+   "url": "/crm"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie oportunidades e acompanhe seu processo comercial.",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 15
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel|Algo deu errado|Falha ao|Something went wrong/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main button:has-text('Sucata industrial')"
+   },
+   "seconds": 0.9,
+   "at": 2.99,
+   "label": "o quadro abre no Sucata industrial",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main section > header:has(h2:text-is('Visita técnica'))"
+   },
+   "seconds": 1.4,
+   "at": 5.04,
+   "label": "coluna Visita técnica no lugar certo",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 7.44
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Nova oportunidade",
+    "exact": true,
+    "nth": 0
+   },
+   "at": 12.6,
+   "label": "Nova oportunidade"
+  },
+  {
+   "do": "waitFor",
+   "selector": "#crm-title",
+   "timeout": 8
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#crm-title"
+   },
+   "text": "Retalho de chapa da Metalúrgica Jequitibá",
+   "cps": 40,
+   "at": 14.68,
+   "label": "Título: Retalho de chapa da Metalúrgica Jequitibá"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog]:has(#crm-title) [role=combobox]",
+    "hasText": "Novo"
+   },
+   "seconds": 1.0,
+   "at": 18.75,
+   "label": "Etapa *: Novo",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 22.9
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#crm-value"
+   },
+   "at": 23.15,
+   "label": "Valor"
+  },
+  {
+   "do": "press",
+   "key": "Control+A",
+   "label": "seleciona o 0"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#crm-value"
+   },
+   "text": "8400",
+   "cps": 12,
+   "at": 25.22,
+   "label": "Valor 8400 (zoom)",
+   "noClick": true
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 27.73
+  },
+  {
+   "do": "select",
+   "target": {
+    "selector": "[role=dialog]:has(#crm-title) [role=combobox]",
+    "hasText": "Rafael Nogueira"
+   },
+   "option": "Sem responsável",
+   "at": 27.88,
+   "label": "Responsável: Sem responsável"
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 31.35
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog]:has(#crm-title) [role=combobox]",
+    "hasText": "Selecionar empresa"
+   },
+   "at": 31.67,
+   "label": "Empresa (abre a busca)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Buscar cliente ou fornecedor..."
+   },
+   "text": "Metalúrgica Jequitibá",
+   "cps": 30,
+   "at": 37.21,
+   "label": "busca: Metalúrgica Jequitibá",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=option]:has-text('como empresa avulsa')"
+   },
+   "at": 41.49,
+   "label": "Usar \"Metalúrgica Jequitibá\" como empresa avulsa",
+   "noScroll": true
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#crm-contact"
+   },
+   "text": "Paulo Lacerda",
+   "cps": 30,
+   "at": 43.06,
+   "label": "Contato: Paulo Lacerda"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#crm-contact-role"
+   },
+   "text": "Suprimentos",
+   "cps": 30,
+   "at": 44.58,
+   "label": "Área/Setor: Suprimentos"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#crm-email"
+   },
+   "text": "",
+   "noClick": true,
+   "label": "E-mail (sem mexer o cursor)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const e=document.querySelector(\"#crm-email\");if(!e)return 'SEM ALVO';e.focus();return 'foco ok'})()",
+   "label": "foco no E-mail"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const e=document.activeElement;if(!e||!/^(INPUT|TEXTAREA)$/.test(e.tagName))return 'SEM FOCO';document.execCommand('insertText',false,\"paulo.lacerda@metalurgicajequitiba.example\");return e.value})()",
+   "label": "E-mail: paulo.lacerda@metalurgicajequitiba.example (colado)"
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 45.82
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const d=[...document.querySelectorAll(\"[role=dialog]:has(#crm-title)\")].pop();if(!d)return 'SEM JANELA';const el=[...d.querySelectorAll('label, p, h3, span, button')].filter(e=>e.textContent.trim().startsWith(\"Opera\\u00e7\\u00e3o\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';let c=el.parentElement;while(c&&c!==d.parentElement){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)break;c=c.parentElement;}if(!c||c===d.parentElement)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-150);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 46.34,
+   "label": "a janela desce até Operação"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog]:has(#crm-title) [role=combobox]",
+    "hasText": "Selecionar material"
+   },
+   "at": 47.21,
+   "label": "Tipo de material (abre a busca)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Buscar material..."
+   },
+   "text": "Chap",
+   "cps": 14,
+   "label": "busca: Chap",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=option]:has-text('Chaparia')"
+   },
+   "at": 48.34,
+   "label": "Chaparia",
+   "noScroll": true
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#crm-quantity"
+   },
+   "text": "12000",
+   "cps": 14,
+   "at": 49.26,
+   "label": "Quantidade estimada 12000 Kg (zoom)"
+  },
+  {
+   "do": "select",
+   "target": {
+    "selector": "[role=dialog]:has(#crm-title) [role=combobox]",
+    "hasText": "Não definido"
+   },
+   "option": "Frota própria",
+   "at": 52.7,
+   "label": "Meio de transporte: Frota própria"
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 54.29
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#crm-date"
+   },
+   "at": 56.44,
+   "label": "Previsão de fechamento"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#crm-date"
+   },
+   "text": "30112026",
+   "cps": 14,
+   "label": "Previsão de fechamento 30/11/2026",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#crm-notes"
+   },
+   "at": 58.41,
+   "label": "Observações"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#crm-notes"
+   },
+   "text": "Quer retirada a cada quinze dias, com caçamba.",
+   "cps": 40,
+   "at": 60.2,
+   "label": "Observações: Quer retirada a cada quinze dias, com caçamba.",
+   "noClick": true
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const esp=[\"Retalho de chapa da Metalúrgica Jequitibá\", \"8400\", \"Paulo Lacerda\", \"Suprimentos\", \"paulo.lacerda@metalurgicajequitiba.example\", \"12.000\", \"2026-11-30\", \"Quer retirada a cada quinze dias, com caçamba.\"];let out='';for(let i=0;i<12;i++){const sc=[...document.querySelectorAll(\"[role=dialog]:has(#crm-title)\")].pop();const v=sc?[...sc.querySelectorAll('input, textarea')].map(e=>e.value).join(' | '):'';const falta=esp.filter(e=>!v.includes(e));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+v.slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere campos da Nova oportunidade"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Metalúrgica Jequitibá\", \"Chaparia\", \"Frota própria\", \"Sem responsável\", \"Novo\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]:has(#crm-title)\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere escolhas da Nova oportunidade"
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 64.58
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Salvar",
+    "exact": true,
+    "within": "[role=dialog]:has(#crm-title)"
+   },
+   "at": 64.68,
+   "label": "Salvar (Nova oportunidade)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Oportunidade criada",
+   "timeout": 10
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "main section div.rounded-lg:has(> div p:text-is('Retalho de chapa da Metalúrgica Jequitibá'))"
+   },
+   "timeout": 10
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Retalho de chapa da Metalúrgica Jequitibá\", \"Paulo Lacerda\", \"Metalúrgica Jequitibá\", \"Chaparia\", \"12.000 Kg\", \"R$ 8.400,00\", \"30/11/2026\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main section div.rounded-lg:has(> div p:text-is('Retalho de chapa da Metal\\u00fargica Jequitib\\u00e1'))\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere o cartão em Novo"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main section div.rounded-lg:has(> div p:text-is('Retalho de chapa da Metalúrgica Jequitibá'))"
+   },
+   "seconds": 2.4,
+   "at": 67.31,
+   "label": "o cartão no Novo: material, valor e previsão",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L9",
+   "at": 71.0
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main section div.rounded-lg:has(> div p:text-is('Retalho de chapa da Metalúrgica Jequitibá'))"
+   },
+   "seconds": 5.0,
+   "at": 71.6,
+   "label": "o cartão (a compra se lança no caixa)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 81.31
+  }
+ ]
+}

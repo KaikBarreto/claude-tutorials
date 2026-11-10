@@ -1,0 +1,517 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<!-- T09 · Pedidos e histórico do caixa: as cenas [ILUSTRAÇÃO] da aula, no kit da EcoFlix (perfis/ecoflix/cenas/cenas_ecoflix.html;
+     docs/09-aula-ilustrada.md). 1280x800 CSS, renderizado quadro a quadro por render_cenas.cjs (window.setup + window.R(t));
+     tudo é função do tempo t e preso às palavras da fala com W(linha, 'palavra'). Os dois exemplos do kit saíram.
+     As âncoras de cada cena (de, ate, cauda) ficam em ILU, logo abaixo das utilidades: é o mesmo conteúdo do
+     ilustracoes.json desta pasta (a edição calcula o "at", o "dur" e o "repouso" com elas). Cada cena só aparece na sua
+     janela: abre 0,3 s antes do início da palavra "de" e fecha "cauda" s depois do fim da palavra "ate".
+     Conferir (quadros): node <skill>/ferramentas/edit/cenas/render_cenas.cjs N tempos/capNN.json <pasta> --html cenas.html --stills t1,t2
+     Dados: mundo da Recicla Vale Metais (MUNDO_FICTICIO.md, T09/plano.md); rótulos do app como no T09/inventario.md. -->
+<style>
+@font-face{font-family:M;font-weight:500;src:url(../../../web/fonts/montserrat-latin-500-normal.woff2) format('woff2')}
+@font-face{font-family:M;font-weight:600;src:url(../../../web/fonts/montserrat-latin-600-normal.woff2) format('woff2')}
+@font-face{font-family:M;font-weight:700;src:url(../../../web/fonts/montserrat-latin-700-normal.woff2) format('woff2')}
+@font-face{font-family:M;font-weight:800;src:url(../../../web/fonts/montserrat-latin-800-normal.woff2) format('woff2')}
+@font-face{font-family:M;font-weight:500;src:url(../../../web/fonts/montserrat-latin-ext-500-normal.woff2) format('woff2');unicode-range:U+0100-024F}
+@font-face{font-family:M;font-weight:700;src:url(../../../web/fonts/montserrat-latin-ext-700-normal.woff2) format('woff2');unicode-range:U+0100-024F}
+/* ---------------------------------------------------------------- paleta EcoFlix (marca: acento #50D088, escuro #121212)
+   --v  acento: preenchimentos, barras, contornos de destaque (nunca texto sobre branco: contraste baixo)
+   --ve verde escuro: texto e ícone verde sobre branco (contraste 5,0)   --vc verde claro: fundo de ícone/resultado
+   --a  âmbar: o SEGUNDO conceito da cena (ex.: competência x caixa)     --ae texto âmbar (5,9)   --ac âmbar claro
+   --t  texto (o escuro da marca)   --c texto secundário (4,8)   --l linhas   --e painel escuro (mostrador) */
+:root{--v:#50D088;--ve:#2E7D57;--vc:#EAF8F0;--vm:#A9E9C6;--a:#F2B63D;--ae:#8A5A00;--ac:#FFF5DF;
+  --t:#121212;--c:#6B7280;--l:#E6E9EE;--e:#121212}
+*{box-sizing:border-box;margin:0;padding:0;transition:none!important;animation:none!important}
+html,body{width:1280px;height:800px;overflow:hidden;background:#fff}
+body{font-family:M,sans-serif;color:var(--t);-webkit-font-smoothing:antialiased}
+#st{position:absolute;inset:0;overflow:hidden;background:
+  radial-gradient(1100px 650px at 92% -12%,rgba(80,208,136,.09),transparent 62%),
+  radial-gradient(900px 600px at -12% 112%,rgba(80,208,136,.06),transparent 60%),#fff}
+.g{position:absolute;left:0;top:0;width:1280px;height:800px;transform-origin:640px 400px}
+.ab{position:absolute}
+.row{display:flex;align-items:center}
+/* título da cena: área (kicker) + conceito; sozinho fica grande no centro e sobe quando o desenho entra */
+.kick{font-weight:700;font-size:15px;letter-spacing:.3em;color:var(--ve);text-transform:uppercase}
+.h{font-weight:800;font-size:46px;letter-spacing:-.01em;line-height:1.1}
+/* cartão, chip, etiqueta, ícone */
+.card{position:absolute;background:#fff;border:1px solid #E1E8E4;border-radius:18px;
+  box-shadow:0 18px 40px rgba(16,24,40,.10),0 3px 8px rgba(16,24,40,.06)}
+.ic{display:inline-flex;align-items:center;justify-content:center;flex:none}
+.ic svg{width:100%;height:100%}
+.ico{display:flex;align-items:center;justify-content:center;flex:none;border-radius:14px;background:var(--vc);color:var(--ve)}
+.ico.a{background:var(--ac);color:var(--ae)}
+.tag{display:inline-flex;align-items:center;gap:8px;padding:9px 18px;border-radius:999px;font-weight:800;font-size:20px;white-space:nowrap}
+.tag.v{background:var(--vc);color:var(--ve)} .tag.a{background:var(--ac);color:var(--ae)}
+.lbl{font-weight:700;font-size:17px;color:var(--c)}
+.num{font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+.op{position:absolute;width:60px;height:60px;border-radius:50%;background:#F2F4F7;color:var(--t);display:flex;
+  align-items:center;justify-content:center;font-weight:800;font-size:34px;line-height:1}
+/* mostrador da balança (painel escuro, número no acento) */
+.most{background:var(--e);border-radius:16px;padding:16px 22px 18px;box-shadow:0 16px 34px rgba(16,24,40,.22)}
+.most .ml{position:relative;height:20px;font-weight:700;font-size:15px;letter-spacing:.22em;color:#A9E9C6;text-transform:uppercase}
+.most .ml span{position:absolute;left:0;top:0;white-space:nowrap}
+.most .mn{margin-top:6px;font-weight:800;font-size:44px;color:var(--v);font-variant-numeric:tabular-nums;white-space:nowrap}
+.rip{position:absolute;width:56px;height:56px;margin:-28px 0 0 -28px;border-radius:50%;border:3px solid var(--v);opacity:0}
+/* ---------------------------------------------------------------- peças desta aula (T09) */
+.tag.n{background:#F2F4F7;color:#374151}
+.ficha{position:absolute;display:flex;align-items:center;gap:12px;height:58px;padding:0 18px;background:#fff;
+  border:1px solid #E1E8E4;border-radius:14px;box-shadow:0 8px 20px rgba(16,24,40,.08);font-weight:700;font-size:19px;white-space:nowrap}
+.dot{width:12px;height:12px;border-radius:50%;flex:none}
+.papel{position:absolute;background:#fff;border:1px solid #E3E7EC;border-radius:10px;
+  box-shadow:0 18px 40px rgba(16,24,40,.12),0 3px 8px rgba(16,24,40,.06)}
+.barra{height:10px;border-radius:5px;background:#E6E9EE}
+</style></head>
+<body><div id="st"></div>
+<script>
+// ------------------------------------------------------------------ utilidades (as do cenas_modelo.html + as da EcoFlix)
+const cl=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
+const eo=x=>1-Math.pow(1-cl(x),3);
+const eio=x=>{x=cl(x);return x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2};
+const pr=(t,a,d=.45)=>cl((t-a)/d);
+const lerp=(a,b,p)=>a+(b-a)*p;
+const $=s=>document.querySelector(s);
+const ST=document.getElementById('st');
+function el(html,parent=ST){const d=document.createElement('div');d.innerHTML=html.trim();let f=null;for(const n of [...d.childNodes]){parent.appendChild(n);if(!f&&n.nodeType===1)f=n}return f}
+function grupo(){return el('<div class="g"></div>')}
+function ic(n,px,cor){const s=(window.ICONS||{})[n]||'';return `<span class="ic" style="width:${px}px;height:${px}px;${cor?'color:'+cor:''}">${s}</span>`}
+function hex(c){c=c.replace('#','');return[0,2,4].map(i=>parseInt(c.substr(i,2),16))}
+function mix(a,b,p){const A=hex(a),B=hex(b);return `rgb(${A.map((v,i)=>Math.round(v+(B[i]-v)*cl(p))).join(',')})`}
+// aparece em a, some em b (opacidade + leve subida + escala): a entrada e a saída suaves de tudo
+function vis(e,t,a,b=1e9,o={}){
+  const din=o.din??.5,dout=o.dout??.4,dy=o.dy??16,dx=o.dx??0,sc=o.sc??.985;
+  const p=eo(pr(t,a,din)),q=1-eo(pr(t,b,dout)),op=Math.min(p,q);
+  e.style.opacity=op.toFixed(4);e.style.visibility=op<=.001?'hidden':'visible';
+  const s=sc+(1-sc)*p - (1-q)*(1-sc);
+  e.style.transform=`translate(${((1-p)*dx).toFixed(2)}px,${((1-p)*dy-(1-q)*dy*.5).toFixed(2)}px) scale(${s.toFixed(4)})`;
+  return op;
+}
+function ripple(r,t,a){const p=pr(t,a,.7);r.style.opacity=(p>0&&p<1)?(.6*(1-p)).toFixed(3):0;r.style.transform=`scale(${(.4+2.0*eo(p)).toFixed(3)})`}
+function pulse(e,t,a,amp=.045,dur=.9){const p=pr(t,a,dur);e.style.scale=(p>0&&p<1)?(1+amp*Math.sin(Math.PI*p)).toFixed(4):''}
+function digita(e,txt,t,a,b){const p=cl((t-a)/Math.max(.05,b-a));const n=Math.round(p*txt.length);
+  const car=(p>0&&p<1)||(Math.floor(t*2.2)%2===0&&p<1.2&&t>=a)?'<span style="color:var(--v);font-weight:500">|</span>':'';
+  e.innerHTML=(txt.slice(0,n)||'')+(t>=a&&t<b+.8?car:'');}
+// EcoFlix: números e dinheiro no jeito brasileiro; contagem suave de um número; traço que se desenha; arco; contorno
+const NF=new Intl.NumberFormat('pt-BR');
+const kg=v=>NF.format(Math.round(v))+' kg';
+const brl=v=>'R$ '+v.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
+function conta(e,t,a,d,v0,v1,fmt=kg){const p=eo(pr(t,a,d));const s=fmt(lerp(v0,v1,p));if(e.textContent!==s)e.textContent=s;return p}
+function traco(p,t,a,d=.8){if(!p._L){p._L=p.getTotalLength();p.style.strokeDasharray=p._L}const q=eio(pr(t,a,d));p.style.strokeDashoffset=(p._L*(1-q)).toFixed(2);p.style.opacity=q>0?1:0;return q}
+function arco(e,t,a,d,x0,y0,x1,y1,h=-80,rot=0){const p=eio(pr(t,a,d));const x=lerp(x0,x1,p),y=lerp(y0,y1,p)+h*4*p*(1-p);
+  e.style.transform=`translate(${x.toFixed(2)}px,${y.toFixed(2)}px) rotate(${(rot*p).toFixed(2)}deg)`;return p}
+function contorno(e,t,a,de,para,d=.45){e.style.borderColor=mix(de,para,eo(pr(t,a,d)))}
+// título padrão da cena: grande no centro enquanto está sozinho, sobe para o alto quando o desenho entra (em "sobe")
+function titulo(g,kick,txt){return el(`<div class="ab" style="left:0;top:0;width:1280px;text-align:center">
+  <div class="kick">${kick}</div><div class="h" style="margin-top:12px">${txt}</div></div>`,g)}
+function posTitulo(e,t,a,sobe,sai=1e9){vis(e,t,a,sai,{dy:14});const p=eio(pr(t,sobe,.7));
+  e.style.top=lerp(318,46,p).toFixed(2)+'px';e.style.scale=lerp(1.12,1,p).toFixed(4)}
+
+// ------------------------------------------------------------------ tempos da fala (capNN.json do proc.py ou estimado)
+let D=null;
+const norm=w=>w.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9%./-]+/g,'');
+function W(linha,palavra,n=1,campo='s'){
+  const alvo=norm(palavra);let k=0;
+  for(const w of D.words){if(w.linha===linha&&norm(w.w).replace(/[.,]$/,'')===alvo){k++;if(k===n)return w[campo]}}
+  for(const w of D.words){if(w.linha===linha&&norm(w.w).startsWith(alvo)){k++;if(k>=n)return w[campo]}}
+  console.warn('palavra não achada',linha,palavra);return L(linha);
+}
+const L=i=>(D.linhas[i]||{s:0}).s, LE=i=>(D.linhas[i]||{e:D.dur}).e;
+
+// ------------------------------------------------------------------ desenhos genéricos (sem marca)
+// caminhão de lado (frente para a direita), com a carga de sucata em pedaços (.pd) que podem ser descarregados
+function caminhao(){
+  const pd=[ // [forma, cor, centro da peça, destino no monte atrás do caminhão (deslocamento do centro e giro)]
+    ['<polygon points="28,90 44,52 88,42 100,90"/>','#8C5A3C',[64,66],[-224,148,6]],
+    ['<polygon points="82,90 102,36 146,48 154,90"/>','#6F7983',[118,63],[-318,122,12]],
+    ['<rect x="118" y="44" width="112" height="16" rx="8" transform="rotate(-8 174 52)"/>','#9AA3AD',[174,52],[-334,98,-18]],
+    ['<polygon points="148,90 170,54 212,44 232,90"/>','#A0694A',[190,67],[-425,148,-8]],
+    ['<polygon points="210,90 232,40 276,54 286,90"/>','#4F5861',[248,65],[-373,120,-10]],
+    ['<polygon points="258,90 282,60 308,66 312,90"/>','#8A949E',[285,75],[-375,148,4]],
+    ['<g><circle cx="192" cy="64" r="19"/><circle cx="192" cy="64" r="7" fill="#8A949E"/></g>','#5E6670',[192,64],[-242,155,200]],
+    ['<polygon points="40,70 60,50 84,64 64,86"/>','#B07A55',[62,68],[-307,100,30]]];
+  const pecas=pd.map(([f,c,[cx,cy],[dx,dy,r]])=>`<g class="pd" data-cx="${cx}" data-cy="${cy}" data-dx="${dx}" data-dy="${dy}" data-r="${r}" fill="${c}">${f}</g>`).join('');
+  const roda=x=>`<g class="roda" data-x="${x}" transform="translate(${x},196)"><circle r="26" fill="#1B1F24"/><circle r="12" fill="#9AA3AD"/>
+    <rect x="-2.5" y="-23" width="5" height="10" rx="2" fill="#5B636C"/><rect x="-2.5" y="13" width="5" height="10" rx="2" fill="#5B636C"/></g>`;
+  return `<svg viewBox="0 0 500 230" width="500" height="230" style="overflow:visible">
+    <g class="carga">${pecas}</g>
+    <rect x="18" y="86" width="304" height="88" rx="6" fill="#7E8994"/>
+    <rect x="16" y="82" width="308" height="11" rx="4" fill="#68727D"/>
+    <g stroke="#707A85" stroke-width="3">${[78,138,198,258].map(x=>`<line x1="${x}" y1="98" x2="${x}" y2="168"/>`).join('')}</g>
+    <path d="M334,176 L334,76 Q334,64 346,64 L412,64 L462,116 L472,121 Q480,124 480,134 L480,176 Z" fill="#2F3640"/>
+    <path d="M348,78 L406,78 L444,116 L348,116 Z" fill="#D7E5ED"/>
+    <rect x="470" y="142" width="10" height="11" rx="2" fill="#F2B63D"/>
+    <rect x="12" y="170" width="472" height="15" rx="4" fill="#23282E"/>
+    ${roda(92)}${roda(158)}${roda(416)}
+  </svg>`;
+}
+
+// ------------------------------------------------------------------ utilidades desta aula (faltavam no kit)
+// monte de sucata genérico (pedaços em polígono), 260x120; tons = lista de cores dos pedaços
+function monte(tons){
+  const f=['<polygon points="14,118 40,62 92,48 112,118"/>','<polygon points="70,118 98,36 150,30 168,118"/>',
+    '<rect x="96" y="40" width="120" height="16" rx="8" transform="rotate(-12 156 48)"/>','<polygon points="150,118 172,58 222,52 246,118"/>',
+    '<polygon points="40,118 58,86 96,80 108,118"/>','<polygon points="186,118 204,84 240,90 252,118"/>',
+    '<g><circle cx="128" cy="86" r="22"/><circle cx="128" cy="86" r="8" fill="#E6E9EE"/></g>','<polygon points="112,118 126,96 158,94 170,118"/>'];
+  return `<svg viewBox="0 0 260 120" width="260" height="120" style="overflow:visible">${f.map((s,i)=>`<g fill="${tons[i%tons.length]}">${s}</g>`).join('')}</svg>`;
+}
+// seta que se desenha (traco) com a ponta aparecendo no fim; d = caminho SVG no palco (1280x800)
+function seta(pai,d,cor='#50D088',w=4){
+  const s=el(`<svg class="ab" style="left:0;top:0;overflow:visible" width="1280" height="800">
+    <path d="${d}" fill="none" stroke="${cor}" stroke-width="${w}" stroke-linecap="round"/>
+    <path d="M-12,-9 L0,0 L-12,9" fill="none" stroke="${cor}" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round" opacity="0"/></svg>`,pai);
+  const [p,h]=s.querySelectorAll('path');const Lp=p.getTotalLength(),a=p.getPointAtLength(Lp),b=p.getPointAtLength(Math.max(0,Lp-4));
+  h.setAttribute('transform',`translate(${a.x.toFixed(2)},${a.y.toFixed(2)}) rotate(${(Math.atan2(a.y-b.y,a.x-b.x)*57.2958).toFixed(2)})`);
+  return {s,p,h};
+}
+function setaR(o,t,a,d=.55){const q=traco(o.p,t,a,d);o.h.style.opacity=cl((q-.85)/.15).toFixed(3);return q}
+// ponto que viaja por um caminho (o "dado" indo de um lugar ao outro); some suave nas pontas
+function viaja(e,path,t,a,d,r=8){const p=eio(pr(t,a,d));const Lp=path.getTotalLength(),q=path.getPointAtLength(Lp*p);
+  e.style.transform=`translate(${(q.x-r).toFixed(2)}px,${(q.y-r).toFixed(2)}px)`;
+  e.style.opacity=(p>0&&p<1)?Math.min(1,p*6,(1-p)*6).toFixed(3):'0';return p}
+// número que vira no lugar (16 → 70): a = o de antes, b = o novo, empilhados
+function vira(a,b,t,t0,d=.5){const p=eio(pr(t,t0,d));a.style.transform=`scaleY(${Math.max(0,1-2*p).toFixed(3)})`;
+  b.style.transform=`scaleY(${Math.max(0,2*p-1).toFixed(3)})`;a.style.opacity=p<.5?1:0;b.style.opacity=p>=.5?1:0;return p}
+// fator de um pulso para quem já é posicionado por transform (entra no próprio transform): o pulse do kit usa a propriedade
+// scale, que escala também a translação e faz o elemento pular de lugar
+function fpulso(t,a,amp=.045,dur=.9){const p=pr(t,a,dur);return (p>0&&p<1)?1+amp*Math.sin(Math.PI*p):1}
+// cor que acende em qualquer propriedade (fundo, texto), como o contorno do kit
+function luz(e,prop,t,a,de,para,d=.45){e.style[prop]=mix(de,para,eo(pr(t,a,d)))}
+// anel de destaque em volta de um cartão (sem mexer na sombra dele)
+function anel(e,t,a,rgba,sombra='0 18px 40px rgba(16,24,40,.10),0 3px 8px rgba(16,24,40,.06)',px=5){
+  e.style.boxShadow=`0 0 0 ${(px*eo(pr(t,a,.45))).toFixed(2)}px ${rgba},${sombra}`}
+// texto escrito à mão (giz, caneta): sem cursor piscando
+function escreve(e,txt,t,a,b){const p=cl((t-a)/Math.max(.05,b-a));const s=txt.slice(0,Math.round(p*txt.length));if(e._s!==s){e.textContent=s;e._s=s}}
+
+// ------------------------------------------------------------------ cenas da aula: âncoras (= ilustracoes.json)
+// de = [linha, palavra, ocorrência] (a janela abre 0,3 s antes do início dela); ate = a palavra em cujo fim a cena pode
+// sair (a janela fecha "cauda" s depois); mostra = todo nome, número e rótulo escrito na cena
+const ILU=[
+ {cap:0,id:'ilu00_pedido',de:[0,'Oi',1],ate:[1,'dela',1],cauda:.6,
+  resumo:'o pedido de três semanas atrás: a Auto Peças Vale Forte liga pedindo o comprovante da bateria de 21/10 e o pedido não aparece no nome dela',
+  mostra:['Pedidos','O pedido sumido','NOVEMBRO','11','OUTUBRO','21','3 semanas atrás','Achar','Corrigir','Imprimir','Auto Peças Vale Forte','fornecedor','Cadê o comprovante?']},
+ {cap:1,id:'ilu01_telas',de:[0,'Pedidos',1],ate:[2,'juntas',1],cauda:.6,
+  resumo:'Pedidos mostra cada compra e venda; o Histórico do Caixa mostra os caixas fechados; todo pedido nasce dentro de um caixa',
+  mostra:['Pedidos × Histórico do Caixa','Pedidos','Histórico do Caixa','Compra','Venda','10/11','21/10','Rafael · 10/11','Marcos · 10/11','Marcos · 21/10']},
+ {cap:4,id:'ilu04_soma',de:[6,'Agora',1],ate:[8,'duplica',1],cauda:.6,
+  resumo:'editar não soma por cima: desfaz o pedido antigo inteiro, grava o certo, e no fim entram só os 18 kg e sai só a diferença',
+  mostra:['Correções','Não soma por cima','Pedido antigo','24 kg · R$ 148,80','Pedido certo','42 kg · R$ 260,40','Estoque','Caixa','−24 kg','desfaz o antigo','+42 kg','grava o certo',
+    '+18 kg','só o que faltava','+R$ 148,80','devolve pro caixa','−R$ 260,40','sai do caixa','R$ 111,60','para a Aparecida']},
+ {cap:5,id:'ilu05_estornado',de:[5,'pedido',1],ate:[5,'existiu',1],cauda:.6,
+  resumo:'o pedido estornado fica no caixa fechado do dia 3 como rastro: fora dos totais, sem editar nem excluir',
+  mostra:['Correções','O pedido estornado','Caixa de 03/11','fechado','Compra','03/11','Estornado em 05/11','Totais','Compra · 03/11','Editar','Excluir','fica como rastro']},
+ {cap:6,id:'ilu06_popups',de:[1,'Todo',1],ate:[2,'só',1],cauda:.6,
+  resumo:'o PDF abre numa aba nova; se o navegador bloquear, clique no cadeado do endereço, procure Pop-ups e marque Permitir',
+  mostra:['Comprovantes','Liberar os pop-ups','Pedidos | EcoSistema','PDF','ecosistematecnologia.com.br','Pop-ups','Permitir']},
+];
+// várias cenas num capítulo: cada uma no seu grupo, visível só na sua janela (a mesma conta da edição)
+function janela(c){return [W(c.de[0],c.de[1],c.de[2],'s')-.3, W(c.ate[0],c.ate[1],c.ate[2],'e')+c.cauda]}
+const S={};
+function capitulo(...ids){
+  const cs=ids.map(id=>{const g=grupo();return {c:ILU.find(x=>x.id===id),g,R:S[id](g)}});
+  return t=>{for(const k of cs){if(!k.J)k.J=janela(k.c);const on=t>=k.J[0]-.05&&t<=k.J[1]+.05;
+    k.g.style.display=on?'':'none';if(on)k.R(t,k.J)}};
+}
+const SOMBRA='0 18px 40px rgba(16,24,40,.10),0 3px 8px rgba(16,24,40,.06)';
+// posição de um elemento no palco (medida na montagem, antes de qualquer animação): [x, y, largura, altura]
+function caixa(e){const r=e.getBoundingClientRect();return [r.left,r.top,r.width,r.height]}
+
+// ================================================================== cap00 · O pedido sumido (linhas 0 e 1)
+// 0 "Oi! Neste tutorial a gente vai achar aquele pedido de três semanas atrás, corrigir o que saiu errado e imprimir o
+//   comprovante de novo."  1 "Na Recicla Vale Metais, a Auto Peças Vale Forte ligou pedindo o comprovante da bateria que
+//   vendeu em vinte e um de outubro. E o pedido não aparece no nome dela."  Hoje no mundo da T09: 11/11; 21/10 = três
+//   semanas antes. O telefone e o cartão da Auto Peças entram em "ligou" (a marcação punha na linha 0, que não fala dela).
+S.ilu00_pedido=g=>{
+  const tit=titulo(g,'Pedidos','O pedido sumido');
+  // coluna da esquerda (calendário + o que a aula faz): começa no centro e vai para a esquerda quando o telefone toca
+  const CW=470, X0=640-CW/2, X1=70;
+  const col=el(`<div class="ab" style="left:${X0}px;top:190px;width:${CW}px;height:400px"></div>`,g);
+  const folha=(mes,dia,cor)=>`<div class="pg" style="position:absolute;inset:0;border-radius:18px;overflow:hidden;background:#fff;transform-origin:50% 0">
+      <div style="height:60px;background:${cor};display:flex;align-items:center;justify-content:center;font-weight:800;font-size:21px;letter-spacing:.14em;color:#fff">${mes}</div>
+      <div class="num" style="height:180px;display:flex;align-items:center;justify-content:center;font-size:104px">${dia}</div></div>`;
+  const cal=el(`<div class="card" style="left:${(CW-240)/2}px;top:0;width:240px;height:240px;padding:0">${folha('NOVEMBRO','11','#4B5563')}${folha('OUTUBRO','21','#8A5A00')}</div>`,col);
+  const [pgN,pgO]=cal.querySelectorAll('.pg'); pgO.style.opacity=0;
+  const atras=el(`<div class="ab" style="left:0;top:256px;width:${CW}px;text-align:center"><span class="tag a" style="font-size:19px">${ic('undo-2',20)}3 semanas atrás</span></div>`,col);
+  const ag=el(`<div class="ab row" style="left:0;top:330px;width:${CW}px;justify-content:center;gap:14px">
+      <span class="tag v a1" style="font-size:19px">${ic('search',20)}Achar</span><span class="tag v a2" style="font-size:19px">${ic('pencil',20)}Corrigir</span>
+      <span class="tag v a3" style="font-size:19px">${ic('printer',20)}Imprimir</span></div>`,col);
+  const ags=[ag.querySelector('.a1'),ag.querySelector('.a2'),ag.querySelector('.a3')];
+  // a ligação da Auto Peças Vale Forte
+  const lig=el(`<div class="card row" style="left:600px;top:196px;width:600px;height:116px;padding:0 26px;gap:20px">
+      <div style="position:relative;width:64px;height:64px;flex:none"><div class="ico" style="width:64px;height:64px;border-radius:50%">${ic('phone-incoming',30)}</div>
+        <div class="rip r1" style="left:32px;top:32px"></div><div class="rip r2" style="left:32px;top:32px"></div></div>
+      <div><div style="font-weight:800;font-size:25px;white-space:nowrap">Auto Peças Vale Forte</div><div class="lbl" style="margin-top:4px">fornecedor</div></div></div>`,g);
+  const [r1,r2]=[lig.querySelector('.r1'),lig.querySelector('.r2')];
+  // o pedido: "Cadê o comprovante?" (da bateria)
+  const bal=el(`<div class="ab" style="left:660px;top:340px">
+      <div style="position:absolute;left:46px;top:-9px;width:20px;height:20px;background:#fff;border-left:1px solid #E1E8E4;border-top:1px solid #E1E8E4;transform:rotate(45deg)"></div>
+      <div class="row" style="position:relative;height:84px;padding:0 26px;gap:14px;background:#fff;border:1px solid #E1E8E4;border-radius:22px;box-shadow:${SOMBRA}">
+        <span class="bat" style="display:inline-flex">${ic('car-battery',30,'#8A5A00')}</span>
+        <span style="font-weight:800;font-size:24px;white-space:nowrap">Cadê o comprovante?</span></div></div>`,g);
+  const bat=bal.querySelector('.bat');
+  // e o pedido não aparece no nome dela: a pilha de comprovantes com a interrogação
+  const pil=el(`<div class="ab" style="left:720px;top:460px;width:400px;height:250px">
+      ${[0,1,2].map(i=>`<div class="papel" style="left:${30+i*30}px;top:${36-i*10}px;width:200px;height:196px;transform:rotate(${[-7,1,7][i]}deg);padding:24px 22px">
+        <div class="barra" style="width:70%"></div><div class="barra" style="margin-top:12px;width:48%"></div>
+        <div class="barra" style="margin-top:24px;width:86%"></div><div class="barra" style="margin-top:12px;width:62%"></div>
+        <div class="barra" style="margin-top:12px;width:74%"></div><div class="barra" style="margin-top:24px;width:40%;height:14px"></div></div>`).join('')}</div>`,g);
+  const qq=el(`<div class="ab" style="left:1000px;top:470px;width:96px;height:96px;border-radius:50%;background:#FFF5DF;border:4px solid #F2B63D;
+      display:flex;align-items:center;justify-content:center;font-weight:800;font-size:54px;color:#8A5A00;box-shadow:0 10px 24px rgba(16,24,40,.12)">?</div>`,g);
+  let A=null;
+  return (t,J)=>{
+    if(!A)A={ac:W(0,'achar'),se:W(0,'semanas'),at:W(0,'atras'),co:W(0,'corrigir'),im:W(0,'imprimir'),
+      au:W(1,'auto'),li:W(1,'ligou'),pd:W(1,'pedindo'),ba:W(1,'bateria'),ou:W(1,'outubro'),pe:W(1,'pedido'),ap:W(1,'aparece')};
+    posTitulo(tit,t,J[0]-.6,A.ac-.3);
+    // achar aquele pedido de três semanas atrás: o calendário volta de hoje (11/11) para 21/10
+    vis(cal,t,A.ac-.1,1e9,{dy:16}); vis(ags[0],t,A.ac+.05,1e9,{sc:.85,dy:0});
+    vira(pgN,pgO,t,A.se-.1,.6); pulse(cal,t,A.at-.1,.05,.7); vis(atras,t,A.at-.05,1e9,{dy:8});
+    vis(ags[1],t,A.co-.1,1e9,{sc:.85,dy:0}); vis(ags[2],t,A.im-.1,1e9,{sc:.85,dy:0});
+    // a Auto Peças Vale Forte ligou: a coluna abre espaço e a ligação entra
+    const sl=eio(pr(t,A.au-.45,.8)); col.style.left=lerp(X0,X1,sl).toFixed(2)+'px';
+    vis(lig,t,A.au-.05,1e9,{dx:24,dy:0}); ripple(r1,t,A.li-.05); ripple(r2,t,A.li+.3);
+    vis(bal,t,A.pd-.05,1e9,{dy:12}); pulse(bat,t,A.ba-.1,.25,.7);
+    pulse(cal,t,A.ou-.15,.06,.8);
+    vis(pil,t,A.pe-.15,1e9,{dy:16}); vis(qq,t,A.ap-.1,1e9,{sc:.6,dy:0}); pulse(qq,t,A.ap+.4,.08,.7);
+  };
+};
+
+// ================================================================== cap01 · Pedidos × Histórico do Caixa (linhas 0 a 2)
+// 0 "Pedidos mostra cada compra e cada venda, uma por linha, de todos os caixas. É a tela pra achar um pedido, corrigir e
+//   imprimir de novo."  1 "O Histórico do Caixa mostra os caixas já fechados: o dia de cada operador, com quanto abriu e
+//   quanto fechou. É a tela pra rever um dia inteiro e, se precisar, reabrir aquele caixa."  2 "Todo pedido nasce dentro
+//   de um caixa. Por isso as duas telas andam juntas."  Caixas do mundo: #85 Rafael 10/11, #86 Marcos 10/11, #70 Marcos
+//   21/10 (a compra da bateria). Sem valores de caixa na cena (a fala não diz; a junção mexe nos caixas).
+S.ilu01_telas=g=>{
+  const tit=titulo(g,'Pedidos','Pedidos × Histórico do Caixa');
+  const PX=70,PY=188,PW=520,PH=416,HX=690,HW=520, RY=i=>PY+119+i*86;
+  const gP=el('<div class="ab" style="left:0;top:0;width:1280px;height:800px"></div>',g);   // Pedidos: começa no centro
+  const cartao=(x,cls,icn,nome,pai)=>el(`<div class="card" style="left:${x}px;top:${PY}px;width:${PW}px;height:${PH}px;padding:26px">
+      <div class="row" style="gap:14px;height:56px"><div class="ico ${cls}" style="width:56px;height:56px">${ic(icn,28)}</div>
+        <div style="font-weight:800;font-size:27px;white-space:nowrap">${nome}</div><div class="row acs" style="margin-left:auto;gap:10px"></div></div>
+      <div style="margin-top:18px;height:1px;background:#E6E9EE"></div></div>`,pai);
+  const ped=cartao(PX,'','clipboard-list','Pedidos',gP), his=cartao(HX,'a','history','Histórico do Caixa',g);
+  const acs=['search','pencil','printer'].map(c=>el(`<span class="ab0" style="width:44px;height:44px;border-radius:12px;background:#EAF8F0;display:flex;align-items:center;justify-content:center">${ic(c,22,'#2E7D57')}</span>`,ped.querySelector('.acs')));
+  // as linhas de pedido (cada compra e cada venda), de caixas diferentes
+  const RW=[['Compra','v','10/11'],['Venda','a','10/11'],['Compra','v','21/10']];
+  const lin=RW.map(([k,c,d],i)=>el(`<div class="ab row" style="left:${PX+26}px;top:${RY(i)}px;width:${PW-52}px;height:70px;padding:0 18px;gap:16px;border:1px solid #E6E9EE;border-radius:14px;background:#fff">
+      <span class="tag ${c} tg" style="font-size:18px;padding:7px 15px">${k}</span><div class="barra" style="flex:1"></div>
+      <span class="num dt" style="font-size:20px;color:#4B5563">${d}</span></div>`,gP));
+  const tgs=lin.map(l=>l.querySelector('.tg')), dts=lin.map(l=>l.querySelector('.dt'));
+  // as gavetas de caixa (o dia de cada operador), fechadas
+  const GV=[['Rafael','10/11'],['Marcos','10/11'],['Marcos','21/10']];
+  const gav=GV.map(([n,d],i)=>el(`<div class="ab row" style="left:${HX+26}px;top:${RY(i)}px;width:${HW-52}px;height:70px;padding:0 18px;gap:14px;border:1px solid #DCE3E8;border-radius:14px;background:#FBFCFD;box-shadow:inset 0 -6px 0 #EEF1F4">
+      ${ic('archive',24,'#4B5563')}<span style="font-weight:800;font-size:21px;white-space:nowrap">${n} · ${d}</span>
+      <span style="margin-left:auto;position:relative;width:28px;height:28px"><span class="c1" style="position:absolute;inset:0;opacity:0">${ic('lock',26,'#6B7280')}</span>
+        <span class="c2" style="position:absolute;inset:0;opacity:0">${ic('lock-open',26,'#8A5A00')}</span></span></div>`,g));
+  const c1=gav.map(e=>e.querySelector('.c1')), c2=gav.map(e=>e.querySelector('.c2'));
+  // todo pedido nasce dentro de um caixa: a compra de 21/10 liga na gaveta do Marcos de 21/10
+  const y3=RY(2)+35;
+  const liga=seta(g,`M${PX+PW-20},${y3} C${PX+PW+30},${y3} ${HX-30},${y3} ${HX+20},${y3}`,'#50D088',4);
+  const elo=el(`<div class="ab" style="left:${PX+PW+50-30}px;top:${PY+28}px;width:60px;height:60px;border-radius:50%;background:#fff;border:2px solid #A9E9C6;
+      display:flex;align-items:center;justify-content:center;box-shadow:0 8px 18px rgba(16,24,40,.10)">${ic('link-2',28,'#2E7D57')}</div>`,g);
+  let A=null;
+  return (t,J)=>{
+    if(!A)A={pe:W(0,'pedidos'),ca:W(0,'cada',1),co:W(0,'compra'),ve:W(0,'venda'),to:W(0,'todos'),ah:W(0,'achar'),cr:W(0,'corrigir'),im:W(0,'imprimir'),
+      hi:W(1,'historico'),cx:W(1,'caixas'),fe:W(1,'fechados'),re:W(1,'reabrir'),
+      na:W(2,'nasce'),c2:W(2,'caixa'),du:W(2,'duas'),ju:W(2,'juntas')};
+    posTitulo(tit,t,J[0]-.6,A.pe-.05);
+    gP.style.transform=`translateX(${lerp(310,0,eio(pr(t,A.hi-.7,.8))).toFixed(2)}px)`;
+    // Pedidos: cada compra e cada venda, uma por linha, de todos os caixas; achar, corrigir e imprimir
+    vis(ped,t,A.pe+.1,1e9,{dx:-20,dy:0});
+    lin.forEach((l,i)=>vis(l,t,A.ca-.15+i*.2,1e9,{dy:12}));
+    [A.co,A.ve,A.co+.15].forEach((a,i)=>vis(tgs[i],t,a-.1,1e9,{sc:.8,dy:0}));
+    dts.forEach((d,i)=>vis(d,t,A.to-.1+i*.15,1e9,{dy:6}));
+    [A.ah,A.cr,A.im].forEach((a,i)=>vis(acs[i],t,a-.1,1e9,{sc:.7,dy:0}));
+    // Histórico do Caixa: os caixas fechados, o dia de cada operador; reabrir aquele caixa
+    vis(his,t,A.hi-.1,1e9,{dx:20,dy:0});
+    gav.forEach((e,i)=>vis(e,t,A.cx-.1+i*.18,1e9,{dy:12}));
+    c1.forEach((e,i)=>{e.style.opacity=(eo(pr(t,A.fe-.1+i*.12,.4))*(i===2?1-eo(pr(t,A.re,.45)):1)).toFixed(3)});
+    c2[2].style.opacity=eo(pr(t,A.re,.45)).toFixed(3);
+    contorno(gav[2],t,A.re-.1,'#DCE3E8','#F2B63D'); pulse(gav[2],t,A.re-.1,.03,.8);
+    // todo pedido nasce dentro de um caixa; as duas telas andam juntas
+    contorno(lin[2],t,A.na-.3,'#E6E9EE','#50D088'); setaR(liga,t,A.na-.1,.6); pulse(gav[2],t,A.c2-.1,.04,.8);
+    vis(elo,t,A.du-.1,1e9,{sc:.6,dy:0}); pulse(ped,t,A.ju-.1,.015,.8); pulse(his,t,A.ju+.05,.015,.8);
+  };
+};
+
+// ================================================================== cap04 · Não soma por cima (linhas 6 a 8)
+// 6 "Agora, o que o sistema faz ao salvar. Ele não soma por cima. Primeiro desfaz o pedido antigo inteiro: tira os vinte
+//   e quatro quilos do estoque e devolve o dinheiro pro caixa."  7 "Depois grava o pedido certo como se fosse a primeira
+//   vez: quarenta e dois quilos no estoque, e duzentos e sessenta e quarenta saindo do caixa."  8 "No fim, o estoque
+//   ganha só os dezoito quilos que faltavam, e do caixa sai só a diferença que a Aparecida recebe. Nada duplica."
+//   Latinha da Aparecida a R$ 6,20: 24 kg = R$ 148,80; 42 kg = R$ 260,40; diferença 18 kg e R$ 111,60.
+S.ilu04_soma=g=>{
+  const tit=titulo(g,'Correções','Não soma por cima');
+  const XA=90, XN=690, CW=500, YP=180, YL=340;
+  const pedido=(x,cls,nome,val,bic,bcor,bfundo)=>el(`<div class="card row" style="left:${x}px;top:${YP}px;width:${CW}px;height:112px;padding:0 24px;gap:18px">
+      <div class="ico ${cls}" style="width:56px;height:56px">${ic('receipt-text',28)}</div>
+      <div><div style="font-weight:800;font-size:23px;white-space:nowrap">${nome}</div><div class="num vl" style="margin-top:6px;font-size:22px;color:#374151;white-space:nowrap">${val}</div></div>
+      <span class="badge" style="margin-left:auto;width:48px;height:48px;border-radius:50%;background:${bfundo};display:flex;align-items:center;justify-content:center;opacity:0">${ic(bic,26,bcor)}</span></div>`,g);
+  const pA=pedido(XA,'a','Pedido antigo',`${kg(24)} · ${brl(148.8)}`,'undo-2','#8A5A00','#FFF5DF');
+  const pN=pedido(XN,'','Pedido certo',`${kg(42)} · ${brl(260.4)}`,'check','#2E7D57','#EAF8F0');
+  const vA=pA.querySelector('.vl'), bA=pA.querySelector('.badge'), bN=pN.querySelector('.badge');
+  const livro=(x,icn,nome)=>el(`<div class="card" style="left:${x}px;top:${YL}px;width:${CW}px;height:372px;padding:22px 26px">
+      <div class="row" style="gap:14px"><div class="ico" style="width:52px;height:52px;background:#EEF1F4;color:#374151">${ic(icn,26)}</div>
+        <div style="font-weight:800;font-size:24px">${nome}</div></div>
+      ${[[96,56],[162,56],[256,62]].map(([y,h])=>`<div style="position:absolute;left:26px;right:26px;top:${y}px;height:${h}px;border:2px dashed #DCE1E7;border-radius:12px"></div>`).join('')}
+      <div class="dv" style="position:absolute;left:26px;right:26px;top:236px;height:2px;background:#D7DDE3;transform-origin:0 50%"></div></div>`,g);
+  const lE=livro(XA,'package','Estoque'), lC=livro(XN,'wallet','Caixa');
+  const dvs=[lE.querySelector('.dv'),lC.querySelector('.dv')];
+  // as linhas do livro: saem do pedido e pousam no livro (a 1ª e a 2ª); o resultado aparece embaixo do traço
+  const linha=(val,sub,cor,big)=>el(`<div class="ab row" style="left:0;top:0;width:${CW-52}px;height:${big?62:56}px;padding:0 18px;gap:14px;border-radius:12px;background:${big?'#EAF8F0':'#F7F8FA'}">
+      <span class="num" style="font-size:${big?30:26}px;color:${cor};white-space:nowrap">${val}</span>
+      <span class="lbl" style="margin-left:auto;white-space:nowrap;${big?'color:#2E7D57':''}">${sub}</span>
+      ${big?`<span class="ok" style="opacity:0">${ic('circle-check',26,'#2E7D57')}</span>`:''}</div>`,g);
+  const L={E1:linha('−'+kg(24),'desfaz o antigo','#8A5A00'),C1:linha('+'+brl(148.8),'devolve pro caixa','#8A5A00'),
+           E2:linha('+'+kg(42),'grava o certo','#2E7D57'),C2:linha('−'+brl(260.4),'sai do caixa','#2E7D57'),
+           E3:linha('+'+kg(18),'só o que faltava','#121212',1),C3:linha(brl(111.6),'para a Aparecida','#121212',1)};
+  const Y1=YL+96, Y2=YL+162, Y3=YL+256;
+  const POS={E1:[XA+26,Y1],C1:[XN+26,Y1],E2:[XA+26,Y2],C2:[XN+26,Y2],E3:[XA+26,Y3],C3:[XN+26,Y3]};
+  const DE={E1:[XA+26,YP+124],C1:[XA+26,YP+124],E2:[XN+26,YP+124],C2:[XN+26,YP+124]};
+  const voa=(k,t,a)=>{const e=L[k],[x1,y1]=POS[k],[x0,y0]=DE[k];const q=arco(e,t,a,.8,x0,y0,x1,y1,-50);
+    e.style.opacity=(q>0?Math.min(1,q*4):0).toFixed(3);e.style.visibility=q>0?'visible':'hidden'};
+  const fica=(k,t,a,f=1)=>{const e=L[k],[x,y]=POS[k];const p=eo(pr(t,a,.5));e.style.transform=`translate(${x}px,${(y+12*(1-p)).toFixed(2)}px) scale(${f.toFixed(4)})`;
+    e.style.opacity=p.toFixed(3);e.style.visibility=p>0?'visible':'hidden'};
+  let A=null;
+  return (t,J)=>{
+    if(!A)A={sa:W(6,'salvar'),pr:W(6,'primeiro'),de:W(6,'desfaz'),in:W(6,'inteiro'),q1:W(6,'quilos'),di:W(6,'dinheiro'),
+      gr:W(7,'grava'),ce:W(7,'certo'),q2:W(7,'quilos'),sd:W(7,'saindo'),ga:W(8,'ganha'),df:W(8,'diferenca'),na:W(8,'nada')};
+    posTitulo(tit,t,J[0]-.6,A.sa-.35);
+    // o que o sistema mexe: o estoque e o caixa
+    vis(lE,t,A.sa-.15,1e9,{dy:16}); vis(lC,t,A.sa,1e9,{dy:16});
+    // primeiro desfaz o pedido antigo inteiro: os 24 kg saem do estoque e o dinheiro volta pro caixa
+    vis(pA,t,A.pr-.1,1e9,{dx:-20,dy:0}); vis(bA,t,A.de-.05,1e9,{sc:.6,dy:0});
+    vA.style.textDecoration=t>A.in?'line-through':'none'; vA.style.color=mix('#374151','#8A5A00',eo(pr(t,A.in,.4)));
+    voa('E1',t,A.q1-.55); voa('C1',t,A.di-.3);
+    // depois grava o pedido certo: 42 kg no estoque e R$ 260,40 saindo do caixa
+    vis(pN,t,A.gr-.1,1e9,{dx:20,dy:0}); vis(bN,t,A.ce-.05,1e9,{sc:.6,dy:0});
+    voa('E2',t,A.q2-.55); voa('C2',t,A.sd-.3);
+    // no fim: só os 18 kg que faltavam e só a diferença que a Aparecida recebe; nada duplica
+    dvs[0].style.transform=`scaleX(${eio(pr(t,A.ga-.35,.5)).toFixed(4)})`; dvs[1].style.transform=`scaleX(${eio(pr(t,A.df-.35,.5)).toFixed(4)})`;
+    fica('E3',t,A.ga-.1,fpulso(t,A.ga+.4,.04,.8)); fica('C3',t,A.df-.1,fpulso(t,A.df+.4,.04,.8));
+    L.E3.querySelector('.ok').style.opacity=eo(pr(t,A.na-.1,.4)).toFixed(3); L.C3.querySelector('.ok').style.opacity=eo(pr(t,A.na+.1,.4)).toFixed(3);
+  };
+};
+
+// ================================================================== cap05 · O pedido estornado (linha 5)
+// 5 "O pedido estornado não entra nos totais, e não dá mais pra editar nem excluir. Ele fica como o rastro de que
+//   existiu."  A compra duplicada de 03/11, excluída em 05/11 com o caixa do dia 3 fechado (selo do app: "Estornado em
+//   05/11"). Sem o nome do parceiro: a fala diz Cooperativa Recomeço e o T09/plano.md (junção) diz Aparecida Ramos. A
+//   comparação com a exclusão de caixa aberto e a seta da correção para o caixa de 05/11 (da marcação) são da linha 4,
+//   que é tela: ficaram de fora.
+S.ilu05_estornado=g=>{
+  const tit=titulo(g,'Correções','O pedido estornado');
+  const gav=el(`<div class="card" style="left:80px;top:196px;width:520px;height:380px;padding:24px 26px;background:#FBFCFD">
+      <div class="row" style="gap:14px"><div class="ico" style="width:52px;height:52px;background:#EEF1F4;color:#4B5563">${ic('archive',26)}</div>
+        <div><div style="font-weight:800;font-size:24px;white-space:nowrap">Caixa de 03/11</div><div class="lbl" style="margin-top:3px">fechado</div></div>
+        <span style="margin-left:auto">${ic('lock',30,'#6B7280')}</span></div></div>`,g);
+  const ped=el(`<div class="card" style="left:110px;top:330px;width:460px;height:150px;padding:22px 24px">
+      <div class="row" style="gap:12px"><span class="tag v" style="font-size:17px;padding:6px 13px">Compra</span>
+        <span class="num" style="font-size:22px;white-space:nowrap">03/11</span><div class="barra" style="margin-left:auto;width:120px"></div></div>
+      <div class="row" style="margin-top:20px"><span class="tag a selo" style="font-size:18px;padding:8px 15px;box-shadow:0 0 0 2px #F2B63D">${ic('undo-2',19)}Estornado em 05/11</span></div></div>`,g);
+  const selo=ped.querySelector('.selo');
+  const ras=el(`<div class="ab" style="left:110px;top:500px;width:460px;text-align:center"><span class="tag n" style="font-size:18px">${ic('footprints',20)}fica como rastro</span></div>`,g);
+  // os totais: o estornado fica de fora
+  const tot=el(`<div class="card" style="left:660px;top:196px;width:540px;height:262px;padding:22px 26px">
+      <div class="row" style="gap:14px"><div class="ico" style="width:52px;height:52px">${ic('sigma',26)}</div><div style="font-weight:800;font-size:24px">Totais</div></div>
+      ${[0,1].map(i=>`<div class="row" style="margin-top:${i?10:18}px;height:42px;padding:0 14px;gap:12px;border-radius:10px;background:#F7F8FA">
+        <div class="barra" style="width:${[58,46][i]}%"></div><span style="margin-left:auto">${ic('check',22,'#2E7D57')}</span></div>`).join('')}
+      <div class="row fora" style="margin-top:10px;height:42px;padding:0 14px;gap:12px;border-radius:10px;border:2px dashed #E8D3A6">
+        <span style="font-weight:700;font-size:17px;color:#6B7280;text-decoration:line-through;white-space:nowrap">Compra · 03/11</span>
+        <span style="margin-left:auto">${ic('ban',22,'#8A5A00')}</span></div></div>`,g);
+  const fora=tot.querySelector('.fora');
+  // sem editar nem excluir
+  const btn=(n,i)=>`<span class="row ${n}" style="height:50px;padding:0 18px;gap:10px;border-radius:12px;background:#F2F4F7;color:#6B7280;font-weight:800;font-size:19px">
+      ${ic(i,20)}${n==='be'?'Editar':'Excluir'}<span class="trv" style="display:inline-flex;margin-left:4px;opacity:0">${ic('lock',18,'#8A5A00')}</span></span>`;
+  const aco=el(`<div class="card row" style="left:660px;top:488px;width:540px;height:110px;padding:0 26px;gap:16px">${btn('be','pencil')}${btn('bx','trash-2')}</div>`,g);
+  const [be,bx]=[aco.querySelector('.be'),aco.querySelector('.bx')];
+  let A=null;
+  return (t,J)=>{
+    if(!A)A={pe:W(5,'pedido'),es:W(5,'estornado'),to:W(5,'totais'),ed:W(5,'editar'),ex:W(5,'excluir'),fi:W(5,'fica'),ra:W(5,'rastro')};
+    posTitulo(tit,t,J[0]-.6,A.pe-.2);
+    vis(gav,t,A.pe-.05,1e9,{dx:-20,dy:0}); vis(ped,t,A.es-.15,1e9,{dy:14}); pulse(selo,t,A.es+.35,.06,.7);
+    // não entra nos totais
+    vis(tot,t,A.to-.55,1e9,{dx:20,dy:0}); vis(fora,t,A.to-.05,1e9,{dx:-12,dy:0});
+    // não dá mais pra editar nem excluir
+    vis(aco,t,A.ed-.5,1e9,{dy:12}); be.querySelector('.trv').style.opacity=eo(pr(t,A.ed-.05,.4)).toFixed(3);
+    bx.querySelector('.trv').style.opacity=eo(pr(t,A.ex-.05,.4)).toFixed(3);
+    // fica como o rastro de que existiu
+    pulse(ped,t,A.fi-.1,.03,.8); vis(ras,t,A.ra-.15,1e9,{dy:10});
+  };
+};
+
+// ================================================================== cap06 · Liberar os pop-ups (linhas 1 e 2)
+// 1 "Todo PDF do sistema abre numa aba nova, e alguns navegadores bloqueiam isso na primeira vez."  2 "Uma dica: pra
+//   liberar, clique no cadeado ao lado do endereço do site, procure Pop-ups e marque Permitir. É uma vez só."  Navegador
+//   genérico (sem logo); a aba do app tem o título real ("Pedidos | EcoSistema", usePageTitle.ts) e o endereço é o do
+//   sistema. O painel do cadeado é genérico: só "Pop-ups" e "Permitir", as palavras da fala.
+S.ilu06_popups=g=>{
+  const tit=titulo(g,'Comprovantes','Liberar os pop-ups');
+  const BX=150,BY=196,BW=980,BH=440;
+  const nav=el(`<div class="card" style="left:${BX}px;top:${BY}px;width:${BW}px;height:${BH}px;padding:0;overflow:hidden;border-radius:16px">
+      <div style="position:relative;height:54px;background:#E9ECF0">
+        <div class="row" style="position:absolute;left:16px;bottom:0;width:270px;height:42px;padding:0 16px;gap:10px;background:#fff;border-radius:12px 12px 0 0">
+          ${ic('globe',18,'#4B5563')}<span style="font-weight:700;font-size:16px;white-space:nowrap">Pedidos | EcoSistema</span></div></div>
+      <div class="row" style="height:60px;padding:0 18px;gap:14px;border-bottom:1px solid #E6E9EE">
+        <div class="row" style="flex:1;height:40px;padding:0 16px;gap:12px;border-radius:20px;background:#F2F4F7">
+          <span class="cad" style="display:inline-flex">${ic('lock',20,'#374151')}</span><span style="font-weight:600;font-size:17px;color:#374151">ecosistematecnologia.com.br</span>
+          <span class="blq" style="margin-left:auto;display:inline-flex;opacity:0">${ic('ban',20,'#8A5A00')}</span></div></div>
+      <div style="padding:34px 40px">
+        <div class="barra" style="width:34%;height:14px"></div><div class="barra" style="margin-top:22px;width:82%"></div>
+        <div class="barra" style="margin-top:14px;width:74%"></div><div class="barra" style="margin-top:14px;width:78%"></div>
+        <div class="barra" style="margin-top:34px;width:60%"></div><div class="barra" style="margin-top:14px;width:68%"></div></div></div>`,g);
+  const blq=nav.querySelector('.blq'), cad=nav.querySelector('.cad');
+  // a aba nova do PDF (bloqueada na primeira vez; abre depois de permitir)
+  const aba=el(`<div class="ab row" style="left:${BX+16+270+8}px;top:${BY+12}px;width:170px;height:42px;padding:0 16px;gap:10px;background:#fff;border-radius:12px 12px 0 0;border:2px solid transparent;border-bottom:none">
+      ${ic('file-text',18,'#2E7D57')}<span style="font-weight:700;font-size:16px">PDF</span><span class="xb" style="margin-left:auto;display:inline-flex;opacity:0">${ic('ban',18,'#8A5A00')}</span></div>`,g);
+  const xb=aba.querySelector('.xb');
+  // o painel do cadeado: Pop-ups / Permitir
+  const [cx,cy,cw,ch]=caixa(cad);
+  const pai=el(`<div class="card" style="left:${cx-14}px;top:${cy+ch+18}px;width:420px;height:150px;padding:20px 22px">
+      <div class="row" style="gap:10px">${ic('lock',18,'#4B5563')}<span style="font-weight:700;font-size:16px;color:#4B5563">ecosistematecnologia.com.br</span></div>
+      <div class="row lp" style="margin-top:18px;height:70px;padding:0 16px;gap:14px;border-radius:14px;border:1px solid #E1E8E4">
+        ${ic('app-window',24,'#374151')}<span style="font-weight:800;font-size:20px">Pop-ups</span>
+        <span class="row" style="margin-left:auto;gap:10px"><span style="font-weight:700;font-size:17px">Permitir</span>
+          <span class="sw" style="position:relative;width:52px;height:30px;border-radius:15px;background:#D7DDE3">
+            <span class="kn" style="position:absolute;left:3px;top:3px;width:24px;height:24px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(16,24,40,.3)"></span></span></span></div></div>`,g);
+  const lp=pai.querySelector('.lp'), sw=pai.querySelector('.sw'), kn=pai.querySelector('.kn');
+  const rip=el('<div class="rip"></div>',g); rip.style.left=(cx+cw/2)+'px'; rip.style.top=(cy+ch/2)+'px';
+  const cur=el(`<div class="ab" style="left:0;top:0;z-index:9">${ic('mouse-pointer-2',34,'#121212')}</div>`,g);
+  const [sx,sy,sw0,sh0]=caixa(sw);
+  let A=null;
+  return (t,J)=>{
+    if(!A)A={pd:W(1,'pdf'),ab:W(1,'aba'),bl:W(1,'bloqueiam'),cl:W(2,'clique'),ca:W(2,'cadeado'),la:W(2,'lado'),po:W(2,'pop-ups'),
+      ma:W(2,'marque'),pe:W(2,'permitir'),um:W(2,'uma',2)};
+    posTitulo(tit,t,J[0]-.6,A.pd-.35);
+    vis(nav,t,A.pd-.15,1e9,{dy:18});
+    // abre numa aba nova; alguns navegadores bloqueiam
+    vis(aba,t,A.ab-.1,1e9,{dy:10});
+    const b=eo(pr(t,A.bl-.05,.45)), ok=eo(pr(t,A.um-.1,.5));
+    xb.style.opacity=(b*(1-ok)).toFixed(3); blq.style.opacity=(b*(1-ok)).toFixed(3);
+    aba.style.borderColor=mix('#FFFFFF','#F2B63D',b*(1-ok)); aba.querySelector('span').style.opacity=1;
+    aba.style.background=b*(1-ok)>.01?mix('#FFFFFF','#FFF5DF',b*(1-ok)):'#fff';
+    // clique no cadeado ao lado do endereço: o cursor vai até ele, clica, e abre o painel
+    const pc=eio(pr(t,A.cl-.2,.75)), x=lerp(BX+560,cx+cw/2-6,pc), y=lerp(BY+330,cy+ch/2-4,pc);
+    const pc2=eio(pr(t,A.po-.1,.7)), x2=lerp(x,sx+sw0/2-6,pc2), y2=lerp(y,sy+sh0/2-4,pc2);
+    cur.style.transform=`translate(${x2.toFixed(2)}px,${y2.toFixed(2)}px)`; cur.style.opacity=eo(pr(t,A.cl-.3,.35)).toFixed(3);
+    ripple(rip,t,A.ca+.1); vis(pai,t,A.ca+.3,1e9,{dy:-10,sc:.97});
+    // procure Pop-ups e marque Permitir
+    lp.style.background=mix('#FFFFFF','#EAF8F0',eo(pr(t,A.po-.1,.4))); contorno(lp,t,A.po-.1,'#E1E8E4','#50D088');
+    const on=eio(pr(t,A.pe-.1,.35)); sw.style.background=mix('#D7DDE3','#50D088',on); kn.style.left=lerp(3,25,on).toFixed(2)+'px';
+    // é uma vez só: a aba nova abre
+    contorno(aba,t,A.um-.1,'#FFFFFF','#50D088'); pulse(aba,t,A.um,.05,.7);
+  };
+};
+
+// ------------------------------------------------------------------ capítulos
+const CAPS={};
+CAPS[0]=()=>capitulo('ilu00_pedido');
+CAPS[1]=()=>capitulo('ilu01_telas');
+CAPS[4]=()=>capitulo('ilu04_soma');
+CAPS[5]=()=>capitulo('ilu05_estornado');
+CAPS[6]=()=>capitulo('ilu06_popups');
+
+// ------------------------------------------------------------------ API para o renderizador
+let RENDER=null;
+window.setup=d=>{D=d;ST.innerHTML='';RENDER=CAPS[d.cap]();return true};
+window.R=t=>{RENDER(t);return true};
+</script></body></html>

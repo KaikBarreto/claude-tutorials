@@ -33,27 +33,28 @@ Transições faladas: 1 "Com o Cato liberado na conta da empresa"; 2 "Essa janel
 
 **Cuidados (⚠️) com "Uma dica:"**: só o administrador autoriza (cap. 2, com a mensagem do Marcos na tela, que é o ponto,
 e a saída logo depois); "caixa" é o caixa de hoje, mês se pergunta pelo mês (cap. 4); saldo × valor movimentado (cap. 5,
-Fundição: deve R$ 23.950,00, comprou R$ 61.380,00 em outubro); limites de uso por minuto e por dia, a espera resolve
+Fundição: deve R$ 14.370,00, comprou R$ 112.800,00 em outubro); limites de uso por minuto e por dia, a espera resolve
 (cap. 7, ilustração; a mensagem de limite não é encenada).
 
 ## Mundo: o que esta aula precisa
-Além do `MUNDO_FICTICIO.md` (e alinhado com os números do T10: ferro misto 6.420 kg, ferro pesado 2.180 kg, cobre mel
-212,5 kg, preço médio = preço de compra da tabela).
+Além do `MUNDO_FICTICIO.md`, com os números da junção (`MUNDO_LINHA_DO_TEMPO.md`): ferro misto 6.420 kg e ferro pesado 2.180 kg
+(T10), cobre mel 42 kg e latão 214 kg (T7), o lote de alumínio que sai pra Minas na T17 e a chaparia da carga da T18 ainda no
+pátio às 08:30; preço médio = preço de compra da tabela. A T21 herda a T13, a T14 e a T15 (as ações delas ficam antes das 08:30).
 
 | Item | Valores (fictícios) | Onde aparece |
 |---|---|---|
 | Liberação do Cato | `companies.cato_enabled` = true; `ai_consent_at` vazio em `inicio`; `profiles.cato_invite_seen_at` preenchido (Rafael e Marcos) | caps. 1 e 2 |
 | Marcos Antunes | com a permissão `action_use_cato` ("Usar o Cato (assistente de IA)"); não administrador | cap. 2 (corte) |
-| Estoque em 10/11 08:30 (15 materiais, saldo × preço de compra = valor; × preço de venda = projeção) | Ferro pesado 2.180 kg · Ferro misto 6.420 · Chaparia 3.150 · Cobre mel 212,5 · Cobre misto 148 · Fio de cobre encapado 96 · Alumínio latinha 640 · Alumínio perfil 185 · Alumínio bloco 230 · Metal amarelo (latão) 74 · Bronze 38 · Inox 260 · Bateria automotiva 3.960 · Papelão 1.850 · Plástico PET 920. **Total 20.363,5 kg, valor R$ 52.112,25, projeção R$ 64.422,35** (o "Radiador de cobre" do T3 com saldo zero, ou some dos totais) | R3, R8 e a tela "Posição de Estoque" (cap. 6: o "Total geral" tem de bater) |
-| Novembro, 1 a 10 | vendas R$ 34.215,00 (Fundição Bandeira do Vale 16.283,00; Aços Quiririm 14.380,00; Serra Fina 3.552,00); compras R$ 22.890,00; despesas R$ 6.240,00; resultado R$ 5.085,00 | R1, R6 |
-| Saldos a receber (clientes) | Fundição Bandeira do Vale R$ 23.950,00 (sugestão: 2ª parcela da venda de cobre mel de outubro, R$ 47.900,00 em 2×); Serra Fina Alumínio Reciclagem R$ 3.552,00 (venda de 05/11, 480 kg de latinha); Aços Quiririm Ltda R$ 1.475,00 (venda de 06/11, 1.180 kg de ferro pesado, a mesma do T10) | R2, R7 |
-| Bancos | "Conta Principal" R$ 41.380,00; "Conta Reserva" R$ 6.120,00 (total R$ 47.500,00); novembro: entradas R$ 29.870,00, saídas R$ 24.615,40 | R4 |
-| Caixa de hoje | caixa do Marcos aberto às 07:30 com R$ 1.500,00; duas compras em dinheiro até 08:30 (Dona Cida R$ 186,00; Valdir Pereira R$ 132,00); saldo R$ 1.182,00 | R5 |
-| Meses | setembro: compras R$ 112.870,00, vendas R$ 79.450,00 (o mês "comprou muito e vendeu pouco" do T15); outubro: compras R$ 94.215,60 (Depósito Irmãos Siqueira 31.480,00; Cooperativa Recomeço 22.640,00; Auto Peças Vale Forte 18.905,60; Valdir Pereira 12.370,00; Dona Cida 8.820,00), vendas R$ 118.940,00 (Fundição 61.380,00; Aços Quiririm 39.820,00; Serra Fina 17.740,00) | R6, R7 |
+| Estoque em 10/11 08:30 (15 materiais, saldo × preço de compra = valor; × preço de venda = projeção) | Ferro pesado 2.180 kg · Ferro misto 6.420 · Chaparia 3.750 · Cobre mel 42 · Cobre misto 148 · Fio de cobre encapado 96 · Alumínio latinha 640 · Alumínio perfil 3.385 · Alumínio bloco 2.830 · Metal amarelo (latão) 214 · Bronze 38 · Inox 260 · Bateria automotiva 3.960 · Papelão 1.850 · Plástico PET 920. **Total 26.733 kg, valor R$ 96.076,00, projeção R$ 116.689,40** (sem o "Radiador de cobre", que só existe na T3) | R3, R8 e a tela "Posição de Estoque" (cap. 6: o "Total geral" tem de bater) |
+| Novembro, 1 a 10 (regime de caixa, o padrão do `resumo_financeiro`) | vendas R$ 118.620,20 (Fundição Bandeira do Vale 57.460,00; Aços Quiririm 55.085,00; Serra Fina 4.815,20; Depósito Irmãos Siqueira 1.260,00); compras R$ 18.781,45; despesas R$ 32.234,10 (aluguel 6.800,00, folha 19.800,00, diesel 1.180,00 e as da T13 e da T14: pneu 180,00, energia 1.874,30, prensa 1.740,00, combustível 350,00, tarifas 64,90 e 6,50, água 238,40); resultado R$ 67.604,65 | R1, R6 |
+| Saldos a receber | Fundição Bandeira do Vale R$ 14.370,00 (as 3 parcelas de R$ 4.790,00 do T13); Aços Quiririm Ltda R$ 2.870,00 (o saldo do T4 depois da baixa de R$ 2.000,00 da T13); Valdir Pereira R$ 300,00 (o vale do T4); total R$ 17.540,00 | R2 |
+| Bancos | "Conta Principal" R$ 44.933,67 (o fim da T14); "Conta Secundária" R$ 82.515,00 (R$ 90.515,00 em 10/11 08:30, menos a transferência de R$ 8.000,00 da T14); "Conta Cooperativa" R$ 5.000,00 (T14); total R$ 132.448,67; novembro: entradas R$ 101.620,20 e saídas R$ 43.554,10, sem as transferências entre as contas e sem o saque para o cofre | R4 |
+| Caixa de hoje | nenhum caixa aberto em 10/11 até 08:30 (a T6 abre o #85 às 08:31); ontem, 09/11: o #83 do Marcos fechou com R$ 640,00 e o #84 do Rafael com R$ 1.250,00 | R5 |
+| Meses | setembro: compras R$ 201.784,25, vendas R$ 273.047,73 (regra do gerador: 93 % de outubro e a descarga de setembro; conferir na semente); outubro (T15): compras R$ 256.860,00, vendas R$ 269.240,00, por cliente Fundição 112.800,00, Aços Quiririm 77.460,60, Serra Fina 60.349,20 e Depósito Irmãos Siqueira 18.630,20; novembro até o dia 10: compras R$ 18.781,45, vendas R$ 118.620,20 | R6, R7 |
 
-Só o estoque é conferido na tela nesta aula (cap. 6); os demais números aparecem só nas respostas simuladas, mas ficam
-propostos para a semente, para o mundo bater com o T6, T13, T14 e T15. Se a semente consolidada tiver outros valores,
-trocar nas respostas e nas falas dos caps. 3 a 6.
+Só o estoque é conferido na tela nesta aula (cap. 6); os demais números aparecem nas respostas simuladas e saem da linha
+do tempo da junção (`MUNDO_LINHA_DO_TEMPO.md`), que o gerador do mundo confere. Se a semente der outros valores, trocar nas
+respostas e nas falas dos caps. 3 a 6.
 
 ## Gravação
 - **Rotas:** `/materiais` (o painel abre aqui), `/materiais/posicao-estoque` (pelo botão "Abrir posição de estoque").
@@ -81,54 +82,54 @@ no `response_payload`: é o que a edge `cato-assist` (`mode: "followups"`) devol
 
 R1 · "Como tá indo meu negócio esse mês?" (pergunta pronta)
 ```json
-{"toolsUsed":["resumo_financeiro"],"context":{"period":{"start":"2026-11-01","end":"2026-11-10","timezone":"America/Sao_Paulo"},"regime":"competencia","updatedAt":"<agora>"},
- "answer":"Novembro começou no azul. Olhando seus lançamentos de 1 a 10 de novembro:\n\n- **Vendas:** R$ 34.215,00\n- **Compras de material:** R$ 22.890,00\n- **Despesas:** R$ 6.240,00\n\nO resultado até aqui é de **R$ 5.085,00**. A Fundição Bandeira do Vale foi o maior cliente do período, com R$ 16.283,00 em vendas. Ainda faltam 20 dias pro mês fechar.",
+{"toolsUsed":["resumo_financeiro"],"context":{"period":{"start":"2026-11-01","end":"2026-11-10","timezone":"America/Sao_Paulo"},"regime":"caixa","updatedAt":"<agora>"},
+ "answer":"Novembro começou no azul. Olhando seus lançamentos de 1 a 10 de novembro:\n\n- **Vendas:** R$ 118.620,20\n- **Compras:** R$ 18.781,45\n- **Despesas:** R$ 32.234,10\n\nO resultado até aqui é de **R$ 67.604,65**, no regime de caixa. A Fundição Bandeira do Vale foi o maior cliente do período, com R$ 57.460,00 em vendas. Ainda faltam 20 dias pro mês fechar.",
  "followups":["Compara com outubro","Quais despesas tive esse mês?","Qual material mais vendi?"]}
 ```
 R2 · "Quem tá me devendo?"
 ```json
 {"toolsUsed":["saldos_parceiros"],"context":{"updatedAt":"<agora>"},
- "answer":"Hoje, **3 clientes** têm saldo em aberto com você, somando **R$ 28.977,00**:\n\n1. **Fundição Bandeira do Vale:** R$ 23.950,00\n2. **Serra Fina Alumínio Reciclagem:** R$ 3.552,00\n3. **Aços Quiririm Ltda:** R$ 1.475,00\n\nA Fundição concentra 83% do que você tem a receber.",
- "chart":{"type":"barra","title":"Saldo a receber por cliente","valueFormat":"currency","points":[{"label":"Fundição Bandeira do Vale","value":23950},{"label":"Serra Fina Alumínio Reciclagem","value":3552},{"label":"Aços Quiririm Ltda","value":1475}]},
+ "answer":"Hoje, **3 parceiros** têm saldo a seu favor, somando **R$ 17.540,00**:\n\n1. **Fundição Bandeira do Vale:** R$ 14.370,00\n2. **Aços Quiririm Ltda:** R$ 2.870,00\n3. **Valdir Pereira:** R$ 300,00\n\nA Fundição concentra 82% do que você tem a receber.",
+ "chart":{"type":"barra","title":"Saldo a receber por parceiro","valueFormat":"currency","points":[{"label":"Fundição Bandeira do Vale","value":14370},{"label":"Aços Quiririm Ltda","value":2870},{"label":"Valdir Pereira","value":300}]},
  "followups":["Pra quem eu tô devendo?","Quais contas vencem essa semana?","Quanto a Fundição me pagou em outubro?"]}
 ```
 R3 · "Quanto tenho em estoque agora?"
 ```json
 {"toolsUsed":["estoque_atual"],"context":{"period":{"start":"2026-11-10","end":"2026-11-10"},"updatedAt":"<agora>"},
- "answer":"Agora você tem **20.363,5 kg** de material no pátio. A custo médio, esse estoque vale **R$ 52.112,25**; pela tabela de venda, a projeção é de **R$ 64.422,35**.\n\nOs materiais que mais pesam no valor:\n\n1. **Bateria automotiva:** 3.960 kg, R$ 12.276,00\n2. **Cobre mel:** 212,5 kg, R$ 9.031,25\n3. **Cobre misto:** 148 kg, R$ 5.328,00\n\nSozinha, a bateria automotiva responde por quase um quarto do valor do estoque.",
- "followups":["Lista meu estoque em tabela","Quanto vale meu cobre?","O que está parado há mais tempo?"]}
+ "answer":"Agora você tem **26.733 kg** de material no pátio. A custo médio, esse estoque vale **R$ 96.076,00**; pela tabela de venda, a projeção é de **R$ 116.689,40**.\n\nOs materiais que mais pesam no valor:\n\n1. **Alumínio perfil:** 3.385 kg, R$ 30.126,50\n2. **Alumínio bloco:** 2.830 kg, R$ 20.093,00\n3. **Bateria automotiva:** 3.960 kg, R$ 12.276,00\n\nSó o alumínio perfil e o bloco já passam da metade do valor do estoque.",
+ "followups":["Lista meu estoque em tabela","Quanto vale meu alumínio?","O que está parado há mais tempo?"]}
 ```
 R4 · "Qual o saldo das minhas contas no banco?"
 ```json
 {"toolsUsed":["resumo_bancario"],"context":{"period":{"start":"2026-11-01","end":"2026-11-10"},"updatedAt":"<agora>"},
- "answer":"Agora, suas contas no banco somam **R$ 47.500,00**:\n\n- **Conta Principal:** R$ 41.380,00\n- **Conta Reserva:** R$ 6.120,00\n\nEsse é o saldo de agora. Em novembro, até hoje, entraram **R$ 29.870,00** e saíram **R$ 24.615,40** nas contas, sem contar as transferências entre elas.",
+ "answer":"Agora, suas contas no banco somam **R$ 132.448,67**:\n\n- **Conta Principal:** R$ 44.933,67\n- **Conta Secundária:** R$ 82.515,00\n- **Conta Cooperativa:** R$ 5.000,00\n\nEsse é o saldo de agora. Em novembro, até hoje, entraram **R$ 101.620,20** e saíram **R$ 43.554,10** nas contas, sem contar as transferências entre elas.",
  "followups":["Quais pagamentos saíram do banco esse mês?","Quanto tenho no cofre?","Compara as entradas com outubro"]}
 ```
 R5 · "Como tá meu caixa hoje?"
 ```json
 {"toolsUsed":["caixa"],"context":{"period":{"start":"2026-11-10","end":"2026-11-10"},"updatedAt":"<agora>"},
- "answer":"Hoje tem **1 caixa aberto**, o do Marcos Antunes, aberto às 07:30 com R$ 1.500,00 de troco. Até agora saíram **R$ 318,00** em duas compras pagas em dinheiro, e o caixa está com **R$ 1.182,00**. Essas são todas as sessões de caixa de hoje.",
- "followups":["Quanto comprei hoje?","Quanto tenho no cofre?","Mostra os caixas de ontem"]}
+ "answer":"Hoje ainda **não tem caixa aberto**: ninguém abriu o caixa até agora. Ontem, dia 9, foram dois: o do Marcos Antunes fechou com **R$ 640,00** e o do Rafael Nogueira com **R$ 1.250,00**.",
+ "followups":["Quanto tenho no cofre?","Quanto comprei ontem?","Mostra os caixas da semana"]}
 ```
 R6 · "Compras e vendas dos últimos três meses"
 ```json
 {"toolsUsed":["compras_vendas_mensais"],"context":{"period":{"start":"2026-09-01","end":"2026-11-10"},"updatedAt":"<agora>"},
- "answer":"Olhando suas compras e vendas dos últimos três meses:\n\n- **Setembro:** comprou R$ 112.870,00 e vendeu R$ 79.450,00\n- **Outubro:** comprou R$ 94.215,60 e vendeu R$ 118.940,00\n- **Novembro (até o dia 10):** comprou R$ 22.890,00 e vendeu R$ 34.215,00\n\nSetembro foi mês de encher o pátio: as compras passaram as vendas em R$ 33.420,00. Em outubro, as vendas viraram o jogo.",
- "chart":{"type":"linha","title":"Compras e vendas por mês","valueFormat":"currency","series":[{"name":"Compras","points":[{"label":"set/26","value":112870},{"label":"out/26","value":94215.6},{"label":"nov/26","value":22890}]},{"name":"Vendas","points":[{"label":"set/26","value":79450},{"label":"out/26","value":118940},{"label":"nov/26","value":34215}]}]},
- "followups":["Qual foi meu resultado em outubro?","Por que setembro teve mais compra?","Compara com agosto"]}
+ "answer":"Olhando suas compras e vendas dos últimos três meses:\n\n- **Setembro:** comprou R$ 201.784,25 e vendeu R$ 273.047,73\n- **Outubro:** comprou R$ 256.860,00 e vendeu R$ 269.240,00\n- **Novembro (até o dia 10):** comprou R$ 18.781,45 e vendeu R$ 118.620,20\n\nEm outubro, as compras quase alcançaram as vendas: o pátio encheu de ferro pesado. Em novembro, esse ferro saiu, e as vendas passaram longe das compras.",
+ "chart":{"type":"linha","title":"Compras e vendas por mês","valueFormat":"currency","series":[{"name":"Compras","points":[{"label":"set/26","value":201784.25},{"label":"out/26","value":256860},{"label":"nov/26","value":18781.45}]},{"name":"Vendas","points":[{"label":"set/26","value":273047.73},{"label":"out/26","value":269240},{"label":"nov/26","value":118620.2}]}]},
+ "followups":["Qual foi meu resultado em outubro?","Por que outubro teve tanta compra?","Compara com agosto"]}
 ```
 R7 · "Pra quem eu mais vendi em outubro?" (`top_parceiros` não tem rótulo "Consultei...")
 ```json
 {"toolsUsed":["top_parceiros"],"context":{"period":{"start":"2026-10-01","end":"2026-10-31"},"updatedAt":"<agora>"},
- "answer":"Em outubro, olhando suas vendas, quem mais comprou de você foi:\n\n1. **Fundição Bandeira do Vale:** R$ 61.380,00\n2. **Aços Quiririm Ltda:** R$ 39.820,00\n3. **Serra Fina Alumínio Reciclagem:** R$ 17.740,00\n\nA Fundição ficou com mais da metade das vendas do mês: 52%.",
- "chart":{"type":"barra","title":"Vendas por cliente em outubro","valueFormat":"currency","points":[{"label":"Fundição Bandeira do Vale","value":61380},{"label":"Aços Quiririm Ltda","value":39820},{"label":"Serra Fina Alumínio Reciclagem","value":17740}]},
+ "answer":"Em outubro, olhando suas vendas, quem mais comprou de você foi:\n\n1. **Fundição Bandeira do Vale:** R$ 112.800,00\n2. **Aços Quiririm Ltda:** R$ 77.460,60\n3. **Serra Fina Alumínio Reciclagem:** R$ 60.349,20\n\nA Fundição ficou com 42% das vendas do mês.",
+ "chart":{"type":"barra","title":"Vendas por cliente em outubro","valueFormat":"currency","points":[{"label":"Fundição Bandeira do Vale","value":112800},{"label":"Aços Quiririm Ltda","value":77460.6},{"label":"Serra Fina Alumínio Reciclagem","value":60349.2}]},
  "followups":["Quanto a Fundição me deve?","Qual material mais vendi em outubro?","Compara com setembro"]}
 ```
 R8 · "Lista meu estoque em tabela"
 ```json
 {"toolsUsed":["estoque_atual"],"context":{"period":{"start":"2026-11-10","end":"2026-11-10"},"updatedAt":"<agora>"},
- "answer":"Aqui está o seu estoque de agora, do maior valor para o menor. São **15 materiais**, somando **20.363,5 kg** e **R$ 52.112,25** a custo médio.",
- "table":{"title":"Estoque em 10/11/2026","columns":["Material","Quantidade (kg)","Valor em estoque"],"rows":[["Bateria automotiva",3960,12276],["Cobre mel",212.5,9031.25],["Cobre misto",148,5328],["Ferro misto",6420,4815],["Alumínio latinha",640,3968],["Chaparia",3150,2205],["Ferro pesado",2180,2071],["Metal amarelo (latão)",74,2035],["Plástico PET",920,1748],["Fio de cobre encapado",96,1728],["Alumínio perfil",185,1646.5],["Alumínio bloco",230,1633],["Inox",260,1508],["Bronze",38,1102],["Papelão",1850,1017.5]]},
+ "answer":"Aqui está o seu estoque de agora, do maior valor para o menor. São **15 materiais**, somando **26.733 kg** e **R$ 96.076,00** a custo médio.",
+ "table":{"title":"Estoque em 10/11/2026","columns":["Material","Quantidade (kg)","Valor em estoque"],"rows":[["Alumínio perfil",3385,30126.5],["Alumínio bloco",2830,20093],["Bateria automotiva",3960,12276],["Metal amarelo (latão)",214,5885],["Cobre misto",148,5328],["Ferro misto",6420,4815],["Alumínio latinha",640,3968],["Chaparia",3750,2625],["Ferro pesado",2180,2071],["Cobre mel",42,1785],["Plástico PET",920,1748],["Fio de cobre encapado",96,1728],["Inox",260,1508],["Bronze",38,1102],["Papelão",1850,1017.5]]},
  "followups":["Quanto vale meu estoque pela tabela de venda?","Me mostra num gráfico","O que está parado há mais tempo?"]}
 ```
 R9 · "Emite a nota da venda pra Fundição Bandeira do Vale" (pedido fora do que ele faz: vira orientação; caminho

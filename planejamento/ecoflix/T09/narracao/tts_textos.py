@@ -18,7 +18,7 @@ Clicando na linha, ela abre com os materiais, o peso, o preço e como foi pago. 
 No fim de cada linha fica o menu do pedido. Daqui a pouco a gente usa ele.""",
 3: """A bateria da Auto Peças é de vinte e um de outubro. Então, primeiro o período: Mês passado.
 Em Filtros, a busca acha pelo nome do cliente ou fornecedor, pelo número do pedido, pelo operador ou pela placa. Digito Vale Forte.
-No nome da Auto Peças só tem uma compra de chaparia. A bateria não está aqui.
+No nome da Auto Peças, nenhuma compra de bateria em outubro. A bateria não está aqui.
 Então eu procuro pelo que eu sei da compra. Tipo, Compras. Material, Bateria automotiva. E a forma de pagamento, Pix.
 Achou: vinte e um de outubro, duzentos e quarenta quilos de bateria, setecentos e quarenta e quatro reais. Só que no nome do Depósito Irmãos Siqueira.
 O pedido saiu no fornecedor errado. Repara que cada filtro vira uma etiqueta aqui em cima, e o Limpar todos tira tudo de uma vez.""",

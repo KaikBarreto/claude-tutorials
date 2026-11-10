@@ -62,7 +62,7 @@ Condições de Pagamento"; 10→11 "Na aba Aparência"; 11→12 "Pra fechar, a p
 | Login do Rafael | rafael@reciclavalemetais.example; senha do mundo `ReciclaVale#26`; nova senha do cap04 `PatioTaubate#26` (só no cap04) |
 | Endereço | CEP 12086-410, Rua das Oficinas, 1250, Galpão 2, Jardim Vale do Sol, Taubaté/SP, IBGE 3554102; fuso America/Sao_Paulo; na prévia, sem o complemento (`address_visibility_settings.complemento = false`) |
 | Logo e ícone | `recicla-vale-logo.png` (horizontal, ~600×240, fundo transparente) e `recicla-vale-icone.png` (1:1, 128×128): marca fictícia (símbolo próprio + "Recicla Vale Metais"), sem lembrar o símbolo de reciclagem do EcoSistema nem marca real |
-| Frase do comprovante | "Obrigado pela parceria! Atendemos de segunda a sexta, das 7h às 17h, e aos sábados, das 7h às 12h." (98 caracteres), "No comprovante" ligado, centralizada |
+| Frase do comprovante | "Obrigado pela parceria! Atendemos de segunda a sexta, das 7h às 17h." (68 caracteres; junção: sem sábado, como o histórico), "No comprovante" ligado, centralizada |
 | Numeração | padrão: "Nenhum (segue direto)", "#{NUM}", contagem única (o T1 mostra as opções e volta ao padrão) |
 | Condição de pagamento | "30/60/90 dias", padrão, ativa: 30 dias 33,33%, 60 dias 33,33%, 90 dias 33,34% |
 | Usabilidade (sem mudança) | "Multi-Caixas" ligado; cofre ligado; "Formato do Comprovante" Térmico nos dois; "Forma de Pagamento Padrão" "Perguntar sempre"; "Permitir Edição de Itens" e "Múltiplas Tabelas de Preço" ligados; arredondar desligado; "Impureza/Tara Desconta no Valor" ligado; "Lucro no Comprovante" desligado; "Exigir cliente/fornecedor no Ticket de Pesagem" desligado; termos não invertidos |

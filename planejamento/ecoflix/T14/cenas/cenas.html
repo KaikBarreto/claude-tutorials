@@ -1,0 +1,637 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<!-- EcoFlix T14 "Bancos, cofre e conciliação bancária": ilustrações de conceito. Cópia do kit perfis/ecoflix/cenas/cenas_ecoflix.html
+     (estilo, utilidades e desenhos genéricos iguais; os dois exemplos do kit saíram) com as cenas da aula:
+       CAPS[0] O banco e o sistema · CAPS[3] O cofre e o banco · CAPS[4] O dinheiro muda de lugar · CAPS[5] Cada linha com um par
+       CAPS[6] O extrato em OFX · CAPS[10] Data e centavos · CAPS[11] Ignorar o par / Ignorar com cuidado (duas janelas)
+       CAPS[12] Dois Pix iguais · CAPS[14] Os três números
+     Cada cena vive na janela das âncoras do ANC (o mesmo do ilustracoes.json): de W(de) - 0,3 s até W(ate, fim) + cauda.
+     Tempos estimados em tempos/capNN.json (tempos_estimados.py --tts ../narracao/tts_textos.py --cap N); quando a voz
+     chegar, as cenas se ajustam às palavras. Renderizar só o trecho:
+       node render_cenas.cjs <n> <capNN.json> <saida.mp4> --html cenas.html --de <W(de) - 0,3> --ate <W(ate, fim) + cauda>
+     Extras desta aula (fora do kit, os mesmos da T13): WS (W com a ocorrência exata), jan, cores de status do app (vermelho
+     de saída e "Vencida", violeta do "Saldo", cinza de "Pendente"/"Ignorada"). Rótulos do app conferidos no T14/inventario.md;
+     contas sem banco nem logo (ícone genérico), como o mundo pede. -->
+<style>
+@font-face{font-family:M;font-weight:500;src:url(../../../web/fonts/montserrat-latin-500-normal.woff2) format('woff2')}
+@font-face{font-family:M;font-weight:600;src:url(../../../web/fonts/montserrat-latin-600-normal.woff2) format('woff2')}
+@font-face{font-family:M;font-weight:700;src:url(../../../web/fonts/montserrat-latin-700-normal.woff2) format('woff2')}
+@font-face{font-family:M;font-weight:800;src:url(../../../web/fonts/montserrat-latin-800-normal.woff2) format('woff2')}
+@font-face{font-family:M;font-weight:500;src:url(../../../web/fonts/montserrat-latin-ext-500-normal.woff2) format('woff2');unicode-range:U+0100-024F}
+@font-face{font-family:M;font-weight:700;src:url(../../../web/fonts/montserrat-latin-ext-700-normal.woff2) format('woff2');unicode-range:U+0100-024F}
+/* ---------------------------------------------------------------- paleta EcoFlix (marca: acento #50D088, escuro #121212)
+   --v  acento: preenchimentos, barras, contornos de destaque (nunca texto sobre branco: contraste baixo)
+   --ve verde escuro: texto e ícone verde sobre branco (contraste 5,0)   --vc verde claro: fundo de ícone/resultado
+   --a  âmbar: o SEGUNDO conceito da cena (ex.: competência x caixa)     --ae texto âmbar (5,9)   --ac âmbar claro
+   --t  texto (o escuro da marca)   --c texto secundário (4,8)   --l linhas   --e painel escuro (mostrador) */
+:root{--v:#50D088;--ve:#2E7D57;--vc:#EAF8F0;--vm:#A9E9C6;--a:#F2B63D;--ae:#8A5A00;--ac:#FFF5DF;
+  --t:#121212;--c:#6B7280;--l:#E6E9EE;--e:#121212}
+*{box-sizing:border-box;margin:0;padding:0;transition:none!important;animation:none!important}
+html,body{width:1280px;height:800px;overflow:hidden;background:#fff}
+body{font-family:M,sans-serif;color:var(--t);-webkit-font-smoothing:antialiased}
+#st{position:absolute;inset:0;overflow:hidden;background:
+  radial-gradient(1100px 650px at 92% -12%,rgba(80,208,136,.09),transparent 62%),
+  radial-gradient(900px 600px at -12% 112%,rgba(80,208,136,.06),transparent 60%),#fff}
+.g{position:absolute;left:0;top:0;width:1280px;height:800px;transform-origin:640px 400px}
+.ab{position:absolute}
+.row{display:flex;align-items:center}
+/* título da cena: área (kicker) + conceito; sozinho fica grande no centro e sobe quando o desenho entra */
+.kick{font-weight:700;font-size:15px;letter-spacing:.3em;color:var(--ve);text-transform:uppercase}
+.h{font-weight:800;font-size:46px;letter-spacing:-.01em;line-height:1.1}
+/* cartão, chip, etiqueta, ícone */
+.card{position:absolute;background:#fff;border:1px solid #E1E8E4;border-radius:18px;
+  box-shadow:0 18px 40px rgba(16,24,40,.10),0 3px 8px rgba(16,24,40,.06)}
+.ic{display:inline-flex;align-items:center;justify-content:center;flex:none}
+.ic svg{width:100%;height:100%}
+.ico{display:flex;align-items:center;justify-content:center;flex:none;border-radius:14px;background:var(--vc);color:var(--ve)}
+.ico.a{background:var(--ac);color:var(--ae)}
+.tag{display:inline-flex;align-items:center;gap:8px;padding:9px 18px;border-radius:999px;font-weight:800;font-size:20px;white-space:nowrap}
+.tag.v{background:var(--vc);color:var(--ve)} .tag.a{background:var(--ac);color:var(--ae)}
+.lbl{font-weight:700;font-size:17px;color:var(--c)}
+.num{font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+.op{position:absolute;width:60px;height:60px;border-radius:50%;background:#F2F4F7;color:var(--t);display:flex;
+  align-items:center;justify-content:center;font-weight:800;font-size:34px;line-height:1}
+/* mostrador da balança (painel escuro, número no acento) */
+.most{background:var(--e);border-radius:16px;padding:16px 22px 18px;box-shadow:0 16px 34px rgba(16,24,40,.22)}
+.most .ml{position:relative;height:20px;font-weight:700;font-size:15px;letter-spacing:.22em;color:#A9E9C6;text-transform:uppercase}
+.most .ml span{position:absolute;left:0;top:0;white-space:nowrap}
+.most .mn{margin-top:6px;font-weight:800;font-size:44px;color:var(--v);font-variant-numeric:tabular-nums;white-space:nowrap}
+.rip{position:absolute;width:56px;height:56px;margin:-28px 0 0 -28px;border-radius:50%;border:3px solid var(--v);opacity:0}
+</style>
+<style>
+/* ---------------------------------------------------------------- T14 (como na T13): cores de status do app, no tom do kit (texto >= 4,5)
+   --r  vermelho de "A Pagar" e "Vencida" (texto 6,6 no branco)   --rc fundo claro   --rm contorno
+   --p  violeta do chip "Saldo" (7,1)   --pc fundo claro   --pm contorno     --g cinza de "Pendente" (7,6)   --gc fundo
+   Classe do cinza: .cz (o .g do kit é o grupo da cena, absoluto em 1280x800: não usar "g" em chip ou ícone). */
+:root{--r:#B42318;--rc:#FDECEA;--rm:#F2A49C;--p:#6D28D9;--pc:#F1EAFE;--pm:#C4B1F5;--g:#4B5563;--gc:#EEF1F4}
+.tag.r{background:var(--rc);color:var(--r)} .tag.p{background:var(--pc);color:var(--p)} .tag.cz{background:var(--gc);color:var(--g)}
+.tag.sm{font-size:16px;padding:7px 13px;gap:6px}
+.ico.r{background:var(--rc);color:var(--r)} .ico.cz{background:var(--gc);color:var(--g)} .ico.p{background:var(--pc);color:var(--p)}
+.card.b2{border-width:2px}
+.bdg{position:absolute;border-radius:50%;display:flex;align-items:center;justify-content:center;flex:none}
+.cel{position:absolute;display:flex;align-items:center;justify-content:center}
+.hd{position:absolute;text-align:center;font-weight:700;font-size:17px;color:var(--ve)}
+</style>
+</head>
+<body><div id="st"></div>
+<script>
+// ------------------------------------------------------------------ utilidades (as do cenas_modelo.html + as da EcoFlix)
+const cl=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
+const eo=x=>1-Math.pow(1-cl(x),3);
+const eio=x=>{x=cl(x);return x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2};
+const pr=(t,a,d=.45)=>cl((t-a)/d);
+const lerp=(a,b,p)=>a+(b-a)*p;
+const $=s=>document.querySelector(s);
+const ST=document.getElementById('st');
+function el(html,parent=ST){const d=document.createElement('div');d.innerHTML=html.trim();let f=null;for(const n of [...d.childNodes]){parent.appendChild(n);if(!f&&n.nodeType===1)f=n}return f}
+function grupo(){return el('<div class="g"></div>')}
+function ic(n,px,cor){const s=(window.ICONS||{})[n]||'';return `<span class="ic" style="width:${px}px;height:${px}px;${cor?'color:'+cor:''}">${s}</span>`}
+function hex(c){c=c.replace('#','');return[0,2,4].map(i=>parseInt(c.substr(i,2),16))}
+function mix(a,b,p){const A=hex(a),B=hex(b);return `rgb(${A.map((v,i)=>Math.round(v+(B[i]-v)*cl(p))).join(',')})`}
+// aparece em a, some em b (opacidade + leve subida + escala): a entrada e a saída suaves de tudo
+function vis(e,t,a,b=1e9,o={}){
+  const din=o.din??.5,dout=o.dout??.4,dy=o.dy??16,dx=o.dx??0,sc=o.sc??.985;
+  const p=eo(pr(t,a,din)),q=1-eo(pr(t,b,dout)),op=Math.min(p,q);
+  e.style.opacity=op.toFixed(4);e.style.visibility=op<=.001?'hidden':'visible';
+  const s=sc+(1-sc)*p - (1-q)*(1-sc);
+  e.style.transform=`translate(${((1-p)*dx).toFixed(2)}px,${((1-p)*dy-(1-q)*dy*.5).toFixed(2)}px) scale(${s.toFixed(4)})`;
+  return op;
+}
+function ripple(r,t,a){const p=pr(t,a,.7);r.style.opacity=(p>0&&p<1)?(.6*(1-p)).toFixed(3):0;r.style.transform=`scale(${(.4+2.0*eo(p)).toFixed(3)})`}
+function pulse(e,t,a,amp=.045,dur=.9){const p=pr(t,a,dur);e.style.scale=(p>0&&p<1)?(1+amp*Math.sin(Math.PI*p)).toFixed(4):''}
+function digita(e,txt,t,a,b){const p=cl((t-a)/Math.max(.05,b-a));const n=Math.round(p*txt.length);
+  const car=(p>0&&p<1)||(Math.floor(t*2.2)%2===0&&p<1.2&&t>=a)?'<span style="color:var(--v);font-weight:500">|</span>':'';
+  e.innerHTML=(txt.slice(0,n)||'')+(t>=a&&t<b+.8?car:'');}
+// EcoFlix: números e dinheiro no jeito brasileiro; contagem suave de um número; traço que se desenha; arco; contorno
+const NF=new Intl.NumberFormat('pt-BR');
+const kg=v=>NF.format(Math.round(v))+' kg';
+const brl=v=>'R$ '+v.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
+function conta(e,t,a,d,v0,v1,fmt=kg){const p=eo(pr(t,a,d));const s=fmt(lerp(v0,v1,p));if(e.textContent!==s)e.textContent=s;return p}
+function traco(p,t,a,d=.8){if(!p._L){p._L=p.getTotalLength();p.style.strokeDasharray=p._L}const q=eio(pr(t,a,d));p.style.strokeDashoffset=(p._L*(1-q)).toFixed(2);p.style.opacity=q>0?1:0;return q}
+function arco(e,t,a,d,x0,y0,x1,y1,h=-80,rot=0){const p=eio(pr(t,a,d));const x=lerp(x0,x1,p),y=lerp(y0,y1,p)+h*4*p*(1-p);
+  e.style.transform=`translate(${x.toFixed(2)}px,${y.toFixed(2)}px) rotate(${(rot*p).toFixed(2)}deg)`;return p}
+function contorno(e,t,a,de,para,d=.45){e.style.borderColor=mix(de,para,eo(pr(t,a,d)))}
+// título padrão da cena: grande no centro enquanto está sozinho, sobe para o alto quando o desenho entra (em "sobe")
+function titulo(g,kick,txt){return el(`<div class="ab" style="left:0;top:0;width:1280px;text-align:center">
+  <div class="kick">${kick}</div><div class="h" style="margin-top:12px">${txt}</div></div>`,g)}
+function posTitulo(e,t,a,sobe,sai=1e9){vis(e,t,a,sai,{dy:14});const p=eio(pr(t,sobe,.7));
+  e.style.top=lerp(318,46,p).toFixed(2)+'px';e.style.scale=lerp(1.12,1,p).toFixed(4)}
+
+// ------------------------------------------------------------------ tempos da fala (capNN.json do proc.py ou estimado)
+let D=null;
+const norm=w=>w.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9%./-]+/g,'');
+function W(linha,palavra,n=1,campo='s'){
+  const alvo=norm(palavra);let k=0;
+  for(const w of D.words){if(w.linha===linha&&norm(w.w).replace(/[.,]$/,'')===alvo){k++;if(k===n)return w[campo]}}
+  for(const w of D.words){if(w.linha===linha&&norm(w.w).startsWith(alvo)){k++;if(k>=n)return w[campo]}}
+  console.warn('palavra não achada',linha,palavra);return L(linha);
+}
+const L=i=>(D.linhas[i]||{s:0}).s, LE=i=>(D.linhas[i]||{e:D.dur}).e;
+
+// ------------------------------------------------------------------ desenhos genéricos (sem marca)
+// caminhão de lado (frente para a direita), com a carga de sucata em pedaços (.pd) que podem ser descarregados
+function caminhao(){
+  const pd=[ // [forma, cor, centro da peça, destino no monte atrás do caminhão (deslocamento do centro e giro)]
+    ['<polygon points="28,90 44,52 88,42 100,90"/>','#8C5A3C',[64,66],[-224,148,6]],
+    ['<polygon points="82,90 102,36 146,48 154,90"/>','#6F7983',[118,63],[-318,122,12]],
+    ['<rect x="118" y="44" width="112" height="16" rx="8" transform="rotate(-8 174 52)"/>','#9AA3AD',[174,52],[-334,98,-18]],
+    ['<polygon points="148,90 170,54 212,44 232,90"/>','#A0694A',[190,67],[-425,148,-8]],
+    ['<polygon points="210,90 232,40 276,54 286,90"/>','#4F5861',[248,65],[-373,120,-10]],
+    ['<polygon points="258,90 282,60 308,66 312,90"/>','#8A949E',[285,75],[-375,148,4]],
+    ['<g><circle cx="192" cy="64" r="19"/><circle cx="192" cy="64" r="7" fill="#8A949E"/></g>','#5E6670',[192,64],[-242,155,200]],
+    ['<polygon points="40,70 60,50 84,64 64,86"/>','#B07A55',[62,68],[-307,100,30]]];
+  const pecas=pd.map(([f,c,[cx,cy],[dx,dy,r]])=>`<g class="pd" data-cx="${cx}" data-cy="${cy}" data-dx="${dx}" data-dy="${dy}" data-r="${r}" fill="${c}">${f}</g>`).join('');
+  const roda=x=>`<g class="roda" data-x="${x}" transform="translate(${x},196)"><circle r="26" fill="#1B1F24"/><circle r="12" fill="#9AA3AD"/>
+    <rect x="-2.5" y="-23" width="5" height="10" rx="2" fill="#5B636C"/><rect x="-2.5" y="13" width="5" height="10" rx="2" fill="#5B636C"/></g>`;
+  return `<svg viewBox="0 0 500 230" width="500" height="230" style="overflow:visible">
+    <g class="carga">${pecas}</g>
+    <rect x="18" y="86" width="304" height="88" rx="6" fill="#7E8994"/>
+    <rect x="16" y="82" width="308" height="11" rx="4" fill="#68727D"/>
+    <g stroke="#707A85" stroke-width="3">${[78,138,198,258].map(x=>`<line x1="${x}" y1="98" x2="${x}" y2="168"/>`).join('')}</g>
+    <path d="M334,176 L334,76 Q334,64 346,64 L412,64 L462,116 L472,121 Q480,124 480,134 L480,176 Z" fill="#2F3640"/>
+    <path d="M348,78 L406,78 L444,116 L348,116 Z" fill="#D7E5ED"/>
+    <rect x="470" y="142" width="10" height="11" rx="2" fill="#F2B63D"/>
+    <rect x="12" y="170" width="472" height="15" rx="4" fill="#23282E"/>
+    ${roda(92)}${roda(158)}${roda(416)}
+  </svg>`;
+}
+
+// ------------------------------------------------------------------ T14: extras desta aula (fora do kit; os mesmos da T13)
+// WS: o W do kit exigindo a ocorrência exata (o W cai para "começa com" e pode pegar outra palavra sem avisar)
+function WS(linha,palavra,n=1,campo='s'){const alvo=norm(palavra);let k=0;
+  for(const w of D.words){if(w.linha===linha&&norm(w.w).replace(/[.,]$/,'')===alvo){k++;if(k===n)return w[campo]}}
+  console.warn('palavra não achada',linha,palavra,n);return W(linha,palavra,n,campo)}
+// âncoras de cada cena (o ilustracoes.json sai daqui): a janela é [W(de) - 0,3 s, W(ate, fim) + cauda]
+const ANC=/*ANC*/{
+"0":[{"id":"ilu00_banco_sistema","de":[0,"Oi",1],"ate":[1,"aqui",1],"cauda":0.6,
+      "resumo":"o extrato do banco e o sistema mostram saldos diferentes; conferindo linha por linha, a diferença zera",
+      "mostra":["Extrato do banco","Sistema","Saldo","R$ 44.933,47","R$ 46.382,57","Diferença","R$ 0,00"]}],
+"3":[{"id":"ilu03_cofre_banco","de":[0,"Agora",1],"ate":[0,"empresa",2],"cauda":0.6,
+      "resumo":"o cofre é o dinheiro vivo (guardado e nos caixas abertos), o banco é o dinheiro nas contas; os dois juntos dão o total da empresa",
+      "mostra":["DINHEIRO (COFRE)","Disponível no cofre","Caixa de Marcos Antunes","Banco","Conta Principal","Conta Secundária","Conta Cooperativa","Total da empresa"]}],
+"4":[{"id":"ilu04_lugar","de":[4,"Uma",1],"ate":[4,"DRE",1],"cauda":0.6,
+      "resumo":"transferência e saque só mudam o dinheiro de pote: o total da empresa não muda e nada entra na DRE",
+      "mostra":["Total da empresa","Conta Secundária","Conta Principal","DINHEIRO (COFRE)","Transferência","R$ 8.000,00","Saque","R$ 2.000,00","Não muda","Fora da DRE"]}],
+"5":[{"id":"ilu05_conciliar","de":[0,"Com",1],"ate":[2,"certo",1],"cauda":0.6,
+      "resumo":"conciliar é dar a cada linha do extrato um par no sistema; com tudo pareado a diferença é zero; a linha que sobra (a tarifa) vira lançamento",
+      "mostra":["Extrato do banco","Lançamentos do sistema","03/11","05/11","09/11","10/11","−R$ 2.250,00","−R$ 6.800,00","−R$ 180,00","−R$ 1.874,30","Diferença","R$ 0,00","−R$ 11.104,30","TARIFA PACOTE SERVICOS","−R$ 64,90","Tarifas"]}],
+"6":[{"id":"ilu06_ofx","de":[0,"extrato",1],"ate":[0,"OFX",2],"cauda":0.6,
+      "resumo":"no site ou app do banco: Extrato, Período, Exportar em OFX (o PDF é só pra ler); o arquivo vai para Downloads",
+      "mostra":["Extrato","Período","01/11 a 10/11","Exportar","OFX","PDF","Pra ler","Pra conciliar","Extrato_20261101_20261110.ofx","Downloads"]}],
+"10":[{"id":"ilu10_centavos","de":[1,"venda",1],"ate":[1,"fora",1],"cauda":0.6,
+      "resumo":"a venda foi registrada no dia 3 por R$ 4.815,20; o Pix caiu no dia 9 sem os centavos: data e valor diferentes",
+      "mostra":["Extrato do banco","09/11","PIX RECEBIDO SERRA FINA ALUMINIO","+R$ 4.815,00","Venda","Serra Fina Alumínio Reciclagem","03/11","463 kg de alumínio perfil × R$ 10,40","R$ 4.815,20","Pagou depois","dif. −R$ 0,20"]}],
+"11":[{"id":"ilu11_ignorar","de":[1,"Nenhuma",1],"ate":[1,"nada",1],"cauda":0.6,
+      "resumo":"a tarifa e o estorno se anulam (R$ 0,00): Ignorar tira as duas da fila sem criar lançamento",
+      "mostra":["Extrato do banco","09/11","TARIFA AVULSA","−R$ 12,00","ESTORNO TARIFA AVULSA","+R$ 12,00","R$ 0,00","Ignorada","Lançamentos do sistema","Nada criado"]},
+     {"id":"ilu11_tarifa","de":[4,"Uma",1],"ate":[4,"libera",1],"cauda":0.6,
+      "resumo":"ignorar conta como resolvido: o par que se anula pode; uma tarifa de verdade ignorada deixa a diferença aberta e não libera o fechamento",
+      "mostra":["Pode ignorar","TARIFA AVULSA","ESTORNO TARIFA AVULSA","−R$ 12,00","+R$ 12,00","Ignorada","Tarifa de verdade","TARIFA PACOTE SERVICOS","−R$ 64,90","Diferença","Finalizar conciliação"]}],
+"12":[{"id":"ilu12_repetidos","de":[1,"Aqui",1],"ate":[1,"sempre",1],"cauda":0.6,
+      "resumo":"dois Pix de R$ 380,00 no mesmo dia podem casar com duas compras; casar com a errada deixa a outra pendente",
+      "mostra":["Extrato do banco","Lançamentos do sistema","06/11","PIX ENVIADO COOPERATIVA RECOMECO","PIX ENVIADO AUTO PECAS VALE FORTE","−R$ 380,00","Cooperativa Recomeço","Auto Peças Vale Forte","Compra · 200 kg de plástico PET","Compra · 400 kg de ferro pesado","Pendente"]}],
+"14":[{"id":"ilu14_tres_numeros","de":[1,"Diferença",1],"ate":[1,"pendente",1],"cauda":0.6,
+      "resumo":"a Diferença é a distância entre o Saldo do banco e o Saldo conciliado; com as linhas resolvidas a balança nivela e a diferença fica zero, em verde",
+      "mostra":["Saldo do banco","Saldo conciliado","Diferença","R$ 0,00","Nenhuma pendente"]}]
+}/*FIM*/;
+function jan(cap,id){const a=ANC[cap].find(x=>x.id===id);return[WS(a.de[0],a.de[1],a.de[2])-.3,WS(a.ate[0],a.ate[1],a.ate[2],'e')+a.cauda]}
+// posição absoluta por transform (o elemento fica em left:0;top:0); opacidade direta; destaque de borda + anel de luz
+function pos(e,x,y,s=1,r=0){e.style.transform=`translate(${x.toFixed(2)}px,${y.toFixed(2)}px) rotate(${r.toFixed(2)}deg) scale(${s.toFixed(4)})`}
+function op(e,v){v=cl(v);e.style.opacity=v.toFixed(4);e.style.visibility=v<=.001?'hidden':'visible';return v}
+const VERDE=['#50D088','rgba(80,208,136,.24)'], AMBAR=['#F2B63D','rgba(242,182,61,.28)'], VERM=['#E5484D','rgba(229,72,77,.20)'], BASE='#E1E8E4';
+function anel(e,p,cor=VERDE,de=BASE,px=5,sombra=true){p=cl(p);e.style.borderColor=mix(de,cor[0],p);
+  e.style.boxShadow=`0 0 0 ${(px*p).toFixed(2)}px ${cor[1]}`+(sombra?',0 18px 40px rgba(16,24,40,.10),0 3px 8px rgba(16,24,40,.06)':'')}
+const sobe=(t,a,b)=>eo(pr(t,a,.4))*(1-eo(pr(t,b,.4)));   // vai a 1 em a e volta a 0 em b
+// título: já inteiro no 1º quadro da janela (entra 0,6 s antes) e só sobe depois dele (nunca antes de ini + 0,15 s)
+function posT(e,t,ini,sobe){posTitulo(e,t,ini-.6,Math.max(ini+.15,sobe))}
+const sinal=v=>(v<0?'−':'+')+brl(Math.abs(v));            // valor com sinal, como a tabela da conciliação (verde +, vermelho −)
+const corSinal=v=>v<0?'var(--r)':'var(--ve)';
+// barras cinza no lugar do texto (linha sem descrição na cena)
+const risco=(w,h=10,c='#E6E9EE')=>`<div style="width:${w}px;height:${h}px;border-radius:${h/2}px;background:${c};flex:none"></div>`;
+
+const CAPS={};
+// ------------------------------------------------------------------ CAPS[0] · O banco e o sistema (abertura)
+// fala 0 "Oi! Neste tutorial a gente vai fazer o extrato do banco bater com o sistema da Recicla Vale Metais, linha por
+// linha, até a diferença zerar." 1 "Sabe quando o banco mostra um saldo, o sistema mostra outro, e ninguém sabe de onde vem
+// a diferença? É isso que a gente resolve aqui." Saldos do rodapé logo depois do import (T14/plano.md): banco R$ 44.933,47,
+// sistema R$ 46.382,57; no fim os dois batem (o conciliado chega ao do banco) e a Diferença fica R$ 0,00.
+CAPS[0]=()=>{
+  const [INI]=jan(0,'ilu00_banco_sistema');
+  const BANCO=44933.47, SISTEMA=46382.57;                 // números do mundo (junção T4 × T13: conferir antes do render)
+  const g=grupo(); const tit=titulo(g,'Conciliação','O banco e o sistema');
+  const LW=[[190,70],[150,90],[210,60],[130,80],[170,70]];
+  const doc=(x,icn,cls,nome)=>el(`<div class="card b2" style="left:${x}px;top:196px;width:400px;height:410px;padding:26px 28px">
+      <div class="row" style="gap:14px"><div class="ico ${cls}" style="width:52px;height:52px">${ic(icn,28)}</div><div style="font-weight:800;font-size:24px">${nome}</div></div>
+      ${LW.map((l,i)=>`<div class="ab row" style="left:16px;top:${102+i*34}px;width:364px;height:30px;padding:0 12px;border-radius:8px;justify-content:space-between">${risco(l[0])}${risco(l[1])}</div>`).join('')}
+      <div class="ab" style="left:28px;top:290px"><div class="lbl">Saldo</div><div class="num" style="font-size:36px;margin-top:4px">${brl(BANCO)}</div></div></div>`,g);
+  const banco=doc(90,'landmark','cz','Extrato do banco'), sist=doc(790,'monitor','','Sistema');
+  const linB=[...banco.querySelectorAll('.row.ab')], linS=[...sist.querySelectorAll('.row.ab')];
+  const vB=banco.lastElementChild, vS=sist.lastElementChild, numS=vS.querySelector('.num');
+  const liga=el(`<svg class="ab" style="left:0;top:0;overflow:visible" width="1280" height="800"><path d="M490 400 L790 400" fill="none" stroke="var(--v)" stroke-width="4" stroke-linecap="round"/></svg>`,g).querySelector('path');
+  const q=el(`<div class="bdg" style="left:595px;top:355px;width:90px;height:90px;background:var(--ac);border:3px solid #F2B63D;color:var(--ae);font-weight:800;font-size:50px">?</div>`,g);
+  const dif=el(`<div class="ab" style="left:500px;top:374px;width:280px;text-align:center"><div class="tag v" style="border:2px solid var(--v)">Diferença ${brl(0)}</div></div>`,g);
+
+  return t=>{
+    const tEx=WS(0,'extrato'), tSi=WS(0,'sistema'), tLi=WS(0,'linha',1), tDi=WS(0,'diferenca'), tSa=WS(1,'saldo'), tOu=WS(1,'outro'),
+          tNi=WS(1,'ninguem'), tDi2=WS(1,'diferenca'), tRe=WS(1,'resolve');
+    posT(tit,t,INI,tEx-.6);
+    vis(banco,t,tEx-.1,1e9,{dx:-16,dy:0}); vis(sist,t,tSi-.1,1e9,{dx:16,dy:0});
+    // linha por linha: as linhas dos dois lados acendem juntas, uma de cada vez
+    [linB,linS].forEach(L=>L.forEach((e,i)=>{const p=sobe(t,tLi+i*.24,tLi+i*.24+.3);e.style.background=`rgba(80,208,136,${(.16*p).toFixed(3)})`}));
+    // o banco mostra um saldo, o sistema mostra outro
+    vis(vB,t,tSa-.1,1e9,{dy:10}); vis(vS,t,tOu-.1,1e9,{dy:10});
+    // a diferença: o ponto de interrogação aparece, cresce em "ninguém sabe" e vira "Diferença R$ 0,00" quando resolve
+    const fim=eo(pr(t,tRe,.5));
+    const vq=vis(q,t,tDi-.05,1e9,{sc:.6,dy:0}); op(q,vq*(1-fim));
+    const bate=a=>(t>a&&t<a+.8)?.08*Math.sin(Math.PI*pr(t,a,.8)):0;
+    q.style.scale=((1+.22*eo(pr(t,tNi,.5)))*(1+bate(tDi))*(1+bate(tDi2))).toFixed(4);
+    traco(liga,t,tRe-.1,.6); vis(dif,t,tRe+.15,1e9,{sc:.85,dy:0});
+    conta(numS,t,tRe+.1,1.0,SISTEMA,BANCO,brl); anel(banco,fim); anel(sist,fim);
+  };
+};
+
+// ------------------------------------------------------------------ CAPS[3] · O cofre e o banco
+// fala 0 "Agora o cofre. Ele é todo o dinheiro vivo da empresa: o que está guardado e o que está nos caixas abertos. O banco é
+// o dinheiro nas contas. Os dois juntos dão o total da empresa." Rótulos do app: "DINHEIRO (COFRE)", "Disponível no cofre",
+// "Caixa de {operador}" (o caixa aberto, tracejado: hoje não tem nenhum). Contas do mundo depois do cap02: Conta Principal,
+// Conta Secundária e Conta Cooperativa. Barra do total proporcional (cofre R$ 18.500,00; bancos R$ 69.593,47), sem número.
+CAPS[3]=()=>{
+  const [INI]=jan(3,'ilu03_cofre_banco');
+  const COFRE=18500, BANCOS=39593.47+25000+5000;
+  const g=grupo(); const tit=titulo(g,'Cofre','O cofre e o banco');
+  const cofre=el(`<div class="card b2" style="left:70px;top:170px;width:520px;height:340px;padding:24px 26px">
+      <div class="row" style="gap:14px"><div class="ico" style="width:52px;height:52px">${ic('vault',28)}</div><div style="font-weight:800;font-size:22px">DINHEIRO (COFRE)</div></div></div>`,g);
+  const disp=el(`<div class="ab row" style="left:26px;top:104px;width:464px;height:92px;padding:0 20px;gap:14px;border-radius:14px;background:var(--vc);border:2px solid var(--vm)">
+      <div class="ico" style="width:46px;height:46px;background:#fff">${ic('banknote',26)}</div><div style="font-weight:800;font-size:20px;color:var(--ve)">Disponível no cofre</div></div>`,cofre);
+  const cxa=el(`<div class="ab row" style="left:26px;top:212px;width:464px;height:92px;padding:0 20px;gap:14px;border-radius:14px;border:2px dashed #CBD2D9">
+      <div class="ico cz" style="width:46px;height:46px">${ic('wallet',24)}</div><div style="font-weight:800;font-size:20px;color:#4B5563">Caixa de Marcos Antunes</div></div>`,cofre);
+  const banco=el(`<div class="card b2" style="left:690px;top:170px;width:520px;height:340px;padding:24px 26px">
+      <div class="row" style="gap:14px"><div class="ico a" style="width:52px;height:52px">${ic('landmark',28)}</div><div style="font-weight:800;font-size:22px">Banco</div></div></div>`,g);
+  const CT=[['Conta Principal','#3B82F6'],['Conta Secundária','#8B5CF6'],['Conta Cooperativa','#14B8A6']];
+  const contas=CT.map(([n,c],i)=>el(`<div class="ab row" style="left:26px;top:${100+i*72}px;width:464px;height:60px;padding:0 18px;gap:14px;border-radius:12px;background:#FAFBFC;border:1px solid #EEF1F4">
+      <div style="width:14px;height:14px;border-radius:50%;background:${c};flex:none"></div><div style="font-weight:800;font-size:19px">${n}</div></div>`,banco));
+  const W1=1140*COFRE/(COFRE+BANCOS);
+  const rot=el('<div class="ab" style="left:70px;top:548px;font-weight:800;font-size:20px">Total da empresa</div>',g);
+  const bar=el('<div class="ab" style="left:70px;top:586px;width:1140px;height:44px;border-radius:14px;background:#F2F4F7"></div>',g);
+  const sC=el(`<div class="ab" style="left:70px;top:586px;width:${W1.toFixed(1)}px;height:44px;border-radius:14px 0 0 14px;background:var(--v)"></div>`,g);
+  const sB=el(`<div class="ab" style="left:${(70+W1).toFixed(1)}px;top:586px;width:${(1140-W1).toFixed(1)}px;height:44px;border-radius:0 14px 14px 0;background:var(--a)"></div>`,g);
+
+  return t=>{
+    const tCo=WS(0,'cofre'), tVi=WS(0,'vivo'), tGu=WS(0,'guardado'), tCx=WS(0,'caixas'), tBa=WS(0,'banco'), tCt=WS(0,'contas'),
+          tJu=WS(0,'juntos'), tTo=WS(0,'total');
+    posT(tit,t,INI,tCo-.6);
+    vis(cofre,t,tCo-.05,1e9,{dy:16}); anel(cofre,eo(pr(t,tVi-.1,.45)));
+    vis(disp,t,tGu-.1,1e9,{dx:-10,dy:0}); vis(cxa,t,tCx-.1,1e9,{dx:-10,dy:0});
+    vis(banco,t,tBa-.1,1e9,{dy:16}); anel(banco,eo(pr(t,tBa,.45)),AMBAR);
+    contas.forEach((e,i)=>vis(e,t,tCt-.15+i*.12,1e9,{dx:-10,dy:0}));
+    // os dois juntos: as duas partes descem para a barra do total
+    vis(bar,t,tJu-.2,1e9,{dy:0,sc:.99}); vis(sC,t,tJu,1e9,{dy:-40,sc:1}); vis(sB,t,tJu+.15,1e9,{dy:-40,sc:1});
+    vis(rot,t,tTo-.1,1e9,{dx:-10,dy:0}); pulse(bar,t,tTo+.1,.015,.8); pulse(sC,t,tTo+.1,.015,.8); pulse(sB,t,tTo+.1,.015,.8);
+  };
+};
+
+// ------------------------------------------------------------------ CAPS[4] · O dinheiro muda de lugar
+// fala 4 "Uma dica: transferência entre contas suas, saque e depósito só mudam o dinheiro de lugar. A empresa não fica mais
+// rica nem mais pobre, então nada disso entra na DRE." As duas que a aula faz: transferência de R$ 8.000,00 da Conta
+// Secundária para a Conta Principal e saque de R$ 2.000,00 da Conta Principal para o cofre. Potes e total sem número
+// (proporcionais: Secundária R$ 25.000,00; Principal R$ 39.243,47 depois do combustível; cofre R$ 18.560,00). A tarifa do
+// saque (R$ 6,50) fica de fora: a fala desta linha não a cita e ela é despesa (o roteiro pedia a moeda saindo).
+CAPS[4]=()=>{
+  const [INI]=jan(4,'ilu04_lugar');
+  const TR=8000, SQ=2000, S0=[25000,39243.47,18560], MAX=50000;
+  const g=grupo(); const tit=titulo(g,'Movimentações','O dinheiro muda de lugar');
+  const COR=['#8B5CF6','#3B82F6','#50D088'], NOME=['Conta Secundária','Conta Principal','DINHEIRO (COFRE)'], PX=[140,510,880], PW=260;
+  const rot=el('<div class="ab" style="left:140px;top:158px;font-weight:800;font-size:20px">Total da empresa</div>',g);
+  const nm=el(`<div class="ab" style="left:900px;top:152px;width:240px;text-align:right"><div class="tag v sm">${ic('equal',16)}Não muda</div></div>`,g);
+  const barra=el('<div class="ab" style="left:140px;top:192px;width:1000px;height:44px;border-radius:14px;overflow:hidden;background:#F2F4F7"></div>',g);
+  const seg=COR.map(c=>el(`<div class="ab" style="left:0;top:0;height:44px;background:${c}"></div>`,barra));
+  const potes=NOME.map((n,i)=>el(`<div class="card b2" style="left:${PX[i]}px;top:286px;width:${PW}px;height:330px;padding:20px 20px">
+      <div class="ab" style="left:20px;top:20px;width:${PW-44}px;height:224px;border-radius:16px;background:#F7F8FA;border:2px solid #E6E9EE;overflow:hidden">
+        <div class="ab" style="left:0;bottom:0;width:100%;background:${COR[i]};opacity:.85"></div></div>
+      <div class="ab" style="left:0;top:262px;width:${PW-4}px;text-align:center;font-weight:800;font-size:19px">${n}</div></div>`,g));
+  const nivel=potes.map(p=>p.firstElementChild.firstElementChild);
+  const ficha=(v)=>el(`<div class="ab" style="left:0;top:0"><div class="tag" style="background:#fff;border:2px solid #121212;color:#121212;font-size:18px;padding:7px 14px">${brl(v)}</div></div>`,g);
+  const fT=ficha(TR), fS=ficha(SQ);
+  const rotulo=(x,txt)=>el(`<div class="ab" style="left:${x-100}px;top:250px;width:200px;text-align:center;font-weight:700;font-size:17px;color:#4B5563">${txt}</div>`,g);
+  const rT=rotulo((PX[0]+PX[1]+PW)/2,'Transferência'), rS=rotulo((PX[1]+PX[2]+PW)/2,'Saque');
+  const dre=el(`<div class="ab" style="left:0;top:650px;width:1280px;text-align:center"><div class="tag a">${ic('ban',20)}Fora da DRE</div></div>`,g);
+
+  return t=>{
+    const tUm=WS(4,'Uma'), tTr=WS(4,'transferencia'), tSq=WS(4,'saque'), tLu=WS(4,'lugar'), tRi=WS(4,'rica'), tPo=WS(4,'pobre'), tDR=WS(4,'DRE');
+    posT(tit,t,INI,tUm-.1);
+    const ent=Math.max(tUm+.2,INI+.75);                             // o total fica no caminho do título: entra depois que ele subiu
+    vis(rot,t,ent,1e9,{dx:-10,dy:0}); vis(barra,t,ent+.05,1e9,{dy:0,sc:.99});
+    potes.forEach((p,i)=>vis(p,t,tUm+.3+i*.1,1e9,{dy:18}));
+    // a transferência: R$ 8.000,00 sai da Secundária e cai na Principal; o saque: R$ 2.000,00 da Principal para o cofre
+    const pT=eio(pr(t,tTr,1.0)), pS=eio(pr(t,tSq,1.0));
+    const cx=i=>PX[i]+PW/2-62, y0=290;
+    // a ficha sai do pote, viaja e afunda no pote de destino (vira nível)
+    const voa=(f,a,i,j,p)=>{const k=eio(pr(t,a+1.0,.45)); arco(f,t,a,1.0,cx(i),y0,cx(j),y0,-90);
+      if(k>0) f.style.transform=`translate(${cx(j)}px,${(y0+60*k).toFixed(2)}px) scale(${(1-.4*k).toFixed(4)})`; op(f,p>0?Math.min(1,p*5)*(1-k):0)};
+    voa(fT,tTr,0,1,pT); voa(fS,tSq,1,2,pS);
+    vis(rT,t,tTr-.05,1e9,{dy:8}); vis(rS,t,tSq-.05,1e9,{dy:8});
+    const a=eo(cl((pT-.75)/.25)), b=eo(cl((pS-.75)/.25)), s0=eo(cl(pT/.25)), s1=eo(cl(pS/.25));
+    const v=[S0[0]-TR*s0, S0[1]+TR*a-SQ*s1, S0[2]+SQ*b], tot=S0[0]+S0[1]+S0[2];
+    nivel.forEach((e,i)=>{e.style.height=(224*v[i]/MAX).toFixed(1)+'px'});
+    let x=0; seg.forEach((e,i)=>{const w=1000*v[i]/tot; e.style.left=x.toFixed(1)+'px'; e.style.width=w.toFixed(1)+'px'; x+=w;});
+    // a empresa não fica mais rica nem mais pobre: o total não muda; nada disso entra na DRE
+    vis(nm,t,tRi-.1,1e9,{sc:.85,dy:0}); pulse(barra,t,tPo,.02,.8); vis(dre,t,tDR-.15,1e9,{dy:10});
+  };
+};
+
+// ------------------------------------------------------------------ CAPS[5] · Cada linha com um par
+// fala 0 "Com as contas em dia, a conciliação. Conciliar é conferir cada linha do extrato do banco com um lançamento do
+// sistema." 1 "Quando toda linha tem par, a diferença entre o saldo do banco e o do sistema chega a zero." 2 "E a linha que
+// sobra mostra o que ficou sem lançar, como uma tarifa que ninguém viu. É isso que deixa o fechamento do mês certo."
+// Linhas reais do extrato da aula (T14/plano.md: 1, 2, 7 e 11) e os lançamentos que já existem; a quinta, "TARIFA PACOTE
+// SERVICOS" (−R$ 64,90), entra na hora em que a fala diz "a linha que sobra" (assim o zero da linha 1 é verdadeiro) e ganha o
+// lançamento novo na categoria "Tarifas". A Diferença é a soma das linhas ainda sem par (como o rodapé do app).
+CAPS[5]=()=>{
+  const [INI]=jan(5,'ilu05_conciliar');
+  const LIN=[['03/11',-2250],['05/11',-6800],['09/11',-180],['10/11',-1874.30]], TAR=['09/11',-64.90];
+  const g=grupo(); const tit=titulo(g,'Conciliação','Cada linha com um par');
+  const cart=(x,icn,cls,nome)=>el(`<div class="card b2" style="left:${x}px;top:150px;width:470px;height:420px;padding:22px 24px">
+      <div class="row" style="gap:12px"><div class="ico ${cls}" style="width:44px;height:44px">${ic(icn,24)}</div><div style="font-weight:800;font-size:21px">${nome}</div></div></div>`,g);
+  const cB=cart(90,'landmark','cz','Extrato do banco'), cS=cart(720,'monitor','','Lançamentos do sistema');
+  const linha=(pai,d,v,meio)=>el(`<div class="ab row" style="left:20px;top:0;width:426px;height:56px;padding:0 14px;gap:12px;border-radius:12px;background:#FAFBFC;border:2px solid #EEF1F4">
+      <div class="tag cz sm">${d}</div>${meio}<div class="num" style="margin-left:auto;font-size:18px;color:${corSinal(v)}">${sinal(v)}</div></div>`,pai);
+  const Y=i=>88+i*64;
+  const lB=LIN.map(([d,v],i)=>{const e=linha(cB,d,v,risco(120+(i%2)*40));e.style.top=Y(i)+'px';return e});
+  const lS=LIN.map(([d,v],i)=>{const e=linha(cS,d,v,risco(150-(i%2)*30));e.style.top=Y(i)+'px';return e});
+  const tB=linha(cB,TAR[0],TAR[1],'<div style="font-weight:800;font-size:15px;white-space:nowrap">TARIFA PACOTE SERVICOS</div>'); tB.style.top=Y(4)+'px';
+  const vaga=el(`<div class="ab" style="left:20px;top:${Y(4)}px;width:426px;height:56px;border-radius:12px;border:2px dashed #CBD2D9"></div>`,cS);
+  const tS=linha(cS,TAR[0],TAR[1],'<div class="tag a sm">Tarifas</div>'); tS.style.top=Y(4)+'px';
+  const fios=el(`<svg class="ab" style="left:0;top:0;overflow:visible" width="1280" height="800">${[0,1,2,3,4].map(i=>`<path d="M560 ${150+Y(i)+28} L720 ${150+Y(i)+28}"
+      fill="none" stroke="var(--v)" stroke-width="4" stroke-linecap="round"/>`).join('')}</svg>`,g);
+  const fio=[...fios.querySelectorAll('path')];
+  const plac=el(`<div class="card b2" style="left:470px;top:604px;width:340px;height:96px;padding:0 26px;display:flex;align-items:center;justify-content:space-between">
+      <div style="font-weight:800;font-size:20px">Diferença</div><div class="num" style="font-size:28px">${brl(0)}</div></div>`,g);
+  const pv=plac.lastElementChild, TOT=LIN.reduce((s,l)=>s+l[1],0);
+
+  return t=>{
+    const tCo=WS(0,'conciliacao'), tLi=WS(0,'linha'), tLa=WS(0,'lancamento'), tQu=WS(1,'Quando'), tZe=WS(1,'zero'),
+          tSo=WS(2,'sobra'), tSl=WS(2,'lancar'), tTa=WS(2,'tarifa'), tDx=WS(2,'deixa'), tCe=WS(2,'certo');
+    posT(tit,t,INI,tCo-.6);
+    vis(cB,t,tCo-.05,1e9,{dx:-14,dy:0}); vis(cS,t,tCo+.1,1e9,{dx:14,dy:0});
+    lB.forEach((e,i)=>vis(e,t,tLi+i*.15,1e9,{dx:-10,dy:0})); lS.forEach((e,i)=>vis(e,t,tLa+i*.15,1e9,{dx:10,dy:0}));
+    // quando toda linha tem par, a diferença chega a zero: cada traço desconta a linha do placar
+    const tl=i=>tQu+.3+i*.9; let dif=TOT;
+    LIN.forEach(([d,v],i)=>{const p=traco(fio[i],t,tl(i),.5); dif-=v*eo(cl(p)); anel(lB[i],p,VERDE,'#EEF1F4',3,false); anel(lS[i],p,VERDE,'#EEF1F4',3,false);});
+    vis(plac,t,tQu,1e9,{dy:14});
+    // a linha que sobra: a tarifa entra sem par; o lançamento novo (Tarifas) fecha a conta
+    vis(tB,t,tSo-.15,1e9,{dx:-10,dy:0}); const pt=eo(pr(t,tSo-.15,.5)); dif+=TAR[1]*pt; anel(tB,pt*(1-eo(pr(t,tDx+.6,.4))),AMBAR,'#EEF1F4',3,false);
+    pulse(tB,t,tTa,.04,.8); vis(vaga,t,tSl-.1,1e9,{dy:0,sc:.95});
+    vis(tS,t,tDx-.1,1e9,{dx:10,dy:0}); const pf=traco(fio[4],t,tDx+.3,.5); dif-=TAR[1]*eo(cl(pf));
+    anel(tS,pf,VERDE,'#EEF1F4',3,false); if(pf>0) anel(tB,pf,VERDE,'#EEF1F4',3,false);
+    const ok=Math.abs(dif)<.005, s=(ok?brl(0):sinal(Math.round(dif*100)/100));
+    if(pv.textContent!==s) pv.textContent=s;
+    pv.style.color=ok?'var(--ve)':(t>=tSo-.15?'var(--ae)':'var(--r)'); anel(plac,cl(eo(pr(t,tZe,.4))*(1-eo(pr(t,tSo-.15,.3)))+eo(pr(t,tCe-.2,.4))));
+  };
+};
+
+// ------------------------------------------------------------------ CAPS[6] · O extrato em OFX
+// fala 0 "O extrato sai do site ou do app do banco. Você abre o extrato, escolhe o período e exporta no formato OFX. O PDF serve
+// pra ler; pra conciliar, é o OFX." Janela genérica de banco (sem nome, sem logo); o arquivo do mundo
+// "Extrato_20261101_20261110.ofx" (01/11 a 10/11) vai para "Downloads".
+CAPS[6]=()=>{
+  const [INI]=jan(6,'ilu06_ofx');
+  const g=grupo(); const tit=titulo(g,'Conciliação','O extrato em OFX');
+  const jan6=el(`<div class="card b2" style="left:100px;top:156px;width:1080px;height:330px;overflow:hidden">
+      <div class="row" style="height:44px;padding:0 18px;gap:8px;background:#F4F6F8;border-bottom:1px solid #E6E9EE">
+        ${['#E5484D','#F2B63D','#50D088'].map(c=>`<div style="width:12px;height:12px;border-radius:50%;background:${c};opacity:.75"></div>`).join('')}
+        <div class="ico cz" style="width:28px;height:28px;margin-left:12px;border-radius:8px">${ic('landmark',16)}</div></div></div>`,g);
+  const passo=(i,icn,nome,sub)=>el(`<div class="ab" style="left:${34+i*262}px;top:84px;width:220px;height:206px;border-radius:16px;border:2px solid #E1E8E4;background:#fff;padding:22px 20px">
+      <div class="ico" style="width:46px;height:46px">${ic(icn,26)}</div><div style="margin-top:14px;font-weight:800;font-size:21px">${nome}</div>${sub||''}</div>`,jan6);
+  const p1=passo(0,'file-text','Extrato'), p2=passo(1,'calendar-range','Período','<div class="lbl" style="margin-top:6px">01/11 a 10/11</div>'),
+        p3=passo(2,'download','Exportar');
+  const p4=el(`<div class="ab" style="left:${34+3*262}px;top:84px;width:220px;height:206px;border-radius:16px;border:2px solid #E1E8E4;background:#fff;padding:18px 18px"></div>`,jan6);
+  const fmt=(y,nome,cls)=>el(`<div class="ab row" style="left:16px;top:${y}px;width:184px;height:76px;border-radius:12px;padding:0 14px;gap:10px;border:2px solid #E1E8E4">
+      <div class="ico ${cls}" style="width:38px;height:38px">${ic('file-code',20)}</div><div><div style="font-weight:800;font-size:20px">${nome}</div><div class="lbl" style="font-size:15px;height:18px"></div></div></div>`,p4);
+  const fO=fmt(18,'OFX',''), fP=fmt(108,'PDF','cz');
+  const [lO,lP]=[fO,fP].map(e=>e.querySelector('.lbl')); lO.textContent='Pra conciliar'; lP.textContent='Pra ler';
+  const setas=[0,1,2].map(i=>el(`<div class="ab ic" style="left:${34+i*262+226}px;top:170px;width:30px;height:30px;color:#9AA3AD">${ic('arrow-right',30)}</div>`,jan6));
+  const pasta=el(`<div class="card b2" style="left:700px;top:530px;width:480px;height:170px;padding:18px 24px">
+      <div class="row" style="gap:14px"><div class="ico a" style="width:48px;height:48px">${ic('folder-down',26)}</div><div style="font-weight:800;font-size:22px">Downloads</div></div></div>`,g);
+  const arq=el(`<div class="ab" style="left:0;top:0"><div class="tag v" style="border:2px solid var(--v);font-size:17px">${ic('file-down',18)}Extrato_20261101_20261110.ofx</div></div>`,g);
+
+  return t=>{
+    const tSi=WS(0,'site'), tAb=WS(0,'abre'), tPe=WS(0,'periodo'), tXp=WS(0,'exporta'), tO1=WS(0,'OFX',1), tPd=WS(0,'PDF'),
+          tLe=WS(0,'ler'), tCo=WS(0,'conciliar'), tO2=WS(0,'OFX',2);
+    posT(tit,t,INI,tSi-.6);
+    vis(jan6,t,tSi-.1,1e9,{dy:16});
+    vis(p1,t,tAb-.1,1e9,{dy:12}); vis(setas[0],t,tPe-.35,1e9,{dx:-8,dy:0}); vis(p2,t,tPe-.1,1e9,{dy:12});
+    vis(setas[1],t,tXp-.35,1e9,{dx:-8,dy:0}); vis(p3,t,tXp-.1,1e9,{dy:12}); vis(setas[2],t,tO1-.45,1e9,{dx:-8,dy:0});
+    vis(p4,t,tO1-.25,1e9,{dy:12}); vis(fO,t,tO1-.1,1e9,{dy:8}); vis(fP,t,tPd-.1,1e9,{dy:8});
+    // o PDF é pra ler (fica cinza); o OFX é o de conciliar (acende)
+    const cz=eo(pr(t,tLe-.1,.45)); fP.style.opacity=(parseFloat(fP.style.opacity)*(1-.45*cz)).toFixed(4); vis(lP,t,tLe-.1,1e9,{dy:6});
+    vis(lO,t,tCo-.1,1e9,{dy:6}); anel(fO,eo(pr(t,tCo,.45)),VERDE,'#E1E8E4',4,false);
+    // o arquivo desce para Downloads
+    vis(pasta,t,tO2-.6,1e9,{dy:14});
+    const pa=arco(arq,t,tO2-.15,.9,820,380,724,616,-40); op(arq,pa>0?Math.min(1,pa*4):0); anel(pasta,eo(pr(t,tO2+.6,.4)),AMBAR);
+  };
+};
+
+// ------------------------------------------------------------------ CAPS[10] · Data e centavos
+// fala 1 "É que a venda foi registrada no dia três, por quatro mil oitocentos e quinze reais e vinte. A Serra Fina pagou depois
+// e deixou os centavos de fora." Linha 6 do extrato (09/11, +R$ 4.815,00) × venda de 03/11 (463 kg de alumínio perfil ×
+// R$ 10,40 = R$ 4.815,20); o selo da busca do app é "dif. −R$ 0,20".
+CAPS[10]=()=>{
+  const [INI]=jan(10,'ilu10_centavos');
+  const PIX=4815.00, VENDA=4815.20;
+  const g=grupo(); const tit=titulo(g,'Conciliação','Data e centavos');
+  const cB=el(`<div class="card b2" style="left:70px;top:210px;width:470px;height:250px;padding:24px 26px">
+      <div class="row" style="gap:12px"><div class="ico cz" style="width:44px;height:44px">${ic('landmark',24)}</div><div style="font-weight:800;font-size:21px">Extrato do banco</div></div>
+      <div class="tag cz sm" style="margin-top:20px">09/11</div>
+      <div style="margin-top:12px;font-weight:800;font-size:16px;white-space:nowrap">PIX RECEBIDO SERRA FINA ALUMINIO</div>
+      <div class="num" style="margin-top:10px;font-size:30px;color:var(--ve)">${sinal(PIX)}</div></div>`,g);
+  const cV=el(`<div class="card b2" style="left:740px;top:210px;width:470px;height:250px;padding:24px 26px">
+      <div class="row" style="gap:12px"><div class="ico" style="width:44px;height:44px">${ic('receipt-text',24)}</div>
+        <div><div style="font-weight:800;font-size:21px">Venda</div><div class="lbl" style="font-size:16px">Serra Fina Alumínio Reciclagem</div></div></div>
+      <div class="tag cz sm" style="margin-top:16px">03/11</div>
+      <div class="lbl" style="margin-top:10px;font-size:16px">463 kg de alumínio perfil × ${brl(10.40)}</div>
+      <div class="num" style="margin-top:8px;font-size:30px">${brl(VENDA)}</div></div>`,g);
+  const [dB,dV]=[cB,cV].map(c=>c.querySelector('.tag')); const vV=cV.lastElementChild;
+  const liga=el(`<svg class="ab" style="left:0;top:0;overflow:visible" width="1280" height="800"><path d="M740 335 L540 335 M556 325 L540 335 L556 345" fill="none" stroke="#9AA3AD"
+      stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>`,g).querySelector('path');
+  const dep=el('<div class="ab" style="left:540px;top:286px;width:200px;text-align:center;font-weight:700;font-size:16px;color:#4B5563">Pagou depois</div>',g);
+  const dif=el(`<div class="ab" style="left:440px;top:500px;width:400px;text-align:center"><div class="tag a" style="border:2px solid #F2B63D">dif. −${brl(VENDA-PIX)}</div></div>`,g);
+
+  return t=>{
+    const tVe=WS(1,'venda'), tDi=WS(1,'dia'), tPo=WS(1,'por'), tSe=WS(1,'Serra'), tPa=WS(1,'pagou'), tCe=WS(1,'centavos');
+    posT(tit,t,INI,tVe-.2);
+    const ent=Math.max(tVe-.05,INI+.7);                             // os cartões ficam no caminho do título: entram depois que ele subiu
+    vis(cB,t,ent,1e9,{dx:-14,dy:0}); vis(cV,t,ent+.15,1e9,{dx:14,dy:0});
+    // no dia três: as duas datas acendem (são diferentes)
+    const pd=eo(pr(t,tDi,.45)); [dB,dV].forEach(e=>{e.style.background=mix('#EEF1F4','#FFF5DF',pd);e.style.color=mix('#4B5563','#8A5A00',pd);e.style.boxShadow=`0 0 0 ${(3*pd).toFixed(2)}px rgba(242,182,61,.45)`});
+    pulse(dV,t,tDi,.12,.8); pulse(dB,t,tDi+.15,.12,.8); pulse(vV,t,tPo,.05,.8);
+    // pagou depois: o traço vai da venda para o Pix; os centavos de fora
+    traco(liga,t,tPa-.1,.6); vis(dep,t,tPa,1e9,{dy:8}); pulse(cB,t,tSe,.02,.7);
+    vis(dif,t,tCe-.1,1e9,{sc:.85,dy:0}); anel(cV,eo(pr(t,tCe,.45)),AMBAR); anel(cB,eo(pr(t,tCe,.45)),AMBAR);
+  };
+};
+
+// ------------------------------------------------------------------ CAPS[11] · Ignorar o par / Ignorar com cuidado
+// fala 1 "Nenhuma das duas precisa virar lançamento. Pra isso existe o Ignorar: a linha sai da fila sem criar nada."
+// fala 4 "Uma dica: ignorar conta como resolvido. Ignore só o que não mexeu no dinheiro da empresa, como esse par. Uma tarifa
+// de verdade ignorada deixa a diferença aberta, e o fechamento não libera." Linhas 9 e 10 do extrato (TARIFA AVULSA −R$ 12,00
+// e ESTORNO TARIFA AVULSA +R$ 12,00) e, na dica, a linha 8 (TARIFA PACOTE SERVICOS −R$ 64,90) ignorada só como exemplo:
+// a Diferença fica nela e "Finalizar conciliação" não libera. Duas cenas, cada uma na sua janela (as linhas 2 e 3 são tela).
+CAPS[11]=()=>{
+  const [A0]=jan(11,'ilu11_ignorar'), [B0]=jan(11,'ilu11_tarifa');
+  const g=grupo();
+  // linha do extrato (sem a data: as três são de 09/11) e o selo "Ignorada" ao lado, como na coluna da conciliação
+  const linha=(pai,y,txt,v)=>el(`<div class="ab row" style="left:20px;top:${y}px;width:344px;height:64px;padding:0 16px;gap:10px;border-radius:14px;background:#FAFBFC;border:2px solid #EEF1F4">
+      <div style="font-weight:800;font-size:14px;white-space:nowrap">${txt}</div>
+      <div class="num" style="margin-left:auto;font-size:18px;color:${corSinal(v)}">${sinal(v)}</div></div>`,pai);
+  const selo=(pai,y)=>el(`<div class="ab" style="left:376px;top:${y+15}px"><div class="tag cz sm" style="background:#E5E7EB;color:#374151;border:2px solid #C9CED6;font-size:15px;padding:6px 12px">Ignorada</div></div>`,pai);
+  const igual=(pai,y)=>el(`<div class="ab row" style="left:150px;top:${y}px;gap:12px"><div class="op" style="position:relative;width:46px;height:46px;font-size:28px">=</div>
+      <div class="num" style="font-size:28px">${brl(0)}</div></div>`,pai);
+  const cartao=(pai,x,icn,cls,nome,cor)=>el(`<div class="card b2" style="left:${x}px;top:186px;width:510px;height:330px;padding:22px 24px">
+      <div class="row" style="gap:12px"><div class="ico ${cls}" style="width:44px;height:44px">${ic(icn,24)}</div><div style="font-weight:800;font-size:21px;${cor?'color:'+cor:''}">${nome}</div></div></div>`,pai);
+  // ---- cena 1: ignorar o par
+  const g1=el('<div class="ab" style="left:0;top:0;width:1280px;height:800px"></div>',g);
+  const tit1=titulo(g1,'Conciliação','Ignorar o par');
+  const ext=cartao(g1,90,'landmark','cz','Extrato do banco');
+  const l1=linha(ext,92,'TARIFA AVULSA',-12), l2=linha(ext,170,'ESTORNO TARIFA AVULSA',12);
+  const s1=[selo(ext,92),selo(ext,170)], soma=igual(ext,256);
+  const sis=el(`<div class="card b2" style="left:690px;top:186px;width:500px;height:330px;padding:22px 24px">
+      <div class="row" style="gap:12px"><div class="ico" style="width:44px;height:44px">${ic('monitor',24)}</div><div style="font-weight:800;font-size:21px">Lançamentos do sistema</div></div>
+      <div class="ab" style="left:24px;top:96px;width:448px;height:200px;border-radius:14px;border:2px dashed #CBD2D9"></div></div>`,g1);
+  const nada=el(`<div class="ab" style="left:24px;top:146px;width:448px;text-align:center"><div class="ic" style="width:48px;height:48px;color:#9AA3AD">${ic('ban',48)}</div>
+      <div style="margin-top:8px;font-weight:800;font-size:19px;color:#4B5563">Nada criado</div></div>`,sis);
+  // ---- cena 2: ignorar com cuidado
+  const g2=el('<div class="ab" style="left:0;top:0;width:1280px;height:800px"></div>',g);
+  const tit2=titulo(g2,'Conciliação','Ignorar com cuidado');
+  const par=cartao(g2,70,'circle-check','','Pode ignorar','var(--ve)');
+  const m1=linha(par,92,'TARIFA AVULSA',-12), m2=linha(par,170,'ESTORNO TARIFA AVULSA',12);
+  selo(par,92); selo(par,170); const soma2=igual(par,256);
+  const vdd=cartao(g2,700,'triangle-alert','r','Tarifa de verdade','var(--r)');
+  const m3=linha(vdd,92,'TARIFA PACOTE SERVICOS',-64.90), s3=selo(vdd,92);
+  const difB=el(`<div class="ab row" style="left:20px;top:178px;width:466px;height:64px;padding:0 18px;border-radius:14px;border:2px solid #F2A49C;background:#FFF7F6;justify-content:space-between">
+      <div style="font-weight:800;font-size:19px">Diferença</div><div class="num" style="font-size:24px;color:var(--r)">${sinal(-64.90)}</div></div>`,vdd);
+  const fin=el(`<div class="ab" style="left:20px;top:258px;width:466px;text-align:center"><div class="tag" style="background:#E5E7EB;color:#4B5563;font-size:18px">${ic('lock',18)}Finalizar conciliação</div></div>`,vdd);
+  const cad=fin.firstElementChild.firstElementChild;
+
+  return t=>{
+    const cena1=t<B0-1.5; op(g1,cena1?1:0); op(g2,cena1?0:1);
+    if(cena1){
+      const tNe=WS(1,'Nenhuma'), tVi=WS(1,'virar'), tIg=WS(1,'Ignorar'), tFi=WS(1,'fila'), tNa=WS(1,'nada');
+      posT(tit1,t,A0,tNe-.55);
+      const ent=Math.max(tNe-.3,A0+.7);                             // os cartões ficam no caminho do título: entram depois que ele subiu
+      vis(ext,t,ent,1e9,{dx:-14,dy:0}); vis(l1,t,ent+.1,1e9,{dy:10}); vis(l2,t,ent+.25,1e9,{dy:10});
+      vis(soma,t,ent+.5,1e9,{sc:.85,dy:0}); vis(sis,t,Math.max(tVi-.15,ent+.2),1e9,{dx:14,dy:0});
+      s1.forEach((e,i)=>vis(e,t,tIg+i*.15,1e9,{sc:.8,dx:-8,dy:0}));
+      // a linha sai da fila: as duas ficam resolvidas (cinza), sem criar nada no sistema
+      [l1,l2].forEach((l,i)=>{const p=eo(pr(t,tFi-.1+i*.1,.5)); l.style.background=mix('#FAFBFC','#F3F4F6',p); l.style.borderColor=mix('#EEF1F4','#D5DAE0',p);});
+      pulse(l1,t,tFi,.03,.7); pulse(l2,t,tFi+.1,.03,.7); vis(nada,t,tNa-.2,1e9,{sc:.85,dy:0});
+      return;
+    }
+    const tUm=WS(4,'Uma'), tRe=WS(4,'resolvido'), tPa=WS(4,'par'), tTa=WS(4,'tarifa'), tIgn=WS(4,'ignorada'), tDf=WS(4,'diferenca'),
+          tAb=WS(4,'aberta'), tFe=WS(4,'fechamento'), tLb=WS(4,'libera');
+    posT(tit2,t,B0,tUm-.05);
+    // ignorar conta como resolvido: o par que se anula pode
+    vis(par,t,Math.max(tUm+.2,B0+.85),1e9,{dx:-14,dy:0}); anel(par,eo(pr(t,tRe-.1,.45))); pulse(soma2,t,tPa,.08,.8);
+    // a tarifa de verdade ignorada: a diferença fica aberta e o fechamento não libera
+    vis(vdd,t,tTa-.15,1e9,{dx:14,dy:0}); vis(m3,t,tTa,1e9,{dy:10}); vis(s3,t,tIgn-.05,1e9,{sc:.8,dx:-8,dy:0});
+    vis(difB,t,tDf-.1,1e9,{dy:10}); pulse(difB,t,tAb,.03,.8); anel(vdd,eo(pr(t,tAb,.45)),VERM);
+    vis(fin,t,tFe-.1,1e9,{dy:10}); pulse(cad,t,tLb,.25,.8);
+  };
+};
+
+// ------------------------------------------------------------------ CAPS[12] · Dois Pix iguais
+// fala 1 "Aqui o sistema pede que você escolha. Casar com a compra errada deixaria a outra pendente pra sempre." Linhas 3 e 4
+// do extrato (06/11, −R$ 380,00 cada) e as duas compras do mundo (Cooperativa Recomeço, 200 kg de plástico PET a R$ 1,90;
+// Auto Peças Vale Forte, 400 kg de ferro pesado a R$ 0,95). Os traços certos (pelo nome) ficam para a tela, na linha seguinte.
+CAPS[12]=()=>{
+  const [INI]=jan(12,'ilu12_repetidos');
+  const V=-380;
+  const g=grupo(); const tit=titulo(g,'Conciliação','Dois Pix iguais');
+  const cart=(x,w,icn,cls,nome)=>el(`<div class="card b2" style="left:${x}px;top:170px;width:${w}px;height:420px;padding:22px 24px">
+      <div class="row" style="gap:12px"><div class="ico ${cls}" style="width:44px;height:44px">${ic(icn,24)}</div><div style="font-weight:800;font-size:21px">${nome}</div></div></div>`,g);
+  const cB=cart(60,480,'landmark','cz','Extrato do banco'), cS=cart(740,480,'monitor','','Lançamentos do sistema');
+  const lin=(pai,y,a,b,dt)=>el(`<div class="ab" style="left:20px;top:${y}px;width:436px;height:120px;padding:16px 18px;border-radius:14px;background:#FAFBFC;border:2px solid #EEF1F4">
+      <div style="font-weight:800;font-size:${dt?15:18}px;white-space:nowrap">${a}</div>
+      <div class="row" style="margin-top:12px;gap:10px">${dt?`<div class="tag cz sm">${dt}</div>`:`<div class="lbl" style="font-size:16px">${b}</div>`}
+        <div class="num" style="margin-left:auto;font-size:20px;color:var(--r)">${sinal(V)}</div></div></div>`,pai);
+  const b1=lin(cB,92,'PIX ENVIADO COOPERATIVA RECOMECO','', '06/11'), b2=lin(cB,236,'PIX ENVIADO AUTO PECAS VALE FORTE','','06/11');
+  const s1=lin(cS,92,'Cooperativa Recomeço','Compra · 200 kg de plástico PET'), s2=lin(cS,236,'Auto Peças Vale Forte','Compra · 400 kg de ferro pesado');
+  const YB=[170+92+60,170+236+60];
+  const fios=el(`<svg class="ab" style="left:0;top:0;overflow:visible" width="1280" height="800">${[[0,0],[0,1],[1,0],[1,1]].map(([a,b])=>`<path d="M516 ${YB[a]} C 640 ${YB[a]}, 640 ${YB[b]}, 760 ${YB[b]}"
+      fill="none" stroke="#F2B63D" stroke-width="3" stroke-linecap="round" stroke-dasharray="7 9"/>`).join('')}</svg>`,g);
+  const F=[...fios.querySelectorAll('path')];                 // 0: coop→coop, 1: coop→auto (a errada), 2: auto→coop, 3: auto→auto
+  const xis=el(`<div class="bdg" style="left:619px;top:${(YB[0]+YB[1])/2-21}px;width:42px;height:42px;background:var(--rc);border:2px solid #E5484D;color:var(--r)">${ic('x',22)}</div>`,g);
+  const pend=el('<div class="ab" style="left:0;top:0"><div class="tag a sm" style="border:2px solid #F2B63D">Pendente</div></div>',s1);
+  pend.style.left='auto'; pend.style.right='18px'; pend.style.top='14px';
+
+  return t=>{
+    const tAq=WS(1,'Aqui'), tEs=WS(1,'escolha'), tEr=WS(1,'errada'), tOu=WS(1,'outra'), tPe=WS(1,'pendente'), tSe=WS(1,'sempre');
+    posT(tit,t,INI,tAq-.1);
+    const ent=Math.max(tAq+.1,INI+.85);                             // os cartões ficam no caminho do título: entram depois que ele subiu
+    vis(cB,t,ent,1e9,{dx:-14,dy:0}); vis(cS,t,ent+.15,1e9,{dx:14,dy:0});
+    [b1,b2].forEach((e,i)=>vis(e,t,ent+.2+i*.12,1e9,{dy:10})); [s1,s2].forEach((e,i)=>vis(e,t,ent+.35+i*.12,1e9,{dy:10}));
+    // o sistema pede que você escolha: os dois Pix podem casar com as duas compras
+    const pe=eo(pr(t,tEs-.3,.6)), pr2=eo(pr(t,tEr,.45));
+    F.forEach((p,i)=>{p.style.opacity=(pe*(i===1?1:1-.75*pr2)).toFixed(3);});
+    // a compra errada: o Pix da cooperativa casado com a compra da Auto Peças; a da cooperativa fica pendente
+    F[1].style.stroke=mix('#F2B63D','#E5484D',pr2); F[1].style.strokeWidth=(3+2*pr2).toFixed(2); F[1].style.strokeDasharray=pr2>.5?'none':'7 9';
+    vis(xis,t,tEr+.1,1e9,{sc:.7,dy:0});
+    anel(s1,eo(pr(t,tOu,.45)),AMBAR,'#EEF1F4',4,false); vis(pend,t,tPe-.1,1e9,{sc:.85,dy:0}); pulse(pend,t,tSe,.1,.8);
+  };
+};
+
+// ------------------------------------------------------------------ CAPS[14] · Os três números
+// fala 1 "A Diferença é a distância entre os dois. Agora ela está em zero, em verde, e não sobrou nenhuma linha pendente."
+// Balança de dois pratos: "Saldo do banco" e "Saldo conciliado" (rótulos do rodapé do app); a Diferença é o desnível entre
+// os pratos; as linhas resolvidas pousam no prato do sistema e ela nivela; "Diferença" R$ 0,00 em verde. Sem os saldos em
+// número (a fala não diz e eles dependem da junção do mundo).
+CAPS[14]=()=>{
+  const [INI]=jan(14,'ilu14_tres_numeros');
+  const g=grupo(); const tit=titulo(g,'Fechamento','Os três números');
+  const CX=640, CY=286, BR=300, PW=280;                          // pivô, meio braço e largura do prato
+  const bal=el(`<svg class="ab" style="left:0;top:0;overflow:visible" width="1280" height="800">
+      <rect x="${CX-7}" y="${CY}" width="14" height="300" rx="6" fill="#B9C1C9"/><rect x="${CX-110}" y="${CY+292}" width="220" height="18" rx="9" fill="#9AA3AD"/>
+      <g id="t14b"><rect x="${CX-BR}" y="${CY-7}" width="${2*BR}" height="14" rx="7" fill="#7E8994"/><circle cx="${CX}" cy="${CY}" r="14" fill="#5B636C"/></g></svg>`,g);
+  const braco=bal.querySelector('#t14b');
+  // o desnível: linha tracejada na altura do prato do banco e a régua âmbar até o prato do sistema
+  const des=el(`<svg class="ab" style="left:0;top:0;overflow:visible" width="1280" height="800"><path id="t14g" d="" fill="none" stroke="#AEB6BF" stroke-width="2.5" stroke-dasharray="6 7"/>
+      <path id="t14r" d="" fill="none" stroke="#F2B63D" stroke-width="4" stroke-linecap="round"/></svg>`,g);
+  const [guia,regua]=[des.querySelector('#t14g'),des.querySelector('#t14r')];
+  const prato=(nome,cls,cor)=>el(`<div class="ab" style="left:0;top:0;width:${PW}px">
+      <svg class="ab" style="left:0;top:0;overflow:visible" width="${PW}" height="110"><path d="M${PW/2} 0 L40 92 M${PW/2} 0 L${PW-40} 92" stroke="#9AA3AD" stroke-width="3" stroke-linecap="round"/></svg>
+      <div class="ab" style="left:0;top:90px;width:${PW}px;height:26px;border-radius:0 0 140px 140px;background:${cor};opacity:.9"></div>
+      <div class="ab" style="left:0;top:132px;width:${PW}px;text-align:center"><div class="tag ${cls}">${nome}</div></div></div>`,g);
+  const pB=prato('Saldo do banco','v','#50D088'), pS=prato('Saldo conciliado','a','#F2B63D');
+  const fichas=[0,1,2].map(()=>el('<div class="ab" style="left:0;top:0;width:96px;height:22px;border-radius:7px;background:#fff;border:2px solid #C9CED6"></div>',g));
+  const gap=el('<div class="ab" style="left:0;top:0"><div class="tag a sm">Diferença</div></div>',g);
+  const plac=el(`<div class="card b2" style="left:470px;top:650px;width:340px;height:84px;padding:0 26px;display:flex;align-items:center;justify-content:space-between">
+      <div style="font-weight:800;font-size:20px">Diferença</div><div class="num" style="font-size:28px">${brl(0)}</div></div>`,g);
+  const pv=plac.lastElementChild;
+  const nen=el(`<div class="ab" style="left:850px;top:672px"><div class="tag v sm">${ic('circle-check',16)}Nenhuma pendente</div></div>`,g);
+
+  return t=>{
+    const tDf=WS(1,'Diferenca'), tDs=WS(1,'distancia'), tAg=WS(1,'Agora'), tZe=WS(1,'zero'), tVe=WS(1,'verde'), tNe=WS(1,'nenhuma');
+    posT(tit,t,INI,tDf-.2);
+    const ent=Math.max(tDf,INI+.75);                                // a balança fica no caminho do título: entra depois que ele subiu
+    vis(bal,t,ent,1e9,{dy:14});
+    // a balança torta (a diferença) nivela quando as linhas resolvidas pousam no prato do sistema
+    const nv=eio(pr(t,tAg+.35,Math.max(.8,tZe-tAg-.2))), ang=-7*(1-nv), rad=ang*Math.PI/180;
+    braco.setAttribute('transform',`rotate(${ang.toFixed(3)} ${CX} ${CY})`);
+    const ex=[CX-BR*Math.cos(rad),CX+BR*Math.cos(rad)], ey=[CY-BR*Math.sin(rad),CY+BR*Math.sin(rad)];
+    [pB,pS].forEach((p,i)=>{const o=vis(p,t,ent+.1+i*.1,1e9,{dy:14}); pos(p,ex[i]-PW/2,ey[i]+(1-o)*14);});
+    fichas.forEach((f,i)=>{const p=eio(pr(t,tAg+i*.25,.6)), x1=ex[1]-48+(i-1)*44, y1=ey[1]+64-i*4;
+      pos(f,lerp(x1+90,x1,p),lerp(y1-190,y1,p)); op(f,p>0?Math.min(1,p*3):0);});
+    // a diferença é a distância entre os dois pratos
+    const yL=ey[0]+103, yR=ey[1]+103, xr=ex[1]-PW/2-24, pg=eo(pr(t,tDs-.1,.45))*(1-eo(pr(t,tZe-.15,.4)));
+    guia.setAttribute('d',`M${(ex[0]+PW/2+8).toFixed(1)} ${yL.toFixed(1)} L${(xr+10).toFixed(1)} ${yL.toFixed(1)}`);
+    regua.setAttribute('d',`M${xr.toFixed(1)} ${yL.toFixed(1)} L${xr.toFixed(1)} ${yR.toFixed(1)}`);
+    op(des,pg); pos(gap,xr-116,(yL+yR)/2-17); op(gap,pg);
+    vis(plac,t,tZe-.2,1e9,{dy:12}); const vd=eo(pr(t,tVe-.1,.45)); pv.style.color=mix('#121212','#2E7D57',vd); anel(plac,vd);
+    vis(nen,t,tNe-.1,1e9,{dx:-10,dy:0});
+  };
+};
+
+// ------------------------------------------------------------------ API para o renderizador
+let RENDER=null;
+window.setup=d=>{D=d;ST.innerHTML='';RENDER=CAPS[d.cap]();return true};
+window.R=t=>{RENDER(t);return true};
+</script></body></html>

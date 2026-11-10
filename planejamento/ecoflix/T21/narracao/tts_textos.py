@@ -20,24 +20,24 @@ O Rafael é o administrador, então ele clica em Entendi e autorizo. Pronto: o C
 3: """Com o Cáto autorizado, o painel abre aqui do lado, com quatro perguntas prontas pra quebrar o gelo.
 Dá pra clicar numa delas ou escrever a sua pergunta aqui embaixo, do jeito que você fala.
 Vou clicar na primeira: como tá indo meu negócio esse mês.
-Em poucos segundos ele responde: até hoje, dia dez, a empresa vendeu trinta e quatro mil, duzentos e quinze reais, e o resultado do mês está em cinco mil e oitenta e cinco reais.
+Em poucos segundos ele responde: até hoje, dia dez, a empresa vendeu uns cento e dezoito mil e seiscentos reais, e o resultado do mês está em uns sessenta e sete mil e seiscentos.
 Embaixo, ele já sugere as próximas perguntas. É só clicar, se quiser seguir por ali.""",
 4: """Agora, as perguntas do dia a dia. Primeiro: quem tá me devendo.
-São três clientes, que somam vinte e oito mil, novecentos e setenta e sete reais. A Fundição Bandeira do Vale é a maior: vinte e três mil, novecentos e cinquenta.
-No estoque, ele traz o peso, o valor pelo custo médio, uns cinquenta e dois mil reais, e os materiais que mais pesam no valor, com a bateria automotiva na frente.
-No banco, ele separa o saldo de agora, quarenta e sete mil e quinhentos reais nas duas contas, do que entrou e saiu no mês.
-E o caixa: um caixa aberto, o do Marcos, com mil cento e oitenta e dois reais.
+São três parceiros, que somam dezessete mil, quinhentos e quarenta reais. A Fundição Bandeira do Vale é a maior: catorze mil, trezentos e setenta.
+No estoque, ele traz o peso, o valor pelo custo médio, uns noventa e seis mil reais, e os materiais que mais pesam no valor, com o alumínio perfil na frente.
+No banco, ele separa o saldo de agora, uns cento e trinta e dois mil reais nas três contas, do que entrou e saiu no mês.
+E o caixa: hoje ainda não tem nenhum aberto, e ele conta como fecharam os de ontem.
 Uma dica: pro Cáto, caixa é o caixa de hoje. Pra saber do mês, pergunte pelo mês.""",
 5: """Pro mês, a pergunta é do mês: compras e vendas dos últimos três meses. Aqui a resposta vem com uma linha, mês a mês.
-Em setembro, a empresa comprou mais do que vendeu. Em outubro, as vendas passaram na frente.
-Agora, pra quem eu mais vendi em outubro. A Fundição vem na frente, com sessenta e um mil, trezentos e oitenta reais.
-Uma dica: isso é o valor vendido no mês, não é o que ela deve. O saldo em aberto da Fundição, que apareceu lá em cima, é de vinte e três mil, novecentos e cinquenta.
+Em outubro, as compras quase alcançaram as vendas, com o pátio cheio de ferro. Em novembro, o ferro saiu, e as vendas passaram longe das compras.
+Agora, pra quem eu mais vendi em outubro. A Fundição vem na frente, com cento e doze mil e oitocentos reais.
+Uma dica: isso é o valor vendido no mês, não é o que ela deve. O saldo em aberto da Fundição, que apareceu lá em cima, é de catorze mil, trezentos e setenta.
 Quanto alguém te deve é o saldo. De quem você mais comprou, ou pra quem mais vendeu, é o valor movimentado no período. São duas perguntas diferentes.
 E quando você pede uma lista, ele monta uma tabela, com o material, a quantidade e o valor.
 A regra é simples: distribuição vira pizza, ranking vira barra, o que muda no tempo vira linha, e lista vira tabela. E o texto vem sempre antes.""",
 6: """Repara no que vem em cima de cada resposta: de onde ele tirou os dados, o período e a hora da consulta.
 Os números são lidos direto dos seus dados, os mesmos das telas do sistema. E o botão embaixo leva pra tela de onde o número veio.
-Na Posição de Estoque, o total geral dá os mesmos cinquenta e dois mil, cento e doze reais e vinte e cinco centavos.
+Na Posição de Estoque, o total geral dá os mesmos noventa e seis mil e setenta e seis reais.
 É o mesmo número, porque os dois leem os mesmos dados.
 Mesmo assim, ele avisa aqui embaixo que pode cometer erros. Quando o número for pra uma decisão, confira na tela, por aquele botão.""",
 7: """E o que ele não faz? Vou pedir pra ele emitir uma nota.

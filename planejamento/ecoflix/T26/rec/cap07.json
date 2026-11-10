@@ -1,0 +1,403 @@
+{
+ "name": "t26-cap07",
+ "title": "T26 · Cap. 7 · Checklists e etiquetas (narração 64,2 s, ESTIMADA; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
+ "fakeNow": "2026-11-10T08:30:00-03:00",
+ "seed": "t26-cap07",
+ "pace": 0.5,
+ "cps": 22,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 470
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true",
+  "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10"
+ },
+ "seedExtra": [
+  "t26/apos-cap06"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/login"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "timeout": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "••••••••"
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Rafael",
+   "timeout": 45
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 20
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const sb=document.querySelector('[data-state][data-collapsible]');if(sb&&sb.getAttribute('data-state')==='collapsed')return 'ja recolhido';const b=document.querySelector('header button.h-8.w-8');if(!b)return 'SEM ALVO';b.click();return 'recolhido'})()"
+  },
+  {
+   "do": "wait",
+   "seconds": 0.7
+  },
+  {
+   "do": "goto",
+   "url": "/crm"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie oportunidades e acompanhe seu processo comercial.",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 15
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Configurações do CRM/Kanban",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Organize os funis comerciais e as etapas de cada Kanban.",
+   "timeout": 15
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel|Algo deu errado|Falha ao|Something went wrong/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#tab-btn-checklists"
+   },
+   "at": 1.42,
+   "label": "menu Checklists"
+  },
+  {
+   "do": "waitFor",
+   "text": "Modelos reutilizáveis de checklist pra aplicar em oportunidades.",
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "O modelo é só o ponto de partida",
+    "within": "[role=dialog]:has(#tab-btn-funis)"
+   },
+   "seconds": 1.2,
+   "at": 3.67,
+   "label": "aviso: o modelo é só o ponto de partida",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 6.76
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Nova checklist",
+    "exact": true
+   },
+   "at": 6.76,
+   "label": "Nova checklist"
+  },
+  {
+   "do": "waitFor",
+   "selector": "#crm-checklist-name",
+   "timeout": 8
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#crm-checklist-name"
+   },
+   "text": "Documentos do fornecedor",
+   "cps": 30,
+   "at": 8.72,
+   "label": "Nome: Documentos do fornecedor",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Adicionar item",
+    "exact": true
+   },
+   "at": 10.65,
+   "label": "Adicionar item (1)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Adicionar item",
+    "exact": true
+   },
+   "label": "Adicionar item (2)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Adicionar item",
+    "exact": true
+   },
+   "label": "Adicionar item (3)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog]:has(#crm-checklist-name) input[aria-label='Texto do item 1']"
+   },
+   "at": 11.82,
+   "label": "item 1"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const e=document.activeElement;if(!e||!/^(INPUT|TEXTAREA)$/.test(e.tagName))return 'SEM FOCO';document.execCommand('insertText',false,\"CNPJ conferido\");return e.value})()",
+   "label": "item 1: CNPJ conferido"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog]:has(#crm-checklist-name) input[aria-label='Texto do item 2']"
+   },
+   "at": 13.18,
+   "label": "item 2"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const e=document.activeElement;if(!e||!/^(INPUT|TEXTAREA)$/.test(e.tagName))return 'SEM FOCO';document.execCommand('insertText',false,\"Local de retirada combinado\");return e.value})()",
+   "label": "item 2: Local de retirada combinado"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog]:has(#crm-checklist-name) input[aria-label='Texto do item 3']"
+   },
+   "at": 15.46,
+   "label": "item 3"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const e=document.activeElement;if(!e||!/^(INPUT|TEXTAREA)$/.test(e.tagName))return 'SEM FOCO';document.execCommand('insertText',false,\"Frequ\\u00eancia da coleta combinada\");return e.value})()",
+   "label": "item 3: Frequência da coleta combinada"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const esp=[\"Documentos do fornecedor\", \"CNPJ conferido\", \"Local de retirada combinado\", \"Frequência da coleta combinada\"];let out='';for(let i=0;i<12;i++){const sc=[...document.querySelectorAll(\"[role=dialog]:has(#crm-checklist-name)\")].pop();const v=sc?[...sc.querySelectorAll('input, textarea')].map(e=>e.value).join(' | '):'';const falta=esp.filter(e=>!v.includes(e));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+v.slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere nome e itens"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Salvar",
+    "exact": true,
+    "within": "[role=dialog]:has(#crm-checklist-name)"
+   },
+   "at": 17.89,
+   "label": "Salvar (Nova checklist)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Checklist criada",
+   "timeout": 10
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 18.65
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Documentos do fornecedor",
+    "within": "[role=dialog]:has(#tab-btn-funis)"
+   },
+   "seconds": 0.6,
+   "at": 19.1,
+   "label": "o modelo Documentos do fornecedor na lista",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 28.79
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#tab-btn-etiquetas"
+   },
+   "at": 29.12,
+   "label": "menu Etiquetas"
+  },
+  {
+   "do": "waitFor",
+   "text": "Etiquetas ajudam a classificar oportunidades no Kanban.",
+   "timeout": 8
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Nova etiqueta",
+    "exact": true
+   },
+   "at": 31.14,
+   "label": "Nova etiqueta"
+  },
+  {
+   "do": "waitFor",
+   "selector": "#crm-label-name",
+   "timeout": 8
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#crm-label-name"
+   },
+   "text": "Indústria",
+   "cps": 22,
+   "at": 33.03,
+   "label": "Nome: Indústria"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "#crm-label-color"
+   },
+   "seconds": 0.1,
+   "at": 34.33,
+   "label": "Cor (o seletor de cor)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const i=document.querySelector(\"#crm-label-color\");if(!i)return 'SEM ALVO';const set=Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set;set.call(i,\"#6366f1\");i.dispatchEvent(new Event('input',{bubbles:true}));i.dispatchEvent(new Event('change',{bubbles:true}));return i.value})()",
+   "label": "Cor: #6366f1"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Salvar",
+    "exact": true,
+    "within": "[role=dialog]:has(#crm-label-name)"
+   },
+   "at": 34.61,
+   "label": "Salvar (Nova etiqueta)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Etiqueta criada",
+   "timeout": 10
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 35.36
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Indústria",
+    "exact": true,
+    "within": "[role=dialog]:has(#tab-btn-funis)"
+   },
+   "seconds": 2.0,
+   "at": 36.42,
+   "label": "a etiqueta Indústria na lista",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 46.34
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 640,
+    "y": 600
+   },
+   "by": 0,
+   "duration": 0.2,
+   "after": 0,
+   "at": 47.04,
+   "label": "cursor sai (plano geral da janela)"
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 64.24
+  }
+ ]
+}

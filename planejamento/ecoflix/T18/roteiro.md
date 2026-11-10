@@ -8,8 +8,8 @@
   vinhetas de capítulo, as esperas do órgão simulado e a cartela; alvo da fonte ~12 min)
 - Coluna Fala = texto da narração na grafia da legenda; a grafia de pronúncia do TTS está em `narracao/tts_textos.py`. Coluna Tela =
   o que o robô faz e onde a câmera foca, rótulos entre aspas como no código 1.59.154 (`T18/inventario.md`; "SIGOR" é o nome curto que o
-  app mostra para SP). Logado como Rafael Nogueira (MASTER), desktop. Mundo e sementes: `T18/plano.md`. FAKE_NOW 10/11/2026 08:30 nos
-  capítulos 0 a 5 e 10:40 do 6 em diante. Nenhum acesso real ao órgão ambiental: o SIGOR é simulado no backend falso.
+  app mostra para SP). Logado como Rafael Nogueira (MASTER), desktop. Mundo e sementes: `T18/plano.md`. FAKE_NOW 10/11/2026 09:30 nos
+  capítulos 0 a 5 (junção: depois das notas do T16 e do T17) e 10:40 do 6 em diante. Nenhum acesso real ao órgão ambiental: o SIGOR é simulado no backend falso.
 - Marcas: `[BACKEND: ...]` o que o backend falso ainda não tem; `[ZOOM: ...]` zoom suave que dura a frase inteira (sem zoom em cima de
   zoom); `[ILUSTRAÇÃO: ...]` desenho por código no estilo da marca, nunca tela inventada nem documento oficial desenhado.
 

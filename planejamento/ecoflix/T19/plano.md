@@ -37,18 +37,19 @@ da empresa".
 
 ## Estado de partida (semente `inicio`)
 Mundo base (`MUNDO_FICTICIO.md`) + o bloco abaixo. Ninguém pago hoje; todos pagos em 09/11 (5º dia útil), menos o Edson (na estrada
-nesse dia). Caixa do Rafael aberto. Ponto em uso desde 01/09 pelo pátio (Marcos, Edson, Cláudio, Diego).
+nesse dia). Caixa do Rafael aberto às 08:30 pela semente da aula (junção: no mundo base nenhum caixa abre em 10/11 antes das
+08:31, como mostra a T6). Ponto em uso desde 01/09 pelo pátio (Marcos, Edson, Cláudio, Diego).
 
 ## Mundo: o que esta aula precisa
 **Departamentos** (`employee_departments`): "Escritório" (#2563EB, `briefcase`), "Pátio" (#16A34A, `wrench`). Criado na aula:
 "Transporte" (#EA580C, `truck`).
 
-**Funcionários** (`employees`; e-mails `@reciclavale.example`; telefones (12) 90000-41xx):
+**Funcionários** (`employees`; e-mails `@reciclavalemetais.example`, o domínio do T2 (junção); telefones (12) 90000-41xx):
 
 | Nome | Cargo | Depto | Admissão | Salário | Regime | CPF | Chave Pix | Ponto (slug) |
 |---|---|---|---|---|---|---|---|---|
-| Rafael Nogueira | Sócio-administrador | Escritório | 02/03/2015 | 6.000,00 | Informal | 287.341.905-97 | rafael.nogueira@reciclavale.example | não |
-| Juliana Prado | Assistente administrativa | Escritório | 05/06/2023 | 2.800,00 | CLT | 362.918.470-78 | juliana.prado@reciclavale.example | não (liga no cap. 8: `juliana-prado-8w3n`) |
+| Rafael Nogueira | Sócio-administrador | Escritório | 02/03/2015 | 6.000,00 | Informal | 274.913.508-79 (o do T18, junção) | rafael.nogueira@reciclavalemetais.example | não |
+| Juliana Prado | Assistente administrativa | Escritório | 05/06/2023 | 2.800,00 | CLT | 362.918.470-78 | juliana.prado@reciclavalemetais.example | não (liga no cap. 8: `juliana-prado-8w3n`) |
 | Marcos Antunes | Balanceiro | Pátio | 16/08/2021 | 2.400,00 | CLT | 305.672.148-26 | (12) 90000-4103 | sim (`marcos-antunes-7q2d`) |
 | Edson Moura | Motorista | Pátio (Transporte no cap. 4) | 04/04/2019 | 2.900,00 | Informal | 251.847.396-37 | 251.847.396-37 | sim (`edson-moura-3k8f`) |
 | Cláudio Ferraz | Ajudante de pátio | Pátio | 11/01/2022 | 2.100,00 | CLT | 334.095.127-64 | (12) 90000-4105 | sim (`claudio-ferraz-9m4t`) |
@@ -73,21 +74,21 @@ Telefones: Rafael 4101, Juliana 4102, Marcos 4103, Edson 4104, Cláudio 4105, Di
   bônus R$ 150,00 "Meta de prensagem de outubro" (2.250,00); Edson recebimento R$ 100,00 "Sobra do vale da viagem" (2.750,00) e
   pagamento R$ 2.750,00 Pix (vales descontados 400,00; reset 2.900,00).
 
-**Dinheiro:** caixa do Rafael aberto em 10/11 às 07:30 com R$ 1.500,00 (só ele aberto; se o do Marcos estiver aberto, aparece
+**Dinheiro:** caixa do Rafael aberto em 10/11 às 08:30 com R$ 1.500,00 (semente da aula; junção) (só ele aberto; se o do Marcos estiver aberto, aparece
 "Qual caixa?" já no do Rafael). Conta bancária principal com saldo acima de R$ 2.750,00. Categoria "Folha Salarial" existente.
 Cadastro fiscal: `is_simples_nacional = false` (Lucro Real), Taubaté/SP.
 
 **Ponto:** `time_settings`: entrada 07:00, saída 16:00, intervalo 60, tolerância 10, madrugada até 05:00, seg a sex,
 `require_selfie` e `require_geolocation` ligados, quiosque sem reconhecimento facial, fuso America/Sao_Paulo.
 `ponto_kiosk_slug` da empresa: `recicla-vale-metais-2h6p`. Batidas (`time_records` + `time_sheets`) de 01/09 a 09/11 para Marcos,
-Edson, Cláudio e Diego, dias completos (entrada ~06:55, intervalo 11:00 às 12:00, saída ~16:00), endereço "Rua Projetada Doze,
-1450 - Parque Industrial Vale Verde - Taubaté", "Mobile - Chrome", foto = avatar ilustrado genérico. Exceções: **Cláudio sem batida
+Edson, Cláudio e Diego, dias completos (entrada ~06:55, intervalo 11:00 às 12:00, saída ~16:00), endereço "Rua das Oficinas,
+1250 - Parque Industrial - Taubaté" (o endereço do T1, junção), "Mobile - Chrome", foto = avatar ilustrado genérico. Exceções: **Cláudio sem batida
 em 05/11** (vira "Falta"; atestado no cap. 10) e **Diego sem batida em 06/11** (fica "Falta", com o desconto do cap. 5). Hoje
 (10/11): entradas Edson 06:47, Marcos 06:52, Cláudio 06:58, Diego 07:03 (`time_sheets` do dia com status `open` e `balance_min`
 nulo, para o aviso "1 dia(s) sem saída registrada não entram no saldo"). Sem ausências lançadas em novembro.
 
-**Celular (cap. 9):** posição `{"lat": -23.0105, "lng": -45.5412}`; o Nominatim devolve `road` "Rua Projetada Doze", `house_number`
-"1450", `suburb` "Parque Industrial Vale Verde", `city` "Taubaté".
+**Celular (cap. 9):** posição `{"lat": -23.0105, "lng": -45.5412}`; o Nominatim devolve `road` "Rua das Oficinas", `house_number`
+"1250", `suburb` "Parque Industrial", `city` "Taubaté" (o endereço do T1 e da semente, junção).
 
 Anotar no `MUNDO_FICTICIO.md`: os 8 funcionários, os 3 departamentos, o endereço do pátio e o slug do tablet.
 

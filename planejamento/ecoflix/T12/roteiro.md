@@ -17,7 +17,8 @@ Cooperativa Recomeço.
 - **Duração estimada:** ~13 min de vídeo (1.716 palavras de fala, ~11 min de voz a 2,6 palavras/s, mais a vinheta de
   abertura, 12 vinhetas de capítulo, a cartela, a troca de janela do portal e as esperas dos formulários; as 7
   ilustrações correm junto da fala; alvo da fonte: 15 min)
-- **FAKE_NOW:** `2026-11-10T08:30:00-03:00` (terça) em todos os capítulos.
+- **FAKE_NOW:** `2026-11-10T07:00:00-03:00` (terça) em todos os capítulos (junção: o Edson faz a troca da caçamba cedo; às
+  08:40 ele está na balança com a latinha da cooperativa, T8, e às 09:40 sai pra Minas, T17).
 - **Estado inicial:** `plano.md` → "Mundo: o que esta aula precisa" (frota com tara e capacidade, as caçambas e os bags com
   as movimentações, as ordens 1 a 8, o portal da Cooperativa Recomeço).
 - **🔒** módulo Coletas (dito no cap00) e Portal do Cliente (dito no cap07). **Fora da aula:** "Rastreamento" e "Rotas"
@@ -73,7 +74,7 @@ Cooperativa Recomeço.
 | Tela | Fala |
 | --- | --- |
 | Capítulo novo (semente `t12/inicio`); o `setup` refaz fora do vídeo a etapa "Parceiro" (Auto Peças Vale Forte) e, na etapa "Coleta", o material e a observação; a câmera abre na etapa "Coleta", com "Data agendada" e "Período" vazios. | Agora, o dia e o período. Ainda na etapa Coleta, ficam a Data agendada e o Período. |
-| Em "Data agendada" digita 12/11/2026. | A Auto Peças pediu pra quinta, doze de novembro. |
+| Em "Data agendada" digita 11/11/2026. | A Auto Peças pediu pra amanhã, quarta, onze de novembro. |
 | Abre "Período": "Não definido", "Manhã", "Tarde" e "Dia todo". | O Período é a janela do dia: manhã, tarde ou dia todo. Assim o motorista sabe quando passar, e o parceiro, quando esperar. |
 | Escolhe "Manhã"; a câmera fica nos dois campos. | Escolho manhã. E as janelas que aparecem aqui você define nas Configurações, no fim da aula. |
 | Clique em "Avançar": etapa "Frota". | Avanço pra última etapa. |
@@ -82,9 +83,9 @@ Cooperativa Recomeço.
 
 | Tela | Fala |
 | --- | --- |
-| Capítulo novo (semente `t12/inicio`); o `setup` refaz fora do vídeo as etapas "Parceiro" e "Coleta" (12/11/2026, "Manhã"); a câmera abre na etapa "Frota", com "Motorista" e "Veículo". | Falta quem vai buscar. Na etapa Frota ficam o Motorista e o Veículo, os mesmos da pesagem. |
+| Capítulo novo (semente `t12/inicio`); o `setup` refaz fora do vídeo as etapas "Parceiro" e "Coleta" (11/11/2026, "Manhã"); a câmera abre na etapa "Frota", com "Motorista" e "Veículo". | Falta quem vai buscar. Na etapa Frota ficam o Motorista e o Veículo, os mesmos da pesagem. |
 | Em "Motorista" digita "Jair" e escolhe "Jair Lopes"; em "Veículo" digita "GHT" e escolhe "GHT7B19". | O Jair vai com o caminhão três quartos, que leva os quatrocentos quilos com folga. |
-| A câmera desce ao quadro "Revisão": "Parceiro: Auto Peças Vale Forte", "Cidade: Taubaté / SP", "Material: ~400 kg de radiadores e baterias" e "Data: 12/11/2026 · Manhã". | Embaixo, a Revisão mostra tudo antes de criar: o parceiro, a cidade, o material, a data e o período. |
+| A câmera desce ao quadro "Revisão": "Parceiro: Auto Peças Vale Forte", "Cidade: Taubaté / SP", "Material: ~400 kg de radiadores e baterias" e "Data: 11/11/2026 · Manhã". | Embaixo, a Revisão mostra tudo antes de criar: o parceiro, a cidade, o material, a data e o período. |
 | Clique em "Criar ordem": aviso "Ordem de coleta criada"; o cartão "#9" na coluna "Agendada", com "Manhã", "Jair Lopes" e "GHT7B19". [BACKEND: rpc `get_next_collection_order_number` (9) + insert em `collection_orders` (status agendada, origem interna) + evento de criação] | Criar ordem. Pronto: a ordem nove já está agendada, com o Jair e o caminhão três quartos. |
 | A câmera fica no cartão. | Motorista e veículo também podem ficar pra depois. Quem quiser exigir os dois antes de agendar tem a opção nas Configurações. |
 
@@ -122,16 +123,16 @@ Cooperativa Recomeço.
 | Tela | Fala |
 | --- | --- |
 | Capítulo novo (semente `t12/apos-cap07`); menu "Coletas & Logística" → "Frota": abas "Veículos" e "Motoristas"; em "Veículos" ("Mesma frota usada na pesagem de compra/venda."), a lista "Veículos da frota" com EZR4C63, FKD2E41 e GHT7B19. | Quem faz tudo isso é a frota. Em Frota ficam os veículos e os motoristas, os mesmos da pesagem de compra e venda. |
-| Clique em "FKD2E41": o detalhe com a placa no modelo Mercosul, "Caminhão truck" e "Capacidade operacional". [ZOOM: "Tara" 9.200 kg e "Capacidade" 14.000 kg] | No caminhão truck, a ficha mostra a tara e a capacidade. |
-| [ILUSTRAÇÃO: tara, bruto e líquido: um caminhão vazio numa balança de pátio, "tara 9.200 kg"; o mesmo caminhão carregado de sucata, "bruto"; a diferença acende como "líquido", o peso do material] | A tara é o peso do caminhão vazio. Carregado, ele pesa mais na balança, e essa diferença é o peso do material. |
+| Clique em "FKD2E41": o detalhe com a placa no modelo Mercosul, "Caminhão truck" e "Capacidade operacional". [ZOOM: "Tara" 6.380 kg e "Capacidade" 14.000 kg] | No caminhão truck, a ficha mostra a tara e a capacidade. |
+| [ILUSTRAÇÃO: tara, bruto e líquido: um caminhão vazio numa balança de pátio, "tara 6.380 kg"; o mesmo caminhão carregado de sucata, "bruto"; a diferença acende como "líquido", o peso do material] | A tara é o peso do caminhão vazio. Carregado, ele pesa mais na balança, e essa diferença é o peso do material. |
 | Clique em "Novo veículo": janela "Novo veículo"; em "Placa *" digita FVL8A52 (o desenho da placa aparece embaixo); em "Descrição / Apelido" digita "Caminhão poliguindaste". | A Recicla Vale comprou um caminhão poliguindaste, o que leva e busca caçamba. Em Novo veículo, eu digito a placa e um apelido. |
 | Em "UF de licenciamento" escolhe "SP"; em "Tipo" escolhe "Veículo único (truck, toco, utilitário)"; em "Tipo de rodado" escolhe "Toco" (o que passar da fala vai acelerado). | Os dados de transporte servem pros documentos de transporte. Aqui, São Paulo, veículo único e toco. |
 | Em "Tara (kg)" digita 7100 e em "Capacidade (kg)" digita 8500. [ZOOM: "Tara (kg)" 7100 e "Capacidade (kg)" 8500] | A tara dele é sete mil e cem quilos, e a capacidade, oito mil e quinhentos. |
 | Clique em "Cadastrar": aviso "Veículo cadastrado"; o FVL8A52 na lista. [BACKEND: insert em `vehicles`] | Cadastrar. Pronto, o poliguindaste já está na frota. |
 | Clique na aba "Motoristas": "Motoristas", a lista com Edson Moura, Jair Lopes e Tiago Freitas; clique em "Novo motorista": janela "Novo motorista". | Agora o motorista dele. Na aba Motoristas, clico em Novo motorista. |
-| Em "Nome *" digita "Rogério Batista"; em "CPF" digita 463.718.205-08; em "Telefone" digita (12) 90000-4417 (o que passar da fala vai acelerado). | O Rogério Batista foi contratado pro poliguindaste. Nome, CPF e telefone. |
+| Em "Nome *" digita "Sérgio Paiva"; em "CPF" digita 463.718.205-08; em "Telefone" digita (12) 90000-4417 (o que passar da fala vai acelerado). | O Sérgio Paiva foi contratado pro poliguindaste. Nome, CPF e telefone. |
 | Em "CNH" digita 04581273671; em "Categoria" escolhe "C"; em "Validade da CNH" digita 18/06/2030. [ZOOM: "CNH", "Categoria" e "Validade da CNH"] | E a carteira de motorista, a CNH: o número, a categoria C, que é a de caminhão, e a validade. |
-| Clique em "Cadastrar": aviso "Motorista cadastrado"; Rogério Batista na lista. [BACKEND: insert em `drivers`] | Cadastrar. Agora ele já pode ser escalado nas ordens. |
+| Clique em "Cadastrar": aviso "Motorista cadastrado"; Sérgio Paiva na lista. [BACKEND: insert em `drivers`] | Cadastrar. Agora ele já pode ser escalado nas ordens. |
 
 ### cap09 · As caçambas e onde estão (vinheta: EQUIPAMENTOS)
 

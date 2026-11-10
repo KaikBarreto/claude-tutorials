@@ -1,0 +1,449 @@
+{
+ "name": "t01-cap06",
+ "title": "T01 · Cap. 6 · Contato e endereço (narração 69,5 s ESTIMADA; marcas L1..L9 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
+ "seed": "t01-cap06",
+ "pace": 0.5,
+ "cps": 14,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "anonymous": true,
+ "seedExtra": [
+  "t01/inicio",
+  "t01/apos-cap05"
+ ],
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "initial-preferences-set": "true",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10"
+ },
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/login"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "timeout": 30
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "input[type=password]"
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Rafael!",
+   "timeout": 40
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/configuracoes"
+  },
+  {
+   "do": "waitFor",
+   "text": "Configurações do Sistema",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel|Algo deu errado|Falha ao carregar|Personalize sua experi[êe]ncia|Voc[êe] j[áa] est[áa] conectado|Sistema atualizado|O rel[óo]gio deste computador|Sess[ãa]o expirou/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');if(f&&window.__avisos.length<10&&!window.__avisos.includes('LEMBRETE DA TRILHA'))window.__avisos.push('LEMBRETE DA TRILHA')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0.4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const m=[...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);return m||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"Informações de Contato\"&&e.offsetParent);if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-140);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/1000),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 0.4,
+   "label": "desce até Informações de Contato"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "#company-phone"
+   },
+   "seconds": 0.6,
+   "at": 3.14,
+   "label": "Telefone (12) 90000-4410",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "#company-email"
+   },
+   "seconds": 1.2,
+   "at": 4.13,
+   "label": "E-mail do cadastro",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 6.23
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "#company-email"
+   },
+   "seconds": 1.4,
+   "at": 7.21,
+   "label": "o e-mail do cadastro é o do Rafael",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#company-email"
+   },
+   "at": 10.0,
+   "label": "E-mail"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#company-email"
+   },
+   "text": "contato@reciclavalemetais.example",
+   "cps": 40,
+   "at": 11.0,
+   "label": "apaga e digita contato@reciclavalemetais.example",
+   "noClick": true,
+   "clear": true
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const esp=[\"contato@reciclavalemetais.example\"];let out='';for(let i=0;i<12;i++){const v=[...document.querySelectorAll(\"main\"+' input, '+\"main\"+' textarea')].map(e=>e.value).join(' | ');const falta=esp.filter(e=>!v.includes(e));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+v.slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere e-mail de contato"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 15.46
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "#show-phone"
+   },
+   "seconds": 0.4,
+   "at": 17.28,
+   "label": "chave Exibir nos documentos do Telefone",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "#show-email"
+   },
+   "seconds": 1.0,
+   "at": 18.57,
+   "label": "chave Exibir nos documentos do E-mail",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 19.53
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 25.58
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const m=[...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);return m||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"Endereço\"&&e.offsetParent);if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-120);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 25.58,
+   "label": "desce até o Endereço"
+  },
+  {
+   "do": "click",
+   "target": {
+    "placeholder": "00000-000"
+   },
+   "at": 27.2,
+   "label": "CEP"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "00000-000"
+   },
+   "text": "12086410",
+   "cps": 10,
+   "at": 28.65,
+   "label": "digita o CEP 12086-410",
+   "noClick": true
+  },
+  {
+   "do": "waitFor",
+   "text": "Endereço encontrado!",
+   "timeout": 8
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const esp=[\"12086-410\", \"Rua das Oficinas\", \"Jardim Vale do Sol\"];let out='';for(let i=0;i<12;i++){const v=[...document.querySelectorAll(\"main\"+' input, '+\"main\"+' textarea')].map(e=>e.value).join(' | ');const falta=esp.filter(e=>!v.includes(e));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+v.slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere endereço achado pelo CEP"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"SP - São Paulo\", \"Taubaté\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Estado e Cidade"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "placeholder": "Rua, Avenida, etc."
+   },
+   "seconds": 0.3,
+   "at": 29.93,
+   "label": "Logradouro: Rua das Oficinas",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "placeholder": "Bairro"
+   },
+   "seconds": 0.4,
+   "at": 30.61,
+   "label": "Bairro: Jardim Vale do Sol",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main div:has(> label:text-is(\"Cidade\")) button[role=combobox]"
+   },
+   "seconds": 0.3,
+   "at": 31.52,
+   "label": "Cidade: Taubaté",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main div:has(> label:text-is(\"Estado\")) button[role=combobox]"
+   },
+   "seconds": 0.6,
+   "at": 32.35,
+   "label": "Estado: SP - São Paulo",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 33.52
+  },
+  {
+   "do": "click",
+   "target": {
+    "placeholder": "Nº"
+   },
+   "at": 34.91,
+   "label": "Número"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Nº"
+   },
+   "text": "1250",
+   "cps": 8,
+   "at": 36.37,
+   "label": "digita 1250",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "placeholder": "Sala, Galpão, etc. (opcional)"
+   },
+   "at": 38.09,
+   "label": "Complemento"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Sala, Galpão, etc. (opcional)"
+   },
+   "text": "Galpão 2",
+   "cps": 10,
+   "at": 39.93,
+   "label": "digita Galpão 2",
+   "noClick": true
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 40.47
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "É este endereço que sai na nota fiscal."
+   },
+   "seconds": 3.4,
+   "at": 41.68,
+   "label": "nota: é este endereço que sai na nota fiscal",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "É este endereço que sai na nota fiscal."
+   },
+   "seconds": 2.4,
+   "at": 45.65,
+   "label": "nota: a Configuração Fiscal usa o que estiver aqui",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 49.78
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const m=[...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);return m||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"Prévia no comprovante\"&&e.offsetParent);if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-210);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 49.78,
+   "label": "desce até a Prévia no comprovante"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Rua das Oficinas, 1250 - Galpão 2 - Jardim Vale do Sol - Taubaté/SP - CEP: 12086-410\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere prévia com o galpão"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main p.font-mono"
+   },
+   "seconds": 3.0,
+   "at": 51.44,
+   "label": "Prévia no comprovante: o endereço como sai impresso",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L9",
+   "at": 57.27
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "checkbox",
+    "name": "Logradouro"
+   },
+   "seconds": 0.5,
+   "at": 58.25,
+   "label": "caixas da prévia, pedaço por pedaço",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "checkbox",
+    "name": "CEP"
+   },
+   "seconds": 0.5,
+   "at": 59.03,
+   "label": "caixa CEP",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "checkbox",
+    "name": "Complemento"
+   },
+   "at": 63.74,
+   "label": "desmarca o Complemento"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Rua das Oficinas, 1250 - Jardim Vale do Sol - Taubaté/SP - CEP: 12086-410\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere prévia sem o galpão"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main p.font-mono"
+   },
+   "seconds": 1.4,
+   "at": 66.37,
+   "label": "a prévia sem o galpão",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 69.55
+  }
+ ]
+}

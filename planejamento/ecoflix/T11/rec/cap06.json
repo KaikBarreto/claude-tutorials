@@ -1,0 +1,412 @@
+{
+ "name": "t11-cap06",
+ "title": "T11 · Cap. 6 · O Kanban (narração 70,6 s ESTIMADA; marcas L1..L8 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
+ "seed": "t11-cap06",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 900,
+  "y": 440
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true"
+ },
+ "seedExtra": [
+  "t11/inicio",
+  "t11/apos-cap03",
+  "t11/apos-cap04",
+  "t11/apos-cap05"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "waitFor",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "timeout": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "••••••••"
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "url": "/dashboard",
+   "timeout": 40
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 25
+  },
+  {
+   "do": "goto",
+   "url": "/producao"
+  },
+  {
+   "do": "waitFor",
+   "text": "Fichas técnicas, ordens de produção e custo por peça",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 25
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const b=document.querySelector('header svg.lucide-panel-left-close')?.closest('button');if(!b)return document.querySelector('header svg.lucide-panel-left')?'ja recolhido':'sem botao';b.click();return 'recolhido'})()"
+  },
+  {
+   "do": "wait",
+   "seconds": 0.8
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel|Algo deu errado|Falha ao/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');if(f&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA ECOFLIX'))window.__avisos.push('TRILHA ECOFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "main div.overflow-x-auto"
+   },
+   "text": "",
+   "noClick": true,
+   "optional": true,
+   "timeout": 4,
+   "at": 1.87,
+   "label": "o quadro (Kanban)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main div.rounded-xl:has(> div button:text-is('A fazer')) > div.flex-1"
+   },
+   "seconds": 0.5,
+   "at": 3.52,
+   "label": "uma coluna é uma etapa",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main div.group:has(span:text-is('#3'))"
+   },
+   "seconds": 0.5,
+   "at": 5.72,
+   "label": "um cartão",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "A fazer",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.3,
+   "at": 9.89,
+   "label": "A fazer",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Em produção",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.3,
+   "at": 10.8,
+   "label": "Em produção",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Concluída",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.4,
+   "at": 11.64,
+   "label": "Concluída",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 13.22
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Em produção",
+    "exact": true,
+    "within": "main"
+   },
+   "at": 14.32,
+   "label": "nome da coluna Em produção (abre Editar coluna)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Editar coluna",
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] button[aria-label='Escolher cor']"
+   },
+   "seconds": 0.4,
+   "at": 17.53,
+   "label": "Cor (continua laranja)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#col-edit-name"
+   },
+   "text": "Na prensa",
+   "cps": 20,
+   "at": 19.73,
+   "label": "Nome: Na prensa",
+   "clear": true
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const esp=[\"Na prensa\"];let out='';for(let i=0;i<12;i++){const v=[...document.querySelectorAll(\"[role=dialog]\"+' input, '+\"[role=dialog]\"+' textarea')].map(e=>e.value).join(' | ');const falta=esp.filter(e=>!v.includes(e));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+v.slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere nome Na prensa"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 21.39
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] button[role=switch]"
+   },
+   "seconds": 1.4,
+   "at": 23.04,
+   "label": "[ZOOM] chave Coluna de conclusão (desligada)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "As ordens finalizadas vão automaticamente",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.0,
+   "at": 28.06,
+   "label": "a explicação da chave",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Salvar",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 30.89,
+   "label": "Salvar"
+  },
+  {
+   "do": "waitFor",
+   "text": "Coluna atualizada",
+   "timeout": 8
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 31.39
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Na prensa",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.8,
+   "at": 33.72,
+   "label": "a coluna Na prensa",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 34.92
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Concluída",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.5,
+   "at": 37.94,
+   "label": "a coluna Concluída",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main span[title='Coluna de conclusão']"
+   },
+   "seconds": 1.4,
+   "at": 40.22,
+   "label": "[ZOOM] sinal de check da Concluída (Coluna de conclusão)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 42.72
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const c=[...document.querySelectorAll('main div')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowX)&&e.scrollWidth>e.clientWidth+4);if(!c)return 'SEM ROLAGEM';const x0=c.scrollLeft,t0=performance.now();const alvo=Math.max(0,Math.min(c.scrollWidth-c.clientWidth,x0+(300)));await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollLeft=x0+(alvo-x0)*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'x:'+Math.round(c.scrollLeft)})()",
+   "at": 44.04,
+   "label": "a faixa do quadro mostra o fim (botão Coluna)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Coluna",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 1.2,
+   "at": 44.52,
+   "label": "botão Coluna (sem clicar)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 48.46
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const c=[...document.querySelectorAll('main div')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowX)&&e.scrollWidth>e.clientWidth+4);if(!c)return 'SEM ROLAGEM';const x0=c.scrollLeft,t0=performance.now();const alvo=Math.max(0,Math.min(c.scrollWidth-c.clientWidth,x0+(-300)));await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollLeft=x0+(alvo-x0)*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'x:'+Math.round(c.scrollLeft)})()",
+   "at": 48.46,
+   "label": "a faixa do quadro volta ao começo"
+  },
+  {
+   "do": "drag",
+   "target": {
+    "selector": "main div.group:has(span:text-is('#3')) p.font-medium"
+   },
+   "to": {
+    "selector": "main div.rounded-xl:has(> div button:text-is('Na prensa')) > div.flex-1"
+   },
+   "at": 49.94,
+   "label": "arrasta a #3 para Na prensa"
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 57.99
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "main div.overflow-x-auto"
+   },
+   "text": "",
+   "noClick": true,
+   "optional": true,
+   "timeout": 4,
+   "at": 57.99,
+   "label": "o quadro inteiro"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Concluída",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 1.0,
+   "at": 59.34,
+   "label": "a coluna de conclusão",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 70.64
+  }
+ ]
+}

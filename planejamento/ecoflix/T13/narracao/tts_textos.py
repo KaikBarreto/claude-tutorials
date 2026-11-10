@@ -75,11 +75,11 @@ Agora um pagamento em parte. A Hidráulica Moréti pediu metade na entrega das p
 No valor, mil setecentos e quarenta reais. A tela mostra quanto falta pra quitar.
 Como sobrou uma parte, aparece o Novo vencimento do restante. Coloco trinta de novembro.
 Confirmar. A conta ficou Parcial: mostra quanto já foi pago e quanto era, e agora vence dia trinta.""",
-10: """Agora, o fiado. Ele aparece na mesma lista, com a etiqueta roxa Saldo. A Aços Quiririm levou três mil quilos de ferro misto a prazo: três mil cento e cinquenta reais.
+10: """Agora, o fiado. Ele aparece na mesma lista, com a etiqueta roxa Saldo. A Aços Quiririm levou ferro e chaparia a prazo: quatro mil oitocentos e setenta reais.
 A linha de saldo não tem vencimento nem categoria. É o total que o cliente deve, como o caderninho do balcão.
 A baixa dele é própria. Clico em Receber. A Aços Quiririm mandou um Pix, então troco pro Pix e escolho a Conta Principal.
-Ela pagou dois mil reais. Embaixo, a tela já mostra o saldo depois da baixa: mil cento e cinquenta.
-Confirmar recebimento. O saldo da Aços Quiririm caiu pra mil cento e cinquenta.
+Ela pagou dois mil reais. Embaixo, a tela já mostra o saldo depois da baixa: dois mil oitocentos e setenta.
+Confirmar recebimento. O saldo da Aços Quiririm caiu pra dois mil oitocentos e setenta.
 Agora repara na Fundição Bandeira do Vale. Ela comprou trezentos quilos de cobre mel a prazo, em três vezes. E aqui só aparecem as parcelas.
 Uma dica: se o saldo de um cliente sumir da lista, olha se a venda foi parcelada. Na venda a prazo em parcelas, o mesmo dinheiro fica no saldo e nas parcelas. Pra não cobrar duas vezes, a lista desconta do saldo o que já virou parcela.
 Se tudo virou parcela, a linha de saldo some. Se só uma parte virou, ela mostra só o que sobra.

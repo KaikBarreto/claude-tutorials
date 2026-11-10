@@ -1,0 +1,509 @@
+{
+ "name": "t26-cap10",
+ "title": "T26 · Cap. 10 · A ficha da oportunidade (narração 65,3 s, ESTIMADA; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
+ "fakeNow": "2026-11-10T08:30:00-03:00",
+ "seed": "t26-cap10",
+ "pace": 0.5,
+ "cps": 22,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 470
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true",
+  "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10"
+ },
+ "seedExtra": [
+  "t26/apos-cap09"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/login"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "timeout": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "••••••••"
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Rafael",
+   "timeout": 45
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 20
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const sb=document.querySelector('[data-state][data-collapsible]');if(sb&&sb.getAttribute('data-state')==='collapsed')return 'ja recolhido';const b=document.querySelector('header button.h-8.w-8');if(!b)return 'SEM ALVO';b.click();return 'recolhido'})()"
+  },
+  {
+   "do": "wait",
+   "seconds": 0.7
+  },
+  {
+   "do": "goto",
+   "url": "/crm"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie oportunidades e acompanhe seu processo comercial.",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 15
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel|Algo deu errado|Falha ao|Something went wrong/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main section button:has(> p:text-is('Retalho de chapa da Metalúrgica Jequitibá'))"
+   },
+   "at": 0.0,
+   "label": "clique no cartão (abre a ficha)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Comentários e atividades",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "tab",
+    "name": "Detalhes"
+   },
+   "seconds": 0.1,
+   "at": 5.19,
+   "label": "aba Detalhes",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "tab",
+    "name": "Tarefas"
+   },
+   "seconds": 0.1,
+   "at": 6.1,
+   "label": "aba Tarefas (1)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "tab",
+    "name": "Histórico"
+   },
+   "seconds": 0.1,
+   "at": 6.86,
+   "label": "aba Histórico",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 7.74
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog]:has(textarea[placeholder^=\"Escreva um coment\"]) [role=combobox]",
+    "hasText": "Sucata industrial"
+   },
+   "seconds": 0.1,
+   "at": 9.56,
+   "label": "Funil: Sucata industrial",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog]:has(textarea[placeholder^=\"Escreva um coment\"]) [role=combobox]",
+    "hasText": "Em contato"
+   },
+   "seconds": 0.1,
+   "at": 10.39,
+   "label": "Estágio: Em contato",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog]:has(textarea[placeholder^=\"Escreva um coment\"]) [role=combobox]",
+    "hasText": "Sem responsável"
+   },
+   "seconds": 0.3,
+   "at": 11.3,
+   "label": "Responsável: Sem responsável",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "select",
+   "target": {
+    "selector": "[role=dialog]:has(textarea[placeholder^=\"Escreva um coment\"]) [role=combobox]",
+    "hasText": "Sem responsável"
+   },
+   "option": "Rafael Nogueira",
+   "at": 12.98,
+   "label": "Responsável: Rafael Nogueira"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "[role=dialog]:has(textarea[placeholder^=\"Escreva um coment\"]) [role=combobox]",
+    "hasText": "Rafael Nogueira"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 18.49
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const d=[...document.querySelectorAll(\"[role=dialog]:has(textarea[placeholder^=\\\"Escreva um coment\\\"])\")].pop();if(!d)return 'SEM JANELA';const el=[...d.querySelectorAll('label, p, h3, span, button')].filter(e=>e.textContent.trim().startsWith(\"Valor Estimado\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';let c=el.parentElement;while(c&&c!==d.parentElement){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)break;c=c.parentElement;}if(!c||c===d.parentElement)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-160);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 18.89,
+   "label": "a ficha desce até os valores"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Valor Estimado",
+    "exact": true,
+    "within": "[role=dialog]:has(textarea[placeholder^=\"Escreva um coment\"])"
+   },
+   "seconds": 0.1,
+   "at": 19.78,
+   "label": "Valor Estimado R$ 8.400,00",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Previsão Fechamento",
+    "exact": true,
+    "within": "[role=dialog]:has(textarea[placeholder^=\"Escreva um coment\"])"
+   },
+   "seconds": 0.1,
+   "at": 20.61,
+   "label": "Previsão Fechamento 30/11/2026",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Material",
+    "exact": true,
+    "within": "[role=dialog]:has(textarea[placeholder^=\"Escreva um coment\"])"
+   },
+   "seconds": 0.1,
+   "at": 21.67,
+   "label": "Material: Chaparia",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Empresa",
+    "exact": true,
+    "within": "[role=dialog]:has(textarea[placeholder^=\"Escreva um coment\"])"
+   },
+   "seconds": 0.1,
+   "at": 22.66,
+   "label": "Empresa: Metalúrgica Jequitibá",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const d=[...document.querySelectorAll(\"[role=dialog]:has(textarea[placeholder^=\\\"Escreva um coment\\\"])\")].pop();if(!d)return 'SEM JANELA';const el=[...d.querySelectorAll('label, p, h3, span, button')].filter(e=>e.textContent.trim().startsWith(\"Observa\\u00e7\\u00f5es\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';let c=el.parentElement;while(c&&c!==d.parentElement){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)break;c=c.parentElement;}if(!c||c===d.parentElement)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-300);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 23.42,
+   "label": "a ficha desce até as Observações"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "#opportunity-notes"
+   },
+   "seconds": 3.0,
+   "at": 25.16,
+   "label": "Observações (salvam sozinhas; o motivo da perda vai aqui)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 31.36
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const d=[...document.querySelectorAll(\"[role=dialog]:has(textarea[placeholder^=\\\"Escreva um coment\\\"])\")].pop();if(!d)return 'SEM JANELA';const el=[...d.querySelectorAll('label, p, h3, span, button')].filter(e=>e.textContent.trim().startsWith(\"Etiquetas\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';let c=el.parentElement;while(c&&c!==d.parentElement){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)break;c=c.parentElement;}if(!c||c===d.parentElement)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-380);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 31.96,
+   "label": "a ficha desce até Etiquetas e Checklists"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Gerenciar",
+    "exact": true,
+    "within": "[role=dialog]:has(textarea[placeholder^=\"Escreva um coment\"])"
+   },
+   "at": 32.9,
+   "label": "Etiquetas: Gerenciar"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] button:has-text('Indústria')"
+   },
+   "at": 33.79,
+   "label": "marca Indústria",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "[role=dialog]:has(textarea[placeholder^=\"Escreva um coment\"]) span:text-is('Indústria')"
+   },
+   "timeout": 6
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "label": "fecha a lista das etiquetas"
+  },
+  {
+   "do": "wait",
+   "seconds": 0.4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Aplicar modelo",
+    "within": "[role=dialog]:has(textarea[placeholder^=\"Escreva um coment\"])"
+   },
+   "seconds": 1.6,
+   "at": 38.72,
+   "label": "Checklists: Aplicar modelo (sem clicar)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 41.88
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const d=[...document.querySelectorAll(\"[role=dialog]:has(textarea[placeholder^=\\\"Escreva um coment\\\"])\")].pop();if(!d)return 'SEM JANELA';const el=[...d.querySelectorAll('label, p, h3, span, button')].filter(e=>e.textContent.trim().startsWith(\"Detalhes\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';let c=el.parentElement;while(c&&c!==d.parentElement){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)break;c=c.parentElement;}if(!c||c===d.parentElement)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-140);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 42.18,
+   "label": "a ficha sobe até as abas"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Tarefas"
+   },
+   "at": 42.52,
+   "label": "aba Tarefas"
+  },
+  {
+   "do": "waitFor",
+   "text": "Agendar visita na Metalúrgica Jequitibá",
+   "timeout": 8
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Agendar visita na Metalúrgica Jequitibá\", \"11/11\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]:has(textarea[placeholder^=\\\"Escreva um coment\\\"])\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere a tarefa da automação, 11/11"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog]:has(textarea[placeholder^=\"Escreva um coment\"]) p:text-is('Agendar visita na Metalúrgica Jequitibá')"
+   },
+   "seconds": 1.2,
+   "at": 46.28,
+   "label": "tarefa da automação: Agendar visita na Metalúrgica Jequitibá (11/11)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Concluir tarefa",
+    "exact": true,
+    "within": "[role=dialog]:has(textarea[placeholder^=\"Escreva um coment\"])"
+   },
+   "at": 51.93,
+   "label": "Concluir tarefa"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "role": "button",
+    "name": "Reabrir tarefa",
+    "exact": true,
+    "within": "[role=dialog]:has(textarea[placeholder^=\"Escreva um coment\"])"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 52.86
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Histórico"
+   },
+   "at": 53.27,
+   "label": "aba Histórico"
+  },
+  {
+   "do": "waitFor",
+   "text": "Etapa alterada de \"Novo\" para \"Em contato\".",
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Etapa alterada de \"Novo\" para \"Em contato\".",
+    "exact": true,
+    "within": "[role=dialog]:has(textarea[placeholder^=\"Escreva um coment\"])"
+   },
+   "seconds": 2.0,
+   "at": 55.14,
+   "label": "Histórico: Etapa alterada de \"Novo\" para \"Em contato\". (quem e quando)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 58.45
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Fechar",
+    "exact": true,
+    "within": "[role=dialog]:has(textarea[placeholder^=\"Escreva um coment\"])"
+   },
+   "at": 58.55,
+   "label": "fecha a ficha",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "selector": "[role=dialog]:has(textarea[placeholder^=\"Escreva um coment\"])"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "drag",
+   "target": {
+    "selector": "main section div.rounded-lg:has(> div p:text-is('Retalho de chapa da Metalúrgica Jequitibá')) button[aria-label='Mover oportunidade']"
+   },
+   "to": {
+    "selector": "main section:has(> header h2:text-is('Visita técnica'))"
+   },
+   "at": 60.7,
+   "label": "arrasta o cartão para Visita técnica (agora passa)",
+   "hold": 0.5
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "main section:has(> header h2:text-is('Visita técnica')) p:text-is('Retalho de chapa da Metalúrgica Jequitibá')"
+   },
+   "timeout": 10
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Visita técnica\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere o cartão em Visita técnica"
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 65.26
+  }
+ ]
+}

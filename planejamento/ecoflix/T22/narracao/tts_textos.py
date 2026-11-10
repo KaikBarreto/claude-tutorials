@@ -25,26 +25,26 @@ Vincular. Pronto, a filial está no Grupo Recicla Vale.
 Do lado dela, o dia a dia segue igual: a filial continua usando o próprio sistema, e a matriz passa a enxergar os números.""",
 4: """De volta à matriz. Com a filial no grupo, o Dashboard Gerencial já mostra as duas unidades.
 Vou olhar outubro inteiro: em cima, Mês passado. E aqui dá pra ver todas as unidades juntas, ou uma de cada vez.
-Os cartões somam o grupo. Em outubro, a receita foi de duzentos e cinquenta e oito mil reais, e a despesa, de duzentos e cinquenta e um mil.
+Os cartões somam o grupo. Em outubro, a receita foi de trezentos e quarenta e quatro mil e quarenta reais, e a despesa, de trezentos e setenta mil, seiscentos e noventa.
 A setinha compara com o mês anterior. E o Estoque Total soma o estoque das duas unidades.
 No gráfico, cada unidade aparece com a receita e a despesa lado a lado. A estrela marca a matriz.""",
-5: """E o ranking ordena as unidades pelo lucro. Em outubro, a matriz ficou na frente.
+5: """E o ranking ordena as unidades pelo lucro. Em outubro, a filial ficou na frente, e a matriz, no vermelho.
 Embaixo vem o resumo por unidade, em números.
-A matriz vendeu cento e oitenta e seis mil, gastou cento e oitenta mil e lucrou seis mil reais. Margem de três vírgula dois por cento.
+A matriz teve duzentos e setenta e dois mil e quarenta de receita e duzentos e noventa e nove mil, seiscentos e noventa de despesa. Ficou negativa em vinte e sete mil, seiscentos e cinquenta reais.
 A filial vendeu setenta e dois mil, gastou setenta e um mil e lucrou mil reais.
-Repara que a margem é pequena. É que aqui entra a compra inteira do mês, até o material que ainda está no pátio esperando venda. Isso fica claro na dê-érri-ê, com o regime de competência.""",
+Repara no vermelho da matriz. É que aqui entra a compra inteira do mês, até o material que ainda está no pátio esperando venda. Isso fica claro na dê-érri-ê, com o regime de competência.""",
 6: """Agora o Financeiro. Na aba dê-érri-ê, com outubro escolhido, fica a dê-érri-ê do grupo inteiro.
-Começo pelo regime de caixa, o dinheiro que entrou e saiu. O grupo vendeu duzentos e cinquenta e oito mil e comprou duzentos e vinte mil em material.
-Tirando as despesas da operação, trinta e um mil, sobram sete mil reais no mês.
+Começo pelo regime de caixa, o dinheiro que entrou e saiu. O grupo vendeu trezentos e quarenta e um mil, duzentos e quarenta, e comprou trezentos e dezoito mil, oitocentos e sessenta em material.
+Tirando os impostos e as despesas da operação, e somando o aluguel de caçamba, o mês fecha no vermelho: menos vinte e seis mil, seiscentos e cinquenta reais.
 E no Comparativo fica a mesma dê-érri-ê, unidade por unidade.
-Os sete mil do grupo são seis mil da matriz e mil da filial. Assim você vê de onde vem o resultado.""",
-7: """Agora o mesmo outubro em regime de competência. No lugar das compras entra o cê-ême-vê, o custo só do material que foi vendido: cento e noventa e quatro mil.
-E o resultado do mês sobe pra trinta e três mil reais.
-A diferença, vinte e seis mil, é o material que a gente comprou em outubro e ainda está no pátio. No caixa, ele já pesa no mês. Na competência, ele só vira custo quando for vendido.
+O vermelho do grupo vem da matriz, menos vinte e sete mil, seiscentos e cinquenta, contra mil positivos da filial. Assim você vê de onde vem o resultado.""",
+7: """Agora o mesmo outubro em regime de competência. No lugar das compras entra o cê-ême-vê, o custo só do material que foi vendido: duzentos e setenta e três mil, oitocentos e sessenta.
+E o resultado do mês vira positivo: dezoito mil, trezentos e cinquenta reais.
+A diferença, quarenta e cinco mil, é o material que a gente comprou em outubro e ainda está no pátio. No caixa, ele já pesa no mês. Na competência, ele só vira custo quando for vendido.
 O caixa mostra o dinheiro do mês. A competência mostra o lucro do que foi vendido. Os dois estão certos: cada um responde uma pergunta.
 Uma dica: se aparecer aqui o aviso de material em estoque sem custo de compra, o lucro em competência pode estar maior do que é. Confira as entradas do período antes de decidir em cima do número.""",
 8: """Agora o estoque. No Estoque Gerencial, a Visão Geral junta o estoque das duas unidades.
-Na tabela, cada material numa linha e cada unidade numa coluna. O alumínio latinha: quatro mil e trezentos quilos na matriz e mil oitocentos e cinquenta na filial. No total, seis mil cento e cinquenta.
+Na tabela, cada material numa linha e cada unidade numa coluna. O alumínio latinha: seiscentos e quarenta quilos na matriz e mil oitocentos e cinquenta na filial. No total, dois mil quatrocentos e noventa.
 Na Posição de Estoque, você vê o saldo de cada material numa data, com o custo médio e o valor.
 No Histórico de Materiais, cada entrada e cada saída, com a unidade de onde veio.
 E no Relatório de Estoque, quanto o grupo comprou e vendeu de cada material, com o lucro e a margem.""",
@@ -61,7 +61,7 @@ Assim, nenhum estoque se move sem confirmação. Em Nova, a origem é a filial e
 O material é o alumínio latinha: mil e duzentos quilos.
 Repara no aviso do resumo: com a aprovação ligada, o estoque ainda não se move. Clico em Solicitar uma transferência.
 A transferência fica pendente. Quando o caminhão chega na matriz e o material é conferido, aí sim, Executar. A tela pede pra confirmar que o destino está de acordo.
-Confirmar e Executar. Pronto: a matriz fica com cinco mil e quinhentos quilos, e a filial com seiscentos e cinquenta. O total do grupo continua o mesmo.
+Confirmar e Executar. Pronto: a matriz fica com mil oitocentos e quarenta quilos, e a filial com seiscentos e cinquenta. O total do grupo continua o mesmo.
 Uma dica: um material do grupo pode juntar mais de um material de uma unidade. O total do grupo soma todos, e a transferência tira de um só. Se o número do grupo parecer estranho, confira material por material.""",
 11: """Por último, as assinaturas. Cada unidade tem a sua, e aqui a matriz vê todas: o plano, se está ativa e quando vence.
 E dá pra pagar tudo de uma vez, numa fatura só, na matriz.

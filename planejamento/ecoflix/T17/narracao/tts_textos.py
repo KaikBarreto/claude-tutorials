@@ -16,7 +16,7 @@ Uma dica: quem precisa emitir o manifesto depende da operação e do estado. Con
 2: """Antes do primeiro manifesto, o caminhão e o motorista precisam estar na Frota. Os caminhões da Recicla Vale já estão aqui: é a mesma frota da pesagem.
 Pro manifesto, faltam os dados de transporte do caminhão trúqui. Clico em Editar.
 Ele é emplacado em São Paulo. No Tipo, é um veículo único, sem carreta. O rodado é trúqui, e a carroceria é aberta.
-A tara é o peso do caminhão vazio: sete mil e oitocentos quilos. E ele leva até catorze mil quilos de carga.
+A tara, o peso do caminhão vazio, já veio da frota: seis mil trezentos e oitenta quilos. E ele leva até catorze mil quilos de carga.
 Uma dica: peso aqui é sempre em quilos. Se o número parecer tonelada, a própria tela avisa.
 Salvar, e o caminhão está pronto pro manifesto.
 Agora o motorista. O Edson Moura já está na lista. Clico em Editar.
@@ -50,7 +50,7 @@ Quando ela cobra um trabalho, como a coleta com caçamba, não sai mercadoria ne
 Na lista ficam as notas de serviço emitidas: o número, quem contratou, que aqui se chama tomador, o valor e o status.
 E os dados da empresa que a nota de serviço usa, como a inscrição municipal, ficam nas Configurações Fiscais. Quem confere esses dados é o contador.""",
 7: """Vou cobrar a coleta com caçamba que a Recicla Vale fez na Aços Quiririm. Nova /ˈẽːniˈɛːfiˈɛːsiˈeː/.
-Na data de competência vai o dia do serviço: sete de novembro. No tomador, quem contratou, eu escolho a Aços Quiririm no cadastro.
+Na data de competência vai o dia do serviço: seis de novembro. No tomador, quem contratou, eu escolho a Aços Quiririm no cadastro.
 Avançar. O município já vem como Taubaté. O código do serviço é o seu contador que passa. Aqui, coleta e remoção de resíduos.
 Se a empresa emite sempre o mesmo serviço, ele pode ficar salvo, e aí é só puxar por aqui.
 Na descrição, o que foi feito, do jeito que vai aparecer na nota.
