@@ -3,7 +3,7 @@
 - **Título:** Transporte, serviço e o contador (fonte). 🔒 módulo **Notas Fiscais** (dito na abertura, sem preço).
 - **Antes:** T16 Nota Fiscal de mercadoria (NF-e). **Próximo:** T18 Ambiental: MTR e CDF.
 - **Áreas das vinhetas:** TRANSPORTE · FROTA · MANIFESTO · SERVIÇO · RELATÓRIO FISCAL · ESTOQUE FISCAL · CONTADOR · RESUMO.
-- **Alvo da fonte:** ~16 min. **Estimativa:** ~13 min de vídeo (1.841 palavras, ~11,8 min de fala, + 13 vinhetas + esperas da
+- **Alvo da fonte:** ~16 min. **Estimativa:** ~13 min de vídeo (1.846 palavras, ~11,8 min de fala, + 13 vinhetas + esperas da
   SEFAZ simulada).
 - Regime do exemplo **Lucro Real**; a fala mostra os campos e diz que quem define tributação (código do serviço, alíquota) é o
   contador. Nada de SEFAZ, prefeitura nem numeração de verdade: tudo no backend falso.

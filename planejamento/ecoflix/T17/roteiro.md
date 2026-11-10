@@ -5,7 +5,7 @@
 - **Próximo:** Ambiental: MTR e CDF (T18)
 - **Vinhetas (áreas):** TRANSPORTE · FROTA · MANIFESTO · SERVIÇO · RELATÓRIO FISCAL · ESTOQUE FISCAL · CONTADOR · RESUMO (todo
   capítulo menos o 0)
-- **Duração estimada:** ~13 min de vídeo (1.841 palavras de fala, ~11,8 min a 2,6 palavras/s, mais a vinheta de abertura, 13
+- **Duração estimada:** ~13 min de vídeo (1.846 palavras de fala, ~11,8 min a 2,6 palavras/s, mais a vinheta de abertura, 13
   vinhetas de capítulo, as esperas da SEFAZ simulada e a cartela; alvo da fonte ~16 min)
 - Coluna Fala = texto da narração na grafia da legenda; a grafia de pronúncia do TTS está em `narracao/tts_textos.py`. Coluna Tela =
   o que o robô faz e onde a câmera foca, rótulos entre aspas como no código 1.59.154 (`T17/inventario.md`). Logado como Rafael

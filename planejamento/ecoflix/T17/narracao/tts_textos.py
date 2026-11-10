@@ -45,12 +45,12 @@ Uma dica: encerrar não é cancelar. Encerrar é o fim normal da viagem. Cancela
 No menu de ações, Encerrar. O pedido vai pra sefás, e o selo mostra que o encerramento foi enviado.
 Pronto, encerrado. A viagem está fechada, e o manifesto passa a contar nos encerrados.""",
 6: """Agora, a nota de serviço. Ela fica em Notas de Serviço.
-Pensa assim: quando a Recicla Vale vende sucata, a mercadoria sai do pátio e baixa do estoque. Isso é a nota fiscal de mercadoria, a ene-éfe-ê.
-Quando ela cobra um trabalho, como a coleta com caçamba, nada sai do estoque. Isso é a nota de serviço, a ene-éfe-ésse-ê, que é da prefeitura.
+Pensa assim: quando a Recicla Vale vende sucata, a mercadoria sai do pátio. A nota dessa venda é a nota fiscal de mercadoria, a ene-éfe-ê.
+Quando ela cobra um trabalho, como a coleta com caçamba, não sai mercadoria nenhuma. Essa é a nota de serviço, a ene-éfe-ésse-ê, que é da prefeitura.
 Na lista ficam as notas de serviço emitidas: o número, quem contratou, que aqui se chama tomador, o valor e o status.
 E os dados da empresa que a nota de serviço usa, como a inscrição municipal, ficam nas Configurações Fiscais. Quem confere esses dados é o contador.""",
 7: """Vou cobrar a coleta com caçamba que a Recicla Vale fez na Aços Quiririm. Nova ene-éfe-ésse-ê.
-A data de competência é a do serviço, hoje. No tomador, quem contratou, eu escolho a Aços Quiririm no cadastro.
+Na data de competência vai o dia do serviço: sete de novembro. No tomador, quem contratou, eu escolho a Aços Quiririm no cadastro.
 Avançar. O município já vem como Taubaté. O código do serviço é o seu contador que passa. Aqui, coleta e remoção de resíduos.
 Se a empresa emite sempre o mesmo serviço, ele pode ficar salvo, e aí é só puxar por aqui.
 Na descrição, o que foi feito, do jeito que vai aparecer na nota.
@@ -72,11 +72,11 @@ A conta já vem com o valor e os dados da nota. Falta o vencimento, dia vinte, e
 Aqui em cima, o que entrou e o que saiu em notas no mês.
 O saldo é a saída menos a entrada. Em outubro, ficou positivo: setenta e um mil, seiscentos e vinte e cinco reais.
 E o último cartão junta as notas pendentes e as rejeitadas. Aqui está tudo em dia. Se aparecer um número, resolve antes de fechar o mês.
-Embaixo, o gráfico do mês, a divisão por status e os fornecedores e clientes com mais notas.""",
+Embaixo, o gráfico do mês, a divisão por status e o ranking dos fornecedores e dos clientes.""",
 10: """Agora, o estoque fiscal: o estoque contado só pelas notas. Na Posição do estoque, aparece o saldo fiscal de cada material, agora.
 Pra ver um dia do passado, escolho a data e a hora, aqui o fim de outubro, e clico em Ver posição.
 Uma dica: essa posição é só consulta. Ela não muda saldo, nota, movimentação nem o estoque de hoje. E a data é sempre do passado, nunca do futuro.
-No Histórico fiscal fica o cardécs fiscal de cada material. Escolho o metal amarelo: cada linha é uma nota, com o saldo antes e depois.
+No Histórico fiscal fica o cardécs fiscal de cada material. Escolho o metal amarelo: cada linha é uma entrada ou uma saída, com o saldo antes e depois.
 Na última aba, o fiscal e o operacional ficam lado a lado. Repara no metal amarelo: seiscentos quilos de diferença.
 Foi uma venda pra Fundição Bandeira do Vale. A nota saiu no dia trinta de outubro, mas o pedido só foi finalizado no dia três de novembro.
 O fiscal segue as notas. O operacional segue as compras, os pedidos e o pátio. Por isso, os dois podem dar diferente.

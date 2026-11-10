@@ -9,7 +9,7 @@ Então a gente vai ver com quanto o caixa abre, com quanto ele fecha, e onde fic
 Tudo isso fica no menu lateral, em Financeiro, Caixa.
 Se você ainda não viu o tutorial Balança e impressora, o Ecotrêi, dá uma olhada antes. [pause] Vamos começar pela tela com o caixa fechado.""",
 1: """Essa é a tela do caixa logo cedo, antes de abrir. Em Meu Caixa fica o botão Abrir Caixa.
-E esse cartão amarelo é o último caixa que eu fechei, o de ontem, com o valor e o horário. Ele serve pra reabrir, se precisar corrigir alguma coisa. No fim do tutorial a gente usa.
+E esse cartão amarelo é o último caixa que eu fechei, o de ontem, com o valor e o horário. Ele serve pra reabrir, se precisar corrigir alguma coisa.
 Mais embaixo, o Painel Gerencial mostra os caixas abertos no dia. Por enquanto, nenhum.
 Quem não tem acesso aos caixas da equipe toda vê, no lugar disso, um cartão grande escrito Caixa Fechado, com o mesmo botão.
 Repara o que acontece se alguém tenta lançar uma compra agora: o sistema avisa Abra o caixa antes de realizar compras e volta pra cá.
@@ -18,11 +18,11 @@ Uma dica: venda, despesa e receita também precisam de caixa aberto. Então o di
 O campo vem vazio de propósito. Embaixo tem uma dica: mil duzentos e cinquenta reais foi o que sobrou no último caixa.
 Uma dica: esse número é só uma referência. Conte o dinheiro da gaveta e digite o que contou. Copiar a dica sem contar é o motivo mais comum de diferença no fechamento.
 Hoje cedo eu pus mais troco na gaveta e contei mil e quinhentos reais. É isso que eu digito.
-Abrir Caixa. Pronto: o caixa abriu com mil e quinhentos reais, e a tela já mostra o caixa aberto.""",
+Abrir Caixa. Pronto: o caixa abriu com mil e quinhentos reais.""",
 3: """Lá embaixo, no Histórico de Transações, o sistema lançou sozinho a linha Abertura do Caixa, com os mil e quinhentos. Isso acontece sempre que o caixa abre com dinheiro.
 Agora imagina um dia em que a Recicla Vale só entrega carga pros clientes, e eles pagam por Pix ou transferência. Nenhum dinheiro vivo passa pela gaveta.
 Aí faz sentido abrir o caixa com zero. É só deixar o campo vazio ou digitar zero.
-Agora é a vez do caixa do Marcos, o balanceiro. No Início, o administrador também abre caixa pra outra pessoa: em Abrir para o usuário, eu escolho o Marcos.
+Agora, o caixa do Marcos, o balanceiro. No Início, o administrador abre caixa pra outra pessoa: em Abrir para o usuário, escolho o Marcos.
 Repara no aviso amarelo: com o campo vazio, o caixa abre sem dinheiro em espécie. Uma dica: aberto com zero, o caixa não ganha a linha de abertura no histórico. Não está faltando nada.
 Mas o Marcos paga os fornecedores em dinheiro na balança. Então o caixa dele precisa de dinheiro, e quem diz quanto dá é o cofre.""",
 4: """Embaixo do campo, o sistema mostra o disponível no cofre: dezessete mil reais, de dezoito mil e quinhentos no total. Mil e quinhentos estão dentro de caixas abertos.
