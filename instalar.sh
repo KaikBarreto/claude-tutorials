@@ -10,6 +10,8 @@
 #   PERFIL    perfil pronto de uma série (pasta perfis/<nome>): marca, voz, pronúncias e padrão de montagem.
 #             PERFIL=domiflix = o padrão do T3 da Dominex, idêntico. Sem perfil: modelos neutros.
 #   MARCA     pasta com marca.json + arquivos da marca (logo, fontes). Padrão: a do PERFIL, senão modelos/.
+#   APP_SRC   código do app (git archive da versão publicada). Se a marca tem som próprio da vinheta fora do git
+#             ("vinheta.som" + "som_origem", ex.: EcoFlix), ele é copiado daí para $TUT_HOME/marca.
 #
 # Rode de novo para outro tutorial (só TUTORIAL muda); arquivos que já existem não são sobrescritos.
 # Rede: github.com e raw.githubusercontent.com (modelos), pypi.org, registry.npmjs.org.
@@ -31,6 +33,18 @@ mkdir -p "$TUT_HOME/marca"
 if [ ! -f "$TUT_HOME/marca/marca.json" ]; then
   [ -f "$MARCA/marca.json" ] || { echo "MARCA=$MARCA não tem marca.json"; exit 1; }
   cp -r "$MARCA/." "$TUT_HOME/marca/"
+fi
+# som próprio da vinheta (mídia: não vai para o git): copia do código do app; sem ele, a vinheta usa o sintetizado
+SOM="$(python3 -c 'import json,sys; v=json.load(open(sys.argv[1])).get("vinheta") or {}; print(v.get("som","") if isinstance(v,dict) else "", v.get("som_origem","") if isinstance(v,dict) else "", sep="\t")' "$TUT_HOME/marca/marca.json")"
+SOM_DST="$(printf '%s' "$SOM" | cut -f1)"; SOM_ORIG="$(printf '%s' "$SOM" | cut -f2)"
+if [ -n "$SOM_DST" ] && [ ! -f "$TUT_HOME/marca/$SOM_DST" ]; then
+  if [ -n "${APP_SRC:-}" ] && [ -n "$SOM_ORIG" ] && [ -f "$APP_SRC/$SOM_ORIG" ]; then
+    mkdir -p "$(dirname "$TUT_HOME/marca/$SOM_DST")"; cp "$APP_SRC/$SOM_ORIG" "$TUT_HOME/marca/$SOM_DST"
+    echo "som da vinheta: $APP_SRC/$SOM_ORIG -> marca/$SOM_DST"
+  else
+    echo "AVISO: falta o som da vinheta (marca/$SOM_DST). Rode de novo com APP_SRC=<código do app> (copia $SOM_ORIG);"
+    echo "       sem ele, a vinheta sai com o som sintetizado."
+  fi
 fi
 
 # gravador, editor e narração do tutorial
