@@ -1,6 +1,6 @@
 # Inventário · T16 · Nota Fiscal de mercadoria (NF-e)
 
-> EM ANDAMENTO (salvo cedo por segurança; a máquina reiniciou na primeira tentativa).
+> Levantado em 10/11/2026 (segunda tentativa, depois do reinício das 00:40).
 > Código da versão gravada `APP_VERSION = "1.59.154"` (`src/config/version.ts:16`), cópia somente leitura em
 > `/home/claude/ecoflix/app-src-1.59.154/`. Caminhos relativos a `src/`, exceto `supabase/...`.
 
@@ -158,3 +158,119 @@
 - Emitir: grava `invoices` + `invoice_items` (+ `invoice_orders`), toast **"Nota fiscal salva! Enviando para SEFAZ..."**
   (`:5182-5185`); edge `plugnotas-emit`, toast **"Nota fiscal enviada para processamento!"** (`hooks/usePlugNotas.tsx:88`);
   depois "Aguardando SEFAZ" e o polling acima até "Autorizada".
+
+## 6. Visualizar (`NotaFiscalPreview.tsx`)
+- Título "NF-e #N" + selo de status (`:1664-1672`); botões "DANFE", "Comprovante (Notinha)", "XML", "Gerar nota complementar",
+  "Histórico" (`:744-796`); abas **"DANFE"** e **"XML"** (`:912-919`). Na nota autorizada, faixa verde no topo do DANFE com
+  **"Chave de Acesso"** (botão copiar) e **"Protocolo"** (`:990-1008`); nota não autorizada leva a marca d'água
+  "SIMULAÇÃO". Aba XML: "XML da nota" / "Mesmo arquivo enviado à SEFAZ. Pode selecionar e copiar trechos direto daqui." /
+  "Copiar XML" (`:924-967`).
+
+## 7. A partir de um pedido (`ImportarPedidoModal.tsx`)
+- Botão "Pedido" da barra "Importar de" → **"Importar de Pedido de Venda"** (ou "de Compra") (`:637-640`); busca "Buscar por
+  nº do pedido ou cliente..." + filtro de período; linha "Pedido <ref>" com data, parceiro, peso total, valor e **"Importar"**
+  (`:360-436`, `:526`). Sem abas "Recentes"/"Buscar" (o Guia Técnico ainda cita).
+- Ao importar: toast **"Pedido importado com sucesso!"** e selo "Pedido importado"; o parceiro vira o destinatário e os itens
+  vêm com o **peso líquido** (bruto menos tara e impureza; `NovaNotaModal.tsx:3019-3051`, `:3147-3149`). Tabelas `sale_items`
+  / `purchase_items`; RPC da lista de pedidos.
+
+## 8. Emissão em Massa (Caixa) (`ImportarPedidosCaixaModal.tsx`; só na NF-e de Entrada)
+- **"Emitir NF-e em massa"** / "Selecione as compras e confira exatamente como o lote será numerado e emitido." (`:1160-1161`);
+  "1. Pedidos do lote" / "Escolha as compras que serão faturadas"; abas **"Por Caixa"** / "Por Fornecedor" (`:1168-1190`);
+  data ("Hoje" ou "09 de novembro, 2026"); "Caixas de origem" (nome do operador, selo **"Fechado"**, hora de abertura);
+  "Selecionar todos sem NF-e"; "N/M selecionados" (`:1196-1369`).
+- "2. Configuração e resultado" / "Como as notas serão geradas": "Uma nota por pedido" ("Emite diretamente uma NF-e para cada
+  pedido selecionado.") e **"Uma nota consolidada"** ("Junta os itens e abre a nota para você revisar antes de emitir.");
+  "Série e numeração": "Série fiscal", "Último número usado", "Próximo número", "Faixa prevista para este lote" ("NF-e nº N");
+  "Valor dos pedidos"; "N itens após consolidar."; rodapé "Cancelar" + **"Montar nota consolidada"** (ou "Emitir N notas
+  agora") (`:927-1131`). Toast "N pedido(s) importado(s) com sucesso!" (`:924`).
+- Consolidada por caixa entra como **"Consumidor Final / Não Identificado"** (nota contra a própria empresa)
+  (`NovaNotaModal.tsx:2967-2983`).
+
+## 9. Cancelar e Carta de Correção
+- `CancelarNotaDialog.tsx` + `i18n/locales/pt-BR/invoices.json` (`cancelDialog.*`): **"Cancelar Nota Fiscal #N"** / "Esta ação
+  irá marcar a nota fiscal como cancelada. Por favor, informe o motivo do cancelamento."; **"Motivo do Cancelamento"**
+  (placeholder "Informe o motivo do cancelamento (mínimo 15 caracteres)..."; "Faltam N caractere(s) (mínimo 15 exigido pela
+  SEFAZ)"; máximo 255); "Voltar", **"Confirmar Cancelamento"**. Até 24 h da autorização, sem alerta (depois, "Fora do prazo
+  normal de 24h", até 480 h). Edge `plugnotas-cancel`; toasts "Nota fiscal cancelada" ou "Cancelamento em processamento, pode
+  levar alguns instantes" (selo "Cancelando…") (`hooks/usePlugNotas.tsx:104-147`).
+- `CartaCorrecaoDialog.tsx`: **"Carta de Correção - NF-e #N"**; alerta "Importante: A Carta de Correção (CC-e) permite
+  corrigir erros em campos específicos da NF-e. Não é permitido corrigir: valores, quantidade, dados de identificação do
+  remetente/destinatário, data de emissão, ou qualquer informação que altere o cálculo do imposto." (`:193-200`); "Nova Carta
+  de Correção" / "Descreva de forma clara e objetiva a correção a ser feita"; **"Texto da Correção *"** (15 a 1000
+  caracteres, contador "N/1000"); "Dica: Use o formato "Onde se lê '...', leia-se '...'" para deixar a correção clara.";
+  "Fechar", **"Enviar CC-e"** (`:152-319`). Toast "Carta de Correção enviada com sucesso!" (`hooks/useCartaCorrecao.tsx:33`).
+  Depois: "1 CC-e enviada", "PDF", "XML", "✅ Registrada na SEFAZ · protocolo ...". Limite 20 por nota. Edge `plugnotas-cce`.
+
+## 10. Inutilizar (`InutilizarNumeracaoDialog.tsx`)
+- Três pontinhos ao lado de "Nova Nota" → "Inutilizar numeração" → **"Inutilizar Numeração de NF-e"**; aviso **"Operação
+  irreversível!"** com "Os números ficam permanentemente bloqueados", "Só funciona em números que NUNCA foram autorizados pela
+  SEFAZ", "Prazo SEFAZ: até dia 10 do mês seguinte ao pulo", "Para anular nota emitida, use Cancelamento" (`:445-459`).
+- Abas **"Por Faixa"** / "Inutilizar Rejeitadas" (`:491-503`); "Série *", "Ano *", **"Número Inicial *"**, "Número Final"
+  ("Igual ao inicial"); resumo "Inutilizará as Notas #A até #B da Série 1, ano 2026" (`:509-578`); **"Justificativa *
+  (mínimo 15 caracteres)"** (placeholder "Ex: Numeração não utilizada por falha de sistema durante emissão"); botão
+  **"Inutilizar na SEFAZ"**; toast "Numeração inutilizada com sucesso". Edge `plugnotas-inutilize` (grava
+  `nfe_inutilized_numbers`; marca `invoices` da faixa como `inutilizada`).
+- Sub-aba "Inutilizadas": **"Numerações Inutilizadas"** / "Números fechados na SEFAZ que não viraram nota. Escolha o tipo para
+  ver as inutilizações de Saída ou de Entrada." + "Saída" / "Entrada" (`NotasFiscais.tsx:2035-2070`); lista via RPC
+  `get_invoices_paged` (`p_include_inutilizadas`).
+
+## 11. DANFE e XML (`hooks/usePlugNotas.tsx:220-310`)
+- Menu da linha "Download DANFE": PDF em aba nova, nome "DANFE N - Recicla Vale Metais" (atalho do bucket `nfe-danfes` ou
+  edge `plugnotas-download`). "Download XML": arquivo "NFe N - Recicla Vale Metais.xml". "XML de Cancelamento" na cancelada:
+  "Cancelamento N - ....xml".
+
+## 12. Notas Recebidas (`notas-recebidas/NotasRecebidasTab.tsx`)
+- Desligado: **"Ative as Notas Recebidas"** / "Com este recurso ativo, as NF-e emitidas contra o CNPJ da sua empresa (por
+  fornecedores e indústrias que autofaturam) passam a entrar aqui automaticamente. Ative para começar a receber."; **"Ativar
+  Notas Recebidas"**; nota "Este recurso consulta a base da SEFAZ pelo seu provedor fiscal. Dependendo do seu plano, pode haver
+  consumo de cota — ..." (`:1797-1860`).
+- Confirmação **"Ativar consulta de notas recebidas?"** ("Ao ativar, cada nota fiscal recebida dos seus fornecedores passa a
+  contar na sua cota mensal de documentos fiscais — o mesmo limite das notas que você emite. ... A contagem vale a partir da
+  ativação."; "Você já usou N de L documentos fiscais neste mês."); "Cancelar", **"Ativar mesmo assim"**; toast "Notas
+  Recebidas ativado" (`:1308-1378`, `:430-436`).
+- Ativo: **"Notas emitidas contra o seu CNPJ"** (dica: "São as NF-e que fornecedores emitiram tendo o seu CNPJ como
+  destinatário, buscadas diretamente na SEFAZ. ..."), chave "Recurso ativo", **"Importar nota"**, **"Sincronizar agora"**,
+  busca "Buscar por emitente, CNPJ, chave ou natureza"; colunas "Emitente", "Valor", "Emissão", "SEFAZ", "Manifestação",
+  "Ações" (`:1898-2100`). Selos SEFAZ "Autorizada"/"Cancelada"/"Denegada"; manifestação "Ciência", "Confirmada",
+  "Desconhecida", "Não realizada", "Sem manifestação" (`inboundShared.ts:93-143`).
+- Menu da linha (`:1420-1620`): "Ver XML", "Ver/baixar PDF", **"Buscar documento"** (dica "Baixa o XML e o DANFE (não
+  confirma nem recusa nada)"); "Financeiro": "Lançar despesa / conta", "Pendurar no saldo do fornecedor", **"Lançar
+  compra…"**, "Contar no estoque fiscal"; "Manifestar": **"Confirmar operação"** (dica "Confirma que a compra/entrada é sua"),
+  **"Desconhecer operação"**, **"Operação não realizada"**.
+- Confirmar: sem justificativa; toast "Operação confirmada junto à SEFAZ" (`:559-583`). Negativas (`ManifestarDialog.tsx`):
+  "Você está declarando à SEFAZ que NÃO reconhece esta operação." / "... NÃO foi realizada." + "Esta manifestação é
+  registrada na SEFAZ e não pode ser desfeita."; justificativa mínima de 15; "Confirmar manifestação".
+- 🚫 Ciência: não existe botão; é automática pelo provedor e não é pré-requisito do download (`inboundShared.ts:346-362`).
+- Backend: edges `plugnotas-enable-dfe`, `plugnotas-dfe-sync`, `plugnotas-manifestar`, `plugnotas-dfe-fetch-doc`; hook
+  `useInboundNfe`.
+
+## 13. Importar por XML e casamento de material
+- "Importar nota" (`ImportInboundNfeDialog.tsx`): **"Importar nota recebida"** / "Traga uma NF-e para esta lista pela chave
+  de acesso ou pelo XML autorizado."; abas "Chave de acesso" / **"Arquivo XML"** ("Selecione o XML autorizado da NF-e");
+  "Cancelar", **"Importar nota"**; "Aguardando a janela segura" / "Processando a nota" ("O XML está na fila da VPS e deve
+  aparecer na lista em instantes."); **"Nota importada"** / "A NF-e já foi adicionada à lista. ..."; **"Concluir"**.
+  RPC `dfe_inbound_import_enqueue` + fila de jobs (`hooks/useInboundNfeImport.ts:77-100`).
+- "Lançar compra…" abre `components/ImportNfeXmlDialog.tsx` com o XML da nota: título "Importar NF-e nº N — <emitente>"
+  (`:350`); "Fornecedor: <nome>" + "por CNPJ/CPF"; cartão por item: nome do XML, "cProd · NCM ...", selo de confiança
+  **"alta"**, **"confira"**, "baixa" ou "sem correspondência" (`:73-77`), "Qtd", "Valor un.", "Material" (busca "Buscar
+  material..."); "A NF-e traz só o peso líquido — bruto, tara e impureza continuam manuais."; rodapé "Contar também no estoque
+  fiscal", "Cancelar", "Conferir na tela de compra" (dica "Ao continuar, abrimos um pedido novo na tela de Compra com estes
+  itens preenchidos. Nada é lançado agora — ...") (`NotasRecebidasTab.tsx:2562-2595`).
+- Regra do casamento (`lib/nfe/matchMaterial.ts`): código igual ou nome igual (sem acento e sem caixa) = "alta"; senão,
+  palavras em comum (≥ 3 letras) / maior lista, NCM igual soma 0,15: ≥ 0,85 "alta", ≥ 0,6 "confira", ≥ 0,34 "baixa".
+  "alta" e "confira" vêm marcados; "baixa" fica para o operador (`lib/nfe/buildImportModel.ts:61-66`).
+
+## 14. Código × fonte (vale o código; vai no relatório)
+1. **Aviso IBS/CBS "fixo no topo"**: o componente existe (`IbsCbsReformaBanner.tsx`) mas não é usado em tela nenhuma. A
+   aula mostra o cartão "Reforma Tributária (IBS/CBS)" de Impostos e não fala das datas.
+2. **"No XML autorizado, o nome do produto sai sem acento"**: no código, `sanitizeNfeText`
+   (`supabase/functions/_shared/nfe-text-sanitize.ts:18-45`) mantém as letras acentuadas e o `xProd` vai com acento ao
+   provedor (`plugnotas-emit/index.ts:2475`). Não dá para conferir: fica fora da fala.
+3. **"Cancelado continua contando na cota"**: depende da RPC `count_fiscal_documents_in_month` (não está na cópia). Fica na
+   fala como está na fonte; conferir no banco.
+4. Guia Técnico desatualizado (a aula segue o código): abas "Dados" e "Itens" (não "Dados & Itens"); "Número previsto" (não
+   "Número (automático)"); modal de pedido sem "Recentes"/"Buscar"; cancelamento até 24 h + 480 h; o bloco "Como funciona?"
+   não existe mais na tela de NF-e.
+5. Sobram na tela e não entram na fala: "SPED Fiscal" (selo "BETA", fora da trilha), "Exportação Contábil" (T17),
+   `EmissionFlowTimeline.tsx` (não usado; serve de base para a ilustração do caminho da nota).

@@ -117,3 +117,8 @@ Decisões:
   Icêémiésse". Grafias de corrido, numa palavra (a troca volta a ser 1 para 1: o ajuste no `proc.py` deixa de ser
   necessário). Quarto teste no fluxo de teste. Na revisão geral, trocar também "éne éfe é", "éne éfe ésse é" e
   "i cê eme éssi" pelas grafias novas.
+- 10/11 01:10 Kaik: "ficou horrivel ainda, não tá vocálico, veja se dá pra descrever exatamente o som pro eleven labs /
+  na frase "a nf-e saiu e o icms está certo" o nf-e e icms está otimo". Dentro da frase, a grafia de corrido funciona;
+  sozinha, não. O guia do eleven_v4 aceita o som exato em IPA entre barras ("/ʃɪˈvɔːn/"). Quinto teste em IPA, sozinhas e
+  em frases: NF-e /ˌẽniˌɛfiˈe/, NFS-e /ˌẽniˌɛfiˌɛsiˈe/, ICMS /iseˌɛmiˈɛsi/. Se o Kaik aprovar, o IPA vira a grafia
+  do TTS dessas três (a troca IPA → sigla é 1 para 1) e vale para outras siglas difíceis.
