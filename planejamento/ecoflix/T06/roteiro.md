@@ -11,7 +11,7 @@ Marcos Antunes. Cada capítulo parte de um navegador novo com a semente indicada
 - **Próximo:** Comprar e vender sucata (T7)
 - **Vinhetas (áreas):** CAIXA · ABERTURA · COFRE · MULTI-CAIXA · MOVIMENTAÇÕES · FECHAMENTO · RESUMO
 - **FAKE_NOW:** 10/11/2026 08:30 nos capítulos 0 a 9; 10/11/2026 17:40 nos capítulos 10 a 12.
-- **Duração estimada:** ~13 min de vídeo (1.854 palavras, ~11,9 min de fala a 2,6 palavras/s, mais 12 vinhetas e as
+- **Duração estimada:** ~14,5 min de vídeo (2.039 palavras, ~13,1 min de fala a 2,6 palavras/s, mais 12 vinhetas e as
   ações; alvo da fonte ~14 min).
 - Marcas: `[BACKEND: ...]` o que o backend falso precisa ter; `[ZOOM: ...]` zoom suave que dura a frase inteira;
   `[ILUSTRAÇÃO: ...]` cena desenhada no estilo da marca (`docs/09-aula-ilustrada.md`); `[OUTRO USUÁRIO: ...]` trecho

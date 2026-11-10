@@ -6,7 +6,8 @@
   ele põe na abertura, operar dois caixas (Rafael e Marcos), mover dinheiro entre banco e caixa sem virar receita, fechar
   conferindo o esperado e reabrir.
 - **Antes:** T5 "Balança e impressora: o EcoTray". **Próximo:** T7 "Comprar e vender sucata".
-- **Duração:** alvo da fonte ~14 min; a fala dá ~11 min (ver `roteiro.md`), mais vinhetas e ações.
+- **Duração:** alvo da fonte ~14 min; a fala dá ~13 min (2.039 palavras, ver `roteiro.md`), ~14,5 min com vinhetas e
+  ações.
 - **Base:** `T06/inventario.md` (código 1.59.154). Desktop, logado como **Rafael Nogueira** (administrador MASTER); um
   trecho do cap08 logado como **Marcos Antunes** (outro usuário).
 - **FAKE_NOW:** `2026-11-10T08:30:00-03:00` nos capítulos 0 a 9 (a manhã); `2026-11-10T17:40:00-03:00` nos capítulos 10
