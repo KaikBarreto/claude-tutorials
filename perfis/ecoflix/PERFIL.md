@@ -30,8 +30,9 @@ de plano na fala.
   claro. EcoSistema: `ecosistema_logo_light.png` e `ecosistema_logo_dark.png`. Nunca redesenhar.
 - **Vinheta de abertura** (~4,4 s, molde da Domiflix): as 3 peças do símbolo se encaixam girando (no lugar das 3 peças
   do capacete), passa um brilho, o símbolo vai para a esquerda e o "EcoFlix" sai de trás; embaixo, o título da aula;
-  escurece. Som proposto: o som oficial da EcoFlix que já toca no app (`src/assets/ecoflix-intro.mp3`, 4,1 s; mídia
-  não vai para o git, o instalador copia do repositório do app). Decide-se na prévia.
+  escurece. Som: o oficial da EcoFlix que já toca no app (`src/assets/ecoflix-intro.mp3`, 4,1 s), com o encaixe das
+  peças nos golpes dele; se não casar, o sintetizado da Domiflix noutra tonalidade (o Kaik deixou a vinheta a critério,
+  10/11). Mídia não vai para o git: o instalador copia do repositório do app.
 - **Cartela final** (3,9 s): a mesma montagem do logo + "Até a próxima aula!".
 - Cores: acento **#50D088** (o verde do símbolo), escuro **#121212** (fundo do tema escuro do app), claro **#F3F4F6**.
   O verde da interface do app (#16A34A) não é acento do vídeo: fica escuro demais no palco.
@@ -40,9 +41,10 @@ de plano na fala.
 - Grafia: **EcoFlix**, **EcoSistema**, **EcoTray**, **Cato** (o assistente).
 
 ## Voz (`voz.json`)
-- Masculina, ElevenLabs, modelo **eleven_v4**, pt; voice settings padrão da voz; duas versões por nó.
-- Escolha pendente (08/11): amostras no fluxo "EcoFlix · teste de voz masculina" com base44, Cristian, Davi Leão e
-  Amanndev, o mesmo texto.
+- **Kaik Barreto** (clone da voz do Kaik, `voice_id` KtH4mnH3mgKFGT4Ik9jZ), escolhida por ele em 10/11; ElevenLabs,
+  modelo **eleven_v4**, pt; voice settings padrão da voz.
+- **Uma versão por fala** e **um fluxo só** para todas as aulas ("EcoFlix · Vozes de todas as aulas"), como o Kaik pediu
+  na Domiflix (30/10): ele baixa tudo de uma vez; fala ruim se regera sozinha.
 - Regras de fluxo da Domiflix: um nó por capítulo, um nó com os títulos dos capítulos, correções num nó só, nunca gerar
   de novo para "tentar"; o Kaik exporta o zip e o `proc.py` acha cada capítulo pelo conteúdo.
 - Antes da primeira aula: um nó só com todas as palavras da tabela abaixo, na voz escolhida, para conferir.
@@ -75,8 +77,11 @@ regra, rótulos exatamente como na tela, fala que vale nas duas versões quando 
 - ⚠️ entra falado, aberto com **"Uma dica:"**, na hora em que o cliente cairia nele.
 - 🚫 entra como informação do que acontece ("sem a opção, concluir não mexe no estoque"), no tom positivo da Domiflix.
 - 🔒 ao entrar numa parte de módulo, dizer que ela depende do plano contratado. Sem preço.
-- **Erro de propósito na tela**: a fonte pede "mostre o erro de propósito em todo ⚠️"; a Domiflix tinha "não encenar a
-  falha" (Kaik, 30/10). **Decisão do Kaik pendente** (PRODUCAO.md); até lá, vale a regra da Domiflix.
+- **Erro na tela** (Kaik, 10/11): caminho certo primeiro e a consequência como informação; a mensagem de erro só
+  aparece na tela quando reconhecê-la é o ponto ("Abra o caixa antes de realizar compras", "Popup bloqueado", o aviso
+  do cofre), com a saída logo em seguida. A fonte pedia o erro em todo ⚠️; a Domiflix, nunca.
+- **Fiscal**: regime do exemplo **Lucro Real** (Kaik, 10/11: o padrão de muita reciclagem); a fala mostra os campos e
+  diz que quem define a tributação é o contador, sem ensinar regra tributária.
 
 ## Estrutura de cada aula (o "molde" da fonte é o da Domiflix)
 1. Abertura (20 a 30 s): "Oi! Neste tutorial a gente vai..." com o problema real, citando a Recicla Vale Metais.

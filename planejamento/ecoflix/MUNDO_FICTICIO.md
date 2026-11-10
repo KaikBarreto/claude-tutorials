@@ -13,7 +13,7 @@ Se o app pedir um dado que não está aqui, inventar no mesmo estilo e anotar ne
 
 ## Empresa
 - **Recicla Vale Metais Ltda** ("Recicla Vale Metais"), ferro-velho em Taubaté, SP (Vale do Paraíba).
-- Regime do exemplo fiscal: Simples Nacional (confirmar com o Kaik antes do T16).
+- Regime do exemplo fiscal: **Lucro Real** (Kaik, 10/11: o padrão de muita reciclagem).
 - Matriz em Taubaté; filial em Pindamonhangaba, SP (só no T22).
 - Assinatura ativa com todos os módulos da trilha (plano Personalizado), para todas as telas existirem.
 - Cofre (Conta Dinheiro) com R$ 18.500,00; uma conta bancária principal e uma secundária.
