@@ -93,3 +93,6 @@ vendeu pouco num mês) cabem num dos meses.
   de outubro +R$ 6.500 em competência e −R$ 31.500 em caixa; a diferença de R$ 38.000 é o ferro parado no pátio.
   Categorias e centros de custo "Coleta" e "Pátio". Energia de R$ 3.850 lançada em dobro **só a partir do estado da T15**
   (excluída no cap10; a T14 não vê a duplicata). Fiado da Fundição Bandeira do Vale.
+- **Compra e venda** (T7): caixa aberto com R$ 2.500; bateria a R$ 3,40 para a Auto Peças Vale Forte; 214 kg de latão
+  (Metal amarelo) e 42 kg de Cobre mel no estoque; Valdir Pereira sem CPF nem endereço; o carroceiro "Zé Moreira" é
+  cadastrado na tela da T7. Uma balança só no EcoTray.

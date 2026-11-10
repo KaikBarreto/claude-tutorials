@@ -7,7 +7,7 @@
 - **Áreas das vinhetas:** PARCEIROS · CADASTRO · CADASTRO · FISCAL · SALDO · PREÇOS · FICHA · FICHA · SALDO · FICHA · FICHA ·
   SALDO · RESUMO.
 - **Duração estimada:** ~15 min de vídeo (1.966 palavras, ~12,6 min de fala a 2,6 palavras/s, mais 13 vinhetas, as
-  ilustrações e as esperas de tela). Alvo da fonte: 17 min. Voz: 11.052 caracteres (falas + títulos).
+  ilustrações e as esperas de tela). Alvo da fonte: 17 min. Voz: 11.065 caracteres (falas + títulos).
 - **Pronúncia:** as do PERFIL que a aula usa (SEFAZ, PDF, EcoTray) e duas novas a testar: "Cliente-mais-Fornecedor" →
   Cliente+Fornecedor e "pét" → PET. O `config_narracao.json` do T04 segue o `PERFIL.md` (o do perfil estava, às 01:20,
   com NF-e, NFS-e e ICMS em outra grafia; a aula não fala nenhum dos três).

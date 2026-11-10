@@ -175,3 +175,11 @@ Decisões:
   Decisões do coordenador: a DFC entra no tour das abas numa frase (existe no código; sem aprofundar); a energia em
   dobro só existe do estado da T15 em diante. **Risco de precisão**: os números falados (DRE de outubro) precisam sair
   iguais das sementes e dos handlers; conferir no ensaio, antes da voz.
+- 10/11 02:0x **T7 pronta** (roteiro, a principal): 17 blocos, 2.520 palavras, ~16 a 17 min de voz (~19 min de vídeo; alvo
+  22), 11 ilustrações e uma cena de Windows com o EcoTray. Pronúncias a testar: "xíft-cê" e "xíft-vê" (Shift+C, Shift+V),
+  "tara-ímp" (Tara/Imp.), "ao vivo" (AO VIVO). Backend: EcoTray falso com sequência fixa de pesos e impressão direta;
+  RPCs de compra (com parcelas) e de venda com transferência; queda de internet sem derrubar o EcoTray; janela do PDF.
+  Decisões do coordenador: duas compras na parte do pagamento (para mostrar as formas) e uma balança só.
+  **Para o Kaik (bugs do EcoSistema achados no código)**: a coluna "Peso Líquido" mostra o peso bruto; a Central de
+  Ajuda erra o nome do cadastro e diz que o cupom sem valor fica gravado. Se a coluna aparecer na aula, ela mostra o
+  erro: ou o Kaik corrige antes da gravação, ou a aula não mostra a coluna.

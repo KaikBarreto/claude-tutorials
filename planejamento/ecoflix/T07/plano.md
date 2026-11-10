@@ -126,5 +126,6 @@ Além do `MUNDO_FICTICIO.md` (alinhar com T3, T4, T5 e T6 na consolidação):
 3. **Uma balança só** ("Balança", nome padrão do EcoTray) para tudo, com dupla pesagem de carroça (cabe numa balança de piso). Se o
    T5 configurar duas (piso e rodoviária), o visor vira dois e a fala muda pouco.
 4. **"Tabela Depósitos" e o preço especial da Vale Forte** dependem do T3/T4: se não existirem, a semente cria.
-5. Pronúncias novas a testar: "xíft-cê"/"xíft-vê" (Shift+C/Shift+V) e "tara-ímp" (Tara/Imp.).
+5. Pronúncias novas a testar (no nó de conferência, antes da voz): "xíft-cê"/"xíft-vê" (Shift+C/Shift+V), "tara-ímp"
+   (Tara/Imp.) e "ao vivo" (o selo "AO VIVO", em maiúsculas na tela). Se o hífen não bastar, IPA entre barras (PERFIL).
 6. Handoffs: H1 coluna "Peso Líquido" mostrando o bruto; H2 tooltip com ponto; H3 Central de Ajuda (inventário).

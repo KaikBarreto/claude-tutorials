@@ -1,7 +1,7 @@
 # Texto enviado ao ElevenLabs (eleven_v4, voz Kaik Barreto) por capítulo do T17 "Transporte, serviço e o contador".
 # Gerado do roteiro.md (coluna Fala): cada linha do texto é uma linha da tabela Tela × Fala.
 # Trocas de pronúncia em relação ao roteiro (a legenda segue a grafia do roteiro, ver config_narracao.json):
-#   Fiscal & Ambiental -> "Fiscal e Ambiental" | NFS-e -> "ene-éfe-ésse-ê" | NF-e -> "ene-éfe-ê" | MDF-e -> "ême-dê-éfe-ê" | SEFAZ -> "sefás" | PDF -> "pê-dê-éfe" | XML -> "xis-ême-éle" | ISS -> "i-ésse-ésse" | Kardex -> "cardécs" | truck -> "trúqui"
+#   Fiscal & Ambiental -> "Fiscal e Ambiental" | NFS-e -> "/ˈẽːniˈɛːfiˈɛːsiˈeː/" | NF-e -> "/ˈẽniˈɛfiˈe/" | MDF-e -> "/ˈẽmiˈdeˈɛfiˈe/" | SEFAZ -> "sefás" | PDF -> "pê-dê-éfe" | XML -> "xis-ême-éle" | ISS -> "/iˈɛsiˈɛːsːi/" | Kardex -> "cardécs" | truck -> "trúqui"
 CAPS = {
 0: """Oi! Neste tutorial a gente vai cuidar dos outros documentos da Recicla Vale Metais: o que acompanha a carga na estrada, o que cobra um serviço e o pacote que o contador pede todo mês.
 Hoje sai um caminhão de alumínio pra Minas Gerais, a coleta com caçamba na Aços Quiririm vira cobrança, e outubro fecha com o contador.
@@ -9,7 +9,7 @@ Tudo isso fica no menu Fiscal e Ambiental: em Transporte, em Notas de Serviço e
 Essas telas fazem parte do módulo de Notas Fiscais, então dependem do plano contratado.
 Se você ainda não viu o tutorial da nota fiscal de mercadoria, dá uma olhada antes. [pause] Vamos começar pelo manifesto.""",
 1: """O manifesto fica aqui, em Transporte, na aba Manifestos. A Recicla Vale ainda não emitiu nenhum.
-Imagina o caminhão saindo com alumínio de duas vendas. Cada venda tem a sua nota fiscal. O manifesto, o ême-dê-éfe-ê, é o documento da viagem: ele junta as notas da carga, o caminhão e o motorista.
+Imagina o caminhão saindo com alumínio de duas vendas. Cada venda tem a sua nota fiscal. O manifesto, o /ˈẽmiˈdeˈɛfiˈe/, é o documento da viagem: ele junta as notas da carga, o caminhão e o motorista.
 Ele é emitido antes de o caminhão sair e encerrado quando a viagem termina.
 Aqui em cima, os cartões contam os manifestos autorizados, pendentes, rejeitados e encerrados.
 Uma dica: quem precisa emitir o manifesto depende da operação e do estado. Confirme com a sua contabilidade, principalmente quando a carga atravessa estado. O sistema entrega a ferramenta, e quem interpreta a regra é o contador.""",
@@ -22,13 +22,13 @@ Salvar, e o caminhão está pronto pro manifesto.
 Agora o motorista. O Edson Moura já está na lista. Clico em Editar.
 O manifesto leva o CPF do motorista, então eu completo o CPF, a CNH e a categoria.
 Salvar. Caminhão e motorista prontos.""",
-3: """Com a frota pronta, uma olhada nas Configurações do ême-dê-éfe-ê. Aqui ficam a série e o próximo número do manifesto.
+3: """Com a frota pronta, uma olhada nas Configurações do /ˈẽmiˈdeˈɛfiˈe/. Aqui ficam a série e o próximo número do manifesto.
 A Recicla Vale nunca emitiu manifesto, então começa no número um. Se a sua empresa já emitia em outro sistema, é aqui que você continua a sequência.
 E o caminhão e o motorista ficam na Frota, que a gente acabou de ver.
 Agora, o percurso. Hoje o caminhão leva alumínio pra Serra Fina, em Itamonte, Minas Gerais.
 Ele sai de Taubaté, passa pelo Rio de Janeiro e sobe pra Minas. São Paulo é a origem, Minas Gerais é o destino, e o Rio de Janeiro é o estado do meio do caminho.
 O estado do meio do caminho vai no Percurso. E isso a gente preenche em cada manifesto, na hora de emitir.""",
-4: """Hora de emitir. Clico em Novo ême-dê-éfe-ê, e o primeiro passo são as notas da carga.
+4: """Hora de emitir. Clico em Novo /ˈẽmiˈdeˈɛfiˈe/, e o primeiro passo são as notas da carga.
 Busco a Serra Fina e marco as duas notas de hoje: o alumínio perfil e o alumínio bloco. Juntas, dão cinquenta e cinco mil, trezentos e oitenta reais.
 Continuar. No veículo, o caminhão trúqui, e no motorista, o Edson. Como a Frota está completa, não falta nenhum dado.
 Continuar. A origem já vem com a cidade da empresa: Taubaté.
@@ -37,7 +37,7 @@ E no destino, Minas Gerais, cidade de Itamonte.
 O peso já vem somado das notas: cinco mil e oitocentos quilos. E o valor da carga também.
 Na revisão, o jeito de emitir fica no Normal, que envia pra sefás na hora.
 Uma dica: a contingência é só pra quando a sefás estiver fora do ar. Nesse caso, o motorista só sai com o pê-dê-éfe do manifesto impresso em papel.
-Tudo pronto. Criar ême-dê-éfe-ê. O manifesto número um foi criado e já foi enviado pra sefás.
+Tudo pronto. Criar /ˈẽmiˈdeˈɛfiˈe/. O manifesto número um foi criado e já foi enviado pra sefás.
 Pronto, autorizado. Na linha aparecem o motorista, a placa, o trajeto, o valor e o peso.
 E pelo menu de ações você baixa o pê-dê-éfe do manifesto, que vai com o motorista na viagem.""",
 5: """À tarde, a carga foi entregue em Itamonte. Agora falta encerrar o manifesto.
@@ -45,24 +45,24 @@ Uma dica: encerrar não é cancelar. Encerrar é o fim normal da viagem. Cancela
 No menu de ações, Encerrar. O pedido vai pra sefás, e o selo mostra que o encerramento foi enviado.
 Pronto, encerrado. A viagem está fechada, e o manifesto passa a contar nos encerrados.""",
 6: """Agora, a nota de serviço. Ela fica em Notas de Serviço.
-Pensa assim: quando a Recicla Vale vende sucata, a mercadoria sai do pátio. A nota dessa venda é a nota fiscal de mercadoria, a ene-éfe-ê.
-Quando ela cobra um trabalho, como a coleta com caçamba, não sai mercadoria nenhuma. Essa é a nota de serviço, a ene-éfe-ésse-ê, que é da prefeitura.
+Pensa assim: quando a Recicla Vale vende sucata, a mercadoria sai do pátio. A nota dessa venda é a nota fiscal de mercadoria, a /ˈẽniˈɛfiˈe/.
+Quando ela cobra um trabalho, como a coleta com caçamba, não sai mercadoria nenhuma. Essa é a nota de serviço, a /ˈẽːniˈɛːfiˈɛːsiˈeː/, que é da prefeitura.
 Na lista ficam as notas de serviço emitidas: o número, quem contratou, que aqui se chama tomador, o valor e o status.
 E os dados da empresa que a nota de serviço usa, como a inscrição municipal, ficam nas Configurações Fiscais. Quem confere esses dados é o contador.""",
-7: """Vou cobrar a coleta com caçamba que a Recicla Vale fez na Aços Quiririm. Nova ene-éfe-ésse-ê.
+7: """Vou cobrar a coleta com caçamba que a Recicla Vale fez na Aços Quiririm. Nova /ˈẽːniˈɛːfiˈɛːsiˈeː/.
 Na data de competência vai o dia do serviço: sete de novembro. No tomador, quem contratou, eu escolho a Aços Quiririm no cadastro.
 Avançar. O município já vem como Taubaté. O código do serviço é o seu contador que passa. Aqui, coleta e remoção de resíduos.
 Se a empresa emite sempre o mesmo serviço, ele pode ficar salvo, e aí é só puxar por aqui.
 Na descrição, o que foi feito, do jeito que vai aparecer na nota.
 Avançar. O valor do serviço: mil oitocentos e cinquenta reais.
-A alíquota do i-ésse-ésse veio da lista do município. Quem confirma esse número é o contador.
+A alíquota do /iˈɛsiˈɛːsːi/ veio da lista do município. Quem confirma esse número é o contador.
 Na pré-visualização, a nota aparece como vai sair. E o selo mostra que ela está pronta pra emitir.
-Emitir ene-éfe-ésse-ê. Ela entra na lista como processando.
+Emitir /ˈẽːniˈɛːfiˈɛːsiˈeː/. Ela entra na lista como processando.
 E em instantes fica autorizada: nota de serviço número catorze.
 Pelo menu, você baixa o pê-dê-éfe pra mandar pra Aços Quiririm e acompanha tudo no Histórico.""",
-8: """E quando é a Recicla Vale que contrata um serviço? A nota chega em Notas Fiscais, nas Notas Recebidas, na aba ene-éfe-ésse-ê.
+8: """E quando é a Recicla Vale que contrata um serviço? A nota chega em Notas Fiscais, nas Notas Recebidas, na aba /ˈẽːniˈɛːfiˈɛːsiˈeː/.
 São as notas que outras empresas emitem contra o seu CNPJ: o contador, a manutenção, um frete. Elas entram aqui sozinhas, prontas pra virar despesa.
-Clico em Ativar ene-éfe-ésse-ê Recebidas. Repara no aviso: cada nota recebida conta na cota mensal de documentos fiscais, a mesma das notas que você emite.
+Clico em Ativar /ˈẽːniˈɛːfiˈɛːsiˈeː/ Recebidas. Repara no aviso: cada nota recebida conta na cota mensal de documentos fiscais, a mesma das notas que você emite.
 Ativar mesmo assim. Pronto, ele já buscou as notas, e chegaram duas.
 Os honorários do escritório de contabilidade, de mil seiscentos e cinquenta reais, e a aferição da balança rodoviária, de novecentos e oitenta.
 Uma dica: só chega aqui a nota de cidade que já entrou no sistema nacional. Se uma nota não aparecer, peça o pê-dê-éfe ao prestador e lance a despesa na mão.
@@ -99,7 +99,7 @@ No próximo tutorial, a gente cuida da parte que mantém a licença da sua empre
 }
 
 # Títulos falados das vinhetas de capítulo (um nó no ElevenLabs, separados por [pause]); cap00 sem vinheta.
-TITULOS = {1: "O que é o ême-dê-éfe-ê.",
+TITULOS = {1: "O que é o /ˈẽmiˈdeˈɛfiˈe/.",
            2: "Veículo e motorista.",
            3: "Numeração e percurso.",
            4: "Emitir o manifesto.",

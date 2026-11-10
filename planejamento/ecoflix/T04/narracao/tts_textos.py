@@ -6,7 +6,7 @@
 CAPS = {
 0: """Oi! Neste tutorial a gente vai montar a base de quem entra e sai do pátio da Recicla Vale Metais.
 De um lado, quem traz sucata: o carroceiro, a cooperativa, a oficina. Do outro, quem leva: a siderúrgica, a fundição.
-E entre os dois fica a coisa mais importante de todas: o saldo. Quem está te devendo, e quem tem crédito com você.
+E entre os dois fica o saldo: quem está te devendo, e quem tem crédito com você. É isso que a gente vai aprender a ler.
 Se você ainda não viu o tutorial Materiais e tabelas de preço, dá uma olhada antes.
 Tudo isso fica no menu, em Clientes e Fornecedores. Eu recolho o menu do lado, pra lista ficar mais larga. [pause] Vamos ver como a tela está organizada.""",
 1: """A tela tem duas listas, nas abas Clientes e Fornecedores.
@@ -79,8 +79,8 @@ O valor: mil e duzentos reais.
 A forma de pagamento é Pix ou transferência, saindo da conta da empresa. Em Observação, eu anoto o motivo.
 Confirmar. O saldo cai pra mil trezentos e cinquenta reais, e o pagamento entra no extrato.
 E no Exportar, o extrato sai em pê-dê-éfe ou em planilha, pra mandar pro parceiro.""",
-10: """Agora, o Lucro estimado. Margem é a diferença entre o preço que você paga no quilo e o preço que você vende. Eu escolho o Mês passado, outubro inteiro.
-Olha a latinha: a Recicla pagou seis e vinte o quilo e vendeu, em média, a sete e quarenta. Sobra um e vinte por quilo.
+10: """Agora, o Lucro estimado: quanto cada material dessa cooperativa deixa pra Recicla Vale. Eu escolho o Mês passado, outubro inteiro.
+Olha a latinha: a Recicla pagou seis e vinte o quilo e vendeu, em média, a sete e quarenta. Sobra um e vinte por quilo, e essa diferença é a margem.
 E o papelão, que vale pouco, dá a maior margem no total, porque vem muito: dois mil e cem reais no mês.
 Somando tudo, a margem estimada da cooperativa em outubro foi de cinco mil novecentos e noventa e oito reais.
 Uma dica: esse número é uma estimativa, não é dinheiro no bolso. O aviso da tela diz: sucata é fungível.

@@ -10,8 +10,8 @@ código 1.59.154 (`T04/inventario.md`). Mundo, sementes e simulações: `T04/pla
 - **Próximo:** Balança e impressora: o EcoTray (T5)
 - **Vinhetas (áreas):** PARCEIROS · CADASTRO · CADASTRO · FISCAL · SALDO · PREÇOS · FICHA · FICHA · SALDO · FICHA · FICHA ·
   SALDO · RESUMO (todos os capítulos, menos o 0)
-- **Duração estimada:** ~15 min de vídeo (1.966 palavras e 10.708 caracteres de fala, ~12,6 min de voz, mais vinhetas,
-  ilustrações e esperas de tela; alvo da fonte: 17 min). Voz: 11.052 caracteres com os títulos das vinhetas.
+- **Duração estimada:** ~15 min de vídeo (1.966 palavras e 10.721 caracteres de fala, ~12,6 min de voz, mais vinhetas,
+  ilustrações e esperas de tela; alvo da fonte: 17 min). Voz: 11.065 caracteres com os títulos das vinhetas.
 - **Gravação:** computador, janela 1280×800 (modo compacto da tela: selos da lista só com ícone), Rafael Nogueira
   (administrador), `FAKE_NOW=2026-11-10T08:30:00-03:00`. Do cap. 1 em diante o `setup` recolhe o menu lateral e cada
   capítulo abre um navegador novo na semente indicada.
@@ -26,7 +26,7 @@ código 1.59.154 (`T04/inventario.md`). Mundo, sementes e simulações: `T04/pla
 | Vinheta da EcoFlix com o título "Clientes, fornecedores e a ficha do parceiro". | (sem fala) |
 | [ILUSTRAÇÃO: o pátio: fundo claro, Montserrat, verde da marca; no centro, o pátio "Recicla Vale Metais" (galpão e uma pilha de sucata), que entra com a frase.] | Oi! Neste tutorial a gente vai montar a base de quem entra e sai do pátio da Recicla Vale Metais. |
 | [ILUSTRAÇÃO (cont.): em "De um lado", entram à esquerda "Carroceiro", "Cooperativa" e "Oficina", com setas para o pátio e o rótulo "trazem sucata"; em "Do outro", à direita, "Siderúrgica" e "Fundição", com setas saindo do pátio e o rótulo "levam material".] | De um lado, quem traz sucata: o carroceiro, a cooperativa, a oficina. Do outro, quem leva: a siderúrgica, a fundição. |
-| [ILUSTRAÇÃO (cont.): em "o saldo", uma etiqueta "Saldo" aparece entre o pátio e cada lado; em "Quem está te devendo", uma etiqueta verde "te deve"; em "quem tem crédito", uma vermelha "tem crédito".] | E entre os dois fica a coisa mais importante de todas: o saldo. Quem está te devendo, e quem tem crédito com você. |
+| [ILUSTRAÇÃO (cont.): em "o saldo", uma etiqueta "Saldo" aparece entre o pátio e cada lado; em "Quem está te devendo", uma etiqueta verde "te deve"; em "quem tem crédito", uma vermelha "tem crédito".] | E entre os dois fica o saldo: quem está te devendo, e quem tem crédito com você. É isso que a gente vai aprender a ler. |
 | Volta para o app: Dashboard do EcoSistema, logado como Rafael Nogueira, menu lateral aberto. Cartão discreto: "Antes: Materiais e tabelas de preço". [BACKEND: semente `seeds-extra/t04/inicio`] | Se você ainda não viu o tutorial Materiais e tabelas de preço, dá uma olhada antes. |
 | Clique no menu lateral em "Clientes e Fornecedores" (ícone de aperto de mão): abre a tela, aba "Clientes". Na frase "Eu recolho o menu", clique no botão de recolher do topo (ícone do painel, à esquerda): o menu vira só ícones e a lista alarga. | Tudo isso fica no menu, em Clientes e Fornecedores. Eu recolho o menu do lado, pra lista ficar mais larga. [pause] Vamos ver como a tela está organizada. |
 
@@ -149,8 +149,8 @@ código 1.59.154 (`T04/inventario.md`). Mundo, sementes e simulações: `T04/pla
 
 | Tela | Fala |
 | --- | --- |
-| Capítulo novo (semente `apos-cap09`), ficha da "Cooperativa Recomeço". Clique em "Lucro estimado": o período mostra "Este mês"; em "Eu escolho", abre e clica em "Mês passado"; a tabela "Margem estimada por material" carrega. [BACKEND: RPC `get_supplier_profit_estimate` com as cinco linhas de outubro do plano] | Agora, o Lucro estimado. Margem é a diferença entre o preço que você paga no quilo e o preço que você vende. Eu escolho o Mês passado, outubro inteiro. |
-| [ZOOM: as linhas "Alumínio latinha" e "Papelão" da tabela, desta linha até o fim da seguinte; o mouse aponta "Preço Médio Compra" R$ 6,20, "Preço Médio Venda" R$ 7,40 e "Margem R$/kg" R$ 1,20 da latinha] | Olha a latinha: a Recicla pagou seis e vinte o quilo e vendeu, em média, a sete e quarenta. Sobra um e vinte por quilo. |
+| Capítulo novo (semente `apos-cap09`), ficha da "Cooperativa Recomeço". Clique em "Lucro estimado": o período mostra "Este mês"; em "Eu escolho", abre e clica em "Mês passado"; a tabela "Margem estimada por material" carrega. [BACKEND: RPC `get_supplier_profit_estimate` com as cinco linhas de outubro do plano] | Agora, o Lucro estimado: quanto cada material dessa cooperativa deixa pra Recicla Vale. Eu escolho o Mês passado, outubro inteiro. |
+| [ZOOM: as linhas "Alumínio latinha" e "Papelão" da tabela, desta linha até o fim da seguinte; o mouse aponta "Preço Médio Compra" R$ 6,20, "Preço Médio Venda" R$ 7,40 e "Margem R$/kg" R$ 1,20 da latinha] | Olha a latinha: a Recicla pagou seis e vinte o quilo e vendeu, em média, a sete e quarenta. Sobra um e vinte por quilo, e essa diferença é a margem. |
 | (o zoom continua; o mouse vai para "Margem Total" R$ 2.100,00 do papelão) | E o papelão, que vale pouco, dá a maior margem no total, porque vem muito: dois mil e cem reais no mês. |
 | A câmera abre nos cartões "Custo total comprado" R$ 18.755,00, "Margem estimada total" R$ 5.998,00 e "Margem média %" 24,2%; o mouse para no do meio. | Somando tudo, a margem estimada da cooperativa em outubro foi de cinco mil novecentos e noventa e oito reais. |
 | [ZOOM: o aviso âmbar "Estimativa — sucata é fungível; a margem é calculada sobre o preço médio de venda do material no período, não é lucro realizado."] | Uma dica: esse número é uma estimativa, não é dinheiro no bolso. O aviso da tela diz: sucata é fungível. |
