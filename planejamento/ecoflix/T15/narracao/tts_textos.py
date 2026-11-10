@@ -18,8 +18,8 @@ Agora, uma categoria que pede cuidado: a compra de máquina ou de caminhão.
 Uma dica: comprar uma prensa ou um caminhão não é despesa do mês. O dinheiro vira um bem da empresa.
 Com empréstimo é parecido. Receber não é receita, e devolver o valor emprestado não é despesa. Só os juros entram no resultado. Se a parcela mistura os dois, são dois lançamentos.
 E a distribuição de lucro pros sócios também fica fora da despesa.
-Por isso, essa categoria vai em Não compõe o dê-érri-ê: o dinheiro sai do caixa, mas o resultado não muda. E no fluxo de caixa ela fica em Atividades de investimento.
-Pronto. O Ecossistema registra a compra. A depreciação da máquina, e o ganho ou a perda quando ela for vendida, ficam com o contador. Na dúvida sobre onde uma categoria entra, é ele quem orienta.""",
+Por isso, essa categoria vai em Não compõe o dê-érri-ê: o dinheiro sai do caixa, mas o resultado não muda. E no fluxo de caixa, que acompanha o caminho do dinheiro, ela fica em Atividades de investimento.
+Pronto. O Ecossistema registra a compra. O controle dos bens, a depreciação da máquina e o ganho ou a perda quando ela for vendida ficam com o contador. Na dúvida sobre onde uma categoria entra, é ele quem orienta.""",
 2: """Com as categorias certas, dá pra saber em que o dinheiro foi gasto. O centro de custo responde onde: em qual frente da empresa.
 Na Recicla Vale Metais, o pátio fica com a energia e o aluguel, e a coleta fica com o combustível e a manutenção do caminhão. Assim, cada frente mostra quanto custa.
 A terceira frente vai ser a produção, a prensa que enfarda latinha e papelão. Coloco o nome, uma cor pra achar rápido nos gráficos e uma descrição.
@@ -48,7 +48,7 @@ E o Ver todos abre a lista completa.
 Nos materiais, o ferro pesado lidera as compras de outubro: cinquenta mil quilos, por quarenta e sete mil e quinhentos reais.
 Já nos mais vendidos, ele nem aparece entre os cinco primeiros. Isso vai explicar o resultado do mês.""",
 6: """Agora, o dê-érri-ê, o demonstrativo do resultado. É o relatório que o contador pede, e ele mostra, passo a passo, como as vendas viram resultado.
-Ele se lê de cima pra baixo, como uma escada. Começa na Receita Bruta, que são as vendas. Tira os impostos e deduções, e chega na Receita Líquida. Tira os custos do material, e chega no Lucro Bruto.
+Ele se lê de cima pra baixo, como uma escada. Começa na Receita Bruta, que são as vendas. Tira os impostos e deduções, que o contador define, e chega na Receita Líquida. Tira os custos do material, e chega no Lucro Bruto.
 Depois saem as despesas operacionais, entram as outras receitas e despesas, e o que sobra é o Resultado do Período.
 Na tela é igual: cada degrau numa faixa, com o valor de outubro.
 Clicando num grupo, ele abre as categorias, com o valor de cada uma.
