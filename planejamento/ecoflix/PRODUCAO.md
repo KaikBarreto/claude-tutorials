@@ -315,3 +315,9 @@ Decisões:
   palco); `"device": "windows"` (1280×712) no gravador; uso em `docs/10-cena-windows.md`. Prévia de 15,5 s enviada ao
   Kaik. **Para o T5 na revisão**: com a balança detectada, o diálogo troca o Protocolo para "Toledo" (o roteiro diz
   "Automático"); com um navegador conectado, o painel mostra "2 cliente(s)".
+- 10/11 02:04 Kaik: "essa tela de "registrar compra" é muito antiga da ecosistema, não é a versão atual / As pronuncias do
+  audio ficaram boas, algumas coisas erradas mas ok por enquanto". A tela era só a imagem provisória da prévia da cena
+  do EcoTray (`feature-pedidos.png`, imagem antiga de divulgação que está no código do app). **Regra**: nas aulas, a
+  página do navegador é sempre a gravação do app na versão 1.59.154; imagem de divulgação do app nunca vira tela. Teste
+  de pronúncia 2 aceito por enquanto (algumas palavras a refinar quando o Kaik apontar). Shift+C/V unificados em
+  "xífti-cê"/"xífti-vê" (a T07 usava "xíft-").

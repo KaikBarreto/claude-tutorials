@@ -1,7 +1,7 @@
 # Texto para o ElevenLabs (eleven_v4, voz Kaik Barreto) por capítulo do T7 "Comprar e vender sucata".
 # Gerado do roteiro.md (coluna Fala): cada linha do texto é uma linha da tabela Tela × Fala.
 # Trocas de pronúncia em relação ao roteiro (a legenda segue o roteiro, ver config_narracao.json):
-#   Ctrl+K -> "contról-cá" | Shift+C -> "xíft-cê" | Shift+V -> "xíft-vê" | EcoTray -> "Ecotrêi" | PDF -> "pê-dê-éfe" | Tara/Imp. -> "tara-ímp" | AO VIVO -> "ao vivo"
+#   Ctrl+K -> "contról-cá" | Shift+C -> "xífti-cê" | Shift+V -> "xífti-vê" | EcoTray -> "Ecotrêi" | PDF -> "pê-dê-éfe" | Tara/Imp. -> "tara-ímp" | AO VIVO -> "ao vivo"
 # A voz não é gerada agora: revisão geral e ensaio gravado antes (PRODUCAO.md, "Fila").
 CAPS = {
 0: """Oi! Neste tutorial a gente vai fazer o que a Recicla Vale Metais faz o dia inteiro: pesar, comprar, pagar e imprimir o comprovante. E depois vender.
@@ -9,7 +9,7 @@ A sucata chega no portão e vai pra balança. Daí o peso tem que virar valor ce
 Se você ainda não viu o tutorial Caixa: abrir, fechar e o cofre, dá uma olhada antes. É do caixa aberto que saem as compras e as vendas. [pause] Vamos lá.""",
 1: """Tudo começa no caixa. No menu, Financeiro, Caixa. Com o caixa aberto, aparecem os botões Nova Compra e Nova Venda.
 Clicando em Nova Compra, a tela abre já ligada ao seu caixa. É o selo aqui em cima.
-Também dá pra ir pelo teclado. xíft-cê abre a compra, e xíft-vê abre a venda.
+Também dá pra ir pelo teclado. xífti-cê abre a compra, e xífti-vê abre a venda.
 E o contról-cá abre a busca em qualquer tela. Em Ações Rápidas estão a Nova Compra e a Nova Venda.
 Na tela da compra, em cima ficam o fornecedor e a tabela de preços. À esquerda, o cartão da pesagem, por onde entra cada material. À direita, os itens do pedido. E embaixo, o total e o botão Finalizar.""",
 2: """Primeiro, quem está vendendo pra gente. Clicando no fornecedor, abre a lista, e a primeira opção é Não informado.

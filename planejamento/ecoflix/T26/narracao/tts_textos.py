@@ -84,7 +84,7 @@ E a mesma tarefa aparece na Agenda, com o selo cê-érre-ême. Assim, ela entra 
 É uma tarefa só, nos dois lugares. Concluiu num, aparece concluída no outro.
 Clicando nela, a Agenda leva direto pra oportunidade no cê-érre-ême. Uma dica: na Agenda dá pra concluir a tarefa; pra editar ou excluir, é na aba Tarefas do cê-érre-ême.""",
 12: """Com o funil em uso, entram mais cartões. No fim do dia, a Recicla Vale já tem seis oportunidades no funil: sessenta e dois mil e trezentos reais no total.
-Dezenove mil já estão ganhos, com a Construtora Pilar, e quarenta e um mil seiscentos e cinquenta seguem em negociação.
+Já são dezenove mil reais ganhos, com a Construtora Pilar, e quarenta e um mil seiscentos e cinquenta reais em negociação.
 Na busca, dá pra achar pelo título, pelo contato, pela empresa ou pelo material. Digitando alumínio, sobra o cartão da Esquadrias Horizonte. E os cartões de cima passam a dizer filtrado.
 Nos Filtros, dá pra separar por situação, por faixa de valor, por responsável, por material e por meio de transporte.
 Quero ver o que está com o Rafael e ainda em negociação. Aplicar, e ficam dois cartões: vinte e seis mil e duzentos reais.

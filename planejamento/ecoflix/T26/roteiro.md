@@ -11,7 +11,7 @@ fictício.
 - **Próximo:** fim da trilha (cartão "Fim da trilha")
 - **Vinhetas (áreas):** CRM · CRM · FUNIS · ESTÁGIOS · REGRAS · AUTOMAÇÕES · MODELOS · OPORTUNIDADES · KANBAN · OPORTUNIDADES ·
   TAREFAS · FILTROS · RESUMO (todos os capítulos menos o 0)
-- **Duração estimada:** ~16 min de vídeo (2.090 palavras de fala, ~13,4 min de voz a 2,6 palavras/s, mais 13 vinhetas, 10
+- **Duração estimada:** ~15 min de vídeo (1.817 palavras de fala, ~11,6 min de voz a 2,6 palavras/s, mais 13 vinhetas, 10
   ilustrações e o tempo das ações; a fonte pede ~16 min)
 - **FAKE_NOW:** `2026-11-10T08:30:00-03:00` nos capítulos 0 a 11; `2026-11-10T17:30:00-03:00` no 12 (o fim do dia, com o funil em
   uso). Desktop, janela 1280×800, tema claro, logado como Rafael Nogueira (MASTER). Cada capítulo abre um navegador novo com a
@@ -164,7 +164,7 @@ fictício.
 | Tela | Fala |
 | --- | --- |
 | Capítulo novo (semente `apos-cap11-dia`, FAKE_NOW 17:30, com as cinco oportunidades do dia): o quadro do "Sucata industrial" com seis cartões; [ZOOM: "Total de oportunidades" "6" e "Valor total" "R$ 62.300,00"] | Com o funil em uso, entram mais cartões. No fim do dia, a Recicla Vale já tem seis oportunidades no funil: sessenta e dois mil e trezentos reais no total. |
-| [ZOOM: "Ganhos" "R$ 19.000,00" e "Em negociação" "R$ 41.650,00"] | Dezenove mil já estão ganhos, com a Construtora Pilar, e quarenta e um mil seiscentos e cinquenta seguem em negociação. |
+| [ZOOM: "Ganhos" "R$ 19.000,00" e "Em negociação" "R$ 41.650,00"] | Já são dezenove mil reais ganhos, com a Construtora Pilar, e quarenta e um mil seiscentos e cinquenta reais em negociação. |
 | Na busca, digita "alumínio": fica só "Perfis de alumínio da Esquadrias Horizonte"; os cartões do topo passam a "(filtrado)". | Na busca, dá pra achar pelo título, pelo contato, pela empresa ou pelo material. Digitando alumínio, sobra o cartão da Esquadrias Horizonte. E os cartões de cima passam a dizer filtrado. |
 | Apaga a busca; clique em "Filtros": "Filtrar oportunidades" · "Refine os cards exibidos neste funil.", com "Status", "Valor mínimo", "Valor máximo", "Responsável", "Material" e "Meio de transporte". | Nos Filtros, dá pra separar por situação, por faixa de valor, por responsável, por material e por meio de transporte. |
 | Em "Status" escolhe "Em negociação"; em "Responsável", "Rafael Nogueira"; clique em "Aplicar": ficam a Jequitibá e a Esquadrias Horizonte; o botão "Filtros" mostra "2"; [ZOOM: "Valor total (filtrado)" "R$ 26.200,00"] | Quero ver o que está com o Rafael e ainda em negociação. Aplicar, e ficam dois cartões: vinte e seis mil e duzentos reais. |
