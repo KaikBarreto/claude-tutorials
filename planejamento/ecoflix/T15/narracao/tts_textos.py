@@ -55,7 +55,7 @@ Clicando num grupo, ele abre as categorias, com o valor de cada uma.
 E do lado de cada valor vem quanto ele pesa na receita do mês.
 No fim, o resultado de outubro: seis mil e quinhentos reais, na faixa verde.
 E lembra da categoria das máquinas? O que fica em Não compõe o dê-érri-ê não aparece aqui.""",
-7: """No cabeçalho do dê-érri-ê fica o botão que mais gera dúvida: Regime de Caixa ou Regime de Competência. O dê-érri-ê abre em competência.
+7: """No cabeçalho do dê-érri-ê fica um botão que gera muita dúvida: Regime de Caixa ou Regime de Competência. O dê-érri-ê abre em competência.
 No caixa, conta todo o dinheiro que entrou e saiu no mês. O material comprado já vira custo, mesmo que ainda esteja no pátio.
 Na competência, conta só o custo do material que foi vendido. O que está parado no estoque espera a venda.
 Pensa no ferro pesado de outubro. A Recicla Vale Metais comprou cinquenta toneladas, a noventa e cinco centavos o quilo. Saíram quarenta e sete mil e quinhentos reais.
@@ -84,7 +84,7 @@ Uma dica: o relatório não inventa número nenhum. Se um resultado parece estra
 Lembra da energia de outubro? Em Filtros, escolho a categoria Energia elétrica. Dá pra filtrar também por cliente ou fornecedor, por centro de custo e pela fonte.
 Duas contas de energia, no mesmo dia e com o mesmo valor: três mil, oitocentos e cinquenta reais. A conta foi lançada em dobro.
 Clico na lixeira da segunda e em Excluir. Pronto: ficou uma conta só, e o dê-érri-ê e o patrimônio já recalcularam sozinhos.
-A lixeira aparece nas despesas lançadas no banco. E o lápis do lado troca a categoria de um lançamento do caixa ou do banco.
+A lixeira aparece nas despesas lançadas no banco, pra quem tem a permissão Gerenciar Contas Bancárias. E o lápis do lado troca a categoria de um lançamento do caixa ou do banco.
 Uma dica: o Histórico não repete o dinheiro de uma compra ou de uma venda que já está na lista. Assim, nada é contado duas vezes. Pra ver o caixa linha por linha, o lugar é o Histórico do Caixa.""",
 11: """Pra levar tudo pro contador, tem o Exportar.
 O histórico sai em pê-dê-éfe ou em ékisel, com o período e os filtros da tela. Aqui eu escolho o que entra: receitas, despesas e compras.
@@ -92,7 +92,7 @@ O ékisel é pra você mexer nos números. O pê-dê-éfe é pra mandar pro cont
 E o Fechamento completo, em ékisel, monta o pacote do mês pro contador: os lançamentos, as contas em aberto e o estoque no fim do período.
 E o dê-érri-ê tem o Exportar dele, em Planilha ékisel ou Documento pê-dê-éfe, do jeito que está na tela, com o período e o regime.""",
 12: """Pronto! Recapitulando: a gente montou o plano de contas, com o frete de entrega em outro lugar do dê-érri-ê e as máquinas fora do resultado. E criou o centro de custo da produção.
-Abriu o relatório em outubro, leu o resultado e as despesas no Dashboard, e viu os maiores fornecedores e clientes do mês.
+Abriu o relatório em outubro, leu o resultado e as despesas no Dashboard, e viu quem liderou entre os fornecedores e os clientes.
 Leu o dê-érri-ê nos dois regimes e viu, com o ferro do pátio, por que outubro deu lucro na competência e prejuízo no caixa.
 Viu o patrimônio de hoje, a evolução dos últimos seis meses e a comparação com setembro.
 E achou a energia lançada em dobro no Histórico, excluiu, e exportou o histórico pro contador.

@@ -29,9 +29,10 @@
 | 12 | RESUMO / Recapitulando | Montagem do que foi feito; cartão "Próximo: Cato, o assistente". | trechos | 0:55 |
 
 Transições faladas: 0→1 "Tudo começa pelas categorias"; 1→2 "Com as categorias certas, dá pra saber em que o dinheiro foi
-gasto"; 2→3 "Agora o relatório"; 3→4 "O Dashboard é a aba pra bater o olho"; 4→5 "Mais embaixo ficam os números do movimento
-do pátio"; 5→6 "Agora, o DRE"; 6→7 "o botão que mais gera dúvida"; 7→8 "No pé do DRE"; 8→9 "Mais embaixo fica a Evolução
-Mensal"; 9→10 "Agora o Histórico"; 10→11 "Pra levar tudo pro contador".
+gasto"; 2→3 "Plano de contas pronto. Agora, o relatório"; 3→4 "Começando pelo Dashboard, a aba pra bater o olho"; 4→5 "Mais
+embaixo ficam os números do movimento do pátio"; 5→6 "Agora, o DRE"; 6→7 "No cabeçalho do DRE fica um botão que gera muita
+dúvida"; 7→8 "No pé do DRE"; 8→9 "Descendo mais, a Evolução Mensal"; 9→10 "Agora o Histórico"; 10→11 "Pra levar tudo pro
+contador".
 
 ## Os cuidados da fonte (⚠️ e 🚫) e onde entram
 | Cuidado | Capítulo | Na tela |
@@ -122,7 +123,7 @@ dele; consolidar no `MUNDO_FICTICIO.md`). Os capítulos 3 a 9 e 11 só leem.
 
 ## Gravação
 - Rotas: `/dashboard` (abertura), `/categorias-financeiras`, `/relatorio-financeiro`. Sem celular, sem página pública, sem
-  outro usuário. Nada de Windows nem EcoTray.
+  outro usuário. Nada de Windows nem EcoTray. Nenhuma edge function: só tabelas e RPCs.
 - **`setup` fora do vídeo** (cada capítulo abre um navegador novo e o período volta a "Este mês"): capítulos 4 a 11 abrem o
   relatório, escolhem "Mês passado" e a aba de partida (`localStorage` "financial-report-tab"); no capítulo 3 o
   `localStorage` começa sem a chave (abre no "Dashboard").

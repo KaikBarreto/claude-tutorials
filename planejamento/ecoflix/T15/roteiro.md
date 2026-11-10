@@ -10,7 +10,7 @@ fala). Coluna Tela = o que o robô faz e onde a câmera foca, com os rótulos en
 - **Próximo:** Cato, o assistente (T21)
 - **Vinhetas (áreas):** CATEGORIAS · CENTROS DE CUSTO · RELATÓRIO · DASHBOARD · DASHBOARD · DRE · DRE · PATRIMÔNIO · EVOLUÇÃO ·
   HISTÓRICO · EXPORTAR · RESUMO (todos os capítulos menos o 0)
-- **Duração estimada:** ~16 min de vídeo (2.250 palavras e 12.312 caracteres de fala, ~14,4 min de voz a 2,6 palavras/s,
+- **Duração estimada:** ~16 min de vídeo (2.259 palavras e 12.374 caracteres de fala, ~14,5 min de voz a 2,6 palavras/s,
   mais 12 vinhetas e as ações sem fala; alvo da fonte, ~17 min)
 - **Aula:** computador, janela de 1280×800, logado como Rafael Nogueira (MASTER) do começo ao fim. `FAKE_NOW`
   2026-11-10T08:30:00-03:00; o mês lido é outubro ("Mês passado"). Cada capítulo abre um navegador novo, com o mundo do fim do
@@ -112,7 +112,7 @@ fala). Coluna Tela = o que o robô faz e onde a câmera foca, com os rótulos en
 
 | Tela | Fala |
 | --- | --- |
-| Capítulo novo (`setup`: "Mês passado", aba "DRE"); a câmera vai aos botões "Regime de Caixa" e "Regime de Competência" (marcado). | No cabeçalho do DRE fica o botão que mais gera dúvida: Regime de Caixa ou Regime de Competência. O DRE abre em competência. |
+| Capítulo novo (`setup`: "Mês passado", aba "DRE"); a câmera vai aos botões "Regime de Caixa" e "Regime de Competência" (marcado). | No cabeçalho do DRE fica um botão que gera muita dúvida: Regime de Caixa ou Regime de Competência. O DRE abre em competência. |
 | Passa o mouse em "Regime de Caixa": a dica "Considera todo o dinheiro que entrou e saiu no período. Mostra sua situação de caixa, mas o material que você comprou e ainda está no estoque conta como custo agora, mesmo sem ter sido vendido.". [ZOOM: a dica, a frase inteira] | No caixa, conta todo o dinheiro que entrou e saiu no mês. O material comprado já vira custo, mesmo que ainda esteja no pátio. |
 | A câmera abre; passa o mouse em "Regime de Competência": a dica "Considera só o custo do material que você realmente vendeu no período. O que está parado no estoque não abate o lucro até ser vendido. É o lucro contábil do negócio.". [ZOOM: a dica, a frase inteira] | Na competência, conta só o custo do material que foi vendido. O que está parado no estoque espera a venda. |
 | [ILUSTRAÇÃO: O exemplo do pátio, com o ferro pesado de outubro, um passo por linha. Passo 1, nesta linha: um caminhão descarrega 50 t no pátio; o cartão "50 t × R$ 0,95/kg = R$ 47.500" sai de um cofrinho] | Pensa no ferro pesado de outubro. A Recicla Vale Metais comprou cinquenta toneladas, a noventa e cinco centavos o quilo. Saíram quarenta e sete mil e quinhentos reais. |
@@ -156,7 +156,7 @@ fala). Coluna Tela = o que o robô faz e onde a câmera foca, com os rótulos en
 | Clique em "Filtros": o painel "Filtros", com "Categoria", "Cliente/Fornecedor", "Centro de custo" e "Fonte"; em "Categoria", marca "Energia elétrica"; clique em "Aplicar". | Lembra da energia de outubro? Em Filtros, escolho a categoria Energia elétrica. Dá pra filtrar também por cliente ou fornecedor, por centro de custo e pela fonte. |
 | A lista mostra duas linhas "Conta de energia", "13/10/2026", selo "Banco", "Energia elétrica" e "-R$ 3.850,00" cada; a barra "2 lançamentos", "-R$ 7.700,00". [ZOOM: as duas linhas, com a data e o valor, a frase inteira] [BACKEND: as duas linhas em `bank_transactions` (13/10/2026 09:12 e 16:40), nenhuma conciliada nem ligada a conta a pagar] | Duas contas de energia, no mesmo dia e com o mesmo valor: três mil, oitocentos e cinquenta reais. A conta foi lançada em dobro. |
 | A câmera abre; na linha das 16:40, clique na lixeira ("Excluir lançamento"): a janela "Excluir lançamento?", com "Essa ação não pode ser desfeita."; clique em "Excluir": aviso "Lançamento excluído."; fica uma linha, com "1 lançamento" e "-R$ 3.850,00". [BACKEND: as leituras do grupo e `delete_bank_transaction_atomic` (apaga e devolve R$ 3.850,00 ao saldo da conta); vira `apos-cap10`] | Clico na lixeira da segunda e em Excluir. Pronto: ficou uma conta só, e o DRE e o patrimônio já recalcularam sozinhos. |
-| A câmera aproxima da lixeira e do lápis ("Editar categoria") da linha que ficou, sem clicar. | A lixeira aparece nas despesas lançadas no banco. E o lápis do lado troca a categoria de um lançamento do caixa ou do banco. |
+| A câmera aproxima da lixeira e do lápis ("Editar categoria") da linha que ficou, sem clicar. | A lixeira aparece nas despesas lançadas no banco, pra quem tem a permissão Gerenciar Contas Bancárias. E o lápis do lado troca a categoria de um lançamento do caixa ou do banco. |
 | [ILUSTRAÇÃO: O mesmo dinheiro não conta duas vezes: dois cartões genéricos, "Compra de cobre: R$ 4.250" e "Pagamento no caixa: R$ 4.250", ligados por um sinal de igual, "o mesmo dinheiro"; em "nada é contado duas vezes", o segundo cartão esmaece e o total fica R$ 4.250, com um R$ 8.500 riscado ao lado] | Uma dica: o Histórico não repete o dinheiro de uma compra ou de uma venda que já está na lista. Assim, nada é contado duas vezes. Pra ver o caixa linha por linha, o lugar é o Histórico do Caixa. |
 
 ### cap11 · Exportar em Excel e PDF (vinheta: EXPORTAR)
@@ -174,7 +174,7 @@ fala). Coluna Tela = o que o robô faz e onde a câmera foca, com os rótulos en
 | Tela | Fala |
 | --- | --- |
 | Montagem rápida: o cartão "Frete" com "Frete de entrega" e o selo; "Máquinas e veículos" em "Não compõe o DRE"; "Produção" na lista dos centros de custo. | Pronto! Recapitulando: a gente montou o plano de contas, com o frete de entrega em outro lugar do DRE e as máquinas fora do resultado. E criou o centro de custo da produção. |
-| Montagem rápida: o filtro em "Mês passado", o banner "Superávit" e o "Top Clientes" em "Kg". | Abriu o relatório em outubro, leu o resultado e as despesas no Dashboard, e viu os maiores fornecedores e clientes do mês. |
+| Montagem rápida: o filtro em "Mês passado", o banner "Superávit" e o "Top Clientes" em "Kg". | Abriu o relatório em outubro, leu o resultado e as despesas no Dashboard, e viu quem liderou entre os fornecedores e os clientes. |
 | Montagem rápida: a troca de regime ("R$ 6.500,00" na faixa verde, "-R$ 31.500,00" na vermelha) e um quadro da ilustração do pátio. | Leu o DRE nos dois regimes e viu, com o ferro do pátio, por que outubro deu lucro na competência e prejuízo no caixa. |
 | Montagem rápida: o patrimônio aberto, a "Evolução Mensal" e as colunas de setembro e outubro. | Viu o patrimônio de hoje, a evolução dos últimos seis meses e a comparação com setembro. |
 | Montagem rápida: as duas contas de energia, o "Lançamento excluído." e o "Exportar PDF". | E achou a energia lançada em dobro no Histórico, excluiu, e exportou o histórico pro contador. |
