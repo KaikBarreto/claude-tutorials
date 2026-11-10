@@ -35,7 +35,9 @@ relativos à pasta do marca.json; chaves que começam com `_` são comentário.
   oficial; soco e brilho no encaixe; o nome sai de trás do símbolo; título embaixo, sem o rótulo "▶ SÉRIE" (o nome já é a
   série). Com `vinheta.som`, o som da marca toca inteiro: os dois primeiros golpes, achados no próprio arquivo, caem quando
   a última peça assenta e no encaixe; por baixo, o respiro e os whooshes das peças. O som não vai para o git: o
-  `instalar.sh` copia de `APP_SRC/<som_origem>`.
+  `instalar.sh` copia de `APP_SRC/<som_origem>`. No vertical 9:16 (`web/intro_vertical.html`), o molde do capacete
+  vertical: o símbolo sobe e o nome sai de trás dele para baixo, centrado pelas letras (®/™ do fim fica pendurado).
+- O estilo `logo` só tem 16:9; o vertical existe para `dominex-capacete` e `ecosistema-reciclagem`.
 - Só o logo da própria marca; nada de logo ou fonte de terceiros sem licença.
 - Exemplos completos: `perfis/domiflix/marca/` (estilo `dominex-capacete`, saída idêntica ao T3) e
-  `perfis/ecoflix/marca/` (`ecosistema-reciclagem`, som oficial da EcoFlix).
+  `perfis/ecoflix/marca/` (`ecosistema-reciclagem`, som sintetizado em Mi maior; o oficial da EcoFlix é opcional).
