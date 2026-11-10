@@ -5,7 +5,7 @@
 CAPS = {
 0: """Oi! Neste tutorial a gente vai cuidar do dinheiro do dia na Recicla Vale Metais.
 No ferro-velho, quase toda compra de sucata é paga em dinheiro vivo. Se o caixa não bate no fim do dia, ninguém sabe onde foi parar a diferença.
-Então a gente vai ver com quanto o caixa abre, o que entra e sai, com quanto ele fecha, e onde fica o dinheiro da empresa quando não tem caixa aberto.
+Então a gente vai ver com quanto o caixa abre, com quanto ele fecha, e onde fica o dinheiro da empresa quando não tem caixa aberto.
 Tudo isso fica no menu lateral, em Financeiro, Caixa.
 Se você ainda não viu o tutorial Balança e impressora, o Ecotrêi, dá uma olhada antes. [pause] Vamos começar pela tela com o caixa fechado.""",
 1: """Essa é a tela do caixa logo cedo, antes de abrir. Em Meu Caixa fica o botão Abrir Caixa.
@@ -13,7 +13,7 @@ E esse cartão amarelo é o último caixa que eu fechei, o de ontem, com o valor
 Mais embaixo, o Painel Gerencial mostra os caixas abertos no dia. Por enquanto, nenhum.
 Quem não tem acesso aos caixas da equipe toda vê, no lugar disso, um cartão grande escrito Caixa Fechado, com o mesmo botão.
 Repara o que acontece se alguém tenta lançar uma compra agora: o sistema avisa Abra o caixa antes de realizar compras e volta pra cá.
-Venda, despesa e receita também passam por um caixa aberto. Então, vamos abrir.""",
+Uma dica: venda, despesa e receita também precisam de caixa aberto. Então o dia começa por aqui: vamos abrir.""",
 2: """Clico em Abrir Caixa. A janela pede o saldo inicial em dinheiro: quanto dinheiro vivo tem na gaveta agora.
 O campo vem vazio de propósito. Embaixo tem uma dica: mil duzentos e cinquenta reais foi o que sobrou no último caixa.
 Uma dica: esse número é só uma referência. Conte o dinheiro da gaveta e digite o que contou. Copiar a dica sem contar é o motivo mais comum de diferença no fechamento.
@@ -23,7 +23,7 @@ Abrir Caixa. Pronto: o caixa abriu com mil e quinhentos reais, e a tela já most
 Agora imagina um dia em que a Recicla Vale só entrega carga pros clientes, e eles pagam por Pix ou transferência. Nenhum dinheiro vivo passa pela gaveta.
 Aí faz sentido abrir o caixa com zero. É só deixar o campo vazio ou digitar zero.
 Agora é a vez do caixa do Marcos, o balanceiro. No Início, o administrador também abre caixa pra outra pessoa: em Abrir para o usuário, eu escolho o Marcos.
-Repara no aviso amarelo com o campo vazio: o caixa abriria sem dinheiro em espécie, e sem aquela linha de abertura no histórico.
+Repara no aviso amarelo: com o campo vazio, o caixa abre sem dinheiro em espécie. Uma dica: aberto com zero, o caixa não ganha a linha de abertura no histórico. Não está faltando nada.
 Mas o Marcos paga os fornecedores em dinheiro na balança. Então o caixa dele precisa de dinheiro, e quem diz quanto dá é o cofre.""",
 4: """Embaixo do campo, o sistema mostra o disponível no cofre: dezessete mil reais, de dezoito mil e quinhentos no total. Mil e quinhentos estão dentro de caixas abertos.
 O cofre é todo o dinheiro vivo da empresa: dezoito mil e quinhentos reais. No sistema, ele também aparece como Conta Dinheiro.
@@ -33,10 +33,10 @@ Por isso o caixa só abre com o dinheiro que já está registrado no cofre. E qu
 E se alguém tentar abrir com mais do que tem? É o que a gente vê agora.""",
 5: """Hoje o Marcos tem compra grande na balança e quer começar com vinte mil reais. Digito vinte mil no saldo de abertura.
 Clico em Abrir Caixa, e aparece o aviso: Saldo insuficiente em dinheiro.
-O texto explica: o caixa só abre com o dinheiro registrado no cofre. A gente tentou vinte mil, e o disponível é dezessete mil, porque mil e quinhentos já estão no meu caixa.
+O caixa só abre com o dinheiro registrado no cofre. A gente tentou vinte mil, e o disponível é dezessete mil, porque mil e quinhentos já estão no meu caixa.
 Tem duas saídas. Usar disponível preenche o campo com os dezessete mil do cofre.
-E Ajustar saldo do dinheiro corrige o cofre quando tem dinheiro na empresa que nunca foi lançado, como uma sobra guardada. Depois do ajuste, o caixa abre sozinho com o valor que você tentou.
-Uma dica: se você está com o dinheiro na mão e o aviso aparece, é sinal de dinheiro sem registro. Conte tudo o que a empresa tem em espécie e ajuste o cofre uma vez só.
+E Ajustar saldo do dinheiro é pra quando tem dinheiro na empresa que nunca foi lançado. Você corrige o cofre, e o caixa abre sozinho com o valor que tentou.
+Uma dica: se o aviso aparece e o dinheiro está na sua mão, conte tudo o que a empresa tem em espécie e ajuste o cofre uma vez só.
 Aqui não é o caso: o Marcos começa com os dezessete mil, e o resto vem do banco mais tarde. Usar disponível, Abrir Caixa, e pronto: o caixa do Marcos está aberto.""",
 6: """Com o caixa aberto, a tela tem dois cartões no topo. O primeiro é o Dinheiro em Caixa: o dinheiro vivo deste caixa, os meus mil e quinhentos.
 Embaixo, a hora em que ele abriu e o Dinheiro total da empresa, que é o cofre: dezoito mil e quinhentos.
@@ -60,14 +60,14 @@ E todo caixa fechado, de todo operador, fica guardado no Histórico do Caixa, co
 Pôr dinheiro na gaveta durante o dia é o que muita gente chama de suprimento. Quando ele vem do banco, aqui no sistema é um Saque.
 A sangria é o caminho contrário: o dinheiro sai de um caixa, ou do cofre, e vai pro banco.
 Nos dois casos não é receita nem despesa: é o mesmo dinheiro da empresa mudando de lugar. Só a tarifa do banco é despesa de verdade.
-Clico no botão do saque. A janela tem as duas opções, Saque e Sangria, e o Saque já vem marcado.
+No botão do saque, a janela abre com a opção Saque marcada.
 A conta de origem é a principal do banco. No destino, eu escolho o caixa do Marcos.
 Valor do saque: três mil reais.
 O banco cobrou tarifa? Aqui, sim: seis reais e cinquenta.
 Embaixo, os efeitos: a conta do banco diminui três mil e seis reais e cinquenta, e o caixa do Marcos aumenta três mil.
 Uma dica: nunca lance um saque como Nova Receita. Ele entraria no relatório como se a empresa tivesse faturado mais. A tarifa o sistema já lança separada, como despesa.
 Confirmar Saque. Pronto: o caixa do Marcos chegou nos vinte mil.
-Na opção Sangria, você escolhe a origem, que pode ser o cofre ou um caixa aberto, e a conta do banco que recebe. É o que se faz quando sobra dinheiro na gaveta e ele vai pro banco.
+Na opção Sangria, você escolhe de onde sai o dinheiro, o cofre ou um caixa aberto, e a conta do banco que recebe.
 Já a Nova Movimentação Bancária é pra entrada ou saída direto no banco, que não vem de pedido. Por exemplo, a tarifa mensal da conta.
 Saída, a descrição, trinta e nove e noventa, e a categoria Tarifas bancárias.
 Salvar. Essa sim entra no resultado como despesa.""",
