@@ -59,6 +59,8 @@ done
 [ -f "$TUT_HOME/$TUTORIAL/edit/caps/specs.json" ] || cp "$(pega specs.json)" "$TUT_HOME/$TUTORIAL/edit/caps/specs.json"
 [ -f "$TUT_HOME/$TUTORIAL/edit/caps/aula.modelo.json" ] || cp "$(pega aula.json)" "$TUT_HOME/$TUTORIAL/edit/caps/aula.modelo.json"
 if [ -n "$P" ]; then
+  # kit de ilustração da série (ex.: perfis/ecoflix/cenas: cenas_ecoflix.html + exemplo/) ao lado do cenas_modelo.html
+  [ -d "$P/cenas" ] && cp -r --update=none "$P/cenas/." "$TUT_HOME/$TUTORIAL/edit/cenas/"
   [ -f "$P/voz.json" ] && cp --update=none "$P/voz.json" "$TUT_HOME/$TUTORIAL/narracao/voz.json"
   [ -f "$P/PERFIL.md" ] && cp --update=none "$P/PERFIL.md" "$TUT_HOME/$TUTORIAL/PERFIL.md"
 fi

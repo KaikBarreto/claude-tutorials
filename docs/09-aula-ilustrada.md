@@ -53,6 +53,31 @@ Depois, igual à aula com tela: `render_chapter.py` de cada capítulo → `finis
 cursor oculto. Capítulo seguido de outro **sem** vinheta: a cena some no fim (`ST.style.opacity`) depois da última
 palavra e a seguinte começa do branco.
 
+## Ilustração de conceito no meio do capítulo (kit EcoFlix)
+Na EcoFlix a ilustração entra **no meio do capítulo gravado**, cobrindo a janela do app, sempre que a fala explica um
+conceito (`[ILUSTRAÇÃO: ...]` no roteiro), e depois volta para a tela. Kit pronto: `perfis/ecoflix/cenas/cenas_ecoflix.html`
+(o `instalar.sh` do perfil copia para `<tutorial>/edit/cenas/`; copie para `cenas.html`). Mesmas regras de cima.
+- **Estilo**: fundo branco com luz verde suave; Montserrat; o acento `#50D088` só em preenchimento, barra e contorno;
+  texto verde `#2E7D57` e âmbar `#8A5A00` (contraste ≥ 4,5 no branco), o âmbar para o segundo conceito da cena; cartões
+  brancos de sombra suave, chips e etiquetas; ícones lucide simples; desenhos genéricos sem marca (caminhão, balança);
+  números do jeito brasileiro (`kg()`, `brl()`).
+- **Movimento**: entrada e saída suaves com `vis`; `conta` (o número conta até o valor), `traco` (a linha se desenha),
+  `arco` (o objeto viaja), `contorno` (a cor de destaque entra), `posTitulo` (o título começa grande no centro e sobe
+  quando o desenho entra). Tudo preso a palavras com `W(linha, 'palavra')`.
+- **Exemplos**: `CAPS[1]` "Tara e peso líquido" (Peso bruto − Tara = Peso líquido) e `CAPS[2]` "Caixa × competência",
+  com as falas e tempos estimados em `exemplo/`. Antes da voz, `python3 tempos_estimados.py capNN.json "fala 0" ...`
+  faz um `capNN.json` estimado (790 caracteres/min); quando a voz chega, as cenas se ajustam às palavras.
+- Um conceito por ilustração; várias do mesmo capítulo cabem no mesmo `CAPS[n]`, cada uma no seu trecho. Rótulos
+  exatamente como no app. Renderize só o trecho e encaixe no capítulo:
+```bash
+node render_cenas.cjs 7 ../../narracao/cap07.json ../out/ilu07_tara.mp4 --html cenas.html --de 41.2 --ate 58.9
+# specs.json do capítulo 07: o "at" é o mesmo instante do --de (0,3 s antes da primeira palavra do conceito)
+#   "ilustracoes": [{"at": 41.2, "dur": 17.7, "src": ".../out/ilu07_tara.mp4", "box": [166, 44, 1587, 992],
+#                    "scale_in": 0.0, "radius": 16, "shadow": false, "loop": false}],  "repouso": [[41.2, 58.9]]
+```
+  O editor faz a fusão de 0,35/0,30 s com a tela; o `repouso` segura a câmera parada embaixo, e nenhum zoom manual
+  termina a menos de 1 s do `at` (`docs/05-edicao.md`).
+
 ## Vertical 9:16
 Molde `cenas/cenas_modelo_vertical.html` (copie para `<tutorial>/edit/cenas/cenas_vertical.html`): 1080x1920, cenas desenhadas na
 área segura (x 72-1008, y 180-1420; a faixa da legenda do player, y 1420-1600, fica livre), um assunto por vez preso à palavra,
