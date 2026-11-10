@@ -236,3 +236,15 @@ Decisões:
   `sigor-mtr-cancel`, `sigor-cdf-emit`, RPC `mtr_set_credential`, rota SP → SIGOR. Decisões do coordenador: Serra Fina
   em Itamonte, MG; números de outubro podem ser falados; IBAMA 19 12 02 e Classe II B no exemplo, sem recomendação.
   **Teste de pronúncia 2**: juntar todas as palavras novas das aulas num nó só quando os roteiros fecharem.
+- 10/11 03:1x **T5 e T8 prontas** (roteiro). T5: abertura e 11 capítulos, 1.645 palavras, ~10,5 min de fala (~12 min com
+  vinhetas e cenas), 8 `[CENA WINDOWS]` com os textos do código (aviso do download, SmartScreen, instalador, painel,
+  Configurar Balanças, bandeja › "Sair", atalho) e 10 ilustrações; pronúncia a testar "dráiver"; backend: EcoTray falso
+  que muda de estado a cada capítulo. Código × fonte: o indicador de peso não aparece no celular (sem trecho de
+  celular); com a trava de peso ligada não dá para digitar o peso com o EcoTray fechado; o "Guia de Instalação" ainda
+  fala em ZIP. T8: abertura e 10 capítulos, 1.243 palavras, ~8 min de fala (~10 min de vídeo), sem cena de Windows;
+  backend `get_next_ticket_number` = 58, rascunho em `weighing_tickets`, `finalize_weighing_ticket_v3`, `order_drafts`,
+  caixa do Rafael aberto. Código × fonte: só com a 1ª pesagem, ela vira o bruto e precisa ser digitada de novo na
+  saída; valorizar um ticket sem valores ignora a tabela do fornecedor (o exemplo não usa o Siqueira). Decisões do
+  coordenador: T5 sem celular e papel de 58 mm; T8 com pesos digitados e compra finalizada no cap09. **Para o Kaik
+  (possíveis bugs)**: o "Guia de Instalação" do EcoTray ainda fala em ZIP; valorizar ticket sem valores ignora a tabela de
+  preço do fornecedor.

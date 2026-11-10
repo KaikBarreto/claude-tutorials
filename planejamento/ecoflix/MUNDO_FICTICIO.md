@@ -131,3 +131,9 @@ vendeu pouco num mês) cabem num dos meses.
   código 19 12 02 (metais ferrosos) e Classe II B no exemplo (a fala diz que quem classifica é o responsável técnico);
   NF-e de 3.600 kg de chaparia para a Aços Quiririm; dois MTR (um cancelado) e um CDF de outubro da Auto Peças Vale
   Forte; a carga vai no GHT7B19 com o Jair Lopes (o FKD2E41 está na viagem da T17).
+- **EcoTray** (T5): impressora térmica POS-58 (58 mm); "Balança do pátio" na COM3; pesos de 18,6 e 312 kg; duas
+  impressoras no cap10; `ecotray_version` 1.7.22; chaves gravadas por usuário (Rafael). Sem trecho de celular (o indicador
+  de peso não aparece em tela menor que 1024 px).
+- **Ticket de Pesagem** (T8): próximo ticket 58; caminhão da Cooperativa Recomeço com 9.460 kg na entrada e 6.380 kg na
+  saída, 2 % de impureza (3.018,4 kg de Alumínio latinha a R$ 6,20 = R$ 18.714,08, pago por Pix); rascunho do Jair Lopes
+  (Auto Peças Vale Forte); pesos digitados (a balança rodoviária fica fora do EcoTray).

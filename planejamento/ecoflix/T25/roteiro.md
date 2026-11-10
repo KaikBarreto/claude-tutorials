@@ -13,8 +13,8 @@ desenhada, nunca tela inventada), `[TESTAR]` (o robô confere antes de gravar). 
 - **Próximo:** as aulas dos módulos do plano (cartão "Próximo: os módulos do seu plano"; na trilha, a primeira é o T16)
 - **Vinhetas (áreas):** DASHBOARD · DASHBOARD · DASHBOARD · DASHBOARD · AGENDA · AGENDA · ATALHOS · ROTINA · ROTINA ·
   ROTINA · RESUMO (todos os capítulos menos o 0)
-- **Duração estimada:** ~11 min de vídeo (ver o total no fim do `tts_textos.py`; mais a vinheta de abertura, 11 vinhetas de
-  capítulo e a cartela); alvo da fonte ~13 min
+- **Duração estimada:** ~10 min de vídeo (1.319 palavras de fala, ~8,5 min de voz a 2,6 palavras/s; 7.145 caracteres, ~9 min a
+  790 por minuto, mais a vinheta de abertura, 11 vinhetas de capítulo, a cartela e as ações na tela); alvo da fonte ~13 min
 
 ### cap00 · Abertura
 
