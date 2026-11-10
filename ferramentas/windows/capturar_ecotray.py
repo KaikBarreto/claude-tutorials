@@ -7,7 +7,7 @@ código do app) não roda de novo.
 
 uso: python3 capturar_ecotray.py <plano.json> <saida/> [--app <pasta ecotray do app>] [--refazer]
      a pasta do app vem de --app, ou de $ECOTRAY_SRC, ou de $APP_SRC/ecotray
-Precisa de: Xvfb, unshare (util-linux) e o Python com Tk de preparar_tk.sh (chamado sozinho se faltar).
+Precisa de: Xvfb, unshare (util-linux) e o Python com Tk de preparar.sh (chamado sozinho se faltar).
 Formato do plano e exemplos: docs/10-cena-windows.md e exemplos/ecoflix-ecotray/."""
 import fcntl
 import hashlib
@@ -38,7 +38,7 @@ def lo_up():
 def env_tk():
     envf = os.path.join(CACHE, "env.sh")
     if not os.path.exists(envf):
-        subprocess.run(["bash", os.path.join(HERE, "preparar_tk.sh")], check=True, env=dict(os.environ, CENA_WIN_CACHE=CACHE))
+        subprocess.run(["bash", os.path.join(HERE, "preparar.sh")], check=True, env=dict(os.environ, CENA_WIN_CACHE=CACHE))
     env = dict(os.environ)
     for linha in open(envf):
         if linha.startswith("export "):

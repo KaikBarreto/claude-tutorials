@@ -1,0 +1,332 @@
+{
+ "_leia": "Plano de capturas do EcoTray para a prévia e para a instalação (T5). Cada sessão roda o código do app: painel = dashboard.py, instalador = installer_win/installer_gui.py, bandeja = tray_app.py (menu e ícone). Mundo: Recicla Vale Metais, 10/11/2026 08:30. Formato: docs/10-cena-windows.md.",
+ "tela": [
+  1920,
+  1200
+ ],
+ "usuario_windows": "Rafael",
+ "sessoes": [
+  {
+   "nome": "bandeja",
+   "programa": "bandeja",
+   "passos": [
+    {
+     "status": "connected:COM3@9600",
+     "impressora": "POS-58",
+     "capturar": "bandeja_ok"
+    },
+    {
+     "status": "error:no_scale_found",
+     "capturar": "bandeja_sem_balanca"
+    }
+   ]
+  },
+  {
+   "nome": "painel_conectado",
+   "programa": "painel",
+   "abrir": {
+    "status": "ok",
+    "scale_info": "Balança: COM3@9600",
+    "printer_info": "Impressora: POS-58",
+    "printers_list": [
+     "POS-58"
+    ],
+    "version": "1.7.22"
+   },
+   "servidor": {
+    "versao": "1.7.22",
+    "trava": "unlocked",
+    "balancas": [
+     {
+      "id": "b1",
+      "nome": "Balança",
+      "conectada": true,
+      "porta": "COM3"
+     }
+    ],
+    "balanca_padrao": "b1",
+    "pesos": {
+     "b1": "0.000"
+    },
+    "impressoras": [
+     "POS-58"
+    ],
+    "impressora_padrao": "POS-58",
+    "navegadores": 1,
+    "atividade": [
+     {
+      "ts": "08:29:47",
+      "msg": "Impresso em POS-58",
+      "kind": "ok"
+     },
+     {
+      "ts": "08:12:40",
+      "msg": "[scale:Balança] conectada",
+      "kind": "ok"
+     },
+     {
+      "ts": "08:12:38",
+      "msg": "Módulo Integração com Balança destravado",
+      "kind": "ok"
+     },
+     {
+      "ts": "08:12:31",
+      "msg": "Impressora padrão: POS-58",
+      "kind": "info"
+     }
+    ],
+    "hora": "08:31:03"
+   },
+   "log": [
+    "2026-11-10 08:12:30 [INFO] Iniciando EcoTray v1.7.22...",
+    "2026-11-10 08:12:30 [INFO] WebSocket server em ws://127.0.0.1:8053",
+    "2026-11-10 08:12:30 [INFO] WebSocket server em ws://127.0.0.1:8054",
+    "2026-11-10 08:12:31 [INFO] EcoTray em execução.",
+    "2026-11-10 08:12:40 [INFO] [scale:Balança] connected:COM3@9600"
+   ],
+   "passos": [
+    {
+     "capturar": "painel_0"
+    },
+    {
+     "peso": {
+      "valor": "214.5"
+     },
+     "capturar": "painel_214_5"
+    },
+    {
+     "peso": {
+      "valor": "488.0"
+     },
+     "capturar": "painel_488"
+    },
+    {
+     "peso": {
+      "valor": "731.5"
+     },
+     "capturar": "painel_731_5"
+    },
+    {
+     "peso": {
+      "valor": "966.0"
+     },
+     "capturar": "painel_966"
+    },
+    {
+     "peso": {
+      "valor": "1142.0"
+     },
+     "capturar": "painel_1142"
+    },
+    {
+     "peso": {
+      "valor": "1236.5"
+     },
+     "capturar": "painel_1236_5"
+    },
+    {
+     "peso": {
+      "valor": "1250.5"
+     },
+     "capturar": "painel_1250_5"
+    },
+    {
+     "ponteiro": "–",
+     "capturar": "painel_1250_5_minimizar"
+    },
+    {
+     "ponteiro": "✕",
+     "capturar": "painel_1250_5_fechar"
+    },
+    {
+     "atividade": {
+      "ts": "08:32:15",
+      "msg": "Impresso em POS-58",
+      "kind": "ok"
+     },
+     "impresso": "POS-58",
+     "espera": 0.3,
+     "capturar": "painel_impresso"
+    },
+    {
+     "espera": 3.2,
+     "capturar": "painel_depois_impresso"
+    },
+    {
+     "aba": "Logs",
+     "espera": 0.6,
+     "capturar": "painel_logs"
+    }
+   ]
+  },
+  {
+   "nome": "painel_primeira_vez",
+   "programa": "painel",
+   "_leia": "Logo depois de instalar: o instalador abre o EcoTray com --show-dashboard e, 2 s depois, o painel. A balança ainda não respondeu (status warn) e o navegador ainda não confirmou o módulo (trava unknown). Quando o sistema confirma, o próprio painel troca a lista (scale_lock_status).",
+   "abrir": {
+    "status": "warn",
+    "scale_info": "Sem balança conectada",
+    "printer_info": "Impressora: POS-58",
+    "printers_list": [
+     "POS-58"
+    ],
+    "version": "1.7.22"
+   },
+   "servidor": {
+    "versao": "1.7.22",
+    "trava": "unknown",
+    "balancas": [
+     {
+      "id": "b1",
+      "nome": "Balança",
+      "conectada": true,
+      "porta": "COM3"
+     }
+    ],
+    "balanca_padrao": "b1",
+    "pesos": {
+     "b1": "0.000"
+    },
+    "impressoras": [
+     "POS-58"
+    ],
+    "impressora_padrao": null,
+    "navegadores": 0,
+    "atividade": [],
+    "hora": "08:35:12"
+   },
+   "passos": [
+    {
+     "espera": 0.8,
+     "capturar": "primeira_aguardando"
+    },
+    {
+     "estado": {
+      "navegadores": 1
+     },
+     "atividade": {
+      "ts": "08:44:10",
+      "msg": "Módulo Integração com Balança destravado",
+      "kind": "ok"
+     },
+     "trava": "unlocked",
+     "espera": 1.0,
+     "capturar": "primeira_liberada"
+    },
+    {
+     "atividade": {
+      "ts": "08:45:02",
+      "msg": "[scale:Balança] conectada",
+      "kind": "ok"
+     },
+     "espera": 0.5,
+     "capturar": "primeira_conectada"
+    }
+   ]
+  },
+  {
+   "nome": "instalador",
+   "programa": "instalador",
+   "tamanho_mb": 19.4,
+   "passos": [
+    {
+     "capturar": "inst_pronto"
+    },
+    {
+     "ponteiro": "Instalar",
+     "capturar": "inst_pronto_hover"
+    },
+    {
+     "instalar": true,
+     "etapa": [
+      0,
+      "Verificando servidor de downloads...",
+      5
+     ],
+     "capturar": "inst_05"
+    },
+    {
+     "etapa": [
+      0,
+      "Pronto para baixar",
+      15
+     ],
+     "capturar": "inst_15"
+    },
+    {
+     "etapa": [
+      1,
+      "Baixando EcoTray.exe...",
+      20
+     ],
+     "capturar": "inst_20"
+    },
+    {
+     "baixando": 26,
+     "capturar": "inst_26"
+    },
+    {
+     "baixando": 32,
+     "capturar": "inst_32"
+    },
+    {
+     "baixando": 38,
+     "capturar": "inst_38"
+    },
+    {
+     "baixando": 44,
+     "capturar": "inst_44"
+    },
+    {
+     "baixando": 50,
+     "capturar": "inst_50"
+    },
+    {
+     "baixando": 56,
+     "capturar": "inst_56"
+    },
+    {
+     "baixando": 62,
+     "capturar": "inst_62"
+    },
+    {
+     "baixando": 68,
+     "capturar": "inst_68"
+    },
+    {
+     "baixando": 75,
+     "capturar": "inst_75"
+    },
+    {
+     "etapa": [
+      2,
+      "Copiando arquivos...",
+      78
+     ],
+     "capturar": "inst_78"
+    },
+    {
+     "etapa": [
+      3,
+      "Criando atalho de inicialização...",
+      88
+     ],
+     "capturar": "inst_88"
+    },
+    {
+     "etapa": [
+      3,
+      "Criando atalho na Área de Trabalho...",
+      92
+     ],
+     "capturar": "inst_92"
+    },
+    {
+     "concluir": true,
+     "espera": 0.5,
+     "capturar": "inst_fim"
+    }
+   ]
+  }
+ ]
+}

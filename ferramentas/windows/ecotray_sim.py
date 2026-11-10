@@ -8,7 +8,7 @@
 Saída: um PNG por captura (só a janela, no tamanho real) e `quadros.json` com a posição da janela na tela e os alvos
 (texto, retângulo relativo à janela e tipo de cursor do widget) para a cena mirar o cursor.
 
-Roda no Python com Tk preparado por `preparar_tk.sh`, dentro do `capturar_ecotray.py` (rede própria + Xvfb).
+Roda no Python com Tk preparado por `preparar.sh`, dentro do `capturar_ecotray.py` (rede própria + Xvfb).
 uso: python ecotray_sim.py <pasta ecotray do app> <plano.json> <saida/>
 Plano: {"tela": [1920, 1200], "usuario_windows": "Rafael", "sessoes": [ {"programa": "painel"|"instalador", ...} ]}
 (formato completo em docs/10-cena-windows.md)."""
@@ -81,9 +81,14 @@ class EcoTrayFalso:
                     n = list(self.e["impressoras"])
                     await ws.send(json.dumps({"type": "printers", "data": n, "printers_stale": False,
                                               "data_meta": [{"name": x, "driver": None, "is_compatible": True} for x in n]}))
-                elif a == "set_default_printer":
-                    self.e["impressora_padrao"] = d.get("printer") or self.e["impressora_padrao"]
+                elif a == "set_default_printer":  # como o ecotray.py: grava, responde e anota "Impressora padrão: X"
+                    p = d.get("printer") or self.e["impressora_padrao"]
+                    self.e["impressora_padrao"] = p
                     await ws.send(json.dumps({"type": "printer_config", "success": True}))
+                    curto = p.split("\\")[-1] if p and "\\" in p else (p or "")
+                    a_ = {"ts": self.e.get("hora", "08:30:00"), "msg": f"Impressora padrão: {curto}", "kind": "info"}
+                    self.e["atividade"].insert(0, a_); del self.e["atividade"][20:]
+                    await self._enviar(json.dumps({"type": "activity", **a_}, ensure_ascii=False))
                 elif a == "check_update":
                     await ws.send(json.dumps({"type": "update_check", "status": "checking"}))
                 elif a == "get_activity":
@@ -190,7 +195,7 @@ def alvos(root):
             anda(c)
 
     def abas(nb, r):
-        n = nb.index("end"); y = 4; xs = {}
+        n = nb.index("end"); xs = {}
         for yy in range(2, 40, 3):
             for x in range(0, r[2], 2):
                 try:
@@ -201,8 +206,7 @@ def alvos(root):
                     a = xs.setdefault(i, [x, yy, x, yy])
                     a[0], a[1], a[2], a[3] = min(a[0], x), min(a[1], yy), max(a[2], x), max(a[3], yy)
         for i, (x0, y0, x1, y1) in xs.items():
-            add("aba:" + nb.tab(i, "text"), [r[0] + x0, r[1] + y0, x1 - x0 + 2, y1 - y0 + 3], "arrow")
-        del y
+            add("aba:" + str(nb.tab(i, "text")).strip(), [r[0] + x0, r[1] + y0, x1 - x0 + 2, y1 - y0 + 3], "arrow")
 
     anda(root)
     return out
@@ -398,20 +402,62 @@ def sessao_instalador(s):
     app.run()
 
 
+# ───────────────────────────── bandeja (ícone e menu do tray_app.py) ─────────────────────────────
+
+def sessao_bandeja(s):
+    """O menu da bandeja é nativo do Windows (pystray): não dá para fotografar aqui. Então o tray_app.py de verdade monta
+    o menu com um pystray de mentira que só anota os itens (texto, padrão, ativo, separador), e o ícone sai do próprio
+    _get_image() (icon.png 64x64 + a bolinha de status do _compose_icon). A cena desenha o menu no estilo do Windows 11
+    com esses itens."""
+    fake = types.ModuleType("pystray")
+
+    class MenuItem:
+        def __init__(self, text, action=None, checked=None, radio=False, default=False, visible=True, enabled=True):
+            self.text, self.default, self.visible, self.enabled = text, default, visible, enabled
+
+    class Menu:
+        SEPARATOR = MenuItem("-")
+
+        def __init__(self, *items):
+            self.items = items
+
+    fake.MenuItem, fake.Menu, fake.Icon = MenuItem, Menu, object
+    sys.modules["pystray"] = fake
+    sys.path.insert(0, str(APP))
+    import tray_app  # o código do app, sem alteração
+    t = tray_app.TrayApp(on_reconnect=lambda: None, on_open_settings=lambda: None, on_exit=lambda: None,
+                         on_update=lambda: None, icon_path=str(APP / "assets" / "icon.png"))
+    for p in s.get("passos", []):
+        if "status" in p:  # como o ecotray.py chama: "connected:COM3@9600", "error:no_scale_found", ...
+            t.set_scale_status(p["status"])
+        if "impressora" in p:
+            t.set_printer_info(p["impressora"] or None)
+        if "capturar" in p:
+            nome = p["capturar"]
+            itens = [{"sep": True} if it is Menu.SEPARATOR else {"texto": it.text, "padrao": bool(it.default), "ativo": bool(it.enabled)}
+                     for it in t._build_menu().items if getattr(it, "visible", True)]
+            t._get_image().save(SAIDA / f"{nome}.png")
+            QUADROS[nome] = {"arquivo": f"{nome}.png", "tipo": "bandeja", "status": t._status, "dica": "EcoTray", "menu": itens}
+            print(f"  {nome}: ícone {t._status}, menu com {len(itens)} itens", flush=True)
+
+
 # ───────────────────────────── principal ─────────────────────────────
 
 def main():
-    preparar_tk()
     sessoes = PL["sessoes"]
     so = os.environ.get("SIM_SESSAO")  # cada sessão roda num processo próprio (o capturar_ecotray.py chama uma por vez)
     for s in sessoes:
         if so and s["nome"] != so:
             continue
         print(f"sessão {s['nome']} ({s['programa']})", flush=True)
+        if s["programa"] in ("painel", "instalador"):
+            preparar_tk()
         if s["programa"] == "painel":
             sessao_painel(s)
         elif s["programa"] == "instalador":
             sessao_instalador(s)
+        elif s["programa"] == "bandeja":
+            sessao_bandeja(s)
         else:
             ERROS.append(f"programa desconhecido: {s['programa']}")
     out = SAIDA / (f".quadros.{so}.json" if so else "quadros.json")

@@ -1,0 +1,35 @@
+{
+ "_leia": "Prévia da cena de Windows (pedido do Kaik, 10/11): a pessoa abre o EcoTray pela bandeja, vê a balança conectada e o peso subindo, e no navegador o peso aparece na tela de compra. Sem gravação do robô ainda: a página é uma imagem do próprio app (src/assets/features/feature-pedidos.png, recortada) com o campo PESO (KG) acompanhando o EcoTray. Caminhos relativos a esta pasta de trabalho (previa.sh monta capturas/ e app/).",
+ "nome": "previa-ecotray",
+ "duracao": 15.5,
+ "capturas": "capturas",
+ "relogio": {"hora": "08:31", "data": "10/11/2026"},
+ "cursor": {"inicio": [820, 700]},
+ "bandeja": {"icone": "bandeja_ok", "fixado": true},
+ "icone_app": "app/icon.png",
+ "navegador": {
+  "modo": "maximizado",
+  "url": "ecosistematecnologia.com.br/compra",
+  "aba": "Compra | EcoSistema",
+  "favicon": "app/icon.png",
+  "pagina": {"imagem": "app/feature-pedidos.png", "recorte": [130, 0, 1220, 548], "escala": 1.4, "pos": [106, 16], "fundo": "#fcfcfc"}
+ },
+ "campos": [
+  {"id": "peso", "rect_imagem": [193, 400, 267, 27], "estilo": {"tamanho": 11, "cor": "#18181b", "recuo": 9, "peso": 500}}
+ ],
+ "passos": [
+  {"at": 2.05, "do": "clicar", "alvo": "bandeja:ecotray", "botao": "direito", "label": "bandeja", "mostra": "menu"},
+  {"at": 2.95, "do": "clicar", "alvo": "menu:Abrir EcoTray", "label": "Abrir EcoTray", "esconde": "menu"},
+  {"at": 3.55, "do": "painel", "quadro": "painel_0"},
+  {"at": 4.7, "do": "mover", "alvo": "tela:985,606", "label": "olha o peso"},
+  {"at": 5.2, "do": "sequencia", "janela": "painel", "quadros": [[0, "painel_214_5"], [0.4, "painel_488"], [0.8, "painel_731_5"],
+    [1.2, "painel_966"], [1.6, "painel_1142"], [2.0, "painel_1236_5"], [2.4, "painel_1250_5"]]},
+  {"at": 5.35, "do": "campos", "id": "peso", "valores": [[0, "214,500"], [0.4, "488,000"], [0.8, "731,500"], [1.2, "966,000"],
+    [1.6, "1.142,000"], [2.0, "1.236,500"], [2.4, "1.250,500"]]},
+  {"at": 10.2, "do": "mover", "alvo": "painel:–", "label": "minimizar"},
+  {"at": 10.2, "do": "painel", "quadro": "painel_1250_5_minimizar"},
+  {"at": 10.75, "do": "clicar", "alvo": "painel:–", "label": "minimiza"},
+  {"at": 10.82, "do": "painel", "quadro": null},
+  {"at": 12.3, "do": "mover", "alvo": "campo:peso", "ponto": [0.66, 1.9], "label": "campo do peso"}
+ ]
+}

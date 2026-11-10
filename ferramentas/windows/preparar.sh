@@ -4,6 +4,7 @@
 #   tkroot/   pacotes do Ubuntu baixados com apt-get download e só extraídos (python3-tk, libtk8.6, libtcl8.6, libxft2, BLT)
 #   venv/     Python do sistema que casa com o _tkinter extraído + Pillow + websockets (o painel usa os dois)
 #   fonts/    Montserrat (a fonte do painel) e Inconsolata (no lugar da Consolas do Windows, que não é livre)
+#   web/      Noto Sans, a fonte da interface do "Windows" da cena (cena_windows.html)
 #   fonts.conf  fontconfig próprio: as fontes acima, "Consolas"/"Menlo" -> Inconsolata, sem emoji colorido (derruba o Xft)
 #   env.sh    variáveis para rodar o Python com Tk (fonte: source env.sh)
 # Rede: archive.ubuntu.com (pacotes), raw.githubusercontent.com (fontes), pypi (Pillow, websockets).
@@ -49,6 +50,9 @@ baixa Montserrat-Bold.ttf "https://raw.githubusercontent.com/JulietaUla/Montserr
 # Inconsolata estática (a variável sai com o espaçamento errado no Xft)
 baixa Inconsolata-Regular.ttf "https://raw.githubusercontent.com/googlefonts/Inconsolata/main/fonts/ttf/Inconsolata-Regular.ttf"
 baixa Inconsolata-Bold.ttf "https://raw.githubusercontent.com/googlefonts/Inconsolata/main/fonts/ttf/Inconsolata-Bold.ttf"
+# fonte da interface do "Windows" da cena (cena_windows.html): Noto Sans, humanista e livre (a Segoe UI não é)
+mkdir -p "$C/web"
+[ -s "$C/web/NotoSans.ttf" ] || curl -sSfL --retry 3 -o "$C/web/NotoSans.ttf" "https://raw.githubusercontent.com/google/fonts/main/ofl/notosans/NotoSans%5Bwdth%2Cwght%5D.ttf"
 
 cat > "$C/fonts.conf" <<EOF
 <?xml version="1.0"?>
