@@ -148,5 +148,6 @@ onde ele e o código discordam, vale o código (marcado **≠ guia**).
 - "Importar materiais por planilha" ("Baixe o modelo, preencha uma linha por material e envie o arquivo para conferir antes
   de cadastrar."): "1. Baixe o modelo" + "Baixar modelo"; "2. Envie a planilha preenchida" + "Arraste a planilha aqui ou
   clique para selecionar" / "O sistema confere tudo antes de cadastrar." / "Aceita somente o modelo .xlsx, com até 5 MB."
-  A aula só abre e fecha (nenhum arquivo). Tudo ou nada e reenvio sem duplicar: confirmados no guia (`t3-c03`); o código
-  da gravação fica no backend (não lido aqui).
+  A aula só abre e fecha (nenhum arquivo). Gravação numa chamada só, `rpc import_materials_spreadsheet_flexible_atomic`
+  (`:171-176`): tudo ou nada; o `p_client_request_id` devolve `reused` no reenvio do mesmo arquivo (não duplica). Bate com
+  a fonte e o guia (`t3-c03`).
