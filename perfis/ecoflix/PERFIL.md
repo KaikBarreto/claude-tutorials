@@ -50,17 +50,19 @@ de plano na fala.
 - Antes da primeira aula: um nó só com todas as palavras da tabela abaixo, na voz escolhida, para conferir.
 
 ### Pronúncia (no texto do TTS; a legenda usa a grafia da tela; `narracao/config_narracao.json`)
-Sigla que a gente fala de corrido no dia a dia vai escrita de corrido, numa palavra só (NF-e "êniéfiê", NFS-e
-"êniéfiéssiê", ICMS "icêémiésse"): soletrada letra por letra soa "blocada" (Kaik, 10/11). Com hífen quando a voz lê bem
-(CFOP, MTR). Troca fala → legenda com o mesmo número de palavras dos dois lados.
+Som exato: o eleven_v4 aceita IPA entre barras no lugar da palavra ("/ˈẽniˈɛfiˈe/"); é o caminho quando a grafia
+não basta (NF-e, NFS-e, ICMS: soletradas soavam "blocadas", de corrido só funcionavam dentro da frase). Acento tônico
+em cada letra deixa a sigla "vocal" (Kaik, 10/11). Com hífen quando a voz já lê bem (CFOP, MTR). Troca fala → legenda
+com o mesmo número de palavras dos dois lados (o IPA conta como uma).
 | Tela / legenda | Texto do TTS | Situação |
 |---|---|---|
 | EcoSistema | Ecossistema | ok (sem o "ss" o TTS erra) |
 | EcoFlix / EcoTray / Cato | Écoflix / Ecotrêi / Cáto | ok (Kaik ouviu, 10/11) |
-| NF-e / NFS-e | êniéfiê / êniéfiéssiê | Kaik, 10/11 01:05: de corrido, numa palavra (soletrada soava "blocada"); teste 4 |
+| NF-e | /ˈẽniˈɛfiˈe/ (IPA) | Kaik, 10/11 01:16: o melhor do teste 6 (o guia do eleven_v4 aceita IPA entre barras) |
+| NFS-e | /ˈẽːniˈɛːfiˈɛːsiˈeː/ (IPA, provisório) | Kaik, 10/11 01:16: o melhor do teste 6, mas o S ainda sai "êsse"; teste 7 |
 | SEFAZ | sefás | Kaik, 10/11: é "SEFÁS" ("séfaz" saía "séfas") |
 | CFOP | cê-éfe-ó-pê | Kaik, 10/11: soletrada ("cê-fópi" saía "cêfop") |
-| ICMS | icêémiésse | Kaik, 10/11 01:05: de corrido, numa palavra; teste 4 |
+| ICMS | /iˈseˈɛmiˈɛsi/ (IPA, provisório) | Kaik, 10/11 01:16: o S ainda sai "êsse"; teste 7 |
 | Kardex | cardécs | Kaik, 10/11: é "CARDÉX" ("cárdecs" saía "cárdex") |
 | DANFE / NCM | dânfi / ene-cê-ême | ok (10/11) |
 | CST / CSOSN | cê-ésse-tê / cê-ésse-ó-ésse-ene | ok (10/11) |

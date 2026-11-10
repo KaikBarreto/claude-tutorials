@@ -11,7 +11,7 @@ Marcos Antunes. Cada capítulo parte de um navegador novo com a semente indicada
 - **Próximo:** Comprar e vender sucata (T7)
 - **Vinhetas (áreas):** CAIXA · ABERTURA · COFRE · MULTI-CAIXA · MOVIMENTAÇÕES · FECHAMENTO · RESUMO
 - **FAKE_NOW:** 10/11/2026 08:30 nos capítulos 0 a 9; 10/11/2026 17:40 nos capítulos 10 a 12.
-- **Duração estimada:** ~14,5 min de vídeo (2.039 palavras, ~13,1 min de fala a 2,6 palavras/s, mais 12 vinhetas e as
+- **Duração estimada:** ~14,5 min de vídeo (2.044 palavras, ~13,1 min de fala a 2,6 palavras/s, mais 12 vinhetas e as
   ações; alvo da fonte ~14 min).
 - Marcas: `[BACKEND: ...]` o que o backend falso precisa ter; `[ZOOM: ...]` zoom suave que dura a frase inteira;
   `[ILUSTRAÇÃO: ...]` cena desenhada no estilo da marca (`docs/09-aula-ilustrada.md`); `[OUTRO USUÁRIO: ...]` trecho
@@ -126,7 +126,7 @@ Marcos Antunes. Cada capítulo parte de um navegador novo com a semente indicada
 | (ilustração: as duas setas ganham o selo "não é receita nem despesa"; uma moeda pequena "tarifa" sai do banco com o selo "despesa"; a cena some) | Nos dois casos não é receita nem despesa: é o mesmo dinheiro da empresa mudando de lugar. Só a tarifa do banco é despesa de verdade. |
 | Clique em "Saque / Sangria": janela "Saque / Sangria" com "Saque" marcado e "Transferir dinheiro do banco para o cofre ou para um caixa aberto". | No botão do saque, a janela abre com a opção Saque marcada. |
 | Em "Conta de origem" fica a conta principal; em "Destino do saque" o robô abre a lista e troca o caixa do Rafael por "Caixa de Marcos Antunes". | A conta de origem é a principal do banco. No destino, eu escolho o caixa do Marcos. |
-| O robô digita "3.000,00" em "Valor do Saque". [ZOOM: "Valor do Saque" com R$ 3.000,00] | Valor do saque: três mil reais. |
+| O robô digita "3.000,00" em "Valor do Saque". [ZOOM: "Valor do Saque" com R$ 3.000,00] | Valor do saque: três mil reais, o que falta pro Marcos. |
 | O zoom solta; em "Tem tarifa no saque?" escolhe "Sim"; aparece "Valor da Tarifa" e o robô digita "6,50". [ZOOM: "Valor da Tarifa" com R$ 6,50] | O banco cobrou tarifa? Aqui, sim: seis reais e cinquenta. |
 | O zoom solta; câmera em "Efeitos desta transação:": "Saldo da Conta Bancária", "Diminuirá em R$ 3006,50" e "(Saque: R$ 3.000,00 + Tarifa: R$ 6,50)"; "Fundo de Caixa", "Aumentará em R$ 3.000,00". | Embaixo, os efeitos: a conta do banco diminui três mil e seis reais e cinquenta, e o caixa do Marcos aumenta três mil. |
 | (câmera nos efeitos) | Uma dica: nunca lance um saque como Nova Receita. Ele entraria no relatório como se a empresa tivesse faturado mais. A tarifa o sistema já lança separada, como despesa. |

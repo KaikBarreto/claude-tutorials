@@ -62,7 +62,7 @@ A sangria é o caminho contrário: o dinheiro sai de um caixa, ou do cofre, e va
 Nos dois casos não é receita nem despesa: é o mesmo dinheiro da empresa mudando de lugar. Só a tarifa do banco é despesa de verdade.
 No botão do saque, a janela abre com a opção Saque marcada.
 A conta de origem é a principal do banco. No destino, eu escolho o caixa do Marcos.
-Valor do saque: três mil reais.
+Valor do saque: três mil reais, o que falta pro Marcos.
 O banco cobrou tarifa? Aqui, sim: seis reais e cinquenta.
 Embaixo, os efeitos: a conta do banco diminui três mil e seis reais e cinquenta, e o caixa do Marcos aumenta três mil.
 Uma dica: nunca lance um saque como Nova Receita. Ele entraria no relatório como se a empresa tivesse faturado mais. A tarifa o sistema já lança separada, como despesa.

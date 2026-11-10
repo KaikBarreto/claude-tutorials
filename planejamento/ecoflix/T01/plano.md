@@ -7,8 +7,8 @@
   logo, CNPJ, contato, endereço, número do pedido, frase do comprovante, preferências do pátio e a condição 30/60/90.
 - **Pré-requisito:** T0. Cartão "Antes: Bem-vindo ao EcoSistema".
 - **Próximo:** T2. Cartão "Próximo: Usuários e permissões".
-- **Duração:** alvo da fonte ~18 min; a fala natural dá ~13 min de voz (ver `roteiro.md`), ~15 min de vídeo com as 13
-  vinhetas, as ilustrações e o tempo das ações.
+- **Duração:** alvo da fonte ~18 min; a fala natural dá ~15 min de voz (2.351 palavras, ver `roteiro.md`), ~17 min de
+  vídeo com as 13 vinhetas e o tempo das ações.
 - **Base:** `T01/inventario.md` (código 1.59.154). App no tema claro, desktop (janela 1280×800, como na Domiflix).
 - **FAKE_NOW:** `2026-11-10T08:30:00-03:00` em todos os capítulos (os exemplos do "Formato do número" saem com 11/26).
 - 🔒: só o White Label, como menção (a aula inteira é a T27). Nada de preço de plano.
