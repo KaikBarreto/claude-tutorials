@@ -52,6 +52,22 @@ precisar mudar neles vai no relatório.
 - Fiscal: regime do exemplo **Lucro Real**; a fala mostra os campos e diz que quem define a tributação é o contador;
   não ensina regra tributária.
 - Tamanho: o tempo natural da fala (~2,6 palavras/s, ~790 caracteres por minuto); a minutagem da fonte é alvo.
+- **Simples (Kaik, 10/11)**: palavras do dia a dia do pátio; termo técnico explicado na primeira vez em que aparece,
+  com um exemplo do ferro-velho; uma ideia por frase. Se der para dizer mais curto, diga.
+
+## Ilustrar conceitos (Kaik, 10/11: mais do que na Domiflix)
+Sempre que a fala explicar um conceito, e não só uma tela (caixa × competência, saldo a favor e contra, tara e peso
+líquido, cofre × caixa, o caminho da nota até a SEFAZ, MTR e CDF, matriz e filial, ficha técnica...), marque na coluna
+Tela `[ILUSTRAÇÃO: <conceito>: o que o desenho mostra, em que ordem, com qual frase]`. Ilustração é desenho por código
+ou cena HTML no estilo da marca (`docs/09-aula-ilustrada.md`), nunca uma tela inventada do app. Pelo menos uma em
+cada capítulo que explica conceito; a abertura também pode ter uma (o problema do pátio).
+
+## Sem erro na gravação (Kaik, 10/11)
+- Cada afirmação conferida no código da 1.59.154 (a fonte conferiu ⚠️ e 🚫; se código e fonte discordarem, vale o
+  código, e isso vai no relatório). Número na fala só do mundo fictício.
+- Zoom nunca brusco: cada `[ZOOM: ...]` dura a frase inteira que fala do campo (≥ 2,5 s), sem zoom em cima de zoom; a
+  Tela dá tempo para a ação acontecer antes da fala que a comenta.
+- A voz não é gerada agora: os textos passam por uma revisão geral e por um ensaio gravado antes (economia de créditos).
 
 ## Gravável
 A coluna Tela tem de ser executável pelo robô no app real (1.59.154) com o backend falso: só telas e rótulos que existem

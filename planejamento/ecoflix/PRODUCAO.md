@@ -14,7 +14,7 @@ Anexo "EcoFlix-briefing-gravacao.md" = `docs/ecoflix/trilha-de-tutoriais.md` do 
 - Mundo: Recicla Vale Metais (sugestão da fonte), em Taubaté, SP; `FAKE_NOW` 10/11/2026 08:30 (terça).
 - T3 é a primeira aula (molde e prévia), como na Domiflix.
 
-## Decisões pendentes (Kaik)
+## Decisões pendentes (Kaik) · respondidas em 10/11 (ver "Kaik, 10/11")
 1. **Voz**: qual das quatro amostras do fluxo "EcoFlix · teste de voz masculina" (base44, Cristian, Davi Leão,
    Amanndev), ou outra.
 2. **Erro de propósito na tela**: a fonte pede "mostre o erro de propósito em todo ⚠️"; a Domiflix tinha "não encenar a
@@ -50,6 +50,49 @@ Anexo "EcoFlix-briefing-gravacao.md" = `docs/ecoflix/trilha-de-tutoriais.md` do 
   voltar (11/11), Opus nos roteiros e em bug de causa desconhecida.
 - Ensaio (`prever.py --ens`) antes de cada gravação final; câmera auditada antes do render; folha de 3 s antes de entregar.
 
+## Kaik, 10/11 (00:21, 00:29 e 00:33)
+"use a voz kaik barreto (até fiz nesse flow um run dela) / No exemplo o regime fiscal pode ser o lucro real, que é o
+padrão de muita reciclagem / a vinheta faça como achar melhor, a sugestão sobre eeros é boa / bote 20 subagentes em
+paralelo para já começar a gravar e estruturar tudo, toda a parte que precisa de ti / E planejar o roteiro , tudo /
+quero terminar tudo isso bem mais rapido do que foi o da dominex, avance"
+"consegue estruturar de uma forma que você continue fazendo tudo independentemente de acabar meu limite de 5h ou
+semanal? ir voltando a fazer conforme voltar o limite / e estime já a produção de todos os audios como a dominex fez
+mas já fazendo uma repassada de uma vez nisso tudo, talvez até esperar gravar tudo pra ver se não mudaria algo, assim
+fica mais preciso e economiza creditos do eleven labs, que vou btoar depois que você levantar tudo / a gravação evite
+erros, zooms bruscos, informações erradas etc. / Onde achar melhor, pode ilustrar visualmente, até mais do que foi
+feito na dominex, sempre que falar de um conceito (não necessariamente algo na tela), ilustre bem pra ficar fácil de
+entender pro publico / Sempre tentando falar de uma forma simples e facil de entender"
+"se achar melhor,a o invés de supabase falso pode usar a conta teste@ecosistematecnologia.com.br"
+Decisões:
+- Voz **Kaik Barreto** (`KtH4mnH3mgKFGT4Ik9jZ`), uma versão por fala, fluxo único. Fiscal: **Lucro Real**. Vinheta a
+  critério (som oficial da EcoFlix, se casar). Erro na tela: a proposta aprovada (PERFIL → "Fala").
+- **Voz por último**: ensaio gravado de cada aula sem voz, depois uma revisão geral de todos os textos, então a
+  estimativa de créditos para o Kaik comprar, e só aí a voz de tudo de uma vez.
+- Mais ilustração de conceito do que na Domiflix; fala simples; zero zoom brusco e zero informação errada (briefing).
+- **Supabase falso mantido** (a conta teste fica de plano B para alguma tela muito difícil de simular): data do mundo
+  fixa, capítulo regravável do mesmo ponto, nenhuma nota, MTR ou cobrança de verdade, versão do app travada na
+  gravada.
+- Retomadas automáticas: `RETOMADAS.md`.
+
+## Fila
+1. **Agora (10/11 00:3x)**: 17 agentes de roteiro (26 aulas, `_BRIEF_ROTEIRO.md`) e 3 de estrutura: Ferramentas
+   (melhorias da Domiflix na skill, branch `consolidacao-domiflix`), Mundo (EcoSistema 1.59.154 no Supabase falso, mundo
+   da Recicla Vale Metais, EcoTray falso; branch `ecoflix-mundo`), Marca (vinheta, cartela, cartões e kit de ilustração;
+   branch `ecoflix-marca`, prévia em `/home/claude/ecoflix/previa_marca/`).
+2. Juntar: conferir os roteiros (tom, precisão, ilustrações), juntar os branches no main, consolidar no
+   `MUNDO_FICTICIO.md` e nas sementes o que cada aula pediu, handlers do que faltar.
+3. Robôs de todas as aulas e **ensaio gravado sem voz** (tempos estimados), corrigindo texto e tela.
+4. **Revisão geral** dos textos numa passada só, aplicando o teste de pronúncia; **estimativa de créditos** (caracteres
+   de todos os `CAPS` e `TITULOS`, ~1 crédito por caractere no eleven_v4) → avisar o Kaik e esperar os créditos.
+5. Voz: fluxo único "EcoFlix · Vozes de todas as aulas", uma versão por fala → o Kaik exporta o zip.
+6. Gravação final, edição e entrega, aula por aula, na ordem de produção da `TRILHA.md`.
+7. ZIP final das legendas e capítulos; apagar os lembretes que sobrarem.
+
 ## Registro
 - 08/11 23:5x Planejamento: perfil `perfis/ecoflix`, `TRILHA.md`, `MUNDO_FICTICIO.md` e este registro. Quatro amostras
   de voz geradas no ElevenLabs (mesmo texto, 2 versões cada, 362 créditos por versão, 2.896 no total).
+- 10/11 00:2x Decisões do Kaik aplicadas no PERFIL, voz.json e MUNDO; `_BRIEF_ROTEIRO.md`, `trecho_aula.py` (só a seção
+  da aula, 2 a 4 KB em vez de 60 mil tokens) e o código 1.59.154 em `/home/claude/ecoflix/app-src-1.59.154/` (61 MB).
+- 10/11 00:3x 20 agentes lançados (opus). Teste de pronúncia na voz Kaik Barreto (16 itens numerados, 634 créditos) no
+  fluxo "EcoFlix · teste de voz masculina". Os 20 lembretes de retomada criados (`RETOMADAS.md`; o limite de criação
+  aceita uns 10 por minuto).
