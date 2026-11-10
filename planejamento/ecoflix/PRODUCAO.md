@@ -306,3 +306,12 @@ Decisões:
   uma versão por fala); com ~5 % de folga para refazer falas, **~270 mil créditos**. O T0 vertical usa o mesmo áudio.
   Os textos ainda mudam um pouco no ensaio (±5 %). Teste de pronúncia 2 (24 frases com as palavras novas das aulas) no
   fluxo de teste. Diferenças a unificar depois do teste: Shift+C "xíft-cê" (T07) × "xífti-cê" (T25).
+- 10/11 04:3x **Cena de Windows do EcoTray pronta** (branch `ecoflix-ecotray`, no main): `dashboard.py` e
+  `installer_gui.py` de verdade, sem alteração, num Xvfb 1920×1200 a 96 dpi (Tk 8.6 com Xft extraído de pacotes do Ubuntu
+  em /dev/shm, nada instalado: refazer depois de reinício com `ferramentas/windows/preparar.sh`), Montserrat, EcoTray
+  falso na porta 8054 numa rede própria; o menu e o ícone da bandeja saem do `tray_app.py`. Área de trabalho genérica
+  estilo Windows 11 com o navegador onde entra a gravação do robô; aviso de download, SmartScreen, instalador,
+  "Configurar Balanças", "Nova balança", arrasto. Sai no formato do robô (o `render_chapter.py` põe cursor, câmera e
+  palco); `"device": "windows"` (1280×712) no gravador; uso em `docs/10-cena-windows.md`. Prévia de 15,5 s enviada ao
+  Kaik. **Para o T5 na revisão**: com a balança detectada, o diálogo troca o Protocolo para "Toledo" (o roteiro diz
+  "Automático"); com um navegador conectado, o painel mostra "2 cliente(s)".
