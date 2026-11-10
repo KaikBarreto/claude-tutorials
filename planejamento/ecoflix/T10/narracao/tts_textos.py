@@ -27,9 +27,9 @@ No material de destino, escolho o ferro pesado. E na quantidade, trezentos e vin
 Transferir. Pronto: o ferro misto ficou com seis mil e cem quilos, e o ferro pesado, com dois mil e quinhentos.
 E quando você marca vários materiais, a barra de baixo traz o Transferir Estoque. Esse botão é outra coisa: ele leva material entre a matriz e a filial, e faz parte do Gerencial, que depende do plano contratado.""",
 4: """Agora o Histórico, de onde veio cada quilo. É o cardécs do estoque.
-cardécs é a ficha de cada material, como um extrato de banco. Cada linha é uma entrada ou uma saída, com o saldo antes e depois.
+O cardécs é a ficha de cada material, como um extrato de banco. Cada linha é uma entrada ou uma saída, com o saldo antes e depois.
 Escolho o ferro pesado aqui na coluna dos materiais. Repara que a transferência que a gente fez já está em cima.
-Leia da esquerda pra direita: tinha dois mil cento e oitenta quilos, entraram trezentos e vinte, ficou com dois mil e quinhentos.
+É só ler da esquerda pra direita: tinha dois mil cento e oitenta quilos, entraram trezentos e vinte, ficou com dois mil e quinhentos.
 A linha de baixo veio antes: uma compra de ontem, de oitocentos e sessenta quilos. O estoque final dela, dois mil cento e oitenta, é o inicial da transferência.
 É uma corrente: o final de uma linha é o começo da seguinte. Assim dá pra seguir o material quilo a quilo.
 Uma dica: o Histórico abre em Este mês. Hoje é dia dez, então ele mostra dez dias.
@@ -52,20 +52,20 @@ E as fotos tiradas na hora da compra. Clicando, a foto amplia.
 Quando o contador pergunta de onde veio o ferro, a resposta está aqui: o pedido, o pagamento e as fotos, na mesma linha.""",
 7: """Agora o Relatório de Estoque: tudo o que você comprou e vendeu num período.
 Ele também abre em Este mês. Pra fechar outubro, escolho Mês passado.
+Uma dica: o Relatório conta só os pedidos finalizados, pela data de cada pedido. Pedido excluído ou estornado fica de fora.
 Em cima, quatro cartões: Total Comprado, Total Vendido, Lucro e Projeção de Lucro.
 Clicando num cartão, ele abre os detalhes, como o preço médio de compra e o material que mais comprou.
 A Projeção de Lucro é uma estimativa.
 Ela imagina que você vendeu tudo o que comprou no mês, pelo preço médio de venda, ou pelo da tabela se o material não teve venda. É lucro bruto, sem as despesas.
 Uma dica: o saldo da tela de Estoque não é o comprado menos o vendido daqui.
-O Relatório só soma compras e vendas do período. O saldo vem acumulado desde o começo e muda também com transferência, ajuste manual, exclusão e produção. Quando os números não batem, é quase sempre isso.
-E o Relatório conta só os pedidos finalizados, pela data de cada pedido. Pedido excluído ou estornado fica de fora.""",
+O Relatório só soma compras e vendas do período. O saldo vem acumulado desde o começo e muda também com transferência, ajuste manual, exclusão e produção. Quando os números não batem, é quase sempre isso.""",
 8: """Embaixo dos cartões fica o detalhamento, material por material.
 Olha o cobre mel em outubro: comprou novecentos e oitenta quilos, por quarenta e um mil seiscentos e cinquenta reais. Dividindo o valor pelos quilos, dá o preço médio de compra: quarenta e dois e cinquenta.
-E vendeu mil quilos, por quarenta e sete mil e novecentos reais, a quarenta e sete e noventa em média.
+Uma dica: a quantidade comprada daqui é a líquida, já sem a tara e a impureza. A Dona Cida pôs oitenta e seis quilos de latinha na balança. Tirando o saco e a sujeira, seis quilos, entraram oitenta quilos. Por isso esse número pode ser menor que o peso que você lembra de ter pesado.
+E o cobre mel vendeu mil quilos, por quarenta e sete mil e novecentos reais, a quarenta e sete e noventa em média.
 O Resultado é o vendido menos o comprado no mês: seis mil duzentos e cinquenta reais. E a Margem é esse resultado em porcentagem do que foi vendido: uns treze por cento.
 Já o Lucro sobre vendas olha só o que foi vendido: a diferença entre os dois preços médios, vezes os mil quilos. Dá cinco mil e quatrocentos. Também é estimativa.
-Uma dica: a quantidade comprada daqui é a líquida, já sem a tara e a impureza. A Dona Cida pôs oitenta e seis quilos de latinha na balança. Tirando o saco e a sujeira, seis quilos, entraram oitenta quilos. Por isso esse número pode ser menor que o peso que você lembra de ter pesado.
-E material com muita compra e nenhuma venda, como a bateria automotiva, mil trezentos e vinte quilos comprados, não é erro. É material que entrou e ainda não saiu do pátio.""",
+Uma dica: material com muita compra e nenhuma venda, como a bateria automotiva, mil trezentos e vinte quilos comprados, não é erro. É material que entrou e ainda não saiu do pátio.""",
 9: """Agora repara o que acontece quando eu filtro por um fornecedor, o Depósito Irmãos Siqueira. Ficam só as compras. O Total Vendido, o Lucro e as colunas de venda saem.
 É de propósito. O cobre misto do Siqueira foi pra mesma pilha do cobre do Valdir. Quando a Fundição compra, não tem como saber de quem era cada quilo.
 Então, com esse filtro, o relatório responde uma pergunta: quanto você comprou do Siqueira, de cada material, e a que preço.
