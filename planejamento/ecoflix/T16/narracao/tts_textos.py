@@ -45,7 +45,7 @@ Por exemplo: o contador passou um tratamento próprio para as vendas à Fundiç�
 Em Quando aplicar ficam as condições. Aqui, a operação é venda, e o cliente é um só: a Fundição, pelo CNPJ. O resto fica em Qualquer.
 Em O que aplicar entra só o que muda, do jeito que o contador passou. Campo em branco não é zero: ele continua vindo do padrão.
 Clico em Criar cenário. Ele nasce como não revisado, e depois de conferir com a contabilidade é só marcar como revisado.
-Uma dica: não precisa um cenário pra cada combinação. Cadastre a regra geral e, depois, só a exceção mais estreita. Quando duas servem pra mesma nota, vale a mais específica.""",
+Uma dica: não precisa criar um cenário pra cada combinação. Cadastre a regra geral e, depois, só a exceção mais estreita. Quando duas servem pra mesma nota, vale a mais específica.""",
 6: """Agora, de qual número a primeira nota sai. Toda nota tem uma série e um número. A série é a sequência, e o número sobe de um em um.
 Aqui, entrada e saída usam a mesma série, a série um. Pra quem usa uma série só, é deixar assim.
 A Recicla Vale já emitia nota em outro sistema, na série um. A última foi a mil duzentos e quarenta e oito, então a numeração precisa continuar dali.
@@ -96,7 +96,7 @@ Confiro os itens e clico em Emitir Nota. Pronto: a mil duzentos e cinquenta e um
 No menu da nota, Cancelar. O motivo é obrigatório, com pelo menos quinze caracteres.
 Confirmar Cancelamento. Pronto, cancelada. Passadas vinte e quatro horas da autorização, a própria tela avisa que o prazo normal acabou.
 Já a mil duzentos e cinquenta continua valendo. Só mudou um detalhe: a transportadora trocou o caminhão da carga. Pra isso existe a carta de correção, um aviso que fica junto da nota.
-Ela corrige erros em campos específicos. E a própria tela diz o que não dá pra corrigir: valores, quantidade, quem vende e quem compra, a data e o que mudar o imposto.
+Ela corrige erros em campos específicos. E a própria tela diz o que não dá pra corrigir: valores, quantidade, quem vende e quem compra, a data e qualquer coisa que mude o imposto.
 No texto, uso o formato que a tela sugere: onde se lê a placa antiga, leia-se a placa nova.
 Clico em Enviar cê-cê-ê. Pronto: a correção fica registrada junto da nota.""",
 13: """E o número que nunca virou nota? No sistema antigo, as notas mil duzentos e quarenta e seis e mil duzentos e quarenta e sete foram recusadas e ficaram pra trás. Esses números estão em aberto na sefás.
@@ -116,10 +116,10 @@ O menu muda com a situação da nota. Na cancelada, aparece o xis-ême-éle de C
 E pra mandar as notas do mês pro contador, tem a Exportação Contábil, que é assunto do próximo tutorial.""",
 15: """Até aqui, as notas que a Recicla Vale emite. Agora, as que ela recebe.
 Quando um fornecedor emite uma nota com o CNPJ da Recicla Vale como destinatário, a nota passa pela sefás. Com o recurso ativo, ela aparece sozinha aqui.
-Clico em Ativar Notas Recebidas. A tela avisa: daqui pra frente, cada nota recebida conta na mesma cota das notas que você emite.
+Clico em Ativar Notas Recebidas. A tela avisa: a partir da ativação, cada nota recebida conta na mesma cota das notas que você emite.
 Ativar mesmo assim. Em instantes chegam as notas emitidas contra o CNPJ da Recicla Vale: a da Auto Peças Vale Forte, de mil novecentos e oitenta e quatro reais, e a do Depósito Irmãos Siqueira.
 Cada linha mostra quem emitiu, o valor, a data, a situação na sefás e a manifestação.
-Daqui pra frente, as notas entram sozinhas. E o Sincronizar agora faz a busca na hora.""",
+Depois disso, as notas entram sozinhas. E o Sincronizar agora faz a busca na hora.""",
 16: """Chegou a nota, e agora? Repara na coluna Manifestação: as duas já estão com Ciência.
 Manifestar é responder à sefás sobre a nota que chegou. A ciência não é um botão: ela já vem sozinha, quando a nota entra.
 A do Depósito chegou só com o resumo. Pra baixar o xis-ême-éle e o dânfi de uma nota recebida, é Buscar documento, que não confirma nem recusa nada.
@@ -136,7 +136,7 @@ A nota traz só o peso líquido. E Conferir na tela de compra leva os itens pra 
 18: """Pronto! Recapitulando: a gente subiu o certificado á-um, preencheu a empresa e os impostos no Lucro Real e criou um cenário, sempre com o que o contador passou.
 Continuou a numeração do sistema antigo, cadastrou a transportadora e viu a cota do mês, com a tolerância de cinco documentos.
 Emitiu a nota pelos três caminhos: do zero, a partir de um pedido e a partir de um caixa fechado.
-Cancelou uma nota, mandou uma carta de correção, inutilizou os números que sobraram e baixou o dânfi e o xis-ême-éle.
+Cancelou uma nota, mandou uma carta de correção, inutilizou os números que tinham ficado em aberto e baixou o dânfi e o xis-ême-éle.
 E ativou as notas recebidas, confirmou uma operação e importou uma nota pelo xis-ême-éle.
 No próximo tutorial, o documento que acompanha a carga na estrada e o pacote que o contador pede. Até lá!""",
 }
