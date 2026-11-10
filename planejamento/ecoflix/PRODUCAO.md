@@ -132,3 +132,12 @@ Decisões:
   arquivo do perfil), e isso entrou no commit 5b3a506. Restaurado da versão boa (234acde) com o IPA novo; a cópia do que
   ele escreveu está no scratchpad. O `tts_textos.py` dele está certo na pasta do T03. Agente avisado. **Na junção dos
   roteiros, conferir `git diff` de `perfis/` contra o que eu mudei.**
+- 10/11 01:2x **T1 pronta** (roteiro): 14 capítulos, 2.351 palavras, ~15 min de voz (~17 min de vídeo), 12 ilustrações,
+  5 zooms. Pronúncias novas a testar: A4 "á-quatro", Shift "xífti". Backend a simular: `self-register` sem criar a
+  empresa, `password-reset` (código 481207), `cep-lookup`, municípios do IBGE por fixture, upload em `avatars`, `public/`
+  (imagens do login). Identidade da empresa para a trilha: CNPJ 47.318.506/0001-07, Rua das Oficinas, 1250, CEP
+  12086-410, logo e ícone fictícios a criar, frase do comprovante, condição 30/60/90. Código × fonte: não existe aviso
+  fixo de cadastro incompleto; biometria sem tela de cadastro (fora da fala); prefixo do material vai para a T3; opções
+  de pedido da Usabilidade gravam por usuário (a fala avisa); `/instalar` fora. **Pergunta ao Kaik**: Usabilidade e
+  numeração só mostradas, sem mudar (para não alterar o que T7 e T8 esperam), ou ligar "Exigir cliente/fornecedor no
+  Ticket de Pesagem"? Agente de T20 + T26 lançado na vaga.

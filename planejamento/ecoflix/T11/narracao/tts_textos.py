@@ -16,7 +16,7 @@ Uma dica: se a sua empresa ainda não tem a Produção, a tela abre desfocada, c
 2: """Tudo começa pela ficha técnica. Ela é a receita do produto: o que entra e o que sai.
 Na receita do fardo, entra latinha e sai fardo de alumínio. Uma ficha por produto, e ela vale pra todas as ordens dele.
 Clico em Nova. A tela já mostra a receita do jeito que ela é: as matérias-primas entram, e o produto final sai.
-Do lado esquerdo, a matéria-prima. Escolho a Alumínio latinha.
+Do lado esquerdo, a matéria-prima. Escolho o Alumínio latinha.
 Do lado direito, o produto final: o Fardo de alumínio. Ele precisa estar cadastrado como material, igual a qualquer outro do estoque.
 Se ainda não estiver, esse botão de mais cria o material sem sair da ficha.
 E o nome da ficha é opcional. Em branco, ela usa o nome do produto.""",
@@ -60,8 +60,9 @@ Se der menos, ela aparece em verde: rendeu mais que a receita.
 Uma dica: quem baixa do estoque é o real, não o teórico. Saem quatrocentos e noventa e oito quilos de latinha, e não os quatrocentos e oitenta da ficha.""",
 9: """Com a diferença, apareceu o campo Motivo da perda, e o botão Salvar lançamento ficou apagado. O sistema pede o motivo antes de salvar.
 É a tolerância de perda. Na Recicla Vale ela é de dois por cento: em quatrocentos e oitenta quilos, até nove quilos e seiscentos gramas de diferença passam sem motivo.
-Os dezoito quilos passaram disso. Dentro da tolerância, a linha só avisa e não pede nada. E o valor da tolerância fica nas Configurações, que a gente vê no fim.
-Escolho o motivo. Aqui, a maior parte da diferença virou chaparia, então é Material reaproveitável. E o motivo fica guardado no lançamento.
+Os dezoito quilos passaram disso, então o motivo é obrigatório. Dentro da tolerância, a linha só avisa e não pede nada. O valor da tolerância fica nas Configurações, que a gente vê no fim.
+Escolho o motivo. Aqui, a maior parte da diferença virou chaparia, então é Material reaproveitável. O motivo fica guardado no lançamento, e o botão acende.
+Uma dica: com o Salvar lançamento apagado, desce até a matéria-prima usada. É lá que o motivo da perda fica esperando.
 Salvar lançamento. O estoque já foi ajustado: saiu a latinha, e entraram o fardo e a chaparia. E o dia aparece na ordem, com quem produziu.""",
 10: """Lote prensado, hora de fechar a ordem. Arrasto o cartão pra Concluída, e abre a janela de finalizar.
 A meta era de quinhentos quilos, e saíram quatrocentos e oitenta: noventa e seis por cento da meta. Como a meta é referência, a ordem fecha assim mesmo.
@@ -81,11 +82,11 @@ E o botão Exportar tira o relatório em pê-dê-éfe ou em planilha.""",
 O custo de produção em cadeia, o multinível, é pra quando um material que você mesmo produziu vira matéria-prima de outro. Ligado, ele entra com o custo de produção, e não com o de compra.
 Em Quando dar baixa no estoque, a Recicla Vale usa o padrão: cada dia lançado já mexe no estoque.
 Desligado, os dias vão se acumulando, e o estoque só mexe quando a ordem é finalizada.
-Bloquear finalização quando faltar matéria-prima: a Recicla Vale liga. Assim, a produção não fecha sem matéria-prima no estoque, e o saldo não fica negativo.
+Bloquear finalização quando faltar matéria-prima em estoque: a Recicla Vale liga. Assim, a produção não fecha sem matéria-prima no estoque, e o saldo não fica negativo.
 A tolerância de perda é aquela dos dois por cento. Com zero, o sistema pede o motivo pra qualquer diferença.
 E a meta de produção por dia, por funcionário, é a do relatório: duzentos e cinquenta quilos.""",
 13: """E quando uma ordem foi lançada errada? Repara nas ordens um e dois do Cobre mel: são a mesma produção, lançada duas vezes.
-Ordem concluída fica na Concluída. Pra corrigir, o caminho é excluir. Na lixeira do cartão, o sistema avisa que o estoque é estornado. Estornar é desfazer o movimento: a matéria-prima volta, e o produto sai.
+Ordem concluída fica na coluna de conclusão. Pra corrigir, o caminho é excluir. Na lixeira do cartão, o sistema avisa que o estoque é estornado. Estornar é desfazer o movimento: a matéria-prima volta, e o produto sai.
 Excluir ordem. Pronto: os oitenta quilos de fio voltaram pro estoque, e os cinquenta quilos de cobre saíram.
 No histórico do material, o cardécs, dá pra ver tudo. As duas saídas da produção continuam lá, e o estorno entra como uma linha nova, devolvendo os oitenta quilos.
 Nada é apagado: o histórico conta o que aconteceu, até o que foi desfeito.

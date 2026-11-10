@@ -130,9 +130,9 @@ R$ 17.000,00); a conciliação finalizada do extrato (17 linhas: 13 casadas, 1 b
   "Conciliação"). Desktop 1280×800, um usuário, sem celular, sem página pública. Cada capítulo abre um navegador novo na
   semente da tabela; o `setup` reabre fora do vídeo a conta ou o extrato onde o capítulo começa.
 - **Sementes:** `inicio`; `apos-cap02` (conta nova, poupança arquivada); `apos-cap03` (ajuste do cofre); `apos-cap04` (os
-  quatro lançamentos); `apos-cap06` (extrato importado, 17 pendentes); `apos-cap07` (13 resolvidas menos as que ficam:
-  pendentes 3, 4, 5, 6, 8, 9, 10); `apos-cap08`; `apos-cap09`; `apos-cap10`; `apos-cap11`; `apos-cap12` (0 pendentes,
-  entrada do 13 e do 14); `apos-cap14` (finalizada).
+  quatro lançamentos); `apos-cap06` (extrato importado, 17 pendentes); `apos-cap07` (10 resolvidas; pendentes as linhas
+  3, 4, 5, 6, 8, 9 e 10); `apos-cap08`; `apos-cap09`; `apos-cap10`; `apos-cap11`; `apos-cap12` (0 pendentes, entrada do
+  13 e do 14; o 13 desfaz e refaz a linha 1 e termina igual); `apos-cap14` (finalizada).
 - **Backend falso, contas e cofre:** `bank_accounts` (select com `is_archived` false, insert, update de nome, cor, saldo e
   `is_archived`); `bank_transactions` (insert direto do ajuste inicial e do saque para o cofre, select); RPCs
   `update_bank_balance`, `update_bank_account_balance`, `create_manual_bank_transaction` (Saída e as duas pernas da
