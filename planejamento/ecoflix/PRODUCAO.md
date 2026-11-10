@@ -213,3 +213,15 @@ Decisões:
   deixava de fora como "Em breve"). **Na junção**: refazer o `config_narracao.json` de cada aula a partir do do perfil
   final + as trocas da aula (vários agentes copiaram versões intermediárias); um agente rodou sem querer o script de
   outro (falhou sem efeito).
+- 10/11 02:5x **T10 e T21 prontas** (roteiro). T10: 13 blocos, 1.775 palavras, ~11,4 min de voz (~14 min de vídeo);
+  Excel "ékisel" a testar; "Lucro sobre vendas" → "Lucro s/ Vendas" na legenda; backend `transfer_material_stock`,
+  `get_inventory_report_data`, `get_financial_dre_summary`, `get_orders_payment_distribution`,
+  `get_stock_balance_at_date`, fotos em `order_attachments`, PDF em aba nova. Código × fonte: não existe ação "em massa"
+  entre materiais (o botão da barra de seleção transfere entre matriz e filial: Gerencial); o rótulo é "Todos os tempos";
+  no Kardex o filtro de fornecedor mantém as vendas na lista. Decisão do coordenador: o botão de transferência entre
+  matriz e filial fica para a T22. T21: 10 blocos, 1.028 palavras, ~6,6 min de voz (~8 min de vídeo); backend edges
+  `cato-background` e `cato-assist` (modo followups), tabela `cato_jobs`, RPCs `accept_ai_terms`, `set_cato_feedback`,
+  `cato_memory_manage`. Código × fonte: o Cato só aparece com a liberação da empresa e a permissão de uso; o limite de
+  40 perguntas por dia por usuário é da fonte; o "caixa" do Cato soma banco e saldo de parceiro das sessões do dia.
+  **Pergunta ao Kaik**: o Cato propõe reajuste de preço por cartão de confirmação, e a fonte diz que ele só consulta:
+  mostrar ou não? **Conflito T10 × T15** (Ferro pesado) anotado no MUNDO, com proposta.

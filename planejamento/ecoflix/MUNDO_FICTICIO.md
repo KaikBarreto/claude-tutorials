@@ -116,3 +116,10 @@ vendeu pouco num mês) cabem num dos meses.
 - **Coletas** (T12): ordens 1 a 8; frota com tara (CPF e CNH dos motoristas gerados); equipamentos (o app chama
   "Equipamentos", não "Caçambas") 01 a 05 e 40 bags; o portal da Cooperativa Recomeço abre numa segunda janela sem login
   (o robô concede a geolocalização).
+- **Estoque** (T10; valores no `T10/plano.md`): Ferro misto 6.420 kg; Ferro pesado 2.180 kg em 10/11 (ajuste de −14 kg em
+  31/10, exclusão de 180 kg, compra de 860 kg no Pix com 2 fotos); Cobre mel e Bateria automotiva com movimento em
+  outubro; a "Tabela Depósitos" da T3. **Conflito com a T15 a resolver na junção**: a T15 deixa 40 t de Ferro pesado no
+  pátio no fim de outubro. Proposta: as 40 t estão na posição de 31/10 (o T10 mostra isso na posição por data) e uma
+  venda grande à Aços Quiririm no começo de novembro deixa os 2.180 kg de hoje.
+- **Cato** (T21): estoque de 15 materiais somando R$ 52.112,25 (conferido na tela de Posição); respostas simuladas R1 a R9
+  no `T21/plano.md`; um corte logado como Marcos.

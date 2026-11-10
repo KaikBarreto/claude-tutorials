@@ -4,7 +4,7 @@
 - **Antes:** T17 Transporte, serviço e o contador. **Próximo:** T19 Funcionários e ponto eletrônico ("a equipe do pátio dentro
   do sistema").
 - **Áreas das vinhetas:** AMBIENTAL · CONFIGURAÇÃO · MTR · CDF · NOTA FISCAL · RESUMO.
-- **Alvo da fonte:** ~12 min. Estimativa no `roteiro.md` (fala natural + 10 vinhetas).
+- **Alvo da fonte:** ~12 min. **Estimativa:** ~10,5 min de vídeo (1.403 palavras, ~9,0 min de fala, + 10 vinhetas e as esperas).
 - Tudo simulado: nenhum acesso real ao SIGOR (órgão ambiental de SP) nem à SEFAZ. A fala mostra os campos e diz que quem define a
   obrigação e a classificação é o órgão ambiental e a licença da empresa; não ensina norma. Regime do exemplo Lucro Real (não aparece).
 - Base: `T18/inventario.md` (código 1.59.154). Desktop, logado como **Rafael Nogueira** (MASTER).

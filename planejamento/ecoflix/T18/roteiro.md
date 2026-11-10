@@ -4,7 +4,8 @@
 - **Antes:** Transporte, serviço e o contador (T17)
 - **Próximo:** Funcionários e ponto eletrônico (T19)
 - **Vinhetas (áreas):** AMBIENTAL · CONFIGURAÇÃO · MTR · CDF · NOTA FISCAL · RESUMO (todo capítulo menos o 0)
-- **Duração estimada:** ver o fim do cabeçalho (contagem do `narracao/tts_textos.py`)
+- **Duração estimada:** ~10,5 min de vídeo (1.403 palavras de fala, ~9,0 min a 2,6 palavras/s, mais a vinheta de abertura, 10
+  vinhetas de capítulo, as esperas do órgão simulado e a cartela; alvo da fonte ~12 min)
 - Coluna Fala = texto da narração na grafia da legenda; a grafia de pronúncia do TTS está em `narracao/tts_textos.py`. Coluna Tela =
   o que o robô faz e onde a câmera foca, rótulos entre aspas como no código 1.59.154 (`T18/inventario.md`; "SIGOR" é o nome curto que o
   app mostra para SP). Logado como Rafael Nogueira (MASTER), desktop. Mundo e sementes: `T18/plano.md`. FAKE_NOW 10/11/2026 08:30 nos
@@ -47,13 +48,13 @@
 | Tela | Fala |
 | --- | --- |
 | Passa o mouse no "Novo MTR", que está desligado: aparece a dica "Configure o acesso ao SIGOR primeiro". | Antes do primeiro MTR, um passo de configuração. Repara que o Novo MTR ainda está desligado. |
-| A dica some; cartão "Dica: estado da empresa e acesso ao sistema ambiental". | Uma dica: antes de qualquer emissão, precisam estar prontos o estado da empresa, nas Configurações Fiscais, e o acesso ao sistema ambiental do estado. Com os dois, o Novo MTR libera. |
+| A dica some; cartão "Dica: estado da empresa e acesso ao sistema ambiental". | Uma dica: antes de qualquer emissão, precisam estar prontos o estado da empresa, nas Configurações Fiscais, e o acesso ao sistema ambiental do estado, que a gente configura agora. |
 | Clica na sub-aba "Configurações": "Configuração do MTR", "Sistema:" com o nome do SIGOR e o aviso "Configure o acesso ao SIGOR para emitir MTR.". [ZOOM: "Sistema:"] [BACKEND: `mtr_uf_sistema` SP → `sigor_sp` e `mtr_sistemas` ativo] | Em Configurações, o sistema já vem pelo estado da empresa. A Recicla Vale é de São Paulo, então é o SIGOR. |
 | Digita "274.913.508-79" em "CPF da pessoa usuária do SIGOR *" e uma senha fictícia em "Senha do SIGOR *" (só pontinhos). [ZOOM: "CPF da pessoa usuária do SIGOR *"] | No SIGOR, o acesso é o do próprio usuário: o CPF da pessoa cadastrada no portal e a mesma senha que ela usa pra entrar. Aqui, o do Rafael. |
 | Digita "203918" em "Código da unidade geradora *"; "Ambiente" fica em "Produção". | O código da unidade geradora é o número que aparece no portal, ao lado do nome da empresa. |
 | Clica em "Salvar acesso": toast "Acesso ao SIGOR salvo"; clica em "Testar acesso salvo": toast "Acesso ao SIGOR validado" e o quadro "Acesso validado". [BACKEND: RPC `mtr_set_credential`; `sigor-mtr-sync-ref` testa → validado] | Salvar acesso. E Testar acesso salvo: pronto, validado. |
-| No cartão "Dados do SIGOR", clica em "Sincronizar dados do SIGOR": toast "Dados do SIGOR sincronizados". [BACKEND: `sigor-mtr-sync-ref` devolve as listas do órgão] | Agora, Sincronizar dados do SIGOR. Ele traz as listas oficiais de resíduo, classe, unidade e tratamento. |
-| Aparece o cartão "Resíduos salvos"; clica em "Novo resíduo"; digita "Sucata de ferro" em "Nome do resíduo *". | Com as listas, aparecem os Resíduos salvos. A Recicla Vale manda muita sucata de ferro, então eu salvo esse resíduo uma vez só. |
+| No cartão "Dados do SIGOR", clica em "Sincronizar dados do SIGOR": toast "Dados do SIGOR sincronizados". [BACKEND: `sigor-mtr-sync-ref` devolve as listas do órgão] | Agora, Sincronizar dados do SIGOR. Ele traz as listas oficiais de resíduo, classe, unidade e tratamento, e com elas o Novo MTR libera. |
+| Aparece o cartão "Resíduos salvos"; clica em "Novo resíduo"; digita "Sucata de ferro" em "Nome do resíduo *". | Também aparecem os Resíduos salvos. A Recicla Vale manda muita sucata de ferro, então eu salvo esse resíduo uma vez só. |
 | Em "Código IBAMA *", clica em "Buscar código IBAMA...", digita "ferrosos" e escolhe o de metais ferrosos; em "Classe *" (lista filtrada pelo resíduo), escolhe a da licença; "Estado físico *" → "Sólido"; "Acondicionamento *" → o de granel; "Tratamento *" → "Reciclagem". [BACKEND: classes permitidas para o resíduo] | Código do IBAMA, classe, estado físico, acondicionamento e tratamento vêm das listas do órgão. Quem confirma cada um é quem cuida da licença da empresa. |
 | Em "Unidade *", escolhe "TON - Tonelada". [ZOOM: "Unidade *" com "TON - Tonelada"] | Repara que a unidade aparece do jeito que o órgão escreve, com a sigla na frente. Aqui, tonelada. |
 | Clica em "Salvar resíduo": toast "Resíduo salvo"; a lista mostra "Sucata de ferro". | Salvar resíduo. Na hora do MTR, é só escolher. |

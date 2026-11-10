@@ -72,12 +72,12 @@ como no código (`T08/inventario.md`, 1.59.154).
 | Tela | Fala |
 | --- | --- |
 | Capítulo novo (semente `apos-cap03`: o rascunho com o item de 9.460 kg; o `setup` reabre a aba). [ILUSTRAÇÃO: Entrada e saída: o caminhão cheio na balança, "1ª pesagem 9.460 kg"; ele descarrega a latinha no pátio; volta vazio, "2ª pesagem 6.380 kg"; na palavra "diferença", os "3.080 kg" da latinha se destacam entre as duas.] | O caminhão descarregou e voltou vazio pra balança. A diferença entre as duas pesagens é a latinha que ficou no pátio. |
-| No item "Alumínio latinha", "Ações do item" (⋮) → "Adicionar tara / pesagem avançada": a janela abre com "Peso Bruto (Kg)" 9.460 e "1ª Pesagem" e "2ª Pesagem" vazias. | No item, Adicionar tara / pesagem avançada. O peso da entrada está no bruto. |
+| No item "Alumínio latinha", "Ações do item" (⋮) → "Adicionar tara / pesagem avançada": a janela abre com "Peso Bruto (Kg)" 9.460 e "1ª Pesagem" e "2ª Pesagem" vazias. | No item, em Adicionar tara, pesagem avançada. O peso da entrada está no bruto. |
 | Em "1ª Pesagem" digita 9460; em "2ª Pesagem" digita 6380: o "Peso Bruto (Kg)" vira "3.080", com "|9.460 − 6.380|" embaixo; "Líquido (Kg)" "3.080". | A gente passa ele pra primeira pesagem e põe a segunda, com o caminhão vazio: seis mil trezentos e oitenta quilos. |
 | [ZOOM: "Peso Bruto (Kg)" "3.080" e "|9.460 − 6.380|"] | Pronto: o bruto sai sozinho, a diferença das duas. Três mil e oitenta quilos de latinha. |
 | Zoom em "Tara (Kg)", em branco. | A tara é o peso do que vem junto e não é material, como uma caçamba. Aqui o caminhão já saiu na segunda pesagem, então a tara fica em branco. |
 | Clique em "Confirmar": aviso "Pesagem do item atualizada"; a linha mostra o peso 3.080. | Confirmar, e a pesagem do item está atualizada. |
-| Clique na seta da linha "Alumínio latinha": abre o detalhe, com "1ª pesagem", "2ª pesagem" e "Bruto". | Na linha, a setinha abre o detalhe, com as duas pesagens e o bruto. |
+| Clique na seta da linha "Alumínio latinha" ("Ver detalhes da pesagem"): abre o detalhe, com "1ª pesagem", "2ª pesagem" e "Bruto" (`components/order/WeighingDetailRow.tsx`). | Na linha, a setinha abre o detalhe, com as duas pesagens e o bruto. |
 
 ### cap05 · Impureza em porcentagem ou em quilos (vinheta: PESAGEM)
 
@@ -100,14 +100,14 @@ como no código (`T08/inventario.md`, 1.59.154).
 | Clique na barra escura: a lista mostra "#58" "3.080 kg" "Cooperativa Recomeço" e "#59" "5.640 kg" "Auto Peças Vale Forte". [ZOOM: a lista das duas abas] | Na barra de cima, a gente troca de um caminhão pro outro. Cada aba guarda o seu rascunho, e nada se mistura. |
 | Clique em "#58": volta o ticket da cooperativa. Clique em "Salvar Ticket de Pesagem": aviso "Ticket de pesagem salvo" e a janela "Ticket #58 salvo" ("O que deseja fazer com este ticket de pesagem?"), com "Imprimir comprovante", "Valorizar" e "Fechar". [BACKEND: RPC `finalize_weighing_ticket_v3` → `ticket_number` 58, `status` pending] | O ticket da cooperativa está pronto, então eu salvo. Agora sim, ele ganha o número de verdade. |
 | Clique em "Fechar": fica a aba do Jair ("#59", "Auto Peças Vale Forte", "Seu rascunho"). | O valor a gente resolve depois. E a aba do Jair continua aberta, esperando ele descarregar. |
-| Zoom no "x" da aba do Jair, na lista de abas, sem clicar (ele pede "Descartar este ticket?", com "Manter ticket" e "Descartar ticket"). | Se alguém fechar uma aba no x, o sistema pergunta antes de descartar o ticket. |
+| Clique na barra escura: na lista de abas, zoom no "x" da aba do Jair, sem clicar (ele pede "Descartar este ticket?", com "Manter ticket" e "Descartar ticket"); fecha a lista. | Se alguém fechar uma aba no x, o sistema pergunta antes de descartar o ticket. |
 
 ### cap07 · Valorizar o ticket (vinheta: VALORIZAR)
 
 | Tela | Fala |
 | --- | --- |
 | Capítulo novo (semente `apos-cap06`), em "Ticket de Pesagem": em "Aguardando valorização", o cartão "Ticket #58" ("COMPRA", "Fornecedor: Cooperativa Recomeço", "Sem valores", "Alumínio latinha", "3.018,4 kg", "10/11/26 08:52"). | No fim do dia, o preço com a cooperativa fechou. É hora de valorizar: transformar o peso em pedido. |
-| No cartão, "Ações" → "Valorizar". [BACKEND: `order_drafts` insert com o item e o preço da tabela principal, R$ 6,20] A tela vai para a Compra (`/compra`) com o rascunho: fornecedor "Cooperativa Recomeço", "Alumínio latinha", o peso, "Tara/Imp." 61,6, "Valor/Kg" 6,20 e o total. | Em Ações, Valorizar. O sistema abre uma compra já preenchida: a cooperativa, a latinha e o peso líquido. |
+| No cartão, "Ações" → "Valorizar". [BACKEND: `order_drafts` insert com o item e o preço da tabela principal, R$ 6,20] A tela vai para a Compra (`/compra`) com o rascunho: fornecedor "Cooperativa Recomeço", "Alumínio latinha", o peso, "Tara/Imp." 61,6, "Valor/Kg" 6,20 e o total. | Em Ações, Valorizar. O sistema abre uma compra já preenchida: a cooperativa, a latinha, o peso e a impureza. |
 | [ZOOM: o "Valor/Kg" 6,20 e o total da linha, R$ 18.714,08] | O preço vem da tabela: seis e vinte o quilo. Dá dezoito mil setecentos e catorze reais e oito centavos. |
 | Zoom na célula "Valor/Kg". | Se o preço combinado for outro, é só mudar o valor do quilo aqui, antes de finalizar. Num ticket de venda, abre uma venda do mesmo jeito. |
 | [ILUSTRAÇÃO: o caminho: ticket, "Valorizar", compra em rascunho, "Finalizar", estoque e caixa; o estoque e o caixa só acendem no "Finalizar".] | Repara: até aqui, nada entrou no estoque e nada saiu do caixa. A compra está em rascunho, e o efeito só acontece quando ela for finalizada. |

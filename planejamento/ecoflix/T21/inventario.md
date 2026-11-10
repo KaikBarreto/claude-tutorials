@@ -44,8 +44,8 @@ Código lido (só leitura): `/home/claude/ecoflix/app-src-1.59.154/`. Caminhos r
   "Quase lá…" e "Pode fechar o Cato e continuar trabalhando. Eu aviso quando terminar." (`:135-141,1130-1145`).
 - Resposta (`:903-1127`): em cima, "Consultei <fonte>" (`lib/cato/messages.ts:98-130`: "seu resumo financeiro",
   "suas compras e vendas", "seu estoque", "seu resumo bancário", "os saldos dos parceiros", "seu caixa", "a central de
-  ajuda"...; ranking de parceiros não tem rótulo) e a linha de contexto "Período <início> – <fim> · Regime de
-  competência · Atualizado às HH:MM" (`lib/cato/responsePresentation.ts:42-56`); o texto aparece digitando
+  ajuda"...; ranking de parceiros não tem rótulo) e a linha de contexto "Período <início> <traço> <fim> · Regime de
+  competência · Atualizado às HH:MM" (o app põe um traço entre as datas: não ler) (`lib/cato/responsePresentation.ts:42-56`); o texto aparece digitando
   (negrito, listas); depois o gráfico (`CatoChart.tsx`: "pizza", "barra", "linha", com título) ou a tabela
   (`CatoTable.tsx`: título; coluna com "valor"/"saldo" vira R$, "Quantidade (kg)" vira "n kg").
 - Linha de ações: botão do destino (`responsePresentation.ts:5-20`: "Abrir relatório financeiro", "Abrir caixa",

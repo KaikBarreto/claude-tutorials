@@ -12,7 +12,8 @@ sorteadas. As respostas do Cato são **simuladas** no backend falso: texto, grá
 - **Antes:** Relatório Financeiro e DRE (T15)
 - **Próximo:** Dashboard, Agenda e rotina (T25)
 - **Vinhetas (áreas):** CATO · AUTORIZAÇÃO · PERGUNTAS · RESPOSTAS · LIMITES · AJUDA · RESUMO (todos os capítulos menos o 0)
-- **Duração estimada:** ver o fim deste cabeçalho (calculada do `tts_textos.py`)
+- **Duração estimada:** ~8 min de vídeo (1.028 palavras e 5.439 caracteres de fala, ~6,6 min de voz a 2,6 palavras/s,
+  mais 9 vinhetas e as esperas das nove respostas; alvo da fonte: 8 min)
 - **FAKE_NOW:** `2026-11-10T08:30:00-03:00` (terça).
 - **Sementes:** `inicio` (Cato liberado, sem autorização; caps. 0 a 2) e `apos-cap02` (autorização gravada; caps. 3 a 9).
   Caps. 3 a 8 são uma conversa só, gravada em sequência; para regravar um deles, o `setup` restaura a conversa pelo

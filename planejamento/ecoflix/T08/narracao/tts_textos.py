@@ -31,7 +31,7 @@ Não existe um status de esperando a segunda pesagem. O ticket fica aqui, aberto
 Mesmo saindo da tela, o rascunho continua lá, em Rascunhos abertos.
 Uma dica: quando o rascunho é reaberto, confira o que já estava preenchido antes de salvar.""",
 4: """O caminhão descarregou e voltou vazio pra balança. A diferença entre as duas pesagens é a latinha que ficou no pátio.
-No item, Adicionar tara / pesagem avançada. O peso da entrada está no bruto.
+No item, em Adicionar tara, pesagem avançada. O peso da entrada está no bruto.
 A gente passa ele pra primeira pesagem e põe a segunda, com o caminhão vazio: seis mil trezentos e oitenta quilos.
 Pronto: o bruto sai sozinho, a diferença das duas. Três mil e oitenta quilos de latinha.
 A tara é o peso do que vem junto e não é material, como uma caçamba. Aqui o caminhão já saiu na segunda pesagem, então a tara fica em branco.
@@ -51,7 +51,7 @@ O ticket da cooperativa está pronto, então eu salvo. Agora sim, ele ganha o n�
 O valor a gente resolve depois. E a aba do Jair continua aberta, esperando ele descarregar.
 Se alguém fechar uma aba no x, o sistema pergunta antes de descartar o ticket.""",
 7: """No fim do dia, o preço com a cooperativa fechou. É hora de valorizar: transformar o peso em pedido.
-Em Ações, Valorizar. O sistema abre uma compra já preenchida: a cooperativa, a latinha e o peso líquido.
+Em Ações, Valorizar. O sistema abre uma compra já preenchida: a cooperativa, a latinha, o peso e a impureza.
 O preço vem da tabela: seis e vinte o quilo. Dá dezoito mil setecentos e catorze reais e oito centavos.
 Se o preço combinado for outro, é só mudar o valor do quilo aqui, antes de finalizar. Num ticket de venda, abre uma venda do mesmo jeito.
 Repara: até aqui, nada entrou no estoque e nada saiu do caixa. A compra está em rascunho, e o efeito só acontece quando ela for finalizada.""",
