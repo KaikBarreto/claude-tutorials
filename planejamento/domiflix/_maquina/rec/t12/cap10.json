@@ -1,0 +1,119 @@
+{
+ "name": "t12-cap10",
+ "title": "T12 · Cap. 10 · Qual link mandar (narração 36,6 s; marcas L1..L3 = início de cada linha do roteiro)",
+ "seed": "t12-cap10",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap05",
+  "t12/inicio",
+  "t12/apos-cap08"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/clientes",
+  "/contratos",
+  "/ordens-servico"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/portal/562a7dbb648d5653872808a111187f64"
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Hotel Mirante do Mar",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|erro|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0.04
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Contratos",
+    "exact": true
+   },
+   "at": 5.16,
+   "label": "seção Contratos do portal"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "PMOC - Hotel Mirante do Mar",
+    "exact": true
+   },
+   "seconds": 0.4,
+   "at": 6.34,
+   "label": "linha do contrato PMOC com o selo PMOC",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "PMOC - Hotel Mirante do Mar",
+    "exact": true
+   },
+   "at": 7.06,
+   "label": "clica na linha do contrato (abre a página da unidade)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Em dia",
+   "timeout": 25
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|erro|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 11.64
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 32.96
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 36.56
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ },
+ "anonymous": true,
+ "sameTab": true
+}

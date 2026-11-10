@@ -1,0 +1,165 @@
+{
+ "seedExtra": [
+  "t2/apos-cap10",
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t9/inicio",
+  "t9/apos-cap16",
+  "t10/inicio"
+ ],
+ "stopOnFail": false,
+ "steps": [
+  {
+   "do": "waitFor",
+   "text": "Olá, Camila!",
+   "timeout": 40
+  },
+  {
+   "do": "eval",
+   "js": "({w:innerWidth,h:innerHeight,ver:(document.body.innerText.match(/\\d+\\.\\d+\\.\\d+/g)||[]).slice(0,3)})"
+  },
+  {
+   "do": "shot",
+   "name": "a1-dash"
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "CRM e Projetos"
+   },
+   "optional": true
+  },
+  {
+   "do": "shot",
+   "name": "a2-menu"
+  },
+  {
+   "do": "list",
+   "selector": "[data-sidebar] a"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "link",
+    "name": "CRM/Kanban",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 3000
+  },
+  {
+   "do": "shot",
+   "name": "a3-crm-vazio"
+  },
+  {
+   "do": "text",
+   "selector": "main",
+   "name": "crm-vazio",
+   "max": 1500
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Toggle Sidebar",
+    "nth": 0
+   },
+   "optional": true
+  },
+  {
+   "do": "wait",
+   "ms": 800
+  },
+  {
+   "do": "shot",
+   "name": "a4-recolhido"
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Começar com estágios padrão"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 3000
+  },
+  {
+   "do": "shot",
+   "name": "a5-funil"
+  },
+  {
+   "do": "text",
+   "selector": "main",
+   "name": "funil",
+   "max": 2500
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('main [draggable=true]')].map(e=>e.innerText.slice(0,30).replace(/\\n/g,' / '))"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const m=document.querySelector('main');const sc=[...m.querySelectorAll('*')].filter(e=>e.scrollWidth>e.clientWidth+5&&getComputedStyle(e).overflowX!=='visible').map(e=>e.className.toString().slice(0,60)+' '+e.scrollWidth+'/'+e.clientWidth);return sc})()"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const ds=[...document.querySelectorAll('[role=dialog]')];const root=ds[ds.length-1]||document.querySelector('main')||document.body;return [...root.querySelectorAll('input,textarea,select,button,[role=combobox],[role=switch],[role=tab],[draggable=true]')].filter(e=>e.offsetParent!==null).map(e=>[e.tagName.toLowerCase(),e.getAttribute('role')||'',e.type||'',e.getAttribute('placeholder')||'',e.getAttribute('aria-label')||'',(e.innerText||e.value||'').trim().slice(0,40),e.id||'',e.draggable?'DRAG':''].join('|'))})()"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Configurações do CRM/Kanban"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 1800
+  },
+  {
+   "do": "shot",
+   "name": "b1-conf"
+  },
+  {
+   "do": "text",
+   "selector": "[role=dialog]",
+   "name": "conf",
+   "max": 1800
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const ds=[...document.querySelectorAll('[role=dialog]')];const root=ds[ds.length-1]||document.querySelector('main')||document.body;return [...root.querySelectorAll('input,textarea,select,button,[role=combobox],[role=switch],[role=tab],[draggable=true]')].filter(e=>e.offsetParent!==null).map(e=>[e.tagName.toLowerCase(),e.getAttribute('role')||'',e.type||'',e.getAttribute('placeholder')||'',e.getAttribute('aria-label')||'',(e.innerText||e.value||'').trim().slice(0,40),e.id||'',e.draggable?'DRAG':''].join('|'))})()"
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Novo estágio",
+    "within": "[role=dialog]"
+   },
+   "optional": true
+  },
+  {
+   "do": "wait",
+   "ms": 700
+  },
+  {
+   "do": "shot",
+   "name": "b2-novo"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const ds=[...document.querySelectorAll('[role=dialog]')];const root=ds[ds.length-1]||document.querySelector('main')||document.body;return [...root.querySelectorAll('input,textarea,select,button,[role=combobox],[role=switch],[role=tab],[draggable=true]')].filter(e=>e.offsetParent!==null).map(e=>[e.tagName.toLowerCase(),e.getAttribute('role')||'',e.type||'',e.getAttribute('placeholder')||'',e.getAttribute('aria-label')||'',(e.innerText||e.value||'').trim().slice(0,40),e.id||'',e.draggable?'DRAG':''].join('|'))})()"
+  },
+  {
+   "do": "html",
+   "selector": "[role=dialog]",
+   "max": 200
+  }
+ ]
+}

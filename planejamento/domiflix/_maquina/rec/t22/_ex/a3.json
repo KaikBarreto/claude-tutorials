@@ -1,0 +1,121 @@
+{
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap05",
+  "t12/inicio",
+  "t12/apos-cap11",
+  "t13/inicio",
+  "t13/apos-cap14",
+  "t19/inicio",
+  "t19/apos-cap13",
+  "t20/inicio",
+  "t22/_prov-t15",
+  "t22/inicio"
+ ],
+ "start": "/funcionarios",
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ },
+ "stopOnFail": false,
+ "steps": [
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Toggle Sidebar",
+    "nth": 0
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Perfil Comportamental",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 800
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Ver como grade"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 800
+  },
+  {
+   "do": "shot",
+   "name": "01-grade"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main div[role=button]:has-text('Rafael Lima')"
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main div[role=button]:has-text('Rafael Lima') button",
+    "hasText": "Gerar link"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 800
+  },
+  {
+   "do": "shot",
+   "name": "02-modal"
+  },
+  {
+   "do": "text",
+   "selector": "[role=dialog]"
+  },
+  {
+   "do": "html",
+   "selector": "[role=dialog]",
+   "max": 2500
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Gerar link",
+    "exact": true,
+    "within": "[role=dialog]"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 900
+  },
+  {
+   "do": "shot",
+   "name": "03-toast"
+  },
+  {
+   "do": "text",
+   "selector": "[role=region], ol li, [data-sonner-toast]",
+   "name": "toast"
+  },
+  {
+   "do": "shot",
+   "name": "04-cartao-pendente"
+  },
+  {
+   "do": "eval",
+   "js": "document.body.innerText.match(/avaliacao[^\\s]*/g)"
+  }
+ ]
+}

@@ -1,0 +1,142 @@
+{
+ "name": "t20-cap05",
+ "title": "T20 · Cap. 5 · A compra no cartão (narração 35,8 s; marcas L1..L5 = início de cada linha do roteiro)",
+ "seed": "t20-cap05",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 0.4,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap05",
+  "t12/inicio",
+  "t12/apos-cap11",
+  "t13/inicio",
+  "t13/apos-cap14",
+  "t19/inicio",
+  "t19/apos-cap13",
+  "t20/inicio",
+  "t20/apos-cap03"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/financeiro/relatorios"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Camila!",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/financeiro/relatorios?tab=dre"
+  },
+  {
+   "do": "waitFor",
+   "text": "Demonstrativo de Resultado",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Toggle Sidebar",
+    "nth": 0
+   }
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Regime de Caixa",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|erro|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button",
+    "hasText": "Despesas administrativas"
+   },
+   "label": "abre Despesas administrativas"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Ferramentas e Equipamentos",
+    "within": "main"
+   },
+   "seconds": 1.6,
+   "label": "Ferramentas e Equipamentos",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 760,
+    "y": 420
+   },
+   "by": 520,
+   "duration": 2.5,
+   "after": 100,
+   "label": "desce pela tabela: nada de transferência nem de fatura"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{await new Promise(r=>setTimeout(r,1800));const el=document.querySelector(\"main\");const t=(el?el.innerText:'').replace(/[\\s\\u00a0]+/g,' ').toLowerCase();return t.includes(\"pagamento de fatura\")?'DIFERENTE: apareceu '+\"Pagamento de Fatura\":'OK: ausente '+\"Pagamento de Fatura\"})()",
+   "label": "confere sem Pagamento de Fatura no DRE"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{await new Promise(r=>setTimeout(r,1800));const el=document.querySelector(\"main\");const t=(el?el.innerText:'').replace(/[\\s\\u00a0]+/g,' ').toLowerCase();return t.includes(\"transfer\\u00eancia entre contas\")?'DIFERENTE: apareceu '+\"Transfer\\u00eancia entre contas\":'OK: ausente '+\"Transfer\\u00eancia entre contas\"})()",
+   "label": "confere sem Transferência entre contas no DRE"
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

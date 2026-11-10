@@ -1,0 +1,74 @@
+{
+ "name": "R12-d",
+ "title": "T0 v2 · R12 · Confirmação no fim do T0 (computador 1280x800)",
+ "seed": "t0v2-R12",
+ "pace": 0.6,
+ "tail": 1.2,
+ "cps": 9,
+ "seedExtra": [
+  "t0v2/catalogo",
+  "t0v2/progresso-camila",
+  "t0v2/usuario-novo",
+  "t0v2/conta-teste"
+ ],
+ "prewarm": [
+  "/dashboard"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "Primeiro passo",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "waitFor",
+   "text": "Confirmar e começar a primeira aula",
+   "timeout": 40,
+   "label": "vídeo terminou"
+  },
+  {
+   "do": "pause",
+   "seconds": 1.2
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "checkbox"
+   },
+   "optional": true,
+   "timeout": 8,
+   "label": "marca a caixa"
+  },
+  {
+   "do": "pause",
+   "seconds": 1.2
+  },
+  {
+   "do": "click",
+   "target": "Confirmar e começar a primeira aula",
+   "optional": true,
+   "timeout": 8,
+   "label": "botão Confirmar e começar a primeira aula"
+  },
+  {
+   "do": "pause",
+   "seconds": 4
+  }
+ ],
+ "user": "diego.martins@glacialcold.example"
+}

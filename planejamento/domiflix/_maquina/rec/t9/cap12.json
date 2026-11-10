@@ -1,0 +1,310 @@
+{
+ "name": "t9-cap12",
+ "title": "T9 · Cap. 12 · O que o cliente vê (narração 67,1 s; marcas L1..L6 = início de cada linha do roteiro)",
+ "seed": "t9-cap12",
+ "pace": 0.45,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t9/inicio",
+  "t9/apos-cap11"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/orcamentos",
+  "/proposta/13193e23fd5ac75f5ff116551a0fa569228f1b5e2ac08f1d6424287b8d7d1900?preview=1"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/orcamentos"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie orçamentos, custos e precificação",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Toggle Sidebar",
+    "nth": 0
+   }
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|erro|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "goto",
+   "url": "/proposta/13193e23fd5ac75f5ff116551a0fa569228f1b5e2ac08f1d6424287b8d7d1900?preview=1",
+   "at": 0.88,
+   "label": "abre o link da proposta (o que o cliente recebe)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Glacial Cold Brasil",
+   "timeout": 25
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Glacial Cold Brasil",
+    "exact": true
+   },
+   "seconds": 0.8,
+   "at": 7.3,
+   "label": "no alto: a empresa",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Proposta válida até"
+   },
+   "seconds": 1.4,
+   "at": 9.46,
+   "label": "a validade da proposta",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 10.42
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const h=[...document.querySelectorAll('body *')].find(e=>e.children.length===0&&e.textContent.trim().toLowerCase()===\"cliente\");if(!h)return 'sem titulo';const r=h.getBoundingClientRect();window.scrollTo({top:window.scrollY+r.top-110,behavior:'smooth'});return r.top})()",
+   "at": 10.92,
+   "label": "desce até Cliente"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const h=[...document.querySelectorAll('body *')].find(e=>e.children.length===0&&e.textContent.trim().toLowerCase()===\"servi\\u00e7os\");if(!h)return 'sem titulo';const r=h.getBoundingClientRect();window.scrollTo({top:window.scrollY+r.top-110,behavior:'smooth'});return r.top})()",
+   "at": 12.9,
+   "label": "desce até Serviços"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const h=[...document.querySelectorAll('body *')].find(e=>e.children.length===0&&e.textContent.trim().toLowerCase()===\"total dos servi\\u00e7os\");if(!h)return 'sem titulo';const r=h.getBoundingClientRect();window.scrollTo({top:window.scrollY+r.top-110,behavior:'smooth'});return r.top})()",
+   "at": 17.78,
+   "label": "desce até os totais"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Descontos"
+   },
+   "seconds": 0.6,
+   "at": 19.7,
+   "label": "deslocamento e desconto",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "R$ 1.000,00",
+    "exact": true
+   },
+   "seconds": 1.4,
+   "at": 22.33,
+   "label": "TOTAL R$ 1.000,00",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Proposta válida até 18/11/2026\", \"Higienização de Split\", \"R$ 180,00 3 R$ 540,00\", \"Carga de Gás\", \"R$ 350,00 1 R$ 350,00\", \"Gás refrigerante R-410A R$ 150,00 1 R$ 150,00\", \"Total dos serviços R$ 890,00\", \"Total de materiais R$ 150,00\", \"Deslocamento (18 km) R$ 45,00\", \"Descontos − R$ 85,00\", \"TOTAL R$ 1.000,00\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"body\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere página do cliente: totais (890 + 150 + 45 − 85 = 1.000,00)"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 23.25
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const h=[...document.querySelectorAll('body *')].find(e=>e.children.length===0&&e.textContent.trim().toLowerCase()===\"formas de pagamento\");if(!h)return 'sem titulo';const r=h.getBoundingClientRect();window.scrollTo({top:window.scrollY+r.top-110,behavior:'smooth'});return r.top})()",
+   "at": 24.11,
+   "label": "desce até Formas de pagamento"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const h=[...document.querySelectorAll('body *')].find(e=>e.children.length===0&&e.textContent.trim().toLowerCase()===\"informa\\u00e7\\u00f5es adicionais\");if(!h)return 'sem titulo';const r=h.getBoundingClientRect();window.scrollTo({top:window.scrollY+r.top-110,behavior:'smooth'});return r.top})()",
+   "at": 28.35,
+   "label": "desce até Informações adicionais"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const h=[...document.querySelectorAll('body *')].find(e=>e.children.length===0&&e.textContent.trim().toLowerCase()===\"observa\\u00e7\\u00f5es\");if(!h)return 'sem titulo';const r=h.getBoundingClientRect();window.scrollTo({top:window.scrollY+r.top-110,behavior:'smooth'});return r.top})()",
+   "at": 30.11,
+   "label": "desce até Observações"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const h=[...document.querySelectorAll('body *')].find(e=>e.children.length===0&&e.textContent.trim().toLowerCase()===\"garantia\");if(!h)return 'sem titulo';const r=h.getBoundingClientRect();window.scrollTo({top:window.scrollY+r.top-110,behavior:'smooth'});return r.top})()",
+   "at": 31.23,
+   "label": "desce até Garantia"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"À vista no PIX\", \"5% de desconto\", \"R$ 950,00\", \"Em até 10x de R$ 100,00\", \"Serviço executado após a aprovação, com data combinada com o cliente.\", \"Atendimento de segunda a sexta, das 8h às 17h.\", \"Garantia de 90 dias sobre o serviço.\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"body\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere página do cliente: pagamento, informações, observações e garantia"
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 35.17
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Baixar PDF",
+    "exact": true
+   },
+   "seconds": 0.6,
+   "at": 37.25,
+   "label": "botão Baixar PDF (só passa)",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.scrollTo({top:document.documentElement.scrollHeight,behavior:'smooth'});return 1})()",
+   "at": 38.35,
+   "label": "desce até o fim"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Aprovar",
+    "exact": true
+   },
+   "seconds": 0.5,
+   "at": 40.29,
+   "label": "botão Aprovar",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Rejeitar",
+    "exact": true
+   },
+   "seconds": 0.5,
+   "at": 41.17,
+   "label": "botão Rejeitar (só passa)",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 45.12
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Aprovar",
+    "exact": true
+   },
+   "at": 46.4,
+   "label": "Aprovar",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "text": "Proposta aprovada",
+   "timeout": 15
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Proposta aprovada\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"body\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere página do cliente depois de Aprovar"
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 50.16
+  },
+  {
+   "do": "goto",
+   "url": "/orcamentos",
+   "at": 50.16,
+   "label": "volta para a lista de orçamentos"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie orçamentos, custos e precificação",
+   "timeout": 25
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('Pousada Brisa do Mar')",
+    "hasText": "Aprovado"
+   },
+   "seconds": 1.8,
+   "at": 53.36,
+   "label": "a linha da Pousada: Aprovado",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"R$ 1.000,00\", \"Aprovado\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main tbody tr\")].filter(e=>!true||e.innerText.includes(\"Pousada Brisa do Mar\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere linha da Pousada: Aprovado (sem No financeiro)"
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 67.12
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

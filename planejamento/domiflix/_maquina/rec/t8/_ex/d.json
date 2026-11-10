@@ -1,0 +1,5 @@
+{"seedExtra":["t3/apos-cap10","t1/apos-cap13","t4/inicio","t4/apos-cap14","t5/inicio","t5/apos-cap15","t8/inicio"],
+ "steps":[{"do":"goto","url":"/estoque"},{"do":"waitFor","text":"Controle de peças e materiais","timeout":25},
+ {"do":"click","target":{"role":"button","name":"Toggle Sidebar","nth":0}},{"do":"wait","ms":700},
+ {"do":"eval","js":"JSON.stringify([...document.querySelectorAll('main button, main input, main th')].map(b=>(b.tagName+'|'+(b.getAttribute('aria-label')||'')+'|'+(b.getAttribute('title')||'')+'|'+(b.placeholder||'')+'|'+(b.textContent||'').trim().slice(0,30))))"},
+ {"do":"click","target":{"selector":"main button:has(svg.lucide-filter)"}},{"do":"wait","ms":800},{"do":"shot","name":"d1"},{"do":"text","selector":"[role=dialog]","name":"d1t"}]}

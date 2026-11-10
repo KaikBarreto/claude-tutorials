@@ -1,0 +1,195 @@
+{
+ "name": "t12-cap06",
+ "title": "T12 · Cap. 6 · O link da unidade (narração 46,6 s; marcas L1..L4 = início de cada linha do roteiro)",
+ "seed": "t12-cap06",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap05",
+  "t12/inicio",
+  "t12/apos-cap03"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/clientes",
+  "/contratos",
+  "/ordens-servico",
+  "/contratos/34306a37-c1a7-58a1-b713-244525163500"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Camila!",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|erro|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Gestão",
+    "exact": true
+   },
+   "at": 0.3,
+   "label": "grupo Gestão do menu"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "link",
+    "name": "Contratos",
+    "exact": true
+   },
+   "at": 4.2,
+   "label": "menu Contratos"
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "PMOC - Hotel Mirante do Mar",
+    "exact": true,
+    "within": "main"
+   },
+   "at": 7.6,
+   "label": "abre o PMOC - Hotel Mirante do Mar"
+  },
+  {
+   "do": "scroll",
+   "target": {
+    "text": "Portal do Contrato",
+    "exact": true,
+    "within": "main"
+   },
+   "at": 8.9,
+   "label": "desce até o cartão Portal do Contrato",
+   "duration": 1.2
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 12.04
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "switch",
+    "name": "Portal Público",
+    "exact": true
+   },
+   "seconds": 1.1,
+   "at": 14.58,
+   "label": "chave Portal Público",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Qualquer pessoa com o link"
+   },
+   "seconds": 2.4,
+   "at": 16.18,
+   "label": "texto Qualquer pessoa com o link vê o portal",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "scroll",
+   "by": 380,
+   "at": 22.53,
+   "label": "desce até o QR Code e o link da unidade",
+   "point": {
+    "x": 700,
+    "y": 450
+   },
+   "duration": 0.8
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 23.73
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Copiar link",
+    "exact": true
+   },
+   "at": 26.99,
+   "label": "Copiar link da unidade"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Imprimir QR Code",
+    "exact": true
+   },
+   "seconds": 0.19,
+   "at": 31.63,
+   "label": "botão Imprimir QR Code (sem clicar)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 32.37
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Imprimir QR Code",
+    "exact": true
+   },
+   "seconds": 3.01,
+   "at": 32.37,
+   "label": "botão Imprimir QR Code (sem clicar) (continua)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 46.64
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

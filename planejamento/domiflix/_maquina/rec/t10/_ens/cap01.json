@@ -1,0 +1,233 @@
+{
+ "name": "t10-cap01",
+ "title": "T10 · Cap. 1 · O funil começa aqui (narração 57,9 s · PROVISÓRIO: tempos estimados do texto, sem a voz; marcas L1..L5 = início de cada linha do roteiro)",
+ "seed": "t10-cap01",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 0.4,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t2/apos-cap10",
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t9/inicio",
+  "t9/apos-cap16",
+  "t10/inicio"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/crm"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Camila!",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|erro|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "CRM e Projetos",
+    "exact": true
+   },
+   "label": "abre o grupo CRM e Projetos"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "link",
+    "name": "CRM/Kanban",
+    "exact": true
+   },
+   "label": "abre o CRM/Kanban"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie oportunidades e processos",
+   "timeout": 25
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "tab",
+    "name": "Funil",
+    "exact": true
+   },
+   "seconds": 0.4,
+   "label": "aba Funil",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "tab",
+    "name": "Tarefas",
+    "exact": true
+   },
+   "seconds": 0.4,
+   "label": "aba Tarefas",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Total no funil",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.4,
+   "label": "indicador Total no funil",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Toggle Sidebar",
+    "nth": 0
+   },
+   "label": "recolhe o menu lateral (o quadro ganha espaço)"
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Começar com estágios padrão",
+    "exact": true
+   },
+   "seconds": 0.5,
+   "label": "botão Começar com estágios padrão",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Personalizar estágios",
+    "exact": true
+   },
+   "seconds": 0.5,
+   "label": "botão Personalizar estágios (sem clicar)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Começar com estágios padrão",
+    "exact": true
+   },
+   "label": "Começar com estágios padrão"
+  },
+  {
+   "do": "waitFor",
+   "text": "Fechado (Perdido)",
+   "timeout": 15
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Funil de Vendas\", \"Lead\", \"Proposta\", \"Negociação\", \"Fechado (Ganho)\", \"Fechado (Perdido)\", \"Total no funil\", \"Valor Total\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere funil com as cinco etapas padrão"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Total no funil",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.5,
+   "label": "indicador Total no funil",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Valor Total",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.5,
+   "label": "indicador Valor Total",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Fechado (Ganho)",
+    "exact": true,
+    "within": "main",
+    "nth": 0
+   },
+   "seconds": 0.5,
+   "label": "indicador Fechado (Ganho)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Lead",
+    "exact": true,
+    "within": "main",
+    "nth": 0
+   },
+   "seconds": 0.5,
+   "label": "indicador Lead",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Novo funil",
+    "exact": true
+   },
+   "seconds": 1.2,
+   "label": "o \"+\" Novo funil (sem clicar)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

@@ -1,0 +1,60 @@
+{
+ "name": "t7-cap14",
+ "title": "T7 · Cap. 14 · Editar a OS em campo (narração 132,2 s; marcas L1..L10 = início de cada linha do roteiro)",
+ "seed": "t7-cap14",
+ "pace": 0.4,
+ "cps": 9,
+ "tail": 0.4,
+ "device": "phone",
+ "start": {
+  "x": 195,
+  "y": 600
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap15",
+  "t7/inicio",
+  "t7/inicio-editar-os"
+ ],
+ "prewarm": [
+  "/agenda"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/agenda"
+  },
+  {
+   "do": "waitFor",
+   "text": "Colégio Monte Verde",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(() => {\n  // GPS do aparelho emulado (T7). O Chromium headless trava `getCurrentPosition({maximumAge: 0})` quando já existe um\n  // `watchPosition` ativo — e o app do técnico faz exatamente isso (rastreia a cada 30 s e pede a posição no check-in).\n  // Este stub devolve a posição atual na hora, para as duas chamadas, e `__setGeo` \"anda\" com o aparelho e avisa quem observa.\n  if (window.__geoStub) return 'ja-instalado';\n  const st = { lat: -22.9035, lng: -43.1038, acc: 12 };\n  const pos = () => ({\n    coords: { latitude: st.lat, longitude: st.lng, accuracy: st.acc, altitude: null, altitudeAccuracy: null, heading: null, speed: null },\n    timestamp: Date.now(),\n  });\n  const watchers = new Map();\n  let seq = 0;\n  const g = navigator.geolocation;\n  g.getCurrentPosition = (ok) => { setTimeout(() => ok(pos()), 60); };\n  g.watchPosition = (ok) => { const id = ++seq; watchers.set(id, ok); setTimeout(() => { if (watchers.has(id)) ok(pos()); }, 90); return id; };\n  g.clearWatch = (id) => { watchers.delete(id); };\n  window.__setGeo = (lat, lng, acc) => { st.lat = lat; st.lng = lng; if (acc) st.acc = acc; watchers.forEach((cb) => cb(pos())); return [st.lat, st.lng]; };\n  window.__geoStub = true;\n  return 'instalado';\n})()\n"
+  },
+  {
+   "do": "pause",
+   "seconds": 1
+  }
+ ],
+ "steps": [
+  {
+   "do": "pause",
+   "seconds": 1
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const e=[...document.querySelectorAll('main *')].find(x=>x.children.length===0&&x.textContent.trim()==='Pousada Sol Nascente');const o=[];let n=e;for(let i=0;i<8&&n;i++){const r=n.getBoundingClientRect();o.push(n.tagName+'|'+(n.getAttribute('role')||'')+'|'+String(n.className).slice(0,60)+'|'+Math.round(r.top)+','+Math.round(r.height));n=n.parentElement}return o})()"
+  }
+ ],
+ "user": "rafael.lima@glacialcold.example"
+}

@@ -1,0 +1,288 @@
+{
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap05",
+  "t11/inicio",
+  "t11/_teste_rt"
+ ],
+ "start": "/dashboard",
+ "stopOnFail": false,
+ "steps": [
+  {
+   "do": "goto",
+   "url": "/contratos"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Novo Contrato",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 1200
+  },
+  {
+   "do": "keys",
+   "target": {
+    "selector": "[role=dialog] input",
+    "nth": 0
+   },
+   "text": "Manutenção preventiva trimestral - Colégio Monte Verde",
+   "delay": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Selecione o cliente"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "keys",
+   "target": {
+    "placeholder": "Buscar cliente..."
+   },
+   "text": "Colégio",
+   "delay": 10
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[cmdk-item]",
+    "hasText": "Colégio Monte Verde"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 600
+  },
+  {
+   "do": "shot",
+   "name": "20-info-comum"
+  },
+  {
+   "do": "list",
+   "selector": "[role=dialog] button[role=switch], [role=dialog] [role=switch]"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Próximo",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 900
+  },
+  {
+   "do": "shot",
+   "name": "21-escopo-comum"
+  },
+  {
+   "do": "text",
+   "selector": "[role=dialog]",
+   "name": "ESCOPO comum",
+   "max": 2300
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Adicionar equipamento sem ambiente",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 900
+  },
+  {
+   "do": "shot",
+   "name": "22-picker"
+  },
+  {
+   "do": "text",
+   "selector": "[role=dialog]",
+   "name": "picker",
+   "max": 1800
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Hi-Wall 18.000 BTUs - Sala dos professores"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 400
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Adicionar 1 equipamento",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 900
+  },
+  {
+   "do": "shot",
+   "name": "23-escopo-com-equip"
+  },
+  {
+   "do": "text",
+   "selector": "[role=dialog]",
+   "name": "escopo com equip",
+   "max": 1800
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Próximo",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 900
+  },
+  {
+   "do": "shot",
+   "name": "24-agenda-comum"
+  },
+  {
+   "do": "text",
+   "selector": "[role=dialog]",
+   "name": "AGENDA comum",
+   "max": 2500
+  },
+  {
+   "do": "list",
+   "selector": "[role=dialog] button",
+   "attr": null
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button",
+    "hasText": "/2026"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 700
+  },
+  {
+   "do": "shot",
+   "name": "25-calendario"
+  },
+  {
+   "do": "text",
+   "selector": "[data-radix-popper-content-wrapper]",
+   "name": "popover calendario",
+   "max": 900
+  },
+  {
+   "do": "html",
+   "selector": "[data-radix-popper-content-wrapper]",
+   "max": 2500
+  },
+  {
+   "do": "list",
+   "selector": "[data-radix-popper-content-wrapper] button",
+   "attr": "aria-label"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] button",
+    "nth": 1
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "gridcell",
+    "name": "15",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 700
+  },
+  {
+   "do": "shot",
+   "name": "26-data-ok"
+  },
+  {
+   "do": "text",
+   "selector": "[role=dialog]",
+   "name": "AGENDA depois da data",
+   "max": 2800
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('[role=dialog] input')].map(i=>i.type+':'+i.value+':'+(i.placeholder||'')).join(' | ')"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Próximo",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 900
+  },
+  {
+   "do": "shot",
+   "name": "27-equipe-comum"
+  },
+  {
+   "do": "text",
+   "selector": "[role=dialog]",
+   "name": "EQUIPE comum",
+   "max": 3200
+  },
+  {
+   "do": "list",
+   "selector": "[role=dialog] button[role=combobox]"
+  },
+  {
+   "do": "list",
+   "selector": "[role=dialog] button"
+  },
+  {
+   "do": "html",
+   "selector": "[role=dialog] [data-contract-validation=executors], [role=dialog] main",
+   "max": 2500
+  }
+ ]
+}

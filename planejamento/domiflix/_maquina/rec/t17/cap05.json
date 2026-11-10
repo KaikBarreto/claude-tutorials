@@ -1,0 +1,332 @@
+{
+ "name": "t17-cap05",
+ "title": "T17 · Cap. 5 · O período e a origem (narração 27,7 s; marcas L1..L4 = início de cada linha do roteiro)",
+ "seed": "t17-cap05",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap05",
+  "t12/inicio",
+  "t12/apos-cap11",
+  "t13/inicio",
+  "t13/apos-cap14",
+  "t19/inicio",
+  "t19/apos-cap13",
+  "t20/inicio",
+  "t20/apos-cap12",
+  "t2/apos-cap10",
+  "t15/inicio",
+  "t15/apos-cap12",
+  "t22/inicio",
+  "t22/apos-cap11",
+  "t21/inicio",
+  "t21/apos-cap10",
+  "t14/inicio",
+  "t14/apos-cap12",
+  "t17/inicio"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/ordens-servico",
+  "/financeiro/relatorio"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Camila!",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Toggle Sidebar",
+    "nth": 0
+   }
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "eval",
+   "js": "document.getAnimations().filter(a=>a.currentTime<0).forEach(a=>{a.startTime=document.timeline.currentTime})"
+  },
+  {
+   "do": "pause",
+   "seconds": 1.2
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main button",
+    "hasText": "Este mês"
+   },
+   "seconds": 0.8,
+   "at": 0.5,
+   "label": "filtro de período: Este mês",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button",
+    "hasText": "Este mês"
+   },
+   "at": 2.5,
+   "label": "abre a lista de períodos"
+  },
+  {
+   "do": "waitFor",
+   "text": "Últimos 30 dias",
+   "timeout": 8
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Todos os tempos\", \"Hoje\", \"Últimos 7 dias\", \"Este mês\", \"Mês passado\", \"Últimos 30 dias\", \"Este ano\", \"Personalizado\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"body\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere a lista dos oito períodos"
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Mês passado",
+    "exact": true
+   },
+   "at": 5.54,
+   "label": "escolhe Mês passado"
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main .rounded-2xl.cursor-pointer",
+    "hasText": "Faturamento"
+   },
+   "seconds": 0.9,
+   "at": 6.64,
+   "label": "a tela inteira muda junto (Mês passado)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 8.34
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button",
+    "hasText": "Mês passado"
+   },
+   "at": 8.44,
+   "label": "abre a lista de períodos de novo"
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Personalizado",
+    "exact": true
+   },
+   "at": 9.3,
+   "label": "escolhe Personalizado"
+  },
+  {
+   "do": "waitFor",
+   "text": "Selecione o período",
+   "timeout": 8
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Selecione o período\", \"Início\", \"Fim\", \"Limpar\", \"Aplicar\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"body\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Selecionar datas: calendário com Início e Fim"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Selecione o período"
+   },
+   "seconds": 1.1,
+   "at": 10.5,
+   "label": "calendário: Início e Fim",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 12.54,
+   "label": "fecha o calendário sem aplicar (Esc)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button",
+    "hasText": "Personalizado"
+   },
+   "at": 12.9,
+   "label": "abre a lista de períodos (Personalizado)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Este mês",
+    "exact": true
+   },
+   "at": 13.89,
+   "label": "volta ao Este mês",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 14.42
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main .rounded-2xl",
+    "hasText": "OS por Status"
+   },
+   "seconds": 0.6,
+   "at": 14.96,
+   "label": "os blocos também levam pra origem (OS por Status)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button",
+    "hasText": "Concluída"
+   },
+   "at": 17.36,
+   "label": "clica em Concluída (OS por Status)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie suas ordens de serviço",
+   "timeout": 15
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Ordens de Serviço\", \"Mostrando\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere a lista de OS abre já filtrada (Mostrando n de N OS)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Mostrando",
+    "within": "main"
+   },
+   "seconds": 0.7,
+   "at": 19.48,
+   "label": "a lista já abre nesse status (Mostrando n de N OS)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 21.63
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "a[href=\"/dashboard\"]"
+   },
+   "at": 21.63,
+   "label": "volta ao Dashboard",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Camila!",
+   "timeout": 15
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 1000,
+    "y": 75
+   },
+   "by": 0,
+   "duration": 0.2,
+   "after": 0,
+   "label": "cursor sai do menu (o menu recolhe)"
+  },
+  {
+   "do": "eval",
+   "js": "document.getAnimations().filter(a=>a.currentTime<0).forEach(a=>{a.startTime=document.timeline.currentTime})",
+   "label": "cartões do Dashboard (animação)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main .rounded-2xl.cursor-pointer",
+    "hasText": "Faturamento"
+   },
+   "at": 23.25,
+   "label": "clica no cartão Faturamento"
+  },
+  {
+   "do": "waitFor",
+   "text": "Saldo do período",
+   "timeout": 15
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 27.68
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

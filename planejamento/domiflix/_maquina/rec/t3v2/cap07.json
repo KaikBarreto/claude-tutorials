@@ -1,0 +1,400 @@
+{
+ "name": "t3v2-cap07",
+ "title": "T3 v2 · Cap. 7 · Campos personalizados (narração 44,5 s; marcas L1..L5 = início de cada linha do roteiro)",
+ "seed": "t3v2-cap07",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 980,
+  "y": 480
+ },
+ "seedExtra": [
+  "t3v2/apos-cap06"
+ ],
+ "prewarm": [
+  "/clientes"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/clientes"
+  },
+  {
+   "do": "waitFor",
+   "text": "Lista de Clientes"
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Colégio Monte Verde",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Responsável no Local",
+   "timeout": 10
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Configurações",
+    "exact": true,
+    "within": "main"
+   },
+   "at": 0.0,
+   "label": "abre Configurações"
+  },
+  {
+   "do": "waitFor",
+   "text": "Configurações de clientes e fornecedores",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Campos personalizados",
+    "within": "[role=dialog]"
+   },
+   "at": 1.92,
+   "label": "seção Campos personalizados"
+  },
+  {
+   "do": "waitFor",
+   "text": "Crie informações adicionais para cadastro, ficha e portal.",
+   "timeout": 8
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 4.76
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Novo campo",
+    "exact": true
+   },
+   "at": 7.06,
+   "label": "Novo campo"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] section input",
+    "nth": 0
+   },
+   "at": 8.23,
+   "label": "clica no campo do nome"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] section input",
+    "nth": 0
+   },
+   "text": "Horário de acesso",
+   "cps": 40,
+   "at": 9.55,
+   "label": "nome do campo: Horário de acesso",
+   "noClick": true
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "combobox",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.5,
+   "at": 11.1,
+   "label": "o tipo continua em Texto"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Salvar campo",
+    "exact": true
+   },
+   "at": 12.15,
+   "label": "Salvar campo"
+  },
+  {
+   "do": "waitFor",
+   "text": "Campo criado",
+   "timeout": 6,
+   "optional": true
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 15.36
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "combobox",
+    "within": "[role=dialog]"
+   },
+   "at": 15.82,
+   "label": "abre a lista de tipos"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "option",
+    "name": "Número"
+   },
+   "seconds": 0.2,
+   "at": 16.42,
+   "label": "Número"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "option",
+    "name": "Data"
+   },
+   "seconds": 0.2,
+   "at": 17.09,
+   "label": "Data"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "option",
+    "name": "Lista de opções"
+   },
+   "seconds": 0.2,
+   "at": 17.81,
+   "label": "Lista de opções"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "option",
+    "name": "Sim/Não"
+   },
+   "seconds": 0.2,
+   "at": 19.28,
+   "label": "Sim/Não"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Texto"
+   },
+   "at": 20.62,
+   "label": "volta ao Texto (fecha a lista sem trocar o tipo)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "switch",
+    "name": "Obrigatório"
+   },
+   "seconds": 0.4,
+   "at": 21.14,
+   "label": "interruptor Obrigatório",
+   "optional": true
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "switch",
+    "name": "Mostrar no Portal do Cliente"
+   },
+   "seconds": 0.4,
+   "at": 22.74,
+   "label": "interruptor Mostrar no Portal do Cliente",
+   "optional": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Cancelar",
+    "exact": true
+   },
+   "at": 23.5,
+   "label": "Cancelar (fecha o formulário)"
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 24.4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Fornecedores",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 25.47,
+   "label": "Fornecedores"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Clientes",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 27.1,
+   "label": "volta para Clientes"
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 28.48,
+   "label": "fecha a janela"
+  },
+  {
+   "do": "wait",
+   "seconds": 0.5
+  },
+  {
+   "do": "eval",
+   "js": "(() => { const d = document.querySelector('[role=dialog]'); if (!d) return 'ja fechada'; const b = [...d.querySelectorAll('button')].find((x) => [x.textContent, x.getAttribute('aria-label'), x.title].some((v) => /^\\s*fechar\\s*$/i.test(v || ''))); if (!b) return 'sem botao Fechar'; b.click(); return 'fechada pelo botao'; })()",
+   "label": "Fechar (se o Esc não fechou)"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 29.48
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "button[aria-haspopup='menu'][aria-label='Ações']",
+    "nth": 0
+   },
+   "seconds": 0.4,
+   "at": 29.8,
+   "label": "menu Ações da ficha"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "button[aria-haspopup='menu'][aria-label='Ações']",
+    "nth": 0
+   },
+   "label": "abre o menu se ainda não abriu",
+   "unless": {
+    "role": "menuitem",
+    "name": "Editar"
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Editar"
+   },
+   "at": 30.86,
+   "label": "Editar"
+  },
+  {
+   "do": "waitFor",
+   "text": "Editar Cliente",
+   "timeout": 10
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "scroll",
+   "label": "desce até o campo Horário de acesso",
+   "point": {
+    "x": 640,
+    "y": 400
+   },
+   "by": 900,
+   "duration": 0.55,
+   "after": 100
+  },
+  {
+   "do": "click",
+   "target": {
+    "label": "Horário de acesso"
+   },
+   "at": 34.04,
+   "label": "clica no campo Horário de acesso"
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "Horário de acesso"
+   },
+   "text": "Depois das 17h",
+   "cps": 40,
+   "at": 34.936,
+   "label": "o horário no campo novo",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Salvar",
+    "exact": true
+   },
+   "at": 35.88,
+   "label": "Salvar"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 15
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Horário de acesso",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 1.0,
+   "at": 42.84,
+   "label": "a linha Horário de acesso no cartão Informações"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 44.54
+  }
+ ]
+}

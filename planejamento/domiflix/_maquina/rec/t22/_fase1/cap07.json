@@ -1,0 +1,455 @@
+{
+ "name": "t22-cap07",
+ "title": "T22 · Cap. 7 · Organizar e encontrar (narração 31,7 s; marcas L1..L7 = início de cada linha do roteiro)",
+ "seed": "t22-cap07",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap05",
+  "t12/inicio",
+  "t12/apos-cap11",
+  "t13/inicio",
+  "t13/apos-cap14",
+  "t19/inicio",
+  "t19/apos-cap13",
+  "t20/inicio",
+  "t20/apos-cap12",
+  "t2/apos-cap10",
+  "t15/inicio",
+  "t15/apos-cap12",
+  "t22/inicio",
+  "t22/apos-cap06"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/funcionarios"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Camila!",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/funcionarios"
+  },
+  {
+   "do": "waitFor",
+   "text": "Funcionários (RH)",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Toggle Sidebar",
+    "nth": 0
+   }
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Organograma",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "pause",
+   "seconds": 0.6
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Abrir",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "waitFor",
+   "text": "Salvo",
+   "timeout": 20
+  },
+  {
+   "do": "pause",
+   "seconds": 1.0
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Organizar",
+    "exact": true
+   },
+   "at": 0.74,
+   "label": "Organizar",
+   "noScroll": true
+  },
+  {
+   "do": "pause",
+   "seconds": 1.0
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 900,
+    "y": 690
+   },
+   "by": 0,
+   "duration": 0.4,
+   "after": 0,
+   "at": 1.82,
+   "label": "clica no fundo do quadro (tira a seleção) (cursor)"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const x=900,y=690;const el=document.elementFromPoint(x,y);if(!el)return 'SEM ALVO';const o={bubbles:true,cancelable:true,composed:true,clientX:x,clientY:y,button:0,view:window};const pe=(t,b)=>new PointerEvent(t,{...o,pointerId:1,pointerType:'mouse',isPrimary:true,buttons:b});const me=(t,b)=>new MouseEvent(t,{...o,buttons:b,detail:1});el.dispatchEvent(pe('pointerdown',1));el.dispatchEvent(me('mousedown',1));el.dispatchEvent(pe('pointerup',0));el.dispatchEvent(me('mouseup',0));el.dispatchEvent(me('click',0));return el.className.toString().slice(0,40)})()",
+   "at": 2.72,
+   "label": "clica no fundo do quadro (tira a seleção)"
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 3.62
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "button[aria-label='Adicionar caixa']"
+   },
+   "seconds": 0.6,
+   "at": 3.72,
+   "label": "ferramentas (lateral)",
+   "optional": true,
+   "timeout": 3,
+   "noScroll": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "button[aria-label='Adicionar caixa']"
+   },
+   "at": 4.66,
+   "label": "Adicionar caixa",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "text": "Texto da caixa",
+   "timeout": 8
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "label:text-is('Texto da caixa') + input"
+   },
+   "at": 7.04,
+   "label": "Texto da caixa: Equipe Alfa (clique)",
+   "noScroll": true
+  },
+  {
+   "do": "press",
+   "key": "Control+A"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "label:text-is('Texto da caixa') + input"
+   },
+   "text": "Equipe Alfa: Bruno e Lucas",
+   "noClick": true,
+   "label": "Texto da caixa: Equipe Alfa"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Fechar",
+    "exact": true
+   },
+   "label": "fecha o painel",
+   "noScroll": true
+  },
+  {
+   "do": "drag",
+   "target": {
+    "selector": ".react-flow__node",
+    "hasText": "Equipe Alfa"
+   },
+   "to": {
+    "x": 495,
+    "y": 610
+   },
+   "at": 8.34,
+   "label": "arrasta a caixa para perto do Bruno e do Lucas",
+   "noScroll": true
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 11.14
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Tela cheia",
+    "exact": true
+   },
+   "at": 11.3,
+   "label": "Tela cheia",
+   "noScroll": true
+  },
+  {
+   "do": "pause",
+   "seconds": 1.0
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 15.22
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "button[aria-label='Árvore']"
+   },
+   "seconds": 0.4,
+   "at": 15.22,
+   "label": "ferramentas (lateral)",
+   "optional": true,
+   "timeout": 3,
+   "noScroll": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "button[aria-label='Árvore']"
+   },
+   "at": 15.4,
+   "label": "Árvore",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "text": "Hierarquia",
+   "timeout": 8
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Hierarquia\", \"Expandir tudo\", \"Recolher tudo\", \"pessoas\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"body\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere painel Hierarquia"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "button[aria-label='Árvore']"
+   },
+   "label": "fecha a Árvore",
+   "noScroll": true
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 18.9
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "button[aria-label='Destacar por setor']"
+   },
+   "at": 19.06,
+   "label": "Destacar por setor",
+   "noScroll": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button",
+    "hasText": "Campo"
+   },
+   "at": 19.94,
+   "label": "escolhe o setor Campo",
+   "noScroll": true
+  },
+  {
+   "do": "pause",
+   "seconds": 1.2
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Limpar destaque",
+    "exact": true
+   },
+   "label": "Limpar destaque",
+   "optional": true,
+   "noScroll": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "button[aria-label='Destacar por setor']"
+   },
+   "label": "fecha o Destacar",
+   "noScroll": true
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 21.79
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "button[aria-label='Buscar pessoa']"
+   },
+   "at": 22.19,
+   "label": "Buscar pessoa",
+   "noScroll": true
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='Nome ou cargo...']"
+   },
+   "text": "Júlia",
+   "cps": 9,
+   "at": 23.23,
+   "label": "busca Júlia",
+   "noScroll": true
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Júlia Santos\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Buscar pessoa: resultado Júlia Santos"
+  },
+  {
+   "do": "pause",
+   "seconds": 1.2
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "button[aria-label='Buscar pessoa']"
+   },
+   "label": "fecha a Busca",
+   "noScroll": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Tela cheia",
+    "exact": true
+   },
+   "label": "sai da tela cheia",
+   "noScroll": true
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 24.99
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Exportar",
+    "exact": true
+   },
+   "at": 27.07,
+   "label": "Exportar",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "text": "Baixar imagem (PNG)",
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Baixar PDF"
+   },
+   "seconds": 1.2,
+   "at": 29.15,
+   "label": "Baixar imagem (PNG) e Baixar PDF (sem clicar)",
+   "optional": true,
+   "timeout": 3,
+   "noScroll": true
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 30.63,
+   "label": "fecha o menu sem escolher"
+  },
+  {
+   "do": "pause",
+   "seconds": 1.6
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 31.68
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z",
+  "disc-overview-view-mode": "grid"
+ }
+}

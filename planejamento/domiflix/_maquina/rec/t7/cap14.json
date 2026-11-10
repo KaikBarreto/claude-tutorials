@@ -1,0 +1,708 @@
+{
+ "name": "t7-cap14",
+ "title": "T7 · Cap. 14 · Editar a OS em campo (narração 131,2 s; marcas L1..L10 = início de cada linha do roteiro)",
+ "seed": "t7-cap14",
+ "pace": 0.4,
+ "cps": 9,
+ "tail": 1.5,
+ "device": "phone",
+ "start": {
+  "x": 195,
+  "y": 600
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap15",
+  "t7/inicio",
+  "t7/vazias-1.38.21",
+  "t7/inicio-editar-os"
+ ],
+ "prewarm": [
+  "/agenda"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/agenda"
+  },
+  {
+   "do": "waitFor",
+   "text": "Colégio Monte Verde",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(() => {\n  // GPS do aparelho emulado (T7). O Chromium headless trava `getCurrentPosition({maximumAge: 0})` quando já existe um\n  // `watchPosition` ativo — e o app do técnico faz exatamente isso (rastreia a cada 30 s e pede a posição no check-in).\n  // Este stub devolve a posição atual na hora, para as duas chamadas, e `__setGeo` \"anda\" com o aparelho e avisa quem observa.\n  if (window.__geoStub) return 'ja-instalado';\n  const st = { lat: -22.9035, lng: -43.1038, acc: 12 };\n  const pos = () => ({\n    coords: { latitude: st.lat, longitude: st.lng, accuracy: st.acc, altitude: null, altitudeAccuracy: null, heading: null, speed: null },\n    timestamp: Date.now(),\n  });\n  const watchers = new Map();\n  let seq = 0;\n  const g = navigator.geolocation;\n  g.getCurrentPosition = (ok) => { setTimeout(() => ok(pos()), 60); };\n  g.watchPosition = (ok) => { const id = ++seq; watchers.set(id, ok); setTimeout(() => { if (watchers.has(id)) ok(pos()); }, 90); return id; };\n  g.clearWatch = (id) => { watchers.delete(id); };\n  window.__setGeo = (lat, lng, acc) => { st.lat = lat; st.lng = lng; if (acc) st.acc = acc; watchers.forEach((cb) => cb(pos())); return [st.lat, st.lng]; };\n  window.__geoStub = true;\n  return 'instalado';\n})()\n"
+  },
+  {
+   "do": "eval",
+   "js": "window.__setGeo(-22.89758,-43.09913)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main div.cursor-pointer",
+    "hasText": "Pousada Sol Nascente",
+    "nth": 0
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Resumo da OS",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Preencher OS",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Glacial Cold Brasil",
+   "timeout": 20
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const el=([...document.querySelectorAll(\"main *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Checklists\"));if(!el)return 'SEM ALVO';const r=el.getBoundingClientRect();const cy=r.top+r.height/2;const y0=window.scrollY,dy=Math.round(cy-(300));if(Math.abs(dy)<3)return 'ok';const dur=Math.min(1000,Math.max(450,Math.abs(dy)*1.15)),t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/dur),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;window.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()"
+  },
+  {
+   "do": "pause",
+   "seconds": 0.6
+  },
+  {
+   "do": "clock",
+   "set": "2026-11-11T08:50:00-03:00"
+  },
+  {
+   "do": "pause",
+   "seconds": 0.5
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Checklists",
+    "exact": true
+   },
+   "seconds": 1.0,
+   "at": 1.64,
+   "label": "a área Checklists",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Pousada Sol Nascente",
+    "exact": true
+   },
+   "seconds": 1.0,
+   "at": 5.32,
+   "label": "o cliente: Pousada Sol Nascente",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Manutenção preventiva de split",
+    "exact": false
+   },
+   "seconds": 1.4,
+   "at": 8.84,
+   "label": "o checklist solto, sem equipamento",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 17.32
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 375,
+    "y": 812
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "at": 17.62
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "button[aria-label='Mais ações']"
+   },
+   "text": "",
+   "noClick": true,
+   "label": "o menu de mais ações",
+   "at": 18.42,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const el=(document.querySelector('button[aria-label=\"Mais ações\"]'));if(!el)return 'SEM ALVO';const r=el.getBoundingClientRect();const x=r.left+r.width/2,y=r.top+r.height/2;const o={bubbles:true,cancelable:true,composed:true,clientX:x,clientY:y,screenX:x,screenY:y,button:0,view:window};const pe=(t,b)=>new PointerEvent(t,{...o,pointerId:1,pointerType:'mouse',isPrimary:true,buttons:b,width:1,height:1});const me=(t,b)=>new MouseEvent(t,{...o,buttons:b,detail:1});el.dispatchEvent(pe('pointerdown',1));el.dispatchEvent(me('mousedown',1));el.dispatchEvent(pe('pointerup',0));el.dispatchEvent(me('mouseup',0));el.dispatchEvent(me('click',0));return [Math.round(x),Math.round(y)]})()",
+   "at": 18.52,
+   "label": "o menu de mais ações (toque)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Editar OS",
+    "exact": true
+   },
+   "seconds": 0.4,
+   "at": 19.32,
+   "label": "a opção Editar OS no menu",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Editar OS",
+    "exact": true
+   },
+   "at": 20.24,
+   "label": "Editar OS"
+  },
+  {
+   "do": "waitFor",
+   "text": "Estrutura da OS",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Estrutura da OS",
+    "exact": true
+   },
+   "seconds": 1.0,
+   "at": 21.8,
+   "label": "a gaveta Editar OS: Estrutura da OS",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "As respostas acompanham o checklist",
+    "exact": false
+   },
+   "seconds": 1.0,
+   "at": 25.4,
+   "label": "o texto: as respostas acompanham o checklist",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 29.64
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Checklists sem equipamento",
+    "exact": true
+   },
+   "seconds": 1.0,
+   "at": 29.96,
+   "label": "o bloco Checklists sem equipamento",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Respondido",
+    "exact": false
+   },
+   "seconds": 1.0,
+   "at": 34.92,
+   "label": "o visto: o checklist já tem respostas",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Nenhum equipamento",
+    "exact": true
+   },
+   "seconds": 1.0,
+   "at": 39.8,
+   "label": "a ordem ainda não tem equipamento",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 41.4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Adicionar equipamento",
+    "exact": true
+   },
+   "at": 43.67,
+   "label": "Adicionar equipamento"
+  },
+  {
+   "do": "waitFor",
+   "text": "Novo Equipamento",
+   "timeout": 10
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "input[placeholder='Nome do equipamento']"
+   },
+   "text": "Hi-Wall 12.000 BTUs - Sala de café",
+   "cps": 20,
+   "at": 45.53,
+   "label": "o nome do equipamento"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const el=(document.querySelector(\"[role=dialog] input[placeholder='Local']\"));if(!el)return 'SEM ALVO';let sc=el.parentElement;while(sc&&!(/(auto|scroll)/.test(getComputedStyle(sc).overflowY)&&sc.scrollHeight>sc.clientHeight+4))sc=sc.parentElement;if(!sc)return 'SEM ROLAGEM';const r=el.getBoundingClientRect();const y0=sc.scrollTop,dy=Math.round(r.top+r.height/2-(470));if(Math.abs(dy)<3)return 'ok';const dur=450,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/dur),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;sc.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 50.26,
+   "label": "a gaveta rola até o Local"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "input[placeholder='Local']"
+   },
+   "at": 50.71,
+   "label": "o campo Local"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "input[placeholder='Local']"
+   },
+   "text": "Sala de café",
+   "cps": 40,
+   "at": 51.41,
+   "label": "Local: Sala de café",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "button[role=combobox]",
+    "nth": "last"
+   },
+   "at": 52.65,
+   "label": "abre a Tensão"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "220 V"
+   },
+   "at": 53.17,
+   "label": "escolhe 220 V"
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 340,
+    "y": 811
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "at": 54.45
+  },
+  {
+   "do": "type",
+   "target": {
+    "role": "button",
+    "name": "Criar",
+    "exact": true
+   },
+   "text": "",
+   "noClick": true,
+   "label": "Criar o equipamento",
+   "at": 55.25,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const el=([...document.querySelectorAll(\"button\")].filter(b=>b.textContent.trim()===\"Criar\"&&b.getClientRects().length).pop());if(!el)return 'SEM ALVO';const r=el.getBoundingClientRect();const x=r.left+r.width/2,y=r.top+r.height/2;const o={bubbles:true,cancelable:true,composed:true,clientX:x,clientY:y,screenX:x,screenY:y,button:0,view:window};const pe=(t,b)=>new PointerEvent(t,{...o,pointerId:1,pointerType:'mouse',isPrimary:true,buttons:b,width:1,height:1});const me=(t,b)=>new MouseEvent(t,{...o,buttons:b,detail:1});el.dispatchEvent(pe('pointerdown',1));el.dispatchEvent(me('mousedown',1));el.dispatchEvent(pe('pointerup',0));el.dispatchEvent(me('mouseup',0));el.dispatchEvent(me('click',0));return [Math.round(x),Math.round(y)]})()",
+   "at": 55.35,
+   "label": "Criar o equipamento (toque)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Hi-Wall 12.000 BTUs - Sala de café",
+   "timeout": 10
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 58.61
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Selecionar checklists",
+    "exact": true
+   },
+   "seconds": 1.0,
+   "at": 59.25,
+   "label": "Selecionar checklists",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Remover equipamento",
+    "exact": true
+   },
+   "seconds": 1.0,
+   "at": 60.85,
+   "label": "Remover equipamento",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 67.86
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Arrastar checklist Manutenção preventiva de split",
+    "exact": true
+   },
+   "seconds": 1.4,
+   "at": 69.18,
+   "label": "a alça do checklist",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "drag",
+   "target": {
+    "role": "button",
+    "name": "Arrastar checklist Manutenção preventiva de split",
+    "exact": true
+   },
+   "to": {
+    "selector": "section",
+    "hasText": "Hi-Wall 12.000 BTUs - Sala de café"
+   },
+   "at": 71.92,
+   "label": "arrasta o checklist até o Hi-Wall",
+   "hold": 3.7
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 80.9
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Ações do checklist",
+    "exact": true
+   },
+   "at": 83.78,
+   "label": "Ações do checklist"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Mover para",
+    "exact": true
+   },
+   "seconds": 1.2,
+   "at": 86.42,
+   "label": "o menu: Mover para",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "document.dispatchEvent(new KeyboardEvent('keydown',{key:'Escape',bubbles:true}))",
+   "at": 89.02,
+   "label": "fecha o menu sem escolher"
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 89.67
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 195,
+    "y": 808
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "at": 90.81
+  },
+  {
+   "do": "type",
+   "target": {
+    "role": "button",
+    "name": "Salvar equipamentos e checklists",
+    "exact": true
+   },
+   "text": "",
+   "noClick": true,
+   "label": "Salvar equipamentos e checklists",
+   "at": 91.61,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const el=([...document.querySelectorAll(\"button\")].filter(b=>b.textContent.trim()===\"Salvar equipamentos e checklists\"&&b.getClientRects().length).pop());if(!el)return 'SEM ALVO';const r=el.getBoundingClientRect();const x=r.left+r.width/2,y=r.top+r.height/2;const o={bubbles:true,cancelable:true,composed:true,clientX:x,clientY:y,screenX:x,screenY:y,button:0,view:window};const pe=(t,b)=>new PointerEvent(t,{...o,pointerId:1,pointerType:'mouse',isPrimary:true,buttons:b,width:1,height:1});const me=(t,b)=>new MouseEvent(t,{...o,buttons:b,detail:1});el.dispatchEvent(pe('pointerdown',1));el.dispatchEvent(me('mousedown',1));el.dispatchEvent(pe('pointerup',0));el.dispatchEvent(me('mouseup',0));el.dispatchEvent(me('click',0));return [Math.round(x),Math.round(y)]})()",
+   "at": 91.71,
+   "label": "Salvar equipamentos e checklists (toque)"
+  },
+  {
+   "do": "waitFor",
+   "text": "OS atualizada",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "acompanhou",
+    "exact": false
+   },
+   "seconds": 1.6,
+   "at": 94.65,
+   "label": "o aviso: OS atualizada, respostas acompanharam",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 360,
+    "y": 30
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "at": 99.59
+  },
+  {
+   "do": "type",
+   "target": {
+    "role": "button",
+    "name": "Fechar",
+    "exact": true
+   },
+   "text": "",
+   "noClick": true,
+   "label": "Fechar a gaveta",
+   "at": 100.39,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const el=([...document.querySelectorAll(\"button\")].filter(b=>b.textContent.trim()===\"Fechar\"&&b.getClientRects().length).pop());if(!el)return 'SEM ALVO';const r=el.getBoundingClientRect();const x=r.left+r.width/2,y=r.top+r.height/2;const o={bubbles:true,cancelable:true,composed:true,clientX:x,clientY:y,screenX:x,screenY:y,button:0,view:window};const pe=(t,b)=>new PointerEvent(t,{...o,pointerId:1,pointerType:'mouse',isPrimary:true,buttons:b,width:1,height:1});const me=(t,b)=>new MouseEvent(t,{...o,buttons:b,detail:1});el.dispatchEvent(pe('pointerdown',1));el.dispatchEvent(me('mousedown',1));el.dispatchEvent(pe('pointerup',0));el.dispatchEvent(me('mouseup',0));el.dispatchEvent(me('click',0));return [Math.round(x),Math.round(y)]})()",
+   "at": 100.49,
+   "label": "Fechar a gaveta (toque)"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "selector": "div[role=dialog][aria-modal=true]"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "mark",
+   "name": "L9",
+   "at": 100.79
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Checklists",
+    "exact": true
+   },
+   "seconds": 0.8,
+   "at": 101.99,
+   "label": "a área Checklists: agora dentro do Hi-Wall",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Hi-Wall 12.000 BTUs - Sala de café",
+    "within": "main"
+   },
+   "at": 103.15,
+   "label": "abre o acordeão do Hi-Wall"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "5 de 13",
+    "exact": true
+   },
+   "seconds": 1.4,
+   "at": 106.39,
+   "label": "as cinco respostas continuam: 5 de 13",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 375,
+    "y": 812
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "at": 112.16
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "button[aria-label='Mais ações']"
+   },
+   "text": "",
+   "noClick": true,
+   "label": "o menu de mais ações",
+   "at": 112.96,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const el=(document.querySelector('button[aria-label=\"Mais ações\"]'));if(!el)return 'SEM ALVO';const r=el.getBoundingClientRect();const x=r.left+r.width/2,y=r.top+r.height/2;const o={bubbles:true,cancelable:true,composed:true,clientX:x,clientY:y,screenX:x,screenY:y,button:0,view:window};const pe=(t,b)=>new PointerEvent(t,{...o,pointerId:1,pointerType:'mouse',isPrimary:true,buttons:b,width:1,height:1});const me=(t,b)=>new MouseEvent(t,{...o,buttons:b,detail:1});el.dispatchEvent(pe('pointerdown',1));el.dispatchEvent(me('mousedown',1));el.dispatchEvent(pe('pointerup',0));el.dispatchEvent(me('mouseup',0));el.dispatchEvent(me('click',0));return [Math.round(x),Math.round(y)]})()",
+   "at": 113.06,
+   "label": "o menu de mais ações (toque)"
+  },
+  {
+   "do": "mark",
+   "name": "L10",
+   "at": 113.62
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Editar OS",
+    "exact": true
+   },
+   "at": 113.74,
+   "label": "Editar OS de novo"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Data e horários"
+   },
+   "at": 114.44,
+   "label": "a aba Data e horários"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Período da OS",
+    "exact": true
+   },
+   "seconds": 1.2,
+   "at": 115.88,
+   "label": "Período da OS",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Data inicial",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.6,
+   "at": 118.74,
+   "label": "as datas da OS",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const el=([...document.querySelectorAll('[role=dialog] label')].find(e=>e.textContent.trim()==='Início'));if(!el)return 'SEM ALVO';let sc=el.parentElement;while(sc&&!(/(auto|scroll)/.test(getComputedStyle(sc).overflowY)&&sc.scrollHeight>sc.clientHeight+4))sc=sc.parentElement;if(!sc)return 'SEM ROLAGEM';const r=el.getBoundingClientRect();const y0=sc.scrollTop,dy=Math.round(r.top+r.height/2-(640));if(Math.abs(dy)<3)return 'ok';const dur=600,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/dur),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;sc.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 119.84,
+   "label": "a gaveta rola até o horário do dia"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Início",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.6,
+   "at": 120.38,
+   "label": "o início e o fim de cada dia",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 131.2
+  }
+ ],
+ "user": "rafael.lima@glacialcold.example"
+}

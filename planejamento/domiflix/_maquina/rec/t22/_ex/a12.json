@@ -1,0 +1,719 @@
+{
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap05",
+  "t12/inicio",
+  "t12/apos-cap11",
+  "t13/inicio",
+  "t13/apos-cap14",
+  "t19/inicio",
+  "t19/apos-cap13",
+  "t20/inicio",
+  "t22/_prov-t15",
+  "t22/inicio",
+  "t22/_prov-rafael"
+ ],
+ "start": "/funcionarios",
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z",
+  "disc-overview-view-mode": "grid"
+ },
+ "stopOnFail": false,
+ "steps": [
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Toggle Sidebar",
+    "nth": 0
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Fluxograma",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 600
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Novo fluxograma",
+    "exact": true
+   }
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Ex.: Abertura de ordem de serviço"
+   },
+   "text": "Atendimento de chamado do portal"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Criar fluxograma",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 2500
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": ".react-flow__node",
+    "hasText": "Início"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "label:text-is('Nome da etapa') + input"
+   }
+  },
+  {
+   "do": "press",
+   "key": "Control+A"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "label:text-is('Nome da etapa') + input"
+   },
+   "text": "Chamado aberto no portal"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Zoom Out"
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Zoom Out"
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Zoom Out"
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Zoom Out"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 600
+  },
+  {
+   "do": "shot",
+   "name": "01-zoom"
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('.react-flow__node')].map(n=>[n.textContent.slice(0,25),Math.round(n.getBoundingClientRect().x),Math.round(n.getBoundingClientRect().y),Math.round(n.getBoundingClientRect().width),Math.round(n.getBoundingClientRect().height)])",
+   "max": 2000
+  },
+  {
+   "do": "drag",
+   "target": {
+    "selector": ".react-flow__node",
+    "hasText": "Chamado aberto"
+   },
+   "to": {
+    "x": 520,
+    "y": 170
+   },
+   "steps": 18
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Adicionar forma",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] button",
+    "hasText": "Tarefa"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 700
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "label:text-is('Nome da etapa') + input"
+   }
+  },
+  {
+   "do": "press",
+   "key": "Control+A"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "label:text-is('Nome da etapa') + input"
+   },
+   "text": "Triagem do chamado"
+  },
+  {
+   "do": "wait",
+   "ms": 300
+  },
+  {
+   "do": "drag",
+   "target": {
+    "selector": ".react-flow__node",
+    "hasText": "Triagem do chamado"
+   },
+   "to": {
+    "x": 690,
+    "y": 170
+   },
+   "steps": 18
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Adicionar forma",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] button",
+    "hasText": "Decisão"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 700
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "label:text-is('Nome da etapa') + input"
+   }
+  },
+  {
+   "do": "press",
+   "key": "Control+A"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "label:text-is('Nome da etapa') + input"
+   },
+   "text": "Precisa de visita?"
+  },
+  {
+   "do": "wait",
+   "ms": 300
+  },
+  {
+   "do": "drag",
+   "target": {
+    "selector": ".react-flow__node",
+    "hasText": "Precisa de visita?"
+   },
+   "to": {
+    "x": 860,
+    "y": 170
+   },
+   "steps": 18
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Adicionar forma",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] button",
+    "hasText": "Tarefa"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 700
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "label:text-is('Nome da etapa') + input"
+   }
+  },
+  {
+   "do": "press",
+   "key": "Control+A"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "label:text-is('Nome da etapa') + input"
+   },
+   "text": "Agendar visita e técnico"
+  },
+  {
+   "do": "wait",
+   "ms": 300
+  },
+  {
+   "do": "drag",
+   "target": {
+    "selector": ".react-flow__node",
+    "hasText": "Agendar visita e técnico"
+   },
+   "to": {
+    "x": 1030,
+    "y": 170
+   },
+   "steps": 18
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Adicionar forma",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] button",
+    "hasText": "Tarefa"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 700
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "label:text-is('Nome da etapa') + input"
+   }
+  },
+  {
+   "do": "press",
+   "key": "Control+A"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "label:text-is('Nome da etapa') + input"
+   },
+   "text": "Executar a visita"
+  },
+  {
+   "do": "wait",
+   "ms": 300
+  },
+  {
+   "do": "drag",
+   "target": {
+    "selector": ".react-flow__node",
+    "hasText": "Executar a visita"
+   },
+   "to": {
+    "x": 1200,
+    "y": 170
+   },
+   "steps": 18
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Adicionar forma",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] button",
+    "hasText": "Documento"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 700
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "label:text-is('Nome da etapa') + input"
+   }
+  },
+  {
+   "do": "press",
+   "key": "Control+A"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "label:text-is('Nome da etapa') + input"
+   },
+   "text": "Relatório de Serviço"
+  },
+  {
+   "do": "wait",
+   "ms": 300
+  },
+  {
+   "do": "drag",
+   "target": {
+    "selector": ".react-flow__node",
+    "hasText": "Relatório de Serviço"
+   },
+   "to": {
+    "x": 1200,
+    "y": 380
+   },
+   "steps": 18
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Adicionar forma",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] button",
+    "hasText": "Tarefa"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 700
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "label:text-is('Nome da etapa') + input"
+   }
+  },
+  {
+   "do": "press",
+   "key": "Control+A"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "label:text-is('Nome da etapa') + input"
+   },
+   "text": "Orientar o cliente por telefone"
+  },
+  {
+   "do": "wait",
+   "ms": 300
+  },
+  {
+   "do": "drag",
+   "target": {
+    "selector": ".react-flow__node",
+    "hasText": "Orientar o cliente por telefone"
+   },
+   "to": {
+    "x": 860,
+    "y": 380
+   },
+   "steps": 18
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Adicionar forma",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] button",
+    "hasText": "Fim"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 700
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "label:text-is('Nome da etapa') + input"
+   }
+  },
+  {
+   "do": "press",
+   "key": "Control+A"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "label:text-is('Nome da etapa') + input"
+   },
+   "text": "Chamado encerrado"
+  },
+  {
+   "do": "wait",
+   "ms": 300
+  },
+  {
+   "do": "drag",
+   "target": {
+    "selector": ".react-flow__node",
+    "hasText": "Chamado encerrado"
+   },
+   "to": {
+    "x": 1030,
+    "y": 570
+   },
+   "steps": 18
+  },
+  {
+   "do": "shot",
+   "name": "02-formas"
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('.react-flow__node')].map(n=>[n.textContent.slice(0,25),Math.round(n.getBoundingClientRect().x),Math.round(n.getBoundingClientRect().y),Math.round(n.getBoundingClientRect().width),Math.round(n.getBoundingClientRect().height)])",
+   "max": 2000
+  },
+  {
+   "do": "drag",
+   "target": {
+    "selector": ".react-flow__node:has-text('Chamado aberto') .react-flow__handle-right.source"
+   },
+   "to": {
+    "selector": ".react-flow__node:has-text('Triagem') .react-flow__handle-left.target"
+   },
+   "steps": 14,
+   "after": 600
+  },
+  {
+   "do": "drag",
+   "target": {
+    "selector": ".react-flow__node:has-text('Triagem') .react-flow__handle-right.source"
+   },
+   "to": {
+    "selector": ".react-flow__node:has-text('Precisa') .react-flow__handle-left.target"
+   },
+   "steps": 14,
+   "after": 600
+  },
+  {
+   "do": "drag",
+   "target": {
+    "selector": ".react-flow__node:has-text('Precisa') .react-flow__handle-right.source"
+   },
+   "to": {
+    "selector": ".react-flow__node:has-text('Agendar') .react-flow__handle-left.target"
+   },
+   "steps": 14,
+   "after": 600
+  },
+  {
+   "do": "drag",
+   "target": {
+    "selector": ".react-flow__node:has-text('Agendar') .react-flow__handle-right.source"
+   },
+   "to": {
+    "selector": ".react-flow__node:has-text('Executar') .react-flow__handle-left.target"
+   },
+   "steps": 14,
+   "after": 600
+  },
+  {
+   "do": "drag",
+   "target": {
+    "selector": ".react-flow__node:has-text('Executar') .react-flow__handle-bottom.source"
+   },
+   "to": {
+    "selector": ".react-flow__node:has-text('Relatório') .react-flow__handle-top.target"
+   },
+   "steps": 14,
+   "after": 600
+  },
+  {
+   "do": "drag",
+   "target": {
+    "selector": ".react-flow__node:has-text('Relatório') .react-flow__handle-bottom.source"
+   },
+   "to": {
+    "selector": ".react-flow__node:has-text('Chamado encerrado') .react-flow__handle-right.target"
+   },
+   "steps": 14,
+   "after": 600
+  },
+  {
+   "do": "drag",
+   "target": {
+    "selector": ".react-flow__node:has-text('Precisa') .react-flow__handle-bottom.source"
+   },
+   "to": {
+    "selector": ".react-flow__node:has-text('Orientar') .react-flow__handle-top.target"
+   },
+   "steps": 14,
+   "after": 600
+  },
+  {
+   "do": "drag",
+   "target": {
+    "selector": ".react-flow__node:has-text('Orientar') .react-flow__handle-right.source"
+   },
+   "to": {
+    "selector": ".react-flow__node:has-text('Chamado encerrado') .react-flow__handle-left.target"
+   },
+   "steps": 14,
+   "after": 600
+  },
+  {
+   "do": "eval",
+   "js": "document.querySelectorAll('.react-flow__edge').length"
+  },
+  {
+   "do": "shot",
+   "name": "03-ligado"
+  },
+  {
+   "do": "clickjs",
+   "js": "(()=>{const p=document.querySelectorAll('.react-flow__edge-path')[2];if(!p)return [10,10];const L=p.getTotalLength();const q=p.getPointAtLength(L/2);const m=p.getScreenCTM();return [q.x*m.a+q.y*m.c+m.e,q.x*m.b+q.y*m.d+m.f]})()"
+  },
+  {
+   "do": "wait",
+   "ms": 600
+  },
+  {
+   "do": "shot",
+   "name": "04-aresta"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Rótulo (ex.: Sim, Não)"
+   },
+   "text": "Sim"
+  },
+  {
+   "do": "clickjs",
+   "js": "(()=>{const p=document.querySelectorAll('.react-flow__edge-path')[6];if(!p)return [10,10];const L=p.getTotalLength();const q=p.getPointAtLength(L/2);const m=p.getScreenCTM();return [q.x*m.a+q.y*m.c+m.e,q.x*m.b+q.y*m.d+m.f]})()"
+  },
+  {
+   "do": "wait",
+   "ms": 600
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Rótulo (ex.: Sim, Não)"
+   },
+   "text": "Não"
+  },
+  {
+   "do": "wait",
+   "ms": 600
+  },
+  {
+   "do": "shot",
+   "name": "05-rotulos"
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('.react-flow__edge-textwrapper, .react-flow__edge-label, [class*=edge] text')].map(e=>e.textContent)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Conferência do fluxograma"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 700
+  },
+  {
+   "do": "shot",
+   "name": "06-conferencia"
+  },
+  {
+   "do": "text",
+   "selector": "[data-radix-popper-content-wrapper]",
+   "max": 600
+  }
+ ]
+}

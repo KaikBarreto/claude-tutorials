@@ -1,0 +1,239 @@
+{
+ "name": "t7-cap07",
+ "title": "T7 · Cap. 7 · Pausar e retomar (narração 29,8 s; marcas L1..L3 = início de cada linha do roteiro)",
+ "seed": "t7-cap07",
+ "pace": 0.4,
+ "cps": 9,
+ "tail": 0.4,
+ "device": "phone",
+ "start": {
+  "x": 195,
+  "y": 600
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap15",
+  "t7/inicio",
+  "t7/vazias-1.38.21",
+  "t7/apos-cap06"
+ ],
+ "prewarm": [
+  "/agenda"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/agenda"
+  },
+  {
+   "do": "waitFor",
+   "text": "Colégio Monte Verde",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(() => {\n  // GPS do aparelho emulado (T7). O Chromium headless trava `getCurrentPosition({maximumAge: 0})` quando já existe um\n  // `watchPosition` ativo — e o app do técnico faz exatamente isso (rastreia a cada 30 s e pede a posição no check-in).\n  // Este stub devolve a posição atual na hora, para as duas chamadas, e `__setGeo` \"anda\" com o aparelho e avisa quem observa.\n  if (window.__geoStub) return 'ja-instalado';\n  const st = { lat: -22.9035, lng: -43.1038, acc: 12 };\n  const pos = () => ({\n    coords: { latitude: st.lat, longitude: st.lng, accuracy: st.acc, altitude: null, altitudeAccuracy: null, heading: null, speed: null },\n    timestamp: Date.now(),\n  });\n  const watchers = new Map();\n  let seq = 0;\n  const g = navigator.geolocation;\n  g.getCurrentPosition = (ok) => { setTimeout(() => ok(pos()), 60); };\n  g.watchPosition = (ok) => { const id = ++seq; watchers.set(id, ok); setTimeout(() => { if (watchers.has(id)) ok(pos()); }, 90); return id; };\n  g.clearWatch = (id) => { watchers.delete(id); };\n  window.__setGeo = (lat, lng, acc) => { st.lat = lat; st.lng = lng; if (acc) st.acc = acc; watchers.forEach((cb) => cb(pos())); return [st.lat, st.lng]; };\n  window.__geoStub = true;\n  return 'instalado';\n})()\n"
+  },
+  {
+   "do": "eval",
+   "js": "window.__setGeo(-22.89758,-43.09913)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Colégio Monte Verde",
+    "within": "main"
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Resumo da OS",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Preencher OS",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Glacial Cold Brasil",
+   "timeout": 20
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "clock",
+   "set": "2026-11-11T09:45:00-03:00"
+  },
+  {
+   "do": "pause",
+   "seconds": 0.5
+  }
+ ],
+ "steps": [
+  {
+   "do": "scroll",
+   "point": {
+    "x": 375,
+    "y": 812
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "button[aria-label='Mais ações']"
+   },
+   "text": "",
+   "noClick": true,
+   "label": "o menu de mais ações",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const el=(document.querySelector('button[aria-label=\"Mais ações\"]'));if(!el)return 'SEM ALVO';const r=el.getBoundingClientRect();const x=r.left+r.width/2,y=r.top+r.height/2;const o={bubbles:true,cancelable:true,composed:true,clientX:x,clientY:y,screenX:x,screenY:y,button:0,view:window};const pe=(t,b)=>new PointerEvent(t,{...o,pointerId:1,pointerType:'mouse',isPrimary:true,buttons:b,width:1,height:1});const me=(t,b)=>new MouseEvent(t,{...o,buttons:b,detail:1});el.dispatchEvent(pe('pointerdown',1));el.dispatchEvent(me('mousedown',1));el.dispatchEvent(pe('pointerup',0));el.dispatchEvent(me('mouseup',0));el.dispatchEvent(me('click',0));return [Math.round(x),Math.round(y)]})()",
+   "label": "o menu de mais ações (toque)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Pausar OS",
+    "exact": true
+   },
+   "label": "Pausar OS"
+  },
+  {
+   "do": "waitFor",
+   "text": "Retomar OS",
+   "timeout": 15
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 323,
+    "y": 26
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0
+  },
+  {
+   "do": "type",
+   "target": {
+    "text": "Pausada",
+    "exact": true
+   },
+   "text": "",
+   "noClick": true,
+   "label": "cabeçalho: o selo Pausada",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Retome o atendimento",
+    "exact": false
+   },
+   "seconds": 2.4,
+   "label": "o aviso: retome para continuar o preenchimento",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 160,
+    "y": 812
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0
+  },
+  {
+   "do": "type",
+   "target": {
+    "role": "button",
+    "name": "Retomar OS",
+    "exact": true
+   },
+   "text": "",
+   "noClick": true,
+   "label": "o rodapé só tem Retomar OS",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Checklists",
+    "exact": true
+   },
+   "seconds": 2.6,
+   "label": "tudo o que foi preenchido continua salvo",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 160,
+    "y": 812
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0
+  },
+  {
+   "do": "type",
+   "target": {
+    "role": "button",
+    "name": "Retomar OS",
+    "exact": true
+   },
+   "text": "",
+   "noClick": true,
+   "label": "Retomar OS",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const el=([...document.querySelectorAll(\"button\")].filter(b=>b.textContent.trim()===\"Retomar OS\"&&b.getClientRects().length).pop());if(!el)return 'SEM ALVO';const r=el.getBoundingClientRect();const x=r.left+r.width/2,y=r.top+r.height/2;const o={bubbles:true,cancelable:true,composed:true,clientX:x,clientY:y,screenX:x,screenY:y,button:0,view:window};const pe=(t,b)=>new PointerEvent(t,{...o,pointerId:1,pointerType:'mouse',isPrimary:true,buttons:b,width:1,height:1});const me=(t,b)=>new MouseEvent(t,{...o,buttons:b,detail:1});el.dispatchEvent(pe('pointerdown',1));el.dispatchEvent(me('mousedown',1));el.dispatchEvent(pe('pointerup',0));el.dispatchEvent(me('mouseup',0));el.dispatchEvent(me('click',0));return [Math.round(x),Math.round(y)]})()",
+   "label": "Retomar OS (toque)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Finalizar Parcial",
+   "timeout": 15
+  },
+  {
+   "do": "eval",
+   "js": "({novidades:/novidades|nova vers|Atualiza(ç|c)ão disponível/i.test(document.body.innerText),avisosErro:[...document.querySelectorAll('[role=status],[role=alert],li[data-state]')].map(e=>e.innerText.trim().slice(0,80)).filter(t=>/não foi possível|erro|tente novamente|indispon/i.test(t)),dialogos:[...document.querySelectorAll('[role=dialog]')].map(e=>e.innerText.trim().slice(0,40))})",
+   "label": "sonda final"
+  }
+ ],
+ "user": "rafael.lima@glacialcold.example"
+}

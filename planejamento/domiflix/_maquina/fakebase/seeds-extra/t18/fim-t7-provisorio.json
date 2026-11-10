@@ -1,0 +1,145 @@
+{
+ "_comentario": "T18 · FIM DO T7 PROVISÓRIO (vale só até o T7 gravar o t7/apos-capNN final). Gerado por rec/t18/semear.py: não edite à mão.",
+ "_patch": {
+  "service_orders": [
+   {
+    "match": {
+     "id": "2c9dc476-c5ca-412f-90fe-6c38a67f125e"
+    },
+    "set": {
+     "status": "concluida",
+     "check_in_time": "2026-11-11T12:05:00.000Z",
+     "check_in_by": "34c36c63-0890-5e89-8963-7c77b7996908",
+     "started_at": "2026-11-11T12:05:00.000Z",
+     "check_out_time": "2026-11-11T13:30:00.000Z",
+     "check_out_by": "34c36c63-0890-5e89-8963-7c77b7996908",
+     "completed_at": "2026-11-11T13:31:00.000Z",
+     "updated_at": "2026-11-11T13:31:00.000Z",
+     "partial_finish": false
+    }
+   }
+  ],
+  "inventory": [
+   {
+    "match": {
+     "id": "@id:material.limpa-evaporador"
+    },
+    "set": {
+     "quantity": 10
+    }
+   },
+   {
+    "match": {
+     "id": "@id:material.fita-isolante"
+    },
+    "set": {
+     "quantity": 28
+    }
+   }
+  ],
+  "inventory_stock_levels": [
+   {
+    "match": {
+     "id": "@id:nivel.limpa-evaporador.principal"
+    },
+    "set": {
+     "quantity": 10
+    }
+   },
+   {
+    "match": {
+     "id": "@id:nivel.fita-isolante.principal"
+    },
+    "set": {
+     "quantity": 28
+    }
+   }
+  ]
+ },
+ "service_order_materials": [
+  {
+   "id": "@id:t18.mat.limpa",
+   "company_id": "9c307966-79f1-567c-ac4d-d5fd3c1a2f40",
+   "service_order_id": "2c9dc476-c5ca-412f-90fe-6c38a67f125e",
+   "inventory_id": "@id:material.limpa-evaporador",
+   "stock_id": "@id:estoque.principal",
+   "quantity": 2,
+   "unit_cost": 20.0,
+   "created_at": "2026-11-11T12:05:00.000Z"
+  },
+  {
+   "id": "@id:t18.mat.fita",
+   "company_id": "9c307966-79f1-567c-ac4d-d5fd3c1a2f40",
+   "service_order_id": "2c9dc476-c5ca-412f-90fe-6c38a67f125e",
+   "inventory_id": "@id:material.fita-isolante",
+   "stock_id": "@id:estoque.principal",
+   "quantity": 2,
+   "unit_cost": 6.5,
+   "created_at": "2026-11-11T12:05:00.000Z"
+  }
+ ],
+ "inventory_movements": [
+  {
+   "id": "@id:t18.mov.limpa",
+   "company_id": "9c307966-79f1-567c-ac4d-d5fd3c1a2f40",
+   "inventory_id": "@id:material.limpa-evaporador",
+   "stock_id": "@id:estoque.principal",
+   "movement_type": "consumo",
+   "quantity": -2,
+   "stock_before": 12,
+   "stock_after": 10,
+   "service_order_id": "2c9dc476-c5ca-412f-90fe-6c38a67f125e",
+   "unit_cost": 20.0,
+   "notes": "Consumo na OS #16",
+   "created_at": "2026-11-11T13:31:00.000Z"
+  },
+  {
+   "id": "@id:t18.mov.fita",
+   "company_id": "9c307966-79f1-567c-ac4d-d5fd3c1a2f40",
+   "inventory_id": "@id:material.fita-isolante",
+   "stock_id": "@id:estoque.principal",
+   "movement_type": "consumo",
+   "quantity": -2,
+   "stock_before": 30,
+   "stock_after": 28,
+   "service_order_id": "2c9dc476-c5ca-412f-90fe-6c38a67f125e",
+   "unit_cost": 6.5,
+   "notes": "Consumo na OS #16",
+   "created_at": "2026-11-11T13:31:00.000Z"
+  }
+ ],
+ "service_ratings": [
+  {
+   "id": "@id:t18.rating.os16",
+   "service_order_id": "2c9dc476-c5ca-412f-90fe-6c38a67f125e",
+   "nps_score": 10,
+   "quality_rating": 5,
+   "punctuality_rating": 5,
+   "professionalism_rating": 5,
+   "comment": null,
+   "rated_by_name": "Antônio Ferreira",
+   "rated_at": "2026-11-11T13:45:00.000Z",
+   "created_at": "2026-11-11T13:31:00.000Z"
+  }
+ ],
+ "service_rating_criteria": [
+  {
+   "rating_id": "@id:t18.rating.os16",
+   "criterion_id": "@id:t5.nps_crit.0",
+   "label_snapshot": "Qualidade",
+   "value": 5
+  },
+  {
+   "rating_id": "@id:t18.rating.os16",
+   "criterion_id": "@id:t5.nps_crit.1",
+   "label_snapshot": "Pontualidade",
+   "value": 5
+  },
+  {
+   "rating_id": "@id:t18.rating.os16",
+   "criterion_id": "@id:t5.nps_crit.2",
+   "label_snapshot": "Profissionalismo",
+   "value": 5
+  }
+ ]
+}

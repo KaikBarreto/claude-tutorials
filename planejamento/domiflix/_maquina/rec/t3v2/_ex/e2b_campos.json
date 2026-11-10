@@ -1,0 +1,337 @@
+{
+ "seedExtra": [
+  "t3v2/apos-cap06"
+ ],
+ "start": "/clientes",
+ "stopOnFail": false,
+ "steps": [
+  {
+   "do": "waitFor",
+   "text": "Lista de Clientes"
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Colégio Monte Verde",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Responsável no Local",
+   "timeout": 10
+  },
+  {
+   "do": "wait",
+   "ms": 600
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Configurações",
+    "exact": true,
+    "within": "main"
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Configurações de clientes e fornecedores",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Campos personalizados",
+    "within": "[role=dialog]"
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Crie informações adicionais para cadastro, ficha e portal.",
+   "timeout": 8
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Novo campo",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 400
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] section input",
+    "nth": 0
+   },
+   "text": "Horário de acesso"
+  },
+  {
+   "do": "count",
+   "target": {
+    "role": "combobox",
+    "within": "[role=dialog]"
+   }
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "combobox",
+    "within": "[role=dialog]"
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Salvar campo",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Campo criado",
+   "timeout": 6
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "combobox",
+    "within": "[role=dialog]"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 400
+  },
+  {
+   "do": "shot",
+   "name": "c1-tipos"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "option",
+    "name": "Número"
+   }
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "option",
+    "name": "Data"
+   }
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "option",
+    "name": "Lista de opções"
+   }
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "option",
+    "name": "Sim/Não"
+   }
+  },
+  {
+   "do": "press",
+   "key": "Escape"
+  },
+  {
+   "do": "wait",
+   "ms": 400
+  },
+  {
+   "do": "count",
+   "target": {
+    "role": "dialog"
+   }
+  },
+  {
+   "do": "count",
+   "target": {
+    "role": "switch",
+    "name": "Obrigatório"
+   }
+  },
+  {
+   "do": "count",
+   "target": {
+    "role": "switch",
+    "name": "Mostrar no Portal do Cliente"
+   }
+  },
+  {
+   "do": "count",
+   "target": {
+    "role": "switch",
+    "name": "Visível"
+   }
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "switch",
+    "name": "Obrigatório"
+   }
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "switch",
+    "name": "Mostrar no Portal do Cliente"
+   }
+  },
+  {
+   "do": "shot",
+   "name": "c2-switches"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Cancelar",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 400
+  },
+  {
+   "do": "shot",
+   "name": "c3-cancelado"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Fornecedores",
+    "within": "[role=dialog]"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "shot",
+   "name": "c4-fornecedores"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Clientes",
+    "within": "[role=dialog]"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 400
+  },
+  {
+   "do": "press",
+   "key": "Escape"
+  },
+  {
+   "do": "wait",
+   "ms": 600
+  },
+  {
+   "do": "count",
+   "target": {
+    "role": "dialog"
+   }
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "button[aria-haspopup='menu'][aria-label='Ações']",
+    "nth": 0
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Editar"
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Editar Cliente",
+   "timeout": 10
+  },
+  {
+   "do": "wait",
+   "ms": 800
+  },
+  {
+   "do": "count",
+   "target": {
+    "label": "Horário de acesso"
+   }
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "Horário de acesso"
+   },
+   "text": "Depois das 17h"
+  },
+  {
+   "do": "shot",
+   "name": "c5-form-campo"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Salvar",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 1500
+  },
+  {
+   "do": "count",
+   "target": {
+    "text": "Horário de acesso",
+    "exact": true,
+    "within": "main"
+   }
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Horário de acesso",
+    "exact": true,
+    "within": "main"
+   }
+  },
+  {
+   "do": "shot",
+   "name": "c6-ficha"
+  }
+ ]
+}

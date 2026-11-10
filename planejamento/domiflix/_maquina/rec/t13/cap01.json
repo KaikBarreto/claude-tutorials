@@ -1,0 +1,266 @@
+{
+ "name": "t13-cap01",
+ "title": "T13 · Cap. 1 · Onde fica cada coisa (narração 44,2 s; marcas L1..L5 = início de cada linha do roteiro)",
+ "seed": "t13-cap01",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap05",
+  "t12/inicio",
+  "t12/apos-cap11",
+  "t13/inicio"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/financeiro/relatorio"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Camila!",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/financeiro/relatorio"
+  },
+  {
+   "do": "waitFor",
+   "text": "Saldo do Período",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Financeiro",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "role": "link",
+    "name": "Relatórios",
+    "exact": true
+   },
+   "timeout": 15
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|erro|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Financeiro",
+    "exact": true
+   },
+   "seconds": 0.6,
+   "at": 0.0,
+   "label": "o grupo Financeiro do menu",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "link",
+    "name": "Relatórios",
+    "exact": true
+   },
+   "seconds": 0.4,
+   "at": 2.64,
+   "label": "as cinco telas do grupo",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 3.54
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "link",
+    "name": "Visão Geral",
+    "exact": true
+   },
+   "seconds": 0.5,
+   "at": 3.8,
+   "label": "Visão Geral",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "link",
+    "name": "Movimentações Financeiras",
+    "exact": true
+   },
+   "seconds": 0.5,
+   "at": 6.28,
+   "label": "Movimentações Financeiras",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "link",
+    "name": "Contas a Pagar/Receber",
+    "exact": true
+   },
+   "seconds": 0.5,
+   "at": 8.44,
+   "label": "Contas a Pagar/Receber",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 16.1
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "link",
+    "name": "Cobranças",
+    "exact": true
+   },
+   "seconds": 0.5,
+   "at": 16.2,
+   "label": "Cobranças",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "link",
+    "name": "Relatórios",
+    "exact": true
+   },
+   "seconds": 0.5,
+   "at": 21.35,
+   "label": "Relatórios",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 26.77
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Este mês",
+    "exact": true
+   },
+   "seconds": 0.8,
+   "at": 28.05,
+   "label": "filtro de período em Este mês",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Configurações Financeiras",
+    "exact": true
+   },
+   "seconds": 0.8,
+   "at": 31.81,
+   "label": "botão Configurações Financeiras",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 35.17
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Este mês",
+    "exact": true
+   },
+   "at": 36.37,
+   "label": "abre o filtro de período"
+  },
+  {
+   "do": "waitFor",
+   "text": "Últimos 7 dias",
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Personalizado",
+    "within": "[data-radix-popper-content-wrapper]"
+   },
+   "seconds": 0.9,
+   "at": 37.43,
+   "label": "as opções do período",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 43.31,
+   "label": "fecha sem trocar"
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 44.16
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

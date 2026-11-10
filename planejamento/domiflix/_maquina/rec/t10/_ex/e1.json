@@ -1,0 +1,72 @@
+{
+ "seedExtra": [
+  "t2/apos-cap10",
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t9/inicio",
+  "t9/apos-cap16",
+  "t10/inicio"
+ ],
+ "steps": [
+  {
+   "do": "waitFor",
+   "text": "Olá, Camila!",
+   "timeout": 30
+  },
+  {
+   "do": "shot",
+   "name": "e1-dash"
+  },
+  {
+   "do": "eval",
+   "js": "({w:innerWidth,h:innerHeight,ver:document.body.innerText.match(/1\\.\\d+\\.\\d+/g)})"
+  },
+  {
+   "do": "list",
+   "selector": "nav a, aside a, [data-sidebar] a, [data-sidebar] button"
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "CRM e Projetos"
+   }
+  },
+  {
+   "do": "shot",
+   "name": "e1-menu"
+  },
+  {
+   "do": "list",
+   "selector": "[data-sidebar] a"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "link",
+    "name": "CRM/Kanban",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 2500
+  },
+  {
+   "do": "shot",
+   "name": "e1-crm-vazio"
+  },
+  {
+   "do": "text",
+   "selector": "main",
+   "name": "crm-vazio",
+   "max": 2500
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos||'sem')"
+  }
+ ]
+}

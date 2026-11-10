@@ -1,0 +1,418 @@
+{
+ "name": "t10-cap06",
+ "title": "T10 · Cap. 6 · Tudo do negócio num lugar (narração 86,2 s; marcas L1..L8 = início de cada linha do roteiro)",
+ "seed": "t10-cap06",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 0.4,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t2/apos-cap10",
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t9/inicio",
+  "t9/apos-cap16",
+  "t10/inicio",
+  "t10/apos-cap05"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/crm"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Camila!",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/crm"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie oportunidades e processos",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Toggle Sidebar",
+    "nth": 0
+   }
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|erro|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "click",
+   "target": {
+    "selector": "main [draggable=true]",
+    "hasText": "PMOC anual"
+   },
+   "label": "abre o PMOC anual do Hotel Mirante do Mar"
+  },
+  {
+   "do": "waitFor",
+   "text": "Responsáveis:",
+   "timeout": 15
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Estágio:",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.8,
+   "label": "Estágio: Negociação",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Responsáveis:",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.8,
+   "label": "Responsáveis: Tatiane Ribeiro (Principal)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Estágio:\", \"Negociação\", \"Responsáveis:\", \"Tatiane Ribeiro\", \"Principal\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere estágio Negociação e responsável Tatiane Ribeiro (Principal)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Editar",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.4,
+   "label": "botão Editar (alto da janela)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] button:has(svg[class*='trash'])"
+   },
+   "seconds": 1.0,
+   "label": "a lixeira (sem clicar: pede confirmação do navegador)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Criar OS",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.6,
+   "label": "botão Criar OS (sem clicar)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Criar Tarefa",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.6,
+   "label": "botão Criar Tarefa (sem clicar)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Valor Estimado",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.6,
+   "label": "quadro Valor Estimado",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Previsão Fechamento",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.6,
+   "label": "quadro Previsão Fechamento",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Origem",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.6,
+   "label": "quadro Origem",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Contato do Cliente",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.0,
+   "label": "quadro Contato do Cliente",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] a:has-text('WhatsApp'), [role=dialog] button:has-text('WhatsApp')"
+   },
+   "seconds": 0.8,
+   "label": "botão verde WhatsApp (sem clicar)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "placeholder": "Adicione observações sobre esta oportunidade...",
+    "within": "[role=dialog]"
+   },
+   "label": "campo Observações"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Adicione observações sobre esta oportunidade...",
+    "within": "[role=dialog]"
+   },
+   "text": "O hotel quer o contrato anual, com visita mensal em todos os aparelhos.",
+   "cps": 24,
+   "label": "digita as observações",
+   "noClick": true
+  },
+  {
+   "do": "waitFor",
+   "text": "Salvo",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] section[aria-label='Etiquetas da oportunidade']"
+   },
+   "seconds": 0.6,
+   "label": "bloco Etiquetas da oportunidade",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] section[aria-label^='Checklists']"
+   },
+   "seconds": 0.6,
+   "label": "bloco Checklists da oportunidade",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "placeholder": "Escreva um comentário...",
+    "within": "[role=dialog]"
+   },
+   "label": "campo de comentário"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Escreva um comentário...",
+    "within": "[role=dialog]"
+   },
+   "text": "A gerência pediu a minuta do contrato.",
+   "cps": 28,
+   "label": "digita o comentário",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Comentar",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "label": "Comentar"
+  },
+  {
+   "do": "waitFor",
+   "text": "A gerência pediu a minuta do contrato.",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Histórico"
+   },
+   "label": "aba Histórico"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Nova Interação",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "label": "Nova Interação"
+  },
+  {
+   "do": "waitFor",
+   "text": "Registrar Interação",
+   "timeout": 10
+  },
+  {
+   "do": "select",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]"
+   },
+   "option": "Reunião",
+   "label": "Tipo de Interação: Reunião"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Ex: Enviar proposta",
+    "within": "[role=dialog]"
+   },
+   "text": "Enviar a minuta do contrato",
+   "cps": 28,
+   "label": "Próxima Ação"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Descreva o que foi conversado...",
+    "within": "[role=dialog]"
+   },
+   "text": "Reunião com a gerência do hotel para alinhar o PMOC anual.",
+   "cps": 30,
+   "label": "Descrição"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:has(svg.lucide-calendar)"
+   },
+   "label": "campo Data da Próxima Ação"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] button[name=next-month]"
+   },
+   "label": "mês seguinte"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] button[name=day]",
+    "hasText": "10"
+   },
+   "label": "dia 10"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Registrar",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "label": "Registrar"
+  },
+  {
+   "do": "waitFor",
+   "text": "Próxima ação:",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Próxima ação:",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.2,
+   "label": "linha nova com Próxima ação:",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Mudança de estágio",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.2,
+   "label": "Mudança de estágio (De Proposta, Para Negociação)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Reunião\", \"Próxima ação: Enviar a minuta do contrato\", \"Mudança de estágio\", \"Proposta\", \"Negociação\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere histórico: Reunião e Mudança de estágio"
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

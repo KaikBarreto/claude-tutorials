@@ -1,0 +1,173 @@
+{
+ "name": "t18-cap09",
+ "title": "T18 · Cap. 9 · Cabo e disjuntor (narração 27,5 s; marcas L1..L2 = início de cada linha do roteiro)",
+ "seed": "t18-cap09",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap15",
+  "t7/inicio",
+  "t7/apos-cap10",
+  "t18/catalogo"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/area-tecnico",
+  "/area-tecnico/cabo-eletrico"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/area-tecnico"
+  },
+  {
+   "do": "waitFor",
+   "text": "Termos Técnicos Explicados",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "nav button",
+    "hasText": "Cabo Elétrico"
+   },
+   "at": 0.96,
+   "label": "abre o Cabo Elétrico"
+  },
+  {
+   "do": "waitFor",
+   "text": "Seleção de seção do cabo elétrico para ar-condicionado em geral.",
+   "timeout": 15
+  },
+  {
+   "do": "select",
+   "target": {
+    "selector": "main button[role=combobox]",
+    "nth": 0
+   },
+   "option": "18.000 BTUs",
+   "at": 2.74,
+   "label": "escolhe 18.000 BTUs"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "220V",
+    "exact": true
+   },
+   "at": 5.16,
+   "label": "tensão 220V"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Ex: 40",
+    "exact": true
+   },
+   "text": "20",
+   "cps": 7,
+   "at": 8.36,
+   "label": "distância 20 m"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main p.leading-snug"
+   },
+   "seconds": 2.6,
+   "at": 11.94,
+   "label": "cabo 4 mm² e disjuntor de 16 A",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "scroll",
+   "by": 260,
+   "at": 15.34,
+   "label": "desce: queda de tensão e foto do disjuntor",
+   "duration": 0.9
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Queda de tensão",
+    "within": "main"
+   },
+   "seconds": 0.7,
+   "at": 16.6,
+   "label": "queda de tensão",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Ampliar foto"
+   },
+   "seconds": 1.0,
+   "at": 17.32,
+   "label": "a foto do disjuntor",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 19.48
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Ex: 40",
+    "exact": true
+   },
+   "text": "30",
+   "cps": 7,
+   "at": 20.4,
+   "label": "distância 30 m",
+   "clear": true
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main p.leading-snug"
+   },
+   "seconds": 2.2,
+   "at": 25.02,
+   "label": "cabo de 6 mm²",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 27.52
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

@@ -1,0 +1,482 @@
+{
+ "name": "t1-cap12",
+ "title": "T1 · Cap. 12 · Termos, cópia dos dados e Zona de Perigo (marcas L1..L4 = início de cada linha da fala; `at` pelos tempos da voz)",
+ "seed": "t1-cap12",
+ "pace": 1.0,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 300
+ },
+ "seedExtra": [
+  "t1/apos-cap11"
+ ],
+ "prewarm": [
+  "/configuracoes"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/configuracoes"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie as configurações do sistema"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "text": "Salvo",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "scroll",
+   "by": 6000,
+   "duration": 2.4,
+   "after": 300,
+   "label": "rola até o fim da aba Empresa",
+   "at": 0.6
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Documentos Legais",
+    "exact": true
+   },
+   "seconds": 1.0,
+   "label": "cartão Documentos Legais",
+   "at": 3.9
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 6.2
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Ver termos de uso",
+    "exact": true
+   },
+   "label": "Ver termos de uso",
+   "at": 6.2
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "role": "button",
+    "name": "Baixar PDF",
+    "exact": true
+   },
+   "timeout": 10,
+   "label": "janela dos termos de uso aberta"
+  },
+  {
+   "do": "scroll",
+   "target": {
+    "selector": "[role=dialog] div.overflow-y-auto"
+   },
+   "by": 320,
+   "duration": 0.6,
+   "after": 100,
+   "label": "rola um pouco os termos",
+   "at": 7.3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Baixar PDF",
+    "exact": true
+   },
+   "seconds": 0.5,
+   "label": "Baixar PDF (sem clicar)",
+   "at": 8.7
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:not([aria-label]):text-is('Fechar')"
+   },
+   "label": "Fechar os termos",
+   "at": 10.0
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "button",
+    "name": "Baixar PDF",
+    "exact": true
+   },
+   "timeout": 8,
+   "label": "janela dos termos fechada"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Aceito em"
+   },
+   "seconds": 0.8,
+   "label": "Aceito em (data do aceite, verde)",
+   "at": 11.3
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 13.48
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Exportar meus dados",
+    "exact": true
+   },
+   "seconds": 0.3,
+   "label": "cartão Exportar meus dados",
+   "at": 13.48
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Exportar dados",
+    "exact": true
+   },
+   "label": "Exportar dados",
+   "at": 14.0
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "text": "Marcar tudo",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "timeout": 10,
+   "label": "janela de exportação aberta"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Clientes",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.25,
+   "label": "grupo Clientes",
+   "at": 16.2
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Equipamentos",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.25,
+   "label": "grupo Equipamentos",
+   "at": 17.2
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Ordens de Serviço",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.25,
+   "label": "grupo Ordens de Serviço",
+   "at": 18.2
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Financeiro",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.3,
+   "label": "grupo Financeiro",
+   "at": 19.5
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Marcar tudo",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.3,
+   "label": "Marcar tudo",
+   "at": 21.2
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Limpar seleção",
+    "exact": true
+   },
+   "seconds": 0.3,
+   "label": "Limpar seleção",
+   "at": 22.3
+  },
+  {
+   "do": "scroll",
+   "target": {
+    "selector": "[role=dialog] div.overflow-y-auto"
+   },
+   "by": 260,
+   "duration": 0.6,
+   "after": 100,
+   "label": "a lista rola até o aviso",
+   "at": 23.0
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Movimentações de Estoque e Ponto vêm desmarcados por padrão"
+   },
+   "seconds": 1.0,
+   "label": "aviso: Movimentações de Estoque e Ponto vêm desmarcados",
+   "at": 24.4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Cancelar",
+    "exact": true
+   },
+   "label": "Cancelar (sem exportar)",
+   "at": 26.7
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "text": "Marcar tudo",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "timeout": 8,
+   "label": "janela de exportação fechada"
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 28.15
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Zona de Perigo",
+    "exact": true
+   },
+   "seconds": 0.3,
+   "label": "cartão Zona de Perigo",
+   "at": 28.5
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Ações irreversíveis. Revise cuidadosamente antes de confirmar."
+   },
+   "seconds": 0.2,
+   "label": "Ações irreversíveis"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Zerar Sistema",
+    "exact": true
+   },
+   "label": "Zerar Sistema",
+   "at": 30.2
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "text": "Marcar tudo",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "timeout": 10,
+   "label": "janela do Zerar Sistema aberta"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Operacional",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.3,
+   "label": "grupo Operacional",
+   "at": 31.7
+  },
+  {
+   "do": "scroll",
+   "target": {
+    "selector": "[role=dialog] div.overflow-y-auto"
+   },
+   "by": 929,
+   "duration": 1.0,
+   "after": 100,
+   "label": "a lista rola pelos grupos até o fim",
+   "at": 32.9
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Serão mantidos:",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.2,
+   "label": "Serão mantidos",
+   "at": 34.5
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Dados básicos da empresa",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.2,
+   "label": "mantém: dados básicos da empresa",
+   "at": 35.3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Usuários cadastrados",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.2,
+   "label": "mantém: usuários cadastrados",
+   "at": 36.0
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Esta ação NÃO PODE ser desfeita!",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.4,
+   "label": "aviso: esta ação não pode ser desfeita",
+   "at": 37.3
+  },
+  {
+   "do": "scroll",
+   "target": {
+    "selector": "[role=dialog] div.overflow-y-auto"
+   },
+   "by": -929,
+   "duration": 2.2,
+   "after": 100,
+   "label": "a lista volta ao topo, devagar",
+   "at": 39.4
+  },
+  {
+   "do": "scroll",
+   "target": {
+    "selector": "[role=dialog] div.overflow-y-auto"
+   },
+   "by": 929,
+   "duration": 1.2,
+   "after": 100,
+   "label": "e desce de novo até a confirmação",
+   "at": 42.2
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Sim, Zerar Sistema",
+    "exact": true
+   },
+   "seconds": 0.4,
+   "label": "Sim, Zerar Sistema (bloqueado, sem clicar)",
+   "at": 43.5
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Glacial Cold Brasil",
+    "exact": true,
+    "within": "[role=dialog]",
+    "nth": 1
+   },
+   "seconds": 0.3,
+   "label": "o nome da empresa que precisa ser digitado",
+   "at": 44.6
+  },
+  {
+   "do": "hover",
+   "target": {
+    "placeholder": "Nome da empresa"
+   },
+   "seconds": 0.7,
+   "label": "campo Nome da empresa (nada digitado)",
+   "at": 45.4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Esta ação NÃO PODE ser desfeita!",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.5,
+   "label": "não tem volta",
+   "at": 46.8
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Cancelar",
+    "exact": true
+   },
+   "label": "Cancelar (nada é apagado)",
+   "at": 48.0
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "text": "Marcar tudo",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "timeout": 8,
+   "label": "janela do Zerar Sistema fechada"
+  },
+  {
+   "do": "pause",
+   "seconds": 1.0
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 50.4
+  }
+ ]
+}

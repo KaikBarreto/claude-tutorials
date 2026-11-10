@@ -1,0 +1,412 @@
+{
+ "name": "t11-cap08",
+ "title": "T11 · Cap. 8 · Equipe e cobrança (narração 70,6 s; marcas L1..L6 = início de cada linha do roteiro)",
+ "seed": "t11-cap08",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t2/apos-cap10",
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t9/inicio",
+  "t9/apos-cap16",
+  "t10/apos-cap09",
+  "t11/inicio",
+  "t11/apos-cap03"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/contratos"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Camila!",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/contratos"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie contratos recorrentes e manutenções programadas",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(() => { sessionStorage.setItem('form-draft:contract-form', \"{\\\"name\\\":\\\"PMOC - Hotel Mirante do Mar\\\",\\\"customerId\\\":\\\"cbed8554-3919-5fa8-b9c6-5d13ef24cf37\\\",\\\"serviceTypeId\\\":\\\"\\\",\\\"formTemplateId\\\":\\\"\\\",\\\"notes\\\":\\\"\\\",\\\"isActive\\\":true,\\\"isPmoc\\\":true,\\\"responsibleTechnicianId\\\":\\\"e9873794-c222-43d4-95a8-71154808a3fd\\\",\\\"freqType\\\":\\\"months\\\",\\\"freqValue\\\":1,\\\"startDate\\\":\\\"2026-12-01\\\",\\\"horizonMonths\\\":12,\\\"step\\\":3,\\\"stepKey\\\":\\\"team\\\",\\\"unidadeNome\\\":\\\"Hotel Mirante do MarHotel Mirante do Mar - S\\u00e3o Francisco\\\",\\\"unidadeEndereco\\\":\\\"Avenida Quintino Bocai\\u00fava\\\",\\\"unidadeNumero\\\":\\\"770\\\",\\\"unidadeComplemento\\\":\\\"\\\",\\\"unidadeBairro\\\":\\\"S\\u00e3o Francisco\\\",\\\"unidadeCidade\\\":\\\"Niter\\u00f3i\\\",\\\"unidadeUf\\\":\\\"RJ\\\",\\\"unidadeCep\\\":\\\"24360-000\\\",\\\"environments\\\":[{\\\"key\\\":\\\"env-1794315610850-1\\\",\\\"identificacao\\\":\\\"Lobby e recep\\u00e7\\u00e3o\\\",\\\"tipo_atividade\\\":\\\"Recep\\u00e7\\u00e3o de hotel\\\",\\\"area_climatizada_m2\\\":\\\"180\\\",\\\"ocupantes_fixos\\\":\\\"4\\\",\\\"ocupantes_flutuantes\\\":\\\"40\\\",\\\"carga_termica_tr\\\":\\\"4\\\",\\\"photo_url\\\":null,\\\"equipment_ids\\\":[\\\"702fe3a4-c022-541e-a2d1-7a1706e3d55b\\\",\\\"08a6906e-93b7-5633-ae39-e45b753e9672\\\"]},{\\\"key\\\":\\\"env-1794315610850-2\\\",\\\"identificacao\\\":\\\"Restaurante\\\",\\\"tipo_atividade\\\":\\\"Restaurante do hotel\\\",\\\"area_climatizada_m2\\\":\\\"220\\\",\\\"ocupantes_fixos\\\":\\\"10\\\",\\\"ocupantes_flutuantes\\\":\\\"80\\\",\\\"carga_termica_tr\\\":\\\"3\\\",\\\"photo_url\\\":null,\\\"equipment_ids\\\":[\\\"9539608c-f4be-5fb9-a443-e350e659b4cc\\\"]},{\\\"key\\\":\\\"env-1794315610850-3\\\",\\\"identificacao\\\":\\\"Sal\\u00e3o de eventos\\\",\\\"tipo_atividade\\\":\\\"Sal\\u00e3o de eventos\\\",\\\"area_climatizada_m2\\\":\\\"300\\\",\\\"ocupantes_fixos\\\":\\\"2\\\",\\\"ocupantes_flutuantes\\\":\\\"150\\\",\\\"carga_termica_tr\\\":\\\"4\\\",\\\"photo_url\\\":null,\\\"equipment_ids\\\":[\\\"685a9331-e393-5e5a-ae40-f1f35eccf696\\\"]}],\\\"looseItems\\\":[],\\\"machineConfigs\\\":{\\\"702fe3a4-c022-541e-a2d1-7a1706e3d55b\\\":{\\\"scope\\\":\\\"ac\\\",\\\"startVisit\\\":12,\\\"activities\\\":[{\\\"description\\\":\\\"Limpar ou trocar o elemento filtrante\\\",\\\"guidance\\\":\\\"Desligue o equipamento, remova o filtro pela frontal e lave em \\u00e1gua corrente com sab\\u00e3o neutro; seque \\u00e0 sombra antes de recolocar. Troque se estiver rasgado ou ressecado.\\\",\\\"freq_code\\\":\\\"M\\\",\\\"section\\\":\\\"condicionadores\\\",\\\"component\\\":\\\"filtros\\\",\\\"is_measurement\\\":false,\\\"unit\\\":null,\\\"expected_min\\\":null,\\\"expected_max\\\":null,\\\"catalog_activity_id\\\":\\\"4db1b0c6-78d5-55f9-b347-e675b6e6230e\\\",\\\"applies_per_equipment\\\":true,\\\"equipment_ref\\\":\\\"702fe3a4-c022-541e-a2d1-7a1706e3d55b\\\"},{\\\"description\\\":\\\"Lavar a bandeja e remover o biofilme\\\",\\\"guidance\\\":\\\"Esvazie a bandeja e remova a camada viscosa (lodo/limo) esfregando com pano e sab\\u00e3o neutro; enx\\u00e1gue bem. Use luvas \\u2014 o biofilme acumula bact\\u00e9rias.\\\",\\\"freq_code\\\":\\\"T\\\",\\\"section\\\":\\\"condicionadores\\\",\\\"component\\\":\\\"bandejas\\\",\\\"is_measurement\\\":false,\\\"unit\\\":null,\\\"expected_min\\\":null,\\\"expected_max\\\":null,\\\"catalog_activity_id\\\":\\\"a2dd3e68-ca24-5022-9c8d-c98efc64abd1\\\",\\\"applies_per_equipment\\\":true,\\\"equipment_ref\\\":\\\"702fe3a4-c022-541e-a2d1-7a1706e3d55b\\\"},{\\\"description\\\":\\\"Lavar e remover o biofilme da serpentina\\\",\\\"guidance\\\":\\\"Proteja a parte el\\u00e9trica, aplique produto pr\\u00f3prio de limpeza de serpentina e enx\\u00e1gue com pulverizador, sem dobrar as aletas. Direcione a \\u00e1gua para a bandeja/dreno.\\\",\\\"freq_code\\\":\\\"T\\\",\\\"section\\\":\\\"condicionadores\\\",\\\"component\\\":\\\"evaporadores\\\",\\\"is_measurement\\\":false,\\\"unit\\\":null,\\\"expected_min\\\":null,\\\"expected_max\\\":null,\\\"catalog_activity_id\\\":\\\"cbe86ac2-e850-5447-b81a-e79d70df443a\\\",\\\"applies_per_equipment\\\":true,\\\"equipment_ref\\\":\\\"702fe3a4-c022-541e-a2d1-7a1706e3d55b\\\"},{\\\"description\\\":\\\"Limpar a turbina\\\",\\\"guidance\\\":\\\"Com o equipamento desligado, remova a sujeira acumulada entre as p\\u00e1s da turbina (rolo) com escova e aspira\\u00e7\\u00e3o, sem desbalancear o conjunto.\\\",\\\"freq_code\\\":\\\"M\\\",\\\"section\\\":\\\"condicionadores\\\",\\\"component\\\":\\\"evaporadores\\\",\\\"is_measurement\\\":false,\\\"unit\\\":null,\\\"expected_min\\\":null,\\\"expected_max\\\":null,\\\"catalog_activity_id\\\":\\\"938b2647-eb79-5353-8f11-caf373e9863e\\\",\\\"applies_per_equipment\\\":true,\\\"equipment_ref\\\":\\\"702fe3a4-c022-541e-a2d1-7a1706e3d55b\\\"},{\\\"description\\\":\\\"Verificar a drenagem da bandeja\\\",\\\"guidance\\\":\\\"Despeje \\u00e1gua na bandeja e acompanhe o escoamento at\\u00e9 a sa\\u00edda do dreno; se demorar ou empo\\u00e7ar, desobstrua a mangueira de dreno.\\\",\\\"freq_code\\\":\\\"M\\\",\\\"section\\\":\\\"condicionadores\\\",\\\"component\\\":\\\"evaporadores\\\",\\\"is_measurement\\\":false,\\\"unit\\\":null,\\\"expected_min\\\":null,\\\"expected_max\\\":null,\\\"catalog_activity_id\\\":\\\"89ceefee-3b85-50ff-8b08-c4081711e6bd\\\",\\\"applies_per_equipment\\\":true,\\\"equipment_ref\\\":\\\"702fe3a4-c022-541e-a2d1-7a1706e3d55b\\\"},{\\\"description\\\":\\\"Desobstruir o dreno\\\",\\\"guidance\\\":null,\\\"freq_code\\\":\\\"M\\\",\\\"section\\\":\\\"condicionadores\\\",\\\"component\\\":\\\"evaporadores\\\",\\\"is_measurement\\\":false,\\\"unit\\\":null,\\\"expected_min\\\":null,\\\"expected_max\\\":null,\\\"catalog_activity_id\\\":\\\"93358b51-086f-5615-b8bc-a0b6c27ecdb8\\\",\\\"applies_per_equipment\\\":true,\\\"equipment_ref\\\":\\\"702fe3a4-c022-541e-a2d1-7a1706e3d55b\\\"},{\\\"description\\\":\\\"Aplicar antibactericida na serpentina\\\",\\\"guidance\\\":\\\"Ap\\u00f3s a limpeza, com a serpentina limpa, aplique o produto antibactericida de forma uniforme conforme o r\\u00f3tulo. Use luvas e m\\u00e1scara.\\\",\\\"freq_code\\\":\\\"M\\\",\\\"section\\\":\\\"condicionadores\\\",\\\"component\\\":\\\"evaporadores\\\",\\\"is_measurement\\\":false,\\\"unit\\\":null,\\\"expected_min\\\":null,\\\"expected_max\\\":null,\\\"catalog_activity_id\\\":\\\"ad3a957c-4624-566f-b2f2-f9d36645d134\\\",\\\"applies_per_equipment\\\":true,\\\"equipment_ref\\\":\\\"702fe3a4-c022-541e-a2d1-7a1706e3d55b\\\"},{\\\"description\\\":\\\"Verificar ru\\u00eddos e vibra\\u00e7\\u00f5es\\\",\\\"guidance\\\":\\\"Com o equipamento ligado, ou\\u00e7a ru\\u00eddos anormais e sinta vibra\\u00e7\\u00f5es excessivas no gabinete. Reaperte fixa\\u00e7\\u00f5es soltas que estejam causando o barulho.\\\",\\\"freq_code\\\":\\\"M\\\",\\\"section\\\":\\\"condicionadores\\\",\\\"component\\\":\\\"gabinetes\\\",\\\"is_measurement\\\":false,\\\"unit\\\":null,\\\"expected_min\\\":null,\\\"expected_max\\\":null,\\\"catalog_activity_id\\\":\\\"ca8b0e84-c3b9-5d14-98da-ff44afa18ba0\\\",\\\"applies_per_equipment\\\":true,\\\"equipment_ref\\\":\\\"702fe3a4-c022-541e-a2d1-7a1706e3d55b\\\"},{\\\"description\\\":\\\"Lavar e remover as incrusta\\u00e7\\u00f5es da serpentina\\\",\\\"guidance\\\":\\\"Proteja a parte el\\u00e9trica e lave a serpentina da condensadora com produto pr\\u00f3prio e jato controlado de dentro para fora, removendo poeira e folhas, sem dobrar as aletas.\\\",\\\"freq_code\\\":\\\"S\\\",\\\"section\\\":\\\"condicionadores\\\",\\\"component\\\":\\\"condensadores\\\",\\\"is_measurement\\\":false,\\\"unit\\\":null,\\\"expected_min\\\":null,\\\"expected_max\\\":null,\\\"catalog_activity_id\\\":\\\"0c4fc0a4-7e90-54bd-9ac4-2a410ef7af52\\\",\\\"applies_per_equipment\\\":true,\\\"equipment_ref\\\":\\\"702fe3a4-c022-541e-a2d1-7a1706e3d55b\\\"},{\\\"description\\\":\\\"Verificar os capacitores\\\",\\\"guidance\\\":\\\"Com a energia desligada e o capacitor descarregado, inspecione procurando estufamento, vazamento ou queima. Substitua qualquer capacitor com sinal de defeito.\\\",\\\"freq_code\\\":\\\"M\\\",\\\"section\\\":\\\"condicionadores\\\",\\\"component\\\":\\\"motores_eletricos\\\",\\\"is_measurement\\\":false,\\\"unit\\\":null,\\\"expected_min\\\":null,\\\"expected_max\\\":null,\\\"catalog_activity_id\\\":\\\"9bc83b65-4b82-524f-b87e-d7c453f27bb4\\\",\\\"applies_per_equipment\\\":true,\\\"equipment_ref\\\":\\\"702fe3a4-c022-541e-a2d1-7a1706e3d55b\\\"},{\\\"description\\\":\\\"Inspecionar ind\\u00edcios de vazamento de refrigerante\\\",\\\"guidance\\\":\\\"Inspecione conex\\u00f5es e solda com detector eletr\\u00f4nico ou espuma detectora; bolhas indicam vazamento. Marque o ponto e registre antes de qualquer recarga.\\\",\\\"freq_code\\\":\\\"M\\\",\\\"section\\\":\\\"condicionadores\\\",\\\"component\\\":\\\"circuito_refrigerante\\\",\\\"is_measurement\\\":false,\\\"unit\\\":null,\\\"expected_min\\\":null,\\\"expected_max\\\":null,\\\"catalog_activity_id\\\":\\\"ae43c6ba-44f8-59b9-b3ea-0db9cca6a361\\\",\\\"applies_per_equipment\\\":true,\\\"equipment_ref\\\":\\\"702fe3a4-c022-541e-a2d1-7a1706e3d55b\\\"},{\\\"description\\\":\\\"Verificar o aperto dos contatos\\\",\\\"guidance\\\":\\\"Com a energia desligada, reaperte os bornes e terminais el\\u00e9tricos no torque adequado. Refa\\u00e7a contatos oxidados ou frouxos.\\\",\\\"freq_code\\\":\\\"T\\\",\\\"section\\\":\\\"condicionadores\\\",\\\"component\\\":\\\"circuito_eletrico\\\",\\\"is_measurement\\\":false,\\\"unit\\\":null,\\\"expected_min\\\":null,\\\"expected_max\\\":null,\\\"catalog_activity_id\\\":\\\"7a8a8349-e0a2-5c04-84b1-b3f7c51fe68a\\\",\\\"applies_per_equipment\\\":true,\\\"equipment_ref\\\":\\\"702fe3a4-c022-541e-a2d1-7a1706e3d55b\\\"},{\\\"description\\\":\\\"Medir tens\\u00f5es e corrente\\\",\\\"guidance\\\":\\\"Com o equipamento em regime, me\\u00e7a a tens\\u00e3o entre fases e a corrente em cada fase usando mult\\u00edmetro/alicate amper\\u00edmetro. Anote os valores e compare com a faixa indicada.\\\",\\\"freq_code\\\":\\\"M\\\",\\\"section\\\":\\\"medicoes\\\",\\\"component\\\":null,\\\"is_measurement\\\":true,\\\"unit\\\":\\\"V\\\",\\\"expected_min\\\":null,\\\"expected_max\\\":null,\\\"catalog_activity_id\\\":\\\"d392b805-eee7-5278-9eac-f5b89af8e626\\\",\\\"applies_per_equipment\\\":true,\\\"equipment_ref\\\":\\\"702fe3a4-c022-541e-a2d1-7a1706e3d55b\\\"},{\\\"description\\\":\\\"Medir temperatura de insuflamento, ambiente e retorno\\\",\\\"guidance\\\":\\\"Com o sistema em regime, me\\u00e7a com term\\u00f4metro a temperatura do ar que sai (insuflamento), do ambiente e do retorno. Anote os tr\\u00eas valores.\\\",\\\"freq_code\\\":\\\"M\\\",\\\"section\\\":\\\"medicoes\\\",\\\"component\\\":null,\\\"is_measurement\\\":true,\\\"unit\\\":\\\"\\u00b0C\\\",\\\"expected_min\\\":null,\\\"expected_max\\\":null,\\\"catalog_activity_id\\\":\\\"fb54a3fe-6944-540f-a7da-f74a5a4a1085\\\",\\\"applies_per_equipment\\\":true,\\\"equipment_ref\\\":\\\"702fe3a4-c022-541e-a2d1-7a1706e3d55b\\\"},{\\\"description\\\":\\\"Teste operacional\\\",\\\"guidance\\\":null,\\\"freq_code\\\":\\\"M\\\",\\\"section\\\":\\\"testes\\\",\\\"component\\\":null,\\\"is_measurement\\\":false,\\\"unit\\\":null,\\\"expected_min\\\":null,\\\"expected_max\\\":null,\\\"catalog_activity_id\\\":\\\"e8da9927-4252-5ddf-83c9-71b3089c0dee\\\",\\\"applies_per_equipment\\\":true,\\\"equipment_ref\\\":\\\"702fe3a4-c022-541e-a2d1-7a1706e3d55b\\\"},{\\\"description\\\":\\\"Verificar atua\\u00e7\\u00e3o e regulagem dos termostatos\\\",\\\"guidance\\\":\\\"Simule a varia\\u00e7\\u00e3o de temperatura e confirme que o termostato liga/desliga no ponto ajustado. Ajuste o setpoint conforme necess\\u00e1rio.\\\",\\\"freq_code\\\":\\\"M\\\",\\\"section\\\":\\\"testes\\\",\\\"component\\\":null,\\\"is_measurement\\\":false,\\\"unit\\\":null,\\\"expected_min\\\":null,\\\"expected_max\\\":null,\\\"catalog_activity_id\\\":\\\"769bbd7a-1d37-5fe4-92a0-90984a472fa2\\\",\\\"applies_per_equipment\\\":true,\\\"equipment_ref\\\":\\\"702fe3a4-c022-541e-a2d1-7a1706e3d55b\\\"},{\\\"description\\\":\\\"Verificar os rel\\u00e9s de sequ\\u00eancia de fase\\\",\\\"guidance\\\":\\\"Confirme que o rel\\u00e9 de sequ\\u00eancia de fase impede a partida com fase invertida ou falta de fase. Teste simulando a condi\\u00e7\\u00e3o.\\\",\\\"freq_code\\\":\\\"S\\\",\\\"section\\\":\\\"testes\\\",\\\"component\\\":null,\\\"is_measurement\\\":false,\\\"unit\\\":null,\\\"expected_min\\\":null,\\\"expected_max\\\":null,\\\"catalog_activity_id\\\":\\\"aa5d7f5e-b024-59cd-89ff-d8c9862dceab\\\",\\\"applies_per_equipment\\\":true,\\\"equipment_ref\\\":\\\"702fe3a4-c022-541e-a2d1-7a1706e3d55b\\\"}],\\\"customized\\\":false,\\\"customTemplateIds\\\":[],\\\"firstOsExcludedQuestions\\\":[],\\\"normTemplateIds\\\":[\\\"ed14c0c3-2d96-45cc-9c3f-4fd246a9fc6f\\\"]},\\\"08a6906e-93b7-5633-ae39-e45b753e9672\\\":{\\\"scope\\\":\\\"ac\\\",\\\"startVisit\\\":12,\\\"activities\\\":[{\\\"description\\\":\\\"Limpar ou trocar o elemento filtrante\\\",\\\"guidance\\\":\\\"Desligue o equipamento, remova o filtro pela frontal e lave em \\u00e1gua corrente com sab\\u00e3o neutro; seque \\u00e0 sombra antes de recolocar. Troque se estiver rasgado ou ressecado.\\\",\\\"freq_code\\\":\\\"M\\\",\\\"section\\\":\\\"condicionadores\\\",\\\"component\\\":\\\"filtros\\\",\\\"is_measurement\\\":false,\\\"unit\\\":null,\\\"expected_min\\\":null,\\\"expected_max\\\":null,\\\"catalog_activity_id\\\":\\\"4db1b0c6-78d5-55f9-b347-e675b6e6230e\\\",\\\"applies_per_equipment\\\":true,\\\"equipment_ref\\\":\\\"08a6906e-93b7-5633-ae39-e45b753e9672\\\"},{\\\"description\\\":\\\"Lavar a bandeja e remover o biofilme\\\",\\\"guidance\\\":\\\"Esvazie a bandeja e remova a camada viscosa (lodo/limo) esfregando com pano e sab\\u00e3o neutro; enx\\u00e1gue bem. Use luvas \\u2014 o biofilme acumula bact\\u00e9rias.\\\",\\\"freq_code\\\":\\\"T\\\",\\\"section\\\":\\\"condicionadores\\\",\\\"component\\\":\\\"bandejas\\\",\\\"is_measurement\\\":false,\\\"unit\\\":null,\\\"expected_min\\\":null,\\\"expected_max\\\":null,\\\"catalog_activity_id\\\":\\\"a2dd3e68-ca24-5022-9c8d-c98efc64abd1\\\",\\\"applies_per_equipment\\\":true,\\\"equipment_ref\\\":\\\"08a6906e-93b7-5633-ae39-e45b753e9672\\\"},{\\\"description\\\":\\\"Lavar e remover o biofilme da serpentina\\\",\\\"guidance\\\":\\\"Proteja a parte el\\u00e9trica, aplique produto pr\\u00f3prio de limpeza de serpentina e enx\\u00e1gue com pulverizador, sem dobrar as aletas. Direcione a \\u00e1gua para a bandeja/dreno.\\\",\\\"freq_code\\\":\\\"T\\\",\\\"section\\\":\\\"condicionadores\\\",\\\"component\\\":\\\"evaporadores\\\",\\\"is_measurement\\\":false,\\\"unit\\\":null,\\\"expected_min\\\":null,\\\"expected_max\\\":null,\\\"catalog_activity_id\\\":\\\"cbe86ac2-e850-5447-b81a-e79d70df443a\\\",\\\"applies_per_equipment\\\":true,\\\"equipment_ref\\\":\\\"08a6906e-93b7-5633-ae39-e45b753e9672\\\"},{\\\"description\\\":\\\"Limpar a turbina\\\",\\\"guidance\\\":\\\"Com o equipamento desligado, remova a sujeira acumulada entre as p\\u00e1s da turbina (rolo) com escova e aspira\\u00e7\\u00e3o, sem desbalancear o conjunto.\\\",\\\"freq_code\\\":\\\"M\\\",\\\"section\\\":\\\"condicionadores\\\",\\\"component\\\":\\\"evaporadores\\\",\\\"is_measurement\\\":false,\\\"unit\\\":null,\\\"expected_min\\\":null,\\\"expected_max\\\":null,\\\"catalog_activity_id\\\":\\\"938b2647-eb79-5353-8f11-caf373e9863e\\\",\\\"applies_per_equipment\\\":true,\\\"equipment_ref\\\":\\\"08a6906e-93b7-5633-ae39-e45b753e9672\\\"},{\\\"description\\\":\\\"Verificar a drenagem da bandeja\\\",\\\"guidance\\\":\\\"Despeje \\u00e1gua na bandeja e acompanhe o escoamento at\\u00e9 a sa\\u00edda do dreno; se demorar ou empo\\u00e7ar, desobstrua a mangueira de dreno.\\\",\\\"freq_code\\\":\\\"M\\\",\\\"section\\\":\\\"condicionadores\\\",\\\"component\\\":\\\"evaporadores\\\",\\\"is_measurement\\\":false,\\\"unit\\\":null,\\\"expected_min\\\":null,\\\"expected_max\\\":null,\\\"catalog_activity_id\\\":\\\"89ceefee-3b85-50ff-8b08-c4081711e6bd\\\",\\\"applies_per_equipment\\\":true,\\\"equipment_ref\\\":\\\"08a6906e-93b7-5633-ae39-e45b753e9672\\\"},{\\\"description\\\":\\\"Desobstruir o dreno\\\",\\\"guidance\\\":null,\\\"freq_code\\\":\\\"M\\\",\\\"section\\\":\\\"condicionadores\\\",\\\"component\\\":\\\"evaporadores\\\",\\\"is_measurement\\\":false,\\\"unit\\\":null,\\\"expected_min\\\":null,\\\"expected_max\\\":null,\\\"catalog_activity_id\\\":\\\"93358b51-086f-5615-b8bc-a0b6c27ecdb8\\\",\\\"applies_per_equipment\\\":true,\\\"equipment_ref\\\":\\\"08a6906e-93b7-5633-ae39-e45b753e9672\\\"},{\\\"description\\\":\\\"Aplicar antibactericida na serpentina\\\",\\\"guidance\\\":\\\"Ap\\u00f3s a limpeza, com a serpentina limpa, aplique o produto antibactericida de forma uniforme conforme o r\\u00f3tulo. Use luvas e m\\u00e1scara.\\\",\\\"freq_code\\\":\\\"M\\\",\\\"section\\\":\\\"condicionadores\\\",\\\"component\\\":\\\"evaporadores\\\",\\\"is_measurement\\\":false,\\\"unit\\\":null,\\\"expected_min\\\":null,\\\"expected_max\\\":null,\\\"catalog_activity_id\\\":\\\"ad3a957c-4624-566f-b2f2-f9d36645d134\\\",\\\"applies_per_equipment\\\":true,\\\"equipment_ref\\\":\\\"08a6906e-93b7-5633-ae39-e45b753e9672\\\"},{\\\"description\\\":\\\"Verificar ru\\u00eddos e vibra\\u00e7\\u00f5es\\\",\\\"guidance\\\":\\\"Com o equipamento ligado, ou\\u00e7a ru\\u00eddos anormais e sinta vibra\\u00e7\\u00f5es excessivas no gabinete. Reaperte fixa\\u00e7\\u00f5es soltas que estejam causando o barulho.\\\",\\\"freq_code\\\":\\\"M\\\",\\\"section\\\":\\\"condicionadores\\\",\\\"component\\\":\\\"gabinetes\\\",\\\"is_measurement\\\":false,\\\"unit\\\":null,\\\"expected_min\\\":null,\\\"expected_max\\\":null,\\\"catalog_activity_id\\\":\\\"ca8b0e84-c3b9-5d14-98da-ff44afa18ba0\\\",\\\"applies_per_equipment\\\":true,\\\"equipment_ref\\\":\\\"08a6906e-93b7-5633-ae39-e45b753e9672\\\"},{\\\"description\\\":\\\"Lavar e remover as incrusta\\u00e7\\u00f5es da serpentina\\\",\\\"guidance\\\":\\\"Proteja a parte el\\u00e9trica e lave a serpentina da condensadora com produto pr\\u00f3prio e jato controlado de dentro para fora, removendo poeira e folhas, sem dobrar as aletas.\\\",\\\"freq_code\\\":\\\"S\\\",\\\"section\\\":\\\"condicionadores\\\",\\\"component\\\":\\\"condensadores\\\",\\\"is_measurement\\\":false,\\\"unit\\\":null,\\\"expected_min\\\":null,\\\"expected_max\\\":null,\\\"catalog_activity_id\\\":\\\"0c4fc0a4-7e90-54bd-9ac4-2a410ef7af52\\\",\\\"applies_per_equipment\\\":true,\\\"equipment_ref\\\":\\\"08a6906e-93b7-5633-ae39-e45b753e9672\\\"},{\\\"description\\\":\\\"Verificar os capacitores\\\",\\\"guidance\\\":\\\"Com a energia desligada e o capacitor descarregado, inspecione procurando estufamento, vazamento ou queima. Substitua qualquer capacitor com sinal de defeito.\\\",\\\"freq_code\\\":\\\"M\\\",\\\"section\\\":\\\"condicionadores\\\",\\\"component\\\":\\\"motores_eletricos\\\",\\\"is_measurement\\\":false,\\\"unit\\\":null,\\\"expected_min\\\":null,\\\"expected_max\\\":null,\\\"catalog_activity_id\\\":\\\"9bc83b65-4b82-524f-b87e-d7c453f27bb4\\\",\\\"applies_per_equipment\\\":true,\\\"equipment_ref\\\":\\\"08a6906e-93b7-5633-ae39-e45b753e9672\\\"},{\\\"description\\\":\\\"Inspecionar ind\\u00edcios de vazamento de refrigerante\\\",\\\"guidance\\\":\\\"Inspecione conex\\u00f5es e solda com detector eletr\\u00f4nico ou espuma detectora; bolhas indicam vazamento. Marque o ponto e registre antes de qualquer recarga.\\\",\\\"freq_code\\\":\\\"M\\\",\\\"section\\\":\\\"condicionadores\\\",\\\"component\\\":\\\"circuito_refrigerante\\\",\\\"is_measurement\\\":false,\\\"unit\\\":null,\\\"expected_min\\\":null,\\\"expected_max\\\":null,\\\"catalog_activity_id\\\":\\\"ae43c6ba-44f8-59b9-b3ea-0db9cca6a361\\\",\\\"applies_per_equipment\\\":true,\\\"equipment_ref\\\":\\\"08a6906e-93b7-5633-ae39-e45b753e9672\\\"},{\\\"description\\\":\\\"Verificar o aperto dos contatos\\\",\\\"guidance\\\":\\\"Com a energia desligada, reaperte os bornes e terminais el\\u00e9tricos no torque adequado. Refa\\u00e7a contatos oxidados ou frouxos.\\\",\\\"freq_code\\\":\\\"T\\\",\\\"section\\\":\\\"condicionadores\\\",\\\"component\\\":\\\"circuito_eletrico\\\",\\\"is_measurement\\\":false,\\\"unit\\\":null,\\\"expected_min\\\":null,\\\"expected_max\\\":null,\\\"catalog_activity_id\\\":\\\"7a8a8349-e0a2-5c04-84b1-b3f7c51fe68a\\\",\\\"applies_per_equipment\\\":true,\\\"equipment_ref\\\":\\\"08a6906e-93b7-5633-ae39-e45b753e9672\\\"},{\\\"description\\\":\\\"Medir tens\\u00f5es e corrente\\\",\\\"guidance\\\":\\\"Com o equipamento em regime, me\\u00e7a a tens\\u00e3o entre fases e a corrente em cada fase usando mult\\u00edmetro/alicate amper\\u00edmetro. Anote os valores e compare com a faixa indicada.\\\",\\\"freq_code\\\":\\\"M\\\",\\\"section\\\":\\\"medicoes\\\",\\\"component\\\":null,\\\"is_measurement\\\":true,\\\"unit\\\":\\\"V\\\",\\\"expected_min\\\":null,\\\"expected_max\\\":null,\\\"catalog_activity_id\\\":\\\"d392b805-eee7-5278-9eac-f5b89af8e626\\\",\\\"applies_per_equipment\\\":true,\\\"equipment_ref\\\":\\\"08a6906e-93b7-5633-ae39-e45b753e9672\\\"},{\\\"description\\\":\\\"Medir temperatura de insuflamento, ambiente e retorno\\\",\\\"guidance\\\":\\\"Com o sistema em regime, me\\u00e7a com term\\u00f4metro a temperatura do ar que sai (insuflamento), do ambiente e do retorno. Anote os tr\\u00eas valores.\\\",\\\"freq_code\\\":\\\"M\\\",\\\"section\\\":\\\"medicoes\\\",\\\"component\\\":null,\\\"is_measurement\\\":true,\\\"unit\\\":\\\"\\u00b0C\\\",\\\"expected_min\\\":null,\\\"expected_max\\\":null,\\\"catalog_activity_id\\\":\\\"fb54a3fe-6944-540f-a7da-f74a5a4a1085\\\",\\\"applies_per_equipment\\\":true,\\\"equipment_ref\\\":\\\"08a6906e-93b7-5633-ae39-e45b753e9672\\\"},{\\\"description\\\":\\\"Teste operacional\\\",\\\"guidance\\\":null,\\\"freq_code\\\":\\\"M\\\",\\\"section\\\":\\\"testes\\\",\\\"component\\\":null,\\\"is_measurement\\\":false,\\\"unit\\\":null,\\\"expected_min\\\":null,\\\"expected_max\\\":null,\\\"catalog_activity_id\\\":\\\"e8da9927-4252-5ddf-83c9-71b3089c0dee\\\",\\\"applies_per_equipment\\\":true,\\\"equipment_ref\\\":\\\"08a6906e-93b7-5633-ae39-e45b753e9672\\\"},{\\\"description\\\":\\\"Verificar atua\\u00e7\\u00e3o e regulagem dos termostatos\\\",\\\"guidance\\\":\\\"Simule a varia\\u00e7\\u00e3o de temperatura e confirme que o termostato liga/desliga no ponto ajustado. Ajuste o setpoint conforme necess\\u00e1rio.\\\",\\\"freq_code\\\":\\\"M\\\",\\\"section\\\":\\\"testes\\\",\\\"component\\\":null,\\\"is_measurement\\\":false,\\\"unit\\\":null,\\\"expected_min\\\":null,\\\"expected_max\\\":null,\\\"catalog_activity_id\\\":\\\"769bbd7a-1d37-5fe4-92a0-90984a472fa2\\\",\\\"applies_per_equipment\\\":true,\\\"equipment_ref\\\":\\\"08a6906e-93b7-5633-ae39-e45b753e9672\\\"},{\\\"description\\\":\\\"Verificar os rel\\u00e9s de sequ\\u00eancia de fase\\\",\\\"guidance\\\":\\\"Confirme que o rel\\u00e9 de sequ\\u00eancia de fase impede a partida com fase invertida ou falta de fase. Teste simulando a condi\\u00e7\\u00e3o.\\\",\\\"freq_code\\\":\\\"S\\\",\\\"section\\\":\\\"testes\\\",\\\"component\\\":null,\\\"is_measurement\\\":false,\\\"unit\\\":null,\\\"expected_min\\\":null,\\\"expected_max\\\":null,\\\"catalog_activity_id\\\":\\\"aa5d7f5e-b024-59cd-89ff-d8c9862dceab\\\",\\\"applies_per_equipment\\\":true,\\\"equipment_ref\\\":\\\"08a6906e-93b7-5633-ae39-e45b753e9672\\\"}],\\\"customized\\\":false,\\\"customTemplateIds\\\":[],\\\"firstOsExcludedQuestions\\\":[],\\\"normTemplateIds\\\":[\\\"ed14c0c3-2d96-45cc-9c3f-4fd246a9fc6f\\\"]},\\\"9539608c-f4be-5fb9-a443-e350e659b4cc\\\":{\\\"scope\\\":\\\"ac\\\",\\\"startVisit\\\":12,\\\"activities\\\":[{\\\"description\\\":\\\"Limpar ou trocar o elemento filtrante\\\",\\\"guidance\\\":\\\"Desligue o equipamento, remova o filtro pela frontal e lave em \\u00e1gua corrente com sab\\u00e3o neutro; seque \\u00e0 sombra antes de recolocar. Troque se estiver rasgado ou ressecado.\\\",\\\"freq_code\\\":\\\"M\\\",\\\"section\\\":\\\"condicionadores\\\",\\\"component\\\":\\\"filtros\\\",\\\"is_measurement\\\":false,\\\"unit\\\":null,\\\"expected_min\\\":null,\\\"expected_max\\\":null,\\\"catalog_activity_id\\\":\\\"4db1b0c6-78d5-55f9-b347-e675b6e6230e\\\",\\\"applies_per_equipment\\\":true,\\\"equipment_ref\\\":\\\"9539608c-f4be-5fb9-a443-e350e659b4cc\\\"},{\\\"description\\\":\\\"Lavar a bandeja e remover o biofilme\\\",\\\"guidance\\\":\\\"Esvazie a bandeja e remova a camada viscosa (lodo/limo) esfregando com pano e sab\\u00e3o neutro; enx\\u00e1gue bem. Use luvas \\u2014 o biofilme acumula bact\\u00e9rias.\\\",\\\"freq_code\\\":\\\"T\\\",\\\"section\\\":\\\"condicionadores\\\",\\\"component\\\":\\\"bandejas\\\",\\\"is_measurement\\\":false,\\\"unit\\\":null,\\\"expected_min\\\":null,\\\"expected_max\\\":null,\\\"catalog_activity_id\\\":\\\"a2dd3e68-ca24-5022-9c8d-c98efc64abd1\\\",\\\"applies_per_equipment\\\":true,\\\"equipment_ref\\\":\\\"9539608c-f4be-5fb9-a443-e350e659b4cc\\\"},{\\\"description\\\":\\\"Lavar e remover o biofilme da serpentina\\\",\\\"guidance\\\":\\\"Proteja a parte el\\u00e9trica, aplique produto pr\\u00f3prio de limpeza de serpentina e enx\\u00e1gue com pulverizador, sem dobrar as aletas. Direcione a \\u00e1gua para a bandeja/dreno.\\\",\\\"freq_code\\\":\\\"T\\\",\\\"section\\\":\\\"condicionadores\\\",\\\"component\\\":\\\"evaporadores\\\",\\\"is_measurement\\\":false,\\\"unit\\\":null,\\\"expected_min\\\":null,\\\"expected_max\\\":null,\\\"catalog_activity_id\\\":\\\"cbe86ac2-e850-5447-b81a-e79d70df443a\\\",\\\"applies_per_equipment\\\":true,\\\"equipment_ref\\\":\\\"9539608c-f4be-5fb9-a443-e350e659b4cc\\\"},{\\\"description\\\":\\\"Limpar a turbina\\\",\\\"guidance\\\":\\\"Com o equipamento desligado, remova a sujeira acumulada entre as p\\u00e1s da turbina (rolo) com escova e aspira\\u00e7\\u00e3o, sem desbalancear o conjunto.\\\",\\\"freq_code\\\":\\\"M\\\",\\\"section\\\":\\\"condicionadores\\\",\\\"component\\\":\\\"evaporadores\\\",\\\"is_measurement\\\":false,\\\"unit\\\":null,\\\"expected_min\\\":null,\\\"expected_max\\\":null,\\\"catalog_activity_id\\\":\\\"938b2647-eb79-5353-8f11-caf373e9863e\\\",\\\"applies_per_equipment\\\":true,\\\"equipment_ref\\\":\\\"9539608c-f4be-5fb9-a443-e350e659b4cc\\\"},{\\\"description\\\":\\\"Verificar a drenagem da bandeja\\\",\\\"guidance\\\":\\\"Despeje \\u00e1gua na bandeja e acompanhe o escoamento at\\u00e9 a sa\\u00edda do dreno; se demorar ou empo\\u00e7ar, desobstrua a mangueira de dreno.\\\",\\\"freq_code\\\":\\\"M\\\",\\\"section\\\":\\\"condicionadores\\\",\\\"component\\\":\\\"evaporadores\\\",\\\"is_measurement\\\":false,\\\"unit\\\":null,\\\"expected_min\\\":null,\\\"expected_max\\\":null,\\\"catalog_activity_id\\\":\\\"89ceefee-3b85-50ff-8b08-c4081711e6bd\\\",\\\"applies_per_equipment\\\":true,\\\"equipment_ref\\\":\\\"9539608c-f4be-5fb9-a443-e350e659b4cc\\\"},{\\\"description\\\":\\\"Desobstruir o dreno\\\",\\\"guidance\\\":null,\\\"freq_code\\\":\\\"M\\\",\\\"section\\\":\\\"condicionadores\\\",\\\"component\\\":\\\"evaporadores\\\",\\\"is_measurement\\\":false,\\\"unit\\\":null,\\\"expected_min\\\":null,\\\"expected_max\\\":null,\\\"catalog_activity_id\\\":\\\"93358b51-086f-5615-b8bc-a0b6c27ecdb8\\\",\\\"applies_per_equipment\\\":true,\\\"equipment_ref\\\":\\\"9539608c-f4be-5fb9-a443-e350e659b4cc\\\"},{\\\"description\\\":\\\"Aplicar antibactericida na serpentina\\\",\\\"guidance\\\":\\\"Ap\\u00f3s a limpeza, com a serpentina limpa, aplique o produto antibactericida de forma uniforme conforme o r\\u00f3tulo. Use luvas e m\\u00e1scara.\\\",\\\"freq_code\\\":\\\"M\\\",\\\"section\\\":\\\"condicionadores\\\",\\\"component\\\":\\\"evaporadores\\\",\\\"is_measurement\\\":false,\\\"unit\\\":null,\\\"expected_min\\\":null,\\\"expected_max\\\":null,\\\"catalog_activity_id\\\":\\\"ad3a957c-4624-566f-b2f2-f9d36645d134\\\",\\\"applies_per_equipment\\\":true,\\\"equipment_ref\\\":\\\"9539608c-f4be-5fb9-a443-e350e659b4cc\\\"},{\\\"description\\\":\\\"Verificar ru\\u00eddos e vibra\\u00e7\\u00f5es\\\",\\\"guidance\\\":\\\"Com o equipamento ligado, ou\\u00e7a ru\\u00eddos anormais e sinta vibra\\u00e7\\u00f5es excessivas no gabinete. Reaperte fixa\\u00e7\\u00f5es soltas que estejam causando o barulho.\\\",\\\"freq_code\\\":\\\"M\\\",\\\"section\\\":\\\"condicionadores\\\",\\\"component\\\":\\\"gabinetes\\\",\\\"is_measurement\\\":false,\\\"unit\\\":null,\\\"expected_min\\\":null,\\\"expected_max\\\":null,\\\"catalog_activity_id\\\":\\\"ca8b0e84-c3b9-5d14-98da-ff44afa18ba0\\\",\\\"applies_per_equipment\\\":true,\\\"equipment_ref\\\":\\\"9539608c-f4be-5fb9-a443-e350e659b4cc\\\"},{\\\"description\\\":\\\"Lavar e remover as incrusta\\u00e7\\u00f5es da serpentina\\\",\\\"guidance\\\":\\\"Proteja a parte el\\u00e9trica e lave a serpentina da condensadora com produto pr\\u00f3prio e jato controlado de dentro para fora, removendo poeira e folhas, sem dobrar as aletas.\\\",\\\"freq_code\\\":\\\"S\\\",\\\"section\\\":\\\"condicionadores\\\",\\\"component\\\":\\\"condensadores\\\",\\\"is_measurement\\\":false,\\\"unit\\\":null,\\\"expected_min\\\":null,\\\"expected_max\\\":null,\\\"catalog_activity_id\\\":\\\"0c4fc0a4-7e90-54bd-9ac4-2a410ef7af52\\\",\\\"applies_per_equipment\\\":true,\\\"equipment_ref\\\":\\\"9539608c-f4be-5fb9-a443-e350e659b4cc\\\"},{\\\"description\\\":\\\"Verificar os capacitores\\\",\\\"guidance\\\":\\\"Com a energia desligada e o capacitor descarregado, inspecione procurando estufamento, vazamento ou queima. Substitua qualquer capacitor com sinal de defeito.\\\",\\\"freq_code\\\":\\\"M\\\",\\\"section\\\":\\\"condicionadores\\\",\\\"component\\\":\\\"motores_eletricos\\\",\\\"is_measurement\\\":false,\\\"unit\\\":null,\\\"expected_min\\\":null,\\\"expected_max\\\":null,\\\"catalog_activity_id\\\":\\\"9bc83b65-4b82-524f-b87e-d7c453f27bb4\\\",\\\"applies_per_equipment\\\":true,\\\"equipment_ref\\\":\\\"9539608c-f4be-5fb9-a443-e350e659b4cc\\\"},{\\\"description\\\":\\\"Inspecionar ind\\u00edcios de vazamento de refrigerante\\\",\\\"guidance\\\":\\\"Inspecione conex\\u00f5es e solda com detector eletr\\u00f4nico ou espuma detectora; bolhas indicam vazamento. Marque o ponto e registre antes de qualquer recarga.\\\",\\\"freq_code\\\":\\\"M\\\",\\\"section\\\":\\\"condicionadores\\\",\\\"component\\\":\\\"circuito_refrigerante\\\",\\\"is_measurement\\\":false,\\\"unit\\\":null,\\\"expected_min\\\":null,\\\"expected_max\\\":null,\\\"catalog_activity_id\\\":\\\"ae43c6ba-44f8-59b9-b3ea-0db9cca6a361\\\",\\\"applies_per_equipment\\\":true,\\\"equipment_ref\\\":\\\"9539608c-f4be-5fb9-a443-e350e659b4cc\\\"},{\\\"description\\\":\\\"Verificar o aperto dos contatos\\\",\\\"guidance\\\":\\\"Com a energia desligada, reaperte os bornes e terminais el\\u00e9tricos no torque adequado. Refa\\u00e7a contatos oxidados ou frouxos.\\\",\\\"freq_code\\\":\\\"T\\\",\\\"section\\\":\\\"condicionadores\\\",\\\"component\\\":\\\"circuito_eletrico\\\",\\\"is_measurement\\\":false,\\\"unit\\\":null,\\\"expected_min\\\":null,\\\"expected_max\\\":null,\\\"catalog_activity_id\\\":\\\"7a8a8349-e0a2-5c04-84b1-b3f7c51fe68a\\\",\\\"applies_per_equipment\\\":true,\\\"equipment_ref\\\":\\\"9539608c-f4be-5fb9-a443-e350e659b4cc\\\"},{\\\"description\\\":\\\"Medir tens\\u00f5es e corrente\\\",\\\"guidance\\\":\\\"Com o equipamento em regime, me\\u00e7a a tens\\u00e3o entre fases e a corrente em cada fase usando mult\\u00edmetro/alicate amper\\u00edmetro. Anote os valores e compare com a faixa indicada.\\\",\\\"freq_code\\\":\\\"M\\\",\\\"section\\\":\\\"medicoes\\\",\\\"component\\\":null,\\\"is_measurement\\\":true,\\\"unit\\\":\\\"V\\\",\\\"expected_min\\\":null,\\\"expected_max\\\":null,\\\"catalog_activity_id\\\":\\\"d392b805-eee7-5278-9eac-f5b89af8e626\\\",\\\"applies_per_equipment\\\":true,\\\"equipment_ref\\\":\\\"9539608c-f4be-5fb9-a443-e350e659b4cc\\\"},{\\\"description\\\":\\\"Medir temperatura de insuflamento, ambiente e retorno\\\",\\\"guidance\\\":\\\"Com o sistema em regime, me\\u00e7a com term\\u00f4metro a temperatura do ar que sai (insuflamento), do ambiente e do retorno. Anote os tr\\u00eas valores.\\\",\\\"freq_code\\\":\\\"M\\\",\\\"section\\\":\\\"medicoes\\\",\\\"component\\\":null,\\\"is_measurement\\\":true,\\\"unit\\\":\\\"\\u00b0C\\\",\\\"expected_min\\\":null,\\\"expected_max\\\":null,\\\"catalog_activity_id\\\":\\\"fb54a3fe-6944-540f-a7da-f74a5a4a1085\\\",\\\"applies_per_equipment\\\":true,\\\"equipment_ref\\\":\\\"9539608c-f4be-5fb9-a443-e350e659b4cc\\\"},{\\\"description\\\":\\\"Teste operacional\\\",\\\"guidance\\\":null,\\\"freq_code\\\":\\\"M\\\",\\\"section\\\":\\\"testes\\\",\\\"component\\\":null,\\\"is_measurement\\\":false,\\\"unit\\\":null,\\\"expected_min\\\":null,\\\"expected_max\\\":null,\\\"catalog_activity_id\\\":\\\"e8da9927-4252-5ddf-83c9-71b3089c0dee\\\",\\\"applies_per_equipment\\\":true,\\\"equipment_ref\\\":\\\"9539608c-f4be-5fb9-a443-e350e659b4cc\\\"},{\\\"description\\\":\\\"Verificar atua\\u00e7\\u00e3o e regulagem dos termostatos\\\",\\\"guidance\\\":\\\"Simule a varia\\u00e7\\u00e3o de temperatura e confirme que o termostato liga/desliga no ponto ajustado. Ajuste o setpoint conforme necess\\u00e1rio.\\\",\\\"freq_code\\\":\\\"M\\\",\\\"section\\\":\\\"testes\\\",\\\"component\\\":null,\\\"is_measurement\\\":false,\\\"unit\\\":null,\\\"expected_min\\\":null,\\\"expected_max\\\":null,\\\"catalog_activity_id\\\":\\\"769bbd7a-1d37-5fe4-92a0-90984a472fa2\\\",\\\"applies_per_equipment\\\":true,\\\"equipment_ref\\\":\\\"9539608c-f4be-5fb9-a443-e350e659b4cc\\\"},{\\\"description\\\":\\\"Verificar os rel\\u00e9s de sequ\\u00eancia de fase\\\",\\\"guidance\\\":\\\"Confirme que o rel\\u00e9 de sequ\\u00eancia de fase impede a partida com fase invertida ou falta de fase. Teste simulando a condi\\u00e7\\u00e3o.\\\",\\\"freq_code\\\":\\\"S\\\",\\\"section\\\":\\\"testes\\\",\\\"component\\\":null,\\\"is_measurement\\\":false,\\\"unit\\\":null,\\\"expected_min\\\":null,\\\"expected_max\\\":null,\\\"catalog_activity_id\\\":\\\"aa5d7f5e-b024-59cd-89ff-d8c9862dceab\\\",\\\"applies_per_equipment\\\":true,\\\"equipment_ref\\\":\\\"9539608c-f4be-5fb9-a443-e350e659b4cc\\\"}],\\\"customized\\\":false,\\\"customTemplateIds\\\":[],\\\"firstOsExcludedQuestions\\\":[],\\\"normTemplateIds\\\":[\\\"ed14c0c3-2d96-45cc-9c3f-4fd246a9fc6f\\\"]},\\\"685a9331-e393-5e5a-ae40-f1f35eccf696\\\":{\\\"scope\\\":\\\"ac\\\",\\\"startVisit\\\":12,\\\"activities\\\":[{\\\"description\\\":\\\"Limpar ou trocar o elemento filtrante\\\",\\\"guidance\\\":\\\"Desligue o equipamento, remova o filtro pela frontal e lave em \\u00e1gua corrente com sab\\u00e3o neutro; seque \\u00e0 sombra antes de recolocar. Troque se estiver rasgado ou ressecado.\\\",\\\"freq_code\\\":\\\"M\\\",\\\"section\\\":\\\"condicionadores\\\",\\\"component\\\":\\\"filtros\\\",\\\"is_measurement\\\":false,\\\"unit\\\":null,\\\"expected_min\\\":null,\\\"expected_max\\\":null,\\\"catalog_activity_id\\\":\\\"4db1b0c6-78d5-55f9-b347-e675b6e6230e\\\",\\\"applies_per_equipment\\\":true,\\\"equipment_ref\\\":\\\"685a9331-e393-5e5a-ae40-f1f35eccf696\\\"},{\\\"description\\\":\\\"Lavar a bandeja e remover o biofilme\\\",\\\"guidance\\\":\\\"Esvazie a bandeja e remova a camada viscosa (lodo/limo) esfregando com pano e sab\\u00e3o neutro; enx\\u00e1gue bem. Use luvas \\u2014 o biofilme acumula bact\\u00e9rias.\\\",\\\"freq_code\\\":\\\"T\\\",\\\"section\\\":\\\"condicionadores\\\",\\\"component\\\":\\\"bandejas\\\",\\\"is_measurement\\\":false,\\\"unit\\\":null,\\\"expected_min\\\":null,\\\"expected_max\\\":null,\\\"catalog_activity_id\\\":\\\"a2dd3e68-ca24-5022-9c8d-c98efc64abd1\\\",\\\"applies_per_equipment\\\":true,\\\"equipment_ref\\\":\\\"685a9331-e393-5e5a-ae40-f1f35eccf696\\\"},{\\\"description\\\":\\\"Lavar e remover o biofilme da serpentina\\\",\\\"guidance\\\":\\\"Proteja a parte el\\u00e9trica, aplique produto pr\\u00f3prio de limpeza de serpentina e enx\\u00e1gue com pulverizador, sem dobrar as aletas. Direcione a \\u00e1gua para a bandeja/dreno.\\\",\\\"freq_code\\\":\\\"T\\\",\\\"section\\\":\\\"condicionadores\\\",\\\"component\\\":\\\"evaporadores\\\",\\\"is_measurement\\\":false,\\\"unit\\\":null,\\\"expected_min\\\":null,\\\"expected_max\\\":null,\\\"catalog_activity_id\\\":\\\"cbe86ac2-e850-5447-b81a-e79d70df443a\\\",\\\"applies_per_equipment\\\":true,\\\"equipment_ref\\\":\\\"685a9331-e393-5e5a-ae40-f1f35eccf696\\\"},{\\\"description\\\":\\\"Limpar a turbina\\\",\\\"guidance\\\":\\\"Com o equipamento desligado, remova a sujeira acumulada entre as p\\u00e1s da turbina (rolo) com escova e aspira\\u00e7\\u00e3o, sem desbalancear o conjunto.\\\",\\\"freq_code\\\":\\\"M\\\",\\\"section\\\":\\\"condicionadores\\\",\\\"component\\\":\\\"evaporadores\\\",\\\"is_measurement\\\":false,\\\"unit\\\":null,\\\"expected_min\\\":null,\\\"expected_max\\\":null,\\\"catalog_activity_id\\\":\\\"938b2647-eb79-5353-8f11-caf373e9863e\\\",\\\"applies_per_equipment\\\":true,\\\"equipment_ref\\\":\\\"685a9331-e393-5e5a-ae40-f1f35eccf696\\\"},{\\\"description\\\":\\\"Verificar a drenagem da bandeja\\\",\\\"guidance\\\":\\\"Despeje \\u00e1gua na bandeja e acompanhe o escoamento at\\u00e9 a sa\\u00edda do dreno; se demorar ou empo\\u00e7ar, desobstrua a mangueira de dreno.\\\",\\\"freq_code\\\":\\\"M\\\",\\\"section\\\":\\\"condicionadores\\\",\\\"component\\\":\\\"evaporadores\\\",\\\"is_measurement\\\":false,\\\"unit\\\":null,\\\"expected_min\\\":null,\\\"expected_max\\\":null,\\\"catalog_activity_id\\\":\\\"89ceefee-3b85-50ff-8b08-c4081711e6bd\\\",\\\"applies_per_equipment\\\":true,\\\"equipment_ref\\\":\\\"685a9331-e393-5e5a-ae40-f1f35eccf696\\\"},{\\\"description\\\":\\\"Desobstruir o dreno\\\",\\\"guidance\\\":null,\\\"freq_code\\\":\\\"M\\\",\\\"section\\\":\\\"condicionadores\\\",\\\"component\\\":\\\"evaporadores\\\",\\\"is_measurement\\\":false,\\\"unit\\\":null,\\\"expected_min\\\":null,\\\"expected_max\\\":null,\\\"catalog_activity_id\\\":\\\"93358b51-086f-5615-b8bc-a0b6c27ecdb8\\\",\\\"applies_per_equipment\\\":true,\\\"equipment_ref\\\":\\\"685a9331-e393-5e5a-ae40-f1f35eccf696\\\"},{\\\"description\\\":\\\"Aplicar antibactericida na serpentina\\\",\\\"guidance\\\":\\\"Ap\\u00f3s a limpeza, com a serpentina limpa, aplique o produto antibactericida de forma uniforme conforme o r\\u00f3tulo. Use luvas e m\\u00e1scara.\\\",\\\"freq_code\\\":\\\"M\\\",\\\"section\\\":\\\"condicionadores\\\",\\\"component\\\":\\\"evaporadores\\\",\\\"is_measurement\\\":false,\\\"unit\\\":null,\\\"expected_min\\\":null,\\\"expected_max\\\":null,\\\"catalog_activity_id\\\":\\\"ad3a957c-4624-566f-b2f2-f9d36645d134\\\",\\\"applies_per_equipment\\\":true,\\\"equipment_ref\\\":\\\"685a9331-e393-5e5a-ae40-f1f35eccf696\\\"},{\\\"description\\\":\\\"Verificar ru\\u00eddos e vibra\\u00e7\\u00f5es\\\",\\\"guidance\\\":\\\"Com o equipamento ligado, ou\\u00e7a ru\\u00eddos anormais e sinta vibra\\u00e7\\u00f5es excessivas no gabinete. Reaperte fixa\\u00e7\\u00f5es soltas que estejam causando o barulho.\\\",\\\"freq_code\\\":\\\"M\\\",\\\"section\\\":\\\"condicionadores\\\",\\\"component\\\":\\\"gabinetes\\\",\\\"is_measurement\\\":false,\\\"unit\\\":null,\\\"expected_min\\\":null,\\\"expected_max\\\":null,\\\"catalog_activity_id\\\":\\\"ca8b0e84-c3b9-5d14-98da-ff44afa18ba0\\\",\\\"applies_per_equipment\\\":true,\\\"equipment_ref\\\":\\\"685a9331-e393-5e5a-ae40-f1f35eccf696\\\"},{\\\"description\\\":\\\"Lavar e remover as incrusta\\u00e7\\u00f5es da serpentina\\\",\\\"guidance\\\":\\\"Proteja a parte el\\u00e9trica e lave a serpentina da condensadora com produto pr\\u00f3prio e jato controlado de dentro para fora, removendo poeira e folhas, sem dobrar as aletas.\\\",\\\"freq_code\\\":\\\"S\\\",\\\"section\\\":\\\"condicionadores\\\",\\\"component\\\":\\\"condensadores\\\",\\\"is_measurement\\\":false,\\\"unit\\\":null,\\\"expected_min\\\":null,\\\"expected_max\\\":null,\\\"catalog_activity_id\\\":\\\"0c4fc0a4-7e90-54bd-9ac4-2a410ef7af52\\\",\\\"applies_per_equipment\\\":true,\\\"equipment_ref\\\":\\\"685a9331-e393-5e5a-ae40-f1f35eccf696\\\"},{\\\"description\\\":\\\"Verificar os capacitores\\\",\\\"guidance\\\":\\\"Com a energia desligada e o capacitor descarregado, inspecione procurando estufamento, vazamento ou queima. Substitua qualquer capacitor com sinal de defeito.\\\",\\\"freq_code\\\":\\\"M\\\",\\\"section\\\":\\\"condicionadores\\\",\\\"component\\\":\\\"motores_eletricos\\\",\\\"is_measurement\\\":false,\\\"unit\\\":null,\\\"expected_min\\\":null,\\\"expected_max\\\":null,\\\"catalog_activity_id\\\":\\\"9bc83b65-4b82-524f-b87e-d7c453f27bb4\\\",\\\"applies_per_equipment\\\":true,\\\"equipment_ref\\\":\\\"685a9331-e393-5e5a-ae40-f1f35eccf696\\\"},{\\\"description\\\":\\\"Inspecionar ind\\u00edcios de vazamento de refrigerante\\\",\\\"guidance\\\":\\\"Inspecione conex\\u00f5es e solda com detector eletr\\u00f4nico ou espuma detectora; bolhas indicam vazamento. Marque o ponto e registre antes de qualquer recarga.\\\",\\\"freq_code\\\":\\\"M\\\",\\\"section\\\":\\\"condicionadores\\\",\\\"component\\\":\\\"circuito_refrigerante\\\",\\\"is_measurement\\\":false,\\\"unit\\\":null,\\\"expected_min\\\":null,\\\"expected_max\\\":null,\\\"catalog_activity_id\\\":\\\"ae43c6ba-44f8-59b9-b3ea-0db9cca6a361\\\",\\\"applies_per_equipment\\\":true,\\\"equipment_ref\\\":\\\"685a9331-e393-5e5a-ae40-f1f35eccf696\\\"},{\\\"description\\\":\\\"Verificar o aperto dos contatos\\\",\\\"guidance\\\":\\\"Com a energia desligada, reaperte os bornes e terminais el\\u00e9tricos no torque adequado. Refa\\u00e7a contatos oxidados ou frouxos.\\\",\\\"freq_code\\\":\\\"T\\\",\\\"section\\\":\\\"condicionadores\\\",\\\"component\\\":\\\"circuito_eletrico\\\",\\\"is_measurement\\\":false,\\\"unit\\\":null,\\\"expected_min\\\":null,\\\"expected_max\\\":null,\\\"catalog_activity_id\\\":\\\"7a8a8349-e0a2-5c04-84b1-b3f7c51fe68a\\\",\\\"applies_per_equipment\\\":true,\\\"equipment_ref\\\":\\\"685a9331-e393-5e5a-ae40-f1f35eccf696\\\"},{\\\"description\\\":\\\"Medir tens\\u00f5es e corrente\\\",\\\"guidance\\\":\\\"Com o equipamento em regime, me\\u00e7a a tens\\u00e3o entre fases e a corrente em cada fase usando mult\\u00edmetro/alicate amper\\u00edmetro. Anote os valores e compare com a faixa indicada.\\\",\\\"freq_code\\\":\\\"M\\\",\\\"section\\\":\\\"medicoes\\\",\\\"component\\\":null,\\\"is_measurement\\\":true,\\\"unit\\\":\\\"V\\\",\\\"expected_min\\\":null,\\\"expected_max\\\":null,\\\"catalog_activity_id\\\":\\\"d392b805-eee7-5278-9eac-f5b89af8e626\\\",\\\"applies_per_equipment\\\":true,\\\"equipment_ref\\\":\\\"685a9331-e393-5e5a-ae40-f1f35eccf696\\\"},{\\\"description\\\":\\\"Medir temperatura de insuflamento, ambiente e retorno\\\",\\\"guidance\\\":\\\"Com o sistema em regime, me\\u00e7a com term\\u00f4metro a temperatura do ar que sai (insuflamento), do ambiente e do retorno. Anote os tr\\u00eas valores.\\\",\\\"freq_code\\\":\\\"M\\\",\\\"section\\\":\\\"medicoes\\\",\\\"component\\\":null,\\\"is_measurement\\\":true,\\\"unit\\\":\\\"\\u00b0C\\\",\\\"expected_min\\\":null,\\\"expected_max\\\":null,\\\"catalog_activity_id\\\":\\\"fb54a3fe-6944-540f-a7da-f74a5a4a1085\\\",\\\"applies_per_equipment\\\":true,\\\"equipment_ref\\\":\\\"685a9331-e393-5e5a-ae40-f1f35eccf696\\\"},{\\\"description\\\":\\\"Teste operacional\\\",\\\"guidance\\\":null,\\\"freq_code\\\":\\\"M\\\",\\\"section\\\":\\\"testes\\\",\\\"component\\\":null,\\\"is_measurement\\\":false,\\\"unit\\\":null,\\\"expected_min\\\":null,\\\"expected_max\\\":null,\\\"catalog_activity_id\\\":\\\"e8da9927-4252-5ddf-83c9-71b3089c0dee\\\",\\\"applies_per_equipment\\\":true,\\\"equipment_ref\\\":\\\"685a9331-e393-5e5a-ae40-f1f35eccf696\\\"},{\\\"description\\\":\\\"Verificar atua\\u00e7\\u00e3o e regulagem dos termostatos\\\",\\\"guidance\\\":\\\"Simule a varia\\u00e7\\u00e3o de temperatura e confirme que o termostato liga/desliga no ponto ajustado. Ajuste o setpoint conforme necess\\u00e1rio.\\\",\\\"freq_code\\\":\\\"M\\\",\\\"section\\\":\\\"testes\\\",\\\"component\\\":null,\\\"is_measurement\\\":false,\\\"unit\\\":null,\\\"expected_min\\\":null,\\\"expected_max\\\":null,\\\"catalog_activity_id\\\":\\\"769bbd7a-1d37-5fe4-92a0-90984a472fa2\\\",\\\"applies_per_equipment\\\":true,\\\"equipment_ref\\\":\\\"685a9331-e393-5e5a-ae40-f1f35eccf696\\\"},{\\\"description\\\":\\\"Verificar os rel\\u00e9s de sequ\\u00eancia de fase\\\",\\\"guidance\\\":\\\"Confirme que o rel\\u00e9 de sequ\\u00eancia de fase impede a partida com fase invertida ou falta de fase. Teste simulando a condi\\u00e7\\u00e3o.\\\",\\\"freq_code\\\":\\\"S\\\",\\\"section\\\":\\\"testes\\\",\\\"component\\\":null,\\\"is_measurement\\\":false,\\\"unit\\\":null,\\\"expected_min\\\":null,\\\"expected_max\\\":null,\\\"catalog_activity_id\\\":\\\"aa5d7f5e-b024-59cd-89ff-d8c9862dceab\\\",\\\"applies_per_equipment\\\":true,\\\"equipment_ref\\\":\\\"685a9331-e393-5e5a-ae40-f1f35eccf696\\\"}],\\\"customized\\\":false,\\\"customTemplateIds\\\":[],\\\"firstOsExcludedQuestions\\\":[],\\\"normTemplateIds\\\":[\\\"ed14c0c3-2d96-45cc-9c3f-4fd246a9fc6f\\\"]}},\\\"commonChecklists\\\":{},\\\"finGenerate\\\":false,\\\"finDescription\\\":\\\"\\\",\\\"finAmount\\\":\\\"\\\",\\\"finFirstDueDate\\\":\\\"\\\",\\\"finFrequency\\\":\\\"mensal\\\",\\\"finCount\\\":\\\"\\\",\\\"finContinuous\\\":false,\\\"finAccountId\\\":\\\"\\\",\\\"finAccountLabel\\\":\\\"\\\",\\\"finCategory\\\":\\\"\\\",\\\"finCostCenterId\\\":null,\\\"finPaymentMethod\\\":\\\"\\\"}\"); return 'rascunho gravado'; })()"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Novo Contrato",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Rascunho encontrado",
+   "timeout": 15
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Retomar rascunho",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Dados do contrato",
+   "timeout": 15
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "pause",
+   "seconds": 1.0
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|erro|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "waitFor",
+   "text": "Técnicos Executores",
+   "timeout": 10
+  },
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0.04
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] [data-contract-validation=executors] button[role=combobox]",
+    "nth": 0
+   },
+   "at": 5.22,
+   "label": "abre Técnicos Executores"
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Rafael Lima",
+    "exact": true,
+    "within": "[data-radix-popper-content-wrapper]"
+   },
+   "at": 8.5,
+   "label": "marca Rafael Lima"
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Bruno Alves",
+    "exact": true,
+    "within": "[data-radix-popper-content-wrapper]"
+   },
+   "at": 9.62,
+   "label": "marca Bruno Alves"
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 11.68,
+   "label": "fecha a lista"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]",
+    "nth": 1
+   },
+   "at": 11.78,
+   "label": "abre Responsáveis Financeiros (Cobrança)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Tatiane Ribeiro",
+    "exact": true,
+    "within": "[data-radix-popper-content-wrapper]"
+   },
+   "at": 13.3,
+   "label": "marca Tatiane Ribeiro"
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 16.56,
+   "label": "fecha a lista"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Contrato Ativo",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.4,
+   "at": 17.3,
+   "label": "chave Contrato Ativo (ligada)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 18.8
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 640,
+    "y": 470
+   },
+   "by": 520,
+   "duration": 0.8,
+   "after": 100,
+   "at": 19.2,
+   "label": "desce até a Configuração financeira"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] [data-contract-validation=finance] [role=switch]",
+    "nth": 0
+   },
+   "at": 23.68,
+   "label": "liga Já gerar as parcelas a receber"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 26.64
+  },
+  {
+   "do": "click",
+   "target": {
+    "placeholder": "Mensalidade do contrato"
+   },
+   "at": 26.8,
+   "label": "Descrição da parcela (clique)"
+  },
+  {
+   "do": "press",
+   "key": "Control+A"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Mensalidade do contrato"
+   },
+   "text": "Mensalidade PMOC",
+   "noClick": true,
+   "label": "Descrição da parcela"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] [data-contract-validation=finance] input",
+    "nth": 1
+   },
+   "text": "120000",
+   "cps": 9,
+   "at": 30.32,
+   "label": "Valor de cada parcela"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Cada parcela nasce com este valor",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.6,
+   "at": 33.62,
+   "label": "dica: não é um total dividido",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 37.55
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] [data-contract-validation=finance] button",
+    "hasText": "/",
+    "nth": 0
+   },
+   "at": 37.71,
+   "label": "Primeiro vencimento (abre o calendário)"
+  },
+  {
+   "do": "eval",
+   "js": "'dump data vencimento: ' + [...document.querySelectorAll('[data-radix-popper-content-wrapper], [role=dialog]')].map(e => e.getAttribute('role') + ':' + e.innerText.replace(/\\s+/g, ' ').slice(0, 120) + '|btns=' + e.querySelectorAll('button').length).join(' ## ')",
+   "label": "dump data de vencimento"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "gridcell",
+    "name": "10",
+    "exact": true
+   },
+   "at": 38.91,
+   "label": "escolhe o dia 10 (o calendário já abre em dezembro, a data de início)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Quantas parcelas",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.6,
+   "at": 44.25,
+   "label": "Quantas parcelas (já vem 12)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 48.35
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] [data-contract-validation=finance] button[role=combobox]",
+    "hasText": "Selecione a conta",
+    "nth": 0
+   },
+   "at": 48.59,
+   "label": "Conta de recebimento"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Conta Principal",
+    "exact": false
+   },
+   "at": 50.61,
+   "label": "Conta Principal"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] [data-contract-validation=finance] button[role=combobox]",
+    "hasText": "Selecione a categoria",
+    "nth": 0
+   },
+   "at": 51.47,
+   "label": "Categoria"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Contratos PMOC",
+    "exact": false
+   },
+   "at": 52.37,
+   "label": "Contratos PMOC"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Duração da cobrança",
+    "within": "[role=dialog]"
+   },
+   "seconds": 2.4,
+   "at": 53.95,
+   "label": "Duração da cobrança (Por um período)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 61.33
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Como vai ficar",
+    "within": "[role=dialog]"
+   },
+   "seconds": 4.0,
+   "at": 61.57,
+   "label": "Como vai ficar: 12 parcelas de R$ 1.200,00, R$ 14.400,00",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"12 parcelas de R$ 1.200,00\", \"R$ 14.400,00\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere cap08: Como vai ficar fecha 12 x 1.200,00 = 14.400,00"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Próximo",
+    "exact": true
+   },
+   "at": 69.34,
+   "label": "Próximo (Revisão)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Revisão final",
+   "timeout": 10
+  },
+  {
+   "do": "eval",
+   "js": "sessionStorage.getItem('form-draft:contract-form')",
+   "label": "rascunho"
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 70.64
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

@@ -1,0 +1,403 @@
+{
+ "name": "t13-cap11",
+ "title": "T13 · Cap. 11 · Pagar e receber (narração 65,9 s; marcas L1..L6 = início de cada linha do roteiro)",
+ "seed": "t13-cap11",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap05",
+  "t12/inicio",
+  "t12/apos-cap11",
+  "t13/inicio",
+  "t13/apos-cap10"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/financeiro/contas"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Camila!",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/financeiro/contas"
+  },
+  {
+   "do": "waitFor",
+   "text": "Faturas de Cartão",
+   "timeout": 25,
+   "optional": true
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Toggle Sidebar",
+    "nth": 0
+   }
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button[role=combobox]",
+    "hasText": "10"
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "25",
+    "exact": true
+   }
+  },
+  {
+   "do": "pause",
+   "seconds": 0.6
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|erro|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "A Pagar",
+    "exact": true
+   },
+   "at": 6.02,
+   "label": "aba A Pagar"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main tr:has-text('Gás R-410A') button[aria-haspopup='menu']"
+   },
+   "at": 7.54,
+   "label": "menu ⋮ da linha do gás"
+  },
+  {
+   "do": "pause",
+   "seconds": 0.6
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main tr:has-text('Gás R-410A') button[aria-haspopup='menu']"
+   },
+   "label": "menu ⋮ da linha do gás de novo (só se não abriu)",
+   "unless": {
+    "role": "menuitem",
+    "name": "Marcar como pago"
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Marcar como pago"
+   },
+   "at": 10.22,
+   "label": "Marcar como pago"
+  },
+  {
+   "do": "waitFor",
+   "text": "Confirmar pagamento",
+   "timeout": 10
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Gás R-410A e tubos de cobre\", \"R$ 640,00\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Confirmar pagamento: Gás R-410A e tubos de cobre — R$ 640,00"
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 12.06
+  },
+  {
+   "do": "select",
+   "target": {
+    "selector": "[role=dialog] div:has(> label:has-text('Pago com')) button[role=combobox]",
+    "nth": 0
+   },
+   "option": "Conta Principal",
+   "at": 13.26,
+   "label": "Pago com: Conta Principal"
+  },
+  {
+   "do": "select",
+   "target": {
+    "selector": "[role=dialog] div:has(> label:has-text('Forma de pagamento')) button[role=combobox]",
+    "nth": 0
+   },
+   "option": "Boleto",
+   "at": 15.1,
+   "label": "Forma de pagamento: Boleto"
+  },
+  {
+   "do": "pause",
+   "seconds": 0.5
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Confirmar",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 17.26,
+   "label": "Confirmar"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 12
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Todas",
+    "exact": true
+   },
+   "at": 18.6,
+   "label": "aba Todas: a baixa fica na lista com o status"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tr:has-text('Gás R-410A'), main [role=row]:has-text('Gás R-410A')"
+   },
+   "seconds": 0.9,
+   "at": 19.34,
+   "label": "a conta do gás fica como Pago",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 23.36
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "A Receber",
+    "exact": true
+   },
+   "at": 26.42,
+   "label": "aba A Receber"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Buscar por nome, descrição, categoria ou valor..."
+   },
+   "text": "PMOC",
+   "cps": 10,
+   "at": 28.58,
+   "label": "busca \"PMOC\""
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Mensalidade PMOC - dez/2026 (1/12)\", \"Mensalidade PMOC - nov/2027 (12/12)\", \"de 12\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere as doze mensalidades do PMOC"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tr:has-text('Mensalidade PMOC - nov/2027 (12/12)'), main [role=row]:has-text('Mensalidade PMOC - nov/2027 (12/12)')"
+   },
+   "seconds": 0.9,
+   "at": 30.42,
+   "label": "as doze mensalidades",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 36.96
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main tr:has-text('Mensalidade PMOC - dez/2026 (1/12)') button[aria-haspopup='menu']"
+   },
+   "at": 37.12,
+   "label": "menu ⋮ da mensalidade (1/12)"
+  },
+  {
+   "do": "pause",
+   "seconds": 0.6
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main tr:has-text('Mensalidade PMOC - dez/2026 (1/12)') button[aria-haspopup='menu']"
+   },
+   "label": "menu ⋮ da mensalidade (1/12) de novo (só se não abriu)",
+   "unless": {
+    "role": "menuitem",
+    "name": "Marcar como recebido"
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Marcar como recebido"
+   },
+   "at": 39.96,
+   "label": "Marcar como recebido"
+  },
+  {
+   "do": "waitFor",
+   "text": "Como foi recebido?",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Restante a receber",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.9,
+   "at": 40.64,
+   "label": "Valor recebido 1.200,00 e a dica do recebimento parcial",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 48.99
+  },
+  {
+   "do": "select",
+   "target": {
+    "selector": "[role=dialog] div:has(> label:has-text('Forma de pagamento')) button[role=combobox]",
+    "nth": 0
+   },
+   "option": "PIX",
+   "at": 51.47,
+   "label": "Forma de pagamento: PIX"
+  },
+  {
+   "do": "select",
+   "target": {
+    "selector": "[role=dialog] div:has(> label:has-text('Caixa / Conta bancária')) button[role=combobox]",
+    "nth": 0
+   },
+   "option": "Conta Principal",
+   "at": 52.85,
+   "label": "Caixa / Conta bancária: Conta Principal"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Tarifa de máquina/gateway",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.9,
+   "at": 54.63,
+   "label": "Tarifa de máquina/gateway e a dica",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "pause",
+   "seconds": 0.5
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 60.67
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Confirmar recebimento",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 60.67,
+   "label": "Confirmar recebimento"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 12
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Total recebido",
+    "within": "main"
+   },
+   "seconds": 0.8,
+   "at": 62.23,
+   "label": "o Total recebido sobe: a mensalidade (1/12) foi recebida",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 65.9
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

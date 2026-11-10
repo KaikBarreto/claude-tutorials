@@ -1,0 +1,128 @@
+{
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/g1-trilha"
+ ],
+ "steps": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Camila!",
+   "timeout": 20
+  },
+  {
+   "do": "shot",
+   "name": "dash"
+  },
+  {
+   "do": "goto",
+   "url": "/ordens-servico"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie suas ordens de serviço",
+   "timeout": 20
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Nova OS",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Nova Ordem de Serviço"
+  },
+  {
+   "do": "wait",
+   "ms": 1000
+  },
+  {
+   "do": "shot",
+   "name": "e1_vazio"
+  },
+  {
+   "do": "text",
+   "selector": "[role=dialog]",
+   "name": "etapa1 vazio",
+   "max": 2500
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "combobox",
+    "hasText": "Selecione o cliente"
+   }
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Buscar cliente..."
+   },
+   "text": "Colégio"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Colégio Monte Verde"
+   }
+  },
+  {
+   "do": "shot",
+   "name": "e1_cliente"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]",
+    "hasText": "Adicionar serviços"
+   }
+  },
+  {
+   "do": "shot",
+   "name": "e1_lista"
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Manutenção Preventiva",
+    "exact": true,
+    "within": "[data-radix-popper-content-wrapper]"
+   }
+  },
+  {
+   "do": "press",
+   "key": "Escape"
+  },
+  {
+   "do": "wait",
+   "ms": 1200
+  },
+  {
+   "do": "shot",
+   "name": "e1_servico"
+  },
+  {
+   "do": "text",
+   "selector": "[role=dialog]",
+   "name": "etapa1 preenchida",
+   "max": 4000
+  },
+  {
+   "do": "html",
+   "selector": "[role=dialog] form",
+   "max": 200
+  }
+ ],
+ "start": "/dashboard"
+}

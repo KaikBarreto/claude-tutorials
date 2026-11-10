@@ -1,0 +1,285 @@
+{
+ "name": "t13-cap09",
+ "title": "T13 · Cap. 9 · Pagar a fatura (narração 68,3 s; marcas L1..L6 = início de cada linha do roteiro)",
+ "seed": "t13-cap09",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap05",
+  "t12/inicio",
+  "t12/apos-cap11",
+  "t13/inicio",
+  "t13/apos-cap08"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/financeiro/movimentacoes"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Camila!",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/financeiro/movimentacoes"
+  },
+  {
+   "do": "waitFor",
+   "text": "Contas e cartões",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Toggle Sidebar",
+    "nth": 0
+   }
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|erro|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "aside[aria-label=\"Contas e cartões\"] button",
+    "hasText": "Cartão Empresarial"
+   },
+   "at": 0.5,
+   "label": "abre o Cartão Empresarial"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"R$ 430,00\", \"Fechada\", \"Aberta\", \"Pagar Fatura\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere as três faturas de R$ 430,00, novembro Fechada e as outras Abertas"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main button",
+    "hasText": "Novembro 2026",
+    "nth": 0
+   },
+   "seconds": 0.9,
+   "at": 5.94,
+   "label": "fatura de novembro: Fechada, Pagar Fatura liberado",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 14.66
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Pagar Fatura",
+    "exact": true,
+    "within": "main",
+    "nth": 0
+   },
+   "at": 14.66,
+   "label": "Pagar Fatura (novembro)"
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Pagar Fatura",
+    "exact": true,
+    "within": "main",
+    "nth": 0
+   },
+   "label": "Pagar Fatura de novo (só se a janela não abriu)",
+   "unless": {
+    "text": "Restante a pagar"
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Restante a pagar",
+   "timeout": 10
+  },
+  {
+   "do": "select",
+   "target": {
+    "selector": "[role=dialog] div:has(> label:has-text('Pagar com')) button[role=combobox]",
+    "nth": 0
+   },
+   "option": "Conta Principal",
+   "at": 18.9,
+   "label": "Pagar com: Conta Principal"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Fatura será completamente quitada",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.9,
+   "at": 23.46,
+   "label": "aviso: Fatura será completamente quitada",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 27.14
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] div:has(> label:has-text('Valor a pagar')) input",
+    "nth": 0
+   },
+   "seconds": 0.9,
+   "at": 27.14,
+   "label": "Valor a pagar já vem com o total (430,00)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 40.26
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Confirmar Pagamento",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 40.26,
+   "label": "Confirmar Pagamento"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 12
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Paga\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere a fatura de novembro ganha o selo Paga"
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 45.89
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "aside[aria-label=\"Contas e cartões\"] button",
+    "hasText": "Geral (Todos)"
+   },
+   "at": 45.89,
+   "label": "Geral (Todos)"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Pagamento de fatura\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere a lista geral traz o pagamento da fatura"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main",
+    "hasText": "Pagamento de fatura"
+   },
+   "seconds": 0.9,
+   "at": 48.37,
+   "label": "a linha do pagamento da fatura",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 53.73
+  },
+  {
+   "do": "goto",
+   "url": "/configuracoes?tab=usabilidade",
+   "at": 53.89,
+   "label": "abre Configurações > Usabilidade"
+  },
+  {
+   "do": "waitFor",
+   "text": "Movimentações financeiras",
+   "timeout": 20
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Incluir compras no cartão",
+    "within": "main"
+   },
+   "seconds": 0.9,
+   "at": 58.93,
+   "label": "Incluir compras no cartão e a dica, sem mexer",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 68.32
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

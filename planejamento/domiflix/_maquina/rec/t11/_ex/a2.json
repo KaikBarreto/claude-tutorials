@@ -1,0 +1,20 @@
+{"seedExtra": ["t3/apos-cap10","t1/apos-cap13","t4/inicio","t4/apos-cap14","t5/inicio","t5/apos-cap05","t11/inicio"],
+ "start": "/dashboard",
+ "steps": [
+  {"do":"goto","url":"/contratos"},
+  {"do":"click","target":{"role":"button","name":"Configurações de Contrato"}},
+  {"do":"waitFor","text":"Documentos e responsáveis técnicos"},
+  {"do":"text","selector":"main","name":"aba Documentos","max":2500},
+  {"do":"click","target":{"role":"tab","name":"Responsáveis Técnicos"}},
+  {"do":"text","selector":"main","name":"aba RT","max":1500},
+  {"do":"click","target":{"role":"button","name":"Novo Responsável"}},
+  {"do":"waitFor","text":"Novo Responsável Técnico"},
+  {"do":"shot","name":"05-novo-rt"},
+  {"do":"text","selector":"[role=dialog]","name":"dialogo RT","max":3000},
+  {"do":"list","selector":"[role=dialog] input","attr":"placeholder"},
+  {"do":"list","selector":"[role=dialog] label"},
+  {"do":"click","target":{"role":"tab","name":"Desenhar"}},
+  {"do":"shot","name":"06-desenhar"},
+  {"do":"text","selector":"[role=dialog]","name":"dialogo RT desenhar","max":3500},
+  {"do":"html","selector":"[role=dialog] canvas","max":600}
+ ]}

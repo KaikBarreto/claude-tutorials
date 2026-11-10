@@ -1,0 +1,337 @@
+{
+ "name": "t2-cap06",
+ "title": "T2 · Cap. 6 · Acesso Total ou personalizado (narração 61,6 s; marcas L1..L6 = início de cada linha do roteiro)",
+ "seed": "t2-cap06",
+ "pace": 0.3,
+ "cps": 40,
+ "tail": 1.5,
+ "start": {
+  "x": 900,
+  "y": 420
+ },
+ "seedExtra": [
+  "t1/apos-cap13",
+  "t2/inicio",
+  "t2/apos-cap05"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/configuracoes"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "goto",
+   "url": "/configuracoes?tab=usuarios"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "main p",
+    "hasText": "usuários •"
+   },
+   "timeout": 15
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Criar Usuário",
+    "exact": true,
+    "within": "main"
+   },
+   "at": 0.0,
+   "label": "Criar Usuário"
+  },
+  {
+   "do": "waitFor",
+   "text": "Preencha os dados do novo usuário",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "placeholder": "Nome do usuário"
+   },
+   "label": "clica no campo Nome"
+  },
+  {
+   "do": "eval",
+   "js": "(() => { document.execCommand('insertText', false, \"Tatiane Ribeiro\"); const e = document.activeElement; return e && e.value; })()",
+   "label": "nome: Tatiane Ribeiro"
+  },
+  {
+   "do": "click",
+   "target": {
+    "placeholder": "Crie uma senha segura"
+   },
+   "label": "clica no campo Senha"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Crie uma senha segura"
+   },
+   "text": "$TUT_SENHA",
+   "cps": 80,
+   "label": "senha (mascarada)",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "placeholder": "email@exemplo.com"
+   },
+   "label": "clica no campo Email"
+  },
+  {
+   "do": "eval",
+   "js": "(() => { document.execCommand('insertText', false, \"tatiane.ribeiro@glacialcold.example\"); const e = document.activeElement; return e && e.value; })()",
+   "label": "e-mail: tatiane.ribeiro@glacialcold.example"
+  },
+  {
+   "do": "click",
+   "target": {
+    "placeholder": "(00) 00000-0000"
+   },
+   "label": "clica no campo Telefone"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "(00) 00000-0000"
+   },
+   "text": "2130001008",
+   "cps": 120,
+   "label": "telefone: (21) 3000-1008",
+   "noClick": true
+  },
+  {
+   "do": "eval",
+   "js": "(() => { const e = document.querySelector('[role=dialog] ' + \"button[role=switch]:not([aria-label])\"); if (!e) return 'alvo nao achado: ' + \"button[role=switch]:not([aria-label])\"; e.scrollIntoView({ block: \"center\", behavior: 'smooth' }); return 'rolando ate ' + \"button[role=switch]:not([aria-label])\"; })()",
+   "at": 6.42,
+   "label": "rola até Tipo de Usuário"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] button[role=switch]:not([aria-label])"
+   },
+   "seconds": 1.2,
+   "at": 6.72,
+   "label": "Tipo de Usuário fica em Interno"
+  },
+  {
+   "do": "eval",
+   "js": "(() => { const d = document.querySelector('[role=dialog] .overflow-y-auto'); if (!d) return 'sem area rolavel'; d.scrollTo({ top: 0, behavior: 'smooth' }); return 'topo da janela'; })()",
+   "at": 8.56,
+   "label": "volta ao topo (Perfis rápidos)"
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 9.16
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Escritório",
+    "exact": true
+   },
+   "at": 10.52,
+   "label": "clica no perfil rápido Escritório"
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 640,
+    "y": 420
+   },
+   "by": 360,
+   "duration": 1.0,
+   "after": 100,
+   "at": 12.28,
+   "label": "percorre as telas ligadas"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 14.76
+  },
+  {
+   "do": "click",
+   "target": {
+    "placeholder": "Buscar tela ou ação..."
+   },
+   "at": 17.46,
+   "label": "clica na busca"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Buscar tela ou ação..."
+   },
+   "text": "contratos",
+   "cps": 14,
+   "at": 18.74,
+   "label": "digita contratos",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "switch",
+    "name": "Acesso à tela Contratos",
+    "exact": true
+   },
+   "at": 19.56,
+   "label": "liga a tela Contratos"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Escritório",
+    "exact": true
+   },
+   "seconds": 0.5,
+   "at": 21.94,
+   "label": "o chip Escritório apagou"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Personalizado",
+    "exact": true
+   },
+   "seconds": 1.2,
+   "at": 23.54,
+   "label": "o chip Personalizado acendeu"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Limpar busca",
+    "exact": true
+   },
+   "at": 29.12,
+   "label": "Limpar busca"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Acesso Total",
+    "exact": true
+   },
+   "at": 32.16,
+   "label": "clica no perfil rápido Acesso Total"
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 32.56
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Acesso Total",
+    "exact": true
+   },
+   "seconds": 5.0,
+   "at": 33.16,
+   "label": "o cursor fica no Acesso Total"
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 40.48
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Escritório",
+    "exact": true
+   },
+   "at": 43.19,
+   "label": "clica de novo em Escritório"
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 1060,
+    "y": 742
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "at": 45.97,
+   "label": "Criar Usuário (cursor)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] button",
+    "hasText": "Criar Usuário"
+   },
+   "text": "",
+   "noClick": true,
+   "label": "Criar Usuário"
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll(\"[role=dialog] button\")].filter(b=>/Criar Usuário/i.test(b.textContent)).shift().click()",
+   "at": 46.87,
+   "label": "Criar Usuário (clique)"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "role": "button",
+    "name": "Tatiane Ribeiro",
+    "within": "main"
+   },
+   "timeout": 30
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 57.11
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Tatiane Ribeiro",
+    "within": "main"
+   },
+   "seconds": 0.6,
+   "at": 59.53,
+   "label": "a Tatiane na lista, com o cargo Escritório"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 61.6
+  }
+ ]
+}

@@ -1,0 +1,126 @@
+{
+ "name": "R05-d",
+ "title": "T0 v2 · R05 · Outros módulos: selo vermelho Não tem no seu plano (computador 1280x800)",
+ "seed": "t0v2-R05",
+ "pace": 0.6,
+ "tail": 1.2,
+ "cps": 9,
+ "seedExtra": [
+  "t0v2/catalogo",
+  "t0v2/progresso-camila",
+  "t0v2/usuario-novo",
+  "t0v2/conta-contratada",
+  "t0v2/pagamentos"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/domiflix"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/domiflix?trilha=tutoriais-do-sistema"
+  },
+  {
+   "do": "waitFor",
+   "text": "Aprenda a usar a Dominex",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "'sem tarja'"
+  },
+  {
+   "do": "pause",
+   "seconds": 0.6
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "scroll",
+   "target": {
+    "text": "CRM e Kanban",
+    "within": "main"
+   },
+   "optional": true,
+   "timeout": 8
+  },
+  {
+   "do": "pause",
+   "seconds": 1.2
+  },
+  {
+   "do": "hover",
+   "target": "Não tem no seu plano",
+   "seconds": 1.2,
+   "optional": true,
+   "timeout": 3,
+   "label": "selo Não tem no seu plano"
+  },
+  {
+   "do": "pause",
+   "seconds": 2.0
+  },
+  {
+   "do": "hover",
+   "target": "Conheça este módulo",
+   "seconds": 0.8,
+   "optional": true,
+   "timeout": 3,
+   "label": "Conheça este módulo"
+  },
+  {
+   "do": "pause",
+   "seconds": 1.5
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "CRM e Kanban",
+    "within": "main",
+    "nth": 1
+   },
+   "optional": true,
+   "timeout": 8,
+   "label": "abre a aula do módulo"
+  },
+  {
+   "do": "waitFor",
+   "text": "Consultar fora da ordem?",
+   "timeout": 8
+  },
+  {
+   "do": "pause",
+   "seconds": 2.0
+  },
+  {
+   "do": "hover",
+   "target": "Consultar esta aula",
+   "seconds": 0.8,
+   "optional": true,
+   "timeout": 3,
+   "label": "Consultar esta aula"
+  },
+  {
+   "do": "pause",
+   "seconds": 1.5
+  }
+ ]
+}

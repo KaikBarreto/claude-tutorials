@@ -1,0 +1,119 @@
+{
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap05",
+  "t12/inicio",
+  "t12/apos-cap11",
+  "t13/inicio",
+  "t13/apos-cap04"
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ },
+ "steps": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Camila",
+   "timeout": 25
+  },
+  {
+   "do": "goto",
+   "url": "/financeiro/contas"
+  },
+  {
+   "do": "wait",
+   "ms": 2500
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Toggle Sidebar",
+    "nth": 0
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 600
+  },
+  {
+   "do": "shot",
+   "name": "01-contas"
+  },
+  {
+   "do": "text",
+   "selector": "main",
+   "name": "main",
+   "max": 3000
+  },
+  {
+   "do": "list",
+   "selector": "main button, main [role=tab]"
+  },
+  {
+   "do": "html",
+   "selector": "main tbody tr",
+   "max": 1800
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main tbody tr:has-text('Gás R-410A') button[aria-haspopup='menu']"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "shot",
+   "name": "02-menu"
+  },
+  {
+   "do": "list",
+   "selector": "[role=menuitem]"
+  },
+  {
+   "do": "press",
+   "key": "Escape"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Nova Conta"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 900
+  },
+  {
+   "do": "shot",
+   "name": "03-nova"
+  },
+  {
+   "do": "text",
+   "selector": "[role=dialog]",
+   "name": "dlg",
+   "max": 2500
+  },
+  {
+   "do": "list",
+   "selector": "[role=dialog] button[role=combobox], [role=dialog] button[aria-haspopup]"
+  },
+  {
+   "do": "list",
+   "selector": "[role=dialog] input",
+   "attr": "placeholder"
+  }
+ ]
+}

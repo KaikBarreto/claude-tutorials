@@ -1,0 +1,124 @@
+{
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap05",
+  "t12/inicio",
+  "t12/apos-cap11",
+  "t13/inicio",
+  "t13/apos-cap14",
+  "t19/inicio",
+  "t20/_prov-t19",
+  "t20/inicio"
+ ],
+ "start": "/dashboard",
+ "stopOnFail": false,
+ "steps": [
+  {
+   "do": "goto",
+   "url": "/financeiro/relatorios?tab=dre"
+  },
+  {
+   "do": "wait",
+   "ms": 2500
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Toggle Sidebar",
+    "nth": 0
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Este mês",
+    "exact": true
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] button",
+    "hasText": "Mês passado"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 1000
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Comparar períodos",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 700
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button",
+    "hasText": "Período anterior"
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Aplicar comparação",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 1200
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Personalizado",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "list",
+   "selector": "[data-radix-popper-content-wrapper] button"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] button",
+    "hasText": "Personalizado"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 700
+  },
+  {
+   "do": "text",
+   "selector": "[data-radix-popper-content-wrapper]",
+   "name": "cal-aberto",
+   "max": 250
+  },
+  {
+   "do": "shot",
+   "name": "60-cal"
+  }
+ ]
+}

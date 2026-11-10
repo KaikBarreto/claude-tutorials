@@ -1,0 +1,684 @@
+{
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap15",
+  "t7/inicio",
+  "t18/fim-t7-provisorio",
+  "t18/catalogo"
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ },
+ "start": "/area-tecnico",
+ "stopOnFail": false,
+ "steps": [
+  {
+   "do": "goto",
+   "url": "/area-tecnico/superaquecimento"
+  },
+  {
+   "do": "waitFor",
+   "text": "Calcule SH e SC pela pressão e temperatura medidas em campo.",
+   "timeout": 25
+  },
+  {
+   "do": "wait",
+   "ms": 900
+  },
+  {
+   "do": "shot",
+   "name": "g5-0"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const q=[...document.querySelectorAll('main input,main textarea,main button,main [role=switch],main [role=tab],main [role=combobox],main [role=slider],main select,main a[href]')];return q.filter(e=>e.getClientRects().length).map(e=>{const r=e.getBoundingClientRect();return [e.tagName.toLowerCase(),e.getAttribute('role')||'',(e.innerText||'').replace(/\\s+/g,' ').trim().slice(0,38),e.placeholder||'',e.getAttribute('aria-label')||'',e.id||'',(e.value==null?'':String(e.value)).slice(0,12),Math.round(r.x)+','+Math.round(r.y)+' '+Math.round(r.width)+'x'+Math.round(r.height)].join('|')})})()",
+   "max": 7000
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button[role=combobox]",
+    "nth": 0
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 600
+  },
+  {
+   "do": "shot",
+   "name": "g5-1"
+  },
+  {
+   "do": "list",
+   "selector": "[role=option]"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Padrão"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "shot",
+   "name": "g5-2"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Ex: 120"
+   },
+   "text": "118"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Ex: 12"
+   },
+   "text": "12"
+  },
+  {
+   "do": "wait",
+   "ms": 600
+  },
+  {
+   "do": "shot",
+   "name": "g5-3"
+  },
+  {
+   "do": "text",
+   "selector": "main",
+   "name": "SH 118/12",
+   "max": 2500
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Ex: 120"
+   },
+   "text": "125",
+   "clear": true
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Ex: 12"
+   },
+   "text": "15",
+   "clear": true
+  },
+  {
+   "do": "wait",
+   "ms": 600
+  },
+  {
+   "do": "shot",
+   "name": "g5-4"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Subresfriamento (SC)"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Ex: 120"
+   },
+   "text": "350"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Ex: 12"
+   },
+   "text": "35"
+  },
+  {
+   "do": "wait",
+   "ms": 600
+  },
+  {
+   "do": "shot",
+   "name": "g5-5"
+  },
+  {
+   "do": "text",
+   "selector": "main",
+   "name": "SC 350/35",
+   "max": 2500
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const q=[...document.querySelectorAll('main input,main textarea,main button,main [role=switch],main [role=tab],main [role=combobox],main [role=slider],main select,main a[href]')];return q.filter(e=>e.getClientRects().length).map(e=>{const r=e.getBoundingClientRect();return [e.tagName.toLowerCase(),e.getAttribute('role')||'',(e.innerText||'').replace(/\\s+/g,' ').trim().slice(0,38),e.placeholder||'',e.getAttribute('aria-label')||'',e.id||'',(e.value==null?'':String(e.value)).slice(0,12),Math.round(r.x)+','+Math.round(r.y)+' '+Math.round(r.width)+'x'+Math.round(r.height)].join('|')})})()",
+   "max": 5000
+  },
+  {
+   "do": "goto",
+   "url": "/area-tecnico/regua-gases"
+  },
+  {
+   "do": "waitFor",
+   "text": "Pressão de saturação dos refrigerantes por temperatura.",
+   "timeout": 25
+  },
+  {
+   "do": "wait",
+   "ms": 900
+  },
+  {
+   "do": "shot",
+   "name": "g6-0"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const q=[...document.querySelectorAll('main input,main textarea,main button,main [role=switch],main [role=tab],main [role=combobox],main [role=slider],main select,main a[href]')];return q.filter(e=>e.getClientRects().length).map(e=>{const r=e.getBoundingClientRect();return [e.tagName.toLowerCase(),e.getAttribute('role')||'',(e.innerText||'').replace(/\\s+/g,' ').trim().slice(0,38),e.placeholder||'',e.getAttribute('aria-label')||'',e.id||'',(e.value==null?'':String(e.value)).slice(0,12),Math.round(r.x)+','+Math.round(r.y)+' '+Math.round(r.width)+'x'+Math.round(r.height)].join('|')})})()",
+   "max": 7000
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const s=document.querySelector('[role=slider]');const k=s&&s.querySelector('div.border-primary');const r=x=>{if(!x)return null;const b=x.getBoundingClientRect();return [Math.round(b.x),Math.round(b.y),Math.round(b.width),Math.round(b.height)]};return {slider:r(s),knob:r(k),now:s&&s.getAttribute('aria-valuenow')}})()"
+  },
+  {
+   "do": "text",
+   "selector": "main",
+   "name": "régua",
+   "max": 1500
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "Pressão em PSI (g)"
+   },
+   "text": "150"
+  },
+  {
+   "do": "wait",
+   "ms": 600
+  },
+  {
+   "do": "shot",
+   "name": "g6-1"
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('main input')].filter(e=>e.getClientRects().length).map(e=>e.getAttribute('aria-label')+'='+e.value)"
+  },
+  {
+   "do": "drag",
+   "target": {
+    "selector": "[role=slider] div.border-primary"
+   },
+   "to": {
+    "x": 760,
+    "y": 260
+   },
+   "steps": 30
+  },
+  {
+   "do": "shot",
+   "name": "g6-2"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const s=document.querySelector('[role=slider]');return s.getAttribute('aria-valuenow')})()"
+  },
+  {
+   "do": "drag",
+   "target": {
+    "selector": "[role=slider] div.border-primary"
+   },
+   "to": {
+    "x": 760,
+    "y": 600
+   },
+   "steps": 30
+  },
+  {
+   "do": "shot",
+   "name": "g6-3"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const s=document.querySelector('[role=slider]');return s.getAttribute('aria-valuenow')})()"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "bar",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "shot",
+   "name": "g6-4"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button[role=combobox]",
+    "nth": 0
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "shot",
+   "name": "g6-5"
+  },
+  {
+   "do": "list",
+   "selector": "[role=option]"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "R-404A"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 600
+  },
+  {
+   "do": "shot",
+   "name": "g6-6"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const q=[...document.querySelectorAll('main input,main textarea,main button,main [role=switch],main [role=tab],main [role=combobox],main [role=slider],main select,main a[href]')];return q.filter(e=>e.getClientRects().length).map(e=>{const r=e.getBoundingClientRect();return [e.tagName.toLowerCase(),e.getAttribute('role')||'',(e.innerText||'').replace(/\\s+/g,' ').trim().slice(0,38),e.placeholder||'',e.getAttribute('aria-label')||'',e.id||'',(e.value==null?'':String(e.value)).slice(0,12),Math.round(r.x)+','+Math.round(r.y)+' '+Math.round(r.width)+'x'+Math.round(r.height)].join('|')})})()",
+   "max": 5000
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Bubble"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "shot",
+   "name": "g6-7"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Dew"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 400
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button[role=combobox]",
+    "nth": 0
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "R-32"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 700
+  },
+  {
+   "do": "shot",
+   "name": "g6-8"
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('main svg')].filter(e=>e.getClientRects().length).map(e=>(e.getAttribute('class')||'').slice(0,60)+'|'+Math.round(e.getBoundingClientRect().x)+','+Math.round(e.getBoundingClientRect().y)).slice(0,25)",
+   "max": 3000
+  },
+  {
+   "do": "goto",
+   "url": "/area-tecnico/retrofit-gas"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gases drop-in para trocar o refrigerante",
+   "timeout": 25
+  },
+  {
+   "do": "wait",
+   "ms": 900
+  },
+  {
+   "do": "shot",
+   "name": "g7-0"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const q=[...document.querySelectorAll('main input,main textarea,main button,main [role=switch],main [role=tab],main [role=combobox],main [role=slider],main select,main a[href]')];return q.filter(e=>e.getClientRects().length).map(e=>{const r=e.getBoundingClientRect();return [e.tagName.toLowerCase(),e.getAttribute('role')||'',(e.innerText||'').replace(/\\s+/g,' ').trim().slice(0,38),e.placeholder||'',e.getAttribute('aria-label')||'',e.id||'',(e.value==null?'':String(e.value)).slice(0,12),Math.round(r.x)+','+Math.round(r.y)+' '+Math.round(r.width)+'x'+Math.round(r.height)].join('|')})})()",
+   "max": 7000
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const q=[...document.querySelectorAll('main input,main textarea,main button,main [role=switch],main [role=tab],main [role=combobox],main [role=slider],main select,main a[href]')];return q.filter(e=>e.getClientRects().length).map(e=>{const r=e.getBoundingClientRect();return [e.tagName.toLowerCase(),e.getAttribute('role')||'',(e.innerText||'').replace(/\\s+/g,' ').trim().slice(0,38),e.placeholder||'',e.getAttribute('aria-label')||'',e.id||'',(e.value==null?'':String(e.value)).slice(0,12),Math.round(r.x)+','+Math.round(r.y)+' '+Math.round(r.width)+'x'+Math.round(r.height)].join('|')})})()",
+   "max": 3000
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button[role=combobox]",
+    "nth": 0
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "shot",
+   "name": "g7-1"
+  },
+  {
+   "do": "list",
+   "selector": "[role=option]"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "R-22"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 600
+  },
+  {
+   "do": "shot",
+   "name": "g7-2"
+  },
+  {
+   "do": "text",
+   "selector": "main",
+   "name": "retrofit R-22",
+   "max": 2500
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "bar",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "shot",
+   "name": "g7-3"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "psi",
+    "exact": true
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button[role=combobox]",
+    "nth": 0
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "R-404A"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 700
+  },
+  {
+   "do": "shot",
+   "name": "g7-4"
+  },
+  {
+   "do": "goto",
+   "url": "/area-tecnico/ciclo-refrigeracao"
+  },
+  {
+   "do": "waitFor",
+   "text": "Entenda como o gás circula pelo sistema e o que cada componente faz.",
+   "timeout": 25
+  },
+  {
+   "do": "wait",
+   "ms": 900
+  },
+  {
+   "do": "shot",
+   "name": "g8-0"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const q=[...document.querySelectorAll('main input,main textarea,main button,main [role=switch],main [role=tab],main [role=combobox],main [role=slider],main select,main a[href]')];return q.filter(e=>e.getClientRects().length).map(e=>{const r=e.getBoundingClientRect();return [e.tagName.toLowerCase(),e.getAttribute('role')||'',(e.innerText||'').replace(/\\s+/g,' ').trim().slice(0,38),e.placeholder||'',e.getAttribute('aria-label')||'',e.id||'',(e.value==null?'':String(e.value)).slice(0,12),Math.round(r.x)+','+Math.round(r.y)+' '+Math.round(r.width)+'x'+Math.round(r.height)].join('|')})})()",
+   "max": 7000
+  },
+  {
+   "do": "wait",
+   "ms": 1500
+  },
+  {
+   "do": "shot",
+   "name": "g8-1"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Imagem 2D"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 900
+  },
+  {
+   "do": "shot",
+   "name": "g8-2"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Ilustração"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 900
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button",
+    "hasText": "Compressor"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 700
+  },
+  {
+   "do": "shot",
+   "name": "g8-3"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button",
+    "hasText": "Evaporador"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 700
+  },
+  {
+   "do": "shot",
+   "name": "g8-4"
+  },
+  {
+   "do": "goto",
+   "url": "/area-tecnico/diluicao-produto"
+  },
+  {
+   "do": "waitFor",
+   "text": "Diluição de Produto",
+   "timeout": 25
+  },
+  {
+   "do": "wait",
+   "ms": 900
+  },
+  {
+   "do": "shot",
+   "name": "g9-0"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const q=[...document.querySelectorAll('main input,main textarea,main button,main [role=switch],main [role=tab],main [role=combobox],main [role=slider],main select,main a[href]')];return q.filter(e=>e.getClientRects().length).map(e=>{const r=e.getBoundingClientRect();return [e.tagName.toLowerCase(),e.getAttribute('role')||'',(e.innerText||'').replace(/\\s+/g,' ').trim().slice(0,38),e.placeholder||'',e.getAttribute('aria-label')||'',e.id||'',(e.value==null?'':String(e.value)).slice(0,12),Math.round(r.x)+','+Math.round(r.y)+' '+Math.round(r.width)+'x'+Math.round(r.height)].join('|')})})()",
+   "max": 7000
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "10",
+    "exact": true
+   },
+   "text": "10",
+   "clear": true
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Ex: 500"
+   },
+   "text": "500"
+  },
+  {
+   "do": "wait",
+   "ms": 600
+  },
+  {
+   "do": "shot",
+   "name": "g9-1"
+  },
+  {
+   "do": "text",
+   "selector": "main",
+   "name": "diluição",
+   "max": 1800
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "L",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "shot",
+   "name": "g9-2"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "mL",
+    "exact": true
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Tenho X de produto"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Ex: 50"
+   },
+   "text": "50"
+  },
+  {
+   "do": "wait",
+   "ms": 600
+  },
+  {
+   "do": "shot",
+   "name": "g9-3"
+  },
+  {
+   "do": "text",
+   "selector": "main",
+   "name": "tenho X",
+   "max": 1800
+  }
+ ]
+}

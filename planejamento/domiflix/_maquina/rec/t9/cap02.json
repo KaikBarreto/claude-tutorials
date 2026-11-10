@@ -1,0 +1,305 @@
+{
+ "name": "t9-cap02",
+ "title": "T9 · Cap. 2 · O BDI da empresa (narração 71,8 s; marcas L1..L5 = início de cada linha do roteiro)",
+ "seed": "t9-cap02",
+ "pace": 0.45,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t9/inicio"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/orcamentos"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/orcamentos"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie orçamentos, custos e precificação",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Toggle Sidebar",
+    "nth": 0
+   }
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|erro|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0.04
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Precificação",
+    "exact": true
+   },
+   "at": 0.52,
+   "label": "aba Precificação"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Método BDI",
+    "within": "main"
+   },
+   "seconds": 0.8,
+   "at": 3.86,
+   "label": "cartão Método BDI",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Preço = Custo Total ÷ BDI",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 1.2,
+   "at": 5.62,
+   "label": "fórmula Preço = Custo Total ÷ BDI",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 13.46
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "BDI atual",
+    "within": "main"
+   },
+   "seconds": 1.0,
+   "at": 15.46,
+   "label": "BDI atual 1.0000 (tudo zerado)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "main input",
+    "nth": 0
+   },
+   "text": "6",
+   "at": 23.55,
+   "label": "Imposto 6",
+   "clear": true
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "main input",
+    "nth": 1
+   },
+   "text": "12",
+   "at": 25.63,
+   "label": "Adm. Indireta 12",
+   "clear": true
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "main input",
+    "nth": 2
+   },
+   "text": "22",
+   "at": 28.59,
+   "label": "Lucro Padrão 22",
+   "clear": true
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"BDI atual 0.6000\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere BDI atual 0.6000 depois de 6 + 12 + 22"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 31.17
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "BDI atual",
+    "within": "main"
+   },
+   "seconds": 1.4,
+   "at": 31.43,
+   "label": "BDI atual 0.6000",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Adm. Indireta",
+    "exact": true
+   },
+   "seconds": 1.2,
+   "at": 38.37,
+   "label": "barra de composição do preço",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 40.66
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 760,
+    "y": 420
+   },
+   "by": 380,
+   "duration": 0.5,
+   "after": 100,
+   "at": 40.66,
+   "label": "desce até Deslocamento e Pagamento"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "main input",
+    "nth": 3
+   },
+   "text": "1,5",
+   "at": 43.67,
+   "label": "Custo por KM 1,5",
+   "clear": true
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "main input",
+    "nth": 4
+   },
+   "text": "5",
+   "at": 46.26,
+   "label": "Desconto à vista 5",
+   "clear": true
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "main input",
+    "nth": 5
+   },
+   "text": "10",
+   "at": 48.74,
+   "label": "Parcelas (cartão) 10",
+   "clear": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Salvar",
+    "exact": true
+   },
+   "at": 50.44,
+   "label": "Salvar as taxas"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Configurações de precificação atualizadas.\", \"R$ 1.666,67\", \"R$ 1.000,00 ÷ 0.6000 = R$ 1.666,67\", \"À vista (5% desc.)\", \"Cartão (10x sem juros)\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere taxas salvas e Simulador (R$ 1.666,67)"
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('main input')].slice(0,6).map(i=>i.value).join('|')",
+   "label": "confere campos 6|12|22|1.5|5|10"
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 55.94
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Simulador de Preço",
+    "within": "main"
+   },
+   "seconds": 1.0,
+   "at": 56.82,
+   "label": "Simulador de Preço",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "R$ 1.666,67",
+    "exact": true
+   },
+   "seconds": 1.6,
+   "at": 61.36,
+   "label": "Preço Final (BDI) R$ 1.666,67",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "R$ 1.000,00 ÷ 0.6000",
+    "within": "main"
+   },
+   "seconds": 1.2,
+   "at": 66.1,
+   "label": "linha Preço = R$ 1.000,00 ÷ 0.6000",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 71.76
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

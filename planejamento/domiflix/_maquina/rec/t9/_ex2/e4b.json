@@ -1,0 +1,341 @@
+{
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t9/inicio"
+ ],
+ "steps": [
+  {
+   "do": "goto",
+   "url": "/orcamentos"
+  },
+  {
+   "do": "wait",
+   "ms": 1500
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Precificação",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 600
+  },
+  {
+   "do": "keys",
+   "target": {
+    "selector": "main input",
+    "nth": 0
+   },
+   "text": "6",
+   "clear": true
+  },
+  {
+   "do": "keys",
+   "target": {
+    "selector": "main input",
+    "nth": 1
+   },
+   "text": "12",
+   "clear": true
+  },
+  {
+   "do": "keys",
+   "target": {
+    "selector": "main input",
+    "nth": 2
+   },
+   "text": "22",
+   "clear": true
+  },
+  {
+   "do": "keys",
+   "target": {
+    "selector": "main input",
+    "nth": 3
+   },
+   "text": "1,5",
+   "clear": true
+  },
+  {
+   "do": "keys",
+   "target": {
+    "selector": "main input",
+    "nth": 4
+   },
+   "text": "5",
+   "clear": true
+  },
+  {
+   "do": "keys",
+   "target": {
+    "selector": "main input",
+    "nth": 5
+   },
+   "text": "10",
+   "clear": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Salvar",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 700
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Custos Globais",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 800
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Novo Recurso",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 600
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Veículos"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 600
+  },
+  {
+   "do": "keys",
+   "target": {
+    "placeholder": "Ex: Spin 2024"
+   },
+   "text": "Van 01"
+  },
+  {
+   "do": "keys",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='Valor mensal']",
+    "nth": 0
+   },
+   "text": "1400"
+  },
+  {
+   "do": "keys",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='Valor mensal']",
+    "nth": 1
+   },
+   "text": "1620"
+  },
+  {
+   "do": "keys",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='Valor anual']",
+    "nth": 0
+   },
+   "text": "3600"
+  },
+  {
+   "do": "keys",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='Valor anual']",
+    "nth": 1
+   },
+   "text": "2400"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Salvar",
+    "exact": true,
+    "within": "[role=dialog]"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 1000
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Van 01",
+    "within": "main"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 700
+  },
+  {
+   "do": "shot",
+   "name": "van"
+  },
+  {
+   "do": "text",
+   "selector": "main",
+   "name": "van",
+   "max": 2200
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Custos dos Serviços",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 1200
+  },
+  {
+   "do": "shot",
+   "name": "a"
+  },
+  {
+   "do": "text",
+   "selector": "main",
+   "name": "custos",
+   "max": 2000
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Higienização de Split",
+    "within": "main"
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Higienização de Split",
+    "within": "main"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 900
+  },
+  {
+   "do": "keys",
+   "target": {
+    "selector": "main input[type=number]"
+   },
+   "text": "32",
+   "clear": true
+  },
+  {
+   "do": "keys",
+   "target": {
+    "selector": "main input[type=text]"
+   },
+   "text": "1,5",
+   "clear": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Notas",
+    "within": "main"
+   },
+   "optional": true
+  },
+  {
+   "do": "wait",
+   "ms": 1500
+  },
+  {
+   "do": "shot",
+   "name": "mo"
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('main p, main span')].map(e=>e.innerText).filter(t=>/R\\$|Salvo/.test(t)).slice(0,10)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Calcular",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 800
+  },
+  {
+   "do": "shot",
+   "name": "calc"
+  },
+  {
+   "do": "text",
+   "selector": "[role=dialog]",
+   "name": "calc",
+   "max": 1500
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Cancelar",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Recursos",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 900
+  },
+  {
+   "do": "shot",
+   "name": "rec"
+  },
+  {
+   "do": "text",
+   "selector": "main",
+   "name": "rec",
+   "max": 2600
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

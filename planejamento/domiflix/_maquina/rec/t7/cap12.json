@@ -1,0 +1,427 @@
+{
+ "name": "t7-cap12",
+ "title": "T7 · Cap. 12 · O link do cliente (narração 70,5 s; marcas L1..L5 = início de cada linha do roteiro)",
+ "seed": "t7-cap12",
+ "pace": 0.4,
+ "cps": 9,
+ "tail": 1.5,
+ "device": "phone",
+ "start": {
+  "x": 195,
+  "y": 600
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap15",
+  "t7/inicio",
+  "t7/vazias-1.38.21",
+  "t7/apos-cap10"
+ ],
+ "prewarm": [
+  "/agenda"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/agenda"
+  },
+  {
+   "do": "waitFor",
+   "text": "Colégio Monte Verde",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(() => {\n  // GPS do aparelho emulado (T7). O Chromium headless trava `getCurrentPosition({maximumAge: 0})` quando já existe um\n  // `watchPosition` ativo — e o app do técnico faz exatamente isso (rastreia a cada 30 s e pede a posição no check-in).\n  // Este stub devolve a posição atual na hora, para as duas chamadas, e `__setGeo` \"anda\" com o aparelho e avisa quem observa.\n  if (window.__geoStub) return 'ja-instalado';\n  const st = { lat: -22.9035, lng: -43.1038, acc: 12 };\n  const pos = () => ({\n    coords: { latitude: st.lat, longitude: st.lng, accuracy: st.acc, altitude: null, altitudeAccuracy: null, heading: null, speed: null },\n    timestamp: Date.now(),\n  });\n  const watchers = new Map();\n  let seq = 0;\n  const g = navigator.geolocation;\n  g.getCurrentPosition = (ok) => { setTimeout(() => ok(pos()), 60); };\n  g.watchPosition = (ok) => { const id = ++seq; watchers.set(id, ok); setTimeout(() => { if (watchers.has(id)) ok(pos()); }, 90); return id; };\n  g.clearWatch = (id) => { watchers.delete(id); };\n  window.__setGeo = (lat, lng, acc) => { st.lat = lat; st.lng = lng; if (acc) st.acc = acc; watchers.forEach((cb) => cb(pos())); return [st.lat, st.lng]; };\n  window.__geoStub = true;\n  return 'instalado';\n})()\n"
+  },
+  {
+   "do": "eval",
+   "js": "window.__setGeo(-22.89758,-43.09913)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Colégio Monte Verde",
+    "within": "main"
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Resumo da OS",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Relatório de Serviço",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Execução",
+   "timeout": 20
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const r=await fetch(\"http://127.0.0.1:54321/__dev/seed\",{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({files:[\"t7/pesquisa-oculta\"]})});return r.status})()"
+  },
+  {
+   "do": "clock",
+   "set": "2026-11-11T10:40:00-03:00"
+  },
+  {
+   "do": "pause",
+   "seconds": 0.5
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 375,
+    "y": 812
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "at": 1.62
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "button[aria-label='Mais ações']"
+   },
+   "text": "",
+   "noClick": true,
+   "label": "o menu de mais ações",
+   "at": 2.42,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const el=(document.querySelector('button[aria-label=\"Mais ações\"]'));if(!el)return 'SEM ALVO';const r=el.getBoundingClientRect();const x=r.left+r.width/2,y=r.top+r.height/2;const o={bubbles:true,cancelable:true,composed:true,clientX:x,clientY:y,screenX:x,screenY:y,button:0,view:window};const pe=(t,b)=>new PointerEvent(t,{...o,pointerId:1,pointerType:'mouse',isPrimary:true,buttons:b,width:1,height:1});const me=(t,b)=>new MouseEvent(t,{...o,buttons:b,detail:1});el.dispatchEvent(pe('pointerdown',1));el.dispatchEvent(me('mousedown',1));el.dispatchEvent(pe('pointerup',0));el.dispatchEvent(me('mouseup',0));el.dispatchEvent(me('click',0));return [Math.round(x),Math.round(y)]})()",
+   "at": 2.52,
+   "label": "o menu de mais ações (toque)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Copiar Link",
+    "exact": true
+   },
+   "at": 3.66,
+   "label": "Copiar Link"
+  },
+  {
+   "do": "goto",
+   "url": "/os-tecnico/2c9dc476-c5ca-412f-90fe-6c38a67f125e?modo=cliente",
+   "at": 13.72,
+   "label": "o cliente abre o link (sem login)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Relatório de Serviço",
+   "timeout": 20
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 14.68
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 196,
+    "y": 56
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "at": 17.4
+  },
+  {
+   "do": "type",
+   "target": {
+    "text": "Glacial Cold Brasil",
+    "exact": true
+   },
+   "text": "",
+   "noClick": true,
+   "label": "cabeçalho: o nome da empresa",
+   "at": 18.3,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 196,
+    "y": 82
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "at": 18.12
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "h1"
+   },
+   "text": "",
+   "noClick": true,
+   "label": "cabeçalho: o número da OS",
+   "at": 19.02,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 323,
+    "y": 26
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "at": 19.56
+  },
+  {
+   "do": "type",
+   "target": {
+    "text": "Concluída",
+    "exact": true
+   },
+   "text": "",
+   "noClick": true,
+   "label": "cabeçalho: o status Concluída",
+   "at": 20.46,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Relatório de Serviço",
+    "exact": false
+   },
+   "seconds": 1.4,
+   "at": 21.92,
+   "label": "o mesmo relatório do técnico",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 110,
+    "y": 812
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "at": 23.52
+  },
+  {
+   "do": "type",
+   "target": {
+    "role": "button",
+    "name": "Baixar PDF",
+    "exact": true
+   },
+   "text": "",
+   "noClick": true,
+   "label": "o botão Baixar PDF",
+   "at": 24.42,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 26.48
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const r=await fetch(\"http://127.0.0.1:54321/__dev/seed\",{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({files:[\"t7/pesquisa-visivel\"]})});return r.status})()",
+   "at": 27.24,
+   "label": "a avaliação do cliente passa a valer"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{document.dispatchEvent(new Event('visibilitychange'));return document.visibilityState})()",
+   "label": "o app refaz a leitura do link"
+  },
+  {
+   "do": "waitFor",
+   "text": "Como foi seu atendimento?",
+   "timeout": 15
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=slider]"
+   },
+   "seconds": 1.0,
+   "at": 32.0,
+   "label": "a escala de 0 a 10",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Qualidade",
+    "exact": false
+   },
+   "seconds": 1.0,
+   "at": 35.52,
+   "label": "as estrelas de cada critério",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const th=document.querySelector('[role=slider]');if(!th)return 'SEM ALVO';const root=th.parentElement.parentElement;const rr=root.getBoundingClientRect(),tr=th.getBoundingClientRect();let m=document.getElementById(\"__wp1\");if(!m){m=document.createElement('div');m.id=\"__wp1\";m.style.cssText='position:fixed;width:6px;height:6px;opacity:0;pointer-events:none;z-index:2147483647';document.body.appendChild(m)}m.style.left=(rr.right+4-3)+'px';m.style.top=(tr.top+tr.height/2-3)+'px';return [Math.round(rr.right),Math.round(tr.top+tr.height/2)]})()",
+   "at": 39.6,
+   "label": "destino do arrasto da nota"
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 40.1
+  },
+  {
+   "do": "drag",
+   "target": {
+    "selector": "[role=slider]"
+   },
+   "to": {
+    "selector": "#__wp1"
+   },
+   "at": 40.1,
+   "label": "arrasta a nota até 10"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Qualidade: 5 de 5 estrelas",
+    "exact": true
+   },
+   "at": 42.48,
+   "label": "5 estrelas em Qualidade"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Pontualidade: 5 de 5 estrelas",
+    "exact": true
+   },
+   "at": 43.06,
+   "label": "5 estrelas em Pontualidade"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Profissionalismo: 5 de 5 estrelas",
+    "exact": true
+   },
+   "at": 43.68,
+   "label": "5 estrelas em Profissionalismo"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "input[placeholder*='nome' i]"
+   },
+   "text": "Helena",
+   "cps": 14,
+   "at": 44.33,
+   "label": "o nome"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "textarea"
+   },
+   "text": "Pontual!",
+   "cps": 16,
+   "at": 45.95,
+   "label": "o comentário"
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 256,
+    "y": 808
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "at": 47.93
+  },
+  {
+   "do": "type",
+   "target": {
+    "role": "button",
+    "name": "Enviar avaliação",
+    "exact": true
+   },
+   "text": "",
+   "noClick": true,
+   "label": "Enviar avaliação",
+   "at": 48.73,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const el=([...document.querySelectorAll(\"button\")].filter(b=>b.textContent.trim()===\"Enviar avalia\\u00e7\\u00e3o\"&&b.getClientRects().length).pop());if(!el)return 'SEM ALVO';const r=el.getBoundingClientRect();const x=r.left+r.width/2,y=r.top+r.height/2;const o={bubbles:true,cancelable:true,composed:true,clientX:x,clientY:y,screenX:x,screenY:y,button:0,view:window};const pe=(t,b)=>new PointerEvent(t,{...o,pointerId:1,pointerType:'mouse',isPrimary:true,buttons:b,width:1,height:1});const me=(t,b)=>new MouseEvent(t,{...o,buttons:b,detail:1});el.dispatchEvent(pe('pointerdown',1));el.dispatchEvent(me('mousedown',1));el.dispatchEvent(pe('pointerup',0));el.dispatchEvent(me('mouseup',0));el.dispatchEvent(me('click',0));return [Math.round(x),Math.round(y)]})()",
+   "at": 48.83,
+   "label": "Enviar avaliação (toque)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Obrigado",
+   "timeout": 15
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 53.33
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 70.48
+  }
+ ],
+ "user": "rafael.lima@glacialcold.example"
+}

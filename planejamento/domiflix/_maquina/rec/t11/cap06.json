@@ -1,0 +1,978 @@
+{
+ "name": "t11-cap06",
+ "title": "T11 · Cap. 6 · Ambientes climatizados (narração 92,9 s; marcas L1..L8 = início de cada linha do roteiro)",
+ "seed": "t11-cap06",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t2/apos-cap10",
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t9/inicio",
+  "t9/apos-cap16",
+  "t10/apos-cap09",
+  "t11/inicio",
+  "t11/apos-cap03"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/contratos"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Camila!",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/contratos"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie contratos recorrentes e manutenções programadas",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(() => { sessionStorage.setItem('form-draft:contract-form', \"{\\\"name\\\":\\\"PMOC - Hotel Mirante do Mar\\\",\\\"customerId\\\":\\\"cbed8554-3919-5fa8-b9c6-5d13ef24cf37\\\",\\\"serviceTypeId\\\":\\\"\\\",\\\"formTemplateId\\\":\\\"\\\",\\\"notes\\\":\\\"\\\",\\\"isActive\\\":true,\\\"isPmoc\\\":true,\\\"responsibleTechnicianId\\\":\\\"e9873794-c222-43d4-95a8-71154808a3fd\\\",\\\"freqType\\\":\\\"months\\\",\\\"freqValue\\\":1,\\\"startDate\\\":\\\"2026-11-10\\\",\\\"horizonMonths\\\":12,\\\"step\\\":1,\\\"stepKey\\\":\\\"items\\\",\\\"unidadeNome\\\":\\\"Hotel Mirante do MarHotel Mirante do Mar - S\\u00e3o Francisco\\\",\\\"unidadeEndereco\\\":\\\"Avenida Quintino Bocai\\u00fava\\\",\\\"unidadeNumero\\\":\\\"770\\\",\\\"unidadeComplemento\\\":\\\"\\\",\\\"unidadeBairro\\\":\\\"S\\u00e3o Francisco\\\",\\\"unidadeCidade\\\":\\\"Niter\\u00f3i\\\",\\\"unidadeUf\\\":\\\"RJ\\\",\\\"unidadeCep\\\":\\\"24360-000\\\",\\\"environments\\\":[],\\\"looseItems\\\":[],\\\"machineConfigs\\\":{},\\\"commonChecklists\\\":{},\\\"finGenerate\\\":false,\\\"finDescription\\\":\\\"\\\",\\\"finAmount\\\":\\\"\\\",\\\"finFirstDueDate\\\":\\\"\\\",\\\"finFrequency\\\":\\\"mensal\\\",\\\"finCount\\\":\\\"\\\",\\\"finContinuous\\\":false,\\\"finAccountId\\\":\\\"\\\",\\\"finAccountLabel\\\":\\\"\\\",\\\"finCategory\\\":\\\"\\\",\\\"finCostCenterId\\\":null,\\\"finPaymentMethod\\\":\\\"\\\"}\"); return 'rascunho gravado'; })()"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Novo Contrato",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Rascunho encontrado",
+   "timeout": 15
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Retomar rascunho",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Dados do contrato",
+   "timeout": 15
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "pause",
+   "seconds": 1.0
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|erro|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "waitFor",
+   "text": "Ambientes climatizados",
+   "timeout": 10
+  },
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0.04
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Adicionar ambiente",
+    "exact": true
+   },
+   "at": 6.1,
+   "label": "Adicionar ambiente"
+  },
+  {
+   "do": "waitFor",
+   "text": "Voltar aos ambientes",
+   "timeout": 10
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Ex: 2º andar — Sala 201"
+   },
+   "text": "Lobby e recepção",
+   "cps": 40,
+   "at": 7.9,
+   "label": "Identificação do ambiente"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Ex: Escritório administrativo"
+   },
+   "text": "Recepção de hotel",
+   "cps": 40,
+   "at": 9.12,
+   "label": "Tipo de atividade"
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 12.98
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button",
+    "hasText": "Calcular",
+    "nth": 0
+   },
+   "at": 14.88,
+   "label": "Calcular a área"
+  },
+  {
+   "do": "waitFor",
+   "text": "Calcular área climatizada",
+   "timeout": 8
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog]:has-text('Calcular área climatizada') input",
+    "nth": 0
+   },
+   "at": 16.76,
+   "label": "largura 12 (clique)"
+  },
+  {
+   "do": "press",
+   "key": "Control+A"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog]:has-text('Calcular área climatizada') input",
+    "nth": 0
+   },
+   "text": "12",
+   "noClick": true,
+   "label": "largura 12"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog]:has-text('Calcular área climatizada') input",
+    "nth": 1
+   },
+   "at": 17.96,
+   "label": "comprimento 15 (clique)"
+  },
+  {
+   "do": "press",
+   "key": "Control+A"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog]:has-text('Calcular área climatizada') input",
+    "nth": 1
+   },
+   "text": "15",
+   "noClick": true,
+   "label": "comprimento 15"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Área climatizada",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.0,
+   "at": 19.64,
+   "label": "o resultado: 180 m²",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"180\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere cap06: o cálculo dá 180 m²"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Usar",
+    "exact": true
+   },
+   "at": 23.33,
+   "label": "Usar"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 23.97
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='Ex: 5,0']"
+   },
+   "at": 25.17,
+   "label": "Carga térmica 4 TR (clique)"
+  },
+  {
+   "do": "press",
+   "key": "Control+A"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='Ex: 5,0']"
+   },
+   "text": "4",
+   "noClick": true,
+   "label": "Carga térmica 4 TR"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "O que é TR?",
+    "exact": true
+   },
+   "seconds": 2.4,
+   "at": 29.33,
+   "label": "dica do TR (1 TR = 12.000 BTU/h)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "= 48.000 BTUs",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.6,
+   "at": 32.37,
+   "label": "o campo mostra 48.000 BTUs",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"48.000 BTUs\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere cap06: o campo da carga térmica mostra 48.000 BTUs"
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 38.53
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='Ex: 12']"
+   },
+   "at": 39.57,
+   "label": "ocupantes fixos 4 (clique)"
+  },
+  {
+   "do": "press",
+   "key": "Control+A"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='Ex: 12']"
+   },
+   "text": "4",
+   "noClick": true,
+   "label": "ocupantes fixos 4"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='Ex: 30']"
+   },
+   "at": 43.26,
+   "label": "ocupantes flutuantes 40 (clique)"
+  },
+  {
+   "do": "press",
+   "key": "Control+A"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='Ex: 30']"
+   },
+   "text": "40",
+   "noClick": true,
+   "label": "ocupantes flutuantes 40"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const esp=[\"Lobby e recepção\", \"Recepção de hotel\", \"180\", \"4\", \"40\"];let out='';for(let i=0;i<14;i++){const d=document.querySelector('[role=dialog]');const vs=d?[...d.querySelectorAll('input,textarea')].map(x=>x.value.trim().toLowerCase()):[];const falta=esp.filter(e=>{e=e.toLowerCase();return !vs.some(x=>x===e||(e.length>3&&x.includes(e)))});if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' nos campos: '+vs.join(' | ').slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere cap06: os campos do ambiente (180 m², 4 TR, 4 e 40 ocupantes)"
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 47.26
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button",
+    "hasText": "Adicionar equipamento",
+    "nth": 0
+   },
+   "at": 48.86,
+   "label": "Adicionar equipamento"
+  },
+  {
+   "do": "waitFor",
+   "text": "Adicionar equipamento ao ambiente",
+   "timeout": 8
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Cassete 36.000 BTUs - Lobby",
+    "exact": true
+   },
+   "at": 50.78,
+   "label": "marca o Cassete 36.000 BTUs do lobby"
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Hi-Wall 12.000 BTUs - Recepção",
+    "exact": true
+   },
+   "at": 53.58,
+   "label": "marca o Hi-Wall 12.000 BTUs da recepção"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Adicionar 2 equipamentos",
+    "exact": true
+   },
+   "at": 56.54,
+   "label": "Adicionar 2 equipamentos"
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 57.34
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Cassete 36.000 BTUs - Lobby",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 60.0,
+   "label": "abre o Cassete 36.000 BTUs do lobby"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Escopo da norma",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.0,
+   "at": 61.7,
+   "label": "Escopo da norma",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Expansão Direta",
+    "within": "[role=dialog]"
+   },
+   "seconds": 2.0,
+   "at": 63.3,
+   "label": "Expansão Direta (marcada)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Escopo da norma\", \"Expansão Direta\", \"Sistemas Centrais\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere cap06: a máquina mostra o Escopo da norma"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Sistemas Centrais",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.6,
+   "at": 67.62,
+   "label": "Sistemas Centrais (não troca)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "waitFor",
+   "text": "Checklists da norma",
+   "timeout": 15
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 70.64
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Checklists da norma",
+    "within": "[role=dialog]"
+   },
+   "seconds": 2.4,
+   "at": 70.98,
+   "label": "Checklists da norma desta máquina (Essencial)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Essencial\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere cap06: o checklist Essencial da norma já vem escolhido"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Na 1ª OS?",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.6,
+   "at": 78.48,
+   "label": "coluna Na 1ª OS?",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 760,
+    "y": 470
+   },
+   "by": 350,
+   "duration": 0.7,
+   "after": 100,
+   "at": 82.58,
+   "label": "desce até Checklists personalizados"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Checklists personalizados",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.5,
+   "at": 84.08,
+   "label": "Checklists personalizados desta máquina",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 86.72
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 760,
+    "y": 470
+   },
+   "by": -350,
+   "duration": 0.6,
+   "after": 100,
+   "at": 86.72,
+   "label": "volta ao topo da máquina"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Voltar aos ambientes",
+    "exact": true
+   },
+   "at": 88.94,
+   "label": "Voltar aos ambientes"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Adicionar ambiente",
+    "exact": true
+   },
+   "label": "Adicionar ambiente (Restaurante)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Voltar aos ambientes",
+   "timeout": 10
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Ex: 2º andar — Sala 201"
+   },
+   "text": "Restaurante",
+   "cps": 40,
+   "label": "identificação: Restaurante"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Ex: Escritório administrativo"
+   },
+   "text": "Restaurante do hotel",
+   "cps": 40,
+   "label": "tipo de atividade: Restaurante do hotel"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button",
+    "hasText": "Calcular",
+    "nth": 0
+   },
+   "label": "Calcular a área"
+  },
+  {
+   "do": "waitFor",
+   "text": "Calcular área climatizada",
+   "timeout": 8
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog]:has-text('Calcular área climatizada') input",
+    "nth": 0
+   },
+   "label": "largura (clique)"
+  },
+  {
+   "do": "press",
+   "key": "Control+A"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog]:has-text('Calcular área climatizada') input",
+    "nth": 0
+   },
+   "text": "20",
+   "noClick": true,
+   "label": "largura"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog]:has-text('Calcular área climatizada') input",
+    "nth": 1
+   },
+   "label": "comprimento (clique)"
+  },
+  {
+   "do": "press",
+   "key": "Control+A"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog]:has-text('Calcular área climatizada') input",
+    "nth": 1
+   },
+   "text": "11",
+   "noClick": true,
+   "label": "comprimento"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Usar",
+    "exact": true
+   },
+   "label": "Usar a área calculada"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='Ex: 5,0']"
+   },
+   "label": "carga térmica (TR) (clique)"
+  },
+  {
+   "do": "press",
+   "key": "Control+A"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='Ex: 5,0']"
+   },
+   "text": "3",
+   "noClick": true,
+   "label": "carga térmica (TR)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='Ex: 12']"
+   },
+   "label": "ocupantes fixos (clique)"
+  },
+  {
+   "do": "press",
+   "key": "Control+A"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='Ex: 12']"
+   },
+   "text": "10",
+   "noClick": true,
+   "label": "ocupantes fixos"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='Ex: 30']"
+   },
+   "label": "ocupantes flutuantes (clique)"
+  },
+  {
+   "do": "press",
+   "key": "Control+A"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='Ex: 30']"
+   },
+   "text": "80",
+   "noClick": true,
+   "label": "ocupantes flutuantes"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const esp=[\"Restaurante\", \"Restaurante do hotel\", \"220\", \"3\", \"10\", \"80\"];let out='';for(let i=0;i<14;i++){const d=document.querySelector('[role=dialog]');const vs=d?[...d.querySelectorAll('input,textarea')].map(x=>x.value.trim().toLowerCase()):[];const falta=esp.filter(e=>{e=e.toLowerCase();return !vs.some(x=>x===e||(e.length>3&&x.includes(e)))});if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' nos campos: '+vs.join(' | ').slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere cap06: campos do ambiente Restaurante"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button",
+    "hasText": "Adicionar equipamento",
+    "nth": 0
+   },
+   "label": "Adicionar equipamento ao ambiente"
+  },
+  {
+   "do": "waitFor",
+   "text": "Adicionar equipamento ao ambiente",
+   "timeout": 8
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Cassete 36.000 BTUs - Restaurante do hotel",
+    "exact": true
+   },
+   "label": "marca Cassete 36.000 BTUs - Restaurante do hotel"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Adicionar 1 equipamento",
+    "exact": false
+   },
+   "label": "Adicionar 1 equipamento(s)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Voltar aos ambientes",
+    "exact": true
+   },
+   "label": "Voltar aos ambientes"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Adicionar ambiente",
+    "exact": true
+   },
+   "label": "Adicionar ambiente (Salão de eventos)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Voltar aos ambientes",
+   "timeout": 10
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Ex: 2º andar — Sala 201"
+   },
+   "text": "Salão de eventos",
+   "cps": 40,
+   "label": "identificação: Salão de eventos"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Ex: Escritório administrativo"
+   },
+   "text": "Salão de eventos",
+   "cps": 40,
+   "label": "tipo de atividade: Salão de eventos"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button",
+    "hasText": "Calcular",
+    "nth": 0
+   },
+   "label": "Calcular a área"
+  },
+  {
+   "do": "waitFor",
+   "text": "Calcular área climatizada",
+   "timeout": 8
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog]:has-text('Calcular área climatizada') input",
+    "nth": 0
+   },
+   "label": "largura (clique)"
+  },
+  {
+   "do": "press",
+   "key": "Control+A"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog]:has-text('Calcular área climatizada') input",
+    "nth": 0
+   },
+   "text": "15",
+   "noClick": true,
+   "label": "largura"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog]:has-text('Calcular área climatizada') input",
+    "nth": 1
+   },
+   "label": "comprimento (clique)"
+  },
+  {
+   "do": "press",
+   "key": "Control+A"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog]:has-text('Calcular área climatizada') input",
+    "nth": 1
+   },
+   "text": "20",
+   "noClick": true,
+   "label": "comprimento"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Usar",
+    "exact": true
+   },
+   "label": "Usar a área calculada"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='Ex: 5,0']"
+   },
+   "label": "carga térmica (TR) (clique)"
+  },
+  {
+   "do": "press",
+   "key": "Control+A"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='Ex: 5,0']"
+   },
+   "text": "4",
+   "noClick": true,
+   "label": "carga térmica (TR)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='Ex: 12']"
+   },
+   "label": "ocupantes fixos (clique)"
+  },
+  {
+   "do": "press",
+   "key": "Control+A"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='Ex: 12']"
+   },
+   "text": "2",
+   "noClick": true,
+   "label": "ocupantes fixos"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='Ex: 30']"
+   },
+   "label": "ocupantes flutuantes (clique)"
+  },
+  {
+   "do": "press",
+   "key": "Control+A"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='Ex: 30']"
+   },
+   "text": "150",
+   "noClick": true,
+   "label": "ocupantes flutuantes"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const esp=[\"Salão de eventos\", \"Salão de eventos\", \"300\", \"4\", \"2\", \"150\"];let out='';for(let i=0;i<14;i++){const d=document.querySelector('[role=dialog]');const vs=d?[...d.querySelectorAll('input,textarea')].map(x=>x.value.trim().toLowerCase()):[];const falta=esp.filter(e=>{e=e.toLowerCase();return !vs.some(x=>x===e||(e.length>3&&x.includes(e)))});if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' nos campos: '+vs.join(' | ').slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere cap06: campos do ambiente Salão de eventos"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button",
+    "hasText": "Adicionar equipamento",
+    "nth": 0
+   },
+   "label": "Adicionar equipamento ao ambiente"
+  },
+  {
+   "do": "waitFor",
+   "text": "Adicionar equipamento ao ambiente",
+   "timeout": 8
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Piso-Teto 48.000 BTUs - Salão de eventos",
+    "exact": true
+   },
+   "label": "marca Piso-Teto 48.000 BTUs - Salão de eventos"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Adicionar 1 equipamento",
+    "exact": false
+   },
+   "label": "Adicionar 1 equipamento(s)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Voltar aos ambientes",
+    "exact": true
+   },
+   "label": "Voltar aos ambientes"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "equipamento(s) no total entram neste contrato",
+    "within": "[role=dialog]"
+   },
+   "seconds": 2.0,
+   "label": "4 equipamentos no total",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "sessionStorage.getItem('form-draft:contract-form')",
+   "label": "rascunho"
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 92.86
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

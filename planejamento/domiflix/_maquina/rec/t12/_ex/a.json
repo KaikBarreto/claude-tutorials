@@ -1,0 +1,156 @@
+{
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap05",
+  "t12/inicio"
+ ],
+ "start": "/dashboard",
+ "stopOnFail": false,
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ },
+ "steps": [
+  {
+   "do": "wait",
+   "ms": 1500
+  },
+  {
+   "do": "shot",
+   "name": "a-01-dash"
+  },
+  {
+   "do": "text",
+   "selector": "main",
+   "name": "dash",
+   "max": 900
+  },
+  {
+   "do": "eval",
+   "js": "({v:document.body.innerText.match(/v1\\.38\\.\\d+/g), dark:!!document.querySelector('[data-domiflix-intro]'), url:location.href})"
+  },
+  {
+   "do": "goto",
+   "url": "/clientes/cbed8554-3919-5fa8-b9c6-5d13ef24cf37"
+  },
+  {
+   "do": "wait",
+   "ms": 1500
+  },
+  {
+   "do": "shot",
+   "name": "a-02-ficha"
+  },
+  {
+   "do": "text",
+   "selector": "main",
+   "name": "ficha",
+   "max": 1500
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Ações",
+    "exact": true
+   }
+  },
+  {
+   "do": "shot",
+   "name": "a-03-acoes"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Editar"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 800
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Portal"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 1200
+  },
+  {
+   "do": "shot",
+   "name": "a-04-portal"
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('[role=dialog] input')].map(i=>i.value+'|'+i.type)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "switch",
+    "name": "Exigir senha para entrar"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "shot",
+   "name": "a-05-senha"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "switch",
+    "name": "Exigir senha para entrar"
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Cancelar"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 600
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Ações",
+    "exact": true
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Copiar link do portal"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 300
+  },
+  {
+   "do": "shot",
+   "name": "a-06-copiado"
+  },
+  {
+   "do": "eval",
+   "js": "navigator.clipboard.readText().catch(e=>String(e))"
+  }
+ ]
+}

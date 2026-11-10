@@ -1,0 +1,147 @@
+{
+ "name": "t9-cap16",
+ "title": "T9 · Cap. 16 · Recapitulando (narração 48,6 s; marcas L1..L5 = início de cada linha do roteiro)",
+ "seed": "t9-cap16",
+ "pace": 0.4,
+ "cps": 9,
+ "tail": 0.4,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t9/inicio",
+  "t9/apos-cap15"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/orcamentos"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/orcamentos"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie orçamentos, custos e precificação",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|erro|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "hover",
+   "target": {
+    "role": "tab",
+    "name": "Precificação",
+    "exact": true
+   },
+   "seconds": 1.0,
+   "label": "aba Precificação",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "tab",
+    "name": "Custos Globais",
+    "exact": true
+   },
+   "seconds": 1.0,
+   "label": "aba Custos Globais",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "tab",
+    "name": "Custos dos Serviços",
+    "exact": true
+   },
+   "seconds": 1.0,
+   "label": "aba Custos dos Serviços",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Novo Orçamento",
+    "exact": true
+   },
+   "seconds": 1.4,
+   "label": "botão Novo Orçamento",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Configurar Proposta",
+    "exact": true
+   },
+   "seconds": 1.4,
+   "label": "botão Configurar Proposta",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr",
+    "hasText": "Hotel Mirante do Mar"
+   },
+   "seconds": 0.35,
+   "label": "a linha do Hotel Mirante do Mar (No financeiro)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr",
+    "hasText": "Hotel Mirante do Mar"
+   },
+   "seconds": 1.05,
+   "label": "a linha do Hotel Mirante do Mar (No financeiro) (continua)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr",
+    "hasText": "Pousada Brisa do Mar"
+   },
+   "seconds": 1.6,
+   "label": "a linha da Pousada Brisa do Mar (Convertido)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

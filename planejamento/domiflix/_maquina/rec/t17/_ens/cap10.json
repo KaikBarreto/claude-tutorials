@@ -1,0 +1,247 @@
+{
+ "name": "t17-cap10",
+ "title": "T17 · Cap. 10 · Exportar meus dados (narração 32,6 s; marcas L1..L4 = início de cada linha do roteiro)",
+ "seed": "t17-cap10",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 0.4,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap05",
+  "t12/inicio",
+  "t12/apos-cap11",
+  "t13/inicio",
+  "t13/apos-cap14",
+  "t19/inicio",
+  "t19/apos-cap13",
+  "t20/inicio",
+  "t20/apos-cap12",
+  "t2/apos-cap10",
+  "t15/inicio",
+  "t15/apos-cap12",
+  "t22/inicio",
+  "t22/apos-cap11",
+  "t21/inicio",
+  "t21/apos-cap10",
+  "t14/inicio",
+  "t14/apos-cap12",
+  "t17/inicio"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/configuracoes"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Camila!",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "document.getAnimations().filter(a=>a.currentTime<0).forEach(a=>{a.startTime=document.timeline.currentTime})"
+  },
+  {
+   "do": "pause",
+   "seconds": 1.2
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "scroll",
+   "point": {
+    "x": 80,
+    "y": 770
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "label": "Configurações, no rodapé do menu (cursor)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "button",
+    "hasText": "Configurações"
+   },
+   "text": "",
+   "noClick": true,
+   "label": "Configurações, no rodapé do menu"
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll(\"button\")].filter(b=>/Configurações/i.test(b.textContent)).shift().click()",
+   "label": "Configurações, no rodapé do menu (clique)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie as configurações do sistema",
+   "timeout": 20
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const b=[...document.querySelectorAll('button')].find(x=>x.innerText.trim()==='Exportar dados');if(!b)return 'SEM BOTAO';b.scrollIntoView({block:'center',behavior:'smooth'});return 1})()",
+   "label": "rola até o cartão Exportar meus dados"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Exportar meus dados\", \"Baixe uma planilha do Excel com os dados da sua empresa\", \"Exportar dados\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere o cartão Exportar meus dados, no fim da aba Empresa"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Exportar meus dados",
+    "within": "main"
+   },
+   "seconds": 2.4,
+   "label": "cartão Exportar meus dados",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Exportar dados",
+    "exact": true
+   },
+   "label": "Exportar dados"
+  },
+  {
+   "do": "waitFor",
+   "text": "Escolha o que deseja incluir na planilha",
+   "timeout": 10
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Exportar meus dados\", \"Escolha o que deseja incluir na planilha. O arquivo é gerado na hora e baixado automaticamente.\", \"Clientes\", \"Ordens de Serviço\", \"Financeiro\", \"Funcionários\", \"Exportar\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere a janela Exportar meus dados com os grupos"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Limpar seleção",
+    "exact": true
+   },
+   "label": "Limpar seleção"
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Clientes",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "label": "marca Clientes"
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Ordens de Serviço",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "label": "marca Ordens de Serviço"
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Financeiro",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "label": "marca Financeiro"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const d=document.querySelector('[role=dialog] .overflow-y-auto');if(!d)return 'sem rolagem';d.scrollTo({top:999,behavior:'smooth'});return d.scrollHeight})()",
+   "label": "rola a lista até Funcionários"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Funcionários",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 2.8,
+   "label": "grupo Funcionários, desmarcado",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const e=[...document.querySelectorAll('[role=dialog] [role=checkbox]')];return e.map(x=>x.getAttribute('aria-checked')).join(',')})()",
+   "label": "lê as caixas da janela (só três marcadas)"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const f=window.fetch.bind(window);window.fetch=async(...x)=>{const u=String(x[0]&&x[0].url||x[0]);if(/\\/rest\\/v1\\/(customers|customer_contacts|service_orders|service_materials|financial_transactions|financial_accounts)/.test(u))await new Promise(r=>setTimeout(r,250));return f(...x)};return 'ok'})()",
+   "label": "latência de rede nas leituras do arquivo (a barra de progresso aparece)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Exportar",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "label": "Exportar"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": ".app-toast-viewport li",
+    "hasText": "Exportação concluída"
+   },
+   "timeout": 25
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": ".app-toast-viewport li",
+    "hasText": "Exportação concluída"
+   },
+   "seconds": 1.2,
+   "label": "aviso: Exportação concluída! O arquivo foi baixado.",
+   "optional": true,
+   "noScroll": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

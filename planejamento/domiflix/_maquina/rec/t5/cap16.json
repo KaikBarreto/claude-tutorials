@@ -1,0 +1,325 @@
+{
+ "name": "t5-cap16",
+ "title": "T5 · Cap. 16 · Onde está cada técnico (narração 52,8 s; marcas L1..L5 = início de cada linha do roteiro)",
+ "seed": "t5-cap16",
+ "pace": 0.3,
+ "cps": 14,
+ "tail": 1.5,
+ "start": {
+  "x": 900,
+  "y": 480
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap15"
+ ],
+ "prewarm": [
+  "/agenda",
+  "/mapa-ao-vivo"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/agenda"
+  },
+  {
+   "do": "waitFor",
+   "text": "Visualize e gerencie os agendamentos",
+   "timeout": 20
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "link",
+    "name": "Agenda",
+    "exact": true
+   },
+   "seconds": 0.5,
+   "at": 0.4,
+   "label": "a Agenda, onde o tutorial anterior parou"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Operacional",
+    "exact": true
+   },
+   "at": 2.6,
+   "label": "vai ao grupo Operacional (sob a ilustração)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "link",
+    "name": "Mapa e Rastreamento",
+    "exact": true
+   },
+   "at": 3.6,
+   "label": "vai ao Mapa e Rastreamento (sob a ilustração)"
+  },
+  {
+   "do": "waitFor",
+   "selector": ".leaflet-marker-icon",
+   "timeout": 20
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": ".leaflet-marker-icon:has(div[style*=\"#6366f1\"])"
+   },
+   "seconds": 0.5,
+   "label": "aquece o mapa (sob a ilustração)"
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 18.56
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Operacional",
+    "exact": true
+   },
+   "seconds": 0.3,
+   "at": 18.56,
+   "label": "menu: Operacional"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "link",
+    "name": "Mapa e Rastreamento",
+    "exact": true
+   },
+   "seconds": 0.4,
+   "at": 19.62,
+   "label": "menu: Mapa e Rastreamento"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": ".leaflet-marker-icon:has(div[style*=\"#6366f1\"])"
+   },
+   "seconds": 0.5,
+   "at": 23.67,
+   "label": "marcador do Bruno"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": ".leaflet-marker-icon:has(div[style*=\"#22c55e\"])"
+   },
+   "seconds": 0.5,
+   "at": 24.55,
+   "label": "marcador da Júlia"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": ".leaflet-marker-icon:has(div[style*=\"width:16px\"][style*=\"#ef4444\"])"
+   },
+   "seconds": 0.5,
+   "at": 26.47,
+   "label": "marcador do Lucas"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "A Caminho",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.6,
+   "at": 29.99,
+   "label": "legenda: A Caminho"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Executando OS",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.6,
+   "at": 30.71,
+   "label": "legenda: Executando OS"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Check-out",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 1.0,
+   "at": 32.15,
+   "label": "legenda: Check-out"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 33.61
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": ".leaflet-marker-icon:has(div[style*=\"#6366f1\"])"
+   },
+   "at": 33.61,
+   "label": "clica no marcador do Bruno"
+  },
+  {
+   "do": "waitFor",
+   "text": "OS vinculada",
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "OS vinculada",
+    "exact": true,
+    "within": ".leaflet-popup-content"
+   },
+   "seconds": 0.6,
+   "at": 35.11,
+   "label": "popup: OS vinculada"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Última atualização",
+    "exact": false,
+    "within": ".leaflet-popup-content"
+   },
+   "seconds": 0.6,
+   "at": 36.31,
+   "label": "popup: última atualização"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Chegada em",
+    "exact": false,
+    "within": ".leaflet-popup-content"
+   },
+   "seconds": 0.8,
+   "at": 37.65,
+   "label": "popup: chegada em ~5 min"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": ".leaflet-marker-icon:has(div[style*=\"width:20px\"])"
+   },
+   "seconds": 1.5,
+   "at": 39.43,
+   "label": "a linha até o destino do cliente"
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 42.49
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Atualizar",
+    "exact": true
+   },
+   "at": 42.49,
+   "label": "Atualizar"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Histórico"
+   },
+   "at": 45.21,
+   "label": "aba Histórico"
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 45.53
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "combobox",
+    "hasText": "Todos os técnicos"
+   },
+   "at": 46.41,
+   "label": "campo Técnico"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Júlia Santos"
+   },
+   "label": "Júlia Santos"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Check-in",
+    "exact": false,
+    "within": "main",
+    "nth": 1
+   },
+   "seconds": 0.3,
+   "at": 49.01,
+   "label": "os deslocamentos do dia"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Distância total",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.6,
+   "at": 50.21,
+   "label": "Distância total"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Tempo em campo",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 1.2,
+   "at": 51.17,
+   "label": "Tempo em campo"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 52.76
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

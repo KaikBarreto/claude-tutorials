@@ -1,0 +1,323 @@
+{
+ "name": "t8-cap11",
+ "title": "T8 · Cap. 11 · A nota fiscal em XML (narração 61,0 s; marcas L1..L5 = início de cada linha do roteiro)",
+ "seed": "t8-cap11",
+ "pace": 0.4,
+ "cps": 12,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap15",
+  "t8/inicio",
+  "t8/apos-cap10"
+ ],
+ "prewarm": [
+  "/estoque"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/estoque"
+  },
+  {
+   "do": "waitFor",
+   "text": "Controle de peças e materiais",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Toggle Sidebar",
+    "nth": 0
+   }
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|erro|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Importar XML de NF-e",
+    "exact": true
+   },
+   "at": 3.54,
+   "label": "Importar XML da NF-e"
+  },
+  {
+   "do": "waitFor",
+   "text": "Selecione o arquivo .xml da nota fiscal eletrônica",
+   "timeout": 10
+  },
+  {
+   "do": "upload",
+   "target": {
+    "role": "button",
+    "name": "Escolher arquivo XML",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "file": "assets/nfe-gelo-norte.xml",
+   "at": 6.0,
+   "label": "escolhe o arquivo XML da nota"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gelo Norte Componentes",
+   "timeout": 15
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 11.08
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Gelo Norte Componentes",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.0,
+   "at": 11.22,
+   "label": "o fornecedor: Gelo Norte Componentes",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Vinculado",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.0,
+   "at": 14.1,
+   "label": "o selo Vinculado",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "91.345.602/0001-36",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.5,
+   "at": 15.86,
+   "label": "o CNPJ da nota",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Produtos da nota",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.6,
+   "at": 22.82,
+   "label": "Produtos da nota",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 23.48
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] input[aria-label]",
+    "nth": 0
+   },
+   "seconds": 0.3,
+   "at": 25.3,
+   "label": "o nome do primeiro produto",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Qtd",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.3,
+   "at": 25.94,
+   "label": "a quantidade",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Unidade",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.3,
+   "at": 26.98,
+   "label": "a unidade",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Custo un.",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.3,
+   "at": 27.94,
+   "label": "o custo unitário",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Destino no estoque",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.6,
+   "at": 28.82,
+   "label": "Destino no estoque",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]",
+    "nth": 0
+   },
+   "seconds": 1.5,
+   "at": 31.94,
+   "label": "o capacitor ligado ao Capacitor 40 µF (EST-010)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]",
+    "nth": 1
+   },
+   "seconds": 0.8,
+   "at": 36.58,
+   "label": "o contator: Criar novo item",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]",
+    "nth": 2
+   },
+   "seconds": 1.2,
+   "at": 38.66,
+   "label": "o filtro secador: Criar novo item",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "3 itens",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.8,
+   "at": 40.8,
+   "label": "3 itens • R$ 731,00",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Confirmar entrada",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 41.7,
+   "label": "Confirmar entrada"
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 42.6
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 47.17
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const d=document,set=(v)=>{Object.defineProperty(d,\"visibilityState\",{configurable:true,get:()=>v});Object.defineProperty(d,\"hidden\",{configurable:true,get:()=>v===\"hidden\"});window.dispatchEvent(new Event(\"visibilitychange\"))};set(\"hidden\");set(\"visible\");delete d.visibilityState;delete d.hidden;return 1})()",
+   "at": 47.27,
+   "label": "atualiza as listas (o app refaz a consulta ao voltar o foco da janela)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text(\"Contator\")"
+   },
+   "seconds": 1.2,
+   "at": 48.91,
+   "label": "o Contator 25 A na lista",
+   "timeout": 8,
+   "optional": true
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text(\"Filtro secador\")"
+   },
+   "seconds": 3.0,
+   "at": 51.23,
+   "label": "o Filtro secador na lista",
+   "timeout": 8,
+   "optional": true
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 61.04
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

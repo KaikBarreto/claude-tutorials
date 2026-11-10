@@ -1,0 +1,7 @@
+{"seedExtra":["t3/apos-cap10","t1/apos-cap13","t4/inicio","t4/apos-cap14","t5/inicio","t5/apos-cap15","t8/inicio"],
+ "steps":[{"do":"goto","url":"/estoque"},{"do":"waitFor","text":"Controle de peças e materiais","timeout":25},
+ {"do":"click","target":{"role":"button","name":"Toggle Sidebar","nth":0}},{"do":"wait","ms":700},
+ {"do":"click","target":{"selector":"aside[aria-label=\"Locais de estoque\"] button:has-text(\"Estoque Principal\")"}},{"do":"wait","ms":500},
+ {"do":"click","target":{"role":"button","name":"Cadastrar Material"}},{"do":"wait","ms":1200},
+ {"do":"eval","js":"JSON.stringify([...document.querySelectorAll('[role=dialog] label, [role=dialog] input, [role=dialog] button, [role=dialog] textarea')].map(b=>(b.tagName+'|'+(b.id||'')+'|'+(b.getAttribute('aria-label')||'')+'|'+(b.placeholder||'')+'|'+(b.textContent||'').trim().slice(0,30))))"},
+ {"do":"scrolly","by":900,"selector":"[role=dialog] div.overflow-y-auto"},{"do":"wait","ms":500},{"do":"shot","name":"e1"}]}

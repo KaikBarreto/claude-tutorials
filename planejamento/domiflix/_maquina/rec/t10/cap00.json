@@ -1,0 +1,168 @@
+{
+ "name": "t10-cap00",
+ "title": "T10 · Cap. 0 · Abertura (narração 40,3 s; marcas L1..L4 = início de cada linha do roteiro)",
+ "seed": "t10-cap00",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t2/apos-cap10",
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t9/inicio",
+  "t9/apos-cap16",
+  "t10/inicio"
+ ],
+ "prewarm": [
+  "/dashboard"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Camila!",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|erro|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "link",
+    "name": "Agenda",
+    "exact": true
+   },
+   "seconds": 0.1,
+   "at": 0.2,
+   "label": "o cursor desce pelo menu lateral",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "CRM e Projetos",
+    "exact": true
+   },
+   "seconds": 0.4,
+   "at": 1.8,
+   "label": "o grupo \"CRM e Projetos\" do menu",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "CRM e Projetos",
+    "exact": true
+   },
+   "at": 4.42,
+   "label": "abre o grupo CRM e Projetos"
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 9.54
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "link",
+    "name": "CRM/Kanban",
+    "exact": true
+   },
+   "seconds": 0.8,
+   "at": 17.08,
+   "label": "item CRM/Kanban do grupo",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "link",
+    "name": "Projetos",
+    "exact": true
+   },
+   "seconds": 0.8,
+   "at": 19.38,
+   "label": "item Projetos do grupo",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 21.87
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "CRM e Projetos",
+    "exact": true
+   },
+   "seconds": 0.8,
+   "at": 26.99,
+   "label": "a câmera fica no grupo CRM e Projetos",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 30.59
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "link",
+    "name": "CRM/Kanban",
+    "exact": true
+   },
+   "seconds": 0.6,
+   "at": 37.93,
+   "label": "o cursor passa pelo CRM/Kanban (sem clicar)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 40.32
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

@@ -1,0 +1,180 @@
+{
+ "name": "t12-cap03",
+ "title": "T12 · Cap. 3 · O cliente abre um chamado (narração 41,8 s; marcas L1..L5 = início de cada linha do roteiro)",
+ "seed": "t12-cap03",
+ "pace": 0.4,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap05",
+  "t12/inicio"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/clientes",
+  "/contratos",
+  "/ordens-servico"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/portal/562a7dbb648d5653872808a111187f64"
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Hotel Mirante do Mar",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|erro|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Abrir Chamado",
+    "exact": true
+   },
+   "at": 3.94,
+   "label": "Abrir Chamado"
+  },
+  {
+   "do": "waitFor",
+   "text": "Descreva o problema",
+   "timeout": 10
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 7.96
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Descreva o problema que você está enfrentando..."
+   },
+   "text": "O ar do restaurante está pingando água perto da janela.",
+   "cps": 15,
+   "at": 8.66,
+   "label": "digita a descrição do chamado"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 15.08
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]"
+   },
+   "at": 15.22,
+   "label": "abre a lista de Equipamento (opcional)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Cassete 36.000 BTUs - Restaurante do hotel"
+   },
+   "at": 20.06,
+   "label": "escolhe o Cassete 36.000 BTUs do restaurante"
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 24.42
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Enviar Chamado",
+    "exact": true
+   },
+   "at": 24.48,
+   "label": "Enviar Chamado"
+  },
+  {
+   "do": "waitFor",
+   "text": "O ar do restaurante está pingando água perto da janela.",
+   "timeout": 15
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "O ar do restaurante está pingando água perto da janela.",
+    "exact": true
+   },
+   "seconds": 2.8,
+   "at": 28.96,
+   "label": "a ordem nova no topo da lista, Pendente",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "O ar do restaurante está pingando água perto da janela.",
+    "exact": true
+   },
+   "seconds": 0.29,
+   "at": 33.66,
+   "label": "o cartão do chamado: número, descrição e o selo Pendente",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 34.5
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "O ar do restaurante está pingando água perto da janela.",
+    "exact": true
+   },
+   "seconds": 4.01,
+   "at": 34.5,
+   "label": "o cartão do chamado: número, descrição e o selo Pendente (continua)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 41.76
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ },
+ "anonymous": true
+}

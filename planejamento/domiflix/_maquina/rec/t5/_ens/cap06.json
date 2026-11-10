@@ -1,0 +1,386 @@
+{
+ "name": "t5-cap06",
+ "title": "T5 · Cap. 6 · Recorrência (narração 38,6 s; marcas L1..L4 = início de cada linha do roteiro)",
+ "seed": "t5-cap06",
+ "pace": 0.3,
+ "cps": 14,
+ "tail": 0.4,
+ "start": {
+  "x": 900,
+  "y": 480
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/g1-trilha",
+  "t5/g2-vazias",
+  "t5/apos-cap05"
+ ],
+ "prewarm": [
+  "/ordens-servico"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/ordens-servico"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie suas ordens de serviço",
+   "timeout": 20
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{if(!window.__fixAnim){window.__fixAnim=setInterval(()=>document.getAnimations().filter(a=>a.currentTime<0).forEach(a=>{a.startTime=document.timeline.currentTime}),40)}return 1})()"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|erro|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  },
+  {
+   "do": "clock",
+   "set": "2026-11-03T09:00:00-03:00"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Nova OS",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Nova Ordem de Serviço",
+   "timeout": 10
+  },
+  {
+   "do": "pause",
+   "seconds": 0.5
+  }
+ ],
+ "steps": [
+  {
+   "do": "click",
+   "target": {
+    "role": "combobox",
+    "hasText": "Selecione o cliente"
+   },
+   "label": "campo Cliente"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Academia Ponto Forte"
+   },
+   "label": "Academia Ponto Forte"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]",
+    "hasText": "Adicionar serviços"
+   },
+   "label": "campo Tipos de Serviço"
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Higienização de Split",
+    "exact": true,
+    "within": "[data-radix-popper-content-wrapper]"
+   },
+   "label": "Higienização de Split"
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "label": "fecha a lista de serviços"
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll(\"[role=dialog] button\")].filter(b=>/^Próximo/i.test(b.textContent))[0].click()",
+   "label": "Próximo (acelerado, Escopo técnico)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Selecione um ou mais equipamentos para esta OS.",
+   "timeout": 10
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll(\"[role=dialog] button\")].filter(b=>/Selecionar todos/i.test(b.textContent))[0].click()",
+   "label": "marca os dois splits (acelerado)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Desmarcar todos",
+   "timeout": 8
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll(\"[role=dialog] button\")].filter(b=>/^Próximo/i.test(b.textContent))[0].click()",
+   "label": "Próximo (acelerado, Equipe e agenda)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Defina responsáveis, organize as jornadas",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]",
+    "hasText": "Selecione..."
+   },
+   "label": "campo Responsáveis"
+  },
+  {
+   "do": "waitFor",
+   "text": "Lucas Ferreira",
+   "timeout": 6
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const e=[...document.querySelectorAll('[data-radix-popper-content-wrapper] *')].find(x=>x.children.length===0&&x.textContent.trim()===\"Lucas Ferreira\");if(!e)return 'SEM ALVO';e.click();return 1})()",
+   "label": "Lucas Ferreira (acelerado)"
+  },
+  {
+   "do": "pause",
+   "seconds": 0.2
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "label": "fecha o seletor"
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 640,
+    "y": 420
+   },
+   "by": 900,
+   "duration": 0.5,
+   "after": 0,
+   "label": "leva a Recorrência à vista (rolagem)"
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 239,
+    "y": 589
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "label": "liga a Recorrência (cursor)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] div:has(> label > svg.lucide-repeat) > button[role=switch]"
+   },
+   "text": "",
+   "noClick": true,
+   "label": "liga a Recorrência"
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll(\"[role=dialog] div:has(> label > svg.lucide-repeat) > button[role=switch]\")].shift().click()",
+   "label": "liga a Recorrência (clique)"
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 640,
+    "y": 420
+   },
+   "by": 900,
+   "duration": 0.5,
+   "after": 0,
+   "label": "mostra o painel da Recorrência (rolagem)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]",
+    "hasText": "Semanal"
+   },
+   "label": "campo Frequência"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Mensal"
+   },
+   "label": "Mensal"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button",
+    "hasText": "dd/mm/aaaa"
+   },
+   "label": "campo Até"
+  },
+  {
+   "do": "waitFor",
+   "selector": "button[name=next-month]",
+   "timeout": 8
+  },
+  {
+   "do": "eval",
+   "js": "document.querySelector(\"button[name=next-month]\").click()",
+   "label": "mês seguinte (1)"
+  },
+  {
+   "do": "pause",
+   "seconds": 0.25
+  },
+  {
+   "do": "eval",
+   "js": "document.querySelector(\"button[name=next-month]\").click()",
+   "label": "mês seguinte (2)"
+  },
+  {
+   "do": "pause",
+   "seconds": 0.25
+  },
+  {
+   "do": "eval",
+   "js": "document.querySelector(\"button[name=next-month]\").click()",
+   "label": "mês seguinte (3)"
+  },
+  {
+   "do": "pause",
+   "seconds": 0.25
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 928,
+    "y": 267
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "label": "dia 3 de fevereiro (cursor)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "role": "gridcell",
+    "name": "3",
+    "exact": true
+   },
+   "text": "",
+   "noClick": true,
+   "label": "dia 3 de fevereiro"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const e=[...document.querySelectorAll('[role=gridcell]')].find(x=>x.textContent.trim()==='3'&&!x.disabled);if(!e)return 'SEM ALVO';e.click();return 1})()",
+   "label": "dia 3 de fevereiro (clique)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] p",
+    "hasText": "Serão criadas"
+   },
+   "seconds": 2.4,
+   "label": "prévia: serão criadas 4 OS"
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll(\"[role=dialog] button\")].filter(b=>/^Próximo/i.test(b.textContent))[0].click()",
+   "label": "Próximo (acelerado, Revisão)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Pronto para criar",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Criar OS Recorrentes",
+    "exact": true
+   },
+   "label": "Criar OS Recorrentes"
+  },
+  {
+   "do": "waitFor",
+   "text": "com recorrência!",
+   "timeout": 15
+  },
+  {
+   "do": "scroll",
+   "label": "desce até o Kanban",
+   "by": 330,
+   "point": {
+    "x": 760,
+    "y": 120
+   }
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "HIG-2026-17",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.4,
+   "label": "cartão da série: novembro"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "HIG-2026-18",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.4,
+   "label": "cartão da série: dezembro"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "HIG-2027-19",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.4,
+   "label": "cartão da série: janeiro"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "HIG-2027-20",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 2.0,
+   "label": "cartão da série: fevereiro"
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

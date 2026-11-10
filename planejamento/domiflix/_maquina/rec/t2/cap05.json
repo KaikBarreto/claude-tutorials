@@ -1,0 +1,401 @@
+{
+ "name": "t2-cap05",
+ "title": "T2 · Cap. 5 · Cadastrando um técnico (narração 89,0 s; marcas L1..L6 = início de cada linha do roteiro)",
+ "seed": "t2-cap05",
+ "pace": 0.3,
+ "cps": 40,
+ "tail": 1.5,
+ "start": {
+  "x": 900,
+  "y": 420
+ },
+ "seedExtra": [
+  "t1/apos-cap13",
+  "t2/inicio",
+  "t2/apos-cap04"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/configuracoes"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "goto",
+   "url": "/configuracoes?tab=usuarios"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "main p",
+    "hasText": "usuários •"
+   },
+   "timeout": 15
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Configurações",
+    "exact": true,
+    "within": "main"
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Configurações de Cargos",
+   "timeout": 10
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 0.5,
+   "label": "fecha a janela de cargos"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Criar Usuário",
+    "exact": true,
+    "within": "main"
+   },
+   "at": 6.36,
+   "label": "Criar Usuário"
+  },
+  {
+   "do": "waitFor",
+   "text": "Preencha os dados do novo usuário",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Foto do Usuário",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.0,
+   "at": 8.06,
+   "label": "à esquerda: os dados da pessoa"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "heading",
+    "name": "Permissões",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.0,
+   "at": 10.62,
+   "label": "à direita: as permissões"
+  },
+  {
+   "do": "click",
+   "target": {
+    "placeholder": "Nome do usuário"
+   },
+   "at": 12.26,
+   "label": "clica no campo Nome"
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 13.16
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Nome do usuário"
+   },
+   "text": "Rafael Lima",
+   "cps": 40,
+   "at": 13.16,
+   "label": "nome: Rafael Lima",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "placeholder": "Crie uma senha segura"
+   },
+   "at": 13.56,
+   "label": "clica no campo Senha"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Crie uma senha segura"
+   },
+   "text": "$TUT_SENHA",
+   "cps": 1.3,
+   "at": 14.95,
+   "label": "senha (mascarada): o indicador acende item por item",
+   "noClick": true
+  },
+  {
+   "do": "eval",
+   "js": "(() => { const e = document.querySelector('[role=dialog] ' + \"input[type=email]\"); if (!e) return 'alvo nao achado: ' + \"input[type=email]\"; e.scrollIntoView({ block: \"center\", behavior: 'smooth' }); return 'rolando ate ' + \"input[type=email]\"; })()",
+   "at": 28.14,
+   "label": "rola até o e-mail"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 28.64
+  },
+  {
+   "do": "click",
+   "target": {
+    "placeholder": "email@exemplo.com"
+   },
+   "at": 28.64,
+   "label": "clica no campo Email"
+  },
+  {
+   "do": "eval",
+   "js": "(() => { document.execCommand('insertText', false, \"rafael.lima@glacialcold.example\"); const e = document.activeElement; return e && e.value; })()",
+   "at": 29.7,
+   "label": "e-mail: rafael.lima@glacialcold.example"
+  },
+  {
+   "do": "click",
+   "target": {
+    "placeholder": "(00) 00000-0000"
+   },
+   "at": 32.32,
+   "label": "clica no campo Telefone"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "(00) 00000-0000"
+   },
+   "text": "2130001002",
+   "cps": 40,
+   "at": 33.22,
+   "label": "telefone: (21) 3000-1002",
+   "noClick": true
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "combobox",
+    "hasText": "Nenhum",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.5,
+   "at": 35.34,
+   "label": "Vincular a Funcionário (fica em Nenhum)"
+  },
+  {
+   "do": "eval",
+   "js": "(() => { const e = document.querySelector('[role=dialog] ' + \"button[role=switch]:not([aria-label])\"); if (!e) return 'alvo nao achado: ' + \"button[role=switch]:not([aria-label])\"; e.scrollIntoView({ block: \"center\", behavior: 'smooth' }); return 'rolando ate ' + \"button[role=switch]:not([aria-label])\"; })()",
+   "at": 41.74,
+   "label": "rola até Tipo de Usuário"
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 42.24
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] button[role=switch]:not([aria-label])"
+   },
+   "seconds": 0.5,
+   "at": 42.24,
+   "label": "Tipo de Usuário (Interno)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[role=switch]:not([aria-label])"
+   },
+   "at": 42.96,
+   "label": "escolhe Técnico"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Aparece na listagem de técnicos da OS e pode ser adicionado a equipes",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 2.0,
+   "at": 46.06,
+   "label": "legenda do Técnico"
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 55.64
+  },
+  {
+   "do": "eval",
+   "js": "(() => { const d = document.querySelector('[role=dialog] .overflow-y-auto'); if (!d) return 'sem area rolavel'; d.scrollTo({ top: 0, behavior: 'smooth' }); return 'topo da janela'; })()",
+   "at": 55.92,
+   "label": "volta ao topo (Perfis rápidos)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Perfis rápidos",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.5,
+   "at": 56.68,
+   "label": "Perfis rápidos"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Técnico de Campo",
+    "exact": true
+   },
+   "at": 58.92,
+   "label": "clica no perfil rápido Técnico de Campo"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Ver ações de Agenda",
+    "exact": true
+   },
+   "seconds": 0.5,
+   "at": 62.78,
+   "label": "a Agenda ligou"
+  },
+  {
+   "do": "eval",
+   "js": "(() => { const e = [...document.querySelectorAll('[role=dialog] [aria-label]')].find((x) => x.getAttribute('aria-label') === \"Acesso \\u00e0 tela \\u00c1rea do T\\u00e9cnico\\u2122\"); if (!e) return 'alvo nao achado: ' + \"Acesso \\u00e0 tela \\u00c1rea do T\\u00e9cnico\\u2122\"; e.scrollIntoView({ block: \"center\", behavior: 'auto' }); return 'rolando ate ' + \"Acesso \\u00e0 tela \\u00c1rea do T\\u00e9cnico\\u2122\"; })()",
+   "at": 63.24,
+   "label": "rola até a Área do Técnico"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "switch",
+    "name": "Acesso à tela Área do Técnico™",
+    "exact": true
+   },
+   "seconds": 0.4,
+   "at": 63.84,
+   "label": "a Área do Técnico ligou"
+  },
+  {
+   "do": "eval",
+   "js": "(() => { const e = [...document.querySelectorAll('[role=dialog] [aria-label]')].find((x) => x.getAttribute('aria-label') === \"Ver a\\u00e7\\u00f5es de Ordens de Servi\\u00e7o\"); if (!e) return 'alvo nao achado: ' + \"Ver a\\u00e7\\u00f5es de Ordens de Servi\\u00e7o\"; e.scrollIntoView({ block: \"center\", behavior: 'auto' }); return 'rolando ate ' + \"Ver a\\u00e7\\u00f5es de Ordens de Servi\\u00e7o\"; })()",
+   "at": 64.28,
+   "label": "rola até Ordens de Serviço"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Ver ações de Ordens de Serviço",
+    "exact": true
+   },
+   "at": 64.98,
+   "label": "abre a seta de Ordens de Serviço (tela desligada)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "switch",
+    "name": "Editar OS em campo",
+    "exact": true
+   },
+   "seconds": 1.2,
+   "at": 65.66,
+   "label": "Editar OS em campo ligada"
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 1060,
+    "y": 742
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "at": 71.76,
+   "label": "Criar Usuário (cursor)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] button",
+    "hasText": "Criar Usuário"
+   },
+   "text": "",
+   "noClick": true,
+   "label": "Criar Usuário"
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll(\"[role=dialog] button\")].filter(b=>/Criar Usuário/i.test(b.textContent)).shift().click()",
+   "at": 72.66,
+   "label": "Criar Usuário (clique)"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "role": "button",
+    "name": "Rafael Lima",
+    "within": "main"
+   },
+   "timeout": 30
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 82.98
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Rafael Lima",
+    "within": "main"
+   },
+   "seconds": 1.5,
+   "at": 85.64,
+   "label": "o Rafael na lista, com o cargo Técnico de Campo"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 89.04
+  }
+ ]
+}

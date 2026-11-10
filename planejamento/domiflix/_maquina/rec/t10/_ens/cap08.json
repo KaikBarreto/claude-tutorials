@@ -1,0 +1,352 @@
+{
+ "name": "t10-cap08",
+ "title": "T10 · Cap. 8 · Contatos que chegam sozinhos (narração 98,4 s; marcas L1..L8 = início de cada linha do roteiro)",
+ "seed": "t10-cap08",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 0.4,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t2/apos-cap10",
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t9/inicio",
+  "t9/apos-cap16",
+  "t10/inicio",
+  "t10/apos-cap06"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/crm"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Camila!",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/crm"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie oportunidades e processos",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Toggle Sidebar",
+    "nth": 0
+   }
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|erro|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Configurações do CRM/Kanban",
+    "exact": true
+   },
+   "label": "Configurações do CRM/Kanban"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerenciar Funis",
+   "timeout": 15
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Webhooks",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "label": "seção Webhooks"
+  },
+  {
+   "do": "waitFor",
+   "text": "Webhooks de Leads Externos",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Webhooks de Leads Externos",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.2,
+   "label": "título Webhooks de Leads Externos",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Criar novo webhook",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.2,
+   "label": "quadro Criar novo webhook",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Ex: Meta Ads - Campanha Março",
+    "within": "[role=dialog]"
+   },
+   "text": "Site - Pedido de orçamento",
+   "cps": 24,
+   "label": "Nome do webhook"
+  },
+  {
+   "do": "select",
+   "target": {
+    "role": "combobox",
+    "name": "Origem padrão"
+   },
+   "option": "Site",
+   "label": "Origem padrão: Site"
+  },
+  {
+   "do": "select",
+   "target": {
+    "role": "combobox",
+    "name": "Funil de destino"
+   },
+   "option": "Funil de Vendas",
+   "label": "Funil de destino"
+  },
+  {
+   "do": "select",
+   "target": {
+    "role": "combobox",
+    "name": "Etapa de destino"
+   },
+   "option": "Lead",
+   "label": "Etapa de destino: Lead"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Criar webhook",
+    "exact": true
+   },
+   "label": "Criar webhook"
+  },
+  {
+   "do": "waitFor",
+   "text": "Webhooks configurados",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Site - Pedido de orçamento",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.0,
+   "label": "a linha do webhook novo (Ativo)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:has(svg.lucide-copy)"
+   },
+   "label": "botão de copiar"
+  },
+  {
+   "do": "waitFor",
+   "text": "URL copiada!",
+   "timeout": 8
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const e=[...document.querySelectorAll('input')].find(i=>/crm-lead-webhook\\?token=/.test(i.value));if(!e)return 'sem campo';window.__tok=e.value.split('token=')[1];return window.__tok.length})()",
+   "label": "lê o token do campo da tela (para o POST do robô)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Como usar o webhook",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.4,
+   "label": "bloco Como usar o webhook",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "label": "fecha a janela"
+  },
+  {
+   "do": "wait",
+   "seconds": 0.4
+  },
+  {
+   "do": "eval",
+   "js": "(() => { const d = document.querySelector('[role=dialog]'); if (!d) return 'ja fechada'; const b = [...d.querySelectorAll('button')].find((x) => [x.textContent, x.getAttribute('aria-label'), x.title].some((v) => /^\\s*fechar\\s*$/i.test(v || ''))); if (!b) return 'sem botao Fechar'; b.click(); return 'fechada pelo botao'; })()",
+   "label": "Fechar (se o Esc não fechou)"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const r=await fetch(\"http://127.0.0.1:54328\"+'/functions/v1/crm-lead-webhook?token='+window.__tok,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:'Renato Assis',phone:'(21) 93000-1500',email:'renato.assis@email.example',title:'Orçamento pelo site - Renato Assis',notes:'Manutenção em 3 splits do escritório'})});return r.status+' '+(await r.text()).slice(0,120)})()",
+   "label": "o site manda um contato (POST invisível ao webhook)"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.dispatchEvent(new Event('focus'));document.dispatchEvent(new Event('visibilitychange'));return 'foco'})()",
+   "label": "a janela volta ao foco: o quadro relê os cards"
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela (antes de recarregar)"
+  },
+  {
+   "do": "goto",
+   "url": "/crm",
+   "reload": true,
+   "label": "recarrega o CRM (o quadro relê os cards; cortar na edição)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie oportunidades e processos",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|erro|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()",
+   "label": "religa o observador de avisos (a página foi recarregada)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Toggle Sidebar",
+    "nth": 0
+   },
+   "label": "recolhe o menu lateral de novo"
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "waitFor",
+   "text": "Orçamento pelo site - Renato Assis",
+   "timeout": 15
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main [draggable=true]",
+    "hasText": "Renato Assis"
+   },
+   "seconds": 1.2,
+   "label": "o card novo na coluna Lead (Sem responsável, origem Site)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main [draggable=true]",
+    "hasText": "Renato Assis"
+   },
+   "label": "abre o card"
+  },
+  {
+   "do": "waitFor",
+   "text": "Assumir oportunidade",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Observações",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.4,
+   "label": "Observações (Nome, Telefone, Email e Origem)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Assumir oportunidade",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "label": "Assumir oportunidade"
+  },
+  {
+   "do": "waitFor",
+   "text": "Camila Duarte",
+   "timeout": 10
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Responsáveis:\", \"Camila Duarte\", \"Principal\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Camila Duarte assumiu (Principal)"
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

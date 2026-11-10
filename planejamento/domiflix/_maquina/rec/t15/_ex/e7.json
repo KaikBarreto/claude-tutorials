@@ -1,0 +1,116 @@
+{
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap05",
+  "t12/inicio",
+  "t12/apos-cap11",
+  "t13/inicio",
+  "t13/apos-cap14",
+  "t19/inicio",
+  "t19/apos-cap13",
+  "t20/inicio",
+  "t2/apos-cap10",
+  "t15/inicio",
+  "t15/salarios"
+ ],
+ "start": "/dashboard",
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ },
+ "stopOnFail": false,
+ "steps": [
+  {
+   "do": "goto",
+   "url": "/funcionarios"
+  },
+  {
+   "do": "waitFor",
+   "text": "Lista de Funcionários",
+   "timeout": 25
+  },
+  {
+   "do": "wait",
+   "ms": 700
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Rafael Lima",
+    "within": "main"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 900
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Vale",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 1200
+  },
+  {
+   "do": "html",
+   "selector": "[role=dialog] input[placeholder='R$ 0,00']",
+   "max": 900
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const i=document.querySelector(\"[role=dialog] input[placeholder='R$ 0,00']\");const r=i.getBoundingClientRect();const e=document.elementFromPoint(r.x+r.width/2,r.y+r.height/2);return [r.x,r.y,r.width,r.height,e&&e.outerHTML.slice(0,200),getComputedStyle(i).pointerEvents,i.readOnly,i.disabled,document.querySelectorAll(\"[role=dialog] input[placeholder='R$ 0,00']\").length].join(' ## ')})()",
+   "max": 1200
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='R$ 0,00']"
+   },
+   "timeout": 3
+  },
+  {
+   "do": "keys",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='R$ 0,00']"
+   },
+   "text": "30000",
+   "delay": 40
+  },
+  {
+   "do": "eval",
+   "js": "document.querySelector(\"[role=dialog] input[placeholder='R$ 0,00']\").value"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Registrar Vale",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 1500
+  },
+  {
+   "do": "shot",
+   "name": "k1-apos-vale"
+  },
+  {
+   "do": "eval",
+   "js": "document.body.innerText.match(/Vale registrado[^\\n]*/)?.[0] || document.body.innerText.match(/Erro[^\\n]*/)?.[0] || 'sem aviso'"
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('[role=dialog]')].length"
+  }
+ ]
+}

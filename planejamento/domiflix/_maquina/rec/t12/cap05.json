@@ -1,0 +1,329 @@
+{
+ "name": "t12-cap05",
+ "title": "T12 · Cap. 5 · O QR Code do equipamento (narração 66,0 s; marcas L1..L7 = início de cada linha do roteiro)",
+ "seed": "t12-cap05",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap05",
+  "t12/inicio",
+  "t12/apos-cap03"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/clientes",
+  "/contratos",
+  "/ordens-servico",
+  "/equipamentos/d0f4c4b5-7a28-40ff-895f-6bdf7252c748"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Camila!",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|erro|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Gestão",
+    "exact": true
+   },
+   "at": 0.3,
+   "label": "grupo Gestão do menu"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "link",
+    "name": "Clientes e Fornecedores",
+    "exact": true
+   },
+   "at": 4.4,
+   "label": "menu Clientes e Fornecedores"
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Colégio Monte Verde",
+    "exact": true,
+    "within": "main"
+   },
+   "at": 6.6,
+   "label": "ficha do Colégio Monte Verde"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Equipamentos",
+    "exact": true
+   },
+   "at": 8.1,
+   "label": "aba Equipamentos da ficha"
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Hi-Wall 18.000 BTUs - Sala dos professores",
+    "exact": true,
+    "within": "main"
+   },
+   "at": 9.3,
+   "label": "abre o Hi-Wall 18.000 BTUs da sala dos professores"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "QR Code do equipamento",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 1.6,
+   "at": 10.86,
+   "label": "cartão QR Code do equipamento",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 13.48
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Gerar Etiqueta",
+    "exact": true
+   },
+   "seconds": 0.3,
+   "at": 14.06,
+   "label": "botão Gerar Etiqueta",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Baixar QR (PNG)",
+    "exact": true
+   },
+   "seconds": 0.3,
+   "at": 15.26,
+   "label": "botão Baixar QR (PNG)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Abrir link",
+    "exact": true
+   },
+   "seconds": 0.3,
+   "at": 16.7,
+   "label": "botão Abrir link (sem clicar)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Copiar link",
+    "exact": true
+   },
+   "at": 21.79,
+   "label": "Copiar link do QR"
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela (1ª parte, logada)"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 22.53
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 29.65
+  },
+  {
+   "do": "eval",
+   "js": "localStorage.clear(); sessionStorage.clear(); 1",
+   "at": 29.73,
+   "label": "limpa a sessão (vira o cliente)"
+  },
+  {
+   "do": "goto",
+   "url": "/portal/b1942560a8109dd96fb42b9f2f5b2cb6?eq=d0f4c4b5-7a28-40ff-895f-6bdf7252c748",
+   "reload": true,
+   "at": 30.03,
+   "label": "abre o link do QR sem sessão"
+  },
+  {
+   "do": "waitFor",
+   "text": "Visão geral",
+   "timeout": 25
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|erro|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Visão geral",
+    "exact": true
+   },
+   "seconds": 0.3,
+   "at": 37.65,
+   "label": "aba Visão geral do aparelho",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Aerovento",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 1.0,
+   "at": 39.17,
+   "label": "a marca Aerovento",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Histórico",
+    "exact": true
+   },
+   "at": 44.58,
+   "label": "aba Histórico do aparelho"
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 45.08
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main p",
+    "hasText": "Ocorrência 1"
+   },
+   "seconds": 1.4,
+   "at": 48.2,
+   "label": "as visitas do contrato no histórico",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Anexos",
+    "exact": true
+   },
+   "at": 54.18,
+   "label": "aba Anexos do aparelho"
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 54.84
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Manual Aerovento AV-HW18.pdf"
+   },
+   "seconds": 1.8,
+   "at": 55.24,
+   "label": "o anexo Manual Aerovento AV-HW18.pdf",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Voltar para lista",
+    "exact": true
+   },
+   "seconds": 0.3,
+   "at": 61.48,
+   "label": "botão Voltar para lista",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 61.96
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Voltar para lista",
+    "exact": true
+   },
+   "at": 64.1,
+   "label": "Voltar para lista"
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 66.0
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

@@ -1,0 +1,390 @@
+{
+ "name": "t8-cap07",
+ "title": "T8 · Cap. 7 · Todo movimento no Kardex (narração 70,6 s; marcas L1..L5 = início de cada linha do roteiro)",
+ "seed": "t8-cap07",
+ "pace": 0.4,
+ "cps": 11,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap15",
+  "t8/inicio",
+  "t8/apos-cap06"
+ ],
+ "prewarm": [
+  "/estoque"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/estoque"
+  },
+  {
+   "do": "waitFor",
+   "text": "Controle de peças e materiais",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Toggle Sidebar",
+    "nth": 0
+   }
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|erro|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Histórico de Materiais (Kardex)",
+    "exact": true
+   },
+   "at": 0.9,
+   "label": "aba Histórico de Materiais (Kardex)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Kardex geral",
+   "timeout": 15
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Geral (Todos)",
+    "within": "main"
+   },
+   "seconds": 1.0,
+   "at": 4.9,
+   "label": "a coluna Materiais, com \"Geral (Todos)\"",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Kardex geral",
+    "within": "main"
+   },
+   "seconds": 1.5,
+   "at": 7.22,
+   "label": "o Kardex geral",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 12.28
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main thead th",
+    "hasText": "Data e Hora"
+   },
+   "seconds": 0.15,
+   "at": 12.6,
+   "label": "coluna Data e Hora",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main thead th",
+    "hasText": "Tipo"
+   },
+   "seconds": 0.15,
+   "at": 13.64,
+   "label": "coluna Tipo",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main thead th",
+    "hasText": "Material e origem"
+   },
+   "seconds": 0.15,
+   "at": 15.08,
+   "label": "coluna Material e origem",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main thead th",
+    "hasText": "Local"
+   },
+   "seconds": 0.15,
+   "at": 17.08,
+   "label": "coluna Local",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main thead th",
+    "hasText": "Alteração"
+   },
+   "seconds": 0.15,
+   "at": 19.32,
+   "label": "coluna Alteração",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main thead th",
+    "hasText": "Saldo final"
+   },
+   "seconds": 0.15,
+   "at": 20.64,
+   "label": "coluna Saldo final",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text(\"Fita isolante\"):has-text(\"Compra no balcão\")"
+   },
+   "seconds": 0.3,
+   "at": 22.24,
+   "label": "a entrada da Fita isolante",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text(\"Capacitor 40\"):has-text(\"Cadastro inicial\")"
+   },
+   "seconds": 0.3,
+   "at": 23.6,
+   "label": "o cadastro inicial do Capacitor 40 µF",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text(\"Capacitor 40\"):has-text(\"Saída\")"
+   },
+   "seconds": 0.3,
+   "at": 25.52,
+   "label": "a saída do Capacitor 40 µF",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text(\"Transferência\")"
+   },
+   "seconds": 2.0,
+   "at": 26.8,
+   "label": "a transferência: Estoque Principal → Van 01",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 30.9
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text(\"OS #16\")",
+    "nth": 0
+   },
+   "seconds": 0.6,
+   "at": 30.9,
+   "label": "a primeira linha de Consumo (OS #16)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "OS #16",
+    "within": "main"
+   },
+   "seconds": 2.0,
+   "at": 33.82,
+   "label": "a origem OS #16",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 49.52
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main [aria-label=\"Período\"]"
+   },
+   "seconds": 0.6,
+   "at": 49.62,
+   "label": "o seletor de período: Este mês",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Filtros",
+    "within": "main"
+   },
+   "at": 51.82,
+   "label": "abre Filtros do Kardex"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Tipo de movimento",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.3,
+   "at": 53.04,
+   "label": "Tipo de movimento",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Local",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.3,
+   "at": 54.38,
+   "label": "Local",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Consumo",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 55.5,
+   "label": "filtra por Consumo"
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 57.82,
+   "label": "fecha Filtros"
+  },
+  {
+   "do": "pause",
+   "seconds": 0.6
+  },
+  {
+   "do": "eval",
+   "js": "document.querySelector(\"main button[aria-label^=\\\"Filtros\\\"]\").click()",
+   "at": 58.28,
+   "label": "abre Filtros de novo"
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 58.88
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Consumo",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 59.38,
+   "label": "tira o filtro Consumo"
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 60.18,
+   "label": "fecha Filtros"
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll(\"main button\")].find(b=>/Gás refrigerante R-410A/.test(b.textContent)).scrollIntoView({block:\"center\",behavior:\"smooth\"})",
+   "at": 60.38,
+   "label": "rola a lista de materiais até o Gás"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button:has-text(\"Gás refrigerante R-410A\")"
+   },
+   "at": 60.88,
+   "label": "escolhe o Gás refrigerante R-410A na coluna Materiais"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main h2",
+    "hasText": "Gás refrigerante R-410A"
+   },
+   "seconds": 2.0,
+   "at": 64.06,
+   "label": "Histórico deste material",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 70.56
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

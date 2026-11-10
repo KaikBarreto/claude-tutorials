@@ -1,0 +1,953 @@
+{
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap05",
+  "t12/inicio",
+  "t12/apos-cap11",
+  "t13/inicio",
+  "t13/apos-cap14",
+  "t19/inicio",
+  "t19/apos-cap13",
+  "t20/inicio",
+  "t20/apos-cap12",
+  "t2/apos-cap10",
+  "t15/inicio",
+  "t15/apos-cap12",
+  "t22/inicio",
+  "t22/apos-cap11",
+  "t21/inicio",
+  "t21/apos-cap10",
+  "t14/inicio",
+  "t14/apos-cap12",
+  "t17/inicio"
+ ],
+ "start": "/dashboard",
+ "stopOnFail": false,
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ },
+ "steps": [
+  {
+   "do": "waitFor",
+   "text": "Olá, Camila!",
+   "timeout": 30
+  },
+  {
+   "do": "wait",
+   "ms": 5000
+  },
+  {
+   "do": "shot",
+   "name": "d01"
+  },
+  {
+   "do": "shot",
+   "name": "d01full",
+   "full": true
+  },
+  {
+   "do": "text",
+   "selector": "main",
+   "name": "dashboard",
+   "max": 7000
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('aside, nav')].map(e=>e.innerText.replace(/\\s+/g,' ').slice(0,400))",
+   "name": "menu"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Diário",
+    "exact": true
+   },
+   "optional": true
+  },
+  {
+   "do": "wait",
+   "ms": 1200
+  },
+  {
+   "do": "shot",
+   "name": "d02-diario"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button",
+    "hasText": "Este mês"
+   },
+   "optional": true
+  },
+  {
+   "do": "wait",
+   "ms": 800
+  },
+  {
+   "do": "shot",
+   "name": "d03-periodos"
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('[role=menuitem],[role=option],[role=dialog] button')].map(e=>e.innerText.trim())",
+   "name": "opcoes"
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Mês passado",
+    "exact": true
+   },
+   "optional": true
+  },
+  {
+   "do": "wait",
+   "ms": 2500
+  },
+  {
+   "do": "shot",
+   "name": "d04-mespassado",
+   "full": true
+  },
+  {
+   "do": "text",
+   "selector": "main",
+   "name": "mes passado",
+   "max": 4000
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button",
+    "hasText": "Mês passado"
+   },
+   "optional": true
+  },
+  {
+   "do": "wait",
+   "ms": 800
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Personalizado",
+    "exact": true
+   },
+   "optional": true
+  },
+  {
+   "do": "wait",
+   "ms": 1000
+  },
+  {
+   "do": "shot",
+   "name": "d05-personalizado"
+  },
+  {
+   "do": "text",
+   "selector": "[role=dialog],[data-radix-popper-content-wrapper]",
+   "name": "personalizado",
+   "max": 1500
+  },
+  {
+   "do": "press",
+   "key": "Escape"
+  },
+  {
+   "do": "wait",
+   "ms": 600
+  },
+  {
+   "do": "shot",
+   "name": "d06-aposesc"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button",
+    "hasText": "Mês passado"
+   },
+   "optional": true
+  },
+  {
+   "do": "wait",
+   "ms": 700
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Este mês",
+    "exact": true
+   },
+   "optional": true
+  },
+  {
+   "do": "wait",
+   "ms": 2000
+  },
+  {
+   "do": "shot",
+   "name": "d07-estemes"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button",
+    "hasText": "Concluída"
+   },
+   "optional": true
+  },
+  {
+   "do": "wait",
+   "ms": 2500
+  },
+  {
+   "do": "shot",
+   "name": "d08-os-concluida"
+  },
+  {
+   "do": "eval",
+   "js": "location.href",
+   "name": "url"
+  },
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Camila!",
+   "timeout": 30
+  },
+  {
+   "do": "wait",
+   "ms": 3500
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Faturamento",
+    "within": "main"
+   },
+   "optional": true
+  },
+  {
+   "do": "wait",
+   "ms": 3500
+  },
+  {
+   "do": "shot",
+   "name": "d09-fatur"
+  },
+  {
+   "do": "eval",
+   "js": "location.href",
+   "name": "url"
+  },
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Camila!",
+   "timeout": 30
+  },
+  {
+   "do": "wait",
+   "ms": 3500
+  },
+  {
+   "do": "text",
+   "selector": "main",
+   "name": "dash2",
+   "max": 200
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Chamado pelo portal",
+    "within": "main"
+   },
+   "optional": true
+  },
+  {
+   "do": "wait",
+   "ms": 3000
+  },
+  {
+   "do": "shot",
+   "name": "d10-chamado"
+  },
+  {
+   "do": "eval",
+   "js": "location.href",
+   "name": "url"
+  },
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Camila!",
+   "timeout": 30
+  },
+  {
+   "do": "wait",
+   "ms": 3500
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "OS Abertas",
+    "within": "main"
+   },
+   "optional": true
+  },
+  {
+   "do": "wait",
+   "ms": 3000
+  },
+  {
+   "do": "shot",
+   "name": "d11-osabertas"
+  },
+  {
+   "do": "eval",
+   "js": "location.href",
+   "name": "url"
+  },
+  {
+   "do": "goto",
+   "url": "/ordens-servico"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie suas ordens de serviço",
+   "timeout": 30
+  },
+  {
+   "do": "wait",
+   "ms": 2500
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Relatório",
+    "exact": true
+   },
+   "optional": true
+  },
+  {
+   "do": "wait",
+   "ms": 4000
+  },
+  {
+   "do": "shot",
+   "name": "r01",
+   "full": true
+  },
+  {
+   "do": "text",
+   "selector": "main",
+   "name": "relatorio os",
+   "max": 3500
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "NPS e Satisfação",
+    "exact": true
+   },
+   "optional": true
+  },
+  {
+   "do": "wait",
+   "ms": 4000
+  },
+  {
+   "do": "shot",
+   "name": "r02",
+   "full": true
+  },
+  {
+   "do": "text",
+   "selector": "main",
+   "name": "nps",
+   "max": 3500
+  },
+  {
+   "do": "goto",
+   "url": "/financeiro/relatorios?tab=visao-geral"
+  },
+  {
+   "do": "wait",
+   "ms": 5000
+  },
+  {
+   "do": "shot",
+   "name": "f-visao-geral"
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('[role=tab]')].map(e=>e.innerText.trim()).join(' | ')",
+   "name": "abas visao-geral"
+  },
+  {
+   "do": "goto",
+   "url": "/financeiro/relatorios?tab=dre"
+  },
+  {
+   "do": "wait",
+   "ms": 5000
+  },
+  {
+   "do": "shot",
+   "name": "f-dre"
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('[role=tab]')].map(e=>e.innerText.trim()).join(' | ')",
+   "name": "abas dre"
+  },
+  {
+   "do": "goto",
+   "url": "/financeiro/relatorios?tab=dfc"
+  },
+  {
+   "do": "wait",
+   "ms": 5000
+  },
+  {
+   "do": "shot",
+   "name": "f-dfc"
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('[role=tab]')].map(e=>e.innerText.trim()).join(' | ')",
+   "name": "abas dfc"
+  },
+  {
+   "do": "goto",
+   "url": "/financeiro/relatorios?tab=contabilidade"
+  },
+  {
+   "do": "wait",
+   "ms": 5000
+  },
+  {
+   "do": "shot",
+   "name": "f-contabilidade"
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('[role=tab]')].map(e=>e.innerText.trim()).join(' | ')",
+   "name": "abas contabilidade"
+  },
+  {
+   "do": "goto",
+   "url": "/financeiro/relatorios?tab=analise"
+  },
+  {
+   "do": "wait",
+   "ms": 5000
+  },
+  {
+   "do": "shot",
+   "name": "f-analise"
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('[role=tab]')].map(e=>e.innerText.trim()).join(' | ')",
+   "name": "abas analise"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Exportar",
+    "exact": true
+   },
+   "optional": true
+  },
+  {
+   "do": "wait",
+   "ms": 700
+  },
+  {
+   "do": "shot",
+   "name": "f-dre-exportar"
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('[role=menuitem]')].map(e=>e.innerText.trim())",
+   "name": "itens exportar dre"
+  },
+  {
+   "do": "press",
+   "key": "Escape"
+  },
+  {
+   "do": "goto",
+   "url": "/estoque"
+  },
+  {
+   "do": "wait",
+   "ms": 4500
+  },
+  {
+   "do": "shot",
+   "name": "e01"
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('[role=tab]')].map(e=>e.innerText.trim()).join(' | ')",
+   "name": "abas estoque"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Exportar estoque",
+    "exact": true
+   },
+   "optional": true
+  },
+  {
+   "do": "wait",
+   "ms": 700
+  },
+  {
+   "do": "shot",
+   "name": "e02"
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('[role=menuitem]')].map(e=>e.innerText.trim())",
+   "name": "itens exportar est"
+  },
+  {
+   "do": "press",
+   "key": "Escape"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Posição de Estoque",
+    "exact": true
+   },
+   "optional": true
+  },
+  {
+   "do": "wait",
+   "ms": 3500
+  },
+  {
+   "do": "shot",
+   "name": "e-Pos"
+  },
+  {
+   "do": "text",
+   "selector": "main",
+   "name": "Posição de Estoque",
+   "max": 700
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Inventários",
+    "exact": true
+   },
+   "optional": true
+  },
+  {
+   "do": "wait",
+   "ms": 3500
+  },
+  {
+   "do": "shot",
+   "name": "e-Inv"
+  },
+  {
+   "do": "text",
+   "selector": "main",
+   "name": "Inventários",
+   "max": 700
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Relatório",
+    "exact": true
+   },
+   "optional": true
+  },
+  {
+   "do": "wait",
+   "ms": 3500
+  },
+  {
+   "do": "shot",
+   "name": "e-Rel"
+  },
+  {
+   "do": "text",
+   "selector": "main",
+   "name": "Relatório",
+   "max": 700
+  },
+  {
+   "do": "goto",
+   "url": "/funcionarios"
+  },
+  {
+   "do": "wait",
+   "ms": 4000
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Controle de Ponto",
+    "exact": true
+   },
+   "optional": true
+  },
+  {
+   "do": "wait",
+   "ms": 3000
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Histórico",
+    "exact": true
+   },
+   "optional": true
+  },
+  {
+   "do": "wait",
+   "ms": 3000
+  },
+  {
+   "do": "shot",
+   "name": "p01"
+  },
+  {
+   "do": "text",
+   "selector": "main",
+   "name": "historico ponto",
+   "max": 1800
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Relatório",
+    "exact": true
+   },
+   "optional": true
+  },
+  {
+   "do": "wait",
+   "ms": 3000
+  },
+  {
+   "do": "shot",
+   "name": "p02",
+   "full": true
+  },
+  {
+   "do": "text",
+   "selector": "main",
+   "name": "relatorio ponto",
+   "max": 1800
+  },
+  {
+   "do": "goto",
+   "url": "/financeiro/contas"
+  },
+  {
+   "do": "wait",
+   "ms": 4500
+  },
+  {
+   "do": "shot",
+   "name": "c01"
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('[role=tab]')].map(e=>e.innerText.trim()).join(' | ')",
+   "name": "abas contas"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "A Receber",
+    "exact": true
+   },
+   "optional": true
+  },
+  {
+   "do": "wait",
+   "ms": 1500
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Filtros"
+   },
+   "optional": true
+  },
+  {
+   "do": "wait",
+   "ms": 1000
+  },
+  {
+   "do": "shot",
+   "name": "c02"
+  },
+  {
+   "do": "text",
+   "selector": "[role=dialog],[data-radix-popper-content-wrapper]",
+   "name": "filtros",
+   "max": 1200
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Pendentes",
+    "exact": true
+   },
+   "optional": true
+  },
+  {
+   "do": "wait",
+   "ms": 800
+  },
+  {
+   "do": "press",
+   "key": "Escape"
+  },
+  {
+   "do": "wait",
+   "ms": 800
+  },
+  {
+   "do": "shot",
+   "name": "c03"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Exportar",
+    "exact": true
+   },
+   "optional": true
+  },
+  {
+   "do": "wait",
+   "ms": 700
+  },
+  {
+   "do": "shot",
+   "name": "c04"
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('[role=menuitem]')].map(e=>e.innerText.trim())",
+   "name": "itens exportar contas"
+  },
+  {
+   "do": "press",
+   "key": "Escape"
+  },
+  {
+   "do": "goto",
+   "url": "/financeiro/movimentacoes"
+  },
+  {
+   "do": "wait",
+   "ms": 4500
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Exportar",
+    "exact": true
+   },
+   "optional": true
+  },
+  {
+   "do": "wait",
+   "ms": 700
+  },
+  {
+   "do": "shot",
+   "name": "m01"
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('[role=menuitem]')].map(e=>e.innerText.trim())",
+   "name": "itens exportar mov"
+  },
+  {
+   "do": "press",
+   "key": "Escape"
+  },
+  {
+   "do": "goto",
+   "url": "/configuracoes"
+  },
+  {
+   "do": "wait",
+   "ms": 4500
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const m=document.querySelector('main');m.scrollTo&&m.scrollTo(0,99999);window.scrollTo(0,99999);return 1})()"
+  },
+  {
+   "do": "wait",
+   "ms": 800
+  },
+  {
+   "do": "shot",
+   "name": "g01",
+   "full": true
+  },
+  {
+   "do": "text",
+   "selector": "main",
+   "name": "config empresa",
+   "max": 1200
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Exportar dados",
+    "exact": true
+   },
+   "optional": true
+  },
+  {
+   "do": "wait",
+   "ms": 1500
+  },
+  {
+   "do": "shot",
+   "name": "g02"
+  },
+  {
+   "do": "text",
+   "selector": "[role=dialog]",
+   "name": "janela",
+   "max": 2500
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Limpar seleção",
+    "exact": true
+   },
+   "optional": true
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Clientes",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "optional": true
+  },
+  {
+   "do": "wait",
+   "ms": 300
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Ordens de Serviço",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "optional": true
+  },
+  {
+   "do": "wait",
+   "ms": 300
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Financeiro",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "optional": true
+  },
+  {
+   "do": "wait",
+   "ms": 300
+  },
+  {
+   "do": "shot",
+   "name": "g03"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Exportar",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "optional": true
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "shot",
+   "name": "g04"
+  },
+  {
+   "do": "wait",
+   "ms": 3500
+  },
+  {
+   "do": "shot",
+   "name": "g05"
+  },
+  {
+   "do": "eval",
+   "js": "document.body.innerText.includes('Exportação concluída')",
+   "name": "concluida"
+  }
+ ]
+}

@@ -1,0 +1,189 @@
+{
+ "name": "t4-cap13",
+ "title": "T4 · Cap. 13 · Vincular e desativar (narração 23,4 s; marcas L1..L2 = início de cada linha do roteiro)",
+ "seed": "t4-cap13",
+ "pace": 0.6,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 900,
+  "y": 480
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap12"
+ ],
+ "prewarm": [
+  "/servicos",
+  "/servicos?tab=checklists"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/servicos"
+  },
+  {
+   "do": "waitFor",
+   "text": "Configure os tipos de serviços, tarefas e checklists",
+   "timeout": 20
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Checklists",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Lista de checklists",
+   "timeout": 15
+  },
+  {
+   "do": "waitFor",
+   "text": "Editar checklist",
+   "timeout": 15
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Higienização de split",
+    "exact": true,
+    "within": "main [role=list]"
+   }
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "6 perguntas · 1 serviço",
+    "exact": true
+   },
+   "seconds": 1.0,
+   "at": 5.58,
+   "label": "Higienização de split: 6 perguntas · 1 serviço"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "13 perguntas · 1 serviço",
+    "exact": true
+   },
+   "seconds": 1.0,
+   "at": 7.66,
+   "label": "Manutenção preventiva de split: 13 perguntas · 1 serviço"
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 9.56
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Editar checklist",
+    "exact": true
+   },
+   "at": 9.56,
+   "label": "Editar checklist"
+  },
+  {
+   "do": "waitFor",
+   "text": "Voltar à prévia",
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "div.flex.items-center.gap-2:has(> label:text-is(\"Ativo\"))"
+   },
+   "seconds": 0.5,
+   "at": 10.68,
+   "label": "interruptor Ativo do checklist"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "button:has(svg.lucide-trash2):not([aria-label])"
+   },
+   "seconds": 0.2,
+   "at": 11.42,
+   "label": "lixeira (desativar checklist)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "button:has(svg.lucide-trash2):not([aria-label])"
+   },
+   "at": 12.28,
+   "label": "clica na lixeira"
+  },
+  {
+   "do": "waitFor",
+   "text": "Desativar checklist?",
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Desativar checklist?",
+    "exact": true,
+    "within": "[role=alertdialog]"
+   },
+   "seconds": 0.6,
+   "at": 13.12,
+   "label": "janela Desativar checklist?"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "continuará preservado",
+    "exact": false,
+    "within": "[role=alertdialog]"
+   },
+   "seconds": 5.0,
+   "at": 15.28,
+   "label": "as OSs antigas continuam com o roteiro"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Cancelar",
+    "exact": true
+   },
+   "at": 22.22,
+   "label": "Cancelar"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "alertdialog"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 23.36
+  }
+ ]
+}

@@ -1,0 +1,245 @@
+{
+ "name": "t15-cap08",
+ "title": "T15 · Cap. 8 · As regras do ponto (narração 43,1 s; marcas L1..L6 = início de cada linha do roteiro)",
+ "seed": "t15-cap08",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 0.4,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap05",
+  "t12/inicio",
+  "t12/apos-cap11",
+  "t13/inicio",
+  "t13/apos-cap14",
+  "t19/inicio",
+  "t19/apos-cap13",
+  "t20/inicio",
+  "t2/apos-cap10",
+  "t15/inicio",
+  "t15/apos-cap07"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/funcionarios"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/funcionarios"
+  },
+  {
+   "do": "waitFor",
+   "text": "Lista de Funcionários",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|erro|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Controle de Ponto",
+    "exact": true
+   },
+   "label": "Controle de Ponto"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Config",
+    "exact": true
+   },
+   "label": "Config"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Jornada Padrão da Empresa",
+    "within": "main"
+   },
+   "seconds": 0.8,
+   "label": "Jornada Padrão da Empresa",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Entrada padrão",
+    "within": "main"
+   },
+   "seconds": 0.5,
+   "label": "Entrada padrão",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Saída padrão",
+    "within": "main"
+   },
+   "seconds": 0.5,
+   "label": "Saída padrão",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Intervalo (min)",
+    "within": "main"
+   },
+   "seconds": 0.6,
+   "label": "Intervalo 60 min",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Exigir selfie",
+    "within": "main"
+   },
+   "seconds": 0.7,
+   "label": "Exigir selfie",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Exigir geolocalização",
+    "within": "main"
+   },
+   "seconds": 0.7,
+   "label": "Exigir geolocalização",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "xpath=//main//label[normalize-space()='Exigir selfie']/following::button[@role='switch'][1]"
+   },
+   "label": "desliga Exigir selfie"
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 760,
+    "y": 420
+   },
+   "by": 260,
+   "duration": 0.5,
+   "after": 100,
+   "label": "desce até a madrugada"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Batidas da madrugada",
+    "within": "main"
+   },
+   "seconds": 1.2,
+   "label": "Batidas da madrugada",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Salvar configurações",
+    "exact": true
+   },
+   "label": "Salvar configurações"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Configurações salvas!\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"body\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere aviso Configurações salvas!"
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 760,
+    "y": 420
+   },
+   "by": 600,
+   "duration": 0.5,
+   "after": 100,
+   "label": "desce até o ponto em grupo"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Ponto em grupo (quiosque)",
+    "within": "main"
+   },
+   "seconds": 1.5,
+   "label": "Ponto em grupo (quiosque)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 760,
+    "y": 420
+   },
+   "by": 600,
+   "duration": 0.5,
+   "after": 100,
+   "label": "desce até a Jornada Individual"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Jornada Individual",
+    "within": "main"
+   },
+   "seconds": 1.0,
+   "label": "Jornada Individual",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('Bruno Alves') td:last-child button",
+    "nth": 0
+   },
+   "seconds": 1.0,
+   "label": "lápis de uma linha da jornada",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

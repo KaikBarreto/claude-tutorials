@@ -1,0 +1,290 @@
+{
+ "name": "t8-cap13",
+ "title": "T8 · Cap. 13 · O saldo numa data (narração 40,4 s; marcas L1..L3 = início de cada linha do roteiro)",
+ "seed": "t8-cap13",
+ "pace": 0.4,
+ "cps": 12,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap15",
+  "t8/inicio",
+  "t8/apos-cap12"
+ ],
+ "prewarm": [
+  "/estoque"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/estoque"
+  },
+  {
+   "do": "waitFor",
+   "text": "Controle de peças e materiais",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Toggle Sidebar",
+    "nth": 0
+   }
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "aside[aria-label=\"Locais de estoque\"] button:has-text(\"Estoque Principal\")"
+   }
+  },
+  {
+   "do": "pause",
+   "seconds": 0.6
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Inventários",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Novo inventário",
+   "timeout": 20
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|erro|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Posição de Estoque",
+    "exact": true
+   },
+   "at": 2.18,
+   "label": "aba Posição de Estoque"
+  },
+  {
+   "do": "waitFor",
+   "text": "Valor em estoque",
+   "timeout": 15
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Valor em estoque",
+    "within": "main"
+   },
+   "seconds": 0.4,
+   "at": 7.46,
+   "label": "o cartão Valor em estoque (custo)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Projeção de venda",
+    "within": "main"
+   },
+   "seconds": 0.4,
+   "at": 8.9,
+   "label": "o cartão Projeção de venda",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tr:has-text(\"Total\")",
+    "nth": "last"
+   },
+   "seconds": 0.2,
+   "at": 10.34,
+   "label": "a linha Total",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main button[aria-haspopup=\"dialog\"]",
+    "nth": 0
+   },
+   "seconds": 0.4,
+   "at": 11.78,
+   "label": "o seletor de data e hora (agora)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 14.76
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button[aria-haspopup=\"dialog\"]",
+    "nth": 0
+   },
+   "at": 15.78,
+   "label": "abre o calendário"
+  },
+  {
+   "do": "waitFor",
+   "text": "Concluir",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] button[name=\"previous-month\"]"
+   },
+   "at": 16.66,
+   "label": "mês anterior (outubro)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] button[name=\"day\"]:text-is(\"3\")"
+   },
+   "at": 17.54,
+   "label": "escolhe o dia 3 de outubro"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Concluir",
+    "exact": true,
+    "within": "[data-radix-popper-content-wrapper]"
+   },
+   "at": 19.72,
+   "label": "Concluir"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text(\"R-410A\")"
+   },
+   "seconds": 0.4,
+   "at": 25.91,
+   "label": "o R-410A com o saldo daquele dia",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "placeholder": "Buscar material ou SKU...",
+    "exact": true
+   },
+   "at": 27.47,
+   "label": "clica na busca"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 28.21
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Buscar material ou SKU...",
+    "exact": true
+   },
+   "text": "R-410A",
+   "cps": 8,
+   "at": 28.27,
+   "label": "digita R-410A na busca",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Exportar",
+    "exact": true,
+    "within": "main"
+   },
+   "at": 30.27,
+   "label": "abre Exportar (PDF ou Excel)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "menuitem",
+    "name": "PDF"
+   },
+   "seconds": 2.0,
+   "at": 32.29,
+   "label": "o menu Exportar: PDF e Excel (sem clicar)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 35.05,
+   "label": "fecha o menu"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Valor (custo)",
+    "within": "main"
+   },
+   "seconds": 2.0,
+   "at": 38.19,
+   "label": "a coluna Valor (custo)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 40.38
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

@@ -1,0 +1,523 @@
+{
+ "name": "t5-cap15",
+ "title": "T5 · Cap. 15 · Montando uma equipe (narração 52,2 s; marcas L1..L4 = início de cada linha do roteiro)",
+ "seed": "t5-cap15",
+ "pace": 0.25,
+ "cps": 14,
+ "tail": 1.5,
+ "start": {
+  "x": 900,
+  "y": 480
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap14"
+ ],
+ "prewarm": [
+  "/agenda",
+  "/funcionarios",
+  "/ordens-servico"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/agenda"
+  },
+  {
+   "do": "waitFor",
+   "text": "Visualize e gerencie os agendamentos",
+   "timeout": 20
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Gestão",
+    "exact": true
+   },
+   "at": 4.04,
+   "label": "abre o grupo Gestão"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "link",
+    "name": "Funcionários (RH)",
+    "exact": true
+   },
+   "at": 4.76,
+   "label": "menu: Funcionários (RH)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Equipes"
+   },
+   "at": 6.26,
+   "label": "aba Equipes"
+  },
+  {
+   "do": "waitFor",
+   "text": "Nenhuma equipe cadastrada",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Funcionários (RH)",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.5,
+   "at": 8.36,
+   "label": "o módulo de RH"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Nova Equipe",
+    "exact": true
+   },
+   "at": 9.62,
+   "label": "Nova Equipe"
+  },
+  {
+   "do": "waitFor",
+   "text": "Visual da Equipe",
+   "timeout": 10
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 10.12
+  },
+  {
+   "do": "click",
+   "target": {
+    "placeholder": "Nome da equipe"
+   },
+   "at": 11.3,
+   "label": "campo Nome"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Nome da equipe"
+   },
+   "text": "Equipe Alfa",
+   "cps": 14,
+   "at": 12.1,
+   "label": "nome Equipe Alfa",
+   "noClick": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const el=document.querySelector(\"[role=dialog] div[class*=\\\"max-h-[200px]\\\"]\");if(!el)return false;for(let n=el.parentElement;n&&n!==document.documentElement;n=n.parentElement){const s=getComputedStyle(n);if(/(auto|scroll)/.test(s.overflowY)&&n.scrollHeight>n.clientHeight+4){n.scrollTo({top:n.scrollHeight,behavior:\"smooth\"});return true}}return false})()",
+   "label": "leva a lista de membros à vista (rolagem suave)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] input[type=color]"
+   },
+   "seconds": 0.5,
+   "at": 14.22,
+   "label": "cor da equipe"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:has(svg.lucide-hard-hat)"
+   },
+   "at": 15.26,
+   "label": "ícone"
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Bruno Alves",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 16.96,
+   "label": "Bruno Alves"
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Lucas Ferreira",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 18.1,
+   "label": "Lucas Ferreira"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Criar Equipe",
+    "exact": true
+   },
+   "at": 20.24,
+   "label": "Criar Equipe"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{if([...document.querySelectorAll('a')].some(a=>a.textContent.trim()==='Ordens de Serviço'))return 'já aberto';const b=[...document.querySelectorAll('button')].find(x=>x.textContent.trim()==='Operacional');if(!b)return 'SEM ALVO';b.click();return 1})()",
+   "label": "abre o grupo Operacional (acelerado)"
+  },
+  {
+   "do": "waitFor",
+   "selector": "a:has-text(\"Ordens de Serviço\")",
+   "timeout": 8
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const e=[...document.querySelectorAll('a')].find(x=>x.textContent.trim()==='Ordens de Serviço');if(!e)return 'SEM ALVO';e.click();return 1})()",
+   "label": "menu: Ordens de Serviço (acelerado)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie suas ordens de serviço",
+   "timeout": 15
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const e=[...document.querySelectorAll('button')].find(x=>x.textContent.trim()==='Nova OS');if(!e)return 'SEM ALVO';e.click();return 1})()",
+   "label": "Nova OS (acelerado)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Nova Ordem de Serviço",
+   "timeout": 10
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 24.5
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const e=[...document.querySelectorAll('[role=dialog] button[role=combobox]')].find(x=>x.textContent.includes('Adicionar serviços'));if(!e)return 'SEM ALVO';e.click();return 1})()",
+   "at": 25.1,
+   "label": "abre a lista de serviços (acelerado)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Carga de Gás",
+   "timeout": 6
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const e=[...document.querySelectorAll('[data-radix-popper-content-wrapper] *')].find(x=>x.children.length===0&&x.textContent.trim()==='Carga de Gás');if(!e)return 'SEM ALVO';e.click();return 1})()",
+   "label": "Carga de Gás (acelerado)"
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "label": "fecha a lista de serviços"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const el=[...document.querySelectorAll('[role=combobox]')].find(x=>x.textContent.includes('Selecione o cliente'));if(!el)return 'SEM ALVO';el.focus();return document.activeElement===el})()",
+   "at": 26.64,
+   "label": "foca o campo Cliente (acelerado)"
+  },
+  {
+   "do": "press",
+   "key": "Enter",
+   "label": "abre a lista de clientes"
+  },
+  {
+   "do": "waitFor",
+   "selector": "[role=option]:has-text(\"Pousada Sol Nascente\")",
+   "timeout": 6
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const e=[...document.querySelectorAll('[role=option]')].find(x=>x.textContent.trim().startsWith('Pousada Sol Nascente'));if(!e)return 'SEM ALVO';e.click();return 1})()",
+   "label": "Pousada Sol Nascente (acelerado)"
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll(\"[role=dialog] button\")].filter(b=>/^Próximo/i.test(b.textContent))[0].click()",
+   "label": "Próximo (acelerado)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Serviços, mão de obra e materiais",
+   "timeout": 10
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll(\"[role=dialog] button\")].filter(b=>/^Próximo/i.test(b.textContent))[0].click()",
+   "label": "Próximo (acelerado, Equipamentos)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Selecione o equipamento.",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "checkbox",
+    "within": "[role=dialog]"
+   },
+   "at": 28.76,
+   "label": "marca o Cassete 36.000 BTUs"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "role": "checkbox",
+    "within": "[role=dialog]",
+    "checked": true
+   },
+   "timeout": 8
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll(\"[role=dialog] button\")].filter(b=>/^Próximo/i.test(b.textContent))[0].click()",
+   "label": "Próximo (acelerado, Agendamento e Detalhes)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Revisão do escopo da OS",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]",
+    "hasText": "Selecione..."
+   },
+   "at": 31.82,
+   "label": "campo Responsáveis"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Equipes",
+    "exact": false,
+    "within": "[data-radix-popper-content-wrapper]"
+   },
+   "seconds": 0.4,
+   "at": 33.36,
+   "label": "a seção Equipes"
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Equipe Alfa",
+    "exact": true,
+    "within": "[data-radix-popper-content-wrapper]"
+   },
+   "at": 35.26,
+   "label": "Equipe Alfa"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Lucas Ferreira",
+    "exact": true,
+    "within": "[data-radix-popper-content-wrapper]"
+   },
+   "seconds": 0.5,
+   "at": 36.56,
+   "label": "os dois membros marcados"
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "label": "fecha o seletor"
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 640,
+    "y": 420
+   },
+   "by": 280,
+   "duration": 0.4,
+   "after": 0,
+   "label": "leva o Período do atendimento à vista (rolagem)"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const e=document.querySelector('[role=dialog] section:has(svg.lucide-calendar)')?.querySelector('button:has(svg.lucide-calendar)');if(!e)return 'SEM ALVO';e.click();return 1})()",
+   "label": "Data inicial (acelerado)"
+  },
+  {
+   "do": "waitFor",
+   "selector": "[role=gridcell]",
+   "timeout": 8
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const e=[...document.querySelectorAll('[role=gridcell]')].find(x=>x.textContent.trim()==='11'&&!x.disabled);if(!e)return 'SEM ALVO';e.click();return 1})()",
+   "label": "quarta, dia 11 (acelerado)"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "selector": "[role=gridcell]"
+   },
+   "timeout": 6
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const e=[...document.querySelectorAll('[role=dialog] button')].find(x=>(x.getAttribute('aria-label')||x.textContent).includes('Quando termina'));if(!e)return 'SEM ALVO';e.click();return 1})()",
+   "label": "Quando termina (acelerado)"
+  },
+  {
+   "do": "waitFor",
+   "selector": "[role=listbox][aria-label=Horas]",
+   "timeout": 8
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const e=[...document.querySelectorAll('[role=listbox][aria-label=Horas] [role=option]')].find(x=>x.textContent.trim()==='16');if(!e)return 'SEM ALVO';e.click();return 1})()",
+   "label": "hora 16"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const e=[...document.querySelectorAll('[role=listbox][aria-label=Minutos] [role=option]')].find(x=>x.textContent.trim()==='00');if(!e)return 'SEM ALVO';e.click();return 1})()",
+   "label": "minuto 00"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const e=[...document.querySelectorAll('button')].find(x=>x.textContent.trim()==='Concluir');if(!e)return 'SEM ALVO';e.click();return 1})()",
+   "label": "Concluir (fim)"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "selector": "[role=listbox][aria-label=Horas]"
+   },
+   "timeout": 6
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const e=[...document.querySelectorAll('[role=dialog] button')].find(x=>(x.getAttribute('aria-label')||x.textContent).includes('Quando começa'));if(!e)return 'SEM ALVO';e.click();return 1})()",
+   "label": "Quando começa (acelerado)"
+  },
+  {
+   "do": "waitFor",
+   "selector": "[role=listbox][aria-label=Horas]",
+   "timeout": 8
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const e=[...document.querySelectorAll('[role=listbox][aria-label=Horas] [role=option]')].find(x=>x.textContent.trim()==='14');if(!e)return 'SEM ALVO';e.click();return 1})()",
+   "label": "hora 14"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const e=[...document.querySelectorAll('[role=listbox][aria-label=Minutos] [role=option]')].find(x=>x.textContent.trim()==='00');if(!e)return 'SEM ALVO';e.click();return 1})()",
+   "label": "minuto 00"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const e=[...document.querySelectorAll('button')].find(x=>x.textContent.trim()==='Concluir');if(!e)return 'SEM ALVO';e.click();return 1})()",
+   "label": "Concluir (início)"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "selector": "[role=listbox][aria-label=Horas]"
+   },
+   "timeout": 6
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] button[aria-label^=\"Quando começa\"]"
+   },
+   "seconds": 0.4,
+   "at": 42.64,
+   "label": "Quando começa: 14:00"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Criar OS",
+    "exact": true
+   },
+   "at": 44.0,
+   "label": "Criar OS"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const e=[...document.querySelectorAll('a')].find(x=>x.textContent.trim()==='Agenda');if(!e)return 'SEM ALVO';e.click();return 1})()",
+   "label": "menu: Agenda (acelerado)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Visualize e gerencie os agendamentos",
+   "timeout": 15
+  },
+  {
+   "do": "waitFor",
+   "text": "Agendada para 11/11/2026",
+   "timeout": 40
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 48.94
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Pousada Sol Nascente",
+    "exact": false,
+    "within": "main .grid-cols-7.flex-1"
+   },
+   "at": 49.38,
+   "label": "abre o resumo da OS na quarta"
+  },
+  {
+   "do": "waitFor",
+   "text": "Resumo da OS",
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Equipe Alfa",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 1.4,
+   "label": "Equipe Alfa no resumo"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 52.2
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

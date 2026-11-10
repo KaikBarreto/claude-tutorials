@@ -1,0 +1,209 @@
+{
+ "name": "t18-cap14",
+ "title": "T18 · Cap. 14 · Produto e água (narração 38,6 s; marcas L1..L3 = início de cada linha do roteiro)",
+ "seed": "t18-cap14",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap15",
+  "t7/inicio",
+  "t7/apos-cap10",
+  "t18/catalogo"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/area-tecnico",
+  "/area-tecnico/diluicao-produto"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/area-tecnico"
+  },
+  {
+   "do": "waitFor",
+   "text": "Termos Técnicos Explicados",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0.04
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "nav button",
+    "hasText": "Diluição de Produto"
+   },
+   "at": 0.04,
+   "label": "abre a Diluição de Produto"
+  },
+  {
+   "do": "waitFor",
+   "text": "Quanto de produto e de água para chegar no volume desejado.",
+   "timeout": 15
+  },
+  {
+   "do": "scroll",
+   "by": 200,
+   "at": 4.0,
+   "label": "desce: campos e resultado juntos",
+   "duration": 0.9
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Preparar solução",
+    "exact": true
+   },
+   "seconds": 0.4,
+   "at": 9.88,
+   "label": "Modo de Diluição: Preparar solução",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "10",
+    "exact": true
+   },
+   "text": "10",
+   "cps": 7,
+   "at": 11.32,
+   "label": "proporção 1 para 10",
+   "clear": true
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Ex: 500",
+    "exact": true
+   },
+   "text": "500",
+   "cps": 7,
+   "at": 12.6,
+   "label": "volume final 500 mL"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Produto",
+    "within": "main",
+    "nth": 0
+   },
+   "seconds": 2.0,
+   "at": 17.15,
+   "label": "45,45 mL de produto",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Água",
+    "within": "main",
+    "nth": 0
+   },
+   "seconds": 2.4,
+   "at": 21.55,
+   "label": "454,55 mL de água",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 25.89
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "img",
+    "name": "Galão com"
+   },
+   "seconds": 1.4,
+   "at": 25.89,
+   "label": "o galão desenhado mostra a proporção",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "mL",
+    "exact": true
+   },
+   "seconds": 1.0,
+   "at": 28.85,
+   "label": "a chave de Unidade: mL / L (sem trocar)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 31.57
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Tenho X de produto",
+    "exact": true
+   },
+   "at": 34.35,
+   "label": "modo Tenho X de produto"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Ex: 50",
+    "exact": true
+   },
+   "text": "50",
+   "cps": 7,
+   "at": 35.49,
+   "label": "50 mL de produto"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Água a adicionar",
+    "within": "main"
+   },
+   "seconds": 1.0,
+   "at": 36.99,
+   "label": "Água a adicionar",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 38.64
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

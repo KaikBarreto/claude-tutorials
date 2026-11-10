@@ -1,0 +1,228 @@
+{
+ "name": "t19-cap04",
+ "title": "T19 · Cap. 4 · Taxas e preferências (narração 48,2 s; marcas L1..L4 = início de cada linha do roteiro)",
+ "seed": "t19-cap04",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 0.4,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap05",
+  "t12/inicio",
+  "t12/apos-cap11",
+  "t13/inicio",
+  "t13/apos-cap14",
+  "t19/inicio",
+  "t19/apos-cap03"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/configuracoes"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Camila!",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/configuracoes?tab=integracoes&integration=asaas"
+  },
+  {
+   "do": "waitFor",
+   "text": "Recebimentos (Asaas)",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|erro|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "eval",
+   "js": "(()=>{const t=\"Taxas da Asaas\";const el=[...document.querySelectorAll('main p, main h2, main h3, main label, main span')].find(e=>e.innerText&&e.innerText.trim().startsWith(t));if(!el)return 'sem '+t;el.scrollIntoView({behavior:'smooth',block:\"start\"});return 'rolou'})()",
+   "label": "a câmera para no cartão Taxas da Asaas"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Taxas da Asaas\", \"Pix\", \"Boleto\", \"Cartão de crédito\", \"À vista (1x)\", \"2 a 6x\", \"7 a 12x\", \"13 a 21x\", \"Antecipação\", \"Prazo para o dinheiro cair\", \"Taxas da sua conta Asaas, atualizadas em\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere o cartão Taxas da Asaas com as faixas e o prazo"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{await new Promise(r=>setTimeout(r,1800));const el=document.querySelector(\"main\");const t=(el?el.innerText:'').replace(/[\\s\\u00a0]+/g,' ').toLowerCase();return t.includes(\"n\\u00e3o pagam tarifa\")?'DIFERENTE: apareceu '+\"n\\u00e3o pagam tarifa\":'OK: ausente '+\"n\\u00e3o pagam tarifa\"})()",
+   "label": "confere sem a nota de franquia do Pix (desmentiria a taxa do cap. 8)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Taxas da Asaas",
+    "within": "main"
+   },
+   "seconds": 2.0,
+   "label": "cartão Taxas da Asaas",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Prazo para o dinheiro cair",
+    "within": "main"
+   },
+   "seconds": 1.6,
+   "label": "prazo pro dinheiro cair",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "As taxas são cobradas pela Asaas diretamente na sua conta.",
+    "within": "main"
+   },
+   "seconds": 1.8,
+   "label": "nota: a Dominex não retém nada por transação",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Atualizar taxas",
+    "exact": true
+   },
+   "label": "Atualizar taxas"
+  },
+  {
+   "do": "waitFor",
+   "text": "Taxas atualizadas com a Asaas.",
+   "timeout": 10,
+   "optional": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const t=\"Multa e juros por atraso\";const el=[...document.querySelectorAll('main p, main h2, main h3, main label, main span')].find(e=>e.innerText&&e.innerText.trim().startsWith(t));if(!el)return 'sem '+t;el.scrollIntoView({behavior:'smooth',block:\"center\"});return 'rolou'})()",
+   "label": "a câmera desce até Multa e juros por atraso"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const esp=[\"2\", \"1\"];let out='';for(let i=0;i<12;i++){const v=[...document.querySelectorAll(\"main\"+' input, '+\"main\"+' textarea')].map(e=>e.value).join(' | ');const falta=esp.filter(e=>!v.includes(e));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+v.slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere multa 2 e juros 1 ao mês"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Multa por atraso (%)",
+    "within": "main"
+   },
+   "seconds": 1.2,
+   "label": "Multa por atraso (%) com 2",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Juros ao mês (%)",
+    "within": "main"
+   },
+   "seconds": 1.2,
+   "label": "Juros ao mês (%) com 1",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Salvar",
+    "exact": true,
+    "nth": 0
+   },
+   "seconds": 1.4,
+   "label": "Salvar da seção Multa e juros por atraso (sem clicar)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const t=\"Preferências de cobrança\";const el=[...document.querySelectorAll('main p, main h2, main h3, main label, main span')].find(e=>e.innerText&&e.innerText.trim().startsWith(t));if(!el)return 'sem '+t;el.scrollIntoView({behavior:'smooth',block:\"start\"});return 'rolou'})()",
+   "label": "a câmera desce até Preferências de cobrança"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Meios de pagamento habilitados",
+    "within": "main"
+   },
+   "seconds": 1.6,
+   "label": "Meios de pagamento habilitados",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Meios de pagamento habilitados\", \"Pix\", \"Boleto\", \"Cartão de crédito\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Pix, boleto e cartão de crédito"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const t=\"Desconto por antecipação\";const el=[...document.querySelectorAll('main p, main h2, main h3, main label, main span')].find(e=>e.innerText&&e.innerText.trim().startsWith(t));if(!el)return 'sem '+t;el.scrollIntoView({behavior:'smooth',block:\"center\"});return 'rolou'})()",
+   "label": "a câmera segue para Desconto por antecipação"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Desconto por antecipação",
+    "within": "main"
+   },
+   "seconds": 1.6,
+   "label": "Desconto por antecipação",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Deixe em branco para não aplicar desconto.",
+    "within": "main"
+   },
+   "seconds": 1.6,
+   "label": "em branco, não tem desconto",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

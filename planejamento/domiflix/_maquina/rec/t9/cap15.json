@@ -1,0 +1,304 @@
+{
+ "name": "t9-cap15",
+ "title": "T9 · Cap. 15 · Gerar a ordem de serviço (narração 56,5 s; marcas L1..L5 = início de cada linha do roteiro)",
+ "seed": "t9-cap15",
+ "pace": 0.45,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t9/inicio",
+  "t9/apos-cap14"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/orcamentos"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/orcamentos"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie orçamentos, custos e precificação",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Toggle Sidebar",
+    "nth": 0
+   }
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|erro|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main tbody tr:has-text('Pousada Brisa do Mar') button[aria-label='Ações']"
+   },
+   "at": 3.5,
+   "label": "menu ⋮ da linha da Pousada"
+  },
+  {
+   "do": "pause",
+   "seconds": 0.6
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main tbody tr:has-text('Pousada Brisa do Mar') button[aria-label='Ações']"
+   },
+   "label": "menu ⋮ de Pousada Brisa do Mar de novo (só se não abriu)",
+   "unless": {
+    "role": "menuitem",
+    "name": "Gerar OS"
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Gerar OS"
+   },
+   "at": 6.18,
+   "label": "Gerar OS"
+  },
+  {
+   "do": "waitFor",
+   "text": "Distribuir serviços",
+   "timeout": 15
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Defina em qual equipamento",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.4,
+   "at": 9.86,
+   "label": "Defina em qual equipamento cada serviço será executado",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 15.14
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Todos",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 19.14,
+   "label": "Todos: a higienização nos três splits"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] label:has-text('Hi-Wall 12.000 BTUs - Recepção')",
+    "nth": 1
+   },
+   "at": 23.51,
+   "label": "Carga de Gás só no split da recepção"
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('[role=dialog] button[role=checkbox]')].map(b=>b.getAttribute('aria-checked')).join(',')",
+   "label": "confere caixas: Higienização nos 3, Carga de Gás só na Recepção (true,true,true,true,false,false)"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 24.53
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Gerar OS",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 24.53,
+   "label": "Gerar OS"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 15
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"R$ 1.000,00\", \"Convertido\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main tbody tr\")].filter(e=>!true||e.innerText.includes(\"Pousada Brisa do Mar\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere linha da Pousada: Convertido"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('Pousada Brisa do Mar')",
+    "hasText": "Convertido"
+   },
+   "seconds": 0.5,
+   "at": 33.73,
+   "label": "a linha passa a Convertido",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 34.77
+  },
+  {
+   "do": "goto",
+   "url": "/ordens-servico",
+   "at": 34.790000000000006,
+   "label": "abre Ordens de Serviço (menu lateral recolhido)"
+  },
+  {
+   "do": "waitFor",
+   "text": "HIG-2026-17",
+   "timeout": 20
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button:has(svg.lucide-layout-list)"
+   },
+   "at": 38.03,
+   "label": "visão em lista"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"HIG-2026-17\", \"Pousada Brisa do Mar\", \"Higienização de Split\", \"Agendada\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main tbody tr\")].filter(e=>!true||e.innerText.includes(\"HIG-2026-17\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere OS #17 na lista: Pousada, Higienização de Split, Agendada"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main tbody tr:has-text('HIG-2026-17') button[aria-haspopup='menu']"
+   },
+   "at": 39.31,
+   "label": "menu ⋮ da OS #17"
+  },
+  {
+   "do": "pause",
+   "seconds": 0.6
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main tbody tr:has-text('HIG-2026-17') button[aria-haspopup='menu']"
+   },
+   "label": "menu ⋮ da OS #17 de novo (só se não abriu)",
+   "unless": {
+    "role": "menuitem",
+    "name": "Visualizar OS"
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Visualizar OS"
+   },
+   "at": 41.27,
+   "label": "Visualizar OS"
+  },
+  {
+   "do": "waitFor",
+   "text": "Total para faturamento",
+   "timeout": 15
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Total para faturamento",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.4,
+   "label": "Total para faturamento R$ 1.000,00",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"OS #17\", \"Agendada\", \"Pousada Brisa do Mar\", \"Higienização de Split 3 serviço(s) R$ 180,00 R$ 540,00\", \"Carga de Gás 1 serviço(s) R$ 350,00 R$ 350,00\", \"Total para faturamento R$ 1.000,00\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere OS #17: Agendada, total para faturamento R$ 1.000,00"
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 46.94
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 47.54,
+   "label": "fecha a janela"
+  },
+  {
+   "do": "wait",
+   "seconds": 0.4
+  },
+  {
+   "do": "eval",
+   "js": "(() => { const d = document.querySelector('[role=dialog]'); if (!d) return 'ja fechada'; const b = [...d.querySelectorAll('button')].find((x) => [x.textContent, x.getAttribute('aria-label'), x.title].some((v) => /^\\s*fechar\\s*$/i.test(v || ''))); if (!b) return 'sem botao Fechar'; b.click(); return 'fechada pelo botao'; })()",
+   "label": "Fechar (se o Esc não fechou)"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 56.48
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

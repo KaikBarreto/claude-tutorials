@@ -1,0 +1,476 @@
+{
+ "name": "t1-cap13",
+ "title": "T1 · Cap. 13 · Recapitulando (marcas L1..L4 = início de cada linha da fala; `at` pelos tempos da voz)",
+ "seed": "t1-cap13",
+ "pace": 0.75,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 300
+ },
+ "seedExtra": [
+  "t1/apos-cap12"
+ ],
+ "prewarm": [
+  "/configuracoes"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/configuracoes"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie as configurações do sistema"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "text": "Salvo",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "section:has(h3:has-text('Identidade Visual')) img"
+   },
+   "seconds": 0.4,
+   "label": "o logo da empresa",
+   "at": 1.6
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Dados Cadastrais",
+    "exact": true
+   },
+   "seconds": 0.2,
+   "label": "os dados da empresa",
+   "at": 2.8
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 760,
+    "y": 420
+   },
+   "by": 640,
+   "duration": 0.6,
+   "after": 50,
+   "label": "rola até o endereço",
+   "at": 3.6
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "h3:text-is('Endereço')"
+   },
+   "text": "",
+   "noClick": true,
+   "label": "o endereço da empresa"
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 760,
+    "y": 420
+   },
+   "by": 500,
+   "duration": 0.5,
+   "after": 50,
+   "label": "rola até o White Label",
+   "at": 4.8
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "section:has(h3:has-text('White Label')) button[role=switch]"
+   },
+   "label": "liga o White Label (o sistema fica dourado)",
+   "at": 5.4
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "text": "Logo completo",
+    "exact": true
+   },
+   "timeout": 10,
+   "label": "as opções do White Label aparecem"
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 128,
+    "y": 32
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "label": "o cursor sobe ao logo no topo do menu"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[data-sidebar=sidebar] img[src^='data:']"
+   },
+   "text": "",
+   "noClick": true,
+   "label": "o logo da empresa no topo do menu"
+  },
+  {
+   "do": "pause",
+   "seconds": 0.1
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 760,
+    "y": 400
+   },
+   "by": 920,
+   "duration": 0.6,
+   "after": 50,
+   "label": "rola até o QR Code e o cabeçalho do relatório",
+   "at": 7.5
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "div.rounded-lg.border:has(> p:text-is('Pré-visualização'))"
+   },
+   "text": "",
+   "noClick": true,
+   "label": "QR Code com a marca no centro"
+  },
+  {
+   "do": "pause",
+   "seconds": 0.3
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "div.overflow-hidden.shadow-sm:has-text('OS #000001')"
+   },
+   "text": "",
+   "noClick": true,
+   "label": "cabeçalho do relatório com a marca"
+  },
+  {
+   "do": "pause",
+   "seconds": 0.3
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 1000,
+    "y": 400
+   },
+   "by": -1100,
+   "duration": 0.6,
+   "after": 50,
+   "label": "volta ao White Label",
+   "at": 9.9
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "section:has(h3:has-text('White Label')) button[role=switch]"
+   },
+   "label": "desliga o White Label (o sistema volta ao verde)",
+   "at": 10.8
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 11.96
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 460,
+    "y": 300
+   },
+   "by": -4000,
+   "duration": 0.5,
+   "after": 50,
+   "label": "volta ao alto da aba Empresa",
+   "at": 12.0
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Regional",
+    "exact": true
+   },
+   "label": "aba Regional"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "text": "Padrões da empresa",
+    "exact": true
+   },
+   "timeout": 10,
+   "label": "cartões da aba Regional"
+  },
+  {
+   "do": "type",
+   "target": {
+    "text": "Padrões da empresa",
+    "exact": true
+   },
+   "text": "",
+   "noClick": true,
+   "label": "Padrões da empresa: idioma, moeda e fuso"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Usabilidade",
+    "exact": true
+   },
+   "label": "aba Usabilidade",
+   "at": 15.3
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "h3:text-is('Ordens de Serviço')"
+   },
+   "timeout": 10,
+   "label": "grupos de preferências da aba Usabilidade"
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 760,
+    "y": 400
+   },
+   "by": 1700,
+   "duration": 0.8,
+   "after": 50,
+   "label": "a aba Usabilidade rola pelos interruptores até as Origens",
+   "at": 16.3
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "h3:text-is('Origens')"
+   },
+   "text": "",
+   "noClick": true,
+   "label": "cartão Origens"
+  },
+  {
+   "do": "pause",
+   "seconds": 0.2
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 560,
+    "y": 330
+   },
+   "by": -4000,
+   "duration": 0.5,
+   "after": 50,
+   "label": "volta ao alto da aba para chegar às abas",
+   "at": 18.2
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Atalhos",
+    "exact": true
+   },
+   "label": "aba Atalhos",
+   "at": 19.0
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "h2:text-is('Atalhos de Teclado')"
+   },
+   "timeout": 10,
+   "label": "tela Atalhos de Teclado"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Aparência",
+    "exact": true
+   },
+   "label": "aba Aparência",
+   "at": 20.1
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "h3:text-is('Estilo de Navegação (Desktop)')"
+   },
+   "timeout": 10,
+   "label": "tela Aparência"
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 1096,
+    "y": 198
+   },
+   "by": 140,
+   "axis": "x",
+   "duration": 0.35,
+   "after": 50,
+   "label": "a faixa de abas rola para mostrar Integrações",
+   "at": 21.0
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Integrações",
+    "exact": true
+   },
+   "label": "aba Integrações",
+   "at": 21.5
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "role": "tab",
+    "name": "Cobranças (Asaas)",
+    "exact": true
+   },
+   "timeout": 12,
+   "label": "subabas da aba Integrações"
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 1185,
+    "y": 190
+   },
+   "by": -200,
+   "axis": "x",
+   "duration": 0.3,
+   "after": 50,
+   "label": "a faixa de abas volta ao início",
+   "at": 22.4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Empresa",
+    "exact": true
+   },
+   "label": "volta à aba Empresa"
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 300,
+    "y": 330
+   },
+   "by": 6000,
+   "duration": 0.5,
+   "after": 50,
+   "label": "desce até a Zona de Perigo",
+   "at": 24.4
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 25.65
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 300,
+    "y": 330
+   },
+   "by": -6000,
+   "duration": 1.1,
+   "after": 50,
+   "label": "volta ao topo da aba Empresa pronta",
+   "at": 25.7
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Salvo",
+    "exact": true
+   },
+   "seconds": 1.0,
+   "label": "selo Salvo no canto do cabeçalho",
+   "at": 27.3
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 80,
+    "y": 770
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "label": "o cursor desce ao botão Configurações do menu"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[data-sidebar=sidebar] button[aria-label=\"Configurações\"]"
+   },
+   "text": "",
+   "noClick": true,
+   "label": "botão Configurações no rodapé do menu: é só voltar aqui"
+  },
+  {
+   "do": "pause",
+   "seconds": 0.6
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 31.89
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "tab",
+    "name": "Usuários e Permissões",
+    "exact": true
+   },
+   "seconds": 2.4,
+   "label": "aba Usuários e Permissões (assunto do próximo tutorial)",
+   "at": 33.4
+  },
+  {
+   "do": "pause",
+   "seconds": 1.0
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 38.9
+  }
+ ]
+}

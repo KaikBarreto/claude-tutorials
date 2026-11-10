@@ -1,0 +1,310 @@
+{
+ "name": "t14-cap05",
+ "title": "T14 · Cap. 5 · Os serviços com código (narração 36,0 s; marcas L1..L3 = início de cada linha do roteiro; FAKE_NOW 2026-11-13T15:10:00-03:00)",
+ "seed": "t14-cap05",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap05",
+  "t12/inicio",
+  "t12/apos-cap11",
+  "t13/inicio",
+  "t13/apos-cap14",
+  "t19/inicio",
+  "t19/apos-cap13",
+  "t20/inicio",
+  "t20/apos-cap12",
+  "t2/apos-cap10",
+  "t15/inicio",
+  "t15/apos-cap12",
+  "t22/inicio",
+  "t22/apos-cap11",
+  "t21/inicio",
+  "t21/apos-cap10",
+  "t14/inicio",
+  "t14/apos-cap04"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/notas-fiscais",
+  "/notas-fiscais/configuracoes"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Camila!",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/notas-fiscais"
+  },
+  {
+   "do": "waitFor",
+   "text": "Emita e acompanhe suas NFS-e.",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/notas-fiscais/configuracoes"
+  },
+  {
+   "do": "waitFor",
+   "text": "Dados da empresa, certificado digital e tributação",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&!/fica indispon/i.test(m[0])&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Serviços",
+    "exact": true
+   },
+   "at": 0.58,
+   "label": "aba Serviços"
+  },
+  {
+   "do": "waitFor",
+   "text": "Cadastre aqui os serviços que você fatura",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Cadastre aqui os serviços que você fatura",
+    "within": "main"
+   },
+   "seconds": 1.6,
+   "at": 1.94,
+   "label": "dica: a mesma lista das ordens de serviço",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Higienização de Split",
+    "exact": true,
+    "within": "main [role=list]"
+   },
+   "seconds": 0.8,
+   "at": 5.94,
+   "label": "lista de tipos de serviço",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 9.62
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Higienização de Split",
+    "exact": true,
+    "within": "main [role=list]"
+   },
+   "at": 12.42,
+   "label": "abre a Higienização de Split (já na aba Fiscal)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Fiscal (NFS-e)",
+   "timeout": 10
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||null};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"Fiscal (NFS-e)\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-150);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/1000),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 13.32,
+   "label": "sobe o bloco Fiscal (NFS-e) para o alto"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "button[role=combobox]",
+    "hasText": "Selecione o código...",
+    "nth": 0
+   },
+   "at": 14.52,
+   "label": "Código de serviço (cTribNac)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Buscar por código ou descrição..."
+   },
+   "text": "14.01.01",
+   "cps": 14,
+   "label": "busca 14.01.01"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "text": "14.01.01",
+    "exact": true,
+    "within": "[data-radix-popper-content-wrapper]"
+   },
+   "timeout": 10
+  },
+  {
+   "do": "pause",
+   "seconds": 0.1
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "14.01.01",
+    "exact": true,
+    "within": "[data-radix-popper-content-wrapper]"
+   },
+   "label": "escolhe 14.01.01"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"14.01.01\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere código de serviço 14.01.01 escolhido"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const esp=[\"14.01\"];let out='';for(let i=0;i<12;i++){const v=[...document.querySelectorAll(\"main\"+' input, '+\"main\"+' textarea')].map(e=>e.value).join(' | ');const falta=esp.filter(e=>!v.includes(e));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+v.slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere item 14.01 da LC 116 preenchido sozinho"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Ex.: 001"
+   },
+   "text": "001",
+   "at": 17.8,
+   "label": "cTribMun 001"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "button[role=combobox]",
+    "hasText": "Selecione o código...",
+    "nth": 0
+   },
+   "at": 19.78,
+   "label": "Código NBS"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Buscar por código ou descrição..."
+   },
+   "text": "1200",
+   "cps": 12,
+   "label": "busca 1200"
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "120016000",
+    "exact": true,
+    "within": "[data-radix-popper-content-wrapper]"
+   },
+   "label": "escolhe 120016000"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 23.26
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Alíquota de ISS (%)",
+    "exact": true
+   },
+   "seconds": 1.4,
+   "at": 23.42,
+   "label": "Alíquota de ISS em branco",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Alíquota de ISS (%)",
+    "exact": true
+   },
+   "seconds": 0.5,
+   "at": 33.0,
+   "label": "a alíquota da prefeitura vai aqui",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Salvar",
+    "exact": true
+   },
+   "at": 34.3,
+   "label": "Salvar"
+  },
+  {
+   "do": "waitFor",
+   "text": "Tipo de serviço atualizado!",
+   "timeout": 10
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Tipo de serviço atualizado!\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"body\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere aviso Tipo de serviço atualizado!"
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 36.0
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

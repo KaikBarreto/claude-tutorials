@@ -1,0 +1,366 @@
+{
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap05",
+  "t12/inicio",
+  "t12/apos-cap11",
+  "t13/inicio",
+  "t13/apos-cap14",
+  "t19/inicio",
+  "t19/apos-cap13",
+  "t20/inicio",
+  "t2/apos-cap10",
+  "t15/inicio",
+  "t15/salarios",
+  "t15/folhas",
+  "t15/_dev-ponto-registro"
+ ],
+ "start": "/dashboard",
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ },
+ "stopOnFail": false,
+ "steps": [
+  {
+   "do": "clock",
+   "set": "2026-11-11T09:10:00-03:00"
+  },
+  {
+   "do": "goto",
+   "url": "/funcionarios"
+  },
+  {
+   "do": "waitFor",
+   "text": "Lista de Funcionários",
+   "timeout": 25
+  },
+  {
+   "do": "wait",
+   "ms": 700
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Controle de Ponto",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 1500
+  },
+  {
+   "do": "shot",
+   "name": "i1-hoje"
+  },
+  {
+   "do": "text",
+   "selector": "main",
+   "name": "hoje",
+   "max": 1800
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('main tbody tr')].map(r=>r.innerText.replace(/\\s+/g,' ').trim()).join(' || ')",
+   "max": 1500
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main tbody tr:has-text('Rafael Lima') td:last-child button",
+    "nth": 0
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 1200
+  },
+  {
+   "do": "shot",
+   "name": "i2-olho"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const ds=[...document.querySelectorAll('[role=dialog]')];const d=ds.length?ds[ds.length-1]:document.body;const out=[];d.querySelectorAll('button,input,textarea,select,[role=tab],[role=switch],[role=combobox],[role=radio],[role=checkbox],label').forEach(e=>{const r=e.getBoundingClientRect();if(r.width<2||r.height<2)return;out.push([e.tagName.toLowerCase(),e.getAttribute('role')||'',(e.getAttribute('aria-label')||e.innerText||e.placeholder||e.name||'').trim().replace(/\\s+/g,' ').slice(0,60),e.type||'',e.value&&e.type!=='checkbox'?String(e.value).slice(0,30):'',Math.round(r.x),Math.round(r.y)].join(' | '))});return out.join('\\n')})()",
+   "max": 7000
+  },
+  {
+   "do": "text",
+   "selector": "[role=dialog]",
+   "name": "olho",
+   "max": 1800
+  },
+  {
+   "do": "press",
+   "key": "Escape"
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main tbody tr:has-text('Rafael Lima') td:last-child button",
+    "nth": 1
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 1200
+  },
+  {
+   "do": "shot",
+   "name": "i3-lapis"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const ds=[...document.querySelectorAll('[role=dialog]')];const d=ds.length?ds[ds.length-1]:document.body;const out=[];d.querySelectorAll('button,input,textarea,select,[role=tab],[role=switch],[role=combobox],[role=radio],[role=checkbox],label').forEach(e=>{const r=e.getBoundingClientRect();if(r.width<2||r.height<2)return;out.push([e.tagName.toLowerCase(),e.getAttribute('role')||'',(e.getAttribute('aria-label')||e.innerText||e.placeholder||e.name||'').trim().replace(/\\s+/g,' ').slice(0,60),e.type||'',e.value&&e.type!=='checkbox'?String(e.value).slice(0,30):'',Math.round(r.x),Math.round(r.y)].join(' | '))});return out.join('\\n')})()",
+   "max": 7000
+  },
+  {
+   "do": "text",
+   "selector": "[role=dialog]",
+   "name": "lapis",
+   "max": 1500
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Cancelar",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Histórico",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 1500
+  },
+  {
+   "do": "shot",
+   "name": "i4-hist"
+  },
+  {
+   "do": "text",
+   "selector": "main",
+   "name": "hist",
+   "max": 1600
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Filtros"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 700
+  },
+  {
+   "do": "shot",
+   "name": "i4b-filtros"
+  },
+  {
+   "do": "text",
+   "selector": "body",
+   "name": "filtros",
+   "max": 1200
+  },
+  {
+   "do": "press",
+   "key": "Escape"
+  },
+  {
+   "do": "wait",
+   "ms": 300
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Relatório",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 1800
+  },
+  {
+   "do": "shot",
+   "name": "i5-rel"
+  },
+  {
+   "do": "text",
+   "selector": "main",
+   "name": "rel",
+   "max": 1800
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Config",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 1200
+  },
+  {
+   "do": "wheel",
+   "x": 760,
+   "y": 500,
+   "dy": 900
+  },
+  {
+   "do": "wait",
+   "ms": 900
+  },
+  {
+   "do": "shot",
+   "name": "i6-quiosque"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Salvar configurações"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 1000
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('[data-sonner-toast],[role=status],ol li')].map(t=>t.innerText.replace(/\\n/g,' / ')).join(' || ')",
+   "max": 500
+  },
+  {
+   "do": "goto",
+   "url": "/financeiro/contas"
+  },
+  {
+   "do": "waitFor",
+   "text": "A Pagar",
+   "timeout": 25
+  },
+  {
+   "do": "wait",
+   "ms": 1000
+  },
+  {
+   "do": "shot",
+   "name": "j1-contas"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "A Pagar"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 900
+  },
+  {
+   "do": "keys",
+   "target": {
+    "placeholder": "Buscar por nome, descrição, categoria ou valor..."
+   },
+   "text": "Folha",
+   "delay": 30
+  },
+  {
+   "do": "wait",
+   "ms": 1500
+  },
+  {
+   "do": "shot",
+   "name": "j2-folha"
+  },
+  {
+   "do": "text",
+   "selector": "main",
+   "name": "folha",
+   "max": 2500
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('main tbody tr')].slice(0,2).map(r=>[...r.querySelectorAll('button')].map(b=>(b.getAttribute('aria-label')||b.innerText||'').trim()).join(',')).join(' || ')",
+   "max": 600
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main tbody tr:has-text('Rafael Lima') button[aria-label='Ações']"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 700
+  },
+  {
+   "do": "shot",
+   "name": "j3-menu"
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('[role=menuitem]')].map(m=>m.innerText).join(' | ')"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Marcar como pago"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 1500
+  },
+  {
+   "do": "shot",
+   "name": "j4-pagar-folha"
+  },
+  {
+   "do": "text",
+   "selector": "[role=dialog]",
+   "name": "pagamento",
+   "max": 2500
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Cancelar",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  }
+ ]
+}

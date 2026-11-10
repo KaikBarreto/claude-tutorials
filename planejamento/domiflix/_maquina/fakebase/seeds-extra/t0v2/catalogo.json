@@ -1,0 +1,240 @@
+{
+ "subscription_modules": [
+  {
+   "code": "basic",
+   "name": "Módulo Básico",
+   "description": "Módulo Básico",
+   "price": 197,
+   "type": "module",
+   "sort_order": 1,
+   "is_active": true
+  },
+  {
+   "code": "contracts",
+   "name": "Gestão de Contratos e PMOC",
+   "description": "Gestão de Contratos e PMOC",
+   "price": 100,
+   "type": "module",
+   "sort_order": 2,
+   "is_active": true
+  },
+  {
+   "code": "rh",
+   "name": "Funcionários / RH",
+   "description": "Funcionários / RH",
+   "price": 60,
+   "type": "addon",
+   "sort_order": 3,
+   "is_active": true
+  },
+  {
+   "code": "crm",
+   "name": "CRM / Kanban",
+   "description": "CRM / Kanban",
+   "price": 90,
+   "type": "addon",
+   "sort_order": 4,
+   "is_active": true
+  },
+  {
+   "code": "nfe",
+   "name": "Emissão de Notas Fiscais",
+   "description": "Emissão de Notas Fiscais",
+   "price": 120,
+   "type": "addon",
+   "sort_order": 5,
+   "is_active": true
+  },
+  {
+   "code": "customer_portal",
+   "name": "Portal do Cliente",
+   "description": "Portal do Cliente",
+   "price": 0,
+   "type": "addon",
+   "sort_order": 8,
+   "is_active": true
+  },
+  {
+   "code": "pricing_advanced",
+   "name": "Precificação Avançada",
+   "description": "Precificação Avançada",
+   "price": 0,
+   "type": "addon",
+   "sort_order": 9,
+   "is_active": true
+  },
+  {
+   "code": "video_questions",
+   "name": "Perguntas em Vídeo",
+   "description": "Perguntas em Vídeo",
+   "price": 0,
+   "type": "addon",
+   "sort_order": 10,
+   "is_active": true
+  },
+  {
+   "code": "whatsapp",
+   "name": "Avisos de WhatsApp",
+   "description": "Avisos automáticos e ilimitados por WhatsApp aos clientes.",
+   "price": 150,
+   "type": "addon",
+   "sort_order": 12,
+   "is_active": true
+  },
+  {
+   "code": "cobrancas",
+   "name": "Cobranças online",
+   "description": "Cobranças online",
+   "price": 150,
+   "type": "addon",
+   "sort_order": 13,
+   "is_active": true
+  },
+  {
+   "code": "pdv",
+   "name": "PDV e Loja",
+   "description": "PDV e Loja",
+   "price": 200,
+   "type": "addon",
+   "sort_order": 14,
+   "is_active": true
+  },
+  {
+   "code": "finance_advanced",
+   "name": "Financeiro Avançado",
+   "description": "DRE, contas a pagar e a receber, inclusos na base.",
+   "price": 0,
+   "type": "addon",
+   "sort_order": 6,
+   "is_active": true
+  },
+  {
+   "code": "extra_user",
+   "name": "Usuário Extra",
+   "description": "Adicional de R$ 20 por usuário acima dos 5 incluídos na base.",
+   "price": 20,
+   "type": "addon",
+   "sort_order": 10,
+   "is_active": true
+  }
+ ],
+ "_patch": {
+  "subscription_plans": [
+   {
+    "match": {
+     "code": "avancado"
+    },
+    "set": {
+     "included_modules": [
+      "basic",
+      "customer_portal",
+      "pricing_advanced",
+      "video_questions",
+      "contracts",
+      "rh"
+     ],
+     "price": 547,
+     "max_users": 10
+    }
+   }
+  ],
+  "company_modules": [
+   {
+    "match": {
+     "module_code": "crm"
+    },
+    "set": {
+     "company_id": "00000000-0000-4000-8000-0000000000ff"
+    }
+   },
+   {
+    "match": {
+     "module_code": "nfe"
+    },
+    "set": {
+     "company_id": "00000000-0000-4000-8000-0000000000ff"
+    }
+   },
+   {
+    "match": {
+     "module_code": "cobrancas"
+    },
+    "set": {
+     "company_id": "00000000-0000-4000-8000-0000000000ff"
+    }
+   },
+   {
+    "match": {
+     "module_code": "whatsapp"
+    },
+    "set": {
+     "company_id": "00000000-0000-4000-8000-0000000000ff"
+    }
+   },
+   {
+    "match": {
+     "module_code": "pdv"
+    },
+    "set": {
+     "company_id": "00000000-0000-4000-8000-0000000000ff"
+    }
+   },
+   {
+    "match": {
+     "module_code": "finance_advanced"
+    },
+    "set": {
+     "company_id": "00000000-0000-4000-8000-0000000000ff"
+    }
+   },
+   {
+    "match": {
+     "module_code": "white_label"
+    },
+    "set": {
+     "company_id": "00000000-0000-4000-8000-0000000000ff"
+    }
+   }
+  ]
+ },
+ "whatsapp_tiers": [
+  {
+   "tier": 1,
+   "name": "Grátis",
+   "monthly_limit": null,
+   "price": 0
+  },
+  {
+   "tier": 2,
+   "name": "WhatsApp Dominex",
+   "monthly_limit": null,
+   "price": 150
+  }
+ ],
+ "nfse_tiers": [
+  {
+   "tier": 1,
+   "name": "Nível 1",
+   "monthly_limit": 200,
+   "price": 100
+  },
+  {
+   "tier": 2,
+   "name": "Nível 2",
+   "monthly_limit": 500,
+   "price": 200
+  },
+  {
+   "tier": 3,
+   "name": "Nível 3",
+   "monthly_limit": 1000,
+   "price": 300
+  },
+  {
+   "tier": 4,
+   "name": "Nível 4 (Ilimitado)",
+   "monthly_limit": null,
+   "price": 400
+  }
+ ]
+}

@@ -1,0 +1,241 @@
+{
+ "name": "t5-cap07",
+ "title": "T5 · Cap. 7 · Acompanhando no Kanban (narração 42,2 s; marcas L1..L4 = início de cada linha do roteiro)",
+ "seed": "t5-cap07",
+ "pace": 0.45,
+ "cps": 14,
+ "tail": 1.5,
+ "start": {
+  "x": 900,
+  "y": 480
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap06"
+ ],
+ "prewarm": [
+  "/ordens-servico"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/ordens-servico"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie suas ordens de serviço",
+   "timeout": 20
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "scroll",
+   "at": 0.3,
+   "label": "desce até o Kanban",
+   "by": 330,
+   "point": {
+    "x": 760,
+    "y": 120
+   }
+  },
+  {
+   "do": "scroll",
+   "at": 1.4,
+   "label": "mostra Pendente, A Caminho e Em Andamento",
+   "by": 560,
+   "axis": "x",
+   "point": {
+    "x": 640,
+    "y": 520
+   }
+  },
+  {
+   "do": "drag",
+   "target": {
+    "text": "MC-2026-11",
+    "exact": true,
+    "within": "main"
+   },
+   "to": {
+    "selector": "main h3",
+    "hasText": "Em Andamento"
+   },
+   "at": 2.6,
+   "label": "arrasta MC-2026-11 de Pendente para Em Andamento"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "MC-2026-11",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.8,
+   "at": 7.54,
+   "label": "o cartão já está em Em Andamento"
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 9.0
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Criar OS em \"Pendente\""
+   },
+   "seconds": 1.8,
+   "at": 9.08,
+   "label": "o \"+\" da coluna Pendente"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 12.92
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "HIG-2026-9",
+    "exact": true,
+    "within": "main"
+   },
+   "at": 12.92,
+   "label": "abre o detalhe da OS #9"
+  },
+  {
+   "do": "waitFor",
+   "text": "Check-in / Check-out",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] h3",
+    "hasText": "Cliente"
+   },
+   "seconds": 0.3,
+   "at": 15.28,
+   "label": "cartão Cliente"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] h3",
+    "hasText": "Equipamento"
+   },
+   "seconds": 0.3,
+   "at": 16.58,
+   "label": "cartão Equipamento"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] h3",
+    "hasText": "Check-in / Check-out"
+   },
+   "seconds": 1.2,
+   "at": 17.92,
+   "label": "cartão Check-in / Check-out"
+  },
+  {
+   "do": "scroll",
+   "target": {
+    "selector": "[role=dialog] button",
+    "hasText": "Preencher OS"
+   },
+   "at": 20.12,
+   "label": "desce até as ações"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button",
+    "hasText": "Link OS"
+   },
+   "at": 23.13,
+   "label": "Link OS"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] button",
+    "hasText": "Preencher OS"
+   },
+   "seconds": 2.4,
+   "at": 25.65,
+   "label": "Preencher OS"
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 32.77
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button",
+    "hasText": "Resetar OS"
+   },
+   "at": 34.91,
+   "label": "Resetar OS"
+  },
+  {
+   "do": "waitFor",
+   "text": "Manter o preenchimento",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Manter o preenchimento",
+    "exact": true
+   },
+   "seconds": 0.4,
+   "at": 39.17,
+   "label": "Manter o preenchimento"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Apagar o preenchimento",
+    "exact": true
+   },
+   "seconds": 0.4,
+   "at": 39.81,
+   "label": "Apagar o preenchimento"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Cancelar",
+    "exact": true
+   },
+   "at": 41.29,
+   "label": "Cancelar"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 42.24
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

@@ -1,0 +1,700 @@
+{
+ "name": "t22-cap06",
+ "title": "T22 · Cap. 6 · Montando a estrutura (narração 48,2 s; marcas L1..L7 = início de cada linha do roteiro)",
+ "seed": "t22-cap06",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 0.4,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap05",
+  "t12/inicio",
+  "t12/apos-cap11",
+  "t13/inicio",
+  "t13/apos-cap14",
+  "t19/inicio",
+  "t19/apos-cap13",
+  "t20/inicio",
+  "t20/apos-cap12",
+  "t2/apos-cap10",
+  "t15/inicio",
+  "t15/apos-cap12",
+  "t22/inicio",
+  "t22/apos-cap02"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/funcionarios"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Camila!",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/funcionarios"
+  },
+  {
+   "do": "waitFor",
+   "text": "Funcionários (RH)",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Toggle Sidebar",
+    "nth": 0
+   }
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Organograma",
+    "exact": true
+   },
+   "label": "aba Organograma",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "text": "Nenhum organograma ainda",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Novo Organograma",
+    "exact": true
+   },
+   "label": "Novo Organograma",
+   "noScroll": true
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input"
+   },
+   "text": "Estrutura 2026",
+   "cps": 18,
+   "label": "nome Estrutura 2026",
+   "noScroll": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Criar",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "label": "Criar",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "text": "Salvo",
+   "timeout": 20
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": ".react-flow__node",
+    "hasText": "Direção"
+   },
+   "label": "abre Editar nó da Direção",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "text": "Editar nó",
+   "timeout": 8
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "label:text-is('Nome') + input"
+   },
+   "label": "Nome: Camila Duarte (clique)",
+   "noScroll": true
+  },
+  {
+   "do": "press",
+   "key": "Control+A"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "label:text-is('Nome') + input"
+   },
+   "text": "Camila Duarte",
+   "noClick": true,
+   "label": "Nome: Camila Duarte",
+   "cps": 20
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "label:text-is('Cargo') + input"
+   },
+   "label": "Cargo: Diretora (clique)",
+   "noScroll": true
+  },
+  {
+   "do": "press",
+   "key": "Control+A"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "label:text-is('Cargo') + input"
+   },
+   "text": "Diretora",
+   "noClick": true,
+   "label": "Cargo: Diretora",
+   "cps": 20
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "label:text-is('Setor') + input"
+   },
+   "label": "Setor: Direção (clique)",
+   "noScroll": true
+  },
+  {
+   "do": "press",
+   "key": "Control+A"
+  },
+  {
+   "do": "eval",
+   "js": "(() => { document.execCommand('insertText', false, \"Dire\\u00e7\\u00e3o\"); const e = document.activeElement; return e && e.value; })()",
+   "label": "Setor: Direção"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": ".react-flow__node",
+    "hasText": "Camila Duarte"
+   },
+   "seconds": 0.5,
+   "label": "cursor na caixa da Camila",
+   "optional": true,
+   "timeout": 3,
+   "noScroll": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": ".react-flow__node:has-text('Camila Duarte') button[aria-label='Adicionar nó'] >> nth=1"
+   },
+   "label": "+ de baixo da caixa da Camila",
+   "force": true,
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='Buscar funcionário...']"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='Buscar funcionário...']"
+   },
+   "text": "Tatiane",
+   "cps": 18,
+   "label": "busca Tatiane",
+   "noScroll": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button",
+    "hasText": "Tatiane Ribeiro"
+   },
+   "label": "escolhe Tatiane Ribeiro (entra ligada)",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": ".react-flow__node",
+    "hasText": "Tatiane Ribeiro"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": ".react-flow__node",
+    "hasText": "Tatiane Ribeiro"
+   },
+   "label": "abre Editar nó da Tatiane",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "text": "Nome, cargo e foto vêm do cadastro do funcionário.",
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Nome, cargo e foto vêm do cadastro do funcionário."
+   },
+   "seconds": 1.0,
+   "label": "dica: nome, cargo e foto vêm do cadastro",
+   "optional": true,
+   "timeout": 3,
+   "noScroll": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "label:text-is('Setor') + input"
+   },
+   "label": "Setor: Escritório (clique)",
+   "noScroll": true
+  },
+  {
+   "do": "press",
+   "key": "Control+A"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "label:text-is('Setor') + input"
+   },
+   "text": "Escritório",
+   "noClick": true,
+   "label": "Setor: Escritório",
+   "cps": 16
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "label:text-is('Cor do setor') ~ div button",
+    "nth": 1
+   },
+   "label": "escolhe a cor do setor",
+   "noScroll": true
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Escritório\", \"Tatiane Ribeiro\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"body\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere caixa da Tatiane com o setor Escritório"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": ".react-flow__node",
+    "hasText": "Camila Duarte"
+   },
+   "seconds": 0.1,
+   "label": "cursor na caixa da Camila",
+   "optional": true,
+   "timeout": 3,
+   "noScroll": true
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": ".react-flow__node",
+    "hasText": "Camila Duarte"
+   },
+   "seconds": 0.21,
+   "label": "cursor na caixa da Camila (continua)",
+   "optional": true,
+   "timeout": 3,
+   "noScroll": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": ".react-flow__node:has-text('Camila Duarte') button[aria-label='Adicionar nó'] >> nth=1"
+   },
+   "label": "+ de baixo da Camila (Rafael)",
+   "force": true,
+   "noScroll": true
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='Buscar funcionário...']"
+   },
+   "text": "Rafael",
+   "cps": 30,
+   "label": "rápido (4x): busca Rafael",
+   "noScroll": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button",
+    "hasText": "Rafael Lima"
+   },
+   "label": "rápido (4x): escolhe Rafael Lima",
+   "noScroll": true
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": ".react-flow__node",
+    "hasText": "Rafael Lima"
+   },
+   "seconds": 0.3,
+   "label": "rápido (4x): cursor no Rafael (Bruno Alves)",
+   "optional": true,
+   "timeout": 3,
+   "noScroll": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": ".react-flow__node:has-text('Rafael Lima') button[aria-label='Adicionar nó'] >> nth=1"
+   },
+   "label": "rápido (4x): + de baixo do Rafael (Bruno Alves)",
+   "force": true,
+   "noScroll": true
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='Buscar funcionário...']"
+   },
+   "text": "Bruno",
+   "cps": 30,
+   "label": "rápido (4x): busca Bruno",
+   "noScroll": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button",
+    "hasText": "Bruno Alves"
+   },
+   "label": "rápido (4x): escolhe Bruno Alves",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": ".react-flow__node",
+    "hasText": "Bruno Alves"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": ".react-flow__node",
+    "hasText": "Rafael Lima"
+   },
+   "seconds": 0.3,
+   "label": "rápido (4x): cursor no Rafael (Júlia Santos)",
+   "optional": true,
+   "timeout": 3,
+   "noScroll": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": ".react-flow__node:has-text('Rafael Lima') button[aria-label='Adicionar nó'] >> nth=1"
+   },
+   "label": "rápido (4x): + de baixo do Rafael (Júlia Santos)",
+   "force": true,
+   "noScroll": true
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='Buscar funcionário...']"
+   },
+   "text": "Júlia",
+   "cps": 30,
+   "label": "rápido (4x): busca Júlia",
+   "noScroll": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button",
+    "hasText": "Júlia Santos"
+   },
+   "label": "rápido (4x): escolhe Júlia Santos",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": ".react-flow__node",
+    "hasText": "Júlia Santos"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": ".react-flow__node",
+    "hasText": "Rafael Lima"
+   },
+   "seconds": 0.3,
+   "label": "rápido (4x): cursor no Rafael (Lucas Ferreira)",
+   "optional": true,
+   "timeout": 3,
+   "noScroll": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": ".react-flow__node:has-text('Rafael Lima') button[aria-label='Adicionar nó'] >> nth=1"
+   },
+   "label": "rápido (4x): + de baixo do Rafael (Lucas Ferreira)",
+   "force": true,
+   "noScroll": true
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='Buscar funcionário...']"
+   },
+   "text": "Lucas",
+   "cps": 30,
+   "label": "rápido (4x): busca Lucas",
+   "noScroll": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button",
+    "hasText": "Lucas Ferreira"
+   },
+   "label": "rápido (4x): escolhe Lucas Ferreira",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": ".react-flow__node",
+    "hasText": "Lucas Ferreira"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": ".react-flow__node",
+    "hasText": "Rafael Lima"
+   },
+   "seconds": 0.3,
+   "label": "rápido (4x): cursor no Rafael (Marina Costa)",
+   "optional": true,
+   "timeout": 3,
+   "noScroll": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": ".react-flow__node:has-text('Rafael Lima') button[aria-label='Adicionar nó'] >> nth=1"
+   },
+   "label": "rápido (4x): + de baixo do Rafael (Marina Costa)",
+   "force": true,
+   "noScroll": true
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='Buscar funcionário...']"
+   },
+   "text": "Marina",
+   "cps": 30,
+   "label": "rápido (4x): busca Marina",
+   "noScroll": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button",
+    "hasText": "Marina Costa"
+   },
+   "label": "rápido (4x): escolhe Marina Costa",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": ".react-flow__node",
+    "hasText": "Marina Costa"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": ".react-flow__node",
+    "hasText": "Rafael Lima"
+   },
+   "seconds": 0.3,
+   "label": "rápido (4x): cursor no Rafael (Paulo Souza)",
+   "optional": true,
+   "timeout": 3,
+   "noScroll": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": ".react-flow__node:has-text('Rafael Lima') button[aria-label='Adicionar nó'] >> nth=1"
+   },
+   "label": "rápido (4x): + de baixo do Rafael (Paulo Souza)",
+   "force": true,
+   "noScroll": true
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='Buscar funcionário...']"
+   },
+   "text": "Paulo",
+   "cps": 30,
+   "label": "rápido (4x): busca Paulo",
+   "noScroll": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button",
+    "hasText": "Paulo Souza"
+   },
+   "label": "rápido (4x): escolhe Paulo Souza",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": ".react-flow__node",
+    "hasText": "Paulo Souza"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": ".react-flow__node",
+    "hasText": "Rafael Lima"
+   },
+   "label": "abre Editar nó do Rafael",
+   "noScroll": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "label:text-is('Setor') + input"
+   },
+   "label": "Setor: Campo (clique)",
+   "noScroll": true
+  },
+  {
+   "do": "press",
+   "key": "Control+A"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "label:text-is('Setor') + input"
+   },
+   "text": "Campo",
+   "noClick": true,
+   "label": "Setor: Campo",
+   "cps": 16
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "label:text-is('Cor do setor') ~ div button",
+    "nth": 2
+   },
+   "label": "cor do setor Campo",
+   "noScroll": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Aplicar aos de baixo",
+    "exact": true
+   },
+   "label": "Aplicar aos de baixo",
+   "noScroll": true
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Campo\", \"Paulo Souza\", \"Júlia Santos\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"body\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere as caixas de baixo ficaram no setor Campo"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Salvo"
+   },
+   "seconds": 1.4,
+   "label": "selo Salvo",
+   "optional": true,
+   "timeout": 3,
+   "noScroll": true
+  },
+  {
+   "do": "pause",
+   "seconds": 1.6
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z",
+  "disc-overview-view-mode": "grid"
+ }
+}

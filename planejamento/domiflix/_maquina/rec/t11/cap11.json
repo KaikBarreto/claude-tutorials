@@ -1,0 +1,187 @@
+{
+ "name": "t11-cap11",
+ "title": "T11 · Cap. 11 · O cronograma do ano (narração 38,6 s; marcas L1..L4 = início de cada linha do roteiro)",
+ "seed": "t11-cap11",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t2/apos-cap10",
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t9/inicio",
+  "t9/apos-cap16",
+  "t10/apos-cap09",
+  "t11/inicio",
+  "t11/apos-cap09"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/contratos",
+  "/contratos"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Camila!",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/contratos"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie contratos recorrentes e manutenções programadas",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main tbody tr",
+    "hasText": "PMOC - Hotel Mirante do Mar"
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Visão Geral",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|erro|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Cronograma",
+    "exact": true
+   },
+   "at": 0.0,
+   "label": "aba Cronograma"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Próximo período",
+    "exact": true
+   },
+   "at": 4.34,
+   "label": "Próximo período (a primeira visita é em dezembro)"
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 8.66
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main [style*='--warning']",
+    "nth": 0
+   },
+   "seconds": 2.4,
+   "at": 15.06,
+   "label": "etiqueta laranja (visita a fazer)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 23.49
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main [style*='--warning']",
+    "nth": 0
+   },
+   "at": 23.49,
+   "label": "clica no dia da visita",
+   "optional": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Semana",
+    "exact": true,
+    "within": "main"
+   },
+   "at": 29.41,
+   "label": "Semana"
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Mês",
+    "exact": true,
+    "within": "main"
+   },
+   "at": 30.13,
+   "label": "Mês"
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 30.77
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Imprimir PDF Anual"
+   },
+   "seconds": 3.4,
+   "at": 31.49,
+   "label": "Imprimir PDF Anual (sem clicar)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 38.64
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

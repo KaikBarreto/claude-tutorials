@@ -1,0 +1,16 @@
+{"seedExtra": ["t3/apos-cap10","t1/apos-cap13","t4/inicio","t4/apos-cap14","t5/inicio","t5/apos-cap05","t11/inicio"],
+ "start": "/dashboard",
+ "steps": [
+  {"do":"goto","url":"/contratos"},
+  {"do":"waitFor","text":"Contratos","timeout":15},
+  {"do":"shot","name":"01-lista"},
+  {"do":"text","selector":"main","name":"main","max":1500},
+  {"do":"click","target":{"role":"button","name":"Filtros"}},
+  {"do":"shot","name":"02-filtros"},
+  {"do":"text","selector":"[role=dialog]","name":"filtros","max":1500},
+  {"do":"press","key":"Escape"},
+  {"do":"click","target":{"role":"button","name":"Configurações de Contrato"}},
+  {"do":"shot","name":"03-config"},
+  {"do":"click","target":{"role":"tab","name":"Responsáveis Técnicos"}},
+  {"do":"shot","name":"04-rt"}
+ ]}

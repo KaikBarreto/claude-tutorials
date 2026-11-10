@@ -1,0 +1,496 @@
+{
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap05",
+  "t12/inicio",
+  "t12/apos-cap11",
+  "t13/inicio",
+  "t13/apos-cap14",
+  "t19/inicio",
+  "t19/apos-cap13",
+  "t20/inicio",
+  "t20/apos-cap12",
+  "t2/apos-cap10",
+  "t15/inicio",
+  "t15/apos-cap12",
+  "t22/inicio",
+  "t22/apos-cap11",
+  "t21/inicio",
+  "t21/apos-cap10",
+  "t14/inicio",
+  "t14/apos-cap12",
+  "t17/inicio"
+ ],
+ "start": "/dashboard",
+ "stopOnFail": false,
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ },
+ "steps": [
+  {
+   "do": "waitFor",
+   "text": "Olá, Camila!",
+   "timeout": 30
+  },
+  {
+   "do": "wait",
+   "ms": 3000
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Toggle Sidebar",
+    "nth": 0
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 1500
+  },
+  {
+   "do": "shot",
+   "name": "s01"
+  },
+  {
+   "do": "eval",
+   "js": "document.querySelector('aside')?JSON.stringify(document.querySelector('aside').getBoundingClientRect()):'sem aside'"
+  },
+  {
+   "do": "text",
+   "selector": "main",
+   "name": "dash recolhido",
+   "max": 300
+  },
+  {
+   "do": "wheel",
+   "x": 760,
+   "y": 420,
+   "dy": 330,
+   "after": 900
+  },
+  {
+   "do": "shot",
+   "name": "s02"
+  },
+  {
+   "do": "wheel",
+   "x": 760,
+   "y": 420,
+   "dy": 330,
+   "after": 900
+  },
+  {
+   "do": "shot",
+   "name": "s03"
+  },
+  {
+   "do": "wheel",
+   "x": 760,
+   "y": 420,
+   "dy": 330,
+   "after": 900
+  },
+  {
+   "do": "shot",
+   "name": "s04"
+  },
+  {
+   "do": "wheel",
+   "x": 760,
+   "y": 420,
+   "dy": 330,
+   "after": 900
+  },
+  {
+   "do": "shot",
+   "name": "s05"
+  },
+  {
+   "do": "wheel",
+   "x": 760,
+   "y": 420,
+   "dy": 330,
+   "after": 900
+  },
+  {
+   "do": "shot",
+   "name": "s06"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const m=document.scrollingElement;return JSON.stringify({sh:m.scrollHeight,st:m.scrollTop,main:(()=>{const e=document.querySelector('main');return [e.scrollHeight,e.clientHeight,e.scrollTop]})()})})()"
+  },
+  {
+   "do": "wheel",
+   "x": 760,
+   "y": 420,
+   "dy": -3000,
+   "after": 900
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button",
+    "hasText": "Este mês"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 600
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Mês passado",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 1500
+  },
+  {
+   "do": "shot",
+   "name": "s07-mespassado"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button",
+    "hasText": "Mês passado"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 600
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Personalizado",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 1000
+  },
+  {
+   "do": "press",
+   "key": "Escape"
+  },
+  {
+   "do": "wait",
+   "ms": 700
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('main button')].slice(0,6).map(b=>b.innerText.trim())"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button",
+    "hasText": "Personalizado",
+    "nth": 0
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 700
+  },
+  {
+   "do": "shot",
+   "name": "s08-lista"
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Este mês",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 1500
+  },
+  {
+   "do": "shot",
+   "name": "s09-volta"
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('main button')].slice(0,6).map(b=>b.innerText.trim())"
+  },
+  {
+   "do": "goto",
+   "url": "/financeiro/contas"
+  },
+  {
+   "do": "wait",
+   "ms": 4000
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "A Receber",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 1200
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Filtros"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 900
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]",
+    "nth": 0
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 700
+  },
+  {
+   "do": "shot",
+   "name": "s10-status"
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('[role=option]')].map(e=>e.innerText.trim())"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Pendentes"
+   },
+   "optional": true
+  },
+  {
+   "do": "wait",
+   "ms": 700
+  },
+  {
+   "do": "shot",
+   "name": "s11-apos"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Fechar",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "optional": true
+  },
+  {
+   "do": "wait",
+   "ms": 900
+  },
+  {
+   "do": "shot",
+   "name": "s12-contas-pend"
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('main button')].filter(b=>/Filtros/.test(b.innerText)||/Filtros/.test(b.getAttribute('aria-label')||'')).map(b=>b.innerText.trim()+'|'+b.getAttribute('aria-label'))"
+  },
+  {
+   "do": "goto",
+   "url": "/financeiro/relatorios?tab=dre"
+  },
+  {
+   "do": "wait",
+   "ms": 5000
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Exportar",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 700
+  },
+  {
+   "do": "shot",
+   "name": "s13-dre-exp"
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('[role=menuitem]')].map(e=>e.innerText.trim())"
+  },
+  {
+   "do": "press",
+   "key": "Escape"
+  },
+  {
+   "do": "goto",
+   "url": "/configuracoes"
+  },
+  {
+   "do": "wait",
+   "ms": 4000
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const b=[...document.querySelectorAll('button')].find(x=>x.innerText.trim()==='Exportar dados');b.scrollIntoView({block:'center'});return 1})()"
+  },
+  {
+   "do": "wait",
+   "ms": 900
+  },
+  {
+   "do": "shot",
+   "name": "s14-card"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Exportar dados",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 1200
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Limpar seleção",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 400
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Clientes",
+    "exact": true,
+    "within": "[role=dialog]"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 250
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Ordens de Serviço",
+    "exact": true,
+    "within": "[role=dialog]"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 250
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Financeiro",
+    "exact": true,
+    "within": "[role=dialog]"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 250
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const d=document.querySelector('[role=dialog] .overflow-y-auto');return d?[d.scrollHeight,d.clientHeight]:'sem'})()"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const d=document.querySelector('[role=dialog] .overflow-y-auto');if(d)d.scrollTo({top:999,behavior:'smooth'});return 1})()"
+  },
+  {
+   "do": "wait",
+   "ms": 900
+  },
+  {
+   "do": "shot",
+   "name": "s15-func"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const f=window.fetch.bind(window);window.fetch=async(...x)=>{const u=String(x[0]&&x[0].url||x[0]);if(/\\/rest\\/v1\\/(customers|customer_contacts|service_orders|service_materials|financial_transactions|financial_accounts)/.test(u))await new Promise(r=>setTimeout(r,700));return f(...x)};return 'ok'})()"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Exportar",
+    "exact": true,
+    "within": "[role=dialog]"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 700
+  },
+  {
+   "do": "shot",
+   "name": "s16-prog1"
+  },
+  {
+   "do": "wait",
+   "ms": 1500
+  },
+  {
+   "do": "shot",
+   "name": "s17-prog2"
+  },
+  {
+   "do": "wait",
+   "ms": 1500
+  },
+  {
+   "do": "shot",
+   "name": "s18-prog3"
+  },
+  {
+   "do": "wait",
+   "ms": 4000
+  },
+  {
+   "do": "shot",
+   "name": "s19-fim"
+  },
+  {
+   "do": "eval",
+   "js": "document.body.innerText.includes('Exportação concluída')"
+  }
+ ]
+}

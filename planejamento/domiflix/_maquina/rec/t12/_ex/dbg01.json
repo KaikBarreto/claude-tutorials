@@ -1,0 +1,113 @@
+{
+ "name": "t12-cap01",
+ "title": "T12 · Cap. 1 · O link de cada cliente (narração 77,7 s; marcas L1..L6 = início de cada linha do roteiro)",
+ "seed": "t12-cap01",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 0.4,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap05",
+  "t12/inicio"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/clientes",
+  "/contratos",
+  "/ordens-servico"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/clientes/cbed8554-3919-5fa8-b9c6-5d13ef24cf37"
+  },
+  {
+   "do": "waitFor",
+   "text": "Informações",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|erro|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Ações",
+    "exact": true
+   },
+   "label": "botão Ações da ficha"
+  },
+  {
+   "do": "pause",
+   "seconds": 0.6
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Ações",
+    "exact": true
+   },
+   "label": "Ações de novo (só se o menu não abriu)",
+   "unless": {
+    "role": "menuitem",
+    "name": "Editar",
+    "exact": true
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Editar",
+    "exact": true
+   },
+   "label": "Editar no menu Ações"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Portal",
+    "exact": true
+   },
+   "label": "aba Portal da janela Editar Cliente"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "switch",
+    "name": "Portal ativo",
+    "exact": true
+   },
+   "seconds": 2.4,
+   "label": "chave Portal ativo",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify([...document.querySelectorAll('input')].filter(i=>/dominex/.test(i.value)).map(i=>i.outerHTML.slice(0,300)+'|vis:'+!!i.offsetParent))",
+   "label": "inp"
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

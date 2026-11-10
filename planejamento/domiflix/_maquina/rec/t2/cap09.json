@@ -1,0 +1,228 @@
+{
+ "name": "t2-cap09",
+ "title": "T2 · Cap. 9 · Desativar e reativar (narração 65,4 s; marcas L1..L6 = início de cada linha do roteiro)",
+ "seed": "t2-cap09",
+ "pace": 0.5,
+ "cps": 40,
+ "tail": 1.5,
+ "start": {
+  "x": 900,
+  "y": 420
+ },
+ "seedExtra": [
+  "t1/apos-cap13",
+  "t2/inicio",
+  "t2/apos-cap08"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/configuracoes"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "goto",
+   "url": "/configuracoes?tab=usuarios"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "main p",
+    "hasText": "usuários •"
+   },
+   "timeout": 15
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Bruno Alves",
+    "within": "main"
+   },
+   "seconds": 0.8,
+   "at": 4.06,
+   "label": "a lista: Bruno Alves"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Tatiane Ribeiro",
+    "within": "main"
+   },
+   "seconds": 1.2,
+   "at": 6.2,
+   "label": "a lista: Tatiane Ribeiro (oito pessoas)"
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 9.72
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Paulo Souza",
+    "within": "main"
+   },
+   "at": 9.72,
+   "label": "clica no Paulo Souza"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main p",
+    "hasText": "usuários •"
+   },
+   "seconds": 2.0,
+   "at": 11.26,
+   "label": "contador: 8 usuários ativos"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 15.24
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Desativar",
+    "exact": true,
+    "within": "main"
+   },
+   "at": 15.24,
+   "label": "Desativar"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main p",
+    "hasText": "usuários •"
+   },
+   "seconds": 1.4,
+   "at": 21.94,
+   "label": "contador cai para 7"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Paulo Souza",
+    "within": "main"
+   },
+   "seconds": 1.2,
+   "at": 23.78,
+   "label": "etiqueta Inativo na lista"
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 27.2
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Reativar",
+    "exact": true,
+    "within": "main"
+   },
+   "at": 28.48,
+   "label": "Reativar"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main p",
+    "hasText": "usuários •"
+   },
+   "seconds": 1.4,
+   "at": 33.54,
+   "label": "contador sobe para 8"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Excluir",
+    "exact": true,
+    "within": "main"
+   },
+   "at": 38.4,
+   "label": "Excluir"
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 39.04
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Excluir usuário permanentemente?",
+    "exact": true
+   },
+   "seconds": 1.5,
+   "at": 40.18,
+   "label": "janela: Excluir usuário permanentemente?"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Cancelar",
+    "exact": true
+   },
+   "at": 49.48,
+   "label": "Cancelar"
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 51.24
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Camila Duarte",
+    "within": "main"
+   },
+   "at": 51.64,
+   "label": "clica na Camila Duarte"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Editar",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 1.4,
+   "at": 53.42,
+   "label": "só o botão Editar"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 65.36
+  }
+ ]
+}

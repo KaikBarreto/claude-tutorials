@@ -1,0 +1,162 @@
+{
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap05",
+  "t12/inicio",
+  "t12/apos-cap11",
+  "t13/inicio",
+  "t13/apos-cap14",
+  "t19/inicio",
+  "t19/apos-cap13",
+  "t20/inicio",
+  "t20/apos-cap12",
+  "t2/apos-cap10",
+  "t15/inicio",
+  "t15/apos-cap12",
+  "t22/inicio",
+  "t22/apos-cap11",
+  "t21/inicio",
+  "t21/corte-dia13",
+  "t14/inicio"
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ },
+ "start": "/dashboard",
+ "steps": [
+  {
+   "do": "goto",
+   "url": "/notas-fiscais/configuracoes"
+  },
+  {
+   "do": "wait",
+   "ms": 2000
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "main label:has-text('Inscrição Municipal') + input"
+   },
+   "text": "000123-4"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Salvar dados fiscais"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 2000
+  },
+  {
+   "do": "upload",
+   "target": {
+    "role": "button",
+    "name": "Selecionar arquivo (.pfx / .p12)"
+   },
+   "file": "../arquivos/certificado-ficticio.pfx"
+  },
+  {
+   "do": "keys",
+   "target": {
+    "placeholder": "Ex: Certificado da empresa"
+   },
+   "text": "Certificado da empresa",
+   "clear": true
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Senha do arquivo .pfx/.p12"
+   },
+   "text": "senha-ficticia"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#cert-custody-consent"
+   }
+  },
+  {
+   "do": "count",
+   "target": {
+    "selector": "main div.sticky button:has-text('Enviar certificado')"
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main div.sticky button:has-text('Enviar certificado')"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 400
+  },
+  {
+   "do": "shot",
+   "name": "10-enviando"
+  },
+  {
+   "do": "text",
+   "selector": "section[aria-label*=\"Notifications\"], [data-sonner-toaster]",
+   "name": "toast",
+   "optional": true
+  },
+  {
+   "do": "wait",
+   "ms": 2500
+  },
+  {
+   "do": "shot",
+   "name": "11-enviado"
+  },
+  {
+   "do": "text",
+   "selector": "main",
+   "name": "apos-enviar",
+   "max": 2500
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const b=[...document.querySelectorAll('button')].find(x=>x.textContent.includes('Verificar cobertura do município'));return b?{disabled:b.disabled}:null})()"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Certificado A1"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 1500
+  },
+  {
+   "do": "wheel",
+   "x": 760,
+   "y": 500,
+   "dy": 900
+  },
+  {
+   "do": "wait",
+   "ms": 800
+  },
+  {
+   "do": "shot",
+   "name": "12-registro"
+  },
+  {
+   "do": "text",
+   "selector": "main",
+   "name": "registro",
+   "max": 3000
+  }
+ ]
+}

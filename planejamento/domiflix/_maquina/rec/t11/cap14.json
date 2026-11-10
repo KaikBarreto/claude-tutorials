@@ -1,0 +1,297 @@
+{
+ "name": "t11-cap14",
+ "title": "T11 · Cap. 14 · Recapitulando (narração 56,4 s; marcas L1..L5 = início de cada linha do roteiro)",
+ "seed": "t11-cap14",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t2/apos-cap10",
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t9/inicio",
+  "t9/apos-cap16",
+  "t10/apos-cap09",
+  "t11/inicio",
+  "t11/apos-cap12"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/contratos",
+  "/contratos"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Camila!",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/contratos"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie contratos recorrentes e manutenções programadas",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|erro|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr",
+    "hasText": "PMOC - Hotel Mirante do Mar"
+   },
+   "seconds": 1.2,
+   "at": 0.3,
+   "label": "a lista de Contratos (os dois contratos)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Filtros"
+   },
+   "at": 3.24,
+   "label": "abre o painel Filtros"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Tipo",
+    "within": "[role=dialog]",
+    "exact": true
+   },
+   "seconds": 0.8,
+   "at": 5.34,
+   "label": "filtro Tipo (PMOC e Comum)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "label": "fecha o painel Filtros"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Configurações de Contrato",
+    "exact": true
+   },
+   "at": 7.7,
+   "label": "Configurações de Contrato"
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 9.86
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Responsáveis Técnicos",
+    "exact": true
+   },
+   "at": 11.68,
+   "label": "aba Responsáveis Técnicos"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Ricardo Tavares Albuquerque",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 1.4,
+   "at": 13.7,
+   "label": "o Ricardo cadastrado",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Voltar",
+    "exact": true
+   },
+   "at": 16.54,
+   "label": "Voltar para a lista de Contratos"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Novo Contrato",
+    "exact": true
+   },
+   "seconds": 1.2,
+   "at": 19.52,
+   "label": "Novo Contrato (Unidade e RT, ambientes)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 24.52
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main tbody tr",
+    "hasText": "PMOC - Hotel Mirante do Mar"
+   },
+   "at": 24.76,
+   "label": "abre o contrato do hotel"
+  },
+  {
+   "do": "waitFor",
+   "text": "Visão Geral",
+   "timeout": 20
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Ocorrências",
+    "exact": true
+   },
+   "at": 27.22,
+   "label": "aba Ocorrências (as visitas na agenda)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Documentos",
+    "exact": true
+   },
+   "at": 29.24,
+   "label": "aba Documentos"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Dossiê PMOC",
+    "within": "main"
+   },
+   "seconds": 0.5,
+   "at": 35.7,
+   "label": "Dossiê PMOC (Termo, Certificado, Cronograma)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 36.37
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Financeiro",
+    "exact": true
+   },
+   "at": 38.81,
+   "label": "aba Financeiro"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Cronograma",
+    "exact": true
+   },
+   "at": 39.81,
+   "label": "aba Cronograma"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Visão Geral",
+    "exact": true
+   },
+   "at": 41.97,
+   "label": "aba Visão Geral"
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 45.73
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Renovar / Estender"
+   },
+   "seconds": 0.19,
+   "at": 45.73,
+   "label": "Renovar / Estender (sem clicar)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Renovar / Estender"
+   },
+   "seconds": 1.21,
+   "at": 45.73,
+   "label": "Renovar / Estender (sem clicar) (continua)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 56.42
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

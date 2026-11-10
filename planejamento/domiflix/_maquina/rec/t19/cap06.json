@@ -1,0 +1,518 @@
+{
+ "name": "t19-cap06",
+ "title": "T19 · Cap. 6 · Uma cobrança avulsa (narração 96,5 s; marcas L1..L10 = início de cada linha do roteiro)",
+ "seed": "t19-cap06",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap05",
+  "t12/inicio",
+  "t12/apos-cap11",
+  "t13/inicio",
+  "t13/apos-cap14",
+  "t19/inicio",
+  "t19/apos-cap03"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/financeiro/cobrancas"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Camila!",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/financeiro/cobrancas"
+  },
+  {
+   "do": "waitFor",
+   "text": "Cobranças e recorrências",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Toggle Sidebar",
+    "nth": 0
+   }
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|erro|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0.04
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "A RECEBER",
+    "within": "main"
+   },
+   "seconds": 0.8,
+   "at": 4.58,
+   "label": "cartões A receber, Recebido e Vencido",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Nenhuma cobrança",
+    "within": "main"
+   },
+   "seconds": 0.3,
+   "at": 7.2,
+   "label": "a lista ainda vazia",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Nova cobrança",
+    "exact": true,
+    "nth": 0
+   },
+   "at": 8.76,
+   "label": "Nova cobrança"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gere um link de pagamento para enviar ao seu cliente.",
+   "timeout": 10
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 9.46
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "tab",
+    "name": "Encargos",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.6,
+   "at": 12.34,
+   "label": "as quatro abas da janela",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]",
+    "nth": 0
+   },
+   "at": 18.04,
+   "label": "abre a lista de clientes (Restaurante Sabor da Serra)"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "text": "Restaurante Sabor da Serra"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Restaurante Sabor da Serra"
+   },
+   "label": "cliente: Restaurante Sabor da Serra"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Restaurante Sabor da Serra\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere cliente escolhido"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{await new Promise(r=>setTimeout(r,1800));const el=document.querySelector(\"[role=dialog]\");const t=(el?el.innerText:'').replace(/[\\s\\u00a0]+/g,' ').toLowerCase();return t.includes(\"ainda n\\u00e3o tem cpf ou cnpj\")?'DIFERENTE: apareceu '+\"ainda n\\u00e3o tem CPF ou CNPJ\":'OK: ausente '+\"ainda n\\u00e3o tem CPF ou CNPJ\"})()",
+   "label": "confere sem aviso de documento (o restaurante tem CNPJ)"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 24.18
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]",
+    "nth": 0
+   },
+   "seconds": 1.8,
+   "at": 26.9,
+   "label": "campo Cliente preenchido, sem aviso de documento",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 32.98
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#charge-amount"
+   },
+   "at": 33.6,
+   "label": "campo Valor"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#charge-amount"
+   },
+   "text": "45000",
+   "cps": 8,
+   "label": "Valor: 450,00",
+   "noClick": true
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const esp=[\"450,00\"];let out='';for(let i=0;i<12;i++){const v=[...document.querySelectorAll(\"[role=dialog]\"+' input, '+\"[role=dialog]\"+' textarea')].map(e=>e.value).join(' | ');const falta=esp.filter(e=>!v.includes(e));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+v.slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere valor 450,00"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Resumo do recebimento\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere o resumo do recebimento aparece embaixo (depois do cliente e do valor)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#charge-due"
+   },
+   "at": 35.7,
+   "label": "abre o calendário (vencimento 13/11/2026)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] button:text-is(\"13\")"
+   },
+   "label": "escolhe o dia 13 (vencimento 13/11/2026)"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"13/11/2026\", \"a receita entra em 10/11/2026, o dia de hoje\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere vencimento 13/11/2026 e a dica da competência em 10/11/2026"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Esta é a data em que o cliente deve pagar.",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.5,
+   "at": 37.58,
+   "label": "dica do regime de competência",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#charge-desc"
+   },
+   "at": 40.14,
+   "label": "campo Descrição"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#charge-desc"
+   },
+   "text": "Limpeza e higienização de 2 splits da cozinha",
+   "cps": 16,
+   "label": "Descrição: Limpeza e higienização de 2 splits da cozinha",
+   "noClick": true
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 45.84
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Avançar",
+    "exact": true
+   },
+   "at": 45.84,
+   "label": "Avançar: aba Pagamento"
+  },
+  {
+   "do": "waitFor",
+   "text": "Forma de pagamento",
+   "timeout": 8
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]",
+    "hasText": "Cliente escolhe"
+   },
+   "at": 48.0,
+   "label": "abre Forma de pagamento"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "role": "option",
+    "name": "Cartão de crédito"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Pix\", \"Boleto\", \"Cartão de crédito\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"body\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere a lista traz Pix, Boleto e Cartão de crédito"
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 50.32,
+   "label": "fecha a lista sem trocar"
+  },
+  {
+   "do": "pause",
+   "seconds": 0.5
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 53.04
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Avançar",
+    "exact": true
+   },
+   "at": 53.04,
+   "label": "Avançar: aba Encargos"
+  },
+  {
+   "do": "waitFor",
+   "text": "Multa (%)",
+   "timeout": 8
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const esp=[\"2\", \"1\"];let out='';for(let i=0;i<12;i++){const v=[...document.querySelectorAll(\"[role=dialog]\"+' input, '+\"[role=dialog]\"+' textarea')].map(e=>e.value).join(' | ');const falta=esp.filter(e=>!v.includes(e));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+v.slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere multa 2 e juros 1 já preenchidos"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Multa (%)",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.6,
+   "at": 54.24,
+   "label": "Multa (%) e Juros ao mês (%) já preenchidos",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 59.02
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Avançar",
+    "exact": true
+   },
+   "at": 59.02,
+   "label": "Avançar: aba Financeiro"
+  },
+  {
+   "do": "waitFor",
+   "text": "Lançar no financeiro",
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Lançar no financeiro",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.8,
+   "at": 60.62,
+   "label": "Lançar no financeiro: Sim",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 67.82
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Resumo do recebimento",
+    "within": "[role=dialog]"
+   },
+   "at": 67.82,
+   "label": "abre o Resumo do recebimento"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"O cliente escolhe como pagar. Veja quanto sobra em cada forma:\", \"R$ 448,01\", \"R$ 436,05\", \"Quanto o cliente paga\", \"Pagando 30 dias depois do vencimento\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere resumo: Pix e boleto R$ 448,01, cartão à vista R$ 436,05 e o cenário de atraso"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Quanto o cliente paga",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.8,
+   "at": 72.46,
+   "label": "Quanto o cliente paga, se atrasar",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L9",
+   "at": 74.46
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Gerar cobrança",
+    "exact": true
+   },
+   "at": 74.46,
+   "label": "Gerar cobrança"
+  },
+  {
+   "do": "waitFor",
+   "text": "Aponte a câmera para pagar",
+   "timeout": 15
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Cobrança gerada\", \"Aponte a câmera para pagar\", \"Link de pagamento\", \"Enviar por WhatsApp\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere cobrança gerada com o QR Code e o link de pagamento"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const esp=[\"/pagar/hn7xq3rmk4vp\"];let out='';for(let i=0;i<12;i++){const v=[...document.querySelectorAll(\"[role=dialog]\"+' input, '+\"[role=dialog]\"+' textarea')].map(e=>e.value).join(' | ');const falta=esp.filter(e=>!v.includes(e));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+v.slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere o link de pagamento traz o código da cobrança"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Aponte a câmera para pagar",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.6,
+   "at": 80.22,
+   "label": "QR Code da cobrança",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L10",
+   "at": 85.38
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Copiar link",
+    "exact": true
+   },
+   "at": 86.5,
+   "label": "Copiar link"
+  },
+  {
+   "do": "waitFor",
+   "text": "Link copiado!",
+   "timeout": 6,
+   "optional": true
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Enviar por WhatsApp",
+    "exact": true
+   },
+   "seconds": 2.0,
+   "at": 90.76,
+   "label": "Enviar por WhatsApp (sem clicar)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 96.52
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

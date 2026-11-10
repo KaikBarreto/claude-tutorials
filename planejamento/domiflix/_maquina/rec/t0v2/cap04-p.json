@@ -1,0 +1,203 @@
+{
+ "title": "T0 v2 · cap04 · A sua assinatura",
+ "seed": "t0v2-cap04",
+ "pace": 0.5,
+ "tail": 1.2,
+ "cps": 9,
+ "seedExtra": [
+  "t0v2/catalogo",
+  "t0v2/progresso-camila",
+  "t0v2/usuario-novo",
+  "t0v2/conta-contratada",
+  "t0v2/pagamentos",
+  "t0v2/lembrete-dispensado"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/assinatura"
+ ],
+ "name": "t0v2-cap04-p",
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "Camila",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "pause",
+   "seconds": 0.6
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0.04
+  },
+  {
+   "do": "click",
+   "target": "Menu",
+   "optional": true,
+   "timeout": 8,
+   "label": "abre o Menu",
+   "noScroll": true,
+   "at": 1.1
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Assinatura",
+    "exact": true
+   },
+   "optional": true,
+   "timeout": 8,
+   "label": "abre Assinatura",
+   "noScroll": true,
+   "at": 2.2
+  },
+  {
+   "do": "eval",
+   "js": "window.history.pushState({}, '', '/assinatura'); window.dispatchEvent(new PopStateEvent('popstate')); 'ok'",
+   "at": 3.3
+  },
+  {
+   "do": "waitFor",
+   "text": "Histórico de pagamentos",
+   "timeout": 20,
+   "at": 3.8
+  },
+  {
+   "do": "hover",
+   "target": "Ativa",
+   "seconds": 0.7,
+   "optional": true,
+   "timeout": 3,
+   "label": "status",
+   "at": 5.6
+  },
+  {
+   "do": "hover",
+   "target": "Plano Avançado",
+   "seconds": 0.7,
+   "optional": true,
+   "timeout": 3,
+   "label": "plano",
+   "at": 6.5
+  },
+  {
+   "do": "hover",
+   "target": "Vencimento",
+   "seconds": 0.7,
+   "optional": true,
+   "timeout": 3,
+   "label": "vencimento",
+   "at": 7.2
+  },
+  {
+   "do": "hover",
+   "target": "Valor mensal",
+   "seconds": 0.7,
+   "optional": true,
+   "timeout": 3,
+   "label": "valor",
+   "at": 8.3
+  },
+  {
+   "do": "scroll",
+   "target": "Uso da conta",
+   "optional": true,
+   "timeout": 8,
+   "at": 9.5,
+   "label": "uso da conta"
+  },
+  {
+   "do": "scroll",
+   "target": "Histórico de pagamentos",
+   "optional": true,
+   "timeout": 8,
+   "at": 10.6,
+   "label": "histórico"
+  },
+  {
+   "do": "eval",
+   "js": "fetch('http://127.0.0.1:54321/__dev/seed',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({files:['t0v2/conta-anual']})}).then(()=>{const root=document.getElementById('root');const key=Object.keys(root).find(k=>k.startsWith('__reactContainer$'));const st=[root[key]];let n=0;while(st.length&&n++<20000){const f=st.pop();if(!f)continue;const p=f.memoizedProps;if(p&&p.client&&typeof p.client.refetchQueries==='function'){p.client.invalidateQueries();p.client.refetchQueries({type:'active'});break;}if(f.sibling)st.push(f.sibling);if(f.child)st.push(f.child);}})",
+   "label": "plano anual (bastidor)",
+   "at": 11.9
+  },
+  {
+   "do": "scroll",
+   "target": "Pagar Agora",
+   "optional": true,
+   "timeout": 8,
+   "at": 12.4
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 12.44
+  },
+  {
+   "do": "hover",
+   "target": "Pagar Agora",
+   "seconds": 1.0,
+   "optional": true,
+   "timeout": 3,
+   "label": "botão Pagar Agora",
+   "at": 13.9
+  },
+  {
+   "do": "hover",
+   "target": "PIX",
+   "seconds": 0.5,
+   "optional": true,
+   "timeout": 3,
+   "label": "Pix",
+   "at": 15.9
+  },
+  {
+   "do": "hover",
+   "target": "Boleto",
+   "seconds": 0.5,
+   "optional": true,
+   "timeout": 3,
+   "label": "Boleto",
+   "at": 16.6
+  },
+  {
+   "do": "hover",
+   "target": "Cartão",
+   "seconds": 0.5,
+   "optional": true,
+   "timeout": 3,
+   "label": "Cartão",
+   "at": 17.2
+  },
+  {
+   "do": "hover",
+   "target": "20% de desconto no plano anual",
+   "seconds": 1.2,
+   "optional": true,
+   "timeout": 3,
+   "label": "20% de desconto",
+   "at": 18.6
+  },
+  {
+   "do": "pause",
+   "seconds": 0.5,
+   "at": 25.6
+  }
+ ],
+ "device": "phone",
+ "start": {
+  "x": 195,
+  "y": 600
+ }
+}

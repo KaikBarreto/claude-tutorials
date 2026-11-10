@@ -1,0 +1,237 @@
+{
+ "name": "t2-cap03",
+ "title": "T2 · Cap. 3 · A ação sem a tela (narração 36,7 s; marcas L1..L3 = início de cada linha do roteiro)",
+ "seed": "t2-cap03",
+ "pace": 0.5,
+ "cps": 40,
+ "tail": 0.4,
+ "start": {
+  "x": 900,
+  "y": 420
+ },
+ "seedExtra": [
+  "t1/apos-cap13",
+  "t2/inicio"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/configuracoes"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "goto",
+   "url": "/configuracoes?tab=usuarios"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "main p",
+    "hasText": "usuários •"
+   },
+   "timeout": 15
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Configurações",
+    "exact": true,
+    "within": "main"
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Configurações de Cargos",
+   "timeout": 10
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Novo Cargo",
+    "exact": true
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "placeholder": "Ex: Técnico de Campo"
+   }
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Ex: Técnico de Campo"
+   },
+   "text": "Técnico de Campo",
+   "noClick": true,
+   "cps": 60
+  },
+  {
+   "do": "click",
+   "target": {
+    "placeholder": "Descrição opcional"
+   }
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Descrição opcional"
+   },
+   "text": "Agenda, ferramentas e OS pelo link",
+   "noClick": true,
+   "cps": 60
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "switch",
+    "name": "Acesso à tela Agenda",
+    "exact": true
+   }
+  },
+  {
+   "do": "eval",
+   "js": "(() => { const e = [...document.querySelectorAll('[role=dialog] [aria-label]')].find((x) => x.getAttribute('aria-label') === \"Acesso \\u00e0 tela \\u00c1rea do T\\u00e9cnico\\u2122\"); if (!e) return 'alvo nao achado: ' + \"Acesso \\u00e0 tela \\u00c1rea do T\\u00e9cnico\\u2122\"; e.scrollIntoView({ block: \"center\", behavior: 'smooth' }); return 'rolando ate ' + \"Acesso \\u00e0 tela \\u00c1rea do T\\u00e9cnico\\u2122\"; })()"
+  },
+  {
+   "do": "wait",
+   "seconds": 0.8
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "switch",
+    "name": "Acesso à tela Área do Técnico™",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  }
+ ],
+ "steps": [
+  {
+   "do": "eval",
+   "js": "(() => { const e = [...document.querySelectorAll('[role=dialog] [aria-label]')].find((x) => x.getAttribute('aria-label') === \"Ver a\\u00e7\\u00f5es de Ordens de Servi\\u00e7o\"); if (!e) return 'alvo nao achado: ' + \"Ver a\\u00e7\\u00f5es de Ordens de Servi\\u00e7o\"; e.scrollIntoView({ block: \"center\", behavior: 'smooth' }); return 'rolando ate ' + \"Ver a\\u00e7\\u00f5es de Ordens de Servi\\u00e7o\"; })()",
+   "label": "rola até Ordens de Serviço"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Ver ações de Ordens de Serviço",
+    "exact": true
+   },
+   "seconds": 0.5,
+   "label": "linha Ordens de Serviço (a tela fica desligada)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Ver ações de Ordens de Serviço",
+    "exact": true
+   },
+   "label": "abre a seta de Ordens de Serviço"
+  },
+  {
+   "do": "eval",
+   "js": "(() => { const e = [...document.querySelectorAll('[role=dialog] [aria-label]')].find((x) => x.getAttribute('aria-label') === \"Editar OS em campo\"); if (!e) return 'alvo nao achado: ' + \"Editar OS em campo\"; e.scrollIntoView({ block: \"center\", behavior: 'smooth' }); return 'rolando ate ' + \"Editar OS em campo\"; })()",
+   "label": "rola até a última ação"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "switch",
+    "name": "Editar OS em campo",
+    "exact": true
+   },
+   "label": "liga Editar OS em campo"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "A tela está desligada, mas estas ações continuam valendo por conta própria.",
+    "exact": true
+   },
+   "seconds": 4.2,
+   "label": "aviso em itálico: a tela está desligada, mas a ação continua valendo"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "1/6",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.4,
+   "label": "contador 1/6"
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 880,
+    "y": 742
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "label": "Criar Cargo (cursor)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] button",
+    "hasText": "Criar Cargo"
+   },
+   "text": "",
+   "noClick": true,
+   "label": "Criar Cargo"
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll(\"[role=dialog] button\")].filter(b=>/Criar Cargo/i.test(b.textContent)).shift().click()",
+   "label": "Criar Cargo (clique)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Cargo criado com sucesso!",
+   "timeout": 8,
+   "optional": true
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Técnico de Campo",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.6,
+   "label": "o cargo Técnico de Campo na lista"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "3 permissões",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.2,
+   "label": "etiqueta: 3 permissões"
+  }
+ ]
+}

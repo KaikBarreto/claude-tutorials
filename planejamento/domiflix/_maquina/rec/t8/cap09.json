@@ -1,0 +1,458 @@
+{
+ "name": "t8-cap09",
+ "title": "T8 · Cap. 9 · Cotações e fornecedor por material (narração 78,3 s; marcas L1..L6 = início de cada linha do roteiro)",
+ "seed": "t8-cap09",
+ "pace": 0.25,
+ "cps": 14,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap15",
+  "t8/inicio",
+  "t8/apos-cap08"
+ ],
+ "prewarm": [
+  "/estoque"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/estoque"
+  },
+  {
+   "do": "waitFor",
+   "text": "Controle de peças e materiais",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Toggle Sidebar",
+    "nth": 0
+   }
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "aside[aria-label=\"Locais de estoque\"] button:has-text(\"Estoque Principal\")"
+   }
+  },
+  {
+   "do": "pause",
+   "seconds": 0.6
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Compras de Material",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Requisições de Compra",
+   "timeout": 20
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|erro|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button:has-text(\"Reposição de gás, cobre e capacitor\")"
+   },
+   "at": 4.02,
+   "label": "abre a requisição"
+  },
+  {
+   "do": "waitFor",
+   "text": "Nova cotação",
+   "timeout": 15
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main h2",
+    "hasText": "Materiais"
+   },
+   "seconds": 0.2,
+   "at": 8.28,
+   "label": "bloco Materiais",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main h2",
+    "hasText": "Cotações"
+   },
+   "seconds": 0.2,
+   "at": 9.24,
+   "label": "bloco Cotações",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main h2",
+    "hasText": "Ordens de compra"
+   },
+   "seconds": 0.2,
+   "at": 10.36,
+   "label": "bloco Ordens de compra",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 12.44
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Nova cotação",
+    "exact": true,
+    "within": "main"
+   },
+   "at": 13.3,
+   "label": "Nova cotação"
+  },
+  {
+   "do": "waitFor",
+   "text": "Fornecedor",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]"
+   },
+   "at": 14.42,
+   "label": "abre o campo Fornecedor"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Ventura Gás e Tubos"
+   },
+   "at": 15.96,
+   "label": "escolhe a Ventura Gás e Tubos"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] tbody tr:has-text(\"Gás refrigerante R-410A\") td:nth-child(3) input"
+   },
+   "text": "94,00",
+   "at": 19.75,
+   "label": "valor unitário de Gás refrigerante R-410A: 94,00"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] tbody tr:has-text(\"Tubo de cobre 3/8\") td:nth-child(3) input"
+   },
+   "text": "29,50",
+   "at": 22.08,
+   "label": "valor unitário de Tubo de cobre 3/8: 29,50"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] tbody tr:has-text(\"Capacitor 40\") td:nth-child(3) input"
+   },
+   "text": "39,00",
+   "at": 25.76,
+   "label": "valor unitário de Capacitor 40: 39,00"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Total geral",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.5,
+   "at": 29.16,
+   "label": "Total geral",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Salvar cotação",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 30.38,
+   "label": "Salvar cotação (Ventura)"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 31.28
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Nova cotação",
+    "exact": true,
+    "within": "main"
+   },
+   "at": 31.88,
+   "label": "Nova cotação (Cobre Sul Suprimentos Ltda)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Fornecedor",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]"
+   },
+   "label": "abre o campo Fornecedor (Cobre Sul Suprimentos Ltda)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Cobre Sul Suprimentos Ltda"
+   },
+   "label": "escolhe Cobre Sul Suprimentos Ltda"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] tbody tr:has-text(\"Gás refrigerante R-410A\") td:nth-child(3) input"
+   },
+   "text": "98,00",
+   "cps": 24,
+   "label": "Cobre Sul Suprimentos Ltda: Gás refrigerante R-410A 98,00"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] tbody tr:has-text(\"Tubo de cobre 3/8\") td:nth-child(3) input"
+   },
+   "text": "27,00",
+   "cps": 24,
+   "label": "Cobre Sul Suprimentos Ltda: Tubo de cobre 3/8 27,00"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] tbody tr:has-text(\"Capacitor 40\") td:nth-child(3) input"
+   },
+   "text": "38,00",
+   "cps": 24,
+   "label": "Cobre Sul Suprimentos Ltda: Capacitor 40 38,00"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Salvar cotação",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "label": "Salvar cotação (Cobre Sul Suprimentos Ltda)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Nova cotação",
+    "exact": true,
+    "within": "main"
+   },
+   "label": "Nova cotação (Polar Distribuidora de Peças Ltda)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Fornecedor",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]"
+   },
+   "label": "abre o campo Fornecedor (Polar Distribuidora de Peças Ltda)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Polar Distribuidora de Peças Ltda"
+   },
+   "label": "escolhe Polar Distribuidora de Peças Ltda"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] tbody tr:has-text(\"Gás refrigerante R-410A\") td:nth-child(3) input"
+   },
+   "text": "99,00",
+   "cps": 24,
+   "label": "Polar Distribuidora de Peças Ltda: Gás refrigerante R-410A 99,00"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] tbody tr:has-text(\"Tubo de cobre 3/8\") td:nth-child(3) input"
+   },
+   "text": "31,00",
+   "cps": 24,
+   "label": "Polar Distribuidora de Peças Ltda: Tubo de cobre 3/8 31,00"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] tbody tr:has-text(\"Capacitor 40\") td:nth-child(3) input"
+   },
+   "text": "36,00",
+   "cps": 24,
+   "label": "Polar Distribuidora de Peças Ltda: Capacitor 40 36,00"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Salvar cotação",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "label": "Salvar cotação (Polar Distribuidora de Peças Ltda)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main div.rounded-lg.border:has-text(\"3/3\")",
+    "nth": 0
+   },
+   "seconds": 0.4,
+   "at": 46.88,
+   "label": "o cartão de uma cotação: 3/3 materiais com preço",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 47.46
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Mais barata",
+    "within": "main"
+   },
+   "seconds": 2.5,
+   "at": 51.32,
+   "label": "o selo Mais barata",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 58.22
+  },
+  {
+   "do": "select",
+   "target": {
+    "selector": "main div.rounded-md.border.p-2:has-text(\"Gás refrigerante R-410A\") button[role=combobox]"
+   },
+   "option": "Ventura Gás e Tubos",
+   "at": 64.62,
+   "label": "fornecedor escolhido do R-410A: Ventura"
+  },
+  {
+   "do": "select",
+   "target": {
+    "selector": "main div.rounded-md.border.p-2:has-text(\"Tubo de cobre 3/8\") button[role=combobox]"
+   },
+   "option": "Cobre Sul Suprimentos Ltda",
+   "at": 66.38,
+   "label": "fornecedor escolhido do Tubo: Cobre Sul"
+  },
+  {
+   "do": "select",
+   "target": {
+    "selector": "main div.rounded-md.border.p-2:has-text(\"Capacitor 40\") button[role=combobox]"
+   },
+   "option": "Polar Distribuidora de Peças Ltda",
+   "at": 68.06,
+   "label": "fornecedor escolhido do Capacitor: Polar"
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 70.86
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main h2",
+    "hasText": "Materiais"
+   },
+   "seconds": 3.0,
+   "at": 70.96,
+   "label": "os três materiais com fornecedor escolhido",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 78.26
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

@@ -1,0 +1,303 @@
+{
+ "name": "t12-cap09",
+ "title": "T12 · Cap. 9 · A página da unidade (narração 80,3 s; marcas L1..L8 = início de cada linha do roteiro)",
+ "seed": "t12-cap09",
+ "pace": 0.4,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap05",
+  "t12/inicio",
+  "t12/apos-cap08"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/clientes",
+  "/contratos",
+  "/ordens-servico"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/contrato/unidade/pmoc-hotel-mirante-do-mar-k7m2q9x4wb3d"
+  },
+  {
+   "do": "waitFor",
+   "text": "Em dia",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|erro|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Plano de Manutenção",
+    "exact": true
+   },
+   "seconds": 1.0,
+   "at": 9.14,
+   "label": "subtítulo Plano de Manutenção",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Em dia",
+    "exact": true
+   },
+   "seconds": 1.4,
+   "at": 10.66,
+   "label": "selo Em dia",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Visão Geral",
+    "exact": true
+   },
+   "at": 15.72,
+   "label": "aba Visão Geral"
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 16.28
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Conforme Lei Federal 13.589/2018"
+   },
+   "seconds": 1.2,
+   "at": 20.34,
+   "label": "conformidade com a lei",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "scroll",
+   "by": 330,
+   "at": 21.92,
+   "label": "desce até o bloco Responsável Técnico",
+   "point": {
+    "x": 700,
+    "y": 450
+   },
+   "duration": 0.8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Responsável Técnico",
+    "exact": true
+   },
+   "seconds": 2.6,
+   "at": 23.44,
+   "label": "bloco Responsável Técnico",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Equipamentos",
+    "exact": true
+   },
+   "at": 29.22,
+   "label": "aba Equipamentos"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 29.78
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Cronograma",
+    "exact": true
+   },
+   "at": 31.94,
+   "label": "aba Cronograma"
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 32.58
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Próximo período",
+    "exact": true
+   },
+   "at": 34.4,
+   "label": "Próximo período (o calendário abre em novembro; a primeira visita é em dezembro)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Toque em uma manutenção do calendário"
+   },
+   "seconds": 1.6,
+   "at": 38.75,
+   "label": "dica do calendário",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Ocorrências",
+    "exact": true
+   },
+   "at": 44.13,
+   "label": "aba Ocorrências"
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 44.69
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Agendada",
+    "exact": true
+   },
+   "seconds": 1.4,
+   "at": 48.03,
+   "label": "selo Agendada das visitas",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Documentos",
+    "exact": true
+   },
+   "at": 53.65,
+   "label": "aba Documentos"
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 54.21
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Válido até"
+   },
+   "seconds": 1.2,
+   "at": 61.39,
+   "label": "Válido até dos documentos",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Baixar PDF"
+   },
+   "seconds": 1.8,
+   "at": 63.09,
+   "label": "botão Baixar PDF (sem clicar)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 65.43
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Histórico",
+    "exact": true
+   },
+   "seconds": 1.5,
+   "at": 67.49,
+   "label": "aba Histórico (sem clicar)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "scroll",
+   "by": 900,
+   "at": 70.03,
+   "label": "rola até o rodapé",
+   "point": {
+    "x": 700,
+    "y": 450
+   },
+   "duration": 0.8
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 71.03
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Abrir chamado nesta unidade",
+    "exact": true
+   },
+   "seconds": 3.0,
+   "at": 71.81,
+   "label": "botão Abrir chamado nesta unidade (sem clicar)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 80.32
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ },
+ "anonymous": true
+}

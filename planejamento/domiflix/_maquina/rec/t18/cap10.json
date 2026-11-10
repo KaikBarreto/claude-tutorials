@@ -1,0 +1,345 @@
+{
+ "name": "t18-cap10",
+ "title": "T18 · Cap. 10 · Superaquecimento e subresfriamento (narração 77,7 s; marcas L1..L6 = início de cada linha do roteiro)",
+ "seed": "t18-cap10",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap15",
+  "t7/inicio",
+  "t7/apos-cap10",
+  "t18/catalogo"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/area-tecnico",
+  "/area-tecnico/superaquecimento"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/area-tecnico"
+  },
+  {
+   "do": "waitFor",
+   "text": "Termos Técnicos Explicados",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "nav button",
+    "hasText": "Superaquecimento"
+   },
+   "at": 4.1,
+   "label": "abre o Superaquecimento"
+  },
+  {
+   "do": "waitFor",
+   "text": "Calcule SH e SC pela pressão e temperatura medidas em campo.",
+   "timeout": 15
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main button[role=combobox]",
+    "nth": 0
+   },
+   "seconds": 1.0,
+   "at": 6.42,
+   "label": "o campo Modelo / fabricante",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button[role=combobox]",
+    "nth": 0
+   },
+   "at": 8.74,
+   "label": "abre a lista de modelos / fabricantes"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Padrão"
+   },
+   "at": 11.56,
+   "label": "escolhe Padrão"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main button[role=combobox]",
+    "nth": 1
+   },
+   "seconds": 0.8,
+   "at": 17.4,
+   "label": "Fluido Refrigerante: R-410A",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "psi",
+    "exact": true
+   },
+   "seconds": 0.6,
+   "at": 20.34,
+   "label": "Unidade de pressão: psi",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "scroll",
+   "by": 330,
+   "at": 21.48,
+   "label": "desce até os campos e a nota",
+   "duration": 1.0
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 23.52
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Valor genérico de referência",
+    "within": "main"
+   },
+   "seconds": 4.6,
+   "at": 23.52,
+   "label": "a nota do modelo Padrão",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 31.04
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Ex: 120",
+    "exact": true
+   },
+   "text": "118",
+   "cps": 7,
+   "at": 31.38,
+   "label": "pressão de baixa 118 psi"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Ex: 12",
+    "exact": true
+   },
+   "text": "12",
+   "cps": 7,
+   "at": 35.54,
+   "label": "temperatura da linha de sucção 12"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main p.text-5xl"
+   },
+   "seconds": 1.4,
+   "at": 38.78,
+   "label": "superaquecimento 7,7 °C",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main span.rounded-full",
+    "hasText": "Ideal"
+   },
+   "seconds": 1.6,
+   "at": 40.72,
+   "label": "selo Ideal",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 44.28
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Ex: 120",
+    "exact": true
+   },
+   "text": "125",
+   "cps": 7,
+   "at": 44.28,
+   "label": "pressão 125 psi",
+   "clear": true
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Ex: 12",
+    "exact": true
+   },
+   "text": "15",
+   "cps": 7,
+   "at": 45.84,
+   "label": "temperatura 15",
+   "clear": true
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main p.text-5xl"
+   },
+   "seconds": 1.2,
+   "at": 48.1,
+   "label": "9,1 °C",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main span.rounded-full",
+    "hasText": "Alto"
+   },
+   "seconds": 1.8,
+   "at": 49.4,
+   "label": "selo Alto",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "scroll",
+   "by": -330,
+   "at": 53.8,
+   "label": "sobe até as abas",
+   "duration": 0.7
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Subresfriamento (SC)",
+    "exact": true
+   },
+   "at": 54.74,
+   "label": "aba Subresfriamento (SC)"
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 55.4
+  },
+  {
+   "do": "scroll",
+   "by": 330,
+   "at": 56.54,
+   "label": "desce até os campos",
+   "duration": 0.8
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Ex: 120",
+    "exact": true
+   },
+   "text": "350",
+   "cps": 7,
+   "at": 57.93,
+   "label": "pressão de alta 350 psi"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Ex: 12",
+    "exact": true
+   },
+   "text": "35",
+   "cps": 7,
+   "at": 62.0,
+   "label": "temperatura da linha de líquido 35"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main p.text-5xl"
+   },
+   "seconds": 1.0,
+   "at": 63.78,
+   "label": "6,4 °C",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main span.rounded-full",
+    "hasText": "Ideal"
+   },
+   "seconds": 1.0,
+   "at": 65.4,
+   "label": "selo Ideal do subresfriamento",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 67.08
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "psi",
+    "exact": true
+   },
+   "seconds": 5.0,
+   "at": 67.98,
+   "label": "a chave psi / bar da Unidade de pressão (sem trocar)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 77.68
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

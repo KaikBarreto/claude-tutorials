@@ -1,0 +1,136 @@
+{
+ "name": "t2-cap08",
+ "title": "T2 · Cap. 8 · O que o técnico vê (narração 28,6 s; marcas L1..L3 = início de cada linha do roteiro)",
+ "seed": "t2-cap08",
+ "pace": 0.6,
+ "cps": 40,
+ "tail": 1.5,
+ "start": {
+  "x": 900,
+  "y": 420
+ },
+ "seedExtra": [
+  "t1/apos-cap13",
+  "t2/inicio",
+  "t2/apos-cap07"
+ ],
+ "user": "rafael.lima@glacialcold.example",
+ "prewarm": [
+  "/agenda",
+  "/area-tecnico"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/agenda"
+  },
+  {
+   "do": "waitFor",
+   "text": "Rafael Lima",
+   "timeout": 20
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Rafael Lima",
+    "exact": true,
+    "within": "[data-sidebar=sidebar]"
+   },
+   "seconds": 1.0,
+   "at": 2.2,
+   "label": "o cartão da conta: Rafael Lima"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "link",
+    "name": "Agenda",
+    "exact": true
+   },
+   "seconds": 0.8,
+   "at": 6.78,
+   "label": "abre na Agenda"
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 8.2
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "link",
+    "name": "Agenda",
+    "exact": true
+   },
+   "seconds": 0.4,
+   "at": 9.34,
+   "label": "menu: Agenda"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "link",
+    "name": "Área do Técnico™",
+    "exact": true
+   },
+   "seconds": 1.0,
+   "at": 10.22,
+   "label": "menu: Área do Técnico"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[data-sidebar=sidebar]"
+   },
+   "seconds": 1.5,
+   "at": 12.52,
+   "label": "o menu só tem o que o trabalho pede"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "link",
+    "name": "Área do Técnico™",
+    "exact": true
+   },
+   "at": 17.24,
+   "label": "abre a Área do Técnico"
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 17.88
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "link",
+    "name": "Agenda",
+    "exact": true
+   },
+   "at": 24.6,
+   "label": "volta para a Agenda"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 28.64
+  }
+ ]
+}

@@ -1,0 +1,349 @@
+{
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t9/inicio",
+  "t9/_dev/apos-cap04",
+  "t9/_dev/apos-cap09"
+ ],
+ "start": "/dashboard",
+ "stopOnFail": false,
+ "steps": [
+  {
+   "do": "goto",
+   "url": "/orcamentos"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie orçamentos, custos e precificação",
+   "timeout": 20
+  },
+  {
+   "do": "wait",
+   "ms": 1200
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{try{sessionStorage.clear()}catch(e){}return 'ss limpo'})()"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Configurar Proposta",
+    "exact": true
+   },
+   "after": 1500
+  },
+  {
+   "do": "shot",
+   "name": "50-config-modelo"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const ds=[...document.querySelectorAll('[role=dialog],[data-radix-popper-content-wrapper]')];const root=ds.length?ds[ds.length-1]:document.querySelector('main')||document;return [...root.querySelectorAll('button,input,textarea,select,[role=combobox],[role=switch],[role=checkbox],[role=tab],[role=option],[role=menuitem],[role=slider]')].filter(e=>e.getClientRects().length).map(e=>{const r=e.getBoundingClientRect();return [e.tagName[0],e.type||'',e.getAttribute('role')||'',(e.innerText||'').replace(/\\s+/g,' ').slice(0,38),e.getAttribute('aria-label')||'',e.placeholder||'',(e.value||'').slice(0,14),Math.round(r.x),Math.round(r.y),Math.round(r.width),Math.round(r.height),e.disabled?'D':''].join('|')})})()",
+   "max": 6000
+  },
+  {
+   "do": "text",
+   "selector": "[role=dialog]",
+   "name": "config etapa 1",
+   "max": 1500
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Vanguarda",
+    "within": "[role=dialog]"
+   },
+   "optional": true,
+   "after": 500
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Vanguarda",
+    "within": "[role=dialog]"
+   },
+   "optional": true,
+   "after": 900
+  },
+  {
+   "do": "shot",
+   "name": "51-config-vanguarda"
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Clean",
+    "within": "[role=dialog]"
+   },
+   "optional": true,
+   "after": 900
+  },
+  {
+   "do": "shot",
+   "name": "52-config-clean"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Próximo",
+    "exact": true
+   },
+   "after": 1200
+  },
+  {
+   "do": "shot",
+   "name": "53-config-personalizacao"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const ds=[...document.querySelectorAll('[role=dialog],[data-radix-popper-content-wrapper]')];const root=ds.length?ds[ds.length-1]:document.querySelector('main')||document;return [...root.querySelectorAll('button,input,textarea,select,[role=combobox],[role=switch],[role=checkbox],[role=tab],[role=option],[role=menuitem],[role=slider]')].filter(e=>e.getClientRects().length).map(e=>{const r=e.getBoundingClientRect();return [e.tagName[0],e.type||'',e.getAttribute('role')||'',(e.innerText||'').replace(/\\s+/g,' ').slice(0,38),e.getAttribute('aria-label')||'',e.placeholder||'',(e.value||'').slice(0,14),Math.round(r.x),Math.round(r.y),Math.round(r.width),Math.round(r.height),e.disabled?'D':''].join('|')})})()",
+   "max": 6000
+  },
+  {
+   "do": "text",
+   "selector": "[role=dialog]",
+   "name": "config etapa 2",
+   "max": 3500
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const s=document.querySelector('[role=dialog] [role=slider]');if(!s)return 'sem slider';const r=s.getBoundingClientRect();const t=s.parentElement.parentElement.getBoundingClientRect();return {thumb:[r.x,r.y,r.width,r.height].map(Math.round),track:[t.x,t.y,t.width,t.height].map(Math.round),val:s.getAttribute('aria-valuenow')}})()",
+   "max": 300
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "slider",
+    "name": "Tamanho do logo"
+   },
+   "optional": true,
+   "after": 300
+  },
+  {
+   "do": "press",
+   "key": "ArrowRight",
+   "times": 2,
+   "after": 500
+  },
+  {
+   "do": "eval",
+   "js": "document.querySelector('[role=dialog] [role=slider]').getAttribute('aria-valuenow')",
+   "max": 50
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "switch",
+    "name": "Garantia"
+   },
+   "optional": true,
+   "after": 700
+  },
+  {
+   "do": "shot",
+   "name": "54-config-garantia-ligada"
+  },
+  {
+   "do": "keys",
+   "target": {
+    "selector": "[role=dialog] textarea[placeholder*='Ex']",
+    "nth": 3
+   },
+   "text": "Garantia de 90 dias sobre o serviço.",
+   "delay": 15,
+   "optional": true
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('[role=dialog] textarea')].map(t=>[t.placeholder.slice(0,30),t.value.slice(0,40)].join('='))",
+   "max": 900
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] div.rounded-lg:has-text('Garantia') button[aria-label='Mover para cima']"
+   },
+   "optional": true,
+   "after": 900
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('[role=dialog] span.flex-1')].map(e=>e.innerText)",
+   "max": 500
+  },
+  {
+   "do": "shot",
+   "name": "55-config-garantia-subiu"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Próximo",
+    "exact": true
+   },
+   "after": 1500
+  },
+  {
+   "do": "shot",
+   "name": "56-config-revisao"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const ds=[...document.querySelectorAll('[role=dialog],[data-radix-popper-content-wrapper]')];const root=ds.length?ds[ds.length-1]:document.querySelector('main')||document;return [...root.querySelectorAll('button,input,textarea,select,[role=combobox],[role=switch],[role=checkbox],[role=tab],[role=option],[role=menuitem],[role=slider]')].filter(e=>e.getClientRects().length).map(e=>{const r=e.getBoundingClientRect();return [e.tagName[0],e.type||'',e.getAttribute('role')||'',(e.innerText||'').replace(/\\s+/g,' ').slice(0,38),e.getAttribute('aria-label')||'',e.placeholder||'',(e.value||'').slice(0,14),Math.round(r.x),Math.round(r.y),Math.round(r.width),Math.round(r.height),e.disabled?'D':''].join('|')})})()",
+   "max": 6000
+  },
+  {
+   "do": "text",
+   "selector": "[role=dialog]",
+   "name": "config etapa 3",
+   "max": 900
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Próxima página"
+   },
+   "optional": true,
+   "after": 800
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[aria-label*='róxim']"
+   },
+   "optional": true,
+   "after": 800
+  },
+  {
+   "do": "shot",
+   "name": "57-config-pagina2"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Salvar",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "optional": true,
+   "after": 1200
+  },
+  {
+   "do": "eval",
+   "js": "(document.querySelector('[data-sonner-toaster]')||{}).innerText||'sem toast'",
+   "max": 400
+  },
+  {
+   "do": "shot",
+   "name": "58-config-salvo"
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('[role=dialog] button')].filter(b=>b.getClientRects().length).slice(0,4).map(b=>[b.innerText.slice(0,20),b.getAttribute('aria-label'),Math.round(b.getBoundingClientRect().x),Math.round(b.getBoundingClientRect().y)].join('|'))",
+   "max": 400
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "after": 900
+  },
+  {
+   "do": "eval",
+   "js": "document.querySelectorAll('[role=dialog]').length",
+   "max": 20
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main tbody tr:has-text('Pousada Brisa do Mar') button[aria-haspopup='menu']"
+   },
+   "after": 800
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Visualizar"
+   },
+   "optional": true,
+   "after": 2200
+  },
+  {
+   "do": "shot",
+   "name": "59-visualizar"
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('[role=dialog]')].pop().innerText.slice(0,1500)",
+   "max": 1800
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const ds=[...document.querySelectorAll('[role=dialog],[data-radix-popper-content-wrapper]')];const root=ds.length?ds[ds.length-1]:document.querySelector('main')||document;return [...root.querySelectorAll('button,input,textarea,select,[role=combobox],[role=switch],[role=checkbox],[role=tab],[role=option],[role=menuitem],[role=slider]')].filter(e=>e.getClientRects().length).map(e=>{const r=e.getBoundingClientRect();return [e.tagName[0],e.type||'',e.getAttribute('role')||'',(e.innerText||'').replace(/\\s+/g,' ').slice(0,38),e.getAttribute('aria-label')||'',e.placeholder||'',(e.value||'').slice(0,14),Math.round(r.x),Math.round(r.y),Math.round(r.width),Math.round(r.height),e.disabled?'D':''].join('|')})})()",
+   "max": 6000
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "after": 900
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main tbody tr:has-text('Pousada Brisa do Mar') button[aria-haspopup='menu']"
+   },
+   "after": 800
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Gerar link da proposta"
+   },
+   "optional": true,
+   "after": 1500
+  },
+  {
+   "do": "eval",
+   "js": "(document.querySelector('[data-sonner-toaster]')||{}).innerText||'sem toast'",
+   "max": 400
+  },
+  {
+   "do": "shot",
+   "name": "60-link-gerado"
+  },
+  {
+   "do": "text",
+   "selector": "main tbody",
+   "name": "tabela depois do link",
+   "max": 1800
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main tbody tr:has-text('Pousada Brisa do Mar') button[aria-haspopup='menu']"
+   },
+   "after": 800
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const ds=[...document.querySelectorAll('[role=dialog],[data-radix-popper-content-wrapper]')];const root=ds.length?ds[ds.length-1]:document.querySelector('main')||document;return [...root.querySelectorAll('button,input,textarea,select,[role=combobox],[role=switch],[role=checkbox],[role=tab],[role=option],[role=menuitem],[role=slider]')].filter(e=>e.getClientRects().length).map(e=>{const r=e.getBoundingClientRect();return [e.tagName[0],e.type||'',e.getAttribute('role')||'',(e.innerText||'').replace(/\\s+/g,' ').slice(0,38),e.getAttribute('aria-label')||'',e.placeholder||'',(e.value||'').slice(0,14),Math.round(r.x),Math.round(r.y),Math.round(r.width),Math.round(r.height),e.disabled?'D':''].join('|')})})()",
+   "max": 6000
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "after": 500
+  }
+ ]
+}

@@ -1,0 +1,271 @@
+{
+ "name": "t20-cap07",
+ "title": "T20 · Cap. 7 · O caixa dos próximos dias (narração 42,6 s; marcas L1..L4 = início de cada linha do roteiro)",
+ "seed": "t20-cap07",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap05",
+  "t12/inicio",
+  "t12/apos-cap11",
+  "t13/inicio",
+  "t13/apos-cap14",
+  "t19/inicio",
+  "t19/apos-cap13",
+  "t20/inicio",
+  "t20/apos-cap03"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/financeiro/relatorios"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Camila!",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/financeiro/relatorios?tab=visao-geral"
+  },
+  {
+   "do": "waitFor",
+   "text": "Visão geral dos relatórios",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Toggle Sidebar",
+    "nth": 0
+   }
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|erro|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "DFC - Fluxo de Caixa",
+    "exact": true
+   },
+   "at": 3.46,
+   "label": "aba DFC - Fluxo de Caixa"
+  },
+  {
+   "do": "waitFor",
+   "text": "Saldo atual",
+   "timeout": 20
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Saldo atual\", \"A receber · 15 dias\", \"A pagar · 15 dias\", \"Dívidas a receber\", \"Dívidas a pagar\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere cartões do DFC previsto"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Saldo atual",
+    "within": "main"
+   },
+   "seconds": 1.2,
+   "at": 7.86,
+   "label": "Saldo atual",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "A receber · 15 dias",
+    "within": "main"
+   },
+   "seconds": 1.2,
+   "at": 9.38,
+   "label": "A receber e A pagar em 15 dias",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 12.18
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "30 dias",
+    "exact": true
+   },
+   "at": 13.94,
+   "label": "30 dias"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Saldo inicial\", \"Recebimentos\", \"Total de saídas\", \"Saldo final\", \"Dívida\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere matriz dia a dia"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Saldo inicial",
+    "within": "main"
+   },
+   "seconds": 1.0,
+   "at": 17.14,
+   "label": "Saldo inicial",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Recebimentos",
+    "within": "main"
+   },
+   "seconds": 1.0,
+   "at": 18.74,
+   "label": "Recebimentos",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Total de saídas",
+    "within": "main"
+   },
+   "seconds": 1.0,
+   "at": 19.62,
+   "label": "Total de saídas",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 21.41
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main td[role=button]",
+    "hasText": "R$ 2.800,00"
+   },
+   "at": 22.29,
+   "label": "valor das saídas de hoje (aluguel)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Total do dia",
+   "timeout": 10
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Aluguel do galpão\", \"R$ 2.800,00\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere lista do dia com o aluguel"
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 26.29,
+   "label": "fecha a janela"
+  },
+  {
+   "do": "wait",
+   "seconds": 0.4
+  },
+  {
+   "do": "eval",
+   "js": "(() => { const d = document.querySelector('[role=dialog]'); if (!d) return 'ja fechada'; const b = [...d.querySelectorAll('button')].find((x) => [x.textContent, x.getAttribute('aria-label'), x.title].some((v) => /^\\s*fechar\\s*$/i.test(v || ''))); if (!b) return 'sem botao Fechar'; b.click(); return 'fechada pelo botao'; })()",
+   "label": "Fechar (se o Esc não fechou)"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 30.37
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main thead th",
+    "hasText": "Dívida"
+   },
+   "seconds": 1.4,
+   "at": 36.05,
+   "label": "coluna Dívida (vazia)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Previsão otimista",
+    "within": "main"
+   },
+   "seconds": 2.0,
+   "at": 39.01,
+   "label": "texto Previsão otimista",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 42.56
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

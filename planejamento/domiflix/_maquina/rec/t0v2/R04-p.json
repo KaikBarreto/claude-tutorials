@@ -1,0 +1,95 @@
+{
+ "name": "R04-p",
+ "title": "T0 v2 · R04 · Módulos do plano: selo verde Tem no seu plano (celular 390x844)",
+ "seed": "t0v2-R04",
+ "pace": 0.6,
+ "tail": 1.2,
+ "cps": 9,
+ "seedExtra": [
+  "t0v2/catalogo",
+  "t0v2/progresso-camila",
+  "t0v2/usuario-novo",
+  "t0v2/conta-contratada",
+  "t0v2/pagamentos"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/domiflix"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/domiflix/assistir/servicos-tarefas-e-checklists/1?trilha=tutoriais-do-sistema"
+  },
+  {
+   "do": "waitFor",
+   "text": "Ver trilha",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "'sem tarja'"
+  },
+  {
+   "do": "pause",
+   "seconds": 0.6
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": "Ver trilha",
+   "optional": true,
+   "timeout": 8,
+   "label": "abre a gaveta Ver trilha"
+  },
+  {
+   "do": "pause",
+   "seconds": 1.5
+  },
+  {
+   "do": "scroll",
+   "target": "Gestão de Contratos e PMOC",
+   "optional": true,
+   "timeout": 8
+  },
+  {
+   "do": "pause",
+   "seconds": 1.5
+  },
+  {
+   "do": "hover",
+   "target": "Tem no seu plano",
+   "seconds": 1.0,
+   "optional": true,
+   "timeout": 3,
+   "label": "selo Tem no seu plano"
+  },
+  {
+   "do": "pause",
+   "seconds": 2.5
+  }
+ ],
+ "device": "phone",
+ "start": {
+  "x": 195,
+  "y": 600
+ }
+}

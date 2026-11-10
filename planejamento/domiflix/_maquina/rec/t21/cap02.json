@@ -1,0 +1,197 @@
+{
+ "name": "t21-cap02",
+ "title": "T21 · Cap. 2 · Preparando o número (narração 34,4 s; marcas L1..L4 = início de cada linha do roteiro)",
+ "seed": "t21-cap02",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap05",
+  "t12/inicio",
+  "t12/apos-cap11",
+  "t13/inicio",
+  "t13/apos-cap14",
+  "t19/inicio",
+  "t19/apos-cap13",
+  "t20/inicio",
+  "t20/apos-cap12",
+  "t2/apos-cap10",
+  "t15/inicio",
+  "t15/apos-cap12",
+  "t22/inicio",
+  "t22/apos-cap11",
+  "t21/inicio"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/configuracoes"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Camila!",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/configuracoes?tab=integracoes&integration=whatsapp"
+  },
+  {
+   "do": "waitFor",
+   "text": "Conexão com o WhatsApp",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "pause",
+   "seconds": 0.6
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Abra o WhatsApp\", \"Toque em Mais opções\", \"Toque em Dispositivos conectados\", \"Conectar dispositivo\", \"Aponte a câmera para o QR Code desta tela.\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere o passo a passo de quatro itens"
+  },
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0.04
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main ol"
+   },
+   "seconds": 5.0,
+   "at": 1.62,
+   "label": "passo a passo de quatro itens",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Toque em Dispositivos conectados",
+    "within": "main"
+   },
+   "seconds": 1.6,
+   "at": 7.14,
+   "label": "passo 3: Dispositivos conectados",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 11.14
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Pode ser melhor usar um número secundário",
+    "within": "main"
+   },
+   "seconds": 3.0,
+   "at": 13.08,
+   "label": "dica: um número secundário",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 18.58
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Entendo que toda automação",
+    "within": "main"
+   },
+   "seconds": 0.9,
+   "at": 19.18,
+   "label": "texto do aceite do risco",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button[role=checkbox]"
+   },
+   "at": 20.02,
+   "label": "marca a caixa do aceite"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Entendo que toda automação de WhatsApp fora da API Oficial da Meta tem um risco\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere o texto do aceite"
+  },
+  {
+   "do": "eval",
+   "js": "document.querySelector('main button[role=checkbox]').getAttribute('aria-checked')",
+   "label": "a caixa ficou marcada (true)"
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 29.42
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Conectar meu WhatsApp",
+    "exact": true
+   },
+   "seconds": 2.4,
+   "at": 30.94,
+   "label": "botão Conectar meu WhatsApp (liberado)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "String(!document.evaluate(\"//button[contains(.,'Conectar meu WhatsApp')]\", document, null, 9, null).singleNodeValue.disabled)",
+   "label": "o botão está liberado (true)"
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 34.4
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

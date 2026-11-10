@@ -1,0 +1,94 @@
+{
+ "name": "R04-d",
+ "title": "T0 v2 · R04 · Módulos do plano: selo verde Tem no seu plano (computador 1280x800)",
+ "seed": "t0v2-R04",
+ "pace": 0.6,
+ "tail": 1.2,
+ "cps": 9,
+ "seedExtra": [
+  "t0v2/catalogo",
+  "t0v2/progresso-camila",
+  "t0v2/usuario-novo",
+  "t0v2/conta-contratada",
+  "t0v2/pagamentos"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/domiflix"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/domiflix?trilha=tutoriais-do-sistema"
+  },
+  {
+   "do": "waitFor",
+   "text": "Aprenda a usar a Dominex",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "'sem tarja'"
+  },
+  {
+   "do": "pause",
+   "seconds": 0.6
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "scroll",
+   "target": {
+    "text": "Gestão de Contratos e PMOC",
+    "within": "main"
+   },
+   "optional": true,
+   "timeout": 8
+  },
+  {
+   "do": "pause",
+   "seconds": 1.2
+  },
+  {
+   "do": "hover",
+   "target": "Tem no seu plano",
+   "seconds": 1.2,
+   "optional": true,
+   "timeout": 3,
+   "label": "selo Tem no seu plano"
+  },
+  {
+   "do": "pause",
+   "seconds": 2.5
+  },
+  {
+   "do": "hover",
+   "target": "Na sequência do seu plano",
+   "seconds": 0.8,
+   "optional": true,
+   "timeout": 3,
+   "label": "Na sequência do seu plano"
+  },
+  {
+   "do": "pause",
+   "seconds": 2.5
+  }
+ ]
+}

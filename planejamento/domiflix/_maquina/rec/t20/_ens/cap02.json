@@ -1,0 +1,256 @@
+{
+ "name": "t20-cap02",
+ "title": "T20 · Cap. 2 · O resultado do mês (narração 55,7 s; marcas L1..L5 = início de cada linha do roteiro)",
+ "seed": "t20-cap02",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 0.4,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap05",
+  "t12/inicio",
+  "t12/apos-cap11",
+  "t13/inicio",
+  "t13/apos-cap14",
+  "t19/inicio",
+  "t19/apos-cap13",
+  "t20/inicio"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/financeiro/relatorios"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Camila!",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/financeiro/relatorios?tab=visao-geral"
+  },
+  {
+   "do": "waitFor",
+   "text": "Visão geral dos relatórios",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Toggle Sidebar",
+    "nth": 0
+   }
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|erro|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "DRE - Resultado",
+    "exact": true
+   },
+   "label": "aba DRE - Resultado"
+  },
+  {
+   "do": "waitFor",
+   "text": "Demonstrativo de Resultado",
+   "timeout": 20
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Este mês",
+    "exact": true
+   },
+   "label": "abre o filtro de período (Mês passado)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] button",
+    "hasText": "Mês passado"
+   },
+   "label": "escolhe Mês passado"
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Outubro de 2026\", \"(+) Receita Bruta\", \"R$ 13.950,00\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere DRE de outubro: receita bruta 13.950,00"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Configurar DRE",
+    "exact": true
+   },
+   "seconds": 0.9,
+   "label": "Configurar DRE",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "tab",
+    "name": "Regime de Caixa",
+    "exact": true
+   },
+   "seconds": 0.9,
+   "label": "escolha do regime",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main label",
+    "hasText": "Incluir projeções"
+   },
+   "seconds": 0.9,
+   "label": "Incluir projeções",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Exportar",
+    "exact": true
+   },
+   "seconds": 0.9,
+   "label": "Exportar",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 760,
+    "y": 420
+   },
+   "by": 300,
+   "duration": 2.0,
+   "after": 100,
+   "label": "a câmera desce pela tabela do DRE"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"= Receita Líquida\", \"= Lucro Bruto\", \"= Resultado Líquido\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere linhas de resultado da tabela"
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 760,
+    "y": 420
+   },
+   "by": 260,
+   "duration": 2.0,
+   "after": 100,
+   "label": "continua descendo"
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 760,
+    "y": 420
+   },
+   "by": 260,
+   "duration": 2.0,
+   "after": 100,
+   "label": "até o resultado líquido"
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 760,
+    "y": 420
+   },
+   "by": -700,
+   "duration": 1.2,
+   "after": 100,
+   "label": "sobe até o custo dos serviços"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button",
+    "hasText": "Custos diretos"
+   },
+   "label": "abre Custos diretos"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"CSP - Materiais\", \"CSP - Mão de Obra Avulsa\", \"Peças e componentes\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere categorias de Custos diretos"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Peças e componentes",
+    "within": "main"
+   },
+   "seconds": 1.0,
+   "label": "Peças e componentes",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "% receita",
+    "within": "main"
+   },
+   "seconds": 1.4,
+   "label": "coluna % da receita",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

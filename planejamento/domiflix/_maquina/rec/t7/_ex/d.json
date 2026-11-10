@@ -1,0 +1,117 @@
+{
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap15",
+  "t7/inicio"
+ ],
+ "user": "rafael.lima@glacialcold.example",
+ "device": "phone",
+ "start": "/agenda",
+ "steps": [
+  {
+   "do": "wait",
+   "ms": 2500
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Colégio Monte Verde",
+    "within": "main"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 1200
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Preencher OS"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 3000
+  },
+  {
+   "do": "geo",
+   "lat": -22.9003,
+   "lng": -43.118
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "A Caminho"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 3000
+  },
+  {
+   "do": "geo",
+   "lat": -22.89758,
+   "lng": -43.09913
+  },
+  {
+   "do": "clock",
+   "set": "2026-11-11T09:05:00-03:00"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Fazer Check-in"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 3500
+  },
+  {
+   "do": "shot",
+   "name": "d01-checkin"
+  },
+  {
+   "do": "text",
+   "selector": "body",
+   "name": "os",
+   "max": 2500
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify([...document.querySelectorAll('*')].filter(e=>{const p=getComputedStyle(e).position;return (p==='fixed'||p==='sticky')&&e.getBoundingClientRect().height>0}).map(e=>[e.tagName,Math.round(e.getBoundingClientRect().top),Math.round(e.getBoundingClientRect().height),(e.className||'').toString().slice(0,50)]))",
+   "max": 2000
+  },
+  {
+   "do": "scrolly",
+   "by": 700
+  },
+  {
+   "do": "wait",
+   "ms": 800
+  },
+  {
+   "do": "shot",
+   "name": "d02-checklists"
+  },
+  {
+   "do": "scrolly",
+   "by": 900
+  },
+  {
+   "do": "shot",
+   "name": "d03-fundo"
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify({sh:document.documentElement.scrollHeight,y:scrollY,ih:innerHeight})"
+  }
+ ]
+}

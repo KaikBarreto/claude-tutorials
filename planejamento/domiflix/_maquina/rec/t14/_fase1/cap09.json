@@ -1,0 +1,467 @@
+{
+ "name": "t14-cap09",
+ "title": "T14 · Cap. 9 · Rascunho e cancelamento (narração 33,0 s; marcas L1..L4 = início de cada linha do roteiro; FAKE_NOW 2026-11-13T15:10:00-03:00)",
+ "seed": "t14-cap09",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap05",
+  "t12/inicio",
+  "t12/apos-cap11",
+  "t13/inicio",
+  "t13/apos-cap14",
+  "t19/inicio",
+  "t19/apos-cap13",
+  "t20/inicio",
+  "t20/apos-cap12",
+  "t2/apos-cap10",
+  "t15/inicio",
+  "t15/apos-cap12",
+  "t22/inicio",
+  "t22/apos-cap11",
+  "t21/inicio",
+  "t21/apos-cap10",
+  "t14/inicio",
+  "t14/apos-cap07"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/notas-fiscais",
+  "/notas-fiscais/configuracoes"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Camila!",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/notas-fiscais"
+  },
+  {
+   "do": "waitFor",
+   "text": "Emita e acompanhe suas NFS-e.",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "waitFor",
+   "text": "Restaurante Sabor da Serra",
+   "timeout": 15
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&!/fica indispon/i.test(m[0])&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Nova Nota",
+    "exact": true
+   },
+   "at": 3.62,
+   "label": "Nova Nota"
+  },
+  {
+   "do": "waitFor",
+   "text": "Data de competência",
+   "timeout": 12
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]",
+    "hasText": "Selecione o cliente"
+   },
+   "label": "Tomador do serviço"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Buscar cliente..."
+   },
+   "text": "Academia",
+   "label": "busca Academia",
+   "noScroll": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Academia Ponto Forte"
+   },
+   "label": "escolhe Academia Ponto Forte"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Avançar",
+    "exact": true
+   },
+   "label": "Avançar (Serviço)",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "text": "Escolha um serviço cadastrado",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]",
+    "hasText": "Escolha um serviço cadastrado"
+   },
+   "label": "Serviço"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Manutenção Preventiva"
+   },
+   "label": "escolhe Manutenção Preventiva"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const d=document.querySelector('[role=dialog]');if(!d)return 'sem janela';const el=[...d.querySelectorAll('*')].filter(e=>e.textContent.trim().startsWith(\"Discrimina\\u00e7\\u00e3o do servi\\u00e7o\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';el.scrollIntoView({behavior:'smooth',block:'center'});await new Promise(r=>setTimeout(r,700));return 'ok'})()",
+   "label": "desce até a discriminação"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] textarea"
+   },
+   "text": "Manutenção mensal dos splits",
+   "label": "Discriminação: Manutenção mensal dos splits",
+   "clear": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Salvar rascunho",
+    "exact": true
+   },
+   "at": 8.18,
+   "label": "Salvar rascunho",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "text": "Rascunho salvo.",
+   "timeout": 10
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Rascunho salvo.\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"body\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere aviso Rascunho salvo."
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Cancelar",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "label": "corte: Cancelar (fecha a janela)",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "text": "Descartar nota?",
+   "timeout": 6
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Descartar",
+    "exact": true
+   },
+   "label": "corte: Descartar (o rascunho já está salvo)"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "text": "Descartar nota?"
+   },
+   "timeout": 6
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Relatório fiscal",
+    "exact": true
+   },
+   "label": "corte: Relatório fiscal (recarrega a lista)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Notas Fiscais",
+    "exact": true
+   },
+   "label": "corte: volta à lista"
+  },
+  {
+   "do": "waitFor",
+   "text": "Rascunho",
+   "timeout": 10
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Academia Ponto Forte\", \"Rascunho\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main tbody tr\")].filter(e=>!true||e.innerText.includes(\"Academia Ponto Forte\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere linha do rascunho"
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 9.54
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('Academia Ponto Forte') button[aria-haspopup=menu]"
+   },
+   "seconds": 0.5,
+   "at": 9.7,
+   "label": "menu ⋯ do rascunho",
+   "optional": false,
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('Academia Ponto Forte') button[aria-haspopup=menu]"
+   },
+   "seconds": 0.5,
+   "label": "menu ⋯ de Academia Ponto Forte de novo (só se não abriu)",
+   "unless": {
+    "role": "menuitem",
+    "name": "Continuar preenchendo"
+   },
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "role": "menuitem",
+    "name": "Continuar preenchendo"
+   },
+   "timeout": 6
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "menuitem",
+    "name": "Continuar preenchendo"
+   },
+   "seconds": 0.8,
+   "at": 12.98,
+   "label": "Continuar preenchendo",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "menuitem",
+    "name": "Emitir NFS-e"
+   },
+   "seconds": 0.8,
+   "at": 14.42,
+   "label": "Emitir NFS-e",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "menuitem",
+    "name": "Excluir rascunho"
+   },
+   "seconds": 0.8,
+   "at": 15.38,
+   "label": "Excluir rascunho (sem clicar)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "label": "fecha o menu"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 16.18
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('Restaurante Sabor da Serra') button[aria-haspopup=menu]"
+   },
+   "seconds": 0.5,
+   "at": 16.64,
+   "label": "menu ⋯ da Nota nº 1",
+   "optional": false,
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('Restaurante Sabor da Serra') button[aria-haspopup=menu]"
+   },
+   "seconds": 0.5,
+   "label": "menu ⋯ de Restaurante Sabor da Serra de novo (só se não abriu)",
+   "unless": {
+    "role": "menuitem",
+    "name": "Ver detalhe"
+   },
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "role": "menuitem",
+    "name": "Ver detalhe"
+   },
+   "timeout": 6
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Ver detalhe"
+   },
+   "label": "Ver detalhe"
+  },
+  {
+   "do": "waitFor",
+   "text": "Chave de acesso",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Cancelar nota",
+    "exact": true
+   },
+   "at": 18.26,
+   "label": "Cancelar nota"
+  },
+  {
+   "do": "waitFor",
+   "text": "Cancelar esta nota fiscal?",
+   "timeout": 8
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Cancelar esta nota fiscal?\", \"Nota nº 1, Restaurante Sabor da Serra, R$ 450,00.\", \"Motivo do cancelamento\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=alertdialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere janela Cancelar esta nota fiscal?"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Obrigatório por exigência legal.",
+    "within": "[role=alertdialog]"
+   },
+   "seconds": 1.6,
+   "at": 20.82,
+   "label": "motivo obrigatório (15 a 255 caracteres)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 23.17
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Esta nota já foi enviada e registrada na prefeitura.",
+    "within": "[role=alertdialog]"
+   },
+   "seconds": 1.4,
+   "at": 23.81,
+   "label": "o cancelamento não tem volta",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Voltar",
+    "exact": true,
+    "within": "[role=alertdialog]"
+   },
+   "at": 31.49,
+   "label": "Voltar (a nota continua Autorizada)"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "alertdialog"
+   },
+   "timeout": 6
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Autorizada\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere a nota continua Autorizada"
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 32.96
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

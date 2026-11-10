@@ -1,0 +1,453 @@
+{
+ "name": "t10-cap09",
+ "title": "T10 · Cap. 9 · Acompanhando a obra (narração 100,3 s; marcas L1..L7 = início de cada linha do roteiro)",
+ "seed": "t10-cap09",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t2/apos-cap10",
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t9/inicio",
+  "t9/apos-cap16",
+  "t10/inicio",
+  "t10/apos-cap08"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/projetos"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Camila!",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|erro|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "CRM e Projetos",
+    "exact": true
+   },
+   "at": 0.3,
+   "label": "abre o grupo CRM e Projetos"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "link",
+    "name": "Projetos",
+    "exact": true
+   },
+   "at": 5.3,
+   "label": "abre Projetos"
+  },
+  {
+   "do": "waitFor",
+   "text": "Nenhum projeto ainda",
+   "timeout": 15
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 14.5
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Novo projeto",
+    "exact": true
+   },
+   "at": 15.22,
+   "label": "Novo projeto"
+  },
+  {
+   "do": "waitFor",
+   "text": "Nome do projeto",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "placeholder": "Ex: Instalação de 80 splits, Indústria X",
+    "within": "[role=dialog]"
+   },
+   "at": 18.38,
+   "label": "campo Nome do projeto"
+  },
+  {
+   "do": "eval",
+   "js": "(() => { document.execCommand('insertText', false, \"Instala\\u00e7\\u00e3o de 6 splits - Col\\u00e9gio Monte Verde\"); const e = document.activeElement; return e && e.value; })()",
+   "label": "Nome do projeto"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "combobox",
+    "name": "Cliente",
+    "within": "[role=dialog]"
+   },
+   "at": 22.18,
+   "label": "campo Cliente"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[cmdk-input]"
+   },
+   "text": "Colégio",
+   "label": "busca Colégio"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Colégio Monte Verde"
+   },
+   "label": "Colégio Monte Verde"
+  },
+  {
+   "do": "select",
+   "target": {
+    "role": "combobox",
+    "name": "Responsável",
+    "within": "[role=dialog]"
+   },
+   "option": "Camila Duarte",
+   "label": "Responsável: Camila Duarte"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] #project-start, [role=dialog] button:has(svg.lucide-calendar)",
+    "nth": 0
+   },
+   "at": 29.94,
+   "label": "campo Início previsto"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] button[name=next-month]"
+   },
+   "label": "mês seguinte",
+   "noScroll": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] button[name=day]",
+    "hasText": "5"
+   },
+   "label": "dia 5",
+   "noScroll": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:has(svg.lucide-calendar)",
+    "nth": 1
+   },
+   "label": "campo Prazo final"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] button[name=next-month]"
+   },
+   "label": "mês seguinte",
+   "noScroll": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] button[name=next-month]"
+   },
+   "label": "mais um mês",
+   "noScroll": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] button[name=day]",
+    "hasText": "20"
+   },
+   "label": "dia 20",
+   "noScroll": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Salvar",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 37.84,
+   "label": "Salvar o projeto"
+  },
+  {
+   "do": "waitFor",
+   "text": "#1",
+   "timeout": 10
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 41.04
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Instalação de 6 splits - Colégio Monte Verde",
+    "within": "main"
+   },
+   "at": 41.04,
+   "label": "abre o projeto"
+  },
+  {
+   "do": "waitFor",
+   "text": "Nenhuma frente de trabalho ainda",
+   "timeout": 15
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Toggle Sidebar",
+    "nth": 0
+   },
+   "label": "recolhe o menu lateral (as quatro colunas cabem)"
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Progresso da obra",
+    "within": "main"
+   },
+   "seconds": 1.0,
+   "at": 46.88,
+   "label": "Progresso da obra (traço)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 51.68
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Criar frente de trabalho",
+    "exact": true
+   },
+   "at": 56.42,
+   "label": "Criar frente de trabalho"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Ex: Instalação, Elétrica, Dutos",
+    "within": "[role=dialog]"
+   },
+   "text": "Infraestrutura",
+   "cps": 55,
+   "label": "Nome da frente"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Salvar",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "label": "Salvar a frente"
+  },
+  {
+   "do": "waitFor",
+   "text": "Em execução",
+   "timeout": 10
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 65.2
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Novo card",
+    "exact": true
+   },
+   "at": 68.24,
+   "label": "Novo card"
+  },
+  {
+   "do": "waitFor",
+   "text": "Título do card *",
+   "timeout": 10
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] #title"
+   },
+   "text": "Tubulação de cobre do Bloco B",
+   "cps": 55,
+   "at": 69.28,
+   "label": "Título do card"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]",
+    "hasText": "Selecione..."
+   },
+   "at": 72.16,
+   "label": "campo Responsável"
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Rafael Lima",
+    "within": "[data-radix-popper-content-wrapper]"
+   },
+   "label": "marca Rafael Lima"
+  },
+  {
+   "do": "press",
+   "key": "Escape"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Salvar",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 74.48,
+   "label": "Salvar o card"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 10
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 75.28
+  },
+  {
+   "do": "drag",
+   "target": {
+    "selector": "main [draggable=true]",
+    "hasText": "Tubulação de cobre"
+   },
+   "to": {
+    "selector": "main div.rounded-t-lg",
+    "hasText": "Em execução"
+   },
+   "at": 78.54,
+   "label": "arrasta o card para Em execução"
+  },
+  {
+   "do": "drag",
+   "target": {
+    "selector": "main [draggable=true]",
+    "hasText": "Tubulação de cobre"
+   },
+   "to": {
+    "selector": "main div.rounded-t-lg",
+    "hasText": "Concluído"
+   },
+   "at": 80.7,
+   "label": "arrasta o card para Concluído"
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 82.4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Visão geral",
+    "exact": true
+   },
+   "at": 82.64,
+   "label": "aba Visão geral"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Progresso da obra",
+    "within": "main"
+   },
+   "seconds": 1.4,
+   "at": 83.76,
+   "label": "Progresso da obra 100%",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Progresso da obra\", \"100%\", \"Infraestrutura\", \"1 card\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Progresso da obra em 100% e a frente com 1 card"
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 100.34
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

@@ -1,0 +1,412 @@
+{
+ "name": "t19-cap10",
+ "title": "T19 · Cap. 10 · Cobrança todo mês (narração 55,8 s; marcas L1..L6 = início de cada linha do roteiro)",
+ "seed": "t19-cap10",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap05",
+  "t12/inicio",
+  "t12/apos-cap11",
+  "t13/inicio",
+  "t13/apos-cap14",
+  "t19/inicio",
+  "t19/apos-cap08"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/financeiro/cobrancas"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Camila!",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/financeiro/cobrancas"
+  },
+  {
+   "do": "waitFor",
+   "text": "Cobranças e recorrências",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Toggle Sidebar",
+    "nth": 0
+   }
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|erro|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Assinaturas",
+    "exact": true
+   },
+   "at": 1.7,
+   "label": "aba Assinaturas"
+  },
+  {
+   "do": "waitFor",
+   "text": "Nenhuma assinatura",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Nova assinatura",
+    "exact": true,
+    "nth": 0
+   },
+   "at": 3.82,
+   "label": "Nova assinatura"
+  },
+  {
+   "do": "waitFor",
+   "text": "Configure uma cobrança recorrente para o seu cliente.",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]",
+    "nth": 0
+   },
+   "at": 5.36,
+   "label": "abre a lista de clientes (Academia Ponto Forte)"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "text": "Academia Ponto Forte"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Academia Ponto Forte"
+   },
+   "label": "cliente: Academia Ponto Forte"
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 6.9
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] input[placeholder=\"0,00\"]"
+   },
+   "at": 10.76,
+   "label": "campo Valor"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[placeholder=\"0,00\"]"
+   },
+   "text": "38000",
+   "cps": 8,
+   "label": "Valor: 380,00",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]",
+    "hasText": "Mensal"
+   },
+   "at": 12.98,
+   "label": "abre Frequência"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "role": "option",
+    "name": "Semanal"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "option",
+    "name": "Anual"
+   },
+   "seconds": 1.0,
+   "at": 15.22,
+   "label": "a lista vai de Semanal a Anual",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "label": "fecha a lista (fica em Mensal)"
+  },
+  {
+   "do": "pause",
+   "seconds": 0.5
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 16.82
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]",
+    "hasText": "Cliente escolhe"
+   },
+   "at": 17.06,
+   "label": "abre Forma de pagamento"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "role": "option",
+    "name": "Pix Automático"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "option",
+    "name": "Cartão de crédito (recorrente)"
+   },
+   "seconds": 0.8,
+   "at": 21.46,
+   "label": "Cartão de crédito (recorrente)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "option",
+    "name": "Pix Automático"
+   },
+   "seconds": 1.2,
+   "at": 23.3,
+   "label": "Pix Automático",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "label": "fecha a lista (fica em Cliente escolhe)"
+  },
+  {
+   "do": "pause",
+   "seconds": 0.5
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 26.9
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[aria-haspopup]",
+    "hasText": "/2026"
+   },
+   "at": 27.06,
+   "label": "abre o calendário (1º vencimento 10/12/2026)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Go to next month"
+   },
+   "label": "próximo mês (1º vencimento 10/12/2026)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] button:text-is(\"10\")"
+   },
+   "label": "escolhe o dia 10 (1º vencimento 10/12/2026)"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"10/12/2026\", \"Contínua\", \"A assinatura segue gerando cobranças até você cancelar.\", \"Número de ciclos\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere 1º vencimento 10/12/2026, Duração Contínua e Número de ciclos"
+  },
+  {
+   "do": "click",
+   "target": {
+    "placeholder": "Ex.: Contrato de manutenção mensal"
+   },
+   "at": 30.34,
+   "label": "campo Descrição"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Ex.: Contrato de manutenção mensal"
+   },
+   "text": "Manutenção mensal dos splits",
+   "cps": 16,
+   "label": "Descrição: Manutenção mensal dos splits",
+   "noClick": true
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Número de ciclos",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.4,
+   "at": 35.92,
+   "label": "Número de ciclos",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 38.9
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Resumo por cobrança",
+    "within": "[role=dialog]"
+   },
+   "at": 39.06,
+   "label": "abre o Resumo por cobrança"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Valores de UMA cobrança (Mensal), não o total da assinatura.\", \"A assinatura não tem fim definido, então não existe total fechado.\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere resumo por cobrança"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Valores de UMA cobrança",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.8,
+   "at": 41.38,
+   "label": "Valores de UMA cobrança",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 43.36
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Criar assinatura",
+    "exact": true
+   },
+   "at": 43.36,
+   "label": "Criar assinatura"
+  },
+  {
+   "do": "waitFor",
+   "text": "Receita recorrente mensal (MRR)",
+   "timeout": 15
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Academia Ponto Forte\", \"380,00\", \"Mensal\", \"10/12/2026\", \"Cliente escolhe\", \"Ativa\", \"1 assinatura ativa\", \"Receita recorrente mensal (MRR): 380,00\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere a lista: Ativa, 1 assinatura ativa e MRR 380,00"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr",
+    "hasText": "Academia Ponto Forte"
+   },
+   "seconds": 1.4,
+   "at": 45.76,
+   "label": "a assinatura Ativa na lista",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Receita recorrente mensal (MRR)",
+    "within": "main"
+   },
+   "seconds": 2.0,
+   "at": 48.48,
+   "label": "Receita recorrente mensal (MRR)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 55.84
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

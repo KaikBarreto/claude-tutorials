@@ -1,0 +1,135 @@
+{
+ "_comentario": "ENSAIO · estado depois do cap. 4 (Precificação 6/12/22, Van 01, custos da Higienização). Gerado por rec/t9/semear.py --dev.",
+ "_patch": {
+  "pricing_settings": [
+   {
+    "match": {
+     "company_id": "9c307966-79f1-567c-ac4d-d5fd3c1a2f40"
+    },
+    "set": {
+     "tax_rate": 6,
+     "admin_indirect_rate": 12,
+     "default_profit_rate": 22,
+     "km_cost": 1.5,
+     "card_discount_rate": 5,
+     "card_installments": 10
+    }
+   }
+  ]
+ },
+ "cost_resources": [
+  {
+   "id": "@id:t9.res.van01",
+   "company_id": "9c307966-79f1-567c-ac4d-d5fd3c1a2f40",
+   "category": "vehicle",
+   "name": "Van 01",
+   "monthly_hours": 176,
+   "is_active": true,
+   "notes": null,
+   "photo_url": null,
+   "created_at": "@now-0m",
+   "updated_at": "@now-0m"
+  }
+ ],
+ "cost_resource_items": [
+  {
+   "id": "@id:t9.resitem.0",
+   "resource_id": "@id:t9.res.van01",
+   "name": "Depreciação mensal",
+   "value": 1400,
+   "is_monthly": true,
+   "annual_value": null,
+   "sort_order": 0
+  },
+  {
+   "id": "@id:t9.resitem.1",
+   "resource_id": "@id:t9.res.van01",
+   "name": "Manutenção + Combustível",
+   "value": 1620,
+   "is_monthly": true,
+   "annual_value": null,
+   "sort_order": 1
+  },
+  {
+   "id": "@id:t9.resitem.2",
+   "resource_id": "@id:t9.res.van01",
+   "name": "Seguro",
+   "value": 300,
+   "is_monthly": false,
+   "annual_value": 3600,
+   "sort_order": 2
+  },
+  {
+   "id": "@id:t9.resitem.3",
+   "resource_id": "@id:t9.res.van01",
+   "name": "Documentação / IPVA",
+   "value": 200,
+   "is_monthly": false,
+   "annual_value": 2400,
+   "sort_order": 3
+  }
+ ],
+ "service_costs": [
+  {
+   "id": "@id:t9.svccost.hig",
+   "company_id": "9c307966-79f1-567c-ac4d-d5fd3c1a2f40",
+   "service_id": "10113e22-97c6-46e6-bcc5-f411f62f6935",
+   "hourly_rate": 32,
+   "hours": 1.5,
+   "labor_cost": 48,
+   "extra_costs": [],
+   "notes": null,
+   "created_at": "@now-0m",
+   "updated_at": "@now-0m"
+  }
+ ],
+ "service_materials": [
+  {
+   "id": "@id:t9.svcmat.limpa-evaporador",
+   "company_id": "9c307966-79f1-567c-ac4d-d5fd3c1a2f40",
+   "service_id": "10113e22-97c6-46e6-bcc5-f411f62f6935",
+   "stock_item_id": "@id:material.limpa-evaporador",
+   "item_name": "Limpa-evaporador em spray",
+   "quantity": 1,
+   "purchase_price": 20.0,
+   "subtotal": 20.0,
+   "unit": "un",
+   "sort_order": 0,
+   "created_at": "@now-0m"
+  },
+  {
+   "id": "@id:t9.svcmat.fita-isolante",
+   "company_id": "9c307966-79f1-567c-ac4d-d5fd3c1a2f40",
+   "service_id": "10113e22-97c6-46e6-bcc5-f411f62f6935",
+   "stock_item_id": "@id:material.fita-isolante",
+   "item_name": "Fita isolante",
+   "quantity": 1,
+   "purchase_price": 6.5,
+   "subtotal": 6.5,
+   "unit": "rolos",
+   "sort_order": 1,
+   "created_at": "@now-0m"
+  },
+  {
+   "id": "@id:t9.svcmat.mangueira",
+   "company_id": "9c307966-79f1-567c-ac4d-d5fd3c1a2f40",
+   "service_id": "10113e22-97c6-46e6-bcc5-f411f62f6935",
+   "stock_item_id": "@id:material.mangueira",
+   "item_name": "Mangueira de dreno",
+   "quantity": 1,
+   "purchase_price": 3.5,
+   "subtotal": 3.5,
+   "unit": "m",
+   "sort_order": 2,
+   "created_at": "@now-0m"
+  }
+ ],
+ "service_cost_resources": [
+  {
+   "id": "@id:t9.svcres.van",
+   "service_id": "10113e22-97c6-46e6-bcc5-f411f62f6935",
+   "resource_id": "@id:t9.res.van01",
+   "override_value": null
+  }
+ ]
+}

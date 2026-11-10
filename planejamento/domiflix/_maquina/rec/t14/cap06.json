@@ -1,0 +1,308 @@
+{
+ "name": "t14-cap06",
+ "title": "T14 · Cap. 6 · Pessoas e serviço (narração 42,7 s; marcas L1..L5 = início de cada linha do roteiro; FAKE_NOW 2026-11-13T15:10:00-03:00)",
+ "seed": "t14-cap06",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap05",
+  "t12/inicio",
+  "t12/apos-cap11",
+  "t13/inicio",
+  "t13/apos-cap14",
+  "t19/inicio",
+  "t19/apos-cap13",
+  "t20/inicio",
+  "t20/apos-cap12",
+  "t2/apos-cap10",
+  "t15/inicio",
+  "t15/apos-cap12",
+  "t22/inicio",
+  "t22/apos-cap11",
+  "t21/inicio",
+  "t21/apos-cap10",
+  "t14/inicio",
+  "t14/apos-cap05"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/notas-fiscais",
+  "/notas-fiscais/configuracoes"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Camila!",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/notas-fiscais"
+  },
+  {
+   "do": "waitFor",
+   "text": "Emita e acompanhe suas NFS-e.",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&!/fica indispon/i.test(m[0])&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Autorizadas\", \"Processando\", \"Rejeitadas\", \"Canceladas\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere indicadores zerados"
+  },
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0.04
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Autorizadas",
+    "within": "main"
+   },
+   "seconds": 1.0,
+   "at": 0.9,
+   "label": "indicadores das notas",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Nova Nota",
+    "exact": true
+   },
+   "at": 6.58,
+   "label": "Nova Nota"
+  },
+  {
+   "do": "waitFor",
+   "text": "Data de competência",
+   "timeout": 12
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Nova NFS-e\", \"Pessoas\", \"Serviço\", \"Valores\", \"Revisar e Emitir\", \"Data de competência\", \"13/11/2026\", \"Competência\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere janela Nova NFS-e: competência hoje e regime Competência"
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 8.5
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Data de competência",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.0,
+   "at": 10.1,
+   "label": "Data de competência (hoje)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Regime de apuração (Simples Nacional)",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.0,
+   "at": 13.54,
+   "label": "Regime de apuração: Competência",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]",
+    "hasText": "Selecione o cliente"
+   },
+   "at": 16.26,
+   "label": "Tomador do serviço"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Buscar cliente..."
+   },
+   "text": "Sabor",
+   "label": "busca Sabor",
+   "noScroll": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Restaurante Sabor da Serra"
+   },
+   "at": 18.52,
+   "label": "escolhe Restaurante Sabor da Serra"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 18.85
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]",
+    "hasText": "Restaurante Sabor da Serra"
+   },
+   "seconds": 1.6,
+   "at": 21.17,
+   "label": "tomador escolhido (com CNPJ e endereço)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{await new Promise(r=>setTimeout(r,1800));const el=document.querySelector(\"[role=dialog]\");const t=(el?el.innerText:'').replace(/[\\s\\u00a0]+/g,' ').toLowerCase();return t.includes(\"este cliente est\\u00e1 sem cpf/cnpj\")?'DIFERENTE: apareceu '+\"Este cliente est\\u00e1 sem CPF/CNPJ\":'OK: ausente '+\"Este cliente est\\u00e1 sem CPF/CNPJ\"})()",
+   "label": "confere sem aviso de documento"
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 28.61
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Avançar",
+    "exact": true
+   },
+   "at": 28.75,
+   "label": "Avançar (Serviço)",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "text": "Escolha um serviço cadastrado",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]",
+    "hasText": "Escolha um serviço cadastrado"
+   },
+   "at": 29.57,
+   "label": "Serviço"
+  },
+  {
+   "do": "waitFor",
+   "text": "Prontos para emitir",
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Prontos para emitir",
+    "within": "[data-radix-popper-content-wrapper]"
+   },
+   "seconds": 0.6,
+   "label": "grupo Prontos para emitir",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Higienização de Split"
+   },
+   "at": 33.15,
+   "label": "escolhe Higienização de Split"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"14.01.01\", \"001\", \"120016000\", \"Tributada normalmente\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere classificação fiscal preenchida pelo serviço"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Classificação fiscal",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.4,
+   "at": 34.37,
+   "label": "Classificação fiscal preenchida",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 36.93
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const d=document.querySelector('[role=dialog]');if(!d)return 'sem janela';const el=[...d.querySelectorAll('*')].filter(e=>e.textContent.trim().startsWith(\"Discrimina\\u00e7\\u00e3o do servi\\u00e7o\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';el.scrollIntoView({behavior:'smooth',block:'center'});await new Promise(r=>setTimeout(r,700));return 'ok'})()",
+   "at": 36.93,
+   "label": "desce até a discriminação"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] textarea"
+   },
+   "text": "Limpeza e higienização de 2 splits da cozinha",
+   "cps": 30,
+   "at": 37.57,
+   "label": "Discriminação do serviço",
+   "clear": true
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const esp=[\"Limpeza e higienização de 2 splits da cozinha\"];let out='';for(let i=0;i<12;i++){const v=[...document.querySelectorAll(\"[role=dialog]\"+' input, '+\"[role=dialog]\"+' textarea')].map(e=>e.value).join(' | ');const falta=esp.filter(e=>!v.includes(e));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+v.slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere discriminação digitada"
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 42.72
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

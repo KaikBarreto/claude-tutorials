@@ -1,0 +1,295 @@
+{
+ "name": "t20-cap04",
+ "title": "T20 · Cap. 4 · Caixa ou competência (narração 59,1 s; marcas L1..L5 = início de cada linha do roteiro)",
+ "seed": "t20-cap04",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 0.4,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap05",
+  "t12/inicio",
+  "t12/apos-cap11",
+  "t13/inicio",
+  "t13/apos-cap14",
+  "t19/inicio",
+  "t19/apos-cap13",
+  "t20/inicio",
+  "t20/apos-cap03"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/financeiro/relatorios"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Camila!",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/financeiro/relatorios?tab=dre"
+  },
+  {
+   "do": "waitFor",
+   "text": "Demonstrativo de Resultado",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Toggle Sidebar",
+    "nth": 0
+   }
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Este mês",
+    "exact": true
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] button",
+    "hasText": "Mês passado"
+   }
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "pause",
+   "seconds": 1.0
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|erro|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "hover",
+   "target": {
+    "role": "tab",
+    "name": "Regime de Caixa",
+    "exact": true
+   },
+   "seconds": 0.8,
+   "label": "botões dos regimes",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "tab",
+    "name": "Regime de Competência",
+    "exact": true
+   },
+   "seconds": 2.4,
+   "label": "dica do Regime de Competência",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button",
+    "hasText": "Despesas administrativas"
+   },
+   "label": "abre Despesas administrativas"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Ferramentas e Equipamentos\", \"R$ 430,00\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Ferramentas e Equipamentos (parcela 1/3) no mês passado em competência"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Ferramentas e Equipamentos",
+    "within": "main"
+   },
+   "seconds": 1.0,
+   "label": "Ferramentas e Equipamentos",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Regime de Caixa",
+    "exact": true
+   },
+   "label": "Regime de Caixa"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "tab",
+    "name": "Regime de Caixa",
+    "exact": true
+   },
+   "seconds": 1.6,
+   "label": "dica do Regime de Caixa",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Regime de Caixa: cada lançamento entra no mês em que o dinheiro entrou ou saiu da conta\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere rodapé do Regime de Caixa"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{await new Promise(r=>setTimeout(r,1800));const el=document.querySelector(\"main\");const t=(el?el.innerText:'').replace(/[\\s\\u00a0]+/g,' ').toLowerCase();return t.includes(\"ferramentas e equipamentos\")?'DIFERENTE: apareceu '+\"Ferramentas e Equipamentos\":'OK: ausente '+\"Ferramentas e Equipamentos\"})()",
+   "label": "confere Ferramentas e Equipamentos fora do mês passado em caixa"
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 760,
+    "y": 420
+   },
+   "by": 900,
+   "duration": 1.6,
+   "after": 100,
+   "label": "até o rodapé"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "* Regime de Caixa",
+    "within": "main"
+   },
+   "seconds": 1.8,
+   "label": "rodapé do Regime de Caixa",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 760,
+    "y": 420
+   },
+   "by": -1200,
+   "duration": 1.0,
+   "after": 100,
+   "label": "volta ao topo"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Mês passado",
+    "exact": true
+   },
+   "label": "abre o filtro de período (Este mês)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] button",
+    "hasText": "Este mês"
+   },
+   "label": "escolhe Este mês"
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button",
+    "hasText": "Despesas administrativas"
+   },
+   "label": "abre Despesas administrativas (se fechou)",
+   "optional": true,
+   "unless": {
+    "text": "Ferramentas e Equipamentos",
+    "within": "main"
+   }
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Ferramentas e Equipamentos\", \"R$ 430,00\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Este mês em caixa: a parcela paga com a fatura"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Ferramentas e Equipamentos",
+    "within": "main"
+   },
+   "seconds": 1.2,
+   "label": "Ferramentas e Equipamentos em Este mês",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "tab",
+    "name": "Regime de Caixa",
+    "exact": true
+   },
+   "seconds": 1.2,
+   "label": "as duas visões",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "tab",
+    "name": "Regime de Competência",
+    "exact": true
+   },
+   "seconds": 1.2,
+   "label": "Competência",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

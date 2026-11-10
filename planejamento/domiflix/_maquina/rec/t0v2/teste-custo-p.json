@@ -1,0 +1,133 @@
+{
+ "name": "teste-custo-p",
+ "seed": "t0v2-teste",
+ "pace": 0.5,
+ "tail": 0.5,
+ "cps": 9,
+ "device": "phone",
+ "start": {
+  "x": 195,
+  "y": 600
+ },
+ "seedExtra": [
+  "t0v2/catalogo",
+  "t0v2/progresso-camila",
+  "t0v2/usuario-novo",
+  "t0v2/conta-teste",
+  "t0v2/lembrete-dispensado"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/domiflix",
+  "/domiflix/assistir/crm-e-kanban/1?trilha=tutoriais-do-sistema"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/domiflix?trilha=tutoriais-do-sistema"
+  },
+  {
+   "do": "waitFor",
+   "text": "Aprenda a usar a Dominex",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(() => { if (window.__cobrir) return 'ja';\n const css = document.createElement('style'); css.textContent = '.__tarja{background:#111!important;color:transparent!important;border-radius:3px;text-shadow:none!important;box-shadow:0 0 0 2px #111}'; document.head.appendChild(css);\n const re = /R\\$\\s*[\\d.]+(?:,\\d{2})?/;\n const go = (root) => { const els = root.querySelectorAll('*'); for (const e of els) { if (e.closest('.__tarja') || ['SCRIPT','STYLE'].includes(e.tagName)) continue;\n   const nodes = [...e.childNodes].filter((n) => n.nodeType === 3); if (!nodes.length) continue; const txt = nodes.map((n) => n.nodeValue).join('');\n   if (!re.test(txt)) continue;\n   for (const n of nodes) { if (/^[\\sR$\\d.,]+$/.test(n.nodeValue) && n.nodeValue.trim()) { const sp = document.createElement('span'); sp.className = '__tarja'; sp.textContent = n.nodeValue; n.replaceWith(sp); } } } };\n go(document.body); let busy = false; new MutationObserver(() => { if (busy) return; busy = true; requestAnimationFrame(() => { go(document.body); busy = false; }); }).observe(document.body, { childList: true, subtree: true, characterData: true });\n window.__cobrir = true; return 'ok'; })()"
+  },
+  {
+   "do": "pause",
+   "seconds": 0.5
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "goto",
+   "url": "/domiflix/assistir/crm-e-kanban/1?trilha=tutoriais-do-sistema"
+  },
+  {
+   "do": "waitFor",
+   "text": "Ver trilha",
+   "timeout": 12
+  },
+  {
+   "do": "hover",
+   "target": "Ver trilha",
+   "seconds": 0.3,
+   "optional": true,
+   "timeout": 3,
+   "label": "hover Ver trilha"
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('button,a,[role=button]')].find(e=>e.innerText.trim().startsWith('Ver trilha')).click();'ok'",
+   "label": "eval click Ver trilha"
+  },
+  {
+   "do": "pause",
+   "seconds": 1.0
+  },
+  {
+   "do": "press",
+   "key": "Escape"
+  },
+  {
+   "do": "pause",
+   "seconds": 0.5
+  },
+  {
+   "do": "click",
+   "target": "Ver trilha",
+   "optional": true,
+   "timeout": 8,
+   "label": "click normal Ver trilha"
+  },
+  {
+   "do": "pause",
+   "seconds": 0.5
+  },
+  {
+   "do": "press",
+   "key": "Escape"
+  },
+  {
+   "do": "eval",
+   "js": "window.history.pushState({}, '', '/dashboard'); window.dispatchEvent(new PopStateEvent('popstate')); 'ok'",
+   "label": "volta"
+  },
+  {
+   "do": "hover",
+   "target": "Menu",
+   "seconds": 0.3,
+   "optional": true,
+   "timeout": 3,
+   "label": "hover Menu"
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('button,a,[role=button]')].find(e=>e.innerText.trim()==='Menu').click();'ok'",
+   "label": "eval click Menu"
+  },
+  {
+   "do": "pause",
+   "seconds": 1.0
+  }
+ ]
+}

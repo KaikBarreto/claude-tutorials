@@ -1,0 +1,357 @@
+{
+ "name": "t5-cap11",
+ "title": "T5 · Cap. 11 · Satisfação do cliente (narração 41,9 s; marcas L1..L3 = início de cada linha do roteiro)",
+ "seed": "t5-cap11",
+ "pace": 0.45,
+ "cps": 14,
+ "tail": 1.5,
+ "start": {
+  "x": 900,
+  "y": 480
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap09"
+ ],
+ "prewarm": [
+  "/ordens-servico"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/ordens-servico"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie suas ordens de serviço",
+   "timeout": 20
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "NPS e Satisfação"
+   },
+   "at": 4.08,
+   "label": "aba NPS e Satisfação"
+  },
+  {
+   "do": "waitFor",
+   "text": "Média por Categoria",
+   "timeout": 12
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "NPS Score",
+    "exact": true,
+    "within": "main",
+    "nth": 0
+   },
+   "seconds": 0.3,
+   "at": 8.18,
+   "label": "KPI NPS Score"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Média Geral",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.3,
+   "at": 8.98,
+   "label": "KPI Média Geral"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Respostas",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.3,
+   "at": 10.26,
+   "label": "KPI Respostas"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Taxa de Resposta",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.5,
+   "at": 11.22,
+   "label": "KPI Taxa de Resposta"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Distribuição NPS",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.5,
+   "at": 12.82,
+   "label": "gráfico Distribuição NPS"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Promotores",
+    "exact": false,
+    "within": "main"
+   },
+   "seconds": 0.3,
+   "at": 14.9,
+   "label": "Promotores"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Neutros",
+    "exact": false,
+    "within": "main"
+   },
+   "seconds": 0.3,
+   "at": 15.86,
+   "label": "Neutros"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Detratores",
+    "exact": false,
+    "within": "main"
+   },
+   "seconds": 1.0,
+   "at": 16.74,
+   "label": "Detratores"
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 18.68
+  },
+  {
+   "do": "scroll",
+   "at": 18.68,
+   "label": "desce até o ranking",
+   "by": 600,
+   "point": {
+    "x": 760,
+    "y": 120
+   }
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Ranking de Técnicos",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.5,
+   "at": 19.88,
+   "label": "Ranking de Técnicos"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Detratores em Aberto",
+    "exact": false,
+    "within": "main"
+   },
+   "seconds": 0.5,
+   "at": 20.58,
+   "label": "Detratores em Aberto"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Atenção",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.5,
+   "at": 22.9,
+   "label": "selo Atenção"
+  },
+  {
+   "do": "scroll",
+   "at": 23.86,
+   "label": "desce até o feed",
+   "by": 700,
+   "point": {
+    "x": 760,
+    "y": 120
+   }
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Feed de Feedbacks",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.6,
+   "at": 24.74,
+   "label": "Feed de Feedbacks"
+  },
+  {
+   "do": "scroll",
+   "at": 26.04,
+   "label": "volta ao topo",
+   "by": -1400,
+   "point": {
+    "x": 760,
+    "y": 120
+   }
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 27.24
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Configurações",
+    "exact": true,
+    "within": "main"
+   },
+   "at": 27.24,
+   "label": "Configurações de NPS"
+  },
+  {
+   "do": "waitFor",
+   "text": "Configurações de NPS",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Pergunta da escala",
+    "exact": false,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.4,
+   "at": 28.26,
+   "label": "Pergunta da escala"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Critérios de avaliação",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.4,
+   "at": 29.62,
+   "label": "Critérios de avaliação"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] input",
+    "nth": 0
+   },
+   "seconds": 0.2,
+   "at": 31.3,
+   "label": "critério Qualidade"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] input",
+    "nth": 1
+   },
+   "seconds": 0.2,
+   "at": 32.1,
+   "label": "critério Pontualidade"
+  },
+  {
+   "do": "scroll",
+   "label": "desce um pouco na janela",
+   "by": 160,
+   "point": {
+    "x": 640,
+    "y": 420
+   }
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] input",
+    "nth": 2
+   },
+   "seconds": 0.3,
+   "at": 33.3,
+   "label": "critério Profissionalismo"
+  },
+  {
+   "do": "scroll",
+   "at": 34.5,
+   "label": "desce até a Avaliação no Google",
+   "by": 800,
+   "point": {
+    "x": 640,
+    "y": 420
+   }
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Avaliação no Google",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.4,
+   "at": 35.7,
+   "label": "Avaliação no Google"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] input[placeholder*=\"g.page\"]"
+   },
+   "seconds": 2.0,
+   "at": 36.5,
+   "label": "link da avaliação do Google"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Cancelar",
+    "exact": true
+   },
+   "at": 40.92,
+   "label": "Cancelar"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 41.92
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

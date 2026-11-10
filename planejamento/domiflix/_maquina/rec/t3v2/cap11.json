@@ -1,0 +1,564 @@
+{
+ "name": "t3v2-cap11",
+ "title": "T3 v2 · Cap. 11 · Cadastrando um equipamento (narração 74,7 s; marcas L1..L12 = início de cada linha do roteiro)",
+ "seed": "t3v2-cap11",
+ "pace": 0.6,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 880,
+  "y": 500
+ },
+ "seedExtra": [
+  "t3v2/apos-cap10"
+ ],
+ "prewarm": [
+  "/equipamentos",
+  "/clientes"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/equipamentos"
+  },
+  {
+   "do": "waitFor",
+   "text": "Lista de Equipamentos"
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  }
+ ],
+ "steps": [
+  {
+   "do": "waitFor",
+   "text": "Lista de Equipamentos"
+  },
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0.04
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Novo Equipamento"
+   },
+   "at": 1.4,
+   "label": "Novo Equipamento"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "placeholder": "Nome do equipamento"
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "combobox",
+    "name": "Selecione o cliente"
+   },
+   "at": 2.65,
+   "label": "campo Cliente"
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 3.56
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Buscar cliente..."
+   },
+   "noClick": true,
+   "text": "Colégio",
+   "cps": 14,
+   "at": 4.6,
+   "label": "busca Colégio"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 6.76
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "option",
+    "name": "Colégio Monte Verde"
+   },
+   "seconds": 2.2,
+   "at": 6.76,
+   "label": "as etiquetas do cliente aparecem na lista"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Colégio Monte Verde"
+   },
+   "at": 9.76,
+   "label": "escolhe o Colégio Monte Verde"
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 10.76
+  },
+  {
+   "do": "hover",
+   "target": {
+    "placeholder": "Nome do equipamento"
+   },
+   "seconds": 1.8,
+   "at": 12.08,
+   "label": "campo Nome (a dica)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "placeholder": "Nome do equipamento"
+   },
+   "at": 14.98,
+   "label": "Nome"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Nome do equipamento"
+   },
+   "noClick": true,
+   "text": "Hi-Wall 18.000 BTUs - Sala dos professores",
+   "cps": 40,
+   "at": 15.98,
+   "label": "Nome: tipo + lugar"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "combobox",
+    "hasText": "Selecione",
+    "within": "[role=dialog]",
+    "nth": 0
+   },
+   "at": 20.23,
+   "label": "campo Categoria"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Split Hi-Wall"
+   },
+   "at": 21.43,
+   "label": "Categoria: Split Hi-Wall"
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 22.84
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Selecione uma ou mais etiquetas",
+    "exact": true
+   },
+   "at": 23.3,
+   "label": "campo Etiquetas (logo abaixo da Categoria)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Em garantia",
+    "exact": true,
+    "within": "[data-radix-popper-content-wrapper]"
+   },
+   "at": 25.4,
+   "label": "marca Em garantia"
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 26.7,
+   "label": "fecha a lista"
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 27.32
+  },
+  {
+   "do": "eval",
+   "js": "document.querySelector('[role=dialog] input[placeholder=\"Marca\"]').focus()",
+   "at": 27.32,
+   "label": "foco no campo Marca"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Marca"
+   },
+   "noClick": true,
+   "text": "Aerovento",
+   "cps": 30,
+   "at": 27.47,
+   "label": "Marca"
+  },
+  {
+   "do": "press",
+   "key": "Tab",
+   "delay": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Modelo"
+   },
+   "noClick": true,
+   "text": "AV-HW18",
+   "cps": 30,
+   "label": "Modelo"
+  },
+  {
+   "do": "press",
+   "key": "Tab",
+   "delay": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Nº de Série"
+   },
+   "noClick": true,
+   "text": "AE2204518",
+   "cps": 30,
+   "label": "Nº de Série"
+  },
+  {
+   "do": "press",
+   "key": "Tab",
+   "delay": 40
+  },
+  {
+   "do": "eval",
+   "js": "(() => { document.execCommand('insertText', false, \"18.000 BTUs\"); const e = document.activeElement; return e && e.value; })()",
+   "label": "Capacidade"
+  },
+  {
+   "do": "press",
+   "key": "Tab",
+   "delay": 40
+  },
+  {
+   "do": "eval",
+   "js": "(() => { document.execCommand('insertText', false, \"Sala dos professores\"); const e = document.activeElement; return e && e.value; })()",
+   "label": "Local"
+  },
+  {
+   "do": "press",
+   "key": "Tab",
+   "delay": 40
+  },
+  {
+   "do": "press",
+   "key": "Enter",
+   "at": 31.67,
+   "delay": 40,
+   "label": "Data de Instalação"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "gridcell",
+    "name": "10",
+    "exact": true
+   },
+   "at": 32.27,
+   "label": "dia da instalação"
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 33.64
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Tensão *",
+    "exact": true
+   },
+   "seconds": 1.6,
+   "at": 34.77,
+   "label": "Tensão * (campo criado, obrigatório)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "combobox",
+    "hasText": "Selecione",
+    "within": "[role=dialog]",
+    "nth": 0
+   },
+   "at": 37.57,
+   "label": "campo Tensão"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "220 V"
+   },
+   "at": 38.67,
+   "label": "Tensão: 220 V"
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 39.96
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Validade da Garantia",
+    "exact": true
+   },
+   "seconds": 1.2,
+   "at": 40.07,
+   "label": "Validade da Garantia"
+  },
+  {
+   "do": "scroll",
+   "by": -600,
+   "duration": 0.5,
+   "after": 80,
+   "x": 640,
+   "y": 400,
+   "at": 41.87,
+   "label": "volta ao topo da janela"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "placeholder": "Gerado automaticamente ao salvar"
+   },
+   "seconds": 1.0,
+   "at": 42.67,
+   "label": "Identificador: gerado automaticamente ao salvar"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Criar",
+    "exact": true
+   },
+   "at": 44.97,
+   "label": "Criar"
+  },
+  {
+   "do": "waitFor",
+   "text": "Equipamento criado com sucesso!",
+   "timeout": 8
+  },
+  {
+   "do": "mark",
+   "name": "L9",
+   "at": 45.8
+  },
+  {
+   "do": "mark",
+   "name": "L10",
+   "at": 47.32
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Novo Equipamento"
+   },
+   "at": 47.39,
+   "label": "Novo Equipamento de novo"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "placeholder": "Nome do equipamento"
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "combobox",
+    "name": "Selecione o cliente"
+   },
+   "at": 49.79,
+   "label": "campo Cliente (o cliente ainda não existe)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Buscar cliente..."
+   },
+   "text": "Pousada Sol Nascente",
+   "cps": 60,
+   "at": 53.49,
+   "label": "digita o nome do cliente novo"
+  },
+  {
+   "do": "press",
+   "key": "Escape"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Criar cliente"
+   },
+   "label": "clica no +"
+  },
+  {
+   "do": "waitFor",
+   "text": "Novo cliente",
+   "timeout": 8
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Criar cliente",
+    "nth": "last"
+   },
+   "label": "cria o cliente só com o nome"
+  },
+  {
+   "do": "click",
+   "target": {
+    "placeholder": "Nome do equipamento"
+   },
+   "label": "Nome do 2º equipamento"
+  },
+  {
+   "do": "eval",
+   "js": "(() => { document.execCommand('insertText', false, \"Cassete 36.000 BTUs - Recep\\u00e7\\u00e3o\"); const e = document.activeElement; return e && e.value; })()",
+   "label": "Nome: Cassete 36.000 BTUs - Recepção"
+  },
+  {
+   "do": "press",
+   "key": "Tab",
+   "times": 2,
+   "delay": 40
+  },
+  {
+   "do": "type",
+   "noClick": true,
+   "text": "Split C",
+   "cps": 30,
+   "label": "Categoria: Split Cassete"
+  },
+  {
+   "do": "press",
+   "key": "Enter",
+   "delay": 40
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('[role=dialog] [role=combobox]')].find((e) => /^Selecione$/.test(e.textContent.trim())).focus()",
+   "label": "foco no campo Tensão"
+  },
+  {
+   "do": "mark",
+   "name": "L11",
+   "at": 62.04
+  },
+  {
+   "do": "type",
+   "noClick": true,
+   "text": "380",
+   "cps": 14,
+   "at": 62.09,
+   "label": "Tensão: 380 V"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Criar",
+    "exact": true
+   },
+   "at": 62.69,
+   "label": "Criar o 2º equipamento"
+  },
+  {
+   "do": "waitFor",
+   "text": "Equipamento criado com sucesso!",
+   "timeout": 8
+  },
+  {
+   "do": "mark",
+   "name": "L12",
+   "at": 64.3
+  },
+  {
+   "do": "goto",
+   "url": "/clientes",
+   "at": 64.3,
+   "label": "volta para Clientes"
+  },
+  {
+   "do": "waitFor",
+   "text": "Lista de Clientes"
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Colégio Monte Verde",
+    "exact": true
+   },
+   "label": "ficha do Colégio Monte Verde"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Equipamentos"
+   },
+   "label": "aba Equipamentos da ficha do cliente"
+  },
+  {
+   "do": "waitFor",
+   "text": "Hi-Wall 18.000 BTUs - Sala dos professores",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Hi-Wall 18.000 BTUs - Sala dos professores"
+   },
+   "seconds": 0.6,
+   "at": 70.04,
+   "label": "o Hi-Wall já está na tabela"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Novo Equipamento"
+   },
+   "seconds": 2.4,
+   "at": 71.24,
+   "label": "Novo Equipamento (o cliente já vem escolhido)"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 74.66
+  }
+ ]
+}

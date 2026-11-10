@@ -1,0 +1,209 @@
+{
+ "name": "t19-cap03",
+ "title": "T19 · Cap. 3 · Para onde vai o dinheiro (narração 41,0 s; marcas L1..L4 = início de cada linha do roteiro)",
+ "seed": "t19-cap03",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap05",
+  "t12/inicio",
+  "t12/apos-cap11",
+  "t13/inicio",
+  "t13/apos-cap14",
+  "t19/inicio",
+  "t19/apos-cap02"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/configuracoes"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Camila!",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/configuracoes?tab=integracoes&integration=asaas"
+  },
+  {
+   "do": "waitFor",
+   "text": "Recebimentos (Asaas)",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|erro|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Falta escolher a conta que recebe o dinheiro",
+    "within": "main"
+   },
+   "seconds": 1.6,
+   "at": 2.9,
+   "label": "aviso amarelo: falta escolher a conta",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Escolher agora",
+    "exact": true
+   },
+   "at": 4.82,
+   "label": "Escolher agora (a tela desce até o Lançamento no Financeiro)"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Lançamento no Financeiro\", \"Conta bancária de destino\", \"Categoria da receita\", \"Categoria da taxa (Asaas)\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere a seção Lançamento no Financeiro"
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 9.78
+  },
+  {
+   "do": "select",
+   "target": {
+    "selector": "main button[role=combobox]",
+    "hasText": "Escolha a conta"
+   },
+   "option": "Conta Principal",
+   "at": 9.94,
+   "label": "conta de destino: Conta Principal"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "main input[placeholder=\"Nenhuma\"]"
+   },
+   "text": "Vendas de Serviços",
+   "cps": 14,
+   "at": 14.32,
+   "label": "categoria da receita: Vendas de Serviços (campo de texto)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Categoria da taxa (Asaas)",
+    "within": "main"
+   },
+   "seconds": 1.6,
+   "at": 17.14,
+   "label": "categoria da taxa: Tarifas e Taxas",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const esp=[\"Tarifas e Taxas\"];let out='';for(let i=0;i<12;i++){const v=[...document.querySelectorAll(\"main\"+' input, '+\"main\"+' textarea')].map(e=>e.value).join(' | ');const falta=esp.filter(e=>!v.includes(e));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+v.slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere categoria da taxa já vem em Tarifas e Taxas"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 20.26
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Salvar",
+    "exact": true,
+    "nth": "last"
+   },
+   "at": 20.9,
+   "label": "Salvar a seção Lançamento no Financeiro"
+  },
+  {
+   "do": "waitFor",
+   "text": "Configuração de lançamento salva.",
+   "timeout": 8,
+   "optional": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const t=\"Lançar cobranças no Financeiro automaticamente\";const el=[...document.querySelectorAll('main p, main h2, main h3, main label, main span')].find(e=>e.innerText&&e.innerText.trim().startsWith(t));if(!el)return 'sem '+t;el.scrollIntoView({behavior:'smooth',block:\"center\"});return 'rolou'})()",
+   "at": 25.36,
+   "label": "a câmera sobe até os interruptores"
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 26.06
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "switch",
+    "name": "Lançar cobranças no Financeiro automaticamente",
+    "exact": true
+   },
+   "seconds": 1.4,
+   "at": 29.58,
+   "label": "interruptor: lançar cobranças no Financeiro",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "switch",
+    "name": "Lançar a taxa da Asaas como despesa",
+    "exact": true
+   },
+   "seconds": 1.4,
+   "at": 35.5,
+   "label": "interruptor: lançar a taxa da Asaas como despesa",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 40.96
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

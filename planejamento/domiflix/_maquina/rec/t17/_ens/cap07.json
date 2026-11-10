@@ -1,0 +1,239 @@
+{
+ "name": "t17-cap07",
+ "title": "T17 · Cap. 7 · Financeiro e estoque (narração 27,4 s; marcas L1..L3 = início de cada linha do roteiro)",
+ "seed": "t17-cap07",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 0.4,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap05",
+  "t12/inicio",
+  "t12/apos-cap11",
+  "t13/inicio",
+  "t13/apos-cap14",
+  "t19/inicio",
+  "t19/apos-cap13",
+  "t20/inicio",
+  "t20/apos-cap12",
+  "t2/apos-cap10",
+  "t15/inicio",
+  "t15/apos-cap12",
+  "t22/inicio",
+  "t22/apos-cap11",
+  "t21/inicio",
+  "t21/apos-cap10",
+  "t14/inicio",
+  "t14/apos-cap12",
+  "t17/inicio"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/financeiro/relatorios",
+  "/estoque"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Camila!",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "document.getAnimations().filter(a=>a.currentTime<0).forEach(a=>{a.startTime=document.timeline.currentTime})"
+  },
+  {
+   "do": "pause",
+   "seconds": 1.2
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Financeiro",
+    "exact": true
+   },
+   "label": "abre o grupo Financeiro"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "link",
+    "name": "Relatórios",
+    "exact": true
+   },
+   "label": "menu: Relatórios"
+  },
+  {
+   "do": "waitFor",
+   "text": "Regime de Caixa",
+   "timeout": 15
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Visão Geral\", \"DRE - Resultado\", \"DFC - Fluxo de Caixa\", \"Contabilidade\", \"Análise\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere as cinco abas dos Relatórios"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Visão Geral",
+    "exact": true
+   },
+   "label": "aba Visão Geral"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "DRE - Resultado",
+    "exact": true
+   },
+   "label": "aba DRE - Resultado"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "DFC - Fluxo de Caixa",
+    "exact": true
+   },
+   "label": "aba DFC - Fluxo de Caixa"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Contabilidade",
+    "exact": true
+   },
+   "label": "aba Contabilidade"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Análise",
+    "exact": true
+   },
+   "label": "aba Análise"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "DRE - Resultado",
+    "exact": true
+   },
+   "label": "aba DRE - Resultado (zoom)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Demonstrativo de Resultado",
+   "timeout": 15
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "tab",
+    "name": "DRE - Resultado",
+    "exact": true
+   },
+   "seconds": 2.2,
+   "label": "a leitura do DRE está no tutorial de Relatório Financeiro e DRE",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Gestão",
+    "exact": true
+   },
+   "label": "abre o grupo Gestão"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "link",
+    "name": "Estoque",
+    "exact": true
+   },
+   "label": "menu: Estoque"
+  },
+  {
+   "do": "waitFor",
+   "text": "Controle de peças e materiais",
+   "timeout": 15
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Posição de Estoque",
+    "exact": true
+   },
+   "label": "aba Posição de Estoque"
+  },
+  {
+   "do": "waitFor",
+   "text": "Valor em estoque",
+   "timeout": 15
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Inventários",
+    "exact": true
+   },
+   "label": "aba Inventários"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Relatório",
+    "exact": true
+   },
+   "label": "aba Relatório (Compras)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Relatório de estoque por material",
+   "timeout": 15
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

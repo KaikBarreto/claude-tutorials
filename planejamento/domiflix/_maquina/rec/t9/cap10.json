@@ -1,0 +1,438 @@
+{
+ "name": "t9-cap10",
+ "title": "T9 · Cap. 10 · Configurar a proposta (narração 62,0 s; marcas L1..L6 = início de cada linha do roteiro)",
+ "seed": "t9-cap10",
+ "pace": 0.45,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t9/inicio",
+  "t9/apos-cap09"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/orcamentos"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/orcamentos"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie orçamentos, custos e precificação",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Toggle Sidebar",
+    "nth": 0
+   }
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "eval",
+   "js": "(() => { try { sessionStorage.clear(); } catch (e) {} return 'sessionStorage limpo'; })()"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|erro|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Configurar Proposta",
+    "exact": true
+   },
+   "at": 1.0,
+   "label": "Configurar Proposta"
+  },
+  {
+   "do": "waitFor",
+   "text": "Escolha o estilo visual da proposta enviada ao cliente.",
+   "timeout": 15
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] button",
+    "hasText": "Clean",
+    "nth": 0
+   },
+   "seconds": 0.2,
+   "at": 5.64,
+   "label": "modelo Clean",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] button",
+    "hasText": "Vanguarda",
+    "nth": 0
+   },
+   "seconds": 0.2,
+   "at": 6.36,
+   "label": "modelo Vanguarda",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] button",
+    "hasText": "Aurora",
+    "nth": 0
+   },
+   "seconds": 0.2,
+   "at": 7.24,
+   "label": "modelo Aurora",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] button",
+    "hasText": "Prisma",
+    "nth": 0
+   },
+   "seconds": 0.2,
+   "at": 8.12,
+   "label": "modelo Prisma",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 10.98
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button",
+    "hasText": "Clean",
+    "nth": 0
+   },
+   "at": 18.42,
+   "label": "fica com o Clean"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 19.22
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Próximo",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 19.46,
+   "label": "Próximo: Personalização"
+  },
+  {
+   "do": "waitFor",
+   "text": "Tamanho do logo",
+   "timeout": 15
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "slider"
+   },
+   "at": 21.14,
+   "label": "controle Tamanho do logo"
+  },
+  {
+   "do": "press",
+   "key": "ArrowRight",
+   "label": "Tamanho do logo 120%",
+   "times": 2
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"120%\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Tamanho do logo 120%"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const d=document.querySelector('[role=dialog] .overflow-y-auto');if(d)d.scrollBy({top:300,behavior:'smooth'});return 1})()",
+   "at": 23.48,
+   "label": "desce a janela até as cores"
+  },
+  {
+   "do": "wait",
+   "seconds": 0.5
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Cor Primária",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.4,
+   "at": 24.62,
+   "label": "Cor Primária",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Cor de Destaque",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.4,
+   "at": 25.66,
+   "label": "Cor de Destaque",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Fundo do Cabeçalho",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.4,
+   "at": 26.7,
+   "label": "Fundo do Cabeçalho",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const d=document.querySelector('[role=dialog] .overflow-y-auto');if(d)d.scrollBy({top:260,behavior:'smooth'});return 1})()",
+   "at": 27.32,
+   "label": "desce a janela até as chaves"
+  },
+  {
+   "do": "wait",
+   "seconds": 0.5
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "switch",
+    "name": "Mostrar paginação?",
+    "exact": true
+   },
+   "seconds": 0.6,
+   "at": 29.02,
+   "label": "chave Mostrar paginação?",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "switch",
+    "name": "Mostrar deslocamento",
+    "exact": true
+   },
+   "seconds": 0.6,
+   "at": 29.98,
+   "label": "chave Mostrar deslocamento",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 31.02
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const d=document.querySelector('[role=dialog] .overflow-y-auto');if(!d)return 'sem rolagem';const h=[...d.querySelectorAll('*')].find(e=>e.children.length===0&&e.textContent.trim().toLowerCase()===\"se\\u00e7\\u00f5es da proposta\");if(!h)return 'sem titulo';const r=h.getBoundingClientRect(),dr=d.getBoundingClientRect();d.scrollTo({top:d.scrollTop+(r.top-dr.top)-20,behavior:'smooth'});return d.scrollTop})()",
+   "at": 31.16,
+   "label": "rola até Seções da proposta"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "switch",
+    "name": "Garantia",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 33.42,
+   "label": "desliga a seção Garantia"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] div.rounded-lg:has(button[aria-label='Garantia']) button[aria-label='Mover para cima']"
+   },
+   "seconds": 0.3,
+   "at": 36.38,
+   "label": "setas ▲▼ de uma seção",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "switch",
+    "name": "Garantia",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 38.06,
+   "label": "liga a seção Garantia de novo"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] div.rounded-lg:has(button[aria-label='Garantia']) textarea"
+   },
+   "text": "Garantia de 90 dias sobre o serviço.",
+   "cps": 28,
+   "at": 39.42,
+   "label": "texto da Garantia"
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll(\"[role=dialog] textarea\")].map(t=>t.value).filter(v=>/Garantia/.test(v)).join('|')",
+   "label": "confere texto da Garantia digitado"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] div.rounded-lg:has(button[aria-label='Garantia']) button[aria-label='Mover para cima']"
+   },
+   "at": 43.1,
+   "label": "▲ sobe a Garantia"
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 46.08
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Próximo",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 46.4,
+   "label": "Próximo: Revisão"
+  },
+  {
+   "do": "waitFor",
+   "text": "Veja como a proposta vai chegar ao cliente.",
+   "timeout": 15
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[aria-label*='róxim']"
+   },
+   "at": 47.12,
+   "label": "folheia: próxima página"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[aria-label*='róxim']"
+   },
+   "at": 48.48,
+   "label": "folheia: próxima página",
+   "optional": true
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 53.84
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Salvar",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 53.84,
+   "label": "Salvar a configuração"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "li[role=status]"
+   },
+   "timeout": 10
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Configuração da proposta salva\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"li[role=status]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere aviso Configuração da proposta salva"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:has-text('Fechar')"
+   },
+   "at": 60.38,
+   "label": "fecha a janela no X",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 62.0
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

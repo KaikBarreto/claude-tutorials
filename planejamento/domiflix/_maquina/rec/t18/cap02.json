@@ -1,0 +1,338 @@
+{
+ "name": "t18-cap02",
+ "title": "T18 · Cap. 2 · O Início (narração 42,7 s; marcas L1..L3 = início de cada linha do roteiro)",
+ "seed": "t18-cap02",
+ "pace": 0.35,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap15",
+  "t7/inicio",
+  "t7/apos-cap10",
+  "t18/catalogo"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/area-tecnico"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/area-tecnico"
+  },
+  {
+   "do": "waitFor",
+   "text": "Termos Técnicos Explicados",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "nav button",
+    "hasText": "Início"
+   },
+   "seconds": 0.5,
+   "at": 0.4,
+   "label": "o Início, porta de entrada das ferramentas",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main button",
+    "hasText": "Consulte modelos"
+   },
+   "seconds": 0.1,
+   "at": 2.6,
+   "label": "cartão Catálogo",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main button",
+    "hasText": "Calcule os BTUs"
+   },
+   "seconds": 0.1,
+   "at": 3.22,
+   "label": "cartão Carga Térmica",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main button",
+    "hasText": "Converta pressão"
+   },
+   "seconds": 0.1,
+   "at": 3.83,
+   "label": "cartão Conversão",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main button",
+    "hasText": "Encontre o capacitor"
+   },
+   "seconds": 0.1,
+   "at": 4.45,
+   "label": "cartão Cálculo de Capacitor",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main button",
+    "hasText": "Bitola do cabo"
+   },
+   "seconds": 0.1,
+   "at": 5.06,
+   "label": "cartão Cabo Elétrico",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main button",
+    "hasText": "Calcule SH"
+   },
+   "seconds": 0.1,
+   "at": 5.68,
+   "label": "cartão Superaquecimento",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main button",
+    "hasText": "Pressão de saturação dos gases"
+   },
+   "seconds": 0.1,
+   "at": 6.3,
+   "label": "cartão Régua de Gases",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main button",
+    "hasText": "Gases drop-in"
+   },
+   "seconds": 0.1,
+   "at": 6.91,
+   "label": "cartão Retrofit de Gás",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main button",
+    "hasText": "Entenda o ciclo"
+   },
+   "seconds": 0.1,
+   "at": 7.53,
+   "label": "cartão Ciclo de Refrigeração",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main button",
+    "hasText": "Calcule produto"
+   },
+   "seconds": 0.1,
+   "at": 8.14,
+   "label": "cartão Diluição de Produto",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 9.8
+  },
+  {
+   "do": "scroll",
+   "by": 650,
+   "at": 9.8,
+   "label": "desce até os Termos Técnicos Explicados",
+   "duration": 1.4
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Buscar termo (ex: BTU, capacitor, pressão)"
+   },
+   "text": "capacitor",
+   "cps": 8,
+   "at": 16.88,
+   "label": "digita \"capacitor\" na busca do glossário"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button",
+    "hasText": "Capacitor (µF"
+   },
+   "at": 18.76,
+   "label": "abre o termo Capacitor"
+  },
+  {
+   "do": "scroll",
+   "by": 170,
+   "at": 20.68,
+   "label": "desce até o exemplo do termo",
+   "duration": 0.8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Um compressor de 18.000 BTUs",
+    "within": "main"
+   },
+   "seconds": 7.0,
+   "at": 22.29,
+   "label": "o Exemplo: compressor de 18.000 BTUs, capacitor de ~40 µF",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Buscar termo (ex: BTU, capacitor, pressão)"
+   },
+   "text": "",
+   "at": 30.91,
+   "label": "limpa a busca",
+   "clear": true
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 31.81
+  },
+  {
+   "do": "scroll",
+   "target": {
+    "selector": "main h3",
+    "hasText": "Medidas e Unidades"
+   },
+   "at": 33.57,
+   "label": "rola até o grupo Medidas e Unidades"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main h3",
+    "hasText": "Medidas e Unidades"
+   },
+   "seconds": 0.15,
+   "at": 34.67,
+   "label": "grupo Medidas e Unidades",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "scroll",
+   "target": {
+    "selector": "main h3",
+    "hasText": "Ciclo Básico de Refrigeração"
+   },
+   "at": 35.17,
+   "label": "rola até o grupo Ciclo Básico de Refrigeração"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main h3",
+    "hasText": "Ciclo Básico de Refrigeração"
+   },
+   "seconds": 0.15,
+   "at": 36.27,
+   "label": "grupo Ciclo Básico de Refrigeração",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "scroll",
+   "target": {
+    "selector": "main h3",
+    "hasText": "Elétrica e Instalação"
+   },
+   "at": 37.57,
+   "label": "rola até o grupo Elétrica e Instalação"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main h3",
+    "hasText": "Elétrica e Instalação"
+   },
+   "seconds": 0.15,
+   "at": 38.67,
+   "label": "grupo Elétrica e Instalação",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "scroll",
+   "target": {
+    "selector": "main h3",
+    "hasText": "Gases e Nomenclatura"
+   },
+   "at": 39.69,
+   "label": "rola até o grupo Gases e Nomenclatura"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main h3",
+    "hasText": "Gases e Nomenclatura"
+   },
+   "seconds": 0.15,
+   "at": 40.79,
+   "label": "grupo Gases e Nomenclatura",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 42.72
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

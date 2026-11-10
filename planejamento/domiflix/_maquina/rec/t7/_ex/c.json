@@ -1,0 +1,118 @@
+{
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap15",
+  "t7/inicio"
+ ],
+ "user": "rafael.lima@glacialcold.example",
+ "device": "phone",
+ "start": "/agenda",
+ "steps": [
+  {
+   "do": "wait",
+   "ms": 2500
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Colégio Monte Verde",
+    "within": "main"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 1200
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Preencher OS"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 3000
+  },
+  {
+   "do": "geo",
+   "lat": -22.9003,
+   "lng": -43.118
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "A Caminho"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 3500
+  },
+  {
+   "do": "shot",
+   "name": "c01-a-caminho"
+  },
+  {
+   "do": "text",
+   "selector": "body",
+   "name": "os",
+   "max": 1800
+  },
+  {
+   "do": "scrolly",
+   "by": 400
+  },
+  {
+   "do": "wait",
+   "ms": 2500
+  },
+  {
+   "do": "shot",
+   "name": "c02-rota"
+  },
+  {
+   "do": "list",
+   "selector": "button",
+   "max": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Ampliar"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 3000
+  },
+  {
+   "do": "shot",
+   "name": "c03-mapa-cheio"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "button[aria-label='Fechar mapa']"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 800
+  },
+  {
+   "do": "shot",
+   "name": "c04-fechado"
+  },
+  {
+   "do": "eval",
+   "js": "fetch(location.origin).then(()=>1)"
+  }
+ ]
+}

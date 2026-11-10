@@ -1,0 +1,170 @@
+{
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap05",
+  "t12/inicio",
+  "t12/apos-cap03"
+ ],
+ "start": "/dashboard",
+ "stopOnFail": false,
+ "steps": [
+  {
+   "do": "wait",
+   "ms": 2500
+  },
+  {
+   "do": "shot",
+   "name": "c-01-dash-aviso"
+  },
+  {
+   "do": "text",
+   "selector": "[role=dialog]",
+   "name": "aviso",
+   "max": 600
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('[role=dialog] button')].map(b=>b.innerText.trim())"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Ver chamados"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 1500
+  },
+  {
+   "do": "shot",
+   "name": "c-02-chamados"
+  },
+  {
+   "do": "eval",
+   "js": "location.href"
+  },
+  {
+   "do": "text",
+   "selector": "main",
+   "name": "aba chamados",
+   "max": 2500
+  },
+  {
+   "do": "list",
+   "selector": "main [role=tab]"
+  },
+  {
+   "do": "list",
+   "selector": "main button[role=combobox]"
+  },
+  {
+   "do": "list",
+   "selector": "main table tbody tr"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "combobox",
+    "nth": 1
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "shot",
+   "name": "c-03-filtro2"
+  },
+  {
+   "do": "list",
+   "selector": "[role=option]"
+  },
+  {
+   "do": "press",
+   "key": "Escape"
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "O ar do restaurante está pingando"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 1500
+  },
+  {
+   "do": "shot",
+   "name": "c-04-os"
+  },
+  {
+   "do": "list",
+   "selector": "[role=dialog] button"
+  },
+  {
+   "do": "press",
+   "key": "Escape"
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Ordens de Serviço"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 1500
+  },
+  {
+   "do": "shot",
+   "name": "c-05-kanban"
+  },
+  {
+   "do": "text",
+   "selector": "main",
+   "name": "kanban",
+   "max": 1500
+  },
+  {
+   "do": "goto",
+   "url": "/clientes/cbed8554-3919-5fa8-b9c6-5d13ef24cf37"
+  },
+  {
+   "do": "wait",
+   "ms": 1200
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Chamados"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 1000
+  },
+  {
+   "do": "shot",
+   "name": "c-06-ficha-chamados"
+  },
+  {
+   "do": "text",
+   "selector": "main",
+   "name": "ficha chamados",
+   "max": 800
+  }
+ ]
+}

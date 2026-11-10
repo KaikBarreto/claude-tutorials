@@ -1,0 +1,477 @@
+{
+ "name": "t1-cap05",
+ "title": "T1 · Cap. 5 · A cor e o logo da sua marca (marcas L1..L7 = início de cada linha da fala; `at` pelos tempos da voz nova de 31/10, 64,32 s; logo com o texto branco no Substituir)",
+ "seed": "t1-cap05",
+ "pace": 1.0,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 300
+ },
+ "seedExtra": [
+  "t1/apos-cap04"
+ ],
+ "prewarm": [
+  "/configuracoes"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/configuracoes"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie as configurações do sistema"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "text": "Salvo",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0.0
+  },
+  {
+   "do": "scroll",
+   "target": {
+    "selector": "h3:has-text('White Label')"
+   },
+   "label": "rola até a seção White Label",
+   "at": 0.1
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "h3:has-text('White Label')"
+   },
+   "seconds": 0.9,
+   "label": "seção White Label"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Personalize o sistema com a identidade visual da sua marca"
+   },
+   "seconds": 3.0,
+   "label": "texto da seção: identidade visual da sua marca"
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 8.12
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Ativar White Label",
+    "exact": true
+   },
+   "seconds": 1.0,
+   "label": "Ativar White Label (desligado)",
+   "at": 8.17
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "section:has(h3:has-text('White Label')) button[role=switch]"
+   },
+   "label": "liga o Ativar White Label",
+   "at": 10.08
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "text": "Logo completo",
+    "exact": true
+   },
+   "timeout": 10,
+   "label": "as opções do White Label aparecem"
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 128,
+    "y": 32
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "label": "o cursor sobe ao logo no topo do menu",
+   "at": 13.62
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[data-sidebar=sidebar] img[src^='data:']"
+   },
+   "text": "",
+   "noClick": true,
+   "label": "logo da empresa no topo do menu, no lugar do da Dominex"
+  },
+  {
+   "do": "pause",
+   "seconds": 1.2
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 760,
+    "y": 420
+   },
+   "by": 380,
+   "duration": 0.6,
+   "after": 50,
+   "label": "rola até as opções Logo completo, Ícone e Cor primária",
+   "at": 16.4
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 18.12
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Logo completo",
+    "exact": true
+   },
+   "seconds": 0.6,
+   "label": "Logo completo (usa o logo da empresa por padrão)",
+   "at": 18.17
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "img[alt='WL Logo']",
+    "within": "main.overflow-y-auto"
+   },
+   "seconds": 0.9,
+   "label": "o logo da empresa na caixa do Logo completo",
+   "at": 19.6
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 128,
+    "y": 32
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "label": "o cursor sobe ao logo no topo do menu escuro",
+   "at": 21.0
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[data-sidebar=sidebar] img[src^='data:']"
+   },
+   "text": "",
+   "noClick": true,
+   "label": "menu escuro: o logo da empresa mal aparece"
+  },
+  {
+   "do": "upload",
+   "target": {
+    "selector": "xpath=//label[normalize-space(.)='Logo completo']/following::label[contains(normalize-space(.),'Substituir')][1]"
+   },
+   "file": "assets/glacial_horizontal_texto_branco.png",
+   "after": 900,
+   "label": "Substituir: envia o logo com o texto branco",
+   "at": 24.25
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "img[src*='wl_logo_']",
+    "within": "main.overflow-y-auto"
+   },
+   "timeout": 10,
+   "label": "o logo novo aparece na caixa"
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 128,
+    "y": 32
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "label": "o cursor sobe ao logo novo no menu"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[data-sidebar=sidebar] img[src*='wl_logo_']"
+   },
+   "text": "",
+   "noClick": true,
+   "label": "o logo com o texto branco no topo do menu"
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 28.79
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Ícone (1:1)",
+    "exact": true
+   },
+   "seconds": 0.8,
+   "label": "Ícone (1:1)",
+   "at": 28.84
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Ícone quadrado para o menu lateral recolhido. 128×128px."
+   },
+   "seconds": 1.8,
+   "label": "texto do ícone: menu lateral recolhido, 128×128 px",
+   "at": 30.9
+  },
+  {
+   "do": "upload",
+   "target": {
+    "text": "Enviar ícone",
+    "exact": true
+   },
+   "file": "../fakebase/storage/company-logos/glacial/icone.png",
+   "after": 900,
+   "label": "envia o arquivo do ícone",
+   "at": 33.0
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "img[src*='wl_icon_']",
+    "within": "main.overflow-y-auto"
+   },
+   "timeout": 10,
+   "label": "o ícone aparece na caixa"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "img[src*='wl_icon_']",
+    "within": "main.overflow-y-auto"
+   },
+   "seconds": 1.0,
+   "label": "ícone enviado"
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 37.51
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Cor primária",
+    "exact": true
+   },
+   "seconds": 0.5,
+   "label": "Cor primária (substitui o verde padrão)",
+   "at": 37.55
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "#00C597"
+   },
+   "label": "abre o seletor de cor",
+   "at": 38.95
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='#000000']"
+   },
+   "timeout": 8,
+   "label": "seletor de cor aberto"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] .cursor-crosshair"
+   },
+   "seconds": 0.7,
+   "label": "área de cores do seletor",
+   "at": 41.6
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='#000000']"
+   },
+   "seconds": 1.4,
+   "label": "campo do código da cor",
+   "at": 42.96
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 45.72
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='#000000']"
+   },
+   "text": "#EEB770",
+   "clear": true,
+   "cps": 5,
+   "label": "digita o código do dourado da marca",
+   "at": 45.72
+  },
+  {
+   "do": "pause",
+   "seconds": 3.0,
+   "label": "botões, abas e destaques mudam para o dourado"
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "label": "fecha o seletor de cor",
+   "at": 53.7
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 59.08
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 290,
+    "y": 32
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "label": "o cursor sobe ao botão de recolher o menu",
+   "at": 59.08
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "button[data-sidebar=trigger]"
+   },
+   "text": "",
+   "noClick": true,
+   "label": "botão de recolher o menu"
+  },
+  {
+   "do": "pause",
+   "seconds": 0.1
+  },
+  {
+   "do": "eval",
+   "js": "document.querySelector(\"button[data-sidebar=trigger]\").click()",
+   "label": "recolhe o menu lateral",
+   "at": 60.4
+  },
+  {
+   "do": "pause",
+   "seconds": 0.1
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[data-sidebar=sidebar] img[src*='wl_icon_']"
+   },
+   "text": "",
+   "noClick": true,
+   "label": "ícone da marca no menu recolhido"
+  },
+  {
+   "do": "pause",
+   "seconds": 0.1
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 98,
+    "y": 32
+   },
+   "by": 0,
+   "duration": 0.2,
+   "after": 0,
+   "label": "o cursor vai ao botão de abrir o menu"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "button[data-sidebar=trigger]"
+   },
+   "text": "",
+   "noClick": true,
+   "label": "botão de abrir o menu"
+  },
+  {
+   "do": "pause",
+   "seconds": 0.1
+  },
+  {
+   "do": "eval",
+   "js": "document.querySelector(\"button[data-sidebar=trigger]\").click()",
+   "label": "abre o menu lateral de novo",
+   "at": 62.6
+  },
+  {
+   "do": "pause",
+   "seconds": 0.3
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[data-sidebar=sidebar] img[src*='wl_logo_']"
+   },
+   "text": "",
+   "noClick": true,
+   "label": "logo da marca no menu aberto"
+  },
+  {
+   "do": "pause",
+   "seconds": 0.2
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "text": "Salvo",
+    "exact": true
+   },
+   "timeout": 10,
+   "label": "selo Salvo: tudo gravado"
+  },
+  {
+   "do": "pause",
+   "seconds": 0.1
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{try{const el=document.querySelector(\"main.overflow-y-auto img[src*='wl_logo_']\");const b=await (await fetch(el.src)).blob();return await new Promise((ok,er)=>{const f=new FileReader();f.onload=()=>ok(f.result);f.onerror=er;f.readAsDataURL(b)})}catch(e){return null}})()",
+   "label": "guarda o logo enviado (data URI) para a semente do cap. 6"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 64.3
+  }
+ ]
+}

@@ -1,0 +1,258 @@
+{
+ "name": "t4-cap03",
+ "title": "T4 · Cap. 3 · Novo tipo de serviço (narração 66,0 s; marcas L1..L8 = início de cada linha do roteiro)",
+ "seed": "t4-cap03",
+ "pace": 0.6,
+ "cps": 18,
+ "tail": 0.4,
+ "start": {
+  "x": 900,
+  "y": 480
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/g1-trilha",
+  "t4/g2-vazias",
+  "t4/apos-cap02"
+ ],
+ "prewarm": [
+  "/servicos"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/servicos"
+  },
+  {
+   "do": "waitFor",
+   "text": "Nenhum tipo de serviço",
+   "timeout": 20
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|erro|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Novo Serviço",
+    "exact": true
+   },
+   "seconds": 1.0,
+   "label": "botão Novo Serviço"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Novo Serviço",
+    "exact": true
+   },
+   "label": "Novo Serviço"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "role": "dialog"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Ex: Manutenção Preventiva"
+   },
+   "text": "Manutenção Preventiva",
+   "cps": 18,
+   "label": "nome: Manutenção Preventiva"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "input[type=color] + input"
+   },
+   "text": "#22C55E",
+   "cps": 12,
+   "label": "cor do serviço",
+   "clear": true
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "input[type=color]"
+   },
+   "seconds": 1.6,
+   "label": "uma cor diferente para cada serviço"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "combobox",
+    "hasText": "Sem categoria"
+   },
+   "label": "abre a lista de categorias"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Manutenção"
+   },
+   "label": "categoria Manutenção"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Descrição do tipo de serviço"
+   },
+   "text": "Limpeza e conferência completa do aparelho",
+   "cps": 40,
+   "label": "descrição curta"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Prefixo de Numeração OS",
+    "exact": true
+   },
+   "seconds": 1.0,
+   "label": "Prefixo de Numeração OS"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Ex: MP, MC, INS"
+   },
+   "text": "MP",
+   "cps": 6,
+   "label": "prefixo MP"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "-2026-0001",
+    "exact": false
+   },
+   "seconds": 3.2,
+   "label": "prévia do número da OS"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Ex: 350,00"
+   },
+   "text": "180",
+   "cps": 6,
+   "label": "preço padrão 180"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Valor sugerido ao adicionar este serviço em um orçamento. Pode ser editado pelo vendedor.",
+    "exact": false
+   },
+   "seconds": 3.4,
+   "label": "o orçamento sugere esse valor"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "div.flex.items-center.gap-2:has(> label:text-is(\"Vinculado a equipamento\"))"
+   },
+   "seconds": 2.0,
+   "label": "interruptor Vinculado a equipamento"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "div.flex.items-center.gap-2:has(> label:text-is(\"Ativo\"))"
+   },
+   "seconds": 2.4,
+   "label": "interruptor Ativo"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Criar",
+    "exact": true
+   },
+   "label": "Criar"
+  },
+  {
+   "do": "waitFor",
+   "text": "Tipo de serviço criado!",
+   "timeout": 10,
+   "optional": true
+  },
+  {
+   "do": "eval",
+   "js": "(async () => {const B='http://127.0.0.1:54321/rest/v1'; const H={'content-type':'application/json',Prefer:'return=representation'};const cats=await (await fetch(B+'/service_type_categories?select=id,name')).json();const c=Object.fromEntries(cats.map(x=>[x.name,x.id]));const rows=[{\"name\": \"Manutenção Corretiva\", \"description\": \"Diagnóstico e reparo de falhas no aparelho\", \"color\": \"#F97316\", \"category_id\": \"@Manutenção\", \"number_prefix\": \"MC\", \"default_price\": 220, \"requires_equipment\": true, \"is_active\": true}, {\"name\": \"Instalação de Split\", \"description\": \"Instalação completa de aparelho split\", \"color\": \"#3B82F6\", \"category_id\": \"@Instalação\", \"number_prefix\": \"INS\", \"default_price\": 650, \"requires_equipment\": true, \"is_active\": true, \"codigo_servico\": \"140601\", \"item_lc116\": \"14.06\", \"codigo_tributacao_municipal\": \"001\", \"iss_aliquota\": 5}, {\"name\": \"Higienização de Split\", \"description\": \"Limpeza interna e externa do aparelho\", \"color\": \"#06B6D4\", \"category_id\": \"@Higienização\", \"number_prefix\": \"HIG\", \"default_price\": 180, \"requires_equipment\": true, \"is_active\": true}, {\"name\": \"Carga de Gás\", \"description\": \"Recarga de gás refrigerante\", \"color\": \"#A855F7\", \"category_id\": \"@Manutenção\", \"number_prefix\": \"GAS\", \"default_price\": 350, \"requires_equipment\": true, \"is_active\": true}, {\"name\": \"Visita Técnica\", \"description\": \"Visita para avaliação e orçamento\", \"color\": \"#6B7280\", \"category_id\": null, \"number_prefix\": \"VT\", \"default_price\": 120, \"requires_equipment\": false, \"is_active\": true}];for(const r of rows){ if(typeof r.category_id==='string'&&r.category_id.startsWith('@')) r.category_id=c[r.category_id.slice(1)]; }const r=await fetch(B+'/service_types',{method:'POST',headers:H,body:JSON.stringify(rows)});const root=document.getElementById('root'); const key=Object.keys(root).find(k=>k.startsWith('__reactContainer$'));const stack=[root[key]]; let n=0; let ok=false;while(stack.length&&n++<20000){const f=stack.pop(); if(!f) continue; const p=f.memoizedProps;if(p&&p.client&&typeof p.client.refetchQueries==='function'){p.client.refetchQueries({type:'active'}); ok=true; break;}if(f.sibling) stack.push(f.sibling); if(f.child) stack.push(f.child);}return r.status;})()",
+   "label": "(bastidor) os outros cinco serviços já cadastrados"
+  },
+  {
+   "do": "waitFor",
+   "text": "6 tipos cadastrados",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Manutenção Corretiva",
+    "exact": true
+   },
+   "seconds": 0.3,
+   "label": "lista: Manutenção Corretiva"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Instalação de Split",
+    "exact": true
+   },
+   "seconds": 0.3,
+   "label": "lista: Instalação de Split"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Higienização de Split",
+    "exact": true
+   },
+   "seconds": 0.3,
+   "label": "lista: Higienização de Split"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Carga de Gás",
+    "exact": true
+   },
+   "seconds": 0.3,
+   "label": "lista: Carga de Gás"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Visita Técnica",
+    "exact": true
+   },
+   "seconds": 0.9,
+   "label": "lista: Visita Técnica"
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  }
+ ]
+}

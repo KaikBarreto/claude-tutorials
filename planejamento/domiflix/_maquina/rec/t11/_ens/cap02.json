@@ -1,0 +1,328 @@
+{
+ "name": "t11-cap02",
+ "title": "T11 · Cap. 2 · O Responsável Técnico (narração 79,4 s; marcas L1..L6 = início de cada linha do roteiro)",
+ "seed": "t11-cap02",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 0.4,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t2/apos-cap10",
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t9/inicio",
+  "t9/apos-cap16",
+  "t10/apos-cap09",
+  "t11/inicio"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/contratos",
+  "/contratos"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Camila!",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/contratos"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie contratos recorrentes e manutenções programadas",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|erro|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Configurações de Contrato",
+    "exact": true
+   },
+   "label": "Configurações de Contrato"
+  },
+  {
+   "do": "waitFor",
+   "text": "Documentos e responsáveis técnicos",
+   "timeout": 15
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Modelos padrão de documentos PMOC",
+    "exact": true
+   },
+   "seconds": 1.4,
+   "label": "Modelos padrão de documentos PMOC",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "scroll",
+   "target": {
+    "text": "Validade dos documentos",
+    "exact": true
+   },
+   "label": "desce até Validade dos documentos",
+   "duration": 1.0
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Validade dos documentos",
+    "exact": true
+   },
+   "seconds": 1.6,
+   "label": "Validade dos documentos (12 meses)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Responsáveis Técnicos",
+    "exact": true
+   },
+   "label": "aba Responsáveis Técnicos"
+  },
+  {
+   "do": "waitFor",
+   "text": "Nenhum responsável técnico cadastrado",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Novo Responsável",
+    "exact": true
+   },
+   "seconds": 1.4,
+   "label": "botão Novo Responsável",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Novo Responsável",
+    "exact": true
+   },
+   "label": "Novo Responsável"
+  },
+  {
+   "do": "waitFor",
+   "text": "Novo Responsável Técnico",
+   "timeout": 10
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='Ex: João da Silva']"
+   },
+   "text": "Ricardo Tavares Albuquerque",
+   "cps": 15,
+   "label": "Nome completo"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='Ex: CREA-SP 1234567']"
+   },
+   "text": "CREA-RJ 9000012345",
+   "cps": 14,
+   "label": "CFT/CREA"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='Ex: Engenheiro Mecânico']"
+   },
+   "text": "Engenheiro Mecânico",
+   "cps": 16,
+   "label": "Modalidade"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='Ex: ART 1234567/2026']"
+   },
+   "text": "ART 9000001234/2026",
+   "cps": 14,
+   "label": "Número de registro"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='email@exemplo.com.br']"
+   },
+   "text": "ricardo.tavares@glacialcold.example",
+   "cps": 20,
+   "label": "Email"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='(21) 99999-9999']"
+   },
+   "text": "2130001009",
+   "cps": 10,
+   "label": "Telefone"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "tab",
+    "name": "Enviar imagem",
+    "exact": true
+   },
+   "seconds": 1.0,
+   "label": "aba Enviar imagem (recomendada)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Desenhar",
+    "exact": true
+   },
+   "label": "aba Desenhar"
+  },
+  {
+   "do": "waitFor",
+   "text": "Desenhe acima usando o dedo, mouse ou caneta.",
+   "timeout": 8
+  },
+  {
+   "do": "drag",
+   "target": {
+    "selector": "[role=dialog] canvas"
+   },
+   "to": {
+    "x": 450,
+    "y": 600
+   },
+   "label": "assina no quadro (1)"
+  },
+  {
+   "do": "drag",
+   "target": {
+    "selector": "[role=dialog] canvas"
+   },
+   "to": {
+    "x": 850,
+    "y": 655
+   },
+   "label": "assina no quadro (2)"
+  },
+  {
+   "do": "drag",
+   "target": {
+    "selector": "[role=dialog] canvas"
+   },
+   "to": {
+    "x": 560,
+    "y": 672
+   },
+   "label": "assina no quadro (3)"
+  },
+  {
+   "do": "drag",
+   "target": {
+    "selector": "[role=dialog] canvas"
+   },
+   "to": {
+    "x": 790,
+    "y": 572
+   },
+   "label": "assina no quadro (4)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Salvar imagem",
+    "exact": true
+   },
+   "label": "Salvar imagem"
+  },
+  {
+   "do": "eval",
+   "js": "'dump RT: ' + [...document.querySelector('[role=dialog]').querySelectorAll('label,button')].map(e => e.tagName + ':' + e.innerText.trim().slice(0, 40)).join(' | ')",
+   "label": "dump RT depois da assinatura"
+  },
+  {
+   "do": "upload",
+   "target": {
+    "selector": "[role=dialog] label:has-text('Selecionar') >> nth=-1"
+   },
+   "file": "assets/carimbo-rt.png",
+   "label": "Carimbo do responsável (Selecionar)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Cadastrar responsável",
+    "exact": true
+   },
+   "label": "Cadastrar responsável"
+  },
+  {
+   "do": "waitFor",
+   "text": "Ricardo Tavares Albuquerque",
+   "timeout": 15
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Ricardo Tavares Albuquerque",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 1.6,
+   "label": "o Ricardo na lista",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

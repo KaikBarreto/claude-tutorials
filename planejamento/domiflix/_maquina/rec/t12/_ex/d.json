@@ -1,0 +1,131 @@
+{
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap05",
+  "t12/inicio"
+ ],
+ "start": "/equipamentos/d0f4c4b5-7a28-40ff-895f-6bdf7252c748",
+ "stopOnFail": false,
+ "steps": [
+  {
+   "do": "wait",
+   "ms": 2000
+  },
+  {
+   "do": "shot",
+   "name": "d-01-equip"
+  },
+  {
+   "do": "text",
+   "selector": "main",
+   "name": "equip",
+   "max": 2500
+  },
+  {
+   "do": "list",
+   "selector": "main button"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Copiar link"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 400
+  },
+  {
+   "do": "shot",
+   "name": "d-02-copiado"
+  },
+  {
+   "do": "eval",
+   "js": "navigator.clipboard.readText().catch(e=>String(e))"
+  },
+  {
+   "do": "eval",
+   "js": "localStorage.clear(); sessionStorage.clear(); 1"
+  },
+  {
+   "do": "goto",
+   "url": "/portal/b1942560a8109dd96fb42b9f2f5b2cb6?eq=d0f4c4b5-7a28-40ff-895f-6bdf7252c748"
+  },
+  {
+   "do": "wait",
+   "ms": 1500
+  },
+  {
+   "do": "shot",
+   "name": "d-03-portal-eq"
+  },
+  {
+   "do": "text",
+   "selector": "body",
+   "name": "portal eq",
+   "max": 2000
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Histórico"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 700
+  },
+  {
+   "do": "shot",
+   "name": "d-04-hist"
+  },
+  {
+   "do": "text",
+   "selector": "body",
+   "name": "hist",
+   "max": 1800
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Anexos"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 700
+  },
+  {
+   "do": "shot",
+   "name": "d-05-anexos"
+  },
+  {
+   "do": "text",
+   "selector": "body",
+   "name": "anexos",
+   "max": 800
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Voltar para lista"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 700
+  },
+  {
+   "do": "shot",
+   "name": "d-06-voltar"
+  }
+ ]
+}

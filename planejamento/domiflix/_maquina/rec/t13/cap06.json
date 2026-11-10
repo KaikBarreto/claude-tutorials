@@ -1,0 +1,334 @@
+{
+ "name": "t13-cap06",
+ "title": "T13 · Cap. 6 · De uma conta pra outra (narração 58,4 s; marcas L1..L6 = início de cada linha do roteiro)",
+ "seed": "t13-cap06",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap05",
+  "t12/inicio",
+  "t12/apos-cap11",
+  "t13/inicio",
+  "t13/apos-cap05"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/financeiro/movimentacoes"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Camila!",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/financeiro/movimentacoes"
+  },
+  {
+   "do": "waitFor",
+   "text": "Contas e cartões",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Toggle Sidebar",
+    "nth": 0
+   }
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|erro|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "aside[aria-label=\"Contas e cartões\"] button",
+    "hasText": "Conta Principal"
+   },
+   "at": 0.8,
+   "label": "abre a Conta Principal"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Reposição de dreno\", \"Instalação de split 12.000 BTUs - Mercado Vila Nova\", \"Saldo do dia\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere extrato com a compra direta e a receita"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main",
+    "hasText": "Reposição de dreno"
+   },
+   "seconds": 0.9,
+   "at": 3.22,
+   "label": "a compra direta no extrato",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main tbody tr:has-text('Instalação de split') button[aria-label='Ações']"
+   },
+   "at": 6.52,
+   "label": "menu ⋮ da linha da receita"
+  },
+  {
+   "do": "pause",
+   "seconds": 0.6
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main tbody tr:has-text('Instalação de split') button[aria-label='Ações']"
+   },
+   "label": "menu ⋮ da linha de novo (só se não abriu)",
+   "unless": {
+    "role": "menuitem",
+    "name": "Editar"
+   }
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 8.02
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "menuitem",
+    "name": "Excluir"
+   },
+   "seconds": 0.9,
+   "at": 8.42,
+   "label": "Excluir (sem clicar)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 10.18,
+   "label": "fecha o menu"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 17.38
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Ações de Conta Principal",
+    "exact": true
+   },
+   "at": 24.62,
+   "label": "menu ⋮ da Conta Principal"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Transferir"
+   },
+   "at": 26.38,
+   "label": "Transferir"
+  },
+  {
+   "do": "waitFor",
+   "text": "Transferência entre Contas",
+   "timeout": 10
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 27.42
+  },
+  {
+   "do": "select",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]",
+    "nth": 0
+   },
+   "option": "Conta Principal",
+   "at": 27.66,
+   "label": "Origem: Conta Principal"
+  },
+  {
+   "do": "select",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]",
+    "nth": 1
+   },
+   "option": "Caixa",
+   "at": 29.9,
+   "label": "Destino: Caixa"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='0,00']",
+    "nth": 0
+   },
+   "text": "30000",
+   "cps": 20,
+   "at": 31.74,
+   "label": "Valor 300,00"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const esp=[\"300,00\"];let out='';for(let i=0;i<12;i++){const v=[...document.querySelectorAll(\"[role=dialog]\"+' input, '+\"[role=dialog]\"+' textarea')].map(e=>e.value).join(' | ');const falta=esp.filter(e=>!v.includes(e));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+v.slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Valor 300,00"
+  },
+  {
+   "do": "click",
+   "target": {
+    "placeholder": "Ex: Transferência para pagar fornecedor",
+    "within": "[role=dialog]"
+   },
+   "at": 33.26,
+   "label": "descrição: Troco do caixa (clique)"
+  },
+  {
+   "do": "eval",
+   "js": "(() => { document.execCommand('insertText', false, \"Troco do caixa\"); const e = document.activeElement; return e && e.value; })()",
+   "label": "descrição: Troco do caixa (colado)"
+  },
+  {
+   "do": "pause",
+   "seconds": 0.5
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Transferir",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 35.5,
+   "label": "Transferir"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 12
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 36.54
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "aside[aria-label=\"Contas e cartões\"] button",
+    "hasText": "Caixa"
+   },
+   "at": 37.5,
+   "label": "abre o Caixa"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Troco do caixa\", \"R$ 1.100,00\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere o extrato do Caixa: Troco do caixa e saldo R$ 1.100,00"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main",
+    "hasText": "Troco do caixa"
+   },
+   "seconds": 0.9,
+   "at": 39.18,
+   "label": "a entrada Troco do caixa no Caixa",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 46.85
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Ações de Caixa",
+    "exact": true
+   },
+   "at": 50.29,
+   "label": "menu ⋮ do Caixa"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "menuitem",
+    "name": "Ajustar saldo"
+   },
+   "seconds": 0.9,
+   "at": 51.65,
+   "label": "Ajustar saldo (sem clicar)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 57.65,
+   "label": "fecha o menu"
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 58.4
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

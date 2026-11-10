@@ -1,0 +1,289 @@
+{
+ "name": "t1-cap11",
+ "title": "T1 · Cap. 11 · Onde ficam as integrações (1.38.19: quatro subabas) (marcas L1..L4 = início de cada linha da fala; `at` pelos tempos da voz)",
+ "seed": "t1-cap11",
+ "pace": 1.0,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 1000,
+  "y": 230
+ },
+ "seedExtra": [
+  "t1/apos-cap10",
+  "t1/g1-trilha",
+  "t1/g2-vazias"
+ ],
+ "prewarm": [
+  "/configuracoes"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/configuracoes"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie as configurações do sistema"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "text": "Salvo",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|erro|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0.0
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 1096,
+    "y": 196
+   },
+   "by": 140,
+   "axis": "x",
+   "duration": 0.35,
+   "after": 50,
+   "label": "a faixa de abas rola para mostrar Integrações",
+   "at": 0.1
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Integrações",
+    "exact": true
+   },
+   "label": "aba Integrações",
+   "at": 0.64
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "role": "tab",
+    "name": "Cobranças (Asaas)",
+    "exact": true
+   },
+   "timeout": 12,
+   "label": "subabas da aba Integrações"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "tab",
+    "name": "WhatsApp",
+    "exact": true
+   },
+   "seconds": 0.05,
+   "label": "subaba WhatsApp",
+   "at": 4.82
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "tab",
+    "name": "Cobranças (Asaas)",
+    "exact": true
+   },
+   "seconds": 0.05,
+   "label": "subaba Cobranças (Asaas)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "tab",
+    "name": "Impressora fiscal",
+    "exact": true
+   },
+   "seconds": 0.05,
+   "label": "subaba Impressora fiscal"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "tab",
+    "name": "API Pública",
+    "exact": true
+   },
+   "seconds": 0.05,
+   "label": "subaba API Pública"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Conexão com o WhatsApp",
+    "exact": true
+   },
+   "seconds": 0.8,
+   "label": "tela de conexão do WhatsApp (sem conectar nada)",
+   "at": 7.44
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Conectar por QR Code",
+    "exact": true
+   },
+   "seconds": 2.0,
+   "label": "Conectar por QR Code: o número da empresa (desconectado)",
+   "at": 9.2
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 12.52
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Cobranças (Asaas)",
+    "exact": true
+   },
+   "label": "clica na subaba Cobranças (Asaas)",
+   "at": 12.52
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "text": "Recebimentos (Asaas)",
+    "exact": true
+   },
+   "timeout": 12,
+   "label": "o cartão Recebimentos (Asaas) abre"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Recebimentos (Asaas)",
+    "exact": true
+   },
+   "seconds": 0.5,
+   "label": "cartão Recebimentos (Asaas)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "tab",
+    "name": "Configurações",
+    "exact": true
+   },
+   "seconds": 0.1,
+   "label": "botão Configurações (sem clicar)",
+   "at": 16.52
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "tab",
+    "name": "Simulador",
+    "exact": true
+   },
+   "seconds": 0.1,
+   "label": "botão Simulador (sem clicar)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Ativo",
+    "exact": true
+   },
+   "seconds": 2.4,
+   "label": "selo Ativo",
+   "at": 18.94
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 22.21
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "tab",
+    "name": "Impressora fiscal",
+    "exact": true
+   },
+   "seconds": 2.0,
+   "label": "subaba Impressora fiscal (só o nome, sem clicar)",
+   "at": 22.21
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "tab",
+    "name": "API Pública",
+    "exact": true
+   },
+   "seconds": 2.0,
+   "label": "subaba API Pública (só o nome, sem clicar)",
+   "at": 26.07
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 31.09
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "tab",
+    "name": "WhatsApp",
+    "exact": true
+   },
+   "seconds": 0.05,
+   "label": "as subabas: WhatsApp",
+   "at": 31.09
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "tab",
+    "name": "Cobranças (Asaas)",
+    "exact": true
+   },
+   "seconds": 0.2,
+   "label": "as subabas: Cobranças (Asaas)",
+   "at": 31.8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "tab",
+    "name": "API Pública",
+    "exact": true
+   },
+   "seconds": 0.2,
+   "label": "as subabas: API Pública",
+   "at": 34.25
+  },
+  {
+   "do": "pause",
+   "seconds": 0.6
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 36.74
+  }
+ ]
+}

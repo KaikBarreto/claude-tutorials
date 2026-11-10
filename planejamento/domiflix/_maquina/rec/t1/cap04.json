@@ -1,0 +1,200 @@
+{
+ "name": "t1-cap04",
+ "title": "T1 · Cap. 4 · Endereço pelo CEP (marcas L1..L5 = início de cada linha da fala; `at` pelos tempos da voz)",
+ "seed": "t1-cap04",
+ "pace": 1.0,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 300
+ },
+ "seedExtra": [
+  "t1/apos-cap03"
+ ],
+ "prewarm": [
+  "/configuracoes"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/configuracoes"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie as configurações do sistema"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "text": "Salvo",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0.0
+  },
+  {
+   "do": "scroll",
+   "by": 900,
+   "duration": 1.4,
+   "label": "rola até Endereço",
+   "at": 0.1
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "h3:text-is('Endereço')"
+   },
+   "seconds": 0.3,
+   "label": "cartão Endereço"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "00000-000"
+   },
+   "text": "24230190",
+   "cps": 6,
+   "label": "digita o CEP",
+   "at": 3.34
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 5.64
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "text": "Endereço encontrado!"
+   },
+   "timeout": 10,
+   "label": "aviso Endereço encontrado!"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "placeholder": "Rua, Avenida…"
+   },
+   "seconds": 0.15,
+   "label": "rua preenchida pelo CEP",
+   "at": 7.44
+  },
+  {
+   "do": "hover",
+   "target": {
+    "placeholder": "Bairro"
+   },
+   "seconds": 0.15,
+   "label": "bairro preenchido pelo CEP",
+   "at": 8.43
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "combobox",
+    "hasText": "Niterói"
+   },
+   "seconds": 0.15,
+   "label": "UF e cidade preenchidas pelo CEP",
+   "at": 9.33
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 10.68
+  },
+  {
+   "do": "hover",
+   "target": {
+    "placeholder": "Nº"
+   },
+   "seconds": 0.15,
+   "label": "campo Número",
+   "at": 10.68
+  },
+  {
+   "do": "hover",
+   "target": {
+    "placeholder": "Sala, Andar…"
+   },
+   "seconds": 0.3,
+   "label": "complemento (vazio)",
+   "at": 11.56
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Nº"
+   },
+   "text": "200",
+   "cps": 5,
+   "label": "digita o número 200",
+   "at": 12.56
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 15.32
+  },
+  {
+   "do": "hover",
+   "target": {
+    "placeholder": "Rua, Avenida…"
+   },
+   "seconds": 3.0,
+   "label": "campo Endereço (digite a rua e a Dominex sugere)",
+   "at": 18.81
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 23.04
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "h3:text-is('Endereço')"
+   },
+   "seconds": 0.2,
+   "label": "título Endereço",
+   "at": 23.04
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "section:has(h3:text-is('Endereço')) button[role=switch]"
+   },
+   "seconds": 2.8,
+   "label": "Exibir em documentos único, vale pro endereço inteiro",
+   "at": 23.88
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "text": "Salvo",
+    "exact": true
+   },
+   "timeout": 10,
+   "label": "selo Salvo: tudo gravado"
+  },
+  {
+   "do": "pause",
+   "seconds": 0.6
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 28.4
+  }
+ ]
+}

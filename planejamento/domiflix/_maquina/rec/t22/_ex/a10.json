@@ -1,0 +1,200 @@
+{
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap05",
+  "t12/inicio",
+  "t12/apos-cap11",
+  "t13/inicio",
+  "t13/apos-cap14",
+  "t19/inicio",
+  "t19/apos-cap13",
+  "t20/inicio",
+  "t22/_prov-t15",
+  "t22/inicio",
+  "t22/_prov-rafael"
+ ],
+ "start": "/funcionarios",
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z",
+  "disc-overview-view-mode": "grid"
+ },
+ "stopOnFail": false,
+ "steps": [
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Toggle Sidebar",
+    "nth": 0
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Organograma",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 600
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Novo Organograma",
+    "exact": true
+   }
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Ex: Estrutura 2026"
+   },
+   "text": "Estrutura 2026"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Criar",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 2000
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Direção",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "label:text-is('Nome') + input"
+   }
+  },
+  {
+   "do": "press",
+   "key": "Control+A"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "label:text-is('Nome') + input"
+   },
+   "text": "Camila Duarte"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "label:text-is('Cargo') + input"
+   }
+  },
+  {
+   "do": "press",
+   "key": "Control+A"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "label:text-is('Cargo') + input"
+   },
+   "text": "Diretora"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "label:text-is('Setor') + input"
+   }
+  },
+  {
+   "do": "press",
+   "key": "Control+A"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "label:text-is('Setor') + input"
+   },
+   "text": "Direção"
+  },
+  {
+   "do": "wait",
+   "ms": 900
+  },
+  {
+   "do": "shot",
+   "name": "01-camila"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": ".react-flow__node",
+    "nth": 0
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": ".react-flow__node:has-text('Camila Duarte') button[aria-label='Adicionar nó'] >> nth=1"
+   },
+   "force": true
+  },
+  {
+   "do": "wait",
+   "ms": 900
+  },
+  {
+   "do": "shot",
+   "name": "02-add-no"
+  },
+  {
+   "do": "text",
+   "selector": "[role=dialog]",
+   "max": 1500
+  },
+  {
+   "do": "list",
+   "selector": "[role=dialog] button"
+  },
+  {
+   "do": "list",
+   "selector": "[role=dialog] [role=tab]"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Buscar funcionário..."
+   },
+   "text": "Tatiane"
+  },
+  {
+   "do": "wait",
+   "ms": 600
+  },
+  {
+   "do": "shot",
+   "name": "03-busca"
+  },
+  {
+   "do": "html",
+   "selector": "[role=dialog]",
+   "max": 3000
+  }
+ ]
+}

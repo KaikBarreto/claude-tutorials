@@ -1,0 +1,337 @@
+{
+ "name": "t9-cap01",
+ "title": "T9 · Cap. 1 · A tela e as quatro abas (narração 57,6 s; marcas L1..L4 = início de cada linha do roteiro)",
+ "seed": "t9-cap01",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 0.4,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t9/inicio"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/orcamentos"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/orcamentos"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie orçamentos, custos e precificação",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|erro|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main h1"
+   },
+   "seconds": 0.3,
+   "label": "título Orçamentos",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "tab",
+    "name": "Orçamentos",
+    "exact": true
+   },
+   "seconds": 0.1,
+   "label": "aba Orçamentos",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "tab",
+    "name": "Custos dos Serviços",
+    "exact": true
+   },
+   "seconds": 0.1,
+   "label": "aba Custos dos Serviços",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "tab",
+    "name": "Custos Globais",
+    "exact": true
+   },
+   "seconds": 0.1,
+   "label": "aba Custos Globais",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "tab",
+    "name": "Precificação",
+    "exact": true
+   },
+   "seconds": 0.1,
+   "label": "aba Precificação",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "tab",
+    "name": "Orçamentos",
+    "exact": true
+   },
+   "seconds": 0.1,
+   "label": "a primeira aba é a lista",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Configurar Proposta",
+    "exact": true
+   },
+   "seconds": 0.1,
+   "label": "botão Configurar Proposta",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Novo Orçamento",
+    "exact": true
+   },
+   "seconds": 0.4,
+   "label": "botão Novo Orçamento",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main .grid > *",
+    "hasText": "Em Aberto"
+   },
+   "seconds": 0.3,
+   "label": "cartão Em Aberto",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main .grid > *",
+    "hasText": "Em Aberto"
+   },
+   "seconds": 0.6,
+   "label": "cartão Em Aberto (soma dos enviados)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main .grid > *",
+    "hasText": "Ticket Médio"
+   },
+   "seconds": 0.5,
+   "label": "cartão Ticket Médio",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main .grid > *",
+    "hasText": "Conversão"
+   },
+   "seconds": 0.5,
+   "label": "cartão Conversão",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main .grid > *",
+    "hasText": "Em Aberto"
+   },
+   "label": "clique no cartão Em Aberto"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main .grid > *",
+    "hasText": "Conversão"
+   },
+   "seconds": 0.4,
+   "label": "cartão Conversão (filtra por Aprovado)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Filtros"
+   },
+   "label": "botão Filtros (dentro da busca)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Enviado",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "label": "desmarca Enviado no filtro de Status"
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "label": "fecha o filtro"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main thead th",
+    "nth": 0
+   },
+   "seconds": 0.1,
+   "label": "coluna Nº",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main thead th",
+    "nth": 1
+   },
+   "seconds": 0.1,
+   "label": "coluna Cliente",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main thead th",
+    "nth": 2
+   },
+   "seconds": 0.1,
+   "label": "coluna Data",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main thead th",
+    "nth": 3
+   },
+   "seconds": 0.1,
+   "label": "coluna Custo",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main thead th",
+    "nth": 4
+   },
+   "seconds": 0.1,
+   "label": "coluna Valor",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main thead th",
+    "nth": 5
+   },
+   "seconds": 0.1,
+   "label": "coluna Margem",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main thead th",
+    "nth": 6
+   },
+   "seconds": 0.1,
+   "label": "coluna Status",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "placeholder": "Buscar por cliente, número ou telefone..."
+   },
+   "label": "campo de busca"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Buscar por cliente, número ou telefone..."
+   },
+   "text": "hotel",
+   "cps": 40,
+   "label": "digita \"hotel\" na busca",
+   "noClick": true
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Buscar por cliente, número ou telefone..."
+   },
+   "text": "",
+   "label": "limpa a busca",
+   "noClick": true,
+   "clear": true
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

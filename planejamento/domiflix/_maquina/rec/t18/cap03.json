@@ -1,0 +1,230 @@
+{
+ "name": "t18-cap03",
+ "title": "T18 · Cap. 3 · Dentro da ordem de serviço (narração 37,0 s; marcas L1..L4 = início de cada linha do roteiro)",
+ "seed": "t18-cap03",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 700,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap15",
+  "t7/inicio",
+  "t7/apos-cap10",
+  "t18/catalogo"
+ ],
+ "prewarm": [
+  "/agenda",
+  "/os-tecnico/48833d34-7e78-5497-9bd8-c25c454e69b2",
+  "/area-tecnico"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/agenda"
+  },
+  {
+   "do": "waitFor",
+   "text": "Visualize e gerencie os agendamentos",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(() => {\n  // GPS do aparelho emulado (T18, cópia do T7). O Chromium headless trava `getCurrentPosition({maximumAge: 0})` quando já existe um\n  // `watchPosition` ativo — e o app do técnico faz exatamente isso (rastreia a cada 30 s e pede a posição no check-in).\n  // Este stub devolve a posição atual na hora, para as duas chamadas, e `__setGeo` \"anda\" com o aparelho e avisa quem observa.\n  if (window.__geoStub) return 'ja-instalado';\n  const st = { lat: -22.9035, lng: -43.1038, acc: 12 };\n  const pos = () => ({\n    coords: { latitude: st.lat, longitude: st.lng, accuracy: st.acc, altitude: null, altitudeAccuracy: null, heading: null, speed: null },\n    timestamp: Date.now(),\n  });\n  const watchers = new Map();\n  let seq = 0;\n  const g = navigator.geolocation;\n  g.getCurrentPosition = (ok) => { setTimeout(() => ok(pos()), 60); };\n  g.watchPosition = (ok) => { const id = ++seq; watchers.set(id, ok); setTimeout(() => { if (watchers.has(id)) ok(pos()); }, 90); return id; };\n  g.clearWatch = (id) => { watchers.delete(id); };\n  window.__setGeo = (lat, lng, acc) => { st.lat = lat; st.lng = lng; if (acc) st.acc = acc; watchers.forEach((cb) => cb(pos())); return [st.lat, st.lng]; };\n  window.__geoStub = true;\n  return 'instalado';\n})()\n"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "#9",
+    "exact": true,
+    "within": "main"
+   },
+   "at": 0.0,
+   "label": "abre a OS #9, em andamento, na Agenda"
+  },
+  {
+   "do": "waitFor",
+   "text": "Resumo da OS",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Em Andamento",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.3,
+   "at": 1.3,
+   "label": "o resumo da OS: Em Andamento",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "scroll",
+   "target": {
+    "role": "button",
+    "name": "Preencher OS",
+    "exact": true
+   },
+   "at": 1.9,
+   "label": "rola o resumo até o botão Preencher OS",
+   "duration": 0.8
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Preencher OS",
+    "exact": true
+   },
+   "at": 2.7,
+   "label": "clica em Preencher OS"
+  },
+  {
+   "do": "waitFor",
+   "text": "Glacial Cold Brasil",
+   "timeout": 20
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "button[aria-label='Área do Técnico™']"
+   },
+   "seconds": 2.0,
+   "at": 5.22,
+   "label": "o botão redondo da Área do Técnico, no canto da ordem",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "button[aria-label='Área do Técnico™']"
+   },
+   "at": 8.02,
+   "label": "clica no botão redondo"
+  },
+  {
+   "do": "waitFor",
+   "text": "Voltar para OS",
+   "timeout": 15
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 8.92
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "button",
+    "hasText": "Consulte modelos"
+   },
+   "seconds": 0.2,
+   "at": 11.0,
+   "label": "as mesmas ferramentas do Início",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "button",
+    "hasText": "Converta pressão"
+   },
+   "at": 11.66,
+   "label": "abre a Conversão"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 14.36
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 640,
+    "y": 768
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "at": 17.82,
+   "label": "botão vermelho Voltar para OS (cursor)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "button",
+    "hasText": "Voltar para OS"
+   },
+   "text": "",
+   "noClick": true,
+   "label": "botão vermelho Voltar para OS",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('button')].find(b=>/Voltar para OS/.test(b.textContent)).click()",
+   "at": 18.72,
+   "label": "botão vermelho Voltar para OS (clique)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Checklists",
+    "exact": true
+   },
+   "seconds": 2.17,
+   "at": 20.5,
+   "label": "a ordem continua do ponto onde parou: o cartão Checklists",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 23.22
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Checklists",
+    "exact": true
+   },
+   "seconds": 12.93,
+   "at": 23.22,
+   "label": "a ordem continua do ponto onde parou: o cartão Checklists (continua)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 36.96
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

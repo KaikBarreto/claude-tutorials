@@ -1,0 +1,202 @@
+{
+ "name": "t15-cap11",
+ "title": "T15 · Cap. 11 · A folha em Contas a Pagar (narração 28,9 s; marcas L1..L4 = início de cada linha do roteiro)",
+ "seed": "t15-cap11",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 0.4,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap05",
+  "t12/inicio",
+  "t12/apos-cap11",
+  "t13/inicio",
+  "t13/apos-cap14",
+  "t19/inicio",
+  "t19/apos-cap13",
+  "t20/inicio",
+  "t2/apos-cap10",
+  "t15/inicio",
+  "t15/apos-cap10",
+  "t15/folhas"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/financeiro/contas"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Camila!",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|erro|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Financeiro",
+    "exact": true
+   },
+   "label": "grupo Financeiro do menu"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "a[href='/financeiro/contas']:visible"
+   },
+   "label": "Contas a Pagar/Receber"
+  },
+  {
+   "do": "waitFor",
+   "text": "Contas a pagar e a receber",
+   "timeout": 20
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "A Pagar",
+    "exact": true
+   },
+   "label": "aba A Pagar"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Buscar por nome, descrição, categoria ou valor..."
+   },
+   "text": "Folha",
+   "cps": 10,
+   "label": "busca \"Folha\""
+  },
+  {
+   "do": "waitFor",
+   "text": "Folha Rafael Lima",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Folha Rafael Lima",
+    "within": "main"
+   },
+   "seconds": 1.0,
+   "label": "folha de cada um",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "07/12/2026",
+    "within": "main"
+   },
+   "seconds": 1.2,
+   "label": "vencimento 07/12/2026",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Folha Rafael Lima — 2026-12\", \"Folha de Pagamento\", \"07/12/2026\", \"R$ 3.080,00\", \"Pendente\", \"Folha Tatiane Ribeiro — 2026-12\", \"R$ 2.800,00\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere as folhas de dezembro, vencimento 07/12/2026"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main tbody tr:has-text('Rafael Lima') button[aria-label='Ações']"
+   },
+   "label": "menu ⋮ da folha do Rafael"
+  },
+  {
+   "do": "pause",
+   "seconds": 0.6
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main tbody tr:has-text('Rafael Lima') button[aria-label='Ações']"
+   },
+   "label": "menu ⋮ de Rafael Lima de novo (só se não abriu)",
+   "unless": {
+    "role": "menuitem",
+    "name": "Marcar como pago"
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Marcar como pago"
+   },
+   "label": "Marcar como pago"
+  },
+  {
+   "do": "waitFor",
+   "text": "Quitando folha pendente",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Quitando folha pendente",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.0,
+   "label": "Quitando folha pendente, período 2026-12",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Pagamento, Rafael Lima\", \"Quitando folha pendente, período 2026-12\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere janela de pagamento quitando a folha de 2026-12"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Cancelar",
+    "exact": true
+   },
+   "label": "Cancelar"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 10
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

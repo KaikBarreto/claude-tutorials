@@ -1,0 +1,267 @@
+{
+ "name": "t2-cap02",
+ "title": "T2 · Cap. 2 · Montando um cargo (narração 55,8 s; marcas L1..L6 = início de cada linha do roteiro)",
+ "seed": "t2-cap02",
+ "pace": 0.5,
+ "cps": 40,
+ "tail": 1.5,
+ "start": {
+  "x": 900,
+  "y": 300
+ },
+ "seedExtra": [
+  "t1/apos-cap13",
+  "t2/inicio"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/configuracoes"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "goto",
+   "url": "/configuracoes?tab=usuarios"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "main p",
+    "hasText": "usuários •"
+   },
+   "timeout": 15
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Configurações",
+    "exact": true,
+    "within": "main"
+   },
+   "at": 0.0,
+   "label": "abre Configurações (cargos)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Configurações de Cargos",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Nenhum cargo cadastrado",
+    "exact": true
+   },
+   "seconds": 1.2,
+   "at": 2.76,
+   "label": "a janela de cargos, ainda vazia"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Novo Cargo",
+    "exact": true
+   },
+   "at": 11.08,
+   "label": "Novo Cargo"
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 12.04
+  },
+  {
+   "do": "click",
+   "target": {
+    "placeholder": "Ex: Técnico de Campo"
+   },
+   "at": 13.94,
+   "label": "clica no campo Nome"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Ex: Técnico de Campo"
+   },
+   "text": "Técnico de Campo",
+   "cps": 60,
+   "at": 15.91,
+   "label": "nome do cargo: Técnico de Campo",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "placeholder": "Descrição opcional"
+   },
+   "at": 16.74,
+   "label": "clica no campo Descrição"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Descrição opcional"
+   },
+   "text": "Agenda, ferramentas e OS pelo link",
+   "cps": 60,
+   "label": "descrição do cargo",
+   "noClick": true
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 18.92
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 640,
+    "y": 420
+   },
+   "by": 380,
+   "duration": 1.1,
+   "after": 100,
+   "at": 20.83,
+   "label": "desce pelo editor: categorias"
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 640,
+    "y": 420
+   },
+   "by": 380,
+   "duration": 1.1,
+   "after": 100,
+   "at": 23.31,
+   "label": "desce pelo editor: mais categorias"
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 640,
+    "y": 420
+   },
+   "by": -760,
+   "duration": 1.3,
+   "after": 100,
+   "at": 24.75,
+   "label": "volta ao topo do editor"
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 27.59
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Ver ações de Agenda",
+    "exact": true
+   },
+   "seconds": 0.5,
+   "at": 29.29,
+   "label": "linha da Agenda"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "switch",
+    "name": "Acesso à tela Agenda",
+    "exact": true
+   },
+   "at": 31.99,
+   "label": "liga a tela Agenda"
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 34.07
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "0/4",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.8,
+   "at": 34.07,
+   "label": "contador 0/4 da Agenda"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Ver ações de Agenda",
+    "exact": true
+   },
+   "at": 38.63,
+   "label": "abre a seta da Agenda"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "switch",
+    "name": "Ver Toda a Agenda",
+    "exact": true
+   },
+   "seconds": 2.2,
+   "at": 41.32,
+   "label": "Ver Toda a Agenda (desligada)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Ver ações de Agenda",
+    "exact": true
+   },
+   "at": 47.76,
+   "label": "fecha a seta da Agenda"
+  },
+  {
+   "do": "eval",
+   "js": "(() => { const e = [...document.querySelectorAll('[role=dialog] [aria-label]')].find((x) => x.getAttribute('aria-label') === \"Acesso \\u00e0 tela \\u00c1rea do T\\u00e9cnico\\u2122\"); if (!e) return 'alvo nao achado: ' + \"Acesso \\u00e0 tela \\u00c1rea do T\\u00e9cnico\\u2122\"; e.scrollIntoView({ block: \"center\", behavior: 'smooth' }); return 'rolando ate ' + \"Acesso \\u00e0 tela \\u00c1rea do T\\u00e9cnico\\u2122\"; })()",
+   "at": 49.44,
+   "label": "rola até Operacional"
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 49.94
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "switch",
+    "name": "Acesso à tela Área do Técnico™",
+    "exact": true
+   },
+   "at": 50.08,
+   "label": "liga a Área do Técnico"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 55.76
+  }
+ ]
+}

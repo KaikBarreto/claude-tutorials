@@ -1,0 +1,92 @@
+{
+ "title": "T0 v2 · cap06 · Os combinados",
+ "seed": "t0v2-cap06",
+ "pace": 0.5,
+ "tail": 1.2,
+ "cps": 9,
+ "seedExtra": [
+  "t0v2/catalogo",
+  "t0v2/progresso-camila",
+  "t0v2/usuario-novo",
+  "t0v2/conta-teste",
+  "t0v2/lembrete-dispensado"
+ ],
+ "prewarm": [
+  "/dashboard"
+ ],
+ "user": "diego.martins@glacialcold.example",
+ "name": "t0v2-cap06",
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "Primeiro passo",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0.04
+  },
+  {
+   "do": "waitFor",
+   "text": "Confirmar e começar a primeira aula",
+   "timeout": 40,
+   "at": 0.9
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 6.52
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 11.0
+  },
+  {
+   "do": "scroll",
+   "target": "Assisti ao vídeo até o final e entendi os combinados.",
+   "optional": true,
+   "timeout": 8,
+   "at": 14.2
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 14.28
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "checkbox"
+   },
+   "optional": true,
+   "timeout": 8,
+   "label": "marca a caixa",
+   "at": 14.9
+  },
+  {
+   "do": "click",
+   "target": "Confirmar e começar a primeira aula",
+   "optional": true,
+   "timeout": 8,
+   "label": "botão Confirmar e começar a primeira aula",
+   "at": 16.9
+  },
+  {
+   "do": "pause",
+   "seconds": 0.5,
+   "at": 19.6
+  }
+ ]
+}

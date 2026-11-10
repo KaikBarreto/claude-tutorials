@@ -1,0 +1,270 @@
+{
+ "name": "t19-cap09",
+ "title": "T19 · Cap. 9 · Pago e baixado (narração 31,4 s; marcas L1..L4 = início de cada linha do roteiro)",
+ "seed": "t19-cap09",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap05",
+  "t12/inicio",
+  "t12/apos-cap11",
+  "t13/inicio",
+  "t13/apos-cap14",
+  "t19/inicio",
+  "t19/apos-cap08"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/financeiro/cobrancas",
+  "/financeiro/contas"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Camila!",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/financeiro/cobrancas"
+  },
+  {
+   "do": "waitFor",
+   "text": "Cobranças e recorrências",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Toggle Sidebar",
+    "nth": 0
+   }
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|erro|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Pago\", \"450,00\", \"RECEBIDO\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere a cobrança está Pago e o Recebido soma 450,00"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr",
+    "hasText": "Restaurante Sabor da Serra"
+   },
+   "seconds": 1.4,
+   "at": 2.74,
+   "label": "a linha Pago",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "RECEBIDO",
+    "within": "main"
+   },
+   "seconds": 1.4,
+   "at": 4.5,
+   "label": "cartão Recebido com R$ 450,00",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 7.78
+  },
+  {
+   "do": "goto",
+   "url": "/financeiro/contas",
+   "at": 7.78,
+   "label": "abre Contas a Pagar/Receber"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "role": "tab",
+    "name": "A Receber",
+    "exact": true
+   },
+   "timeout": 20
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "A Receber",
+    "exact": true
+   },
+   "label": "aba A Receber"
+  },
+  {
+   "do": "waitFor",
+   "text": "Limpeza e higienização de 2 splits da cozinha",
+   "timeout": 15
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Limpeza e higienização de 2 splits da cozinha\", \"Bruto: R$ 450,00\", \"Taxa: − R$ 1,99\", \"Líquido: R$ 448,01\", \"Pago\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere a conta a receber paga com bruto, taxa e líquido"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Bruto: R$ 450,00",
+    "within": "main"
+   },
+   "seconds": 2.4,
+   "at": 13.06,
+   "label": "Bruto, Taxa e Líquido da conta a receber",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 16.91
+  },
+  {
+   "do": "goto",
+   "url": "/financeiro/movimentacoes",
+   "at": 16.91,
+   "label": "abre Movimentações Financeiras"
+  },
+  {
+   "do": "waitFor",
+   "text": "Tarifa de recebimento (Asaas)",
+   "timeout": 20
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Limpeza e higienização de 2 splits da cozinha\", \"Vendas de Serviços\", \"Conta Principal\", \"+ R$ 450,00\", \"Tarifa de recebimento (Asaas)\", \"Tarifas e Taxas\", \"- R$ 1,99\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere a receita em Vendas de Serviços e a tarifa em Tarifas e Taxas"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tr",
+    "hasText": "Limpeza e higienização"
+   },
+   "seconds": 0.7,
+   "at": 18.23,
+   "label": "a receita em Vendas de Serviços",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tr",
+    "hasText": "Tarifa de recebimento"
+   },
+   "seconds": 1.6,
+   "at": 21.23,
+   "label": "a tarifa em Tarifas e Taxas",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "goto",
+   "url": "/financeiro/cobrancas",
+   "at": 24.61,
+   "label": "volta para Cobranças"
+  },
+  {
+   "do": "waitFor",
+   "text": "Restaurante Sabor da Serra",
+   "timeout": 20
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 24.91
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button[aria-label=\"Ações da cobrança\"]",
+    "nth": 0
+   },
+   "at": 26.35,
+   "label": "menu ⋯ da cobrança paga"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "role": "menuitem",
+    "name": "Estornar"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "menuitem",
+    "name": "Estornar"
+   },
+   "seconds": 1.8,
+   "at": 27.07,
+   "label": "Estornar (sem clicar)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "label": "fecha o menu"
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 31.36
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

@@ -1,0 +1,406 @@
+{
+ "name": "t3v2-cap06",
+ "title": "T3 v2 · Cap. 6 · Etiquetas (narração 44,1 s; marcas L1..L5 = início de cada linha do roteiro)",
+ "seed": "t3v2-cap06",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 980,
+  "y": 480
+ },
+ "seedExtra": [
+  "t3v2/apos-cap05"
+ ],
+ "prewarm": [
+  "/clientes"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/clientes"
+  },
+  {
+   "do": "waitFor",
+   "text": "Lista de Clientes"
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Colégio Monte Verde",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Responsável no Local",
+   "timeout": 10
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Configurações",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.6,
+   "at": 1.68,
+   "label": "o botão Configurações"
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 4.52
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Configurações",
+    "exact": true,
+    "within": "main"
+   },
+   "at": 5.22,
+   "label": "abre Configurações"
+  },
+  {
+   "do": "waitFor",
+   "text": "Configurações de clientes e fornecedores",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Etiquetas",
+    "within": "[role=dialog]"
+   },
+   "at": 5.92,
+   "label": "seção Etiquetas"
+  },
+  {
+   "do": "waitFor",
+   "text": "Classifique clientes e fornecedores com cores fáceis de reconhecer.",
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Preferencial",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.7,
+   "at": 8.28,
+   "label": "a etiqueta Preferencial já está lá"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 10.12
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Nova etiqueta",
+    "exact": true
+   },
+   "at": 12.9,
+   "label": "Nova etiqueta"
+  },
+  {
+   "do": "click",
+   "target": {
+    "placeholder": "Ex.: BLOQUEADO"
+   },
+   "at": 14.36,
+   "label": "clica no campo do nome"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Ex.: BLOQUEADO"
+   },
+   "text": "Contrato PMOC",
+   "cps": 40,
+   "at": 15.91,
+   "label": "nome da etiqueta: Contrato PMOC",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:has(span.font-mono)"
+   },
+   "at": 17.16,
+   "label": "abre o seletor de cor"
+  },
+  {
+   "do": "click",
+   "target": {
+    "title": "#3B82F6",
+    "exact": true
+   },
+   "at": 18.2,
+   "label": "azul"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Salvar etiqueta",
+    "exact": true
+   },
+   "at": 19.11,
+   "label": "Salvar etiqueta"
+  },
+  {
+   "do": "waitFor",
+   "text": "Etiqueta criada",
+   "timeout": 6,
+   "optional": true
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 21.32
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 21.32,
+   "label": "fecha o seletor de cor"
+  },
+  {
+   "do": "wait",
+   "seconds": 0.3
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "when": {
+    "role": "dialog"
+   },
+   "label": "fecha a janela de Configurações"
+  },
+  {
+   "do": "wait",
+   "seconds": 0.5
+  },
+  {
+   "do": "eval",
+   "js": "(() => { const d = document.querySelector('[role=dialog]'); if (!d) return 'ja fechada'; const b = [...d.querySelectorAll('button')].find((x) => [x.textContent, x.getAttribute('aria-label'), x.title].some((v) => /^\\s*fechar\\s*$/i.test(v || ''))); if (!b) return 'sem botao Fechar'; b.click(); return 'fechada pelo botao'; })()",
+   "label": "Fechar (se o Esc não fechou)"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "button[aria-haspopup='menu'][aria-label='Ações']",
+    "nth": 0
+   },
+   "seconds": 0.4,
+   "at": 23.56,
+   "label": "menu Ações da ficha"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "button[aria-haspopup='menu'][aria-label='Ações']",
+    "nth": 0
+   },
+   "label": "abre o menu se ainda não abriu",
+   "unless": {
+    "role": "menuitem",
+    "name": "Editar"
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Editar"
+   },
+   "at": 24.72,
+   "label": "Editar"
+  },
+  {
+   "do": "waitFor",
+   "text": "Editar Cliente",
+   "timeout": 10
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "scroll",
+   "label": "desce até o campo Etiquetas",
+   "point": {
+    "x": 640,
+    "y": 400
+   },
+   "by": 700,
+   "duration": 0.5,
+   "after": 100
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Sem etiquetas",
+    "exact": true
+   },
+   "at": 27.3,
+   "label": "abre a lista de etiquetas"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Contrato PMOC",
+    "exact": true,
+    "within": "[data-radix-popper-content-wrapper]"
+   },
+   "at": 28.48,
+   "label": "marca Contrato PMOC"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Preferencial",
+    "exact": true,
+    "within": "[data-radix-popper-content-wrapper]"
+   },
+   "at": 29.1,
+   "label": "marca a Preferencial (dá pra marcar mais de uma)"
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 31.46,
+   "label": "fecha a lista"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Salvar",
+    "exact": true
+   },
+   "at": 31.75,
+   "label": "Salvar"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 12
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 36.48
+  },
+  {
+   "do": "hover",
+   "target": {
+    "title": "Contrato PMOC",
+    "exact": true,
+    "nth": 1
+   },
+   "seconds": 0.35,
+   "at": 37.77,
+   "label": "os selos na ficha"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "span[aria-label^='Etiquetas:']",
+    "nth": 0
+   },
+   "seconds": 0.4,
+   "at": 38.57,
+   "label": "na lista: o selo e o +1"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Filtros",
+    "exact": true
+   },
+   "at": 39.58,
+   "label": "Filtros"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Contrato PMOC",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 41.14,
+   "label": "marca Contrato PMOC no filtro"
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 1056,
+    "y": 768
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "at": 42.6,
+   "label": "Aplicar o filtro (cursor)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] button",
+    "hasText": "Aplicar"
+   },
+   "text": "",
+   "noClick": true,
+   "label": "Aplicar o filtro"
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll(\"[role=dialog] button\")].filter(b=>/Aplicar/i.test(b.textContent)).shift().click()",
+   "at": 43.5,
+   "label": "Aplicar o filtro (clique)"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 44.08
+  }
+ ]
+}

@@ -1,0 +1,139 @@
+{
+ "name": "t12-cap11",
+ "title": "T12 · Cap. 11 · Recapitulando (narração 44,9 s; marcas L1..L5 = início de cada linha do roteiro)",
+ "seed": "t12-cap11",
+ "pace": 0.4,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap05",
+  "t12/inicio",
+  "t12/apos-cap08"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/clientes",
+  "/contratos",
+  "/ordens-servico"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/clientes/cbed8554-3919-5fa8-b9c6-5d13ef24cf37"
+  },
+  {
+   "do": "waitFor",
+   "text": "Informações",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|erro|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Ações",
+    "exact": true
+   },
+   "seconds": 1.4,
+   "at": 3.46,
+   "label": "o menu Ações da ficha",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 9.64
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "tab",
+    "name": "Chamados",
+    "exact": true
+   },
+   "seconds": 1.4,
+   "at": 12.66,
+   "label": "aba Chamados da ficha",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 19.67
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "tab",
+    "name": "Equipamentos",
+    "exact": true
+   },
+   "seconds": 1.4,
+   "at": 20.21,
+   "label": "aba Equipamentos da ficha",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 25.67
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "tab",
+    "name": "Contratos",
+    "exact": true
+   },
+   "seconds": 1.4,
+   "at": 25.67,
+   "label": "aba Contratos da ficha",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 36.79
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 44.88
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

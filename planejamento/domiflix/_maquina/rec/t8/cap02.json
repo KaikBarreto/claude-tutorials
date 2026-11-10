@@ -1,0 +1,364 @@
+{
+ "name": "t8-cap02",
+ "title": "T8 · Cap. 2 · Cadastrar um material (narração 70,2 s; marcas L1..L7 = início de cada linha do roteiro)",
+ "seed": "t8-cap02",
+ "pace": 0.4,
+ "cps": 11,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap15",
+  "t8/inicio"
+ ],
+ "prewarm": [
+  "/estoque"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/estoque"
+  },
+  {
+   "do": "waitFor",
+   "text": "Controle de peças e materiais",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Toggle Sidebar",
+    "nth": 0
+   }
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "aside[aria-label=\"Locais de estoque\"] button:has-text(\"Estoque Principal\")"
+   }
+  },
+  {
+   "do": "pause",
+   "seconds": 0.6
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|erro|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Cadastrar Material",
+    "exact": true,
+    "within": "main"
+   },
+   "at": 2.02,
+   "label": "clica em Cadastrar Material"
+  },
+  {
+   "do": "waitFor",
+   "text": "Novo Item de Estoque",
+   "timeout": 10
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Nome do item",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "text": "Capacitor 40 µF",
+   "cps": 9,
+   "at": 4.42,
+   "label": "digita o nome: Capacitor 40 µF"
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 7.96
+  },
+  {
+   "do": "hover",
+   "target": {
+    "placeholder": "Ex: FLT-001",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.8,
+   "at": 7.96,
+   "label": "o código EST-010, já preenchido",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Auto",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.6,
+   "at": 10.12,
+   "label": "o botão Auto",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Código sequencial sugerido automaticamente",
+    "within": "[role=dialog]"
+   },
+   "seconds": 2.0,
+   "at": 11.4,
+   "label": "a dica do código",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] div:has(> label:text-is(\"Grupo\")) button"
+   },
+   "at": 15.54,
+   "label": "abre o campo Grupo"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 16.2
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Elétrica"
+   },
+   "at": 16.92,
+   "label": "escolhe Elétrica"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] #inventory-supplier"
+   },
+   "at": 17.86,
+   "label": "abre o campo Fornecedor"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Polar Distribuidora de Peças Ltda"
+   },
+   "at": 21.4,
+   "label": "escolhe a Polar Distribuidora de Peças"
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 24.24
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] div:has(> label:text-is(\"Quantidade\")) input"
+   },
+   "text": "6",
+   "at": 24.3,
+   "label": "quantidade inicial: 6"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] div:has(> label:text-is(\"Unidade\")) button"
+   },
+   "seconds": 0.6,
+   "at": 25.92,
+   "label": "a unidade: Unidade (un)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] div:has(> label:text-is(\"Preço de Custo (R$)\")) input"
+   },
+   "text": "38,90",
+   "at": 28.88,
+   "label": "preço de custo: 38,90"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] div:has(> label:text-is(\"Preço de Venda (R$)\")) input"
+   },
+   "text": "70,00",
+   "at": 32.72,
+   "label": "preço de venda: 70,00"
+  },
+  {
+   "do": "scroll",
+   "target": {
+    "text": "Locais deste material",
+    "within": "[role=dialog]"
+   },
+   "at": 37.38,
+   "label": "desce até Locais deste material",
+   "duration": 0.8
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 38.32
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] label:text-is(\"Estoque Principal\")"
+   },
+   "seconds": 0.6,
+   "at": 39.74,
+   "label": "o Estoque Principal (já marcado)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[placeholder=\"Mín.\"]"
+   },
+   "text": "4",
+   "at": 41.4,
+   "label": "mínimo: 4"
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 52.16
+  },
+  {
+   "do": "scroll",
+   "target": {
+    "text": "Foto do item",
+    "within": "[role=dialog]"
+   },
+   "at": 52.46,
+   "label": "volta à foto do item",
+   "duration": 0.8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Código de barras",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.5,
+   "at": 52.78,
+   "label": "o código de barras",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Vendável na loja",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.2,
+   "at": 54.46,
+   "label": "a chave Vendável na loja",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 800,
+    "y": 768
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "at": 60.36,
+   "label": "Salvar (cursor)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] button",
+    "hasText": "Salvar"
+   },
+   "text": "",
+   "noClick": true,
+   "label": "Salvar",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll(\"[role=dialog] button\")].filter(b=>new RegExp(\"Salvar\",\"i\").test(b.textContent)).shift().click()",
+   "at": 61.26,
+   "label": "Salvar (clique)"
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 61.76
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const d=document,set=(v)=>{Object.defineProperty(d,\"visibilityState\",{configurable:true,get:()=>v});Object.defineProperty(d,\"hidden\",{configurable:true,get:()=>v===\"hidden\"});window.dispatchEvent(new Event(\"visibilitychange\"))};set(\"hidden\");set(\"visible\");delete d.visibilityState;delete d.hidden;return 1})()",
+   "at": 61.82,
+   "label": "atualiza as listas (o app refaz a consulta ao voltar o foco da janela)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text(\"Capacitor 40\")"
+   },
+   "seconds": 3.0,
+   "at": 62.22,
+   "label": "a linha Capacitor 40 µF na lista",
+   "timeout": 8,
+   "optional": true
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 70.24
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

@@ -1,0 +1,305 @@
+{
+ "name": "t1-cap01",
+ "title": "T1 · Cap. 1 · Onde fica e como salva (marcas L1..L4 = início de cada linha da fala; `at` pelos tempos da voz)",
+ "seed": "t1-cap01",
+ "pace": 0.8,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 520,
+  "y": 430
+ },
+ "seedExtra": [
+  "t1/inicio"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/configuracoes"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Camila!"
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(() => { const orig = window.fetch.bind(window); window.fetch = async (input, init) => { const url = String((input && input.url) || input); const method = String((init && init.method) || (input && input.method) || 'GET').toUpperCase(); if (method === 'PATCH' && url.includes('/rest/v1/company_settings')) await new Promise((r) => setTimeout(r, 2900)); return orig(input, init); }; return 'latencia do salvamento: 2900 ms'; })()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0.0
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 80,
+    "y": 770
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "label": "o cursor desce ao botão Configurações",
+   "at": 0.2
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[data-sidebar=sidebar] button[aria-label=\"Configurações\"]"
+   },
+   "text": "",
+   "noClick": true,
+   "label": "botão Configurações no rodapé do menu"
+  },
+  {
+   "do": "eval",
+   "js": "document.querySelector('[data-sidebar=sidebar] button[aria-label=\"Configurações\"]').click()",
+   "label": "clica em Configurações (clique no botão do rodapé)",
+   "at": 3.86
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie as configurações do sistema"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "heading",
+    "name": "Configurações"
+   },
+   "seconds": 1.0,
+   "label": "título e subtítulo da tela de Configurações",
+   "at": 4.46
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 7.0
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "tab",
+    "name": "Empresa",
+    "exact": true
+   },
+   "seconds": 0.15,
+   "label": "aba Empresa",
+   "at": 8.55
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "tab",
+    "name": "Regional",
+    "exact": true
+   },
+   "seconds": 0.15,
+   "label": "aba Regional",
+   "at": 9.27
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "tab",
+    "name": "Usuários e Permissões",
+    "exact": true
+   },
+   "seconds": 0.15,
+   "label": "aba Usuários e Permissões",
+   "at": 10.15
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "tab",
+    "name": "Usabilidade",
+    "exact": true
+   },
+   "seconds": 0.15,
+   "label": "aba Usabilidade",
+   "at": 11.91
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "tab",
+    "name": "Atalhos",
+    "exact": true
+   },
+   "seconds": 0.15,
+   "label": "aba Atalhos",
+   "at": 13.03
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "tab",
+    "name": "Aparência",
+    "exact": true
+   },
+   "seconds": 0.15,
+   "label": "aba Aparência",
+   "at": 13.99
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 1096,
+    "y": 196
+   },
+   "by": 140,
+   "axis": "x",
+   "duration": 0.35,
+   "after": 50,
+   "label": "a faixa de abas rola para mostrar Integrações",
+   "at": 14.59
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "tab",
+    "name": "Integrações",
+    "exact": true
+   },
+   "seconds": 0.3,
+   "label": "aba Integrações",
+   "at": 15.0
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 1185,
+    "y": 190
+   },
+   "by": -200,
+   "axis": "x",
+   "duration": 0.3,
+   "after": 50,
+   "label": "a faixa de abas volta ao início",
+   "at": 15.9
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "tab",
+    "name": "Usuários e Permissões",
+    "exact": true
+   },
+   "seconds": 4.6,
+   "label": "aba Usuários e Permissões (assunto da próxima aula)",
+   "at": 16.3
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 22.55
+  },
+  {
+   "do": "hover",
+   "target": {
+    "placeholder": "Nome da sua empresa"
+   },
+   "seconds": 0.6,
+   "label": "campo Nome da Empresa: é aqui que a gente vai preencher",
+   "at": 24.77
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Salvo",
+    "exact": true
+   },
+   "seconds": 1.8,
+   "label": "selo Salvo no canto do cabeçalho",
+   "at": 27.23
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 30.63
+  },
+  {
+   "do": "click",
+   "target": {
+    "placeholder": "Nome da sua empresa"
+   },
+   "label": "clica no campo Nome da Empresa",
+   "at": 30.69
+  },
+  {
+   "do": "press",
+   "key": "End"
+  },
+  {
+   "do": "eval",
+   "js": "(() => { const el = document.querySelector('input[placeholder=\"Nome da sua empresa\"]'); if (!el || !el.value.endsWith(' ')) throw new Error('o nome da empresa deveria terminar com um espaço (semente t1/inicio)'); return 'ok: o nome termina com um espaço'; })()",
+   "label": "confere que sobra um espaço no fim do nome (semente t1/inicio)"
+  },
+  {
+   "do": "press",
+   "key": "Backspace",
+   "label": "apaga o espaço que sobrava no fim do nome",
+   "at": 33.79
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "text": "Alterações não salvas",
+    "exact": true
+   },
+   "timeout": 6,
+   "label": "selo: Alterações não salvas"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "div.flex-col.mb-6 > div.flex-wrap.shrink-0 > span.text-xs"
+   },
+   "seconds": 0.3,
+   "label": "selo do cabeçalho: o estado muda"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "text": "Salvando…",
+    "exact": true
+   },
+   "timeout": 6,
+   "label": "selo: Salvando…"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "text": "Salvo",
+    "exact": true
+   },
+   "timeout": 8,
+   "label": "selo: Salvo"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Salvo",
+    "exact": true
+   },
+   "seconds": 1.2,
+   "label": "selo Salvo: tudo gravado"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 40.08
+  }
+ ]
+}

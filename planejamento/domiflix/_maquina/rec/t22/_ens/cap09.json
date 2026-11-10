@@ -1,0 +1,382 @@
+{
+ "name": "t22-cap09",
+ "title": "T22 · Cap. 9 · Raias e responsáveis (narração 33,6 s; marcas L1..L4 = início de cada linha do roteiro)",
+ "seed": "t22-cap09",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 0.4,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap05",
+  "t12/inicio",
+  "t12/apos-cap11",
+  "t13/inicio",
+  "t13/apos-cap14",
+  "t19/inicio",
+  "t19/apos-cap13",
+  "t20/inicio",
+  "t20/apos-cap12",
+  "t2/apos-cap10",
+  "t15/inicio",
+  "t15/apos-cap12",
+  "t22/inicio",
+  "t22/apos-cap08"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/funcionarios"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Camila!",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/funcionarios"
+  },
+  {
+   "do": "waitFor",
+   "text": "Funcionários (RH)",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Toggle Sidebar",
+    "nth": 0
+   }
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Fluxograma",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "pause",
+   "seconds": 0.6
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "button",
+    "hasText": "Atendimento de chamado do portal"
+   }
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "waitFor",
+   "text": "Salvo",
+   "timeout": 20
+  },
+  {
+   "do": "pause",
+   "seconds": 1.0
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Adicionar raia",
+    "exact": true
+   },
+   "label": "Adicionar raia (1)",
+   "noScroll": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": ".react-flow__node-lane button",
+    "nth": 0
+   },
+   "label": "nome da raia 1",
+   "noScroll": true
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "input[placeholder='Nome da raia (setor ou responsável)']"
+   },
+   "text": "Escritório",
+   "cps": 12,
+   "label": "raia: Escritório",
+   "noClick": true,
+   "noScroll": true
+  },
+  {
+   "do": "press",
+   "key": "Enter",
+   "label": "confirma a raia 1"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Adicionar raia",
+    "exact": true
+   },
+   "label": "Adicionar raia (2)",
+   "noScroll": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": ".react-flow__node-lane button",
+    "nth": 1
+   },
+   "label": "nome da raia 2",
+   "noScroll": true
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "input[placeholder='Nome da raia (setor ou responsável)']"
+   },
+   "text": "Campo",
+   "cps": 12,
+   "label": "raia: Campo",
+   "noClick": true,
+   "noScroll": true
+  },
+  {
+   "do": "press",
+   "key": "Enter",
+   "label": "confirma a raia 2"
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify([...document.querySelectorAll('.react-flow__node')].map(n=>{const r=n.getBoundingClientRect();return [n.textContent.slice(0,22),Math.round(r.x),Math.round(r.y),Math.round(r.width),Math.round(r.height)]}))",
+   "label": "diagnóstico: posições (raias e formas)"
+  },
+  {
+   "do": "drag",
+   "target": {
+    "selector": ".react-flow__node >> text=\"Triagem do chamado\""
+   },
+   "to": {
+    "selector": ".react-flow__node-lane",
+    "hasText": "Escritório"
+   },
+   "label": "arrasta Triagem do chamado para a raia Escritório",
+   "noScroll": true
+  },
+  {
+   "do": "drag",
+   "target": {
+    "selector": ".react-flow__node >> text=\"Agendar visita e técnico\""
+   },
+   "to": {
+    "selector": ".react-flow__node-lane",
+    "hasText": "Escritório"
+   },
+   "label": "arrasta Agendar visita e técnico para a raia Escritório",
+   "noScroll": true
+  },
+  {
+   "do": "drag",
+   "target": {
+    "selector": ".react-flow__node >> text=\"Orientar o cliente por telefone\""
+   },
+   "to": {
+    "selector": ".react-flow__node-lane",
+    "hasText": "Escritório"
+   },
+   "label": "arrasta Orientar o cliente por telefone para a raia Escritório",
+   "noScroll": true
+  },
+  {
+   "do": "drag",
+   "target": {
+    "selector": ".react-flow__node >> text=\"Executar a visita\""
+   },
+   "to": {
+    "selector": ".react-flow__node-lane",
+    "hasText": "Campo"
+   },
+   "label": "arrasta Executar a visita para a raia Campo",
+   "noScroll": true
+  },
+  {
+   "do": "drag",
+   "target": {
+    "selector": ".react-flow__node >> text=\"Relatório de Serviço\""
+   },
+   "to": {
+    "selector": ".react-flow__node-lane",
+    "hasText": "Campo"
+   },
+   "label": "arrasta Relatório de Serviço para a raia Campo",
+   "noScroll": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Organizar",
+    "exact": true
+   },
+   "label": "Organizar (arruma as faixas e as etapas dentro delas)",
+   "noScroll": true
+  },
+  {
+   "do": "pause",
+   "seconds": 1.0
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify([...document.querySelectorAll('.react-flow__node')].map(n=>[n.textContent.slice(0,18),n.className.includes('lane')]))",
+   "label": "diagnóstico: formas e raias"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": ".react-flow__node",
+    "hasText": "Triagem do chamado"
+   },
+   "label": "abre Editar etapa da triagem",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "text": "Editar etapa",
+   "timeout": 8
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "label:text-is('Como fazer') + textarea"
+   },
+   "label": "Como fazer da triagem (clique)",
+   "noScroll": true
+  },
+  {
+   "do": "press",
+   "key": "Control+A"
+  },
+  {
+   "do": "eval",
+   "js": "(() => { document.execCommand('insertText', false, \"Ler o chamado, conferir o equipamento e decidir se precisa de visita.\"); const e = document.activeElement; return e && e.value; })()",
+   "label": "Como fazer da triagem"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "button[role=combobox]",
+    "hasText": "Cargo ou setor"
+   },
+   "label": "seletor Responsável",
+   "noScroll": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Tatiane Ribeiro"
+   },
+   "label": "escolhe Tatiane Ribeiro",
+   "noScroll": true
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{await new Promise(r=>setTimeout(r,1800));const el=document.querySelector(\"body\");const t=(el?el.innerText:'').replace(/[\\s\\u00a0]+/g,' ').toLowerCase();return t.includes(\"dura\\u00e7\\u00e3o\")?'DIFERENTE: apareceu '+\"Dura\\u00e7\\u00e3o\":'OK: ausente '+\"Dura\\u00e7\\u00e3o\"})()",
+   "label": "confere não existe o campo Duração em uma Tarefa"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Fechar",
+    "exact": true
+   },
+   "label": "fecha o painel",
+   "optional": true,
+   "noScroll": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Organizar",
+    "exact": true
+   },
+   "label": "Organizar (refaz o arranjo da esquerda para a direita)",
+   "noScroll": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Formatar",
+    "exact": true
+   },
+   "label": "Formatar",
+   "noScroll": true
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Salvo"
+   },
+   "seconds": 1.2,
+   "label": "selo Salvo",
+   "optional": true,
+   "timeout": 3,
+   "noScroll": true
+  },
+  {
+   "do": "pause",
+   "seconds": 1.6
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z",
+  "disc-overview-view-mode": "grid"
+ }
+}

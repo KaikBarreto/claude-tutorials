@@ -1,0 +1,198 @@
+{
+ "name": "t5-cap09",
+ "title": "T5 · Cap. 9 · Concluir e faturar (narração 30,9 s; marcas L1..L2 = início de cada linha do roteiro)",
+ "seed": "t5-cap09",
+ "pace": 0.3,
+ "cps": 14,
+ "tail": 1.5,
+ "start": {
+  "x": 900,
+  "y": 480
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap07"
+ ],
+ "prewarm": [
+  "/ordens-servico"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/ordens-servico"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie suas ordens de serviço",
+   "timeout": 20
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "scroll",
+   "at": 0.0,
+   "label": "desce até o Kanban",
+   "by": 330,
+   "point": {
+    "x": 760,
+    "y": 120
+   }
+  },
+  {
+   "do": "scroll",
+   "at": 1.3,
+   "label": "mostra Em Andamento e Concluída",
+   "by": 800,
+   "axis": "x",
+   "point": {
+    "x": 640,
+    "y": 520
+   }
+  },
+  {
+   "do": "drag",
+   "target": {
+    "text": "MC-2026-11",
+    "exact": true,
+    "within": "main"
+   },
+   "to": {
+    "selector": "main h3",
+    "hasText": "Concluída"
+   },
+   "at": 2.76,
+   "label": "arrasta MC-2026-11 de Em Andamento para Concluída"
+  },
+  {
+   "do": "waitFor",
+   "text": "Receita da Ordem de Serviço",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Houve alguma receita nesta Ordem de Serviço?",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.0,
+   "at": 6.52,
+   "label": "a pergunta sobre a receita"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Receita da Ordem de Serviço",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.6,
+   "at": 10.36,
+   "label": "o título da janela"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Se entrou (ou vai entrar)",
+    "exact": false,
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.2,
+   "at": 14.92,
+   "label": "lance agora e o valor fica vinculado"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Valor da OS",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.0,
+   "at": 17.22,
+   "label": "Valor da OS sugerido"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Não",
+    "exact": true
+   },
+   "at": 19.94,
+   "label": "Não"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button:has(svg.lucide-layout-list)"
+   },
+   "at": 21.09,
+   "label": "alterna para Lista"
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 21.99
+  },
+  {
+   "do": "eval",
+   "js": "document.querySelector(\"main\").scrollTo({top: 99999, behavior: \"smooth\"})",
+   "at": 22.19,
+   "label": "rola a lista até o fim (suave)"
+  },
+  {
+   "do": "pause",
+   "seconds": 0.7
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text(\"MC-2026-11\") td:last-child button"
+   },
+   "seconds": 0.4,
+   "label": "menu Ações da OS concluída"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main tbody tr:has-text(\"MC-2026-11\") td:last-child button"
+   },
+   "label": "abre o menu se ainda não abriu",
+   "unless": {
+    "role": "menuitem",
+    "name": "Faturar OS"
+   }
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "menuitem",
+    "name": "Faturar OS"
+   },
+   "seconds": 4.0,
+   "label": "Faturar OS"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 30.88
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

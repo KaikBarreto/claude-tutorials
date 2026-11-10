@@ -1,0 +1,366 @@
+{
+ "name": "t10-cap03",
+ "title": "T10 · Cap. 3 · A primeira oportunidade (narração 66,0 s; marcas L1..L6 = início de cada linha do roteiro)",
+ "seed": "t10-cap03",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t2/apos-cap10",
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t9/inicio",
+  "t9/apos-cap16",
+  "t10/inicio",
+  "t10/apos-cap02"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/crm"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Camila!",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/crm"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie oportunidades e processos",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Toggle Sidebar",
+    "nth": 0
+   }
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|erro|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Nova oportunidade",
+    "exact": true
+   },
+   "at": 2.5,
+   "label": "Nova oportunidade"
+  },
+  {
+   "do": "waitFor",
+   "text": "Título da Oportunidade *",
+   "timeout": 15
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 4.74
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] #title"
+   },
+   "text": "Instalação de 6 splits - Colégio Monte Verde",
+   "cps": 55,
+   "at": 6.34,
+   "label": "título da oportunidade"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] #customer_id"
+   },
+   "at": 11.62,
+   "label": "campo Cliente"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[cmdk-input]"
+   },
+   "text": "Colégio",
+   "label": "busca \"Colégio\""
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Colégio Monte Verde"
+   },
+   "label": "Colégio Monte Verde"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] button[aria-label='Criar cliente']"
+   },
+   "seconds": 1.0,
+   "at": 16.44,
+   "label": "o \"+\" do seletor (cadastrar na hora; sem clicar)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 18.02
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]",
+    "hasText": "Selecione..."
+   },
+   "at": 19.54,
+   "label": "campo Vendedor Responsável"
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Camila Duarte",
+    "within": "[data-radix-popper-content-wrapper]"
+   },
+   "label": "marca Camila Duarte"
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "label": "fecha a lista de vendedores"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "O primeiro selecionado vira o responsável principal",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.4,
+   "at": 22.99,
+   "label": "dica do Principal",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 27.23
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] #source"
+   },
+   "at": 27.39,
+   "label": "campo Origem"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Indicação"
+   },
+   "at": 30.91,
+   "label": "origem Indicação"
+  },
+  {
+   "do": "select",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]",
+    "hasText": "Lead"
+   },
+   "option": "Visita técnica",
+   "at": 31.95,
+   "label": "estágio Visita técnica"
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 36.99
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] #value"
+   },
+   "at": 37.15,
+   "label": "Valor Estimado 18600 (clique)"
+  },
+  {
+   "do": "press",
+   "key": "Control+A"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] #value"
+   },
+   "text": "18600",
+   "label": "Valor Estimado 18600",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] #probability"
+   },
+   "at": 43.15,
+   "label": "Probabilidade 60 (clique)"
+  },
+  {
+   "do": "press",
+   "key": "Control+A"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] #probability"
+   },
+   "text": "60",
+   "label": "Probabilidade 60",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] #expected_close_date"
+   },
+   "at": 45.09,
+   "label": "campo Previsão Fechamento"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] button[name=next-month]"
+   },
+   "label": "mês seguinte",
+   "noScroll": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] button[name=day]",
+    "hasText": "15"
+   },
+   "label": "dia 15",
+   "noScroll": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] #notes"
+   },
+   "at": 48.03,
+   "label": "campo Observações"
+  },
+  {
+   "do": "eval",
+   "js": "(() => { document.execCommand('insertText', false, \"Instala\\u00e7\\u00e3o dos aparelhos nas salas de aula do Bloco B.\"); const e = document.activeElement; return e && e.value; })()",
+   "label": "observações"
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 51.17
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Salvar",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 51.17,
+   "label": "Salvar"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 10
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Instalação de 6 splits - Colégio Monte Verde\", \"Colégio Monte Verde\", \"R$ 18.600,00\", \"Probabilidade\", \"60%\", \"Indicação\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere card do colégio na Visita técnica"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main [draggable=true]",
+    "hasText": "Instalação de 6 splits"
+   },
+   "seconds": 1.2,
+   "at": 55.25,
+   "label": "o card no funil",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Valor Total",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 1.2,
+   "at": 62.13,
+   "label": "indicadores contam a primeira oportunidade",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 66.0
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

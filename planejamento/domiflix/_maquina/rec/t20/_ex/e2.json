@@ -1,0 +1,78 @@
+{
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap05",
+  "t12/inicio",
+  "t12/apos-cap11",
+  "t13/inicio",
+  "t13/apos-cap14",
+  "t19/inicio",
+  "t20/_prov-t19",
+  "t20/inicio"
+ ],
+ "start": "/dashboard",
+ "steps": [
+  {
+   "do": "goto",
+   "url": "/financeiro/relatorios"
+  },
+  {
+   "do": "waitFor",
+   "text": "Visão geral dos relatórios",
+   "timeout": 25
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Toggle Sidebar",
+    "nth": 0
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 600
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Este mês",
+    "exact": true
+   }
+  },
+  {
+   "do": "list",
+   "selector": "[data-radix-popper-content-wrapper] button"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Personalizado"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 800
+  },
+  {
+   "do": "shot",
+   "name": "10-cal"
+  },
+  {
+   "do": "list",
+   "selector": "[data-radix-popper-content-wrapper] button",
+   "max": 4000
+  },
+  {
+   "do": "html",
+   "selector": "[data-radix-popper-content-wrapper] table",
+   "max": 1800
+  }
+ ]
+}

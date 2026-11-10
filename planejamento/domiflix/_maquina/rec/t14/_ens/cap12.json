@@ -1,0 +1,373 @@
+{
+ "name": "t14-cap12",
+ "title": "T14 · Cap. 12 · Ciência e conta a pagar (narração 41,4 s; marcas L1..L5 = início de cada linha do roteiro; FAKE_NOW 2026-11-13T16:20:00-03:00)",
+ "seed": "t14-cap12",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 0.4,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap05",
+  "t12/inicio",
+  "t12/apos-cap11",
+  "t13/inicio",
+  "t13/apos-cap14",
+  "t19/inicio",
+  "t19/apos-cap13",
+  "t20/inicio",
+  "t20/apos-cap12",
+  "t2/apos-cap10",
+  "t15/inicio",
+  "t15/apos-cap12",
+  "t22/inicio",
+  "t22/apos-cap11",
+  "t21/inicio",
+  "t21/apos-cap10",
+  "t14/inicio",
+  "t14/apos-cap11"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/notas-fiscais",
+  "/financeiro/movimentacoes"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Camila!",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/notas-fiscais"
+  },
+  {
+   "do": "waitFor",
+   "text": "Emita e acompanhe suas NFS-e.",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Notas recebidas",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Cobre Sul Suprimentos Ltda",
+   "timeout": 15
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&!/fica indispon/i.test(m[0])&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "click",
+   "target": {
+    "selector": "main div:has(> div p:has-text('Cobre Sul Suprimentos Ltda')) > button[aria-haspopup=menu]"
+   },
+   "label": "menu ⋮ da nota"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Manifestar"
+   },
+   "label": "Manifestar"
+  },
+  {
+   "do": "waitFor",
+   "text": "Manifestar sobre a nota",
+   "timeout": 8
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Manifestar sobre a nota\", \"Dar ciência da operação\", \"Confirmar a operação\", \"Desconheço esta operação\", \"Operação não realizada\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere as quatro respostas"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "O que você quer manifestar?",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.0,
+   "label": "O que você quer manifestar?",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Dar ciência da operação",
+    "within": "[role=dialog]",
+    "exact": true
+   },
+   "label": "Dar ciência da operação"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Avisa a Receita que você está ciente da nota.",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.4,
+   "label": "Avisa a Receita que você está ciente",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Enviar manifestação",
+    "exact": true
+   },
+   "label": "Enviar manifestação"
+  },
+  {
+   "do": "waitFor",
+   "text": "Manifestação enviada.",
+   "timeout": 10
+  },
+  {
+   "do": "waitFor",
+   "text": "Ciência em processamento",
+   "timeout": 10
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Ciência em processamento\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere ciência em processamento"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const r=await fetch(\"http://127.0.0.1:54321/__dev/seed\",{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({files:[\"t14/corte-cap12\"]})});return r.status})()",
+   "label": "corte: o worker registra a ciência na Receita (semente t14/corte-cap12)"
+  },
+  {
+   "do": "clock",
+   "forward": "00:04:00",
+   "label": "corte: relógio do navegador 4 min à frente"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Sincronizar"
+   },
+   "label": "Sincronizar (depois do corte)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Nenhuma nota nova foi encontrada.",
+   "timeout": 12
+  },
+  {
+   "do": "waitFor",
+   "text": "Ciência dada",
+   "timeout": 10
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Ciência dada\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere ciência dada"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{await new Promise(r=>setTimeout(r,1800));const el=document.querySelector(\"main\");const t=(el?el.innerText:'').replace(/[\\s\\u00a0]+/g,' ').toLowerCase();return t.includes(\"resumo\")?'DIFERENTE: apareceu '+\"Resumo\":'OK: ausente '+\"Resumo\"})()",
+   "label": "confere a nota completa (sem o selo Resumo)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main div:has(> div p:has-text('Cobre Sul Suprimentos Ltda')) > button[aria-haspopup=menu]"
+   },
+   "label": "menu ⋮ da nota"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Lançar conta a pagar"
+   },
+   "label": "Lançar conta a pagar"
+  },
+  {
+   "do": "waitFor",
+   "text": "Antes de lançar",
+   "timeout": 8
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"A nota traz um vencimento combinado com o fornecedor\", \"24/11/2026\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere vencimento combinado: 24/11/2026"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "24/11/2026",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.4,
+   "label": "1 conta vencendo em 24/11/2026",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Continuar",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "label": "Continuar"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const esp=[\"Compra · Cobre Sul Suprimentos Ltda\"];let out='';for(let i=0;i<12;i++){const v=[...document.querySelectorAll(\"[role=dialog]\"+' input, '+\"[role=dialog]\"+' textarea')].map(e=>e.value).join(' | ');const falta=esp.filter(e=>!v.includes(e));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+v.slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere descrição já preenchida"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Cobre Sul Suprimentos Ltda\", \"24/11/2026\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere fornecedor vinculado e vencimento"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Fornecedor vinculado",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.0,
+   "label": "Fornecedor vinculado (achado pelo CNPJ)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "select",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]",
+    "hasText": "Selecione uma categoria"
+   },
+   "option": "CSP - Materiais",
+   "label": "Categoria: CSP - Materiais"
+  },
+  {
+   "do": "select",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]",
+    "hasText": "Selecione uma conta"
+   },
+   "option": "Conta Principal",
+   "label": "Conta: Conta Principal"
+  },
+  {
+   "do": "select",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]",
+    "hasText": "Selecione a forma de pagamento"
+   },
+   "option": "Boleto",
+   "label": "Forma de pagamento: Boleto"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Salvar",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "label": "Salvar"
+  },
+  {
+   "do": "waitFor",
+   "text": "Despesa lançada e vinculada à nota.",
+   "timeout": 12
+  },
+  {
+   "do": "waitFor",
+   "text": "Lançada",
+   "timeout": 8
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Lançada\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere nota marcada como Lançada"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Lançada",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 1.2,
+   "label": "selo Lançada",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main div:has(> div p:has-text('Cobre Sul Suprimentos Ltda')) > button[aria-haspopup=menu]"
+   },
+   "label": "menu ⋮ da nota"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "menuitem",
+    "name": "Ver lançamento"
+   },
+   "seconds": 1.6,
+   "label": "Ver lançamento (sem clicar)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "label": "fecha o menu"
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

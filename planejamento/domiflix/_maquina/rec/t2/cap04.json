@@ -1,0 +1,439 @@
+{
+ "name": "t2-cap04",
+ "title": "T2 · Cap. 4 · O cargo do escritório (narração 68,5 s; marcas L1..L5 = início de cada linha do roteiro)",
+ "seed": "t2-cap04",
+ "pace": 0.3,
+ "cps": 40,
+ "tail": 1.5,
+ "start": {
+  "x": 900,
+  "y": 420
+ },
+ "seedExtra": [
+  "t1/apos-cap13",
+  "t2/inicio",
+  "t2/apos-cap03"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/configuracoes"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "goto",
+   "url": "/configuracoes?tab=usuarios"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "main p",
+    "hasText": "usuários •"
+   },
+   "timeout": 15
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Configurações",
+    "exact": true,
+    "within": "main"
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Configurações de Cargos",
+   "timeout": 10
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Novo Cargo",
+    "exact": true
+   },
+   "at": 0.4,
+   "label": "Novo Cargo"
+  },
+  {
+   "do": "click",
+   "target": {
+    "placeholder": "Ex: Técnico de Campo"
+   },
+   "at": 1.8,
+   "label": "clica no campo Nome"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Ex: Técnico de Campo"
+   },
+   "text": "Escritório",
+   "cps": 40,
+   "at": 3.35,
+   "label": "nome do cargo: Escritório",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "placeholder": "Descrição opcional"
+   },
+   "at": 4.06,
+   "label": "clica no campo Descrição"
+  },
+  {
+   "do": "eval",
+   "js": "(() => { document.execCommand('insertText', false, \"Atendimento, OS, or\\u00e7amentos e financeiro do dia a dia\"); const e = document.activeElement; return e && e.value; })()",
+   "label": "descrição do cargo"
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 6.68
+  },
+  {
+   "do": "click",
+   "target": {
+    "placeholder": "Buscar tela ou ação..."
+   },
+   "at": 8.2,
+   "label": "clica na busca"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Buscar tela ou ação..."
+   },
+   "text": "orcamento",
+   "cps": 14,
+   "at": 12.07,
+   "label": "digita orcamento (sem acento)",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "switch",
+    "name": "Acesso à tela Orçamentos",
+    "exact": true
+   },
+   "at": 15.88,
+   "label": "liga a tela Orçamentos"
+  },
+  {
+   "do": "click",
+   "target": {
+    "placeholder": "Buscar tela ou ação..."
+   },
+   "at": 17.18,
+   "label": "clica na busca"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 17.88
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Buscar tela ou ação..."
+   },
+   "text": "financeiro",
+   "cps": 14,
+   "at": 18.23,
+   "label": "digita financeiro",
+   "clear": true,
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "switch",
+    "name": "Acesso à tela Financeiro",
+    "exact": true
+   },
+   "at": 22.52,
+   "label": "liga a tela Financeiro"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "switch",
+    "name": "Gerenciar Financeiro",
+    "exact": true
+   },
+   "at": 23.8,
+   "label": "liga Gerenciar Financeiro"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "switch",
+    "name": "Excluir Lançamento Financeiro",
+    "exact": true
+   },
+   "seconds": 3.2,
+   "at": 28.38,
+   "label": "Excluir Lançamento Financeiro fica desligado"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Limpar busca",
+    "exact": true
+   },
+   "at": 35.48,
+   "label": "Limpar busca"
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 36.28
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "switch",
+    "name": "Acesso à tela Dashboard",
+    "exact": true
+   },
+   "at": 39.16,
+   "label": "liga Dashboard"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "switch",
+    "name": "Acesso à tela Agenda",
+    "exact": true
+   },
+   "at": 40.36,
+   "label": "liga Agenda"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Ver ações de Agenda",
+    "exact": true
+   },
+   "at": 41.14,
+   "label": "abre a seta da Agenda"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "switch",
+    "name": "Ver Toda a Agenda",
+    "exact": true
+   },
+   "at": 41.64,
+   "label": "liga Ver Toda a Agenda"
+  },
+  {
+   "do": "eval",
+   "js": "(() => { const e = [...document.querySelectorAll('[role=dialog] [aria-label]')].find((x) => x.getAttribute('aria-label') === \"Acesso \\u00e0 tela Ordens de Servi\\u00e7o\"); if (!e) return 'alvo nao achado: ' + \"Acesso \\u00e0 tela Ordens de Servi\\u00e7o\"; e.scrollIntoView({ block: \"center\", behavior: 'smooth' }); return 'rolando ate ' + \"Acesso \\u00e0 tela Ordens de Servi\\u00e7o\"; })()",
+   "at": 42.92,
+   "label": "rola até Ordens de Serviço"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "switch",
+    "name": "Acesso à tela Ordens de Serviço",
+    "exact": true
+   },
+   "at": 43.32,
+   "label": "liga Ordens de Serviço"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Ver ações de Ordens de Serviço",
+    "exact": true
+   },
+   "at": 44.36,
+   "label": "abre a seta de Ordens de Serviço"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "switch",
+    "name": "Criar OS",
+    "exact": true
+   },
+   "at": 44.76,
+   "label": "liga Criar OS"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "switch",
+    "name": "Editar OS",
+    "exact": true
+   },
+   "at": 45.4,
+   "label": "liga Editar OS"
+  },
+  {
+   "do": "eval",
+   "js": "(() => { const e = [...document.querySelectorAll('[role=dialog] [aria-label]')].find((x) => x.getAttribute('aria-label') === \"Acesso \\u00e0 tela Clientes e Fornecedores\"); if (!e) return 'alvo nao achado: ' + \"Acesso \\u00e0 tela Clientes e Fornecedores\"; e.scrollIntoView({ block: \"center\", behavior: 'auto' }); return 'rolando ate ' + \"Acesso \\u00e0 tela Clientes e Fornecedores\"; })()",
+   "at": 45.99,
+   "label": "rola até Clientes e Fornecedores"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "switch",
+    "name": "Acesso à tela Clientes e Fornecedores",
+    "exact": true
+   },
+   "at": 46.39,
+   "label": "liga Clientes e Fornecedores"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Ver ações de Clientes e Fornecedores",
+    "exact": true
+   },
+   "at": 47.51,
+   "label": "abre a seta de Clientes e Fornecedores"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "switch",
+    "name": "Criar Cliente",
+    "exact": true
+   },
+   "at": 48.23,
+   "label": "liga Criar Cliente"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "switch",
+    "name": "Editar Cliente",
+    "exact": true
+   },
+   "at": 48.87,
+   "label": "liga Editar Cliente"
+  },
+  {
+   "do": "eval",
+   "js": "(() => { const e = [...document.querySelectorAll('[role=dialog] [aria-label]')].find((x) => x.getAttribute('aria-label') === \"Acesso \\u00e0 tela Equipamentos\"); if (!e) return 'alvo nao achado: ' + \"Acesso \\u00e0 tela Equipamentos\"; e.scrollIntoView({ block: \"center\", behavior: 'auto' }); return 'rolando ate ' + \"Acesso \\u00e0 tela Equipamentos\"; })()",
+   "at": 49.31,
+   "label": "rola até Equipamentos"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "switch",
+    "name": "Acesso à tela Equipamentos",
+    "exact": true
+   },
+   "at": 49.91,
+   "label": "liga Equipamentos"
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 880,
+    "y": 742
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "at": 50.93,
+   "label": "Criar Cargo (cursor)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] button",
+    "hasText": "Criar Cargo"
+   },
+   "text": "",
+   "noClick": true,
+   "label": "Criar Cargo"
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 51.83
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll(\"[role=dialog] button\")].filter(b=>/Criar Cargo/i.test(b.textContent)).shift().click()",
+   "at": 51.83,
+   "label": "Criar Cargo (clique)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Cargo criado com sucesso!",
+   "timeout": 8,
+   "optional": true
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "13 permissões",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.8,
+   "at": 52.65,
+   "label": "etiqueta: 13 permissões (Escritório)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "3 permissões",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.8,
+   "at": 54.41,
+   "label": "etiqueta: 3 permissões (Técnico de Campo)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] button:has(svg.lucide-pencil)",
+    "nth": 0
+   },
+   "seconds": 1.0,
+   "at": 56.89,
+   "label": "o lápis edita um cargo (não clica na lixeira)"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 68.48
+  }
+ ]
+}

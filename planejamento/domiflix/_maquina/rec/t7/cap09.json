@@ -1,0 +1,242 @@
+{
+ "name": "t7-cap09",
+ "title": "T7 · Cap. 9 · A assinatura do cliente (narração 35,7 s; marcas L1..L3 = início de cada linha do roteiro)",
+ "seed": "t7-cap09",
+ "pace": 0.4,
+ "cps": 9,
+ "tail": 1.5,
+ "device": "phone",
+ "start": {
+  "x": 195,
+  "y": 600
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap15",
+  "t7/inicio",
+  "t7/vazias-1.38.21",
+  "t7/apos-cap08"
+ ],
+ "prewarm": [
+  "/agenda"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/agenda"
+  },
+  {
+   "do": "waitFor",
+   "text": "Colégio Monte Verde",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(() => {\n  // GPS do aparelho emulado (T7). O Chromium headless trava `getCurrentPosition({maximumAge: 0})` quando já existe um\n  // `watchPosition` ativo — e o app do técnico faz exatamente isso (rastreia a cada 30 s e pede a posição no check-in).\n  // Este stub devolve a posição atual na hora, para as duas chamadas, e `__setGeo` \"anda\" com o aparelho e avisa quem observa.\n  if (window.__geoStub) return 'ja-instalado';\n  const st = { lat: -22.9035, lng: -43.1038, acc: 12 };\n  const pos = () => ({\n    coords: { latitude: st.lat, longitude: st.lng, accuracy: st.acc, altitude: null, altitudeAccuracy: null, heading: null, speed: null },\n    timestamp: Date.now(),\n  });\n  const watchers = new Map();\n  let seq = 0;\n  const g = navigator.geolocation;\n  g.getCurrentPosition = (ok) => { setTimeout(() => ok(pos()), 60); };\n  g.watchPosition = (ok) => { const id = ++seq; watchers.set(id, ok); setTimeout(() => { if (watchers.has(id)) ok(pos()); }, 90); return id; };\n  g.clearWatch = (id) => { watchers.delete(id); };\n  window.__setGeo = (lat, lng, acc) => { st.lat = lat; st.lng = lng; if (acc) st.acc = acc; watchers.forEach((cb) => cb(pos())); return [st.lat, st.lng]; };\n  window.__geoStub = true;\n  return 'instalado';\n})()\n"
+  },
+  {
+   "do": "eval",
+   "js": "window.__setGeo(-22.89758,-43.09913)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Colégio Monte Verde",
+    "within": "main"
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Resumo da OS",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Preencher OS",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Glacial Cold Brasil",
+   "timeout": 20
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Hi-Wall 18.000 BTUs",
+    "within": "main"
+   }
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const el=(document.querySelectorAll(\"main canvas\")[0]);if(!el)return 'SEM ALVO';const r=el.getBoundingClientRect();const cy=r.top+r.height/2;const y0=window.scrollY,dy=Math.round(cy-(520));if(Math.abs(dy)<3)return 'ok';const dur=Math.min(1000,Math.max(450,Math.abs(dy)*1.15)),t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/dur),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;window.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()"
+  },
+  {
+   "do": "pause",
+   "seconds": 0.5
+  },
+  {
+   "do": "clock",
+   "set": "2026-11-11T10:20:00-03:00"
+  },
+  {
+   "do": "pause",
+   "seconds": 0.5
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Assinatura do cliente",
+    "exact": false
+   },
+   "seconds": 1.4,
+   "at": 1.16,
+   "label": "a pergunta Assinatura do cliente",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main span.text-destructive",
+    "nth": "last"
+   },
+   "seconds": 1.4,
+   "at": 9.76,
+   "label": "o asterisco: obrigatória",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 15.0
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "main canvas"
+   },
+   "text": "",
+   "at": 18.18,
+   "label": "o campo da assinatura",
+   "noClick": true
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const cv=document.querySelector('main canvas');if(!cv)return 'SEM ALVO';const r=cv.getBoundingClientRect();const T=[[[0.1, 0.5], [0.114, 0.551], [0.128, 0.596], [0.142, 0.632], [0.156, 0.655], [0.17, 0.663], [0.184, 0.656], [0.198, 0.634], [0.211, 0.599], [0.225, 0.554], [0.239, 0.501], [0.253, 0.446], [0.267, 0.391], [0.281, 0.341], [0.295, 0.299], [0.309, 0.268], [0.323, 0.251], [0.337, 0.247], [0.351, 0.256], [0.365, 0.278], [0.379, 0.31], [0.392, 0.349], [0.406, 0.393], [0.42, 0.436], [0.434, 0.477], [0.448, 0.512], [0.462, 0.539], [0.476, 0.556], [0.49, 0.562], [0.504, 0.557], [0.518, 0.542], [0.532, 0.52], [0.546, 0.492], [0.56, 0.461], [0.574, 0.43], [0.588, 0.402], [0.601, 0.379], [0.615, 0.364], [0.629, 0.357], [0.643, 0.359], [0.657, 0.37], [0.671, 0.39], [0.685, 0.417], [0.699, 0.449], [0.713, 0.483], [0.727, 0.518], [0.741, 0.551], [0.755, 0.581], [0.769, 0.604], [0.782, 0.621], [0.796, 0.631], [0.81, 0.634], [0.824, 0.63], [0.838, 0.62], [0.852, 0.606], [0.866, 0.59], [0.88, 0.573]], [[0.16, 0.82], [0.189, 0.811], [0.218, 0.802], [0.247, 0.793], [0.277, 0.785], [0.306, 0.777], [0.335, 0.771], [0.364, 0.764], [0.393, 0.759], [0.422, 0.755], [0.452, 0.752], [0.481, 0.751], [0.51, 0.75], [0.539, 0.751], [0.568, 0.752], [0.598, 0.755], [0.627, 0.759], [0.656, 0.764], [0.685, 0.771], [0.714, 0.777], [0.743, 0.785], [0.772, 0.793], [0.802, 0.802], [0.831, 0.811], [0.86, 0.82]]],D=[1500, 800];const ev=(t,x,y,b)=>cv.dispatchEvent(new MouseEvent(t,{bubbles:true,cancelable:true,view:window,clientX:x,clientY:y,screenX:x,screenY:y,button:0,buttons:b,detail:1}));const pt=p=>[r.left+p[0]*r.width,r.top+p[1]*r.height];for(let k=0;k<T.length;k++){const P=T[k],dur=D[k]||1000;let [x,y]=pt(P[0]);ev('mousedown',x,y,1);await new Promise(res=>{const t0=performance.now();let i=1;const f=t=>{const p=Math.min(1,(t-t0)/dur),upto=Math.round(p*(P.length-1));while(i<=upto){[x,y]=pt(P[i]);ev('mousemove',x,y,1);i++}p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});ev('mouseup',x,y,0);await new Promise(rs=>setTimeout(rs,160))}return T.length})()",
+   "at": 18.28,
+   "label": "o cliente assina com o dedo"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Limpar",
+    "exact": true
+   },
+   "seconds": 0.6,
+   "at": 20.28,
+   "label": "o botão Limpar",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Confirmar",
+    "exact": true
+   },
+   "seconds": 0.9,
+   "at": 22.2,
+   "label": "o botão Confirmar",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Tela cheia",
+    "exact": false
+   },
+   "seconds": 1.6,
+   "at": 23.56,
+   "label": "o botão Tela cheia",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 28.2
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Confirmar",
+    "exact": true
+   },
+   "at": 28.2,
+   "label": "Confirmar a assinatura"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Concluído",
+    "exact": false
+   },
+   "seconds": 1.4,
+   "at": 30.92,
+   "label": "o checklist do equipamento: Concluído",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button[title='Editar resposta']",
+    "nth": "last"
+   },
+   "at": 34.18,
+   "label": "lápis: rever a assinatura"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 35.68
+  }
+ ],
+ "user": "rafael.lima@glacialcold.example"
+}

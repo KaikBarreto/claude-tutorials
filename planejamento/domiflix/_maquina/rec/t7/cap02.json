@@ -1,0 +1,337 @@
+{
+ "name": "t7-cap02",
+ "title": "T7 · Cap. 2 · A Caminho e a rota (narração 56,5 s; marcas L1..L6 = início de cada linha do roteiro)",
+ "seed": "t7-cap02",
+ "pace": 0.4,
+ "cps": 9,
+ "tail": 1.5,
+ "device": "phone",
+ "start": {
+  "x": 195,
+  "y": 600
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap15",
+  "t7/inicio",
+  "t7/vazias-1.38.21"
+ ],
+ "prewarm": [
+  "/agenda"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/agenda"
+  },
+  {
+   "do": "waitFor",
+   "text": "Colégio Monte Verde",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(() => {\n  // GPS do aparelho emulado (T7). O Chromium headless trava `getCurrentPosition({maximumAge: 0})` quando já existe um\n  // `watchPosition` ativo — e o app do técnico faz exatamente isso (rastreia a cada 30 s e pede a posição no check-in).\n  // Este stub devolve a posição atual na hora, para as duas chamadas, e `__setGeo` \"anda\" com o aparelho e avisa quem observa.\n  if (window.__geoStub) return 'ja-instalado';\n  const st = { lat: -22.9035, lng: -43.1038, acc: 12 };\n  const pos = () => ({\n    coords: { latitude: st.lat, longitude: st.lng, accuracy: st.acc, altitude: null, altitudeAccuracy: null, heading: null, speed: null },\n    timestamp: Date.now(),\n  });\n  const watchers = new Map();\n  let seq = 0;\n  const g = navigator.geolocation;\n  g.getCurrentPosition = (ok) => { setTimeout(() => ok(pos()), 60); };\n  g.watchPosition = (ok) => { const id = ++seq; watchers.set(id, ok); setTimeout(() => { if (watchers.has(id)) ok(pos()); }, 90); return id; };\n  g.clearWatch = (id) => { watchers.delete(id); };\n  window.__setGeo = (lat, lng, acc) => { st.lat = lat; st.lng = lng; if (acc) st.acc = acc; watchers.forEach((cb) => cb(pos())); return [st.lat, st.lng]; };\n  window.__geoStub = true;\n  return 'instalado';\n})()\n"
+  },
+  {
+   "do": "eval",
+   "js": "window.__setGeo(-22.9003,-43.118)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Colégio Monte Verde",
+    "within": "main"
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Resumo da OS",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Preencher OS",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Glacial Cold Brasil",
+   "timeout": 20
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "clock",
+   "set": "2026-11-11T08:50:00-03:00"
+  },
+  {
+   "do": "pause",
+   "seconds": 0.5
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Ir para o Atendimento",
+    "exact": false
+   },
+   "seconds": 0.8,
+   "at": 1.4,
+   "label": "o cartão Ir para o Atendimento",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "A Caminho",
+    "exact": true
+   },
+   "at": 4.04,
+   "label": "A Caminho"
+  },
+  {
+   "do": "waitFor",
+   "text": "Rota até o cliente",
+   "timeout": 15
+  },
+  {
+   "do": "eval",
+   "js": "new Promise(res=>{const t0=performance.now();let ok=0,ult=t0;const f=n=>{ok=(n-ult)<40?ok+1:0;ult=n;if(ok>=14||n-t0>11000)res(Math.round(n-t0));else requestAnimationFrame(f)};requestAnimationFrame(f)})",
+   "label": "espera o mapa terminar de desenhar"
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 14.2
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 323,
+    "y": 26
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "at": 15.14
+  },
+  {
+   "do": "type",
+   "target": {
+    "text": "A Caminho",
+    "exact": true
+   },
+   "text": "",
+   "noClick": true,
+   "label": "cabeçalho: o selo A Caminho",
+   "at": 16.04,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Iniciar Atendimento",
+    "exact": false
+   },
+   "seconds": 1.2,
+   "at": 17.54,
+   "label": "o cartão Iniciar Atendimento",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": ".leaflet-container"
+   },
+   "seconds": 2.2,
+   "at": 21.66,
+   "label": "a posição do técnico",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 25.76
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Rota até o cliente",
+    "exact": false
+   },
+   "seconds": 1.0,
+   "at": 26.38,
+   "label": "o cartão Rota até o cliente",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": ".leaflet-container"
+   },
+   "seconds": 0.8,
+   "at": 28.06,
+   "label": "o caminho no mapa",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "min até o cliente",
+    "exact": false
+   },
+   "seconds": 3.0,
+   "at": 29.74,
+   "label": "o rótulo com minutos e quilômetros",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 35.12
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Ampliar mapa",
+    "exact": true
+   },
+   "at": 36.02,
+   "label": "Ampliar o mapa"
+  },
+  {
+   "do": "waitFor",
+   "selector": "div[role=dialog][aria-modal=true]",
+   "timeout": 8
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 360,
+    "y": 30
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "at": 39.32
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "div[role=dialog][aria-modal=true] button",
+    "nth": 0
+   },
+   "text": "",
+   "noClick": true,
+   "label": "fecha o mapa em tela cheia",
+   "at": 40.12,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const el=(document.querySelector('div[role=dialog][aria-modal=true] button'));if(!el)return 'SEM ALVO';const r=el.getBoundingClientRect();const x=r.left+r.width/2,y=r.top+r.height/2;const o={bubbles:true,cancelable:true,composed:true,clientX:x,clientY:y,screenX:x,screenY:y,button:0,view:window};const pe=(t,b)=>new PointerEvent(t,{...o,pointerId:1,pointerType:'mouse',isPrimary:true,buttons:b,width:1,height:1});const me=(t,b)=>new MouseEvent(t,{...o,buttons:b,detail:1});el.dispatchEvent(pe('pointerdown',1));el.dispatchEvent(me('mousedown',1));el.dispatchEvent(pe('pointerup',0));el.dispatchEvent(me('mouseup',0));el.dispatchEvent(me('click',0));return [Math.round(x),Math.round(y)]})()",
+   "at": 40.22,
+   "label": "fecha o mapa em tela cheia (toque)"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "selector": "div[role=dialog][aria-modal=true]"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 40.8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Waze",
+    "exact": true
+   },
+   "seconds": 0.2,
+   "at": 40.8,
+   "label": "o botão Waze",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Google Maps",
+    "exact": true
+   },
+   "seconds": 0.9,
+   "at": 42.28,
+   "label": "o botão Google Maps",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 48.0
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const el=([...document.querySelectorAll(\"button\")].filter(b=>b.textContent.trim()===\"Fazer Check-in\"&&b.getClientRects().length).pop());if(!el)return 'SEM ALVO';const r=el.getBoundingClientRect();const cy=r.top+r.height/2;const y0=window.scrollY,dy=Math.round(cy-(560));if(Math.abs(dy)<3)return 'ok';const dur=Math.min(1000,Math.max(450,Math.abs(dy)*1.15)),t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/dur),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;window.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 50.9,
+   "label": "a página rola até o Iniciar Atendimento"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Fazer Check-in",
+    "exact": true
+   },
+   "seconds": 2.2,
+   "at": 52.72,
+   "label": "o check-in direto, sem A Caminho",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 56.48
+  }
+ ],
+ "user": "rafael.lima@glacialcold.example"
+}

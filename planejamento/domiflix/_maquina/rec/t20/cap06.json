@@ -1,0 +1,370 @@
+{
+ "name": "t20-cap06",
+ "title": "T20 · Cap. 6 · Comparar e projetar (narração 41,8 s; marcas L1..L4 = início de cada linha do roteiro)",
+ "seed": "t20-cap06",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap05",
+  "t12/inicio",
+  "t12/apos-cap11",
+  "t13/inicio",
+  "t13/apos-cap14",
+  "t19/inicio",
+  "t19/apos-cap13",
+  "t20/inicio",
+  "t20/apos-cap03"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/financeiro/relatorios"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Camila!",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/financeiro/relatorios?tab=dre"
+  },
+  {
+   "do": "waitFor",
+   "text": "Demonstrativo de Resultado",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Toggle Sidebar",
+    "nth": 0
+   }
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|erro|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0.04
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Este mês",
+    "exact": true
+   },
+   "at": 1.86,
+   "label": "abre o filtro de período (Mês passado)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] button",
+    "hasText": "Mês passado"
+   },
+   "label": "escolhe Mês passado"
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Comparar períodos",
+    "exact": true
+   },
+   "at": 4.18,
+   "label": "Comparar períodos"
+  },
+  {
+   "do": "waitFor",
+   "text": "Comparar com",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button",
+    "hasText": "Período anterior"
+   },
+   "at": 6.42,
+   "label": "Período anterior"
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 968,
+    "y": 723
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "at": 8.14,
+   "label": "Aplicar comparação (cursor)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "role": "button",
+    "name": "Aplicar comparação",
+    "exact": true
+   },
+   "text": "",
+   "noClick": true,
+   "label": "Aplicar comparação",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const b=[...document.querySelectorAll('[role=dialog] button')].find(x=>x.textContent.trim()===\"Aplicar comparação\");if(!b)return 'sem botao';b.click();return 'clicou'})()",
+   "at": 9.04,
+   "label": "Aplicar comparação (clique)"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 10
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Setembro de 2026\", \"Outubro de 2026\", \"R$ 19.850,00\", \"R$ 13.950,00\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere colunas de setembro e outubro (receita bruta)"
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 13.54
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "(+) Receita Bruta",
+    "within": "main"
+   },
+   "seconds": 1.8,
+   "at": 13.54,
+   "label": "as duas colunas lado a lado",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 17.62
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Comparar períodos",
+    "exact": true
+   },
+   "at": 18.32,
+   "label": "Comparar períodos de novo"
+  },
+  {
+   "do": "waitFor",
+   "text": "Remover comparações",
+   "timeout": 10
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 323,
+    "y": 723
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "at": 19.02,
+   "label": "Remover comparações (cursor)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "role": "button",
+    "name": "Remover comparações",
+    "exact": true
+   },
+   "text": "",
+   "noClick": true,
+   "label": "Remover comparações",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const b=[...document.querySelectorAll('[role=dialog] button')].find(x=>x.textContent.trim()===\"Remover comparações\");if(!b)return 'sem botao';b.click();return 'clicou'})()",
+   "at": 19.92,
+   "label": "Remover comparações (clique)"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 10
+  },
+  {
+   "do": "type",
+   "target": {
+    "role": "tab",
+    "name": "Regime de Competência",
+    "exact": true
+   },
+   "text": "",
+   "label": "Regime de Competência",
+   "noClick": true,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Personalizado",
+    "exact": true
+   },
+   "at": 20.22,
+   "label": "abre o filtro de período (01/11 a 31/12)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] button",
+    "hasText": "Personalizado"
+   },
+   "label": "Personalizado"
+  },
+  {
+   "do": "waitFor",
+   "text": "Selecione o período",
+   "timeout": 8
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] table >> nth=0 >> button:text-is(\"1\") >> nth=0"
+   },
+   "label": "dia inicial 1"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] table >> nth=1 >> button:text-is(\"31\") >> nth=0"
+   },
+   "label": "dia final 31"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Aplicar",
+    "exact": true
+   },
+   "label": "Aplicar o período"
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "switch",
+    "name": "Incluir projeções"
+   },
+   "at": 25.44,
+   "label": "liga Incluir projeções"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"1 ciclo(s) previsto(s)\", \"R$ 380,00\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere projeção de um ciclo de R$ 380,00"
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 34.64
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 760,
+    "y": 420
+   },
+   "by": 900,
+   "duration": 1.6,
+   "after": 100,
+   "at": 35.28,
+   "label": "até o rodapé"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Inclui R$ 380,00 de assinaturas identificadas como previstas; nenhuma transação foi criada.\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere rodapé das projeções"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Inclui R$ 380,00",
+    "within": "main"
+   },
+   "seconds": 1.8,
+   "label": "rodapé das projeções",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 41.77
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

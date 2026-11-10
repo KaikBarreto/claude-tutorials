@@ -1,0 +1,163 @@
+{
+ "name": "t2-cap00",
+ "title": "T2 · Cap. 0 · Abertura (narração 31,7 s; marcas L1..L3 = início de cada linha do roteiro)",
+ "seed": "t2-cap00",
+ "pace": 0.6,
+ "cps": 40,
+ "tail": 1.5,
+ "start": {
+  "x": 700,
+  "y": 430
+ },
+ "seedExtra": [
+  "t1/apos-cap13",
+  "t2/inicio"
+ ],
+ "prewarm": [
+  "/dashboard"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Camila!",
+   "timeout": 15
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Olá, Camila!"
+   },
+   "seconds": 1.1,
+   "at": 0.3,
+   "label": "tela inicial da Dominex, logada como Camila"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "link",
+    "name": "Dashboard",
+    "exact": true
+   },
+   "seconds": 0.2,
+   "at": 2.06,
+   "label": "menu lateral: Dashboard"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "link",
+    "name": "Área do Técnico™",
+    "exact": true
+   },
+   "seconds": 0.2,
+   "at": 4.06,
+   "label": "menu lateral: Área do Técnico"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Gestão",
+    "exact": true
+   },
+   "seconds": 0.2,
+   "at": 5.34,
+   "label": "menu lateral: Gestão"
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 8.68
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "link",
+    "name": "Agenda",
+    "exact": true
+   },
+   "seconds": 0.6,
+   "at": 9.9,
+   "label": "menu: Agenda (o técnico em campo)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Operacional",
+    "exact": true
+   },
+   "seconds": 0.1,
+   "at": 12.86,
+   "label": "menu: Operacional (a ordem de serviço)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "link",
+    "name": "Orçamentos",
+    "exact": true
+   },
+   "seconds": 0.1,
+   "at": 14.3,
+   "label": "menu: Orçamentos"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Financeiro",
+    "exact": true
+   },
+   "seconds": 0.8,
+   "at": 15.34,
+   "label": "menu: Financeiro"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 22.15
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 80,
+    "y": 770
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "at": 28.15,
+   "label": "botão Configurações no rodapé do menu (cursor)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[data-sidebar=sidebar] button[aria-label=\"Configurações\"]"
+   },
+   "text": "",
+   "noClick": true,
+   "label": "botão Configurações no rodapé do menu"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 31.68
+  }
+ ]
+}

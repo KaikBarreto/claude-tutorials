@@ -1,0 +1,216 @@
+{
+ "name": "t11-cap04",
+ "title": "T11 · Cap. 4 · Ligando o PMOC (narração 37,2 s; marcas L1..L4 = início de cada linha do roteiro)",
+ "seed": "t11-cap04",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t2/apos-cap10",
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t9/inicio",
+  "t9/apos-cap16",
+  "t10/apos-cap09",
+  "t11/inicio",
+  "t11/apos-cap03"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/contratos"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Camila!",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/contratos"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie contratos recorrentes e manutenções programadas",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|erro|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Novo Contrato",
+    "exact": true
+   },
+   "at": 5.96,
+   "label": "Novo Contrato"
+  },
+  {
+   "do": "waitFor",
+   "text": "Dados do contrato",
+   "timeout": 15
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 8.58
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input",
+    "nth": 0
+   },
+   "text": "PMOC - Hotel Mirante do Mar",
+   "cps": 18,
+   "at": 10.02,
+   "label": "Nome do Contrato"
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Selecione o cliente",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 13.72,
+   "label": "abre a lista de Cliente"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Buscar cliente..."
+   },
+   "text": "Hotel",
+   "cps": 40,
+   "at": 14.62,
+   "label": "busca \"Hotel\"",
+   "noScroll": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[cmdk-item]",
+    "hasText": "Hotel Mirante do Mar"
+   },
+   "at": 15.82,
+   "label": "escolhe Hotel Mirante do Mar",
+   "noScroll": true
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 16.98
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] [role=switch]",
+    "nth": 0
+   },
+   "seconds": 1.2,
+   "at": 17.62,
+   "label": "chave É um contrato PMOC?",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] [role=switch]",
+    "nth": 0
+   },
+   "at": 21.01,
+   "label": "liga É um contrato PMOC?"
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 28.45
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 640,
+    "y": 470
+   },
+   "by": 430,
+   "duration": 0.7,
+   "after": 100,
+   "at": 28.75,
+   "label": "desce até o RT e a Identificação da Unidade"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Identificação da Unidade",
+    "within": "[role=dialog]"
+   },
+   "seconds": 2.2,
+   "at": 29.35,
+   "label": "Identificação da Unidade",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] button",
+    "hasText": "Revisão",
+    "nth": 0
+   },
+   "seconds": 1.2,
+   "at": 35.25,
+   "label": "a barra segue com as cinco etapas",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "sessionStorage.getItem('form-draft:contract-form')",
+   "label": "rascunho"
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 37.2
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

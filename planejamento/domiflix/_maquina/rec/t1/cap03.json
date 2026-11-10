@@ -1,0 +1,273 @@
+{
+ "name": "t1-cap03",
+ "title": "T1 · Cap. 3 · Dados cadastrais e contato (marcas L1..L6 = início de cada linha da fala; `at` pelos tempos da voz)",
+ "seed": "t1-cap03",
+ "pace": 1.0,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 300
+ },
+ "seedExtra": [
+  "t1/apos-cap02"
+ ],
+ "prewarm": [
+  "/configuracoes"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/configuracoes"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie as configurações do sistema"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "text": "Salvo",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0.0
+  },
+  {
+   "do": "scroll",
+   "by": 480,
+   "duration": 1.0,
+   "label": "rola até Dados Cadastrais",
+   "at": 0.1
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Dados Cadastrais",
+    "exact": true
+   },
+   "seconds": 0.2,
+   "label": "cartão Dados Cadastrais"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "placeholder": "Nome da sua empresa"
+   },
+   "seconds": 2.8,
+   "label": "campo Nome da Empresa (Glacial Cold Brasil)",
+   "at": 2.42
+  },
+  {
+   "do": "hover",
+   "target": {
+    "placeholder": "00.000.000/0000-00"
+   },
+   "seconds": 1.6,
+   "label": "campo CNPJ/CPF",
+   "at": 6.72
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 9.96
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "00.000.000/0000-00"
+   },
+   "text": "91520340000107",
+   "cps": 8,
+   "label": "digita o CNPJ só com números",
+   "at": 9.96
+  },
+  {
+   "do": "pause",
+   "seconds": 0.0
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 13.32
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Segmento de Atuação da Empresa",
+    "exact": true
+   },
+   "seconds": 0.8,
+   "label": "título do campo Segmento",
+   "at": 13.32
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Refrigeração e Climatização",
+    "exact": true
+   },
+   "seconds": 1.8,
+   "label": "segmento (caixa cinza)",
+   "at": 14.88
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Define quais ferramentas e recursos do seu segmento"
+   },
+   "seconds": 1.8,
+   "label": "texto de apoio do segmento",
+   "at": 17.28
+  },
+  {
+   "do": "hover",
+   "target": {
+    "placeholder": "(00) 0000-0000"
+   },
+   "seconds": 0.05,
+   "label": "o cursor vai ao campo Telefone",
+   "at": 24.28
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 25.24
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "(00) 0000-0000"
+   },
+   "text": "2130001000",
+   "cps": 24,
+   "label": "digita o telefone",
+   "at": 25.24
+  },
+  {
+   "do": "press",
+   "key": [
+    "Tab",
+    "Tab"
+   ],
+   "delay": 60,
+   "label": "Tab leva ao campo Email"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "contato@empresa.com"
+   },
+   "text": "contato@glacialcold.example",
+   "cps": 36,
+   "label": "digita o e-mail",
+   "noClick": true
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 28.52
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "div:has(> label:text-is('Nome da Empresa')) button[role=switch]"
+   },
+   "seconds": 0.4,
+   "label": "Exibir em documentos: Nome da Empresa",
+   "at": 28.82
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "div:has(> label:text-is('CNPJ/CPF')) button[role=switch]"
+   },
+   "seconds": 0.4,
+   "label": "Exibir em documentos: CNPJ/CPF",
+   "at": 29.96
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "div:has(> label:text-is('Telefone')) button[role=switch]"
+   },
+   "seconds": 0.4,
+   "label": "Exibir em documentos: Telefone",
+   "at": 31.0
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "div:has(> label:text-is('Email')) button[role=switch]"
+   },
+   "seconds": 0.4,
+   "label": "Exibir em documentos: Email",
+   "at": 32.84
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 35.56
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "div:has(> label:text-is('Email')) button[role=switch]"
+   },
+   "label": "desliga o Exibir em documentos do Email",
+   "at": 37.84
+  },
+  {
+   "do": "pause",
+   "seconds": 1.4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "div:has(> label:text-is('Email')) button[role=switch]"
+   },
+   "seconds": 0.6,
+   "label": "o cursor volta ao interruptor do Email (para ligar de novo)",
+   "at": 44.8
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "div:has(> label:text-is('Email')) button[role=switch]"
+   },
+   "label": "liga de novo o Exibir em documentos do Email",
+   "at": 46.22
+  },
+  {
+   "do": "pause",
+   "seconds": 1.0
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "text": "Salvo",
+    "exact": true
+   },
+   "timeout": 10,
+   "label": "selo Salvo: tudo gravado"
+  },
+  {
+   "do": "pause",
+   "seconds": 0.6
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 48.96
+  }
+ ]
+}

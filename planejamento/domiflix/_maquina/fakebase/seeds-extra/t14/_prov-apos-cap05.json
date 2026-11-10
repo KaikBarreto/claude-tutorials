@@ -1,0 +1,58 @@
+{
+ "_comentario": "T14 · PROVISÓRIA (só exploração da fase 1): estado depois do cap05 montado à mão. Não entra na cadeia.",
+ "fiscal_certificate_audit": [
+  {
+   "id": "@id:t14.prov.a1",
+   "company_id": "9c307966-79f1-567c-ac4d-d5fd3c1a2f40",
+   "operacao": "upload",
+   "contexto": "upload_certificado",
+   "origem": "edge:nfse-upload-certificate",
+   "created_at": "2026-11-13T18:10:00.000Z"
+  },
+  {
+   "id": "@id:t14.prov.a2",
+   "company_id": "9c307966-79f1-567c-ac4d-d5fd3c1a2f40",
+   "operacao": "decifra",
+   "contexto": "verificar_cobertura",
+   "origem": "edge:nfse",
+   "created_at": "2026-11-13T18:10:01.000Z"
+  }
+ ],
+ "_patch": {
+  "company_fiscal_settings": [
+   {
+    "match": {
+     "company_id": "9c307966-79f1-567c-ac4d-d5fd3c1a2f40"
+    },
+    "set": {
+     "inscricao_municipal": "000123-4",
+     "municipio_ibge": "3303302",
+     "pode_emitir": true,
+     "regime_tributario": "simples_nacional",
+     "reg_ap_trib_sn": "1",
+     "percentual_trib_sn": 6,
+     "certificado_ref": "9c307966-79f1-567c-ac4d-d5fd3c1a2f40/cert-1794581400000.b64",
+     "certificado_dek_envelopada": "ZGVrLWZpY3RpY2lh",
+     "certificado_senha_cifrada": "c2VuaGEtZmljdGljaWE=",
+     "certificado_nonce": "bm9uY2U=",
+     "certificado_algoritmo": "AES-256-GCM",
+     "certificate_expires_at": "2027-11-10T15:00:00.000Z"
+    }
+   }
+  ],
+  "service_types": [
+   {
+    "match": {
+     "name": "Higienização de Split"
+    },
+    "set": {
+     "codigo_servico": "140101",
+     "item_lc116": "14.01",
+     "codigo_tributacao_municipal": "001",
+     "codigo_nbs": "120016000",
+     "iss_aliquota": null
+    }
+   }
+  ]
+ }
+}

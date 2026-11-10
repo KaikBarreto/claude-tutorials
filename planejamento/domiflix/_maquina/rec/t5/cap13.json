@@ -1,0 +1,306 @@
+{
+ "name": "t5-cap13",
+ "title": "T5 · Cap. 13 · Criar e reagendar (narração 43,8 s; marcas L1..L3 = início de cada linha do roteiro)",
+ "seed": "t5-cap13",
+ "pace": 0.3,
+ "cps": 14,
+ "tail": 1.5,
+ "start": {
+  "x": 900,
+  "y": 480
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/g1-trilha",
+  "t5/g2-vazias",
+  "t5/apos-cap09",
+  "t5/tarefas-agenda"
+ ],
+ "prewarm": [
+  "/agenda"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/agenda"
+  },
+  {
+   "do": "waitFor",
+   "text": "Visualize e gerencie os agendamentos",
+   "timeout": 20
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Nova Tarefa/OS",
+    "exact": true
+   },
+   "at": 1.62,
+   "label": "Nova Tarefa/OS"
+  },
+  {
+   "do": "waitFor",
+   "text": "O que deseja criar?",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] button",
+    "hasText": "Ordem de Serviço"
+   },
+   "seconds": 0.5,
+   "at": 6.62,
+   "label": "opção Ordem de Serviço"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] button",
+    "hasText": "Tarefa"
+   },
+   "seconds": 0.4,
+   "at": 8.22,
+   "label": "opção Tarefa"
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 9.22,
+   "label": "fecha a janela"
+  },
+  {
+   "do": "dblclick",
+   "target": {
+    "selector": "main .grid-cols-7.flex-1 > div:nth-child(9) span",
+    "nth": 0
+   },
+   "at": 9.8,
+   "label": "dois cliques no dia 9"
+  },
+  {
+   "do": "waitFor",
+   "text": "O que deseja criar?",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button",
+    "hasText": "Tarefa"
+   },
+   "label": "escolhe Tarefa"
+  },
+  {
+   "do": "waitFor",
+   "text": "Título da Tarefa",
+   "timeout": 10
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 12.28
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input",
+    "nth": 0
+   },
+   "text": "Reunião de alinhamento da equipe",
+   "cps": 30,
+   "at": 12.33,
+   "label": "título da tarefa",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]",
+    "hasText": "Nenhum",
+    "nth": 1
+   },
+   "at": 15.54,
+   "label": "campo Tipo de Tarefa"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Reunião"
+   },
+   "label": "tipo Reunião"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]",
+    "hasText": "Selecione..."
+   },
+   "at": 17.82,
+   "label": "campo Responsáveis"
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Bruno Alves",
+    "exact": true,
+    "within": "[data-radix-popper-content-wrapper]"
+   },
+   "label": "Bruno Alves"
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Lucas Ferreira",
+    "exact": true,
+    "within": "[data-radix-popper-content-wrapper]"
+   },
+   "label": "Lucas Ferreira"
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "label": "fecha o seletor"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] button",
+    "hasText": "09/11/2026"
+   },
+   "seconds": 0.2,
+   "at": 20.7,
+   "label": "Data"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] input[type=time]"
+   },
+   "seconds": 0.2,
+   "at": 21.72,
+   "label": "Horário"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] input",
+    "nth": 2
+   },
+   "seconds": 0.2,
+   "at": 22.4,
+   "label": "Duração"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Criar Tarefa",
+    "exact": true
+   },
+   "at": 22.72,
+   "label": "Criar Tarefa"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Reunião de alinhamento da equipe",
+    "exact": false,
+    "within": "main"
+   },
+   "seconds": 1.4,
+   "at": 24.82,
+   "label": "a tarefa no dia 9"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "#13",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.8,
+   "at": 30.14,
+   "label": "uma OS no mesmo dia"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 31.96
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "#16",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 1.0,
+   "at": 32.48,
+   "label": "a OS #16 na terça"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main .grid-cols-7.flex-1 > div:nth-child(11)"
+   },
+   "seconds": 0.5,
+   "at": 34.2,
+   "label": "o novo dia: quarta, 11"
+  },
+  {
+   "do": "drag",
+   "target": {
+    "text": "#16",
+    "exact": true,
+    "within": "main"
+   },
+   "to": {
+    "selector": "main .grid-cols-7.flex-1 > div:nth-child(11)"
+   },
+   "at": 36.96,
+   "label": "arrasta a OS #16 da terça para a quarta"
+  },
+  {
+   "do": "waitFor",
+   "text": "OS reagendada com sucesso!",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "#16",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 1.9,
+   "at": 41.22,
+   "label": "a OS #16 agora na quarta"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 43.84
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

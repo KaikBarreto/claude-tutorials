@@ -1,0 +1,164 @@
+{
+ "_comentario": "T7 · estado de partida = fim do T5 + estoque do Consumo na OS. Gerado por rec/t7/semear.py: não edite à mão.",
+ "_patch": {
+  "service_orders": [
+   {
+    "match": {
+     "id": "2c9dc476-c5ca-412f-90fe-6c38a67f125e"
+    },
+    "set": {
+     "status": "pendente",
+     "scheduled_date": "2026-11-11",
+     "scheduled_time": "09:00:00",
+     "duration_minutes": 120,
+     "schedule_plan": [
+      {
+       "date": "2026-11-11",
+       "time": "09:00",
+       "duration_minutes": 120
+      }
+     ],
+     "check_in_time": null,
+     "check_in_by": null,
+     "check_in_location": null,
+     "check_out_time": null,
+     "check_out_by": null,
+     "check_out_location": null,
+     "started_at": null,
+     "paused_at": null,
+     "resumed_at": null,
+     "completed_at": null,
+     "partial_finish": false
+    }
+   }
+  ]
+ },
+ "service_order_service_types": [
+  {
+   "service_order_id": "2c9dc476-c5ca-412f-90fe-6c38a67f125e",
+   "service_type_id": "49db63cb-1737-415d-b795-187297148790",
+   "position": 0,
+   "created_at": "2026-11-03T12:00:00.000Z"
+  }
+ ],
+ "service_order_equipment_service_types": [
+  {
+   "service_order_id": "2c9dc476-c5ca-412f-90fe-6c38a67f125e",
+   "equipment_id": "d0f4c4b5-7a28-40ff-895f-6bdf7252c748",
+   "service_type_id": "49db63cb-1737-415d-b795-187297148790",
+   "position": 0,
+   "created_at": "2026-11-03T12:00:00.000Z"
+  }
+ ],
+ "stocks": [
+  {
+   "id": "@id:estoque.principal",
+   "company_id": "9c307966-79f1-567c-ac4d-d5fd3c1a2f40",
+   "name": "Estoque Principal",
+   "is_default": true,
+   "sort_order": 0,
+   "customer_id": null
+  }
+ ],
+ "material_groups": [
+  {
+   "id": "@id:grupo.gases",
+   "company_id": "9c307966-79f1-567c-ac4d-d5fd3c1a2f40",
+   "name": "Gases",
+   "color": "#0EA5E9",
+   "sort_order": 0
+  },
+  {
+   "id": "@id:grupo.consumiveis",
+   "company_id": "9c307966-79f1-567c-ac4d-d5fd3c1a2f40",
+   "name": "Consumíveis",
+   "color": "#F59E0B",
+   "sort_order": 3
+  }
+ ],
+ "inventory": [
+  {
+   "id": "@id:material.r410a",
+   "company_id": "9c307966-79f1-567c-ac4d-d5fd3c1a2f40",
+   "name": "Gás refrigerante R-410A",
+   "sku": "EST-001",
+   "unit": "kg",
+   "quantity": 8.5,
+   "min_quantity": 10,
+   "cost_price": 90.0,
+   "sale_price": 150.0,
+   "group_id": "@id:grupo.gases",
+   "is_sellable": false,
+   "customer_id": null,
+   "created_at": "@now-90d",
+   "updated_at": "@now-90d"
+  },
+  {
+   "id": "@id:material.limpa-evaporador",
+   "company_id": "9c307966-79f1-567c-ac4d-d5fd3c1a2f40",
+   "name": "Limpa-evaporador em spray",
+   "sku": "EST-007",
+   "unit": "un",
+   "quantity": 12,
+   "min_quantity": 6,
+   "cost_price": 20.0,
+   "sale_price": 38.0,
+   "group_id": "@id:grupo.consumiveis",
+   "is_sellable": false,
+   "customer_id": null,
+   "created_at": "@now-90d",
+   "updated_at": "@now-90d"
+  },
+  {
+   "id": "@id:material.fita-isolante",
+   "company_id": "9c307966-79f1-567c-ac4d-d5fd3c1a2f40",
+   "name": "Fita isolante",
+   "sku": "EST-008",
+   "unit": "rolos",
+   "quantity": 30,
+   "min_quantity": 12,
+   "cost_price": 6.5,
+   "sale_price": 11.0,
+   "group_id": "@id:grupo.consumiveis",
+   "is_sellable": false,
+   "customer_id": null,
+   "created_at": "@now-90d",
+   "updated_at": "@now-90d"
+  }
+ ],
+ "inventory_stock_levels": [
+  {
+   "id": "@id:nivel.r410a.principal",
+   "company_id": "9c307966-79f1-567c-ac4d-d5fd3c1a2f40",
+   "inventory_id": "@id:material.r410a",
+   "stock_id": "@id:estoque.principal",
+   "quantity": 8.5,
+   "min_quantity": 10,
+   "is_present": true,
+   "created_at": "@now-90d",
+   "updated_at": "@now-90d"
+  },
+  {
+   "id": "@id:nivel.limpa-evaporador.principal",
+   "company_id": "9c307966-79f1-567c-ac4d-d5fd3c1a2f40",
+   "inventory_id": "@id:material.limpa-evaporador",
+   "stock_id": "@id:estoque.principal",
+   "quantity": 12,
+   "min_quantity": 6,
+   "is_present": true,
+   "created_at": "@now-90d",
+   "updated_at": "@now-90d"
+  },
+  {
+   "id": "@id:nivel.fita-isolante.principal",
+   "company_id": "9c307966-79f1-567c-ac4d-d5fd3c1a2f40",
+   "inventory_id": "@id:material.fita-isolante",
+   "stock_id": "@id:estoque.principal",
+   "quantity": 30,
+   "min_quantity": 12,
+   "is_present": true,
+   "created_at": "@now-90d",
+   "updated_at": "@now-90d"
+  }
+ ]
+}

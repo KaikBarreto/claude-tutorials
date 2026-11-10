@@ -1,0 +1,282 @@
+{
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap05",
+  "t12/inicio",
+  "t12/apos-cap11",
+  "t13/inicio",
+  "t13/apos-cap14",
+  "t19/inicio",
+  "t20/_prov-t19",
+  "t20/inicio"
+ ],
+ "start": "/dashboard",
+ "stopOnFail": false,
+ "steps": [
+  {
+   "do": "goto",
+   "url": "/financeiro/relatorios?tab=visao-geral"
+  },
+  {
+   "do": "wait",
+   "ms": 2500
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Toggle Sidebar",
+    "nth": 0
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Este mês",
+    "exact": true
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Personalizado",
+    "within": "[data-radix-popper-content-wrapper]"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 600
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Go to previous month"
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Go to previous month"
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Go to previous month"
+   }
+  },
+  {
+   "do": "shot",
+   "name": "30-cal-ago"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] table >> nth=0 >> button:text-is(\"1\") >> nth=0"
+   }
+  },
+  {
+   "do": "text",
+   "selector": "[data-radix-popper-content-wrapper]",
+   "name": "cal-inicio",
+   "max": 300
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Go to next month"
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Go to next month"
+   }
+  },
+  {
+   "do": "shot",
+   "name": "31-cal-out"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] table >> nth=0 >> button:text-is(\"31\") >> nth=0"
+   }
+  },
+  {
+   "do": "text",
+   "selector": "[data-radix-popper-content-wrapper]",
+   "name": "cal-fim",
+   "max": 300
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Aplicar",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 1500
+  },
+  {
+   "do": "shot",
+   "name": "32-visao-3m"
+  },
+  {
+   "do": "text",
+   "selector": "main",
+   "name": "visao-3m",
+   "max": 1800
+  },
+  {
+   "do": "goto",
+   "url": "/financeiro/relatorios?tab=dre"
+  },
+  {
+   "do": "wait",
+   "ms": 2500
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Toggle Sidebar",
+    "nth": 0
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Este mês"
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Mês passado",
+    "within": "[data-radix-popper-content-wrapper]"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 1200
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Comparar períodos",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 900
+  },
+  {
+   "do": "shot",
+   "name": "33-comparar"
+  },
+  {
+   "do": "text",
+   "selector": "[role=dialog]",
+   "name": "cmp",
+   "max": 2500
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button",
+    "hasText": "Período anterior"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "text",
+   "selector": "[role=dialog]",
+   "name": "cmp2",
+   "max": 2500
+  },
+  {
+   "do": "list",
+   "selector": "[role=dialog] button"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Aplicar comparação",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 1500
+  },
+  {
+   "do": "shot",
+   "name": "34-comp-aplicada"
+  },
+  {
+   "do": "text",
+   "selector": "main",
+   "name": "dre-comp",
+   "max": 3500
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Mês passado"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 600
+  },
+  {
+   "do": "list",
+   "selector": "[data-radix-popper-content-wrapper] button"
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Personalizado",
+    "within": "[data-radix-popper-content-wrapper]"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 600
+  },
+  {
+   "do": "shot",
+   "name": "35-cal-proj"
+  }
+ ]
+}

@@ -1,0 +1,172 @@
+{
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t9/inicio"
+ ],
+ "steps": [
+  {
+   "do": "goto",
+   "url": "/orcamentos"
+  },
+  {
+   "do": "wait",
+   "ms": 1500
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Custos Globais",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 800
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Novo Recurso",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 600
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Veículos"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 600
+  },
+  {
+   "do": "keys",
+   "target": {
+    "placeholder": "Ex: Spin 2024"
+   },
+   "text": "Van 01"
+  },
+  {
+   "do": "list",
+   "selector": "[role=dialog] input[placeholder='Nome do componente']",
+   "attr": "value"
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('[role=dialog] [role=switch]')].map(s=>s.getAttribute('aria-checked')+':'+(s.closest('div')?.parentElement?.innerText||'').replace(/\\s+/g,' ').slice(0,60))"
+  },
+  {
+   "do": "keys",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='Valor mensal']",
+    "nth": 0
+   },
+   "text": "1400"
+  },
+  {
+   "do": "keys",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='Valor mensal']",
+    "nth": 1
+   },
+   "text": "1620"
+  },
+  {
+   "do": "keys",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='Valor anual']",
+    "nth": 0
+   },
+   "text": "3600"
+  },
+  {
+   "do": "keys",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='Valor anual']",
+    "nth": 1
+   },
+   "text": "2400"
+  },
+  {
+   "do": "shot",
+   "name": "a"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const d=document.querySelector('[role=dialog] .overflow-y-auto');d.scrollTo(0,d.scrollHeight);return d.scrollHeight})()"
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "shot",
+   "name": "b"
+  },
+  {
+   "do": "text",
+   "selector": "[role=dialog]",
+   "name": "dlg",
+   "max": 1500
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Salvar",
+    "exact": true,
+    "within": "[role=dialog]"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 1200
+  },
+  {
+   "do": "shot",
+   "name": "c"
+  },
+  {
+   "do": "text",
+   "selector": "main",
+   "name": "lista",
+   "max": 1200
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Van 01",
+    "within": "main"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 900
+  },
+  {
+   "do": "shot",
+   "name": "d"
+  },
+  {
+   "do": "text",
+   "selector": "main",
+   "name": "detalhe",
+   "max": 2500
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

@@ -1,0 +1,494 @@
+{
+ "name": "t11-cap03",
+ "title": "T11 · Cap. 3 · Um contrato comum (narração 105,7 s; marcas L1..L7 = início de cada linha do roteiro)",
+ "seed": "t11-cap03",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 0.4,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t2/apos-cap10",
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t9/inicio",
+  "t9/apos-cap16",
+  "t10/apos-cap09",
+  "t11/inicio",
+  "t11/apos-cap02"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/contratos"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Camila!",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/contratos"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie contratos recorrentes e manutenções programadas",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|erro|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Novo Contrato",
+    "exact": true
+   },
+   "label": "Novo Contrato"
+  },
+  {
+   "do": "waitFor",
+   "text": "Dados do contrato",
+   "timeout": 15
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input",
+    "nth": 0
+   },
+   "text": "Manutenção preventiva trimestral - Colégio Monte Verde",
+   "cps": 22,
+   "label": "Nome do Contrato"
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Selecione o cliente",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "label": "abre a lista de Cliente"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Buscar cliente..."
+   },
+   "text": "Colégio",
+   "cps": 14,
+   "label": "busca \"Colégio\"",
+   "noScroll": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[cmdk-item]",
+    "hasText": "Colégio Monte Verde"
+   },
+   "label": "escolhe Colégio Monte Verde",
+   "noScroll": true
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] [role=switch]",
+    "nth": 0
+   },
+   "seconds": 1.4,
+   "label": "chave É um contrato PMOC? (desligada)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] button",
+    "hasText": "Dados do contrato",
+    "nth": 0
+   },
+   "seconds": 0.1,
+   "label": "a barra de cinco etapas: Dados do contrato",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] button",
+    "hasText": "Escopo técnico",
+    "nth": 0
+   },
+   "seconds": 0.1,
+   "label": "a barra de cinco etapas: Escopo técnico",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] button",
+    "hasText": "Agenda",
+    "nth": 0
+   },
+   "seconds": 0.1,
+   "label": "a barra de cinco etapas: Agenda",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] button",
+    "hasText": "Operação e cobrança",
+    "nth": 0
+   },
+   "seconds": 0.1,
+   "label": "a barra de cinco etapas: Operação e cobrança",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] button",
+    "hasText": "Revisão",
+    "nth": 0
+   },
+   "seconds": 0.1,
+   "label": "a barra de cinco etapas: Revisão",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Próximo",
+    "exact": true
+   },
+   "label": "Próximo (Escopo técnico)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Equipamentos e escopo",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Adicionar equipamento sem ambiente",
+    "exact": true
+   },
+   "label": "Adicionar equipamento sem ambiente"
+  },
+  {
+   "do": "waitFor",
+   "text": "Adicionar equipamento ao contrato",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Hi-Wall 18.000 BTUs - Sala dos professores",
+    "exact": true
+   },
+   "label": "marca o Hi-Wall 18.000 BTUs da sala dos professores"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Adicionar 1 equipamento",
+    "exact": true
+   },
+   "label": "Adicionar 1 equipamento"
+  },
+  {
+   "do": "waitFor",
+   "text": "Equipamentos não atribuídos",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Próximo",
+    "exact": true
+   },
+   "label": "Próximo (Agenda)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Defina a cadência",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Trimestral",
+    "exact": true
+   },
+   "label": "atalho Trimestral"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button",
+    "hasText": "/2026",
+    "nth": 0
+   },
+   "label": "Data de Início (abre o calendário)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] button",
+    "nth": 1
+   },
+   "label": "próximo mês no calendário"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "gridcell",
+    "name": "15",
+    "exact": true
+   },
+   "label": "escolhe o dia 15"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Prévia das datas",
+    "within": "[role=dialog]"
+   },
+   "seconds": 2.2,
+   "label": "Prévia das datas",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Prévia das datas (4)\", \"15/12/2026\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere cap03: a prévia mostra quatro visitas (a fala diz quatro)"
+  },
+  {
+   "do": "eval",
+   "js": "(() => { const t = document.querySelector('[role=dialog]').innerText; return 'dump prévia: ' + (t.match(/Prévia das datas \\(\\d+\\)/) || ['?'])[0] + ' | ' + (t.match(/= \\d+ [a-zç()]+/) || ['?'])[0] + ' | ' + (t.match(/\\d\\d\\/\\d\\d\\/\\d{4}/g) || []).join(' '); })()",
+   "label": "dump prévia das datas"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Próximo",
+    "exact": true
+   },
+   "label": "Próximo (Operação e cobrança)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Técnicos Executores",
+   "timeout": 10
+  },
+  {
+   "do": "eval",
+   "js": "(()=>JSON.stringify({dump:'executores', html:(document.querySelector('[data-contract-validation=executors]')||{}).innerHTML?.slice(0,900)}))()",
+   "label": "dump executores"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] [data-contract-validation=executors] button[role=combobox]",
+    "nth": 0
+   },
+   "label": "abre Técnicos Executores"
+  },
+  {
+   "do": "eval",
+   "js": "'dump executores aberto: ' + [...document.querySelectorAll('[data-radix-popper-content-wrapper]')].map(e => e.innerText.replace(/\\s+/g, ' ').slice(0, 300)).join(' ## ')",
+   "label": "dump lista de técnicos"
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Rafael Lima",
+    "exact": true,
+    "within": "[data-radix-popper-content-wrapper]"
+   },
+   "label": "marca Rafael Lima"
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "label": "fecha a lista de técnicos"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]",
+    "nth": 2
+   },
+   "label": "abre Tipo de Serviço"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Manutenção Preventiva",
+    "exact": false
+   },
+   "label": "Manutenção Preventiva"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button",
+    "hasText": "Escopo técnico",
+    "nth": 0
+   },
+   "label": "volta ao Escopo técnico (onde mora o Checklist Padrão)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]",
+    "hasText": "Nenhum",
+    "nth": 0
+   },
+   "label": "abre Checklist Padrão"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Manutenção preventiva de split",
+    "exact": false
+   },
+   "label": "Manutenção preventiva de split"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button",
+    "hasText": "Operação e cobrança",
+    "nth": 0
+   },
+   "label": "volta a Operação e cobrança"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Contrato Ativo",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.6,
+   "label": "chave Contrato Ativo",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 760,
+    "y": 480
+   },
+   "by": 520,
+   "duration": 0.5,
+   "after": 100,
+   "label": "desce até a Configuração financeira"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Já gerar as parcelas a receber",
+    "within": "[role=dialog]"
+   },
+   "seconds": 2.2,
+   "label": "Já gerar as parcelas a receber (desligado)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Próximo",
+    "exact": true
+   },
+   "label": "Próximo (Revisão)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Revisão final",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Revisão final",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.6,
+   "label": "Revisão final",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__toasts=[];new MutationObserver(ms=>{for(const m of ms)m.addedNodes.forEach(n=>{const t=(n.textContent||'').trim();if(t&&t.length<300&&/OSs?\\b|parcelas|Gerando|criado/i.test(t))window.__toasts.push(t.replace(/\\s+/g,' '))})}).observe(document.body,{childList:true,subtree:true});return 1})()",
+   "label": "observador dos avisos"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Criar Contrato"
+   },
+   "label": "Criar Contrato"
+  },
+  {
+   "do": "waitFor",
+   "text": "Visão Geral",
+   "timeout": 30
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const esp=[\"4 OSs geradas\"];let ctx='sem aviso';for(let i=0;i<40;i++){const l=(window.__toasts||[]).filter(t=>t.includes(\"OSs geradas\"));if(l.length){ctx=l[0].slice(0,170);const falta=esp.filter(e=>!l.some(t=>t.includes(e)));return (falta.length?'DIFERENTE: faltou '+JSON.stringify(falta)+' em: ':'OK: ')+ctx}await new Promise(r=>setTimeout(r,250));}return 'DIFERENTE: sem aviso com '+\"OSs geradas\"+' | todos: '+JSON.stringify(window.__toasts||[]).slice(0,300)})()",
+   "label": "confere cap03: o aviso diz quatro OSs (a fala diz quatro ordens de serviço)"
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

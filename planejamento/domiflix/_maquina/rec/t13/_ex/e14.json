@@ -1,0 +1,105 @@
+{
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap05",
+  "t12/inicio",
+  "t12/apos-cap11",
+  "t13/inicio",
+  "t13/apos-cap05"
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ },
+ "steps": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Camila",
+   "timeout": 25
+  },
+  {
+   "do": "goto",
+   "url": "/financeiro/movimentacoes"
+  },
+  {
+   "do": "wait",
+   "ms": 1500
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Toggle Sidebar",
+    "nth": 0
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Configurações Financeiras",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 2000
+  },
+  {
+   "do": "shot",
+   "name": "01-config"
+  },
+  {
+   "do": "text",
+   "selector": "main",
+   "name": "main",
+   "max": 2500
+  },
+  {
+   "do": "list",
+   "selector": "main button",
+   "attr": "aria-label"
+  },
+  {
+   "do": "list",
+   "selector": "main [role=tab]"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Nova categoria"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 900
+  },
+  {
+   "do": "shot",
+   "name": "02-nova"
+  },
+  {
+   "do": "text",
+   "selector": "[role=dialog]",
+   "name": "dlg",
+   "max": 2500
+  },
+  {
+   "do": "list",
+   "selector": "[role=dialog] button[role=combobox], [role=dialog] input, [role=dialog] textarea",
+   "attr": "placeholder"
+  },
+  {
+   "do": "list",
+   "selector": "[role=dialog] button[role=combobox]"
+  }
+ ]
+}

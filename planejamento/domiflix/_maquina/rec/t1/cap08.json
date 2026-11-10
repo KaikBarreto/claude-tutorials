@@ -1,0 +1,414 @@
+{
+ "name": "t1-cap08",
+ "title": "T1 · Cap. 8 · Como o sistema se comporta (marcas L1..L8 = início de cada linha da fala; `at` pelos tempos da voz)",
+ "seed": "t1-cap08",
+ "pace": 1.0,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 300
+ },
+ "seedExtra": [
+  "t1/apos-cap07"
+ ],
+ "prewarm": [
+  "/configuracoes"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/configuracoes"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie as configurações do sistema"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "text": "Salvo",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0.0
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Usabilidade",
+    "exact": true
+   },
+   "label": "aba Usabilidade",
+   "at": 2.28
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "h3:text-is('Ordens de Serviço')"
+   },
+   "timeout": 10,
+   "label": "grupos de preferências da aba Usabilidade"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "h3:text-is('Usabilidade')"
+   },
+   "seconds": 0.4,
+   "label": "cabeçalho Usabilidade"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Preferências de comportamento do sistema"
+   },
+   "seconds": 0.4,
+   "label": "texto: preferências de comportamento do sistema"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "h3:text-is('Ordens de Serviço')"
+   },
+   "seconds": 0.1,
+   "label": "grupo Ordens de Serviço",
+   "at": 5.86
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 760,
+    "y": 420
+   },
+   "by": 520,
+   "duration": 0.6,
+   "after": 50,
+   "label": "rola pelos grupos até Interface, Segurança e Agenda",
+   "at": 6.76
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "h3:text-is('Interface')"
+   },
+   "seconds": 0.1,
+   "label": "grupo Interface",
+   "at": 7.9
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "h3:text-is('Segurança')"
+   },
+   "seconds": 0.1,
+   "label": "grupo Segurança",
+   "at": 8.71
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "h3:text-is('Agenda')"
+   },
+   "seconds": 0.5,
+   "label": "grupo Agenda",
+   "at": 9.58
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 11.16
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 760,
+    "y": 420
+   },
+   "by": -250,
+   "duration": 0.5,
+   "after": 50,
+   "label": "sobe até as preferências de Ordens de Serviço",
+   "at": 11.21
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "label:text-is('Consumo de estoque na OS')"
+   },
+   "seconds": 0.7,
+   "label": "Consumo de estoque na OS",
+   "at": 12.3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Permite que o técnico registre os materiais usados durante a ordem de serviço e dê baixa no estoque ao finalizar"
+   },
+   "seconds": 4.0,
+   "label": "texto: o técnico registra os materiais e o estoque baixa ao finalizar",
+   "at": 15.42
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "div:has(> div > label:text-is('Consumo de estoque na OS')) button[role=switch]"
+   },
+   "label": "liga o Consumo de estoque na OS",
+   "at": 20.44
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "text": "Preferência salva!"
+   },
+   "timeout": 10,
+   "label": "aviso: preferência salva"
+  },
+  {
+   "do": "pause",
+   "seconds": 0.2
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 24.13
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "label:text-is('Exigir Assinatura')"
+   },
+   "seconds": 0.4,
+   "label": "Exigir Assinatura",
+   "at": 24.13
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Tornar obrigatória a assinatura do cliente ao finalizar OS"
+   },
+   "seconds": 1.6,
+   "label": "texto: assinatura do cliente obrigatória ao finalizar",
+   "at": 25.19
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 29.65
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 760,
+    "y": 420
+   },
+   "by": 330,
+   "duration": 0.6,
+   "after": 50,
+   "label": "rola até os grupos Segurança e Agenda",
+   "at": 29.65
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "label:text-is('Confirmar Exclusões')"
+   },
+   "seconds": 2.4,
+   "label": "Confirmar Exclusões (grupo Segurança)",
+   "at": 30.93
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "label:text-is('Exibir Feriados')"
+   },
+   "seconds": 3.4,
+   "label": "Exibir Feriados (grupo Agenda)",
+   "at": 34.55
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 39.41
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 760,
+    "y": 420
+   },
+   "by": -200,
+   "duration": 0.5,
+   "after": 50,
+   "label": "volta às preferências do começo da aba",
+   "at": 39.41
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "label:text-is('Consumo de estoque na OS')"
+   },
+   "seconds": 1.2,
+   "label": "Consumo de estoque na OS: vale para a empresa inteira",
+   "at": 42.79
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "label:text-is('Tabelas Compactas')"
+   },
+   "seconds": 3.0,
+   "label": "Tabelas Compactas: vale só neste aparelho",
+   "at": 45.54
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 53.52
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 760,
+    "y": 420
+   },
+   "by": 700,
+   "duration": 0.9,
+   "after": 50,
+   "label": "rola até o cartão de lançamentos no financeiro",
+   "at": 53.52
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "h3:text-is('Orçamento, OS e financeiro')"
+   },
+   "seconds": 0.3,
+   "label": "cartão Orçamento, OS e financeiro",
+   "at": 54.56
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "O que vira lançamento no financeiro automaticamente, ao aprovar um orçamento ou ao finalizar uma Ordem de Serviço"
+   },
+   "seconds": 2.0,
+   "label": "texto: o que vira lançamento no financeiro",
+   "at": 56.98
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "label:text-is('Ao aprovar um orçamento')"
+   },
+   "seconds": 0.4,
+   "label": "Ao aprovar um orçamento",
+   "at": 59.72
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Já recebi",
+    "exact": true
+   },
+   "seconds": 2.0,
+   "label": "opção Já recebi (sem trocar)",
+   "at": 62.52
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Vou receber depois",
+    "exact": true
+   },
+   "seconds": 2.0,
+   "label": "opção Vou receber depois (sem trocar)",
+   "at": 65.96
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 69.76
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "label:text-is('Perguntar sobre receita ao finalizar OS')"
+   },
+   "seconds": 0.5,
+   "label": "Perguntar sobre receita ao finalizar OS",
+   "at": 69.76
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "div:has(> div > label:text-is('Perguntar sobre receita ao finalizar OS')) button[role=switch]"
+   },
+   "label": "liga o Perguntar sobre receita ao finalizar OS",
+   "at": 71.6
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "text": "Preferência salva!"
+   },
+   "timeout": 10,
+   "label": "aviso: preferência salva"
+  },
+  {
+   "do": "pause",
+   "seconds": 0.2
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 79.44
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 760,
+    "y": 420
+   },
+   "by": 200,
+   "duration": 0.5,
+   "after": 50,
+   "label": "rola até o cartão Movimentações financeiras",
+   "at": 79.44
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "h3:text-is('Movimentações financeiras')"
+   },
+   "seconds": 1.2,
+   "label": "cartão Movimentações financeiras",
+   "at": 80.5
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Preferência pessoal, vale em qualquer aparelho que você usar"
+   },
+   "seconds": 0.6,
+   "label": "texto: preferência pessoal, vale em qualquer aparelho",
+   "at": 82.44
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 84.64
+  }
+ ]
+}

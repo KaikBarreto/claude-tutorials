@@ -1,0 +1,293 @@
+{
+ "name": "t21-cap05",
+ "title": "T21 · Cap. 5 · Os avisos da OS (narração 54,2 s; marcas L1..L6 = início de cada linha do roteiro)",
+ "seed": "t21-cap05",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 0.4,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap05",
+  "t12/inicio",
+  "t12/apos-cap11",
+  "t13/inicio",
+  "t13/apos-cap14",
+  "t19/inicio",
+  "t19/apos-cap13",
+  "t20/inicio",
+  "t20/apos-cap12",
+  "t2/apos-cap10",
+  "t15/inicio",
+  "t15/apos-cap12",
+  "t22/inicio",
+  "t22/apos-cap11",
+  "t21/inicio",
+  "t21/apos-cap04"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/configuracoes"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Camila!",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/configuracoes?tab=integracoes&integration=whatsapp"
+  },
+  {
+   "do": "waitFor",
+   "text": "Proteção do número",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "pause",
+   "seconds": 0.6
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "scroll",
+   "point": {
+    "x": 760,
+    "y": 420
+   },
+   "by": 520,
+   "duration": 0.5,
+   "after": 100,
+   "label": "desce até Automação de mensagens"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#whatsapp-automation-master"
+   },
+   "label": "liga Ativar automações"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Automação de mensagens\", \"Defina quais avisos serão enviados e como cada mensagem será montada.\", \"Ativar automações\", \"Alterações não salvas\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere cartão Automação de mensagens, com Alterações não salvas"
+  },
+  {
+   "do": "eval",
+   "js": "document.querySelector('#whatsapp-automation-master').getAttribute('aria-checked')",
+   "label": "Ativar automações ligado (true)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "radio",
+    "name": "Ordens de serviço"
+   },
+   "seconds": 0.8,
+   "label": "aba Ordens de serviço",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Escolha quando enviar\", \"Lembrete de visita agendada\", \"Técnico a caminho\", \"Serviço iniciado\", \"OS concluída\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere a lista dos quatro momentos da OS"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Lembrete de visita agendada"
+   },
+   "seconds": 0.8,
+   "label": "momento: Lembrete de visita agendada",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Técnico a caminho"
+   },
+   "seconds": 0.8,
+   "label": "momento: Técnico a caminho",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Serviço iniciado"
+   },
+   "seconds": 0.8,
+   "label": "momento: Serviço iniciado",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "OS concluída"
+   },
+   "seconds": 0.8,
+   "label": "momento: OS concluída",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('main button[role=switch][aria-label^=\"Enviar esta mensagem:\"]')].map(s=>s.getAttribute('aria-label').replace('Enviar esta mensagem: ','')+'='+s.getAttribute('aria-checked')).join(' | ')",
+   "label": "interruptores dos quatro momentos (só o lembrete desligado)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Técnico a caminho"
+   },
+   "label": "clica em Técnico a caminho (Editando)"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Editando\", \"Enviar esta mensagem\", \"Modelo da mensagem\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Técnico a caminho em edição"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#whatsapp-template"
+   },
+   "label": "abre Modelo da mensagem"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Rotação automática · recomendada\", \"Objetiva\", \"Cordial\", \"Detalhada\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"body\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere a lista dos modelos da mensagem"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Cordial"
+   },
+   "label": "escolhe Cordial"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Cordial\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Modelo da mensagem em Cordial"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Incluir link de acompanhamento da OS",
+    "within": "main"
+   },
+   "seconds": 1.6,
+   "label": "Incluir link de acompanhamento da OS (ligado)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Prévia ilustrativa",
+    "within": "main"
+   },
+   "seconds": 3.0,
+   "label": "Prévia da mensagem (Prévia ilustrativa)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Prévia da mensagem\", \"Prévia ilustrativa\", \"o técnico Carlos já está a caminho para atender você na OS #1048\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere a prévia Cordial cita o nome do técnico e o número da OS"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Lembrete de visita agendada"
+   },
+   "label": "clica em Lembrete de visita agendada"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#whatsapp-selected-event"
+   },
+   "label": "liga Enviar esta mensagem"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Quando enviar o lembrete\", \"1 dia antes · recomendado\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Quando enviar o lembrete: 1 dia antes · recomendado"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Quando enviar o lembrete",
+    "within": "main"
+   },
+   "seconds": 2.0,
+   "label": "Quando enviar o lembrete: 1 dia antes",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Salvar configurações",
+    "exact": true
+   },
+   "label": "Salvar configurações"
+  },
+  {
+   "do": "waitFor",
+   "text": "Configurações de WhatsApp salvas.",
+   "timeout": 15
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Configurações salvas\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere selo Configurações salvas"
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

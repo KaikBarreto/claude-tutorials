@@ -1,0 +1,446 @@
+{
+ "name": "t20-cap03",
+ "title": "T20 · Cap. 3 · Organizar os grupos (narração 67,2 s; marcas L1..L7 = início de cada linha do roteiro)",
+ "seed": "t20-cap03",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap05",
+  "t12/inicio",
+  "t12/apos-cap11",
+  "t13/inicio",
+  "t13/apos-cap14",
+  "t19/inicio",
+  "t19/apos-cap13",
+  "t20/inicio"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/financeiro/relatorios"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Camila!",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/financeiro/relatorios?tab=dre"
+  },
+  {
+   "do": "waitFor",
+   "text": "Demonstrativo de Resultado",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Toggle Sidebar",
+    "nth": 0
+   }
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Este mês",
+    "exact": true
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] button",
+    "hasText": "Mês passado"
+   }
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "pause",
+   "seconds": 1.0
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|erro|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Configurar DRE",
+    "exact": true
+   },
+   "at": 2.74,
+   "label": "abre Configurar DRE"
+  },
+  {
+   "do": "waitFor",
+   "text": "Novo subgrupo",
+   "timeout": 15
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Organize os grupos\", \"Novo subgrupo\", \"Despesa operacional\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere janela Configurar DRE"
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 12.18
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Despesas com pessoal",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.4,
+   "at": 12.18,
+   "label": "subgrupo Despesas com pessoal",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Editar Despesas com pessoal",
+    "exact": true
+   },
+   "seconds": 1.2,
+   "at": 24.21,
+   "label": "lápis do subgrupo (sem clicar)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 27.25
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 700,
+    "y": 420
+   },
+   "by": -2400,
+   "duration": 0.5,
+   "after": 100,
+   "at": 27.3,
+   "label": "volta ao topo da janela"
+  },
+  {
+   "do": "select",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox][aria-label=\"Natureza na DRE\"]",
+    "nth": 0
+   },
+   "option": "Despesa operacional",
+   "at": 28.47,
+   "label": "natureza Despesa operacional"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#new-dre-group-name"
+   },
+   "at": 31.17,
+   "label": "campo do nome do subgrupo"
+  },
+  {
+   "do": "eval",
+   "js": "(() => { document.execCommand('insertText', false, \"Despesas administrativas\"); const e = document.activeElement; return e && e.value; })()",
+   "at": 32.55,
+   "label": "nome do subgrupo (colado)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Adicionar",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 33.83,
+   "label": "Adicionar"
+  },
+  {
+   "do": "waitFor",
+   "text": "Nenhuma categoria neste grupo",
+   "timeout": 10
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 34.85
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 700,
+    "y": 420
+   },
+   "by": 800,
+   "duration": 0.5,
+   "after": 100,
+   "at": 34.9,
+   "label": "desce até as despesas operacionais"
+  },
+  {
+   "do": "select",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox][aria-label=\"Mover Aluguel para outro grupo DRE\"]"
+   },
+   "option": "Despesas administrativas",
+   "at": 36.13,
+   "label": "move Aluguel para Despesas administrativas"
+  },
+  {
+   "do": "select",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox][aria-label=\"Mover Luz/Energia para outro grupo DRE\"]"
+   },
+   "option": "Despesas administrativas",
+   "at": 40.31,
+   "label": "move Luz/Energia para Despesas administrativas"
+  },
+  {
+   "do": "select",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox][aria-label=\"Mover Ferramentas e Equipamentos para outro grupo DRE\"]"
+   },
+   "option": "Despesas administrativas",
+   "at": 42.41,
+   "label": "move Ferramentas e Equipamentos para Despesas administrativas"
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 44.53
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 700,
+    "y": 420
+   },
+   "by": -2400,
+   "duration": 0.5,
+   "after": 100,
+   "at": 44.58,
+   "label": "volta ao topo da janela (2º subgrupo)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#new-dre-group-name"
+   },
+   "at": 45.58,
+   "label": "campo do nome do 2º subgrupo"
+  },
+  {
+   "do": "eval",
+   "js": "(() => { document.execCommand('insertText', false, \"Despesas com ve\\u00edculos\"); const e = document.activeElement; return e && e.value; })()",
+   "at": 46.63,
+   "label": "nome do 2º subgrupo (colado)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Adicionar",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 46.98,
+   "label": "Adicionar o 2º subgrupo"
+  },
+  {
+   "do": "waitFor",
+   "text": "Nenhuma categoria neste grupo",
+   "timeout": 10
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 700,
+    "y": 420
+   },
+   "by": 800,
+   "duration": 0.5,
+   "after": 100,
+   "label": "desce até o combustível"
+  },
+  {
+   "do": "select",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox][aria-label=\"Mover Combustível/Transporte para outro grupo DRE\"]"
+   },
+   "option": "Despesas com veículos",
+   "label": "move Combustível/Transporte para Despesas com veículos"
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 51.02
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 700,
+    "y": 420
+   },
+   "by": 640,
+   "duration": 0.5,
+   "after": 100,
+   "at": 51.32,
+   "label": "mostra os subgrupos novos"
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 700,
+    "y": 420
+   },
+   "by": 3000,
+   "duration": 0.5,
+   "after": 100,
+   "at": 55.18,
+   "label": "desce até o fim da janela"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Precisa de outra forma de ver o DRE?",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.4,
+   "at": 56.52,
+   "label": "quadro Precisa de outra forma de ver o DRE?",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Outras visões",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.6,
+   "at": 57.2,
+   "label": "botão Outras visões (sem clicar)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 60.94,
+   "label": "fecha a janela"
+  },
+  {
+   "do": "wait",
+   "seconds": 0.4
+  },
+  {
+   "do": "eval",
+   "js": "(() => { const d = document.querySelector('[role=dialog]'); if (!d) return 'ja fechada'; const b = [...d.querySelectorAll('button')].find((x) => [x.textContent, x.getAttribute('aria-label'), x.title].some((v) => /^\\s*fechar\\s*$/i.test(v || ''))); if (!b) return 'sem botao Fechar'; b.click(); return 'fechada pelo botao'; })()",
+   "label": "Fechar (se o Esc não fechou)"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Despesas administrativas\", \"Despesas com veículos\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere subgrupos no DRE"
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 61.34
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Despesas administrativas",
+    "within": "main"
+   },
+   "seconds": 0.8,
+   "at": 62.44,
+   "label": "Despesas administrativas",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Despesas com veículos",
+    "within": "main"
+   },
+   "seconds": 1.2,
+   "at": 65.2,
+   "label": "Despesas com veículos",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 67.24
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

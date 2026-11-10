@@ -1,0 +1,198 @@
+{
+ "name": "t12-cap08",
+ "title": "T12 · Cap. 8 · Os documentos no portal (narração 32,1 s; marcas L1..L3 = início de cada linha do roteiro)",
+ "seed": "t12-cap08",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap05",
+  "t12/inicio",
+  "t12/apos-cap07"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/clientes",
+  "/contratos",
+  "/ordens-servico",
+  "/contratos/34306a37-c1a7-58a1-b713-244525163500"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/contratos/34306a37-c1a7-58a1-b713-244525163500"
+  },
+  {
+   "do": "waitFor",
+   "text": "Portal do Contrato",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|erro|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Documentos",
+    "exact": true
+   },
+   "at": 1.78,
+   "label": "aba Documentos do contrato"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Documentos no portal do cliente",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 1.4,
+   "at": 3.24,
+   "label": "cartão Documentos no portal do cliente",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Oculto",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 1.2,
+   "at": 5.86,
+   "label": "selo Oculto",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 11.8
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Liberar documentos no portal do cliente",
+    "exact": true
+   },
+   "at": 13.68,
+   "label": "Liberar documentos no portal do cliente"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Liberado",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 1.4,
+   "at": 16.56,
+   "label": "selo Liberado",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Ocultar documentos do portal",
+    "exact": true
+   },
+   "seconds": 2.4,
+   "at": 19.52,
+   "label": "botão Ocultar documentos do portal (sem clicar)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 24.42
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Dossiê PMOC",
+    "within": "main"
+   },
+   "seconds": 0.2,
+   "at": 25.16,
+   "label": "cartão Dossiê PMOC",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Termo de Responsabilidade Técnica",
+    "within": "main"
+   },
+   "seconds": 0.2,
+   "at": 26.12,
+   "label": "cartão Termo de Responsabilidade Técnica",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Certificado de Conformidade",
+    "within": "main"
+   },
+   "seconds": 0.2,
+   "at": 26.92,
+   "label": "cartão Certificado de Conformidade",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Planilha PMOC",
+    "within": "main"
+   },
+   "seconds": 0.2,
+   "at": 27.96,
+   "label": "cartão Planilha PMOC",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 32.08
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

@@ -1,0 +1,203 @@
+{
+ "name": "t1-cap02",
+ "title": "T1 · Cap. 2 · O logo da empresa (marcas L1..L4 = início de cada linha da fala; `at` pelos tempos da voz)",
+ "seed": "t1-cap02",
+ "pace": 1.0,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 300
+ },
+ "seedExtra": [
+  "t1/apos-cap01"
+ ],
+ "prewarm": [
+  "/configuracoes"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/configuracoes"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie as configurações do sistema"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "text": "Salvo",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0.0
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Dados da Empresa",
+    "exact": true
+   },
+   "seconds": 1.2,
+   "label": "cartão Dados da Empresa",
+   "at": 0.2
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Identidade Visual",
+    "exact": true
+   },
+   "seconds": 1.2,
+   "label": "seção Identidade Visual",
+   "at": 2.86
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Clique para enviar o logo",
+    "exact": true
+   },
+   "seconds": 1.6,
+   "label": "área Clique para enviar o logo",
+   "at": 5.81
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "PNG, JPG até 5MB",
+    "exact": true
+   },
+   "seconds": 1.4,
+   "label": "dica PNG, JPG até 5MB",
+   "at": 8.9
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 12.92
+  },
+  {
+   "do": "upload",
+   "target": {
+    "text": "Clique para enviar o logo",
+    "exact": true
+   },
+   "file": "assets/logo-horizontal.png",
+   "after": 900,
+   "label": "envia o arquivo do logo",
+   "at": 12.97
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "role": "button",
+    "name": "Remover",
+    "exact": true
+   },
+   "timeout": 10,
+   "label": "a miniatura do logo aparece com Substituir e Remover"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "section:has(h3:has-text('Identidade Visual')) img"
+   },
+   "seconds": 1.4,
+   "label": "miniatura do logo"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Substituir",
+    "exact": true
+   },
+   "seconds": 1.2,
+   "label": "botão Substituir",
+   "at": 17.78
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 20.36
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Remover",
+    "exact": true
+   },
+   "label": "clica em Remover",
+   "at": 21.54
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "text": "Remover logo?",
+    "exact": true
+   },
+   "timeout": 8,
+   "label": "janela Remover logo?"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "O logo atual será removido permanentemente."
+   },
+   "seconds": 1.6,
+   "label": "aviso da janela de remoção"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Cancelar",
+    "exact": true
+   },
+   "label": "clica em Cancelar",
+   "at": 24.51
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "text": "Remover logo?",
+    "exact": true
+   },
+   "timeout": 8
+  },
+  {
+   "do": "pause",
+   "seconds": 0.6
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 27.16
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "section:has(h3:has-text('Identidade Visual')) img"
+   },
+   "seconds": 2.4,
+   "label": "o logo continua na tela",
+   "at": 27.21
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 37.04
+  }
+ ]
+}

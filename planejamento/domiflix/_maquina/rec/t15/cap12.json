@@ -1,0 +1,312 @@
+{
+ "name": "t15-cap12",
+ "title": "T15 · Cap. 12 · Recapitulando (narração 43,2 s; marcas L1..L5 = início de cada linha do roteiro)",
+ "seed": "t15-cap12",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap05",
+  "t12/inicio",
+  "t12/apos-cap11",
+  "t13/inicio",
+  "t13/apos-cap14",
+  "t19/inicio",
+  "t19/apos-cap13",
+  "t20/inicio",
+  "t20/apos-cap12",
+  "t2/apos-cap10",
+  "t15/inicio",
+  "t15/apos-cap10",
+  "t15/folhas"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/financeiro/contas",
+  "/funcionarios"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/funcionarios"
+  },
+  {
+   "do": "waitFor",
+   "text": "Lista de Funcionários",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|erro|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Tatiane Ribeiro",
+    "within": "main"
+   },
+   "at": 2.18,
+   "label": "ficha da Tatiane (CLT, Controle de Ponto)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Editar",
+    "exact": true
+   },
+   "at": 3.64,
+   "label": "Editar"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Pagamento",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 4.74,
+   "label": "aba Pagamento"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Regime",
+    "within": "[role=dialog]",
+    "exact": true
+   },
+   "seconds": 0.8,
+   "at": 5.78,
+   "label": "regime CLT",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 9.0,
+   "label": "fecha a janela"
+  },
+  {
+   "do": "wait",
+   "seconds": 0.4
+  },
+  {
+   "do": "eval",
+   "js": "(() => { const d = document.querySelector('[role=dialog]'); if (!d) return 'ja fechada'; const b = [...d.querySelectorAll('button')].find((x) => [x.textContent, x.getAttribute('aria-label'), x.title].some((v) => /^\\s*fechar\\s*$/i.test(v || ''))); if (!b) return 'sem botao Fechar'; b.click(); return 'fechada pelo botao'; })()",
+   "label": "Fechar (se o Esc não fechou)"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 10.66
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Rafael Lima",
+    "within": "main"
+   },
+   "at": 10.98,
+   "label": "ficha do Rafael"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Saldo atual",
+    "within": "main"
+   },
+   "seconds": 1.0,
+   "at": 12.42,
+   "label": "vale, bônus e falta",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Extrato",
+    "exact": true
+   },
+   "at": 17.36,
+   "label": "Extrato"
+  },
+  {
+   "do": "waitFor",
+   "text": "Saldo após",
+   "timeout": 10
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 18.26,
+   "label": "fecha a janela"
+  },
+  {
+   "do": "wait",
+   "seconds": 0.4
+  },
+  {
+   "do": "eval",
+   "js": "(() => { const d = document.querySelector('[role=dialog]'); if (!d) return 'ja fechada'; const b = [...d.querySelectorAll('button')].find((x) => [x.textContent, x.getAttribute('aria-label'), x.title].some((v) => /^\\s*fechar\\s*$/i.test(v || ''))); if (!b) return 'sem botao Fechar'; b.click(); return 'fechada pelo botao'; })()",
+   "label": "Fechar (se o Esc não fechou)"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 18.42
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Controle de Ponto",
+    "exact": true
+   },
+   "at": 19.54,
+   "label": "Controle de Ponto"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Config",
+    "exact": true
+   },
+   "at": 20.1,
+   "label": "Config"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Hoje",
+    "exact": true
+   },
+   "at": 25.44,
+   "label": "Hoje"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Histórico",
+    "exact": true
+   },
+   "at": 26.16,
+   "label": "Histórico"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Relatório",
+    "exact": true
+   },
+   "at": 27.04,
+   "label": "Relatório"
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 27.92
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{history.pushState({},'','/financeiro/contas');window.dispatchEvent(new PopStateEvent('popstate'));return location.pathname})()",
+   "at": 28.26,
+   "label": "vai para Contas a Pagar"
+  },
+  {
+   "do": "waitFor",
+   "text": "Contas a pagar e a receber",
+   "timeout": 20
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "A Pagar",
+    "exact": true
+   },
+   "at": 30.16,
+   "label": "aba A Pagar"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Buscar por nome, descrição, categoria ou valor..."
+   },
+   "text": "Folha",
+   "cps": 10,
+   "at": 30.8,
+   "label": "busca \"Folha\""
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 32.0
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Folha Rafael Lima",
+    "within": "main"
+   },
+   "seconds": 1.2,
+   "at": 32.0,
+   "label": "as folhas, fim do tutorial",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 43.2
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

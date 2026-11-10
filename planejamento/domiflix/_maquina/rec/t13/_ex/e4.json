@@ -1,0 +1,165 @@
+{
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap05",
+  "t12/inicio",
+  "t12/apos-cap11",
+  "t13/inicio"
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ },
+ "steps": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Camila",
+   "timeout": 25
+  },
+  {
+   "do": "goto",
+   "url": "/financeiro/movimentacoes"
+  },
+  {
+   "do": "wait",
+   "ms": 2000
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Toggle Sidebar",
+    "nth": 0
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Ações de Conta Principal"
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Editar"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 600
+  },
+  {
+   "do": "keys",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='0,00']"
+   },
+   "text": "1850000"
+  },
+  {
+   "do": "shot",
+   "name": "01-saldo"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Salvar",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 1200
+  },
+  {
+   "do": "shot",
+   "name": "02-salvo"
+  },
+  {
+   "do": "text",
+   "selector": "main",
+   "name": "main",
+   "max": 900
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button:has-text('Conta Principal')",
+    "nth": 0
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 1200
+  },
+  {
+   "do": "shot",
+   "name": "03-conta"
+  },
+  {
+   "do": "text",
+   "selector": "main",
+   "name": "main",
+   "max": 1500
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Nova movimentação",
+    "nth": 0
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 700
+  },
+  {
+   "do": "shot",
+   "name": "04-nova"
+  },
+  {
+   "do": "text",
+   "selector": "[role=dialog]",
+   "name": "dlg"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:has-text('Receita')"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 900
+  },
+  {
+   "do": "shot",
+   "name": "05-form"
+  },
+  {
+   "do": "text",
+   "selector": "[role=dialog]",
+   "name": "form",
+   "max": 3500
+  },
+  {
+   "do": "list",
+   "selector": "[role=dialog] input",
+   "attr": "placeholder"
+  },
+  {
+   "do": "list",
+   "selector": "[role=dialog] [role=combobox]"
+  }
+ ]
+}

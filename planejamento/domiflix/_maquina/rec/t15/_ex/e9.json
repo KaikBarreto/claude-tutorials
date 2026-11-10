@@ -1,0 +1,65 @@
+{
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap05",
+  "t12/inicio",
+  "t12/apos-cap11",
+  "t13/inicio",
+  "t13/apos-cap14",
+  "t19/inicio",
+  "t19/apos-cap13",
+  "t20/inicio",
+  "t2/apos-cap10",
+  "t15/inicio",
+  "t15/apos-cap09"
+ ],
+ "start": "/dashboard",
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ },
+ "stopOnFail": false,
+ "steps": [
+  {
+   "do": "geo",
+   "lat": -22.9024,
+   "lng": -43.1109
+  },
+  {
+   "do": "goto",
+   "url": "/ponto/tatiane-ribeiro-63ubf8zw"
+  },
+  {
+   "do": "waitFor",
+   "text": "PONTO",
+   "timeout": 25
+  },
+  {
+   "do": "wait",
+   "ms": 2500
+  },
+  {
+   "do": "shot",
+   "name": "q1-ponto"
+  },
+  {
+   "do": "eval",
+   "js": "[...document.images].map(i=>[i.src,i.complete,i.naturalWidth,i.crossOrigin,i.referrerPolicy].join(' | ')).join(' ## ')",
+   "max": 1500
+  },
+  {
+   "do": "eval",
+   "js": "location.origin+' '+performance.getEntriesByType('resource').filter(r=>/logo|storage/.test(r.name)).map(r=>r.name+' '+r.initiatorType+' '+r.responseStatus).join(' ## ')",
+   "max": 1500
+  },
+  {
+   "do": "eval",
+   "js": "getComputedStyle(document.querySelector('header, [class*=sticky]')||document.body).backgroundImage",
+   "max": 300
+  }
+ ],
+ "device": "phone"
+}

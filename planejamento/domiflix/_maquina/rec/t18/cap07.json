@@ -1,0 +1,337 @@
+{
+ "name": "t18-cap07",
+ "title": "T18 · Cap. 7 · Pressão, temperatura, potência e medidas (narração 46,9 s; marcas L1..L4 = início de cada linha do roteiro)",
+ "seed": "t18-cap07",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap15",
+  "t7/inicio",
+  "t7/apos-cap10",
+  "t18/catalogo"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/area-tecnico",
+  "/area-tecnico/conversao"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/area-tecnico"
+  },
+  {
+   "do": "waitFor",
+   "text": "Termos Técnicos Explicados",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "nav button",
+    "hasText": "Conversão"
+   },
+   "at": 0.0,
+   "label": "abre a Conversão"
+  },
+  {
+   "do": "waitFor",
+   "text": "Converta entre unidades de medida.",
+   "timeout": 15
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "0",
+    "exact": true,
+    "nth": 0
+   },
+   "text": "10",
+   "cps": 7,
+   "at": 3.48,
+   "label": "digita 10 bar",
+   "clear": true
+  },
+  {
+   "do": "hover",
+   "target": {
+    "placeholder": "0",
+    "exact": true,
+    "nth": 1
+   },
+   "seconds": 1.0,
+   "at": 5.48,
+   "label": "145 psi no campo Para",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Inverter unidades",
+    "exact": true
+   },
+   "at": 8.1,
+   "label": "Inverter unidades"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "tab",
+    "name": "Temperatura"
+   },
+   "seconds": 0.2,
+   "at": 11.02,
+   "label": "aba Temperatura",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "tab",
+    "name": "Potência"
+   },
+   "seconds": 0.2,
+   "at": 11.98,
+   "label": "aba Potência",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "tab",
+    "name": "Comprimento"
+   },
+   "seconds": 0.2,
+   "at": 12.78,
+   "label": "aba Comprimento",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Mais usadas",
+    "within": "main"
+   },
+   "seconds": 0.6,
+   "at": 15.3,
+   "label": "o bloco Mais usadas",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 15.96
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "HP → BTU/h",
+    "exact": true
+   },
+   "seconds": 0.3,
+   "at": 18.46,
+   "label": "atalho HP → BTU/h (mostra)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "mm → pol",
+    "exact": true
+   },
+   "seconds": 0.3,
+   "at": 20.73,
+   "label": "atalho mm → pol (mostra)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "HP → BTU/h",
+    "exact": true
+   },
+   "at": 22.53,
+   "label": "atalho HP → BTU/h"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Modo de cálculo",
+    "within": "main"
+   },
+   "seconds": 1.0,
+   "at": 23.99,
+   "label": "Modo de cálculo: Refrigeração e Energia",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Refrigeração"
+   },
+   "seconds": 0.5,
+   "at": 25.35,
+   "label": "modo Refrigeração",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "0",
+    "exact": true,
+    "nth": 0
+   },
+   "text": "2",
+   "cps": 7,
+   "at": 27.4,
+   "label": "2 HP",
+   "clear": true
+  },
+  {
+   "do": "hover",
+   "target": {
+    "placeholder": "0",
+    "exact": true,
+    "nth": 1
+   },
+   "seconds": 1.0,
+   "at": 29.11,
+   "label": "18.000 BTU/h em Refrigeração",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Energia"
+   },
+   "at": 31.17,
+   "label": "modo Energia"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "placeholder": "0",
+    "exact": true,
+    "nth": 1
+   },
+   "seconds": 0.4,
+   "at": 33.59,
+   "label": "5.088 BTU/h em Energia",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "mm → pol",
+    "exact": true
+   },
+   "at": 33.93,
+   "label": "atalho mm → pol"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 35.83
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "0",
+    "exact": true,
+    "nth": 0
+   },
+   "text": "6,35",
+   "cps": 7,
+   "at": 36.92,
+   "label": "6,35 mm",
+   "clear": true
+  },
+  {
+   "do": "hover",
+   "target": {
+    "placeholder": "0",
+    "exact": true,
+    "nth": 1
+   },
+   "seconds": 1.2,
+   "at": 39.99,
+   "label": "0,25 pol",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Favoritar conversão",
+    "exact": true
+   },
+   "at": 41.63,
+   "label": "a estrela Favoritar conversão"
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 42.05
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Favoritas",
+    "within": "main"
+   },
+   "seconds": 2.2,
+   "at": 43.41,
+   "label": "a lista Favoritas",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 46.88
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

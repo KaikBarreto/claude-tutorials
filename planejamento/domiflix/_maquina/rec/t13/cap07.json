@@ -1,0 +1,283 @@
+{
+ "name": "t13-cap07",
+ "title": "T13 · Cap. 7 · O cartão da empresa (narração 38,4 s; marcas L1..L4 = início de cada linha do roteiro)",
+ "seed": "t13-cap07",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap05",
+  "t12/inicio",
+  "t12/apos-cap11",
+  "t13/inicio",
+  "t13/apos-cap06"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/financeiro/movimentacoes"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Camila!",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/financeiro/movimentacoes"
+  },
+  {
+   "do": "waitFor",
+   "text": "Contas e cartões",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Toggle Sidebar",
+    "nth": 0
+   }
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|erro|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Novo cartão de crédito",
+    "exact": true
+   },
+   "at": 2.42,
+   "label": "o + do grupo Cartões (rótulo Novo cartão)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Novo Cartão",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='Ex: Nubank Crédito']",
+    "nth": 0
+   },
+   "at": 4.58,
+   "label": "nome: Cartão Empresarial (clique)"
+  },
+  {
+   "do": "eval",
+   "js": "(() => { document.execCommand('insertText', false, \"Cart\\u00e3o Empresarial\"); const e = document.activeElement; return e && e.value; })()",
+   "label": "nome: Cartão Empresarial (colado)"
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 7.88
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] div:has(> label:has-text('Dia de fechamento')) button[role=combobox]",
+    "nth": 0
+   },
+   "at": 9.48,
+   "label": "abre a lista (Dia de fechamento: Dia 5)"
+  },
+  {
+   "do": "pause",
+   "seconds": 0.5
+  },
+  {
+   "do": "press",
+   "key": [
+    "D",
+    "i",
+    "a",
+    " ",
+    "5",
+    "Enter"
+   ],
+   "label": "Dia de fechamento: Dia 5 (pelo teclado)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] div:has(> label:has-text('Dia de vencimento')) button[role=combobox]",
+    "nth": 0
+   },
+   "at": 11.72,
+   "label": "abre a lista (Dia de vencimento: Dia 15)"
+  },
+  {
+   "do": "pause",
+   "seconds": 0.5
+  },
+  {
+   "do": "press",
+   "key": [
+    "D",
+    "i",
+    "a",
+    " ",
+    "1",
+    "5",
+    "Enter"
+   ],
+   "label": "Dia de vencimento: Dia 15 (pelo teclado)"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Fecha dia 5\", \"Vence dia 15\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere o cartão fecha no dia 5 e vence no dia 15 (pré-visualização)"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"do mesmo mês\", \"Compras feitas no dia do fechamento já entram na próxima fatura.\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere a frase da regra do cartão"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "do mesmo mês",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.9,
+   "at": 13.9,
+   "label": "a frase da regra: fecha dia 5, vence dia 15 do mesmo mês",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 21.32
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Compras feitas no dia do fechamento",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.9,
+   "at": 21.72,
+   "label": "compra no dia do fechamento entra na fatura seguinte",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 28.72
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='0,00']",
+    "nth": 0
+   },
+   "text": "1000000",
+   "cps": 20,
+   "at": 29.4,
+   "label": "Limite de crédito 10.000,00"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const esp=[\"10.000,00\"];let out='';for(let i=0;i<12;i++){const v=[...document.querySelectorAll(\"[role=dialog]\"+' input, '+\"[role=dialog]\"+' textarea')].map(e=>e.value).join(' | ');const falta=esp.filter(e=>!v.includes(e));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+v.slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Limite de crédito 10.000,00"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] :text('Vence dia 15')"
+   },
+   "seconds": 0.9,
+   "at": 30.57,
+   "label": "Pré-visualização: Fecha dia 5 · Vence dia 15",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Criar Cartão",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 32.83,
+   "label": "Criar Cartão"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 12
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Cartão Empresarial\", \"Fatura em aberto R$ 0,00\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere o cartão no grupo Cartões com a fatura em aberto"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "aside[aria-label=\"Contas e cartões\"] button",
+    "hasText": "Cartão Empresarial"
+   },
+   "seconds": 0.9,
+   "at": 33.84,
+   "label": "o cartão no grupo Cartões",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 38.42
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

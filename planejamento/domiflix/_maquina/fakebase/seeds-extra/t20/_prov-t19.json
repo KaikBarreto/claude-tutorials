@@ -1,0 +1,11 @@
+{
+ "_comentario": "PROVISÓRIA (exploração do robô do T20): imita o que o T19 deixa (assinatura da Academia, cobrança paga do Restaurante com a taxa). NÃO entra na cadeia final; some quando existir a semente final do T19.",
+ "_patch": {"tenant_payment_accounts": [{"match": {"id": "@id:tpa.glacial"}, "set": {"status": "active", "auto_post_to_finance": true, "default_finance_account_id": "6711124b-176a-5f89-b699-2d47d1753f78", "default_income_category": "Vendas de Serviços", "default_fee_category": "Tarifas e Taxas"}}]},
+ "tenant_subscriptions": [
+  {"id": "@id:t20.prov.sub", "company_id": "9c307966-79f1-567c-ac4d-d5fd3c1a2f40", "customer_id": "@id:customer.academia", "description": "Mensalidade da manutenção", "value": 380, "cycle": "MONTHLY", "billing_type": "PIX", "status": "active", "next_due_date": "2026-12-10", "category": "Vendas de Serviços", "created_at": "2026-11-10T13:00:00.000Z"}
+ ],
+ "financial_transactions": [
+  {"id": "@id:t20.prov.rec", "company_id": "9c307966-79f1-567c-ac4d-d5fd3c1a2f40", "account_id": "@id:finacc.principal", "transaction_type": "entrada", "amount": 450, "description": "Cobrança - Restaurante Sabor da Serra", "category": "Vendas de Serviços", "customer_id": "@id:customer.restaurante", "transaction_date": "2026-11-10", "due_date": "2026-11-10", "is_paid": true, "paid_date": "2026-11-10", "payment_method": "pix", "amount_received": 0, "created_at": "2026-11-10T13:00:00.000Z"},
+  {"id": "@id:t20.prov.fee", "company_id": "9c307966-79f1-567c-ac4d-d5fd3c1a2f40", "account_id": "@id:finacc.principal", "transaction_type": "saida", "amount": 1.99, "description": "Taxa Asaas", "category": "Tarifas e Taxas", "transaction_date": "2026-11-10", "due_date": "2026-11-10", "is_paid": true, "paid_date": "2026-11-10", "payment_method": "pix", "amount_received": 0, "created_at": "2026-11-10T13:00:00.000Z"}
+ ]
+}

@@ -1,0 +1,293 @@
+{
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap05",
+  "t12/inicio",
+  "t12/apos-cap11",
+  "t13/inicio",
+  "t13/apos-cap14",
+  "t19/inicio",
+  "t20/_prov-t19",
+  "t20/inicio"
+ ],
+ "start": "/dashboard",
+ "stopOnFail": false,
+ "steps": [
+  {
+   "do": "goto",
+   "url": "/financeiro/relatorios?tab=dfc"
+  },
+  {
+   "do": "wait",
+   "ms": 2500
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Toggle Sidebar",
+    "nth": 0
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "30 dias",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 800
+  },
+  {
+   "do": "shot",
+   "name": "40-dfc30"
+  },
+  {
+   "do": "text",
+   "selector": "main",
+   "name": "dfc30",
+   "max": 1200
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main td[role=button]",
+    "hasText": "R$ 2.800,00"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 800
+  },
+  {
+   "do": "shot",
+   "name": "41-dia"
+  },
+  {
+   "do": "text",
+   "selector": "[role=dialog]",
+   "name": "dia",
+   "max": 2000
+  },
+  {
+   "do": "press",
+   "key": "Escape"
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Realizado",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 1000
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Este mês",
+    "exact": true
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] button",
+    "hasText": "Mês passado"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 1200
+  },
+  {
+   "do": "shot",
+   "name": "42-realizado",
+   "full": true
+  },
+  {
+   "do": "text",
+   "selector": "main",
+   "name": "realizado",
+   "max": 4500
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Exportar"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 600
+  },
+  {
+   "do": "shot",
+   "name": "43-exportar"
+  },
+  {
+   "do": "list",
+   "selector": "[role=menuitem]"
+  },
+  {
+   "do": "press",
+   "key": "Escape"
+  },
+  {
+   "do": "goto",
+   "url": "/financeiro/relatorios?tab=contabilidade"
+  },
+  {
+   "do": "wait",
+   "ms": 2500
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Toggle Sidebar",
+    "nth": 0
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Este mês",
+    "exact": true
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] button",
+    "hasText": "Mês passado"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 1200
+  },
+  {
+   "do": "shot",
+   "name": "44-contab"
+  },
+  {
+   "do": "text",
+   "selector": "main",
+   "name": "contab",
+   "max": 2500
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Exportar pacote",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 600
+  },
+  {
+   "do": "shot",
+   "name": "45-pacote"
+  },
+  {
+   "do": "wait",
+   "ms": 2500
+  },
+  {
+   "do": "text",
+   "selector": "body",
+   "name": "toast",
+   "max": 200
+  },
+  {
+   "do": "shot",
+   "name": "46-pacote2"
+  },
+  {
+   "do": "goto",
+   "url": "/financeiro/relatorios?tab=analise"
+  },
+  {
+   "do": "wait",
+   "ms": 2500
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Toggle Sidebar",
+    "nth": 0
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "combobox",
+    "name": "Ordenar clientes por"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "list",
+   "selector": "[role=option]"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Melhor margem"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 800
+  },
+  {
+   "do": "shot",
+   "name": "47-margem",
+   "full": true
+  },
+  {
+   "do": "text",
+   "selector": "main",
+   "name": "margem",
+   "max": 2500
+  }
+ ]
+}

@@ -1,0 +1,456 @@
+{
+ "name": "t4-cap10",
+ "title": "T4 · Cap. 10 · As perguntas (narração 59,3 s; marcas L1..L5 = início de cada linha do roteiro)",
+ "seed": "t4-cap10",
+ "pace": 0.6,
+ "cps": 14,
+ "tail": 1.5,
+ "start": {
+  "x": 900,
+  "y": 480
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap09"
+ ],
+ "prewarm": [
+  "/servicos",
+  "/servicos?tab=checklists"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/servicos"
+  },
+  {
+   "do": "waitFor",
+   "text": "Configure os tipos de serviços, tarefas e checklists",
+   "timeout": 20
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Checklists",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Lista de checklists",
+   "timeout": 15
+  },
+  {
+   "do": "waitFor",
+   "text": "Editar checklist",
+   "timeout": 15
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Higienização de split",
+    "exact": true,
+    "within": "main [role=list]"
+   }
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Editar checklist",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Voltar à prévia",
+   "timeout": 15
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Nova Pergunta",
+    "exact": true
+   },
+   "at": 1.6,
+   "label": "Nova Pergunta"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "role": "dialog"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Escreva a pergunta",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.0,
+   "at": 2.94,
+   "label": "bloco Escreva a pergunta"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Prévia na OS",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 3.2,
+   "at": 5.52,
+   "label": "Prévia na OS"
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 10.52
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#checklist-question-text"
+   },
+   "text": "Estado da serpentina",
+   "cps": 16,
+   "at": 10.64,
+   "label": "pergunta: Estado da serpentina"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#checklist-question-description"
+   },
+   "text": "Observe se há sujeira ou amassados nas aletas.",
+   "cps": 26,
+   "at": 13.96,
+   "label": "orientação para o técnico"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Escolha como responder",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.6,
+   "at": 21.05,
+   "label": "Escolha como responder"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "checkbox",
+    "name": "Conformidade",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 23.11,
+   "label": "marca Conformidade"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "checkbox",
+    "name": "Verdadeiro/Falso",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "label": "desmarca Verdadeiro/Falso"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Não conforme",
+    "exact": true,
+    "within": "[role=dialog]",
+    "nth": 0
+   },
+   "seconds": 1.4,
+   "at": 24.47,
+   "label": "a prévia mostra as três respostas"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 27.65
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Escolha como responder",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.3,
+   "at": 27.65,
+   "label": "oito jeitos de responder"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "checkbox",
+    "name": "Verdadeiro/Falso",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.1,
+   "at": 29.16,
+   "label": "tipo de resposta: Verdadeiro/Falso"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "checkbox",
+    "name": "Conformidade",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.1,
+   "at": 30.68,
+   "label": "tipo de resposta: Conformidade"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "checkbox",
+    "name": "Texto",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.1,
+   "at": 32.04,
+   "label": "tipo de resposta: Texto"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "checkbox",
+    "name": "Número",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.1,
+   "at": 32.92,
+   "label": "tipo de resposta: Número"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "checkbox",
+    "name": "Foto",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.1,
+   "at": 33.88,
+   "label": "tipo de resposta: Foto"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "checkbox",
+    "name": "Vídeo",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.1,
+   "at": 34.76,
+   "label": "tipo de resposta: Vídeo"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "checkbox",
+    "name": "Seleção",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.1,
+   "at": 35.56,
+   "label": "tipo de resposta: Seleção"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "checkbox",
+    "name": "Assinatura",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.1,
+   "at": 36.6,
+   "label": "tipo de resposta: Assinatura"
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 38.13
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] div.flex.items-start.gap-3:has(label:text-is(\"Campo obrigatório\"))"
+   },
+   "seconds": 2.6,
+   "at": 38.13,
+   "label": "Campo obrigatório ligado"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Frequência",
+    "exact": true,
+    "within": "[role=dialog]",
+    "nth": 0
+   },
+   "seconds": 2.2,
+   "at": 43.01,
+   "label": "Frequência (é pros contratos)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Nova Pergunta",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 47.45,
+   "label": "Nova Pergunta (salva)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Pergunta adicionada!",
+   "timeout": 8,
+   "optional": true
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Estado da serpentina",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.3,
+   "at": 48.73,
+   "label": "a pergunta entra no checklist"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Nova Pergunta",
+    "exact": true
+   },
+   "at": 49.57,
+   "label": "Nova Pergunta (segunda)"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "role": "dialog"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 51.01
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#checklist-question-text"
+   },
+   "text": "Aspecto da água retirada",
+   "cps": 14,
+   "at": 51.01,
+   "label": "pergunta: Aspecto da água retirada",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "checkbox",
+    "name": "Seleção",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 54.21,
+   "label": "marca Seleção"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "checkbox",
+    "name": "Verdadeiro/Falso",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "label": "desmarca Verdadeiro/Falso"
+  },
+  {
+   "do": "eval",
+   "js": "document.querySelector('input[placeholder=\"Adicionar opção...\"]').focus()",
+   "label": "(foco no campo das opções)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Adicionar opção..."
+   },
+   "text": "Limpa\nTurva\nSuja\n",
+   "cps": 14,
+   "at": 56.63,
+   "label": "opções: limpa, turva e suja",
+   "noClick": true
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 59.28
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Nova Pergunta",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "label": "Nova Pergunta (salva a segunda)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Pergunta adicionada!",
+   "timeout": 8,
+   "optional": true
+  }
+ ]
+}

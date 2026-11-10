@@ -1,0 +1,257 @@
+{
+ "name": "t18-cap08",
+ "title": "T18 · Cap. 8 · Capacitor (narração 45,9 s; marcas L1..L4 = início de cada linha do roteiro)",
+ "seed": "t18-cap08",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap15",
+  "t7/inicio",
+  "t7/apos-cap10",
+  "t18/catalogo"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/area-tecnico",
+  "/area-tecnico/calculo-capacitor"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/area-tecnico"
+  },
+  {
+   "do": "waitFor",
+   "text": "Termos Técnicos Explicados",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "nav button",
+    "hasText": "Cálculo de Capacitor"
+   },
+   "at": 1.44,
+   "label": "abre o Cálculo de Capacitor"
+  },
+  {
+   "do": "waitFor",
+   "text": "Capacitor recomendado pela fase, BTU/LRA e tensão.",
+   "timeout": 15
+  },
+  {
+   "do": "select",
+   "target": {
+    "selector": "main button[role=combobox]",
+    "nth": 0
+   },
+   "option": "18.000 BTUs",
+   "at": 7.7,
+   "label": "escolhe 18.000 BTUs"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "220V",
+    "exact": true
+   },
+   "at": 9.7,
+   "label": "tensão 220V"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main p.leading-tight"
+   },
+   "seconds": 2.4,
+   "at": 11.48,
+   "label": "Use o capacitor de 40 µF",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Amper",
+    "within": "main"
+   },
+   "seconds": 0.6,
+   "at": 15.0,
+   "label": "Amper",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Potência",
+    "within": "main",
+    "nth": 0
+   },
+   "seconds": 0.6,
+   "at": 15.8,
+   "label": "Potência",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 18.12
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Ampliar foto"
+   },
+   "at": 20.24,
+   "label": "amplia a foto do capacitor"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 21.86
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 22.16,
+   "label": "fecha a foto ampliada"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Preciso (LRA)",
+    "exact": true
+   },
+   "at": 24.24,
+   "label": "modo Preciso (LRA)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Ex: 40",
+    "exact": true
+   },
+   "text": "30",
+   "cps": 7,
+   "at": 28.34,
+   "label": "LRA 30"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main p.leading-tight"
+   },
+   "seconds": 2.0,
+   "at": 29.94,
+   "label": "31 µF",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Estimativa (BTU)",
+    "exact": true
+   },
+   "at": 34.24,
+   "label": "Estimativa (BTU)"
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 36.66
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Trifásico",
+    "exact": true
+   },
+   "at": 36.72,
+   "label": "chave Fase: Trifásico"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Máquina trifásica não usa capacitor",
+    "within": "main"
+   },
+   "seconds": 0.3,
+   "at": 38.26,
+   "label": "a máquina trifásica não usa capacitor",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Ex: 2,9",
+    "exact": true
+   },
+   "text": "9",
+   "cps": 7,
+   "at": 39.2,
+   "label": "corrente nominal 9 A"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Contator recomendado",
+    "within": "main"
+   },
+   "seconds": 0.8,
+   "at": 41.62,
+   "label": "Contator recomendado",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Relé térmico:",
+    "within": "main"
+   },
+   "seconds": 1.0,
+   "at": 42.42,
+   "label": "Relé térmico",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 45.92
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

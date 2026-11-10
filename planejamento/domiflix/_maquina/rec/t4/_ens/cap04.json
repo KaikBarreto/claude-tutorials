@@ -1,0 +1,195 @@
+{
+ "name": "t4-cap04",
+ "title": "T4 · Cap. 4 · Organizando a lista (narração 42,5 s; marcas L1..L5 = início de cada linha do roteiro)",
+ "seed": "t4-cap04",
+ "pace": 0.42,
+ "cps": 10,
+ "tail": 0.4,
+ "start": {
+  "x": 900,
+  "y": 480
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/g1-trilha",
+  "t4/g2-vazias",
+  "t4/apos-cap03"
+ ],
+ "prewarm": [
+  "/servicos"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/servicos"
+  },
+  {
+   "do": "waitFor",
+   "text": "6 tipos cadastrados",
+   "timeout": 20
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  }
+ ],
+ "steps": [
+  {
+   "do": "hover",
+   "target": {
+    "text": "6 tipos cadastrados",
+    "exact": true
+   },
+   "seconds": 1.2,
+   "label": "lista com os seis serviços"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Carga de Gás",
+    "exact": true,
+    "within": "main [role=list]"
+   },
+   "seconds": 0.6,
+   "label": "cada serviço com a sua cor"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Manutenção • GAS",
+    "exact": true
+   },
+   "seconds": 1.0,
+   "label": "categoria e prefixo na linha"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Buscar por nome ou descrição..."
+   },
+   "text": "higien",
+   "cps": 10,
+   "label": "busca por 'higien'"
+  },
+  {
+   "do": "press",
+   "key": [
+    "Control+a",
+    "Backspace"
+   ],
+   "label": "limpa a busca"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Filtros",
+    "exact": true
+   },
+   "label": "botão Filtros"
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Manutenção",
+    "exact": true,
+    "within": "[data-radix-popper-content-wrapper]"
+   },
+   "label": "filtra a categoria Manutenção"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Limpar filtros",
+    "exact": true
+   },
+   "label": "Limpar filtros"
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "label": "fecha o filtro",
+   "delay": 60
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Ordenar",
+    "exact": false
+   },
+   "label": "botão Ordenar"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Nome (A-Z)",
+    "exact": true,
+    "within": "[data-radix-popper-content-wrapper]"
+   },
+   "seconds": 0.4,
+   "label": "Nome (A-Z)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Nome (Z-A)",
+    "exact": true,
+    "within": "[data-radix-popper-content-wrapper]"
+   },
+   "seconds": 0.3,
+   "label": "Nome (Z-A)"
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "label": "fecha o Ordenar",
+   "delay": 60
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Manutenção Preventiva",
+    "exact": true,
+    "within": "main [role=list]"
+   },
+   "label": "abre Manutenção Preventiva"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "div.flex.items-center.gap-2:has(> label:text-is(\"Vinculado a equipamento\"))"
+   },
+   "seconds": 4.5,
+   "label": "Vinculado a equipamento ligado (Manutenção Preventiva)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Visita Técnica",
+    "exact": true,
+    "within": "main [role=list]"
+   },
+   "label": "abre Visita Técnica"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "div.flex.items-center.gap-2:has(> label:text-is(\"Vinculado a equipamento\"))"
+   },
+   "seconds": 5.0,
+   "label": "Vinculado a equipamento desligado (Visita Técnica)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "div.flex.items-center.gap-2:has(> label:text-is(\"Vinculado a equipamento\"))"
+   },
+   "seconds": 6.0,
+   "label": "(ilustração) ligado × desligado"
+  }
+ ]
+}

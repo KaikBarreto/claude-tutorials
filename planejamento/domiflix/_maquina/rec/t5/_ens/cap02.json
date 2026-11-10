@@ -1,0 +1,224 @@
+{
+ "name": "t5-cap02",
+ "title": "T5 · Cap. 2 · Abrindo uma nova OS (narração 43,1 s; marcas L1..L5 = início de cada linha do roteiro)",
+ "seed": "t5-cap02",
+ "pace": 0.5,
+ "cps": 14,
+ "tail": 0.4,
+ "start": {
+  "x": 900,
+  "y": 480
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/g1-trilha",
+  "t5/g2-vazias"
+ ],
+ "prewarm": [
+  "/ordens-servico"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/ordens-servico"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie suas ordens de serviço",
+   "timeout": 20
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{if(!window.__fixAnim){window.__fixAnim=setInterval(()=>document.getAnimations().filter(a=>a.currentTime<0).forEach(a=>{a.startTime=document.timeline.currentTime}),40)}return 1})()"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|erro|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Nova OS",
+    "exact": true
+   },
+   "label": "Nova OS"
+  },
+  {
+   "do": "waitFor",
+   "text": "Nova Ordem de Serviço",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Revisão",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.4,
+   "label": "as quatro etapas"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Atendimento e orçamento",
+    "exact": true,
+    "within": "[role=dialog]",
+    "nth": 0
+   },
+   "seconds": 0.9,
+   "label": "etapa Atendimento e orçamento"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "switch",
+    "name": "Cliente cadastrado"
+   },
+   "seconds": 0.3,
+   "label": "Cliente cadastrado"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "switch",
+    "name": "Cliente cadastrado"
+   },
+   "label": "Cliente avulso"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] p",
+    "hasText": "O cliente será criado automaticamente"
+   },
+   "seconds": 1.3,
+   "label": "aviso: o cliente é criado com estes dados"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "switch",
+    "name": "Cliente cadastrado"
+   },
+   "label": "volta para Cliente cadastrado"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "combobox",
+    "hasText": "Selecione o cliente"
+   },
+   "label": "campo Cliente"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Buscar cliente..."
+   },
+   "text": "Colégio",
+   "cps": 12,
+   "label": "busca Colégio",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Colégio Monte Verde"
+   },
+   "label": "Colégio Monte Verde"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]",
+    "hasText": "Adicionar serviços"
+   },
+   "label": "campo Tipos de Serviço"
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Manutenção Preventiva",
+    "exact": true,
+    "within": "[data-radix-popper-content-wrapper]"
+   },
+   "label": "Manutenção Preventiva"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Visita Técnica",
+    "exact": true,
+    "within": "[data-radix-popper-content-wrapper]"
+   },
+   "seconds": 1.6,
+   "label": "a lista deixa marcar mais de um serviço"
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "label": "fecha a lista de serviços"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Manutenção Preventiva",
+    "exact": true,
+    "within": "[aria-label=\"Resumo da ordem de serviço\"]"
+   },
+   "seconds": 1.8,
+   "label": "o serviço principal no resumo da OS"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const el=document.querySelector(\"[role=dialog] button[role=switch][aria-label=\\\"Endere\\u00e7o de servi\\u00e7o (diferente do cliente)\\\"]\");if(!el)return false;for(let n=el.parentElement;n&&n!==document.documentElement;n=n.parentElement){const s=getComputedStyle(n);if(/(auto|scroll)/.test(s.overflowY)&&n.scrollHeight>n.clientHeight+4){const r=el.getBoundingClientRect(),b=n.getBoundingClientRect();n.scrollTo({top:n.scrollTop+(r.top+r.height/2)-(b.top+b.height/2),behavior:\"smooth\"});return true}}return false})()",
+   "label": "desce até o Endereço de serviço"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "switch",
+    "name": "Endereço de serviço (diferente do cliente)"
+   },
+   "label": "liga o Endereço de serviço"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] p",
+    "hasText": "O atendimento será feito neste endereço"
+   },
+   "seconds": 1.6,
+   "label": "campos do endereço de serviço"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "switch",
+    "name": "Endereço de serviço (diferente do cliente)"
+   },
+   "label": "desliga o Endereço de serviço"
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

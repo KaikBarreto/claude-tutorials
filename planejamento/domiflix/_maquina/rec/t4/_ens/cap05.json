@@ -1,0 +1,193 @@
+{
+ "name": "t4-cap05",
+ "title": "T4 · Cap. 5 · Dados fiscais (narração 45,4 s; marcas L1..L4 = início de cada linha do roteiro)",
+ "seed": "t4-cap05",
+ "pace": 0.5,
+ "cps": 8,
+ "tail": 0.4,
+ "start": {
+  "x": 900,
+  "y": 480
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/g1-trilha",
+  "t4/g2-vazias",
+  "t4/apos-cap03"
+ ],
+ "prewarm": [
+  "/servicos"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/servicos"
+  },
+  {
+   "do": "waitFor",
+   "text": "6 tipos cadastrados",
+   "timeout": 20
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  }
+ ],
+ "steps": [
+  {
+   "do": "click",
+   "target": {
+    "text": "Manutenção Preventiva",
+    "exact": true,
+    "within": "main [role=list]"
+   },
+   "label": "abre Manutenção Preventiva"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "tab",
+    "name": "Fiscal"
+   },
+   "seconds": 0.8,
+   "label": "pílula Fiscal"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Fiscal"
+   },
+   "label": "abre a aba Fiscal"
+  },
+  {
+   "do": "waitFor",
+   "text": "Fiscal (NFS-e)",
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Fiscal (NFS-e)",
+    "exact": true
+   },
+   "seconds": 1.8,
+   "label": "bloco Fiscal (NFS-e)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "button[role=combobox]",
+    "hasText": "Selecione o código...",
+    "nth": 0
+   },
+   "label": "Código de serviço (cTribNac)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Buscar por código ou descrição..."
+   },
+   "text": "14.01.01",
+   "cps": 3.4,
+   "label": "busca 14.01.01"
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "14.01.01",
+    "exact": true,
+    "within": "[data-radix-popper-content-wrapper]"
+   },
+   "label": "escolhe 14.01.01"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "div:has(> label:text-is(\"Item da LC 116\"))"
+   },
+   "seconds": 1.8,
+   "label": "Item da LC 116 preenchido sozinho"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Código de tributação municipal (cTribMun)",
+    "exact": true
+   },
+   "seconds": 1.5,
+   "label": "Código de tributação municipal"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Ex.: 001"
+   },
+   "text": "001",
+   "cps": 3.2,
+   "label": "cTribMun 001"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Complemento de 3 dígitos",
+    "exact": false
+   },
+   "seconds": 2.6,
+   "label": "a prefeitura usa para aceitar a nota"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Alíquota de ISS (%)",
+    "exact": true
+   },
+   "seconds": 1.6,
+   "label": "Alíquota de ISS"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "5"
+   },
+   "text": "5",
+   "cps": 4,
+   "label": "ISS 5%"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Salvar",
+    "exact": true
+   },
+   "label": "Salvar"
+  },
+  {
+   "do": "waitFor",
+   "text": "Tipo de serviço atualizado!",
+   "timeout": 10,
+   "optional": true
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "button[role=combobox]",
+    "hasText": "14.01.01",
+    "nth": 0
+   },
+   "seconds": 2.0,
+   "label": "código salvo na ficha"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "placeholder": "Ex.: 001"
+   },
+   "seconds": 1.6,
+   "label": "cTribMun salvo"
+  }
+ ]
+}

@@ -1,0 +1,215 @@
+{
+ "name": "t2-cap02",
+ "title": "T2 · Cap. 2 · Montando um cargo (narração 55,8 s; marcas L1..L6 = início de cada linha do roteiro)",
+ "seed": "t2-cap02",
+ "pace": 0.5,
+ "cps": 40,
+ "tail": 0.4,
+ "start": {
+  "x": 900,
+  "y": 300
+ },
+ "seedExtra": [
+  "t1/apos-cap13",
+  "t2/inicio"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/configuracoes"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "goto",
+   "url": "/configuracoes?tab=usuarios"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "main p",
+    "hasText": "usuários •"
+   },
+   "timeout": 15
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  }
+ ],
+ "steps": [
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Configurações",
+    "exact": true,
+    "within": "main"
+   },
+   "label": "abre Configurações (cargos)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Configurações de Cargos",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Nenhum cargo cadastrado",
+    "exact": true
+   },
+   "seconds": 1.2,
+   "label": "a janela de cargos, ainda vazia"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Novo Cargo",
+    "exact": true
+   },
+   "label": "Novo Cargo"
+  },
+  {
+   "do": "click",
+   "target": {
+    "placeholder": "Ex: Técnico de Campo"
+   },
+   "label": "clica no campo Nome"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Ex: Técnico de Campo"
+   },
+   "text": "Técnico de Campo",
+   "cps": 60,
+   "label": "nome do cargo: Técnico de Campo",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "placeholder": "Descrição opcional"
+   },
+   "label": "clica no campo Descrição"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Descrição opcional"
+   },
+   "text": "Agenda, ferramentas e OS pelo link",
+   "cps": 60,
+   "label": "descrição do cargo",
+   "noClick": true
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 640,
+    "y": 420
+   },
+   "by": 380,
+   "duration": 1.1,
+   "after": 100,
+   "label": "desce pelo editor: categorias"
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 640,
+    "y": 420
+   },
+   "by": 380,
+   "duration": 1.1,
+   "after": 100,
+   "label": "desce pelo editor: mais categorias"
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 640,
+    "y": 420
+   },
+   "by": -760,
+   "duration": 1.3,
+   "after": 100,
+   "label": "volta ao topo do editor"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Ver ações de Agenda",
+    "exact": true
+   },
+   "seconds": 0.5,
+   "label": "linha da Agenda"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "switch",
+    "name": "Acesso à tela Agenda",
+    "exact": true
+   },
+   "label": "liga a tela Agenda"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "0/4",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.8,
+   "label": "contador 0/4 da Agenda"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Ver ações de Agenda",
+    "exact": true
+   },
+   "label": "abre a seta da Agenda"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "switch",
+    "name": "Ver Toda a Agenda",
+    "exact": true
+   },
+   "seconds": 2.2,
+   "label": "Ver Toda a Agenda (desligada)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Ver ações de Agenda",
+    "exact": true
+   },
+   "label": "fecha a seta da Agenda"
+  },
+  {
+   "do": "eval",
+   "js": "(() => { const e = [...document.querySelectorAll('[role=dialog] [aria-label]')].find((x) => x.getAttribute('aria-label') === \"Acesso \\u00e0 tela \\u00c1rea do T\\u00e9cnico\\u2122\"); if (!e) return 'alvo nao achado: ' + \"Acesso \\u00e0 tela \\u00c1rea do T\\u00e9cnico\\u2122\"; e.scrollIntoView({ block: \"center\", behavior: 'smooth' }); return 'rolando ate ' + \"Acesso \\u00e0 tela \\u00c1rea do T\\u00e9cnico\\u2122\"; })()",
+   "label": "rola até Operacional"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "switch",
+    "name": "Acesso à tela Área do Técnico™",
+    "exact": true
+   },
+   "label": "liga a Área do Técnico"
+  }
+ ]
+}

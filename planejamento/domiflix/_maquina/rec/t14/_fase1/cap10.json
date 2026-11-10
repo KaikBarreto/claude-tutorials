@@ -1,0 +1,317 @@
+{
+ "name": "t14-cap10",
+ "title": "T14 · Cap. 10 · Nota automática do contrato (narração 39,9 s ESTIMADA nas linhas 3; marcas L1..L4 = início de cada linha do roteiro; FAKE_NOW 2026-11-13T15:10:00-03:00)",
+ "seed": "t14-cap10",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap05",
+  "t12/inicio",
+  "t12/apos-cap11",
+  "t13/inicio",
+  "t13/apos-cap14",
+  "t19/inicio",
+  "t19/apos-cap13",
+  "t20/inicio",
+  "t20/apos-cap12",
+  "t2/apos-cap10",
+  "t15/inicio",
+  "t15/apos-cap12",
+  "t22/inicio",
+  "t22/apos-cap11",
+  "t21/inicio",
+  "t21/apos-cap10",
+  "t14/inicio",
+  "t14/apos-cap09"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/contratos",
+  "/contratos/34306a37-c1a7-58a1-b713-244525163500",
+  "/notas-fiscais"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Camila!",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&!/fica indispon/i.test(m[0])&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Gestão",
+    "exact": true
+   },
+   "at": 2.72,
+   "label": "menu Gestão"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "link",
+    "name": "Contratos",
+    "exact": true
+   },
+   "label": "Contratos"
+  },
+  {
+   "do": "waitFor",
+   "text": "PMOC - Hotel Mirante do Mar",
+   "timeout": 15
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "PMOC - Hotel Mirante do Mar",
+    "exact": true
+   },
+   "at": 4.1,
+   "label": "contrato PMOC - Hotel Mirante do Mar"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "role": "tab",
+    "name": "Financeiro",
+    "exact": true
+   },
+   "timeout": 15
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Financeiro",
+    "exact": true
+   },
+   "at": 5.94,
+   "label": "aba Financeiro"
+  },
+  {
+   "do": "waitFor",
+   "text": "Nota fiscal automática",
+   "timeout": 12
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||null};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"Nota fiscal autom\\u00e1tica\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-220);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/1000),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 7.52,
+   "label": "desce até a Nota fiscal automática"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Ligada, o sistema emite a nota fiscal de cada parcela",
+    "within": "main"
+   },
+   "seconds": 1.2,
+   "label": "dica da nota automática",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 8.58
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "switch",
+    "name": "Nota fiscal automática",
+    "exact": true
+   },
+   "at": 8.58,
+   "label": "liga a Nota fiscal automática (Desligada > Ligada)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Quando a nota sai",
+   "timeout": 8
+  },
+  {
+   "do": "select",
+   "target": {
+    "selector": "main div:has(> label:has-text('Quando a nota sai')) button[role=combobox]"
+   },
+   "option": "No vencimento da parcela",
+   "at": 9.38,
+   "label": "Quando a nota sai: No vencimento da parcela"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Ex.: Manutenção preventiva mensal"
+   },
+   "text": "Manutenção preventiva mensal do PMOC - Hotel Mirante do Mar",
+   "cps": 30,
+   "at": 17.38,
+   "label": "Descrição do serviço na nota"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 20.16
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||null};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"Dados fiscais\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-180);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/1000),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 20.75,
+   "label": "desce até os dados fiscais (o seletor do NBS abre para baixo)"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Opcionais, em branco, cada campo usa o que está cadastrado no tipo de serviço deste contrato.\", \"Herdado do tipo de serviço: 140101\", \"Herdado do tipo de serviço: 001\", \"Sem valor cadastrado no tipo de serviço\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere dados fiscais herdados da Manutenção Preventiva"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Herdado do tipo de serviço: 140101",
+    "within": "main"
+   },
+   "seconds": 1.2,
+   "at": 24.36,
+   "label": "herdado do tipo de serviço",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main div:has(> label:has-text('Código NBS')) > button[role=combobox]"
+   },
+   "at": 27.42,
+   "label": "Código NBS (o único sem valor herdado)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Buscar código..."
+   },
+   "text": "1200",
+   "label": "busca 1200"
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "120016000",
+    "exact": true,
+    "within": "[data-radix-popper-content-wrapper]"
+   },
+   "label": "escolhe 120016000"
+  },
+  {
+   "do": "pause",
+   "seconds": 0.4
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "text": "Alteração não salva"
+   },
+   "timeout": 12
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "text": "Salvando..."
+   },
+   "timeout": 12
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "text": "Salvo",
+    "exact": true,
+    "within": "main"
+   },
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Salvo",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 1.0,
+   "at": 30.7,
+   "label": "Salvo (a tela salva sozinha)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 32.14
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{history.pushState(null,'','/notas-fiscais');dispatchEvent(new PopStateEvent('popstate'));return 1})()",
+   "at": 35.0,
+   "label": "corte: Notas Fiscais"
+  },
+  {
+   "do": "waitFor",
+   "text": "Emita e acompanhe suas NFS-e.",
+   "timeout": 12
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "tab",
+    "name": "Emissões automáticas",
+    "exact": true
+   },
+   "seconds": 1.4,
+   "at": 37.26,
+   "label": "aba Emissões automáticas (sem abrir)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 39.85
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

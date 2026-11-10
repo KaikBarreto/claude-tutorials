@@ -1,0 +1,198 @@
+{
+ "name": "t18-cap12",
+ "title": "T18 · Cap. 12 · Retrofit de Gás (narração 37,0 s; marcas L1..L3 = início de cada linha do roteiro)",
+ "seed": "t18-cap12",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap15",
+  "t7/inicio",
+  "t7/apos-cap10",
+  "t18/catalogo"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/area-tecnico",
+  "/area-tecnico/retrofit-gas"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/area-tecnico"
+  },
+  {
+   "do": "waitFor",
+   "text": "Termos Técnicos Explicados",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "nav button",
+    "hasText": "Retrofit de Gás"
+   },
+   "at": 0.2,
+   "label": "abre o Retrofit de Gás"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gases drop-in para trocar o refrigerante direto na mesma máquina.",
+   "timeout": 15
+  },
+  {
+   "do": "select",
+   "target": {
+    "selector": "main button[role=combobox]",
+    "nth": 0
+   },
+   "option": "R-22",
+   "at": 5.54,
+   "label": "Gás atual: R-22"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Mais indicado",
+    "within": "main"
+   },
+   "seconds": 2.0,
+   "at": 11.14,
+   "label": "o selo Mais indicado no R-438A (MO99)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "scroll",
+   "by": 300,
+   "at": 16.0,
+   "label": "desce até as opções",
+   "duration": 0.9
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 16.6
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Óleo",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.4,
+   "at": 17.0,
+   "label": "Óleo",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Cuidados",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.4,
+   "at": 17.64,
+   "label": "Cuidados",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Pressão de trabalho",
+    "within": "main"
+   },
+   "seconds": 0.4,
+   "at": 18.52,
+   "label": "Pressão de trabalho",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "bar",
+    "exact": true
+   },
+   "at": 20.7,
+   "label": "Unidade: bar"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "psi",
+    "exact": true
+   },
+   "at": 21.7,
+   "label": "volta para psi"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 22.32
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "é a troca de gás no mesmo equipamento",
+    "within": "main"
+   },
+   "seconds": 6.0,
+   "at": 23.12,
+   "label": "a nota Drop-in",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "scroll",
+   "by": -300,
+   "at": 30.16,
+   "label": "volta ao topo (Gás atual)",
+   "duration": 0.8
+  },
+  {
+   "do": "select",
+   "target": {
+    "selector": "main button[role=combobox]",
+    "nth": 0
+   },
+   "option": "R-404A",
+   "at": 31.76,
+   "label": "Gás atual: R-404A"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 36.96
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

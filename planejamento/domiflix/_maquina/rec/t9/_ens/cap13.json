@@ -1,0 +1,214 @@
+{
+ "name": "t9-cap13",
+ "title": "T9 · Cap. 13 · Quem abriu a proposta (narração 36,7 s; marcas L1..L3 = início de cada linha do roteiro)",
+ "seed": "t9-cap13",
+ "pace": 0.45,
+ "cps": 9,
+ "tail": 0.4,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t9/inicio",
+  "t9/apos-cap12"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/orcamentos"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/orcamentos"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie orçamentos, custos e precificação",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|erro|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('Hotel Mirante do Mar') td:nth-child(2)"
+   },
+   "seconds": 1.2,
+   "label": "coluna Cliente do Hotel Mirante do Mar",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('Hotel Mirante do Mar') td:nth-child(2) svg"
+   },
+   "seconds": 0.8,
+   "label": "olho: Visualizada 3× (a dica nativa não grava)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main tbody tr:has-text('Hotel Mirante do Mar') button[aria-label='Ações']"
+   },
+   "label": "menu ⋮ do Hotel Mirante do Mar"
+  },
+  {
+   "do": "pause",
+   "seconds": 0.6
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main tbody tr:has-text('Hotel Mirante do Mar') button[aria-label='Ações']"
+   },
+   "label": "menu ⋮ de Hotel Mirante do Mar de novo (só se não abriu)",
+   "unless": {
+    "role": "menuitem",
+    "name": "Visualizar"
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Visualizar"
+   },
+   "label": "Visualizar (mostra o dia e a hora da última)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Visualizada 3×",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.6,
+   "label": "Visualizada 3× · última vez 02/11 16:20",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Visualizada 3× · última vez\", \"Proposta #2\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Visualizar do #2: Visualizada 3× · última vez dd/MM HH:mm"
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "label": "fecha a janela"
+  },
+  {
+   "do": "wait",
+   "seconds": 0.4
+  },
+  {
+   "do": "eval",
+   "js": "(() => { const d = document.querySelector('[role=dialog]'); if (!d) return 'ja fechada'; const b = [...d.querySelectorAll('button')].find((x) => [x.textContent, x.getAttribute('aria-label'), x.title].some((v) => /^\\s*fechar\\s*$/i.test(v || ''))); if (!b) return 'sem botao Fechar'; b.click(); return 'fechada pelo botao'; })()",
+   "label": "Fechar (se o Esc não fechou)"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('Casa de Repouso') td:nth-child(2)"
+   },
+   "seconds": 0.35,
+   "label": "linha da Casa de Repouso Vida Mansa (prospecto)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('Casa de Repouso') td:nth-child(2)"
+   },
+   "seconds": 0.45,
+   "label": "linha da Casa de Repouso Vida Mansa (prospecto) (continua)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('Casa de Repouso') td:nth-child(2) svg"
+   },
+   "seconds": 1.6,
+   "label": "olho apagado: Não visualizada",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"(prospecto)\", \"Não visualizada\", \"Enviado\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main tbody tr\")].filter(e=>!true||e.innerText.includes(\"Casa de Repouso\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Casa de Repouso Vida Mansa: prospecto, Não visualizada"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main tbody tr:has-text('Hotel Mirante do Mar') button[aria-label='Ações']"
+   },
+   "label": "menu ⋮ de uma linha"
+  },
+  {
+   "do": "pause",
+   "seconds": 0.6
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main tbody tr:has-text('Hotel Mirante do Mar') button[aria-label='Ações']"
+   },
+   "label": "menu ⋮ de Hotel Mirante do Mar de novo (só se não abriu)",
+   "unless": {
+    "role": "menuitem",
+    "name": "Abrir proposta em nova guia"
+   }
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "menuitem",
+    "name": "Abrir proposta em nova guia"
+   },
+   "seconds": 1.6,
+   "label": "item Abrir proposta em nova guia (sem clicar)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "label": "fecha o menu"
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

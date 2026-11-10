@@ -1,0 +1,285 @@
+{
+ "title": "T0 v2 · cap01 · Como funcionam os tutoriais",
+ "seed": "t0v2-cap01",
+ "pace": 0.5,
+ "tail": 1.2,
+ "cps": 9,
+ "seedExtra": [
+  "t0v2/catalogo",
+  "t0v2/progresso-camila",
+  "t0v2/usuario-novo",
+  "t0v2/lembrete-dispensado",
+  "t0v2/conta-contratada"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/domiflix",
+  "/domiflix/assistir/crm-e-kanban/1?trilha=tutoriais-do-sistema",
+  "/domiflix/assistir/servicos-tarefas-e-checklists/1?trilha=tutoriais-do-sistema"
+ ],
+ "name": "t0v2-cap01-p",
+ "device": "phone",
+ "start": {
+  "x": 195,
+  "y": 600
+ },
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/domiflix?trilha=tutoriais-do-sistema"
+  },
+  {
+   "do": "waitFor",
+   "text": "Aprenda a usar a Dominex",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "'sem tarja'"
+  },
+  {
+   "do": "pause",
+   "seconds": 0.6
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0.0
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 4.6
+  },
+  {
+   "do": "hover",
+   "target": "Formação básica: 3 de 5",
+   "seconds": 0.9,
+   "optional": true,
+   "timeout": 3,
+   "label": "Formação básica",
+   "at": 5.3
+  },
+  {
+   "do": "scroll",
+   "target": "Na sequência do seu plano",
+   "optional": true,
+   "timeout": 8,
+   "at": 8.8
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 9.4
+  },
+  {
+   "do": "hover",
+   "target": "Na sequência do seu plano",
+   "seconds": 0.8,
+   "optional": true,
+   "timeout": 3,
+   "label": "Na sequência do seu plano",
+   "at": 11.9
+  },
+  {
+   "do": "scroll",
+   "target": "Conheça este módulo",
+   "optional": true,
+   "timeout": 8,
+   "at": 14.4
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 14.44
+  },
+  {
+   "do": "hover",
+   "target": "Conheça este módulo",
+   "seconds": 0.9,
+   "optional": true,
+   "timeout": 3,
+   "label": "Conheça este módulo",
+   "at": 17.3
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Conheça este módulo",
+    "nth": 0
+   },
+   "optional": true,
+   "timeout": 8,
+   "label": "abre a aula do módulo",
+   "at": 21.0
+  },
+  {
+   "do": "waitFor",
+   "text": "Consultar fora da ordem?",
+   "timeout": 8,
+   "at": 22.7
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('button,a,[role=button]')].find(e=>e.innerText.trim().startsWith('Consultar esta aula')).click();'ok'",
+   "label": "clica Consultar esta aula",
+   "at": 24.0
+  },
+  {
+   "do": "hover",
+   "target": "Não tem no seu plano",
+   "seconds": 0.8,
+   "optional": true,
+   "timeout": 3,
+   "label": "selo Não tem no seu plano",
+   "at": 25.3
+  },
+  {
+   "do": "eval",
+   "js": "fetch('http://127.0.0.1:54321/__dev/seed',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({files:['t0v2/conta-teste']})}).then(()=>{const root=document.getElementById('root');const key=Object.keys(root).find(k=>k.startsWith('__reactContainer$'));const st=[root[key]];let n=0;while(st.length&&n++<20000){const f=st.pop();if(!f)continue;const p=f.memoizedProps;if(p&&p.client&&typeof p.client.refetchQueries==='function'){p.client.invalidateQueries();p.client.refetchQueries({type:'active'});break;}if(f.sibling)st.push(f.sibling);if(f.child)st.push(f.child);}})",
+   "label": "volta ao teste (bastidor)",
+   "at": 26.0
+  },
+  {
+   "do": "hover",
+   "target": "Escolher meu plano",
+   "seconds": 0.9,
+   "optional": true,
+   "timeout": 3,
+   "label": "botão Escolher meu plano",
+   "at": 26.7
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 28.2
+  },
+  {
+   "do": "scroll",
+   "by": 380,
+   "duration": 0.8,
+   "at": 29.6
+  },
+  {
+   "do": "hover",
+   "target": "Materiais e extras",
+   "seconds": 0.7,
+   "optional": true,
+   "timeout": 3,
+   "label": "Materiais e extras",
+   "at": 32.2
+  },
+  {
+   "do": "eval",
+   "js": "window.history.pushState({}, '', '/domiflix?trilha=tutoriais-do-sistema'); window.dispatchEvent(new PopStateEvent('popstate')); 'ok'",
+   "label": "volta à trilha",
+   "at": 33.9
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 34.2
+  },
+  {
+   "do": "waitFor",
+   "text": "Trilha do seu plano",
+   "timeout": 10,
+   "at": 34.3
+  },
+  {
+   "do": "eval",
+   "js": "window.scrollTo(0, 0); 'ok'",
+   "at": 34.6
+  },
+  {
+   "do": "hover",
+   "target": "Trilha do seu plano",
+   "seconds": 0.9,
+   "optional": true,
+   "timeout": 3,
+   "label": "Trilha do seu plano 43%",
+   "at": 34.9
+  },
+  {
+   "do": "scroll",
+   "by": 760,
+   "duration": 0.5,
+   "point": {
+    "x": 195,
+    "y": 520
+   },
+   "after": 100,
+   "at": 36.3
+  },
+  {
+   "do": "hover",
+   "target": "Próxima recomendada",
+   "seconds": 0.9,
+   "optional": true,
+   "timeout": 3,
+   "label": "Próxima recomendada",
+   "at": 37.6
+  },
+  {
+   "do": "eval",
+   "js": "window.history.pushState({}, '', '/dashboard'); window.dispatchEvent(new PopStateEvent('popstate')); 'ok'",
+   "label": "volta ao sistema",
+   "at": 38.9
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 39.08
+  },
+  {
+   "do": "waitFor",
+   "text": "Menu",
+   "timeout": 10,
+   "at": 39.4
+  },
+  {
+   "do": "click",
+   "target": "Menu",
+   "optional": true,
+   "timeout": 8,
+   "label": "abre o Menu",
+   "noScroll": true,
+   "at": 40.0
+  },
+  {
+   "do": "scroll",
+   "target": "Tutoriais | Domiflix",
+   "optional": true,
+   "timeout": 8,
+   "at": 42.0
+  },
+  {
+   "do": "hover",
+   "target": "Tutoriais | Domiflix",
+   "seconds": 0.8,
+   "optional": true,
+   "timeout": 3,
+   "label": "Tutoriais | Domiflix",
+   "at": 43.0
+  },
+  {
+   "do": "pause",
+   "seconds": 0.5,
+   "at": 44.4
+  }
+ ]
+}

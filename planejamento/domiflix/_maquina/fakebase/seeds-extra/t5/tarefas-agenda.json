@@ -1,0 +1,69 @@
+{
+ "service_orders": [
+  {
+   "id": "@id:t5.task.t1",
+   "order_number": 0,
+   "entry_type": "tarefa",
+   "origin": "manual",
+   "status": "pendente",
+   "os_type": "visita_tecnica",
+   "task_title": "Entregar material no Hotel Mirante do Mar",
+   "task_type_id": "ed58b936-be10-4c48-b0bb-b57734c16a28",
+   "show_in_schedule": true,
+   "technician_id": "@id:user.bruno",
+   "created_by": "@id:user.camila",
+   "scheduled_date": "@today+1d",
+   "scheduled_time": "15:00:00",
+   "duration_minutes": 60,
+   "schedule_plan": [
+    {
+     "date": "@today+1d",
+     "time": "15:00",
+     "duration_minutes": 60
+    }
+   ],
+   "created_at": "@now-2d",
+   "updated_at": "@now-2d"
+  },
+  {
+   "id": "@id:t5.task.t2",
+   "order_number": 0,
+   "entry_type": "tarefa",
+   "origin": "manual",
+   "status": "pendente",
+   "os_type": "visita_tecnica",
+   "task_title": "Comprar peças na distribuidora",
+   "task_type_id": "109b915d-f9b0-4909-ad4f-5360fa515a79",
+   "show_in_schedule": true,
+   "technician_id": "@id:user.paulo",
+   "created_by": "@id:user.camila",
+   "scheduled_date": "@today+3d",
+   "scheduled_time": "10:00:00",
+   "duration_minutes": 90,
+   "schedule_plan": [
+    {
+     "date": "@today+3d",
+     "time": "10:00",
+     "duration_minutes": 90
+    }
+   ],
+   "created_at": "@now-2d",
+   "updated_at": "@now-2d"
+  }
+ ],
+ "service_order_assignees": [
+  {
+   "id": "@id:t5.assg.t1",
+   "service_order_id": "@id:t5.task.t1",
+   "user_id": "@id:user.bruno",
+   "created_at": "@now-2d"
+  },
+  {
+   "id": "@id:t5.assg.t2",
+   "service_order_id": "@id:t5.task.t2",
+   "user_id": "@id:user.paulo",
+   "created_at": "@now-2d"
+  }
+ ],
+ "_comentario": "T5 · as 2 tarefas que já estão na Agenda. Ficam FORA do inicio.json porque o contador \"Mostrando N de M OS\" do app conta a tarefa e não a mostra (ServiceOrders.tsx:1079-1085). Só entram nos capítulos da Agenda (12 e 13). Gerado por rec/t5/semear.py."
+}

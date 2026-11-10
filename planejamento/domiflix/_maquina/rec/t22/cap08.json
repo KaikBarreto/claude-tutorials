@@ -1,0 +1,837 @@
+{
+ "name": "t22-cap08",
+ "title": "T22 · Cap. 8 · Desenhando a rotina (narração 82,4 s; marcas L1..L5 = início de cada linha do roteiro)",
+ "seed": "t22-cap08",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap05",
+  "t12/inicio",
+  "t12/apos-cap11",
+  "t13/inicio",
+  "t13/apos-cap14",
+  "t19/inicio",
+  "t19/apos-cap13",
+  "t20/inicio",
+  "t20/apos-cap12",
+  "t2/apos-cap10",
+  "t15/inicio",
+  "t15/apos-cap12",
+  "t22/inicio",
+  "t22/apos-cap07"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/funcionarios"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Camila!",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/funcionarios"
+  },
+  {
+   "do": "waitFor",
+   "text": "Funcionários (RH)",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Toggle Sidebar",
+    "nth": 0
+   }
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0.04
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Fluxograma",
+    "exact": true
+   },
+   "at": 1.78,
+   "label": "aba Fluxograma",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "text": "Nenhum fluxograma ainda",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Novo fluxograma",
+    "exact": true
+   },
+   "at": 7.46,
+   "label": "Novo fluxograma",
+   "noScroll": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] input"
+   },
+   "at": 8.9,
+   "label": "nome do fluxograma (clique)",
+   "noScroll": true
+  },
+  {
+   "do": "press",
+   "key": "Control+A"
+  },
+  {
+   "do": "eval",
+   "js": "(() => { document.execCommand('insertText', false, \"Atendimento de chamado do portal\"); const e = document.activeElement; return e && e.value; })()",
+   "label": "nome do fluxograma"
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 9.86
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Criar fluxograma",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 9.86,
+   "label": "Criar fluxograma",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": ".react-flow__node",
+    "hasText": "Início"
+   },
+   "timeout": 20
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": ".react-flow__node",
+    "hasText": "Início"
+   },
+   "at": 11.94,
+   "label": "abre Editar etapa do Início",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "text": "Editar etapa",
+   "timeout": 8
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "label:text-is('Nome da etapa') + input"
+   },
+   "at": 12.9,
+   "label": "Nome da etapa: Chamado aberto no portal (clique)",
+   "noScroll": true
+  },
+  {
+   "do": "press",
+   "key": "Control+A"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "label:text-is('Nome da etapa') + input"
+   },
+   "text": "Chamado aberto no portal",
+   "noClick": true,
+   "label": "Nome da etapa: Chamado aberto no portal",
+   "cps": 20
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Fechar",
+    "exact": true
+   },
+   "label": "fecha o painel (para alcançar o zoom)",
+   "optional": true,
+   "noScroll": true
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 900,
+    "y": 600
+   },
+   "by": 300,
+   "duration": 0.3,
+   "after": 100,
+   "label": "rápido (4x): reduz o quadro com a roda (1/2)"
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 900,
+    "y": 600
+   },
+   "by": 300,
+   "duration": 0.3,
+   "after": 100,
+   "label": "rápido (4x): reduz o quadro com a roda (2/2)"
+  },
+  {
+   "do": "drag",
+   "target": {
+    "selector": ".react-flow__node >> text=\"Chamado aberto no portal\""
+   },
+   "to": {
+    "x": 530,
+    "y": 190
+   },
+   "label": "arrasta o Início para o lugar",
+   "noScroll": true
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify([...document.querySelectorAll('.react-flow__node')].map(n=>{const r=n.getBoundingClientRect();return [n.textContent.slice(0,22),Math.round(r.x),Math.round(r.y),Math.round(r.width),Math.round(r.height)]}))",
+   "label": "diagnóstico: posições das formas"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 21.06
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Adicionar forma",
+    "exact": true
+   },
+   "at": 21.3,
+   "label": "Adicionar forma (lista)",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] button",
+    "hasText": "Decisão"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Início\", \"Tarefa\", \"Decisão\", \"Subproc\", \"Docum\", \"Espera\", \"Fim\", \"Observa\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"body\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere lista de formas"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] button",
+    "hasText": "Início"
+   },
+   "seconds": 0.2,
+   "at": 24.72,
+   "label": "formas do desenho: Início",
+   "optional": true,
+   "timeout": 3,
+   "noScroll": true
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] button",
+    "hasText": "Tarefa"
+   },
+   "seconds": 0.2,
+   "at": 25.6,
+   "label": "formas do desenho: Tarefa",
+   "optional": true,
+   "timeout": 3,
+   "noScroll": true
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] button",
+    "hasText": "Decisão"
+   },
+   "seconds": 0.2,
+   "at": 26.48,
+   "label": "formas do desenho: Decisão",
+   "optional": true,
+   "timeout": 3,
+   "noScroll": true
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] button",
+    "hasText": "Subproc"
+   },
+   "seconds": 0.2,
+   "at": 27.44,
+   "label": "formas do desenho: Subproc",
+   "optional": true,
+   "timeout": 3,
+   "noScroll": true
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] button",
+    "hasText": "Docum"
+   },
+   "seconds": 0.2,
+   "at": 28.8,
+   "label": "formas do desenho: Docum",
+   "optional": true,
+   "timeout": 3,
+   "noScroll": true
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] button",
+    "hasText": "Espera"
+   },
+   "seconds": 0.2,
+   "at": 29.92,
+   "label": "formas do desenho: Espera",
+   "optional": true,
+   "timeout": 3,
+   "noScroll": true
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] button",
+    "hasText": "Fim"
+   },
+   "seconds": 0.2,
+   "at": 30.8,
+   "label": "formas do desenho: Fim",
+   "optional": true,
+   "timeout": 3,
+   "noScroll": true
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] button",
+    "hasText": "Observa"
+   },
+   "seconds": 0.2,
+   "at": 31.6,
+   "label": "formas do desenho: Observa",
+   "optional": true,
+   "timeout": 3,
+   "noScroll": true
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] button",
+    "hasText": "Tarefa"
+   },
+   "seconds": 1.2,
+   "at": 32.74,
+   "label": "forma Tarefa (lista)",
+   "optional": true,
+   "timeout": 3,
+   "noScroll": true
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] button",
+    "hasText": "Decisão"
+   },
+   "seconds": 1.2,
+   "at": 34.9,
+   "label": "forma Decisão (lista)",
+   "optional": true,
+   "timeout": 3,
+   "noScroll": true
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 38.34
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] button",
+    "hasText": "Tarefa"
+   },
+   "at": 38.38,
+   "label": "escolhe Tarefa",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "text": "Editar etapa",
+   "timeout": 8
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "label:text-is('Nome da etapa') + input"
+   },
+   "label": "rápido (4x): nome: Triagem do chamado (clique)",
+   "noScroll": true
+  },
+  {
+   "do": "press",
+   "key": "Control+A"
+  },
+  {
+   "do": "eval",
+   "js": "(() => { document.execCommand('insertText', false, \"Triagem do chamado\"); const e = document.activeElement; return e && e.value; })()",
+   "label": "rápido (4x): nome: Triagem do chamado"
+  },
+  {
+   "do": "drag",
+   "target": {
+    "selector": ".react-flow__node >> text=\"Triagem do chamado\""
+   },
+   "to": {
+    "x": 690,
+    "y": 190
+   },
+   "label": "rápido (4x): arrasta Triagem do chamado para o lugar",
+   "noScroll": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Adicionar forma",
+    "exact": true
+   },
+   "label": "rápido (4x): Adicionar forma (Decisão)",
+   "noScroll": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] button",
+    "hasText": "Decisão"
+   },
+   "label": "rápido (4x): escolhe Decisão",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "text": "Editar etapa",
+   "timeout": 8
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "label:text-is('Nome da etapa') + input"
+   },
+   "label": "rápido (4x): nome: Precisa de visita? (clique)",
+   "noScroll": true
+  },
+  {
+   "do": "press",
+   "key": "Control+A"
+  },
+  {
+   "do": "eval",
+   "js": "(() => { document.execCommand('insertText', false, \"Precisa de visita?\"); const e = document.activeElement; return e && e.value; })()",
+   "label": "rápido (4x): nome: Precisa de visita?"
+  },
+  {
+   "do": "drag",
+   "target": {
+    "selector": ".react-flow__node >> text=\"Precisa de visita?\""
+   },
+   "to": {
+    "x": 845,
+    "y": 190
+   },
+   "label": "rápido (4x): arrasta Precisa de visita? para o lugar",
+   "noScroll": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Adicionar forma",
+    "exact": true
+   },
+   "label": "rápido (4x): Adicionar forma (Tarefa)",
+   "noScroll": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] button",
+    "hasText": "Tarefa"
+   },
+   "label": "rápido (4x): escolhe Tarefa",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "text": "Editar etapa",
+   "timeout": 8
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "label:text-is('Nome da etapa') + input"
+   },
+   "label": "rápido (4x): nome: Agendar visita e técnico (clique)",
+   "noScroll": true
+  },
+  {
+   "do": "press",
+   "key": "Control+A"
+  },
+  {
+   "do": "eval",
+   "js": "(() => { document.execCommand('insertText', false, \"Agendar visita e t\\u00e9cnico\"); const e = document.activeElement; return e && e.value; })()",
+   "label": "rápido (4x): nome: Agendar visita e técnico"
+  },
+  {
+   "do": "drag",
+   "target": {
+    "selector": ".react-flow__node >> text=\"Agendar visita e técnico\""
+   },
+   "to": {
+    "x": 1000,
+    "y": 190
+   },
+   "label": "rápido (4x): arrasta Agendar visita e técnico para o lugar",
+   "noScroll": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Adicionar forma",
+    "exact": true
+   },
+   "label": "rápido (4x): Adicionar forma (Tarefa)",
+   "noScroll": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] button",
+    "hasText": "Tarefa"
+   },
+   "label": "rápido (4x): escolhe Tarefa",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "text": "Editar etapa",
+   "timeout": 8
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "label:text-is('Nome da etapa') + input"
+   },
+   "label": "rápido (4x): nome: Executar a visita (clique)",
+   "noScroll": true
+  },
+  {
+   "do": "press",
+   "key": "Control+A"
+  },
+  {
+   "do": "eval",
+   "js": "(() => { document.execCommand('insertText', false, \"Executar a visita\"); const e = document.activeElement; return e && e.value; })()",
+   "label": "rápido (4x): nome: Executar a visita"
+  },
+  {
+   "do": "drag",
+   "target": {
+    "selector": ".react-flow__node >> text=\"Executar a visita\""
+   },
+   "to": {
+    "x": 1155,
+    "y": 190
+   },
+   "label": "rápido (4x): arrasta Executar a visita para o lugar",
+   "noScroll": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Adicionar forma",
+    "exact": true
+   },
+   "label": "rápido (4x): Adicionar forma (Documento)",
+   "noScroll": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] button",
+    "hasText": "Documento"
+   },
+   "label": "rápido (4x): escolhe Documento",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "text": "Editar etapa",
+   "timeout": 8
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "label:text-is('Nome da etapa') + input"
+   },
+   "label": "rápido (4x): nome: Relatório de Serviço (clique)",
+   "noScroll": true
+  },
+  {
+   "do": "press",
+   "key": "Control+A"
+  },
+  {
+   "do": "eval",
+   "js": "(() => { document.execCommand('insertText', false, \"Relat\\u00f3rio de Servi\\u00e7o\"); const e = document.activeElement; return e && e.value; })()",
+   "label": "rápido (4x): nome: Relatório de Serviço"
+  },
+  {
+   "do": "drag",
+   "target": {
+    "selector": ".react-flow__node >> text=\"Relatório de Serviço\""
+   },
+   "to": {
+    "x": 1155,
+    "y": 400
+   },
+   "label": "rápido (4x): arrasta Relatório de Serviço para o lugar",
+   "noScroll": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Adicionar forma",
+    "exact": true
+   },
+   "label": "rápido (4x): Adicionar forma (Tarefa)",
+   "noScroll": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] button",
+    "hasText": "Tarefa"
+   },
+   "label": "rápido (4x): escolhe Tarefa",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "text": "Editar etapa",
+   "timeout": 8
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "label:text-is('Nome da etapa') + input"
+   },
+   "label": "rápido (4x): nome: Orientar o cliente por telefone (clique)",
+   "noScroll": true
+  },
+  {
+   "do": "press",
+   "key": "Control+A"
+  },
+  {
+   "do": "eval",
+   "js": "(() => { document.execCommand('insertText', false, \"Orientar o cliente por telefone\"); const e = document.activeElement; return e && e.value; })()",
+   "label": "rápido (4x): nome: Orientar o cliente por telefone"
+  },
+  {
+   "do": "drag",
+   "target": {
+    "selector": ".react-flow__node >> text=\"Orientar o cliente por telefone\""
+   },
+   "to": {
+    "x": 845,
+    "y": 400
+   },
+   "label": "rápido (4x): arrasta Orientar o cliente por telefone para o lugar",
+   "noScroll": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Adicionar forma",
+    "exact": true
+   },
+   "label": "rápido (4x): Adicionar forma (Fim)",
+   "noScroll": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] button",
+    "hasText": "Fim"
+   },
+   "label": "rápido (4x): escolhe Fim",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "text": "Editar etapa",
+   "timeout": 8
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "label:text-is('Nome da etapa') + input"
+   },
+   "label": "rápido (4x): nome: Chamado encerrado (clique)",
+   "noScroll": true
+  },
+  {
+   "do": "press",
+   "key": "Control+A"
+  },
+  {
+   "do": "eval",
+   "js": "(() => { document.execCommand('insertText', false, \"Chamado encerrado\"); const e = document.activeElement; return e && e.value; })()",
+   "label": "rápido (4x): nome: Chamado encerrado"
+  },
+  {
+   "do": "drag",
+   "target": {
+    "selector": ".react-flow__node >> text=\"Chamado encerrado\""
+   },
+   "to": {
+    "x": 1000,
+    "y": 590
+   },
+   "label": "rápido (4x): arrasta Chamado encerrado para o lugar",
+   "noScroll": true
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify([...document.querySelectorAll('.react-flow__node')].map(n=>{const r=n.getBoundingClientRect();return [n.textContent.slice(0,22),Math.round(r.x),Math.round(r.y),Math.round(r.width),Math.round(r.height)]}))",
+   "label": "diagnóstico: posições das formas"
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 71.81
+  },
+  {
+   "do": "drag",
+   "target": {
+    "selector": ".react-flow__node:has-text('Chamado aberto') .react-flow__handle-right.source"
+   },
+   "to": {
+    "selector": ".react-flow__node:has-text('Triagem') .react-flow__handle-left.target"
+   },
+   "at": 74.85,
+   "label": "liga Chamado aberto a Triagem",
+   "noScroll": true
+  },
+  {
+   "do": "drag",
+   "target": {
+    "selector": ".react-flow__node:has-text('Chamado aberto') .react-flow__handle-right.source"
+   },
+   "to": {
+    "selector": ".react-flow__node:has-text('Triagem') .react-flow__handle-left.target"
+   },
+   "label": "liga Chamado aberto a Triagem (repete: se a primeira não pegou; o quadro ignora ligação repetida)",
+   "unless": {
+    "selector": ".react-flow__edge",
+    "nth": 0
+   },
+   "noScroll": true
+  },
+  {
+   "do": "eval",
+   "js": "document.querySelectorAll('.react-flow__edge').length",
+   "label": "diagnóstico: número de ligações (1)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Salvo",
+   "timeout": 10
+  },
+  {
+   "do": "pause",
+   "seconds": 1.0
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 82.39
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z",
+  "disc-overview-view-mode": "grid"
+ }
+}

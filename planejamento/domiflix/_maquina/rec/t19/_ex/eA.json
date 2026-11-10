@@ -1,0 +1,403 @@
+{
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap05",
+  "t12/inicio",
+  "t12/apos-cap11",
+  "t13/inicio",
+  "t13/apos-cap14",
+  "t19/inicio"
+ ],
+ "stopOnFail": false,
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ },
+ "steps": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Camila!",
+   "timeout": 25
+  },
+  {
+   "do": "wait",
+   "ms": 1500
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Configurações",
+    "exact": true
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Integrações",
+    "exact": true
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Cobranças (Asaas)",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 1200
+  },
+  {
+   "do": "shot",
+   "name": "a01-inativo"
+  },
+  {
+   "do": "text",
+   "selector": "main",
+   "name": "inativo",
+   "max": 2500
+  },
+  {
+   "do": "list",
+   "selector": "main button,main [role=tab]"
+  },
+  {
+   "do": "click",
+   "target": {
+    "placeholder": "Cole aqui sua chave de API"
+   }
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{document.execCommand('insertText',false,'$aact_exemplo_glacial_0000');const e=document.activeElement;return e.type+' '+e.value.length})()"
+  },
+  {
+   "do": "shot",
+   "name": "a02-chave"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Ativar recebimentos",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 2500
+  },
+  {
+   "do": "shot",
+   "name": "a03-ativo"
+  },
+  {
+   "do": "text",
+   "selector": "main",
+   "name": "ativo",
+   "max": 6000
+  },
+  {
+   "do": "list",
+   "selector": "main button,main [role=switch],main [role=combobox],main input"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const m=document.querySelector('main');const ps=[m,...document.querySelectorAll('main *')].filter(e=>e.scrollHeight>e.clientHeight+20&&getComputedStyle(e).overflowY.match(/auto|scroll/));ps.forEach(e=>e.scrollTo(0,700));return ps.length+' roláveis'})()"
+  },
+  {
+   "do": "shot",
+   "name": "a04-rolou700"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const m=document.querySelector('main');const ps=[m,...document.querySelectorAll('main *')].filter(e=>e.scrollHeight>e.clientHeight+20&&getComputedStyle(e).overflowY.match(/auto|scroll/));ps.forEach(e=>e.scrollTo(0,1400));return ps.length+' roláveis'})()"
+  },
+  {
+   "do": "shot",
+   "name": "a05-rolou1400"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const m=document.querySelector('main');const ps=[m,...document.querySelectorAll('main *')].filter(e=>e.scrollHeight>e.clientHeight+20&&getComputedStyle(e).overflowY.match(/auto|scroll/));ps.forEach(e=>e.scrollTo(0,2100));return ps.length+' roláveis'})()"
+  },
+  {
+   "do": "shot",
+   "name": "a06-rolou2100"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const m=document.querySelector('main');const ps=[m,...document.querySelectorAll('main *')].filter(e=>e.scrollHeight>e.clientHeight+20&&getComputedStyle(e).overflowY.match(/auto|scroll/));ps.forEach(e=>e.scrollTo(0,3000));return ps.length+' roláveis'})()"
+  },
+  {
+   "do": "shot",
+   "name": "a07-rolou3000"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const m=document.querySelector('main');const ps=[m,...document.querySelectorAll('main *')].filter(e=>e.scrollHeight>e.clientHeight+20&&getComputedStyle(e).overflowY.match(/auto|scroll/));ps.forEach(e=>e.scrollTo(0,0));return ps.length+' roláveis'})()"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Escolher agora",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 1500
+  },
+  {
+   "do": "shot",
+   "name": "a08-escolher"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button[role=combobox]",
+    "nth": 0
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "shot",
+   "name": "a09-combo-conta"
+  },
+  {
+   "do": "list",
+   "selector": "[role=option]"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Conta Principal"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 400
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button[role=combobox]",
+    "nth": 1
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "shot",
+   "name": "a10-combo-cat"
+  },
+  {
+   "do": "list",
+   "selector": "[role=option]"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Vendas de Serviços"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 400
+  },
+  {
+   "do": "shot",
+   "name": "a11-financeiro"
+  },
+  {
+   "do": "text",
+   "selector": "main",
+   "name": "fin",
+   "max": 400
+  },
+  {
+   "do": "list",
+   "selector": "main button"
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('main button')].filter(b=>/^Salvar/.test(b.innerText.trim())).map(b=>b.innerText.trim()+' | '+(b.closest('section,div[class*=space-y]')?.innerText||'').slice(0,60).replace(/\\n/g,' '))"
+  },
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Camila!",
+   "timeout": 25
+  },
+  {
+   "do": "goto",
+   "url": "/configuracoes?tab=integracoes&integration=asaas"
+  },
+  {
+   "do": "wait",
+   "ms": 2000
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Simulador",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 1000
+  },
+  {
+   "do": "shot",
+   "name": "a12-simulador"
+  },
+  {
+   "do": "text",
+   "selector": "main",
+   "name": "sim",
+   "max": 2500
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#sim-amount"
+   },
+   "text": "1200,00"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Cartão",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "list",
+   "selector": "main [role=combobox],main [role=switch],main [role=radio],main button"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button[role=combobox]",
+    "nth": 0
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 400
+  },
+  {
+   "do": "shot",
+   "name": "a13-parc"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "3x"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "shot",
+   "name": "a14-resultado"
+  },
+  {
+   "do": "text",
+   "selector": "main",
+   "name": "resultado",
+   "max": 2500
+  },
+  {
+   "do": "html",
+   "selector": "main [aria-label=\"Quem paga a taxa\"]",
+   "max": 1500
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Repassar ao cliente",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "shot",
+   "name": "a15-repasse"
+  },
+  {
+   "do": "text",
+   "selector": "main",
+   "name": "repasse",
+   "max": 1500
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "A empresa absorve",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 400
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Pix",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "shot",
+   "name": "a16-pix"
+  },
+  {
+   "do": "text",
+   "selector": "main",
+   "name": "pix",
+   "max": 1800
+  }
+ ]
+}

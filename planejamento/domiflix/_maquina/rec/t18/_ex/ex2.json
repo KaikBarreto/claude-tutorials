@@ -1,0 +1,160 @@
+{
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap15",
+  "t7/inicio",
+  "t18/fim-t7-provisorio",
+  "t18/catalogo"
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ },
+ "start": "/dashboard",
+ "stopOnFail": false,
+ "steps": [
+  {
+   "do": "goto",
+   "url": "/agenda"
+  },
+  {
+   "do": "waitFor",
+   "text": "Visualize e gerencie os agendamentos",
+   "timeout": 25
+  },
+  {
+   "do": "wait",
+   "ms": 1200
+  },
+  {
+   "do": "shot",
+   "name": "b00-agenda"
+  },
+  {
+   "do": "list",
+   "selector": "main [role=tab]"
+  },
+  {
+   "do": "text",
+   "selector": "main",
+   "name": "texto da agenda",
+   "max": 2500
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "#9",
+    "within": "main",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 1000
+  },
+  {
+   "do": "shot",
+   "name": "b01-resumo"
+  },
+  {
+   "do": "text",
+   "selector": "[role=dialog], main",
+   "name": "painel",
+   "max": 1800
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Preencher OS",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Glacial Cold Brasil",
+   "timeout": 25
+  },
+  {
+   "do": "wait",
+   "ms": 2500
+  },
+  {
+   "do": "shot",
+   "name": "b02-os"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const q=[...document.querySelectorAll('button,a')].filter(e=>e.getClientRects().length&&/cnico/i.test(e.getAttribute('aria-label')||''));return q.map(e=>{const r=e.getBoundingClientRect();return [e.tagName,e.getAttribute('aria-label'),Math.round(r.x),Math.round(r.y),Math.round(r.width),Math.round(r.height)].join('|')})})()",
+   "max": 1500
+  },
+  {
+   "do": "eval",
+   "js": "document.documentElement.scrollHeight+' x '+window.innerHeight+' x '+window.innerWidth"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const b=[...document.querySelectorAll('button')].find(e=>/cnico/i.test(e.getAttribute('aria-label')||''));if(!b)return 'SEM';b.click();return 'clicado'})()"
+  },
+  {
+   "do": "wait",
+   "ms": 3000
+  },
+  {
+   "do": "shot",
+   "name": "b03-overlay"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const q=[...document.querySelectorAll('button')].filter(e=>e.getClientRects().length);return q.map(e=>{const r=e.getBoundingClientRect();return [(e.innerText||'').trim().slice(0,30),e.getAttribute('aria-label')||'',Math.round(r.x),Math.round(r.y),Math.round(r.width),Math.round(r.height)].join('|')}).slice(0,60)})()",
+   "max": 5000
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const cs=[...document.querySelectorAll('canvas')].map(c=>{const r=c.getBoundingClientRect();return Math.round(r.x)+','+Math.round(r.y)+' '+Math.round(r.width)+'x'+Math.round(r.height)});return cs})()"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "button",
+    "hasText": "Conversão"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 1200
+  },
+  {
+   "do": "shot",
+   "name": "b04-conversao-na-os"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "button",
+    "hasText": "Voltar para OS"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 1500
+  },
+  {
+   "do": "shot",
+   "name": "b05-voltou"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const q=[...document.querySelectorAll('button')].filter(e=>e.getClientRects().length&&/cnico/i.test(e.getAttribute('aria-label')||''));return q.map(e=>{const r=e.getBoundingClientRect();return [e.getAttribute('aria-label'),Math.round(r.x),Math.round(r.y)].join('|')})})()"
+  },
+  {
+   "do": "text",
+   "selector": "body",
+   "name": "texto da OS",
+   "max": 1500
+  }
+ ]
+}

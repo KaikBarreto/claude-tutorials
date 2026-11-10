@@ -1,0 +1,388 @@
+{
+ "name": "t2-cap04",
+ "title": "T2 · Cap. 4 · O cargo do escritório (narração 68,5 s; marcas L1..L5 = início de cada linha do roteiro)",
+ "seed": "t2-cap04",
+ "pace": 0.5,
+ "cps": 40,
+ "tail": 0.4,
+ "start": {
+  "x": 900,
+  "y": 420
+ },
+ "seedExtra": [
+  "t1/apos-cap13",
+  "t2/inicio",
+  "t2/apos-cap03"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/configuracoes"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "goto",
+   "url": "/configuracoes?tab=usuarios"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "main p",
+    "hasText": "usuários •"
+   },
+   "timeout": 15
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Configurações",
+    "exact": true,
+    "within": "main"
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Configurações de Cargos",
+   "timeout": 10
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  }
+ ],
+ "steps": [
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Novo Cargo",
+    "exact": true
+   },
+   "label": "Novo Cargo"
+  },
+  {
+   "do": "click",
+   "target": {
+    "placeholder": "Ex: Técnico de Campo"
+   },
+   "label": "clica no campo Nome"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Ex: Técnico de Campo"
+   },
+   "text": "Escritório",
+   "cps": 40,
+   "label": "nome do cargo: Escritório",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "placeholder": "Descrição opcional"
+   },
+   "label": "clica no campo Descrição"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Descrição opcional"
+   },
+   "text": "Atendimento, OS, orçamentos e financeiro do dia a dia",
+   "cps": 80,
+   "label": "descrição do cargo",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "placeholder": "Buscar tela ou ação..."
+   },
+   "label": "clica na busca"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Buscar tela ou ação..."
+   },
+   "text": "orcamento",
+   "cps": 14,
+   "label": "digita orcamento (sem acento)",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "switch",
+    "name": "Acesso à tela Orçamentos",
+    "exact": true
+   },
+   "label": "liga a tela Orçamentos"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Buscar tela ou ação..."
+   },
+   "text": "financeiro",
+   "cps": 14,
+   "label": "digita financeiro",
+   "clear": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "switch",
+    "name": "Acesso à tela Financeiro",
+    "exact": true
+   },
+   "label": "liga a tela Financeiro"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "switch",
+    "name": "Gerenciar Financeiro",
+    "exact": true
+   },
+   "label": "liga Gerenciar Financeiro"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "switch",
+    "name": "Excluir Lançamento Financeiro",
+    "exact": true
+   },
+   "seconds": 3.2,
+   "label": "Excluir Lançamento Financeiro fica desligado"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Limpar busca",
+    "exact": true
+   },
+   "label": "Limpar busca"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "switch",
+    "name": "Acesso à tela Dashboard",
+    "exact": true
+   },
+   "label": "liga Dashboard"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "switch",
+    "name": "Acesso à tela Agenda",
+    "exact": true
+   },
+   "label": "liga Agenda"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Ver ações de Agenda",
+    "exact": true
+   },
+   "label": "abre a seta da Agenda"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "switch",
+    "name": "Ver Toda a Agenda",
+    "exact": true
+   },
+   "label": "liga Ver Toda a Agenda"
+  },
+  {
+   "do": "eval",
+   "js": "(() => { const e = [...document.querySelectorAll('[role=dialog] [aria-label]')].find((x) => x.getAttribute('aria-label') === \"Acesso \\u00e0 tela Ordens de Servi\\u00e7o\"); if (!e) return 'alvo nao achado: ' + \"Acesso \\u00e0 tela Ordens de Servi\\u00e7o\"; e.scrollIntoView({ block: \"center\", behavior: 'smooth' }); return 'rolando ate ' + \"Acesso \\u00e0 tela Ordens de Servi\\u00e7o\"; })()",
+   "label": "rola até Ordens de Serviço"
+  },
+  {
+   "do": "pause",
+   "seconds": 1.2
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "switch",
+    "name": "Acesso à tela Ordens de Serviço",
+    "exact": true
+   },
+   "label": "liga Ordens de Serviço"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Ver ações de Ordens de Serviço",
+    "exact": true
+   },
+   "label": "abre a seta de Ordens de Serviço"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "switch",
+    "name": "Criar OS",
+    "exact": true
+   },
+   "label": "liga Criar OS"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "switch",
+    "name": "Editar OS",
+    "exact": true
+   },
+   "label": "liga Editar OS"
+  },
+  {
+   "do": "eval",
+   "js": "(() => { const e = [...document.querySelectorAll('[role=dialog] [aria-label]')].find((x) => x.getAttribute('aria-label') === \"Acesso \\u00e0 tela Clientes e Fornecedores\"); if (!e) return 'alvo nao achado: ' + \"Acesso \\u00e0 tela Clientes e Fornecedores\"; e.scrollIntoView({ block: \"center\", behavior: 'smooth' }); return 'rolando ate ' + \"Acesso \\u00e0 tela Clientes e Fornecedores\"; })()",
+   "label": "rola até Clientes e Fornecedores"
+  },
+  {
+   "do": "pause",
+   "seconds": 1.2
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "switch",
+    "name": "Acesso à tela Clientes e Fornecedores",
+    "exact": true
+   },
+   "label": "liga Clientes e Fornecedores"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Ver ações de Clientes e Fornecedores",
+    "exact": true
+   },
+   "label": "abre a seta de Clientes e Fornecedores"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "switch",
+    "name": "Criar Cliente",
+    "exact": true
+   },
+   "label": "liga Criar Cliente"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "switch",
+    "name": "Editar Cliente",
+    "exact": true
+   },
+   "label": "liga Editar Cliente"
+  },
+  {
+   "do": "eval",
+   "js": "(() => { const e = [...document.querySelectorAll('[role=dialog] [aria-label]')].find((x) => x.getAttribute('aria-label') === \"Acesso \\u00e0 tela Equipamentos\"); if (!e) return 'alvo nao achado: ' + \"Acesso \\u00e0 tela Equipamentos\"; e.scrollIntoView({ block: \"center\", behavior: 'smooth' }); return 'rolando ate ' + \"Acesso \\u00e0 tela Equipamentos\"; })()",
+   "label": "rola até Equipamentos"
+  },
+  {
+   "do": "pause",
+   "seconds": 1.2
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "switch",
+    "name": "Acesso à tela Equipamentos",
+    "exact": true
+   },
+   "label": "liga Equipamentos"
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 880,
+    "y": 742
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "label": "Criar Cargo (cursor)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] button",
+    "hasText": "Criar Cargo"
+   },
+   "text": "",
+   "noClick": true,
+   "label": "Criar Cargo"
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll(\"[role=dialog] button\")].filter(b=>/Criar Cargo/i.test(b.textContent)).shift().click()",
+   "label": "Criar Cargo (clique)"
+  },
+  {
+   "do": "pause",
+   "seconds": 1.2
+  },
+  {
+   "do": "waitFor",
+   "text": "Cargo criado com sucesso!",
+   "timeout": 8,
+   "optional": true
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "13 permissões",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.8,
+   "label": "etiqueta: 13 permissões (Escritório)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "3 permissões",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.8,
+   "label": "etiqueta: 3 permissões (Técnico de Campo)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] button:has(svg.lucide-pencil)",
+    "nth": 0
+   },
+   "seconds": 1.0,
+   "label": "o lápis edita um cargo (não clica na lixeira)"
+  }
+ ]
+}

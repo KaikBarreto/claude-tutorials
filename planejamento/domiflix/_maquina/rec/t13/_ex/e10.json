@@ -1,0 +1,228 @@
+{
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap05",
+  "t12/inicio",
+  "t12/apos-cap11",
+  "t13/inicio",
+  "t13/apos-cap04"
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ },
+ "steps": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Camila",
+   "timeout": 25
+  },
+  {
+   "do": "goto",
+   "url": "/financeiro/movimentacoes"
+  },
+  {
+   "do": "wait",
+   "ms": 2000
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Toggle Sidebar",
+    "nth": 0
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Novo cartão de crédito",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 1000
+  },
+  {
+   "do": "shot",
+   "name": "01-novo-cartao"
+  },
+  {
+   "do": "text",
+   "selector": "[role=dialog]",
+   "name": "dlg",
+   "max": 2500
+  },
+  {
+   "do": "list",
+   "selector": "[role=dialog] button[role=combobox]"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='Ex: Nubank Crédito']"
+   },
+   "text": "Cartão Empresarial"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] div:has(> label:has-text('Dia de fechamento')) button[role=combobox]"
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Dia 5",
+    "exact": true
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] div:has(> label:has-text('Dia de vencimento')) button[role=combobox]"
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Dia 15",
+    "exact": true
+   }
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='0,00']"
+   },
+   "text": "10000,00"
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "shot",
+   "name": "02-preenchido"
+  },
+  {
+   "do": "text",
+   "selector": "[role=dialog]",
+   "name": "dlg2",
+   "max": 2500
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Criar Cartão",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 1500
+  },
+  {
+   "do": "shot",
+   "name": "03-criado"
+  },
+  {
+   "do": "text",
+   "selector": "aside",
+   "name": "col",
+   "max": 900
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "aside[aria-label=\"Contas e cartões\"] button",
+    "hasText": "Cartão Empresarial"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 1500
+  },
+  {
+   "do": "shot",
+   "name": "04-cartao"
+  },
+  {
+   "do": "text",
+   "selector": "main",
+   "name": "cartao",
+   "max": 1800
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "aside[aria-label=\"Contas e cartões\"] button",
+    "hasText": "Geral (Todos)"
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Nova movimentação",
+    "exact": true,
+    "nth": 0
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button",
+    "hasText": "Dinheiro que sai da empresa."
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 800
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]",
+    "hasText": "Selecione uma conta"
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Cartão Empresarial"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 800
+  },
+  {
+   "do": "shot",
+   "name": "05-despesa-cartao"
+  },
+  {
+   "do": "text",
+   "selector": "[role=dialog]",
+   "name": "dlg3",
+   "max": 3000
+  },
+  {
+   "do": "list",
+   "selector": "[role=dialog] button[role=combobox], [role=dialog] button[aria-haspopup], [role=dialog] button:has(svg.lucide-plus)"
+  }
+ ]
+}

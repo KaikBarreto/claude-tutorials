@@ -1,0 +1,446 @@
+{
+ "name": "t8-cap12",
+ "title": "T8 · Cap. 12 · Contar e ajustar (narração 85,8 s; marcas L1..L8 = início de cada linha do roteiro)",
+ "seed": "t8-cap12",
+ "pace": 0.4,
+ "cps": 12,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap15",
+  "t8/inicio",
+  "t8/apos-cap11"
+ ],
+ "prewarm": [
+  "/estoque"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/estoque"
+  },
+  {
+   "do": "waitFor",
+   "text": "Controle de peças e materiais",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Toggle Sidebar",
+    "nth": 0
+   }
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|erro|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Inventários",
+    "exact": true
+   },
+   "at": 5.14,
+   "label": "aba Inventários"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Novo inventário",
+    "exact": true,
+    "within": "main"
+   },
+   "at": 6.66,
+   "label": "Novo inventário"
+  },
+  {
+   "do": "waitFor",
+   "text": "Selecione os locais de estoque que serão contados",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] label:has-text(\"Estoque Principal\")"
+   },
+   "at": 11.06,
+   "label": "marca o Estoque Principal"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Avançar",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 12.02,
+   "label": "Avançar"
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 13.32
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] button.rounded-xl",
+    "hasText": "Todos os materiais"
+   },
+   "seconds": 0.2,
+   "at": 14.26,
+   "label": "escopo: Todos os materiais",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] button.rounded-xl",
+    "hasText": "Por grupo"
+   },
+   "seconds": 0.2,
+   "at": 15.46,
+   "label": "escopo: Por grupo",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] button.rounded-xl",
+    "hasText": "Itens específicos"
+   },
+   "seconds": 0.2,
+   "at": 16.18,
+   "label": "escopo: Itens específicos",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button.rounded-xl",
+    "hasText": "Por grupo"
+   },
+   "at": 16.36,
+   "label": "escolhe Por grupo de material"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] label:has-text(\"Gases\")"
+   },
+   "at": 19.3,
+   "label": "marca Gases"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] label:has-text(\"Elétrica\")"
+   },
+   "at": 20.1,
+   "label": "marca Elétrica"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Avançar",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 20.94,
+   "label": "Avançar"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 21.84
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Resumo do inventário",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.0,
+   "at": 22.62,
+   "label": "o resumo do inventário",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] textarea"
+   },
+   "text": "Contagem do mês",
+   "cps": 12,
+   "at": 23.88,
+   "label": "observação: Contagem do mês"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Criar inventário",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 26.54,
+   "label": "Criar inventário"
+  },
+  {
+   "do": "waitFor",
+   "text": "Contagem do mês",
+   "timeout": 15
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 29.52
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main tbody tr:has-text(\"Contagem do mês\")"
+   },
+   "at": 29.52,
+   "label": "abre o inventário criado (clique na linha)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Esperado",
+   "timeout": 15
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] thead th",
+    "hasText": "Esperado"
+   },
+   "seconds": 1.2,
+   "at": 30.06,
+   "label": "a coluna Esperado",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] thead th",
+    "hasText": "Contado"
+   },
+   "seconds": 1.8,
+   "at": 34.86,
+   "label": "os campos Contado, vazios",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 37.92
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] tbody tr:has-text(\"Gás refrigerante R-410A\") input"
+   },
+   "text": "16",
+   "at": 46.05,
+   "label": "R-410A contado: 16"
+  },
+  {
+   "do": "press",
+   "key": "Tab",
+   "label": "sai do campo (salva)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] tbody tr:has-text(\"Gás refrigerante R-32\") input"
+   },
+   "text": "6",
+   "at": 49.04,
+   "label": "R-32 contado: 6"
+  },
+  {
+   "do": "press",
+   "key": "Tab",
+   "label": "sai do campo (salva)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] tbody tr:has-text(\"Capacitor 35\") input"
+   },
+   "text": "8",
+   "at": 51.05,
+   "label": "Capacitor 35 µF contado: 8"
+  },
+  {
+   "do": "press",
+   "key": "Tab",
+   "label": "sai do campo (salva)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] tbody tr:has-text(\"Capacitor 40\") input"
+   },
+   "text": "13",
+   "at": 54.29,
+   "label": "Capacitor 40 µF contado: 13"
+  },
+  {
+   "do": "press",
+   "key": "Tab",
+   "label": "sai do campo (salva)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Divergências encontradas",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.6,
+   "at": 56.85,
+   "label": "a faixa: Divergências encontradas, 2 itens",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Divergências (2)",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 59.49,
+   "label": "aba Divergências (2)"
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 59.75
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] thead th",
+    "hasText": "Valor divergência"
+   },
+   "seconds": 0.8,
+   "at": 63.09,
+   "label": "o valor de cada divergência",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 65.65
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Finalizar inventário",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 72.75,
+   "label": "Finalizar inventário"
+  },
+  {
+   "do": "waitFor",
+   "text": "Finalizar inventário?",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Finalizar",
+    "exact": true,
+    "within": "[role=alertdialog]"
+   },
+   "at": 75.01,
+   "label": "Finalizar"
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 77.49
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Finalizado",
+    "within": "main"
+   },
+   "seconds": 1.2,
+   "at": 77.79,
+   "label": "Inventário #1: Finalizado",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "tab",
+    "name": "Histórico de Materiais (Kardex)",
+    "exact": true
+   },
+   "seconds": 0.4,
+   "at": 80.03,
+   "label": "aba Histórico de Materiais (Kardex)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 85.84
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

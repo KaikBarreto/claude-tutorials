@@ -1,0 +1,326 @@
+{
+ "name": "t4-cap11",
+ "title": "T4 · Cap. 11 · Combinando respostas (narração 38,4 s; marcas L1..L3 = início de cada linha do roteiro)",
+ "seed": "t4-cap11",
+ "pace": 0.6,
+ "cps": 14,
+ "tail": 1.5,
+ "start": {
+  "x": 900,
+  "y": 480
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap10"
+ ],
+ "prewarm": [
+  "/servicos",
+  "/servicos?tab=checklists"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/servicos"
+  },
+  {
+   "do": "waitFor",
+   "text": "Configure os tipos de serviços, tarefas e checklists",
+   "timeout": 20
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Checklists",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Lista de checklists",
+   "timeout": 15
+  },
+  {
+   "do": "waitFor",
+   "text": "Editar checklist",
+   "timeout": 15
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Higienização de split",
+    "exact": true,
+    "within": "main [role=list]"
+   }
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Editar checklist",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Voltar à prévia",
+   "timeout": 15
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Nova Pergunta",
+    "exact": true
+   },
+   "at": 2.66,
+   "label": "Nova Pergunta"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "role": "dialog"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#checklist-question-text"
+   },
+   "text": "Filtros lavados?",
+   "cps": 14,
+   "at": 5.6,
+   "label": "pergunta: Filtros lavados?",
+   "noClick": true
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "checkbox",
+    "name": "Verdadeiro/Falso",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.3,
+   "at": 7.64,
+   "label": "deixa Verdadeiro/Falso marcado"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "checkbox",
+    "name": "Foto",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 9.36,
+   "label": "marca Foto também"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Exclusivo",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.3,
+   "at": 10.4,
+   "label": "Modo de resposta múltipla: Exclusivo"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Cumulativo",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.3,
+   "at": 16.72,
+   "label": "Cumulativo"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Cumulativo",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 19.6,
+   "label": "escolhe Cumulativo"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Tirar ou anexar foto",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.5,
+   "at": 21.12,
+   "label": "a prévia: marca e anexa a foto"
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 23.67
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] div.flex.items-start.gap-3:has(label:text-is(\"Exigir foto da câmera\")) button[role=switch]"
+   },
+   "at": 23.67,
+   "label": "liga Exigir foto da câmera"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Tirar foto agora",
+    "exact": false,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.8,
+   "at": 25.41,
+   "label": "a prévia mostra Tirar foto agora"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Nova Pergunta",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 27.89,
+   "label": "Nova Pergunta (salva)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Pergunta adicionada!",
+   "timeout": 8,
+   "optional": true
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 29.75
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Nova Pergunta",
+    "exact": true
+   },
+   "at": 29.75,
+   "label": "Nova Pergunta (quarta)"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "role": "dialog"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#checklist-question-text"
+   },
+   "text": "Dreno escoando",
+   "cps": 14,
+   "at": 30.83,
+   "label": "pergunta: Dreno escoando",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "checkbox",
+    "name": "Vídeo",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "label": "marca Vídeo"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "checkbox",
+    "name": "Verdadeiro/Falso",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "label": "desmarca Verdadeiro/Falso"
+  },
+  {
+   "do": "eval",
+   "js": "(() => { const l=[...document.querySelectorAll('[role=dialog] label')].find(x=>x.textContent.trim()==='Exigir gravação na hora');const b=l && l.closest('div.flex.items-start.gap-3') && l.closest('div.flex.items-start.gap-3').querySelector('button[role=switch]');if(b) b.focus(); return !!b; })()",
+   "label": "(foco no interruptor)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] div.flex.items-start.gap-3:has(label:text-is(\"Exigir gravação na hora\")) button[role=switch]"
+   },
+   "label": "liga Exigir gravação na hora"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Gravar vídeo agora",
+    "exact": false,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.4,
+   "at": 35.79,
+   "label": "a prévia mostra Gravar vídeo agora"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 38.4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Nova Pergunta",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "label": "Nova Pergunta (salva a quarta)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Pergunta adicionada!",
+   "timeout": 8,
+   "optional": true
+  }
+ ]
+}

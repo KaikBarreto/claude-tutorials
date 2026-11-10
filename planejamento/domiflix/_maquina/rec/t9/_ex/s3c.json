@@ -1,0 +1,260 @@
+{
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t9/inicio",
+  "t9/_dev/apos-cap04",
+  "t9/_dev/apos-cap09"
+ ],
+ "start": "/dashboard",
+ "stopOnFail": false,
+ "steps": [
+  {
+   "do": "goto",
+   "url": "/orcamentos"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie orçamentos, custos e precificação",
+   "timeout": 20
+  },
+  {
+   "do": "wait",
+   "ms": 1200
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main tbody tr:has-text('Hotel Mirante do Mar') button[aria-haspopup='menu']"
+   },
+   "after": 800
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Aprovar orçamento"
+   },
+   "optional": true,
+   "after": 1500
+  },
+  {
+   "do": "shot",
+   "name": "80-aprovar-hotel"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const ds=[...document.querySelectorAll('[role=dialog],[data-radix-popper-content-wrapper]')];const root=ds.length?ds[ds.length-1]:document.querySelector('main')||document;return [...root.querySelectorAll('button,input,textarea,select,[role=combobox],[role=switch],[role=checkbox],[role=tab],[role=option],[role=menuitem],[role=slider]')].filter(e=>e.getClientRects().length).map(e=>{const r=e.getBoundingClientRect();return [e.tagName[0],e.type||'',e.getAttribute('role')||'',(e.innerText||'').replace(/\\s+/g,' ').slice(0,38),e.getAttribute('aria-label')||'',e.placeholder||'',(e.value||'').slice(0,14),Math.round(r.x),Math.round(r.y),Math.round(r.width),Math.round(r.height),e.disabled?'D':''].join('|')})})()",
+   "max": 6000
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('[role=dialog]')].pop().innerText.slice(0,2200)",
+   "max": 2300
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Já recebi"
+   },
+   "optional": true,
+   "after": 900
+  },
+  {
+   "do": "shot",
+   "name": "81-ja-recebi"
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('[role=dialog]')].pop().innerText.slice(0,2200)",
+   "max": 2300
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const ds=[...document.querySelectorAll('[role=dialog],[data-radix-popper-content-wrapper]')];const root=ds.length?ds[ds.length-1]:document.querySelector('main')||document;return [...root.querySelectorAll('button,input,textarea,select,[role=combobox],[role=switch],[role=checkbox],[role=tab],[role=option],[role=menuitem],[role=slider]')].filter(e=>e.getClientRects().length).map(e=>{const r=e.getBoundingClientRect();return [e.tagName[0],e.type||'',e.getAttribute('role')||'',(e.innerText||'').replace(/\\s+/g,' ').slice(0,38),e.getAttribute('aria-label')||'',e.placeholder||'',(e.value||'').slice(0,14),Math.round(r.x),Math.round(r.y),Math.round(r.width),Math.round(r.height),e.disabled?'D':''].join('|')})})()",
+   "max": 6000
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Vou receber depois"
+   },
+   "optional": true,
+   "after": 900
+  },
+  {
+   "do": "shot",
+   "name": "82-vou-receber"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const ds=[...document.querySelectorAll('[role=dialog],[data-radix-popper-content-wrapper]')];const root=ds.length?ds[ds.length-1]:document.querySelector('main')||document;return [...root.querySelectorAll('button,input,textarea,select,[role=combobox],[role=switch],[role=checkbox],[role=tab],[role=option],[role=menuitem],[role=slider]')].filter(e=>e.getClientRects().length).map(e=>{const r=e.getBoundingClientRect();return [e.tagName[0],e.type||'',e.getAttribute('role')||'',(e.innerText||'').replace(/\\s+/g,' ').slice(0,38),e.getAttribute('aria-label')||'',e.placeholder||'',(e.value||'').slice(0,14),Math.round(r.x),Math.round(r.y),Math.round(r.width),Math.round(r.height),e.disabled?'D':''].join('|')})})()",
+   "max": 6000
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('[role=dialog] button')].filter(b=>/\\d{2}\\/\\d{2}\\/\\d{4}|dd\\/mm/.test(b.innerText)).map(b=>[b.innerText,Math.round(b.getBoundingClientRect().y)].join('|'))",
+   "max": 300
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:has-text('03/11/2026')"
+   },
+   "optional": true,
+   "after": 900
+  },
+  {
+   "do": "shot",
+   "name": "83-calendario-venc"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "gridcell",
+    "name": "20",
+    "exact": true
+   },
+   "optional": true,
+   "after": 900
+  },
+  {
+   "do": "shot",
+   "name": "84-venc-20"
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('[role=dialog]')].pop().innerText.slice(0,2400)",
+   "max": 2500
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Aprovar e gerar conta a receber"
+   },
+   "optional": true,
+   "after": 1800
+  },
+  {
+   "do": "eval",
+   "js": "(document.querySelector('[data-sonner-toaster]')||{}).innerText||'sem toast'",
+   "max": 400
+  },
+  {
+   "do": "shot",
+   "name": "85-hotel-aprovado"
+  },
+  {
+   "do": "text",
+   "selector": "main tbody",
+   "name": "lista depois do hotel",
+   "max": 3200
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main tbody tr:has-text('Hotel Mirante do Mar') button[aria-haspopup='menu']"
+   },
+   "after": 800
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const ds=[...document.querySelectorAll('[role=dialog],[data-radix-popper-content-wrapper]')];const root=ds.length?ds[ds.length-1]:document.querySelector('main')||document;return [...root.querySelectorAll('button,input,textarea,select,[role=combobox],[role=switch],[role=checkbox],[role=tab],[role=option],[role=menuitem],[role=slider]')].filter(e=>e.getClientRects().length).map(e=>{const r=e.getBoundingClientRect();return [e.tagName[0],e.type||'',e.getAttribute('role')||'',(e.innerText||'').replace(/\\s+/g,' ').slice(0,38),e.getAttribute('aria-label')||'',e.placeholder||'',(e.value||'').slice(0,14),Math.round(r.x),Math.round(r.y),Math.round(r.width),Math.round(r.height),e.disabled?'D':''].join('|')})})()",
+   "max": 6000
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "after": 500
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main tbody tr:has-text('Pousada Brisa do Mar') button[aria-haspopup='menu']"
+   },
+   "after": 800
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Aprovar orçamento"
+   },
+   "optional": true,
+   "after": 1500
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Aprovar e gerar conta a receber"
+   },
+   "optional": true,
+   "after": 1800
+  },
+  {
+   "do": "eval",
+   "js": "(document.querySelector('[data-sonner-toaster]')||{}).innerText||'sem toast'",
+   "max": 400
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main tbody tr:has-text('Pousada Brisa do Mar') button[aria-haspopup='menu']"
+   },
+   "after": 800
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const ds=[...document.querySelectorAll('[role=dialog],[data-radix-popper-content-wrapper]')];const root=ds.length?ds[ds.length-1]:document.querySelector('main')||document;return [...root.querySelectorAll('button,input,textarea,select,[role=combobox],[role=switch],[role=checkbox],[role=tab],[role=option],[role=menuitem],[role=slider]')].filter(e=>e.getClientRects().length).map(e=>{const r=e.getBoundingClientRect();return [e.tagName[0],e.type||'',e.getAttribute('role')||'',(e.innerText||'').replace(/\\s+/g,' ').slice(0,38),e.getAttribute('aria-label')||'',e.placeholder||'',(e.value||'').slice(0,14),Math.round(r.x),Math.round(r.y),Math.round(r.width),Math.round(r.height),e.disabled?'D':''].join('|')})})()",
+   "max": 6000
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Gerar OS"
+   },
+   "optional": true,
+   "after": 1500
+  },
+  {
+   "do": "shot",
+   "name": "86-distribuir"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const ds=[...document.querySelectorAll('[role=dialog],[data-radix-popper-content-wrapper]')];const root=ds.length?ds[ds.length-1]:document.querySelector('main')||document;return [...root.querySelectorAll('button,input,textarea,select,[role=combobox],[role=switch],[role=checkbox],[role=tab],[role=option],[role=menuitem],[role=slider]')].filter(e=>e.getClientRects().length).map(e=>{const r=e.getBoundingClientRect();return [e.tagName[0],e.type||'',e.getAttribute('role')||'',(e.innerText||'').replace(/\\s+/g,' ').slice(0,38),e.getAttribute('aria-label')||'',e.placeholder||'',(e.value||'').slice(0,14),Math.round(r.x),Math.round(r.y),Math.round(r.width),Math.round(r.height),e.disabled?'D':''].join('|')})})()",
+   "max": 6000
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('[role=dialog]')].pop().innerText.slice(0,2400)",
+   "max": 2500
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Todos"
+   },
+   "optional": true,
+   "after": 800
+  },
+  {
+   "do": "shot",
+   "name": "87-distribuir-todos"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const ds=[...document.querySelectorAll('[role=dialog],[data-radix-popper-content-wrapper]')];const root=ds.length?ds[ds.length-1]:document.querySelector('main')||document;return [...root.querySelectorAll('button,input,textarea,select,[role=combobox],[role=switch],[role=checkbox],[role=tab],[role=option],[role=menuitem],[role=slider]')].filter(e=>e.getClientRects().length).map(e=>{const r=e.getBoundingClientRect();return [e.tagName[0],e.type||'',e.getAttribute('role')||'',(e.innerText||'').replace(/\\s+/g,' ').slice(0,38),e.getAttribute('aria-label')||'',e.placeholder||'',(e.value||'').slice(0,14),Math.round(r.x),Math.round(r.y),Math.round(r.width),Math.round(r.height),e.disabled?'D':''].join('|')})})()",
+   "max": 6000
+  }
+ ]
+}

@@ -1,0 +1,267 @@
+{
+ "name": "t4-cap12",
+ "title": "T4 · Cap. 12 · Organizar e conferir (narração 29,4 s; marcas L1..L3 = início de cada linha do roteiro)",
+ "seed": "t4-cap12",
+ "pace": 0.6,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 900,
+  "y": 480
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap11"
+ ],
+ "prewarm": [
+  "/servicos",
+  "/servicos?tab=checklists"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/servicos"
+  },
+  {
+   "do": "waitFor",
+   "text": "Configure os tipos de serviços, tarefas e checklists",
+   "timeout": 20
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Checklists",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Lista de checklists",
+   "timeout": 15
+  },
+  {
+   "do": "waitFor",
+   "text": "Editar checklist",
+   "timeout": 15
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Higienização de split",
+    "exact": true,
+    "within": "main [role=list]"
+   }
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Editar checklist",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Voltar à prévia",
+   "timeout": 15
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "scroll",
+   "target": {
+    "selector": "div[draggable=true]:has-text(\"Dreno escoando\")"
+   },
+   "at": 0.5,
+   "label": "mostra todas as perguntas da lista"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Conformidade",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.5,
+   "at": 5.16,
+   "label": "selo do tipo de resposta"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Cumulativo",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.4,
+   "at": 7.36,
+   "label": "selo Cumulativo"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Câmera",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.4,
+   "at": 8.4,
+   "label": "selo Câmera"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "div[draggable=true]:has-text(\"Filtros lavados?\") svg.lucide-grip-vertical"
+   },
+   "seconds": 0.3,
+   "at": 9.42,
+   "label": "alça de arrastar"
+  },
+  {
+   "do": "drag",
+   "target": {
+    "selector": "div[draggable=true]:has-text(\"Filtros lavados?\") svg.lucide-grip-vertical"
+   },
+   "to": {
+    "selector": "div[draggable=true]:has-text(\"Aspecto da água retirada\")"
+   },
+   "at": 10.48,
+   "label": "arrasta Filtros lavados? uma posição para cima"
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 14.52
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Pesquisar pergunta, descrição ou tipo..."
+   },
+   "text": "serpentina",
+   "cps": 9,
+   "at": 15.52,
+   "label": "busca por 'serpentina'"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "button[role=combobox]",
+    "hasText": "Todos os tipos"
+   },
+   "at": 17.78,
+   "label": "filtro Todos os tipos"
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 19.38,
+   "label": "fecha o filtro"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 19.97
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Voltar à prévia",
+    "exact": true
+   },
+   "at": 19.97,
+   "label": "Voltar à prévia"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Ver",
+    "exact": true
+   },
+   "at": 20.87,
+   "label": "botão Ver"
+  },
+  {
+   "do": "waitFor",
+   "text": "Como este checklist aparece para o técnico na Ordem de Serviço",
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Esta é uma prévia",
+    "exact": false,
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.0,
+   "at": 22.73,
+   "label": "é igual ao que o técnico vê"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Conforme",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 25.97,
+   "label": "responde Conforme"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "checkbox",
+    "name": "Limpa",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 26.69,
+   "label": "responde Limpa"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 29.44
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Fechar",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "label": "Fechar a prévia"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 8
+  }
+ ]
+}

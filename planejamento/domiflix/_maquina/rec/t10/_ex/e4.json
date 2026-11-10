@@ -1,0 +1,106 @@
+{
+ "seedExtra": [
+  "t2/apos-cap10",
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t9/inicio",
+  "t9/apos-cap16",
+  "t10/inicio",
+  "t10/apos-cap02"
+ ],
+ "stopOnFail": false,
+ "steps": [
+  {
+   "do": "waitFor",
+   "text": "Olá, Camila!",
+   "timeout": 40
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const H={'Content-Type':'application/json','Prefer':'return=representation'};const st=await (await fetch('http://127.0.0.1:54328/rest/v1/crm_stages?select=id,name')).json();const id=n=>st.find(s=>s.name===n).id;\nconst add=async(t,n,v)=>{const r=await fetch('http://127.0.0.1:54328/rest/v1/leads',{method:'POST',headers:H,body:JSON.stringify({title:t,stage_id:id(n),value:v,probability:50,company_id:'9c307966-79f1-567c-ac4d-d5fd3c1a2f40'})});return r.status};\nreturn [await add('Card A','Lead',1000),await add('Card B','Proposta',2000)]})()"
+  },
+  {
+   "do": "goto",
+   "url": "/crm"
+  },
+  {
+   "do": "wait",
+   "ms": 2500
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Toggle Sidebar",
+    "nth": 0
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 800
+  },
+  {
+   "do": "shot",
+   "name": "d1-board"
+  },
+  {
+   "do": "drag",
+   "target": {
+    "selector": "main [draggable=true]",
+    "hasText": "Card B"
+   },
+   "to": {
+    "selector": "main [draggable=true]",
+    "hasText": "Negociação"
+   }
+  },
+  {
+   "do": "shot",
+   "name": "d2-after-card"
+  },
+  {
+   "do": "text",
+   "selector": "main",
+   "name": "board",
+   "max": 900
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Configurações do CRM/Kanban"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 1500
+  },
+  {
+   "do": "drag",
+   "target": {
+    "selector": "[role=dialog] [draggable=true]",
+    "hasText": "Fechado (Perdido)"
+   },
+   "to": {
+    "selector": "[role=dialog] [draggable=true]",
+    "hasText": "Proposta"
+   }
+  },
+  {
+   "do": "shot",
+   "name": "d3-after-row"
+  },
+  {
+   "do": "text",
+   "selector": "[role=dialog]",
+   "name": "dlg",
+   "max": 600
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

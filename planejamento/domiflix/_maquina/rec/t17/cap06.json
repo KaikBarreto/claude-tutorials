@@ -1,0 +1,396 @@
+{
+ "name": "t17-cap06",
+ "title": "T17 · Cap. 6 · Ordens de serviço e satisfação (narração 35,5 s; marcas L1..L3 = início de cada linha do roteiro)",
+ "seed": "t17-cap06",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap05",
+  "t12/inicio",
+  "t12/apos-cap11",
+  "t13/inicio",
+  "t13/apos-cap14",
+  "t19/inicio",
+  "t19/apos-cap13",
+  "t20/inicio",
+  "t20/apos-cap12",
+  "t2/apos-cap10",
+  "t15/inicio",
+  "t15/apos-cap12",
+  "t22/inicio",
+  "t22/apos-cap11",
+  "t21/inicio",
+  "t21/apos-cap10",
+  "t14/inicio",
+  "t14/apos-cap12",
+  "t17/inicio"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/ordens-servico"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Camila!",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "document.getAnimations().filter(a=>a.currentTime<0).forEach(a=>{a.startTime=document.timeline.currentTime})"
+  },
+  {
+   "do": "pause",
+   "seconds": 1.2
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Operacional",
+    "exact": true
+   },
+   "at": 0.2,
+   "label": "abre o grupo Operacional"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "link",
+    "name": "Ordens de Serviço",
+    "exact": true
+   },
+   "at": 1.86,
+   "label": "menu: Ordens de Serviço"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie suas ordens de serviço",
+   "timeout": 15
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Relatório",
+    "exact": true
+   },
+   "at": 4.26,
+   "label": "aba Relatório"
+  },
+  {
+   "do": "waitFor",
+   "text": "Taxa de conclusão",
+   "timeout": 15
+  },
+  {
+   "do": "eval",
+   "js": "document.getAnimations().filter(a=>a.currentTime<0).forEach(a=>{a.startTime=document.timeline.currentTime})",
+   "label": "cartões do relatório (animação)"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Total de OS\", \"Taxa de conclusão\", \"Tempo médio\", \"Faturamento\", \"Volume de OS ao Longo do Tempo\", \"Faturamento ao Longo do Tempo\", \"OS por Dia da Semana\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere o Relatório de OS: quatro cartões e os gráficos"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Total de OS",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.3,
+   "at": 6.32,
+   "label": "KPI Total de OS",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Taxa de conclusão",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.4,
+   "at": 7.84,
+   "label": "KPI Taxa de conclusão",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Tempo médio",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.4,
+   "at": 9.04,
+   "label": "KPI Tempo médio",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Faturamento",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.4,
+   "at": 10.08,
+   "label": "KPI Faturamento",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 760,
+    "y": 420
+   },
+   "by": 632,
+   "duration": 0.5,
+   "after": 100,
+   "at": 10.9,
+   "label": "desce até o gráfico Volume de OS"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Volume de OS ao Longo do Tempo",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.3,
+   "at": 11.9,
+   "label": "gráfico Volume de OS ao Longo do Tempo",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 12.5
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 760,
+    "y": 420
+   },
+   "by": 560,
+   "duration": 0.5,
+   "after": 100,
+   "at": 12.9,
+   "label": "desce até os rankings"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Top 10 Clientes\", \"Top Técnicos (Concluídas)\", \"Saúde do agendamento\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Top 10 Clientes, Top Técnicos e Saúde do agendamento"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Top 10 Clientes",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.6,
+   "at": 14.0,
+   "label": "Top 10 Clientes",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Top Técnicos (Concluídas)",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.6,
+   "at": 15.54,
+   "label": "Top Técnicos (Concluídas)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Saúde do agendamento",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 1.4,
+   "at": 18.02,
+   "label": "Saúde do agendamento",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 21.07
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 760,
+    "y": 420
+   },
+   "by": -3000,
+   "duration": 0.8,
+   "after": 100,
+   "at": 21.07,
+   "label": "volta ao topo"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "NPS e Satisfação",
+    "exact": true
+   },
+   "at": 22.67,
+   "label": "aba NPS e Satisfação"
+  },
+  {
+   "do": "waitFor",
+   "text": "Média por Categoria",
+   "timeout": 15
+  },
+  {
+   "do": "eval",
+   "js": "document.getAnimations().filter(a=>a.currentTime<0).forEach(a=>{a.startTime=document.timeline.currentTime})",
+   "label": "cartões do NPS (animação)"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"NPS Score\", \"Média Geral\", \"Respostas\", \"Taxa de Resposta\", \"Distribuição NPS\", \"Ranking de Técnicos\", \"Feed de Feedbacks\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere NPS e Satisfação: cartões, distribuição, ranking e feed"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "NPS Score",
+    "exact": true,
+    "within": "main",
+    "nth": 0
+   },
+   "seconds": 0.4,
+   "at": 30.11,
+   "label": "KPI NPS Score",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Distribuição NPS",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.4,
+   "at": 31.23,
+   "label": "Distribuição NPS",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 760,
+    "y": 420
+   },
+   "by": 700,
+   "duration": 0.5,
+   "after": 100,
+   "at": 32.18,
+   "label": "desce até o ranking e os comentários"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Ranking de Técnicos",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.3,
+   "at": 33.05,
+   "label": "Ranking de Técnicos",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 760,
+    "y": 420
+   },
+   "by": 508,
+   "duration": 0.5,
+   "after": 100,
+   "at": 33.7,
+   "label": "desce até os comentários"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Feed de Feedbacks",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.5,
+   "at": 34.61,
+   "label": "Feed de Feedbacks",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 35.52
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

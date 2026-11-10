@@ -1,0 +1,161 @@
+{
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/g1-trilha"
+ ],
+ "steps": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Camila!",
+   "timeout": 20
+  },
+  {
+   "do": "goto",
+   "url": "/ordens-servico"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie suas ordens de serviço",
+   "timeout": 20
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{if(!window.__fx){window.__fx=setInterval(()=>document.getAnimations().filter(a=>a.currentTime<0).forEach(a=>{a.startTime=document.timeline.currentTime}),40)}return 1})()"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Nova OS",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Nova Ordem de Serviço"
+  },
+  {
+   "do": "wait",
+   "ms": 800
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('[role=dialog] [role=switch],[role=dialog] [role=combobox]')].map(e=>e.getAttribute('role')+'|'+(e.getAttribute('aria-label')||'')+'|'+(e.id||'')+'|'+e.innerText.slice(0,50))"
+  },
+  {
+   "do": "html",
+   "selector": "[role=dialog] button:has-text('FECHAR'), [role=dialog] button:has-text('Fechar')",
+   "max": 600
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const b=[...document.querySelectorAll('[role=dialog] button')].find(b=>/fechar/i.test(b.textContent));const r=b.getBoundingClientRect();return [b.outerHTML.slice(0,300),r.x,r.y,r.width,r.height]})()"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] [role=switch]",
+    "nth": 0
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 600
+  },
+  {
+   "do": "shot",
+   "name": "d_avulso"
+  },
+  {
+   "do": "text",
+   "selector": "[role=dialog]",
+   "name": "avulso",
+   "max": 900
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] [role=switch]",
+    "nth": 0
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "combobox",
+    "hasText": "Selecione o cliente"
+   }
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Buscar cliente..."
+   },
+   "text": "Colégio"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Colégio Monte Verde"
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]",
+    "hasText": "Adicionar serviços"
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Manutenção Preventiva",
+    "exact": true,
+    "within": "[data-radix-popper-content-wrapper]"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 700
+  },
+  {
+   "do": "shot",
+   "name": "d_pop_marcado"
+  },
+  {
+   "do": "press",
+   "key": "Escape"
+  },
+  {
+   "do": "wait",
+   "ms": 900
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const c=document.querySelector('[role=dialog] .overflow-y-auto');c.scrollTo({top:c.scrollHeight});return c.scrollHeight})()"
+  },
+  {
+   "do": "wait",
+   "ms": 800
+  },
+  {
+   "do": "shot",
+   "name": "d_fundo"
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('[role=dialog] [role=switch],[role=dialog] input,[role=dialog] label')].map(e=>{const r=e.getBoundingClientRect();return e.tagName+'|'+(e.getAttribute('role')||'')+'|'+(e.getAttribute('aria-label')||e.placeholder||e.type||'')+'|'+Math.round(r.x)+','+Math.round(r.y)+'|'+(e.innerText||'').slice(0,40)})",
+   "max": 4000
+  }
+ ],
+ "start": "/dashboard"
+}

@@ -1,0 +1,353 @@
+{
+ "name": "t15-cap07",
+ "title": "T15 · Cap. 7 · O pagamento (narração 62,2 s; marcas L1..L6 = início de cada linha do roteiro)",
+ "seed": "t15-cap07",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 0.4,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap05",
+  "t12/inicio",
+  "t12/apos-cap11",
+  "t13/inicio",
+  "t13/apos-cap14",
+  "t19/inicio",
+  "t19/apos-cap13",
+  "t20/inicio",
+  "t20/apos-cap12",
+  "t2/apos-cap10",
+  "t15/inicio",
+  "t15/apos-cap06"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/funcionarios"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/funcionarios"
+  },
+  {
+   "do": "waitFor",
+   "text": "Lista de Funcionários",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Rafael Lima",
+    "within": "main"
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Movimentações",
+   "timeout": 10
+  },
+  {
+   "do": "pause",
+   "seconds": 0.6
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|erro|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Pagamento",
+    "exact": true
+   },
+   "label": "Pagamento"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Tipo de pagamento",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.0,
+   "label": "abre no regime Normal / Informal",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Descontar dos Vales",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.0,
+   "label": "Descontar dos Vales (100%)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Pagar com",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.0,
+   "label": "Pagar com Conta Principal",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Pagamento, Rafael Lima\", \"Normal / Informal\", \"Total de vales: R$ 300,00, Padrão: 100%\", \"Conta Principal\", \"R$ 20.525,00\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere janela Pagamento do Rafael: vales R$ 300,00 e Conta Principal R$ 20.525,00"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Subtotal",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.0,
+   "label": "resumo do pagamento",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Valor a Pagar",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.2,
+   "label": "Valor a Pagar",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Salário\", \"R$ 3.080,00\", \"Total de Bônus\", \"R$ 150,00\", \"Vales\", \"R$ 300,00\", \"Faltas\", \"R$ 140,00\", \"Subtotal\", \"R$ 2.790,00\", \"Valor a Pagar\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere resumo: valor a pagar R$ 2.790,00"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Confirmar Pagamento",
+    "exact": true
+   },
+   "label": "Confirmar Pagamento"
+  },
+  {
+   "do": "waitFor",
+   "text": "Deseja gerar Recibo?",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Não",
+    "exact": true
+   },
+   "label": "Recibo: Não"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "text": "Deseja gerar Recibo?"
+   },
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Extrato",
+    "exact": true
+   },
+   "label": "Extrato"
+  },
+  {
+   "do": "waitFor",
+   "text": "Saldo após",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Saldo após",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.0,
+   "label": "Saldo após de cada movimento",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Gerar Recibo",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.2,
+   "label": "Gerar Recibo no pagamento",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Extrato, Rafael Lima\", \"Vale\", \"Bônus\", \"Falta\", \"Pagamento\", \"Ajuste\", \"Saldo após\", \"Gerar Recibo\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere extrato com vale, bônus, falta, pagamento e ajuste"
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "label": "fecha a janela"
+  },
+  {
+   "do": "wait",
+   "seconds": 0.4
+  },
+  {
+   "do": "eval",
+   "js": "(() => { const d = document.querySelector('[role=dialog]'); if (!d) return 'ja fechada'; const b = [...d.querySelectorAll('button')].find((x) => [x.textContent, x.getAttribute('aria-label'), x.title].some((v) => /^\\s*fechar\\s*$/i.test(v || ''))); if (!b) return 'sem botao Fechar'; b.click(); return 'fechada pelo botao'; })()",
+   "label": "Fechar (se o Esc não fechou)"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Tatiane Ribeiro",
+    "within": "main"
+   },
+   "label": "Tatiane Ribeiro"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Pagamento",
+    "exact": true
+   },
+   "label": "Pagamento (modo CLT)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Proventos",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.8,
+   "label": "Proventos",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "INSS",
+    "within": "[role=dialog]",
+    "exact": true
+   },
+   "seconds": 0.5,
+   "label": "INSS",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "IRRF",
+    "within": "[role=dialog]",
+    "exact": true
+   },
+   "seconds": 0.5,
+   "label": "IRRF",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Vale-transporte",
+    "within": "[role=dialog]",
+    "exact": true
+   },
+   "seconds": 0.5,
+   "label": "Vale-transporte",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Líquido a pagar",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.0,
+   "label": "Líquido a pagar",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Pagamento, Tatiane Ribeiro\", \"CLT\", \"Proventos\", \"Descontos\", \"INSS\", \"IRRF\", \"Vale-transporte\", \"Líquido a pagar\", \"Conta Principal\", \"R$ 17.735,00\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere modo CLT da Tatiane; Conta Principal R$ 17.735,00"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Valores calculados com base nas tabelas vigentes",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.5,
+   "label": "aviso: confira com o contador",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Cancelar",
+    "exact": true
+   },
+   "label": "Cancelar o pagamento da Tatiane"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 10
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

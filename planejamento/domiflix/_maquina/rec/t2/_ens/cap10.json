@@ -1,0 +1,76 @@
+{
+ "name": "t2-cap10",
+ "title": "T2 · Cap. 10 · Vagas do plano (narração 25,4 s; marcas L1..L2 = início de cada linha do roteiro)",
+ "seed": "t2-cap10",
+ "pace": 0.5,
+ "cps": 40,
+ "tail": 0.4,
+ "start": {
+  "x": 900,
+  "y": 420
+ },
+ "seedExtra": [
+  "t1/apos-cap13",
+  "t2/inicio",
+  "t2/apos-cap09"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/configuracoes"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "goto",
+   "url": "/configuracoes?tab=usuarios"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "main p",
+    "hasText": "usuários •"
+   },
+   "timeout": 15
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  }
+ ],
+ "steps": [
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main p",
+    "hasText": "usuários •"
+   },
+   "seconds": 7.0,
+   "label": "contador: ativos e vagas do plano"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[data-sidebar=sidebar] button",
+    "hasText": "Camila Duarte"
+   },
+   "label": "abre o menu da conta"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "menuitem",
+    "name": "Assinatura"
+   },
+   "seconds": 1.8,
+   "label": "Assinatura (sem clicar)"
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "label": "fecha o menu da conta"
+  }
+ ]
+}

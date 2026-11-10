@@ -1,0 +1,267 @@
+{
+ "title": "T0 v2 · cap01 · Como funcionam os tutoriais",
+ "seed": "t0v2-cap01",
+ "pace": 0.5,
+ "tail": 1.2,
+ "cps": 9,
+ "seedExtra": [
+  "t0v2/catalogo",
+  "t0v2/progresso-camila",
+  "t0v2/usuario-novo",
+  "t0v2/conta-teste",
+  "t0v2/lembrete-dispensado"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/domiflix",
+  "/domiflix/assistir/crm-e-kanban/1?trilha=tutoriais-do-sistema",
+  "/domiflix/assistir/servicos-tarefas-e-checklists/1?trilha=tutoriais-do-sistema"
+ ],
+ "name": "t0v2-cap01",
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/domiflix?trilha=tutoriais-do-sistema"
+  },
+  {
+   "do": "waitFor",
+   "text": "Aprenda a usar a Dominex",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "'sem tarja'"
+  },
+  {
+   "do": "pause",
+   "seconds": 0.6
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0.0
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 4.6
+  },
+  {
+   "do": "hover",
+   "target": "Formação básica",
+   "seconds": 0.8,
+   "optional": true,
+   "timeout": 3,
+   "label": "selo Formação básica",
+   "at": 5.1
+  },
+  {
+   "do": "scroll",
+   "target": {
+    "text": "Gestão de Contratos e PMOC",
+    "within": "main"
+   },
+   "optional": true,
+   "timeout": 8,
+   "at": 9.2,
+   "label": "desce até os módulos do plano"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 9.4
+  },
+  {
+   "do": "hover",
+   "target": "Tem no seu plano",
+   "seconds": 0.8,
+   "optional": true,
+   "timeout": 3,
+   "label": "selo Tem no seu plano",
+   "at": 11.9
+  },
+  {
+   "do": "hover",
+   "target": "Na sequência do seu plano",
+   "seconds": 0.7,
+   "optional": true,
+   "timeout": 3,
+   "label": "Na sequência do seu plano",
+   "at": 13.0
+  },
+  {
+   "do": "eval",
+   "js": "fetch('http://127.0.0.1:54321/__dev/seed',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({files:['t0v2/conta-contratada']})}).then(()=>{const root=document.getElementById('root');const key=Object.keys(root).find(k=>k.startsWith('__reactContainer$'));const st=[root[key]];let n=0;while(st.length&&n++<20000){const f=st.pop();if(!f)continue;const p=f.memoizedProps;if(p&&p.client&&typeof p.client.refetchQueries==='function'){p.client.invalidateQueries();p.client.refetchQueries({type:'active'});break;}if(f.sibling)st.push(f.sibling);if(f.child)st.push(f.child);}})",
+   "label": "conta contratada (bastidor)",
+   "at": 14.0
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 14.44
+  },
+  {
+   "do": "scroll",
+   "target": {
+    "text": "CRM e Kanban",
+    "within": "main"
+   },
+   "optional": true,
+   "timeout": 8,
+   "at": 14.5,
+   "label": "desce até os outros módulos"
+  },
+  {
+   "do": "hover",
+   "target": "Não tem no seu plano",
+   "seconds": 0.8,
+   "optional": true,
+   "timeout": 3,
+   "label": "selo Não tem no seu plano",
+   "at": 19.9
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "CRM e Kanban",
+    "within": "main",
+    "nth": 1
+   },
+   "optional": true,
+   "timeout": 8,
+   "label": "abre a aula do módulo",
+   "at": 21.2
+  },
+  {
+   "do": "waitFor",
+   "text": "Consultar fora da ordem?",
+   "timeout": 8,
+   "at": 22.9
+  },
+  {
+   "do": "hover",
+   "target": "Consultar esta aula",
+   "seconds": 0.6,
+   "optional": true,
+   "timeout": 3,
+   "label": "Consultar esta aula",
+   "at": 23.3
+  },
+  {
+   "do": "eval",
+   "js": "fetch('http://127.0.0.1:54321/__dev/seed',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({files:['t0v2/conta-teste']})}).then(()=>{const root=document.getElementById('root');const key=Object.keys(root).find(k=>k.startsWith('__reactContainer$'));const st=[root[key]];let n=0;while(st.length&&n++<20000){const f=st.pop();if(!f)continue;const p=f.memoizedProps;if(p&&p.client&&typeof p.client.refetchQueries==='function'){p.client.invalidateQueries();p.client.refetchQueries({type:'active'});break;}if(f.sibling)st.push(f.sibling);if(f.child)st.push(f.child);}})",
+   "label": "volta ao teste (bastidor)",
+   "at": 23.9
+  },
+  {
+   "do": "click",
+   "target": "Consultar esta aula",
+   "optional": true,
+   "timeout": 8,
+   "label": "clica Consultar esta aula",
+   "at": 24.2
+  },
+  {
+   "do": "hover",
+   "target": "Escolher meu plano",
+   "seconds": 1.0,
+   "optional": true,
+   "timeout": 3,
+   "label": "botão Escolher meu plano",
+   "at": 25.2
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 28.2
+  },
+  {
+   "do": "scroll",
+   "by": 300,
+   "duration": 0.6,
+   "at": 29.6
+  },
+  {
+   "do": "hover",
+   "target": "Materiais e extras",
+   "seconds": 0.6,
+   "optional": true,
+   "timeout": 3,
+   "label": "Materiais e extras",
+   "at": 32.2
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 34.2
+  },
+  {
+   "do": "hover",
+   "target": "Sua trilha",
+   "seconds": 0.8,
+   "optional": true,
+   "timeout": 3,
+   "label": "Sua trilha",
+   "at": 34.4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Aula 5.1: Ordens de Serviço, agenda, equipes e mapa ao vivo"
+   },
+   "seconds": 0.8,
+   "optional": true,
+   "timeout": 3,
+   "label": "próxima aula",
+   "at": 36.9
+  },
+  {
+   "do": "eval",
+   "js": "window.history.pushState({}, '', '/dashboard'); window.dispatchEvent(new PopStateEvent('popstate')); 'ok'",
+   "label": "volta ao sistema",
+   "at": 38.6
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 39.08
+  },
+  {
+   "do": "click",
+   "target": "Camila Duarte",
+   "optional": true,
+   "timeout": 8,
+   "label": "cartão da conta",
+   "at": 40.4
+  },
+  {
+   "do": "hover",
+   "target": "Tutoriais | Domiflix",
+   "seconds": 1.0,
+   "optional": true,
+   "timeout": 3,
+   "label": "Tutoriais | Domiflix",
+   "at": 42.0
+  },
+  {
+   "do": "pause",
+   "seconds": 0.5,
+   "at": 44.0
+  }
+ ]
+}

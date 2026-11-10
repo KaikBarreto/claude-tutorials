@@ -1,0 +1,340 @@
+{
+ "name": "t3v2-cap09",
+ "title": "T3 v2 · Cap. 9 · Fornecedores (narração 44,0 s; marcas L1..L6 = início de cada linha do roteiro)",
+ "seed": "t3v2-cap09",
+ "pace": 0.6,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 980,
+  "y": 480
+ },
+ "seedExtra": [
+  "t3v2/apos-cap08"
+ ],
+ "prewarm": [
+  "/clientes"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/clientes"
+  },
+  {
+   "do": "waitFor",
+   "text": "Lista de Clientes"
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Fornecedores"
+   },
+   "at": 1.7,
+   "label": "aba Fornecedores"
+  },
+  {
+   "do": "waitFor",
+   "text": "Lista de Fornecedores"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Cobre Sul Suprimentos Ltda",
+    "exact": true
+   },
+   "seconds": 0.4,
+   "at": 4.2,
+   "label": "lista de fornecedores (1)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Distribuidora Aurora de Peças Ltda",
+    "exact": true
+   },
+   "seconds": 0.4,
+   "at": 5.3,
+   "label": "a loja de peças"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Gelo Norte Componentes Ltda",
+    "exact": true
+   },
+   "seconds": 0.4,
+   "at": 6.5,
+   "label": "o distribuidor de gás"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Polar Distribuidora de Peças Ltda",
+    "exact": true
+   },
+   "seconds": 0.4,
+   "at": 7.8,
+   "label": "o fabricante"
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 9.08
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Novo Fornecedor"
+   },
+   "seconds": 1.2,
+   "at": 10.2,
+   "label": "Novo Fornecedor (topo do painel da direita)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Novo Fornecedor"
+   },
+   "at": 12.4,
+   "label": "abre Novo Fornecedor"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "placeholder": "Nome do fornecedor"
+   }
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 14.28
+  },
+  {
+   "do": "click",
+   "target": {
+    "placeholder": "Nome do fornecedor"
+   },
+   "at": 14.5,
+   "label": "Nome"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Nome do fornecedor"
+   },
+   "noClick": true,
+   "text": "Ventura Gás e Tubos",
+   "cps": 60,
+   "at": 15.9,
+   "label": "Nome: Ventura Gás e Tubos"
+  },
+  {
+   "do": "press",
+   "key": "Tab",
+   "at": 17.5,
+   "times": 2
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "00.000.000/0000-00"
+   },
+   "noClick": true,
+   "text": "91.345.605/0001-70",
+   "cps": 60,
+   "at": 17.6,
+   "label": "CNPJ"
+  },
+  {
+   "do": "press",
+   "key": "Tab",
+   "at": 18.9
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Nome do contato"
+   },
+   "noClick": true,
+   "text": "Rodrigo",
+   "cps": 30,
+   "at": 19.0,
+   "label": "Contato: Rodrigo"
+  },
+  {
+   "do": "press",
+   "key": "Tab",
+   "at": 19.7
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "(00) 00000-0000"
+   },
+   "noClick": true,
+   "text": "(21) 3000-3105",
+   "cps": 60,
+   "at": 19.8,
+   "label": "Telefone"
+  },
+  {
+   "do": "press",
+   "key": "Tab",
+   "at": 20.9
+  },
+  {
+   "do": "eval",
+   "js": "(() => { document.execCommand('insertText', false, \"vendas@venturagas.example\"); const e = document.activeElement; return e && e.value; })()",
+   "at": 21.1,
+   "label": "E-mail"
+  },
+  {
+   "do": "press",
+   "key": "Tab",
+   "at": 21.8
+  },
+  {
+   "do": "eval",
+   "js": "(() => { document.execCommand('insertText', false, \"Rua das Palmeiras, 45, Niter\\u00f3i\"); const e = document.activeElement; return e && e.value; })()",
+   "at": 22.0,
+   "label": "Endereço"
+  },
+  {
+   "do": "press",
+   "key": "Tab",
+   "at": 23.2
+  },
+  {
+   "do": "eval",
+   "js": "(() => { document.execCommand('insertText', false, \"G\\u00e1s R-410A e tubo de cobre\"); const e = document.activeElement; return e && e.value; })()",
+   "at": 23.4,
+   "label": "Observações: o que compro dele"
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 26.02
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Sem etiquetas",
+    "exact": true
+   },
+   "at": 26.16,
+   "label": "abre a lista de etiquetas"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Preferencial",
+    "exact": true,
+    "within": "[data-radix-popper-content-wrapper]"
+   },
+   "at": 27.78,
+   "label": "marca a Preferencial"
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 29.18,
+   "label": "fecha a lista"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Salvar",
+    "exact": true
+   },
+   "at": 29.4,
+   "label": "Salvar"
+  },
+  {
+   "do": "waitFor",
+   "text": "Fornecedor cadastrado!",
+   "timeout": 8
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 30.34
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 31.3
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Ventura Gás e Tubos",
+    "exact": true
+   },
+   "at": 31.3,
+   "label": "abre a ficha do Ventura Gás e Tubos"
+  },
+  {
+   "do": "waitFor",
+   "text": "Nenhum gasto registrado",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Dados do fornecedor"
+   },
+   "seconds": 0.2,
+   "at": 32.9,
+   "label": "Dados do fornecedor"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Histórico de Gastos"
+   },
+   "seconds": 0.9,
+   "at": 33.85,
+   "label": "Histórico de Gastos"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Nenhum gasto registrado"
+   },
+   "seconds": 2.5,
+   "at": 35.45,
+   "label": "Nenhum gasto registrado (as despesas do Financeiro aparecem aqui)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Histórico de Gastos"
+   },
+   "seconds": 1.4,
+   "at": 39.4,
+   "label": "com o total gasto"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 44.0
+  }
+ ]
+}

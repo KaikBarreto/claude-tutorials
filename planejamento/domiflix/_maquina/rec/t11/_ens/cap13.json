@@ -1,0 +1,249 @@
+{
+ "name": "t11-cap13",
+ "title": "T11 · Cap. 13 · Renovar, pausar e excluir (narração 56,9 s; marcas L1..L3 = início de cada linha do roteiro)",
+ "seed": "t11-cap13",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 0.4,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t2/apos-cap10",
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t9/inicio",
+  "t9/apos-cap16",
+  "t10/apos-cap09",
+  "t11/inicio",
+  "t11/apos-cap12"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/contratos",
+  "/contratos"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Camila!",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/contratos"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie contratos recorrentes e manutenções programadas",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|erro|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr",
+    "hasText": "PMOC - Hotel Mirante do Mar"
+   },
+   "seconds": 0.6,
+   "label": "a linha do hotel",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main tbody tr:has-text('PMOC - Hotel Mirante do Mar') button[aria-label='Ações']"
+   },
+   "label": "menu da linha"
+  },
+  {
+   "do": "pause",
+   "seconds": 0.6
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main tbody tr:has-text('PMOC - Hotel Mirante do Mar') button[aria-label='Ações']"
+   },
+   "label": "menu da linha de novo (só se não abriu)",
+   "unless": {
+    "role": "menuitem",
+    "name": "Pausar"
+   }
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "menuitem",
+    "name": "Pausar"
+   },
+   "seconds": 1.8,
+   "label": "Pausar (sem clicar)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "label": "fecha o menu"
+  },
+  {
+   "do": "pause",
+   "seconds": 0.5
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main tbody tr",
+    "hasText": "PMOC - Hotel Mirante do Mar"
+   },
+   "label": "abre o contrato PMOC - Hotel Mirante do Mar"
+  },
+  {
+   "do": "waitFor",
+   "text": "Visão Geral",
+   "timeout": 20
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Renovar / Estender"
+   },
+   "seconds": 0.8,
+   "label": "botão Renovar / Estender",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Renovar / Estender"
+   },
+   "label": "abre Renovar / Estender"
+  },
+  {
+   "do": "waitFor",
+   "text": "Estender por",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "+6 meses"
+   },
+   "label": "+6 meses",
+   "optional": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "+12 meses"
+   },
+   "label": "+12 meses",
+   "optional": true
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Horizonte atual",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.6,
+   "label": "Horizonte atual e novo horizonte",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Cancelar",
+    "exact": true
+   },
+   "label": "Cancelar (fecha sem renovar)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Excluir contrato"
+   },
+   "label": "abre Excluir contrato"
+  },
+  {
+   "do": "waitFor",
+   "text": "Serão excluídos junto com o contrato",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "ordens de serviço vinculadas",
+    "within": "[role=alertdialog]"
+   },
+   "seconds": 2.4,
+   "label": "a lista do que sai junto",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"12 ordens de serviço vinculadas\", \"4 itens do contrato\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=alertdialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere cap13: a janela de excluir lista as 12 OSs e os 4 itens (a tela mostra 13 OSs)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Tenho certeza que desejo excluir",
+    "within": "[role=alertdialog]"
+   },
+   "seconds": 2.2,
+   "label": "caixa de confirmação (sem marcar)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Cancelar",
+    "exact": true
+   },
+   "label": "Cancelar (fecha sem excluir)"
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

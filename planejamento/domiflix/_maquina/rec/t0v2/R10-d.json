@@ -1,0 +1,83 @@
+{
+ "name": "R10-d",
+ "title": "T0 v2 · R10 · Mensagem pronta para o suporte (texto lido do app) (computador 1280x800)",
+ "seed": "t0v2-R10",
+ "pace": 0.6,
+ "tail": 1.2,
+ "cps": 9,
+ "seedExtra": [
+  "t0v2/catalogo",
+  "t0v2/progresso-camila",
+  "t0v2/usuario-novo",
+  "t0v2/conta-teste"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/domiflix"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/domiflix/assistir/gestao-de-contratos-e-pmoc/1?trilha=tutoriais-do-sistema"
+  },
+  {
+   "do": "waitFor",
+   "text": "Tirar dúvidas com o suporte",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "'sem tarja'"
+  },
+  {
+   "do": "pause",
+   "seconds": 0.6
+  },
+  {
+   "do": "eval",
+   "js": "(() => { window.__wa = null; window.open = (u) => { window.__wa = u; return null; }; return 'stub'; })()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "scroll",
+   "target": "Tirar dúvidas com o suporte",
+   "optional": true,
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": "Tirar dúvidas com o suporte",
+   "seconds": 1.2,
+   "optional": true,
+   "timeout": 3,
+   "label": "o botão"
+  },
+  {
+   "do": "eval",
+   "js": "(() => { const a = [...document.querySelectorAll('a')].find(x => x.href.startsWith('https://wa.me')); if (!a) return 'sem link'; try { return decodeURIComponent(a.href.split('text=')[1] || ''); } catch (e) { return a.href; } })()",
+   "label": "texto da mensagem"
+  },
+  {
+   "do": "pause",
+   "seconds": 2.5
+  }
+ ]
+}

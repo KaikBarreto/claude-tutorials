@@ -1,0 +1,356 @@
+{
+ "name": "t8-cap04",
+ "title": "T8 · Cap. 4 · Locais e grupos de material (narração 55,5 s; marcas L1..L5 = início de cada linha do roteiro)",
+ "seed": "t8-cap04",
+ "pace": 0.4,
+ "cps": 11,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap15",
+  "t8/inicio",
+  "t8/apos-cap03"
+ ],
+ "prewarm": [
+  "/estoque"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/estoque"
+  },
+  {
+   "do": "waitFor",
+   "text": "Controle de peças e materiais",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Toggle Sidebar",
+    "nth": 0
+   }
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|erro|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Configurações",
+    "exact": true,
+    "within": "main"
+   },
+   "at": 4.98,
+   "label": "abre Configurações"
+  },
+  {
+   "do": "waitFor",
+   "text": "Configurações do Estoque",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Gases",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.25,
+   "at": 12.68,
+   "label": "grupo Gases",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Cobre e tubos",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.25,
+   "at": 13.48,
+   "label": "grupo Cobre e tubos",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Elétrica",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.25,
+   "at": 14.84,
+   "label": "grupo Elétrica",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Consumíveis",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.25,
+   "at": 15.8,
+   "label": "grupo Consumíveis",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Locais de estoque",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 17.06,
+   "label": "aba Locais de estoque"
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 17.72
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Estoque Principal",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.8,
+   "at": 17.72,
+   "label": "o Estoque Principal, local padrão",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Nome do local...",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "text": "Van 01",
+   "at": 23.93,
+   "label": "digita Van 01"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] div.flex.gap-2:has(input[placeholder=\"Nome do local...\"]) button"
+   },
+   "at": 25.79,
+   "label": "botão de mais: cria o local"
+  },
+  {
+   "do": "waitFor",
+   "text": "Van 01",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Fechar",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 27.31,
+   "label": "fecha Configurações"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 28.21
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "aside[aria-label=\"Locais de estoque\"] button:has-text(\"Estoque Principal\")"
+   },
+   "seconds": 0.4,
+   "at": 30.59,
+   "label": "a aba Estoque Principal, com a estrela",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "aside[aria-label=\"Locais de estoque\"] button:has-text(\"Van 01\")"
+   },
+   "seconds": 0.4,
+   "at": 31.87,
+   "label": "a aba Van 01",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 33.57
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Configurar local: Van 01",
+    "exact": true
+   },
+   "at": 34.35,
+   "label": "engrenagem da aba Van 01"
+  },
+  {
+   "do": "waitFor",
+   "text": "Configurar Van 01",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Desmarcar todos",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 36.93,
+   "label": "desmarca todos (a Van começa com tudo marcado)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]"
+   },
+   "at": 38.39,
+   "label": "abre Adicionar por grupo"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Gases"
+   },
+   "at": 39.4,
+   "label": "escolhe Gases"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Adicionar grupo",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 40.33,
+   "label": "Adicionar grupo"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] label:has-text(\"Fita isolante\")"
+   },
+   "at": 42.17,
+   "label": "marca a Fita isolante"
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 800,
+    "y": 700
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "at": 42.93,
+   "label": "Salvar (cursor)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] button",
+    "hasText": "Salvar"
+   },
+   "text": "",
+   "noClick": true,
+   "label": "Salvar",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll(\"[role=dialog] button\")].filter(b=>new RegExp(\"Salvar\",\"i\").test(b.textContent)).shift().click()",
+   "at": 43.83,
+   "label": "Salvar (clique)"
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 45.25
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "aside[aria-label=\"Locais de estoque\"] button:has-text(\"Van 01\")"
+   },
+   "at": 45.25,
+   "label": "abre a aba Van 01"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text(\"Fita isolante\")"
+   },
+   "seconds": 4.0,
+   "at": 45.8,
+   "label": "os três materiais da Van 01",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 55.45
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

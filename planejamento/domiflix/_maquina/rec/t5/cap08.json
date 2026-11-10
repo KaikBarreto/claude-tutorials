@@ -1,0 +1,242 @@
+{
+ "name": "t5-cap08",
+ "title": "T5 · Cap. 8 · Status, filtros e busca (narração 27,7 s; marcas L1..L3 = início de cada linha do roteiro)",
+ "seed": "t5-cap08",
+ "pace": 0.3,
+ "cps": 14,
+ "tail": 1.5,
+ "start": {
+  "x": 900,
+  "y": 480
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap07"
+ ],
+ "prewarm": [
+  "/ordens-servico"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/ordens-servico"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie suas ordens de serviço",
+   "timeout": 20
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Configurações",
+    "exact": true,
+    "within": "main"
+   },
+   "at": 2.56,
+   "label": "Configurações"
+  },
+  {
+   "do": "waitFor",
+   "text": "Configurações de OS",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] div[draggable=true]:has-text(\"Pausada\") button[aria-label=\"Ações\"]"
+   },
+   "seconds": 0.4,
+   "at": 4.72,
+   "label": "menu da linha Pausada"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] div[draggable=true]:has-text(\"Pausada\") button[aria-label=\"Ações\"]"
+   },
+   "label": "abre o menu se ainda não abriu",
+   "unless": {
+    "role": "menuitem",
+    "name": "Editar"
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Editar"
+   },
+   "at": 6.7,
+   "label": "Editar"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] input[type=color]"
+   },
+   "seconds": 0.3,
+   "at": 7.92,
+   "label": "nome e cor"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Cancelar",
+    "exact": true
+   },
+   "at": 9.0,
+   "label": "Cancelar"
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 913,
+    "y": 76
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "at": 9.78,
+   "label": "fecha as configurações (cursor)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] button",
+    "hasText": "fechar"
+   },
+   "text": "",
+   "noClick": true,
+   "label": "fecha as configurações"
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll(\"[role=dialog] button\")].filter(b=>/fechar/i.test(b.textContent)).shift().click()",
+   "at": 10.68,
+   "label": "fecha as configurações (clique)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Filtros"
+   },
+   "at": 11.58,
+   "label": "Filtros"
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 13.06
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Em Andamento",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 14.14,
+   "label": "marca Em Andamento"
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 1056,
+    "y": 768
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "at": 15.18,
+   "label": "Aplicar (cursor)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] button",
+    "hasText": "Aplicar"
+   },
+   "text": "",
+   "noClick": true,
+   "label": "Aplicar"
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll(\"[role=dialog] button\")].filter(b=>/Aplicar/i.test(b.textContent)).shift().click()",
+   "at": 16.08,
+   "label": "Aplicar (clique)"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 16.26
+  },
+  {
+   "do": "click",
+   "target": {
+    "placeholder": "Buscar por OS, cliente, telefone, endereço ou serviço..."
+   },
+   "at": 18.46,
+   "label": "campo de busca"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Buscar por OS, cliente, telefone, endereço ou serviço..."
+   },
+   "text": "Monte",
+   "cps": 14,
+   "at": 22.49,
+   "label": "busca Monte",
+   "noClick": true
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Mostrando resultados de todas as OS (filtros pausados)",
+    "exact": true
+   },
+   "seconds": 1.2,
+   "at": 23.33,
+   "label": "filtros pausados"
+  },
+  {
+   "do": "press",
+   "key": "Control+A",
+   "at": 26.29,
+   "label": "seleciona a busca"
+  },
+  {
+   "do": "press",
+   "key": "Backspace",
+   "label": "limpa a busca"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 27.74
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

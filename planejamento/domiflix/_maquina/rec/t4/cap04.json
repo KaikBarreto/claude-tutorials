@@ -1,0 +1,238 @@
+{
+ "name": "t4-cap04",
+ "title": "T4 · Cap. 4 · Organizando a lista (narração 42,5 s; marcas L1..L5 = início de cada linha do roteiro)",
+ "seed": "t4-cap04",
+ "pace": 0.42,
+ "cps": 10,
+ "tail": 1.5,
+ "start": {
+  "x": 900,
+  "y": 480
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/g1-trilha",
+  "t4/g2-vazias",
+  "t4/apos-cap03"
+ ],
+ "prewarm": [
+  "/servicos"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/servicos"
+  },
+  {
+   "do": "waitFor",
+   "text": "6 tipos cadastrados",
+   "timeout": 20
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "6 tipos cadastrados",
+    "exact": true
+   },
+   "seconds": 1.2,
+   "at": 0.05,
+   "label": "lista com os seis serviços"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Carga de Gás",
+    "exact": true,
+    "within": "main [role=list]"
+   },
+   "seconds": 0.6,
+   "at": 2.86,
+   "label": "cada serviço com a sua cor"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Manutenção • GAS",
+    "exact": true
+   },
+   "seconds": 1.0,
+   "label": "categoria e prefixo na linha"
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 6.2
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Buscar por nome ou descrição..."
+   },
+   "text": "higien",
+   "cps": 10,
+   "at": 6.42,
+   "label": "busca por 'higien'"
+  },
+  {
+   "do": "press",
+   "key": [
+    "Control+a",
+    "Backspace"
+   ],
+   "at": 9.24,
+   "label": "limpa a busca"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Filtros",
+    "exact": true
+   },
+   "at": 9.84,
+   "label": "botão Filtros"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 10.2
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Manutenção",
+    "exact": true,
+    "within": "[data-radix-popper-content-wrapper]"
+   },
+   "at": 11.19,
+   "label": "filtra a categoria Manutenção"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Limpar filtros",
+    "exact": true
+   },
+   "label": "Limpar filtros"
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "label": "fecha o filtro",
+   "delay": 60
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Ordenar",
+    "exact": false
+   },
+   "at": 13.14,
+   "label": "botão Ordenar"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Nome (A-Z)",
+    "exact": true,
+    "within": "[data-radix-popper-content-wrapper]"
+   },
+   "seconds": 0.4,
+   "at": 14.34,
+   "label": "Nome (A-Z)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Nome (Z-A)",
+    "exact": true,
+    "within": "[data-radix-popper-content-wrapper]"
+   },
+   "seconds": 0.3,
+   "at": 15.72,
+   "label": "Nome (Z-A)"
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "label": "fecha o Ordenar",
+   "delay": 60
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 17.24
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Manutenção Preventiva",
+    "exact": true,
+    "within": "main [role=list]"
+   },
+   "at": 19.26,
+   "label": "abre Manutenção Preventiva"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "div.flex.items-center.gap-2:has(> label:text-is(\"Vinculado a equipamento\"))"
+   },
+   "seconds": 4.5,
+   "label": "Vinculado a equipamento ligado (Manutenção Preventiva)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Visita Técnica",
+    "exact": true,
+    "within": "main [role=list]"
+   },
+   "at": 27.73,
+   "label": "abre Visita Técnica"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "div.flex.items-center.gap-2:has(> label:text-is(\"Vinculado a equipamento\"))"
+   },
+   "seconds": 5.0,
+   "at": 29.39,
+   "label": "Vinculado a equipamento desligado (Visita Técnica)"
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 35.19
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "div.flex.items-center.gap-2:has(> label:text-is(\"Vinculado a equipamento\"))"
+   },
+   "seconds": 6.0,
+   "at": 35.19,
+   "label": "(ilustração) ligado × desligado"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 42.48
+  }
+ ]
+}

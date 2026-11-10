@@ -1,0 +1,383 @@
+{
+ "name": "t13-cap05",
+ "title": "T13 · Cap. 5 · A compra direta (narração 53,8 s; marcas L1..L5 = início de cada linha do roteiro)",
+ "seed": "t13-cap05",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap05",
+  "t12/inicio",
+  "t12/apos-cap11",
+  "t13/inicio",
+  "t13/apos-cap04"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/estoque"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Camila!",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/estoque"
+  },
+  {
+   "do": "waitFor",
+   "text": "Controle de peças e materiais",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Toggle Sidebar",
+    "nth": 0
+   }
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|erro|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Compras de Material",
+    "exact": true
+   },
+   "at": 8.42,
+   "label": "aba Compras de Material"
+  },
+  {
+   "do": "waitFor",
+   "text": "Nova compra",
+   "timeout": 15
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Nova compra",
+    "exact": true,
+    "within": "main"
+   },
+   "at": 9.54,
+   "label": "abre o menu Nova compra (1.38.19: o botão virou menu)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "menuitem",
+    "name": "Registrar compra direta"
+   },
+   "seconds": 0.9,
+   "label": "item Registrar compra direta",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Registrar compra direta"
+   },
+   "at": 11.56,
+   "label": "Registrar compra direta"
+  },
+  {
+   "do": "waitFor",
+   "text": "Registre a entrada no estoque e a despesa financeira em uma única operação.",
+   "timeout": 10
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 12.24
+  },
+  {
+   "do": "click",
+   "target": {
+    "placeholder": "Ex.: Reposição de cobre",
+    "within": "[role=dialog]"
+   },
+   "at": 16.7,
+   "label": "descrição: Reposição de dreno (clique)"
+  },
+  {
+   "do": "eval",
+   "js": "(() => { document.execCommand('insertText', false, \"Reposi\\u00e7\\u00e3o de dreno\"); const e = document.activeElement; return e && e.value; })()",
+   "label": "descrição: Reposição de dreno (colado)"
+  },
+  {
+   "do": "select",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]",
+    "hasText": "Selecione o fornecedor"
+   },
+   "option": "Distribuidora Aurora de Peças Ltda",
+   "at": 19.4,
+   "label": "fornecedor: Distribuidora Aurora"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Estoque Principal\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere o local de estoque já vem em Estoque Principal"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] div:has(> label:has-text('Local de estoque')) button[role=combobox]",
+    "nth": 0
+   },
+   "seconds": 0.9,
+   "at": 21.5,
+   "label": "Local de estoque: Estoque Principal",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 26.14
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] div:has(> label:has-text('Material 1')) button[role=combobox]",
+    "nth": 0
+   },
+   "at": 26.76,
+   "label": "abre o campo Material 1"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "role": "option",
+    "name": "Mangueira de dreno"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "pause",
+   "seconds": 0.4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Mangueira de dreno"
+   },
+   "label": "Material 1: Mangueira de dreno"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const b=document.querySelector('[role=dialog] button[role=combobox]:not([aria-expanded=true])');return [...document.querySelectorAll('[role=dialog] button[role=combobox]')].map(x=>x.innerText.trim().slice(0,40)).join(' | ')})()",
+   "label": "confere campos de seleção depois de escolher o material"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='0']",
+    "nth": 0
+   },
+   "text": "30",
+   "at": 29.42,
+   "label": "Quantidade 30"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='0,00']",
+    "nth": 0
+   },
+   "text": "3,50",
+   "at": 30.62,
+   "label": "Preço unitário 3,50"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Subtotal: R$ 105,00\", \"Total da compra\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Subtotal e Total da compra R$ 105,00"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Total da compra",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.9,
+   "at": 31.95,
+   "label": "Total da compra R$ 105,00",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 35.34
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const d=document.querySelector('[role=dialog] .overflow-y-auto');if(!d)return 'sem rolagem';d.scrollTo({top:2000,behavior:'smooth'});return d.scrollHeight})()",
+   "at": 35.44,
+   "label": "rola a janela até o lado do Financeiro"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"CSP - Materiais\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere a categoria financeira já vem em CSP - Materiais"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] div:has(> label:has-text('Categoria financeira')) button[role=combobox]",
+    "nth": 0
+   },
+   "seconds": 0.9,
+   "at": 37.74,
+   "label": "Categoria financeira CSP - Materiais",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "select",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]",
+    "hasText": "Caixa"
+   },
+   "option": "Conta Principal",
+   "at": 40.7,
+   "label": "Conta financeira: Conta Principal (a lista abre em Caixa)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Situação do pagamento",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.8,
+   "at": 43.26,
+   "label": "Situação do pagamento: Pago",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "select",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]",
+    "hasText": "Selecione a forma de pagamento"
+   },
+   "option": "PIX",
+   "at": 43.98,
+   "label": "forma de pagamento: PIX"
+  },
+  {
+   "do": "pause",
+   "seconds": 0.5
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 45.5
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Registrar compra",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 46.22,
+   "label": "Registrar compra"
+  },
+  {
+   "do": "pause",
+   "seconds": 1.5
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const d=document.querySelector('[role=dialog]');return (d?'DIALOGO ABERTO: '+d.innerText.slice(-500)+' || ':'')+document.body.innerText.slice(0,300)})()",
+   "label": "o que aparece depois do clique em Registrar compra"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 15
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Reposição de dreno\", \"Compra direta\", \"R$ 105,00\", \"Concluída\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere a compra aparece na lista: Reposição de dreno, Compra direta, R$ 105,00"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const t=document.body.innerText;return t.slice(-700)})()",
+   "label": "texto da tela no fim (aviso do app)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main button",
+    "hasText": "Compra direta"
+   },
+   "seconds": 0.9,
+   "at": 48.35,
+   "label": "a compra direta na lista",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 53.82
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

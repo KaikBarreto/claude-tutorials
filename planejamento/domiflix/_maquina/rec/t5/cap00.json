@@ -1,0 +1,143 @@
+{
+ "name": "t5-cap00",
+ "title": "T5 · Cap. 0 · Abertura (narração 34,3 s; marcas L1..L3 = início de cada linha do roteiro)",
+ "seed": "t5-cap00",
+ "pace": 0.6,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 700,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/cap00-painel"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/ordens-servico",
+  "/agenda",
+  "/funcionarios",
+  "/mapa-ao-vivo",
+  "/dashboard"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Camila!",
+   "timeout": 20
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Olá, Camila!",
+    "exact": false
+   },
+   "seconds": 1.2,
+   "at": 1.0,
+   "label": "tela inicial do Dominex, logada"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Operacional",
+    "exact": true
+   },
+   "seconds": 1.0,
+   "at": 8.4,
+   "label": "o cursor desliza pelo menu até o grupo Operacional"
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 11.64
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Operacional",
+    "exact": true
+   },
+   "at": 11.64,
+   "label": "abre o grupo Operacional"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "link",
+    "name": "Ordens de Serviço",
+    "exact": true
+   },
+   "seconds": 0.9,
+   "at": 14.2,
+   "label": "menu: Ordens de Serviço"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "link",
+    "name": "Agenda",
+    "exact": true
+   },
+   "seconds": 0.8,
+   "at": 16.42,
+   "label": "menu: Agenda"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "link",
+    "name": "Mapa e Rastreamento",
+    "exact": true
+   },
+   "seconds": 1.4,
+   "at": 17.62,
+   "label": "menu: Mapa e Rastreamento"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 23.2
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "link",
+    "name": "Ordens de Serviço",
+    "exact": true
+   },
+   "seconds": 3.0,
+   "at": 30.3,
+   "label": "vamos começar pela tela de Ordens de Serviço"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 34.32
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

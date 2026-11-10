@@ -1,0 +1,222 @@
+{
+ "name": "t21-cap10",
+ "title": "T21 · Cap. 10 · Recapitulando (narração 30,3 s; marcas L1..L4 = início de cada linha do roteiro)",
+ "seed": "t21-cap10",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 0.4,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap05",
+  "t12/inicio",
+  "t12/apos-cap11",
+  "t13/inicio",
+  "t13/apos-cap14",
+  "t19/inicio",
+  "t19/apos-cap13",
+  "t20/inicio",
+  "t20/apos-cap12",
+  "t2/apos-cap10",
+  "t15/inicio",
+  "t15/apos-cap12",
+  "t22/inicio",
+  "t22/apos-cap11",
+  "t21/inicio",
+  "t21/apos-cap05",
+  "t21/corte-dia13"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/configuracoes"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Camila!",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/configuracoes?tab=integracoes&integration=whatsapp"
+  },
+  {
+   "do": "waitFor",
+   "text": "Automação de mensagens",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "pause",
+   "seconds": 0.6
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Conexão"
+   },
+   "label": "abre a área Conexão"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Canal ativo",
+    "exact": true
+   },
+   "seconds": 1.6,
+   "label": "selo Conectado e Canal ativo",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Automações"
+   },
+   "label": "abre as Automações"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Proteção do número",
+    "within": "main"
+   },
+   "seconds": 0.9,
+   "label": "Proteção do número",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const m=document.querySelector('main');const el=[...m.querySelectorAll('*')].find(e=>e.children.length===0&&e.textContent.trim()===\"Escolha quando enviar\");if(!el)return 'SEM ALVO';const sc=(()=>{for(let p=el.parentElement;p;p=p.parentElement){const s=getComputedStyle(p);if(/(auto|scroll)/.test(s.overflowY)&&p.scrollHeight>p.clientHeight+4)return p}return document.scrollingElement})();const dy=Math.round(el.getBoundingClientRect().top-330);if(Math.abs(dy)<3)return 'ok';const y0=sc.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;sc.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'topo '+Math.round(el.getBoundingClientRect().top)})()",
+   "label": "desce até Automação de mensagens"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "radio",
+    "name": "Ordens de serviço"
+   },
+   "seconds": 0.9,
+   "label": "aba Ordens de serviço (avisos da OS ligados)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "radio",
+    "name": "Cobranças"
+   },
+   "seconds": 0.7,
+   "label": "aba Cobranças (só aponta)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Técnico a caminho"
+   },
+   "seconds": 1.2,
+   "label": "Técnico a caminho (Editando, Cordial)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Prévia ilustrativa",
+    "within": "main"
+   },
+   "seconds": 0.81,
+   "label": "aba Ordens de serviço com a prévia",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Prévia ilustrativa",
+    "within": "main"
+   },
+   "seconds": 0.39,
+   "label": "aba Ordens de serviço com a prévia (continua)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Histórico"
+   },
+   "label": "abre o Histórico"
+  },
+  {
+   "do": "waitFor",
+   "text": "Fila e histórico de envios",
+   "timeout": 15
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Fila e histórico de envios\", \"Lido 2\", \"Entregue 1\", \"Ignorado 1\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Histórico com os quatro avisos do dia 13"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main div.grid.grid-cols-2"
+   },
+   "seconds": 1.59,
+   "label": "contadores do Histórico",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main div.grid.grid-cols-2"
+   },
+   "seconds": 0.81,
+   "label": "contadores do Histórico (continua)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

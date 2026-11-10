@@ -1,0 +1,345 @@
+{
+ "name": "t13-cap04",
+ "title": "T13 · Cap. 4 · Saiu dinheiro (narração 62,6 s; marcas L1..L6 = início de cada linha do roteiro)",
+ "seed": "t13-cap04",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap05",
+  "t12/inicio",
+  "t12/apos-cap11",
+  "t13/inicio",
+  "t13/apos-cap03"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/financeiro/movimentacoes"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Camila!",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/financeiro/movimentacoes"
+  },
+  {
+   "do": "waitFor",
+   "text": "Contas e cartões",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Toggle Sidebar",
+    "nth": 0
+   }
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "aside[aria-label=\"Contas e cartões\"] button",
+    "hasText": "Conta Principal"
+   }
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "pause",
+   "seconds": 0.6
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|erro|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Nova movimentação",
+    "exact": true,
+    "nth": 0
+   },
+   "at": 6.98,
+   "label": "Nova movimentação"
+  },
+  {
+   "do": "waitFor",
+   "text": "Escolha como o dinheiro se movimenta.",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button",
+    "hasText": "Dinheiro que sai da empresa."
+   },
+   "at": 8.58,
+   "label": "Despesa"
+  },
+  {
+   "do": "waitFor",
+   "text": "Registre uma receita ou despesa",
+   "timeout": 10
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 9.54
+  },
+  {
+   "do": "select",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]",
+    "hasText": "Selecione uma categoria"
+   },
+   "option": "CSP - Materiais",
+   "at": 9.7,
+   "label": "categoria CSP - Materiais"
+  },
+  {
+   "do": "click",
+   "target": {
+    "placeholder": "Descreva a movimentação",
+    "within": "[role=dialog]"
+   },
+   "at": 13.14,
+   "label": "descrição (clique)"
+  },
+  {
+   "do": "eval",
+   "js": "(() => { document.execCommand('insertText', false, \"G\\u00e1s R-410A e tubos de cobre\"); const e = document.activeElement; return e && e.value; })()",
+   "label": "descrição (colado)"
+  },
+  {
+   "do": "select",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]",
+    "hasText": "Selecione um fornecedor"
+   },
+   "option": "Ventura Gás e Tubos",
+   "at": 15.38,
+   "label": "fornecedor Ventura Gás e Tubos"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 25.29
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='0,00']",
+    "nth": 0
+   },
+   "text": "64000",
+   "cps": 20,
+   "at": 25.29,
+   "label": "Valor 640,00"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const esp=[\"640,00\"];let out='';for(let i=0;i<12;i++){const v=[...document.querySelectorAll(\"[role=dialog]\"+' input, '+\"[role=dialog]\"+' textarea')].map(e=>e.value).join(' | ');const falta=esp.filter(e=>!v.includes(e));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+v.slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Valor 640,00"
+  },
+  {
+   "do": "select",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]",
+    "hasText": "Selecione uma conta"
+   },
+   "option": "Conta Principal",
+   "at": 27.93,
+   "label": "conta Conta Principal"
+  },
+  {
+   "do": "select",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]",
+    "hasText": "Selecione a forma de pagamento"
+   },
+   "option": "Boleto",
+   "at": 29.03,
+   "label": "forma de pagamento Boleto"
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 32.13
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "switch",
+    "name": "Já foi pago",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 33.41,
+   "label": "desliga o Já foi pago"
+  },
+  {
+   "do": "waitFor",
+   "text": "Irá para contas a pagar",
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Irá para contas a pagar",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.9,
+   "at": 35.73,
+   "label": "aviso: irá para contas a pagar",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[aria-haspopup]",
+    "hasText": "Selecione a data"
+   },
+   "at": 39.17,
+   "label": "abre o calendário do Vencimento"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] button:text-is(\"20\")"
+   },
+   "at": 41.09,
+   "label": "escolhe o dia 20 (20/11/2026)"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"20/11/2026\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Vencimento 20/11/2026"
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 42.45
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Mais detalhes",
+    "exact": true
+   },
+   "at": 42.69,
+   "label": "abre Mais detalhes"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const d=document.querySelector('[role=dialog] .overflow-y-auto');if(!d)return 'sem rolagem';d.scrollTo({top:600,behavior:'smooth'});return d.scrollHeight})()",
+   "at": 44.15,
+   "label": "rola a janela até Comprovantes"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Aceita imagens (JPG, PNG) e PDFs",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.9,
+   "at": 46.85,
+   "label": "Comprovantes / Notas Fiscais: Anexar comprovantes, sem anexar",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 53.09
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Salvar",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 53.09,
+   "label": "Salvar"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 12
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{await new Promise(r=>setTimeout(r,900));const el=document.querySelector(\"main\");const t=(el?el.innerText:'').replace(/[\\s\\u00a0]+/g,' ').toLowerCase();return t.includes(\"g\\u00e1s r-410a e tubos de cobre\")?'DIFERENTE: apareceu '+\"G\\u00e1s R-410A e tubos de cobre\":'OK: ausente '+\"G\\u00e1s R-410A e tubos de cobre\"})()",
+   "label": "confere a despesa a pagar NÃO entra no extrato da Conta Principal"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main",
+    "hasText": "Instalação de split"
+   },
+   "seconds": 0.9,
+   "at": 55.48,
+   "label": "o extrato continua só com a receita",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 62.64
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

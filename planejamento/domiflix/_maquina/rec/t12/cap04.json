@@ -1,0 +1,276 @@
+{
+ "name": "t12-cap04",
+ "title": "T12 · Cap. 4 · Onde o chamado cai (narração 71,7 s; marcas L1..L6 = início de cada linha do roteiro)",
+ "seed": "t12-cap04",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap05",
+  "t12/inicio",
+  "t12/apos-cap03"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/ordens-servico",
+  "/clientes"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/clientes"
+  },
+  {
+   "do": "waitFor",
+   "text": "Lista de Clientes",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|erro|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "link",
+    "name": "Dashboard",
+    "exact": true
+   },
+   "at": 3.28,
+   "label": "abre o Dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "chamados de cliente aguardando",
+   "timeout": 15
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Ver chamados",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.4,
+   "at": 8.5,
+   "label": "a janela Você tem 2 chamados de cliente aguardando",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 15.08
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Ver chamados",
+    "exact": true
+   },
+   "at": 15.08,
+   "label": "Ver chamados"
+  },
+  {
+   "do": "waitFor",
+   "text": "Chamados abertos",
+   "timeout": 15
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr",
+    "hasText": "Hotel Mirante do Mar"
+   },
+   "seconds": 1.6,
+   "at": 20.34,
+   "label": "a linha do chamado do hotel",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Pendente",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.8,
+   "at": 28.82,
+   "label": "o status Pendente do chamado",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 30.6
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Chamados abertos",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 1.2,
+   "at": 31.62,
+   "label": "filtro Chamados abertos",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button[role=combobox]",
+    "nth": 1
+   },
+   "at": 34.1,
+   "label": "abre o filtro Todos os portais"
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 36.08,
+   "label": "fecha o filtro"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main tbody tr",
+    "hasText": "Hotel Mirante do Mar"
+   },
+   "at": 38.18,
+   "label": "abre a ordem do chamado"
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 39.08
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Editar",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 2.2,
+   "at": 44.4,
+   "label": "botão Editar da ordem (sem clicar)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 47.73,
+   "label": "fecha a ordem"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Ordens de Serviço",
+    "exact": true
+   },
+   "at": 48.11,
+   "label": "aba Ordens de Serviço (Kanban)"
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 48.85
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Chamados do Portal",
+    "within": "main"
+   },
+   "seconds": 2.2,
+   "at": 48.97,
+   "label": "coluna Chamados do Portal",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Gestão",
+    "exact": true
+   },
+   "at": 61.09,
+   "label": "grupo Gestão do menu"
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 62.29
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "link",
+    "name": "Clientes e Fornecedores",
+    "exact": true
+   },
+   "at": 62.29,
+   "label": "menu Clientes e Fornecedores"
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Hotel Mirante do Mar",
+    "exact": true,
+    "within": "main"
+   },
+   "at": 63.49,
+   "label": "ficha do Hotel Mirante do Mar"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Chamados",
+    "exact": true
+   },
+   "at": 65.65,
+   "label": "aba Chamados da ficha do cliente"
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 71.68
+  }
+ ],
+ "storage": {}
+}

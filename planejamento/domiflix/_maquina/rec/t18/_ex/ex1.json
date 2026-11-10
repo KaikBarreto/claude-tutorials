@@ -1,0 +1,225 @@
+{
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap15",
+  "t7/inicio",
+  "t18/fim-t7-provisorio",
+  "t18/catalogo"
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ },
+ "start": "/dashboard",
+ "stopOnFail": false,
+ "steps": [
+  {
+   "do": "waitFor",
+   "text": "Olá, Camila!",
+   "timeout": 25
+  },
+  {
+   "do": "shot",
+   "name": "a00-dashboard"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "link",
+    "name": "Área do Técnico™",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Termos Técnicos Explicados",
+   "timeout": 20
+  },
+  {
+   "do": "wait",
+   "ms": 1500
+  },
+  {
+   "do": "shot",
+   "name": "a01-inicio"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const q=[...document.querySelectorAll('main input,main textarea,main button,main [role=switch],main [role=tab],main [role=combobox],main [role=slider],main select,main a[href]')];return q.filter(e=>e.getClientRects().length).map(e=>{const r=e.getBoundingClientRect();return [e.tagName.toLowerCase(),e.getAttribute('role')||'',(e.innerText||'').replace(/\\s+/g,' ').trim().slice(0,38),e.placeholder||'',e.getAttribute('aria-label')||'',e.id||'',(e.value==null?'':String(e.value)).slice(0,12),Math.round(r.x)+','+Math.round(r.y)+' '+Math.round(r.width)+'x'+Math.round(r.height)].join('|')})})()",
+   "max": 9000
+  },
+  {
+   "do": "text",
+   "selector": "main",
+   "name": "texto do Início",
+   "max": 2500
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button",
+    "hasText": "Refrigeração e Climatização"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 600
+  },
+  {
+   "do": "shot",
+   "name": "a02-nichos"
+  },
+  {
+   "do": "list",
+   "selector": "[cmdk-item]"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[cmdk-item]",
+    "hasText": "Energia Solar"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 800
+  },
+  {
+   "do": "shot",
+   "name": "a03-solar"
+  },
+  {
+   "do": "text",
+   "selector": "main",
+   "name": "texto da prévia",
+   "max": 1500
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const q=[...document.querySelectorAll('main input,main textarea,main button,main [role=switch],main [role=tab],main [role=combobox],main [role=slider],main select,main a[href]')];return q.filter(e=>e.getClientRects().length).map(e=>{const r=e.getBoundingClientRect();return [e.tagName.toLowerCase(),e.getAttribute('role')||'',(e.innerText||'').replace(/\\s+/g,' ').trim().slice(0,38),e.placeholder||'',e.getAttribute('aria-label')||'',e.id||'',(e.value==null?'':String(e.value)).slice(0,12),Math.round(r.x)+','+Math.round(r.y)+' '+Math.round(r.width)+'x'+Math.round(r.height)].join('|')})})()",
+   "max": 5000
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button",
+    "hasText": "Energia Solar"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[cmdk-item]",
+    "hasText": "Refrigeração e Climatização"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 800
+  },
+  {
+   "do": "shot",
+   "name": "a04-volta"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "nav button",
+    "hasText": "Início"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 800
+  },
+  {
+   "do": "scrolly",
+   "by": 700
+  },
+  {
+   "do": "shot",
+   "name": "a05-glossario"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Buscar termo (ex: BTU, capacitor, pressão)"
+   },
+   "text": "capacitor"
+  },
+  {
+   "do": "wait",
+   "ms": 600
+  },
+  {
+   "do": "shot",
+   "name": "a06-busca-capacitor"
+  },
+  {
+   "do": "list",
+   "selector": "main [data-state] button"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button",
+    "hasText": "Capacitor (µF"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 700
+  },
+  {
+   "do": "shot",
+   "name": "a07-termo-aberto"
+  },
+  {
+   "do": "text",
+   "selector": "main",
+   "name": "texto com o termo aberto",
+   "max": 2500
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Buscar termo (ex: BTU, capacitor, pressão)"
+   },
+   "text": ""
+  },
+  {
+   "do": "wait",
+   "ms": 600
+  },
+  {
+   "do": "shot",
+   "name": "a08-grupos"
+  },
+  {
+   "do": "list",
+   "selector": "main h3, main h2"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button",
+    "hasText": "Elétrica e Instalação"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 700
+  },
+  {
+   "do": "shot",
+   "name": "a09-grupo-aberto"
+  }
+ ]
+}

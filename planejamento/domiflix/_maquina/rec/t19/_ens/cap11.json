@@ -1,0 +1,267 @@
+{
+ "name": "t19-cap11",
+ "title": "T19 · Cap. 11 · Editar e cancelar (narração 35,8 s; marcas L1..L4 = início de cada linha do roteiro)",
+ "seed": "t19-cap11",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 0.4,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap05",
+  "t12/inicio",
+  "t12/apos-cap11",
+  "t13/inicio",
+  "t13/apos-cap14",
+  "t19/inicio",
+  "t19/apos-cap10"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/financeiro/cobrancas"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Camila!",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/financeiro/cobrancas"
+  },
+  {
+   "do": "waitFor",
+   "text": "Cobranças e recorrências",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Toggle Sidebar",
+    "nth": 0
+   }
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Assinaturas",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Academia Ponto Forte",
+   "timeout": 20
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|erro|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button[aria-label=\"Ações da assinatura\"]",
+    "nth": 0
+   },
+   "label": "menu ⋯ da assinatura"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "role": "menuitem",
+    "name": "Editar"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Editar"
+   },
+   "label": "Editar"
+  },
+  {
+   "do": "waitFor",
+   "text": "O cliente não pode ser trocado depois que a recorrência é criada.",
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "O cliente não pode ser trocado",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.6,
+   "label": "Cliente travado",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Cancelar",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "label": "Cancelar (fecha sem salvar)"
+  },
+  {
+   "do": "pause",
+   "seconds": 0.6
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button[aria-label=\"Ações da assinatura\"]",
+    "nth": 0
+   },
+   "label": "menu ⋯ da assinatura"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "role": "menuitem",
+    "name": "Cancelar"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Cancelar"
+   },
+   "label": "Cancelar (abre a janela Cancelar assinatura)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Esta ação não pode ser desfeita.",
+   "timeout": 8
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Cancelar assinatura\", \"as próximas cobranças desta assinatura deixam de ser geradas na Asaas\", \"O histórico de cobranças já realizadas continua disponível no Financeiro\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"body\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere a janela Cancelar assinatura"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Ao cancelar, as próximas cobranças",
+    "within": "[role=alertdialog],[role=dialog]"
+   },
+   "seconds": 1.8,
+   "label": "aviso: as próximas cobranças deixam de ser geradas",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Cancelar assinatura",
+    "exact": true
+   },
+   "seconds": 0.15,
+   "label": "botões Cancelar assinatura e Voltar",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Cancelar assinatura",
+    "exact": true
+   },
+   "seconds": 0.55,
+   "label": "botões Cancelar assinatura e Voltar (continua)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Voltar",
+    "exact": true
+   },
+   "label": "Voltar"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "text": "Esta ação não pode ser desfeita."
+   },
+   "timeout": 8
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Academia Ponto Forte\", \"Ativa\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere a assinatura continua Ativa"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr",
+    "hasText": "Academia Ponto Forte"
+   },
+   "seconds": 1.4,
+   "label": "a assinatura continua Ativa",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr",
+    "hasText": "Academia Ponto Forte"
+   },
+   "seconds": 2.0,
+   "label": "a linha da assinatura (o selo de autorização ativa só aparece no Pix Automático)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

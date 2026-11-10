@@ -1,0 +1,337 @@
+{
+ "name": "t1-cap09",
+ "title": "T1 · Cap. 9 · Origens dos clientes (marcas L1..L5 = início de cada linha da fala; `at` pelos tempos da voz)",
+ "seed": "t1-cap09",
+ "pace": 0.65,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 300
+ },
+ "seedExtra": [
+  "t1/apos-cap08"
+ ],
+ "prewarm": [
+  "/configuracoes"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/configuracoes"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie as configurações do sistema"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "text": "Salvo",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Usabilidade",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "h3:text-is('Origens')"
+   },
+   "timeout": 10
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0.0
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 760,
+    "y": 420
+   },
+   "by": 1500,
+   "duration": 1.4,
+   "after": 50,
+   "label": "rola até o cartão Origens",
+   "at": 0.1
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "h3:text-is('Origens')"
+   },
+   "seconds": 0.4,
+   "label": "cartão Origens"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Lista de origens usada no cadastro de clientes e nas oportunidades do CRM"
+   },
+   "seconds": 3.0,
+   "label": "texto: origens usadas no cadastro de clientes e no CRM",
+   "at": 3.36
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Gerenciar origens"
+   },
+   "label": "Gerenciar origens",
+   "at": 9.56
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "text": "Origens de Clientes",
+    "exact": true
+   },
+   "timeout": 10,
+   "label": "janela Origens de Clientes"
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 11.08
+  },
+  {
+   "do": "click",
+   "target": {
+    "placeholder": "Nova origem..."
+   },
+   "label": "campo Nova origem",
+   "at": 11.08
+  },
+  {
+   "do": "type",
+   "noClick": true,
+   "text": "Panfleto",
+   "cps": 8,
+   "label": "digita o nome Panfleto"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]"
+   },
+   "label": "abre a lista de ícones",
+   "at": 13.18
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Megaphone",
+    "exact": true
+   },
+   "label": "escolhe o ícone"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[aria-haspopup=dialog]"
+   },
+   "label": "abre o seletor de cor"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[style*='background-color: rgb(249, 115, 22)']"
+   },
+   "label": "escolhe a cor laranja"
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "label": "fecha o seletor de cor"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Adicionar",
+    "exact": true
+   },
+   "label": "Adicionar"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "text": "Origem criada!"
+   },
+   "timeout": 10,
+   "label": "aviso: origem criada"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 18.04
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] div.rounded-lg.border.bg-card:has(span:text-is('Panfleto')) button[aria-label='Ações']"
+   },
+   "seconds": 0.3,
+   "label": "menu da linha Panfleto (abre ao passar o mouse)",
+   "at": 18.04
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] div.rounded-lg.border.bg-card:has(span:text-is('Panfleto')) button[aria-label='Ações']"
+   },
+   "unless": {
+    "role": "menuitem",
+    "name": "Editar"
+   },
+   "label": "abre o menu se ainda não abriu"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Editar"
+   },
+   "label": "Editar"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] div.rounded-lg.border.bg-card input"
+   },
+   "label": "campo do nome da origem"
+  },
+  {
+   "do": "press",
+   "key": "End"
+  },
+  {
+   "do": "type",
+   "noClick": true,
+   "text": " de bairro",
+   "cps": 14,
+   "label": "troca o nome para Panfleto de bairro"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button.h-7.w-7.text-primary"
+   },
+   "label": "confirma a edição"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "text": "Origem atualizada!"
+   },
+   "timeout": 10,
+   "label": "aviso: origem atualizada"
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 22.21
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] div.rounded-lg.border.bg-card:has(span:text-is('Panfleto de bairro')) button[aria-label='Ações']"
+   },
+   "seconds": 0.3,
+   "label": "menu da linha Panfleto de bairro (abre ao passar o mouse)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] div.rounded-lg.border.bg-card:has(span:text-is('Panfleto de bairro')) button[aria-label='Ações']"
+   },
+   "unless": {
+    "role": "menuitem",
+    "name": "Excluir"
+   },
+   "label": "abre o menu se ainda não abriu"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Excluir"
+   },
+   "label": "Excluir",
+   "at": 23.65
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "text": "Origem removida!"
+   },
+   "timeout": 10,
+   "label": "aviso: origem removida"
+  },
+  {
+   "do": "pause",
+   "seconds": 0.3,
+   "label": "a lista volta às quatro origens"
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 26.93
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Fechar"
+   },
+   "label": "fecha a janela",
+   "at": 26.93
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "text": "Origens de Clientes",
+    "exact": true
+   },
+   "timeout": 8,
+   "label": "a janela fecha"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "h3:text-is('Origens')"
+   },
+   "seconds": 1.4,
+   "label": "cartão Origens, com as quatro origens"
+  },
+  {
+   "do": "pause",
+   "seconds": 0.6
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 31.52
+  }
+ ]
+}

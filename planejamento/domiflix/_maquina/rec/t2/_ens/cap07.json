@@ -1,0 +1,179 @@
+{
+ "name": "t2-cap07",
+ "title": "T2 · Cap. 7 · Conferindo o acesso (narração 35,6 s; marcas L1..L3 = início de cada linha do roteiro)",
+ "seed": "t2-cap07",
+ "pace": 0.5,
+ "cps": 40,
+ "tail": 0.4,
+ "start": {
+  "x": 900,
+  "y": 420
+ },
+ "seedExtra": [
+  "t1/apos-cap13",
+  "t2/inicio",
+  "t2/apos-cap06"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/configuracoes"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "goto",
+   "url": "/configuracoes?tab=usuarios"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "main p",
+    "hasText": "usuários •"
+   },
+   "timeout": 15
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  }
+ ],
+ "steps": [
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Rafael Lima",
+    "within": "main"
+   },
+   "label": "clica no Rafael Lima na lista"
+  },
+  {
+   "do": "waitFor",
+   "text": "Perfil de acesso",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Perfil de acesso",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 1.4,
+   "label": "Perfil de acesso: Técnico de Campo"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Dados do usuário",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 1.8,
+   "label": "Dados do usuário: Técnico e telefone"
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 960,
+    "y": 500
+   },
+   "by": 300,
+   "duration": 0.9,
+   "after": 100,
+   "label": "desce até Permissões concedidas"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Telas (2)",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.8,
+   "label": "Telas (2): Agenda e Área do Técnico"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Ações (1)",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 1.2,
+   "label": "Ações (1): Editar OS em campo"
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 960,
+    "y": 500
+   },
+   "by": -300,
+   "duration": 0.9,
+   "after": 100,
+   "label": "volta ao topo do painel"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Editar",
+    "exact": true,
+    "within": "main"
+   },
+   "label": "clica em Editar"
+  },
+  {
+   "do": "waitFor",
+   "text": "Atualize os dados e permissões do usuário",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Técnico de Campo",
+    "exact": true
+   },
+   "seconds": 1.2,
+   "label": "a janela vem preenchida, com o chip Técnico de Campo aceso"
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 960,
+    "y": 742
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "label": "Cancelar (cursor)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] button",
+    "hasText": "Cancelar"
+   },
+   "text": "",
+   "noClick": true,
+   "label": "Cancelar"
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll(\"[role=dialog] button\")].filter(b=>/Cancelar/i.test(b.textContent)).shift().click()",
+   "label": "Cancelar (clique)"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 8
+  }
+ ]
+}

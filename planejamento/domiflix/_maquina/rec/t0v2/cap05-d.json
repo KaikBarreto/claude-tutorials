@@ -1,0 +1,177 @@
+{
+ "title": "T0 v2 · cap05 · Quando a empresa cresce",
+ "seed": "t0v2-cap05",
+ "pace": 0.4,
+ "tail": 1.2,
+ "cps": 9,
+ "seedExtra": [
+  "t0v2/catalogo",
+  "t0v2/progresso-camila",
+  "t0v2/usuario-novo",
+  "t0v2/conta-contratada",
+  "t0v2/pagamentos",
+  "t0v2/lembrete-dispensado"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/assinatura"
+ ],
+ "name": "t0v2-cap05",
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/assinatura"
+  },
+  {
+   "do": "waitFor",
+   "text": "Histórico de pagamentos",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "pause",
+   "seconds": 0.6
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0.0
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 8.44
+  },
+  {
+   "do": "scroll",
+   "target": "Gerenciar Meu Plano",
+   "optional": true,
+   "timeout": 8,
+   "at": 8.6
+  },
+  {
+   "do": "click",
+   "target": "Gerenciar Meu Plano",
+   "optional": true,
+   "timeout": 8,
+   "label": "abre Gerenciar Meu Plano",
+   "at": 11.8
+  },
+  {
+   "do": "waitFor",
+   "text": "Personalizado",
+   "timeout": 15,
+   "at": 12.9
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "tab",
+    "name": "Planos Prontos"
+   },
+   "seconds": 0.8,
+   "optional": true,
+   "timeout": 3,
+   "label": "aba Planos Prontos",
+   "at": 14.5
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Personalizado"
+   },
+   "optional": true,
+   "timeout": 8,
+   "label": "aba Personalizado",
+   "at": 15.8
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Cobranças online",
+    "within": "[role=dialog]"
+   },
+   "optional": true,
+   "timeout": 8,
+   "label": "marca Cobranças online",
+   "noScroll": true,
+   "at": 16.6
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "CRM / Kanban",
+    "within": "[role=dialog]"
+   },
+   "optional": true,
+   "timeout": 8,
+   "label": "marca CRM / Kanban",
+   "noScroll": true,
+   "at": 17.3
+  },
+  {
+   "do": "scroll",
+   "by": 500,
+   "duration": 0.6,
+   "at": 18.0
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:has(svg.lucide-plus)",
+    "nth": "last"
+   },
+   "optional": true,
+   "timeout": 8,
+   "label": "sobe usuários",
+   "noScroll": true,
+   "at": 18.7
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:has(svg.lucide-plus)",
+    "nth": "last"
+   },
+   "optional": true,
+   "timeout": 8,
+   "label": "sobe usuários 2",
+   "noScroll": true,
+   "at": 19.3
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 20.6
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 29.49
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 36.45
+  },
+  {
+   "do": "pause",
+   "seconds": 0.5,
+   "at": 42.88
+  }
+ ]
+}

@@ -1,0 +1,381 @@
+{
+ "name": "t3v2-cap13",
+ "title": "T3 v2 · Cap. 13 · Recap e próximo (narração 45,6 s; marcas L1..L3 = início de cada linha do roteiro)",
+ "seed": "t3v2-cap13",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 1000,
+  "y": 520
+ },
+ "seedExtra": [
+  "t3v2/apos-cap12"
+ ],
+ "prewarm": [
+  "/clientes",
+  "/equipamentos"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/clientes"
+  },
+  {
+   "do": "waitFor",
+   "text": "Lista de Clientes"
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Lista de Clientes",
+    "exact": true
+   },
+   "seconds": 0.9,
+   "at": 0.8,
+   "label": "lista de clientes"
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Colégio Monte Verde",
+    "exact": true
+   },
+   "at": 2.86,
+   "label": "cliente empresa pelo CNPJ"
+  },
+  {
+   "do": "waitFor",
+   "text": "Responsável no Local",
+   "timeout": 10
+  },
+  {
+   "do": "eval",
+   "js": "(() => { const el = [...document.querySelectorAll('p, span, div, h3, h4')].find((e) => e.children.length === 0 && e.textContent.trim() === 'Marcos Antônio Braga'); if (!el) return 'Marcos não achado'; let p = el.parentElement; while (p && p.scrollHeight <= p.clientHeight + 2) p = p.parentElement; if (!p) return 'sem rolagem'; const r = el.getBoundingClientRect(); const q = p.getBoundingClientRect(); p.scrollTo({ top: p.scrollTop + (r.top - q.top) - q.height / 2 + r.height / 2, behavior: 'smooth' }); return 'lista em ' + Math.round(p.scrollTop); })()",
+   "at": 4.6,
+   "label": "desce a lista de clientes até o pessoa física"
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Marcos Antônio Braga",
+    "exact": true
+   },
+   "at": 5.45,
+   "label": "cliente pessoa física pelo CEP"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Configurações",
+    "exact": true,
+    "within": "main"
+   },
+   "at": 7.2,
+   "label": "organizou as origens (Configurações)"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "role": "dialog"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "eval",
+   "js": "(() => { const el = [...document.querySelectorAll('p, span, div, h3, h4')].find((e) => e.children.length === 0 && e.textContent.trim() === 'Marcos Antônio Braga'); if (!el) return 'Marcos não achado'; let p = el.parentElement; while (p && p.scrollHeight <= p.clientHeight + 2) p = p.parentElement; if (!p) return 'sem rolagem'; const r = el.getBoundingClientRect(); const q = p.getBoundingClientRect(); p.scrollTo({ top: 0, behavior: 'smooth' }); return 'lista em ' + Math.round(p.scrollTop); })()",
+   "at": 8.9,
+   "label": "volta ao topo da lista de clientes"
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 9.32,
+   "label": "fecha a janela"
+  },
+  {
+   "do": "wait",
+   "seconds": 0.25
+  },
+  {
+   "do": "eval",
+   "js": "(() => { const d = document.querySelector('[role=dialog]'); if (!d) return 'ja fechada'; const b = [...d.querySelectorAll('button')].find((x) => [x.textContent, x.getAttribute('aria-label'), x.title].some((v) => /^\\s*fechar\\s*$/i.test(v || ''))); if (!b) return 'sem botao Fechar'; b.click(); return 'fechada pelo botao'; })()",
+   "label": "Fechar (se o Esc não fechou)"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Colégio Monte Verde",
+    "exact": true
+   },
+   "at": 9.9,
+   "label": "responsável no local com WhatsApp"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "label": "Abrir WhatsApp do cliente",
+    "nth": 1
+   },
+   "seconds": 0.3,
+   "at": 11.5,
+   "timeout": 5,
+   "optional": true,
+   "label": "ícone verde do WhatsApp (só passa o mouse)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "title": "Contrato PMOC",
+    "exact": true,
+    "nth": 1
+   },
+   "seconds": 0.6,
+   "at": 13.2,
+   "label": "os selos coloridos da ficha"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Horário de acesso",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.6,
+   "at": 14.98,
+   "label": "a linha Horário de acesso"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Formulários de captação",
+    "exact": true
+   },
+   "at": 17.38,
+   "label": "formulário de captação"
+  },
+  {
+   "do": "waitFor",
+   "text": "Cadastro de novos clientes",
+   "timeout": 8
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 19.72,
+   "label": "fecha a janela"
+  },
+  {
+   "do": "wait",
+   "seconds": 0.25
+  },
+  {
+   "do": "eval",
+   "js": "(() => { const d = document.querySelector('[role=dialog]'); if (!d) return 'ja fechada'; const b = [...d.querySelectorAll('button')].find((x) => [x.textContent, x.getAttribute('aria-label'), x.title].some((v) => /^\\s*fechar\\s*$/i.test(v || ''))); if (!b) return 'sem botao Fechar'; b.click(); return 'fechada pelo botao'; })()",
+   "label": "Fechar (se o Esc não fechou)"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Fornecedores"
+   },
+   "at": 20.3,
+   "label": "aba Fornecedores"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "link",
+    "name": "Equipamentos",
+    "exact": true
+   },
+   "at": 21.81,
+   "label": "equipamentos prontos"
+  },
+  {
+   "do": "waitFor",
+   "text": "Lista de Equipamentos",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Configurar Campos",
+    "exact": true
+   },
+   "at": 23.1,
+   "label": "Configurar Campos (abre em Categorias: com categoria)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Configurações de equipamentos",
+   "timeout": 8
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Campos personalizados",
+    "within": "[role=dialog]"
+   },
+   "at": 24.6,
+   "label": "Campos personalizados"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Etiquetas",
+    "within": "[role=dialog]"
+   },
+   "at": 26.16,
+   "label": "Etiquetas"
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 27.24,
+   "label": "fecha a janela"
+  },
+  {
+   "do": "wait",
+   "seconds": 0.25
+  },
+  {
+   "do": "eval",
+   "js": "(() => { const d = document.querySelector('[role=dialog]'); if (!d) return 'ja fechada'; const b = [...d.querySelectorAll('button')].find((x) => [x.textContent, x.getAttribute('aria-label'), x.title].some((v) => /^\\s*fechar\\s*$/i.test(v || ''))); if (!b) return 'sem botao Fechar'; b.click(); return 'fechada pelo botao'; })()",
+   "label": "Fechar (se o Esc não fechou)"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 28.34
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "link",
+    "name": "Clientes e Fornecedores"
+   },
+   "at": 28.4,
+   "label": "volta a Clientes e Fornecedores"
+  },
+  {
+   "do": "waitFor",
+   "text": "Lista de Clientes",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Colégio Monte Verde",
+    "exact": true
+   },
+   "at": 29.6,
+   "label": "ficha do cliente"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Equipamentos"
+   },
+   "at": 31.1,
+   "label": "aba Equipamentos do cliente"
+  },
+  {
+   "do": "waitFor",
+   "text": "Hi-Wall 18.000 BTUs - Sala dos professores",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Hi-Wall 18.000 BTUs - Sala dos professores"
+   },
+   "at": 33.1,
+   "label": "ficha do equipamento com o QR"
+  },
+  {
+   "do": "waitFor",
+   "text": "QR Code do equipamento",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "QR Code do equipamento",
+    "exact": true
+   },
+   "seconds": 0.3,
+   "at": 34.1,
+   "label": "QR Code do equipamento"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 36.3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Gerar Etiqueta"
+   },
+   "seconds": 1.6,
+   "at": 36.99,
+   "label": "Gerar Etiqueta"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "0026",
+    "exact": true
+   },
+   "seconds": 2.0,
+   "at": 39.39,
+   "label": "identificador 0026"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 45.6
+  }
+ ]
+}

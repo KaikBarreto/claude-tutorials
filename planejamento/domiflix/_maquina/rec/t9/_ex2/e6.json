@@ -1,0 +1,806 @@
+{
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t9/inicio",
+  "t9/apos-cap09"
+ ],
+ "steps": [
+  {
+   "do": "goto",
+   "url": "/orcamentos"
+  },
+  {
+   "do": "wait",
+   "ms": 1500
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{try{sessionStorage.clear()}catch(e){}return 1})()"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Configurar Proposta",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 1200
+  },
+  {
+   "do": "shot",
+   "name": "c10a"
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('[role=dialog]')].map(d=>d.innerText.replace(/\\n+/g,' | ').slice(0,2600))",
+   "max": 6000
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('[role=dialog] input,[role=dialog] textarea,[role=dialog] [role=switch],[role=dialog] [role=slider],[role=dialog] [role=combobox]')].map(i=>(i.tagName+':'+(i.type||i.getAttribute('role'))+':'+(i.placeholder||i.getAttribute('aria-label')||'')+':'+(i.value||i.getAttribute('aria-checked')||'').slice(0,30)))",
+   "max": 3500
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Vanguarda",
+    "within": "[role=dialog]"
+   },
+   "optional": true
+  },
+  {
+   "do": "wait",
+   "ms": 700
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Clean",
+    "within": "[role=dialog]",
+    "exact": true
+   },
+   "optional": true
+  },
+  {
+   "do": "wait",
+   "ms": 700
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Próximo",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "optional": true
+  },
+  {
+   "do": "wait",
+   "ms": 1200
+  },
+  {
+   "do": "shot",
+   "name": "c10b"
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('[role=dialog] input,[role=dialog] textarea,[role=dialog] [role=switch],[role=dialog] [role=slider],[role=dialog] [role=combobox]')].map(i=>(i.tagName+':'+(i.type||i.getAttribute('role'))+':'+(i.placeholder||i.getAttribute('aria-label')||'')+':'+(i.value||i.getAttribute('aria-checked')||'').slice(0,30)))",
+   "max": 3500
+  },
+  {
+   "do": "html",
+   "selector": "[role=dialog] [role=slider]",
+   "max": 700,
+   "optional": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const s=document.querySelector('[role=dialog] [role=slider]');if(!s)return 'sem slider';const r=s.getBoundingClientRect();return [r.x,r.y,r.width,r.height,s.getAttribute('aria-valuenow'),s.getAttribute('aria-valuemin'),s.getAttribute('aria-valuemax')]})()"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "slider"
+   },
+   "optional": true
+  },
+  {
+   "do": "press",
+   "key": "ArrowRight",
+   "times": 2
+  },
+  {
+   "do": "eval",
+   "js": "document.querySelector('[role=dialog] [role=slider]').getAttribute('aria-valuenow')"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const d=document.querySelector('[role=dialog] .overflow-y-auto');d&&d.scrollTo(0,9999);return d?d.scrollHeight:'sem'})()"
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "shot",
+   "name": "c10c"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "switch",
+    "name": "Garantia"
+   },
+   "optional": true
+  },
+  {
+   "do": "wait",
+   "ms": 600
+  },
+  {
+   "do": "shot",
+   "name": "c10d"
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('[role=dialog] input,[role=dialog] textarea,[role=dialog] [role=switch],[role=dialog] [role=slider],[role=dialog] [role=combobox]')].map(i=>(i.tagName+':'+(i.type||i.getAttribute('role'))+':'+(i.placeholder||i.getAttribute('aria-label')||'')+':'+(i.value||i.getAttribute('aria-checked')||'').slice(0,30)))",
+   "max": 3500
+  },
+  {
+   "do": "keys",
+   "target": {
+    "selector": "[role=dialog] textarea[placeholder*='Somos']"
+   },
+   "text": "Garantia de 90 dias sobre o serviço.",
+   "optional": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] div.rounded-lg:has-text('Garantia') button[aria-label='Mover para cima']"
+   },
+   "optional": true
+  },
+  {
+   "do": "wait",
+   "ms": 700
+  },
+  {
+   "do": "shot",
+   "name": "c10e"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Próximo",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "optional": true
+  },
+  {
+   "do": "wait",
+   "ms": 1500
+  },
+  {
+   "do": "shot",
+   "name": "c10f"
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('[role=dialog] button')].filter(b=>b.getClientRects().length).map(b=>[b.innerText.trim().slice(0,18),b.getAttribute('aria-label'),b.getAttribute('title'),Math.round(b.getBoundingClientRect().x),Math.round(b.getBoundingClientRect().y)].join('|'))",
+   "max": 1500
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[aria-label*='róxim']"
+   },
+   "optional": true
+  },
+  {
+   "do": "wait",
+   "ms": 700
+  },
+  {
+   "do": "shot",
+   "name": "c10g"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Salvar",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "optional": true
+  },
+  {
+   "do": "wait",
+   "ms": 900
+  },
+  {
+   "do": "eval",
+   "js": "(document.querySelector('[data-sonner-toaster]')||{}).innerText||'sem toast'",
+   "max": 400
+  },
+  {
+   "do": "shot",
+   "name": "c10h"
+  },
+  {
+   "do": "eval",
+   "js": "document.querySelectorAll('[role=dialog]').length"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:has-text('Fechar')"
+   },
+   "optional": true
+  },
+  {
+   "do": "wait",
+   "ms": 800
+  },
+  {
+   "do": "eval",
+   "js": "document.querySelectorAll('[role=dialog]').length"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main tbody tr:has-text('Pousada Brisa do Mar') button[aria-label='Ações']"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 700
+  },
+  {
+   "do": "shot",
+   "name": "c11a"
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('[role=menuitem]')].map(i=>i.innerText)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Visualizar"
+   },
+   "optional": true
+  },
+  {
+   "do": "wait",
+   "ms": 2200
+  },
+  {
+   "do": "shot",
+   "name": "c11b"
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('[role=dialog]')].map(d=>d.innerText.replace(/\\n+/g,' | ').slice(0,2600))",
+   "max": 6000
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('[role=dialog] button')].filter(b=>b.getClientRects().length).map(b=>[b.innerText.trim().slice(0,18),b.getAttribute('aria-label'),b.getAttribute('title'),Math.round(b.getBoundingClientRect().x),Math.round(b.getBoundingClientRect().y)].join('|'))",
+   "max": 1500
+  },
+  {
+   "do": "press",
+   "key": "Escape"
+  },
+  {
+   "do": "wait",
+   "ms": 800
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main tbody tr:has-text('Pousada Brisa do Mar') button[aria-label='Ações']"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 700
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Gerar link da proposta"
+   },
+   "optional": true
+  },
+  {
+   "do": "wait",
+   "ms": 1500
+  },
+  {
+   "do": "eval",
+   "js": "(document.querySelector('[data-sonner-toaster]')||{}).innerText||'sem toast'",
+   "max": 400
+  },
+  {
+   "do": "shot",
+   "name": "c11c"
+  },
+  {
+   "do": "text",
+   "selector": "main",
+   "name": "lista_pos_link",
+   "max": 1800
+  },
+  {
+   "do": "goto",
+   "url": "/proposta/13193e23fd5ac75f5ff116551a0fa569228f1b5e2ac08f1d6424287b8d7d1900?preview=1"
+  },
+  {
+   "do": "wait",
+   "ms": 2500
+  },
+  {
+   "do": "shot",
+   "name": "c12a"
+  },
+  {
+   "do": "text",
+   "selector": "body",
+   "name": "publica",
+   "max": 4200
+  },
+  {
+   "do": "eval",
+   "js": "({h:document.documentElement.scrollHeight,vh:innerHeight,sc:[...document.querySelectorAll('*')].filter(e=>e.scrollHeight>e.clientHeight+40&&['auto','scroll'].includes(getComputedStyle(e).overflowY)).map(e=>[e.tagName,e.className.slice(0,40),e.scrollHeight,e.clientHeight].join('|')).slice(0,6)})",
+   "max": 600
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('button')].filter(b=>b.getClientRects().length).map(b=>[b.innerText.trim().slice(0,24),Math.round(b.getBoundingClientRect().x),Math.round(b.getBoundingClientRect().y),Math.round(b.getBoundingClientRect().width),Math.round(b.getBoundingClientRect().height)].join('|'))",
+   "max": 600
+  },
+  {
+   "do": "wheel",
+   "x": 640,
+   "y": 420,
+   "dy": 900,
+   "after": 900
+  },
+  {
+   "do": "shot",
+   "name": "c12b"
+  },
+  {
+   "do": "wheel",
+   "x": 640,
+   "y": 420,
+   "dy": 900,
+   "after": 900
+  },
+  {
+   "do": "shot",
+   "name": "c12c"
+  },
+  {
+   "do": "wheel",
+   "x": 640,
+   "y": 420,
+   "dy": 900,
+   "after": 900
+  },
+  {
+   "do": "shot",
+   "name": "c12d"
+  },
+  {
+   "do": "wheel",
+   "x": 640,
+   "y": 420,
+   "dy": 3000,
+   "after": 900
+  },
+  {
+   "do": "shot",
+   "name": "c12e"
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('button')].filter(b=>b.getClientRects().length).map(b=>[b.innerText.trim().slice(0,24),Math.round(b.getBoundingClientRect().x),Math.round(b.getBoundingClientRect().y)].join('|'))",
+   "max": 600
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Aprovar",
+    "exact": true
+   },
+   "optional": true
+  },
+  {
+   "do": "wait",
+   "ms": 1500
+  },
+  {
+   "do": "shot",
+   "name": "c12f"
+  },
+  {
+   "do": "text",
+   "selector": "body",
+   "name": "depois_aprovar",
+   "max": 500
+  },
+  {
+   "do": "goto",
+   "url": "/orcamentos"
+  },
+  {
+   "do": "wait",
+   "ms": 2500
+  },
+  {
+   "do": "shot",
+   "name": "c12g"
+  },
+  {
+   "do": "text",
+   "selector": "main tbody",
+   "name": "lista_pos_aprovar",
+   "max": 3000
+  },
+  {
+   "do": "html",
+   "selector": "main tbody tr:has-text('Hotel Mirante do Mar') td:nth-child(2)",
+   "max": 1600,
+   "optional": true
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('Hotel Mirante do Mar') td:nth-child(2) svg"
+   },
+   "optional": true
+  },
+  {
+   "do": "wait",
+   "ms": 900
+  },
+  {
+   "do": "shot",
+   "name": "c13a"
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('[role=tooltip]')].map(e=>e.innerText)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main tbody tr:has-text('Hotel Mirante do Mar') button[aria-label='Ações']"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 700
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('[role=menuitem]')].map(i=>i.innerText)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Aprovar orçamento"
+   },
+   "optional": true
+  },
+  {
+   "do": "wait",
+   "ms": 1500
+  },
+  {
+   "do": "shot",
+   "name": "c14a"
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('[role=dialog]')].map(d=>d.innerText.replace(/\\n+/g,' | ').slice(0,2600))",
+   "max": 6000
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('[role=dialog] input,[role=dialog] textarea,[role=dialog] [role=switch],[role=dialog] [role=slider],[role=dialog] [role=combobox]')].map(i=>(i.tagName+':'+(i.type||i.getAttribute('role'))+':'+(i.placeholder||i.getAttribute('aria-label')||'')+':'+(i.value||i.getAttribute('aria-checked')||'').slice(0,30)))",
+   "max": 3500
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Já recebi",
+    "exact": true
+   },
+   "optional": true
+  },
+  {
+   "do": "wait",
+   "ms": 900
+  },
+  {
+   "do": "shot",
+   "name": "c14b"
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('[role=dialog]')].map(d=>d.innerText.replace(/\\n+/g,' | ').slice(0,2600))",
+   "max": 6000
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Vou receber depois",
+    "exact": true
+   },
+   "optional": true
+  },
+  {
+   "do": "wait",
+   "ms": 900
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:has-text('03/11/2026')"
+   },
+   "optional": true
+  },
+  {
+   "do": "wait",
+   "ms": 900
+  },
+  {
+   "do": "shot",
+   "name": "c14c"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "gridcell",
+    "name": "20",
+    "exact": true
+   },
+   "optional": true
+  },
+  {
+   "do": "wait",
+   "ms": 900
+  },
+  {
+   "do": "shot",
+   "name": "c14d"
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('[role=dialog]')].map(d=>d.innerText.replace(/\\n+/g,' | ').slice(0,2600))",
+   "max": 6000
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Aprovar e gerar conta a receber",
+    "exact": true
+   },
+   "optional": true
+  },
+  {
+   "do": "wait",
+   "ms": 1800
+  },
+  {
+   "do": "eval",
+   "js": "(document.querySelector('[data-sonner-toaster]')||{}).innerText||'sem toast'",
+   "max": 400
+  },
+  {
+   "do": "shot",
+   "name": "c14e"
+  },
+  {
+   "do": "text",
+   "selector": "main tbody",
+   "name": "lista_pos_hotel",
+   "max": 3000
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main tbody tr:has-text('Hotel Mirante do Mar') button[aria-label='Ações']"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 700
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('[role=menuitem]')].map(i=>i.innerText)"
+  },
+  {
+   "do": "press",
+   "key": "Escape"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main tbody tr:has-text('Pousada Brisa do Mar') button[aria-label='Ações']"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 700
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('[role=menuitem]')].map(i=>i.innerText)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Gerar OS"
+   },
+   "optional": true
+  },
+  {
+   "do": "wait",
+   "ms": 1500
+  },
+  {
+   "do": "shot",
+   "name": "c15a"
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('[role=dialog]')].map(d=>d.innerText.replace(/\\n+/g,' | ').slice(0,2600))",
+   "max": 6000
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('[role=dialog] button')].filter(b=>b.getClientRects().length).map(b=>[b.innerText.trim().slice(0,24),b.getAttribute('role'),b.getAttribute('aria-checked')||b.getAttribute('data-state'),Math.round(b.getBoundingClientRect().x),Math.round(b.getBoundingClientRect().y)].join('|'))",
+   "max": 1500
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Todos",
+    "exact": true
+   },
+   "nth": 0,
+   "optional": true
+  },
+  {
+   "do": "wait",
+   "ms": 700
+  },
+  {
+   "do": "shot",
+   "name": "c15b"
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('[role=dialog] button')].filter(b=>b.getClientRects().length).map(b=>[b.innerText.trim().slice(0,24),b.getAttribute('role'),b.getAttribute('aria-checked')||b.getAttribute('data-state'),Math.round(b.getBoundingClientRect().x),Math.round(b.getBoundingClientRect().y)].join('|'))",
+   "max": 1500
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] label:has-text('Hi-Wall 12.000 BTUs - Recepção')",
+    "nth": 1
+   },
+   "optional": true
+  },
+  {
+   "do": "wait",
+   "ms": 600
+  },
+  {
+   "do": "shot",
+   "name": "c15c"
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('[role=dialog] button[role=checkbox]')].map(b=>b.getAttribute('aria-checked'))"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Gerar OS",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "optional": true
+  },
+  {
+   "do": "wait",
+   "ms": 2000
+  },
+  {
+   "do": "eval",
+   "js": "(document.querySelector('[data-sonner-toaster]')||{}).innerText||'sem toast'",
+   "max": 400
+  },
+  {
+   "do": "shot",
+   "name": "c15d"
+  },
+  {
+   "do": "text",
+   "selector": "main tbody",
+   "name": "lista_pos_os",
+   "max": 1500
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Operacional",
+    "exact": true
+   },
+   "optional": true
+  },
+  {
+   "do": "wait",
+   "ms": 600
+  },
+  {
+   "do": "shot",
+   "name": "c15e"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "link",
+    "name": "Ordens de Serviço",
+    "exact": true
+   },
+   "optional": true
+  },
+  {
+   "do": "wait",
+   "ms": 2500
+  },
+  {
+   "do": "shot",
+   "name": "c15f"
+  },
+  {
+   "do": "text",
+   "selector": "main",
+   "name": "os_lista",
+   "max": 1800
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

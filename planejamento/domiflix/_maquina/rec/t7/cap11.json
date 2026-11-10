@@ -1,0 +1,351 @@
+{
+ "name": "t7-cap11",
+ "title": "T7 · Cap. 11 · O relatório e o PDF (narração 44,5 s; marcas L1..L5 = início de cada linha do roteiro)",
+ "seed": "t7-cap11",
+ "pace": 0.4,
+ "cps": 9,
+ "tail": 1.5,
+ "device": "phone",
+ "start": {
+  "x": 195,
+  "y": 600
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap15",
+  "t7/inicio",
+  "t7/vazias-1.38.21",
+  "t7/apos-cap10"
+ ],
+ "prewarm": [
+  "/agenda"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/agenda"
+  },
+  {
+   "do": "waitFor",
+   "text": "Colégio Monte Verde",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(() => {\n  // GPS do aparelho emulado (T7). O Chromium headless trava `getCurrentPosition({maximumAge: 0})` quando já existe um\n  // `watchPosition` ativo — e o app do técnico faz exatamente isso (rastreia a cada 30 s e pede a posição no check-in).\n  // Este stub devolve a posição atual na hora, para as duas chamadas, e `__setGeo` \"anda\" com o aparelho e avisa quem observa.\n  if (window.__geoStub) return 'ja-instalado';\n  const st = { lat: -22.9035, lng: -43.1038, acc: 12 };\n  const pos = () => ({\n    coords: { latitude: st.lat, longitude: st.lng, accuracy: st.acc, altitude: null, altitudeAccuracy: null, heading: null, speed: null },\n    timestamp: Date.now(),\n  });\n  const watchers = new Map();\n  let seq = 0;\n  const g = navigator.geolocation;\n  g.getCurrentPosition = (ok) => { setTimeout(() => ok(pos()), 60); };\n  g.watchPosition = (ok) => { const id = ++seq; watchers.set(id, ok); setTimeout(() => { if (watchers.has(id)) ok(pos()); }, 90); return id; };\n  g.clearWatch = (id) => { watchers.delete(id); };\n  window.__setGeo = (lat, lng, acc) => { st.lat = lat; st.lng = lng; if (acc) st.acc = acc; watchers.forEach((cb) => cb(pos())); return [st.lat, st.lng]; };\n  window.__geoStub = true;\n  return 'instalado';\n})()\n"
+  },
+  {
+   "do": "eval",
+   "js": "window.__setGeo(-22.89758,-43.09913)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Colégio Monte Verde",
+    "within": "main"
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Resumo da OS",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Relatório de Serviço",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Execução",
+   "timeout": 20
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "clock",
+   "set": "2026-11-11T10:31:00-03:00"
+  },
+  {
+   "do": "pause",
+   "seconds": 0.5
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 196,
+    "y": 82
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "at": 2.56
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "h1"
+   },
+   "text": "",
+   "noClick": true,
+   "label": "o número da OS",
+   "at": 3.46,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Colégio Monte Verde",
+    "exact": true
+   },
+   "seconds": 0.4,
+   "at": 4.9,
+   "label": "o cliente",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Hi-Wall 18.000 BTUs",
+    "exact": false
+   },
+   "seconds": 0.4,
+   "at": 5.78,
+   "label": "o equipamento atendido",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const el=([...document.querySelectorAll('main h3, h3')].find(e=>e.textContent.trim().toLowerCase()===\"execu\\u00e7\\u00e3o\"));if(!el)return 'SEM ALVO';const r=el.getBoundingClientRect();const cy=r.top+r.height/2;const y0=window.scrollY,dy=Math.round(cy-(330));if(Math.abs(dy)<3)return 'ok';const dur=Math.min(1000,Math.max(450,Math.abs(dy)*1.15)),t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/dur),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;window.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 6.86,
+   "label": "a seção Execução entra na tela"
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 8.12
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "CHECK-IN",
+    "exact": true
+   },
+   "seconds": 0.4,
+   "at": 8.84,
+   "label": "o check-in",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "CHECK-OUT",
+    "exact": true
+   },
+   "seconds": 1.0,
+   "at": 9.64,
+   "label": "o check-out",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Duração:",
+    "exact": false
+   },
+   "seconds": 2.6,
+   "at": 15.48,
+   "label": "a duração do atendimento",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 20.18
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const el=([...document.querySelectorAll('main h3, h3')].find(e=>e.textContent.trim().toLowerCase()===\"checklists por equipamento\"));if(!el)return 'SEM ALVO';const r=el.getBoundingClientRect();const cy=r.top+r.height/2;const y0=window.scrollY,dy=Math.round(cy-(260));if(Math.abs(dy)<3)return 'ok';const dur=900,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/dur),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;window.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 20.54,
+   "label": "as respostas do checklist"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const el=([...document.querySelectorAll(\"img[src*='os-photos']\")].filter(i=>i.getClientRects().length&&i.offsetParent).pop());if(!el)return 'SEM ALVO';const r=el.getBoundingClientRect();const cy=r.top+r.height/2;const y0=window.scrollY,dy=Math.round(cy-(470));if(Math.abs(dy)<3)return 'ok';const dur=1000,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/dur),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;window.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 24.32,
+   "label": "a foto que o técnico anexou"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const el=([...document.querySelectorAll('main h3, h3')].find(e=>e.textContent.trim().toLowerCase()===\"assinaturas\"));if(!el)return 'SEM ALVO';const r=el.getBoundingClientRect();const cy=r.top+r.height/2;const y0=window.scrollY,dy=Math.round(cy-(330));if(Math.abs(dy)<3)return 'ok';const dur=900,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/dur),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;window.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 26.16,
+   "label": "a seção Assinaturas"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "img[alt='Assinatura do cliente']"
+   },
+   "seconds": 1.4,
+   "at": 27.98,
+   "label": "a assinatura do cliente, com data, hora e local",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 30.34
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 110,
+    "y": 812
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "at": 30.34
+  },
+  {
+   "do": "type",
+   "target": {
+    "role": "button",
+    "name": "Baixar PDF",
+    "exact": true
+   },
+   "text": "",
+   "noClick": true,
+   "label": "o rodapé: Baixar PDF",
+   "at": 31.14,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 110,
+    "y": 812
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "at": 32.0
+  },
+  {
+   "do": "type",
+   "target": {
+    "role": "button",
+    "name": "Baixar PDF",
+    "exact": true
+   },
+   "text": "",
+   "noClick": true,
+   "label": "Baixar PDF",
+   "at": 32.8,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const el=([...document.querySelectorAll(\"button\")].filter(b=>b.textContent.trim()===\"Baixar PDF\"&&b.getClientRects().length).pop());if(!el)return 'SEM ALVO';const r=el.getBoundingClientRect();const x=r.left+r.width/2,y=r.top+r.height/2;const o={bubbles:true,cancelable:true,composed:true,clientX:x,clientY:y,screenX:x,screenY:y,button:0,view:window};const pe=(t,b)=>new PointerEvent(t,{...o,pointerId:1,pointerType:'mouse',isPrimary:true,buttons:b,width:1,height:1});const me=(t,b)=>new MouseEvent(t,{...o,buttons:b,detail:1});el.dispatchEvent(pe('pointerdown',1));el.dispatchEvent(me('mousedown',1));el.dispatchEvent(pe('pointerup',0));el.dispatchEvent(me('mouseup',0));el.dispatchEvent(me('click',0));return [Math.round(x),Math.round(y)]})()",
+   "at": 32.9,
+   "label": "Baixar PDF (toque)"
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 375,
+    "y": 812
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "at": 34.08
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "button[aria-label='Mais ações']"
+   },
+   "text": "",
+   "noClick": true,
+   "label": "o menu de mais ações",
+   "at": 34.88,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const el=(document.querySelector('button[aria-label=\"Mais ações\"]'));if(!el)return 'SEM ALVO';const r=el.getBoundingClientRect();const x=r.left+r.width/2,y=r.top+r.height/2;const o={bubbles:true,cancelable:true,composed:true,clientX:x,clientY:y,screenX:x,screenY:y,button:0,view:window};const pe=(t,b)=>new PointerEvent(t,{...o,pointerId:1,pointerType:'mouse',isPrimary:true,buttons:b,width:1,height:1});const me=(t,b)=>new MouseEvent(t,{...o,buttons:b,detail:1});el.dispatchEvent(pe('pointerdown',1));el.dispatchEvent(me('mousedown',1));el.dispatchEvent(pe('pointerup',0));el.dispatchEvent(me('mouseup',0));el.dispatchEvent(me('click',0));return [Math.round(x),Math.round(y)]})()",
+   "at": 34.98,
+   "label": "o menu de mais ações (toque)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Copiar Link",
+    "exact": true
+   },
+   "seconds": 0.6,
+   "at": 35.54,
+   "label": "o Copiar Link",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Imprimir",
+    "exact": true
+   },
+   "seconds": 0.8,
+   "at": 36.82,
+   "label": "o Imprimir",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 38.21
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 44.48
+  }
+ ],
+ "user": "rafael.lima@glacialcold.example"
+}

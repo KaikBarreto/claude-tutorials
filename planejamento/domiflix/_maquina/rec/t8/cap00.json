@@ -1,0 +1,199 @@
+{
+ "name": "t8-cap00",
+ "title": "T8 · Cap. 0 · Abertura (narração 31,3 s; marcas L1..L3 = início de cada linha do roteiro)",
+ "seed": "t8-cap00",
+ "pace": 0.5,
+ "cps": 11,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap15",
+  "t8/inicio"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/estoque"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Camila!",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|erro|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Gestão",
+    "exact": true
+   },
+   "at": 3.0,
+   "label": "abre o grupo Gestão"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "link",
+    "name": "Estoque",
+    "exact": true
+   },
+   "at": 6.6,
+   "label": "abre o Estoque"
+  },
+  {
+   "do": "waitFor",
+   "text": "Controle de peças e materiais",
+   "timeout": 20
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 11.32
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Toggle Sidebar",
+    "nth": 0
+   },
+   "at": 11.82,
+   "label": "recolhe o menu lateral (a tela ganha espaço)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "tab",
+    "name": "Estoque Atual",
+    "exact": true
+   },
+   "seconds": 0.2,
+   "at": 13.72,
+   "label": "aba Estoque Atual",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "tab",
+    "name": "Histórico de Materiais (Kardex)",
+    "exact": true
+   },
+   "seconds": 0.2,
+   "at": 15.17,
+   "label": "aba Histórico de Materiais (Kardex)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "tab",
+    "name": "Compras de Material",
+    "exact": true
+   },
+   "seconds": 0.2,
+   "at": 16.62,
+   "label": "aba Compras de Material",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "tab",
+    "name": "Inventários",
+    "exact": true
+   },
+   "seconds": 0.2,
+   "at": 18.07,
+   "label": "aba Inventários",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "tab",
+    "name": "Posição de Estoque",
+    "exact": true
+   },
+   "seconds": 0.2,
+   "at": 19.52,
+   "label": "aba Posição de Estoque",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "tab",
+    "name": "Relatório",
+    "exact": true
+   },
+   "seconds": 0.2,
+   "at": 20.97,
+   "label": "aba Relatório",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 21.83
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Controle de peças e materiais",
+    "within": "main"
+   },
+   "seconds": 7.3,
+   "at": 22.63,
+   "label": "o título da tela de Estoque",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 31.28
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

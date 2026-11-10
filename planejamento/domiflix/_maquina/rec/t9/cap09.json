@@ -1,0 +1,468 @@
+{
+ "name": "t9-cap09",
+ "title": "T9 · Cap. 9 · Quinta etapa: validade e revisão (narração 55,9 s; marcas L1..L5 = início de cada linha do roteiro)",
+ "seed": "t9-cap09",
+ "pace": 0.45,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t9/inicio",
+  "t9/apos-cap04"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/orcamentos"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/orcamentos"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie orçamentos, custos e precificação",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Toggle Sidebar",
+    "nth": 0
+   }
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "eval",
+   "js": "(() => { try { sessionStorage.clear(); } catch (e) {} return 'sessionStorage limpo'; })()"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Novo Orçamento",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Condições comerciais",
+   "timeout": 20
+  },
+  {
+   "do": "wait",
+   "seconds": 0.6
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "combobox",
+    "name": "Selecione o cliente"
+   }
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[cmdk-input]"
+   },
+   "text": "Pousada"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Pousada Brisa do Mar"
+   }
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "listbox"
+   },
+   "timeout": 8,
+   "optional": true
+  },
+  {
+   "do": "wait",
+   "seconds": 0.5
+  },
+  {
+   "do": "select",
+   "target": {
+    "role": "combobox",
+    "name": "Selecionar tipo de serviço..."
+   },
+   "option": "Higienização de Split"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] input.w-16"
+   }
+  },
+  {
+   "do": "press",
+   "key": "Control+A"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input.w-16"
+   },
+   "text": "3",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Adicionar",
+    "exact": true,
+    "within": "[role=dialog]"
+   }
+  },
+  {
+   "do": "wait",
+   "seconds": 1.0
+  },
+  {
+   "do": "select",
+   "target": {
+    "role": "combobox",
+    "name": "Selecionar tipo de serviço..."
+   },
+   "option": "Carga de Gás"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Adicionar",
+    "exact": true,
+    "within": "[role=dialog]"
+   }
+  },
+  {
+   "do": "wait",
+   "seconds": 1.0
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Adicionar materiais",
+    "exact": true
+   }
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Buscar por nome, código ou categoria..."
+   },
+   "text": "gás"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] div[role=button]:has-text('R-410A') button",
+    "nth": 1
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Adicionar ao orçamento",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "seconds": 1.0
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='0 km']"
+   },
+   "text": "18"
+  },
+  {
+   "do": "wait",
+   "seconds": 0.6
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Próximo",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "seconds": 1.0
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const d=document.querySelector('[role=dialog] .overflow-y-auto');if(d)d.scrollTo({top:0});return 1})()"
+  },
+  {
+   "do": "wait",
+   "seconds": 0.5
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='0']"
+   },
+   "text": "85"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Observações internas"
+   },
+   "text": "Atendimento de segunda a sexta, das 8h às 17h.",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Condições de pagamento, garantia, etc."
+   },
+   "text": "Serviço executado após a aprovação, com data combinada com o cliente.",
+   "cps": 40
+  },
+  {
+   "do": "wait",
+   "seconds": 0.6
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|erro|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0.04
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Próximo",
+    "exact": true
+   },
+   "at": 0.04,
+   "label": "Próximo: Revisão e envio"
+  },
+  {
+   "do": "waitFor",
+   "text": "Template da Proposta",
+   "timeout": 15
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const d=document.querySelector('[role=dialog] .overflow-y-auto');if(d)d.scrollTo({top:0});return 1})()",
+   "label": "volta ao topo da etapa"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:has-text('dd/mm/aaaa')"
+   },
+   "at": 2.66,
+   "label": "campo Válido até"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "gridcell",
+    "name": "18",
+    "exact": true
+   },
+   "at": 4.34,
+   "label": "marca 18/11 (15 dias à frente)"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Válido até\", \"18/11/2026\", \"Template da Proposta\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Válido até 18/11/2026 (15 dias à frente)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Template da Proposta",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.8,
+   "at": 8.42,
+   "label": "Template da Proposta: Clean",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Capa da proposta",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.8,
+   "at": 10.02,
+   "label": "Capa da proposta",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 11.86
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Preço sugerido",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.2,
+   "at": 13.86,
+   "label": "Preço sugerido R$ 1.085,00",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "O que entra no BDI?",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.4,
+   "at": 19.54,
+   "label": "guia O que entra no BDI?",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Fora do BDI automático",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.4,
+   "at": 25.17,
+   "label": "Fora do BDI automático (Carga de Gás e gás)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 29.01
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Preço praticado",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.6,
+   "at": 30.13,
+   "label": "Preço praticado R$ 1.000,00",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Preço praticado R$ 1.000,00\", \"Preço sugerido R$ 1.085,00\", \"À vista R$ 950,00\", \"10x R$ 100,00\", \"Fora do BDI automático\", \"2 preços cadastrados\", \"R$ 500,00\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Revisão: sugerido 1.085,00, praticado 1.000,00, à vista 950,00, 10x 100,00"
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 39.73
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Pagamentos",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.8,
+   "at": 39.73,
+   "label": "Pagamentos: à vista R$ 950,00 e 10x R$ 100,00",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 48.86
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Criar Orçamento",
+    "exact": true
+   },
+   "at": 48.96,
+   "label": "Criar Orçamento"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 15
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr",
+    "hasText": "Pousada Brisa do Mar"
+   },
+   "seconds": 1.6,
+   "at": 50.94,
+   "label": "a linha nova entra como Rascunho",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"#9\", \"Pousada Brisa do Mar\", \"R$ 441,00\", \"R$ 1.000,00\", \"Rascunho\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main tbody tr\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere linha #9: custo 441,00, valor 1.000,00, Rascunho"
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 55.91
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

@@ -1,0 +1,223 @@
+{
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t9/inicio",
+  "t9/_dev/apos-cap04",
+  "t9/_dev/apos-cap09"
+ ],
+ "start": "/dashboard",
+ "stopOnFail": false,
+ "steps": [
+  {
+   "do": "goto",
+   "url": "/orcamentos"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie orçamentos, custos e precificação",
+   "timeout": 20
+  },
+  {
+   "do": "wait",
+   "ms": 1200
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main tbody tr:has-text('Pousada Brisa do Mar') button[aria-haspopup='menu']"
+   },
+   "after": 800
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Gerar link da proposta"
+   },
+   "optional": true,
+   "after": 1500
+  },
+  {
+   "do": "eval",
+   "js": "(document.querySelector('[data-sonner-toaster]')||{}).innerText||'sem toast'",
+   "max": 400
+  },
+  {
+   "do": "goto",
+   "url": "/proposta/13193e23fd5ac75f5ff116551a0fa569228f1b5e2ac08f1d6424287b8d7d1900?preview=1"
+  },
+  {
+   "do": "wait",
+   "ms": 2500
+  },
+  {
+   "do": "shot",
+   "name": "70-publica-topo"
+  },
+  {
+   "do": "text",
+   "selector": "body",
+   "name": "pública topo",
+   "max": 3800
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const ds=[...document.querySelectorAll('[role=dialog],[data-radix-popper-content-wrapper]')];const root=ds.length?ds[ds.length-1]:document.querySelector('main')||document;return [...root.querySelectorAll('button,input,textarea,select,[role=combobox],[role=switch],[role=checkbox],[role=tab],[role=option],[role=menuitem],[role=slider]')].filter(e=>e.getClientRects().length).map(e=>{const r=e.getBoundingClientRect();return [e.tagName[0],e.type||'',e.getAttribute('role')||'',(e.innerText||'').replace(/\\s+/g,' ').slice(0,38),e.getAttribute('aria-label')||'',e.placeholder||'',(e.value||'').slice(0,14),Math.round(r.x),Math.round(r.y),Math.round(r.width),Math.round(r.height),e.disabled?'D':''].join('|')})})()",
+   "max": 6000
+  },
+  {
+   "do": "eval",
+   "js": "({h:document.documentElement.scrollHeight,vh:innerHeight,sc:[...document.querySelectorAll('*')].filter(e=>e.scrollHeight>e.clientHeight+40&&['auto','scroll'].includes(getComputedStyle(e).overflowY)).map(e=>[e.tagName,e.className.slice(0,40),e.scrollHeight,e.clientHeight].join('|')).slice(0,6)})",
+   "max": 600
+  },
+  {
+   "do": "wheel",
+   "x": 640,
+   "y": 420,
+   "dy": 600,
+   "after": 900
+  },
+  {
+   "do": "shot",
+   "name": "71-publica-meio1"
+  },
+  {
+   "do": "wheel",
+   "x": 640,
+   "y": 420,
+   "dy": 700,
+   "after": 900
+  },
+  {
+   "do": "shot",
+   "name": "72-publica-meio2"
+  },
+  {
+   "do": "wheel",
+   "x": 640,
+   "y": 420,
+   "dy": 700,
+   "after": 900
+  },
+  {
+   "do": "shot",
+   "name": "73-publica-meio3"
+  },
+  {
+   "do": "wheel",
+   "x": 640,
+   "y": 420,
+   "dy": 1500,
+   "after": 900
+  },
+  {
+   "do": "shot",
+   "name": "74-publica-fim"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const ds=[...document.querySelectorAll('[role=dialog],[data-radix-popper-content-wrapper]')];const root=ds.length?ds[ds.length-1]:document.querySelector('main')||document;return [...root.querySelectorAll('button,input,textarea,select,[role=combobox],[role=switch],[role=checkbox],[role=tab],[role=option],[role=menuitem],[role=slider]')].filter(e=>e.getClientRects().length).map(e=>{const r=e.getBoundingClientRect();return [e.tagName[0],e.type||'',e.getAttribute('role')||'',(e.innerText||'').replace(/\\s+/g,' ').slice(0,38),e.getAttribute('aria-label')||'',e.placeholder||'',(e.value||'').slice(0,14),Math.round(r.x),Math.round(r.y),Math.round(r.width),Math.round(r.height),e.disabled?'D':''].join('|')})})()",
+   "max": 6000
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('button')].filter(b=>b.getClientRects().length).map(b=>[b.innerText.trim().slice(0,24),Math.round(b.getBoundingClientRect().x),Math.round(b.getBoundingClientRect().y),Math.round(b.getBoundingClientRect().width),Math.round(b.getBoundingClientRect().height)].join('|'))",
+   "max": 600
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Aprovar",
+    "exact": true
+   },
+   "optional": true,
+   "after": 1500
+  },
+  {
+   "do": "shot",
+   "name": "75-publica-aprovada"
+  },
+  {
+   "do": "text",
+   "selector": "body",
+   "name": "pública depois de aprovar",
+   "max": 600
+  },
+  {
+   "do": "goto",
+   "url": "/orcamentos"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie orçamentos, custos e precificação",
+   "timeout": 20
+  },
+  {
+   "do": "wait",
+   "ms": 1500
+  },
+  {
+   "do": "shot",
+   "name": "76-lista-aprovado"
+  },
+  {
+   "do": "text",
+   "selector": "main tbody",
+   "name": "lista depois de aprovar",
+   "max": 3200
+  },
+  {
+   "do": "html",
+   "selector": "main tbody tr:has-text('Hotel Mirante do Mar') td:nth-child(2)",
+   "max": 1600
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('Hotel Mirante do Mar') td:nth-child(2) [title], main tbody tr:has-text('Hotel Mirante do Mar') td:nth-child(2) svg"
+   },
+   "optional": true,
+   "after": 1000
+  },
+  {
+   "do": "shot",
+   "name": "77-hover-visualizacoes"
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('[role=tooltip]')].map(e=>e.innerText)",
+   "max": 300
+  },
+  {
+   "do": "html",
+   "selector": "main tbody tr:has-text('Casa de Repouso') td:nth-child(2)",
+   "max": 1200
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main tbody tr:has-text('Hotel Mirante do Mar') button[aria-haspopup='menu']"
+   },
+   "after": 800
+  },
+  {
+   "do": "shot",
+   "name": "78-menu-hotel"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const ds=[...document.querySelectorAll('[role=dialog],[data-radix-popper-content-wrapper]')];const root=ds.length?ds[ds.length-1]:document.querySelector('main')||document;return [...root.querySelectorAll('button,input,textarea,select,[role=combobox],[role=switch],[role=checkbox],[role=tab],[role=option],[role=menuitem],[role=slider]')].filter(e=>e.getClientRects().length).map(e=>{const r=e.getBoundingClientRect();return [e.tagName[0],e.type||'',e.getAttribute('role')||'',(e.innerText||'').replace(/\\s+/g,' ').slice(0,38),e.getAttribute('aria-label')||'',e.placeholder||'',(e.value||'').slice(0,14),Math.round(r.x),Math.round(r.y),Math.round(r.width),Math.round(r.height),e.disabled?'D':''].join('|')})})()",
+   "max": 6000
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "after": 500
+  }
+ ]
+}

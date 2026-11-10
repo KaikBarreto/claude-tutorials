@@ -1,0 +1,95 @@
+{
+ "name": "t2-cap10",
+ "title": "T2 · Cap. 10 · Vagas do plano (narração 25,4 s; marcas L1..L2 = início de cada linha do roteiro)",
+ "seed": "t2-cap10",
+ "pace": 0.5,
+ "cps": 40,
+ "tail": 1.5,
+ "start": {
+  "x": 900,
+  "y": 420
+ },
+ "seedExtra": [
+  "t1/apos-cap13",
+  "t2/inicio",
+  "t2/apos-cap09"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/configuracoes"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "goto",
+   "url": "/configuracoes?tab=usuarios"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "main p",
+    "hasText": "usuários •"
+   },
+   "timeout": 15
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main p",
+    "hasText": "usuários •"
+   },
+   "seconds": 7.0,
+   "at": 1.98,
+   "label": "contador: ativos e vagas do plano"
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 10.36
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[data-sidebar=sidebar] button",
+    "hasText": "Camila Duarte"
+   },
+   "at": 17.3,
+   "label": "abre o menu da conta"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "menuitem",
+    "name": "Assinatura"
+   },
+   "seconds": 1.8,
+   "at": 18.56,
+   "label": "Assinatura (sem clicar)"
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 20.64,
+   "label": "fecha o menu da conta"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 25.44
+  }
+ ]
+}

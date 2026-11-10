@@ -1,0 +1,333 @@
+{
+ "name": "t15-cap04",
+ "title": "T15 · Cap. 4 · O dia do pagamento (narração 25,3 s; marcas L1..L4 = início de cada linha do roteiro)",
+ "seed": "t15-cap04",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 0.4,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap05",
+  "t12/inicio",
+  "t12/apos-cap11",
+  "t13/inicio",
+  "t13/apos-cap14",
+  "t19/inicio",
+  "t19/apos-cap13",
+  "t20/inicio",
+  "t2/apos-cap10",
+  "t15/inicio"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/funcionarios"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/funcionarios"
+  },
+  {
+   "do": "waitFor",
+   "text": "Lista de Funcionários",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Novo Funcionário",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Nome Completo",
+   "timeout": 10
+  },
+  {
+   "do": "pause",
+   "seconds": 0.6
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='Nome do funcionário']",
+    "nth": 0
+   },
+   "text": "Tatiane Ribeiro",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='000.000.000-00']",
+    "nth": 0
+   },
+   "text": "41837290687",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='(00) 00000-0000']",
+    "nth": 0
+   },
+   "text": "2130001008",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='Ex: Técnico']",
+    "nth": 0
+   },
+   "text": "Assistente administrativa",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='Endereço completo']",
+    "nth": 0
+   },
+   "text": "Rua Gavião Peixoto, 120, apto 302, Icaraí, Niterói - RJ",
+   "cps": 60
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] div:has(> label:text-is('Data de Admissão')) > button"
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] button:text-is(\"3\") >> nth=0"
+   }
+  },
+  {
+   "do": "pause",
+   "seconds": 0.4
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='CPF, email, telefone ou chave aleatória']",
+    "nth": 0
+   },
+   "text": "tatiane.ribeiro@glacialcold.example",
+   "cps": 60
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Pagamento",
+    "exact": true,
+    "within": "[role=dialog]"
+   }
+  },
+  {
+   "do": "pause",
+   "seconds": 0.5
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[placeholder^='R$']",
+    "nth": 0
+   },
+   "text": "280000",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Calcular",
+    "exact": true,
+    "within": "[role=dialog]"
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Calcular Custo Mensal",
+   "timeout": 10
+  },
+  {
+   "do": "pause",
+   "seconds": 0.6
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "div:has(> label:text-is('Transporte')) input"
+   },
+   "text": "22000",
+   "cps": 40
+  },
+  {
+   "do": "pause",
+   "seconds": 0.4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "button:has-text('Aplicar R$')"
+   }
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "CLT",
+    "exact": true,
+    "within": "[role=dialog]"
+   }
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='Ex: 7156-10']",
+    "nth": 0
+   },
+   "text": "4110-10",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='Ex: 00123']",
+    "nth": 0
+   },
+   "text": "00008",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Sim",
+    "exact": true,
+    "within": "[role=dialog]"
+   }
+  },
+  {
+   "do": "pause",
+   "seconds": 0.4
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] div:has(> label:has-text('Valor mensal do VT')) input"
+   },
+   "text": "22000",
+   "cps": 40
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|erro|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "eval",
+   "js": "(()=>{const d=document.querySelector('[role=dialog] .overflow-y-auto');if(!d)return 'sem rolagem';d.scrollTo({top:420,behavior:'smooth'});return d.scrollHeight})()",
+   "label": "desce até a Configuração de Pagamento"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Configuração de Pagamento",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.0,
+   "label": "Configuração de Pagamento",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]",
+    "hasText": "Mensal"
+   },
+   "label": "abre Frequência (Mensal, Quinzenal, Semanal)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Mensal"
+   },
+   "label": "fica em Mensal"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] div:has(> label:text-is('N° dia útil do mês')) input"
+   },
+   "seconds": 0.9,
+   "label": "N° dia útil do mês (5)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]",
+    "hasText": "Dia útil"
+   },
+   "label": "abre Tipo de dia (Dia útil, Dia corrido)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Dia útil"
+   },
+   "label": "volta para Dia útil"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Valor da folha aparece automaticamente",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.4,
+   "label": "a dica da folha automática",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Frequência\", \"Mensal\", \"Tipo de dia\", \"Dia útil\", \"N° dia útil do mês\", \"Valor da folha aparece automaticamente em Contas a Pagar conforme essa configuração.\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere configuração de pagamento na tela"
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

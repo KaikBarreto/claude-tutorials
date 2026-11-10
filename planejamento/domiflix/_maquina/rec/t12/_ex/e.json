@@ -1,0 +1,102 @@
+{
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap05",
+  "t12/inicio",
+  "t12/apos-cap08"
+ ],
+ "start": "/contratos",
+ "stopOnFail": false,
+ "steps": [
+  {
+   "do": "wait",
+   "ms": 1500
+  },
+  {
+   "do": "shot",
+   "name": "e-01-lista"
+  },
+  {
+   "do": "text",
+   "selector": "main",
+   "name": "lista contratos",
+   "max": 900
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "PMOC - Hotel Mirante do Mar"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 2000
+  },
+  {
+   "do": "shot",
+   "name": "e-02-visao"
+  },
+  {
+   "do": "eval",
+   "js": "location.href"
+  },
+  {
+   "do": "list",
+   "selector": "main [role=tab]"
+  },
+  {
+   "do": "text",
+   "selector": "main",
+   "name": "visao",
+   "max": 4500
+  },
+  {
+   "do": "list",
+   "selector": "main [role=switch]"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Copiar link"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "shot",
+   "name": "e-03-copiado"
+  },
+  {
+   "do": "eval",
+   "js": "navigator.clipboard.readText().catch(e=>String(e))"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Documentos"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 1500
+  },
+  {
+   "do": "shot",
+   "name": "e-04-docs"
+  },
+  {
+   "do": "text",
+   "selector": "main",
+   "name": "docs",
+   "max": 2500
+  }
+ ]
+}

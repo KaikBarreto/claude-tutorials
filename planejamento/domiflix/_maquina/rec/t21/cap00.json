@@ -1,0 +1,219 @@
+{
+ "name": "t21-cap00",
+ "title": "T21 · Cap. 0 · Abertura (narração 34,8 s; marcas L1..L4 = início de cada linha do roteiro)",
+ "seed": "t21-cap00",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap05",
+  "t12/inicio",
+  "t12/apos-cap11",
+  "t13/inicio",
+  "t13/apos-cap14",
+  "t19/inicio",
+  "t19/apos-cap13",
+  "t20/inicio",
+  "t20/apos-cap12",
+  "t2/apos-cap10",
+  "t15/inicio",
+  "t15/apos-cap12",
+  "t22/inicio",
+  "t22/apos-cap11",
+  "t21/inicio"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/configuracoes"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Camila!",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Configurações",
+    "exact": true
+   },
+   "at": 0.6,
+   "label": "Configurações, no rodapé do menu",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie as configurações do sistema",
+   "timeout": 20
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Integrações",
+    "exact": true
+   },
+   "at": 2.9,
+   "label": "aba Integrações"
+  },
+  {
+   "do": "pause",
+   "seconds": 0.6
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Integrações",
+    "exact": true
+   },
+   "label": "aba Integrações de novo (só se a subaba ainda não apareceu)",
+   "unless": {
+    "selector": "[role=tab]",
+    "hasText": "WhatsApp"
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=tab]",
+    "hasText": "WhatsApp"
+   },
+   "at": 4.88,
+   "label": "subaba WhatsApp"
+  },
+  {
+   "do": "waitFor",
+   "text": "Conexão com o WhatsApp",
+   "timeout": 15
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Conexão com o WhatsApp\", \"Conecte o WhatsApp atual da empresa por QR Code. A API Oficial da Meta será adicionada depois, sem misturar os canais.\", \"Desconectado\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere o cartão Conexão com o WhatsApp, com o selo Desconectado"
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 6.66
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Conexão com o WhatsApp",
+    "within": "main"
+   },
+   "seconds": 2.6,
+   "at": 10.74,
+   "label": "cartão Conexão com o WhatsApp",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Desconectado",
+    "exact": true
+   },
+   "seconds": 2.0,
+   "at": 13.46,
+   "label": "selo Desconectado",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 16.9
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "tab",
+    "name": "Integrações",
+    "exact": true
+   },
+   "seconds": 0.9,
+   "at": 23.66,
+   "label": "aba Integrações (de novo, na fala)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=tab]",
+    "hasText": "WhatsApp"
+   },
+   "seconds": 0.41,
+   "at": 24.94,
+   "label": "subaba WhatsApp (de novo, na fala)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 25.9
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=tab]",
+    "hasText": "WhatsApp"
+   },
+   "seconds": 0.29,
+   "at": 25.9,
+   "label": "subaba WhatsApp (de novo, na fala) (continua)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 34.8
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

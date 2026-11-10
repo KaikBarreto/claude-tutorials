@@ -1,0 +1,436 @@
+{
+ "name": "t1-cap06",
+ "title": "T1 · Cap. 6 · QR Code, relatório e link do cliente (marcas L1..L7 = início de cada linha da fala; `at` pelos tempos da voz)",
+ "seed": "t1-cap06",
+ "pace": 1.0,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 300
+ },
+ "seedExtra": [
+  "t1/apos-cap05"
+ ],
+ "prewarm": [
+  "/configuracoes"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/configuracoes"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie as configurações do sistema"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "text": "Salvo",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0.0
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 760,
+    "y": 420
+   },
+   "by": 2050,
+   "duration": 1.4,
+   "after": 50,
+   "label": "rola até a seção QR Code",
+   "at": 0.35
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "QR Code",
+    "exact": true
+   },
+   "seconds": 0.4,
+   "label": "seção QR Code",
+   "at": 2.12
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Personalize o visual dos QR Codes gerados pelo sistema, com o logo da sua marca no centro"
+   },
+   "seconds": 0.5,
+   "label": "texto da seção: QR Codes com o logo da marca no centro"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "div.rounded-lg.border:has(> p:text-is('Pré-visualização'))"
+   },
+   "seconds": 1.4,
+   "label": "prévia do QR Code com o logo no centro",
+   "at": 5.28
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 7.64
+  },
+  {
+   "do": "select",
+   "target": {
+    "role": "combobox",
+    "hasText": "Quadrado"
+   },
+   "option": "Arredondado",
+   "exact": true,
+   "label": "Estilo dos pontos: Arredondado",
+   "at": 7.64
+  },
+  {
+   "do": "pause",
+   "seconds": 0.1,
+   "label": "a prévia muda"
+  },
+  {
+   "do": "select",
+   "target": {
+    "role": "combobox",
+    "hasText": "Quadrado"
+   },
+   "option": "Arredondado",
+   "exact": true,
+   "label": "Cantos: Arredondado"
+  },
+  {
+   "do": "pause",
+   "seconds": 0.6,
+   "label": "a prévia muda de novo"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 13.72
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Cor do QR Code",
+    "exact": true
+   },
+   "seconds": 0.8,
+   "label": "Cor do QR Code",
+   "at": 13.72
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "button:has-text('#000000')",
+    "within": "main.overflow-y-auto"
+   },
+   "seconds": 1.4,
+   "label": "cor do QR Code: preto, sem trocar",
+   "at": 15.6
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 19.64
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 760,
+    "y": 420
+   },
+   "by": 390,
+   "duration": 0.8,
+   "after": 50,
+   "label": "rola até o Cabeçalho do Relatório de Serviço",
+   "at": 19.64
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Cabeçalho do Relatório de Serviço",
+    "exact": true
+   },
+   "seconds": 0.6,
+   "label": "título: Cabeçalho do Relatório de Serviço"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Personalize o visual do cabeçalho que aparece no relatório da OS concluída"
+   },
+   "seconds": 1.4,
+   "label": "texto: o relatório da OS concluída",
+   "at": 22.6
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "div.overflow-hidden.shadow-sm:has-text('OS #000001')"
+   },
+   "seconds": 2.0,
+   "label": "prévia do cabeçalho com os dados da empresa",
+   "at": 26.9
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 29.52
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Cor de fundo do cabeçalho",
+    "exact": true
+   },
+   "seconds": 0.1,
+   "label": "Cor de fundo do cabeçalho",
+   "at": 29.55
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Cor do texto",
+    "exact": true
+   },
+   "seconds": 0.1,
+   "label": "Cor do texto",
+   "at": 30.36
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Tamanho do logo"
+   },
+   "seconds": 0.2,
+   "label": "Tamanho do logo",
+   "at": 31.25
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Logo Completo",
+    "exact": true
+   },
+   "label": "tipo de logo no relatório: Logo Completo (já escolhido)",
+   "at": 32.22
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Ícone",
+    "exact": true
+   },
+   "label": "tipo de logo no relatório: Ícone",
+   "at": 34.06
+  },
+  {
+   "do": "pause",
+   "seconds": 0.2,
+   "label": "a prévia acompanha"
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 35.6
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Logo Completo",
+    "exact": true
+   },
+   "label": "tipo de logo no relatório: Logo Completo",
+   "at": 35.6
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 760,
+    "y": 420
+   },
+   "by": -940,
+   "duration": 1.0,
+   "after": 50,
+   "label": "volta ao topo da seção: Imagem ao compartilhar a OS",
+   "at": 36.78
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Imagem ao compartilhar a OS",
+    "exact": true
+   },
+   "seconds": 0.8,
+   "label": "Imagem ao compartilhar a OS"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Define a imagem que aparece no WhatsApp e em outros aplicativos ao compartilhar o link público da Ordem de Serviço."
+   },
+   "seconds": 0.7,
+   "label": "texto: a imagem que aparece no WhatsApp"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Usar logo da empresa"
+   },
+   "label": "Usar logo da empresa",
+   "at": 42.4
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "text": "Imagem social gerada com o logo da empresa."
+   },
+   "timeout": 12,
+   "label": "aviso: imagem social gerada"
+  },
+  {
+   "do": "pause",
+   "seconds": 0.3
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Ajustar arte"
+   },
+   "label": "Ajustar arte",
+   "at": 46.8
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "text": "Prévia nos dois formatos",
+    "exact": true
+   },
+   "timeout": 8,
+   "label": "editor da arte aberto"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Prévia nos dois formatos",
+    "exact": true
+   },
+   "seconds": 0.1,
+   "label": "Prévia nos dois formatos"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Cartão grande"
+   },
+   "seconds": 0.3,
+   "label": "Cartão grande",
+   "at": 49.64
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Miniatura compacta"
+   },
+   "seconds": 0.4,
+   "label": "Miniatura compacta",
+   "at": 50.76
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 51.88
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Cancelar",
+    "exact": true
+   },
+   "label": "fecha o editor sem salvar (Cancelar)",
+   "at": 51.88
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 760,
+    "y": 420
+   },
+   "by": -240,
+   "duration": 0.5,
+   "after": 50,
+   "label": "sobe um pouco até o interruptor White Label",
+   "at": 53.02
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Ativar White Label",
+    "exact": true
+   },
+   "seconds": 1.0,
+   "label": "Ativar White Label (ligado)",
+   "at": 54.44
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "section:has(h3:has-text('White Label')) button[role=switch]"
+   },
+   "label": "desliga o Ativar White Label",
+   "at": 55.9
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "text": "Salvo",
+    "exact": true
+   },
+   "timeout": 10,
+   "label": "selo Salvo"
+  },
+  {
+   "do": "pause",
+   "seconds": 0.5
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[data-sidebar=sidebar] a:has(img)"
+   },
+   "text": "",
+   "noClick": true,
+   "label": "logo da Dominex de volta no topo do menu"
+  },
+  {
+   "do": "pause",
+   "seconds": 1.0,
+   "label": "o verde da Dominex volta"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 60.72
+  }
+ ]
+}

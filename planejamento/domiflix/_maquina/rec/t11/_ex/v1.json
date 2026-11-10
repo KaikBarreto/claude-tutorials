@@ -1,0 +1,120 @@
+{
+ "seedExtra": [
+  "t2/apos-cap10",
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t9/inicio",
+  "t9/apos-cap16",
+  "t10/apos-cap09",
+  "t11/inicio",
+  "t11/apos-cap09"
+ ],
+ "start": "/dashboard",
+ "stopOnFail": false,
+ "steps": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "wait",
+   "ms": 1500
+  },
+  {
+   "do": "shot",
+   "name": "v-dashboard"
+  },
+  {
+   "do": "goto",
+   "url": "/contratos"
+  },
+  {
+   "do": "wait",
+   "ms": 1500
+  },
+  {
+   "do": "shot",
+   "name": "v-lista"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main tbody tr",
+    "hasText": "PMOC - Hotel Mirante do Mar"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 2500
+  },
+  {
+   "do": "shot",
+   "name": "v-detalhe"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Financeiro"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 1200
+  },
+  {
+   "do": "shot",
+   "name": "v-financeiro"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Cronograma"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 1200
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Próximo período"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 1200
+  },
+  {
+   "do": "shot",
+   "name": "v-cronograma"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Documentos"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 1500
+  },
+  {
+   "do": "shot",
+   "name": "v-documentos"
+  },
+  {
+   "do": "text",
+   "selector": "main",
+   "name": "documentos",
+   "max": 2500
+  }
+ ]
+}

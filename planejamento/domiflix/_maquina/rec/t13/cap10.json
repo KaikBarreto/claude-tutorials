@@ -1,0 +1,468 @@
+{
+ "name": "t13-cap10",
+ "title": "T13 · Cap. 10 · O que vai vencer (narração 81,4 s; marcas L1..L8 = início de cada linha do roteiro)",
+ "seed": "t13-cap10",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap05",
+  "t12/inicio",
+  "t12/apos-cap11",
+  "t13/inicio",
+  "t13/apos-cap09"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/financeiro/contas"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Camila!",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/financeiro/contas"
+  },
+  {
+   "do": "waitFor",
+   "text": "Faturas de Cartão",
+   "timeout": 25,
+   "optional": true
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Toggle Sidebar",
+    "nth": 0
+   }
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button[role=combobox]",
+    "hasText": "10"
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "25",
+    "exact": true
+   }
+  },
+  {
+   "do": "pause",
+   "seconds": 0.6
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|erro|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"A pagar\", \"A receber\", \"Vencidas\", \"Próximos 7 dias\", \"De 8 a 30 dias\", \"Gás R-410A e tubos de cobre\", \"Pendente\", \"Orçamento #2 (1/3)\", \"Faturas de Cartão\", \"Paga\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere a tela: cartões, faixa de horizonte, gás pendente, orçamento #2 e a fatura de novembro Paga"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "tab",
+    "name": "Todas",
+    "exact": true
+   },
+   "seconds": 0.9,
+   "at": 5.46,
+   "label": "a aba Todas",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 8.58
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "tab",
+    "name": "A Pagar",
+    "exact": true
+   },
+   "seconds": 0.4,
+   "at": 10.02,
+   "label": "aba A Pagar",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "tab",
+    "name": "A Receber",
+    "exact": true
+   },
+   "seconds": 0.4,
+   "at": 10.9,
+   "label": "aba A Receber",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Próximos 7 dias",
+    "within": "main"
+   },
+   "seconds": 0.9,
+   "at": 12.1,
+   "label": "faixa: Vencidas, Próximos 7 dias, De 8 a 30 dias",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 20.26
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tr:has-text('Gás R-410A'), main [role=row]:has-text('Gás R-410A')"
+   },
+   "seconds": 0.9,
+   "at": 20.66,
+   "label": "a linha do gás",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tr:has-text('Orçamento #2 (1/3)'), main [role=row]:has-text('Orçamento #2 (1/3)')"
+   },
+   "seconds": 0.9,
+   "at": 23.52,
+   "label": "a linha Orçamento #2 (1/3) do Hotel Mirante do Mar",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 30.32
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main button",
+    "hasText": "Calendário"
+   },
+   "seconds": 0.8,
+   "at": 31.92,
+   "label": "alternador Lista / Calendário",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Exportar",
+    "exact": true
+   },
+   "at": 33.04,
+   "label": "Exportar"
+  },
+  {
+   "do": "waitFor",
+   "text": "CSV",
+   "timeout": 6
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "menuitem",
+    "name": "PDF"
+   },
+   "seconds": 0.9,
+   "at": 34.56,
+   "label": "Excel, PDF e CSV",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 37.08,
+   "label": "fecha sem escolher"
+  },
+  {
+   "do": "pause",
+   "seconds": 0.5
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 37.44
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Nova Conta",
+    "exact": true
+   },
+   "at": 40.88,
+   "label": "Nova Conta"
+  },
+  {
+   "do": "waitFor",
+   "text": "Nova Conta",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "placeholder": "Ex: Aluguel do escritório",
+    "within": "[role=dialog]"
+   },
+   "at": 45.12,
+   "label": "descrição: Aluguel do galpão (clique)"
+  },
+  {
+   "do": "eval",
+   "js": "(() => { document.execCommand('insertText', false, \"Aluguel do galp\\u00e3o\"); const e = document.activeElement; return e && e.value; })()",
+   "label": "descrição: Aluguel do galpão (colado)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]",
+    "hasText": "Selecione uma categoria"
+   },
+   "at": 46.12,
+   "label": "abre a lista de categorias"
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 46.92
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Buscar categoria..."
+   },
+   "text": "Aluguel",
+   "cps": 10,
+   "at": 46.92,
+   "label": "busca \"Aluguel\""
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Aluguel",
+    "exact": true
+   },
+   "label": "escolhe Aluguel"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='0,00']",
+    "nth": 0
+   },
+   "text": "280000",
+   "cps": 20,
+   "at": 49.48,
+   "label": "Valor 2.800,00"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const esp=[\"2.800,00\"];let out='';for(let i=0;i<12;i++){const v=[...document.querySelectorAll(\"[role=dialog]\"+' input, '+\"[role=dialog]\"+' textarea')].map(e=>e.value).join(' | ');const falta=esp.filter(e=>!v.includes(e));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+v.slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Valor 2.800,00"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] button[aria-haspopup]",
+    "hasText": "10/11/2026"
+   },
+   "seconds": 0.9,
+   "at": 52.28,
+   "label": "Vencimento: hoje (dia 10)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "select",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]",
+    "hasText": "Selecione uma conta"
+   },
+   "option": "Conta Principal",
+   "at": 53.64,
+   "label": "Conta Bancária / Caixa: Conta Principal"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const d=document.querySelector('[role=dialog] .overflow-y-auto');if(!d)return 'sem rolagem';d.scrollTo({top:2000,behavior:'smooth'});return d.scrollHeight})()",
+   "at": 56.26,
+   "label": "rola até Parcelar ou repetir"
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 57.06
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Parcelar ou repetir",
+    "exact": true
+   },
+   "at": 57.3,
+   "label": "abre Parcelar ou repetir"
+  },
+  {
+   "do": "select",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]",
+    "hasText": "Única"
+   },
+   "option": "Mensal",
+   "at": 60.02,
+   "label": "Recorrência: Mensal"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Mensal\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Recorrência Mensal"
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('[role=dialog] input')].map(i=>i.value).join('|')",
+   "label": "confere campos da janela (parcelas 12)"
+  },
+  {
+   "do": "pause",
+   "seconds": 0.5
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Criar Conta",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 63.1,
+   "label": "Criar Conta"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 30
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Aluguel do galpão (1/12)\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere a primeira parcela do aluguel entra na lista do mês"
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 69.54
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Buscar por nome, descrição, categoria ou valor..."
+   },
+   "text": "aluguel",
+   "cps": 12,
+   "at": 72.75,
+   "label": "busca \"aluguel\""
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Aluguel do galpão (1/12)\", \"Aluguel do galpão (12/12)\", \"de 12\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere as doze parcelas do aluguel aparecem na busca"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tr:has-text('Aluguel do galpão (12/12)'), main [role=row]:has-text('Aluguel do galpão (12/12)')"
+   },
+   "seconds": 0.9,
+   "at": 76.91,
+   "label": "as doze parcelas, uma por mês",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Buscar por nome, descrição, categoria ou valor..."
+   },
+   "text": "",
+   "at": 79.21,
+   "label": "limpa a busca",
+   "clear": true
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 81.38
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

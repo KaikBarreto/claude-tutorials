@@ -1,0 +1,179 @@
+{
+ "title": "T0 v2 · cap03 · Quando bater uma dúvida",
+ "seed": "t0v2-cap03",
+ "pace": 0.4,
+ "tail": 1.2,
+ "cps": 9,
+ "seedExtra": [
+  "t0v2/catalogo",
+  "t0v2/progresso-camila",
+  "t0v2/usuario-novo",
+  "t0v2/conta-contratada",
+  "t0v2/pagamentos",
+  "t0v2/lembrete-dispensado"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/domiflix",
+  "/domiflix/assistir/gestao-de-contratos-e-pmoc/1?trilha=tutoriais-do-sistema"
+ ],
+ "name": "t0v2-cap03-p",
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/domiflix/assistir/gestao-de-contratos-e-pmoc/1?trilha=tutoriais-do-sistema"
+  },
+  {
+   "do": "waitFor",
+   "text": "Tirar dúvidas com o suporte",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(() => { window.__wa = null; window.open = (u) => { window.__wa = u; return null; }; return 'stub'; })()"
+  },
+  {
+   "do": "pause",
+   "seconds": 0.6
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0.0
+  },
+  {
+   "do": "scroll",
+   "target": "Tirar dúvidas com o suporte",
+   "optional": true,
+   "timeout": 8,
+   "at": 10.2
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 11.4
+  },
+  {
+   "do": "hover",
+   "target": "Tirar dúvidas com o suporte",
+   "seconds": 0.6,
+   "optional": true,
+   "timeout": 3,
+   "label": "botão Tirar dúvidas com o suporte",
+   "at": 11.7
+  },
+  {
+   "do": "click",
+   "target": "Tirar dúvidas com o suporte",
+   "optional": true,
+   "timeout": 8,
+   "label": "clica Tirar dúvidas com o suporte",
+   "at": 12.9
+  },
+  {
+   "do": "eval",
+   "js": "location.href='/guia-tecnico/'; 'ok'",
+   "at": 19.6
+  },
+  {
+   "do": "waitFor",
+   "text": "Guia Técnico",
+   "timeout": 20,
+   "at": 20.4
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 20.44
+  },
+  {
+   "do": "hover",
+   "target": {
+    "placeholder": "Buscar no guia…"
+   },
+   "seconds": 1.0,
+   "optional": true,
+   "timeout": 3,
+   "label": "busca do guia",
+   "at": 23.8
+  },
+  {
+   "do": "eval",
+   "js": "location.href='/dashboard'; 'ok'",
+   "at": 30.31
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "at": 30.6
+  },
+  {
+   "do": "eval",
+   "js": "(() => { window.__wa = null; window.open = (u) => { window.__wa = u; return null; }; return 'stub'; })()",
+   "at": 30.8
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 34.15
+  },
+  {
+   "do": "click",
+   "target": "Menu",
+   "optional": true,
+   "timeout": 8,
+   "label": "abre o Menu",
+   "noScroll": true,
+   "at": 34.4
+  },
+  {
+   "do": "scroll",
+   "target": "Falar com o Suporte",
+   "optional": true,
+   "timeout": 8,
+   "at": 36.4
+  },
+  {
+   "do": "hover",
+   "target": "Falar com o Suporte",
+   "seconds": 0.6,
+   "optional": true,
+   "timeout": 3,
+   "label": "Falar com o Suporte",
+   "at": 37.5
+  },
+  {
+   "do": "click",
+   "target": "Falar com o Suporte",
+   "optional": true,
+   "timeout": 8,
+   "label": "clica Falar com o Suporte",
+   "noScroll": true,
+   "at": 39.2
+  },
+  {
+   "do": "pause",
+   "seconds": 0.5,
+   "at": 40.4
+  }
+ ],
+ "device": "phone",
+ "start": {
+  "x": 195,
+  "y": 600
+ }
+}

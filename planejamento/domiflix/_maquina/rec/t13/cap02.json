@@ -1,0 +1,390 @@
+{
+ "name": "t13-cap02",
+ "title": "T13 · Cap. 2 · O caixa e o banco (narração 66,6 s; marcas L1..L5 = início de cada linha do roteiro)",
+ "seed": "t13-cap02",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap05",
+  "t12/inicio",
+  "t12/apos-cap11",
+  "t13/inicio"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/financeiro/movimentacoes"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Camila!",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/financeiro/relatorio"
+  },
+  {
+   "do": "waitFor",
+   "text": "Saldo do Período",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Financeiro",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "role": "link",
+    "name": "Movimentações Financeiras",
+    "exact": true
+   },
+   "timeout": 15
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|erro|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "link",
+    "name": "Movimentações Financeiras",
+    "exact": true
+   },
+   "at": 0.6,
+   "label": "abre Movimentações Financeiras"
+  },
+  {
+   "do": "waitFor",
+   "text": "Contas e cartões",
+   "timeout": 20
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Toggle Sidebar",
+    "nth": 0
+   },
+   "at": 2.3,
+   "label": "recolhe o menu lateral (a tela ganha espaço)"
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "aside[aria-label=\"Contas e cartões\"] h2, aside[aria-label=\"Contas e cartões\"] p",
+    "nth": 0
+   },
+   "seconds": 0.9,
+   "at": 8.48,
+   "label": "coluna Contas e cartões",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 10.82
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "aside[aria-label=\"Contas e cartões\"] button",
+    "hasText": "Caixa"
+   },
+   "seconds": 0.8,
+   "at": 13.46,
+   "label": "linha Caixa",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "aside[aria-label=\"Contas e cartões\"] button",
+    "hasText": "Conta Principal"
+   },
+   "seconds": 0.8,
+   "at": 17.22,
+   "label": "linha Conta Principal",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Conciliação bancária (OFX)",
+    "exact": true
+   },
+   "seconds": 0.9,
+   "at": 22.18,
+   "label": "botão Conciliação bancária (OFX), sem clicar",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 27.54
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Ações de Conta Principal",
+    "exact": true
+   },
+   "at": 33.36,
+   "label": "menu ⋮ da Conta Principal"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Editar"
+   },
+   "at": 35.78,
+   "label": "Editar"
+  },
+  {
+   "do": "waitFor",
+   "text": "Editar Conta",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Instituição",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.6,
+   "at": 36.48,
+   "label": "passa por Tipo e Instituição (sem abrir)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='0,00']",
+    "nth": 0
+   },
+   "text": "1850000",
+   "cps": 8,
+   "at": 39.76,
+   "label": "Saldo Inicial 18.500,00"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const esp=[\"18.500,00\"];let out='';for(let i=0;i<12;i++){const v=[...document.querySelectorAll(\"[role=dialog]\"+' input, '+\"[role=dialog]\"+' textarea')].map(e=>e.value).join(' | ');const falta=esp.filter(e=>!v.includes(e));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+v.slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Saldo Inicial 18.500,00"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Editar o saldo inicial recalcula",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.3,
+   "label": "aviso: Editar o saldo inicial recalcula o saldo atual",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 42.1
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "switch",
+    "name": "Faz parte do caixa da empresa",
+    "exact": true
+   },
+   "seconds": 0.9,
+   "at": 42.2,
+   "label": "interruptor Faz parte do caixa da empresa (ligado)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Ligado, o dinheiro desta conta",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.9,
+   "at": 45.26,
+   "label": "explicação do interruptor",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Salvar",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 50.22,
+   "label": "Salvar"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 10
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Saldo R$ 18.500,00\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Conta Principal com Saldo R$ 18.500,00"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Nova conta bancária",
+    "exact": true
+   },
+   "seconds": 0.9,
+   "at": 53.5,
+   "label": "o + do grupo Contas (rótulo Nova conta), sem clicar",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 58.3
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Ações de Caixa",
+    "exact": true
+   },
+   "at": 58.7,
+   "label": "menu ⋮ do Caixa"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Editar"
+   },
+   "label": "Editar"
+  },
+  {
+   "do": "waitFor",
+   "text": "Editar Conta",
+   "timeout": 10
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='0,00']",
+    "nth": 0
+   },
+   "text": "80000",
+   "cps": 8,
+   "label": "Saldo Inicial 800,00"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const esp=[\"800,00\"];let out='';for(let i=0;i<12;i++){const v=[...document.querySelectorAll(\"[role=dialog]\"+' input, '+\"[role=dialog]\"+' textarea')].map(e=>e.value).join(' | ');const falta=esp.filter(e=>!v.includes(e));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+v.slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Saldo Inicial 800,00"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Salvar",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "label": "Salvar"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 10
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Saldo R$ 800,00\", \"Saldo R$ 18.500,00\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Caixa 800,00 e Conta Principal 18.500,00"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "aside[aria-label=\"Contas e cartões\"] button",
+    "hasText": "Caixa"
+   },
+   "seconds": 0.9,
+   "at": 62.94,
+   "label": "as duas contas mostram o saldo",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 66.56
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

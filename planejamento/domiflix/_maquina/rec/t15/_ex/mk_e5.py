@@ -1,0 +1,22 @@
+import sys; sys.path.insert(0,'/home/claude/domiflix/rec/t15/_ex')
+from _lib import *
+D="[role=dialog]"
+a(do="goto",url="/funcionarios"); a(do="waitFor",text="Lista de Funcionários",timeout=25); wait()
+click(role="button",name="Novo Funcionário",exact=True); wait(900)
+ty("Nome do funcionário","Tatiane Ribeiro"); ty("000.000.000-00","41837290687"); ty("(00) 00000-0000","2130001008"); ty("Ex: Técnico","Assistente administrativa"); ty("Endereço completo","Rua Gavião Peixoto, 120, apto 302, Icaraí, Niterói - RJ")
+click(selector="[role=dialog] div:has(> label:text-is('Data de Admissão')) > button"); wait(800); shot("g1-calendario")
+a(do="eval",js="[...document.querySelectorAll('[data-radix-popper-content-wrapper] button, [role=dialog] ~ div button, [role=grid] button')].map(b=>(b.getAttribute('aria-label')||b.innerText||'').trim().slice(0,30)).slice(0,60).join(' | ')",max=2500)
+a(do="eval",js="(document.querySelector('[data-radix-popper-content-wrapper]')||document.body).innerText.slice(0,300)",max=400)
+a(do="eval",js="[...document.querySelectorAll('[role=dialog] select, [role=dialog] [role=combobox]')].map(e=>e.outerHTML.slice(0,160)).join(' || ')",max=1500)
+txt("pop","[data-radix-popper-content-wrapper]",800)
+a(do="press",key="Escape"); wait(400)
+ty("CPF, email, telefone ou chave aleatória","tatiane.ribeiro@glacialcold.example"); shot("g2-pix"); lst()
+click(role="tab",name="Pagamento",exact=True); wait(900); shot("g3-pagamento"); lst(); txt("pagamento",mx=3500)
+a(do="type",target={"selector":"[role=dialog] input[inputmode='decimal'], [role=dialog] input[type=text]","nth":0},text="280000")
+a(do="eval",js="[...document.querySelectorAll('[role=dialog] input')].map(i=>[i.placeholder,i.type,i.value,i.inputMode].join('/')).join(' | ')",max=1500)
+click(role="button",name="Calcular",exact=True); wait(1200); shot("g4-calcular"); lst(); txt("calcular",mx=4000)
+a(do="eval",js="[...document.querySelectorAll('[role=dialog]')].map(d=>d.innerText.slice(0,60)).join(' ### ')",max=800)
+click(role="button",name="Cancelar",exact=True)
+wait(500)
+json_=0
+out("e5",c['inicio']+['t15/salarios'])

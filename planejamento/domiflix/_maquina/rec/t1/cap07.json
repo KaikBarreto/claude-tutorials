@@ -1,0 +1,300 @@
+{
+ "name": "t1-cap07",
+ "title": "T1 · Cap. 7 · Idioma, moeda e fuso (marcas L1..L6 = início de cada linha da fala; `at` pelos tempos da voz)",
+ "seed": "t1-cap07",
+ "pace": 1.0,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 300
+ },
+ "seedExtra": [
+  "t1/apos-cap06"
+ ],
+ "prewarm": [
+  "/configuracoes"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/configuracoes"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie as configurações do sistema"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "text": "Salvo",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0.0
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Regional",
+    "exact": true
+   },
+   "label": "aba Regional",
+   "at": 1.32
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "text": "Meu idioma",
+    "exact": true
+   },
+   "timeout": 10,
+   "label": "cartões da aba Regional"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Meu idioma",
+    "exact": true
+   },
+   "seconds": 0.4,
+   "label": "cartão Meu idioma",
+   "at": 2.58
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Padrões da empresa",
+    "exact": true
+   },
+   "seconds": 0.4,
+   "label": "cartão Padrões da empresa",
+   "at": 4.42
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 6.76
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Meu idioma",
+    "exact": true
+   },
+   "seconds": 0.2,
+   "label": "Meu idioma",
+   "at": 6.76
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "combobox",
+    "hasText": "Português",
+    "nth": 0
+   },
+   "seconds": 1.2,
+   "label": "seletor Idioma (Português), sem trocar",
+   "at": 7.72
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "O idioma que VOCÊ vê no sistema. Aplica na hora, só para você."
+   },
+   "seconds": 1.6,
+   "label": "texto: aplica na hora, só para você",
+   "at": 10.32
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 13.56
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Padrões da empresa",
+    "exact": true
+   },
+   "seconds": 0.3,
+   "label": "Padrões da empresa",
+   "at": 13.56
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Idioma padrão, moeda e fuso horário para toda a empresa"
+   },
+   "seconds": 0.2,
+   "label": "texto: idioma padrão, moeda e fuso horário para toda a empresa",
+   "at": 14.74
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 760,
+    "y": 420
+   },
+   "by": 420,
+   "duration": 0.5,
+   "after": 50,
+   "label": "rola até País, Idioma padrão, Moeda e Fuso horário",
+   "at": 15.68
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "País da empresa",
+    "exact": true
+   },
+   "seconds": 0.1,
+   "label": "País da empresa (Brasil)",
+   "at": 16.48
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Idioma padrão da empresa",
+    "exact": true
+   },
+   "seconds": 0.1,
+   "label": "Idioma padrão da empresa",
+   "at": 17.12
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Moeda",
+    "exact": true
+   },
+   "seconds": 0.1,
+   "label": "Moeda",
+   "at": 18.4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Fuso horário",
+    "exact": true
+   },
+   "seconds": 0.1,
+   "label": "Fuso horário",
+   "at": 19.2
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 23.59
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "combobox",
+    "hasText": "BRL"
+   },
+   "label": "abre a lista de moedas",
+   "at": 23.59
+  },
+  {
+   "do": "pause",
+   "seconds": 1.6,
+   "label": "lista de moedas com as bandeiras"
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "label": "fecha a lista de moedas sem trocar"
+  },
+  {
+   "do": "pause",
+   "seconds": 0.1
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "combobox",
+    "hasText": "America/Sao Paulo"
+   },
+   "label": "abre a busca de fuso horário",
+   "at": 26.71
+  },
+  {
+   "do": "pause",
+   "seconds": 2.0,
+   "label": "busca de fuso: Buscar fuso (ex: Sao Paulo)"
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "label": "fecha a busca de fuso sem trocar"
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 36.79
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "A moeda é a de operação da empresa. Trocar não converte os valores já registrados, eles continuam com o número original."
+   },
+   "seconds": 6.0,
+   "label": "aviso da moeda: trocar não converte os valores já registrados",
+   "at": 36.79
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 46.77
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 760,
+    "y": 420
+   },
+   "by": 230,
+   "duration": 0.5,
+   "after": 50,
+   "label": "rola até o cartão Perfil Comportamental",
+   "at": 46.77
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Perfil Comportamental",
+    "exact": true
+   },
+   "seconds": 1.2,
+   "label": "cartão Perfil Comportamental"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Como o teste comportamental (DISC) se comporta para os funcionários."
+   },
+   "seconds": 1.6,
+   "label": "texto: teste comportamental (DISC) dos funcionários"
+  },
+  {
+   "do": "pause",
+   "seconds": 0.6
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 53.28
+  }
+ ]
+}

@@ -1,0 +1,213 @@
+{
+ "name": "t18-cap13",
+ "title": "T18 · Cap. 13 · Ciclo de Refrigeração e termos (narração 26,9 s; marcas L1..L2 = início de cada linha do roteiro)",
+ "seed": "t18-cap13",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap15",
+  "t7/inicio",
+  "t7/apos-cap10",
+  "t18/catalogo"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/area-tecnico",
+  "/area-tecnico/superaquecimento",
+  "/area-tecnico/ciclo-refrigeracao"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/area-tecnico"
+  },
+  {
+   "do": "waitFor",
+   "text": "Termos Técnicos Explicados",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "nav button",
+    "hasText": "Superaquecimento"
+   },
+   "at": 2.82,
+   "label": "abre o Superaquecimento"
+  },
+  {
+   "do": "waitFor",
+   "text": "Ver o ciclo de refrigeração",
+   "timeout": 15
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button",
+    "hasText": "Ver o ciclo de refrigeração"
+   },
+   "at": 5.52,
+   "label": "link Ver o ciclo de refrigeração"
+  },
+  {
+   "do": "waitFor",
+   "text": "Ciclo Básico de Refrigeração",
+   "timeout": 15
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "nav button",
+    "hasText": "Ciclo de Refrigeração"
+   },
+   "seconds": 0.5,
+   "at": 8.34,
+   "label": "também pelo menu",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Ilustração",
+    "exact": true
+   },
+   "seconds": 0.4,
+   "at": 9.24,
+   "label": "a Ilustração animada do ciclo",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main svg text",
+    "hasText": "COMPRESSOR"
+   },
+   "seconds": 0.4,
+   "at": 11.74,
+   "label": "o compressor na ilustração",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main svg text",
+    "hasText": "CONDENSADOR"
+   },
+   "seconds": 0.4,
+   "at": 12.86,
+   "label": "o condensador na ilustração",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main svg text",
+    "hasText": "VÁLVULA DE EXPANSÃO"
+   },
+   "seconds": 0.4,
+   "at": 14.14,
+   "label": "o válvula de expansão na ilustração",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main svg text",
+    "hasText": "EVAPORADOR"
+   },
+   "seconds": 0.4,
+   "at": 15.82,
+   "label": "o evaporador na ilustração",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 17.64
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Imagem 2D",
+    "exact": true
+   },
+   "at": 17.86,
+   "label": "Imagem 2D"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Ilustração",
+    "exact": true
+   },
+   "at": 20.16,
+   "label": "volta para a Ilustração"
+  },
+  {
+   "do": "scroll",
+   "target": {
+    "text": "Termos do ciclo",
+    "exact": true,
+    "within": "main"
+   },
+   "at": 21.22,
+   "label": "rola até os Termos do ciclo"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button",
+    "hasText": "Compressor"
+   },
+   "at": 23.14,
+   "label": "abre o termo Compressor"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button",
+    "hasText": "Evaporador"
+   },
+   "at": 24.98,
+   "label": "abre o termo Evaporador"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 26.88
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

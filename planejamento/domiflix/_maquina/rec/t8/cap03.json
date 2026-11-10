@@ -1,0 +1,389 @@
+{
+ "name": "t8-cap03",
+ "title": "T8 · Cap. 3 · Entrada, saída e estoque baixo (narração 60,6 s; marcas L1..L5 = início de cada linha do roteiro)",
+ "seed": "t8-cap03",
+ "pace": 0.4,
+ "cps": 11,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap15",
+  "t8/inicio",
+  "t8/apos-cap02"
+ ],
+ "prewarm": [
+  "/estoque"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/estoque"
+  },
+  {
+   "do": "waitFor",
+   "text": "Controle de peças e materiais",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Toggle Sidebar",
+    "nth": 0
+   }
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "aside[aria-label=\"Locais de estoque\"] button:has-text(\"Estoque Principal\")"
+   }
+  },
+  {
+   "do": "pause",
+   "seconds": 0.6
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|erro|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text(\"Fita isolante\") button[aria-label=\"Ações\"]"
+   },
+   "seconds": 0.3,
+   "at": 2.02,
+   "label": "menu da linha Fita isolante",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main tbody tr:has-text(\"Fita isolante\") button[aria-label=\"Ações\"]"
+   },
+   "label": "abre o menu de Fita isolante se ainda não abriu",
+   "unless": {
+    "role": "menuitem",
+    "name": "Registrar entrada"
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Registrar entrada"
+   },
+   "at": 4.58,
+   "label": "Registrar entrada (Fita isolante)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Saldo atual",
+   "timeout": 10
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Qtd.",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "text": "10",
+   "at": 6.52,
+   "label": "quantidade: 10"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] div:has(> label:text-is(\"Observação\")) textarea"
+   },
+   "text": "Compra no balcão",
+   "cps": 12,
+   "at": 8.3,
+   "label": "observação: Compra no balcão"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Saldo após",
+    "within": "[role=dialog]"
+   },
+   "seconds": 2.0,
+   "at": 12.0,
+   "label": "o Saldo após: 38",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Confirmar",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 15.54,
+   "label": "Confirmar a entrada"
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 17.48
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text(\"Capacitor 40\") button[aria-label=\"Ações\"]"
+   },
+   "seconds": 0.3,
+   "at": 18.42,
+   "label": "menu da linha Capacitor 40 µF",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main tbody tr:has-text(\"Capacitor 40\") button[aria-label=\"Ações\"]"
+   },
+   "label": "abre o menu de Capacitor 40 µF se ainda não abriu",
+   "unless": {
+    "role": "menuitem",
+    "name": "Registrar saída"
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Registrar saída"
+   },
+   "at": 19.94,
+   "label": "Registrar saída (Capacitor 40 µF)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Saldo atual",
+   "timeout": 10
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Qtd.",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "text": "3",
+   "at": 21.46,
+   "label": "quantidade: 3"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Saldo após",
+    "within": "[role=dialog]"
+   },
+   "seconds": 2.0,
+   "at": 23.0,
+   "label": "o Saldo após: 3",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Confirmar",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 27.56,
+   "label": "Confirmar a saída"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 29.48
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text(\"Capacitor 40\") span[aria-label^=\"Estoque abaixo do mínimo\"]"
+   },
+   "seconds": 1.5,
+   "at": 30.58,
+   "label": "o triângulo do Capacitor 40 µF: 3 de 4",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Estoque baixo",
+    "exact": true
+   },
+   "seconds": 1.5,
+   "at": 34.18,
+   "label": "o cartão Estoque baixo: de 2 para 3",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Filtros",
+    "within": "main"
+   },
+   "at": 37.78,
+   "label": "abre Filtros"
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 38.44
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Estoque abaixo do mínimo",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 39.06,
+   "label": "marca \"Estoque abaixo do mínimo\""
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Estoque abaixo do mínimo",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 44.0,
+   "label": "desmarca \"Estoque abaixo do mínimo\""
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 47.23,
+   "label": "fecha Filtros"
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 49.51
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text(\"Mangueira de dreno\") button[aria-label=\"Ações\"]"
+   },
+   "seconds": 0.3,
+   "at": 49.61,
+   "label": "menu da linha Mangueira de dreno",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main tbody tr:has-text(\"Mangueira de dreno\") button[aria-label=\"Ações\"]"
+   },
+   "label": "abre o menu se ainda não abriu",
+   "unless": {
+    "role": "menuitem",
+    "name": "Excluir"
+   }
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "menuitem",
+    "name": "Editar"
+   },
+   "seconds": 0.2,
+   "at": 51.59,
+   "label": "menu: Editar",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "menuitem",
+    "name": "Registrar entrada"
+   },
+   "seconds": 0.2,
+   "label": "menu: Registrar entrada",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "menuitem",
+    "name": "Registrar saída"
+   },
+   "seconds": 0.2,
+   "label": "menu: Registrar saída",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "menuitem",
+    "name": "Excluir"
+   },
+   "seconds": 5.0,
+   "at": 53.11,
+   "label": "menu: Excluir (sem clicar)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 59.83,
+   "label": "fecha o menu"
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 60.56
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

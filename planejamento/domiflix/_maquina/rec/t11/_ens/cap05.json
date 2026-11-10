@@ -1,0 +1,249 @@
+{
+ "name": "t11-cap05",
+ "title": "T11 · Cap. 5 · Unidade e responsável técnico (narração 63,6 s; marcas L1..L4 = início de cada linha do roteiro)",
+ "seed": "t11-cap05",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 0.4,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t2/apos-cap10",
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t9/inicio",
+  "t9/apos-cap16",
+  "t10/apos-cap09",
+  "t11/inicio",
+  "t11/apos-cap03"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/contratos"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Camila!",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/contratos"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie contratos recorrentes e manutenções programadas",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(() => { sessionStorage.setItem('form-draft:contract-form', \"{\\\"name\\\":\\\"PMOC - Hotel Mirante do Mar\\\",\\\"customerId\\\":\\\"cbed8554-3919-5fa8-b9c6-5d13ef24cf37\\\",\\\"serviceTypeId\\\":\\\"\\\",\\\"formTemplateId\\\":\\\"\\\",\\\"notes\\\":\\\"\\\",\\\"isActive\\\":true,\\\"isPmoc\\\":true,\\\"responsibleTechnicianId\\\":\\\"\\\",\\\"freqType\\\":\\\"months\\\",\\\"freqValue\\\":1,\\\"startDate\\\":\\\"2026-11-10\\\",\\\"horizonMonths\\\":12,\\\"step\\\":0,\\\"stepKey\\\":\\\"info\\\",\\\"unidadeNome\\\":\\\"Hotel Mirante do Mar\\\",\\\"unidadeEndereco\\\":\\\"Avenida Quintino Bocai\\u00fava\\\",\\\"unidadeNumero\\\":\\\"770\\\",\\\"unidadeComplemento\\\":\\\"\\\",\\\"unidadeBairro\\\":\\\"S\\u00e3o Francisco\\\",\\\"unidadeCidade\\\":\\\"Niter\\u00f3i\\\",\\\"unidadeUf\\\":\\\"RJ\\\",\\\"unidadeCep\\\":\\\"24360-000\\\",\\\"environments\\\":[],\\\"looseItems\\\":[],\\\"machineConfigs\\\":{},\\\"commonChecklists\\\":{},\\\"finGenerate\\\":false,\\\"finDescription\\\":\\\"\\\",\\\"finAmount\\\":\\\"\\\",\\\"finFirstDueDate\\\":\\\"\\\",\\\"finFrequency\\\":\\\"mensal\\\",\\\"finCount\\\":\\\"\\\",\\\"finContinuous\\\":false,\\\"finAccountId\\\":\\\"\\\",\\\"finAccountLabel\\\":\\\"\\\",\\\"finCategory\\\":\\\"\\\",\\\"finCostCenterId\\\":null,\\\"finPaymentMethod\\\":\\\"\\\"}\"); return 'rascunho gravado'; })()"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Novo Contrato",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Rascunho encontrado",
+   "timeout": 15
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Retomar rascunho",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Dados do contrato",
+   "timeout": 15
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "pause",
+   "seconds": 1.0
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|erro|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "scroll",
+   "point": {
+    "x": 640,
+    "y": 470
+   },
+   "by": 430,
+   "duration": 0.7,
+   "after": 100,
+   "label": "desce até o RT e a Identificação da Unidade"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]",
+    "hasText": "Sem RT atribuído"
+   },
+   "label": "abre Responsável Técnico (RT)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Ricardo",
+    "exact": false
+   },
+   "label": "escolhe o Ricardo"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Cadastrar novo Responsável Técnico",
+    "exact": true
+   },
+   "seconds": 1.4,
+   "label": "botão + (Cadastrar novo Responsável Técnico, sem clicar)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "O que é Responsável Técnico?",
+    "exact": true
+   },
+   "seconds": 3.6,
+   "label": "ícone de informação do RT (a dica)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 640,
+    "y": 470
+   },
+   "by": 260,
+   "duration": 0.6,
+   "after": 100,
+   "label": "desce até a Identificação da Unidade"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Endereço (logradouro)",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.6,
+   "label": "endereço da unidade",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const esp=[\"Avenida Quintino Bocaiúva\", \"770\", \"São Francisco\", \"Niterói\"];let out='';for(let i=0;i<14;i++){const d=document.querySelector('[role=dialog]');const vs=d?[...d.querySelectorAll('input,textarea')].map(x=>x.value.trim().toLowerCase()):[];const falta=esp.filter(e=>{e=e.toLowerCase();return !vs.some(x=>x===e||(e.length>3&&x.includes(e)))});if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' nos campos: '+vs.join(' | ').slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere cap05: a unidade já vem com o endereço do hotel (a fala diz que vem preenchido)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Ex: Loja Centro, Galpão 2…"
+   },
+   "text": "Hotel Mirante do Mar - São Francisco",
+   "cps": 16,
+   "label": "Nome da unidade / local"
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 640,
+    "y": 470
+   },
+   "by": 300,
+   "duration": 0.6,
+   "after": 100,
+   "label": "desce até o selo da lei"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Conforme Lei Federal 13.589/2018",
+    "within": "[role=dialog]"
+   },
+   "seconds": 2.2,
+   "label": "selo Conforme Lei Federal 13.589/2018",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "O que o PMOC desbloqueia",
+    "within": "[role=dialog]"
+   },
+   "seconds": 3.0,
+   "label": "quadro O que o PMOC desbloqueia",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Próximo",
+    "exact": true
+   },
+   "label": "Próximo (Escopo técnico)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Ambientes e equipamentos",
+   "timeout": 10
+  },
+  {
+   "do": "eval",
+   "js": "sessionStorage.getItem('form-draft:contract-form')",
+   "label": "rascunho"
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

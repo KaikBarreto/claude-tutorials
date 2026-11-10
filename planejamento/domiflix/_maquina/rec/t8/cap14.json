@@ -1,0 +1,368 @@
+{
+ "name": "t8-cap14",
+ "title": "T8 · Cap. 14 · Compras, média paga e preço (narração 71,5 s; marcas L1..L6 = início de cada linha do roteiro)",
+ "seed": "t8-cap14",
+ "pace": 0.4,
+ "cps": 12,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap15",
+  "t8/inicio",
+  "t8/apos-cap13"
+ ],
+ "prewarm": [
+  "/estoque"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/estoque"
+  },
+  {
+   "do": "waitFor",
+   "text": "Controle de peças e materiais",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Toggle Sidebar",
+    "nth": 0
+   }
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "aside[aria-label=\"Locais de estoque\"] button:has-text(\"Estoque Principal\")"
+   }
+  },
+  {
+   "do": "pause",
+   "seconds": 0.6
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Posição de Estoque",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Valor em estoque",
+   "timeout": 20
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|erro|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Relatório",
+    "exact": true
+   },
+   "at": 2.42,
+   "label": "aba Relatório"
+  },
+  {
+   "do": "waitFor",
+   "text": "Total comprado",
+   "timeout": 15
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main button:has-text(\"Total comprado\")",
+    "nth": 0
+   },
+   "seconds": 0.6,
+   "at": 3.62,
+   "label": "o cartão Total comprado",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Ticket médio por compra",
+    "within": "main"
+   },
+   "seconds": 1.5,
+   "at": 8.34,
+   "label": "o ticket médio de cada compra",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main button:has-text(\"Total vendido\")",
+    "nth": 0
+   },
+   "seconds": 0.5,
+   "at": 10.98,
+   "label": "o cartão Total vendido (PDV)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 11.32
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main button:has-text(\"Lucro bruto\")",
+    "nth": 0
+   },
+   "seconds": 0.5,
+   "at": 12.18,
+   "label": "o cartão Lucro bruto (PDV)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main button:has-text(\"Projeção de lucro\")",
+    "nth": 0
+   },
+   "seconds": 2.0,
+   "at": 15.06,
+   "label": "o cartão Projeção de lucro (estimativa)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 20.85
+  },
+  {
+   "do": "scroll",
+   "target": {
+    "text": "Evolução do preço de compra",
+    "within": "main"
+   },
+   "at": 20.85,
+   "label": "desce até a Evolução do preço de compra",
+   "duration": 1.0
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Maiores altas e quedas",
+    "within": "main"
+   },
+   "seconds": 0.4,
+   "at": 26.91,
+   "label": "Visão geral: maiores altas e quedas",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 29.57
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button:has-text(\"EST-001 · kg\")"
+   },
+   "at": 29.57,
+   "label": "escolhe o Gás refrigerante R-410A"
+  },
+  {
+   "do": "waitFor",
+   "text": "Último preço",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Último preço",
+    "within": "main"
+   },
+   "seconds": 0.5,
+   "at": 30.91,
+   "label": "Último preço: R$ 94,00",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Menor preço",
+    "within": "main"
+   },
+   "seconds": 0.5,
+   "at": 34.19,
+   "label": "Menor preço: R$ 86,00",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Maior preço",
+    "within": "main"
+   },
+   "seconds": 0.5,
+   "at": 36.67,
+   "label": "Maior preço: R$ 94,00",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Média do período",
+    "within": "main"
+   },
+   "seconds": 0.5,
+   "at": 38.45,
+   "label": "Média do período (ponderada)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Variação",
+    "within": "main"
+   },
+   "seconds": 1.5,
+   "at": 41.73,
+   "label": "Variação do último preço",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 46.23
+  },
+  {
+   "do": "scroll",
+   "target": {
+    "selector": "main th",
+    "hasText": "Média paga"
+   },
+   "at": 46.43,
+   "label": "desce até a lista por material",
+   "duration": 1.0
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main th",
+    "hasText": "Média paga"
+   },
+   "seconds": 1.2,
+   "at": 47.49,
+   "label": "a coluna Média paga",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main tbody tr:has-text(\"Gás refrigerante R-410A\")",
+    "nth": 0
+   },
+   "at": 50.77,
+   "label": "abre a linha do R-410A"
+  },
+  {
+   "do": "waitFor",
+   "text": "Histórico de compras",
+   "timeout": 10
+  },
+  {
+   "do": "scroll",
+   "target": {
+    "text": "Histórico de compras",
+    "within": "main"
+   },
+   "at": 53.73,
+   "label": "desce até o histórico de compras",
+   "duration": 1.0
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Histórico de compras",
+    "within": "main"
+   },
+   "seconds": 3.0,
+   "at": 54.21,
+   "label": "Histórico de compras do R-410A",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 60.95
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "O.C. #4",
+    "within": "main"
+   },
+   "seconds": 4.0,
+   "at": 61.45,
+   "label": "as compras: data, fornecedor, ordem, quantidade e preço",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 71.52
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

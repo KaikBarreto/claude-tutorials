@@ -1,0 +1,76 @@
+{
+ "name": "R08-p",
+ "title": "T0 v2 · R08 · Sua trilha (progresso e próxima aula) (celular 390x844)",
+ "seed": "t0v2-R08",
+ "pace": 0.6,
+ "tail": 1.2,
+ "cps": 9,
+ "seedExtra": [
+  "t0v2/catalogo",
+  "t0v2/progresso-camila",
+  "t0v2/usuario-novo",
+  "t0v2/conta-teste"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/domiflix"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/domiflix/assistir/servicos-tarefas-e-checklists/1?trilha=tutoriais-do-sistema"
+  },
+  {
+   "do": "waitFor",
+   "text": "Materiais e extras",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "'sem tarja'"
+  },
+  {
+   "do": "pause",
+   "seconds": 0.6
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "pause",
+   "seconds": 1.2
+  },
+  {
+   "do": "click",
+   "target": "Ver trilha",
+   "optional": true,
+   "timeout": 8,
+   "label": "abre a gaveta Ver trilha"
+  },
+  {
+   "do": "pause",
+   "seconds": 3.5
+  }
+ ],
+ "device": "phone",
+ "start": {
+  "x": 195,
+  "y": 600
+ }
+}

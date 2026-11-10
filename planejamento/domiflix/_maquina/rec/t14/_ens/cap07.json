@@ -1,0 +1,366 @@
+{
+ "name": "t14-cap07",
+ "title": "T14 · Cap. 7 · Valores e emissão (narração 32,4 s; marcas L1..L4 = início de cada linha do roteiro; FAKE_NOW 2026-11-13T15:10:00-03:00)",
+ "seed": "t14-cap07",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 0.4,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap05",
+  "t12/inicio",
+  "t12/apos-cap11",
+  "t13/inicio",
+  "t13/apos-cap14",
+  "t19/inicio",
+  "t19/apos-cap13",
+  "t20/inicio",
+  "t20/apos-cap12",
+  "t2/apos-cap10",
+  "t15/inicio",
+  "t15/apos-cap12",
+  "t22/inicio",
+  "t22/apos-cap11",
+  "t21/inicio",
+  "t21/apos-cap10",
+  "t14/inicio",
+  "t14/apos-cap05"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/notas-fiscais",
+  "/notas-fiscais/configuracoes"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Camila!",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/notas-fiscais"
+  },
+  {
+   "do": "waitFor",
+   "text": "Emita e acompanhe suas NFS-e.",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Nova Nota",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Data de competência",
+   "timeout": 15
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]",
+    "hasText": "Selecione o cliente"
+   }
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Buscar cliente..."
+   },
+   "text": "Sabor",
+   "noScroll": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Restaurante Sabor da Serra"
+   }
+  },
+  {
+   "do": "pause",
+   "seconds": 0.4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Avançar",
+    "exact": true
+   },
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "text": "Escolha um serviço cadastrado",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]",
+    "hasText": "Escolha um serviço cadastrado"
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Higienização de Split"
+   }
+  },
+  {
+   "do": "pause",
+   "seconds": 0.6
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] textarea"
+   },
+   "text": "Limpeza e higienização de 2 splits da cozinha",
+   "clear": true,
+   "cps": 40
+  },
+  {
+   "do": "pause",
+   "seconds": 0.5
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&!/fica indispon/i.test(m[0])&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Avançar",
+    "exact": true
+   },
+   "label": "Avançar (Valores)",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "text": "Retenção do ISS",
+   "timeout": 10
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[inputmode=decimal]",
+    "nth": 0
+   },
+   "text": "450,00",
+   "label": "Valor do serviço 450,00"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"R$ 450,00\", \"Não retido\", \"Empresa do Simples Nacional sem retenção de ISS\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere total R$ 450,00, ISS não retido e o aviso amarelo"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Alíquota ISS %",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.8,
+   "label": "Alíquota ISS em branco",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Empresa do Simples Nacional sem retenção de ISS",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.6,
+   "label": "aviso amarelo do Simples",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const d=document.querySelector('[role=dialog]');if(!d)return 'sem janela';const el=[...d.querySelectorAll('*')].filter(e=>e.textContent.trim().startsWith(\"Percentual de tributos do Simples Nacional\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';el.scrollIntoView({behavior:'smooth',block:'center'});await new Promise(r=>setTimeout(r,700));return 'ok'})()",
+   "label": "desce até o percentual do Simples"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Vem das Configurações fiscais (aba Tributação)",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.2,
+   "label": "percentual 6 da aba Tributação",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const d=document.querySelector('[role=dialog]');if(!d)return 'sem janela';const el=[...d.querySelectorAll('*')].filter(e=>e.textContent.trim().startsWith(\"Pr\\u00e9via do c\\u00e1lculo\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';el.scrollIntoView({behavior:'smooth',block:'center'});await new Promise(r=>setTimeout(r,700));return 'ok'})()",
+   "label": "desce até a prévia"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Valor líquido",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.2,
+   "label": "Prévia do cálculo",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Avançar",
+    "exact": true
+   },
+   "label": "Avançar (Revisar e Emitir)",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "text": "Número será atribuído após emissão",
+   "timeout": 10
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Glacial Cold Brasil\", \"91520340000107\", \"000123-4\", \"Niterói - RJ\", \"Sabor da Serra Alimentos Ltda\", \"Limpeza e higienização de 2 splits da cozinha\", \"R$ 450,00\", \"Pronta para emitir\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere pré-visualização: empresa, cliente, serviço e valores"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const d=document.querySelector('[role=dialog]');if(!d)return 'sem janela';const el=[...d.querySelectorAll('*')].filter(e=>e.textContent.trim().startsWith(\"N\\u00famero ser\\u00e1 atribu\\u00eddo ap\\u00f3s emiss\\u00e3o\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';el.scrollIntoView({behavior:'smooth',block:'center'});await new Promise(r=>setTimeout(r,700));return 'ok'})()",
+   "label": "sobe ao topo da pré-visualização"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Número será atribuído após emissão",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.8,
+   "label": "pré-visualização (o número sai depois)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Glacial Cold Brasil",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.6,
+   "label": "bloco Prestador",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Sabor da Serra Alimentos Ltda",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.5,
+   "label": "bloco Tomador",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const d=document.querySelector('[role=dialog]');if(!d)return 'sem janela';const el=[...d.querySelectorAll('*')].filter(e=>e.textContent.trim().startsWith(\"Limpeza e higieniza\\u00e7\\u00e3o de 2 splits da cozinha\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';el.scrollIntoView({behavior:'smooth',block:'center'});await new Promise(r=>setTimeout(r,700));return 'ok'})()",
+   "label": "desce até o serviço"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Limpeza e higienização de 2 splits da cozinha",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.8,
+   "label": "bloco Serviço e os valores",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const d=document.querySelector('[role=dialog]');if(!d)return 'sem janela';const el=[...d.querySelectorAll('*')].filter(e=>e.textContent.trim().startsWith(\"N\\u00famero ser\\u00e1 atribu\\u00eddo ap\\u00f3s emiss\\u00e3o\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';el.scrollIntoView({behavior:'smooth',block:'center'});await new Promise(r=>setTimeout(r,700));return 'ok'})()",
+   "label": "sobe ao número"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Número será atribuído após emissão",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.0,
+   "label": "Número será atribuído após emissão",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Emitir NFS-e",
+    "exact": true
+   },
+   "label": "Emitir NFS-e",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "text": "Nota fiscal enviada para emissão.",
+   "timeout": 15
+  },
+  {
+   "do": "waitFor",
+   "text": "Chave de acesso",
+   "timeout": 10
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Nota nº 1\", \"Autorizada\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere o detalhe abre com a nota já autorizada"
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

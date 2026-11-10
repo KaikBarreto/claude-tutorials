@@ -1,0 +1,618 @@
+{
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap05",
+  "t12/inicio",
+  "t12/apos-cap11",
+  "t13/inicio",
+  "t13/apos-cap14",
+  "t19/inicio",
+  "t19/apos-cap13",
+  "t20/inicio",
+  "t22/_prov-t15",
+  "t22/inicio",
+  "t22/_prov-rafael"
+ ],
+ "start": "/funcionarios",
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z",
+  "disc-overview-view-mode": "grid"
+ },
+ "stopOnFail": false,
+ "steps": [
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Toggle Sidebar",
+    "nth": 0
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Organograma",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 600
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Novo Organograma",
+    "exact": true
+   }
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Ex: Estrutura 2026"
+   },
+   "text": "Estrutura 2026"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Criar",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 2000
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Direção",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "label:text-is('Nome') + input"
+   }
+  },
+  {
+   "do": "press",
+   "key": "Control+A"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "label:text-is('Nome') + input"
+   },
+   "text": "Camila Duarte"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "label:text-is('Cargo') + input"
+   }
+  },
+  {
+   "do": "press",
+   "key": "Control+A"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "label:text-is('Cargo') + input"
+   },
+   "text": "Diretora"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "label:text-is('Setor') + input"
+   }
+  },
+  {
+   "do": "press",
+   "key": "Control+A"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "label:text-is('Setor') + input"
+   },
+   "text": "Direção"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": ".react-flow__node",
+    "hasText": "Camila Duarte"
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": ".react-flow__node:has-text('Camila Duarte') button[aria-label='Adicionar nó'] >> nth=1"
+   },
+   "force": true
+  },
+  {
+   "do": "wait",
+   "ms": 700
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Buscar funcionário..."
+   },
+   "text": "Tatiane"
+  },
+  {
+   "do": "wait",
+   "ms": 400
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button",
+    "hasText": "Tatiane Ribeiro"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 900
+  },
+  {
+   "do": "shot",
+   "name": "01-tatiane"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": ".react-flow__node",
+    "hasText": "Tatiane Ribeiro"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "shot",
+   "name": "02-edit-tatiane"
+  },
+  {
+   "do": "list",
+   "selector": "label:text-is('Cor do setor') + div button",
+   "attr": "aria-label"
+  },
+  {
+   "do": "list",
+   "selector": "label:text-is('Cor do setor') ~ div button",
+   "attr": "title"
+  },
+  {
+   "do": "html",
+   "selector": "label:text-is('Cor do setor') + *",
+   "max": 1800
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "label:text-is('Setor') + input"
+   }
+  },
+  {
+   "do": "press",
+   "key": "Control+A"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "label:text-is('Setor') + input"
+   },
+   "text": "Escritório"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "label:text-is('Cor do setor') ~ div button >> nth=1"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "shot",
+   "name": "03-setor"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": ".react-flow__node",
+    "hasText": "Camila Duarte"
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": ".react-flow__node:has-text('Camila Duarte') button[aria-label='Adicionar nó'] >> nth=1"
+   },
+   "force": true
+  },
+  {
+   "do": "wait",
+   "ms": 700
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Buscar funcionário..."
+   },
+   "text": "Rafael"
+  },
+  {
+   "do": "wait",
+   "ms": 400
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button",
+    "hasText": "Rafael Lima"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 900
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": ".react-flow__node",
+    "hasText": "Rafael Lima"
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": ".react-flow__node:has-text('Rafael Lima') button[aria-label='Adicionar nó'] >> nth=1"
+   },
+   "force": true
+  },
+  {
+   "do": "wait",
+   "ms": 700
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Buscar funcionário..."
+   },
+   "text": "Bruno"
+  },
+  {
+   "do": "wait",
+   "ms": 400
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button",
+    "hasText": "Bruno Alves"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 900
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": ".react-flow__node",
+    "hasText": "Rafael Lima"
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": ".react-flow__node:has-text('Rafael Lima') button[aria-label='Adicionar nó'] >> nth=1"
+   },
+   "force": true
+  },
+  {
+   "do": "wait",
+   "ms": 700
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Buscar funcionário..."
+   },
+   "text": "Júlia"
+  },
+  {
+   "do": "wait",
+   "ms": 400
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button",
+    "hasText": "Júlia Santos"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 900
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": ".react-flow__node",
+    "hasText": "Rafael Lima"
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": ".react-flow__node:has-text('Rafael Lima') button[aria-label='Adicionar nó'] >> nth=1"
+   },
+   "force": true
+  },
+  {
+   "do": "wait",
+   "ms": 700
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Buscar funcionário..."
+   },
+   "text": "Lucas"
+  },
+  {
+   "do": "wait",
+   "ms": 400
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button",
+    "hasText": "Lucas Ferreira"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 900
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": ".react-flow__node",
+    "hasText": "Rafael Lima"
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": ".react-flow__node:has-text('Rafael Lima') button[aria-label='Adicionar nó'] >> nth=1"
+   },
+   "force": true
+  },
+  {
+   "do": "wait",
+   "ms": 700
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Buscar funcionário..."
+   },
+   "text": "Marina"
+  },
+  {
+   "do": "wait",
+   "ms": 400
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button",
+    "hasText": "Marina Costa"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 900
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": ".react-flow__node",
+    "hasText": "Rafael Lima"
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": ".react-flow__node:has-text('Rafael Lima') button[aria-label='Adicionar nó'] >> nth=1"
+   },
+   "force": true
+  },
+  {
+   "do": "wait",
+   "ms": 700
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Buscar funcionário..."
+   },
+   "text": "Paulo"
+  },
+  {
+   "do": "wait",
+   "ms": 400
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button",
+    "hasText": "Paulo Souza"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 900
+  },
+  {
+   "do": "shot",
+   "name": "04-todos"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": ".react-flow__node",
+    "hasText": "Rafael Lima"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "label:text-is('Setor') + input"
+   }
+  },
+  {
+   "do": "press",
+   "key": "Control+A"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "label:text-is('Setor') + input"
+   },
+   "text": "Campo"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "label:text-is('Cor do setor') ~ div button >> nth=2"
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Aplicar aos de baixo",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 1200
+  },
+  {
+   "do": "shot",
+   "name": "05-campo"
+  },
+  {
+   "do": "text",
+   "selector": "header, [data-orgchart-root]",
+   "max": 300
+  },
+  {
+   "do": "eval",
+   "js": "document.body.innerText.includes('Salvo')"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Organizar",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 1200
+  },
+  {
+   "do": "shot",
+   "name": "06-organizado"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "button[aria-label='Adicionar caixa']"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "shot",
+   "name": "07-toolkit"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "button[aria-label='Adicionar caixa']"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 900
+  },
+  {
+   "do": "shot",
+   "name": "08-caixa"
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('.react-flow__node')].map(n=>[n.textContent.slice(0,20),Math.round(n.getBoundingClientRect().x),Math.round(n.getBoundingClientRect().y),Math.round(n.getBoundingClientRect().width)])",
+   "max": 2500
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": ".react-flow__node",
+    "hasText": "Nova caixa"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "shot",
+   "name": "09-caixa-painel"
+  },
+  {
+   "do": "list",
+   "selector": "textarea, input",
+   "attr": "placeholder"
+  },
+  {
+   "do": "list",
+   "selector": "label"
+  }
+ ]
+}

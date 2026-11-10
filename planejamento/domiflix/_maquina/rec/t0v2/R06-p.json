@@ -1,0 +1,83 @@
+{
+ "name": "R06-p",
+ "title": "T0 v2 · R06 · Bloco de contratar (Conheça agora) (celular 390x844)",
+ "seed": "t0v2-R06",
+ "pace": 0.6,
+ "tail": 1.2,
+ "cps": 9,
+ "seedExtra": [
+  "t0v2/catalogo",
+  "t0v2/progresso-camila",
+  "t0v2/usuario-novo",
+  "t0v2/conta-teste"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/domiflix"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/domiflix/assistir/emissao-de-notas-fiscais/1?trilha=tutoriais-do-sistema"
+  },
+  {
+   "do": "waitFor",
+   "text": "Conheça agora",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "'sem tarja'"
+  },
+  {
+   "do": "pause",
+   "seconds": 0.6
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "scroll",
+   "target": "Conheça agora. Ative quando fizer sentido.",
+   "optional": true,
+   "timeout": 8
+  },
+  {
+   "do": "pause",
+   "seconds": 1.5
+  },
+  {
+   "do": "hover",
+   "target": "Escolher meu plano",
+   "seconds": 1.2,
+   "optional": true,
+   "timeout": 3,
+   "label": "botão Escolher meu plano"
+  },
+  {
+   "do": "pause",
+   "seconds": 3
+  }
+ ],
+ "device": "phone",
+ "start": {
+  "x": 195,
+  "y": 600
+ }
+}

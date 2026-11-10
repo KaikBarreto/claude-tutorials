@@ -1,0 +1,283 @@
+{
+ "name": "t4-cap08",
+ "title": "T4 · Cap. 8 · Catálogo de modelos (narração 47,1 s; marcas L1..L4 = início de cada linha do roteiro)",
+ "seed": "t4-cap08",
+ "pace": 0.6,
+ "cps": 11,
+ "tail": 1.5,
+ "start": {
+  "x": 900,
+  "y": 480
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/g1-trilha",
+  "t4/g2-vazias",
+  "t4/apos-cap07"
+ ],
+ "prewarm": [
+  "/servicos",
+  "/servicos?tab=checklists"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/servicos"
+  },
+  {
+   "do": "waitFor",
+   "text": "6 tipos cadastrados",
+   "timeout": 20
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Checklists",
+    "exact": true
+   },
+   "at": 0.0,
+   "label": "aba Checklists"
+  },
+  {
+   "do": "waitFor",
+   "text": "Nenhum checklist criado",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Nenhum checklist criado",
+    "exact": true
+   },
+   "seconds": 1.5,
+   "at": 1.04,
+   "label": "aba Checklists vazia"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Catálogo de Checklists",
+    "exact": true
+   },
+   "seconds": 0.5,
+   "at": 9.2,
+   "label": "botão Catálogo de Checklists"
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 11.32
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Catálogo de Checklists",
+    "exact": true
+   },
+   "at": 11.32,
+   "label": "Catálogo de Checklists"
+  },
+  {
+   "do": "waitFor",
+   "text": "Estes são apenas modelos sugeridos.",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Estes são apenas modelos sugeridos.",
+    "exact": true
+   },
+   "seconds": 0.5,
+   "at": 12.68,
+   "label": "aviso: apenas modelos sugeridos"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Instalação de Split",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.3,
+   "at": 15.04,
+   "label": "modelo Instalação de Split"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Higienização de Split",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.3,
+   "at": 15.92,
+   "label": "modelo Higienização de Split"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Manutenção Preventiva de Split",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.3,
+   "at": 17.04,
+   "label": "modelo Manutenção Preventiva de Split"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Carga de Gás",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.3,
+   "at": 18.64,
+   "label": "modelo Carga de Gás"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Estes são apenas modelos sugeridos.",
+    "exact": true
+   },
+   "seconds": 1.5,
+   "at": 21.52,
+   "label": "as perguntas ficam editáveis depois"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 25.92
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Manutenção Preventiva de Split",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 25.92,
+   "label": "abre o modelo Manutenção Preventiva"
+  },
+  {
+   "do": "waitFor",
+   "text": "Filtros limpos / em bom estado?",
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Filtros limpos / em bom estado?",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.6,
+   "at": 28.0,
+   "label": "perguntas prontas"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Número (psi)",
+    "exact": true,
+    "within": "[role=dialog]",
+    "nth": 0
+   },
+   "seconds": 1.0,
+   "at": 31.7,
+   "label": "selo Número (psi)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Obrigatória",
+    "exact": true,
+    "within": "[role=dialog]",
+    "nth": 0
+   },
+   "seconds": 0.8,
+   "at": 33.68,
+   "label": "selo Obrigatória"
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 36.08
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Selecionar",
+    "exact": true
+   },
+   "at": 36.08,
+   "label": "Selecionar"
+  },
+  {
+   "do": "waitFor",
+   "text": "Nome do novo checklist",
+   "timeout": 8
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input"
+   },
+   "text": "Manutenção preventiva de split",
+   "cps": 16,
+   "at": 37.46,
+   "label": "nome: Manutenção preventiva de split",
+   "clear": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Criar checklist",
+    "exact": true
+   },
+   "at": 41.58,
+   "label": "Criar checklist"
+  },
+  {
+   "do": "waitFor",
+   "text": "13 perguntas importadas!",
+   "timeout": 10,
+   "optional": true
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "13 perguntas · Todos os serviços",
+    "exact": true
+   },
+   "seconds": 2.0,
+   "at": 43.64,
+   "label": "treze perguntas importadas"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 47.12
+  }
+ ]
+}

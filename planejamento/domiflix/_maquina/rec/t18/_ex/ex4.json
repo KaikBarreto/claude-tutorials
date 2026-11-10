@@ -1,0 +1,581 @@
+{
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap15",
+  "t7/inicio",
+  "t18/fim-t7-provisorio",
+  "t18/catalogo"
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ },
+ "start": "/area-tecnico",
+ "stopOnFail": false,
+ "steps": [
+  {
+   "do": "goto",
+   "url": "/area-tecnico/carga-termica"
+  },
+  {
+   "do": "waitFor",
+   "text": "Dimensione a capacidade em BTUs do ambiente.",
+   "timeout": 25
+  },
+  {
+   "do": "wait",
+   "ms": 900
+  },
+  {
+   "do": "shot",
+   "name": "g1-0"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const q=[...document.querySelectorAll('main input,main textarea,main button,main [role=switch],main [role=tab],main [role=combobox],main [role=slider],main select,main a[href]')];return q.filter(e=>e.getClientRects().length).map(e=>{const r=e.getBoundingClientRect();return [e.tagName.toLowerCase(),e.getAttribute('role')||'',(e.innerText||'').replace(/\\s+/g,' ').trim().slice(0,38),e.placeholder||'',e.getAttribute('aria-label')||'',e.id||'',(e.value==null?'':String(e.value)).slice(0,12),Math.round(r.x)+','+Math.round(r.y)+' '+Math.round(r.width)+'x'+Math.round(r.height)].join('|')})})()",
+   "max": 7000
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "Altura (metros)",
+    "exact": true
+   },
+   "text": "2,8"
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "Largura (metros)",
+    "exact": true
+   },
+   "text": "4"
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "Comprimento (metros)",
+    "exact": true
+   },
+   "text": "5"
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "Quantidade de pessoas",
+    "exact": true
+   },
+   "text": "4"
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "Eletroeletrônicos",
+    "exact": true
+   },
+   "text": "3"
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "Janelas (2 x 1,5 metros)",
+    "exact": true
+   },
+   "text": "1"
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "shot",
+   "name": "g1-1"
+  },
+  {
+   "do": "text",
+   "selector": "main",
+   "name": "carga térmica",
+   "max": 1500
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "TR",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 400
+  },
+  {
+   "do": "shot",
+   "name": "g1-2"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "BTU",
+    "exact": true
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "switch",
+    "name": "Ambiente ensolarado?"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 400
+  },
+  {
+   "do": "shot",
+   "name": "g1-3"
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('main p')].map(e=>e.innerText.trim()).filter(t=>/BTU|TR|aparelho|Recomenda/.test(t)).slice(0,8)"
+  },
+  {
+   "do": "goto",
+   "url": "/area-tecnico/conversao"
+  },
+  {
+   "do": "waitFor",
+   "text": "Converta entre unidades de medida.",
+   "timeout": 25
+  },
+  {
+   "do": "wait",
+   "ms": 900
+  },
+  {
+   "do": "shot",
+   "name": "g2-0"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const q=[...document.querySelectorAll('main input,main textarea,main button,main [role=switch],main [role=tab],main [role=combobox],main [role=slider],main select,main a[href]')];return q.filter(e=>e.getClientRects().length).map(e=>{const r=e.getBoundingClientRect();return [e.tagName.toLowerCase(),e.getAttribute('role')||'',(e.innerText||'').replace(/\\s+/g,' ').trim().slice(0,38),e.placeholder||'',e.getAttribute('aria-label')||'',e.id||'',(e.value==null?'':String(e.value)).slice(0,12),Math.round(r.x)+','+Math.round(r.y)+' '+Math.round(r.width)+'x'+Math.round(r.height)].join('|')})})()",
+   "max": 7000
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "0",
+    "exact": true,
+    "nth": 0
+   },
+   "text": "10"
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "shot",
+   "name": "g2-1"
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('main input')].filter(e=>e.getClientRects().length).map(e=>e.value)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Inverter unidades"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 400
+  },
+  {
+   "do": "shot",
+   "name": "g2-2"
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('main input')].filter(e=>e.getClientRects().length).map(e=>e.value)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "HP → BTU/h"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "shot",
+   "name": "g2-3"
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('main input')].filter(e=>e.getClientRects().length).map(e=>e.value)"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const q=[...document.querySelectorAll('main input,main textarea,main button,main [role=switch],main [role=tab],main [role=combobox],main [role=slider],main select,main a[href]')];return q.filter(e=>e.getClientRects().length).map(e=>{const r=e.getBoundingClientRect();return [e.tagName.toLowerCase(),e.getAttribute('role')||'',(e.innerText||'').replace(/\\s+/g,' ').trim().slice(0,38),e.placeholder||'',e.getAttribute('aria-label')||'',e.id||'',(e.value==null?'':String(e.value)).slice(0,12),Math.round(r.x)+','+Math.round(r.y)+' '+Math.round(r.width)+'x'+Math.round(r.height)].join('|')})})()",
+   "max": 5000
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "0",
+    "exact": true,
+    "nth": 0
+   },
+   "text": "2",
+   "clear": true
+  },
+  {
+   "do": "wait",
+   "ms": 400
+  },
+  {
+   "do": "shot",
+   "name": "g2-4"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Energia"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 400
+  },
+  {
+   "do": "shot",
+   "name": "g2-5"
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('main input')].filter(e=>e.getClientRects().length).map(e=>e.value)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "mm → pol"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "0",
+    "exact": true,
+    "nth": 0
+   },
+   "text": "6,35",
+   "clear": true
+  },
+  {
+   "do": "wait",
+   "ms": 400
+  },
+  {
+   "do": "shot",
+   "name": "g2-6"
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('main input')].filter(e=>e.getClientRects().length).map(e=>e.value)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Favoritar conversão"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "shot",
+   "name": "g2-7"
+  },
+  {
+   "do": "text",
+   "selector": "main",
+   "name": "conversão com favorita",
+   "max": 1200
+  },
+  {
+   "do": "goto",
+   "url": "/area-tecnico/calculo-capacitor"
+  },
+  {
+   "do": "waitFor",
+   "text": "Cálculo de Capacitor",
+   "timeout": 25
+  },
+  {
+   "do": "wait",
+   "ms": 900
+  },
+  {
+   "do": "shot",
+   "name": "g3-0"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const q=[...document.querySelectorAll('main input,main textarea,main button,main [role=switch],main [role=tab],main [role=combobox],main [role=slider],main select,main a[href]')];return q.filter(e=>e.getClientRects().length).map(e=>{const r=e.getBoundingClientRect();return [e.tagName.toLowerCase(),e.getAttribute('role')||'',(e.innerText||'').replace(/\\s+/g,' ').trim().slice(0,38),e.placeholder||'',e.getAttribute('aria-label')||'',e.id||'',(e.value==null?'':String(e.value)).slice(0,12),Math.round(r.x)+','+Math.round(r.y)+' '+Math.round(r.width)+'x'+Math.round(r.height)].join('|')})})()",
+   "max": 7000
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button[role=combobox]",
+    "nth": 0
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "shot",
+   "name": "g3-1"
+  },
+  {
+   "do": "list",
+   "selector": "[role=option]"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "18.000 BTUs"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 600
+  },
+  {
+   "do": "shot",
+   "name": "g3-2"
+  },
+  {
+   "do": "text",
+   "selector": "main",
+   "name": "capacitor",
+   "max": 1500
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('main img, main [role=img]')].map(e=>(e.alt||e.getAttribute('aria-label')||'')+'|'+Math.round(e.getBoundingClientRect().x)+','+Math.round(e.getBoundingClientRect().y)+' '+Math.round(e.getBoundingClientRect().width)+'x'+Math.round(e.getBoundingClientRect().height))"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const q=[...document.querySelectorAll('main input,main textarea,main button,main [role=switch],main [role=tab],main [role=combobox],main [role=slider],main select,main a[href]')];return q.filter(e=>e.getClientRects().length).map(e=>{const r=e.getBoundingClientRect();return [e.tagName.toLowerCase(),e.getAttribute('role')||'',(e.innerText||'').replace(/\\s+/g,' ').trim().slice(0,38),e.placeholder||'',e.getAttribute('aria-label')||'',e.id||'',(e.value==null?'':String(e.value)).slice(0,12),Math.round(r.x)+','+Math.round(r.y)+' '+Math.round(r.width)+'x'+Math.round(r.height)].join('|')})})()",
+   "max": 5000
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main img",
+    "nth": 0
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 700
+  },
+  {
+   "do": "shot",
+   "name": "g3-3"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const q=[...document.querySelectorAll('[role=dialog] input,[role=dialog] textarea,[role=dialog] button,[role=dialog] [role=switch],[role=dialog] [role=tab],[role=dialog] [role=combobox],[role=dialog] [role=slider],[role=dialog] select,[role=dialog] a[href]')];return q.filter(e=>e.getClientRects().length).map(e=>{const r=e.getBoundingClientRect();return [e.tagName.toLowerCase(),e.getAttribute('role')||'',(e.innerText||'').replace(/\\s+/g,' ').trim().slice(0,38),e.placeholder||'',e.getAttribute('aria-label')||'',e.id||'',(e.value==null?'':String(e.value)).slice(0,12),Math.round(r.x)+','+Math.round(r.y)+' '+Math.round(r.width)+'x'+Math.round(r.height)].join('|')})})()",
+   "max": 3000
+  },
+  {
+   "do": "press",
+   "key": "Escape"
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Preciso (LRA)"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const q=[...document.querySelectorAll('main input,main textarea,main button,main [role=switch],main [role=tab],main [role=combobox],main [role=slider],main select,main a[href]')];return q.filter(e=>e.getClientRects().length).map(e=>{const r=e.getBoundingClientRect();return [e.tagName.toLowerCase(),e.getAttribute('role')||'',(e.innerText||'').replace(/\\s+/g,' ').trim().slice(0,38),e.placeholder||'',e.getAttribute('aria-label')||'',e.id||'',(e.value==null?'':String(e.value)).slice(0,12),Math.round(r.x)+','+Math.round(r.y)+' '+Math.round(r.width)+'x'+Math.round(r.height)].join('|')})})()",
+   "max": 4000
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Ex: 40"
+   },
+   "text": "30"
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "shot",
+   "name": "g3-4"
+  },
+  {
+   "do": "text",
+   "selector": "main",
+   "name": "capacitor LRA",
+   "max": 1200
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Trifásico"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 600
+  },
+  {
+   "do": "shot",
+   "name": "g3-5"
+  },
+  {
+   "do": "text",
+   "selector": "main",
+   "name": "capacitor trifásico",
+   "max": 2500
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const q=[...document.querySelectorAll('main input,main textarea,main button,main [role=switch],main [role=tab],main [role=combobox],main [role=slider],main select,main a[href]')];return q.filter(e=>e.getClientRects().length).map(e=>{const r=e.getBoundingClientRect();return [e.tagName.toLowerCase(),e.getAttribute('role')||'',(e.innerText||'').replace(/\\s+/g,' ').trim().slice(0,38),e.placeholder||'',e.getAttribute('aria-label')||'',e.id||'',(e.value==null?'':String(e.value)).slice(0,12),Math.round(r.x)+','+Math.round(r.y)+' '+Math.round(r.width)+'x'+Math.round(r.height)].join('|')})})()",
+   "max": 5000
+  },
+  {
+   "do": "goto",
+   "url": "/area-tecnico/cabo-eletrico"
+  },
+  {
+   "do": "waitFor",
+   "text": "Seleção de seção do cabo elétrico",
+   "timeout": 25
+  },
+  {
+   "do": "wait",
+   "ms": 900
+  },
+  {
+   "do": "shot",
+   "name": "g4-0"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const q=[...document.querySelectorAll('main input,main textarea,main button,main [role=switch],main [role=tab],main [role=combobox],main [role=slider],main select,main a[href]')];return q.filter(e=>e.getClientRects().length).map(e=>{const r=e.getBoundingClientRect();return [e.tagName.toLowerCase(),e.getAttribute('role')||'',(e.innerText||'').replace(/\\s+/g,' ').trim().slice(0,38),e.placeholder||'',e.getAttribute('aria-label')||'',e.id||'',(e.value==null?'':String(e.value)).slice(0,12),Math.round(r.x)+','+Math.round(r.y)+' '+Math.round(r.width)+'x'+Math.round(r.height)].join('|')})})()",
+   "max": 7000
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button[role=combobox]",
+    "nth": 0
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "18.000 BTUs"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "220V",
+    "exact": true
+   }
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Ex: 40"
+   },
+   "text": "20"
+  },
+  {
+   "do": "wait",
+   "ms": 600
+  },
+  {
+   "do": "shot",
+   "name": "g4-1"
+  },
+  {
+   "do": "text",
+   "selector": "main",
+   "name": "cabo 20 m",
+   "max": 1500
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Ex: 40"
+   },
+   "text": "30",
+   "clear": true
+  },
+  {
+   "do": "wait",
+   "ms": 600
+  },
+  {
+   "do": "shot",
+   "name": "g4-2"
+  },
+  {
+   "do": "text",
+   "selector": "main",
+   "name": "cabo 30 m",
+   "max": 1500
+  }
+ ]
+}

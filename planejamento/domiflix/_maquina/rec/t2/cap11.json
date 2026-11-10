@@ -1,0 +1,284 @@
+{
+ "name": "t2-cap11",
+ "title": "T2 · Cap. 11 · Recapitulando (narração 41,5 s; marcas L1..L4 = início de cada linha do roteiro)",
+ "seed": "t2-cap11",
+ "pace": 0.4,
+ "cps": 40,
+ "tail": 1.5,
+ "start": {
+  "x": 900,
+  "y": 420
+ },
+ "seedExtra": [
+  "t1/apos-cap13",
+  "t2/inicio",
+  "t2/apos-cap09"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/configuracoes"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "goto",
+   "url": "/configuracoes?tab=usuarios"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "main p",
+    "hasText": "usuários •"
+   },
+   "timeout": 15
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0.04
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Configurações",
+    "exact": true,
+    "within": "main"
+   },
+   "at": 1.44,
+   "label": "abre Configurações (cargos)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Configurações de Cargos",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "3 permissões",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.6,
+   "at": 3.42,
+   "label": "cargo Técnico de Campo (3 permissões)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "13 permissões",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.6,
+   "at": 4.86,
+   "label": "cargo Escritório (13 permissões)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] button:has(svg.lucide-pencil)",
+    "nth": 0
+   },
+   "seconds": 0.8,
+   "at": 7.34,
+   "label": "o lápis edita o cargo"
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 12.66,
+   "label": "fecha a janela de cargos"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 13.16
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Rafael Lima",
+    "within": "main"
+   },
+   "seconds": 0.3,
+   "at": 13.28,
+   "label": "o Rafael na lista"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Tatiane Ribeiro",
+    "within": "main"
+   },
+   "seconds": 0.3,
+   "at": 14.9,
+   "label": "a Tatiane na lista"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Criar Usuário",
+    "exact": true,
+    "within": "main"
+   },
+   "at": 15.42,
+   "label": "abre Criar Usuário"
+  },
+  {
+   "do": "waitFor",
+   "text": "Preencha os dados do novo usuário",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Personalizado",
+    "exact": true
+   },
+   "seconds": 0.8,
+   "at": 18.48,
+   "label": "chip Personalizado"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Acesso Total",
+    "exact": true
+   },
+   "seconds": 0.8,
+   "at": 21.44,
+   "label": "chip Acesso Total"
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 960,
+    "y": 742
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "at": 22.66,
+   "label": "Cancelar (cursor)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] button",
+    "hasText": "Cancelar"
+   },
+   "text": "",
+   "noClick": true,
+   "label": "Cancelar"
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll(\"[role=dialog] button\")].filter(b=>/Cancelar/i.test(b.textContent)).shift().click()",
+   "at": 23.56,
+   "label": "Cancelar (clique)"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 23.91
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Rafael Lima",
+    "within": "main"
+   },
+   "at": 24.55,
+   "label": "abre o painel do Rafael"
+  },
+  {
+   "do": "waitFor",
+   "text": "Perfil de acesso",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Permissões concedidas",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.8,
+   "at": 25.17,
+   "label": "Permissões concedidas do Rafael"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Paulo Souza",
+    "within": "main"
+   },
+   "at": 29.11,
+   "label": "abre o painel do Paulo Souza"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Desativar",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.8,
+   "at": 30.99,
+   "label": "Desativar fica no painel"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main p",
+    "hasText": "usuários •"
+   },
+   "seconds": 1.0,
+   "at": 32.81,
+   "label": "contador de vagas"
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 34.55
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 41.52
+  }
+ ]
+}

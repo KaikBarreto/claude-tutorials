@@ -1,0 +1,289 @@
+{
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap05",
+  "t12/inicio",
+  "t12/apos-cap11",
+  "t13/inicio",
+  "t13/apos-cap14",
+  "t19/inicio",
+  "t19/apos-cap13",
+  "t20/inicio",
+  "t20/apos-cap12",
+  "t2/apos-cap10",
+  "t15/inicio",
+  "t15/apos-cap12",
+  "t22/inicio",
+  "t22/apos-cap11",
+  "t21/inicio",
+  "t21/corte-dia13",
+  "t14/inicio",
+  "t14/_prov-apos-cap05"
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ },
+ "start": "/dashboard",
+ "steps": [
+  {
+   "do": "goto",
+   "url": "/notas-fiscais"
+  },
+  {
+   "do": "wait",
+   "ms": 1800
+  },
+  {
+   "do": "shot",
+   "name": "20-lista-vazia"
+  },
+  {
+   "do": "text",
+   "selector": "main",
+   "name": "lista",
+   "max": 1200
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Nova Nota",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 1500
+  },
+  {
+   "do": "shot",
+   "name": "21-pessoas"
+  },
+  {
+   "do": "text",
+   "selector": "[role=dialog]",
+   "name": "pessoas",
+   "max": 2500
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]",
+    "hasText": "Selecione o cliente"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 700
+  },
+  {
+   "do": "keys",
+   "target": {
+    "placeholder": "Buscar cliente..."
+   },
+   "text": "Sabor"
+  },
+  {
+   "do": "wait",
+   "ms": 800
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Restaurante Sabor da Serra"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 800
+  },
+  {
+   "do": "shot",
+   "name": "22-tomador"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Avançar"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 1000
+  },
+  {
+   "do": "text",
+   "selector": "[role=dialog]",
+   "name": "servico",
+   "max": 2500
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]",
+    "hasText": "Escolha um serviço cadastrado"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 800
+  },
+  {
+   "do": "shot",
+   "name": "23-lista-servicos"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Higienização de Split"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 900
+  },
+  {
+   "do": "keys",
+   "target": {
+    "selector": "[role=dialog] textarea"
+   },
+   "text": "Limpeza e higienizacao de 2 splits da cozinha",
+   "clear": true
+  },
+  {
+   "do": "shot",
+   "name": "24-servico"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Avançar"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 1000
+  },
+  {
+   "do": "text",
+   "selector": "[role=dialog]",
+   "name": "valores",
+   "max": 2500
+  },
+  {
+   "do": "eval",
+   "js": "(()=>[...document.querySelectorAll('[role=dialog] input')].map(i=>[i.placeholder,i.value,i.type,i.inputMode]))()"
+  },
+  {
+   "do": "shot",
+   "name": "25-valores"
+  },
+  {
+   "do": "keys",
+   "target": {
+    "selector": "[role=dialog] input[inputmode=decimal], [role=dialog] input[inputmode=numeric]",
+    "nth": 0
+   },
+   "text": "45000"
+  },
+  {
+   "do": "wait",
+   "ms": 600
+  },
+  {
+   "do": "eval",
+   "js": "(()=>[...document.querySelectorAll('[role=dialog] input')].map(i=>[i.placeholder,i.value]))()"
+  },
+  {
+   "do": "shot",
+   "name": "26-valores-450"
+  },
+  {
+   "do": "text",
+   "selector": "[role=dialog]",
+   "name": "valores2",
+   "max": 2500
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Avançar"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 1000
+  },
+  {
+   "do": "shot",
+   "name": "27-revisar"
+  },
+  {
+   "do": "text",
+   "selector": "[role=dialog]",
+   "name": "revisar",
+   "max": 3000
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Emitir NFS-e"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 300
+  },
+  {
+   "do": "shot",
+   "name": "28-emitindo"
+  },
+  {
+   "do": "wait",
+   "ms": 2500
+  },
+  {
+   "do": "shot",
+   "name": "29-detalhe"
+  },
+  {
+   "do": "text",
+   "selector": "body",
+   "name": "detalhe",
+   "max": 3500
+  },
+  {
+   "do": "press",
+   "key": "Escape"
+  },
+  {
+   "do": "wait",
+   "ms": 1200
+  },
+  {
+   "do": "shot",
+   "name": "30-lista"
+  },
+  {
+   "do": "text",
+   "selector": "main",
+   "name": "lista2",
+   "max": 2000
+  },
+  {
+   "do": "html",
+   "selector": "main tbody tr",
+   "max": 1500
+  }
+ ]
+}

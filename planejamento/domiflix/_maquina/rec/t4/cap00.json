@@ -1,0 +1,143 @@
+{
+ "name": "t4-cap00",
+ "title": "T4 · Cap. 0 · Abertura (narração 35,0 s; marcas L1..L3 = início de cada linha do roteiro)",
+ "seed": "t4-cap00",
+ "pace": 0.6,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 700,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio"
+ ],
+ "prewarm": [
+  "/dashboard"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Camila!",
+   "timeout": 20
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Olá, Camila!",
+    "exact": false
+   },
+   "seconds": 1.2,
+   "at": 1.0,
+   "label": "tela inicial do Dominex, logada"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Gestão",
+    "exact": true
+   },
+   "seconds": 1.0,
+   "at": 6.04,
+   "label": "o cursor vai ao menu Gestão"
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 12.92
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Gestão",
+    "exact": true
+   },
+   "at": 12.92,
+   "label": "abre o menu Gestão"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "link",
+    "name": "Serviços",
+    "exact": true
+   },
+   "seconds": 1.5,
+   "at": 13.98,
+   "label": "menu Gestão: Serviços (ordens de serviço)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "link",
+    "name": "Serviços",
+    "exact": true
+   },
+   "seconds": 3.0,
+   "at": 16.52,
+   "label": "Serviços: tipo, prefixo e roteiro"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 25.27
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "link",
+    "name": "Clientes e Fornecedores",
+    "exact": true
+   },
+   "seconds": 1.0,
+   "at": 26.45,
+   "label": "menu Gestão: Clientes e Fornecedores (tutorial anterior)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "link",
+    "name": "Equipamentos",
+    "exact": true
+   },
+   "seconds": 1.0,
+   "at": 28.15,
+   "label": "menu Gestão: Equipamentos (tutorial anterior)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "link",
+    "name": "Serviços",
+    "exact": true
+   },
+   "seconds": 0.8,
+   "at": 32.89,
+   "label": "Vamos abrir a tela de Serviços"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 34.96
+  }
+ ]
+}

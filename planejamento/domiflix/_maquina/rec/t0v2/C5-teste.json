@@ -1,0 +1,84 @@
+{
+ "name": "teste-C5",
+ "title": "Teste C5: para onde o botão de contratar leva (NÃO é tela do vídeo)",
+ "seed": "t0v2-R06",
+ "pace": 0.6,
+ "tail": 1.2,
+ "cps": 9,
+ "seedExtra": [
+  "t0v2/catalogo",
+  "t0v2/progresso-camila",
+  "t0v2/usuario-novo",
+  "t0v2/conta-teste"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/domiflix"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/domiflix/assistir/emissao-de-notas-fiscais/1?trilha=tutoriais-do-sistema"
+  },
+  {
+   "do": "waitFor",
+   "text": "Conheça agora",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(() => { if (window.__cobrir) return 'ja';\n const css = document.createElement('style'); css.textContent = '.__tarja{background:#111!important;color:transparent!important;border-radius:3px;text-shadow:none!important;box-shadow:0 0 0 2px #111}'; document.head.appendChild(css);\n const re = /R\\$\\s?[\\d.]+(?:,\\d{2})?/g;\n const go = (root) => { const w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT); const hit = []; let n; while ((n = w.nextNode())) { if (re.test(n.nodeValue) && !n.parentElement.closest('.__tarja')) hit.push(n); re.lastIndex = 0; }\n  for (const t of hit) { const f = document.createDocumentFragment(); let last = 0; const s = t.nodeValue; s.replace(re, (m, i) => { f.append(s.slice(last, i)); const sp = document.createElement('span'); sp.className = '__tarja'; sp.textContent = m; f.append(sp); last = i + m.length; return m; }); f.append(s.slice(last)); t.replaceWith(f); } };\n go(document.body); let busy = false; new MutationObserver(() => { if (busy) return; busy = true; requestAnimationFrame(() => { go(document.body); busy = false; }); }).observe(document.body, { childList: true, subtree: true, characterData: true });\n window.__cobrir = true; return 'ok'; })()"
+  },
+  {
+   "do": "pause",
+   "seconds": 0.6
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "scroll",
+   "target": "Conheça agora. Ative quando fizer sentido.",
+   "optional": true
+  },
+  {
+   "do": "click",
+   "target": "Escolher meu plano",
+   "label": "clica Escolher meu plano"
+  },
+  {
+   "do": "pause",
+   "seconds": 2.5
+  },
+  {
+   "do": "eval",
+   "js": "location.pathname + location.search",
+   "label": "rota depois do clique"
+  },
+  {
+   "do": "eval",
+   "js": "document.body.innerText.slice(0,160)",
+   "label": "texto da página"
+  },
+  {
+   "do": "pause",
+   "seconds": 1
+  }
+ ]
+}

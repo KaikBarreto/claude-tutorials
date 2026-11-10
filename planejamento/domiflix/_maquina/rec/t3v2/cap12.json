@@ -1,0 +1,482 @@
+{
+ "name": "t3v2-cap12",
+ "title": "T3 v2 · Cap. 12 · QR Code e etiqueta (narração 71,0 s; marcas L1..L8 = início de cada linha do roteiro)",
+ "seed": "t3v2-cap12",
+ "pace": 0.6,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 1060,
+  "y": 560
+ },
+ "seedExtra": [
+  "t3v2/apos-cap11"
+ ],
+ "prewarm": [
+  "/clientes",
+  "/equipamentos"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/clientes"
+  },
+  {
+   "do": "waitFor",
+   "text": "Lista de Clientes"
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Colégio Monte Verde",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Responsável no Local",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Equipamentos"
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Hi-Wall 18.000 BTUs - Sala dos professores",
+   "timeout": 10
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Hi-Wall 18.000 BTUs - Sala dos professores"
+   },
+   "at": 0.1,
+   "label": "clica no aparelho: abre a ficha"
+  },
+  {
+   "do": "waitFor",
+   "text": "QR Code do equipamento",
+   "timeout": 10
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 2.68
+  },
+  {
+   "do": "scroll",
+   "by": 420,
+   "duration": 0.5,
+   "after": 80,
+   "x": 970,
+   "y": 500,
+   "at": 2.75,
+   "label": "desce até o cartão Informações"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Tensão",
+    "exact": true
+   },
+   "seconds": 0.4,
+   "at": 3.7,
+   "label": "Informações: Tensão 220 V"
+  },
+  {
+   "do": "scroll",
+   "by": -420,
+   "duration": 0.45,
+   "after": 80,
+   "x": 970,
+   "y": 500,
+   "at": 4.75,
+   "label": "volta ao QR Code"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "QR Code do equipamento",
+    "exact": true
+   },
+   "seconds": 1.0,
+   "at": 5.7,
+   "label": "QR Code do equipamento"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "0026",
+    "exact": true
+   },
+   "seconds": 1.6,
+   "at": 7.6,
+   "label": "identificador 0026"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 10.12
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Gerar Etiqueta"
+   },
+   "at": 10.15,
+   "label": "Gerar Etiqueta"
+  },
+  {
+   "do": "waitFor",
+   "text": "Itens da etiqueta",
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Nome da empresa",
+    "exact": true
+   },
+   "seconds": 0.3,
+   "at": 12.9,
+   "label": "item: nome da empresa"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Telefone da empresa",
+    "exact": true
+   },
+   "seconds": 0.7,
+   "at": 13.9,
+   "label": "item: telefone da empresa"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "QR Code",
+    "exact": true
+   },
+   "seconds": 0.9,
+   "at": 15.35,
+   "label": "item: QR Code"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Nome do equipamento",
+    "exact": true
+   },
+   "seconds": 0.6,
+   "at": 16.85,
+   "label": "item: nome do equipamento"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Identificador",
+    "exact": true
+   },
+   "seconds": 0.8,
+   "at": 18.0,
+   "label": "item: identificador"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "checkbox",
+    "name": "Marca",
+    "exact": true
+   },
+   "at": 20.45,
+   "label": "inclui a Marca"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "checkbox",
+    "name": "Modelo",
+    "exact": true
+   },
+   "at": 21.25,
+   "label": "inclui o Modelo"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "checkbox",
+    "name": "Nome do cliente",
+    "exact": true
+   },
+   "at": 22.15,
+   "label": "inclui o Nome do cliente"
+  },
+  {
+   "do": "scroll",
+   "by": 500,
+   "duration": 0.5,
+   "after": 80,
+   "x": 640,
+   "y": 400,
+   "at": 23.0,
+   "label": "desce até Tamanho e Pré-visualização"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "5×8 cm"
+   },
+   "at": 24.05,
+   "label": "tamanho 5×8 cm"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Pré-visualização",
+    "exact": true
+   },
+   "seconds": 0.3,
+   "at": 24.85,
+   "label": "Pré-visualização"
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 25.81
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Imprimir"
+   },
+   "seconds": 1.6,
+   "at": 26.4,
+   "label": "Imprimir (só passa o mouse)"
+  },
+  {
+   "do": "scroll",
+   "by": -600,
+   "duration": 0.5,
+   "after": 80,
+   "x": 640,
+   "y": 400,
+   "at": 29.4,
+   "label": "sobe até o aviso de tamanho real"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "dimensionamento"
+   },
+   "seconds": 3.0,
+   "at": 30.5,
+   "label": "aviso: dimensionamento em tamanho real"
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 34.37
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 34.55,
+   "label": "Fechar a etiqueta"
+  },
+  {
+   "do": "wait",
+   "seconds": 0.4
+  },
+  {
+   "do": "eval",
+   "js": "(() => { const d = document.querySelector('[role=dialog]'); if (!d) return 'ja fechada'; const b = [...d.querySelectorAll('button')].find((x) => [x.textContent, x.getAttribute('aria-label'), x.title].some((v) => /^\\s*fechar\\s*$/i.test(v || ''))); if (!b) return 'sem botao Fechar'; b.click(); return 'fechada pelo botao'; })()",
+   "label": "Fechar a etiqueta (se o Esc não fechou)"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Baixar QR (PNG)"
+   },
+   "at": 35.9,
+   "label": "Baixar QR (PNG)"
+  },
+  {
+   "do": "waitFor",
+   "text": "QR Code salvo!",
+   "timeout": 6
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 38.85
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "QR Code do equipamento",
+    "exact": true
+   },
+   "seconds": 2.0,
+   "at": 39.5,
+   "label": "para que serve o QR"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Abrir link"
+   },
+   "seconds": 2.0,
+   "at": 44.0,
+   "label": "Abrir link (só passa o mouse)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Copiar link"
+   },
+   "seconds": 3.0,
+   "at": 46.55,
+   "label": "Copiar link (só passa o mouse)"
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 51.97
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Anexos",
+    "exact": true
+   },
+   "at": 52.0,
+   "label": "aba Anexos"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "role": "button",
+    "name": "Enviar",
+    "exact": true
+   }
+  },
+  {
+   "do": "upload",
+   "target": {
+    "role": "button",
+    "name": "Enviar",
+    "exact": true
+   },
+   "file": "assets/Manual Aerovento AV-HW18.pdf",
+   "at": 53.95,
+   "label": "Enviar o PDF do manual"
+  },
+  {
+   "do": "waitFor",
+   "text": "1 anexo enviado!",
+   "timeout": 8
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "button[title='Lista']"
+   },
+   "at": 56.6,
+   "label": "visão em lista"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Manual Aerovento"
+   },
+   "seconds": 2.8,
+   "at": 58.1,
+   "timeout": 4,
+   "optional": true,
+   "label": "o anexo também aparece pro cliente no portal"
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 61.57
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Histórico / Tarefas"
+   },
+   "at": 61.6,
+   "label": "aba Histórico / Tarefas"
+  },
+  {
+   "do": "waitFor",
+   "text": "Nenhuma OS relacionada a este equipamento",
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Nenhuma OS relacionada a este equipamento"
+   },
+   "seconds": 1.8,
+   "at": 63.0,
+   "label": "Ordens de Serviço Relacionadas (vazia)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Tarefas",
+    "exact": true
+   },
+   "seconds": 0.8,
+   "at": 65.5,
+   "label": "Tarefas"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Nova tarefa..."
+   },
+   "text": "Trocar as pilhas do controle",
+   "cps": 28,
+   "submit": true,
+   "at": 68.0,
+   "label": "Nova tarefa: Trocar as pilhas do controle"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 71.04
+  }
+ ]
+}

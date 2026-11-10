@@ -1,0 +1,397 @@
+{
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap05",
+  "t12/inicio",
+  "t12/apos-cap11",
+  "t13/inicio",
+  "t13/apos-cap14",
+  "t19/inicio",
+  "t19/apos-cap13",
+  "t20/inicio",
+  "t2/apos-cap10",
+  "t15/inicio",
+  "t15/salarios",
+  "t15/folhas"
+ ],
+ "start": "/dashboard",
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ },
+ "stopOnFail": false,
+ "steps": [
+  {
+   "do": "goto",
+   "url": "/funcionarios"
+  },
+  {
+   "do": "waitFor",
+   "text": "Lista de Funcionários",
+   "timeout": 25
+  },
+  {
+   "do": "wait",
+   "ms": 700
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Rafael Lima",
+    "within": "main"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 900
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Vale",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 900
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]",
+    "nth": 0
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 400
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Caixa (em dinheiro)"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 300
+  },
+  {
+   "do": "keys",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='R$ 0,00']",
+    "nth": 0
+   },
+   "text": "30000",
+   "delay": 30
+  },
+  {
+   "do": "keys",
+   "target": {
+    "selector": "[role=dialog] textarea",
+    "nth": 0
+   },
+   "text": "Adiantamento",
+   "delay": 30
+  },
+  {
+   "do": "wait",
+   "ms": 300
+  },
+  {
+   "do": "shot",
+   "name": "h1-vale-pronto"
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('[role=dialog] input,[role=dialog] textarea')].map(i=>i.value).join(' | ')"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Registrar Vale",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 1500
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('[data-sonner-toast],[role=status],li[role=status],ol li')].map(t=>t.innerText.replace(/\\n/g,' / ')).slice(0,4).join(' || ')",
+   "max": 600
+  },
+  {
+   "do": "shot",
+   "name": "h2-apos-vale"
+  },
+  {
+   "do": "text",
+   "selector": "main",
+   "name": "ficha",
+   "max": 3000
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Bônus",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 900
+  },
+  {
+   "do": "shot",
+   "name": "h3-bonus"
+  },
+  {
+   "do": "text",
+   "selector": "[role=dialog]",
+   "name": "bonus",
+   "max": 900
+  },
+  {
+   "do": "keys",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='R$ 0,00']",
+    "nth": 0
+   },
+   "text": "15000",
+   "delay": 30
+  },
+  {
+   "do": "keys",
+   "target": {
+    "selector": "[role=dialog] textarea",
+    "nth": 0
+   },
+   "text": "Bônus por produtividade",
+   "delay": 30
+  },
+  {
+   "do": "wait",
+   "ms": 300
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Registrar Bônus",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 1500
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('[data-sonner-toast],[role=status],li[role=status],ol li')].map(t=>t.innerText.replace(/\\n/g,' / ')).slice(0,4).join(' || ')",
+   "max": 600
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Falta",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 1200
+  },
+  {
+   "do": "shot",
+   "name": "h4-falta"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const ds=[...document.querySelectorAll('[role=dialog]')];const d=ds.length?ds[ds.length-1]:document.body;const out=[];d.querySelectorAll('button,input,textarea,select,[role=tab],[role=switch],[role=combobox],[role=radio],[role=checkbox],label').forEach(e=>{const r=e.getBoundingClientRect();if(r.width<2||r.height<2)return;out.push([e.tagName.toLowerCase(),e.getAttribute('role')||'',(e.getAttribute('aria-label')||e.innerText||e.placeholder||e.name||'').trim().replace(/\\s+/g,' ').slice(0,60),e.type||'',e.value&&e.type!=='checkbox'?String(e.value).slice(0,30):'',Math.round(r.x),Math.round(r.y)].join(' | '))});return out.join('\\n')})()",
+   "max": 7000
+  },
+  {
+   "do": "text",
+   "selector": "[role=dialog]",
+   "name": "falta",
+   "max": 1500
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('[role=dialog] input,[role=dialog] textarea')].map(i=>i.placeholder+'='+i.value).join(' | ')"
+  },
+  {
+   "do": "keys",
+   "target": {
+    "selector": "[role=dialog] textarea",
+    "nth": 0
+   },
+   "text": "Falta em 06/11",
+   "delay": 30
+  },
+  {
+   "do": "wait",
+   "ms": 300
+  },
+  {
+   "do": "shot",
+   "name": "h5-falta-pronta"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Registrar Falta",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 1500
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('[data-sonner-toast],[role=status],li[role=status],ol li')].map(t=>t.innerText.replace(/\\n/g,' / ')).slice(0,4).join(' || ')",
+   "max": 600
+  },
+  {
+   "do": "shot",
+   "name": "h6-apos-falta"
+  },
+  {
+   "do": "text",
+   "selector": "main",
+   "name": "ficha",
+   "max": 3000
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Pagamento",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 1500
+  },
+  {
+   "do": "shot",
+   "name": "h7-pagamento"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const ds=[...document.querySelectorAll('[role=dialog]')];const d=ds.length?ds[ds.length-1]:document.body;const out=[];d.querySelectorAll('button,input,textarea,select,[role=tab],[role=switch],[role=combobox],[role=radio],[role=checkbox],label').forEach(e=>{const r=e.getBoundingClientRect();if(r.width<2||r.height<2)return;out.push([e.tagName.toLowerCase(),e.getAttribute('role')||'',(e.getAttribute('aria-label')||e.innerText||e.placeholder||e.name||'').trim().replace(/\\s+/g,' ').slice(0,60),e.type||'',e.value&&e.type!=='checkbox'?String(e.value).slice(0,30):'',Math.round(r.x),Math.round(r.y)].join(' | '))});return out.join('\\n')})()",
+   "max": 7000
+  },
+  {
+   "do": "text",
+   "selector": "[role=dialog]",
+   "name": "pagamento",
+   "max": 3500
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Confirmar Pagamento",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 1800
+  },
+  {
+   "do": "shot",
+   "name": "h8-recibo"
+  },
+  {
+   "do": "text",
+   "selector": "[role=dialog]",
+   "name": "recibo",
+   "max": 1200
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Não",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 1500
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('[data-sonner-toast],[role=status],li[role=status],ol li')].map(t=>t.innerText.replace(/\\n/g,' / ')).slice(0,4).join(' || ')",
+   "max": 600
+  },
+  {
+   "do": "shot",
+   "name": "h9-apos-pag"
+  },
+  {
+   "do": "text",
+   "selector": "main",
+   "name": "ficha",
+   "max": 3000
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Extrato",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 1500
+  },
+  {
+   "do": "shot",
+   "name": "h10-extrato"
+  },
+  {
+   "do": "text",
+   "selector": "[role=dialog]",
+   "name": "extrato",
+   "max": 4500
+  },
+  {
+   "do": "press",
+   "key": "Escape"
+  },
+  {
+   "do": "wait",
+   "ms": 300
+  },
+  {
+   "do": "press",
+   "key": "Escape"
+  },
+  {
+   "do": "wait",
+   "ms": 300
+  },
+  {
+   "do": "eval",
+   "js": "location.pathname"
+  }
+ ]
+}

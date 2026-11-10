@@ -1,0 +1,160 @@
+{
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/g1-trilha"
+ ],
+ "steps": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Camila!",
+   "timeout": 20
+  },
+  {
+   "do": "goto",
+   "url": "/ordens-servico"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie suas ordens de serviço",
+   "timeout": 20
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Nova OS",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Nova Ordem de Serviço"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "combobox",
+    "hasText": "Selecione o cliente"
+   }
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Buscar cliente..."
+   },
+   "text": "Colégio"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Colégio Monte Verde"
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]",
+    "hasText": "Adicionar serviços"
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Manutenção Preventiva",
+    "exact": true,
+    "within": "[data-radix-popper-content-wrapper]"
+   }
+  },
+  {
+   "do": "press",
+   "key": "Escape"
+  },
+  {
+   "do": "wait",
+   "ms": 1200
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const els=[...document.querySelectorAll('[role=dialog] *')].filter(e=>e.scrollHeight>e.clientHeight+20&&/(auto|scroll)/.test(getComputedStyle(e).overflowY));return els.map(e=>e.tagName+'.'+e.className.slice(0,80)+' '+e.scrollHeight+'/'+e.clientHeight)})()"
+  },
+  {
+   "do": "wheel",
+   "x": 480,
+   "y": 500,
+   "dy": 600
+  },
+  {
+   "do": "shot",
+   "name": "e1_scroll"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Próximo",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 1500
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const a=document.getAnimations();const r=a.map(x=>x.playState+\":\"+Math.round(x.currentTime||0));a.filter(x=>x.currentTime<0).forEach(x=>{x.startTime=document.timeline.currentTime});return r})()"
+  },
+  {
+   "do": "wait",
+   "ms": 1500
+  },
+  {
+   "do": "shot",
+   "name": "e2"
+  },
+  {
+   "do": "text",
+   "selector": "[role=dialog]",
+   "name": "etapa2",
+   "max": 3000
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "checkbox",
+    "within": "[role=dialog]"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 1500
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const a=document.getAnimations();const r=a.map(x=>x.playState+\":\"+Math.round(x.currentTime||0));a.filter(x=>x.currentTime<0).forEach(x=>{x.startTime=document.timeline.currentTime});return r})()"
+  },
+  {
+   "do": "wait",
+   "ms": 1500
+  },
+  {
+   "do": "shot",
+   "name": "e2_marcado"
+  },
+  {
+   "do": "text",
+   "selector": "[role=dialog]",
+   "name": "etapa2 marcado",
+   "max": 3500
+  }
+ ],
+ "start": "/dashboard"
+}

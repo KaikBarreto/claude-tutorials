@@ -1,0 +1,322 @@
+{
+ "name": "t5-cap17",
+ "title": "T5 · Cap. 17 · Recapitulando (narração 43,7 s; marcas L1..L3 = início de cada linha do roteiro)",
+ "seed": "t5-cap17",
+ "pace": 0.3,
+ "cps": 14,
+ "tail": 1.5,
+ "start": {
+  "x": 900,
+  "y": 480
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap15"
+ ],
+ "prewarm": [
+  "/ordens-servico",
+  "/agenda",
+  "/funcionarios",
+  "/mapa-ao-vivo"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/ordens-servico"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie suas ordens de serviço",
+   "timeout": 20
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Nova OS",
+    "exact": true
+   },
+   "at": 1.78,
+   "label": "Nova OS"
+  },
+  {
+   "do": "waitFor",
+   "text": "Nova Ordem de Serviço",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Cliente e Serviço",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.4,
+   "at": 3.54,
+   "label": "etapa Cliente e Serviço"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Orçamento",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.4,
+   "at": 5.46,
+   "label": "etapa Orçamento"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Equipamentos e Checklists",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.0,
+   "at": 6.34,
+   "label": "etapa Equipamentos e Checklists"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button",
+    "hasText": "fechar"
+   },
+   "at": 7.72,
+   "label": "fecha a Nova OS"
+  },
+  {
+   "do": "scroll",
+   "at": 8.98,
+   "label": "desce até o Kanban",
+   "by": 330,
+   "point": {
+    "x": 760,
+    "y": 120
+   }
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "HIG-2026-17",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.4,
+   "at": 9.72,
+   "label": "cartão da série: novembro"
+  },
+  {
+   "do": "eval",
+   "js": "document.querySelector(\"main\").scrollTo({top: 0})",
+   "at": 12.84,
+   "label": "volta ao topo (time-lapse)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Configurações",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.2,
+   "at": 12.94,
+   "label": "Configurações (status)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Filtros",
+    "exact": true
+   },
+   "seconds": 0.2,
+   "at": 15.18,
+   "label": "Filtros e busca (o funil fica dentro do campo)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "NPS e Satisfação"
+   },
+   "at": 16.26,
+   "label": "aba NPS e Satisfação"
+  },
+  {
+   "do": "eval",
+   "js": "document.getAnimations().filter(a=>a.currentTime<0).forEach(a=>{a.startTime=document.timeline.currentTime})",
+   "label": "cartões de KPI (animação)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Média por Categoria",
+   "timeout": 12
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 22.14
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "link",
+    "name": "Agenda",
+    "exact": true
+   },
+   "at": 22.14,
+   "label": "menu: Agenda"
+  },
+  {
+   "do": "waitFor",
+   "text": "Visualize e gerencie os agendamentos",
+   "timeout": 15
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "#16",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.5,
+   "at": 23.94,
+   "label": "a OS reagendada na quarta"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{if([...document.querySelectorAll('a')].some(a=>a.textContent.trim()===\"Funcion\\u00e1rios (RH)\"))return 'já aberto';const b=[...document.querySelectorAll('button')].find(x=>x.textContent.trim()===\"Gest\\u00e3o\");if(!b)return 'SEM ALVO';b.click();return 1})()",
+   "at": 25.0,
+   "label": "abre o grupo Gestão (time-lapse)"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "role": "link",
+    "name": "Funcionários (RH)",
+    "exact": true
+   },
+   "timeout": 10
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const e=[...document.querySelectorAll('a')].find(x=>x.textContent.trim()==='Funcionários (RH)');if(!e)return 'SEM ALVO';e.click();return 1})()",
+   "label": "menu: Funcionários (RH) (time-lapse)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Equipes"
+   },
+   "label": "aba Equipes"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Equipe Alfa",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.8,
+   "at": 27.48,
+   "label": "a Equipe Alfa"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{if([...document.querySelectorAll('a')].some(a=>a.textContent.trim()===\"Mapa e Rastreamento\"))return 'já aberto';const b=[...document.querySelectorAll('button')].find(x=>x.textContent.trim()===\"Operacional\");if(!b)return 'SEM ALVO';b.click();return 1})()",
+   "at": 28.86,
+   "label": "abre o grupo Operacional (time-lapse)"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "role": "link",
+    "name": "Mapa e Rastreamento",
+    "exact": true
+   },
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "link",
+    "name": "Mapa e Rastreamento",
+    "exact": true
+   },
+   "label": "menu: Mapa e Rastreamento"
+  },
+  {
+   "do": "waitFor",
+   "selector": ".leaflet-marker-icon",
+   "timeout": 20
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": ".leaflet-marker-icon:has(div[style*=\"#6366f1\"])"
+   },
+   "seconds": 0.3,
+   "label": "aquece o mapa"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 35.26
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": ".leaflet-marker-icon:has(div[style*=\"#6366f1\"])"
+   },
+   "seconds": 0.8,
+   "at": 37.46,
+   "label": "o técnico no mapa"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": ".leaflet-marker-icon:has(div[style*=\"#6366f1\"])"
+   },
+   "at": 38.96,
+   "label": "abre o técnico no mapa"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "OS vinculada",
+    "exact": true,
+    "within": ".leaflet-popup-content"
+   },
+   "seconds": 2.5,
+   "at": 41.32,
+   "label": "a OS do técnico"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 43.7
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

@@ -1,0 +1,345 @@
+{
+ "name": "t13-cap03",
+ "title": "T13 · Cap. 3 · Entrou dinheiro (narração 85,5 s; marcas L1..L7 = início de cada linha do roteiro)",
+ "seed": "t13-cap03",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap05",
+  "t12/inicio",
+  "t12/apos-cap11",
+  "t13/inicio",
+  "t13/apos-cap02"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/financeiro/movimentacoes"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Camila!",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/financeiro/movimentacoes"
+  },
+  {
+   "do": "waitFor",
+   "text": "Contas e cartões",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Toggle Sidebar",
+    "nth": 0
+   }
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|erro|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "aside[aria-label=\"Contas e cartões\"] button",
+    "hasText": "Conta Principal"
+   },
+   "at": 2.74,
+   "label": "abre a Conta Principal"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Conta Principal\", \"R$ 18.500,00\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere cabeçalho da conta com o saldo"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Conta Principal",
+    "within": "main",
+    "nth": 1
+   },
+   "seconds": 0.9,
+   "at": 5.38,
+   "label": "em cima o saldo",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 8.74
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Nova movimentação",
+    "exact": true,
+    "nth": 0
+   },
+   "at": 8.74,
+   "label": "Nova movimentação"
+  },
+  {
+   "do": "waitFor",
+   "text": "Escolha como o dinheiro se movimenta.",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Despesa Dinheiro que sai da empresa.",
+    "exact": true
+   },
+   "seconds": 0.4,
+   "at": 12.68,
+   "label": "opção Despesa",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button",
+    "hasText": "Dinheiro que entra na empresa."
+   },
+   "at": 20.98,
+   "label": "Receita"
+  },
+  {
+   "do": "waitFor",
+   "text": "Registre uma receita ou despesa",
+   "timeout": 10
+  },
+  {
+   "do": "select",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]",
+    "hasText": "Selecione uma categoria"
+   },
+   "option": "Vendas de Serviços",
+   "at": 23.26,
+   "label": "categoria Vendas de Serviços"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 23.72
+  },
+  {
+   "do": "click",
+   "target": {
+    "placeholder": "Descreva a movimentação",
+    "within": "[role=dialog]"
+   },
+   "at": 25.9,
+   "label": "descrição (clique)"
+  },
+  {
+   "do": "eval",
+   "js": "(() => { document.execCommand('insertText', false, \"Instala\\u00e7\\u00e3o de split 12.000 BTUs - Mercado Vila Nova\"); const e = document.activeElement; return e && e.value; })()",
+   "label": "descrição (colado)"
+  },
+  {
+   "do": "select",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]",
+    "hasText": "Selecione um cliente"
+   },
+   "option": "Mercado Vila Nova",
+   "at": 27.98,
+   "label": "cliente Mercado Vila Nova"
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 36.36
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]",
+    "hasText": "Sem ordem de serviço"
+   },
+   "seconds": 0.9,
+   "at": 37.4,
+   "label": "campo Ordem de serviço, sem escolher",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 48.92
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='0,00']",
+    "nth": 0
+   },
+   "text": "185000",
+   "cps": 20,
+   "at": 49.82,
+   "label": "Valor 1.850,00"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const esp=[\"1.850,00\"];let out='';for(let i=0;i<12;i++){const v=[...document.querySelectorAll(\"[role=dialog]\"+' input, '+\"[role=dialog]\"+' textarea')].map(e=>e.value).join(' | ');const falta=esp.filter(e=>!v.includes(e));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+v.slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Valor 1.850,00"
+  },
+  {
+   "do": "select",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]",
+    "hasText": "Selecione uma conta"
+   },
+   "option": "Conta Principal",
+   "at": 53.16,
+   "label": "conta Conta Principal"
+  },
+  {
+   "do": "select",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]",
+    "hasText": "Selecione a forma de pagamento"
+   },
+   "option": "PIX",
+   "at": 57.38,
+   "label": "forma de pagamento PIX"
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 58.36
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Quando isso aconteceu",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.9,
+   "at": 60.74,
+   "label": "Data do lançamento e a dica",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Será registrado como recebido",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.9,
+   "at": 64.92,
+   "label": "Já foi recebido ligado",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Quando o dinheiro realmente saiu",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.9,
+   "at": 66.9,
+   "label": "Data do recebimento e a dica",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 75.54
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Salvar",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 75.54,
+   "label": "Salvar"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 12
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Instalação de split 12.000 BTUs - Mercado Vila Nova\", \"1.850,00\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere a receita no extrato"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Saldo: R$",
+    "within": "main"
+   },
+   "seconds": 0.9,
+   "at": 80.42,
+   "label": "o Saldo sob o Valor (na janela de 1280 px a coluna Saldo Após não aparece: só a partir de 1440 px)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 85.5
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

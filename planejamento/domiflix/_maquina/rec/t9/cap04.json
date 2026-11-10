@@ -1,0 +1,465 @@
+{
+ "name": "t9-cap04",
+ "title": "T9 · Cap. 4 · Quanto custa executar um serviço (narração 79,0 s; marcas L1..L7 = início de cada linha do roteiro)",
+ "seed": "t9-cap04",
+ "pace": 0.3,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t9/inicio",
+  "t9/apos-cap03"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/orcamentos"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/orcamentos"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie orçamentos, custos e precificação",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Toggle Sidebar",
+    "nth": 0
+   }
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|erro|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0.04
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Custos dos Serviços",
+    "exact": true
+   },
+   "at": 1.48,
+   "label": "aba Custos dos Serviços"
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Higienização de Split",
+    "exact": true,
+    "within": "main"
+   },
+   "at": 6.18,
+   "label": "escolhe Higienização de Split na lista"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Mão de obra",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.2,
+   "at": 10.2,
+   "label": "sub-aba Mão de obra",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Recursos",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.2,
+   "at": 11.32,
+   "label": "sub-aba Recursos",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Materiais",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.2,
+   "at": 12.28,
+   "label": "sub-aba Materiais",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Resumo",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.2,
+   "at": 13.32,
+   "label": "sub-aba Resumo",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 14.02
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Mão de obra",
+    "exact": true,
+    "within": "main"
+   },
+   "at": 14.02,
+   "label": "volta à sub-aba Mão de obra"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main input[type=number]"
+   },
+   "at": 16.16,
+   "label": "Custo / hora 32 (clique)"
+  },
+  {
+   "do": "press",
+   "key": "Control+A"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "main input[type=number]"
+   },
+   "text": "32",
+   "noClick": true,
+   "label": "Custo / hora 32"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "main input[type=text]"
+   },
+   "text": "1,5",
+   "at": 19.04,
+   "label": "Horas 1,5",
+   "clear": true
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Custo HH R$ 48,00\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Custo HH R$ 48,00"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Custo HH",
+    "within": "main"
+   },
+   "seconds": 1.4,
+   "at": 20.42,
+   "label": "Custo HH R$ 48,00",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 26.86
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Calcular",
+    "exact": true
+   },
+   "at": 27.74,
+   "label": "botão Calcular"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:has(svg.lucide-chevrons-up-down)"
+   },
+   "at": 32.62,
+   "label": "lista de funcionários da calculadora"
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 34.4,
+   "label": "fecha a lista de funcionários"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Cancelar",
+    "exact": true
+   },
+   "at": 36.3,
+   "label": "Cancelar (sem aplicar)"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 37.1
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Recursos",
+    "exact": true,
+    "within": "main"
+   },
+   "at": 37.34,
+   "label": "sub-aba Recursos"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "checkbox"
+   },
+   "at": 38.06,
+   "label": "marca a Van 01"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "1.5h × R$ 20,00",
+    "within": "main"
+   },
+   "seconds": 1.4,
+   "at": 44.14,
+   "label": "conta 1.5h × R$ 20,00 = R$ 30,00",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"1.5h × R$ 20,00 = R$ 30,00\", \"Total recursos vinculados R$ 30,00\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Van 01 vinculada (R$ 30,00)"
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 45.3
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Materiais",
+    "exact": true,
+    "within": "main"
+   },
+   "at": 45.62,
+   "label": "sub-aba Materiais"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const b=[...document.querySelectorAll('main button')].find(x=>x.innerText.trim()==='Adicionar');if(b)b.scrollIntoView({block:'center',behavior:'smooth'});return !!b})()",
+   "at": 46.12,
+   "label": "centraliza o botão Adicionar (Limpa-evaporador em spray)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main div:has(> label:has-text(\"Item do estoque\")) button"
+   },
+   "label": "abre Selecione do estoque (Limpa-evaporador em spray)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Limpa-evaporador em spray"
+   },
+   "label": "escolhe Limpa-evaporador em spray"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Adicionar",
+    "exact": true,
+    "within": "main"
+   },
+   "label": "Adicionar Limpa-evaporador em spray"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const b=[...document.querySelectorAll('main button')].find(x=>x.innerText.trim()==='Adicionar');if(b)b.scrollIntoView({block:'center',behavior:'smooth'});return !!b})()",
+   "label": "centraliza o botão Adicionar (Fita isolante)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main div:has(> label:has-text(\"Item do estoque\")) button"
+   },
+   "label": "abre Selecione do estoque (Fita isolante)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Fita isolante"
+   },
+   "label": "escolhe Fita isolante"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Adicionar",
+    "exact": true,
+    "within": "main"
+   },
+   "label": "Adicionar Fita isolante"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const b=[...document.querySelectorAll('main button')].find(x=>x.innerText.trim()==='Adicionar');if(b)b.scrollIntoView({block:'center',behavior:'smooth'});return !!b})()",
+   "label": "centraliza o botão Adicionar (Mangueira de dreno)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main div:has(> label:has-text(\"Item do estoque\")) button"
+   },
+   "label": "abre Selecione do estoque (Mangueira de dreno)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Mangueira de dreno"
+   },
+   "label": "escolhe Mangueira de dreno"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Adicionar",
+    "exact": true,
+    "within": "main"
+   },
+   "label": "Adicionar Mangueira de dreno"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Seu custo total R$ 30,00\", \"Limpa-evaporador\", \"Fita isolante\", \"Mangueira de dreno\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere materiais (R$ 30,00)"
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 58.1
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Resumo",
+    "exact": true,
+    "within": "main"
+   },
+   "at": 58.34,
+   "label": "sub-aba Resumo"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Seu custo total para executar",
+    "within": "main"
+   },
+   "seconds": 1.6,
+   "at": 66.26,
+   "label": "Seu custo total para executar R$ 108,00",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Cliente paga com BDI",
+    "within": "main"
+   },
+   "seconds": 1.6,
+   "at": 68.27,
+   "label": "Cliente paga com BDI R$ 180,00",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Mão de obra R$ 48,00\", \"Materiais R$ 30,00\", \"Recursos R$ 30,00\", \"Seu custo total para executar R$ 108,00\", \"Cliente paga com BDI R$ 180,00\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Resumo (48 + 30 + 30 = 108; preço 180)"
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 72.75
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 79.04
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

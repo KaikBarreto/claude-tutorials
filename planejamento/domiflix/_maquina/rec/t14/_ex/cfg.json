@@ -1,0 +1,183 @@
+{
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap05",
+  "t12/inicio",
+  "t12/apos-cap11",
+  "t13/inicio",
+  "t13/apos-cap14",
+  "t19/inicio",
+  "t19/apos-cap13",
+  "t20/inicio",
+  "t20/apos-cap12",
+  "t2/apos-cap10",
+  "t15/inicio",
+  "t15/apos-cap12",
+  "t22/inicio",
+  "t22/apos-cap11",
+  "t21/inicio",
+  "t21/corte-dia13",
+  "t14/inicio"
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ },
+ "start": "/dashboard",
+ "steps": [
+  {
+   "do": "goto",
+   "url": "/notas-fiscais"
+  },
+  {
+   "do": "wait",
+   "ms": 1500
+  },
+  {
+   "do": "shot",
+   "name": "00-notas"
+  },
+  {
+   "do": "text",
+   "selector": "main",
+   "name": "notas",
+   "max": 1500
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Configurações fiscais"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 2500
+  },
+  {
+   "do": "shot",
+   "name": "01-config"
+  },
+  {
+   "do": "text",
+   "selector": "main",
+   "name": "config",
+   "max": 4000
+  },
+  {
+   "do": "list",
+   "selector": "[role=tab]"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const b=[...document.querySelectorAll('button')].find(x=>x.textContent.includes('Verificar cobertura do município'));return b?{disabled:b.disabled}:null})()"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>[...document.querySelectorAll('main input')].map(i=>[i.placeholder,i.value,i.type]))()"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "main label:has-text('Inscrição Municipal') + input"
+   },
+   "text": "000123-4",
+   "optional": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Salvar dados fiscais"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 2500
+  },
+  {
+   "do": "shot",
+   "name": "02-salvo"
+  },
+  {
+   "do": "text",
+   "selector": "body",
+   "name": "apos-salvar",
+   "max": 2500
+  },
+  {
+   "do": "upload",
+   "target": {
+    "role": "button",
+    "name": "Selecionar arquivo (.pfx / .p12)"
+   },
+   "file": "../arquivos/certificado-ficticio.pfx"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>[...document.querySelectorAll('main input')].map(i=>[i.placeholder,i.value,i.type]))()"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Senha do arquivo .pfx/.p12"
+   },
+   "text": "senha-ficticia"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#cert-custody-consent"
+   }
+  },
+  {
+   "do": "shot",
+   "name": "03-certificado-preenchido"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Enviar certificado"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 3500
+  },
+  {
+   "do": "shot",
+   "name": "04-enviado"
+  },
+  {
+   "do": "text",
+   "selector": "body",
+   "name": "apos-enviar",
+   "max": 3000
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Certificado A1"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 1500
+  },
+  {
+   "do": "shot",
+   "name": "05-registro"
+  },
+  {
+   "do": "text",
+   "selector": "main",
+   "name": "registro",
+   "max": 3000
+  }
+ ]
+}

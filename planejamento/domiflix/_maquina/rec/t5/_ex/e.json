@@ -1,0 +1,252 @@
+{
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/g1-trilha"
+ ],
+ "steps": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Camila!",
+   "timeout": 20
+  },
+  {
+   "do": "goto",
+   "url": "/ordens-servico"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie suas ordens de serviço",
+   "timeout": 20
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{if(!window.__fx){window.__fx=setInterval(()=>document.getAnimations().filter(a=>a.currentTime<0).forEach(a=>{a.startTime=document.timeline.currentTime}),40)}return 1})()"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Nova OS",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Nova Ordem de Serviço"
+  },
+  {
+   "do": "wait",
+   "ms": 600
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "combobox",
+    "hasText": "Selecione o cliente"
+   }
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Buscar cliente..."
+   },
+   "text": "Colégio"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Colégio Monte Verde"
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]",
+    "hasText": "Adicionar serviços"
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Manutenção Preventiva",
+    "exact": true,
+    "within": "[data-radix-popper-content-wrapper]"
+   }
+  },
+  {
+   "do": "press",
+   "key": "Escape"
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const b=[...document.querySelectorAll('[role=dialog] button')].find(b=>/fechar/i.test(b.textContent));b.click();return 1})()"
+  },
+  {
+   "do": "wait",
+   "ms": 1200
+  },
+  {
+   "do": "shot",
+   "name": "e_apos_fechar"
+  },
+  {
+   "do": "text",
+   "selector": "body",
+   "name": "apos fechar",
+   "max": 600
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Nova OS",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 1200
+  },
+  {
+   "do": "shot",
+   "name": "e_rascunho"
+  },
+  {
+   "do": "text",
+   "selector": "[role=alertdialog], [role=dialog]",
+   "name": "rascunho",
+   "max": 800
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Retomar rascunho",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 1500
+  },
+  {
+   "do": "shot",
+   "name": "e_retomado"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Próximo",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 1500
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "checkbox",
+    "within": "[role=dialog]"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 1200
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Próximo",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 1800
+  },
+  {
+   "do": "shot",
+   "name": "e3_topo"
+  },
+  {
+   "do": "text",
+   "selector": "[role=dialog]",
+   "name": "etapa3",
+   "max": 3500
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('[role=dialog] [role=switch],[role=dialog] [role=combobox],[role=dialog] textarea,[role=dialog] button')].map(e=>{const r=e.getBoundingClientRect();return (e.getAttribute('role')||e.tagName)+'|'+(e.getAttribute('aria-label')||e.placeholder||'')+'|'+Math.round(r.x)+','+Math.round(r.y)+'|'+(e.innerText||'').replace(/\\s+/g,' ').slice(0,40)})",
+   "max": 5000
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const c=document.querySelector('[role=dialog] .overflow-y-auto');c.scrollTo({top:c.scrollHeight});return c.scrollHeight})()"
+  },
+  {
+   "do": "wait",
+   "ms": 1000
+  },
+  {
+   "do": "shot",
+   "name": "e3_fundo"
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('[role=dialog] [role=switch]')].map(e=>{const r=e.getBoundingClientRect();return (e.getAttribute('aria-label')||'')+'|'+e.getAttribute('aria-checked')+'|'+Math.round(r.x)+','+Math.round(r.y)})",
+   "max": 3000
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Próximo",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 1800
+  },
+  {
+   "do": "shot",
+   "name": "e4_topo"
+  },
+  {
+   "do": "text",
+   "selector": "[role=dialog]",
+   "name": "etapa4",
+   "max": 4500
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const c=document.querySelector('[role=dialog] .overflow-y-auto');c.scrollTo({top:c.scrollHeight});return c.scrollHeight})()"
+  },
+  {
+   "do": "wait",
+   "ms": 1000
+  },
+  {
+   "do": "shot",
+   "name": "e4_fundo"
+  }
+ ],
+ "start": "/dashboard"
+}

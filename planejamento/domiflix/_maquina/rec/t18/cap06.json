@@ -1,0 +1,246 @@
+{
+ "name": "t18-cap06",
+ "title": "T18 · Cap. 6 · Quantos BTUs o ambiente pede (narração 60,7 s; marcas L1..L4 = início de cada linha do roteiro)",
+ "seed": "t18-cap06",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap15",
+  "t7/inicio",
+  "t7/apos-cap10",
+  "t18/catalogo"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/area-tecnico",
+  "/area-tecnico/carga-termica"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/area-tecnico"
+  },
+  {
+   "do": "waitFor",
+   "text": "Termos Técnicos Explicados",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "nav button",
+    "hasText": "Carga Térmica"
+   },
+   "at": 1.22,
+   "label": "abre a Carga Térmica"
+  },
+  {
+   "do": "waitFor",
+   "text": "Dimensione a capacidade em BTUs do ambiente.",
+   "timeout": 15
+  },
+  {
+   "do": "scroll",
+   "by": 250,
+   "at": 7.96,
+   "label": "sobe a tela: campos e resultado juntos",
+   "duration": 0.9
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 10.68
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "Altura (metros)",
+    "exact": true
+   },
+   "text": "2,8",
+   "cps": 7,
+   "at": 10.89,
+   "label": "altura 2,8"
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "Largura (metros)",
+    "exact": true
+   },
+   "text": "4",
+   "cps": 7,
+   "at": 13.57,
+   "label": "largura 4"
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "Comprimento (metros)",
+    "exact": true
+   },
+   "text": "5",
+   "cps": 7,
+   "at": 15.56,
+   "label": "comprimento 5"
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "Quantidade de pessoas",
+    "exact": true
+   },
+   "text": "4",
+   "cps": 7,
+   "at": 17.13,
+   "label": "4 pessoas"
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "Eletroeletrônicos",
+    "exact": true
+   },
+   "text": "3",
+   "cps": 7,
+   "at": 18.44,
+   "label": "3 eletroeletrônicos"
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "Janelas (2 x 1,5 metros)",
+    "exact": true
+   },
+   "text": "1",
+   "cps": 7,
+   "at": 20.25,
+   "label": "1 janela"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main p.text-5xl"
+   },
+   "seconds": 2.4,
+   "at": 24.72,
+   "label": "o resultado: 16.800 BTUs",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 32.6
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "TR",
+    "exact": true
+   },
+   "at": 32.9,
+   "label": "chave BTU / TR: TR"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main p.text-5xl"
+   },
+   "seconds": 1.2,
+   "at": 37.72,
+   "label": "resultado em TR: 1,4",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "BTU",
+    "exact": true
+   },
+   "at": 39.46,
+   "label": "volta para BTU"
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 40.36
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "switch",
+    "name": "Ambiente ensolarado?"
+   },
+   "at": 41.22,
+   "label": "liga Ambiente ensolarado?"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main p.text-5xl"
+   },
+   "seconds": 1.6,
+   "at": 44.61,
+   "label": "o resultado sobe: 21.200 BTUs",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Recomenda-se",
+    "within": "main"
+   },
+   "seconds": 3.0,
+   "at": 47.19,
+   "label": "a nota abaixo do resultado",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Ferramenta de apoio",
+    "within": "main"
+   },
+   "seconds": 6.0,
+   "at": 52.39,
+   "label": "o rodapé \"Ferramenta de apoio...\"",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 60.72
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

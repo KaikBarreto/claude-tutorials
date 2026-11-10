@@ -1,0 +1,167 @@
+{
+ "_comentario": "T2 · estado FINAL da aula = DELTA sobre a base PADRÃO (seeds/): os 2 cargos (Técnico de Campo e Escritório), as permissões de Camila (acesso total), Rafael, Bruno, Júlia, Lucas, Marina e Paulo (cargo Técnico de Campo) e a Tatiane Ribeiro (Interno, cargo Escritório, tatiane.ribeiro@glacialcold.example, (21) 3000-1008). Oito usuários ativos. Estado inicial do T5 e do T7. Não usar junto com a base própria do T2 (duplicaria os perfis).",
+ "permission_presets": [
+  {
+   "id": "@id:preset.tecnico",
+   "name": "Técnico de Campo",
+   "description": "Agenda, ferramentas e OS pelo link",
+   "permissions": [
+    "screen:schedule",
+    "screen:technician_tools",
+    "fn:editar_os_campo"
+   ],
+   "created_at": "@now-10m",
+   "updated_at": "@now-10m"
+  },
+  {
+   "id": "@id:preset.escritorio",
+   "name": "Escritório",
+   "description": "Atendimento, OS, orçamentos e financeiro do dia a dia",
+   "permissions": [
+    "screen:quotes",
+    "screen:finance",
+    "fn:manage_finance",
+    "screen:dashboard",
+    "screen:schedule",
+    "fn:view_all_schedule",
+    "screen:service_orders",
+    "fn:create_os",
+    "fn:edit_os",
+    "screen:customers",
+    "fn:create_customer",
+    "fn:edit_customer",
+    "screen:equipment"
+   ],
+   "created_at": "@now-8m",
+   "updated_at": "@now-8m"
+  }
+ ],
+ "profiles": [
+  {
+   "id": "@id:profile.tatiane",
+   "user_id": "@id:user.tatiane",
+   "company_id": "@id:company.glacial",
+   "full_name": "Tatiane Ribeiro",
+   "email": "tatiane.ribeiro@glacialcold.example",
+   "phone": "(21) 3000-1008",
+   "is_active": true,
+   "navigation_style": "sidebar",
+   "terms_accepted_at": "@now-20m",
+   "created_at": "@now-20m"
+  }
+ ],
+ "user_permissions": [
+  {
+   "id": "@id:perm.camila",
+   "user_id": "@id:user.camila",
+   "permissions": [
+    "*"
+   ],
+   "preset_id": null,
+   "is_active": true,
+   "created_at": "@now-360d",
+   "updated_at": "@now-360d"
+  },
+  {
+   "id": "@id:perm.rafael",
+   "user_id": "@id:user.rafael",
+   "permissions": [
+    "screen:schedule",
+    "screen:technician_tools",
+    "fn:editar_os_campo"
+   ],
+   "preset_id": "@id:preset.tecnico",
+   "is_active": true,
+   "created_at": "@now-5m",
+   "updated_at": "@now-5m"
+  },
+  {
+   "id": "@id:perm.bruno",
+   "user_id": "@id:user.bruno",
+   "permissions": [
+    "screen:schedule",
+    "screen:technician_tools",
+    "fn:editar_os_campo"
+   ],
+   "preset_id": "@id:preset.tecnico",
+   "is_active": true,
+   "created_at": "@now-5m",
+   "updated_at": "@now-5m"
+  },
+  {
+   "id": "@id:perm.julia",
+   "user_id": "@id:user.julia",
+   "permissions": [
+    "screen:schedule",
+    "screen:technician_tools",
+    "fn:editar_os_campo"
+   ],
+   "preset_id": "@id:preset.tecnico",
+   "is_active": true,
+   "created_at": "@now-5m",
+   "updated_at": "@now-5m"
+  },
+  {
+   "id": "@id:perm.lucas",
+   "user_id": "@id:user.lucas",
+   "permissions": [
+    "screen:schedule",
+    "screen:technician_tools",
+    "fn:editar_os_campo"
+   ],
+   "preset_id": "@id:preset.tecnico",
+   "is_active": true,
+   "created_at": "@now-5m",
+   "updated_at": "@now-5m"
+  },
+  {
+   "id": "@id:perm.marina",
+   "user_id": "@id:user.marina",
+   "permissions": [
+    "screen:schedule",
+    "screen:technician_tools",
+    "fn:editar_os_campo"
+   ],
+   "preset_id": "@id:preset.tecnico",
+   "is_active": true,
+   "created_at": "@now-5m",
+   "updated_at": "@now-5m"
+  },
+  {
+   "id": "@id:perm.paulo",
+   "user_id": "@id:user.paulo",
+   "permissions": [
+    "screen:schedule",
+    "screen:technician_tools",
+    "fn:editar_os_campo"
+   ],
+   "preset_id": "@id:preset.tecnico",
+   "is_active": true,
+   "created_at": "@now-5m",
+   "updated_at": "@now-5m"
+  },
+  {
+   "id": "@id:perm.tatiane",
+   "user_id": "@id:user.tatiane",
+   "permissions": [
+    "screen:quotes",
+    "screen:finance",
+    "fn:manage_finance",
+    "screen:dashboard",
+    "screen:schedule",
+    "fn:view_all_schedule",
+    "screen:service_orders",
+    "fn:create_os",
+    "fn:edit_os",
+    "screen:customers",
+    "fn:create_customer",
+    "fn:edit_customer",
+    "screen:equipment"
+   ],
+   "preset_id": "@id:preset.escritorio",
+   "is_active": true,
+   "created_at": "@now-5m",
+   "updated_at": "@now-5m"
+  }
+ ]
+}

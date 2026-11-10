@@ -1,0 +1,293 @@
+{
+ "name": "t12-cap07",
+ "title": "T12 · Cap. 7 · Quem vê o quê (narração 57,9 s; marcas L1..L5 = início de cada linha do roteiro)",
+ "seed": "t12-cap07",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap05",
+  "t12/inicio",
+  "t12/apos-cap03"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/clientes",
+  "/contratos",
+  "/ordens-servico",
+  "/contratos/34306a37-c1a7-58a1-b713-244525163500"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/contratos/34306a37-c1a7-58a1-b713-244525163500"
+  },
+  {
+   "do": "waitFor",
+   "text": "Portal do Contrato",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "document.evaluate(\"//*[normalize-space(text())='Quem vê o quê no portal']\", document, null, 9, null).singleNodeValue?.scrollIntoView({block: 'start'}); 1"
+  },
+  {
+   "do": "wait",
+   "seconds": 0.5
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|erro|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Quem vê o quê no portal",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 1.4,
+   "at": 0.26,
+   "label": "cartão Quem vê o quê no portal",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=group] button",
+    "hasText": "Oculto"
+   },
+   "seconds": 0.3,
+   "at": 8.2,
+   "label": "opção Oculto",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=group] button",
+    "hasText": "Sem senha"
+   },
+   "seconds": 0.3,
+   "at": 9.0,
+   "label": "opção Sem senha",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=group] button",
+    "hasText": "Com senha"
+   },
+   "seconds": 0.3,
+   "at": 10.12,
+   "label": "opção Com senha",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 11.88
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "group",
+    "name": "Visão geral",
+    "exact": true
+   },
+   "seconds": 0.1,
+   "at": 12.84,
+   "label": "seção Visão geral",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "group",
+    "name": "Equipamentos",
+    "exact": true
+   },
+   "seconds": 0.1,
+   "at": 14.04,
+   "label": "seção Equipamentos",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "group",
+    "name": "Cronograma",
+    "exact": true
+   },
+   "seconds": 0.1,
+   "at": 15.16,
+   "label": "seção Cronograma",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "group",
+    "name": "Ocorrências",
+    "exact": true
+   },
+   "seconds": 0.1,
+   "at": 16.28,
+   "label": "seção Ocorrências",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "group",
+    "name": "Documentos",
+    "exact": true
+   },
+   "seconds": 0.1,
+   "at": 17.4,
+   "label": "seção Documentos",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "group",
+    "name": "Histórico",
+    "exact": true
+   },
+   "seconds": 0.1,
+   "at": 18.52,
+   "label": "seção Histórico",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "group",
+    "name": "Histórico PMOC",
+    "exact": true
+   },
+   "seconds": 0.1,
+   "at": 19.48,
+   "label": "seção Histórico PMOC",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "group",
+    "name": "Cobranças",
+    "exact": true
+   },
+   "seconds": 0.1,
+   "at": 20.92,
+   "label": "seção Cobranças",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 22.84
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=group][aria-label='Cobranças'] button",
+    "hasText": "Oculto"
+   },
+   "at": 27.45,
+   "label": "Cobranças em Oculto"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Este cliente ainda não tem senha"
+   },
+   "seconds": 0.19,
+   "at": 34.91,
+   "label": "aviso: o cliente ainda não tem senha no Portal do Cliente",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 35.65
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Este cliente ainda não tem senha"
+   },
+   "seconds": 2.21,
+   "at": 35.65,
+   "label": "aviso: o cliente ainda não tem senha no Portal do Cliente (continua)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Abrir cadastro do cliente",
+    "exact": true
+   },
+   "seconds": 2.4,
+   "at": 43.95,
+   "label": "botão Abrir cadastro do cliente (sem clicar)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 48.05
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 57.92
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

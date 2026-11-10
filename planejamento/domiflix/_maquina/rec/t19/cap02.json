@@ -1,0 +1,239 @@
+{
+ "name": "t19-cap02",
+ "title": "T19 · Cap. 2 · Conectar a conta (narração 40,4 s; marcas L1..L4 = início de cada linha do roteiro)",
+ "seed": "t19-cap02",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap05",
+  "t12/inicio",
+  "t12/apos-cap11",
+  "t13/inicio",
+  "t13/apos-cap14",
+  "t19/inicio"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/configuracoes"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Camila!",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/configuracoes"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie as configurações do sistema",
+   "timeout": 60
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|erro|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Configurações",
+    "exact": true
+   },
+   "seconds": 0.2,
+   "at": 0.0,
+   "label": "Configurações, no rodapé do menu (a tela já está aberta: ver nota no cabeçalho; o 1º gesto custa ~7 s com a máquina carregada)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Integrações",
+    "exact": true
+   },
+   "at": 9.18,
+   "label": "aba Integrações"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Cobranças (Asaas)",
+    "exact": true
+   },
+   "at": 11.68,
+   "label": "subaba Cobranças (Asaas)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Recebimentos (Asaas)",
+   "timeout": 15
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Cobre seus clientes por Pix, boleto e cartão usando sua própria conta Asaas.\", \"Cole a chave de API da sua conta Asaas para ativar os recebimentos.\", \"Como obter sua chave de API da Asaas\", \"Ativar recebimentos\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere o cartão pede a chave (sem selo de status)"
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 13.4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Cole a chave de API da sua conta Asaas",
+    "within": "main"
+   },
+   "seconds": 1.8,
+   "at": 18.2,
+   "label": "texto: cole a chave de API",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Como obter sua chave de API da Asaas",
+    "within": "main"
+   },
+   "seconds": 1.4,
+   "at": 23.24,
+   "label": "quadro Como obter sua chave, com os quatro passos",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 25.75
+  },
+  {
+   "do": "click",
+   "target": {
+    "placeholder": "Cole aqui sua chave de API"
+   },
+   "at": 27.77,
+   "label": "campo Chave de API da Asaas"
+  },
+  {
+   "do": "eval",
+   "js": "(() => { document.execCommand('insertText', false, \"$aact_exemplo_glacial_0000\"); const e = document.activeElement; return e && e.value; })()",
+   "at": 28.67,
+   "label": "cola a chave fictícia (campo de senha: só pontos)"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const e=document.querySelector('#asaas-api-key');return e?e.type+' '+e.value.length+' caracteres':'sem campo'})()",
+   "label": "o campo é de senha e recebeu a chave"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Chave de API da Asaas",
+    "within": "main"
+   },
+   "seconds": 1.4,
+   "at": 31.37,
+   "label": "o campo mostra só pontinhos",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 32.55
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Ativar recebimentos",
+    "exact": true
+   },
+   "at": 33.35,
+   "label": "Ativar recebimentos"
+  },
+  {
+   "do": "waitFor",
+   "text": "Recebimentos ativos. Já é possível cobrar seus clientes.",
+   "timeout": 15
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Ativo\", \"Recebimentos ativos. Já é possível cobrar seus clientes.\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere selo Ativo e a mensagem de recebimentos ativos"
+  },
+  {
+   "do": "eval",
+   "js": "location.reload()",
+   "at": 35.81,
+   "label": "recarrega a página (o cartão de taxas só atualiza depois de recarregar)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Taxas da sua conta Asaas, atualizadas em",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Ativo\", \"Taxas da sua conta Asaas, atualizadas em\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere depois de recarregar, o cartão mostra as taxas da conta (sem \"referência\")"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{await new Promise(r=>setTimeout(r,1800));const el=document.querySelector(\"main\");const t=(el?el.innerText:'').replace(/[\\s\\u00a0]+/g,' ').toLowerCase();return t.includes(\"taxas de refer\\u00eancia\")?'DIFERENTE: apareceu '+\"Taxas de refer\\u00eancia\":'OK: ausente '+\"Taxas de refer\\u00eancia\"})()",
+   "label": "confere sem o aviso de taxas de referência"
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 40.42
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

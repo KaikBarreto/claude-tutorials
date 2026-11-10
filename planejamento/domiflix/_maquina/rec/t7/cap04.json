@@ -1,0 +1,443 @@
+{
+ "name": "t7-cap04",
+ "title": "T7 · Cap. 4 · O checklist do equipamento (narração 85,8 s; marcas L1..L6 = início de cada linha do roteiro)",
+ "seed": "t7-cap04",
+ "pace": 0.4,
+ "cps": 9,
+ "tail": 1.5,
+ "device": "phone",
+ "start": {
+  "x": 195,
+  "y": 600
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap15",
+  "t7/inicio",
+  "t7/vazias-1.38.21",
+  "t7/apos-cap03"
+ ],
+ "prewarm": [
+  "/agenda"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/agenda"
+  },
+  {
+   "do": "waitFor",
+   "text": "Colégio Monte Verde",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(() => {\n  // GPS do aparelho emulado (T7). O Chromium headless trava `getCurrentPosition({maximumAge: 0})` quando já existe um\n  // `watchPosition` ativo — e o app do técnico faz exatamente isso (rastreia a cada 30 s e pede a posição no check-in).\n  // Este stub devolve a posição atual na hora, para as duas chamadas, e `__setGeo` \"anda\" com o aparelho e avisa quem observa.\n  if (window.__geoStub) return 'ja-instalado';\n  const st = { lat: -22.9035, lng: -43.1038, acc: 12 };\n  const pos = () => ({\n    coords: { latitude: st.lat, longitude: st.lng, accuracy: st.acc, altitude: null, altitudeAccuracy: null, heading: null, speed: null },\n    timestamp: Date.now(),\n  });\n  const watchers = new Map();\n  let seq = 0;\n  const g = navigator.geolocation;\n  g.getCurrentPosition = (ok) => { setTimeout(() => ok(pos()), 60); };\n  g.watchPosition = (ok) => { const id = ++seq; watchers.set(id, ok); setTimeout(() => { if (watchers.has(id)) ok(pos()); }, 90); return id; };\n  g.clearWatch = (id) => { watchers.delete(id); };\n  window.__setGeo = (lat, lng, acc) => { st.lat = lat; st.lng = lng; if (acc) st.acc = acc; watchers.forEach((cb) => cb(pos())); return [st.lat, st.lng]; };\n  window.__geoStub = true;\n  return 'instalado';\n})()\n"
+  },
+  {
+   "do": "eval",
+   "js": "window.__setGeo(-22.89758,-43.09913)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Colégio Monte Verde",
+    "within": "main"
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Resumo da OS",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Preencher OS",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Glacial Cold Brasil",
+   "timeout": 20
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "clock",
+   "set": "2026-11-11T09:08:00-03:00"
+  },
+  {
+   "do": "pause",
+   "seconds": 0.5
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Hi-Wall 18.000 BTUs",
+    "within": "main"
+   },
+   "at": 5.08,
+   "label": "abre o acordeão do equipamento"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Manutenção preventiva de split",
+    "exact": false
+   },
+   "seconds": 1.6,
+   "at": 11.0,
+   "label": "o checklist do equipamento",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "0 de 13",
+    "exact": true
+   },
+   "seconds": 0.7,
+   "at": 22.23,
+   "label": "o contador: 0 de 13",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const el=(document.querySelectorAll(\"[role=switch]\")[0]);if(!el)return 'SEM ALVO';const r=el.getBoundingClientRect();const cy=r.top+r.height/2;const y0=window.scrollY,dy=Math.round(cy-(375));if(Math.abs(dy)<3)return 'ok';const dur=Math.min(1000,Math.max(450,Math.abs(dy)*1.15)),t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/dur),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;window.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 23.61,
+   "label": "as perguntas Sim/Não entram na tela"
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 24.77
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Filtros limpos",
+    "exact": false
+   },
+   "seconds": 0.4,
+   "at": 27.49,
+   "label": "pergunta 1: filtros",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Serpentinas",
+    "exact": false
+   },
+   "seconds": 0.4,
+   "at": 28.37,
+   "label": "pergunta 2: serpentinas",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Dreno",
+    "exact": false
+   },
+   "seconds": 0.4,
+   "at": 29.49,
+   "label": "pergunta 3: dreno",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Fixações",
+    "exact": false
+   },
+   "seconds": 0.4,
+   "at": 30.37,
+   "label": "pergunta 4: fixações",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Conexões elétricas",
+    "exact": false
+   },
+   "seconds": 0.6,
+   "at": 31.33,
+   "label": "pergunta 5: conexões elétricas",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main span.text-destructive",
+    "nth": 0
+   },
+   "seconds": 1.0,
+   "at": 33.17,
+   "label": "o asterisco vermelho das obrigatórias",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "switch"
+   },
+   "at": 36.95,
+   "label": "interruptor 1 -> Sim"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "switch"
+   },
+   "at": 38.89,
+   "label": "interruptor 2 -> Sim"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 40.05
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "switch"
+   },
+   "at": 40.85,
+   "label": "interruptor 3 -> Sim"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "switch"
+   },
+   "at": 42.8,
+   "label": "interruptor 4 -> Sim"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "switch"
+   },
+   "at": 44.7,
+   "label": "interruptor 5 -> Sim"
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 49.3
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const el=(document.querySelectorAll(\"main input[placeholder=\\\"Digite o valor...\\\"]\")[0]);if(!el)return 'SEM ALVO';const r=el.getBoundingClientRect();const cy=r.top+r.height/2;const y0=window.scrollY,dy=Math.round(cy-(520));if(Math.abs(dy)<3)return 'ok';const dur=Math.min(1000,Math.max(450,Math.abs(dy)*1.15)),t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/dur),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;window.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 49.3,
+   "label": "as medições entram na tela"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "main input[placeholder='Digite o valor...']",
+    "nth": 0
+   },
+   "text": "7,6",
+   "cps": 7,
+   "at": 53.95,
+   "label": "corrente do compressor: 7,6"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main input[placeholder='Digite o valor...']",
+    "nth": 1
+   },
+   "at": 56.02,
+   "label": "campo da pressão de baixa"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "main input[placeholder='Digite o valor...']",
+    "nth": 0
+   },
+   "text": "118",
+   "cps": 7,
+   "at": 57.82,
+   "label": "pressão de baixa: 118",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main input[placeholder='Digite o valor...']",
+    "nth": 1
+   },
+   "at": 59.54,
+   "label": "campo da pressão de alta"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "main input[placeholder='Digite o valor...']",
+    "nth": 0
+   },
+   "text": "345",
+   "cps": 7,
+   "at": 60.65,
+   "label": "pressão de alta: 345",
+   "noClick": true
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const el=(document.querySelectorAll(\"main input[placeholder=\\\"Digite o valor...\\\"]\")[1]);if(!el)return 'SEM ALVO';const r=el.getBoundingClientRect();const cy=r.top+r.height/2;if(380<=cy&&cy<=740)return 'ok';const y0=window.scrollY,dy=Math.round(cy-(520));if(Math.abs(dy)<3)return 'ok';const dur=Math.min(1000,Math.max(450,Math.abs(dy)*1.15)),t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/dur),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;window.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 62.18,
+   "label": "a última medição entra na tela"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main input[placeholder='Digite o valor...']",
+    "nth": 1
+   },
+   "at": 63.46,
+   "label": "campo da temperatura de insuflamento"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "main input[placeholder='Digite o valor...']",
+    "nth": 0
+   },
+   "text": "12",
+   "cps": 7,
+   "at": 66.16,
+   "label": "temperatura de insuflamento: 12",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Ruído / vibração anormal?",
+    "exact": false
+   },
+   "at": 68.48,
+   "label": "toca fora do campo: a medição grava"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const el=([...document.querySelectorAll(\"main *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Normal\"));if(!el)return 'SEM ALVO';const r=el.getBoundingClientRect();const cy=r.top+r.height/2;const y0=window.scrollY,dy=Math.round(cy-(520));if(Math.abs(dy)<3)return 'ok';const dur=Math.min(1000,Math.max(450,Math.abs(dy)*1.15)),t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/dur),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;window.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 69.5,
+   "label": "a pergunta de seleção entra na tela"
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 70.8
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main label",
+    "hasText": "Normal",
+    "nth": 0
+   },
+   "at": 71.9,
+   "label": "marca Normal"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button[title='Editar resposta']",
+    "nth": "last"
+   },
+   "at": 74.14,
+   "label": "lápis: reabre as opções"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button[title='Fechar edição']"
+   },
+   "at": 75.6,
+   "label": "fecha a edição"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const el=(document.querySelectorAll(\"main button[title='Editar resposta']\")[8]);if(!el)return 'SEM ALVO';const r=el.getBoundingClientRect();const cy=r.top+r.height/2;const y0=window.scrollY,dy=Math.round(cy-(540));if(Math.abs(dy)<3)return 'ok';const dur=Math.min(1000,Math.max(450,Math.abs(dy)*1.15)),t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/dur),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;window.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 76.34,
+   "label": "o lápis da medição entra na tela"
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 76.64
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button[title='Editar resposta']",
+    "nth": 8
+   },
+   "at": 79.0,
+   "label": "lápis da temperatura: muda a resposta"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button[title='Fechar edição']"
+   },
+   "at": 80.26,
+   "label": "fecha a edição"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "10 de 13",
+    "exact": true
+   },
+   "seconds": 1.6,
+   "at": 83.72,
+   "label": "o contador: 10 de 13",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 85.76
+  }
+ ],
+ "user": "rafael.lima@glacialcold.example"
+}

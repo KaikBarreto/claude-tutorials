@@ -1,0 +1,60 @@
+{
+  "name": "t3-cap07",
+  "title": "T3 · Cap. 7 · Fornecedores (narração 44,0 s; marcas L1..L5 = início de cada linha do roteiro)",
+  "seed": "t3-cap07",
+  "pace": 1.0,
+  "cps": 9,
+  "tail": 1.5,
+  "start": { "x": 980, "y": 480 },
+  "seedExtra": ["t3/apos-cap06"],
+  "prewarm": ["/clientes"],
+  "setup": [
+    { "do": "goto", "url": "/clientes" },
+    { "do": "waitFor", "text": "Lista de Clientes" },
+    { "do": "waitFor", "idle": true }
+  ],
+  "steps": [
+    { "do": "mark", "name": "L1", "at": 0 },
+    { "do": "click", "target": { "role": "tab", "name": "Fornecedores" }, "at": 1.7, "label": "aba Fornecedores" },
+    { "do": "waitFor", "text": "Lista de Fornecedores" },
+    { "do": "hover", "target": { "text": "Cobre Sul Suprimentos Ltda", "exact": true }, "seconds": 0.4, "at": 4.2, "label": "lista de fornecedores (1)" },
+    { "do": "hover", "target": { "text": "Distribuidora Aurora de Peças Ltda", "exact": true }, "seconds": 0.4, "at": 5.3, "label": "a loja de peças" },
+    { "do": "hover", "target": { "text": "Gelo Norte Componentes Ltda", "exact": true }, "seconds": 0.4, "at": 6.5, "label": "o distribuidor de gás" },
+    { "do": "hover", "target": { "text": "Polar Distribuidora de Peças Ltda", "exact": true }, "seconds": 0.4, "at": 7.8, "label": "o fabricante" },
+
+    { "do": "mark", "name": "L2", "at": 9.08 },
+    { "do": "hover", "target": { "role": "button", "name": "Novo Fornecedor" }, "seconds": 1.2, "at": 10.2, "label": "Novo Fornecedor (topo do painel da direita)" },
+    { "do": "click", "target": { "role": "button", "name": "Novo Fornecedor" }, "at": 12.4, "label": "abre Novo Fornecedor" },
+    { "do": "waitFor", "target": { "placeholder": "Nome do fornecedor" } },
+
+    { "do": "mark", "name": "L3", "at": 14.28 },
+    { "do": "click", "target": { "placeholder": "Nome do fornecedor" }, "at": 14.5, "label": "Nome" },
+    { "do": "type", "target": { "placeholder": "Nome do fornecedor" }, "noClick": true, "text": "Ventura Gás e Tubos", "cps": 30, "at": 15.3, "label": "Nome: Ventura Gás e Tubos" },
+    { "do": "press", "key": "Tab", "at": 16.6 },
+    { "do": "type", "target": { "placeholder": "00.000.000/0000-00" }, "noClick": true, "text": "91.345.605/0001-70", "cps": 30, "at": 16.8, "label": "CNPJ" },
+    { "do": "press", "key": "Tab", "at": 18.0 },
+    { "do": "type", "target": { "placeholder": "Nome do contato" }, "noClick": true, "text": "Rodrigo", "cps": 14, "at": 18.2, "label": "Contato: Rodrigo" },
+    { "do": "press", "key": "Tab", "at": 19.0 },
+    { "do": "type", "target": { "placeholder": "(00) 00000-0000" }, "noClick": true, "text": "(21) 3000-3105", "cps": 30, "at": 19.2, "label": "Telefone" },
+    { "do": "press", "key": "Tab", "at": 20.1 },
+    { "do": "type", "target": { "placeholder": "email@fornecedor.com" }, "noClick": true, "text": "vendas@venturagas.example", "cps": 30, "at": 20.3, "label": "E-mail" },
+    { "do": "press", "key": "Tab", "at": 21.8 },
+    { "do": "type", "target": { "placeholder": "Rua, número, bairro, cidade/UF e CEP" }, "noClick": true, "text": "Rua das Palmeiras, 45, Niterói", "cps": 30, "at": 22.0, "label": "Endereço" },
+    { "do": "press", "key": "Tab", "at": 23.95 },
+    { "do": "type", "target": { "placeholder": "Anotações sobre o fornecedor..." }, "noClick": true, "text": "Gás R-410A e tubo de cobre", "cps": 30, "at": 24.15, "label": "Observações: o que compro dele" },
+    { "do": "hover", "target": { "placeholder": "00.000.000/0000-00" }, "seconds": 2.6, "at": 26.0, "label": "o sistema não busca o CNPJ: você digita tudo" },
+
+    { "do": "click", "target": { "role": "button", "name": "Salvar", "exact": true }, "at": 29.4, "label": "Salvar" },
+    { "do": "mark", "name": "L4", "at": 30.34 },
+    { "do": "waitFor", "text": "Fornecedor cadastrado!", "timeout": 8 },
+
+    { "do": "mark", "name": "L5", "at": 31.30 },
+    { "do": "click", "target": { "text": "Ventura Gás e Tubos", "exact": true }, "at": 31.3, "label": "abre a ficha do Ventura Gás e Tubos" },
+    { "do": "waitFor", "text": "Nenhum gasto registrado", "timeout": 10 },
+    { "do": "hover", "target": { "text": "Dados do fornecedor" }, "seconds": 0.5, "at": 32.3, "label": "Dados do fornecedor" },
+    { "do": "hover", "target": { "text": "Histórico de Gastos" }, "seconds": 1.0, "at": 33.3, "label": "Histórico de Gastos" },
+    { "do": "hover", "target": { "text": "Nenhum gasto registrado" }, "seconds": 3.0, "at": 35.0, "label": "Nenhum gasto registrado (as despesas do Financeiro aparecem aqui)" },
+    { "do": "hover", "target": { "text": "Histórico de Gastos" }, "seconds": 1.4, "at": 39.4, "label": "com o total gasto" },
+    { "do": "mark", "name": "FIM", "at": 44.0 }
+  ]
+}

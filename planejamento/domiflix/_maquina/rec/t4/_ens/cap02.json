@@ -1,0 +1,189 @@
+{
+ "name": "t4-cap02",
+ "title": "T4 · Cap. 2 · Categorias (narração 22,7 s; marcas L1..L4 = início de cada linha do roteiro)",
+ "seed": "t4-cap02",
+ "pace": 0.45,
+ "cps": 28,
+ "tail": 0.4,
+ "start": {
+  "x": 900,
+  "y": 480
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/g1-trilha",
+  "t4/g2-vazias"
+ ],
+ "prewarm": [
+  "/servicos"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/servicos"
+  },
+  {
+   "do": "waitFor",
+   "text": "Nenhum tipo de serviço",
+   "timeout": 20
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  }
+ ],
+ "steps": [
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Categorias",
+    "exact": true
+   },
+   "label": "botão Categorias"
+  },
+  {
+   "do": "waitFor",
+   "selector": "[role=dialog]",
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Nenhuma categoria cadastrada.",
+    "exact": true
+   },
+   "seconds": 2.2,
+   "label": "janela Categorias de Serviço, vazia"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Nome da categoria..."
+   },
+   "text": "Instalação",
+   "label": "nome da categoria Instalação"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:has(span.font-mono)"
+   },
+   "label": "seletor de cor (Instalação)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] button[title=\"#3B82F6\"]"
+   },
+   "label": "cor #3B82F6 (Instalação)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:has(svg.lucide-plus)"
+   },
+   "label": "botão + (Instalação)"
+  },
+  {
+   "do": "waitFor",
+   "selector": "[role=dialog] div[draggable=true]:has-text(\"Instalação\")",
+   "timeout": 8
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Nome da categoria..."
+   },
+   "text": "Manutenção",
+   "label": "nome da categoria Manutenção"
+  },
+  {
+   "do": "press",
+   "key": "Enter",
+   "label": "confirma Manutenção",
+   "delay": 60
+  },
+  {
+   "do": "waitFor",
+   "selector": "[role=dialog] div[draggable=true]:has-text(\"Manutenção\")",
+   "timeout": 8
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Nome da categoria..."
+   },
+   "text": "Higienização",
+   "label": "nome da categoria Higienização",
+   "noClick": true
+  },
+  {
+   "do": "press",
+   "key": "Enter",
+   "label": "confirma Higienização",
+   "delay": 60
+  },
+  {
+   "do": "waitFor",
+   "selector": "[role=dialog] div[draggable=true]:has-text(\"Higienização\")",
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] div[draggable=true]:has-text(\"Higienização\") svg.lucide-grip-vertical"
+   },
+   "seconds": 0.5,
+   "label": "alça de arrastar"
+  },
+  {
+   "do": "drag",
+   "target": {
+    "selector": "[role=dialog] div[draggable=true]:has-text(\"Higienização\") svg.lucide-grip-vertical"
+   },
+   "to": {
+    "selector": "[role=dialog] div[draggable=true]:has-text(\"Manutenção\")"
+   },
+   "label": "arrasta Higienização uma posição para cima"
+  },
+  {
+   "do": "drag",
+   "target": {
+    "selector": "[role=dialog] div[draggable=true]:has-text(\"Higienização\") svg.lucide-grip-vertical"
+   },
+   "to": {
+    "selector": "[role=dialog] div[draggable=true]:has-text(\"Manutenção\")"
+   },
+   "label": "devolve Higienização ao fim"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Instalação",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.6,
+   "label": "as três categorias"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Fechar",
+    "within": "[role=dialog]"
+   },
+   "label": "fecha a janela de categorias"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "selector": "[role=dialog]"
+   },
+   "timeout": 8
+  }
+ ]
+}

@@ -1,0 +1,189 @@
+{
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap05",
+  "t12/inicio"
+ ],
+ "anonymous": true,
+ "start": "/portal/562a7dbb648d5653872808a111187f64",
+ "stopOnFail": false,
+ "steps": [
+  {
+   "do": "wait",
+   "ms": 1500
+  },
+  {
+   "do": "shot",
+   "name": "b-01"
+  },
+  {
+   "do": "text",
+   "selector": "body",
+   "name": "portal hotel",
+   "max": 3500
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('button,a')].map(e=>(e.getAttribute('aria-label')||e.innerText||'').trim().replace(/\\s+/g,' ')).filter(Boolean).slice(0,60)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Equipamentos",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 700
+  },
+  {
+   "do": "shot",
+   "name": "b-02-equip"
+  },
+  {
+   "do": "text",
+   "selector": "body",
+   "name": "equip",
+   "max": 1500
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Contratos",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 700
+  },
+  {
+   "do": "shot",
+   "name": "b-03-contr"
+  },
+  {
+   "do": "text",
+   "selector": "body",
+   "name": "contr",
+   "max": 1500
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Ordens de Serviço",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 700
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Falar com a empresa"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "shot",
+   "name": "b-04-falar"
+  },
+  {
+   "do": "text",
+   "selector": "[role=menu]",
+   "name": "menu falar"
+  },
+  {
+   "do": "press",
+   "key": "Escape"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Abrir Chamado"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 700
+  },
+  {
+   "do": "shot",
+   "name": "b-05-chamado"
+  },
+  {
+   "do": "text",
+   "selector": "[role=dialog]",
+   "name": "dialog",
+   "max": 800
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Descreva o problema que você está enfrentando..."
+   },
+   "text": "O ar do restaurante está pingando água perto da janela."
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Selecione..."
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "shot",
+   "name": "b-06-equipsel"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Cassete 36.000 BTUs - Restaurante do hotel"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 400
+  },
+  {
+   "do": "shot",
+   "name": "b-07-pronto"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Enviar Chamado"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 2500
+  },
+  {
+   "do": "shot",
+   "name": "b-08-enviado"
+  },
+  {
+   "do": "text",
+   "selector": "body",
+   "name": "lista apos",
+   "max": 1200
+  }
+ ]
+}

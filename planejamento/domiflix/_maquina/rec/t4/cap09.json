@@ -1,0 +1,265 @@
+{
+ "name": "t4-cap09",
+ "title": "T4 · Cap. 9 · Checklist do zero (narração 29,9 s; marcas L1..L3 = início de cada linha do roteiro)",
+ "seed": "t4-cap09",
+ "pace": 0.6,
+ "cps": 12,
+ "tail": 1.5,
+ "start": {
+  "x": 900,
+  "y": 480
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap08"
+ ],
+ "prewarm": [
+  "/servicos",
+  "/servicos?tab=checklists"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/servicos"
+  },
+  {
+   "do": "waitFor",
+   "text": "Configure os tipos de serviços, tarefas e checklists",
+   "timeout": 20
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Checklists",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Lista de checklists",
+   "timeout": 15
+  },
+  {
+   "do": "waitFor",
+   "text": "Editar checklist",
+   "timeout": 15
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Editar checklist",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Voltar à prévia",
+   "timeout": 15
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Serviços habilitados",
+    "exact": true
+   },
+   "seconds": 0.4,
+   "at": 1.74,
+   "label": "Serviços habilitados"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "button[role=combobox]",
+    "hasText": "Todos os serviços"
+   },
+   "at": 3.46,
+   "label": "abre Serviços habilitados"
+  },
+  {
+   "do": "waitFor",
+   "selector": "[data-radix-popper-content-wrapper] label",
+   "timeout": 6
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] label:has-text(\"Todos os serviços\")"
+   },
+   "at": 5.68,
+   "label": "desmarca Todos os serviços"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] label:has-text(\"Manutenção Preventiva\")"
+   },
+   "at": 7.36,
+   "label": "marca Manutenção Preventiva"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] label:has-text(\"Carga de Gás\")"
+   },
+   "at": 8.36,
+   "label": "desmarca o serviço que o app marcou sozinho"
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Serviços habilitados",
+    "exact": true
+   },
+   "at": 9.66,
+   "label": "fecha a lista de serviços (clique fora)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "button[role=combobox]",
+    "hasText": "Manutenção Preventiva"
+   },
+   "seconds": 1.6,
+   "at": 10.5,
+   "label": "checklist só nas ordens da Manutenção Preventiva"
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 13.08
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Voltar à prévia",
+    "exact": true
+   },
+   "at": 13.08,
+   "label": "Voltar à prévia"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Novo checklist",
+    "exact": true
+   },
+   "at": 14.92,
+   "label": "Novo checklist"
+  },
+  {
+   "do": "waitFor",
+   "text": "Novo Checklist",
+   "timeout": 8
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input"
+   },
+   "text": "Higienização de split",
+   "cps": 14,
+   "at": 16.72,
+   "label": "nome: Higienização de split"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[role=switch]"
+   },
+   "at": 19.8,
+   "label": "desliga Todos os serviços"
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Higienização de Split",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 21.8,
+   "label": "marca Higienização de Split"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Criar",
+    "exact": true
+   },
+   "at": 23.03,
+   "label": "Criar"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 24.76
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Higienização de split",
+    "exact": true,
+    "within": "main [role=list]"
+   },
+   "at": 24.76,
+   "label": "abre o checklist novo na lista"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Editar checklist",
+    "exact": true
+   },
+   "label": "abre o editor do checklist novo"
+  },
+  {
+   "do": "waitFor",
+   "text": "Nenhuma pergunta criada",
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "button[role=combobox]",
+    "hasText": "Higienização de Split"
+   },
+   "seconds": 1.6,
+   "at": 27.1,
+   "label": "sem serviço marcado, vale para todos"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 29.92
+  }
+ ]
+}

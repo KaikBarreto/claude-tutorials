@@ -1,0 +1,331 @@
+{
+ "name": "t22-cap04",
+ "title": "T22 · Cap. 4 · Interações e comparação (narração 37,0 s; marcas L1..L5 = início de cada linha do roteiro)",
+ "seed": "t22-cap04",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 0.4,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap05",
+  "t12/inicio",
+  "t12/apos-cap11",
+  "t13/inicio",
+  "t13/apos-cap14",
+  "t19/inicio",
+  "t19/apos-cap13",
+  "t20/inicio",
+  "t20/apos-cap12",
+  "t2/apos-cap10",
+  "t15/inicio",
+  "t15/apos-cap12",
+  "t22/inicio",
+  "t22/apos-cap02"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/funcionarios"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Camila!",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/funcionarios"
+  },
+  {
+   "do": "waitFor",
+   "text": "Funcionários (RH)",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Toggle Sidebar",
+    "nth": 0
+   }
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Perfil Comportamental",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "pause",
+   "seconds": 0.6
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main div[role=button]:has-text('Rafael Lima') >> text=Ver detalhes"
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Visão geral",
+   "timeout": 15
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Interações",
+    "exact": true
+   },
+   "label": "sub-aba Interações"
+  },
+  {
+   "do": "waitFor",
+   "text": "Como se comporta com",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "button[role=combobox]",
+    "hasText": "Selecione um funcionário"
+   },
+   "label": "seletor de funcionário"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Bruno Alves"
+   },
+   "label": "escolhe Bruno Alves"
+  },
+  {
+   "do": "waitFor",
+   "text": "Atritos",
+   "timeout": 10
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Atritos\", \"Sinergias\", \"Melhor comunicação\", \"Ver comparação\", \"O Metódico\", \"O Especialista\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere interações Rafael x Bruno"
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 1268,
+    "y": 520
+   },
+   "by": 0,
+   "duration": 0.4,
+   "after": 0,
+   "label": "cursor na margem direita (fora dos gráficos)"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const m=document.querySelector('main');const el=[...m.querySelectorAll('*')].find(e=>e.children.length===0&&e.textContent.trim()===\"Gr\\u00e1fico DISC cruzado\");if(!el)return 'SEM ALVO';const sc=(()=>{for(let p=el.parentElement;p;p=p.parentElement){const s=getComputedStyle(p);if(/(auto|scroll)/.test(s.overflowY)&&p.scrollHeight>p.clientHeight+4)return p}return document.scrollingElement})();const dy=Math.round(el.getBoundingClientRect().top-200);if(Math.abs(dy)<3)return 'ok';const y0=sc.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/1000),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;sc.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "label": "desce até os gráficos cruzados (cursor fora)"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const m=document.querySelector('main');const el=[...m.querySelectorAll('*')].find(e=>e.children.length===0&&e.textContent.trim()===\"Atritos\");if(!el)return 'SEM ALVO';const sc=(()=>{for(let p=el.parentElement;p;p=p.parentElement){const s=getComputedStyle(p);if(/(auto|scroll)/.test(s.overflowY)&&p.scrollHeight>p.clientHeight+4)return p}return document.scrollingElement})();const dy=Math.round(el.getBoundingClientRect().top-220);if(Math.abs(dy)<3)return 'ok';const y0=sc.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/1000),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;sc.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "label": "desce até Atritos (cursor fora dos gráficos)"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const m=document.querySelector('main');const el=[...m.querySelectorAll('*')].find(e=>e.children.length===0&&e.textContent.trim()===\"Sinergias\");if(!el)return 'SEM ALVO';const sc=(()=>{for(let p=el.parentElement;p;p=p.parentElement){const s=getComputedStyle(p);if(/(auto|scroll)/.test(s.overflowY)&&p.scrollHeight>p.clientHeight+4)return p}return document.scrollingElement})();const dy=Math.round(el.getBoundingClientRect().top-220);if(Math.abs(dy)<3)return 'ok';const y0=sc.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/1000),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;sc.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "label": "desce até Sinergias"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const m=document.querySelector('main');const el=[...m.querySelectorAll('*')].find(e=>e.children.length===0&&e.textContent.trim()===\"Melhor comunica\\u00e7\\u00e3o\");if(!el)return 'SEM ALVO';const sc=(()=>{for(let p=el.parentElement;p;p=p.parentElement){const s=getComputedStyle(p);if(/(auto|scroll)/.test(s.overflowY)&&p.scrollHeight>p.clientHeight+4)return p}return document.scrollingElement})();const dy=Math.round(el.getBoundingClientRect().top-220);if(Math.abs(dy)<3)return 'ok';const y0=sc.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/1000),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;sc.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "label": "desce até Melhor comunicação"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const ms=[...document.querySelectorAll('main, main *')].filter(e=>e.scrollTop>2);if(!ms.length)return 'ok';const y0=ms.map(e=>e.scrollTop),t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;ms.forEach((m,i)=>m.scrollTo({top:y0[i]*(1-e),behavior:'instant'}));p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'topo '+y0.join(',')})()",
+   "label": "sobe ao cabeçalho"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Ver comparação",
+    "exact": true
+   },
+   "seconds": 1.4,
+   "label": "Ver comparação (só zoom, sem clicar)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Voltar",
+    "exact": true
+   },
+   "label": "Voltar (sai para a aba Funcionários)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Novo Funcionário",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Perfil Comportamental",
+    "exact": true
+   },
+   "label": "volta à aba Perfil Comportamental (o Voltar sai para Funcionários)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Comparar",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Comparar",
+    "exact": true
+   },
+   "label": "Comparar"
+  },
+  {
+   "do": "waitFor",
+   "text": "Comparar perfis",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "button[role=combobox]",
+    "hasText": "Selecione um funcionário",
+    "nth": 0
+   },
+   "label": "Primeiro funcionário"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Rafael Lima"
+   },
+   "label": "escolhe Rafael Lima"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "button[role=combobox]",
+    "hasText": "Selecione um funcionário",
+    "nth": 0
+   },
+   "label": "Segundo funcionário"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Bruno Alves"
+   },
+   "label": "escolhe Bruno Alves"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gráfico DISC cruzado",
+   "timeout": 10
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 1268,
+    "y": 520
+   },
+   "by": 0,
+   "duration": 0.4,
+   "after": 0,
+   "label": "cursor na margem direita (fora dos gráficos)"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const m=document.querySelector('main');const el=[...m.querySelectorAll('*')].find(e=>e.children.length===0&&e.textContent.trim()===\"Gr\\u00e1fico DISC cruzado\");if(!el)return 'SEM ALVO';const sc=(()=>{for(let p=el.parentElement;p;p=p.parentElement){const s=getComputedStyle(p);if(/(auto|scroll)/.test(s.overflowY)&&p.scrollHeight>p.clientHeight+4)return p}return document.scrollingElement})();const dy=Math.round(el.getBoundingClientRect().top-200);if(Math.abs(dy)<3)return 'ok';const y0=sc.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/1000),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;sc.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "label": "Gráfico DISC cruzado (cursor fora)"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const m=document.querySelector('main');const el=[...m.querySelectorAll('*')].find(e=>e.children.length===0&&e.textContent.trim()===\"Radar de compet\\u00eancias cruzado\");if(!el)return 'SEM ALVO';const sc=(()=>{for(let p=el.parentElement;p;p=p.parentElement){const s=getComputedStyle(p);if(/(auto|scroll)/.test(s.overflowY)&&p.scrollHeight>p.clientHeight+4)return p}return document.scrollingElement})();const dy=Math.round(el.getBoundingClientRect().top-200);if(Math.abs(dy)<3)return 'ok';const y0=sc.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/1000),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;sc.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "label": "Radar de competências cruzado (cursor fora)"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const m=document.querySelector('main');const el=[...m.querySelectorAll('*')].find(e=>e.children.length===0&&e.textContent.trim()===\"Atritos\");if(!el)return 'SEM ALVO';const sc=(()=>{for(let p=el.parentElement;p;p=p.parentElement){const s=getComputedStyle(p);if(/(auto|scroll)/.test(s.overflowY)&&p.scrollHeight>p.clientHeight+4)return p}return document.scrollingElement})();const dy=Math.round(el.getBoundingClientRect().top-220);if(Math.abs(dy)<3)return 'ok';const y0=sc.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/1000),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;sc.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "label": "desce por Atritos, Sinergias e Melhor comunicação"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Voltar",
+    "exact": true
+   },
+   "label": "Voltar"
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z",
+  "disc-overview-view-mode": "grid"
+ }
+}

@@ -1,0 +1,306 @@
+{
+ "name": "t5-cap10",
+ "title": "T5 · Cap. 10 · Chamados e relatório (narração 37,7 s; marcas L1..L3 = início de cada linha do roteiro)",
+ "seed": "t5-cap10",
+ "pace": 0.45,
+ "cps": 14,
+ "tail": 1.5,
+ "start": {
+  "x": 900,
+  "y": 480
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap09"
+ ],
+ "prewarm": [
+  "/ordens-servico"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/ordens-servico"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie suas ordens de serviço",
+   "timeout": 20
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0.04
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "tab",
+    "name": "Chamados"
+   },
+   "seconds": 0.4,
+   "at": 1.42,
+   "label": "aba Chamados (cursor)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "tab",
+    "name": "Relatório"
+   },
+   "seconds": 0.4,
+   "at": 2.78,
+   "label": "aba Relatório (cursor)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Chamados"
+   },
+   "at": 3.86,
+   "label": "aba Chamados"
+  },
+  {
+   "do": "waitFor",
+   "text": "Chamado pelo portal",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Portal do Cliente",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.8,
+   "at": 7.22,
+   "label": "origem: Portal do Cliente"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button[role=combobox]",
+    "hasText": "Chamados"
+   },
+   "at": 8.42,
+   "label": "filtro Chamados abertos"
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 9.94,
+   "label": "fecha o filtro"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Abrir chamado"
+   },
+   "seconds": 1.4,
+   "at": 10.08,
+   "label": "Abrir chamado"
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 12.76
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Ordens de Serviço"
+   },
+   "at": 12.76,
+   "label": "volta à aba Ordens de Serviço"
+  },
+  {
+   "do": "eval",
+   "js": "document.getAnimations().filter(a=>a.currentTime<0).forEach(a=>{a.startTime=document.timeline.currentTime})",
+   "label": "cartões de KPI (animação)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main h3",
+    "hasText": "Chamados do Portal"
+   },
+   "seconds": 1.6,
+   "at": 14.38,
+   "label": "coluna Chamados do Portal"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "MC-2026-15",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 1.6,
+   "at": 17.48,
+   "label": "o chamado vira uma OS normal"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 20.6
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Relatório"
+   },
+   "at": 20.6,
+   "label": "aba Relatório"
+  },
+  {
+   "do": "eval",
+   "js": "document.getAnimations().filter(a=>a.currentTime<0).forEach(a=>{a.startTime=document.timeline.currentTime})",
+   "label": "cartões de KPI (animação)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Taxa de conclusão",
+   "timeout": 12
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Total de OS",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.6,
+   "at": 21.96,
+   "label": "KPI Total de OS"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Taxa de conclusão",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.6,
+   "at": 23.94,
+   "label": "KPI Taxa de conclusão"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Tempo médio",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.6,
+   "at": 25.38,
+   "label": "KPI Tempo médio"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Faturamento",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.8,
+   "at": 26.42,
+   "label": "KPI Faturamento"
+  },
+  {
+   "do": "scroll",
+   "at": 27.44,
+   "label": "desce até os gráficos",
+   "by": 520,
+   "point": {
+    "x": 760,
+    "y": 120
+   }
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "OS por Status",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.3,
+   "at": 28.34,
+   "label": "gráfico por status"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "OS por Tipo de Serviço",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.3,
+   "at": 29.22,
+   "label": "gráfico por tipo de serviço"
+  },
+  {
+   "do": "scroll",
+   "at": 30.18,
+   "label": "desce até o dia da semana",
+   "by": 520,
+   "point": {
+    "x": 760,
+    "y": 120
+   }
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "OS por Dia da Semana",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.6,
+   "at": 31.36,
+   "label": "gráfico por dia da semana"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Saúde do agendamento",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 1.2,
+   "at": 32.5,
+   "label": "quadro Saúde do agendamento"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Concluídas no",
+    "exact": false,
+    "within": "main"
+   },
+   "seconds": 2.0,
+   "at": 35.62,
+   "label": "Concluídas no prazo"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 37.68
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

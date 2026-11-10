@@ -1,0 +1,236 @@
+{
+ "name": "t4-cap14",
+ "title": "T4 · Cap. 14 · Recapitulando (narração 32,6 s; marcas L1..L3 = início de cada linha do roteiro)",
+ "seed": "t4-cap14",
+ "pace": 0.5,
+ "cps": 14,
+ "tail": 0.4,
+ "start": {
+  "x": 900,
+  "y": 480
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/g1-trilha",
+  "t4/g2-vazias",
+  "t4/apos-cap12"
+ ],
+ "prewarm": [
+  "/servicos",
+  "/servicos?tab=task-types",
+  "/servicos?tab=checklists"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/servicos"
+  },
+  {
+   "do": "waitFor",
+   "text": "6 tipos cadastrados",
+   "timeout": 20
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  }
+ ],
+ "steps": [
+  {
+   "do": "hover",
+   "target": {
+    "text": "6 tipos cadastrados",
+    "exact": true
+   },
+   "seconds": 0.3,
+   "label": "lista de serviços"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Categorias",
+    "exact": true
+   },
+   "label": "categorias"
+  },
+  {
+   "do": "waitFor",
+   "selector": "[role=dialog]",
+   "timeout": 8
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "label": "fecha as categorias"
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Manutenção Preventiva",
+    "exact": true,
+    "within": "main [role=list]"
+   },
+   "label": "ficha da Manutenção Preventiva"
+  },
+  {
+   "do": "scroll",
+   "target": {
+    "placeholder": "Ex: 350,00"
+   },
+   "label": "prefixo e preço padrão"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Fiscal"
+   },
+   "label": "aba Fiscal"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Tipos de Tarefas"
+   },
+   "label": "aba Tipos de Tarefas"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Compra de peças",
+    "exact": true,
+    "within": "main [role=list]"
+   },
+   "seconds": 0.4,
+   "label": "tipos de tarefa da Agenda"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Checklists",
+    "exact": true
+   },
+   "label": "aba Checklists"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Catálogo de Checklists",
+    "exact": true
+   },
+   "label": "catálogo de modelos"
+  },
+  {
+   "do": "waitFor",
+   "text": "Estes são apenas modelos sugeridos.",
+   "timeout": 8
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "label": "fecha o catálogo"
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Higienização de split",
+    "exact": true,
+    "within": "main [role=list]"
+   },
+   "label": "checklist feito do zero"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Editar checklist",
+    "exact": true
+   },
+   "label": "editor com as perguntas"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "button[role=combobox]",
+    "hasText": "Higienização de Split"
+   },
+   "seconds": 1.0,
+   "label": "ligado aos serviços certos"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Voltar à prévia",
+    "exact": true
+   },
+   "label": "Voltar à prévia"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Ver",
+    "exact": true
+   },
+   "label": "botão Ver"
+  },
+  {
+   "do": "waitFor",
+   "text": "Como este checklist aparece para o técnico na Ordem de Serviço",
+   "timeout": 8
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Fechar",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "label": "fecha a prévia"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Operacional",
+    "exact": true
+   },
+   "label": "menu Operacional (próximo tutorial)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "link",
+    "name": "Agenda",
+    "exact": true
+   },
+   "seconds": 0.6,
+   "label": "menu Agenda (próximo tutorial)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "link",
+    "name": "Mapa e Rastreamento",
+    "exact": true
+   },
+   "seconds": 1.2,
+   "label": "Mapa e Rastreamento (próximo tutorial)"
+  }
+ ]
+}

@@ -1,0 +1,157 @@
+{
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap05",
+  "t12/inicio",
+  "t12/apos-cap11",
+  "t13/inicio",
+  "t13/apos-cap14",
+  "t19/inicio",
+  "t19/apos-cap13",
+  "t20/inicio",
+  "t22/_prov-t15",
+  "t22/inicio",
+  "t22/_prov-rafael"
+ ],
+ "start": "/funcionarios",
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z",
+  "disc-overview-view-mode": "grid"
+ },
+ "stopOnFail": false,
+ "steps": [
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Toggle Sidebar",
+    "nth": 0
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Fluxograma",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 800
+  },
+  {
+   "do": "shot",
+   "name": "01-vazio"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Novo fluxograma",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 600
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Ex.: Abertura de ordem de serviço"
+   },
+   "text": "Atendimento de chamado do portal"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Criar fluxograma",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 2500
+  },
+  {
+   "do": "shot",
+   "name": "02-quadro"
+  },
+  {
+   "do": "list",
+   "selector": "button"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": ".react-flow__node",
+    "nth": 0
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 700
+  },
+  {
+   "do": "shot",
+   "name": "03-editar"
+  },
+  {
+   "do": "list",
+   "selector": "input",
+   "attr": "placeholder"
+  },
+  {
+   "do": "list",
+   "selector": "label"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Adicionar forma"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 600
+  },
+  {
+   "do": "shot",
+   "name": "04-formas"
+  },
+  {
+   "do": "list",
+   "selector": "[role=menuitem], [role=menu] button, [data-radix-popper-content-wrapper] button"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] button",
+    "hasText": "Tarefa"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 800
+  },
+  {
+   "do": "shot",
+   "name": "05-tarefa"
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('.react-flow__node')].map(n=>[n.dataset.id.slice(0,6),n.className.slice(0,50),n.textContent.slice(0,30),Math.round(n.getBoundingClientRect().x),Math.round(n.getBoundingClientRect().y),Math.round(n.getBoundingClientRect().width),Math.round(n.getBoundingClientRect().height)])"
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('.react-flow__handle')].slice(0,8).map(h=>[h.dataset.handleid||h.dataset.id,h.className.slice(0,70),Math.round(h.getBoundingClientRect().x),Math.round(h.getBoundingClientRect().y)])"
+  }
+ ]
+}

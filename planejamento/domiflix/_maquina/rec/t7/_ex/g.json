@@ -1,0 +1,56 @@
+{
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap15",
+  "t7/inicio"
+ ],
+ "user": "rafael.lima@glacialcold.example",
+ "device": "phone",
+ "start": "/agenda",
+ "steps": [
+  {
+   "do": "wait",
+   "ms": 2500
+  },
+  {
+   "do": "eval",
+   "js": "new Promise(res=>{const t=Date.now();navigator.geolocation.getCurrentPosition(p=>res({ok:true,lat:p.coords.latitude,lng:p.coords.longitude,ms:Date.now()-t}),e=>res({ok:false,code:e.code,msg:e.message,ms:Date.now()-t}),{enableHighAccuracy:true,timeout:6000,maximumAge:0})})"
+  },
+  {
+   "do": "geo",
+   "lat": -22.9003,
+   "lng": -43.118
+  },
+  {
+   "do": "eval",
+   "js": "new Promise(res=>{const t=Date.now();navigator.geolocation.getCurrentPosition(p=>res({ok:true,lat:p.coords.latitude,lng:p.coords.longitude,ms:Date.now()-t}),e=>res({ok:false,code:e.code,msg:e.message,ms:Date.now()-t}),{enableHighAccuracy:true,timeout:6000,maximumAge:0})})"
+  },
+  {
+   "do": "geo",
+   "lat": -22.89758,
+   "lng": -43.09913
+  },
+  {
+   "do": "eval",
+   "js": "new Promise(res=>{const t=Date.now();navigator.geolocation.getCurrentPosition(p=>res({ok:true,lat:p.coords.latitude,lng:p.coords.longitude,ms:Date.now()-t}),e=>res({ok:false,code:e.code,msg:e.message,ms:Date.now()-t}),{enableHighAccuracy:true,timeout:6000,maximumAge:0})})"
+  },
+  {
+   "do": "eval",
+   "js": "navigator.permissions.query({name:'geolocation'}).then(r=>r.state)"
+  },
+  {
+   "do": "geo",
+   "lat": -22.897,
+   "lng": -43.099,
+   "accuracy": 10
+  },
+  {
+   "do": "eval",
+   "js": "new Promise(res=>{const t=Date.now();navigator.geolocation.getCurrentPosition(p=>res({ok:true,lat:p.coords.latitude,lng:p.coords.longitude,ms:Date.now()-t}),e=>res({ok:false,code:e.code,msg:e.message,ms:Date.now()-t}),{enableHighAccuracy:true,timeout:6000,maximumAge:0})})"
+  }
+ ]
+}

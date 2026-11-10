@@ -1,0 +1,42 @@
+{
+ "_comentario": "T14 · corte do capítulo 12 (FAKE_NOW 16:20): o worker da fila de manifestação registrou a ciência na Receita. Aplicada pelo robô (POST /__dev/seed) depois de \"Enviar manifestação\", com o relógio do navegador 4 min à frente; a nota completa chega no \"Sincronizar\" seguinte (a trava de 65 min da consulta das 15:10 já passou). Gerado por rec/t14/semear.py.",
+ "fiscal_certificate_audit": [
+  {
+   "id": "@id:t14.audit.manifestar",
+   "company_id": "9c307966-79f1-567c-ac4d-d5fd3c1a2f40",
+   "operacao": "decifra",
+   "contexto": "dfe_manifestar:33261191345603000180550010000045121404512264",
+   "origem": "edge:dfe-manifestar-worker",
+   "created_at": "2026-11-13T19:23:00.000Z"
+  }
+ ],
+ "_patch": {
+  "inbound_nfe": [
+   {
+    "match": {
+     "chave": "33261191345603000180550010000045121404512264"
+    },
+    "set": {
+     "manifestacao": "ciencia",
+     "manifestacao_data": "2026-11-13T19:23:00.000Z",
+     "manifestacao_pendente": null,
+     "manifestacao_pendente_em": null,
+     "manifestacao_erro": null,
+     "updated_at": "2026-11-13T19:23:00.000Z"
+    }
+   }
+  ],
+  "dfe_manifestacao_jobs": [
+   {
+    "match": {
+     "chave": "33261191345603000180550010000045121404512264"
+    },
+    "set": {
+     "status": "concluida",
+     "tentativas": 1,
+     "updated_at": "2026-11-13T19:23:00.000Z"
+    }
+   }
+  ]
+ }
+}

@@ -1,0 +1,450 @@
+{
+ "name": "t5-cap05",
+ "title": "T5 · Cap. 5 · Agendamento e detalhes (narração 64,7 s; marcas L1..L7 = início de cada linha do roteiro)",
+ "seed": "t5-cap05",
+ "pace": 0.45,
+ "cps": 26,
+ "tail": 0.4,
+ "start": {
+  "x": 900,
+  "y": 480
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/g1-trilha",
+  "t5/g2-vazias"
+ ],
+ "prewarm": [
+  "/ordens-servico"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/ordens-servico"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie suas ordens de serviço",
+   "timeout": 20
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{if(!window.__fixAnim){window.__fixAnim=setInterval(()=>document.getAnimations().filter(a=>a.currentTime<0).forEach(a=>{a.startTime=document.timeline.currentTime}),40)}return 1})()"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|erro|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Nova OS",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Nova Ordem de Serviço",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "combobox",
+    "hasText": "Selecione o cliente"
+   }
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Buscar cliente..."
+   },
+   "text": "Colégio"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Colégio Monte Verde"
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]",
+    "hasText": "Adicionar serviços"
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Manutenção Preventiva",
+    "exact": true,
+    "within": "[data-radix-popper-content-wrapper]"
+   }
+  },
+  {
+   "do": "press",
+   "key": "Escape"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerenciar serviços",
+   "timeout": 8
+  },
+  {
+   "do": "waitFor",
+   "selector": "[role=dialog] input[aria-label=\"Quantidade de Manutenção Preventiva\"]",
+   "timeout": 8
+  },
+  {
+   "do": "pause",
+   "seconds": 0.6
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Próximo",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Selecione o equipamento.",
+   "timeout": 10
+  },
+  {
+   "do": "pause",
+   "seconds": 0.6
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "checkbox",
+    "within": "[role=dialog]"
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Serviços neste equipamento",
+   "timeout": 8
+  },
+  {
+   "do": "pause",
+   "seconds": 0.6
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "pause",
+   "seconds": 0.4
+  }
+ ],
+ "steps": [
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Próximo",
+    "exact": true
+   },
+   "label": "Próximo (Equipe e agenda)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Defina responsáveis, organize as jornadas",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] h2",
+    "hasText": "Equipe e agenda"
+   },
+   "seconds": 0.6,
+   "label": "etapa Equipe e agenda"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]",
+    "hasText": "Selecione..."
+   },
+   "label": "campo Responsáveis"
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Rafael Lima",
+    "exact": true,
+    "within": "[data-radix-popper-content-wrapper]"
+   },
+   "label": "Rafael Lima"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Técnicos",
+    "exact": false,
+    "within": "[data-radix-popper-content-wrapper]"
+   },
+   "seconds": 1.0,
+   "label": "técnicos e equipes no mesmo seletor"
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "label": "fecha o seletor"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Período do atendimento",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.5,
+   "label": "Período do atendimento"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:has(svg.lucide-calendar)",
+    "nth": 0
+   },
+   "label": "Data inicial"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "gridcell",
+    "name": "10",
+    "exact": true
+   },
+   "label": "terça, dia 10"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Quando começa"
+   },
+   "label": "Quando começa"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "09",
+    "exact": true,
+    "within": "[role=listbox][aria-label=Horas]"
+   },
+   "label": "hora 09"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "00",
+    "exact": true,
+    "within": "[role=listbox][aria-label=Minutos]"
+   },
+   "label": "minuto 00"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Concluir"
+   },
+   "label": "Concluir (início)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Quando termina"
+   },
+   "label": "Quando termina"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "11",
+    "exact": true,
+    "within": "[role=listbox][aria-label=Horas]"
+   },
+   "label": "hora 11"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "00",
+    "exact": true,
+    "within": "[role=listbox][aria-label=Minutos]"
+   },
+   "label": "minuto 00"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Concluir"
+   },
+   "label": "Concluir (fim)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "placeholder": "Descreva o serviço a ser realizado"
+   },
+   "label": "campo Descrição do Serviço"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Descreva o serviço a ser realizado"
+   },
+   "text": "Manutenção preventiva",
+   "cps": 14,
+   "label": "Descrição do Serviço",
+   "noClick": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const el=document.querySelector(\"[role=dialog] button[role=switch][aria-label=\\\"Gerar Pesquisa de Satisfa\\u00e7\\u00e3o ao finalizar?\\\"]\");if(!el)return false;for(let n=el.parentElement;n&&n!==document.documentElement;n=n.parentElement){const s=getComputedStyle(n);if(/(auto|scroll)/.test(s.overflowY)&&n.scrollHeight>n.clientHeight+4){const r=el.getBoundingClientRect(),b=n.getBoundingClientRect();n.scrollTo({top:n.scrollTop+(r.top+r.height/2)-(b.top+b.height/2),behavior:\"smooth\"});return true}}return false})()",
+   "label": "desce até a pesquisa de satisfação"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Gerar Pesquisa de Satisfação",
+    "exact": false,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.6,
+   "label": "Gerar Pesquisa de Satisfação"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "switch",
+    "name": "Gerar Pesquisa de Satisfação ao finalizar?",
+    "checked": false
+   },
+   "label": "deixa a pesquisa em Sim",
+   "when": {
+    "role": "switch",
+    "name": "Gerar Pesquisa de Satisfação ao finalizar?",
+    "checked": false
+   }
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "switch",
+    "name": "Gerar Pesquisa de Satisfação ao finalizar?"
+   },
+   "seconds": 1.2,
+   "label": "pesquisa ligada"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const c=document.querySelector(\"[role=dialog] .overflow-y-auto\");if(c)c.scrollTo({top:0,behavior:\"auto\"});return 1})()",
+   "label": "volta ao topo da etapa"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]",
+    "hasText": "Rafael Lima"
+   },
+   "seconds": 2.0,
+   "label": "volta ao seletor Responsáveis"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Próximo",
+    "exact": true
+   },
+   "label": "Próximo (Revisão)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Pronto para criar",
+   "timeout": 10
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const c=document.querySelector(\"[role=dialog] .overflow-y-auto\");if(c)c.scrollTo({top:0,behavior:\"auto\"});return 1})()",
+   "label": "topo da Revisão"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Pronto para criar",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.4,
+   "label": "Revisão: Pronto para criar"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Criar OS",
+    "exact": true
+   },
+   "label": "Criar OS"
+  },
+  {
+   "do": "waitFor",
+   "text": "OS #16",
+   "timeout": 12
+  },
+  {
+   "do": "scroll",
+   "label": "desce até o Kanban",
+   "by": 330,
+   "point": {
+    "x": 760,
+    "y": 120
+   }
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "MP-2026-16",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 2.4,
+   "label": "cartão MP-2026-16 na coluna Pendente"
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

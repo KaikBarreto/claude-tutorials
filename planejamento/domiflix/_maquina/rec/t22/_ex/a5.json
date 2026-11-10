@@ -1,0 +1,159 @@
+{
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap05",
+  "t12/inicio",
+  "t12/apos-cap11",
+  "t13/inicio",
+  "t13/apos-cap14",
+  "t19/inicio",
+  "t19/apos-cap13",
+  "t20/inicio",
+  "t22/_prov-t15",
+  "t22/inicio",
+  "t22/_prov-rafael"
+ ],
+ "start": "/funcionarios",
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z",
+  "disc-overview-view-mode": "grid"
+ },
+ "stopOnFail": false,
+ "steps": [
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Toggle Sidebar",
+    "nth": 0
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Organograma",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 800
+  },
+  {
+   "do": "shot",
+   "name": "01-vazio"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Novo Organograma",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 600
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Ex: Estrutura 2026"
+   },
+   "text": "Estrutura 2026"
+  },
+  {
+   "do": "shot",
+   "name": "02-dialogo"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Criar",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 2500
+  },
+  {
+   "do": "shot",
+   "name": "03-quadro"
+  },
+  {
+   "do": "list",
+   "selector": "button",
+   "attr": "aria-label"
+  },
+  {
+   "do": "text",
+   "selector": "main",
+   "max": 800
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Direção",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 800
+  },
+  {
+   "do": "shot",
+   "name": "04-editar"
+  },
+  {
+   "do": "list",
+   "selector": "input",
+   "attr": "placeholder"
+  },
+  {
+   "do": "list",
+   "selector": "label"
+  },
+  {
+   "do": "html",
+   "selector": "[role=dialog], aside, [data-state=open]",
+   "max": 1500
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": ".react-flow__node",
+    "nth": 0
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "shot",
+   "name": "05-hover"
+  },
+  {
+   "do": "count",
+   "target": {
+    "selector": "button[aria-label='Adicionar nó']"
+   }
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll(\"button[aria-label='Adicionar nó']\")].map(b=>{const r=b.getBoundingClientRect();return [Math.round(r.x),Math.round(r.y),getComputedStyle(b).opacity]})"
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('.react-flow__node')].map(n=>[n.dataset.id,n.className.slice(0,60),Math.round(n.getBoundingClientRect().x),Math.round(n.getBoundingClientRect().y)])"
+  }
+ ]
+}

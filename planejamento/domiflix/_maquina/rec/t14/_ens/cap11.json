@@ -1,0 +1,201 @@
+{
+ "name": "t14-cap11",
+ "title": "T14 · Cap. 11 · As notas dos fornecedores (narração 25,8 s; marcas L1..L3 = início de cada linha do roteiro; FAKE_NOW 2026-11-13T15:10:00-03:00)",
+ "seed": "t14-cap11",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 0.4,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap05",
+  "t12/inicio",
+  "t12/apos-cap11",
+  "t13/inicio",
+  "t13/apos-cap14",
+  "t19/inicio",
+  "t19/apos-cap13",
+  "t20/inicio",
+  "t20/apos-cap12",
+  "t2/apos-cap10",
+  "t15/inicio",
+  "t15/apos-cap12",
+  "t22/inicio",
+  "t22/apos-cap11",
+  "t21/inicio",
+  "t21/apos-cap10",
+  "t14/inicio",
+  "t14/apos-cap10"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/notas-fiscais",
+  "/notas-fiscais/configuracoes"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Camila!",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/notas-fiscais"
+  },
+  {
+   "do": "waitFor",
+   "text": "Emita e acompanhe suas NFS-e.",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Notas recebidas",
+    "exact": true
+   },
+   "label": "aba Notas recebidas"
+  },
+  {
+   "do": "waitFor",
+   "text": "Receber NF-e de fornecedores automaticamente",
+   "timeout": 10
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Receber NF-e de fornecedores automaticamente\", \"Ligue para consultar, direto na Receita Federal\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere recebimento de NF-e desligado"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Receber NF-e de fornecedores automaticamente",
+    "within": "main"
+   },
+   "seconds": 1.0,
+   "label": "Receber NF-e de fornecedores automaticamente",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Ligue para consultar, direto na Receita Federal",
+    "within": "main"
+   },
+   "seconds": 1.4,
+   "label": "consulta direto na Receita Federal",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Ligar recebimento automático",
+    "exact": true
+   },
+   "label": "Ligar recebimento automático"
+  },
+  {
+   "do": "waitFor",
+   "text": "Recebimento automático ligado.",
+   "timeout": 10
+  },
+  {
+   "do": "waitFor",
+   "text": "Nenhuma nota recebida ainda",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Nenhuma nota recebida ainda",
+    "within": "main"
+   },
+   "seconds": 1.2,
+   "label": "Nenhuma nota recebida ainda",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Sincronizar"
+   },
+   "label": "Sincronizar"
+  },
+  {
+   "do": "waitFor",
+   "text": "1 nota(s) nova(s) encontrada(s).",
+   "timeout": 12
+  },
+  {
+   "do": "waitFor",
+   "text": "Cobre Sul Suprimentos Ltda",
+   "timeout": 8
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Cobre Sul Suprimentos Ltda\", \"4512\", \"1.180,00\", \"Sem manifestação\", \"Resumo\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere nota da Cobre Sul em resumo"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Cobre Sul Suprimentos Ltda",
+    "within": "main"
+   },
+   "seconds": 1.0,
+   "label": "Cobre Sul Suprimentos Ltda",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Resumo",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 1.6,
+   "label": "selo Resumo",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

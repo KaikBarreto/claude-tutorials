@@ -1,0 +1,77 @@
+{
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap15",
+  "t7/inicio"
+ ],
+ "user": "rafael.lima@glacialcold.example",
+ "device": "phone",
+ "start": "/agenda",
+ "steps": [
+  {
+   "do": "wait",
+   "ms": 2500
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Colégio Monte Verde",
+    "within": "main"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 1200
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Preencher OS"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 3500
+  },
+  {
+   "do": "shot",
+   "name": "b02-os-topo"
+  },
+  {
+   "do": "eval",
+   "js": "location.pathname + location.search"
+  },
+  {
+   "do": "text",
+   "selector": "body",
+   "name": "os",
+   "max": 2500
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify({sh:document.documentElement.scrollHeight, ih:innerHeight, hdr:[...document.querySelectorAll('header,div')].filter(e=>getComputedStyle(e).position==='fixed'||getComputedStyle(e).position==='sticky').map(e=>[e.tagName,Math.round(e.getBoundingClientRect().top),Math.round(e.getBoundingClientRect().height),(e.className||'').toString().slice(0,60)]).slice(0,12)})",
+   "max": 1500
+  },
+  {
+   "do": "scrolly",
+   "by": 560
+  },
+  {
+   "do": "shot",
+   "name": "b03-os-meio"
+  },
+  {
+   "do": "scrolly",
+   "by": 560
+  },
+  {
+   "do": "shot",
+   "name": "b04-os-fim"
+  }
+ ]
+}

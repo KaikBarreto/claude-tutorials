@@ -1,0 +1,98 @@
+{
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap15",
+  "t7/inicio"
+ ],
+ "user": "rafael.lima@glacialcold.example",
+ "device": "phone",
+ "start": "/agenda",
+ "steps": [
+  {
+   "do": "wait",
+   "ms": 2500
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__geo=[];const g=navigator.geolocation;const gcp=g.getCurrentPosition.bind(g);const wp=g.watchPosition.bind(g);\ng.getCurrentPosition=(ok,err,o)=>{const t=Date.now();window.__geo.push('gcp '+JSON.stringify(o));return gcp(p=>{window.__geo.push('gcp ok '+(Date.now()-t));ok&&ok(p)},e=>{window.__geo.push('gcp err '+e.code+' '+e.message+' '+(Date.now()-t));err&&err(e)},o)};\ng.watchPosition=(ok,err,o)=>{window.__geo.push('watch '+JSON.stringify(o));return wp(p=>{ok&&ok(p)},e=>{window.__geo.push('watch err '+e.code+' '+e.message);err&&err(e)},o)};return 1})()"
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Colégio Monte Verde",
+    "within": "main"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 1200
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Preencher OS"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 3000
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__geo=[];const g=navigator.geolocation;const gcp=g.getCurrentPosition.bind(g);const wp=g.watchPosition.bind(g);\ng.getCurrentPosition=(ok,err,o)=>{const t=Date.now();window.__geo.push('gcp '+JSON.stringify(o));return gcp(p=>{window.__geo.push('gcp ok '+(Date.now()-t));ok&&ok(p)},e=>{window.__geo.push('gcp err '+e.code+' '+e.message+' '+(Date.now()-t));err&&err(e)},o)};\ng.watchPosition=(ok,err,o)=>{window.__geo.push('watch '+JSON.stringify(o));return wp(p=>{ok&&ok(p)},e=>{window.__geo.push('watch err '+e.code+' '+e.message);err&&err(e)},o)};return 1})()"
+  },
+  {
+   "do": "geo",
+   "lat": -22.9003,
+   "lng": -43.118
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "A Caminho"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 3000
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__geo)"
+  },
+  {
+   "do": "geo",
+   "lat": -22.89758,
+   "lng": -43.09913
+  },
+  {
+   "do": "wait",
+   "ms": 1500
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__geo)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Fazer Check-in"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 4000
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__geo)"
+  }
+ ]
+}

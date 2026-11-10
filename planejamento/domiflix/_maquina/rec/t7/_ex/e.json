@@ -1,0 +1,107 @@
+{
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap15",
+  "t7/inicio"
+ ],
+ "user": "rafael.lima@glacialcold.example",
+ "device": "phone",
+ "start": "/agenda",
+ "steps": [
+  {
+   "do": "wait",
+   "ms": 2500
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Colégio Monte Verde",
+    "within": "main"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 1200
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Preencher OS"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 3000
+  },
+  {
+   "do": "geo",
+   "lat": -22.9003,
+   "lng": -43.118
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "A Caminho"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 3000
+  },
+  {
+   "do": "geo",
+   "lat": -22.89758,
+   "lng": -43.09913
+  },
+  {
+   "do": "goto",
+   "url": "/os-tecnico/colegio-monte-verde-manutencao-preventiva-gkqj48c3qqp5"
+  },
+  {
+   "do": "wait",
+   "ms": 3000
+  },
+  {
+   "do": "shot",
+   "name": "e01-recarregada"
+  },
+  {
+   "do": "clock",
+   "set": "2026-11-11T09:05:00-03:00"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Fazer Check-in"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 3500
+  },
+  {
+   "do": "state",
+   "table": "service_orders",
+   "where": {
+    "order_number": 16
+   },
+   "pick": [
+    "status",
+    "check_in_time",
+    "check_in_by",
+    "check_in_location"
+   ]
+  },
+  {
+   "do": "shot",
+   "name": "e02-checkin"
+  }
+ ]
+}

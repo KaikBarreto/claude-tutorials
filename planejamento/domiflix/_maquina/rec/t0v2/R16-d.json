@@ -1,0 +1,106 @@
+{
+ "name": "R16-d",
+ "title": "T0 v2 · R16 · Assinatura (computador 1280x800)",
+ "seed": "t0v2-R16",
+ "pace": 0.6,
+ "tail": 1.2,
+ "cps": 9,
+ "seedExtra": [
+  "t0v2/catalogo",
+  "t0v2/progresso-camila",
+  "t0v2/usuario-novo",
+  "t0v2/conta-contratada",
+  "t0v2/pagamentos",
+  "t0v2/lembrete-dispensado"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/domiflix"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/assinatura"
+  },
+  {
+   "do": "waitFor",
+   "text": "Histórico de pagamentos",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "'sem tarja'"
+  },
+  {
+   "do": "pause",
+   "seconds": 0.6
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "pause",
+   "seconds": 2
+  },
+  {
+   "do": "hover",
+   "target": "Plano",
+   "seconds": 0.8,
+   "optional": true,
+   "timeout": 3,
+   "label": "Plano"
+  },
+  {
+   "do": "pause",
+   "seconds": 1.5
+  },
+  {
+   "do": "hover",
+   "target": "Vencimento",
+   "seconds": 0.8,
+   "optional": true,
+   "timeout": 3,
+   "label": "Vencimento"
+  },
+  {
+   "do": "pause",
+   "seconds": 1.5
+  },
+  {
+   "do": "scroll",
+   "target": "Uso da conta",
+   "optional": true,
+   "timeout": 8
+  },
+  {
+   "do": "pause",
+   "seconds": 1.5
+  },
+  {
+   "do": "scroll",
+   "target": "Histórico de pagamentos",
+   "optional": true,
+   "timeout": 8
+  },
+  {
+   "do": "pause",
+   "seconds": 2.5
+  }
+ ]
+}

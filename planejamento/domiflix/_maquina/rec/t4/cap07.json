@@ -1,0 +1,230 @@
+{
+ "name": "t4-cap07",
+ "title": "T4 · Cap. 7 · Tipos de tarefa (narração 31,1 s; marcas L1..L4 = início de cada linha do roteiro)",
+ "seed": "t4-cap07",
+ "pace": 0.45,
+ "cps": 12,
+ "tail": 1.5,
+ "start": {
+  "x": 900,
+  "y": 480
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/g1-trilha",
+  "t4/g2-vazias",
+  "t4/apos-cap06"
+ ],
+ "prewarm": [
+  "/servicos",
+  "/servicos?tab=task-types"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/servicos"
+  },
+  {
+   "do": "waitFor",
+   "text": "6 tipos cadastrados",
+   "timeout": 20
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Tipos de Tarefas"
+   },
+   "at": 0.4,
+   "label": "aba Tipos de Tarefas"
+  },
+  {
+   "do": "waitFor",
+   "text": "Treinamento da equipe",
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Treinamento da equipe",
+    "exact": true,
+    "within": "main [role=list]"
+   },
+   "seconds": 1.4,
+   "at": 0.92,
+   "label": "tipo de tarefa já cadastrado"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Ficha do tipo de tarefa",
+    "exact": false
+   },
+   "seconds": 1.6,
+   "at": 2.92,
+   "label": "ficha do tipo de tarefa"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "div.flex.items-center.gap-2:has(> label:text-is(\"Ativo\"))"
+   },
+   "seconds": 2.0,
+   "at": 11.94,
+   "label": "só os ativos entram na escolha"
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 15.08
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Novo Tipo",
+    "exact": true
+   },
+   "at": 15.08,
+   "label": "Novo Tipo"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "role": "dialog"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Ex: Reunião, Entrega, Compra"
+   },
+   "text": "Reunião",
+   "cps": 9,
+   "at": 17.5,
+   "label": "nome: Reunião",
+   "noClick": true
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[type=color] + input"
+   },
+   "text": "#8B5CF6",
+   "cps": 20,
+   "label": "cor da Reunião",
+   "clear": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Criar",
+    "exact": true
+   },
+   "at": 20.02,
+   "label": "Criar"
+  },
+  {
+   "do": "waitFor",
+   "text": "Tipo de tarefa criado!",
+   "timeout": 10,
+   "optional": true
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 21.09
+  },
+  {
+   "do": "eval",
+   "js": "(async () => {const B='http://127.0.0.1:54321/rest/v1'; const H={'content-type':'application/json',Prefer:'return=representation'};const r=await fetch(B+'/task_types',{method:'POST',headers:H,body:JSON.stringify({\"company_id\": \"9c307966-79f1-567c-ac4d-d5fd3c1a2f40\", \"name\": \"Entrega de material\", \"color\": \"#F97316\", \"description\": \"Entrega de material e ferramentas nos clientes\", \"is_active\": true})});const root=document.getElementById('root'); const key=Object.keys(root).find(k=>k.startsWith('__reactContainer$'));const stack=[root[key]]; let n=0; let ok=false;while(stack.length&&n++<20000){const f=stack.pop(); if(!f) continue; const p=f.memoizedProps;if(p&&p.client&&typeof p.client.refetchQueries==='function'){p.client.refetchQueries({type:'active'}); ok=true; break;}if(f.sibling) stack.push(f.sibling); if(f.child) stack.push(f.child);}return r.status;})()",
+   "at": 22.21,
+   "label": "(bastidor) Entrega de material"
+  },
+  {
+   "do": "eval",
+   "js": "(async () => {const B='http://127.0.0.1:54321/rest/v1'; const H={'content-type':'application/json',Prefer:'return=representation'};const r=await fetch(B+'/task_types',{method:'POST',headers:H,body:JSON.stringify({\"company_id\": \"9c307966-79f1-567c-ac4d-d5fd3c1a2f40\", \"name\": \"Compra de peças\", \"color\": \"#EAB308\", \"description\": \"Compra de peças e insumos no fornecedor\", \"is_active\": true})});const root=document.getElementById('root'); const key=Object.keys(root).find(k=>k.startsWith('__reactContainer$'));const stack=[root[key]]; let n=0; let ok=false;while(stack.length&&n++<20000){const f=stack.pop(); if(!f) continue; const p=f.memoizedProps;if(p&&p.client&&typeof p.client.refetchQueries==='function'){p.client.refetchQueries({type:'active'}); ok=true; break;}if(f.sibling) stack.push(f.sibling); if(f.child) stack.push(f.child);}return r.status;})()",
+   "at": 23.89,
+   "label": "(bastidor) Compra de peças"
+  },
+  {
+   "do": "waitFor",
+   "text": "4 tipos cadastrados",
+   "timeout": 10,
+   "optional": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Compra de peças",
+    "exact": true,
+    "within": "main [role=list]"
+   },
+   "at": 24.47,
+   "label": "abre Compra de peças"
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 25.17
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "input[type=color] + input"
+   },
+   "seconds": 0.3,
+   "at": 26.83,
+   "label": "cor do tipo"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "textarea"
+   },
+   "seconds": 0.3,
+   "at": 27.39,
+   "label": "descrição do tipo"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "div.flex.items-center.gap-2:has(> label:text-is(\"Ativo\"))"
+   },
+   "seconds": 0.3,
+   "at": 28.43,
+   "label": "interruptor Ativo"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Salvar",
+    "exact": true
+   },
+   "seconds": 0.5,
+   "at": 29.15,
+   "label": "Salvar e Excluir como nos serviços"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 31.12
+  }
+ ]
+}

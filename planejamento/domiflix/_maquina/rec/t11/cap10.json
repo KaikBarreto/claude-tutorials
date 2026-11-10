@@ -1,0 +1,654 @@
+{
+ "name": "t11-cap10",
+ "title": "T11 · Cap. 10 · O contrato por dentro (narração 137,1 s; marcas L1..L9 = início de cada linha do roteiro)",
+ "seed": "t11-cap10",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t2/apos-cap10",
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t9/inicio",
+  "t9/apos-cap16",
+  "t10/apos-cap09",
+  "t11/inicio",
+  "t11/apos-cap09"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/contratos",
+  "/contratos"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Camila!",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/contratos"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie contratos recorrentes e manutenções programadas",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|erro|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0.04
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Filtros"
+   },
+   "at": 3.08,
+   "label": "abre o painel Filtros"
+  },
+  {
+   "do": "waitFor",
+   "text": "Aplicar",
+   "timeout": 8
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button, [role=dialog] label, [role=dialog] [role=checkbox]",
+    "hasText": "PMOC",
+    "nth": 0
+   },
+   "at": 5.52,
+   "label": "marca PMOC em Tipo"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Aplicar",
+    "exact": true
+   },
+   "at": 6.28,
+   "label": "Aplicar",
+   "noScroll": true
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr",
+    "hasText": "PMOC - Hotel Mirante do Mar"
+   },
+   "seconds": 1.4,
+   "at": 7.46,
+   "label": "sobra só o contrato do hotel",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main thead th",
+    "hasText": "Saúde"
+   },
+   "seconds": 2.6,
+   "at": 10.2,
+   "label": "coluna Saúde",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 18.92
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main tbody tr",
+    "hasText": "PMOC - Hotel Mirante do Mar"
+   },
+   "at": 18.92,
+   "label": "abre o contrato PMOC - Hotel Mirante do Mar"
+  },
+  {
+   "do": "waitFor",
+   "text": "Visão Geral",
+   "timeout": 20
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Editar contrato"
+   },
+   "seconds": 0.8,
+   "at": 23.1,
+   "label": "botão Editar contrato (sem clicar)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Excluir contrato"
+   },
+   "seconds": 0.8,
+   "at": 24.54,
+   "label": "botão Excluir contrato (sem clicar)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "tab",
+    "name": "Visão Geral",
+    "exact": true
+   },
+   "seconds": 0.1,
+   "at": 26.92,
+   "label": "aba Visão Geral",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "tab",
+    "name": "Ocorrências",
+    "exact": true
+   },
+   "seconds": 0.1,
+   "label": "aba Ocorrências",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "tab",
+    "name": "Ambientes e Equipamentos",
+    "exact": true
+   },
+   "seconds": 0.1,
+   "label": "aba Ambientes e Equipamentos",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "tab",
+    "name": "Histórico PMOC",
+    "exact": true
+   },
+   "seconds": 0.1,
+   "label": "aba Histórico PMOC",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "tab",
+    "name": "Financeiro",
+    "exact": true
+   },
+   "seconds": 0.1,
+   "label": "aba Financeiro",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "tab",
+    "name": "Documentos",
+    "exact": true
+   },
+   "seconds": 0.1,
+   "label": "aba Documentos",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "tab",
+    "name": "Cronograma",
+    "exact": true
+   },
+   "seconds": 0.1,
+   "label": "aba Cronograma",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 31.66
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Informações",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 1.2,
+   "at": 33.1,
+   "label": "cartão Informações",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Resumo",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 1.4,
+   "at": 34.78,
+   "label": "cartão Resumo",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Portal do Contrato",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 1.4,
+   "at": 39.58,
+   "label": "cartão Portal do Contrato (só passa)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Progresso",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 1.6,
+   "at": 44.1,
+   "label": "cartão Progresso",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Total de ocorrências\", \"0 de 13 concluídas\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere cap10: 13 ocorrências, 0 concluídas"
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 47.7
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Ocorrências",
+    "exact": true
+   },
+   "at": 48.02,
+   "label": "aba Ocorrências"
+  },
+  {
+   "do": "waitFor",
+   "text": "Vincular OS existente",
+   "timeout": 20
+  },
+  {
+   "do": "waitFor",
+   "selector": "main tbody tr button:not([disabled])",
+   "timeout": 20
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main thead th",
+    "hasText": "Prevista",
+    "nth": 0
+   },
+   "seconds": 1.0,
+   "at": 51.7,
+   "label": "coluna Prevista",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main thead th",
+    "hasText": "Agenda",
+    "nth": 0
+   },
+   "seconds": 1.0,
+   "at": 54.5,
+   "label": "coluna Agenda",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr",
+    "nth": 2
+   },
+   "seconds": 1.4,
+   "at": 56.02,
+   "label": "uma visita da lista (OS normal)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr button[title*='Pular'], main tbody tr button[aria-label*='Pular']",
+    "nth": 1
+   },
+   "seconds": 1.2,
+   "at": 64.58,
+   "label": "botão Pular da visita (sem clicar)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 66.37
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main tbody tr button",
+    "hasText": "Planejar visita",
+    "nth": 0
+   },
+   "at": 69.41,
+   "label": "Planejar visita (1ª visita)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Planejar visita do contrato",
+   "timeout": 15
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button",
+    "hasText": "Próximo",
+    "nth": 0
+   },
+   "at": 71.33,
+   "label": "Próximo (Escopo técnico)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Escopo técnico",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button",
+    "hasText": "Próximo",
+    "nth": 0
+   },
+   "at": 72.95,
+   "label": "Próximo (Equipe e agenda)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Período do atendimento",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Período do atendimento",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.4,
+   "at": 76.69,
+   "label": "Período do atendimento",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Jornadas por dia",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.0,
+   "at": 77.03,
+   "label": "Jornadas por dia",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Adicionar outra data",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.0,
+   "at": 79.49,
+   "label": "botão Adicionar outra data (sem clicar)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] button",
+    "hasText": "Adicionar dia",
+    "nth": 0
+   },
+   "seconds": 1.0,
+   "at": 80.45,
+   "label": "botão Adicionar dia (sem clicar)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button",
+    "hasText": "Cancelar",
+    "nth": 0
+   },
+   "at": 85.89,
+   "label": "Cancelar (nada grava)"
+  },
+  {
+   "do": "waitFor",
+   "selector": "main button:not([disabled])",
+   "timeout": 10
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 86.69
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button",
+    "hasText": "Vincular OS existente",
+    "nth": 0
+   },
+   "at": 90.54,
+   "label": "Vincular OS existente"
+  },
+  {
+   "do": "waitFor",
+   "text": "Vincular OS existente ao contrato",
+   "timeout": 15
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] [role=radio], [role=dialog] button, [role=dialog] label",
+    "hasText": "OS #10",
+    "nth": 0
+   },
+   "at": 92.46,
+   "label": "marca a OS #10 do hotel"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]",
+    "nth": 0
+   },
+   "at": 94.62,
+   "label": "abre Competência do contrato"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "01/12/2026",
+    "exact": false
+   },
+   "at": 96.06,
+   "label": "escolhe a visita 01/12/2026"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] button",
+    "hasText": "Vincular OS",
+    "nth": 0
+   },
+   "seconds": 1.2,
+   "at": 104.56,
+   "label": "botão Vincular OS (sem clicar)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button",
+    "hasText": "Cancelar",
+    "nth": 0
+   },
+   "at": 107.98,
+   "label": "Cancelar (nada grava)"
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 108.74
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Ambientes e Equipamentos",
+    "exact": true
+   },
+   "at": 109.06,
+   "label": "aba Ambientes e Equipamentos"
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 114.9
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Histórico PMOC",
+    "exact": true
+   },
+   "at": 115.06,
+   "label": "aba Histórico PMOC"
+  },
+  {
+   "do": "mark",
+   "name": "L9",
+   "at": 124.74
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Financeiro",
+    "exact": true
+   },
+   "at": 125.14,
+   "label": "aba Financeiro"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main button[title='Marcar como pago']",
+    "nth": 0
+   },
+   "seconds": 2.2,
+   "at": 134.3,
+   "label": "botão Marcar como pago da parcela (sem clicar; o title nativo não aparece na gravação: aviso na edição)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"R$ 14.400,00\", \"Pendente\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere cap10: Previsto R$ 14.400,00 e parcelas Pendente"
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 137.12
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

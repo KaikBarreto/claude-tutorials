@@ -1,0 +1,348 @@
+{
+ "name": "t9-cap07",
+ "title": "T9 · Cap. 7 · Terceira etapa: materiais e deslocamento (narração 42,1 s; marcas L1..L3 = início de cada linha do roteiro)",
+ "seed": "t9-cap07",
+ "pace": 0.45,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t9/inicio",
+  "t9/apos-cap04"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/orcamentos"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/orcamentos"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie orçamentos, custos e precificação",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Toggle Sidebar",
+    "nth": 0
+   }
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "eval",
+   "js": "(() => { try { sessionStorage.clear(); } catch (e) {} return 'sessionStorage limpo'; })()"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Novo Orçamento",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Condições comerciais",
+   "timeout": 20
+  },
+  {
+   "do": "wait",
+   "seconds": 0.6
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "combobox",
+    "name": "Selecione o cliente"
+   }
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[cmdk-input]"
+   },
+   "text": "Pousada"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Pousada Brisa do Mar"
+   }
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "listbox"
+   },
+   "timeout": 8,
+   "optional": true
+  },
+  {
+   "do": "wait",
+   "seconds": 0.5
+  },
+  {
+   "do": "select",
+   "target": {
+    "role": "combobox",
+    "name": "Selecionar tipo de serviço..."
+   },
+   "option": "Higienização de Split"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] input.w-16"
+   }
+  },
+  {
+   "do": "press",
+   "key": "Control+A"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input.w-16"
+   },
+   "text": "3",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Adicionar",
+    "exact": true,
+    "within": "[role=dialog]"
+   }
+  },
+  {
+   "do": "wait",
+   "seconds": 1.0
+  },
+  {
+   "do": "select",
+   "target": {
+    "role": "combobox",
+    "name": "Selecionar tipo de serviço..."
+   },
+   "option": "Carga de Gás"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Adicionar",
+    "exact": true,
+    "within": "[role=dialog]"
+   }
+  },
+  {
+   "do": "wait",
+   "seconds": 1.0
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|erro|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Subtotal Serviços R$ 890,00\", \"Pousada Brisa do Mar\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere partida do cap. 7: serviços R$ 890,00 já no assistente"
+  },
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0.12
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const d=document.querySelector('[role=dialog] .overflow-y-auto');if(!d)return 'sem rolagem';const h=[...d.querySelectorAll('*')].find(e=>e.children.length===0&&e.textContent.trim().toLowerCase()===\"materiais\");if(!h)return 'sem titulo';const r=h.getBoundingClientRect(),dr=d.getBoundingClientRect();d.scrollTo({top:d.scrollTop+(r.top-dr.top)-14,behavior:'smooth'});return d.scrollTop})()",
+   "at": 0.2,
+   "label": "rola até Materiais"
+  },
+  {
+   "do": "wait",
+   "seconds": 0.7
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Adicionar materiais",
+    "exact": true
+   },
+   "at": 1.1,
+   "label": "Adicionar materiais"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Buscar por nome, código ou categoria..."
+   },
+   "text": "gás",
+   "cps": 14,
+   "at": 3.54,
+   "label": "busca gás"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] div[role=button]:has-text('R-410A')"
+   },
+   "seconds": 0.6,
+   "at": 5.34,
+   "label": "Gás refrigerante R-410A",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] div[role=button]:has-text('R-410A') p:has-text('/ kg')"
+   },
+   "seconds": 1.2,
+   "at": 10.4,
+   "label": "R$ 150,00 / kg",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 14.98
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] div[role=button]:has-text('R-410A') button",
+    "nth": 1
+   },
+   "at": 15.62,
+   "label": "+ um quilo"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Adicionar ao orçamento",
+    "exact": true
+   },
+   "at": 16.26,
+   "label": "Adicionar ao orçamento"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "text": "Adicionar ao orçamento"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Gás refrigerante R-410A\", \"Subtotal Materiais R$ 150,00\", \"Custo R$ 90,00 · Preço R$ 150,00\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere R-410A 1 kg a R$ 150,00 (preço de venda)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Subtotal Materiais",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.2,
+   "at": 18.18,
+   "label": "Subtotal Materiais R$ 150,00",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 26.21
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const d=document.querySelector('[role=dialog] .overflow-y-auto');if(!d)return 'sem rolagem';const h=[...d.querySelectorAll('*')].find(e=>e.children.length===0&&e.textContent.trim().toLowerCase()===\"deslocamento\");if(!h)return 'sem titulo';const r=h.getBoundingClientRect(),dr=d.getBoundingClientRect();d.scrollTo({top:d.scrollTop+(r.top-dr.top)-14,behavior:'smooth'});return d.scrollTop})()",
+   "at": 26.21,
+   "label": "rola até Deslocamento"
+  },
+  {
+   "do": "wait",
+   "seconds": 0.7
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='0 km']"
+   },
+   "text": "18",
+   "at": 27.91,
+   "label": "Distância 18 km"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Modalidade",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.6,
+   "at": 35.33,
+   "label": "Modalidade Custo por km + BDI",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Preço resultante",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.6,
+   "at": 39.49,
+   "label": "Custo R$ 27,00 · Preço resultante R$ 45,00",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Custo por km + BDI\", \"Custo R$ 27,00 · Preço resultante R$ 45,00\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere deslocamento 18 km: custo 27,00, preço 45,00"
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 42.07
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

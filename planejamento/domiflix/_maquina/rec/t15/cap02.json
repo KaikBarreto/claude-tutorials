@@ -1,0 +1,298 @@
+{
+ "name": "t15-cap02",
+ "title": "T15 · Cap. 2 · Os dados da funcionária (narração 38,5 s; marcas L1..L5 = início de cada linha do roteiro)",
+ "seed": "t15-cap02",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap05",
+  "t12/inicio",
+  "t12/apos-cap11",
+  "t13/inicio",
+  "t13/apos-cap14",
+  "t19/inicio",
+  "t19/apos-cap13",
+  "t20/inicio",
+  "t20/apos-cap12",
+  "t2/apos-cap10",
+  "t15/inicio"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/funcionarios"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/funcionarios"
+  },
+  {
+   "do": "waitFor",
+   "text": "Lista de Funcionários",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|erro|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Lista de Funcionários",
+    "within": "main"
+   },
+   "seconds": 0.3,
+   "at": 0.3,
+   "label": "o cursor passa pela lista",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Novo Funcionário",
+    "exact": true
+   },
+   "at": 5.6,
+   "label": "Novo Funcionário"
+  },
+  {
+   "do": "waitFor",
+   "text": "Nome Completo",
+   "timeout": 10
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 9.54
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "tab",
+    "name": "Dados",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.15,
+   "at": 11.86,
+   "label": "aba Dados",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "tab",
+    "name": "Pagamento",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.15,
+   "at": 12.66,
+   "label": "aba Pagamento",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "tab",
+    "name": "Acesso",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.15,
+   "at": 13.7,
+   "label": "aba Acesso",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "tab",
+    "name": "Ponto eletrônico",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.15,
+   "at": 14.58,
+   "label": "aba Ponto eletrônico",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "tab",
+    "name": "Perfil",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.15,
+   "at": 15.94,
+   "label": "aba Perfil",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Adicionar foto do funcionário",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.2,
+   "at": 16.9,
+   "label": "foto vazia (opcional)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 20.4
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='Nome do funcionário']",
+    "nth": 0
+   },
+   "text": "Tatiane Ribeiro",
+   "cps": 30,
+   "at": 20.7,
+   "label": "Nome Completo"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='000.000.000-00']",
+    "nth": 0
+   },
+   "text": "41837290687",
+   "cps": 30,
+   "at": 22.46,
+   "label": "CPF"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='(00) 00000-0000']",
+    "nth": 0
+   },
+   "text": "2130001008",
+   "cps": 30,
+   "at": 23.66,
+   "label": "Telefone"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='Ex: Técnico']",
+    "nth": 0
+   },
+   "text": "Assistente administrativa",
+   "cps": 30,
+   "at": 24.8,
+   "label": "Cargo"
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 28.48
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='Endereço completo']",
+    "nth": 0
+   },
+   "at": 29.34,
+   "label": "campo Endereço"
+  },
+  {
+   "do": "eval",
+   "js": "(() => { document.execCommand('insertText', false, \"Rua Gavi\\u00e3o Peixoto, 120, apto 302, Icara\\u00ed, Niter\\u00f3i - RJ\"); const e = document.activeElement; return e && e.value; })()",
+   "at": 30.24,
+   "label": "cola o endereço"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] div:has(> label:text-is('Data de Admissão')) > button"
+   },
+   "at": 30.32,
+   "label": "abre o calendário da Data de Admissão"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] button:text-is(\"3\") >> nth=0"
+   },
+   "at": 30.8,
+   "label": "escolhe o dia 3 de novembro"
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 31.52
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='CPF, email, telefone ou chave aleatória']",
+    "nth": 0
+   },
+   "text": "tatiane.ribeiro@glacialcold.example",
+   "cps": 22,
+   "at": 31.84,
+   "label": "Chave PIX"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const esp=[\"Tatiane Ribeiro\", \"418.372.906-87\", \"(21) 3000-1008\", \"Assistente administrativa\", \"Rua Gavião Peixoto, 120, apto 302, Icaraí, Niterói - RJ\", \"tatiane.ribeiro@glacialcold.example\"];let out='';for(let i=0;i<12;i++){const v=[...document.querySelectorAll(\"[role=dialog]\"+' input, '+\"[role=dialog]\"+' textarea')].map(e=>e.value.replace(/\\u00a0/g,' ')).join(' | ');const falta=esp.filter(e=>!v.includes(e));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+v.slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere campos da aba Dados"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"03/11/2026\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Data de Admissão 03/11/2026"
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 38.48
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

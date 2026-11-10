@@ -1,0 +1,272 @@
+{
+ "_comentario": "T2 · base própria (estado de partida = fim do T1): igual a seeds/gen-01-tenant.json, mas a empresa tem SÓ a Camila Duarte (admin) como usuária; Rafael, Bruno, Júlia, Lucas, Marina e Paulo entram durante a aula (Rafael e Tatiane ao vivo; os outros cinco num corte antes do cap09) e Tatiane Ribeiro nasce na aula. Os planos seguem os de hoje (Start 5, Avançado 10, Master 15 usuários: migration 20261013120000_trial_7d_reprice_plans_and_base_features.sql), então o contador da aba Usuários e Permissões sai '1/15' (a base padrão tem 3/8/20). Use com FAKE_SEEDS_DIR=<esta pasta>; as demais sementes (gen-02-cadastros, receita, 00-vazias) são links para seeds/.",
+ "companies": [
+  {
+   "id": "@id:company.glacial",
+   "name": "Glacial Cold Brasil",
+   "cnpj": "91.520.340/0001-07",
+   "email": "contato@glacialcold.example",
+   "phone": "(21) 3000-1000",
+   "address": "Rua Moreira César",
+   "address_number": "200",
+   "neighborhood": "Icaraí",
+   "city": "Niterói",
+   "state": "RJ",
+   "zip_code": "24230-190",
+   "segment": "refrigeracao",
+   "logo_url": "@storage:company-logos/glacial/logo-horizontal.png",
+   "contact_name": "Camila Duarte",
+   "billing_email": "financeiro@glacialcold.example",
+   "subscription_status": "active",
+   "subscription_plan": "master",
+   "subscription_value": 597,
+   "billing_cycle": "monthly",
+   "subscription_expires_at": "@now+23d",
+   "max_users": 15,
+   "extra_users": 0,
+   "ltv": 7164,
+   "payment_lock_bypass": false,
+   "payment_method": "credit_card",
+   "subscription_card_brand": "visa",
+   "subscription_card_last4": "4242",
+   "is_demo": false,
+   "is_self_service": true,
+   "created_at": "@now-380d",
+   "updated_at": "@now-2d"
+  }
+ ],
+ "company_settings": [
+  {
+   "id": "@id:company_settings.glacial",
+   "company_id": "@id:company.glacial",
+   "name": "Glacial Cold Brasil",
+   "document": "91.520.340/0001-07",
+   "phone": "(21) 3000-1000",
+   "email": "contato@glacialcold.example",
+   "address": "Rua Moreira César",
+   "address_number": "200",
+   "neighborhood": "Icaraí",
+   "city": "Niterói",
+   "state": "RJ",
+   "zip_code": "24230-190",
+   "segment": "refrigeracao",
+   "logo_url": "@storage:company-logos/glacial/logo-horizontal.png",
+   "white_label_logo_url": "@storage:company-logos/glacial/logo-horizontal.png",
+   "white_label_icon_url": "@storage:company-logos/glacial/icone.png",
+   "language": "pt-br",
+   "currency": "BRL",
+   "country_code": "BR",
+   "timezone": "America/Sao_Paulo",
+   "white_label_enabled": false,
+   "show_name_in_documents": true,
+   "show_cnpj_in_documents": true,
+   "show_address_in_documents": true,
+   "show_phone_in_documents": true,
+   "show_email_in_documents": true,
+   "os_stock_consumption_enabled": true,
+   "os_finish_revenue_prompt_enabled": true
+  }
+ ],
+ "subscription_plans": [
+  {
+   "id": "@id:plan.start",
+   "code": "start",
+   "name": "Start",
+   "description": "Para quem está começando",
+   "price": 197,
+   "max_users": 5,
+   "included_modules": [
+    "basic"
+   ],
+   "is_active": true
+  },
+  {
+   "id": "@id:plan.avancado",
+   "code": "avancado",
+   "name": "Avançado",
+   "description": "Equipe em crescimento",
+   "price": 347,
+   "max_users": 10,
+   "included_modules": [
+    "basic",
+    "crm",
+    "contracts"
+   ],
+   "is_active": true
+  },
+  {
+   "id": "@id:plan.master",
+   "code": "master",
+   "name": "Master",
+   "description": "Operação completa",
+   "price": 597,
+   "max_users": 15,
+   "included_modules": [
+    "basic",
+    "rh",
+    "crm",
+    "contracts",
+    "nfe",
+    "pricing_advanced",
+    "customer_portal",
+    "white_label",
+    "video_questions",
+    "whatsapp",
+    "cobrancas",
+    "finance_advanced"
+   ],
+   "is_active": true
+  }
+ ],
+ "company_modules": [
+  {
+   "id": "@id:cm.basic",
+   "company_id": "@id:company.glacial",
+   "module_code": "basic",
+   "quantity": 1,
+   "activated_at": "@now-300d"
+  },
+  {
+   "id": "@id:cm.rh",
+   "company_id": "@id:company.glacial",
+   "module_code": "rh",
+   "quantity": 1,
+   "activated_at": "@now-300d"
+  },
+  {
+   "id": "@id:cm.crm",
+   "company_id": "@id:company.glacial",
+   "module_code": "crm",
+   "quantity": 1,
+   "activated_at": "@now-300d"
+  },
+  {
+   "id": "@id:cm.contracts",
+   "company_id": "@id:company.glacial",
+   "module_code": "contracts",
+   "quantity": 1,
+   "activated_at": "@now-300d"
+  },
+  {
+   "id": "@id:cm.nfe",
+   "company_id": "@id:company.glacial",
+   "module_code": "nfe",
+   "quantity": 1,
+   "activated_at": "@now-300d"
+  },
+  {
+   "id": "@id:cm.pricing_advanced",
+   "company_id": "@id:company.glacial",
+   "module_code": "pricing_advanced",
+   "quantity": 1,
+   "activated_at": "@now-300d"
+  },
+  {
+   "id": "@id:cm.customer_portal",
+   "company_id": "@id:company.glacial",
+   "module_code": "customer_portal",
+   "quantity": 1,
+   "activated_at": "@now-300d"
+  },
+  {
+   "id": "@id:cm.white_label",
+   "company_id": "@id:company.glacial",
+   "module_code": "white_label",
+   "quantity": 1,
+   "activated_at": "@now-300d"
+  },
+  {
+   "id": "@id:cm.video_questions",
+   "company_id": "@id:company.glacial",
+   "module_code": "video_questions",
+   "quantity": 1,
+   "activated_at": "@now-300d"
+  },
+  {
+   "id": "@id:cm.whatsapp",
+   "company_id": "@id:company.glacial",
+   "module_code": "whatsapp",
+   "quantity": 1,
+   "activated_at": "@now-300d"
+  },
+  {
+   "id": "@id:cm.cobrancas",
+   "company_id": "@id:company.glacial",
+   "module_code": "cobrancas",
+   "quantity": 1,
+   "activated_at": "@now-300d"
+  },
+  {
+   "id": "@id:cm.finance_advanced",
+   "company_id": "@id:company.glacial",
+   "module_code": "finance_advanced",
+   "quantity": 1,
+   "activated_at": "@now-300d"
+  },
+  {
+   "id": "@id:cm.pdv",
+   "company_id": "@id:company.glacial",
+   "module_code": "pdv",
+   "quantity": 1,
+   "activated_at": "@now-300d"
+  }
+ ],
+ "tenant_payment_accounts": [
+  {
+   "id": "@id:tpa.glacial",
+   "company_id": "@id:company.glacial",
+   "provider": "asaas",
+   "mode": "production",
+   "status": "active",
+   "asaas_account_id": "acc_glacial_demo",
+   "wallet_id": "wallet_glacial_demo",
+   "auto_post_to_finance": true,
+   "auto_post_fees": false,
+   "default_fine_percent": 2,
+   "default_interest_percent": 1,
+   "default_due_days": 3,
+   "default_discount_percent": null,
+   "default_discount_days": null,
+   "default_description": null,
+   "allow_pix": true,
+   "allow_boleto": true,
+   "allow_card": true,
+   "default_max_installments": 1,
+   "default_finance_account_id": null,
+   "default_income_category": null,
+   "default_fee_category": "Taxas de cobrança",
+   "card_recurring_enabled": false,
+   "pix_auto_enabled": false,
+   "card_fee_payer": "tenant",
+   "created_at": "@now-200d",
+   "updated_at": "@now-200d"
+  }
+ ],
+ "profiles": [
+  {
+   "id": "@id:profile.camila",
+   "user_id": "@id:user.camila",
+   "company_id": "@id:company.glacial",
+   "full_name": "Camila Duarte",
+   "email": "camila.duarte@glacialcold.example",
+   "phone": "(21) 3000-1001",
+   "is_active": true,
+   "navigation_style": "sidebar",
+   "terms_accepted_at": "@now-360d",
+   "created_at": "@now-360d"
+  }
+ ],
+ "user_roles": [
+  {
+   "id": "@id:role.camila",
+   "user_id": "@id:user.camila",
+   "role": "admin"
+  }
+ ],
+ "user_preferences": [
+  {
+   "user_id": "@id:user.camila",
+   "language": "pt-br"
+  }
+ ]
+}

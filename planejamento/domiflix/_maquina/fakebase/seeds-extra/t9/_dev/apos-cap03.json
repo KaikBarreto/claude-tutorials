@@ -1,0 +1,72 @@
+{
+ "_comentario": "ENSAIO · estado depois do cap. 3 (Precificação 6/12/22 e a Van 01; ainda sem custos do serviço). Gerado por rec/t9/semear.py --dev.",
+ "_patch": {
+  "pricing_settings": [
+   {
+    "match": {
+     "company_id": "9c307966-79f1-567c-ac4d-d5fd3c1a2f40"
+    },
+    "set": {
+     "tax_rate": 6,
+     "admin_indirect_rate": 12,
+     "default_profit_rate": 22,
+     "km_cost": 1.5,
+     "card_discount_rate": 5,
+     "card_installments": 10
+    }
+   }
+  ]
+ },
+ "cost_resources": [
+  {
+   "id": "@id:t9.res.van01",
+   "company_id": "9c307966-79f1-567c-ac4d-d5fd3c1a2f40",
+   "category": "vehicle",
+   "name": "Van 01",
+   "monthly_hours": 176,
+   "is_active": true,
+   "notes": null,
+   "photo_url": null,
+   "created_at": "@now-0m",
+   "updated_at": "@now-0m"
+  }
+ ],
+ "cost_resource_items": [
+  {
+   "id": "@id:t9.resitem.0",
+   "resource_id": "@id:t9.res.van01",
+   "name": "Depreciação mensal",
+   "value": 1400,
+   "is_monthly": true,
+   "annual_value": null,
+   "sort_order": 0
+  },
+  {
+   "id": "@id:t9.resitem.1",
+   "resource_id": "@id:t9.res.van01",
+   "name": "Manutenção + Combustível",
+   "value": 1620,
+   "is_monthly": true,
+   "annual_value": null,
+   "sort_order": 1
+  },
+  {
+   "id": "@id:t9.resitem.2",
+   "resource_id": "@id:t9.res.van01",
+   "name": "Seguro",
+   "value": 300,
+   "is_monthly": false,
+   "annual_value": 3600,
+   "sort_order": 2
+  },
+  {
+   "id": "@id:t9.resitem.3",
+   "resource_id": "@id:t9.res.van01",
+   "name": "Documentação / IPVA",
+   "value": 200,
+   "is_monthly": false,
+   "annual_value": 2400,
+   "sort_order": 3
+  }
+ ]
+}

@@ -1,0 +1,52 @@
+{
+ "_comentario": "T5 cap00: tira do dia de hoje as OS ainda abertas (bug de fuso do Dashboard). Só entra na cadeia do cap00.",
+ "_patch": {
+  "service_orders": [
+   {
+    "match": {
+     "id": "@id:t5.os.09"
+    },
+    "set": {
+     "scheduled_date": "@today+1d",
+     "schedule_plan": [
+      {
+       "date": "@today+1d",
+       "time": "08:30",
+       "duration_minutes": 120
+      }
+     ]
+    }
+   },
+   {
+    "match": {
+     "id": "@id:t5.os.10"
+    },
+    "set": {
+     "scheduled_date": "@today+1d",
+     "schedule_plan": [
+      {
+       "date": "@today+1d",
+       "time": "09:15",
+       "duration_minutes": 120
+      }
+     ]
+    }
+   },
+   {
+    "match": {
+     "id": "@id:t5.os.11"
+    },
+    "set": {
+     "scheduled_date": "@today+1d",
+     "schedule_plan": [
+      {
+       "date": "@today+1d",
+       "time": "14:00",
+       "duration_minutes": 120
+      }
+     ]
+    }
+   }
+  ]
+ }
+}

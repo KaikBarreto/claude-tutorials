@@ -1,0 +1,165 @@
+{
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap05",
+  "t12/inicio",
+  "t12/apos-cap11",
+  "t13/inicio",
+  "t13/apos-cap14",
+  "t19/inicio",
+  "t20/_prov-t19",
+  "t20/inicio"
+ ],
+ "start": "/dashboard",
+ "stopOnFail": false,
+ "steps": [
+  {
+   "do": "goto",
+   "url": "/financeiro/relatorios?tab=dre"
+  },
+  {
+   "do": "waitFor",
+   "text": "Demonstrativo de Resultado",
+   "timeout": 25
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Toggle Sidebar",
+    "nth": 0
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 600
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Este mês",
+    "exact": true
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Mês passado",
+    "within": "[data-radix-popper-content-wrapper]"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 1500
+  },
+  {
+   "do": "shot",
+   "name": "20-dre-out"
+  },
+  {
+   "do": "text",
+   "selector": "main",
+   "name": "dre-out",
+   "max": 6000
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button",
+    "hasText": "Custos diretos"
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 800
+  },
+  {
+   "do": "text",
+   "selector": "main",
+   "name": "dre-custos-abertos",
+   "max": 2500
+  },
+  {
+   "do": "list",
+   "selector": "main button"
+  },
+  {
+   "do": "shot",
+   "name": "21-custos"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Regime de Competência",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 900
+  },
+  {
+   "do": "shot",
+   "name": "22-hover-comp"
+  },
+  {
+   "do": "text",
+   "selector": "[role=tooltip]",
+   "name": "tooltip"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Regime de Caixa",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 1200
+  },
+  {
+   "do": "text",
+   "selector": "main",
+   "name": "dre-caixa",
+   "max": 3500
+  },
+  {
+   "do": "shot",
+   "name": "23-caixa"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Configurar DRE",
+    "exact": true
+   }
+  },
+  {
+   "do": "wait",
+   "ms": 1500
+  },
+  {
+   "do": "shot",
+   "name": "24-config"
+  },
+  {
+   "do": "text",
+   "selector": "[role=dialog]",
+   "name": "config",
+   "max": 6000
+  },
+  {
+   "do": "list",
+   "selector": "[role=dialog] button"
+  }
+ ]
+}

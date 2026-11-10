@@ -1,0 +1,332 @@
+{
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t9/inicio"
+ ],
+ "start": "/dashboard",
+ "stopOnFail": false,
+ "steps": [
+  {
+   "do": "shot",
+   "name": "00-dashboard"
+  },
+  {
+   "do": "goto",
+   "url": "/orcamentos"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie orçamentos, custos e precificação",
+   "timeout": 20
+  },
+  {
+   "do": "wait",
+   "ms": 1500
+  },
+  {
+   "do": "shot",
+   "name": "01-lista"
+  },
+  {
+   "do": "text",
+   "selector": "main",
+   "name": "lista",
+   "max": 3800
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('main button, main [role=tab], main [role=button]')].map(b=>({t:(b.innerText||'').replace(/\\s+/g,' ').slice(0,36),al:b.getAttribute('aria-label'),ro:b.getAttribute('role'),y:Math.round(b.getBoundingClientRect().y),x:Math.round(b.getBoundingClientRect().x)})).filter(o=>o.t||o.al)",
+   "max": 3500
+  },
+  {
+   "do": "html",
+   "selector": "main .grid",
+   "max": 1500
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main .grid > *",
+    "nth": 0
+   },
+   "after": 900
+  },
+  {
+   "do": "shot",
+   "name": "02-clicou-em-aberto"
+  },
+  {
+   "do": "text",
+   "selector": "main",
+   "name": "depois do clique em Em Aberto",
+   "max": 1500
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('main button, main [role=tab], main [role=button]')].map(b=>({t:(b.innerText||'').replace(/\\s+/g,' ').slice(0,36),al:b.getAttribute('aria-label'),ro:b.getAttribute('role'),y:Math.round(b.getBoundingClientRect().y),x:Math.round(b.getBoundingClientRect().x)})).filter(o=>o.t||o.al)",
+   "max": 3000
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Status"
+   },
+   "after": 700,
+   "optional": true
+  },
+  {
+   "do": "shot",
+   "name": "03-filtro-status"
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('[role=dialog], [role=menu], [data-radix-popper-content-wrapper]')].map(e=>(e.innerText||'').replace(/\\s+/g,' ').slice(0,300))",
+   "max": 900
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('[data-radix-popper-content-wrapper] [role=checkbox], [role=dialog] [role=checkbox], [role=menuitemcheckbox]')].map(e=>({t:(e.parentElement.innerText||e.innerText||'').replace(/\\s+/g,' ').slice(0,30),ro:e.getAttribute('role'),ck:e.getAttribute('aria-checked')||e.getAttribute('data-state')}))",
+   "max": 900
+  },
+  {
+   "do": "press",
+   "key": "Escape"
+  },
+  {
+   "do": "click",
+   "target": {
+    "placeholder": "Buscar por cliente, número ou telefone..."
+   },
+   "optional": true
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Buscar por cliente, número ou telefone..."
+   },
+   "text": "hotel",
+   "optional": true
+  },
+  {
+   "do": "shot",
+   "name": "04-busca-hotel"
+  },
+  {
+   "do": "text",
+   "selector": "main",
+   "name": "busca hotel",
+   "max": 900
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Buscar por cliente, número ou telefone..."
+   },
+   "text": "",
+   "optional": true
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('main table tr, main [role=row]')].slice(0,3).map(r=>r.outerHTML.slice(0,1400))",
+   "max": 3600
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr",
+    "nth": 1
+   },
+   "optional": true
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll(\"main button[aria-haspopup='menu']\")].map(b=>({al:b.getAttribute('aria-label'),y:Math.round(b.getBoundingClientRect().y),x:Math.round(b.getBoundingClientRect().x)})).slice(0,5)",
+   "max": 600
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Precificação"
+   },
+   "optional": true,
+   "after": 900
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Precificação",
+    "exact": true,
+    "within": "main"
+   },
+   "optional": true,
+   "after": 900
+  },
+  {
+   "do": "wait",
+   "ms": 900
+  },
+  {
+   "do": "shot",
+   "name": "05-precificacao-zerada"
+  },
+  {
+   "do": "text",
+   "selector": "main",
+   "name": "precificacao",
+   "max": 2500
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('main input, main textarea, main [role=combobox], main [role=switch]')].map(i=>({tag:i.tagName,ty:i.type,v:i.value,ph:i.placeholder,al:i.getAttribute('aria-label'),id:i.id,y:Math.round(i.getBoundingClientRect().y),x:Math.round(i.getBoundingClientRect().x)}))",
+   "max": 3000
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "main input[type=number]",
+    "nth": 0
+   },
+   "text": "6"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "main input[type=number]",
+    "nth": 1
+   },
+   "text": "12"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "main input[type=number]",
+    "nth": 2
+   },
+   "text": "22"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "main input[type=number]",
+    "nth": 3
+   },
+   "text": "1.5"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "main input[type=number]",
+    "nth": 4
+   },
+   "text": "5"
+  },
+  {
+   "do": "shot",
+   "name": "06-precificacao-digitada"
+  },
+  {
+   "do": "text",
+   "selector": "main",
+   "name": "precificacao digitada",
+   "max": 2500
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Salvar",
+    "exact": true
+   },
+   "optional": true
+  },
+  {
+   "do": "wait",
+   "ms": 700
+  },
+  {
+   "do": "shot",
+   "name": "07-precificacao-salva"
+  },
+  {
+   "do": "text",
+   "selector": "main",
+   "name": "depois de salvar",
+   "max": 2500
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Custos Globais"
+   },
+   "optional": true,
+   "after": 900
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Custos Globais",
+    "exact": true,
+    "within": "main"
+   },
+   "optional": true,
+   "after": 900
+  },
+  {
+   "do": "wait",
+   "ms": 900
+  },
+  {
+   "do": "shot",
+   "name": "08-custos-globais"
+  },
+  {
+   "do": "text",
+   "selector": "main",
+   "name": "custos globais",
+   "max": 1800
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Novo Recurso"
+   },
+   "optional": true,
+   "after": 900
+  },
+  {
+   "do": "shot",
+   "name": "09-novo-recurso"
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('[role=dialog] input, [role=dialog] textarea, [role=dialog] button, [role=dialog] [role=combobox], [role=dialog] [role=switch]')].map(i=>({tag:i.tagName,ty:i.type,v:(i.value||'').slice(0,30),t:(i.innerText||'').replace(/\\s+/g,' ').slice(0,32),ph:i.placeholder,al:i.getAttribute('aria-label'),id:i.id,y:Math.round(i.getBoundingClientRect().y)}))",
+   "max": 2500
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Veículos",
+    "exact": true
+   },
+   "optional": true,
+   "after": 1200
+  },
+  {
+   "do": "shot",
+   "name": "10-novo-veiculo"
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll('[role=dialog] input, [role=dialog] textarea, [role=dialog] button, [role=dialog] [role=combobox], [role=dialog] [role=switch]')].map(i=>({tag:i.tagName,ty:i.type,v:(i.value||'').slice(0,30),t:(i.innerText||'').replace(/\\s+/g,' ').slice(0,32),ph:i.placeholder,al:i.getAttribute('aria-label'),id:i.id,y:Math.round(i.getBoundingClientRect().y)}))",
+   "max": 6000
+  }
+ ]
+}

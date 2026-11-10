@@ -1,0 +1,306 @@
+{
+ "name": "t5-cap12",
+ "title": "T5 · Cap. 12 · As visões da Agenda (narração 34,3 s; marcas L1..L4 = início de cada linha do roteiro)",
+ "seed": "t5-cap12",
+ "pace": 0.3,
+ "cps": 14,
+ "tail": 1.5,
+ "start": {
+  "x": 900,
+  "y": 480
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap09",
+  "t5/tarefas-agenda"
+ ],
+ "prewarm": [
+  "/ordens-servico",
+  "/agenda"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/ordens-servico"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie suas ordens de serviço",
+   "timeout": 20
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0.04
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "link",
+    "name": "Agenda",
+    "exact": true
+   },
+   "at": 0.1,
+   "label": "menu: Agenda"
+  },
+  {
+   "do": "waitFor",
+   "text": "Visualize e gerencie os agendamentos",
+   "timeout": 12
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "link",
+    "name": "Dashboard",
+    "exact": true
+   },
+   "seconds": 0.4,
+   "at": 2.38,
+   "label": "menu: Dashboard, logo acima"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "tab",
+    "name": "Mês"
+   },
+   "seconds": 0.3,
+   "at": 3.6,
+   "label": "visão Mês"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "#12",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.5,
+   "at": 4.92,
+   "label": "uma OS no dia 5"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Entregar material no Hotel Mirante do Mar",
+    "exact": false,
+    "within": "main"
+   },
+   "seconds": 0.5,
+   "at": 6.82,
+   "label": "uma tarefa no dia 4"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Finados",
+    "exact": false,
+    "within": "main"
+   },
+   "seconds": 0.8,
+   "at": 8.04,
+   "label": "feriado: Finados"
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 10.68
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Semana"
+   },
+   "at": 12.12,
+   "label": "visão Semana"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Dia"
+   },
+   "at": 12.92,
+   "label": "visão Dia"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Hoje",
+    "exact": true
+   },
+   "at": 14.5,
+   "label": "Hoje"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Mês"
+   },
+   "label": "volta ao Mês"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 16.68
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Lista"
+   },
+   "at": 17.08,
+   "label": "visão Lista"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "atrasado",
+    "exact": false,
+    "within": "main"
+   },
+   "seconds": 0.3,
+   "at": 19.72,
+   "label": "seção Atrasado"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Calendário"
+   },
+   "label": "volta ao Calendário"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Filtros",
+    "exact": true
+   },
+   "label": "Filtros"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Técnico",
+    "exact": false,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.1,
+   "at": 24.54,
+   "label": "filtro Técnico"
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 25.16
+  },
+  {
+   "do": "scroll",
+   "at": 26.96,
+   "label": "desce até Status e Tipo",
+   "by": 613,
+   "point": {
+    "x": 842,
+    "y": 450
+   }
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Tipo",
+    "exact": false,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.1,
+   "at": 27.92,
+   "label": "filtro Tipo"
+  },
+  {
+   "do": "eval",
+   "js": "document.querySelector(\"main\").scrollTo({top: 140})",
+   "label": "rola a agenda por trás da janela"
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 1056,
+    "y": 768
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "at": 29.3,
+   "label": "fecha os filtros (cursor)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] button",
+    "hasText": "fechar",
+    "nth": "last"
+   },
+   "text": "",
+   "noClick": true,
+   "label": "fecha os filtros"
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll(\"[role=dialog] button\")].filter(b=>/fechar/i.test(b.textContent)).pop().click()",
+   "at": 30.2,
+   "label": "fecha os filtros (clique)"
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 868,
+    "y": 712
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "at": 30.9,
+   "label": "legenda: ver todos os tipos (cursor)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "main button",
+    "hasText": "Ver todos"
+   },
+   "text": "",
+   "noClick": true,
+   "label": "legenda: ver todos os tipos"
+  },
+  {
+   "do": "eval",
+   "js": "[...document.querySelectorAll(\"main button\")].filter(b=>/Ver todos/i.test(b.textContent)).shift().click()",
+   "at": 31.8,
+   "label": "legenda: ver todos os tipos (clique)"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 34.32
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

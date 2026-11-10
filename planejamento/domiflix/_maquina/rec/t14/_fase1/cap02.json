@@ -1,0 +1,410 @@
+{
+ "name": "t14-cap02",
+ "title": "T14 · Cap. 2 · Os dados da empresa (narração 61,8 s ESTIMADA nas linhas 1,2,5,6; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-13T15:10:00-03:00)",
+ "seed": "t14-cap02",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap05",
+  "t12/inicio",
+  "t12/apos-cap11",
+  "t13/inicio",
+  "t13/apos-cap14",
+  "t19/inicio",
+  "t19/apos-cap13",
+  "t20/inicio",
+  "t20/apos-cap12",
+  "t2/apos-cap10",
+  "t15/inicio",
+  "t15/apos-cap12",
+  "t22/inicio",
+  "t22/apos-cap11",
+  "t21/inicio",
+  "t21/apos-cap10",
+  "t14/inicio"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/notas-fiscais",
+  "/notas-fiscais/configuracoes"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Camila!",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/notas-fiscais"
+  },
+  {
+   "do": "waitFor",
+   "text": "Emita e acompanhe suas NFS-e.",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&!/fica indispon/i.test(m[0])&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Configurações fiscais",
+    "exact": true
+   },
+   "at": 2.4,
+   "label": "Configurações fiscais"
+  },
+  {
+   "do": "waitFor",
+   "text": "Confira e salve os dados fiscais da empresa.",
+   "timeout": 15
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Configuração incompleta\", \"Município: liberação ainda não confirmada\", \"Certificado A1: pendente\", \"Empresa\", \"Certificado A1\", \"Tributação\", \"Serviços\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere painel Configuração incompleta e as quatro abas"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "tab",
+    "name": "Empresa",
+    "exact": true
+   },
+   "seconds": 0.3,
+   "at": 4.31,
+   "label": "aba Empresa",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "tab",
+    "name": "Certificado A1",
+    "exact": true
+   },
+   "seconds": 0.3,
+   "label": "aba Certificado A1",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "tab",
+    "name": "Tributação",
+    "exact": true
+   },
+   "seconds": 0.3,
+   "label": "aba Tributação",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "tab",
+    "name": "Serviços",
+    "exact": true
+   },
+   "seconds": 0.3,
+   "label": "aba Serviços",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Configuração incompleta",
+    "within": "main"
+   },
+   "seconds": 1.4,
+   "at": 5.69,
+   "label": "painel: Configuração incompleta",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 10.15
+  },
+  {
+   "do": "hover",
+   "target": {
+    "placeholder": "Nome da empresa"
+   },
+   "seconds": 0.8,
+   "at": 10.34,
+   "label": "Razão social / Nome",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "placeholder": "00.000.000/0000-00"
+   },
+   "seconds": 0.8,
+   "at": 11.1,
+   "label": "CNPJ",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "main label:has-text('Inscrição Municipal') + input"
+   },
+   "text": "000123-4",
+   "at": 14.21,
+   "label": "Inscrição Municipal 000123-4"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const esp=[\"Glacial Cold Brasil\", \"91.520.340/0001-07\", \"000123-4\"];let out='';for(let i=0;i<12;i++){const v=[...document.querySelectorAll(\"main\"+' input, '+\"main\"+' textarea')].map(e=>e.value).join(' | ');const falta=esp.filter(e=>!v.includes(e));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+v.slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere nome, CNPJ e Inscrição Municipal"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Exigida pelo município para emitir notas.",
+    "within": "main"
+   },
+   "seconds": 1.4,
+   "at": 18.6,
+   "label": "dica: exigida pelo município para emitir notas",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 20.89
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "00000-000"
+   },
+   "text": "24230190",
+   "at": 22.49,
+   "label": "CEP 24230-190",
+   "clear": true
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Preenche endereço, cidade e o código do município automaticamente.",
+    "within": "main"
+   },
+   "seconds": 0.9,
+   "label": "dica do CEP",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const esp=[\"24230-190\", \"Rua Moreira César\", \"200\", \"Icaraí\"];let out='';for(let i=0;i<12;i++){const v=[...document.querySelectorAll(\"main\"+' input, '+\"main\"+' textarea')].map(e=>e.value).join(' | ');const falta=esp.filter(e=>!v.includes(e));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+v.slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere endereço preenchido pelo CEP"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main label:has-text('Logradouro') + input"
+   },
+   "seconds": 0.6,
+   "at": 23.77,
+   "label": "Logradouro",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main label:has-text('Bairro') + input"
+   },
+   "seconds": 0.6,
+   "at": 24.41,
+   "label": "Bairro",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Cidade / UF",
+    "within": "main"
+   },
+   "seconds": 0.6,
+   "at": 25.21,
+   "label": "Cidade / UF",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 27.53
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||null};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"Ambiente de emiss\\u00e3o de NFS-e\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-360);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/1000),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 27.57,
+   "label": "desce até o ambiente de emissão"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Homologação: notas de teste, sem valor fiscal.\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere ambiente em Homologação"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Homologação: notas de teste, sem valor fiscal.",
+    "within": "main"
+   },
+   "seconds": 1.4,
+   "at": 29.77,
+   "label": "Homologação: notas de teste",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Produção",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 1.0,
+   "at": 36.17,
+   "label": "Produção (sem clicar)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const b=[...document.querySelectorAll('main button')].find(x=>x.textContent.trim()===\"Verificar cobertura do munic\\u00edpio\");if(!b)return 'DIFERENTE: sem o botão';return b.disabled?'OK: desligado':'DIFERENTE: ligado'})()",
+   "label": "confere Verificar cobertura do município desligado"
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 39.4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Verificar cobertura do município"
+   },
+   "seconds": 1.2,
+   "at": 40.41,
+   "label": "Verificar cobertura do município (travado)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Envie um certificado A1 válido antes de consultar",
+    "within": "main"
+   },
+   "seconds": 1.6,
+   "at": 46.34,
+   "label": "dica: o certificado antes da consulta",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 50.21
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Salvar dados fiscais",
+    "exact": true
+   },
+   "at": 50.9,
+   "label": "Salvar dados fiscais (rodapé da seção)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Dados da empresa salvos.",
+   "timeout": 12
+  },
+  {
+   "do": "waitFor",
+   "text": "Envie o certificado A1 (.pfx/.p12) usado para assinar as notas no Padrão Nacional.",
+   "timeout": 10
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Dados da empresa salvos.\", \"Envie o certificado A1 (.pfx/.p12)\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"body\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere salvo e a tela passou para o certificado"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "tab",
+    "name": "Certificado A1",
+    "exact": true
+   },
+   "seconds": 1.2,
+   "at": 59.45,
+   "label": "aba Certificado A1 (a tela passou sozinha)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 61.83
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

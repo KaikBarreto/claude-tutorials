@@ -1,0 +1,221 @@
+{
+ "name": "t19-cap08",
+ "title": "T19 · Cap. 8 · O que o cliente vê (narração 37,8 s; marcas L1..L4 = início de cada linha do roteiro)",
+ "seed": "t19-cap08",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 0.4,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap05",
+  "t12/inicio",
+  "t12/apos-cap11",
+  "t13/inicio",
+  "t13/apos-cap14",
+  "t19/inicio",
+  "t19/apos-cap06"
+ ],
+ "prewarm": [
+  "/dashboard"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/pagar/hn7xq3rmk4vp"
+  },
+  {
+   "do": "waitFor",
+   "text": "Valor a pagar",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|erro|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Glacial Cold Brasil\", \"Valor a pagar\", \"R$ 450,00\", \"Vencimento\", \"13/11/2026\", \"Limpeza e higienização de 2 splits da cozinha\", \"Forma de pagamento\", \"Pix\", \"Aprovação na hora\", \"Boleto\", \"1 a 2 dias úteis\", \"Cartão\", \"Aprovação imediata\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"body\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere a página do cliente: marca, valor, vencimento, descrição e as três formas"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Valor a pagar",
+    "exact": true
+   },
+   "seconds": 1.4,
+   "label": "Valor a pagar",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Limpeza e higienização de 2 splits da cozinha"
+   },
+   "seconds": 1.4,
+   "label": "a descrição do serviço (a página não traz o rótulo Descrição)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Pix",
+    "exact": true
+   },
+   "label": "Pix"
+  },
+  {
+   "do": "waitFor",
+   "text": "Pague com Pix",
+   "timeout": 8
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Escaneie o QR Code com o app do seu banco ou use o Pix copia e cola abaixo.\", \"Copiar código Pix\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"body\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Pix: QR Code, copia e cola e o botão Copiar código Pix"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Copiar código Pix",
+    "exact": true
+   },
+   "label": "Copiar código Pix"
+  },
+  {
+   "do": "waitFor",
+   "text": "Código copiado!",
+   "timeout": 6,
+   "optional": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Voltar",
+    "exact": true
+   },
+   "label": "Voltar"
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Boleto",
+    "exact": true
+   },
+   "label": "Boleto"
+  },
+  {
+   "do": "waitFor",
+   "text": "Boleto bancário",
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Abrir boleto"
+   },
+   "seconds": 1.4,
+   "label": "Abrir boleto (sem clicar)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Voltar",
+    "exact": true
+   },
+   "label": "Voltar"
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Cartão",
+    "exact": true
+   },
+   "label": "Cartão"
+  },
+  {
+   "do": "waitFor",
+   "text": "Pagamento com cartão",
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "button",
+    "hasText": "Pagar R$ 450,00"
+   },
+   "seconds": 1.6,
+   "label": "Pagar R$ 450,00 (sem preencher)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "fetch(\"http://127.0.0.1:54333/functions/v1/asaas-simular-pagamento\",{method:'POST',headers:{'content-type':'application/json'},body:'{}'}).then(r=>r.text())",
+   "label": "CORTE: o Pix é pago fora da tela (o aviso do Asaas simulado)"
+  },
+  {
+   "do": "eval",
+   "js": "document.dispatchEvent(new Event('visibilitychange'));window.dispatchEvent(new Event('focus'));'foco'",
+   "label": "volta ao mesmo link (a página consulta de novo)"
+  },
+  {
+   "do": "pause",
+   "seconds": 2.5
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{if(!document.body.innerText.includes('Pagamento confirmado')){location.reload();return 'recarregou'}return 'já mostra'})()",
+   "label": "recarrega o link se ainda não mostrou o pagamento"
+  },
+  {
+   "do": "waitFor",
+   "text": "Pagamento confirmado",
+   "timeout": 15
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Pagamento confirmado\", \"Recebemos seu pagamento. Obrigado!\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"body\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Pagamento confirmado"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Pagamento confirmado",
+    "exact": true
+   },
+   "seconds": 2.2,
+   "label": "Pagamento confirmado",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ },
+ "anonymous": true
+}

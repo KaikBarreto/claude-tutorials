@@ -1,0 +1,204 @@
+{
+ "name": "t10-cap04",
+ "title": "T10 · Cap. 4 · Andando no funil (narração 44,8 s; marcas L1..L4 = início de cada linha do roteiro)",
+ "seed": "t10-cap04",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 0.4,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t2/apos-cap10",
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t9/inicio",
+  "t9/apos-cap16",
+  "t10/inicio",
+  "t10/apos-cap03"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/crm"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Camila!",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/crm"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie oportunidades e processos",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Toggle Sidebar",
+    "nth": 0
+   }
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|erro|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main [draggable=true]",
+    "hasText": "PMOC anual"
+   },
+   "seconds": 0.6,
+   "label": "card do hotel (Negociação)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main [draggable=true]",
+    "hasText": "Marcos Antônio Braga"
+   },
+   "seconds": 0.6,
+   "label": "card do Marcos (Proposta)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main [draggable=true]",
+    "hasText": "Luana Martins"
+   },
+   "seconds": 0.6,
+   "label": "card da Luana (Proposta)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "drag",
+   "target": {
+    "selector": "main [draggable=true]",
+    "hasText": "Marcos Antônio Braga"
+   },
+   "to": {
+    "selector": "main [draggable=true]",
+    "hasText": "Negociação"
+   },
+   "label": "arrasta o Marcos de Proposta para Negociação"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Negociação\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere o Marcos entrou em Negociação"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const b=document.querySelector(\"main div.overflow-x-auto.pb-4\");if(!b)return 'sem faixa';b.scrollTo({left:632,behavior:\"auto\"});return b.scrollLeft})()",
+   "label": "rola o quadro até Fechado (Perdido) ficar na janela"
+  },
+  {
+   "do": "drag",
+   "target": {
+    "selector": "main [draggable=true]",
+    "hasText": "Luana Martins"
+   },
+   "to": {
+    "x": 1150,
+    "y": 620
+   },
+   "label": "arrasta a Luana para Fechado (Perdido)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Motivo da Perda",
+   "timeout": 10
+  },
+  {
+   "do": "select",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]"
+   },
+   "option": "Preço alto",
+   "label": "Motivo: Preço alto"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Adicione mais detalhes sobre a perda...",
+    "within": "[role=dialog]"
+   },
+   "text": "O cliente achou o valor da higienização acima do esperado.",
+   "cps": 30,
+   "label": "detalhes da perda"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Confirmar Perda",
+    "exact": true
+   },
+   "label": "Confirmar Perda"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main [draggable=true]",
+    "hasText": "Fechado (Perdido)"
+   },
+   "seconds": 1.4,
+   "label": "coluna Fechado (Perdido) (1 oportunidade, R$ 380,00)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Fechado (Perdido)\", \"Higienização de 2 splits - Luana Martins\", \"R$ 380,00\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Luana em Fechado (Perdido) com R$ 380,00"
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

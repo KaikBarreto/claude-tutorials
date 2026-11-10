@@ -1,0 +1,138 @@
+{
+ "name": "t4-cap06",
+ "title": "T4 · Cap. 6 · Editar, desativar e excluir (narração 22,6 s; marcas L1..L3 = início de cada linha do roteiro)",
+ "seed": "t4-cap06",
+ "pace": 0.5,
+ "cps": 24,
+ "tail": 0.4,
+ "start": {
+  "x": 900,
+  "y": 480
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/g1-trilha",
+  "t4/g2-vazias",
+  "t4/apos-cap05"
+ ],
+ "prewarm": [
+  "/servicos"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/servicos"
+  },
+  {
+   "do": "waitFor",
+   "text": "6 tipos cadastrados",
+   "timeout": 20
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  }
+ ],
+ "steps": [
+  {
+   "do": "click",
+   "target": {
+    "text": "Manutenção Preventiva",
+    "exact": true,
+    "within": "main [role=list]"
+   },
+   "label": "abre Manutenção Preventiva"
+  },
+  {
+   "do": "scroll",
+   "target": {
+    "role": "button",
+    "name": "Salvar",
+    "exact": true
+   },
+   "label": "ficha: botão Salvar à vista"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "textarea"
+   },
+   "text": " e teste",
+   "cps": 20,
+   "label": "edita a descrição"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Salvar",
+    "exact": true
+   },
+   "label": "Salvar"
+  },
+  {
+   "do": "waitFor",
+   "text": "Tipo de serviço atualizado!",
+   "timeout": 10,
+   "optional": true
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "div.flex.items-center.gap-2:has(> label:text-is(\"Ativo\"))"
+   },
+   "seconds": 3.0,
+   "label": "interruptor Ativo"
+  },
+  {
+   "do": "scroll",
+   "target": {
+    "role": "button",
+    "name": "Excluir",
+    "exact": true
+   },
+   "label": "ficha: botão Excluir à vista"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Excluir",
+    "exact": true
+   },
+   "label": "Excluir"
+  },
+  {
+   "do": "waitFor",
+   "text": "Excluir Tipo de Serviço",
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Tem certeza que deseja excluir este tipo de serviço? Esta ação não pode ser desfeita.",
+    "exact": false
+   },
+   "seconds": 1.4,
+   "label": "confirmação: não pode ser desfeita"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Cancelar",
+    "exact": true
+   },
+   "label": "Cancelar"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "alertdialog"
+   },
+   "timeout": 8
+  }
+ ]
+}

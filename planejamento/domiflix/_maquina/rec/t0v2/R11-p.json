@@ -1,0 +1,60 @@
+{
+ "name": "R11-p",
+ "title": "T0 v2 · R11 · Lembrete da trilha no topo do sistema (celular 390x844)",
+ "seed": "t0v2-R11",
+ "pace": 0.6,
+ "tail": 1.2,
+ "cps": 9,
+ "seedExtra": [
+  "t0v2/catalogo",
+  "t0v2/progresso-camila",
+  "t0v2/usuario-novo",
+  "t0v2/conta-teste"
+ ],
+ "prewarm": [
+  "/dashboard"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "vamos retomar de onde você parou",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "pause",
+   "seconds": 2.5
+  },
+  {
+   "do": "hover",
+   "target": "Continuar tutorial",
+   "seconds": 1.0,
+   "optional": true,
+   "timeout": 3,
+   "label": "Continuar tutorial"
+  },
+  {
+   "do": "pause",
+   "seconds": 3.5
+  }
+ ],
+ "device": "phone",
+ "start": {
+  "x": 195,
+  "y": 600
+ }
+}

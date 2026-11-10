@@ -1,0 +1,347 @@
+{
+ "name": "t9-cap03",
+ "title": "T9 · Cap. 3 · O custo da Van 01 (narração 70,9 s; marcas L1..L5 = início de cada linha do roteiro)",
+ "seed": "t9-cap03",
+ "pace": 0.45,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t9/inicio",
+  "t9/apos-cap02"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/orcamentos"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/orcamentos"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie orçamentos, custos e precificação",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Toggle Sidebar",
+    "nth": 0
+   }
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|erro|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0.04
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Custos Globais",
+    "exact": true
+   },
+   "at": 2.14,
+   "label": "aba Custos Globais"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Centro de Custos",
+    "within": "main"
+   },
+   "seconds": 0.8,
+   "at": 5.54,
+   "label": "título Centro de Custos",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Custo/hora Veículos",
+    "within": "main"
+   },
+   "seconds": 1.0,
+   "at": 8.02,
+   "label": "faixa Custo/hora Veículos",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 14.42
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Novo Recurso",
+    "exact": true
+   },
+   "at": 14.66,
+   "label": "Novo Recurso"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Ferramentas",
+    "exact": true
+   },
+   "seconds": 0.2,
+   "at": 19.88,
+   "label": "opção Ferramentas",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Brindes",
+    "exact": true
+   },
+   "seconds": 0.2,
+   "at": 20.84,
+   "label": "opção Brindes",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "EPIs",
+    "exact": true
+   },
+   "seconds": 0.2,
+   "at": 21.56,
+   "label": "opção EPIs",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Veículos",
+    "exact": true
+   },
+   "at": 23.9,
+   "label": "opção Veículos"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 24.78
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='Ex: Spin 2024']",
+    "nth": 0
+   },
+   "text": "Van 01",
+   "at": 25.16,
+   "label": "Nome do veículo: Van 01"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] input[inputmode=numeric]"
+   },
+   "at": 27.66,
+   "label": "Horas de uso mensal 176 (clique)"
+  },
+  {
+   "do": "press",
+   "key": "Control+A"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[inputmode=numeric]"
+   },
+   "text": "176",
+   "noClick": true,
+   "label": "Horas de uso mensal 176"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='Valor mensal']",
+    "nth": 0
+   },
+   "text": "1400",
+   "at": 34.94,
+   "label": "Depreciação mensal 1.400"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='Valor mensal']",
+    "nth": 1
+   },
+   "text": "1620",
+   "at": 39.43,
+   "label": "Manutenção + Combustível 1.620"
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 41.49
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='Valor anual']",
+    "nth": 0
+   },
+   "text": "3600",
+   "at": 42.61,
+   "label": "Seguro 3.600 (anual)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='Valor anual']",
+    "nth": 1
+   },
+   "text": "2400",
+   "at": 45.81,
+   "label": "Documentação / IPVA 2.400 (anual)"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Total mensal: R$ 3.520,00\", \"Horas mensais: 176h\", \"Custo/hora: R$ 20,00/h\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Resumo da Van 01 (3.520,00 por mês, 176h, R$ 20,00/h)"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const d=document.querySelector('[role=dialog] .overflow-y-auto');if(!d)return 'sem rolagem';d.scrollTo({top:d.scrollHeight,behavior:'smooth'});return d.scrollHeight})()",
+   "at": 52.13,
+   "label": "desce até o Resumo da janela"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Total mensal:",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.0,
+   "at": 53.27,
+   "label": "Resumo: Total mensal R$ 3.520,00",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Custo/hora:",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.2,
+   "at": 57.19,
+   "label": "Resumo: Custo/hora R$ 20,00",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 60.05
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Salvar",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 60.05,
+   "label": "Salvar a Van 01"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Custo/hora Veículos",
+    "within": "main"
+   },
+   "seconds": 1.0,
+   "at": 61.25,
+   "label": "Custo/hora Veículos R$ 20,00/h",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Van 01",
+    "exact": true,
+    "within": "main"
+   },
+   "at": 65.74,
+   "label": "abre a Van 01 na lista"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Composição do custo",
+    "within": "main"
+   },
+   "seconds": 1.4,
+   "at": 67.58,
+   "label": "Composição do custo",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Custo/hora Veículos R$ 20,00/h\", \"Custo por hora R$ 20,00\", \"Custo mensal R$ 3.520,00\", \"Horas mensais 176\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Van 01 na lista e na ficha"
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 70.88
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

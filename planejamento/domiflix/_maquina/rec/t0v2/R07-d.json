@@ -1,0 +1,93 @@
+{
+ "name": "R07-d",
+ "title": "T0 v2 · R07 · Página da aula (vídeo, legenda, descrição, materiais) (computador 1280x800)",
+ "seed": "t0v2-R07",
+ "pace": 0.6,
+ "tail": 1.2,
+ "cps": 9,
+ "seedExtra": [
+  "t0v2/catalogo",
+  "t0v2/progresso-camila",
+  "t0v2/usuario-novo",
+  "t0v2/conta-teste"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/domiflix"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/domiflix/assistir/servicos-tarefas-e-checklists/1?trilha=tutoriais-do-sistema"
+  },
+  {
+   "do": "waitFor",
+   "text": "Materiais e extras",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "'sem tarja'"
+  },
+  {
+   "do": "pause",
+   "seconds": 0.6
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "pause",
+   "seconds": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Português",
+    "nth": 0
+   },
+   "seconds": 1.0,
+   "optional": true,
+   "timeout": 3,
+   "label": "menu Legendas"
+  },
+  {
+   "do": "pause",
+   "seconds": 1.5
+  },
+  {
+   "do": "scroll",
+   "target": "Materiais e extras",
+   "optional": true,
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": "Materiais e extras",
+   "seconds": 1.0,
+   "optional": true,
+   "timeout": 3,
+   "label": "Materiais e extras"
+  },
+  {
+   "do": "pause",
+   "seconds": 3
+  }
+ ]
+}

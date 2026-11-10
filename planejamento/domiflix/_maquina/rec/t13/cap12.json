@@ -1,0 +1,345 @@
+{
+ "name": "t13-cap12",
+ "title": "T13 · Cap. 12 · Organizar as categorias (narração 68,9 s; marcas L1..L7 = início de cada linha do roteiro)",
+ "seed": "t13-cap12",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap05",
+  "t12/inicio",
+  "t12/apos-cap11",
+  "t13/inicio",
+  "t13/apos-cap11"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/financeiro/movimentacoes"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Camila!",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/financeiro/movimentacoes"
+  },
+  {
+   "do": "waitFor",
+   "text": "Contas e cartões",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Toggle Sidebar",
+    "nth": 0
+   }
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|erro|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Configurações Financeiras",
+    "exact": true
+   },
+   "at": 4.02,
+   "label": "Configurações Financeiras"
+  },
+  {
+   "do": "waitFor",
+   "text": "Categorias de Despesa",
+   "timeout": 15
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Categorias de Receita",
+    "within": "main"
+   },
+   "seconds": 0.9,
+   "at": 8.02,
+   "label": "Categorias de Receita",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Categorias de Despesa",
+    "within": "main"
+   },
+   "seconds": 0.9,
+   "at": 8.82,
+   "label": "Categorias de Despesa",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 12.26
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main :text-is('Vendas de Serviços') >> xpath=.. >> svg.lucide-lock"
+   },
+   "seconds": 0.9,
+   "at": 12.98,
+   "label": "o cadeado de Vendas de Serviços (Categoria do sistema)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main :text-is('CSP - Materiais') >> xpath=.. >> svg.lucide-lock"
+   },
+   "seconds": 0.9,
+   "at": 16.18,
+   "label": "o cadeado de CSP - Materiais (Categoria do sistema)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 20.64
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Nova categoria",
+    "exact": true,
+    "nth": 1
+   },
+   "at": 23.92,
+   "label": "Nova categoria (despesa)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Nova Categoria",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "placeholder": "Ex: Serviços",
+    "within": "[role=dialog]"
+   },
+   "at": 24.72,
+   "label": "nome: Peças e componentes (clique)"
+  },
+  {
+   "do": "eval",
+   "js": "(() => { document.execCommand('insertText', false, \"Pe\\u00e7as e componentes\"); const e = document.activeElement; return e && e.value; })()",
+   "label": "nome: Peças e componentes (colado)"
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 28.96
+  },
+  {
+   "do": "select",
+   "target": {
+    "selector": "[role=dialog] div:has(> label:has-text('Onde aparece no DRE')) button[role=combobox]",
+    "nth": 0
+   },
+   "option": "Custos diretos",
+   "at": 36.24,
+   "label": "Onde aparece no DRE: Custos diretos"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Prévia no DRE",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.9,
+   "at": 38.32,
+   "label": "Prévia no DRE: reduz o lucro bruto",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 43.39
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Atividades operacionais",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.9,
+   "at": 44.19,
+   "label": "Grupo DFC, Cor e Ícone",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "pause",
+   "seconds": 0.5
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Criar",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 47.95,
+   "label": "Criar"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 12
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Peças e componentes\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Peças e componentes entra em Categorias de Despesa"
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 49.63
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Ações de Peças e componentes",
+    "exact": true
+   },
+   "at": 49.79,
+   "label": "menu ⋮ de Peças e componentes"
+  },
+  {
+   "do": "pause",
+   "seconds": 0.6
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Ações de Peças e componentes",
+    "exact": true
+   },
+   "label": "menu ⋮ de Peças e componentes de novo (só se não abriu)",
+   "unless": {
+    "role": "menuitem",
+    "name": "Adicionar subcategoria"
+   }
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "menuitem",
+    "name": "Adicionar subcategoria"
+   },
+   "seconds": 0.9,
+   "at": 52.19,
+   "label": "Adicionar subcategoria (sem clicar)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 57.69,
+   "label": "fecha o menu"
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 58.03
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "tab",
+    "name": "Centro de Custo",
+    "exact": true
+   },
+   "seconds": 0.9,
+   "at": 58.91,
+   "label": "aba Centro de Custo",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "tab",
+    "name": "Grupos do DRE",
+    "exact": true
+   },
+   "seconds": 0.9,
+   "at": 64.34,
+   "label": "aba Grupos do DRE",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 68.92
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

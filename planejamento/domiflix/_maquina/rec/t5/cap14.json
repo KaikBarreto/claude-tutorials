@@ -1,0 +1,323 @@
+{
+ "name": "t5-cap14",
+ "title": "T5 · Cap. 14 · Pausadas, busca e resumo (narração 39,0 s; marcas L1..L3 = início de cada linha do roteiro)",
+ "seed": "t5-cap14",
+ "pace": 0.3,
+ "cps": 14,
+ "tail": 1.5,
+ "start": {
+  "x": 900,
+  "y": 480
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap13"
+ ],
+ "prewarm": [
+  "/agenda"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/agenda"
+  },
+  {
+   "do": "waitFor",
+   "text": "Visualize e gerencie os agendamentos",
+   "timeout": 20
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "OS Pausadas",
+    "exact": true
+   },
+   "at": 4.08,
+   "label": "OS Pausadas"
+  },
+  {
+   "do": "waitFor",
+   "text": "Retomar agora",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Restaurante Sabor da Serra",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.8,
+   "at": 6.14,
+   "label": "a OS pausada na lista"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Pausada há cerca de",
+    "exact": false,
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.5,
+   "at": 7.64,
+   "label": "o tempo que está parada"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Retomar agora",
+    "exact": true
+   },
+   "at": 10.6,
+   "label": "Retomar agora"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "#8",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.6,
+   "at": 12.26,
+   "label": "a OS #8 de volta à agenda"
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 13.96
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Buscar OS ou tarefa"
+   },
+   "at": 13.96,
+   "label": "Pesquisar"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Número da OS, cliente, descrição, técnico..."
+   },
+   "text": "Monte",
+   "cps": 14,
+   "at": 16.3,
+   "label": "busca Monte",
+   "noClick": true
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "#16",
+    "exact": false,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.4,
+   "at": 17.1,
+   "label": "resultado: o número da OS"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Colégio Monte Verde",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.4,
+   "at": 17.88,
+   "label": "resultado: o cliente"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Manutenção preventiva",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.4,
+   "at": 18.84,
+   "label": "resultado: a descrição"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Rafael Lima",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.4,
+   "at": 19.84,
+   "label": "resultado: o técnico"
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "label": "fecha a busca"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 21.24
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "#8",
+    "exact": true,
+    "within": "main"
+   },
+   "at": 21.24,
+   "label": "abre o resumo da OS #8"
+  },
+  {
+   "do": "waitFor",
+   "text": "Resumo da OS",
+   "timeout": 8
+  },
+  {
+   "do": "scroll",
+   "at": 22.5,
+   "label": "rola o resumo até os responsáveis",
+   "by": 150,
+   "point": {
+    "x": 1090,
+    "y": 520
+   }
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Responsáveis",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.6,
+   "at": 23.55,
+   "label": "Responsáveis"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Descrição",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.6,
+   "at": 24.67,
+   "label": "Descrição"
+  },
+  {
+   "do": "scroll",
+   "at": 25.43,
+   "label": "rola o resumo até a linha do tempo",
+   "by": 170,
+   "point": {
+    "x": 1090,
+    "y": 520
+   }
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Linha do tempo",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.3,
+   "at": 25.71,
+   "label": "Linha do tempo"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button",
+    "hasText": "Ações"
+   },
+   "at": 27.13,
+   "label": "menu Ações"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "menuitem",
+    "name": "Editar"
+   },
+   "seconds": 0.2,
+   "at": 27.85,
+   "label": "Ações: Editar"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "menuitem",
+    "name": "Pausar OS"
+   },
+   "seconds": 0.2,
+   "at": 29.15,
+   "label": "Ações: Pausar OS"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "menuitem",
+    "name": "Faturar OS"
+   },
+   "seconds": 0.2,
+   "at": 29.95,
+   "label": "Ações: Faturar OS"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "menuitem",
+    "name": "Copiar link de acompanhamento"
+   },
+   "seconds": 1.6,
+   "at": 30.91,
+   "label": "Ações: Copiar link de acompanhamento"
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 32.99,
+   "label": "fecha o menu Ações"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main button",
+    "hasText": "Preencher OS"
+   },
+   "seconds": 4.5,
+   "at": 33.47,
+   "label": "botão Preencher OS"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 38.96
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}

@@ -1,0 +1,133 @@
+{
+ "name": "t2-cap01",
+ "title": "T2 · Cap. 1 · Onde ficam os usuários (narração 39,4 s; marcas L1..L4 = início de cada linha do roteiro)",
+ "seed": "t2-cap01",
+ "pace": 0.6,
+ "cps": 40,
+ "tail": 0.4,
+ "start": {
+  "x": 640,
+  "y": 430
+ },
+ "seedExtra": [
+  "t1/apos-cap13",
+  "t2/inicio"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/configuracoes"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Camila!",
+   "timeout": 15
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  }
+ ],
+ "steps": [
+  {
+   "do": "scroll",
+   "point": {
+    "x": 80,
+    "y": 770
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "label": "botão Configurações no rodapé do menu (cursor)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[data-sidebar=sidebar] button[aria-label=\"Configurações\"]"
+   },
+   "text": "",
+   "noClick": true,
+   "label": "botão Configurações no rodapé do menu"
+  },
+  {
+   "do": "eval",
+   "js": "document.querySelector('[data-sidebar=sidebar] button[aria-label=\"Configurações\"]').click()",
+   "label": "clica em Configurações (rodapé do menu)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie as configurações do sistema",
+   "timeout": 12
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Usuários e Permissões"
+   },
+   "label": "aba Usuários e Permissões"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "main p",
+    "hasText": "usuários •"
+   },
+   "timeout": 12
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main p",
+    "hasText": "usuários •"
+   },
+   "seconds": 4.5,
+   "label": "contador de usuários e vagas"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Camila Duarte",
+    "within": "main"
+   },
+   "seconds": 1.2,
+   "label": "a Camila na lista"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Selecione um usuário",
+    "exact": true
+   },
+   "seconds": 2.0,
+   "label": "painel: Selecione um usuário"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Criar Usuário",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 1.3,
+   "label": "botão Criar Usuário"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Configurações",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 4.0,
+   "label": "botão Configurações (cargos)"
+  }
+ ]
+}

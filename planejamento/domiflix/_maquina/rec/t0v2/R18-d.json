@@ -1,0 +1,103 @@
+{
+ "name": "R18-d",
+ "title": "T0 v2 · R18 · Gerenciar Meu Plano (computador 1280x800)",
+ "seed": "t0v2-R18",
+ "pace": 0.6,
+ "tail": 1.2,
+ "cps": 9,
+ "seedExtra": [
+  "t0v2/catalogo",
+  "t0v2/progresso-camila",
+  "t0v2/usuario-novo",
+  "t0v2/conta-contratada",
+  "t0v2/pagamentos",
+  "t0v2/lembrete-dispensado"
+ ],
+ "prewarm": [
+  "/dashboard",
+  "/domiflix"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/assinatura"
+  },
+  {
+   "do": "waitFor",
+   "text": "Histórico de pagamentos",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "'sem tarja'"
+  },
+  {
+   "do": "pause",
+   "seconds": 0.6
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "scroll",
+   "target": "Gerenciar Meu Plano",
+   "optional": true,
+   "timeout": 8
+  },
+  {
+   "do": "click",
+   "target": "Gerenciar Meu Plano",
+   "optional": true,
+   "timeout": 8,
+   "label": "abre Gerenciar Meu Plano"
+  },
+  {
+   "do": "waitFor",
+   "text": "Personalizado",
+   "timeout": 15
+  },
+  {
+   "do": "pause",
+   "seconds": 1.5
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Personalizado"
+   },
+   "optional": true,
+   "timeout": 8,
+   "label": "aba Personalizado"
+  },
+  {
+   "do": "pause",
+   "seconds": 2
+  },
+  {
+   "do": "scroll",
+   "by": 500,
+   "duration": 1.5
+  },
+  {
+   "do": "pause",
+   "seconds": 2.5
+  }
+ ]
+}

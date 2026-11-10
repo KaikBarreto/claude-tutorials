@@ -1,0 +1,478 @@
+{
+ "name": "t8-cap01",
+ "title": "T8 · Cap. 1 · A tela e as seis abas (narração 64,4 s; marcas L1..L5 = início de cada linha do roteiro)",
+ "seed": "t8-cap01",
+ "pace": 0.5,
+ "cps": 11,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "seedExtra": [
+  "t3/apos-cap10",
+  "t1/apos-cap13",
+  "t4/inicio",
+  "t4/apos-cap14",
+  "t5/inicio",
+  "t5/apos-cap15",
+  "t8/inicio"
+ ],
+ "prewarm": [
+  "/estoque"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/estoque"
+  },
+  {
+   "do": "waitFor",
+   "text": "Controle de peças e materiais",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Toggle Sidebar",
+    "nth": 0
+   }
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|erro|Tente novamente|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');const e=[...document.querySelectorAll('div.fixed')].some(x=>getComputedStyle(x).backgroundColor==='rgb(17, 17, 17)');if((f||e)&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA DOMIFLIX'))window.__avisos.push('TRILHA DOMIFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "tab",
+    "name": "Estoque Atual",
+    "exact": true
+   },
+   "seconds": 0.15,
+   "at": 1.11,
+   "label": "aba Estoque Atual",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "tab",
+    "name": "Histórico de Materiais (Kardex)",
+    "exact": true
+   },
+   "seconds": 0.15,
+   "at": 2.31,
+   "label": "aba Histórico de Materiais (Kardex)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "tab",
+    "name": "Compras de Material",
+    "exact": true
+   },
+   "seconds": 0.15,
+   "at": 5.11,
+   "label": "aba Compras de Material",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "tab",
+    "name": "Inventários",
+    "exact": true
+   },
+   "seconds": 0.15,
+   "at": 6.63,
+   "label": "aba Inventários",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "tab",
+    "name": "Posição de Estoque",
+    "exact": true
+   },
+   "seconds": 0.15,
+   "at": 7.75,
+   "label": "aba Posição de Estoque",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "tab",
+    "name": "Relatório",
+    "exact": true
+   },
+   "seconds": 0.15,
+   "at": 9.35,
+   "label": "aba Relatório",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Importar XML de NF-e",
+    "exact": true
+   },
+   "seconds": 0.3,
+   "at": 12.74,
+   "label": "o botão Importar XML da NF-e",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Configurações",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.3,
+   "at": 15.46,
+   "label": "o botão Configurações",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 19.24
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Total de itens",
+    "exact": true
+   },
+   "seconds": 0.3,
+   "at": 23.07,
+   "label": "cartão Total de itens",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Valor investido (R$)",
+    "exact": true
+   },
+   "seconds": 0.3,
+   "at": 24.43,
+   "label": "cartão Valor investido",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Estoque baixo",
+    "exact": true
+   },
+   "seconds": 0.5,
+   "at": 29.07,
+   "label": "cartão Estoque baixo",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "aside[aria-label=\"Locais de estoque\"] button:has-text(\"Estoque Principal\")"
+   },
+   "at": 30.87,
+   "label": "escolhe o local Estoque Principal (mínimo e custo por local)"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 32.37
+  },
+  {
+   "do": "click",
+   "target": {
+    "placeholder": "Buscar material...",
+    "exact": true
+   },
+   "at": 33.31,
+   "label": "clica na busca"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Buscar material...",
+    "exact": true
+   },
+   "text": "fita",
+   "cps": 8,
+   "at": 34.11,
+   "label": "digita \"fita\" na busca",
+   "noClick": true
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Buscar material...",
+    "exact": true
+   },
+   "text": "",
+   "at": 35.61,
+   "label": "limpa a busca",
+   "clear": true,
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Filtros",
+    "within": "main"
+   },
+   "at": 36.35,
+   "label": "abre Filtros"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Estoque abaixo do mínimo",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.5,
+   "at": 38.13,
+   "label": "a caixa \"Estoque abaixo do mínimo\"",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Grupo",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.5,
+   "at": 39.89,
+   "label": "a lista de grupos",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 41.19,
+   "label": "fecha Filtros"
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 41.27
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main thead th",
+    "hasText": "Nome"
+   },
+   "seconds": 0.15,
+   "at": 41.85,
+   "label": "coluna Nome",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main thead th",
+    "hasText": "SKU"
+   },
+   "seconds": 0.15,
+   "at": 42.57,
+   "label": "coluna SKU",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main thead th",
+    "hasText": "Categoria"
+   },
+   "seconds": 0.15,
+   "at": 43.45,
+   "label": "coluna Categoria",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main thead th",
+    "hasText": "Quantidade"
+   },
+   "seconds": 0.15,
+   "at": 44.25,
+   "label": "coluna Quantidade",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main thead th",
+    "hasText": "Qtd. mínima"
+   },
+   "seconds": 0.15,
+   "at": 45.85,
+   "label": "coluna Qtd. mínima",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main thead th",
+    "hasText": "Custo Unit."
+   },
+   "seconds": 0.15,
+   "at": 46.57,
+   "label": "coluna Custo Unit.",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const m=[...document.querySelectorAll(\"main\")].find(e=>getComputedStyle(e).overflowY===\"auto\");if(m)m.scrollTo({top:260,behavior:\"smooth\"});return 1})()",
+   "at": 46.87,
+   "label": "rola a lista para ver as duas linhas em falta"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text(\"Gás refrigerante R-410A\") span[aria-label^=\"Estoque abaixo do mínimo\"]"
+   },
+   "seconds": 0.5,
+   "at": 47.67,
+   "label": "o triângulo do R-410A",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text(\"Tubo de cobre 3/8\") span[aria-label^=\"Estoque abaixo do mínimo\"]"
+   },
+   "seconds": 0.5,
+   "at": 48.63,
+   "label": "o triângulo do Tubo de cobre 3/8\"",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text(\"Gás refrigerante R-410A\") span[aria-label^=\"Estoque abaixo do mínimo\"]"
+   },
+   "seconds": 3.0,
+   "at": 52.53,
+   "label": "dica do triângulo: 8,5 de 10",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const m=[...document.querySelectorAll(\"main\")].find(e=>getComputedStyle(e).overflowY===\"auto\");if(m)m.scrollTo({top:0,behavior:\"smooth\"});return 1})()",
+   "at": 56.73,
+   "label": "volta ao topo da lista"
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 57.03
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Exportar estoque",
+    "exact": true,
+    "within": "main"
+   },
+   "at": 58.05,
+   "label": "abre Exportar"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "PDF"
+   },
+   "at": 59.35,
+   "label": "escolhe PDF"
+  },
+  {
+   "do": "waitFor",
+   "text": "Selecionar materiais",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] thead, [role=dialog] [role=checkbox]"
+   },
+   "seconds": 1.0,
+   "at": 60.47,
+   "label": "a janela Selecionar materiais",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 63.25,
+   "label": "fecha a janela (sem gerar arquivo)"
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 64.4
+  }
+ ],
+ "storage": {
+  "dominex:portal-tickets-seen:d40f5787-1779-501f-900c-ddb2b90a36e5": "2031-01-01T00:00:00.000Z"
+ }
+}
