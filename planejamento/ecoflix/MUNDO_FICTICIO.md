@@ -105,3 +105,7 @@ vendeu pouco num mês) cabem num dos meses.
   fiscal cadastrados (o cenário do exemplo usa CST 51, sem recomendação: quem define é o contador); venda de 500 kg
   líquidos de Cobre mel; caixa de 09/11 fechado; duas notas recebidas; XML da Cooperativa Recomeço para importar. Na aula:
   cancelar a 1249, carta de correção da placa, inutilizar 1246 e 1247 (tudo simulado).
+- **Bancos** (T13, T14): "Conta Principal" e "Conta Secundária" (nunca "Conta Reserva"); uma "Poupança antiga" zerada,
+  para arquivar na T14; categorias "Combustível" e "Tarifas bancárias". Extrato OFX fictício de 17 linhas, de 01/11 a
+  10/11, casando com os Pix da T13 e com o que a T14 cria (tabela no `T14/plano.md`). "Tornar principal" só é mostrado,
+  sem clicar (a conta padrão não muda na trilha).

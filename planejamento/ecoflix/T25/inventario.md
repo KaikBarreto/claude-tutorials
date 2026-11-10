@@ -48,10 +48,10 @@ A cópia não traz `supabase/migrations`: o que as RPCs devolvem vem do contrato
   hoje", "Você tem {n} tarefa(s) pendente(s)", lista com horário, "Fechar" e "Ir para Agenda" (`:58-110`).
 
 ## 2. Agenda (`/agenda`, `pages/Agenda.tsx`)
-- **Onde:** último item do menu lateral, "Agenda" (`config/routes.ts:488`); atalho Shift+A.
+- **Onde:** último item do menu lateral, "Agenda" (`config/routes.ts:491`); atalho Shift+A.
 - **Tela:** "Agenda" · "Gerencie suas tarefas e compromissos"; abre em "Mês" no computador e em "Dia" no celular (`:74`).
   Cabeçalho do calendário (`components/agenda/AgendaCalendar.tsx:228-290`): setas, o mês ("nov 2026") com seletor, "Hoje",
-  "Dia" · "Semana" · "Mês". À direita (≥ 1280 px, `Agenda.tsx:224-234`), o dia escolhido ("10 de novembro", "terça-feira"),
+  "Dia" · "Semana" · "Mês". À direita (≥ 1280 px, `Agenda.tsx:225-234`), o dia escolhido ("10 de novembro", "terça-feira"),
   o botão **"Nova Tarefa"** e as tarefas do dia ("Nenhuma tarefa neste dia") (`components/agenda/AgendaDaySidebar.tsx:36-80`).
   Rodapé "Legenda:" "Tarefa", "Coleta", "CRM", "Outro" (`components/agenda/TaskCard.tsx:229-247`).
 - **"Nova Tarefa"** (`components/agenda/TaskFormDialog.tsx`): "Título", "Descrição", "Categoria" ("Tarefa" padrão, "Coleta",
@@ -60,7 +60,7 @@ A cópia não traz `supabase/migrations`: o que as RPCs devolvem vem do contrato
   "Tarefa atualizada" (`hooks/useScheduleTasks.tsx:465,488`). Backend: `schedule_tasks` (insert/update).
 - **Arrastar para outro dia** (`AgendaCalendar.tsx:126-190`): arrasto nativo do navegador (`draggable`, `onDrop`) nas vistas
   "Semana" e "Mês"; grava `scheduled_date` (`Agenda.tsx:172-177`, toast "Tarefa atualizada"). Não arrastam: vista "Dia",
-  avisos automáticos e tarefas do CRM (`:167-170`).
+  avisos automáticos e tarefas do CRM (`:169`).
 - **Feriados** (`Agenda.tsx:59-87`, `utils/holidays.ts:39-56,154`): nacionais calculados (novembro: "Finados" 02, "Proclamação
   da República" 15, "Consciência Negra" 20) e municipais de uma lista própria (Taubaté não está nela); cidade e UF de
   `company_fiscal_config`. Etiqueta com estrela no dia (`AgendaCalendar.tsx:192-215`). Liga e desliga em Configurações →

@@ -10,7 +10,7 @@ instituição (ícone genérico, sem logo de banco).
 - **Antes:** Contas a Pagar e Receber (T13)
 - **Próximo:** Relatório Financeiro e DRE (T15)
 - **Vinhetas (áreas):** BANCOS · COFRE · MOVIMENTAÇÕES · CONCILIAÇÃO · FECHAMENTO · RESUMO (todos os capítulos menos o 0)
-- **Duração estimada:** ~16,5 min de vídeo (2.211 palavras de fala, ~14,2 min de voz a 2,6 palavras/s; 12.529 caracteres
+- **Duração estimada:** ~16,5 min de vídeo (2.211 palavras de fala, ~14,2 min de voz a 2,6 palavras/s; 12.527 caracteres
   com os títulos das vinhetas; mais a vinheta de abertura, 15 vinhetas de capítulo, as ilustrações e as esperas
   aceleradas; alvo da fonte ~18 min)
 - **FAKE_NOW:** `2026-11-10T08:30:00-03:00` em todos os capítulos. Logado: Rafael Nogueira (admin MASTER). Desktop
@@ -153,7 +153,7 @@ instituição (ícone genérico, sem logo de banco).
 | --- | --- |
 | Capítulo novo (semente `apos-cap09`). A linha "PIX RECEBIDO SERRA FINA ALUMINIO" (09/11, +R$ 4.815,00), com "Criar receita", "Mais ações" e a nota "Sem casamento automático." [BACKEND: linha 6 sem sugestão, sem `near_matches`, sem candidato distante] | Este Pix da Serra Fina Alumínio caiu no dia nove: quatro mil oitocentos e quinze reais. E o sistema não sugeriu nada. |
 | [ILUSTRAÇÃO: data e centavos: à esquerda o cartão do banco "09/11 · Pix · R$ 4.815,00"; à direita o cartão da venda "03/11 · 463 kg de alumínio perfil × R$ 10,40 = R$ 4.815,20"; em "dia três" as duas datas piscam em âmbar; em "centavos" os R$ 0,20 se destacam; um traço liga os dois cartões] | É que a venda foi registrada no dia três, por quatro mil oitocentos e quinze reais e vinte. A Serra Fina pagou depois e deixou os centavos de fora. |
-| A câmera passa por "Criar receita", sem clicar; clique em "Mais ações" e em "Buscar lançamento": painel "Buscar lançamento para casar". | Uma dica: em vez de criar outra receita, procure a venda que já existe. Mais ações, Buscar lançamento. |
+| A câmera passa por "Criar receita", sem clicar; clique em "Mais ações" e em "Buscar lançamento": painel "Buscar lançamento para casar". | Em vez de criar outra receita, a gente procura a venda que já existe. Mais ações, Buscar lançamento. |
 | Em "Nome do cliente/fornecedor, nº do pedido..." digita "Serra": a frase "Mostra lançamentos de R$ 4.815,00 (ou com até R$ 2,00 de diferença)" e o resultado "Venda #(nº) • Serra Fina Alumínio Reciclagem", 03/11, +R$ 4.815,20, com o selo âmbar "dif. −R$ 0,20". [ZOOM: o resultado com o selo "dif. −R$ 0,20"] [BACKEND: `reconcile_search_candidates` com "Serra" devolve a venda] | Digito Serra. A busca aceita até dois reais de diferença e casa mesmo com a data diferente. Olha a venda, com vinte centavos a menos. |
 | Marca a venda; clique em "Casar com selecionado": janela "Casar com valor diferente?", "O lançamento é R$ 4.815,20 e a linha é R$ 4.815,00. Casar assim? A diferença de R$ -0,20 vai pro resumo de ajustes." | Casar com selecionado. O sistema confirma: casar com valor diferente? |
 | Clique em "Casar assim": aviso "Linha casada"; selo "Casada"; no rodapé aparece o bloco âmbar "Diferenças casadas" com R$ -0,20. [ZOOM: "Diferenças casadas"] [BACKEND: casamento manual com `value_difference` −0,20; `matched_value_difference_total` −0,20 e `count` 1; vira `apos-cap10`] | Casar assim. A diferença não vira lançamento. Ela fica guardada no rodapé, em Diferenças casadas, pra quem quiser conferir. |

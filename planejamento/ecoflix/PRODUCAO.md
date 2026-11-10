@@ -195,3 +195,9 @@ Decisões:
   "nome sem acento no XML" não confere no código (fora da fala); "cancelada conta na cota" não dá para conferir (a RPC
   não está na cópia; fora da fala). Decisão do coordenador: as ações do exemplo (cancelar a 1249, CC-e da placa,
   inutilizar 1246 e 1247, cenário com CST 51) ficam, todas simuladas e sem tom de recomendação; vai como aviso ao Kaik.
+- 10/11 02:3x **T14 pronta** (roteiro): 16 capítulos, 104 falas, 2.211 palavras, ~14,2 min de voz (~16,5 min de vídeo), 9
+  ilustrações; sem pronúncia nova ("Quiririm" a conferir no ensaio). Backend: RPCs da conciliação (sugestões por linha,
+  importar, casar, baixar, criar, ignorar, desfazer, finalizar), do cofre e do saque. Código × fonte: "Abra o caixa antes
+  de realizar saques" não existe (com o cofre, o saque não pede caixa); o selo da linha é "Casada"; o menu diz
+  "Movimentações Financeiras". Conflito com a T6 ("Conta Reserva") resolvido: "Conta Secundária" (agente da T6 avisado).
+  "Tornar principal" só mostrado (coordenador).

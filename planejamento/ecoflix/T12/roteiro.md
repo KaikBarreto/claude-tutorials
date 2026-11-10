@@ -14,7 +14,9 @@ Cooperativa Recomeço.
 - **Próximo:** Produção (T11)
 - **Vinhetas (áreas):** COLETAS · ORDENS · AGENDA · ACOMPANHAMENTO · PORTAL · FROTA · EQUIPAMENTOS · RELATÓRIO ·
   CONFIGURAÇÕES · RESUMO (todos os capítulos menos o 0)
-- **Duração estimada:** ver cabeçalho do `narracao/tts_textos.py` (contagem) e a linha abaixo.
+- **Duração estimada:** ~13 min de vídeo (1.712 palavras de fala, ~11 min de voz a 2,6 palavras/s, mais a vinheta de
+  abertura, 12 vinhetas de capítulo, a cartela, a troca de janela do portal e as esperas dos formulários; as 7
+  ilustrações correm junto da fala; alvo da fonte: 15 min)
 - **FAKE_NOW:** `2026-11-10T08:30:00-03:00` (terça) em todos os capítulos.
 - **Estado inicial:** `plano.md` → "Mundo: o que esta aula precisa" (frota com tara e capacidade, as caçambas e os bags com
   as movimentações, as ordens 1 a 8, o portal da Cooperativa Recomeço).

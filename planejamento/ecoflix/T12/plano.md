@@ -9,7 +9,8 @@
   entrou no pátio em produto de maior valor").
 - **Vinhetas (áreas):** COLETAS · ORDENS · AGENDA · ACOMPANHAMENTO · PORTAL · FROTA · EQUIPAMENTOS · RELATÓRIO ·
   CONFIGURAÇÕES · RESUMO.
-- **Alvo da fonte:** ~15 min. Estimativa no roteiro.
+- **Alvo da fonte:** ~15 min. Estimativa: 1.712 palavras de fala (~11 min de voz) + vinhetas, cartela, a troca de janela
+  do portal e as esperas dos formulários ≈ 13 min.
 - **FAKE_NOW:** `2026-11-10T08:30:00-03:00` (terça). Desktop, Rafael Nogueira (MASTER); no cap07, uma segunda janela sem
   login com o portal da Cooperativa Recomeço.
 - **Fora da aula (fonte):** "Rastreamento" e "Rotas". A fala não cita nem promete nada; a câmera não para nesses itens do

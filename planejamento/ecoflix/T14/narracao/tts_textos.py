@@ -76,7 +76,7 @@ A categoria é obrigatória: Tarifas. E o botão já mostra o valor.
 Criar. A linha fica como Criada, e a tarifa entra no histórico da conta como despesa.""",
 10: """Este Pix da Serra Fina Alumínio caiu no dia nove: quatro mil oitocentos e quinze reais. E o sistema não sugeriu nada.
 É que a venda foi registrada no dia três, por quatro mil oitocentos e quinze reais e vinte. A Serra Fina pagou depois e deixou os centavos de fora.
-Uma dica: em vez de criar outra receita, procure a venda que já existe. Mais ações, Buscar lançamento.
+Em vez de criar outra receita, a gente procura a venda que já existe. Mais ações, Buscar lançamento.
 Digito Serra. A busca aceita até dois reais de diferença e casa mesmo com a data diferente. Olha a venda, com vinte centavos a menos.
 Casar com selecionado. O sistema confirma: casar com valor diferente?
 Casar assim. A diferença não vira lançamento. Ela fica guardada no rodapé, em Diferenças casadas, pra quem quiser conferir.""",
