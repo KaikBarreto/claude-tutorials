@@ -85,3 +85,7 @@ vendeu pouco num mês) cabem num dos meses.
   como o código faz).
 - **Permissões do Marcos**: as do T2 (perfil "Operador Padrão" sem "Ver Projeção de Lucro"); as aulas seguintes não
   mudam isso.
+- **Produção** (T11): produto "Fardo de alumínio" (da latinha, custo médio da latinha R$ 6,20); ficha do Cobre mel com
+  as ordens #1 e #2 (a #2 em dobro, excluída no cap13); tolerância 2 %, meta 250; FAKE_NOW 17:30 do cap07 da T11 em
+  diante.
+- **Ajudantes do pátio** (T11, valem para a T19): Cláudio Ferraz e Diego Morais.

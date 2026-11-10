@@ -7,7 +7,7 @@
   relatório de outubro lido aba por aba, o DRE nos dois regimes com o exemplo do pátio, e o histórico conferido e exportado.
 - **Antes:** T14 · Bancos, cofre e conciliação bancária. **Próximo:** T21 · Cato, o assistente ("perguntar em português e
   receber a resposta pronta").
-- **Duração:** alvo da fonte ~17 min; estimativa da fala no `roteiro.md` (cabeçalho).
+- **Duração:** alvo da fonte ~17 min; estimativa ~16 min 45 s (fala de ~14,5 min, mais vinhetas e ações; soma da tabela abaixo).
 - **Base:** `T15/inventario.md` (código 1.59.154). Computador, janela de 1280×800, logado como **Rafael Nogueira** (MASTER) a
   aula inteira. `FAKE_NOW=2026-11-10T08:30:00-03:00`; o mês lido é **outubro de 2026** ("Mês passado").
 
@@ -15,18 +15,18 @@
 | # | Vinheta (área / título) | O que a tela mostra | Partida | Duração |
 |---|---|---|---|---|
 | 0 | (sem vinheta) | Dashboard do EcoSistema; ilustração do problema do pátio; cartão "Antes". | `inicio` | 0:40 |
-| 1 | CATEGORIAS / O plano de contas | Menu "Financeiro" › "Categorias Financeiras"; receitas e despesas por grupo do DRE; cria a subcategoria **Frete de entrega** (pai "Frete", em "Custos adicionais") em "Despesas operacionais (OPEX)" e vê o selo; cria **Máquinas e veículos** em "Não compõe o DRE" / "Atividades de investimento". Ilustrações: plano de contas; nem toda saída é despesa. | `inicio` | 2:30 |
-| 2 | CENTROS DE CUSTO / Centros de custo | "Centros de custo" (Coleta e Pátio); cria **Produção**; zoom no "Ativo". Ilustração: as frentes do pátio. | `apos-cap01` | 1:25 |
-| 3 | RELATÓRIO / O Relatório Financeiro | Menu "Financeiro" › "Relatório Financeiro"; "Este mês" → "Mês passado"; as cinco abas; a aba "Centros de Custo" de outubro; dica da permissão. | `apos-cap02` | 1:35 |
-| 4 | DASHBOARD / O Dashboard do mês | Banner "Resultado do Período" (R$ 6.500,00, "Superávit"); "Despesas por Categoria" (a energia em dobro: R$ 7.700,00); "Receitas por Categoria". | `apos-cap02` + `setup` | 1:05 |
-| 5 | DASHBOARD / Fornecedores, clientes e ticket médio | "Ticket Médio Compra/Venda"; "Top Fornecedores"; "Top Clientes" em "R$" e "Kg"; "Materiais + Comprados" (ferro pesado 50.000 kg) e "+ Vendidos". Ilustração: ticket médio. | idem | 1:20 |
-| 6 | DRE / Lendo o DRE | Aba "DRE" em competência; seções e resultados; um grupo aberto; "Valor · % receita"; "08 = Resultado do Período" R$ 6.500,00. Ilustração: a escada do DRE. | idem | 1:30 |
-| 7 | DRE / Caixa ou competência | Dicas dos dois botões; ilustração do exemplo do pátio (ferro pesado de outubro); troca para caixa: −R$ 31.500,00; a linha "CMV / Compras de materiais". | idem + aba "DRE" | 2:35 |
-| 8 | PATRIMÔNIO / O patrimônio de hoje | "Patrimônio Operacional Atual" aberto, linha por linha; "Exportar Patrimônio" (zoom). Ilustração: a foto de agora. | idem | 1:15 |
-| 9 | EVOLUÇÃO / Mês a mês | "Evolução Mensal" (seis meses, out/26 com as maiores compras); "Comparar períodos" › "Período anterior" (setembro) › "Aplicar comparação". | idem | 1:20 |
-| 10 | HISTÓRICO / O Histórico | Abas "Receitas", "Despesas", "Compras"; "Filtros" › "Energia elétrica": duas "Conta de energia" iguais; exclui a segunda; lápis e lixeira. Ilustração: o mesmo dinheiro não conta duas vezes. | idem + aba "DRE" | 1:45 |
-| 11 | EXPORTAR / Excel e PDF | "Exportar" do Histórico: "PDF" → "Exportar Histórico (PDF)" → "Exportar PDF"; "Fechamento completo (Excel)" (zoom); "Exportar" do DRE ("Planilha Excel", "Documento PDF"). | `apos-cap10` + `setup` | 0:55 |
-| 12 | RESUMO / Recapitulando | Montagem do que foi feito; cartão "Próximo: Cato, o assistente". | trechos | 0:55 |
+| 1 | CATEGORIAS / O plano de contas | Menu "Financeiro" › "Categorias Financeiras"; receitas e despesas por grupo do DRE; cria a subcategoria **Frete de entrega** (pai "Frete", em "Custos adicionais") em "Despesas operacionais (OPEX)" e vê o selo; cria **Máquinas e veículos** em "Não compõe o DRE" / "Atividades de investimento". Ilustrações: plano de contas; nem toda saída é despesa. | `inicio` | 2:35 |
+| 2 | CENTROS DE CUSTO / Centros de custo | "Centros de custo" (Coleta e Pátio); cria **Produção**; zoom no "Ativo". Ilustração: as frentes do pátio. | `apos-cap01` | 1:10 |
+| 3 | RELATÓRIO / O Relatório Financeiro | Menu "Financeiro" › "Relatório Financeiro"; "Este mês" → "Mês passado"; as cinco abas; a aba "Centros de Custo" de outubro; dica da permissão. | `apos-cap02` | 1:20 |
+| 4 | DASHBOARD / O Dashboard do mês | Banner "Resultado do Período" (R$ 6.500,00, "Superávit"); "Despesas por Categoria" (a energia em dobro: R$ 7.700,00); "Receitas por Categoria". | `apos-cap02` + `setup` | 1:00 |
+| 5 | DASHBOARD / Fornecedores, clientes e ticket médio | "Ticket Médio Compra/Venda"; "Top Fornecedores"; "Top Clientes" em "R$" e "Kg"; "Materiais + Comprados" (ferro pesado 50.000 kg) e "+ Vendidos". Ilustração: ticket médio. | idem | 1:15 |
+| 6 | DRE / Lendo o DRE | Aba "DRE" em competência; seções e resultados; um grupo aberto; "Valor · % receita"; "08 = Resultado do Período" R$ 6.500,00. Ilustração: a escada do DRE. | idem | 1:10 |
+| 7 | DRE / Caixa ou competência | Dicas dos dois botões; ilustração do exemplo do pátio (ferro pesado de outubro); troca para caixa: −R$ 31.500,00; a linha "CMV / Compras de materiais". | idem + aba "DRE" | 2:20 |
+| 8 | PATRIMÔNIO / O patrimônio de hoje | "Patrimônio Operacional Atual" aberto, linha por linha; "Exportar Patrimônio" (zoom). Ilustração: a foto de agora. | idem | 1:00 |
+| 9 | EVOLUÇÃO / Mês a mês | "Evolução Mensal" (seis meses, out/26 com as maiores compras); "Comparar períodos" › "Período anterior" (setembro) › "Aplicar comparação". | idem | 0:55 |
+| 10 | HISTÓRICO / O Histórico | Abas "Receitas", "Despesas", "Compras"; "Filtros" › "Energia elétrica": duas "Conta de energia" iguais; exclui a segunda; lápis e lixeira. Ilustração: o mesmo dinheiro não conta duas vezes. | idem + aba "DRE" | 1:30 |
+| 11 | EXPORTAR / Exportar em Excel e PDF | "Exportar" do Histórico: "PDF" → "Exportar Histórico (PDF)" → "Exportar PDF"; "Fechamento completo (Excel)" (zoom); "Exportar" do DRE ("Planilha Excel", "Documento PDF"). | `apos-cap10` + `setup` | 0:50 |
+| 12 | RESUMO / Recapitulando | Montagem do que foi feito; cartão "Próximo: Cato, o assistente". | trechos | 1:00 |
 
 Transições faladas: 0→1 "Tudo começa pelas categorias"; 1→2 "Com as categorias certas, dá pra saber em que o dinheiro foi
 gasto"; 2→3 "Plano de contas pronto. Agora, o relatório"; 3→4 "Começando pelo Dashboard, a aba pra bater o olho"; 4→5 "Mais

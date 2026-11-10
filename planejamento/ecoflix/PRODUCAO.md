@@ -162,3 +162,10 @@ Decisões:
   estoque, preços e transferência, login do Marcos, PDFs em aba nova. Decisões do coordenador: abrir uma compra no cap07
   só para mostrar "Preço especial aplicado" (sem finalizar; exemplo concreto); a tabela ligada ao depósito vale na venda
   também (é o que o código faz); permissões do Marcos = as da T2.
+- 10/11 01:4x **T11 pronta** (roteiro): abertura, 13 capítulos e recap, 2.044 palavras, ~13 min de voz (~16 min de vídeo),
+  12 ilustrações; sem pronúncia nova; 24 `numeros` para a legenda. Backend: RPCs de ficha, ordem, lançamento,
+  finalização e exclusão (estorno no Kardex). Código × fonte: coproduto é digitado no lançamento do dia; "Observação"
+  não grava; a tela diz "peça" em produto por kg. **O agente da T11 assumiu o incidente do config do perfil**: rodou um
+  `gera_tts.py` de mesmo nome que o do T03 no scratchpad compartilhado. Todos os agentes avisados: script com nome único
+  (prefixo da aula), nunca rodar script alheio, nada em `perfis/`. Histórico semeado do cobre aceito (coordenador);
+  ajudantes Cláudio Ferraz e Diego Morais passados ao agente da T19.
