@@ -58,7 +58,8 @@ E dá pra escolher pedaço por pedaço. O galpão não precisa sair no papel, en
 7: """Cada compra e cada venda ganha um número, e é ele que sai no comprovante. Em Numeração de pedidos, você escolhe como esse número aparece.
 Primeiro, o Reinício da numeração. No Nenhum, o número segue direto e nunca zera. No Mensal, a contagem recomeça todo mês, e no Anual, todo ano.
 Imagina que outubro terminou no pedido trinta. Seguindo direto, novembro começa no trinta e um. No Mensal, novembro recomeça do um.
-Depois, o Formato do número. Cada modelo mostra um exemplo do lado. No Barras, por exemplo, entram o mês e o ano junto do número.
+Depois, o Formato do número. Cada modelo mostra um exemplo do lado.
+No Barras, por exemplo, entram o mês e o ano junto do número.
 No Zeros, o número ganha zeros na frente. A Recicla Vale fica no Padrão, que é o número simples, seguindo direto.
 Por último, a Numeração separada para compras e vendas. Ligando, cada tipo passa a ter a sua própria contagem.
 Hoje, compra e venda dividem uma fila só de números. Separando, as compras seguem uma fila, e as vendas, outra.

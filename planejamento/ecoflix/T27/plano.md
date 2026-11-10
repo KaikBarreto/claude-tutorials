@@ -33,7 +33,7 @@ lugar, é hora de ligar"; 3→4 "Agora a cor"; 4→5 "E onde isso aparece?"; 5�
 ## Mundo: o que esta aula precisa (além do `MUNDO_FICTICIO.md`)
 | Item | Valor |
 |---|---|
-| Logo horizontal da Recicla Vale | o do T1 (`recicla-vale-logo.png`); se o T1 ainda não tiver, desenhar por código: "Recicla Vale Metais" em azul-aço `#1F5FAD`, com um símbolo simples (duas chapas dobradas em "V"), fundo transparente, ~600×160 px. Nada de marca real |
+| Logo horizontal da Recicla Vale | o do T1 (`recicla-vale-logo.png`); se o T1 ainda não tiver, desenhar por código: "Recicla Vale Metais" em azul-aço `#1F5FAD`, com um símbolo simples (duas chapas dobradas em "V"), ~600×160 px. Precisa ler bem no menu, que é escuro por padrão, e no papel do comprovante: sugestão, o desenho sobre uma placa branca de cantos arredondados. Nada de marca real |
 | Ícone quadrado | `recicla-vale-icone.png`, 128×128 px, PNG transparente, o mesmo símbolo do logo |
 | Cor da marca | **`#1F5FAD`** (azul-aço), digitada no campo da "Cor Primária" |
 | "Nome Exibido no Sistema" | fica vazio (🚫) |
