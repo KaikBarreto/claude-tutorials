@@ -5,7 +5,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { chromium } from './pw.mjs';
-import { APP_URL, APP_ORIGIN, FAKE_URL, ANON_KEY, USER_EMAIL, REC_DIR, MUNDO } from './env.mjs';
+import { APP_URL, APP_ORIGIN, FAKE_URL, BAKED_FAKE_URL, ANON_KEY, USER_EMAIL, REC_DIR, MUNDO } from './env.mjs';
+import { instalarEcoTray } from './ecotray-falso.mjs';
 import { isolateNetwork } from './net.mjs';
 import { serveAppAtOrigin, withAppOriginArgs } from './app-origin.mjs';
 import { Telemetry } from './telemetry.mjs';
@@ -105,6 +106,8 @@ const NOISE_CONSOLE = [
   /\[vite\] (connecting|connected)/,
   /GL Driver Message/, // aviso de desempenho do WebGL por software
   /Missing `Description` or `aria-describedby/, // aviso de acessibilidade do Radix (janelas sem descricao), do proprio app
+  // ruído do app de um mundo (mundo.json "navegador.ruidoConsole"): avisos que o próprio app escreve
+  ...(MUNDO.navegador?.ruidoConsole || []).map((s) => new RegExp(s)),
 ];
 const NOISE_FAILED = /ERR_ABORTED/; // requisicao cancelada pelo proprio app (troca de tela / AbortController)
 
@@ -124,6 +127,17 @@ function sameTabLinks() {
       if (a && a.target !== '_self' && a.href) a.target = '_self';
     }, true);
   } catch (e) { /* ignora */ }
+}
+
+function injectCss(css) {
+  const add = () => {
+    const st = document.createElement('style');
+    st.setAttribute('data-robo', 'mundo');
+    st.textContent = css;
+    (document.head || document.documentElement).appendChild(st);
+  };
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', add);
+  else add();
 }
 
 function stubServiceWorker() {
@@ -184,6 +198,10 @@ export async function openSession({
   isolate = true,
   locale = 'pt-BR',
   timezone = TZ,
+  // EcoTray falso (balança e impressora térmica, ws://127.0.0.1:8053/8054): objeto de configuração, true, ou false para não
+  // simular; sem a opção, vale o "navegador.ecotray" do mundo (rec/recorder/ecotray-falso.mjs). Só no modo fakebase.
+  ecotray = undefined,
+  dirImpressoes = null, // onde o EcoTray falso guarda o que foi "impresso" (PDF/PNG)
 } = {}) {
   const own = !browser;
   browser = browser || (await launchBrowser({ headed }));
@@ -210,10 +228,14 @@ export async function openSession({
   // envelhecem entre o planejamento e a gravação. O tempo continua correndo normalmente a partir dali.
   if (FAKE_NOW_DATE) await context.clock.install({ time: FAKE_NOW_DATE });
   await context.addInitScript(stubServiceWorker);
+  // CSS do mundo (mundo.json "navegador.css"): correção de renderização do Chromium sem janela, nunca mudança de tela
+  if (isolate && MUNDO.navegador?.css) await context.addInitScript(injectCss, MUNDO.navegador.css);
   if (sameTab) await context.addInitScript(sameTabLinks);
   const tel = new Telemetry({ dsf: SCALE });
   if (telemetry || cursorOverlay) await tel.install(context, { overlay: cursorOverlay });
   const externos = isolate ? await isolateNetwork(context, { verbose: verboseNet }) : [];
+  const cfgEcoTray = ecotray === undefined ? MUNDO.navegador?.ecotray : ecotray;
+  const ecotrayCtl = isolate && cfgEcoTray ? await instalarEcoTray(context, cfgEcoTray, { fakeUrl: FAKE_URL, bakedUrl: BAKED_FAKE_URL, dirImpressoes, log: verboseNet ? console.log : () => {} }) : null;
   // APP_ORIGIN (opcional): o app abre em https://www.dominex.app, servido pelo app local (vem DEPOIS do desvio de rede: vale primeiro)
   const appOrigin = isolate && APP_ORIGIN ? await serveAppAtOrigin(context, { verbose: verboseNet }) : null;
   const page = await context.newPage();
@@ -266,7 +288,7 @@ export async function openSession({
   page.on('response', (r) => {
     if (r.status() >= 400) diag.bad.push(`${r.status()} ${r.request().method()} ${r.url().slice(0, 220)}`);
   });
-  return { browser, context, page, session, diag, tel, appOrigin, ownsBrowser: own };
+  return { browser, context, page, session, diag, tel, appOrigin, ecotray: ecotrayCtl, ownsBrowser: own };
 }
 
 /**
@@ -290,6 +312,7 @@ export async function settle(s, { quietMs = 600, timeoutMs = 20000, staleMs = 80
 }
 
 export async function closeSession(s) {
+  s.ecotray?.parar();
   try {
     await s.context.close();
   } finally {

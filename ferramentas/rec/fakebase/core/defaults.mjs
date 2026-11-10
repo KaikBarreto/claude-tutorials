@@ -11,6 +11,10 @@ import { mundo } from './mundo.mjs';
  * Acrescente aqui quando uma tabela precisar de default especifico (ex.: sequencias do banco).
  */
 export const TABLE_DEFAULTS = {
+  // 1.38.19: metodologia de BDI (20261102160000_quotes_use_bdi / 20261103133000_os_budget_bdi_methodology)
+  quotes: { use_bdi: true },
+  service_orders: { use_bdi: false, tax_rate: 10, admin_indirect_rate: 12, profit_rate: 10, bdi: 0.68, total_cost: 0, km_cost: 0, distance_km: 0, displacement_cost: 0, commercial_adjustment: 0 },
+  service_order_budget_items: { pricing_mode: 'manual', bdi: 0.68, unit_hours: 0, unit_hourly_rate: 0, unit_labor_cost: 0, unit_materials_cost: 0, unit_extras_cost: 0, unit_total_cost: 0, profit_rate: 10 },
   equipment: { status: 'active', attachments_public: true },
   customers: {
     customer_type: 'pf',
@@ -19,7 +23,17 @@ export const TABLE_DEFAULTS = {
     is_store_customer: false,
     whatsapp_notifications_enabled: true,
     public_short_code: (row) => shortCode(row.id || row.name),
+    custom_fields: () => ({}), // 1.38.8+: jsonb NOT NULL DEFAULT '{}'
   },
+  // 1.38.8+ (etiquetas e campos personalizados de clientes/fornecedores; 1.38.9 acrescenta o escopo equipment):
+  // a expressao ALWAYS_TRUE (abaixo) faria todo `show_*` nascer verdadeiro; no banco `show_in_portal` nasce FALSO.
+  party_labels: { scope: 'party', show_in_portal: false, color: '#64748B', is_active: true },
+  party_field_config: { field_type: 'text', is_visible: true, is_required: false, is_visible_in_portal: false, position: 0 },
+  suppliers: { custom_fields: () => ({}) },
+  customer_label_assignments: { position: 0 },
+  supplier_label_assignments: { position: 0 },
+  equipment_label_assignments: { position: 0 },
+  equipment_field_config: { is_visible_in_portal: false }, // campo novo nasce privado (migration 20261031194500)
 };
 
 const ALWAYS_TRUE = /^(is_active|active|ativo|enabled|is_enabled|visible|is_visible|show_.+)$/;

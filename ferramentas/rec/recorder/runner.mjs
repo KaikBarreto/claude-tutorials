@@ -595,6 +595,17 @@ const STEPS = {
   },
 
   // celular: posição do aparelho (A Caminho, Check-in e Finalizar pedem localização)
+  // EcoTray falso (rec/recorder/ecotray-falso.mjs): material na balança e EcoTray aberto/fechado
+  async balanca(ctx, step) {
+    if (!ctx.session.ecotray) throw new Error('"balanca": o EcoTray falso está desligado neste roteiro ("ecotray": false?)');
+    ctx.session.ecotray.peso(Number(step.peso) || 0, { subir: step.subir ?? 1.0, oscilar: step.oscilar ?? 1.0, balanca: step.balanca });
+    if (step.seconds) await ctx.page.waitForTimeout(step.seconds * 1000);
+  },
+  async ecotray(ctx, step) {
+    if (!ctx.session.ecotray) throw new Error('"ecotray": o EcoTray falso está desligado neste roteiro');
+    if (step.ligado !== undefined) ctx.session.ecotray.ligar(!!step.ligado);
+    if (step.seconds) await ctx.page.waitForTimeout(step.seconds * 1000);
+  },
   async geo(ctx, step) {
     await ctx.session.context.setGeolocation({ latitude: step.lat, longitude: step.lng, accuracy: step.accuracy ?? 15 });
   },
@@ -795,6 +806,8 @@ export async function runScript(script, opts = {}) {
     device: script.device, // "device": "phone" -> grava em tela de celular
     isolate: !isUrl, // modo url: a rede passa (o app e de outro lugar); fakebase: so localhost
     locale: script.locale, timezone: script.timezone, // padrao: pt-BR e America/Sao_Paulo
+    ecotray: script.ecotray, // EcoTray falso: config, true/false; sem a opção, o do mundo (mundo.json "navegador.ecotray")
+    dirImpressoes: path.join(outDir, `${name}.impressoes`), // o que o EcoTray falso "imprimiu" (PDF/PNG do app)
   });
   const { page, tel, diag } = session;
   const h = new Human(page, tel, rng, { pace: script.pace ?? 1, cps: script.cps ?? 11 });

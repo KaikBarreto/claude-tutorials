@@ -473,7 +473,7 @@ for (const d of dias) {
         const parc = [r2(v.total / 3), r2(v.total / 3)];
         parc.push(r2(v.total - parc[0] - parc[1]));
         ['2026-11-19', '2026-12-19', '2027-01-18'].forEach((due, i) => add('financial_bills', {
-          id: id(`titulo.fiado_bandeira.${i + 1}`), company_id: COMPANY, direction: 'receivable', description: `Venda #${v.num} - parcela ${i + 1}/3`, amount: parc[i], currency: 'BRL',
+          id: id(`titulo.fiado_bandeira.${i + 1}`), company_id: COMPANY, direction: 'receivable', description: `Fatura venda #${v.num} (parcela ${i + 1}/3)`, amount: parc[i], currency: 'BRL',
           due_date: due, status: 'pending', paid_amount: 0, order_id: v.id, order_type: 'sale', partner_id: id('cliente.bandeira'), partner_type: 'customer',
           installment_number: i + 1, installment_total: 3, payment_condition_id: id('condicao.30_60_90'), source_type: 'order', category_id: null, created_by: RAFAEL, created_at: at(d, '15:00'), updated_at: at(d, '15:00'),
         }));
@@ -595,6 +595,8 @@ const VAZIAS = [
   'company_fiscal_config', 'transportadoras', 'services', 'log_pesagens', 'cash_register_balance_audit',
   // não existe no banco: o app consulta por engano (useOfflinePrewarm) e o PostgREST responde 404; aqui fica vazia
   'cash_registers',
+  // existe no banco mas não no types.ts da 1.59.154 (migration 20261021161000, bastão de edição do rascunho)
+  'draft_editors',
 ];
 
 // ---------------------------------------------------------------- grava

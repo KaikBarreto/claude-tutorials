@@ -355,3 +355,136 @@ export function remover(ctx, tabela, fn) {
   for (const r of gone) g.afterDelete?.(r, hc);
   return gone;
 }
+
+// ---------------------------------------------------------------- pedidos (create_purchase_atomic / create_sale_atomic)
+/** update_balance: saldo do parceiro (parceiro duplo vai para a linha 'party' do lado do cliente, sinal invertido no fornecedor). */
+export function atualizaSaldo(ctx, cid, tipo, entidade, valor) {
+  const { store } = ctx;
+  let et = tipo, eid = entidade, v = valor;
+  if (tipo === 'customer') {
+    const c = store.rows('customers').find((x) => x.id === entidade);
+    if (c?.linked_supplier_id) et = 'party';
+  } else if (tipo === 'supplier') {
+    const s = store.rows('suppliers').find((x) => x.id === entidade);
+    if (s?.linked_customer_id) { et = 'party'; eid = s.linked_customer_id; v = -valor; }
+  }
+  let b = store.rows('balances').find((x) => x.company_id === cid && x.entity_type === et && x.entity_id === eid);
+  if (b) { b.balance = r2(num(b.balance) + v); b.updated_at = new Date(agoraMs()).toISOString(); store.table('balances').touch(); }
+  else b = ctx.db.insert('balances', { company_id: cid, entity_type: et, entity_id: eid, balance: r2(v), currency: 'BRL' }, { companyId: cid });
+  return b;
+}
+/** Pedido completo como as funções atômicas do banco: cabeçalho, itens, estoque, pagamentos (register_order_payments) e
+ *  parcelas (generate_order_installments). Devolve o jsonb da função. */
+export function criarPedido(ctx, tipo, a) {
+  const { store, RpcError } = ctx;
+  const isC = tipo === 'purchase';
+  const cid = a.p_company_id || ctx.companyId;
+  const uid = a.p_user_id || ctx.userId;
+  const parceiro = isC ? a.p_supplier_id : a.p_customer_id;
+  const tab = isC ? 'purchases' : 'sales';
+  if (a.p_client_request_id) {
+    const ja = store.rows(tab).find((p) => p.company_id === cid && p.client_request_id === a.p_client_request_id);
+    if (ja) return { [isC ? 'purchase_id' : 'sale_id']: ja.id, order_number: ja.order_number, order_ref: ja.order_ref, already_existed: true, weighing_ticket_id: null, weighing_ticket_linked: null };
+  }
+  let caixa = null;
+  if (a.p_cash_register_id) {
+    caixa = store.rows('cash_register').find((c) => c.id === a.p_cash_register_id);
+    if (!caixa || caixa.company_id !== cid || caixa.status !== 'open') throw new RpcError(`CASH_REGISTER_CLOSED: caixa ${a.p_cash_register_id} inexistente, de outra empresa ou fechado (status=${caixa?.status || 'NULL'})`);
+  }
+  const cobrado = r2(a.p_paid_amount ?? a.p_total_amount ?? 0);
+  const dinheiro = num(a.p_cash_amount), banco = num(a.p_transfer_amount), saldo = num(a.p_balance_amount), excesso = num(a.p_excess_to_balance);
+  const formas = r2(dinheiro + banco + saldo);
+  if (Math.abs(formas - r2(cobrado + excesso)) > 0.01) throw new RpcError(`PAGAMENTO_NAO_FECHA: formas somam ${formas} e o pedido cobra ${r2(cobrado + excesso)}`);
+  const txAt = a.p_transaction_at || new Date(agoraMs()).toISOString();
+  const numero = a.p_order_number || proximoNumero(store, cid);
+  const comp = store.rows('companies').find((c) => c.id === cid) || {};
+  const ref = String(comp.order_number_template || '#{NUM}').replace('{NUM}', String(numero));
+  const head = inserir(ctx, tab, {
+    company_id: cid, [isC ? 'supplier_id' : 'customer_id']: parceiro || null, notes: a.p_notes || null, total_amount: r2(a.p_total_amount), paid_amount: a.p_paid_amount ?? null,
+    payment_method: a.p_payment_method || null, order_number: numero, order_seq: a.p_preserve_numbering ? a.p_order_seq ?? null : numero, order_period: a.p_preserve_numbering ? a.p_order_period ?? null : null,
+    order_ref: a.p_preserve_numbering ? a.p_order_ref ?? null : ref, created_by: uid, transaction_at: txAt, driver_id: a.p_driver_id || null, vehicle_id: a.p_vehicle_id || null,
+    driver_name: a.p_driver_name || null, vehicle_plate: a.p_vehicle_plate || null, status: 'completed', client_request_id: a.p_client_request_id || null,
+    hide_financial_details: !!a.p_hide_financial_details, currency: a.p_currency || 'BRL',
+  });
+  const rot = isC ? 'Compra' : 'Venda';
+  const itens = Array.isArray(a.p_items) ? a.p_items : [];
+  for (const it of itens) {
+    ctx.db.insert(isC ? 'purchase_items' : 'sale_items', {
+      [isC ? 'purchase_id' : 'sale_id']: head.id, material_id: it.material_id, material_name: it.material_name, quantity: num(it.quantity), unit_price: num(it.unit_price),
+      impurity: num(it.impurity), total_price: r2(it.total_price), tare_weight: it.tare_weight ?? null, impurity_kg: it.impurity_kg ?? null, impurity_pct: it.impurity_pct ?? null,
+      first_weight: it.first_weight ?? null, second_weight: it.second_weight ?? null, weighing_mode: it.weighing_mode ?? null, item_discount: num(it.item_discount),
+      weight_source: it.weight_source || 'manual', captured_weight: it.captured_weight ?? null, scale_identifier: it.scale_identifier ?? null,
+    });
+  }
+  // estoque: um movimento por item, saldo corrido por material
+  for (const it of itens) {
+    const m = store.rows('materials').find((x) => x.id === it.material_id && x.company_id === cid);
+    if (!m) throw new RpcError(`Material não encontrado ou de outra empresa em {${it.material_id}}`);
+    const imp = num(it.impurity);
+    const liq = num(it.quantity) - imp;
+    const antes = num(m.current_stock);
+    const depois = Math.round((antes + (isC ? liq : -liq)) * 1000) / 1000;
+    inserir(ctx, 'stock_movements', {
+      company_id: cid, material_id: m.id, order_id: head.id, order_type: tipo, type: isC ? 'COMPRA' : 'VENDA', quantity: isC ? liq : -liq,
+      stock_before: antes, stock_after: depois, description: `${rot} #${numero}${imp > 0 ? ` (${imp}kg impureza)` : ''}`, created_by: uid, transaction_at: txAt,
+    });
+    m.current_stock = depois;
+    store.table('materials').touch();
+  }
+  // pagamentos (register_order_payments)
+  const ctTipo = isC ? 'purchase' : 'sale';
+  const partes = (dinheiro > 0) + (banco > 0) + (saldo > 0);
+  const sufixo = partes > 1 ? ' (Parcial)' : '';
+  if (dinheiro === 0 && banco === 0 && saldo === 0) {
+    if (caixa) inserir(ctx, 'cash_transactions', { company_id: cid, type: ctTipo, amount: 0, description: `${rot} #${numero} (Doação)`, order_id: head.id, cash_register_id: caixa.id, created_by: uid, transaction_at: txAt });
+  } else {
+    if (dinheiro > 0) {
+      if (!caixa) throw new RpcError('cash_register_id obrigatorio quando cash_amount > 0');
+      inserir(ctx, 'cash_transactions', { company_id: cid, type: ctTipo, amount: dinheiro, description: `${rot} #${numero}${sufixo}`, order_id: head.id, cash_register_id: caixa.id, created_by: uid, transaction_at: txAt });
+    }
+    if (banco > 0) {
+      const conta = a.p_bank_account_id || contas(store, cid).find((b) => b.is_default)?.id;
+      if (!conta) throw new RpcError('Empresa sem bank_account default — nao pode processar transferencia');
+      inserir(ctx, 'bank_transactions', { company_id: cid, type: isC ? 'withdrawal' : 'deposit', amount: isC ? -banco : banco, description: `${rot} #${numero}${sufixo}`, order_id: head.id, bank_account_id: conta, created_by: uid, transaction_at: txAt, payment_method: 'transfer', source: 'order' });
+      if (dinheiro === 0 && caixa) inserir(ctx, 'cash_transactions', { company_id: cid, type: ctTipo, amount: 0, description: `${rot} #${numero} (PIX/Transferência)`, order_id: head.id, cash_register_id: caixa.id, created_by: uid, transaction_at: txAt });
+    }
+    if (excesso > 0 && isC && parceiro) {
+      const b = atualizaSaldo(ctx, cid, 'supplier', parceiro, -excesso);
+      inserir(ctx, 'balance_movements', { balance_id: b.id, company_id: cid, entity_type: 'supplier', entity_id: parceiro, movement_type: 'order', amount: -excesso, description: `Sobra do pagamento - ${rot} #${numero}`, order_id: head.id, payment_method: null, created_by: uid, transaction_at: txAt });
+    }
+    if (saldo > 0) {
+      if (!parceiro) throw new RpcError('entity_type e entity_id obrigatorios quando balance_amount > 0');
+      const et = isC ? 'supplier' : 'customer';
+      const b = atualizaSaldo(ctx, cid, et, parceiro, saldo);
+      inserir(ctx, 'balance_movements', { balance_id: b.id, company_id: cid, entity_type: et, entity_id: parceiro, movement_type: 'order', amount: saldo, description: `${rot} #${numero}`, order_id: head.id, payment_method: 'balance', created_by: uid, transaction_at: txAt, cash_register_id: caixa?.id || null });
+      if (a.p_balance_due_date) { b.due_date = a.p_balance_due_date; }
+      if (dinheiro === 0 && banco === 0 && caixa) inserir(ctx, 'cash_transactions', { company_id: cid, type: ctTipo, amount: 0, description: `${rot} #${numero} (Saldo)`, order_id: head.id, cash_register_id: caixa.id, created_by: uid, transaction_at: txAt });
+      // parcelas (generate_order_installments)
+      const parc = Array.isArray(a.p_installments) ? a.p_installments : [];
+      const label = isC ? 'compra' : 'venda';
+      const base = { company_id: cid, direction: isC ? 'payable' : 'receivable', category_id: null, paid_amount: 0, status: 'pending', partner_type: et, partner_id: parceiro, order_id: head.id, order_type: tipo, payment_condition_id: a.p_payment_condition_id || null, created_by: uid, currency: 'BRL' };
+      if (parc.length) parc.forEach((p, i) => ctx.db.insert('financial_bills', { ...base, description: `Fatura ${label} #${numero} (parcela ${p.number || i + 1}/${parc.length})`, amount: num(p.amount), due_date: p.due_date || null, installment_number: p.number || i + 1, installment_total: parc.length }, { companyId: cid }));
+      else if (a.p_balance_due_date) ctx.db.insert('financial_bills', { ...base, description: `Fatura ${label} #${numero}`, amount: saldo, due_date: a.p_balance_due_date, installment_number: 1, installment_total: 1 }, { companyId: cid });
+    }
+  }
+  if (a.p_order_draft_id) ctx.db.remove('order_drafts', { id: a.p_order_draft_id });
+  return { [isC ? 'purchase_id' : 'sale_id']: head.id, order_number: numero, order_ref: head.order_ref, already_existed: false, weighing_ticket_id: a.p_source_weighing_ticket_id || null, weighing_ticket_linked: a.p_source_weighing_ticket_id ? true : null };
+}
+
+/** claim/heartbeat_draft_editing: quem chama fica com o bastão (um operador por sessão no mundo falso). */
+export function bastao(ctx, a, modo) {
+  const { store, userId, companyId } = ctx;
+  const t = store.table('draft_editors');
+  const agora = new Date(agoraMs()).toISOString();
+  let r = t.rows.find((x) => x.draft_kind === a.p_draft_kind && x.draft_id === a.p_draft_id);
+  if (!r) {
+    if (modo === 'heartbeat') return [];
+    r = { draft_kind: a.p_draft_kind, draft_id: a.p_draft_id, company_id: companyId, user_id: userId, session_id: a.p_session_id, claimed_at: agora, heartbeat_at: agora };
+    t.rows.push(r);
+  } else if (modo === 'claim' || r.session_id === a.p_session_id) {
+    Object.assign(r, { user_id: userId, session_id: a.p_session_id, heartbeat_at: agora, ...(modo === 'claim' && r.session_id !== a.p_session_id ? { claimed_at: agora } : {}) });
+  }
+  t.touch();
+  const nome = store.rows('profiles').find((p) => p.id === r.user_id)?.full_name || null;
+  return [{ draft_kind: r.draft_kind, draft_id: r.draft_id, holder_user_id: r.user_id, holder_name: nome, holder_session_id: r.session_id, claimed_at: r.claimed_at, heartbeat_at: r.heartbeat_at, is_holder: r.session_id === a.p_session_id }];
+}
