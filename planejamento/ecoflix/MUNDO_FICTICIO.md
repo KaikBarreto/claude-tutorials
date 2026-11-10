@@ -101,3 +101,7 @@ vendeu pouco num mês) cabem num dos meses.
   adiantou a ele (ele desconta na próxima entrega de material). 14 compras da Cooperativa no histórico. A T4 cadastra
   pela busca de CNPJ a "Serralheria Bem-Te-Vi" (número em branco, campo em vermelho) e tenta "Cida Ramos" com o telefone
   da Aparecida (o app avisa "Mesmo telefone").
+- **Fiscal** (T16): cota em níveis de 100 e 300 documentos; série 1 com a última nota 1248; transportadora e cenário
+  fiscal cadastrados (o cenário do exemplo usa CST 51, sem recomendação: quem define é o contador); venda de 500 kg
+  líquidos de Cobre mel; caixa de 09/11 fechado; duas notas recebidas; XML da Cooperativa Recomeço para importar. Na aula:
+  cancelar a 1249, carta de correção da placa, inutilizar 1246 e 1247 (tudo simulado).

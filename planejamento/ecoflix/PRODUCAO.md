@@ -188,3 +188,10 @@ Decisões:
   CNPJ simulada, lista de cidades, RPCs de vínculo cliente+fornecedor, pagamento por Pix, lucro estimado. Código × fonte:
   a ficha abre ao lado da lista, com 7 abas; telefone repetido dá "Mesmo telefone", não "Duplicado". Decisão do
   coordenador: o saldo do Valdir é um vale que a Recicla adiantou (MUNDO).
+- 10/11 02:2x **T16 pronta** (roteiro, NF-e): 19 blocos, 2.858 palavras, ~18,3 min de fala (~22 min de vídeo; alvo 25). Usa o
+  IPA novo de NF-e, NFS-e e ICMS. Pronúncias a testar: CC-e, A1, pfx, IBS, CBS, "Fiscal & Ambiental". Backend: edges da
+  PlugNotas (certificado, cadastro, emissão e status, cancelamento, CC-e, inutilização, download, notas recebidas,
+  manifestação), importação por XML, inutilizadas na lista. Código × fonte: o aviso IBS/CBS do topo não é renderizado;
+  "nome sem acento no XML" não confere no código (fora da fala); "cancelada conta na cota" não dá para conferir (a RPC
+  não está na cópia; fora da fala). Decisão do coordenador: as ações do exemplo (cancelar a 1249, CC-e da placa,
+  inutilizar 1246 e 1247, cenário com CST 51) ficam, todas simuladas e sem tom de recomendação; vai como aviso ao Kaik.
