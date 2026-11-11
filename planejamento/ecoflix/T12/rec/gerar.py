@@ -586,7 +586,8 @@ def cap06():
     c.mark(1)
     c.click(CARD_BTN(8, 'A caminho'), at=c.A(1, 'A', F1 + 0.3, nth=1), label='#8: A caminho')
     c.waitfor(text='Status alterado para A caminho', timeout=10)
-    c.hover(CARD_TXT(8, '#8'), 1.0, at=c.A(1, 'anda', 1.2), label='#8 na coluna A caminho')
+    c.waitfor(gone=CARD_BTN(8, 'A caminho'), timeout=10)   # o cartão já mudou de coluna (sem o botão A caminho)
+    c.hover(CARD_TXT(8, '#8'), 0.3, at=c.A(1, 'anda', 1.2), label='#8 na coluna A caminho')
     c.mark(2)
     c.click(CARD_BTN(8, 'Preencher'), at=c.A(2, 'Preencher', FJ), label='#8: Preencher')
     c.waitfor(text='Ordem #8', timeout=15)
@@ -610,7 +611,7 @@ def cap06():
     c.mark(6)
     c.cursor((760, 460), at=c.A(6, 'concluir', 0.3), label='cursor em repouso (a dica)')
     c.mark(7)
-    c.click(LINK('Voltar às ordens'), at=c.A(7, 'volta', FC), label='Voltar às ordens')
+    c.click(LINK('Voltar às ordens'), at=c.L(7) - 0.2, label='Voltar às ordens', noScroll=True)   # no topo (y < 96): sem rolar
     c.waitfor(text=PAGINAS['/coletas/ordens'], timeout=15)
     c.hover(CARD_TXT(8, '#8'), 0.8, at=c.A(7, 'oito', FH), label='#8 em Concluídas')
     c.click(CARD_TXT(8, 'Depósito Irmãos Siqueira'), at=c.A(7, 'cartão', FC), label='abre a ficha da ordem 8')

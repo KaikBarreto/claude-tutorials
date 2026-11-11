@@ -709,7 +709,8 @@ def cap10():
     c.type({'placeholder': 'Buscar material...'}, 'latinha', at=c.A(3, 'material', 0.6), label='busca latinha')
     c.click(SEL('main label:has-text("Alumínio latinha") button[role=checkbox]'), at=c.A(3, 'alumínio', 0.6), label='marca Alumínio latinha')
     c.click(CAMPO_QTD, at=c.A(3, 'mil', 0.6), label='campo Quantidade')
-    c.type(CAMPO_QTD, '1200', at=c.A(3, 'duzentos', 0.05), noClick=True, label='Quantidade 1200 (ZOOM)')
+    # o campo já vem com o saldo da origem (1.850): limpa (Ctrl+A, Backspace) antes de digitar
+    c.type(CAMPO_QTD, '1200', at=c.A(3, 'mil', -0.2), noClick=True, clear=True, label='Quantidade 1200 (ZOOM)')
     c.mark(4)
     c.click({'placeholder': 'Ex: Transferência para suprir demanda...'}, at=c.L(4) - 0.2, label='Observações')
     c.colar('main textarea', 'Lote para a Serra Fina Alumínio Reciclagem', label='Observações: Lote para a Serra Fina Alumínio Reciclagem')

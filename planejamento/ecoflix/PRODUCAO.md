@@ -653,3 +653,8 @@ Decisões:
 - 11/11 22:0x **T12 em 3D mandada ao Kaik** ("Tara 6.380 kg" segura ~2 s com o caminhão vazio; carregado, 9.460 kg e o
   "peso do material" 3.080 kg). Prévias 3D já mandadas: T05, T07, T08, T04, T10, T11, T12, T16 (e a vitrine). Faltam T00
   (Opus, em andamento) e T17+T18.
+- 11/11 22:1x **Cenas de Windows da T05**: as 8 cenas prontas e conferidas com `--mira` (textos e horas batem; 08:41:07 na
+  cena 4), 38 capturas do código do EcoTray (sem linha repetida na Atividade Recente), `LEIA.md`; a prévia `T05_windows.mp4`
+  está na fila (prio 05). Ao liberar a balança, o EcoTray de verdade escreve "Impressora padrão: POS-58" (08:44:10), fora do
+  roteiro mas real. **Antes da gravação final**: trocar a página do navegador (hoje a imagem `feature-integracao.png`, que
+  mostra "v1.2.5" de marketing) pela gravação `device: windows` do robô da T05 (`navegador.pagina.gravacao`).
