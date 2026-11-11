@@ -386,3 +386,12 @@ Decisões:
   ilustração), avisados de subir de novo a instância de cada um, de rodar o `preparar_aula.sh` (a junção mexeu nas falas) e
   de economizar tokens. Os quadros da T06 em tamanho real têm texto legível: a escala das cenas está boa (a folha de contato
   é que engana).
+- 11/11 11:5x **Junção pronta** (`MUNDO_LINHA_DO_TEMPO.md`): história e cadeias do mundo, estado de partida de cada aula
+  (seção 14), decisões (15), mudanças para a semente (16), a T26 (17) e os 580 números falados conferidos (18). Principais
+  decisões: Edson e o FKD2E41 na T8, T12 e T17 (a T12 passa para 07:00, tara 6.380); nenhum caixa aberto antes das 08:31
+  (a venda da T16 vai para 09/11); NF-e de outubro com 1246 e 1247 puladas e as de hoje de 1249 a 1254; alumínio da T17 e
+  chaparia da T18 no estoque; Pix de 380,00 da Aparecida no OFX da T14; Vale Forte com três compras em outubro;
+  "Contabilidade Manacá" na T17 e Sérgio Paiva sem repetição. Falas acertadas em T4, T6 a T10, T12 a T14, T16, T17, T20 a
+  T22, T25 e T27 (a cota da NF-e da T16 saiu da fala). A comparação roteiro × tts foi parcial: fica para a revisão geral.
+  **Semente do mundo base** (seção 16) com um agente novo; os robôs seguem no gerador e no ensaio rápido e só fazem o
+  ensaio completo depois do aviso de mundo novo pronto (a T26 não depende e segue).

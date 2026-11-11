@@ -3,7 +3,7 @@
 <!-- T27 "White Label" · ilustrações de conceito (kit perfis/ecoflix/cenas/cenas_ecoflix.html).
      Uma cena por [ILUSTRAÇÃO] do roteiro, presa às palavras com W(linha, 'palavra'); janelas e textos em ilustracoes.json.
      CAPS[0] A marca da Recicla Vale · CAPS[1] Muda e continua · CAPS[2] Qual imagem vai onde · CAPS[5] Onde a marca aparece
-     + Portal do parceiro + Para desligar (as duas últimas se sobrepõem 0,55 s de propósito: troca direta, sem voltar à tela)
+     + Portal do parceiro e Para desligar (essas duas numa janela só, linhas 3 e 4: troca direta, sem voltar à tela)
      · CAPS[6] Na hora, para todos.
      Renderizar só o trecho: node render_cenas.cjs <n> <capNN.json> <saida.mp4> --html cenas.html --de <at> --ate <at+dur>
      Imagens embutidas (data:): o logo e o ícone FICTÍCIOS da Recicla Vale (rec/t01/assets, os mesmos que o T1 envia; se
@@ -294,7 +294,7 @@ CAPS[2]=()=>{
 // saem sem o rodapé do EcoSistema."  3 "No Portal do parceiro, com a cor salva, o topo fica com a cor da Recicla Vale, e o
 // rodapé do EcoSistema sai também."  4 "Uma dica: pra desligar o White Label, use o interruptor. Se você só remover o
 // logo, o menu volta pro logo do EcoSistema, mas os documentos continuam sem o rodapé."
-// B termina 0,6 s depois da linha 3 e C começa 0,3 s antes da linha 4: as janelas se sobrepõem e a troca é direta.
+// B e C são uma janela só (linhas 3 e 4 seguidas): o Portal sai quando a linha 4 começa e o título troca no alto, sem voltar à tela.
 CAPS[5]=()=>{
   const g=grupo();
   // ---- A · onde a marca aparece: menu, cabeçalho, comprovante térmico, A4 e relatórios em PDF
@@ -377,7 +377,7 @@ CAPS[5]=()=>{
     }
     // B
     const b0=W(3,'Portal')-.3, bpa=W(3,'parceiro'), bco=W(3,'cor'), bto=W(3,'topo'), bre=W(3,'Recicla'), bro=W(3,'rodape'), bF=LE(3)+.6;
-    const sB=t>=b0-1&&t<bF+.5; B.style.display=sB?'':'none';
+    const c0=W(4,'Uma')-.3, sB=t>=b0-1&&t<c0+.6; B.style.display=sB?'':'none'; B.style.opacity=(1-eo(pr(t,c0-.1,.45))).toFixed(3);
     if(sB){
       posTitulo(titB,t,b0-.6,b0+.25);
       vis(fone,t,b0+.15,1e9,{dy:16}); vis(corP,t,bco-.1,1e9,{dy:12});
@@ -386,10 +386,10 @@ CAPS[5]=()=>{
       const r=eo(pr(t,bro,.5)); rodp.style.opacity=(1-r).toFixed(3);
     }
     // C
-    const c0=W(4,'Uma')-.3, cde=W(4,'desligar'), cin=W(4,'interruptor'), cre=W(4,'remover'), clo=W(4,'logo'), cvo=W(4,'volta'), ccn=W(4,'continuam'), cro=W(4,'rodape');
+    const cde=W(4,'desligar'), cin=W(4,'interruptor'), cre=W(4,'remover'), clo=W(4,'logo'), cvo=W(4,'volta'), ccn=W(4,'continuam'), cro=W(4,'rodape');
     const sC=t>=c0-1; C.style.display=sC?'':'none';
     if(sC){
-      posTitulo(titC,t,c0-.6,cde-.2);
+      titC.style.top='46px'; vis(titC,t,c0+.1,1e9,{dy:8});
       vis(P1.p,t,cde-.1,1e9,{dy:16}); P1.p.style.left=lerp(390,110,eio(pr(t,cre-.75,.7))).toFixed(2)+'px';
       const off=eo(pr(t,cin+.15,.6)); marca(P1.s,1-off); pintar(P1.s,1-off); P1.rod.style.opacity=off.toFixed(3);
       pulse(P1.h,t,cin,.08,.7);
