@@ -1,0 +1,33 @@
+{
+ "_doc": "T05 · estado de partida (caps 0 a 2, e a base de tudo): sem impressão direta, papel de 80 mm, escala 100%, turbo desligado (pdf), balança desligada no perfil do Rafael (kg, 3 casas, leitura contínua desligada) e a trava de peso da empresa desligada. O módulo Integração com Balança já vem ativo no mundo base. Sem EcoTray (o roteiro do robô desliga o EcoTray falso).",
+ "_patch": {
+  "profiles": [
+   {
+    "match": {
+     "id": "@id:user.rafael"
+    },
+    "set": {
+     "direct_print_enabled": false,
+     "direct_print_printer_name": null,
+     "receipt_paper_width_mm": 80,
+     "receipt_scale": 100,
+     "thermal_print_mode": "pdf",
+     "balanca_ativada": false,
+     "balanca_unidade": "kg",
+     "balanca_decimais": 3,
+     "balanca_continua": false
+    }
+   }
+  ],
+  "companies": [
+   {
+    "match": {
+     "id": "@id:company.reciclavale"
+    },
+    "set": {
+     "scale_weight_lock_enabled": false
+    }
+   }
+  ]
+ }
+}

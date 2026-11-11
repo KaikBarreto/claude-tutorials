@@ -452,7 +452,7 @@ def cap02():
     c.press('Tab', at=c.A(5, 'cadastrado', 0.1), label='Tab: o foco vai ao "+" e o painel mostra o cartão inteiro')
     c.hover(NOME_PRODUTO, 0.6, at=c.A(5, 'material,', 0.6), label='o Fardo de alumínio no cartão')
     c.mark(6)
-    c.hover(MAIS_PRODUTO, 1.4, at=c.A(6, 'botão', 0.6), label='[ZOOM] botão + (Criar novo produto), sem clicar')
+    c.hover(MAIS_PRODUTO, 1.4, at=c.A(6, 'botão', 0.6), label='[ZOOM] botão + (Criar novo produto), sem clicar', noScroll=True)   # já à vista depois do Tab; rolar gastava ~6 s
     c.mark(7)
     c.hover(SEL('#recipe-name'), 1.2, at=c.A(7, 'nome', 0.6), label='Nome da ficha (vazio, o nome do produto de exemplo)')
     c.fim()

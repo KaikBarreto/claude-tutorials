@@ -1,0 +1,33 @@
+{
+ "_doc": "T05 · fim do cap. 6 (caps 7 a 10 partem daqui): impressão direta com a POS-58 em 58 mm; Integração com Balança Digital ligada (kg, 3 casas, leitura contínua desligada). A \"Balança do pátio\" é do EcoTray falso do robô; a trava de peso da empresa segue desligada.",
+ "_patch": {
+  "profiles": [
+   {
+    "match": {
+     "id": "@id:user.rafael"
+    },
+    "set": {
+     "direct_print_enabled": true,
+     "direct_print_printer_name": "POS-58",
+     "receipt_paper_width_mm": 58,
+     "receipt_scale": 100,
+     "thermal_print_mode": "pdf",
+     "balanca_ativada": true,
+     "balanca_unidade": "kg",
+     "balanca_decimais": 3,
+     "balanca_continua": false
+    }
+   }
+  ],
+  "companies": [
+   {
+    "match": {
+     "id": "@id:company.reciclavale"
+    },
+    "set": {
+     "scale_weight_lock_enabled": false
+    }
+   }
+  ]
+ }
+}

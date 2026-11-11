@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # T22 · ensaio de um capítulo. Uso: bash rec/t22/t22_ens.sh NN [--completo] [--estado]
-#   (sem opção)  ensaio RÁPIDO: rec/t22/_ens/capNN.json sem os `at` (ensaio.py), sem MP4; saídas em rec/t22/_ens/ e resumo.py --ens
+#   (sem opção)  ensaio RÁPIDO: rec/t22/_ens/capNN.json sem os `at` (ensaio.py), COM o MP4 e a folha de contato em /dev/shm/t22rec
+#                (regra de 11/11 18:46: o rápido sempre com a montagem, para olhar a folha); saídas em rec/t22/_ens/ e resumo.py --ens
 #   --completo   ensaio COMPLETO com os tempos estimados (o roteiro rec/t22/capNN.json), com MP4 e folha de contato em /dev/shm/t22rec
 #                (o MP4 e a folha ficam lá para olhar e apagar); actions/telemetry em rec/t22/; resumo.py
 #   --estado     depois da gravação e DENTRO da mesma trava, grava a semente apos-capNN a partir do banco (t22_estado.py)
@@ -31,7 +32,7 @@ QD=/dev/shm/t22rec/_frames_cap$NN
 mkdir -p rec/t22/_ens rec/t22/_estado /dev/shm/t22rec
 if [ "$MODO" = rapido ]; then
   PREP="python3 -I rec/t22/gerar.py $N > /dev/null && python3 -I rec/t22/ensaio.py $N > /dev/null"
-  REC="node rec/record.mjs rec/t22/_ens/cap$NN.json --out $TMP --name t22-cap$NN --no-encode --keep-frames"
+  REC="node rec/record.mjs rec/t22/_ens/cap$NN.json --out $TMP --name t22-cap$NN --keep-frames"
   DEST=rec/t22/_ens; LOG=rec/t22/_ens/.cap$NN.out; QARG=--ens
 else
   PREP="python3 -I rec/t22/gerar.py $N > /dev/null"

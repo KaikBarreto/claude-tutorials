@@ -431,13 +431,12 @@ def cap00():
     for i in (1, 2, 3, 4):
         c.mark(i)
     c.mark(5)
-    c.hover(SEL("button:has(span:text-is('Financeiro'))"), 0.4, at=c.A(5, 'menu,', 0.5), label='o cursor vai ao menu lateral')
-    c.click(SEL("button:has(span:text-is('Financeiro'))"), at=c.A(5, 'Financeiro,', 0.6), label='abre o grupo Financeiro (menu lateral)')
-    c.click({'role': 'link', 'name': 'Contas a Pagar/Receber'}, at=c.A(5, 'Contas', 0.6), label='Contas a Pagar/Receber (menu lateral)')
+    c.click(SEL("button:has(span:text-is('Financeiro'))"), at=c.A(5, 'menu,', 0.2), label='abre o grupo Financeiro (menu lateral)')
+    c.click({'role': 'link', 'name': 'Contas a Pagar/Receber'}, at=c.A(5, 'Contas', 0.9), label='Contas a Pagar/Receber (menu lateral)')
     c.waitfor(text='Água e esgoto de outubro', timeout=15)
     c.ev(ANIM)
-    c.click(TOGGLE, at=c.A(5, 'Vamos', 0.6), label='recolhe o menu lateral (aviso da edição: recolher o menu dá espaço para a lista)', noScroll=True)
-    c.hover(ABA('Todas'), 1.0, at=c.A(5, 'conhecer', 0.4), label='a tela abre na aba Todas')
+    c.click(TOGGLE, at=c.A(5, 'Vamos', 0.9), label='recolhe o menu lateral (aviso da edição: recolher o menu dá espaço para a lista)', noScroll=True)
+    c.hover(ABA('Todas'), 0.6, at=c.A(5, 'conhecer', 0.0), label='a tela abre na aba Todas')
     c.fim()
     return c
 

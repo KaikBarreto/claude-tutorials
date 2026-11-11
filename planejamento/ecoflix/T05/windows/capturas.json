@@ -1,0 +1,387 @@
+{
+ "_leia": "Capturas do EcoTray da T5 (cenas de Windows). Cada sessão roda o código do app (dashboard.py, installer_gui.py, tray_app.py). Mundo: Recicla Vale Metais, 10/11/2026, de 08:33 a 08:58. Formato: docs/10-cena-windows.md.",
+ "tela": [
+  1920,
+  1200
+ ],
+ "usuario_windows": "Rafael",
+ "sessoes": [
+  {
+   "nome": "bandeja",
+   "programa": "bandeja",
+   "passos": [
+    {
+     "status": "connected:COM3@9600",
+     "impressora": "POS-58",
+     "capturar": "bandeja_ok"
+    },
+    {
+     "status": "error:no_scale_found",
+     "capturar": "bandeja_sem_balanca"
+    }
+   ]
+  },
+  {
+   "nome": "instalador",
+   "programa": "instalador",
+   "tamanho_mb": 19.4,
+   "passos": [
+    {
+     "capturar": "inst_pronto"
+    },
+    {
+     "instalar": true,
+     "etapa": [
+      0,
+      "Verificando servidor de downloads...",
+      5
+     ],
+     "capturar": "inst_05"
+    },
+    {
+     "etapa": [
+      0,
+      "Pronto para baixar",
+      15
+     ],
+     "capturar": "inst_15"
+    },
+    {
+     "etapa": [
+      1,
+      "Baixando EcoTray.exe...",
+      20
+     ],
+     "capturar": "inst_20"
+    },
+    {
+     "baixando": 26,
+     "capturar": "inst_26"
+    },
+    {
+     "baixando": 32,
+     "capturar": "inst_32"
+    },
+    {
+     "baixando": 38,
+     "capturar": "inst_38"
+    },
+    {
+     "baixando": 44,
+     "capturar": "inst_44"
+    },
+    {
+     "baixando": 50,
+     "capturar": "inst_50"
+    },
+    {
+     "baixando": 56,
+     "capturar": "inst_56"
+    },
+    {
+     "baixando": 62,
+     "capturar": "inst_62"
+    },
+    {
+     "baixando": 68,
+     "capturar": "inst_68"
+    },
+    {
+     "baixando": 75,
+     "capturar": "inst_75"
+    },
+    {
+     "etapa": [
+      2,
+      "Copiando arquivos...",
+      78
+     ],
+     "capturar": "inst_78"
+    },
+    {
+     "etapa": [
+      3,
+      "Criando atalho de inicialização...",
+      88
+     ],
+     "capturar": "inst_88"
+    },
+    {
+     "etapa": [
+      3,
+      "Criando atalho na Área de Trabalho...",
+      92
+     ],
+     "capturar": "inst_92"
+    },
+    {
+     "concluir": true,
+     "espera": 0.5,
+     "capturar": "inst_fim"
+    }
+   ],
+   "_leia": "Sem captura de hover no botão: no Windows o tk.Button não muda de cor com o mouse em cima (só enquanto está pressionado); no X11 mudaria."
+  },
+  {
+   "nome": "painel_instalado",
+   "programa": "painel",
+   "_leia": "Cena 3 (cap. 2): logo depois de instalar o instalador abre o painel (--show-dashboard). Navegador ainda não confirmou (trava unknown, 'Aguardando o sistema'); a impressora única é marcada como padrão e entra na Atividade Recente.",
+   "abrir": {
+    "status": "warn",
+    "scale_info": "Sem balança conectada",
+    "printer_info": "Impressora: POS-58",
+    "printers_list": [
+     "POS-58"
+    ],
+    "version": "1.7.22"
+   },
+   "servidor": {
+    "versao": "1.7.22",
+    "balancas": [],
+    "balanca_padrao": null,
+    "pesos": {},
+    "impressoras": [
+     "POS-58"
+    ],
+    "impressora_padrao": null,
+    "trava": "unknown",
+    "navegadores": 0,
+    "hora": "08:33:55",
+    "atividade": []
+   },
+   "passos": [
+    {
+     "espera": 0.8,
+     "capturar": "pi_aguardando"
+    },
+    {
+     "ponteiro": "–",
+     "capturar": "pi_minimizar"
+    }
+   ]
+  },
+  {
+   "nome": "painel_impressao",
+   "programa": "painel",
+   "_leia": "Cena 4 (cap. 4): o painel volta pela bandeja com o navegador já conectado; 'Testar' vira print -> aviso verde '✓  Impresso em POS-58' (3 s) e a linha 08:41:07 na Atividade Recente.",
+   "abrir": {
+    "status": "warn",
+    "scale_info": "Sem balança conectada",
+    "printer_info": "Impressora: POS-58",
+    "printers_list": [
+     "POS-58"
+    ],
+    "version": "1.7.22"
+   },
+   "servidor": {
+    "versao": "1.7.22",
+    "balancas": [],
+    "balanca_padrao": null,
+    "pesos": {},
+    "impressoras": [
+     "POS-58"
+    ],
+    "impressora_padrao": "POS-58",
+    "trava": "unknown",
+    "navegadores": 1,
+    "hora": "08:33:55",
+    "atividade": [
+     {
+      "ts": "08:33:55",
+      "msg": "Impressora padrão: POS-58",
+      "kind": "info"
+     }
+    ]
+   },
+   "passos": [
+    {
+     "capturar": "imp_0"
+    },
+    {
+     "estado": {
+      "hora": "08:41:07"
+     },
+     "atividade": {
+      "ts": "08:41:07",
+      "msg": "Impresso em POS-58",
+      "kind": "ok"
+     },
+     "impresso": "POS-58",
+     "espera": 0.3,
+     "capturar": "imp_impresso"
+    },
+    {
+     "espera": 3.3,
+     "capturar": "imp_depois"
+    },
+    {
+     "ponteiro": "–",
+     "capturar": "imp_minimizar"
+    }
+   ]
+  },
+  {
+   "nome": "painel_balanca",
+   "programa": "painel",
+   "_leia": "Cenas 5 e 6 (cap. 6): o painel aguarda o sistema, a balança libera (08:44:10), Configurar Balanças detecta a COM3, Nova balança (nome, porta), OK e Gravar (08:44:42).",
+   "abrir": {
+    "status": "warn",
+    "scale_info": "Sem balança conectada",
+    "printer_info": "Impressora: POS-58",
+    "printers_list": [
+     "POS-58"
+    ],
+    "version": "1.7.22"
+   },
+   "servidor": {
+    "versao": "1.7.22",
+    "balancas": [],
+    "balanca_padrao": null,
+    "pesos": {},
+    "impressoras": [
+     "POS-58"
+    ],
+    "impressora_padrao": "POS-58",
+    "trava": "unknown",
+    "navegadores": 1,
+    "hora": "08:44:10",
+    "atividade": [
+     {
+      "ts": "08:41:07",
+      "msg": "Impresso em POS-58",
+      "kind": "ok"
+     },
+     {
+      "ts": "08:33:55",
+      "msg": "Impressora padrão: POS-58",
+      "kind": "info"
+     }
+    ],
+    "portas": [
+     {
+      "port": "COM3",
+      "desc": "USB-SERIAL CH340 (COM3)"
+     }
+    ],
+    "diagnostico": [
+     {
+      "port": "COM3",
+      "description": "USB-SERIAL CH340 (COM3)",
+      "hardware": "USB VID:PID=1A86:7523",
+      "hw_type": "usb",
+      "category": "sucesso",
+      "verdict": "Balança reconhecida",
+      "advice": "",
+      "raw": "",
+      "weight": "0.000",
+      "baudrate": 9600,
+      "bytesize": 8,
+      "parity": "N",
+      "stopbits": 1
+     }
+    ],
+    "diagnostico_seg": 2.0
+   },
+   "passos": [
+    {
+     "capturar": "bal_aguardando"
+    },
+    {
+     "trava": "unlocked",
+     "atividade": {
+      "ts": "08:44:10",
+      "msg": "Módulo Integração com Balança destravado",
+      "kind": "ok"
+     },
+     "espera": 1.0,
+     "capturar": "bal_liberada"
+    },
+    {
+     "ponteiro": "Configurar Balanças",
+     "capturar": "bal_liberada_hover"
+    },
+    {
+     "clique": "Configurar Balanças",
+     "espera": 0.3
+    },
+    {
+     "janela": "Configurar Balanças",
+     "espera": 0.5,
+     "capturar": "cfg_detectando"
+    },
+    {
+     "janela": "Configurar Balanças",
+     "espera": 2.4,
+     "capturar": "cfg_detectado"
+    },
+    {
+     "janela": "Configurar Balanças",
+     "clique": "Adicionar",
+     "espera": 0.2
+    },
+    {
+     "janela": "Nova balança",
+     "espera": 0.4,
+     "capturar": "nova_vazia"
+    },
+    {
+     "janela": "Nova balança",
+     "digitar": {
+      "campo": "Nome",
+      "texto": "Balança do pátio",
+      "letras": 8
+     },
+     "capturar": "nova_nome_1"
+    },
+    {
+     "janela": "Nova balança",
+     "digitar": {
+      "campo": "Nome",
+      "texto": "Balança do pátio"
+     },
+     "capturar": "nova_nome"
+    },
+    {
+     "janela": "Nova balança",
+     "abrir_lista": "Porta Serial",
+     "espera": 0.4,
+     "capturar": "nova_lista_aberta"
+    },
+    {
+     "janela": "lista",
+     "capturar": "nova_lista"
+    },
+    {
+     "janela": "Nova balança",
+     "escolher": {
+      "campo": "Porta Serial",
+      "valor": "COM3  ✓ balança"
+     },
+     "capturar": "nova_porta"
+    },
+    {
+     "janela": "Nova balança",
+     "clique": "OK",
+     "espera": 0.2
+    },
+    {
+     "janela": "Configurar Balanças",
+     "espera": 0.4,
+     "capturar": "cfg_com_balanca"
+    },
+    {
+     "janela": "Configurar Balanças",
+     "estado": {
+      "hora": "08:44:42"
+     },
+     "clique": "Gravar",
+     "espera": 0.2
+    },
+    {
+     "espera": 1.2,
+     "capturar": "painel_balanca_do_patio"
+    }
+   ]
+  }
+ ]
+}

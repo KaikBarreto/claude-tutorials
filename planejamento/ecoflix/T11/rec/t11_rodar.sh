@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # T11 · ensaio e gravação de um capítulo, cada um sob a própria trava (os outros agentes entram entre dois capítulos).
 #   bash rec/t11/t11_rodar.sh NN rapido     ensaio rápido (sem os `at`, sem MP4): falhas, seletores, "SEM ALVO"
+#   bash rec/t11/t11_rodar.sh NN rapidomp4  o rápido com MP4 e folha de contato
 #   bash rec/t11/t11_rodar.sh NN completo   gravação com os tempos (prever.py antes; resumo.py depois; MP4 + folha de contato)
 # A instância do Supabase falso é a da T11 (porta 54311) e tem de estar com o FAKE_NOW do capítulo (08:30 nos caps 0 a 6,
 # 17:30 do 7 ao 14): se não estiver, o script para (suba de novo FORA da trava: FAKE_NOW=... FAKE_PORT=54311 bash rec/run.sh fake).
@@ -20,9 +21,11 @@ case "$INST" in
 esac
 python3 -I rec/t11/t11_sementes.py >/dev/null || exit 4   # sementes sempre do mundo base atual
 python3 -I rec/t11/gerar.py "$NN" >/dev/null || exit 4
-if [ "$MODO" = rapido ]; then
+if [ "$MODO" = rapido ] || [ "$MODO" = rapidomp4 ]; then
+  # rapidomp4: o rápido COM a montagem do MP4, para a folha de contato (regra do coordenador de 11/11 18:46)
+  ENC=--no-encode; [ "$MODO" = rapidomp4 ] && ENC=
   python3 -I rec/t11/ensaio.py "$NN" >/dev/null
-  flock .heavy.lock timeout 900 node rec/record.mjs "rec/t11/_ens/cap$NN.json" --no-encode > "rec/t11/_ens/.ens-$NN.out" 2>&1
+  flock .heavy.lock timeout 900 node rec/record.mjs "rec/t11/_ens/cap$NN.json" $ENC > "rec/t11/_ens/.ens-$NN.out" 2>&1
   echo "rc=$?" >> "rec/t11/_ens/.ens-$NN.out"
   python3 -I rec/t11/resumo.py "$NN" --ens --tudo > "rec/t11/_ens/.resumo-$NN.txt" 2>&1
   grep -c "SEM ALVO" "rec/t11/_ens/.ens-$NN.out" "rec/t11/_ens/t11-cap$NN.actions.json" 2>/dev/null | sed 's/^/SEM ALVO: /'

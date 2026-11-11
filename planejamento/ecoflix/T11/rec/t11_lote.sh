@@ -17,8 +17,13 @@ for item in "$@"; do
     for f in rec/t11/t11-cap$NN.contact.jpg rec/t11/cap$NN.contact.jpg; do [ -e "$f" ] && mv -f -- "$f" /dev/shm/t11/; done
     r="rec/t11/.resumo-$NN.txt"; o="rec/t11/.rec-$NN.out"
   else
+    if [ "$MODO" = rapidomp4 ]; then
+      [ -e "rec/t11/_ens/t11-cap$NN.mp4" ] && rm -f -- "/home/claude/ecoflix/rec/t11/_ens/t11-cap$NN.mp4"
+      [ -e "rec/t11/_ens/t11-cap$NN.contact.jpg" ] && mv -f -- "rec/t11/_ens/t11-cap$NN.contact.jpg" /dev/shm/t11/
+      python3 -I rec/t11/prever.py "$NN" --ens > "rec/t11/.prever-$NN.txt" 2>&1
+    fi
     r="rec/t11/_ens/.resumo-$NN.txt"; o="rec/t11/_ens/.ens-$NN.out"
   fi
   [ "$rc" = 0 ] && touch "$feito"
-  echo "cap$NN $MODO rc=$rc falhas=$(grep -c FALHOU "$o" 2>/dev/null) $(grep -o 'maxLate [0-9.]*' "$o" 2>/dev/null | tail -1) $(grep 'conferências' "$r" 2>/dev/null)"
+  echo "cap$NN $MODO rc=$rc falhas=$(grep -c FALHOU "$o" 2>/dev/null) $(grep -o 'maxLate [0-9.]*' "$o" 2>/dev/null | tail -1) $(grep 'conferências' "$r" 2>/dev/null) $(grep -o 'maior atraso.*' "rec/t11/.prever-$NN.txt" 2>/dev/null | head -1)"
 done

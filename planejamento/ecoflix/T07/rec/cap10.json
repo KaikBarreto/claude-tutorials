@@ -218,6 +218,11 @@
    "label": "confere Valor/Kg 3,40"
   },
   {
+   "do": "eval",
+   "js": "(async()=>{let v='';for(let i=0;i<35;i++){const l=[...document.querySelectorAll('main label')].find(x=>x.textContent.includes(\"Quantidade (Kg)\"));let p=l;while(p&&p!==document.body&&!p.querySelector('input'))p=p.parentElement;const el=l&&p&&p.querySelector('input');v=el?el.value:'SEM ALVO';if(v===\"186,0\")return 'OK: '+v;await new Promise(r=>setTimeout(r,200));}return 'DIFERENTE: '+v})()",
+   "label": "confere Quantidade 186,0 da balança"
+  },
+  {
    "do": "mark",
    "name": "L3",
    "at": 18.57
@@ -423,8 +428,8 @@
   },
   {
    "do": "eval",
-   "js": "(async()=>{const esp=[\"200,00\", \"736,40\", \"2.000,00\"];let out='';for(let i=0;i<12;i++){const v=[...document.querySelectorAll(\"[role=dialog]\"+' input, '+\"[role=dialog]\"+' textarea')].map(e=>e.value).join(' | ');const falta=esp.filter(e=>!v.includes(e));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+v.slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
-   "label": "confere Dinheiro 200, Pix 736,40, Saldo 2.000"
+   "js": "(async()=>{const esp=[\"200,00\", \"736,40\"];let out='';for(let i=0;i<12;i++){const v=[...document.querySelectorAll(\"[role=dialog]\"+' input, '+\"[role=dialog]\"+' textarea')].map(e=>e.value).join(' | ');const falta=esp.filter(e=>!v.includes(e));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+v.slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Dinheiro 200,00 e Pix 736,40 (o saldo 2.000 confere no resumo)"
   },
   {
    "do": "mark",

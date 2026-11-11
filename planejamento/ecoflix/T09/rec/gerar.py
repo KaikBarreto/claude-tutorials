@@ -729,7 +729,7 @@ def cap08():
     c.mark(1)
     c.click(ACOES_CX(70), at=c.A(1, 'ações', 0.7), label='Ações do #70')
     c.click(ITEM('Ver comprovante'), at=c.A(1, 'Ver', 0.6), label='Ver comprovante (relatório de fechamento em aba nova: PDF na edição)')
-    c.ev(js_pdf_tamanho(0, 'relatorio-fechamento-70'), label='PDF do relatório de fechamento do #70 (para a edição)')
+    c.ev(js_pdf_tamanho(0, 'relatorio-fechamento-70', limite=25_000_000), label='PDF do relatório de fechamento do #70 (~15 MB: vai inteiro, a edição usa)')
     c.mark(2)
     c.cursor((700, 520), at=c.A(2, 'Ele', 0.2), label='cursor descansa (o PDF do fechamento na edição)')
     c.mark(3)

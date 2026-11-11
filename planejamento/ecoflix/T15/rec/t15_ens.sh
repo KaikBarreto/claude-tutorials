@@ -15,7 +15,7 @@ tr '\0' '\n' < /proc/$PID/environ | grep -q "^FAKE_NOW=$FAKE_NOW$" || { echo "FA
 if [ "$MODO" = completo ]; then
   ROT=rec/t15/cap$NN.json; OUT=rec/t15/.cap$NN.out; EXTRA=""; RES=""
 else
-  python3 -I rec/t15/ensaio.py "$NN" >/dev/null; ROT=rec/t15/_ens/cap$NN.json; OUT=rec/t15/_ens/.cap$NN.out; EXTRA="--rapido --no-encode"; RES="--ens"
+  python3 -I rec/t15/ensaio.py "$NN" >/dev/null; ROT=rec/t15/_ens/cap$NN.json; OUT=rec/t15/_ens/.cap$NN.out; EXTRA="--rapido"; RES="--ens"
 fi
 SEM=""
 case "$NN" in 01|02|10) SEM="python3 -I rec/t15/t15_sementes.py $NN";; esac
