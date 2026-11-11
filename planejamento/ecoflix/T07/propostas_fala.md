@@ -26,5 +26,8 @@ Não editei `roteiro.md` nem `tts_textos.py`: a revisão geral aplica.
 - **Itens do Pedido a 1280 px** (menu recolhido): as células editáveis cortam o número ("446,4" no Valor Total do cobre, "130,2" na
   latinha, "21" no peso), visto nas folhas de contato dos caps. 05 e 09. A fala não depende; zoom na linha mostra o corte.
 - **Resumo do Pedido** flutua ao lado da janela "Finalizar Pedido" (fora dela), como o roteiro pede.
+- **Aviso da impressão direta**: na tela é "Comprovante enviado para a impressora!" (o roteiro e o inventário escrevem "Comprovante
+  enviado para impressora"). A fala não cita o aviso.
+- **Janela "Mesclar pesagens"** é um AlertDialog (`role=alertdialog`); "Esc" e alvo de janela comum não a acham.
 - **Plano/roteiro do cap05** ("tabela padrão sem item explícito, então sem aviso de preço"): no mundo base a Principal tem itens, e o
   aviso "Preço da tabela aplicado" aparece (ver propostas dos caps. 04 e 05).

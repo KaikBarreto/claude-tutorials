@@ -893,12 +893,12 @@ def cap09():
     c.hover({'text': 'Saldo após o pedido:'}, 2.0, w=(4, 'resumo'), label='Saldo após o pedido: Você deverá a ele (zoom)')
     c.confere('body', ['Você deverá a ele'], 'Você deverá a ele')
     c.click(TILE('Dinheiro'), w=(5, 'Dinheiro,', 1), label='Dinheiro')
-    c.hover(PD('Saldo atual do caixa', exact=False), 1.2, w=(5, 'caixa'), label='Saldo atual do caixa')
+    c.hover(PD('Saldo atual do caixa', exact=False), 0.6, w=(5, 'caixa'), label='Saldo atual do caixa')
     c.click(CONFIRMA_PAG, w=(6, 'Confirmar'), label='CONFIRMAR PAGAMENTO')
     c.waitfor(text='Compra registrada!', timeout=12)
     c.waitfor(text='Imprimir Comprovante', timeout=10)
     c.click(BTNX('Imprimir direto'), w=(6, 'cupom'), label='Imprimir direto')
-    c.waitfor(text='Comprovante enviado para impressora', timeout=10)
+    c.waitfor(text='Comprovante enviado para a impressora', timeout=10)
     c.fim()
     return c
 
@@ -982,7 +982,7 @@ def cap12():
     c.hover(BTNX('Imprimir direto'), 1.2, w=(1, 'Imprimir'), label='Imprimir direto')
     c.hover(BTN('Visualizar', within=DLG), 1.2, w=(1, 'Visualizar,'), label='Visualizar')
     c.click(BTNX('Imprimir direto'), w=(2, 'Imprimir'), label='Imprimir direto')
-    c.waitfor(text='Comprovante enviado para impressora', timeout=10)
+    c.waitfor(text='Comprovante enviado para a impressora', timeout=10)
     c.ev(js_rola_form(dur_ms=500), w=(3, 'Pronto.'), label='rola o formulário (sob a ilustração do cupom)')
     c.click(OPCOES, w=(4, 'preco?'), label='Opções avançadas')
     c.waitfor(text='Ajustes usados de vez em quando', timeout=8)
