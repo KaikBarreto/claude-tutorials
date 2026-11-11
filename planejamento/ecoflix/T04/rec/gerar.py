@@ -432,6 +432,16 @@ def js_sem_texto(texto, escopo='[role=dialog]'):
             "await new Promise(r=>setTimeout(r,300));}return 'DIFERENTE: ainda aparece '+%s})()") % (json.dumps(escopo), json.dumps(texto), json.dumps(texto), json.dumps(texto))
 
 
+def js_cores_rel(nomes, cores, escopo='[role=dialog]', celula='td:nth-child(3)'):
+    """conferência dos 4 casos de saldo: em cada linha (tr do escopo com o nome), o texto do saldo e a COR dele (texto ou fundo:
+    verde, vermelho ou cinza); DIFERENTE quando a cor não é a que a fala diz."""
+    return ("(async()=>{const esp=%s;const cor=e=>{for(const el of [e,...e.querySelectorAll('*')])for(const p of ['color','backgroundColor']){"
+            "const m=(getComputedStyle(el)[p].match(/[\\d.]+/g)||[]).map(Number);if(m.length<3||(m.length>3&&m[3]===0))continue;const [r,g]=m;"
+            "if(g>r+40)return 'verde';if(r>g+40)return 'vermelho'}return 'cinza'};let out=[],ok=true;"
+            "for(const [n,c] of esp){const tr=[...document.querySelectorAll(%s+' tr')].find(t=>t.textContent.includes(n));const el=tr&&tr.querySelector(%s);"
+            "if(!el){out.push(n+': SEM ALVO');ok=false;continue}const k=cor(el);if(k!==c)ok=false;out.push(n.split(' ')[0]+' '+el.textContent.trim()+' '+k)}"
+            "return (ok?'OK: ':'DIFERENTE: ')+out.join(' | ')})()") % (json.dumps(list(zip(nomes, cores)), ensure_ascii=False), json.dumps(escopo), json.dumps(celula))
+
 AVISO_NUMERO = 'Não veio da Receita — obrigatório para emitir NF-e'
 TOAST_CNPJ = 'Dados preenchidos — confira antes de salvar'
 CEP_IN = SEL(f"{DLG} input[placeholder='00000-000']")
@@ -843,6 +853,9 @@ def cap12():
     c.ev(js_rola_texto('A Pagar', 150, 800, escopo=REL), at=c.L(5) - 0.9, label='desce até A Pagar')
     c.confere('dlg', ['A Pagar', 'R$ 3.690,00', 'Cooperativa Recomeço', 'Depósito Irmãos Siqueira', 'Serra Fina Alumínio Reciclagem'], 'bloco A Pagar')
     c.hover(TXT('A Pagar', within=REL, exact=False), 1.4, at=c.A(5, 'três', 0.5), label='zoom: bloco A Pagar, Total R$ 3.690,00 (L5-L8)')
+    nomes = ['Fundição Bandeira do Vale', 'Aços Quiririm Ltda', 'Valdir Pereira', 'Cooperativa Recomeço', 'Depósito Irmãos Siqueira', 'Serra Fina Alumínio Reciclagem']
+    c.add({'do': 'eval', 'label': 'confere as cores dos 6 saldos do relatório (os 4 casos)',
+           'js': js_cores_rel(nomes, ['verde', 'verde', 'verde', 'vermelho', 'vermelho', 'vermelho'])})
     c.mark(6)
     c.hover(REL_LINHA('Cooperativa Recomeço'), 1.0, at=c.A(6, 'cooperativa', 0.5), label='Cooperativa Recomeço, Fornecedor')
     c.hover(REL_SALDO('Cooperativa Recomeço'), 1.4, at=c.A(6, 'vermelho:', 0.5), label='R$ 1.350,00 em vermelho')

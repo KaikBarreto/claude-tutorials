@@ -428,3 +428,6 @@ Decisões:
 - 11/11 12:2x **Ilustrações T10 e T12 prontas** (13 + 7 cenas): "Ajuste manual" nos dois lados (é o rótulo do app); a tara
   da T10 é o saco ("Tara/Imp."); a cena da pesagem da T12 sem "Peso bruto" nem "Peso líquido" (tara do caminhão 6.380 da
   junção); sem desenho de tela do app. Robô da T09 lançado no lugar.
+- 11/11 12:3x **Ilustrações T19 e T25 prontas** (12 + 8 cenas): relógios sem horário escrito no ponto da T19; nenhum
+  número de outubro na tela da T25; "Módulo do plano" virou cadeado + "depende do plano". Propostas de fala e pendências
+  das ilustrações agora em `PROPOSTAS_ILUSTRACOES.md` (para a revisão geral). Robô da T10 lançado no lugar.

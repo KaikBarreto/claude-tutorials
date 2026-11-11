@@ -236,6 +236,11 @@
    "timeout": 4
   },
   {
+   "do": "eval",
+   "label": "confere as cores dos 6 saldos do relatório (os 4 casos)",
+   "js": "(async()=>{const esp=[[\"Fundição Bandeira do Vale\", \"verde\"], [\"Aços Quiririm Ltda\", \"verde\"], [\"Valdir Pereira\", \"verde\"], [\"Cooperativa Recomeço\", \"vermelho\"], [\"Depósito Irmãos Siqueira\", \"vermelho\"], [\"Serra Fina Alumínio Reciclagem\", \"vermelho\"]];const cor=e=>{for(const el of [e,...e.querySelectorAll('*')])for(const p of ['color','backgroundColor']){const m=(getComputedStyle(el)[p].match(/[\\d.]+/g)||[]).map(Number);if(m.length<3||(m.length>3&&m[3]===0))continue;const [r,g]=m;if(g>r+40)return 'verde';if(r>g+40)return 'vermelho'}return 'cinza'};let out=[],ok=true;for(const [n,c] of esp){const tr=[...document.querySelectorAll(\"[role=dialog]\"+' tr')].find(t=>t.textContent.includes(n));const el=tr&&tr.querySelector(\"td:nth-child(3)\");if(!el){out.push(n+': SEM ALVO');ok=false;continue}const k=cor(el);if(k!==c)ok=false;out.push(n.split(' ')[0]+' '+el.textContent.trim()+' '+k)}return (ok?'OK: ':'DIFERENTE: ')+out.join(' | ')})()"
+  },
+  {
    "do": "mark",
    "name": "L6",
    "at": 44.22

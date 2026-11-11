@@ -216,7 +216,7 @@ const ILU=[
   mostra:['Materiais','O cardápio do pátio','Recicla Vale Metais','Compra','Venda','Cobre mel','Ferro pesado','Alumínio latinha','R$ 42,00','R$ 47,40','R$ 0,95','R$ 1,25','R$ 6,20','R$ 7,40','Nota fiscal']},
  {cap:1,id:'ilu01_totais',de:[3,'Total',1],ate:[3,'hoje',1],cauda:.6,
   resumo:'Total Pago é o estoque vezes o preço médio pago; Projeção de Vendas é o mesmo estoque vezes o preço de venda',
-  mostra:['Total Pago × Projeção de Vendas','Total Pago','Projeção de Vendas','Estoque','Preço médio pago','Preço de Venda','o que você pagou','se vender tudo hoje']},
+  mostra:['Total Pago × Projeção de Vendas','Total Pago','Projeção de Vendas','Estoque','Preço médio pago','Preço de Venda','quanto você pagou','vendendo tudo hoje']},
  {cap:3,id:'ilu03_codigo',de:[1,'atalho',1],ate:[2,'setenta',1],cauda:.6,
   resumo:'o código é o atalho do balcão (digita o número, o material aparece); dá para usar o do caderno: 16 vira 70',
   mostra:['Materiais','O código é um atalho','1','2','3','4','13','14','15','16','70','Radiador de cobre','Compra','Venda','Radiador','Rafael']},
@@ -320,7 +320,7 @@ S.ilu01_totais=g=>{
       <div class="ico ${cls}" style="width:60px;height:60px">${ic(icn,30)}</div>
       <div><div style="font-weight:800;font-size:24px;white-space:nowrap">${nome}</div>
         <div class="lbl" style="margin-top:6px;white-space:nowrap">${sub}</div></div></div>`,g);
-  const cT=res(RY[0],'','wallet','Total Pago','o que você pagou'), cP=res(RY[1],'a','trending-up','Projeção de Vendas','se vender tudo hoje');
+  const cT=res(RY[0],'','wallet','Total Pago','quanto você pagou'), cP=res(RY[1],'a','trending-up','Projeção de Vendas','vendendo tudo hoje');
   const oi=RY.map(y=>el(`<div class="op" style="left:${X.ig}px;top:${y-30}px">=</div>`,g));
   const TONS=['#8C5A3C','#6F7983','#9AA3AD','#A0694A','#4F5861','#8A949E','#5E6670','#B07A55'];
   const pilha=y=>el(`<div class="ab" style="left:${X.pil}px;top:${y-84}px;width:260px;height:168px">${monte(TONS)}

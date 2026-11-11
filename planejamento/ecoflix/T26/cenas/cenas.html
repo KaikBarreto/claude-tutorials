@@ -313,8 +313,10 @@ CAPS[1]=()=>{
       const [x,y,s]=trilha(t,k,.6);
       poe(e,x-CW/2,y-CHh/2,s,eo(pr(t,tco-.1+i*.07,.3)));
     });
-    vis(LAB[0],t,tco-.1,1e9,{dx:-10,dy:0}); vis(LAB[1],t,tal,1e9,{dx:-10,dy:0}); vis(LAB[2],t,tpr,1e9,{dx:-10,dy:0});
-    vis(ganho,t,tfe+.2,1e9,{dy:10}); vis(perd,t,tpd-.25,1e9,{dx:-10,dy:0});
+    // os rótulos saem antes de o funil deitar (não giram de lado junto com ele)
+    const sl=tde-.35;
+    vis(LAB[0],t,tco-.1,sl,{dx:-10,dy:0}); vis(LAB[1],t,tal,sl,{dx:-10,dy:0}); vis(LAB[2],t,tpr,sl,{dx:-10,dy:0});
+    vis(ganho,t,tfe+.2,sl,{dy:10}); vis(perd,t,tpd-.25,sl,{dx:-10,dy:0});
   };
 };
 
