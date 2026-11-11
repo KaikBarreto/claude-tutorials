@@ -1,6 +1,6 @@
 {
  "name": "t05-cap09w",
- "title": "T05 · Cap. 9 · Quando o EcoTray cai (narração 65,0 s ESTIMADA; marcas L1..L8 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00) · SÓ O TRECHO COM O NAVEGADOR NA CENA DE WINDOWS (até a linha 7; device windows, 1280x712)",
+ "title": "T05 · Cap. 9 · Quando o EcoTray cai (narração 65,0 s ESTIMADA; marcas L1..L8 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00) · SÓ O TRECHO COM O NAVEGADOR NA CENA DE WINDOWS (até a linha 8; device windows, 1280x712)",
  "seed": "t05-cap09",
  "pace": 0.5,
  "cps": 9,
@@ -222,6 +222,34 @@
    "timeout": 10
   },
   {
+   "do": "mark",
+   "name": "L8",
+   "at": 57.92
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=document.querySelector('main h1, main h2, main h3')||document.querySelector('main');const c=rolagem(el);if(!c)return 'SEM ROLAGEM';if(c.scrollTop<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0*(1-e),behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return c.scrollTop})()",
+   "at": 57.92,
+   "label": "volta ao topo"
+  },
+  {
+   "do": "type",
+   "target": {
+    "text": "Programa para Windows e macOS que conecta impressora térmica"
+   },
+   "text": "",
+   "noClick": true,
+   "optional": true,
+   "timeout": 4,
+   "at": 59.06,
+   "label": "texto do cartão: inicia automaticamente com o computador"
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
    "do": "eval",
    "js": "JSON.stringify(window.__avisos || \"sem observador\")",
    "label": "avisos de erro na tela"
@@ -229,7 +257,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 57.92
+   "at": 65.02
   }
  ],
  "ecotray": {

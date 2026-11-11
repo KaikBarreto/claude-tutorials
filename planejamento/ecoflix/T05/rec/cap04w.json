@@ -1,6 +1,6 @@
 {
  "name": "t05-cap04w",
- "title": "T05 · Cap. 4 · Conectar a impressora (narração 46,6 s ESTIMADA; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00) · SÓ O TRECHO COM O NAVEGADOR NA CENA DE WINDOWS (até a linha 5; device windows, 1280x712)",
+ "title": "T05 · Cap. 4 · Conectar a impressora (narração 46,6 s ESTIMADA; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:40:25-03:00) · SÓ O TRECHO COM O NAVEGADOR NA CENA DE WINDOWS (até a linha 6; device windows, 1280x712)",
  "seed": "t05-cap04",
  "pace": 0.5,
  "cps": 9,
@@ -186,6 +186,11 @@
    "timeout": 10
   },
   {
+   "do": "eval",
+   "js": "new Date().toLocaleString('pt-BR')",
+   "label": "hora do cupom (relógio do navegador)"
+  },
+  {
    "do": "mark",
    "name": "L5",
    "at": 28.48
@@ -203,6 +208,29 @@
    "label": "cursor descansa"
   },
   {
+   "do": "mark",
+   "name": "L6",
+   "at": 39.61
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Atualizar",
+    "exact": true
+   },
+   "seconds": 0.6,
+   "at": 44.07,
+   "label": "Atualizar (sem clicar)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
    "do": "eval",
    "js": "JSON.stringify(window.__avisos || \"sem observador\")",
    "label": "avisos de erro na tela"
@@ -210,7 +238,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 39.61
+   "at": 46.55
   }
  ],
  "ecotray": {

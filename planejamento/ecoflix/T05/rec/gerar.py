@@ -23,6 +23,11 @@ TUT = os.path.normpath(os.path.join(HERE, '..', '..'))
 NARR = os.path.join(TUT, 't05', 'narracao')
 FN = '2026-11-10T08:30:00-03:00'
 FAKE_NOW = {n: FN for n in range(12)}
+# cap04: a ilustração e a cena de Windows mostram o cupom de teste às 08:41:07; o relógio do mundo parte de FAKE_NOW quando o navegador
+# abre (o setup, fora do vídeo, também gasta relógio): FAKE_NOW do cap04 = 08:41:07 - SETUP_S - instante do clique em "Testar" (no capNN.json).
+# SETUP_S: calibrar com o `eval` "hora do cupom" do ensaio (hora do navegador no clique) e o `tAct` do "Testar" no actions.json.
+HORA_CUPOM = (8, 41, 7)
+SETUP_S = 20.0
 NOMES = ['Abertura', 'O que é o EcoTray', 'Baixar e instalar', 'O pareamento automático', 'Conectar a impressora',
          'Largura do papel e impressão turbo', 'Conectar a balança', 'Peso somente pela balança', 'O indicador de peso',
          'Quando o EcoTray cai', 'Driver incompatível', 'Recapitulando']
@@ -443,6 +448,7 @@ def cap04():
     c.mark(4)
     c.click(BTN('Testar'), at=c.A(4, 'Testar', 0.9), label='Testar')
     c.waitfor(text='Comprovante enviado para a impressora!', timeout=10)
+    c.ev("new Date().toLocaleString('pt-BR')", label='hora do cupom (relógio do navegador)')
     c.mark(5)
     c.cursor(NEUTRO, at=c.L(5) + 0.5, label='cursor descansa')
     c.mark(6)
@@ -648,6 +654,12 @@ def main():
         if os.environ.get('ANCHORS'):
             for i, w, t in c.anchors:
                 print(f'   anchor L{i} "{w}" -> {t}')
+        if n == 4:   # relógio próprio: o clique em "Testar" cai em 08:41:07
+            t_click = [st['at'] for st in c.steps if st.get('label') == 'Testar'][0]
+            alvo = HORA_CUPOM[0] * 3600 + HORA_CUPOM[1] * 60 + HORA_CUPOM[2]
+            ini = int(round(alvo - SETUP_S - t_click))
+            FAKE_NOW[4] = '2026-11-10T%02d:%02d:%02d-03:00' % (ini // 3600, ini % 3600 // 60, ini % 60)
+            json.dump({f'{k:02d}': FAKE_NOW[k] for k in FAKE_NOW}, open(os.path.join(HERE, 'fake_now.json'), 'w', encoding='utf8'), indent=1)
         d = c.out()
         last = -1
         for stp in d['steps']:   # o `at` precisa ser crescente
