@@ -123,14 +123,14 @@ OBS = ("(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tent
 
 
 class Cap:
-    def __init__(s, n, pace=0.5, cps=40, start=(760, 470), setup=None, prewarm=None, phone=False):
+    def __init__(s, n, pace=0.5, cps=40, start=(760, 470), setup=None, prewarm=None, phone=False, recolhe=True):
         s.n = n
         s.words, s.linhas, s.dur, s.estimada, s.respiros = carregar_voz(n)
         s.steps = []
         s.pace, s.cps, s.start = pace, cps, start
         s.phone = phone
         s.prewarm = prewarm or (['/dashboard'] if phone else ['/login'])
-        s.setup = (list(setup or []) if phone else LOGIN + list(setup or [])) + [{'do': 'eval', 'js': OBS}]
+        s.setup = (list(setup or []) if phone else LOGIN + ([RECOLHE, {'do': 'wait', 'seconds': 0.7}] if recolhe else []) + list(setup or [])) + [{'do': 'eval', 'js': OBS}]
         s.anchors = []
         s.ambiguas = []
         s.pending = []
@@ -346,7 +346,7 @@ BOTAO_FICHA = lambda t: SEL(f"{FICHA} button:text-is('{t}')")
 RESUMO = lambda rot: SEL(f"{FICHA} div:has(> p:text-is('{rot}'))")
 DADO = lambda rot: SEL(f"{FICHA} dl > div:has(> dt:text-is('{rot}'))")
 CAMPO = lambda cid, esc=DLG: SEL(f'{esc} #{cid}')
-BDLG = lambda t, esc=DLG: SEL(f"{esc} button:text-is('{t}')")
+BDLG = lambda t, esc=DLG: SEL(f"{esc} button:text-is('{t}'):not(.absolute)")
 DTAB = lambda t: SEL(f"{DLG} [role=tab]:has-text('{t}')")
 SALDO_LINHA = lambda nome, valor: SEL(f"main [role=listitem]:has(p:text-is('{nome}')) :text-is('{valor}')")
 
@@ -361,6 +361,10 @@ LOGIN = [
     {'do': 'waitFor', 'idle': True, 'timeout': 20},
 ]
 AGUARDA = {'do': 'waitFor', 'idle': True, 'timeout': 15}
+# menu lateral recolhido (a 1280 px com o menu aberto a faixa de abas corta "Configurações de RH" e esconde "Dashboard", e a ficha
+# corta o nome: "Ed..."); o cap00 fica com o menu aberto (o item "Funcionários (RH)" é o assunto)
+RECOLHE = {'do': 'eval', 'js': ("(()=>{const sb=document.querySelector('[data-state][data-collapsible]');if(sb&&sb.getAttribute('data-state')==='collapsed')"
+                                "return 'ja recolhido';const b=document.querySelector('header button.h-8.w-8');if(!b)return 'SEM ALVO';b.click();return 'recolhido'})()")}
 SUBTITULO = 'Gerencie sua equipe e controle de pagamentos'
 
 
@@ -448,7 +452,7 @@ def cap_novo(n, **kw):
 # ================================================================ capítulos
 def cap00():
     """Abertura: Dashboard; o cursor vai ao menu lateral e abre Funcionários (RH); ilustração na L2; cartões do módulo e do Antes."""
-    c = cap_novo(0, start=(760, 300))
+    c = cap_novo(0, start=(760, 300), recolhe=False)
     c.mark(1)
     c.confere('main', ['Olá, Rafael'], 'Dashboard da Recicla Vale Metais')
     c.hover(LINK('Funcionários (RH)'), 0.4, at=c.A(1, 'colocar', 0.9), label='o cursor vai ao menu lateral')
@@ -488,7 +492,7 @@ def cap01():
     c.hover(SEL("main button:has-text('Exportar Relatório')"), 0.2, at=c.A(3, 'relatório', 0.75), label='Exportar Relatório')
     c.hover(SEL("main button:has-text('Novo Funcionário')"), 0.6, at=c.A(3, 'Novo', 0.75), label='Novo Funcionário')
     c.mark(4)
-    c.hover(SALDO_LINHA('Rafael Nogueira', 'R$ 6.000,00'), 0.6, at=c.A(4, 'saldo:', 0.75), label='o saldo na lista Equipe (selo verde)')
+    c.hover(SALDO_LINHA('Cláudio Ferraz', 'R$ 2.100,00'), 0.6, at=c.A(4, 'saldo:', 0.75), label='o saldo na lista Equipe (selo verde)')
     c.hover({'placeholder': 'Buscar por nome ou cargo...'}, 0.8, at=c.A(4, 'buscar', 0.75), label='busca Buscar por nome ou cargo...')
     c.mark(5)
     c.click(LINHA('Diego Morais'), at=c.A(5, 'Diego,', 0.8), label='Diego Morais (abre a ficha)')
@@ -528,10 +532,11 @@ def cap02():
     c.type(CAMPO('phone'), '12900004107', at=round(max(c.W(2, 'sai') - 0.05, t_cpf + 2.0), 2), label='Telefone (12) 90000-4107', cps=40, noClick=True)
     c.confere_campos(['Gabriel Rocha', '418.273.956-64', '(12) 90000-4107'], 'nome, CPF e telefone com máscara')
     c.mark(3)
+    rola_ate(c, DLG, 'Cargo', round(c.L(3) - 0.9, 2), 'rola a janela até Cargo', y=300, dur_ms=500)
     c.click(CAMPO('position'), at=c.A(3, 'cargo', 0.9), label='campo Cargo')
     c.ev(colar('Operador de empilhadeira'), at=c.A(3, 'operador', 0.05), label='Cargo: Operador de empilhadeira')
     escolhe(c, CAMPO('department'), 'Pátio', c.A(3, 'departamento', 0.9), c.A(3, 'Pátio,', 0.6), 'Departamento: Pátio')
-    c.hover(CAMPO('hire_date'), 0.6, at=c.A(3, 'admissão', 0.75), label='Data de Admissão 10/11/2026')
+    c.digita(CAMPO('hire_date'), '10112026', c.W(3, 'hoje,'), 'Data de Admissão 10/11/2026')
     c.confere_campos(['2026-11-10'], 'admissão hoje')
     c.mark(4)
     c.click(DTAB('Remuneração'), at=c.A(4, 'Remuneração', 0.9), label='aba Remuneração')
@@ -726,10 +731,11 @@ def cap06():
     c.mark(4)
     c.click(BOTAO_FICHA('Pagamento'), at=c.A(4, 'Pagamento.', 0.9), label='Pagamento')
     c.waitfor(text='Pagamento ao funcionário', timeout=10)
-    c.confere('dlg', ['Salário:', 'R$ 2.900,00', 'Total de Bônus:', 'R$ 250,00', 'Descontos:', 'R$ 400,00'], 'resumo do pagamento')
-    c.hover(TXT('Salário:', within=DLG), 0.2, at=c.A(4, 'salário,', 0.75), label='Resumo: Salário')
-    c.hover(TXT('Total de Bônus:', within=DLG), 0.2, at=c.A(4, 'bônus', 0.75), label='Resumo: Total de Bônus')
-    c.hover(TXT('Descontos:', within=DLG), 0.5, at=c.A(4, 'descontos.', 0.75), label='Resumo: Descontos (vales)')
+    c.confere('body', ['Salário:', 'R$ 2.900,00', 'Total de Bônus:', 'R$ 250,00', 'Descontos:', 'R$ 400,00'], 'resumo do pagamento')
+    c.confere_campos(['400,00', '2.750,00'], 'vales a descontar 400,00 e valor 2.750,00')
+    c.hover(TXT('Salário:'), 0.2, at=c.A(4, 'salário,', 0.75), label='Resumo: Salário')
+    c.hover(TXT('Total de Bônus:'), 0.2, at=c.A(4, 'bônus', 0.75), label='Resumo: Total de Bônus')
+    c.hover(TXT('Descontos:'), 0.5, at=c.A(4, 'descontos.', 0.75), label='Resumo: Descontos (vales)')
     c.mark(5)
     c.hover(TXTX('Quanto você quer descontar dos vales', within=DLG), 1.0, at=c.A(5, 'quanto', 0.75), label='Quanto você quer descontar dos vales (400,00)')
     c.hover(TXTX('Valor padrão: 100% dos vales', within=DLG), 1.2, at=c.A(5, 'padrão', 0.75), label='Valor padrão: 100% dos vales (R$ 400,00)')
@@ -745,8 +751,9 @@ def cap06():
     c.confere('dlg', ['Calculado: R$ 2.750,00'], 'Calculado: R$ 2.750,00')
     c.hover(TXTX('Calculado: R$', within=DLG), 1.0, at=c.A(7, 'salário,', 0.75), label='Calculado: R$ 2.750,00')
     c.mark(8)
-    c.click(SEL(f"{DLG} button:has-text('PIX/Transferência'), {DLG} label:has-text('PIX/Transferência')"), at=c.A(8, 'Pix,', 0.9), label='Forma de Pagamento: PIX/Transferência')
-    c.hover(TXTX('Conta', within=DLG), 0.3, at=c.A(8, 'conta', 0.75), label='Conta bancária: Conta Principal')
+    rola_ate(c, DLG, 'Forma de Pagamento', c.A(8, 'Ele', 0.4), 'rola até a Forma de Pagamento', y=260, dur_ms=500)
+    c.click(SEL(f"{DLG} label[for='payment-pix']"), at=c.A(8, 'Pix,', 0.9), label='Forma de Pagamento: PIX/Transferência')
+    c.hover(SEL(f"{DLG} label:has-text('Conta')"), 0.3, at=c.A(8, 'conta', 0.75), label='Conta bancária: Conta Principal')
     c.click(BDLG('Confirmar Pagamento'), at=c.A(8, 'Confirmar', 0.9), label='Confirmar Pagamento')
     c.waitfor(gone={'role': 'dialog'}, timeout=15)
     c.mark(9)
@@ -784,7 +791,8 @@ def cap07():
     c.mark(4)
     c.hover(TXTX('Ajuste de salário', within=DLG), 3.0, at=c.A(4, 'sistema', 0.75), label='Ajuste de salário (continua)')
     c.mark(5)
-    LIXO = SEL(f"{DLG} div:has(> div p:text-is('Adiantamento')) button:has(svg.lucide-trash-2)")
+    LIXO = SEL("xpath=//div[@role='dialog']//*[normalize-space(text())='Vale']/ancestor::div[.//button//*[contains(@class,'lucide-trash')]][1]"
+               "//button[.//*[contains(@class,'lucide-trash')]]")
     c.hover(LIXO, 1.6, at=c.A(5, 'excluir', 0.75), label='lixeira de uma linha Vale (sem clicar)')
     c.mark(6)
     c.cursor((1000, 140), at=c.A(6, 'A', 0.3), label='cursor sai da lixeira (ilustração)')
@@ -855,7 +863,7 @@ def cap09():
     setup = [{'do': 'geo', 'lat': -23.0105, 'lng': -45.5412},
              {'do': 'goto', 'url': f'/ponto/{GABRIEL_SLUG}'}, {'do': 'waitFor', 'text': 'Gabriel Rocha', 'timeout': 30},
              {'do': 'waitFor', 'text': 'Registrar Entrada', 'timeout': 20}, {'do': 'eval', 'js': JS_CAMERA}, {'do': 'wait', 'seconds': 0.8}]
-    c = cap_novo(9, setup=setup, phone=True, start=(195, 600), pace=0.6)
+    c = cap_novo(9, setup=setup, phone=True, start=(195, 600), pace=0.6, prewarm=[f'/ponto/{GABRIEL_SLUG}'])
     c.mark(1)
     c.confere('body', ['Gabriel Rocha', 'Operador de empilhadeira', 'Recicla Vale Metais', 'PONTO ELETRÔNICO'], 'tela do ponto do Gabriel')
     c.marcar(TXT('Gabriel Rocha'), at=c.A(1, 'nome', 0.3), label='nome do Gabriel e cargo (cabeçalho)')
@@ -942,7 +950,8 @@ def cap10():
     c.click(ABA('Registro de Ponto'), at=c.A(7, 'Registro', 0.9), label='aba Registro de Ponto')
     c.waitfor(text='Lançar manual', timeout=10)
     c.waitfor(text='Gabriel Rocha', timeout=10)
-    CARD_G = SEL("main div:has(> div p:text-is('Gabriel Rocha'))")
+    CARD_G = SEL("xpath=//main//*[normalize-space(text())='Gabriel Rocha']/following::div[contains(@class,'border')][1]")
+    rola_ate(c, 'main', 'Gabriel Rocha', c.A(7, 'uma', 0.4), 'rola até a batida do Gabriel', y=330, dur_ms=600, prefixo=False)
     c.hover(CARD_G, 1.6, at=c.A(7, 'Gabriel', 0.75), label='a batida do Gabriel: selfie, Entrada, hora, endereço, Mobile - Chrome')
     c.mark(8)
     c.hover(SEL("main button:has-text('Lançar manual')"), 2.0, at=c.A(8, 'Lançar', 0.75), label='Lançar manual')
@@ -977,8 +986,9 @@ def cap11():
     c.hover(CAMPO('default-break', 'main'), 0.3, at=c.A(2, 'hora', 0.75), label='Intervalo padrão (min) 60')
     c.hover(CAMPO('late-tol', 'main'), 0.6, at=c.A(2, 'dez', 0.75), label='Tolerância de atraso (min) 10')
     c.mark(3)
-    c.hover(SEL("main [aria-label='Trabalha Segunda-feira'], main [aria-label^='Trabalha Seg']"), 0.3, at=c.A(3, 'segunda', 0.75), label='Dias em que a empresa trabalha: Seg')
-    c.hover(SEL("main [aria-label='Trabalha Sexta-feira'], main [aria-label^='Trabalha Sex']"), 1.0, at=c.A(3, 'sexta.', 0.75), label='Seg a Sex ligados')
+    rola_ate(c, 'main', 'Dias em que a empresa trabalha', c.A(3, 'E', 0.4), 'rola até os dias da empresa', y=330, dur_ms=600)
+    c.hover(SEL("main #work-weekday-1"), 0.3, at=c.A(3, 'segunda', 0.75), label='Dias em que a empresa trabalha: Seg')
+    c.hover(SEL("main #work-weekday-5"), 1.0, at=c.A(3, 'sexta.', 0.75), label='Seg a Sex ligados')
     c.mark(4)
     rola_ate(c, 'main', 'Jornada Individual', c.A(4, 'jornada', 0.6), 'rola até a Jornada Individual', y=160)
     LAPIS = SEL("main tr:has-text('Juliana Prado') button:has(svg.lucide-pencil)")
@@ -1002,6 +1012,7 @@ def cap12():
     """Arquivar o Rogério, Inativos (Reativar) e o diálogo do Excluir definitivamente (Cancelar)."""
     c = cap_novo(12, setup=RH)
     c.mark(1)
+    rola_ate(c, 'main [role=list]', 'Rogério Batista', c.A(1, 'sai', 0.4), 'rola a lista até o Rogério', y=520, dur_ms=600, prefixo=False)
     c.click(LINHA('Rogério Batista'), at=c.A(1, 'Rogério,', 0.8), label='Rogério Batista')
     c.waitfor(target=DADO('Último pagamento'), timeout=10)
     c.confere(FICHA, ['Ajudante de pátio', '30/10/2026'], 'Rogério: último pagamento 30/10')

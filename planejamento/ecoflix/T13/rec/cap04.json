@@ -1,0 +1,440 @@
+{
+ "name": "t13-cap04",
+ "title": "T13 · Cap. 4 · Lançar uma conta (narração ESTIMADA 71,8 s; marcas L1..L9 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "seed": "t13-cap04",
+ "pace": 0.5,
+ "cps": 40,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 400
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true"
+ },
+ "seedExtra": [
+  "t13/inicio"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "waitFor",
+   "target": {
+    "label": "E-mail"
+   },
+   "timeout": 30
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "E-mail"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "Senha",
+    "exact": true
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Rafael!",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/contas-pagar-receber"
+  },
+  {
+   "do": "waitFor",
+   "text": "Água e esgoto de outubro",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const a=document.getAnimations().filter(x=>x.currentTime<0);a.forEach(x=>x.startTime=document.timeline.currentTime);return a.length})()"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|Algo deu errado|Falha ao|Something went wrong|inv[áa]lid/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{document.querySelectorAll('[data-sonner-toast][data-type=error]').forEach(t=>{const s='TOAST DE ERRO: '+t.textContent.trim().slice(0,90);if(!window.__avisos.includes(s)&&window.__avisos.length<10)window.__avisos.push(s)})},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0.4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Nova conta",
+    "exact": true,
+    "within": "main"
+   },
+   "at": 9.49,
+   "label": "Nova conta"
+  },
+  {
+   "do": "waitFor",
+   "text": "Cadastre uma conta a pagar ou a receber com vencimento.",
+   "timeout": 8
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 10.56
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]:has-text('A pagar (despesa)')"
+   },
+   "seconds": 1.6,
+   "at": 10.81,
+   "label": "Tipo: A pagar (despesa)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 16.6
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#bill-amount"
+   },
+   "at": 16.93,
+   "label": "ZOOM Valor 3.480,00 (clique no campo)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#bill-amount"
+   },
+   "text": "3480,00",
+   "cps": 40,
+   "at": 18.36,
+   "label": "ZOOM Valor 3.480,00",
+   "noClick": true
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 20.82
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#bill-description"
+   },
+   "at": 21.25,
+   "label": "Descrição (clique no campo)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#bill-description"
+   },
+   "text": "Manutenção da prensa enfardadeira",
+   "cps": 40,
+   "at": 22.93,
+   "label": "Descrição",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#bill-due"
+   },
+   "at": 26.64,
+   "label": "Vencimento 19/11/2026 (abre o calendário)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] button[name='day']:not(.day-outside):text-is('19')"
+   },
+   "at": 27.9,
+   "label": "Vencimento 19/11/2026"
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 29.52
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#bill-category"
+   },
+   "at": 29.87,
+   "label": "Categoria (abre a lista)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Pesquisar categoria..."
+   },
+   "text": "Manut",
+   "at": 32.5,
+   "label": "busca Manut",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Manutenção de máquinas"
+   },
+   "at": 33.62,
+   "label": "Manutenção de máquinas"
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 35.49
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]:has(span:text-is('Fornecedor'))"
+   },
+   "seconds": 0.26,
+   "at": 38.98,
+   "label": "o tipo já vem em Fornecedor",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]:has-text('Selecione o fornecedor')"
+   },
+   "at": 39.89,
+   "label": "Selecione o fornecedor"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Pesquisar fornecedor..."
+   },
+   "text": "Moretti",
+   "at": 40.82,
+   "label": "busca Moretti",
+   "noClick": true
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "role": "option",
+    "name": "Hidráulica Moretti Ltda"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Hidráulica Moretti Ltda"
+   },
+   "at": 42.24,
+   "label": "Hidráulica Moretti Ltda"
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 42.6
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "#bill-cost-center"
+   },
+   "seconds": 1.2,
+   "at": 43.05,
+   "label": "Centro de custo",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#bill-cost-center"
+   },
+   "at": 48.04,
+   "label": "Centro de custo (abre a lista)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Pátio"
+   },
+   "at": 49.6,
+   "label": "Pátio"
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 50.08
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.textContent.trim()===\"Pagamento previsto\"&&e.offsetParent).sort((a,b)=>a.textContent.length-b.textContent.length||a.children.length-b.children.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-300);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 50.08,
+   "label": "desce a janela até o bloco Dinheiro"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]:has-text('Não definido')"
+   },
+   "at": 51.27,
+   "label": "Pagamento previsto (abre a lista)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Conta Principal"
+   },
+   "at": 56.23,
+   "label": "Conta Principal (grupo Contas)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]:has-text('Conta Principal')"
+   },
+   "seconds": 0.36,
+   "at": 60.88,
+   "label": "previsto: Conta Principal",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L9",
+   "at": 61.89
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Criar conta",
+    "exact": true
+   },
+   "at": 62.09,
+   "label": "Criar conta",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "text": "Conta criada",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('Manutenção da prensa enfardadeira') :text-is('Manutenção da prensa enfardadeira')"
+   },
+   "seconds": 1.2,
+   "at": 64.09,
+   "label": "ZOOM a linha nova, com 19/11/2026 e R$ 3.480,00",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('Manutenção da prensa enfardadeira') :text-is('Pendente')"
+   },
+   "seconds": 0.6,
+   "at": 66.37,
+   "label": "Pendente",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('Manutenção da prensa enfardadeira') :text-is('19/11/2026')"
+   },
+   "seconds": 0.15,
+   "at": 67.73,
+   "label": "vencimento 19/11/2026",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('Manutenção da prensa enfardadeira') :text-is('Manutenção de máquinas')"
+   },
+   "seconds": 0.4,
+   "at": 68.49,
+   "label": "categoria e Conta Principal",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('Manutenção da prensa enfardadeira') :text-is('Hidráulica Moretti Ltda')"
+   },
+   "seconds": 0.8,
+   "at": 69.55,
+   "label": "Hidráulica Moretti Ltda",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"19/11/2026\", \"R$ 3.480,00\", \"Pendente\", \"Hidráulica Moretti Ltda\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main tbody tr:has-text('Manuten\\u00e7\\u00e3o da prensa enfardadeira')\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere a linha nova"
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 71.81
+  }
+ ]
+}

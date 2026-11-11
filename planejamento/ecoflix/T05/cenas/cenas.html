@@ -54,6 +54,11 @@ body{font-family:M,sans-serif;color:var(--t);-webkit-font-smoothing:antialiased}
 .most .ml span{position:absolute;left:0;top:0;white-space:nowrap}
 .most .mn{margin-top:6px;font-weight:800;font-size:44px;color:var(--v);font-variant-numeric:tabular-nums;white-space:nowrap}
 .rip{position:absolute;width:56px;height:56px;margin:-28px 0 0 -28px;border-radius:50%;border:3px solid var(--v);opacity:0}
+</style><style id="saturado">/* estilo saturado (Kaik, 11/11): selo, chip, etiqueta, quadrado de ícone e círculo de etapa
+   com fundo cheio e ícone/texto branco; nunca fundo claro com conteúdo colorido, nunca ícone escuro sobre o verde */
+:root{--vs:#16A34A;--as:#D97706;--rs:#DC2626}
+.ico{background:var(--vs);color:#fff}.ico.a{background:var(--as);color:#fff}
+.tag.v{background:var(--vs);color:#fff}.tag.a{background:var(--as);color:#fff}
 </style></head>
 <body><div id="st"></div>
 <script>
@@ -266,10 +271,10 @@ function ponte(g,{carga='carroca',navX=50}={}){
   return o;
 }
 // pílula verde do peso e ficha do cupom (o que viaja pela ponte)
-const pilulaHTML=txt=>`<div class="ab" style="left:0;top:0;padding:8px 16px;border-radius:999px;background:var(--v);color:#0E3B25;font-weight:800;
+const pilulaHTML=txt=>`<div class="ab" style="left:0;top:0;padding:8px 16px;border-radius:999px;background:var(--v);color:#fff;font-weight:800;
   font-size:22px;white-space:nowrap;box-shadow:0 6px 16px rgba(80,208,136,.35)">${txt}</div>`;
-const fichaHTML=()=>`<div class="ab" style="left:0;top:0;width:52px;height:52px;border-radius:14px;background:#fff;border:2px solid var(--v);
-  display:flex;align-items:center;justify-content:center;color:var(--ve);box-shadow:0 6px 16px rgba(16,24,40,.12)">${ic('receipt-text',28)}</div>`;
+const fichaHTML=()=>`<div class="ab" style="left:0;top:0;width:52px;height:52px;border-radius:14px;background:var(--v);
+  display:flex;align-items:center;justify-content:center;color:#fff;box-shadow:0 6px 16px rgba(16,24,40,.12)">${ic('receipt-text',28)}</div>`;
 // viaja em duas pernas (até o EcoTray, uma pausa por trás dele, e adiante); visível do começo ao fim do trajeto
 function viaja2(e,ra,rb,t,a,da,pausa,db){const b=a+da+pausa;if(t<b)segue(e,ra,t,a,da);else segue(e,rb,t,b,db);
   const op=t<a?0:Math.min(1,cl((t-a)/.18),1-cl((t-b-db)/.25));e.style.opacity=op.toFixed(3);e.style.visibility=op<=.001?'hidden':'visible'}
@@ -330,8 +335,8 @@ CAPS[0]=()=>{
     <span id="h2" style="position:absolute;left:0;right:0;opacity:0">Com o EcoTray</span></div></div>`,g);
   // hoje: a seta pontilhada do PDF até a impressora, com a dúvida no meio
   const seta=caminho('M 432 560 C 580 560, 760 640, 924 640',g,{cor:'#98A2B3',lw:4,tr:'2 12'});
-  const duv=el(`<div class="ab" style="left:648px;top:570px;width:60px;height:60px;border-radius:50%;background:#fff;border:2px solid #D0D5DD;
-    display:flex;align-items:center;justify-content:center;font-weight:800;font-size:32px;color:#667085;box-shadow:0 6px 16px rgba(16,24,40,.08)">?</div>`,g);
+  const duv=el(`<div class="ab" style="left:648px;top:570px;width:60px;height:60px;border-radius:50%;background:var(--a);
+    display:flex;align-items:center;justify-content:center;font-weight:800;font-size:32px;color:#fff;box-shadow:0 6px 16px rgba(16,24,40,.08)">?</div>`,g);
   const P=ponte(g,{carga:'carroca'});
   const tec=el(`<div class="ab" style="left:535px;top:276px">${tecladoSVG(210)}</div>`,g);       // o Marcos digita
   const pill=el(pilulaHTML(kg(PESO)),P.viaj), tok=el(fichaHTML(),P.viaj);
@@ -385,9 +390,9 @@ CAPS[1]=()=>{
   const tr=[caminho('M 456 440 L 602 440',g,{cor:'#C3C9D0',lw:4,tr:'2 12'}),
             caminho('M 678 440 C 760 440, 790 240, 850 240',g,{cor:'#C3C9D0',lw:4,tr:'2 12'}),
             caminho('M 678 440 C 760 440, 860 640, 942 640',g,{cor:'#C3C9D0',lw:4,tr:'2 12'})];
-  const xis=el(`<div class="ab" style="left:606px;top:406px;width:68px;height:68px;border-radius:50%;background:#F2F4F7;border:2px solid #D0D5DD;
+  const xis=el(`<div class="ab" style="left:606px;top:406px;width:68px;height:68px;border-radius:50%;background:var(--a);
     display:flex;align-items:center;justify-content:center"><svg width="30" height="30" viewBox="0 0 30 30"><path d="M7 7 L23 23 M23 7 L7 23"
-    stroke="#667085" stroke-width="4" stroke-linecap="round"/></svg></div>`,g);
+    stroke="#fff" stroke-width="4" stroke-linecap="round"/></svg></div>`,g);
   const P=ponte(g,{carga:'saco',navX:440});
   const pill=el(pilulaHTML(kgd(PESO)),P.viaj), tok=el(fichaHTML(),P.viaj);
   const ripT=el('<div class="rip"></div>',g); ripT.style.left='710px'; ripT.style.top='460px';   // ícone na bandeja
@@ -455,7 +460,7 @@ CAPS[3]=()=>{
   const eco=el(`<div class="card" style="left:566px;top:108px;width:188px;height:156px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px">
     <img src="${ECO}" width="62" height="62"><div style="font-weight:800;font-size:30px">EcoTray</div></div>`,tela);
   const b1=el(`<div class="ab" style="left:330px;top:58px">${balaoHTML('EcoTray?',{fs:30})}</div>`,tela);
-  const b2=el(`<div class="ab" style="left:330px;top:226px">${balaoHTML('Aqui! v1.7.22',{cor:'var(--v)',tx:'var(--ve)',fundo:'#F4FBF7',ponta:'cd',fs:27})}</div>`,tela);
+  const b2=el(`<div class="ab" style="left:330px;top:226px">${balaoHTML('Aqui! v1.7.22',{cor:'var(--v)',tx:'#fff',fundo:'var(--v)',ponta:'cd',fs:27})}</div>`,tela);
   const scan=el('<div class="rip" style="width:120px;height:120px;margin:-60px 0 0 -60px;border-width:4px"></div>',tela); scan.style.left='322px'; scan.style.top='186px';
   // computador 2 (sem EcoTray e sem cabo): cinza, a pergunta fica sem resposta
   const mv2=el('<div class="ab" style="left:730px;top:172px;width:800px;height:500px;transform-origin:0 0;transform:scale(.62)"></div>',g);
@@ -464,7 +469,7 @@ CAPS[3]=()=>{
   const nav2=el(`<div class="ab" style="left:26px;top:60px;width:296px;height:252px;opacity:.75">${navegadorHTML(296,252,'EcoSistema',24)}</div>`,tela2);
   el(esq(24,30,200,14,'#EEF1F4')+esq(24,58,150,14,'#EEF1F4')+esq(24,110,240,14,'#EEF1F4')+esq(24,138,180,14,'#EEF1F4'),nav2.querySelector('.navc'));
   el(`<div class="ab" style="left:330px;top:58px">${balaoHTML('EcoTray?',{tx:'#667085',fs:30})}</div>`,tela2);
-  const sem=el(`<div class="ab" style="left:730px;top:496px;width:496px;text-align:center"><div class="tag" style="background:#F2F4F7;color:#475467">Sem EcoTray</div></div>`,g);
+  const sem=el(`<div class="ab" style="left:730px;top:496px;width:496px;text-align:center"><div class="tag a">Sem EcoTray</div></div>`,g);
   // a balança e a impressora, ligadas por cabo ao computador 1
   const cab1=caminho('M 210 447 C 210 500, 190 510, 190 560',g,{cor:'#4B5563',lw:5});
   const cab2=caminho('M 400 447 C 400 510, 457 540, 457 608',g,{cor:'#4B5563',lw:5});
@@ -522,8 +527,7 @@ CAPS[4]=()=>{
     box-shadow:0 4px 10px rgba(16,24,40,.10)">${esq(16,18,84,10,'#98A2B3')}${esq(16,42,108,8)}${esq(16,60,92,8)}${esq(16,78,108,8)}${esq(16,104,64,10,'#98A2B3')}</div>`,janA);
   gIA.appendChild(janA);
   const impA=el(`<div class="ab" style="left:790px;top:400px">${impressoraSVG(300)}</div>`,gIA);
-  const chipU=el(`<div class="ab row" style="left:600px;top:500px;gap:8px;padding:8px 16px;border-radius:999px;background:#fff;border:2px solid #D0D5DD;
-    font-weight:800;font-size:20px;box-shadow:0 6px 14px rgba(16,24,40,.08)">${ic('usb',22,'#344054')}USB</div>`,A);
+  const chipU=el(`<div class="ab tag v" style="left:600px;top:500px">${ic('usb',22)}USB</div>`,A);
   // ---- B · o cupom de teste sai cortado do lado: o desenho é de 80 mm e o papel, de 58 mm (k = 6,07 px por mm)
   const B=el('<div class="ab" style="left:0;top:0;width:1280px;height:800px"></div>',g);
   const titB=titulo(B,'Impressora','Cupom de teste');
@@ -697,8 +701,8 @@ CAPS[7]=()=>{
     <div class="row" style="gap:12px"><div class="ico" style="width:40px;height:40px">${ic('clipboard-list',22)}</div>
     <div style="font-weight:800;font-size:21px">Pedido</div></div><div style="margin-top:16px">${campoHTML(388)}</div></div>`,g);
   const campo=ped.querySelector('.campo'), cv=ped.querySelector('.cv');
-  const cad=el(`<div class="ab" style="left:-6px;top:-6px;width:42px;height:42px;border-radius:50%;background:var(--vc);display:flex;align-items:center;
-    justify-content:center">${ic('lock',24,'#2E7D57')}</div>`,ped.querySelector('.ci'));
+  const cad=el(`<div class="ab" style="left:-6px;top:-6px;width:42px;height:42px;border-radius:50%;background:var(--v);display:flex;align-items:center;
+    justify-content:center">${ic('lock',24,'#fff')}</div>`,ped.querySelector('.ci'));
   const lig=el(`<div class="ab tag v" style="left:300px;top:20px;font-size:18px;padding:7px 14px">${ic('lock',18)}Ligada</div>`,ped);
   const ripC=el('<div class="rip"></div>',ped); ripC.style.left='220px'; ripC.style.top='118px';
   // ninguém digita por cima: o teclado tenta "321" e não entra
@@ -746,8 +750,8 @@ CAPS[8]=()=>{
   // o cabo da balança chega no computador do EcoTray
   const GP=el('<div class="ab" style="left:0;top:0;width:1280px;height:800px"></div>',g);   // o computador (entra no centro)
   const cabo=caminho('M 92 512 C 40 512, 40 640, 96 668',GP,{cor:'#4B5563',lw:5});
-  const bal=el(`<div class="ab" style="left:96px;top:636px;width:64px;height:64px;border-radius:50%;background:#fff;border:2px solid #D0D5DD;display:flex;
-    align-items:center;justify-content:center;box-shadow:0 6px 14px rgba(16,24,40,.08)">${ic('scale',32,'#344054')}</div>`,GP);
+  const bal=el(`<div class="ab" style="left:96px;top:636px;width:64px;height:64px;border-radius:50%;background:var(--v);display:flex;
+    align-items:center;justify-content:center;box-shadow:0 6px 14px rgba(16,24,40,.08)">${ic('scale',32,'#fff')}</div>`,GP);
   // o computador: a página do sistema, o rodapé com o peso ao vivo e a barra do Windows com o EcoTray perto do relógio
   const pc=el(`<div class="ab" style="left:92px;top:176px;width:580px;height:440px">
     <div style="position:absolute;left:0;top:0;width:580px;height:380px;border-radius:18px;background:#2F3640;padding:12px">
@@ -766,7 +770,7 @@ CAPS[8]=()=>{
     <div style="position:absolute;left:196px;top:410px;width:188px;height:16px;border-radius:8px;background:#2F3640"></div></div>`,GP);
   const rod=pc.querySelector('.rod'), tray=pc.querySelector('.trayico');
   const ripT=el('<div class="rip"></div>',pc); ripT.style.left='527px'; ripT.style.top='351px';
-  const lPc=el(`<div class="ab" style="left:92px;top:636px;width:580px;text-align:center"><span class="tag v"><img src="${ECO}" width="22" height="22">Computador do EcoTray</span></div>`,GP);
+  const lPc=el(`<div class="ab" style="left:92px;top:636px;width:580px;text-align:center"><span class="tag v">Computador do EcoTray</span></div>`,GP);
   // o celular: o sistema funciona, sem o rodapé do peso
   const cel=el(`<div class="ab" style="left:850px;top:170px">${celularHTML(230,460)}</div>`,g);
   const tela=cel.querySelector('.tela');
@@ -774,9 +778,9 @@ CAPS[8]=()=>{
      '<div style="position:absolute;left:20px;top:126px;width:170px;height:96px;border-radius:12px;background:#E9ECEF"></div>'+
      '<div style="position:absolute;left:20px;top:236px;width:170px;height:96px;border-radius:12px;background:#E9ECEF"></div>',tela);
   const vazio=el('<div class="ab" style="left:14px;top:388px;width:182px;height:30px;border-radius:9px;border:2px dashed #C3C9D0"></div>',tela);
-  const ok=el(`<div class="ab" style="left:1048px;top:150px;width:54px;height:54px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;
-    box-shadow:0 6px 16px rgba(16,24,40,.12)">${ic('circle-check',38,'#2E7D57')}</div>`,g);
-  const lCel=el(`<div class="ab" style="left:850px;top:650px;width:230px;text-align:center"><span class="tag" style="background:#F2F4F7;color:#344054">${ic('smartphone',20)}Celular</span></div>`,g);
+  const ok=el(`<div class="ab" style="left:1048px;top:150px;width:54px;height:54px;border-radius:50%;background:var(--v);display:flex;align-items:center;justify-content:center;
+    box-shadow:0 6px 16px rgba(16,24,40,.12)">${ic('check',32,'#fff')}</div>`,g);
+  const lCel=el(`<div class="ab" style="left:850px;top:650px;width:230px;text-align:center"><span class="tag a">${ic('smartphone',20)}Celular</span></div>`,g);
 
   return t=>{
     const t0=W(5,'Uma')-.3, tpe=W(5,'peso'), tvi=W(5,'vivo'), tco=W(5,'computador'), tec=W(5,'EcoTray'), tce=W(5,'celular'),
@@ -806,13 +810,13 @@ CAPS[9]=()=>{
   const P=ponte(g,{carga:'carroca'});
   P.mn.textContent=kg(PESO);
   const pill=el(pilulaHTML(kg(PESO)),P.viaj), tok=el(fichaHTML(),P.viaj);
-  const off=el(`<div class="ab" style="left:716px;top:322px;width:44px;height:44px;border-radius:50%;background:#F2F4F7;border:2px solid #D0D5DD;
+  const off=el(`<div class="ab" style="left:716px;top:322px;width:44px;height:44px;border-radius:50%;background:var(--a);
     display:flex;align-items:center;justify-content:center"><svg width="20" height="20" viewBox="0 0 20 20"><path d="M5 5 L15 15 M15 5 L5 15"
-    stroke="#667085" stroke-width="3" stroke-linecap="round"/></svg></div>`,g);
-  const okS=el(`<div class="ab" style="left:420px;top:150px;width:54px;height:54px;border-radius:50%;background:#fff;display:flex;align-items:center;
-    justify-content:center;box-shadow:0 6px 16px rgba(16,24,40,.12)">${ic('circle-check',38,'#2E7D57')}</div>`,g);
-  const btImp=el(`<div class="ab" style="left:398px;top:488px;width:46px;height:46px;border-radius:12px;background:#fff;border:2px solid #D0D5DD;display:flex;
-    align-items:center;justify-content:center;box-shadow:0 6px 14px rgba(16,24,40,.10)">${ic('printer',24,'#344054')}</div>`,g);
+    stroke="#fff" stroke-width="3" stroke-linecap="round"/></svg></div>`,g);
+  const okS=el(`<div class="ab" style="left:420px;top:150px;width:54px;height:54px;border-radius:50%;background:var(--v);display:flex;align-items:center;
+    justify-content:center;box-shadow:0 6px 16px rgba(16,24,40,.12)">${ic('check',32,'#fff')}</div>`,g);
+  const btImp=el(`<div class="ab" style="left:398px;top:488px;width:46px;height:46px;border-radius:12px;background:var(--v);display:flex;
+    align-items:center;justify-content:center;box-shadow:0 6px 14px rgba(16,24,40,.10)">${ic('printer',24,'#fff')}</div>`,g);
   const icTec=el(`<div class="ab" style="left:0;top:0;opacity:0">${ic('keyboard',30,'#475467')}</div>`,P.ci);
   const icCad=el(`<div class="ab" style="left:-38px;top:0;opacity:0">${ic('lock',30,'#8A5A00')}</div>`,P.ci);
   const icRel=el(`<div class="ab" style="left:0;top:0;opacity:0">${ic('hourglass',30,'#8A5A00')}</div>`,P.ci);

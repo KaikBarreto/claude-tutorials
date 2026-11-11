@@ -1,0 +1,285 @@
+{
+ "name": "t06-cap01",
+ "title": "T6 · Cap. 1 · O caixa fechado (narração ESTIMADA 57,6 s; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "seed": "t06-cap01",
+ "pace": 0.5,
+ "cps": 40,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 470
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true"
+ },
+ "seedExtra": [],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "waitFor",
+   "target": {
+    "label": "E-mail"
+   },
+   "timeout": 30
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "E-mail"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "Senha",
+    "exact": true
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Rafael!",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/caixa"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gestão financeira e movimentações",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "waitFor",
+   "text": "Nenhum caixa foi aberto neste dia.",
+   "timeout": 15
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|Algo deu errado|Falha ao|Something went wrong/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{document.querySelectorAll('[data-sonner-toast][data-type=error]').forEach(t=>{const s='TOAST DE ERRO: '+t.textContent.trim().slice(0,90);if(!window.__avisos.includes(s)&&window.__avisos.length<10)window.__avisos.push(s)})},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Meu Caixa\", \"Abrir Caixa\", \"#84\", \"R$ 1.250,00\", \"Rafael Nogueira\", \"09/11 07:58 → 09/11 17:44\", \"reabrir outro caixa\", \"Reabrir #84\", \"0 caixas encontrados\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere tela do caixa fechado (#84, R$ 1.250,00)"
+  },
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0.4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Abrir Caixa",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.6,
+   "at": 5.37,
+   "label": "botão Abrir Caixa (Meu Caixa)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 6.76
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "#84",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.6,
+   "at": 7.69,
+   "label": "ZOOM cartão amarelo #84 (L2)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "09/11 07:58",
+    "exact": false,
+    "within": "main"
+   },
+   "seconds": 0.6,
+   "at": 13.69,
+   "label": "horário do #84",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Reabrir #84",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.6,
+   "at": 15.43,
+   "label": "Reabrir #84",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 18.88
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Painel Gerencial",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.6,
+   "at": 20.64,
+   "label": "Painel Gerencial",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Nenhum caixa foi aberto neste dia.",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.6,
+   "at": 25.65,
+   "label": "Nenhum caixa foi aberto neste dia.",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 26.21
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Meu Caixa",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.6,
+   "at": 26.81,
+   "label": "volta ao topo (Meu Caixa)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Abrir Caixa",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.6,
+   "at": 36.02,
+   "label": "o mesmo botão Abrir Caixa",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 36.5
+  },
+  {
+   "do": "press",
+   "key": "Shift+C",
+   "at": 40.92,
+   "label": "atalho Shift+C (Compra)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Abra o caixa antes de realizar compras",
+   "timeout": 8
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[data-sonner-toast]"
+   },
+   "text": "",
+   "noClick": true,
+   "optional": true,
+   "timeout": 4,
+   "label": "ZOOM aviso Abra o caixa antes de realizar compras (L5)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gestão financeira e movimentações",
+   "timeout": 8
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 47.18
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Abrir Caixa",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.6,
+   "at": 55.85,
+   "label": "Abrir Caixa (vamos abrir)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 57.63
+  }
+ ]
+}

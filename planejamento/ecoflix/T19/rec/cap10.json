@@ -73,6 +73,14 @@
    "timeout": 20
   },
   {
+   "do": "eval",
+   "js": "(()=>{const sb=document.querySelector('[data-state][data-collapsible]');if(sb&&sb.getAttribute('data-state')==='collapsed')return 'ja recolhido';const b=document.querySelector('header button.h-8.w-8');if(!b)return 'SEM ALVO';b.click();return 'recolhido'})()"
+  },
+  {
+   "do": "wait",
+   "seconds": 0.7
+  },
+  {
    "do": "goto",
    "url": "/funcionarios"
   },
@@ -436,7 +444,7 @@
   {
    "do": "click",
    "target": {
-    "selector": "[role=dialog] button:text-is('Cancelar')"
+    "selector": "[role=dialog] button:text-is('Cancelar'):not(.absolute)"
    },
    "at": 62.87,
    "label": "Cancelar"
@@ -472,9 +480,15 @@
    "timeout": 10
   },
   {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const el=[...document.querySelectorAll(\"main *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Gabriel Rocha\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-330);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 67.08,
+   "label": "rola até a batida do Gabriel"
+  },
+  {
    "do": "hover",
    "target": {
-    "selector": "main div:has(> div p:text-is('Gabriel Rocha'))"
+    "selector": "xpath=//main//*[normalize-space(text())='Gabriel Rocha']/following::div[contains(@class,'border')][1]"
    },
    "seconds": 1.6,
    "at": 68.1,

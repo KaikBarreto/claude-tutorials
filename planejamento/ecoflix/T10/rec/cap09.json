@@ -1,0 +1,315 @@
+{
+ "name": "t10-cap09",
+ "title": "T10 · Cap. 9 · O filtro de fornecedor (narração 41,2 s ESTIMADA; marcas L1..L4 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; usuário rafael)",
+ "seed": "t10-cap09",
+ "pace": 0.5,
+ "cps": 14,
+ "tail": 1.5,
+ "start": {
+  "x": 700,
+  "y": 300
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true"
+ },
+ "seedExtra": [
+  "t10/inicio",
+  "t10/apos-cap03"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/login"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "input[type=email]"
+   },
+   "timeout": 30
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "input[type=email]"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "input[type=password]"
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "button[type=submit]"
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Rafael!",
+   "timeout": 40
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/materiais"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie os materiais do estoque",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "header button:has(svg.lucide-panel-left-close), header button:has(svg.lucide-panel-left)"
+   },
+   "noScroll": true
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 700,
+    "y": 420
+   },
+   "by": 0,
+   "duration": 0.2,
+   "after": 0
+  },
+  {
+   "do": "goto",
+   "url": "/relatorio-estoque"
+  },
+  {
+   "do": "waitFor",
+   "text": "Análise detalhada de compras, vendas e lucro por material",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button[role=combobox]",
+    "hasText": "Este mês"
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Mês passado"
+   }
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 700,
+    "y": 420
+   },
+   "by": 0,
+   "duration": 0.2,
+   "after": 0
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=new RegExp(\"N[\\u00e3a]o foi poss[i\\u00ed]vel|Erro ao|Tente novamente|indispon[i\\u00ed]vel|Algo deu errado|Something went wrong|Falha ao|Pop-up bloqueado|Popup bloqueado|Sem permiss[\\u00e3a]o\",'i');const ign=new RegExp(\"$^\",'i');const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&!ign.test(m[0])&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0.0
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Fornecedores",
+    "exact": true
+   },
+   "at": 2.59,
+   "label": "filtro Fornecedores (abre a lista)"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] label:has-text('Depósito Irmãos Siqueira')"
+   },
+   "timeout": 6
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] label:has-text('Depósito Irmãos Siqueira')"
+   },
+   "at": 4.86,
+   "label": "marca Depósito Irmãos Siqueira"
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 7.49,
+   "label": "fecha a lista"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Total Comprado",
+    "exact": true
+   },
+   "seconds": 0.8,
+   "at": 7.9,
+   "label": "[ZOOM] só o Total Comprado",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{await new Promise(r=>setTimeout(r,300));const el=document.querySelector(\"main\");const t=(el?el.innerText:'').replace(/[\\s\\u00a0]+/g,' ').toLowerCase();return t.includes(\"total vendido\")?'DIFERENTE: apareceu '+\"Total Vendido\":'OK: ausente '+\"Total Vendido\"})()",
+   "label": "confere sem Total Vendido nem Lucro"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main thead"
+   },
+   "seconds": 1.2,
+   "at": 11.01,
+   "label": "cabeçalho só com as colunas de compra",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 12.76
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 24.73
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "main table"
+   },
+   "text": "",
+   "noClick": true,
+   "optional": true,
+   "timeout": 4,
+   "at": 25.58,
+   "label": "[ZOOM] tabela: Código, Material, Qtd. Comprada, Valor Comprado e Preço Médio Compra"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Código\", \"Material\", \"Qtd. Comprada\", \"Valor Comprado\", \"Preço Médio Compra\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main thead\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere colunas de compra"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main thead th:has-text('Qtd. Comprada')"
+   },
+   "seconds": 0.8,
+   "at": 30.92,
+   "label": "Qtd. Comprada",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 35.32
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main thead th:has-text('Preço Médio Compra')"
+   },
+   "seconds": 1.0,
+   "at": 35.32,
+   "label": "Preço Médio Compra",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Depósito Irmãos Siqueira",
+    "exact": true
+   },
+   "at": 35.82,
+   "label": "filtro (Depósito Irmãos Siqueira)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] label:has-text('Depósito Irmãos Siqueira')"
+   },
+   "at": 38.55,
+   "label": "desmarca Depósito Irmãos Siqueira"
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 39.81,
+   "label": "fecha a lista"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Total Vendido\", \"Lucro\", \"Projeção de Lucro\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere voltam os quatro cartões"
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 41.22
+  }
+ ]
+}

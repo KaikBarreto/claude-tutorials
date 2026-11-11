@@ -1,0 +1,193 @@
+{
+ "suppliers": [
+  {
+   "id": "@id:t14.fornecedor.moretti",
+   "company_id": "@id:company.reciclavale",
+   "name": "Hidráulica Moretti Ltda",
+   "nome_fantasia": null,
+   "razao_social": "Hidráulica Moretti Ltda",
+   "cpf_cnpj": "41.739.625/0001-57",
+   "phone": "(12) 90000-3131",
+   "phone_unavailable": false,
+   "email": "contato@hidraulicamoretti.example",
+   "contact_name": null,
+   "address": null,
+   "logradouro": null,
+   "numero": null,
+   "bairro": null,
+   "cep": null,
+   "cidade": "Taubaté",
+   "uf": "SP",
+   "codigo_ibge": null,
+   "pix_key": null,
+   "code": "6",
+   "is_mei": false,
+   "created_by": "@id:user.rafael",
+   "created_at": "2026-11-10T10:50:00.000Z",
+   "updated_at": "2026-11-10T10:50:00.000Z",
+   "indicador_ie": 9,
+   "inscricao_estadual": null,
+   "linked_customer_id": null,
+   "is_industry": false,
+   "default_price_table_id": null
+  }
+ ],
+ "financial_bills": [
+  {
+   "id": "@id:t14.conta.prensa",
+   "company_id": "@id:company.reciclavale",
+   "direction": "payable",
+   "description": "Manutenção da prensa enfardadeira",
+   "amount": 3480,
+   "currency": "BRL",
+   "due_date": "2026-11-30",
+   "status": "partial",
+   "paid_amount": 1740,
+   "partner_id": "@id:t14.fornecedor.moretti",
+   "partner_type": "supplier",
+   "category_id": "@id:categoria.manut_maquinas",
+   "cost_center_id": "@id:cc.patio",
+   "expected_bank_account_id": "@id:banco.principal",
+   "is_projection": false,
+   "created_by": "@id:user.rafael",
+   "created_at": "2026-11-10T10:52:00.000Z",
+   "updated_at": "2026-11-10T11:10:00.000Z",
+   "paid_at": "2026-11-10T11:10:00.000Z"
+  },
+  {
+   "id": "@id:t14.conta.pneu",
+   "company_id": "@id:company.reciclavale",
+   "direction": "payable",
+   "description": "Conserto do pneu da empilhadeira",
+   "amount": 180,
+   "currency": "BRL",
+   "due_date": "2026-11-09",
+   "status": "paid",
+   "paid_amount": 180,
+   "category_id": "@id:categoria.manut_maquinas",
+   "cost_center_id": "@id:cc.patio",
+   "expected_bank_account_id": "@id:banco.principal",
+   "is_projection": false,
+   "created_by": "@id:user.rafael",
+   "created_at": "2026-11-10T10:55:00.000Z",
+   "updated_at": "2026-11-10T10:55:00.000Z",
+   "paid_at": "2026-11-09T14:00:00.000Z"
+  }
+ ],
+ "bank_transactions": [
+  {
+   "id": "@id:t14.t13.pneu",
+   "company_id": "@id:company.reciclavale",
+   "bank_account_id": "@id:banco.principal",
+   "type": "withdrawal",
+   "amount": -180.0,
+   "description": "Pagamento: Conserto do pneu da empilhadeira",
+   "transaction_at": "2026-11-09T14:00:00.000Z",
+   "transaction_date": "2026-11-09",
+   "created_at": "2026-11-10T10:55:00.000Z",
+   "created_by": "@id:user.rafael",
+   "source": "manual",
+   "excluded_from_dre": false,
+   "balance_after": 106088.16,
+   "origin_company_id": "@id:company.reciclavale",
+   "category_id": "@id:categoria.manut_maquinas",
+   "cost_center_id": "@id:cc.patio",
+   "payment_method": "transfer"
+  },
+  {
+   "id": "@id:t14.t13.energia",
+   "company_id": "@id:company.reciclavale",
+   "bank_account_id": "@id:banco.principal",
+   "type": "withdrawal",
+   "amount": -1874.3,
+   "description": "Pagamento: Energia elétrica de outubro",
+   "transaction_at": "2026-11-10T11:05:00.000Z",
+   "transaction_date": "2026-11-10",
+   "created_at": "2026-11-10T11:05:00.000Z",
+   "created_by": "@id:user.rafael",
+   "source": "manual",
+   "excluded_from_dre": false,
+   "balance_after": 104213.86,
+   "origin_company_id": "@id:company.reciclavale",
+   "category_id": "@id:categoria.energia",
+   "cost_center_id": "@id:cc.patio",
+   "payment_method": "transfer"
+  },
+  {
+   "id": "@id:t14.t13.prensa",
+   "company_id": "@id:company.reciclavale",
+   "bank_account_id": "@id:banco.principal",
+   "type": "withdrawal",
+   "amount": -1740.0,
+   "description": "Pagamento: Manutenção da prensa enfardadeira",
+   "transaction_at": "2026-11-10T11:10:00.000Z",
+   "transaction_date": "2026-11-10",
+   "created_at": "2026-11-10T11:10:00.000Z",
+   "created_by": "@id:user.rafael",
+   "source": "manual",
+   "excluded_from_dre": false,
+   "balance_after": 102473.86,
+   "origin_company_id": "@id:company.reciclavale",
+   "category_id": "@id:categoria.manut_maquinas",
+   "cost_center_id": "@id:cc.patio",
+   "payment_method": "transfer",
+   "partner_id": "@id:t14.fornecedor.moretti",
+   "partner_type": "supplier"
+  },
+  {
+   "id": "@id:t14.t13.quiririm",
+   "company_id": "@id:company.reciclavale",
+   "bank_account_id": "@id:banco.principal",
+   "type": "deposit",
+   "amount": 2000.0,
+   "description": "Recebimento de saldo",
+   "transaction_at": "2026-11-10T11:15:00.000Z",
+   "transaction_date": "2026-11-10",
+   "created_at": "2026-11-10T11:15:00.000Z",
+   "created_by": "@id:user.rafael",
+   "source": "manual",
+   "excluded_from_dre": false,
+   "balance_after": 104473.86,
+   "origin_company_id": "@id:company.reciclavale",
+   "partner_id": "@id:cliente.quiririm",
+   "partner_type": "customer",
+   "payment_method": "transfer"
+  }
+ ],
+ "_patch": {
+  "financial_bills": [
+   {
+    "match": {
+     "id": "@id:titulo.energia_out"
+    },
+    "set": {
+     "status": "paid",
+     "paid_amount": 1874.3,
+     "paid_at": "2026-11-10T11:05:00.000Z",
+     "updated_at": "2026-11-10T11:05:00.000Z"
+    }
+   }
+  ],
+  "balances": [
+   {
+    "match": {
+     "id": "@id:saldo.customer:@id:cliente.quiririm"
+    },
+    "set": {
+     "balance": 2870.0,
+     "updated_at": "2026-11-10T11:15:00.000Z"
+    }
+   }
+  ],
+  "bank_accounts": [
+   {
+    "match": {
+     "id": "@id:banco.principal"
+    },
+    "set": {
+     "balance": 104473.86
+    }
+   }
+  ]
+ }
+}

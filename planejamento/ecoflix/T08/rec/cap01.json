@@ -1,0 +1,245 @@
+{
+ "name": "t08-cap01",
+ "title": "T08 · Cap. 1 · Quando usar o ticket (narração 62,2 s ESTIMADA; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:40:00-03:00)",
+ "seed": "t08-cap01",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 900,
+  "y": 440
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true"
+ },
+ "seedExtra": [
+  "base/balanca-ativada",
+  "base/caixa-aberto",
+  "t08/inicio"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "waitFor",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "timeout": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "••••••••"
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "url": "/dashboard",
+   "timeout": 40
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 25
+  },
+  {
+   "do": "goto",
+   "url": "/ticket-pesagem"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie tickets de pesagem rodoviária",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 25
+  },
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 25
+  },
+  {
+   "do": "wait",
+   "seconds": 1.0
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel|Algo deu errado|Falha ao|Balan[çc]a desconectada|Pop-up bloqueado|Popup bloqueado/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');if(f&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA ECOFLIX'))window.__avisos.push('TRILHA ECOFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[data-sidebar=sidebar] button:has-text('Materiais')"
+   },
+   "at": 1.27,
+   "label": "menu Materiais"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "link",
+    "name": "Ticket de Pesagem"
+   },
+   "at": 2.68,
+   "label": "menu Ticket de Pesagem"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie tickets de pesagem rodoviária",
+   "timeout": 15
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 4.88
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 1000,
+    "y": 560
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "at": 5.68,
+   "label": "cursor sai do menu"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 17.6
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 32.15
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "main div:has(> h3:text-is(\"Aguardando valorização\"))"
+   },
+   "text": "",
+   "noClick": true,
+   "optional": true,
+   "timeout": 4,
+   "at": 32.25,
+   "label": "kanban: as duas colunas"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main h3:text-is('Aguardando valorização')"
+   },
+   "seconds": 0.5,
+   "at": 33.73,
+   "label": "coluna Aguardando valorização (com o #57)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main h3:text-is('Valorizados')"
+   },
+   "seconds": 0.5,
+   "at": 38.05,
+   "label": "coluna Valorizados",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 41.69
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Pesagens avulsas"
+   },
+   "at": 41.82,
+   "label": "aba Pesagens avulsas"
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 50.54
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Nova Pesagem Avulsa",
+    "exact": true
+   },
+   "seconds": 0.6,
+   "at": 52.04,
+   "label": "Nova Pesagem Avulsa (sem clicar)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Tickets padrão"
+   },
+   "at": 61.11,
+   "label": "volta para Tickets padrão"
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 62.2
+  }
+ ]
+}

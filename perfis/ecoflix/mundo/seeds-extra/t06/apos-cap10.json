@@ -1,0 +1,32 @@
+{
+ "_doc": "T06 · depois do cap10: caixa #85 fechado às 17:41 com R$ 1.007,10, sem diferença (o dinheiro contado volta ao cofre).",
+ "cash_transactions": [
+  {
+   "id": "@id:ct.t06.fecha85",
+   "company_id": "@id:company.reciclavale",
+   "cash_register_id": "@id:caixa.85",
+   "type": "closing",
+   "amount": 1007.1,
+   "description": "Fechamento de caixa",
+   "transaction_at": "2026-11-10T20:41:00.000Z",
+   "transaction_date": "2026-11-10",
+   "created_at": "2026-11-10T20:41:00.000Z",
+   "created_by": "@id:user.rafael",
+   "excluded_from_dre": false
+  }
+ ],
+ "_patch": {
+  "cash_register": [
+   {
+    "match": {
+     "id": "@id:caixa.85"
+    },
+    "set": {
+     "status": "closed",
+     "closing_balance": 1007.1,
+     "closed_at": "2026-11-10T20:41:00.000Z"
+    }
+   }
+  ]
+ }
+}

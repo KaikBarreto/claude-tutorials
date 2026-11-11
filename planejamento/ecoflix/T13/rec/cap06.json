@@ -1,0 +1,407 @@
+{
+ "name": "t13-cap06",
+ "title": "T13 · Cap. 6 · Parcelar uma conta (narração ESTIMADA 72,0 s; marcas L1..L9 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "seed": "t13-cap06",
+ "pace": 0.5,
+ "cps": 40,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 400
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true"
+ },
+ "seedExtra": [
+  "t13/inicio",
+  "t13/apos-cap05"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "waitFor",
+   "target": {
+    "label": "E-mail"
+   },
+   "timeout": 30
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "E-mail"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "Senha",
+    "exact": true
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Rafael!",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/contas-pagar-receber"
+  },
+  {
+   "do": "waitFor",
+   "text": "Água e esgoto de outubro",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const a=document.getAnimations().filter(x=>x.currentTime<0);a.forEach(x=>x.startTime=document.timeline.currentTime);return a.length})()"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|Algo deu errado|Falha ao|Something went wrong|inv[áa]lid/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{document.querySelectorAll('[data-sonner-toast][data-type=error]').forEach(t=>{const s='TOAST DE ERRO: '+t.textContent.trim().slice(0,90);if(!window.__avisos.includes(s)&&window.__avisos.length<10)window.__avisos.push(s)})},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0.4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Nova conta",
+    "exact": true,
+    "within": "main"
+   },
+   "at": 1.9,
+   "label": "Nova conta"
+  },
+  {
+   "do": "waitFor",
+   "text": "Cadastre uma conta a pagar ou a receber com vencimento.",
+   "timeout": 8
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 11.09
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#bill-amount"
+   },
+   "at": 11.42,
+   "label": "ZOOM Valor 7.080,00 (clique no campo)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#bill-amount"
+   },
+   "text": "7080,00",
+   "cps": 40,
+   "at": 14.52,
+   "label": "ZOOM Valor 7.080,00",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#bill-description"
+   },
+   "at": 15.79,
+   "label": "Descrição (colada) (clique no campo)"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const e=document.activeElement;if(!e||!/^(INPUT|TEXTAREA)$/.test(e.tagName))return 'SEM ALVO (nada em foco)';document.execCommand('insertText',false,\"Pneus do caminh\\u00e3o truck\");return e.value})()",
+   "at": 16.85,
+   "label": "Descrição (colada)"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 17.66
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#bill-due"
+   },
+   "at": 18.09,
+   "label": "Vencimento 23/11/2026 (1ª parcela) (abre o calendário)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] button[name='day']:not(.day-outside):text-is('23')"
+   },
+   "at": 21.63,
+   "label": "Vencimento 23/11/2026 (1ª parcela)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#bill-category"
+   },
+   "at": 23.3,
+   "label": "Categoria (abre a lista)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Pesquisar categoria..."
+   },
+   "text": "veículos",
+   "at": 24.05,
+   "label": "Manutenção de veículos (busca + Enter)",
+   "noClick": true,
+   "submit": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]:has-text('Selecione o fornecedor')"
+   },
+   "at": 24.71,
+   "label": "Selecione o fornecedor"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Pesquisar fornecedor..."
+   },
+   "text": "Vale",
+   "at": 26.03,
+   "label": "busca Vale",
+   "noClick": true
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "role": "option",
+    "name": "Auto Peças Vale Forte"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 26.44
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Auto Peças Vale Forte"
+   },
+   "at": 26.46,
+   "label": "Auto Peças Vale Forte"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.textContent.trim()===\"Parcelar ou repetir\"&&e.offsetParent).sort((a,b)=>a.textContent.length-b.textContent.length||a.children.length-b.children.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-260);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 27.34,
+   "label": "desce a janela até Parcelar ou repetir"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[aria-expanded]:has-text('Parcelar ou repetir')"
+   },
+   "at": 28.1,
+   "label": "abre Parcelar ou repetir"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#installment-toggle"
+   },
+   "at": 29.44,
+   "label": "liga Parcelar"
+  },
+  {
+   "do": "waitFor",
+   "text": "Configurar faturamento",
+   "timeout": 8
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 30.89
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog]:has-text('Nº de parcelas') button:text-is('3')"
+   },
+   "at": 31.69,
+   "label": "Nº de parcelas: 3"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog]:has-text('Nº de parcelas') input[aria-label='Valor da parcela 2']"
+   },
+   "seconds": 1.6,
+   "at": 37.64,
+   "label": "ZOOM as três linhas e a faixa Soma das parcelas",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Soma das parcelas",
+    "within": "[role=dialog]:has-text('Nº de parcelas')"
+   },
+   "seconds": 0.76,
+   "at": 43.79,
+   "label": "faixa verde Soma das parcelas",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 45.2
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Aplicar faturamento",
+    "exact": true
+   },
+   "at": 45.4,
+   "label": "Aplicar faturamento",
+   "noScroll": true
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "3x — 1º venc. 23/11/2026",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.6,
+   "at": 47.25,
+   "label": "resumo 3x — 1º venc. 23/11/2026 — total R$ 7.080,00",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 51.7
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Criar conta",
+    "exact": true
+   },
+   "at": 51.9,
+   "label": "Criar conta",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "text": "3 parcelas criadas",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main input[aria-label='Buscar contas']"
+   },
+   "at": 52.99,
+   "label": "busca pneus (clique no campo)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "main input[aria-label='Buscar contas']"
+   },
+   "text": "pneus",
+   "cps": 40,
+   "at": 54.3,
+   "label": "busca pneus",
+   "noClick": true
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "main tbody tr:has-text('Pneus do caminhão truck (parcela 3/3)')"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('Pneus do caminhão truck (parcela 2/3)') :text-is('23/12/2026')"
+   },
+   "seconds": 0.15,
+   "at": 54.91,
+   "label": "as três parcelas",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"23/11/2026\", \"23/12/2026\", \"23/01/2027\", \"R$ 2.360,00\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main tbody\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere três parcelas de R$ 2.360,00"
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 55.55
+  },
+  {
+   "do": "mark",
+   "name": "L9",
+   "at": 61.74
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 71.97
+  }
+ ]
+}

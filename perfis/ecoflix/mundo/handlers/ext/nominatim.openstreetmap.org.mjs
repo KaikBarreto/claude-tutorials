@@ -4,8 +4,9 @@
 // (o mapa sintético de Niterói).
 import nucleo from '../../../fakebase/handlers/ext/nominatim.openstreetmap.org.mjs';
 
-const PATIO = { lat: -23.0105, lon: -45.5412 };
-const perto = (lat, lon) => Math.hypot((lat - PATIO.lat) * 111, (lon - PATIO.lon) * 102) <= 1.5;
+// o ponto do celular da T19 e o endereço geocodificado da empresa (companies.lat/lng, mundo.json navegador.geolocalizacao)
+const PATIO = [{ lat: -23.0105, lon: -45.5412 }, { lat: -23.0262, lon: -45.5559 }];
+const perto = (lat, lon) => PATIO.some((p) => Math.hypot((lat - p.lat) * 111, (lon - p.lon) * 102) <= 1.5);
 
 export default async function nominatim(ctx) {
   const q = ctx.query || {};

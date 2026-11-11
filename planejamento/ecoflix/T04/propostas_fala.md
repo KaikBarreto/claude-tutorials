@@ -13,6 +13,10 @@ Linhas numeradas como no `capNN.json` (L1 = 1ª linha da tabela do capítulo).
   (`components/CnpjLookupInput.tsx:146-150`): não aparece no vídeo. O robô passa o mouse e lê o texto (`eval` "texto da dica (title)
   da lupa"); a edição põe um aviso "Ao passar o mouse: Buscar dados da empresa pelo CNPJ" (docs/08, T9 cap13). A fala fica.
 
+- **As 7 abas da ficha não cabem em 1280 px** (o [TESTAR] do cap07), mesmo com o menu recolhido: a faixa "Seções da ficha"
+  (`ClientsListView.tsx:315`, `overflow-x-auto`) corta "Notas fiscais" e deixa "Preços" fora (x ≈ 1276 numa janela de 1280). O robô
+  rola a faixa de lado (suave, ~0,5 s) antes de "Notas fiscais"/"Preços" nos caps 06, 07 e 11; a fala não muda.
+
 ## Mundo (para a junção)
 - **Cida Ramos** (fornecedora PF, mesmo telefone da Aparecida, sem documento nem endereço) não está no mundo base B: entra pela semente
   `seeds-extra/t04/inicio` (código 6). Sem ela não há selo "Mesmo telefone" no cap01.

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Folha para o Kaik revisar as ilustrações de uma aula: o quadro final de cada cena (tudo já na tela), grande, com o
-capítulo e o resumo da cena. Usa os tempos estimados da aula e o render_cenas.cjs (sob a trava pesada, um capítulo por vez).
+capítulo e o resumo da cena. Usa os tempos estimados da aula e o render_cenas.cjs (trava leve .stills.lock + nice 19, um capítulo por vez).
 uso: python3 -I planejamento/ecoflix/folha_cenas.py T07 [T04 ...]   ->  /home/claude/ecoflix/previa_ilustracoes/Tnn_cenas.jpg"""
 import json
 import os
@@ -15,7 +15,7 @@ from PIL import Image, ImageDraw, ImageFont
 SKILL = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..'))
 RENDER = os.path.join(SKILL, 'ferramentas', 'edit', 'cenas', 'render_cenas.cjs')
 FONTES = os.path.join(SKILL, 'ferramentas', 'kit', 'fonts')
-TRAVA = '/home/claude/ecoflix/.heavy.lock'
+TRAVA = '/home/claude/ecoflix/.stills.lock'  # quadros: trava leve própria + nice 19 (não disputa com a gravação)
 SAIDA = '/home/claude/ecoflix/previa_ilustracoes'
 TW, TH, COLS, PAD, LEG = 960, 600, 2, 24, 64
 
@@ -58,7 +58,7 @@ def aula(A):
             l, p, o = (c['ate'] + [1])[:3]
             t = fim_da_palavra(cap, l, p, o) + min(float(c.get('cauda', 0.6)), 0.5) - 0.05
             ts.append(round(t, 2))
-        cmd = ['flock', TRAVA, 'timeout', '300', 'node', RENDER, str(cap_n), tempos, 'q', '--html',
+        cmd = ['flock', TRAVA, 'nice', '-n', '19', 'timeout', '300', 'node', RENDER, str(cap_n), tempos, 'q', '--html',
                os.path.join(pasta, 'cenas.html'), '--stills', ','.join(f'{t:.2f}' for t in ts)]
         r = subprocess.run(cmd, cwd=tmp, capture_output=True, text=True)
         if r.returncode:

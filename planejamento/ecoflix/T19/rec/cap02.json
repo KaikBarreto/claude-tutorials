@@ -73,6 +73,14 @@
    "timeout": 20
   },
   {
+   "do": "eval",
+   "js": "(()=>{const sb=document.querySelector('[data-state][data-collapsible]');if(sb&&sb.getAttribute('data-state')==='collapsed')return 'ja recolhido';const b=document.querySelector('header button.h-8.w-8');if(!b)return 'SEM ALVO';b.click();return 'recolhido'})()"
+  },
+  {
+   "do": "wait",
+   "seconds": 0.7
+  },
+  {
    "do": "goto",
    "url": "/funcionarios"
   },
@@ -207,6 +215,12 @@
    "at": 16.9
   },
   {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.textContent.trim().startsWith(\"Cargo\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-300);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/500),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 16.9,
+   "label": "rola a janela até Cargo"
+  },
+  {
    "do": "click",
    "target": {
     "selector": "[role=dialog] #position"
@@ -249,15 +263,23 @@
    "noScroll": true
   },
   {
-   "do": "hover",
+   "do": "click",
    "target": {
     "selector": "[role=dialog] #hire_date"
    },
-   "seconds": 0.6,
-   "at": 22.14,
+   "at": 22.83,
+   "label": "campo Data de Admissão 10/11/2026"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] #hire_date"
+   },
+   "text": "10112026",
+   "cps": 40,
+   "at": 23.68,
    "label": "Data de Admissão 10/11/2026",
-   "optional": true,
-   "timeout": 4
+   "noClick": true
   },
   {
    "do": "eval",
@@ -321,7 +343,7 @@
   {
    "do": "click",
    "target": {
-    "selector": "[role=dialog] button:text-is('Calcular')"
+    "selector": "[role=dialog] button:text-is('Calcular'):not(.absolute)"
    },
    "at": 36.86,
    "label": "Calcular (custo mensal)"
@@ -524,7 +546,7 @@
   {
    "do": "click",
    "target": {
-    "selector": "[role=dialog] button:text-is('Cadastrar')"
+    "selector": "[role=dialog] button:text-is('Cadastrar'):not(.absolute)"
    },
    "at": 80.57,
    "label": "Cadastrar"

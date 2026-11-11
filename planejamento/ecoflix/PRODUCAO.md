@@ -438,3 +438,17 @@ Decisões:
   estilo delas"): mandadas as folhas de contato das 20 aulas prontas (`previa_ilustracoes/Tnn.jpg`). `folha_cenas.py Tnn`
   faz uma folha maior com o quadro final de cada cena (`Tnn_cenas.jpg`), para quando ele quiser ver de perto (sob a trava;
   com a fila cheia, demora).
+- 11/11 12:20 **Kaik sobre o estilo das ilustrações**: "as etapas mostram com o ícone escuro sobre o verde, devia ser branco
+  / E em vários lugares estão com badges dessaturados com texto saturado, tem que ser saturados com ícone branco / tipo em
+  quadrados atrás de ícones, badges, etc. / substitua em tudo / E nas ilustrações do cato devia usar a identidade visual
+  real do cato / e na ilustração do cato pode usar o tema escuro que fica melhor, igual no video motion do cato do site"
+  (mandou a marca do Cato: degradê #6366F1 → #A855F7 → #EC4899 → #F97316, estrela, logo, ícone, #EFEFEF e #121212).
+  **Feito**: bloco `<style id="saturado">` no kit e nas 26 `cenas.html` (`estilo_saturado.py`: `.ico`, `.ico.a`,
+  `.tag.v` e `.tag.a` com fundo cheio e ícone/texto branco; tokens `--vs` #16A34A, `--as` #D97706, `--rs` #DC2626). A
+  prova lado a lado (verde da marca × verde do sistema) foi para o Kaik escolher; o padrão é o verde do sistema, que lê
+  bem com texto branco (trocar é só mudar `--vs`/`--as` no `estilo_saturado.py` e rodar de novo). O que cada aula fez com
+  estilo próprio: 6 agentes de estilo (`_BRIEF_ESTILO.md`, Sonnet: T00-T02, T03/T04/T06, T07-T09, T10-T12, T13/T14/T16,
+  T17/T18/T19/T25); as 3 frentes de ilustração ainda abertas foram avisadas. Cato: identidade em
+  `perfis/ecoflix/cenas/cato/` (ícone, logo e espiral do próprio app; estrelas da marca; `LEIA.md`) e um agente refazendo
+  as 9 cenas da T21 no tema escuro. **Quadros de conferência agora na trava leve** `.stills.lock` com `nice -n 19` (a
+  trava pesada tinha 36 na fila; ela fica só para as gravações do robô).

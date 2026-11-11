@@ -695,8 +695,10 @@ def cap06():
     c.hover(PD('com alterações pendentes'), 1.4, w=(6, 'aviso'), label='aviso 3 material(is) com alterações pendentes')
     c.click(BTN('Salvar', within=DLG), w=(7, 'Salvar,'), noScroll=True, label='Salvar (rodapé da janela)')
     c.waitfor(text='Preços atualizados!', timeout=10)
+    ini = round(c.W(7, 'Salvar,') + 1.0, 2)   # o aviso (4 s) sobe logo depois do Salvar: o cursor vai direto a ele e fica até "vinculadas:"
+    c.hover({'text': 'As tabelas vinculadas serão recalculadas'}, round(c.W(7, 'vinculadas:') + 0.6 - ini - 0.55, 2),
+            label='aviso Preços atualizados! As tabelas vinculadas... (o mouse segura o aviso)')
     c.waitfor(gone={'role': 'dialog'}, timeout=8)
-    c.hover(SEL('[data-sonner-toast]'), 2.0, w=(7, 'aviso'), label='aviso Preços atualizados! As tabelas vinculadas... (o mouse segura o aviso)')
     c.confere('main', ['R$ 42,50', 'R$ 47,90'], 'Cobre mel 42,50 e 47,90 na lista')
     c.fim()
     return c
@@ -761,11 +763,11 @@ def cap07():
     c.click({'placeholder': 'Escreva o nome ou código do material'}, w=(10, 'vinte.', None, -0.1), label='campo do material de novo')
     c.type({'placeholder': 'Escreva o nome ou código do material'}, 'bronze', w=(11, 'Já', None, 0.3), clicar=False, clear=True, cps=30, label='troca para bronze')
     c.click(OPT('Bronze', exact=False), w=(11, 'bronze,', None, 0.3), label='Bronze')
-    c.confere('body', ['Preço especial aplicado para Bronze'], 'aviso Preço especial aplicado para Bronze')
-    # o aviso vive 2 s: o cursor vai direto para ele e fica em cima (o sonner pausa) até o fim de "Preço especial aplicado."
-    ini = round(c.W(11, 'bronze,') + 0.9, 2)
-    c.hover(SEL('[data-sonner-toast]'), round(c.W(11, 'aplicado.') + 0.6 - ini - 0.55, 2), w=ini,
+    # o aviso vive 2 s: o cursor vai direto para ele, sem conferência no meio, e fica em cima (o sonner pausa) até "aplicado."
+    ini = round(c.W(11, 'bronze,') + 0.6, 2)
+    c.hover({'text': 'Preço especial aplicado para Bronze'}, round(c.W(11, 'aplicado.') + 0.6 - ini - 0.55, 2),
             label='aviso Preço especial aplicado (o mouse segura o aviso) (zoom: Valor/kg 30,50 com o aviso)')
+    c.confere('body', ['Preço especial aplicado para Bronze'], 'aviso Preço especial aplicado para Bronze')
     c.confere_campos(['30,5'], 'Valor/kg 30,50', escopo='main')
     c.fim()
     return c
@@ -855,8 +857,9 @@ def cap10():
     c.hover(PD('Atenção: Este material possui'), 2.4, w=(2, 'cento'), label='aviso: possui 110 Kg em estoque (zoom)')
     c.click(BTN('Sim, Excluir'), w=(3, 'Sim,'), label='Sim, Excluir')
     c.waitfor(text='excluído', timeout=10)
-    c.hover(SEL('[data-sonner-toast] button:has-text("Desfazer")'), 0.4, w=(3, 'Desfazer.'), label='aviso "Radiador de cobre" excluído com Desfazer (o mouse segura o aviso)')
-    c.click(SEL('[data-sonner-toast] button:has-text("Desfazer")'), w=(4, 'Clicando'), label='Desfazer')
+    ini = round(c.W(3, 'Sim,') + 0.5, 2)   # o aviso (5 s) sobe logo depois do clique: o cursor vai a ele e fica até "Desfazer."
+    c.hover(BTN('Desfazer'), round(c.W(3, 'Desfazer.') + 0.4 - ini - 0.55, 2), label='aviso "Radiador de cobre" excluído com Desfazer (o mouse segura o aviso)')
+    c.click(BTN('Desfazer'), w=(4, 'Clicando'), label='Desfazer')
     c.waitfor(text='restaurado!', timeout=10)
     c.waitfor(target=P('Radiador de cobre'), timeout=10)
     c.hover(CELULA('Radiador de cobre', 4), 1.4, w=(4, 'saldo'), label='o radiador volta com 110 Kg')

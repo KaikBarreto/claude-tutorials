@@ -1,0 +1,299 @@
+{
+ "name": "t13-cap03",
+ "title": "T13 · Cap. 3 · Lista e calendário (narração ESTIMADA 46,3 s; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "seed": "t13-cap03",
+ "pace": 0.5,
+ "cps": 40,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 400
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true"
+ },
+ "seedExtra": [
+  "t13/inicio"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "waitFor",
+   "target": {
+    "label": "E-mail"
+   },
+   "timeout": 30
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "E-mail"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "Senha",
+    "exact": true
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Rafael!",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/contas-pagar-receber"
+  },
+  {
+   "do": "waitFor",
+   "text": "Água e esgoto de outubro",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const a=document.getAnimations().filter(x=>x.currentTime<0);a.forEach(x=>x.startTime=document.timeline.currentTime);return a.length})()"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|Algo deu errado|Falha ao|Something went wrong|inv[áa]lid/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{document.querySelectorAll('[data-sonner-toast][data-type=error]').forEach(t=>{const s='TOAST DE ERRO: '+t.textContent.trim().slice(0,90);if(!window.__avisos.includes(s)&&window.__avisos.length<10)window.__avisos.push(s)})},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0.4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "radio",
+    "name": "Visão em lista"
+   },
+   "seconds": 0.8,
+   "at": 4.43,
+   "label": "Lista (marcado)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "radio",
+    "name": "Visão em calendário"
+   },
+   "seconds": 0.31,
+   "at": 6.41,
+   "label": "Calendário",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 7.37
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "radio",
+    "name": "Visão em calendário"
+   },
+   "at": 7.79,
+   "label": "abre o Calendário"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "main div.grid-cols-7 > button:has(span:text-is('10'))"
+   },
+   "timeout": 10
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const a=document.getAnimations().filter(x=>x.currentTime<0);a.forEach(x=>x.startTime=document.timeline.currentTime);return a.length})()"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main div.grid-cols-7 > button span[title^='Água e esgoto de outubro']"
+   },
+   "seconds": 0.6,
+   "at": 12.22,
+   "label": "etiqueta vermelha: a pagar",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main div.grid-cols-7 > button span[title^='Fatura venda #1733 (parcela 1/3)']"
+   },
+   "seconds": 0.6,
+   "at": 14.5,
+   "label": "etiqueta verde: a receber",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 16.07
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main div.grid-cols-7 > button:has(svg[class*='triangle'])"
+   },
+   "seconds": 1.0,
+   "at": 16.52,
+   "label": "dia 5 com o triângulo de vencida",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main div.grid-cols-7 > button span[title^='Água e esgoto de outubro']"
+   },
+   "seconds": 0.8,
+   "at": 20.7,
+   "label": "a água, do dia cinco",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 22.41
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main div.grid-cols-7 > button:has(span:text-is('10'))"
+   },
+   "at": 22.71,
+   "label": "clica no dia 10"
+  },
+  {
+   "do": "waitFor",
+   "text": "Contas de 10/11/2026",
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] button:has-text('Marcar pago')"
+   },
+   "seconds": 0.19,
+   "at": 27.72,
+   "label": "Marcar pago (na janela do dia)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] button:has-text('Editar')"
+   },
+   "seconds": 0.15,
+   "at": 28.56,
+   "label": "Editar (na janela do dia)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 29.22
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 29.22,
+   "label": "fecha a janela do dia (Esc)"
+  },
+  {
+   "do": "wait",
+   "seconds": 0.5
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Saldos de clientes/fornecedores",
+    "within": "main"
+   },
+   "seconds": 2.0,
+   "at": 33.99,
+   "label": "o aviso do topo",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Saldos de clientes/fornecedores",
+    "within": "main"
+   },
+   "seconds": 0.15,
+   "at": 41.36,
+   "label": "a própria tela avisa",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 41.94
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "radio",
+    "name": "Visão em lista"
+   },
+   "at": 44.34,
+   "label": "volta para a Lista"
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 46.32
+  }
+ ]
+}

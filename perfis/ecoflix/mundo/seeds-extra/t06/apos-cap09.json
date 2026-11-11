@@ -1,0 +1,131 @@
+{
+ "_doc": "T06 · depois do cap09: saque de R$ 3.000,00 da Conta Principal para o caixa #86 com tarifa de R$ 6,50 (08:46) e a saída \"Tarifa mensal do pacote de serviços\" de R$ 39,90 da Conta Secundária, categoria \"Tarifas\", no caixa #85 (08:47).",
+ "bank_transactions": [
+  {
+   "id": "@id:bt.t06.saque",
+   "company_id": "@id:company.reciclavale",
+   "bank_account_id": "@id:banco.principal",
+   "type": "transfer",
+   "amount": -3000.0,
+   "description": "↑ SAQUE · Conta Principal → Caixa #86",
+   "transaction_at": "2026-11-10T11:46:00.000Z",
+   "transaction_date": "2026-11-10",
+   "created_at": "2026-11-10T11:46:00.000Z",
+   "created_by": "@id:user.rafael",
+   "source": "manual",
+   "excluded_from_dre": false,
+   "balance_after": 103268.16,
+   "origin_company_id": "@id:company.reciclavale",
+   "group_id": "@id:grupo.t06.saque",
+   "cash_register_id": "@id:caixa.86"
+  },
+  {
+   "id": "@id:bt.t06.tarifa_saque",
+   "company_id": "@id:company.reciclavale",
+   "bank_account_id": "@id:banco.principal",
+   "type": "expense",
+   "amount": -6.5,
+   "description": "Tarifa de Saque para o Caixa #86",
+   "transaction_at": "2026-11-10T11:46:00.000Z",
+   "transaction_date": "2026-11-10",
+   "created_at": "2026-11-10T11:46:00.000Z",
+   "created_by": "@id:user.rafael",
+   "source": "manual",
+   "excluded_from_dre": false,
+   "balance_after": 103261.66,
+   "origin_company_id": "@id:company.reciclavale",
+   "group_id": "@id:grupo.t06.saque",
+   "cash_register_id": "@id:caixa.86"
+  },
+  {
+   "id": "@id:bt.t06.espelho_cofre",
+   "company_id": "@id:company.reciclavale",
+   "bank_account_id": "@id:banco.cofre",
+   "type": "transfer",
+   "amount": 3000.0,
+   "description": "↑ Crédito do Cofre · Saque Conta Principal → Caixa #86",
+   "transaction_at": "2026-11-10T11:46:00.000Z",
+   "transaction_date": "2026-11-10",
+   "created_at": "2026-11-10T11:46:00.000Z",
+   "created_by": "@id:user.rafael",
+   "source": "manual",
+   "excluded_from_dre": false,
+   "balance_after": 330586.45,
+   "origin_company_id": "@id:company.reciclavale",
+   "group_id": "@id:grupo.t06.saque",
+   "cash_register_id": "@id:caixa.86"
+  },
+  {
+   "id": "@id:bt.t06.tarifa_mes",
+   "company_id": "@id:company.reciclavale",
+   "bank_account_id": "@id:banco.secundaria",
+   "type": "expense",
+   "amount": -39.9,
+   "description": "Tarifa mensal do pacote de serviços",
+   "transaction_at": "2026-11-10T11:47:00.000Z",
+   "transaction_date": "2026-11-10",
+   "created_at": "2026-11-10T11:47:00.000Z",
+   "created_by": "@id:user.rafael",
+   "source": "manual",
+   "excluded_from_dre": false,
+   "balance_after": 31960.1,
+   "origin_company_id": "@id:company.reciclavale",
+   "category_id": "@id:categoria.tarifas",
+   "cash_register_id": "@id:caixa.85"
+  }
+ ],
+ "cash_transactions": [
+  {
+   "id": "@id:ct.t06.saque86",
+   "company_id": "@id:company.reciclavale",
+   "cash_register_id": "@id:caixa.86",
+   "type": "transfer",
+   "amount": 3000.0,
+   "description": "↓ SAQUE · Conta Principal → Caixa #86",
+   "transaction_at": "2026-11-10T11:46:00.000Z",
+   "transaction_date": "2026-11-10",
+   "created_at": "2026-11-10T11:46:00.000Z",
+   "created_by": "@id:user.rafael",
+   "excluded_from_dre": false,
+   "group_id": "@id:grupo.t06.saque"
+  }
+ ],
+ "_patch": {
+  "bank_accounts": [
+   {
+    "match": {
+     "id": "@id:banco.principal"
+    },
+    "set": {
+     "balance": 103261.66
+    }
+   },
+   {
+    "match": {
+     "id": "@id:banco.secundaria"
+    },
+    "set": {
+     "balance": 31960.1
+    }
+   },
+   {
+    "match": {
+     "id": "@id:banco.cofre"
+    },
+    "set": {
+     "balance": 21500.0
+    }
+   }
+  ],
+  "cash_register": [
+   {
+    "match": {
+     "id": "@id:caixa.86"
+    },
+    "set": {
+     "opening_balance": 20000.0
+    }
+   }
+  ]
+ }
+}

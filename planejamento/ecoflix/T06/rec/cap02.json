@@ -1,0 +1,259 @@
+{
+ "name": "t06-cap02",
+ "title": "T6 · Cap. 2 · Abrir o caixa (narração ESTIMADA 44,9 s; marcas L1..L5 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "seed": "t06-cap02",
+ "pace": 0.5,
+ "cps": 40,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 470
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true"
+ },
+ "seedExtra": [],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "waitFor",
+   "target": {
+    "label": "E-mail"
+   },
+   "timeout": 30
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "E-mail"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "Senha",
+    "exact": true
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Rafael!",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/caixa"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gestão financeira e movimentações",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "waitFor",
+   "text": "Nenhum caixa foi aberto neste dia.",
+   "timeout": 15
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|Algo deu errado|Falha ao|Something went wrong/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{document.querySelectorAll('[data-sonner-toast][data-type=error]').forEach(t=>{const s='TOAST DE ERRO: '+t.textContent.trim().slice(0,90);if(!window.__avisos.includes(s)&&window.__avisos.length<10)window.__avisos.push(s)})},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0.4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Abrir Caixa",
+    "exact": true,
+    "within": "main"
+   },
+   "at": 0.48,
+   "label": "Abrir Caixa"
+  },
+  {
+   "do": "waitFor",
+   "text": "Informe o saldo inicial em dinheiro",
+   "exact": false,
+   "timeout": 10
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{let v='';for(let i=0;i<12;i++){const e=document.querySelector(\"#customOpenDatetime\");v=e?e.value:'(sem campo)';if(v===\"2026-11-10T08:31\")return 'OK: '+v;await new Promise(r=>setTimeout(r,250));}return 'DIFERENTE: '+v})()",
+   "label": "confere hora da abertura 08:31"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Informe o saldo inicial em dinheiro",
+    "exact": false,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.6,
+   "at": 2.79,
+   "label": "a janela pede o saldo inicial",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 8.13
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "#openingBalance"
+   },
+   "seconds": 0.6,
+   "at": 8.68,
+   "label": "ZOOM campo Saldo de Abertura vazio e a dica do #84 (L2 a L4)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "foi o valor restante em dinheiro do último caixa",
+    "exact": false,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.6,
+   "at": 12.17,
+   "label": "dica R$ 1.250,00 do último caixa (#84)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"R$ 1.250,00 foi o valor restante em dinheiro do último caixa (#84)\", \"Disponível no cofre agora: R$ 18.500,00\", \"O caixa será aberto sem dinheiro em espécie (R$ 0,00)\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog],[role=alertdialog]\")];const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere dica do #84, cofre e aviso do zero"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 17.67
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "#openingBalance"
+   },
+   "seconds": 0.6,
+   "at": 23.68,
+   "label": "campo (digite o que contou)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 30.92
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#openingBalance"
+   },
+   "at": 34.26,
+   "label": "campo Saldo de Abertura"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#openingBalance"
+   },
+   "text": "1.500,00",
+   "at": 35.34,
+   "label": "digita 1.500,00",
+   "noClick": true
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{let v='';for(let i=0;i<12;i++){const e=document.querySelector(\"#openingBalance\");v=e?e.value:'(sem campo)';if(v===\"1.500,00\")return 'OK: '+v;await new Promise(r=>setTimeout(r,250));}return 'DIFERENTE: '+v})()",
+   "label": "confere campo com 1.500,00"
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 38.34
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Abrir Caixa",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 38.64,
+   "label": "Abrir Caixa (janela)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Caixa aberto com sucesso!",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "R$ 1.500,00",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.6,
+   "at": 41.09,
+   "label": "Dinheiro em Caixa R$ 1.500,00 (#85)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"#85 | Caixa - Rafael Nogueira\", \"Dinheiro em Caixa\", \"R$ 1.500,00\", \"Aberto em: 10/11/2026 08:31\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere caixa #85 aberto às 08:31"
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 44.92
+  }
+ ]
+}

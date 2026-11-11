@@ -55,6 +55,11 @@ body{font-family:M,sans-serif;color:var(--t);-webkit-font-smoothing:antialiased}
 .most .ml span{position:absolute;left:0;top:0;white-space:nowrap}
 .most .mn{margin-top:6px;font-weight:800;font-size:44px;color:var(--v);font-variant-numeric:tabular-nums;white-space:nowrap}
 .rip{position:absolute;width:56px;height:56px;margin:-28px 0 0 -28px;border-radius:50%;border:3px solid var(--v);opacity:0}
+</style><style id="saturado">/* estilo saturado (Kaik, 11/11): selo, chip, etiqueta, quadrado de ícone e círculo de etapa
+   com fundo cheio e ícone/texto branco; nunca fundo claro com conteúdo colorido, nunca ícone escuro sobre o verde */
+:root{--vs:#16A34A;--as:#D97706;--rs:#DC2626}
+.ico{background:var(--vs);color:#fff}.ico.a{background:var(--as);color:#fff}
+.tag.v{background:var(--vs);color:#fff}.tag.a{background:var(--as);color:#fff}
 </style></head>
 <body><div id="st"></div>
 <script>
@@ -226,7 +231,6 @@ CAPS[1]=()=>{
   const C=coluna(670,'Continua','a',[['globe','Endereço do sistema'],['app-window','Aba do navegador'],['mail','E-mails'],['log-in','Tela de login'],['palette','Uma cor só']]);
   // o rodapé sai riscado
   const tx4=M.rows[3].querySelector('.tx'); const risco=el('<div class="ab" style="left:-4px;top:13px;height:3px;border-radius:2px;background:#475467;width:0"></div>',tx4);
-  M.rows[3].querySelector('.ico').style.cssText+=';background:#F2F4F7;color:#667085';
   // uma cor só: o azul no claro e, no tema escuro, a mesma cor um pouco mais clara
   const sw=el(`<div class="ab row" style="left:250px;top:-2px;gap:10px">
     <div class="s1" style="width:46px;height:46px;border-radius:10px;background:#fff;border:2px solid #E4E7EC;display:flex;align-items:center;justify-content:center">
@@ -411,7 +415,7 @@ CAPS[6]=()=>{
   const NOMES=['Rafael','Juliana','Marcos'];
   const S=NOMES.map((n,i)=>{const x=70+i*405;
     const s=el(`<div class="ab" style="left:${x}px;top:236px">${sistemaHTML(330,250,{mw:110,lw:88,itens:5})}</div>`,g);
-    const tg=el(`<div class="ab" style="left:${x}px;top:504px;width:330px;text-align:center"><span class="tag" style="background:#F2F4F7;color:#344054">${ic('user',20)}${n}</span></div>`,g);
+    const tg=el(`<div class="ab" style="left:${x}px;top:504px;width:330px;text-align:center"><span class="tag v">${ic('user',20)}${n}</span></div>`,g);
     const rp=el('<div class="rip"></div>',s); rp.style.left='55px'; rp.style.top='31px';
     return {s,tg,rp}});
 

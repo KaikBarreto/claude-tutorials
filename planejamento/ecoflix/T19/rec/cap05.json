@@ -73,6 +73,14 @@
    "timeout": 20
   },
   {
+   "do": "eval",
+   "js": "(()=>{const sb=document.querySelector('[data-state][data-collapsible]');if(sb&&sb.getAttribute('data-state')==='collapsed')return 'ja recolhido';const b=document.querySelector('header button.h-8.w-8');if(!b)return 'SEM ALVO';b.click();return 'recolhido'})()"
+  },
+  {
+   "do": "wait",
+   "seconds": 0.7
+  },
+  {
    "do": "goto",
    "url": "/funcionarios"
   },
@@ -216,7 +224,7 @@
   {
    "do": "click",
    "target": {
-    "selector": "[role=dialog] button:text-is('Confirmar')"
+    "selector": "[role=dialog] button:text-is('Confirmar'):not(.absolute)"
    },
    "at": 19.03,
    "label": "Confirmar o vale"
@@ -315,7 +323,7 @@
   {
    "do": "click",
    "target": {
-    "selector": "[role=dialog] button:text-is('Confirmar')"
+    "selector": "[role=dialog] button:text-is('Confirmar'):not(.absolute)"
    },
    "label": "Confirmar a falta"
   },
@@ -467,7 +475,7 @@
   {
    "do": "click",
    "target": {
-    "selector": "[role=dialog] button:text-is('Confirmar')"
+    "selector": "[role=dialog] button:text-is('Confirmar'):not(.absolute)"
    },
    "label": "Confirmar o bônus"
   },

@@ -64,16 +64,22 @@ body{font-family:M,sans-serif;color:var(--t);-webkit-font-smoothing:antialiased}
    --az azul do centro de custo "Coleta" (a cor dele no app)  --aze texto azul (6,7)  --azc fundo
    --n cinza neutro (ícone e chip apagado)  .risco = traço que risca um chip ("não é despesa") */
 :root{--r:#E5484D;--re:#B42318;--rc:#FDECEC;--az:#3B82F6;--aze:#1D4ED8;--azc:#EAF1FE;--n:#4B5563;--nc:#F2F4F7}
-.tag.r{background:var(--rc);color:var(--re)} .tag.n{background:var(--nc);color:var(--n)} .tag.az{background:var(--azc);color:var(--aze)}
-.ico.r{background:var(--rc);color:var(--re)} .ico.n{background:var(--nc);color:var(--n)} .ico.az{background:var(--azc);color:var(--aze)}
+/* selos, chips e quadrados de ícone desta aula: fundo cheio, ícone e texto brancos (pedido do Kaik, 11/11) */
+.tag.r{background:var(--re);color:#fff} .tag.n{background:var(--n);color:#fff} .tag.az{background:var(--aze);color:#fff}
+.ico.r{background:var(--re);color:#fff} .ico.n{background:var(--n);color:#fff} .ico.az{background:var(--aze);color:#fff}
 .cab{display:flex;align-items:center;height:72px;padding:0 22px;gap:12px;border-bottom:1px solid var(--l);background:#FAFBFC}
 .cab b{font-weight:800;font-size:22px;white-space:nowrap}
 .ch{position:relative;display:inline-flex}
-.risco{position:absolute;left:-5px;top:50%;height:3px;margin-top:-1px;border-radius:2px;background:var(--re);width:0;opacity:0}
+.risco{position:absolute;left:-5px;top:50%;height:3px;margin-top:-1px;border-radius:2px;background:#fff;width:0;opacity:0}
 .cx{position:absolute;left:0;width:100%;display:flex;justify-content:center}
 .lin{display:flex;align-items:center;justify-content:space-between}
 .lin .k{font-weight:700;font-size:19px;color:var(--n);white-space:nowrap}
 .lin .v{font-weight:800;font-size:23px;font-variant-numeric:tabular-nums;white-space:nowrap}
+</style><style id="saturado">/* estilo saturado (Kaik, 11/11): selo, chip, etiqueta, quadrado de ícone e círculo de etapa
+   com fundo cheio e ícone/texto branco; nunca fundo claro com conteúdo colorido, nunca ícone escuro sobre o verde */
+:root{--vs:#16A34A;--as:#D97706;--rs:#DC2626}
+.ico{background:var(--vs);color:#fff}.ico.a{background:var(--as);color:#fff}
+.tag.v{background:var(--vs);color:#fff}.tag.a{background:var(--as);color:#fff}
 </style></head>
 <body><div id="st"></div>
 <script>
@@ -261,7 +267,7 @@ CAPS[0]=()=>{
     return {c,m,tl,bs}};
   const uA=uni(110,'Matriz','Taubaté'), uB=uni(840,'Filial','Pindamonhangaba');
   // quanto o grupo vendeu? (o total que ninguém tem; vira ✓ quando a tela única mostra o total)
-  const qq=el('<div class="ab" style="left:608px;top:404px;width:64px;height:64px"><div class="q1" style="position:absolute;inset:0;border-radius:50%;background:#F2F4F7;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:36px">?</div>'+
+  const qq=el('<div class="ab" style="left:608px;top:404px;width:64px;height:64px"><div class="q1" style="position:absolute;inset:0;border-radius:50%;background:#121212;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:36px">?</div>'+
     `<div class="q2 ico" style="position:absolute;inset:0;border-radius:50%;opacity:0">${ic('check',34)}</div></div>`,g), q1=qq.querySelector('.q1'), q2=qq.querySelector('.q2');
   // na mão: o papel com os números copiados e a calculadora (fica, apagado, quando a tela única entra)
   const mao=el(`<div class="card" style="left:490px;top:488px;width:300px;height:172px;padding:20px 24px">
@@ -308,7 +314,7 @@ CAPS[1]=()=>{
   const g=grupo();
   const tit=titulo(g,'Gerencial','Matriz e filial');
   const gc=contornoGrupo(g,60,152,1160,560);
-  const gn=el(`<div class="ab" style="left:92px;top:134px"><div class="tag v" style="font-size:18px;padding:7px 16px;background:#fff;border:2px solid var(--v)">${ic('network',18)}Grupo Recicla Vale</div></div>`,g);
+  const gn=el(`<div class="ab" style="left:92px;top:134px"><div class="tag v" style="font-size:18px;padding:7px 16px">${ic('network',18)}Grupo Recicla Vale</div></div>`,g);
   const uM=unidade(g,110,216,340,306,'Matriz','Taubaté'), uF=unidade(g,830,216,340,306,'Filial','Pindamonhangaba');
   // login e assinatura próprios, nas duas
   const proprios=[uM,uF].map(u=>el(`<div class="ab row" style="left:0;top:240px;width:340px;justify-content:center;gap:10px">
@@ -320,13 +326,13 @@ CAPS[1]=()=>{
   const fN=faixa(278,822,458,'var(--ve)'), fP=faixa(370,458,822,'var(--ve)'), fM=faixa(462,470,810,'#AEB6BF',true);
   const chip=(y,html,cls='v')=>el(`<div class="ab" style="left:470px;top:${y-21}px;width:340px;display:flex;justify-content:center"><div class="tag ${cls}" style="font-size:18px;padding:8px 16px;box-shadow:0 4px 12px rgba(16,24,40,.08)">${html}</div></div>`,g);
   const cN=chip(278,`${ic('chart-column',18)}números`), cP=chip(370,`${ic('clipboard-list',18)}padrão de cadastro`),
-        cM=el(`<div class="ab" style="left:470px;top:${462-30}px;width:340px;display:flex;justify-content:center"><div class="row" style="gap:10px;padding:6px 14px;border-radius:999px;background:#fff;border:1px solid #E1E8E4;box-shadow:0 4px 12px rgba(16,24,40,.08)">${fardo(44)}<div style="font-weight:800;font-size:18px">material</div></div></div>`,g);
+        cM=el(`<div class="ab" style="left:470px;top:${462-30}px;width:340px;display:flex;justify-content:center"><div class="tag n" style="font-size:18px;padding:8px 16px;box-shadow:0 4px 12px rgba(16,24,40,.08)">${ic('package',18)}material</div></div>`,g);
   // quem opera a filial é a filial: o caixa, as compras e as notas dela; a matriz não opera (cadeado)
   const op=[['wallet','caixa'],['scale','compras'],['receipt-text','notas']].map(([n,txt],i)=>el(`<div class="ab" style="left:${852+i*104}px;top:548px;width:88px;text-align:center">
       <div class="ico" style="width:56px;height:56px;margin:0 auto;border-radius:16px">${ic(n,28)}</div>
       <div style="margin-top:6px;font-weight:700;font-size:17px;color:#374151">${txt}</div></div>`,g));
   const lk=el(`<svg class="ab" style="left:0;top:0;overflow:visible" width="1" height="1"><path d="M452 512 Q640 600 836 590" fill="none" stroke="#C3CAD2" stroke-width="3" stroke-dasharray="8 8"/></svg>`,g);
-  const cad=el(`<div class="ab ico n" style="left:614px;top:540px;width:54px;height:54px;border-radius:50%;background:#fff;border:2px solid #C3CAD2">${ic('lock',26)}</div>`,g);
+  const cad=el(`<div class="ab ico n" style="left:614px;top:540px;width:54px;height:54px;border-radius:50%">${ic('lock',26)}</div>`,g);
   return t=>{
     const T0=W(1,'o')-.3, T1=W(3,'la',1,'e')+.6;
     if(!janela(g,t,T0,T1))return;
@@ -355,7 +361,7 @@ CAPS[3]=()=>{
   const g=grupo();
   const tit=titulo(g,'Filial','Nada muda na filial');
   const gc=contornoGrupo(g,60,160,1160,540);
-  const gn=el(`<div class="ab" style="left:92px;top:142px"><div class="tag v" style="font-size:18px;padding:7px 16px;background:#fff;border:2px solid var(--v)">${ic('network',18)}Grupo Recicla Vale</div></div>`,g);
+  const gn=el(`<div class="ab" style="left:92px;top:142px"><div class="tag v" style="font-size:18px;padding:7px 16px">${ic('network',18)}Grupo Recicla Vale</div></div>`,g);
   const uM=unidade(g,110,262,300,250,'Matriz','Taubaté');
   const uF=el(`<div class="card" style="left:640px;top:222px;width:520px;height:400px;overflow:hidden">
       <div style="position:absolute;left:14px;top:22px">${galpao()}</div>
@@ -367,7 +373,7 @@ CAPS[3]=()=>{
       <div style="margin-top:8px;font-weight:700;font-size:17px;color:#374151">${txt}</div></div>`,tl));
   const igual=el(`<div class="ab" style="left:0;top:270px;width:520px;display:flex;justify-content:center"><div class="tag v" style="font-size:19px;padding:8px 18px">${ic('check',20)}segue igual</div></div>`,uF);
   const prop=el(`<div class="ab" style="left:0;top:330px;width:520px;text-align:center;font-weight:700;font-size:18px;color:#4B5563">o próprio sistema</div>`,uF);
-  const cod=el(`<div class="ab" style="left:0;top:0"><div class="tag n" style="font-size:18px;padding:8px 16px;background:#fff;border:2px solid #C3CAD2;box-shadow:0 6px 16px rgba(16,24,40,.10)">${ic('key-round',18)}${CODIGO}</div></div>`,g);
+  const cod=el(`<div class="ab" style="left:0;top:0"><div class="tag n" style="font-size:18px;padding:8px 16px;box-shadow:0 6px 16px rgba(16,24,40,.10)">${ic('key-round',18)}${CODIGO}</div></div>`,g);
   const sN=seta(g,632,420,420,420,'var(--ve)',4);
   const cN=el(`<div class="ab" style="left:420px;top:${420-62}px;width:212px;display:flex;justify-content:center"><div class="tag v" style="font-size:18px;padding:8px 16px">${ic('chart-column',18)}números</div></div>`,g);
   const olho=el(`<div class="ab ico" style="left:372px;top:244px;width:54px;height:54px;border-radius:50%;box-shadow:0 6px 16px rgba(16,24,40,.12)">${ic('eye',26)}</div>`,g);
@@ -515,7 +521,7 @@ function cena07semcusto(){
   const f1=el(`<div class="ab" style="left:52px;top:150px">${fardo(140)}</div>`,est);
   const t1=el(`<div class="ab" style="left:78px;top:104px"><div class="tag v" style="font-size:17px;padding:6px 14px">${ic('tag',17)}com custo</div></div>`,est);
   const f2=el(`<div class="ab" style="left:300px;top:150px">${fardo(140)}</div>`,est);
-  const t2=el(`<div class="ab" style="left:318px;top:104px"><div class="tag a" style="font-size:17px;padding:6px 14px;border:2px dashed var(--a)">${ic('tag',17)}sem custo</div></div>`,est);
+  const t2=el(`<div class="ab" style="left:318px;top:104px"><div class="tag a" style="font-size:17px;padding:6px 14px">${ic('tag',17)}sem custo</div></div>`,est);
   // competência: com o custo faltando, o CMV fica menor e o lucro maior do que é
   const cp=el(`<div class="card" style="left:640px;top:166px;width:580px;height:300px;overflow:hidden">
       <div class="cab"><div class="ico a" style="width:42px;height:42px">${ic('scale',22)}</div><b>Regime de Competência</b></div></div>`,g);
@@ -532,7 +538,7 @@ function cena07semcusto(){
         <div style="font-weight:800;font-size:20px">entradas do período</div></div></div>`,g);
   const lin=[0,1,2].map(i=>el(`<div class="ab row" style="left:${24+i*376}px;top:84px;width:352px;height:84px;padding:0 16px;gap:14px;border-radius:14px;border:1px solid #E6E9EE;background:#fff">
       <div style="flex:none">${fardo(54)}</div><div style="flex:1"><div style="height:8px;width:80%;border-radius:4px;background:#E3E7EC"></div><div style="margin-top:9px;height:8px;width:50%;border-radius:4px;background:#EDF0F3"></div></div>
-      ${i<2?`<div class="tag v" style="font-size:15px;padding:5px 10px">${ic('tag',15)}com custo</div>`:`<div class="tag a" style="font-size:15px;padding:5px 10px;border:2px dashed var(--a)">${ic('tag',15)}sem custo</div>`}</div>`,en));
+      ${i<2?`<div class="tag v" style="font-size:15px;padding:5px 10px">${ic('tag',15)}com custo</div>`:`<div class="tag a" style="font-size:15px;padding:5px 10px">${ic('tag',15)}sem custo</div>`}</div>`,en));
   const lupa=el(`<div class="ab" style="left:0;top:0;width:76px;height:76px;border-radius:50%;background:rgba(255,255,255,.35);border:5px solid #2F3640;box-shadow:0 8px 18px rgba(16,24,40,.18)">
       <div style="position:absolute;left:62px;top:62px;width:34px;height:12px;border-radius:6px;background:#2F3640;transform:rotate(45deg);transform-origin:0 50%"></div></div>`,g);
   return t=>{
@@ -578,7 +584,7 @@ CAPS[10]=()=>{
   const qq=el('<div class="ab" style="left:792px;top:206px;width:44px;height:44px;border-radius:50%;background:#121212;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:24px">?</div>',g);
   // a unidade (filial) com dois materiais ligados ao mesmo material do grupo
   const ub=el(`<div class="ab" style="left:130px;top:356px;width:800px;height:340px;border-radius:22px;border:2px dashed #C3CAD2;background:#FAFBFC"></div>`,g);
-  const ul=el(`<div class="ab" style="left:156px;top:338px"><div class="tag n" style="font-size:17px;padding:7px 14px;background:#fff;border:2px solid #C3CAD2">${ic('warehouse',18)}Filial Pindamonhangaba</div></div>`,g);
+  const ul=el(`<div class="ab" style="left:156px;top:338px"><div class="tag n" style="font-size:17px;padding:7px 14px">${ic('warehouse',18)}Filial Pindamonhangaba</div></div>`,g);
   const mat=(y,nome,cor,w)=>el(`<div class="card row" style="left:240px;top:${y}px;width:640px;height:104px;padding:0 24px;gap:18px">
       <div style="flex:none">${fardo(76)}</div><div style="font-weight:800;font-size:22px;white-space:nowrap">${nome}</div>
       <div style="margin-left:auto;width:${w}px;height:22px;border-radius:7px;background:${cor}"></div></div>`,g);

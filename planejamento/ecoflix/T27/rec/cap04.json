@@ -1,0 +1,340 @@
+{
+ "name": "t27-cap04",
+ "title": "T27 · Cap. 4 · A cor da marca (narração 46,3 s ESTIMADA; marcas L1..L5 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; usuário Rafael Nogueira)",
+ "seed": "t27-cap04",
+ "pace": 0.5,
+ "cps": 14,
+ "tail": 1.5,
+ "start": {
+  "x": 1240,
+  "y": 300
+ },
+ "anonymous": true,
+ "seedExtra": [
+  "t27/inicio",
+  "t27/apos-cap03"
+ ],
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "initial-preferences-set": "true",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10"
+ },
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/login"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "timeout": 30
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "input[type=password]"
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Rafael!",
+   "timeout": 40
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/configuracoes"
+  },
+  {
+   "do": "waitFor",
+   "text": "Configurações do Sistema",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "main img[alt='Logo']"
+   },
+   "timeout": 15
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button:has(h3:text-is('White Label'))"
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "White Label Ativo",
+   "timeout": 10
+  },
+  {
+   "do": "pause",
+   "seconds": 0.6
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 1240,
+    "y": 300
+   },
+   "by": 0,
+   "duration": 0.2,
+   "after": 0
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel|Algo deu errado|Falha ao carregar|Popup bloqueado|Personalize sua experi[êe]ncia|Voc[êe] j[áa] est[áa] conectado|Sistema atualizado|O rel[óo]gio deste computador|Sess[ãa]o expirou/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');if(f&&window.__avisos.length<10&&!window.__avisos.includes('LEMBRETE DA TRILHA'))window.__avisos.push('LEMBRETE DA TRILHA')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0.4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const m=[...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);return m||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"Personalizações\"&&e.offsetParent);if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-250);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 2.61,
+   "label": "desce até as Personalizações"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Personalizações",
+    "exact": true
+   },
+   "seconds": 0.9,
+   "at": 3.82,
+   "label": "Personalizações",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 5.17
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "#wl-company-name"
+   },
+   "seconds": 2.8,
+   "at": 5.62,
+   "label": "Nome Exibido no Sistema (vazio; sem zoom)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 12.88
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Cor Primária",
+    "exact": true
+   },
+   "seconds": 0.6,
+   "at": 13.41,
+   "label": "Cor Primária",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "#wl-primary-color"
+   },
+   "seconds": 0.2,
+   "at": 16.06,
+   "label": "seletor de cor (sem abrir)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "input[placeholder='#22c55e']"
+   },
+   "at": 16.8,
+   "label": "campo do código da Cor Primária"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "input[placeholder='#22c55e']"
+   },
+   "text": "#1F5FAD",
+   "at": 19.04,
+   "label": "digita #1F5FAD na Cor Primária",
+   "noClick": true
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main div:text-is('Preview')"
+   },
+   "seconds": 2.6,
+   "at": 21.53,
+   "label": "Preview no azul da Recicla Vale",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const esp=[\"#1F5FAD\"];let out='';for(let i=0;i<12;i++){const v=[...document.querySelectorAll(\"main\"+' input, '+\"main\"+' textarea')].map(e=>e.value).join(' | ');const falta=esp.filter(e=>!v.includes(e));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+v.slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Cor Primária digitada"
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 24.69
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Salvar Personalizações",
+    "exact": true
+   },
+   "at": 24.89,
+   "label": "Salvar Personalizações"
+  },
+  {
+   "do": "waitFor",
+   "text": "Configurações de White Label salvas!",
+   "timeout": 8
+  },
+  {
+   "do": "eval",
+   "js": "(()=>getComputedStyle(document.documentElement).getPropertyValue('--primary').trim()||'sem --primary')()",
+   "label": "cor --primary aplicada (azul)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Salvar Personalizações",
+    "exact": true
+   },
+   "seconds": 0.34,
+   "at": 27.8,
+   "label": "botão no azul",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main div.rounded-xl:has(p:text-is('White Label Desativado')) > button[role=switch], main div.rounded-xl:has(p:text-is('White Label Ativo')) > button[role=switch]"
+   },
+   "seconds": 0.71,
+   "at": 28.79,
+   "label": "interruptor no azul",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "button[aria-label='Configurações']"
+   },
+   "seconds": 2.2,
+   "at": 30.15,
+   "label": "barrinha azul do item ativo no menu (Configurações)",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 32.86
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "input[placeholder='#22c55e']"
+   },
+   "seconds": 1.4,
+   "at": 34.53,
+   "label": "Cor Primária (vazia = verde padrão)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Reset",
+    "exact": true
+   },
+   "seconds": 1.6,
+   "at": 38.78,
+   "label": "Reset (sem clicar: só limpa o campo)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Salvar Personalizações",
+    "exact": true
+   },
+   "seconds": 1.2,
+   "at": 43.11,
+   "label": "Salvar Personalizações (a volta pro verde vale depois dele)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 46.28
+  }
+ ]
+}

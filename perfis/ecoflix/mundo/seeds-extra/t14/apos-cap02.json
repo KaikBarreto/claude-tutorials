@@ -1,0 +1,52 @@
+{
+ "bank_accounts": [
+  {
+   "id": "@id:t14.conta.cooperativa",
+   "company_id": "@id:company.reciclavale",
+   "name": "Conta Cooperativa",
+   "kind": "bank",
+   "is_default": false,
+   "is_protected": false,
+   "is_archived": false,
+   "institution_name": null,
+   "institution_code": null,
+   "institution_ispb": null,
+   "color": "#14B8A6",
+   "currency": "BRL",
+   "balance": 5000.0,
+   "created_at": "2026-11-10T11:31:00.000Z",
+   "updated_at": "2026-11-10T11:31:00.000Z"
+  }
+ ],
+ "bank_transactions": [
+  {
+   "id": "@id:t14.bt.saldo_inicial",
+   "company_id": "@id:company.reciclavale",
+   "bank_account_id": "@id:t14.conta.cooperativa",
+   "type": "deposit",
+   "amount": 5000.0,
+   "description": "Ajuste de saldo - Saldo inicial",
+   "transaction_at": "2026-11-10T11:31:20.000Z",
+   "transaction_date": "2026-11-10",
+   "created_at": "2026-11-10T11:31:20.000Z",
+   "created_by": "@id:user.rafael",
+   "source": "manual",
+   "excluded_from_dre": true,
+   "balance_after": 5000.0,
+   "origin_company_id": "@id:company.reciclavale"
+  }
+ ],
+ "_patch": {
+  "bank_accounts": [
+   {
+    "match": {
+     "id": "@id:banco.poupanca"
+    },
+    "set": {
+     "is_archived": true,
+     "updated_at": "2026-11-10T11:32:00.000Z"
+    }
+   }
+  ]
+ }
+}

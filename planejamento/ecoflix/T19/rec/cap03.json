@@ -73,6 +73,14 @@
    "timeout": 20
   },
   {
+   "do": "eval",
+   "js": "(()=>{const sb=document.querySelector('[data-state][data-collapsible]');if(sb&&sb.getAttribute('data-state')==='collapsed')return 'ja recolhido';const b=document.querySelector('header button.h-8.w-8');if(!b)return 'SEM ALVO';b.click();return 'recolhido'})()"
+  },
+  {
+   "do": "wait",
+   "seconds": 0.7
+  },
+  {
    "do": "goto",
    "url": "/funcionarios"
   },
@@ -168,7 +176,7 @@
   {
    "do": "click",
    "target": {
-    "selector": "[role=dialog] button:text-is('CLT')"
+    "selector": "[role=dialog] button:text-is('CLT'):not(.absolute)"
    },
    "at": 10.0,
    "label": "Regime de contratação: CLT"
@@ -279,7 +287,7 @@
   {
    "do": "click",
    "target": {
-    "selector": "[role=dialog] button:text-is('Atualizar')"
+    "selector": "[role=dialog] button:text-is('Atualizar'):not(.absolute)"
    },
    "at": 36.0,
    "label": "Atualizar"

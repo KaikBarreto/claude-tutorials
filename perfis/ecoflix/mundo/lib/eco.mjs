@@ -114,7 +114,9 @@ export function saldoCaixa(store, caixa) {
   let s = 0;
   for (const t of store.rows('cash_transactions')) {
     if (t.cash_register_id !== caixa.id || t.type === 'closing') continue;
-    s += t.type === 'opening' ? num(t.amount) : (SINAL_CAIXA[t.type] || 0) * num(t.amount);
+    // 'transfer' entra pelo SINAL do amount, como no razão do app (_cash_register_ledger_balance, migration 20260926164000): saque
+    // do banco para o caixa (+) e sangria do caixa (-). T06 cap09: o #86 do Marcos vai de 17.000,00 a 20.000,00.
+    s += t.type === 'opening' ? num(t.amount) : t.type === 'transfer' ? num(t.amount) : (SINAL_CAIXA[t.type] || 0) * num(t.amount);
   }
   return r2(s);
 }

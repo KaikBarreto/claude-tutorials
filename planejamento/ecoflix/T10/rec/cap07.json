@@ -1,0 +1,387 @@
+{
+ "name": "t10-cap07",
+ "title": "T10 · Cap. 7 · Comprado, vendido e lucro (narração 77,7 s ESTIMADA; marcas L1..L9 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; usuário rafael)",
+ "seed": "t10-cap07",
+ "pace": 0.5,
+ "cps": 14,
+ "tail": 1.5,
+ "start": {
+  "x": 700,
+  "y": 300
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true"
+ },
+ "seedExtra": [
+  "t10/inicio",
+  "t10/apos-cap03"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/login"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "input[type=email]"
+   },
+   "timeout": 30
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "input[type=email]"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "input[type=password]"
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "button[type=submit]"
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Rafael!",
+   "timeout": 40
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/materiais"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie os materiais do estoque",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "header button:has(svg.lucide-panel-left-close), header button:has(svg.lucide-panel-left)"
+   },
+   "noScroll": true
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 700,
+    "y": 420
+   },
+   "by": 0,
+   "duration": 0.2,
+   "after": 0
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=new RegExp(\"N[\\u00e3a]o foi poss[i\\u00ed]vel|Erro ao|Tente novamente|indispon[i\\u00ed]vel|Algo deu errado|Something went wrong|Falha ao|Pop-up bloqueado|Popup bloqueado|Sem permiss[\\u00e3a]o\",'i');const ign=new RegExp(\"$^\",'i');const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&!ign.test(m[0])&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0.0
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Materiais",
+    "exact": true,
+    "within": "[data-sidebar=sidebar]"
+   },
+   "seconds": 0.4,
+   "at": 0.4,
+   "label": "menu lateral (o menu recolhido abre)",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "link",
+    "name": "Relatório",
+    "exact": true,
+    "within": "[data-sidebar=sidebar]"
+   },
+   "at": 1.3,
+   "label": "Relatório",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "text": "Análise detalhada de compras, vendas e lucro por material",
+   "timeout": 15
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 760,
+    "y": 420
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "at": 3.89,
+   "label": "o cursor sai do menu (ele recolhe)"
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 5.77
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main button[role=combobox]",
+    "hasText": "Este mês"
+   },
+   "seconds": 0.6,
+   "at": 7.57,
+   "label": "período Este mês",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button[role=combobox]",
+    "hasText": "Este mês"
+   },
+   "at": 9.84,
+   "label": "período (abre a lista)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Mês passado"
+   },
+   "at": 10.45,
+   "label": "Mês passado"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 11.59
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main button[role=combobox]",
+    "hasText": "Mês passado"
+   },
+   "seconds": 3.0,
+   "at": 12.24,
+   "label": "[ZOOM] período Mês passado",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 21.66
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Total Comprado",
+    "exact": true
+   },
+   "seconds": 0.5,
+   "at": 24.2,
+   "label": "cartão Total Comprado",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Total Vendido",
+    "exact": true
+   },
+   "seconds": 0.4,
+   "at": 25.57,
+   "label": "cartão Total Vendido",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Lucro",
+    "exact": true
+   },
+   "seconds": 0.2,
+   "at": 26.86,
+   "label": "cartão Lucro",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Projeção de Lucro",
+    "exact": true
+   },
+   "seconds": 0.8,
+   "at": 27.47,
+   "label": "cartão Projeção de Lucro",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 28.91
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Total Comprado",
+    "exact": true
+   },
+   "at": 29.11,
+   "label": "abre Total Comprado"
+  },
+  {
+   "do": "waitFor",
+   "text": "Preço médio de compra",
+   "timeout": 6
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Preço médio de compra",
+    "within": "main",
+    "exact": true
+   },
+   "seconds": 1.0,
+   "at": 33.36,
+   "label": "Preço médio de compra",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Material que mais comprou",
+    "within": "main",
+    "exact": true
+   },
+   "seconds": 1.2,
+   "at": 35.33,
+   "label": "Material que mais comprou",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 37.38
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Projeção de Lucro",
+    "exact": true
+   },
+   "at": 37.73,
+   "label": "abre Projeção de Lucro"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Estimativa: assume a venda",
+    "within": "main",
+    "exact": false
+   },
+   "seconds": 0.36,
+   "at": 39.71,
+   "label": "[ZOOM] explicação da Projeção de Lucro (estimativa)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 40.62
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Estimativa: assume a venda",
+    "within": "main",
+    "exact": false
+   },
+   "seconds": 1.04,
+   "at": 40.62,
+   "label": "[ZOOM] explicação da Projeção de Lucro (estimativa) (continua)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Total Comprado\", \"Total Vendido\", \"Lucro\", \"Projeção de Lucro\", \"Preço médio de compra\", \"Material que mais comprou\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere os quatro cartões e os detalhes"
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 53.72
+  },
+  {
+   "do": "mark",
+   "name": "L9",
+   "at": 60.07
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 77.74
+  }
+ ]
+}

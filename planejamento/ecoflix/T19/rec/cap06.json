@@ -73,6 +73,14 @@
    "timeout": 20
   },
   {
+   "do": "eval",
+   "js": "(()=>{const sb=document.querySelector('[data-state][data-collapsible]');if(sb&&sb.getAttribute('data-state')==='collapsed')return 'ja recolhido';const b=document.querySelector('header button.h-8.w-8');if(!b)return 'SEM ALVO';b.click();return 'recolhido'})()"
+  },
+  {
+   "do": "wait",
+   "seconds": 0.7
+  },
+  {
    "do": "goto",
    "url": "/funcionarios"
   },
@@ -230,7 +238,7 @@
   {
    "do": "click",
    "target": {
-    "selector": "[role=dialog] button:text-is('Confirmar Recebimento')"
+    "selector": "[role=dialog] button:text-is('Confirmar Recebimento'):not(.absolute)"
    },
    "at": 22.75,
    "label": "Confirmar Recebimento"
@@ -261,7 +269,7 @@
   {
    "do": "click",
    "target": {
-    "selector": "[role=dialog] button:text-is('Fechar')"
+    "selector": "[role=dialog] button:text-is('Fechar'):not(.absolute)"
    },
    "label": "Fechar"
   },
@@ -292,15 +300,19 @@
   },
   {
    "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Salário:\", \"R$ 2.900,00\", \"Total de Bônus:\", \"R$ 250,00\", \"Descontos:\", \"R$ 400,00\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Salário:\", \"R$ 2.900,00\", \"Total de Bônus:\", \"R$ 250,00\", \"Descontos:\", \"R$ 400,00\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"body\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
    "label": "confere resumo do pagamento"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const esp=[\"400,00\", \"2.750,00\"];let out='';for(let i=0;i<12;i++){const sc=[...document.querySelectorAll(\"[role=dialog]\")].pop();const v=sc?[...sc.querySelectorAll('input, textarea')].map(e=>e.value).join(' | '):'';const falta=esp.filter(e=>!v.includes(e));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+v.slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere vales a descontar 400,00 e valor 2.750,00"
   },
   {
    "do": "hover",
    "target": {
     "text": "Salário:",
-    "exact": true,
-    "within": "[role=dialog]"
+    "exact": true
    },
    "seconds": 0.1,
    "at": 30.69,
@@ -312,8 +324,7 @@
    "do": "hover",
    "target": {
     "text": "Total de Bônus:",
-    "exact": true,
-    "within": "[role=dialog]"
+    "exact": true
    },
    "seconds": 0.1,
    "at": 31.67,
@@ -325,8 +336,7 @@
    "do": "hover",
    "target": {
     "text": "Descontos:",
-    "exact": true,
-    "within": "[role=dialog]"
+    "exact": true
    },
    "seconds": 0.1,
    "at": 32.51,
@@ -371,7 +381,7 @@
   {
    "do": "click",
    "target": {
-    "selector": "[role=dialog] button:text-is('CLT (com folha)')"
+    "selector": "[role=dialog] button:text-is('CLT (com folha)'):not(.absolute)"
    },
    "at": 44.83,
    "label": "Modo de pagamento: CLT (com folha)"
@@ -421,7 +431,7 @@
   {
    "do": "click",
    "target": {
-    "selector": "[role=dialog] button:text-is('Normal')"
+    "selector": "[role=dialog] button:text-is('Normal'):not(.absolute)"
    },
    "at": 59.94,
    "label": "Modo de pagamento: Normal"
@@ -466,9 +476,15 @@
    "at": 76.88
   },
   {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.textContent.trim().startsWith(\"Forma de Pagamento\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-260);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/500),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 77.38,
+   "label": "rola até a Forma de Pagamento"
+  },
+  {
    "do": "click",
    "target": {
-    "selector": "[role=dialog] button:has-text('PIX/Transferência'), [role=dialog] label:has-text('PIX/Transferência')"
+    "selector": "[role=dialog] label[for='payment-pix']"
    },
    "at": 78.02,
    "label": "Forma de Pagamento: PIX/Transferência"
@@ -476,8 +492,7 @@
   {
    "do": "hover",
    "target": {
-    "text": "Conta",
-    "within": "[role=dialog]"
+    "selector": "[role=dialog] label:has-text('Conta')"
    },
    "seconds": 0.14,
    "at": 78.93,
@@ -488,7 +503,7 @@
   {
    "do": "click",
    "target": {
-    "selector": "[role=dialog] button:text-is('Confirmar Pagamento')"
+    "selector": "[role=dialog] button:text-is('Confirmar Pagamento'):not(.absolute)"
    },
    "at": 80.07,
    "label": "Confirmar Pagamento"

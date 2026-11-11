@@ -1,0 +1,136 @@
+{
+ "bank_transactions": [
+  {
+   "id": "@id:t14.bt.combustivel",
+   "company_id": "@id:company.reciclavale",
+   "bank_account_id": "@id:banco.principal",
+   "type": "withdrawal",
+   "amount": -350.0,
+   "description": "Combustível da picape",
+   "transaction_at": "2026-11-10T11:10:00.000Z",
+   "transaction_date": "2026-11-10",
+   "created_at": "2026-11-10T11:10:00.000Z",
+   "created_by": "@id:user.rafael",
+   "source": "manual",
+   "excluded_from_dre": false,
+   "balance_after": 104123.86,
+   "origin_company_id": "@id:company.reciclavale",
+   "category_id": "@id:categoria.combustivel",
+   "cost_center_id": "@id:cc.frota",
+   "payment_method": "transfer"
+  },
+  {
+   "id": "@id:t14.bt.transf_saida",
+   "company_id": "@id:company.reciclavale",
+   "bank_account_id": "@id:banco.secundaria",
+   "type": "withdrawal",
+   "amount": -8000.0,
+   "description": "Transferência: Conta Secundária → Conta Principal",
+   "transaction_at": "2026-11-10T11:20:00.000Z",
+   "transaction_date": "2026-11-10",
+   "created_at": "2026-11-10T11:20:00.000Z",
+   "created_by": "@id:user.rafael",
+   "source": "manual",
+   "excluded_from_dre": true,
+   "balance_after": 24000.0,
+   "origin_company_id": "@id:company.reciclavale",
+   "group_id": "@id:t14.grupo.transferencia"
+  },
+  {
+   "id": "@id:t14.bt.transf_entrada",
+   "company_id": "@id:company.reciclavale",
+   "bank_account_id": "@id:banco.principal",
+   "type": "deposit",
+   "amount": 8000.0,
+   "description": "Transferência: Conta Secundária → Conta Principal",
+   "transaction_at": "2026-11-10T11:20:00.000Z",
+   "transaction_date": "2026-11-10",
+   "created_at": "2026-11-10T11:20:00.000Z",
+   "created_by": "@id:user.rafael",
+   "source": "manual",
+   "excluded_from_dre": true,
+   "balance_after": 112123.86,
+   "origin_company_id": "@id:company.reciclavale",
+   "group_id": "@id:t14.grupo.transferencia"
+  },
+  {
+   "id": "@id:t14.bt.saque_banco",
+   "company_id": "@id:company.reciclavale",
+   "bank_account_id": "@id:banco.principal",
+   "type": "withdrawal",
+   "amount": -2000.0,
+   "description": "↑ SAQUE · Conta Principal → Cofre (DINHEIRO)",
+   "transaction_at": "2026-11-10T11:25:00.000Z",
+   "transaction_date": "2026-11-10",
+   "created_at": "2026-11-10T11:25:00.000Z",
+   "created_by": "@id:user.rafael",
+   "source": "cash_to_bank",
+   "excluded_from_dre": true,
+   "balance_after": 110123.86,
+   "origin_company_id": "@id:company.reciclavale",
+   "group_id": "@id:t14.grupo.saque"
+  },
+  {
+   "id": "@id:t14.bt.saque_cofre",
+   "company_id": "@id:company.reciclavale",
+   "bank_account_id": "@id:banco.cofre",
+   "type": "deposit",
+   "amount": 2000.0,
+   "description": "↓ SAQUE · Conta Principal → Cofre",
+   "transaction_at": "2026-11-10T11:25:00.000Z",
+   "transaction_date": "2026-11-10",
+   "created_at": "2026-11-10T11:25:00.000Z",
+   "created_by": "@id:user.rafael",
+   "source": "bank_to_cash",
+   "excluded_from_dre": true,
+   "balance_after": 329586.45,
+   "origin_company_id": "@id:company.reciclavale",
+   "group_id": "@id:t14.grupo.saque"
+  },
+  {
+   "id": "@id:t14.bt.tarifa_saque",
+   "company_id": "@id:company.reciclavale",
+   "bank_account_id": "@id:banco.principal",
+   "type": "expense",
+   "amount": -6.5,
+   "description": "Tarifa de Saque para o Cofre",
+   "transaction_at": "2026-11-10T11:25:10.000Z",
+   "transaction_date": "2026-11-10",
+   "created_at": "2026-11-10T11:25:10.000Z",
+   "created_by": "@id:user.rafael",
+   "source": "manual",
+   "excluded_from_dre": false,
+   "balance_after": 110117.36,
+   "origin_company_id": "@id:company.reciclavale",
+   "group_id": "@id:t14.grupo.saque"
+  }
+ ],
+ "_patch": {
+  "bank_accounts": [
+   {
+    "match": {
+     "id": "@id:banco.principal"
+    },
+    "set": {
+     "balance": 110117.36
+    }
+   },
+   {
+    "match": {
+     "id": "@id:banco.secundaria"
+    },
+    "set": {
+     "balance": 24000.0
+    }
+   },
+   {
+    "match": {
+     "id": "@id:banco.cofre"
+    },
+    "set": {
+     "balance": 20560.0
+    }
+   }
+  ]
+ }
+}

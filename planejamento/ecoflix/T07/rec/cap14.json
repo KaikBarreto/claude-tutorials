@@ -1,0 +1,579 @@
+{
+ "name": "t07-cap14",
+ "title": "T07 · Cap. 14 · Estoque insuficiente (narração 92,2 s ESTIMADA; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:35:00-03:00; usuário rafael)",
+ "seed": "t07-cap14",
+ "pace": 0.5,
+ "cps": 14,
+ "tail": 1.5,
+ "start": {
+  "x": 700,
+  "y": 300
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true"
+ },
+ "seedExtra": [
+  "t07/inicio",
+  "t07/apos-cap12",
+  "base/balanca-ativada"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/login"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "input[type=email]"
+   },
+   "timeout": 30
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "input[type=email]"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "input[type=password]"
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "button[type=submit]"
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Rafael!",
+   "timeout": 40
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/venda"
+  },
+  {
+   "do": "waitFor",
+   "text": "Selecionar cliente",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "header button:has(svg.lucide-panel-left-close), header button:has(svg.lucide-panel-left)"
+   },
+   "noScroll": true
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#customer-desktop-top"
+   }
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "placeholder": "Buscar por nome, apelido, CPF/CNPJ ou telefone..."
+   },
+   "timeout": 10
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Buscar por nome, apelido, CPF/CNPJ ou telefone..."
+   },
+   "text": "bandeira",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:has-text('Fundição Bandeira do Vale')"
+   }
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "balanca",
+   "peso": 152,
+   "subir": 0.6,
+   "oscilar": 0.6
+  },
+  {
+   "do": "pause",
+   "seconds": 2.4
+  },
+  {
+   "do": "click",
+   "target": {
+    "placeholder": "Escreva o nome ou código do material"
+   }
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Escreva o nome ou código do material"
+   },
+   "text": "latão",
+   "noClick": true,
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Metal amarelo (latão)",
+    "exact": false
+   }
+  },
+  {
+   "do": "pause",
+   "seconds": 0.6
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{let v='';for(let i=0;i<35;i++){const el=document.querySelector(\"main div:has(> label:has-text('Quantidade (Kg)')) input\");v=el?el.value:'SEM ALVO';if(v===\"152,0\")return 'OK: '+v;await new Promise(r=>setTimeout(r,200));}return 'DIFERENTE: '+v})()"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Incluir Item",
+    "exact": true
+   }
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "balanca",
+   "peso": 0,
+   "subir": 0.6,
+   "oscilar": 0.6
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Opções avançadas"
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Ajustes usados de vez em quando",
+   "timeout": 8
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] div:has(p:text-is('Comprovante sem valores')) > button[role=switch]"
+   }
+  },
+  {
+   "do": "press",
+   "key": "Escape"
+  },
+  {
+   "do": "pause",
+   "seconds": 0.6
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{if(window.__pdfs)return 'ja';window.__pdfs=[];const o=URL.createObjectURL.bind(URL);URL.createObjectURL=(b)=>{try{if(b&&b.type==='application/pdf')window.__pdfs.push(b)}catch(e){}return o(b)};return 'gancho'})()"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=new RegExp(\"N[\\u00e3a]o foi poss[i\\u00ed]vel|Erro ao|Tente novamente|indispon[i\\u00ed]vel|Algo deu errado|Something went wrong|Falha ao|Pop-up bloqueado|Sem permiss[\\u00e3a]o\",'i');const ign=new RegExp(\"$^\",'i');const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&!ign.test(m[0])&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0.0
+  },
+  {
+   "do": "balanca",
+   "peso": 60,
+   "subir": 0.6,
+   "oscilar": 0.6,
+   "at": 0.0,
+   "label": "cobre mel na balança (60 kg)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "placeholder": "Escreva o nome ou código do material"
+   },
+   "at": 2.89,
+   "label": "Material"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Escreva o nome ou código do material"
+   },
+   "text": "cobre mel",
+   "cps": 30,
+   "noClick": true,
+   "at": 3.65,
+   "label": "material: cobre mel"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Cobre mel",
+    "exact": false
+   },
+   "at": 4.41,
+   "label": "Cobre mel"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main label:has-text('Estoque Disponível')"
+   },
+   "seconds": 1.0,
+   "at": 5.47,
+   "label": "Estoque Disponível 42",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Incluir Item",
+    "exact": true
+   },
+   "at": 6.84,
+   "label": "Incluir Item (cobre mel)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Estoque insuficiente nesta unidade",
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Faltam",
+    "within": "[role=dialog]",
+    "exact": false
+   },
+   "seconds": 2.4,
+   "at": 9.03,
+   "label": "Faltam 18 Kg de Cobre mel. (zoom)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Faltam 18 Kg de Cobre mel.\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Faltam 18 Kg de Cobre mel."
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 12.75
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]"
+   },
+   "at": 12.75,
+   "label": "Origem do estoque (abre a lista)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Esta unidade",
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] :text-is('Esta unidade')"
+   },
+   "seconds": 1.2,
+   "at": 15.99,
+   "label": "grupo Esta unidade",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 29.43
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Cobre misto",
+    "exact": false
+   },
+   "at": 35.32,
+   "label": "Cobre misto"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] div:has(> label:has-text('Quantidade')) input"
+   },
+   "at": 35.5,
+   "label": "Quantidade (Kg)"
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 36.35
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] div:has(> label:has-text('Quantidade')) input"
+   },
+   "text": "18",
+   "noClick": true,
+   "at": 36.35,
+   "label": "18 kg"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Quantidade coberta",
+    "within": "[role=dialog]",
+    "exact": false
+   },
+   "seconds": 1.2,
+   "at": 37.67,
+   "label": "Quantidade coberta",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 43.19
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Transferir e Adicionar"
+   },
+   "at": 43.39,
+   "label": "Transferir e Adicionar"
+  },
+  {
+   "do": "waitFor",
+   "text": "agendada para a finalização da venda",
+   "timeout": 8
+  },
+  {
+   "do": "balanca",
+   "peso": 0,
+   "subir": 0.5,
+   "oscilar": 0.3,
+   "label": "tira o cobre da balança"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('Cobre mel')",
+    "nth": 0
+   },
+   "seconds": 1.2,
+   "at": 46.95,
+   "label": "linha Cobre mel (Lucro R$ 324,00)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Total da Venda",
+    "within": "main"
+   },
+   "seconds": 1.6,
+   "at": 54.55,
+   "label": "Total da Venda R$ 7.722,80 e Lucro estimado R$ 992,80 (zoom)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Lucro estimado",
+    "within": "main",
+    "exact": false
+   },
+   "seconds": 0.67,
+   "at": 62.06,
+   "label": "Lucro estimado R$ 992,80",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 63.28
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Lucro estimado",
+    "within": "main",
+    "exact": false
+   },
+   "seconds": 0.53,
+   "at": 63.28,
+   "label": "Lucro estimado R$ 992,80 (continua)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"7.722,80\", \"992,80\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere total 7.722,80 e lucro 992,80"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main :text-matches('^Itens do Pedido')"
+   },
+   "seconds": 3.0,
+   "at": 63.63,
+   "label": "a lista (Cancelar, Inserir mesmo assim: só na fala)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 75.78
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Finalizar",
+    "exact": true
+   },
+   "at": 76.13,
+   "label": "Finalizar"
+  },
+  {
+   "do": "waitFor",
+   "text": "Finalizar Pedido",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:has(span:text-is('Pix/Transferência'))"
+   },
+   "at": 76.82,
+   "label": "Pix/Transferência"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "CONFIRMAR PAGAMENTO"
+   },
+   "at": 77.8,
+   "label": "CONFIRMAR PAGAMENTO"
+  },
+  {
+   "do": "waitFor",
+   "text": "Venda registrada!",
+   "timeout": 12
+  },
+  {
+   "do": "waitFor",
+   "text": "Deseja imprimir o comprovante de venda?",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Visualizar",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 81.06,
+   "label": "Visualizar"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Visualizar PDF"
+   },
+   "at": 84.71,
+   "label": "Visualizar PDF (o PDF abre noutra aba)"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{for(let i=0;i<30&&!(window.__pdfs&&window.__pdfs.length>0);i++)await new Promise(r=>setTimeout(r,200));const b=window.__pdfs&&window.__pdfs[0];if(!b)return 'SEM PDF';const u=new Uint8Array(await b.arrayBuffer());let s='';for(let i=0;i<u.length;i+=8192)s+=String.fromCharCode.apply(null,u.subarray(i,i+8192));return {pdf:\"venda-fundicao-sem-valores\",bytes:u.length,b64:btoa(s)}})()",
+   "label": "PDF sem valores (para a edição)"
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 92.16
+  }
+ ]
+}

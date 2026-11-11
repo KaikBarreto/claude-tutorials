@@ -1,0 +1,336 @@
+{
+ "name": "t13-cap01",
+ "title": "T13 · Cap. 1 · A tela e as abas (narração ESTIMADA 47,0 s; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "seed": "t13-cap01",
+ "pace": 0.5,
+ "cps": 40,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 300
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true"
+ },
+ "seedExtra": [
+  "t13/inicio"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "waitFor",
+   "target": {
+    "label": "E-mail"
+   },
+   "timeout": 30
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "E-mail"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "Senha",
+    "exact": true
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Rafael!",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/contas-pagar-receber"
+  },
+  {
+   "do": "waitFor",
+   "text": "Água e esgoto de outubro",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const a=document.getAnimations().filter(x=>x.currentTime<0);a.forEach(x=>x.startTime=document.timeline.currentTime);return a.length})()"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|Algo deu errado|Falha ao|Something went wrong|inv[áa]lid/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{document.querySelectorAll('[data-sonner-toast][data-type=error]').forEach(t=>{const s='TOAST DE ERRO: '+t.textContent.trim().slice(0,90);if(!window.__avisos.includes(s)&&window.__avisos.length<10)window.__avisos.push(s)})},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0.4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main h1"
+   },
+   "seconds": 0.8,
+   "at": 0.4,
+   "label": "título Contas a Pagar/Receber",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main button:text-is('Todas')"
+   },
+   "seconds": 0.8,
+   "at": 2.99,
+   "label": "aba Todas",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 7.59
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button:text-is('A Pagar')"
+   },
+   "at": 8.48,
+   "label": "aba A Pagar (fica vermelha)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main button:text-is('A Pagar')"
+   },
+   "seconds": 0.8,
+   "at": 10.95,
+   "label": "A Pagar em vermelho",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button:text-is('A Receber')"
+   },
+   "at": 15.16,
+   "label": "aba A Receber"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 17.35
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button:text-is('Todas')"
+   },
+   "at": 17.77,
+   "label": "volta para Todas"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main thead th:has-text('Descrição')"
+   },
+   "seconds": 0.25,
+   "at": 20.18,
+   "label": "coluna Descrição",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main thead th:has-text('Categoria')"
+   },
+   "seconds": 0.25,
+   "at": 21.32,
+   "label": "coluna Categoria",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main thead th:has-text('Vencimento')"
+   },
+   "seconds": 0.25,
+   "at": 22.46,
+   "label": "coluna Vencimento",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main thead th:has-text('Valor')"
+   },
+   "seconds": 0.2,
+   "at": 23.67,
+   "label": "coluna Valor",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main thead th:has-text('Status')"
+   },
+   "seconds": 0.15,
+   "at": 24.53,
+   "label": "coluna Status",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 24.99
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('Água e esgoto de outubro') :text-is('Água e esgoto de outubro')"
+   },
+   "seconds": 0.8,
+   "at": 25.44,
+   "label": "a água de outubro",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('Água e esgoto de outubro') :text-is('Vencida')"
+   },
+   "seconds": 0.64,
+   "at": 30.53,
+   "label": "status Vencida",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('Água e esgoto de outubro') :text-is('05/11/2026')"
+   },
+   "seconds": 0.76,
+   "at": 31.82,
+   "label": "vencimento 05/11/2026 em vermelho",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 33.23
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('Energia elétrica de outubro') :text-is('Energia elétrica de outubro')"
+   },
+   "seconds": 0.6,
+   "at": 33.69,
+   "label": "a energia de outubro",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('Energia elétrica de outubro') :text-is('Pendente')"
+   },
+   "seconds": 0.42,
+   "at": 35.66,
+   "label": "status Pendente",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('Aluguel do galpão de novembro') :text-is('Aluguel do galpão de novembro')"
+   },
+   "seconds": 0.6,
+   "at": 36.73,
+   "label": "o aluguel do galpão",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('Aluguel do galpão de novembro') :text-is('Paga')"
+   },
+   "seconds": 0.15,
+   "at": 40.37,
+   "label": "status Paga e Quitada em 05/11/2026",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 40.87
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Nova conta",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 1.4,
+   "at": 44.13,
+   "label": "botão Nova conta",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 47.0
+  }
+ ]
+}

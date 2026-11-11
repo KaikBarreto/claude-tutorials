@@ -6,10 +6,10 @@ Cadeia (cada capítulo abre um navegador novo e parte da lista acumulada; ver SE
   inicio      o dia 10/11 que a T6 e a T8 contam, já fechado (o #85 do Rafael: abertura de R$ 1.500,00, a compra do ticket #58 da
               Cooperativa por Pix, a venda de 1.600 kg de ferro pesado à Aços Quiririm por Pix e as compras da Aparecida e do Valdir
               em dinheiro, fecha com R$ 1.007,10; o #86 do Marcos: R$ 17.000,00 + o saque de R$ 3.000,00, fecha com R$ 20.000,00)
-              e a manhã de 11/11: o #87 do Rafael aberto às 07:10 com R$ 1.200,00 e três compras em dinheiro (07:22 Aparecida,
+              e a manhã de 11/11: o #88 do Rafael aberto às 07:10 com R$ 1.200,00 e três compras em dinheiro (07:22 Aparecida,
               24 kg de latinha, R$ 148,80; 07:41 e 07:42 Valdir, 280 kg de ferro misto, R$ 210,00 cada: a 2ª é a duplicada).
               O Marcos sem caixa aberto em 11/11.
-  apos-cap04  a latinha da Aparecida corrigida: 42 kg, R$ 260,40 (mesmo número e mesma hora, no #87; estoque +18 kg)
+  apos-cap04  a latinha da Aparecida corrigida: 42 kg, R$ 260,40 (mesmo número e mesma hora, no #88; estoque +18 kg)
   apos-cap05  a compra duplicada do Valdir (07:42) excluída (estoque -280 kg) e a linha do Histórico de Exclusões
   apos-cap06  "Cupom sem valor" ligado na compra do Valdir (07:41)
 
@@ -32,7 +32,7 @@ LATINHA, F_PESADO, F_MISTO, PAPELAO = '@id:material.al_latinha', '@id:material.f
 CIDA, VALDIR, RECOMECO = '@id:fornecedor.cida', '@id:fornecedor.valdir', '@id:fornecedor.recomeco'
 QUIRIRIM = '@id:cliente.quiririm'
 PRINCIPAL = '@id:banco.principal'
-CX = {n: f'@id:t09.caixa.{n}' for n in (85, 86, 87)}
+CX = {n: f'@id:t09.caixa.{n}' for n in (85, 86, 88)}
 
 
 def base():
@@ -175,6 +175,21 @@ def grava(nome, doc, dados):
 def main():
     e = Estado()
     num = ULT_PEDIDO
+    # ---------------------------------------------------------------- o estorno de 03/11 (só se o mundo base ainda não tiver)
+    tem_estorno = any(p.get('reverted_at') and p.get('supplier_id') == CIDA and p.get('transaction_date') == '2026-11-03' for p in B['purchases'])
+    if not tem_estorno:
+        cx03 = next(c for c in B['cash_register'] if c['opened_at'][:10] == '2026-11-03' and c['opened_by'] == MARCOS)
+        cx05 = next(c for c in B['cash_register'] if c['opened_at'][:10] == '2026-11-05' and c['opened_by'] == MARCOS)
+        itens = [(LATINHA, 38, 6.2, 0), (PAPELAO, 280, 0.55, 0)]
+        orig, _ = e.pedido('cida03', 'purchase', CIDA, itens, z('2026-11-03', '09:40'), MARCOS, cx03['id'], 'cash', num + 1)
+        copia, tot = e.pedido('cida03b', 'purchase', CIDA, itens, z('2026-11-03', '09:41'), MARCOS, cx03['id'], 'cash', num + 2)
+        quando = z('2026-11-05', '08:12')
+        for p in e.t['purchases']:
+            if p['id'] == copia:
+                p.update(reverted_at=quando, reverted_compensation_register_id=cx05['id'])
+        e.ct('estorno03', cx05['id'], 'adjustment', tot, f'Estorno da Compra #{num + 2}', quando, MARCOS, reversal_for_order_id=copia)
+        num += 2
+        print('PROVISÓRIO: o mundo base ainda não tem a cópia estornada de 03/11 da Aparecida; vai nesta semente')
     # ---------------------------------------------------------------- 10/11 (T6 + T8), fechado no fim do dia
     D10 = '2026-11-10'
     e.caixa(85, RAFAEL, z(D10, '08:31'), 1500.0)
@@ -193,34 +208,20 @@ def main():
     e.pedido('valdir10', 'purchase', VALDIR, [(F_MISTO, 310, 0.75, 0)], z(D10, '15:05'), RAFAEL, CX[85], 'cash', num)
     e.fecha(85, z(D10, '17:44'), 1007.1, RAFAEL)
     e.fecha(86, z(D10, '17:36'), 20000.0, MARCOS)
-    # ---------------------------------------------------------------- 11/11 de manhã: o #87 do Rafael
+    # ---------------------------------------------------------------- 11/11 de manhã: o #88 do Rafael
     D11 = '2026-11-11'
-    e.caixa(87, RAFAEL, z(D11, '07:10'), 1200.0)
+    e.caixa(88, RAFAEL, z(D11, '07:10'), 1200.0)
     num += 1
-    cida, _ = e.pedido('cida', 'purchase', CIDA, [(LATINHA, 24, 6.2, 0)], z(D11, '07:22'), RAFAEL, CX[87], 'cash', num)
+    cida, _ = e.pedido('cida', 'purchase', CIDA, [(LATINHA, 24, 6.2, 0)], z(D11, '07:22'), RAFAEL, CX[88], 'cash', num)
     n_cida = num
     num += 1
-    valdir, _ = e.pedido('valdir', 'purchase', VALDIR, [(F_MISTO, 280, 0.75, 0)], z(D11, '07:41'), RAFAEL, CX[87], 'cash', num)
+    valdir, _ = e.pedido('valdir', 'purchase', VALDIR, [(F_MISTO, 280, 0.75, 0)], z(D11, '07:41'), RAFAEL, CX[88], 'cash', num)
     num += 1
-    dup, _ = e.pedido('valdir_dup', 'purchase', VALDIR, [(F_MISTO, 280, 0.75, 0)], z(D11, '07:42'), RAFAEL, CX[87], 'cash', num)
+    dup, _ = e.pedido('valdir_dup', 'purchase', VALDIR, [(F_MISTO, 280, 0.75, 0)], z(D11, '07:42'), RAFAEL, CX[88], 'cash', num)
     n_dup = num
     for c in e.t['cash_register']:
-        if c['id'] == CX[87]:
+        if c['id'] == CX[88]:
             c['opening_balance'] = r2(1200 - 148.8 - 210 - 210)
-    # ---------------------------------------------------------------- o estorno de 03/11 (só se o mundo base ainda não tiver)
-    tem_estorno = any(p.get('reverted_at') and p.get('supplier_id') == CIDA and p.get('transaction_date') == '2026-11-03' for p in B['purchases'])
-    if not tem_estorno:
-        cx03 = next(c for c in B['cash_register'] if c['opened_at'][:10] == '2026-11-03' and c['opened_by'] == MARCOS)
-        cx05 = next(c for c in B['cash_register'] if c['opened_at'][:10] == '2026-11-05' and c['opened_by'] == MARCOS)
-        itens = [(LATINHA, 38, 6.2, 0), (PAPELAO, 280, 0.55, 0)]
-        orig, _ = e.pedido('cida03', 'purchase', CIDA, itens, z('2026-11-03', '09:40'), MARCOS, cx03['id'], 'cash', ULT_PEDIDO + 90)
-        copia, tot = e.pedido('cida03b', 'purchase', CIDA, itens, z('2026-11-03', '09:41'), MARCOS, cx03['id'], 'cash', ULT_PEDIDO + 91)
-        quando = z('2026-11-05', '08:12')
-        for p in e.t['purchases']:
-            if p['id'] == copia:
-                p.update(reverted_at=quando, reverted_compensation_register_id=cx05['id'])
-        e.ct('estorno03', cx05['id'], 'adjustment', tot, f'Estorno da Compra #{ULT_PEDIDO + 91}', quando, MARCOS, reversal_for_order_id=copia)
-        print('PROVISÓRIO: o mundo base ainda não tem a cópia estornada de 03/11 da Aparecida; vai nesta semente')
     tem_audit = any(a.get('entity_type') == 'purchase' for a in B.get('destructive_actions_audit', []))
     if not tem_audit:
         copia_b = next((p for p in B['purchases'] if p.get('reverted_at') and p.get('supplier_id') == CIDA), None) or next(p for p in e.t['purchases'] if p.get('reverted_at'))
@@ -234,25 +235,25 @@ def main():
     dados = dict(e.t)
     dados['_patch'] = {'materials': patch_materiais(e, [LATINHA, F_PESADO, F_MISTO, PAPELAO]),
                        'bank_accounts': [{'match': {'id': PRINCIPAL}, 'set': {'balance': e.banco[PRINCIPAL]}}]}
-    grava('inicio', 'T09 · estado de 11/11 08:30: o dia 10/11 (T6 e T8) fechado e o caixa #87 do Rafael com as três compras da manhã '
+    grava('inicio', 'T09 · estado de 11/11 08:30: o dia 10/11 (T6 e T8) fechado e o caixa #88 do Rafael com as três compras da manhã '
           '(latinha da Aparecida com 24 kg; a compra do Valdir lançada duas vezes). Gerado por rec/t09/t09_sementes.py.', dados)
 
     # ---------------------------------------------------------------- apos-cap04: latinha 24 -> 42 kg
     st = e.estoque[LATINHA] + 18
-    grava('apos-cap04', 'T09 · depois do cap04: a compra da Aparecida editada para 42 kg de latinha (R$ 260,40, mesmo número e hora, no #87).', {'_patch': {
+    grava('apos-cap04', 'T09 · depois do cap04: a compra da Aparecida editada para 42 kg de latinha (R$ 260,40, mesmo número e hora, no #88).', {'_patch': {
         'purchases': [{'match': {'id': cida}, 'set': {'total_amount': 260.4, 'paid_amount': 260.4}}],
         'purchase_items': [{'match': {'id': '@id:t09.pi.cida.0'}, 'set': {'quantity': 42, 'total_price': 260.4}}],
         'stock_movements': [{'match': {'id': '@id:t09.sm.cida.0'}, 'set': {'quantity': 42, 'stock_after': e.estoque[LATINHA] - 24 + 42}}],
         'cash_transactions': [{'match': {'id': '@id:t09.ct.cida'}, 'set': {'amount': 260.4}}],
         'materials': [{'match': {'id': LATINHA}, 'set': {'current_stock': st}}],
-        'cash_register': [{'match': {'id': CX[87]}, 'set': {'opening_balance': r2(1200 - 260.4 - 420)}}],
+        'cash_register': [{'match': {'id': CX[88]}, 'set': {'opening_balance': r2(1200 - 260.4 - 420)}}],
     }})
     # ---------------------------------------------------------------- apos-cap05: a duplicada do Valdir excluída
     grava('apos-cap05', 'T09 · depois do cap05: a compra duplicada do Valdir (07:42) excluída, com a linha do Histórico de Exclusões.', {
         '_remove': {'purchases': [{'id': dup}], 'purchase_items': [{'id': '@id:t09.pi.valdir_dup.0'}], 'stock_movements': [{'id': '@id:t09.sm.valdir_dup.0'}],
                     'cash_transactions': [{'id': '@id:t09.ct.valdir_dup'}]},
         '_patch': {'materials': [{'match': {'id': F_MISTO}, 'set': {'current_stock': e.estoque[F_MISTO] - 280}}],
-                   'cash_register': [{'match': {'id': CX[87]}, 'set': {'opening_balance': r2(1200 - 260.4 - 210)}}]},
+                   'cash_register': [{'match': {'id': CX[88]}, 'set': {'opening_balance': r2(1200 - 260.4 - 210)}}]},
         'destructive_actions_audit': [{
             'id': '@id:t09.audit.valdir', 'company_id': CID, 'action_type': 'delete_entity', 'entity_type': 'purchase', 'entity_id': dup,
             'entity_label': 'Valdir Pereira', 'performed_by': RAFAEL, 'performed_by_email': 'rafael@reciclavalemetais.example',
@@ -263,7 +264,7 @@ def main():
     # ---------------------------------------------------------------- apos-cap06: cupom sem valor no Valdir
     grava('apos-cap06', 'T09 · depois do cap06: "Cupom sem valor" ligado na compra do Valdir (07:41).', {'_patch': {
         'purchases': [{'match': {'id': valdir}, 'set': {'hide_financial_details': True}}]}})
-    print(f'pedidos #{ULT_PEDIDO + 1}..#{num} (latinha #{n_cida}, duplicada #{n_dup}); caixas #85 a #87')
+    print(f'pedidos #{ULT_PEDIDO + 1}..#{num} (latinha #{n_cida}, duplicada #{n_dup}); caixas #85, #86 e #88 (o #87 não existe na aula: lacuna que nenhuma tela da T9 mostra; coordenador, 11/11: vale o #88)')
 
 
 if __name__ == '__main__':

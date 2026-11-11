@@ -73,6 +73,14 @@
    "timeout": 20
   },
   {
+   "do": "eval",
+   "js": "(()=>{const sb=document.querySelector('[data-state][data-collapsible]');if(sb&&sb.getAttribute('data-state')==='collapsed')return 'ja recolhido';const b=document.querySelector('header button.h-8.w-8');if(!b)return 'SEM ALVO';b.click();return 'recolhido'})()"
+  },
+  {
+   "do": "wait",
+   "seconds": 0.7
+  },
+  {
    "do": "goto",
    "url": "/funcionarios"
   },
@@ -300,7 +308,7 @@
   {
    "do": "hover",
    "target": {
-    "selector": "[role=dialog] div:has(> div p:text-is('Adiantamento')) button:has(svg.lucide-trash-2)"
+    "selector": "xpath=//div[@role='dialog']//*[normalize-space(text())='Vale']/ancestor::div[.//button//*[contains(@class,'lucide-trash')]][1]//button[.//*[contains(@class,'lucide-trash')]]"
    },
    "seconds": 1.6,
    "at": 47.89,
@@ -328,7 +336,7 @@
   {
    "do": "click",
    "target": {
-    "selector": "[role=dialog] button:text-is('Fechar')"
+    "selector": "[role=dialog] button:text-is('Fechar'):not(.absolute)"
    },
    "at": 60.26,
    "label": "Fechar o extrato"

@@ -299,6 +299,57 @@ def capitulo(fn):
     return fn
 
 
+# ---------------------------------------------------------------- alvos do Ticket de Pesagem (rec/t08/_ex: explorações de 11/11)
+MENU = '[data-sidebar=sidebar]'
+NEUTRO = (1000, 560)          # ponto neutro para o cursor descansar (fora de menu, cartão e botão)
+COL_AGUARDA = SEL("main h3:text-is('Aguardando valorização')")
+COL_VALORIZ = SEL("main h3:text-is('Valorizados')")
+ABA_AVULSAS = {'role': 'tab', 'name': 'Pesagens avulsas'}
+ABA_PADRAO = {'role': 'tab', 'name': 'Tickets padrão'}
+
+
+def dashboard_setup(extra=()):
+    return list(LOGIN) + [{'do': 'goto', 'url': '/ticket-pesagem'}, {'do': 'waitFor', 'text': TICKET_OK, 'timeout': 30},
+                          {'do': 'waitFor', 'idle': True, 'timeout': 25}, {'do': 'goto', 'url': '/dashboard'},
+                          {'do': 'waitFor', 'idle': True, 'timeout': 25}, {'do': 'wait', 'seconds': 1.0}] + list(extra)
+
+
+@capitulo
+def cap00():
+    """Abertura: o Dashboard parado (a ilustração do caminhão cobre L2 e L3; o cartão "Antes" entra na L4)."""
+    c = Cap(0, setup=dashboard_setup())
+    c.mark(1)
+    c.cursor(NEUTRO, at=0.3, label='cursor descansa no centro')
+    for i in range(2, len(c.linhas) + 1):
+        c.mark(i)
+    c.fim()
+    return c
+
+
+@capitulo
+def cap01():
+    """Onde fica (Materiais > Ticket de Pesagem), as duas colunas do kanban e a aba Pesagens avulsas."""
+    c = Cap(1, setup=dashboard_setup())
+    c.mark(1)
+    c.click(SEL(f"{MENU} button:has-text('Materiais')"), at=c.A(1, 'Materiais', 0.8), label='menu Materiais')
+    c.click({'role': 'link', 'name': 'Ticket de Pesagem'}, at=c.A(1, 'Ticket', 0.6, nth=1), label='menu Ticket de Pesagem')
+    c.waitfor(text=TICKET_OK, timeout=15)
+    c.mark(2)   # L2 e L3: ilustração "compra direta x ticket" por cima da lista
+    c.cursor(NEUTRO, at=c.L(2) + 0.6, label='cursor sai do menu')
+    c.mark(3)
+    c.mark(4)
+    c.registra(SEL('main div:has(> h3:text-is("Aguardando valorização"))'), at=c.A(4, 'Os', 0.1), label='kanban: as duas colunas')
+    c.hover(COL_AGUARDA, 0.5, at=c.A(4, 'Aguardando', 0.6), label='coluna Aguardando valorização (com o #57)')
+    c.hover(COL_VALORIZ, 0.5, at=c.A(4, 'Valorizados', 0.6), label='coluna Valorizados')
+    c.mark(5)
+    c.click(ABA_AVULSAS, at=c.A(5, 'Pesagens', 0.6), label='aba Pesagens avulsas')
+    c.mark(6)
+    c.hover(BTN('Nova Pesagem Avulsa'), 0.6, at=c.A(6, 'comprovante', 0.6), label='Nova Pesagem Avulsa (sem clicar)')
+    c.click(ABA_PADRAO, at=c.A(6, 'comercial', -0.5), label='volta para Tickets padrão')
+    c.fim()
+    return c
+
+
 # @@CAPITULOS@@
 
 

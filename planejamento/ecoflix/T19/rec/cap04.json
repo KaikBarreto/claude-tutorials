@@ -73,6 +73,14 @@
    "timeout": 20
   },
   {
+   "do": "eval",
+   "js": "(()=>{const sb=document.querySelector('[data-state][data-collapsible]');if(sb&&sb.getAttribute('data-state')==='collapsed')return 'ja recolhido';const b=document.querySelector('header button.h-8.w-8');if(!b)return 'SEM ALVO';b.click();return 'recolhido'})()"
+  },
+  {
+   "do": "wait",
+   "seconds": 0.7
+  },
+  {
    "do": "goto",
    "url": "/funcionarios"
   },
@@ -191,7 +199,7 @@
   {
    "do": "click",
    "target": {
-    "selector": "[role=dialog] button[aria-haspopup=dialog]:near(label:text-is('Ícone'))"
+    "selector": "[role=dialog] div.space-y-2:has(> label:text-is('Ícone')) button"
    },
    "at": 13.51,
    "label": "Ícone (abre a grade)"
@@ -213,7 +221,7 @@
   {
    "do": "click",
    "target": {
-    "selector": "[role=dialog] button:text-is('Adicionar')"
+    "selector": "[role=dialog] button:text-is('Adicionar'):not(.absolute)"
    },
    "at": 15.31,
    "label": "Adicionar"
@@ -346,7 +354,7 @@
   {
    "do": "click",
    "target": {
-    "selector": "[role=dialog] button:text-is('Atualizar')"
+    "selector": "[role=dialog] button:text-is('Atualizar'):not(.absolute)"
    },
    "at": 26.58,
    "label": "Atualizar"
@@ -384,7 +392,7 @@
   {
    "do": "click",
    "target": {
-    "selector": "main button:has-text('Filtros')"
+    "selector": "main button[aria-label^='Filtros']"
    },
    "at": 32.32,
    "label": "Filtros da lista"

@@ -1,0 +1,314 @@
+{
+ "name": "t07-cap03",
+ "title": "T07 · Cap. 3 · Cadastrar o fornecedor na hora (narração 40,5 s ESTIMADA; marcas L1..L4 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:35:00-03:00; usuário rafael)",
+ "seed": "t07-cap03",
+ "pace": 0.5,
+ "cps": 14,
+ "tail": 1.5,
+ "start": {
+  "x": 700,
+  "y": 300
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true"
+ },
+ "seedExtra": [
+  "t07/inicio",
+  "base/balanca-ativada"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/login"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "input[type=email]"
+   },
+   "timeout": 30
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "input[type=email]"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "input[type=password]"
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "button[type=submit]"
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Rafael!",
+   "timeout": 40
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/compra"
+  },
+  {
+   "do": "waitFor",
+   "text": "Voltar para o caixa",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "header button:has(svg.lucide-panel-left-close), header button:has(svg.lucide-panel-left)"
+   },
+   "noScroll": true
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#supplier-desktop-top"
+   }
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "placeholder": "Buscar por nome, apelido, CPF/CNPJ ou telefone..."
+   },
+   "timeout": 10
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Buscar por nome, apelido, CPF/CNPJ ou telefone..."
+   },
+   "text": "Moreira",
+   "cps": 40
+  },
+  {
+   "do": "waitFor",
+   "text": "Nenhum resultado encontrado.",
+   "timeout": 8
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=new RegExp(\"N[\\u00e3a]o foi poss[i\\u00ed]vel|Erro ao|Tente novamente|indispon[i\\u00ed]vel|Algo deu errado|Something went wrong|Falha ao|Pop-up bloqueado|Sem permiss[\\u00e3a]o\",'i');const ign=new RegExp(\"$^\",'i');const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&!ign.test(m[0])&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0.0
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:has(svg.lucide-plus)"
+   },
+   "at": 2.51,
+   "label": "+ (cadastrar)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Novo Fornecedor",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "tab",
+    "name": "Dados de Contato",
+    "exact": true
+   },
+   "seconds": 0.8,
+   "at": 4.1,
+   "label": "Novo Fornecedor, Dados de Contato",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 7.52
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#name"
+   },
+   "at": 9.4,
+   "label": "Nome"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#name"
+   },
+   "text": "José Carlos Moreira",
+   "cps": 24,
+   "noClick": true,
+   "at": 11.25,
+   "label": "Nome: José Carlos Moreira",
+   "clear": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#contact_name"
+   },
+   "at": 12.43,
+   "label": "Pessoa de Contato ou Apelido"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#contact_name"
+   },
+   "text": "Zé Moreira",
+   "cps": 24,
+   "noClick": true,
+   "at": 13.91,
+   "label": "apelido: Zé Moreira"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#phone"
+   },
+   "at": 16.9,
+   "label": "Telefone"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#phone"
+   },
+   "text": "12900004471",
+   "cps": 30,
+   "noClick": true,
+   "label": "Telefone (12) 90000-4471"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 17.81
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#pix_key"
+   },
+   "at": 18.16,
+   "label": "Chave PIX"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#pix_key"
+   },
+   "text": "(12) 90000-4471",
+   "cps": 30,
+   "noClick": true,
+   "at": 19.27,
+   "label": "Chave PIX (12) 90000-4471"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] div:has(> label:has-text('Tabela de Preços Padrão')) button"
+   },
+   "seconds": 0.8,
+   "at": 22.8,
+   "label": "Tabela de Preços Padrão",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 27.73
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] label[for=also-counterpart]"
+   },
+   "seconds": 0.8,
+   "at": 27.73,
+   "label": "Também é cliente (desmarcado)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Salvar",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 27.93,
+   "label": "Salvar"
+  },
+  {
+   "do": "waitFor",
+   "text": "Fornecedor cadastrado com sucesso!",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "#supplier-desktop-top"
+   },
+   "seconds": 1.2,
+   "at": 30.36,
+   "label": "fornecedor José Carlos Moreira já escolhido",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"José Carlos Moreira\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere fornecedor escolhido"
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 40.46
+  }
+ ]
+}

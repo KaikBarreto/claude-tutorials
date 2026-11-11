@@ -300,7 +300,33 @@ def js_topo(escopo='main', dur_ms=700):
             + SUAVE.replace('DUR', str(int(dur_ms))).replace('DESTINO', 'y0*(1-e)') + "return 'topo:'+Math.round(c.scrollTop)})()")
 
 
-# @@ALVOS@@
+# ---------------------------------------------------------------- alvos da aula (rec/t09/_ex: explorações de 11/11)
+RECOLHE_MENU = ("(()=>{const b=document.querySelector('header svg.lucide-panel-left-close')?.closest('button');"
+                "if(!b)return document.querySelector('header svg.lucide-panel-left')?'ja recolhido':'sem botao';b.click();return 'recolhido'})()")
+PEDIDOS_OK = 'Histórico completo de compras e vendas'
+PERIODO = lambda txt: SEL(f"main [role=combobox]:has-text('{txt}')")          # o período da tela (Radix Select: clique real)
+LINHA = lambda txt: f"main tbody tr:has-text('{txt}')"                        # a linha do pedido (data e hora são da semente)
+MENU_LINHA = lambda txt: SEL(f"{LINHA(txt)} button")                          # o "⋮" (HoverDropdownMenu: abre ao passar o mouse)
+L_CIDA, L_VALDIR, L_DUP = '11/11/2026 07:22', '11/11/2026 07:41', '11/11/2026 07:42'
+L_BATERIA = "Depósito Irmãos Siqueira'):has-text('744,00"                     # a compra de 21/10 (fecha o :has-text de LINHA)
+LINK = lambda n: {'role': 'link', 'name': n, 'exact': True, 'within': MENU}
+
+
+def setup_pedidos(periodo=None, extra=(), recolhe=True):
+    """login, Pedidos (aquece a lista), menu recolhido (a tabela inteira cabe a 1280 px), período escolhido fora do vídeo"""
+    st = list(LOGIN) + [{'do': 'goto', 'url': '/pedidos'}, {'do': 'waitFor', 'text': PEDIDOS_OK, 'timeout': 30}, {'do': 'waitFor', 'idle': True, 'timeout': 25}]
+    if recolhe:
+        st += [{'do': 'eval', 'js': RECOLHE_MENU}, {'do': 'wait', 'seconds': 0.8}]
+    if periodo:
+        st += [{'do': 'click', 'target': PERIODO('Este mês')}, {'do': 'click', 'target': OPT(periodo)},
+               {'do': 'waitFor', 'target': PERIODO(periodo), 'timeout': 10}, {'do': 'waitFor', 'idle': True, 'timeout': 15}, {'do': 'wait', 'seconds': 0.8}]
+    return st + list(extra)
+
+
+def abre_menu_linha(c, linha, at, rotulo):
+    """passa o mouse no "⋮" da linha: o menu do pedido abre (HoverDropdownMenu, fecha 300 ms depois que o mouse sai)"""
+    c.hover(MENU_LINHA(linha), 0.3, at=at, label=rotulo, optional=False, timeout=8)
+    c.waitfor(target=ITEM('Ver comprovante'), timeout=6)
 
 # ================================================================ capítulos
 CAPS_ROBO = {}
@@ -309,6 +335,74 @@ CAPS_ROBO = {}
 def capitulo(fn):
     CAPS_ROBO[int(fn.__name__[3:])] = fn
     return fn
+
+
+@capitulo
+def cap00():
+    """Abertura: o Dashboard com o menu aberto (L1-L2 sob a ilustração do telefonema); L3 Pedidos e Financeiro > Histórico do Caixa no
+    menu, sem navegar (o grupo Financeiro só se abre para o item aparecer); L4 o cartão "Antes" (edição)."""
+    setup = list(LOGIN) + [{'do': 'goto', 'url': '/pedidos'}, {'do': 'waitFor', 'text': PEDIDOS_OK, 'timeout': 30}, {'do': 'waitFor', 'idle': True, 'timeout': 25},
+                           {'do': 'goto', 'url': '/dashboard'}, {'do': 'waitFor', 'idle': True, 'timeout': 25}, {'do': 'wait', 'seconds': 1.0}]
+    c = Cap(0, setup=setup, start=(760, 470))
+    c.mark(1)
+    c.registra(SEL('main'), at=0.4, label='Dashboard (sob a ilustração do telefonema)')
+    c.mark(2)
+    c.mark(3)
+    c.hover(LINK('Pedidos'), 0.5, at=c.A(3, 'Pedidos,', 0.7), label='menu Pedidos (sem clicar)')
+    c.click(BTN('Financeiro', within=MENU), at=c.A(3, 'Histórico', 1.4), label='abre o grupo Financeiro (sem navegar)')
+    c.hover(LINK('Histórico do Caixa'), 0.6, at=c.A(3, 'Caixa,', 0.6), label='menu Financeiro > Histórico do Caixa (sem clicar)')
+    c.hover(BTN('Financeiro', within=MENU), 0.4, at=c.A(3, 'Financeiro.', 0.6), label='grupo Financeiro')
+    c.mark(4)
+    c.cursor((760, 470), at=c.A(4, 'Se', 0.3), label='cursor descansa (cartão "Antes: Ticket de Pesagem")')
+    c.fim()
+    return c
+
+
+@capitulo
+def cap01():
+    """Duas telas, dois trabalhos: ilustração pedido x caixa (L1-L3) sobre o Dashboard; L4 clica em Pedidos no menu."""
+    setup = list(LOGIN) + [{'do': 'goto', 'url': '/pedidos'}, {'do': 'waitFor', 'text': PEDIDOS_OK, 'timeout': 30}, {'do': 'waitFor', 'idle': True, 'timeout': 25},
+                           {'do': 'goto', 'url': '/dashboard'}, {'do': 'waitFor', 'idle': True, 'timeout': 25}, {'do': 'wait', 'seconds': 1.0}]
+    c = Cap(1, setup=setup, start=(760, 470))
+    c.mark(1)
+    c.registra(SEL('main'), at=0.4, label='Dashboard (sob a ilustração pedido x caixa)')
+    c.mark(2)
+    c.mark(3)
+    c.mark(4)
+    c.click(LINK('Pedidos'), at=c.A(4, 'pedidos.', 0.8), label='menu Pedidos')
+    c.waitfor(text=PEDIDOS_OK, timeout=15)
+    c.confere('main', ['Pedidos', PEDIDOS_OK, 'Todas as Ordens'], 'tela Pedidos')
+    c.fim()
+    return c
+
+
+@capitulo
+def cap02():
+    """A tela Pedidos (menu recolhido no setup): período e lista (L1), o Resumo do período aberto (L2, zoom), as colunas (L3),
+    a linha da latinha da Aparecida aberta com os 24 kg (L4) e o "⋮" sem abrir (L5)."""
+    c = Cap(2, setup=setup_pedidos())
+    c.mark(1)
+    c.hover(PERIODO('Este mês'), 0.5, at=c.A(1, 'mês', 0.7), label='período "Este mês"')
+    c.hover(TXT('Todas as Ordens', within='main'), 0.5, at=c.A(1, 'todas', 0.7, nth=0), label='"Todas as Ordens" com a contagem')
+    c.mark(2)
+    c.click(TXT('Resumo do período filtrado', within='main'), at=c.A(2, 'resumo', 0.8), label='abre o Resumo do período filtrado')
+    c.registra(RESUMO, at=c.A(2, 'quanto', 0.2), label='[ZOOM] Resumo do período filtrado: Compras e Vendas por forma de pagamento')
+    c.hover(RESUMO_COMPRAS, 0.4, at=c.A(2, 'compras', 0.6), label='Compras')
+    c.hover(RESUMO_VENDAS, 0.4, at=c.A(2, 'vendas,', 0.6), label='Vendas')
+    c.cursor((780, 470), at=c.A(2, 'saldo.', 0.2), label='cursor sai do resumo')
+    c.mark(3)
+    for col, palavra, nth in (('Usuário', 'quem', 0), ('Data', 'data,', 0), ('Tipo', 'compra', 0), ('N° Pedidos', 'número,', 0),
+                              ('Cliente/Fornecedor', 'cliente', 0), ('Pagamento', 'pago', 0), ('Valor', 'valor.', 0)):
+        c.hover(SEL(f"main thead th:has-text('{col}')"), 0.2, at=c.A(3, palavra, 0.6, nth=nth), label=f'coluna {col}')
+    c.mark(4)
+    c.click(TXT(L_CIDA, within='main'), at=c.A(4, 'Clicando', 0.6), label='abre a linha da latinha da Aparecida (hoje 07:22)')
+    c.hover(TXT('Alumínio latinha', within=f"main tbody tr:has-text('Fornecedor:')"), 0.4, at=c.A(4, 'materiais,', 0.6), label='o material da linha')
+    c.hover(TXTX('24.00 Kg', within='main'), 0.8, at=c.A(4, 'vinte', 0.6), label='[ZOOM] o peso: 24 kg')
+    c.mark(5)
+    c.registra(MENU_LINHA(L_CIDA), at=c.A(5, 'menu', 0.3), label='[DESTAQUE] o "⋮" no fim da linha (sem abrir)')
+    c.cursor((1120, 541), at=c.A(5, 'menu', 0.6), label='cursor perto do "⋮" (passar por cima abriria o menu)')
+    c.fim()
+    return c
 
 
 # @@CAPITULOS@@

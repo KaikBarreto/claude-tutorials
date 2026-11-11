@@ -1,0 +1,631 @@
+{
+ "name": "t07-cap07",
+ "title": "T07 · Cap. 7 · Mesclar pesagens (narração 45,4 s ESTIMADA; marcas L1..L4 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:35:00-03:00; usuário rafael)",
+ "seed": "t07-cap07",
+ "pace": 0.5,
+ "cps": 14,
+ "tail": 1.5,
+ "start": {
+  "x": 700,
+  "y": 300
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true"
+ },
+ "seedExtra": [
+  "t07/inicio",
+  "t07/apos-cap03",
+  "base/balanca-ativada"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/login"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "input[type=email]"
+   },
+   "timeout": 30
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "input[type=email]"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "input[type=password]"
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "button[type=submit]"
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Rafael!",
+   "timeout": 40
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/compra"
+  },
+  {
+   "do": "waitFor",
+   "text": "Voltar para o caixa",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "header button:has(svg.lucide-panel-left-close), header button:has(svg.lucide-panel-left)"
+   },
+   "noScroll": true
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#supplier-desktop-top"
+   }
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "placeholder": "Buscar por nome, apelido, CPF/CNPJ ou telefone..."
+   },
+   "timeout": 10
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Buscar por nome, apelido, CPF/CNPJ ou telefone..."
+   },
+   "text": "moreira",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:has-text('José Carlos Moreira')"
+   }
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "balanca",
+   "peso": 12.4,
+   "subir": 0.6,
+   "oscilar": 0.6
+  },
+  {
+   "do": "pause",
+   "seconds": 2.4
+  },
+  {
+   "do": "click",
+   "target": {
+    "placeholder": "Escreva o nome ou código do material"
+   }
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Escreva o nome ou código do material"
+   },
+   "text": "cobre mi",
+   "noClick": true,
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Cobre misto",
+    "exact": false
+   }
+  },
+  {
+   "do": "pause",
+   "seconds": 0.6
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{let v='';for(let i=0;i<35;i++){const el=document.querySelector(\"main div:has(> label:has-text('Quantidade (Kg)')) input\");v=el?el.value:'SEM ALVO';if(v===\"12,4\")return 'OK: '+v;await new Promise(r=>setTimeout(r,200));}return 'DIFERENTE: '+v})()"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Incluir Item",
+    "exact": true
+   }
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "balanca",
+   "peso": 0,
+   "subir": 0.6,
+   "oscilar": 0.6
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "balanca",
+   "peso": 21.6,
+   "subir": 0.6,
+   "oscilar": 0.6
+  },
+  {
+   "do": "pause",
+   "seconds": 2.4
+  },
+  {
+   "do": "click",
+   "target": {
+    "placeholder": "Escreva o nome ou código do material"
+   }
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Escreva o nome ou código do material"
+   },
+   "text": "latinha",
+   "noClick": true,
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Alumínio latinha",
+    "exact": false
+   }
+  },
+  {
+   "do": "pause",
+   "seconds": 0.6
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{let v='';for(let i=0;i<35;i++){const el=document.querySelector(\"main div:has(> label:has-text('Quantidade (Kg)')) input\");v=el?el.value:'SEM ALVO';if(v===\"21,6\")return 'OK: '+v;await new Promise(r=>setTimeout(r,200));}return 'DIFERENTE: '+v})()"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main div:has(> label:has-text('Tara/Imp.')) input"
+   }
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "main div:has(> label:has-text('Tara/Imp.')) input"
+   },
+   "text": "0,6",
+   "noClick": true,
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Incluir Item",
+    "exact": true
+   }
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "balanca",
+   "peso": 0,
+   "subir": 0.6,
+   "oscilar": 0.6
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "click",
+   "target": {
+    "placeholder": "Escreva o nome ou código do material"
+   }
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Escreva o nome ou código do material"
+   },
+   "text": "ferro mi",
+   "noClick": true,
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Ferro misto",
+    "exact": false
+   }
+  },
+  {
+   "do": "pause",
+   "seconds": 0.6
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Pesagem avançada",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Registre pesagem dupla",
+   "timeout": 10
+  },
+  {
+   "do": "balanca",
+   "peso": 412,
+   "subir": 0.6,
+   "oscilar": 0.6
+  },
+  {
+   "do": "pause",
+   "seconds": 2.4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] div:has(> label:text-is('1ª Pesagem')) button[aria-label='Capturar peso da balança']"
+   }
+  },
+  {
+   "do": "pause",
+   "seconds": 0.6
+  },
+  {
+   "do": "balanca",
+   "peso": 96,
+   "subir": 0.6,
+   "oscilar": 0.6
+  },
+  {
+   "do": "pause",
+   "seconds": 2.4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] div:has(> label:text-is('2ª Pesagem')) button[aria-label='Capturar peso da balança']"
+   }
+  },
+  {
+   "do": "pause",
+   "seconds": 0.6
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] div:has(> div > label:text-is('Impureza')) button:text-is('%')"
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] div:has(> div > label:text-is('Impureza')) input"
+   }
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] div:has(> div > label:text-is('Impureza')) input"
+   },
+   "text": "3",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "label[for=wm-two]"
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Confirmar",
+    "exact": true,
+    "within": "[role=dialog]"
+   }
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "balanca",
+   "peso": 0,
+   "subir": 0.6,
+   "oscilar": 0.6
+  },
+  {
+   "do": "pause",
+   "seconds": 0.6
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=new RegExp(\"N[\\u00e3a]o foi poss[i\\u00ed]vel|Erro ao|Tente novamente|indispon[i\\u00ed]vel|Algo deu errado|Something went wrong|Falha ao|Pop-up bloqueado|Sem permiss[\\u00e3a]o\",'i');const ign=new RegExp(\"$^\",'i');const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&!ign.test(m[0])&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0.0
+  },
+  {
+   "do": "balanca",
+   "peso": 18.4,
+   "subir": 0.6,
+   "oscilar": 0.6,
+   "at": 0.0,
+   "label": "latinha na balança (18,4 kg)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "placeholder": "Escreva o nome ou código do material"
+   },
+   "at": 1.37,
+   "label": "Material"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Escreva o nome ou código do material"
+   },
+   "text": "latinha",
+   "cps": 30,
+   "noClick": true,
+   "at": 2.45,
+   "label": "material: latinha"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Alumínio latinha",
+    "exact": false
+   },
+   "at": 2.89,
+   "label": "Alumínio latinha"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main div:has(> label:has-text('Tara/Imp.')) input"
+   },
+   "at": 5.7,
+   "label": "Tara/Imp."
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "main div:has(> label:has-text('Tara/Imp.')) input"
+   },
+   "text": "0,4",
+   "cps": 10,
+   "noClick": true,
+   "at": 7.33,
+   "label": "tara 0,4"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Incluir Item",
+    "exact": true
+   },
+   "at": 7.9,
+   "label": "Incluir Item (2ª latinha)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Itens do Pedido (4)",
+   "timeout": 8
+  },
+  {
+   "do": "balanca",
+   "peso": 0,
+   "subir": 0.5,
+   "oscilar": 0.3,
+   "label": "tira a latinha da balança"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('Alumínio latinha')",
+    "nth": 1
+   },
+   "seconds": 0.8,
+   "at": 9.64,
+   "label": "a latinha duas vezes na lista",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 11.24
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('Alumínio latinha') button:has(svg.lucide-merge)"
+   },
+   "seconds": 1.4,
+   "at": 16.07,
+   "label": "Mesclar 2 pesagens deste material",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main tbody tr:has-text('Alumínio latinha') button:has(svg.lucide-merge)"
+   },
+   "at": 17.44,
+   "label": "mesclar"
+  },
+  {
+   "do": "waitFor",
+   "text": "Pesagens atuais:",
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Pesagens atuais:",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.0,
+   "at": 18.65,
+   "label": "Pesagens atuais: e Total mesclado: (zoom)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Total mesclado:",
+    "within": "[role=dialog]",
+    "exact": false
+   },
+   "seconds": 2.0,
+   "at": 19.94,
+   "label": "Total mesclado: 40 kg (tara: 1), R$ 6,20/kg (média)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"40\", \"6,20\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Total mesclado 40 kg, R$ 6,20/kg"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 25.71
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Mesclar Todas",
+    "exact": true
+   },
+   "at": 25.91,
+   "label": "Mesclar Todas"
+  },
+  {
+   "do": "waitFor",
+   "text": "pesagens mescladas com sucesso",
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('Alumínio latinha')",
+    "nth": 0
+   },
+   "seconds": 1.4,
+   "at": 29.78,
+   "label": "uma linha de latinha, R$ 241,80",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"241,80\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main tbody tr\")].filter(e=>!true||e.innerText.includes(\"Alumínio latinha\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere latinha mesclada R$ 241,80"
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 35.85
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main button[aria-label='Desmesclar pesagens']"
+   },
+   "seconds": 2.0,
+   "at": 40.23,
+   "label": "Desmesclar pesagens (zoom)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 45.4
+  }
+ ]
+}

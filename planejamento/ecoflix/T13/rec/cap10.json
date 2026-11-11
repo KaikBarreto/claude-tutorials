@@ -1,0 +1,414 @@
+{
+ "name": "t13-cap10",
+ "title": "T13 · Cap. 10 · O fiado na mesma lista (narração ESTIMADA 99,0 s; marcas L1..L9 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "seed": "t13-cap10",
+ "pace": 0.5,
+ "cps": 40,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 400
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true"
+ },
+ "seedExtra": [
+  "t13/inicio",
+  "t13/apos-cap09"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "waitFor",
+   "target": {
+    "label": "E-mail"
+   },
+   "timeout": 30
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "E-mail"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "Senha",
+    "exact": true
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Rafael!",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/contas-pagar-receber"
+  },
+  {
+   "do": "waitFor",
+   "text": "Água e esgoto de outubro",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const a=document.getAnimations().filter(x=>x.currentTime<0);a.forEach(x=>x.startTime=document.timeline.currentTime);return a.length})()"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|Algo deu errado|Falha ao|Something went wrong|inv[áa]lid/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{document.querySelectorAll('[data-sonner-toast][data-type=error]').forEach(t=>{const s='TOAST DE ERRO: '+t.textContent.trim().slice(0,90);if(!window.__avisos.includes(s)&&window.__avisos.length<10)window.__avisos.push(s)})},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0.4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button:text-is('A Receber')"
+   },
+   "at": 0.53,
+   "label": "aba A Receber"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main input[aria-label='Buscar contas']"
+   },
+   "at": 1.17,
+   "label": "busca Quiririm (clique no campo)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "main input[aria-label='Buscar contas']"
+   },
+   "text": "Quiririm",
+   "cps": 40,
+   "at": 2.02,
+   "label": "busca Quiririm",
+   "noClick": true
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "main tbody tr:has-text('Aços Quiririm Ltda')"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('Aços Quiririm Ltda') :text-is('Saldo')"
+   },
+   "seconds": 0.8,
+   "at": 4.96,
+   "label": "chip roxo Saldo",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('Aços Quiririm Ltda') :text-is('R$ 4.870,00')"
+   },
+   "seconds": 1.2,
+   "at": 9.29,
+   "label": "R$ 4.870,00",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 12.3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('Aços Quiririm Ltda') :text-is('Saldo')"
+   },
+   "seconds": 1.6,
+   "at": 12.75,
+   "label": "ZOOM o chip Saldo e o valor R$ 4.870,00",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('Aços Quiririm Ltda') :text-is('Cliente')"
+   },
+   "seconds": 1.0,
+   "at": 17.69,
+   "label": "Aços Quiririm Ltda, Cliente",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Saldo\", \"R$ 4.870,00\", \"Cliente\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main tbody tr:has-text('A\\u00e7os Quiririm Ltda')\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere linha de saldo da Aços Quiririm"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 21.15
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main tbody tr:has-text('Aços Quiririm Ltda') button[title='Receber']"
+   },
+   "at": 23.86,
+   "label": "Receber (saldo da Aços Quiririm)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Receber de Aços Quiririm Ltda",
+   "timeout": 8
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]:has-text('Dinheiro (Caixa)')"
+   },
+   "at": 27.35,
+   "label": "Forma de recebimento (abre a lista)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Pix / Transferência (Banco)"
+   },
+   "at": 28.3,
+   "label": "Pix / Transferência (Banco)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]",
+    "nth": 1
+   },
+   "at": 28.86,
+   "label": "Conta bancária (abre a lista)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Conta Principal"
+   },
+   "at": 30.04,
+   "label": "Conta Principal"
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 30.92
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#pay-fiado-amount"
+   },
+   "at": 31.42,
+   "label": "ZOOM Valor 2.000,00 e Saldo após esta baixa (clique no campo)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#pay-fiado-amount"
+   },
+   "text": "2000,00",
+   "cps": 40,
+   "at": 32.53,
+   "label": "ZOOM Valor 2.000,00 e Saldo após esta baixa",
+   "noClick": true,
+   "clear": true
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Saldo após esta baixa",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.6,
+   "at": 35.47,
+   "label": "Saldo após esta baixa: R$ 2.870,00",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Saldo após esta baixa: R$ 2.870,00\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog],[role=alertdialog]\")];const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere saldo depois da baixa"
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 39.77
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Confirmar recebimento",
+    "exact": true
+   },
+   "at": 39.97,
+   "label": "Confirmar recebimento",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "text": "Recebimento registrado",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('Aços Quiririm Ltda') :text-is('R$ 2.870,00')"
+   },
+   "seconds": 1.4,
+   "at": 43.82,
+   "label": "o saldo caiu para R$ 2.870,00",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"R$ 2.870,00\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main tbody tr:has-text('A\\u00e7os Quiririm Ltda')\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere saldo de 2.870,00"
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 46.81
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main input[aria-label='Buscar contas']"
+   },
+   "at": 47.51,
+   "label": "busca Fundição (clique no campo)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "main input[aria-label='Buscar contas']"
+   },
+   "text": "Fundição",
+   "cps": 40,
+   "at": 48.11,
+   "label": "busca Fundição",
+   "noClick": true,
+   "clear": true
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "main tbody tr:has-text('Fatura venda #1733 (parcela 3/3)')"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('Fatura venda #1733 (parcela 1/3)') :text-is('Fundição Bandeira do Vale')"
+   },
+   "seconds": 0.8,
+   "at": 49.0,
+   "label": "Fundição Bandeira do Vale",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('Fatura venda #1733 (parcela 2/3)') :text-is('17/12/2026')"
+   },
+   "seconds": 0.15,
+   "at": 57.21,
+   "label": "só as três parcelas, nenhuma linha Saldo",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{await new Promise(r=>setTimeout(r,600));const el=document.querySelector(\"main tbody\");const t=(el?el.innerText:'').replace(/[\\s\\u00a0]+/g,' ').toLowerCase();return t.includes(\"saldo\")?'DIFERENTE: apareceu '+\"Saldo\":'OK: ausente '+\"Saldo\"})()",
+   "label": "confere nenhuma linha Saldo da Fundição"
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 58.01
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 76.89
+  },
+  {
+   "do": "mark",
+   "name": "L9",
+   "at": 84.83
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('Fatura venda #1733 (parcela 1/3)') button[title='Editar']"
+   },
+   "seconds": 3.0,
+   "at": 86.5,
+   "label": "o lápis Editar de uma parcela (sem clicar)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 99.01
+  }
+ ]
+}

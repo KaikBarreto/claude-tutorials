@@ -1,0 +1,313 @@
+{
+ "name": "t06-cap07",
+ "title": "T6 · Cap. 7 · Cada um com o seu caixa (narração ESTIMADA 58,8 s; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "seed": "t06-cap07",
+ "pace": 0.5,
+ "cps": 40,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 470
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true"
+ },
+ "seedExtra": [
+  "t06/apos-cap02",
+  "t06/apos-cap05"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "waitFor",
+   "target": {
+    "label": "E-mail"
+   },
+   "timeout": 30
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "E-mail"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "Senha",
+    "exact": true
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Rafael!",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/caixa"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gestão financeira e movimentações",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "waitFor",
+   "text": "#86 | Caixa - Marcos Antunes",
+   "timeout": 15
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "#85 | Caixa - Rafael Nogueira",
+    "within": "main"
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Aberto em: 10/11/2026 08:31",
+   "timeout": 10
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|Algo deu errado|Falha ao|Something went wrong/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{document.querySelectorAll('[data-sonner-toast][data-type=error]').forEach(t=>{const s='TOAST DE ERRO: '+t.textContent.trim().slice(0,90);if(!window.__avisos.includes(s)&&window.__avisos.length<10)window.__avisos.push(s)})},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0.4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "#85 | Caixa - Rafael Nogueira",
+    "within": "main"
+   },
+   "seconds": 0.6,
+   "at": 2.78,
+   "label": "ZOOM abas Início, #85 e #86 (L1 e L2)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "#86 | Caixa - Marcos Antunes",
+    "within": "main"
+   },
+   "seconds": 0.6,
+   "at": 4.68,
+   "label": "aba #86 do Marcos",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 7.14
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 16.9
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button[aria-haspopup=\"dialog\"]:not([aria-label])"
+   },
+   "at": 17.43,
+   "label": "? Como funcionam os Multi-Caixas"
+  },
+  {
+   "do": "waitFor",
+   "text": "Como funcionam os Multi-Caixas?",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Transações de caixa (depósitos",
+    "exact": false,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.6,
+   "at": 21.78,
+   "label": "item 1: transações de caixa só no caixa selecionado",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 28.79
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Saldo bancário (PIX/transferências)",
+    "exact": false,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.6,
+   "at": 30.25,
+   "label": "item 2: saldo bancário compartilhado",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Saldo de clientes/fornecedores também",
+    "exact": false,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.6,
+   "at": 31.7,
+   "label": "item 3: saldo de clientes/fornecedores",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 35.06
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 35.06,
+   "label": "fecha a ajuda"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 6
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Início",
+    "exact": true,
+    "within": "main"
+   },
+   "at": 35.9,
+   "label": "aba Início"
+  },
+  {
+   "do": "waitFor",
+   "text": "Abrir Caixa para Outro Usuário",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Painel Gerencial",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.6,
+   "at": 37.06,
+   "label": "Painel Gerencial",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Resumo do Dia",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.6,
+   "at": 39.03,
+   "label": "Resumo do Dia",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Abrir Caixa",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.6,
+   "at": 42.98,
+   "label": "Abrir Caixa para Outro Usuário",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"2 caixas encontrados\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere 2 caixas encontrados"
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 47.41
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "caixas encontrados",
+    "exact": false,
+    "within": "main"
+   },
+   "seconds": 0.6,
+   "at": 49.86,
+   "label": "2 caixas encontrados",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 58.78
+  }
+ ]
+}

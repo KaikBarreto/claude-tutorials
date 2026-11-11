@@ -57,19 +57,17 @@ body{font-family:M,sans-serif;color:var(--t);-webkit-font-smoothing:antialiased}
 /* T20: rótulo embaixo do desenho, legenda curta, chips (1 a 3 palavras), balão de conversa, selo redondo */
 .rot{font-weight:800;font-size:23px;text-align:center;white-space:nowrap}
 .sub{font-weight:700;font-size:20px;color:#4B5563;text-align:center;white-space:nowrap}
-.tag.c{background:#F2F4F7;color:#4B5563}
-.chip{display:inline-flex;align-items:center;gap:9px;padding:10px 19px 10px 16px;border-radius:999px;font-weight:800;font-size:20px;
-  white-space:nowrap;background:#fff;border:1.5px solid #DDE5E0;color:var(--t);box-shadow:0 6px 14px rgba(16,24,40,.07)}
-.chip.v{background:var(--vc);border-color:var(--vm);color:var(--ve)}
-.chip.a{background:var(--ac);border-color:#F6D58E;color:var(--ae)}
-.chip.c{background:#F2F4F7;border-color:#E1E5EA;color:#4B5563}
-.chip.r{background:#FDECEA;border-color:#F6C5BF;color:#B42318}
+.tag.c{background:#6B7280;color:#fff} .tag.r{background:#B42318;color:#fff}
 .bal{position:absolute;background:#fff;border:1.5px solid #DCE4DF;border-radius:18px;box-shadow:0 12px 26px rgba(16,24,40,.10)}
 .rabo{position:absolute;width:18px;height:18px;background:inherit;border-right:1.5px solid #DCE4DF;border-bottom:1.5px solid #DCE4DF}
 .badge{position:absolute;width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;
-  box-shadow:0 6px 14px rgba(16,24,40,.16)}
-.badge.v{background:var(--vc);border:3px solid var(--v);color:var(--ve)}
-.badge.a{background:var(--ac);border:3px solid var(--a);color:var(--ae)}
+  border:3px solid #fff;box-shadow:0 6px 14px rgba(16,24,40,.16)}
+.badge.c{background:#6B7280;color:#fff}
+</style><style id="saturado">/* estilo saturado (Kaik, 11/11): selo, chip, etiqueta, quadrado de ícone e círculo de etapa
+   com fundo cheio e ícone/texto branco; nunca fundo claro com conteúdo colorido, nunca ícone escuro sobre o verde */
+:root{--vs:#16A34A;--as:#D97706;--rs:#DC2626}
+.ico{background:var(--vs);color:#fff}.ico.a{background:var(--as);color:#fff}
+.tag.v{background:var(--vs);color:#fff}.tag.a{background:var(--as);color:#fff}
 </style></head>
 <body><div id="st"></div>
 <script>
@@ -179,7 +177,7 @@ function porta(w=200,h=300){                                                // m
 function abre(pt,p,ang=72){const f=pt.querySelector('.folha'), q=eio(p);
   f.style.transform=`perspective(${(f.offsetWidth*4)|0}px) rotateY(${(ang*q).toFixed(2)}deg)`;f.style.filter=`brightness(${(1-.1*q).toFixed(3)})`}
 const barra=(x,y,w,c='#E1E6EB',h=7)=>`<div class="ab" style="left:${x}px;top:${y}px;width:${w}px;height:${h}px;border-radius:4px;background:${c}"></div>`;
-function chip(txt,cls='',icone=null,px=22){return `<div class="chip ${cls}">${icone?ic(icone,px):''}${txt}</div>`}
+function chip(txt,cls='',icone=null,px=22){return `<div class="tag ${cls||'v'}">${icone?ic(icone,px):''}${txt}</div>`}
 // o "x" do lucide tem nome de uma letra e o render_cenas.cjs só acha nomes com 2 ou mais: o X vai desenhado (e o visto também)
 function xis(px){return `<svg viewBox="0 0 24 24" width="${px}" height="${px}" style="display:block"><path d="M6 6 L18 18 M18 6 L6 18" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>`}
 function visto(px){return `<svg viewBox="0 0 24 24" width="${px}" height="${px}" style="display:block"><path d="M5 12.5 L10 17.5 L19 7" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg>`}
@@ -202,7 +200,7 @@ function trilha(t,kfs,d=.6){let [,x,y,s]=kfs[0];for(let k=1;k<kfs.length;k++){co
 function raia(pai,x,y,w,h,nome,cor='#9AA3AD',fs=18){
   return el(`<div class="ab raia" style="left:${x}px;top:${y}px;width:${w}px;height:${h}px;border-radius:16px;background:#F5F7F9;border:1.5px solid #E2E7EB;overflow:hidden">
     <div class="ab" style="left:0;top:0;width:100%;height:9px;background:${cor}"></div>
-    <div class="ab" style="left:0;top:24px;width:100%;display:flex;justify-content:center"><div class="chip" style="font-size:${fs}px;padding:7px 15px;box-shadow:none">${nome}</div></div></div>`,pai);
+    <div class="ab" style="left:0;top:24px;width:100%;display:flex;justify-content:center"><div style="font-weight:800;font-size:${fs+2}px;padding:6px 0;white-space:nowrap">${nome}</div></div></div>`,pai);
 }
 function cartao(w=150,h=60,cor='#5C8FD6'){
   return `<div class="cartao" style="position:relative;width:${w}px;height:${h}px;background:#fff;border-radius:10px;border:2px solid #E1E6EB;box-shadow:0 6px 14px rgba(16,24,40,.08);overflow:hidden">
@@ -231,7 +229,7 @@ CAPS[0]=()=>{
       <div class="rabo" style="left:-10px;top:18px;transform:rotate(135deg)"></div></div>`,conv);
   const b1=bal(276,'Me liga depois'), b2=bal(366,'Tenho sucata toda semana'), b3=bal(456,'Preço do cobre?');
   const relW=el(`<div class="ab" style="left:${264+b2.offsetWidth-28}px;top:${366-34-24}px"></div>`,conv);
-  const rel=el(`<div class="badge a" style="position:relative;width:52px;height:52px">${ic('clock',27)}</div>`,relW);
+  const rel=el(`<div class="badge ico a" style="position:relative;width:52px;height:52px">${ic('clock',27)}</div>`,relW);
   const seta=setaLarga(g,632,428,96,60);
   const cA=el(`<div class="card" style="left:742px;top:236px;width:490px;height:182px;padding:22px 24px">
       <div class="row" style="gap:16px"><div class="ico" style="width:52px;height:52px">${ic('factory',28)}</div>
@@ -240,7 +238,7 @@ CAPS[0]=()=>{
   const CH=[['dono','user-round'],['valor','banknote'],['próximo passo','calendar-check']].map(([x,i])=>el(chip(x,'v',i,20),fila));
   for(const c of CH){c.style.fontSize='18px';c.style.padding='8px 15px 8px 12px'}
   const mk=(y,txt,icn)=>el(`<div class="card" style="left:742px;top:${y}px;width:490px;height:76px;padding:0 24px;display:flex;align-items:center;gap:14px">
-      <div class="ico" style="width:44px;height:44px;background:#EEF1F4;color:#4B5563">${ic(icn,24)}</div>
+      <div class="ico" style="width:44px;height:44px">${ic(icn,24)}</div>
       <div style="font-weight:800;font-size:21px">${txt}</div></div>`,g);
   const cB=mk(440,'Preço do cobre?','message-circle'), cC=mk(532,'Me liga depois','phone');
 
@@ -277,7 +275,7 @@ CAPS[1]=()=>{
   let svg='';F.forEach(([y0,y1,w0,w1,c])=>{svg+=`<polygon points="${640-w0/2},${y0} ${640+w0/2},${y0} ${640+w1/2},${y1} ${640-w1/2},${y1}" fill="${c}" stroke="#A9E9C6" stroke-width="2" stroke-linejoin="round"/>`});
   svg+='<rect x="598" y="512" width="84" height="40" rx="6" fill="#A9E9C6"/>';
   el(`<svg class="ab" style="left:0;top:0" width="1280" height="800">${svg}</svg>`,fun);
-  const LAB=F.map(([y0,y1,w0,w1,c,n])=>el(`<div class="ab" style="left:0;top:${(y0+y1)/2-22}px;width:${Math.round(640-(w0+w1)/4-18)}px;display:flex;justify-content:flex-end">${chip(n,'')}</div>`,fun));
+  const LAB=F.map(([y0,y1,w0,w1,c,n])=>el(`<div class="ab" style="left:0;top:${(y0+y1)/2-22}px;width:${Math.round(640-(w0+w1)/4-18)}px;display:flex;justify-content:flex-end"><div style="font-weight:800;font-size:22px;padding:8px 0">${n}</div></div>`,fun));
   const ganho=el(`<div class="ab" style="left:0;top:604px;width:1280px;display:flex;justify-content:center">${chip('Ganho','v','trophy')}</div>`,fun);
   const perd=el(`<div class="ab" style="left:888px;top:430px">${chip('Perdido','c','circle-x')}</div>`,fun);
   // as colunas (o funil deitado)
@@ -364,10 +362,9 @@ CAPS[3]=()=>{
   [[0,0],[0,1],[1,0],[2,0],[3,0]].forEach(([i,k])=>el(`<div class="ab" style="left:${70+i*192+20}px;top:${306+k*76}px">${cartao(140,60,COR[i])}</div>`,brd));
   const novo=el(`<div class="ab" style="left:${70+2*192-20}px;top:174px;width:220px;display:flex;justify-content:center">${chip('Novo estágio','a','circle-plus',20)}</div>`,g);
   for(const c of novo.children){c.style.fontSize='18px';c.style.padding='8px 15px 8px 12px'}
-  const band=el(`<div class="ab" style="left:70px;top:590px;width:${4*192-12}px;height:50px;border-radius:14px;background:var(--ac);border:2px solid var(--a);
-      display:flex;align-items:center;justify-content:center;gap:10px;font-weight:800;font-size:21px;color:var(--ae)">${ic('handshake',24)}negociação</div>`,g);
-  const tro=el(`<div class="badge v" style="left:${70+4*192+90-38}px;top:364px;width:76px;height:76px">${ic('trophy',38)}</div>`,g);
-  const per=el(`<div class="badge" style="left:${70+5*192+90-38}px;top:364px;width:76px;height:76px;background:#F2F4F7;border:3px solid #C3CAD2;color:#6B7280">${xis(36)}</div>`,g);
+  const band=el(`<div class="ab tag a" style="left:70px;top:590px;width:${4*192-12}px;height:50px;border-radius:14px;justify-content:center;gap:10px;font-size:21px">${ic('handshake',24)}negociação</div>`,g);
+  const tro=el(`<div class="badge ico" style="left:${70+4*192+90-38}px;top:364px;width:76px;height:76px">${ic('trophy',38)}</div>`,g);
+  const per=el(`<div class="badge c" style="left:${70+5*192+90-38}px;top:364px;width:76px;height:76px">${xis(36)}</div>`,g);
 
   return t=>{
     const t0=W(6,'Uma'), tes=W(6,'estagio'), tcr=W(6,'criado'), tno=W(6,'Novo'), tne=W(6,'negociacao'), tga=W(6,'Ganho'), tpe=W(6,'Perdido'),
@@ -404,8 +401,8 @@ CAPS[5]=()=>{
       <div class="row" style="gap:10px;font-weight:700;font-size:17px">${cb()}tarefas encerradas</div>
       <div class="row" style="gap:10px;margin-top:14px;font-weight:700;font-size:17px">${cb()}responsável</div></div>`,folha);
   const [ok1,ok2]=placa.querySelectorAll('.ok');
-  const cad=el(`<div class="badge a" style="left:${474+300-14-34}px;top:${248+14+20}px;width:44px;height:44px">${ic('lock',22)}</div>`,g);
-  const cadA=el(`<div class="badge v" style="left:${474+300-14-34}px;top:${248+14+20}px;width:44px;height:44px;opacity:0">${ic('lock-open',22)}</div>`,g);
+  const cad=el(`<div class="badge ico a" style="left:${474+300-14-34}px;top:${248+14+20}px;width:44px;height:44px">${ic('lock',22)}</div>`,g);
+  const cadA=el(`<div class="badge ico" style="left:${474+300-14-34}px;top:${248+14+20}px;width:44px;height:44px;opacity:0">${ic('lock-open',22)}</div>`,g);
   const cw=el(`<div class="ab" style="left:0;top:0;visibility:hidden">${cartao(250,84,'#5C8FD6')}</div>`,g);
 
   return t=>{
@@ -434,23 +431,24 @@ CAPS[6]=()=>{
   const rA=raia(gA,84,230,300,380,'Em contato','#5C8FD6');                   // 84-384, 230-610
   const gat=el(`<div class="ab" style="left:84px;top:630px;width:300px;display:flex;justify-content:center">${chip('gatilho','a','zap')}</div>`,gA);
   const cwA=el(`<div class="ab" style="left:0;top:0;visibility:hidden">${cartao(230,78,'#C9A57C')}</div>`,gA);
-  const raio=el(`<div class="badge a" style="left:410px;top:356px;width:58px;height:58px">${ic('zap',30)}</div>`,gA);
+  const raio=el(`<div class="badge ico a" style="left:410px;top:356px;width:58px;height:58px">${ic('zap',30)}</div>`,gA);
   const XC=[560,830,1100], DW=72, DH=210, BASE=480;
   const DM=XC.map(cx=>{const w=el(`<div class="ab" style="left:${cx-DW/2}px;top:${BASE-DH}px;width:${DW}px;height:${DH}px;transform-origin:${DW}px ${DH}px"></div>`,gA);
     el(domino(DW,DH),w);return w});
   const AC=[['Atribuir responsável','user-round'],['Criar tarefa','list-checks'],['Adicionar etiqueta','tag']].map(([x,i],k)=>
-    el(`<div class="ab" style="left:${XC[k]-150}px;top:508px;width:300px;display:flex;justify-content:center">${chip(x,'',i)}</div>`,gA));
+    el(`<div class="ab" style="left:${XC[k]-150}px;top:508px;width:300px;height:52px">
+      <div class="ab" style="left:0;top:0;width:300px;display:flex;justify-content:center">${chip(x,'c',i)}</div>
+      <div class="ab feita" style="left:0;top:0;width:300px;display:flex;justify-content:center;opacity:0">${chip(x,'v',i)}</div></div>`,gA));
   const acoes=el(`<div class="ab" style="left:${XC[0]-60}px;top:186px;width:${XC[2]-XC[0]+120}px;display:flex;justify-content:center">${chip('ações','v','layers')}</div>`,gA);
   // ---- cena B: "Ao entrar nesta etapa" só roda avançando
   const gB=grupo();
   const titB=titulo(gB,'Automações','Só quando avança');
   const RB=[['Novo','#9AA3AD'],['Em contato','#5C8FD6'],['Visita técnica','#0D9488']].map(([n,c],i)=>raia(gB,110+i*370,196,320,452,n,c));   // 110-430, 480-800, 850-1170
-  const zB=el(`<div class="ab" style="left:${480+320-56}px;top:208px;width:44px;height:44px;border-radius:50%;background:var(--ac);color:var(--ae);
-      display:flex;align-items:center;justify-content:center">${ic('zap',24)}</div>`,gB);
+  const zB=el(`<div class="ab ico a" style="left:${480+320-56}px;top:208px;width:44px;height:44px;border-radius:50%">${ic('zap',24)}</div>`,gB);
   const k1=el(`<div class="ab" style="left:0;top:0;visibility:hidden">${cartao(260,84,'#C9A57C')}</div>`,gB);
   const k2=el(`<div class="ab" style="left:0;top:0;visibility:hidden">${cartao(260,84,'#8E8AC4')}</div>`,gB);
-  const bz1=el(`<div class="badge v" style="left:${480+30+260-30}px;top:${290-18}px;width:48px;height:48px">${ic('zap',24)}</div>`,gB);
-  const bz2=el(`<div class="badge" style="left:${480+30+260-30}px;top:${470-18}px;width:48px;height:48px;background:#F2F4F7;border:3px solid #C3CAD2;color:#6B7280">${ic('zap-off',24)}</div>`,gB);
+  const bz1=el(`<div class="badge ico" style="left:${480+30+260-30}px;top:${290-18}px;width:48px;height:48px">${ic('zap',24)}</div>`,gB);
+  const bz2=el(`<div class="badge c" style="left:${480+30+260-30}px;top:${470-18}px;width:48px;height:48px">${ic('zap-off',24)}</div>`,gB);
   const c1=el(`<div class="ab" style="left:480px;top:390px;width:320px;display:flex;justify-content:center">${chip('roda','v','check')}</div>`,gB);
   const c2=el(`<div class="ab" style="left:480px;top:570px;width:320px;display:flex;justify-content:center">${chip('não roda','c','zap-off')}</div>`,gB);
 
@@ -467,8 +465,7 @@ CAPS[6]=()=>{
     vis(raio,t,aat+.25,1e9,{sc:.5,dy:0}); pulsos(raio,t,[aat+.6],.12,.7);
     const queda=[afa-.1,aa2-.1,aa2+.4];
     DM.forEach((d,i)=>{const q=eio(pr(t,queda[i],.55)); d.style.transform=`rotate(${(84*q).toFixed(2)}deg)`;
-      const ch=AC[i].firstElementChild, on=eo(pr(t,queda[i]+.3,.35));
-      ch.style.background=mix('#FFFFFF','#EAF8F0',on); ch.style.borderColor=mix('#DDE5E0','#A9E9C6',on); ch.style.color=mix('#121212','#2E7D57',on)});
+      AC[i].querySelector('.feita').style.opacity=eo(pr(t,queda[i]+.3,.35)).toFixed(3)});
     // cena B
     const b0=W(9,'Uma'), bav=W(9,'avanca'), bvo=W(9,'Voltando'), bnr=W(9,'roda',2);
     gB.style.display=t>=b0-1.2?'block':'none';
@@ -493,7 +490,7 @@ CAPS[7]=()=>{
       ${item(98,190)}${item(146,250)}${item(194,220)}</div>`,g);
   const novo=el(`<div class="ab" style="left:12px;top:234px;width:394px;height:48px;border-radius:10px;background:var(--ac);border:2px solid var(--a)">
       <div class="ab" style="left:10px;top:11px;width:22px;height:22px;border-radius:6px;border:2.5px solid #D9A93A;background:#fff"></div>
-      ${barra(46,18,180,'#E7C47A',9)}<div class="ab" style="right:12px;top:9px;color:var(--ae)">${ic('circle-plus',26)}</div></div>`,mod);
+      ${barra(46,18,180,'#E7C47A',9)}<div class="ab ico a" style="right:8px;top:6px;width:32px;height:32px;border-radius:50%">${ic('plus',20)}</div></div>`,mod);
   const rM=el(`<div class="ab" style="left:84px;top:562px;width:420px;display:flex;justify-content:center">${chip('modelo','','stamp')}</div>`,g);
   const op=(y)=>el(`<div class="card" style="left:742px;top:${y}px;width:420px;height:200px;padding:20px 22px">
       ${barra(22,24,190,'#CBD3DB',10)}${barra(22,44,120)}</div>`,g);
@@ -541,7 +538,7 @@ CAPS[9]=()=>{
       <path d="M500 437 L 442 437" fill="none" stroke="var(--a)" stroke-width="6" stroke-linecap="round"/>
       <path d="M640 484 L 640 584" fill="none" stroke="var(--a)" stroke-width="6" stroke-linecap="round"/></svg>`,g);
   const P=[...sv.querySelectorAll('path')];
-  const trava=(x,y)=>el(`<div class="badge a" style="left:${x-25}px;top:${y-25}px;width:50px;height:50px">${ic('lock',24)}</div>`,g);
+  const trava=(x,y)=>el(`<div class="badge ico a" style="left:${x-25}px;top:${y-25}px;width:50px;height:50px">${ic('lock',24)}</div>`,g);
   const L=[trava(840,437),trava(440,437),trava(640,586)];
   const fan=[[930,437,'Visita técnica'],[350,437,'Novo'],[640,640,'Perdido']];
 
@@ -575,8 +572,7 @@ CAPS[11]=()=>{
       ${[0,1].map(k=>`<div class="ab" style="left:24px;top:${174+k*60}px;width:392px;height:48px;border-radius:12px;border:1.5px solid #EEF1F4;background:#FAFBFC">
         ${barra(18,20,[150,110][k],'#E1E6EB',8)}</div>`).join('')}</div>`,g);
   let cel='';for(let d=1;d<=30;d++){const r=Math.floor((d-1)/7), c=(d-1)%7, x=24+c*54, y=92+r*38;
-    cel+=d===12?`<div class="ab c12" style="left:${x}px;top:${y}px;width:46px;height:30px;border-radius:8px;background:var(--vc);border:2px solid var(--v);
-      display:flex;align-items:center;justify-content:center;font-weight:800;font-size:17px;color:var(--ve)">12</div>`
+    cel+=d===12?`<div class="ab ico c12" style="left:${x}px;top:${y}px;width:46px;height:30px;border-radius:8px;font-weight:800;font-size:17px">12</div>`
       :`<div class="ab" style="left:${x}px;top:${y}px;width:46px;height:30px;border-radius:8px;background:#F3F5F7"></div>`}
   const pA=el(`<div class="card" style="left:760px;top:330px;width:440px;height:316px;padding:22px 24px">
       <div class="row" style="gap:12px"><div class="ico" style="width:46px;height:46px">${ic('calendar-days',24)}</div><div style="font-weight:800;font-size:23px">Agenda</div></div>

@@ -4,7 +4,7 @@
 Lê o mundo base (rec/mundo/seeds/02-cadastros.json e 03-historico.json): rode de novo SEMPRE que o mundo base mudar (o número do pedido
 de 09/11 e os saldos de hoje vêm dele). Uso:  python3 -I rec/t10/t10_sementes.py
   t10/inicio      : as 2 fotos (order_attachments) da compra de 09/11 do Depósito Irmãos Siqueira (860 kg de ferro pesado). Caps. 0 a 12.
-  t10/apos-cap03  : a transferência do cap03 (320 kg do Ferro misto para o Ferro pesado, Rafael, 10/11 08:35), gravada como o handler
+  t10/apos-cap03  : a transferência do cap03 (320 kg do Ferro misto para o Ferro pesado, Rafael, 10/11 08:30:50), gravada como o handler
                     transfer_material_stock grava (duas linhas TRANSFERENCIA, created_at = transaction_at). Caps. 4 a 12.
 As fotos são DESENHO gerado por código (caçamba com sucata de ferro; sem placa, rosto, marca nem texto): nada de foto real.
 """
@@ -19,7 +19,8 @@ SAIDA = os.path.join(MUNDO, 'seeds-extra', 't10')
 FOTOS = os.path.join(MUNDO, 'storage', 'order-attachments', 't10')
 EMPRESA = '@id:company.reciclavale'
 TRANSF = 320
-HORA_TRANSF = '2026-11-10T11:35:20.000Z'   # 08:35:20 em Taubaté (o robô transfere ~08:35)
+HORA_TRANSF = '2026-11-10T11:30:50.000Z'   # 08:30:50 em Taubaté: o cap03 transfere ~1 min depois do FAKE_NOW, e os caps. 4 a 12 começam
+#                                            de novo às 08:30 (o horário não pode ficar no futuro do relógio da tela)
 
 
 def base():
@@ -107,7 +108,8 @@ def desenha_fotos():
             d.ellipse([x, y, x + r, y + r // 2], fill=(150, 88, 40))
         im = im.filter(ImageFilter.GaussianBlur(0.8))
         caminho = os.path.join(FOTOS, f'compra-0911-{k}.jpg')
-        im.save(caminho, 'JPEG', quality=84)
+        im.save(caminho + '.tmp', 'JPEG', quality=84)
+        os.replace(caminho + '.tmp', caminho)
         saidas.append((f't10/compra-0911-{k}.jpg', os.path.getsize(caminho)))
     return saidas
 
@@ -133,7 +135,7 @@ def main():
     base_mov = {'company_id': EMPRESA, 'type': 'TRANSFERENCIA', 'created_by': '@id:user.rafael', 'transaction_at': HORA_TRANSF,
                 'transaction_date': '2026-11-10', 'created_at': HORA_TRANSF}
     apos3 = {
-        '_doc': f'T10 · depois do cap03: {TRANSF} kg do Ferro misto ({oa:g} -> {od:g}) para o Ferro pesado ({da:g} -> {dd:g}), Rafael, 10/11 08:35. '
+        '_doc': f'T10 · depois do cap03: {TRANSF} kg do Ferro misto ({oa:g} -> {od:g}) para o Ferro pesado ({da:g} -> {dd:g}), Rafael, 10/11 08:30:50. '
                 'Gerado por rec/t10/t10_sementes.py (como o handler transfer_material_stock grava).',
         '_patch': {'materials': [{'match': {'id': o['id']}, 'set': {'current_stock': od}},
                                  {'match': {'id': dst['id']}, 'set': {'current_stock': dd}}]},
@@ -145,8 +147,10 @@ def main():
         ],
     }
     for nome, dado in (('inicio', inicio), ('apos-cap03', apos3)):
-        with open(os.path.join(SAIDA, f'{nome}.json'), 'w', encoding='utf8') as f:
+        tmp = os.path.join(SAIDA, f'.{nome}.json.tmp')   # troca atômica: um ensaio pode estar lendo a semente
+        with open(tmp, 'w', encoding='utf8') as f:
             json.dump(dado, f, ensure_ascii=False, indent=1)
+        os.replace(tmp, os.path.join(SAIDA, f'{nome}.json'))
     print(f"compra de 09/11: {p['id']} ({p.get('order_ref')}); fotos {[c for c, _ in fotos]}")
     print(f'transferência: ferro misto {oa:g} -> {od:g}; ferro pesado {da:g} -> {dd:g}')
 

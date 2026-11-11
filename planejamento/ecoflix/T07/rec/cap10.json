@@ -1,0 +1,488 @@
+{
+ "name": "t07-cap10",
+ "title": "T07 · Cap. 10 · Até três formas de pagamento (narração 68,2 s ESTIMADA; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:35:00-03:00; usuário rafael)",
+ "seed": "t07-cap10",
+ "pace": 0.5,
+ "cps": 14,
+ "tail": 1.5,
+ "start": {
+  "x": 700,
+  "y": 300
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true"
+ },
+ "seedExtra": [
+  "t07/inicio",
+  "t07/apos-cap09",
+  "base/balanca-ativada"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/login"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "input[type=email]"
+   },
+   "timeout": 30
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "input[type=email]"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "input[type=password]"
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "button[type=submit]"
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Rafael!",
+   "timeout": 40
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/compra"
+  },
+  {
+   "do": "waitFor",
+   "text": "Voltar para o caixa",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "header button:has(svg.lucide-panel-left-close), header button:has(svg.lucide-panel-left)"
+   },
+   "noScroll": true
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=new RegExp(\"N[\\u00e3a]o foi poss[i\\u00ed]vel|Erro ao|Tente novamente|indispon[i\\u00ed]vel|Algo deu errado|Something went wrong|Falha ao|Pop-up bloqueado|Sem permiss[\\u00e3a]o\",'i');const ign=new RegExp(\"$^\",'i');const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&!ign.test(m[0])&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0.0
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#supplier-desktop-top"
+   },
+   "at": 1.52,
+   "label": "Selecionar fornecedor"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Buscar por nome, apelido, CPF/CNPJ ou telefone..."
+   },
+   "text": "vale forte",
+   "cps": 30,
+   "at": 2.72,
+   "label": "busca vale forte"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:has-text('Auto Peças Vale Forte')"
+   },
+   "at": 6.08,
+   "label": "Auto Peças Vale Forte"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "balanca",
+   "peso": 186,
+   "subir": 0.6,
+   "oscilar": 0.6,
+   "label": "bateria na balança (186 kg)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "placeholder": "Escreva o nome ou código do material"
+   },
+   "label": "Material"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Escreva o nome ou código do material"
+   },
+   "text": "bateria",
+   "cps": 40,
+   "noClick": true,
+   "label": "material: bateria"
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 6.91
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Bateria automotiva",
+    "exact": false
+   },
+   "at": 7.31,
+   "label": "Bateria automotiva"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[data-sonner-toast]"
+   },
+   "seconds": 1.6,
+   "at": 8.27,
+   "label": "aviso Preço especial aplicado (o mouse segura o aviso)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Preço especial aplicado para Bateria automotiva\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"body\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere aviso Preço especial aplicado"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "main div:has(> label:has-text('Valor/Kg')) input"
+   },
+   "text": "",
+   "noClick": true,
+   "optional": true,
+   "timeout": 4,
+   "at": 14.67,
+   "label": "Valor/Kg 3,40 (zoom)"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const esp=[\"3,40\"];let out='';for(let i=0;i<12;i++){const v=[...document.querySelectorAll(\"main\"+' input, '+\"main\"+' textarea')].map(e=>e.value).join(' | ');const falta=esp.filter(e=>!v.includes(e));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+v.slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Valor/Kg 3,40"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 18.57
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Incluir Item",
+    "exact": true
+   },
+   "at": 19.08,
+   "label": "Incluir Item (bateria)"
+  },
+  {
+   "do": "balanca",
+   "peso": 64,
+   "subir": 0.6,
+   "oscilar": 0.6,
+   "label": "cobre na balança (64 kg)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "placeholder": "Escreva o nome ou código do material"
+   },
+   "label": "Material"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Escreva o nome ou código do material"
+   },
+   "text": "cobre mi",
+   "cps": 40,
+   "noClick": true,
+   "label": "material: cobre mi"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Cobre misto",
+    "exact": false
+   },
+   "at": 22.34,
+   "label": "Cobre misto"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{let v='';for(let i=0;i<35;i++){const el=document.querySelector(\"main div:has(> label:has-text('Quantidade (Kg)')) input\");v=el?el.value:'SEM ALVO';if(v===\"64,0\")return 'OK: '+v;await new Promise(r=>setTimeout(r,200));}return 'DIFERENTE: '+v})()",
+   "label": "confere Quantidade 64,0 da balança"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Incluir Item",
+    "exact": true
+   },
+   "at": 24.62,
+   "label": "Incluir Item (cobre)"
+  },
+  {
+   "do": "balanca",
+   "peso": 0,
+   "subir": 0.5,
+   "oscilar": 0.3,
+   "label": "tira o cobre da balança"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Total da Compra",
+    "within": "main"
+   },
+   "seconds": 1.6,
+   "at": 25.76,
+   "label": "Total da Compra R$ 2.936,40 (zoom)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"2.936,40\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Total da Compra R$ 2.936,40"
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 29.86
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Finalizar",
+    "exact": true
+   },
+   "at": 30.21,
+   "label": "Finalizar"
+  },
+  {
+   "do": "waitFor",
+   "text": "Finalizar Pedido",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#multiple-payments"
+   },
+   "at": 39.47,
+   "label": "Múltiplas formas de pagamento"
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 42.58
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] button:has(span:text-is('Dinheiro'))"
+   },
+   "seconds": 0.3,
+   "at": 42.93,
+   "label": "Dinheiro (já vem marcado)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:has(span:text-is('Pix/Transferência'))"
+   },
+   "at": 43.61,
+   "label": "Pix/Transferência"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Formas de pagamento (máx. 3)\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere rótulo Formas de pagamento (máx. 3)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:has(span:text-is('Saldo do Fornecedor'))"
+   },
+   "at": 43.99,
+   "label": "Saldo do Fornecedor"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#cash-amount"
+   },
+   "at": 44.6,
+   "label": "valor do Dinheiro"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#cash-amount"
+   },
+   "text": "200,00",
+   "cps": 14,
+   "noClick": true,
+   "at": 46.16,
+   "label": "Dinheiro 200,00",
+   "clear": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#balance-amount"
+   },
+   "at": 46.42,
+   "label": "valor do Saldo"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#balance-amount"
+   },
+   "text": "2000,00",
+   "cps": 14,
+   "noClick": true,
+   "at": 47.98,
+   "label": "Saldo 2000,00",
+   "clear": true
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "#transfer-amount"
+   },
+   "seconds": 2.0,
+   "at": 51.2,
+   "label": "os três valores: Pix completa 736,40 (zoom)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const esp=[\"200,00\", \"736,40\", \"2.000,00\"];let out='';for(let i=0;i<12;i++){const v=[...document.querySelectorAll(\"[role=dialog]\"+' input, '+\"[role=dialog]\"+' textarea')].map(e=>e.value).join(' | ');const falta=esp.filter(e=>!v.includes(e));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+v.slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Dinheiro 200, Pix 736,40, Saldo 2.000"
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 56.67
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Chave PIX do fornecedor",
+    "within": "[role=dialog]",
+    "exact": false
+   },
+   "seconds": 0.8,
+   "at": 56.67,
+   "label": "a conta do Pix",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Total",
+    "within": "[role=dialog]",
+    "exact": true
+   },
+   "seconds": 1.4,
+   "at": 57.17,
+   "label": "bloco Total (sem Faltam nem Excesso)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Distribuição do pagamento",
+    "within": "[role=dialog]",
+    "exact": false
+   },
+   "seconds": 1.2,
+   "at": 60.89,
+   "label": "Distribuição do pagamento",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "CONFIRMAR PAGAMENTO"
+   },
+   "seconds": 1.0,
+   "at": 63.7,
+   "label": "CONFIRMAR PAGAMENTO liberado",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 68.19
+  }
+ ]
+}

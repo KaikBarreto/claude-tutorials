@@ -56,19 +56,17 @@ body{font-family:M,sans-serif;color:var(--t);-webkit-font-smoothing:antialiased}
 /* T20: rótulo embaixo do desenho, legenda curta, chips (1 a 3 palavras), balão de conversa, selo redondo */
 .rot{font-weight:800;font-size:23px;text-align:center;white-space:nowrap}
 .sub{font-weight:700;font-size:20px;color:#4B5563;text-align:center;white-space:nowrap}
-.tag.c{background:#F2F4F7;color:#4B5563}
-.chip{display:inline-flex;align-items:center;gap:9px;padding:10px 19px 10px 16px;border-radius:999px;font-weight:800;font-size:20px;
-  white-space:nowrap;background:#fff;border:1.5px solid #DDE5E0;color:var(--t);box-shadow:0 6px 14px rgba(16,24,40,.07)}
-.chip.v{background:var(--vc);border-color:var(--vm);color:var(--ve)}
-.chip.a{background:var(--ac);border-color:#F6D58E;color:var(--ae)}
-.chip.c{background:#F2F4F7;border-color:#E1E5EA;color:#4B5563}
-.chip.r{background:#FDECEA;border-color:#F6C5BF;color:#B42318}
+.tag.c{background:#6B7280;color:#fff} .tag.r{background:#B42318;color:#fff}
 .bal{position:absolute;background:#fff;border:1.5px solid #DCE4DF;border-radius:18px;box-shadow:0 12px 26px rgba(16,24,40,.10)}
 .rabo{position:absolute;width:18px;height:18px;background:inherit;border-right:1.5px solid #DCE4DF;border-bottom:1.5px solid #DCE4DF}
 .badge{position:absolute;width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;
-  box-shadow:0 6px 14px rgba(16,24,40,.16)}
-.badge.v{background:var(--vc);border:3px solid var(--v);color:var(--ve)}
-.badge.a{background:var(--ac);border:3px solid var(--a);color:var(--ae)}
+  border:3px solid #fff;box-shadow:0 6px 14px rgba(16,24,40,.16)}
+.badge.c{background:#6B7280;color:#fff}
+</style><style id="saturado">/* estilo saturado (Kaik, 11/11): selo, chip, etiqueta, quadrado de ícone e círculo de etapa
+   com fundo cheio e ícone/texto branco; nunca fundo claro com conteúdo colorido, nunca ícone escuro sobre o verde */
+:root{--vs:#16A34A;--as:#D97706;--rs:#DC2626}
+.ico{background:var(--vs);color:#fff}.ico.a{background:var(--as);color:#fff}
+.tag.v{background:var(--vs);color:#fff}.tag.a{background:var(--as);color:#fff}
 </style></head>
 <body><div id="st"></div>
 <script>
@@ -285,7 +283,7 @@ function foto(tipo,w=120){const h=Math.round(w*.76), c={papelao:PAP,pet:PETc,lat
       <rect width="108" height="70" fill="#E3EEF5"/><rect y="50" width="108" height="20" fill="#CDD3CB"/>
       ${fardo(10,30,30,22,...c)}${fardo(42,30,30,22,...c)}${fardo(26,9,30,22,...c)}${fardo(74,34,26,18,...c)}</svg></div>`;
 }
-function chip(txt,cls='',icone=null,px=22){return `<div class="chip ${cls}">${icone?ic(icone,px):''}${txt}</div>`}
+function chip(txt,cls='',icone=null,px=22){return `<div class="tag ${cls||'v'}">${icone?ic(icone,px):''}${txt}</div>`}
 // o "x" do lucide tem nome de uma letra e o render_cenas.cjs só acha nomes com 2 ou mais: o X vai desenhado
 function xis(px){return `<svg viewBox="0 0 24 24" width="${px}" height="${px}" style="display:block"><path d="M6 6 L18 18 M18 6 L6 18" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>`}
 // voo em arco (canto de cima do elemento), sem mexer na opacidade
@@ -332,9 +330,9 @@ CAPS[0]=()=>{
   const DEST=[[522,206,-7],[592,250,5],[536,302,-3],[606,346,6]];   // canto do print no monte e giro
   const OE=[253-98,461-72], OC=[393-98,523-72], MC=[662,348];        // saída: janela do escritório, celular; centro do monte
   const lk=el(`<div class="ab" style="left:0;top:0;width:262px;height:90px;visibility:hidden">
-      <div class="bal" style="left:0;top:0;width:262px;height:90px;padding:0 24px;display:flex;align-items:center;gap:16px;border:2px solid var(--v);background:#F4FBF7">
+      <div class="bal" style="left:0;top:0;width:262px;height:90px;padding:0 24px;display:flex;align-items:center;gap:16px;border:2px solid var(--v);background:#fff">
         <div class="ico" style="width:54px;height:54px">${ic('link',30)}</div>
-        <div style="font-weight:800;font-size:27px;color:var(--ve)">um link</div>
+        <div style="font-weight:800;font-size:27px">um link</div>
         <div class="rabo" style="left:26px;bottom:-11px;transform:rotate(45deg);border-right:2px solid var(--v);border-bottom:2px solid var(--v)"></div></div></div>`,g);
   const LK0=[393-131,523-45], LK1=[531,262];
   const chips=el('<div class="ab" style="left:452px;top:386px;width:420px;display:flex;flex-wrap:wrap;gap:12px;justify-content:center"></div>',g);
@@ -374,7 +372,7 @@ CAPS[1]=()=>{
   const rC=el('<div class="ab rot" style="left:958px;top:522px;width:360px">Parceiro</div>',g);
   const SX=496, SL=540, SY=318;
   const seta=setaLarga(g,SX,SY,SL,104);
-  const selo=el(`<div class="ab" style="left:${SX}px;top:${SY-24}px;width:${SL-74}px;display:flex;justify-content:center">${chip('só pra ver','','eye')}</div>`,g);
+  const selo=el(`<div class="ab" style="left:${SX}px;top:${SY-24}px;width:${SL-74}px;display:flex;justify-content:center">${chip('só pra ver','','eye')}</div>`,g); selo.firstElementChild.style.boxShadow='0 0 0 4px #fff';
   const nada=el(`<div class="ab" style="left:${SX}px;top:390px;width:${SL-74}px;display:flex;justify-content:center">${chip('não muda nada','c','pencil-off')}</div>`,g);
   // a única coisa que volta: o pedido de coleta (seta fina, do celular para o sistema)
   const volta=el(`<svg class="ab" style="left:0;top:0;overflow:visible" width="1280" height="800">
@@ -412,11 +410,11 @@ CAPS[2]=()=>{
   const chW=el('<div class="ab" style="left:0;top:0"></div>',g), ch=el(chave(230),chW);          // 230x92
   const pc=el(`<div class="ab" style="left:888px;top:180px">${busto(176,'#5C8FD6')}</div>`,g);   // 888-1064, 180-356
   const rPc=el('<div class="ab sub" style="left:826px;top:372px;width:300px">contato certo</div>',g);
-  const ok=el(`<div class="badge v" style="left:1020px;top:294px;width:56px;height:56px">${ic('check',30)}</div>`,g);
+  const ok=el(`<div class="badge ico" style="left:1020px;top:294px;width:56px;height:56px">${ic('check',30)}</div>`,g);
   const gr=el(`<div class="bal" style="left:752px;top:446px;width:452px;height:176px;display:flex;align-items:center;justify-content:center;gap:30px">
       ${busto(112,'#5C8FD6','#EEF1F4')}${busto(112,'#6AA7A0','#EDF4F3')}${busto(112,'#8E8AC4','#F0EFF8')}</div>`,g);
   const rGr=el('<div class="ab sub" style="left:828px;top:638px;width:300px">em grupo</div>',g);
-  const no=el(`<div class="badge a" style="left:1174px;top:422px;width:56px;height:56px">${xis(28)}</div>`,g);
+  const no=el(`<div class="badge ico a" style="left:1174px;top:422px;width:56px;height:56px">${xis(28)}</div>`,g);
   const cp=[0,1,2,3].map(()=>el(`<div class="ab" style="left:0;top:0;visibility:hidden">${chave(104)}</div>`,g));   // 104x42
   const K0=[520,380], KL=[356,380];                       // chave solta / na fechadura (a ponta na maçaneta)
   const DST=[[766,246],[784,560],[926,560],[1068,560]];
@@ -452,8 +450,7 @@ CAPS[3]=()=>{
       <div class="ico ${cls}" style="width:58px;height:58px">${ic('user-round',32)}</div>
       <div style="font-weight:800;font-size:27px">${txt}</div></div>`,g);
   const cC=card(210,'Cliente',''), cF=card(382,'Fornecedor','a');
-  const elo=el(`<div class="ab" style="left:232px;top:320px;width:56px;height:56px;border-radius:50%;background:#fff;border:2px solid #DDE5E0;
-      display:flex;align-items:center;justify-content:center;color:#4B5563;box-shadow:0 6px 14px rgba(16,24,40,.08)">${ic('link-2',28)}</div>`,g);
+  const elo=el(`<div class="ab ico" style="left:232px;top:320px;width:56px;height:56px;border-radius:50%;border:3px solid #fff;box-shadow:0 6px 14px rgba(16,24,40,.10)">${ic('link-2',28)}</div>`,g);
   const chv=el(`<div class="card" style="left:84px;top:506px;width:352px;height:66px;padding:0 22px;display:flex;align-items:center;justify-content:space-between;
       box-shadow:0 8px 18px rgba(16,24,40,.08)"><div style="font-weight:700;font-size:20px">Aba Relatório</div>
       <div class="sw" style="position:relative;width:58px;height:32px;border-radius:16px;background:#50D088">
@@ -475,10 +472,9 @@ CAPS[3]=()=>{
   const lC=linha('Compras','var(--a)'), lV=linha('Vendas','var(--v)'); lV.style.borderTop='1px solid var(--l)';
   const relOn=el(`<div class="ab" style="left:834px;top:458px;width:352px;display:flex;justify-content:center">${chip('Relatório','v','eye')}</div>`,g);
   const relOff=el(`<div class="ab" style="left:834px;top:458px;width:352px;display:flex;justify-content:center">
-      <div class="chip c" style="text-decoration:line-through;text-decoration-thickness:2px">${ic('eye-off',22)}Relatório</div></div>`,g);
-  const vale=el(`<div class="ab row" style="left:0;top:626px;width:1280px;justify-content:center;gap:16px">
-      <div class="ico a" style="width:56px;height:56px">${ic('eye-off',30)}</div>
-      <div style="font-weight:800;font-size:32px;color:var(--ae)">Vale o que esconde mais</div></div>`,g);
+      <div class="tag c" style="text-decoration:line-through;text-decoration-thickness:2px">${ic('eye-off',22)}Relatório</div></div>`,g);
+  const vale=el(`<div class="ab row" style="left:0;top:626px;width:1280px;justify-content:center">
+      <div class="tag a" style="font-size:30px;padding:12px 28px;gap:12px">${ic('eye-off',32)}Vale o que esconde mais</div></div>`,g);
 
   return t=>{
     const t0=W(6,'Uma'), tcl=W(6,'cliente'), tfo=W(6,'fornecedor'), tme=W(6,'mesmo'), tde=W(6,'Deposito'), tca=W(6,'cadastros'),
@@ -523,8 +519,8 @@ CAPS[4]=()=>{
   const p2=el(`<div class="ab" style="left:85px;top:96px">${porta(180,256)}</div>`,c2);
   const s2=el('<div class="ab sub" style="left:0;top:376px;width:350px">abre pelo link</div>',c2);
   const p3=el(`<div class="ab" style="left:85px;top:96px">${porta(180,256)}</div>`,c3);
-  const cad=el(`<div class="badge a" style="left:196px;top:196px;width:66px;height:66px">${ic('lock',32)}</div>`,c3);
-  const cadA=el(`<div class="badge v" style="left:196px;top:196px;width:66px;height:66px;opacity:0">${ic('lock-open',32)}</div>`,c3);
+  const cad=el(`<div class="badge ico a" style="left:196px;top:196px;width:66px;height:66px">${ic('lock',32)}</div>`,c3);
+  const cadA=el(`<div class="badge ico" style="left:196px;top:196px;width:66px;height:66px;opacity:0">${ic('lock-open',32)}</div>`,c3);
   const s3=el('<div class="ab sub" style="left:0;top:376px;width:350px">depois do login</div>',c3);
   const coop=el(`<div class="ab" style="left:860px;top:642px;width:350px;display:flex;justify-content:center">${chip('na cooperativa','a','check')}</div>`,g);
 
@@ -555,7 +551,7 @@ CAPS[6]=()=>{
   const rM=el('<div class="ab rot" style="left:45px;top:462px;width:360px">No sistema</div>',g);
   const rC=el('<div class="ab rot" style="left:900px;top:462px;width:360px">No portal</div>',g);
   const cc=el(`<div class="card" style="left:440px;top:212px;width:400px;height:178px;padding:26px 30px">
-      <div class="row" style="gap:16px"><div class="ico" style="width:52px;height:52px;background:#EEF1F4;color:#4B5563">${ic('wallet',28)}</div>
+      <div class="row" style="gap:16px"><div class="ico" style="width:52px;height:52px">${ic('wallet',28)}</div>
         <div style="font-weight:800;font-size:25px">Conta-corrente</div></div>
       <div class="num" style="margin-top:16px;font-size:48px">${V}</div></div>`,g);
   const lado=(x,cor)=>el(`<div class="card" style="left:${x}px;top:530px;width:350px;height:154px;padding:22px 28px">
@@ -597,7 +593,7 @@ CAPS[8]=()=>{
       <div class="row" style="gap:16px"><div class="ico a" style="width:54px;height:54px">${ic('package',30)}</div>
         <div style="font-weight:800;font-size:26px">Papelão e PET</div></div>
       <div class="rabo" style="left:-10px;top:40px;transform:rotate(135deg)"></div></div>`,g);
-  const dia=el(chip('quinta · manhã','','calendar-days'),ped); dia.style.position='absolute'; dia.style.left='26px'; dia.style.top='100px';
+  const dia=el(chip('quinta · manhã','a','calendar-days'),ped); dia.style.position='absolute'; dia.style.left='26px'; dia.style.top='100px';
   const sel1=el('<div class="ab" style="left:262px;top:420px;width:352px;display:flex;justify-content:center"><div class="tag a" style="font-size:22px">Solicitada</div></div>',g);
   const sel2=el('<div class="ab" style="left:262px;top:420px;width:352px;display:flex;justify-content:center"><div class="tag v" style="font-size:22px">Agendada</div></div>',g);
   const seta=setaLarga(g,636,312,136,72);
@@ -632,7 +628,7 @@ CAPS[10]=()=>{
   const gA=grupo();
   const titA=titulo(gA,'Fotos','Fotos no pedido');
   const pedA=el(`<div class="card" style="left:56px;top:184px;width:388px;height:320px;padding:24px 28px">
-      <div class="row" style="gap:16px"><div class="ico" style="width:54px;height:54px;background:#EEF1F4;color:#4B5563">${ic('clipboard-list',30)}</div>
+      <div class="row" style="gap:16px"><div class="ico" style="width:54px;height:54px">${ic('clipboard-list',30)}</div>
         <div style="font-weight:800;font-size:26px">Pedido</div></div>
       ${barra(28,98,230,'#E1E6EB',10)}${barra(28,120,170,'#EEF1F4',10)}
       ${[0,1,2].map(i=>`<div class="ab" style="left:${28+i*110}px;top:152px;width:96px;height:72px;border-radius:9px;border:2px dashed #CBD3DB"></div>`).join('')}</div>`,gA);
@@ -668,7 +664,7 @@ CAPS[10]=()=>{
   const tgPw=el('<div class="ab" style="left:820px;top:538px;width:400px"></div>',gB);
   const tgP=el('<div style="display:flex;justify-content:center"><div class="tag a" style="font-size:22px">Link do portal</div></div>',tgPw);
   const sbP=el('<div class="ab sub" style="left:820px;top:596px;width:400px">histórico inteiro</div>',gB);
-  const cadB=el(`<div class="badge a" style="left:988px;top:372px;width:64px;height:64px">${ic('lock',30)}</div>`,gB);
+  const cadB=el(`<div class="badge ico a" style="left:988px;top:372px;width:64px;height:64px">${ic('lock',30)}</div>`,gB);
   const cup=el(`<div class="ab" style="left:548px;top:300px">${cupom(184,320)}</div>`,gB);      // 548-732, 300-620
   const ligB=el(`<svg class="ab" style="left:0;top:0;overflow:visible" width="1280" height="800">
       <path d="M738 470 C 772 470, 784 440, 818 426" fill="none" stroke="var(--a)" stroke-width="4" stroke-linecap="round"/>

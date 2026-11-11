@@ -48,6 +48,8 @@ Pegue 2 instantes por linha (meio e fim), monte uma folha de contato e olhe tudo
 que não entrou, composição vazia. No piloto, a revisão pegou 9 problemas antes do render.
 Cena travada (promessa que nunca resolve, laço sem fim no `setup` ou no `R`): o `render_cenas.cjs` sai com código 3 quando
 nada anda em 90 s (`--vigia S`), em vez de segurar a trava pesada dos outros.
+Quadros de conferência (poucos JPEG) não disputam a trava pesada com a gravação: trava leve própria e prioridade baixa,
+`flock $TUT_HOME/.stills.lock nice -n 19 timeout 300 node render_cenas.cjs ...` (a pesada fica para gravar e renderizar MP4).
 
 ## Render e montagem
 ```bash
