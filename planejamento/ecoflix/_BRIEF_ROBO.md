@@ -29,7 +29,8 @@ A voz ainda não existe: os tempos vêm de `capNN.json` **estimados**. Quando a 
 ## Sua instância (nunca a 54340 nem a de outro agente)
 Porta = 54300 + o número da aula (T03 → 54303, T26 → 54326). `FAKE_NOW` do `plano.md` da aula (padrão
 2026-11-10T08:30:00-03:00), igual no Supabase falso e no robô. `TUT_USER=rafael@reciclavalemetais.example` e uma
-`TUT_SENHA` qualquer no ambiente (o falso aceita qualquer uma; a senha nunca vai para arquivo).
+`TUT_SENHA` qualquer no ambiente, com 8 caracteres ou mais (o falso aceita qualquer uma, mas o formulário de login
+recusa senha curta: a T05 perdeu dois ensaios com "x"; a senha nunca vai para arquivo).
 ```bash
 cd /home/claude/ecoflix
 FAKE_NOW=2026-11-10T08:30:00-03:00 FAKE_PORT=54303 bash rec/run.sh fake

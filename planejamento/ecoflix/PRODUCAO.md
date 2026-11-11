@@ -658,3 +658,7 @@ Decisões:
   está na fila (prio 05). Ao liberar a balança, o EcoTray de verdade escreve "Impressora padrão: POS-58" (08:44:10), fora do
   roteiro mas real. **Antes da gravação final**: trocar a página do navegador (hoje a imagem `feature-integracao.png`, que
   mostra "v1.2.5" de marketing) pela gravação `device: windows` do robô da T05 (`navegador.pagina.gravacao`).
+- 11/11 22:2x **Robô da T05**: nenhum capítulo aprovado ainda; os dois primeiros ensaios caíram no login (a `TUT_SENHA`
+  "x" era curta para o formulário; `_BRIEF_ROBO.md` agora pede 8+ caracteres); usa `fila.sh --prio 05`, um por vez. Cap04
+  com relógio próprio para o cupom 08:41:07 (a calibrar); trechos `device: windows` só como roteiro (`cap02w`, `cap04w`,
+  `cap06w`, `cap09w`); completo provável em cap06, cap09 e cap10.
