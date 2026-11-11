@@ -33,7 +33,7 @@ body{font-family:M,sans-serif;color:var(--t);-webkit-font-smoothing:antialiased}
 .fx{position:absolute;left:0;top:0;width:1280px;height:800px;overflow:hidden;background:#121212}
 .fx img{position:absolute;left:0;top:0;width:1280px;height:800px;object-fit:cover;opacity:.15}
 #st{position:absolute;inset:0;overflow:hidden}
-.g{position:absolute;left:0;top:0;width:1280px;height:800px;transform-origin:640px 400px}
+.eco-grupo{position:absolute;left:0;top:0;width:1280px;height:800px;transform-origin:640px 400px}
 .ab{position:absolute}
 .row{display:flex;align-items:center}
 /* título da cena: área (kicker, no degradê) + conceito (claro); sozinho fica grande no centro e sobe quando o desenho entra */
@@ -107,7 +107,7 @@ const lerp=(a,b,p)=>a+(b-a)*p;
 const $=s=>document.querySelector(s);
 const ST=document.getElementById('st');
 function el(html,parent=ST){const d=document.createElement('div');d.innerHTML=html.trim();let f=null;for(const n of [...d.childNodes]){parent.appendChild(n);if(!f&&n.nodeType===1)f=n}return f}
-function grupo(){return el('<div class="g"></div>')}
+function grupo(){return el('<div class="eco-grupo"></div>')}
 function ic(n,px,cor){const s=(window.ICONS||{})[n]||'';return `<span class="ic" style="width:${px}px;height:${px}px;${cor?'color:'+cor:''}">${s}</span>`}
 function hex(c){c=c.replace('#','');return[0,2,4].map(i=>parseInt(c.substr(i,2),16))}
 function mix(a,b,p){const A=hex(a),B=hex(b);return `rgb(${A.map((v,i)=>Math.round(v+(B[i]-v)*cl(p))).join(',')})`}
@@ -121,7 +121,13 @@ function vis(e,t,a,b=1e9,o={}){
   return op;
 }
 function ripple(r,t,a){const p=pr(t,a,.7);r.style.opacity=(p>0&&p<1)?(.6*(1-p)).toFixed(3):0;r.style.transform=`scale(${(.4+2.0*eo(p)).toFixed(3)})`}
-function pulse(e,t,a,amp=.045,dur=.9){const p=pr(t,a,dur);e.style.scale=(p>0&&p<1)?(1+amp*Math.sin(Math.PI*p)).toFixed(4):''}
+function pulse(e,t,a,amp=.045,dur=.9){
+  const p=pr(t,a,dur),f=(p>0&&p<1)?1+amp*Math.sin(Math.PI*p):1,c=e.style.transform;
+  const meu=e._pw!==undefined&&c===e._pw, base=meu?e._pb:c;
+  if(!meu||e._pt!==t)e._pm={};                       // quadro novo (ou o transform foi reescrito): recomeça os pulsos
+  e._pm[`${a}|${amp}|${dur}`]=f;e._pt=t;e._pb=base;  // a mesma chamada repetida no mesmo t não se acumula
+  let k=1;for(const v of Object.values(e._pm))k*=v;
+  e.style.transform=k===1?base:(base?base+' ':'')+`scale(${k.toFixed(4)})`;e._pw=e.style.transform}
 function digita(e,txt,t,a,b){const p=cl((t-a)/Math.max(.05,b-a));const n=Math.round(p*txt.length);
   const car=(p>0&&p<1)||(Math.floor(t*2.2)%2===0&&p<1.2&&t>=a)?'<span style="color:var(--v);font-weight:500">|</span>':'';
   e.innerHTML=(txt.slice(0,n)||'')+(t>=a&&t<b+.8?car:'');}
@@ -163,7 +169,7 @@ function caminhao(){
     ['<polygon points="258,90 282,60 308,66 312,90"/>','#8A949E',[285,75],[-375,148,4]],
     ['<g><circle cx="192" cy="64" r="19"/><circle cx="192" cy="64" r="7" fill="#8A949E"/></g>','#5E6670',[192,64],[-242,155,200]],
     ['<polygon points="40,70 60,50 84,64 64,86"/>','#B07A55',[62,68],[-307,100,30]]];
-  const pecas=pd.map(([f,c,[cx,cy],[dx,dy,r]])=>`<g class="pd" data-cx="${cx}" data-cy="${cy}" data-dx="${dx}" data-dy="${dy}" data-r="${r}" fill="${c}">${f}</g>`).join('');
+  const pecas=pd.map(([f,c,[cx,cy],[dx,dy,r]])=>`<g class="pd" data-cx="${cx}" data-cy="${cy}" data-dx="${dx}" data-dy="${dy-16}" data-r="${r}" fill="${c}">${f}</g>`).join('');
   const roda=x=>`<g class="roda" data-x="${x}" transform="translate(${x},196)"><circle r="26" fill="#1B1F24"/><circle r="12" fill="#9AA3AD"/>
     <rect x="-2.5" y="-23" width="5" height="10" rx="2" fill="#5B636C"/><rect x="-2.5" y="13" width="5" height="10" rx="2" fill="#5B636C"/></g>`;
   return `<svg viewBox="0 0 500 230" width="500" height="230" style="overflow:visible">

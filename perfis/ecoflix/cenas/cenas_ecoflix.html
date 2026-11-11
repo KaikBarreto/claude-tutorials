@@ -9,8 +9,8 @@
      (várias ilustrações do mesmo capítulo cabem no mesmo CAPS[n], cada uma no seu trecho) e renderize só o trecho dela:
        node render_cenas.cjs <n> ../../narracao/capNN.json <saida.mp4> --de <at> --ate <at + dur>
      Antes da voz, tempos estimados: python3 tempos_estimados.py exemplo/cap01.json "fala 0" "fala 1" ...
-     Exemplos: CAPS[1] "Tara e peso líquido" (exemplo/cap01.json) e CAPS[2] "Caixa × competência" (exemplo/cap02.json).
-     Regras: rótulos exatos do app ("Peso bruto", "Tara", "Peso líquido", "Competência", "Regime de Caixa"), dados do
+     Exemplos: CAPS[1] "Dupla pesagem" (exemplo/cap01.json) e CAPS[2] "Caixa × competência" (exemplo/cap02.json).
+     Regras: rótulos exatos do app ("1ª Pesagem", "2ª Pesagem", "Peso Bruto", "Competência", "Regime de Caixa"), dados do
      mundo da Recicla Vale Metais, objetos genéricos sem marca, nenhum logo de terceiros, texto medido (cabe no cartão). -->
 <style>
 @font-face{font-family:M;font-weight:500;src:url(../../../web/fonts/montserrat-latin-500-normal.woff2) format('woff2')}
@@ -32,7 +32,8 @@ body{font-family:M,sans-serif;color:var(--t);-webkit-font-smoothing:antialiased}
 #st{position:absolute;inset:0;overflow:hidden;background:
   radial-gradient(1100px 650px at 92% -12%,rgba(80,208,136,.09),transparent 62%),
   radial-gradient(900px 600px at -12% 112%,rgba(80,208,136,.06),transparent 60%),#fff}
-.g{position:absolute;left:0;top:0;width:1280px;height:800px;transform-origin:640px 400px}
+/* grupo da cena: classe com nome único, para um chip ou ícone da aula com a classe "g" não herdar este estilo */
+.eco-grupo{position:absolute;left:0;top:0;width:1280px;height:800px;transform-origin:640px 400px}
 .ab{position:absolute}
 .row{display:flex;align-items:center}
 /* título da cena: área (kicker) + conceito; sozinho fica grande no centro e sobe quando o desenho entra */
@@ -74,7 +75,7 @@ const lerp=(a,b,p)=>a+(b-a)*p;
 const $=s=>document.querySelector(s);
 const ST=document.getElementById('st');
 function el(html,parent=ST){const d=document.createElement('div');d.innerHTML=html.trim();let f=null;for(const n of [...d.childNodes]){parent.appendChild(n);if(!f&&n.nodeType===1)f=n}return f}
-function grupo(){return el('<div class="g"></div>')}
+function grupo(){return el('<div class="eco-grupo"></div>')}
 function ic(n,px,cor){const s=(window.ICONS||{})[n]||'';return `<span class="ic" style="width:${px}px;height:${px}px;${cor?'color:'+cor:''}">${s}</span>`}
 function hex(c){c=c.replace('#','');return[0,2,4].map(i=>parseInt(c.substr(i,2),16))}
 function mix(a,b,p){const A=hex(a),B=hex(b);return `rgb(${A.map((v,i)=>Math.round(v+(B[i]-v)*cl(p))).join(',')})`}
@@ -88,7 +89,16 @@ function vis(e,t,a,b=1e9,o={}){
   return op;
 }
 function ripple(r,t,a){const p=pr(t,a,.7);r.style.opacity=(p>0&&p<1)?(.6*(1-p)).toFixed(3):0;r.style.transform=`scale(${(.4+2.0*eo(p)).toFixed(3)})`}
-function pulse(e,t,a,amp=.045,dur=.9){const p=pr(t,a,dur);e.style.scale=(p>0&&p<1)?(1+amp*Math.sin(Math.PI*p)).toFixed(4):''}
+// pulso: um scale() no FIM do transform do elemento (a translação dele não é escalada, ao contrário da propriedade CSS
+// `scale`), e pulsos do mesmo elemento no mesmo instante t se multiplicam em vez de um zerar o outro. O transform que o
+// `vis` (ou a aula) escreveu no quadro vem antes: chame pulse DEPOIS do vis do mesmo elemento.
+function pulse(e,t,a,amp=.045,dur=.9){
+  const p=pr(t,a,dur),f=(p>0&&p<1)?1+amp*Math.sin(Math.PI*p):1,c=e.style.transform;
+  const meu=e._pw!==undefined&&c===e._pw, base=meu?e._pb:c;
+  if(!meu||e._pt!==t)e._pm={};                       // quadro novo (ou o transform foi reescrito): recomeça os pulsos
+  e._pm[`${a}|${amp}|${dur}`]=f;e._pt=t;e._pb=base;  // a mesma chamada repetida no mesmo t não se acumula
+  let k=1;for(const v of Object.values(e._pm))k*=v;
+  e.style.transform=k===1?base:(base?base+' ':'')+`scale(${k.toFixed(4)})`;e._pw=e.style.transform}
 function digita(e,txt,t,a,b){const p=cl((t-a)/Math.max(.05,b-a));const n=Math.round(p*txt.length);
   const car=(p>0&&p<1)||(Math.floor(t*2.2)%2===0&&p<1.2&&t>=a)?'<span style="color:var(--v);font-weight:500">|</span>':'';
   e.innerHTML=(txt.slice(0,n)||'')+(t>=a&&t<b+.8?car:'');}
@@ -119,7 +129,9 @@ function W(linha,palavra,n=1,campo='s'){
 const L=i=>(D.linhas[i]||{s:0}).s, LE=i=>(D.linhas[i]||{e:D.dur}).e;
 
 // ------------------------------------------------------------------ desenhos genéricos (sem marca)
-// caminhão de lado (frente para a direita), com a carga de sucata em pedaços (.pd) que podem ser descarregados
+// caminhão de lado (frente para a direita), com a carga de sucata em pedaços (.pd) que podem ser descarregados.
+// O destino (data-dy) é medido até a LINHA DA RODA: o monte pousa no chão em que o caminhão está. Se o caminhão está numa
+// balança e o monte vai para o chão abaixo dela (16 px mais baixo), some 16 ao dy ao descarregar (ver o CAPS[1]).
 function caminhao(){
   const pd=[ // [forma, cor, centro da peça, destino no monte atrás do caminhão (deslocamento do centro e giro)]
     ['<polygon points="28,90 44,52 88,42 100,90"/>','#8C5A3C',[64,66],[-224,148,6]],
@@ -130,7 +142,7 @@ function caminhao(){
     ['<polygon points="258,90 282,60 308,66 312,90"/>','#8A949E',[285,75],[-375,148,4]],
     ['<g><circle cx="192" cy="64" r="19"/><circle cx="192" cy="64" r="7" fill="#8A949E"/></g>','#5E6670',[192,64],[-242,155,200]],
     ['<polygon points="40,70 60,50 84,64 64,86"/>','#B07A55',[62,68],[-307,100,30]]];
-  const pecas=pd.map(([f,c,[cx,cy],[dx,dy,r]])=>`<g class="pd" data-cx="${cx}" data-cy="${cy}" data-dx="${dx}" data-dy="${dy}" data-r="${r}" fill="${c}">${f}</g>`).join('');
+  const pecas=pd.map(([f,c,[cx,cy],[dx,dy,r]])=>`<g class="pd" data-cx="${cx}" data-cy="${cy}" data-dx="${dx}" data-dy="${dy-16}" data-r="${r}" fill="${c}">${f}</g>`).join('');
   const roda=x=>`<g class="roda" data-x="${x}" transform="translate(${x},196)"><circle r="26" fill="#1B1F24"/><circle r="12" fill="#9AA3AD"/>
     <rect x="-2.5" y="-23" width="5" height="10" rx="2" fill="#5B636C"/><rect x="-2.5" y="13" width="5" height="10" rx="2" fill="#5B636C"/></g>`;
   return `<svg viewBox="0 0 500 230" width="500" height="230" style="overflow:visible">
@@ -200,33 +212,35 @@ function abreGaveta(e,p){const q=cl(p);
   e.querySelector('.rg-fr').setAttribute('transform',`translate(0 ${(64*q).toFixed(2)})`);
   e.querySelector('.rg-ba').setAttribute('transform',`translate(0 ${(64*(q-1)).toFixed(2)})`)}
 
-// ------------------------------------------------------------------ CAPS[1] · Tara e peso líquido
-// fala (exemplo/cap01.json): 0 "O caminhão chega cheio e para na balança: esse é o peso bruto."
-// 1 "Depois de descarregar, ele pesa de novo, vazio: essa é a tara."  2 "O peso líquido é a conta: caminhão cheio menos
-// caminhão vazio."  3 "Sobra só o peso da sucata, e é ele que vai para o pedido."
+// ------------------------------------------------------------------ CAPS[1] · Dupla pesagem
+// No Ticket de Pesagem do app: caminhão cheio = "1ª Pesagem", caminhão vazio = "2ª Pesagem", a diferença = "Peso Bruto".
+// "Tara" é a embalagem (saco, tambor, caçamba), não o caminhão vazio.
+// fala (exemplo/cap01.json): 0 "O caminhão chega cheio e para na balança: essa é a primeira pesagem."
+// 1 "Depois de descarregar, ele pesa de novo, vazio: essa é a segunda pesagem."  2 "A diferença entre as duas é a conta:
+// caminhão cheio menos caminhão vazio."  3 "Sobra só o peso da sucata, e é ele que vai para o pedido."
 const CAPS={};
 CAPS[1]=()=>{
-  const BRUTO=14380, TARA=9120, LIQ=BRUTO-TARA;           // kg (ferro misto, Recicla Vale Metais)
+  const P1=14380, P2=9120, BRUTO=P1-P2;                    // kg (ferro misto, Recicla Vale Metais)
   const g=grupo();
-  const tit=titulo(g,'Balança','Tara e peso líquido');
+  const tit=titulo(g,'Balança','Dupla pesagem');
   const cena=el('<div class="ab" style="left:0;top:0;width:1280px;height:800px;transform-origin:640px 168px"></div>',g);
   const chao=el('<div class="ab" style="left:70px;top:604px;width:1140px;height:4px;border-radius:2px;background:#DDE2E7"></div>',cena);
   const plat=el('<div class="ab" style="left:318px;top:590px;width:580px;height:16px;border-radius:5px;background:#CBD1D8;border:2px solid #A8B0B9"></div>',cena);
   const poste=el('<div class="ab" style="left:1055px;top:452px;width:10px;height:152px;border-radius:4px;background:#B9C1C9"></div>',cena);
   const most=el(`<div class="ab most" style="left:910px;top:330px;width:300px">
-    <div class="ml"><span id="mlb">Peso bruto</span><span id="mlt">Tara</span></div><div class="mn" id="mn">0 kg</div></div>`,cena);
+    <div class="ml"><span id="mlb">1ª Pesagem</span><span id="mlt">2ª Pesagem</span></div><div class="mn" id="mn">0 kg</div></div>`,cena);
   const cam=el(`<div class="ab" style="left:0;top:0;width:500px;height:230px">${caminhao()}</div>`,cena);
   const rodas=[...cam.querySelectorAll('.roda')], pecas=[...cam.querySelectorAll('.pd')];
   const X1=360, Y=366, X0=-560;                            // caminhão parado na balança / fora da tela
-  // conta: Peso bruto - Tara = Peso líquido (rótulos do app)
+  // conta: 1ª Pesagem - 2ª Pesagem = Peso Bruto (rótulos do app)
   const linha=el('<div class="ab" style="left:0;top:452px;width:1280px;height:170px"></div>',g);
   const cartao=(x,rot,sub,v,res)=>el(`<div class="card" style="left:${x}px;top:0;width:318px;height:150px;padding:22px 26px;
       ${res?'border:2px solid var(--v);background:#F4FBF7':''}">
       <div style="font-weight:800;font-size:22px;${res?'color:var(--ve)':''}">${rot}</div>
       <div class="lbl" style="margin-top:4px">${sub}</div>
       <div class="num" style="margin-top:12px;font-size:40px;${res?'color:var(--ve)':''}">${kg(v)}</div></div>`,linha);
-  const cB=cartao(70,'Peso bruto','caminhão cheio',BRUTO), cT=cartao(481,'Tara','caminhão vazio',TARA),
-        cL=cartao(892,'Peso líquido','só a sucata',LIQ,true);
+  const cB=cartao(70,'1ª Pesagem','caminhão cheio',P1), cT=cartao(481,'2ª Pesagem','caminhão vazio',P2),
+        cL=cartao(892,'Peso Bruto','só a sucata',BRUTO,true);
   const oM=el('<div class="op" style="left:405px;top:45px">−</div>',linha), oI=el('<div class="op" style="left:816px;top:45px">=</div>',linha);
   const ped=el(`<div class="ab row" style="left:892px;top:640px;width:318px;gap:12px;justify-content:center">
     <div class="ico" style="width:44px;height:44px">${ic('clipboard-list',24)}</div>
@@ -236,7 +250,7 @@ CAPS[1]=()=>{
   const rip=el('<div class="rip"></div>',cL); rip.style.left='159px'; rip.style.top='75px';
 
   return t=>{
-    const tc=W(0,'caminhao'), tb=W(0,'balanca'), tbr=W(0,'bruto'), td=W(1,'descarregar'), tv=W(1,'vazio'), tt=W(1,'tara');
+    const tc=W(0,'caminhao'), tb=W(0,'balanca'), tbr=W(0,'primeira'), td=W(1,'descarregar'), tv=W(1,'vazio'), tt=W(1,'segunda');
     const tco=W(2,'conta'), tch=W(2,'cheio'), tme=W(2,'menos'), tva=W(2,'vazio'), tsu=W(3,'sucata'), tpe=W(3,'pedido');
     posTitulo(tit,t,L(0)-.4,tc-.1);
     // chega: anda até a balança e para (rodas girando com a distância)
@@ -244,14 +258,14 @@ CAPS[1]=()=>{
     const pa=eo(pr(t,tc,Math.max(1.2,tb-tc+.3))), x=lerp(X0,X1,pa);
     cam.style.transform=`translate(${x.toFixed(2)}px,${Y}px)`;
     rodas.forEach(r=>r.setAttribute('transform',`translate(${r.dataset.x},196) rotate(${((x-X1)/26*57.3).toFixed(2)})`));
-    // mostrador: sobe até o bruto quando o caminhão para; desce até a tara depois de descarregar
+    // mostrador: sobe até a 1ª pesagem quando o caminhão para; desce até a 2ª depois de descarregar
     const mn=$('#mn'), chegou=tc+Math.max(1.2,tb-tc+.3);
-    if(t<tv) conta(mn,t,chegou-.15,1.0,0,BRUTO); else conta(mn,t,tv,.9,BRUTO,TARA);
+    if(t<tv) conta(mn,t,chegou-.15,1.0,0,P1); else conta(mn,t,tv,.9,P1,P2);
     const lt=eo(pr(t,tv,.35)); $('#mlb').style.opacity=1-lt; $('#mlt').style.opacity=lt;
     pulse(most,t,tbr,.05,.7); pulse(most,t,tt,.05,.7);
-    // descarrega: cada pedaço salta da caçamba para o monte, um depois do outro
+    // descarrega: cada pedaço salta da caçamba para o monte, um depois do outro (+16: o monte pousa no chão, abaixo da balança)
     pecas.forEach((p,i)=>{const d=p.dataset;const q=eio(pr(t,td+.1+i*.12,.7));
-      p.setAttribute('transform',`translate(${(d.dx*q).toFixed(2)},${(d.dy*q-130*4*q*(1-q)).toFixed(2)}) rotate(${(d.r*q).toFixed(2)} ${d.cx} ${d.cy})`)});
+      p.setAttribute('transform',`translate(${(d.dx*q).toFixed(2)},${((+d.dy+16)*q-130*4*q*(1-q)).toFixed(2)}) rotate(${(d.r*q).toFixed(2)} ${d.cx} ${d.cy})`)});
     // conta: o desenho encolhe e sobe logo antes do 1º cartão (a metade de baixo não fica vazia); os cartões nas palavras
     const enc=eio(pr(t,Math.max(tco,tch-.75),.8)); cena.style.transform=`translate(0,${(-26*enc).toFixed(2)}px) scale(${lerp(1,.62,enc).toFixed(4)})`;
     vis(cB,t,tch-.15,1e9,{dy:22}); vis(oM,t,tme-.1,1e9,{sc:.6,dy:0}); vis(cT,t,tva-.15,1e9,{dy:22});

@@ -628,3 +628,9 @@ Decisões:
   passa à frente, mas ninguém espera mais de ~80 min a mais). Senha nova com prefixo "50-": as antigas (prioridade pura)
   andam primeiro, em ordem de aula, até acabarem; script trocado com `mv` (quem já roda segue no arquivo antigo). Conferido:
   antigo E20 primeiro, depois C0, B15, D15.
+- 11/11 20:4x **Kit 3D com materiais reconhecíveis concluído** (agente do kit): latinha metálica com faixa genérica
+  (inteira e amassada), PET translúcida (transparente e verde), ferro enferrujado (vergalhão, cano, chapa, perfil), cobre em
+  fio e tubo, papelão, torrão, pneu, mangueira, sacola; tipos novos `latinha`, `pet`, `ferro`, `papelao`; `pets()`,
+  `fardoPapelao()`, `bigBag()`. T07 com o big bag como tara (chip "saco") e a carroça com ferro misto; T08 com as latinhas
+  novas. **Mandados ao Kaik às 20:4x: T07_3d.mp4, T08_3d.mp4, vitrine_3d.jpg e T05_3d.mp4.** Faltam as correções da T11,
+  T12 e T16 (prévias depois).
