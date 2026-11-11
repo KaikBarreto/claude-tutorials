@@ -15,8 +15,8 @@ Sementes (cada uma soma só o que o capítulo fez; o roteiro empilha: SEMENTE em
   dia-10      no #85: venda à Aços Quiririm (1.600 kg de ferro pesado a R$ 1,25 = R$ 2.000,00, Pix na Conta Principal, 10:15); compra da
               Aparecida Ramos (42 kg de alumínio latinha a R$ 6,20 = R$ 260,40, dinheiro, 11:20); compra do Valdir Pereira (310 kg de ferro
               misto a R$ 0,75 = R$ 232,50, dinheiro, 15:05). Esperado no fechamento: 1.500,00 - 492,90 = R$ 1.007,10
-  apos-cap10  #85 fechado às 17:41 com R$ 1.007,10 (sem diferença)
-  apos-cap11  #85 reaberto às 17:42
+  apos-cap10  #85 fechado às 17:42 com R$ 1.007,10 (sem diferença)
+  apos-cap11  #85 reaberto às 17:43
 """
 import json
 import os
@@ -94,7 +94,7 @@ def bt(id_, contaid, tipo, valor, desc, quando, saldo_depois, **kw):
 # ---------------------------------------------------------------- as sementes
 N85 = numero_caixa()            # 85 no mundo base
 N86 = N85 + 1
-ABRE85, ABRE86, SAQUE, TARIFA_MES, FECHA85, REABRE85 = utc('08:31'), utc('08:42'), utc('08:46'), utc('08:47'), utc('17:41'), utc('17:42')
+ABRE85, ABRE86, SAQUE, TARIFA_MES, FECHA85, REABRE85 = utc('08:31'), utc('08:42'), utc('08:46'), utc('08:47'), utc('17:42'), utc('17:43')
 SAQ, TAR_SAQUE, TAR_MES = 3000.0, 6.5, 39.9
 
 
@@ -225,7 +225,7 @@ def dia_10():
 
 def apos_cap10():
     return {
-        '_doc': f'T06 · depois do cap10: caixa #{N85} fechado às 17:41 com R$ 1.007,10, sem diferença (o dinheiro contado volta ao cofre).',
+        '_doc': f'T06 · depois do cap10: caixa #{N85} fechado às 17:42 com R$ 1.007,10, sem diferença (o dinheiro contado volta ao cofre).',
         'cash_transactions': [ct('@id:ct.t06.fecha85', C85, 'closing', 1007.1, 'Fechamento de caixa', FECHA85)],
         '_patch': {'cash_register': [{'match': {'id': C85}, 'set': {'status': 'closed', 'closing_balance': 1007.1, 'closed_at': FECHA85}}]},
     }
@@ -233,8 +233,7 @@ def apos_cap10():
 
 def apos_cap11():
     return {
-        '_doc': f'T06 · depois do cap11: caixa #{N85} reaberto às 17:42 (volta como estava antes do fechamento).',
-        '_remove': {'cash_transactions': [{'id': '@id:ct.t06.fecha85'}]},
+        '_doc': f'T06 · depois do cap11: caixa #{N85} reaberto às 17:43 (volta como estava antes do fechamento; a linha "Fechamento de caixa" fica, como o app faz).',
         '_patch': {'cash_register': [{'match': {'id': C85}, 'set': {'status': 'open', 'closing_balance': None, 'closed_at': None,
                                                                      'reopened_at': REABRE85}}]},
     }

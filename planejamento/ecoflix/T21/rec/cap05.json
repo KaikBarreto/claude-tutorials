@@ -271,7 +271,7 @@
    "target": {
     "selector": "[role=dialog][aria-label^=\"Cato.ai\"] li:has-text(\"Fundição Bandeira do Vale: R$ 112.800,00\")"
    },
-   "seconds": 1.8,
+   "seconds": 1.2,
    "at": 28.2,
    "label": "ZOOM Fundição Bandeira do Vale: R$ 112.800,00",
    "optional": true,
@@ -297,7 +297,7 @@
    "target": {
     "selector": "textarea[aria-label=\"Mensagem para o Cato\"]"
    },
-   "at": 55.43,
+   "at": 55.33,
    "label": "campo Pergunte ao Cato (R8)",
    "noScroll": true
   },
@@ -308,7 +308,7 @@
    },
    "text": "Lista meu estoque em tabela",
    "cps": 40,
-   "at": 56.18,
+   "at": 56.08,
    "label": "digita: Lista meu estoque em tabela",
    "noClick": true
   },
@@ -317,7 +317,7 @@
    "target": {
     "selector": "button[aria-label=\"Enviar\"]"
    },
-   "at": 58.53,
+   "at": 58.32,
    "label": "Enviar (R8)",
    "noScroll": true
   },
@@ -329,7 +329,7 @@
   {
    "do": "eval",
    "js": "(async()=>{const c=document.querySelector(\"[role=dialog][aria-label^=\\\"Cato.ai\\\"] div.h-full.overflow-y-auto\");if(!c)return 'SEM PAINEL';const el=[...document.querySelectorAll(\"[role=dialog][aria-label^=\\\"Cato.ai\\\"] div.h-full.overflow-y-auto div.items-end\")].filter(e=>e.getClientRects().length).pop();if(!el)return 'SEM ALVO';const dy=Math.round(el.getBoundingClientRect().top-165);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/500),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});await new Promise(r=>setTimeout(r,60));return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 60.59,
+   "at": 60.45,
    "label": "a conversa sobe até o começo da resposta (a tabela empurrou)"
   },
   {
@@ -337,8 +337,8 @@
    "target": {
     "selector": "[role=dialog][aria-label^=\"Cato.ai\"] th:has-text(\"Material\")"
    },
-   "seconds": 0.4,
-   "at": 60.8,
+   "seconds": 0.15,
+   "at": 60.9,
    "label": "tabela: Material",
    "optional": true,
    "timeout": 4
@@ -348,8 +348,8 @@
    "target": {
     "selector": "[role=dialog][aria-label^=\"Cato.ai\"] th:has-text(\"Quantidade\")"
    },
-   "seconds": 0.4,
-   "at": 61.66,
+   "seconds": 0.15,
+   "at": 61.76,
    "label": "tabela: Quantidade (kg)",
    "optional": true,
    "timeout": 4
@@ -359,8 +359,8 @@
    "target": {
     "selector": "[role=dialog][aria-label^=\"Cato.ai\"] th:has-text(\"Valor em estoque\")"
    },
-   "seconds": 0.8,
-   "at": 62.7,
+   "seconds": 0.15,
+   "at": 62.6,
    "label": "tabela: Valor em estoque",
    "optional": true,
    "timeout": 4

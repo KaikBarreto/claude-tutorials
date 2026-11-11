@@ -3,7 +3,7 @@
 // e o Pix Copia e Cola FICTÍCIOS (chave inventada, nada sai daqui) e grava a cobrança em subscription_payments (status PENDING) para o
 // check-asaas-payment responder. Depois, a centralização do edge: billing_managed_by_group_id em todas as unidades e o ponteiro de
 // assinatura das filiais limpo. Ciclos misturados = GROUP_MIXED_CYCLE. Cartão e boleto não fazem parte da aula: recusa sem cobrança.
-import { exigeDono, empresasDoGrupo, empresaDoUsuario } from '../../lib/grupo.mjs';
+import { exigeDono, empresasDoGrupo } from '../../lib/grupo.mjs';
 import { esperado } from '../rpc/group_expected_payment.mjs';
 import { agoraMs } from '../../lib/eco.mjs';
 
@@ -57,6 +57,5 @@ export default (body, ctx) => {
     is_recurring: body?.recurring !== false, pix_automatic: true, authorization_id: authId, payment_id: authId, status: 'PENDING', pix_qr_code: PNG,
     pix_copy_paste: copia, pix_expiration_date: expira, due_date: venc,
     centralization: { subscriptions_cancelled: [], companies_marked: ids, errors: [] },
-    _usuario: empresaDoUsuario(store, ctx.userId) ? undefined : undefined,
   };
 };

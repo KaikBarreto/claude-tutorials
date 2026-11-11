@@ -733,6 +733,13 @@ QTD = SEL(f"{DLG} tr.bg-primary\\/5 input", nth=2)                        # linh
 RESUMO = SEL(f"{DLG} :text-is('Total da nota')")
 
 
+def js_valor_campo(material):
+    """lê a linha do item (os valores ficam em inputs, fora do innerText): 'OK: ...' ou 'DIFERENTE: ...'"""
+    return ("(()=>{const rs=[...document.querySelectorAll('[role=dialog] tr')].filter(r=>[...r.querySelectorAll('input')].some(i=>i.value.includes(%s)));"
+            "if(!rs.length)return 'DIFERENTE: sem a linha';const v=[...rs[rs.length-1].querySelectorAll('input')].map(i=>i.value).join(' | ');"
+            "const t=document.querySelector('[role=dialog]').innerText;return (v.includes('500,00')&&t.includes('23.950,00')?'OK: ':'DIFERENTE: ')+v})()") % json.dumps(material)
+
+
 def emite_e_espera(c, num, at, label, linha_aut=None, at_aut=None):
     """Emitir Nota (rodapé fixo, sem rolar): a janela fecha, a linha #num aparece "Aguardando SEFAZ" e, no polling de 5 s, "Autorizada"."""
     c.click(ROD('Emitir Nota'), at=at, label=label, noScroll=True)
@@ -820,8 +827,8 @@ def cap10():
     c.hover(SEL(f"{DLG} button:has-text('Fundição Bandeira do Vale')", nth=0), 0.8, at=c.A(3, 'cliente', 0.6), label='o cliente veio do pedido')
     c.mark(4)
     c.click(ROD('Avançar'), at=round(c.L(4) - 0.2, 2), label='Avançar', noScroll=True)
-    c.marcar(SEL(f"{DLG} :text-is('Cobre mel')", nth=-1), at=c.A(4, 'quantidade:', 0.2), label='zoom: Qtd 500 (Cobre mel)')
-    c.confere('dlg', ['Cobre mel', '23.950,00'], 'Cobre mel 500 kg = R$ 23.950,00')
+    c.marcar(SEL(f"{DLG} th:text-is('Qtd')", nth=-1), at=c.A(4, 'quantidade:', 0.2), label='zoom: Qtd 500 (Cobre mel)')
+    c.ev(js_valor_campo('Cobre mel'), label='confere Qtd do Cobre mel (500,00) e o total R$ 23.950,00')
     c.mark(5)
     c.mark(6)
     c.mark(7)
@@ -1041,9 +1048,9 @@ def cap17():
     de compra (L7, sem clicar)."""
     c = Cap(17, setup=setup_nfe('recebidas', 'Notas emitidas contra o seu CNPJ'), start=(760, 400))
     c.mark(1)
-    c.hover(BTN('Importar nota', MAIN), 1.0, at=c.A(1, 'arquivo.', 0.6), label='Importar nota')
+    c.hover(BTN('Importar nota recebida', MAIN), 1.0, at=c.A(1, 'arquivo.', 0.6), label='Importar nota')
     c.mark(2)
-    c.click(BTN('Importar nota', MAIN), at=c.A(2, 'Importar', 0.7), label='Importar nota')
+    c.click(BTN('Importar nota recebida', MAIN), at=c.A(2, 'Importar', 0.7), label='Importar nota')
     c.waitfor(text='Importar nota recebida', timeout=10)
     c.click(SEL(f"{DLG} [role=tab]:has-text('Arquivo XML'), {DLG} button:has-text('Arquivo XML')"), at=c.A(2, 'Arquivo', 0.6), label='aba Arquivo XML')
     c.upload(SEL(f"{DLG} button:has-text('Selecione o XML'), {DLG} label:has-text('Selecione o XML')"), XML_COOP, at=c.A(2, 'escolho', 0.7),

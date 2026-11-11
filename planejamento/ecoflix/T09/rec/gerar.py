@@ -120,8 +120,9 @@ def js_aba_html(k, nome, espera_txt):
 
 
 class Cap:
-    def __init__(s, n, pace=0.5, cps=9, start=(900, 440), setup=None, noscroll=False):
+    def __init__(s, n, pace=0.5, cps=9, start=(900, 440), setup=None, noscroll=False, storage=None):
         s.n = n
+        s.storage_extra = dict(storage or {})
         s.words, s.linhas, s.dur, s.estimada = carregar_voz(n)
         s.steps = []
         s.pace, s.cps, s.start = pace, cps, start
@@ -256,7 +257,7 @@ class Cap:
                      f'marcas L1..L{len(s.linhas)} = início de cada linha do roteiro; FAKE_NOW {FAKE_NOW})',
             'seed': f't09-cap{s.n:02d}', 'pace': s.pace, 'cps': s.cps, 'tail': 1.5,
             'start': {'x': s.start[0], 'y': s.start[1]},
-            'anonymous': True, 'storage': dict(STORAGE),
+            'anonymous': True, 'storage': {**STORAGE, **s.storage_extra},
             'seedExtra': sementes(s.n),
             'prewarm': ['/login'], 'setup': s.setup, 'steps': s.steps,
         }
@@ -625,7 +626,7 @@ L_ESTORNO = "03/11/2026'):has-text('Estornado em"                            # a
 def cap05():
     """Excluir e o selo de estornado: as duas compras do Valdir (L1); a prévia da exclusão (L2, zoom); Excluir pedido (L3); Este mês e o
     selo "Estornado em 05/11" com a dica (L4-L5, zoom); (ilustração L6); Configurações > Empresa > Ver histórico (L7)."""
-    c = Cap(5, setup=setup_pedidos('Hoje', extra=ITENS_50))
+    c = Cap(5, setup=setup_pedidos('Hoje'), storage={'orders_table_items_per_page': '50'})   # 50 por página: as compras de 03/11 na mesma página
     c.mark(1)
     c.hover(SEL(LINHA(L_VALDIR)), 0.5, at=c.A(1, 'Valdir', 0.6), label='a compra do Valdir das 07:41')
     c.hover(SEL(LINHA(L_DUP)), 0.8, at=c.A(1, 'duas', 0.6), label='[DESTAQUE] a mesma compra às 07:42 (duplicada)')
@@ -649,19 +650,24 @@ def cap05():
     c.ev(js_ate_el("[...document.querySelectorAll('main tbody tr')].find(t=>t.innerText.includes('Estornado em'))", y=430, dur_ms=1100),
          at=c.A(4, 'compra', 0.9, nth=0), label='rola a lista até as compras de 03/11 da Aparecida')
     c.hover(SEL(f"{LINHA(L_ESTORNO)} :text('Estornado em')"), 2.6, at=c.A(4, 'cópia', 0.6), label='[ZOOM] o selo "Estornado em 05/11" e a dica')
+    c.ev("(()=>{const t=[...document.querySelectorAll('main tbody tr')].find(t=>t.innerText.includes('Estornado em'));const b=t&&[...t.querySelectorAll('[title]')].find(e=>e.textContent.includes('Estornado em'));return b?'Ao passar o mouse: '+b.title:'SEM ALVO'})()",
+         label='[AVISO] a dica do selo é o title do navegador (não aparece na gravação): o texto exato para o aviso da edição')
     c.mark(5)
     c.hover(SEL(f"{LINHA(L_ESTORNO)} :text('Estornado em')"), 3.0, at=c.A(5, 'Ele', 0.2), label='a dica continua (correção no caixa do dia em que excluiu)')
     c.mark(6)
     c.cursor((700, 300), at=c.A(6, 'O', 0.2), label='cursor sai do selo (ilustração excluir x estornar)')
     c.mark(7)
-    c.click(CONFIG_MENU, at=c.A(7, 'Só', 0.8), label='Configurações (rodapé do menu)', noScroll=True)
+    c.click(SEL('header button:has(svg.lucide-panel-left)'), at=c.A(7, 'E', 0.2), label='abre o menu lateral (recolhido no começo)', noScroll=True)
+    c.click(SEL("button[aria-label='Configurações']"), at=c.A(7, 'Só', 0.8), label='Configurações (rodapé do menu)', noScroll=True)
+    c.waitfor(url='/configuracoes', timeout=15)
+    c.click(TXT('Empresa', within='main'), at=c.A(7, 'administrador', 0.6), label='aba Empresa', unless=TXT('Histórico de Exclusões', within='main'))
     c.waitfor(text='Histórico de Exclusões', timeout=15)
     c.ev(js_ate_el("[...document.querySelectorAll('main h3, main h2, main p, main div')].find(e=>e.children.length===0&&e.textContent.trim()==='Histórico de Exclusões')", y=360, dur_ms=800),
          at=c.A(7, 'Configurações,', 0.5), label='desce até o cartão Histórico de Exclusões')
     c.click(BTNX('Ver histórico'), at=c.A(7, 'Ver', 0.7), label='Ver histórico')
     c.waitfor(text='Excluiu compra', timeout=15)
     c.confere('main', ['Histórico de Exclusões', 'Excluiu compra', 'Valdir Pereira', 'rafael@reciclavalemetais.example'], 'a linha de hoje no Histórico de Exclusões')
-    c.registra(SEL("main :is(div,li):has(> * :text('Excluiu compra')):has-text('Valdir Pereira')"), at=c.A(7, 'histórico.', -0.6),
+    c.registra(SEL("main :is(div,li):has(> * :text('Excluiu compra')):has-text('Valdir Pereira')"), at=c.A(7, 'histórico.', -0.6, nth=1),
                label='[ZOOM] a linha "Excluiu compra "Valdir Pereira"", com a hora e o e-mail')
     c.fim()
     return c

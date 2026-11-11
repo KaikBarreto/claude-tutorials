@@ -447,16 +447,14 @@ def cap02():
     c.click(CRIAR, at=c.A(1, 'Criar', 0.6), label='Criar Usuário')
     c.waitfor(text='Preencha os dados do novo usuário', timeout=10)
     c.mark(2)
-    # com a máquina carregada a digitação do robô cai a ~0,2 s por letra (ensaio de 11/11): o nome começa já no "nome", o e-mail (41
-    # letras) entra colado e a senha vai mais rápida
-    c.click(SEL('#fullName'), at=c.A(2, 'Primeiro', 0.8), label='campo Nome Completo')
-    c.type(SEL('#fullName'), 'Marcos Antunes', at=c.A(2, 'nome', 0.05), noClick=True, cps=30, label='Nome Completo: Marcos Antunes')
+    c.click(SEL('#fullName'), at=c.A(2, 'nome', 1.0), label='campo Nome Completo')
+    c.type(SEL('#fullName'), 'Marcos Antunes', at=c.A(2, 'Marcos', 0.05), noClick=True, cps=30, label='Nome Completo: Marcos Antunes')
     c.mark(3)
     c.click(SEL('#email'), at=c.A(3, 'e-mail.', 0.6), label='campo Email')
-    c.ev(js_colar(EMAIL_MARCOS), at=c.A(3, 'e-mail.', -0.1), label='Email do Marcos (colado)')
+    c.type(SEL('#email'), EMAIL_MARCOS, at=c.A(3, 'e-mail.', -0.35), noClick=True, cps=40, label='Email do Marcos')
     c.mark(4)
     c.click(SEL('#password'), at=c.A(4, 'senha', 0.6), label='campo Senha')
-    c.type(SEL('#password'), SENHA_MARCOS, at=c.A(4, 'define,', 0.05), noClick=True, cps=20, label='Senha (aparece em pontinhos)')
+    c.type(SEL('#password'), SENHA_MARCOS, at=c.A(4, 'define,', 0.05), noClick=True, cps=10, label='Senha (aparece em pontinhos)')
     c.confere('dlg', ['Senha forte. Deve conter:', 'Pelo menos 8 caracteres', 'Pelo menos 1 número', 'Pelo menos 1 letra minúscula',
                       'Pelo menos 1 letra maiúscula', 'Pelo menos 1 caractere especial'], 'Senha forte e os cinco itens')
     c.marcar(TXT('Senha forte. Deve conter:', DLG), at=c.A(4, 'Repara', 0.0), label='ZOOM indicador Senha forte e os cinco itens')

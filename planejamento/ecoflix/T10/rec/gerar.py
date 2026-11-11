@@ -511,11 +511,11 @@ def cap03():
     320; Transferir: 6.100,000 e 2.500,000; marca Cobre mel e Cobre misto: a barra com Transferir Estoque (sem clicar); desmarca."""
     c = Cap(3, setup_estoque())
     c.ev(js_rola_ate('Lista de Materiais', y=110), w=(2, 'entra', None, 0.0), label='a lista sobe (por baixo da ilustração)')
-    abre_acoes(c, 'Ferro misto', 'Transferir estoque', w=(3, 'abro'), w_item=(3, 'Transferir'))
+    abre_acoes(c, 'Ferro misto', 'Transferir estoque', w=(3, 'ferro'), w_item=(3, 'clico'))   # hover no "..." custou 2,5 s com a máquina carregada
     c.waitfor(text='Transferir quantidade de Ferro misto', timeout=8)
-    c.confere('dlg', ['Transferir Estoque', 'Estoque Atual de Ferro misto', '6.420'], 'janela: Estoque Atual de Ferro misto 6.420 Kg')
     c.hover(SEL(f"{DLG} div:has(> label:has-text('Estoque Atual de Ferro misto'))"), 2.4, w=(4, 'estoque'),
             label='[ZOOM] Estoque Atual de Ferro misto 6.420 Kg')
+    c.confere('dlg', ['Transferir Estoque', 'Estoque Atual de Ferro misto', '6.420'], 'janela: Estoque Atual de Ferro misto 6.420 Kg')
     c.click(SEL(f'{DLG} #target-material'), w=(5, 'material'), primeiro=True, label='Material de Destino')
     c.type(SEL(f'{DLG} #target-material'), 'ferro pes', w=(5, 'destino,', None, 0.0), clicar=False, cps=24, label='Material de Destino: ferro pes')
     c.click(OPT('Ferro pesado', exact=False), w=(5, 'pesado.'), label='Ferro pesado')
@@ -527,10 +527,10 @@ def cap03():
     c.hover(CELULA('Ferro misto', 4), 1.2, w=(6, 'misto'), label='[ZOOM] Ferro misto 6.100 Kg')
     c.hover(CELULA('Ferro pesado', 4), 1.6, w=(6, 'pesado,'), label='[ZOOM] Ferro pesado 2.500 Kg')
     c.confere('main tbody', [' 6.100Kg', ' 2.500Kg'], 'Ferro misto 6.100 Kg e Ferro pesado 2.500 Kg')
-    c.click(CHK('Cobre mel'), w=(7, 'você'), label='marca Cobre mel')
-    c.click(CHK('Cobre misto'), w=(7, 'materiais,'), label='marca Cobre misto')
+    c.click(CHK('Cobre mel'), w=(7, 'quando'), label='marca Cobre mel')
+    c.click(CHK('Cobre misto'), w=(7, 'vários'), label='marca Cobre misto')
     c.hover(BARRA('Transferir Estoque'), 2.6, w=(7, 'barra'), noScroll=True, label='[ZOOM] barra de baixo: 2 selecionados e Transferir Estoque (sem clicar)')
-    c.confere('div.fixed:has(button)', ['2', 'selecionados', 'Transferir Estoque'], 'barra: 2 selecionados, Transferir Estoque')
+    c.confere('div.fixed.bottom-20', ['2', 'selecionados', 'Transferir Estoque'], 'barra: 2 selecionados, Transferir Estoque')
     c.click(CHK('Cobre mel'), w=(7, 'Gerencial,'), label='desmarca Cobre mel')
     c.click(CHK('Cobre misto'), w=(7, 'plano'), label='desmarca Cobre misto')
     c.fim()

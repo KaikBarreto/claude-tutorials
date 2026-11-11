@@ -553,3 +553,9 @@ Decisões:
   terra, borracha, plástico, `bigBag`; mesma API, os montes caem nos mesmos lugares). As frentes 3D foram avisadas para
   conferir e fazer as prévias com `--dsf 1`; o agente da T11/T12 foi retomado para as prévias dele. O `chaparia.js` não
   foi apagado pelo agente do kit (perguntado à frente T17/T18).
+- 11/11 17:3x **Robô da T13**: com renders ao lado, os gestos do ensaio completo saíam 1,5 a 2x mais lentos (cap04 às
+  17:21, já com o render em SCHED_IDLE: maxLate 8,2 s com 0 passo falho; no ensaio sem carga, 0,8 a 1,1 s por gesto).
+  **O `render_cenas.cjs` agora pausa entre quadros enquanto um `node record.mjs` captura** (sem ffmpeg filho; volta quando
+  ele monta o MP4 ou sai; `RENDER_PAUSA=0` desliga; conferido o detector e um quadro 2D). Aviso mandado aos 18 robôs que
+  ensaiaram desde as 13:30 (regravar o capítulo antes de mexer em âncora por atraso visto nesse intervalo) e às frentes 3D
+  (prévias mais lentas, trechos de 7 s). Na gravação final, a mesma regra: nada de render enquanto o robô captura.

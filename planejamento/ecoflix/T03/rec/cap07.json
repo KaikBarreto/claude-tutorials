@@ -622,14 +622,17 @@
    "clear": true
   },
   {
-   "do": "click",
+   "do": "hover",
    "target": {
     "role": "option",
     "name": "Bronze",
     "exact": false
    },
-   "at": 115.5,
-   "label": "Bronze"
+   "seconds": 0.4,
+   "at": 115.25,
+   "label": "Bronze na lista",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "scroll",
@@ -638,9 +641,25 @@
     "y": 748
    },
    "by": 0,
-   "duration": 0.3,
+   "duration": 0.35,
    "after": 0,
    "label": "cursor no lugar do aviso (embaixo à direita)"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const o=[...document.querySelectorAll('[role=option]')].filter(e=>e.offsetParent!==null&&e.innerText.includes('Bronze'))[0];if(!o)return 'SEM ALVO: opção Bronze';o.click();return 'ok'})()",
+   "label": "escolhe Bronze (clique por JS, com o cursor já no lugar do aviso)"
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 1000,
+    "y": 752
+   },
+   "by": 0,
+   "duration": 0.12,
+   "after": 0,
+   "label": "o mouse mexe em cima do aviso (o sonner pausa)"
   },
   {
    "do": "hover",

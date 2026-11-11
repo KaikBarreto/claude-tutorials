@@ -109,7 +109,7 @@ CAPS[0] = () => {
   const P = patio({ banco: true });
   const tit = titulo('Primeira aula', 'Bem-vindo ao <span style="color:var(--ve)">EcoSistema</span>');
   // alfinetes das seis estações (acima de cada lugar) e a linha que os liga (cinza; a verde corre de um ao outro)
-  const PINO = [[XG, HP + 1.2, 0], [BAL[0], 2.8, BAL[2]], [GUI[0], 3.7, GUI[2]], [BAI[0], 2.6, BAI[2]], [CAM[0], 3.6, CAM[2]], [BCO[0], 4.3, BCO[2]]];
+  const PINO = [[XG, HP + 1.3, 0], [BAL[0] + .5, 2.65, BAL[2] - .2], [GUI[0], 3.9, GUI[2]], [BAI[0], 3.0, BAI[2]], [CAM[0], 4.2, CAM[2]], [BCO[0], 4.5, BCO[2]]];
   const svg = el(`<svg class="ab" style="left:0;top:0;overflow:visible" width="1280" height="800"><polyline class="lc" fill="none" stroke="#DDE3E0"
       stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><polyline class="lv" fill="none" stroke="#50D088" stroke-width="7"
       stroke-linecap="round" stroke-linejoin="round"/></svg>`);
@@ -122,8 +122,8 @@ CAPS[0] = () => {
   const tr = trilha([[-15, ZC], [XG - 2.2, ZC], [XG - .5, ZC - .9], [XG, -.6], [XG + .1, -2.2]]);
   const s1 = tr.L - .2, s0 = s1 - 7.6, a0 = tl - .25, a1 = tp + .45;
   const an = anel(P.car, 1.45, .08, [.7, 0, 0]), onda = anel(P.car, 1.45, .05, [.7, 0, 0]);   // a sucata que entra: anel na carroça
-  camera([[0, { x: 1.2, y: .6, z: 0, d: 37.5, az: -.19, el: .54, oy: -112 }], [tl - .2, { x: 1.2, y: .6, z: 0, d: 37.5, az: -.19, el: .54, oy: -112 }],
-    [tc + 1.2, { x: 1.6, y: .6, z: 0, d: 35.8, az: -.13, el: .54, oy: -116 }, 'lin']]);
+  camera([[0, { x: .8, y: .6, z: 1, d: 34.4, az: -.28, el: .45, oy: -150 }], [tl - .2, { x: .8, y: .6, z: 1, d: 34.4, az: -.28, el: .45, oy: -150 }],
+    [tc + 1.2, { x: 1.1, y: .6, z: 1, d: 32.8, az: -.22, el: .45, oy: -155 }, 'lin']]);
   return t => {
     GL.style.opacity = eo(pr(t, tl - .25, .6)).toFixed(3);
     posTitulo(tit, t, -.6, tl - .1);
@@ -141,7 +141,7 @@ CAPS[0] = () => {
     const str = pts.map(p => p[0].toFixed(1) + ',' + p[1].toFixed(1)).join(' ');
     lc.setAttribute('points', str); lv.setAttribute('points', str);
     lv.style.strokeDasharray = `${tot.toFixed(1)} ${(tot + 10).toFixed(1)}`; lv.style.strokeDashoffset = (tot - feito).toFixed(1); lv.style.opacity = t >= TS[0] ? 1 : 0;
-    vis(svg, t, tl + .15, 1e9, { dy: 0, sc: 1 });
+    vis(svg, t, tl + .6, 1e9, { dy: 0, sc: 1 });
   };
 };
 
@@ -227,7 +227,7 @@ CAPS[5] = () => {
   const m1 = tLa + .45, m2 = tCx - .55, m3 = tMt - .5, m4 = tDe - .4, sai = tVe, ANDA = 6, DUR = 2.8;
   const V = k(9.8, 1.0, -1.8, 13.5, 0, -185);
   camera([[0, k(-5.3, 1.3, .6, 13.2, -.02, -150)], [m1, k(-4.8, 1.3, .6, 12.5, 0, -148), 'lin'],
-    [m1 + 1.25, k(-2.9, .8, 2.4, 10.4, .02, -128)], [m2, k(-2.9, .8, 2.4, 9.9, .02, -128), 'lin'],
+    [m1 + 1.25, k(-2.9, .8, 2.7, 11.5, 0, -200)], [m2, k(-2.9, .8, 2.7, 11.4, 0, -199), 'lin'],
     [m2 + 1.3, k(-.4, 1.2, 1.0, 10.2, 0, -166)], [m3, k(-.4, 1.2, 1.0, 9.8, 0, -166), 'lin'],
     [m3 + 1.6, k(0, .9, 1.5, 15.5, .1, -212)], [m4, k(0, .9, 1.5, 15.2, .1, -212), 'lin'],
     [Math.max(m4 + 1.9, tJu), V], [sai, { ...V, d: 13.3 }, 'lin'],
@@ -247,7 +247,7 @@ CAPS[5] = () => {
     vis(nLat, t, tLa - .05, tBa - .2, { dy: 8 }); ancora(nLat, mundo(P.car, [0, 1.3, 0]), .5, 1, 0, -6);
     // 2 balança: os sacos pulam para a plataforma; o mostrador conta até 38 kg e cresce
     sacosNaBalanca(P, t, h0);
-    vis(most, t, h1 - .25, tCx - .2, { dy: 10 }); ancora(most, P.topoBal, .5, 1, 40, -6);
+    vis(most, t, h1 - .25, tCx - .2, { dy: 10 }); ancora(most, P.topoBal, .5, 1, -10, -6);
     conta(mn, t, m0, 1.1, 0, KG);
     mostIn.style.transform = `scale(${lerp(1, 1.18, eio(pr(t, m0, Math.max(.8, LE(1) - m0)))).toFixed(4)})`;
     // 3 caixa: o cupom sai da registradora, o pedido de compra e o dinheiro na hora
@@ -269,9 +269,10 @@ CAPS[5] = () => {
     // 5 venda: o caminhão carregado de latinha sai para a Serra Fina, com a nota fiscal (a câmera vai junto)
     const xc = CAM[0] + ANDA * eio(pr(t, sai, DUR)); anda(P.cam, xc);
     vis(cli, t, tSe - .1, 1e9, { dy: 20, sc: .94 });
-    vis(nf, t, tNo - .1, 1e9, { dy: 8 }); ancora(nf, [xc + 1.75, 2.62, CAM[2]], .5, 1, 0, -4); pulse(nf, t, tNo + .5, .05, .6);
+    vis(nf, t, tNo - .1, 1e9, { dy: 8 }); ancora(nf, [xc + 1.75, 0, CAM[2] + 1.3], .5, 0, 0, 10); pulse(nf, t, tNo + .5, .05, .6);
   };
 };
 
-cena(d => CAPS[d.cap](), d => ({ sombra: d.cap === 0 ? 17 : 11, mapa: 2048, chao: false }));
+// mapa de sombra 2048 no render final (2560x1600); 1024 na conferência e na prévia (--dsf 1), que rodam com a CPU que sobra
+cena(d => CAPS[d.cap](), d => ({ sombra: d.cap === 0 ? 17 : 11, mapa: (window.devicePixelRatio || 1) >= 2 ? 2048 : 1024, chao: false }));
 </script></body></html>

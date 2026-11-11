@@ -53,6 +53,8 @@ Quadros de conferência (poucos JPEG) não disputam a trava pesada com a gravaç
 O `render_cenas.cjs` se põe sozinho em `SCHED_IDLE` (`chrt -i`), com o Chromium e o ffmpeg que ele abre: só usa a CPU
 que sobra da gravação. O `nice` não basta: como root, o Chromium sobe o processo da GPU para nice -8 (11/11, a cena 3D a
 57 % de CPU no mesmo nível da gravação). `RENDER_PRIORIDADE=normal` desliga (render sozinho na máquina).
+E pausa sozinho enquanto o robô captura (um `node record.mjs` vivo sem ffmpeg filho; com ffmpeg ele já está montando o
+MP4): mesmo em SCHED_IDLE, a cena 3D ao lado deixava os gestos 1,5 a 2x mais lentos. `RENDER_PAUSA=0` desliga.
 
 ## Render e montagem
 ```bash

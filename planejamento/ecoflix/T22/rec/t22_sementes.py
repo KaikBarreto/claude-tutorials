@@ -133,9 +133,21 @@ VEND_SET = resolve_vendas({'al_latinha': 900, 'ferro_pesado': 5600, 'chaparia': 
 COMP_SET = resolve_compras({'al_latinha': 1500, 'chaparia': 4300, 'cobre_misto': 100, 'cobre_mel': 50, 'latao': 70, 'al_perfil': 300,
                             'al_bloco': 60, 'inox': 520, 'bateria': 800, 'papelao': 5200, 'pet': 600, 'fio_cobre': 120, 'bronze': 10},
                            57000)
-# NOVEMBRO (03 a 09/11): algumas compras e vendas (sem total falado)
-COMP_NOV = {'al_latinha': 420, 'ferro_pesado': 2600, 'ferro_misto': 1800, 'papelao': 1500, 'chaparia': 900, 'bateria': 300, 'pet': 200}
-VEND_NOV = {'ferro_pesado': 3000, 'chaparia': 1500, 'al_latinha': 300, 'cobre_mel': 20, 'papelao': 2400}
+# NOVEMBRO (03 a 09/11): algumas compras e vendas (sem total falado), pedido a pedido; a compra de 09/11 16:20 fica no alto do Histórico de
+# Materiais do grupo (cap08: "cada entrada e cada saída, com a unidade de onde veio")
+NOV_PEDIDOS = [
+    ('2026-11-03', '09:10', 'purchase', '@id:t22.fornecedor.joaquim', [('ferro_pesado', 1300), ('ferro_misto', 900)]),
+    ('2026-11-04', '10:05', 'purchase', '@id:t22.fornecedor.mutirao', [('papelao', 1100), ('pet', 200), ('al_latinha', 240)]),
+    ('2026-11-05', '15:10', 'sale', '@id:t22.cliente.bandeira', [('cobre_mel', 20), ('al_latinha', 300)]),
+    ('2026-11-06', '09:40', 'purchase', None, [('ferro_pesado', 1300), ('ferro_misto', 900), ('chaparia', 900), ('bateria', 300)]),
+    ('2026-11-06', '16:05', 'sale', '@id:t22.cliente.toledo', [('ferro_pesado', 3000), ('chaparia', 1500), ('papelao', 2400)]),
+    ('2026-11-09', '16:20', 'purchase', '@id:t22.fornecedor.rosa', [('al_latinha', 180), ('papelao', 400)]),
+]
+COMP_NOV, VEND_NOV = {}, {}
+for _d, _h, _t, _p, _cesta in NOV_PEDIDOS:
+    for _k, _q in _cesta:
+        _alvo = COMP_NOV if _t == 'purchase' else VEND_NOV
+        _alvo[_k] = _alvo.get(_k, 0) + _q
 
 # ---------------------------------------------------------------- calendário (dias úteis; 12/10 e 02/11 são feriado)
 FERIADOS = {'2026-09-07', '2026-10-12', '2026-11-02'}
@@ -183,6 +195,12 @@ def cnpj_ok(c):
     p1 = [5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2]
     p2 = [6] + p1
     return dv(d[:12], p1) == d[12] and dv(d[:13], p2) == d[13]
+
+
+def grava(nome, dados):
+    tmp = os.path.join(SAIDA, '.' + nome + '.novo')
+    json.dump(dados, open(tmp, 'w', encoding='utf8'), ensure_ascii=False, indent=1)
+    os.replace(tmp, os.path.join(SAIDA, nome))
 
 
 def main():
@@ -325,7 +343,7 @@ def main():
     cli_metais = '@id:t22.cliente.bandeira'
     cli_ferro = '@id:t22.cliente.toledo'
     plano = []
-    for qc, qv, dias in ((COMP_SET, VEND_SET, sete), (COMP_OUT, VEND_OUT, outu), (COMP_NOV, VEND_NOV, nove)):
+    for qc, qv, dias in ((COMP_SET, VEND_SET, sete), (COMP_OUT, VEND_OUT, outu)):
         cedo = dias[:max(2, int(len(dias) * 0.6))]   # compras na primeira parte do mês, vendas na segunda (estoque nunca negativo)
         for d, h, p, cesta in pedidos_do_mes(qc, cedo, 1, 'purchase', 8 * 60 + 40, forn):
             plano.append((d, h, 'purchase', p, cesta))
@@ -337,6 +355,7 @@ def main():
             plano.append((d, h, 'sale', p, cesta))
         for d, h, p, cesta in pedidos_do_mes(vf, meio, 3, 'sale', 16 * 60 + 5, [cli_ferro]):
             plano.append((d, h, 'sale', p, cesta))
+    plano += [(d, h, t, p, list(c)) for d, h, t, p, c in NOV_PEDIDOS]
     plano.sort(key=lambda x: (x[0], x[1]))
 
     saldo = dict(inicial)
@@ -450,16 +469,16 @@ def main():
                    if next(p for p in rows['purchases'] if p['id'] == i['purchase_id'])['transaction_date'] <= '2026-09-30'):
             raise SystemExit(f'{k} sem compra em setembro (o custo médio de 30/09 sairia zero)')
     os.makedirs(SAIDA, exist_ok=True)
-    json.dump(rows, open(os.path.join(SAIDA, 'inicio.json'), 'w', encoding='utf8'), ensure_ascii=False, indent=1)
+    grava('inicio.json', rows)
 
     grupo = {'company_groups': [{'id': '@id:t22.grupo', 'name': 'Grupo Recicla Vale', 'owner_company_id': '@id:company.reciclavale',
                                  'invite_code': 'GRP-7C4E9A', 'invite_code_expires_at': '2026-12-10T11:34:00.000Z', 'max_members': 10,
                                  'require_transfer_approval': False, 'asaas_subscription_id': None,
                                  'created_at': '2026-11-10T11:34:00.000Z'}]}
-    json.dump(grupo, open(os.path.join(SAIDA, 'apos-cap02.json'), 'w', encoding='utf8'), ensure_ascii=False, indent=1)
+    grava('apos-cap02.json', grupo)
     membro = {'company_group_members': [{'id': '@id:t22.membro.filial', 'group_id': '@id:t22.grupo', 'company_id': F,
                                          'joined_at': '2026-11-10T11:41:00.000Z', 'status': 'active'}]}
-    json.dump(membro, open(os.path.join(SAIDA, 'apos-cap03.json'), 'w', encoding='utf8'), ensure_ascii=False, indent=1)
+    grava('apos-cap03.json', membro)
 
     print(f"filial: {len(rows['purchases'])} compras, {len(rows['sales'])} vendas, {len(rows['stock_movements'])} movimentos, "
           f"{len(rows['bank_transactions'])} lançamentos; banco R$ {banco[0]:,.2f}")

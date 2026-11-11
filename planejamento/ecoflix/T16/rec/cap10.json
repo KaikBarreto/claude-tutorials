@@ -208,7 +208,7 @@
   {
    "do": "type",
    "target": {
-    "selector": "[role=dialog] :text-is('Cobre mel')",
+    "selector": "[role=dialog] th:text-is('Qtd')",
     "nth": -1
    },
    "text": "",
@@ -220,8 +220,8 @@
   },
   {
    "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Cobre mel\", \"23.950,00\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog],[role=alertdialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
-   "label": "confere Cobre mel 500 kg = R$ 23.950,00"
+   "js": "(()=>{const rs=[...document.querySelectorAll('[role=dialog] tr')].filter(r=>[...r.querySelectorAll('input')].some(i=>i.value.includes(\"Cobre mel\")));if(!rs.length)return 'DIFERENTE: sem a linha';const v=[...rs[rs.length-1].querySelectorAll('input')].map(i=>i.value).join(' | ');const t=document.querySelector('[role=dialog]').innerText;return (v.includes('500,00')&&t.includes('23.950,00')?'OK: ':'DIFERENTE: ')+v})()",
+   "label": "confere Qtd do Cobre mel (500,00) e o total R$ 23.950,00"
   },
   {
    "do": "mark",

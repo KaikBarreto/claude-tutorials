@@ -6,7 +6,11 @@ Linhas numeradas como no `capNN.json` (L1 = 1ª linha da tabela do capítulo).
 ## Propostas de fala
 | Cap. | Linha | Texto atual | Texto novo | Motivo |
 |---|---|---|---|---|
-| (preencher no ensaio) | | | | |
+| 02 | L2 | "O único campo obrigatório é o Nome." | "O único campo obrigatório é o Nome. Eu escrevo Rogério Alves Costa." | 19 letras levam ~3 s com o robô (~0,16 s por letra nos ensaios de 11/11, máquina cheia) e a linha tem 2,7 s; hoje o nome é **colado** na palavra "Nome" |
+| 02 | L3 | "...chama ele: Rogério Eletricista. O apelido..." | (igual) ou respiro de ~1,5 s depois de "Eletricista." (`pausas.py`) | apelido também colado: digitado, invadiria a linha 4 |
+| 03 | L2 | "Em Dados Fiscais, Pessoa Jurídica, e eu digito o CNPJ." | "Em Dados Fiscais, Pessoa Jurídica, e eu preencho o CNPJ." ou respiro de ~2 s depois de "CNPJ." | os 14 dígitos digitados levam ~2,3 s depois de dois cliques de ~1,5 a 3 s (aba e Pessoa Jurídica): hoje o CNPJ é colado em "CNPJ." |
+| 04 | L5 | "...é o contador. Eu preencho o que ele passou." | "...é o contador. Eu preencho o que ele passou: contribuinte de ICMS, com a inscrição estadual." | escolher o indicador e digitar 12 dígitos leva ~5 s; a frase dá 2,6 s depois de "Eu": hoje o indicador sai em "Quem define" e a inscrição é colada em "Eu" |
+| 09 | L9 | "...Em Observação, eu anoto o motivo." | (igual) ou respiro de ~2 s depois de "motivo." | "Acerto parcial da entrega de 06/11" (34 letras) digitado levaria ~5 s: hoje é colado em "anoto" |
 
 ## Achados do app (1.59.154)
 - **Lupa do CNPJ (cap03 L3):** a dica "Buscar dados da empresa pelo CNPJ" é o `title` nativo do botão

@@ -134,7 +134,7 @@
     "selector": "main tbody tr:has-text('Ferro misto') td:last-child button"
    },
    "seconds": 0.4,
-   "at": 20.66,
+   "at": 19.3,
    "label": "\"...\" da linha Ferro misto",
    "optional": false,
    "timeout": 8
@@ -167,18 +167,13 @@
     "role": "menuitem",
     "name": "Transferir estoque"
    },
-   "at": 22.26,
+   "at": 21.58,
    "label": "Transferir estoque"
   },
   {
    "do": "waitFor",
    "text": "Transferir quantidade de Ferro misto",
    "timeout": 8
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Transferir Estoque\", \"Estoque Atual de Ferro misto\", \"6.420\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
-   "label": "confere janela: Estoque Atual de Ferro misto 6.420 Kg"
   },
   {
    "do": "mark",
@@ -195,6 +190,11 @@
    "label": "[ZOOM] Estoque Atual de Ferro misto 6.420 Kg",
    "optional": true,
    "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Transferir Estoque\", \"Estoque Atual de Ferro misto\", \"6.420\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere janela: Estoque Atual de Ferro misto 6.420 Kg"
   },
   {
    "do": "mark",
@@ -315,7 +315,7 @@
     "name": "Selecionar Cobre mel",
     "exact": true
    },
-   "at": 48.71,
+   "at": 48.18,
    "label": "marca Cobre mel"
   },
   {
@@ -325,7 +325,7 @@
     "name": "Selecionar Cobre misto",
     "exact": true
    },
-   "at": 50.08,
+   "at": 49.55,
    "label": "marca Cobre misto"
   },
   {
@@ -342,7 +342,7 @@
   },
   {
    "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"2\", \"selecionados\", \"Transferir Estoque\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"div.fixed:has(button)\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"2\", \"selecionados\", \"Transferir Estoque\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"div.fixed.bottom-20\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
    "label": "confere barra: 2 selecionados, Transferir Estoque"
   },
   {

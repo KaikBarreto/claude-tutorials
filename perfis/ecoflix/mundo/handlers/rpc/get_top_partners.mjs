@@ -1,5 +1,5 @@
 // Ranking de fornecedores (compra) ou clientes (venda) no período, por valor ou peso. Compra de balcão (sem cadastro)
-// entra como "Sem fornecedor".
+// entra como "Sem cadastro" (como a função SQL: COALESCE(nome, 'Sem cadastro'); T25).
 import { janela, pedidos, itensDe, liquido, num, r2, r3 } from '../../lib/eco.mjs';
 export default (a, { store, companyId }) => {
   const cid = a.p_company_id || companyId;
@@ -10,7 +10,7 @@ export default (a, { store, companyId }) => {
   const acc = new Map();
   for (const p of lista) {
     const pid = (tipo === 'sale' ? p.customer_id : p.supplier_id) || null;
-    const e = acc.get(pid) || { parceiro_id: pid, parceiro: pid ? nomes.get(pid) : tipo === 'sale' ? 'Sem cliente' : 'Sem fornecedor', peso: 0, valor: 0 };
+    const e = acc.get(pid) || { parceiro_id: pid, parceiro: pid ? nomes.get(pid) : 'Sem cadastro', peso: 0, valor: 0 };
     e.valor += num(p.total_amount);
     for (const it of itens.get(p.id) || []) e.peso += liquido(it);
     acc.set(pid, e);

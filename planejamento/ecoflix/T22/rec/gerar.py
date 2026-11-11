@@ -114,7 +114,7 @@ class Cap:
         s.words, s.linhas, s.dur, s.estimado = carregar_voz(n)
         s.steps, s.pending, s.anchors = [], [], []
         s.pace, s.cps, s.start = pace, cps, start
-        s.setup = list(setup) + [{'do': 'eval', 'js': OBS}]
+        s.setup = list(setup) + [{'do': 'eval', 'js': OBS}, {'do': 'eval', 'js': ANIMA_SEMPRE}]
         s.storage_extra = storage_extra
 
     # ---- tempo
@@ -303,6 +303,10 @@ def js_clica_texto(texto, escopo='main', tag='button'):
 
 
 ANIMA = "(()=>{const a=document.getAnimations().filter(x=>x.currentTime<0);a.forEach(x=>x.startTime=document.timeline.currentTime);return a.length})()"
+# o mesmo conserto a cada 60 ms, a partir do setup (o relógio falso deixa animação do framer-motion/WAAPI parada antes do início: o checkout
+# e o "Pagamento Confirmado!" ficavam em branco); não vale depois de um `goto` (nenhum capítulo navega por goto fora do setup)
+ANIMA_SEMPRE = ("(()=>{if(window.__anima)return 'ja';window.__anima=setInterval(()=>{try{document.getAnimations().forEach(x=>{"
+                "if(x.currentTime!==null&&x.currentTime<0)x.startTime=document.timeline.currentTime})}catch(e){}},60);return 'ok'})()")
 
 
 # ---------------------------------------------------------------- alvos próprios do T22
@@ -315,7 +319,9 @@ SWITCH_TEXTO = lambda texto: SEL(f'main div.flex:has(> div > div > p:text-is("{t
 LINHA = lambda texto: SEL(f'main tbody tr:has-text("{texto}")')
 CELULA = lambda texto, n: SEL(f'main tbody tr:has-text("{texto}") td:nth-child({n})')
 KPI = lambda rotulo: SEL(f'main div.rounded-lg:has(> div > div > span:text-is("{rotulo}"))')
-DRE_LINHA = lambda rotulo: SEL(f'main div.flex:has(> span:text-is("{rotulo}"))')
+DRE_LINHA = lambda rotulo: SEL(f'main :is(div,button).flex:has(> span:text-is("{rotulo}"))')
+DRE_VALOR = lambda rotulo: SEL(f'main div.flex:has(> span:text-is("{rotulo}")) > span:last-child')
+DRE_RESULTADO = SEL('main div.flex:has(> div > div > span:text-is("(=) Resultado do Período"))')
 LIXEIRA_FILIAL = SEL('main div.rounded-lg:has(p:text-is("Filial Pindamonhangaba")) button.text-destructive')
 ENVIAR_ATIVOS = SEL('main div.rounded-lg:has(p:text-is("Filial Pindamonhangaba")) button:has-text("Enviar Ativos")')
 COMBO = lambda txt, esc='main': SEL(f'{esc} button[role=combobox]:has-text("{txt}")')
@@ -328,15 +334,34 @@ def setup_dash(extra=()):
     return login() + vai('/gerencial', 'Gerencial') + list(extra)
 
 
+def js_menu_ger(abrir=True):
+    """abre (ou fecha) o grupo "Gerencial (Filiais)" do menu lateral por eval, só se precisar (no setup o `when`/`unless` não vale: lição 155)"""
+    return ("(async()=>{const aberto=()=>!!document.querySelector('a[href=\"/gerencial/configuracoes\"]');"
+            "const b=[...document.querySelectorAll('button')].find(e=>e.textContent.trim().startsWith('Gerencial (Filiais)'));if(!b)return 'SEM ALVO';"
+            f"if(aberto()!=={'true' if abrir else 'false'})b.click();await new Promise(r=>setTimeout(r,500));return aberto()?'aberto':'fechado'}})()")
+
+
 def abre_menu_ger():
     """abre o grupo "Gerencial (Filiais)" do menu lateral (fora do vídeo), se ainda não estiver aberto"""
-    return [{'do': 'click', 'target': MENU_GER, 'unless': SEL('a[href="/gerencial/configuracoes"]')},
-            {'do': 'waitFor', 'target': SEL('a[href="/gerencial/configuracoes"]'), 'timeout': 8}]
+    return [{'do': 'eval', 'js': js_menu_ger(True)}, {'do': 'waitFor', 'target': SEL('a[href="/gerencial/configuracoes"]'), 'timeout': 8}]
+
+
+def fecha_menu_ger():
+    return [{'do': 'eval', 'js': js_menu_ger(False)}]
+
+
+def menu_mostra(rota):
+    """rola (sem animação, fora do vídeo) a lista do menu lateral até o item `rota` aparecer inteiro acima do cartão da conta"""
+    js = ("(()=>{const a=document.querySelector('a[href=\"%s\"]');if(!a)return 'SEM ALVO';let c=a.parentElement;"
+          "while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)break;c=c.parentElement;}"
+          "if(!c||c===document.body)return 'SEM ROLAGEM';const dy=a.getBoundingClientRect().bottom-(c.getBoundingClientRect().bottom-8);"
+          "if(dy>0)c.scrollTop+=dy;return Math.round(a.getBoundingClientRect().top)})()") % rota
+    return [{'do': 'eval', 'js': js}]
 
 
 def cap00():
     """Abertura: Dashboard do EcoSistema da matriz; o cursor abre o grupo "Gerencial (Filiais)" do menu (ilustração na L2)."""
-    c = Cap(0, login() + vai('/gerencial', 'Configurar Grupo') + vai('/dashboard', 'Olá, Rafael!'), pace=0.6, start=(760, 420))
+    c = Cap(0, login() + vai('/gerencial', 'Configurar Grupo') + vai('/dashboard', 'Olá, Rafael!') + fecha_menu_ger(), pace=0.6, start=(760, 420))
     c.mark(1)
     c.hover(MENU_GER, 0.6, at=c.A(1, 'matriz', 0.6), label='menu Gerencial (Filiais)')
     c.click(MENU_GER, at=c.A(1, 'enxergar', 0.5), label='abre o grupo Gerencial (Filiais)', unless=SEL('a[href="/gerencial/configuracoes"]'))
@@ -344,6 +369,7 @@ def cap00():
     c.hover(LINK_GER('Dashboard', '/gerencial'), 0.3, at=c.A(1, 'filial', 0.5), label='Dashboard')
     c.hover(LINK_GER('Financeiro', '/gerencial/financeiro'), 0.2, label='Financeiro')
     c.hover(LINK_GER('Estoque', '/gerencial/estoque'), 0.2, label='Estoque')
+    c.rolar(140, ponto=(120, 640), duration=0.4, after=150)
     c.hover(LINK_GER('Assinaturas', '/gerencial/assinaturas'), 0.2, label='Assinaturas')
     c.hover(LINK_GER('Configurações', '/gerencial/configuracoes'), 0.6, label='Configurações')
     c.mark(2)
@@ -384,9 +410,10 @@ def cap02():
     c.ev(ANIMA)
     c.mark(3)
     c.hover(TAB('unidades'), 0.3, at=c.A(3, 'abas', 0.5), label='abas do grupo')
-    c.hover(TAB('transferencias'), 0.3, label='abas do grupo (até Transferências)')
+    c.hover(TAB('categorias'), 0.3, label='abas do grupo (até Categorias Financeiras)')
     c.hover(TXTP('Configure o grupo', within=MAIN), 1.0, at=c.A(3, 'passo', 0.5), label='passo a passo Configure o grupo')
     c.mark(4)
+    c.ev(js_rola_texto('Código de Convite', 170, 700), at=c.L(4) - 0.9, label='desce até o código de convite')
     c.hover(CODIGO_DIV, 1.0, at=c.A(4, 'código', 0.5), label='código de convite (ZOOM: código e validade)')
     c.hover(TXTP('Válido até', within=MAIN), 1.0, at=c.A(4, 'trinta', 0.5), label='Válido até 10/12/2026')
     c.hover(REGERAR, 1.0, at=c.A(4, 'botão', 0.5), label='botão Gerar novo código')
@@ -444,7 +471,7 @@ def cap04():
     c.ev(ANIMA)
     c.hover(TXTP('unidades', within=MAIN), 1.0, at=c.A(1, 'duas', 0.5), label='Grupo Recicla Vale • 2 unidades')
     c.mark(2)
-    c.click(PERIODO('Este mês'), at=c.A(2, 'outubro', 0.6), label='período')
+    c.click(PERIODO('Este mês'), at=c.A(2, 'outubro', 0.6), label='período', noScroll=True)
     c.click(OPT('Mês passado'), at=c.A(2, 'Mês', 0.3), label='Mês passado')
     c.waitfor(text='R$ 344.040,00', timeout=10)
     c.ev(ANIMA)
@@ -458,7 +485,6 @@ def cap04():
     c.hover(SEL('main div.rounded-lg:has(span:text-is("Receita Total")) span.inline-flex'), 0.8, at=c.A(4, 'setinha', 0.5), label='setinha da Receita Total')
     c.hover(KPI('Estoque Total'), 1.0, at=c.A(4, 'Estoque', 0.5), label='Estoque Total')
     c.mark(5)
-    c.ev(js_rola_texto('Receita vs Despesa por Unidade', 150, 800), at=c.L(5) - 0.9, label='desce até o gráfico por unidade')
     c.hover(SEL('main div.space-y-3:has(h2:has-text("Receita vs Despesa por Unidade")) .recharts-surface'), 1.0, at=c.A(5, 'unidade', 0.5),
             label='gráfico Receita vs Despesa por Unidade')
     c.hover(SEL('main .recharts-xAxis text:has-text("★")'), 1.0, at=c.A(5, 'estrela', 0.5), label='a estrela da matriz')
@@ -469,7 +495,7 @@ def cap04():
 def cap05():
     """Ranking e resumo por unidade: Ranking por Lucro (filial na frente, matriz negativa); Resumo por Unidade, linha da matriz e da filial."""
     c = Cap(5, setup_ger(extra=[{'do': 'click', 'target': PERIODO('Este mês')}, {'do': 'click', 'target': OPT('Mês passado')},
-                                {'do': 'waitFor', 'text': 'R$ 344.040,00', 'timeout': 10}, AGUARDA, rola_setup('Ranking por Lucro', 140)]),
+                                {'do': 'waitFor', 'text': 'R$ 344.040,00', 'timeout': 10}, AGUARDA]),
             pace=0.5, start=(900, 300))
     c.mark(1)
     c.hover(TXTP('Ranking por Lucro', within=MAIN), 0.8, at=c.A(1, 'ranking', 0.5), label='Ranking por Lucro')
@@ -480,12 +506,13 @@ def cap05():
     c.hover(TXTP('Resumo por Unidade', within=MAIN), 0.6, at=c.A(2, 'resumo', 0.4), label='Resumo por Unidade')
     c.mark(3)
     c.hover(LINHA('Recicla Vale Metais'), 1.0, at=c.A(3, 'matriz', 0.5), label='linha da matriz (ZOOM)')
-    c.confere('main tbody', ['R$ 272.040,00', 'R$ 299.690,00', '-R$ 27.650,00', '-10.2%'], 'linha da matriz')
-    c.hover(CELULA('Recicla Vale Metais', 4), 1.0, at=c.A(3, 'negativa', 0.5), label='lucro da matriz -R$ 27.650,00')
+    c.confere('main tbody', ['R$ 272.040,00', 'R$ 299.690,00', 'R$ -27.650,00', '-10.2%'], 'linha da matriz')
+    c.hover(CELULA('Recicla Vale Metais', 4), 1.0, at=c.A(3, 'negativa', 0.5), label='lucro da matriz R$ -27.650,00')
     c.mark(4)
     c.hover(LINHA('Filial Pindamonhangaba'), 1.0, at=c.A(4, 'filial', 0.5), label='linha da filial (ZOOM)')
     c.confere('main tbody', ['R$ 72.000,00', 'R$ 71.000,00', 'R$ 1.000,00', '1.4%'], 'linha da filial')
     c.mark(5)
+    c.hover(CELULA('Recicla Vale Metais', 4), 1.2, at=c.A(5, 'vermelho', 0.5), label='o vermelho da matriz')
     c.fim()
     return c
 
@@ -501,7 +528,7 @@ def setup_fin(aba='dashboard', periodo=True):
 def cap06():
     """A DRE do grupo: Financeiro › DRE › Mês passado (Consolidado); Regime de Caixa: vendas, compras, resultado de caixa; impostos, despesas,
     outras receitas e o resultado do período; Comparativo e a linha Resultado por unidade."""
-    c = Cap(6, setup_ger(url='/gerencial/financeiro', espera='Financeiro Gerencial', extra=vai('/gerencial', 'Dashboard Gerencial')),
+    c = Cap(6, setup_ger(url='/gerencial/financeiro', espera='Financeiro Gerencial', extra=vai('/gerencial', 'Dashboard Gerencial') + abre_menu_ger()),
             pace=0.5, start=(700, 300), storage_extra={'gerencial-financeiro-tab': 'dashboard'})
     c.mark(1)
     c.click(LINK_GER('Financeiro', '/gerencial/financeiro'), at=0.1, label='Financeiro do Gerencial (menu)')
@@ -514,15 +541,15 @@ def cap06():
     c.mark(2)
     c.click({'role': 'tab', 'name': 'Regime de Caixa'}, at=c.A(2, 'caixa,', 0.6), label='Regime de Caixa')
     c.waitfor(text='Compras de Material', timeout=10)
-    c.hover(DRE_LINHA('Vendas de Material'), 1.0, at=c.A(2, 'vendeu', 0.6), label='vendas, compras e resultado de caixa (ZOOM)')
+    c.hover(DRE_LINHA('Vendas de Material'), 1.0, at=c.A(2, 'vendeu', 0.6), label='vendas e compras de material (ZOOM)')
     c.hover(DRE_LINHA('Compras de Material'), 1.0, at=c.A(2, 'comprou', 0.5), label='Compras de Material')
     c.confere('main', ['R$ 341.240,00', 'R$ 318.860,00', 'R$ 19.980,00'], 'vendas, compras e resultado de caixa')
     c.mark(3)
     c.ev(js_rola_texto('(-) Impostos e Deduções', 200, 800), at=c.L(3) - 0.9, label='desce até impostos e resultado')
     c.hover(DRE_LINHA('(-) Impostos e Deduções'), 0.8, at=c.A(3, 'impostos', 0.5), label='impostos, despesas, outras receitas e resultado (ZOOM)')
     c.hover(DRE_LINHA('Total Despesas'), 0.8, at=c.A(3, 'despesas', 0.5), label='Total Despesas')
-    c.hover(DRE_LINHA('(+) Outras Receitas'), 0.8, at=c.A(3, 'aluguel', 0.5), label='Outras Receitas (aluguel de caçamba)')
-    c.hover(DRE_LINHA('(=) Resultado do Período'), 1.2, at=c.A(3, 'vermelho:', 0.5), label='Resultado do Período')
+    c.hover(DRE_LINHA('Receitas Diversas (Caixa + Banco)'), 0.8, at=c.A(3, 'aluguel', 0.5), label='Outras Receitas (aluguel de caçamba)')
+    c.hover(DRE_RESULTADO, 1.2, at=c.A(3, 'vermelho:', 0.5), label='Resultado do Período')
     c.confere('main', ['R$ 3.574,10', 'R$ 45.855,90', 'R$ 2.800,00', 'R$ 26.650,00', 'Déficit'], 'impostos, despesas, outras receitas e resultado')
     c.mark(4)
     c.ev(js_topo(700), at=c.L(4) - 0.9, label='sobe para o alto da DRE')
@@ -540,17 +567,22 @@ def cap06():
 def cap07():
     """Caixa e competência: a DRE do grupo em Regime de Competência (CMV, Lucro Bruto, resultado); depois Caixa e Competência de novo, com a
     câmera no resultado."""
-    c = Cap(7, setup_fin(), pace=0.5, start=(700, 300), storage_extra={'gerencial-financeiro-tab': 'dre'})
+    c = Cap(7, setup_fin() + [{'do': 'click', 'target': {'role': 'tab', 'name': 'Regime de Caixa'}}, {'do': 'waitFor', 'text': 'Compras de Material', 'timeout': 10},
+                              AGUARDA, rola_setup('Vendas de Material', 330)],
+            pace=0.5, start=(700, 300), storage_extra={'gerencial-financeiro-tab': 'dre'})
     c.mark(1)
+    c.click({'role': 'tab', 'name': 'Regime de Competência'}, at=c.A(1, 'competência.', 0.6), label='Regime de Competência')
+    c.waitfor(text='CMV (Custo da Mercadoria Vendida)', timeout=10)
     c.hover(DRE_LINHA('CMV (Custo da Mercadoria Vendida)'), 1.0, at=c.A(1, 'CMV,', 0.5), label='CMV e Lucro Bruto (ZOOM)')
-    c.hover(DRE_LINHA('CMV (Custo da Mercadoria Vendida)'), 1.0, at=c.A(1, 'vendido:', 0.5), label='CMV (Custo da Mercadoria Vendida)')
-    c.hover(DRE_LINHA('(=) Lucro Bruto'), 1.0, at=c.A(1, 'oitocentos', 0.5), label='Lucro Bruto')
+    c.hover(DRE_VALOR('CMV (Custo da Mercadoria Vendida)'), 1.2, at=c.A(1, 'duzentos', 0.5), label='CMV R$ 273.873,30')
+    c.confere('main', ['R$ 273.873,30', 'R$ 64.966,70'], 'CMV e Lucro Bruto em competência')
     c.mark(2)
     c.ev(js_rola_texto('(=) Resultado do Período', 420, 800), at=c.L(2) - 0.9, label='desce até o resultado')
-    c.hover(DRE_LINHA('(=) Resultado do Período'), 1.2, at=c.A(2, 'resultado', 0.5), label='Resultado do Período (ZOOM)')
+    c.hover(DRE_RESULTADO, 1.2, at=c.A(2, 'resultado', 0.5), label='Resultado do Período (ZOOM)')
+    c.confere('main', ['R$ 18.336,70', 'Superávit'], 'resultado em competência')
     c.mark(3)
     c.mark(4)
-    c.hover(DRE_LINHA('(=) Resultado do Período'), 0.4, at=c.L(4) - 0.6, label='o resultado (a câmera fica nele)')
+    c.hover(DRE_RESULTADO, 0.4, at=c.L(4) - 0.6, label='o resultado (a câmera fica nele)')
     c.ev(js_clica_texto('Regime de Caixa'), at=c.A(4, 'caixa', 0.1), label='Regime de Caixa (o resultado vai para -R$ 26.650,00)')
     c.ev(js_clica_texto('Regime de Competência'), at=c.A(4, 'competência', 0.1), label='Regime de Competência (volta ao resultado positivo)')
     c.mark(5)
@@ -561,7 +593,7 @@ def cap07():
 def cap08():
     """O estoque do grupo: Estoque Gerencial › Visão Geral (as duas unidades, a Tabela Unificada e a linha do alumínio latinha); Posição de
     Estoque; Histórico de Materiais; Relatório de Estoque."""
-    c = Cap(8, setup_ger(url='/gerencial/estoque', espera='Estoque Gerencial', extra=vai('/gerencial', 'Dashboard Gerencial')),
+    c = Cap(8, setup_ger(url='/gerencial/estoque', espera='Estoque Gerencial', extra=vai('/gerencial', 'Dashboard Gerencial') + abre_menu_ger()),
             pace=0.5, start=(700, 300), storage_extra={'gerencial-estoque-tab': 'visao-geral'})
     c.mark(1)
     c.click(LINK_GER('Estoque', '/gerencial/estoque'), at=c.A(1, 'estoque.', 0.7), label='Estoque do Gerencial (menu)')
@@ -569,18 +601,19 @@ def cap08():
     c.ev(ANIMA)
     c.hover(TAB('visao-geral'), 0.6, at=c.A(1, 'Visão', 0.5), label='Visão Geral')
     c.mark(2)
-    c.ev(js_rola_texto('Tabela Unificada de Materiais', 120, 800), at=c.L(2) - 0.9, label='desce até a Tabela Unificada de Materiais')
     c.hover(TXTP('Tabela Unificada de Materiais', within=MAIN), 0.6, at=c.A(2, 'tabela,', 0.4), label='Tabela Unificada de Materiais')
+    c.hover(TXT('Filial Pindamonhangaba', within='main thead'), 0.6, at=c.A(2, 'unidade', 0.5), label='uma coluna por unidade')
     c.hover(LINHA('Alumínio latinha'), 1.0, at=c.A(2, 'alumínio', 0.5), label='linha do alumínio latinha (ZOOM)')
     c.confere('main tbody', ['640', '1.850', '2.490'], 'latinha 640, 1.850 e 2.490 kg')
     c.mark(3)
-    c.ev(js_topo(600), at=c.L(3) - 0.9, label='sobe até as abas')
     c.click(TAB('posicao'), at=c.A(3, 'Posição', 0.6), label='Posição de Estoque')
     c.hover(TXT('Custo médio', within=MAIN), 0.6, at=c.A(3, 'custo', 0.5), label='Custo médio')
-    c.hover(TXT('Valor em estoque', within=MAIN), 0.6, at=c.A(3, 'valor.', 0.5), label='Valor em estoque')
+    c.hover(TXT('Valor em estoque', within=MAIN), 0.4, at=c.A(3, 'valor.', 0.5), label='Valor em estoque')
     c.mark(4)
     c.click(TAB('historico'), at=c.A(4, 'Histórico', 0.6), label='Histórico de Materiais')
-    c.hover(TXT('Filial', within='main thead'), 0.8, at=c.A(4, 'unidade', 0.5), label='coluna Filial')
+    c.hover(TXT('Filial', within='main thead'), 0.6, at=c.A(4, 'unidade', 0.5), label='coluna Filial')
+    c.hover(SEL('main tbody tr:first-child td:has-text("Filial Pindamonhangaba")'), 0.5, at=c.A(4, 'veio.', 0.5),
+            label='a unidade de onde veio (a compra da filial de 09/11)')
     c.mark(5)
     c.click(TAB('relatorio'), at=c.A(5, 'Relatório', 0.6), label='Relatório de Estoque')
     c.hover(TXT('Lucro', within='main thead'), 0.6, at=c.A(5, 'lucro', 0.5), label='coluna Lucro')
@@ -593,7 +626,8 @@ def cap09():
     """Enviar Ativos: Configurações do grupo › Catálogo (Importar do Estoque da Matriz), Tabelas de Preço (entram sozinhas), Clientes e
     Fornecedores (marca a Fundição Bandeira do Vale), Categorias Financeiras; Unidades › Enviar Ativos › Confirmar Envio; a lixeira da
     filial (sem clicar). Vira apos-cap09."""
-    c = Cap(9, setup_ger(url='/gerencial/configuracoes', espera='Código de Convite', extra=vai('/gerencial', 'Dashboard Gerencial')),
+    c = Cap(9, setup_ger(url='/gerencial/configuracoes', espera='Código de Convite',
+                         extra=vai('/gerencial', 'Dashboard Gerencial') + abre_menu_ger() + menu_mostra('/gerencial/configuracoes')),
             pace=0.5, start=(700, 300))
     c.mark(1)
     c.click(LINK_GER('Configurações', '/gerencial/configuracoes'), at=c.A(1, 'padronização.', 0.7), label='Configurações do Gerencial (menu)')
@@ -636,7 +670,7 @@ def cap10():
     """Transferência com aprovação: aba Transferências, liga "Exigir aprovação"; Nova: filial -> matriz, alumínio latinha 1.200 kg,
     observação; Solicitar; Pendente; Executar; Confirmar e Executar; o Estoque Gerencial com 1.840 e 650 kg. Vira apos-cap10."""
     c = Cap(10, setup_ger(url='/gerencial/estoque', espera='Estoque Gerencial',
-                          extra=vai('/gerencial/configuracoes', 'Código de Convite')), pace=0.5, start=(700, 300),
+                          extra=vai('/gerencial/configuracoes', 'Código de Convite') + abre_menu_ger()), pace=0.5, start=(700, 300),
             storage_extra={'gerencial-estoque-tab': 'visao-geral'})
     c.mark(1)
     c.click(TAB('transferencias'), at=c.A(1, 'transferências.', 0.6), label='aba Transferências')
@@ -671,7 +705,6 @@ def cap10():
     c.hover(TXT('Concluída', within=MAIN), 0.6, at=c.A(6, 'Pronto:', 0.5), label='Concluída')
     c.click(LINK_GER('Estoque', '/gerencial/estoque'), at=c.A(6, 'matriz', 0.6), label='Estoque do Gerencial (menu)')
     c.waitfor(text='Tabela Unificada de Materiais', timeout=12)
-    c.ev(js_rola_texto('Tabela Unificada de Materiais', 120, 700), label='desce até a tabela')
     c.hover(LINHA('Alumínio latinha'), 1.0, at=c.A(6, 'quarenta', 0.5), label='latinha: 1.840 na matriz e 650 na filial (ZOOM)')
     c.confere('main tbody', ['1.840', '650', '2.490'], 'latinha 1.840, 650 e 2.490 kg')
     c.mark(7)
@@ -696,7 +729,7 @@ def cap11():
     confirmado por um passo de bastidor. Vira apos-cap11."""
     c = Cap(11, setup_ger(url='/gerencial/assinaturas', espera='Assinaturas do grupo',
                           extra=vai(f'/checkout?mode=group&group={GRUPO}', 'Forma de pagamento') + vai('/gerencial', 'Dashboard Gerencial')
-                          + [{'do': 'eval', 'js': JS_ESCUTA_POLL}]), pace=0.5, start=(700, 300))
+                          + abre_menu_ger() + menu_mostra('/gerencial/assinaturas') + [{'do': 'eval', 'js': JS_ESCUTA_POLL}]), pace=0.5, start=(700, 300))
     c.mark(1)
     c.click(LINK_GER('Assinaturas', '/gerencial/assinaturas'), at=c.A(1, 'assinaturas.', 0.7), label='Assinaturas do Gerencial (menu)')
     c.waitfor(text='Pagar tudo de uma vez', timeout=15)
@@ -715,7 +748,7 @@ def cap11():
     c.mark(5)
     # o checkout pergunta a cada 5 s se o Pix foi pago, a contar da criação da cobrança: o clique em "Escolho" deixa a consulta que confirma
     # o pagamento ~0,5 s depois de "pronto:" (o bastidor marca a cobrança paga logo antes dela)
-    c.click(BTNX('PIX'), at=c.A(5, 'Escolho', 0.4), label='PIX')
+    c.click(BTNX('PIX Instantâneo'), at=c.A(5, 'Escolho', 0.4), label='PIX')
     c.waitfor(text='Copia e Cola', timeout=12)
     c.mark(6)
     c.ev(JS_PAGA, label='bastidor: o Pix é pago (a cobrança fica RECEIVED antes da próxima consulta)')

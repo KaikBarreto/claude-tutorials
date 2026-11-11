@@ -155,7 +155,10 @@ def inicio():
                  '(cap15). Gerado por rec/t16/t16_sementes.py inicio.'),
         '_remove': {'nfe_series': [{}], 'invoices': [{}], 'invoice_items': [{}], 'invoice_orders': [{}], 'nfe_events': [{}],
                     'nfe_inutilized_numbers': [{}], 'transportadoras': [{}], 'fiscal_scenarios': [{}], 'inbound_nfe': [{}]},
-        '_patch': {'company_fiscal_config': [{'match': {'id': CFG}, 'set': VAZIO_CFG}]},
+        # a Serra Fina (Itamonte, MG) vem de B sem código IBGE ("a busca de CEP do app preenche"); a NF-e exige o campo
+        # (lib/nfe/partnerFiscalReadiness.ts) e o plano pede o cadastro fiscal completo: 3132503, o de Itamonte no handler do IBGE do mundo
+        '_patch': {'company_fiscal_config': [{'match': {'id': CFG}, 'set': VAZIO_CFG}],
+                   'customers': [{'match': {'name': 'Serra Fina Alumínio Reciclagem'}, 'set': {'codigo_ibge': '3132503'}}]},
         'inbound_nfe': [recebida('valeforte', 81247, True), recebida('siqueira', 81302, False)],
     }
 

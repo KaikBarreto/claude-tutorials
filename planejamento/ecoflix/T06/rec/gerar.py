@@ -4,7 +4,8 @@ a partir da fala ($TUT_HOME/t06/narracao/capNN.json: o estimado até a voz chega
 
 Computador 1280x800, Rafael Nogueira (master) na Recicla Vale Metais. FAKE_NOW (o mesmo no Supabase falso e no robô: rec/t06/t06_rodar.sh
 sobe a instância com o certo): 08:30:00 nos caps 0 e 1, 08:30:55 no cap 2 (o #85 abre às 08:31), 08:41:50 nos caps 3 a 5 (o #86 abre às
-08:42), 08:45:00 nos caps 6 a 9 e no 8b, 17:40:00 nos caps 10 a 12 (todos em 10/11/2026, -03:00).
+08:42), 08:45:00 nos caps 6 a 9 e no 8b, 17:40:00 no cap 10 (fecha às 17:42), 17:42:40 no 11 (reabre às 17:43) e 17:44:00 no 12
+(todos em 10/11/2026, -03:00).
 Rodar de qualquer pasta: `python3 -I rec/t06/gerar.py [NN ...] [8b]` (ANCORAS=1 lista as âncoras). Depois:
 `node rec/record.mjs rec/t06/capNN.json --check`; gravar: `bash rec/t06/t06_rodar.sh NN [--ens]`.
 
@@ -21,7 +22,7 @@ Estado de partida (rec/mundo/seeds-extra/t06/, escrito por rec/t06/t06_sementes.
 Rafael é o último) nos caps 0 a 2; + `apos-cap02` (#85 do Rafael, R$ 1.500,00, 08:31) nos caps 3 a 5 (o setup dos caps 4 e 5 abre
 fora do vídeo "Início" > "Abrir Caixa" para o Marcos); + `apos-cap05` (#86 do Marcos, R$ 17.000,00, 08:42) nos caps 6 a 9 e no 8b;
 + `apos-cap09` (saque de 3.000,00 + 6,50 para o #86 e a tarifa mensal de 39,90) + `dia-10` (venda à Aços Quiririm, latinha da
-Aparecida e ferro misto do Valdir no #85) no cap10; + `apos-cap10` (#85 fechado com R$ 1.007,10 às 17:41) no cap11;
+Aparecida e ferro misto do Valdir no #85) no cap10; + `apos-cap10` (#85 fechado com R$ 1.007,10 às 17:42) no cap11;
 + `apos-cap11` (#85 reaberto) no cap12 (passeio de reserva da montagem).
 
 PARTICULARIDADES DA 1.59.154 (explorações rec/t06/_ex/e1..e2, 11/11):
@@ -46,7 +47,7 @@ TARDE = '2026-11-10T17:40:00-03:00'
 # "Data e Hora de Abertura" no instante em que a janela abre, e nenhum caixa abre antes das 08:31 (#85 às 08:31, #86 às 08:42)
 FAKE_NOW = {0: MANHA, 1: MANHA, 2: '2026-11-10T08:30:55-03:00', 3: '2026-11-10T08:41:50-03:00', 4: '2026-11-10T08:41:50-03:00',
             5: '2026-11-10T08:41:50-03:00', 6: '2026-11-10T08:45:00-03:00', 7: '2026-11-10T08:45:00-03:00', 8: '2026-11-10T08:45:00-03:00',
-            9: '2026-11-10T08:45:00-03:00', 10: TARDE, 11: TARDE, 12: TARDE}
+            9: '2026-11-10T08:45:00-03:00', 10: TARDE, 11: '2026-11-10T17:42:40-03:00', 12: '2026-11-10T17:44:00-03:00'}
 NOMES = ['Abertura', 'O caixa fechado', 'Abrir o caixa', 'Abrir com zero', 'O cofre da empresa', 'Saldo insuficiente',
          'Os dois cartões', 'Cada um com o seu caixa', 'O caixa dos outros', 'Saque e sangria', 'Fechar o caixa',
          'Reabrir um caixa', 'Recapitulando']
@@ -448,13 +449,14 @@ def cap01():
     c.mark(1)
     c.confere('main', ['Meu Caixa', 'Abrir Caixa', '#84', 'R$ 1.250,00', 'Rafael Nogueira', '09/11 07:58 → 09/11 17:44', 'reabrir outro caixa',
                        'Reabrir #84', '0 caixas encontrados'], 'tela do caixa fechado (#84, R$ 1.250,00)')
-    # gravação de 11/11: o hover leva ~1,6 s até o cursor chegar (o --rapido anda mais depressa): as folgas vêm daí
+    # gravação de 11/11 (16:25, máquina carregada por renders: gestos 1,5 a 2x mais lentos): hover ~1,6 s até o cursor chegar;
+    # sem a carga, ~1 s. Folgas no meio do caminho até a próxima gravação medir de novo.
     c.hover(ABRIR, at=c.A(1, 'Meu', 0.6), label='botão Abrir Caixa (Meu Caixa)')
     c.mark(2)
     c.hover(CARD_AMARELO, at=c.A(2, 'cartão', 0.5), label='ZOOM cartão amarelo #84 (L2)')
-    c.hover(BTN('Reabrir #84', MAIN), at=c.A(2, 'reabrir', 1.5), label='Reabrir #84')
+    c.hover(BTN('Reabrir #84', MAIN), at=c.A(2, 'reabrir', 1.0), label='Reabrir #84')
     c.mark(3)
-    c.hover(TXT('Painel Gerencial'), at=c.A(3, 'Painel', 1.4), label='Painel Gerencial')
+    c.hover(TXT('Painel Gerencial'), at=c.A(3, 'Painel', 0.9), label='Painel Gerencial')
     c.hover(TXT('Nenhum caixa foi aberto neste dia.'), 0.3, at=c.A(3, 'Por', 0.5), label='Nenhum caixa foi aberto neste dia.')
     c.mark(4)
     c.hover(ABRIR, at=c.A(4, 'Quem', 0.3), label='volta ao topo (o mesmo botão Abrir Caixa)')
@@ -493,7 +495,7 @@ def cap02():
     c.click(CAMPO_ABERTURA, at=c.A(4, 'Hoje', 0.6), label='campo Saldo de Abertura')
     c.type(CAMPO_ABERTURA, '1.500,00', at=c.A(4, 'contei', 0.05), label='digita 1.500,00', noClick=True)
     c.confere_campo('#openingBalance', '1.500,00', 'campo com 1.500,00')
-    t = c.A(5, 'Abrir', 1.9)
+    t = c.A(5, 'Abrir', 1.2)
     c.marca_em(5, t)
     c.click(ABRIR_DLG, at=t, label='Abrir Caixa (janela)')
     c.waitfor(text='Caixa aberto com sucesso!', timeout=10)

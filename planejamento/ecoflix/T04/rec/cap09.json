@@ -270,7 +270,7 @@
     "exact": true,
     "within": "main section[aria-label='Detalhes de Cooperativa Recomeço']"
    },
-   "at": 61.72,
+   "at": 61.26,
    "label": "Movimentação"
   },
   {
@@ -288,8 +288,8 @@
    "target": {
     "selector": "[role=dialog] label[for=debit]"
    },
-   "seconds": 0.67,
-   "at": 63.18,
+   "seconds": 0.15,
+   "at": 63.79,
    "label": "Tipo de Operação: Pagar (já marcado)",
    "optional": true,
    "timeout": 4
@@ -390,13 +390,6 @@
    "timeout": 12
   },
   {
-   "do": "waitFor",
-   "gone": {
-    "role": "dialog"
-   },
-   "timeout": 8
-  },
-  {
    "do": "eval",
    "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"R$ 1.350,00\", \"Acerto parcial da entrega de 06/11\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main section[aria-label='Detalhes de Cooperativa Recome\\u00e7o']\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
    "label": "confere saldo R$ 1.350,00 e o pagamento no extrato"
@@ -409,7 +402,7 @@
     "within": "main section[aria-label='Detalhes de Cooperativa Recomeço']"
    },
    "seconds": 1.4,
-   "at": 78.28,
+   "at": 78.88,
    "label": "zoom: Saldo Atual R$ 1.350,00 (depois do toast)",
    "optional": true,
    "timeout": 4

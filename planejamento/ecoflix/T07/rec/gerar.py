@@ -456,7 +456,7 @@ SEMENTE = {0: [], 1: [], 2: [], 3: [], 4: ['apos-cap03'], 5: ['apos-cap03'], 6: 
            9: ['apos-cap03'], 10: ['apos-cap09'], 11: ['apos-cap09'], 12: ['apos-cap09'], 13: ['apos-cap12'], 14: ['apos-cap12'],
            15: ['apos-cap14'], 16: ['apos-cap15']}
 EXTRA_BASE = {n: ['base/balanca-ativada'] for n in range(17)}
-FOLGA.update({'balanca': 0.0, 'click': 1.8, 'click1': 2.2, 'hover': 1.5, 'type': 1.8})   # medidas do ensaio do T07 com a máquina dividida (ver resumo.py --ens)
+FOLGA.update({'balanca': 0.0})   # os custos do T03 (docs/04); os ensaios de 13:30 a 17:35 de 11/11 saíram 1,5 a 2x lentos (renders ao lado)   # medidas do ensaio do T07 com a máquina dividida (ver resumo.py --ens)
 
 # ---------------------------------------------------------------- alvos da compra e da venda (Purchase.tsx / Sale.tsx, 1.59.154)
 MAT = {'placeholder': 'Escreva o nome ou código do material'}

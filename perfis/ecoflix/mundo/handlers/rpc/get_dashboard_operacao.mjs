@@ -1,6 +1,8 @@
 // Aba "Operação" do Dashboard: contagens e pesos do período, volume das últimas 8 semanas, pedidos por dia e mapa de
 // calor por dia da semana e hora (como a função SQL get_dashboard_operacao).
-import { janela, pedidos, itensDe, num, r3, diaDe, horaBR, hojeBR, addDias } from '../../lib/eco.mjs';
+import { janela, naJanela, itensDe, num, r3, diaDe, horaBR, hojeBR, addDias } from '../../lib/eco.mjs';
+// T25: a função SQL (20260909163000) só filtra status='completed': pedido estornado (reverted_at) CONTA aqui, ao contrário das RPCs irmãs.
+const pedidos = (store, cid, tipo, j) => store.rows(tipo === 'purchase' ? 'purchases' : 'sales').filter((p) => p.company_id === cid && p.status === 'completed' && (!j || naJanela(p, j)));
 export default (a, { store, companyId }) => {
   const cid = a.p_company_id || companyId;
   const j = janela(a.p_start_date, a.p_end_date);

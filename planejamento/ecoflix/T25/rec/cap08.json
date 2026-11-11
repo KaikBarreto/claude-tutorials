@@ -1,0 +1,325 @@
+{
+ "name": "t25-cap08",
+ "title": "T25 · Cap. 8 · A rotina diária (narração ESTIMADA 61,0 s; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "seed": "t25-cap08",
+ "pace": 0.5,
+ "cps": 40,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 300
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true"
+ },
+ "seedExtra": [
+  "t14/inicio",
+  "t14/apos-cap02",
+  "t14/apos-cap03",
+  "t14/apos-cap04",
+  "t14/apos-cap06",
+  "t14/apos-cap07",
+  "t14/apos-cap08",
+  "t14/apos-cap09",
+  "t14/apos-cap10",
+  "t14/apos-cap11",
+  "t14/apos-cap12",
+  "t14/apos-cap14",
+  "t15/inicio",
+  "t15/apos-cap01",
+  "t15/apos-cap02",
+  "t15/apos-cap10",
+  "t21/inicio",
+  "t21/apos-cap02",
+  "t25/inicio",
+  "t25/apos-cap05"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "waitFor",
+   "target": {
+    "label": "E-mail"
+   },
+   "timeout": 30
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "E-mail"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "Senha",
+    "exact": true
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Rafael!",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/historico-caixa"
+  },
+  {
+   "do": "waitFor",
+   "text": "Caixas Fechados",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const a=document.getAnimations().filter(x=>x.currentTime<0);a.forEach(x=>x.startTime=document.timeline.currentTime);return a.length})()"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|Algo deu errado|Falha ao|Something went wrong|inv[áa]lid/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{document.querySelectorAll('[data-sonner-toast][data-type=error]').forEach(t=>{const s='TOAST DE ERRO: '+t.textContent.trim().slice(0,90);if(!window.__avisos.includes(s)&&window.__avisos.length<10)window.__avisos.push(s)})},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0.4
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{localStorage.removeItem('daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908');return 'marca do dia removida'})()",
+   "at": 0.4,
+   "label": "tira a marca do lembrete diário"
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 10.47
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "link",
+    "name": "Dashboard",
+    "exact": true
+   },
+   "at": 11.17,
+   "label": "abre o Dashboard de manhã"
+  },
+  {
+   "do": "waitFor",
+   "text": "Tarefas para hoje",
+   "timeout": 15
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] :text-is('Cotação do cobre com a Fundição Bandeira do Vale')"
+   },
+   "seconds": 1.0,
+   "at": 16.29,
+   "label": "ZOOM Tarefas para hoje: a cotação do cobre, 14:00",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 20.46
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Fechar",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 20.46,
+   "label": "Fechar"
+  },
+  {
+   "do": "press",
+   "key": "Control+k",
+   "at": 21.16,
+   "label": "Ctrl+K"
+  },
+  {
+   "do": "waitFor",
+   "selector": "[role=dialog] input",
+   "timeout": 10
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input"
+   },
+   "text": "histórico",
+   "cps": 8,
+   "at": 21.98,
+   "label": "digita histórico",
+   "noClick": true
+  },
+  {
+   "do": "press",
+   "key": "Enter",
+   "at": 22.03,
+   "label": "Enter abre o Histórico do Caixa"
+  },
+  {
+   "do": "waitFor",
+   "text": "Caixas Fechados",
+   "timeout": 15
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main thead th:has-text('Saldo Final')"
+   },
+   "seconds": 1.0,
+   "at": 28.18,
+   "label": "destaque: Saldo Final dos caixas de ontem",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 32.96
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Financeiro",
+    "exact": true
+   },
+   "at": 33.94,
+   "label": "menu Financeiro",
+   "unless": {
+    "role": "link",
+    "name": "Contas a Pagar/Receber",
+    "exact": true
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "link",
+    "name": "Contas a Pagar/Receber",
+    "exact": true
+   },
+   "at": 35.08,
+   "label": "Contas a Pagar/Receber"
+  },
+  {
+   "do": "waitFor",
+   "text": "Vence em 7 dias",
+   "timeout": 15
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Vencidas",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.15,
+   "at": 38.04,
+   "label": "cartão Vencidas",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Vence em 7 dias",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.8,
+   "at": 38.87,
+   "label": "cartão Vence em 7 dias",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 42.95
+  },
+  {
+   "do": "press",
+   "key": "Shift+A",
+   "at": 44.25,
+   "label": "Shift+A abre a Agenda"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie suas tarefas e compromissos",
+   "timeout": 15
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main div.grid.grid-cols-7 > div:not(.opacity-40):has(> span:text-is('11'))"
+   },
+   "at": 45.48,
+   "label": "clica no dia 11"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main div.rounded-xl :text-is('Coleta na Auto Peças Vale Forte')"
+   },
+   "seconds": 1.2,
+   "at": 46.59,
+   "label": "ZOOM Coleta na Auto Peças Vale Forte, 08:00",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 50.66
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 60.97
+  }
+ ]
+}

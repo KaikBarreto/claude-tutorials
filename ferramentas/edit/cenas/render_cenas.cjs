@@ -39,6 +39,31 @@ vivo();
 if (process.env.RENDER_PRIORIDADE !== 'normal') {
   try { require('child_process').execFileSync('chrt', ['-i', '-a', '-p', '0', String(process.pid)], { stdio: 'ignore' }); } catch (e) { /* sem chrt: segue */ }
 }
+// Pausa enquanto o robô captura (um `node .../record.mjs` vivo sem ffmpeg/ffprobe filho; com filho, ele já está montando o
+// MP4 e a cena pode seguir): mesmo em SCHED_IDLE, a cena 3D ao lado deixava os gestos da gravação 1,5 a 2x mais lentos
+// (11/11, T13 cap04 com maxLate 8,2 s). Olha o /proc no máximo a cada 0,5 s. RENDER_PAUSA=0 desliga.
+let olhou = 0;
+function roboCapturando() {
+  const procs = [];
+  for (const d of fs.readdirSync('/proc')) {
+    if (!/^\d+$/.test(d)) continue;
+    try {
+      const c = fs.readFileSync(`/proc/${d}/cmdline`, 'utf8').split('\0'), st = fs.readFileSync(`/proc/${d}/stat`, 'utf8');
+      procs.push({ pid: +d, c, ppid: +st.slice(st.lastIndexOf(')') + 2).split(' ')[1] });
+    } catch (e) { /* processo saiu no meio */ }
+  }
+  return procs.filter(p => /(^|\/)node$/.test(p.c[0]) && /(^|\/)record\.mjs$/.test(p.c[1] || ''))
+    .some(r => !procs.some(p => p.ppid === r.pid && /(^|\/)ff(mpeg|probe)$/.test(p.c[0])));
+}
+async function esperaRobo() {
+  if (process.env.RENDER_PAUSA === '0' || Date.now() - olhou < 500) return;
+  let avisou = false;
+  while (roboCapturando()) {
+    if (!avisou) { console.log('render_cenas: em pausa enquanto o robô grava'); avisou = true; }
+    vivo(); await new Promise(r => setTimeout(r, 1000));
+  }
+  olhou = Date.now();
+}
 
 (async () => {
   const N = JSON.parse(fs.readFileSync(tempos, 'utf8'));
@@ -76,6 +101,7 @@ if (process.env.RENDER_PRIORIDADE !== 'normal') {
   if (STILLS) {
     fs.mkdirSync(saida, { recursive: true });
     for (const s of STILLS.split(',')) {
+      await esperaRobo();
       const t = parseFloat(s); await page.evaluate(t => window.R(t), t);
       await page.screenshot({ path: path.join(saida, `cap${String(cap).padStart(2, '0')}_${t.toFixed(2)}.jpg`), type: 'jpeg', quality: 90 });
       vivo();
@@ -91,6 +117,7 @@ if (process.env.RENDER_PRIORIDADE !== 'normal') {
     { stdio: ['pipe', 'inherit', 'inherit'] });
   const t0 = Date.now();
   for (let i = 0; i < n; i++) {
+    await esperaRobo();
     await page.evaluate(t => window.R(t), (i0 + i) / FPS);
     const buf = await page.screenshot({ type: 'jpeg', quality: 92 });
     if (!ff.stdin.write(buf)) await new Promise(r => ff.stdin.once('drain', r));

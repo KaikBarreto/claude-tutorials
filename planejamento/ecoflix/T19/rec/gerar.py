@@ -855,9 +855,17 @@ g.fillStyle='#e6e6dc';g.fillRect(cx-W*0.30,W*0.86,W*0.6,W*0.03);g.fillStyle='#c6
 g.beginPath();g.ellipse(cx,cy,W*0.17,W*0.2,0,0,Math.PI*2);g.fill();g.fillStyle='#facc15';g.beginPath();g.ellipse(cx,cy-W*0.09,W*0.19,W*0.16,0,Math.PI,0);g.fill();
 g.fillRect(cx-W*0.22,cy-W*0.1,W*0.44,W*0.03);g.fillStyle='#282830';for(const d of[-1,1]){g.beginPath();g.arc(cx+d*W*0.07,cy+W*0.02,9,0,Math.PI*2);g.fill();}
 g.strokeStyle='#96463c';g.lineWidth=7;g.beginPath();g.arc(cx,cy+W*0.06,W*0.06,0.35,Math.PI-0.35);g.stroke();requestAnimationFrame(pinta)};pinta();
-const fake=async()=>cv.captureStream(24);if(!navigator.mediaDevices)Object.defineProperty(navigator,'mediaDevices',{value:{}});
+let st=null;window.__t19cam={chamadas:0,abortados:0};
+const fake=async()=>{window.__t19cam.chamadas++;if(!st){st=cv.captureStream(24);st.getTracks().forEach(t=>{t.stop=()=>{}})}return st};
+if(!navigator.mediaDevices)Object.defineProperty(navigator,'mediaDevices',{value:{}});
 navigator.mediaDevices.getUserMedia=fake;navigator.mediaDevices.enumerateDevices=async()=>[{kind:'videoinput',deviceId:'cam-falsa',label:'Câmera frontal',groupId:'g'}];
+const play0=HTMLMediaElement.prototype.play;HTMLMediaElement.prototype.play=function(){const nossa=st&&this.srcObject===st;const p=play0.call(this);
+return nossa?p.catch(e=>{if(e&&e.name==='AbortError'){window.__t19cam.abortados++;return undefined}throw e}):p};
 return 'camera falsa'})()"""
+# A câmera do app reinicia a cada segundo: o PontoScreen re-renderiza com o relógio (setNow a cada 1 s) e passa onCapture sem
+# useCallback, então o efeito do CenteredSelfieCapture (deps [captureFrame, copy, stopCamera]) para e reabre a câmera; um play()
+# interrompido (AbortError) vira "Não foi possível abrir a câmera." (achado do app). A câmera falsa devolve sempre o mesmo stream,
+# ignora o stop() e engole o AbortError do play() dela (uma câmera "instantânea"); window.__t19cam conta as reaberturas.
 
 
 def js_botao(texto, sel='button'):
@@ -898,6 +906,7 @@ def cap09():
     c.marcar(TXT('Horário'), at=c.A(nc, 'horário,', 0.3), label='Horário e Local (zoom)')
     c.marcar(TXTX('Rua das Oficinas, 1250'), at=c.A(nc, 'local', 0.3), label='Local: Rua das Oficinas, 1250')
     c.marcar(SEL("[role=dialog] img"), at=c.A(nc, 'foto.', 0.3), label='miniatura da selfie')
+    c.ev("JSON.stringify(window.__t19cam||null)", label='câmera falsa: reaberturas do app (achado: reinicia a cada segundo)')
     c.mark(nc + 1)
     c.click(SEL("button:has-text('Confirmar registro')"), at=c.A(nc + 1, 'Confirmar', 0.9), label='Confirmar registro', noScroll=True)
     c.waitfor(text='Ponto registrado', timeout=10)

@@ -110,8 +110,13 @@
    "target": {
     "selector": "main button[aria-label='Relatório']"
    },
-   "at": 5.94,
+   "at": 4.88,
    "label": "Relatório"
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 6.83
   },
   {
    "do": "waitFor",
@@ -122,11 +127,6 @@
    "do": "eval",
    "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"A Receber\", \"R$ 19.540,00\", \"Fundição Bandeira do Vale\", \"Aços Quiririm Ltda\", \"Valdir Pereira\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog],[role=alertdialog]\")];const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
    "label": "confere bloco A Receber"
-  },
-  {
-   "do": "mark",
-   "name": "L2",
-   "at": 6.83
   },
   {
    "do": "hover",

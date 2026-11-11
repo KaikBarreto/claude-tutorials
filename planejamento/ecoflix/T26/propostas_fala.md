@@ -34,7 +34,7 @@ tiver o vão, o aviso some.
    robô reabre a configuração em "Esse texto fica aqui".
 7. **"Novo estágio" abre sem o cursor no Nome** (o foco fica nas abas); o "Novo funil" abre com o cursor no Nome. Só afeta o robô
    (ele põe o foco antes de digitar).
-8. **Primeira abertura do CRM**: com a máquina carregada, o clique em CRM/Kanban mostrou a tela branca "Carregando..." por ~1,3 s
-   (a rota carrega sob demanda). O cap01 agora abre o CRM uma vez no preparo, fora do vídeo; o funil padrão já nasce ali, e na tela fica igual.
+8. **Primeira abertura do CRM**: no ensaio das 14h (renders 3D rodando ao lado), o clique em CRM/Kanban mostrou a tela branca
+   "Carregando..." por ~1,3 s (a rota carrega sob demanda); no ensaio das 12h, sem a carga, não apareceu. O cap01 agora abre o CRM uma vez no preparo, fora do vídeo; o funil padrão já nasce ali, e na tela fica igual.
 9. **Números do Dashboard (caps 0 e 1)**: aparecem os do mundo base (Compras, Vendas, Margem e o lembrete do dia); a fala não cita
    nenhum, então não há o que conferir contra ela.

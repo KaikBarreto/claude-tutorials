@@ -4,20 +4,9 @@
 # rec/t02/_ens/), que o resumo.py e o prever.py leem. O MP4 e a folha de contato ficam só em /dev/shm: apague depois de olhar.
 #   TUT_USER=rafael@reciclavalemetais.example TUT_SENHA=<qualquer> bash rec/t02/t02_rodar.sh 03 [--ens]
 # A senha vem só do ambiente (o setup do capítulo entra pela tela de login com "$TUT_USER"/"$TUT_SENHA"); nunca vai para arquivo.
-# A linha final diz os quadros por segundo da captura e quanto da gravação teve render de cenas (render_cenas.cjs, sob a
-# .stills.lock) rodando junto: o Chrome do render volta as threads para nice 0/-8 e, com ele, a captura cai para ~9 qps e os
-# gestos atrasam até 2,5 s. Atraso com "cenas" alto é da máquina, não do roteiro.
+# A linha final diz os quadros por segundo da captura e o maior atraso: com a máquina carregada (render de cenas ao lado, até
+# 17:35 de 11/11) a captura cai para ~9 qps e os gestos atrasam até 2,5 s; aí o atraso é da carga, não do roteiro: grave de novo.
 set -euo pipefail
-if [ "${1:-}" = __dentro ]; then   # já com a trava: amostra o render de cenas a cada 3 s enquanto grava
-  shift
-  AMOSTRA=$1; shift
-  ( while :; do if pgrep -f "^node .*cenas/render_cenas\.cjs" > /dev/null; then echo 1; else echo 0; fi; sleep 3; done ) > "$AMOSTRA" &
-  am=$!
-  st=0
-  node rec/record.mjs "$@" || st=$?
-  kill "$am" 2> /dev/null || true
-  exit "$st"
-fi
 EU=$(readlink -f "$0")
 cd "$(dirname "$EU")/../.."   # $TUT_HOME
 N=$(printf %02d "$((10#$1))")
@@ -43,11 +32,10 @@ else
   DEST=rec/t02
   EXTRA=
 fi
-rm -f "$OUT/t02-cap$N".* "$OUT/.t02-cap$N.cenas"
+rm -f "$OUT/t02-cap$N".*
 st=0
-flock .heavy.lock bash "$EU" __dentro "$OUT/.t02-cap$N.cenas" "$ROT" --out "$OUT" $EXTRA > "$OUT/t02-cap$N.log" 2>&1 || st=$?
+flock .heavy.lock node rec/record.mjs "$ROT" --out "$OUT" $EXTRA > "$OUT/t02-cap$N.log" 2>&1 || st=$?
 cp "$OUT/t02-cap$N.actions.json" "$OUT/t02-cap$N.telemetry.json" "$DEST/" 2>/dev/null || true
 grep -E "FALHOU|seeds extras|^saidas" "$OUT/t02-cap$N.log" || true
-cenas=$(awk '{s+=$1; n++} END {printf "%d/%d", s, n}' "$OUT/.t02-cap$N.cenas" 2>/dev/null || echo "?")
 qps=$(python3 -I -c "import json,sys; a=json.load(open(sys.argv[1])); print(a['stats'].get('captureFps'), a['late']['maxS'])" "$OUT/t02-cap$N.actions.json" 2>/dev/null || echo "? ?")
-echo "cap$N ${ENS:-completo}: saída $st ($(date +%H:%M:%S)) · qps/atraso máx $qps · amostras com render de cenas $cenas"
+echo "cap$N ${ENS:-completo}: saída $st ($(date +%H:%M:%S)) · qps/atraso máx $qps"

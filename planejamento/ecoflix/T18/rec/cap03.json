@@ -1,0 +1,601 @@
+{
+ "name": "t18-cap03",
+ "title": "T18 · Cap. 3 · Acesso e resíduos (narração 114,0 s ESTIMADA; marcas L1..L12 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T09:30:00-03:00)",
+ "seed": "t18-cap03",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 900,
+  "y": 470
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true"
+ },
+ "seedExtra": [
+  "t18/inicio"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "waitFor",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "timeout": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "••••••••"
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "url": "/dashboard",
+   "timeout": 40
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 25
+  },
+  {
+   "do": "goto",
+   "url": "/materiais"
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 25
+  },
+  {
+   "do": "wait",
+   "seconds": 0.3
+  },
+  {
+   "do": "goto",
+   "url": "/fiscal-ambiental/ambiental/mtr"
+  },
+  {
+   "do": "waitFor",
+   "text": "Manifestos de Transporte de Resíduos",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 25
+  },
+  {
+   "do": "wait",
+   "seconds": 0.8
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel|Algo deu errado|Falha ao|n[ãa]o encontrad|recusou|rejeitad[ao]!/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');if(f&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA ECOFLIX'))window.__avisos.push('TRILHA ECOFLIX')},300);return 1})()"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{if(window.__animFix)return 'ja';window.__animFix=setInterval(()=>{for(const a of document.getAnimations())if(a.currentTime!==null&&a.currentTime<0)a.startTime=document.timeline.currentTime},100);return 'anim fix'})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main span[tabindex='0']:has-text('Novo MTR')"
+   },
+   "seconds": 1.8,
+   "at": 4.97,
+   "label": "dica: Novo MTR desligado (Configure o acesso ao SIGOR primeiro)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 8.98
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 900,
+    "y": 470
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "at": 8.98,
+   "label": "a dica some (cartão: estado e acesso)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main div.border-b button:text-is('Configurações')"
+   },
+   "at": 23.38,
+   "label": "aba Configurações"
+  },
+  {
+   "do": "waitFor",
+   "text": "Configuração do MTR",
+   "timeout": 15
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 23.75
+  },
+  {
+   "do": "type",
+   "target": {
+    "text": "Sistema:",
+    "within": "main"
+   },
+   "text": "",
+   "noClick": true,
+   "optional": true,
+   "timeout": 4,
+   "at": 25.22,
+   "label": "Sistema: SIGOR (zoom)"
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 32.53
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#mtr-cpf"
+   },
+   "at": 35.54,
+   "label": "CPF da pessoa usuária do SIGOR (zoom) (campo)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#mtr-cpf"
+   },
+   "text": "27491350879",
+   "cps": 40,
+   "label": "CPF da pessoa usuária do SIGOR (zoom)",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#mtr-senha"
+   },
+   "at": 38.96,
+   "label": "Senha do SIGOR (pontinhos) (campo)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#mtr-senha"
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40,
+   "label": "Senha do SIGOR (pontinhos)",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#mtr-cod-unidade"
+   },
+   "at": 43.34,
+   "label": "Código da unidade geradora: 203918 (campo)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#mtr-cod-unidade"
+   },
+   "text": "203918",
+   "cps": 40,
+   "label": "Código da unidade geradora: 203918",
+   "noClick": true
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 43.88
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "#mtr-ambiente"
+   },
+   "seconds": 0.5,
+   "at": 45.99,
+   "label": "Ambiente: Produção",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Salvar acesso",
+    "exact": true
+   },
+   "at": 50.79,
+   "label": "Salvar acesso"
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 51.29
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Testar acesso salvo",
+    "exact": true
+   },
+   "at": 52.08,
+   "label": "Testar acesso salvo"
+  },
+  {
+   "do": "waitFor",
+   "text": "Acesso validado",
+   "timeout": 15
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 56.2
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Sincronizar dados do SIGOR",
+    "exact": true
+   },
+   "at": 56.38,
+   "label": "Sincronizar dados do SIGOR"
+  },
+  {
+   "do": "waitFor",
+   "text": "Resíduos salvos",
+   "timeout": 20
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 68.01
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Novo resíduo",
+    "exact": true
+   },
+   "at": 68.85,
+   "label": "Novo resíduo"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "#mtr-preset-apelido"
+   },
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#mtr-preset-apelido"
+   },
+   "at": 72.09,
+   "label": "Nome do resíduo: Sucata de ferro (campo)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#mtr-preset-apelido"
+   },
+   "text": "Sucata de ferro",
+   "cps": 40,
+   "label": "Nome do resíduo: Sucata de ferro",
+   "noClick": true
+  },
+  {
+   "do": "mark",
+   "name": "L9",
+   "at": 77.62
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]",
+    "hasText": "Buscar código IBAMA"
+   },
+   "at": 77.78,
+   "label": "Código IBAMA (abre)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Digite o código ou descrição..."
+   },
+   "text": "ferrosos",
+   "cps": 40,
+   "label": "busca: ferrosos",
+   "noClick": true
+  },
+  {
+   "do": "press",
+   "key": "Enter",
+   "label": "escolhe o de metais ferrosos"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] div:has(> label:text-is('Classe *')) button[role=combobox]"
+   },
+   "at": 78.46,
+   "label": "Classe: a da licença (II A) (abre)"
+  },
+  {
+   "do": "pause",
+   "seconds": 0.4
+  },
+  {
+   "do": "press",
+   "key": "Enter",
+   "label": "Classe: a da licença (II A)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] div:has(> label:text-is('Estado físico *')) button[role=combobox]"
+   },
+   "at": 79.22,
+   "label": "Estado físico: Sólido (abre)"
+  },
+  {
+   "do": "pause",
+   "seconds": 0.4
+  },
+  {
+   "do": "press",
+   "key": "Enter",
+   "label": "Estado físico: Sólido"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] div:has(> label:text-is('Acondicionamento *')) button[role=combobox]"
+   },
+   "at": 80.51,
+   "label": "Acondicionamento: Granel (abre)"
+  },
+  {
+   "do": "pause",
+   "seconds": 0.4
+  },
+  {
+   "do": "press",
+   "key": "G",
+   "label": "Acondicionamento: Granel"
+  },
+  {
+   "do": "press",
+   "key": "Enter",
+   "label": "Acondicionamento: Granel (Enter)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] div:has(> label:text-is('Tratamento *')) button[role=combobox]"
+   },
+   "at": 81.95,
+   "label": "Tratamento: Reciclação (abre)"
+  },
+  {
+   "do": "pause",
+   "seconds": 0.4
+  },
+  {
+   "do": "press",
+   "key": "R",
+   "label": "Tratamento: Reciclação"
+  },
+  {
+   "do": "press",
+   "key": "Enter",
+   "label": "Tratamento: Reciclação (Enter)"
+  },
+  {
+   "do": "mark",
+   "name": "L10",
+   "at": 90.04
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] div:has(> label:text-is('Unidade *')) button[role=combobox]"
+   },
+   "at": 93.24,
+   "label": "Unidade: TON - Tonelada (abre)"
+  },
+  {
+   "do": "press",
+   "key": "Enter",
+   "at": 97.43,
+   "label": "Unidade: TON - Tonelada"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] div:has(> label:text-is('Unidade *')) button[role=combobox]"
+   },
+   "text": "",
+   "noClick": true,
+   "optional": true,
+   "timeout": 4,
+   "label": "Unidade com TON - Tonelada (zoom)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Salvar resíduo",
+    "exact": true
+   },
+   "at": 97.63,
+   "label": "Salvar resíduo"
+  },
+  {
+   "do": "waitFor",
+   "text": "Sucata de ferro",
+   "timeout": 10
+  },
+  {
+   "do": "mark",
+   "name": "L11",
+   "at": 98.13
+  },
+  {
+   "do": "mark",
+   "name": "L12",
+   "at": 102.81
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Materiais",
+    "within": "aside, [data-sidebar=sidebar]"
+   },
+   "at": 103.4,
+   "label": "menu Materiais",
+   "unless": {
+    "role": "link",
+    "name": "Estoque",
+    "exact": true,
+    "within": "aside, [data-sidebar=sidebar]"
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "link",
+    "name": "Estoque",
+    "exact": true,
+    "within": "aside, [data-sidebar=sidebar]"
+   },
+   "at": 104.61,
+   "label": "Materiais › Estoque"
+  },
+  {
+   "do": "waitFor",
+   "text": "Chaparia",
+   "timeout": 20
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main tbody tr:has-text('Ferro pesado') [role=checkbox]"
+   },
+   "label": "marca Ferro pesado"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main tbody tr:has-text('Ferro misto') [role=checkbox]"
+   },
+   "label": "marca Ferro misto"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main tbody tr:has-text('Chaparia') [role=checkbox]"
+   },
+   "label": "marca Chaparia"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Definir resíduo do MTR",
+    "exact": true
+   },
+   "label": "Definir resíduo do MTR"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#bulk-material-mtr-residuo"
+   },
+   "label": "Resíduo do MTR (abre)"
+  },
+  {
+   "do": "press",
+   "key": "Enter",
+   "label": "Sucata de ferro"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Definir resíduo em 3",
+    "exact": true
+   },
+   "label": "Definir resíduo em 3"
+  },
+  {
+   "do": "waitFor",
+   "text": "Resíduo do MTR definido em 3",
+   "timeout": 15
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 114.01
+  }
+ ]
+}

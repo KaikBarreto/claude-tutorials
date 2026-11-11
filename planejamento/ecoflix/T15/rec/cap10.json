@@ -132,13 +132,8 @@
    "target": {
     "selector": "#tab-btn-historico"
    },
-   "at": 0.41,
+   "at": 0.2,
    "label": "aba Histórico"
-  },
-  {
-   "do": "mark",
-   "name": "L2",
-   "at": 8.05
   },
   {
    "do": "click",
@@ -146,8 +141,26 @@
     "role": "tab",
     "name": "Despesas"
    },
-   "at": 8.65,
+   "at": 4.68,
    "label": "Despesas"
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 8.05
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Conta de energia",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.6,
+   "at": 15.56,
+   "label": "os lançamentos de outubro",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "mark",
@@ -161,7 +174,7 @@
     "name": "Filtros",
     "exact": true
    },
-   "at": 29.04,
+   "at": 27.84,
    "label": "Filtros"
   },
   {
@@ -172,7 +185,7 @@
     "exact": true,
     "within": "[role=dialog]"
    },
-   "at": 30.63,
+   "at": 29.83,
    "label": "Categoria"
   },
   {
@@ -182,13 +195,13 @@
     "exact": true,
     "within": "[data-radix-popper-content-wrapper]"
    },
-   "at": 31.49,
+   "at": 31.99,
    "label": "marca Energia elétrica"
   },
   {
    "do": "press",
    "key": "Escape",
-   "at": 33.06,
+   "at": 33.26,
    "label": "fecha a lista"
   },
   {
@@ -199,7 +212,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 0.4,
-   "at": 34.83,
+   "at": 34.33,
    "label": "Cliente/Fornecedor",
    "optional": true,
    "timeout": 4
@@ -212,21 +225,8 @@
     "within": "[role=dialog]"
    },
    "seconds": 0.4,
-   "at": 37.03,
+   "at": 36.23,
    "label": "Centro de custo",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "Fonte",
-    "exact": true,
-    "within": "[role=dialog]"
-   },
-   "seconds": 0.2,
-   "at": 38.78,
-   "label": "Fonte",
    "optional": true,
    "timeout": 4
   },
@@ -242,7 +242,7 @@
     "name": "Aplicar",
     "exact": true
    },
-   "at": 39.68,
+   "at": 39.26,
    "label": "Aplicar",
    "noScroll": true
   },
@@ -255,7 +255,7 @@
     "nth": 0
    },
    "seconds": 1.2,
-   "at": 42.32,
+   "at": 41.32,
    "label": "as duas Conta de energia (ZOOM)",
    "optional": true,
    "timeout": 4
@@ -278,7 +278,7 @@
     "exact": true,
     "nth": 0
    },
-   "at": 50.77,
+   "at": 49.87,
    "label": "lixeira da conta das 16:40"
   },
   {
@@ -294,7 +294,7 @@
     "exact": true,
     "within": "[role=alertdialog]"
    },
-   "at": 52.59,
+   "at": 52.29,
    "label": "Excluir"
   },
   {
@@ -304,8 +304,8 @@
   },
   {
    "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"1 lançamento\", \"-R$ 3.850,00\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,250));}return out})()",
-   "label": "confere ficou uma conta só"
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"1 lançamento\", \"-R$ 3.850,00\", \"09:12\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,250));}return out})()",
+   "label": "confere ficou uma conta só (a das 09:12)"
   },
   {
    "do": "mark",
@@ -320,7 +320,7 @@
     "exact": true
    },
    "seconds": 0.6,
-   "at": 60.48,
+   "at": 60.23,
    "label": "lixeira (ZOOM)",
    "optional": true,
    "timeout": 4
@@ -333,7 +333,7 @@
     "exact": true
    },
    "seconds": 0.8,
-   "at": 68.6,
+   "at": 67.8,
    "label": "lápis Editar categoria",
    "optional": true,
    "timeout": 4

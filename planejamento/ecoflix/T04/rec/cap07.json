@@ -209,20 +209,9 @@
    "target": {
     "selector": "[aria-label='Seções da ficha'] button:has-text('Visão geral')"
    },
-   "seconds": 0.19,
+   "seconds": 0.2,
    "at": 16.28,
    "label": "aba Visão geral",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "[aria-label='Seções da ficha'] button:has-text('Pedidos')"
-   },
-   "seconds": 0.15,
-   "at": 17.42,
-   "label": "aba Pedidos",
    "optional": true,
    "timeout": 4
   },
@@ -249,20 +238,9 @@
    "timeout": 4
   },
   {
-   "do": "hover",
-   "target": {
-    "selector": "[aria-label='Seções da ficha'] button:has-text('Financeiro')"
-   },
-   "seconds": 0.15,
-   "at": 20.98,
-   "label": "aba Financeiro",
-   "optional": true,
-   "timeout": 4
-  },
-  {
    "do": "eval",
    "js": "(async()=>{const s=document.querySelector(\"[aria-label='Seções da ficha']\");if(!s)return 'SEM ALVO';const x0=s.scrollLeft,dx=(s.scrollWidth-s.clientWidth)-x0;if(Math.abs(dx)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/450),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;s.scrollLeft=x0+dx*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'faixa:'+Math.round(s.scrollLeft)})()",
-   "at": 21.73,
+   "at": 20.83,
    "label": "rola a faixa das abas até Preços"
   },
   {
@@ -286,11 +264,6 @@
    "label": "aba Preços",
    "optional": true,
    "timeout": 4
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const s=document.querySelector(\"[aria-label='Seções da ficha']\");if(!s)return 'SEM ALVO';const x0=s.scrollLeft,dx=(0)-x0;if(Math.abs(dx)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/450),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;s.scrollLeft=x0+dx*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'faixa:'+Math.round(s.scrollLeft)})()",
-   "label": "a faixa das abas volta ao começo"
   },
   {
    "do": "mark",
