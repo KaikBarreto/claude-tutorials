@@ -475,3 +475,8 @@ Decisões:
 - 11/11 13:2x **Estilo saturado pronto em T17, T18, T19 e T25** (7, 8, 13 e 8 elementos; desenhos como cédulas, avatares,
   ícones soltos de pasta e arquivo e os cartões "NF-e/Pedido" da régua da T17 ficaram como estavam). **As 26 aulas estão
   no estilo novo**, menos o Cato (T21), que está sendo refeito no tema escuro. Folhas mandadas ao Kaik.
+- 11/11 13:3x **Cato (T21) no tema escuro com a identidade dele**: fundo #121212 com a espiral do app a 15 %, kicker no
+  degradê, título #EFEFEF, ícone do Cato como avatar e botão, logo na janela de conversa do cap00, balões escuros
+  translúcidos, selos e números de destaque no degradê (texto branco no laranja com sombra: contraste ~2,8). Folha mandada
+  ao Kaik. **Na edição**: copiar a pasta `cato/` junto com o `cenas.html` da T21. **Todas as 26 aulas estão ilustradas no
+  estilo novo.**

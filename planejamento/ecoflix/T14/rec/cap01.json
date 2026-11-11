@@ -1,0 +1,402 @@
+{
+ "name": "t14-cap01",
+ "title": "T14 · Cap. 1 · A tela e as contas (narração ESTIMADA 58,5 s; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "seed": "t14-cap01",
+ "pace": 0.55,
+ "cps": 40,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 470
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true"
+ },
+ "seedExtra": [
+  "t14/inicio"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "waitFor",
+   "target": {
+    "label": "E-mail"
+   },
+   "timeout": 30
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "E-mail"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "Senha",
+    "exact": true
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Rafael!",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|Algo deu errado|Falha ao|Something went wrong|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&!/fica indispon/i.test(m[0])&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{document.querySelectorAll('[data-sonner-toast][data-type=error]').forEach(t=>{const s='TOAST DE ERRO: '+t.textContent.trim().slice(0,90);if(!window.__avisos.includes(s)&&window.__avisos.length<10)window.__avisos.push(s)})},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Financeiro",
+    "exact": true
+   },
+   "at": 0.84,
+   "label": "menu Financeiro",
+   "unless": {
+    "role": "link",
+    "name": "Movimentações Financeiras"
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "link",
+    "name": "Movimentações Financeiras"
+   },
+   "at": 2.0,
+   "label": "menu Movimentações Financeiras"
+  },
+  {
+   "do": "waitFor",
+   "text": "Controle de pagamentos via Pix/Transferência",
+   "timeout": 20
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main h1:has-text(\"Movimentações Financeiras\")"
+   },
+   "seconds": 0.8,
+   "at": 7.04,
+   "label": "título Movimentações Financeiras",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 11.77
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "div[class*=\"group/tab\"] button:has(span:text-is(\"Resumo\"))"
+   },
+   "seconds": 0.3,
+   "at": 12.78,
+   "label": "lista de contas",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "div[class*=\"group/tab\"] button:has(span:text-is(\"DINHEIRO (COFRE)\"))"
+   },
+   "seconds": 0.3,
+   "at": 15.89,
+   "label": "saldo embaixo do nome",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "div[class*=\"group/tab\"] button:has(span:text-is(\"DINHEIRO (COFRE)\"))"
+   },
+   "seconds": 0.2,
+   "at": 19.25,
+   "label": "o cofre primeiro",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "div[class*=\"group/tab\"] button:has(span:text-is(\"Conta Principal\"))"
+   },
+   "seconds": 0.2,
+   "at": 20.98,
+   "label": "a conta principal",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "div[class*=\"group/tab\"] button:has(span:text-is(\"Conta Secundária\"))"
+   },
+   "seconds": 0.3,
+   "at": 22.11,
+   "label": "as outras contas",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Nova Conta"
+   },
+   "seconds": 0.3,
+   "label": "botões Nova Conta e Novo Cartão",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 22.67
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "div[class*=\"group/tab\"] button:has(span:text-is(\"Conta Principal\"))"
+   },
+   "at": 23.07,
+   "label": "abre a Conta Principal"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main div.text-4xl.font-bold"
+   },
+   "seconds": 0.4,
+   "at": 26.94,
+   "label": "cartão da Conta Principal",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Saque",
+    "within": "main"
+   },
+   "seconds": 0.15,
+   "at": 29.57,
+   "label": "Saque",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Sangria",
+    "within": "main"
+   },
+   "seconds": 0.15,
+   "at": 30.25,
+   "label": "Sangria",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Nova Movimentação",
+    "within": "main"
+   },
+   "seconds": 0.15,
+   "at": 31.09,
+   "label": "Nova Movimentação",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Extrato",
+    "within": "main"
+   },
+   "seconds": 0.3,
+   "at": 32.61,
+   "label": "Extrato",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 33.19
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Histórico de Movimentações",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.4,
+   "at": 34.58,
+   "label": "Histórico de Movimentações",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main button[role=combobox]:has-text(\"Este mês\")"
+   },
+   "seconds": 0.2,
+   "at": 35.56,
+   "label": "período Este mês",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "placeholder": "Buscar por descrição ou valor..."
+   },
+   "seconds": 0.4,
+   "at": 36.55,
+   "label": "busca por descrição ou valor",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 38.78
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "div[class*=\"group/tab\"] button:has(span:text-is(\"Resumo\"))"
+   },
+   "at": 39.3,
+   "label": "Resumo"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Dinheiro e contas bancárias",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.4,
+   "at": 40.92,
+   "label": "total da empresa",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Dinheiro",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.3,
+   "at": 43.5,
+   "label": "Dinheiro (cofre)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Contas bancárias",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.4,
+   "at": 46.01,
+   "label": "Contas bancárias",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 46.49
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Movimentações Financeiras",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.4,
+   "at": 49.17,
+   "label": "aba Movimentações Financeiras",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Conciliação",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.6,
+   "at": 51.82,
+   "label": "aba Conciliação",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 58.47
+  }
+ ]
+}

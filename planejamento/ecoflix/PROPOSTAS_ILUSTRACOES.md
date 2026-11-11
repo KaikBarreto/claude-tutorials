@@ -22,3 +22,4 @@ As do robô ficam em `Tnn/propostas_fala.md`; estas vieram dos agentes de ilustr
 | T15 | cap10 | Os R$ 4.250,00 vêm do roteiro e não do mundo. | Conferir com a semente nova. |
 | T22 | cap10 | "Latinha prensada" vem do roteiro e não está no MUNDO. | Conferir com a semente nova. |
 | Kit | `descarrega` | Fora da balança, deixa as peças 16 px abaixo do chão. | Corrigir na unificação do kit. |
+| Kit | classe `g` | Um elemento com a classe `g` herda o `.g` de grupo do kit (vira um círculo gigante no tema do Cato). | Renomear a classe de grupo na unificação do kit. |

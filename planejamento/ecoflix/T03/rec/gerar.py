@@ -32,8 +32,9 @@ PARTICULARIDADES DA 1.59.154 (achadas no ensaio do T03):
    abaixo da dobra da janela até a janela rolar (o robô rola a janela no começo da frase).
  - O "Desfazer" da exclusão e o aviso "Preço especial aplicado" somem em 5 s e 2 s: o cursor PARA EM CIMA do aviso (o sonner pausa o
    tempo com o mouse em cima) e o clique vem na palavra.
- - PDF (cap09) abre noutra aba, que o robô não grava (aba única, Chromium sem leitor de PDF): o roteiro guarda o PDF que o app gerou
-   (URL.createObjectURL embrulhado no setup) e o devolve no actions.json; t03_pdfs.py extrai para a edição montar a ilustração.
+ - PDF (cap09) abre noutra aba, que o robô não grava (aba única, Chromium sem leitor de PDF): o roteiro pega o PDF que o app gerou
+   (URL.createObjectURL embrulhado no setup) e o guarda no Supabase falso (tabela t03_pdfs); t03_pdfs.py, logo depois da gravação, grava
+   $TUT_HOME/t03/pdf/*.pdf e a 1ª página em PNG para a edição montar a "aba nova" (fora de rec/: não vai para o git).
 
 SEMENTES (rec/t03/t03_sementes.py escreve rec/mundo/seeds-extra/t03/): cada capítulo = mundo base + t03/inicio + o apos-capNN do anterior.
 """
@@ -394,11 +395,16 @@ JS_PDF_GANCHO = ("(()=>{if(window.__pdfs)return 'ja';window.__pdfs=[];const o=UR
 
 
 def js_pdf(k, nome):
-    """devolve o k-ésimo PDF que o app gerou (base64) para o actions.json: t03_pdfs.py grava o arquivo para a edição"""
+    """guarda o k-ésimo PDF que o app gerou numa tabela de bastidor do Supabase falso (t03_pdfs, base64; o fetch para o endereço do build é
+    desviado para a MINHA instância): o actions.json fica pequeno (o PDF A4 da tabela tem ~15 MB) e o t03_pdfs.py, logo depois da
+    gravação, grava o arquivo e a 1ª página em PNG para a edição"""
+    url = MUNDO['env']['fakeUrl'].rstrip('/') + '/rest/v1/t03_pdfs'
     return ("(async()=>{for(let i=0;i<30&&!(window.__pdfs&&window.__pdfs.length>%d);i++)await new Promise(r=>setTimeout(r,200));"
             "const b=window.__pdfs&&window.__pdfs[%d];if(!b)return 'SEM PDF';const u=new Uint8Array(await b.arrayBuffer());let s='';"
-            "for(let i=0;i<u.length;i+=8192)s+=String.fromCharCode.apply(null,u.subarray(i,i+8192));return {pdf:%s,bytes:u.length,b64:btoa(s)}})()") % (
-        k, k, json.dumps(nome))
+            "for(let i=0;i<u.length;i+=8192)s+=String.fromCharCode.apply(null,u.subarray(i,i+8192));"
+            "const r=await fetch(%s,{method:'POST',headers:{'content-type':'application/json',apikey:%s,Prefer:'return=minimal'},"
+            "body:JSON.stringify({nome:%s,bytes:u.length,b64:btoa(s)})});return {pdf:%s,bytes:u.length,guardado:r.status}})()") % (
+        k, k, json.dumps(url), json.dumps(MUNDO['env']['anonKey']), json.dumps(nome), json.dumps(nome))
 
 
 # ---------------------------------------------------------------- setup (fora do vídeo)

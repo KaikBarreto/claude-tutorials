@@ -321,3 +321,26 @@ def cap01():
     c.hover(BTN('Conciliação', within=MAIN), seconds=0.6, at=c.A(6, 'Conciliação', 0.5), label='aba Conciliação')
     c.fim()
     return c
+
+
+# ---------------------------------------------------------------- main
+def main():
+    pedidos = [int(a) for a in sys.argv[1:] if a.isdigit()]
+    fns = {n: globals().get(f'cap{n:02d}') for n in range(15)}
+    feitos = []
+    for n, fn in fns.items():
+        if fn is None or (pedidos and n not in pedidos):
+            continue
+        c = fn()
+        d = c.out()
+        json.dump(d, open(os.path.join(HERE, f'cap{n:02d}.json'), 'w', encoding='utf8'), ensure_ascii=False, indent=1)
+        nat = sum(1 for st in d['steps'] if st.get('do') != 'mark')
+        feitos.append(f'cap{n:02d} {nat} passos, {len(c.linhas)} linhas, {c.dur:.1f} s{" (fala estimada)" if c.estimado else ""}')
+        if os.environ.get('ANCORAS'):
+            for i, p, t in c.anchors:
+                print(f'   cap{n:02d} L{i} {p!r} -> {t}')
+    print('\n'.join(feitos))
+
+
+if __name__ == '__main__':
+    main()

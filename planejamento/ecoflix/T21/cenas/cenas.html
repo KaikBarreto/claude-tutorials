@@ -4,7 +4,9 @@
      as duas cenas de exemplo). CAPS[n] só dos capítulos com [ILUSTRAÇÃO] no roteiro (0, 1, 2, 4, 5, 6, 7); o cap05 e o cap07
      têm duas cenas cada, cada uma na sua janela (lista ILU, a mesma do ilustracoes.json). No cap07 as duas são seguidas:
      a 1ª fica até o fim da 1ª palavra da fala seguinte e a 2ª (fundo opaco) entra por cima numa fusão.
-     O Cato aparece só como balão de conversa (a pergunta e o tipo de resposta): nada de robô nem marca de IA.
+     Tema escuro do Cato (Kaik, 11/11): fundo #121212 com a espiral do app bem apagada, o ícone do Cato como avatar, o logo na
+     janela de conversa da abertura, balões escuros translúcidos com texto claro, selos no degradê com texto branco. A
+     identidade fica em cato/ (caminho relativo; o LEIA.md dela está em perfis/ecoflix/cenas/cato/).
      Render só do trecho: node render_cenas.cjs <n> <capNN.json> <saida.mp4> --html cenas.html --de <at> --ate <at + dur> -->
 <style>
 @font-face{font-family:M;font-weight:500;src:url(../../../web/fonts/montserrat-latin-500-normal.woff2) format('woff2')}
@@ -13,38 +15,65 @@
 @font-face{font-family:M;font-weight:800;src:url(../../../web/fonts/montserrat-latin-800-normal.woff2) format('woff2')}
 @font-face{font-family:M;font-weight:500;src:url(../../../web/fonts/montserrat-latin-ext-500-normal.woff2) format('woff2');unicode-range:U+0100-024F}
 @font-face{font-family:M;font-weight:700;src:url(../../../web/fonts/montserrat-latin-ext-700-normal.woff2) format('woff2');unicode-range:U+0100-024F}
-/* ---------------------------------------------------------------- paleta EcoFlix (marca: acento #50D088, escuro #121212)
-   --v  acento: preenchimentos, barras, contornos de destaque (nunca texto sobre branco: contraste baixo)
-   --ve verde escuro: texto e ícone verde sobre branco (contraste 5,0)   --vc verde claro: fundo de ícone/resultado
-   --a  âmbar: o SEGUNDO conceito da cena (ex.: competência x caixa)     --ae texto âmbar (5,9)   --ac âmbar claro
-   --t  texto (o escuro da marca)   --c texto secundário (4,8)   --l linhas   --e painel escuro (mostrador) */
-:root{--v:#50D088;--ve:#2E7D57;--vc:#EAF8F0;--vm:#A9E9C6;--a:#F2B63D;--ae:#8A5A00;--ac:#FFF5DF;
-  --t:#121212;--c:#6B7280;--l:#E6E9EE;--e:#121212}
+/* ---------------------------------------------------------------- T21 · tema escuro do Cato (Kaik, 11/11)
+   identidade do Cato (cato/, do próprio app): degradê #6366F1 → #A855F7 → #EC4899 → #F97316, claro #EFEFEF, escuro #121212.
+   Selo, chip, etiqueta e quadrado de ícone com fundo no degradê e texto/ícone branco (nunca fundo claro com texto colorido);
+   as regras com #st valem sobre o bloco "saturado" (verde) do kit, que fica sem efeito nesta aula.
+   --gc degradê inteiro (o Cato, o destaque)   --g1 metade fria (1º conceito)   --g2 metade quente (2º conceito)
+   --v traço e contorno (roxo)   --a traço do 2º conceito (laranja)   --t texto claro   --c texto secundário   --l linhas
+   --bx cartão escuro   --bb contorno dele   --e painel escuro */
+:root{--gc:linear-gradient(135deg,#6366F1 0%,#A855F7 36%,#EC4899 70%,#F97316 100%);
+  --g1:linear-gradient(135deg,#6366F1,#A855F7);--g2:linear-gradient(135deg,#EC4899,#F97316);
+  --v:#A855F7;--a:#F97316;--t:#EFEFEF;--c:#A1A1AA;--l:rgba(255,255,255,.10);--bx:rgba(28,28,34,.92);--bb:rgba(255,255,255,.11);
+  --e:#121212}
 *{box-sizing:border-box;margin:0;padding:0;transition:none!important;animation:none!important}
-html,body{width:1280px;height:800px;overflow:hidden;background:#fff}
+html,body{width:1280px;height:800px;overflow:hidden;background:#121212}
 body{font-family:M,sans-serif;color:var(--t);-webkit-font-smoothing:antialiased}
-#st{position:absolute;inset:0;overflow:hidden;background:
-  radial-gradient(1100px 650px at 92% -12%,rgba(80,208,136,.09),transparent 62%),
-  radial-gradient(900px 600px at -12% 112%,rgba(80,208,136,.06),transparent 60%),#fff}
+/* fundo: #121212 com a espiral do app bem apagada; .fx também cobre a cena anterior do capítulo (fusão) */
+.fx{position:absolute;left:0;top:0;width:1280px;height:800px;overflow:hidden;background:#121212}
+.fx img{position:absolute;left:0;top:0;width:1280px;height:800px;object-fit:cover;opacity:.15}
+#st{position:absolute;inset:0;overflow:hidden}
 .g{position:absolute;left:0;top:0;width:1280px;height:800px;transform-origin:640px 400px}
 .ab{position:absolute}
 .row{display:flex;align-items:center}
-/* título da cena: área (kicker) + conceito; sozinho fica grande no centro e sobe quando o desenho entra */
-.kick{font-weight:700;font-size:15px;letter-spacing:.3em;color:var(--ve);text-transform:uppercase}
-.h{font-weight:800;font-size:46px;letter-spacing:-.01em;line-height:1.1}
+/* título da cena: área (kicker, no degradê) + conceito (claro); sozinho fica grande no centro e sobe quando o desenho entra */
+.kick{display:inline-block;font-weight:700;font-size:15px;letter-spacing:.3em;text-transform:uppercase;
+  background:var(--gc);-webkit-background-clip:text;background-clip:text;color:transparent}
+.h{font-weight:800;font-size:46px;letter-spacing:-.01em;line-height:1.1;color:var(--t)}
 /* cartão, chip, etiqueta, ícone */
-.card{position:absolute;background:#fff;border:1px solid #E1E8E4;border-radius:18px;
-  box-shadow:0 18px 40px rgba(16,24,40,.10),0 3px 8px rgba(16,24,40,.06)}
+.card{position:absolute;background:var(--bx);border:1px solid var(--bb);border-radius:18px;
+  box-shadow:0 18px 40px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.05)}
 .ic{display:inline-flex;align-items:center;justify-content:center;flex:none}
 .ic svg{width:100%;height:100%}
-.ico{display:flex;align-items:center;justify-content:center;flex:none;border-radius:14px;background:var(--vc);color:var(--ve)}
-.ico.a{background:var(--ac);color:var(--ae)}
+.ico{display:flex;align-items:center;justify-content:center;flex:none;border-radius:14px}
+#st .ico{background:var(--g1);color:#fff} #st .ico.a{background:var(--g2);color:#fff}
+#st .ico.n{background:rgba(255,255,255,.08);color:#D4D4D8;box-shadow:inset 0 0 0 1px rgba(255,255,255,.14)} /* neutro */
 .tag{display:inline-flex;align-items:center;gap:8px;padding:9px 18px;border-radius:999px;font-weight:800;font-size:20px;white-space:nowrap}
-.tag.v{background:var(--vc);color:var(--ve)} .tag.a{background:var(--ac);color:var(--ae)}
-.tag.c{background:#EEF1F4;color:#4B5563} /* T21: etiqueta neutra (cinza) */
+#st .tag.v{background:var(--g1);color:#fff} #st .tag.a{background:var(--g2);color:#fff}
+#st .tag.gr{background:var(--gc);color:#fff} /* degradê inteiro (não usar "g": é a classe do grupo da cena) */
+#st .tag.v,#st .tag.a,#st .tag.gr{text-shadow:0 1px 2px rgba(0,0,0,.22);box-shadow:0 8px 22px rgba(0,0,0,.35)}
+#st .tag.c{background:rgba(255,255,255,.07);color:var(--t);box-shadow:inset 0 0 0 1px rgba(255,255,255,.16)} /* etiqueta neutra */
 .tag.tg{font-size:24px;padding:11px 22px} /* T21: etiqueta maior */
 .lbl{font-weight:700;font-size:17px;color:var(--c)}
 .num{font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+/* número no degradê: .gt começa claro e vira o degradê (a letra fica transparente); .gt1 frio e .gt2 quente, sempre */
+.gt,.gt1,.gt2{display:inline-block;-webkit-background-clip:text;background-clip:text}
+.gt{background-image:var(--gc);-webkit-text-fill-color:#EFEFEF}
+.gt1{background-image:linear-gradient(90deg,#818CF8,#C084FC);-webkit-text-fill-color:transparent}
+.gt2{background-image:linear-gradient(90deg,#F472B6,#FB923C);-webkit-text-fill-color:transparent}
+/* o Cato: o ícone do app como avatar; balão da pergunta (escuro com um toque índigo, como o do app) e do Cato (cinza-escuro);
+   janela de conversa com a espiral no topo, o logo e o fio no degradê (como o painel do app) */
+.av{display:block;flex:none;border-radius:50%;box-shadow:0 0 16px rgba(168,85,247,.5)}
+.bl{border-radius:22px;padding:18px 24px;color:var(--t);box-shadow:0 10px 24px rgba(0,0,0,.35)}
+.bp{background:linear-gradient(135deg,rgba(99,102,241,.24),rgba(124,58,237,.16));border:1px solid rgba(129,140,248,.34);border-bottom-right-radius:6px}
+.br{background:rgba(38,38,43,.82);border:1px solid rgba(255,255,255,.10);border-bottom-left-radius:6px}
+.pn{position:absolute;overflow:hidden;border-radius:24px;background:rgba(22,22,26,.9);border:1px solid rgba(255,255,255,.10);
+  box-shadow:0 30px 60px rgba(0,0,0,.5)}
+.ph{position:relative;height:82px;overflow:hidden}
+.ph .tx{position:absolute;left:0;top:0;width:100%;height:100%;object-fit:cover;opacity:.6}
+.ph .sc{position:absolute;inset:0;background:linear-gradient(180deg,rgba(18,18,18,.3),rgba(18,18,18,.65) 70%,rgba(22,22,26,.95))}
+.ph .lg{position:absolute;left:24px;top:19px;height:44px}
+.ph .ln{position:absolute;left:0;right:0;bottom:0;height:2px;background:linear-gradient(90deg,transparent,#6366F1,#A855F7,#EC4899,#F97316,transparent)}
 .op{position:absolute;width:60px;height:60px;border-radius:50%;background:#F2F4F7;color:var(--t);display:flex;
   align-items:center;justify-content:center;font-weight:800;font-size:34px;line-height:1}
 /* mostrador da balança (painel escuro, número no acento) */
@@ -59,7 +88,15 @@ body{font-family:M,sans-serif;color:var(--t);-webkit-font-smoothing:antialiased}
 .ico{background:var(--vs);color:#fff}.ico.a{background:var(--as);color:#fff}
 .tag.v{background:var(--vs);color:#fff}.tag.a{background:var(--as);color:#fff}
 </style></head>
-<body><div id="st"></div>
+<body><!-- degradês do Cato para os desenhos: fill="url(#cgC)" etc. (só em forma com largura e altura; linha reta some) -->
+<svg width="0" height="0" style="position:absolute"><defs>
+<linearGradient id="cgC" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6366F1"/><stop offset=".36" stop-color="#A855F7"/><stop offset=".7" stop-color="#EC4899"/><stop offset="1" stop-color="#F97316"/></linearGradient>
+<linearGradient id="cgH" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#6366F1"/><stop offset=".36" stop-color="#A855F7"/><stop offset=".7" stop-color="#EC4899"/><stop offset="1" stop-color="#F97316"/></linearGradient>
+<linearGradient id="cg1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6366F1"/><stop offset="1" stop-color="#A855F7"/></linearGradient>
+<linearGradient id="cg2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#EC4899"/><stop offset="1" stop-color="#F97316"/></linearGradient>
+<linearGradient id="cgV" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#6366F1"/><stop offset=".55" stop-color="#A855F7"/><stop offset="1" stop-color="#EC4899"/></linearGradient>
+</defs></svg>
+<div class="fx"><img src="cato/cato-bg-wide.jpg" alt=""></div><div id="st"></div>
 <script>
 // ------------------------------------------------------------------ utilidades (as do cenas_modelo.html + as da EcoFlix)
 const cl=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
@@ -147,7 +184,7 @@ const CAPS={};
 // ================================================================== T21 · Cato, o assistente (as cenas da aula)
 // Cada cena tem a sua janela: abre 0,3 s antes da palavra "de" e fecha "cauda" s depois do fim da palavra "ate"
 // (as mesmas âncoras do ilustracoes.json, que sai desta lista). O título está na tela no 1º quadro da janela.
-// O Cato aparece só como balão de conversa (pergunta e tipo de resposta): nada de robô nem marca de IA.
+// Tema escuro do Cato: avatar (cato-icon), logo na janela da abertura, balões escuros, selos no degradê (ver o <style>).
 const ILU=[
  {cap:0,id:'ilu00_problema',de:[0,'Oi',1],ate:[1,'número',1],cauda:.8,
   resumo:'em vez de procurar o número nos relatórios, o Rafael pergunta em português e a resposta vem com o número',
@@ -187,21 +224,24 @@ const svg=(w,h,inner,st='',k=1)=>`<svg viewBox="0 0 ${w} ${h}" width="${w*k}" he
 const fixa=(e,op)=>{e.style.opacity=op.toFixed(4);e.style.visibility=op<=.001?'hidden':'visible'};
 const tagC=(cls,txt,cx,y,g,st='')=>el(`<div class="ab" style="left:${cx-300}px;top:${y}px;width:600px;text-align:center;${st}"><div class="tag ${cls}">${txt}</div></div>`,g);
 const seta=(w,cor='var(--v)',sw=5)=>svg(w,24,`<path d="M3 12 L${w-6} 12 M${w-16} 3 L${w-5} 12 L${w-16} 21" fill="none" stroke="${cor}" stroke-width="${sw}" stroke-linecap="round" stroke-linejoin="round"/>`);
-// fundo opaco igual ao do palco: a cena seguinte do mesmo capítulo cobre a anterior (fusão, sem cartão vazio)
-const FUNDO='radial-gradient(1100px 650px at 92% -12%,rgba(80,208,136,.09),transparent 62%),radial-gradient(900px 600px at -12% 112%,rgba(80,208,136,.06),transparent 60%),#fff';
-const fundo=g=>el(`<div class="ab" style="left:0;top:0;width:1280px;height:800px;background:${FUNDO}"></div>`,g);
+// fundo opaco igual ao do palco (#121212 e a espiral apagada): a cena seguinte do mesmo capítulo cobre a anterior (fusão)
+const fundo=g=>el('<div class="fx"><img src="cato/cato-bg-wide.jpg" alt=""></div>',g);
 // cena só existe perto da sua janela (várias cenas no mesmo capítulo)
 const perto=(g,t,A,B)=>{g.style.visibility=(t>=A-1.6&&t<=B+.6)?'visible':'hidden'};
-// balão de conversa: pergunta (cinza, canto de baixo à direita reto) ou resposta do Cato (branco com contorno verde)
+// o avatar do Cato: o ícone do app (degradê com a estrela branca)
+const AV=px=>`<img class="av" src="cato/cato-icon.png" alt="" style="width:${px}px;height:${px}px">`;
+// balão de conversa, escuro e translúcido com texto claro: pergunta (toque índigo, canto de baixo à direita reto) ou
+// resposta do Cato (cinza-escuro, canto de baixo à esquerda reto, com o avatar e o nome em cima)
 function balao(g,x,y,w,html,tipo,st=''){
   const p=tipo==='p';
   return el(`<div class="ab" style="left:${x}px;top:${y}px;width:${w}px;${st}">
-    ${p?'':'<div style="font-weight:800;font-size:16px;color:var(--ve);margin:0 0 8px 8px">Cato</div>'}
-    <div class="bl" data-box style="border-radius:22px;padding:18px 24px;${p?'background:#EEF1F4;border-bottom-right-radius:6px':
-      'background:#fff;border:2px solid var(--v);border-bottom-left-radius:6px;box-shadow:0 10px 24px rgba(16,24,40,.08)'}">${html}</div></div>`,g);
+    ${p?'':`<div class="row" style="gap:10px;margin:0 0 10px 4px">${AV(34)}<span style="font-weight:800;font-size:17px">Cato</span></div>`}
+    <div class="bl ${p?'bp':'br'}" data-box>${html}</div></div>`,g);
 }
-// linhas de texto genéricas (barras cinza)
-const linhas=(ws,h=10,gap=10,cor='#E3E7EC')=>ws.map((w,k)=>`<div style="width:${w}px;height:${h}px;border-radius:${h/2}px;background:${cor};margin-top:${k?gap:0}px"></div>`).join('');
+// cor intermediária em hex (o mix só lê hex)
+const hx=(a,b,p)=>'#'+hex(a).map((v,i)=>Math.round(v+(hex(b)[i]-v)*cl(p)).toString(16).padStart(2,'0')).join('');
+// linhas de texto genéricas (barras cinza-escuro)
+const linhas=(ws,h=10,gap=10,cor='#3A3A43')=>ws.map((w,k)=>`<div style="width:${w}px;height:${h}px;border-radius:${h/2}px;background:${cor};margin-top:${k?gap:0}px"></div>`).join('');
 
 // ------------------------------------------------------------------ CAPS[0] · Tirar dúvida simples (o problema)
 // falas 0 e 1: "Oi! Neste tutorial a gente vai parar de abrir relatório pra tirar dúvida simples." / "Na Recicla Vale Metais,
@@ -211,23 +251,25 @@ CAPS[0]=()=>{
   const tit=titulo(g,'Cato','Tirar dúvida simples');
   // a pessoa (silhueta genérica) e três relatórios genéricos na frente dela; uma lupa procura o número
   const esq=el('<div class="ab" style="left:0;top:0;width:1280px;height:800px"></div>',g);
-  const pes=el(`<div class="ab" style="left:200px;top:226px">${svg(200,190,`<circle cx="100" cy="58" r="44" fill="#B9C1C9"/>
-     <path d="M14 190 C 14 128, 52 104, 100 104 C 148 104, 186 128, 186 190 Z" fill="#B9C1C9"/>`)}</div>`,esq);
+  const pes=el(`<div class="ab" style="left:200px;top:226px">${svg(200,190,`<circle cx="100" cy="58" r="44" fill="#4A4A55"/>
+     <path d="M14 190 C 14 128, 52 104, 100 104 C 148 104, 186 128, 186 190 Z" fill="#4A4A55"/>`)}</div>`,esq);
   const nome=tagC('c','Rafael',350,620,esq);
   const rel=(x,y,r,tipo)=>el(`<div class="card rl" style="left:${x}px;top:${y}px;width:178px;height:150px;padding:16px 18px;transform-origin:50% 100%;rotate:${r}deg">
-     ${linhas([96],10)}<div style="margin-top:14px">${tipo==='b'?svg(142,64,`<g fill="#D5DAE0"><rect x="6" y="34" width="22" height="30" rx="3"/>
+     ${linhas([96],10)}<div style="margin-top:14px">${tipo==='b'?svg(142,64,`<g fill="#45454F"><rect x="6" y="34" width="22" height="30" rx="3"/>
        <rect x="40" y="14" width="22" height="50" rx="3"/><rect x="74" y="26" width="22" height="38" rx="3"/><rect x="108" y="6" width="22" height="58" rx="3"/></g>`)
-       :tipo==='l'?svg(142,64,`<polyline points="4,54 34,34 64,42 96,14 138,24" fill="none" stroke="#C5CBD3" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>`)
+       :tipo==='l'?svg(142,64,`<polyline points="4,54 34,34 64,42 96,14 138,24" fill="none" stroke="#55555F" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>`)
        :linhas([142,120,138,100],8,9)}</div></div>`,esq);
   const R=[rel(84,452,-7,'b'),rel(262,438,0,'t'),rel(440,452,7,'l')];
-  const lupa=el(`<div class="ab ico" style="left:0;top:0;width:64px;height:64px;border-radius:50%;background:#fff;color:#4B5563;
-     border:2px solid #C5CBD3;box-shadow:0 8px 18px rgba(16,24,40,.12)">${ic('search',32)}</div>`,esq);
-  const duv=el(`<div class="ab" style="left:384px;top:204px;width:64px;height:64px;border-radius:50%;background:var(--ac);border:2px solid var(--a);
-     display:flex;align-items:center;justify-content:center;font-weight:800;font-size:34px;color:var(--ae)">?</div>`,esq);
-  // a conversa: a pergunta em português e a resposta com o número
-  const per=balao(g,780,240,400,'<div style="font-weight:800;font-size:26px">Quem tá me devendo?</div>','p');
-  const res=balao(g,700,370,420,`<div class="lbl" style="font-size:18px">3 parceiros</div>
-     <div class="num rn" style="font-size:44px;margin-top:4px">${brl(17540)}</div>`,'r');
+  const lupa=el(`<div class="ab ico" style="left:0;top:0;width:64px;height:64px;border-radius:50%;background:#26262D;color:#E4E4E7;
+     border:2px solid rgba(255,255,255,.24);box-shadow:0 8px 18px rgba(0,0,0,.45)">${ic('search',32)}</div>`,esq);
+  const duv=el(`<div class="ab" style="left:384px;top:204px;width:64px;height:64px;border-radius:50%;background:var(--g2);box-shadow:0 8px 20px rgba(236,72,153,.35);
+     display:flex;align-items:center;justify-content:center;font-weight:800;font-size:34px;color:#fff">?</div>`,esq);
+  // a conversa, na janela do Cato (como no app: a espiral no topo, o logo e o fio no degradê): a pergunta e a resposta
+  const jan=el(`<div class="pn" style="left:676px;top:196px;width:520px;height:396px"><div class="ph"><img class="tx" src="cato/cato-bg-wide.jpg" alt="">
+     <div class="sc"></div><img class="lg" src="cato/cato-logo.png" alt=""><div class="ln"></div></div></div>`,g);
+  const per=balao(g,752,302,420,'<div style="font-weight:800;font-size:26px;white-space:nowrap">Quem tá me devendo?</div>','p');
+  const res=balao(g,700,395,400,`<div class="lbl" style="font-size:18px">3 parceiros</div>
+     <div class="num rn gt" style="font-size:44px;margin-top:4px">${brl(17540)}</div>`,'r');
   const rb=res.querySelector('.bl'), rn=res.querySelector('.rn');
   return t=>{
     const [A]=janela(i);
@@ -243,9 +285,9 @@ CAPS[0]=()=>{
     const cz=eo(pr(t,tpe-.2,.6)); R.forEach(r=>{r.style.filter=cz>.001?`grayscale(1) opacity(${(1-.55*cz).toFixed(3)})`:''});
     lupa.style.filter=cz>.001?`opacity(${(1-.6*cz).toFixed(3)})`:''; duv.style.filter=cz>.001?`opacity(${(1-.6*cz).toFixed(3)})`:'';
     esq.style.transform=`translate(${lerp(290,0,eio(pr(t,tpe-.45,.8))).toFixed(2)}px,0)`;
-    vis(per,t,tpe-.15,1e9,{dx:24,dy:0}); vis(res,t,tre2-.15,1e9,{dx:-24,dy:0});
-    const ac=eo(pr(t,tnu-.1,.45)); rb.style.boxShadow=`0 0 0 ${(6*ac).toFixed(2)}px rgba(80,208,136,.22),0 10px 24px rgba(16,24,40,.08)`;
-    rn.style.color=mix('#121212','#2E7D57',ac); pulse(rn,t,tnu-.05,.06,.8);
+    vis(jan,t,tpe-.3,1e9,{dx:24,dy:0}); vis(per,t,tpe-.15,1e9,{dx:24,dy:0}); vis(res,t,tre2-.15,1e9,{dx:-24,dy:0});
+    const ac=eo(pr(t,tnu-.1,.45)); rb.style.boxShadow=`0 0 0 ${(6*ac).toFixed(2)}px rgba(168,85,247,.3),0 10px 24px rgba(0,0,0,.35)`;
+    rn.style.setProperty('-webkit-text-fill-color',`rgba(239,239,239,${(1-ac).toFixed(3)})`); pulse(rn,t,tnu-.05,.06,.8);
   };
 };
 
@@ -254,31 +296,31 @@ CAPS[0]=()=>{
 CAPS[1]=()=>{
   const i=I('ilu01_onde'), g=grupo();
   const tit=titulo(g,'Cato','Onde fica o botão');
-  const bot=(x,y,d)=>`<div class="ab bt" style="left:${x}px;top:${y}px;width:${d}px;height:${d}px;border-radius:50%;background:var(--v);color:#fff;
-     display:flex;align-items:center;justify-content:center;box-shadow:0 6px 14px rgba(46,125,87,.35)">${ic('message-circle',d*.5)}</div>
+  const bot=(x,y,d)=>`<img class="ab bt av" src="cato/cato-icon.png" alt="" style="left:${x}px;top:${y}px;width:${d}px;height:${d}px">
      <div class="rip" style="left:${x+d/2}px;top:${y+d/2}px"></div>`;
-  // computador genérico (tela com blocos neutros, sem imitar o app) e o botão no canto de baixo à direita
+  // computador genérico (tela escura com blocos neutros, sem imitar o app) e o botão do Cato (o ícone do app) no canto de
+  // baixo à direita
   const pc=el(`<div class="ab" style="left:150px;top:206px;width:600px;height:440px">
-     <div class="ab" style="left:0;top:0;width:600px;height:370px;border-radius:20px;background:#2F3640"></div>
-     <div class="ab" style="left:16px;top:16px;width:568px;height:338px;border-radius:8px;background:#F3F4F6;overflow:hidden">
-       <div class="ab" style="left:0;top:0;width:110px;height:338px;background:#E6E9EE"></div>
+     <div class="ab" style="left:0;top:0;width:600px;height:370px;border-radius:20px;background:#2A2A32;box-shadow:inset 0 0 0 1px rgba(255,255,255,.12),0 24px 50px rgba(0,0,0,.5)"></div>
+     <div class="ab" style="left:16px;top:16px;width:568px;height:338px;border-radius:8px;background:#17171C;overflow:hidden">
+       <div class="ab" style="left:0;top:0;width:110px;height:338px;background:#1F1F26"></div>
        <div class="ab" style="left:134px;top:22px">${linhas([180],12)}</div>
-       <div class="ab" style="left:134px;top:58px;width:410px;height:120px;border-radius:10px;background:#fff"></div>
-       <div class="ab" style="left:134px;top:192px;width:196px;height:120px;border-radius:10px;background:#fff"></div>
-       <div class="ab" style="left:346px;top:192px;width:198px;height:120px;border-radius:10px;background:#fff"></div>
+       <div class="ab" style="left:134px;top:58px;width:410px;height:120px;border-radius:10px;background:#25252C"></div>
+       <div class="ab" style="left:134px;top:192px;width:196px;height:120px;border-radius:10px;background:#25252C"></div>
+       <div class="ab" style="left:346px;top:192px;width:198px;height:120px;border-radius:10px;background:#25252C"></div>
        ${bot(496,266,54)}</div>
-     <div class="ab" style="left:262px;top:370px;width:76px;height:50px;background:#4F5861"></div>
-     <div class="ab" style="left:200px;top:418px;width:200px;height:16px;border-radius:8px;background:#5E6670"></div></div>`,g);
+     <div class="ab" style="left:262px;top:370px;width:76px;height:50px;background:#2A2A32"></div>
+     <div class="ab" style="left:200px;top:418px;width:200px;height:16px;border-radius:8px;background:#34343D"></div></div>`,g);
   const nPc=tagC('c','computador',450,668,g);
   // celular genérico: barra de baixo e o botão à esquerda, logo acima dela
   const cel=el(`<div class="ab" style="left:880px;top:196px;width:250px;height:470px">
-     <div class="ab" style="left:0;top:0;width:250px;height:470px;border-radius:38px;background:#2F3640"></div>
-     <div class="ab" style="left:12px;top:12px;width:226px;height:446px;border-radius:28px;background:#F3F4F6;overflow:hidden">
+     <div class="ab" style="left:0;top:0;width:250px;height:470px;border-radius:38px;background:#2A2A32;box-shadow:inset 0 0 0 1px rgba(255,255,255,.12),0 24px 50px rgba(0,0,0,.5)"></div>
+     <div class="ab" style="left:12px;top:12px;width:226px;height:446px;border-radius:28px;background:#17171C;overflow:hidden">
        <div class="ab" style="left:18px;top:30px">${linhas([120],12)}</div>
-       <div class="ab" style="left:18px;top:62px;width:190px;height:96px;border-radius:10px;background:#fff"></div>
-       <div class="ab" style="left:18px;top:170px;width:190px;height:96px;border-radius:10px;background:#fff"></div>
-       <div class="ab barra" style="left:0;top:382px;width:226px;height:64px;background:#fff;border-top:2px solid #E3E7EC;display:flex;align-items:center;justify-content:space-around">
-         ${[0,1,2,3].map(()=>'<div style="width:26px;height:26px;border-radius:8px;background:#D5DAE0"></div>').join('')}</div>
+       <div class="ab" style="left:18px;top:62px;width:190px;height:96px;border-radius:10px;background:#25252C"></div>
+       <div class="ab" style="left:18px;top:170px;width:190px;height:96px;border-radius:10px;background:#25252C"></div>
+       <div class="ab barra" style="left:0;top:382px;width:226px;height:64px;background:#1F1F26;border-top:2px solid #33333B;display:flex;align-items:center;justify-content:space-around">
+         ${[0,1,2,3].map(()=>'<div style="width:26px;height:26px;border-radius:8px;background:#3A3A43"></div>').join('')}</div>
        ${bot(16,318,50)}</div></div>`,g);
   const barra=cel.querySelector('.barra');
   const nCe=tagC('c','celular',1005,688,g);
@@ -292,8 +334,8 @@ CAPS[1]=()=>{
     vis(cel,t,tce-.2,1e9,{dy:22}); vis(nCe,t,tce,1e9,{dy:8});
     pulse(bCe,t,tes,.18,.8); ripple(rCe,t,tes); ripple(rCe,t,tes+.5);
     for(const [b,a] of [[bPc,tdi],[bCe,tes]]){const v=eo(pr(t,a-.05,.45));
-      b.style.boxShadow=`0 0 0 ${(9*v).toFixed(2)}px rgba(80,208,136,.28),0 6px 14px rgba(46,125,87,.35)`;}
-    const bb=eo(pr(t,tba-.1,.45)); barra.style.background=mix('#FFFFFF','#EAF8F0',bb); barra.style.borderTopColor=mix('#E3E7EC','#50D088',bb);
+      b.style.boxShadow=`0 0 0 ${(9*v).toFixed(2)}px rgba(168,85,247,.3),0 0 ${(16+12*v).toFixed(1)}px rgba(168,85,247,.55)`;}
+    const bb=eo(pr(t,tba-.1,.45)); barra.style.background=mix('#1F1F26','#2A1D3A',bb); barra.style.borderTopColor=mix('#33333B','#A855F7',bb);
   };
 };
 
@@ -304,13 +346,13 @@ CAPS[2]=()=>{
   const i=I('ilu02_caminho'), g=grupo();
   const tit=titulo(g,'Autorização','O caminho da pergunta');
   const per=balao(g,36,224,370,'<div style="font-weight:800;font-size:23px;white-space:nowrap">Quem tá me devendo?</div>','p');
-  const cato=el(`<div class="card" style="left:470px;top:228px;width:200px;height:130px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px">
-     <div class="ico" style="width:56px;height:56px;border-radius:50%;background:var(--v);color:#fff">${ic('message-circle',30)}</div>
-     <div style="font-weight:800;font-size:24px">Cato</div></div>`,g);
+  const cato=el(`<div class="card" style="left:470px;top:228px;width:200px;height:130px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;
+     border-color:rgba(168,85,247,.45);box-shadow:0 18px 40px rgba(0,0,0,.45),0 0 32px rgba(168,85,247,.18)">
+     ${AV(56)}<div style="font-weight:800;font-size:24px">Cato</div></div>`,g);
   const fios=el(`<svg class="ab" style="left:0;top:0;overflow:visible" width="1280" height="800">
      <path class="f1" d="M412 258 C 436 262, 444 288, 464 292" fill="none" stroke="var(--v)" stroke-width="4" stroke-linecap="round"/>
      <path class="f2" d="M570 436 L570 368" fill="none" stroke="var(--v)" stroke-width="4" stroke-linecap="round"/>
-     <path class="f3" d="M676 293 L870 293" fill="none" stroke="#9AA3AD" stroke-width="4" stroke-linecap="round" stroke-dasharray="3 11"/>
+     <path class="f3" d="M676 293 L870 293" fill="none" stroke="rgba(255,255,255,.4)" stroke-width="4" stroke-linecap="round" stroke-dasharray="3 11"/>
      <path class="f4" d="M466 330 C 430 360, 410 380, 386 392" fill="none" stroke="var(--v)" stroke-width="4" stroke-linecap="round"/></svg>`,g);
   const [f1,f2,f3,f4]=['.f1','.f2','.f3','.f4'].map(s=>fios.querySelector(s));
   const pta=(x,y,r)=>el(`<div class="ab" style="left:${x-11}px;top:${y-11}px;width:22px;height:22px;rotate:${r}deg">${svg(22,22,`<path d="M5 4 L16 11 L5 18" fill="none" stroke="var(--v)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>`)}</div>`,g);
@@ -321,13 +363,13 @@ CAPS[2]=()=>{
      <div class="row" style="flex-wrap:wrap;gap:10px;margin-top:14px">${CH.map(c=>`<div class="tag v ch" style="font-size:18px;padding:7px 15px">${c}</div>`).join('')}</div></div>`,g);
   const chips=[...dados.querySelectorAll('.ch')];
   const ia=el(`<div class="card" style="left:880px;top:214px;width:330px;height:168px;padding:22px 24px;display:flex;align-items:center;gap:18px">
-     <div class="ico" style="width:64px;height:64px;border-radius:16px;background:#EEF1F4;color:#4B5563">${ic('cloud',34)}</div>
+     <div class="ico n" style="width:64px;height:64px;border-radius:16px">${ic('cloud',34)}</div>
      <div style="font-weight:800;font-size:22px;line-height:1.2">serviço de inteligência artificial</div>
-     <div class="ab cad ico a" style="left:296px;top:-16px;width:46px;height:46px;border-radius:50%;border:2px solid var(--a)">${ic('lock-keyhole',22)}</div></div>`,g);
+     <div class="ab cad ico a" style="left:296px;top:-16px;width:46px;height:46px;border-radius:50%;box-shadow:0 0 0 3px #1C1C22,0 6px 16px rgba(236,72,153,.4)">${ic('lock-keyhole',22)}</div></div>`,g);
   const cad=ia.querySelector('.cad');
-  const trecho=el(`<div class="ab ico" style="left:0;top:0;width:46px;height:54px;border-radius:10px;background:#fff;border:2px solid #C5CBD3;color:#6B7280">${ic('file-text',26)}</div>`,g);
-  const aviso=tagC('v',`${ic('shield-check',20)}não treina com os seus dados`,1045,404,g);
-  const res=balao(g,60,404,300,`<div style="padding-top:2px">${linhas([200,150],10,10,'#D5DAE0')}</div>`,'r');
+  const trecho=el(`<div class="ab ico" style="left:0;top:0;width:46px;height:54px;border-radius:10px;background:#26262D;border:2px solid rgba(255,255,255,.32);color:#E4E4E7">${ic('file-text',26)}</div>`,g);
+  const aviso=tagC('gr',`${ic('shield-check',20)}não treina com os seus dados`,1045,404,g);
+  const res=balao(g,60,404,300,`<div style="padding-top:2px">${linhas([200,150],10,10,'#4A4A55')}</div>`,'r');
   return t=>{
     const [A]=janela(i);
     const tre=W(1,'responder'), tel=W(1,'ele'), tle=W(1,'le'), tda=W(1,'dados'), tc=CH.map(c=>W(1,c)), ttr=W(1,'trechos'),
@@ -349,10 +391,10 @@ CAPS[2]=()=>{
 
 // ------------------------------------------------------------------ CAPS[4] · Caixa é o de hoje
 // fala 5: "Uma dica: pro Cato, caixa é o caixa de hoje. Pra saber do mês, pergunte pelo mês."
-const CALEND=(k=1)=>svg(220,210,`<rect x="2" y="12" width="216" height="196" rx="18" fill="#fff" stroke="#C5CBD3" stroke-width="3"/>
-  <path d="M2 30 Q2 12 20 12 L200 12 Q218 12 218 30 L218 58 L2 58 Z" fill="var(--v)"/>
-  <rect x="52" y="0" width="12" height="30" rx="6" fill="#4F5861"/><rect x="156" y="0" width="12" height="30" rx="6" fill="#4F5861"/>
-  ${[...Array(35)].map((_,j)=>`<rect class="dd" x="${18+(j%7)*27}" y="${72+Math.floor(j/7)*26}" width="20" height="18" rx="4" fill="#E6E9EE"/>`).join('')}`,'',k);
+const CALEND=(k=1)=>svg(220,210,`<rect x="2" y="12" width="216" height="196" rx="18" fill="#1E1E24" stroke="#45454F" stroke-width="3"/>
+  <path d="M2 30 Q2 12 20 12 L200 12 Q218 12 218 30 L218 58 L2 58 Z" fill="url(#cgC)"/>
+  <rect x="52" y="0" width="12" height="30" rx="6" fill="#8B8B96"/><rect x="156" y="0" width="12" height="30" rx="6" fill="#8B8B96"/>
+  ${[...Array(35)].map((_,j)=>`<rect class="dd" x="${18+(j%7)*27}" y="${72+Math.floor(j/7)*26}" width="20" height="18" rx="4" fill="#2E2E36"/>`).join('')}`,'',k);
 CAPS[4]=()=>{
   const i=I('ilu04_caixa_hoje'), g=grupo();
   const tit=titulo(g,'Perguntas','Caixa é o de hoje');
@@ -362,11 +404,11 @@ CAPS[4]=()=>{
   const dr=el(`<div class="ab" style="left:933px;top:300px">${svg(24,50,`<path d="M12 2 L12 42 M4 32 L12 44 L20 32" fill="none" stroke="var(--a)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>`)}</div>`,g);
   // a gaveta do caixa (notas e moedas) e o calendário do mês
   const gav=el(`<div class="ab" style="left:169px;top:362px">${svg(280,170,`
-     <polygon points="30,20 250,20 272,84 8,84" fill="#E6E9EE" stroke="#B9C1C9" stroke-width="3" stroke-linejoin="round"/>
-     <g stroke="#B9C1C9" stroke-width="3"><line x1="85" y1="20" x2="74" y2="84"/><line x1="140" y1="20" x2="140" y2="84"/><line x1="195" y1="20" x2="206" y2="84"/></g>
-     <g fill="var(--vm)" stroke="#50D088" stroke-width="2"><rect x="38" y="30" width="38" height="44" rx="4"/><rect x="92" y="30" width="40" height="44" rx="4"/></g>
-     <g fill="#F2B63D" stroke="#D99A1E" stroke-width="2"><circle cx="164" cy="44" r="9"/><circle cx="176" cy="60" r="9"/><circle cx="222" cy="46" r="9"/><circle cx="234" cy="62" r="9"/></g>
-     <rect x="4" y="84" width="272" height="80" rx="10" fill="#5E6670"/><rect x="110" y="114" width="60" height="16" rx="8" fill="#9AA3AD"/>`,'',1.15)}</div>`,g);
+     <polygon points="30,20 250,20 272,84 8,84" fill="#24242B" stroke="#4A4A55" stroke-width="3" stroke-linejoin="round"/>
+     <g stroke="#4A4A55" stroke-width="3"><line x1="85" y1="20" x2="74" y2="84"/><line x1="140" y1="20" x2="140" y2="84"/><line x1="195" y1="20" x2="206" y2="84"/></g>
+     <g fill="url(#cg1)" stroke="#A5B4FC" stroke-width="2"><rect x="38" y="30" width="38" height="44" rx="4"/><rect x="92" y="30" width="40" height="44" rx="4"/></g>
+     <g fill="url(#cg2)" stroke="#FDBA74" stroke-width="2"><circle cx="164" cy="44" r="9"/><circle cx="176" cy="60" r="9"/><circle cx="222" cy="46" r="9"/><circle cx="234" cy="62" r="9"/></g>
+     <rect x="4" y="84" width="272" height="80" rx="10" fill="#33333B" stroke="#45454F" stroke-width="2"/><rect x="110" y="114" width="60" height="16" rx="8" fill="#6B6B76"/>`,'',1.15)}</div>`,g);
   const tHoje=tagC('v','hoje',330,570,g);
   const cal=el(`<div class="ab" style="left:835px;top:356px">${CALEND()}</div>`,g);
   const dd=[...cal.querySelectorAll('.dd')];
@@ -379,7 +421,7 @@ CAPS[4]=()=>{
     vis(pL,t,tca-.1,1e9,{dx:16,dy:0}); vis(dl,t,tc1,1e9,{dy:-8}); vis(gav,t,tc1+.1,1e9,{dy:16});
     vis(tHoje,t,tho-.15); pulse(tHoje.firstElementChild,t,tho+.3,.08,.7);
     vis(pR,t,tsa-.15,1e9,{dx:16,dy:0}); vis(dr,t,tm1-.1,1e9,{dy:-8}); vis(cal,t,tm1,1e9,{dy:16}); pulse(pR.querySelector('.bl'),t,tpe,.03,.7);
-    vis(tMes,t,tm2-.2); dd.forEach((d,k)=>d.setAttribute('fill',mix('#E6E9EE','#FBD98B',eo(pr(t,tm2-.2+k*.012,.3)))));
+    vis(tMes,t,tm2-.2); dd.forEach((d,k)=>d.setAttribute('fill',mix('#2E2E36',hx('#EC4899','#F97316',k/34),eo(pr(t,tm2-.2+k*.012,.3)))));
   };
 };
 
@@ -391,37 +433,37 @@ CAPS[5]=()=>{
   const i1=I('ilu05_saldo_vendido'), g1=grupo();
   const tit1=titulo(g1,'Respostas','Saldo × valor movimentado');
   const fic=el(`<div class="card" style="left:130px;top:190px;width:1020px;height:330px;overflow:hidden">
-     <div class="row" style="height:72px;padding:0 28px;gap:14px;border-bottom:1px solid var(--l);background:#FAFBFC">
+     <div class="row" style="height:72px;padding:0 28px;gap:14px;border-bottom:1px solid var(--l);background:rgba(255,255,255,.04)">
        <div class="ico" style="width:44px;height:44px">${ic('users',24)}</div><div style="font-weight:800;font-size:24px">Fundição Bandeira do Vale</div>
        <div class="lbl" style="margin-left:auto;font-size:17px">cliente</div></div></div>`,g1);
-  const caixa=(x,cls,rot,cor)=>el(`<div class="ab cx" style="left:${x}px;top:96px;width:450px;height:208px;border-radius:16px;border:2px solid ${cor};background:${cls==='v'?'#F4FBF7':'#FFFBF2'};padding:20px 24px">
+  const caixa=(x,cls,rot,cor)=>el(`<div class="ab cx" style="left:${x}px;top:96px;width:450px;height:208px;border-radius:16px;border:2px solid ${cor};background:${cls==='v'?'rgba(99,102,241,.09)':'rgba(236,72,153,.08)'};padding:20px 24px">
      <div class="tag ${cls}" style="font-size:18px;padding:7px 15px">${rot}</div></div>`,fic);
-  const cV=caixa(26,'v','vendido em outubro','var(--vm)'), cD=caixa(544,'a','deve hoje','#F7D79A');
-  const mesV=el(`<div class="ab" style="left:24px;top:76px">${svg(400,56,`<line x1="4" y1="44" x2="396" y2="44" stroke="#B9C1C9" stroke-width="4" stroke-linecap="round"/>
-     ${[30,92,150,214,276,340].map((x,k)=>`<g class="sv"><path d="M${x} 38 L${x} 10 M${x-8} 18 L${x} 8 L${x+8} 18" fill="none" stroke="var(--v)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></g>`).join('')}`)}</div>`,cV);
+  const cV=caixa(26,'v','vendido em outubro','rgba(129,140,248,.5)'), cD=caixa(544,'a','deve hoje','rgba(249,115,22,.5)');
+  const mesV=el(`<div class="ab" style="left:24px;top:76px">${svg(400,56,`<line x1="4" y1="44" x2="396" y2="44" stroke="#4A4A55" stroke-width="4" stroke-linecap="round"/>
+     ${[30,92,150,214,276,340].map((x,k)=>`<g class="sv"><path d="M${x} 38 L${x} 10 M${x-8} 18 L${x} 8 L${x+8} 18" fill="none" stroke="#818CF8" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></g>`).join('')}`)}</div>`,cV);
   const sv=[...mesV.querySelectorAll('.sv')];
-  const vV=el(`<div class="ab num" style="left:24px;top:146px;font-size:38px;color:var(--ve)">${brl(112800)}</div>`,cV);
+  const vV=el(`<div class="ab num gt1" style="left:24px;top:146px;font-size:38px">${brl(112800)}</div>`,cV);
   const abD=el(`<div class="ab lbl" style="left:24px;top:82px;font-size:18px">em aberto</div>`,cD);
-  const vD=el(`<div class="ab num" style="left:24px;top:146px;font-size:38px;color:var(--ae)">${brl(14370)}</div>`,cD);
+  const vD=el(`<div class="ab num gt2" style="left:24px;top:146px;font-size:38px">${brl(14370)}</div>`,cD);
   const qD=balao(g1,700,560,380,'<div style="font-weight:800;font-size:22px">quanto ela me deve?</div>','p');
   const qV=balao(g1,182,560,380,'<div style="font-weight:800;font-size:22px">pra quem eu mais vendi?</div>','p');
   // ---- cena 2 (fundo opaco próprio)
   const i2=I('ilu05_regra'), g2=grupo(); fundo(g2);
   const tit2=titulo(g2,'Respostas','Gráfico ou tabela');
-  const PIZ=svg(150,110,`<circle cx="75" cy="55" r="52" fill="#E6E9EE"/><path d="M75 55 L75 3 A52 52 0 0 1 124.5 71 Z" fill="var(--v)"/>
-     <path d="M75 55 L124.5 71 A52 52 0 0 1 40 93.6 Z" fill="var(--a)"/>`);
-  const BAR=svg(150,110,`<g fill="var(--v)"><rect x="14" y="10" width="32" height="96" rx="5"/><rect x="60" y="38" width="32" height="68" rx="5"/></g>
-     <rect x="106" y="70" width="32" height="36" rx="5" fill="var(--vm)"/>`);
-  const LIN=svg(150,110,`<polyline points="8,90 44,62 78,72 112,30 144,40" fill="none" stroke="var(--v)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
-     ${[[8,90],[44,62],[78,72],[112,30],[144,40]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="7" fill="#fff" stroke="var(--v)" stroke-width="4"/>`).join('')}`);
-  const TAB=svg(150,110,`<rect x="4" y="4" width="142" height="102" rx="8" fill="#fff" stroke="#C5CBD3" stroke-width="3"/>
-     <path d="M5 8 Q5 5 9 5 L141 5 Q145 5 145 8 L145 30 L5 30 Z" fill="var(--vm)"/><g stroke="#D5DAE0" stroke-width="3">
+  const PIZ=svg(150,110,`<circle cx="75" cy="55" r="52" fill="#2E2E36"/><path d="M75 55 L75 3 A52 52 0 0 1 124.5 71 Z" fill="url(#cg1)"/>
+     <path d="M75 55 L124.5 71 A52 52 0 0 1 40 93.6 Z" fill="url(#cg2)"/>`);
+  const BAR=svg(150,110,`<g fill="url(#cgV)"><rect x="14" y="10" width="32" height="96" rx="5"/><rect x="60" y="38" width="32" height="68" rx="5"/></g>
+     <rect x="106" y="70" width="32" height="36" rx="5" fill="#4C3A6B"/>`);
+  const LIN=svg(150,110,`<polyline points="8,90 44,62 78,72 112,30 144,40" fill="none" stroke="url(#cgH)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+     ${[[8,90],[44,62],[78,72],[112,30],[144,40]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="7" fill="#1E1E24" stroke="#EFEFEF" stroke-width="4"/>`).join('')}`);
+  const TAB=svg(150,110,`<rect x="4" y="4" width="142" height="102" rx="8" fill="#1E1E24" stroke="#4A4A55" stroke-width="3"/>
+     <path d="M5 8 Q5 5 9 5 L141 5 Q145 5 145 8 L145 30 L5 30 Z" fill="url(#cgC)"/><g stroke="#3A3A43" stroke-width="3">
      <line x1="5" y1="55" x2="145" y2="55"/><line x1="5" y1="80" x2="145" y2="80"/><line x1="60" y1="30" x2="60" y2="105"/></g>`);
   const REG=[[PIZ,'pizza','distribuição'],[BAR,'barra','ranking'],[LIN,'linha','muda no tempo'],[TAB,'tabela','lista']];
-  const cards=REG.map(([d,tp,uso],k)=>el(`<div class="card" style="left:${81+k*286}px;top:196px;width:260px;height:316px;padding:22px 24px;border:2px solid #E1E8E4">
+  const cards=REG.map(([d,tp,uso],k)=>el(`<div class="card" style="left:${81+k*286}px;top:196px;width:260px;height:316px;padding:22px 24px;border:2px solid #2E2E36">
      <div class="tx">${linhas([150,110],10,9)}</div><div class="row" style="height:132px;justify-content:center;margin-top:12px">${d}</div>
      <div style="font-weight:800;font-size:26px;margin-top:10px">${tp}</div><div class="lbl" style="margin-top:4px;font-size:18px">${uso}</div></div>`,g2));
-  const txt=tagC('v',`${ic('align-left',20)}o texto vem sempre antes`,640,546,g2);
+  const txt=tagC('gr',`${ic('align-left',20)}o texto vem sempre antes`,640,546,g2);
   return t=>{
     const [A1,B1]=janela(i1), [A2,B2]=janela(i2);
     perto(g1,t,A1,B1); perto(g2,t,A2,B2);
@@ -440,9 +482,9 @@ CAPS[5]=()=>{
           tls=W(6,'lista'), tta=W(6,'tabela'), ttx=W(6,'texto');
     posTitulo(tit2,t,A2-.5,tdi-.4);
     [[tdi,tpz],[tra,tba],[tte,tli],[tls,tta]].forEach(([a,b],k)=>{const c=cards[k]; vis(c,t,a-.2,1e9,{dy:20});
-      const v=eo(pr(t,b-.1,.45)); c.style.borderColor=mix('#E1E8E4','#50D088',v);
-      c.style.boxShadow=`0 0 0 ${(4*v).toFixed(2)}px rgba(80,208,136,.18),0 18px 40px rgba(16,24,40,.10)`;});
-    const tv=eo(pr(t,ttx-.15,.45)); cards.forEach(c=>c.querySelectorAll('.tx div').forEach(d=>d.style.background=mix('#E3E7EC','#7FDCA8',tv)));
+      const v=eo(pr(t,b-.1,.45)); c.style.borderColor=mix('#2E2E36','#A855F7',v);
+      c.style.boxShadow=`0 0 0 ${(4*v).toFixed(2)}px rgba(168,85,247,.22),0 18px 40px rgba(0,0,0,.45)`;});
+    const tv=eo(pr(t,ttx-.15,.45)); cards.forEach(c=>c.querySelectorAll('.tx div').forEach(d=>d.style.background=mix('#3A3A43','#C084FC',tv)));
     vis(txt,t,ttx-.15,1e9,{dy:10});
   };
 };
@@ -453,12 +495,12 @@ CAPS[6]=()=>{
   const i=I('ilu06_mesmo_dado'), g=grupo();
   const tit=titulo(g,'Respostas','O mesmo número');
   const tela=el(`<div class="card" style="left:150px;top:440px;width:400px;height:170px;padding:22px 26px">
-     <div class="row" style="gap:12px"><div class="ico" style="width:42px;height:42px;background:#EEF1F4;color:#4B5563">${ic('monitor',22)}</div>
+     <div class="row" style="gap:12px"><div class="ico n" style="width:42px;height:42px">${ic('monitor',22)}</div>
      <div style="font-weight:800;font-size:21px">tela do sistema</div></div>
-     <div class="num vn" style="font-size:40px;margin-top:20px">${brl(96076)}</div></div>`,g);
-  const resp=balao(g,730,412,400,`<div class="lbl" style="font-size:18px">resposta do Cato</div><div class="num vn" style="font-size:40px;margin-top:10px">${brl(96076)}</div>`,'r');
+     <div class="num vn gt" style="font-size:40px;margin-top:20px">${brl(96076)}</div></div>`,g);
+  const resp=balao(g,730,412,400,`<div class="lbl" style="font-size:18px">resposta do Cato</div><div class="num vn gt" style="font-size:40px;margin-top:10px">${brl(96076)}</div>`,'r');
   const cen=el(`<div class="ab" style="left:440px;top:186px;width:400px;text-align:center">
-     <div class="ico cc" style="width:84px;height:84px;border-radius:50%;margin:0 auto;background:var(--v);color:#fff">${ic('database',42)}</div>
+     <div class="ico cc" style="width:84px;height:84px;border-radius:50%;margin:0 auto;background:var(--gc);color:#fff;box-shadow:0 0 30px rgba(168,85,247,.4)">${ic('database',42)}</div>
      <div style="font-weight:800;font-size:22px;margin-top:12px">os dados da empresa</div></div>`,g);
   const fios=el(`<svg class="ab" style="left:0;top:0;overflow:visible" width="1280" height="800">
      <path d="M600 330 C 520 360, 380 370, 350 432" fill="none" stroke="var(--v)" stroke-width="4" stroke-linecap="round"/>
@@ -469,7 +511,7 @@ CAPS[6]=()=>{
     const tme=W(3,'mesmo'), tnu=W(3,'numero'), tdo=W(3,'dois'), tle=W(3,'leem'), tda=W(3,'dados');
     posTitulo(tit,t,A-.5,tme-.35);
     vis(tela,t,tme-.2,1e9,{dy:20}); vis(resp,t,tme-.05,1e9,{dy:20});
-    vn.forEach((v,k)=>{pulse(v,t,tnu-.05+k*.08,.07,.8); v.style.color=mix('#121212','#2E7D57',eo(pr(t,tnu-.05,.45)))});
+    vn.forEach((v,k)=>{pulse(v,t,tnu-.05+k*.08,.07,.8); v.style.setProperty('-webkit-text-fill-color',`rgba(239,239,239,${(1-eo(pr(t,tnu-.05,.45))).toFixed(3)})`)});
     vis(cen,t,tdo-.2,1e9,{dy:-14,sc:.9}); fp.forEach((p,k)=>traco(p,t,tle-.1+k*.1,.5));
     pulse(cc,t,tda-.05,.1,.8);
   };
@@ -484,33 +526,33 @@ CAPS[7]=()=>{
   const tit1=titulo(g1,'Limites','O Cato consulta, você executa');
   const item=(ico,txt,cls)=>`<div class="row it" style="gap:14px;margin-top:16px"><div class="ico ${cls}" style="width:46px;height:46px">${ic(ico,24)}</div>
      <div style="font-weight:800;font-size:23px">${txt}</div></div>`;
-  const col=(x,ico,nome,cls,its)=>el(`<div class="card" style="left:${x}px;top:196px;width:460px;height:396px;padding:24px 28px">
-     <div class="row hd" style="gap:14px;padding-bottom:16px;border-bottom:1px solid var(--l)"><div class="ico" style="width:52px;height:52px;border-radius:50%;
-       ${cls==='a'?'background:var(--a)':'background:var(--v)'};color:#fff">${ic(ico,28)}</div><div style="font-weight:800;font-size:26px">${nome}</div></div>
+  // a coluna do Cato leva o avatar dele (e o contorno roxo); a sua, o círculo no degradê quente
+  const col=(x,ico,nome,cls,its)=>el(`<div class="card" style="left:${x}px;top:196px;width:460px;height:396px;padding:24px 28px;${cls==='a'?'':'border-color:rgba(168,85,247,.4)'}">
+     <div class="row hd" style="gap:14px;padding-bottom:16px;border-bottom:1px solid var(--l)">${cls==='a'?`<div class="ico a" style="width:52px;height:52px;border-radius:50%">${ic(ico,28)}</div>`:AV(52)}<div style="font-weight:800;font-size:26px">${nome}</div></div>
      ${its}</div>`,g1);
   const cC=col(110,'message-circle','o Cato','v',item('search','consulta','')+item('message-square','responde',''));
   const cV=col(710,'user','você','a',item('receipt-text','emitir nota','a')+item('banknote','pagar conta','a')+item('user-plus','cadastrar','a')+
-     `<div class="row ft" style="gap:10px;margin-top:22px;color:#4B5563">${ic('monitor',22)}<span style="font-weight:700;font-size:19px">nas telas do sistema</span></div>`);
+     `<div class="row ft" style="gap:10px;margin-top:22px;color:var(--c)">${ic('monitor',22)}<span style="font-weight:700;font-size:19px">nas telas do sistema</span></div>`);
   const itC=[...cC.querySelectorAll('.it')], itV=[...cV.querySelectorAll('.it')], ft=cV.querySelector('.ft'), hdV=cV.querySelector('.hd');
   // ---- cena 2 (fundo opaco próprio)
   const i2=I('ilu07_limites'), g2=grupo(); fundo(g2);
   const tit2=titulo(g2,'Limites','Limite de perguntas');
-  const rel=el(`<div class="ab" style="left:228px;top:196px">${svg(170,170,`<circle cx="85" cy="85" r="76" fill="#fff" stroke="#4F5861" stroke-width="8"/>
-     ${[...Array(12)].map((_,k)=>{const a=k*Math.PI/6;return `<line x1="${85+62*Math.sin(a)}" y1="${85-62*Math.cos(a)}" x2="${85+54*Math.sin(a)}" y2="${85-54*Math.cos(a)}" stroke="#9AA3AD" stroke-width="4" stroke-linecap="round"/>`}).join('')}
-     <line class="pt" x1="85" y1="85" x2="85" y2="30" stroke="var(--v)" stroke-width="6" stroke-linecap="round"/>
-     <line x1="85" y1="85" x2="118" y2="85" stroke="#4F5861" stroke-width="7" stroke-linecap="round"/><circle cx="85" cy="85" r="7" fill="#4F5861"/>`,'',1.2)}</div>`,g2);
+  const rel=el(`<div class="ab" style="left:228px;top:196px">${svg(170,170,`<circle cx="85" cy="85" r="76" fill="#1E1E24" stroke="url(#cgC)" stroke-width="8"/>
+     ${[...Array(12)].map((_,k)=>{const a=k*Math.PI/6;return `<line x1="${85+62*Math.sin(a)}" y1="${85-62*Math.cos(a)}" x2="${85+54*Math.sin(a)}" y2="${85-54*Math.cos(a)}" stroke="#5A5A66" stroke-width="4" stroke-linecap="round"/>`}).join('')}
+     <line class="pt" x1="85" y1="85" x2="85" y2="30" stroke="#EFEFEF" stroke-width="6" stroke-linecap="round"/>
+     <line x1="85" y1="85" x2="118" y2="85" stroke="#8B8B96" stroke-width="7" stroke-linecap="round"/><circle cx="85" cy="85" r="7" fill="#EFEFEF"/>`,'',1.2)}</div>`,g2);
   const pt=rel.querySelector('.pt');
-  const tMin=tagC('v tg','por minuto',330,420,g2);
+  const tMin=tagC('gr tg','por minuto',330,420,g2);
   const cal=el(`<div class="ab" style="left:840px;top:196px">${CALEND()}</div>`,g2);
-  const tDia=tagC('v tg','por dia',950,428,g2);
+  const tDia=tagC('gr tg','por dia',950,428,g2);
   const esc=tagC('c tg',`${ic('shield-check',22)}protege o custo`,640,272,g2);
   const esp=balao(g2,206,524,440,`<div class="row" style="gap:12px;font-weight:800;font-size:27px;white-space:nowrap">${ic('hourglass',26)}Espera um minutinho</div>`,'r');
   const volta=el(`<svg class="ab" style="left:0;top:0;overflow:visible" width="1280" height="800"><path d="M662 598 C 730 632, 790 652, 852 634"
      fill="none" stroke="var(--v)" stroke-width="4" stroke-linecap="round"/><path class="vh" d="M836 622 L854 633 L840 649" fill="none" stroke="var(--v)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>`,g2);
   const vp=volta.querySelector('path'), vh=volta.querySelector('.vh');
-  const chat=el(`<div class="ab" style="left:868px;top:580px;width:250px;height:110px;border-radius:22px;background:#EEF1F4;border-bottom-right-radius:6px;
-     display:flex;align-items:center;justify-content:center;gap:12px"><div class="ico" style="width:48px;height:48px;border-radius:50%;background:var(--v);color:#fff">${ic('message-circle',26)}</div>
-     ${linhas([90],10)}</div>`,g2);
+  const chat=el(`<div class="ab" style="left:868px;top:580px;width:250px;height:110px;border-radius:22px;background:rgba(38,38,43,.82);border:1px solid rgba(255,255,255,.10);
+     border-bottom-left-radius:6px;box-shadow:0 10px 24px rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;gap:12px">${AV(48)}
+     ${linhas([90],10,10,'#4A4A55')}</div>`,g2);
   return t=>{
     const [A1,B1]=janela(i1), [A2,B2]=janela(i2);
     perto(g1,t,A1,B1); perto(g2,t,A2,B2); if(t>A2-.05) g1.style.visibility='hidden';   // a cena 2 já cobre a 1
