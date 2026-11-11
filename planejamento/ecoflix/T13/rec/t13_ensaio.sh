@@ -26,7 +26,15 @@ if [ "$MODO" = rapido ]; then
 else
   ROT=rec/t13/cap$NN.json; DIR=rec/t13; EXTRA=; RES=""
 fi
-flock .heavy.lock timeout 900 node rec/record.mjs "$ROT" $EXTRA > "$DIR/.t13-cap$NN.out" 2>&1
+# gravação e captura da semente na MESMA trava (outra gravação na instância reseta o banco: docs/08, T5)
+SEM=0; [ "${3:-}" = --semente ] && SEM=1
+flock .heavy.lock bash -c '
+  timeout 900 node rec/record.mjs "$1" $2 > "$3/.t13-cap$4.out" 2>&1; rc=$?
+  if [ "$5" = 1 ] && [ $rc = 0 ]; then
+    f=$(python3 -I -c "import json;a=json.load(open(\"$3/t13-cap$4.actions.json\"))[\"actions\"];print(sum(1 for x in a if x.get(\"error\") or x.get(\"ok\") is False))" 2>/dev/null || echo x)
+    if [ "$f" = 0 ]; then python3 -I rec/t13/t13_sementes.py captura "$((10#$4))" --porta 54313 > "$3/.t13-cap$4.semente" 2>&1; fi
+  fi
+  exit $rc' _ "$ROT" "$EXTRA" "$DIR" "$NN" "$SEM"
 RC=$?
 tail -3 "$DIR/.t13-cap$NN.out"
 python3 -I rec/t13/resumo.py "$NN" $RES > "$DIR/t13-cap$NN.resumo.txt" 2>&1
@@ -35,4 +43,4 @@ grep -c "SEM ALVO" "$DIR/t13-cap$NN.actions.json" 2>/dev/null | sed 's/^/SEM ALV
 FALHOS=$(python3 -I -c "import json;a=json.load(open('$DIR/t13-cap$NN.actions.json'))['actions'];print(sum(1 for x in a if x.get('error') or x.get('ok') is False))" 2>/dev/null || echo '?')
 echo "rc=$RC falhos=$FALHOS"
 if [ "$MODO" = rapido ]; then rm -f "$DIR/t13-cap$NN.mp4"; [ "$FALHOS" = 0 ] && rm -f "$DIR/t13-cap$NN.contact.jpg"; fi
-if [ "${3:-}" = --semente ] && [ "$FALHOS" = 0 ] && [ "$RC" = 0 ]; then python3 -I rec/t13/t13_sementes.py captura "$((10#$NN))" --porta $PORTA; fi
+[ -f "$DIR/.t13-cap$NN.semente" ] && [ "$SEM" = 1 ] && cat "$DIR/.t13-cap$NN.semente" && rm -f "$DIR/.t13-cap$NN.semente"

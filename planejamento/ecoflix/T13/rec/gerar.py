@@ -296,9 +296,14 @@ LOGIN = [{'do': 'waitFor', 'target': {'label': 'E-mail'}, 'timeout': 30},
 IR_TELA = [{'do': 'goto', 'url': '/contas-pagar-receber'}, {'do': 'waitFor', 'text': 'Água e esgoto de outubro', 'timeout': 30}, AGUARDA]
 
 
+TOGGLE = SEL('header button.h-8.w-8')            # recolher/abrir o menu lateral (sem rótulo; o 1º botão do cabeçalho)
+RECOLHE = [{'do': 'click', 'target': TOGGLE, 'noScroll': True}, {'do': 'wait', 'seconds': 0.8}]
+
+
 def setup_tela(extra=()):
-    """login e a tela Contas a Pagar/Receber (aba Todas, Lista); `extra` antes do acerto das animações"""
-    return LOGIN + IR_TELA + list(extra) + [{'do': 'eval', 'js': ANIM}]
+    """login e a tela Contas a Pagar/Receber (aba Todas, Lista) com o menu lateral recolhido (a 1280 px, aberto, a tabela corta a
+    coluna Ações e quebra as descrições em 3 linhas: exploração e1); `extra` antes do acerto das animações"""
+    return LOGIN + IR_TELA + RECOLHE + list(extra) + [{'do': 'eval', 'js': ANIM}]
 
 
 # ---------------------------------------------------------------- JavaScript (rolagens suaves, colar)
@@ -324,6 +329,12 @@ def js_rola_texto(texto, y, dur_ms=700, escopo=DLG):
             "const c=rolagem(el);if(!c)return 'SEM ROLAGEM';"
             f"let dy=Math.round(el.getBoundingClientRect().top-{int(y)});const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));"
             "if(Math.abs(dy)<3)return 'ok';" + SUAVE.replace('DUR', str(int(dur_ms))) + "return Math.round(el.getBoundingClientRect().top)})()")
+
+
+def js_topo(dur_ms=700):
+    """rolagem suave do <main> (o contêiner que rola a tela) até o topo"""
+    return ("(async()=>{const c=[...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);"
+            "if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop,dy=-y0;if(y0<3)return 'ok';" + SUAVE.replace('DUR', str(int(dur_ms))) + "return 'topo:'+Math.round(c.scrollTop)})()")
 
 
 def js_colar(texto):
@@ -396,7 +407,8 @@ def cap00():
     c.click({'role': 'link', 'name': 'Contas a Pagar/Receber'}, at=c.A(5, 'Contas', 0.6), label='Contas a Pagar/Receber (menu lateral)')
     c.waitfor(text='Água e esgoto de outubro', timeout=15)
     c.ev(ANIM)
-    c.hover(ABA('Todas'), 1.2, at=c.A(5, 'conhecer', 0.5), label='a tela abre na aba Todas')
+    c.click(TOGGLE, at=c.A(5, 'Vamos', 0.6), label='recolhe o menu lateral (aviso da edição: recolher o menu dá espaço para a lista)', noScroll=True)
+    c.hover(ABA('Todas'), 1.0, at=c.A(5, 'conhecer', 0.4), label='a tela abre na aba Todas')
     c.fim()
     return c
 
@@ -414,6 +426,7 @@ def cap01():
     c.click(ABA('A Receber'), at=c.A(2, 'Receber,', 0.7), label='aba A Receber')
     c.mark(3)
     c.click(ABA('Todas'), at=c.A(2, 'entra.', -0.4), label='volta para Todas')
+    c.ev(js_rola('main thead', 110), at=c.A(3, 'Cada', -0.1), label='desce a tela até o cabeçalho da lista')
     c.hover(COL('Descrição'), 0.25, at=c.A(3, 'descrição,', 0.5), label='coluna Descrição')
     c.hover(COL('Categoria'), 0.25, at=c.A(3, 'categoria,', 0.5), label='coluna Categoria')
     c.hover(COL('Vencimento'), 0.25, at=c.A(3, 'vencimento,', 0.5), label='coluna Vencimento')
@@ -468,8 +481,9 @@ def cap03():
     c.click(CAL_BTN, at=c.A(2, 'calendário,', 0.7), label='abre o Calendário')
     c.waitfor(target=DIA_CAL('10'), timeout=10)
     c.ev(ANIM)
+    c.ev(js_rola('main div.grid.grid-cols-7', 290), at=c.A(2, 'cada', 0.0), label='desce a tela: o aviso e as quatro primeiras semanas')
     c.hover(ETIQ_CAL('Água e esgoto de outubro'), 0.6, at=c.A(2, 'Vermelho', 0.6), label='etiqueta vermelha: a pagar')
-    c.hover(ETIQ_CAL('Fatura venda #1733 (parcela 1/3)'), 0.6, at=c.A(2, 'verde,', 0.6), label='etiqueta verde: a receber')
+    c.hover(ETIQ_CAL('Fatura venda #'), 0.6, at=c.A(2, 'verde,', 0.6), label='etiqueta verde: a receber')
     c.mark(3)
     c.hover(TRIANGULO, 1.0, at=c.A(3, 'triângulo', 0.6), label='dia 5 com o triângulo de vencida')
     c.hover(ETIQ_CAL('Água e esgoto de outubro'), 0.8, at=c.A(3, 'água,', 0.6), label='a água, do dia cinco')
@@ -525,6 +539,7 @@ def cap04():
     c.mark(9)
     c.click(RODAPE('Criar conta'), at=c.A(9, 'Criar', 0.7), label='Criar conta', noScroll=True)
     c.waitfor(text='Conta criada', timeout=10)
+    c.ev(js_rola("main tbody tr:has-text('Manutenção da prensa enfardadeira')", 420), at=c.A(9, 'Pronto:', 0.3), label='desce a tela até a linha nova')
     c.hover(TXT_LINHA('Manutenção da prensa enfardadeira', 'Manutenção da prensa enfardadeira'), 1.2, at=c.A(9, 'manutenção', 0.6),
             label='ZOOM a linha nova, com 19/11/2026 e R$ 3.480,00')
     c.hover(TXT_LINHA('Manutenção da prensa enfardadeira', 'Pendente'), 0.6, at=c.A(9, 'pendente,', 0.6), label='Pendente')
@@ -785,14 +800,14 @@ def cap10():
     c.confere(LINHA('Aços Quiririm Ltda')['selector'], ['R$ 2.870,00'], 'saldo de 2.870,00')
     c.mark(6)
     c.digita(BUSCA, 'Fundição', c.A(6, 'Agora', 0.2), c.A(6, 'repara', 0.05), 'busca Fundição', clear=True)
-    c.waitfor(target=LINHA('Fatura venda #1733 (parcela 3/3)'), timeout=8)
-    c.hover(TXT_LINHA('Fatura venda #1733 (parcela 1/3)', 'Fundição Bandeira do Vale'), 0.8, at=c.A(6, 'Bandeira', 0.6), label='Fundição Bandeira do Vale')
-    c.hover(TXT_LINHA('Fatura venda #1733 (parcela 2/3)', '17/12/2026'), 1.2, at=c.A(6, 'parcelas.', 0.6), label='só as três parcelas, nenhuma linha Saldo')
+    c.waitfor(target=LINHA('18/01/2027'), timeout=8)
+    c.hover(TXT_LINHA('17/11/2026', 'Fundição Bandeira do Vale'), 0.8, at=c.A(6, 'Bandeira', 0.6), label='Fundição Bandeira do Vale')
+    c.hover(TXT_LINHA('17/12/2026', '17/12/2026'), 1.2, at=c.A(6, 'parcelas.', 0.6), label='só as três parcelas, nenhuma linha Saldo')
     c.confere_ausente('main tbody', 'Saldo', 'nenhuma linha Saldo da Fundição')
     c.mark(7)
     c.mark(8)
     c.mark(9)
-    c.hover(NA_LINHA('Fatura venda #1733 (parcela 1/3)', "button[title='Editar']"), 3.0, at=c.A(9, 'parcelas', 0.6), label='o lápis Editar de uma parcela (sem clicar)')
+    c.hover(NA_LINHA('17/11/2026', "button[title='Editar']"), 3.0, at=c.A(9, 'parcelas', 0.6), label='o lápis Editar de uma parcela (sem clicar)')
     c.fim()
     return c
 
@@ -840,6 +855,7 @@ def cap12():
     ROT = lambda t: SEL(f"{PAINEL} label:text-is('{t}')")
     c.mark(1)
     c.click(ABA('A Receber'), at=c.A(1, 'Receber,', 0.7), label='aba A Receber')
+    c.ev(js_rola('main tbody tr:last-child', 600), at=c.A(1, 'repara', 0.3), label='desce a tela até o fim da lista')
     c.hover(TXT_LINHA('Aços Quiririm Ltda', 'Saldo'), 1.2, at=c.A(1, 'saldo,', 0.6), label='as linhas de saldo, lá no fim')
     c.mark(2)
     c.click(FILTROS, at=c.A(2, 'Filtros.', 0.7), label='Filtros (abre o painel)')
@@ -860,7 +876,8 @@ def cap12():
     c.hover(SEL('main tbody tr', nth='last'), 1.6, at=c.A(4, 'saíram.', 0.6), label='o fim da lista: sem as linhas de saldo')
     c.confere_ausente('main tbody', 'Saldo', 'as linhas de saldo saíram')
     c.mark(5)
-    c.hover(CARTAO('Total a Receber'), 1.6, at=c.A(5, 'cartões', 0.6), label='os cartões continuam iguais')
+    c.ev(js_topo(700), at=c.L(5) - 0.6, label='sobe a tela até os cartões')
+    c.hover(CARTAO('Total a Receber'), 1.6, at=c.A(5, 'cartões', 0.4), label='os cartões continuam iguais')
     c.mark(6)
     c.click(FILTROS, at=c.A(6, 'Junto', 0.4), label='Filtros (de novo)')
     c.click(SEL(f"{PAINEL} button[role=combobox]:has-text('Todos')", nth=0), at=c.A(6, 'escolho', 0.7), label='Cliente/Fornecedor (abre a busca)')
@@ -868,11 +885,12 @@ def cap12():
     c.click(OPT('Fundição Bandeira do Vale'), at=c.A(6, 'Vale.', 0.6), label='Fundição Bandeira do Vale')
     c.click(RODAPE('Aplicar'), at=c.A(6, 'Pronto:', 0.3), label='Aplicar', noScroll=True)
     c.hover(SEL('main tbody tr', nth=1), 1.2, at=c.A(6, 'parcelas', 0.6), label='as três parcelas dela')
-    c.confere('main', ['Fatura venda #1733 (parcela 1/3)', 'Fatura venda #1733 (parcela 3/3)'], 'as três parcelas da Fundição')
+    c.confere('main tbody', ['Fundição Bandeira do Vale', '17/11/2026', '17/12/2026', '18/01/2027'], 'as três parcelas da Fundição')
     c.mark(7)
     c.click(FILTROS, at=c.A(7, 'ver', 0.6), label='Filtros (de novo)')
     c.click(RODAPE('Limpar filtros'), at=c.A(7, 'Limpar', 0.6), label='Limpar filtros', noScroll=True)
     c.click(RODAPE('Aplicar'), at=c.A(7, 'filtros.', 0.2), label='Aplicar', noScroll=True)
+    c.ev(js_rola('main tbody tr:last-child', 600), at=c.A(7, 'E', 0.2), label='desce a tela até o fim da lista')
     c.hover(TXT_LINHA('Aços Quiririm Ltda', 'Saldo'), 1.0, at=c.A(7, 'voltam.', 0.6), label='as linhas de saldo voltam')
     c.fim()
     return c
@@ -886,6 +904,7 @@ def cap13():
     c.hover(CARTAO('Total a Pagar'), 0.4, at=c.A(1, 'cartões', 0.6), label='os quatro cartões')
     c.hover(CAL_BTN, 0.6, at=c.A(1, 'calendário.', 0.6), label='o calendário')
     c.mark(2)
+    c.ev(js_rola('main thead', 110), at=c.L(2) - 0.5, label='desce a tela até a lista')
     c.hover(TXT_LINHA('Manutenção da prensa enfardadeira', 'Manutenção da prensa enfardadeira'), 1.0, at=c.A(2, 'manutenção', 0.6), label='a manutenção da prensa')
     c.mark(3)
     c.hover(TXT_LINHA('Aluguel da empilhadeira', 'Aluguel da empilhadeira'), 1.0, at=c.A(3, 'aluguel', 0.6), label='o aluguel da empilhadeira')

@@ -183,7 +183,7 @@ export function baixarConta(ctx, e, bill) {
   const bt = inserir(ctx, 'bank_transactions', {
     company_id: e.company_id, bank_account_id: e.bank_account_id, type: pagar ? 'withdrawal' : 'deposit', amount: valor, description: `Pagamento: ${bill.description}`,
     category_id: bill.category_id ?? null, cost_center_id: bill.cost_center_id ?? null, transaction_at: `${dia}T15:00:00.000Z`, group_id: grupo, created_by: ctx.userId,
-    partner_id: bill.partner_id ?? null, partner_type: bill.partner_type ?? null, payment_method: 'transfer', source: 'manual', origin_company_id: e.company_id,
+    partner_id: bill.partner_id ?? null, partner_type: bill.partner_type ?? null, payment_method: 'transfer', source: 'manual',
   });
   ctx.db.insert('bill_payments', { company_id: e.company_id, bill_id: bill.id, amount: valor, paid_date: dia, payment_method: 'transfer', bank_account_id: e.bank_account_id,
     bank_transaction_id: bt.id, group_id: grupo, created_by: ctx.userId, currency: 'BRL', created_at: agoraIso() }, { companyId: e.company_id });

@@ -43,7 +43,7 @@ body{font-family:M,sans-serif;color:var(--t);-webkit-font-smoothing:antialiased}
 .tag.v{background:var(--vc);color:var(--ve)} .tag.a{background:var(--ac);color:var(--ae)}
 .lbl{font-weight:700;font-size:17px;color:var(--c)}
 .num{font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
-.op{position:absolute;width:60px;height:60px;border-radius:50%;background:#F2F4F7;color:var(--t);display:flex;
+.op{position:absolute;width:60px;height:60px;border-radius:50%;background:#4B5563;color:#fff;display:flex;
   align-items:center;justify-content:center;font-weight:800;font-size:34px;line-height:1}
 /* mostrador da balança (painel escuro, número no acento) */
 .most{background:var(--e);border-radius:16px;padding:16px 22px 18px;box-shadow:0 16px 34px rgba(16,24,40,.22)}
@@ -52,14 +52,14 @@ body{font-family:M,sans-serif;color:var(--t);-webkit-font-smoothing:antialiased}
 .most .mn{margin-top:6px;font-weight:800;font-size:44px;color:var(--v);font-variant-numeric:tabular-nums;white-space:nowrap}
 .rip{position:absolute;width:56px;height:56px;margin:-28px 0 0 -28px;border-radius:50%;border:3px solid var(--v);opacity:0}
 /* etiqueta neutra, placa de porta, chip com seta, sinal +/- (os da T10) */
-.tag.n{background:#F2F4F7;color:#374151}
+.tag.n{background:#4B5563;color:#fff}
 .placa{display:inline-block;padding:9px 18px;border-radius:12px;background:#fff;border:2px solid #E1E8E4;font-weight:800;
   font-size:21px;white-space:nowrap;box-shadow:0 6px 14px rgba(16,24,40,.06)}
 .chip{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;border-radius:999px;background:#fff;border:2px solid #E1E8E4;
   font-weight:800;font-size:19px;white-space:nowrap}
-.chip.e .ic{color:var(--ve)} .chip.s .ic{color:var(--ae)}
+.chip.e{background:var(--vs);border-color:var(--vs);color:#fff} .chip.s{background:var(--as);border-color:var(--as);color:#fff}
 .sgn{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:50%;font-weight:800;font-size:22px;line-height:1}
-.sgn.v{background:var(--vc);color:var(--ve)} .sgn.a{background:var(--ac);color:var(--ae)}
+.sgn.v{background:var(--vs);color:#fff} .sgn.a{background:var(--as);color:#fff}
 </style><style id="saturado">/* estilo saturado (Kaik, 11/11): selo, chip, etiqueta, quadrado de ícone e círculo de etapa
    com fundo cheio e ícone/texto branco; nunca fundo claro com conteúdo colorido, nunca ícone escuro sobre o verde */
 :root{--vs:#16A34A;--as:#D97706;--rs:#DC2626}
@@ -243,9 +243,9 @@ CAPS[0]=()=>{
       <div class="ab" style="left:0;top:0;width:170px;padding:9px 12px;border-radius:10px;background:#fff;border:2px solid #C9D1D9;text-align:center;font-weight:800;font-size:18px;line-height:1.2">Recicla Vale<br>Metais</div></div>`,patio);
   const cam=el(`<div class="ab" style="left:0;top:0;width:340px;height:157px">${caminhaoSvg(340)}</div>`,patio);
   const rodas=[...cam.querySelectorAll('.roda')];
-  const duv=el(`<div class="ab" style="left:716px;top:396px;width:66px;height:66px;border-radius:50%;background:#fff;border:3px solid var(--a);box-shadow:0 8px 18px rgba(16,24,40,.10)">
-      <div class="ab q" style="left:0;top:0;width:60px;height:60px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:36px;color:var(--ae)">?</div>
-      <div class="ab ok" style="left:0;top:0;width:60px;height:60px;display:flex;align-items:center;justify-content:center;color:var(--ve)">${ic('check',34)}</div></div>`,patio);
+  const duv=el(`<div class="ab" style="left:716px;top:396px;width:66px;height:66px;border-radius:50%;background:var(--as);box-shadow:0 8px 18px rgba(16,24,40,.10)">
+      <div class="ab q" style="left:0;top:0;width:60px;height:60px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:36px;color:#fff">?</div>
+      <div class="ab ok" style="left:0;top:0;width:60px;height:60px;display:flex;align-items:center;justify-content:center;color:#fff">${ic('check',34)}</div></div>`,patio);
   const dq=duv.querySelector('.q'), dk=duv.querySelector('.ok');
   const cad=el(`<div class="ab" style="left:660px;top:280px">${caderno('buscar ferro,<br>terça?')}</div>`,g);
   const msg=el(`<div class="ab" style="left:948px;top:244px;padding:16px 22px;border-radius:22px 22px 22px 6px;background:#fff;border:2px solid #D5DBE1;box-shadow:0 10px 24px rgba(16,24,40,.08)">
@@ -280,7 +280,7 @@ CAPS[0]=()=>{
     campos.forEach((c,i)=>{vis(c,t,tc[i]-.1,1e9,{dy:0,dx:-14}); tinge(c,t,tc[i]-.1,tc[i]+.9);});
     // agora o caminhão sabe: o "?" vira o sinal de ok
     const ok=eo(pr(t,tc[3],.4)); dq.style.opacity=(1-ok).toFixed(3); dk.style.opacity=ok.toFixed(3);
-    duv.style.borderColor=mix('#F2B63D','#50D088',ok);
+    duv.style.background=mix('#D97706','#16A34A',ok);
   };
 };
 
@@ -302,7 +302,7 @@ CAPS[1]=()=>{
       `<path d="M${x+42},${YN} H${XS[i+1]-42}" stroke="#50D088" stroke-width="5" stroke-linecap="round" fill="none"/>`).join('')}</svg>`,g1);
   const seg=[...linha.querySelectorAll('path')];
   const nos=ET.map(([icn,txt],i)=>({
-    n:el(`<div class="ab" style="left:${XS[i]-38}px;top:${YN-38}px;width:76px;height:76px;border-radius:50%;background:#F2F4F7;color:#9AA3AD;display:flex;align-items:center;justify-content:center;border:3px solid #E1E8E4">${ic(icn,34)}</div>`,g1),
+    n:el(`<div class="ab" style="left:${XS[i]-38}px;top:${YN-38}px;width:76px;height:76px;border-radius:50%;background:#9AA3AD;color:#fff;display:flex;align-items:center;justify-content:center;border:3px solid transparent">${ic(icn,34)}</div>`,g1),
     c:el(`<div class="ab" style="left:${XS[i]-130}px;top:${YN+52}px;width:260px;text-align:center"><div class="tag v" style="font-size:17px;padding:7px 14px">${txt}</div></div>`,g1)}));
   const faixa=el('<div class="ab" style="left:60px;top:452px;width:1160px;height:0;border-top:3px dashed #D5DBE1"></div>',g);
   const lbl2=el(`<div class="ab" style="left:230px;top:526px;width:250px;text-align:center"><div class="tag a">${ic('receipt-text',20)}Compra</div></div>`,g);
@@ -320,7 +320,7 @@ CAPS[1]=()=>{
     g1.style.transform=`translateY(${(110*(1-eio(pr(t,tim-.3,.8)))).toFixed(2)}px)`;
     vis(lbl1,t,tor-.1,1e9,{dy:10});
     nos.forEach((o,i)=>{vis(o.n,t,tor+.15+.08*i,1e9,{dy:0,sc:.7});
-      const p=eo(pr(t,T[i]-.1,.4)); o.n.style.background=mix('#F2F4F7','#EAF8F0',p); o.n.style.color=mix('#9AA3AD','#2E7D57',p);
+      const p=eo(pr(t,T[i]-.1,.4)); o.n.style.background=mix('#9AA3AD','#16A34A',p); o.n.style.color='#fff';
       o.n.style.borderColor=mix('#E1E8E4','#50D088',p); vis(o.c,t,T[i]-.05,1e9,{dy:8});});
     seg.forEach((s,i)=>traco(s,t,T[i+1]-.45,.5));
     pulse(nos[4].n,t,tcl,.08,.8);
@@ -531,7 +531,7 @@ CAPS[11]=()=>{
       <path d="M732,264 H866 M854,252 L868,264 L854,276" stroke="#F2B63D"/>
       <path d="M350,534 H866 M854,522 L868,534 L854,546" stroke="#50D088"/></g></svg>`,g);
   const [s1,s2,s3]=set.querySelectorAll('path');
-  const ficha=()=>el(`<div class="ab" style="left:0;top:0;width:56px;height:44px;border-radius:10px;background:#fff;border:2px solid #E1E8E4;box-shadow:0 6px 14px rgba(16,24,40,.12);display:flex;align-items:center;justify-content:center;color:var(--ve)">${ic('clipboard-list',22)}</div>`,g);
+  const ficha=()=>el(`<div class="ab" style="left:0;top:0;width:56px;height:44px;border-radius:10px;background:var(--vs);box-shadow:0 6px 14px rgba(16,24,40,.12);display:flex;align-items:center;justify-content:center;color:#fff">${ic('clipboard-list',22)}</div>`,g);
   const k1=ficha(), k2=ficha(), k3=ficha();
   const livre=el('<div class="ab row" style="left:430px;top:556px;gap:12px"></div>',g);
   const q1=el('<div class="tag v" style="font-size:19px;padding:8px 16px">qualquer dia</div>',livre), q2=el('<div class="tag v" style="font-size:19px;padding:8px 16px">até hoje</div>',livre);

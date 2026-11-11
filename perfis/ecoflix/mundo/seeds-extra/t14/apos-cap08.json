@@ -1,0 +1,92 @@
+{
+ "bank_transactions": [
+  {
+   "id": "@id:t14.bt.agua",
+   "company_id": "@id:company.reciclavale",
+   "bank_account_id": "@id:banco.principal",
+   "type": "withdrawal",
+   "amount": -238.4,
+   "description": "Pagamento: Água e esgoto de outubro",
+   "transaction_at": "2026-11-09T15:00:00.000Z",
+   "transaction_date": "2026-11-09",
+   "created_at": "2026-11-10T11:40:00.000Z",
+   "created_by": "@id:user.rafael",
+   "source": "manual",
+   "excluded_from_dre": false,
+   "balance_after": 44998.57,
+   "origin_company_id": null,
+   "category_id": "@id:categoria.agua",
+   "cost_center_id": "@id:cc.escritorio",
+   "group_id": "@id:t14.grupo.agua",
+   "payment_method": "transfer"
+  }
+ ],
+ "bill_payments": [
+  {
+   "id": "@id:t14.pagamento.agua",
+   "company_id": "@id:company.reciclavale",
+   "bill_id": "@id:titulo.agua_out",
+   "amount": 238.4,
+   "paid_date": "2026-11-09",
+   "payment_method": "transfer",
+   "bank_account_id": "@id:banco.principal",
+   "bank_transaction_id": "@id:t14.bt.agua",
+   "group_id": "@id:t14.grupo.agua",
+   "created_by": "@id:user.rafael",
+   "currency": "BRL",
+   "fee_amount": 0,
+   "interest_amount": 0,
+   "created_at": "2026-11-10T11:40:00.000Z"
+  }
+ ],
+ "reconciliation_matches": [
+  {
+   "id": "@id:t14.casamento.05",
+   "company_id": "@id:company.reciclavale",
+   "entry_id": "@id:t14.linha.05",
+   "bank_transaction_id": "@id:t14.bt.agua",
+   "match_type": "bill_settlement",
+   "bill_id": "@id:titulo.agua_out",
+   "confidence": "manual",
+   "value_difference": 0.0,
+   "group_id": null,
+   "created_by": "@id:user.rafael",
+   "created_at": "2026-11-10T11:40:00.000Z"
+  }
+ ],
+ "_patch": {
+  "bank_statement_entries": [
+   {
+    "match": {
+     "id": "@id:t14.linha.05"
+    },
+    "set": {
+     "status": "matched"
+    }
+   }
+  ],
+  "bank_accounts": [
+   {
+    "match": {
+     "id": "@id:banco.principal"
+    },
+    "set": {
+     "balance": 44998.57
+    }
+   }
+  ],
+  "financial_bills": [
+   {
+    "match": {
+     "id": "@id:titulo.agua_out"
+    },
+    "set": {
+     "status": "paid",
+     "paid_amount": 238.4,
+     "paid_at": "2026-11-09T15:00:00.000Z",
+     "updated_at": "2026-11-10T11:40:00.000Z"
+    }
+   }
+  ]
+ }
+}

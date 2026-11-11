@@ -14,7 +14,7 @@ export default (a, ctx) => {
     company_id: e.company_id, bank_account_id: e.bank_account_id, type: num(e.amount) >= 0 ? 'deposit' : 'expense', amount: Math.abs(num(e.amount)),
     description: a.p_description ?? null, category_id: a.p_category_id ?? null, cost_center_id: a.p_cost_center_id ?? null, created_by: ctx.userId,
     transaction_at: e.posted_at, source: 'manual', partner_id: a.p_partner_id ?? null, partner_type: a.p_partner_type ?? null,
-    excluded_from_dre: a.p_excluded_from_dre === true, origin_company_id: e.company_id,
+    excluded_from_dre: a.p_excluded_from_dre === true,
   });
   casar(ctx, e, bt, { tipo: 'created' });
   return bt.id;

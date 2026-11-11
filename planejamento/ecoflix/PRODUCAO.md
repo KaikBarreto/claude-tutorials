@@ -452,3 +452,8 @@ Decisões:
   `perfis/ecoflix/cenas/cato/` (ícone, logo e espiral do próprio app; estrelas da marca; `LEIA.md`) e um agente refazendo
   as 9 cenas da T21 no tema escuro. **Quadros de conferência agora na trava leve** `.stills.lock` com `nice -n 19` (a
   trava pesada tinha 36 na fila; ela fica só para as gravações do robô).
+- 11/11 12:5x **Ilustrações T05 e T27 prontas no estilo novo** (11 + 6 cenas). **Estilo saturado pronto em T03, T04 e T06**
+  (22, 7 e 7 ajustes: `.tag.n`/`.ico.n` cinza #4B5563 com branco, `.tag.r`/`.ico.r` vermelho cheio, fichas, bolinhas de
+  "=", "×" e "?"; ficaram como estavam o ícone nu no degrau da T03 cap07, o maço de notas com borda verde da T06 e os
+  marcadores grandes). Folhas mandadas ao Kaik (T05, T27, T03, T04, T06). Trocas de pronúncia agora só em palavra inteira
+  (a "asas"→"Asaas" pegava em "casas" na T05).

@@ -72,7 +72,7 @@ def bt(chave, conta, tipo, valor, desc, quando, **extra):
     ant = ultimo.get(conta, ('', 0.0))[1]
     linha = {'id': f'@id:t14.{chave}', 'company_id': EMP, 'bank_account_id': conta, 'type': tipo, 'amount': v, 'description': desc,
              'transaction_at': quando, 'transaction_date': dia_brt(quando), 'created_at': extra.pop('created_at', quando), 'created_by': RAFA,
-             'source': 'manual', 'excluded_from_dre': False, 'balance_after': r2(ant + v), 'origin_company_id': EMP, **extra}
+             'source': 'manual', 'excluded_from_dre': False, 'balance_after': r2(ant + v), 'origin_company_id': None, **extra}
     ultimo[conta] = (linha['created_at'], linha['balance_after'])
     saldo[conta] = r2(saldo[conta] + v)
     return linha

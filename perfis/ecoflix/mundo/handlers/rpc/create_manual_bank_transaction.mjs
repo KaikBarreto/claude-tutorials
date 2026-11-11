@@ -15,7 +15,9 @@ export default (a, ctx) => {
     category_id: a.p_category_id || null, cost_center_id: a.p_cost_center_id || null, cash_register_id: a.p_cash_register_id || null,
     transaction_at: txAt, group_id: a.p_group_id || null, order_id: a.p_order_id || null, excluded_from_dre: !!a.p_excluded_from_dre,
     partner_id: a.p_partner_id || null, partner_type: a.p_partner_type || null, payment_method: a.p_payment_method || null,
-    employee_movement_id: a.p_employee_movement_id || null, created_by: a.p_created_by || ctx.userId, source: 'manual', origin_company_id: cid,
+    // origin_company_id só nasce preenchido em lançamento de filial numa conta compartilhada da matriz (a função SQL grava NULL na conta
+    // da própria empresa); preenchido, o histórico mostra o selo "Outra empresa do grupo" em todo lançamento manual (achado no T14).
+    employee_movement_id: a.p_employee_movement_id || null, created_by: a.p_created_by || ctx.userId, source: 'manual', origin_company_id: null,
   });
-  return [{ id: r.id, balance_after: r.balance_after, company_id: cid, origin_company_id: cid }];
+  return [{ id: r.id, balance_after: r.balance_after, company_id: cid, origin_company_id: null }];
 };

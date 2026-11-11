@@ -80,6 +80,17 @@
    "idle": true
   },
   {
+   "do": "click",
+   "target": {
+    "selector": "header button.h-8.w-8"
+   },
+   "noScroll": true
+  },
+  {
+   "do": "wait",
+   "seconds": 0.8
+  },
+  {
    "do": "eval",
    "js": "(()=>{const a=document.getAnimations().filter(x=>x.currentTime<0);a.forEach(x=>x.startTime=document.timeline.currentTime);return a.length})()"
   },
@@ -160,6 +171,12 @@
    },
    "at": 17.77,
    "label": "volta para Todas"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=[...document.querySelectorAll(\"main thead\")].filter(e=>e.offsetParent)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-110);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 18.36,
+   "label": "desce a tela até o cabeçalho da lista"
   },
   {
    "do": "hover",
