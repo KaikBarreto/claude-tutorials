@@ -1,0 +1,383 @@
+{
+ "name": "t09-cap02",
+ "title": "T09 · Cap. 2 · A tela Pedidos (narração 48,8 s ESTIMADA; marcas L1..L5 = início de cada linha do roteiro; FAKE_NOW 2026-11-11T08:30:00-03:00)",
+ "seed": "t09-cap02",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 900,
+  "y": 440
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-11",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-11",
+  "initial-preferences-set": "true"
+ },
+ "seedExtra": [
+  "t09/inicio"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "waitFor",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "timeout": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "••••••••"
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "url": "/dashboard",
+   "timeout": 40
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 25
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{if(window.__abas)return 'ja';window.__abas=[];window.__pdfs=[];const o=URL.createObjectURL.bind(URL);URL.createObjectURL=(b)=>{try{if(b&&b.type==='application/pdf')window.__pdfs.push(b)}catch(e){}return o(b)};const wo=window.open.bind(window);window.open=(...a)=>{if(window.__bloqueia){window.__bloqueia=0;return null}const w=wo(...a);window.__abas.push(w);return w};return 'ganchos'})()"
+  },
+  {
+   "do": "goto",
+   "url": "/pedidos"
+  },
+  {
+   "do": "waitFor",
+   "text": "Histórico completo de compras e vendas",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 25
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const b=document.querySelector('header svg.lucide-panel-left-close')?.closest('button');if(!b)return document.querySelector('header svg.lucide-panel-left')?'ja recolhido':'sem botao';b.click();return 'recolhido'})()"
+  },
+  {
+   "do": "wait",
+   "seconds": 0.8
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel|Algo deu errado|Falha ao/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');if(f&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA ECOFLIX'))window.__avisos.push('TRILHA ECOFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main [role=combobox]:has-text('Este mês')"
+   },
+   "seconds": 0.5,
+   "at": 0.84,
+   "label": "período \"Este mês\"",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Todas as Ordens",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.5,
+   "at": 2.13,
+   "label": "\"Todas as Ordens\" com a contagem",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 8.6
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Resumo do período filtrado",
+    "exact": true,
+    "within": "main"
+   },
+   "at": 8.98,
+   "label": "abre o Resumo do período filtrado (vem fechado)"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "text": "Saldo",
+    "exact": true,
+    "within": "main"
+   },
+   "timeout": 6
+  },
+  {
+   "do": "type",
+   "target": {
+    "text": "Resumo do período filtrado",
+    "exact": true,
+    "within": "main"
+   },
+   "text": "",
+   "noClick": true,
+   "optional": true,
+   "timeout": 4,
+   "at": 11.18,
+   "label": "[ZOOM] Resumo do período filtrado: Compras e Vendas por forma de pagamento"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Compras",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.4,
+   "at": 11.92,
+   "label": "Compras",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Vendas",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.4,
+   "at": 13.96,
+   "label": "Vendas",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Dinheiro",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.2,
+   "at": 15.63,
+   "label": "Dinheiro",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Saldo",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.2,
+   "at": 17.0,
+   "label": "Saldo",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 18.28
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main thead th:has-text('Usuário')"
+   },
+   "seconds": 0.2,
+   "at": 19.02,
+   "label": "coluna Usuário",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main thead th:has-text('Data')"
+   },
+   "seconds": 0.2,
+   "at": 20.31,
+   "label": "coluna Data",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main thead th:has-text('Tipo')"
+   },
+   "seconds": 0.2,
+   "at": 21.29,
+   "label": "coluna Tipo",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main thead th:has-text('N° Pedidos')"
+   },
+   "seconds": 0.2,
+   "at": 22.89,
+   "label": "coluna N° Pedidos",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main thead th:has-text('Cliente/Fornecedor')"
+   },
+   "seconds": 0.2,
+   "at": 23.8,
+   "label": "coluna Cliente/Fornecedor",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main thead th:has-text('Pagamento')"
+   },
+   "seconds": 0.2,
+   "at": 26.38,
+   "label": "coluna Pagamento",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main thead th:has-text('Valor')"
+   },
+   "seconds": 0.2,
+   "at": 27.06,
+   "label": "coluna Valor",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "11/11/2026 07:22",
+    "exact": true,
+    "within": "main"
+   },
+   "at": 27.94,
+   "label": "abre a linha da latinha da Aparecida (hoje 07:22)"
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 28.34
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Alumínio latinha",
+    "exact": true,
+    "within": "main tbody tr:has-text('Fornecedor:')"
+   },
+   "seconds": 0.4,
+   "at": 30.75,
+   "label": "o material da linha",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "24.00 Kg",
+    "within": "main"
+   },
+   "seconds": 0.8,
+   "at": 38.18,
+   "label": "[ZOOM] o peso: 24 kg",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 42.2
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "main tbody tr:has-text('11/11/2026 07:22') button"
+   },
+   "text": "",
+   "noClick": true,
+   "optional": true,
+   "timeout": 4,
+   "at": 44.23,
+   "label": "[DESTAQUE] o \"⋮\" no fim da linha (sem abrir)"
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 1120,
+    "y": 541
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "at": 43.93,
+   "label": "cursor perto do \"⋮\" (passar por cima abriria o menu)"
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 48.85
+  }
+ ]
+}

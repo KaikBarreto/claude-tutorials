@@ -28,6 +28,11 @@ def token(nome):
     return hashlib.sha1(('t04-portal:' + nome).encode()).hexdigest()[:32]
 
 
+# ids do mundo base B (gerar/sementes.mjs, estáveis): a cooperativa, as categorias "Frete" e "Outras Receitas" e o caixa #64 (Marcos, 15/10)
+COOPERATIVA = '43dc53b4-634c-591b-968b-cfdb85002e81'
+CAT_FRETE = '53b2bfd6-60de-5a43-96c2-8ddc593b2d04'
+CAT_OUTRAS_RECEITAS = '2bda7b80-3cfa-52b1-9ab0-e464580daff4'
+CAIXA_15_10 = '54028c98-306b-5106-99fb-117d31d56824'
 FORNECEDORES = ['Valdir Pereira', 'Aparecida Ramos', 'Depósito Irmãos Siqueira', 'Auto Peças Vale Forte', 'Cooperativa Recomeço']
 CLIENTES = ['Aços Quiririm Ltda', 'Fundição Bandeira do Vale', 'Serra Fina Alumínio Reciclagem', 'Depósito Irmãos Siqueira']
 
@@ -38,7 +43,9 @@ def inicio():
                  '(mesmo telefone, sem documento nem endereço): as duas ganham o selo "Mesmo telefone" (cap01) e ela fica "Incompleto" '
                  '(cap04); (2) link do portal (portal_token) em todos os parceiros (a ficha da Cooperativa mostra "Acesso ao portal", '
                  'cap07); (3) Depósito Irmãos Siqueira na tabela padrão (a T4 liga a "Tabela Depósitos" na tela, cap06; a junção, seção 4, '
-                 'já deixa B assim: o _patch só garante). Gerado por rec/t04/t04_sementes.py.'),
+                 'já deixa B assim: o _patch só garante); (4) a conta paga "Frete das entregas de outubro" (R$ 450,00) e a entrada no caixa '
+                 '#64 "Venda de sacos de ráfia usados" (R$ 120,00, 15/10) ligadas à Cooperativa Recomeço (cap11). '
+                 'Gerado por rec/t04/t04_sementes.py.'),
         'suppliers': [{
             'id': '@id:supplier.cida-ramos', 'company_id': EMP, 'code': '6', 'name': 'Cida Ramos', 'nome_fantasia': None,
             'razao_social': None, 'cpf_cnpj': None, 'phone': '(12) 90000-1201', 'phone_unavailable': False, 'email': None,
@@ -49,6 +56,19 @@ def inicio():
             'portal_token': token('Cida Ramos'), 'show_address_in_docs': True, 'show_bank_in_docs': True,
             'show_cpf_cnpj_in_docs': True, 'show_phone_in_docs': True, 'show_pix_in_docs': True,
             'created_by': '@id:user.rafael', 'created_at': '2026-09-18T12:40:00.000Z', 'updated_at': '2026-09-18T12:40:00.000Z',
+        }],
+        # cap11 (aba Financeiro da ficha): a despesa e a receita avulsas ligadas à cooperativa, que o mundo base não traz (junção de 11/11)
+        'financial_bills': [{
+            'id': '@id:t04.conta.frete-outubro', 'company_id': EMP, 'direction': 'payable', 'description': 'Frete das entregas de outubro',
+            'amount': 450, 'currency': 'BRL', 'due_date': '2026-10-31', 'status': 'paid', 'paid_amount': 450, 'paid_at': '2026-10-30',
+            'category_id': CAT_FRETE, 'partner_type': 'supplier', 'partner_id': COOPERATIVA, 'is_projection': False,
+            'created_by': '@id:user.rafael', 'created_at': '2026-10-26T13:10:00.000Z', 'updated_at': '2026-10-30T14:00:00.000Z',
+        }],
+        'cash_transactions': [{
+            'id': '@id:t04.caixa.rafia', 'company_id': EMP, 'type': 'deposit', 'amount': 120, 'description': 'Venda de sacos de ráfia usados',
+            'category_id': CAT_OUTRAS_RECEITAS, 'partner_type': 'supplier', 'partner_id': COOPERATIVA, 'cash_register_id': CAIXA_15_10,
+            'excluded_from_dre': False, 'transaction_at': '2026-10-15T14:20:00.000Z', 'transaction_date': '2026-10-15',
+            'created_by': '@id:user.marcos', 'created_at': '2026-10-15T14:20:00.000Z',
         }],
         '_patch': {
             'suppliers': [{'match': {'name': n}, 'set': {'portal_token': token('f:' + n)}} for n in FORNECEDORES]

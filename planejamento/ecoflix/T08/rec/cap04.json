@@ -216,6 +216,11 @@
    "label": "Peso Bruto 3.080 |9.460 − 6.380|"
   },
   {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"3.080\", \"|9.460 − 6.380|\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")];const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere bruto 3.080 = |9.460 − 6.380|"
+  },
+  {
    "do": "hover",
    "target": {
     "selector": "[role=dialog] div:has(> label:has-text('Peso Bruto'))"
@@ -288,6 +293,11 @@
    "timeout": 4,
    "at": 52.38,
    "label": "detalhe: 1ª pesagem, 2ª pesagem e Bruto"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"1ª pesagem: 9.460\", \"2ª pesagem: 6.380\", \"Bruto: 3.080\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere detalhe da pesagem"
   },
   {
    "do": "eval",

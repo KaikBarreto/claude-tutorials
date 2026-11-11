@@ -166,6 +166,7 @@
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=document.querySelector(\"[role=dialog] input[placeholder=\\\"Buscar tela ou a\\u00e7\\u00e3o...\\\"]\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-150);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "note": "L2 lista",
    "at": 9.13,
    "label": "desce o corpo da janela: a lista aparece inteira"
   },
@@ -177,6 +178,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 0.3,
+   "note": "L2 separada",
    "at": 9.84,
    "label": "grupo Geral",
    "optional": true,
@@ -190,6 +192,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 0.2,
+   "note": "L2 grupos.",
    "at": 10.65,
    "label": "grupo Financeiro",
    "optional": true,
@@ -208,6 +211,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 0.4,
+   "note": "L2 sistema,",
    "at": 13.16,
    "label": "uma linha = uma tela (Clientes e Fornecedores)",
    "optional": true,
@@ -221,6 +225,7 @@
     "exact": true
    },
    "seconds": 1.0,
+   "note": "L2 interruptor",
    "at": 14.45,
    "label": "o interruptor do lado",
    "optional": true,
@@ -249,6 +254,7 @@
     "name": "Acesso à tela Contas a Pagar/Receber",
     "exact": true
    },
+   "note": "L4 Contas",
    "at": 25.52,
    "label": "liga a tela Contas a Pagar/Receber"
   },
@@ -260,6 +266,7 @@
     "exact": true,
     "within": "[role=dialog]"
    },
+   "note": "L4 Abro",
    "at": 27.5,
    "label": "Clique para ver 4 ações (Contas a Pagar/Receber)"
   },
@@ -270,6 +277,7 @@
     "name": "Criar Conta a Pagar/Receber",
     "exact": true
    },
+   "note": "L4 Criar",
    "at": 30.08,
    "label": "liga Criar Conta a Pagar/Receber"
   },
@@ -280,6 +288,7 @@
     "name": "Dar Baixa em Conta",
     "exact": true
    },
+   "note": "L4 Dar",
    "at": 31.14,
    "label": "liga Dar Baixa em Conta"
   },
@@ -294,6 +303,7 @@
     "selector": "[role=dialog] button[aria-label='Ver ações de Contas a Pagar/Receber'] div.tabular-nums"
    },
    "seconds": 1.8,
+   "note": "L4 contador",
    "at": 32.91,
    "label": "ZOOM selo 2/4 e as duas ações ligadas",
    "optional": true,
@@ -312,6 +322,7 @@
     "exact": true
    },
    "seconds": 0.8,
+   "note": "L5 tela,",
    "at": 37.44,
    "label": "primeiro a tela (interruptor de Contas a Pagar/Receber)",
    "optional": true,
@@ -325,6 +336,7 @@
     "exact": true
    },
    "seconds": 0.8,
+   "note": "L5 ações.",
    "at": 38.8,
    "label": "depois as ações",
    "optional": true,
@@ -333,6 +345,7 @@
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=document.querySelector(\"[role=dialog] [role=switch][aria-label=\\\"Acesso \\u00e0 tela Caixa\\\"]\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-400);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "note": "L5 tela. #1",
    "at": 41.88,
    "label": "a lista sobe até o Caixa"
   },
@@ -344,6 +357,7 @@
     "exact": true
    },
    "seconds": 1.6,
+   "note": "L5 Caixa",
    "at": 42.67,
    "label": "a tela Caixa, desligada (sem abrir as ações)",
    "optional": true,
@@ -360,6 +374,7 @@
     "placeholder": "Buscar tela ou ação...",
     "within": "[role=dialog]"
    },
+   "note": "L6 busca.",
    "at": 50.97,
    "label": "Buscar tela ou ação..."
   },
@@ -371,6 +386,7 @@
    },
    "text": "nota",
    "cps": 12,
+   "note": "L6 nota,",
    "at": 52.59,
    "label": "busca: nota",
    "noClick": true
@@ -383,6 +399,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 0.4,
+   "note": "L6 Fiscal",
    "at": 53.65,
    "label": "aparece o Fiscal & Ambiental",
    "optional": true,
@@ -395,6 +412,7 @@
     "name": "Acesso à tela Fiscal & Ambiental",
     "exact": true
    },
+   "note": "L6 tela",
    "at": 55.6,
    "label": "liga a tela Fiscal & Ambiental"
   },
@@ -406,6 +424,7 @@
     "exact": true,
     "within": "[role=dialog]"
    },
+   "note": "L6 ações",
    "at": 56.36,
    "label": "Clique para ver 4 ações (Fiscal & Ambiental)"
   },
@@ -416,6 +435,7 @@
     "name": "Emitir NF-e (Produto)",
     "exact": true
    },
+   "note": "L6 NF-e",
    "at": 57.58,
    "label": "liga Emitir NF-e (Produto)"
   },
@@ -426,6 +446,7 @@
     "name": "Emitir NFS-e (Serviço)",
     "exact": true
    },
+   "note": "L6 NFS-e.",
    "at": 58.72,
    "label": "liga Emitir NFS-e (Serviço)"
   },
@@ -440,18 +461,21 @@
     "role": "button",
     "name": "Limpar busca"
    },
+   "note": "L7 mesmo",
    "at": 60.97,
    "label": "Limpar busca"
   },
   {
    "do": "eval",
    "js": "(()=>{const r=[];for(const n of [\"Ver Totais e Valores Financeiros\", \"Acesso à tela Dashboard\"]){const s=document.querySelector('[role=dialog] [role=switch][aria-label=\"'+n+'\"]');if(!s){r.push('SEM ALVO '+n);continue}if(s.getAttribute('data-state')!=='checked'){s.click();r.push('ligou '+n)}else r.push('já '+n)}return r.join(' | ')})()",
+   "note": "L7 resto",
    "at": 62.84,
    "label": "liga Ver Totais e Dashboard (sem cursor)"
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=document.querySelector(\"[role=dialog] [role=switch][aria-label=\\\"Acesso \\u00e0 tela Movimenta\\u00e7\\u00f5es Banc\\u00e1rias\\\"]\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-300);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/450),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "note": "L7 escritório:",
    "at": 63.42,
    "label": "a lista desce até o banco"
   },
@@ -462,6 +486,7 @@
     "name": "Acesso à tela Movimentações Bancárias",
     "exact": true
    },
+   "note": "L7 banco,",
    "at": 64.53,
    "label": "liga Movimentações Bancárias (o banco)"
   },
@@ -482,6 +507,7 @@
     "name": "Acesso à tela Relatório Financeiro",
     "exact": true
    },
+   "note": "L7 relatório",
    "at": 65.37,
    "label": "liga Relatório Financeiro"
   },
@@ -497,6 +523,7 @@
     "name": "Acesso à tela Pedidos",
     "exact": true
    },
+   "note": "L7 pedidos",
    "at": 67.41,
    "label": "liga Pedidos"
   },
@@ -512,6 +539,7 @@
     "name": "Acesso à tela Clientes e Fornecedores",
     "exact": true
    },
+   "note": "L7 clientes",
    "at": 68.4,
    "label": "liga Clientes e Fornecedores"
   },
@@ -528,6 +556,7 @@
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=document.querySelector(\"[role=dialog] [role=switch][aria-label=\\\"Acesso \\u00e0 tela Caixa\\\"]\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-400);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "note": "L7 Caixa",
    "at": 70.05,
    "label": "a lista sobe até o Caixa"
   },
@@ -539,6 +568,7 @@
     "exact": true
    },
    "seconds": 1.2,
+   "note": "L7 Caixa",
    "at": 70.75,
    "label": "o Caixa fica desligado",
    "optional": true,
@@ -572,6 +602,7 @@
     "exact": true,
     "within": "[role=dialog]"
    },
+   "note": "L10 Criar",
    "at": 102.71,
    "label": "Criar Usuário (rodapé da janela)"
   },
@@ -597,6 +628,7 @@
     "within": "main"
    },
    "seconds": 0.3,
+   "note": "L10 Juliana",
    "at": 104.4,
    "label": "Juliana entra na equipe",
    "optional": true,
@@ -610,6 +642,7 @@
     "within": "main"
    },
    "seconds": 0.6,
+   "note": "L10 equipe.",
    "at": 105.79,
    "label": "selo 3 / 3 usuários",
    "optional": true,

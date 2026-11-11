@@ -27,6 +27,12 @@ export FAKE_URL=http://127.0.0.1:$PORT FAKE_NOW=$FN TUT_USER=rafael@reciclavalem
 echo "cap$NN FAKE_NOW=$FN $(date +%H:%M:%S)"
 if [ "$MODO" = "--rapido" ]; then
   python3 -I rec/t08/ensaio.py "$NN" && flock .heavy.lock node rec/record.mjs "rec/t08/_ens/cap$NN.json" --rapido > "rec/t08/_ens/.cap$NN.out" 2>&1
+elif [ "$MODO" = "--os-dois" ]; then
+  # o ensaio rápido e, se ele sai com 0 passo falho, a gravação completa: um capítulo, uma trava (a fila passa de 20 min)
+  python3 -I rec/t08/ensaio.py "$NN" || exit 2
+  flock .heavy.lock bash -c "node rec/record.mjs rec/t08/_ens/cap$NN.json --rapido > rec/t08/_ens/.cap$NN.out 2>&1;
+    python3 -I rec/t08/resumo.py $NN --ens > rec/t08/_ens/cap$NN.resumo 2>&1; grep -q '!!ERRO' rec/t08/_ens/cap$NN.resumo && exit 4;
+    node rec/record.mjs rec/t08/cap$NN.json > rec/t08/.cap$NN.out 2>&1"
 else
   flock .heavy.lock node rec/record.mjs "rec/t08/cap$NN.json" > "rec/t08/.cap$NN.out" 2>&1
 fi

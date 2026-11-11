@@ -120,6 +120,7 @@
     "exact": true,
     "within": "main"
    },
+   "note": "L1 valores.",
    "at": 1.09,
    "label": "Editar (detalhe do Marcos)"
   },
@@ -131,6 +132,7 @@
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=document.querySelector(\"[role=dialog] input[placeholder=\\\"Buscar tela ou a\\u00e7\\u00e3o...\\\"]\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-150);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "note": "L1 topo",
    "at": 3.2,
    "label": "desce o corpo da janela: Geral no topo da lista"
   },
@@ -142,6 +144,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 0.6,
+   "note": "L1 Geral,",
    "at": 3.62,
    "label": "grupo Geral",
    "optional": true,
@@ -153,6 +156,7 @@
     "selector": "[role=dialog] div.items-start:has(> [role=switch][aria-label='Ver Totais e Valores Financeiros'])"
    },
    "seconds": 3.0,
+   "note": "L1 Ver",
    "at": 4.83,
    "label": "ZOOM Ver Totais e Valores Financeiros (ligado)",
    "optional": true,
@@ -200,6 +204,7 @@
     "selector": "[role=dialog] div.items-start:has(> [role=switch][aria-label='Ver Dinheiro Total em Caixa'])"
    },
    "seconds": 1.2,
+   "note": "L5 ligados,",
    "at": 48.21,
    "label": "Ver Dinheiro Total em Caixa (ligado)",
    "optional": true,
@@ -211,6 +216,7 @@
     "selector": "[role=dialog] div.items-start:has(> [role=switch][aria-label='Ver Projeção de Lucro'])"
    },
    "seconds": 1.6,
+   "note": "L5 projeção",
    "at": 51.4,
    "label": "Ver Projeção de Lucro (desligado)",
    "optional": true,
@@ -224,6 +230,7 @@
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=document.querySelector(\"[role=dialog] [role=switch][aria-label=\\\"Acesso \\u00e0 tela Ticket de Pesagem\\\"]\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-330);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "note": "L6 pesa,",
    "at": 59.31,
    "label": "a lista desce até o Ticket de Pesagem"
   },
@@ -235,6 +242,7 @@
     "exact": true,
     "within": "[role=dialog]"
    },
+   "note": "L6 Ticket",
    "at": 60.68,
    "label": "Clique para ver 4 ações (Ticket de Pesagem)"
   },
@@ -254,6 +262,7 @@
     "selector": "[role=dialog] div.items-start:has(> [role=switch][aria-label='Criar Ticket de Pesagem com Valores'])"
    },
    "seconds": 3.0,
+   "note": "L7 Criar",
    "at": 63.03,
    "label": "ZOOM Criar Ticket de Pesagem com Valores (desligado)",
    "optional": true,
@@ -272,6 +281,7 @@
     "exact": true,
     "within": "[role=dialog]"
    },
+   "note": "L8 cancelo.",
    "at": 78.24,
    "label": "Cancelar (nada muda)"
   },

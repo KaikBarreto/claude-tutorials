@@ -27,10 +27,8 @@ PDF = os.path.join(HERE, 'assets', 'comprovante-pix-energia-outubro.pdf')
 
 def inicio():
     return {
-        '_doc': ('T13 · estado de partida (caps 0 a 4) por cima do mundo base B: (1) o fornecedor "Hidráulica Moretti Ltda" (plano da T13, '
-                 'manutenção da prensa; CNPJ 41.739.625/0001-57 com dígito válido), que a aula escolhe no cap04; (2) `paid_at` do "Aluguel do '
-                 'galpão de novembro" como DATA (a coluna é `date`, migração 20260925200000; o app corta "aaaa-mm-dd" em BillsList.formatPaidAt e '
-                 'a semente de B grava o carimbo inteiro, que sairia "05T12:00:00.000Z/11/2026" em "Quitada em"). Gerado por rec/t13/t13_sementes.py.'),
+        '_doc': ('T13 · estado de partida (caps 0 a 4) por cima do mundo base B: o fornecedor "Hidráulica Moretti Ltda" (plano da T13, '
+                 'manutenção da prensa; CNPJ 41.739.625/0001-57 com dígito válido), que a aula escolhe no cap04. Gerado por rec/t13/t13_sementes.py.'),
         'suppliers': [{
             'id': '@id:fornecedor.moretti', 'company_id': EMP, 'code': '6', 'name': 'Hidráulica Moretti Ltda', 'nome_fantasia': None,
             'razao_social': 'Hidráulica Moretti Ltda', 'cpf_cnpj': '41.739.625/0001-57', 'phone': '(12) 90000-3131', 'phone_unavailable': False,
@@ -39,9 +37,6 @@ def inicio():
             'indicador_ie': 9, 'inscricao_estadual': None, 'linked_customer_id': None, 'is_industry': False, 'default_price_table_id': None,
             'created_by': '@id:user.rafael', 'created_at': '2026-11-06T17:20:00.000Z', 'updated_at': '2026-11-06T17:20:00.000Z',
         }],
-        '_patch': {
-            'financial_bills': [{'match': {'id': '@id:titulo.aluguel_nov'}, 'set': {'paid_at': '2026-11-05'}}],
-        },
     }
 
 

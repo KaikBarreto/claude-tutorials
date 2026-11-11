@@ -490,7 +490,7 @@ IND_IE = SEL(f"{DLG} button[role=combobox]:has-text('Não Contribuinte')")      
 REGIME = SEL(f"{DLG} button[role=combobox]:has-text('Simples Nacional')")                # o regime que a consulta trouxe
 TABELA_PADRAO = SEL(f"{DLG} div:has(> label:has-text('Tabela de Preços Padrão')) button")
 AVISO_AZUL = TXT('Mudanças em nome, CPF/CNPJ, contato, endereço e tabela de preços padrão refletem automaticamente no cadastro de cliente vinculado.', within=DLG)
-TAMBEM_CLIENTE = SEL(f"{DLG} label:has-text('Também é cliente')")
+TAMBEM_CLIENTE = SEL(f"{DLG} #also-counterpart")                                          # caixa "Também é cliente" (Checkbox do Radix)
 BTN_FICHA = lambda nome, b: BTN(b, FICHA_DE(nome))
 SALDO_FICHA = lambda nome: SEL(f"{FICHA_DE(nome)} .tabular-nums", nth=0)
 COOP = 'Cooperativa Recomeço'
@@ -654,6 +654,7 @@ def cap05():
     c.waitfor(text='Editar Fornecedor', timeout=10)
     c.ev(DLG_ROLA('Também é cliente', 420, 500), label='desce a janela até Também é cliente')
     c.click(TAMBEM_CLIENTE, at=c.A(2, 'cliente.', 0.6), label='marca Também é cliente')
+    c.add({'do': 'eval', 'js': "(()=>{const e=document.querySelector('[role=dialog] #also-counterpart');return e?(e.getAttribute('data-state')==='checked'?'OK: marcada':'DIFERENTE: '+e.getAttribute('data-state')):'DIFERENTE: sem a caixa'})()", 'label': 'confere Também é cliente marcada'})
     c.mark(3)
     c.click(SALVAR, at=c.A(3, 'Salvar.', 0.6), label='Salvar')
     c.waitfor(text='Cadastro criado também como cliente.', timeout=12)

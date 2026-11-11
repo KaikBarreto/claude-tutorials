@@ -370,6 +370,11 @@
    "timeout": 6
   },
   {
+   "do": "eval",
+   "js": "(()=>{const v=[...document.querySelectorAll('main tbody tr')].filter(r=>/Papel[ãa]o/.test(r.innerText)&&/-370|-30 Kg/.test(r.innerText));if(!v.length)return 'OK: papelão negativo fora da lista';const r=v[0].getBoundingClientRect();return (r.top<innerHeight&&r.bottom>0?'DIFERENTE: papelão negativo VISÍVEL ':'OK: papelão negativo só abaixo da dobra ')+'(y '+Math.round(r.top)+')'})()",
+   "label": "confere o papelão negativo (Kardex Geral) fora da tela"
+  },
+  {
    "do": "press",
    "key": "Escape",
    "at": 29.92,

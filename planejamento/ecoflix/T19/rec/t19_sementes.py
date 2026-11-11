@@ -9,7 +9,8 @@ O que entra por cima do mundo base (B, 10/11/2026 08:30):
    28/10, bônus 22/10);
  - ponto: time_settings (07:00-16:00, 60 min, tolerância 10, seg a sex, selfie e localização), o slug do tablet, batidas de 01/09 a
    09/11 do Marcos, Edson, Cláudio e Diego (menos Cláudio 05/11 e Diego 06/11) e as entradas de hoje (06:47, 06:52, 06:58, 07:03);
- - o caixa do Rafael aberto às 08:30 com R$ 1.500,00 (junção: B não tem caixa em 10/11); o cadastro fiscal em Lucro Real; a
+ - o caixa do Rafael aberto às 08:30 com R$ 1.500,00 (junção: B não tem caixa em 10/11); o cadastro fiscal de B em Lucro Real
+   (_patch na config que já existe, sem inserir outra); a
    categoria "Folha salarial" de B com o nome que o app procura ("Folha Salarial", utils/payrollCategory.ts).
 Determinístico: rodar de novo refaz os mesmos arquivos. Os slugs seguem o formato da 1.59.154 ({empresa}-{primeiro nome}-{12}),
 com o código derivado do nome (o handler rpc/generate_ponto_slug.mjs usa a mesma conta: t19_slug abaixo).
@@ -229,11 +230,9 @@ def main():
                                  'type': 'opening', 'amount': 1500, 'description': 'Abertura do Caixa #85', 'transaction_at': '2026-11-10T11:30:00.000Z',
                                  'transaction_date': '2026-11-10', 'created_at': '2026-11-10T11:30:00.000Z', 'created_by': RAFAEL_USER,
                                  'excluded_from_dre': False}]
-    out['company_fiscal_config'] = [{'id': '@id:t19.fiscal', 'company_id': '@id:company.reciclavale', 'cnpj': '47318506000107',
-                                     'razao_social': 'Recicla Vale Metais Ltda', 'nome_fantasia': 'Recicla Vale Metais', 'uf': 'SP',
-                                     'cidade': 'Taubaté', 'is_simples_nacional': False, 'is_default': True, 'ativo': True,
-                                     'created_at': '2026-08-01T12:00:00.000Z', 'updated_at': '2026-08-01T12:00:00.000Z'}]
     out['_patch'] = {
+        # o cadastro fiscal é o do mundo base (fiscal.matriz, Lucro Real): só garante o regime que a calculadora lê (nada de 2ª config)
+        'company_fiscal_config': [{'match': {'company_id': '@id:company.reciclavale', 'is_default': True}, 'set': {'is_simples_nacional': False}}],
         'companies': [{'match': {'id': '@id:company.reciclavale'}, 'set': {'ponto_kiosk_slug': KIOSK}}],
         'financial_categories': [{'match': {'company_id': '@id:company.reciclavale', 'name': 'Folha salarial'}, 'set': {'name': 'Folha Salarial'}}],
     }

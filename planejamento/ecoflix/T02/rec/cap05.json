@@ -99,6 +99,7 @@
     "exact": true,
     "within": "main"
    },
+   "note": "L1 balanceiro:",
    "at": 2.91,
    "label": "clica no Marcos"
   },
@@ -119,6 +120,7 @@
     "exact": true,
     "within": "main"
    },
+   "note": "L1 Marcos",
    "at": 4.13,
    "label": "Editar (detalhe do Marcos)"
   },
@@ -146,6 +148,7 @@
     "within": "[role=dialog]"
    },
    "file": "assets/marcos-antunes.jpg",
+   "note": "L2 foto",
    "at": 10.78,
    "label": "Selecionar foto: marcos-antunes.jpg"
   },
@@ -164,6 +167,7 @@
    "target": {
     "selector": "[role=dialog] #initial-screen"
    },
+   "note": "L3 Tela",
    "at": 14.85,
    "label": "Tela inicial (Automática)"
   },
@@ -174,6 +178,7 @@
     "name": "Caixa",
     "exact": true
    },
+   "note": "L3 Caixa.",
    "at": 16.82,
    "label": "Tela inicial: Caixa"
   },
@@ -194,6 +199,7 @@
     "selector": "[role=dialog] #password"
    },
    "seconds": 1.4,
+   "note": "L4 Nova",
    "at": 26.83,
    "label": "Nova Senha (opcional) (sem digitar)",
    "optional": true,
@@ -210,6 +216,7 @@
     "placeholder": "Buscar tela ou ação...",
     "within": "[role=dialog]"
    },
+   "note": "L5 Busco",
    "at": 29.59,
    "label": "Buscar tela ou ação..."
   },
@@ -221,6 +228,7 @@
    },
    "text": "lucro",
    "cps": 20,
+   "note": "L5 lucro,",
    "at": 30.59,
    "label": "busca: lucro",
    "noClick": true
@@ -233,6 +241,7 @@
     "exact": true,
     "within": "[role=dialog]"
    },
+   "note": "L5 aparece",
    "at": 31.48,
    "label": "Clique para ver 1 ação (Caixa)"
   },
@@ -242,6 +251,7 @@
     "selector": "[role=dialog] div.items-start:has(> [role=switch][aria-label='Ver Projeção de Lucro'])"
    },
    "seconds": 1.6,
+   "note": "L5 Projeção",
    "at": 32.14,
    "label": "aparece o Ver Projeção de Lucro, dentro do Caixa",
    "optional": true,
@@ -254,6 +264,7 @@
     "name": "Ver Projeção de Lucro",
     "exact": true
    },
+   "note": "L5 Desligo.",
    "at": 34.82,
    "label": "desliga Ver Projeção de Lucro"
   },
@@ -273,6 +284,7 @@
     "selector": "[role=dialog] span.bg-amber-500"
    },
    "seconds": 1.2,
+   "note": "L6 Personalizado.",
    "at": 37.93,
    "label": "ZOOM Perfis rápidos com o selo Personalizado",
    "optional": true,
@@ -287,6 +299,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 1.0,
+   "note": "L6 Operador",
    "at": 39.83,
    "label": "Operador Padrão (desmarcado)",
    "optional": true,
@@ -305,6 +318,7 @@
     "exact": true,
     "within": "[role=dialog]"
    },
+   "note": "L7 Atualizar.",
    "at": 42.44,
    "label": "Atualizar"
   },
@@ -335,6 +349,7 @@
     "within": "main"
    },
    "seconds": 1.2,
+   "note": "L7 continua",
    "at": 48.99,
    "label": "Marcos na lista: foto e 31 permissões",
    "optional": true,
@@ -352,6 +367,7 @@
     "exact": true,
     "within": "main"
    },
+   "note": "L8 escritório.",
    "at": 54.1,
    "label": "clica na Juliana"
   },
@@ -372,6 +388,7 @@
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=[...document.querySelectorAll(\"main *\")].filter(e=>e.textContent.trim()===\"Telas (7)\").sort((a,b)=>a.textContent.length-b.textContent.length||a.children.length-b.children.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-420);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/500),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "note": "L8 escritório.",
    "at": 55.0,
    "label": "o detalhe desce até Telas (7)"
   },
@@ -383,6 +400,7 @@
     "within": "main"
    },
    "seconds": 0.2,
+   "note": "L8 contas,",
    "at": 56.41,
    "label": "Contas a Pagar/Receber (as contas)",
    "optional": true,
@@ -396,6 +414,7 @@
     "within": "main"
    },
    "seconds": 0.2,
+   "note": "L8 banco,",
    "at": 57.31,
    "label": "Movimentações Bancárias (o banco)",
    "optional": true,
@@ -409,6 +428,7 @@
     "within": "main"
    },
    "seconds": 0.2,
+   "note": "L8 relatório",
    "at": 58.15,
    "label": "Relatório Financeiro",
    "optional": true,
@@ -417,6 +437,7 @@
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=[...document.querySelectorAll(\"main *\")].filter(e=>e.textContent.trim()===\"Telas (7)\").sort((a,b)=>a.textContent.length-b.textContent.length||a.children.length-b.children.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-330);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/350),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "note": "L8 relatório",
    "at": 59.0,
    "label": "o detalhe desce mais um pouco (Fiscal & Ambiental)"
   },
@@ -428,6 +449,7 @@
     "within": "main"
    },
    "seconds": 2.0,
+   "note": "L8 notas.",
    "at": 59.29,
    "label": "Fiscal & Ambiental (as notas); a lista não tem o Caixa",
    "optional": true,

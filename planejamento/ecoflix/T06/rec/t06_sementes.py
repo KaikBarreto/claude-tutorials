@@ -71,7 +71,7 @@ def numero_caixa():
 
 
 def proximo_pedido():
-    return max(max(p['order_number'] for p in B['purchases']), max(s['order_number'] for s in B['sales'])) + 1
+    return max(int(p['order_number']) for p in B['purchases'] + B['sales'] if p.get('order_number') is not None) + 1
 
 
 def ultimo_saldo(cid):

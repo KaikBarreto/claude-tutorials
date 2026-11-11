@@ -478,8 +478,10 @@ def cap00():
     """Abertura: Dashboard; ilustração do cardápio (L1, L2); menu Materiais > Estoque (L3); cartão "Antes" e o menu lateral recolhido (L4)."""
     c = Cap(0, setup_login() + vai('/materiais', 'Gerencie os materiais do estoque') + vai('/dashboard', 'Olá, Rafael!'), start=(700, 140))
     # L1 e L2: a ilustração do cardápio cobre a janela; o robô fica parado no Dashboard
-    c.click(BTN('Materiais'), w=(3, 'Materiais,'), label='menu Materiais (abre o grupo)')
-    c.click(SEL("a[href='/materiais']"), w=(3, 'Estoque.'), label='Estoque (submenu)')
+    # folgas medidas no ensaio (tAct - tStart): 1,4 s no 1º gesto do capítulo, 1,1 s no submenu que ainda está abrindo
+    c.click(BTN('Materiais'), w=(3, 'Materiais,', None, 1.4), label='menu Materiais (abre o grupo)')
+    c.click(SEL("a[href='/materiais']"), w=(3, 'Estoque.', None, 1.1), label='Estoque (submenu)')
+    c.marca(4)  # a tela carrega já na L4
     c.waitfor(text='Gerencie os materiais do estoque', timeout=15)
     c.confere('main', ['Estoque', 'Tabelas de Preço', 'Principal', 'Movimentar estoque', 'Lista de Materiais'], 'tela Estoque carregada')
     c.hover(P('Gerencie os materiais do estoque'), 0.6, w=(4, 'você'), label='título Estoque (o cursor sai do menu)')

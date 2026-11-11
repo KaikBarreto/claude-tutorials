@@ -373,6 +373,9 @@ def js_clicar(seletor, texto=None):
 
 JS_TIPOS = ("(()=>{const t=[...document.querySelectorAll('main tbody tr > td:nth-child(4)')].map(e=>e.innerText.trim()).filter(Boolean);"
             "return 'tipos na lista: '+[...new Set(t)].join(', ')+' ('+t.length+' linhas)'})()")
+JS_PAPELAO = ("(()=>{const v=[...document.querySelectorAll('main tbody tr')].filter(r=>/Papel[ãa]o/.test(r.innerText)&&/-370|-30 Kg/.test(r.innerText));"
+              "if(!v.length)return 'OK: papelão negativo fora da lista';const r=v[0].getBoundingClientRect();"
+              "return (r.top<innerHeight&&r.bottom>0?'DIFERENTE: papelão negativo VISÍVEL ':'OK: papelão negativo só abaixo da dobra ')+'(y '+Math.round(r.top)+')'})()")
 JS_PDF_GANCHO = ("(()=>{if(window.__pdfs)return 'ja';window.__pdfs=[];const o=URL.createObjectURL.bind(URL);"
                  "URL.createObjectURL=(b)=>{try{if(b&&b.type==='application/pdf')window.__pdfs.push(b)}catch(e){}return o(b)};return 'gancho'})()")
 
@@ -454,7 +457,7 @@ def cap00():
     """Abertura: Dashboard (menu aberto); L1-L2 sob a ilustração das três perguntas; L3 o cursor no menu Materiais (sem abrir); L4 cartão
     "Antes" (edição) e o cursor sai do menu."""
     c = Cap(0, setup_login() + vai('/materiais', 'Gerencie os materiais do estoque') + vai('/dashboard', 'Olá, Rafael!'), start=(760, 420))
-    c.hover(MENU_GRUPO('Materiais'), 2.2, w=(3, 'Materiais,'), label='[ZOOM] menu Materiais (sem abrir)')
+    c.hover(MENU_GRUPO('Materiais'), 2.2, w=(3, 'Materiais,', None, 1.2), label='[ZOOM] menu Materiais (sem abrir)')
     c.cursor((760, 420), w=(4, 'Se', None, 0.0), label='o cursor sai do menu')
     c.fim()
     return c
@@ -464,15 +467,15 @@ def cap01():
     """As quatro portas: Materiais abre o grupo (Estoque, Histórico (Kardex), Relatório, Ticket de Pesagem, Produção); Estoque; a coluna
     Tabelas de Preço até "Posição de Estoque" (sem clicar); L3 sob a ilustração (o menu recolhe por eval); L4 quadro geral."""
     c = Cap(1, setup_login() + vai('/materiais', 'Gerencie os materiais do estoque') + vai('/dashboard', 'Olá, Rafael!'), start=(760, 420))
-    c.click(MENU_GRUPO('Materiais'), w=(1, 'Materiais,'), label='menu Materiais (abre o grupo)')
+    c.click(MENU_GRUPO('Materiais'), w=(1, 'Materiais,'), primeiro=True, label='menu Materiais (abre o grupo)')
     c.waitfor(target=MENU_LINK('Relatório'), timeout=6)
-    c.hover(MENU_LINK('Estoque'), 0.2, w=(1, 'Estoque,'), label='submenu Estoque')
-    c.hover(MENU_LINK('Histórico (Kardex)'), 0.2, w=(1, 'Histórico'), label='submenu Histórico (Kardex)')
-    c.hover(MENU_LINK('Relatório'), 0.5, w=(1, 'Relatório.'), label='submenu Relatório')
+    c.registra(MENU_LINK('Histórico (Kardex)'), w=(1, 'três'), label='[ZOOM] submenu: Estoque, Histórico (Kardex), Relatório (o do meio)')
+    c.hover(MENU_LINK('Estoque'), 0.1, w=(1, 'Estoque,', None, 0.9), label='submenu Estoque')
+    c.hover(MENU_LINK('Relatório'), 0.6, w=(1, 'Relatório.', None, 0.9), label='submenu Relatório (passando pelo Histórico (Kardex))')
     c.click(MENU_LINK('Estoque'), w=(2, 'Estoque,', 0), label='Estoque')
     c.waitfor(text='Gerencie os materiais do estoque', timeout=15)
-    c.hover(P('Tabelas de Preço', exact=True), 0.8, w=(2, 'coluna'), label='coluna Tabelas de Preço')
-    c.hover(BTN('Posição de Estoque'), 1.4, w=(2, 'Posição'), label='[ZOOM] Posição de Estoque, embaixo de Nova Tabela (sem clicar)')
+    c.hover(P('Tabelas de Preço', exact=True), 0.5, w=(2, 'coluna'), label='coluna Tabelas de Preço')
+    c.hover(BTN('Posição de Estoque'), 1.0, w=(2, 'Posição'), label='[ZOOM] Posição de Estoque, embaixo de Nova Tabela (sem clicar)')
     c.confere('main', ['Tabelas de Preço', 'Tabela Depósitos', 'Nova Tabela', 'Posição de Estoque'], 'coluna das tabelas com a Posição de Estoque')
     # L3: ilustração das quatro portas cobre a janela; por baixo, o menu lateral recolhe (sem cursor)
     c.ev(js_clicar('header button:has(svg.lucide-panel-left-close)'), w=(3, 'Histórico', None, 0.0), label='recolhe o menu lateral (por baixo da ilustração)')
@@ -541,6 +544,7 @@ def cap04():
     c.hover(MENU_GRUPO('Materiais'), 0.5, w=(1, 'Agora', None, 0.0), noScroll=True, label='menu lateral (o menu recolhido abre)')
     c.click(MENU_LINK('Histórico (Kardex)'), w=(1, 'Kardex'), noScroll=True, label='Histórico (Kardex)')
     c.waitfor(text='Geral (Todos)', timeout=15)
+    c.ev(JS_PAPELAO, label='confere o papelão negativo (Kardex Geral) fora da tela')
     c.cursor((760, 420), w=(1, 'estoque.', None, 0.0), label='o cursor sai do menu (ele recolhe)')
     # L2: ilustração "Kardex é um extrato" (robô parado)
     c.click(KMAT('Ferro pesado'), w=(3, 'ferro'), label='Ferro pesado na coluna Materiais')
@@ -787,6 +791,7 @@ def cap11():
     c.goto('/historico-materiais', w=(5, 'O', 0, 1.4), label='corte: Histórico de Materiais')
     c.click(BTN('Exportar'), w=(5, 'Histórico'), label='Exportar do Histórico (PDF, Excel)')
     c.waitfor(target=ITEM('Excel'), timeout=6)
+    c.ev(JS_PAPELAO, label='confere o papelão negativo (Kardex Geral) fora da tela')
     c.press('Escape', w=(5, 'Relatório', None, 0.2), label='fecha o menu')
     c.goto('/relatorio-estoque', w=(5, 'também', None, 0.4), label='corte: Relatório de Estoque')
     c.hover(BTN('Exportar Relatório'), 1.4, w=(5, 'cada'), label='Exportar Relatório')
@@ -802,6 +807,7 @@ def cap12():
     c.hover(CELULA('Ferro misto', 4), 1.4, w=(1, 'transferiu'), label='Ferro misto 6.100 Kg')
     c.hover(CELULA('Ferro pesado', 4), 0.6, w=(1, 'ferro', 1), label='Ferro pesado 2.500 Kg')
     c.goto('/historico-materiais', w=(2, 'Leu', None, 0.0), label='Histórico de Materiais')
+    c.ev(JS_PAPELAO, label='confere o papelão negativo (Kardex Geral) fora da tela')
     c.click(KMAT('Ferro pesado'), w=(2, 'linha', 1), label='Ferro pesado')
     c.waitfor(target=KROW('Transferência'), timeout=10)
     c.hover(KBADGE('Transferência'), 0.6, w=(2, 'tipos'), label='os tipos')

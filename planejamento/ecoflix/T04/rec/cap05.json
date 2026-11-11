@@ -178,10 +178,15 @@
   {
    "do": "click",
    "target": {
-    "selector": "[role=dialog] label:has-text('Também é cliente')"
+    "selector": "[role=dialog] #also-counterpart"
    },
    "at": 15.87,
    "label": "marca Também é cliente"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const e=document.querySelector('[role=dialog] #also-counterpart');return e?(e.getAttribute('data-state')==='checked'?'OK: marcada':'DIFERENTE: '+e.getAttribute('data-state')):'DIFERENTE: sem a caixa'})()",
+   "label": "confere Também é cliente marcada"
   },
   {
    "do": "mark",

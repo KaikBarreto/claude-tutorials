@@ -1,5 +1,5 @@
 {
- "_doc": "T1 (Sua conta e sua empresa), estado depois do cap06 (gerado por rec/t01/t01_semente.py a partir do ensaio: o que o robô digitou na tela), por cima de t01/inicio, t01/apos-cap05.",
+ "_doc": "T1 (Sua conta e sua empresa), estado depois do cap06 (gerado por rec/t01/t01_semente.py a partir do ensaio: o que o robô digitou na tela), por cima de t01/inicio, t01/apos-cap05. Configuração Fiscal: o app (CompanySettings.tsx, ao salvar) atualiza o endereço do emitente padrão já existente (@id:fiscal.matriz) em vez de inserir outro; com o endereço vazio do cap05 ele grava nulos e não mexe na UF.",
  "_patch": {
   "companies": [
    {
@@ -23,10 +23,17 @@
   "company_fiscal_config": [
    {
     "match": {
-     "id": "3f6b6813-0150-52df-b619-cdaa7adc0525"
+     "id": "@id:fiscal.matriz"
     },
     "set": {
-     "complemento": "Galpão 2"
+     "cep": "12086410",
+     "logradouro": "Rua das Oficinas",
+     "numero": "1250",
+     "complemento": "Galpão 2",
+     "bairro": "Parque Industrial",
+     "cidade": "Taubaté",
+     "uf": "SP",
+     "codigo_ibge": "3554102"
     }
    }
   ]

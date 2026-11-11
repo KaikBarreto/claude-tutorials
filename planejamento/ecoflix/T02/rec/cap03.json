@@ -151,6 +151,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 1.0,
+   "note": "L1 permissões.",
    "at": 1.8,
    "label": "coluna Permissões",
    "optional": true,
@@ -164,6 +165,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 1.2,
+   "note": "L1 perfis",
    "at": 5.59,
    "label": "Perfis rápidos",
    "optional": true,
@@ -193,6 +195,7 @@
     "exact": true,
     "within": "[role=dialog]"
    },
+   "note": "L3 Acesso",
    "at": 13.48,
    "label": "perfil Acesso Total"
   },
@@ -209,6 +212,7 @@
     "exact": true,
     "within": "[role=dialog]"
    },
+   "note": "L4 Somente",
    "at": 17.32,
    "label": "perfil Somente Visualização"
   },
@@ -225,6 +229,7 @@
     "exact": true,
     "within": "[role=dialog]"
    },
+   "note": "L5 Operador",
    "at": 23.9,
    "label": "perfil Operador Padrão (fica)"
   },
@@ -241,6 +246,7 @@
     "exact": true
    },
    "seconds": 0.2,
+   "note": "L5 caixa,",
    "at": 27.19,
    "label": "Caixa ligado",
    "optional": true,
@@ -249,6 +255,7 @@
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=document.querySelector(\"[role=dialog] [role=switch][aria-label=\\\"Acesso \\u00e0 tela Pedidos\\\"]\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-420);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/450),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "note": "L5 caixa,",
    "at": 27.89,
    "label": "a lista desce até Pedidos"
   },
@@ -260,6 +267,7 @@
     "exact": true
    },
    "seconds": 0.2,
+   "note": "L5 compra",
    "at": 28.37,
    "label": "Pedidos ligado (compra e venda)",
    "optional": true,
@@ -268,6 +276,7 @@
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=document.querySelector(\"[role=dialog] [role=switch][aria-label=\\\"Acesso \\u00e0 tela Estoque\\\"]\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-400);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/450),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "note": "L5 estoque",
    "at": 28.84,
    "label": "a lista desce até Estoque"
   },
@@ -279,6 +288,7 @@
     "exact": true
    },
    "seconds": 0.2,
+   "note": "L5 estoque",
    "at": 29.34,
    "label": "Estoque ligado",
    "optional": true,
@@ -292,6 +302,7 @@
     "exact": true
    },
    "seconds": 1.0,
+   "note": "L5 ticket",
    "at": 30.05,
    "label": "Ticket de Pesagem ligado",
    "optional": true,
@@ -310,6 +321,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 0.8,
+   "note": "L6 Marcos.",
    "at": 35.81,
    "label": "o que serve pro Marcos",
    "optional": true,
@@ -323,6 +335,7 @@
     "exact": true
    },
    "seconds": 1.0,
+   "note": "L6 chave",
    "at": 41.28,
    "label": "chave por chave (o interruptor)",
    "optional": true,
@@ -341,6 +354,7 @@
     "exact": true,
     "within": "[role=dialog]"
    },
+   "note": "L7 Criar",
    "at": 42.82,
    "label": "Criar Usuário (rodapé da janela)"
   },
@@ -366,6 +380,7 @@
     "within": "main"
    },
    "seconds": 0.6,
+   "note": "L7 Marcos",
    "at": 44.97,
    "label": "Marcos na lista",
    "optional": true,
@@ -379,6 +394,7 @@
     "within": "main"
    },
    "seconds": 0.8,
+   "note": "L7 ativo.",
    "at": 46.79,
    "label": "32 permissões · Ativo",
    "optional": true,

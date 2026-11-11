@@ -632,7 +632,7 @@ SUB_QTD = SEL(f"{LANC} div.w-28 input")
 REAL = SEL(f"{LANC} div.w-32 input")
 SUGERIDO = SEL(f"{LANC} span:has-text('Sugerido pela ficha:')")
 DIFERENCA = SEL(f"{LANC} div.w-20 > span")
-MOTIVO = SEL(f"{LANC} button[role=combobox]:has-text('Motivo')")
+MOTIVO = SEL(f"{LANC} div.space-y-1:has(> label:has-text('Motivo da perda')) button[role=combobox]")   # vazio ou já escolhido
 SALVAR_LANC = BTN('Salvar lançamento')
 ABRE_LANCAMENTO = [
     {'do': 'click', 'target': SEL("main div.group:has(span:text-is('#3')) p.font-medium")}, {'do': 'waitFor', 'text': 'Produção #3', 'timeout': 10},

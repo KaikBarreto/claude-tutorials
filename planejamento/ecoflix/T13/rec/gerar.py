@@ -226,6 +226,14 @@ class Cap:
                                                                             'true' if escopo == 'dlg' else 'false')
         return s.add({'do': 'eval', 'js': js, 'label': 'confere ' + label})
 
+    def confere_campos(s, esperados, label, escopo='[role=dialog]'):
+        """lê o VALOR dos campos (input/textarea) do escopo e compara com a fala"""
+        esp = [esperados] if isinstance(esperados, str) else list(esperados)
+        js = ("(async()=>{const esp=%s;let out='';for(let i=0;i<12;i++){const v=[...document.querySelectorAll(%s+' input, '+%s+' textarea')].map(e=>e.value).join(' | ');"
+              "const falta=esp.filter(e=>!v.includes(e));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+v.slice(0,260);"
+              "await new Promise(r=>setTimeout(r,300));}return out})()") % (json.dumps(esp, ensure_ascii=False), json.dumps(escopo), json.dumps(escopo))
+        return s.add({'do': 'eval', 'js': js, 'label': 'confere ' + label})
+
     def confere_ausente(s, escopo, texto, label, espera=0.6):
         """LÊ a tela depois de `espera` s e acusa se o texto apareceu"""
         sel = {'dlg': '[role=dialog]', 'main': 'main', 'body': 'body'}.get(escopo, escopo)
@@ -630,6 +638,8 @@ def cap06():
     c.click(SEL(f"{DLG}:has-text('Nº de parcelas') button:text-is('3')"), at=c.A(5, 'três', 0.7), label='Nº de parcelas: 3')
     c.hover(SEL(f"{DLG}:has-text('Nº de parcelas') input[aria-label='Valor da parcela 2']"), 1.6, at=c.A(5, 'dois', 0.6),
             label='ZOOM as três linhas e a faixa Soma das parcelas')
+    c.confere('dlg', ['Soma das parcelas', 'R$ 7.080,00', '23/11/2026', '23/12/2026', '23/01/2027'], 'as três datas e a soma R$ 7.080,00')
+    c.confere_campos(['2.360,00'], 'parcelas de 2.360,00')
     c.hover({'text': 'Soma das parcelas', 'within': f"{DLG}:has-text('Nº de parcelas')"}, 1.2, at=c.A(5, 'faixa', 0.6), label='faixa verde Soma das parcelas')
     c.mark(6)
     c.click(RODAPE('Aplicar faturamento'), at=c.A(6, 'Aplicar', 0.7), label='Aplicar faturamento', noScroll=True)
@@ -735,9 +745,11 @@ def cap09():
     c.waitfor(target=LINHA('Energia elétrica de outubro'), timeout=8)
     c.hover(TXT_LINHA('Energia elétrica de outubro', 'Energia elétrica de outubro'), 1.4, at=c.A(1, 'energia', 0.6),
             label='a energia: Conta Principal, 10/11/2026, R$ 1.874,30, Pendente')
+    c.confere('row:Energia elétrica de outubro', ['R$ 1.874,30', '10/11/2026', 'Pendente'], 'a energia de hoje')
     c.mark(2)
     c.click(NA_LINHA('Energia elétrica de outubro', "button[title='Marcar pago']"), at=c.A(2, 'Marcar', 0.7), label='Marcar pago (energia)')
     c.waitfor(text='Energia elétrica de outubro · Restante', timeout=8)
+    c.confere('dlg', ['Energia elétrica de outubro · Restante R$ 1.874,30'], 'o restante da energia')
     c.hover(CARTAO_PAG('Pix / Transferência (Banco)'), 0.6, at=c.A(2, 'Pix', 0.6), label='Pix/Transferência já marcado')
     c.hover(COMBO('Conta Principal'), 0.8, at=c.A(2, 'Principal,', 0.6), label='Conta bancária: Conta Principal')
     c.hover(CAMPO('pay-amount-transfer'), 1.0, at=c.A(2, 'inteiro.', 0.6), label='o valor inteiro 1.874,30')
@@ -816,6 +828,7 @@ def cap10():
     c.waitfor(target=LINHA('18/01/2027'), timeout=8)
     c.hover(TXT_LINHA('17/11/2026', 'Fundição Bandeira do Vale'), 0.8, at=c.A(6, 'Bandeira', 0.6), label='Fundição Bandeira do Vale')
     c.hover(TXT_LINHA('17/12/2026', '17/12/2026'), 1.2, at=c.A(6, 'parcelas.', 0.6), label='só as três parcelas, nenhuma linha Saldo')
+    c.confere('main tbody', ['R$ 4.790,00', '17/11/2026', '17/12/2026', '18/01/2027'], 'as três parcelas de R$ 4.790,00')
     c.confere_ausente('main tbody', 'Saldo', 'nenhuma linha Saldo da Fundição')
     c.mark(7)
     c.mark(8)

@@ -128,6 +128,7 @@ class Cap:
     def A(s, i, palavra, folga=0.6, nth=None):
         t = round(max(0.0, s.W(i, palavra, nth) - folga), 2)
         s.anchors.append((i, palavra, t))
+        s._ancora = (t, f'L{i} {palavra}' + (f' #{nth}' if nth else ''))   # vai como `note` no passo (t02_confere.py mede o gesto x palavra)
         return t
 
     # ---- marcas e passos
@@ -163,6 +164,10 @@ class Cap:
             s.pending.append((round(t, 2), i))
 
     def _p(s, d, at, label, kw):
+        anc = getattr(s, '_ancora', None)
+        if at is not None and anc and abs(anc[0] - at) < 1e-6:
+            d['note'] = anc[1]
+        s._ancora = None
         if at is not None:
             d['at'] = round(at, 2)
         if label:

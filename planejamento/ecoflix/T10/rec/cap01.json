@@ -112,7 +112,7 @@
     "exact": true,
     "within": "[data-sidebar=sidebar]"
    },
-   "at": 2.43,
+   "at": 1.83,
    "label": "menu Materiais (abre o grupo)"
   },
   {
@@ -126,6 +126,21 @@
    "timeout": 6
   },
   {
+   "do": "type",
+   "target": {
+    "role": "link",
+    "name": "Histórico (Kardex)",
+    "exact": true,
+    "within": "[data-sidebar=sidebar]"
+   },
+   "text": "",
+   "noClick": true,
+   "optional": true,
+   "timeout": 4,
+   "at": 4.98,
+   "label": "[ZOOM] submenu: Estoque, Histórico (Kardex), Relatório (o do meio)"
+  },
+  {
    "do": "hover",
    "target": {
     "role": "link",
@@ -133,23 +148,9 @@
     "exact": true,
     "within": "[data-sidebar=sidebar]"
    },
-   "seconds": 0.2,
-   "at": 5.85,
+   "seconds": 0.1,
+   "at": 5.5,
    "label": "submenu Estoque",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "role": "link",
-    "name": "Histórico (Kardex)",
-    "exact": true,
-    "within": "[data-sidebar=sidebar]"
-   },
-   "seconds": 0.2,
-   "at": 6.68,
-   "label": "submenu Histórico (Kardex)",
    "optional": true,
    "timeout": 4
   },
@@ -161,9 +162,9 @@
     "exact": true,
     "within": "[data-sidebar=sidebar]"
    },
-   "seconds": 0.5,
-   "at": 7.59,
-   "label": "submenu Relatório",
+   "seconds": 0.6,
+   "at": 7.24,
+   "label": "submenu Relatório (passando pelo Histórico (Kardex))",
    "optional": true,
    "timeout": 4
   },
@@ -195,7 +196,7 @@
     "within": "main",
     "exact": true
    },
-   "seconds": 0.8,
+   "seconds": 0.5,
    "at": 12.04,
    "label": "coluna Tabelas de Preço",
    "optional": true,
@@ -208,27 +209,9 @@
     "name": "Posição de Estoque",
     "exact": true
    },
-   "seconds": 0.97,
+   "seconds": 1.0,
    "at": 14.54,
    "label": "[ZOOM] Posição de Estoque, embaixo de Nova Tabela (sem clicar)",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "mark",
-   "name": "L3",
-   "at": 16.06
-  },
-  {
-   "do": "hover",
-   "target": {
-    "role": "button",
-    "name": "Posição de Estoque",
-    "exact": true
-   },
-   "seconds": 0.23,
-   "at": 16.06,
-   "label": "[ZOOM] Posição de Estoque, embaixo de Nova Tabela (sem clicar) (continua)",
    "optional": true,
    "timeout": 4
   },
@@ -236,6 +219,11 @@
    "do": "eval",
    "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Tabelas de Preço\", \"Tabela Depósitos\", \"Nova Tabela\", \"Posição de Estoque\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
    "label": "confere coluna das tabelas com a Posição de Estoque"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 16.06
   },
   {
    "do": "eval",

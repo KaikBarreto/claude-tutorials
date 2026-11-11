@@ -401,8 +401,8 @@ def cap02():
     c.hover(TXT('Alumínio latinha', within=f"main tbody tr:has-text('Fornecedor:')"), 0.4, at=c.A(4, 'materiais,', 0.6), label='o material da linha')
     c.hover(TXTX('24.00 Kg', within='main'), 0.8, at=c.A(4, 'vinte', 0.6), label='[ZOOM] o peso: 24 kg')
     c.mark(5)
-    c.registra(MENU_LINHA(L_CIDA), at=c.A(5, 'menu', 0.3), label='[DESTAQUE] o "⋮" no fim da linha (sem abrir)')
-    c.cursor((1120, 541), at=c.A(5, 'menu', 0.6), label='cursor perto do "⋮" (passar por cima abriria o menu)')
+    c.hover(TXTX('R$ 148,80', within=LINHA(L_CIDA)), 0.3, at=c.A(5, 'fim', 0.6), label='cursor no valor, ao lado do "⋮" (passar por cima abriria o menu)')
+    c.registra(MENU_LINHA(L_CIDA), at=c.A(5, 'menu', 0.2), label='[DESTAQUE] o "⋮" no fim da linha (sem abrir)')
     c.fim()
     return c
 

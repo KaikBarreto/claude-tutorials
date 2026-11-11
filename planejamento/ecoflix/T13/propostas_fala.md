@@ -14,10 +14,12 @@ proposta (âncoras `A_ou`), então não precisa ser reescrito quando a troca ent
 ## Achados do app (e do mundo)
 - **Recorrência com "Repetir até"** (cap07/cap08): ver a tabela; o roteiro e o plano diziam "a janela de 3 meses (12/11,
   12/12, 12/01)". O backend falso (`rec/mundo/handlers/rpc/create_recurring_bill_template.mjs`) segue a regra real.
-- **Mundo base, `paid_at` do "Aluguel do galpão de novembro"** (`gerar/sementes.mjs:718`): a semente grava o carimbo
-  (`2026-11-05T12:00:00.000Z`), mas a coluna é `date` (migração 20260925200000) e o app corta "aaaa-mm-dd"
-  (`BillsList.formatPaidAt`): "Quitada em" sairia "05T12:00:00.000Z/11/2026". A `t13/inicio` corrige com `_patch`
-  (`2026-11-05`); a correção certa é no gerador do mundo base (vale para toda aula que mostrar a lista).
+- **Mundo base, `paid_at` do "Aluguel do galpão de novembro"**: a coluna é `date` (migração 20260925200000) e o app corta
+  "aaaa-mm-dd" (`BillsList.formatPaidAt`); com o carimbo inteiro, "Quitada em" sairia "05T12:00:00.000Z/11/2026". Já
+  corrigido na semente nova da junção (`gerar/sementes.mjs:877`); a `t13/inicio` não precisa mais do `_patch`.
+- **Backend falso, busca de parceiro** (`rec/fakebase/core/filters.mjs`): valor entre aspas dentro de `or=(...)`
+  (`name.ilike."%Moretti%"`, como o `usePartnerSearch` do app manda) nunca casava, e "Selecione o fornecedor" mostrava
+  "Nenhum encontrado." em qualquer aula. Corrigido (tira as aspas, como o PostgREST).
 - **Mundo base, recorrência do galpão**: o `generate_due_recurring_bills` do mundo (handler compartilhado) só cria as contas
   vencidas até hoje; o real completa a janela de 3 meses das recorrências SEM data-fim (o molde do galpão, com o próximo em
   05/12, teria 05/12, 05/01 e 05/02 na lista). Não mexi no handler (mudaria a lista e os cartões das outras aulas); a fala da

@@ -51,6 +51,12 @@ def movs(h, mat):
     return sorted([m for m in h['stock_movements'] if m['material_id'] == mat], key=lambda m: m['transaction_at'])
 
 
+def chave(m):
+    """o movimento do mundo base pelo id (sm.N é a posição na semente base) E pelo material e a hora: se a semente base mudar e
+    esta não for refeita, o _patch não acha a linha em vez de mexer na linha errada. Refaça sempre que o mundo base mudar."""
+    return {'id': m['id'], 'material_id': m['material_id'], 'transaction_at': m['transaction_at']}
+
+
 def desloca(h, mat, delta):
     """_patch dos movimentos do material antes do CORTE: saldo inicial (quantidade) e as colunas de estoque somam `delta`."""
     out = []
@@ -64,13 +70,13 @@ def desloca(h, mat, delta):
             s['stock_before'] = round(m['stock_before'] + delta, 3)
         if min(s.get('stock_before', 0), s['stock_after']) < 0:
             raise SystemExit(f'{mat}: saldo negativo depois do deslocamento em {m["id"]}')
-        out.append({'match': {'id': m['id']}, 'set': s})
+        out.append({'match': chave(m), 'set': s})
     return out
 
 
 def desloca_depois(h, mat, delta):
     """_patch dos movimentos do material a partir do CORTE: as colunas de estoque somam `delta`."""
-    return [{'match': {'id': m['id']}, 'set': {'stock_before': round(m['stock_before'] + delta, 3), 'stock_after': round(m['stock_after'] + delta, 3)}}
+    return [{'match': chave(m), 'set': {'stock_before': round(m['stock_before'] + delta, 3), 'stock_after': round(m['stock_after'] + delta, 3)}}
             for m in movs(h, mat) if m['transaction_at'] >= CORTE]
 
 
@@ -274,8 +280,10 @@ def main():
                 'apos-cap09': apos_cap09(h), 'apos-cap10': apos_cap10(), 'apos-cap12': apos_cap12(), 'apos-cap13': apos_cap13(h)}
     for nome, d in arquivos.items():
         d = {'_doc': f'T11 · Produção: {nome} (gerado por rec/t11/t11_sementes.py; não editar à mão)', **d}
-        with open(os.path.join(SAIDA, f'{nome}.json'), 'w', encoding='utf8') as f:
+        alvo = os.path.join(SAIDA, f'{nome}.json')
+        with open(alvo + '.tmp', 'w', encoding='utf8') as f:
             json.dump(d, f, ensure_ascii=False, indent=1)
+        os.replace(alvo + '.tmp', alvo)   # troca atômica: a instância pode estar lendo
         n = sum(len(v) for k, v in d.items() if isinstance(v, list))
         print(f'{nome}: {n} linhas{", _patch " + ",".join(d["_patch"]) if "_patch" in d else ""}{", _remove" if "_remove" in d else ""}')
 

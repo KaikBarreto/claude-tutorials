@@ -637,9 +637,10 @@ def cap00():
 
 def cap01():
     """Caixa pelo menu, Nova Compra (selo), Shift+V, Ctrl+K e Ações Rápidas, tour da Nova Compra (menu lateral aberto)."""
-    c = Cap(1, setup_login() + vai('/dashboard', 'Olá, Rafael!'), start=(700, 300))
-    c.click(BTN('Financeiro'), w=(1, 'Financeiro,'), label='menu Financeiro')
-    c.click(MENU('/caixa'), w=(1, 'Caixa.', 1), label='Caixa (submenu)')
+    aquece = vai('/caixa', 'Nova Venda') + vai('/compra', 'Voltar para o caixa') + vai('/venda', 'Selecionar cliente')   # rotas já carregadas: a 1ª abertura do Caixa levou 3,6 s
+    c = Cap(1, setup_login() + aquece + vai('/dashboard', 'Olá, Rafael!'), start=(700, 300))
+    c.click(BTN('Financeiro'), w=(1, 'menu,'), label='menu Financeiro')
+    c.click(MENU('/caixa'), w=(1, 'Financeiro,'), label='Caixa (submenu)')
     c.waitfor(text='Nova Venda', timeout=15)
     c.hover(BTN('Nova Compra'), 0.5, w=(1, 'Compra'), label='Nova Compra')
     c.hover(BTN('Nova Venda'), 0.6, w=(1, 'Venda.'), label='Nova Venda')
@@ -998,7 +999,7 @@ def cap13():
     c.type(MAT, 'latão', w=(4, 'Estoque', 0, 0.6), clicar=False, cps=30, label='material: latão de novo')
     c.click(OPT('Metal amarelo (latão)', exact=False), w=(4, 'Estoque', 0, 0.2), label='Metal amarelo (latão), sem incluir')
     c.hover(ESTOQUE_DISP, 4.0, w=(4, 'Tinha'), label='Estoque Disponível 62, Em estoque 214, Nesta venda -152 (zoom)')
-    c.confere('main', ['Em estoque: 214', '152'], 'Estoque Disponível: 214 em estoque, -152 nesta venda')
+    c.confere("main div:has(> label:has-text('Estoque Disponível'))", ['62', 'Em estoque: 214', '152'], 'Estoque Disponível 62: 214 em estoque, -152 nesta venda')
     c.click(OPCOES, w=(5, 'Opcoes'), label='Opções avançadas')
     c.waitfor(text='Ajustes usados de vez em quando', timeout=8)
     c.click(SW_SEM_VALOR, w=(5, 'ligo'), label='liga Comprovante sem valores')
@@ -1019,6 +1020,7 @@ def cap14():
     c.type(MAT, 'cobre mel', w=(1, 'mel,', None, 0.4), clicar=False, cps=30, label='material: cobre mel')
     c.click(OPT('Cobre mel', exact=False), w=(1, 'sistema'), label='Cobre mel')
     c.hover(ESTOQUE_DISP, 1.0, w=(1, 'quarenta'), label='Estoque Disponível 42')
+    c.confere("main div:has(> label:has-text('Estoque Disponível'))", ['42'], 'Estoque Disponível 42 Kg de cobre mel')
     c.click(INCLUIR, w=(1, 'incluir,'), label='Incluir Item (cobre mel)')
     c.waitfor(text='Estoque insuficiente nesta unidade', timeout=8)
     c.hover(PD('Faltam', exact=False), 2.4, w=(1, 'faltam'), label='Faltam 18 Kg de Cobre mel. (zoom)')

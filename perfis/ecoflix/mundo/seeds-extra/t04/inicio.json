@@ -1,5 +1,5 @@
 {
- "_doc": "T04 · estado de partida (caps 0 a 2) por cima do mundo base B: (1) \"Cida Ramos\", cadastro repetido da Aparecida Ramos (mesmo telefone, sem documento nem endereço): as duas ganham o selo \"Mesmo telefone\" (cap01) e ela fica \"Incompleto\" (cap04); (2) link do portal (portal_token) em todos os parceiros (a ficha da Cooperativa mostra \"Acesso ao portal\", cap07); (3) Depósito Irmãos Siqueira na tabela padrão (a T4 liga a \"Tabela Depósitos\" na tela, cap06; a junção, seção 4, já deixa B assim: o _patch só garante). Gerado por rec/t04/t04_sementes.py.",
+ "_doc": "T04 · estado de partida (caps 0 a 2) por cima do mundo base B: (1) \"Cida Ramos\", cadastro repetido da Aparecida Ramos (mesmo telefone, sem documento nem endereço): as duas ganham o selo \"Mesmo telefone\" (cap01) e ela fica \"Incompleto\" (cap04); (2) link do portal (portal_token) em todos os parceiros (a ficha da Cooperativa mostra \"Acesso ao portal\", cap07); (3) Depósito Irmãos Siqueira na tabela padrão (a T4 liga a \"Tabela Depósitos\" na tela, cap06; a junção, seção 4, já deixa B assim: o _patch só garante); (4) a conta paga \"Frete das entregas de outubro\" (R$ 450,00) e a entrada no caixa #64 \"Venda de sacos de ráfia usados\" (R$ 120,00, 15/10) ligadas à Cooperativa Recomeço (cap11). Gerado por rec/t04/t04_sementes.py.",
  "suppliers": [
   {
    "id": "@id:supplier.cida-ramos",
@@ -42,6 +42,45 @@
    "created_by": "@id:user.rafael",
    "created_at": "2026-09-18T12:40:00.000Z",
    "updated_at": "2026-09-18T12:40:00.000Z"
+  }
+ ],
+ "financial_bills": [
+  {
+   "id": "@id:t04.conta.frete-outubro",
+   "company_id": "@id:company.reciclavale",
+   "direction": "payable",
+   "description": "Frete das entregas de outubro",
+   "amount": 450,
+   "currency": "BRL",
+   "due_date": "2026-10-31",
+   "status": "paid",
+   "paid_amount": 450,
+   "paid_at": "2026-10-30",
+   "category_id": "53b2bfd6-60de-5a43-96c2-8ddc593b2d04",
+   "partner_type": "supplier",
+   "partner_id": "43dc53b4-634c-591b-968b-cfdb85002e81",
+   "is_projection": false,
+   "created_by": "@id:user.rafael",
+   "created_at": "2026-10-26T13:10:00.000Z",
+   "updated_at": "2026-10-30T14:00:00.000Z"
+  }
+ ],
+ "cash_transactions": [
+  {
+   "id": "@id:t04.caixa.rafia",
+   "company_id": "@id:company.reciclavale",
+   "type": "deposit",
+   "amount": 120,
+   "description": "Venda de sacos de ráfia usados",
+   "category_id": "2bda7b80-3cfa-52b1-9ab0-e464580daff4",
+   "partner_type": "supplier",
+   "partner_id": "43dc53b4-634c-591b-968b-cfdb85002e81",
+   "cash_register_id": "54028c98-306b-5106-99fb-117d31d56824",
+   "excluded_from_dre": false,
+   "transaction_at": "2026-10-15T14:20:00.000Z",
+   "transaction_date": "2026-10-15",
+   "created_by": "@id:user.marcos",
+   "created_at": "2026-10-15T14:20:00.000Z"
   }
  ],
  "_patch": {

@@ -13,7 +13,8 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 FAKE = 'http://127.0.0.1:54308'
 SAIDA = os.path.normpath(os.path.join(HERE, '..', 'mundo', 'seeds-extra', 't08'))
 BASE = ['base/balanca-ativada', 'base/caixa-aberto', 't08/inicio']
-FORA = ('presence', 'editing', 'editors', 'heartbeat', 'audit', 'request_log', 'session')
+FORA = ('presence', 'editing', 'editors', 'heartbeat', 'audit', 'request_log', 'session', 'usage_events', 'subscription_plans')
+SO_TEMPO = {'created_at', 'updated_at'}   # linha antiga que só mudou carimbo (semente relativa ao reset): não é mudança da aula
 
 
 def get(u):
@@ -50,7 +51,8 @@ def main():
         for k in a:
             if k in b and a[k] != b[k]:
                 st = {c: v for c, v in a[k].items() if b[k].get(c) != v}
-                mud.append({'match': {'id': k}, 'set': st})
+                if set(st) - SO_TEMPO:
+                    mud.append({'match': {'id': k}, 'set': st})
         sai = [{'id': k} for k in b if k not in a]
         if novos:
             out[t] = novos
