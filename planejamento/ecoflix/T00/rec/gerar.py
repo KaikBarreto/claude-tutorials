@@ -445,7 +445,7 @@ def cap02(v):
         c.click(BTNX('Materiais e tabelas de preço'), at=c.A(6, 'Pode', 1.1), label='aula Materiais e tabelas de preço (fora da ordem)')
         c.waitfor(text='Consultar fora da ordem?', timeout=8)
         c.marcar(TXT('Consultar fora da ordem?', within=DLG), label='gaveta Consultar fora da ordem?')
-        c.click(BTN('Voltar à trilha'), at=c.E(6, 'marcada', 0.5), label='Voltar à trilha')
+        c.toque(BTN('Voltar à trilha'), at=c.E(6, 'marcada', 0.5), label='Voltar à trilha')
     c.fim()
     return c
 

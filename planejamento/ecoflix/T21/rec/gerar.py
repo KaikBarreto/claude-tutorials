@@ -601,7 +601,9 @@ def cap06():
     c.mark(3)
     c.click(NO_PAINEL('button:has-text("Abrir posição de estoque") >> nth=-1'), at=c.A(3, 'Posição', 0.6), label='clique em Abrir posição de estoque')
     c.waitfor(text='Total geral', timeout=10)
-    c.click(NO_PAINEL('button[aria-label="Fechar"]'), at=c.A(3, 'Estoque', 0.3), label='Fechar o painel', noScroll=True)
+    # cada página monta o próprio AppLayout: se a troca de rota já fechou o painel, o Fechar não roda (passo condicional)
+    c.click(NO_PAINEL('button[aria-label="Fechar"]'), at=c.A(3, 'Estoque', 0.3), label='Fechar o painel', noScroll=True,
+            when=NO_PAINEL('button[aria-label="Fechar"]'), optional=True, timeout=3)
     c.waitfor(gone=PAINEL, timeout=6)
     c.ev(js_rola_el(achar_folha('main', 'Total geral'), 430, 800), at=c.A(3, 'total', 0.0), label='desce até o Total geral')
     c.hover(SEL('main tr:has-text("Total geral")'), seconds=1.8, at=c.A(3, 'noventa', 0.7), label='ZOOM Total geral com Valor R$ 96.076,00')

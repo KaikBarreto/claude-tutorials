@@ -243,15 +243,13 @@
     "name": "Sim",
     "exact": true
    },
-   "at": 55.57,
+   "at": 55.37,
    "label": "Sim"
   },
   {
-   "do": "click",
-   "target": {
-    "selector": "[role=dialog] #fee"
-   },
-   "label": "Valor da Tarifa"
+   "do": "eval",
+   "js": "(()=>{const e=document.querySelector('[role=dialog] #fee');if(!e)return 'SEM ALVO';e.focus();return 'foco ok'})()",
+   "label": "foco no Valor da Tarifa"
   },
   {
    "do": "type",
@@ -347,7 +345,7 @@
   {
    "do": "mark",
    "name": "L12",
-   "at": 86.63
+   "at": 86.13
   },
   {
    "do": "click",
@@ -356,7 +354,7 @@
     "name": "Saque / Sangria",
     "within": "main"
    },
-   "at": 86.63,
+   "at": 86.13,
    "label": "Saque / Sangria (de novo)"
   },
   {
@@ -443,7 +441,7 @@
     "selector": "[role=dialog] button[role=combobox]",
     "nth": 0
    },
-   "at": 105.05,
+   "at": 103.76,
    "label": "Conta bancária"
   },
   {
@@ -452,7 +450,7 @@
     "role": "option",
     "name": "Conta Secundária"
    },
-   "at": 106.44,
+   "at": 105.05,
    "label": "Conta Secundária"
   },
   {
@@ -508,7 +506,7 @@
     "selector": "[role=dialog] button[role=combobox]",
     "nth": 1
    },
-   "at": 111.39,
+   "at": 111.09,
    "label": "Categoria"
   },
   {
@@ -518,28 +516,18 @@
     "name": "Tarifas",
     "exact": true
    },
-   "at": 112.35,
+   "at": 112.15,
    "label": "categoria Tarifas"
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Conta Secundária\", \"Tarifas\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog],[role=alertdialog]\")];const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
-   "label": "confere conta Secundária e categoria Tarifas"
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{let v='';for(let i=0;i<12;i++){const e=document.querySelector(\"[role=dialog] #description\");v=e?e.value:'(sem campo)';if(v===\"Tarifa mensal do pacote de servi\\u00e7os\")return 'OK: '+v;await new Promise(r=>setTimeout(r,250));}return 'DIFERENTE: '+v})()",
-   "label": "confere descrição"
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{let v='';for(let i=0;i<12;i++){const e=document.querySelector(\"[role=dialog] #amount\");v=e?e.value:'(sem campo)';if(v===\"R$ 39,90\")return 'OK: '+v;await new Promise(r=>setTimeout(r,250));}return 'DIFERENTE: '+v})()",
-   "label": "confere valor R$ 39,90"
   },
   {
    "do": "mark",
    "name": "L15",
    "at": 112.88
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{for(let i=0;i<10;i++){const d=document.querySelector('[role=dialog]');const t=d?d.innerText:'';const v=d?[...d.querySelectorAll('input')].map(e=>e.value).join(' | '):'';if(t.includes('Conta Secundária')&&t.includes('Tarifas')&&v.includes('Tarifa mensal do pacote de serviços')&&v.includes('R$ 39,90'))return 'OK: Conta Secundária | Tarifas | Tarifa mensal do pacote de serviços | R$ 39,90';await new Promise(r=>setTimeout(r,150))}return 'DIFERENTE: '+(document.querySelector('[role=dialog]')||{innerText:''}).innerText.slice(0,200)})()",
+   "label": "confere conta, categoria, descrição e valor da saída"
   },
   {
    "do": "click",

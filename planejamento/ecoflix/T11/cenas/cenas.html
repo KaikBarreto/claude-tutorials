@@ -500,9 +500,9 @@ CAPS[4]=()=>{
         const xs=M+(kk?D:-D)-CW/2, ys=PONTA;                     // presa na ponta do ímã
         x=lerp(x,xs,sobe); y=lerp(y,ys,sobe)-40*4*sobe*(1-sobe);
         const [px,py,pr_]=PILHA[kk]; x=lerp(x,px-CW/2,cai); y=lerp(y,py-CH/2,cai); r=pr_*cai;
-        pulse(e,t,tac-.25,.1,.6);
       }
       e.style.transform=`translate(${x.toFixed(2)}px,${y.toFixed(2)}px) rotate(${r.toFixed(2)}deg)`; fixa(e,oL);
+      if(+e.dataset.aco) pulse(e,t,tac-.25,.1,.6);   // depois do transform (o pulso se soma a ele)
     }
     vis(monteC,t,tLand-.3,1e9,{dy:0,sc:.9}); vis(tCh,t,Math.max(tch-.1,tLand-.2)); pulse(tCh.firstElementChild,t,Math.max(tch,tLand)+.3,.06,.7);
     vis(valor,t,tva-.15,1e9,{dy:8,sc:.8});

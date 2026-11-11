@@ -619,6 +619,7 @@ Decisões:
 | Aula | Agente | O que falta | Comando |
 |---|---|---|---|
 | T20 | afdb1a0ff5d8d10fb | rápido cap03-cap10 e cap00/cap01 com MP4; completo dos caps 4-8 | `bash rec/t20/t20_fila.sh --rapido 3 4 5 6 7 8 9 10 0 1` |
+| T18 | a82b96199a5d77ce9 | rápido de 03, 04 (seletores corrigidos), 05, 06 (selo da cota) e os estritos com folha de 00-10; `prever.py`; derrubar a 54318 | `bash /home/claude/ecoflix/rec/t18/t18_lote.sh 04:r 03:r 05:s 06:r 00:s 01:s 02:s 07:s 08:s 09:s 10:s` |
 - 11/11 20:2x **Unificação do kit 2D lançada** (vaga aberta pelo robô da T20): `pulse()` sem deslocar elemento posicionado
   por `transform` e com pulsos que se somam; classe de grupo do kit com nome único (a "g" colidia, círculo gigante no tema
   do Cato); `descarrega` sem as peças 16 px abaixo do chão; exemplo "Tara e peso líquido" do kit sem chamar o caminhão vazio
@@ -662,3 +663,4 @@ Decisões:
   "x" era curta para o formulário; `_BRIEF_ROBO.md` agora pede 8+ caracteres); usa `fila.sh --prio 05`, um por vez. Cap04
   com relógio próprio para o cupom 08:41:07 (a calibrar); trechos `device: windows` só como roteiro (`cap02w`, `cap04w`,
   `cap06w`, `cap09w`); completo provável em cap06, cap09 e cap10.
+- 11/11 22:3x **Robô da T18 (parcial)**: gerador dos 11 capítulos, handlers do SIGOR (`mtr_set_credential`, `sigor-mtr-sync-ref`, `-emit`, `-cancel`, `sigor-cdf-emit`, `lib/mtr_sigor.mjs`), sementes `inicio` e `apos-cap03..07`, `propostas_fala.md` (pausas e a 1ª linha do cap01 que falta na voz). Rápido passou em 0, 1, 2, 5-8 e 10; 3, 4 e 9 corrigidos sem rodar de novo; 6 com o selo da cota sem alvo. Na tabela de retomada.
