@@ -199,6 +199,11 @@
    "label": "desce às Unidades identificáveis"
   },
   {
+   "do": "eval",
+   "js": "(async()=>{const esp=[\"Depósito Irmãos Siqueira\"];let out='';for(let i=0;i<22;i++){const el=[...document.querySelectorAll(\"main [role=listitem]\")].find(e=>e.innerText.includes(\"Ca\\u00e7amba 05\"));if(!el){out='DIFERENTE: sem '+\"Ca\\u00e7amba 05\";}else{const t=el.innerText.replace(/\\s+/g,' ');const falta=esp.filter(e=>!t.includes(e));if(!falta.length)return 'OK: '+\"Ca\\u00e7amba 05\"+' '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,200);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Caçamba 05 no Depósito Irmãos Siqueira"
+  },
+  {
    "do": "hover",
    "target": {
     "selector": "main [role=listitem]:has-text('Caçamba 05')"

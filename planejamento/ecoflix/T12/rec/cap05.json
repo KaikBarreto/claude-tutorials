@@ -401,6 +401,11 @@
    "timeout": 10
   },
   {
+   "do": "eval",
+   "js": "(async()=>{const esp=[\"Auto Peças Vale Forte\", \"Manhã\", \"Jair Lopes\", \"GHT7B19\"];let out='';for(let i=0;i<22;i++){const el=[...document.querySelectorAll(\"main div.cursor-pointer.rounded-2xl\")].find(e=>e.innerText.includes(\"#9\"));if(!el){out='DIFERENTE: sem '+\"#9\";}else{const t=el.innerText.replace(/\\s+/g,' ');const falta=esp.filter(e=>!t.includes(e));if(!falta.length)return 'OK: '+\"#9\"+' '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,200);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere cartão #9 (fala: ordem nove, Jair, três quartos)"
+  },
+  {
    "do": "mark",
    "name": "L4",
    "at": 23.19

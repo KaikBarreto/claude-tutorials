@@ -123,16 +123,11 @@
    "timeout": 8
   },
   {
-   "do": "mark",
-   "name": "L2",
-   "at": 9.72
-  },
-  {
    "do": "click",
    "target": {
     "selector": "#bill-amount"
    },
-   "at": 10.42,
+   "at": 7.39,
    "label": "Valor 180,00 (clique no campo)"
   },
   {
@@ -142,22 +137,27 @@
    },
    "text": "180,00",
    "cps": 40,
-   "at": 11.3,
+   "at": 8.47,
    "label": "Valor 180,00",
    "noClick": true
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 9.72
   },
   {
    "do": "click",
    "target": {
     "selector": "#bill-description"
    },
-   "at": 12.06,
+   "at": 10.42,
    "label": "Descrição (colada) (clique no campo)"
   },
   {
    "do": "eval",
    "js": "(()=>{const e=document.activeElement;if(!e||!/^(INPUT|TEXTAREA)$/.test(e.tagName))return 'SEM ALVO (nada em foco)';document.execCommand('insertText',false,\"Conserto do pneu da empilhadeira\");return e.value})()",
-   "at": 13.05,
+   "at": 11.3,
    "label": "Descrição (colada)"
   },
   {
@@ -165,7 +165,7 @@
    "target": {
     "selector": "#bill-due"
    },
-   "at": 13.3,
+   "at": 12.06,
    "label": "Vencimento 09/11/2026 (ontem) (abre o calendário)"
   },
   {
@@ -173,7 +173,7 @@
    "target": {
     "selector": "[data-radix-popper-content-wrapper] button[name='day']:not(.day-outside):text-is('9')"
    },
-   "at": 14.13,
+   "at": 13.2,
    "label": "Vencimento 09/11/2026 (ontem)"
   },
   {
@@ -181,7 +181,7 @@
    "target": {
     "selector": "#bill-category"
    },
-   "at": 15.17,
+   "at": 14.23,
    "label": "Categoria (abre a lista)"
   },
   {
@@ -190,7 +190,7 @@
     "placeholder": "Pesquisar categoria..."
    },
    "text": "máquinas",
-   "at": 15.78,
+   "at": 15.17,
    "label": "busca máquinas",
    "noClick": true
   },
@@ -200,7 +200,7 @@
     "role": "option",
     "name": "Manutenção de máquinas"
    },
-   "at": 16.61,
+   "at": 15.88,
    "label": "Manutenção de máquinas"
   },
   {
@@ -208,13 +208,8 @@
    "target": {
     "selector": "#bill-cost-center"
    },
-   "at": 17.37,
+   "at": 16.91,
    "label": "Centro de custo (abre a lista)"
-  },
-  {
-   "do": "mark",
-   "name": "L3",
-   "at": 18.42
   },
   {
    "do": "click",
@@ -222,13 +217,18 @@
     "role": "option",
     "name": "Pátio"
    },
-   "at": 18.43,
+   "at": 18.03,
    "label": "Pátio"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 18.42
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.textContent.trim()===\"Pagamento previsto\"&&e.offsetParent).sort((a,b)=>a.textContent.length-b.textContent.length||a.children.length-b.children.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-300);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 18.82,
+   "at": 19.02,
    "label": "desce a janela até o bloco Dinheiro"
   },
   {
@@ -236,7 +236,7 @@
    "target": {
     "selector": "[role=dialog] button[role=combobox]:has-text('Não definido')"
    },
-   "at": 19.7,
+   "at": 20.0,
    "label": "Pagamento previsto (abre a lista)"
   },
   {
@@ -315,7 +315,7 @@
    "target": {
     "selector": "main input[aria-label='Buscar contas']"
    },
-   "at": 36.7,
+   "at": 37.73,
    "label": "busca pneu (clique no campo)"
   },
   {
@@ -325,7 +325,7 @@
    },
    "text": "pneu",
    "cps": 40,
-   "at": 37.65,
+   "at": 38.38,
    "label": "busca pneu",
    "noClick": true
   },
@@ -341,8 +341,8 @@
    "target": {
     "selector": "main tbody tr:has-text('Conserto do pneu da empilhadeira') :text-is('Paga')"
    },
-   "seconds": 1.0,
-   "at": 38.27,
+   "seconds": 0.87,
+   "at": 39.37,
    "label": "ZOOM a linha Paga, Quitada em 09/11/2026",
    "optional": true,
    "timeout": 4
@@ -353,7 +353,7 @@
     "selector": "main tbody tr:has-text('Conserto do pneu da empilhadeira') :text-is('Conta Principal')"
    },
    "seconds": 1.2,
-   "at": 40.59,
+   "at": 41.19,
    "label": "Conta Principal",
    "optional": true,
    "timeout": 4

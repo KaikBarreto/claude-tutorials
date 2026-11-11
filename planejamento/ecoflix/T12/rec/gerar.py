@@ -238,6 +238,26 @@ class Cap:
               "await new Promise(r=>setTimeout(r,300));}return out})()") % (json.dumps(esp, ensure_ascii=False), json.dumps(sel), 'true' if escopo == 'dlg' else 'false')
         return s.add({'do': 'eval', 'js': js, 'label': 'confere ' + label})
 
+    def confere_kpi(s, pares, label):
+        """LÊ cada cartão de número pelo rótulo (folha com o texto exato) e compara o número com o que a fala diz"""
+        js = ("(async()=>{const pares=%s;let out='';for(let i=0;i<22;i++){const falta=[];for(const [rot,val] of pares){"
+              "const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===rot);"
+              "if(!el){falta.push(rot+'=?');continue;}let c=el.parentElement,ok=false;for(let k=0;k<4&&c;k++,c=c.parentElement){"
+              "const ls=c.innerText.split('\\n').map(x=>x.trim()).filter(Boolean);if(ls.length>1){ok=ls.includes(val);if(!ok)falta.push(rot+'='+ls.filter(x=>x!==rot).slice(0,2).join('/'));break;}}"
+              "}if(!falta.length)return 'OK: '+pares.map(p=>p.join(' ')).join(' | ');out='DIFERENTE: '+falta.join(' | ');"
+              "await new Promise(r=>setTimeout(r,300));}return out})()") % json.dumps(pares, ensure_ascii=False)
+        return s.add({'do': 'eval', 'js': js, 'label': 'confere ' + label})
+
+    def confere_item(s, sel, item, esperados, label):
+        """LÊ o primeiro `sel` cujo texto tem `item` e compara com o que a fala diz"""
+        esp = [esperados] if isinstance(esperados, str) else list(esperados)
+        js = ("(async()=>{const esp=%s;let out='';for(let i=0;i<22;i++){const el=[...document.querySelectorAll(%s)].find(e=>e.innerText.includes(%s));"
+              "if(!el){out='DIFERENTE: sem '+%s;}else{const t=el.innerText.replace(/\\s+/g,' ');const falta=esp.filter(e=>!t.includes(e));"
+              "if(!falta.length)return 'OK: '+%s+' '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,200);}"
+              "await new Promise(r=>setTimeout(r,300));}return out})()") % (json.dumps(esp, ensure_ascii=False), json.dumps(sel), json.dumps(item),
+                                                                           json.dumps(item), json.dumps(item))
+        return s.add({'do': 'eval', 'js': js, 'label': 'confere ' + label})
+
     def fim(s):
         s.flush(1e9)
         s.steps.append({'do': 'eval', 'js': 'JSON.stringify(window.__avisos || "sem observador")', 'label': 'avisos de erro na tela'})
@@ -390,8 +410,7 @@ def cap00():
         c.mark(i)
         c.flush(1e9)
     c.mark(5)
-    c.hover(GRUPO, 0.3, at=c.A(5, 'menu', 0.5), label='menu Coletas & Logística')
-    c.click(GRUPO, at=c.A(5, 'Coletas', 0.3), label='abre Coletas & Logística')
+    c.click(GRUPO, at=c.A(5, 'Coletas', 0.9), label='abre Coletas & Logística')
     c.click(ITEM_MENU('Ordens de Coleta'), at=c.A(5, 'Ordens', 0.8), label='Ordens de Coleta')
     c.waitfor(text=PAGINAS['/coletas/ordens'], timeout=15)
     c.cursor((760, 470), at=c.A(5, 'Antes', 0.2), label='cursor sai do menu (o quadro abre)')
@@ -425,6 +444,7 @@ def cap02():
     c.hover(COL_T('A caminho'), 0.2, at=c.A(1, 'caminho', 0.6), label='coluna A caminho')
     c.hover(COL_T('Concluídas'), 0.4, at=c.A(1, 'Concluídas', 0.5), label='coluna Concluídas')
     c.hover(COL_T('Cancelada'), 0.6, at=c.A(1, 'canceladas', 0.5), label='coluna Cancelada')
+    c.confere_kpi([['Solicitada', '0'], ['Agendada', '1'], ['A caminho', '1'], ['Concluídas', '5'], ['Cancelada', '1']], 'contagem das colunas')
     c.mark(2)
     c.hover(TXT('Nenhuma ordem', within='main'), 1.2, at=c.A(2, 'Solicitada', 0.5), label='Solicitada vazia (Nenhuma ordem)')
     c.mark(3)
@@ -532,6 +552,7 @@ def cap05():
     c.mark(4)
     c.click(BTN('Criar ordem'), at=c.A(4, 'Criar', 0.8), label='Criar ordem')
     c.waitfor(text='Ordem de coleta criada', timeout=10)
+    c.confere_item('main div.cursor-pointer.rounded-2xl', '#9', ['Auto Peças Vale Forte', 'Manhã', 'Jair Lopes', 'GHT7B19'], 'cartão #9 (fala: ordem nove, Jair, três quartos)')
     c.hover(CARD_TXT(9, '#9'), 0.6, at=c.A(4, 'nove', 0.5), label='cartão #9 em Agendada')
     c.hover(CARD_TXT(9, 'Jair Lopes'), 0.4, at=c.A(4, 'Jair', 0.5), label='cartão #9: Jair Lopes')
     c.hover(CARD_TXT(9, 'GHT7B19'), 0.8, at=c.A(4, 'caminhão', 0.5), label='cartão #9: GHT7B19')
@@ -584,6 +605,7 @@ def cap06():
     c.mark(8)
     rola_ate(c, 'Equipamentos movimentados', c.A(8, 'Aqui', 0.3), 'ficha: Equipamentos movimentados', y=200, escopo=DLG)
     c.hover(TXTX('Equipamentos movimentados', within=DLG, exact=True), 1.0, at=c.A(8, 'caçambas', 0.5), label='Equipamentos movimentados')
+    c.confere('dlg', ['Recolhido', 'Caçamba 03', 'Entregue', 'Caçamba 05', 'A caminho → Concluída'], 'ficha da ordem 8 (caçambas 03 e 05)')
     c.mark(9)
     rola_ate(c, 'Histórico', c.A(9, 'Histórico', 0.6), 'ficha: Histórico', y=200, escopo=DLG)
     c.hover(TXTX('Histórico', within=DLG, exact=True), 1.0, at=c.A(9, 'guarda', 0.5), label='Histórico')
@@ -661,6 +683,7 @@ def cap08():
     c.hover(TXTX('Mesma frota usada na pesagem de compra/venda.', exact=True), 0.8, at=c.A(1, 'pesagem', 0.5), label='mesma frota da pesagem')
     c.mark(2)
     c.click(SEL("main button:has-text('FKD2E41'):has-text('Caminhão truck')"), at=c.A(2, 'caminhão', 0.8), label='FKD2E41')
+    c.confere('main', ['6.380', '14.000'], 'FKD2E41: tara 6.380 e capacidade 14.000 (ilustração)')
     c.hover(TXTX('Tara', within='main', exact=True), 0.3, at=c.A(2, 'tara', 0.5), label='Tara do FKD2E41')
     c.hover(TXTX('Capacidade', within='main', exact=True), 1.0, at=c.A(2, 'capacidade', 0.5), label='Capacidade do FKD2E41')
     c.mark(3)
@@ -732,6 +755,7 @@ def cap09():
     c.hover(SEL("main tr:has-text('Bag 1 m³')"), 1.6, at=c.A(2, 'bag', 0.5), label='Bag 1 m³: por quantidade')
     c.mark(3)
     rola_ate(c, 'Unidades identificáveis', c.A(3, 'Embaixo', 0.3), 'desce às Unidades identificáveis', y=140)
+    c.confere_item('main [role=listitem]', 'Caçamba 05', ['Depósito Irmãos Siqueira'], 'Caçamba 05 no Depósito Irmãos Siqueira')
     c.hover(SEL("main [role=listitem]:has-text('Caçamba 05')"), 0.6, at=c.A(3, 'Caçamba', 0.5), label='Caçamba 05')
     c.hover(SEL("main [role=listitem]:has-text('Caçamba 05') :text-is('Depósito Irmãos Siqueira')"), 1.2, at=c.A(3, 'Depósito', 0.5),
             label='Caçamba 05 no Depósito Irmãos Siqueira')
@@ -777,6 +801,7 @@ def cap10():
     c.mark(1)
     c.click(ITEM_MENU('Relatório'), at=c.A(1, 'relatório', 0.8), label='menu Relatório')
     c.waitfor(text=PAGINAS['/coletas/relatorio'], timeout=15)
+    c.confere_kpi([['Total de coletas', '4'], ['Concluídas', '1'], ['Canceladas', '0'], ['Taxa de conclusão', '25%']], 'Este mês: 4, 1, 0, 25%')
     c.hover(TXTX('Total de coletas', within='main', exact=True), 0.4, at=c.A(1, 'total', 0.5), label='Este mês: Total de coletas')
     c.hover(TXTX('Concluídas', within='main', exact=True), 0.4, at=c.A(1, 'concluídas', 0.5), label='Este mês: Concluídas')
     c.hover(TXTX('Canceladas', within='main', exact=True), 0.4, at=c.A(1, 'canceladas', 0.5), label='Este mês: Canceladas')
@@ -784,6 +809,7 @@ def cap10():
     c.mark(2)
     c.click(SEL("main button[role=combobox]"), at=c.A(2, 'Em', 0.6), label='abre Período')
     c.click(OPT('Mês passado'), at=c.A(2, 'outubro', 0.6), label='Período: Mês passado')
+    c.confere_kpi([['Total de coletas', '6'], ['Concluídas', '5'], ['Canceladas', '1'], ['Taxa de conclusão', '100%']], 'outubro: seis, cinco, uma, cem por cento')
     c.hover(TXTX('Total de coletas', within='main', exact=True), 0.4, at=c.A(2, 'seis', 0.5), label='outubro: Total de coletas')
     c.hover(TXTX('Concluídas', within='main', exact=True), 0.4, at=c.A(2, 'cinco', 0.5), label='outubro: Concluídas')
     c.hover(TXTX('Canceladas', within='main', exact=True), 0.4, at=c.A(2, 'uma', 0.5), label='outubro: Canceladas')

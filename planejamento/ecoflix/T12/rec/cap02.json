@@ -156,6 +156,11 @@
    "timeout": 4
   },
   {
+   "do": "eval",
+   "js": "(async()=>{const pares=[[\"Solicitada\", \"0\"], [\"Agendada\", \"1\"], [\"A caminho\", \"1\"], [\"Concluídas\", \"5\"], [\"Cancelada\", \"1\"]];let out='';for(let i=0;i<22;i++){const falta=[];for(const [rot,val] of pares){const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===rot);if(!el){falta.push(rot+'=?');continue;}let c=el.parentElement,ok=false;for(let k=0;k<4&&c;k++,c=c.parentElement){const ls=c.innerText.split('\\n').map(x=>x.trim()).filter(Boolean);if(ls.length>1){ok=ls.includes(val);if(!ok)falta.push(rot+'='+ls.filter(x=>x!==rot).slice(0,2).join('/'));break;}}}if(!falta.length)return 'OK: '+pares.map(p=>p.join(' ')).join(' | ');out='DIFERENTE: '+falta.join(' | ');await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere contagem das colunas"
+  },
+  {
    "do": "mark",
    "name": "L2",
    "at": 10.19

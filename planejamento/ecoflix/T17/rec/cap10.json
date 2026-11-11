@@ -1,0 +1,367 @@
+{
+ "name": "t17-cap10",
+ "title": "T17 · Cap. 10 · O estoque pelas notas (narração 84,1 s ESTIMADA; marcas L1..L8 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T14:20:00-03:00)",
+ "seed": "t17-cap10",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 900,
+  "y": 440
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true"
+ },
+ "seedExtra": [
+  "t17/inicio",
+  "t17/apos-cap08"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "waitFor",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "timeout": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "••••••••"
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "url": "/dashboard",
+   "timeout": 40
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 25
+  },
+  {
+   "do": "goto",
+   "url": "/fiscal-ambiental/estoque-fiscal/relatorio"
+  },
+  {
+   "do": "waitFor",
+   "text": "Pendentes + Rejeitadas",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 25
+  },
+  {
+   "do": "wait",
+   "seconds": 0.8
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel|Algo deu errado|Falha ao|n[ãa]o encontrad|recusou|rejeitad[ao]!/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');if(f&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA ECOFLIX'))window.__avisos.push('TRILHA ECOFLIX')},300);return 1})()"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{if(window.__animFix)return 'ja';window.__animFix=setInterval(()=>{for(const a of document.getAnimations())if(a.currentTime!==null&&a.currentTime<0)a.startTime=document.timeline.currentTime},100);return 'anim fix'})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Posição do estoque",
+    "exact": true,
+    "within": "nav[aria-label='Navegação da seção']"
+   },
+   "at": 4.61,
+   "label": "aba Posição do estoque"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Saldo fiscal agora, por material.",
+    "within": "main"
+   },
+   "seconds": 0.8,
+   "at": 7.24,
+   "label": "Saldo fiscal agora, por material",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr >> nth=0"
+   },
+   "seconds": 0.6,
+   "at": 8.83,
+   "label": "tabela do saldo fiscal",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 11.02
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button",
+    "hasText": "10/11/2026"
+   },
+   "at": 13.48,
+   "label": "Data da posição (abre)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] button[name=previous-month]"
+   },
+   "at": 14.37,
+   "label": "mês anterior"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] [role=gridcell]:not([class*=outside]) >> text='31'"
+   },
+   "at": 15.4,
+   "label": "dia 31/10"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main input[aria-label='Hora']"
+   },
+   "at": 16.04,
+   "label": "Hora (campo)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "main input[aria-label='Hora']"
+   },
+   "text": "1800",
+   "cps": 40,
+   "at": 16.74,
+   "label": "Hora: 18:00",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Ver posição",
+    "exact": true
+   },
+   "at": 10.83,
+   "label": "Ver posição"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 19.34
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Saldo fiscal em",
+    "within": "main"
+   },
+   "seconds": 0.8,
+   "at": 21.22,
+   "label": "Saldo fiscal em 31/10",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Voltar para agora",
+    "exact": true
+   },
+   "seconds": 1.0,
+   "at": 28.58,
+   "label": "Voltar para agora",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 31.46
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Voltar para agora",
+    "exact": true
+   },
+   "at": 31.46,
+   "label": "volta para agora"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Histórico fiscal",
+    "exact": true,
+    "within": "nav[aria-label='Navegação da seção']"
+   },
+   "at": 31.19,
+   "label": "aba Histórico fiscal"
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Metal amarelo (latão)",
+    "within": "main"
+   },
+   "at": 36.27,
+   "label": "Materiais: Metal amarelo (latão)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('1248') td >> nth=0"
+   },
+   "seconds": 0.6,
+   "at": 40.09,
+   "label": "saída de 30/10 (NF-e 1248, 600 kg)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main th:has-text('Antes')"
+   },
+   "seconds": 0.6,
+   "at": 41.69,
+   "label": "colunas Antes e Depois",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Fiscal × operacional",
+    "exact": true,
+    "within": "nav[aria-label='Navegação da seção']"
+   },
+   "at": 43.38,
+   "label": "aba Fiscal × operacional"
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 43.65
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('Metal amarelo') td >> nth=-1"
+   },
+   "seconds": 1.2,
+   "at": 49.1,
+   "label": "Metal amarelo: Mov. Fiscal, Mov. Operacional e Delta",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 53.11
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 900,
+    "y": 470
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "at": 53.11,
+   "label": "cursor em repouso (ilustração fiscal × operacional)"
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 64.17
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 73.78
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"main *\")].filter(e=>e.offsetParent!==null&&e.textContent.trim().startsWith(\"Como ler o Delta (fiscal − operacional)\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-260);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 73.78,
+   "label": "rola até Como ler o Delta"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Pedidos ainda não finalizados",
+    "within": "main"
+   },
+   "seconds": 1.4,
+   "at": 78.62,
+   "label": "Como ler o Delta",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 84.06
+  }
+ ]
+}

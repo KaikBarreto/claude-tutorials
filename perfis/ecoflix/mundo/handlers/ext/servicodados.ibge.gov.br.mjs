@@ -13,9 +13,18 @@ const SP = [
   ['Taubaté', 3554102], ['Tremembé', 3554805], ['Ubatuba', 3555406],
 ];
 
+// MG (T17: destino do MDF-e, Itamonte 3132503, a cidade da Serra Fina): cidades grandes e do sul de Minas, com os códigos do IBGE.
+const MG = [
+  ['Barbacena', 3105608], ['Belo Horizonte', 3106200], ['Betim', 3106705], ['Contagem', 3118601], ['Divinópolis', 3122306],
+  ['Governador Valadares', 3127701], ['Ipatinga', 3131307], ['Itajubá', 3132404], ['Itamonte', 3132503], ['Juiz de Fora', 3136702],
+  ['Lavras', 3138203], ['Montes Claros', 3143302], ['Poços de Caldas', 3151800], ['Pouso Alegre', 3152501], ['São Lourenço', 3163706],
+  ['Sete Lagoas', 3167202], ['Uberaba', 3170107], ['Uberlândia', 3170206], ['Varginha', 3170701],
+];
+
 export default async function ibge(ctx) {
   const m = ctx.path.match(/^\/api\/v1\/localidades\/estados\/([A-Za-z0-9]+)\/municipios\/?$/);
   if (m && (m[1].toUpperCase() === 'SP' || m[1] === '35')) return SP.map(([nome, id]) => ({ id, nome }));
+  if (m && (m[1].toUpperCase() === 'MG' || m[1] === '31')) return MG.map(([nome, id]) => ({ id, nome }));
   if (/^\/api\/v1\/localidades\/estados\/?$/.test(ctx.path)) {
     return [{ id: 35, sigla: 'SP', nome: 'São Paulo' }, { id: 33, sigla: 'RJ', nome: 'Rio de Janeiro' }, { id: 31, sigla: 'MG', nome: 'Minas Gerais' }];
   }

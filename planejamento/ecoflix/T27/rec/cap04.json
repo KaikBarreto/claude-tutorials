@@ -129,7 +129,7 @@
   },
   {
    "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const m=[...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);return m||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"Personalizações\"&&e.offsetParent);if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-250);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const m=[...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);return m||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"Personalizações\"&&e.offsetParent);if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-250);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/800),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
    "at": 2.61,
    "label": "desce até as Personalizações"
   },
@@ -139,8 +139,8 @@
     "text": "Personalizações",
     "exact": true
    },
-   "seconds": 0.9,
-   "at": 3.82,
+   "seconds": 0.4,
+   "at": 3.52,
    "label": "Personalizações",
    "optional": true,
    "timeout": 3
@@ -183,8 +183,8 @@
    "target": {
     "selector": "#wl-primary-color"
    },
-   "seconds": 0.2,
-   "at": 16.06,
+   "seconds": 0.3,
+   "at": 15.66,
    "label": "seletor de cor (sem abrir)",
    "optional": true,
    "timeout": 3
@@ -212,7 +212,7 @@
    "target": {
     "selector": "main div:text-is('Preview')"
    },
-   "seconds": 2.6,
+   "seconds": 2.2,
    "at": 21.53,
    "label": "Preview no azul da Recicla Vale",
    "optional": true,
@@ -239,14 +239,14 @@
    "label": "Salvar Personalizações"
   },
   {
+   "do": "eval",
+   "js": "(()=>{window.__corT0=performance.now();window.__corMs=null;const f=()=>{const v=getComputedStyle(document.documentElement).getPropertyValue('--primary').trim();if(v==='213 70% 40%'){window.__corMs=Math.round(performance.now()-window.__corT0);return}if(performance.now()-window.__corT0<15000)setTimeout(f,50)};f();return 'vigia da cor'})()",
+   "label": "vigia quando a cor troca"
+  },
+  {
    "do": "waitFor",
    "text": "Configurações de White Label salvas!",
    "timeout": 8
-  },
-  {
-   "do": "eval",
-   "js": "(()=>getComputedStyle(document.documentElement).getPropertyValue('--primary').trim()||'sem --primary')()",
-   "label": "cor --primary aplicada (azul)"
   },
   {
    "do": "hover",
@@ -255,7 +255,7 @@
     "name": "Salvar Personalizações",
     "exact": true
    },
-   "seconds": 0.34,
+   "seconds": 0.2,
    "at": 27.8,
    "label": "botão no azul",
    "optional": true,
@@ -266,8 +266,8 @@
    "target": {
     "selector": "main div.rounded-xl:has(p:text-is('White Label Desativado')) > button[role=switch], main div.rounded-xl:has(p:text-is('White Label Ativo')) > button[role=switch]"
    },
-   "seconds": 0.71,
-   "at": 28.79,
+   "seconds": 0.4,
+   "at": 28.54,
    "label": "interruptor no azul",
    "optional": true,
    "timeout": 3
@@ -277,12 +277,17 @@
    "target": {
     "selector": "button[aria-label='Configurações']"
    },
-   "seconds": 2.2,
-   "at": 30.15,
+   "seconds": 1.2,
+   "at": 29.8,
    "label": "barrinha azul do item ativo no menu (Configurações)",
    "noScroll": true,
    "optional": true,
    "timeout": 3
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const v=getComputedStyle(document.documentElement).getPropertyValue('--primary').trim();return v==='213 70% 40%'?'OK: --primary '+v+' (trocou '+window.__corMs+' ms depois do clique)':'DIFERENTE: --primary '+v})()",
+   "label": "confere a cor aplicada (azul #1F5FAD)"
   },
   {
    "do": "mark",

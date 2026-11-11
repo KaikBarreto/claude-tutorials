@@ -334,7 +334,8 @@ def js_rola(seletor, y, dur_ms=700):
 
 def js_rola_linha(texto, y, dur_ms=700):
     """como js_rola, com o alvo = a 1ª linha da lista (main tbody tr) cujo texto contém `texto` (CSS puro não tem :has-text)"""
-    return ("(async()=>{" + ACHA_ROLAGEM + f"const el=[...document.querySelectorAll('main tbody tr')].filter(e=>e.offsetParent&&e.innerText.includes({json.dumps(texto)}))[0];"
+    return ("(async()=>{" + ACHA_ROLAGEM + f"const acha=()=>[...document.querySelectorAll('main tbody tr')].filter(e=>e.offsetParent&&e.innerText.includes({json.dumps(texto)}))[0];"
+            "let el=acha();for(let i=0;i<20&&!el;i++){await new Promise(r=>setTimeout(r,150));el=acha();}"
             "if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';"
             f"let dy=Math.round(el.getBoundingClientRect().top-{int(y)});const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));"
             "if(Math.abs(dy)<3)return 'ok';" + SUAVE.replace('DUR', str(int(dur_ms))) + "return Math.round(el.getBoundingClientRect().top)})()")
@@ -560,6 +561,7 @@ def cap04():
     c.mark(9)
     c.click(RODAPE('Criar conta'), at=c.A(9, 'Criar', 0.7), label='Criar conta', noScroll=True)
     c.waitfor(text='Conta criada', timeout=10)
+    c.waitfor(target=LINHA('Manutenção da prensa enfardadeira'), timeout=10)
     c.ev(js_rola_linha('Manutenção da prensa enfardadeira', 420), at=c.A(9, 'Pronto:', 0.3), label='desce a tela até a linha nova')
     c.hover(TXT_LINHA('Manutenção da prensa enfardadeira', 'Manutenção da prensa enfardadeira'), 1.2, at=c.A(9, 'manutenção', 0.6),
             label='ZOOM a linha nova, com 19/11/2026 e R$ 3.480,00')
@@ -579,18 +581,18 @@ def cap05():
     c.mark(1)
     c.click(NOVA, at=c.A(1, 'paga?', 0.7), label='Nova conta')
     c.waitfor(text='Cadastre uma conta a pagar ou a receber com vencimento.', timeout=8)
+    c.digita(CAMPO('bill-amount'), '180,00', c.A(1, 'Pix:', 0.6), c.A(1, 'cento', 0.05), 'Valor 180,00')
     c.mark(2)
-    c.digita(CAMPO('bill-amount'), '180,00', c.A(2, 'Preencho', 0.2), c.A(2, 'como', 0.0), 'Valor 180,00')
-    colar(c, CAMPO('bill-description'), 'Conserto do pneu da empilhadeira', c.A(2, 'conta:', 0.3), c.A(2, 'o', 0.0, nth=0), 'Descrição (colada)')
-    escolhe_dia(c, CAMPO('bill-due'), '9', c.A(2, 'valor,', -0.1), c.A(2, 'descrição,', -0.1), 'Vencimento 09/11/2026 (ontem)')
-    c.click(CAMPO('bill-category'), at=c.A(2, 'data', 0.0), label='Categoria (abre a lista)')
-    c.type({'placeholder': 'Pesquisar categoria...'}, 'máquinas', at=c.A(2, 'ontem,', 0.0), label='busca máquinas', noClick=True)
-    c.click(OPT('Manutenção de máquinas'), at=c.A(2, 'categoria', 0.0), label='Manutenção de máquinas')
-    c.click(CAMPO('bill-cost-center'), at=c.A(2, 'e', 0.0), label='Centro de custo (abre a lista)')
+    colar(c, CAMPO('bill-description'), 'Conserto do pneu da empilhadeira', c.A(2, 'Preencho', 0.2), c.A(2, 'como', 0.0), 'Descrição (colada)')
+    escolhe_dia(c, CAMPO('bill-due'), '9', c.A(2, 'conta:', 0.3), c.A(2, 'valor,', 0.0), 'Vencimento 09/11/2026 (ontem)')
+    c.click(CAMPO('bill-category'), at=c.A(2, 'descrição,', -0.2), label='Categoria (abre a lista)')
+    c.type({'placeholder': 'Pesquisar categoria...'}, 'máquinas', at=c.A(2, 'data', 0.0), label='busca máquinas', noClick=True)
+    c.click(OPT('Manutenção de máquinas'), at=c.A(2, 'ontem,', -0.1), label='Manutenção de máquinas')
+    c.click(CAMPO('bill-cost-center'), at=c.A(2, 'categoria', -0.3), label='Centro de custo (abre a lista)')
     c.mark(3)
-    c.click(OPT('Pátio'), at=c.A(2, 'custo.', 0.0), label='Pátio')
-    c.ev(js_rola_texto('Pagamento previsto', 300), at=c.L(3) - 0.5, label='desce a janela até o bloco Dinheiro')
-    c.click(COMBO('Não definido'), at=c.A(3, 'previsto,', 0.6), label='Pagamento previsto (abre a lista)')
+    c.click(OPT('Pátio'), at=c.A(2, 'custo.', 0.4), label='Pátio')
+    c.ev(js_rola_texto('Pagamento previsto', 300), at=c.A(3, 'No', 0.3), label='desce a janela até o bloco Dinheiro')
+    c.click(COMBO('Não definido'), at=c.A(3, 'previsto,', 0.3), label='Pagamento previsto (abre a lista)')
     c.click(OPT('Conta Principal'), at=c.A(3, 'Principal.', 0.6), label='Conta Principal')
     c.mark(4)
     c.click(CAMPO('bill-pay-now'), at=c.A(4, 'ligo', 0.7), label='liga Já paguei essa conta')
@@ -599,10 +601,10 @@ def cap05():
     c.mark(5)
     c.click(RODAPE('Criar conta'), at=c.A(5, 'Criar', 0.7), label='Criar conta', noScroll=True)
     c.waitfor(text='Conta criada e paga', timeout=10)
-    c.digita(BUSCA, 'pneu', c.A(5, 'Ela', 0.7), c.A(5, 'já', 0.05, nth=0), 'busca pneu')
+    c.digita(BUSCA, 'pneu', c.A(5, 'entra', 0.2), c.A(5, 'como', 0.0), 'busca pneu')
     c.waitfor(target=LINHA('Conserto do pneu da empilhadeira'), timeout=8)
-    c.hover(TXT_LINHA('Conserto do pneu da empilhadeira', 'Paga'), 1.0, at=c.A(5, 'Paga,', 0.5), label='ZOOM a linha Paga, Quitada em 09/11/2026')
-    c.hover(TXT_LINHA('Conserto do pneu da empilhadeira', 'Conta Principal'), 1.2, at=c.A(5, 'Conta', 0.6, nth=1), label='Conta Principal')
+    c.hover(TXT_LINHA('Conserto do pneu da empilhadeira', 'Paga'), 1.0, at=c.A(5, 'Paga,', -0.6), label='ZOOM a linha Paga, Quitada em 09/11/2026')
+    c.hover(TXT_LINHA('Conserto do pneu da empilhadeira', 'Conta Principal'), 1.2, at=c.A(5, 'Conta', 0.0, nth=1), label='Conta Principal')
     c.confere('row:Conserto do pneu da empilhadeira', ['R$ 180,00', 'Paga', '09/11/2026'], 'a conta nasceu paga')
     c.mark(6)
     c.hover(TXT_LINHA('Conserto do pneu da empilhadeira', '09/11/2026'), 1.5, at=c.A(6, 'opção', 0.6), label='a linha (a câmera fica)')

@@ -13,7 +13,9 @@ Login: todo capítulo abre SEM sessão ("anonymous": true) e o `setup` entra pel
 (nunca no vídeo; a senha nunca vai para arquivo). O cap06 entra como a Juliana: o e-mail fictício dela no lugar do $TUT_USER.
 
 Sementes (rec/mundo/seeds-extra/t27/): `inicio` (logo e ícone do T1, White Label desligado; caps 0 a 3), `apos-cap03` (+ White
-Label ligado; cap04) e `apos-cap04` (+ Cor Primária #1F5FAD; caps 5 a 7), em cadeia por cima do mundo base.
+Label ligado; cap04) e `apos-cap04` (+ Cor Primária #1F5FAD; caps 5 a 7), em cadeia por cima do mundo base. O logo é a versão
+clara do logo fictício do T1 (`t27_logo_claro.py`: o mesmo desenho sobre placa branca; o do T1, de letra azul-escura, some no
+menu escuro), em rec/mundo/storage/avatars/recicla-vale-logo-claro.png.
 
 Particularidades (app 1.59.154):
  - Logo do topo do menu (img alt "EcoSistema", mesmo com o logo da empresa), botão de recolher o menu (cabeçalho), "Configurações" e o
@@ -363,7 +365,13 @@ JS_PDF = ("(async()=>{let n=-1,parado=0;for(let i=0;i<50;i++){const k=(window.__
           "let t='';try{t=window.__janelas.map(w=>w.document.title).join(' | ')}catch(e){t=String(e)}"
           "return {pdf:'t27-cap05.comprovante.pdf',janela:t,pdfs:window.__pdfs.length,bytes:u.length,b64:btoa(s)}})()")
 JS_FECHA = ("(()=>{const j=window.__janelas||[];let k=0;for(const w of j){try{if(!w.closed){w.close();k++}}catch(e){}}return 'janelas fechadas: '+k})()")
-JS_COR = "(()=>getComputedStyle(document.documentElement).getPropertyValue('--primary').trim()||'sem --primary')()"
+# #1F5FAD em HSL (hexToHSL de hooks/useWhiteLabelTheme.tsx): 213 70% 40%. O tema troca depois que a consulta do White Label volta
+# (invalidateAllCompanyQueries): o passo espera até 4 s e devolve quanto levou (a fala "já ficaram azuis" vem ~2,5 s depois do clique).
+JS_COR_INICIA = ("(()=>{window.__corT0=performance.now();window.__corMs=null;const f=()=>{const v=getComputedStyle(document.documentElement)"
+                 ".getPropertyValue('--primary').trim();if(v==='213 70% 40%'){window.__corMs=Math.round(performance.now()-window.__corT0);return}"
+                 "if(performance.now()-window.__corT0<15000)setTimeout(f,50)};f();return 'vigia da cor'})()")
+JS_COR = ("(()=>{const v=getComputedStyle(document.documentElement).getPropertyValue('--primary').trim();"
+          "return v==='213 70% 40%'?'OK: --primary '+v+' (trocou '+window.__corMs+' ms depois do clique)':'DIFERENTE: --primary '+v})()")
 
 
 # ================================================================ capítulos
@@ -462,24 +470,25 @@ def cap04():
     Vira apos-cap04."""
     c = Cap(4, setup=setup_config() + abre_wl('White Label Ativo'), start=(1240, 300))
     c.mark(1)
-    rola_ate(c, 'Personalizações', at=c.A(1, 'aparecem', 0.9), label='desce até as Personalizações', y=250, dur_ms=900)
-    c.hover(PERSONALIZACOES, 0.9, at=c.A(1, 'Personalizações.', 0.6), label='Personalizações')
+    rola_ate(c, 'Personalizações', at=c.A(1, 'aparecem', 0.9), label='desce até as Personalizações', y=250, dur_ms=800)
+    c.hover(PERSONALIZACOES, 0.4, at=c.A(1, 'Personalizações.', 0.9), label='Personalizações')
     c.mark(2)
     c.hover(NOME_WL, 2.8, at=c.A(2, 'Nome', 0.6), label='Nome Exibido no Sistema (vazio; sem zoom)')
     c.mark(3)
     c.hover(COR_ROTULO, 0.6, at=c.A(3, 'Cor', 0.6), label='Cor Primária')
-    c.hover(COR_PICKER, 0.5, at=c.A(3, 'seletor', 0.6), label='seletor de cor (sem abrir)')
+    c.hover(COR_PICKER, 0.3, at=c.A(3, 'seletor', 1.0), label='seletor de cor (sem abrir)')
     c.click(COR_TEXTO, at=c.A(3, 'digitar', 0.7), label='campo do código da Cor Primária')
     c.type(COR_TEXTO, '#1F5FAD', at=c.A(3, 'digito', 0.05), noClick=True, label='digita #1F5FAD na Cor Primária')
-    c.hover(PREVIEW, 2.6, at=c.A(3, 'quadradinho', 0.6), label='Preview no azul da Recicla Vale')
+    c.hover(PREVIEW, 2.2, at=c.A(3, 'quadradinho', 0.6), label='Preview no azul da Recicla Vale')
     c.confere_campos(['#1F5FAD'], 'Cor Primária digitada')
     c.mark(4)
     c.click(SALVAR_WL, at=c.A(4, 'Salvar', 0.7), label='Salvar Personalizações')
+    c.ev(JS_COR_INICIA, label='vigia quando a cor troca')
     c.waitfor(text='Configurações de White Label salvas!', timeout=8)
-    c.ev(JS_COR, label='cor --primary aplicada (azul)')
-    c.hover(SALVAR_WL, 0.5, at=c.A(4, 'botões,', 0.6), label='botão no azul')
-    c.hover(WL_SWITCH, 0.8, at=c.A(4, 'interruptores', 0.6), label='interruptor no azul')
-    c.hover(CONFIG_RODAPE, 2.2, at=c.A(4, 'barrinha', 0.6), label='barrinha azul do item ativo no menu (Configurações)', noScroll=True)
+    c.hover(SALVAR_WL, 0.3, at=c.A(4, 'botões,', 0.6), label='botão no azul')
+    c.hover(WL_SWITCH, 0.4, at=c.A(4, 'interruptores', 0.85), label='interruptor no azul')
+    c.hover(CONFIG_RODAPE, 1.2, at=c.A(4, 'barrinha', 0.95), label='barrinha azul do item ativo no menu (Configurações)', noScroll=True)
+    c.ev(JS_COR, label='confere a cor aplicada (azul #1F5FAD)')
     c.mark(5)
     c.hover(COR_TEXTO, 1.4, at=c.A(5, 'Cor', 0.6), label='Cor Primária (vazia = verde padrão)')
     c.hover(RESET, 1.6, at=c.A(5, 'Reset', 0.6), label='Reset (sem clicar: só limpa o campo)')
@@ -515,7 +524,7 @@ def cap06():
     azul; L3 sob a ilustração "a troca chegando a todos"."""
     c = Cap(6, setup=login(EMAIL_JULIANA, 'Olá, Juliana!'), start=(720, 150), uid=JULIANA)
     c.mark(1)
-    c.hover(CARD_CONTA, 1.6, at=c.A(1, 'Juliana,', 0.6), label='card da conta: Juliana Prado', noScroll=True)
+    c.hover(CARD_CONTA, 1.0, at=c.A(1, 'Juliana,', 0.6), label='card da conta: Juliana Prado', noScroll=True)
     c.mark(2)
     c.hover(LOGO_MENU, 1.0, at=c.A(2, 'Mesmo', 0.6), label='o logo da Recicla Vale no topo do menu da Juliana', noScroll=True)
     c.hover(DASH_MENU, 1.6, at=c.A(2, 'cor,', 0.6), label='barrinha azul do item ativo (Dashboard)', noScroll=True)

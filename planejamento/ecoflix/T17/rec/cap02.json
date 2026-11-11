@@ -1,0 +1,547 @@
+{
+ "name": "t17-cap02",
+ "title": "T17 · Cap. 2 · Veículo e motorista (narração 67,6 s ESTIMADA; marcas L1..L9 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T09:30:00-03:00)",
+ "seed": "t17-cap02",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 900,
+  "y": 440
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true"
+ },
+ "seedExtra": [
+  "t17/inicio"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "waitFor",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "timeout": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "••••••••"
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "url": "/dashboard",
+   "timeout": 40
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 25
+  },
+  {
+   "do": "goto",
+   "url": "/fiscal-ambiental/transporte/frota"
+  },
+  {
+   "do": "waitFor",
+   "text": "Frota (veículos e motoristas do MDF-e)",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 25
+  },
+  {
+   "do": "wait",
+   "seconds": 0.3
+  },
+  {
+   "do": "goto",
+   "url": "/fiscal-ambiental/transporte"
+  },
+  {
+   "do": "waitFor",
+   "text": "Manifesto Eletrônico de Documentos Fiscais (MDF-e)",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 25
+  },
+  {
+   "do": "wait",
+   "seconds": 0.8
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel|Algo deu errado|Falha ao|n[ãa]o encontrad|recusou|rejeitad[ao]!/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');if(f&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA ECOFLIX'))window.__avisos.push('TRILHA ECOFLIX')},300);return 1})()"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{if(window.__animFix)return 'ja';window.__animFix=setInterval(()=>{for(const a of document.getAnimations())if(a.currentTime!==null&&a.currentTime<0)a.startTime=document.timeline.currentTime},100);return 'anim fix'})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Frota",
+    "exact": true,
+    "within": "nav[aria-label='Navegação da seção']"
+   },
+   "at": 5.22,
+   "label": "aba Frota"
+  },
+  {
+   "do": "waitFor",
+   "text": "Frota (veículos e motoristas do MDF-e)",
+   "timeout": 15
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "FKD2E41",
+    "within": "main aside"
+   },
+   "seconds": 0.4,
+   "at": 6.18,
+   "label": "Veículos da frota",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Mesma frota usada na pesagem de compra/venda.",
+    "exact": true
+   },
+   "seconds": 0.6,
+   "at": 10.88,
+   "label": "mesma frota da pesagem",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 12.32
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Dados de transporte",
+    "exact": true,
+    "within": "main section"
+   },
+   "seconds": 0.4,
+   "at": 14.65,
+   "label": "painel: Dados de transporte",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Editar",
+    "exact": true,
+    "within": "main section"
+   },
+   "at": 17.59,
+   "label": "Editar o FKD2E41"
+  },
+  {
+   "do": "waitFor",
+   "text": "Editar veículo",
+   "timeout": 10
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.offsetParent!==null&&e.textContent.trim().startsWith(\"Dados de transporte (MDF-e / NF-e)\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-160);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 19.19,
+   "label": "janela desce até Dados de transporte"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 19.05
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#veiculo-uf"
+   },
+   "at": 19.79,
+   "label": "UF de licenciamento: SP (abre)"
+  },
+  {
+   "do": "press",
+   "key": "S",
+   "at": 20.79,
+   "label": "UF de licenciamento: SP"
+  },
+  {
+   "do": "press",
+   "key": "P"
+  },
+  {
+   "do": "press",
+   "key": "Enter",
+   "label": "UF de licenciamento: SP (Enter)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#veiculo-categoria"
+   },
+   "at": 21.15,
+   "label": "Tipo: Veículo único (abre)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Veículo único"
+   },
+   "at": 22.95,
+   "label": "Tipo: Veículo único"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#veiculo-rodado"
+   },
+   "at": 24.57,
+   "label": "Tipo de rodado: Truck (abre)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Truck",
+    "exact": true
+   },
+   "at": 25.55,
+   "label": "Tipo de rodado: Truck"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#veiculo-carroceria"
+   },
+   "at": 26.31,
+   "label": "Tipo de carroceria: Aberta (abre)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Aberta",
+    "exact": true
+   },
+   "at": 27.6,
+   "label": "Tipo de carroceria: Aberta"
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 28.66
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "#veiculo-tara"
+   },
+   "seconds": 0.8,
+   "at": 28.66,
+   "label": "Tara (kg)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "#veiculo-cap-kg"
+   },
+   "seconds": 0.8,
+   "at": 36.6,
+   "label": "Capacidade (kg)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 39.56
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#veiculo-cap-m3"
+   },
+   "at": 39.97,
+   "label": "Capacidade (m³): 30 (campo)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#veiculo-cap-m3"
+   },
+   "text": "30",
+   "cps": 40,
+   "at": 42.29,
+   "label": "Capacidade (m³): 30",
+   "noClick": true
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "máx. 999 m³",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.8,
+   "at": 43.87,
+   "label": "ajuda: máx. 999 m³",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Salvar",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 46.7,
+   "label": "Salvar o veículo"
+  },
+  {
+   "do": "waitFor",
+   "text": "Veículo atualizado",
+   "timeout": 10
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 47.2
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Dados de transporte",
+    "exact": true,
+    "within": "main section"
+   },
+   "seconds": 0.6,
+   "at": 49.02,
+   "label": "painel: Dados de transporte preenchido",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 51.34
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Motoristas",
+    "exact": true
+   },
+   "at": 51.35,
+   "label": "aba Motoristas"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Edson Moura",
+    "within": "main aside"
+   },
+   "seconds": 0.4,
+   "at": 52.53,
+   "label": "Edson Moura na lista",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Editar",
+    "exact": true,
+    "within": "main section"
+   },
+   "at": 55.4,
+   "label": "Editar o Edson"
+  },
+  {
+   "do": "waitFor",
+   "text": "Editar motorista",
+   "timeout": 10
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 56.85
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#motorista-doc"
+   },
+   "at": 57.7,
+   "label": "CPF: 318.472.650-90 (campo)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#motorista-doc"
+   },
+   "text": "31847265090",
+   "cps": 40,
+   "at": 58.45,
+   "label": "CPF: 318.472.650-90",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#motorista-cnh"
+   },
+   "at": 60.2,
+   "label": "CNH: 04728193604 (campo)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#motorista-cnh"
+   },
+   "text": "04728193604",
+   "cps": 40,
+   "at": 62.12,
+   "label": "CNH: 04728193604",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#motorista-cnh-cat"
+   },
+   "at": 62.02,
+   "label": "Categoria: C (abre)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "C",
+    "exact": true
+   },
+   "at": 62.82,
+   "label": "Categoria: C"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#motorista-cnh-val"
+   },
+   "at": 63.52,
+   "label": "Validade da CNH: 18/03/2029 (campo)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#motorista-cnh-val"
+   },
+   "text": "18032029",
+   "cps": 40,
+   "at": 64.02,
+   "label": "Validade da CNH: 18/03/2029",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Salvar",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 63.41,
+   "label": "Salvar o motorista"
+  },
+  {
+   "do": "waitFor",
+   "text": "Motorista atualizado",
+   "timeout": 10
+  },
+  {
+   "do": "mark",
+   "name": "L9",
+   "at": 63.81
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Carteira de habilitação",
+    "exact": true,
+    "within": "main section"
+   },
+   "seconds": 0.8,
+   "at": 65.05,
+   "label": "painel: Carteira de habilitação",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 67.64
+  }
+ ]
+}

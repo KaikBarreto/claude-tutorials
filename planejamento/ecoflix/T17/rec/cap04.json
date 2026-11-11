@@ -1,0 +1,609 @@
+{
+ "name": "t17-cap04",
+ "title": "T17 · Cap. 4 · Emitir o manifesto (narração 94,3 s ESTIMADA; marcas L1..L12 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T09:30:00-03:00)",
+ "seed": "t17-cap04",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 900,
+  "y": 440
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true"
+ },
+ "seedExtra": [
+  "t17/inicio",
+  "t17/apos-cap02"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "waitFor",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "timeout": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "••••••••"
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "url": "/dashboard",
+   "timeout": 40
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 25
+  },
+  {
+   "do": "goto",
+   "url": "/fiscal-ambiental/transporte"
+  },
+  {
+   "do": "waitFor",
+   "text": "Manifesto Eletrônico de Documentos Fiscais (MDF-e)",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 25
+  },
+  {
+   "do": "wait",
+   "seconds": 0.8
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel|Algo deu errado|Falha ao|n[ãa]o encontrad|recusou|rejeitad[ao]!/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');if(f&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA ECOFLIX'))window.__avisos.push('TRILHA ECOFLIX')},300);return 1})()"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{if(window.__animFix)return 'ja';window.__animFix=setInterval(()=>{for(const a of document.getAnimations())if(a.currentTime!==null&&a.currentTime<0)a.startTime=document.timeline.currentTime},100);return 'anim fix'})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Novo MDF-e",
+    "exact": true
+   },
+   "at": 1.3,
+   "label": "Novo MDF-e"
+  },
+  {
+   "do": "waitFor",
+   "text": "NF-ES VINCULADAS",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "NF-ES VINCULADAS",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.5,
+   "at": 5.49,
+   "label": "etapa Notas fiscais",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "placeholder": "Buscar NF-e..."
+   },
+   "at": 6.96,
+   "label": "busca: Serra Fina (campo)"
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 7.46
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Buscar NF-e..."
+   },
+   "text": "Serra Fina",
+   "cps": 40,
+   "at": 8.07,
+   "label": "busca: Serra Fina",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] label:has-text('NF-e #1252')"
+   },
+   "at": 11.74,
+   "label": "NF-e 1252 (alumínio perfil)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] label:has-text('NF-e #1253')"
+   },
+   "at": 13.26,
+   "label": "NF-e 1253 (alumínio bloco)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "NF-e(s) selecionada(s)",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.0,
+   "at": 13.89,
+   "label": "2 NF-e selecionadas: R$ 55.380,00",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Continuar",
+    "exact": true
+   },
+   "at": 19.15,
+   "label": "Continuar (veículo e motorista)"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 19.65
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]",
+    "hasText": "Selecione um veículo"
+   },
+   "at": 20.21,
+   "label": "Veículo: Caminhão truck FKD2E41 (abre)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "FKD2E41"
+   },
+   "at": 22.18,
+   "label": "Veículo: Caminhão truck FKD2E41"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]",
+    "hasText": "Selecione um motorista"
+   },
+   "at": 23.02,
+   "label": "Motorista: Edson Moura (abre)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Edson Moura"
+   },
+   "at": 24.46,
+   "label": "Motorista: Edson Moura"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Veículo único",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.6,
+   "at": 26.16,
+   "label": "composição completa",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Continuar",
+    "exact": true
+   },
+   "at": 29.06,
+   "label": "Continuar (trajeto e carga)"
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 29.56
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] div.rounded-xl:has(p:text-is('Carregamento (Origem)')) button[role=combobox] >> nth=1"
+   },
+   "seconds": 0.8,
+   "at": 33.26,
+   "label": "origem: Taubaté/SP",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 34.7
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Adicionar UF ao percurso",
+    "exact": true
+   },
+   "at": 35.56,
+   "label": "Adicionar UF ao percurso"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]",
+    "hasText": "Selecione a UF"
+   },
+   "at": 36.4,
+   "label": "Percurso: 1ª UF RJ (abre)"
+  },
+  {
+   "do": "press",
+   "key": "R",
+   "at": 37.33,
+   "label": "Percurso: 1ª UF RJ"
+  },
+  {
+   "do": "press",
+   "key": "J"
+  },
+  {
+   "do": "press",
+   "key": "Enter",
+   "label": "Percurso: 1ª UF RJ (Enter)"
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 40.82
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] div.rounded-xl:has(p:text-is('Descarregamento (Destino)')) button[role=combobox] >> nth=0"
+   },
+   "at": 40.82,
+   "label": "Destino: MG (abre)"
+  },
+  {
+   "do": "press",
+   "key": "M",
+   "at": 42.03,
+   "label": "Destino: MG"
+  },
+  {
+   "do": "press",
+   "key": "G"
+  },
+  {
+   "do": "press",
+   "key": "Enter",
+   "label": "Destino: MG (Enter)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] div.rounded-xl:has(p:text-is('Descarregamento (Destino)')) button[role=combobox] >> nth=1"
+   },
+   "at": 42.84,
+   "label": "Destino: Itamonte (abre)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Itamonte",
+    "exact": true
+   },
+   "at": 43.9,
+   "label": "Destino: Itamonte"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].find(e=>e.children.length===0&&e.offsetParent!==null&&e.textContent.trim()===\"Peso Bruto Total (kg)\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-330);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 44.56,
+   "label": "janela desce até o peso"
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 45.11
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] div:has(> label:text-is('Peso Bruto Total (kg)')) input"
+   },
+   "seconds": 0.8,
+   "at": 47.39,
+   "label": "Peso Bruto Total (kg): 5800",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Valor Total da Carga",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.8,
+   "at": 50.05,
+   "label": "Valor Total da Carga: R$ 55.380,00",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 52.45
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Continuar",
+    "exact": true
+   },
+   "at": 52.45,
+   "label": "Continuar (revisão e emissão)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] button[aria-pressed]",
+    "hasText": "Normal"
+   },
+   "seconds": 0.8,
+   "at": 55.08,
+   "label": "Como emitir: Normal",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L9",
+   "at": 58.79
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] button[aria-pressed]",
+    "hasText": "Contingência"
+   },
+   "seconds": 1.2,
+   "at": 59.45,
+   "label": "botão Contingência",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L10",
+   "at": 70.68
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Tudo pronto para criar e emitir o MDF-e",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.1,
+   "at": 70.68,
+   "label": "Tudo pronto para criar e emitir o MDF-e",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Tudo pronto para criar e emitir o MDF-e",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.45,
+   "at": 70.68,
+   "label": "Tudo pronto para criar e emitir o MDF-e (continua)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Criar MDF-e",
+    "exact": true
+   },
+   "at": 71.17,
+   "label": "Criar MDF-e"
+  },
+  {
+   "do": "waitFor",
+   "text": "Aguardando SEFAZ",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('FKD2E41') td >> nth=0"
+   },
+   "seconds": 0.6,
+   "at": 76.31,
+   "label": "nº 1 Aguardando SEFAZ",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "waitFor",
+   "text": "Autorizado",
+   "timeout": 15
+  },
+  {
+   "do": "mark",
+   "name": "L11",
+   "at": 78.4
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "main tbody tr:has-text('FKD2E41')"
+   },
+   "text": "",
+   "noClick": true,
+   "optional": true,
+   "timeout": 4,
+   "at": 78.4,
+   "label": "linha do nº 1 Autorizado"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('FKD2E41') td:has-text('Edson')"
+   },
+   "seconds": 0.2,
+   "at": 81.19,
+   "label": "Motorista",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('FKD2E41') td:has-text('FKD2E41')"
+   },
+   "seconds": 0.2,
+   "at": 82.33,
+   "label": "Placa",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('FKD2E41') td:has-text('Itamonte')"
+   },
+   "seconds": 0.2,
+   "at": 83.16,
+   "label": "Trajeto",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('FKD2E41') td:has-text('55.380')"
+   },
+   "seconds": 0.2,
+   "at": 84.14,
+   "label": "Valor",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('FKD2E41') td:has-text('5.800')"
+   },
+   "seconds": 0.3,
+   "at": 84.9,
+   "label": "Peso (kg)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L12",
+   "at": 86.11
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('FKD2E41') button[aria-haspopup=menu]"
+   },
+   "seconds": 0.4,
+   "at": 86.75,
+   "label": "Ações do nº 1",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "menuitem",
+    "name": "Baixar DAMDFE (PDF)"
+   },
+   "seconds": 1.0,
+   "at": 88.29,
+   "label": "Baixar DAMDFE (PDF)",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 94.27
+  }
+ ]
+}

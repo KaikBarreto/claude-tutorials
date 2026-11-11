@@ -124,6 +124,11 @@ def recebida(k, nsu, com_xml):
             'cfop_principal': cfop, 'situacao_sefaz': 'autorizada', 'manifestacao': 'ciencia', 'manifestacao_data': criada,
             'manifestacao_pendente': None, 'manifestacao_pendente_em': None, 'manifestacao_erro': None, 'fin_nfe': 1,
             'resumo': not com_xml, 'xml_content': xml if com_xml else None, 'pdf_url': None, 'nsu': str(nsu), 'plugnotas_id': None,
+            # bastidor: o XML que a "SEFAZ" entrega no Buscar documento (plugnotas-dfe-fetch-doc) e a prova oficial do status
+            # (sem ela o selo SEFAZ seria "Aguardando confirmação oficial": lib/fiscal/statusConfirmation.ts)
+            'xml_pendente': None if com_xml else xml,
+            'fiscal_status_confirmation': {'status': 'authorized', 'key': ch, 'environment': '1', 'cstat': '100', 'protocol': prot,
+                                           'source': 'sefaz_distribution_xml', 'observed_at': criada},
             'purchase_id': None, 'financial_bill_id': None, 'balance_movement_id': None, 'ref_nfe_key': None,
             'created_at': criada, 'updated_at': criada}
 
