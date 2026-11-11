@@ -22,6 +22,9 @@ no gesto. Nada aqui foi aplicado: `roteiro.md` e `tts_textos.py` ficam para a re
 - **Configuração Fiscal no T1:** a aula parte da Matriz de B. Ao salvar no cap05 (endereço ainda vazio) o app grava o endereço
   vazio nela (sem mexer na UF) e o cap06 grava o completo de novo; nada disso aparece na tela do T1. As sementes `apos-cap05`
   e `apos-cap06` atualizam essa linha (não inserem outra).
+- **Painel depois do login (caps 3 e 4):** mostra os números de novembro de B (Total Vendas R$ 118.620,20, Compras
+  R$ 19.171,05, "1 lembrete para hoje · Carregamento Aços Quiririm 14:00"). A fala não cita nenhum; o estado de demonstração do
+  T1 (seção 1) só tira a identidade da empresa. O cap01 corta no toast do cadastro, antes do painel (roteiro).
 
 ## Números da fala × tela (seção 18)
 
@@ -38,7 +41,8 @@ caps 10 e 13 são a leitura de "sessenta e noventa dias" (60 e 90).
 1. **Selo "MASTER" some do card da conta.** `components/layout/SidebarMenuContent.tsx:127` busca o perfil com `role` na chave
    `["user-profile", id]`, mas `components/support/SupportTriageDialog.tsx:181` (montado pelo botão flutuante de suporte em
    toda tela) usa a mesma chave com outra consulta, sem `role`; quem chega primeiro enche o cache e o card fica sem o selo
-   (visto em todo login do ensaio). `TopNavbar.tsx:143` e `MoreMenuDrawer.tsx:106` também dividem a chave com formatos diferentes.
+   (visto em todo login do ensaio; no trocador de contas o selo aparece). `TopNavbar.tsx:143` e `MoreMenuDrawer.tsx:106` também
+   dividem a chave com formatos diferentes.
 2. **Esqueci minha senha entra no sistema sem pedir a senha nova (navegador nunca usado).** Depois de "Verificar", o código
    abre a sessão; o `EntityTerminologyProvider` (`contexts/EntityTerminologyContext.tsx:141-148`) troca a árvore inteira por
    "Carregando empresa..." enquanto lê a nomenclatura (não há o instantâneo `entity_terminology_snapshot` no navegador), a
@@ -46,8 +50,8 @@ caps 10 e 13 são a leitura de "sessenta e noventa dias" (60 e 90).
    painel. Medido no ensaio: "Código verificado com sucesso!" e "Nova Senha" aparecem por ~40 ms, a tela some, volta "Acesse sua
    conta" e vai para /inicio; a senha antiga continua valendo. Num navegador que o usuário já usou (instantâneo de até 7 dias)
    o fluxo segue certo: o cap04 grava nesse estado (o `storage` do capítulo traz o instantâneo, como no computador do
-   escritório do Rafael), para a aula mostrar o fluxo como foi feito. Mesmo efeito, inofensivo, no login comum: um piscar de
-   "Carregando empresa..." entre "Entrar" e o painel.
+   escritório do Rafael), para a aula mostrar o fluxo como foi feito. Mesmo efeito, inofensivo, no login comum: ~1 s de tela
+   escura com o círculo de carregamento entre "Entrar" e o painel (cap03; a edição pode encurtar).
 3. **Painel do login com dados que parecem reais.** A imagem do `LoginShowcase` (`/guia-tecnico/img/t6-caixa.jpg`) mostra
    "Kaik Barreto", "Maicon Silva", "Jonas" e saldos em bancos reais. A câmera fica no formulário (plano), mas a imagem aparece
    no plano geral do /login (caps 3 e 4).

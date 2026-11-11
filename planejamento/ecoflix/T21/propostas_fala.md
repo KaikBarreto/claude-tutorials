@@ -23,6 +23,15 @@ Estoque); R4 saldos 44.933,67 + 82.515,00 + 5.000,00 = 132.448,67; R5 nenhum cai
 |---|---|---|---|---|
 | 03 | L4 | "...e o resultado do mês está em uns sessenta e sete mil e seiscentos." | "...e o resultado do mês está em uns sessenta e nove mil e seiscentos." | R1 agora dá R$ 69.589,55 |
 
+### Tempo das perguntas (opcional, sem mudar texto)
+Cada pergunta leva ~3 s para ser digitada e enviada, ~1,7 s de "Pensando…" e 1,5 a 3,5 s de resposta "digitando" (a conversa
+rola junto até o fim, e o cursor só aponta depois). No cap04 as linhas L3, L4 e L5 já descrevem a resposta logo no começo
+("No estoque, ele traz o peso…", "No banco, ele separa o saldo…", "E o caixa: hoje ainda não tem…"): o robô digita a próxima
+pergunta no fim da linha anterior (R3 em "catorze mil, trezentos e setenta"; R4 em "na frente" / "No banco"; R5 em "saiu no
+mês" / "E o caixa") e envia na virada da linha. Se a revisão preferir que a digitação não corra sobre a fala da resposta
+anterior, basta um respiro de ~2,5 s antes de L3, L4 e L5 do cap04 (`pausas.py`), sem mudar texto: o gerador põe a digitação
+no respiro sozinho. O mesmo vale, mais leve, para o cap05 L3 (R7 digitado em "longe das compras").
+
 ## Roteiro e plano (fora das respostas)
 - `roteiro.md` cap03: `[ZOOM: "Vendas" R$ 118.620,20 e o resultado R$ 67.604,65]` → resultado **R$ 69.589,55**; e as quatro
   perguntas prontas da coluna Tela → "as duas fixas e duas sorteadas" (Achados, 2).

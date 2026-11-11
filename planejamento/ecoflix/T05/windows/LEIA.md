@@ -42,3 +42,9 @@ Conferência: `node ferramentas/windows/cena_windows.cjs <cena>.json stills --st
 - Cada captura do painel mostra "2 cliente(s)" com o navegador conectado e "1 cliente(s)" logo após instalar (handoff H2).
 - Horas: relógio da barra 08:33 (cenas 1 a 3), 08:41:07 no instante do aviso (4), 08:44 (5 e 6), 08:58 (7 e 8).
 - Sugestão de fala (não alterada): nenhuma mudança necessária.
+
+## Prévia (feita em 10/11)
+`/home/claude/ecoflix/previa_ilustracoes/T05_windows.mp4` (58 s, 1280x800, sem áudio) e `T05_windows.jpg` (folha): trechos das 8 cenas,
+renderizadas em 1280x800 (`"saida": [1280, 800]` numa cópia da cena) com `--mira` no lugar do cursor da skill (sem anel de clique).
+Quadros de conferência (`--stills --mira`) das 8 cenas olhados: textos do Windows e do EcoTray iguais ao código e ao inventário.
+Render final: o comando acima (2560x1600 + telemetria), sem `--mira`, depois `specs.json` → `montar_cap.py` → `render_chapter.py`.

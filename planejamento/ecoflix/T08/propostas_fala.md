@@ -7,7 +7,7 @@ Linha = número da linha da coluna Fala no capítulo (L1 = a primeira).
 
 | Cap. | Linha | Texto atual | Texto novo | Motivo |
 |---|---|---|---|---|
-| 06 | L2/L3 | "… Em Novo ticket, abre uma aba em branco." / "Fornecedor, material, motorista, placa e a primeira pesagem: cinco mil seiscentos e quarenta quilos." | Mesma fala, com um respiro de ~3 s logo depois de "aba em branco." (`pausas.py 06 T:3`, T = fim da L2) | Os cinco campos custam ~11 s de robô (fornecedor, material, motorista, placa, Pesagem avançada) e a L3 tem 8,3 s. Hoje o robô começa a preencher ainda na L2 e escolhe as opções das listas sem levar o cursor (time-lapse); com o respiro, o fornecedor cai na palavra "Fornecedor" e a edição acelera o trecho calado. |
+| 06 | L2/L3 | "… Em Novo ticket, abre uma aba em branco." / "Fornecedor, material, motorista, placa e a primeira pesagem: cinco mil seiscentos e quarenta quilos." | Mesma fala, com um respiro de ~3 s logo depois de "aba em branco." (`pausas.py 06 T:3`, T = fim da L2) | Os cinco campos custam ~11 s de robô (fornecedor, material, motorista, placa, Pesagem avançada) e a L3 tem 8,3 s. Hoje o robô começa a preencher ainda na L2 e escolhe as opções das listas sem levar o cursor (time-lapse); com o respiro, o fornecedor cai na palavra "Fornecedor" e a edição acelera o trecho calado. Conta de custo dos gestos; confirmar no ensaio do cap06 (ainda na fila). |
 | 07 | L1 | "No fim do dia, o preço com a cooperativa fechou." | "Pouco depois, o preço com a cooperativa fechou." | Linha do tempo do mundo ("O dia 10/11"; seção 16, item 14): o ticket #58 vai das 08:40 às 09:00 e a compra dele é finalizada perto das 09:00 (a T20 a vê às 15:00). "No fim do dia" contradiz. |
 | 09 | L5 | "… Valorizado, em verde; e Cancelado, em vermelho." | "… Valorizado, em verde; e Cancelado." | Não há ticket cancelado no mundo: a tela mostra só os selos âmbar (#57) e verde (#58); "Cancelado" aparece como opção do filtro Status, sem cor. |
 
@@ -23,6 +23,7 @@ Linha = número da linha da coluna Fala no capítulo (L1 = a primeira).
 - **A 1280 px com o menu lateral aberto**, a Compra corta "Peso Líquido" ("3.0…"), "Valor Total" ("18.714,0…") e o fornecedor
   ("Cooperat…"), e o botão do Cato cobre o "Total da Compra"; a Lista corta a coluna Status ("Valoriza…"). O robô recolhe o menu no
   `setup` dos caps 07 a 09 (fora do vídeo).
+- **Número da aba nova**: logo depois de "Novo Ticket de Pesagem" a barra das abas mostra "#1" por ~4 s e só então "#58" (o número previsto chega depois da primeira pintura). Na L7 do cap02 ("com o número") já está "#58".
 - **Motorista e placa**: Enter não escolhe a sugestão (no Material escolhe); o robô clica a sugestão.
 - **Fornecedor**: a janela "Selecionar Fornecedor" já lista a Cooperativa Recomeço e a Auto Peças Vale Forte sem busca; o robô clica
   direto (o roteiro dizia digitar "Recomeço").

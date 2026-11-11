@@ -716,3 +716,17 @@ Decisões:
   trechos `device: windows` (02w, 04w, 06w, 09w), que substituem a página provisória das cenas de Windows. Sementes
   `t05/inicio`, `apos-cap02/04/05/06`; relógio do cap04 calculado pelo clique em "Testar" (SETUP_S a calibrar pela hora do
   cupom 08:41:07). Completo provável em cap06, cap09 e cap10.
+- 11/11 23:5x **Cenas de Windows da T05 prontas e mandadas ao Kaik** (`T05_windows.mp4`, 58 s com trechos das 8 cenas;
+  as 7 restantes renderizaram numa vez só da trava, 23:35-23:45). Notas para o robô da T05 repassadas (cursor parado na
+  página no clique da bandeja). Falta só trocar a página provisória pela gravação `device: windows`.
+- 11/11 23:5x **Robô da T08 (parcial) retomado** um capítulo por chamada: 00, 01 e 02 aprovados no completo (maxLate
+  0,07-0,10 s); 03-10 por rodar (o lote morreu duas vezes nas 2 h). Handlers `get_next_ticket_number` e
+  `finalize_weighing_ticket_v3`; sementes `t08/inicio` e `apos-cap02..07/09`; Edit de 5 linhas no `lib/eco.mjs`
+  (`criarPedido` marca o ticket de origem como valorizado). Fala: cap06 respiro de ~3 s depois de "aba em branco", cap07
+  "No fim do dia" → "Pouco depois", cap09 tirar "em vermelho". Achados no MELHORIAS (preço no ticket sem valores, "#1" na
+  aba nova, telas cortadas em 1280 px). Gravação final: FAKE_NOW por capítulo (08:40, 08:49, 08:51, 08:58), o PDF térmico
+  do cap08 vira ilustração. **Mundo base**: o ticket #57 tem `items` vazio e o app o trata como legado (0 kg na lista);
+  formato fiel (item com a 1ª pesagem como bruto, `two_weighings`) pedido ao robô nas sementes dele; levar ao mundo base
+  depois que ele confirmar.
+- 11/11 23:5x **Robô da T05**: cap00 e cap04 aprovados no rápido; cap04 e `cap04w` vão ao completo (prever 3,4 s no
+  "Testar" com a máquina cheia); relógio do cupom calibrado (`SETUP_S=10`); cap01 na fila, um por chamada.
