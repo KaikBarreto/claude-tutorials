@@ -18,6 +18,10 @@ COMO O GERADOR PRENDE O ROBÔ À FALA (regras que valem para toda aula):
  - `confere*` LÊ a tela e compara com a fala ("OK"/"DIFERENTE", o resumo.py acusa); `OBS` guarda em window.__avisos todo aviso de erro
    do app e o último passo devolve a lista (tem de sair vazia).
  - Ilustração que cobre a janela (roteiro [ILUSTRAÇÃO]): o robô fica parado ou mexe só por `eval` (sem cursor, sem zoom automático).
+ - Aviso (sonner, embaixo à direita, y ~700-780): fica ABAIXO da faixa útil do robô (96..730 px). Hover/clique nele SEMPRE com
+   `noScroll=True`, senão o robô rola a página, leva o cursor para o meio e o aviso some (as falhas de aviso do T03 eram isso). O cursor
+   vai até ele por coordenada (`rolar(0, ponto=(990, 748))`, sem depender da página) logo depois do gesto que o cria; com o mouse em
+   cima o sonner segura o aviso até a palavra. Alvo pelo TEXTO (o Radix ainda marca a página aria-hidden enquanto uma janela sai).
 
 LOGIN: cada capítulo grava sem sessão pronta ("anonymous": true) e entra pela tela de login no `setup` (fora do vídeo) com "$TUT_USER" e
 "$TUT_SENHA" do ambiente (o Supabase falso aceita qualquer senha; o valor nunca vai para arquivo nem log). O `storage` leva as chaves de
@@ -713,7 +717,7 @@ def cap06():
     ini = round(c.W(7, 'Salvar,') + 1.4, 2)   # o aviso (4 s) sobe logo depois do Salvar: o cursor vai direto a ele e fica até "vinculadas:"
     # avisos embaixo à direita: o cursor vai por coordenada (a página fica ocupada logo depois de salvar; ver cap10)
     c.rolar(0, ponto=(990, 748), duration=0.3, after=0, label='cursor no lugar do aviso (embaixo à direita)')
-    c.hover({'text': 'As tabelas vinculadas serão recalculadas'}, round(c.W(7, 'vinculadas:') + 0.6 - ini - 0.55, 2), timeout=8,
+    c.hover({'text': 'As tabelas vinculadas serão recalculadas'}, round(c.W(7, 'vinculadas:') + 0.6 - ini - 0.55, 2), timeout=8, noScroll=True,
             label='aviso Preços atualizados! As tabelas vinculadas... (o mouse segura o aviso)')
     c.waitfor(gone={'role': 'dialog'}, timeout=8)
     c.confere('main', ['R$ 42,50', 'R$ 47,90'], 'Cobre mel 42,50 e 47,90 na lista')
@@ -783,16 +787,13 @@ def cap07():
     c.confere_campos(['44,2'], 'Valor/kg 44,20', escopo='main')
     c.click({'placeholder': 'Escreva o nome ou código do material'}, w=(10, 'vinte.', None, -0.1), label='campo do material de novo')
     c.type({'placeholder': 'Escreva o nome ou código do material'}, 'bronze', w=(11, 'Já', None, 0.3), clicar=False, clear=True, cps=30, label='troca para bronze')
-    c.hover(OPT('Bronze', exact=False), 0.4, w=(11, 'bronze,', None, 0.55), label='Bronze na lista')
-    # o aviso vive 2 s, e o clique de verdade só devolve depois que a página trata a escolha: nos completos de 11/11 (16:40 e 19:40) o
-    # aviso sumiu antes de o cursor chegar. O cursor desce antes ao lugar do aviso e a escolha sai por JS (o item do cmdk aceita
-    # .click()): o aviso sobe embaixo do cursor, um passo curto do mouse em cima dele e o sonner segura o aviso até "aplicado."
+    c.click(OPT('Bronze', exact=False), w=(11, 'bronze,', None, 0.3), label='Bronze')
+    # o aviso vive 2 s: o cursor vai direto a ele, por coordenada (sem esperar a página), e fica em cima (o sonner pausa) até "aplicado."
+    # noScroll SEMPRE em aviso: ele fica abaixo da faixa útil do robô (96..730 px) e, sem isso, o hover rola a página e tira o cursor
+    # de cima do aviso, que some (era a causa das falhas do aviso no cap06, cap07 e cap10)
     ini = round(c.W(11, 'bronze,') + 1.0, 2)
-    c.rolar(0, ponto=(990, 748), duration=0.35, after=0, label='cursor no lugar do aviso (embaixo à direita)')
-    c.ev("(()=>{const o=[...document.querySelectorAll('[role=option]')].filter(e=>e.offsetParent!==null&&e.innerText.includes('Bronze'))[0];"
-         "if(!o)return 'SEM ALVO: opção Bronze';o.click();return 'ok'})()", label='escolhe Bronze (clique por JS, com o cursor já no lugar do aviso)')
-    c.rolar(0, ponto=(1000, 752), duration=0.12, after=0, label='o mouse mexe em cima do aviso (o sonner pausa)')
-    c.hover({'text': 'Preço especial aplicado para Bronze'}, round(c.W(11, 'aplicado.') + 0.6 - ini - 0.55, 2), timeout=6,
+    c.rolar(0, ponto=(990, 748), duration=0.3, after=0, label='cursor no lugar do aviso (embaixo à direita)')
+    c.hover({'text': 'Preço especial aplicado para Bronze'}, round(c.W(11, 'aplicado.') + 0.6 - ini - 0.55, 2), timeout=6, noScroll=True,
             label='aviso Preço especial aplicado (o mouse segura o aviso) (zoom: Valor/kg 30,50 com o aviso)')
     c.confere('body', ['Preço especial aplicado para Bronze'], 'aviso Preço especial aplicado para Bronze')
     c.confere_campos(['30,5'], 'Valor/kg 30,50', escopo='main')
@@ -888,8 +889,8 @@ def cap10():
     # o Playwright não achava o "Desfazer" a tempo (ensaios de 10 e 11/11). O cursor vai antes ao lugar do botão, por coordenada (sem
     # depender da página), e fica lá: com o mouse em cima o sonner segura o aviso até o clique na palavra "Clicando".
     c.rolar(0, ponto=(1190, 746), duration=0.35, after=0, label='cursor no lugar do Desfazer (o aviso sobe embaixo à direita)')
-    c.hover(TXT('Desfazer'), 0.3, timeout=12, label='aviso "Radiador de cobre" excluído com Desfazer (o mouse segura o aviso)')
-    c.click(TXT('Desfazer'), w=(4, 'Clicando'), timeout=12, label='Desfazer')
+    c.hover(TXT('Desfazer'), 0.3, timeout=12, noScroll=True, label='aviso "Radiador de cobre" excluído com Desfazer (o mouse segura o aviso)')
+    c.click(TXT('Desfazer'), w=(4, 'Clicando'), timeout=12, noScroll=True, label='Desfazer')
     c.waitfor(text='restaurado!', timeout=10)
     c.waitfor(target=P('Radiador de cobre'), timeout=10)
     c.hover(CELULA('Radiador de cobre', 4), 1.4, w=(4, 'saldo'), label='o radiador volta com 110 Kg')

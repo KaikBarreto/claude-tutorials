@@ -24,7 +24,8 @@ Estoque); R4 saldos 44.933,67 + 82.515,00 + 5.000,00 = 132.448,67; R5 nenhum cai
 | 03 | L4 | "...e o resultado do mês está em uns sessenta e sete mil e seiscentos." | "...e o resultado do mês está em uns sessenta e nove mil e seiscentos." | R1 agora dá R$ 69.589,55 |
 
 ## Roteiro e plano (fora das respostas)
-- `roteiro.md` cap03: `[ZOOM: "Vendas" R$ 118.620,20 e o resultado R$ 67.604,65]` → resultado **R$ 69.589,55**.
+- `roteiro.md` cap03: `[ZOOM: "Vendas" R$ 118.620,20 e o resultado R$ 67.604,65]` → resultado **R$ 69.589,55**; e as quatro
+  perguntas prontas da coluna Tela → "as duas fixas e duas sorteadas" (Achados, 2).
 - `plano.md`, "Mundo: o que esta aula precisa": a linha de novembro (despesas 32.234,10, resultado 67.604,65) e a de bancos
   (entradas 101.620,20, saídas 43.554,10) seguem com os valores antigos; `MUNDO_LINHA_DO_TEMPO.md` seção 8 ("Cato") e seção 18
   (T21 cap03, "67.600") também.
@@ -37,7 +38,14 @@ Estoque); R4 saldos 44.933,67 + 82.515,00 + 5.000,00 = 132.448,67; R5 nenhum cai
    transferência de R$ 8.000,00 da T14 entra nos dois lados, o saldo inicial da Conta Cooperativa (+5.000,00) vira entrada e o saque
    de R$ 2.000,00 vira saída. A resposta simulada segue o que o app faz hoje; se o app passar a separar por `group_id`, R4 volta a
    R$ 101.620,20 e R$ 43.554,10.
-2. (Supabase falso, não o app) O DRE do falso (`rec/mundo/lib/eco.mjs`, `lancamentosResultado`) não conta lançamento de banco com
+2. **Perguntas prontas da tela Estoque saem sorteadas.** `lib/cato/starterPrompts.ts` (`promptsForContext`) procura "material"
+   ou "estoque" no caminho, mas a rota da tela é `/materiais` ("materiais" não contém "material"): as duas perguntas da tela não
+   entram e a 3ª e a 4ª são sorteadas a cada abertura (conferido no robô: duas aberturas, dois pares diferentes; o código
+   compilado da 1.59.154 testado com `{path: "/materiais"}` devolve lista vazia). Na Posição de Estoque
+   (`/materiais/posicao-estoque`) funciona. O roteiro (cap03, coluna Tela) e o inventário citam "Quanto tenho em estoque agora?"
+   e "Qual material me deu mais faturamento?": na gravação saem as duas fixas ("Como tá indo meu negócio esse mês?", "Como tá
+   meu caixa hoje?") e duas sorteadas. A fala não cita essas duas (nada muda nela); o robô aponta as perguntas pela posição.
+3. (Supabase falso, não o app) O DRE do falso (`rec/mundo/lib/eco.mjs`, `lancamentosResultado`) não conta lançamento de banco com
    `partner_id` ou `group_id`: as baixas da prensa (R$ 1.740,00, Hidráulica Moretti) e da água (R$ 238,40) e a tarifa do saque
    (R$ 6,50) ficam fora das despesas de novembro. R1 segue o falso (o mesmo número da tela "Este mês" da T15); se o falso mudar,
    R1 e a fala do cap03 mudam junto.

@@ -571,12 +571,19 @@
    "timeout": 10
   },
   {
-   "do": "hover",
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const el=[...document.querySelectorAll(\"main [role=list] *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Gabriel Rocha\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-470);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/500),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 82.01,
+   "label": "a lista mostra o Gabriel no meio"
+  },
+  {
+   "do": "type",
    "target": {
     "selector": "main [role=listitem] > button:has(p:text-is('Gabriel Rocha'))"
    },
-   "seconds": 0.1,
-   "at": 83.91,
+   "text": "",
+   "noClick": true,
+   "at": 84.36,
    "label": "o Gabriel na lista Equipe",
    "optional": true,
    "timeout": 4
@@ -592,12 +599,13 @@
    "at": 84.64
   },
   {
-   "do": "hover",
+   "do": "type",
    "target": {
     "selector": "main [role=listitem]:has(p:text-is('Gabriel Rocha')) :text-is('R$ 2.520,00')"
    },
-   "seconds": 2.0,
-   "at": 88.13,
+   "text": "",
+   "noClick": true,
+   "at": 88.58,
    "label": "selo de saldo do Gabriel R$ 2.520,00",
    "optional": true,
    "timeout": 4

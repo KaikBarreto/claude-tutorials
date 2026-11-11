@@ -477,7 +477,10 @@ def cap03():
     c.waitfor(text='Chaparia', timeout=20)
     for nome in ('Ferro pesado', 'Ferro misto', 'Chaparia'):
         c.click(LINHA(nome, '[role=checkbox]'), label=f'marca {nome}')
-    c.click(BTN('Definir resíduo do MTR'), label='Definir resíduo do MTR')
+    # a barra de ações é fixa no rodapé e o botão fica atrás do botão flutuante do Cato (clique de verdade abriria o Cato): clique por eval
+    c.cursor((1150, 765), label='cursor vai ao botão Definir resíduo do MTR (barra fixa)')
+    c.ev(js_clicar('button', 'Definir resíduo do MTR'), label='Definir resíduo do MTR (clique)')
+    c.waitfor(target=SEL('#bulk-material-mtr-residuo'), timeout=10)
     c.click(SEL('#bulk-material-mtr-residuo'), label='Resíduo do MTR (abre)')
     c.press('Enter', at=None, label='Sucata de ferro')
     c.click(BTN('Definir resíduo em 3'), label='Definir resíduo em 3')

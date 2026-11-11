@@ -641,3 +641,7 @@ Decisões:
   final: no cap07 ("O caminhão na nota") o caminhão passa sob o título grande por ~0,3 s no começo; fazer o título subir
   antes de o caminhão entrar no quadro (mesma correção do cap10). Regra geral para o render final das cenas 3D: conferir
   o primeiro segundo de cada cena (título grande × objeto entrando).
+- 11/11 21:4x **3D da T04 e T10 prontos e mandados ao Kaik**: T04 cap00 (quem traz e quem leva, o Saldo), cap08 (papelão
+  59% do peso a R$ 0,55 × latinha 9% a R$ 6,20), cap10 (a latinha de todo mundo vira o mesmo fardo; margem estimada R$ 1,20
+  o quilo); T10 cap03 (separação: 6.420 → 6.100 kg e 2.180 → 2.500 kg) e cap09 (cobre do Siqueira e do Valdir na mesma
+  pilha, a Fundição leva). O cap05 da T10 fica na 2D. Sem objeto novo (usou o `fardoPapelao` do kit e o `galpao`).

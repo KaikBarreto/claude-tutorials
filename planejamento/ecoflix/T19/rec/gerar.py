@@ -494,7 +494,8 @@ def cap01():
     c.hover(SEL("main button:has-text('Exportar Relatório')"), 0.1, at=c.A(3, 'relatório', 0.75), label='Exportar Relatório')
     c.hover(SEL("main button:has-text('Novo Funcionário')"), 0.6, at=c.A(3, 'Novo', 0.75), label='Novo Funcionário')
     c.mark(4)
-    c.hover(SALDO_LINHA('Cláudio Ferraz', 'R$ 2.100,00'), 0.6, at=c.A(4, 'saldo:', 0.75), label='o saldo na lista Equipe (selo verde)')
+    c.hover(SEL("main [role=listitem] p:text-is('Cláudio Ferraz')"), 0.4, at=c.A(4, 'cargo', 0.75), label='nome e cargo na lista Equipe')
+    c.marcar(SALDO_LINHA('Cláudio Ferraz', 'R$ 2.100,00'), at=c.A(4, 'saldo:', 0.3), label='o saldo na lista Equipe (selo verde)')
     c.hover({'placeholder': 'Buscar por nome ou cargo...'}, 0.8, at=c.A(4, 'buscar', 0.75), label='busca Buscar por nome ou cargo...')
     c.mark(5)
     c.click(LINHA('Diego Morais'), at=c.A(5, 'Diego,', 0.8), label='Diego Morais (abre a ficha)')
@@ -573,10 +574,12 @@ def cap02():
     c.click(BDLG('Cadastrar'), at=c.A(9, 'Cadastrar.', 0.9), label='Cadastrar')
     c.waitfor(gone={'role': 'dialog'}, timeout=12)
     c.waitfor(target=LINHA('Gabriel Rocha'), timeout=10)
-    c.hover(LINHA('Gabriel Rocha'), 0.6, at=c.A(9, 'lista.', 0.75), label='o Gabriel na lista Equipe')
+    # o cursor NÃO entra na lista: no caminho até a linha ele passava no "⋯" (menu que abre ao passar o mouse) e o menu cobria a lista
+    rola_ate(c, 'main [role=list]', 'Gabriel Rocha', c.A(9, 'Pronto,', 0.3), 'a lista mostra o Gabriel no meio', y=470, dur_ms=500, prefixo=False)
+    c.marcar(LINHA('Gabriel Rocha'), at=c.A(9, 'lista.', 0.3), label='o Gabriel na lista Equipe')
     c.mark(10)
     c.confere('main [role=list]', ['Gabriel Rocha', 'R$ 2.520,00'], 'saldo do Gabriel = salário')
-    c.hover(SALDO_LINHA('Gabriel Rocha', 'R$ 2.520,00'), 2.0, at=c.A(10, 'saldo', 0.75), label='selo de saldo do Gabriel R$ 2.520,00')
+    c.marcar(SALDO_LINHA('Gabriel Rocha', 'R$ 2.520,00'), at=c.A(10, 'saldo', 0.3), label='selo de saldo do Gabriel R$ 2.520,00')
     c.fim()
     return c
 

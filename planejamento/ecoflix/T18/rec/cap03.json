@@ -553,13 +553,27 @@
    "label": "marca Chaparia"
   },
   {
-   "do": "click",
-   "target": {
-    "role": "button",
-    "name": "Definir resíduo do MTR",
-    "exact": true
+   "do": "scroll",
+   "point": {
+    "x": 1150,
+    "y": 765
    },
-   "label": "Definir resíduo do MTR"
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "label": "cursor vai ao botão Definir resíduo do MTR (barra fixa)"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const b=[...document.querySelectorAll(\"button\")].find(b=>b.offsetParent!==null&&(b.textContent||'').includes(\"Definir resíduo do MTR\"));if(!b)return 'SEM ALVO';b.click();return 'clicado'})()",
+   "label": "Definir resíduo do MTR (clique)"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "#bulk-material-mtr-residuo"
+   },
+   "timeout": 10
   },
   {
    "do": "click",
