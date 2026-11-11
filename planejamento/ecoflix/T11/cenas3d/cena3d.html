@@ -103,6 +103,7 @@ CAPS[2] = () => {
   chaoPatio(CENA, [0, 0, 0], { c: 24, l: 11, passo: 2.6 });
   const nC = 54, pC = domo(nC, 1.1, .9, .75, .14, .45).map(([x, y, z]) => [PX + x, y, z + .2]), rC = giros(nC), sC = tam(nC, 1.4, 1.65);
   const Lc = latinhas(CENA, pC, { s: 1 });
+  const nR = 30, pR = domo(nR, .95, .75, .4, .14, .5).map(([x, y, z]) => [PX + x, y, z + .2]), rR = giros(nR), sR = tam(nR, 1.4, 1.65), Lr = latinhas(CENA, pR, { s: 1 });   // as que ficam: a pilha não esvazia
   mancha(CENA, 3.6, 3.0, .3, [PX, 0, .2]);
   const PR = prensa(CENA, [PRX, 0, 0]);
   const pK = camada(nC, PRX, 0, .42, .36, 1.69, 3, .2), yaw = pK.map(() => ri(0, 2 * PI));
@@ -124,6 +125,7 @@ CAPS[2] = () => {
   return t => {
     GL.style.opacity = eo(pr(t, tfd - .4, .6)).toFixed(3);
     cresce(PR, t, tfd - .2, .6);
+    aplica(Lr, i => { const q = eo(pr(t, te - .1 + i * .006, .5)); return [pR[i][0], pR[i][1] + .7 * (1 - q), pR[i][2], ...rR[i], ...Array(3).fill(sR[i] * Math.max(q, 1e-4))]; });
     aplica(Lc, i => { const q0 = eo(pr(t, te - .1 + i * .006, .5)), f = eio(pr(t, tl + .2 + i * .008, .6)), k = Math.max(.035, cl((lerp(2.22, 1.64, eio(pr(t, ts - .1, .6))) - .05 - 1.57) / .6)),
         van = 1 - eo(pr(t, tf2 + .2, .35)), a = pC[i], b = [pK[i][0], 1.57 + (pK[i][1] - 1.57) * k, pK[i][2]], pos = arco(a, b, f, 1.1);
       const ks = lerp(1, k, f > .98 ? 1 : 0), sc = sC[i] * Math.max(q0 * van, 1e-4);
