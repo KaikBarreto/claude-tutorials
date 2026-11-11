@@ -42,10 +42,12 @@ custo médio e mostra R$ 10.350,00).
 
 ## Achados do app
 
-1. **Histórico de Envios sempre "Nenhum ativo"** (Configurações do grupo › Unidades): a tela lê `entry.materials_count`,
-   `categories_count`, `price_tables_count`, `customers_count` e `suppliers_count` (`pages/GerencialConfiguracoes.tsx`, bloco "Push audit log"),
-   mas a tabela `group_push_audit` grava as colunas `materials`, `categories`, `price_tables`, `customers` e `suppliers`. Depois do envio do
-   cap09 a linha "→ Filial Pindamonhangaba" aparece com "Nenhum ativo", embora 9 ativos tenham ido.
+1. **Histórico de Envios não acompanha o envio** (Configurações do grupo › Unidades): logo depois do "Confirmar Envio" a lista continua
+   "Nenhum envio registrado ainda." e o passo a passo "Nenhum envio realizado" (a consulta `group-push-audit` não é invalidada pelo
+   envio; só volta ao abrir a página de novo). E quando aparece, a linha "→ Filial Pindamonhangaba" diz "Nenhum ativo": a tela lê
+   `entry.materials_count`, `categories_count`, `price_tables_count`, `customers_count` e `suppliers_count`
+   (`pages/GerencialConfiguracoes.tsx`), mas a tabela `group_push_audit` grava `materials`, `categories`, `price_tables`, `customers` e
+   `suppliers` (no cap09 foram 8 categorias e 1 tabela). Na gravação o zoom da L8 fica na lixeira, longe desse bloco.
 2. **"Sobrescrever preços existentes" não protege os preços da filial**: com "Tabelas de Preço" marcado, o `push_group_assets_to_company`
    sincroniza a tabela Principal da filial com a tabela padrão do grupo (upsert dos itens) e ainda atualiza `purchase_price`/`sale_price` dos
    materiais da filial, mesmo com a chave desligada; a janela diz "Itens já existentes na filial serão ignorados" e "Se ativado, os preços dos

@@ -699,10 +699,10 @@ def cap10():
     c.waitfor(text='Exigir aprovação em transferências', timeout=8)
     c.click(SWITCH_TEXTO('Exigir aprovação em transferências'), at=c.A(1, 'ligo', 0.6), label='liga Exigir aprovação em transferências')
     c.mark(2)
-    # o cartão das transferências fica embaixo dos dois de configuração: a página desce até ele (o formulário da Nova abre embaixo do título)
-    c.ev(js_rola_texto('Transferências Inter-Unidades', 150, 700), at=c.L(2), label='desce até Transferências Inter-Unidades')
     c.click(BTN('Nova'), at=c.A(2, 'Nova,', 0.6), label='Nova')
     c.waitfor(text='Unidade de origem...', timeout=8)
+    # o formulário abre embaixo dos dois cartões de configuração (Origem e Destino em y~770): a página desce até o título dele
+    c.ev(js_rola_texto('Nova transferência em lote', 140, 500), label='desce até Nova transferência em lote')
     c.click(COMBO('Unidade de origem...'), at=c.A(2, 'origem', 0.6), label='Origem')
     c.click(OPT('Filial Pindamonhangaba'), at=c.A(2, 'filial', 0.3), label='Origem: Filial Pindamonhangaba')
     c.click(COMBO('Unidade de destino...'), at=c.A(2, 'destino,', 0.6), label='Destino')

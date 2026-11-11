@@ -241,14 +241,35 @@
    "timeout": 8
   },
   {
+   "do": "eval",
+   "js": "(()=>[...document.querySelectorAll('[role=dialog] button')].some(b=>/Remover Setembro de 2026/.test(b.getAttribute('aria-label')||b.innerText))?'ja marcado':'desmarcado')()",
+   "label": "estado do Período anterior ao abrir"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Período anterior",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.3,
+   "at": 25.5,
+   "label": "Período anterior (setembro)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
    "do": "click",
    "target": {
     "text": "Período anterior",
     "exact": true,
     "within": "[role=dialog]"
    },
-   "at": 25.7,
-   "label": "Período anterior (setembro)"
+   "label": "marca Período anterior",
+   "unless": {
+    "role": "button",
+    "name": "Remover Setembro de 2026"
+   }
   },
   {
    "do": "mark",
