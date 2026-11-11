@@ -329,3 +329,889 @@ com outros; o "Jequitibá" ficou só com ela (a contabilidade da T17 virou "Mana
 Gerada da coluna Fala de todos os roteiros (`jn_falas.py` e `jn_numeros.py` da junção, só leitura). "Valor" é o número lido da
 fala; "De onde sai" diz a seção deste arquivo ou o que a aula faz na tela. Números de contagem da própria tela (passos, abas,
 dias do calendário) aparecem como "tela".
+
+| Aula | Cap. | Valor | Na fala | De onde sai |
+|---|---|---|---|---|
+| T00 | cap01 | 3 | três | tela (contagem, data ou passo) |
+| T00 | cap05 | 38 kg | trinta e oito quilos | exemplo da aula (38 kg × R$ 6,20 = R$ 235,60); plano da seção 3 |
+| T00 | cap05 | 6,20 R$ | seis reais e vinte | exemplo da aula (38 kg × R$ 6,20 = R$ 235,60); plano da seção 3 |
+| T00 | cap05 | 235,60 R$ | duzentos e trinta e cinco reais e sessenta | exemplo da aula (38 kg × R$ 6,20 = R$ 235,60); plano da seção 3 |
+| T00 | cap09 | 5 | cinco | tela (contagem, data ou passo) |
+| T00 | cap10 | 2 | dois | tela (contagem, data ou passo) |
+| T00 | cap12 | 12 | doze | tela (contagem, data ou passo) |
+| T01 | cap01 | 2 | duas | tela (contagem, data ou passo) |
+| T01 | cap01 | 8 | oito | tela (contagem, data ou passo) |
+| T01 | cap01 | 2 | dois | tela (contagem, data ou passo) |
+| T01 | cap02 | 7 dias | sete dias | tela (contagem, data ou passo) |
+| T01 | cap02 | 5 | cinco | tela (contagem, data ou passo) |
+| T01 | cap03 | 5 | cinco | tela (contagem, data ou passo) |
+| T01 | cap04 | 6 | seis | tela (contagem, data ou passo) |
+| T01 | cap04 | 2 | duas | tela (contagem, data ou passo) |
+| T01 | cap06 | 1.250 | mil duzentos e cinquenta | fechamento do #84 (seção 9) |
+| T01 | cap06 | 2 | dois | tela (contagem, data ou passo) |
+| T01 | cap07 | 30 | trinta | tela (contagem, data ou passo) |
+| T01 | cap07 | 31 | trinta e um | tela (contagem, data ou passo) |
+| T01 | cap08 | 2 linhas | duas linhas | tela (contagem, data ou passo) |
+| T01 | cap09 | 4 | 4 | tela (contagem, data ou passo) |
+| T01 | cap09 | 37 kg | trinta e sete quilos | tela do T1 (cadastro e preferências) |
+| T01 | cap09 | 229,40 R$ | duzentos e vinte e nove reais e quarenta | tela do T1 (cadastro e preferências) |
+| T01 | cap09 | 229 R$ | duzentos e vinte e nove reais | tela do T1 (cadastro e preferências) |
+| T01 | cap09 | 40 ¢ | quarenta centavos | tela do T1 (cadastro e preferências) |
+| T01 | cap09 | 200 kg | duzentos quilos | tela do T1 (cadastro e preferências) |
+| T01 | cap09 | 10 kg | dez quilos | tela do T1 (cadastro e preferências) |
+| T01 | cap09 | 190 kg | cento e noventa quilos | tela do T1 (cadastro e preferências) |
+| T01 | cap09 | 142,50 R$ | cento e quarenta e dois reais e cinquenta | tela do T1 (cadastro e preferências) |
+| T01 | cap09 | 200 kg | duzentos quilos | tela do T1 (cadastro e preferências) |
+| T01 | cap09 | 150 R$ | cento e cinquenta reais | tela do T1 (cadastro e preferências) |
+| T01 | cap09 | 2 | dois | tela (contagem, data ou passo) |
+| T01 | cap09 | 190 kg | cento e noventa quilos | tela do T1 (cadastro e preferências) |
+| T01 | cap10 | 3 | três | tela (contagem, data ou passo) |
+| T01 | cap10 | 30 | trinta | tela (contagem, data ou passo) |
+| T01 | cap10 | 150 dias | sessenta e noventa dias | tela (contagem, data ou passo) |
+| T01 | cap10 | 30 | trinta | tela (contagem, data ou passo) |
+| T01 | cap10 | 150 dias | sessenta e noventa dias | tela (contagem, data ou passo) |
+| T01 | cap10 | 30 dias | Trinta dias | tela (contagem, data ou passo) |
+| T01 | cap10 | 33,33 % | trinta e três vírgula trinta e três cento cento | tela (contagem, data ou passo) |
+| T01 | cap10 | 60 dias | Sessenta dias | tela (contagem, data ou passo) |
+| T01 | cap10 | 90 dias | noventa dias | tela (contagem, data ou passo) |
+| T01 | cap10 | 33,34 | trinta e três vírgula trinta e quatro | tela (contagem, data ou passo) |
+| T01 | cap10 | 100 % | cem cento cento | tela (contagem, data ou passo) |
+| T01 | cap10 | 100 | cem | tela (contagem, data ou passo) |
+| T01 | cap12 | 2 | duas | tela (contagem, data ou passo) |
+| T01 | cap13 | 30 | trinta | tela (contagem, data ou passo) |
+| T01 | cap13 | 150 dias | sessenta e noventa dias | tela (contagem, data ou passo) |
+| T02 | cap02 | 8 | oito | tela (contagem, data ou passo) |
+| T02 | cap03 | 1 | uma | tela (contagem, data ou passo) |
+| T02 | cap03 | 3 | três | tela (contagem, data ou passo) |
+| T02 | cap04 | 2 | duas | tela (contagem, data ou passo) |
+| T02 | cap04 | 2 | duas | tela (contagem, data ou passo) |
+| T02 | cap04 | 4 | quatro | tela (contagem, data ou passo) |
+| T02 | cap04 | 2 | duas | tela (contagem, data ou passo) |
+| T02 | cap05 | 2 | dois | tela (contagem, data ou passo) |
+| T02 | cap06 | 2 | dois | tela (contagem, data ou passo) |
+| T02 | cap08 | 3 | três | tela (contagem, data ou passo) |
+| T02 | cap08 | 3 | três | tela (contagem, data ou passo) |
+| T02 | cap09 | 1.000 kg | mil quilos | tela do T2 (plano de 3 usuários) |
+| T02 | cap09 | 95 ¢ | noventa e cinco centavos | tela do T2 (plano de 3 usuários) |
+| T03 | cap01 | 4 | quatro | tela (contagem, data ou passo) |
+| T03 | cap01 | 3 | três | tela (contagem, data ou passo) |
+| T03 | cap02 | 21 R$ | vinte e um reais | tabela de preços (seção 4) e o que a T3 faz na tela |
+| T03 | cap02 | 74 | vinte e quatro e cinquenta | tela (contagem, data ou passo) |
+| T03 | cap02 | 120 kg | cento e vinte quilos | tabela de preços (seção 4) e o que a T3 faz na tela |
+| T03 | cap02 | 0 | zero | tela (contagem, data ou passo) |
+| T03 | cap03 | 16 | dezesseis | tela (contagem, data ou passo) |
+| T03 | cap03 | 70 | setenta | tela (contagem, data ou passo) |
+| T03 | cap03 | 0 | zero | tela (contagem, data ou passo) |
+| T03 | cap03 | 7 | sete | tela (contagem, data ou passo) |
+| T03 | cap03 | 0 | zero | tela (contagem, data ou passo) |
+| T03 | cap03 | 0 | zero | tela (contagem, data ou passo) |
+| T03 | cap03 | 0 | zero | tela (contagem, data ou passo) |
+| T03 | cap03 | 7 | zero zero sete | tela (contagem, data ou passo) |
+| T03 | cap03 | 7 | sete | tela (contagem, data ou passo) |
+| T03 | cap03 | 70 | setenta | tela (contagem, data ou passo) |
+| T03 | cap04 | 8 | oito | tela (contagem, data ou passo) |
+| T03 | cap04 | 3 | três | tela (contagem, data ou passo) |
+| T03 | cap05 | 5 | cinco | tela (contagem, data ou passo) |
+| T03 | cap06 | 50 ¢ | cinquenta centavos | tabela de preços (seção 4) e o que a T3 faz na tela |
+| T03 | cap06 | 92 | quarenta e dois e cinquenta | tela (contagem, data ou passo) |
+| T03 | cap06 | 137 | quarenta e sete e noventa | tela (contagem, data ou passo) |
+| T03 | cap06 | 3 | três | tela (contagem, data ou passo) |
+| T03 | cap07 | 4 % | quatro cento cento | tela (contagem, data ou passo) |
+| T03 | cap07 | 10 R$ | dez reais | tabela de preços (seção 4) e o que a T3 faz na tela |
+| T03 | cap07 | 50 | dez e quarenta | tela (contagem, data ou passo) |
+| T03 | cap07 | 64 | quarenta e quatro e vinte | tela (contagem, data ou passo) |
+| T03 | cap07 | 64 | quarenta e quatro e vinte | tela (contagem, data ou passo) |
+| T03 | cap07 | 80 | trinta e cinquenta | tela (contagem, data ou passo) |
+| T03 | cap08 | 118 kg | cento e dezoito quilos | tabela de preços (seção 4) e o que a T3 faz na tela |
+| T03 | cap08 | 120 | cento e vinte | tela (contagem, data ou passo) |
+| T03 | cap08 | 2 kg | dois quilos | tabela de preços (seção 4) e o que a T3 faz na tela |
+| T03 | cap08 | 120 | cento e vinte | tela (contagem, data ou passo) |
+| T03 | cap08 | 118 kg | cento e dezoito quilos | tabela de preços (seção 4) e o que a T3 faz na tela |
+| T03 | cap08 | 8 kg | oito quilos | tabela de preços (seção 4) e o que a T3 faz na tela |
+| T03 | cap08 | 3 | três | tela (contagem, data ou passo) |
+| T03 | cap08 | 8 kg | oito quilos | tabela de preços (seção 4) e o que a T3 faz na tela |
+| T03 | cap08 | 0 | zero | tela (contagem, data ou passo) |
+| T03 | cap09 | 4 | 4 | tela (contagem, data ou passo) |
+| T03 | cap10 | 110 kg | cento e dez quilos | tabela de preços (seção 4) e o que a T3 faz na tela |
+| T04 | cap00 | 2 | dois | tela (contagem, data ou passo) |
+| T04 | cap01 | 2 | duas | tela (contagem, data ou passo) |
+| T04 | cap01 | 2 | duas | tela (contagem, data ou passo) |
+| T04 | cap01 | 2 | dois | tela (contagem, data ou passo) |
+| T04 | cap02 | 0 | zero | tela (contagem, data ou passo) |
+| T04 | cap04 | 418 | quatrocentos e dezoito | tela (contagem, data ou passo) |
+| T04 | cap05 | 2 | duas | tela (contagem, data ou passo) |
+| T04 | cap05 | 2.100 R$ | dois mil e cem reais | saldos (seção 10) e cooperativa (seção 5) |
+| T04 | cap05 | 1.260 R$ | mil duzentos e sessenta reais | saldos (seção 10) e cooperativa (seção 5) |
+| T04 | cap05 | 2 | dois | tela (contagem, data ou passo) |
+| T04 | cap05 | 2 | duas | tela (contagem, data ou passo) |
+| T04 | cap05 | 840 R$ | oitocentos e quarenta reais | saldos (seção 10) e cooperativa (seção 5) |
+| T04 | cap08 | 14 | catorze | tela (contagem, data ou passo) |
+| T04 | cap08 | 5 | cinco | tela (contagem, data ou passo) |
+| T04 | cap08 | 59 % | cinquenta e nove cento cento | tela (contagem, data ou passo) |
+| T04 | cap08 | 9 % | nove cento cento | tela (contagem, data ou passo) |
+| T04 | cap08 | 26 | seis e vinte | tela (contagem, data ou passo) |
+| T04 | cap08 | 55 ¢ | cinquenta e cinco centavos | saldos (seção 10) e cooperativa (seção 5) |
+| T04 | cap09 | 2.550 R$ | dois mil quinhentos e cinquenta reais | saldos (seção 10) e cooperativa (seção 5) |
+| T04 | cap09 | 1.200 R$ | mil e duzentos reais | saldos (seção 10) e cooperativa (seção 5) |
+| T04 | cap09 | 1.350 R$ | mil trezentos e cinquenta reais | saldos (seção 10) e cooperativa (seção 5) |
+| T04 | cap10 | 26 | seis e vinte | tela (contagem, data ou passo) |
+| T04 | cap10 | 47 | sete e quarenta | tela (contagem, data ou passo) |
+| T04 | cap10 | 20 | vinte | tela (contagem, data ou passo) |
+| T04 | cap10 | 2.100 R$ | dois mil e cem reais | saldos (seção 10) e cooperativa (seção 5) |
+| T04 | cap10 | 5.998 R$ | cinco mil novecentos e noventa e oito reais | saldos (seção 10) e cooperativa (seção 5) |
+| T04 | cap11 | 450 R$ | quatrocentos e cinquenta reais | saldos (seção 10) e cooperativa (seção 5) |
+| T04 | cap11 | 120 | cento e vinte | tela (contagem, data ou passo) |
+| T04 | cap12 | 19.540 R$ | dezenove mil quinhentos e quarenta reais | 14.370 + 4.870 + 300 (seção 10) |
+| T04 | cap12 | 3 | três | tela (contagem, data ou passo) |
+| T04 | cap12 | 4.870 R$ | quatro mil oitocentos e setenta reais | 2.608 × 1,25 + 1.000 × 0,98 + 600 × 1,05 (seção 7) |
+| T04 | cap12 | 300 R$ | trezentos reais | saldos (seção 10) e cooperativa (seção 5) |
+| T04 | cap12 | 3.690 R$ | três mil seiscentos e noventa reais | saldos (seção 10) e cooperativa (seção 5) |
+| T04 | cap12 | 1.350 R$ | mil trezentos e cinquenta reais | saldos (seção 10) e cooperativa (seção 5) |
+| T04 | cap12 | 1.500 R$ | mil e quinhentos reais | saldos (seção 10) e cooperativa (seção 5) |
+| T05 | cap00 | 312 kg | trezentos e doze quilos | EcoTray simulado da T5 (18,6 e 312 kg) |
+| T05 | cap00 | 321 | trezentos e vinte e um | tela (contagem, data ou passo) |
+| T05 | cap05 | 58 mm | cinquenta e oito milímetros | tela (contagem, data ou passo) |
+| T05 | cap05 | 80 mm | oitenta milímetros | tela (contagem, data ou passo) |
+| T05 | cap05 | 58 mm | cinquenta e oito milímetros | tela (contagem, data ou passo) |
+| T05 | cap05 | 100 % | cem cento cento | tela (contagem, data ou passo) |
+| T05 | cap06 | 18 kg | Dezoito quilos | EcoTray simulado da T5 (18,6 e 312 kg) |
+| T05 | cap06 | 600 | seiscentos | tela (contagem, data ou passo) |
+| T05 | cap06 | 3 | três | tela (contagem, data ou passo) |
+| T05 | cap07 | 312 kg | trezentos e doze quilos | EcoTray simulado da T5 (18,6 e 312 kg) |
+| T05 | cap08 | 312 kg | trezentos e doze quilos | EcoTray simulado da T5 (18,6 e 312 kg) |
+| T05 | cap11 | 58 mm | cinquenta e oito milímetros | tela (contagem, data ou passo) |
+| T06 | cap02 | 1.250 R$ | mil duzentos e cinquenta reais | fechamento do #84 (seção 9) |
+| T06 | cap02 | 1.500 R$ | mil e quinhentos reais | caixas (seção 9), cofre (seção 8) e o que a T6 faz |
+| T06 | cap02 | 1.500 R$ | mil e quinhentos reais | caixas (seção 9), cofre (seção 8) e o que a T6 faz |
+| T06 | cap03 | 1.500 | mil e quinhentos | tela (contagem, data ou passo) |
+| T06 | cap03 | 0 | zero | tela (contagem, data ou passo) |
+| T06 | cap03 | 0 | zero | tela (contagem, data ou passo) |
+| T06 | cap03 | 0 | zero | tela (contagem, data ou passo) |
+| T06 | cap04 | 17.000 R$ | dezessete mil reais | 18.500 − 1.500 (T6) |
+| T06 | cap04 | 18.500 | dezoito mil e quinhentos | cofre em 10/11 (seção 8) |
+| T06 | cap04 | 1.500 | Mil e quinhentos | tela (contagem, data ou passo) |
+| T06 | cap04 | 18.500 R$ | dezoito mil e quinhentos reais | cofre em 10/11 (seção 8) |
+| T06 | cap04 | 1.500 | mil e quinhentos | tela (contagem, data ou passo) |
+| T06 | cap04 | 17.000 | dezessete mil | 18.500 − 1.500 (T6) |
+| T06 | cap05 | 20.000 R$ | vinte mil reais | caixas (seção 9), cofre (seção 8) e o que a T6 faz |
+| T06 | cap05 | 20.000 | vinte mil | tela (contagem, data ou passo) |
+| T06 | cap05 | 20.000 | vinte mil | tela (contagem, data ou passo) |
+| T06 | cap05 | 17.000 | dezessete mil | 18.500 − 1.500 (T6) |
+| T06 | cap05 | 1.500 | mil e quinhentos | tela (contagem, data ou passo) |
+| T06 | cap05 | 2 | duas | tela (contagem, data ou passo) |
+| T06 | cap05 | 17.000 | dezessete mil | 18.500 − 1.500 (T6) |
+| T06 | cap05 | 17.000 | dezessete mil | 18.500 − 1.500 (T6) |
+| T06 | cap06 | 2 | dois | tela (contagem, data ou passo) |
+| T06 | cap06 | 1.500 | mil e quinhentos | tela (contagem, data ou passo) |
+| T06 | cap06 | 18.500 | dezoito mil e quinhentos | cofre em 10/11 (seção 8) |
+| T06 | cap06 | 1.500 | mil e quinhentos | tela (contagem, data ou passo) |
+| T06 | cap06 | 17.000 | dezessete mil | 18.500 − 1.500 (T6) |
+| T06 | cap08 | 17.000 | dezessete mil | 18.500 − 1.500 (T6) |
+| T06 | cap09 | 20.000 | vinte mil | tela (contagem, data ou passo) |
+| T06 | cap09 | 17 | dezessete | tela (contagem, data ou passo) |
+| T06 | cap09 | 3.000 | três mil | tela (contagem, data ou passo) |
+| T06 | cap09 | 2 | dois | tela (contagem, data ou passo) |
+| T06 | cap09 | 3.000 R$ | três mil reais | caixas (seção 9), cofre (seção 8) e o que a T6 faz |
+| T06 | cap09 | 6,50 R$ | seis reais e cinquenta | caixas (seção 9), cofre (seção 8) e o que a T6 faz |
+| T06 | cap09 | 3.006,50 R$ | três mil e seis reais e cinquenta | caixas (seção 9), cofre (seção 8) e o que a T6 faz |
+| T06 | cap09 | 3.000 | três mil | tela (contagem, data ou passo) |
+| T06 | cap09 | 20.000 | vinte mil | tela (contagem, data ou passo) |
+| T06 | cap09 | 129 | trinta e nove e noventa | tela (contagem, data ou passo) |
+| T06 | cap10 | 2 compras | duas compras | tela (contagem, data ou passo) |
+| T06 | cap10 | 1.500 | mil e quinhentos | tela (contagem, data ou passo) |
+| T06 | cap10 | 582 | quatrocentos e noventa e dois e noventa | tela (contagem, data ou passo) |
+| T06 | cap10 | 1.007,10 R$ | mil e sete reais e dez | 1.500 − 492,90 (T6) |
+| T06 | cap10 | 2 | dois | tela (contagem, data ou passo) |
+| T06 | cap10 | 1.017 | mil e sete e dez | tela (contagem, data ou passo) |
+| T06 | cap12 | 0 | zero | tela (contagem, data ou passo) |
+| T06 | cap12 | 2 | duas | tela (contagem, data ou passo) |
+| T06 | cap12 | 2 | dois | tela (contagem, data ou passo) |
+| T07 | cap05 | 36 R$ | trinta e seis reais | estoque de 10/11 (seção 4) e o que a T7 faz |
+| T07 | cap05 | 12 kg | doze quilos | estoque de 10/11 (seção 4) e o que a T7 faz |
+| T07 | cap05 | 400 | quatrocentos | tela (contagem, data ou passo) |
+| T07 | cap05 | 446,40 R$ | quatrocentos e quarenta e seis reais e quarenta | estoque de 10/11 (seção 4) e o que a T7 faz |
+| T07 | cap05 | 3 | três | tela (contagem, data ou passo) |
+| T07 | cap05 | 21 kg | vinte e um quilos | estoque de 10/11 (seção 4) e o que a T7 faz |
+| T07 | cap05 | 600 | seiscentos | tela (contagem, data ou passo) |
+| T07 | cap05 | 200 | duzentos | tela (contagem, data ou passo) |
+| T07 | cap05 | 0,60 | zero vírgula seis | tela (contagem, data ou passo) |
+| T07 | cap05 | 21 kg | vinte e um quilos | estoque de 10/11 (seção 4) e o que a T7 faz |
+| T07 | cap05 | 26 | seis e vinte | tela (contagem, data ou passo) |
+| T07 | cap05 | 130,20 R$ | cento e trinta reais e vinte | estoque de 10/11 (seção 4) e o que a T7 faz |
+| T07 | cap06 | 3 | três | tela (contagem, data ou passo) |
+| T07 | cap06 | 412 kg | quatrocentos e doze quilos | estoque de 10/11 (seção 4) e o que a T7 faz |
+| T07 | cap06 | 96 | noventa e seis | tela (contagem, data ou passo) |
+| T07 | cap06 | 316 kg | trezentos e dezesseis quilos | estoque de 10/11 (seção 4) e o que a T7 faz |
+| T07 | cap06 | 3 % | três cento cento | tela (contagem, data ou passo) |
+| T07 | cap06 | 9,48 kg | nove vírgula quarenta e oito quilos | estoque de 10/11 (seção 4) e o que a T7 faz |
+| T07 | cap06 | 306,52 kg | trezentos e seis vírgula cinquenta e dois quilos | estoque de 10/11 (seção 4) e o que a T7 faz |
+| T07 | cap06 | 229,89 R$ | duzentos e vinte e nove reais e oitenta e nove | estoque de 10/11 (seção 4) e o que a T7 faz |
+| T07 | cap06 | 2 | duas | tela (contagem, data ou passo) |
+| T07 | cap06 | 316 kg | trezentos e dezesseis quilos | estoque de 10/11 (seção 4) e o que a T7 faz |
+| T07 | cap06 | 306,52 | trezentos e seis vírgula cinquenta e dois | tela (contagem, data ou passo) |
+| T07 | cap07 | 2 | dois | tela (contagem, data ou passo) |
+| T07 | cap07 | 18 kg | dezoito quilos | estoque de 10/11 (seção 4) e o que a T7 faz |
+| T07 | cap07 | 400 | quatrocentos | tela (contagem, data ou passo) |
+| T07 | cap07 | 400 | quatrocentos | tela (contagem, data ou passo) |
+| T07 | cap07 | 2 | duas | tela (contagem, data ou passo) |
+| T07 | cap07 | 40 kg | quarenta quilos | estoque de 10/11 (seção 4) e o que a T7 faz |
+| T07 | cap07 | 1 kg | um quilo | estoque de 10/11 (seção 4) e o que a T7 faz |
+| T07 | cap07 | 26 | seis e vinte | tela (contagem, data ou passo) |
+| T07 | cap08 | 225 R$ | duzentos e vinte e cinco reais | estoque de 10/11 (seção 4) e o que a T7 faz |
+| T07 | cap08 | 225 | duzentos e vinte e cinco | tela (contagem, data ou passo) |
+| T07 | cap08 | 0 | zero zero | tela (contagem, data ou passo) |
+| T07 | cap08 | 4,89 R$ | quatro reais e oitenta e nove | estoque de 10/11 (seção 4) e o que a T7 faz |
+| T07 | cap08 | 0 | zero | tela (contagem, data ou passo) |
+| T07 | cap08 | 75 | setenta e cinco | tela (contagem, data ou passo) |
+| T07 | cap08 | 75 R$ | setenta e cinco reais | estoque de 10/11 (seção 4) e o que a T7 faz |
+| T07 | cap08 | 225 | duzentos e vinte e cinco | tela (contagem, data ou passo) |
+| T07 | cap08 | 913,20 R$ | novecentos e treze reais e vinte | estoque de 10/11 (seção 4) e o que a T7 faz |
+| T07 | cap08 | 2 | duas | tela (contagem, data ou passo) |
+| T07 | cap09 | 3 | três | tela (contagem, data ou passo) |
+| T07 | cap10 | 43 | três e quarenta | tela (contagem, data ou passo) |
+| T07 | cap10 | 13 | três e dez | tela (contagem, data ou passo) |
+| T07 | cap10 | 186 kg | cento e oitenta e seis quilos | estoque de 10/11 (seção 4) e o que a T7 faz |
+| T07 | cap10 | 64 | sessenta e quatro | tela (contagem, data ou passo) |
+| T07 | cap10 | 2.936,40 R$ | dois mil novecentos e trinta e seis reais e quarenta | estoque de 10/11 (seção 4) e o que a T7 faz |
+| T07 | cap10 | 200 | duzentos | tela (contagem, data ou passo) |
+| T07 | cap10 | 2.000 | dois mil | tela (contagem, data ou passo) |
+| T07 | cap10 | 3 | três | tela (contagem, data ou passo) |
+| T07 | cap10 | 200 | Duzentos | tela (contagem, data ou passo) |
+| T07 | cap10 | 2.000 | dois mil | tela (contagem, data ou passo) |
+| T07 | cap10 | 736,40 R$ | setecentos e trinta e seis reais e quarenta | estoque de 10/11 (seção 4) e o que a T7 faz |
+| T07 | cap11 | 2.000 | dois mil | tela (contagem, data ou passo) |
+| T07 | cap11 | 2 | duas | tela (contagem, data ou passo) |
+| T07 | cap11 | 2 | Duas | tela (contagem, data ou passo) |
+| T07 | cap11 | 1.000 R$ | mil reais | estoque de 10/11 (seção 4) e o que a T7 faz |
+| T07 | cap11 | 25 | vinte e cinco | tela (contagem, data ou passo) |
+| T07 | cap11 | 10 | dez | tela (contagem, data ou passo) |
+| T07 | cap11 | 2 | duas | tela (contagem, data ou passo) |
+| T07 | cap13 | 152 kg | cento e cinquenta e dois quilos | estoque de 10/11 (seção 4) e o que a T7 faz |
+| T07 | cap13 | 121 | trinta e um e noventa | tela (contagem, data ou passo) |
+| T07 | cap13 | 668,80 R$ | seiscentos e sessenta e oito reais e oitenta | estoque de 10/11 (seção 4) e o que a T7 faz |
+| T07 | cap13 | 44 | quatro e quarenta | tela (contagem, data ou passo) |
+| T07 | cap13 | 214 kg | duzentos e catorze quilos | latão em 10/11 (seção 4, T7) |
+| T07 | cap13 | 152 | cento e cinquenta e dois | tela (contagem, data ou passo) |
+| T07 | cap13 | 62 | sessenta e dois | tela (contagem, data ou passo) |
+| T07 | cap14 | 60 kg | sessenta quilos | estoque de 10/11 (seção 4) e o que a T7 faz |
+| T07 | cap14 | 42 | quarenta e dois | cobre mel em 10/11 (seção 4, T7) |
+| T07 | cap14 | 18 kg | dezoito quilos | estoque de 10/11 (seção 4) e o que a T7 faz |
+| T07 | cap14 | 18 kg | dezoito quilos | estoque de 10/11 (seção 4) e o que a T7 faz |
+| T07 | cap14 | 60 kg | sessenta quilos | estoque de 10/11 (seção 4) e o que a T7 faz |
+| T07 | cap14 | 7.722,80 R$ | sete mil setecentos e vinte e dois reais e oitenta | estoque de 10/11 (seção 4) e o que a T7 faz |
+| T07 | cap14 | 1.072 | novecentos e noventa e dois e oitenta | tela (contagem, data ou passo) |
+| T07 | cap15 | 14 kg | catorze quilos | estoque de 10/11 (seção 4) e o que a T7 faz |
+| T07 | cap15 | 600 | seiscentos | tela (contagem, data ou passo) |
+| T07 | cap16 | 2 | duas | tela (contagem, data ou passo) |
+| T08 | cap02 | 3 | três | tela (contagem, data ou passo) |
+| T08 | cap03 | 9.460 kg | nove mil quatrocentos e sessenta quilos | ticket #58 e #59 da T8 (seção 1) |
+| T08 | cap03 | 3 | três | tela (contagem, data ou passo) |
+| T08 | cap03 | 2 | duas | tela (contagem, data ou passo) |
+| T08 | cap04 | 2 | duas | tela (contagem, data ou passo) |
+| T08 | cap04 | 6.380 kg | seis mil trezentos e oitenta quilos | tara do FKD2E41 (seção 3) |
+| T08 | cap04 | 2 | duas | tela (contagem, data ou passo) |
+| T08 | cap04 | 3.080 kg | Três mil e oitenta quilos | ticket #58 e #59 da T8 (seção 1) |
+| T08 | cap04 | 2 | duas | tela (contagem, data ou passo) |
+| T08 | cap05 | 2 % | dois cento cento | tela (contagem, data ou passo) |
+| T08 | cap05 | 61 kg | sessenta e um quilos | ticket #58 e #59 da T8 (seção 1) |
+| T08 | cap05 | 600 | seiscentos | tela (contagem, data ou passo) |
+| T08 | cap05 | 3.018 kg | Três mil e dezoito quilos | ticket #58 e #59 da T8 (seção 1) |
+| T08 | cap05 | 400 | quatrocentos | tela (contagem, data ou passo) |
+| T08 | cap06 | 3 | três | tela (contagem, data ou passo) |
+| T08 | cap06 | 5.640 kg | cinco mil seiscentos e quarenta quilos | ticket #58 e #59 da T8 (seção 1) |
+| T08 | cap07 | 26 | seis e vinte | tela (contagem, data ou passo) |
+| T08 | cap07 | 18.714,08 R$ | dezoito mil setecentos e catorze reais e oito | 3.018,4 × 6,20 (T8) |
+| T08 | cap08 | 4 | 4 | tela (contagem, data ou passo) |
+| T08 | cap08 | 2 | duas | tela (contagem, data ou passo) |
+| T08 | cap09 | 3 | três | tela (contagem, data ou passo) |
+| T09 | cap00 | 3 | três | tela (contagem, data ou passo) |
+| T09 | cap00 | 21 | vinte e um | tela (contagem, data ou passo) |
+| T09 | cap00 | 2 | duas | tela (contagem, data ou passo) |
+| T09 | cap01 | 1 | uma | tela (contagem, data ou passo) |
+| T09 | cap01 | 2 | duas | tela (contagem, data ou passo) |
+| T09 | cap02 | 24 kg | vinte e quatro quilos | caixas #70 e #87 (seção 9) e a cópia de 03/11 (seção 7) |
+| T09 | cap03 | 21 | vinte e um | tela (contagem, data ou passo) |
+| T09 | cap03 | 21 | vinte e um | tela (contagem, data ou passo) |
+| T09 | cap03 | 240 kg | duzentos e quarenta quilos | caixas #70 e #87 (seção 9) e a cópia de 03/11 (seção 7) |
+| T09 | cap03 | 744 R$ | setecentos e quarenta e quatro reais | 240 × 3,10 (#70) |
+| T09 | cap04 | 42 kg | quarenta e dois quilos | cobre mel em 10/11 (seção 4, T7) |
+| T09 | cap04 | 24 | vinte e quatro | tela (contagem, data ou passo) |
+| T09 | cap04 | 42 kg | quarenta e dois quilos | cobre mel em 10/11 (seção 4, T7) |
+| T09 | cap04 | 260,40 R$ | duzentos e sessenta reais e quarenta | caixas #70 e #87 (seção 9) e a cópia de 03/11 (seção 7) |
+| T09 | cap04 | 24 kg | vinte e quatro quilos | caixas #70 e #87 (seção 9) e a cópia de 03/11 (seção 7) |
+| T09 | cap04 | 42 kg | quarenta e dois quilos | cobre mel em 10/11 (seção 4, T7) |
+| T09 | cap04 | 300 | duzentos e sessenta e quarenta | tela (contagem, data ou passo) |
+| T09 | cap04 | 18 kg | dezoito quilos | caixas #70 e #87 (seção 9) e a cópia de 03/11 (seção 7) |
+| T09 | cap04 | 2 | duas | tela (contagem, data ou passo) |
+| T09 | cap05 | 2 | duas | tela (contagem, data ou passo) |
+| T09 | cap05 | 280 kg | duzentos e oitenta quilos | caixas #70 e #87 (seção 9) e a cópia de 03/11 (seção 7) |
+| T09 | cap05 | 210 R$ | duzentos e dez reais | caixas #70 e #87 (seção 9) e a cópia de 03/11 (seção 7) |
+| T09 | cap05 | 3 | três | tela (contagem, data ou passo) |
+| T09 | cap05 | 2 | duas | tela (contagem, data ou passo) |
+| T09 | cap05 | 5 | cinco | tela (contagem, data ou passo) |
+| T09 | cap05 | 3 | três | tela (contagem, data ou passo) |
+| T09 | cap06 | 42 kg | quarenta e dois quilos | cobre mel em 10/11 (seção 4, T7) |
+| T09 | cap07 | 21 | vinte e um | tela (contagem, data ou passo) |
+| T09 | cap07 | 1 | um | tela (contagem, data ou passo) |
+| T09 | cap07 | 21 | vinte e um | tela (contagem, data ou passo) |
+| T09 | cap07 | 10 | dez | tela (contagem, data ou passo) |
+| T09 | cap08 | 240 kg | duzentos e quarenta quilos | caixas #70 e #87 (seção 9) e a cópia de 03/11 (seção 7) |
+| T09 | cap08 | 744 R$ | setecentos e quarenta e quatro reais | 240 × 3,10 (#70) |
+| T09 | cap08 | 2 | dois | tela (contagem, data ou passo) |
+| T09 | cap09 | 21 | vinte e um | tela (contagem, data ou passo) |
+| T09 | cap09 | 21 | vinte e um | tela (contagem, data ou passo) |
+| T09 | cap09 | 240 kg | duzentos e quarenta quilos | caixas #70 e #87 (seção 9) e a cópia de 03/11 (seção 7) |
+| T09 | cap09 | 744 R$ | setecentos e quarenta e quatro reais | 240 × 3,10 (#70) |
+| T09 | cap09 | 662 | seiscentos e doze e cinquenta | tela (contagem, data ou passo) |
+| T09 | cap09 | 21 | vinte e um | tela (contagem, data ou passo) |
+| T09 | cap09 | 48 | dezessete e trinta e um | tela (contagem, data ou passo) |
+| T09 | cap10 | 3 | três | tela (contagem, data ou passo) |
+| T09 | cap10 | 21 | vinte e um | tela (contagem, data ou passo) |
+| T10 | cap00 | 3 | três | tela (contagem, data ou passo) |
+| T10 | cap00 | 31 | trinta e um | tela (contagem, data ou passo) |
+| T10 | cap00 | 4 | quatro | tela (contagem, data ou passo) |
+| T10 | cap01 | 4 | quatro | tela (contagem, data ou passo) |
+| T10 | cap01 | 3 | três | tela (contagem, data ou passo) |
+| T10 | cap02 | 3 | três | tela (contagem, data ou passo) |
+| T10 | cap02 | 42 kg | quarenta e dois quilos | cobre mel em 10/11 (seção 4, T7) |
+| T10 | cap02 | 92 | quarenta e dois e cinquenta | tela (contagem, data ou passo) |
+| T10 | cap02 | 6.420 kg | seis mil quatrocentos e vinte quilos | estoque e Kardex (seção 4) e outubro (seção 5) |
+| T10 | cap03 | 320 kg | trezentos e vinte quilos | estoque e Kardex (seção 4) e outubro (seção 5) |
+| T10 | cap03 | 6.420 kg | seis mil quatrocentos e vinte quilos | estoque e Kardex (seção 4) e outubro (seção 5) |
+| T10 | cap03 | 320 kg | trezentos e vinte quilos | estoque e Kardex (seção 4) e outubro (seção 5) |
+| T10 | cap03 | 6.100 kg | seis mil e cem quilos | estoque e Kardex (seção 4) e outubro (seção 5) |
+| T10 | cap03 | 2.500 | dois mil e quinhentos | 2.180 + 320 da transferência (T10) |
+| T10 | cap04 | 2.180 kg | dois mil cento e oitenta quilos | ferro pesado em 10/11 08:30 (seção 4) |
+| T10 | cap04 | 320 | trezentos e vinte | tela (contagem, data ou passo) |
+| T10 | cap04 | 2.500 | dois mil e quinhentos | 2.180 + 320 da transferência (T10) |
+| T10 | cap04 | 860 kg | oitocentos e sessenta quilos | compra de 09/11 (seção 7) |
+| T10 | cap04 | 2.180 | dois mil cento e oitenta | ferro pesado em 10/11 08:30 (seção 4) |
+| T10 | cap04 | 10 | dez | tela (contagem, data ou passo) |
+| T10 | cap04 | 10 dias | dez dias | tela (contagem, data ou passo) |
+| T10 | cap04 | 2 | dois | tela (contagem, data ou passo) |
+| T10 | cap04 | 2 dias | dois dias | tela (contagem, data ou passo) |
+| T10 | cap05 | 7 | sete | tela (contagem, data ou passo) |
+| T10 | cap05 | 2 | dois | tela (contagem, data ou passo) |
+| T10 | cap05 | 31 | trinta e um | tela (contagem, data ou passo) |
+| T10 | cap05 | 14 kg | catorze quilos | estoque e Kardex (seção 4) e outubro (seção 5) |
+| T10 | cap05 | 180 kg | cento e oitenta quilos | estoque e Kardex (seção 4) e outubro (seção 5) |
+| T10 | cap05 | 2 | duas | tela (contagem, data ou passo) |
+| T10 | cap06 | 860 kg | Oitocentos e sessenta quilos | compra de 09/11 (seção 7) |
+| T10 | cap06 | 95 ¢ | noventa e cinco centavos | estoque e Kardex (seção 4) e outubro (seção 5) |
+| T10 | cap06 | 817 R$ | oitocentos e dezessete reais | 860 × 0,95 (seção 7) |
+| T10 | cap07 | 4 | quatro | tela (contagem, data ou passo) |
+| T10 | cap08 | 980 kg | novecentos e oitenta quilos | cobre mel comprado em outubro (seção 5) |
+| T10 | cap08 | 41.650 R$ | quarenta e um mil seiscentos e cinquenta reais | 980 × 42,50 (seção 5) |
+| T10 | cap08 | 92 | quarenta e dois e cinquenta | tela (contagem, data ou passo) |
+| T10 | cap08 | 86 kg | oitenta e seis quilos | estoque e Kardex (seção 4) e outubro (seção 5) |
+| T10 | cap08 | 6 kg | seis quilos | estoque e Kardex (seção 4) e outubro (seção 5) |
+| T10 | cap08 | 80 kg | oitenta quilos | estoque e Kardex (seção 4) e outubro (seção 5) |
+| T10 | cap08 | 1.000 kg | mil quilos | estoque e Kardex (seção 4) e outubro (seção 5) |
+| T10 | cap08 | 47.900 R$ | quarenta e sete mil e novecentos reais | 1.000 × 47,90 (seção 5) |
+| T10 | cap08 | 137 | quarenta e sete e noventa | tela (contagem, data ou passo) |
+| T10 | cap08 | 6.250 R$ | seis mil duzentos e cinquenta reais | 47.900 − 41.650 (T10) |
+| T10 | cap08 | 13 % | treze cento cento | tela (contagem, data ou passo) |
+| T10 | cap08 | 2 | dois | tela (contagem, data ou passo) |
+| T10 | cap08 | 1.000 kg | mil quilos | estoque e Kardex (seção 4) e outubro (seção 5) |
+| T10 | cap08 | 5.400 | cinco mil e quatrocentos | (47,90 − 42,50) × 1.000 (T10) |
+| T10 | cap08 | 1.320 kg | mil trezentos e vinte quilos | bateria de outubro, ou o ferro pesado em 06/11 (seção 4) |
+| T10 | cap10 | 31 | trinta e um | tela (contagem, data ou passo) |
+| T10 | cap10 | 2.500 kg | dois mil e quinhentos quilos | 2.180 + 320 da transferência (T10) |
+| T10 | cap10 | 31 | trinta e um | tela (contagem, data ou passo) |
+| T10 | cap10 | 82 | vinte e três e cinquenta e nove | tela (contagem, data ou passo) |
+| T10 | cap10 | 31 | trinta e um | tela (contagem, data ou passo) |
+| T10 | cap10 | 41.860 kg | quarenta e um mil oitocentos e sessenta quilos | ferro pesado em 31/10 (seção 4) |
+| T10 | cap11 | 31 | trinta e um | tela (contagem, data ou passo) |
+| T10 | cap12 | 320 kg | trezentos e vinte quilos | estoque e Kardex (seção 4) e outubro (seção 5) |
+| T10 | cap12 | 31 | trinta e um | tela (contagem, data ou passo) |
+| T11 | cap01 | 4 | quatro | tela (contagem, data ou passo) |
+| T11 | cap03 | 1 kg | um quilo | produção da semente da T11 (seção 13) |
+| T11 | cap03 | 1 kg | um quilo | produção da semente da T11 (seção 13) |
+| T11 | cap03 | 1 kg | um quilo | produção da semente da T11 (seção 13) |
+| T11 | cap03 | 4 | quatro | tela (contagem, data ou passo) |
+| T11 | cap03 | 1 kg | um quilo | produção da semente da T11 (seção 13) |
+| T11 | cap03 | 600 | seiscentos | tela (contagem, data ou passo) |
+| T11 | cap03 | 1 kg | um quilo | produção da semente da T11 (seção 13) |
+| T11 | cap03 | 500 kg | Quinhentos quilos | produção da semente da T11 (seção 13) |
+| T11 | cap03 | 500 kg | quinhentos quilos | produção da semente da T11 (seção 13) |
+| T11 | cap03 | 50 kg | Cinquenta quilos | produção da semente da T11 (seção 13) |
+| T11 | cap03 | 80 kg | oitenta quilos | produção da semente da T11 (seção 13) |
+| T11 | cap05 | 500 kg | quinhentos quilos | produção da semente da T11 (seção 13) |
+| T11 | cap05 | 1 | um | tela (contagem, data ou passo) |
+| T11 | cap05 | 500 kg | quinhentos quilos | produção da semente da T11 (seção 13) |
+| T11 | cap05 | 6,20 R$ | seis reais e vinte | produção da semente da T11 (seção 13) |
+| T11 | cap05 | 3 | três | tela (contagem, data ou passo) |
+| T11 | cap06 | 3 | três | tela (contagem, data ou passo) |
+| T11 | cap07 | 1 | um | tela (contagem, data ou passo) |
+| T11 | cap07 | 260 kg | duzentos e sessenta quilos | produção da semente da T11 (seção 13) |
+| T11 | cap07 | 220 | duzentos e vinte | tela (contagem, data ou passo) |
+| T11 | cap07 | 480 kg | quatrocentos e oitenta quilos | produção da semente da T11 (seção 13) |
+| T11 | cap07 | 14 kg | catorze quilos | produção da semente da T11 (seção 13) |
+| T11 | cap08 | 480 kg | quatrocentos e oitenta quilos | produção da semente da T11 (seção 13) |
+| T11 | cap08 | 498 kg | quatrocentos e noventa e oito quilos | produção da semente da T11 (seção 13) |
+| T11 | cap08 | 18 kg | dezoito quilos | produção da semente da T11 (seção 13) |
+| T11 | cap08 | 498 | quatrocentos e noventa e oito | tela (contagem, data ou passo) |
+| T11 | cap08 | 498 kg | quatrocentos e noventa e oito quilos | produção da semente da T11 (seção 13) |
+| T11 | cap08 | 480 | quatrocentos e oitenta | tela (contagem, data ou passo) |
+| T11 | cap09 | 2 % | dois cento cento | tela (contagem, data ou passo) |
+| T11 | cap09 | 480 kg | quatrocentos e oitenta quilos | produção da semente da T11 (seção 13) |
+| T11 | cap09 | 9 kg | nove quilos | produção da semente da T11 (seção 13) |
+| T11 | cap09 | 600 | seiscentos | tela (contagem, data ou passo) |
+| T11 | cap09 | 18 kg | dezoito quilos | produção da semente da T11 (seção 13) |
+| T11 | cap10 | 500 kg | quinhentos quilos | produção da semente da T11 (seção 13) |
+| T11 | cap10 | 480 | quatrocentos e oitenta | tela (contagem, data ou passo) |
+| T11 | cap10 | 96 % | noventa e seis cento cento | tela (contagem, data ou passo) |
+| T11 | cap10 | 18 kg | dezoito quilos | produção da semente da T11 (seção 13) |
+| T11 | cap10 | 3.087,60 R$ | três mil e oitenta e sete reais e sessenta | produção da semente da T11 (seção 13) |
+| T11 | cap10 | 6,43 R$ | seis reais e quarenta e três | produção da semente da T11 (seção 13) |
+| T11 | cap10 | 26 | seis e vinte | tela (contagem, data ou passo) |
+| T11 | cap10 | 18 kg | dezoito quilos | produção da semente da T11 (seção 13) |
+| T11 | cap11 | 480 kg | quatrocentos e oitenta quilos | produção da semente da T11 (seção 13) |
+| T11 | cap11 | 498 | quatrocentos e noventa e oito | tela (contagem, data ou passo) |
+| T11 | cap11 | 96,40 % | noventa e seis vírgula quatro cento cento | tela (contagem, data ou passo) |
+| T11 | cap11 | 18 kg | dezoito quilos | produção da semente da T11 (seção 13) |
+| T11 | cap11 | 480 | quatrocentos e oitenta | tela (contagem, data ou passo) |
+| T11 | cap11 | 3,80 % | três vírgula oito cento cento | tela (contagem, data ou passo) |
+| T11 | cap11 | 250 kg | duzentos e cinquenta quilos | produção da semente da T11 (seção 13) |
+| T11 | cap11 | 30 kg | trinta quilos | produção da semente da T11 (seção 13) |
+| T11 | cap12 | 2 % | dois cento cento | tela (contagem, data ou passo) |
+| T11 | cap12 | 0 | zero | tela (contagem, data ou passo) |
+| T11 | cap12 | 250 kg | duzentos e cinquenta quilos | produção da semente da T11 (seção 13) |
+| T11 | cap13 | 2 | dois | tela (contagem, data ou passo) |
+| T11 | cap13 | 2 | duas | tela (contagem, data ou passo) |
+| T11 | cap13 | 80 kg | oitenta quilos | produção da semente da T11 (seção 13) |
+| T11 | cap13 | 50 kg | cinquenta quilos | produção da semente da T11 (seção 13) |
+| T11 | cap13 | 2 | duas | tela (contagem, data ou passo) |
+| T11 | cap13 | 80 kg | oitenta quilos | produção da semente da T11 (seção 13) |
+| T11 | cap14 | 500 kg | quinhentos quilos | produção da semente da T11 (seção 13) |
+| T12 | cap03 | 3 | três | tela (contagem, data ou passo) |
+| T12 | cap03 | 400 kg | quatrocentos quilos | frota e coletas (seções 3 e 12) |
+| T12 | cap04 | 11 | onze | tela (contagem, data ou passo) |
+| T12 | cap05 | 3 | três | tela (contagem, data ou passo) |
+| T12 | cap05 | 400 kg | quatrocentos quilos | frota e coletas (seções 3 e 12) |
+| T12 | cap05 | 9 | nove | tela (contagem, data ou passo) |
+| T12 | cap05 | 3 | três | tela (contagem, data ou passo) |
+| T12 | cap05 | 2 | dois | tela (contagem, data ou passo) |
+| T12 | cap06 | 03 | 03 | tela (contagem, data ou passo) |
+| T12 | cap06 | 05 | 05 | tela (contagem, data ou passo) |
+| T12 | cap06 | 8 | oito | tela (contagem, data ou passo) |
+| T12 | cap07 | 800 kg | oitocentos quilos | frota e coletas (seções 3 e 12) |
+| T12 | cap07 | 10 | dez | tela (contagem, data ou passo) |
+| T12 | cap08 | 7.100 kg | sete mil e cem quilos | frota e coletas (seções 3 e 12) |
+| T12 | cap08 | 8.500 | oito mil e quinhentos | tela (contagem, data ou passo) |
+| T12 | cap09 | 1 | uma | tela (contagem, data ou passo) |
+| T12 | cap09 | 05 | 05 | tela (contagem, data ou passo) |
+| T12 | cap09 | 06 | 06 | tela (contagem, data ou passo) |
+| T12 | cap09 | 06 | 06 | tela (contagem, data ou passo) |
+| T12 | cap09 | 8 | oito | tela (contagem, data ou passo) |
+| T12 | cap10 | 6 | seis | tela (contagem, data ou passo) |
+| T12 | cap10 | 5 | cinco | tela (contagem, data ou passo) |
+| T12 | cap10 | 100 % | cem cento cento | tela (contagem, data ou passo) |
+| T12 | cap10 | 5 | cinco | tela (contagem, data ou passo) |
+| T12 | cap10 | 5 | cinco | tela (contagem, data ou passo) |
+| T12 | cap11 | 24 | vinte e quatro | tela (contagem, data ou passo) |
+| T12 | cap12 | 06 | 06 | tela (contagem, data ou passo) |
+| T13 | cap01 | 5 | cinco | tela (contagem, data ou passo) |
+| T13 | cap01 | 5 | cinco | tela (contagem, data ou passo) |
+| T13 | cap02 | 4 | quatro | tela (contagem, data ou passo) |
+| T13 | cap02 | 7 | 7 | tela (contagem, data ou passo) |
+| T13 | cap02 | 7 dias | sete dias | tela (contagem, data ou passo) |
+| T13 | cap02 | 2 | dois | tela (contagem, data ou passo) |
+| T13 | cap03 | 5 | cinco | tela (contagem, data ou passo) |
+| T13 | cap04 | 19 | dezenove | tela (contagem, data ou passo) |
+| T13 | cap04 | 3.480 R$ | três mil quatrocentos e oitenta reais | saldos (seção 10) e as contas que a T13 cria |
+| T13 | cap04 | 19 | dezenove | tela (contagem, data ou passo) |
+| T13 | cap05 | 180 R$ | cento e oitenta reais | saldos (seção 10) e as contas que a T13 cria |
+| T13 | cap06 | 7.080 R$ | sete mil e oitenta reais | saldos (seção 10) e as contas que a T13 cria |
+| T13 | cap06 | 3 | três | tela (contagem, data ou passo) |
+| T13 | cap06 | 7.080 | sete mil e oitenta | tela (contagem, data ou passo) |
+| T13 | cap06 | 23 | vinte e três | tela (contagem, data ou passo) |
+| T13 | cap06 | 3 | três | tela (contagem, data ou passo) |
+| T13 | cap06 | 1 | uma | tela (contagem, data ou passo) |
+| T13 | cap06 | 2.360 R$ | dois mil trezentos e sessenta reais | parcela dos pneus (T13) |
+| T13 | cap06 | 3 | três | tela (contagem, data ou passo) |
+| T13 | cap06 | 3 | três | tela (contagem, data ou passo) |
+| T13 | cap07 | 2.300 R$ | dois mil e trezentos reais | saldos (seção 10) e as contas que a T13 cria |
+| T13 | cap07 | 12 | doze | tela (contagem, data ou passo) |
+| T13 | cap07 | 12 | doze | tela (contagem, data ou passo) |
+| T13 | cap07 | 12 | doze | tela (contagem, data ou passo) |
+| T13 | cap07 | 3 | três | tela (contagem, data ou passo) |
+| T13 | cap08 | 15 | quinze | tela (contagem, data ou passo) |
+| T13 | cap08 | 15 | quinze | tela (contagem, data ou passo) |
+| T13 | cap08 | 12 | doze | tela (contagem, data ou passo) |
+| T13 | cap08 | 15 | quinze | tela (contagem, data ou passo) |
+| T13 | cap09 | 1.874,30 R$ | mil oitocentos e setenta e quatro reais e trinta | saldos (seção 10) e as contas que a T13 cria |
+| T13 | cap09 | 1.740 R$ | mil setecentos e quarenta reais | saldos (seção 10) e as contas que a T13 cria |
+| T13 | cap09 | 30 | trinta | tela (contagem, data ou passo) |
+| T13 | cap09 | 30 | trinta | tela (contagem, data ou passo) |
+| T13 | cap10 | 4.870 R$ | quatro mil oitocentos e setenta reais | 2.608 × 1,25 + 1.000 × 0,98 + 600 × 1,05 (seção 7) |
+| T13 | cap10 | 2.000 R$ | dois mil reais | saldos (seção 10) e as contas que a T13 cria |
+| T13 | cap10 | 2.870 | dois mil oitocentos e setenta | 4.870 − 2.000 (T13) |
+| T13 | cap10 | 2.870 | dois mil oitocentos e setenta | 4.870 − 2.000 (T13) |
+| T13 | cap10 | 300 kg | trezentos quilos | saldos (seção 10) e as contas que a T13 cria |
+| T13 | cap10 | 3 | três | tela (contagem, data ou passo) |
+| T13 | cap10 | 2 | duas | tela (contagem, data ou passo) |
+| T13 | cap12 | 3 | três | tela (contagem, data ou passo) |
+| T13 | cap13 | 4 | quatro | tela (contagem, data ou passo) |
+| T13 | cap13 | 3 | três | tela (contagem, data ou passo) |
+| T14 | cap01 | 2 | duas | tela (contagem, data ou passo) |
+| T14 | cap02 | 5.000 R$ | cinco mil reais | bancos e OFX (seção 8) |
+| T14 | cap03 | 2 | dois | tela (contagem, data ou passo) |
+| T14 | cap03 | 18.500 R$ | dezoito mil e quinhentos reais | cofre em 10/11 (seção 8) |
+| T14 | cap03 | 18.560 | dezoito mil quinhentos e sessenta | tela (contagem, data ou passo) |
+| T14 | cap03 | 60 R$ | Sessenta reais | bancos e OFX (seção 8) |
+| T14 | cap03 | 3 | três | tela (contagem, data ou passo) |
+| T14 | cap03 | 60 R$ | sessenta reais | bancos e OFX (seção 8) |
+| T14 | cap04 | 3 | três | tela (contagem, data ou passo) |
+| T14 | cap04 | 350 R$ | trezentos e cinquenta reais | bancos e OFX (seção 8) |
+| T14 | cap04 | 8.000 R$ | Oito mil reais | bancos e OFX (seção 8) |
+| T14 | cap04 | 2.000 R$ | Dois mil reais | bancos e OFX (seção 8) |
+| T14 | cap04 | 6,50 R$ | seis reais e cinquenta | bancos e OFX (seção 8) |
+| T14 | cap05 | 0 | zero | tela (contagem, data ou passo) |
+| T14 | cap06 | 10 | dez | tela (contagem, data ou passo) |
+| T14 | cap06 | 17 | dezessete | tela (contagem, data ou passo) |
+| T14 | cap06 | 3 | três | tela (contagem, data ou passo) |
+| T14 | cap07 | 2.250 R$ | dois mil duzentos e cinquenta reais | bancos e OFX (seção 8) |
+| T14 | cap07 | 3 | três | tela (contagem, data ou passo) |
+| T14 | cap07 | 8.000 | oito mil | tela (contagem, data ou passo) |
+| T14 | cap08 | 238,40 R$ | duzentos e trinta e oito reais e quarenta | bancos e OFX (seção 8) |
+| T14 | cap09 | 64,90 R$ | sessenta e quatro reais e noventa | bancos e OFX (seção 8) |
+| T14 | cap10 | 9 | nove | tela (contagem, data ou passo) |
+| T14 | cap10 | 4.815 R$ | quatro mil oitocentos e quinze reais | bancos e OFX (seção 8) |
+| T14 | cap10 | 3 | três | tela (contagem, data ou passo) |
+| T14 | cap10 | 4.815,20 R$ | quatro mil oitocentos e quinze reais e vinte | bancos e OFX (seção 8) |
+| T14 | cap10 | 2 R$ | dois reais | bancos e OFX (seção 8) |
+| T14 | cap10 | 20 ¢ | vinte centavos | bancos e OFX (seção 8) |
+| T14 | cap11 | 2 linhas | duas linhas | tela (contagem, data ou passo) |
+| T14 | cap11 | 12 R$ | doze reais | bancos e OFX (seção 8) |
+| T14 | cap11 | 2 | duas | tela (contagem, data ou passo) |
+| T14 | cap11 | 2 | duas | tela (contagem, data ou passo) |
+| T14 | cap11 | 0 | zero | tela (contagem, data ou passo) |
+| T14 | cap11 | 2 | duas | tela (contagem, data ou passo) |
+| T14 | cap12 | 2 linhas | duas linhas | tela (contagem, data ou passo) |
+| T14 | cap12 | 2 | dois | tela (contagem, data ou passo) |
+| T14 | cap12 | 380 R$ | trezentos e oitenta reais | bancos e OFX (seção 8) |
+| T14 | cap12 | 2 compras | duas compras | tela (contagem, data ou passo) |
+| T14 | cap14 | 2 | dois | tela (contagem, data ou passo) |
+| T14 | cap14 | 0 | zero | tela (contagem, data ou passo) |
+| T14 | cap14 | 20 ¢ | vinte centavos | bancos e OFX (seção 8) |
+| T14 | cap14 | 0 | zero | tela (contagem, data ou passo) |
+| T14 | cap15 | 0 | zero | tela (contagem, data ou passo) |
+| T15 | cap01 | 2 | dois | tela (contagem, data ou passo) |
+| T15 | cap01 | 2 | dois | tela (contagem, data ou passo) |
+| T15 | cap01 | 2 | dois | tela (contagem, data ou passo) |
+| T15 | cap04 | 6.500 R$ | seis mil e quinhentos reais | outubro (seção 5) |
+| T15 | cap04 | 19.800 R$ | dezenove mil e oitocentos reais | folha de outubro (seção 5) |
+| T15 | cap04 | 7.700 R$ | sete mil e setecentos reais | outubro (seção 5) |
+| T15 | cap04 | 2.800 R$ | dois mil e oitocentos reais | 950 + 1.850 (seção 5) |
+| T15 | cap05 | 50.000 kg | cinquenta mil quilos | ferro pesado comprado em outubro (seção 5) |
+| T15 | cap05 | 47.500 R$ | quarenta e sete mil e quinhentos reais | outubro (seção 5) |
+| T15 | cap05 | 5 | cinco | tela (contagem, data ou passo) |
+| T15 | cap06 | 6.500 R$ | seis mil e quinhentos reais | outubro (seção 5) |
+| T15 | cap07 | 50 t | cinquenta toneladas | outubro (seção 5) |
+| T15 | cap07 | 95 ¢ | noventa e cinco centavos | outubro (seção 5) |
+| T15 | cap07 | 47.500 R$ | quarenta e sete mil e quinhentos reais | outubro (seção 5) |
+| T15 | cap07 | 10 t | dez toneladas | outubro (seção 5) |
+| T15 | cap07 | 1,25 R$ | um real e vinte e cinco | outubro (seção 5) |
+| T15 | cap07 | 12.500 | doze mil e quinhentos | tela (contagem, data ou passo) |
+| T15 | cap07 | 35.000 R$ | trinta e cinco mil reais | outubro (seção 5) |
+| T15 | cap07 | 10 t | dez toneladas | outubro (seção 5) |
+| T15 | cap07 | 9.500 | nove mil e quinhentos | tela (contagem, data ou passo) |
+| T15 | cap07 | 3.000 | três mil | tela (contagem, data ou passo) |
+| T15 | cap07 | 40 t | quarenta toneladas | outubro (seção 5) |
+| T15 | cap07 | 38.000 R$ | trinta e oito mil reais | 256.860 − 218.860 (seção 5) |
+| T15 | cap07 | 2 | dois | tela (contagem, data ou passo) |
+| T15 | cap07 | 6.500 R$ | seis mil e quinhentos reais | outubro (seção 5) |
+| T15 | cap07 | 31.500 R$ | trinta e um mil e quinhentos reais | outubro (seção 5) |
+| T15 | cap07 | 2 | dois | tela (contagem, data ou passo) |
+| T15 | cap07 | 38.000 R$ | trinta e oito mil reais | 256.860 − 218.860 (seção 5) |
+| T15 | cap07 | 2 | dois | tela (contagem, data ou passo) |
+| T15 | cap09 | 6 | seis | tela (contagem, data ou passo) |
+| T15 | cap09 | 6 | seis | tela (contagem, data ou passo) |
+| T15 | cap09 | 2 | dois | tela (contagem, data ou passo) |
+| T15 | cap10 | 1 | um | tela (contagem, data ou passo) |
+| T15 | cap10 | 2 | Duas | tela (contagem, data ou passo) |
+| T15 | cap10 | 3.000 | três mil | tela (contagem, data ou passo) |
+| T15 | cap10 | 850 R$ | oitocentos e cinquenta reais | outubro (seção 5) |
+| T15 | cap10 | 2 | duas | tela (contagem, data ou passo) |
+| T15 | cap12 | 2 | dois | tela (contagem, data ou passo) |
+| T15 | cap12 | 6 | seis | tela (contagem, data ou passo) |
+| T16 | cap02 | 3 | três | tela (contagem, data ou passo) |
+| T16 | cap02 | 2 | dois | tela (contagem, data ou passo) |
+| T16 | cap02 | 3 | três | tela (contagem, data ou passo) |
+| T16 | cap03 | 1 | 1 | tela (contagem, data ou passo) |
+| T16 | cap03 | 14 | catorze | tela (contagem, data ou passo) |
+| T16 | cap03 | 2.027 | dois mil e vinte e sete | tela (contagem, data ou passo) |
+| T16 | cap03 | 1 | 1 | tela (contagem, data ou passo) |
+| T16 | cap04 | 2 | dois | tela (contagem, data ou passo) |
+| T16 | cap04 | 3 | três | tela (contagem, data ou passo) |
+| T16 | cap05 | 0 | zero | tela (contagem, data ou passo) |
+| T16 | cap05 | 2 | duas | tela (contagem, data ou passo) |
+| T16 | cap06 | 1.248 | mil duzentos e quarenta e oito | tela (contagem, data ou passo) |
+| T16 | cap06 | 1.248 | mil duzentos e quarenta e oito | tela (contagem, data ou passo) |
+| T16 | cap06 | 0 | zero | tela (contagem, data ou passo) |
+| T16 | cap06 | 1.249 | mil duzentos e quarenta e nove | tela (contagem, data ou passo) |
+| T16 | cap07 | 2 | dois | tela (contagem, data ou passo) |
+| T16 | cap08 | 5 doc | cinco documentos | tela (contagem, data ou passo) |
+| T16 | cap08 | 5 | cinco | tela (contagem, data ou passo) |
+| T16 | cap09 | 2 | dois | tela (contagem, data ou passo) |
+| T16 | cap09 | 1.249 | mil duzentos e quarenta e nove | tela (contagem, data ou passo) |
+| T16 | cap09 | 320 kg | Trezentos e vinte quilos | novembro, caixas e fiscal (seções 7, 9 e 11) |
+| T16 | cap09 | 50 | dez e quarenta | tela (contagem, data ou passo) |
+| T16 | cap09 | 3.328 R$ | três mil trezentos e vinte e oito reais | novembro, caixas e fiscal (seções 7, 9 e 11) |
+| T16 | cap09 | 1.249 | mil duzentos e quarenta e nove | tela (contagem, data ou passo) |
+| T16 | cap09 | 44 | quarenta e quatro | tela (contagem, data ou passo) |
+| T16 | cap10 | 500 kg | quinhentos quilos | novembro, caixas e fiscal (seções 7, 9 e 11) |
+| T16 | cap10 | 506 | quinhentos e seis | tela (contagem, data ou passo) |
+| T16 | cap10 | 6 kg | seis quilos | novembro, caixas e fiscal (seções 7, 9 e 11) |
+| T16 | cap10 | 500 kg | Quinhentos quilos | novembro, caixas e fiscal (seções 7, 9 e 11) |
+| T16 | cap10 | 137 | quarenta e sete e noventa | tela (contagem, data ou passo) |
+| T16 | cap10 | 23.950 R$ | vinte e três mil novecentos e cinquenta reais | 500 × 47,90 (seção 7) |
+| T16 | cap10 | 1.250 | mil duzentos e cinquenta | fechamento do #84 (seção 9) |
+| T16 | cap11 | 9 | nove | tela (contagem, data ou passo) |
+| T16 | cap11 | 1.251 | mil duzentos e cinquenta e um | tela (contagem, data ou passo) |
+| T16 | cap11 | 803,30 R$ | oitocentos e três reais e trinta | as três compras do #83 (seção 9) |
+| T16 | cap11 | 64 kg | sessenta e quatro quilos | novembro, caixas e fiscal (seções 7, 9 e 11) |
+| T16 | cap11 | 180 | cento e oitenta | tela (contagem, data ou passo) |
+| T16 | cap11 | 410 | quatrocentos e dez | tela (contagem, data ou passo) |
+| T16 | cap11 | 1.251 | mil duzentos e cinquenta e um | tela (contagem, data ou passo) |
+| T16 | cap12 | 1.249 | mil duzentos e quarenta e nove | tela (contagem, data ou passo) |
+| T16 | cap12 | 15 | quinze | tela (contagem, data ou passo) |
+| T16 | cap12 | 24 h | vinte e quatro horas | tela (contagem, data ou passo) |
+| T16 | cap12 | 1.250 | mil duzentos e cinquenta | fechamento do #84 (seção 9) |
+| T16 | cap13 | 2 | dois | tela (contagem, data ou passo) |
+| T16 | cap13 | 1.246 | mil duzentos e quarenta e seis | tela (contagem, data ou passo) |
+| T16 | cap13 | 1.247 | mil duzentos e quarenta e sete | tela (contagem, data ou passo) |
+| T16 | cap13 | 3 | três | tela (contagem, data ou passo) |
+| T16 | cap13 | 1.246 | mil duzentos e quarenta e seis | tela (contagem, data ou passo) |
+| T16 | cap13 | 1.247 | mil duzentos e quarenta e sete | tela (contagem, data ou passo) |
+| T16 | cap14 | 2 | dois | tela (contagem, data ou passo) |
+| T16 | cap14 | 2 | dois | tela (contagem, data ou passo) |
+| T16 | cap15 | 1.984 R$ | mil novecentos e oitenta e quatro reais | 640 × 3,10 (seção 7) |
+| T16 | cap16 | 2 | duas | tela (contagem, data ou passo) |
+| T16 | cap16 | 2 | duas | tela (contagem, data ou passo) |
+| T16 | cap18 | 1 | 1 | tela (contagem, data ou passo) |
+| T16 | cap18 | 5 doc | cinco documentos | tela (contagem, data ou passo) |
+| T16 | cap18 | 3 | três | tela (contagem, data ou passo) |
+| T16 | cap18 | 0 | zero | tela (contagem, data ou passo) |
+| T17 | cap01 | 2 | duas | tela (contagem, data ou passo) |
+| T17 | cap02 | 6.380 kg | seis mil trezentos e oitenta quilos | tara do FKD2E41 (seção 3) |
+| T17 | cap02 | 14.000 kg | catorze mil quilos | fiscal (seção 11) e frota (seção 3) |
+| T17 | cap04 | 2 notas | duas notas | tela (contagem, data ou passo) |
+| T17 | cap04 | 55.000 | cinquenta e cinco mil | tela (contagem, data ou passo) |
+| T17 | cap04 | 380 R$ | trezentos e oitenta reais | fiscal (seção 11) e frota (seção 3) |
+| T17 | cap04 | 5.800 kg | cinco mil e oitocentos quilos | fiscal (seção 11) e frota (seção 3) |
+| T17 | cap07 | 6 | seis | tela (contagem, data ou passo) |
+| T17 | cap07 | 1.850 R$ | mil oitocentos e cinquenta reais | NFS-e 13/14 ou latinha da filial (T17, T22) |
+| T17 | cap07 | 14 | catorze | tela (contagem, data ou passo) |
+| T17 | cap08 | 2 | duas | tela (contagem, data ou passo) |
+| T17 | cap08 | 1.650 R$ | mil seiscentos e cinquenta reais | fiscal (seção 11) e frota (seção 3) |
+| T17 | cap08 | 980 | novecentos e oitenta | cobre mel comprado em outubro (seção 5) |
+| T17 | cap08 | 20 | vinte | tela (contagem, data ou passo) |
+| T17 | cap09 | 71.000 | setenta e um mil | tela (contagem, data ou passo) |
+| T17 | cap09 | 625 R$ | seiscentos e vinte e cinco reais | fiscal (seção 11) e frota (seção 3) |
+| T17 | cap10 | 600 kg | seiscentos quilos | fiscal (seção 11) e frota (seção 3) |
+| T17 | cap10 | 30 | trinta | tela (contagem, data ou passo) |
+| T17 | cap10 | 3 | três | tela (contagem, data ou passo) |
+| T17 | cap10 | 2 | dois | tela (contagem, data ou passo) |
+| T17 | cap11 | 3 | três | tela (contagem, data ou passo) |
+| T17 | cap11 | 21 notas | vinte e uma notas | tela (contagem, data ou passo) |
+| T17 | cap11 | 12 | doze | tela (contagem, data ou passo) |
+| T17 | cap11 | 9 | nove | tela (contagem, data ou passo) |
+| T18 | cap01 | 2 | duas | tela (contagem, data ou passo) |
+| T18 | cap01 | 2 | dois | tela (contagem, data ou passo) |
+| T18 | cap02 | 2 | dois | tela (contagem, data ou passo) |
+| T18 | cap03 | 3 | três | tela (contagem, data ou passo) |
+| T18 | cap04 | 3.600 kg | três mil e seiscentos quilos | NF-e 1254 e MTR (seção 11) |
+| T18 | cap04 | 3 | três | tela (contagem, data ou passo) |
+| T18 | cap04 | 3,60 | três vírgula seis | tela (contagem, data ou passo) |
+| T18 | cap07 | 3 | três | tela (contagem, data ou passo) |
+| T18 | cap07 | 3 | três | tela (contagem, data ou passo) |
+| T18 | cap07 | 3 | três | tela (contagem, data ou passo) |
+| T18 | cap08 | 2 | dois | tela (contagem, data ou passo) |
+| T18 | cap09 | 3 doc | três documentos | tela (contagem, data ou passo) |
+| T19 | cap01 | 4 | quatro | tela (contagem, data ou passo) |
+| T19 | cap02 | 10 | dez | tela (contagem, data ou passo) |
+| T19 | cap02 | 2.520 R$ | dois mil quinhentos e vinte reais | RH da T19 (seção 3) |
+| T19 | cap02 | 600 R$ | seiscentos reais | RH da T19 (seção 3) |
+| T19 | cap02 | 4.264 R$ | quatro mil duzentos e sessenta e quatro reais | RH da T19 (seção 3) |
+| T19 | cap02 | 2.520 | dois mil quinhentos e vinte | tela (contagem, data ou passo) |
+| T19 | cap03 | 220 R$ | duzentos e vinte reais | RH da T19 (seção 3) |
+| T19 | cap03 | 6 % | seis cento cento | tela (contagem, data ou passo) |
+| T19 | cap05 | 1.980 R$ | mil novecentos e oitenta reais | RH da T19 (seção 3) |
+| T19 | cap05 | 200 R$ | duzentos reais | RH da T19 (seção 3) |
+| T19 | cap05 | 1.780 | mil setecentos e oitenta | tela (contagem, data ou passo) |
+| T19 | cap05 | 90 R$ | noventa reais | RH da T19 (seção 3) |
+| T19 | cap05 | 1.980 | mil novecentos e oitenta | tela (contagem, data ou passo) |
+| T19 | cap05 | 200 | duzentos | tela (contagem, data ou passo) |
+| T19 | cap05 | 90 | noventa | tela (contagem, data ou passo) |
+| T19 | cap05 | 1.690 | mil seiscentos e noventa | tela (contagem, data ou passo) |
+| T19 | cap05 | 150 R$ | cento e cinquenta reais | RH da T19 (seção 3) |
+| T19 | cap05 | 2.250 | dois mil duzentos e cinquenta | tela (contagem, data ou passo) |
+| T19 | cap06 | 500 R$ | quinhentos reais | RH da T19 (seção 3) |
+| T19 | cap06 | 250 | duzentos e cinquenta | tela (contagem, data ou passo) |
+| T19 | cap06 | 100 R$ | cem reais | RH da T19 (seção 3) |
+| T19 | cap06 | 500 | quinhentos | tela (contagem, data ou passo) |
+| T19 | cap06 | 400 | quatrocentos | tela (contagem, data ou passo) |
+| T19 | cap06 | 400 | quatrocentos | tela (contagem, data ou passo) |
+| T19 | cap06 | 2.750 | dois mil setecentos e cinquenta | tela (contagem, data ou passo) |
+| T19 | cap06 | 400 | quatrocentos | tela (contagem, data ou passo) |
+| T19 | cap06 | 2.900 | dois mil e novecentos | tela (contagem, data ou passo) |
+| T19 | cap07 | 2.800 | dois mil e oitocentos | 950 + 1.850 (seção 5) |
+| T19 | cap07 | 2.900 | dois mil e novecentos | tela (contagem, data ou passo) |
+| T19 | cap08 | 4 | quatro | tela (contagem, data ou passo) |
+| T19 | cap08 | 6 | seis | tela (contagem, data ou passo) |
+| T19 | cap08 | 2 | dois | tela (contagem, data ou passo) |
+| T19 | cap08 | 1 | um | tela (contagem, data ou passo) |
+| T19 | cap08 | 1 | um | tela (contagem, data ou passo) |
+| T19 | cap10 | 5 | cinco | tela (contagem, data ou passo) |
+| T19 | cap10 | 1 | uma | tela (contagem, data ou passo) |
+| T19 | cap11 | 7 | sete | tela (contagem, data ou passo) |
+| T19 | cap11 | 4 | quatro | tela (contagem, data ou passo) |
+| T19 | cap11 | 10 min | dez minutos | tela (contagem, data ou passo) |
+| T19 | cap11 | 8 | oito | tela (contagem, data ou passo) |
+| T19 | cap11 | 5 | cinco | tela (contagem, data ou passo) |
+| T20 | cap03 | 4 | 4 | tela (contagem, data ou passo) |
+| T20 | cap03 | 2 | dois | tela (contagem, data ou passo) |
+| T20 | cap03 | 2 | dois | tela (contagem, data ou passo) |
+| T20 | cap04 | 3 | três | tela (contagem, data ou passo) |
+| T20 | cap04 | 2 | dois | tela (contagem, data ou passo) |
+| T20 | cap05 | 71.651,58 R$ | setenta e um mil seiscentos e cinquenta e um reais e cinquen | 52.937,50 + 18.714,08 (T20) |
+| T20 | cap05 | 15 | quinze | tela (contagem, data ou passo) |
+| T20 | cap05 | 1 | zero e um | tela (contagem, data ou passo) |
+| T20 | cap06 | 1.350 R$ | mil trezentos e cinquenta reais | cooperativa, coletas e a nota 1250 (seções 5, 7, 11 e 12) |
+| T20 | cap06 | 90 dias | noventa dias | tela (contagem, data ou passo) |
+| T20 | cap06 | 1.350 R$ | mil trezentos e cinquenta reais | cooperativa, coletas e a nota 1250 (seções 5, 7, 11 e 12) |
+| T20 | cap06 | 30 | trinta | tela (contagem, data ou passo) |
+| T20 | cap07 | 1.250 | mil duzentos e cinquenta | fechamento do #84 (seção 9) |
+| T20 | cap07 | 8.400 kg | oito mil e quatrocentos quilos | cooperativa, coletas e a nota 1250 (seções 5, 7, 11 e 12) |
+| T20 | cap07 | 2.600 | dois mil e seiscentos | tela (contagem, data ou passo) |
+| T20 | cap07 | 18.755 R$ | dezoito mil setecentos e cinquenta e cinco reais | cooperativa, coletas e a nota 1250 (seções 5, 7, 11 e 12) |
+| T20 | cap08 | 2.500 kg | dois mil e quinhentos quilos | 2.180 + 320 da transferência (T10) |
+| T20 | cap09 | 4 | 4 | tela (contagem, data ou passo) |
+| T20 | cap10 | 3.700 R$ | três mil e setecentos reais | cooperativa, coletas e a nota 1250 (seções 5, 7, 11 e 12) |
+| T20 | cap10 | 2 | dois | tela (contagem, data ou passo) |
+| T20 | cap11 | 4 | 4 | tela (contagem, data ou passo) |
+| T21 | cap03 | 4 | quatro | tela (contagem, data ou passo) |
+| T21 | cap03 | 10 | dez | tela (contagem, data ou passo) |
+| T21 | cap03 | 118.600 R$ | cento e dezoito mil e seiscentos reais | Cato: seções 4, 5, 6, 7, 8 e 10 |
+| T21 | cap03 | 67.600 | sessenta e sete mil e seiscentos | tela (contagem, data ou passo) |
+| T21 | cap04 | 3 | três | tela (contagem, data ou passo) |
+| T21 | cap04 | 17.000 | dezessete mil | 18.500 − 1.500 (T6) |
+| T21 | cap04 | 540 R$ | quinhentos e quarenta reais | Cato: seções 4, 5, 6, 7, 8 e 10 |
+| T21 | cap04 | 14.000 | catorze mil | tela (contagem, data ou passo) |
+| T21 | cap04 | 370 | trezentos e setenta | tela (contagem, data ou passo) |
+| T21 | cap04 | 96.000 R$ | noventa e seis mil reais | Cato: seções 4, 5, 6, 7, 8 e 10 |
+| T21 | cap04 | 132.000 R$ | cento e trinta e dois mil reais | Cato: seções 4, 5, 6, 7, 8 e 10 |
+| T21 | cap04 | 3 | três | tela (contagem, data ou passo) |
+| T21 | cap05 | 3 | três | tela (contagem, data ou passo) |
+| T21 | cap05 | 112.800 R$ | cento e doze mil e oitocentos reais | vendas de outubro à Fundição (seção 5) |
+| T21 | cap05 | 14.000 | catorze mil | tela (contagem, data ou passo) |
+| T21 | cap05 | 370 | trezentos e setenta | tela (contagem, data ou passo) |
+| T21 | cap05 | 2 | duas | tela (contagem, data ou passo) |
+| T21 | cap06 | 96.076 R$ | noventa e seis mil e setenta e seis reais | estoque de 10/11 a custo (seção 4) |
+| T21 | cap06 | 2 | dois | tela (contagem, data ou passo) |
+| T22 | cap00 | 2 | duas | tela (contagem, data ou passo) |
+| T22 | cap00 | 2 | dois | tela (contagem, data ou passo) |
+| T22 | cap00 | 2 | duas | tela (contagem, data ou passo) |
+| T22 | cap02 | 30 dias | trinta dias | tela (contagem, data ou passo) |
+| T22 | cap04 | 2 | duas | tela (contagem, data ou passo) |
+| T22 | cap04 | 344.040 R$ | trezentos e quarenta e quatro mil e quarenta reais | 272.040 + 72.000 (T22) |
+| T22 | cap04 | 370.000 | trezentos e setenta mil | tela (contagem, data ou passo) |
+| T22 | cap04 | 690 | seiscentos e noventa | tela (contagem, data ou passo) |
+| T22 | cap04 | 2 | duas | tela (contagem, data ou passo) |
+| T22 | cap05 | 272.040 | duzentos e setenta e dois mil e quarenta | 269.240 + 2.800 (seção 5) |
+| T22 | cap05 | 299.000 | duzentos e noventa e nove mil | tela (contagem, data ou passo) |
+| T22 | cap05 | 690 | seiscentos e noventa | tela (contagem, data ou passo) |
+| T22 | cap05 | 27.000 | vinte e sete mil | tela (contagem, data ou passo) |
+| T22 | cap05 | 650 R$ | seiscentos e cinquenta reais | outubro da matriz (seção 5) e a filial da T22 |
+| T22 | cap05 | 72.000 | setenta e dois mil | tela (contagem, data ou passo) |
+| T22 | cap05 | 71.000 | setenta e um mil | tela (contagem, data ou passo) |
+| T22 | cap05 | 1.000 R$ | mil reais | outubro da matriz (seção 5) e a filial da T22 |
+| T22 | cap06 | 341.000 | trezentos e quarenta e um mil | tela (contagem, data ou passo) |
+| T22 | cap06 | 240 | duzentos e quarenta | tela (contagem, data ou passo) |
+| T22 | cap06 | 318.000 | trezentos e dezoito mil | tela (contagem, data ou passo) |
+| T22 | cap06 | 860 | oitocentos e sessenta | compra de 09/11 (seção 7) |
+| T22 | cap06 | 26.000 | vinte e seis mil | tela (contagem, data ou passo) |
+| T22 | cap06 | 650 R$ | seiscentos e cinquenta reais | outubro da matriz (seção 5) e a filial da T22 |
+| T22 | cap06 | 27.000 | vinte e sete mil | tela (contagem, data ou passo) |
+| T22 | cap06 | 650 | seiscentos e cinquenta | tela (contagem, data ou passo) |
+| T22 | cap06 | 1.000 | mil | tela (contagem, data ou passo) |
+| T22 | cap07 | 273.000 | duzentos e setenta e três mil | tela (contagem, data ou passo) |
+| T22 | cap07 | 860 | oitocentos e sessenta | compra de 09/11 (seção 7) |
+| T22 | cap07 | 18.000 | dezoito mil | tela (contagem, data ou passo) |
+| T22 | cap07 | 350 R$ | trezentos e cinquenta reais | outubro da matriz (seção 5) e a filial da T22 |
+| T22 | cap07 | 45.000 | quarenta e cinco mil | 38.000 + 7.000 (T22) |
+| T22 | cap07 | 2 | dois | tela (contagem, data ou passo) |
+| T22 | cap08 | 2 | duas | tela (contagem, data ou passo) |
+| T22 | cap08 | 640 kg | seiscentos e quarenta quilos | latinha da matriz em 10/11 (seção 4) ou a bateria de 05/11 |
+| T22 | cap08 | 1.850 | mil oitocentos e cinquenta | NFS-e 13/14 ou latinha da filial (T17, T22) |
+| T22 | cap08 | 2.490 | dois mil quatrocentos e noventa | 640 + 1.850 (T22) |
+| T22 | cap09 | 2 | duas | tela (contagem, data ou passo) |
+| T22 | cap09 | 2 | duas | tela (contagem, data ou passo) |
+| T22 | cap10 | 1.200 kg | mil e duzentos quilos | outubro da matriz (seção 5) e a filial da T22 |
+| T22 | cap10 | 1.840 kg | mil oitocentos e quarenta quilos | 640 + 1.200 (T22) |
+| T22 | cap10 | 650 | seiscentos e cinquenta | tela (contagem, data ou passo) |
+| T22 | cap12 | 2 | dois | tela (contagem, data ou passo) |
+| T25 | cap00 | 3 | três | tela (contagem, data ou passo) |
+| T25 | cap00 | 2 | duas | tela (contagem, data ou passo) |
+| T25 | cap01 | 3 | três | tela (contagem, data ou passo) |
+| T25 | cap01 | 12.380 R$ | doze mil trezentos e oitenta reais | 269.240 − 256.860 (seção 5) |
+| T25 | cap02 | 2 | duas | tela (contagem, data ou passo) |
+| T25 | cap02 | 6 | seis | tela (contagem, data ou passo) |
+| T25 | cap02 | 10 | dez | tela (contagem, data ou passo) |
+| T25 | cap02 | 10 dias | dez dias | tela (contagem, data ou passo) |
+| T25 | cap02 | 31 | trinta e um | tela (contagem, data ou passo) |
+| T25 | cap03 | 8 | oito | tela (contagem, data ou passo) |
+| T25 | cap03 | 8 | oito | tela (contagem, data ou passo) |
+| T25 | cap03 | 50.000 kg | cinquenta mil quilos | ferro pesado comprado em outubro (seção 5) |
+| T25 | cap05 | 12 | doze | tela (contagem, data ou passo) |
+| T25 | cap05 | 9 | nove | tela (contagem, data ou passo) |
+| T25 | cap05 | 13 | treze | tela (contagem, data ou passo) |
+| T25 | cap05 | 15 | quinze | tela (contagem, data ou passo) |
+| T25 | cap05 | 20 | vinte | tela (contagem, data ou passo) |
+| T25 | cap06 | 17 | dezessete | tela (contagem, data ou passo) |
+| T25 | cap06 | 4.790 R$ | quatro mil setecentos e noventa reais | parcela da Fundição (seção 7) |
+| T25 | cap06 | 23 | vinte e três | tela (contagem, data ou passo) |
+| T25 | cap06 | 2.360 R$ | dois mil trezentos e sessenta reais | parcela dos pneus (T13) |
+| T25 | cap06 | 5 | cinco | tela (contagem, data ou passo) |
+| T25 | cap07 | 92 | quarenta e dois e cinquenta | tela (contagem, data ou passo) |
+| T25 | cap07 | 137 | quarenta e sete e noventa | tela (contagem, data ou passo) |
+| T25 | cap08 | 10 min | dez minutos | tela (contagem, data ou passo) |
+| T25 | cap08 | 2 | duas | tela (contagem, data ou passo) |
+| T25 | cap08 | 7 | 7 | tela (contagem, data ou passo) |
+| T25 | cap08 | 8 | oito | tela (contagem, data ou passo) |
+| T25 | cap09 | 2 | duas | tela (contagem, data ou passo) |
+| T25 | cap10 | 2 h | duas horas | tela (contagem, data ou passo) |
+| T25 | cap10 | 4 | quatro | tela (contagem, data ou passo) |
+| T25 | cap10 | 2 | dois | tela (contagem, data ou passo) |
+| T25 | cap10 | 4 | quatro | tela (contagem, data ou passo) |
+| T25 | cap10 | 8 | oito | tela (contagem, data ou passo) |
+| T25 | cap11 | 6 | seis | tela (contagem, data ou passo) |
+| T25 | cap11 | 3 | três | tela (contagem, data ou passo) |
+| T26 | cap01 | 5 | cinco | tela (contagem, data ou passo) |
+| T26 | cap02 | 2 | duas | tela (contagem, data ou passo) |
+| T26 | cap02 | 4 | quatro | tela (contagem, data ou passo) |
+| T26 | cap03 | 5 | cinco | tela (contagem, data ou passo) |
+| T26 | cap04 | 3 | três | tela (contagem, data ou passo) |
+| T26 | cap05 | 2 | duas | tela (contagem, data ou passo) |
+| T26 | cap07 | 3 | três | tela (contagem, data ou passo) |
+| T26 | cap08 | 2 | dois | tela (contagem, data ou passo) |
+| T26 | cap08 | 8.400 R$ | oito mil e quatrocentos reais | CRM da semente da T26 |
+| T26 | cap08 | 12.000 kg | doze mil quilos | CRM da semente da T26 |
+| T26 | cap08 | 30 | trinta | tela (contagem, data ou passo) |
+| T26 | cap08 | 15 dias | quinze dias | tela (contagem, data ou passo) |
+| T26 | cap10 | 3 | três | tela (contagem, data ou passo) |
+| T26 | cap11 | 12 | doze | tela (contagem, data ou passo) |
+| T26 | cap11 | 2 | dois | tela (contagem, data ou passo) |
+| T26 | cap12 | 6 | seis | tela (contagem, data ou passo) |
+| T26 | cap12 | 62.300 R$ | sessenta e dois mil e trezentos reais | CRM da semente da T26 |
+| T26 | cap12 | 19.000 R$ | dezenove mil reais | CRM da semente da T26 |
+| T26 | cap12 | 41.650 R$ | quarenta e um mil seiscentos e cinquenta reais | 980 × 42,50 (seção 5) |
+| T26 | cap12 | 2 | dois | tela (contagem, data ou passo) |
+| T26 | cap12 | 26.200 R$ | vinte e seis mil e duzentos reais | CRM da semente da T26 |
+| T26 | cap13 | 4 | quatro | tela (contagem, data ou passo) |
+| T27 | cap02 | 2 | duas | tela (contagem, data ou passo) |
+| T27 | cap02 | 2 | duas | tela (contagem, data ou passo) |
+| T27 | cap02 | 5 | cinco | tela (contagem, data ou passo) |
+| T27 | cap05 | 4 | 4 | tela (contagem, data ou passo) |

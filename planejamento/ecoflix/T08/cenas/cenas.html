@@ -166,7 +166,7 @@ function no(pai,x,y,w,n,txt,o={}){
   const e=el(`<div class="card" style="left:${x}px;top:${y}px;width:${w}px;height:${o.h||128}px;text-align:center;border-width:2px">
       <div style="position:relative;width:54px;height:54px;margin:${o.mt||18}px auto 0">
         <div class="ico n" style="position:absolute;inset:0">${ic(n,30)}</div><div class="ico ac ${o.a?'a':''}" style="position:absolute;inset:0;opacity:0">${ic(n,30)}</div></div>
-      <div class="ttl" style="font-size:${o.fs||19}px;margin-top:10px;white-space:normal;line-height:1.15">${txt}</div></div>`,pai);
+      <div class="ttl" style="font-size:${o.fs||19}px;margin-top:10px;white-space:normal;line-height:1.15;padding:0 12px">${txt}</div></div>`,pai);
   e._ac=e.querySelector('.ac'); return e;
 }
 function acende(e,t,a,cor='#50D088'){const p=eo(pr(t,a,.45));e._ac.style.opacity=p.toFixed(3);contorno(e,t,a,'#E1E8E4',cor);return p}
@@ -232,26 +232,26 @@ CAPS[1]=()=>{
   const g=grupo();
   const tit=titulo(g,'Ticket','Quando usar o ticket');
   const sv=svgTela(g);
-  const XS=[150,350,550,750,950], Y1=212, Y2=452, H=128;
-  const r1=el(`<div class="tag v ab" style="left:150px;top:164px;font-size:18px;padding:6px 14px">${ic('circle-check',20)}Preço fechado</div>`,g);
-  const r2=el(`<div class="tag a ab" style="left:150px;top:404px;font-size:18px;padding:6px 14px">${ic('hourglass',20)}Preço em aberto</div>`,g);
-  const fim=(x,y)=>{const e=el(`<div class="card" style="left:${x}px;top:${y}px;width:200px;height:${H}px;text-align:center;border-width:2px">
-      <div class="row" style="justify-content:center;gap:10px;margin-top:18px">
+  const XS=[110,330,550,770,990], Y1=206, Y2=448, H=150, NW=180, O={h:150,mt:24,fs:20};
+  const r1=el(`<div class="tag v ab" style="left:110px;top:160px;font-size:18px;padding:6px 14px">${ic('circle-check',20)}Preço fechado</div>`,g);
+  const r2=el(`<div class="tag a ab" style="left:110px;top:400px;font-size:18px;padding:6px 14px">${ic('hourglass',20)}Preço em aberto</div>`,g);
+  const fim=(x,y)=>{const e=el(`<div class="card" style="left:${x}px;top:${y}px;width:220px;height:${H}px;text-align:center;border-width:2px">
+      <div class="row" style="justify-content:center;gap:10px;margin-top:24px">
         ${['warehouse','wallet'].map(n=>`<div class="pi" style="position:relative;width:54px;height:54px"><div class="ico n" style="position:absolute;inset:0">${ic(n,30)}</div>
           <div class="ico ac" style="position:absolute;inset:0;opacity:0">${ic(n,30)}</div></div>`).join('')}</div>
-      <div class="ttl" style="font-size:19px;margin-top:10px">Estoque e caixa</div>
+      <div class="ttl" style="font-size:20px;margin-top:10px">Estoque e caixa</div>
       <div class="ab bd" style="right:-14px;top:-14px;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--ac);color:var(--ae);opacity:0">${ic('hourglass',20)}</div>
       <div class="ab bk" style="right:-14px;top:-14px;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--v);color:#fff;opacity:0">${ic('check',22)}</div></div>`,g);
     e._ac=[...e.querySelectorAll('.ac')]; e._pi=[...e.querySelectorAll('.pi')]; e._bd=e.querySelector('.bd'); e._bk=e.querySelector('.bk'); return e;};
   const acendeFim=(e,t,a)=>{const p=eo(pr(t,a,.45)); e._ac.forEach(x=>x.style.opacity=p.toFixed(3)); contorno(e,t,a,'#E1E8E4','#50D088');
     e._bk.style.opacity=p.toFixed(3); return p};
-  const a1=no(g,XS[0],Y1,160,'shopping-cart','Compra'), a4=no(g,XS[3],Y1,160,'circle-check','Finalizar'), a5=fim(XS[4],Y1);
-  const b1=no(g,XS[0],Y2,160,'ticket','Ticket',{a:1}), b2=no(g,XS[1],Y2,160,'badge-dollar-sign','Valorizar'),
-        b3=no(g,XS[2],Y2,160,'clipboard-list','Compra ou venda',{fs:18}), b4=no(g,XS[3],Y2,160,'circle-check','Finalizar'), b5=fim(XS[4],Y2);
-  const reg=el('<div class="ab lbl" style="left:150px;top:590px;width:160px;text-align:center;font-size:16px;color:var(--ae)">peso registrado</div>',g);
+  const a1=no(g,XS[0],Y1,NW,'shopping-cart','Compra',O), a4=no(g,XS[3],Y1,NW,'circle-check','Finalizar',O), a5=fim(XS[4],Y1);
+  const b1=no(g,XS[0],Y2,NW,'ticket','Ticket',{...O,a:1}), b2=no(g,XS[1],Y2,NW,'badge-dollar-sign','Valorizar',O),
+        b3=no(g,XS[2],Y2,NW,'clipboard-list','Compra<br>ou venda',{...O,fs:19}), b4=no(g,XS[3],Y2,NW,'circle-check','Finalizar',O), b5=fim(XS[4],Y2);
+  const reg=el('<div class="ab lbl" style="left:110px;top:610px;width:180px;text-align:center;font-size:17px;color:var(--ae)">peso registrado</div>',g);
   const s=(x0,x1,y,c='var(--v)')=>caminho(sv,setaD(x0+8,y,x1-8,y,12),c,4);
-  const sA=[s(310,750,Y1+64),s(910,950,Y1+64)], sB=[s(310,350,Y2+64,'#CBD1D8'),s(510,550,Y2+64,'#CBD1D8'),s(710,750,Y2+64,'#CBD1D8'),s(910,950,Y2+64,'#CBD1D8')];
-  const sBv=[s(910,950,Y2+64)];
+  const sA=[s(290,770,Y1+75),s(950,990,Y1+75)], sB=[s(290,330,Y2+75,'#CBD1D8'),s(510,550,Y2+75,'#CBD1D8'),s(730,770,Y2+75,'#CBD1D8'),s(950,990,Y2+75,'#CBD1D8')];
+  const sBv=[s(950,990,Y2+75)];
 
   return t=>{
     const j0=W(1,'com')-.3, tfe=W(1,'fechado'), tcp=W(1,'compra'), tdi=W(1,'direto'), tab=W(1,'aberto'), tti=W(1,'ticket'),
