@@ -576,3 +576,5 @@ Decisões:
   hora do cupom de teste 08:41:07). O agente das **cenas de Windows da T05** (8 momentos, `planejamento/ecoflix/T05/windows/`)
   esbarrou no limite de 20 subagentes duas vezes: entra quando um agente terminar de vez (o briefing está pronto nesta
   sessão).
+- 11/11 19:1x **Agente das cenas de Windows da T05 lançado** (abriu vaga). Agora todas as frentes estão rodando: 26 robôs, as
+  cenas de Windows da T05, o kit 3D (prévias T07/T08) e as frentes 3D (T00, T04+T10, T05+T16, T17+T18, prévias T11/T12).
