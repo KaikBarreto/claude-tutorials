@@ -58,10 +58,10 @@ body{font-family:M,sans-serif;color:var(--t);-webkit-font-smoothing:antialiased}
 .chv i{position:absolute;top:4px;left:4px;width:20px;height:20px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(16,24,40,.25)}
 .hl{border-radius:8px;padding:2px 10px}
 .bar{height:10px;border-radius:5px;background:#E6E9EE}
-.fsh svg{fill:#16A34A} .fcr svg{fill:#FFFFFF}
+.fsh svg{fill:#50D088} .fcr svg{fill:#FFFFFF}
 </style><style id="saturado">/* estilo saturado (Kaik, 11/11): selo, chip, etiqueta, quadrado de ícone e círculo de etapa
    com fundo cheio e ícone/texto branco; nunca fundo claro com conteúdo colorido, nunca ícone escuro sobre o verde */
-:root{--vs:#16A34A;--as:#D97706;--rs:#DC2626}
+:root{--vs:#50D088;--as:#F2B63D;--rs:#EF4444}
 .ico{background:var(--vs);color:#fff}.ico.a{background:var(--as);color:#fff}
 .tag.v{background:var(--vs);color:#fff}.tag.a{background:var(--as);color:#fff}
 </style></head>
@@ -180,14 +180,14 @@ const CAPS={};
 // contas e das notas, e não mexe no caixa."  3 "O dono decide quem vê valor, quem abre caixa e quem não vê nada."
 CAPS[0]=()=>{
   const g=grupo(), tit=titulo(g,'Recicla Vale Metais','A equipe');
-  const P=[['Rafael Nogueira','Dono','#16A34A','#FFFFFF'],['Marcos Antunes','Balança e caixa','#D97706','#FFFFFF'],['Juliana Prado','Escritório','#4B5563','#FFFFFF']];
+  const P=[['Rafael Nogueira','Dono','#50D088','#FFFFFF'],['Marcos Antunes','Balança e caixa','#F2B63D','#FFFFFF'],['Juliana Prado','Escritório','#4B5563','#FFFFFF']];
   const X=k=>85+k*380;
   const cards=P.map(([n,papel,bg,fg],k)=>el(`<div class="card row" style="left:${X(k)}px;top:244px;width:350px;height:136px;padding:0 22px;gap:18px;border-width:2px">
       <div style="position:relative;width:72px;height:72px;border-radius:50%;background:${bg};display:flex;align-items:center;justify-content:center;flex:none">${ic('user-round',40,fg)}
-        ${k===0?`<div class="ab" style="right:-8px;top:-8px;width:32px;height:32px;border-radius:50%;background:#D97706;border:2px solid #fff;display:flex;align-items:center;justify-content:center">${ic('crown',17,'#fff')}</div>`:''}</div>
+        ${k===0?`<div class="ab" style="right:-8px;top:-8px;width:32px;height:32px;border-radius:50%;background:#F2B63D;border:2px solid #fff;display:flex;align-items:center;justify-content:center">${ic('crown',17,'#fff')}</div>`:''}</div>
       <div><div style="font-weight:800;font-size:22px;white-space:nowrap">${n}</div><div class="tag" style="margin-top:8px;font-size:15px;padding:5px 12px;${TAGC}">${papel}</div></div></div>`,g));
   // as telas de cada um: aberta (verde), fechada (cinza) ou o lucro que ele não vê (âmbar, riscado)
-  const EST={a:['door-open','#16A34A','#FFFFFF'],f:['door-closed','#4B5563','#FFFFFF'],x:['eye-off','#D97706','#FFFFFF']};
+  const EST={a:['door-open','#50D088','#FFFFFF'],f:['door-closed','#4B5563','#FFFFFF'],x:['eye-off','#F2B63D','#FFFFFF']};
   const chip=(k,i,txt,e)=>{const [icn,bg,fg]=EST[e];return el(`<div class="ab row" style="left:${X(k)}px;top:${408+i*58}px;width:350px;height:46px;border-radius:12px;padding:0 16px;gap:12px;background:${bg};color:${fg}">
       ${ic(icn,22,fg)}<span style="position:relative;font-weight:700;font-size:17px;white-space:nowrap">${txt}${e==='x'?'<span class="risco" style="position:absolute;left:-3px;right:-3px;top:50%;height:2px;background:#fff;transform:scaleX(0);transform-origin:0 50%"></span>':''}</span></div>`,g)};
   const R=[chip(0,0,'Acesso Total','a'),chip(0,1,'Caixa','a'),chip(0,2,'Contas a Pagar/Receber','a'),chip(0,3,'Ver Projeção de Lucro','a')];
@@ -234,11 +234,11 @@ CAPS[1]=()=>{
     pulsos(portas[1],t,[[tAb,.04,.7]]);
     // cada aba com a sua chave; acendem em "permissão"
     fio.forEach((e,i)=>vis(e,t,tA2-.1+i*.1,1e9,{dy:0})); chaves.forEach((e,i)=>vis(e,t,tA2+i*.1,1e9,{dy:8}));
-    chaves.forEach((e,i)=>{const p=eo(pr(t,tPe+i*.08,.4));e.style.borderColor=mix('#D0D5DD','#16A34A',p);e.style.background=mix('#FFFFFF','#16A34A',p);e.firstElementChild.style.color=mix('#9AA3AD','#FFFFFF',p)});
+    chaves.forEach((e,i)=>{const p=eo(pr(t,tPe+i*.08,.4));e.style.borderColor=mix('#D0D5DD','#50D088',p);e.style.background=mix('#FFFFFF','#50D088',p);e.firstElementChild.style.color=mix('#9AA3AD','#FFFFFF',p)});
     pulsos(chaves[1],t,[[tGe,.1,.7]]);
     // a da aba Usuários e Permissões: Gerenciar Usuários, presa à tela Configurações; com as duas, a porta abre
     vis(anel,t,tGe-.2,1e9,{dy:0}); vis(kG,t,tGe-.1,1e9,{dy:10}); vis(kC,t,tCf-.1,1e9,{dy:10});
-    [[kG,eo(pr(t,tLi,.4))],[kC,eo(pr(t,tCf+.25,.4))]].forEach(([k,p])=>{const tg=k.firstElementChild;tg.style.background=mix('#4B5563','#16A34A',p);tg.style.color='#fff'});
+    [[kG,eo(pr(t,tLi,.4))],[kC,eo(pr(t,tCf+.25,.4))]].forEach(([k,p])=>{const tg=k.firstElementChild;tg.style.background=mix('#4B5563','#50D088',p);tg.style.color='#fff'});
     const pa=eo(pr(t,tVe-.1,.45)); abre(portas[1],pa); contorno(portas[1],t,tVe-.1,'#E1E8E4','#50D088'); portas[1].style.background=mix('#F7F9FA','#F1FAF5',pa);
   };
 };
@@ -250,9 +250,9 @@ CAPS[3]=()=>{
   const X=k=>105+k*370;
   const aro='<svg width="58" height="58" viewBox="0 0 58 58" style="display:block;margin:0 auto"><circle cx="29" cy="29" r="21" fill="none" stroke="#9AA3AD" stroke-width="6"/></svg>';
   const molho=(n,olho)=>`<div class="row" style="justify-content:center;flex-wrap:wrap;gap:14px;margin-top:24px;padding:0 6px">${[...Array(n)].map(()=>
-      `<div style="position:relative;width:52px;height:52px;border-radius:14px;background:#16A34A;display:flex;align-items:center;justify-content:center">${ic('key-round',28,'#fff')}
+      `<div style="position:relative;width:52px;height:52px;border-radius:14px;background:#50D088;display:flex;align-items:center;justify-content:center">${ic('key-round',28,'#fff')}
       ${olho?`<div class="ab" style="right:-9px;bottom:-9px;width:28px;height:28px;border-radius:50%;background:#4B5563;border:2px solid #fff;display:flex;align-items:center;justify-content:center">${ic('eye',16,'#fff')}</div>`:''}</div>`).join('')}</div>`;
-  const lista=['Caixa','Estoque','Ticket de Pesagem','Pedidos'].map(n=>`<div class="row" style="gap:10px;height:40px;padding:0 14px;border-radius:12px;background:#16A34A;color:#fff;font-weight:700;font-size:17px;white-space:nowrap">${ic('key-round',20)}${n}</div>`).join('');
+  const lista=['Caixa','Estoque','Ticket de Pesagem','Pedidos'].map(n=>`<div class="row" style="gap:10px;height:40px;padding:0 14px;border-radius:12px;background:#50D088;color:#fff;font-weight:700;font-size:17px;white-space:nowrap">${ic('key-round',20)}${n}</div>`).join('');
   const chaveiro=(k,nome,corpo)=>el(`<div class="card" style="left:${X(k)}px;top:214px;width:330px;height:372px;padding:22px 20px;text-align:center">${aro}
       <div class="tag v" style="margin-top:8px;font-size:19px">${nome}</div>${corpo}</div>`,g);
   const C=[chaveiro(0,'Acesso Total',molho(8,false)),
@@ -292,12 +292,12 @@ CAPS[4]=()=>{
   const trava=(x,icn,bg,fg,nome,sub)=>el(`<div class="card" style="left:${x}px;top:292px;width:300px;height:220px;padding:26px 22px;text-align:center">
       <div style="width:66px;height:66px;margin:0 auto;border-radius:50%;background:${bg};display:flex;align-items:center;justify-content:center">${ic(icn,34,fg)}</div>
       <div style="font-weight:800;font-size:26px;margin-top:16px">${nome}</div><div class="lbl" style="margin-top:6px">${sub}</div></div>`,gB);
-  const T1=trava(60,'lock','#D97706','#FFFFFF','Plano','módulo contratado'), T2=trava(410,'shield-check','#16A34A','#FFFFFF','Sistema','confere no servidor');
+  const T1=trava(60,'lock','#F2B63D','#FFFFFF','Plano','módulo contratado'), T2=trava(410,'shield-check','#50D088','#FFFFFF','Sistema','confere no servidor');
   const lista=el(`<div class="card" style="left:820px;top:236px;width:390px;height:356px;padding:22px 24px">
       <div class="row" style="gap:12px"><div class="ico" style="width:42px;height:42px">${ic('key-round',22)}</div><div style="font-weight:800;font-size:22px">Permissões</div></div></div>`,gB);
   const linhas=['Caixa','Pedidos','Funcionários (RH)','Fiscal &amp; Ambiental'].map((n,i)=>el(`<div class="ab row" style="left:24px;top:${82+i*64}px;width:342px;height:52px;border-radius:12px;background:#F7F9FA;padding:0 14px;gap:12px">
       ${ic('door-closed',22,'#4B5563')}<div style="font-weight:700;font-size:18px;white-space:nowrap">${n}</div><div class="chv" style="margin-left:auto"><i></i></div></div>`,lista));
-  const sem=el(`<div class="ab" style="left:322px;top:${82+2*64+9}px;width:34px;height:34px;border-radius:50%;background:#D97706;display:flex;align-items:center;justify-content:center;opacity:0">${ic('lock',18,'#fff')}</div>`,lista);
+  const sem=el(`<div class="ab" style="left:322px;top:${82+2*64+9}px;width:34px;height:34px;border-radius:50%;background:#F2B63D;display:flex;align-items:center;justify-content:center;opacity:0">${ic('lock',18,'#fff')}</div>`,lista);
   const setasB=[[364,402,402,402],[714,402,812,402]].map(([a,b,c,d])=>el(`<div class="ab" style="left:0;top:0">${SETA(a,b,c-6,d,'#C9CED6')}${PONTA(c-4,d,'#C9CED6')}</div>`,gB));
   const JB=janela([7,'Uma'],[8,'fora'],.6);
   return t=>{
@@ -333,7 +333,7 @@ CAPS[6]=()=>{
   const g=grupo(), tit=titulo(g,'Usuários','Desativar ou excluir');
   const cracha=`<div style="width:210px;height:280px;border-radius:18px;background:#fff;border:2px solid #E1E8E4;display:flex;flex-direction:column;align-items:center;padding-top:22px">
       <div style="width:56px;height:12px;border-radius:6px;background:#D5DBE1"></div>
-      <div style="margin-top:20px;width:96px;height:96px;border-radius:50%;background:#D97706;display:flex;align-items:center;justify-content:center">${ic('user-round',54,'#fff')}</div>
+      <div style="margin-top:20px;width:96px;height:96px;border-radius:50%;background:#F2B63D;display:flex;align-items:center;justify-content:center">${ic('user-round',54,'#fff')}</div>
       <div style="margin-top:16px;font-weight:800;font-size:19px;white-space:nowrap">Marcos Antunes</div>
       <div class="lbl" style="margin-top:6px;font-size:15px">Recicla Vale Metais</div></div>`;
   const SOMBRA='filter:drop-shadow(0 12px 22px rgba(16,24,40,.12))';
@@ -377,9 +377,9 @@ CAPS[7]=()=>{
       <div style="width:96px;height:96px;border-radius:50%;background:${bg};display:flex;align-items:center;justify-content:center">${ic('user-round',54,fg)}</div>
       ${nome?`<div style="margin-top:16px;font-weight:800;font-size:22px;white-space:nowrap">${nome}</div>`:'<div class="bar" style="margin-top:24px;width:150px;height:14px;background:#D5DBE1"></div>'}
       <div class="tag tg" style="margin-top:14px;font-size:17px;padding:6px 14px;${TAGC}">${tag}</div></div>`,g);
-  const A=pessoaC(150,'#16A34A','#FFFFFF','Rafael Nogueira','Master'), B=pessoaC(810,'#4B5563','#FFFFFF','','Novo master');
+  const A=pessoaC(150,'#50D088','#FFFFFF','Rafael Nogueira','Master'), B=pessoaC(810,'#4B5563','#FFFFFF','','Novo master');
   const ins=el(`<div class="ab" style="left:0;top:0;width:120px;height:120px">
-      <div class="ab fsh" style="left:10px;top:2px">${ic('shield',100,'#16A34A')}</div>
+      <div class="ab fsh" style="left:10px;top:2px">${ic('shield',100,'#50D088')}</div>
       <div class="ab fcr" style="left:31px;top:30px">${ic('crown',58,'#FFFFFF')}</div></div>`,g);
   const passe=el(`<svg class="ab" style="left:0;top:0;overflow:visible" width="1280" height="800"><path d="M482 462 L798 462" fill="none" stroke="#C9CED6" stroke-width="4" stroke-dasharray="10 10" stroke-linecap="round"/></svg>`,g).firstElementChild;
   const passeP=el(PONTA(800,462,'#C9CED6'),g);
@@ -395,7 +395,7 @@ CAPS[7]=()=>{
     const op=vis(ins,t,tDo+.15,1e9,{dy:0,sc:1}); const p=arco(ins,t,tSo,1.1,IA[0],IA[1],IB[0],IB[1],-90); ins.style.opacity=op.toFixed(4);
     traco(passe,t,tSo-.15,.7); vis(passeP,t,tSo+.45,1e9,{dy:0,dx:-6,din:.25});
     const tA=A.querySelector('.tg'), tB=B.querySelector('.tg'), q=eo(pr(t,tSo+.4,.5)), r=eo(pr(t,tSo+.9,.45));
-    tA.style.opacity=(1-.65*q).toFixed(3); tB.style.background=mix('#4B5563','#D97706',r); tB.style.color='#fff';
+    tA.style.opacity=(1-.65*q).toFixed(3); tB.style.background=mix('#4B5563','#F2B63D',r); tB.style.color='#fff';
     foco(B,t,tSo+.9);
     vis(acao,t,tTo-.15,1e9,{dy:10});
   };
@@ -410,7 +410,7 @@ CAPS[8]=()=>{
   const XC=[250,510,770,1030];
   const cadeiras=XC.slice(0,3).map(x=>el(`<div class="ab" style="left:${x-70}px;top:380px">${cad}</div>`,g));
   const extra=el(`<div class="ab" style="left:${XC[3]-70}px;top:380px;width:140px;height:150px;border-radius:18px;border:3px dashed #C9CED6;display:flex;align-items:center;justify-content:center">${ic('plus',46,'#9AA3AD')}</div>`,g);
-  const NOMES=[['Rafael','#16A34A','#FFFFFF'],['Juliana','#4B5563','#FFFFFF'],['Marcos','#D97706','#FFFFFF']];
+  const NOMES=[['Rafael','#50D088','#FFFFFF'],['Juliana','#4B5563','#FFFFFF'],['Marcos','#F2B63D','#FFFFFF']];
   const gente=NOMES.map(([n,bg,fg],i)=>el(`<div class="ab" style="left:${XC[i]-50}px;top:318px;width:100px;height:100px;border-radius:50%;background:${bg};border:4px solid #fff;
       box-shadow:0 8px 18px rgba(16,24,40,.12);display:flex;align-items:center;justify-content:center">${ic('user-round',52,fg)}</div>`,g));
   const nomes=NOMES.map(([n],i)=>el(`<div class="ab" style="left:${XC[i]-90}px;top:548px;width:180px;text-align:center"><div class="tag" style="font-size:17px;padding:6px 14px;${TAGC}">${n}</div></div>`,g));

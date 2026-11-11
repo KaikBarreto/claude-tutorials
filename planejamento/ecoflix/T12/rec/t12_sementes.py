@@ -21,7 +21,7 @@ END = {COOP: ('Cooperativa Recomeço', 'Rua do Trabalho', '57', 'Vila Nossa Senh
        VALE: ('Auto Peças Vale Forte', 'Avenida Brasil', '1290', 'Centro', 'Taubaté', 'SP', '12080-010'),
        SIQ: ('Depósito Irmãos Siqueira', 'Estrada do Pinheirinho', '2730', 'Pinheirinho', 'Tremembé', 'SP', '12091-500')}
 ALFA = 'abcdefghjkmnpqrstuvwxyz23456789'
-TOKEN_COOP = hashlib.sha1(b'ecoflix-t12-portal-recomeco').hexdigest()[:32]
+TOKEN_COOP = '@id:t12.portal.recomeco'   # portal_token é uuid (utils/portalSlug.ts aceita o uuid puro no fim do link)
 
 
 def z(data, hora):
@@ -120,7 +120,7 @@ def main():
     os.makedirs(SAIDA, exist_ok=True)
     caminho = os.path.join(SAIDA, 'inicio.json')
     json.dump(out, open(caminho, 'w', encoding='utf8'), ensure_ascii=False, indent=1)
-    print(f'{caminho}: {len(ordens)} ordens, {len(eventos)} eventos, {len(movs)} movimentações; portal /portal/{TOKEN_COOP}')
+    print(f'{caminho}: {len(ordens)} ordens, {len(eventos)} eventos, {len(movs)} movimentações')
 
 
 if __name__ == '__main__':

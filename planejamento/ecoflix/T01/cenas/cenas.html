@@ -64,7 +64,7 @@ body{font-family:M,sans-serif;color:var(--t);-webkit-font-smoothing:antialiased}
 .cl{font-weight:600;font-size:15px;line-height:23px;color:#374151;white-space:nowrap}
 </style><style id="saturado">/* estilo saturado (Kaik, 11/11): selo, chip, etiqueta, quadrado de ícone e círculo de etapa
    com fundo cheio e ícone/texto branco; nunca fundo claro com conteúdo colorido, nunca ícone escuro sobre o verde */
-:root{--vs:#16A34A;--as:#D97706;--rs:#DC2626}
+:root{--vs:#50D088;--as:#F2B63D;--rs:#EF4444}
 .ico{background:var(--vs);color:#fff}.ico.a{background:var(--as);color:#fff}
 .tag.v{background:var(--vs);color:#fff}.tag.a{background:var(--as);color:#fff}
 </style></head>
@@ -261,7 +261,7 @@ CAPS[2]=()=>{
       <div style="position:relative;width:52px;height:52px"><div class="ab pf">${ic('door-closed',52,'#6B7280')}</div><div class="ab pa" style="opacity:0">${ic('door-open',52,'#2E7D57')}</div></div>
       <div class="tag pt" style="font-size:17px;padding:7px 14px;${TAGC}">Assinatura</div></div>`,g);
   const users=[...Array(5)].map((_,i)=>el(`<div class="ab" style="left:${270+i*86}px;top:562px;width:68px;height:68px;border-radius:50%;
-      background:#16A34A;display:flex;align-items:center;justify-content:center">${ic('user-round',36,'#fff')}</div>`,g));
+      background:#50D088;display:flex;align-items:center;justify-content:center">${ic('user-round',36,'#fff')}</div>`,g));
   const J=janela([1,'São'],[2,'contratar'],.6);
   return t=>{
     if(!trecho(g,t,J))return;
@@ -273,11 +273,11 @@ CAPS[2]=()=>{
     dias.forEach((e,i)=>vis(e,t,tSa+.5+i*.04,1e9,{dy:14}));
     vis(liga,t,tSa+.75,1e9,{dy:0}); vis(porta,t,tSa+.8,1e9,{dy:14});
     // os 7 dias acendem um a um ("sete dias")
-    dias.forEach((e,i)=>{const p=eo(pr(t,tDi-.3+i*.1,.3));e.style.borderColor=mix('#E6E9EE','#16A34A',p);e.style.background=mix('#FFFFFF','#16A34A',p);
+    dias.forEach((e,i)=>{const p=eo(pr(t,tDi-.3+i*.1,.3));e.style.borderColor=mix('#E6E9EE','#50D088',p);e.style.background=mix('#FFFFFF','#50D088',p);
       for(const c of e.children)c.style.color=mix('#9AA3AD','#FFFFFF',p)});
     // módulos: tudo liberado no teste; os 2 que dependem do plano ganham o anel âmbar; depois da assinatura, só os do plano
     mods.forEach((e,i)=>{const extra=i>=4;let p=eo(pr(t,tLi-.1+i*.07,.4));if(extra)p*=1-eo(pr(t,tP2-.1+(i-4)*.12,.45));
-      e.style.background=mix('#9CA3AF','#16A34A',p);e.style.borderColor=mix('#9CA3AF','#16A34A',p);
+      e.style.background=mix('#9CA3AF','#50D088',p);e.style.borderColor=mix('#9CA3AF','#50D088',p);
       e.firstElementChild.style.color='#fff';e.lastElementChild.style.opacity=(1-p).toFixed(3);
       const r=extra?eo(pr(t,tPl,.45))*(1-eo(pr(t,tP2,.45))):0;
       e.style.boxShadow=`0 0 0 ${(5*r).toFixed(2)}px rgba(242,182,61,.5)`;
@@ -286,7 +286,7 @@ CAPS[2]=()=>{
     // fim do teste: o dia 7 marca o fim; a porta da assinatura abre em "ativar"
     pulse(dias[6],t,tFi-.1,.06,.7);
     const pa=eo(pr(t,tAt,.45));porta.querySelector('.pf').style.opacity=(1-pa).toFixed(3);porta.querySelector('.pa').style.opacity=pa.toFixed(3);
-    contorno(porta,t,tAt,'#E1E8E4','#50D088');const tg=porta.querySelector('.pt');tg.style.background=mix('#4B5563','#16A34A',pa);tg.style.color='#fff';
+    contorno(porta,t,tAt,'#E1E8E4','#50D088');const tg=porta.querySelector('.pt');tg.style.background=mix('#4B5563','#50D088',pa);tg.style.color='#fff';
     liga.style.background=mix('#DDE2E7','#50D088',pa);
     pulse(porta,t,tAs,.04,.7);
   };
@@ -297,7 +297,7 @@ CAPS[2]=()=>{
 // com um clique, sem digitar a senha de novo."
 CAPS[3]=()=>{
   const g=grupo(), tit=titulo(g,'Acesso','Trocar de conta');
-  const COR=[['#16A34A','#FFFFFF'],['#D97706','#FFFFFF'],['#4B5563','#FFFFFF']];
+  const COR=[['#50D088','#FFFFFF'],['#F2B63D','#FFFFFF'],['#4B5563','#FFFFFF']];
   const mon=el(`<div class="ab" style="left:160px;top:212px;width:460px;height:350px">
       <div class="ab" style="left:0;top:0;width:460px;height:290px;border-radius:20px;background:#2F3640;box-shadow:0 18px 40px rgba(16,24,40,.18)"></div>
       <div class="ab tela" style="left:16px;top:16px;width:428px;height:258px;border-radius:10px;background:#F7F9FA;overflow:hidden"></div>
@@ -461,7 +461,7 @@ CAPS[7]=()=>{
   const mO=mes(360,388,'OUTUBRO'), mN=mes(828,292,'NOVEMBRO');
   const divA=el('<div class="ab" style="left:787px;top:246px;width:0;height:396px;border-left:2px dashed #D9DEE4"></div>',gA);
   const peca=(pai,x,y,txt,est='')=>el(`<div class="peca" style="left:${x}px;top:${y}px;width:120px;height:96px;font-size:32px;${est}">${txt}</div>`,pai);
-  const VE='background:#16A34A;border-color:#16A34A;color:#fff', AM='background:#D97706;border-color:#D97706;color:#fff';
+  const VE='background:#50D088;border-color:#50D088;color:#fff', AM='background:#F2B63D;border-color:#F2B63D;color:#fff';
   const LY=[350,526];
   const out=LY.map(y=>[28,29,30].map((n,i)=>peca(gA,360+i*134,y,'#'+n)));
   const novA=[peca(gA,828,LY[0],'#31',VE),peca(gA,962,LY[0],'#32',VE)], novB=[peca(gA,828,LY[1],'#1',AM),peca(gA,962,LY[1],'#2',AM)];
@@ -472,7 +472,7 @@ CAPS[7]=()=>{
   // ---- B · Numeração separada
   const gB=grupo(), titB=titulo(gB,'Pedidos','Numeração separada');
   const pedido=(x,y,tipo,num,novo)=>{const c=tipo==='Compra';return el(`<div class="peca" style="left:${x}px;top:${y}px;width:236px;height:90px;justify-content:flex-start;padding:0 18px;gap:12px;
-      background:${c?'#16A34A':'#D97706'};border-color:${c?'#16A34A':'#D97706'};color:#fff">${ic(c?'arrow-down-to-line':'arrow-up-from-line',26,'#fff')}
+      background:${c?'#50D088':'#F2B63D'};border-color:${c?'#50D088':'#F2B63D'};color:#fff">${ic(c?'arrow-down-to-line':'arrow-up-from-line',26,'#fff')}
       <span style="font-size:22px;color:#fff">${tipo}</span>
       <span style="margin-left:auto;position:relative;width:58px;height:34px;font-size:28px">
         <span class="n0" style="position:absolute;right:0;top:0">#${num}</span><span class="n1" style="position:absolute;right:0;top:0;opacity:0">#${novo??num}</span></span></div>`,gB)};
@@ -492,7 +492,7 @@ CAPS[7]=()=>{
       const tOu=W(2,'outubro'), tPe=W(2,'pedido'), tSe=W(2,'Seguindo'), tNo=W(2,'novembro'), tCo=W(2,'comeca'), tMe=W(2,'Mensal'), tRe=W(2,'recomeca');
       tituloJ(titA,t,JA,tOu-.3);
       vis(mO,t,tOu+.2,1e9,{dy:10}); out[0].forEach((e,i)=>vis(e,t,tOu+.25+i*.08,1e9,{dy:16}));
-      out.forEach(l=>{const p=eo(pr(t,tPe,.45));l[2].style.borderColor=mix('#E1E8E4','#16A34A',p);l[2].style.background=mix('#FFFFFF','#16A34A',p);l[2].style.color=mix('#121212','#FFFFFF',p)});
+      out.forEach(l=>{const p=eo(pr(t,tPe,.45));l[2].style.borderColor=mix('#E1E8E4','#50D088',p);l[2].style.background=mix('#FFFFFF','#50D088',p);l[2].style.color=mix('#121212','#FFFFFF',p)});
       vis(tagA,t,tSe,1e9,{dx:-16,dy:0});
       vis(divA,t,tNo-.3,1e9,{dy:0}); vis(mN,t,tNo-.2,1e9,{dy:10});
       novA.forEach((e,i)=>vis(e,t,tCo-.1+i*.18,1e9,{dx:-20,dy:0})); vis(ret[0],t,tCo+.4,1e9,{dy:0});
@@ -569,7 +569,7 @@ CAPS[9]=()=>{
       <div class="row vA" style="margin-top:12px;font-weight:800;font-size:52px;font-variant-numeric:tabular-nums;letter-spacing:-.01em;white-space:nowrap">
         <span class="v1">R$ 229</span><span style="position:relative;display:inline-block"><span class="c40">,40</span><span class="c00" style="position:absolute;left:0;top:0;opacity:0;color:#2E7D57">,00</span></span></div></div>`,gA);
   const tRec=el(`<div class="ab" style="left:700px;top:496px"><div class="tag v">${ic('hand-coins',20)}Ela recebe</div></div>`,gA);
-  const porco=el(`<div class="ab" style="left:1012px;top:498px;width:120px;height:120px;border-radius:50%;background:#D97706;display:flex;align-items:center;justify-content:center">${ic('piggy-bank',66,'#fff')}</div>`,gA);
+  const porco=el(`<div class="ab" style="left:1012px;top:498px;width:120px;height:120px;border-radius:50%;background:#F2B63D;display:flex;align-items:center;justify-content:center">${ic('piggy-bank',66,'#fff')}</div>`,gA);
   const tSal=el(`<div class="ab" style="left:902px;top:636px;width:340px;text-align:center"><div class="tag a">Saldo a pagar · ${brl(.4)}</div></div>`,gA);
   const voa40=el('<div class="ab" style="left:0;top:0;font-weight:800;font-size:52px;line-height:1.2;color:#8A5A00;font-variant-numeric:tabular-nums;opacity:0">,40</div>',gA);
   const c40=calc.querySelector('.c40'), c00=calc.querySelector('.c00'), v1=calc.querySelector('.v1');

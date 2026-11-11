@@ -28,5 +28,6 @@ for nn in "$@"; do
   python3 -I rec/t03/resumo.py "$nn" $res > "$dir/.cap$nn.resumo" 2>&1
   head -2 "$dir/.cap$nn.resumo"
   case "$nn" in 02|03|04|05|06|07|08) python3 -I rec/t03/t03_estado.py "$nn" > "$dir/.cap$nn.estado" 2>&1; tail -1 "$dir/.cap$nn.estado";; esac
+  [ "$nn" = 09 ] && python3 -I rec/t03/t03_pdfs.py | tail -1   # os PDFs do app (a próxima gravação reinicia o falso)
   rm -f "/home/claude/ecoflix/$dir/t03-cap$nn.mp4"
 done

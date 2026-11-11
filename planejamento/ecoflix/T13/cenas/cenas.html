@@ -72,7 +72,7 @@ body{font-family:M,sans-serif;color:var(--t);-webkit-font-smoothing:antialiased}
 </style>
 <style id="saturado">/* estilo saturado (Kaik, 11/11): selo, chip, etiqueta, quadrado de ícone e círculo de etapa
    com fundo cheio e ícone/texto branco; nunca fundo claro com conteúdo colorido, nunca ícone escuro sobre o verde */
-:root{--vs:#16A34A;--as:#D97706;--rs:#DC2626}
+:root{--vs:#50D088;--as:#F2B63D;--rs:#EF4444}
 .ico{background:var(--vs);color:#fff}.ico.a{background:var(--as);color:#fff}
 .tag.v{background:var(--vs);color:#fff}.tag.a{background:var(--as);color:#fff}
 </style></head>
@@ -311,7 +311,7 @@ CAPS[2]=()=>{
   const fio=(x0,y0,x1,y1)=>el(`<svg class="ab" style="left:0;top:0;overflow:visible" width="1280" height="800"><path d="M${x0} ${y0} L${x1} ${y1}" fill="none"
       stroke="#AEB6BF" stroke-width="2.5" stroke-linecap="round"/></svg>`,c).querySelector('path');
   const fA=fio(X(AGUA),388,X(AGUA),466), fE=fio(X(HOJE)+50,388,X(HOJE)+4,466);
-  const corA=['#4B5563','#DC2626','#ffffff','#ffffff'], corB=['#4B5563','#D97706','#ffffff','#ffffff'];
+  const corA=['#4B5563','#EF4444','#ffffff','#ffffff'], corB=['#4B5563','#F2B63D','#ffffff','#ffffff'];
 
   return t=>{
     const tV=WS(2,'Vencidas'), tPa=WS(2,'passou'), tVe=WS(2,'vencimento'), tAg=WS(2,'agua'), tVn=WS(2,'vence',1),
@@ -459,7 +459,7 @@ CAPS[8]=()=>{
   const cor=(e,pV,pA)=>{if(pA>0){e.style.borderColor=mix(pV>0?VERDE[0]:BASE,AMBAR[0],pA);e.style.boxShadow=`0 0 0 ${(5*Math.max(pA,pV)).toFixed(2)}px ${AMBAR[1]},0 18px 40px rgba(16,24,40,.10)`}
     else anel(e,pV)};
   const corB=(e,pV,pA)=>{e.style.color='#fff';
-    const bg=pA>0?mix(pV>0?'#16A34A':'#4B5563','#D97706',pA):mix('#4B5563','#16A34A',pV);e.style.borderColor=bg;e.style.background=bg};
+    const bg=pA>0?mix(pV>0?'#50D088':'#4B5563','#F2B63D',pA):mix('#4B5563','#50D088',pV);e.style.borderColor=bg;e.style.background=bg};
 
   return t=>{
     const tS1=WS(2,'so',1), tDz=WS(2,'dezembro'), tE2=WS(2,'esta',2), tE3=WS(2,'esta',3), tPx=WS(2,'proximas'), tMo=WS(2,'molde'),
@@ -471,7 +471,7 @@ CAPS[8]=()=>{
     // as duas escolhas: a segunda acende e a primeira fica de lado (cinza)
     const m1=eo(pr(t,tDz-.15,.45)), m2=eo(pr(t,tE2,.45));
     vis(o1,t,ent+.1,1e9,{dy:10}); vis(o2,t,tE2-.05,1e9,{dy:10});
-    o1.style.color='#fff'; o1.style.background=mix('#16A34A','#4B5563',m2); o1.style.borderColor=mix('#16A34A','#4B5563',m2);
+    o1.style.color='#fff'; o1.style.background=mix('#50D088','#4B5563',m2); o1.style.borderColor=mix('#50D088','#4B5563',m2);
     // Só esta conta: só dezembro (verde). Esta e as futuras: dezembro, janeiro e o molde (âmbar); novembro não muda
     const aD=eo(pr(t,tE3,.45)), aJ=eo(pr(t,tPx,.45)), aM=eo(pr(t,tMo,.45));
     cor(contas[1],m1,aD); cor(contas[2],0,aJ); cor(molde,0,aM); anel(contas[0],0);

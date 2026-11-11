@@ -104,7 +104,7 @@
   {
    "do": "click",
    "target": {
-    "selector": "main div.rounded-lg:has(> div span.font-semibold:text-is('#8')) button:text-is('A caminho')"
+    "selector": "main div.cursor-pointer.rounded-2xl:has(span.font-semibold:text-is('#8')) button:text-is('A caminho')"
    },
    "at": 6.81,
    "label": "#8: A caminho"
@@ -117,7 +117,7 @@
   {
    "do": "hover",
    "target": {
-    "selector": "main div.rounded-lg:has(> div span.font-semibold:text-is('#8')) :text-is('#8')"
+    "selector": "main div.cursor-pointer.rounded-2xl:has(span.font-semibold:text-is('#8')) :text-is('#8')"
    },
    "seconds": 0.8,
    "at": 8.4,
@@ -133,7 +133,7 @@
   {
    "do": "click",
    "target": {
-    "selector": "main div.rounded-lg:has(> div span.font-semibold:text-is('#8')) button:text-is('Preencher')"
+    "selector": "main div.cursor-pointer.rounded-2xl:has(span.font-semibold:text-is('#8')) button:text-is('Preencher')"
    },
    "at": 13.61,
    "label": "#8: Preencher"
@@ -161,15 +161,21 @@
    "at": 19.5
   },
   {
-   "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"body *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Equipamentos\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-190);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 19.73,
-   "label": "desce ao bloco Equipamentos"
+   "do": "hover",
+   "target": {
+    "text": "Equipamentos",
+    "exact": true
+   },
+   "seconds": 0.6,
+   "at": 19.5,
+   "label": "bloco Equipamentos (Entreguei e Recolhi)",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "click",
    "target": {
-    "selector": "div:has(> :text-is('Recolhi')) button[role=combobox] >> nth=0"
+    "selector": "button[role=combobox] >> nth=1"
    },
    "at": 24.06,
    "label": "Recolhi: Tipo de equipamento"
@@ -187,7 +193,7 @@
   {
    "do": "click",
    "target": {
-    "selector": "div:has(> :text-is('Recolhi')) button[role=combobox] >> nth=1"
+    "selector": "button[role=combobox] >> nth=2"
    },
    "at": 25.35,
    "label": "Recolhi: Unidade"
@@ -205,7 +211,7 @@
   {
    "do": "click",
    "target": {
-    "selector": "div:has(> :text-is('Recolhi')) button:has-text('Adicionar')"
+    "selector": "button:has-text('Adicionar') >> nth=1"
    },
    "at": 27.15,
    "label": "Recolhi: Adicionar"
@@ -213,7 +219,7 @@
   {
    "do": "click",
    "target": {
-    "selector": "div:has(> :text-is('Entreguei')) button[role=combobox] >> nth=0"
+    "selector": "button[role=combobox] >> nth=0"
    },
    "at": 28.66,
    "label": "Entreguei: Tipo de equipamento"
@@ -236,7 +242,7 @@
   {
    "do": "click",
    "target": {
-    "selector": "div:has(> :text-is('Entreguei')) button[role=combobox] >> nth=1"
+    "selector": "button[role=combobox] >> nth=1"
    },
    "at": 30.79,
    "label": "Entreguei: Unidade (só as da base)"
@@ -267,7 +273,7 @@
   {
    "do": "click",
    "target": {
-    "selector": "div:has(> :text-is('Entreguei')) button:has-text('Adicionar')"
+    "selector": "button:has-text('Adicionar') >> nth=0"
    },
    "label": "Entreguei: Adicionar"
   },
@@ -361,7 +367,7 @@
   {
    "do": "hover",
    "target": {
-    "selector": "main div.rounded-lg:has(> div span.font-semibold:text-is('#8')) :text-is('#8')"
+    "selector": "main div.cursor-pointer.rounded-2xl:has(span.font-semibold:text-is('#8')) :text-is('#8')"
    },
    "seconds": 0.8,
    "at": 59.55,
@@ -372,7 +378,7 @@
   {
    "do": "click",
    "target": {
-    "selector": "main div.rounded-lg:has(> div span.font-semibold:text-is('#8')) :text-is('Depósito Irmãos Siqueira')"
+    "selector": "main div.cursor-pointer.rounded-2xl:has(span.font-semibold:text-is('#8')) :text-is('Depósito Irmãos Siqueira')"
    },
    "at": 61.07,
    "label": "abre a ficha da ordem 8"

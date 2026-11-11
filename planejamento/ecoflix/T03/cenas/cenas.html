@@ -88,7 +88,7 @@ body{font-family:M,sans-serif;color:var(--t);-webkit-font-smoothing:antialiased}
   display:flex;align-items:center;justify-content:center;box-shadow:0 8px 18px rgba(16,24,40,.10)}
 </style><style id="saturado">/* estilo saturado (Kaik, 11/11): selo, chip, etiqueta, quadrado de ícone e círculo de etapa
    com fundo cheio e ícone/texto branco; nunca fundo claro com conteúdo colorido, nunca ícone escuro sobre o verde */
-:root{--vs:#16A34A;--as:#D97706;--rs:#DC2626}
+:root{--vs:#50D088;--as:#F2B63D;--rs:#EF4444}
 .ico{background:var(--vs);color:#fff}.ico.a{background:var(--as);color:#fff}
 .tag.v{background:var(--vs);color:#fff}.tag.a{background:var(--as);color:#fff}
 </style></head>
@@ -297,8 +297,8 @@ S.ilu00_cardapio=g=>{
     linhas.forEach((r,i)=>vis(r,t,A.ca-.1+i*.42,1e9,{dx:-14,dy:0}));
     // as etiquetas acendem na palavra, e os preços da coluna aparecem
     const pc=eo(pr(t,A.co-.05,.45)), pv=eo(pr(t,A.ve-.05,.45));
-    chC.style.background=mix('#4B5563','#16A34A',pc); chC.style.borderColor=mix('#4B5563','#16A34A',pc);
-    chV.style.background=mix('#4B5563','#D97706',pv); chV.style.borderColor=mix('#4B5563','#D97706',pv);
+    chC.style.background=mix('#4B5563','#50D088',pc); chC.style.borderColor=mix('#4B5563','#50D088',pc);
+    chV.style.background=mix('#4B5563','#F2B63D',pv); chV.style.borderColor=mix('#4B5563','#F2B63D',pv);
     vC.forEach((e,i)=>vis(e,t,A.co+.05+i*.12,1e9,{dy:8})); vV.forEach((e,i)=>vis(e,t,A.ve+.05+i*.12,1e9,{dy:8}));
     // abre espaço: a lousa vai para a esquerda e entram os três destinos, cada um na sua palavra
     const sl=eio(pr(t,A.cad-.3,.8)); mov.style.transform=`translate(${(-280*sl).toFixed(2)}px,0) scale(${(1-.1*sl).toFixed(4)})`;
@@ -413,12 +413,12 @@ S.ilu03_codigo=g=>{
     // o balcão do dia a dia; as etiquetas acendem em "compra" e "venda"; digita o número; o material aparece
     vis(balC,t,A.di-.15,1e9,{dy:18});
     const pc=eo(pr(t,A.co-.1,.45)), pv=eo(pr(t,A.ve-.1,.45));
-    chC.style.background=mix('#4B5563','#16A34A',pc); pulse(chC,t,A.co-.1,.08,.6);
-    chV.style.background=mix('#4B5563','#D97706',pv); pulse(chV,t,A.ve-.1,.08,.6);
+    chC.style.background=mix('#4B5563','#50D088',pc); pulse(chC,t,A.co-.1,.08,.6);
+    chV.style.background=mix('#4B5563','#F2B63D',pv); pulse(chV,t,A.ve-.1,.08,.6);
     escreve(dg,'16',t,A.dg,A.dg+.45);
     vis(resl,t,A.ap-.1,1e9,{dx:-12,dy:0});
     contorno(fic,t,A.ap-.1,'#E1E8E4','#50D088'); anel(fic,t,A.ap-.1,'rgba(80,208,136,.25)',SOMBRA,4); pulse(fic,t,A.ap-.1,.05,.8);
-    luz(nbox,'background',t,A.ap-.1,'#4B5563','#16A34A');
+    luz(nbox,'background',t,A.ap-.1,'#4B5563','#50D088');
     // o caderno entra e o balcão abre espaço; pode usar os mesmos: a linha do radiador acende; o Rafael
     const sl=eio(pr(t,A.ca-.5,.8)); bal.style.left=lerp(BX0,BX1,sl).toFixed(2)+'px';
     vis(cad,t,A.ca+.15,1e9,{dx:24,dy:0});
@@ -595,7 +595,7 @@ S.ilu05_gavetas=g=>{
   const tit=titulo(g,'Grupos','Grupo é uma gaveta');
   const GX=[115,475,835], GY=[344,534];
   const GR=[['Ferrosos','#64748B','Ferro pesado'],['Cobre','#C2410C','Cobre mel'],['Alumínio','#0EA5E9','Alumínio latinha'],
-            ['Metais','#CA8A04','Bronze'],['Outros','#16A34A','Papelão']];
+            ['Metais','#CA8A04','Bronze'],['Outros','#50D088','Papelão']];
   const mov=el('<div class="ab" style="left:95px;top:324px;width:1090px;height:350px;border-radius:24px;background:#F2F4F7;border:1px solid #E1E8E4"></div>',g);
   const pos=i=>[GX[i%3],GY[Math.floor(i/3)]];
   // fichas (atrás das gavetas depois que caem: a camada muda quando a base da ficha chega na boca da gaveta)
@@ -656,7 +656,7 @@ S.ilu07_vinculada=g=>{
         <div style="position:absolute;left:0;top:44px;font-weight:700;font-size:22px;white-space:nowrap">Cobre mel</div>
         <div class="old num" style="position:absolute;right:0;top:8px;font-size:18px;color:#6B7280;text-decoration:line-through;opacity:0;white-space:nowrap">${brl(42)}</div>
         <div class="row" style="position:absolute;right:0;top:38px;gap:12px">
-          <div class="up" style="width:36px;height:36px;border-radius:50%;background:#16A34A;display:flex;align-items:center;justify-content:center;opacity:0">${ic('arrow-up',22,'#fff')}</div>
+          <div class="up" style="width:36px;height:36px;border-radius:50%;background:#50D088;display:flex;align-items:center;justify-content:center;opacity:0">${ic('arrow-up',22,'#fff')}</div>
           <div class="num vv" style="font-size:40px;white-space:nowrap">${val}</div></div></div></div>`,g);
   const cP=cartao(XL,'',`<span class="ic" style="width:30px;height:30px">${(window.ICONS||{})['star']||''}</span>`,'Principal',brl(42.5));
   const cD=cartao(XR,'a',ic('link-2',30),'Tabela Depósitos',brl(44.2));
@@ -721,7 +721,7 @@ S.ilu07_ordem=g=>{
     [A.p1,A.de,A.ul].forEach((a,i)=>{luz(deg[i],'background',t,a-.1,'#F2F4F7',DG[i][3]);
       contorno(deg[i],t,a-.1,'#E1E8E4',i===2?'#CFEBDD':DG[i][3]);
       vis(txt[i][0],t,a,1e9,{dy:8}); vis(txt[i][1],t,a+.18,1e9,{dy:8}); dic[i].style.opacity=(.55*eo(pr(t,a+.3,.45))).toFixed(3);
-      contorno(bolas[i],t,a-.1,'#4B5563','#16A34A'); luz(bolas[i],'background',t,a-.1,'#4B5563','#16A34A')});
+      contorno(bolas[i],t,a-.1,'#4B5563','#50D088'); luz(bolas[i],'background',t,a-.1,'#4B5563','#50D088')});
     if(txt[0][2])vis(txt[0][2],t,A.cl-.2,1e9,{dy:8});
     if(txt[1][2])vis(txt[1][2],t,A.pe-.2,1e9,{dy:8});
   };

@@ -31,7 +31,7 @@ TUT = os.path.normpath(os.path.join(HERE, '..', '..'))
 NARR = os.path.join(TUT, 't12', 'narracao')
 NOW = '2026-11-10T07:00:00-03:00'
 FAKE_NOW = {n: NOW for n in range(12)}
-TOKEN_COOP = hashlib.sha1(b'ecoflix-t12-portal-recomeco').hexdigest()[:32]   # o mesmo de t12_sementes.py
+
 
 
 def stable_id(chave):
@@ -44,6 +44,7 @@ def stable_id(chave):
 
 
 RAFAEL = stable_id('user.rafael')
+TOKEN_COOP = stable_id('t12.portal.recomeco')   # portal_token da Cooperativa Recomeço (t12_sementes.py)
 try:
     VERSAO = open(os.path.join(TUT, 'app', 'dist', '.versao-app'), encoding='utf8').read().strip() or '1.59.154'
 except OSError:
@@ -264,7 +265,7 @@ OPT = lambda n, **kw: {'role': 'option', 'name': n, 'exact': True, **kw}
 PH = lambda p, **kw: {'placeholder': p, **kw}
 DLG = '[role=dialog]'
 MENU = 'aside, [data-sidebar=sidebar]'
-CARTAO = lambda num: f"main div.rounded-lg:has(> div span.font-semibold:text-is('#{num}'))"     # cartão #N do quadro
+CARTAO = lambda num: f"main div.cursor-pointer.rounded-2xl:has(span.font-semibold:text-is('#{num}'))"     # cartão #N do quadro
 COLUNA = lambda titulo: f"main div:has(> div :text-is('{titulo}'))"
 
 
@@ -464,8 +465,8 @@ def cap03():
     c.type(BUSCA_PARC, 'Vale Forte', at=c.A(3, 'busco', 0.05), label='busca Vale Forte', cps=40, noClick=True)
     c.click(BTNX('Auto Peças Vale Forte', within=f'{DLG} >> nth=-1'), at=c.A(3, 'Vale', 0.8, nth=0), label='escolhe Auto Peças Vale Forte')
     c.mark(4)
-    c.hover(SEL(f"{DLG} input[placeholder='Rua']"), 0.8, at=c.A(4, 'endereço', 0.5), label='endereço do cadastro')
-    c.hover(SEL(f"{DLG} input[placeholder='Cidade']"), 0.8, at=c.A(4, 'cadastro', 0.5), label='endereço do cadastro (cidade)')
+    c.hover(PH('Rua, Avenida, etc.'), 0.8, at=c.A(4, 'endereço', 0.5), label='endereço do cadastro')
+    c.hover(SEL(f"{DLG} button[role=combobox] >> nth=2"), 0.8, at=c.A(4, 'cadastro', 0.5), label='endereço do cadastro (cidade)')
     c.mark(5)
     c.click(AVANCAR, at=c.A(5, 'Avançar', 0.8), label='Avançar')
     c.click(SEL('#ordem-material'), at=c.A(5, 'Material', 0.8), label='Material estimado (campo)')
@@ -548,21 +549,21 @@ def cap06():
     c.waitfor(text='Ordem #8', timeout=15)
     c.hover(TXTX('Agendamento', exact=True), 0.6, at=c.A(2, 'combinado', 0.5), label='tela da ordem: o combinado')
     c.mark(3)
-    rola_ate(c, 'Equipamentos', c.A(3, 'bloco', 0.2), 'desce ao bloco Equipamentos', y=190, escopo='body')
-    c.click(SEL("div:has(> :text-is('Recolhi')) button[role=combobox] >> nth=0"), at=c.A(3, 'Edson', 0.8), label='Recolhi: Tipo de equipamento')
+    c.hover(TXTX('Equipamentos', exact=True), 0.6, at=c.A(3, 'bloco', 0.5), label='bloco Equipamentos (Entreguei e Recolhi)')
+    c.click(SEL('button[role=combobox] >> nth=1'), at=c.A(3, 'Edson', 0.8), label='Recolhi: Tipo de equipamento')
     c.click(OPT('Caçamba 5 m³'), at=c.A(3, 'recolheu', 0.6), label='Recolhi: Caçamba 5 m³')
-    c.click(SEL("div:has(> :text-is('Recolhi')) button[role=combobox] >> nth=1"), at=c.A(3, 'Caçamba', 0.8, nth=1), label='Recolhi: Unidade')
+    c.click(SEL('button[role=combobox] >> nth=2'), at=c.A(3, 'Caçamba', 0.8, nth=1), label='Recolhi: Unidade')
     c.click(OPT('Caçamba 03'), at=c.A(3, 'três', 0.5), label='Recolhi: Caçamba 03')
-    c.click(SEL("div:has(> :text-is('Recolhi')) button:has-text('Adicionar')"), at=c.A(3, 'cheia', 0.6), label='Recolhi: Adicionar')
+    c.click(SEL("button:has-text('Adicionar') >> nth=1"), at=c.A(3, 'cheia', 0.6), label='Recolhi: Adicionar')
     c.mark(4)
-    c.click(SEL("div:has(> :text-is('Entreguei')) button[role=combobox] >> nth=0"), at=c.A(4, 'deixou', 0.8), label='Entreguei: Tipo de equipamento')
+    c.click(SEL('button[role=combobox] >> nth=0'), at=c.A(4, 'deixou', 0.8), label='Entreguei: Tipo de equipamento')
     c.click(OPT('Caçamba 5 m³'), at=c.A(4, 'Caçamba', 0.6), label='Entreguei: Caçamba 5 m³')
-    c.click(SEL("div:has(> :text-is('Entreguei')) button[role=combobox] >> nth=1"), at=c.A(4, 'vazia', 0.8), label='Entreguei: Unidade (só as da base)')
+    c.click(SEL('button[role=combobox] >> nth=1'), at=c.A(4, 'vazia', 0.8), label='Entreguei: Unidade (só as da base)')
     c.hover(OPT('Caçamba 05'), 1.2, at=c.A(4, 'lista', 0.5), label='Entreguei: lista só com as da base')
     c.click(OPT('Caçamba 05'), at=c.A(4, 'base', 0.8), label='Entreguei: Caçamba 05')
-    c.click(SEL("div:has(> :text-is('Entreguei')) button:has-text('Adicionar')"), label='Entreguei: Adicionar')
+    c.click(SEL("button:has-text('Adicionar') >> nth=0"), label='Entreguei: Adicionar')
     c.mark(5)
-    c.clicar_fixo(SEL("div.fixed button:has-text('Concluir coleta')"), (640, 770), js_clicar('div.fixed button', 'Concluir coleta'),
+    c.clicar_fixo(SEL("div.fixed button:has-text('Concluir coleta')"), (640, 766), js_clicar('div.fixed button', 'Concluir coleta'),
                   c.A(5, 'Concluir', 0.1), 'Concluir coleta')
     c.waitfor(text='Relatório de Coleta 8', timeout=15)
     c.hover(TXTX('Relatório de Coleta 8', exact=True), 1.0, at=c.A(5, 'relatório', 0.5), label='Relatório de Coleta 8')
@@ -652,7 +653,7 @@ def cap08():
     c.hover(TAB('Motoristas'), 0.3, at=c.A(1, 'motoristas', 0.5), label='aba Motoristas')
     c.hover(TXTX('Mesma frota usada na pesagem de compra/venda.', exact=True), 0.8, at=c.A(1, 'pesagem', 0.5), label='mesma frota da pesagem')
     c.mark(2)
-    c.click(TXTX('FKD2E41', within='main', exact=True), at=c.A(2, 'caminhão', 0.8), label='FKD2E41')
+    c.click(SEL("main button:has-text('FKD2E41'):has-text('Caminhão truck')"), at=c.A(2, 'caminhão', 0.8), label='FKD2E41')
     c.hover(TXTX('Tara', within='main', exact=True), 0.3, at=c.A(2, 'tara', 0.5), label='Tara do FKD2E41')
     c.hover(TXTX('Capacidade', within='main', exact=True), 1.0, at=c.A(2, 'capacidade', 0.5), label='Capacidade do FKD2E41')
     c.mark(3)
@@ -721,8 +722,8 @@ def cap09():
     c.hover(SEL("main tr:has-text('Bag 1 m³')"), 1.6, at=c.A(2, 'bag', 0.5), label='Bag 1 m³: por quantidade')
     c.mark(3)
     rola_ate(c, 'Unidades identificáveis', c.A(3, 'Embaixo', 0.3), 'desce às Unidades identificáveis', y=140)
-    c.hover(TXTX('Caçamba 05', within='main', exact=True), 0.6, at=c.A(3, 'Caçamba', 0.5), label='Caçamba 05')
-    c.hover(SEL("main :text-is('Caçamba 05') >> xpath=ancestor::*[contains(., 'Depósito Irmãos Siqueira')][1]"), 1.2, at=c.A(3, 'Depósito', 0.5),
+    c.hover(SEL("main [role=listitem]:has-text('Caçamba 05')"), 0.6, at=c.A(3, 'Caçamba', 0.5), label='Caçamba 05')
+    c.hover(SEL("main [role=listitem]:has-text('Caçamba 05') :text-is('Depósito Irmãos Siqueira')"), 1.2, at=c.A(3, 'Depósito', 0.5),
             label='Caçamba 05 no Depósito Irmãos Siqueira')
     c.mark(4)
     c.click(BTN('Nova unidade'), at=c.A(4, 'Nova', 0.9), label='Nova unidade')
@@ -734,7 +735,7 @@ def cap09():
     c.click(BTN('Cadastrar', within=DLG), at=c.A(4, 'Cadastrar', 0.5), label='Cadastrar unidade')
     c.waitfor(text='Unidade cadastrada', timeout=10)
     c.mark(5)
-    c.click(TXTX('Caçamba 06', within='main', exact=True), at=c.A(5, 'Ela', 0.8), label='Caçamba 06 na lista')
+    c.click(SEL("main [role=listitem]:has-text('Caçamba 06')"), at=c.A(5, 'Ela', 0.8), label='Caçamba 06 na lista')
     c.hover(TXTX('Ainda sem movimentação registrada', within='main', exact=False), 1.2, at=c.A(5, 'lugar', 0.5), label='sem lugar (sem movimentação)')
     c.mark(6)
     c.click(BTN('Movimentar', within='main'), at=c.A(6, 'Movimentar', 0.8), label='Movimentar')
