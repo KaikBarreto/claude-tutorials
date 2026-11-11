@@ -1091,7 +1091,8 @@ const VAZIAS = [
   'notification_preferences', 'user_header_shortcuts', 'contabil_export_jobs', 'blog_posts', 'company_group_members', 'company_groups', 'employees',
   'entity_custom_prices', 'entity_labels', 'entity_custom_field_definitions', 'customer_label_assignments', 'supplier_label_assignments',
   'invoices', 'invoice_items', 'invoice_orders', 'inbound_nfe', 'inbound_nfse', 'nfse_invoices', 'mtr_manifests', 'mtr_cdf',
-  'mtr_credentials', 'mtr_parceiros', 'mtr_manifest_items', 'mtr_manifest_attempts', // o SIGOR do Rafael e os parceiros são da semente da T18
+  'mtr_credentials', 'mtr_parceiros', 'mtr_manifest_items', 'mtr_ref_residuos', 'mtr_ref_classe', 'mtr_ref_estado_fisico', 'mtr_ref_acondicionamento',
+  'mtr_ref_tratamento', 'mtr_ref_unidade', // o SIGOR do Rafael, os parceiros e as listas do órgão ficam com a semente da T18
   'production_orders', 'production_recipes', 'collection_orders', 'crm_opportunities', 'crm_pipelines', 'crm_stages',
   'bank_statement_imports', 'bank_statement_entries', 'reconciliation_matches', 'credit_card_bills', 'bill_payments', 'bill_payment_groups',
   'transaction_attachments', 'employee_movements', 'cato_events', 'cato_pending_actions', 'subscription_payments', 'subscription_history',
@@ -1103,6 +1104,8 @@ const VAZIAS = [
   'cash_registers',
   // existe no banco mas não no types.ts da 1.59.154 (migration 20261021161000, bastão de edição do rascunho)
   'draft_editors',
+  // existem no banco mas não no types.ts da 1.59.154: tentativas de envio do MTR e os resíduos salvos (T18)
+  'mtr_manifest_attempts', 'mtr_residuo_presets',
 ];
 
 // ---------------------------------------------------------------- grava (numa pasta ao lado; depois troca arquivo a arquivo)

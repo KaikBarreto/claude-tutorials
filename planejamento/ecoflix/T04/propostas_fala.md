@@ -17,6 +17,12 @@ Linhas numeradas como no `capNN.json` (L1 = 1ª linha da tabela do capítulo).
   (`ClientsListView.tsx:315`, `overflow-x-auto`) corta "Notas fiscais" e deixa "Preços" fora (x ≈ 1276 numa janela de 1280). O robô
   rola a faixa de lado (suave, ~0,5 s) antes de "Notas fiscais"/"Preços" nos caps 06, 07 e 11; a fala não muda.
 
+- **CEP sem máscara depois da busca do CNPJ (cap03 L5):** o campo mostra "12062150", não "12062-150": `handleCnpjData` grava o CEP
+  só com dígitos e o `CepLookup` só formata quando a pessoa digita (`EntityFormDialog.tsx:728-731`, `CepLookup.tsx:138-150`). A fala
+  não diz o número; a tela fica como o app mostra.
+- **Aviso do React no console** quando a busca preenche UF e cidade ("Select is changing from uncontrolled to controlled", Selects do
+  Radix que nasceram sem valor): só console. Entrou no `ruidoConsole` do `mundo.json` para não contar como problema da gravação.
+
 ## Mundo (para a junção)
 - **Cida Ramos** (fornecedora PF, mesmo telefone da Aparecida, sem documento nem endereço) não está no mundo base B: entra pela semente
   `seeds-extra/t04/inicio` (código 6). Sem ela não há selo "Mesmo telefone" no cap01.

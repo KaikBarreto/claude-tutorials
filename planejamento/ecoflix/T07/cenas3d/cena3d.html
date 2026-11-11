@@ -159,12 +159,12 @@ function peca(pai,metal,p,s=1){const k=pega(TIPOS[metal]),cor=pega(PAL[metal]);
 
 // ------------------------------------------------------------------ 3D: desenhos (sem marca)
 // saco de ráfia fechado (tara)
-function saco(pai,p){const g=grupo(pai,p),mt=MU('#EDE3CC'),ml=MU('#C2AE84'),mf=MU('#D9CBA8');
+function saco(pai,p){const g=grupo(pai,p),mt=MU('#E9D6AC'),ml=MU('#B89A62'),mf=MU('#C9AF7E');
   const pts=[[0,0],[.2,.004],[.29,.05],[.325,.17],[.335,.34],[.315,.5],[.26,.62],[.17,.71],[.085,.77],[.072,.81],[.1,.87],[.115,.92],[.07,.95],[0,.955]];
   poe(new THREE.LatheGeometry(pts.map(([r,y])=>new THREE.Vector2(r,y)),30),mt,g,[0,0,0],[0,0,0],[1,1,.82]);
   poe(new THREE.TorusGeometry(.083,.024,8,20),ml,g,[0,.79,0],[PI/2,0,0],[1,.82,1]);
   for(const [y,r] of [[.25,.331],[.42,.33]])poe(new THREE.TorusGeometry(r,.007,6,40),mf,g,[0,y,0],[PI/2,0,0],[1,.82,1]);
-  return {g,mats:[[mt,'#EDE3CC'],[ml,'#C2AE84'],[mf,'#D9CBA8']]}}
+  return {g,mats:[[mt,'#E9D6AC'],[ml,'#B89A62'],[mf,'#C9AF7E']]}}
 // tambor de aço
 function tambor(pai,p){const g=grupo(pai,p),mt=MU('#557891'),ma=MU('#46667D');
   poe(new THREE.CylinderGeometry(.29,.29,.86,36),mt,g,[0,.43,0]);
@@ -173,15 +173,16 @@ function tambor(pai,p){const g=grupo(pai,p),mt=MU('#557891'),ma=MU('#46667D');
   poe(new THREE.CylinderGeometry(.045,.045,.03,16),ma,g,[.14,.87,.06]);
   return {g,mats:[[mt,'#557891'],[ma,'#46667D']]}}
 // caçamba pequena (de empilhadeira): corpo em trapézio, boca escura e dois patins
-function cacamba(pai,p){const g=grupo(pai,p),mt=MU('#6E7B88'),mi=MU('#3D4550'),mp=MU('#2F353C');
+function cacamba(pai,p){const g=grupo(pai,p),mt=MU('#6E7B88'),mi=MU('#56626F'),mp=MU('#2F353C');
   const sh=new THREE.Shape();sh.moveTo(-.42,0);sh.lineTo(.42,0);sh.lineTo(.56,.5);sh.lineTo(-.56,.5);sh.closePath();
-  const geo=new THREE.ExtrudeGeometry(sh,{depth:.62,bevelEnabled:true,bevelThickness:.03,bevelSize:.03,bevelSegments:2,curveSegments:1});
-  geo.translate(0,.08,-.31);poe(geo,mt,g);
-  poe(rbox(1.02,.02,.56,.01,1),mi,g,[0,.612,0]);
+  const geo=new THREE.ExtrudeGeometry(sh,{depth:.04,bevelEnabled:true,bevelThickness:.012,bevelSize:.012,bevelSegments:1,curveSegments:1});
+  geo.translate(0,.08,-.02);for(const z of [-.31,.31])poe(geo,mt,g,[0,0,z]);            // as duas pontas em trapézio
+  const inc=Math.atan2(.14,.5);for(const sx of [-1,1])poe(rbox(.045,.53,.66,.015,1),mt,g,[sx*.49,.33,0],[0,0,-sx*inc]);   // laterais inclinadas
+  poe(rbox(.86,.04,.62,.015,1),mi,g,[0,.1,0]);                                           // fundo (mais escuro: a boca aberta)
   for(const x of [-.28,.28])poe(rbox(.13,.07,.72,.02,1),mp,g,[x,.035,0]);
-  return {g,mats:[[mt,'#6E7B88'],[mi,'#3D4550'],[mp,'#2F353C']]}}
+  return {g,mats:[[mt,'#6E7B88'],[mi,'#56626F'],[mp,'#2F353C']]}}
 // saco aberto (o bruto): ráfia por fora, sucata aparecendo na boca
-function sacoAberto(pai){const mt=MU('#EDE3CC',{ds:true}),mf=M('#D9CBA8');
+function sacoAberto(pai){const mt=MU('#E9D6AC',{ds:true}),mf=M('#C9AF7E');
   const pts=[[0,0],[.24,.004],[.34,.05],[.385,.17],[.395,.34],[.38,.5],[.35,.62],[.33,.7],[.345,.75],[.365,.775]];
   const g=grupo(pai);poe(new THREE.LatheGeometry(pts.map(([r,y])=>new THREE.Vector2(r,y)),34),mt,g,[0,0,0],[0,0,0],[1,1,.84]);
   poe(new THREE.TorusGeometry(.358,.026,8,40),mf,g,[0,.765,0],[PI/2,0,0],[1,.84,1]);
@@ -196,10 +197,11 @@ function palete(pai,p){const g=grupo(pai,p),m=M('#C9A27A'),m2=M('#B48C64');
   for(let i=0;i<6;i++)poe(rbox(.18,.035,1.0,.012,1),m,g,[-.55+i*.22,.098,0]);return g}
 
 // ------------------------------------------------------------------ cena
-let RD,CENA,CAM,SOL,CK=[],RENDER=null;
+let RD,CENA,CAM,SOL,CHAO,CK=[],RENDER=null;
 function base(){
   RD=new THREE.WebGLRenderer({canvas:document.getElementById('gl'),antialias:Q.get('aa')!=='0',alpha:true,preserveDrawingBuffer:true});
-  RD.setPixelRatio(Math.min(window.devicePixelRatio||1,+(Q.get('pr')||9)));RD.setSize(1280,800,false);RD.setClearColor(0x000000,0);
+  // 3D a 1920x1200 no máximo (o palco final é menor que isso); os rótulos HTML ficam na resolução cheia
+  RD.setPixelRatio(Math.min(window.devicePixelRatio||1,+(Q.get('pr')||1.5)));RD.setSize(1280,800,false);RD.setClearColor(0x000000,0);
   RD.shadowMap.enabled=Q.get('sh')!=='0';RD.shadowMap.type={pcf:THREE.PCFShadowMap,vsm:THREE.VSMShadowMap}[Q.get('st')]??THREE.PCFSoftShadowMap;
   CENA=new THREE.Scene();
   CAM=new THREE.PerspectiveCamera(26,1280/800,.1,120);
@@ -208,8 +210,8 @@ function base(){
   const sc=SOL.shadow.camera;sc.left=-6.5;sc.right=6.5;sc.top=6.5;sc.bottom=-6.5;sc.near=1;sc.far=40;
   SOL.shadow.bias=-.0004;SOL.shadow.normalBias=.02;SOL.shadow.radius=4;CENA.add(SOL,SOL.target);
   const fill=new THREE.DirectionalLight(0xEAF4FF,.55);fill.position.set(6,3,8);CENA.add(fill);
-  const chao=new THREE.Mesh(new THREE.PlaneGeometry(90,90),new THREE.ShadowMaterial({color:0x1d2b24,opacity:.16}));
-  chao.rotation.x=-PI/2;chao.receiveShadow=true;CENA.add(chao);
+  CHAO=new THREE.Mesh(new THREE.PlaneGeometry(14,14),new THREE.ShadowMaterial({color:0x1d2b24,opacity:.16}));
+  CHAO.rotation.x=-PI/2;CHAO.receiveShadow=true;CENA.add(CHAO);   // só o quadrado que o mapa de sombra cobre (segue o alvo)
   geos();
 }
 // câmera: alvo (x,y,z) + distância + azimute + elevação + deslocamento da imagem (oy px: positivo sobe o desenho)
@@ -221,7 +223,7 @@ function pose(t){let k=CK[0][1];
 function aplicaCam(k){const ce=Math.cos(k.el);
   CAM.position.set(k.x+k.d*Math.sin(k.az)*ce,k.y+k.d*Math.sin(k.el),k.z+k.d*Math.cos(k.az)*ce);CAM.lookAt(k.x,k.y,k.z);
   CAM.setViewOffset(1280,800,0,k.oy,1280,800);CAM.updateMatrixWorld();
-  SOL.position.set(k.x-4.5,9,k.z+5.5);SOL.target.position.set(k.x,0,k.z);SOL.target.updateMatrixWorld()}
+  SOL.position.set(k.x-4.5,9,k.z+5.5);SOL.target.position.set(k.x,0,k.z);SOL.target.updateMatrixWorld();CHAO.position.set(k.x,0,k.z)}
 const _v=new THREE.Vector3();
 function tela(p){_v.set(p[0],p[1],p[2]).project(CAM);return[(_v.x+1)*640,(1-_v.y)*400]}
 // prende um rótulo HTML a um ponto do mundo (ax/ay: que ponto do rótulo fica no ponto; dx/dy em px)
@@ -234,7 +236,7 @@ function monta(){
   const XA=-2.3,XB=2.55,B=[.5,0,.5],EST=[.5,0,2.2];
   const tara=[saco(P1,[-3.3,0,.1]),tambor(P1,[-2.35,0,-.05]),cacamba(P1,[-1.25,0,.05])];
   tara.forEach((o,i)=>{o.g.userData.ry=[.25,0,-.2][i];o.g.rotation.y=o.g.userData.ry;mancha(o.g,[.95,.85,1.45][i],[.85,.85,1.05][i],.28)});
-  const ARG=new THREE.Color('#E3E7EB');                       // argila crua: o desenho entra claro e ganha cor na palavra
+  const ARG=new THREE.Color('#DEE3E8');                       // argila crua: o desenho entra claro e ganha cor na palavra
   // monte com impureza
   const GI=grupo(P1,[XB,0,0]);mancha(GI,2.3,1.9,.3);
   for(const p of monte(34,.9,.76,.56))peca(GI,pega(['aco','aco','ferrugem','cobre','alu']),p);
@@ -379,7 +381,7 @@ function monta(){
     pulse(k4,t,tl2,.05,.8);ripple(ripL,t,tl2);
     vis(sEs,t,ten-.05,TX,{dy:12});ancora(sEs,[EST[0]+.72,.28,EST[2]],0,.5,10,0);pulse(sEs,t,tes,.06,.7);
     // parte 2
-    vis(most,t,TX+1.0,1e9,{dy:10});ancora(most,TOPO,.5,1,0,4);
+    vis(most,t,TX+1.9,1e9,{dy:10});ancora(most,TOPO,.5,1,0,4);
     if(t<tvz-.1)conta(mn,t,chegou-.15,.9,0,R1);else conta(mn,t,tvz-.1,.65,R1,R2);
     const lt=eo(pr(t,tvz-.1,.35));m1.style.opacity=1-lt;m2.style.opacity=lt;
     pulse(most,t,tch,.05,.7);pulse(most,t,tvz+.7,.05,.7);

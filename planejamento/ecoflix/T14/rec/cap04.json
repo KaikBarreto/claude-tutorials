@@ -195,7 +195,7 @@
   {
    "do": "click",
    "target": {
-    "placeholder": "Ex: Recebimento de pagamento"
+    "selector": "#description"
    },
    "at": 22.59,
    "label": "Descrição"
@@ -203,7 +203,7 @@
   {
    "do": "type",
    "target": {
-    "placeholder": "Ex: Recebimento de pagamento"
+    "selector": "#description"
    },
    "text": "Combustível da picape",
    "at": 24.13,
@@ -213,7 +213,7 @@
   {
    "do": "click",
    "target": {
-    "label": "Valor *"
+    "selector": "#amount"
    },
    "at": 25.32,
    "label": "Valor"
@@ -221,7 +221,7 @@
   {
    "do": "type",
    "target": {
-    "label": "Valor *"
+    "selector": "#amount"
    },
    "text": "350,00",
    "at": 26.56,
@@ -231,7 +231,8 @@
   {
    "do": "click",
    "target": {
-    "selector": "[role=dialog] button[role=combobox]:has-text(\"Selecione a categoria\")"
+    "selector": "[role=dialog] button[role=combobox]",
+    "hasText": "Selecione uma categoria"
    },
    "at": 28.21,
    "label": "Categoria"
@@ -249,7 +250,7 @@
   {
    "do": "click",
    "target": {
-    "selector": "[role=dialog] button[role=combobox]:has-text(\"centro de custo\")"
+    "selector": "#cost-center"
    },
    "at": 30.03,
    "label": "Centro de custo"
@@ -336,7 +337,8 @@
   {
    "do": "click",
    "target": {
-    "selector": "[role=dialog] button[role=combobox]:near(:text(\"Conta de origem\"))"
+    "selector": "[role=dialog] button[role=combobox]",
+    "hasText": "Conta Principal"
    },
    "at": 60.54,
    "label": "Conta de origem"
@@ -353,7 +355,8 @@
   {
    "do": "click",
    "target": {
-    "selector": "[role=dialog] button[role=combobox]:near(:text(\"Conta de destino\"))"
+    "selector": "[role=dialog] button[role=combobox]",
+    "hasText": "Selecione a conta de destino"
    },
    "at": 63.35,
    "label": "Conta de destino"
@@ -370,7 +373,7 @@
   {
    "do": "click",
    "target": {
-    "label": "Valor *"
+    "selector": "#amount"
    },
    "at": 65.32,
    "label": "Valor da transferência"
@@ -378,7 +381,7 @@
   {
    "do": "type",
    "target": {
-    "label": "Valor *"
+    "selector": "#amount"
    },
    "text": "8000,00",
    "at": 66.25,
@@ -458,7 +461,7 @@
   {
    "do": "click",
    "target": {
-    "label": "Valor do Saque"
+    "selector": "#amount"
    },
    "at": 81.18,
    "label": "Valor do Saque"
@@ -466,7 +469,7 @@
   {
    "do": "type",
    "target": {
-    "label": "Valor do Saque"
+    "selector": "#amount"
    },
    "text": "2000,00",
    "at": 82.41,
@@ -476,18 +479,26 @@
   {
    "do": "click",
    "target": {
-    "role": "button",
-    "name": "Sim",
-    "exact": true,
-    "within": "[role=dialog]"
+    "selector": "[role=dialog] button[role=combobox]",
+    "hasText": "Não"
    },
-   "at": 84.44,
-   "label": "Tem tarifa no saque? Sim"
+   "at": 83.84,
+   "label": "Tem tarifa no saque?"
   },
   {
    "do": "click",
    "target": {
-    "label": "Valor da Tarifa"
+    "role": "option",
+    "name": "Sim",
+    "exact": true
+   },
+   "at": 84.54,
+   "label": "Sim"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#fee"
    },
    "at": 84.97,
    "label": "Valor da Tarifa"
@@ -495,7 +506,7 @@
   {
    "do": "type",
    "target": {
-    "label": "Valor da Tarifa"
+    "selector": "#fee"
    },
    "text": "6,50",
    "at": 86.51,
