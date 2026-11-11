@@ -5,8 +5,6 @@
 #   --completo   ensaio COMPLETO com os tempos estimados (o roteiro rec/t22/capNN.json), com MP4 e folha de contato em /dev/shm/t22rec
 #                (o MP4 e a folha ficam lá para olhar e apagar); actions/telemetry em rec/t22/; resumo.py
 #   --estado     depois da gravação e DENTRO da mesma trava, grava a semente apos-capNN a partir do banco (t22_estado.py)
-#   --se-faltar  (a fila usa) ao pegar a trava, sai na hora se o ensaio desse capítulo e modo já passou (rec/t22/_fila/ok-MODO-NN, ou o log
-#                do lote antigo rec/t22/_ens/rN.log com rc=0): o ticket reserva vira só uma passagem de 0,1 s pela trava
 # Nos dois modos os quadros ficam (--keep-frames) e, FORA da trava, o t22_quadros.py monta o "storyboard" (um quadro depois de cada passo
 # com rótulo) em /dev/shm/t22rec/t22-capNN.quadros-K.jpg; a pasta dos quadros é apagada logo depois (olhar e apagar as folhas).
 # A trava pesada é pega pela fila justa (bash rec/fila.sh --prio 22; regra de 11/11: no máximo UMA tarefa minha na fila, uma de cada
@@ -22,9 +20,8 @@ if [ -z "${TUT_SENHA:-}" ]; then TUT_SENHA="$(python3 -I -c 'import secrets; pri
 export TUT_SENHA
 NN=$(printf '%02d' "$((10#$1))"); shift
 N=$((10#$NN))
-MODO=rapido; ESTADO=""; FALTA=""
-for a in "$@"; do case "$a" in --completo) MODO=completo ;; --estado) ESTADO=1 ;; --se-faltar) FALTA=1 ;; *) echo "opção desconhecida: $a"; exit 2 ;; esac; done
-OK=rec/t22/_fila/ok-$MODO-$NN
+MODO=rapido; ESTADO=""
+for a in "$@"; do case "$a" in --completo) MODO=completo ;; --estado) ESTADO=1 ;; *) echo "opção desconhecida: $a"; exit 2 ;; esac; done
 PIDF=rec/.runtime/fake54322.pid
 minha() { local p; p=$(cat $PIDF 2>/dev/null || echo 0); grep -qz "^FAKE_PORT=54322\$" /proc/$p/environ 2>/dev/null && grep -qz "^FAKE_NOW=$FAKE_NOW\$" /proc/$p/environ 2>/dev/null && curl -s -o /dev/null --max-time 3 http://127.0.0.1:54322/health; }
 if ! minha; then echo "INSTÂNCIA 54322 NÃO É A MINHA OU NÃO RESPONDE: religue com FAKE_NOW=$FAKE_NOW FAKE_PORT=54322 bash rec/run.sh fake"; exit 4; fi
@@ -43,9 +40,7 @@ fi
 # as sementes de partida do capítulo têm de existir (o cap10 parte do apos-cap09, o cap11 do apos-cap10): sem elas, sai na hora (FALTA-SEMENTE)
 SEMS=$(python3 -I -c "import sys; sys.path.insert(0, 'rec/t22'); import gerar; print(' '.join(gerar.SEMENTE[$N]))" 2>/dev/null)
 CHECA="for f in $SEMS; do [ -f rec/mundo/seeds-extra/\$f.json ] || { echo FALTA-SEMENTE \$f; exit 3; }; done;"
-SKIP=""
-[ -n "$FALTA" ] && SKIP="if [ -f $OK ] || grep -qs '=== cap$NN ($MODO) rc=0' rec/t22/_ens/r$N.log; then echo JA-FEITO; exit 0; fi;"
-CMD="$SKIP $CHECA $PREP && rm -rf $TMP && mkdir -p $TMP && timeout 900 $REC; rc=\$?; mv -f $TMP/t22-cap$NN.actions.json $TMP/t22-cap$NN.telemetry.json $DEST/ 2>/dev/null;"
+CMD="$CHECA $PREP && rm -rf $TMP && mkdir -p $TMP && timeout 900 $REC; rc=\$?; mv -f $TMP/t22-cap$NN.actions.json $TMP/t22-cap$NN.telemetry.json $DEST/ 2>/dev/null;"
 CMD="$CMD mv -f $TMP/t22-cap$NN.mp4 $TMP/t22-cap$NN.contact.jpg /dev/shm/t22rec/ 2>/dev/null; rm -rf $QD; mv $TMP/_frames $QD 2>/dev/null; rm -rf $TMP;"
 if [ -n "$ESTADO" ]; then
   CMD="$CMD if [ \$rc = 0 ]; then python3 -I rec/t22/t22_estado.py $N > rec/t22/_estado/cap$NN.log 2>&1 || echo ESTADO-FALHOU; fi;"
@@ -53,9 +48,7 @@ fi
 CMD="$CMD exit \$rc"
 bash rec/fila.sh --prio 22 -- nice -n 5 bash -c "$CMD" > "$LOG" 2>&1   # a fila justa da trava pesada (rec/fila.sh, prioridade 22)
 RC=$?
-if grep -q '^JA-FEITO' "$LOG" 2>/dev/null; then echo "=== cap$NN ($MODO) JA-FEITO $(date +%H:%M)"; exit 0; fi
 if grep -q '^FALTA-SEMENTE' "$LOG" 2>/dev/null; then echo "FALTA-SEMENTE: $(grep -m1 '^FALTA-SEMENTE' "$LOG") $(date +%H:%M)"; exit 3; fi
-[ $RC = 0 ] && { mkdir -p rec/t22/_fila; touch $OK; }
 echo "=== cap$NN ($MODO) rc=$RC $(date +%H:%M)"
 tail -3 "$LOG" | cut -c1-240
 [ -n "$ESTADO" ] && { echo "--- estado do cap$NN:"; tail -20 rec/t22/_estado/cap$NN.log 2>/dev/null; }

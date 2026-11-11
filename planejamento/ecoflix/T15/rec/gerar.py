@@ -640,7 +640,7 @@ def cap09():
     c.mark(4)
     c.click(BTN('Aplicar comparação'), at=c.A(4, 'Aplico', 0.6), label='Aplicar comparação', noScroll=True)
     c.ev(js_rola_texto('(+) Receita Bruta', 110, 1500), at=c.A(4, 'lado', 0.3), label='desce pelas linhas comparadas')
-    c.confere('main', ['Setembro de 2026', 'Outubro de 2026'], 'as duas colunas lado a lado')
+    c.confere('body', ['Setembro de 2026', 'Outubro de 2026'], 'as duas colunas lado a lado')   # o cabeçalho fixo da tabela sai do <main> ao rolar
     c.mark(5)
     c.click(GRUPO('06.01'), at=c.A(5, 'categoria', 0.6), label='abre as categorias das despesas operacionais')
     c.hover(LINHA('Energia elétrica'), seconds=1.0, at=c.A(5, 'renomear', 0.5), label='linhas casadas pelo nome da categoria')
