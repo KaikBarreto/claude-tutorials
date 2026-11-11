@@ -10,8 +10,9 @@ Lembretes `send_later` nesta mesma sessão, "EcoFlix: retomar produção (N/20)"
 1. Estado: `git -C /home/claude/claude-tutorials status --short`; branches `consolidacao-domiflix`, `ecoflix-mundo` e
    `ecoflix-marca` (`git log -1 origin/<branch>`); aulas prontas em `planejamento/ecoflix/Tnn/` (pronta = `inventario.md`,
    `plano.md`, `roteiro.md`, `narracao/tts_textos.py` e `narracao/config_narracao.json`); `df -h /home/claude`; `free -g`.
-2. Agentes que pararam no meio (limite, reinício do container) são relançados com o mesmo briefing, dizendo o que já
-   existe na pasta. Modelo: opus até o limite do Sonnet voltar (11/11); depois sonnet no trabalho mecânico. Até 20 ao
+2. Agente parado pelo limite: retome com `SendMessage` para o mesmo agente (o contexto dele continua; avise do reinício da
+   máquina, se houve). Agente morto pelo reinício do container: relance com o mesmo briefing, dizendo o que já existe na
+   pasta. Modelo: opus até o limite do Sonnet voltar (11/11); depois sonnet no trabalho mecânico. Até 20 ao
    mesmo tempo quando o limite está novo (pedido do Kaik); trabalho pesado sempre um por vez
    (`flock /home/claude/ecoflix/.heavy.lock`).
 3. App e Supabase falso: se o container reiniciou (/dev/shm vazio), religar com `/home/claude/ecoflix/RELIGAR.md`

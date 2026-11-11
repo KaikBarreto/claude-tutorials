@@ -379,3 +379,10 @@ Decisões:
   seu (vermelho de saldo e despesa, seta com ponta, ficha que viaja, chip de parceiro, pátio, fardos, latinhas, gaveta,
   cofre, banco, carroça, notas): unificar no kit depois que todas terminarem, para o mesmo objeto sair igual em todas as
   aulas. Robô da T04 lançado no lugar.
+- 10/11 ~04:0x **Limite semanal acabou** com os 20 agentes no meio (429 "weekly limit", volta 11/11 11:00 de Lisboa). Os
+  lembretes 1 a 6 dispararam durante a parada e chegaram juntos com o 7.
+- 11/11 11:4x **Retomada 7/20**: a máquina tinha reiniciado (`/dev/shm` vazio): app e Supabase falso religados pelo
+  `RELIGAR.md` (o build está em disco); os 20 agentes retomados por mensagem, com o mesmo contexto (junção, 6 robôs e 13 de
+  ilustração), avisados de subir de novo a instância de cada um, de rodar o `preparar_aula.sh` (a junção mexeu nas falas) e
+  de economizar tokens. Os quadros da T06 em tamanho real têm texto legível: a escala das cenas está boa (a folha de contato
+  é que engana).
