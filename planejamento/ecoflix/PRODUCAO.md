@@ -480,3 +480,9 @@ Decisões:
   translúcidos, selos e números de destaque no degradê (texto branco no laranja com sombra: contraste ~2,8). Folha mandada
   ao Kaik. **Na edição**: copiar a pasta `cato/` junto com o `cenas.html` da T21. **Todas as 26 aulas estão ilustradas no
   estilo novo.**
+- 11/11 13:03 **Kaik**: "A) verde da marca com branco ficou melhor que verde do sistema mesmo / agora os quadros ficaram
+  melhores com tudo saturado / E podem ter ilustrações de conceitos que ficariam melhor se fossem ilustradas/3D, não?".
+  **Feito**: cores do estilo saturado trocadas para as da marca em todas as cenas (`--vs` #50D088, `--as` #F2B63D, `--rs`
+  #EF4444; também as cores fixas que as aulas tinham posto); folhas de todas as aulas sendo refeitas. **Piloto 3D** (three.js
+  no Chromium) da pesagem da T07 com um agente, para o Kaik ver antes de levar 3D a outros conceitos (entrega em
+  `T07/cenas3d/` e `previa_ilustracoes/T07_3d_piloto.mp4`).
