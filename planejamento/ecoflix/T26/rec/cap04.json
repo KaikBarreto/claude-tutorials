@@ -245,7 +245,7 @@
   },
   {
    "do": "eval",
-   "js": "(async()=>{const esp=[\"#0d9488\", \"Visitar a indústria, ver o volume e o tipo de sucata e combinar a retirada.\"];let out='';for(let i=0;i<12;i++){const sc=[...document.querySelectorAll(\"[role=dialog]:has(#crm-stage-name)\")].pop();const v=sc?[...sc.querySelectorAll('input, textarea')].map(e=>e.value).join(' | '):'';const falta=esp.filter(e=>!v.includes(e));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+v.slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
+   "js": "(async()=>{const esp=[\"#0d9488\", \"Visitar a indústria, ver o volume e o tipo de sucata e combinar a retirada.\"];let out='';for(let i=0;i<12;i++){const sc=[...document.querySelectorAll(\"[role=dialog]:has([role=tab][id$='-trigger-rules'])\")].pop();const v=sc?[...sc.querySelectorAll('input, textarea')].map(e=>e.value).join(' | '):'';const falta=esp.filter(e=>!v.includes(e));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+v.slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
    "label": "confere cor e orientação no formulário"
   },
   {
@@ -271,7 +271,7 @@
   {
    "do": "waitFor",
    "gone": {
-    "selector": "[role=dialog]:has(#crm-stage-name)"
+    "selector": "[role=dialog]:has([role=tab][id$='-trigger-rules'])"
    },
    "timeout": 8
   },
@@ -318,13 +318,13 @@
   },
   {
    "do": "eval",
-   "js": "(()=>{const d=[...document.querySelectorAll(\"[role=dialog]:has(#crm-stage-name)\")].pop();if(!d)return 'ja fechada';const b=[...d.querySelectorAll('button')].find(x=>[x.textContent,x.getAttribute('aria-label')].some(v=>/^\\s*fechar\\s*$/i.test(v||'')));if(!b)return 'sem botao Fechar';b.click();return 'fechada pelo botao'})()",
+   "js": "(()=>{const d=[...document.querySelectorAll(\"[role=dialog]:has([role=tab][id$='-trigger-rules'])\")].pop();if(!d)return 'ja fechada';const b=[...d.querySelectorAll('button')].find(x=>[x.textContent,x.getAttribute('aria-label')].some(v=>/^\\s*fechar\\s*$/i.test(v||'')));if(!b)return 'sem botao Fechar';b.click();return 'fechada pelo botao'})()",
    "label": "fecha a configuração (Esc) (plano B)"
   },
   {
    "do": "waitFor",
    "gone": {
-    "selector": "[role=dialog]:has(#crm-stage-name)"
+    "selector": "[role=dialog]:has([role=tab][id$='-trigger-rules'])"
    },
    "timeout": 8
   },

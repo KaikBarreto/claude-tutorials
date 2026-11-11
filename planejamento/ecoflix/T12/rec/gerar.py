@@ -87,6 +87,12 @@ OBS = ("(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tent
        "setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');"
        "if(f&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA ECOFLIX'))window.__avisos.push('TRILHA ECOFLIX')},300);return 1})()")
 
+# Animação do framer-motion (opacity 0 inline) que o relógio simulado do Playwright deixa começar no futuro (currentTime < 0): a tela
+# ficaria em branco por segundos (portal, cartões que entram). Efeito do ambiente, não do app (08-licoes, T5 cap. 10): a cada 100 ms,
+# a animação presa começa agora.
+ANIM_FIX = ("(()=>{if(window.__animFix)return 'ja';window.__animFix=setInterval(()=>{for(const a of document.getAnimations())"
+            "if(a.currentTime!==null&&a.currentTime<0)a.startTime=document.timeline.currentTime},100);return 'anim fix'})()")
+
 # GPS fictício (cap06): o navegador do robô no computador não tem permissão de localização; a posição fica perto do Depósito Irmãos
 # Siqueira (Tremembé), nunca aparece na tela (o rastreamento está fora da aula) e só evita a nota "Localização não registrada".
 GPS_FICTICIO = ("(()=>{const p=()=>({coords:{latitude:-22.9668,longitude:-45.5416,accuracy:12,altitude:null,altitudeAccuracy:null,heading:null,"
@@ -102,7 +108,7 @@ class Cap:
         s.pace, s.cps, s.start = pace, cps, start
         s.noscroll = noscroll
         s.sameTab = sameTab
-        s.setup = list(setup or []) + [{'do': 'eval', 'js': OBS}]
+        s.setup = list(setup or []) + [{'do': 'eval', 'js': OBS}, {'do': 'eval', 'js': ANIM_FIX}]
         s.anchors = []
         s.pending = []
 
@@ -599,7 +605,7 @@ def cap07():
     c.flush(1e9)
     c.mark(3)
     c.hover(TXTX('Cooperativa Recomeço', exact=True), 0.8, at=c.A(3, 'Cooperativa', 0.5), label='portal: Cooperativa Recomeço')
-    c.click(SEL("button:text-is('Coletas'), [role=tab]:text-is('Coletas')"), at=c.A(3, 'aba', 0.8), label='aba Coletas')
+    c.click(SEL('#tab-btn-coletas'), at=c.A(3, 'aba', 0.8), label='aba Coletas')
     c.hover(TXTX('Minhas coletas', exact=True), 0.6, at=c.A(3, 'acompanha', 0.5), label='Minhas coletas')
     c.hover(BTN('Solicitar coleta'), 0.6, at=c.A(3, 'pede', 0.5), label='Solicitar coleta')
     c.mark(4)
@@ -614,7 +620,8 @@ def cap07():
     c.type(SEL('#coleta-data'), '13112026', at=c.A(5, 'sexta', 0.3), label='Data preferida 13/11/2026', cps=40, noClick=True)
     c.click(SEL('#coleta-janela'), at=c.A(5, 'período', 0.8), label='abre Período')
     c.click(OPT('Tarde'), at=c.A(5, 'tarde', 0.6), label='Período: Tarde')
-    c.hover(TXTX('Endereço da coleta', within=DLG, exact=True), 0.8, at=c.A(5, 'endereço', 0.5), label='Endereço da coleta (do cadastro)')
+    rola_ate(c, 'Endereço da coleta', c.A(5, 'endereço', 0.4), 'desce ao Endereço da coleta (do cadastro)', y=150, dur_ms=700, escopo=DLG)
+    c.hover(TXTX('Rua do Trabalho', within=DLG, exact=False), 0.5, label='Endereço da coleta: Rua do Trabalho, 57')
     c.mark(6)
     c.click(BTN('Solicitar coleta', within=DLG), at=c.A(6, 'Solicitar', 0.8), label='Solicitar coleta (enviar)')
     c.waitfor(text='Solicitação enviada (#10)', timeout=10)
@@ -667,9 +674,11 @@ def cap08():
     c.type(SEL('#veiculo-descricao'), 'Caminhão poliguindaste', label='Descrição: Caminhão poliguindaste', cps=40, noClick=True)
     c.mark(5)
     c.click(SEL('#veiculo-uf'), at=c.A(5, 'servem', 0.6), label='abre UF de licenciamento')
-    c.click(OPT('SP'), at=c.A(5, 'São', 0.6), label='UF: SP')
+    c.type(SEL('#veiculo-uf'), 'SP', at=c.A(5, 'São', 0.3), label='UF: SP (digitado na lista)', cps=40, noClick=True)
+    c.press('Enter', label='UF: SP')
     c.click(SEL('#veiculo-categoria'), at=c.A(5, 'Paulo', 0.3), label='abre Tipo')
     c.click(OPT('Veículo único (truck, toco, utilitário)'), at=c.A(5, 'único', 0.5), label='Tipo: Veículo único')
+    rola_ate(c, 'Tipo de rodado', None, 'desce a janela do veículo', y=420, dur_ms=500, escopo=DLG)
     c.click(SEL('#veiculo-rodado'), label='abre Tipo de rodado')
     c.click(OPT('Toco'), at=c.A(5, 'toco', 0.5), label='Tipo de rodado: Toco')
     c.mark(6)
@@ -678,7 +687,8 @@ def cap08():
     c.click(SEL('#veiculo-cap-kg'), at=c.A(6, 'capacidade', 0.6), label='Capacidade (campo)')
     c.type(SEL('#veiculo-cap-kg'), '8500', at=c.A(6, 'oito', 0.05), label='Capacidade (kg) 8500', cps=40, noClick=True)
     c.mark(7)
-    c.click(BTN('Cadastrar', within=DLG), at=c.A(7, 'Cadastrar', 0.8), label='Cadastrar veículo')
+    c.clicar_fixo(SEL(f"{DLG} button:has-text('Cadastrar')"), (821, 736), js_clicar(f'{DLG} button', 'Cadastrar'), c.A(7, 'Cadastrar', 0.1),
+                  'Cadastrar veículo')
     c.waitfor(text='Veículo cadastrado', timeout=10)
     c.hover(TXTX('FVL8A52', within='main', exact=True), 1.0, at=c.A(7, 'poliguindaste', 0.5), label='FVL8A52 na frota')
     c.mark(8)
@@ -735,7 +745,8 @@ def cap09():
     c.click(BTN('Cadastrar', within=DLG), at=c.A(4, 'Cadastrar', 0.5), label='Cadastrar unidade')
     c.waitfor(text='Unidade cadastrada', timeout=10)
     c.mark(5)
-    c.click(SEL("main [role=listitem]:has-text('Caçamba 06')"), at=c.A(5, 'Ela', 0.8), label='Caçamba 06 na lista')
+    rola_ate(c, 'Unidades identificáveis', c.A(5, 'Ela', 1.4), 'sobe a lista (Caçamba 06 à vista)', y=24, dur_ms=600)
+    c.click(SEL("main [role=listitem]:has-text('Caçamba 06')"), at=c.A(5, 'ainda', 0.6), label='Caçamba 06 na lista')
     c.hover(TXTX('Ainda sem movimentação registrada', within='main', exact=False), 1.2, at=c.A(5, 'lugar', 0.5), label='sem lugar (sem movimentação)')
     c.mark(6)
     c.click(BTN('Movimentar', within='main'), at=c.A(6, 'Movimentar', 0.8), label='Movimentar')

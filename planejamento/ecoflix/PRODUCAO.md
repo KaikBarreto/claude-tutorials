@@ -489,3 +489,7 @@ Decisões:
 - 11/11 13:31 **Kaik** (sobre a T06): "essa ilustração de 'caixa' não tá muito clara, podia ser uma caixa registradora".
   Um agente desenha a `registradora()` no kit (visor escuro com número no verde, teclado, gaveta que abre com notas e
   moedas) e troca o caixa-gaveta na T06, T09, T19, T21 (variante escura) e na T00 se houver.
+- 11/11 14:0x **Caixa registradora pronta**: `registradora({aberta, cheia, visor, w, tema, cores})` e `abreGaveta()` no kit;
+  trocada na T06 (4 cenas; a gaveta abre quando entra dinheiro e o visor conta), T19 (o vale volta para a gaveta), T21 (tema
+  escuro do Cato, fechada em R$ 0,00) e T00 (a etapa "Caixa" e o glossário). A T09 não tinha gaveta desenhada. Folha da
+  T06 mandada ao Kaik.

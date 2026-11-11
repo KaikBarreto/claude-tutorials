@@ -8,7 +8,7 @@
      tempos/capNN.json. Os dois exemplos do kit saíram (o caminhao() do kit fica: o cap03 usa).
      Valores dos caixas em constantes no topo de cada cena (a junção do mundo pode mudar os números; as âncoras não são número).
      A aula acrescenta ao kit: --r/--re/--rc e .tag.r (despesa), .tag.n/.ico.n, seta com ponta, ficha que viaja, viagem(),
-     e os desenhos da gaveta do caixa, do cofre, do banco, da carroça, do pátio, da pilha de notas e do maço. -->
+     e os desenhos do cofre, do banco, da carroça, do pátio, da pilha de notas e do maço; o caixa é a registradora do kit. -->
 <style>
 @font-face{font-family:M;font-weight:500;src:url(../../../web/fonts/montserrat-latin-500-normal.woff2) format('woff2')}
 @font-face{font-family:M;font-weight:600;src:url(../../../web/fonts/montserrat-latin-600-normal.woff2) format('woff2')}
@@ -176,18 +176,60 @@ function viagem(f,t,a,d,x0,y0,x1,y1,h=0,some=false){const q=arco(f,t,a,d,x0,y0,x
 // ------------------------------------------------------------------ T6 · desenhos genéricos desta aula (sem marca)
 // notas genéricas (verdes, sem valor impresso)
 const NOTA=['#9ED9B5','#7CC69B','#B7E4C7','#8FCFA8'];
-// gaveta do caixa vista de cima: 4 compartimentos de nota atrás, 5 copinhos de moeda na frente e o puxador
-function gaveta(cheia=true,w=300){
-  const nota=(x,y,c)=>`<g><rect x="${x}" y="${y}" width="51" height="56" rx="4" fill="${c}" stroke="#2E7D57" stroke-opacity=".35" stroke-width="1.5"/>
-    <ellipse cx="${x+25.5}" cy="${y+28}" rx="11" ry="13" fill="#fff" opacity=".55"/></g>`;
-  const comp=[0,1,2,3].map(i=>`<rect x="${22+i*65}" y="20" width="61" height="66" rx="6" fill="#F4F6F8"/>`+(cheia?nota(27+i*65,25,NOTA[i]):'')).join('');
-  const moe=[0,1,2,3,4].map(i=>`<circle cx="${42+i*54}" cy="116" r="20" fill="#F4F6F8" stroke="#C9D1D8" stroke-width="2"/>`+
-    (cheia?`<circle cx="${42+i*54}" cy="116" r="12" fill="${i%2?'#C9A44C':'#AEB8C2'}"/><circle cx="${42+i*54}" cy="116" r="6" fill="#fff" opacity=".35"/>`:'')).join('');
-  return `<svg viewBox="0 0 300 172" width="${w}" height="${w*172/300}" style="overflow:visible">
-    <rect x="6" y="6" width="288" height="146" rx="14" fill="#DDE3E8" stroke="#AEB8C2" stroke-width="3"/>
-    <rect x="16" y="14" width="268" height="78" rx="9" fill="#C9D1D8"/>${comp}${moe}
-    <rect x="0" y="148" width="300" height="24" rx="7" fill="#4F5861"/><rect x="118" y="155" width="64" height="8" rx="4" fill="#2F3640"/></svg>`;
+// caixa registradora: o caixa da empresa (Kaik, 11/11: no lugar da gaveta vista de cima). Visor escuro com o valor no verde,
+// como o .most (sem o "R$", que o desenho põe), teclado, rolinho de papel e a gaveta: fechada ou aberta, com notas e moedas
+// (vazia com cheia:false). Altura w*232/300 fechada, w*296/300 aberta; para abrir no meio da cena, desenhe aberta e chame
+// abreGaveta(e,p) a cada quadro (p 0 fechada, 1 aberta). O número fica em .rv: para contar com conta(), desenhe com o valor
+// final (ele dá o tamanho da letra). Fundo escuro: tema:'escuro'; cores:{...} troca qualquer cor do tema.
+const CORES_REG={
+  claro:{vis:'#121212',visL:'none',dig:'#50D088',rs:'#A9E9C6',pap:'#FFFFFF',papL:'#AEB8C2',pes:'#3F4750',fen:'#1F252C',
+    cor:'#5E6670',lab:'#4F5861',lin:'none',tec:'#E3E8EC',tot:'#50D088',gav:'#7E8994',pux:'#4F5861',base:'#2F3640',
+    ban:'#DDE3E8',com:'#F4F6F8',div:'#AEB8C2',notas:['#9ED9B5','#7CC69B','#B7E4C7','#8FCFA8'],notaL:'#2E7D57',
+    moedas:[['#C9A44C','#A8862F'],['#AEB8C2','#8A949E']]},
+  escuro:{vis:'#0A0A0C',visL:'#4A4A55',dig:'#50D088',rs:'#A9E9C6',pap:'#EFEFEF',papL:'#8B8B96',pes:'#1A1A1F',fen:'#0A0A0C',
+    cor:'#2E2E36',lab:'#24242B',lin:'#4A4A55',tec:'#5A5A65',tot:'#50D088',gav:'#3A3A43',pux:'#16161A',base:'#0A0A0C',
+    ban:'#24242B',com:'#33333B',div:'#4A4A55',notas:['#7CC69B','#50D088','#9ED9B5','#6FBF8F'],notaL:'#A9E9C6',
+    moedas:[['#D4AF37','#9C7C1E'],['#A1A1AA','#71717A']]}};
+function registradora({aberta=false,cheia=true,visor='0,00',w=300,tema='claro',cores={}}={}){
+  const c={...CORES_REG[tema],...cores}, H=aberta?296:232, D=64, q=aberta?1:0;
+  const L=c.lin==='none'?'':` stroke="${c.lin}" stroke-width="2.5"`;          // contorno só no fundo escuro
+  // o valor cabe no visor (largura estimada por caractere, Montserrat 800 com algarismos tabulares)
+  const v=String(visor).replace(/^R\$\s*/,''), em=[...v].reduce((s,ch)=>s+(/\d/.test(ch)?.66:/[.,: ]/.test(ch)?.3:.72),0)+1.0, fs=Math.min(30,142/em);
+  const tec=[0,1,2].map(r=>[0,1,2,3,4].map(i=>`<rect x="${44-r*4+i*(31+r)}" y="${92+r*21}" width="${24+r}" height="14" rx="3.5"/>`).join('')).join('');
+  const notas=[0,1,2,3].map(i=>`<rect x="${20+i*66}" y="5" width="62" height="26" rx="4" fill="${c.com}"/>`+(cheia?
+    `<rect x="${24+i*66}" y="8" width="54" height="20" rx="3" fill="${c.notas[i]}" stroke="${c.notaL}" stroke-opacity=".4" stroke-width="1.5"/>
+     <ellipse cx="${51+i*66}" cy="18" rx="7" ry="5.5" fill="#fff" opacity=".5"/>`:'')).join('');
+  const moedas=[0,1,2,3,4].map(i=>{const x=36+i*57,[m,mE]=c.moedas[i%2];
+    return `<ellipse cx="${x}" cy="47" rx="23" ry="10" fill="${c.com}" stroke="${c.div}" stroke-width="1.5"/>`+(cheia?
+      `<ellipse cx="${x}" cy="50" rx="14" ry="6" fill="${mE}"/><ellipse cx="${x}" cy="46.5" rx="14" ry="6" fill="${m}"/>
+       <ellipse cx="${x-3}" cy="45" rx="6" ry="2.4" fill="#fff" opacity=".4"/>`:'')}).join('');
+  const zz=[...Array(11)].map((_,i)=>`${222+i*4},${i%2?15:20}`).join(' ');
+  return `<svg class="rg" viewBox="0 0 300 ${H}" width="${w}" height="${(w*H/300).toFixed(1)}" style="display:block;margin:0 auto;overflow:visible">
+    <g transform="rotate(4 242 76)"><polygon points="222,76 ${zz} 262,76" fill="${c.pap}" stroke="${c.papL}" stroke-width="1.5" stroke-linejoin="round"/>
+      <g fill="${c.papL}">${[[27,28],[35,22],[43,28],[51,16]].map(([y,l])=>`<rect x="228" y="${y}" width="${l}" height="3" rx="1.5"/>`).join('')}
+      <rect x="228" y="60" width="28" height="4.5" rx="2"/></g></g>
+    <rect x="206" y="68" width="72" height="16" rx="6" fill="${c.pes}"${L}/><rect x="216" y="72" width="52" height="4" rx="2" fill="${c.fen}"/>
+    <rect x="100" y="58" width="32" height="26" fill="${c.pes}"${L}/>
+    <rect x="30" y="4" width="172" height="60" rx="11" fill="${c.vis}"${c.visL==='none'?'':` stroke="${c.visL}" stroke-width="2.5"`}/>
+    <text x="190" y="${(34+fs*.36).toFixed(1)}" text-anchor="end" font-size="${fs.toFixed(1)}" fill="${c.dig}"
+      style="font-family:M,sans-serif;font-weight:800;font-variant-numeric:tabular-nums"><tspan font-size="${(fs*.55).toFixed(1)}"
+      fill="${c.rs}">R$ </tspan><tspan class="rv">${v}</tspan></text>
+    <path d="M34 88 Q34 80 42 80 L258 80 Q266 80 267 88 L284 160 L16 160 Z" fill="${c.cor}"${L}/>
+    <g fill="${c.tec}">${tec}<rect x="212" y="92" width="40" height="14" rx="3.5"/></g>
+    <rect x="214" y="113" width="42" height="35" rx="5" fill="${c.tot}"/>
+    <rect x="14" y="154" width="272" height="26" rx="6" fill="${c.lab}"${L}/>
+    <svg x="0" y="180" width="300" height="62" overflow="hidden" style="overflow:hidden"><g class="rg-ba" transform="translate(0 ${D*(q-1)})">
+      <path d="M12 0 L288 0 L294 62 L6 62 Z" fill="${c.ban}"/><rect x="12" y="0" width="276" height="5" fill="${c.div}" opacity=".5"/>
+      ${notas}${moedas}</g></svg>
+    <g class="rg-fr" transform="translate(0 ${D*q})"><rect x="12" y="219" width="276" height="9" rx="4.5" fill="${c.base}"/>
+      <rect x="6" y="178" width="288" height="44" rx="8" fill="${c.gav}"${L}/>
+      <rect x="118" y="194" width="64" height="10" rx="5" fill="${c.pux}"/><circle cx="264" cy="199" r="5" fill="${c.pux}"/></g>
+  </svg>`;
 }
+// a gaveta da registradora (desenhada com aberta:true) de fechada (p=0) a aberta (p=1): a frente desce e a bandeja aparece
+function abreGaveta(e,p){const q=cl(p);
+  e.querySelector('.rg-fr').setAttribute('transform',`translate(0 ${(64*q).toFixed(2)})`);
+  e.querySelector('.rg-ba').setAttribute('transform',`translate(0 ${(64*(q-1)).toFixed(2)})`)}
 // cofre (porta com segredo redondo, puxador e dobradiças)
 function cofre(w=200){
   const marcas=[...Array(12)].map((_,i)=>{const a=i*Math.PI/6, r1=25, r2=30;
@@ -261,23 +303,23 @@ const CAPS={};
 CAPS[0]=()=>{
   const g=grupo();
   const tit=titulo(g,'Caixa','O dinheiro do dia');
-  const gav=el(`<div class="ab" style="left:490px;top:270px;width:300px">${gaveta(true)}
+  const gav=el(`<div class="ab" style="left:510px;top:212px;width:260px">${registradora({aberta:true,visor:'1.500,00',w:260})}
       <div style="margin-top:12px;text-align:center;font-weight:800;font-size:22px">Caixa</div></div>`,g);
   const venda=el(`<div class="card row" style="left:70px;top:300px;width:220px;height:108px;padding:0 22px;gap:16px">
       <div class="ico" style="width:56px;height:56px;border-radius:16px">${ic('factory',30)}</div>
       <div style="font-weight:800;font-size:24px">Venda</div></div>`,g);
   const car=el(`<div class="ab" style="left:990px;top:288px;width:220px">${carroca(220)}
       <div class="ch" style="margin-top:14px;text-align:center"><span class="tag a" style="font-size:17px;padding:6px 14px">compra de sucata</span></div></div>`,g);
-  const sIn=seta(g,'M300 354 L478 354');
-  const sOut=[294,354,414].map(y=>seta(g,`M802 ${y} L982 ${y}`,'var(--a)'));
+  const sIn=seta(g,'M300 354 L500 354');
+  const sOut=[294,354,414].map(y=>seta(g,`M786 ${y} L982 ${y}`,'var(--a)'));
   const fIn=ficha(g,'banknote',24), fOut=[0,1,2].map(()=>ficha(g,'banknote',24));
-  const duv=el(`<div class="ab row" style="left:560px;top:196px;gap:12px">
+  const duv=el(`<div class="ab row" style="left:752px;top:206px;gap:12px">
       <div class="dq" style="width:52px;height:52px;border-radius:50%;background:var(--as);color:#fff;display:flex;align-items:center;justify-content:center">${ic('circle-help',30)}</div>
       <div class="dt"><span class="tag a" style="font-size:18px;padding:7px 15px">a diferença?</span></div></div>`,g);
   // abre e fecha: o caixa pega dinheiro do cofre e devolve no fim
   const cof=el(`<div class="ab" style="left:575px;top:530px;width:130px;text-align:center">${cofre(130)}
       <div style="margin-top:6px;font-weight:800;font-size:22px">Cofre</div></div>`,g);
-  const sAb=seta(g,'M570 590 C 516 586, 498 530, 522 454'), sFe=seta(g,'M758 454 C 782 530, 764 586, 710 590','var(--a)');
+  const sAb=seta(g,'M570 590 C 512 586, 490 540, 506 472'), sFe=seta(g,'M774 472 C 790 540, 768 586, 710 590','var(--a)');
   const tAb=el('<div class="ab" style="left:418px;top:530px"><span class="tag v" style="font-size:17px;padding:6px 15px">abre</span></div>',g);
   const tFe=el('<div class="ab" style="left:786px;top:530px"><span class="tag a" style="font-size:17px;padding:6px 15px">fecha</span></div>',g);
 
@@ -287,12 +329,13 @@ CAPS[0]=()=>{
     const tab=W(2,'abre'), tfe=W(2,'fecha'), tem=W(2,'empresa'), tap=W(2,'aberto');
     tituloCena(tit,t,t0,tdi-.6);
     vis(gav,t,tdi-.1,1e9,{dy:20,sc:.95});
-    // entra dinheiro da venda; sai dinheiro na compra de sucata
-    vis(venda,t,tdia-.2,1e9,{dx:-20,dy:0}); sIn.draw(t,tdia,.6); viagem(fIn,t,tdia+.3,.9,316,330,420,330);
-    vis(car,t,tre-.2,1e9,{dx:20,dy:0}); sOut[1].draw(t,tre,.6); viagem(fOut[1],t,tre+.3,.9,818,330,922,330);
+    // entra dinheiro da venda (a gaveta abre para receber); sai dinheiro na compra de sucata
+    abreGaveta(gav,eio(pr(t,tdia,.55)));
+    vis(venda,t,tdia-.2,1e9,{dx:-20,dy:0}); sIn.draw(t,tdia,.6); viagem(fIn,t,tdia+.3,.9,316,330,436,330);
+    vis(car,t,tre-.2,1e9,{dx:20,dy:0}); sOut[1].draw(t,tre,.6); viagem(fOut[1],t,tre+.3,.9,802,330,922,330);
     // quase toda compra é em dinheiro vivo: muitas setas saindo da gaveta
     sOut[0].draw(t,tcp-.1,.6); sOut[2].draw(t,tcp+.05,.6); pulse(car.querySelector('.ch'),t,tcp,.06,.7);
-    viagem(fOut[0],t,tdv-.25,.9,818,270,922,270); viagem(fOut[2],t,tdv-.05,.9,818,390,922,390);
+    viagem(fOut[0],t,tdv-.25,.9,802,270,922,270); viagem(fOut[2],t,tdv-.05,.9,802,390,922,390);
     // o caixa não bate: onde foi parar a diferença?
     vis(duv.querySelector('.dq'),t,tba-.15,1e9,{sc:.7,dy:0}); vis(duv.querySelector('.dt'),t,tdf-.2,1e9,{dx:-10,dy:0});
     // com quanto abre, com quanto fecha e onde fica o dinheiro da empresa: o cofre
@@ -321,7 +364,7 @@ CAPS[3]=()=>{
   const sPix=seta(g,'M1100 352 L1100 462');
   const fPix=ficha(g,'smartphone',24);
   const pix=el('<div class="ab" style="left:806px;top:388px"><span class="tag v" style="font-size:18px;padding:7px 15px">Pix ou transferência</span></div>',g);
-  const gav=el(`<div class="ab" style="left:330px;top:456px;width:300px">${gaveta(false)}
+  const gav=el(`<div class="ab" style="left:350px;top:440px;width:240px">${registradora({aberta:true,cheia:false,visor:'0,00',w:240})}
       <div style="margin-top:12px;text-align:center;font-weight:800;font-size:22px">Caixa</div></div>`,g);
   const zero=el('<div class="ab num" style="left:660px;top:478px;font-size:44px;white-space:nowrap">R$ 0,00</div>',g);
   const tag=el('<div class="ab" style="left:662px;top:546px"><span class="tag v" style="font-size:18px;padding:7px 15px">abre com zero</span></div>',g);
@@ -342,7 +385,7 @@ CAPS[3]=()=>{
     vis(ban,t,tpa-.25,1e9,{dy:16,sc:.96}); sPix.draw(t,tpa,.6); viagem(fPix,t,tpa+.3,.9,1076,352,1076,410);
     vis(pix,t,tpi-.15,1e9,{dx:10,dy:0});
     // a gaveta fica vazia: abre com zero
-    vis(gav,t,tne-.1,1e9,{dy:18,sc:.95}); pulse(gav,t,tga,.03,.7);
+    vis(gav,t,tne-.1,1e9,{dy:18,sc:.95}); abreGaveta(gav,eio(pr(t,tga-.1,.55))); pulse(gav,t,tga+.45,.03,.7);
     vis(zero,t,tca-.15,1e9,{dy:10}); vis(tag,t,tz1-.1,1e9,{dy:8,sc:.9}); pulse(zero,t,tva,.05,.7); pulse(tag,t,tz2,.05,.7);
   };
 };
@@ -377,10 +420,10 @@ CAPS[4]=()=>{
         <span style="width:14px;height:14px;border-radius:50%;background:var(--v);flex:none"></span>
         <span style="font-weight:700;font-size:19px">Disponível no cofre</span>
         <span class="num" style="margin-left:auto;font-size:24px;color:var(--ve)">${brl(DISP)}</span></div></div>`,g);
-  const gav=el(`<div class="ab" style="left:830px;top:268px;width:300px">${gaveta(true)}
+  const gav=el(`<div class="ab" style="left:850px;top:224px;width:280px">${registradora({aberta:true,visor:'1.500,00',w:280})}
       <div style="margin-top:12px;text-align:center;font-weight:800;font-size:22px">Caixa do Rafael</div>
       <div class="gv num" style="margin-top:6px;text-align:center;font-size:30px">${brl(NO_CAIXA)}</div></div>`,g);
-  const sAb=seta(g,'M612 328 C 680 258, 760 258, 822 328'), sFe=seta(g,'M822 428 C 760 498, 680 498, 612 428','var(--a)');
+  const sAb=seta(g,'M612 328 C 690 258, 780 258, 852 330'), sFe=seta(g,'M852 430 C 770 500, 690 498, 612 428','var(--a)');
   const tAb=el('<div class="ab" style="left:648px;top:214px"><span class="tag v" style="font-size:17px;padding:6px 14px">abre o caixa</span></div>',g);
   const tFe=el('<div class="ab" style="left:650px;top:506px"><span class="tag a" style="font-size:17px;padding:6px 14px">fecha o caixa</span></div>',g);
   const mac=el(`<div class="ab" style="left:0;top:0">${maco(brl(NO_CAIXA))}</div>`,g);
@@ -399,9 +442,11 @@ CAPS[4]=()=>{
     pulse($('#c4-sis'),t,tct,.05,.7);
     // abri o meu caixa: o maço sai do cofre e vai pra gaveta (continua sendo da empresa)
     vis(gav,t,tca-.15,1e9,{dx:20,dy:0}); const gv=gav.querySelector('.gv');
-    const dv=Math.max(1,tga-tdi+.3), q=arco(mac,t,tdi-.1,dv,118,298,898,304,-120,0);
+    const dv=Math.max(1,tga-tdi+.3), q=arco(mac,t,tdi-.1,dv,118,298,884,394,-120,0);
+    abreGaveta(gav,eio(pr(t,tdi-.1+dv*.66,.45)));                // a gaveta abre para receber o maço
     const om=t<tdi-.1?0:Math.min(1,q*6,(1-q)*5+.0001*(q<1)); mac.style.opacity=om.toFixed(3); mac.style.visibility=om>0?'visible':'hidden';
     vis(gv,t,tdi-.1+dv*.85,1e9,{dy:6});
+    conta(gav.querySelector('.rv'),t,tdi-.1+dv*.85,.6,0,NO_CAIXA,v=>v.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2}));
     const pa=eo(pr(t,te2-.2,.8)), fa=NO_CAIXA/TOTAL*pa;
     bv.style.width=((1-fa)*100).toFixed(2)+'%'; ba.style.width=(fa*100).toFixed(2)+'%';
     vis($('#c4-la'),t,te2-.15,1e9,{dy:6}); pulse($('#c4-barra'),t,tlu,.03,.6);
@@ -428,7 +473,7 @@ CAPS[9]=()=>{
   const tit=titulo(g,'Movimentações','Suprimento e sangria');
   const ban=el(`<div class="ab" style="left:80px;top:224px;width:210px;text-align:center">${banco(210)}
       <div style="margin-top:8px;font-weight:800;font-size:22px">Banco</div></div>`,g);
-  const gav=el(`<div class="ab" style="left:490px;top:196px;width:300px">${gaveta(true)}
+  const gav=el(`<div class="ab" style="left:510px;top:170px;width:260px">${registradora({aberta:true,visor:'17.000,00',w:260})}
       <div style="margin-top:10px;text-align:center;font-weight:800;font-size:22px">Caixa do Marcos</div>
       <div class="g9q lbl" style="margin-top:4px;text-align:center;font-size:17px;white-space:nowrap">queria ${brl(QUERIA)}</div>
       <div class="g9a row" style="margin-top:2px;justify-content:center;gap:8px;align-items:baseline;white-space:nowrap">
@@ -437,7 +482,7 @@ CAPS[9]=()=>{
   const cof=el(`<div class="ab" style="left:1010px;top:226px;width:180px;text-align:center">${cofre(180)}
       <div style="margin-top:6px;font-weight:800;font-size:22px">Cofre</div></div>`,g);
   // suprimento (banco → gaveta) e sangria (gaveta ou cofre → banco)
-  const sSup=seta(g,'M302 268 L478 268'), sSan=seta(g,'M478 348 L302 348','var(--a)');
+  const sSup=seta(g,'M302 268 L500 268'), sSan=seta(g,'M500 348 L302 348','var(--a)');
   const sCof=seta(g,'M1100 448 C 1100 640, 210 650, 186 476','var(--a)');
   const fSup=ficha(g,'banknote',24);
   const rSup=el('<div class="ab" style="left:316px;top:208px;width:150px;text-align:center"><span class="tag v" style="font-size:17px;padding:6px 14px">suprimento</span></div>',g);
@@ -464,7 +509,7 @@ CAPS[9]=()=>{
     vis(gav.querySelector('.g9f'),t,tfa-.15,1e9,{dy:6,sc:.9});
     vis(ban,t,tbc-.3,1e9,{dx:-20,dy:0});
     // suprimento: pôr dinheiro na gaveta; vindo do banco, no sistema é um Saque
-    sSup.draw(t,tga-.25,.6); viagem(fSup,t,tga+.1,.9,318,244,404,244);
+    sSup.draw(t,tga-.25,.6); viagem(fSup,t,tga+.1,.9,318,244,444,244); abreGaveta(gav,eio(pr(t,tga-.25,.55)));
     vis(rSup,t,tsu-.15,1e9,{dy:8,sc:.9}); vis(rSaq,t,tsq-.3,1e9,{dy:6});
     // sangria: o caminho contrário, de um caixa ou do cofre para o banco
     vis(rSan,t,tsg-.1,1e9,{dy:8,sc:.9}); sSan.draw(t,tco-.1,.6); pulse(gav,t,tcx,.03,.6);

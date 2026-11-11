@@ -219,7 +219,9 @@ class Cap:
         """hover que invade o próximo gesto com `at` encolhe o `seconds` (deslocamento do cursor ~0,6 s a pace 0,5, ~0,8 s a 0,6):
         sem isso o atraso de um hover se soma ao do seguinte (docs/08, T7 cap. 1)"""
         mov = 0.6 if s.pace <= 0.5 else 0.8
-        timed = [st for st in s.steps if st.get('do') != 'mark' and 'at' in st]
+        # a marca da linha seguinte também limita: o cursor fica parado no alvo depois do passo, então encolher não tira nada
+        # da tela e a marca não atrasa (T1 caps. 10-12)
+        timed = [st for st in s.steps if 'at' in st]
         for st, nx in zip(timed, timed[1:]):
             if st['do'] == 'hover':
                 livre = round(nx['at'] - st['at'] - mov - 0.05, 2)
@@ -842,7 +844,8 @@ def cap11():
     e a busca "cobre", Esc."""
     c = Cap(11, pace=0.5, setup=setup_config(), start=(760, 420))
     c.mark(1)
-    c.click(ABA('appearance'), at=c.A(1, 'Aparência,', 0.8), label='aba Aparência')
+    # a fala começa em 0,4 s: o clique vem depois da marca L1 (com 0,8 ele passava à frente dela e a atrasava)
+    c.click(ABA('appearance'), at=c.A(1, 'Aparência,', 0.5), label='aba Aparência')
     c.waitfor(text='Estilo de Navegação (Desktop)', timeout=10)
     c.hover(TXT('Estilo de Navegação (Desktop)'), 1.4, at=c.A(1, 'escolhe', 0.6), label='Estilo de Navegação (Desktop): Menu Lateral marcado')
     c.mark(2)
@@ -909,7 +912,7 @@ def cap12():
     c.waitfor(text='Digite sua nova senha abaixo. Certifique-se de usar uma senha forte.', timeout=8)
     c.hover(NO_DLG('Nova Senha', exact=True), 0.6, at=c.A(2, 'senha', 0.6), label='Nova Senha')
     c.hover(NO_DLG('Confirmar Nova Senha', exact=True), 0.8, at=c.A(2, 'vezes.', 0.6), label='Confirmar Nova Senha')
-    c.click(BTN('Cancelar'), at=c.A(2, 'Perfil.', 0.6), label='Cancelar (o mesmo botão fica no Perfil)')
+    c.click(BTN('Cancelar'), at=c.A(2, 'fica', 0.3), label='Cancelar (o mesmo botão fica no Perfil)')
     c.waitfor(gone=TXT('Digite sua nova senha abaixo. Certifique-se de usar uma senha forte.'), timeout=8)
     c.mark(3)
     c.click(BTN('Ver Contrato'), at=c.A(3, 'Ver', 0.8), label='Ver Contrato')
@@ -917,7 +920,7 @@ def cap12():
     c.hover(NO_DLG('Aceito em'), 2.4, at=c.A(3, 'data', 0.6), label='Aceito em ... (data e hora do aceite)')
     c.mark(4)
     c.hover(BTN('Baixar PDF'), 2.0, at=c.A(4, 'baixar', 0.6), label='Baixar PDF (sem clicar)')
-    c.click(SEL('[role=dialog] button:not([type=button]):text-is("Fechar")'), at=c.A(4, 'cópia.', 0.5), label='Fechar o contrato')
+    c.click(SEL('[role=dialog] button:not([type=button]):text-is("Fechar")'), at=c.A(4, 'guardar', 0.6), label='Fechar o contrato')
     c.waitfor(gone=TXT('Termos de Uso e Responsabilidade'), timeout=8)
     c.mark(5)
     rola_ate(c, 'Zona de Perigo', at=c.A(5, 'E', 0.9), label='desce até a Zona de Perigo', y=300, dur_ms=900, prefixo=True, escopo='main')

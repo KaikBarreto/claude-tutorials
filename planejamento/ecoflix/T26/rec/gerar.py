@@ -314,7 +314,7 @@ OPT = lambda n, **kw: {'role': 'option', 'name': n, 'exact': True, **kw}
 SW = lambda n, **kw: {'role': 'switch', 'name': n, 'exact': True, **kw}
 # janelas (Radix: cada uma num portal; o `within` acha a janela pelo campo que só ela tem)
 CFG = '[role=dialog]:has(#tab-btn-funis)'                  # Configurações do CRM/Kanban
-ETAPA = '[role=dialog]:has(#crm-stage-name)'               # Novo estágio / Configurar <etapa>
+ETAPA = "[role=dialog]:has([role=tab][id$='-trigger-rules'])"   # Novo estágio / Configurar <etapa> (as abas Regras/Automações desmontam o #crm-stage-name)
 FUNIL = '[role=dialog]:has(#crm-pipeline-name)'            # Novo funil
 CHK = '[role=dialog]:has(#crm-checklist-name)'             # Nova checklist
 ETQ = '[role=dialog]:has(#crm-label-name)'                 # Nova etiqueta
@@ -466,8 +466,7 @@ def cap01():
     c.hover(CAB('Em contato'), 0.1, at=c.A(2, 'Em', 0.75), label='coluna Em contato')
     c.hover(CAB('Proposta'), 0.1, at=c.A(2, 'Proposta,', 0.8), label='coluna Proposta')
     c.ev(js_rola_quadro(2000, 600), at=c.A(2, 'Ganho', 0.95), label='o quadro rola para a direita (Ganho e Perdido)')
-    c.hover(CAB('Ganho'), 0.05, label='coluna Ganho')
-    c.hover(CAB('Perdido'), 0.9, at=c.A(2, 'Perdido.', 0.25), label='coluna Perdido')
+    c.hover(CAB('Perdido'), 0.9, at=c.A(2, 'Perdido.', 0.75), label='coluna Perdido')
     c.mark(3)
     c.ev(js_rola_quadro(0, 600), at=c.A(3, 'entram', 0.0), label='o quadro volta ao começo (sob a ilustração)')
     c.cursor((760, 180), label='cursor descansa (ilustração)')
@@ -522,10 +521,10 @@ def cap03():
     c.mark(2)
     c.click(BTN('Novo funil'), at=c.A(2, 'Novo', 0.9), label='Novo funil')
     c.waitfor(selector='#crm-pipeline-name', timeout=8)
-    c.type(SEL('#crm-pipeline-name'), 'Sucata industrial', at=c.A(2, 'Sucata', 0.3, nth=1), noClick=True, cps=22, label='Nome: Sucata industrial')
-    c.hover(SEL('#crm-pipeline-color'), 0.2, at=c.A(2, 'cor.', 0.6), label='Cor (o seletor de cor)')
+    c.type(SEL('#crm-pipeline-name'), 'Sucata industrial', at=c.A(2, 'Sucata', 0.6, nth=1), noClick=True, cps=30, label='Nome: Sucata industrial')
+    c.hover(SEL('#crm-pipeline-color'), 0.05, at=c.A(2, 'cor.', 0.9), label='Cor (o seletor de cor)')
     c.ev(js_cor('#crm-pipeline-color', '#0ea5e9'), label='Cor: azul #0ea5e9')
-    c.click(BTN('Salvar', within=FUNIL), at=c.A(2, 'Salvar.', 0.7), label='Salvar (Novo funil)')
+    c.click(BTN('Salvar', within=FUNIL), at=c.A(2, 'Salvar.', 0.9), label='Salvar (Novo funil)')
     c.waitfor(text='Funil criado', timeout=10)
     c.mark(3)
     c.hover(SEL(f"{LINHA_FUNIL_S('Sucata industrial')} span.block"), 0.6, at=c.A(3, 'cinco', 0.6), label='Sucata industrial: 5 etapas')
@@ -543,10 +542,11 @@ def cap03():
     c.hover(TXTX('Estágios deste funil', within=CFG), 0.5, at=c.A(5, 'estágios.', 0.6), label='Estágios deste funil')
     c.hover(LINHA_ETAPA('Em contato'), 0.2, at=c.A(5, 'contato', 0.6), label='estágio Em contato')
     c.hover(LINHA_ETAPA('Proposta'), 0.5, at=c.A(5, 'proposta,', 0.6), label='estágio Proposta')
-    c.click(BTN('Novo estágio'), at=c.A(5, 'Novo', 0.9), label='Novo estágio')
+    c.click(BTN('Novo estágio'), at=c.A(5, 'Novo', 1.1), label='Novo estágio')
     c.waitfor(selector='#crm-stage-name', timeout=8)
-    c.type(SEL('#crm-stage-name'), 'Visita técnica', at=c.A(5, 'Visita', 0.9, nth=1), cps=22, label='Nome: Visita técnica')
-    c.click(BTN('Salvar etapa'), at=c.A(5, 'Salvar', 0.8), label='Salvar etapa (Novo estágio)')
+    c.ev(js_foco('#crm-stage-name'), label='foco no Nome (a janela abre com o foco nas abas)')
+    c.type(SEL('#crm-stage-name'), 'Visita técnica', at=c.A(5, 'Visita', 0.6, nth=1), noClick=True, cps=30, label='Nome: Visita técnica')
+    c.click(BTN('Salvar etapa'), at=c.A(5, 'Salvar', 0.9), label='Salvar etapa (Novo estágio)')
     c.waitfor(text='Estágio criado.', timeout=10)
     c.mark(6)
     c.hover(LINHA_ETAPA('Visita técnica'), 0.5, at=c.A(6, 'fim.', 0.6), label='Visita técnica entra no fim da lista')

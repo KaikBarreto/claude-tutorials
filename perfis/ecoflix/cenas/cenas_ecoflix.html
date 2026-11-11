@@ -145,13 +145,12 @@ function caminhao(){
     ${roda(92)}${roda(158)}${roda(416)}
   </svg>`;
 }
-// caixa registradora: o caixa da empresa (Kaik, 11/11: no lugar da gaveta vista de cima, que não se lia). Visor escuro com
-// o valor no verde, como o mostrador .most (o número fica em .rv: dá para contar com conta()), teclado com a tecla verde,
-// rolinho de papel saindo em cima e a gaveta embaixo, fechada ou aberta (puxada, com notas e moedas; vazia com cheia:false).
-// Largura w; altura w*232/300 fechada e w*296/300 aberta. Gaveta abrindo no meio da cena: desenhe com aberta:true (reserva a
-// altura) e chame abreGaveta(e, p) a cada quadro, p de 0 (fechada) a 1 (aberta). tema:'escuro' para fundo escuro;
-// cores:{...} troca qualquer cor do tema (ex.: as notas no degradê de outra identidade).
-const REG={
+// caixa registradora: o caixa da empresa (Kaik, 11/11: no lugar da gaveta vista de cima). Visor escuro com o valor no verde,
+// como o .most (sem o "R$", que o desenho põe), teclado, rolinho de papel e a gaveta: fechada ou aberta, com notas e moedas
+// (vazia com cheia:false). Altura w*232/300 fechada, w*296/300 aberta; para abrir no meio da cena, desenhe aberta e chame
+// abreGaveta(e,p) a cada quadro (p 0 fechada, 1 aberta). O número fica em .rv: para contar com conta(), desenhe com o valor
+// final (ele dá o tamanho da letra). Fundo escuro: tema:'escuro'; cores:{...} troca qualquer cor do tema.
+const CORES_REG={
   claro:{vis:'#121212',visL:'none',dig:'#50D088',rs:'#A9E9C6',pap:'#FFFFFF',papL:'#AEB8C2',pes:'#3F4750',fen:'#1F252C',
     cor:'#5E6670',lab:'#4F5861',lin:'none',tec:'#E3E8EC',tot:'#50D088',gav:'#7E8994',pux:'#4F5861',base:'#2F3640',
     ban:'#DDE3E8',com:'#F4F6F8',div:'#AEB8C2',notas:['#9ED9B5','#7CC69B','#B7E4C7','#8FCFA8'],notaL:'#2E7D57',
@@ -161,10 +160,10 @@ const REG={
     ban:'#24242B',com:'#33333B',div:'#4A4A55',notas:['#7CC69B','#50D088','#9ED9B5','#6FBF8F'],notaL:'#A9E9C6',
     moedas:[['#D4AF37','#9C7C1E'],['#A1A1AA','#71717A']]}};
 function registradora({aberta=false,cheia=true,visor='0,00',w=300,tema='claro',cores={}}={}){
-  const c={...REG[tema],...cores}, H=aberta?296:232, D=64, q=aberta?1:0;
+  const c={...CORES_REG[tema],...cores}, H=aberta?296:232, D=64, q=aberta?1:0;
   const L=c.lin==='none'?'':` stroke="${c.lin}" stroke-width="2.5"`;          // contorno só no fundo escuro
   // o valor cabe no visor (largura estimada por caractere, Montserrat 800 com algarismos tabulares)
-  const em=[...String(visor)].reduce((s,ch)=>s+(/\d/.test(ch)?.66:/[.,: ]/.test(ch)?.3:.72),0)+1.0, fs=Math.min(30,142/em);
+  const v=String(visor).replace(/^R\$\s*/,''), em=[...v].reduce((s,ch)=>s+(/\d/.test(ch)?.66:/[.,: ]/.test(ch)?.3:.72),0)+1.0, fs=Math.min(30,142/em);
   const tec=[0,1,2].map(r=>[0,1,2,3,4].map(i=>`<rect x="${44-r*4+i*(31+r)}" y="${92+r*21}" width="${24+r}" height="14" rx="3.5"/>`).join('')).join('');
   const notas=[0,1,2,3].map(i=>`<rect x="${20+i*66}" y="5" width="62" height="26" rx="4" fill="${c.com}"/>`+(cheia?
     `<rect x="${24+i*66}" y="8" width="54" height="20" rx="3" fill="${c.notas[i]}" stroke="${c.notaL}" stroke-opacity=".4" stroke-width="1.5"/>
@@ -183,7 +182,7 @@ function registradora({aberta=false,cheia=true,visor='0,00',w=300,tema='claro',c
     <rect x="30" y="4" width="172" height="60" rx="11" fill="${c.vis}"${c.visL==='none'?'':` stroke="${c.visL}" stroke-width="2.5"`}/>
     <text x="190" y="${(34+fs*.36).toFixed(1)}" text-anchor="end" font-size="${fs.toFixed(1)}" fill="${c.dig}"
       style="font-family:M,sans-serif;font-weight:800;font-variant-numeric:tabular-nums"><tspan font-size="${(fs*.55).toFixed(1)}"
-      fill="${c.rs}">R$ </tspan><tspan class="rv">${visor}</tspan></text>
+      fill="${c.rs}">R$ </tspan><tspan class="rv">${v}</tspan></text>
     <path d="M34 88 Q34 80 42 80 L258 80 Q266 80 267 88 L284 160 L16 160 Z" fill="${c.cor}"${L}/>
     <g fill="${c.tec}">${tec}<rect x="212" y="92" width="40" height="14" rx="3.5"/></g>
     <rect x="214" y="113" width="42" height="35" rx="5" fill="${c.tot}"/>

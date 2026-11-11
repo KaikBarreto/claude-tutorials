@@ -178,6 +178,60 @@ function caminhao(){
     ${roda(92)}${roda(158)}${roda(416)}
   </svg>`;
 }
+// caixa registradora: o caixa da empresa (Kaik, 11/11: no lugar da gaveta vista de cima). Visor escuro com o valor no verde,
+// como o .most (sem o "R$", que o desenho põe), teclado, rolinho de papel e a gaveta: fechada ou aberta, com notas e moedas
+// (vazia com cheia:false). Altura w*232/300 fechada, w*296/300 aberta; para abrir no meio da cena, desenhe aberta e chame
+// abreGaveta(e,p) a cada quadro (p 0 fechada, 1 aberta). O número fica em .rv: para contar com conta(), desenhe com o valor
+// final (ele dá o tamanho da letra). Fundo escuro: tema:'escuro'; cores:{...} troca qualquer cor do tema.
+const CORES_REG={
+  claro:{vis:'#121212',visL:'none',dig:'#50D088',rs:'#A9E9C6',pap:'#FFFFFF',papL:'#AEB8C2',pes:'#3F4750',fen:'#1F252C',
+    cor:'#5E6670',lab:'#4F5861',lin:'none',tec:'#E3E8EC',tot:'#50D088',gav:'#7E8994',pux:'#4F5861',base:'#2F3640',
+    ban:'#DDE3E8',com:'#F4F6F8',div:'#AEB8C2',notas:['#9ED9B5','#7CC69B','#B7E4C7','#8FCFA8'],notaL:'#2E7D57',
+    moedas:[['#C9A44C','#A8862F'],['#AEB8C2','#8A949E']]},
+  escuro:{vis:'#0A0A0C',visL:'#4A4A55',dig:'#50D088',rs:'#A9E9C6',pap:'#EFEFEF',papL:'#8B8B96',pes:'#1A1A1F',fen:'#0A0A0C',
+    cor:'#2E2E36',lab:'#24242B',lin:'#4A4A55',tec:'#5A5A65',tot:'#50D088',gav:'#3A3A43',pux:'#16161A',base:'#0A0A0C',
+    ban:'#24242B',com:'#33333B',div:'#4A4A55',notas:['#7CC69B','#50D088','#9ED9B5','#6FBF8F'],notaL:'#A9E9C6',
+    moedas:[['#D4AF37','#9C7C1E'],['#A1A1AA','#71717A']]}};
+function registradora({aberta=false,cheia=true,visor='0,00',w=300,tema='claro',cores={}}={}){
+  const c={...CORES_REG[tema],...cores}, H=aberta?296:232, D=64, q=aberta?1:0;
+  const L=c.lin==='none'?'':` stroke="${c.lin}" stroke-width="2.5"`;          // contorno só no fundo escuro
+  // o valor cabe no visor (largura estimada por caractere, Montserrat 800 com algarismos tabulares)
+  const v=String(visor).replace(/^R\$\s*/,''), em=[...v].reduce((s,ch)=>s+(/\d/.test(ch)?.66:/[.,: ]/.test(ch)?.3:.72),0)+1.0, fs=Math.min(30,142/em);
+  const tec=[0,1,2].map(r=>[0,1,2,3,4].map(i=>`<rect x="${44-r*4+i*(31+r)}" y="${92+r*21}" width="${24+r}" height="14" rx="3.5"/>`).join('')).join('');
+  const notas=[0,1,2,3].map(i=>`<rect x="${20+i*66}" y="5" width="62" height="26" rx="4" fill="${c.com}"/>`+(cheia?
+    `<rect x="${24+i*66}" y="8" width="54" height="20" rx="3" fill="${c.notas[i]}" stroke="${c.notaL}" stroke-opacity=".4" stroke-width="1.5"/>
+     <ellipse cx="${51+i*66}" cy="18" rx="7" ry="5.5" fill="#fff" opacity=".5"/>`:'')).join('');
+  const moedas=[0,1,2,3,4].map(i=>{const x=36+i*57,[m,mE]=c.moedas[i%2];
+    return `<ellipse cx="${x}" cy="47" rx="23" ry="10" fill="${c.com}" stroke="${c.div}" stroke-width="1.5"/>`+(cheia?
+      `<ellipse cx="${x}" cy="50" rx="14" ry="6" fill="${mE}"/><ellipse cx="${x}" cy="46.5" rx="14" ry="6" fill="${m}"/>
+       <ellipse cx="${x-3}" cy="45" rx="6" ry="2.4" fill="#fff" opacity=".4"/>`:'')}).join('');
+  const zz=[...Array(11)].map((_,i)=>`${222+i*4},${i%2?15:20}`).join(' ');
+  return `<svg class="rg" viewBox="0 0 300 ${H}" width="${w}" height="${(w*H/300).toFixed(1)}" style="display:block;margin:0 auto;overflow:visible">
+    <g transform="rotate(4 242 76)"><polygon points="222,76 ${zz} 262,76" fill="${c.pap}" stroke="${c.papL}" stroke-width="1.5" stroke-linejoin="round"/>
+      <g fill="${c.papL}">${[[27,28],[35,22],[43,28],[51,16]].map(([y,l])=>`<rect x="228" y="${y}" width="${l}" height="3" rx="1.5"/>`).join('')}
+      <rect x="228" y="60" width="28" height="4.5" rx="2"/></g></g>
+    <rect x="206" y="68" width="72" height="16" rx="6" fill="${c.pes}"${L}/><rect x="216" y="72" width="52" height="4" rx="2" fill="${c.fen}"/>
+    <rect x="100" y="58" width="32" height="26" fill="${c.pes}"${L}/>
+    <rect x="30" y="4" width="172" height="60" rx="11" fill="${c.vis}"${c.visL==='none'?'':` stroke="${c.visL}" stroke-width="2.5"`}/>
+    <text x="190" y="${(34+fs*.36).toFixed(1)}" text-anchor="end" font-size="${fs.toFixed(1)}" fill="${c.dig}"
+      style="font-family:M,sans-serif;font-weight:800;font-variant-numeric:tabular-nums"><tspan font-size="${(fs*.55).toFixed(1)}"
+      fill="${c.rs}">R$ </tspan><tspan class="rv">${v}</tspan></text>
+    <path d="M34 88 Q34 80 42 80 L258 80 Q266 80 267 88 L284 160 L16 160 Z" fill="${c.cor}"${L}/>
+    <g fill="${c.tec}">${tec}<rect x="212" y="92" width="40" height="14" rx="3.5"/></g>
+    <rect x="214" y="113" width="42" height="35" rx="5" fill="${c.tot}"/>
+    <rect x="14" y="154" width="272" height="26" rx="6" fill="${c.lab}"${L}/>
+    <svg x="0" y="180" width="300" height="62" overflow="hidden" style="overflow:hidden"><g class="rg-ba" transform="translate(0 ${D*(q-1)})">
+      <path d="M12 0 L288 0 L294 62 L6 62 Z" fill="${c.ban}"/><rect x="12" y="0" width="276" height="5" fill="${c.div}" opacity=".5"/>
+      ${notas}${moedas}</g></svg>
+    <g class="rg-fr" transform="translate(0 ${D*q})"><rect x="12" y="219" width="276" height="9" rx="4.5" fill="${c.base}"/>
+      <rect x="6" y="178" width="288" height="44" rx="8" fill="${c.gav}"${L}/>
+      <rect x="118" y="194" width="64" height="10" rx="5" fill="${c.pux}"/><circle cx="264" cy="199" r="5" fill="${c.pux}"/></g>
+  </svg>`;
+}
+// a gaveta da registradora (desenhada com aberta:true) de fechada (p=0) a aberta (p=1): a frente desce e a bandeja aparece
+function abreGaveta(e,p){const q=cl(p);
+  e.querySelector('.rg-fr').setAttribute('transform',`translate(0 ${(64*q).toFixed(2)})`);
+  e.querySelector('.rg-ba').setAttribute('transform',`translate(0 ${(64*(q-1)).toFixed(2)})`)}
 
 const CAPS={};
 
@@ -402,14 +456,11 @@ CAPS[4]=()=>{
   const pR=balao(g,730,184,430,'<div style="font-weight:800;font-size:24px;line-height:1.25">Compras e vendas dos últimos três meses</div>','p');
   const dl=el(`<div class="ab" style="left:318px;top:290px">${svg(24,60,`<path d="M12 2 L12 52 M4 42 L12 54 L20 42" fill="none" stroke="var(--v)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>`)}</div>`,g);
   const dr=el(`<div class="ab" style="left:933px;top:300px">${svg(24,50,`<path d="M12 2 L12 42 M4 32 L12 44 L20 32" fill="none" stroke="var(--a)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>`)}</div>`,g);
-  // a gaveta do caixa (notas e moedas) e o calendário do mês
-  const gav=el(`<div class="ab" style="left:169px;top:362px">${svg(280,170,`
-     <polygon points="30,20 250,20 272,84 8,84" fill="#24242B" stroke="#4A4A55" stroke-width="3" stroke-linejoin="round"/>
-     <g stroke="#4A4A55" stroke-width="3"><line x1="85" y1="20" x2="74" y2="84"/><line x1="140" y1="20" x2="140" y2="84"/><line x1="195" y1="20" x2="206" y2="84"/></g>
-     <g fill="url(#cg1)" stroke="#A5B4FC" stroke-width="2"><rect x="38" y="30" width="38" height="44" rx="4"/><rect x="92" y="30" width="40" height="44" rx="4"/></g>
-     <g fill="url(#cg2)" stroke="#FDBA74" stroke-width="2"><circle cx="164" cy="44" r="9"/><circle cx="176" cy="60" r="9"/><circle cx="222" cy="46" r="9"/><circle cx="234" cy="62" r="9"/></g>
-     <rect x="4" y="84" width="272" height="80" rx="10" fill="#33333B" stroke="#45454F" stroke-width="2"/><rect x="110" y="114" width="60" height="16" rx="8" fill="#6B6B76"/>`,'',1.15)}</div>`,g);
-  const tHoje=tagC('v','hoje',330,570,g);
+  // a registradora do caixa (tema escuro do kit, nas cores do Cato; fechada: hoje não tem caixa aberto) e o calendário do mês
+  const cato={notas:Array(4).fill('url(#cg1)'),notaL:'#A5B4FC',moedas:[['url(#cg2)','#C2410C'],['url(#cg2)','#C2410C']],
+    dig:'url(#cgC)',rs:'#A5B4FC',tot:'url(#cg1)'};
+  const gav=el(`<div class="ab" style="left:190px;top:352px;width:280px">${registradora({visor:'0,00',w:280,tema:'escuro',cores:cato})}</div>`,g);
+  const tHoje=tagC('v','hoje',330,584,g);
   const cal=el(`<div class="ab" style="left:835px;top:356px">${CALEND()}</div>`,g);
   const dd=[...cal.querySelectorAll('.dd')];
   const tMes=tagC('a','o mês',945,584,g);

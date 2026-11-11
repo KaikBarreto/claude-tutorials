@@ -291,18 +291,60 @@ function svgPortao(){
     <rect x="52" y="14" width="316" height="14" rx="5" fill="#5B636C"/>
     <rect x="72" y="36" width="276" height="54" rx="10" fill="#2E7D57"/></svg>`;
 }
-// caixa registradora genérica, com a gaveta aberta (220x190)
-function svgRegistradora(){
-  const teclas=[0,1,2].map(r=>[0,1,2,3].map(c=>`<rect x="${34+c*30}" y="${88+r*18}" width="22" height="11" rx="3" fill="#8A949E"/>`).join('')).join('');
-  return `<svg viewBox="0 0 220 190" width="220" height="190" style="overflow:visible">
-    <rect x="146" y="4" width="64" height="42" rx="7" fill="#2F3640"/><rect x="153" y="11" width="50" height="28" rx="4" fill="#3E7D5A"/>
-    <rect x="171" y="46" width="14" height="28" fill="#2F3640"/>
-    <path d="M22,72 L198,72 Q210,72 210,84 L210,150 L10,150 L10,84 Q10,72 22,72 Z" fill="#4F5861"/>${teclas}
-    <rect x="160" y="92" width="34" height="40" rx="5" fill="#3B424B"/>
-    <rect x="0" y="150" width="220" height="36" rx="6" fill="#2F3640"/>
-    <rect x="18" y="156" width="44" height="20" rx="3" fill="#A9E9C6"/><rect x="70" y="156" width="44" height="20" rx="3" fill="#A9E9C6"/>
-    <rect x="122" y="156" width="44" height="20" rx="3" fill="#CFEFDD"/><circle cx="186" cy="166" r="9" fill="#F2B63D"/></svg>`;
+// caixa registradora: o caixa da empresa (Kaik, 11/11: no lugar da gaveta vista de cima). Visor escuro com o valor no verde,
+// como o .most (sem o "R$", que o desenho põe), teclado, rolinho de papel e a gaveta: fechada ou aberta, com notas e moedas
+// (vazia com cheia:false). Altura w*232/300 fechada, w*296/300 aberta; para abrir no meio da cena, desenhe aberta e chame
+// abreGaveta(e,p) a cada quadro (p 0 fechada, 1 aberta). O número fica em .rv: para contar com conta(), desenhe com o valor
+// final (ele dá o tamanho da letra). Fundo escuro: tema:'escuro'; cores:{...} troca qualquer cor do tema.
+const CORES_REG={
+  claro:{vis:'#121212',visL:'none',dig:'#50D088',rs:'#A9E9C6',pap:'#FFFFFF',papL:'#AEB8C2',pes:'#3F4750',fen:'#1F252C',
+    cor:'#5E6670',lab:'#4F5861',lin:'none',tec:'#E3E8EC',tot:'#50D088',gav:'#7E8994',pux:'#4F5861',base:'#2F3640',
+    ban:'#DDE3E8',com:'#F4F6F8',div:'#AEB8C2',notas:['#9ED9B5','#7CC69B','#B7E4C7','#8FCFA8'],notaL:'#2E7D57',
+    moedas:[['#C9A44C','#A8862F'],['#AEB8C2','#8A949E']]},
+  escuro:{vis:'#0A0A0C',visL:'#4A4A55',dig:'#50D088',rs:'#A9E9C6',pap:'#EFEFEF',papL:'#8B8B96',pes:'#1A1A1F',fen:'#0A0A0C',
+    cor:'#2E2E36',lab:'#24242B',lin:'#4A4A55',tec:'#5A5A65',tot:'#50D088',gav:'#3A3A43',pux:'#16161A',base:'#0A0A0C',
+    ban:'#24242B',com:'#33333B',div:'#4A4A55',notas:['#7CC69B','#50D088','#9ED9B5','#6FBF8F'],notaL:'#A9E9C6',
+    moedas:[['#D4AF37','#9C7C1E'],['#A1A1AA','#71717A']]}};
+function registradora({aberta=false,cheia=true,visor='0,00',w=300,tema='claro',cores={}}={}){
+  const c={...CORES_REG[tema],...cores}, H=aberta?296:232, D=64, q=aberta?1:0;
+  const L=c.lin==='none'?'':` stroke="${c.lin}" stroke-width="2.5"`;          // contorno só no fundo escuro
+  // o valor cabe no visor (largura estimada por caractere, Montserrat 800 com algarismos tabulares)
+  const v=String(visor).replace(/^R\$\s*/,''), em=[...v].reduce((s,ch)=>s+(/\d/.test(ch)?.66:/[.,: ]/.test(ch)?.3:.72),0)+1.0, fs=Math.min(30,142/em);
+  const tec=[0,1,2].map(r=>[0,1,2,3,4].map(i=>`<rect x="${44-r*4+i*(31+r)}" y="${92+r*21}" width="${24+r}" height="14" rx="3.5"/>`).join('')).join('');
+  const notas=[0,1,2,3].map(i=>`<rect x="${20+i*66}" y="5" width="62" height="26" rx="4" fill="${c.com}"/>`+(cheia?
+    `<rect x="${24+i*66}" y="8" width="54" height="20" rx="3" fill="${c.notas[i]}" stroke="${c.notaL}" stroke-opacity=".4" stroke-width="1.5"/>
+     <ellipse cx="${51+i*66}" cy="18" rx="7" ry="5.5" fill="#fff" opacity=".5"/>`:'')).join('');
+  const moedas=[0,1,2,3,4].map(i=>{const x=36+i*57,[m,mE]=c.moedas[i%2];
+    return `<ellipse cx="${x}" cy="47" rx="23" ry="10" fill="${c.com}" stroke="${c.div}" stroke-width="1.5"/>`+(cheia?
+      `<ellipse cx="${x}" cy="50" rx="14" ry="6" fill="${mE}"/><ellipse cx="${x}" cy="46.5" rx="14" ry="6" fill="${m}"/>
+       <ellipse cx="${x-3}" cy="45" rx="6" ry="2.4" fill="#fff" opacity=".4"/>`:'')}).join('');
+  const zz=[...Array(11)].map((_,i)=>`${222+i*4},${i%2?15:20}`).join(' ');
+  return `<svg class="rg" viewBox="0 0 300 ${H}" width="${w}" height="${(w*H/300).toFixed(1)}" style="display:block;margin:0 auto;overflow:visible">
+    <g transform="rotate(4 242 76)"><polygon points="222,76 ${zz} 262,76" fill="${c.pap}" stroke="${c.papL}" stroke-width="1.5" stroke-linejoin="round"/>
+      <g fill="${c.papL}">${[[27,28],[35,22],[43,28],[51,16]].map(([y,l])=>`<rect x="228" y="${y}" width="${l}" height="3" rx="1.5"/>`).join('')}
+      <rect x="228" y="60" width="28" height="4.5" rx="2"/></g></g>
+    <rect x="206" y="68" width="72" height="16" rx="6" fill="${c.pes}"${L}/><rect x="216" y="72" width="52" height="4" rx="2" fill="${c.fen}"/>
+    <rect x="100" y="58" width="32" height="26" fill="${c.pes}"${L}/>
+    <rect x="30" y="4" width="172" height="60" rx="11" fill="${c.vis}"${c.visL==='none'?'':` stroke="${c.visL}" stroke-width="2.5"`}/>
+    <text x="190" y="${(34+fs*.36).toFixed(1)}" text-anchor="end" font-size="${fs.toFixed(1)}" fill="${c.dig}"
+      style="font-family:M,sans-serif;font-weight:800;font-variant-numeric:tabular-nums"><tspan font-size="${(fs*.55).toFixed(1)}"
+      fill="${c.rs}">R$ </tspan><tspan class="rv">${v}</tspan></text>
+    <path d="M34 88 Q34 80 42 80 L258 80 Q266 80 267 88 L284 160 L16 160 Z" fill="${c.cor}"${L}/>
+    <g fill="${c.tec}">${tec}<rect x="212" y="92" width="40" height="14" rx="3.5"/></g>
+    <rect x="214" y="113" width="42" height="35" rx="5" fill="${c.tot}"/>
+    <rect x="14" y="154" width="272" height="26" rx="6" fill="${c.lab}"${L}/>
+    <svg x="0" y="180" width="300" height="62" overflow="hidden" style="overflow:hidden"><g class="rg-ba" transform="translate(0 ${D*(q-1)})">
+      <path d="M12 0 L288 0 L294 62 L6 62 Z" fill="${c.ban}"/><rect x="12" y="0" width="276" height="5" fill="${c.div}" opacity=".5"/>
+      ${notas}${moedas}</g></svg>
+    <g class="rg-fr" transform="translate(0 ${D*q})"><rect x="12" y="219" width="276" height="9" rx="4.5" fill="${c.base}"/>
+      <rect x="6" y="178" width="288" height="44" rx="8" fill="${c.gav}"${L}/>
+      <rect x="118" y="194" width="64" height="10" rx="5" fill="${c.pux}"/><circle cx="264" cy="199" r="5" fill="${c.pux}"/></g>
+  </svg>`;
 }
+// a gaveta da registradora (desenhada com aberta:true) de fechada (p=0) a aberta (p=1): a frente desce e a bandeja aparece
+function abreGaveta(e,p){const q=cl(p);
+  e.querySelector('.rg-fr').setAttribute('transform',`translate(0 ${(64*q).toFixed(2)})`);
+  e.querySelector('.rg-ba').setAttribute('transform',`translate(0 ${(64*(q-1)).toFixed(2)})`)}
 // cédula (68x38)
 function svgNota(){return `<svg viewBox="0 0 68 38" width="68" height="38"><rect x="1" y="1" width="66" height="36" rx="6" fill="#A9E9C6" stroke="#50D088" stroke-width="2"/>
   <circle cx="34" cy="19" r="9" fill="none" stroke="#2E7D57" stroke-width="2.5"/><rect x="8" y="8" width="8" height="4" rx="2" fill="#50D088"/><rect x="52" y="26" width="8" height="4" rx="2" fill="#50D088"/></svg>`}
@@ -535,7 +577,7 @@ CAPS[5]=()=>{
      <div class="r3 num" style="margin-top:14px;font-size:40px;color:var(--ve)">${brl(0)}</div>
      <div class="r4 tag v s" style="margin-top:12px">${ic('circle-check',18)}Pago na hora</div></div>`,g);
   const [r1,r2,r3,r4]=['.r1','.r2','.r3','.r4'].map(s=>rec.querySelector(s));
-  const reg=el(`<div class="ab" style="left:950px;top:500px;width:220px;height:190px">${svgRegistradora()}</div>`,g);
+  const reg=el(`<div class="ab" style="left:950px;top:473px;width:220px">${registradora({aberta:true,visor:'235,60',w:220})}</div>`,g);
   const nota=el(`<div class="ab" style="left:0;top:0;width:68px;height:38px">${svgNota()}</div>`,g);
   // estoque
   const est=el(`<div class="card" style="left:380px;top:352px;width:520px;height:250px;padding:30px 36px">
@@ -597,7 +639,7 @@ CAPS[5]=()=>{
     vis(rec,t,tPd-.15,tMt-.25,{dy:22});vis(r1,t,tPd+.2,1e9,{dy:8,sc:1});vis(r2,t,tQu-.05,1e9,{dy:8,sc:1});
     conta(r3,t,tDa,1.6,0,TOTAL,brl);vis(r4,t,tPg-.05,1e9,{dy:8,sc:.9});
     vis(reg,t,tCx-.05,tMt-.25,{dy:14});
-    op(nota,t,tPg-.15,tMt-.3);arco(nota,t,tPg-.1,1,1010,610,cx+53,CY+116,-190,-12);
+    op(nota,t,tPg-.15,tMt-.3);arco(nota,t,tPg-.1,1,1026,609,cx+53,CY+116,-190,-12);
     // 4 estoque: entram 38 kg de alumínio latinha
     vis(est,t,tMt-.1,tDe-.1,{dy:22});conta(estQ,t,tEn,1,0,KG,v=>'+'+kg(v));
     // 5 venda: o caminhão com a latinha juntada (fardos) vai até a Serra Fina, com a nota fiscal
@@ -656,7 +698,7 @@ CAPS[8]=()=>{
      <div class="lin p3"><span>Valor</span><span style="color:var(--ve);font-size:24px">${brl(235.6)}</span></div></div>`,C[0]);
   const P=['.p0','.p1','.p2','.p3'].map(s=>pp.querySelector(s));
   // caixa: o dinheiro entra e sai; abre de manhã e fecha no fim do expediente
-  const rg=el(`<div class="ab" style="left:90px;top:186px;width:220px;height:190px">${svgRegistradora()}</div>`,C[1]);
+  const rg=el(`<div class="ab" style="left:90px;top:170px;width:220px">${registradora({aberta:true,visor:'235,60',w:220})}</div>`,C[1]);
   const cEn=el(`<div class="ab" style="left:330px;top:206px"><span class="tag v s">${ic('arrow-down-left',18)}Entra</span></div>`,C[1]);
   const cSa=el(`<div class="ab" style="left:330px;top:262px"><span class="tag a s">${ic('arrow-up-right',18)}Sai</span></div>`,C[1]);
   const hora=(y,icone,v,sub,cls)=>el(`<div class="papel row" style="left:500px;top:${y}px;width:340px;height:116px;padding:0 22px;gap:18px">

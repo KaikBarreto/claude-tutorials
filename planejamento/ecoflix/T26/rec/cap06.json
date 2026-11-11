@@ -230,7 +230,7 @@
   {
    "do": "type",
    "target": {
-    "selector": "[role=dialog]:has(#crm-stage-name) input[placeholder='Ex.: Preparar contato comercial']"
+    "selector": "[role=dialog]:has([role=tab][id$='-trigger-rules']) input[placeholder='Ex.: Preparar contato comercial']"
    },
    "text": "Agendar a visita",
    "cps": 22,
@@ -240,7 +240,7 @@
   {
    "do": "click",
    "target": {
-    "selector": "[role=dialog]:has(#crm-stage-name) button[role=combobox]",
+    "selector": "[role=dialog]:has([role=tab][id$='-trigger-rules']) button[role=combobox]",
     "hasText": "Ao entrar nesta etapa"
    },
    "at": 19.43,
@@ -311,7 +311,7 @@
   {
    "do": "click",
    "target": {
-    "selector": "[role=dialog]:has(#crm-stage-name) button[role=combobox]",
+    "selector": "[role=dialog]:has([role=tab][id$='-trigger-rules']) button[role=combobox]",
     "hasText": "Criar tarefa"
    },
    "at": 33.37,
@@ -418,7 +418,7 @@
   {
    "do": "click",
    "target": {
-    "selector": "[role=dialog]:has(#crm-stage-name) input[placeholder='Ex.: Ligar para {NOME}']"
+    "selector": "[role=dialog]:has([role=tab][id$='-trigger-rules']) input[placeholder='Ex.: Ligar para {NOME}']"
    },
    "at": 48.52,
    "label": "Título da tarefa *"
@@ -426,7 +426,7 @@
   {
    "do": "type",
    "target": {
-    "selector": "[role=dialog]:has(#crm-stage-name) input[placeholder='Ex.: Ligar para {NOME}']"
+    "selector": "[role=dialog]:has([role=tab][id$='-trigger-rules']) input[placeholder='Ex.: Ligar para {NOME}']"
    },
    "text": "Agendar visita na ",
    "cps": 30,
@@ -438,7 +438,7 @@
   {
    "do": "type",
    "target": {
-    "selector": "[role=dialog]:has(#crm-stage-name) input[placeholder='Ex.: Ligar para {NOME}']"
+    "selector": "[role=dialog]:has([role=tab][id$='-trigger-rules']) input[placeholder='Ex.: Ligar para {NOME}']"
    },
    "text": "{CLIENTE}",
    "cps": 22,
@@ -448,7 +448,7 @@
   },
   {
    "do": "eval",
-   "js": "(async()=>{const esp=[\"Agendar visita na {CLIENTE}\"];let out='';for(let i=0;i<12;i++){const sc=[...document.querySelectorAll(\"[role=dialog]:has(#crm-stage-name)\")].pop();const v=sc?[...sc.querySelectorAll('input, textarea')].map(e=>e.value).join(' | '):'';const falta=esp.filter(e=>!v.includes(e));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+v.slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
+   "js": "(async()=>{const esp=[\"Agendar visita na {CLIENTE}\"];let out='';for(let i=0;i<12;i++){const sc=[...document.querySelectorAll(\"[role=dialog]:has([role=tab][id$='-trigger-rules'])\")].pop();const v=sc?[...sc.querySelectorAll('input, textarea')].map(e=>e.value).join(' | '):'';const falta=esp.filter(e=>!v.includes(e));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+v.slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
    "label": "confere título da tarefa"
   },
   {
@@ -471,7 +471,7 @@
   {
    "do": "hover",
    "target": {
-    "selector": "[role=dialog]:has(#crm-stage-name) input[type=number]"
+    "selector": "[role=dialog]:has([role=tab][id$='-trigger-rules']) input[type=number]"
    },
    "seconds": 0.1,
    "at": 58.93,
@@ -482,7 +482,7 @@
   {
    "do": "select",
    "target": {
-    "selector": "[role=dialog]:has(#crm-stage-name) button[role=combobox]",
+    "selector": "[role=dialog]:has([role=tab][id$='-trigger-rules']) button[role=combobox]",
     "hasText": "Dias corridos"
    },
    "option": "Dias úteis",
@@ -497,7 +497,7 @@
   {
    "do": "hover",
    "target": {
-    "selector": "[role=dialog]:has(#crm-stage-name) div.rounded-xl.shadow-sm:has(input[type=number])"
+    "selector": "[role=dialog]:has([role=tab][id$='-trigger-rules']) div.rounded-xl.shadow-sm:has(input[type=number])"
    },
    "seconds": 3.0,
    "at": 61.26,
@@ -513,7 +513,7 @@
   {
    "do": "hover",
    "target": {
-    "selector": "[role=dialog]:has(#crm-stage-name) label[for=automation-enabled]"
+    "selector": "[role=dialog]:has([role=tab][id$='-trigger-rules']) label[for=automation-enabled]"
    },
    "seconds": 1.6,
    "at": 73.08,
@@ -534,7 +534,7 @@
    "target": {
     "text": "Ativa",
     "exact": true,
-    "within": "[role=dialog]:has(#crm-stage-name)"
+    "within": "[role=dialog]:has([role=tab][id$='-trigger-rules'])"
    },
    "timeout": 6
   },
@@ -560,13 +560,13 @@
   },
   {
    "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Agendar a visita\", \"Ativa\", \"Ao entrar nesta etapa · 1 ação\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]:has(#crm-stage-name)\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Agendar a visita\", \"Ativa\", \"Ao entrar nesta etapa · 1 ação\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]:has([role=tab][id$='-trigger-rules'])\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
    "label": "confere a automação ativa na lista"
   },
   {
    "do": "hover",
    "target": {
-    "selector": "[role=dialog]:has(#crm-stage-name) div.rounded-xl:has(p:text-is('Agendar a visita'))"
+    "selector": "[role=dialog]:has([role=tab][id$='-trigger-rules']) div.rounded-xl:has(p:text-is('Agendar a visita'))"
    },
    "seconds": 0.26,
    "at": 81.02,

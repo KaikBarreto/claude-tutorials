@@ -248,13 +248,13 @@
   },
   {
    "do": "eval",
-   "js": "(()=>{const d=[...document.querySelectorAll(\"[role=dialog]:has(#crm-stage-name)\")].pop();if(!d)return 'ja fechada';const b=[...d.querySelectorAll('button')].find(x=>[x.textContent,x.getAttribute('aria-label')].some(v=>/^\\s*fechar\\s*$/i.test(v||'')));if(!b)return 'sem botao Fechar';b.click();return 'fechada pelo botao'})()",
+   "js": "(()=>{const d=[...document.querySelectorAll(\"[role=dialog]:has([role=tab][id$='-trigger-rules'])\")].pop();if(!d)return 'ja fechada';const b=[...d.querySelectorAll('button')].find(x=>[x.textContent,x.getAttribute('aria-label')].some(v=>/^\\s*fechar\\s*$/i.test(v||'')));if(!b)return 'sem botao Fechar';b.click();return 'fechada pelo botao'})()",
    "label": "fecha a Visita técnica (plano B)"
   },
   {
    "do": "waitFor",
    "gone": {
-    "selector": "[role=dialog]:has(#crm-stage-name)"
+    "selector": "[role=dialog]:has([role=tab][id$='-trigger-rules'])"
    },
    "timeout": 8
   },
@@ -302,13 +302,13 @@
   },
   {
    "do": "eval",
-   "js": "(()=>{const d=[...document.querySelectorAll(\"[role=dialog]:has(#crm-stage-name)\")].pop();if(!d)return 'ja fechada';const b=[...d.querySelectorAll('button')].find(x=>[x.textContent,x.getAttribute('aria-label')].some(v=>/^\\s*fechar\\s*$/i.test(v||'')));if(!b)return 'sem botao Fechar';b.click();return 'fechada pelo botao'})()",
+   "js": "(()=>{const d=[...document.querySelectorAll(\"[role=dialog]:has([role=tab][id$='-trigger-rules'])\")].pop();if(!d)return 'ja fechada';const b=[...d.querySelectorAll('button')].find(x=>[x.textContent,x.getAttribute('aria-label')].some(v=>/^\\s*fechar\\s*$/i.test(v||'')));if(!b)return 'sem botao Fechar';b.click();return 'fechada pelo botao'})()",
    "label": "fecha o Em contato (plano B)"
   },
   {
    "do": "waitFor",
    "gone": {
-    "selector": "[role=dialog]:has(#crm-stage-name)"
+    "selector": "[role=dialog]:has([role=tab][id$='-trigger-rules'])"
    },
    "timeout": 8
   },

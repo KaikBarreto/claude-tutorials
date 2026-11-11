@@ -46,7 +46,7 @@ def base():
 
 
 B = base()
-ULT_PEDIDO = max(int(p['order_number']) for t in ('purchases', 'sales') for p in B.get(t, []))
+ULT_PEDIDO = max(int(p['order_number']) for t in ('purchases', 'sales') for p in B.get(t, []) if p.get('order_number') is not None)
 ULT_CAIXA = max(int(c['register_number']) for c in B['cash_register'])
 assert ULT_CAIXA == 84, f'o mundo base termina no caixa #{ULT_CAIXA}, a aula espera #84'
 ESTOQUE = {m['id']: float(m.get('current_stock') or 0) for m in B['materials']}
@@ -225,11 +225,14 @@ def main():
     tem_audit = any(a.get('entity_type') == 'purchase' for a in B.get('destructive_actions_audit', []))
     if not tem_audit:
         copia_b = next((p for p in B['purchases'] if p.get('reverted_at') and p.get('supplier_id') == CIDA), None) or next(p for p in e.t['purchases'] if p.get('reverted_at'))
+        cx_comp = next((c for c in B['cash_register'] + e.t.get('cash_register', []) if c['id'] == copia_b.get('reverted_compensation_register_id')), None)
+        quem = (cx_comp or {}).get('opened_by') or MARCOS
+        email = {MARCOS: 'marcos.antunes@reciclavalemetais.example', RAFAEL: 'rafael@reciclavalemetais.example'}[quem]
         e.add('destructive_actions_audit', {
             'id': '@id:t09.audit.05nov', 'company_id': CID, 'action_type': 'delete_entity', 'entity_type': 'purchase', 'entity_id': copia_b['id'],
-            'entity_label': 'Aparecida Ramos', 'performed_by': MARCOS, 'performed_by_email': 'marcos.antunes@reciclavalemetais.example',
-            'performed_by_role': 'operator', 'company_name_snapshot': 'Recicla Vale Metais', 'company_email_snapshot': None,
-            'entity_snapshot': {'order_number': copia_b['order_number'], 'total_amount': copia_b['total_amount']},
+            'entity_label': 'Aparecida Ramos', 'performed_by': quem, 'performed_by_email': email,
+            'performed_by_role': 'operator' if quem == MARCOS else 'company_admin', 'company_name_snapshot': 'Recicla Vale Metais', 'company_email_snapshot': None,
+            'entity_snapshot': {'order_number': copia_b.get('order_number'), 'order_ref': copia_b.get('order_ref'), 'total_amount': copia_b['total_amount']},
             'payload': {'mode': 'compensated', 'order_type': 'purchase'}, 'ip_address': None, 'user_agent': None,
             'created_at': copia_b.get('reverted_at') or z('2026-11-05', '08:12')})
     dados = dict(e.t)
@@ -264,6 +267,13 @@ def main():
     # ---------------------------------------------------------------- apos-cap06: cupom sem valor no Valdir
     grava('apos-cap06', 'T09 · depois do cap06: "Cupom sem valor" ligado na compra do Valdir (07:41).', {'_patch': {
         'purchases': [{'match': {'id': valdir}, 'set': {'hide_financial_details': True}}]}})
+    # ---------------------------------------------------------------- apos-cap09: a bateria de 21/10 no nome da Vale Forte, o #70 fechado de novo
+    bat = [p for p in B['purchases'] if p.get('transaction_date') == '2026-10-21' and p.get('supplier_id') == '@id:fornecedor.siqueira' and abs(float(p['total_amount']) - 744) < 0.01]
+    assert len(bat) == 1, f'a compra de bateria de 21/10 do Siqueira (R$ 744,00) não está no mundo base ({len(bat)})'
+    grava('apos-cap09', 'T09 · depois do cap09: a compra de 21/10 (240 kg de bateria, R$ 744,00, Pix) passada para a Auto Peças Vale Forte no #70, '
+          'reaberto e fechado de novo com 21/10/2026 17:31 e R$ 612,50 (para a recapitulação).', {'_patch': {
+              'purchases': [{'match': {'id': bat[0]['id']}, 'set': {'supplier_id': '@id:fornecedor.valeforte'}}],
+              'cash_register': [{'match': {'id': '@id:caixa.70'}, 'set': {'reopened_at': z(D11, '08:33')}}]}})
     print(f'pedidos #{ULT_PEDIDO + 1}..#{num} (latinha #{n_cida}, duplicada #{n_dup}); caixas #85, #86 e #88 (o #87 não existe na aula: lacuna que nenhuma tela da T9 mostra; coordenador, 11/11: vale o #88)')
 
 
