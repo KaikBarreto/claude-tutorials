@@ -80,6 +80,10 @@ suba a sua instância de novo.
   nas 2 h; um lote de vários capítulos numa chamada só roda 2 ou 3 e morre (a T13 parou achando que a fila tinha travado).
   Lance um capítulo, confira quando ele terminar e lance o próximo. Lote que morreu depois de rodar parte não é "morreu
   sem rodar": relance o resto e siga.
+- **Esperar sem gastar** (11/11 23:59): o comando do capítulo (o `fila.sh ...`) é a própria chamada em segundo plano
+  (`run_in_background`, prazo 7200000), e a notificação de término te acorda uma vez só. Nada de Monitor para esperar a fila:
+  ele expira a cada 30 min e te acorda à toa (cada acordada relê o seu contexto inteiro). Relatório ao coordenador só no
+  fim (ou parcial, se parar de vez); se precisar entregar algo ao acordar, uma linha basta.
 - **MP4 de ensaio** (rápido ou completo) com `--preset ultrafast --crf 30` no `record.mjs`: serve só para a folha de
   contato e monta ~3x mais rápido dentro da trava. A gravação final volta ao padrão.
 - **Disco quase cheio**: apague cada MP4 de ensaio e cada `*.contact.jpg` logo depois de olhar (fique com `actions.json` e

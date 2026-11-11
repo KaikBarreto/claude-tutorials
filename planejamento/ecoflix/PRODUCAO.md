@@ -738,3 +738,8 @@ Decisões:
   sementes `t04/inicio`, `apos-cap02/04/05/06/09`. Fala: cap03 "A tela pede pra conferir…" vai para a L4 (o toast some
   antes da L7); respiros para digitar em 02 L2/L3, 03 L2, 04 L5 e 09 L9. Gravação final: caps 01 e 07 com `APP_ORIGIN`
   no domínio (o link do portal saía 127.0.0.1). Achados no MELHORIAS.
+- 11/11 23:5x **Economia de tokens na espera da fila**: os robôs que esperavam com Monitor eram acordados a cada 30 min
+  (o Monitor expira) e mandavam relatório a cada acordada, relendo o contexto inteiro (300-700 mil tokens por acordada).
+  Regra nova no `_BRIEF_ROBO.md`: o comando do capítulo é a própria chamada em segundo plano (prazo 7200000), e a
+  notificação de término acorda o robô uma vez só; nada de Monitor para esperar a fila; relatório só no fim. Avisados
+  T04, T05, T08, T18 e T20.
