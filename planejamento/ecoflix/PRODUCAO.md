@@ -711,3 +711,8 @@ Decisões:
 - 11/11 23:2x **Kaik: "esses 3D vão intercalando com o conteúdo no sistema né?"** Sim: cada ilustração entra no meio do
   capítulo gravado, no lugar da janela do app, de uma palavra a outra da fala (5 a 20 s), e a gravação volta mostrando onde
   se faz aquilo; as prévias só emendam as ilustrações. 35 cenas em 3D no total.
+- 11/11 23:3x **Robô da T05 (parcial) retomado** até o fim, um capítulo por chamada (o lote de 11 numa chamada morreria
+  às 00:55): só o cap00 com rápido aprovado (montou 0,8 s de vídeo: conferir); cap04 na fila; depois 01-03, 05-11 e os
+  trechos `device: windows` (02w, 04w, 06w, 09w), que substituem a página provisória das cenas de Windows. Sementes
+  `t05/inicio`, `apos-cap02/04/05/06`; relógio do cap04 calculado pelo clique em "Testar" (SETUP_S a calibrar pela hora do
+  cupom 08:41:07). Completo provável em cap06, cap09 e cap10.
