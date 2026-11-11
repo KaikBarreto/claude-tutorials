@@ -467,6 +467,11 @@ export function criarPedido(ctx, tipo, a) {
       else if (a.p_balance_due_date) ctx.db.insert('financial_bills', { ...base, description: `Fatura ${label} #${numero}`, amount: saldo, due_date: a.p_balance_due_date, installment_number: 1, installment_total: 1 }, { companyId: cid });
     }
   }
+  // T8: pedido da valorização marca o(s) ticket(s) como valorizado(s), como _link_weighing_ticket_batch_to_order (20261028140000)
+  const rasc = a.p_order_draft_id ? store.rows('order_drafts').find((d) => d.id === a.p_order_draft_id) : null;
+  const tks = new Set([a.p_source_weighing_ticket_id, rasc?.source_weighing_ticket_id, ...(rasc?.source_weighing_ticket_ids || [])].filter(Boolean));
+  for (const t of store.rows('weighing_tickets')) if (tks.has(t.id) && t.company_id === cid && (!t.customer_supplier_id || t.customer_supplier_id === parceiro)) Object.assign(t, { status: 'valorized', valorized_order_id: head.id, updated_at: new Date(agoraMs()).toISOString() });
+  if (tks.size) store.table('weighing_tickets').touch();
   if (a.p_order_draft_id) ctx.db.remove('order_drafts', { id: a.p_order_draft_id });
   return { [isC ? 'purchase_id' : 'sale_id']: head.id, order_number: numero, order_ref: head.order_ref, already_existed: false, weighing_ticket_id: a.p_source_weighing_ticket_id || null, weighing_ticket_linked: a.p_source_weighing_ticket_id ? true : null };
 }

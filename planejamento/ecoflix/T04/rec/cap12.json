@@ -288,7 +288,7 @@
    "target": {
     "selector": "[role=dialog] tr:has-text('Depósito Irmãos Siqueira') td:nth-child(3)"
    },
-   "seconds": 1.4,
+   "seconds": 0.28,
    "at": 60.53,
    "label": "-R$ 840,00 em vermelho",
    "optional": true,
@@ -327,6 +327,12 @@
    "at": 74.87
   },
   {
+   "do": "eval",
+   "js": "(async()=>{const d=document.querySelector('[role=dialog]');if(!d)return 'sem janela';const c=[...d.querySelectorAll('*')].find(e=>{const s=getComputedStyle(e);return /(auto|scroll)/.test(s.overflowY)&&e.scrollHeight>e.clientHeight+4});if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop,dy=-y0;if(y0<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'topo:'+Math.round(c.scrollTop)})()",
+   "at": 74.87,
+   "label": "sobe ao topo do relatório"
+  },
+  {
    "do": "click",
    "target": {
     "role": "button",
@@ -343,8 +349,8 @@
     "role": "menuitem",
     "name": "Exportar em PDF"
    },
-   "seconds": 0.6,
-   "at": 78.31,
+   "seconds": 0.5,
+   "at": 77.98,
    "label": "Exportar em PDF (sem clicar)",
    "optional": true,
    "timeout": 4
@@ -355,20 +361,11 @@
     "role": "menuitem",
     "name": "Exportar em Excel"
    },
-   "seconds": 0.6,
-   "at": 79.53,
+   "seconds": 0.3,
+   "at": 79.27,
    "label": "Exportar em Excel (sem clicar)",
    "optional": true,
    "timeout": 4
-  },
-  {
-   "do": "press",
-   "key": "Escape",
-   "label": "fecha o menu (Esc)"
-  },
-  {
-   "do": "pause",
-   "seconds": 0.5
   },
   {
    "do": "mark",
@@ -376,10 +373,10 @@
    "at": 80.23
   },
   {
-   "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.textContent.trim()===\"A Receber\"&&e.offsetParent).sort((a,b)=>a.textContent.length-b.textContent.length||a.children.length-b.children.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-150);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "do": "press",
+   "key": "Escape",
    "at": 80.23,
-   "label": "sobe até A Receber"
+   "label": "fecha o menu (Esc)"
   },
   {
    "do": "click",

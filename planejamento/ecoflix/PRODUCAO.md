@@ -431,3 +431,10 @@ Decisões:
 - 11/11 12:3x **Ilustrações T19 e T25 prontas** (12 + 8 cenas): relógios sem horário escrito no ponto da T19; nenhum
   número de outubro na tela da T25; "Módulo do plano" virou cadeado + "depende do plano". Propostas de fala e pendências
   das ilustrações agora em `PROPOSTAS_ILUSTRACOES.md` (para a revisão geral). Robô da T10 lançado no lugar.
+- 11/11 12:3x **Ilustrações T03, T09, T13, T14, T17 e T18 prontas** (11 + 5 + 7 + 10 + 7 + 8 cenas); pendências na
+  `PROPOSTAS_ILUSTRACOES.md` (a principal: o cap01 da T18 tem uma fala no roteiro que não está no tts). Faltam as
+  ilustrações de T05+T27, T15+T22 e T20+T26. Robôs da T12, T13 e T14 lançados nos lugares (20 agentes).
+- 11/11 12:4x **Kaik pediu para ver as ilustrações** ("vai me dando as ilustrações aqui pra eu ver se corrijo algo ou o
+  estilo delas"): mandadas as folhas de contato das 20 aulas prontas (`previa_ilustracoes/Tnn.jpg`). `folha_cenas.py Tnn`
+  faz uma folha maior com o quadro final de cada cena (`Tnn_cenas.jpg`), para quando ele quiser ver de perto (sob a trava;
+  com a fila cheia, demora).

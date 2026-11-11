@@ -93,9 +93,7 @@
   {
    "do": "click",
    "target": {
-    "role": "tab",
-    "name": "Fornecedores",
-    "exact": true
+    "selector": "main div.no-scrollbar > button:has-text('Fornecedores')"
    }
   },
   {
@@ -234,7 +232,7 @@
     "selector": "main section[aria-label='Detalhes de Cooperativa Recomeço'] tbody tr:has-text('Pagamento')",
     "nth": 0
    },
-   "seconds": 1.0,
+   "seconds": 0.79,
    "at": 55.01,
    "label": "linha de Pagamento (Pix/Transferência)",
    "optional": true,
@@ -290,8 +288,8 @@
    "target": {
     "selector": "[role=dialog] label[for=debit]"
    },
-   "seconds": 1.0,
-   "at": 64.32,
+   "seconds": 0.8,
+   "at": 63.18,
    "label": "Tipo de Operação: Pagar (já marcado)",
    "optional": true,
    "timeout": 4
@@ -365,15 +363,10 @@
    "label": "Observação (clique no campo)"
   },
   {
-   "do": "type",
-   "target": {
-    "selector": "[role=dialog] #description"
-   },
-   "text": "Acerto parcial da entrega de 06/11",
-   "cps": 40,
-   "at": 75.49,
-   "label": "Observação",
-   "noClick": true
+   "do": "eval",
+   "js": "(()=>{const e=document.activeElement;if(!e||!/^(INPUT|TEXTAREA)$/.test(e.tagName))return 'SEM ALVO (nada em foco)';document.execCommand('insertText',false,\"Acerto parcial da entrega de 06/11\");return e.value})()",
+   "at": 75.67,
+   "label": "Observação: Acerto parcial da entrega de 06/11 (colado)"
   },
   {
    "do": "mark",
@@ -428,7 +421,7 @@
     "nth": 0
    },
    "seconds": 1.0,
-   "at": 83.29,
+   "at": 81.84,
    "label": "o pagamento no extrato",
    "optional": true,
    "timeout": 4
@@ -455,7 +448,7 @@
     "role": "menuitem",
     "name": "Abrir Relatório (PDF)"
    },
-   "seconds": 0.6,
+   "seconds": 0.57,
    "at": 86.9,
    "label": "Abrir Relatório (PDF) (sem clicar)",
    "optional": true,

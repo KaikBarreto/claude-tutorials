@@ -93,9 +93,7 @@
   {
    "do": "click",
    "target": {
-    "role": "tab",
-    "name": "Fornecedores",
-    "exact": true
+    "selector": "main div.no-scrollbar > button:has-text('Fornecedores')"
    }
   },
   {
@@ -171,7 +169,7 @@
     "exact": true,
     "within": "main section[aria-label='Detalhes de Cooperativa Recomeço']"
    },
-   "seconds": 0.8,
+   "seconds": 0.41,
    "at": 2.71,
    "label": "Despesas vinculadas",
    "optional": true,
@@ -239,6 +237,12 @@
    "do": "mark",
    "name": "L4",
    "at": 26.82
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const s=document.querySelector(\"[aria-label='Seções da ficha']\");if(!s)return 'SEM ALVO';const x0=s.scrollLeft,dx=(s.scrollWidth-s.clientWidth)-x0;if(Math.abs(dx)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/500),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;s.scrollLeft=x0+dx*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'faixa:'+Math.round(s.scrollLeft)})()",
+   "at": 26.82,
+   "label": "rola a faixa das abas (Notas fiscais inteira)"
   },
   {
    "do": "click",

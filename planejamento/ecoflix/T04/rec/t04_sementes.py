@@ -67,6 +67,13 @@ def _get(porta, caminho):
         return json.loads(r.read().decode('utf8'))
 
 
+def _post(porta, caminho, corpo):
+    req = urllib.request.Request(f'http://127.0.0.1:{porta}{caminho}', data=json.dumps(corpo).encode(), method='POST',
+                                 headers={'content-type': 'application/json'})
+    with urllib.request.urlopen(req, timeout=60) as r:
+        return r.read()
+
+
 def captura(nn, porta):
     schema = json.load(open(os.path.join(MUNDO, 'schema.json'), encoding='utf8'))['tables']
     novas, patch = {}, {}
@@ -88,6 +95,21 @@ def captura(nn, porta):
                 rows = []
             if rows:
                 patch[tab] = [{'match': {'id': r['id']}, 'set': {k: v for k, v in r.items() if k not in ('id', 'created_at')}} for r in rows]
+    if patch:   # só os campos que a aula mudou: compara com o mundo base + t04/inicio (o instante antes do 1º capítulo da cadeia)
+        _post(porta, '/__dev/reset', {})
+        _post(porta, '/__dev/seed', {'files': ['t04/inicio']})
+        for tab, itens in list(patch.items()):
+            novos = []
+            for it in itens:
+                antes = _get(porta, f"{tab}?select=*&id=eq.{it['match']['id']}")
+                antes = antes[0] if antes else {}
+                mud = {k: v for k, v in it['set'].items() if antes.get(k) != v}
+                if mud:
+                    novos.append({'match': it['match'], 'set': mud})
+            if novos:
+                patch[tab] = novos
+            else:
+                del patch[tab]
     d = {'_doc': f'T04 · estado depois do cap{nn:02d} (cumulativo sobre t04/inicio), capturado do Supabase falso logo depois do ensaio '
                  f'do capítulo (o que o app gravou). Gerado por rec/t04/t04_sementes.py captura {nn}.'}
     d.update(novas)

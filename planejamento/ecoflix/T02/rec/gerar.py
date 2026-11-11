@@ -571,8 +571,8 @@ def cap04():
     c.click(CRIAR_DLG, at=c.A(10, 'Criar', 0.6), label='Criar Usuário (rodapé da janela)')
     c.waitfor(target=TXT('Juliana Prado'), timeout=12)
     c.confere('main', ['3 / 3 usuários', 'Juliana Prado', '15 permissões · Ativo'], 'Juliana na lista (15 permissões) e o selo 3 / 3')
-    c.hover(LINHA('Juliana Prado'), 0.8, at=c.A(10, 'Juliana', 0.5), label='Juliana entra na equipe')
-    c.hover(SELO('3 / 3 usuários'), 0.8, at=c.A(10, 'equipe.', 0.4), label='selo 3 / 3 usuários')
+    c.hover(LINHA('Juliana Prado'), 0.3, at=c.A(10, 'Juliana', 0.5), label='Juliana entra na equipe')
+    c.hover(SELO('3 / 3 usuários'), 0.6, at=c.A(10, 'equipe.', 0.4), label='selo 3 / 3 usuários')
     c.fim()
     return c
 
@@ -788,7 +788,7 @@ def cap10():
     c.hover(TXT('Gerencie usuários da empresa, papéis e permissões de acesso'), 0.8, at=c.A(1, 'Gerenciar', 0.5), label='Gerenciar Usuários')
     c.mark(2)
     c.click(LINHA('Marcos Antunes'), at=c.A(2, 'Marcos', 0.6), label='o Marcos')
-    c.hover(TXT('Perfil de acesso'), 0.8, at=c.A(2, 'Operador', 0.5), label='perfil do Marcos')
+    c.hover(TXT('Perfil de acesso'), 0.6, at=c.A(2, 'deu', 0.5), label='perfil do Marcos')
     c.mark(3)
     c.click(LINHA('Juliana Prado'), at=c.A(3, 'Juliana,', 0.6), label='a Juliana (montada na mão)')
     c.hover(SEL("main p:has-text('permissões configuradas individualmente')"), 0.6, at=c.A(3, 'tela', 0.5, nth=0), label='15 permissões, tela por tela')

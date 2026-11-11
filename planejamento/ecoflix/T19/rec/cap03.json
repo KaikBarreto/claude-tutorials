@@ -1,0 +1,322 @@
+{
+ "name": "t19-cap03",
+ "title": "T19 · Cap. 3 · Campos de folha (narração 51,7 s, ESTIMADA; marcas L1..L5 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
+ "fakeNow": "2026-11-10T08:30:00-03:00",
+ "seed": "t19-cap03",
+ "pace": 0.5,
+ "cps": 40,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 470
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true",
+  "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10"
+ },
+ "seedExtra": [
+  "t19/apos-cap02"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/login"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "timeout": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "••••••••"
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Rafael",
+   "timeout": 45
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 20
+  },
+  {
+   "do": "goto",
+   "url": "/funcionarios"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie sua equipe e controle de pagamentos",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 15
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "main [role=listitem] > button:has(p:text-is('Rafael Nogueira'))"
+   },
+   "timeout": 20
+  },
+  {
+   "do": "wait",
+   "seconds": 0.6
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel|Algo deu errado|Falha ao|Something went wrong|inv[áa]lido/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main [role=listitem] button[aria-label='Ações de Gabriel Rocha']"
+   },
+   "seconds": 0.23,
+   "at": 5.25,
+   "label": "menu ⋯ do Gabriel",
+   "optional": false,
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main [role=listitem] button[aria-label='Ações de Gabriel Rocha']"
+   },
+   "seconds": 0.4,
+   "label": "menu ⋯ de Gabriel Rocha de novo (só se não abriu)",
+   "unless": {
+    "role": "menuitem",
+    "name": "Editar"
+   },
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "role": "menuitem",
+    "name": "Editar"
+   },
+   "timeout": 6
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Editar"
+   },
+   "at": 6.48,
+   "label": "Editar"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "[role=dialog] #name"
+   },
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] [role=tab]:has-text('Remuneração')"
+   },
+   "at": 7.02,
+   "label": "aba Remuneração"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:text-is('CLT')"
+   },
+   "at": 10.0,
+   "label": "Regime de contratação: CLT"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "[role=dialog] #dependents"
+   },
+   "timeout": 6
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 11.08
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] label:text-is('Nº de dependentes (IRRF)')"
+   },
+   "seconds": 0.4,
+   "at": 11.48,
+   "label": "campos de folha do CLT",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] #dependents"
+   },
+   "at": 15.41,
+   "label": "campo Nº de dependentes (IRRF): 1"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] #dependents"
+   },
+   "text": "1",
+   "cps": 40,
+   "at": 16.26,
+   "label": "Nº de dependentes (IRRF): 1",
+   "noClick": true,
+   "clear": true
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 21.84
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] #vt-enabled"
+   },
+   "at": 23.98,
+   "label": "Desconta vale-transporte (até 6%)"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "[role=dialog] #vt-value"
+   },
+   "timeout": 6
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] #vt-value"
+   },
+   "at": 27.99,
+   "label": "campo Valor mensal do VT R$ 220,00"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] #vt-value"
+   },
+   "text": "220,00",
+   "cps": 40,
+   "at": 28.84,
+   "label": "Valor mensal do VT R$ 220,00",
+   "noClick": true
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] label:text-is('Desconta vale-transporte (até 6%)')"
+   },
+   "seconds": 1.2,
+   "at": 32.31,
+   "label": "até 6% do salário",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const esp=[\"1\", \"R$ 220,00\"];let out='';for(let i=0;i<12;i++){const sc=[...document.querySelectorAll(\"[role=dialog]\")].pop();const v=sc?[...sc.querySelectorAll('input, textarea')].map(e=>e.value).join(' | '):'';const falta=esp.filter(e=>!v.includes(e));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+v.slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere dependente e VT"
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 36.0
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:text-is('Atualizar')"
+   },
+   "at": 36.0,
+   "label": "Atualizar"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 12
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 38.1
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 900,
+    "y": 140
+   },
+   "by": 0,
+   "duration": 0.2,
+   "after": 0,
+   "at": 38.7,
+   "label": "cursor descansa (ilustração Informal x CLT)"
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 51.67
+  }
+ ]
+}

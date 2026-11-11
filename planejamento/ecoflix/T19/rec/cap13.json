@@ -1,0 +1,404 @@
+{
+ "name": "t19-cap13",
+ "title": "T19 · Cap. 13 · Recapitulando (narração 48,6 s, ESTIMADA; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
+ "fakeNow": "2026-11-10T08:30:00-03:00",
+ "seed": "t19-cap13",
+ "pace": 0.5,
+ "cps": 40,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 470
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true",
+  "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10"
+ },
+ "seedExtra": [
+  "t19/apos-cap12"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/login"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "timeout": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "••••••••"
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Rafael",
+   "timeout": 45
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 20
+  },
+  {
+   "do": "goto",
+   "url": "/funcionarios"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie sua equipe e controle de pagamentos",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 15
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "main [role=listitem] > button:has(p:text-is('Rafael Nogueira'))"
+   },
+   "timeout": 20
+  },
+  {
+   "do": "wait",
+   "seconds": 0.6
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel|Algo deu errado|Falha ao|Something went wrong|inv[áa]lido/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main [role=listitem] button[aria-label='Ações de Gabriel Rocha']"
+   },
+   "seconds": 0.5,
+   "at": 2.82,
+   "label": "menu ⋯ do Gabriel",
+   "optional": false,
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main [role=listitem] button[aria-label='Ações de Gabriel Rocha']"
+   },
+   "seconds": 0.4,
+   "label": "menu ⋯ de Gabriel Rocha de novo (só se não abriu)",
+   "unless": {
+    "role": "menuitem",
+    "name": "Editar"
+   },
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "role": "menuitem",
+    "name": "Editar"
+   },
+   "timeout": 6
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Editar"
+   },
+   "label": "Editar o Gabriel"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "[role=dialog] #name"
+   },
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] [role=tab]:has-text('Remuneração')"
+   },
+   "at": 4.96,
+   "label": "Remuneração: salário, custo mensal R$ 4.264,00 e CLT"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] #monthly_cost"
+   },
+   "seconds": 0.8,
+   "label": "Custo mensal total R$ 4.264,00",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:text-is('Cancelar')"
+   },
+   "at": 10.12,
+   "label": "Cancelar"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 11.54
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main [role=listitem]:has(p:text-is('Edson Moura')) span:has-text('Transporte')"
+   },
+   "seconds": 0.4,
+   "at": 13.29,
+   "label": "o departamento Transporte",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main [role=listitem] > button:has(p:text-is('Diego Morais'))"
+   },
+   "at": 16.35,
+   "label": "Diego: vale e falta"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main section[aria-label^='Detalhes de'] div:has(> p:text-is('Faltas'))"
+   },
+   "seconds": 0.3,
+   "label": "Diego: Vales 200 e Faltas 90",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main [role=listitem] > button:has(p:text-is('Cláudio Ferraz'))"
+   },
+   "at": 17.79,
+   "label": "Cláudio: bônus"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main section[aria-label^='Detalhes de'] div:has(> p:text-is('Bônus'))"
+   },
+   "seconds": 0.3,
+   "label": "Cláudio: Bônus 150",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 18.72
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main [role=listitem] > button:has(p:text-is('Edson Moura'))"
+   },
+   "at": 20.88,
+   "label": "Edson"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main section[aria-label^='Detalhes de'] button:has-text('Extrato')"
+   },
+   "at": 24.19,
+   "label": "Extrato - Edson Moura"
+  },
+  {
+   "do": "waitFor",
+   "text": "Extrato - Edson Moura",
+   "timeout": 10
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 25.53
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:text-is('Fechar')"
+   },
+   "at": 25.83,
+   "label": "Fechar o extrato"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main [role=listitem] button[aria-label='Ações de Gabriel Rocha']"
+   },
+   "seconds": 0.5,
+   "at": 26.43,
+   "label": "menu ⋯ do Gabriel: Copiar link do ponto",
+   "optional": false,
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main [role=listitem] button[aria-label='Ações de Gabriel Rocha']"
+   },
+   "seconds": 0.4,
+   "label": "menu ⋯ de Gabriel Rocha de novo (só se não abriu)",
+   "unless": {
+    "role": "menuitem",
+    "name": "Copiar link do ponto"
+   },
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "role": "menuitem",
+    "name": "Copiar link do ponto"
+   },
+   "timeout": 6
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "label": "fecha o menu"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "nav[aria-label='Navegação da seção'] button:text-is('Folha de Ponto')"
+   },
+   "at": 31.83,
+   "label": "Folha de Ponto"
+  },
+  {
+   "do": "waitFor",
+   "text": "Todos os funcionários",
+   "timeout": 10
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 36.2
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "nav[aria-label='Navegação da seção'] button:text-is('Funcionários')"
+   },
+   "at": 36.36,
+   "label": "Funcionários"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "main [role=listitem] > button:has(p:text-is('Rafael Nogueira'))"
+   },
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button:text-is('Inativos')"
+   },
+   "at": 37.49,
+   "label": "Inativos com o Rogério"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "main [role=listitem] > button:has(p:text-is('Rogério Batista'))"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 40.65
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 1000,
+    "y": 140
+   },
+   "by": 0,
+   "duration": 0.2,
+   "after": 0,
+   "at": 41.25,
+   "label": "cursor descansa (cartão Próximo)"
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 48.6
+  }
+ ]
+}

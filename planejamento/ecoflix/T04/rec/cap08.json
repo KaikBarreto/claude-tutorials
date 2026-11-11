@@ -93,9 +93,7 @@
   {
    "do": "click",
    "target": {
-    "role": "tab",
-    "name": "Fornecedores",
-    "exact": true
+    "selector": "main div.no-scrollbar > button:has-text('Fornecedores')"
    }
   },
   {
@@ -137,11 +135,16 @@
  ],
  "steps": [
   {
+   "do": "mark",
+   "name": "L1",
+   "at": 0.4
+  },
+  {
    "do": "click",
    "target": {
     "selector": "[aria-label='Seções da ficha'] button:has-text('Pedidos')"
    },
-   "at": 0.03,
+   "at": 0.4,
    "label": "aba Pedidos"
   },
   {
@@ -158,11 +161,6 @@
    "do": "eval",
    "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"R$ 52.937,50\", \"R$ 3.781,25\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main section[aria-label='Detalhes de Cooperativa Recome\\u00e7o']\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
    "label": "confere cartões Total Comprado e Ticket Médio"
-  },
-  {
-   "do": "mark",
-   "name": "L1",
-   "at": 0.4
   },
   {
    "do": "hover",
@@ -208,7 +206,7 @@
     "exact": true,
     "within": "main section[aria-label='Detalhes de Cooperativa Recomeço']"
    },
-   "seconds": 1.2,
+   "seconds": 0.74,
    "at": 13.31,
    "label": "o gráfico (por peso)",
    "optional": true,

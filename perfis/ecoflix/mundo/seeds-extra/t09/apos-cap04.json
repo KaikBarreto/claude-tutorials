@@ -1,0 +1,68 @@
+{
+ "_doc": "T09 · depois do cap04: a compra da Aparecida editada para 42 kg de latinha (R$ 260,40, mesmo número e hora, no #87).",
+ "_patch": {
+  "purchases": [
+   {
+    "match": {
+     "id": "@id:t09.compra.cida"
+    },
+    "set": {
+     "total_amount": 260.4,
+     "paid_amount": 260.4
+    }
+   }
+  ],
+  "purchase_items": [
+   {
+    "match": {
+     "id": "@id:t09.pi.cida.0"
+    },
+    "set": {
+     "quantity": 42,
+     "total_price": 260.4
+    }
+   }
+  ],
+  "stock_movements": [
+   {
+    "match": {
+     "id": "@id:t09.sm.cida.0"
+    },
+    "set": {
+     "quantity": 42,
+     "stock_after": 3818.4
+    }
+   }
+  ],
+  "cash_transactions": [
+   {
+    "match": {
+     "id": "@id:t09.ct.cida"
+    },
+    "set": {
+     "amount": 260.4
+    }
+   }
+  ],
+  "materials": [
+   {
+    "match": {
+     "id": "@id:material.al_latinha"
+    },
+    "set": {
+     "current_stock": 3818.4
+    }
+   }
+  ],
+  "cash_register": [
+   {
+    "match": {
+     "id": "@id:t09.caixa.87"
+    },
+    "set": {
+     "opening_balance": 519.6
+    }
+   }
+  ]
+ }
+}

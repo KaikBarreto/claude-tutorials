@@ -10,3 +10,9 @@ As do robô ficam em `Tnn/propostas_fala.md`; estas vieram dos agentes de ilustr
 | T01 | caps 00, 05, 06, 08 | Símbolo fictício no lugar do logo da Recicla Vale: usar o mesmo logo que o robô da T01 sobe. | Não existe logo da Recicla Vale. |
 | T04/T06 | — | O app escreve "Conta DINHEIRO"; a legenda terá "Conta Dinheiro". | Decidir a grafia da legenda. |
 | Kit | `CAPS[1]` | O exemplo "Tara e peso líquido" chama o caminhão vazio de "Tara" (no app é a "2ª Pesagem"; tara é embalagem). | Corrigir na unificação do kit. |
+| T18 | cap01 | O `tts_textos.py` não tem a 1ª fala do roteiro ("Aqui em Ambiental ficam as duas abas…"). Se ela entrar, todas as âncoras do cap01 somam 1 na linha. | Roteiro × tts: decidir qual vale. |
+| T03 | caps 1, 6, 9 | Roteiro e plano escrevem "PRINCIPAL"; no app e na semente a tabela padrão é "Principal". | Grafia da legenda. |
+| T09 | plano | O plano dá o caixa #87 ao Rafael; MUNDO e roteiro dizem #88 (o robô da T09 foi avisado: vale #88). | Acertar o plano. |
+| T13 | cap10 | O segundo caso da conta ficou sem número (R$ 5.000/3.000/2.000 não são do mundo). | Conferir. |
+| T14 | cap00 | A cena mostra R$ 44.933,47 e R$ 46.382,57, que dependem dos Pix da T13. | Conferir com a semente nova (robô da T14 avisado). |
+| Kit | `pulse()` | Usa a propriedade CSS `scale`, que desloca elemento posicionado por `transform`; chamado duas vezes no mesmo elemento, anula o primeiro; um chip com a classe "g" herda o `.g` de grupo do kit. | Corrigir na unificação do kit. |

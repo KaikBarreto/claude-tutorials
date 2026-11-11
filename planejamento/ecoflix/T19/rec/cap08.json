@@ -1,0 +1,410 @@
+{
+ "name": "t19-cap08",
+ "title": "T19 · Cap. 8 · Ligar o ponto e gerar o link (narração 75,5 s, ESTIMADA; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
+ "fakeNow": "2026-11-10T08:30:00-03:00",
+ "seed": "t19-cap08",
+ "pace": 0.5,
+ "cps": 40,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 470
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true",
+  "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10"
+ },
+ "seedExtra": [
+  "t19/apos-cap06"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/login"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "timeout": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "••••••••"
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Rafael",
+   "timeout": 45
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 20
+  },
+  {
+   "do": "goto",
+   "url": "/funcionarios"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie sua equipe e controle de pagamentos",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 15
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "main [role=listitem] > button:has(p:text-is('Rafael Nogueira'))"
+   },
+   "timeout": 20
+  },
+  {
+   "do": "wait",
+   "seconds": 0.6
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel|Algo deu errado|Falha ao|Something went wrong|inv[áa]lido/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main [role=listitem] button[aria-label='Ações de Gabriel Rocha']"
+   },
+   "seconds": 0.5,
+   "at": 2.09,
+   "label": "menu ⋯ do Gabriel",
+   "optional": false,
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main [role=listitem] button[aria-label='Ações de Gabriel Rocha']"
+   },
+   "seconds": 0.4,
+   "label": "menu ⋯ de Gabriel Rocha de novo (só se não abriu)",
+   "unless": {
+    "role": "menuitem",
+    "name": "Editar"
+   },
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "role": "menuitem",
+    "name": "Editar"
+   },
+   "timeout": 6
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Editar"
+   },
+   "at": 3.72,
+   "label": "Editar"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "[role=dialog] #name"
+   },
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] [role=tab]:has-text('Ponto eletrônico')"
+   },
+   "at": 3.83,
+   "label": "aba Ponto eletrônico"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "[role=dialog] #ponto-enabled"
+   },
+   "timeout": 6
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Ativar ponto eletrônico\", \"Gera um link público pro funcionário bater ponto sem login.\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere ponto ligado"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] #ponto-enabled"
+   },
+   "seconds": 0.1,
+   "at": 10.89,
+   "label": "Ativar ponto eletrônico (ligado)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 11.69
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Sem PIN. Qualquer um com o link",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.2,
+   "at": 13.59,
+   "label": "PIN do ponto (opcional): Sem PIN",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] button:has-text('Definir PIN')"
+   },
+   "seconds": 1.4,
+   "at": 20.11,
+   "label": "Definir PIN (sem clicar)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:text-is('Cancelar')"
+   },
+   "at": 24.72,
+   "label": "Cancelar"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 25.02
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main [role=listitem] button[aria-label='Ações de Gabriel Rocha']"
+   },
+   "seconds": 0.28,
+   "at": 27.0,
+   "label": "menu ⋯ do Gabriel",
+   "optional": false,
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main [role=listitem] button[aria-label='Ações de Gabriel Rocha']"
+   },
+   "seconds": 0.4,
+   "label": "menu ⋯ de Gabriel Rocha de novo (só se não abriu)",
+   "unless": {
+    "role": "menuitem",
+    "name": "Copiar link do ponto"
+   },
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "role": "menuitem",
+    "name": "Copiar link do ponto"
+   },
+   "timeout": 6
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Copiar link do ponto"
+   },
+   "at": 28.28,
+   "label": "Copiar link do ponto"
+  },
+  {
+   "do": "waitFor",
+   "text": "Link copiado",
+   "timeout": 6
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 30.0
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 1000,
+    "y": 140
+   },
+   "by": 0,
+   "duration": 0.2,
+   "after": 0,
+   "at": 30.6,
+   "label": "cursor descansa (ilustração do link no celular)"
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 34.53
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "nav[aria-label='Navegação da seção'] button:text-is('Configurações de Ponto')"
+   },
+   "at": 40.22,
+   "label": "aba Configurações de Ponto"
+  },
+  {
+   "do": "waitFor",
+   "text": "Jornada Padrão da Empresa",
+   "timeout": 10
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const el=[...document.querySelectorAll(\"main *\")].filter(e=>e.textContent.trim().startsWith(\"Marque quem vai bater ponto\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-250);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 42.09,
+   "label": "rola até o cartão Ativar ponto eletrônico"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main div.cursor-pointer:has(p:text-is('Juliana Prado'))"
+   },
+   "at": 46.62,
+   "label": "marca Juliana Prado"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button:has-text('Ativar ponto (1)')"
+   },
+   "at": 48.11,
+   "label": "Ativar ponto (1)"
+  },
+  {
+   "do": "waitFor",
+   "text": "1 funcionário com ponto ativado",
+   "timeout": 8
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 49.52
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const el=[...document.querySelectorAll(\"main *\")].filter(e=>e.textContent.trim().startsWith(\"Tablet da empresa\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-150);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 50.39,
+   "label": "sobe até o cartão Tablet da empresa"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "/ponto/empresa/",
+    "within": "main"
+   },
+   "seconds": 1.2,
+   "at": 52.79,
+   "label": "link do tablet /ponto/empresa/...",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main svg[role=img], main canvas, main img[alt*='QR']"
+   },
+   "seconds": 1.0,
+   "at": 55.82,
+   "label": "QR Code do tablet",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 60.96
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 1000,
+    "y": 140
+   },
+   "by": 0,
+   "duration": 0.2,
+   "after": 0,
+   "at": 61.56,
+   "label": "cursor descansa (ilustração dos dois links)"
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 75.52
+  }
+ ]
+}

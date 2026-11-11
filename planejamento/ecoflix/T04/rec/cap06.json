@@ -93,9 +93,7 @@
   {
    "do": "click",
    "target": {
-    "role": "tab",
-    "name": "Fornecedores",
-    "exact": true
+    "selector": "main div.no-scrollbar > button:has-text('Fornecedores')"
    }
   },
   {
@@ -170,7 +168,7 @@
    "target": {
     "selector": "[role=dialog] div:has(> label:has-text('Tabela de Preços Padrão')) button"
    },
-   "seconds": 1.0,
+   "seconds": 0.32,
    "at": 14.67,
    "label": "Tabela de Preços Padrão: Principal",
    "optional": true,
@@ -254,6 +252,12 @@
    "do": "mark",
    "name": "L6",
    "at": 47.33
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const s=document.querySelector(\"[aria-label='Seções da ficha']\");if(!s)return 'SEM ALVO';const x0=s.scrollLeft,dx=(s.scrollWidth-s.clientWidth)-x0;if(Math.abs(dx)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/500),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;s.scrollLeft=x0+dx*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'faixa:'+Math.round(s.scrollLeft)})()",
+   "at": 47.33,
+   "label": "rola a faixa das abas até Preços"
   },
   {
    "do": "click",

@@ -1,0 +1,366 @@
+{
+ "name": "t19-cap12",
+ "title": "T19 · Cap. 12 · Arquivar ou excluir (narração 54,6 s, ESTIMADA; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
+ "fakeNow": "2026-11-10T08:30:00-03:00",
+ "seed": "t19-cap12",
+ "pace": 0.5,
+ "cps": 40,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 470
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true",
+  "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10"
+ },
+ "seedExtra": [
+  "t19/apos-cap11"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/login"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "timeout": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "••••••••"
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Rafael",
+   "timeout": 45
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 20
+  },
+  {
+   "do": "goto",
+   "url": "/funcionarios"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie sua equipe e controle de pagamentos",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 15
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "main [role=listitem] > button:has(p:text-is('Rafael Nogueira'))"
+   },
+   "timeout": 20
+  },
+  {
+   "do": "wait",
+   "seconds": 0.6
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel|Algo deu errado|Falha ao|Something went wrong|inv[áa]lido/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main [role=listitem] > button:has(p:text-is('Rogério Batista'))"
+   },
+   "at": 2.41,
+   "label": "Rogério Batista"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "main section[aria-label^='Detalhes de'] dl > div:has(> dt:text-is('Último pagamento'))"
+   },
+   "timeout": 10
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Ajudante de pátio\", \"30/10/2026\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main section[aria-label^='Detalhes de']\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Rogério: último pagamento 30/10"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main section[aria-label^='Detalhes de'] dl > div:has(> dt:text-is('Último pagamento'))"
+   },
+   "seconds": 0.26,
+   "at": 6.33,
+   "label": "Último pagamento 30/10/2026",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 7.59
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main [role=listitem] button[aria-label='Ações de Rogério Batista']"
+   },
+   "seconds": 0.26,
+   "at": 14.55,
+   "label": "menu ⋯ do Rogério",
+   "optional": false,
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main [role=listitem] button[aria-label='Ações de Rogério Batista']"
+   },
+   "seconds": 0.4,
+   "label": "menu ⋯ de Rogério Batista de novo (só se não abriu)",
+   "unless": {
+    "role": "menuitem",
+    "name": "Arquivar"
+   },
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "role": "menuitem",
+    "name": "Arquivar"
+   },
+   "timeout": 6
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "menuitem",
+    "name": "Arquivar"
+   },
+   "seconds": 3.0,
+   "at": 15.81,
+   "label": "Arquivar em destaque (sem clicar)",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 21.23
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Arquivar"
+   },
+   "at": 22.36,
+   "label": "Arquivar",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "text": "Funcionário arquivado",
+   "timeout": 8
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "selector": "main [role=listitem] > button:has(p:text-is('Rogério Batista'))"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 30.15
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button:text-is('Inativos')"
+   },
+   "at": 31.07,
+   "label": "Inativos"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "main [role=listitem] > button:has(p:text-is('Rogério Batista'))"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main [role=listitem] button[aria-label='Ações de Rogério Batista']"
+   },
+   "seconds": 0.5,
+   "at": 32.15,
+   "label": "menu ⋯ do Rogério (Inativos)",
+   "optional": false,
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main [role=listitem] button[aria-label='Ações de Rogério Batista']"
+   },
+   "seconds": 0.4,
+   "label": "menu ⋯ de Rogério Batista de novo (só se não abriu)",
+   "unless": {
+    "role": "menuitem",
+    "name": "Reativar"
+   },
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "role": "menuitem",
+    "name": "Reativar"
+   },
+   "timeout": 6
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "menuitem",
+    "name": "Reativar"
+   },
+   "seconds": 0.1,
+   "at": 34.4,
+   "label": "Reativar (sem clicar)",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 35.21
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Excluir definitivamente"
+   },
+   "at": 35.89,
+   "label": "Excluir definitivamente",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "text": "Atenção: esta ação é irreversível.",
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Atenção: esta ação é irreversível.",
+    "within": "[role=alertdialog], [role=dialog]"
+   },
+   "seconds": 2.0,
+   "at": 39.39,
+   "label": "o texto do Excluir definitivamente (zoom)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 44.6
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 1000,
+    "y": 140
+   },
+   "by": 0,
+   "duration": 0.2,
+   "after": 0,
+   "at": 45.2,
+   "label": "cursor descansa (ilustração arquivo x lixeira)"
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 50.87
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=alertdialog] button:text-is('Cancelar'), [role=dialog] button:text-is('Cancelar')"
+   },
+   "at": 52.16,
+   "label": "Cancelar"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "alertdialog"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 54.56
+  }
+ ]
+}

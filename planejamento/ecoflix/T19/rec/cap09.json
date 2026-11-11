@@ -1,0 +1,305 @@
+{
+ "name": "t19-cap09",
+ "title": "T19 · Cap. 9 · O ponto pelo celular (narração 44,7 s, ESTIMADA; marcas L1..L5 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
+ "fakeNow": "2026-11-10T08:30:00-03:00",
+ "seed": "t19-cap09",
+ "pace": 0.6,
+ "cps": 40,
+ "tail": 1.5,
+ "start": {
+  "x": 195,
+  "y": 600
+ },
+ "anonymous": true,
+ "storage": {
+  "pwa-install-dismissed": "true"
+ },
+ "seedExtra": [
+  "t19/apos-cap08"
+ ],
+ "prewarm": [
+  "/dashboard"
+ ],
+ "setup": [
+  {
+   "do": "geo",
+   "lat": -23.0105,
+   "lng": -45.5412
+  },
+  {
+   "do": "goto",
+   "url": "/ponto/recicla-vale-metais-gabriel-8G9H5WS6MRTY"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gabriel Rocha",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "text": "Registrar Entrada",
+   "timeout": 20
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const cv=document.createElement('canvas');cv.width=720;cv.height=720;const g=cv.getContext('2d');let t0=performance.now();\nconst pinta=()=>{const t=(performance.now()-t0)/1000;const W=720,cx=360+Math.sin(t*1.3)*4,cy=380+Math.sin(t*0.9)*3;\nconst gr=g.createLinearGradient(0,0,0,W);gr.addColorStop(0,'#c6d6de');gr.addColorStop(1,'#94a8b2');g.fillStyle=gr;g.fillRect(0,0,W,W);\ng.fillStyle='#78808a';g.fillRect(0,W*0.72,W,W);g.fillStyle='#f27820';g.beginPath();g.ellipse(cx,W*0.98,W*0.36,W*0.3,0,0,Math.PI*2);g.fill();\ng.fillStyle='#e6e6dc';g.fillRect(cx-W*0.30,W*0.86,W*0.6,W*0.03);g.fillStyle='#c69670';g.fillRect(cx-W*0.06,cy+W*0.16,W*0.12,W*0.14);\ng.beginPath();g.ellipse(cx,cy,W*0.17,W*0.2,0,0,Math.PI*2);g.fill();g.fillStyle='#facc15';g.beginPath();g.ellipse(cx,cy-W*0.09,W*0.19,W*0.16,0,Math.PI,0);g.fill();\ng.fillRect(cx-W*0.22,cy-W*0.1,W*0.44,W*0.03);g.fillStyle='#282830';for(const d of[-1,1]){g.beginPath();g.arc(cx+d*W*0.07,cy+W*0.02,9,0,Math.PI*2);g.fill();}\ng.strokeStyle='#96463c';g.lineWidth=7;g.beginPath();g.arc(cx,cy+W*0.06,W*0.06,0.35,Math.PI-0.35);g.stroke();requestAnimationFrame(pinta)};pinta();\nconst fake=async()=>cv.captureStream(24);if(!navigator.mediaDevices)Object.defineProperty(navigator,'mediaDevices',{value:{}});\nnavigator.mediaDevices.getUserMedia=fake;navigator.mediaDevices.enumerateDevices=async()=>[{kind:'videoinput',deviceId:'cam-falsa',label:'Câmera frontal',groupId:'g'}];\nreturn 'camera falsa'})()"
+  },
+  {
+   "do": "wait",
+   "seconds": 0.8
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel|Algo deu errado|Falha ao|Something went wrong|inv[áa]lido/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Gabriel Rocha\", \"Operador de empilhadeira\", \"Recicla Vale Metais\", \"PONTO ELETRÔNICO\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"body\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere tela do ponto do Gabriel"
+  },
+  {
+   "do": "type",
+   "target": {
+    "text": "Gabriel Rocha",
+    "exact": true
+   },
+   "text": "",
+   "noClick": true,
+   "at": 5.34,
+   "label": "nome do Gabriel e cargo (cabeçalho)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "type",
+   "target": {
+    "text": "Recicla Vale Metais"
+   },
+   "text": "",
+   "noClick": true,
+   "at": 6.47,
+   "label": "a empresa e a data",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "type",
+   "target": {
+    "text": "Você ainda não bateu o ponto hoje"
+   },
+   "text": "",
+   "noClick": true,
+   "at": 7.38,
+   "label": "o relógio do ponto (rodapé)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 7.82
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "button:has-text('Registrar Entrada')"
+   },
+   "at": 8.12,
+   "label": "Registrar Entrada",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "text": "Confirme localização e selfie para registrar o ponto",
+   "timeout": 8
+  },
+  {
+   "do": "type",
+   "target": {
+    "text": "Confirme localização e selfie"
+   },
+   "text": "",
+   "noClick": true,
+   "at": 12.87,
+   "label": "Obtendo sua localização...",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "waitFor",
+   "text": "Tirar foto agora",
+   "timeout": 15
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "video"
+   },
+   "text": "",
+   "noClick": true,
+   "label": "Selfie do ponto (câmera)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "button:has-text('Tirar foto agora')"
+   },
+   "at": 13.31,
+   "label": "Tirar foto agora",
+   "noScroll": true,
+   "when": {
+    "selector": "button:has-text('Tirar foto agora')"
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Confirmar registro",
+   "timeout": 12
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Entrada\", \"Horário\", \"Local\", \"Rua das Oficinas, 1250 - Parque Industrial - Taubaté\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"body\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere confirmação com o local do pátio"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 13.71
+  },
+  {
+   "do": "type",
+   "target": {
+    "text": "Tipo",
+    "exact": true
+   },
+   "text": "",
+   "noClick": true,
+   "at": 16.29,
+   "label": "confirmação: Tipo Entrada",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "type",
+   "target": {
+    "text": "Horário",
+    "exact": true
+   },
+   "text": "",
+   "noClick": true,
+   "at": 17.04,
+   "label": "Horário e Local (zoom)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "type",
+   "target": {
+    "text": "Rua das Oficinas, 1250"
+   },
+   "text": "",
+   "noClick": true,
+   "at": 18.03,
+   "label": "Local: Rua das Oficinas, 1250",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] img"
+   },
+   "text": "",
+   "noClick": true,
+   "at": 18.79,
+   "label": "miniatura da selfie",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 22.72
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "button:has-text('Confirmar registro')"
+   },
+   "at": 22.72,
+   "label": "Confirmar registro",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "text": "Ponto registrado",
+   "timeout": 10
+  },
+  {
+   "do": "waitFor",
+   "text": "Registros de hoje",
+   "timeout": 8
+  },
+  {
+   "do": "type",
+   "target": {
+    "text": "Registros de hoje"
+   },
+   "text": "",
+   "noClick": true,
+   "at": 26.73,
+   "label": "Registros de hoje: Entrada",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "button:has-text('Iniciar Intervalo')"
+   },
+   "text": "",
+   "noClick": true,
+   "at": 30.45,
+   "label": "Iniciar Intervalo",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "button:has-text('Registrar Saída')"
+   },
+   "text": "",
+   "noClick": true,
+   "at": 31.51,
+   "label": "Registrar Saída",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 31.79
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 44.68
+  }
+ ],
+ "device": "phone"
+}

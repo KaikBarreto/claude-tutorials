@@ -1,0 +1,73 @@
+{
+ "_doc": "T09 · depois do cap05: a compra duplicada do Valdir (07:42) excluída, com a linha do Histórico de Exclusões.",
+ "_remove": {
+  "purchases": [
+   {
+    "id": "@id:t09.compra.valdir_dup"
+   }
+  ],
+  "purchase_items": [
+   {
+    "id": "@id:t09.pi.valdir_dup.0"
+   }
+  ],
+  "stock_movements": [
+   {
+    "id": "@id:t09.sm.valdir_dup.0"
+   }
+  ],
+  "cash_transactions": [
+   {
+    "id": "@id:t09.ct.valdir_dup"
+   }
+  ]
+ },
+ "_patch": {
+  "materials": [
+   {
+    "match": {
+     "id": "@id:material.ferro_misto"
+    },
+    "set": {
+     "current_stock": 7010.0
+    }
+   }
+  ],
+  "cash_register": [
+   {
+    "match": {
+     "id": "@id:t09.caixa.87"
+    },
+    "set": {
+     "opening_balance": 729.6
+    }
+   }
+  ]
+ },
+ "destructive_actions_audit": [
+  {
+   "id": "@id:t09.audit.valdir",
+   "company_id": "@id:company.reciclavale",
+   "action_type": "delete_entity",
+   "entity_type": "purchase",
+   "entity_id": "@id:t09.compra.valdir_dup",
+   "entity_label": "Valdir Pereira",
+   "performed_by": "@id:user.rafael",
+   "performed_by_email": "rafael@reciclavalemetais.example",
+   "performed_by_role": "company_admin",
+   "company_name_snapshot": "Recicla Vale Metais",
+   "company_email_snapshot": null,
+   "entity_snapshot": {
+    "order_number": 1765,
+    "total_amount": 210
+   },
+   "payload": {
+    "mode": "hard_delete",
+    "order_type": "purchase"
+   },
+   "ip_address": null,
+   "user_agent": null,
+   "created_at": "2026-11-11T11:33:00.000Z"
+  }
+ ]
+}

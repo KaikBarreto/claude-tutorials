@@ -1,0 +1,437 @@
+{
+ "name": "t19-cap01",
+ "title": "T19 · Cap. 1 · A tela Funcionários e suas abas (narração 73,5 s, ESTIMADA; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
+ "fakeNow": "2026-11-10T08:30:00-03:00",
+ "seed": "t19-cap01",
+ "pace": 0.5,
+ "cps": 40,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 470
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true",
+  "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10"
+ },
+ "seedExtra": [
+  "t19/inicio"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/login"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "timeout": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "••••••••"
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Rafael",
+   "timeout": 45
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 20
+  },
+  {
+   "do": "goto",
+   "url": "/funcionarios"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie sua equipe e controle de pagamentos",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 15
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "main [role=listitem] > button:has(p:text-is('Rafael Nogueira'))"
+   },
+   "timeout": 20
+  },
+  {
+   "do": "wait",
+   "seconds": 0.6
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel|Algo deu errado|Falha ao|Something went wrong|inv[áa]lido/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "nav[aria-label='Navegação da seção'] button:text-is('Funcionários')"
+   },
+   "seconds": 0.1,
+   "at": 1.17,
+   "label": "aba Funcionários",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "nav[aria-label='Navegação da seção'] button:text-is('Funcionários')"
+   },
+   "seconds": 0.3,
+   "at": 1.9,
+   "label": "aba Funcionários (cadastro e dinheiro)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "nav[aria-label='Navegação da seção'] button:text-is('Registro de Ponto')"
+   },
+   "seconds": 0.2,
+   "at": 6.03,
+   "label": "aba Registro de Ponto",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "nav[aria-label='Navegação da seção'] button:text-is('Folha de Ponto')"
+   },
+   "seconds": 0.2,
+   "at": 7.62,
+   "label": "aba Folha de Ponto",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "nav[aria-label='Navegação da seção'] button:text-is('Ausências')"
+   },
+   "seconds": 0.1,
+   "at": 8.99,
+   "label": "aba Ausências",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "nav[aria-label='Navegação da seção'] button:text-is('Configurações de Ponto')"
+   },
+   "seconds": 0.6,
+   "at": 9.9,
+   "label": "aba Configurações de Ponto",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 13.74
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "nav[aria-label='Navegação da seção'] button:text-is('Folha de Ponto')"
+   },
+   "seconds": 1.0,
+   "at": 15.26,
+   "label": "as quatro abas do ponto (Gerenciar Ponto Eletrônico)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 20.93
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "nav[aria-label='Navegação da seção'] button:text-is('Configurações de RH')"
+   },
+   "seconds": 0.4,
+   "at": 22.06,
+   "label": "aba Configurações de RH",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "nav[aria-label='Navegação da seção'] button:text-is('Dashboard')"
+   },
+   "seconds": 0.3,
+   "at": 26.69,
+   "label": "aba Dashboard",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main button:text-is('Ativos')"
+   },
+   "seconds": 0.3,
+   "at": 30.57,
+   "label": "Ativos / Inativos",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main button:has-text('Gerenciar departamentos')"
+   },
+   "seconds": 0.2,
+   "at": 32.77,
+   "label": "Gerenciar departamentos",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main button:has-text('Exportar Relatório')"
+   },
+   "seconds": 0.2,
+   "at": 34.21,
+   "label": "Exportar Relatório",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main button:has-text('Novo Funcionário')"
+   },
+   "seconds": 0.56,
+   "at": 35.73,
+   "label": "Novo Funcionário",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 37.29
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main [role=listitem]:has(p:text-is('Rafael Nogueira')) :text-is('R$ 6.000,00')"
+   },
+   "seconds": 0.6,
+   "at": 41.24,
+   "label": "o saldo na lista Equipe (selo verde)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "placeholder": "Buscar por nome ou cargo..."
+   },
+   "seconds": 0.8,
+   "at": 46.4,
+   "label": "busca Buscar por nome ou cargo...",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 49.03
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main [role=listitem] > button:has(p:text-is('Diego Morais'))"
+   },
+   "at": 50.04,
+   "label": "Diego Morais (abre a ficha)"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "main section[aria-label^='Detalhes de'] h3:text-is('Resumo financeiro')"
+   },
+   "timeout": 10
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Diego Morais\", \"Ativo\", \"Movimentações\", \"Resumo financeiro\", \"Dados profissionais\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main section[aria-label^='Detalhes de']\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere a ficha do Diego"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main section[aria-label^='Detalhes de'] button:text-is('Vale')"
+   },
+   "seconds": 0.2,
+   "at": 55.1,
+   "label": "botões de Movimentações (Vale)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main section[aria-label^='Detalhes de'] button:text-is('Pagamento')"
+   },
+   "seconds": 0.14,
+   "at": 58.13,
+   "label": "botão Pagamento",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main section[aria-label^='Detalhes de'] div:has(> p:text-is('Saldo atual'))"
+   },
+   "seconds": 0.3,
+   "at": 59.27,
+   "label": "Resumo financeiro",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main section[aria-label^='Detalhes de'] h3:text-is('Dados profissionais')"
+   },
+   "seconds": 0.6,
+   "at": 61.85,
+   "label": "Dados profissionais",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 63.49
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "nav[aria-label='Navegação da seção'] button:text-is('Dashboard')"
+   },
+   "at": 63.89,
+   "label": "aba Dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "Saldo Total a Pagar",
+   "timeout": 10
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Funcionários Ativos\", \"Folha de Pagamento\", \"Média Salarial\", \"Saldo Total a Pagar\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere os cartões do Dashboard"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Funcionários Ativos",
+    "within": "main"
+   },
+   "seconds": 0.3,
+   "at": 67.82,
+   "label": "Funcionários Ativos",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Folha de Pagamento",
+    "within": "main"
+   },
+   "seconds": 0.1,
+   "at": 69.41,
+   "label": "Folha de Pagamento",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Saldo Total a Pagar",
+    "within": "main"
+   },
+   "seconds": 0.4,
+   "at": 70.4,
+   "label": "Saldo Total a Pagar",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "nav[aria-label='Navegação da seção'] button:text-is('Funcionários')"
+   },
+   "label": "volta para Funcionários"
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 73.49
+  }
+ ]
+}

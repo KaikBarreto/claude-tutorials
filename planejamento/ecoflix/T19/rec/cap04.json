@@ -1,0 +1,455 @@
+{
+ "name": "t19-cap04",
+ "title": "T19 · Cap. 4 · Departamentos (narração 38,3 s, ESTIMADA; marcas L1..L5 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
+ "fakeNow": "2026-11-10T08:30:00-03:00",
+ "seed": "t19-cap04",
+ "pace": 0.5,
+ "cps": 40,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 470
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true",
+  "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10"
+ },
+ "seedExtra": [
+  "t19/apos-cap03"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/login"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "timeout": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "••••••••"
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Rafael",
+   "timeout": 45
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 20
+  },
+  {
+   "do": "goto",
+   "url": "/funcionarios"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie sua equipe e controle de pagamentos",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 15
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "main [role=listitem] > button:has(p:text-is('Rafael Nogueira'))"
+   },
+   "timeout": 20
+  },
+  {
+   "do": "wait",
+   "seconds": 0.6
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel|Algo deu errado|Falha ao|Something went wrong|inv[áa]lido/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button:has-text('Gerenciar departamentos')"
+   },
+   "at": 2.0,
+   "label": "Gerenciar departamentos"
+  },
+  {
+   "do": "waitFor",
+   "text": "Organize seus funcionários em departamentos por cor e ícone.",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Escritório",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.14,
+   "at": 5.65,
+   "label": "Escritório (azul, maleta)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Pátio",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.1,
+   "at": 6.79,
+   "label": "Pátio (verde, chave)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 7.52
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='Ex: Produção, Administrativo, Pátio']"
+   },
+   "at": 8.43,
+   "label": "campo Nome: Transporte"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='Ex: Produção, Administrativo, Pátio']"
+   },
+   "text": "Transporte",
+   "cps": 40,
+   "at": 9.28,
+   "label": "Nome: Transporte",
+   "noClick": true
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] input[type=color]"
+   },
+   "seconds": 0.2,
+   "at": 11.84,
+   "label": "Cor",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const i=document.querySelector(\"[role=dialog] input[type=color]\");if(!i)return 'SEM ALVO';const set=Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set;set.call(i,\"#ea580c\");i.dispatchEvent(new Event('input',{bubbles:true}));i.dispatchEvent(new Event('change',{bubbles:true}));return i.value})()",
+   "at": 13.18,
+   "label": "Cor: laranja #EA580C"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[aria-haspopup=dialog]:near(label:text-is('Ícone'))"
+   },
+   "at": 13.51,
+   "label": "Ícone (abre a grade)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] button:has(svg.lucide-truck)"
+   },
+   "at": 14.5,
+   "label": "ícone do caminhão",
+   "noScroll": true
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 15.31
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:text-is('Adicionar')"
+   },
+   "at": 15.31,
+   "label": "Adicionar"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "text": "Transporte",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Transporte",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.1,
+   "at": 17.81,
+   "label": "Transporte na lista de departamentos",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "label": "fecha a janela"
+  },
+  {
+   "do": "wait",
+   "seconds": 0.4
+  },
+  {
+   "do": "eval",
+   "js": "(() => { const ds = [...document.querySelectorAll('[role=dialog]')]; const d = ds[ds.length - 1]; if (!d) return 'ja fechada'; const b = [...d.querySelectorAll('button')].find((x) => [x.textContent, x.getAttribute('aria-label')].some((v) => /^\\s*(fechar|close)\\s*$/i.test(v || ''))); if (!b) return 'sem botao Fechar'; b.click(); return 'fechada pelo botao'; })()",
+   "label": "Fechar (se o Esc não fechou)"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 18.54
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main [role=listitem] button[aria-label='Ações de Edson Moura']"
+   },
+   "seconds": 0.23,
+   "at": 20.04,
+   "label": "menu ⋯ do Edson",
+   "optional": false,
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main [role=listitem] button[aria-label='Ações de Edson Moura']"
+   },
+   "seconds": 0.4,
+   "label": "menu ⋯ de Edson Moura de novo (só se não abriu)",
+   "unless": {
+    "role": "menuitem",
+    "name": "Editar"
+   },
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "role": "menuitem",
+    "name": "Editar"
+   },
+   "timeout": 6
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Editar"
+   },
+   "at": 21.27,
+   "label": "Editar o Edson"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "[role=dialog] #department"
+   },
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] #department"
+   },
+   "at": 23.78,
+   "label": "Departamento: Transporte (abre a lista)"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "role": "option",
+    "name": "Transporte",
+    "exact": true
+   },
+   "timeout": 6
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Transporte",
+    "exact": true
+   },
+   "at": 25.9,
+   "label": "Departamento: Transporte",
+   "noScroll": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:text-is('Atualizar')"
+   },
+   "at": 26.58,
+   "label": "Atualizar"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 12
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "main [role=listitem]:has(p:text-is('Edson Moura')) span:has-text('Transporte')"
+   },
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main [role=listitem]:has(p:text-is('Edson Moura')) span:has-text('Transporte')"
+   },
+   "seconds": 0.34,
+   "at": 30.53,
+   "label": "o Edson com o caminhão laranja e Transporte",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 31.87
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button:has-text('Filtros')"
+   },
+   "at": 32.32,
+   "label": "Filtros da lista"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] button[role=combobox]"
+   },
+   "timeout": 6
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] button[role=combobox]"
+   },
+   "at": 34.68,
+   "label": "Departamento (a lista dos departamentos)",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "role": "option",
+    "name": "Transporte",
+    "exact": true
+   },
+   "timeout": 6
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "option",
+    "name": "Transporte",
+    "exact": true
+   },
+   "seconds": 0.8,
+   "label": "os departamentos no filtro",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "label": "fecha a lista sem filtrar"
+  },
+  {
+   "do": "pause",
+   "seconds": 0.4
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "label": "fecha os Filtros"
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 38.3
+  }
+ ]
+}

@@ -1,0 +1,342 @@
+{
+ "name": "t19-cap11",
+ "title": "T19 · Cap. 11 · Configurações do ponto (narração 68,5 s, ESTIMADA RESPIROS PENDENTES: na L5 +7.00 s (T 47.66 s no take); marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
+ "fakeNow": "2026-11-10T08:30:00-03:00",
+ "seed": "t19-cap11",
+ "pace": 0.5,
+ "cps": 40,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 470
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true",
+  "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10"
+ },
+ "seedExtra": [
+  "t19/apos-cap10"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/login"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "timeout": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "••••••••"
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Rafael",
+   "timeout": 45
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 20
+  },
+  {
+   "do": "goto",
+   "url": "/funcionarios"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie sua equipe e controle de pagamentos",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 15
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "main [role=listitem] > button:has(p:text-is('Rafael Nogueira'))"
+   },
+   "timeout": 20
+  },
+  {
+   "do": "wait",
+   "seconds": 0.6
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel|Algo deu errado|Falha ao|Something went wrong|inv[áa]lido/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "nav[aria-label='Navegação da seção'] button:text-is('Configurações de Ponto')"
+   },
+   "at": 0.0,
+   "label": "aba Configurações de Ponto"
+  },
+  {
+   "do": "waitFor",
+   "text": "Jornada Padrão da Empresa",
+   "timeout": 10
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const el=[...document.querySelectorAll(\"main *\")].filter(e=>e.textContent.trim().startsWith(\"Jornada Padr\\u00e3o da Empresa\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-120);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 2.73,
+   "label": "o cartão Jornada Padrão da Empresa"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Exigir selfie",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.21,
+   "at": 3.83,
+   "label": "Exigir selfie (ligado)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Exigir localização",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.8,
+   "at": 5.04,
+   "label": "Exigir localização (ligado)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 12.99
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main #default-in"
+   },
+   "seconds": 0.29,
+   "at": 16.63,
+   "label": "Entrada padrão 07:00",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main #default-out"
+   },
+   "seconds": 0.3,
+   "at": 17.92,
+   "label": "Saída padrão 16:00",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main #default-break"
+   },
+   "seconds": 0.3,
+   "at": 19.66,
+   "label": "Intervalo padrão (min) 60",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main #late-tol"
+   },
+   "seconds": 0.6,
+   "at": 21.18,
+   "label": "Tolerância de atraso (min) 10",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 24.19
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main [aria-label='Trabalha Segunda-feira'], main [aria-label^='Trabalha Seg']"
+   },
+   "seconds": 0.1,
+   "at": 27.53,
+   "label": "Dias em que a empresa trabalha: Seg",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main [aria-label='Trabalha Sexta-feira'], main [aria-label^='Trabalha Sex']"
+   },
+   "seconds": 1.0,
+   "at": 28.29,
+   "label": "Seg a Sex ligados",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 31.37
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const el=[...document.querySelectorAll(\"main *\")].filter(e=>e.textContent.trim().startsWith(\"Jornada Individual\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-160);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 34.18,
+   "label": "rola até a Jornada Individual"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tr:has-text('Juliana Prado')"
+   },
+   "seconds": 0.3,
+   "at": 35.7,
+   "label": "a linha da Juliana (horários herdados em cinza)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 40.3
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main tr:has-text('Juliana Prado') button:has(svg.lucide-pencil)"
+   },
+   "at": 40.53,
+   "label": "lápis da Juliana Prado"
+  },
+  {
+   "do": "waitFor",
+   "text": "Sobrescreve o padrão da empresa para este funcionário.",
+   "timeout": 8
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const dorme=ms=>new Promise(r=>setTimeout(r,ms));const dlg=[...document.querySelectorAll('[role=dialog]')].pop();if(!dlg)return 'SEM JANELA';\nconst linhas=[...dlg.querySelectorAll('div.rounded-lg.border')].filter(d=>/^(Seg|Ter|Qua|Qui|Sex)$/.test((d.querySelector('span.w-10')||{}).textContent||''));\nif(linhas.length!==5)return 'SEM ALVO: '+linhas.length+' dias';let feito=[];\nconst escolhe=async(bt,hh)=>{bt.click();let lb=null;for(let i=0;i<30&&!lb;i++){await dorme(60);lb=[...document.querySelectorAll('[role=listbox]')].find(x=>/hora/i.test(x.getAttribute('aria-label')||''));}\nif(!lb)return false;const op=[...lb.querySelectorAll('[role=option]')].find(o=>o.textContent.trim()===hh);if(!op)return false;op.click();await dorme(120);\nconst ok=[...document.querySelectorAll('[data-radix-popper-content-wrapper] button')].find(b=>b.textContent.trim()==='Concluir');if(ok)ok.click();\nfor(let i=0;i<30&&document.querySelector('[role=listbox]');i++)await dorme(50);return true};\nfor(const l of linhas){const bts=[...l.querySelectorAll('button')].filter(b=>/^\\s*\\d\\d:\\d\\d\\s*$|--:--/.test(b.textContent));if(bts.length<2)return 'SEM ALVO: horas de '+l.textContent;\nif(!await escolhe(bts[0],'08'))return 'falhou entrada';if(!await escolhe(bts[1],'17'))return 'falhou saida';feito.push(l.querySelector('span.w-10').textContent);await dorme(150);}\nreturn 'ok '+feito.join(',')})()",
+   "at": 42.19,
+   "label": "Seg a Sex: 08:00 às 17:00 (trecho acelerado, selo 4x)"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"08:00\", \"17:00\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere jornada da Juliana 08:00 às 17:00"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:has-text('Salvar jornada')"
+   },
+   "at": 53.76,
+   "label": "Salvar jornada"
+  },
+  {
+   "do": "waitFor",
+   "text": "Jornada salva",
+   "timeout": 8
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tr:has-text('Juliana Prado')"
+   },
+   "seconds": 1.0,
+   "at": 55.58,
+   "label": "a linha da Juliana: 08:00-17:00 (1h int.)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 58.89
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 1000,
+    "y": 140
+   },
+   "by": 0,
+   "duration": 0.2,
+   "after": 0,
+   "at": 59.49,
+   "label": "cursor descansa (ilustração da jornada)"
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 68.51
+  }
+ ]
+}

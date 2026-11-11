@@ -218,7 +218,21 @@ class Cap:
         s.steps.append({'do': 'eval', 'js': 'JSON.stringify(window.__avisos || "sem observador")', 'label': 'avisos de erro na tela'})
         s.steps.append({'do': 'mark', 'name': 'FIM', 'at': round(s.dur, 2)})
 
+    def encaixa_hovers(s, custo=0.6, minimo=0.15):
+        """o hover termina antes do próximo passo com `at` (uma marca Ln, outro gesto): parada (`seconds`) encurtada até caber
+        (custo do movimento ~0,6 s a pace 0,5, o do prever.py); passo que não cabe nem com o mínimo fica para o prever.py acusar"""
+        for k, st in enumerate(s.steps):
+            if st.get('do') != 'hover' or st.get('at') is None:
+                continue
+            prox = next((x['at'] for x in s.steps[k + 1:] if x.get('at') is not None), None)
+            if prox is None:
+                continue
+            cabe = round(prox - 0.05 - st['at'] - custo, 2)
+            if st['seconds'] > cabe:
+                st['seconds'] = max(minimo, cabe)
+
     def out(s):
+        s.encaixa_hovers()
         est = ' ESTIMADA' if s.estimado else ''
         return {
             'name': f't04-cap{s.n:02d}',
@@ -242,7 +256,7 @@ OPT = lambda n, **kw: {'role': 'option', 'name': n, **kw}
 ITEM = lambda n, **kw: {'role': 'menuitem', 'name': n, **kw}
 AGUARDA = {'do': 'waitFor', 'idle': True}
 TOGGLE = SEL('header button.h-8.w-8')                                                # recolher/abrir o menu lateral (sem rótulo)
-ABA = lambda n: {'role': 'tab', 'name': n, 'exact': True}                            # abas da tela (Clientes, Fornecedores, Visão geral)
+ABA = lambda n: SEL(f"main div.no-scrollbar > button:has-text('{n}')")               # abas da tela (MobilePillTabs: <button>, não role=tab)
 LINHA = lambda nome: SEL(f"main aside button:has-text('{nome}')")                    # a linha da lista (o <button> inteiro)
 NOME_LINHA = lambda nome: SEL(f"main aside button:has-text('{nome}') p.font-medium")  # "código · nome" da linha
 SALDO_LINHA = lambda nome: SEL(f"main aside div:has(> button:has-text('{nome}')) span.tabular-nums", nth=0)   # etiqueta do saldo (a conferir)
@@ -323,6 +337,12 @@ def js_title(seletor):
     return f"(()=>{{const e=document.querySelector({json.dumps(seletor)});return e?(e.getAttribute('title')||'SEM TITLE'):'SEM ALVO'}})()"
 
 
+def js_colar(texto):
+    """cola o texto no campo em foco (execCommand insertText: o React recebe o input), ~0,05 s em vez de digitar letra a letra"""
+    return ("(()=>{const e=document.activeElement;if(!e||!/^(INPUT|TEXTAREA)$/.test(e.tagName))return 'SEM ALVO (nada em foco)';"
+            f"document.execCommand('insertText',false,{json.dumps(texto)});return e.value}})()")
+
+
 def js_limpa_busca(placeholder):
     """apaga a busca (o React recebe o input vazio): a lista volta inteira"""
     return ("(()=>{const e=document.querySelector('input[placeholder=\"%s\"]');if(!e)return 'SEM ALVO';e.focus();e.select();"
@@ -379,8 +399,8 @@ def cap01():
     c.confere(f"main aside button:has(p)", ['Aços Quiririm Ltda', '98.463.027/0001-15', 'R$ 4.870,00'], 'linha da Aços Quiririm com o saldo')
     c.mark(4)
     c.hover(BUSCA('cliente'), 0.8, at=c.A(4, 'busca,', 0.5), label='busca Buscar cliente...')
-    c.hover(SEL("main aside button:has(svg.lucide-funnel), main aside button:has(svg.lucide-filter)"), 0.5, at=c.A(4, 'filtros', 0.5), label='Filtros')
-    c.hover(SEL("main aside button:has(svg.lucide-sliders-horizontal)"), 0.6, at=c.A(4, 'ordem', 0.5), label='Ordenar')
+    c.hover(SEL("main aside button[aria-label^='Filtros']"), 0.5, at=c.A(4, 'filtros', 0.5), label='Filtros')
+    c.hover(SEL("main aside button[aria-label^='Ordenar']"), 0.6, at=c.A(4, 'ordem', 0.5), label='Ordenar')
     c.mark(5)
     c.click(LINHA('Aços Quiririm Ltda'), at=c.A(5, 'Clicando', 0.6), label='clica na Aços Quiririm: a ficha abre ao lado')
     c.waitfor(target=SEL(FICHA_DE('Aços Quiririm Ltda')), timeout=10)
@@ -442,12 +462,20 @@ def js_cores_rel(nomes, cores, escopo='[role=dialog]', celula='td:nth-child(3)')
             "if(!el){out.push(n+': SEM ALVO');ok=false;continue}const k=cor(el);if(k!==c)ok=false;out.push(n.split(' ')[0]+' '+el.textContent.trim()+' '+k)}"
             "return (ok?'OK: ':'DIFERENTE: ')+out.join(' | ')})()") % (json.dumps(list(zip(nomes, cores)), ensure_ascii=False), json.dumps(escopo), json.dumps(celula))
 
+def js_abas_ficha(fim=True, dur_ms=500):
+    """rola a faixa das 7 abas da ficha para o fim (Notas fiscais e Preços à vista) ou para o começo: a 1280 px, com o menu
+    recolhido, "Preços" fica fora da faixa e "Notas fiscais" cortada (achado do ensaio de 11/11)"""
+    destino = 's.scrollWidth-s.clientWidth' if fim else '0'
+    return ("(async()=>{const s=document.querySelector(\"[aria-label='Seções da ficha']\");if(!s)return 'SEM ALVO';const x0=s.scrollLeft,dx=(%s)-x0;"
+            "if(Math.abs(dx)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/%d),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;"
+            "s.scrollLeft=x0+dx*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'faixa:'+Math.round(s.scrollLeft)})()") % (destino, int(dur_ms))
+
 AVISO_NUMERO = 'Não veio da Receita — obrigatório para emitir NF-e'
 TOAST_CNPJ = 'Dados preenchidos — confira antes de salvar'
 CEP_IN = SEL(f"{DLG} input[placeholder='00000-000']")
 CIDADE = SEL(f"{DLG} button[role=combobox]:has-text('Taubaté')")
-IND_IE = SEL(f"{DLG} div.space-y-2:has(> label:text-is('Indicador IE *')) button[role=combobox]")
-REGIME = SEL(f"{DLG} div:has(> label:has-text('Regime tributário do fornecedor')) button[role=combobox]")
+IND_IE = SEL(f"{DLG} button[role=combobox]:has-text('Não Contribuinte')")                 # antes de escolher (o padrão da busca)
+REGIME = SEL(f"{DLG} button[role=combobox]:has-text('Simples Nacional')")                # o regime que a consulta trouxe
 TABELA_PADRAO = SEL(f"{DLG} div:has(> label:has-text('Tabela de Preços Padrão')) button")
 AVISO_AZUL = TXT('Mudanças em nome, CPF/CNPJ, contato, endereço e tabela de preços padrão refletem automaticamente no cadastro de cliente vinculado.', within=DLG)
 TAMBEM_CLIENTE = SEL(f"{DLG} label:has-text('Também é cliente')")
@@ -495,13 +523,13 @@ def cap02():
     c.ev(js_dlg_topo(), at=c.L(7) - 0.9, label='sobe a janela até as abas')
     c.click(ABA_DLG('Dados Fiscais'), at=c.A(7, 'Dados', 0.6), label='aba Dados Fiscais')
     c.hover(BTN('Pessoa Física', DLG), 1.0, at=c.A(7, 'Pessoa', 0.5), label='Tipo de Pessoa: Pessoa Física (já vem marcado)')
-    c.digita(CAMPO('cpf_cnpj'), '41827356090', c.A(7, 'digito', 0.6), c.A(7, 'CPF', 0.05, nth=1), 'CPF 418.273.560-90')
+    c.digita(CAMPO('cpf_cnpj'), '41827356090', c.A(7, 'Rogério.', 0.4), c.A(7, 'Eu', 0.05), 'zoom: CPF 418.273.560-90 (L7)')
     c.confere_campos(['418.273.560-90'], 'CPF com a máscara')
     c.mark(8)
     c.click(SALVAR, at=c.A(8, 'Salvar.', 0.6), label='Salvar')
     c.waitfor(text='Fornecedor cadastrado com sucesso!', timeout=12)
     c.waitfor(gone={'role': 'dialog'}, timeout=8)
-    c.hover(NOME_LINHA('Rogério Alves Costa'), 1.0, at=c.A(8, 'lista.', 0.5), label='Rogério Alves Costa na lista')
+    c.hover(NOME_LINHA('Rogério Alves Costa'), 1.0, at=c.A(8, 'Rogério', 0.5), label='Rogério Alves Costa na lista')
     c.mark(9)
     c.click(NOVO_FORN, at=c.A(9, 'Pra', 0.4), label='Novo Fornecedor (outro cadastro, só para mostrar a Pessoa Jurídica)')
     c.waitfor(text='Identificação e contato', timeout=10)
@@ -539,8 +567,7 @@ def cap03():
     c.mark(5)
     c.ev(DLG_ROLA('Endereço Fiscal', 150, 700), at=c.L(5) - 0.9, label='desce a janela até o Endereço Fiscal')
     c.hover(CEP_IN, 0.3, at=c.A(5, 'CEP,', 0.5), label='CEP 12062-150')
-    c.hover(CIDADE, 0.3, at=c.A(5, 'cidade,', 0.5), label='Cidade Taubaté')
-    c.hover(CAMPO('bairro'), 0.6, at=c.A(5, 'bairro.', 0.5), label='Logradouro e Bairro')
+    c.hover(CIDADE, 0.6, at=c.A(5, 'cidade,', 0.5), label='Cidade Taubaté (rua e bairro logo abaixo)')
     c.confere('dlg', ['Taubaté'], 'a cidade casou com Taubaté')
     c.confere_campos(['12062-150', 'RUA DAS PALMEIRAS', 'JARDIM SANTA LUZIA'], 'CEP, rua e bairro da busca')
     c.mark(6)
@@ -576,9 +603,9 @@ def cap04():
     c.hover(CAMPO('inscricao_estadual'), 0.3, at=c.A(5, 'inscrição', 0.5), label='Inscrição Estadual')
     c.hover(IND_IE, 0.3, at=c.A(5, 'indicador', 0.5), label='Indicador IE')
     c.hover(REGIME, 0.6, at=c.A(5, 'regime', 0.5), label='Regime tributário do fornecedor')
-    c.click(IND_IE, at=c.A(5, 'Eu', 0.6), label='abre o Indicador IE')
-    c.click(OPT('Contribuinte ICMS'), at=c.A(5, 'preencho', 0.4), label='Contribuinte ICMS')
-    c.digita(CAMPO('inscricao_estadual'), '688412573032', c.A(5, 'ele', 0.6), c.A(5, 'passou.', 0.05), 'Inscrição Estadual 688412573032')
+    c.click(IND_IE, at=c.A(5, 'define', 0.3), label='abre o Indicador IE')
+    c.click(OPT('Contribuinte ICMS'), at=c.A(5, 'nesses', 0.3), label='Contribuinte ICMS')
+    c.digita(CAMPO('inscricao_estadual'), '688412573032', c.A(5, 'contador.', 0.3), c.A(5, 'Eu', 0.05), 'Inscrição Estadual 688412573032')
     c.mark(6)
     c.hover(REGIME, 1.2, at=c.A(6, 'Simples', 0.5), label='zoom: Regime Simples Nacional e a linha da consulta (L6)')
     c.hover(TXT('Preenchido pela consulta do CNPJ: a Receita informa que esta empresa é optante pelo Simples Nacional.', within=DLG, exact=False), 1.6,
@@ -596,7 +623,7 @@ def cap04():
     c.mark(9)
     c.click(INCOMPLETOS, at=c.A(9, 'botão', 0.6), label='botão incompletos')
     c.confere('main aside', ['Rogério Alves Costa', 'Valdir Pereira'], 'só os incompletos')
-    c.hover(NOME_LINHA('Rogério Alves Costa'), 1.0, at=c.A(9, 'metade.', 0.5), label='a lista só com os incompletos')
+    c.hover(NOME_LINHA('Rogério Alves Costa'), 1.0, at=c.A(9, 'mostra', 0.5), label='a lista só com os incompletos')
     c.mark(10)
     c.click(MOSTRAR_TODOS, at=c.A(10, 'Uma', 0.6), label='Mostrar todos (a lista volta)')
     c.hover(NOME_LINHA('Serralheria Bem-Te-Vi'), 1.0, at=c.A(10, 'nome,', 0.5), label='a lista inteira')
@@ -664,6 +691,7 @@ def cap06():
     c.waitfor(gone={'role': 'dialog'}, timeout=8)
     c.mark(5)   # ilustração: qual preço vale na compra
     c.mark(6)
+    c.ev(js_abas_ficha(True), at=c.L(6) - 0.9, label='rola a faixa das abas até Preços')
     c.click(ABA_FICHA('Preços'), at=c.A(6, 'ficha', 0.6), label='aba Preços da ficha')
     c.waitfor(text='Preços Personalizados', timeout=12)
     c.hover(TXT('Preços Personalizados', within=FICHA_DE('Depósito Irmãos Siqueira')), 1.2, at=c.A(6, 'Preços.', 0.5), label='Preços Personalizados (Compra e Venda)')
@@ -686,7 +714,10 @@ def cap07():
     c.mark(3)
     for palavra, aba in [('Visão', 'Visão geral'), ('Pedidos,', 'Pedidos'), ('Conta-corrente,', 'Conta-corrente'), ('Lucro', 'Lucro estimado'),
                          ('Financeiro,', 'Financeiro'), ('Notas', 'Notas fiscais'), ('Preços.', 'Preços')]:
+        if aba == 'Notas fiscais':
+            c.ev(js_abas_ficha(True, 450), at=c.A(3, 'Financeiro,', -0.3), label='rola a faixa das abas até Preços')
         c.hover(ABA_FICHA(aba), 0.2, at=c.A(3, palavra, 0.45), label=f'aba {aba}')
+    c.ev(js_abas_ficha(False, 450), label='a faixa das abas volta ao começo')
     c.mark(4)
     c.hover(TXT('Cadastro', within=FC), 0.8, at=c.A(4, 'cadastro,', 0.5), label='Cadastro')
     c.hover(TXT('Contato e endereço', within=FC), 0.8, at=c.A(4, 'contato', 0.5), label='Contato e endereço')
@@ -708,7 +739,7 @@ def cap08():
     """Os materiais que ele mais movimenta: aba Pedidos (cartões, gráfico por peso, legenda), (ilustração peso x valor), Período e a lista."""
     c = cap_novo(8, ficha=COOP, start=(700, 400))
     c.mark(1)
-    c.click(ABA_FICHA('Pedidos'), at=c.A(1, 'Pedidos', 0.6, nth=0), label='aba Pedidos')
+    c.click(ABA_FICHA('Pedidos'), at=c.L(1), label='aba Pedidos')
     c.waitfor(text='Total Comprado', timeout=12)
     c.ev(ANIM, label='animações dos cartões')
     c.confere(FC, ['R$ 52.937,50', 'R$ 3.781,25'], 'cartões Total Comprado e Ticket Médio')
@@ -753,21 +784,22 @@ def cap09():
     c.click(BTN('Movimentação', FC), at=c.A(7, 'Movimentação,', 0.6), label='Movimentação')
     c.waitfor(text='Nova Movimentação de Saldo', timeout=10)
     c.confere('dlg', ['Registre um pagamento ou cobrança para Cooperativa Recomeço', 'Pagar'], 'janela Nova Movimentação de Saldo')
-    c.hover(SEL(f'{DLG} label[for=debit]'), 1.0, at=c.A(7, 'Pagar.', 0.5), label='Tipo de Operação: Pagar (já marcado)')
+    c.hover(SEL(f'{DLG} label[for=debit]'), 0.8, at=c.A(7, 'tipo', 0.5), label='Tipo de Operação: Pagar (já marcado)')
     c.mark(8)
     c.digita(SEL(f'{DLG} #amount'), '1200', c.A(8, 'valor:', 0.6), c.A(8, 'mil', 0.05), 'zoom: Valor R$ 1.200,00')
     c.confere_campos(['1.200,00'], 'valor R$ 1.200,00')
     c.mark(9)
     c.hover(TXT('Pix/Transferência', within=DLG), 0.8, at=c.A(9, 'Pix', 0.5), label='Pix/Transferência (já marcado: nenhum caixa aberto)')
     c.hover(TXT('Conta bancária', within=DLG, exact=False), 0.6, at=c.A(9, 'conta', 0.5), label='Conta bancária (a principal)')
-    c.digita(SEL(f'{DLG} #description'), 'Acerto parcial da entrega de 06/11', c.A(9, 'Observação,', 0.6), c.A(9, 'eu', 0.05), 'Observação')
+    c.click(SEL(f'{DLG} #description'), at=c.A(9, 'Observação,', 0.6), label='Observação (clique no campo)')
+    c.ev(js_colar('Acerto parcial da entrega de 06/11'), at=c.A(9, 'anoto', 0.1), label='Observação: Acerto parcial da entrega de 06/11 (colado)')
     c.mark(10)
     c.click(BTN('Confirmar', DLG), at=c.A(10, 'Confirmar.', 0.6), label='Confirmar')
     c.waitfor(text='Movimentação registrada com sucesso!', timeout=12)
     c.waitfor(gone={'role': 'dialog'}, timeout=8)
     c.confere(FC, ['R$ 1.350,00', 'Acerto parcial da entrega de 06/11'], 'saldo R$ 1.350,00 e o pagamento no extrato')
     c.hover(TXT('Saldo Atual', within=FC), 1.4, at=c.A(10, 'cai', 0.5), label='zoom: Saldo Atual R$ 1.350,00 (depois do toast)')
-    c.hover(SEL(f"{FC} tbody tr:has-text('Acerto parcial')", nth=0), 1.0, at=c.A(10, 'extrato.', 0.5), label='o pagamento no extrato')
+    c.hover(SEL(f"{FC} tbody tr:has-text('Acerto parcial')", nth=0), 1.0, at=c.A(10, 'pagamento', 0.5), label='o pagamento no extrato')
     c.mark(11)
     c.click(BTN('Exportar', FC), at=c.A(11, 'Exportar,', 0.6), label='Exportar (abre o menu)')
     c.hover(ITEM('Abrir Relatório (PDF)'), 0.6, at=c.A(11, 'PDF', 0.5), label='Abrir Relatório (PDF) (sem clicar)')
@@ -819,6 +851,7 @@ def cap11():
     c.mark(3)
     c.hover(TXT('Despesas & Receitas', within=FC), 1.0, at=c.A(3, 'lançada', 0.5), label='a lista Despesas & Receitas')
     c.mark(4)
+    c.ev(js_abas_ficha(True), at=c.L(4) - 0.9, label='rola a faixa das abas (Notas fiscais inteira)')
     c.click(ABA_FICHA('Notas fiscais'), at=c.A(4, 'Notas', 0.6, nth=0), label='aba Notas fiscais')
     c.waitfor(text='Nenhuma nota fiscal para este parceiro.', timeout=12)
     c.hover(TXT('Nenhuma nota fiscal para este parceiro.', within=FC), 2.0, at=c.A(4, 'nenhuma.', 0.5), label='Nenhuma nota fiscal para este parceiro.')
@@ -866,13 +899,12 @@ def cap12():
     c.hover(REL_LINHA('Serra Fina Alumínio Reciclagem'), 1.0, at=c.A(8, 'Serra', 0.5), label='Serra Fina Alumínio Reciclagem, Cliente')
     c.hover(REL_SALDO('Serra Fina Alumínio Reciclagem'), 1.6, at=c.A(8, 'vermelho.', 0.5), label='-R$ 1.500,00 em vermelho')
     c.mark(9)
+    c.ev(js_dlg_topo(700), at=c.L(9) - 0.9, label='sobe ao topo do relatório')
     c.click(BTN('Exportar Relatório', REL), at=c.A(9, 'Exportar', 0.6), label='Exportar Relatório (abre o menu)')
-    c.hover(ITEM('Exportar em PDF'), 0.6, at=c.A(9, 'PDF', 0.5), label='Exportar em PDF (sem clicar)')
-    c.hover(ITEM('Exportar em Excel'), 0.6, at=c.A(9, 'planilha.', 0.5), label='Exportar em Excel (sem clicar)')
-    c.press('Escape', label='fecha o menu (Esc)')
-    c.pause(0.5)
+    c.hover(ITEM('Exportar em PDF'), 0.5, at=c.A(9, 'sai', 0.3), label='Exportar em PDF (sem clicar)')
+    c.hover(ITEM('Exportar em Excel'), 0.3, at=c.A(9, 'ou', 0.3), label='Exportar em Excel (sem clicar)')
     c.mark(10)
-    c.ev(js_rola_texto('A Receber', 150, 700, escopo=REL), at=c.L(10) - 0.9, label='sobe até A Receber')
+    c.press('Escape', at=c.L(10) - 0.9, label='fecha o menu (Esc)')
     c.click(OLHO('Aços Quiririm Ltda'), at=c.A(10, 'olho,', 0.6), label='olho da Aços Quiririm: abre a conta-corrente')
     c.waitfor(text='Conta-Corrente do Cliente', timeout=15)
     c.confere('main', ['Aços Quiririm Ltda', 'R$ 4.870,00'], 'a ficha cheia na conta-corrente')
