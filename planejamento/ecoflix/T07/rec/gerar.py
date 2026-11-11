@@ -539,13 +539,14 @@ def kg(peso):
     return f'{peso:.1f}'.replace('.', ',')
 
 
-def js_espera_valor(sel, valor, ms=7000):
-    """espera o <input> chegar ao valor (a leitura contínua da balança) e devolve OK/DIFERENTE"""
-    return ("(async()=>{let v='';for(let i=0;i<%d;i++){const el=document.querySelector(%s);v=el?el.value:'SEM ALVO';if(v===%s)return 'OK: '+v;"
-            "await new Promise(r=>setTimeout(r,200));}return 'DIFERENTE: '+v})()") % (ms // 200, json.dumps(sel), json.dumps(valor))
+def js_espera_valor(rotulo, valor, ms=7000):
+    """espera o <input> do campo de rótulo `rotulo` (main) chegar ao valor (a leitura contínua da balança): OK/DIFERENTE"""
+    return ("(async()=>{let v='';for(let i=0;i<%d;i++){const l=[...document.querySelectorAll('main label')].find(x=>x.textContent.includes(%s));"
+            "const el=l&&l.parentElement.querySelector('input');v=el?el.value:'SEM ALVO';if(v===%s)return 'OK: '+v;"
+            "await new Promise(r=>setTimeout(r,200));}return 'DIFERENTE: '+v})()") % (ms // 200, json.dumps(rotulo, ensure_ascii=False), json.dumps(valor))
 
 
-QTD_CSS = "main div:has(> label:has-text('Quantidade (Kg)')) input"
+QTD_CSS = 'Quantidade (Kg)'   # rótulo do campo para js_espera_valor
 
 
 def js_rola_form(px=140, dur_ms=0):

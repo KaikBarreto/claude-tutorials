@@ -521,3 +521,9 @@ Decisões:
   na trava leve com `nice -n 19` (a pesada é da gravação dos robôs, com 20 na fila). Nota para a edição: a ilustração
   aparece numa caixa de ~1420 px de largura no vídeo final; renderizar o 3D final com `--dsf 1.35` (1728×1080) em vez de 2
   corta ~45% do tempo (~1 s/quadro em 2560×1600) sem perda visível.
+- 11/11 15:3x **Robôs da T00, T20, T21 e T22 lançados** (`preparar_aula.sh` antes; portas 54300, 54320, 54321, 54322). T00
+  com as duas versões (computador e 9:16 no celular 390×844); T21 primeiro acerta no `plano.md` as respostas R1 a R9 com
+  os números do mundo base novo e "Conta Secundária" (no lugar de "Conta Reserva"); T22 calcula os números do grupo pela
+  soma real das unidades. Opus na T21 e na T22 (números financeiros), Sonnet na T00 e na T20. Faltam os robôs da T05 (com o
+  agente das cenas de Windows), T18 e T25 (conferir no `eco.mjs` a compra estornada e a compensação de novembro): entram
+  quando a fila de agentes abrir.
