@@ -388,23 +388,24 @@ CAPS[3]=()=>{
 };
 
 // ------------------------------------------------------------------ CAPS[5] · A compra inteira do mês (ilu05_compra, linha 4)
-// "Repara que a margem é pequena. É que aqui entra a compra inteira do mês, até o material que ainda está no pátio
-// esperando venda. Isso fica claro na DRE, com o regime de competência."  Sem número na tela: as barras só comparam.
+// "Repara no vermelho da matriz. É que aqui entra a compra inteira do mês, até o material que ainda está no pátio
+// esperando venda. Isso fica claro na DRE, com o regime de competência."  Sem número na tela: as barras só comparam
+// (proporção da matriz em outubro, fala da linha 2: receita 272.040 × despesa 299.690).
 CAPS[5]=()=>{
   const g=grupo();
   const tit=titulo(g,'Dashboard','A compra inteira do mês');
-  // o mês: Receita Total e Despesa Total (rótulos do Dashboard Gerencial), quase da mesma altura
+  // a matriz no mês: Receita Total e Despesa Total (rótulos do Dashboard Gerencial); a despesa passa da receita
   const bc=el(`<div class="card" style="left:660px;top:166px;width:560px;height:452px;overflow:hidden">
-      <div class="cab"><div class="ico" style="width:42px;height:42px">${ic('chart-column',22)}</div><b>Outubro</b></div></div>`,g);
-  const BASE=388, HR=258, HD=244, HP=70;
+      <div class="cab"><div class="ico" style="width:42px;height:42px">${ic('chart-column',22)}</div><b>Matriz</b><div class="lbl" style="margin-left:auto">outubro</div></div></div>`,g);
+  const BASE=388, HR=238, HD=262, HP=40;
   el(`<div class="ab" style="left:60px;top:${BASE}px;width:440px;height:3px;border-radius:2px;background:#DDE2E7"></div>`,bc);
   const col=(x,c)=>el(`<div class="ab" style="left:${x}px;top:${BASE}px;width:130px;height:0;border-radius:10px 10px 3px 3px;background:${c};overflow:hidden"></div>`,bc);
   const cR=col(110,'var(--v)'), cD=col(300,'var(--r)');
   const cDp=el('<div style="position:absolute;left:0;top:0;width:130px;height:0;background:var(--a)"></div>',cD);
   const lR=el(`<div class="ab" style="left:80px;top:${BASE+12}px;width:190px;text-align:center;font-weight:800;font-size:18px;color:var(--ve)">Receita Total</div>`,bc);
   const lD=el(`<div class="ab" style="left:270px;top:${BASE+12}px;width:190px;text-align:center;font-weight:800;font-size:18px;color:var(--re)">Despesa Total</div>`,bc);
-  const brk=el(`<div class="ab" style="left:244px;top:${BASE-HR}px;width:52px;height:${HR-HD}px;border:3px solid var(--ve);border-left:none;border-radius:0 6px 6px 0"></div>`,bc);
-  const mg=el(`<div class="ab" style="left:300px;top:${BASE-HR-46}px;width:160px"><div class="tag v" style="font-size:16px;padding:6px 14px">margem pequena</div></div>`,bc);
+  const brk=el(`<div class="ab" style="left:244px;top:${BASE-HD}px;width:52px;height:${HD-HR}px;border:3px solid var(--re);border-left:none;border-radius:0 6px 6px 0"></div>`,bc);
+  const mg=el(`<div class="ab" style="left:150px;top:${BASE-HD-44}px;width:180px;display:flex;justify-content:center"><div class="tag r" style="font-size:16px;padding:6px 14px">no vermelho</div></div>`,bc);
   // o pátio: o caminhão traz a compra; parte sai vendida; o resto fica esperando venda
   const pat=el(`<div class="card" style="left:60px;top:166px;width:560px;height:452px;overflow:hidden">
       <div class="cab"><div class="ico n" style="width:42px;height:42px">${ic('warehouse',22)}</div><b>Pátio</b><div class="lbl" style="margin-left:auto">compras de outubro</div></div></div>`,g);
@@ -424,14 +425,14 @@ CAPS[5]=()=>{
   return t=>{
     const T0=W(4,'repara')-.3, T1=W(4,'competencia',1,'e')+.6;
     if(!janela(g,t,T0,T1))return;
-    const tre=W(4,'repara'), tmg=W(4,'margem'), tpe=W(4,'pequena'), taq=W(4,'aqui'), tcp=W(4,'compra'), tin=W(4,'inteira'),
+    const tre=W(4,'repara'), tvm=W(4,'vermelho'), tmz=W(4,'matriz'), taq=W(4,'aqui'), tcp=W(4,'compra'), tin=W(4,'inteira'),
           tmt=W(4,'material'), tpa=W(4,'patio'), tes=W(4,'esperando'), trg=W(4,'regime');
     posTitulo(tit,t,T0-.6,tre-.3);
     vis(bc,t,tre,1e9,{dy:22});
     const hr=HR*eo(pr(t,tre+.2,.8)), hd=HD*eo(pr(t,tre+.35,.8));
     cR.style.height=hr.toFixed(1)+'px'; cR.style.top=(BASE-hr).toFixed(1)+'px'; cD.style.height=hd.toFixed(1)+'px'; cD.style.top=(BASE-hd).toFixed(1)+'px';
     vis(lR,t,tre+.3,1e9,{dy:6}); vis(lD,t,tre+.45,1e9,{dy:6});
-    vis(brk,t,tmg-.1,1e9,{dy:0,dx:-6}); vis(mg,t,tpe-.25,1e9,{dy:8});
+    vis(brk,t,tvm-.1,1e9,{dy:0,dx:-6}); vis(mg,t,tvm-.05,1e9,{dy:8}); pulse(bc,t,tmz,.02,.7);
     vis(pat,t,taq-.3,1e9,{dy:22});
     const chega=taq+1.3; cam.anda(lerp(600,270,eo(pr(t,taq-.2,1.5))),270);
     const td=Math.max(chega,tcp); cam.descarrega(t,td,.1);
@@ -455,7 +456,7 @@ CAPS[5]=()=>{
 // no mês. Na competência, ele só vira custo quando for vendido."
 function cena07caixa(){
   // números de outubro do grupo (fala dos capítulos 6 e 7; conferir na junção do mundo)
-  const COMPRAS=220000, CMV=194000, DIF=COMPRAS-CMV;
+  const COMPRAS=318860, CMV=273860, DIF=COMPRAS-CMV;          // 45.000 ("a diferença, quarenta e cinco mil")
   const g=grupo();
   const tit=titulo(g,'Financeiro','Caixa × competência');
   const r1=el('<div class="ab" style="left:0;top:0;width:1280px;height:800px"></div>',g);

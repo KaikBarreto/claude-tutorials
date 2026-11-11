@@ -17,7 +17,7 @@ instituição (ícone genérico, sem logo de banco).
   1280×800. Cada capítulo abre um navegador novo na semente indicada (`plano.md`, "Gravação"); o `setup` reabre fora do
   vídeo a tela onde o capítulo começa.
 - **Estado inicial:** `plano.md`, "Mundo": cofre R$ 18.500,00 e nenhum caixa aberto; "Conta Principal" (principal,
-  R$ 39.593,47), "Conta Secundária" (R$ 25.000,00), "Poupança antiga" (zerada); os Pix de novembro e os do T13 na Conta
+  R$ 39.593,47), "Conta Secundária" (R$ 90.515,00), "Poupança antiga" (zerada); os Pix de novembro e os do T13 na Conta
   Principal; a conta "Água e esgoto de outubro" (R$ 238,40) em aberto; nenhum extrato importado.
 - **Criado ao vivo:** a "Conta Cooperativa" (R$ 5.000,00); a "Poupança antiga" arquivada; o ajuste do cofre (+R$ 60,00);
   o combustível (R$ 350,00), a transferência (R$ 8.000,00) e o saque (R$ 2.000,00 + tarifa R$ 6,50); a importação do

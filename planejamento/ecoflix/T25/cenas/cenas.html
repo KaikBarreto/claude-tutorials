@@ -151,7 +151,7 @@ function naJanela(g,t,J){const on=t>=J.a-.8&&t<=J.b+.05;g.style.opacity=on?1:0;r
 const boneco=(px,cor='#8A949E')=>`<svg viewBox="0 0 48 48" width="${px}" height="${px}" style="display:block"><circle cx="24" cy="16.5" r="9.5" fill="${cor}"/>
   <path d="M7 48 C7 34 14.5 28.5 24 28.5 C33.5 28.5 41 34 41 48 Z" fill="${cor}"/></svg>`;
 const avatar=(px,cor='#8A949E',fundo='#EEF1F4')=>`<div class="cx av" style="width:${px}px;height:${px}px;background:${fundo};overflow:hidden;align-items:flex-end">${boneco(Math.round(px*.84),cor)}</div>`;
-// ------------------------------------------------------------------ utilidades da T25
+// ------------------------------------------------------------------ utilidades da T25 (o caminhao() do kit é usado no CAPS[1])
 // cronômetro da rotina: anel cinza com o arco verde da duração (fração da volta) e o tempo escrito no meio
 function cronometro(px,num,un){return `<div style="position:relative;width:${px}px;height:${px}px">
   <svg viewBox="-50 -50 100 100" width="${px}" height="${px}" style="position:absolute;left:0;top:0;overflow:visible">
@@ -235,22 +235,25 @@ CAPS[0]=()=>{
 };
 
 // ------------------------------------------------------------------ CAPS[1] · Margem não é lucro (linha 2)
-// "Uma dica: margem não é lucro. Esse vermelho é material comprado que ainda está no pátio, esperando a venda. O lucro de
-// verdade, com custo, imposto e despesa, fica no Relatório Financeiro."  À esquerda a margem (Vendas − Compras, negativa)
-// e o ferro parado no pátio; à direita o lucro, com custo, imposto e despesa, e o Relatório Financeiro.
+// "Uma dica: margem não é lucro. Boa parte dessa venda é o ferro que foi comprado em outubro e ficou no pátio. O lucro de
+// verdade, com custo, imposto e despesa, fica no Relatório Financeiro."  À esquerda a margem de novembro (Vendas − Compras,
+// alta, verde) e o caminhão que leva do pátio o ferro comprado em outubro; à direita o lucro, com custo, imposto e despesa.
 CAPS[1]=()=>{
   const g=grupo();
   const tit=titulo(g,'Dashboard','Margem não é lucro');
   const conta=(c,linhas,top)=>linhas.map(([s,cor],k)=>el(`<div class="ab lf" style="left:30px;top:${top+k*52}px;width:440px;height:52px;font-size:24px;${cor?`color:${cor}`:''}">${s}</div>`,c));
   const cab=(c,icone,cls,txt)=>el(`<div class="row" style="height:80px;padding:0 30px;gap:16px;border-bottom:1px solid var(--l)">
       <div class="ico ${cls}" style="width:50px;height:50px">${ic(icone,28)}</div><div class="nm" style="font-size:28px">${txt}</div></div>`,c);
-  const cM=el('<div class="card" style="left:100px;top:172px;width:500px;height:520px"></div>',g); cab(cM,'chart-no-axes-column','a','Margem');
+  const cM=el('<div class="card" style="left:100px;top:172px;width:500px;height:520px"></div>',g); cab(cM,'chart-no-axes-column','','Margem');
   const lM=conta(cM,[['Vendas'],['− Compras']],92);
   const tM=el(`<div class="ab" style="left:30px;top:200px;width:440px"><div style="height:2px;background:#121212"></div>
-      <div class="lf" style="height:56px;border:0;font-size:26px;color:#B42318"><span>= Margem</span><span class="cx" style="width:44px;height:44px;background:#FDECEA;color:#B42318">${ic('trending-down',26)}</span></div></div>`,cM);
-  const pilha=el(`<div class="ab" style="left:100px;top:298px;width:300px;height:150px">${monte()}</div>`,cM);
-  const pecas=[...pilha.querySelectorAll('.pc')];
-  const espera=el('<div class="ab" style="left:0;top:458px;width:500px;text-align:center"><div class="tag a">esperando a venda</div></div>',cM);
+      <div class="lf" style="height:56px;border:0;font-size:26px;color:var(--ve)"><span>= Margem</span><span class="cx" style="width:44px;height:44px;background:var(--vc);color:var(--ve)">${ic('trending-up',26)}</span></div></div>`,cM);
+  // o caminhão do kit (reduzido num invólucro) leva do pátio o ferro comprado em outubro
+  const chao=el('<div class="ab" style="left:24px;top:428px;width:452px;height:5px;border-radius:3px;background:#DDE2E7"></div>',cM);
+  const camW=el('<div class="ab" style="left:36px;top:304px;width:280px;height:129px"></div>',cM);
+  const cam=el(`<div style="width:500px;height:230px;transform:scale(.56);transform-origin:0 0">${caminhao()}</div>`,camW);
+  const rodas=[...cam.querySelectorAll('.roda')];
+  const out=el('<div class="ab" style="left:0;top:450px;width:500px;text-align:center"><div class="tag a">comprado em outubro</div></div>',cM);
   const dif=el(`<div class="cx" style="position:absolute;left:608px;top:318px;width:64px;height:64px;background:#fff;border:3px solid #CBD3DB">
       <svg viewBox="0 0 40 40" width="32" height="32"><g stroke="#4B5563" stroke-width="4.5" stroke-linecap="round"><line x1="8" y1="15" x2="32" y2="15"/>
       <line x1="8" y1="26" x2="32" y2="26"/><line x1="26" y1="6" x2="14" y2="35"/></g></svg></div>`,g);
@@ -261,15 +264,17 @@ CAPS[1]=()=>{
   const rel=el(`<div class="ab" style="left:680px;top:628px;width:500px;text-align:center"><div class="tag v">${ic('file-text',20)}Relatório Financeiro</div></div>`,g);
   return t=>{
     const J=janela([2,'uma'],[2,'financeiro'],.6); if(!naJanela(g,t,J))return;
-    const tma=W(2,'margem'),tlu=W(2,'lucro'),tve=W(2,'vermelho'),tmt=W(2,'material'),tes=W(2,'esperando'),tlu2=W(2,'lucro',2),
+    const tma=W(2,'margem'),tlu=W(2,'lucro'),tvd=W(2,'venda'),tfe=W(2,'ferro'),tou=W(2,'outubro'),tpa=W(2,'patio'),tlu2=W(2,'lucro',2),
           tcu=W(2,'custo'),tim=W(2,'imposto'),tde=W(2,'despesa'),tre=W(2,'relatorio');
     posTitulo(tit,t,J.a-.6,tma-.45);
     vis(cM,t,tma-.05,1e9,{dy:24}); lM.forEach((r,k)=>vis(r,t,tma+.15+k*.12,1e9,{dx:-10,dy:0})); vis(tM,t,tma+.45,1e9,{dx:-10,dy:0});
     vis(dif,t,tlu-.1,1e9,{sc:.6,dy:0});
-    pulse(tM,t,tve,.06,.8);
-    vis(pilha,t,tmt-.1,1e9,{dy:0,sc:1});                                              // o ferro chega ao pátio, peça por peça
-    pecas.forEach((p,k)=>{const q=eo(pr(t,tmt-.05+k*.09,.5));p.style.opacity=q.toFixed(3);p.style.transform=`translateY(${(-40*(1-q)).toFixed(2)}px)`});
-    vis(espera,t,tes-.1,1e9,{dy:10});
+    pulse(tM,t,tvd,.05,.8);                                                            // "dessa venda": a margem alta
+    vis(chao,t,tvd-.1,1e9,{dy:0,sc:1}); vis(camW,t,tvd,1e9,{dy:0,sc:1});
+    pulse(camW,t,tfe,.04,.7); vis(out,t,tou-.15,1e9,{dy:10});
+    const x=lerp(36,186,eio(pr(t,tpa-.2,1.3)));                                      // "pátio": o caminhão leva o ferro embora
+    camW.style.left=x.toFixed(2)+'px';
+    rodas.forEach(r=>r.setAttribute('transform',`translate(${r.dataset.x},196) rotate(${((x-36)/.56/26*57.3).toFixed(2)})`));
     vis(cL,t,tlu2-.1,1e9,{dy:24}); vis(lL[0],t,tlu2+.15,1e9,{dx:-10,dy:0});
     [tcu,tim,tde].forEach((a,k)=>vis(lL[k+1],t,a-.1,1e9,{dx:-10,dy:0})); vis(tL,t,tde+.45,1e9,{dx:-10,dy:0});
     vis(rel,t,tre-.1,1e9,{dy:10});

@@ -50,11 +50,10 @@ bancárias e concilia). Empresa com `cash_account_enabled` true e **nenhum caixa
 |---|---|---|---|---|---|
 | DINHEIRO (COFRE) | cash | | (verde fixo) | | R$ 18.500,00 (RPC `get_dinheiro_balance`), tudo "Disponível no cofre" |
 | Conta Principal | bank | sim | #3B82F6 | R$ 46.382,57 | R$ 39.593,47 |
-| Conta Secundária | bank | | #8B5CF6 | R$ 25.000,00 | R$ 25.000,00 |
+| Conta Secundária | bank | | #8B5CF6 | R$ 25.000,00 | R$ 90.515,00 (os Pix de novembro fora do OFX da Principal; junção, `MUNDO_LINHA_DO_TEMPO.md`, seção 8) |
 | Poupança antiga | bank | | #F59E0B | R$ 0,00 | R$ 0,00 (último lançamento em 14/08/2026, o resgate que zerou a conta) |
 
-Nomes: os do T13 ("Conta Principal", "Conta Secundária"). O T6 sugeriu "Conta Reserva" para a segunda: na consolidação
-vale um nome só; se ficar "Conta Reserva", trocar "Conta Secundária" na Tela e nas falas dos capítulos 4, 7 e 15.
+Nomes: os do T13 ("Conta Principal", "Conta Secundária"). Decidido na junção: "Conta Secundária" (nunca "Conta Reserva").
 **Categorias:** despesa "Combustível" (das despesas fixas do mundo) e a de sistema "Tarifas" (a central de ajuda confirma
 esse nome; o T6 escreveu "Tarifas bancárias"); centro de custo "Frota" (T13). **Conta a pagar em aberto** (T13): "Água e
 esgoto de outubro", R$ 238,40, vencida em 05/11/2026, sem parceiro. Nenhuma outra conta em aberto de R$ 238,40,

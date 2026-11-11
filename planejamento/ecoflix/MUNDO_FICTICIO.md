@@ -7,6 +7,9 @@ real. Na semente, conferir que nenhum nome de parceiro é de empresa real da reg
 
 Se o app pedir um dado que não está aqui, inventar no mesmo estilo e anotar neste arquivo.
 
+**Junção (10/11):** a história única das 26 aulas, o estado de partida de cada uma, as decisões dos conflitos, as mudanças
+para o gerador e a conferência de todo número falado estão em `MUNDO_LINHA_DO_TEMPO.md`; ela vale sobre o que diverge aqui.
+
 ## Data do mundo
 `FAKE_NOW=2026-11-10T08:30:00-03:00` (terça). Histórico fechado de agosto a outubro de 2026 (o "dia 31" do T10 é
 31/10, um sábado); novembro só com os primeiros dias.
@@ -191,3 +194,15 @@ O estado de 10/11 08:30 que todas as aulas recebem. O gerador confere os número
 7. T2 e T3 criam na tela o que o mundo base já traz: a semente delas tira com `_remove` (Juliana, Marcos, Tabela Depósitos).
 8. T7 "214 kg de latão e 42 kg de cobre mel" × T21 (74 e 212,5 kg): ficou o T21 (o do T7 seria depois das compras e vendas
    da aula). As 2 fotos da compra de 09/11 (T10) não estão na semente.
+
+**Decisões da junção** (detalhe e lista de mudanças do gerador: `MUNDO_LINHA_DO_TEMPO.md`, seções 15 e 16):
+1. Fica o mundo: novembro com vendas R$ 118.620,20 e compras R$ 18.781,45 (o ferro de outubro sai em 04/11, 38.992 kg). A T25
+   muda a fala: margem de novembro alta e verde; outubro é o mês da compra.
+2. Fica o T4 (+4.870,00, venda no saldo de 05/11). A T13 baixa 2.000,00 desse saldo e sobra 2.870,00 (o fiado de 3.150,00 sai).
+3. O T10 fala 41.860 kg em 31/10 (Edição Manual 41.874 → 41.860) e "as vendas" de novembro.
+4. Só a categoria de sistema "Tarifas" (sai "Tarifas bancárias"); a tarifa de 39,90 da T6 é da Conta Secundária.
+5. "A Receber" do T4: R$ 19.540,00 (Fundição 14.370,00 + Aços 4.870,00 + vale do Valdir 300,00); fala corrigida.
+6. Catálogo do app (1.000, 3.000 e 5.000; tolerância 5; âmbar a 80 %): selo "0/1.000 Documentos"; a fala da T16 não diz a cota.
+7. Demonstração com `_remove`, como a semente fez.
+8. Fica o T7 (latão 214, cobre mel 42: a falta de 18 kg da aula depende dele); mudam o T10 e o T21. O estoque de 10/11 ganha o
+   lote de alumínio da T17 (3.200 kg de perfil e 2.600 de bloco) e a chaparia da T18 (3.750 kg): R$ 96.076,00. As 2 fotos entram.

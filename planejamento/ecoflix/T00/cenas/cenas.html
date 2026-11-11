@@ -644,7 +644,7 @@ CAPS[8]=()=>{
   const C=[gc('clipboard-list','Pedido'),gc('wallet','Caixa'),gc('notebook-pen','Saldo <span style="color:var(--c);font-weight:700">(fiado)</span>'),
     gc('tags','Tabela de preço'),gc('scroll-text','Ficha técnica'),gc('truck','Ordem de coleta'),gc('file-text','MTR')];
   // pedido: o recibo de uma compra
-  const pp=el(`<div class="papel" style="left:250px;top:124px;width:400px;height:316px;padding:22px 28px">
+  const pp=el(`<div class="papel" style="left:250px;top:140px;width:400px;height:262px;padding:22px 28px">
      <div class="row p0" style="gap:12px"><span class="tag a s">Compra</span><span style="font-weight:800;font-size:21px">Dona Cida</span></div>
      <div class="lin p1" style="margin-top:16px"><span>Material</span><span>Alumínio latinha</span></div>
      <div class="lin p2"><span>Peso</span><span>${kg(38)}</span></div>
@@ -660,14 +660,14 @@ CAPS[8]=()=>{
   const hAb=hora(140,'sunrise','Abre','de manhã',''), hFe=hora(282,'sunset','Fecha','no fim do expediente',' a');
   // saldo: o que ficou pra depois, a receber e a pagar
   const sDep=el(`<div class="ab" style="left:36px;top:122px"><span class="tag n s">${ic('hourglass',18)}Ficou pra depois</span></div>`,C[2]);
-  const caixa2=(x,cls,tg,nome,ex)=>el(`<div class="papel" style="left:${x}px;top:196px;width:390px;height:236px;padding:26px 28px">
+  const caixa2=(x,cls,tg,nome,ex)=>el(`<div class="papel" style="left:${x}px;top:206px;width:390px;height:196px;padding:26px 28px">
      <span class="tag ${cls} s">${tg}</span><div class="nm" style="margin-top:20px;font-weight:800;font-size:28px">${nome}</div>
      ${ex?`<div class="lbl" style="margin-top:8px;font-size:18px;color:#4B5563">${ex}</div>`:''}</div>`,C[2]);
   const sRe=caixa2(36,'v',`${ic('arrow-down-left',18)}A receber`,'Cliente','Fundição Bandeira do Vale');
   const sPa=caixa2(474,'a',`${ic('arrow-up-right',18)}A pagar`,'Fornecedor','');
   const sNm=[sRe.querySelector('.nm'),sRe.querySelector('.lbl'),sPa.querySelector('.nm')];
   // tabela de preço: o preço do quilo de cada material; uma tabela só pros depósitos
-  const tab=(x,cab,linhas)=>el(`<div class="papel" style="left:${x}px;top:124px;width:400px;height:316px;padding:22px 26px">
+  const tab=(x,cab,linhas)=>el(`<div class="papel" style="left:${x}px;top:140px;width:400px;height:262px;padding:22px 26px">
      <div class="row" style="gap:10px;margin-bottom:12px">${cab}</div>${linhas}</div>`,C[3]);
   const MAT=[['Ferro pesado',.95],['Cobre mel',42.5],['Alumínio latinha',6.2]];
   const t1=tab(36,`<span class="tag a s">Compra</span><span class="lbl">preço do quilo</span>`,
@@ -894,6 +894,7 @@ CAPS[11]=()=>{
     const tli=W(3,'limite'),tca=W(3,'cadastros'),tus=W(3,'usuário'),tco=W(3,'computador'),tce=W(3,'celular');
     posTitulo(tit2,t,T1,tli-.1,T2);
     vis(cont,t,tli+.4,1e9,{dy:16});vis(cad,t,tca-.05,T2,{dy:8});
+    const mv=eio(pr(t,tus-.4,.6));cont.style.left=lerp(505,900,mv).toFixed(1)+'px';cad.style.left=lerp(485,880,mv).toFixed(1)+'px';
     vis(usu,t,tus-.1,T2,{dy:14});vis(sU,t,tus+.2,T2,{dy:0,dx:-10});
     vis(note,t,tco-.1,T2,{dy:14});traco(f1,t,tco+.15,.5);f1.style.opacity=t>=tco+.15&&t<T2+.4?(1-eo(pr(t,T2,.4))).toFixed(3):0;
     vis(cel,t,tce-.1,T2,{dy:14});traco(f2,t,tce+.15,.5);f2.style.opacity=t>=tce+.15&&t<T2+.4?(1-eo(pr(t,T2,.4))).toFixed(3):0;
@@ -901,7 +902,7 @@ CAPS[11]=()=>{
     // cena 3
     const tl4=W(4,'limite'),tcr=W(4,'criar'),tav=W(4,'aviso'),tno=W(4,'nova'),tpe=W(4,'Personalizado');
     posTitulo(tit3,t,T2,tl4-.1);
-    if(t<tl4-.1)contV.textContent='1 / 3';else conta(contV,t,tl4,.9,1,3,v=>Math.round(v)+' / 3');
+    if(t<tl4+.3)contV.textContent='1 / 3';else conta(contV,t,tl4+.4,.6,1,3,v=>Math.round(v)+' / 3');
     av.forEach((a,k)=>vis(a,t,k<3?tl4+.4+k*.12:tcr-.05,1e9,{sc:.6,dy:0}));
     vis(avis,t,tav-.1,1e9,{dy:20});vis(avNm,t,tno-.1,1e9,{dy:8,sc:1});vis(pers,t,tpe-.1,1e9,{dy:10});
   };

@@ -223,8 +223,11 @@ class Cap:
         kw.setdefault('optional', True)
         kw.setdefault('timeout', 4)
         at = s.at(w, 'hover')
-        if at is not None:   # hover que atravessa o início de uma linha sai partido (a marca entra no meio)
-            fim = at + 0.55 + seconds
+        if at is not None:
+            for mt, mi in sorted(s.pending):   # marca logo depois do início: o hover começa junto com a linha (a marca vem antes)
+                if at < mt <= at + 0.8:
+                    at = round(mt, 2)
+            fim = at + 0.55 + seconds   # hover que atravessa o início de uma linha sai partido (a marca entra no meio)
             for mt, mi in sorted(s.pending):
                 if at + 0.3 < mt < fim - 0.25:
                     s1 = max(0.1, round(mt - at - 0.55, 2))
@@ -477,7 +480,7 @@ def cap01():
     """A tela Estoque: coluna das tabelas, barra, cartões (ilustração no L4), lista e colunas, corte do Marcos (cap01b, L6), cabeçalho."""
     c = Cap(1, setup_estoque())
     c.hover(P('Tabelas de Preço'), 0.6, w=(1, 'coluna'), label='coluna Tabelas de Preço')
-    c.hover(BTN('Principal'), 1.0, w=(1, 'principal,'), label='Principal com a estrela')
+    c.hover(BTN('Principal'), 0.8, w=(1, 'principal,'), label='Principal com a estrela')
     c.hover(BTN('Nova Tabela'), 0.6, w=(1, 'outra.'), label='Nova Tabela')
     c.hover(BTN('Movimentar estoque'), 0.2, w=(2, 'Movimentar'), label='Movimentar estoque')
     c.hover(BTN('Editar Tabela'), 0.2, w=(2, 'Editar'), label='Editar Tabela')
@@ -528,8 +531,7 @@ def cap02():
     c.click(CAMPO('name'), w=(3, 'nome,'), label='campo Nome')
     c.type(CAMPO('name'), 'Radiador de cobre', w=(3, 'pátio:', None, 0.0), clicar=False, cps=30, label='Nome: Radiador de cobre')
     c.click(CAMPO('unit'), w=(3, 'unidade'), label='Unidade (abre a lista)')
-    c.hover(OPT('pç — Peça'), 0.2, w=(3, 'peça'), label='pç — Peça')
-    c.hover(OPT('fd — Fardo'), 0.2, w=(3, 'fardo,'), label='fd — Fardo')
+    c.hover(OPT('pç — Peça'), 0.5, w=(3, 'peça'), label='pç — Peça (o "fardo" fica abaixo da dobra da lista: rolar custava 2 s)')
     c.click(OPT('Kg — Quilograma'), w=(3, 'aqui.'), label='fica em Kg — Quilograma')
     c.click(CAMPO('purchase_price'), w=(4, 'compra,'), label='P. Compra')
     c.type(CAMPO('purchase_price'), '21,00', w=(4, 'vinte', 0), clicar=False, label='P. Compra 21,00 (zoom: P. Compra e P. Venda)')
@@ -563,7 +565,7 @@ def cap03():
     c.hover(CELULA('Radiador de cobre', 2), 1.6, w=(1, 'dezesseis'), label='célula Código 16 (zoom)')
     c.confere('row:Radiador de cobre', ['16', 'Radiador de cobre'], 'código 16')
     # L2 e L3: ilustração do código (fichas, caderno); o robô fica parado
-    abre_acoes(c, 'Radiador de cobre', 'Editar', w=(3, 'setenta.', None, 0.3), w_item=(4, 'Editar'))   # hover no fim da ilustração do L3
+    abre_acoes(c, 'Radiador de cobre', 'Editar', w=(3, 'setenta.', None, 0.8), w_item=(4, 'Editar'))   # hover no fim da ilustração do L3
     c.waitfor(text='Editar Material', timeout=8)
     c.click(CAMPO('code'), w=(4, 'digito', None, 1.0), label='campo Código', primeiro=True)
     c.type(CAMPO('code'), '0', w=(4, 'zero', 0, 0.35), clicar=False, clear=True, label='apaga o 16 e digita 0: o campo fica vazio (zoom: Código e Fica assim)')

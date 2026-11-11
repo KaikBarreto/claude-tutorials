@@ -489,7 +489,7 @@ CAPS[10]=()=>{
   return t=>{
     const a0=W(2,'Uma')-.3, tcl=W(2,'coleta'), tca=W(2,'cancelada'), tsa=W(2,'sai'), tct=W(2,'conta'), tfi=W(2,'ficaram'), tfo=W(2,'foram'), tcs=W(2,'concluidas');
     posTitulo(tit,t,a0-.6,tcl-.55);
-    const pf=eio(pr(t,tfi-.1,.8)), ps=pr(t,tsa-.05,1.2);
+    const pf=eio(pr(t,tfi-.1,.8)), ps=pr(t,tsa-.05,.9);
     cards.forEach((c,i)=>{vis(c,t,tcl-.05+.06*i,1e9,{dy:18});
       let x=X6(i), y=220;
       if(ORD[i]===CANC){const pd=eio(cl(ps/.5)),pe=eio(cl((ps-.45)/.55)); x=lerp(X6(i),180,pe); y=lerp(220,460,pd); c.style.opacity=Math.min(+c.style.opacity,1-.45*ps).toFixed(3);}
@@ -497,7 +497,7 @@ CAPS[10]=()=>{
       c.style.transform=`translate(${x.toFixed(1)}px,${y.toFixed(1)}px) `+c.style.transform;
     });
     pulse(cards[CANC-1].querySelector('.tag'),t,tca,.08,.7);
-    vis(fora,t,tct-.15,1e9,{dx:-12,dy:0});
+    vis(fora,t,Math.max(tct-.15,tsa+.85),1e9,{dx:-12,dy:0});
     cards.forEach((c,i)=>{if(ORD[i]!==CANC) pulse(c.querySelector('.tag'),t,tcs+.06*i,.08,.7)});
     vis(res,t,tfo-.2,1e9,{dy:14});
   };

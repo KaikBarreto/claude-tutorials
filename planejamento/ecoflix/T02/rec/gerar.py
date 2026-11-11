@@ -561,11 +561,10 @@ def cap04():
     c.ev(js_liga('Ver saldos de cliente/fornecedor'), label='liga Ver saldos de cliente/fornecedor (sem cursor)')
     c.ev(js_lista('Acesso à tela Caixa', 400, 700), at=c.A(7, 'Caixa', 1.0), label='a lista sobe até o Caixa')
     c.hover(TELA('Caixa'), 1.2, at=c.A(7, 'Caixa', 0.3), label='o Caixa fica desligado')
-    c.confere_js(js_estado('Acesso à tela Contas a Pagar/Receber', 'Criar Conta a Pagar/Receber', 'Dar Baixa em Conta', 'Acesso à tela Fiscal & Ambiental',
-                           'Ver Totais e Valores Financeiros', 'Acesso à tela Dashboard',
-                           'Acesso à tela Movimentações Bancárias', 'Gerenciar Contas Bancárias', 'Conciliar Extrato Bancário',
-                           'Acesso à tela Relatório Financeiro', 'Acesso à tela Pedidos', 'Acesso à tela Clientes e Fornecedores',
-                           'Ver saldos de cliente/fornecedor', '-Acesso à tela Caixa'), 'as permissões da Juliana, sem o Caixa')
+    # as ações só existem na tela com a tela aberta: aqui confere as 7 telas e o Ver Totais; as 15 permissões, na lista depois de criar
+    c.confere_js(js_estado('Acesso à tela Contas a Pagar/Receber', 'Acesso à tela Fiscal & Ambiental', 'Ver Totais e Valores Financeiros',
+                           'Acesso à tela Dashboard', 'Acesso à tela Movimentações Bancárias', 'Acesso à tela Relatório Financeiro',
+                           'Acesso à tela Pedidos', 'Acesso à tela Clientes e Fornecedores', '-Acesso à tela Caixa'), 'as 7 telas da Juliana, sem o Caixa')
     c.mark(8)
     c.mark(9)
     c.mark(10)
@@ -659,13 +658,13 @@ def cap06():
     c.hover(TXT('A conta está impedida de entrar.'), 1.0, at=c.A(3, 'acesso,', 0.5), label='A conta está impedida de entrar.')
     c.hover(SELO('2 / 3 usuários'), 2.4, at=c.A(3, 'contador:', 0.5), label='ZOOM selo 2 / 3 usuários')
     c.mark(4)
-    menu(c, 'Marcos Antunes', 'Ativar', at=c.A(4, 'menu:', 0.6), label='menu ... do Marcos')
+    menu(c, 'Marcos Antunes', 'Ativar', at=c.A(4, 'mesmo', 0.6), label='menu ... do Marcos')
     c.click(ITEM('Ativar'), at=c.A(4, 'Ativar.', 0.4), label='Ativar')
     c.waitfor(text='Usuário ativado!', timeout=8)
     c.waitfor(target=SELO('3 / 3 usuários'), timeout=8)
-    c.hover(SELO('3 / 3 usuários'), 0.8, at=c.A(4, 'volta.', 0.5), label='selo 3 / 3 usuários (de volta)')
+    c.hover(SELO('3 / 3 usuários'), 0.4, at=c.A(4, 'Marcos', 0.5), label='selo 3 / 3 usuários (de volta)')
     c.mark(5)
-    menu(c, 'Marcos Antunes', 'Excluir', at=c.A(5, 'Excluir', 0.9), label='menu ... do Marcos')
+    menu(c, 'Marcos Antunes', 'Excluir', at=c.A(5, 'Excluir', 1.2), label='menu ... do Marcos')
     c.click(ITEM('Excluir'), at=c.A(5, 'Excluir', 0.1), label='Excluir')
     c.waitfor(text='Esta ação é irreversível', timeout=8)
     c.confere(ALERTA, ['Excluir usuário', 'Esta ação é irreversível', 'Para confirmar, digite o email do usuário:'], 'janela Excluir usuário')
@@ -756,15 +755,15 @@ def cap09():
     c.waitfor(target=TXT('Perfil de acesso'), timeout=8)
     c.click(EDITAR, at=c.A(1, 'valores.', 0.6, nth=0), label='Editar (detalhe do Marcos)')
     c.waitfor(text='Atualize os dados e permissões deste usuário', timeout=10)
-    c.ev(js_corpo_abaixo(600), at=c.A(1, 'topo', 0.3), label='desce o corpo da janela: Geral no topo da lista')
+    c.ev(js_corpo_abaixo(600), at=c.A(1, 'topo', -0.6), label='desce o corpo da janela: Geral no topo da lista')
     c.hover(TXT('Geral', DLG), 0.6, at=c.A(1, 'Geral,', 0.5), label='grupo Geral')
     c.hover(ACAO('Ver Totais e Valores Financeiros'), 3.0, at=c.A(1, 'Ver', 0.5), label='ZOOM Ver Totais e Valores Financeiros (ligado)')
-    c.confere_js(js_estado('Ver Totais e Valores Financeiros', 'Ver Dinheiro Total em Caixa', '-Ver Projeção de Lucro'), 'valores do Marcos')
     for i in (2, 3, 4):
         c.mark(i)
     # sob a ilustração (o que some e o que fica): abre as ações do Caixa e põe as duas de valor no meio da lista
     c.ev(js_abre_acoes('Caixa'), at=c.L(3), label='abre as ações do Caixa (sob a ilustração)')
     c.ev(js_lista('Ver Dinheiro Total em Caixa', 380, 600), label='a lista desce até os valores do caixa (sob a ilustração)')
+    c.confere_js(js_estado('Ver Totais e Valores Financeiros', 'Ver Dinheiro Total em Caixa', '-Ver Projeção de Lucro'), 'valores do Marcos')
     c.mark(5)
     c.hover(ACAO('Ver Dinheiro Total em Caixa'), 1.2, at=c.A(5, 'ligados,', 0.5), label='Ver Dinheiro Total em Caixa (ligado)')
     c.hover(ACAO('Ver Projeção de Lucro'), 1.6, at=c.A(5, 'projeção', 0.5), label='Ver Projeção de Lucro (desligado)')
@@ -792,7 +791,7 @@ def cap10():
     c.hover(TXT('Perfil de acesso'), 0.8, at=c.A(2, 'Operador', 0.5), label='perfil do Marcos')
     c.mark(3)
     c.click(LINHA('Juliana Prado'), at=c.A(3, 'Juliana,', 0.6), label='a Juliana (montada na mão)')
-    c.hover(TXT('15 permissões configuradas individualmente.'), 0.6, at=c.A(3, 'tela', 0.5, nth=0), label='15 permissões, tela por tela')
+    c.hover(SEL("main p:has-text('permissões configuradas individualmente')"), 0.6, at=c.A(3, 'tela', 0.5, nth=0), label='15 permissões, tela por tela')
     c.mark(4)
     c.click(LINHA('Marcos Antunes'), at=c.A(4, 'Marcos', 0.6), label='o Marcos (foto e 31 permissões)')
     c.mark(5)
