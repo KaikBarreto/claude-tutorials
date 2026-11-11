@@ -43,9 +43,9 @@ filial (outro usuário). Cada capítulo parte de um navegador novo com a semente
 | Tela | Fala |
 | --- | --- |
 | Clique em "Configurar Grupo": "Configurações do Grupo" · "Crie um grupo para gerenciar múltiplas unidades"; cartão "Criar Grupo Gerencial" · "Crie um grupo e compartilhe o código de convite com as filiais". | Começando pela matriz. Clico em Configurar Grupo pra criar o grupo. |
-| Em "Nome do Grupo" ("Ex: Grupo Reciclagem Silva"), digita "Grupo Recicla Vale"; clique em "Criar Grupo": aviso "Grupo gerencial criado com sucesso!". [BACKEND: RPC `generate_group_invite_code` devolve `GRP-7KQ4TX`; `INSERT company_groups` com validade em 10/12/2026; vira `apos-cap02`] | Dou o nome, Grupo Recicla Vale, e clico em Criar Grupo. |
+| Em "Nome do Grupo" ("Ex: Grupo Reciclagem Silva"), digita "Grupo Recicla Vale"; clique em "Criar Grupo": aviso "Grupo gerencial criado com sucesso!". [BACKEND: RPC `generate_group_invite_code` devolve `GRP-7C4E9A`; `INSERT company_groups` com validade em 10/12/2026; vira `apos-cap02`] | Dou o nome, Grupo Recicla Vale, e clico em Criar Grupo. |
 | A tela vira "Configurações do Grupo" · "Gerencie as unidades e padronizações do grupo Grupo Recicla Vale", com o botão "Como funciona", as abas "Unidades", "Catálogo de Materiais", "Tabelas de Preço", "Clientes e Fornecedores", "Categorias Financeiras" e "Transferências" e o passo a passo "Configure o grupo" ("0 de 5 etapas concluídas"). | Pronto. Aqui ficam as abas do grupo e um passo a passo do que falta configurar. |
-| Zoom no cartão "Código de Convite": "GRP-7KQ4TX" e "Válido até 10/12/2026". [ZOOM: o código e a validade, a frase toda] | E esse é o código de convite. É ele que liga a filial ao grupo, e vale por trinta dias. Se vencer, o botão do lado gera outro. |
+| Zoom no cartão "Código de Convite": "GRP-7C4E9A" e "Válido até 10/12/2026". [ZOOM: o código e a validade, a frase toda] | E esse é o código de convite. É ele que liga a filial ao grupo, e vale por trinta dias. Se vencer, o botão do lado gera outro. |
 | Clique no botão de copiar: aviso "Código copiado!". [TESTAR: permissão `clipboard-write` no navegador do robô] | Copio o código e mando pra quem cuida da filial, por mensagem. |
 | Zoom em "Unidades Ativas": "Recicla Vale Metais" com o selo "MATRIZ" e "Nenhuma filial vinculada ainda. Compartilhe o código de convite acima.". | Por enquanto, a lista de unidades tem só a matriz. |
 
@@ -55,7 +55,7 @@ filial (outro usuário). Cada capítulo parte de um navegador novo com a semente
 | --- | --- |
 | Capítulo gravado como Sandra Pires, no sistema da "Filial Pindamonhangaba". Rodapé do menu → "Configurações" → aba "Empresa". [BACKEND: semente `apos-cap02`; `user` = Sandra Pires (filial)] | Agora do lado da filial. A Sandra, gerente em Pindamonhangaba, entra no sistema da filial, em Configurações, na aba Empresa. |
 | Desce até o cartão "Filial" · "Se esta empresa é uma filial, vincule-a à empresa-mãe usando o código de convite"; liga "É Filial" ("Ative para vincular esta empresa a um grupo gerencial"): aparece "Código de Convite" · "Solicite o código ao administrador da empresa-mãe". | Lá embaixo fica o cartão Filial. Ela liga o É Filial. |
-| Cola "GRP-7KQ4TX" no campo "GRP-XXXXXX". [ZOOM: o campo com o código] | E cola o código que recebeu da matriz. |
+| Cola "GRP-7C4E9A" no campo "GRP-XXXXXX". [ZOOM: o campo com o código] | E cola o código que recebeu da matriz. |
 | Clique em "Vincular": aviso "Empresa vinculada ao grupo com sucesso!"; o cartão mostra "Vinculada ao grupo" · "Grupo Recicla Vale" e o selo "Ativa". [BACKEND: RPC `join_group_by_invite_code`; vira `apos-cap03`] | Vincular. Pronto, a filial está no Grupo Recicla Vale. |
 | [ILUSTRAÇÃO: o código liga as unidades: o código "GRP" sai da matriz, viaja até a filial e encaixa como uma peça no contorno do grupo; na palavra "próprio", a tela da filial segue aberta ao lado, com o caixa e a balança dela] | Do lado dela, o dia a dia segue igual: a filial continua usando o próprio sistema, e a matriz passa a enxergar os números. |
 

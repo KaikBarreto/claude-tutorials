@@ -743,3 +743,11 @@ Decisões:
   Regra nova no `_BRIEF_ROBO.md`: o comando do capítulo é a própria chamada em segundo plano (prazo 7200000), e a
   notificação de término acorda o robô uma vez só; nada de Monitor para esperar a fila; relatório só no fim. Avisados
   T04, T05, T08, T18 e T20.
+- 12/11 00:0x **Robô da T22 (parcial) retomado** um capítulo por chamada: rápido aprovado em 1, 2, 3, 4, 7 e 9 (antigos,
+  sem MP4); 0, 5, 6 e 8 corrigidos sem reteste; cap10 falhou duas vezes (Quantidade já com 1.850; aviso cobrindo
+  "Executar"; corrigido); cap11 só testado pela API. Ficam só no rápido 0, 1 e 3; completos previstos 2, 4, 6, 7, 9, 10,
+  11. 25 RPCs, create-group-payment, check-asaas-payment, 2 hooks, `lib/grupo.mjs`; Edit no
+  `get_dre_expenses_by_group.mjs` (soma o grupo por nome). Fala: cap07 L1-L3 com os números da tela (CMV 273.873,30,
+  resultado 18.336,70, diferença 44.986,70), cap09 L6 sem a frase do Sobrescrever. **Código do grupo agora GRP-7C4E9A**
+  (o que o app gera no mundo): trocado no MUNDO_FICTICIO, plano, roteiro (coluna Tela) e na ilustração do cap03 (a voz
+  não lê o código). Gravação final: cap03 como Sandra Pires. Achados no MELHORIAS.

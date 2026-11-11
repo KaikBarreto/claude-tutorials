@@ -40,6 +40,9 @@ as gravações). Cada item diz a aula em que apareceu. **No fim da produção, v
   num ticket sem valores.
 - **Aba nova de ticket mostra "#1" por uns 4 s** antes do número certo (#58) (T8).
 - **"Rascunho encontrado" depois de salvar** (T4): o cadastro já salvo ainda oferece o rascunho ao abrir de novo.
+- **Histórico de Envios do grupo não atualiza** depois do envio (T22) e, quando aparece, diz "Nenhum ativo".
+- **"Sobrescrever" desligado não protege os preços da filial** (T22).
+- **Setinha do Dashboard compara o período errado** (T22): 01 a 31/10 contra 31/08 a 30/09, não contra setembro.
 
 ## 2. Melhorias de uso
 - **Produção diz "peça" em produto vendido por quilo** (T11).

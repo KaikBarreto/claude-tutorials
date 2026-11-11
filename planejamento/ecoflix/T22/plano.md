@@ -20,7 +20,7 @@
 |---|---|---|---|---|
 | 0 | (sem vinheta) | Menu "Gerencial (Filiais)" aberto; [ILUSTRAÇÃO: somar na mão] | 🔒 contratado na matriz · "Antes: Relatório Financeiro e DRE" | 0:35 |
 | 1 | GERENCIAL / Como o Gerencial funciona | "Módulo Gerencial" (sem grupo); [ILUSTRAÇÃO: matriz × filial, em 3 tempos] | ⚠️ cada unidade é empresa própria; ⚠️ junta e padroniza, quem opera a filial é a filial | 0:50 |
-| 2 | GRUPO / Criar o grupo e o código | "Configurar Grupo" → "Grupo Recicla Vale" → "Criar Grupo"; abas; "Código de Convite" GRP-7KQ4TX, "Válido até 10/12/2026", copiar; "Unidades Ativas" só com a matriz | código vale 30 dias | 1:00 |
+| 2 | GRUPO / Criar o grupo e o código | "Configurar Grupo" → "Grupo Recicla Vale" → "Criar Grupo"; abas; "Código de Convite" GRP-7C4E9A, "Válido até 10/12/2026", copiar; "Unidades Ativas" só com a matriz | código vale 30 dias | 1:00 |
 | 3 | FILIAL / Do lado da filial | Sandra Pires: "Configurações" › "Empresa" › "Filial" → "É Filial" → código → "Vincular" → "Vinculada ao grupo"; [ILUSTRAÇÃO: o código liga as unidades] | | 0:45 |
 | 4 | DASHBOARD / O Dashboard Gerencial | "Dashboard Gerencial", "Mês passado", "Todas as Unidades", cartões "Receita Total" e "Despesa Total", "Estoque Total", gráfico por unidade | (sem citar o "Lucro Líquido": risco 1) | 0:55 |
 | 5 | DASHBOARD / Ranking e resumo por unidade | "Ranking por Lucro"; "Resumo por Unidade" (matriz -R$ 27.650,00 -10.2%; filial R$ 1.000,00 1.4%); [ILUSTRAÇÃO: a compra que ainda está no pátio] | | 0:55 |
@@ -48,7 +48,7 @@ dados próprios.
   que os gráficos e o comparativo cortem as duas como "Recicla Vale…" (risco 3).
 - Usuária da filial: **Sandra Pires**, gerente, MASTER da filial, `sandra.pires@reciclavalemetais.example` (domínio do T2, junção).
 
-**Grupo (criado na aula):** "Grupo Recicla Vale"; RPC `generate_group_invite_code` devolve **GRP-7KQ4TX**, válido até 10/12/2026;
+**Grupo (criado na aula):** "Grupo Recicla Vale"; RPC `generate_group_invite_code` devolve **GRP-7C4E9A**, válido até 10/12/2026;
 `require_transfer_approval` desligado ao criar (liga no cap. 10). Vínculo da filial em 10/11/2026 (cap. 3).
 
 **Números de outubro (período "Mês passado"; setembro só para as setinhas):**
