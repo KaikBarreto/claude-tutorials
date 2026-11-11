@@ -605,3 +605,17 @@ Decisões:
 - 11/11 19:3x **Robô da T02 (parcial)**: cap00 e cap01 aprovados no completo; rápido dos 11 no mundo antigo; cap02 e cap07
   pedem completo de novo (render ao lado); faltam os completos de cap04, cap05, cap06 e cap09 e o rápido com MP4 de cap03,
   cap08 e cap10. Retomado com prioridade 02. Achados do app no `MELHORIAS_ECOSISTEMA.md`.
+- 11/11 20:1x **Robô da T20 (parcial, parou à espera da fila; instância 54320 derrubada)**: rápido aprovado em cap00-cap02
+  (cap00 e cap01 sem MP4: repetir com a folha); cap03-cap10 por ensaiar (seletores do código, sem execução). Gerador,
+  handlers do portal (portal-set-credentials, portal-login, entity-portal-report, order-photos-public, portal-order-receipt,
+  `lib/portal.mjs`), sementes e as três fotos prontos; Edit mínimo no `entity-portal.mjs` compartilhado. **Os dois
+  navegadores viram `goto` interno rotulado ("navegador do parceiro/sistema", corte na edição)**: o gravador filma um
+  contexto só; o PDF do cap09 sai em base64 no `actions.json` (como a T08). **Retomar quando a fila chegar na prioridade
+  20**: `cd /home/claude/ecoflix; export PORTAL_SENHA=... TUT_USER=rafael@reciclavalemetais.example; bash rec/t20/t20_fila.sh
+  --rapido 3 4 5 6 7 8 9 10 0 1`, depois `prever.py` e o completo dos caps 4, 5, 6, 7 e 8 (dois navegadores); atenção ao
+  cap06 L4 (pouca folga) e ao sino do cap08 (recarrega `/dashboard`).
+
+## Retomar quando a fila andar (robôs parados à espera da vez)
+| Aula | Agente | O que falta | Comando |
+|---|---|---|---|
+| T20 | afdb1a0ff5d8d10fb | rápido cap03-cap10 e cap00/cap01 com MP4; completo dos caps 4-8 | `bash rec/t20/t20_fila.sh --rapido 3 4 5 6 7 8 9 10 0 1` |

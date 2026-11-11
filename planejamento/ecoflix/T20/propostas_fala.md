@@ -5,7 +5,7 @@ editado; a revisão geral aplica o que valer. Tempos da voz ainda são os estima
 
 ## Mudanças de fala
 
-(preenchido ao fim dos ensaios)
+Nenhuma até aqui: os caps 0, 1 e 2 passaram no rápido sem alterar a fala (ensaio rápido; tempos ainda estimados). Caps 3 a 10 ainda não ensaiados (fila da trava): as propostas de tempo saem do `prever.py` quando rodarem.
 
 ## Achados do app
 
