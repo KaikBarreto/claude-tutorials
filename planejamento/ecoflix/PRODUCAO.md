@@ -645,3 +645,8 @@ Decisões:
   59% do peso a R$ 0,55 × latinha 9% a R$ 6,20), cap10 (a latinha de todo mundo vira o mesmo fardo; margem estimada R$ 1,20
   o quilo); T10 cap03 (separação: 6.420 → 6.100 kg e 2.180 → 2.500 kg) e cap09 (cobre do Siqueira e do Valdir na mesma
   pilha, a Fundição leva). O cap05 da T10 fica na 2D. Sem objeto novo (usou o `fardoPapelao` do kit e o `galpao`).
+- 11/11 21:4x **Retomada 9/20** (lembrete): andando; app e Supabase falso no ar; fila justa com 24 senhas (as antigas
+  quase acabaram); 17 agentes rodando. **Disco: 4,1 GB livres** (a pasta `/home/claude/domiflix` ocupa 16 GB: entregas
+  finais da Domiflix 3,7 GB, app, gravações e projetos das aulas; as `aula_final.mp4` não são cópias soltas das entregas).
+  Risco para a fase final da EcoFlix (gravações finais em 2560×1600 e renders): montar aula por aula e apagar os
+  intermediários de cada uma depois de entregar; se faltar, perguntar ao Kaik o que da Domiflix pode sair.
