@@ -688,7 +688,9 @@ def cap11():
     c.click(ITEM('PDF'), at=c.A(2, 'PDF', 0.8), label='PDF')
     c.waitfor(text='Exportar Histórico (PDF)', timeout=8)
     c.hover(TXT('Receitas', within=DLG), seconds=0.3, at=c.A(2, 'escolho', 1.0), label='Incluir no arquivo: Receitas')
-    c.hover(TXT('Compras', within=DLG), seconds=0.3, at=c.A(2, 'despesas', 0.8), label='Incluir no arquivo: Compras')
+    # na aba Despesas a janela abre com Receitas e Despesas marcadas e Compras desmarcada (11/11): "eu escolho o que entra" = marcar Compras
+    c.click(TXT('Compras', within=DLG), at=c.A(2, 'despesas', 0.8), label='marca Compras')
+    c.confere('dlg', ['Compras'], 'janela do PDF')
     c.mark(3)
     c.click(BTN('Exportar PDF'), at=c.A(3, 'PDF', 0.8), label='Exportar PDF')
     c.waitfor(text='PDF gerado em nova aba', timeout=6, optional=True)

@@ -376,7 +376,9 @@ def capitulo(fn):
 
 # Folga das âncoras (o custo do gesto até o cursor CHEGAR, docs/04): FC no clique, FH no hover. Medidas no ensaio rápido sem render ao
 # lado (depois das 17:35 de 11/11); com a máquina carregada os gestos ficam 1,5 a 2x mais lentos (aviso do coordenador).
-FC, FH = 1.3, 1.4
+FC, FH = 0.6, 0.6        # ensaio rápido do cap06 às 21:00 (máquina sem render): clique e hover chegam em ~0,4 a 0,6 s
+F1 = 1.8                 # 1º clique do capítulo (página recém-carregada): ~2 s até o cursor chegar
+FJ = 1.0                 # 1º clique dentro de uma janela ou página recém-aberta
 
 # ---------------------------------------------------------------- alvos das telas de Coletas (conferidos por exploração, rec/t12/_ex)
 GRUPO = BTNX('Coletas & Logística', within=MENU)
@@ -487,7 +489,7 @@ def cap03():
     Avançar, Material estimado e Observações."""
     c = Cap(3, start=(900, 300), setup=setup_em('/coletas/ordens'))
     c.mark(1)
-    c.click(NOVA_ORDEM, at=c.A(1, 'Nova', FC), label='Nova ordem')
+    c.click(NOVA_ORDEM, at=c.A(1, 'Nova', F1), label='Nova ordem')
     c.waitfor(text='Nova ordem de coleta', timeout=10)
     c.aponta((455, 197), c.A(1, 'Parceiro', 0.35), 'etapa Parceiro')
     c.aponta((606, 197), c.A(1, 'Coleta', 0.35), 'etapa Coleta')
@@ -497,7 +499,7 @@ def cap03():
     c.hover(TXTX('Sem cadastro', within=DLG, exact=True), 1.2, at=c.A(2, 'Sem', FH), label='Sem cadastro')
     c.mark(3)
     c.hover(SEL('#ordem-tipo'), 0.8, at=c.L(3) - 0.2, label='Tipo: Fornecedor')
-    c.click(SEL(f"{DLG} button:has-text('Selecionar')"), at=c.A(3, 'Parceiro', FC), label='Parceiro: Selecionar…')
+    c.click(SEL(f"{DLG} button:has-text('Selecionar')"), at=c.A(3, 'Parceiro', FJ), label='Parceiro: Selecionar…')
     c.waitfor(target=BUSCA_PARC, timeout=10)
     c.type(BUSCA_PARC, 'Vale Forte', label='busca Vale Forte', cps=40, noClick=True)
     c.click(BTNX('Auto Peças Vale Forte', within=f'{DLG} >> nth=-1'), at=c.A(3, 'Vale', FC), label='escolhe Auto Peças Vale Forte')
@@ -582,11 +584,11 @@ def cap06():
     ordens e a ficha (Equipamentos movimentados e Histórico)."""
     c = Cap(6, start=(760, 420), setup=setup_em('/coletas/ordens', extra=[{'do': 'eval', 'js': GPS_FICTICIO}]))
     c.mark(1)
-    c.click(CARD_BTN(8, 'A caminho'), at=c.A(1, 'A', FC, nth=1), label='#8: A caminho')
+    c.click(CARD_BTN(8, 'A caminho'), at=c.A(1, 'A', F1 + 0.3, nth=1), label='#8: A caminho')
     c.waitfor(text='Status alterado para A caminho', timeout=10)
     c.hover(CARD_TXT(8, '#8'), 1.0, at=c.A(1, 'anda', 1.2), label='#8 na coluna A caminho')
     c.mark(2)
-    c.click(CARD_BTN(8, 'Preencher'), at=c.A(2, 'Preencher', FC), label='#8: Preencher')
+    c.click(CARD_BTN(8, 'Preencher'), at=c.A(2, 'Preencher', FJ), label='#8: Preencher')
     c.waitfor(text='Ordem #8', timeout=15)
     c.hover(TXTX('Agendamento', exact=True), 1.0, at=c.A(2, 'combinado', FH), label='tela da ordem: o combinado')
     c.mark(3)
@@ -608,7 +610,7 @@ def cap06():
     c.mark(6)
     c.cursor((760, 460), at=c.A(6, 'concluir', 0.3), label='cursor em repouso (a dica)')
     c.mark(7)
-    c.click(BTNX('Voltar às ordens'), at=c.A(7, 'volta', FC), label='Voltar às ordens')
+    c.click(LINK('Voltar às ordens'), at=c.A(7, 'volta', FC), label='Voltar às ordens')
     c.waitfor(text=PAGINAS['/coletas/ordens'], timeout=15)
     c.hover(CARD_TXT(8, '#8'), 0.8, at=c.A(7, 'oito', FH), label='#8 em Concluídas')
     c.click(CARD_TXT(8, 'Depósito Irmãos Siqueira'), at=c.A(7, 'cartão', FC), label='abre a ficha da ordem 8')
@@ -643,7 +645,7 @@ def cap07():
     c.mark(4)
     c.click(BTN('Solicitar coleta'), at=c.L(4) - 0.2, label='abre Solicitar coleta')
     c.waitfor(target=SEL('#coleta-material'), timeout=10)
-    c.click(SEL('#coleta-material'), at=c.A(4, 'PET', FC), label='Material (campo)')
+    c.click(SEL('#coleta-material'), at=c.A(4, 'PET', FJ), label='Material (campo)')
     c.type(SEL('#coleta-material'), 'PET prensado', at=c.A(4, 'PET', 0.05), label='Material: PET prensado', cps=40, noClick=True)
     c.click(SEL('#coleta-qtd'), at=c.A(4, 'quantidade', FC), label='Quantidade estimada (campo)')
     c.type(SEL('#coleta-qtd'), '800 kg', at=c.A(4, 'quantidade', 0.05), label='Quantidade estimada: 800 kg', cps=40, noClick=True)
@@ -690,7 +692,7 @@ def cap08():
     """Veículos e motoristas: Frota, o FKD2E41 (tara e capacidade), Novo veículo FVL8A52 (poliguindaste) e Novo motorista Sérgio Paiva."""
     c = Cap(8, start=(760, 420), setup=setup_em('/coletas/ordens', aquece=['/coletas/frota'], extra=ABRE_GRUPO))
     c.mark(1)
-    c.click(ITEM_MENU('Frota'), at=c.A(1, 'Frota', FC, nth=1), label='menu Frota')
+    c.click(ITEM_MENU('Frota'), at=c.A(1, 'Frota', F1, nth=1), label='menu Frota')
     c.waitfor(text=PAGINAS['/coletas/frota'], timeout=15)
     c.aponta((340, 198), c.A(1, 'veículos', 0.35), 'aba Veículos')
     c.aponta((460, 198), c.A(1, 'motoristas', 0.35), 'aba Motoristas')
@@ -758,7 +760,7 @@ def cap09():
     agora e a aba Movimentações."""
     c = Cap(9, start=(760, 420), setup=setup_em('/coletas/ordens', aquece=['/coletas/equipamentos'], extra=ABRE_GRUPO))
     c.mark(1)
-    c.click(ITEM_MENU('Equipamentos'), at=c.A(1, 'Equipamentos', FC), label='menu Equipamentos')
+    c.click(ITEM_MENU('Equipamentos'), at=c.A(1, 'Equipamentos', F1), label='menu Equipamentos')
     c.waitfor(text=PAGINAS['/coletas/equipamentos'], timeout=15)
     c.hover(TXTX(PAGINAS['/coletas/equipamentos'], exact=True), 0.6, at=c.A(1, 'bags', FH), label='caçambas, bags, caixas e paletes')
     c.mark(2)
@@ -790,7 +792,7 @@ def cap09():
     c.click(BTN('Movimentar', within='main'), at=c.A(6, 'Movimentar', FC), label='Movimentar')
     c.waitfor(text='Nova movimentação', timeout=10)
     c.hover(BTNX('Externo', within=DLG), 0.6, at=c.A(6, 'fora', FH), label='De: Externo (compra nova)')
-    c.click(SEL(f"{DLG} button:has-text('Minha base') >> nth=1"), at=c.A(6, 'Minha', FC), label='Para: Minha base')
+    c.click(SEL(f"{DLG} button:has-text('Minha base') >> nth=1"), at=c.A(6, 'Minha', FJ), label='Para: Minha base')
     c.click(BTN('Registrar', within=DLG), label='Registrar')
     c.waitfor(text='Movimentação registrada', timeout=10)
     c.hover(TXTX('Posição atual', within='main', exact=True), 1.2, at=c.A(6, 'base', FH, nth=1), label='Posição atual: Minha base')
@@ -818,7 +820,7 @@ def cap10():
     c = Cap(10, start=(760, 420), setup=setup_em('/coletas/ordens', aquece=['/coletas/relatorio'], extra=ABRE_GRUPO))
     KPIS = SEL("main div.grid:has(:text-is('Total de coletas')) >> nth=-1")   # a grade mais interna (os quatro cartões)
     c.mark(1)
-    c.click(ITEM_MENU('Relatório'), at=c.A(1, 'relatório', FC), label='menu Relatório')
+    c.click(ITEM_MENU('Relatório'), at=c.A(1, 'relatório', F1), label='menu Relatório')
     c.waitfor(text=PAGINAS['/coletas/relatorio'], timeout=15)
     c.confere_kpi([['Total de coletas', '4'], ['Concluídas', '1'], ['Canceladas', '0'], ['Taxa de conclusão', '25%']], 'Este mês: 4, 1, 0, 25%')
     c.hover(SEL('main button[role=combobox]'), 0.3, at=c.A(1, 'mês', FH, nth=1), label='Período: Este mês')
@@ -847,7 +849,7 @@ def cap11():
     e Dias aceitos."""
     c = Cap(11, start=(760, 420), setup=setup_em('/coletas/ordens', aquece=['/coletas/configuracoes'], extra=ABRE_GRUPO))
     c.mark(1)
-    c.click(ITEM_MENU('Configurações'), at=c.A(1, 'Configurações', FC), label='menu Configurações (Coletas)')
+    c.click(ITEM_MENU('Configurações'), at=c.A(1, 'Configurações', F1), label='menu Configurações (Coletas)')
     c.waitfor(text=PAGINAS['/coletas/configuracoes'], timeout=15)
     c.hover(TXTX('Operação', within='main', exact=True), 0.8, at=c.A(1, 'operação', FH), label='bloco Operação')
     c.mark(2)

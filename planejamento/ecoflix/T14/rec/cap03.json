@@ -133,8 +133,8 @@
     "text": "Disponível no cofre",
     "within": "main"
    },
-   "seconds": 0.8,
-   "at": 22.5,
+   "seconds": 0.5,
+   "at": 20.52,
    "label": "Disponível no cofre",
    "optional": true,
    "timeout": 4
@@ -155,7 +155,7 @@
     "selector": "main p.text-3xl"
    },
    "seconds": 0.8,
-   "at": 32.26,
+   "at": 26.34,
    "label": "o saldo que o sistema mostra",
    "optional": true,
    "timeout": 4
@@ -239,7 +239,7 @@
     "selector": "#new-balance"
    },
    "text": "18560,00",
-   "at": 46.12,
+   "at": 45.76,
    "label": "digita 18.560,00 (ZOOM Novo saldo e Diferença)",
    "noClick": true,
    "clear": true
@@ -280,7 +280,7 @@
     "selector": "#motivo"
    },
    "text": "Contagem do cofre",
-   "at": 54.33,
+   "at": 53.24,
    "label": "digita Contagem do cofre",
    "noClick": true
   },
@@ -300,11 +300,6 @@
    "timeout": 10
   },
   {
-   "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"R$ 18.560,00\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText+' '+[...el.querySelectorAll('input,textarea')].map(i=>i.value).join(' '));const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,250));}return out})()",
-   "label": "confere cofre com R$ 18.560,00"
-  },
-  {
    "do": "mark",
    "name": "L7",
    "at": 56.64
@@ -318,7 +313,7 @@
    "by": 320,
    "duration": 0.5,
    "after": 100,
-   "at": 56.64,
+   "at": 57.93,
    "label": "desce ao histórico do cofre"
   },
   {
@@ -327,8 +322,8 @@
     "text": "Ajuste de saldo — Contagem do cofre",
     "within": "main"
    },
-   "seconds": 0.6,
-   "at": 58.53,
+   "seconds": 0.5,
+   "at": 59.45,
    "label": "a linha do ajuste",
    "optional": true,
    "timeout": 4
@@ -341,10 +336,15 @@
     "within": "main"
    },
    "seconds": 1.0,
-   "at": 59.55,
+   "at": 60.99,
    "label": "etiqueta Ajuste",
    "optional": true,
    "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"R$ 18.560,00\", \"Ajuste de saldo — Contagem do cofre\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText+' '+[...el.querySelectorAll('input,textarea')].map(i=>i.value).join(' '));const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,250));}return out})()",
+   "label": "confere cofre com R$ 18.560,00 e o ajuste no histórico"
   },
   {
    "do": "eval",

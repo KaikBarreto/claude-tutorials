@@ -634,3 +634,6 @@ Decisões:
   `fardoPapelao()`, `bigBag()`. T07 com o big bag como tara (chip "saco") e a carroça com ferro misto; T08 com as latinhas
   novas. **Mandados ao Kaik às 20:4x: T07_3d.mp4, T08_3d.mp4, vitrine_3d.jpg e T05_3d.mp4.** Faltam as correções da T11,
   T12 e T16 (prévias depois).
+- 11/11 21:1x **T11 em 3D mandada ao Kaik** (a pilha de latinha fica no "Entra"). T12 cap08: carregado agora sobe a
+  "Carregado 9.460 kg" com "peso do material 3.080 kg", mas o "Tara 6.380 kg" ficava só ~0,4 s (a conta terminava em
+  "Carregado"): agente retomado para chegar à tara até "peso" e segurar até "Carregado".

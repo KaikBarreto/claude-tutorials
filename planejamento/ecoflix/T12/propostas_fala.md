@@ -22,5 +22,9 @@ geral aplica; `roteiro.md` e `tts_textos.py` não foram mexidos.
 
 - Quadro "Ordens de Coleta" a 1280 px com o menu lateral aberto: os nomes dos parceiros nos cartões saem cortados
   ("Depósito Irmãos ...", e "Mar..." ao lado do selo "Sem cadastro" no cartão #7, que a fala chama de "Marcelo Tavares").
+- "Relatório de Coleta 8" (tela da ordem concluída, cap06): "Agendamento 09/11/2026 · Manhã" para uma coleta agendada para 10/11. A data
+  sem hora do relatório (`agendamento.data`, "2026-11-10") é lida como meia-noite UTC e mostrada em Brasília, um dia antes
+  (`pages/CollectionOrderPage.tsx`, `fmtDate`). A ficha e o quadro mostram 10/11 certo. A câmera fica no relatório em "Concluir coleta" e
+  na dica: melhor não aproximar o bloco do Agendamento na edição.
 - Cartão da ordem cancelada (#4) oferece o botão "Preencher" (`CollectionOrdersBoard.tsx`, cartão das colunas que não são
   "Solicitada": "Preencher" quando não é concluída), embora a ordem não mude mais de etapa.

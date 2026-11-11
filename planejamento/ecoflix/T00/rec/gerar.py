@@ -354,7 +354,7 @@ def cap01(v):
     ph = v == 'p'
     P = lambda t, **kw: {'text': t, 'within': PORTAO, **kw}
     c.mark(1)
-    c.hover(P('Primeiro passo', exact=True), 0.5, at=c.A(1, 'primeiro', 0.9), label='selo Primeiro passo')
+    c.hover(P('Primeiro passo', exact=True), 0.5, at=c.A(1, 'primeiro', 0.9), label='selo Primeiro passo', noScroll=True)
     c.hover(P('Antes de usar o sistema'), 0.5, at=c.A(1, 'antes', 0.9), label='Antes de usar o sistema')
     c.mark(2)
     if ph:
