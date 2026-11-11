@@ -159,7 +159,7 @@ function cronometro(px,num,un){return `<div style="position:relative;width:${px}
     <path class="arc" d="" fill="none" stroke="#50D088" stroke-width="8" stroke-linecap="round"/></svg>
   <div class="cx" style="position:absolute;inset:0;flex-direction:column;border-radius:0">
     <div class="num" style="font-size:${Math.round(px*.27)}px;line-height:1">${num}</div>
-    <div class="lbl" style="font-size:${Math.round(px*.1)}px;margin-top:4px">${un}</div></div></div>`}
+    <div class="lbl" style="font-size:${Math.round(px*.1)}px;margin-top:${Math.round(px*.06)}px">${un}</div></div></div>`}
 function arcoD(r,fr){if(fr>=.999)return `M0 ${-r} A${r} ${r} 0 1 1 0 ${r} A${r} ${r} 0 1 1 0 ${-r}`;const a=fr*2*Math.PI;
   return `M0 ${-r} A${r} ${r} 0 ${fr>.5?1:0} 1 ${(r*Math.sin(a)).toFixed(2)} ${(-r*Math.cos(a)).toFixed(2)}`}
 function poeCronometro(c,fr){const p=c.querySelector('.arc');p.setAttribute('d',arcoD(39,fr));return p}
@@ -340,7 +340,7 @@ CAPS[6]=()=>{
   const X=[230,510,790];
   const pags=PAG.map(([m,d],k)=>el(`<div class="card" style="left:${X[k]}px;top:400px;width:260px;height:240px;overflow:hidden">
       <div class="cx" style="height:48px;border-radius:0;background:var(--vc);color:var(--ve);font-weight:800;font-size:19px">${m}</div>
-      <div class="ab num dia" style="left:0;top:54px;width:260px;text-align:center;font-size:66px">${d}</div></div>`,g));
+      <div class="ab num dia" style="left:0;top:134px;width:260px;text-align:center;font-size:66px">${d}</div></div>`,g));
   const parc=PAG.map(()=>el(`<div class="ab" style="left:0;top:0;width:212px;height:64px;border-radius:14px;background:var(--vc);border:2px solid var(--vm);
       display:flex;flex-direction:column;justify-content:center;align-items:center">
       <div style="font-weight:800;font-size:15px;color:var(--ve);letter-spacing:.02em">A Receber</div>
@@ -353,7 +353,7 @@ CAPS[6]=()=>{
     vis(venda,t,tfi-.05,1e9,{dy:22});
     pags.forEach((p,k)=>vis(p,t,tve-.1+k*.12,1e9,{dy:22}));
     // "entra": a venda se divide nas três parcelas; "cada parcela": cada uma cai no seu dia
-    parc.forEach((e,k)=>{const x0=640-106+(k-1)*232,y0=300, x1=X[k]+24,y1=400+154;
+    parc.forEach((e,k)=>{const x0=640-106+(k-1)*232,y0=300, x1=X[k]+24,y1=400+60;
       const pa=eo(pr(t,ten-.05+k*.1,.5)), q=eio(pr(t,tca-.1+k*.2,.75));
       const x=lerp(lerp(640-106,x0,pa),x1,q), y=lerp(lerp(250,y0,pa),y1,q)-50*4*q*(1-q);
       e.style.transform=`translate(${x.toFixed(2)}px,${y.toFixed(2)}px)`; e.style.opacity=pa.toFixed(3); e.style.visibility=pa>0?'visible':'hidden'});
@@ -368,14 +368,16 @@ CAPS[6]=()=>{
 CAPS[8]=()=>{
   const g=grupo();
   const tit=titulo(g,'Rotina','Rotina diária');
-  const cr=el(`<div class="ab" style="left:140px;top:236px">${cronometro(260,'10','min')}</div>`,g);
+  const esq=el('<div class="ab" style="left:0;top:0;width:1280px;height:800px"></div>',g);   // lado esquerdo: começa no centro e vai para a esquerda quando a lista entra
+  const cr=el(`<div class="ab" style="left:140px;top:236px">${cronometro(260,'10','min')}</div>`,esq);
   const arc=poeCronometro(cr,10/60);
-  const cedo=el(`<div class="ab" style="left:70px;top:528px;width:400px;text-align:center"><div class="tag a">${ic('sunrise',20)}logo cedo</div></div>`,g);
+  const cedo=el(`<div class="ab" style="left:70px;top:528px;width:400px;text-align:center"><div class="tag a">${ic('sunrise',20)}logo cedo</div></div>`,esq);
   const L=listaRotina(g,560,222,580,[['wallet','Conferir o caixa'],['receipt-text','Contas do dia'],['calendar-days','Agenda de amanhã']],88);
   return t=>{
     const J=janela([0,'bom'],[0,'cedo'],.6); if(!naJanela(g,t,J))return;
     const tro=W(0,'rotina'),tdi=W(0,'diaria'),tmi=W(0,'minutos'),tce=W(0,'cedo');
     posTitulo(tit,t,J.a-.6,tro-.45);
+    esq.style.transform=`translateX(${(370*(1-eio(pr(t,tdi-.35,.8)))).toFixed(2)}px)`;
     vis(cr,t,tro-.05,1e9,{dy:20,sc:.9});
     vis(L.c,t,tdi-.15,1e9,{dy:22}); L.rows.forEach((it,k)=>{vis(it.r,t,tdi+.05+k*.18,1e9,{dx:-12,dy:0}); acende(it,t,tdi+.25+k*.18)});
     traco(arc,t,tmi-.25,.9); pulse(cr,t,tmi+.4,.04,.7);
@@ -388,14 +390,16 @@ CAPS[8]=()=>{
 CAPS[9]=()=>{
   const g=grupo();
   const tit=titulo(g,'Rotina','Rotina semanal');
-  const cr=el(`<div class="ab" style="left:140px;top:236px">${cronometro(260,'30','min')}</div>`,g);
+  const esq=el('<div class="ab" style="left:0;top:0;width:1280px;height:800px"></div>',g);   // lado esquerdo: começa no centro e vai para a esquerda quando a lista entra
+  const cr=el(`<div class="ab" style="left:140px;top:236px">${cronometro(260,'30','min')}</div>`,esq);
   const arc=poeCronometro(cr,30/60);
-  const sem=el(`<div class="ab" style="left:70px;top:528px;width:400px;text-align:center"><div class="tag v">${ic('calendar-days',20)}toda semana</div></div>`,g);
+  const sem=el(`<div class="ab" style="left:70px;top:528px;width:400px;text-align:center"><div class="tag v">${ic('calendar-days',20)}toda semana</div></div>`,esq);
   const L=listaRotina(g,560,276,580,[['boxes','Estoque'],['hand-coins','Fiado vencido']],88);
   return t=>{
     const J=janela([0,'uma'],[0,'fiado'],.6); if(!naJanela(g,t,J))return;
     const tse=W(0,'semana'),tme=W(0,'meia'),tco=W(0,'conferencias'),tes=W(0,'estoque'),tfi=W(0,'fiado');
     posTitulo(tit,t,J.a-.6,tse-.5);
+    esq.style.transform=`translateX(${(370*(1-eio(pr(t,tco-.35,.8)))).toFixed(2)}px)`;
     vis(cr,t,tse-.1,1e9,{dy:20,sc:.9}); vis(sem,t,tse+.15,1e9,{dy:10});
     traco(arc,t,tme-.1,.9);
     vis(L.c,t,tco-.1,1e9,{dy:22});
@@ -411,11 +415,12 @@ CAPS[9]=()=>{
 CAPS[10]=()=>{
   const g=grupo();
   const tit=titulo(g,'Rotina','Rotina mensal');
+  const esq=el('<div class="ab" style="left:0;top:0;width:1280px;height:800px"></div>',g);   // lado esquerdo: começa no centro e vai para a esquerda quando a lista entra
   const pag=el(`<div class="card" style="left:110px;top:196px;width:210px;height:236px;overflow:hidden">
       <div class="cx" style="height:48px;border-radius:0;background:var(--vc);color:var(--ve);font-weight:800;font-size:18px">todo mês</div>
-      <div class="ab num" style="left:0;top:64px;width:210px;text-align:center;font-size:84px">1º</div></div>`,g);
-  const fech=el('<div class="ab" style="left:65px;top:450px;width:300px;text-align:center"><div class="tag v">fechamento</div></div>',g);
-  const cr=el(`<div class="ab" style="left:338px;top:226px">${cronometro(176,'2','horas')}</div>`,g);
+      <div class="ab num" style="left:0;top:64px;width:210px;text-align:center;font-size:84px">1º</div></div>`,esq);
+  const fech=el('<div class="ab" style="left:65px;top:450px;width:300px;text-align:center"><div class="tag v">fechamento</div></div>',esq);
+  const cr=el(`<div class="ab" style="left:338px;top:226px">${cronometro(176,'2','horas')}</div>`,esq);
   const arc=poeCronometro(cr,1);
   const L=listaRotina(g,560,176,600,[['landmark','Conciliar o banco'],['file-text','Conferir o DRE'],['send','Pacote do contador'],['recycle','MTR e CDF pendentes']],90);
   const chave=el(`<div class="ab" style="left:534px;top:378px;width:20px;height:166px;border:3px solid #CBD3DB;border-right:0;border-radius:12px 0 0 12px"></div>`,g);
@@ -425,6 +430,7 @@ CAPS[10]=()=>{
     const tme=W(0,'mes'),tfe=W(0,'fechamento'),tho=W(0,'horas'),tpa=W(0,'passos'),
           tc1=W(1,'conciliar'),tdr=W(1,'dre'),tpc=W(2,'pacote'),tmt=W(2,'mtr'),tdp=W(2,'dependem'),tpl=W(2,'plano');
     posTitulo(tit,t,J.a-.6,tme-.5);
+    esq.style.transform=`translateX(${(350*(1-eio(pr(t,tpa-.4,.8)))).toFixed(2)}px)`;
     vis(pag,t,tme-.1,1e9,{dy:20}); vis(fech,t,tfe-.1,1e9,{dy:10}); pulse(pag,t,tfe,.04,.7);
     vis(cr,t,tho-.35,1e9,{dy:20,sc:.9}); traco(arc,t,tho-.2,.9);
     vis(L.c,t,tpa-.2,1e9,{dy:22}); L.rows.forEach((it,k)=>vis(it.r,t,tpa-.05+k*.1,1e9,{dx:-12,dy:0}));

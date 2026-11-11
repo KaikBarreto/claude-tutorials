@@ -116,6 +116,14 @@ class Cap:
             raise SystemExit(f'cap{s.n:02d}: palavra "{palavra}" (#{nth}) não achada na linha {i}: ' + ' '.join(w['w'] for w in s.words if w['linha'] == i - 1))
         return hits[nth]['s']
 
+    def acha(s, trecho):
+        """número (1..) da linha cuja fala contém `trecho`: o robô segue a ordem da fala, se ela mudar"""
+        q = norm(trecho)
+        hits = [k + 1 for k, l in enumerate(s.linhas) if q in norm(l['texto'])]
+        if len(hits) != 1:
+            raise SystemExit(f'cap{s.n:02d}: trecho "{trecho}" achado em {len(hits)} linhas')
+        return hits[0]
+
     def A(s, i, palavra, folga=0.7, nth=0):
         """`at` = início da palavra - folga (folga = custo do gesto até o cursor chegar; negativa = depois da palavra)"""
         t = round(max(0.0, s.W(i, palavra, nth) - folga), 2)
@@ -520,7 +528,7 @@ def cap05():
     c.mark(3)
     c.click(BTN('Nova produção'), at=c.A(3, 'Nova', 0.8), label='Nova produção')
     c.waitfor(text='Nova ordem de produção', timeout=10)
-    c.confere('dlg', ['Nova ordem de produção', 'Planeje a produção a partir de uma ficha técnica. Depois você vai lançando a produção dia a dia.'], 'janela Nova ordem')
+    c.confere('[role=dialog]:has(#prod-planned)', ['Nova ordem de produção', 'Planeje a produção a partir de uma ficha técnica. Depois você vai lançando a produção dia a dia.'], 'janela Nova ordem')
     c.click(PH('Escreva o nome ou código do produto'), at=c.A(3, 'ficha,', 0.7), label='Ficha técnica *')
     c.type(PH('Escreva o nome ou código do produto'), 'fardo', at=c.A(3, 'escolho', 0.05), noClick=True, cps=40, label='digita fardo')
     c.click(OPT('Fardo de alumínio'), at=c.A(3, 'Fardo', 0.6), label='a ficha do Fardo de alumínio')
@@ -574,22 +582,36 @@ def cap06():
     c.hover(CAB_COLUNA('A fazer'), 0.3, at=c.A(1, 'fazer,', 0.6), label='A fazer')
     c.hover(CAB_COLUNA('Em produção'), 0.3, at=c.A(1, 'produção', 0.6), label='Em produção')
     c.hover(CAB_COLUNA('Concluída'), 0.4, at=c.A(1, 'Concluída.', 0.6), label='Concluída')
-    c.mark(2)
-    c.click(CAB_COLUNA('Em produção'), at=c.A(2, 'Clicando', 0.7), label='nome da coluna Em produção (abre Editar coluna)')
-    c.waitfor(text='Editar coluna', timeout=8)
-    c.hover(SEL(f"{DLG} button[aria-label='Escolher cor']"), 0.4, at=c.A(2, 'cor.', 0.6), label='Cor (continua laranja)')
-    c.type(SEL('#col-edit-name'), 'Na prensa', at=c.A(2, 'vira', 0.3), clear=True, cps=20, label='Nome: Na prensa')
-    c.confere_campos(['Na prensa'], 'nome Na prensa')
-    c.mark(3)
-    c.hover(SEL(f"{DLG} button[role=switch]"), 1.4, at=c.A(3, 'chave', 0.6), label='[ZOOM] chave Coluna de conclusão (desligada)')
-    c.hover(TXTX('As ordens finalizadas vão automaticamente', within=DLG), 1.0, at=c.A(3, 'finalizadas,', 0.6), label='a explicação da chave')
-    c.mark(4)
-    c.click(BTN('Salvar', within=DLG), at=c.A(4, 'Salvar.', 0.7), label='Salvar')
-    c.waitfor(text='Coluna atualizada', timeout=8)
-    c.hover(CAB_COLUNA('Na prensa'), 0.8, at=c.A(4, 'nome.', 0.6), label='a coluna Na prensa')
-    c.mark(5)
-    c.hover(CAB_COLUNA('Concluída'), 0.5, at=c.A(5, 'Concluída.', 0.6), label='a coluna Concluída')
-    c.hover(CHECK_CONCLUSAO, 1.4, at=c.A(5, 'check', 0.6), label='[ZOOM] sinal de check da Concluída (Coluna de conclusão)')
+    # A ordem das falas manda (propostas_fala.md, cap06): o check só aparece ANTES de salvar uma coluna. Depois do "Salvar" o app
+    # perde o is_done (achado do app) e o check some até recarregar a página; com a fala atual (check depois do Salvar) o passo falha.
+    i_col, i_chave, i_salvar, i_check = c.acha('As colunas são suas'), c.acha('a chave Coluna de conclusão'), c.acha('Salvar.'), c.acha('sinal de check')
+
+    def bloco_colunas():
+        c.mark(i_col)
+        c.click(CAB_COLUNA('Em produção'), at=c.A(i_col, 'Clicando', 0.7), label='nome da coluna Em produção (abre Editar coluna)')
+        c.waitfor(text='Editar coluna', timeout=8)
+        c.hover(BTNX('Escolher cor', within=DLG), 0.4, at=c.A(i_col, 'cor.', 0.6), label='Cor (continua laranja)')
+        c.type(SEL('#col-edit-name'), 'Na prensa', at=c.A(i_col, 'vira', 0.3), clear=True, cps=20, label='Nome: Na prensa')
+        c.confere_campos(['Na prensa'], 'nome Na prensa')
+        c.mark(i_chave)
+        c.hover(SEL(f"{DLG} button[role=switch]"), 1.4, at=c.A(i_chave, 'chave', 0.6), label='[ZOOM] chave Coluna de conclusão (desligada)')
+        c.hover(TXTX('As ordens finalizadas vão automaticamente', within=DLG), 1.0, at=c.A(i_chave, 'finalizadas,', 0.6), label='a explicação da chave')
+        c.mark(i_salvar)
+        c.click(BTN('Salvar', within=DLG), at=c.A(i_salvar, 'Salvar.', 0.7), label='Salvar')
+        c.waitfor(text='Coluna atualizada', timeout=8)
+        c.hover(CAB_COLUNA('Na prensa'), 0.8, at=c.A(i_salvar, 'nome.', 0.6), label='a coluna Na prensa')
+
+    def bloco_check():
+        c.mark(i_check)
+        c.hover(CAB_COLUNA('Concluída'), 0.5, at=c.A(i_check, 'Concluída.', 0.6), label='a coluna Concluída')
+        c.hover(CHECK_CONCLUSAO, 1.4, at=c.A(i_check, 'check', 0.6), label='[ZOOM] sinal de check da Concluída (Coluna de conclusão)')
+
+    if i_check < i_col:
+        bloco_check()
+        bloco_colunas()
+    else:
+        bloco_colunas()
+        bloco_check()
     c.mark(6)
     c.ev(js_quadro_x(300), at=c.A(6, 'etapa?', 0.4), label='a faixa do quadro mostra o fim (botão Coluna)')
     c.hover(BTN('Coluna', within='main'), 1.2, at=c.A(6, 'botão', 0.6), label='botão Coluna (sem clicar)')

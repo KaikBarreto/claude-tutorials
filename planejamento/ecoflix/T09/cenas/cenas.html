@@ -195,7 +195,7 @@ const ILU=[
  {cap:4,id:'ilu04_soma',de:[6,'Agora',1],ate:[8,'duplica',1],cauda:.6,
   resumo:'editar não soma por cima: desfaz o pedido antigo inteiro, grava o certo, e no fim entram só os 18 kg e sai só a diferença',
   mostra:['Correções','Não soma por cima','Pedido antigo','24 kg · R$ 148,80','Pedido certo','42 kg · R$ 260,40','Estoque','Caixa','−24 kg','desfaz o antigo','+42 kg','grava o certo',
-    '+18 kg','só o que faltava','+R$ 148,80','devolve pro caixa','−R$ 260,40','sai do caixa','R$ 111,60','para a Aparecida']},
+    '+18 kg','o que faltava','+R$ 148,80','devolve pro caixa','−R$ 260,40','sai do caixa','R$ 111,60','para a Aparecida']},
  {cap:5,id:'ilu05_estornado',de:[5,'pedido',1],ate:[5,'existiu',1],cauda:.6,
   resumo:'o pedido estornado fica no caixa fechado do dia 3 como rastro: fora dos totais, sem editar nem excluir',
   mostra:['Correções','O pedido estornado','Caixa de 03/11','fechado','Compra','03/11','Estornado em 05/11','Totais','Compra · 03/11','Editar','Excluir','fica como rastro']},
@@ -363,12 +363,16 @@ S.ilu04_soma=g=>{
       ${big?`<span class="ok" style="opacity:0">${ic('circle-check',26,'#2E7D57')}</span>`:''}</div>`,g);
   const L={E1:linha('−'+kg(24),'desfaz o antigo','#8A5A00'),C1:linha('+'+brl(148.8),'devolve pro caixa','#8A5A00'),
            E2:linha('+'+kg(42),'grava o certo','#2E7D57'),C2:linha('−'+brl(260.4),'sai do caixa','#2E7D57'),
-           E3:linha('+'+kg(18),'só o que faltava','#121212',1),C3:linha(brl(111.6),'para a Aparecida','#121212',1)};
+           E3:linha('+'+kg(18),'o que faltava','#121212',1),C3:linha(brl(111.6),'para a Aparecida','#121212',1)};
   const Y1=YL+96, Y2=YL+162, Y3=YL+256;
   const POS={E1:[XA+26,Y1],C1:[XN+26,Y1],E2:[XA+26,Y2],C2:[XN+26,Y2],E3:[XA+26,Y3],C3:[XN+26,Y3]};
   const DE={E1:[XA+26,YP+124],C1:[XA+26,YP+124],E2:[XN+26,YP+124],C2:[XN+26,YP+124]};
   const voa=(k,t,a)=>{const e=L[k],[x1,y1]=POS[k],[x0,y0]=DE[k];const q=arco(e,t,a,.8,x0,y0,x1,y1,-50);
-    e.style.opacity=(q>0?Math.min(1,q*4):0).toFixed(3);e.style.visibility=q>0?'visible':'hidden'};
+    e.style.opacity=(q>0?Math.min(1,q*4):0).toFixed(3);e.style.visibility=q>0?'visible':'hidden';
+    // em voo a linha "levanta" (sombra que some ao pousar): lê como algo passando por cima do cabeçalho do livro
+    const s=(q>0&&q<1)?Math.sin(Math.PI*Math.min(1,q*1.15)):0;
+    e.style.boxShadow=s>0?`0 ${(12*s).toFixed(1)}px ${(28*s).toFixed(1)}px rgba(17,24,39,${(.18*s).toFixed(3)})`:'none';
+    e.style.background=s>0?mix('#F7F8FA','#FFFFFF',s):'#F7F8FA'};
   const fica=(k,t,a,f=1)=>{const e=L[k],[x,y]=POS[k];const p=eo(pr(t,a,.5));e.style.transform=`translate(${x}px,${(y+12*(1-p)).toFixed(2)}px) scale(${f.toFixed(4)})`;
     e.style.opacity=p.toFixed(3);e.style.visibility=p>0?'visible':'hidden'};
   let A=null;

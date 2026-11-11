@@ -375,30 +375,29 @@ CAPS[7]=()=>{
   };
 };
 
-// ================================================================== CAPS[8] · Tara e peso líquido (ilu08_tara)
+// ================================================================== CAPS[8] · A tara do caminhão (ilu08_tara)
 // fala 2: "A tara é o peso do caminhão vazio. Carregado, ele pesa mais na balança, e essa diferença é o peso do material."
-// O desenho do kit (caminhão na balança, "Tara", "Peso bruto", "Peso líquido"); só a tara tem número (a do FKD2E41, 6.380 kg,
-// que a tela acabou de mostrar; junção: a 2ª pesagem do T8): o peso bruto não tem número na fala, então a conta vira barras.
+// A tara do veículo (o campo "Tara" da Frota, a do FKD2E41, 6.380 kg, que a tela acabou de mostrar) e o caminhão carregado; a
+// diferença é o peso do material. Sem "Peso bruto"/"Peso líquido": na pesagem do app o caminhão vazio é a "2ª Pesagem", a
+// diferença é o "Peso Bruto" e a tara é a embalagem (aviso do coordenador, 11/11); aqui ficam só as palavras da fala.
 CAPS[8]=()=>{
   const TARA=6380;   // kg: tara do FKD2E41 (T12/plano.md, depois da junção)
   const g=grupo();
-  const tit=titulo(g,'Balança','Tara e peso líquido');
+  const tit=titulo(g,'Frota','A tara do caminhão');
   const chao=el('<div class="ab" style="left:50px;top:570px;width:1180px;height:4px;border-radius:2px;background:#DDE2E7"></div>',g);
   const plat=el('<div class="ab" style="left:90px;top:556px;width:560px;height:16px;border-radius:5px;background:#CBD1D8;border:2px solid #A8B0B9"></div>',g);
   const cam=el(`<div class="ab" style="left:0;top:0;width:450px;height:207px">${caminhaoSvg(450)}</div>`,g);
   const rodas=[...cam.querySelectorAll('.roda')], pecas=[...cam.querySelectorAll('.pd')];
-  const B0=556, BX=[780,970], HT=180, HB=292;
+  const B0=556, BX=[700,860], HT=180, HB=292;
   const bT=el(`<div class="ab" style="left:${BX[0]}px;top:${B0-HT}px;width:96px;height:${HT}px;border-radius:12px 12px 0 0;background:#C9D1D9;transform-origin:50% 100%"></div>`,g);
   const bB=el(`<div class="ab" style="left:${BX[1]}px;top:${B0-HB}px;width:96px;height:${HB}px;border-radius:12px 12px 0 0;background:#C9D1D9;transform-origin:50% 100%;overflow:hidden">
       <div class="ab dif" style="left:0;top:0;width:96px;height:${HB-HT}px;background:var(--v);opacity:0"></div></div>`,g);
   const dif=bB.querySelector('.dif');
   const nT=el(`<div class="ab num" style="left:${BX[0]-52}px;top:${B0-HT-48}px;width:200px;text-align:center;font-size:27px">0 kg</div>`,g);
   const lb=(x,txt)=>el(`<div class="ab" style="left:${x-82}px;top:${B0+26}px;width:260px;text-align:center;font-weight:800;font-size:22px">${txt}</div>`,g);
-  const lT=lb(BX[0],'Tara'), lB=lb(BX[1],'Peso bruto');
+  const lT=lb(BX[0],'Tara'), lB=lb(BX[1],'carregado');
   const nivel=el(`<div class="ab" style="left:${BX[0]+96}px;top:${B0-HT-1.5}px;width:${BX[1]-BX[0]-96}px;height:0;border-top:3px dashed #8E979F"></div>`,g);
-  const lL=el(`<div class="ab" style="left:${BX[1]+112}px;top:${B0-HB+16}px"><div style="font-weight:800;font-size:23px;color:var(--ve);white-space:nowrap">Peso líquido</div>
-      <div class="row lm" style="margin-top:6px;gap:8px">${ic('package',20,'#2E7D57')}<div class="lbl" style="font-size:18px">o material</div></div></div>`,g);
-  const lm=lL.querySelector('.lm');
+  const lL=el(`<div class="ab" style="left:${BX[1]+112}px;top:${B0-HB+22}px"><div class="row" style="gap:8px">${ic('package',22,'#2E7D57')}<div style="font-weight:800;font-size:23px;color:var(--ve);white-space:nowrap">peso do material</div></div></div>`,g);
   return t=>{
     const a0=W(2,'A')-.3, tta=W(2,'tara'), tca=W(2,'caminhao'), tva=W(2,'vazio'), tcg=W(2,'Carregado'), tpe=W(2,'pesa'),
           tba=W(2,'balanca'), tdi=W(2,'diferenca'), tma=W(2,'material');
@@ -415,7 +414,7 @@ CAPS[8]=()=>{
     nT.style.opacity=eo(pr(t,tva,.4)).toFixed(3); conta(nT,t,tva,.9,0,TARA); vis(lT,t,tva-.1,1e9,{dy:8});
     const hb=eio(pr(t,tpe-.1,1.0)); bB.style.transform=`scaleY(${hb.toFixed(4)})`; bB.style.opacity=hb>0?1:0; vis(lB,t,tpe,1e9,{dy:8});
     vis(nivel,t,tba-.1,1e9,{dy:0,sc:1});
-    dif.style.opacity=eo(pr(t,tdi-.1,.45)).toFixed(3); vis(lL,t,tdi,1e9,{dx:-12,dy:0}); vis(lm,t,tma-.15,1e9,{dy:6});
+    dif.style.opacity=eo(pr(t,tdi-.1,.45)).toFixed(3); vis(lL,t,tdi,1e9,{dx:-12,dy:0});
     pulse(bB,t,tma,.03,.8);
   };
 };

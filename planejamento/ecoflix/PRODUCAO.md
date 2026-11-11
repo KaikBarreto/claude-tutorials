@@ -395,17 +395,17 @@ Decisões:
   T22, T25 e T27 (a cota da NF-e da T16 saiu da fala). A comparação roteiro × tts foi parcial: fica para a revisão geral.
   **Semente do mundo base** (seção 16) com um agente novo; os robôs seguem no gerador e no ensaio rápido e só fazem o
   ensaio completo depois do aviso de mundo novo pronto (a T26 não depende e segue).
-- 11/11 12:0x **Ilustrações T11 e T21 prontas** (12 + 9 cenas; folhas em `previa_ilustracoes/`): o Cato só como balão de
+- 11/11 11:5x **Ilustrações T11 e T21 prontas** (12 + 9 cenas; folhas em `previa_ilustracoes/`): o Cato só como balão de
   conversa; diferença e perda em âmbar; valores da T21 já com os números da junção (17.540, 112.800, 14.370, 96.076).
   **Para o robô da T21**: o `T21/plano.md` (respostas R1 a R9) ainda tem os números antigos e "Conta Reserva" (o mundo diz
   "Conta Secundária"): atualizar antes do robô da T21. Mais itens do kit para a unificação (etiquetas, escala em `svg()`,
   janela pelas âncoras, fundo opaco para cenas seguidas, balão de conversa, desenhos). Robô da T19 lançado no lugar.
-- 11/11 12:1x **Ilustrações T01 e T02 prontas** (12 + 9 cenas). **Para a revisão**: não existe logo da Recicla Vale; a T01
+- 11/11 11:5x **Ilustrações T01 e T02 prontas** (12 + 9 cenas). **Para a revisão**: não existe logo da Recicla Vale; a T01
   desenhou um símbolo fictício (caps 00, 05, 06 e 08): usar o MESMO logo do robô da T01 (o que ele sobe na tela) nas
   cenas e no mundo. "Excluir Conta" vem de `config/routes.ts:245` (fora do inventário). Kit: `pulse()` chamado duas vezes no
   mesmo quadro apaga o primeiro (o `CAPS[1]` do kit perde um pulso; corrigir na unificação). `render_cenas.cjs` com
   `--stills` vazio renderizava o MP4 inteiro: agora recusa. Robô da T27 lançado no lugar.
-- 11/11 12:2x **Ilustrações T07 e T08 prontas** (10 + 8 cenas). **Erro de conceito no exemplo do kit** "Tara e peso
+- 11/11 11:5x **Ilustrações T07 e T08 prontas** (10 + 8 cenas). **Erro de conceito no exemplo do kit** "Tara e peso
   líquido" (o que foi na prévia da marca): ele chama o caminhão vazio de "Tara", mas no app essa é a "2ª Pesagem", a
   diferença entre as duas é o "Peso Bruto" e tara é a embalagem (saco, tambor, caçamba). As cenas da T07 e da T08 seguem o
   app (a da T07 virou carroça com 412, 96 e 316 kg: caminhão com 412 kg seria falso); corrigir o `CAPS[1]` do kit na
