@@ -650,3 +650,6 @@ Decisões:
   finais da Domiflix 3,7 GB, app, gravações e projetos das aulas; as `aula_final.mp4` não são cópias soltas das entregas).
   Risco para a fase final da EcoFlix (gravações finais em 2560×1600 e renders): montar aula por aula e apagar os
   intermediários de cada uma depois de entregar; se faltar, perguntar ao Kaik o que da Domiflix pode sair.
+- 11/11 22:0x **T12 em 3D mandada ao Kaik** ("Tara 6.380 kg" segura ~2 s com o caminhão vazio; carregado, 9.460 kg e o
+  "peso do material" 3.080 kg). Prévias 3D já mandadas: T05, T07, T08, T04, T10, T11, T12, T16 (e a vitrine). Faltam T00
+  (Opus, em andamento) e T17+T18.
