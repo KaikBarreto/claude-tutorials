@@ -16,7 +16,7 @@ SAIDA = os.path.normpath(os.path.join(HERE, '..', 'mundo', 'seeds-extra', 't08')
 ISO = re.compile(r'^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?(Z|[+-]\d{2}:?\d{2})$')
 INICIO_E3 = datetime(2026, 11, 10, 11, 40, tzinfo=timezone.utc)          # FAKE_NOW 08:40 da exploração
 BRT = lambda h, m, s=0: datetime(2026, 11, 10, h + 3, m, s, tzinfo=timezone.utc)
-HORA = {'02': BRT(8, 40, 40), '03': BRT(8, 41, 40), '04': BRT(8, 50, 20), '05': BRT(8, 51, 0), '06': BRT(8, 51, 30), '07': BRT(8, 58, 30),
+HORA = {'02': BRT(8, 40, 40), '03': BRT(8, 41, 40), '04': BRT(8, 50, 20), '05': BRT(8, 51, 0), '06': BRT(8, 51, 40), '07': BRT(8, 58, 30),
         '09': BRT(8, 59, 30)}
 DOC = {'02': 'rascunho #58 com a Cooperativa Recomeço, o Edson Moura e o FKD2E41 (sem item: o material escolhido não fica no rascunho)',
        '03': '+ o item Alumínio latinha com a 1ª pesagem de 9.460 kg (conta como bruto), modo Completo',
@@ -88,6 +88,8 @@ def main():
     # apos-cap09 (t08_semente.py, diff completo contra a base): mesmos horários das etapas e a compra perto das 09:00
     p9 = os.path.join(SAIDA, 'apos-cap09.json')
     s9 = json.load(open(p9, encoding='utf8'))
+    if 'horários da história' in s9.get('_doc', ''):
+        print('apos-cap09 já ajustada (rode o t08_semente.py apos-cap09 de novo para refazer)'); return
     resto = sorted({s for s in instantes(s9, set()) if s not in mapa and para_dt(s) >= INICIO_E3}, key=para_dt)
     if resto:
         t0 = para_dt(resto[0])

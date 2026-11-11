@@ -304,6 +304,7 @@ def capitulo(fn):
 # ---------------------------------------------------------------- alvos do Ticket de Pesagem (rec/t08/_ex: explorações de 11/11)
 MENU = '[data-sidebar=sidebar]'
 NEUTRO = (1000, 560)          # ponto neutro para o cursor descansar (fora de menu, cartão e botão)
+TOPO_DASH = (760, 120)        # no Dashboard, o neutro fica no alto: em (1000, 560) o gráfico "Evolução da Margem" abre a dica
 COL_AGUARDA = SEL("main h3:text-is('Aguardando valorização')")
 COL_VALORIZ = SEL("main h3:text-is('Valorizados')")
 ABA_AVULSAS = {'role': 'tab', 'name': 'Pesagens avulsas'}
@@ -319,9 +320,9 @@ def dashboard_setup(extra=()):
 @capitulo
 def cap00():
     """Abertura: o Dashboard parado (a ilustração do caminhão cobre L2 e L3; o cartão "Antes" entra na L4)."""
-    c = Cap(0, setup=dashboard_setup())
+    c = Cap(0, start=TOPO_DASH, setup=dashboard_setup())
     c.mark(1)
-    c.cursor(NEUTRO, at=0.3, label='cursor descansa no centro')
+    c.cursor(TOPO_DASH, at=0.3, label='cursor descansa no alto (fora dos gráficos: a dica do gráfico abriria)')
     for i in range(2, len(c.linhas) + 1):
         c.mark(i)
     c.fim()
@@ -331,7 +332,7 @@ def cap00():
 @capitulo
 def cap01():
     """Onde fica (Materiais > Ticket de Pesagem), as duas colunas do kanban e a aba Pesagens avulsas."""
-    c = Cap(1, setup=dashboard_setup())
+    c = Cap(1, start=TOPO_DASH, setup=dashboard_setup())
     c.mark(1)
     c.click(SEL(f"{MENU} button:has-text('Materiais')"), at=0.3, label='menu Materiais')
     c.click({'role': 'link', 'name': 'Ticket de Pesagem'}, at=c.A(1, 'Ticket', 0.6, nth=1), label='menu Ticket de Pesagem')

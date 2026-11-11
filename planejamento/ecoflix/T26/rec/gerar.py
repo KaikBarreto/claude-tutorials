@@ -649,9 +649,9 @@ def cap06():
     c.mark(3)
     c.click(BTN('Nova automação'), at=c.A(3, 'Nova', 0.9), label='Nova automação')
     c.waitfor(text='Use {NOME} e {CLIENTE} nos textos dinâmicos.', timeout=8)
-    c.type(SEL(f"{ETAPA} input[placeholder='Ex.: Preparar contato comercial']"), 'Agendar a visita', at=c.A(3, 'Agendar', 0.9), cps=22,
+    c.type(SEL(f"{ETAPA} input[placeholder='Ex.: Preparar contato comercial']"), 'Agendar a visita', at=c.A(3, 'Agendar', 0.9), cps=30,
            label='Nome: Agendar a visita')
-    c.click(COMBO('Ao entrar nesta etapa', ETAPA), at=c.A(3, 'gatilho,', 0.8), label='Gatilho (abre a lista)')
+    c.click(COMBO('Ao entrar nesta etapa', ETAPA), at=c.A(3, 'gatilho,', 0.5), label='Gatilho (abre a lista)')
     c.hover(OPC('Ao entrar nesta etapa'), 0.3, at=c.A(3, 'entra', 0.6), label='Ao entrar nesta etapa', noScroll=True)
     c.hover(OPC('Ao concluir uma tarefa'), 0.2, at=c.A(3, 'tarefa', 0.6), label='Ao concluir uma tarefa', noScroll=True)
     c.hover(OPC('Ao concluir um checklist'), 0.3, at=c.A(3, 'checklist', 0.6), label='Ao concluir um checklist', noScroll=True)
@@ -675,8 +675,8 @@ def cap06():
     c.confere_campos(['Agendar visita na {CLIENTE}'], 'título da tarefa', escopo=ETAPA)
     c.hover(TXT('Use {NOME} e {CLIENTE} nos textos dinâmicos.'), 1.6, at=c.A(5, 'vira', 0.6), label='Use {NOME} e {CLIENTE} nos textos dinâmicos. (zoom)')
     c.mark(6)
-    c.hover(SEL(f"{ETAPA} input[type=number]"), 0.2, at=c.A(6, 'prazo', 0.6), label='Prazo em dias: 1')
-    c.select(COMBO('Dias corridos', ETAPA), 'Dias úteis', at=c.A(6, 'dia', 1.0), label='Contagem: Dias úteis')
+    c.hover(SEL(f"{ETAPA} input[type=number]"), 0.1, at=c.A(6, 'prazo', 1.0), label='Prazo em dias: 1')
+    c.select(COMBO('Dias corridos', ETAPA), 'Dias úteis', at=c.A(6, 'prazo', 0.2), label='Contagem: Dias úteis')
     c.mark(7)
     c.hover(SEL(f"{ETAPA} div.rounded-xl.shadow-sm:has(input[type=number])"), 3.0, at=c.A(7, 'tarefa', 0.6), label='a ação inteira (título, prazo e contagem)')
     c.mark(8)

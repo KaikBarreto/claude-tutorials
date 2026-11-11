@@ -429,20 +429,26 @@ BUSCA_OPCAO = PH('Buscar...')
 def filtros_bateria(c=None, ats=None):
     """Tipo: Compras, Material: Bateria automotiva, Forma de Pagamento: Com Pix/Transferência (o painel Filtros já aberto). Sem `c`,
     devolve os passos para o setup."""
-    passos = [('click', CAMPO_FILTRO('Tipo'), 'Tipo'), ('click', OPCAO('Compras'), 'Compras'),
+    # a lista de opções de um campo abre POR CIMA do campo de baixo (Tipo cobre Material): Esc fecha só a lista (o painel fica)
+    passos = [('click', CAMPO_FILTRO('Tipo'), 'Tipo'), ('click', OPCAO('Compras'), 'Compras'), ('esc', None, 'fecha a lista do Tipo'),
               ('click', CAMPO_FILTRO('Material'), 'Material'), ('type', BUSCA_OPCAO, 'bat'), ('click', OPCAO('Bateria automotiva'), 'Bateria automotiva'),
+              ('esc', None, 'fecha a lista do Material'),
               ('click', CAMPO_FILTRO('Forma de Pagamento'), 'Forma de Pagamento'), ('click', OPCAO('Com Pix/Transferência'), 'Com Pix/Transferência')]
     if c is None:
         out = []
         for g, alvo, txt in passos:
-            out.append({'do': 'click', 'target': alvo} if g == 'click' else {'do': 'type', 'target': alvo, 'text': txt, 'noClick': True, 'cps': 40})
+            out.append({'do': 'click', 'target': alvo} if g == 'click' else {'do': 'press', 'key': 'Escape'} if g == 'esc'
+                       else {'do': 'type', 'target': alvo, 'text': txt, 'noClick': True, 'cps': 40})
             out.append({'do': 'wait', 'seconds': 0.4})
         return out
-    for (g, alvo, txt), at in zip(passos, ats):
+    ats = iter(ats)
+    for g, alvo, txt in passos:
         if g == 'click':
-            c.click(alvo, at=at, label=f'filtro: {txt}')
+            c.click(alvo, at=next(ats), label=f'filtro: {txt}')
+        elif g == 'esc':
+            c.press('Escape', label=txt)
         else:
-            c.type(alvo, txt, at=at, noClick=True, cps=40, label=f'digita "{txt}" na busca do Material')
+            c.type(alvo, txt, at=next(ats), noClick=True, cps=40, label=f'digita "{txt}" na busca do Material')
 
 
 @capitulo
@@ -464,12 +470,11 @@ def cap03():
     c.press('Escape', at=c.A(3, 'No', 0.3), label='fecha o painel (a lista fica à mostra)')
     c.registra(SEL('main tbody'), at=c.A(3, 'nome', 0.2), label='[ZOOM] as compras de outubro da Auto Peças Vale Forte (nenhuma de bateria)')
     c.cursor((700, 600), at=c.A(3, 'Auto', 0.6), label='cursor passa pelas linhas da Vale Forte')
+    c.click(FILTROS, at=c.A(3, 'aqui.', 0.6), label='Filtros de novo')
     c.mark(4)
-    c.click(FILTROS, at=c.A(4, 'procuro', 0.8), label='Filtros de novo')
-    c.click(BUSCA_PED, at=c.A(4, 'sei', 0.6), label='busca')
-    c.type(BUSCA_PED, '', at=c.A(4, 'compra.', 0.3), noClick=True, clear=True, label='apaga a busca')
-    filtros_bateria(c, [c.A(4, 'Tipo,', 0.7), c.A(4, 'Compras.', 0.6), c.A(4, 'Material,', 0.7), c.A(4, 'Bateria', 0.4),
-                        c.A(4, 'automotiva.', 0.4), c.A(4, 'forma', 0.7), c.A(4, 'Pix.', 0.6)])
+    c.type(BUSCA_PED, '', at=c.A(4, 'Então', 0.2), clear=True, label='apaga a busca')
+    filtros_bateria(c, [c.A(4, 'Tipo,', 0.8), c.A(4, 'Compras.', 0.6), c.A(4, 'Material,', 0.8), c.A(4, 'Bateria', 0.3),
+                        c.A(4, 'automotiva.', 0.5), c.A(4, 'forma', 0.8), c.A(4, 'Pix.', 0.6)])
     c.mark(5)
     c.press('Escape', at=c.A(5, 'Achou:', 0.6), label='fecha a lista da forma de pagamento')
     c.press('Escape', at=c.A(5, 'Achou:', 0.3), label='fecha o painel Filtros')

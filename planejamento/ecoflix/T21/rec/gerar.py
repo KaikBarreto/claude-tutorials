@@ -419,7 +419,7 @@ def cap00():
     c.mark(3)
     c.hover(FAB, seconds=2.5, at=c.A(3, 'Cato', 0.7), label='botão do Cato (a câmera vai até ele)', noScroll=True)
     c.mark(4)
-    c.rolar(0, at=c.A(4, 'tutorial', 0.4), ponto=(820, 470), duration=0.8, label='cursor sai do botão (cartão Antes)')
+    c.rolar(0, at=c.A(4, 'tutorial', 0.4), ponto=(420, 470), duration=0.8, label='cursor sai do botão (cartão Antes)')
     c.fim()
     return c
 
@@ -429,7 +429,7 @@ def cap01():
     c = Cap(1, login() + IR_ESTOQUE, pace=0.6, start=(760, 420))
     c.mark(1)
     c.hover(FAB, seconds=2.2, at=c.A(1, 'botão', 0.7), label='ZOOM botão redondo do Cato (Abrir o Cato)', noScroll=True)
-    c.rolar(0, at=c.A(1, 'qualquer', 0.3), ponto=(820, 470), duration=0.8, label='cursor solta o botão (em qualquer tela)')
+    c.rolar(0, at=c.A(1, 'qualquer', 0.3), ponto=(420, 470), duration=0.8, label='cursor solta o botão (em qualquer tela)')
     c.mark(2)
     c.mark(3)
     c.click(FAB, at=c.A(3, 'clicar', 0.8), label='clique no botão do Cato', noScroll=True)

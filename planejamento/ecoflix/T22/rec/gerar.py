@@ -677,7 +677,7 @@ def cap10():
     c.waitfor(text='Exigir aprovação em transferências', timeout=8)
     c.click(SWITCH_TEXTO('Exigir aprovação em transferências'), at=c.A(1, 'ligo', 0.6), label='liga Exigir aprovação em transferências')
     c.mark(2)
-    c.click(BTNX('Nova'), at=c.A(2, 'Nova,', 0.6), label='Nova')
+    c.click(BTN('Nova'), at=c.A(2, 'Nova,', 0.6), label='Nova')
     c.waitfor(text='Unidade de origem...', timeout=8)
     c.click(COMBO('Unidade de origem...'), at=c.A(2, 'origem', 0.6), label='Origem')
     c.click(OPT('Filial Pindamonhangaba'), at=c.A(2, 'filial', 0.3), label='Origem: Filial Pindamonhangaba')
@@ -696,7 +696,7 @@ def cap10():
     c.waitfor(text='Pendente', timeout=10)
     c.mark(5)
     c.hover(TXT('Pendente', within=MAIN), 1.0, at=c.A(5, 'pendente.', 0.5), label='Pendente')
-    c.click(BTNX('Executar'), at=c.A(5, 'Executar.', 0.6), label='Executar')
+    c.click(BTN('Executar'), at=c.A(5, 'Executar.', 0.6), label='Executar')   # exato: "Executar todas (1)" vem antes no cabeçalho
     c.waitfor(text='Confirmar execução?', timeout=8)
     c.hover(TXTP('Este grupo exige aprovação antes de executar', within=ALERTA), 1.2, at=c.A(5, 'confirmar', 0.5), label='Confirmar execução? (destino de acordo)')
     c.mark(6)
@@ -749,7 +749,7 @@ def cap11():
     # o checkout pergunta a cada 5 s se o Pix foi pago, a contar da criação da cobrança: o clique em "Escolho" deixa a consulta que confirma
     # o pagamento ~0,5 s depois de "pronto:" (o bastidor marca a cobrança paga logo antes dela)
     c.click(BTNX('PIX Instantâneo'), at=c.A(5, 'Escolho', 0.4), label='PIX')
-    c.waitfor(text='Copia e Cola', timeout=12)
+    c.waitfor(text='Aguardando confirmação do pagamento', timeout=12)   # PixPaymentView: QR, "Ou copie o código PIX:" e a espera
     c.mark(6)
     c.ev(JS_PAGA, label='bastidor: o Pix é pago (a cobrança fica RECEIVED antes da próxima consulta)')
     c.waitfor(text='Pagamento Confirmado!', timeout=8)

@@ -336,15 +336,6 @@ CAD_DADOS = [  # setup do cap02: a etapa "Dados" como no cap01, fora do vídeo
 
 
 # ================================================================ capítulos
-EMAIL_RAFAEL = 'rafael@reciclavalemetais.example'   # fictício (mundo B), o mesmo do TUT_USER
-# cola no campo em foco como o navegador faz (evento input, o React aceita): texto longo sem graça visual (docs/04, T3 v2)
-# troca o valor do campo em foco (seleciona tudo e cola por cima)
-TROCA = ("(()=>{const el=document.activeElement;if(!el||!/^(INPUT|TEXTAREA)$/.test(el.tagName))return 'SEM ALVO: nada em foco';"
-         "el.select();document.execCommand('insertText',false,%s);return el.value})()")
-COLA = ("(()=>{const el=document.activeElement;if(!el||!/^(INPUT|TEXTAREA)$/.test(el.tagName))return 'SEM ALVO: nada em foco';"
-        "document.execCommand('insertText',false,%s);return el.value})()")
-
-
 def cap00():
     """Abertura: as duas primeiras linhas são ilustração (a janela fica parada); na L3 o cursor desce devagar pelo /cadastro."""
     c = Cap(0, pace=0.5, setup=[{'do': 'goto', 'url': '/cadastro'}, {'do': 'waitFor', 'target': CAD_EMPRESA, 'timeout': 30}, AGUARDA],
@@ -380,16 +371,15 @@ def cap01():
     c.hover(TXT('Acesso'), 0.1, at=c.A(1, 'Dados', 0.3), label='etapa Acesso')
     c.hover(TXT('Preenchimento obrigatório'), 1.2, at=c.A(1, 'Preenchimento', 1.0), label='barra Preenchimento obrigatório em 0%')
     c.mark(2)
-    c.click(CAD_EMPRESA, at=c.A(2, 'Primeiro,', 0.87), label='Nome da Empresa')
-    c.type(CAD_EMPRESA, 'Recicla Vale Metais', at=c.A(2, 'empresa:', 1.04), cps=40, noClick=True, label='digita Recicla Vale Metais')
-    c.click(CAD_NOME, at=c.A(2, 'Depois,', -0.18), label='Seu Nome Completo')
-    c.type(CAD_NOME, 'Rafael Nogueira', at=c.A(2, 'Aqui', 0.6), cps=40, noClick=True, label='digita Rafael Nogueira (a barra sobe)')
+    c.click(CAD_EMPRESA, at=c.A(2, 'nome', 0.9), label='Nome da Empresa')
+    c.type(CAD_EMPRESA, 'Recicla Vale Metais', at=c.A(2, 'Recicla', 0.1), cps=20, noClick=True, label='digita Recicla Vale Metais')
+    c.click(CAD_NOME, at=c.A(2, 'nome', 0.8, nth=1), label='Seu Nome Completo')
+    c.type(CAD_NOME, 'Rafael Nogueira', at=c.A(2, 'Rafael', 0.2), cps=20, noClick=True, label='digita Rafael Nogueira (a barra sobe)')
     c.mark(3)
-    c.click(CAD_EMAIL, at=c.A(3, 'e-mail', 0.9), label='Email')
-    # o e-mail (31 letras) digitado levou ~4 s na gravação e não cabia com o telefone na L3: entra colado (docs/04, colar)
-    c.ev(COLA % json.dumps(EMAIL_RAFAEL), at=c.A(3, 'que', 0.0), label='cola o e-mail do Rafael')
-    c.click(CAD_FONE, at=c.A(3, 'telefone', 1.25), label='Telefone')
-    c.type(CAD_FONE, '12900004410', at=c.A(3, 'telefone', -0.25), cps=30, noClick=True, label='digita o telefone (a máscara forma (12) 90000-4410)')
+    c.click(CAD_EMAIL, at=c.A(3, 'e-mail', 0.8), label='Email')
+    c.type(CAD_EMAIL, '$TUT_USER', at=c.A(3, 'que', 0.1), cps=40, noClick=True, label='digita o e-mail do Rafael')
+    c.click(CAD_FONE, at=c.A(3, 'telefone', 0.7), label='Telefone')
+    c.type(CAD_FONE, '12900004410', at=c.A(3, 'arruma', 0.3), cps=20, noClick=True, label='digita o telefone (a máscara forma (12) 90000-4410)')
     c.confere_campos(['Recicla Vale Metais', 'Rafael Nogueira', 'rafael@reciclavalemetais.example', '(12) 90000-4410'], 'os quatro campos da etapa Dados', escopo='body')
     c.mark(4)
     c.hover(TXT('Recebeu um código de indicação?'), 1.5, at=c.A(4, 'código', 1.2), label='link Recebeu um código de indicação? (sem clicar)')
@@ -408,7 +398,7 @@ def cap01():
     c.type(CAD_CONFIRMA, '$TUT_SENHA', at=c.A(7, 'Embaixo,', -0.12), cps=24, noClick=True, label='repete a senha')
     c.mark(8)
     c.rolar(380, at=c.A(8, 'Ao', 1.0), label='desce até o aviso dos termos', ponto=(640, 520))
-    c.hover(BTN('Termos de Uso'), 0.3, at=c.A(8, 'concorda', 0.9), label='Termos de Uso (sem clicar)')
+    c.hover(BTN('Termos de Uso'), 0.3, at=c.A(8, 'Termos', 0.7), label='Termos de Uso (sem clicar)')
     c.hover(LINK('Política de Privacidade'), 1.2, at=c.A(8, 'e', 0.55), label='Política de Privacidade (sem clicar)')
     c.mark(9)
     c.click(BTN('Criar Conta'), at=c.A(9, 'Criar', 0.8), label='Criar Conta')
@@ -447,13 +437,12 @@ def cap03():
     c.mark(1)
     c.confere('body', ['Acesse sua conta', 'Entre para continuar no EcoSistema.'], 'tela de login')
     c.hover(TXT('Acesse sua conta'), 0.8, at=c.A(1, 'entrar.', 0.6), label='Acesse sua conta')
-    c.click(EMAIL_LOGIN, at=c.A(1, 'vai', 0.8), label='E-mail')
+    c.click(EMAIL_LOGIN, at=c.A(1, 'todo', 0.8), label='E-mail')
     c.mark(2)
-    # e-mail colado (31 letras digitadas levaram ~5 s na gravação com a máquina cheia); a senha é digitada (segredo do ambiente)
-    c.ev(COLA % json.dumps(EMAIL_RAFAEL), at=c.A(2, 'Aqui', 0.88), label='cola o e-mail do Rafael')
-    c.click(SENHA_LOGIN, at=c.A(2, 'Aqui', 0.8), label='Senha')
-    c.type(SENHA_LOGIN, '$TUT_SENHA', at=c.A(2, 'o', 0.0), cps=40, noClick=True, label='digita a senha (pontinhos)')
-    c.click(CHK('Lembrar de mim'), at=c.A(2, 'Marcando', 0.0), label='marca Lembrar de mim')
+    c.type(EMAIL_LOGIN, '$TUT_USER', at=c.A(2, 'Aqui', 0.9), cps=40, noClick=True, label='digita o e-mail do Rafael')
+    c.click(SENHA_LOGIN, at=c.A(2, 'cadastro.', 0.6), label='Senha')
+    c.type(SENHA_LOGIN, '$TUT_SENHA', at=c.A(2, 'Marcando', 0.6), cps=40, noClick=True, label='digita a senha (pontinhos)')
+    c.click(CHK('Lembrar de mim'), at=c.A(2, 'Lembrar', 0.5), label='marca Lembrar de mim')
     c.mark(3)
     c.hover(BTNX('Entrar com Google'), 2.4, at=c.A(3, 'Google,', 0.7), label='Entrar com Google (sem clicar)')
     c.hover(BTNX('Entrar com Google'), 1.6, at=c.A(3, 'existe', 0.5), label='Entrar com Google: entra na conta que já existe')
@@ -504,9 +493,8 @@ def cap04():
     c.waitfor(text='Recuperar Senha', timeout=8)
     c.mark(2)
     c.click(SEL('input[type=email]'), at=c.A(2, 'Digito', 0.8), label='E-mail')
-    # e-mail colado: digitado (31 letras) levava ~5 s na gravação e a L2 tem 4 s
-    c.ev(COLA % json.dumps(EMAIL_RAFAEL), at=c.A(2, 'e-mail', 0.0), label='cola o e-mail da conta')
-    c.click(BTN('Enviar Código'), at=c.A(2, 'Enviar', 1.0), label='Enviar Código')
+    c.type(SEL('input[type=email]'), '$TUT_USER', at=c.A(2, 'e-mail', 0.4), cps=40, noClick=True, label='digita o e-mail da conta')
+    c.click(BTN('Enviar Código'), at=c.A(2, 'Enviar', 0.5), label='Enviar Código')
     c.waitfor(text='Verificar Código', timeout=10)
     c.mark(3)
     c.confere('body', ['Se o email existir no sistema, um código será enviado.', 'Digite o código de 6 dígitos enviado para', 'rafael@reciclavalemetais.example'],
@@ -529,7 +517,7 @@ def cap04():
     # são dois Tab: o olho de mostrar a senha (ForgotPasswordFlow.tsx:275, botão sem tabIndex) fica entre os campos
     c.press(['Tab', 'Tab'], at=c.A(7, 'nova', -0.62), label='Tab: Confirmar Nova Senha')
     c.type(SEL('input[type=password]', nth=1), '$TUT_SENHA', at=c.A(7, 'vezes', -0.16), cps=60, noClick=True, label='repete a nova senha')
-    c.click(BTN('Alterar Senha e Entrar'), at=c.A(7, 'Alterar', -1.0), label='Alterar Senha e Entrar')
+    c.click(BTN('Alterar Senha e Entrar'), at=c.A(7, 'Alterar', 0.6), label='Alterar Senha e Entrar')
     c.waitfor(text='Senha alterada com sucesso! Você já está logado.', timeout=12)
     c.registra(TXT('Senha alterada com sucesso! Você já está logado.'), label='toast Senha alterada com sucesso! Você já está logado.')
     c.fim()
@@ -605,9 +593,8 @@ def cap06():
     c.mark(2)
     c.hover(SEL('#company-email'), 1.0, at=c.A(2, 'e-mail', 0.6), label='o e-mail do cadastro é o do Rafael')
     c.click(SEL('#company-email'), at=c.A(2, 'comprovante,', 0.7), label='E-mail')
-    # 33 letras digitadas levavam ~5,6 s na gravação com a máquina cheia: o e-mail novo entra colado por cima do antigo
-    c.ev(TROCA % json.dumps('contato@reciclavalemetais.example'), at=c.A(2, 'e-mail', 0.0, nth=1),
-         label='troca pelo contato@reciclavalemetais.example (colado)')
+    c.type(SEL('#company-email'), 'contato@reciclavalemetais.example', at=c.A(2, 'comprovante,', -0.3), cps=40, noClick=True, clear=True,
+           label='apaga e digita contato@reciclavalemetais.example')
     c.confere_campos(['contato@reciclavalemetais.example'], 'e-mail de contato')
     c.mark(3)
     c.hover(SEL('#show-phone'), 0.2, at=c.A(3, 'chave', 1.0), label='chave Exibir nos documentos do Telefone')
@@ -709,10 +696,9 @@ def cap08():
     c.click(SEL('#show-phrase'), at=c.A(2, 'ligo', 0.8), label='liga a chave No comprovante')
     c.click(SEL('#receipt-phrase'), at=c.A(2, 'pra', 0.9), label='caixa da frase')
     c.mark(3)
-    # a frase (68 letras) digitada levava ~10 s com a máquina cheia e a L3 tem 9 s com o contador no meio: entra colada
-    c.ev(COLA % json.dumps(FRASE), at=c.A(3, 'A', 0.0), label='cola a frase do comprovante')
+    c.type(SEL('#receipt-phrase'), FRASE, at=c.A(3, 'A', 0.0), cps=40, noClick=True, label='digita a frase do comprovante')
     c.confere('main', ['68/2000 caracteres'], 'contador 68/2000')
-    c.hover(TXTP('/2000 caracteres'), 1.2, at=c.A(3, 'contador', 1.0), label='contador 68/2000 caracteres')
+    c.hover(TXTP('/2000 caracteres'), 1.2, at=c.A(3, 'contador', 0.6), label='contador 68/2000 caracteres')
     c.mark(4)
     c.hover(TXT('Alinhar à esquerda'), 1.2, at=c.A(4, 'Alinhar', 0.6), label='Alinhar à esquerda (desligada)')
     c.hover(SEL('#phrase-align-left'), 0.5, at=c.A(4, 'curta,', 0.9), label='chave Alinhar à esquerda: fica no centro')

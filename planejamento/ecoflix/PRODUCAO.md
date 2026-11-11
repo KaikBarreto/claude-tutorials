@@ -559,3 +559,6 @@ Decisões:
   ele monta o MP4 ou sai; `RENDER_PAUSA=0` desliga; conferido o detector e um quadro 2D). Aviso mandado aos 18 robôs que
   ensaiaram desde as 13:30 (regravar o capítulo antes de mexer em âncora por atraso visto nesse intervalo) e às frentes 3D
   (prévias mais lentas, trechos de 7 s). Na gravação final, a mesma regra: nada de render enquanto o robô captura.
+- 11/11 17:50 **Limite semanal batido** (volta em 18/11 11:00 Lisboa): pararam o agente do kit 3D, o 3D da T00 e o robô da
+  T18. 17:5x **Kaik usou um reset** ("pode continuar como estava"): os três retomados com SendMessage de onde pararam; o
+  ritmo segue o de antes (até ~20 agentes).
