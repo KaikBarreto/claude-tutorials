@@ -507,3 +507,7 @@ Decisões:
   do módulo em `file://`). Custo: ~1,0 s por quadro em 2560×1600 (3,5× o 2D): ~17 min por cena de 36 s. Vídeo e folha
   mandados ao Kaik; esperando ele dizer quais conceitos ganham 3D (o agente sugere T00 caminho do pátio, T08/T12 caminhão e
   tara, T11 latinha e fardo, T10/T04 pilha e fardo, T05 EcoTray, T16-T18 carga e percurso; metáforas da T19, T15 e T26).
+- 11/11 14:15 **Kaik sobre o piloto 3D**: "ficou bom". Um agente monta o kit 3D (`perfis/ecoflix/cenas3d/`: objetos da
+  pesagem, caminhão, latinhas, prensa, fardo, impressora, computador, pátio), liga `--allow-file-access-from-files` no
+  `render_cenas.cjs` (conferindo que o 2D sai idêntico) e converte a T07 (cap06) e a T08 (caminhão na balança). Depois do
+  kit: T00 (caminho do pátio), T12, T11, T10/T04, T05 e T16-T18, como o Kaik não escolheu outra lista.
