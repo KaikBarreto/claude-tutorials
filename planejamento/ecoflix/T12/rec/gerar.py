@@ -343,7 +343,489 @@ def capitulo(fn):
     return fn
 
 
-# @@CAPITULOS@@
+# ---------------------------------------------------------------- alvos das telas de Coletas (conferidos por exploração, rec/t12/_ex)
+GRUPO = BTNX('Coletas & Logística', within=MENU)
+ITEM_MENU = lambda n: LINK(n, within=MENU)
+COL_T = lambda t: SEL(f"main h3:text-is('{t}')")                                  # título da coluna do quadro
+CARD = lambda num, sub='': SEL(f"{CARTAO(num)} {sub}".strip())
+CARD_TXT = lambda num, t: SEL(f"{CARTAO(num)} :text-is('{t}')")
+CARD_BTN = lambda num, t: SEL(f"{CARTAO(num)} button:text-is('{t}')")
+NOVA_ORDEM = BTN('Nova ordem')
+PASSO = lambda t: SEL(f"{DLG} span:text-is('{t}')")                                # etapas da Nova ordem
+AVANCAR = BTN('Avançar')
+BUSCA_PARC = PH('Buscar por nome, apelido, CPF/CNPJ ou telefone...')
+MOTORISTA, VEICULO = PH('Digite ou busque o motorista'), PH('Digite ou busque a placa')
+
+
+def setup_nova_ordem(ate_etapa):
+    """refaz fora do vídeo a Nova ordem da Auto Peças Vale Forte até a etapa pedida (2 = Coleta preenchida, 3 = Frota)"""
+    st = [{'do': 'click', 'target': NOVA_ORDEM}, {'do': 'waitFor', 'text': 'Nova ordem de coleta', 'timeout': 10}, {'do': 'wait', 'seconds': 0.5},
+          {'do': 'click', 'target': SEL(f"{DLG} button:has-text('Selecionar')")}, {'do': 'waitFor', 'target': BUSCA_PARC, 'timeout': 10},
+          {'do': 'type', 'target': BUSCA_PARC, 'text': 'Vale Forte', 'cps': 40}, {'do': 'wait', 'seconds': 0.6},
+          {'do': 'click', 'target': BTNX('Auto Peças Vale Forte', within=f'{DLG} >> nth=-1')}, {'do': 'wait', 'seconds': 0.6},
+          {'do': 'click', 'target': AVANCAR}, {'do': 'waitFor', 'target': SEL('#ordem-material'), 'timeout': 10},
+          {'do': 'type', 'target': SEL('#ordem-material'), 'text': '~400 kg de radiadores e baterias', 'cps': 40},
+          {'do': 'type', 'target': SEL('#ordem-obs'), 'text': 'Retirar pelo portão lateral', 'cps': 40}]
+    if ate_etapa >= 3:
+        st += [{'do': 'type', 'target': SEL('#ordem-data'), 'text': '11112026', 'cps': 40},
+               {'do': 'click', 'target': SEL('#ordem-janela')}, {'do': 'click', 'target': OPT('Manhã')}, {'do': 'wait', 'seconds': 0.4},
+               {'do': 'click', 'target': AVANCAR}, {'do': 'waitFor', 'target': MOTORISTA, 'timeout': 10}]
+    return st + [{'do': 'wait', 'seconds': 0.8}]
+
+
+@capitulo
+def cap00():
+    """Abertura: ilustração e cartões sobre o Dashboard; depois o menu Coletas & Logística > Ordens de Coleta."""
+    c = Cap(0, start=(700, 430), setup=setup_em('/dashboard', aquece=['/coletas/ordens']))
+    c.mark(1)
+    c.cursor((720, 440), at=0.5, label='cursor em repouso no Dashboard')
+    for i in (2, 3, 4):
+        c.mark(i)
+        c.flush(1e9)
+    c.mark(5)
+    c.hover(GRUPO, 0.3, at=c.A(5, 'menu', 0.5), label='menu Coletas & Logística')
+    c.click(GRUPO, at=c.A(5, 'Coletas', 0.3), label='abre Coletas & Logística')
+    c.click(ITEM_MENU('Ordens de Coleta'), at=c.A(5, 'Ordens', 0.8), label='Ordens de Coleta')
+    c.waitfor(text=PAGINAS['/coletas/ordens'], timeout=15)
+    c.cursor((760, 470), at=c.A(5, 'Antes', 0.2), label='cursor sai do menu (o quadro abre)')
+    c.fim()
+    return c
+
+
+@capitulo
+def cap01():
+    """O que o módulo resolve: a câmera passa pelo quadro, sem clicar; as ilustrações cobrem as linhas 2 a 4."""
+    c = Cap(1, start=(760, 420), setup=setup_em('/coletas/ordens'))
+    c.mark(1)
+    c.hover(COL_T('Agendada'), 0.6, at=c.A(1, 'buscar', 0.5), label='quadro: coluna Agendada')
+    c.hover(CARD_TXT(8, 'Depósito Irmãos Siqueira'), 0.8, at=c.A(1, 'caçamba', 0.5), label='cartão da troca de caçamba (#8)')
+    c.hover(CARD_TXT(7, 'Marcelo Tavares'), 0.8, at=c.A(1, 'combina', 0.5), label='cartão do Marcelo (#7)')
+    c.cursor((760, 460), at=c.A(1, 'dele', 0.3), label='cursor em repouso')
+    for i in (2, 3, 4):
+        c.mark(i)
+        c.flush(1e9)
+    c.fim()
+    return c
+
+
+@capitulo
+def cap02():
+    """O quadro: colunas, cartões #8 e #7, filtros, Quadro/Lista e Nova ordem; a dica das concluídas e canceladas."""
+    c = Cap(2, start=(760, 420), setup=setup_em('/coletas/ordens'))
+    c.mark(1)
+    c.hover(COL_T('Solicitada'), 0.25, at=c.A(1, 'Solicitada', 0.5), label='coluna Solicitada')
+    c.hover(COL_T('Agendada'), 0.25, at=c.A(1, 'Agendada', 0.5), label='coluna Agendada')
+    c.hover(COL_T('A caminho'), 0.2, at=c.A(1, 'caminho', 0.6), label='coluna A caminho')
+    c.hover(COL_T('Concluídas'), 0.4, at=c.A(1, 'Concluídas', 0.5), label='coluna Concluídas')
+    c.hover(COL_T('Cancelada'), 0.6, at=c.A(1, 'canceladas', 0.5), label='coluna Cancelada')
+    c.mark(2)
+    c.hover(TXT('Nenhuma ordem', within='main'), 1.2, at=c.A(2, 'Solicitada', 0.5), label='Solicitada vazia (Nenhuma ordem)')
+    c.mark(3)
+    c.hover(CARD_TXT(8, '#8'), 0.3, at=c.A(3, 'número', 0.5), label='cartão #8: número')
+    c.hover(CARD_TXT(8, 'Depósito Irmãos Siqueira'), 0.3, at=c.A(3, 'parceiro', 0.5), label='cartão #8: parceiro')
+    c.hover(CARD(8, ":text-is('Manhã')"), 0.3, at=c.A(3, 'período', 0.5), label='cartão #8: período')
+    c.hover(CARD_TXT(8, 'Edson Moura'), 0.3, at=c.A(3, 'motorista', 0.5), label='cartão #8: motorista')
+    c.hover(CARD_TXT(8, 'FKD2E41'), 0.6, at=c.A(3, 'placa', 0.5), label='cartão #8: placa')
+    c.hover(CARD_TXT(8, 'Depósito Irmãos Siqueira'), 1.0, at=c.A(3, 'Depósito', 0.5), label='cartão #8: a troca de caçamba do Siqueira')
+    c.mark(4)
+    c.hover(CARD_TXT(7, 'Tiago Freitas'), 0.6, at=c.A(4, 'Tiago', 0.5), label='cartão #7: Tiago Freitas')
+    c.hover(CARD_TXT(7, 'Marcelo Tavares'), 0.8, at=c.A(4, 'Marcelo', 0.5), label='cartão #7: Marcelo Tavares')
+    c.hover(CARD_TXT(7, 'Sem cadastro'), 1.0, at=c.A(4, 'cadastro', 0.9), label='cartão #7: Sem cadastro')
+    c.mark(5)
+    c.hover(BTNX('Filtros', within='main'), 0.6, at=c.A(5, 'filtros', 0.5), label='Filtros')
+    c.hover(SEL("main [aria-label='Lista']"), 0.6, at=c.A(5, 'troca', 0.5), label='Quadro / Lista')
+    c.hover(NOVA_ORDEM, 0.8, at=c.A(5, 'Nova', 0.5), label='Nova ordem')
+    c.mark(6)
+    c.cursor((760, 470), at=c.A(6, 'anda', 0.3), label='cursor em repouso (a dica)')
+    c.hover(COL_T('Concluídas'), 0.4, at=c.A(6, 'Concluída', 0.5), label='dica: coluna Concluídas')
+    c.hover(COL_T('Cancelada'), 1.2, at=c.A(6, 'cancelada', 0.5), label='dica: coluna Cancelada')
+    c.fim()
+    return c
+
+
+@capitulo
+def cap03():
+    """Criar uma ordem: Nova ordem, as etapas, Cadastrado/Sem cadastro, Tipo, Parceiro (Auto Peças Vale Forte), endereço do cadastro,
+    Avançar, Material estimado e Observações."""
+    c = Cap(3, start=(900, 300), setup=setup_em('/coletas/ordens'))
+    c.mark(1)
+    c.click(NOVA_ORDEM, at=c.A(1, 'Nova', 0.8), label='Nova ordem')
+    c.waitfor(text='Nova ordem de coleta', timeout=10)
+    c.hover(PASSO('Parceiro'), 0.2, at=c.A(1, 'Parceiro', 0.5), label='etapa Parceiro')
+    c.hover(PASSO('Coleta'), 0.2, at=c.A(1, 'Coleta', 0.5), label='etapa Coleta')
+    c.hover(PASSO('Frota'), 0.5, at=c.A(1, 'Frota', 0.5), label='etapa Frota')
+    c.mark(2)
+    c.hover(TXTX('Cadastrado', within=DLG, exact=True), 0.8, at=c.A(2, 'Cadastrado', 0.5), label='Cadastrado')
+    c.hover(TXTX('Sem cadastro', within=DLG, exact=True), 1.2, at=c.A(2, 'Sem', 0.5), label='Sem cadastro')
+    c.mark(3)
+    c.hover(SEL('#ordem-tipo'), 0.8, at=c.A(3, 'Fornecedor', 0.5), label='Tipo: Fornecedor')
+    c.click(SEL(f"{DLG} button:has-text('Selecionar')"), at=c.A(3, 'Parceiro', 0.8), label='Parceiro: Selecionar…')
+    c.waitfor(target=BUSCA_PARC, timeout=10)
+    c.type(BUSCA_PARC, 'Vale Forte', at=c.A(3, 'busco', 0.05), label='busca Vale Forte', cps=40, noClick=True)
+    c.click(BTNX('Auto Peças Vale Forte', within=f'{DLG} >> nth=-1'), at=c.A(3, 'Vale', 0.8, nth=0), label='escolhe Auto Peças Vale Forte')
+    c.mark(4)
+    c.hover(SEL(f"{DLG} input[placeholder='Rua']"), 0.8, at=c.A(4, 'endereço', 0.5), label='endereço do cadastro')
+    c.hover(SEL(f"{DLG} input[placeholder='Cidade']"), 0.8, at=c.A(4, 'cadastro', 0.5), label='endereço do cadastro (cidade)')
+    c.mark(5)
+    c.click(AVANCAR, at=c.A(5, 'Avançar', 0.8), label='Avançar')
+    c.click(SEL('#ordem-material'), at=c.A(5, 'Material', 0.8), label='Material estimado (campo)')
+    c.type(SEL('#ordem-material'), '~400 kg de radiadores e baterias', at=c.A(5, 'uns', 0.05), label='Material estimado', cps=40, noClick=True)
+    c.mark(6)
+    c.click(SEL('#ordem-obs'), at=c.A(6, 'Observações', 0.8), label='Observações (campo)')
+    c.type(SEL('#ordem-obs'), 'Retirar pelo portão lateral', at=c.A(6, 'retirar', 0.05), label='Observações', cps=40, noClick=True)
+    c.fim()
+    return c
+
+
+@capitulo
+def cap04():
+    """Data e janela: Data agendada 11/11/2026, Período (Manhã, Tarde, Dia todo) -> Manhã, Avançar."""
+    c = Cap(4, start=(900, 300), setup=setup_em('/coletas/ordens', extra=setup_nova_ordem(2)))
+    c.mark(1)
+    c.hover(SEL('#ordem-data'), 0.4, at=c.A(1, 'Data', 0.5), label='Data agendada')
+    c.hover(SEL('#ordem-janela'), 0.4, at=c.A(1, 'Período', 0.5, nth=1), label='Período')
+    c.mark(2)
+    c.click(SEL('#ordem-data'), at=c.A(2, 'amanhã', 0.8), label='Data agendada (campo)')
+    c.type(SEL('#ordem-data'), '11112026', at=c.A(2, 'onze', 0.3), label='Data agendada 11/11/2026', cps=40, noClick=True)
+    c.mark(3)
+    c.click(SEL('#ordem-janela'), at=c.A(3, 'Período', 0.8), label='abre Período')
+    c.hover(OPT('Manhã'), 0.2, at=c.A(3, 'manhã', 0.5), label='opção Manhã')
+    c.hover(OPT('Tarde'), 0.2, at=c.A(3, 'tarde', 0.5), label='opção Tarde')
+    c.hover(OPT('Dia todo'), 0.6, at=c.A(3, 'dia', 0.5, nth=1), label='opção Dia todo')
+    c.mark(4)
+    c.click(OPT('Manhã'), at=c.A(4, 'manhã', 0.8), label='escolhe Manhã')
+    c.hover(SEL('#ordem-janela'), 1.0, at=c.A(4, 'Configurações', 0.5), label='Período: Manhã (as janelas vêm das Configurações)')
+    c.mark(5)
+    c.click(AVANCAR, at=c.A(5, 'Avanço', 0.8), label='Avançar para a Frota')
+    c.waitfor(target=MOTORISTA, timeout=10)
+    c.fim()
+    return c
+
+
+@capitulo
+def cap05():
+    """Motorista e veículo: Jair Lopes e GHT7B19, a Revisão, Criar ordem e o cartão #9 em Agendada."""
+    c = Cap(5, start=(900, 300), setup=setup_em('/coletas/ordens', extra=setup_nova_ordem(3)))
+    c.mark(1)
+    c.hover(MOTORISTA, 0.4, at=c.A(1, 'Motorista', 0.5), label='Motorista')
+    c.hover(VEICULO, 0.4, at=c.A(1, 'Veículo', 0.5), label='Veículo')
+    c.mark(2)
+    c.click(MOTORISTA, at=c.A(2, 'Jair', 0.6), label='Motorista (campo)')
+    c.type(MOTORISTA, 'Jair', at=c.A(2, 'Jair', 0.05), label='digita Jair', cps=40, noClick=True)
+    c.click(OPT('Jair Lopes'), at=c.A(2, 'com', 0.6), label='escolhe Jair Lopes')
+    c.click(VEICULO, at=c.A(2, 'três', 0.6), label='Veículo (campo)')
+    c.type(VEICULO, 'GHT', at=c.A(2, 'que', 0.4), label='digita GHT', cps=40, noClick=True)
+    c.click(OPT('GHT7B19'), at=c.A(2, 'quatrocentos', 0.6), label='escolhe GHT7B19')
+    c.mark(3)
+    c.hover(TXTX('Revisão', within=DLG, exact=True), 0.4, at=c.A(3, 'Revisão', 0.5), label='Revisão')
+    c.hover(TXTX('Auto Peças Vale Forte', within=DLG, exact=True), 0.3, at=c.A(3, 'parceiro', 0.5), label='Revisão: parceiro')
+    c.hover(TXTX('Cidade:', within=DLG, exact=True), 0.3, at=c.A(3, 'cidade', 0.5), label='Revisão: cidade')
+    c.hover(TXTX('~400 kg de radiadores e baterias', within=DLG, exact=True), 0.3, at=c.A(3, 'material', 0.5), label='Revisão: material')
+    c.hover(TXTX('Data:', within=DLG, exact=True), 0.6, at=c.A(3, 'data', 0.5), label='Revisão: data e período')
+    c.mark(4)
+    c.click(BTN('Criar ordem'), at=c.A(4, 'Criar', 0.8), label='Criar ordem')
+    c.waitfor(text='Ordem de coleta criada', timeout=10)
+    c.hover(CARD_TXT(9, '#9'), 0.6, at=c.A(4, 'nove', 0.5), label='cartão #9 em Agendada')
+    c.hover(CARD_TXT(9, 'Jair Lopes'), 0.4, at=c.A(4, 'Jair', 0.5), label='cartão #9: Jair Lopes')
+    c.hover(CARD_TXT(9, 'GHT7B19'), 0.8, at=c.A(4, 'caminhão', 0.5), label='cartão #9: GHT7B19')
+    c.mark(5)
+    c.hover(CARD(9), 1.5, at=c.A(5, 'Motorista', 0.5), label='cartão #9 (frota pode ficar pra depois)')
+    c.fim()
+    return c
+
+
+@capitulo
+def cap06():
+    """Acompanhar até concluir: #8 A caminho, Preencher, Recolhi Caçamba 03, Entreguei Caçamba 05, Concluir coleta, o relatório, Voltar às
+    ordens e a ficha (Equipamentos movimentados e Histórico)."""
+    c = Cap(6, start=(760, 420), setup=setup_em('/coletas/ordens', extra=[{'do': 'eval', 'js': GPS_FICTICIO}]))
+    c.mark(1)
+    c.click(CARD_BTN(8, 'A caminho'), at=c.A(1, 'A', 0.8, nth=1), label='#8: A caminho')
+    c.waitfor(text='Status alterado para A caminho', timeout=10)
+    c.hover(CARD_TXT(8, '#8'), 0.8, at=c.A(1, 'cartão', 0.5), label='#8 na coluna A caminho')
+    c.mark(2)
+    c.click(CARD_BTN(8, 'Preencher'), at=c.A(2, 'Preencher', 0.8), label='#8: Preencher')
+    c.waitfor(text='Ordem #8', timeout=15)
+    c.hover(TXTX('Agendamento', exact=True), 0.6, at=c.A(2, 'combinado', 0.5), label='tela da ordem: o combinado')
+    c.mark(3)
+    rola_ate(c, 'Equipamentos', c.A(3, 'bloco', 0.2), 'desce ao bloco Equipamentos', y=190, escopo='body')
+    c.click(SEL("div:has(> :text-is('Recolhi')) button[role=combobox] >> nth=0"), at=c.A(3, 'Edson', 0.8), label='Recolhi: Tipo de equipamento')
+    c.click(OPT('Caçamba 5 m³'), at=c.A(3, 'recolheu', 0.6), label='Recolhi: Caçamba 5 m³')
+    c.click(SEL("div:has(> :text-is('Recolhi')) button[role=combobox] >> nth=1"), at=c.A(3, 'Caçamba', 0.8, nth=1), label='Recolhi: Unidade')
+    c.click(OPT('Caçamba 03'), at=c.A(3, 'três', 0.5), label='Recolhi: Caçamba 03')
+    c.click(SEL("div:has(> :text-is('Recolhi')) button:has-text('Adicionar')"), at=c.A(3, 'cheia', 0.6), label='Recolhi: Adicionar')
+    c.mark(4)
+    c.click(SEL("div:has(> :text-is('Entreguei')) button[role=combobox] >> nth=0"), at=c.A(4, 'deixou', 0.8), label='Entreguei: Tipo de equipamento')
+    c.click(OPT('Caçamba 5 m³'), at=c.A(4, 'Caçamba', 0.6), label='Entreguei: Caçamba 5 m³')
+    c.click(SEL("div:has(> :text-is('Entreguei')) button[role=combobox] >> nth=1"), at=c.A(4, 'vazia', 0.8), label='Entreguei: Unidade (só as da base)')
+    c.hover(OPT('Caçamba 05'), 1.2, at=c.A(4, 'lista', 0.5), label='Entreguei: lista só com as da base')
+    c.click(OPT('Caçamba 05'), at=c.A(4, 'base', 0.8), label='Entreguei: Caçamba 05')
+    c.click(SEL("div:has(> :text-is('Entreguei')) button:has-text('Adicionar')"), label='Entreguei: Adicionar')
+    c.mark(5)
+    c.clicar_fixo(SEL("div.fixed button:has-text('Concluir coleta')"), (640, 770), js_clicar('div.fixed button', 'Concluir coleta'),
+                  c.A(5, 'Concluir', 0.1), 'Concluir coleta')
+    c.waitfor(text='Relatório de Coleta 8', timeout=15)
+    c.hover(TXTX('Relatório de Coleta 8', exact=True), 1.0, at=c.A(5, 'relatório', 0.5), label='Relatório de Coleta 8')
+    c.mark(6)
+    c.cursor((760, 460), at=c.A(6, 'concluir', 0.3), label='cursor em repouso (a dica)')
+    c.mark(7)
+    c.click(BTNX('Voltar às ordens'), at=c.A(7, 'volta', 0.8), label='Voltar às ordens')
+    c.waitfor(text=PAGINAS['/coletas/ordens'], timeout=15)
+    c.hover(CARD_TXT(8, '#8'), 0.8, at=c.A(7, 'Concluídas', 0.5), label='#8 em Concluídas')
+    c.click(CARD_TXT(8, 'Depósito Irmãos Siqueira'), at=c.A(7, 'cartão', 0.8), label='abre a ficha da ordem 8')
+    c.waitfor(text='Detalhes da ordem de coleta.', timeout=10)
+    c.mark(8)
+    rola_ate(c, 'Equipamentos movimentados', c.A(8, 'Aqui', 0.3), 'ficha: Equipamentos movimentados', y=200, escopo=DLG)
+    c.hover(TXTX('Equipamentos movimentados', within=DLG, exact=True), 1.0, at=c.A(8, 'caçambas', 0.5), label='Equipamentos movimentados')
+    c.mark(9)
+    rola_ate(c, 'Histórico', c.A(9, 'Histórico', 0.6), 'ficha: Histórico', y=200, escopo=DLG)
+    c.hover(TXTX('Histórico', within=DLG, exact=True), 1.0, at=c.A(9, 'guarda', 0.5), label='Histórico')
+    c.fim()
+    return c
+
+
+@capitulo
+def cap07():
+    """A coleta pedida pelo portal: o portal da Cooperativa Recomeço (aba Coletas, Solicitar coleta de PET prensado, 800 kg, 13/11, Tarde);
+    de volta ao sistema, o ponto vermelho no menu, o cartão #10 "via portal", Aprovar e Agendar."""
+    portal = f'/portal/{TOKEN_COOP}'
+    c = Cap(7, start=(760, 420), setup=setup_em('/coletas/frota', extra=[{'do': 'goto', 'url': portal},
+                                                                          {'do': 'waitFor', 'text': 'Portal do Cliente', 'timeout': 30},
+                                                                          {'do': 'waitFor', 'idle': True, 'timeout': 25}, {'do': 'wait', 'seconds': 0.8}]))
+    c.mark(1)
+    c.cursor((760, 440), at=0.5, label='cursor em repouso (ilustração)')
+    c.mark(2)
+    c.flush(1e9)
+    c.mark(3)
+    c.hover(TXTX('Cooperativa Recomeço', exact=True), 0.8, at=c.A(3, 'Cooperativa', 0.5), label='portal: Cooperativa Recomeço')
+    c.click(SEL("button:text-is('Coletas'), [role=tab]:text-is('Coletas')"), at=c.A(3, 'aba', 0.8), label='aba Coletas')
+    c.hover(TXTX('Minhas coletas', exact=True), 0.6, at=c.A(3, 'acompanha', 0.5), label='Minhas coletas')
+    c.hover(BTN('Solicitar coleta'), 0.6, at=c.A(3, 'pede', 0.5), label='Solicitar coleta')
+    c.mark(4)
+    c.click(BTN('Solicitar coleta'), at=c.A(4, 'cooperativa', 0.6), label='abre Solicitar coleta')
+    c.waitfor(target=SEL('#coleta-material'), timeout=10)
+    c.click(SEL('#coleta-material'), at=c.A(4, 'PET', 0.8), label='Material (campo)')
+    c.type(SEL('#coleta-material'), 'PET prensado', at=c.A(4, 'PET', 0.05), label='Material: PET prensado', cps=40, noClick=True)
+    c.click(SEL('#coleta-qtd'), at=c.A(4, 'quantidade', 0.8), label='Quantidade estimada (campo)')
+    c.type(SEL('#coleta-qtd'), '800 kg', at=c.A(4, 'quantidade', 0.05), label='Quantidade estimada: 800 kg', cps=40, noClick=True)
+    c.mark(5)
+    c.click(SEL('#coleta-data'), at=c.A(5, 'dia', 0.8), label='Data preferida (campo)')
+    c.type(SEL('#coleta-data'), '13112026', at=c.A(5, 'sexta', 0.3), label='Data preferida 13/11/2026', cps=40, noClick=True)
+    c.click(SEL('#coleta-janela'), at=c.A(5, 'período', 0.8), label='abre Período')
+    c.click(OPT('Tarde'), at=c.A(5, 'tarde', 0.6), label='Período: Tarde')
+    c.hover(TXTX('Endereço da coleta', within=DLG, exact=True), 0.8, at=c.A(5, 'endereço', 0.5), label='Endereço da coleta (do cadastro)')
+    c.mark(6)
+    c.click(BTN('Solicitar coleta', within=DLG), at=c.A(6, 'Solicitar', 0.8), label='Solicitar coleta (enviar)')
+    c.waitfor(text='Solicitação enviada (#10)', timeout=10)
+    c.mark(7)
+    c.add({'do': 'goto', 'url': '/coletas/frota', 'at': round(c.L(7) - 0.2, 2), 'label': 'de volta ao sistema (Frota)'})
+    c.waitfor(text=PAGINAS['/coletas/frota'], timeout=15)
+    c.hover(GRUPO, 1.0, at=c.A(7, 'menu', 0.5), label='o ponto vermelho no menu Coletas & Logística')
+    c.click(ITEM_MENU('Ordens de Coleta'), at=c.A(7, 'coluna', 0.8), label='Ordens de Coleta')
+    c.waitfor(text=PAGINAS['/coletas/ordens'], timeout=15)
+    c.hover(CARD_TXT(10, '#10'), 0.4, at=c.A(7, 'pedido', 0.5), label='#10 na Solicitada')
+    c.hover(CARD_TXT(10, 'via portal'), 0.8, at=c.A(7, 'via', 0.5), label='#10: via portal')
+    c.mark(8)
+    c.hover(CARD_BTN(10, 'Aprovar'), 0.4, at=c.A(8, 'aprovar', 0.5), label='Aprovar')
+    c.hover(CARD_BTN(10, 'Recusar'), 1.0, at=c.A(8, 'recusar', 0.5), label='Recusar')
+    c.mark(9)
+    c.click(CARD_BTN(10, 'Aprovar'), at=c.A(9, 'Aprovar', 0.8), label='Aprovar #10')
+    c.waitfor(text='Agendar coleta', timeout=10)
+    c.hover(TXTX('Data da coleta *', within=DLG, exact=True), 0.3, at=c.A(9, 'data', 0.5), label='Agendar coleta: data do pedido')
+    c.hover(TXTX('Janela *', within=DLG, exact=True), 0.6, at=c.A(9, 'janela', 0.5), label='Agendar coleta: janela do pedido')
+    c.mark(10)
+    c.click(BTN('Agendar', within=DLG), at=c.A(10, 'Agendar', 0.8), label='Agendar')
+    c.waitfor(text='Status alterado para Agendada', timeout=10)
+    c.hover(CARD_TXT(10, '#10'), 1.2, at=c.A(10, 'cooperativa', 0.5), label='#10 em Agendada')
+    c.fim()
+    return c
+
+
+@capitulo
+def cap08():
+    """Veículos e motoristas: Frota, o FKD2E41 (tara e capacidade), Novo veículo FVL8A52 (poliguindaste) e Novo motorista Sérgio Paiva."""
+    c = Cap(8, start=(760, 420), setup=setup_em('/coletas/ordens', aquece=['/coletas/frota']))
+    c.mark(1)
+    c.click(ITEM_MENU('Frota'), at=c.A(1, 'Frota', 0.8), label='menu Frota')
+    c.waitfor(text=PAGINAS['/coletas/frota'], timeout=15)
+    c.hover(TAB('Veículos'), 0.3, at=c.A(1, 'veículos', 0.5), label='aba Veículos')
+    c.hover(TAB('Motoristas'), 0.3, at=c.A(1, 'motoristas', 0.5), label='aba Motoristas')
+    c.hover(TXTX('Mesma frota usada na pesagem de compra/venda.', exact=True), 0.8, at=c.A(1, 'pesagem', 0.5), label='mesma frota da pesagem')
+    c.mark(2)
+    c.click(TXTX('FKD2E41', within='main', exact=True), at=c.A(2, 'caminhão', 0.8), label='FKD2E41')
+    c.hover(TXTX('Tara', within='main', exact=True), 0.3, at=c.A(2, 'tara', 0.5), label='Tara do FKD2E41')
+    c.hover(TXTX('Capacidade', within='main', exact=True), 1.0, at=c.A(2, 'capacidade', 0.5), label='Capacidade do FKD2E41')
+    c.mark(3)
+    c.flush(1e9)
+    c.mark(4)
+    c.click(BTN('Novo veículo'), at=c.A(4, 'Novo', 0.9), label='Novo veículo')
+    c.waitfor(target=SEL('#veiculo-placa'), timeout=10)
+    c.click(SEL('#veiculo-placa'), at=c.A(4, 'digito', 0.6), label='Placa (campo)')
+    c.type(SEL('#veiculo-placa'), 'FVL8A52', at=c.A(4, 'placa', 0.05), label='Placa FVL8A52', cps=40, noClick=True)
+    c.click(SEL('#veiculo-descricao'), at=c.A(4, 'apelido', 0.6), label='Descrição / Apelido (campo)')
+    c.type(SEL('#veiculo-descricao'), 'Caminhão poliguindaste', label='Descrição: Caminhão poliguindaste', cps=40, noClick=True)
+    c.mark(5)
+    c.click(SEL('#veiculo-uf'), at=c.A(5, 'servem', 0.6), label='abre UF de licenciamento')
+    c.click(OPT('SP'), at=c.A(5, 'São', 0.6), label='UF: SP')
+    c.click(SEL('#veiculo-categoria'), at=c.A(5, 'Paulo', 0.3), label='abre Tipo')
+    c.click(OPT('Veículo único (truck, toco, utilitário)'), at=c.A(5, 'único', 0.5), label='Tipo: Veículo único')
+    c.click(SEL('#veiculo-rodado'), label='abre Tipo de rodado')
+    c.click(OPT('Toco'), at=c.A(5, 'toco', 0.5), label='Tipo de rodado: Toco')
+    c.mark(6)
+    c.click(SEL('#veiculo-tara'), at=c.A(6, 'tara', 0.6), label='Tara (campo)')
+    c.type(SEL('#veiculo-tara'), '7100', at=c.A(6, 'sete', 0.05), label='Tara (kg) 7100', cps=40, noClick=True)
+    c.click(SEL('#veiculo-cap-kg'), at=c.A(6, 'capacidade', 0.6), label='Capacidade (campo)')
+    c.type(SEL('#veiculo-cap-kg'), '8500', at=c.A(6, 'oito', 0.05), label='Capacidade (kg) 8500', cps=40, noClick=True)
+    c.mark(7)
+    c.click(BTN('Cadastrar', within=DLG), at=c.A(7, 'Cadastrar', 0.8), label='Cadastrar veículo')
+    c.waitfor(text='Veículo cadastrado', timeout=10)
+    c.hover(TXTX('FVL8A52', within='main', exact=True), 1.0, at=c.A(7, 'poliguindaste', 0.5), label='FVL8A52 na frota')
+    c.mark(8)
+    c.click(TAB('Motoristas'), at=c.A(8, 'aba', 0.8), label='aba Motoristas')
+    c.click(BTN('Novo motorista'), at=c.A(8, 'Novo', 0.8), label='Novo motorista')
+    c.waitfor(target=SEL('#motorista-nome'), timeout=10)
+    c.mark(9)
+    c.click(SEL('#motorista-nome'), at=c.A(9, 'Sérgio', 0.7), label='Nome (campo)')
+    c.type(SEL('#motorista-nome'), 'Sérgio Paiva', at=c.A(9, 'Sérgio', 0.05), label='Nome: Sérgio Paiva', cps=40, noClick=True)
+    c.click(SEL('#motorista-doc'), at=c.A(9, 'Nome', 0.6), label='CPF (campo)')
+    c.type(SEL('#motorista-doc'), '46371820508', at=c.A(9, 'CPF', 0.05), label='CPF', cps=40, noClick=True)
+    c.click(SEL('#motorista-tel'), label='Telefone (campo)')
+    c.type(SEL('#motorista-tel'), '12900004417', label='Telefone', cps=40, noClick=True)
+    c.mark(10)
+    c.click(SEL('#motorista-cnh'), at=c.A(10, 'CNH', 0.8), label='CNH (campo)')
+    c.type(SEL('#motorista-cnh'), '04581273671', at=c.A(10, 'número', 0.05), label='CNH', cps=40, noClick=True)
+    c.click(SEL('#motorista-cnh-cat'), at=c.A(10, 'categoria', 0.8), label='abre Categoria')
+    c.click(OPT('C'), at=c.A(10, 'C', 0.5, nth=3), label='Categoria C')
+    c.click(SEL('#motorista-cnh-val'), at=c.A(10, 'validade', 0.8), label='Validade da CNH (campo)')
+    c.type(SEL('#motorista-cnh-val'), '18062030', at=c.A(10, 'validade', 0.05), label='Validade da CNH 18/06/2030', cps=40, noClick=True)
+    c.mark(11)
+    c.click(BTN('Cadastrar', within=DLG), at=c.A(11, 'Cadastrar', 0.8), label='Cadastrar motorista')
+    c.waitfor(text='Motorista cadastrado', timeout=10)
+    c.hover(TXTX('Sérgio Paiva', within='main', exact=True), 1.2, at=c.A(11, 'escalado', 0.5), label='Sérgio Paiva na lista')
+    c.fim()
+    return c
+
+
+@capitulo
+def cap09():
+    """As caçambas e onde estão: Equipamentos, tipos, unidades, Nova unidade Caçamba 06, Movimentar (Externo -> Minha base), Onde tudo está
+    agora e a aba Movimentações."""
+    c = Cap(9, start=(760, 420), setup=setup_em('/coletas/ordens', aquece=['/coletas/equipamentos']))
+    c.mark(1)
+    c.click(ITEM_MENU('Equipamentos'), at=c.A(1, 'Equipamentos', 0.8), label='menu Equipamentos')
+    c.waitfor(text=PAGINAS['/coletas/equipamentos'], timeout=15)
+    c.hover(TXTX(PAGINAS['/coletas/equipamentos'], exact=True), 0.8, at=c.A(1, 'bags', 0.5), label='caçambas, bags, caixas e paletes')
+    c.mark(2)
+    c.hover(TXTX('Tipos de equipamento', within='main', exact=True), 0.4, at=c.A(2, 'tipo', 0.5), label='Tipos de equipamento')
+    c.hover(SEL("main tr:has-text('Caçamba 5 m³')"), 1.6, at=c.A(2, 'caçamba', 0.5), label='Caçamba 5 m³: uma a uma')
+    c.hover(SEL("main tr:has-text('Bag 1 m³')"), 1.6, at=c.A(2, 'bag', 0.5), label='Bag 1 m³: por quantidade')
+    c.mark(3)
+    rola_ate(c, 'Unidades identificáveis', c.A(3, 'Embaixo', 0.3), 'desce às Unidades identificáveis', y=140)
+    c.hover(TXTX('Caçamba 05', within='main', exact=True), 0.6, at=c.A(3, 'Caçamba', 0.5), label='Caçamba 05')
+    c.hover(SEL("main :text-is('Caçamba 05') >> xpath=ancestor::*[contains(., 'Depósito Irmãos Siqueira')][1]"), 1.2, at=c.A(3, 'Depósito', 0.5),
+            label='Caçamba 05 no Depósito Irmãos Siqueira')
+    c.mark(4)
+    c.click(BTN('Nova unidade'), at=c.A(4, 'Nova', 0.9), label='Nova unidade')
+    c.waitfor(target=SEL('#equipamento-id'), timeout=10)
+    c.click(SEL('#equipamento-id'), at=c.A(4, 'identificação', 0.6), label='Identificação (campo)')
+    c.type(SEL('#equipamento-id'), 'Caçamba 06', at=c.A(4, 'Caçamba', 0.05, nth=1), label='Identificação: Caçamba 06', cps=40, noClick=True)
+    c.click(SEL('#equipamento-tipo'), at=c.A(4, 'tipo', 0.9), label='abre Tipo de equipamento')
+    c.click(OPT('Caçamba 5 m³'), label='Tipo: Caçamba 5 m³')
+    c.click(BTN('Cadastrar', within=DLG), at=c.A(4, 'Cadastrar', 0.5), label='Cadastrar unidade')
+    c.waitfor(text='Unidade cadastrada', timeout=10)
+    c.mark(5)
+    c.click(TXTX('Caçamba 06', within='main', exact=True), at=c.A(5, 'Ela', 0.8), label='Caçamba 06 na lista')
+    c.hover(TXTX('Ainda sem movimentação registrada', within='main', exact=False), 1.2, at=c.A(5, 'lugar', 0.5), label='sem lugar (sem movimentação)')
+    c.mark(6)
+    c.click(BTN('Movimentar', within='main'), at=c.A(6, 'Movimentar', 0.8), label='Movimentar')
+    c.waitfor(text='Nova movimentação', timeout=10)
+    c.hover(BTNX('Externo', within=DLG), 0.8, at=c.A(6, 'Externo', 0.5), label='De: Externo')
+    c.click(SEL(f"{DLG} button:has-text('Minha base') >> nth=1"), at=c.A(6, 'Minha', 0.8), label='Para: Minha base')
+    c.click(BTN('Registrar', within=DLG), at=c.A(6, 'Registrar', 0.8), label='Registrar')
+    c.waitfor(text='Movimentação registrada', timeout=10)
+    c.hover(TXTX('Posição atual', within='main', exact=True), 1.2, at=c.A(6, 'base', 0.5, nth=1), label='Posição atual: Minha base')
+    c.mark(7)
+    c.cursor((760, 460), at=c.A(7, 'dica', 0.3), label='cursor em repouso (ilustração)')
+    c.mark(8)
+    rola_ate(c, 'Onde tudo está agora', c.A(8, 'Onde', 0.6), 'desce a Onde tudo está agora', y=120)
+    c.hover(TXTX('Na base', within='main', exact=True), 0.6, at=c.A(8, 'base', 0.5), label='Na base')
+    c.hover(TXTX('Em campo', within='main', exact=True), 0.4, at=c.A(8, 'campo', 0.5), label='Em campo')
+    c.hover(TXTX('Com parceiros', within='main', exact=True), 0.8, at=c.A(8, 'parceiros', 0.6), label='Com parceiros')
+    c.mark(9)
+    c.click(TAB('Movimentações'), at=c.A(9, 'Movimentações', 0.8), label='aba Movimentações')
+    c.hover(TXTX('Ordem 8', within='main', exact=False), 1.2, at=c.A(9, 'ordem', 0.5), label='as da troca de hoje: Ordem 8')
+    c.fim()
+    return c
+
+
+@capitulo
+def cap10():
+    """O relatório: Este mês (4 coletas, 1 concluída, 25%), Mês passado (6, 5, 1, 100%), por status, motorista, veículo e parceiro."""
+    c = Cap(10, start=(760, 420), setup=setup_em('/coletas/ordens', aquece=['/coletas/relatorio']))
+    c.mark(1)
+    c.click(ITEM_MENU('Relatório'), at=c.A(1, 'relatório', 0.8), label='menu Relatório')
+    c.waitfor(text=PAGINAS['/coletas/relatorio'], timeout=15)
+    c.hover(TXTX('Total de coletas', within='main', exact=True), 0.4, at=c.A(1, 'total', 0.5), label='Este mês: Total de coletas')
+    c.hover(TXTX('Concluídas', within='main', exact=True), 0.4, at=c.A(1, 'concluídas', 0.5), label='Este mês: Concluídas')
+    c.hover(TXTX('Canceladas', within='main', exact=True), 0.4, at=c.A(1, 'canceladas', 0.5), label='Este mês: Canceladas')
+    c.hover(TXTX('Taxa de conclusão', within='main', exact=True), 0.6, at=c.A(1, 'taxa', 0.5), label='Este mês: Taxa de conclusão')
+    c.mark(2)
+    c.click(SEL("main button[role=combobox]"), at=c.A(2, 'Em', 0.6), label='abre Período')
+    c.click(OPT('Mês passado'), at=c.A(2, 'outubro', 0.6), label='Período: Mês passado')
+    c.hover(TXTX('Total de coletas', within='main', exact=True), 0.4, at=c.A(2, 'seis', 0.5), label='outubro: Total de coletas')
+    c.hover(TXTX('Concluídas', within='main', exact=True), 0.4, at=c.A(2, 'cinco', 0.5), label='outubro: Concluídas')
+    c.hover(TXTX('Canceladas', within='main', exact=True), 0.4, at=c.A(2, 'uma', 0.5), label='outubro: Canceladas')
+    c.hover(TXTX('Taxa de conclusão', within='main', exact=True), 1.0, at=c.A(2, 'taxa', 0.5), label='outubro: Taxa de conclusão')
+    c.mark(3)
+    c.cursor((760, 460), at=c.A(3, 'dica', 0.3), label='cursor em repouso (ilustração)')
+    c.mark(4)
+    rola_ate(c, 'Por status', c.A(4, 'Embaixo', 0.3), 'desce às tabelas', y=130)
+    c.hover(TXTX('Por status', within='main', exact=True), 0.3, at=c.A(4, 'status', 0.5), label='Por status')
+    c.hover(TXTX('Por motorista', within='main', exact=True), 0.3, at=c.A(4, 'motorista', 0.5), label='Por motorista')
+    c.hover(TXTX('Por veículo', within='main', exact=True), 0.3, at=c.A(4, 'veículo', 0.5), label='Por veículo')
+    c.hover(TXTX('Por parceiro', within='main', exact=True), 1.2, at=c.A(4, 'parceiro', 0.5), label='Por parceiro')
+    c.mark(5)
+    rola_ate(c, 'Período', c.A(5, 'Uma', 0.3), 'sobe ao Período', y=160)
+    c.hover(SEL("main button[role=combobox]"), 1.5, at=c.A(5, 'cada', 0.5), label='Período (em que mês cada coleta entra)')
+    c.fim()
+    return c
+
+
+@capitulo
+def cap11():
+    """As regras: Configurações, Prefixo da numeração "COL-", Janelas, Exigir motorista e veículo, Exigir aprovação, Antecedência mínima 24
+    e Dias aceitos."""
+    c = Cap(11, start=(760, 420), setup=setup_em('/coletas/ordens', aquece=['/coletas/configuracoes']))
+    c.mark(1)
+    c.click(ITEM_MENU('Configurações'), at=c.A(1, 'Configurações', 0.8), label='menu Configurações (Coletas)')
+    c.waitfor(text=PAGINAS['/coletas/configuracoes'], timeout=15)
+    c.hover(TXTX('Operação', within='main', exact=True), 0.6, at=c.A(1, 'operação', 0.5), label='bloco Operação')
+    c.mark(2)
+    c.hover(SEL('#col-prefix'), 0.6, at=c.A(2, 'Prefixo', 0.5), label='Prefixo da numeração')
+    c.click(SEL('#col-prefix'), at=c.A(2, 'coloco', 0.6), label='Prefixo (campo)')
+    c.type(SEL('#col-prefix'), 'COL-', at=c.A(2, 'prefixo', 0.05, nth=1), label='Prefixo: COL-', cps=40, noClick=True)
+    c.press('Tab', at=c.A(2, 'ordens', 0.2), label='sai do campo (salva o prefixo)')
+    c.waitfor(text='Prefixo da numeração salvo', timeout=8)
+    c.mark(3)
+    c.hover(TXTX('Janelas de coleta oferecidas', within='main', exact=True), 0.5, at=c.A(3, 'Janelas', 0.5), label='Janelas de coleta oferecidas')
+    c.hover(SEL("main button:text-is('Dia todo')"), 0.8, at=c.A(3, 'períodos', 0.5), label='as janelas: Manhã, Tarde e Dia todo')
+    c.hover(TXTX('Exigir motorista e veículo para agendar', within='main', exact=True), 1.2, at=c.A(3, 'exigir', 0.5),
+            label='Exigir motorista e veículo para agendar')
+    c.mark(4)
+    rola_ate(c, 'Portal e solicitações', c.A(4, 'bloco', 0.6), 'desce ao bloco Portal e solicitações', y=120)
+    c.hover(TXTX('Exigir aprovação da solicitação', within='main', exact=True), 1.5, at=c.A(4, 'Exigir', 0.5), label='Exigir aprovação da solicitação')
+    c.mark(5)
+    c.hover(SEL('#col-lead'), 0.6, at=c.A(5, 'Antecedência', 0.5), label='Antecedência mínima (horas)')
+    c.click(SEL('#col-lead'), at=c.A(5, 'coloco', 0.6), label='Antecedência (campo)')
+    c.type(SEL('#col-lead'), '24', at=c.A(5, 'vinte', 0.05), label='Antecedência: 24', cps=40, noClick=True, clear=True)
+    c.press('Tab', at=c.A(5, 'Dias', 0.6), label='sai do campo (salva a antecedência)')
+    c.hover(TXTX('Dias aceitos para coleta', within='main', exact=True), 0.4, at=c.A(5, 'aceitos', 0.5), label='Dias aceitos para coleta')
+    c.hover(SEL("main button:text-is('Seg')"), 0.3, at=c.A(5, 'segunda', 0.5), label='Seg')
+    c.hover(SEL("main button:text-is('Sáb')"), 0.6, at=c.A(5, 'sábado', 0.5), label='Sáb')
+    c.mark(6)
+    c.cursor((760, 460), at=c.A(6, 'dica', 0.3), label='cursor em repouso (ilustração)')
+    c.fim()
+    return c
 
 
 def main():

@@ -42,7 +42,7 @@ def tokens(texto):
     """[(legenda, fala, linha)] na ordem do texto enviado, sem as tags [pause]."""
     out = []
     mapa = dict(TROCAS)
-    rx = re.compile("|".join(re.escape(f) for f, _ in sorted(TROCAS, key=lambda p: -len(p[0]))))
+    rx = re.compile(r"(?<!\w)(?:" + "|".join(re.escape(f) for f, _ in sorted(TROCAS, key=lambda p: -len(p[0]))) + r")(?!\w)")  # só palavra inteira ("asas" não pega em "casas")
     for li, linha in enumerate(texto.split("\n")):
         linha = re.sub(r"\[[a-z ]+\]", " ", linha)
         # uma passada só, da troca mais longa para a mais curta (senão "quê-érre" entra dentro de "quê-érre côde")

@@ -1,0 +1,388 @@
+{
+ "name": "t08-cap03",
+ "title": "T08 · Cap. 3 · A primeira pesagem e o rascunho (narração 77,2 s ESTIMADA; marcas L1..L10 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:40:00-03:00)",
+ "seed": "t08-cap03",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 430,
+  "y": 560
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true"
+ },
+ "seedExtra": [
+  "base/balanca-ativada",
+  "base/caixa-aberto",
+  "t08/inicio",
+  "t08/apos-cap02"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "waitFor",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "timeout": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "••••••••"
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "url": "/dashboard",
+   "timeout": 40
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 25
+  },
+  {
+   "do": "goto",
+   "url": "/ticket-pesagem"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie tickets de pesagem rodoviária",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 25
+  },
+  {
+   "do": "wait",
+   "seconds": 0.8
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Rascunhos abertos"
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Preencha o ticket. Use as abas para atender vários veículos.",
+   "timeout": 20
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 20
+  },
+  {
+   "do": "wait",
+   "seconds": 1.0
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Escreva o nome ou código do material"
+   },
+   "text": "latinha",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Alumínio latinha"
+   }
+  },
+  {
+   "do": "wait",
+   "seconds": 1.0
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel|Algo deu errado|Falha ao|Balan[çc]a desconectada|Pop-up bloqueado|Popup bloqueado/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');if(f&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA ECOFLIX'))window.__avisos.push('TRILHA ECOFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Pesagem avançada",
+    "exact": true
+   },
+   "at": 4.87,
+   "label": "Pesagem avançada"
+  },
+  {
+   "do": "waitFor",
+   "text": "Registre pesagem dupla, tara, impureza e dados do transporte",
+   "timeout": 8
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 7.38
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] div:has(> label:has-text('1ª Pesagem')) input"
+   },
+   "at": 7.38,
+   "label": "campo 1ª Pesagem"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] div:has(> label:has-text('1ª Pesagem')) input"
+   },
+   "text": "9460",
+   "at": 9.23,
+   "label": "digita 9460 na 1ª Pesagem",
+   "noClick": true
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] div:has(> label:has-text('Peso Bruto'))"
+   },
+   "text": "",
+   "noClick": true,
+   "optional": true,
+   "timeout": 4,
+   "at": 14.4,
+   "label": "1ª Pesagem e Peso Bruto 9.460 (= 1ª pesagem)"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 15.48
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] div:has(> label:has-text('1ª Pesagem')) button[aria-label='Capturar peso da balança']"
+   },
+   "seconds": 0.8,
+   "at": 17.89,
+   "label": "botão da balança dentro do campo 1ª Pesagem",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 22.13
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Preencha 1ª e 2ª pesagem",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.8,
+   "at": 22.13,
+   "label": "dica dos três jeitos",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 30.6
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Como exibir no comprovante",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.3,
+   "at": 30.6,
+   "label": "Como exibir no comprovante",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Completo",
+    "within": "[role=dialog]"
+   },
+   "at": 33.39,
+   "label": "Completo"
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 37.71
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Confirmar",
+    "exact": true
+   },
+   "at": 37.71,
+   "label": "Confirmar"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 41.47
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 1000,
+    "y": 560
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "at": 42.07,
+   "label": "cursor descansa"
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 49.19
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main button[aria-expanded]:has-text('Seu rascunho')"
+   },
+   "seconds": 0.8,
+   "at": 53.88,
+   "label": "aba #58 com Seu rascunho",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "main button[aria-expanded]:has-text('Seu rascunho')"
+   },
+   "text": "",
+   "noClick": true,
+   "optional": true,
+   "timeout": 4,
+   "at": 57.82,
+   "label": "número previsto #58"
+  },
+  {
+   "do": "mark",
+   "name": "L9",
+   "at": 63.13
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Voltar",
+    "exact": true
+   },
+   "at": 63.13,
+   "label": "Voltar"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie tickets de pesagem rodoviária",
+   "timeout": 15
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Rascunhos abertos"
+   },
+   "seconds": 0.4,
+   "at": 66.65,
+   "label": "Rascunhos abertos (1)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Rascunhos abertos"
+   },
+   "at": 68.41,
+   "label": "abre o rascunho"
+  },
+  {
+   "do": "waitFor",
+   "text": "Preencha o ticket. Use as abas para atender vários veículos.",
+   "timeout": 15
+  },
+  {
+   "do": "mark",
+   "name": "L10",
+   "at": 68.94
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tr:has-text('Alumínio latinha')"
+   },
+   "seconds": 0.8,
+   "at": 71.88,
+   "label": "item reaberto: Alumínio latinha 9.460",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 77.18
+  }
+ ]
+}

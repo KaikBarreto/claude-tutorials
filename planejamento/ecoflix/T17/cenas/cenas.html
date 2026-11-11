@@ -269,7 +269,7 @@ CAPS[1]=()=>{
   const vazio=y=>el(`<div class="ab" style="left:24px;top:${y}px;width:270px;height:50px;border-radius:12px;background:#F3F5F7"></div>`,md);
   const v1=vazio(98), v2=vazio(158), v3=vazio(218);
   const item=(y,icone,txt)=>el(`<div class="ab row" style="left:24px;top:${y}px;width:270px;height:50px;gap:12px;padding:0 16px;border-radius:12px;background:#EAF8F0">
-      <span class="row" style="color:var(--ve)">${icone}</span><div style="font-weight:700;font-size:18px;white-space:nowrap">${txt}</div></div>`,md);
+      <span class="row" style="background:var(--vs);color:#fff;border-radius:50%;padding:4px;margin:0 -4px">${icone}</span><div style="font-weight:700;font-size:18px;white-space:nowrap">${txt}</div></div>`,md);
   const i1=item(98,ic('circle-check',22),'Notas da carga'), i2=item(158,ic('circle-check',22),'Caminhão'), i3=item(218,ic('circle-check',22),'Motorista');
   // a viagem: emitido antes de sair ("Autorizado"), encerrado no fim ("Encerrado")
   const via=el('<div class="ab" style="left:0;top:0;width:1280px;height:800px"></div>',g);
@@ -282,7 +282,7 @@ CAPS[1]=()=>{
   const sA=selo(200,'Autorizado','sA'), sE=selo(1080,'Encerrado','sE');
   const rot=(x,txt)=>el(`<div class="ab lbl" style="left:${x-110}px;top:${YR+38}px;width:220px;text-align:center;font-size:18px;color:#4B5563">${txt}</div>`,via);
   const rA=rot(200,'antes de sair'), rE=rot(1080,'fim da viagem');
-  const mk=el(`<div class="ab" style="left:0;top:0"><div class="ico" style="width:62px;height:62px;border-radius:50%;background:#fff;border:3px solid var(--v);box-shadow:0 8px 18px rgba(16,24,40,.14)">${ic('truck',32)}</div></div>`,via);
+  const mk=el(`<div class="ab" style="left:0;top:0"><div class="ico" style="width:62px;height:62px;border-radius:50%;background:var(--vs);color:#fff;border:3px solid #fff;box-shadow:0 8px 18px rgba(16,24,40,.14)">${ic('truck',32)}</div></div>`,via);
 
   return t=>{
     const at=W(1,'Imagina')-.3, tc=W(1,'caminhao'), tal=W(1,'aluminio'), tn=W(1,'nota'), tf=W(1,'fiscal'), tm=W(1,'manifesto'),
@@ -310,7 +310,7 @@ CAPS[1]=()=>{
     // "Encerrado": entra apagado na palavra e fica cheio quando o caminhão chega
     const ch=eo(pr(t,ts-.05+Math.max(1.2,fim-ts)-.1,.4)), se=$('#sE');
     vis(sE,t,ten-.1,1e9,{dy:12}); sE.style.opacity=(parseFloat(sE.style.opacity)*lerp(.45,1,ch)).toFixed(3);
-    se.style.background=mix('#F3F5F7','#EAF8F0',ch); se.style.color=mix('#6B7280','#2E7D57',ch); pulse(sE,t,fim+.1,.06,.7);
+    se.style.background=mix('#4B5563','#16A34A',ch); se.style.color='#fff'; pulse(sE,t,fim+.1,.06,.7);
   };
 };
 
@@ -408,7 +408,7 @@ CAPS[5]=()=>{
   lug(400,'Taubaté'); lug(980,'Itamonte');
   const sA=el(`<div class="ab" style="left:290px;top:66px;width:220px;text-align:center"><div class="tag v" style="font-size:17px;padding:7px 15px">Autorizado</div></div>`,cE);
   const sE=el(`<div class="ab" style="left:870px;top:66px;width:220px;text-align:center"><div class="tag v" style="font-size:17px;padding:7px 15px">${ic('circle-check',19)}Encerrado</div></div>`,cE);
-  const mk=el(`<div class="ab" style="left:0;top:0"><div class="ico" style="width:52px;height:52px;border-radius:50%;background:#fff;border:3px solid var(--v);box-shadow:0 8px 18px rgba(16,24,40,.14)">${ic('truck',27)}</div></div>`,cE);
+  const mk=el(`<div class="ab" style="left:0;top:0"><div class="ico" style="width:52px;height:52px;border-radius:50%;background:var(--vs);color:#fff;border:3px solid #fff;box-shadow:0 8px 18px rgba(16,24,40,.14)">${ic('truck',27)}</div></div>`,cE);
   // cancelar: o manifesto que não deveria existir, riscado; o relógio do prazo curto
   const fol=el(`<div class="ab" style="left:400px;top:30px;width:150px">
       <div class="card" style="position:relative;width:150px;height:184px;border-radius:12px;padding:16px 16px">
@@ -594,11 +594,11 @@ CAPS[12]=()=>{
   const rec=el(`<div class="ab row" style="left:330px;top:34px;gap:10px"><div style="width:40px;height:40px"></div>
       <div class="lbl" style="font-size:17px;color:#4B5563">pacote</div></div>`,cont);
   const canais=el(`<div class="ab row" style="left:26px;top:100px;gap:10px">
-      <div class="tag v ce" style="font-size:15px;padding:6px 12px;background:#F3F5F7;color:#374151">${ic('mail',17)}e-mail</div>
-      <div class="tag v cp" style="font-size:15px;padding:6px 12px;background:#F3F5F7;color:#374151">${ic('folder-symlink',17)}pasta compartilhada</div></div>`,cont);
+      <div class="tag v ce" style="font-size:15px;padding:6px 12px;background:#4B5563;color:#fff">${ic('mail',17)}e-mail</div>
+      <div class="tag v cp" style="font-size:15px;padding:6px 12px;background:#4B5563;color:#fff">${ic('folder-symlink',17)}pasta compartilhada</div></div>`,cont);
   const [cE,cP]=[canais.querySelector('.ce'),canais.querySelector('.cp')];
   const item=(y,icone,txt)=>el(`<div class="ab row" style="left:26px;top:${y}px;width:464px;height:52px;gap:14px;padding:0 16px;border-radius:12px;background:#F4FBF7">
-      <span class="row" style="color:var(--ve)">${icone}</span><div style="font-weight:700;font-size:19px;white-space:nowrap">${txt}</div></div>`,cont);
+      <span class="row" style="background:var(--vs);color:#fff;border-radius:9px;padding:5px;margin:0 -5px">${icone}</span><div style="font-weight:700;font-size:19px;white-space:nowrap">${txt}</div></div>`,cont);
   const i1=item(160,ic('search-check',24),'Confere as notas'), i2=item(222,ic('book-check',24),'Lança na contabilidade'), i3=item(284,ic('phone-call',24),'Algo não bateu?');
   const s1=seta(g,626,300,690,300,'#C9D2DA',4);
   const tok=el(`<div class="ab" style="left:0;top:0"><div class="ico a" style="width:40px;height:40px;border-radius:11px;box-shadow:0 6px 14px rgba(16,24,40,.16)">${ic('file-archive',22)}</div></div>`,g);

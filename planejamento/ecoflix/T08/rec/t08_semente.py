@@ -13,7 +13,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 FAKE = 'http://127.0.0.1:54308'
 SAIDA = os.path.normpath(os.path.join(HERE, '..', 'mundo', 'seeds-extra', 't08'))
 BASE = ['base/balanca-ativada', 'base/caixa-aberto', 't08/inicio']
-FORA = ('presence', 'editing', 'heartbeat', 'audit', 'request_log', 'session')
+FORA = ('presence', 'editing', 'editors', 'heartbeat', 'audit', 'request_log', 'session')
 
 
 def get(u):

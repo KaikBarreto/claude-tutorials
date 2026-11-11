@@ -1,0 +1,373 @@
+{
+ "name": "t12-cap02",
+ "title": "T12 · Cap. 2 · O quadro das ordens (narração 61,9 s ESTIMADA; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T07:00:00-03:00)",
+ "seed": "t12-cap02",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true"
+ },
+ "seedExtra": [
+  "t12/inicio"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "waitFor",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "timeout": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "••••••••"
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "url": "/dashboard",
+   "timeout": 40
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 25
+  },
+  {
+   "do": "goto",
+   "url": "/coletas/ordens"
+  },
+  {
+   "do": "waitFor",
+   "text": "Solicite, agende e acompanhe as ordens de coleta",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 25
+  },
+  {
+   "do": "wait",
+   "seconds": 0.8
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel|Algo deu errado|Falha ao|Transi[çc][ãa]o inv[áa]lida|n[ãa]o encontrad|Localiza[çc][ãa]o n[ãa]o registrada|Sem sinal de GPS/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');if(f&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA ECOFLIX'))window.__avisos.push('TRILHA ECOFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main h3:text-is('Solicitada')"
+   },
+   "seconds": 0.25,
+   "at": 3.39,
+   "label": "coluna Solicitada",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main h3:text-is('Agendada')"
+   },
+   "seconds": 0.25,
+   "at": 4.45,
+   "label": "coluna Agendada",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main h3:text-is('A caminho')"
+   },
+   "seconds": 0.2,
+   "at": 5.41,
+   "label": "coluna A caminho",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main h3:text-is('Concluídas')"
+   },
+   "seconds": 0.4,
+   "at": 6.27,
+   "label": "coluna Concluídas",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main h3:text-is('Cancelada')"
+   },
+   "seconds": 0.6,
+   "at": 8.63,
+   "label": "coluna Cancelada",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 10.19
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Nenhuma ordem",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 1.2,
+   "at": 10.19,
+   "label": "Solicitada vazia (Nenhuma ordem)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 19.42
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main div.rounded-lg:has(> div span.font-semibold:text-is('#8')) :text-is('#8')"
+   },
+   "seconds": 0.3,
+   "at": 20.72,
+   "label": "cartão #8: número",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main div.rounded-lg:has(> div span.font-semibold:text-is('#8')) :text-is('Depósito Irmãos Siqueira')"
+   },
+   "seconds": 0.3,
+   "at": 22.31,
+   "label": "cartão #8: parceiro",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main div.rounded-lg:has(> div span.font-semibold:text-is('#8')) :text-is('Manhã')"
+   },
+   "seconds": 0.3,
+   "at": 23.37,
+   "label": "cartão #8: período",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main div.rounded-lg:has(> div span.font-semibold:text-is('#8')) :text-is('Edson Moura')"
+   },
+   "seconds": 0.3,
+   "at": 24.36,
+   "label": "cartão #8: motorista",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main div.rounded-lg:has(> div span.font-semibold:text-is('#8')) :text-is('FKD2E41')"
+   },
+   "seconds": 0.6,
+   "at": 25.42,
+   "label": "cartão #8: placa",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main div.rounded-lg:has(> div span.font-semibold:text-is('#8')) :text-is('Depósito Irmãos Siqueira')"
+   },
+   "seconds": 1.0,
+   "at": 28.99,
+   "label": "cartão #8: a troca de caçamba do Siqueira",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 31.62
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main div.rounded-lg:has(> div span.font-semibold:text-is('#7')) :text-is('Tiago Freitas')"
+   },
+   "seconds": 0.6,
+   "at": 31.62,
+   "label": "cartão #7: Tiago Freitas",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main div.rounded-lg:has(> div span.font-semibold:text-is('#7')) :text-is('Marcelo Tavares')"
+   },
+   "seconds": 0.8,
+   "at": 35.03,
+   "label": "cartão #7: Marcelo Tavares",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main div.rounded-lg:has(> div span.font-semibold:text-is('#7')) :text-is('Sem cadastro')"
+   },
+   "seconds": 1.0,
+   "at": 38.96,
+   "label": "cartão #7: Sem cadastro",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 40.77
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Filtros",
+    "within": "main"
+   },
+   "seconds": 0.6,
+   "at": 41.76,
+   "label": "Filtros",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main [aria-label='Lista']"
+   },
+   "seconds": 0.6,
+   "at": 43.51,
+   "label": "Quadro / Lista",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Nova ordem",
+    "exact": true
+   },
+   "seconds": 0.8,
+   "at": 46.01,
+   "label": "Nova ordem",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 47.57
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 760,
+    "y": 470
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "at": 48.99,
+   "label": "cursor em repouso (a dica)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main h3:text-is('Concluídas')"
+   },
+   "seconds": 0.4,
+   "at": 52.51,
+   "label": "dica: coluna Concluídas",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main h3:text-is('Cancelada')"
+   },
+   "seconds": 1.2,
+   "at": 53.5,
+   "label": "dica: coluna Cancelada",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 61.88
+  }
+ ]
+}

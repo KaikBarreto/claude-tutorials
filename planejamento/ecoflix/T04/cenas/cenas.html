@@ -45,7 +45,7 @@ body{font-family:M,sans-serif;color:var(--t);-webkit-font-smoothing:antialiased}
 .tag.v{background:var(--vc);color:var(--ve)} .tag.a{background:var(--ac);color:var(--ae)}
 .lbl{font-weight:700;font-size:17px;color:var(--c)}
 .num{font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
-.op{position:absolute;width:60px;height:60px;border-radius:50%;background:#F2F4F7;color:var(--t);display:flex;
+.op{position:absolute;width:60px;height:60px;border-radius:50%;background:#4B5563;color:#fff;display:flex;
   align-items:center;justify-content:center;font-weight:800;font-size:34px;line-height:1}
 /* mostrador da balança (painel escuro, número no acento) */
 .most{background:var(--e);border-radius:16px;padding:16px 22px 18px;box-shadow:0 16px 34px rgba(16,24,40,.22)}
@@ -57,10 +57,10 @@ body{font-family:M,sans-serif;color:var(--t);-webkit-font-smoothing:antialiased}
    --r vermelho do saldo (o app pinta de vermelho o dinheiro a pagar): preenchimento e contorno
    --re texto vermelho sobre branco (6,6) e sobre --rc (6,0)   --rc vermelho claro: fundo de etiqueta e de célula */
 :root{--r:#E5484D;--re:#B42318;--rc:#FEF1F0}
-.tag.r{background:var(--rc);color:var(--re)} .tag.n{background:#F2F4F7;color:#374151}
-.ico.r{background:var(--rc);color:var(--re)} .ico.n{background:#EEF1F4;color:#4B5563}
-.tok{position:absolute;left:0;top:0;width:48px;height:48px;border-radius:50%;background:#fff;border:2px solid #D5DCE2;
-  display:flex;align-items:center;justify-content:center;color:#374151;box-shadow:0 6px 14px rgba(16,24,40,.12)}
+.tag.r{background:var(--rs);color:#fff} .tag.n{background:#4B5563;color:#fff}
+.ico.r{background:var(--rs);color:#fff} .ico.n{background:#4B5563;color:#fff}
+.tok{position:absolute;left:0;top:0;width:48px;height:48px;border-radius:50%;background:#4B5563;border:2px solid #4B5563;
+  display:flex;align-items:center;justify-content:center;color:#fff;box-shadow:0 6px 14px rgba(16,24,40,.12)}
 </style><style id="saturado">/* estilo saturado (Kaik, 11/11): selo, chip, etiqueta, quadrado de ícone e círculo de etapa
    com fundo cheio e ícone/texto branco; nunca fundo claro com conteúdo colorido, nunca ícone escuro sobre o verde */
 :root{--vs:#16A34A;--as:#D97706;--rs:#DC2626}
@@ -335,8 +335,8 @@ CAPS[4]=()=>{
         <div class="row" id="n4-l0" style="gap:10px">Rua das Palmeiras, nº
           <span id="n4-num" style="position:relative;display:inline-block;width:86px;height:32px">
             <span style="position:absolute;inset:0;border:2px dashed #AEB8C2;border-radius:8px"></span>
-            <span id="n4-num-r" style="position:absolute;inset:0;border:2px solid var(--r);border-radius:8px;background:var(--rc);
-              display:flex;align-items:center;justify-content:center;color:var(--re)">${ic('circle-alert',20)}</span></span></div>
+            <span id="n4-num-r" style="position:absolute;inset:0;border:2px solid var(--r);border-radius:8px;background:var(--rs);
+              display:flex;align-items:center;justify-content:center;color:#fff">${ic('circle-alert',20)}</span></span></div>
         <div id="n4-l1">Jardim Santa Luzia</div><div id="n4-l2">Taubaté, SP</div><div id="n4-l3" class="num">CEP 12062-150</div></div>
       <div id="n4-itens" style="margin-top:18px">${[100,80,60].map(w=>`<div style="height:10px;width:${w}%;border-radius:5px;background:#EEF1F4;margin-top:12px"></div>`).join('')}</div>
     </div></div>`,g);
@@ -346,8 +346,8 @@ CAPS[4]=()=>{
         <div class="ico n" style="width:96px;height:96px;border-radius:50%">${ic('landmark',50)}</div></div>
       <div style="margin-top:14px;font-weight:800;font-size:26px;letter-spacing:.04em">SEFAZ</div></div>`,g);
   const rec=el(`<div class="ab" style="left:880px;top:536px;width:260px;text-align:center"><span class="tag r" style="font-size:19px">${ic('circle-alert',20)}pode recusar</span></div>`,g);
-  const mini=el(`<div class="ab" style="left:0;top:0;width:44px;height:54px;border-radius:9px;background:#fff;border:2px solid #D5DCE2;display:flex;
-      align-items:center;justify-content:center;color:#4B5563;box-shadow:0 6px 14px rgba(16,24,40,.12)">${ic('receipt-text',24)}</div>`,g);
+  const mini=el(`<div class="ab" style="left:0;top:0;width:44px;height:54px;border-radius:9px;background:#4B5563;border:2px solid #4B5563;display:flex;
+      align-items:center;justify-content:center;color:#fff;box-shadow:0 6px 14px rgba(16,24,40,.12)">${ic('receipt-text',24)}</div>`,g);
 
   return t=>{
     const tn=W(2,'nota',1), tl=W(2,'leva'), ten=W(2,'endereco'), tco=W(2,'completo'), tnu=W(2,'numero'), tse=W(2,'sefaz'), trc=W(2,'recusar');
@@ -473,8 +473,8 @@ CAPS[9]=()=>{
   const leg=el(`<div class="ab row" style="left:0;top:160px;width:1280px;justify-content:center;gap:16px">
       <div class="row" id="g9-lado" style="gap:12px;margin-right:14px"><div class="ico" style="width:44px;height:44px;border-radius:13px">${ic('warehouse',23)}</div>
         <div style="font-weight:800;font-size:22px;white-space:nowrap">Do lado da Recicla Vale</div></div>
-      <div class="tag v" id="g9-ver" style="font-size:18px"><span style="width:12px;height:12px;border-radius:50%;background:var(--v)"></span>pra receber</div>
-      <div class="tag r" id="g9-vem" style="font-size:18px"><span style="width:12px;height:12px;border-radius:50%;background:var(--r)"></span>pra pagar</div></div>`,g);
+      <div class="tag v" id="g9-ver" style="font-size:18px"><span style="width:12px;height:12px;border-radius:50%;background:#fff"></span>pra receber</div>
+      <div class="tag r" id="g9-vem" style="font-size:18px"><span style="width:12px;height:12px;border-radius:50%;background:#fff"></span>pra pagar</div></div>`,g);
   const colH=(x,txt)=>el(`<div class="ab" style="left:${x}px;top:252px;width:360px;text-align:center;font-weight:800;font-size:20px">${txt}</div>`,g);
   const hP=colH(410,'positivo +'), hN=colH(790,'negativo −');
   const linhaG=(y,icone,cls,txt,chip)=>el(`<div class="ab" style="left:130px;top:${y}px;width:260px;height:190px;display:flex;flex-direction:column;

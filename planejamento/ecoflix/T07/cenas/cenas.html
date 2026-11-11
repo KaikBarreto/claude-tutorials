@@ -61,7 +61,7 @@ body{font-family:M,sans-serif;color:var(--t);-webkit-font-smoothing:antialiased}
 :root{--vs:#16A34A;--as:#D97706;--rs:#DC2626}
 .ico{background:var(--vs);color:#fff}.ico.a{background:var(--as);color:#fff}
 .tag.v{background:var(--vs);color:#fff}.tag.a{background:var(--as);color:#fff}
-</style></head>
+</style><style id="saturado-aula">.ico.n,.tag.n,.op,.chk.x{background:#4B5563;color:#fff}.chk.v{background:var(--vs);color:#fff}</style></head>
 <body><div id="st"></div>
 <script>
 // ------------------------------------------------------------------ utilidades (as do kit, sem mudança)
@@ -517,9 +517,9 @@ CAPS[11]=()=>{
     posTitulo(tit,t,j0-.6,tca-.15);
     traco(base,t,tca-.1,.8);
     nos.forEach((n,i)=>{const a=[tca,tpa,tpa+.3][i]; vis(n.dot,t,a-.05,1e9,{dy:0,sc:.4}); vis(n.dt,t,a,1e9,{dy:10}); vis(n.c,t,a+.05,1e9,{dy:16,sc:.95})});
-    nos.slice(1).forEach(n=>{contorno(n.dt,t,tdi-.1,'#EAF8F0','#50D088'); pulse(n.dt,t,tdi-.1,.06,.7); pulse(n.dt,t,tqd-.1,.06,.7);
-      const v=n.c.querySelector('.vv'); const p=eo(pr(t,tqt-.1,.4)); v.style.background=`rgba(80,208,136,${(.22*p).toFixed(3)})`;
-      v.style.color=mix('#121212','#2E7D57',p); pulse(v,t,tqt-.1,.06,.7)});
+    nos.slice(1).forEach(n=>{contorno(n.dt,t,tdi-.1,'#16A34A','#50D088'); pulse(n.dt,t,tdi-.1,.06,.7); pulse(n.dt,t,tqd-.1,.06,.7);
+      const v=n.c.querySelector('.vv'); const p=eo(pr(t,tqt-.1,.4)); v.style.background=`rgba(22,163,74,${p.toFixed(3)})`;
+      v.style.color=mix('#121212','#FFFFFF',p); pulse(v,t,tqt-.1,.06,.7)});
   };
 };
 
@@ -592,10 +592,10 @@ CAPS[13]=()=>{
   const barra=(y,rot,cor,v)=>{
     const lb=el(`<div class="ab ttl" style="left:150px;top:${y+34}px;font-size:26px">${rot}</div>`,g);
     const b=el(`<div class="ab" style="left:${X}px;top:${y}px;width:0;height:${HB}px;border-radius:16px;background:${cor};overflow:hidden">
-        <div class="num" style="position:absolute;left:26px;top:31px;font-size:30px;white-space:nowrap">${brl(v)}/kg</div></div>`,g);
+        <div class="num" style="position:absolute;left:26px;top:31px;font-size:30px;white-space:nowrap;color:#fff">${brl(v)}/kg</div></div>`,g);
     return {lb,b,w:v*K};
   };
-  const bV=barra(YV,'Venda','var(--v)',VEN), bC=barra(YC,'Compra','var(--a)',COM);
+  const bV=barra(YV,'Venda','var(--vs)',VEN), bC=barra(YC,'Compra','var(--as)',COM);
   const xC=X+COM*K, xV=X+VEN*K;
   const lucro=el(`<div class="ab" style="left:${xC.toFixed(1)}px;top:${YV}px;width:${(xV-xC).toFixed(1)}px;height:${HB}px;border-radius:0 16px 16px 0;
       background:repeating-linear-gradient(135deg,rgba(255,255,255,.6) 0 9px,transparent 9px 18px);opacity:0"></div>`,g);
@@ -678,13 +678,13 @@ CAPS[15]=()=>{
         <div class="ico ${i===1?'n':''}" style="width:44px;height:44px;border-radius:50%">${ic(n,24)}</div>
         <div class="ttl" style="font-size:21px">${txt}</div>
         <div class="ok chk v" style="margin-left:auto;width:36px;height:36px;opacity:0">${ic('check',22)}</div>
-        <div class="er tag" style="margin-left:auto;font-size:16px;padding:6px 12px;background:var(--rc);color:var(--r);opacity:0;position:absolute;right:14px">${ic('circle-alert',18)}Erro</div></div>`,w);
+        <div class="er tag" style="margin-left:auto;font-size:16px;padding:6px 12px;background:var(--rs);color:#fff;opacity:0;position:absolute;right:14px">${ic('circle-alert',18)}Erro</div></div>`,w);
     return {w,c,ok:c.querySelector('.ok'),er:c.querySelector('.er')};
   });
   const POS=[[140,236],[140,322],[140,408]], DEST=[[846,262],[846,348]];
   const sv=svgTela(g);
   const tent=caminho(sv,'M462 445 Q650 420 830 400','#9AA3AD',4,'8 9');
-  const ban=el(`<div class="ab" style="left:618px;top:398px;width:56px;height:56px;border-radius:50%;background:#fff;color:var(--r);
+  const ban=el(`<div class="ab" style="left:618px;top:398px;width:56px;height:56px;border-radius:50%;background:var(--rs);color:#fff;
       display:flex;align-items:center;justify-content:center;box-shadow:0 6px 16px rgba(16,24,40,.12)">${ic('ban',34)}</div>`,g);
   const opc=(x,n,cls,rot,sub)=>el(`<div class="card" style="left:${x}px;top:546px;width:500px;height:150px;border-width:2px">
       <div class="row" style="position:absolute;left:26px;top:28px;gap:18px">

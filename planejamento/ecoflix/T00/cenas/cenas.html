@@ -55,14 +55,14 @@ body{font-family:M,sans-serif;color:var(--t);-webkit-font-smoothing:antialiased}
 .rip{position:absolute;width:56px;height:56px;margin:-28px 0 0 -28px;border-radius:50%;border:3px solid var(--v);opacity:0}
 /* ---------------------------------------------------------------- T00 */
 .tag.s{font-size:17px;padding:7px 14px;gap:7px}
-.tag.n{background:#EEF1F4;color:#374151}
+.tag.n{background:#4B5563;color:#fff}
 /* estações do caminho do pátio */
 .est{position:absolute;width:96px;height:96px;border-radius:50%;background:#fff;border:3px solid #D5DCD8;display:flex;
   align-items:center;justify-content:center;color:#9AA3AD}
-.est .fill{position:absolute;inset:-3px;border-radius:50%;background:var(--v);opacity:0}
+.est .fill{position:absolute;inset:-3px;border-radius:50%;background:var(--vs);opacity:0}
 .est .ic{position:relative}
 .estl{position:absolute;width:172px;text-align:center;font-weight:700;font-size:22px;line-height:1.2;color:#6B7280}
-.aula{position:absolute;width:38px;height:38px;border-radius:50%;background:var(--ve);color:#fff;display:flex;
+.aula{position:absolute;width:38px;height:38px;border-radius:50%;background:var(--vs);color:#fff;display:flex;
   align-items:center;justify-content:center;box-shadow:0 6px 14px rgba(16,24,40,.22);border:3px solid #fff}
 .aula svg{fill:currentColor}
 /* faixas de tempo (teste x assinatura) */
@@ -70,16 +70,16 @@ body{font-family:M,sans-serif;color:var(--t);-webkit-font-smoothing:antialiased}
 .zona.v{background:#F2FAF5;border-color:#DDF2E6}
 /* vídeo genérico (miniatura de player, sem marca) */
 .vid{position:absolute;width:240px;height:134px;border-radius:16px;background:#1B1F24;box-shadow:0 14px 30px rgba(16,24,40,.18)}
-.vid .pl{position:absolute;left:92px;top:28px;width:56px;height:56px;border-radius:50%;background:var(--v);display:flex;
-  align-items:center;justify-content:center;color:#12452B}
+.vid .pl{position:absolute;left:92px;top:28px;width:56px;height:56px;border-radius:50%;background:var(--vs);display:flex;
+  align-items:center;justify-content:center;color:#fff}
 .vid .pl svg{fill:currentColor}
 .vid .tr{position:absolute;left:20px;top:106px;width:200px;height:7px;border-radius:4px;background:rgba(255,255,255,.22);overflow:hidden}
 .vid .pg{height:7px;width:0;border-radius:4px;background:var(--v)}
-.vid .bd{position:absolute;right:-15px;top:-15px;width:42px;height:42px;border-radius:50%;background:#fff;border:3px solid var(--v);
-  color:var(--ve);display:flex;align-items:center;justify-content:center}
-.vid .bd.a{border-color:var(--a);color:var(--ae)}
+.vid .bd{position:absolute;right:-15px;top:-15px;width:42px;height:42px;border-radius:50%;background:var(--vs);border:3px solid #fff;
+  color:#fff;display:flex;align-items:center;justify-content:center}
+.vid .bd.a{background:var(--as);border-color:#fff;color:#fff}
 .vid.off{background:#F1F3F5;box-shadow:none;border:2px dashed #C9D0D6;display:flex;align-items:center;justify-content:center;color:#8A949E}
-.selo{display:inline-flex;align-items:center;gap:10px;padding:11px 20px;border-radius:999px;background:var(--vc);color:var(--ve);
+.selo{display:inline-flex;align-items:center;gap:10px;padding:11px 20px;border-radius:999px;background:var(--vs);color:#fff;
   border:2.5px solid var(--v);font-weight:800;font-size:19px;white-space:nowrap;box-shadow:0 10px 22px rgba(46,125,87,.18)}
 /* barra da trilha */
 .barra{border-radius:18px;background:#F4F6F8;border:2px solid #E1E8E4}
@@ -90,7 +90,7 @@ body{font-family:M,sans-serif;color:var(--t);-webkit-font-smoothing:antialiased}
 /* ladrilho de módulo */
 .mod{position:absolute;width:128px;height:96px;border-radius:16px;background:#fff;border:2px solid #E1E8E4;display:flex;
   align-items:center;justify-content:center;color:#9AA3AD}
-.mod .fill{position:absolute;inset:-2px;border-radius:16px;background:var(--v);opacity:0}
+.mod .fill{position:absolute;inset:-2px;border-radius:16px;background:var(--vs);opacity:0}
 .mod .ic{position:relative}
 /* linhas de mês (formas de pagamento) */
 .mes{height:58px;border-radius:14px;background:#F7F8F9;display:flex;align-items:center;gap:12px;padding:0 12px 0 16px;
@@ -243,7 +243,7 @@ function caminho(par){
   return {g,svg,lv:svg.querySelector('.lv'),st};
 }
 function acende(o,p){o.fill.style.opacity=p.toFixed(3);o.c.style.borderColor=mix('#D5DCD8','#50D088',p);
-  o.c.style.color=mix('#9AA3AD','#12452B',p);o.l.style.color=mix('#6B7280','#121212',p)}
+  o.c.style.color=mix('#9AA3AD','#FFFFFF',p);o.l.style.color=mix('#6B7280','#121212',p)}
 function caminhoEntra(E,t,a,b=1e9){vis(E.svg,t,a,b,{dy:0,sc:1});
   E.st.forEach((o,k)=>{vis(o.c,t,a+.08*k,b,{sc:.7,dy:8});vis(o.l,t,a+.08*k+.06,b,{dy:8,sc:1})})}
 // a linha verde corre de uma estação à outra; ts[k] = instante em que a estação k acende (a linha chega nela).
@@ -479,13 +479,13 @@ CAPS[4]=()=>{
   const tit=titulo(g,'Ajuda','Mensagem pronta para o suporte');
   const chat=el(`<div class="card" style="left:120px;top:176px;width:1040px;height:540px;overflow:hidden">
      <div class="row" style="height:78px;padding:0 30px;gap:16px;border-bottom:1px solid var(--l);background:#FAFBFC">
-       <div style="width:48px;height:48px;border-radius:50%;background:var(--vc);color:var(--ve);display:flex;align-items:center;justify-content:center">${ic('headset',26)}</div>
+       <div style="width:48px;height:48px;border-radius:50%;background:var(--vs);color:#fff;display:flex;align-items:center;justify-content:center">${ic('headset',26)}</div>
        <div style="font-weight:800;font-size:22px">Suporte</div></div></div>`,g);
   const cx=el('<div class="ab" style="left:30px;top:106px;width:870px;height:400px;border-radius:20px;border:2px solid #E1E8E4;background:#fff;padding:38px 40px"></div>',chat);
   const LN=['<b>E-mail do usuário:</b> rafael.nogueira@reciclavalemetais.example','<b>Empresa:</b> Recicla Vale Metais Ltda',
     '<b>Trilha:</b> Tutoriais do sistema','<b>Módulo:</b> Sua conta e sua empresa','<b>Minha dúvida:</b> <span class="car" style="color:var(--v);font-weight:500">|</span>'];
   const ln=LN.map((h,k)=>el(`<div class="ln" style="margin-top:${k==4?36:k?20:0}px">${h}</div>`,cx));
-  const env=el(`<div class="ab" style="left:930px;top:434px;width:72px;height:72px;border-radius:50%;background:var(--v);display:flex;align-items:center;justify-content:center;color:#12452B">${ic('send-horizontal',32)}</div>`,chat);
+  const env=el(`<div class="ab" style="left:930px;top:434px;width:72px;height:72px;border-radius:50%;background:var(--vs);display:flex;align-items:center;justify-content:center;color:#fff">${ic('send-horizontal',32)}</div>`,chat);
   const rip=el('<div class="rip" style="left:36px;top:36px"></div>',env);
   return t=>{
     const A=J('ilu04_mensagem');
@@ -769,13 +769,13 @@ CAPS[10]=()=>{
   const g=grupo();
   const tit1=titulo(g,'Assinatura','Tela que não aparece');
   const mot=(x,icone,nome,cls)=>el(`<div class="card" style="left:${x}px;top:168px;width:520px;height:516px;padding:26px 30px">
-     <div class="row hd" style="gap:16px;color:#6B7280"><div class="ico${cls} ii" style="width:58px;height:58px;background:#F2F4F7;color:#9AA3AD">${ic(icone,30)}</div>
+     <div class="row hd" style="gap:16px;color:#6B7280"><div class="ico${cls} ii" style="width:58px;height:58px;background:#9CA3AF;color:#fff">${ic(icone,30)}</div>
      <div style="font-weight:800;font-size:25px">${nome}</div></div></div>`,g);
   const m1=mot(100,'lock','Módulo fora do plano',''), m2=mot(660,'user-x','Usuário sem permissão',' a');
   // motivo 1: no lugar da função, uma tela com o cadeado (o que o módulo faz e como ativar)
   const tela=el(`<div class="ab" style="left:50px;top:118px;width:420px;height:290px;border-radius:16px;border:2px solid #E1E8E4;background:#FAFBFC;overflow:hidden">
      <div style="height:34px;background:#EEF1F4;display:flex;align-items:center;gap:7px;padding:0 14px"><i style="width:10px;height:10px;border-radius:50%;background:#D5DCD8;display:block"></i><i style="width:10px;height:10px;border-radius:50%;background:#D5DCD8;display:block"></i><i style="width:10px;height:10px;border-radius:50%;background:#D5DCD8;display:block"></i></div>
-     <div style="width:76px;height:76px;margin:24px auto 0;border-radius:50%;background:var(--vc);color:var(--ve);display:flex;align-items:center;justify-content:center">${ic('lock',38)}</div></div>`,m1);
+     <div style="width:76px;height:76px;margin:24px auto 0;border-radius:50%;background:var(--vs);color:#fff;display:flex;align-items:center;justify-content:center">${ic('lock',38)}</div></div>`,m1);
   const q1=el(`<div class="ab" style="left:0;top:208px;width:420px;text-align:center"><span class="tag v s">${ic('info',18)}O que faz</span></div>`,tela);
   const q2=el(`<div class="ab" style="left:0;top:246px;width:420px;text-align:center"><span class="tag v s">${ic('circle-plus',18)}Como ativar</span></div>`,tela);
   // motivo 2: o item sai do menu; quem libera é o administrador, em Usuários e Permissões
@@ -796,7 +796,7 @@ CAPS[10]=()=>{
   const zT=zona(100,'',`<span class="tag n">${ic('hourglass',20)}Período de teste</span>`), zA=zona(680,' v',`<span class="tag v">${ic('badge-check',20)}Assinatura ativa</span>`);
   const sZ=seta(g,604,396,72,'#9AA3AD');
   const lig=el(`<div class="ab" style="left:680px;top:636px;width:500px;text-align:center"><span class="tag v">${ic('toggle-right',22)}Módulo ligado</span></div>`,g);
-  const acM=(m,p)=>{m.querySelector('.fill').style.opacity=p.toFixed(3);m.style.color=mix('#9AA3AD','#12452B',p);m.style.borderColor=mix('#E1E8E4','#50D088',p)};
+  const acM=(m,p)=>{m.querySelector('.fill').style.opacity=p.toFixed(3);m.style.color=mix('#9AA3AD','#FFFFFF',p);m.style.borderColor=mix('#E1E8E4','#50D088',p)};
   return t=>{
     const A=J('ilu10_motivos'),B=J('ilu10_teste'),T=troca(2);
     const tdo=W(1,'dois'),tmo=W(1,'módulo'),tlu=W(1,'lugar'),tfa=W(1,'faz'),tat=W(1,'ativar');
@@ -804,8 +804,8 @@ CAPS[10]=()=>{
     posTitulo(tit1,t,A.a-.55,tdo-.1,T);
     vis(m1,t,tdo+.4,T,{dy:20});vis(m2,t,tdo+.55,T,{dy:20});
     const acC=(m,p,cor,fundo,ico)=>{m.style.borderColor=mix('#E1E8E4',cor,p);m.querySelector('.hd').style.color=mix('#6B7280','#121212',p);
-      const i=m.querySelector('.ii');i.style.background=mix('#F2F4F7',fundo,p);i.style.color=mix('#9AA3AD',ico,p)};
-    acC(m1,eo(pr(t,tmo,.45)),'#50D088','#EAF8F0','#2E7D57');acC(m2,eo(pr(t,tus,.45)),'#F2B63D','#FFF5DF','#8A5A00');
+      const i=m.querySelector('.ii');i.style.background=mix('#9CA3AF',fundo,p);i.style.color='#fff'};
+    acC(m1,eo(pr(t,tmo,.45)),'#16A34A','#16A34A','#FFFFFF');acC(m2,eo(pr(t,tus,.45)),'#D97706','#D97706','#FFFFFF');
     m1.style.borderWidth=m2.style.borderWidth='2px';
     vis(tela,t,tlu-.1,1e9,{dy:12});vis(q1,t,tfa-.1,1e9,{dy:8});vis(q2,t,tat-.1,1e9,{dy:8});
     vis(menu,t,tus,1e9,{dy:12});itens.forEach((it,k)=>{if(k===2){const p=eo(pr(t,tpe,.5));it.style.opacity=(1-.8*p).toFixed(3);
@@ -864,7 +864,7 @@ CAPS[11]=()=>{
      <path class="f2" d="M282 528 C 400 528, 400 444, 474 444" fill="none" stroke="#50D088" stroke-width="5" stroke-linecap="round"/></svg>`,g);
   const [f1,f2]=[fios.querySelector('.f1'),fios.querySelector('.f2')];
   const usu=el(`<div class="card row" style="left:476px;top:350px;width:330px;height:150px;padding:0 26px;gap:18px">
-     <div style="width:74px;height:74px;border-radius:50%;background:var(--vc);color:var(--ve);display:flex;align-items:center;justify-content:center;flex:none">${ic('user',38)}</div>
+     <div style="width:74px;height:74px;border-radius:50%;background:var(--vs);color:#fff;display:flex;align-items:center;justify-content:center;flex:none">${ic('user',38)}</div>
      <div style="font-weight:800;font-size:23px;line-height:1.2">Rafael<br>Nogueira</div></div>`,g);
   const cont=el(`<div class="card" style="left:900px;top:318px;width:270px;height:214px;padding:26px 30px">
      <div class="row" style="gap:12px;font-weight:700;font-size:20px;color:#374151">${ic('users',24,'#2E7D57')}Usuários</div>
@@ -875,7 +875,7 @@ CAPS[11]=()=>{
   // --- cena 3: bateu o limite
   const tit3=titulo(g,'Assinatura','Bateu o limite?');
   const av=[0,1,2,3].map(k=>el(`<div class="ab" style="left:${150+k*120+(k===3?40:0)}px;top:196px;width:96px;height:96px;border-radius:50%;
-     ${k<3?'background:var(--vc);color:var(--ve)':'background:#fff;color:var(--ae);border:3px dashed var(--a)'};display:flex;align-items:center;justify-content:center">${ic(k<3?'user':'user-plus',44)}</div>`,g));
+     ${k<3?'background:var(--vs);color:#fff':'background:var(--as);color:#fff'};display:flex;align-items:center;justify-content:center">${ic(k<3?'user':'user-plus',44)}</div>`,g));
   const avis=el(`<div class="card" style="left:150px;top:336px;width:660px;height:206px;padding:28px 32px">
      <div class="row" style="gap:18px"><div class="ico a" style="width:64px;height:64px;border-radius:18px">${ic('party-popper',34)}</div>
        <div style="font-weight:800;font-size:30px">Sua equipe cresceu! 🎉</div></div>
@@ -883,7 +883,7 @@ CAPS[11]=()=>{
        <div style="width:150px;height:24px;border-radius:9px;background:#E6E9EE"></div></div></div>`,g);
   const avNm=avis.querySelector('.nm');
   const pers=el(`<div class="ab" style="left:150px;top:572px"><span class="tag v">${ic('badge-check',22)}Plano Personalizado</span></div>`,g);
-  const acM=(m,p)=>{m.querySelector('.fill').style.opacity=p.toFixed(3);m.style.color=mix('#9AA3AD','#12452B',p);m.style.borderColor=mix('#E1E8E4','#50D088',p)};
+  const acM=(m,p)=>{m.querySelector('.fill').style.opacity=p.toFixed(3);m.style.color=mix('#9AA3AD','#FFFFFF',p);m.style.borderColor=mix('#E1E8E4','#50D088',p)};
   return t=>{
     const A=J('ilu11_diferenca'),T1=troca(2),T2=troca(3);
     // cena 1
@@ -926,7 +926,7 @@ CAPS[12]=()=>{
     const tg=el(`<div style="margin-top:18px;height:38px;position:relative"><span class="tag v s ta" style="position:absolute;left:0;top:0">${ic('repeat',18)}Repete sozinha</span>
       <span class="tag a s tm" style="position:absolute;left:0;top:0">${ic('hand',18)}Cada mês</span></div>`,c);
     const ms=MES.map((m,k)=>{const r=el(`<div class="mes" style="margin-top:${k?10:20}px">${ic('calendar-days',22,'#6B7280')}${m}
-      <div class="st"><div class="sa" style="background:var(--vc);color:var(--ve)">${ic('repeat',20)}</div><div class="sm" style="background:var(--ac);color:var(--ae)">${ic('hand',20)}</div></div></div>`,c);
+      <div class="st"><div class="sa" style="background:var(--vs);color:#fff">${ic('repeat',20)}</div><div class="sm" style="background:var(--as);color:#fff">${ic('hand',20)}</div></div></div>`,c);
       return {r,a:r.querySelector('.sa'),m:r.querySelector('.sm')}});
     return {c,ta:tg.querySelector('.ta'),tm:tg.querySelector('.tm'),ms}};
   const cC=col(90,'credit-card','Cartão',1,420), cP=col(475,'qr-code','Pix',0,520), cB=col(860,'barcode','Boleto',0,420);

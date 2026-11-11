@@ -41,11 +41,11 @@ body{font-family:M,sans-serif;color:var(--t);-webkit-font-smoothing:antialiased}
 .ico.a{background:var(--ac);color:var(--ae)}
 .tag{display:inline-flex;align-items:center;gap:8px;padding:9px 18px;border-radius:999px;font-weight:800;font-size:20px;white-space:nowrap}
 .tag.v{background:var(--vc);color:var(--ve)} .tag.a{background:var(--ac);color:var(--ae)}
-.tag.c{background:#EEF1F4;color:#4B5563} /* T11: etiqueta neutra (cinza) */
+.tag.c{background:#4B5563;color:#fff} /* T11: etiqueta neutra (cinza) */
 .tag.tg{font-size:24px;padding:11px 22px} /* T11: etiqueta maior */
 .lbl{font-weight:700;font-size:17px;color:var(--c)}
 .num{font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
-.op{position:absolute;width:60px;height:60px;border-radius:50%;background:#F2F4F7;color:var(--t);display:flex;
+.op{position:absolute;width:60px;height:60px;border-radius:50%;background:#4B5563;color:#fff;display:flex;
   align-items:center;justify-content:center;font-weight:800;font-size:34px;line-height:1}
 /* mostrador da balança (painel escuro, número no acento) */
 .most{background:var(--e);border-radius:16px;padding:16px 22px 18px;box-shadow:0 16px 34px rgba(16,24,40,.22)}
@@ -274,10 +274,9 @@ CAPS[0]=()=>{
   const fd=el(`<div class="ab" style="left:966px;top:430px">${fardo(1.25)}</div>`,g);
   const melhor=tagC('v','vende melhor',1076,652,g);
   const bal=el(`<div class="ab" style="left:951px;top:286px;width:250px;height:110px">
-     <div style="position:absolute;left:0;top:0;width:250px;height:84px;border-radius:20px;background:var(--ac);border:2px solid var(--a);
-       display:flex;align-items:center;justify-content:center;font-weight:800;font-size:31px;color:var(--ae)">R$ por kg?</div>
-     <div style="position:absolute;left:112px;top:72px;width:24px;height:24px;background:var(--ac);border-right:2px solid var(--a);
-       border-bottom:2px solid var(--a);transform:rotate(45deg)"></div></div>`,g);
+     <div style="position:absolute;left:0;top:0;width:250px;height:84px;border-radius:20px;background:var(--as);
+       display:flex;align-items:center;justify-content:center;font-weight:800;font-size:31px;color:#fff">R$ por kg?</div>
+     <div style="position:absolute;left:112px;top:72px;width:24px;height:24px;background:var(--as);transform:rotate(45deg)"></div></div>`,g);
   return t=>{
     const [A]=janela(i);
     const tl=W(1,'latinha'), ts=W(1,'solta'), tte=W(1,'terra'), tag_=W(1,'agua'), tac=W(1,'aco'), tp=W(1,'prensada'),
@@ -341,7 +340,7 @@ CAPS[1]=()=>{
       e.style.boxShadow=`0 0 0 ${(4*on*(1-off)).toFixed(2)}px rgba(80,208,136,.22),0 18px 40px rgba(16,24,40,.10),0 3px 8px rgba(16,24,40,.06)`;
       e.querySelector('.vela').style.opacity=(.5*cinza).toFixed(3);
       e.style.filter=cinza>.001?`grayscale(${cinza.toFixed(3)})`:'';
-      const pi=e.querySelector('.pi'); pi.style.background=mix('#EEF1F4','#EAF8F0',verde); pi.style.color=mix('#9AA3AD','#2E7D57',verde);
+      const pi=e.querySelector('.pi'); pi.style.background=mix('#9AA3AD','#16A34A',verde); pi.style.color='#fff';
     });
     setas.forEach((s,k)=>vis(s,t,T[k+1]-.3,1e9,{dx:-8,dy:0}));
     vis(q(0,'.p0d'),t,tr-.1,1e9,{dy:8}); vis(q(0,'.p0a'),t,te-.1,1e9,{dy:8}); vis(q(0,'.p0b'),t,ts-.15,1e9,{dx:-8,dy:0}); vis(q(0,'.p0c'),t,ts,1e9,{dy:8});
@@ -410,8 +409,8 @@ CAPS[3]=()=>{
   const b2=cel(710,440,meia(24,COBRE(1.08),'50 kg','cobre mel','m1'),meia(280,FIO(1.08),'80 kg','fio','m2','var(--ve)'),'');
   const mult=(y,txt)=>el(`<div class="ab" style="left:572px;top:${y}px;width:136px;height:60px">
       <div class="ab" style="left:0;top:18px">${seta(136,'var(--vm)',5)}</div>
-      <div class="ab" style="left:14px;top:4px;width:108px;height:50px;border-radius:999px;background:var(--vc);border:2px solid var(--v);
-        display:flex;align-items:center;justify-content:center;font-weight:800;font-size:23px;color:var(--ve)">${txt}</div></div>`,g);
+      <div class="ab" style="left:14px;top:4px;width:108px;height:50px;border-radius:999px;background:var(--vs);
+        display:flex;align-items:center;justify-content:center;font-weight:800;font-size:23px;color:#fff">${txt}</div></div>`,g);
   const x1=mult(284,'× 500'), x2=mult(510,'× 50');
   return t=>{
     const [A]=janela(i);
@@ -465,8 +464,8 @@ CAPS[4]=()=>{
      <polygon points="40,72 66,44 92,62 70,88" fill="#A0694A"/><rect x="100" y="52" width="70" height="12" rx="6" transform="rotate(-12 135 58)" fill="#8A949E"/>
      <polygon points="150,92 170,70 190,76 198,92" fill="#4F5861"/>`,'',1.15)}</div>`,g);
   const tCh=tagC('a','Chaparia',1047,672,g);
-  const valor=el(`<div class="ab" style="left:1126px;top:673px;width:40px;height:40px;border-radius:50%;background:var(--ac);border:2px solid var(--a);
-     display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;color:var(--ae)">R$</div>`,g);
+  const valor=el(`<div class="ab" style="left:1126px;top:673px;width:40px;height:40px;border-radius:50%;background:var(--as);
+     display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;color:#fff">R$</div>`,g);
   const selo=el(`<div class="ab" style="left:937px;top:410px;width:220px;height:110px">
      <div style="position:absolute;left:0;top:0;width:220px;height:86px;border-radius:18px;background:#fff;border:2px solid var(--a);
        box-shadow:0 10px 24px rgba(16,24,40,.10);display:flex;flex-direction:column;align-items:center;justify-content:center">
@@ -712,7 +711,7 @@ CAPS[12]=()=>{
        ${MX.map((x,k)=>`<div class="ab" style="left:${x-13}px;top:${y-13}px;width:26px;height:26px;border-radius:50%;background:#fff;border:4px solid #9AA3AD"></div>
          <div class="ab" style="left:${x-90}px;top:${y-50}px;width:180px;text-align:center;font-weight:700;font-size:20px;color:#4B5563">${ROT[k]}</div>`).join('')}</div>`,g);
     return e};
-  const estq=(x,y,cinza)=>el(`<div class="ab ico" style="left:${x-32}px;top:${y}px;width:64px;height:64px;border-radius:50%;${cinza?'background:#EEF1F4;color:#9AA3AD':''}">${ic('warehouse',32)}</div>`,g);
+  const estq=(x,y,cinza)=>el(`<div class="ab ico" style="left:${x-32}px;top:${y}px;width:64px;height:64px;border-radius:50%;${cinza?'background:#9AA3AD;color:#fff':''}">${ic('warehouse',32)}</div>`,g);
   const desce=(x,y,h)=>el(`<svg class="ab" style="left:${x-12}px;top:${y}px;overflow:visible" width="24" height="${h}"><path d="M12 2 L12 ${h-6} M3 ${h-15} L12 ${h-4} L21 ${h-15}"
      fill="none" stroke="var(--v)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg>`,g);
   const L1=linhaT(Y1,'v','A cada lançamento'), L2=linhaT(Y2,'a','Só ao finalizar');
@@ -732,7 +731,7 @@ CAPS[12]=()=>{
     bl.forEach((b,k)=>{const q=arco(b,t,tac+k*.18,.75,BD[k][0],BD[k][1],BB[k][0],BB[k][1],-70,k?14:-12); fixa(b,eo(pr(t,tdi-.15+k*.1,.45)))});
     vis(e2,t,tes-.15,1e9,{dy:8});
     traco(p2,t,tfi-.1,.5); vis(d2,t,tfi-.1,1e9,{dy:0});
-    const v=eo(pr(t,tfi+.2,.45)); e2.style.background=mix('#EEF1F4','#EAF8F0',v); e2.style.color=mix('#9AA3AD','#2E7D57',v); pulse(e2,t,tfi+.3,.12,.7);
+    const v=eo(pr(t,tfi+.2,.45)); e2.style.background=mix('#9AA3AD','#16A34A',v); e2.style.color='#fff'; pulse(e2,t,tfi+.3,.12,.7);
   };
 };
 

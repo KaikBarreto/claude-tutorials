@@ -1,0 +1,345 @@
+{
+ "name": "t12-cap04",
+ "title": "T12 · Cap. 4 · Data e janela (narração 32,9 s ESTIMADA; marcas L1..L5 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T07:00:00-03:00)",
+ "seed": "t12-cap04",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 900,
+  "y": 300
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true"
+ },
+ "seedExtra": [
+  "t12/inicio"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "waitFor",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "timeout": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "••••••••"
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "url": "/dashboard",
+   "timeout": 40
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 25
+  },
+  {
+   "do": "goto",
+   "url": "/coletas/ordens"
+  },
+  {
+   "do": "waitFor",
+   "text": "Solicite, agende e acompanhe as ordens de coleta",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 25
+  },
+  {
+   "do": "wait",
+   "seconds": 0.8
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Nova ordem",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Nova ordem de coleta",
+   "timeout": 10
+  },
+  {
+   "do": "wait",
+   "seconds": 0.5
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:has-text('Selecionar')"
+   }
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "placeholder": "Buscar por nome, apelido, CPF/CNPJ ou telefone..."
+   },
+   "timeout": 10
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Buscar por nome, apelido, CPF/CNPJ ou telefone..."
+   },
+   "text": "Vale Forte",
+   "cps": 40
+  },
+  {
+   "do": "wait",
+   "seconds": 0.6
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Auto Peças Vale Forte",
+    "within": "[role=dialog] >> nth=-1"
+   }
+  },
+  {
+   "do": "wait",
+   "seconds": 0.6
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Avançar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "#ordem-material"
+   },
+   "timeout": 10
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#ordem-material"
+   },
+   "text": "~400 kg de radiadores e baterias",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#ordem-obs"
+   },
+   "text": "Retirar pelo portão lateral",
+   "cps": 40
+  },
+  {
+   "do": "wait",
+   "seconds": 0.8
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel|Algo deu errado|Falha ao|Transi[çc][ãa]o inv[áa]lida|n[ãa]o encontrad|Localiza[çc][ãa]o n[ãa]o registrada|Sem sinal de GPS/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');if(f&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA ECOFLIX'))window.__avisos.push('TRILHA ECOFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "#ordem-data"
+   },
+   "seconds": 0.4,
+   "at": 4.53,
+   "label": "Data agendada",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "#ordem-janela"
+   },
+   "seconds": 0.4,
+   "at": 5.9,
+   "label": "Período",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 7.23
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#ordem-data"
+   },
+   "at": 8.38,
+   "label": "Data agendada (campo)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#ordem-data"
+   },
+   "text": "11112026",
+   "cps": 40,
+   "at": 10.39,
+   "label": "Data agendada 11/11/2026",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#ordem-janela"
+   },
+   "at": 11.76,
+   "label": "abre Período"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 12.21
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "option",
+    "name": "Manhã",
+    "exact": true
+   },
+   "seconds": 0.2,
+   "at": 14.26,
+   "label": "opção Manhã",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "option",
+    "name": "Tarde",
+    "exact": true
+   },
+   "seconds": 0.2,
+   "at": 14.94,
+   "label": "opção Tarde",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "option",
+    "name": "Dia todo",
+    "exact": true
+   },
+   "seconds": 0.6,
+   "at": 15.63,
+   "label": "opção Dia todo",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 22.5
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Manhã",
+    "exact": true
+   },
+   "at": 22.51,
+   "label": "escolhe Manhã"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "#ordem-janela"
+   },
+   "seconds": 1.0,
+   "at": 26.91,
+   "label": "Período: Manhã (as janelas vêm das Configurações)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Avançar",
+    "exact": true
+   },
+   "at": 29.46,
+   "label": "Avançar para a Frota"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "placeholder": "Digite ou busque o motorista"
+   },
+   "timeout": 10
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 30.06
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 32.91
+  }
+ ]
+}

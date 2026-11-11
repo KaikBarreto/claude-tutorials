@@ -1,0 +1,326 @@
+{
+ "name": "t08-cap09",
+ "title": "T08 · Cap. 9 · Quando o ticket sai dos pendentes (narração 52,0 s ESTIMADA; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:58:00-03:00)",
+ "seed": "t08-cap09",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 700,
+  "y": 420
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true"
+ },
+ "seedExtra": [
+  "base/balanca-ativada",
+  "base/caixa-aberto",
+  "t08/inicio",
+  "t08/apos-cap07"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "waitFor",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "timeout": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "••••••••"
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "url": "/dashboard",
+   "timeout": 40
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 25
+  },
+  {
+   "do": "goto",
+   "url": "/ticket-pesagem"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie tickets de pesagem rodoviária",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 25
+  },
+  {
+   "do": "wait",
+   "seconds": 0.8
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const w=document.querySelector('[data-state][data-collapsible]');if(w&&w.getAttribute('data-state')==='collapsed')return 'ja recolhido';const b=document.querySelector(\"button[aria-label='Toggle Sidebar']\");if(!b)return 'sem botao';b.click();return 'recolhido'})()"
+  },
+  {
+   "do": "wait",
+   "seconds": 0.8
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel|Algo deu errado|Falha ao|Balan[çc]a desconectada|Pop-up bloqueado|Popup bloqueado/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');if(f&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA ECOFLIX'))window.__avisos.push('TRILHA ECOFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main div.rounded-lg:has([aria-label='Selecionar ticket #58']):not(:has(div.rounded-lg [aria-label='Selecionar ticket #58']))"
+   },
+   "seconds": 0.8,
+   "at": 7.09,
+   "label": "cartão #58 ainda em Aguardando valorização",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 8.29
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Ações",
+    "within": "main div.rounded-lg:has([aria-label='Selecionar ticket #58']):not(:has(div.rounded-lg [aria-label='Selecionar ticket #58']))"
+   },
+   "at": 8.29,
+   "label": "Ações do #58"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Valorizar"
+   },
+   "at": 10.2,
+   "label": "Valorizar de novo (retomando)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Origem: Ticket de Pesagem",
+   "timeout": 15
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 14.11
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Finalizar",
+    "exact": true
+   },
+   "at": 14.11,
+   "label": "Finalizar"
+  },
+  {
+   "do": "waitFor",
+   "text": "Finalizar Pedido",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Pix/Transferência",
+    "within": "[role=dialog]"
+   },
+   "at": 16.59,
+   "label": "Pix/Transferência"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "CONFIRMAR PAGAMENTO",
+    "exact": true
+   },
+   "at": 17.18,
+   "label": "CONFIRMAR PAGAMENTO"
+  },
+  {
+   "do": "waitFor",
+   "text": "Valorizado pelo pedido",
+   "timeout": 20
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 24.94
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Valorizado pelo pedido"
+   },
+   "seconds": 0.8,
+   "at": 31.37,
+   "label": "Valorizado pelo pedido #…",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 33.49
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "radio",
+    "name": "Lista"
+   },
+   "at": 33.49,
+   "label": "Lista"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Aguardando valorização",
+    "exact": true,
+    "within": "main tbody"
+   },
+   "seconds": 0.4,
+   "at": 37.26,
+   "label": "selo Aguardando valorização (#57)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Valorizado",
+    "exact": true,
+    "within": "main tbody"
+   },
+   "seconds": 0.3,
+   "at": 40.29,
+   "label": "selo Valorizado (#58)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Filtros",
+    "exact": true
+   },
+   "at": 41.88,
+   "label": "Filtros"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] button:has-text('Status')"
+   },
+   "label": "Status"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "option",
+    "name": "Cancelado",
+    "exact": true
+   },
+   "seconds": 0.5,
+   "at": 43.63,
+   "label": "status Cancelado (opção do filtro)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "label": "fecha a lista de status"
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 45.14
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 45.14,
+   "label": "fecha Filtros"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "radio",
+    "name": "Kanban"
+   },
+   "label": "volta ao Kanban"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Rascunhos abertos"
+   },
+   "seconds": 0.8,
+   "at": 47.09,
+   "label": "Rascunhos abertos (1): o do Jair",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 52.01
+  }
+ ]
+}

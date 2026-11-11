@@ -200,7 +200,7 @@ function monteFerro(){return `<svg viewBox="0 0 200 110" width="200" height="110
 function terra(){return `<svg viewBox="0 0 90 40" width="90" height="40" style="display:block;overflow:visible">
   <path d="M4 36 Q8 14 26 12 Q36 0 52 8 Q70 2 80 18 Q90 26 86 36 Z" fill="#8B6A47"/>
   <circle cx="30" cy="24" r="3" fill="#6E5236"/><circle cx="58" cy="20" r="2.5" fill="#6E5236"/><circle cx="70" cy="30" r="2.5" fill="#6E5236"/></svg>`}
-const TAGC='background:#F2F4F7;color:#374151';   // etiqueta neutra (nome, situação)
+const TAGC='background:#4B5563;color:#fff';   // etiqueta neutra (nome, situação)
 
 const CAPS={};
 // ------------------------------------------------------------------ CAPS[0] · cap00 · o comprovante com a cara da empresa
@@ -250,9 +250,9 @@ CAPS[2]=()=>{
   const rot=(y,txt)=>el(`<div class="ab lbl" style="left:80px;top:${y}px;width:164px;text-align:right">${txt}</div>`,g);
   const rM=rot(257,'Módulos'), rT=rot(423,'Teste'), rU=rot(585,'Usuários');
   const mods=['scale','package','wallet','file-text','truck','landmark'].map((n,i)=>el(`<div class="ab" style="left:${270+i*106}px;top:226px;width:84px;height:84px;
-      border-radius:18px;border:2px solid #E6E9EE;background:#F2F4F7;display:flex;align-items:center;justify-content:center">${ic(n,40,'#9AA3AD')}
-      <div class="ab" style="right:-11px;top:-11px;width:32px;height:32px;border-radius:50%;background:#fff;border:1px solid #E1E8E4;
-        display:flex;align-items:center;justify-content:center">${ic('lock',17,'#6B7280')}</div></div>`,g));
+      border-radius:18px;border:2px solid #9CA3AF;background:#9CA3AF;display:flex;align-items:center;justify-content:center">${ic(n,40,'#fff')}
+      <div class="ab" style="right:-11px;top:-11px;width:32px;height:32px;border-radius:50%;background:#4B5563;border:2px solid #fff;
+        display:flex;align-items:center;justify-content:center">${ic('lock',17,'#fff')}</div></div>`,g));
   const dias=[...Array(7)].map((_,i)=>el(`<div class="ab" style="left:${270+i*96}px;top:384px;width:84px;height:100px;border-radius:16px;
       border:2px solid #E6E9EE;background:#fff;text-align:center;padding-top:14px">
       <div style="font-weight:700;font-size:15px;color:#9AA3AD">Dia</div><div class="num" style="font-size:36px;color:#9AA3AD;margin-top:2px">${i+1}</div></div>`,g));
@@ -261,7 +261,7 @@ CAPS[2]=()=>{
       <div style="position:relative;width:52px;height:52px"><div class="ab pf">${ic('door-closed',52,'#6B7280')}</div><div class="ab pa" style="opacity:0">${ic('door-open',52,'#2E7D57')}</div></div>
       <div class="tag pt" style="font-size:17px;padding:7px 14px;${TAGC}">Assinatura</div></div>`,g);
   const users=[...Array(5)].map((_,i)=>el(`<div class="ab" style="left:${270+i*86}px;top:562px;width:68px;height:68px;border-radius:50%;
-      background:#EAF8F0;display:flex;align-items:center;justify-content:center">${ic('user-round',36,'#2E7D57')}</div>`,g));
+      background:#16A34A;display:flex;align-items:center;justify-content:center">${ic('user-round',36,'#fff')}</div>`,g));
   const J=janela([1,'São'],[2,'contratar'],.6);
   return t=>{
     if(!trecho(g,t,J))return;
@@ -273,12 +273,12 @@ CAPS[2]=()=>{
     dias.forEach((e,i)=>vis(e,t,tSa+.5+i*.04,1e9,{dy:14}));
     vis(liga,t,tSa+.75,1e9,{dy:0}); vis(porta,t,tSa+.8,1e9,{dy:14});
     // os 7 dias acendem um a um ("sete dias")
-    dias.forEach((e,i)=>{const p=eo(pr(t,tDi-.3+i*.1,.3));e.style.borderColor=mix('#E6E9EE','#50D088',p);e.style.background=mix('#FFFFFF','#EAF8F0',p);
-      for(const c of e.children)c.style.color=mix('#9AA3AD','#2E7D57',p)});
+    dias.forEach((e,i)=>{const p=eo(pr(t,tDi-.3+i*.1,.3));e.style.borderColor=mix('#E6E9EE','#16A34A',p);e.style.background=mix('#FFFFFF','#16A34A',p);
+      for(const c of e.children)c.style.color=mix('#9AA3AD','#FFFFFF',p)});
     // módulos: tudo liberado no teste; os 2 que dependem do plano ganham o anel âmbar; depois da assinatura, só os do plano
     mods.forEach((e,i)=>{const extra=i>=4;let p=eo(pr(t,tLi-.1+i*.07,.4));if(extra)p*=1-eo(pr(t,tP2-.1+(i-4)*.12,.45));
-      e.style.background=mix('#F2F4F7','#EAF8F0',p);e.style.borderColor=mix('#E6E9EE','#A9E9C6',p);
-      e.firstElementChild.style.color=mix('#9AA3AD','#2E7D57',p);e.lastElementChild.style.opacity=(1-p).toFixed(3);
+      e.style.background=mix('#9CA3AF','#16A34A',p);e.style.borderColor=mix('#9CA3AF','#16A34A',p);
+      e.firstElementChild.style.color='#fff';e.lastElementChild.style.opacity=(1-p).toFixed(3);
       const r=extra?eo(pr(t,tPl,.45))*(1-eo(pr(t,tP2,.45))):0;
       e.style.boxShadow=`0 0 0 ${(5*r).toFixed(2)}px rgba(242,182,61,.5)`;
       if(!extra)pulse(e,t,tCo+i*.06,.06,.7)});
@@ -286,7 +286,7 @@ CAPS[2]=()=>{
     // fim do teste: o dia 7 marca o fim; a porta da assinatura abre em "ativar"
     pulse(dias[6],t,tFi-.1,.06,.7);
     const pa=eo(pr(t,tAt,.45));porta.querySelector('.pf').style.opacity=(1-pa).toFixed(3);porta.querySelector('.pa').style.opacity=pa.toFixed(3);
-    contorno(porta,t,tAt,'#E1E8E4','#50D088');const tg=porta.querySelector('.pt');tg.style.background=mix('#F2F4F7','#EAF8F0',pa);tg.style.color=mix('#374151','#2E7D57',pa);
+    contorno(porta,t,tAt,'#E1E8E4','#50D088');const tg=porta.querySelector('.pt');tg.style.background=mix('#4B5563','#16A34A',pa);tg.style.color='#fff';
     liga.style.background=mix('#DDE2E7','#50D088',pa);
     pulse(porta,t,tAs,.04,.7);
   };
@@ -297,7 +297,7 @@ CAPS[2]=()=>{
 // com um clique, sem digitar a senha de novo."
 CAPS[3]=()=>{
   const g=grupo(), tit=titulo(g,'Acesso','Trocar de conta');
-  const COR=[['#EAF8F0','#2E7D57'],['#FFF5DF','#8A5A00'],['#EEF1F4','#4B5563']];
+  const COR=[['#16A34A','#FFFFFF'],['#D97706','#FFFFFF'],['#4B5563','#FFFFFF']];
   const mon=el(`<div class="ab" style="left:160px;top:212px;width:460px;height:350px">
       <div class="ab" style="left:0;top:0;width:460px;height:290px;border-radius:20px;background:#2F3640;box-shadow:0 18px 40px rgba(16,24,40,.18)"></div>
       <div class="ab tela" style="left:16px;top:16px;width:428px;height:258px;border-radius:10px;background:#F7F9FA;overflow:hidden"></div>
@@ -456,12 +456,12 @@ CAPS[7]=()=>{
   // ---- A · Reinício da numeração
   const gA=grupo(), titA=titulo(gA,'Pedidos','Reinício da numeração');
   const mes=(x,w,nome)=>el(`<div class="ab row" style="left:${x}px;top:256px;width:${w}px;justify-content:center;gap:12px">
-      <div class="ico" style="width:40px;height:40px;background:#EEF1F4;color:#4B5563">${ic('calendar-days',22)}</div>
+      <div class="ico" style="width:40px;height:40px;background:#4B5563;color:#fff">${ic('calendar-days',22)}</div>
       <div style="font-weight:800;font-size:22px;letter-spacing:.06em">${nome}</div></div>`,gA);
   const mO=mes(360,388,'OUTUBRO'), mN=mes(828,292,'NOVEMBRO');
   const divA=el('<div class="ab" style="left:787px;top:246px;width:0;height:396px;border-left:2px dashed #D9DEE4"></div>',gA);
   const peca=(pai,x,y,txt,est='')=>el(`<div class="peca" style="left:${x}px;top:${y}px;width:120px;height:96px;font-size:32px;${est}">${txt}</div>`,pai);
-  const VE='background:#EAF8F0;border-color:#A9E9C6;color:#2E7D57', AM='background:#FFF5DF;border-color:#F6D58E;color:#8A5A00';
+  const VE='background:#16A34A;border-color:#16A34A;color:#fff', AM='background:#D97706;border-color:#D97706;color:#fff';
   const LY=[350,526];
   const out=LY.map(y=>[28,29,30].map((n,i)=>peca(gA,360+i*134,y,'#'+n)));
   const novA=[peca(gA,828,LY[0],'#31',VE),peca(gA,962,LY[0],'#32',VE)], novB=[peca(gA,828,LY[1],'#1',AM),peca(gA,962,LY[1],'#2',AM)];
@@ -472,8 +472,8 @@ CAPS[7]=()=>{
   // ---- B · Numeração separada
   const gB=grupo(), titB=titulo(gB,'Pedidos','Numeração separada');
   const pedido=(x,y,tipo,num,novo)=>{const c=tipo==='Compra';return el(`<div class="peca" style="left:${x}px;top:${y}px;width:236px;height:90px;justify-content:flex-start;padding:0 18px;gap:12px;
-      background:${c?'#EAF8F0':'#FFF5DF'};border-color:${c?'#A9E9C6':'#F6D58E'}">${ic(c?'arrow-down-to-line':'arrow-up-from-line',26,c?'#2E7D57':'#8A5A00')}
-      <span style="font-size:22px;color:${c?'#2E7D57':'#8A5A00'}">${tipo}</span>
+      background:${c?'#16A34A':'#D97706'};border-color:${c?'#16A34A':'#D97706'};color:#fff">${ic(c?'arrow-down-to-line':'arrow-up-from-line',26,'#fff')}
+      <span style="font-size:22px;color:#fff">${tipo}</span>
       <span style="margin-left:auto;position:relative;width:58px;height:34px;font-size:28px">
         <span class="n0" style="position:absolute;right:0;top:0">#${num}</span><span class="n1" style="position:absolute;right:0;top:0;opacity:0">#${novo??num}</span></span></div>`,gB)};
   const trilho=(x0,x1,y)=>el(`<svg class="ab" style="left:0;top:0;overflow:visible" width="1280" height="800"><path d="M${x0} ${y} L${x1} ${y}" stroke="#D9DEE4" stroke-width="4" stroke-linecap="round" fill="none"/></svg>`,gB).firstElementChild;
@@ -492,7 +492,7 @@ CAPS[7]=()=>{
       const tOu=W(2,'outubro'), tPe=W(2,'pedido'), tSe=W(2,'Seguindo'), tNo=W(2,'novembro'), tCo=W(2,'comeca'), tMe=W(2,'Mensal'), tRe=W(2,'recomeca');
       tituloJ(titA,t,JA,tOu-.3);
       vis(mO,t,tOu+.2,1e9,{dy:10}); out[0].forEach((e,i)=>vis(e,t,tOu+.25+i*.08,1e9,{dy:16}));
-      out.forEach(l=>{const p=eo(pr(t,tPe,.45));l[2].style.borderColor=mix('#E1E8E4','#50D088',p);l[2].style.color=mix('#121212','#2E7D57',p)});
+      out.forEach(l=>{const p=eo(pr(t,tPe,.45));l[2].style.borderColor=mix('#E1E8E4','#16A34A',p);l[2].style.background=mix('#FFFFFF','#16A34A',p);l[2].style.color=mix('#121212','#FFFFFF',p)});
       vis(tagA,t,tSe,1e9,{dx:-16,dy:0});
       vis(divA,t,tNo-.3,1e9,{dy:0}); vis(mN,t,tNo-.2,1e9,{dy:10});
       novA.forEach((e,i)=>vis(e,t,tCo-.1+i*.18,1e9,{dx:-20,dy:0})); vis(ret[0],t,tCo+.4,1e9,{dy:0});
@@ -569,7 +569,7 @@ CAPS[9]=()=>{
       <div class="row vA" style="margin-top:12px;font-weight:800;font-size:52px;font-variant-numeric:tabular-nums;letter-spacing:-.01em;white-space:nowrap">
         <span class="v1">R$ 229</span><span style="position:relative;display:inline-block"><span class="c40">,40</span><span class="c00" style="position:absolute;left:0;top:0;opacity:0;color:#2E7D57">,00</span></span></div></div>`,gA);
   const tRec=el(`<div class="ab" style="left:700px;top:496px"><div class="tag v">${ic('hand-coins',20)}Ela recebe</div></div>`,gA);
-  const porco=el(`<div class="ab" style="left:1012px;top:498px;width:120px;height:120px;border-radius:50%;background:#FFF5DF;display:flex;align-items:center;justify-content:center">${ic('piggy-bank',66,'#8A5A00')}</div>`,gA);
+  const porco=el(`<div class="ab" style="left:1012px;top:498px;width:120px;height:120px;border-radius:50%;background:#D97706;display:flex;align-items:center;justify-content:center">${ic('piggy-bank',66,'#fff')}</div>`,gA);
   const tSal=el(`<div class="ab" style="left:902px;top:636px;width:340px;text-align:center"><div class="tag a">Saldo a pagar · ${brl(.4)}</div></div>`,gA);
   const voa40=el('<div class="ab" style="left:0;top:0;font-weight:800;font-size:52px;line-height:1.2;color:#8A5A00;font-variant-numeric:tabular-nums;opacity:0">,40</div>',gA);
   const c40=calc.querySelector('.c40'), c00=calc.querySelector('.c00'), v1=calc.querySelector('.v1');

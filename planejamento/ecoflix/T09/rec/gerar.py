@@ -405,6 +405,125 @@ def cap02():
     return c
 
 
+POP = '[data-radix-popper-content-wrapper]'
+FILTROS = BTNX('Filtros', within='main')                                      # abre "Filtrar pedidos" (Popover, à direita)
+PAINEL = f"{POP}:has-text('Filtrar pedidos')"
+BUSCA_PED = PH('Pedido, cliente, operador, placa...')
+CAMPO_FILTRO = lambda n: SEL(f"{PAINEL} button:has-text('{n}')")              # "Tipo", "Material", "Forma de Pagamento" (multiseleção)
+OPCAO = lambda n: SEL(f"{POP} label:has-text('{n}')")                         # opção com caixa de marcar (o clique no rótulo marca)
+BUSCA_OPCAO = PH('Buscar...')
+
+
+def filtros_bateria(c=None, ats=None):
+    """Tipo: Compras, Material: Bateria automotiva, Forma de Pagamento: Com Pix/Transferência (o painel Filtros já aberto). Sem `c`,
+    devolve os passos para o setup."""
+    passos = [('click', CAMPO_FILTRO('Tipo'), 'Tipo'), ('click', OPCAO('Compras'), 'Compras'),
+              ('click', CAMPO_FILTRO('Material'), 'Material'), ('type', BUSCA_OPCAO, 'bat'), ('click', OPCAO('Bateria automotiva'), 'Bateria automotiva'),
+              ('click', CAMPO_FILTRO('Forma de Pagamento'), 'Forma de Pagamento'), ('click', OPCAO('Com Pix/Transferência'), 'Com Pix/Transferência')]
+    if c is None:
+        out = []
+        for g, alvo, txt in passos:
+            out.append({'do': 'click', 'target': alvo} if g == 'click' else {'do': 'type', 'target': alvo, 'text': txt, 'noClick': True, 'cps': 40})
+            out.append({'do': 'wait', 'seconds': 0.4})
+        return out
+    for (g, alvo, txt), at in zip(passos, ats):
+        if g == 'click':
+            c.click(alvo, at=at, label=f'filtro: {txt}')
+        else:
+            c.type(alvo, txt, at=at, noClick=True, cps=40, label=f'digita "{txt}" na busca do Material')
+
+
+@capitulo
+def cap03():
+    """Filtrar até achar: Mês passado (L1); Filtros e a busca "Vale Forte" (L2); o painel fecha e as compras da Vale Forte ficam à mostra
+    (L3, zoom); Tipo, Material e Forma de Pagamento (L4); a linha que sobra aberta (L5, zoom); as etiquetas e o Limpar todos (L6)."""
+    c = Cap(3, setup=setup_pedidos())
+    c.mark(1)
+    c.click(PERIODO('Este mês'), at=c.A(1, 'período:', 0.9), label='período')
+    c.click(OPT('Mês passado'), at=c.A(1, 'Mês', 0.6), label='Mês passado')
+    c.waitfor(target=PERIODO('Mês passado'), timeout=8)
+    c.mark(2)
+    c.click(FILTROS, at=c.A(2, 'Filtros,', 0.8), label='Filtros')
+    c.waitfor(text='Filtrar pedidos', timeout=8)
+    c.hover(BUSCA_PED, 0.5, at=c.A(2, 'busca', 0.6), label='a busca do painel (pedido, cliente, operador, placa)')
+    c.click(BUSCA_PED, at=c.A(2, 'Digito', 0.7), label='clica na busca')
+    c.type(BUSCA_PED, 'Vale Forte', at=c.A(2, 'Vale', 0.05), noClick=True, cps=14, label='digita Vale Forte')
+    c.mark(3)
+    c.press('Escape', at=c.A(3, 'No', 0.3), label='fecha o painel (a lista fica à mostra)')
+    c.registra(SEL('main tbody'), at=c.A(3, 'nome', 0.2), label='[ZOOM] as compras de outubro da Auto Peças Vale Forte (nenhuma de bateria)')
+    c.cursor((700, 600), at=c.A(3, 'Auto', 0.6), label='cursor passa pelas linhas da Vale Forte')
+    c.mark(4)
+    c.click(FILTROS, at=c.A(4, 'procuro', 0.8), label='Filtros de novo')
+    c.click(BUSCA_PED, at=c.A(4, 'sei', 0.6), label='busca')
+    c.type(BUSCA_PED, '', at=c.A(4, 'compra.', 0.3), noClick=True, clear=True, label='apaga a busca')
+    filtros_bateria(c, [c.A(4, 'Tipo,', 0.7), c.A(4, 'Compras.', 0.6), c.A(4, 'Material,', 0.7), c.A(4, 'Bateria', 0.4),
+                        c.A(4, 'automotiva.', 0.4), c.A(4, 'forma', 0.7), c.A(4, 'Pix.', 0.6)])
+    c.mark(5)
+    c.press('Escape', at=c.A(5, 'Achou:', 0.6), label='fecha a lista da forma de pagamento')
+    c.press('Escape', at=c.A(5, 'Achou:', 0.3), label='fecha o painel Filtros')
+    c.click(TXTX('21/10/2026', within='main tbody'), at=c.A(5, 'vinte', 0.6), label='abre a linha de 21/10 (Depósito Irmãos Siqueira, R$ 744,00)')
+    c.confere('main tbody', ['21/10/2026', 'Depósito Irmãos Siqueira', 'Bateria automotiva', '744,00'], 'a linha da bateria (21/10, Siqueira, R$ 744,00)')
+    c.registra(SEL("main tbody"), at=c.A(5, 'quilos', 0.2), label='[ZOOM] a linha e o item: Bateria automotiva, 240 kg, R$ 744,00')
+    c.hover(TXTX('Bateria automotiva', within='main tbody'), 0.5, at=c.A(5, 'bateria,', 0.6), label='o item Bateria automotiva')
+    c.hover(TXTX('Depósito Irmãos Siqueira', within='main tbody'), 0.6, at=c.A(5, 'Depósito', 0.6), label='o fornecedor errado: Depósito Irmãos Siqueira')
+    c.mark(6)
+    c.hover(TXTX('Filtrando por', within='main'), 0.5, at=c.A(6, 'etiqueta', 0.6), label='[DESTAQUE] as etiquetas "Filtrando por"')
+    c.hover(TXTX('Limpar todos', within='main'), 0.8, at=c.A(6, 'Limpar', 0.6), label='Limpar todos (sem clicar)')
+    c.fim()
+    return c
+
+
+HIST_OK = 'Todos os registros de fechamento do caixa'
+BUSCA_CX = PH('Buscar por responsável, data ou código...')
+LINHA_CX = lambda n: f"main tbody tr:has-text('#{n}')"
+ACOES_CX = lambda n: SEL(f"{LINHA_CX(n)} button[aria-label='Ações']")
+
+
+def setup_historico(busca=None, extra=()):
+    st = list(LOGIN) + [{'do': 'goto', 'url': '/historico-caixa'}, {'do': 'waitFor', 'text': HIST_OK, 'timeout': 30}, {'do': 'waitFor', 'idle': True, 'timeout': 25}]
+    if busca:
+        st += [{'do': 'type', 'target': BUSCA_CX, 'text': busca, 'cps': 40}, {'do': 'waitFor', 'target': SEL(LINHA_CX(70)), 'timeout': 10},
+               {'do': 'wait', 'seconds': 0.8}]
+    return st + list(extra)
+
+
+@capitulo
+def cap07():
+    """O Histórico do Caixa: Financeiro > Histórico do Caixa pelo menu (L1); as colunas (L2); a correntinha dos caixas de ontem (L3, zoom);
+    o resumo de um caixa (L4); a busca "21/10" e o #70 do Marcos (L5, zoom); o botão Filtros (L6)."""
+    setup = list(LOGIN) + [{'do': 'goto', 'url': '/historico-caixa'}, {'do': 'waitFor', 'text': HIST_OK, 'timeout': 30}, {'do': 'waitFor', 'idle': True, 'timeout': 25},
+                           {'do': 'goto', 'url': '/dashboard'}, {'do': 'waitFor', 'idle': True, 'timeout': 25}, {'do': 'wait', 'seconds': 1.0}]
+    c = Cap(7, setup=setup, start=(760, 470))
+    c.mark(1)
+    c.click(BTN('Financeiro', within=MENU), at=c.A(1, 'Histórico', 1.2), label='menu Financeiro')
+    c.click(LINK('Histórico do Caixa'), at=c.A(1, 'Financeiro.', 0.7), label='menu Histórico do Caixa')
+    c.waitfor(text=HIST_OK, timeout=15)
+    c.hover(SEL(LINHA_CX(85)), 0.6, at=c.A(1, 'cada', 0.6), label='cada caixa fechado, um por linha')
+    c.mark(2)
+    for col, palavra in (('Código', 'número'), ('Abertura', 'abriu'), ('Fechamento', 'fechou,'), ('Aberto por', 'quem'),
+                         ('Saldo Inicial', 'inicial'), ('Saldo Final', 'final.')):
+        c.hover(SEL(f"main thead th:has-text('{col}')"), 0.2, at=c.A(2, palavra, 0.6), label=f'coluna {col}')
+    c.mark(3)
+    c.hover(SEL(f"{LINHA_CX(85)} svg.lucide-link2"), 1.6, at=c.A(3, 'correntinha', 0.6), label='[ZOOM] a correntinha entre o #85 e o #86 (dica "Caixas fechados no mesmo dia")')
+    c.hover(SEL(f"{LINHA_CX(86)} svg.lucide-link2"), 0.8, at=c.A(3, 'Marcos,', 0.6), label='o #86 do Marcos, de ontem')
+    c.mark(4)
+    c.click(TXT('10/11/2026 08:31', within='main'), at=c.A(4, 'Clicando', 0.6), label='abre o resumo do #85 (o caixa do Rafael de ontem)')
+    c.waitfor(text='Total Compras', timeout=10)
+    for rot, palavra in (('Total Compras', 'compras,'), ('Total Vendas', 'vendas,'), ('Receitas', 'receitas,'), ('Despesas', 'despesas'), ('Lucro Projetado', 'lucro')):
+        c.hover(TXTX(rot, within='main tbody'), 0.2, at=c.A(4, palavra, 0.6), label=f'resumo: {rot}')
+    c.mark(5)
+    c.click(BUSCA_CX, at=c.A(5, 'busca', 0.7), label='a busca')
+    c.type(BUSCA_CX, '21/10', at=c.A(5, 'vinte', 0.05), noClick=True, cps=9, label='digita 21/10')
+    c.waitfor(target=SEL(LINHA_CX(70)), timeout=10)
+    c.confere(LINHA_CX(70), ['#70', '21/10/2026', 'Marcos Antunes', '800,00', '612,50'], 'o #70 do Marcos (21/10, R$ 800,00 e R$ 612,50)')
+    c.hover(SEL(LINHA_CX(70)), 1.0, at=c.A(5, 'Marcos', 0.6), label='[ZOOM] a linha do #70 do Marcos')
+    c.mark(6)
+    c.hover(BTN('Filtros', within='main'), 0.8, at=c.A(6, 'Filtros,', 0.6), label='Filtros (sem abrir)')
+    c.cursor((760, 600), at=c.A(6, 'grande.', 0.2), label='cursor descansa')
+    c.fim()
+    return c
+
+
 # @@CAPITULOS@@
 
 

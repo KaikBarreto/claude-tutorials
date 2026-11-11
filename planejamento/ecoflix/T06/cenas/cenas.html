@@ -46,7 +46,7 @@ body{font-family:M,sans-serif;color:var(--t);-webkit-font-smoothing:antialiased}
 .tag.v{background:var(--vc);color:var(--ve)} .tag.a{background:var(--ac);color:var(--ae)}
 .lbl{font-weight:700;font-size:17px;color:var(--c)}
 .num{font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
-.op{position:absolute;width:60px;height:60px;border-radius:50%;background:#F2F4F7;color:var(--t);display:flex;
+.op{position:absolute;width:60px;height:60px;border-radius:50%;background:#4B5563;color:#fff;display:flex;
   align-items:center;justify-content:center;font-weight:800;font-size:34px;line-height:1}
 /* mostrador da balança (painel escuro, número no acento) */
 .most{background:var(--e);border-radius:16px;padding:16px 22px 18px;box-shadow:0 16px 34px rgba(16,24,40,.22)}
@@ -58,9 +58,9 @@ body{font-family:M,sans-serif;color:var(--t);-webkit-font-smoothing:antialiased}
    --r vermelho (despesa de verdade, a tarifa): preenchimento e contorno
    --re texto vermelho sobre branco (6,6) e sobre --rc (6,0)   --rc vermelho claro: fundo de etiqueta e de célula */
 :root{--r:#E5484D;--re:#B42318;--rc:#FEF1F0}
-.tag.r{background:var(--rc);color:var(--re)} .tag.n{background:#F2F4F7;color:#374151}
-.ico.r{background:var(--rc);color:var(--re)} .ico.n{background:#EEF1F4;color:#4B5563}
-.tok{position:absolute;left:0;top:0;width:48px;height:48px;border-radius:50%;background:#fff;border:2px solid #D5DCE2;
+.tag.r{background:var(--rs);color:#fff} .tag.n{background:#4B5563;color:#fff}
+.ico.r{background:var(--rs);color:#fff} .ico.n{background:#4B5563;color:#fff}
+.tok{position:absolute;left:0;top:0;width:48px;height:48px;border-radius:50%;background:#4B5563;border:2px solid #4B5563;
   display:flex;align-items:center;justify-content:center;color:#374151;box-shadow:0 6px 14px rgba(16,24,40,.12)}
 </style><style id="saturado">/* estilo saturado (Kaik, 11/11): selo, chip, etiqueta, quadrado de ícone e círculo de etapa
    com fundo cheio e ícone/texto branco; nunca fundo claro com conteúdo colorido, nunca ícone escuro sobre o verde */
@@ -272,7 +272,7 @@ CAPS[0]=()=>{
   const sOut=[294,354,414].map(y=>seta(g,`M802 ${y} L982 ${y}`,'var(--a)'));
   const fIn=ficha(g,'banknote',24), fOut=[0,1,2].map(()=>ficha(g,'banknote',24));
   const duv=el(`<div class="ab row" style="left:560px;top:196px;gap:12px">
-      <div class="dq" style="width:52px;height:52px;border-radius:50%;background:var(--ac);color:var(--ae);display:flex;align-items:center;justify-content:center">${ic('circle-help',30)}</div>
+      <div class="dq" style="width:52px;height:52px;border-radius:50%;background:var(--as);color:#fff;display:flex;align-items:center;justify-content:center">${ic('circle-help',30)}</div>
       <div class="dt"><span class="tag a" style="font-size:18px;padding:7px 15px">a diferença?</span></div></div>`,g);
   // abre e fecha: o caixa pega dinheiro do cofre e devolve no fim
   const cof=el(`<div class="ab" style="left:575px;top:530px;width:130px;text-align:center">${cofre(130)}
@@ -498,10 +498,10 @@ CAPS[10]=()=>{
       <div class="ico" style="width:52px;height:52px;border-radius:50%">${ic('hand-coins',28)}</div><div class="lbl" style="margin-top:6px">na gaveta</div></div>`,g);
   // o meio: igual (bate) ou diferente (não bate)
   const ind=el(`<div class="ab" style="left:592px;top:296px;width:96px;height:96px">
-      <div class="iv" style="position:absolute;inset:0;border-radius:50%;background:var(--vc);border:3px solid var(--v);display:flex;align-items:center;
-        justify-content:center;color:var(--ve)">${ic('equal',46)}</div>
-      <div class="ia" style="position:absolute;inset:0;border-radius:50%;background:var(--ac);border:3px solid var(--a);display:flex;align-items:center;
-        justify-content:center;color:var(--ae);opacity:0">${ic('equal-not',46)}</div></div>`,g);
+      <div class="iv" style="position:absolute;inset:0;border-radius:50%;background:var(--vs);border:3px solid var(--vs);display:flex;align-items:center;
+        justify-content:center;color:#fff">${ic('equal',46)}</div>
+      <div class="ia" style="position:absolute;inset:0;border-radius:50%;background:var(--as);border:3px solid var(--as);display:flex;align-items:center;
+        justify-content:center;color:#fff;opacity:0">${ic('equal-not',46)}</div></div>`,g);
   const ok=el(`<div class="ab" style="left:0;top:590px;width:1280px;text-align:center"><span class="tag v" style="font-size:20px;padding:9px 20px">
       ${ic('circle-check',22)}sem diferença</span></div>`,g);
   const dif=el(`<div class="ab row" style="left:0;top:590px;width:1280px;justify-content:center;gap:12px">

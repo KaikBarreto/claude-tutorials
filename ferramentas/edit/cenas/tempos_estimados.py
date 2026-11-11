@@ -21,7 +21,7 @@ TAG = r"\[[a-z ]+\]"
 def linhas_tts(texto, trocas):
     """Cada linha do texto como ([(legenda, fala, pausa_antes)], pausa_no_fim), igual ao tokens() do proc.py."""
     mapa = dict(trocas)
-    rx = re.compile("|".join(re.escape(f) for f, _ in sorted(trocas, key=lambda p: -len(p[0])))) if trocas else None
+    rx = re.compile(r"(?<!\w)(?:" + "|".join(re.escape(f) for f, _ in sorted(trocas, key=lambda p: -len(p[0]))) + r")(?!\w)") if trocas else None  # palavra inteira
     linhas = []
     for linha in texto.split("\n"):
         toks, pend = [], 0.0

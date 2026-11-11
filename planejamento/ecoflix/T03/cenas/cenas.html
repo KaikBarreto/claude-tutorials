@@ -45,7 +45,7 @@ body{font-family:M,sans-serif;color:var(--t);-webkit-font-smoothing:antialiased}
 .tag.v{background:var(--vc);color:var(--ve)} .tag.a{background:var(--ac);color:var(--ae)}
 .lbl{font-weight:700;font-size:17px;color:var(--c)}
 .num{font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
-.op{position:absolute;width:60px;height:60px;border-radius:50%;background:#F2F4F7;color:var(--t);display:flex;
+.op{position:absolute;width:60px;height:60px;border-radius:50%;background:#4B5563;color:#fff;display:flex;
   align-items:center;justify-content:center;font-weight:800;font-size:34px;line-height:1}
 /* mostrador da balança (painel escuro, número no acento) */
 .most{background:var(--e);border-radius:16px;padding:16px 22px 18px;box-shadow:0 16px 34px rgba(16,24,40,.22)}
@@ -54,7 +54,7 @@ body{font-family:M,sans-serif;color:var(--t);-webkit-font-smoothing:antialiased}
 .most .mn{margin-top:6px;font-weight:800;font-size:44px;color:var(--v);font-variant-numeric:tabular-nums;white-space:nowrap}
 .rip{position:absolute;width:56px;height:56px;margin:-28px 0 0 -28px;border-radius:50%;border:3px solid var(--v);opacity:0}
 /* ---------------------------------------------------------------- peças desta aula (T03) */
-.tag.n{background:#F2F4F7;color:#374151}
+.tag.n{background:#4B5563;color:#fff}
 .ficha{position:absolute;display:flex;align-items:center;gap:12px;height:58px;padding:0 18px;background:#fff;
   border:1px solid #E1E8E4;border-radius:14px;box-shadow:0 8px 20px rgba(16,24,40,.08);font-weight:700;font-size:19px;white-space:nowrap}
 .dot{width:12px;height:12px;border-radius:50%;flex:none}
@@ -68,7 +68,7 @@ body{font-family:M,sans-serif;color:var(--t);-webkit-font-smoothing:antialiased}
 .lousa .lh{font-weight:800;font-size:28px;height:36px;line-height:36px;white-space:nowrap}
 .lousa .lgiz{margin-top:8px;height:3px;border-radius:2px;background:rgba(243,244,246,.35)}
 .lousa .lcol{width:140px;flex:none;text-align:center}
-.lousa .lt{display:inline-block;padding:6px 14px;border-radius:999px;font-weight:800;font-size:16px;border:2px solid #4E5A54;color:#9DA6A1}
+.lousa .lt{display:inline-block;padding:6px 14px;border-radius:999px;font-weight:800;font-size:16px;border:2px solid #4B5563;background:#4B5563;color:#fff}
 .lousa .lrow{height:60px}
 .lousa .ln{width:276px;flex:none;font-weight:700;font-size:22px;white-space:nowrap}
 .lousa .lv{font-weight:800;font-size:24px;font-variant-numeric:tabular-nums;white-space:nowrap}
@@ -84,7 +84,7 @@ body{font-family:M,sans-serif;color:var(--t);-webkit-font-smoothing:antialiased}
 .deg .dk{font-weight:800;font-size:15px;letter-spacing:.22em;color:#14532D;text-transform:uppercase;white-space:nowrap}
 .deg .dl{margin-top:10px;font-weight:800;font-size:25px;white-space:nowrap}
 .deg .ds{margin-top:6px;font-weight:700;font-size:18px;color:#1F2937;white-space:nowrap}
-.bola{position:absolute;width:64px;height:64px;border-radius:50%;background:#fff;border:2px solid #E1E8E4;color:#9AA3AD;
+.bola{position:absolute;width:64px;height:64px;border-radius:50%;background:#4B5563;border:2px solid #4B5563;color:#fff;
   display:flex;align-items:center;justify-content:center;box-shadow:0 8px 18px rgba(16,24,40,.10)}
 </style><style id="saturado">/* estilo saturado (Kaik, 11/11): selo, chip, etiqueta, quadrado de ícone e círculo de etapa
    com fundo cheio e ícone/texto branco; nunca fundo claro com conteúdo colorido, nunca ícone escuro sobre o verde */
@@ -282,7 +282,7 @@ S.ilu00_cardapio=g=>{
   const DST=[['Compra','shopping-cart',''],['Venda','hand-coins','a'],['Nota fiscal','file-text','n']];
   const CX=800,CW=390,CH=92,GAP=18,CY0=464-(3*CH+2*GAP)/2;
   const dst=DST.map(([n,i,k],j)=>el(`<div class="card row" style="left:${CX}px;top:${CY0+j*(CH+GAP)}px;width:${CW}px;height:${CH}px;padding:0 24px;gap:18px">
-      <div class="ico ${k}" style="width:56px;height:56px;${k==='n'?'background:#EEF1F4;color:#4B5563':''}">${ic(i,28)}</div>
+      <div class="ico ${k}" style="width:56px;height:56px;${k==='n'?'background:#4B5563;color:#fff':''}">${ic(i,28)}</div>
       <div style="font-weight:800;font-size:24px;white-space:nowrap">${n}</div></div>`,g));
   const ys=[0,1,2].map(j=>CY0+j*(CH+GAP)+CH/2);
   const setas=ys.map(y=>seta(g,`M656,464 C724,464 722,${y} ${CX-10},${y}`));
@@ -297,8 +297,8 @@ S.ilu00_cardapio=g=>{
     linhas.forEach((r,i)=>vis(r,t,A.ca-.1+i*.42,1e9,{dx:-14,dy:0}));
     // as etiquetas acendem na palavra, e os preços da coluna aparecem
     const pc=eo(pr(t,A.co-.05,.45)), pv=eo(pr(t,A.ve-.05,.45));
-    chC.style.background=mix('#22302A','#50D088',pc); chC.style.borderColor=mix('#4E5A54','#50D088',pc); chC.style.color=mix('#9DA6A1','#121212',pc);
-    chV.style.background=mix('#22302A','#F2B63D',pv); chV.style.borderColor=mix('#4E5A54','#F2B63D',pv); chV.style.color=mix('#9DA6A1','#121212',pv);
+    chC.style.background=mix('#4B5563','#16A34A',pc); chC.style.borderColor=mix('#4B5563','#16A34A',pc);
+    chV.style.background=mix('#4B5563','#D97706',pv); chV.style.borderColor=mix('#4B5563','#D97706',pv);
     vC.forEach((e,i)=>vis(e,t,A.co+.05+i*.12,1e9,{dy:8})); vV.forEach((e,i)=>vis(e,t,A.ve+.05+i*.12,1e9,{dy:8}));
     // abre espaço: a lousa vai para a esquerda e entram os três destinos, cada um na sua palavra
     const sl=eio(pr(t,A.cad-.3,.8)); mov.style.transform=`translate(${(-280*sl).toFixed(2)}px,0) scale(${(1-.1*sl).toFixed(4)})`;
@@ -364,14 +364,14 @@ S.ilu03_codigo=g=>{
   // a fila de fichas: 1 2 3 4 … 13 14 15 e a do radiador
   const X0=142,TY=192,T=72;
   const nums=[[1,0],[2,84],[3,168],[4,252],[13,392],[14,476],[15,560]];
-  const fila=nums.map(([n,x])=>el(`<div class="card" style="left:${X0+x}px;top:${TY}px;width:${T}px;height:${T}px;border-radius:16px;
-      display:flex;align-items:center;justify-content:center"><span class="num" style="font-size:28px;color:#4B5563">${n}</span></div>`,g));
+  const fila=nums.map(([n,x])=>el(`<div class="card" style="left:${X0+x}px;top:${TY}px;width:${T}px;height:${T}px;border-radius:16px;background:#4B5563;border-color:#4B5563;
+      display:flex;align-items:center;justify-content:center"><span class="num" style="font-size:28px;color:#fff">${n}</span></div>`,g));
   const ret=el(`<div class="ab" style="left:${X0+336}px;top:${TY}px;width:44px;height:${T}px;display:flex;align-items:center;justify-content:center;
       font-weight:800;font-size:30px;color:#6B7280">…</div>`,g);
   const fic=el(`<div class="card row" style="left:${X0+652}px;top:${TY}px;width:344px;height:${T}px;border-radius:16px;overflow:hidden">
-      <div class="nbox" style="position:relative;width:${T}px;height:${T}px;flex:none;background:#F2F4F7;border-right:1px solid #E1E8E4">
-        <span class="num va" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:30px">16</span>
-        <span class="num vb" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:30px;opacity:0;color:#2E7D57">70</span></div>
+      <div class="nbox" style="position:relative;width:${T}px;height:${T}px;flex:none;background:#4B5563;border-right:1px solid #E1E8E4">
+        <span class="num va" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:30px;color:#fff">16</span>
+        <span class="num vb" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:30px;opacity:0;color:#fff">70</span></div>
       <div style="padding:0 20px;font-weight:700;font-size:21px;white-space:nowrap">Radiador de cobre</div></div>`,g);
   const nbox=fic.querySelector('.nbox'), fa=fic.querySelector('.va'), fb=fic.querySelector('.vb');
   // o balcão: compra e venda (as etiquetas acendem na palavra), o operador digita o número, o material aparece
@@ -390,7 +390,7 @@ S.ilu03_codigo=g=>{
   const cad=el(`<div class="card" style="left:${NX}px;top:${NY}px;width:${NW}px;height:${NH}px;overflow:hidden;background:#FFFEF8">
       <div style="position:absolute;left:0;right:0;top:0;height:44px;background:#F4F1E6;border-bottom:1px solid #E6E0CC"></div>
       ${[0,1,2,3,4,5,6,7,8,9].map(i=>`<div style="position:absolute;left:${36+i*48}px;top:13px;width:18px;height:18px;border-radius:50%;background:#fff;border:3px solid #B9C1C9"></div>`).join('')}
-      <div class="raf" style="position:absolute;right:24px;top:58px;padding:5px 14px;border-radius:8px;background:#F4F1E6;font-weight:700;font-size:17px;color:#6B5E3C">Rafael</div>
+      <div class="raf" style="position:absolute;right:24px;top:58px;padding:5px 14px;border-radius:8px;background:#4B5563;font-weight:700;font-size:17px;color:#fff">Rafael</div>
       ${[1,2,3,4].map(i=>`<div style="position:absolute;left:24px;right:24px;top:${56+i*50}px;height:2px;background:#DCE6F0"></div>`).join('')}
       <div style="position:absolute;left:58px;top:44px;bottom:0;width:2px;background:#F3C9C4"></div>
       <div class="row" style="position:absolute;left:80px;right:44px;top:${56+2*50-44}px;height:42px;gap:12px;font-size:26px;color:#1F3A5F">
@@ -413,12 +413,12 @@ S.ilu03_codigo=g=>{
     // o balcão do dia a dia; as etiquetas acendem em "compra" e "venda"; digita o número; o material aparece
     vis(balC,t,A.di-.15,1e9,{dy:18});
     const pc=eo(pr(t,A.co-.1,.45)), pv=eo(pr(t,A.ve-.1,.45));
-    chC.style.background=mix('#F2F4F7','#EAF8F0',pc); chC.style.color=mix('#374151','#2E7D57',pc); pulse(chC,t,A.co-.1,.08,.6);
-    chV.style.background=mix('#F2F4F7','#FFF5DF',pv); chV.style.color=mix('#374151','#8A5A00',pv); pulse(chV,t,A.ve-.1,.08,.6);
+    chC.style.background=mix('#4B5563','#16A34A',pc); pulse(chC,t,A.co-.1,.08,.6);
+    chV.style.background=mix('#4B5563','#D97706',pv); pulse(chV,t,A.ve-.1,.08,.6);
     escreve(dg,'16',t,A.dg,A.dg+.45);
     vis(resl,t,A.ap-.1,1e9,{dx:-12,dy:0});
     contorno(fic,t,A.ap-.1,'#E1E8E4','#50D088'); anel(fic,t,A.ap-.1,'rgba(80,208,136,.25)',SOMBRA,4); pulse(fic,t,A.ap-.1,.05,.8);
-    luz(nbox,'background',t,A.ap-.1,'#F2F4F7','#EAF8F0'); luz(fa,'color',t,A.ap-.1,'#121212','#2E7D57');
+    luz(nbox,'background',t,A.ap-.1,'#4B5563','#16A34A');
     // o caderno entra e o balcão abre espaço; pode usar os mesmos: a linha do radiador acende; o Rafael
     const sl=eio(pr(t,A.ca-.5,.8)); bal.style.left=lerp(BX0,BX1,sl).toFixed(2)+'px';
     vis(cad,t,A.ca+.15,1e9,{dx:24,dy:0});
@@ -512,8 +512,8 @@ S.ilu04_nomefiscal=g=>{
   const lts=[lug.querySelector('.lt1'),lug.querySelector('.lt2'),lug.querySelector('.lt3')];
   const xis=el(`<div class="card" style="left:70px;top:510px;width:420px;height:200px;padding:18px 24px">
       <span class="tag a" style="font-size:16px;padding:6px 14px">linhas iguais</span>
-      ${[0,1,2].map(i=>`<div style="margin-top:${i?8:12}px;height:34px;padding:0 14px;border-radius:10px;background:#F6F7F9;display:flex;align-items:center;
-        font-weight:800;font-size:17px;color:#6B7280;white-space:nowrap">SUCATA DE ALUMÍNIO</div>`).join('')}
+      ${[0,1,2].map(i=>`<div style="margin-top:${i?8:12}px;height:34px;padding:0 14px;border-radius:10px;background:#4B5563;display:flex;align-items:center;
+        font-weight:800;font-size:17px;color:#fff;white-space:nowrap">SUCATA DE ALUMÍNIO</div>`).join('')}
       <svg class="ab" style="left:0;top:0;overflow:visible" width="420" height="200"><path class="x1" d="M126,62 L294,182" fill="none" stroke="#F2B63D" stroke-width="9" stroke-linecap="round"/>
         <path class="x2" d="M294,62 L126,182" fill="none" stroke="#F2B63D" stroke-width="9" stroke-linecap="round"/></svg></div>`,g);
   const x1=xis.querySelector('.x1'), x2=xis.querySelector('.x2');
@@ -656,7 +656,7 @@ S.ilu07_vinculada=g=>{
         <div style="position:absolute;left:0;top:44px;font-weight:700;font-size:22px;white-space:nowrap">Cobre mel</div>
         <div class="old num" style="position:absolute;right:0;top:8px;font-size:18px;color:#6B7280;text-decoration:line-through;opacity:0;white-space:nowrap">${brl(42)}</div>
         <div class="row" style="position:absolute;right:0;top:38px;gap:12px">
-          <div class="up" style="width:36px;height:36px;border-radius:50%;background:#EAF8F0;display:flex;align-items:center;justify-content:center;opacity:0">${ic('arrow-up',22,'#2E7D57')}</div>
+          <div class="up" style="width:36px;height:36px;border-radius:50%;background:#16A34A;display:flex;align-items:center;justify-content:center;opacity:0">${ic('arrow-up',22,'#fff')}</div>
           <div class="num vv" style="font-size:40px;white-space:nowrap">${val}</div></div></div></div>`,g);
   const cP=cartao(XL,'',`<span class="ic" style="width:30px;height:30px">${(window.ICONS||{})['star']||''}</span>`,'Principal',brl(42.5));
   const cD=cartao(XR,'a',ic('link-2',30),'Tabela Depósitos',brl(44.2));
@@ -721,7 +721,7 @@ S.ilu07_ordem=g=>{
     [A.p1,A.de,A.ul].forEach((a,i)=>{luz(deg[i],'background',t,a-.1,'#F2F4F7',DG[i][3]);
       contorno(deg[i],t,a-.1,'#E1E8E4',i===2?'#CFEBDD':DG[i][3]);
       vis(txt[i][0],t,a,1e9,{dy:8}); vis(txt[i][1],t,a+.18,1e9,{dy:8}); dic[i].style.opacity=(.55*eo(pr(t,a+.3,.45))).toFixed(3);
-      contorno(bolas[i],t,a-.1,'#E1E8E4','#50D088'); luz(bolas[i],'color',t,a-.1,'#9AA3AD','#2E7D57')});
+      contorno(bolas[i],t,a-.1,'#4B5563','#16A34A'); luz(bolas[i],'background',t,a-.1,'#4B5563','#16A34A')});
     if(txt[0][2])vis(txt[0][2],t,A.cl-.2,1e9,{dy:8});
     if(txt[1][2])vis(txt[1][2],t,A.pe-.2,1e9,{dy:8});
   };
@@ -757,7 +757,7 @@ S.ilu08_transferir=g=>{
   fm.innerHTML=`<g transform="translate(${PX-130},${CY+8})">${monte(['#6F7983','#4F5861','#9AA3AD','#5E6670','#8A949E','#7E8994','#68727D','#A3ACB5']).replace(/^<svg[^>]*>|<\/svg>$/g,'')}</g>`;
   const chR=el(`<div class="ab" style="left:0;top:${CY+152}px;width:400px;text-align:center"><span class="tag v">Radiador de cobre</span></div>`,g);
   const chF=el(`<div class="ab" style="left:${PX-200}px;top:${CY+152}px;width:400px;text-align:center"><span class="tag a">Ferro misto</span></div>`,g);
-  const kgc=el(`<div class="ab" style="left:0;top:0"><span class="tag n" style="background:#fff;border:2px solid #9AA3AD">${ic('weight',20)}${kg(8)} de ferro</span></div>`,g);
+  const kgc=el(`<div class="ab" style="left:0;top:0"><span class="tag n">${ic('weight',20)}${kg(8)} de ferro</span></div>`,g);
   const sT=seta(g,`M496,${CY-40} C610,${CY-190} 790,${CY-190} 884,${CY-24}`,'#50D088',4);
   // posições das peças: montada → separada → pilha ao lado → em cima do Ferro misto
   const SEP=[[-176,0,0],[176,0,0],[-120,148,0],[120,148,0]];
@@ -812,9 +812,9 @@ S.ilu10_arquivar=g=>{
       <span class="dot" style="background:${c}"></span>${n}</div>`,gA));
   const vaga=el(`<div class="ab" style="left:${LX+18}px;top:${ROWY(2)}px;width:${RW-36}px;height:58px;border:2px dashed #CBD2D9;border-radius:14px;opacity:0"></div>`,gA);
   // apagar (riscado) × arquiva
-  const lix=el(`<div class="ab row" style="left:556px;top:${206+OY}px;gap:14px"><div class="lixc" style="position:relative;width:76px;height:76px;border-radius:50%;background:#F2F4F7;
-      display:flex;align-items:center;justify-content:center">${ic('trash-2',36,'#6B7280')}
-      <svg class="ab" style="left:0;top:0;overflow:visible" width="76" height="76"><path class="risco" d="M14,62 L62,14" fill="none" stroke="#8A5A00" stroke-width="6" stroke-linecap="round"/></svg></div>
+  const lix=el(`<div class="ab row" style="left:556px;top:${206+OY}px;gap:14px"><div class="lixc" style="position:relative;width:76px;height:76px;border-radius:50%;background:#4B5563;
+      display:flex;align-items:center;justify-content:center">${ic('trash-2',36,'#fff')}
+      <svg class="ab" style="left:0;top:0;overflow:visible" width="76" height="76"><path class="risco" d="M14,62 L62,14" fill="none" stroke="#FBBF24" stroke-width="6" stroke-linecap="round"/></svg></div>
       <div class="lbl" style="font-size:20px">apagar</div></div>`,gA);
   const risco=lix.querySelector('.risco'), lixc=lix.querySelector('.lixc');
   const AW=320,AX=556,AY=312+OY;

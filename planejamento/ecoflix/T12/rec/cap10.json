@@ -1,0 +1,374 @@
+{
+ "name": "t12-cap10",
+ "title": "T12 · Cap. 10 · O relatório das coletas (narração 51,1 s ESTIMADA; marcas L1..L5 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T07:00:00-03:00)",
+ "seed": "t12-cap10",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true"
+ },
+ "seedExtra": [
+  "t12/inicio",
+  "t12/apos-cap09"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "waitFor",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "timeout": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "••••••••"
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "url": "/dashboard",
+   "timeout": 40
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 25
+  },
+  {
+   "do": "goto",
+   "url": "/coletas/relatorio"
+  },
+  {
+   "do": "waitFor",
+   "text": "Indicadores e histórico das coletas",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 25
+  },
+  {
+   "do": "wait",
+   "seconds": 0.3
+  },
+  {
+   "do": "goto",
+   "url": "/coletas/ordens"
+  },
+  {
+   "do": "waitFor",
+   "text": "Solicite, agende e acompanhe as ordens de coleta",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 25
+  },
+  {
+   "do": "wait",
+   "seconds": 0.8
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel|Algo deu errado|Falha ao|Transi[çc][ãa]o inv[áa]lida|n[ãa]o encontrad|Localiza[çc][ãa]o n[ãa]o registrada|Sem sinal de GPS/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');if(f&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA ECOFLIX'))window.__avisos.push('TRILHA ECOFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "link",
+    "name": "Relatório",
+    "exact": true,
+    "within": "aside, [data-sidebar=sidebar]"
+   },
+   "at": 1.04,
+   "label": "menu Relatório"
+  },
+  {
+   "do": "waitFor",
+   "text": "Indicadores e histórico das coletas",
+   "timeout": 15
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Total de coletas",
+    "within": "main",
+    "exact": true
+   },
+   "seconds": 0.4,
+   "at": 4.53,
+   "label": "Este mês: Total de coletas",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Concluídas",
+    "within": "main",
+    "exact": true
+   },
+   "seconds": 0.4,
+   "at": 6.27,
+   "label": "Este mês: Concluídas",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Canceladas",
+    "within": "main",
+    "exact": true
+   },
+   "seconds": 0.4,
+   "at": 7.56,
+   "label": "Este mês: Canceladas",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Taxa de conclusão",
+    "within": "main",
+    "exact": true
+   },
+   "seconds": 0.6,
+   "at": 8.7,
+   "label": "Este mês: Taxa de conclusão",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button[role=combobox]"
+   },
+   "at": 10.4,
+   "label": "abre Período"
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 10.8
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Mês passado",
+    "exact": true
+   },
+   "at": 10.8,
+   "label": "Período: Mês passado"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Total de coletas",
+    "within": "main",
+    "exact": true
+   },
+   "seconds": 0.4,
+   "at": 11.79,
+   "label": "outubro: Total de coletas",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Concluídas",
+    "within": "main",
+    "exact": true
+   },
+   "seconds": 0.4,
+   "at": 13.0,
+   "label": "outubro: Concluídas",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Canceladas",
+    "within": "main",
+    "exact": true
+   },
+   "seconds": 0.4,
+   "at": 14.44,
+   "label": "outubro: Canceladas",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Taxa de conclusão",
+    "within": "main",
+    "exact": true
+   },
+   "seconds": 1.0,
+   "at": 15.89,
+   "label": "outubro: Taxa de conclusão",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 19.35
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 760,
+    "y": 460
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "at": 19.55,
+   "label": "cursor em repouso (ilustração)"
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 27.06
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"main *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Por status\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-130);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 27.06,
+   "label": "desce às tabelas"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Por status",
+    "within": "main",
+    "exact": true
+   },
+   "seconds": 0.3,
+   "at": 28.73,
+   "label": "Por status",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Por motorista",
+    "within": "main",
+    "exact": true
+   },
+   "seconds": 0.3,
+   "at": 29.79,
+   "label": "Por motorista",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Por veículo",
+    "within": "main",
+    "exact": true
+   },
+   "seconds": 0.3,
+   "at": 31.08,
+   "label": "Por veículo",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Por parceiro",
+    "within": "main",
+    "exact": true
+   },
+   "seconds": 1.2,
+   "at": 32.15,
+   "label": "Por parceiro",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 38.19
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"main *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Per\\u00edodo\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-160);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 38.19,
+   "label": "sobe ao Período"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main button[role=combobox]"
+   },
+   "seconds": 1.5,
+   "at": 38.8,
+   "label": "Período (em que mês cada coleta entra)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 51.13
+  }
+ ]
+}

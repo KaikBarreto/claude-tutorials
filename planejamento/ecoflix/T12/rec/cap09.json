@@ -1,0 +1,500 @@
+{
+ "name": "t12-cap09",
+ "title": "T12 · Cap. 9 · As caçambas e onde estão (narração 89,1 s ESTIMADA; marcas L1..L9 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T07:00:00-03:00)",
+ "seed": "t12-cap09",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true"
+ },
+ "seedExtra": [
+  "t12/inicio",
+  "t12/apos-cap08"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "waitFor",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "timeout": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "••••••••"
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "url": "/dashboard",
+   "timeout": 40
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 25
+  },
+  {
+   "do": "goto",
+   "url": "/coletas/equipamentos"
+  },
+  {
+   "do": "waitFor",
+   "text": "Caçambas, bags, caixas e paletes em campo",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 25
+  },
+  {
+   "do": "wait",
+   "seconds": 0.3
+  },
+  {
+   "do": "goto",
+   "url": "/coletas/ordens"
+  },
+  {
+   "do": "waitFor",
+   "text": "Solicite, agende e acompanhe as ordens de coleta",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 25
+  },
+  {
+   "do": "wait",
+   "seconds": 0.8
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel|Algo deu errado|Falha ao|Transi[çc][ãa]o inv[áa]lida|n[ãa]o encontrad|Localiza[çc][ãa]o n[ãa]o registrada|Sem sinal de GPS/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');if(f&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA ECOFLIX'))window.__avisos.push('TRILHA ECOFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "link",
+    "name": "Equipamentos",
+    "exact": true,
+    "within": "aside, [data-sidebar=sidebar]"
+   },
+   "at": 1.8,
+   "label": "menu Equipamentos"
+  },
+  {
+   "do": "waitFor",
+   "text": "Caçambas, bags, caixas e paletes em campo",
+   "timeout": 15
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Caçambas, bags, caixas e paletes em campo",
+    "exact": true
+   },
+   "seconds": 0.8,
+   "at": 4.08,
+   "label": "caçambas, bags, caixas e paletes",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 6.85
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Tipos de equipamento",
+    "within": "main",
+    "exact": true
+   },
+   "seconds": 0.4,
+   "at": 7.69,
+   "label": "Tipos de equipamento",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tr:has-text('Caçamba 5 m³')"
+   },
+   "seconds": 1.6,
+   "at": 8.3,
+   "label": "Caçamba 5 m³: uma a uma",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tr:has-text('Bag 1 m³')"
+   },
+   "seconds": 1.6,
+   "at": 13.08,
+   "label": "Bag 1 m³: por quantidade",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 18.74
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"main *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Unidades identific\\u00e1veis\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-140);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 18.74,
+   "label": "desce às Unidades identificáveis"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Caçamba 05",
+    "within": "main",
+    "exact": true
+   },
+   "seconds": 0.6,
+   "at": 19.73,
+   "label": "Caçamba 05",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main :text-is('Caçamba 05') >> xpath=ancestor::*[contains(., 'Depósito Irmãos Siqueira')][1]"
+   },
+   "seconds": 1.2,
+   "at": 24.59,
+   "label": "Caçamba 05 no Depósito Irmãos Siqueira",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 29.34
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Nova unidade",
+    "exact": true
+   },
+   "at": 30.08,
+   "label": "Nova unidade"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "#equipamento-id"
+   },
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#equipamento-id"
+   },
+   "at": 32.96,
+   "label": "Identificação (campo)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#equipamento-id"
+   },
+   "text": "Caçamba 06",
+   "cps": 40,
+   "at": 34.8,
+   "label": "Identificação: Caçamba 06",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#equipamento-tipo"
+   },
+   "at": 35.85,
+   "label": "abre Tipo de equipamento"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Caçamba 5 m³",
+    "exact": true
+   },
+   "label": "Tipo: Caçamba 5 m³"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Cadastrar",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 36.7,
+   "label": "Cadastrar unidade"
+  },
+  {
+   "do": "waitFor",
+   "text": "Unidade cadastrada",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Caçamba 06",
+    "within": "main",
+    "exact": true
+   },
+   "at": 37.59,
+   "label": "Caçamba 06 na lista"
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 38.19
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Ainda sem movimentação registrada",
+    "within": "main",
+    "exact": false
+   },
+   "seconds": 1.2,
+   "at": 39.26,
+   "label": "sem lugar (sem movimentação)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 43.47
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Movimentar",
+    "exact": true,
+    "within": "main"
+   },
+   "at": 43.56,
+   "label": "Movimentar"
+  },
+  {
+   "do": "waitFor",
+   "text": "Nova movimentação",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Externo",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.8,
+   "at": 48.94,
+   "label": "De: Externo",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:has-text('Minha base') >> nth=1"
+   },
+   "at": 49.55,
+   "label": "Para: Minha base"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Registrar",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 50.47,
+   "label": "Registrar"
+  },
+  {
+   "do": "waitFor",
+   "text": "Movimentação registrada",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Posição atual",
+    "within": "main",
+    "exact": true
+   },
+   "seconds": 1.2,
+   "at": 54.48,
+   "label": "Posição atual: Minha base",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 55.59
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 760,
+    "y": 460
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "at": 55.79,
+   "label": "cursor em repouso (ilustração)"
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 70.36
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"main *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Onde tudo est\\u00e1 agora\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-120);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 70.36,
+   "label": "desce a Onde tudo está agora"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Na base",
+    "within": "main",
+    "exact": true
+   },
+   "seconds": 0.6,
+   "at": 74.31,
+   "label": "Na base",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Em campo",
+    "within": "main",
+    "exact": true
+   },
+   "seconds": 0.4,
+   "at": 76.06,
+   "label": "Em campo",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Com parceiros",
+    "within": "main",
+    "exact": true
+   },
+   "seconds": 0.8,
+   "at": 77.48,
+   "label": "Com parceiros",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L9",
+   "at": 79.06
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Movimentações",
+    "exact": true
+   },
+   "at": 79.07,
+   "label": "aba Movimentações"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Ordem 8",
+    "within": "main",
+    "exact": false
+   },
+   "seconds": 1.2,
+   "at": 86.96,
+   "label": "as da troca de hoje: Ordem 8",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 89.12
+  }
+ ]
+}

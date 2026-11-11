@@ -49,7 +49,7 @@ body{font-family:M,sans-serif;color:var(--t);-webkit-font-smoothing:antialiased}
 .tag.v{background:var(--vc);color:var(--ve)} .tag.a{background:var(--ac);color:var(--ae)}
 .lbl{font-weight:700;font-size:17px;color:var(--c)}
 .num{font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
-.op{position:absolute;width:60px;height:60px;border-radius:50%;background:#F2F4F7;color:var(--t);display:flex;
+.op{position:absolute;width:60px;height:60px;border-radius:50%;background:#4B5563;color:#fff;display:flex;
   align-items:center;justify-content:center;font-weight:800;font-size:34px;line-height:1}
 /* mostrador da balança (painel escuro, número no acento) */
 .most{background:var(--e);border-radius:16px;padding:16px 22px 18px;box-shadow:0 16px 34px rgba(16,24,40,.22)}
@@ -64,9 +64,9 @@ body{font-family:M,sans-serif;color:var(--t);-webkit-font-smoothing:antialiased}
    --p  violeta do chip "Saldo" (7,1)   --pc fundo claro   --pm contorno     --g cinza de "Pendente" (7,6)   --gc fundo
    Classe do cinza: .cz (o .g do kit é o grupo da cena, absoluto em 1280x800: não usar "g" em chip ou ícone). */
 :root{--r:#B42318;--rc:#FDECEA;--rm:#F2A49C;--p:#6D28D9;--pc:#F1EAFE;--pm:#C4B1F5;--g:#4B5563;--gc:#EEF1F4}
-.tag.r{background:var(--rc);color:var(--r)} .tag.p{background:var(--pc);color:var(--p)} .tag.cz{background:var(--gc);color:var(--g)}
+.tag.r{background:var(--rs);color:#fff} .tag.p{background:#7C3AED;color:#fff} .tag.cz{background:#4B5563;color:#fff}
 .tag.sm{font-size:16px;padding:7px 13px;gap:6px}
-.ico.r{background:var(--rc);color:var(--r)} .ico.cz{background:var(--gc);color:var(--g)} .ico.p{background:var(--pc);color:var(--p)}
+.ico.r{background:var(--rs);color:#fff} .ico.cz{background:#4B5563;color:#fff} .ico.p{background:#7C3AED;color:#fff}
 .card.b2{border-width:2px}
 .num{white-space:nowrap}                     /* valor nunca quebra em duas linhas */
 .bdg{position:absolute;border-radius:50%;display:flex;align-items:center;justify-content:center;flex:none}
@@ -234,8 +234,8 @@ CAPS[0]=()=>{
   const linB=[...banco.querySelectorAll('.row.ab')], linS=[...sist.querySelectorAll('.row.ab')];
   const vB=banco.lastElementChild, vS=sist.lastElementChild, numS=vS.querySelector('.num');
   const liga=el(`<svg class="ab" style="left:0;top:0;overflow:visible" width="1280" height="800"><path d="M490 400 L790 400" fill="none" stroke="var(--v)" stroke-width="4" stroke-linecap="round"/></svg>`,g).querySelector('path');
-  const q=el(`<div class="bdg" style="left:595px;top:355px;width:90px;height:90px;background:var(--ac);border:3px solid #F2B63D;color:var(--ae);font-weight:800;font-size:50px">?</div>`,g);
-  const dif=el(`<div class="ab" style="left:500px;top:374px;width:280px;text-align:center"><div class="tag v" style="border:2px solid var(--v)">Diferença ${brl(0)}</div></div>`,g);
+  const q=el(`<div class="bdg" style="left:595px;top:355px;width:90px;height:90px;background:var(--as);border:3px solid var(--as);color:#fff;font-weight:800;font-size:50px">?</div>`,g);
+  const dif=el(`<div class="ab" style="left:500px;top:374px;width:280px;text-align:center"><div class="tag v" style="border:2px solid var(--vs)">Diferença ${brl(0)}</div></div>`,g);
 
   return t=>{
     const tEx=WS(0,'extrato'), tSi=WS(0,'sistema'), tLi=WS(0,'linha',1), tDi=WS(0,'diferenca'), tSa=WS(1,'saldo'), tOu=WS(1,'outro'),
@@ -268,7 +268,7 @@ CAPS[3]=()=>{
   const cofre=el(`<div class="card b2" style="left:70px;top:170px;width:520px;height:340px;padding:24px 26px">
       <div class="row" style="gap:14px"><div class="ico" style="width:52px;height:52px">${ic('vault',28)}</div><div style="font-weight:800;font-size:22px">DINHEIRO (COFRE)</div></div></div>`,g);
   const disp=el(`<div class="ab row" style="left:26px;top:104px;width:464px;height:92px;padding:0 20px;gap:14px;border-radius:14px;background:var(--vc);border:2px solid var(--vm)">
-      <div class="ico" style="width:46px;height:46px;background:#fff">${ic('banknote',26)}</div><div style="font-weight:800;font-size:20px;color:var(--ve)">Disponível no cofre</div></div>`,cofre);
+      <div class="ico" style="width:46px;height:46px">${ic('banknote',26)}</div><div style="font-weight:800;font-size:20px;color:var(--ve)">Disponível no cofre</div></div>`,cofre);
   const cxa=el(`<div class="ab row" style="left:26px;top:212px;width:464px;height:92px;padding:0 20px;gap:14px;border-radius:14px;border:2px dashed #CBD2D9">
       <div class="ico cz" style="width:46px;height:46px">${ic('wallet',24)}</div><div style="font-weight:800;font-size:20px;color:#4B5563">Caixa de Marcos Antunes</div></div>`,cofre);
   const banco=el(`<div class="card b2" style="left:690px;top:170px;width:520px;height:340px;padding:24px 26px">
@@ -417,7 +417,7 @@ CAPS[6]=()=>{
   const setas=[0,1,2].map(i=>el(`<div class="ab ic" style="left:${34+i*262+226}px;top:170px;width:30px;height:30px;color:#9AA3AD">${ic('arrow-right',30)}</div>`,jan6));
   const pasta=el(`<div class="card b2" style="left:700px;top:530px;width:480px;height:170px;padding:18px 24px">
       <div class="ab row" style="left:24px;top:104px;gap:14px"><div class="ico a" style="width:48px;height:48px">${ic('folder-down',26)}</div><div style="font-weight:800;font-size:22px">Downloads</div></div></div>`,g);   // o arquivo pousa em cima; o nome da pasta fica embaixo
-  const arq=el(`<div class="ab" style="left:0;top:0"><div class="tag v" style="border:2px solid var(--v);font-size:17px">${ic('file-down',18)}Extrato_20261101_20261110.ofx</div></div>`,g);
+  const arq=el(`<div class="ab" style="left:0;top:0"><div class="tag v" style="border:2px solid var(--vs);font-size:17px">${ic('file-down',18)}Extrato_20261101_20261110.ofx</div></div>`,g);
 
   return t=>{
     const tSi=WS(0,'site'), tAb=WS(0,'abre'), tPe=WS(0,'periodo'), tXp=WS(0,'exporta'), tO1=WS(0,'OFX',1), tPd=WS(0,'PDF'),
@@ -459,7 +459,7 @@ CAPS[10]=()=>{
   const liga=el(`<svg class="ab" style="left:0;top:0;overflow:visible" width="1280" height="800"><path d="M740 335 L540 335 M556 325 L540 335 L556 345" fill="none" stroke="#9AA3AD"
       stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>`,g).querySelector('path');
   const dep=el('<div class="ab" style="left:540px;top:286px;width:200px;text-align:center;font-weight:700;font-size:16px;color:#4B5563">Pagou depois</div>',g);
-  const dif=el(`<div class="ab" style="left:440px;top:500px;width:400px;text-align:center"><div class="tag a" style="border:2px solid #F2B63D">dif. −${brl(VENDA-PIX)}</div></div>`,g);
+  const dif=el(`<div class="ab" style="left:440px;top:500px;width:400px;text-align:center"><div class="tag a" style="border:2px solid var(--as)">dif. −${brl(VENDA-PIX)}</div></div>`,g);
 
   return t=>{
     const tVe=WS(1,'venda'), tDi=WS(1,'dia'), tPo=WS(1,'por'), tSe=WS(1,'Serra'), tPa=WS(1,'pagou'), tCe=WS(1,'centavos');
@@ -467,7 +467,7 @@ CAPS[10]=()=>{
     const ent=Math.max(tVe-.05,INI+.7);                             // os cartões ficam no caminho do título: entram depois que ele subiu
     vis(cB,t,ent,1e9,{dx:-14,dy:0}); vis(cV,t,ent+.15,1e9,{dx:14,dy:0});
     // no dia três: as duas datas acendem (são diferentes)
-    const pd=eo(pr(t,tDi,.45)); [dB,dV].forEach(e=>{e.style.background=mix('#EEF1F4','#FFF5DF',pd);e.style.color=mix('#4B5563','#8A5A00',pd);e.style.boxShadow=`0 0 0 ${(3*pd).toFixed(2)}px rgba(242,182,61,.45)`});
+    const pd=eo(pr(t,tDi,.45)); [dB,dV].forEach(e=>{e.style.background=mix('#4B5563','#D97706',pd);e.style.color='#fff';e.style.boxShadow=`0 0 0 ${(3*pd).toFixed(2)}px rgba(242,182,61,.45)`});
     pulse(dV,t,tDi,.12,.8); pulse(dB,t,tDi+.15,.12,.8); pulse(vV,t,tPo,.05,.8);
     // pagou depois: o traço vai da venda para o Pix; os centavos de fora
     traco(liga,t,tPa-.1,.6); vis(dep,t,tPa,1e9,{dy:8}); pulse(cB,t,tSe,.02,.7);
@@ -488,7 +488,7 @@ CAPS[11]=()=>{
   const linha=(pai,y,txt,v)=>el(`<div class="ab row" style="left:20px;top:${y}px;width:344px;height:64px;padding:0 16px;gap:10px;border-radius:14px;background:#FAFBFC;border:2px solid #EEF1F4">
       <div style="font-weight:800;font-size:14px;white-space:nowrap">${txt}</div>
       <div class="num" style="margin-left:auto;font-size:18px;color:${corSinal(v)}">${sinal(v)}</div></div>`,pai);
-  const selo=(pai,y)=>el(`<div class="ab" style="left:376px;top:${y+15}px"><div class="tag cz sm" style="background:#E5E7EB;color:#374151;border:2px solid #C9CED6;font-size:15px;padding:6px 12px">Ignorada</div></div>`,pai);
+  const selo=(pai,y)=>el(`<div class="ab" style="left:376px;top:${y+15}px"><div class="tag cz sm" style="background:#4B5563;color:#fff;border:2px solid #4B5563;font-size:15px;padding:6px 12px">Ignorada</div></div>`,pai);
   const igual=(pai,y)=>el(`<div class="ab row" style="left:150px;top:${y}px;gap:12px"><div class="op" style="position:relative;width:46px;height:46px;font-size:28px">=</div>
       <div class="num" style="font-size:28px">${brl(0)}</div></div>`,pai);
   const cartao=(pai,x,icn,cls,nome,cor)=>el(`<div class="card b2" style="left:${x}px;top:186px;width:510px;height:330px;padding:22px 24px">
@@ -514,7 +514,7 @@ CAPS[11]=()=>{
   const m3=linha(vdd,92,'TARIFA PACOTE SERVICOS',-64.90), s3=selo(vdd,92);
   const difB=el(`<div class="ab row" style="left:20px;top:178px;width:466px;height:64px;padding:0 18px;border-radius:14px;border:2px solid #F2A49C;background:#FFF7F6;justify-content:space-between">
       <div style="font-weight:800;font-size:19px">Diferença</div><div class="num" style="font-size:24px;color:var(--r)">${sinal(-64.90)}</div></div>`,vdd);
-  const fin=el(`<div class="ab" style="left:20px;top:258px;width:466px;text-align:center"><div class="tag" style="background:#E5E7EB;color:#4B5563;font-size:18px">${ic('lock',18)}Finalizar conciliação</div></div>`,vdd);
+  const fin=el(`<div class="ab" style="left:20px;top:258px;width:466px;text-align:center"><div class="tag" style="background:#4B5563;color:#fff;font-size:18px">${ic('lock',18)}Finalizar conciliação</div></div>`,vdd);
   const cad=fin.firstElementChild.firstElementChild;
 
   return t=>{
@@ -566,8 +566,8 @@ CAPS[12]=()=>{
   const fios=el(`<svg class="ab" style="left:0;top:0;overflow:visible" width="1280" height="800">${[[0,0],[0,1],[1,0],[1,1]].map(([a,b])=>`<path d="M516 ${YB[a]} C 640 ${YB[a]}, 640 ${YB[b]}, 760 ${YB[b]}"
       fill="none" stroke="#F2B63D" stroke-width="3" stroke-linecap="round" stroke-dasharray="7 9"/>`).join('')}</svg>`,g);
   const F=[...fios.querySelectorAll('path')];                 // 0: coop→coop, 1: coop→auto (a errada), 2: auto→coop, 3: auto→auto
-  const xis=el(`<div class="bdg" style="left:619px;top:${(YB[0]+YB[1])/2-21}px;width:42px;height:42px;background:var(--rc);border:2px solid #E5484D;color:var(--r)">${ic('x',22)}</div>`,g);
-  const pend=el('<div class="ab" style="left:0;top:0"><div class="tag a sm" style="border:2px solid #F2B63D">Pendente</div></div>',s1);
+  const xis=el(`<div class="bdg" style="left:619px;top:${(YB[0]+YB[1])/2-21}px;width:42px;height:42px;background:var(--rs);border:2px solid var(--rs);color:#fff">${ic('x',22)}</div>`,g);
+  const pend=el('<div class="ab" style="left:0;top:0"><div class="tag a sm" style="border:2px solid var(--as)">Pendente</div></div>',s1);
   pend.style.left='auto'; pend.style.right='18px'; pend.style.top='-17px';   // selo na borda de cima da compra (as duas linhas dela estão ocupadas)
 
   return t=>{
@@ -608,8 +608,8 @@ CAPS[14]=()=>{
       <div class="ab" style="left:0;top:90px;width:${PW}px;height:26px;border-radius:0 0 140px 140px;background:${cor};opacity:.9"></div>
       <div class="ab" style="left:0;top:132px;width:${PW}px;text-align:center"><div class="tag ${cls}">${nome}</div></div></div>`,g);
   const pB=prato('Saldo do banco','v','#50D088'), pS=prato('Saldo conciliado','a','#F2B63D');
-  const fichas=[0,1,2].map(()=>el(`<div class="ab row" style="left:0;top:0;width:96px;height:24px;border-radius:7px;background:var(--vc);border:2px solid var(--v);padding:0 6px;gap:6px">
-      <div class="ic" style="width:14px;height:14px;color:var(--ve)">${ic('check',14)}</div>${risco(56,6,'#A9E9C6')}</div>`,g));   // linha resolvida
+  const fichas=[0,1,2].map(()=>el(`<div class="ab row" style="left:0;top:0;width:96px;height:24px;border-radius:7px;background:var(--vs);border:2px solid var(--vs);padding:0 6px;gap:6px">
+      <div class="ic" style="width:14px;height:14px;color:#fff">${ic('check',14)}</div>${risco(56,6,'rgba(255,255,255,.65)')}</div>`,g));   // linha resolvida
   const gap=el('<div class="ab" style="left:0;top:0"><div class="tag a sm">Diferença</div></div>',g);
   const plac=el(`<div class="card b2" style="left:470px;top:650px;width:340px;height:84px;padding:0 26px;display:flex;align-items:center;justify-content:space-between">
       <div style="font-weight:800;font-size:20px">Diferença</div><div class="num" style="font-size:28px">${brl(0)}</div></div>`,g);

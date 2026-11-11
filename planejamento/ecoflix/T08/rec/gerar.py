@@ -110,6 +110,8 @@ class Cap:
     def A(s, i, palavra, folga=0.7, nth=0):
         """`at` = início da palavra - folga (folga = custo do gesto até o cursor chegar; negativa = depois da palavra)"""
         t = round(max(0.0, s.W(i, palavra, nth) - folga), 2)
+        if i > 1 or s.L(i) > 0.5:
+            t = max(t, round(s.L(i) - 0.2, 2))   # nunca antes da marca da linha (docs/08: o 1º gesto da linha em L(n) - 0,2)
         s.anchors.append((i, palavra, t))
         return t
 
@@ -346,6 +348,358 @@ def cap01():
     c.mark(6)
     c.hover(BTN('Nova Pesagem Avulsa'), 0.6, at=c.A(6, 'comprovante', 0.6), label='Nova Pesagem Avulsa (sem clicar)')
     c.click(ABA_PADRAO, at=c.A(6, 'comercial', -0.5), label='volta para Tickets padrão')
+    c.fim()
+    return c
+
+
+# ---------------------------------------------------------------- a criação (WeighingTicketCreator / WeighingTicketForm)
+POP = '[data-radix-popper-content-wrapper]'
+BARRA = SEL("main button[aria-expanded]:has-text('Seu rascunho')")          # barra escura das abas (abre a lista)
+LINHA_ABA = lambda n: SEL(f"{POP} button:has-text('#{n}')")
+X_ABA = SEL(f"{POP} button[aria-label='Descartar ticket']")
+NOVO_TICKET = SEL("main button[aria-label='Novo ticket de pesagem']")
+CHAVES = SEL("main div:has(> div > label:has-text('Modalidade')):has(> div > label:has-text('Valores'))")
+SEL_FORN = TXT('Selecionar fornecedor')
+FORN = lambda nome: {'text': nome, 'within': DLG}
+MAT = PH('Escreva o nome ou código do material')
+MOT = PH('Digite ou busque o motorista')
+PLACA = PH('Digite ou busque a placa')
+PES_AV = BTN('Pesagem avançada')
+CAMPO = lambda rot: SEL(f"[role=dialog] div:has(> label:has-text('{rot}')) input")
+C1, C2 = CAMPO('1ª Pesagem'), CAMPO('2ª Pesagem')
+BRUTO = SEL("[role=dialog] div:has(> label:has-text('Peso Bruto'))")
+LIQUIDO = SEL("[role=dialog] div:has(> label:has-text('Líquido'))")
+TARA = CAMPO('Tara')
+IMP = SEL("[role=dialog] div:has(> div > label:has-text('Impureza')) input")
+IMP_CONTA = TXTX('sobre bruto', within=DLG)
+BAL_1A = SEL("[role=dialog] div:has(> label:has-text('1ª Pesagem')) button[aria-label='Capturar peso da balança']")
+DICA = TXTX('Preencha 1ª e 2ª pesagem', within=DLG)
+COMPLETO = {'text': 'Completo', 'within': DLG}
+CONFIRMAR = BTN('Confirmar')
+ACOES_ITEM = SEL("main button[aria-label='Ações do item']")
+ADD_TARA = ITEM('Adicionar tara / pesagem avançada')
+DETALHE = SEL("main button[aria-label='Ver detalhes da pesagem']")
+LINHA_ITEM = SEL("main tr:has-text('Alumínio latinha')")
+SALVAR = BTN('Salvar Ticket de Pesagem')
+RASCUNHOS = TXTX('Rascunhos abertos')
+CARTAO = lambda n: (f"main div.rounded-lg:has([aria-label='Selecionar ticket #{n}'])"
+                    f":not(:has(div.rounded-lg [aria-label='Selecionar ticket #{n}']))")
+ACOES = lambda n: {'role': 'button', 'name': 'Ações', 'within': CARTAO(n)}
+ROLA_FORM = 120          # px: com a página 120 px abaixo, material, motorista, placa, "Pesagem avançada" e a barra das abas cabem na faixa do robô
+
+REABRE = [{'do': 'click', 'target': RASCUNHOS}, {'do': 'waitFor', 'text': CRIAR_OK, 'timeout': 20}, {'do': 'waitFor', 'idle': True, 'timeout': 20},
+          {'do': 'wait', 'seconds': 1.0}]
+MATERIAL_LATINHA = [{'do': 'type', 'target': MAT, 'text': 'latinha', 'cps': 40}, {'do': 'click', 'target': OPT('Alumínio latinha')},
+                    {'do': 'wait', 'seconds': 1.0}]
+
+
+def js_clica(sel, texto):
+    """clique sem cursor (`el.click()`) no primeiro `sel` cujo texto contém `texto`: opção de lista num trecho acelerado"""
+    return ("(()=>{const e=[...document.querySelectorAll(%s)].find(x=>x.textContent.includes(%s));if(!e)return 'SEM ALVO';e.click();return 'ok'})()"
+            % (json.dumps(sel), json.dumps(texto)))
+
+
+def abre_pesagem_item(c, at, rot='item'):
+    """menu "Ações do item" (⋮) e "Adicionar tara / pesagem avançada": a janela abre com as pesagens do item"""
+    c.click(ACOES_ITEM, at=at, label=f'Ações do {rot} (⋮)')
+    c.click(ADD_TARA, label='Adicionar tara / pesagem avançada')
+    c.waitfor(text='Registre pesagem dupla, tara, impureza e dados do transporte', timeout=8)
+
+
+@capitulo
+def cap02():
+    """Criar o ticket: Novo Ticket de Pesagem, as três chaves, fornecedor, material, motorista e placa; a aba à direita."""
+    c = Cap(2, start=(1000, 330), setup=setup_lista())
+    c.mark(1)
+    c.click(BTN('Novo Ticket de Pesagem'), at=c.A(1, 'Novo', 0.8), label='Novo Ticket de Pesagem')
+    c.waitfor(text=CRIAR_OK, timeout=15)
+    c.mark(2)
+    c.registra(CHAVES, at=c.A(2, 'três', 0.2), label='barra de cima: Modalidade, Tipo e Valores')
+    c.hover(BTN('Ticket padrão'), 0.4, at=c.A(2, 'ticket', 0.6), label='Ticket padrão')
+    c.hover(BTN('Compra'), 0.4, at=c.A(2, 'compra', 0.6), label='Compra')
+    c.hover(BTN('Sem valores'), 0.5, at=c.A(2, 'sem', 0.6), label='Sem valores')
+    c.mark(3)
+    c.hover(BTN('Com valores'), 0.6, at=c.A(3, 'valores', 0.6), label='Com valores (sem clicar)')
+    c.mark(4)
+    c.click(SEL_FORN, at=c.A(4, 'fornecedor', 1.0), label='Selecionar fornecedor')
+    c.waitfor(text='Selecionar Fornecedor', timeout=8)
+    c.click(FORN('Cooperativa Recomeço'), at=c.A(4, 'Recomeço', 0.9), label='Cooperativa Recomeço')
+    c.mark(5)
+    c.click(MAT, at=c.A(5, 'material', 0.8), label='campo Material')
+    c.type(MAT, 'latinha', at=c.A(5, 'alumínio', 0.3), cps=40, noClick=True, label='digita latinha')
+    c.click(OPT('Alumínio latinha'), at=c.A(5, 'latinha', 0.6), label='Alumínio latinha')
+    c.mark(6)
+    c.rolar(ROLA_FORM, at=c.A(6, 'E', 0.1), ponto=(700, 460), duration=0.4, after=0, label='desce até motorista e placa')
+    c.click(MOT, at=c.A(6, 'motorista', 0.8), label='campo Motorista')
+    c.type(MOT, 'Edson', at=c.A(6, 'Edson', 0.3), cps=40, noClick=True, label='digita Edson')
+    c.click(OPT('Edson Moura'), at=c.A(6, 'Moura', 0.5), label='Edson Moura')
+    c.click(PLACA, at=c.A(6, 'caminhão', 0.8), label='campo Placa do Veículo')
+    c.type(PLACA, 'FKD', at=c.A(6, 'cadastrados', 0.3), cps=40, noClick=True, label='digita FKD')
+    c.click(OPT('FKD2E41'), at=c.A(6, 'escolher', 0.6), label='FKD2E41')
+    c.mark(7)
+    c.hover(BARRA, 0.8, at=c.A(7, 'aba', 0.7), label='aba deste ticket: número, peso e fornecedor')
+    c.registra(BARRA, at=c.A(7, 'número', 0.2), label='barra das abas: #58, 0 kg, Cooperativa Recomeço, Seu rascunho')
+    c.cursor(NEUTRO, at=c.A(7, 'fornecedor', -0.6), label='cursor sai da barra')
+    c.fim()
+    return c
+
+
+@capitulo
+def cap03():
+    """A primeira pesagem (9.460 kg) na Pesagem avançada, o modo Completo, o rascunho salvo sozinho e Rascunhos abertos."""
+    c = Cap(3, start=(430, 560), setup=setup_lista(REABRE + MATERIAL_LATINHA))
+    c.mark(1)
+    c.click(PES_AV, at=c.A(1, 'Pesagem', 1.0, nth=1), label='Pesagem avançada')
+    c.waitfor(text='Registre pesagem dupla, tara, impureza e dados do transporte', timeout=8)
+    c.mark(2)
+    c.click(C1, at=c.A(2, 'primeira', 0.8), label='campo 1ª Pesagem')
+    c.type(C1, '9460', at=c.A(2, 'nove', 0.1), noClick=True, label='digita 9460 na 1ª Pesagem')
+    c.registra(BRUTO, at=c.A(2, 'bruto', 0.4), label='1ª Pesagem e Peso Bruto 9.460 (= 1ª pesagem)')
+    c.mark(3)
+    c.hover(BAL_1A, 0.8, at=c.A(3, 'botão', 0.6), label='botão da balança dentro do campo 1ª Pesagem')
+    c.mark(4)
+    c.hover(DICA, 0.8, at=c.A(4, 'dica', 0.6), label='dica dos três jeitos')
+    c.mark(5)
+    c.hover(TXTX('Como exibir no comprovante', within=DLG), 0.3, at=c.A(5, 'Como', 0.6), label='Como exibir no comprovante')
+    c.click(COMPLETO, at=c.A(5, 'Completo', 0.6), label='Completo')
+    c.mark(6)
+    c.click(CONFIRMAR, at=c.A(6, 'Confirmar', 0.7), label='Confirmar')
+    c.waitfor(gone={'role': 'dialog'}, timeout=8)
+    c.mark(7)   # L7: ilustração do rascunho salvo
+    c.cursor(NEUTRO, at=c.L(7) + 0.4, label='cursor descansa')
+    c.mark(8)
+    c.hover(BARRA, 0.8, at=c.A(8, 'aqui', 0.6), label='aba #58 com Seu rascunho')
+    c.registra(BARRA, at=c.A(8, 'número', 0.3), label='número previsto #58')
+    c.mark(9)
+    c.click(BTN('Voltar'), at=c.A(9, 'saindo', 0.8), label='Voltar')
+    c.waitfor(text=TICKET_OK, timeout=15)
+    c.hover(RASCUNHOS, 0.4, at=c.A(9, 'Rascunhos', 0.7), label='Rascunhos abertos (1)')
+    c.click(RASCUNHOS, at=c.A(9, 'abertos', -0.3), label='abre o rascunho')
+    c.waitfor(text=CRIAR_OK, timeout=15)
+    c.mark(10)
+    c.hover(LINHA_ITEM, 0.8, at=c.A(10, 'confira', 0.6), label='item reaberto: Alumínio latinha 9.460')
+    c.fim()
+    return c
+
+
+@capitulo
+def cap04():
+    """A segunda pesagem (6.380 kg) com a primeira digitada de novo: o bruto sai sozinho (3.080), a tara em branco e o detalhe."""
+    c = Cap(4, start=(1100, 420), setup=setup_lista(REABRE))
+    c.mark(1)   # L1: ilustração entrada e saída
+    c.mark(2)
+    abre_pesagem_item(c, c.A(2, 'item', 0.8))
+    c.registra(BRUTO, at=c.A(2, 'bruto', 0.4), label='Peso Bruto 9.460 (1ª e 2ª vazias)')
+    c.mark(3)
+    c.click(C1, at=c.A(3, 'primeira', 0.8), label='campo 1ª Pesagem')
+    c.type(C1, '9460', at=c.A(3, 'primeira', -0.3), noClick=True, label='digita 9460 na 1ª Pesagem')
+    c.click(C2, at=c.A(3, 'segunda', 0.8), label='campo 2ª Pesagem')
+    c.type(C2, '6380', at=c.A(3, 'seis', 0.1), noClick=True, label='digita 6380 na 2ª Pesagem')
+    c.mark(4)
+    c.registra(BRUTO, at=c.A(4, 'bruto', 0.4), label='Peso Bruto 3.080 |9.460 − 6.380|')
+    c.hover(BRUTO, 0.6, at=c.A(4, 'Três', 0.6), label='o bruto, a diferença das duas')
+    c.mark(5)
+    c.hover(TARA, 0.8, at=c.A(5, 'tara', 0.6), label='Tara (Kg) em branco')
+    c.mark(6)
+    c.click(CONFIRMAR, at=c.A(6, 'Confirmar', 0.7), label='Confirmar')
+    c.waitfor(gone={'role': 'dialog'}, timeout=8)
+    c.mark(7)
+    c.click(DETALHE, at=c.A(7, 'setinha', 0.7), label='setinha: Ver detalhes da pesagem')
+    c.registra(SEL("main tr:has-text('1ª pesagem')"), at=c.A(7, 'pesagens', 0.3), label='detalhe: 1ª pesagem, 2ª pesagem e Bruto')
+    c.fim()
+    return c
+
+
+@capitulo
+def cap05():
+    """A impureza em porcentagem (2 % = 61,6 kg sobre bruto − tara) e o líquido (3.018,4 kg)."""
+    c = Cap(5, start=(1100, 420), setup=setup_lista(REABRE))
+    c.mark(1)
+    abre_pesagem_item(c, c.A(1, 'impureza', 0.8))
+    c.mark(2)
+    c.click({'role': 'radio', 'name': '%'}, at=c.A(2, 'porcentagem', 0.7), label='Impureza em %')
+    c.click(IMP, at=c.A(2, 'dois', 0.9), label='campo Impureza')
+    c.type(IMP, '2', at=c.A(2, 'dois', 0.0), noClick=True, label='digita 2 (%)')
+    c.registra(IMP_CONTA, at=c.A(2, 'sessenta', 0.6), label='Impureza 2 % = 61,6 Kg (sobre bruto − tara)')
+    c.mark(3)
+    c.hover({'role': 'radio', 'name': 'kg'}, 0.8, at=c.A(3, 'quilos', 0.6), label='seletor kg / %')
+    c.mark(4)   # L4: ilustração da conta do líquido
+    c.cursor((640, 520), at=c.L(4) + 0.3, label='cursor descansa na janela')
+    c.mark(5)
+    c.registra(LIQUIDO, at=c.A(5, 'Três', 0.3), label='Líquido (Kg) 3.018,4')
+    c.mark(6)
+    c.click(CONFIRMAR, at=c.A(6, 'Confirmar', 0.7), label='Confirmar')
+    c.waitfor(gone={'role': 'dialog'}, timeout=8)
+    c.fim()
+    return c
+
+
+@capitulo
+def cap06():
+    """Um segundo caminhão numa aba nova (Jair, bateria, 5.640 kg), a troca de aba, salvar o #58 e o x que pergunta antes de descartar."""
+    c = Cap(6, start=(1150, 330), setup=setup_lista(REABRE))
+    c.mark(1)   # L1: ilustração dos dois caminhões
+    c.mark(2)
+    c.click(NOVO_TICKET, at=c.A(2, 'Novo', 0.7), label='+ Novo ticket')
+    c.waitfor(text='Sem cliente/fornecedor', timeout=8)
+    # L3: o preenchimento (que a edição pode acelerar) começa logo depois da aba nova; as opções das listas são clicadas por `eval`
+    # (sem levar o cursor), como um time-lapse, para caber antes da L4 (só os campos levam o cursor). A página desce 120 px antes
+    # (a barra das abas continua na faixa do robô, e motorista e placa entram nela).
+    c.rolar(ROLA_FORM, ponto=(700, 460), duration=0.4, after=0, label='desce o formulário (a barra das abas segue à vista)')
+    c.click(SEL_FORN, label='Selecionar fornecedor (aba do Jair)')
+    c.waitfor(text='Selecionar Fornecedor', timeout=8)
+    c.ev(js_clica('[role=dialog] button', 'Auto Peças Vale Forte'), label='Auto Peças Vale Forte (clique sem cursor)')
+    c.waitfor(gone={'role': 'dialog'}, timeout=8)
+    c.mark(3)
+    c.click(MAT, at=round(c.L(3) - 0.2, 2), label='campo Material')
+    c.type(MAT, 'bateria', cps=40, noClick=True, label='digita bateria')
+    c.press('Enter', label='Enter escolhe Bateria automotiva')
+    c.click(MOT, label='campo Motorista')
+    c.type(MOT, 'Jair', cps=40, noClick=True, label='digita Jair')
+    c.ev(js_clica('[role=option]', 'Jair Lopes'), label='Jair Lopes (clique sem cursor)')
+    c.pause(0.3)
+    c.click(PLACA, label='campo Placa do Veículo')
+    c.type(PLACA, 'GHT', cps=40, noClick=True, label='digita GHT')
+    c.ev(js_clica('[role=option]', 'GHT7B19'), label='GHT7B19 (clique sem cursor)')
+    c.pause(0.3)
+    c.click(PES_AV, label='Pesagem avançada (Jair)')
+    c.waitfor(text='Registre pesagem dupla, tara, impureza e dados do transporte', timeout=8)
+    c.pause(0.3)
+    c.type(C1, '5640', noClick=True, label='digita 5640 na 1ª Pesagem (o campo já vem com o foco)')
+    c.click(CONFIRMAR, label='Confirmar (Jair)')
+    c.waitfor(gone={'role': 'dialog'}, timeout=8)
+    c.mark(4)
+    c.click(BARRA, at=c.A(4, 'barra', 0.7), label='barra das abas: a lista dos dois tickets')
+    c.registra(SEL(POP), at=c.A(4, 'troca', 0.2), label='lista das abas: #58 Cooperativa e #59 Auto Peças')
+    c.hover(LINHA_ABA(58), 0.4, at=c.A(4, 'caminhão', 0.6), label='aba #58')
+    c.hover(LINHA_ABA(59), 0.4, at=c.A(4, 'outro', 0.6), label='aba #59')
+    c.mark(5)
+    c.click(LINHA_ABA(58), at=c.A(5, 'cooperativa', 0.6), label='troca para o #58')
+    c.click(SALVAR, at=c.A(5, 'salvo', 0.8), label='Salvar Ticket de Pesagem')
+    c.waitfor(text='O que deseja fazer com este ticket de pesagem?', timeout=12)
+    c.registra(SEL(DLG), at=c.A(5, 'número', 0.3), label='Ticket #58 salvo (Imprimir comprovante, Valorizar, Fechar)')
+    c.mark(6)
+    c.click({'role': 'button', 'name': 'Fechar', 'exact': True, 'within': DLG, 'nth': 0}, at=c.A(6, 'depois', 0.7), label='Fechar')
+    c.waitfor(gone={'role': 'dialog'}, timeout=8)
+    c.hover(BARRA, 0.8, at=c.A(6, 'Jair', 0.6), label='fica a aba do Jair (#59)')
+    c.mark(7)
+    c.click(BARRA, at=c.A(7, 'fechar', 0.7), label='abre a lista das abas')
+    c.hover(X_ABA, 0.8, at=c.A(7, 'x', 0.6), label='o x da aba (Descartar ticket), sem clicar')
+    c.press('Escape', at=c.A(7, 'ticket', -0.4), label='fecha a lista')
+    c.fim()
+    return c
+
+
+# ---------------------------------------------------------------- valorizar, comprovante e finalizar
+RECOLHE_MENU = ("(()=>{const w=document.querySelector('[data-state][data-collapsible]');if(w&&w.getAttribute('data-state')==='collapsed')return 'ja recolhido';"
+                "const b=document.querySelector(\"button[aria-label='Toggle Sidebar']\");if(!b)return 'sem botao';b.click();return 'recolhido'})()")
+LINHA_COMPRA = "main tr:has-text('Alumínio latinha')"
+CEL = lambda k: SEL(f'{LINHA_COMPRA} td:nth-child({k})')        # 3 peso líquido, 4 tara/imp., 5 valor/kg, 6 valor total
+POPS = "(()=>{const o=window.open;window.__pops=[];window.open=function(...a){const w=o.apply(this,a);window.__pops.push(w);return w};return 'ok'})()"
+# o PDF do comprovante que o app abre na aba nova (a gravação filma uma aba só): devolvido em base64 para virar a ilustração da edição
+PDF_JS = ("(async()=>{const w=(window.__pops||[]).slice(-1)[0];if(!w)return 'SEM JANELA';for(let i=0;i<40;i++){let f=null;"
+          "try{f=w.document&&w.document.querySelector('#pdf-frame')}catch(e){return 'ERRO '+e}"
+          "if(f&&f.src){const b=await (await fetch(f.src.split('#')[0])).blob();const u=new Uint8Array(await b.arrayBuffer());let s='';"
+          "for(let k=0;k<u.length;k+=8192)s+=String.fromCharCode.apply(null,u.subarray(k,k+8192));return 'PDF:'+btoa(s)}"
+          "await new Promise(r=>setTimeout(r,250))}return 'SEM PDF'})()")
+
+
+def setup_valorizar(extra=()):
+    return setup_lista([{'do': 'eval', 'js': RECOLHE_MENU}, {'do': 'wait', 'seconds': 0.8}] + list(extra))
+
+
+@capitulo
+def cap07():
+    """Valorizar: Ações > Valorizar abre a compra preenchida pela tabela (R$ 6,20/kg, R$ 18.714,08), ainda em rascunho."""
+    c = Cap(7, start=(700, 420), setup=setup_valorizar())
+    c.mark(1)
+    c.hover(SEL(CARTAO(58)), 0.8, at=c.A(1, 'valorizar', 0.6), label='cartão do Ticket #58')
+    c.mark(2)
+    c.click(ACOES(58), at=c.A(2, 'Ações', 0.7), label='Ações do #58')
+    c.click(ITEM('Valorizar'), at=c.A(2, 'Valorizar', 0.6), label='Valorizar')
+    c.waitfor(text='Origem: Ticket de Pesagem', timeout=15)
+    c.hover(BTN('Cooperativa Recomeço', within='main'), 0.3, at=c.A(2, 'cooperativa', 0.6), label='compra: fornecedor Cooperativa Recomeço')
+    c.hover(CEL(2), 0.3, at=c.A(2, 'latinha', 0.6), label='compra: Alumínio latinha')
+    c.hover(CEL(3), 0.3, at=c.A(2, 'peso', 0.6), label='compra: peso líquido')
+    c.hover(CEL(4), 0.4, at=c.A(2, 'impureza', 0.6), label='compra: Tara/Imp. 61,6')
+    c.mark(3)
+    c.registra(CEL(5), at=c.A(3, 'seis', 0.3), label='Valor/Kg 6,20')
+    c.hover(CEL(6), 0.6, at=c.A(3, 'dezoito', 0.6), label='total da linha R$ 18.714,08')
+    c.mark(4)
+    c.hover(CEL(5), 0.8, at=c.A(4, 'aqui', 0.6), label='célula Valor/Kg')
+    c.mark(5)   # L5: ilustração do caminho até o estoque e o caixa
+    c.cursor((760, 560), at=c.L(5) + 0.3, label='cursor descansa')
+    c.fim()
+    return c
+
+
+@capitulo
+def cap08():
+    """O comprovante do ticket (Ações > Ver comprovante > Térmico, PDF na aba nova) e a chave da impressão sozinha em Integrações."""
+    c = Cap(8, start=(700, 420), setup=setup_valorizar([{'do': 'eval', 'js': POPS}]))
+    c.mark(1)
+    c.click(ACOES(58), at=c.A(1, 'Ações', 0.7), label='Ações do #58')
+    c.click(ITEM('Ver comprovante'), at=c.A(1, 'Ver', 0.6), label='Ver comprovante')
+    c.waitfor(text='Escolha o formato do comprovante deste ticket de pesagem.', timeout=8)
+    c.hover(BTNX('Térmico', within=DLG), 0.4, at=c.A(1, 'Térmico', 0.6), label='Térmico (80mm)')
+    c.hover(BTNX('A4', within=DLG), 0.4, at=c.A(1, 'A4', 0.6), label='A4 (Folha)')
+    c.click(BTNX('Térmico', within=DLG), at=c.A(1, 'folha', -0.3), label='Térmico: o PDF abre na aba nova')
+    c.mark(2)
+    c.ev(PDF_JS, at=c.L(2), label='PDF do comprovante térmico (aba nova, para a ilustração)')
+    c.mark(3)
+    c.mark(4)
+    c._p({'do': 'goto', 'url': '/configuracoes?tab=integrations'}, c.A(4, 'E', 0.2), 'Configurações > Integrações', {})
+    c.waitfor(text='Imprimir comprovante do Ticket de Pesagem', timeout=15)
+    c.ev(js_ate('Imprimir comprovante do Ticket de Pesagem', y=400, dur_ms=900), at=c.A(4, 'cupom', 0.3), label='rola até a chave')
+    c.hover(TXT('Imprimir comprovante do Ticket de Pesagem'), 0.8, at=c.A(4, 'Imprimir', 0.6), label='chave Imprimir comprovante do Ticket de Pesagem (desligada)')
+    c.mark(5)   # L5: ilustração das pesagens mescladas
+    c.cursor((800, 560), at=c.L(5) + 0.3, label='cursor descansa')
+    c.fim()
+    return c
+
+
+@capitulo
+def cap09():
+    """Valorizar de novo retoma a mesma compra; finalizar com Pix; o ticket vai para Valorizados; os três status; o rascunho do Jair."""
+    c = Cap(9, start=(700, 420), setup=setup_valorizar())
+    c.mark(1)
+    c.hover(SEL(CARTAO(58)), 0.8, at=c.A(1, 'aqui', 0.6), label='cartão #58 ainda em Aguardando valorização')
+    c.mark(2)
+    c.click(ACOES(58), at=c.A(2, 'Valorizando', 0.7), label='Ações do #58')
+    c.click(ITEM('Valorizar'), at=c.A(2, 'retoma', 0.8), label='Valorizar de novo (retomando)')
+    c.waitfor(text='Origem: Ticket de Pesagem', timeout=15)
+    c.mark(3)
+    c.click(BTN('Finalizar'), at=c.A(3, 'Finalizo', 0.7), label='Finalizar')
+    c.waitfor(text='Finalizar Pedido', timeout=10)
+    c.click({'text': 'Pix/Transferência', 'within': DLG}, at=c.A(3, 'Pix', 0.6), label='Pix/Transferência')
+    c.click(BTN('CONFIRMAR PAGAMENTO'), at=c.A(3, 'confirmar', 0.7), label='CONFIRMAR PAGAMENTO')
+    c.waitfor(text='Valorizado pelo pedido', timeout=20)
+    c.mark(4)
+    c.hover(TXTX('Valorizado pelo pedido'), 0.8, at=c.A(4, 'número', 0.6), label='Valorizado pelo pedido #…')
+    c.mark(5)
+    c.click({'role': 'radio', 'name': 'Lista'}, at=c.A(5, 'lista', 0.7), label='Lista')
+    c.hover(TXT('Aguardando valorização', within='main tbody'), 0.4, at=c.A(5, 'Aguardando', 0.6), label='selo Aguardando valorização (#57)')
+    c.hover(TXT('Valorizado', within='main tbody'), 0.3, at=c.A(5, 'Valorizado', 0.6), label='selo Valorizado (#58)')
+    c.click(BTN('Filtros'), at=c.A(5, 'verde', 0.3), label='Filtros')
+    c.click(SEL(f"{POP} button:has-text('Status')"), label='Status')
+    c.hover(OPT('Cancelado', exact=True), 0.5, at=c.A(5, 'vermelho', 0.6), label='status Cancelado (opção do filtro)')
+    c.press('Escape', label='fecha a lista de status')
+    c.mark(6)
+    c.press('Escape', at=c.L(6) - 0.2, label='fecha Filtros')
+    c.click({'role': 'radio', 'name': 'Kanban'}, label='volta ao Kanban')
+    c.hover(RASCUNHOS, 0.8, at=c.A(6, 'rascunho', 0.6), label='Rascunhos abertos (1): o do Jair')
+    c.fim()
+    return c
+
+
+@capitulo
+def cap10():
+    """Recapitulando: a montagem é da edição; o robô só deixa a lista parada (o #58 em Valorizados) com as marcas."""
+    c = Cap(10, setup=setup_lista())
+    c.mark(1)
+    c.cursor(NEUTRO, at=0.3, label='cursor descansa')
+    for i in range(2, len(c.linhas) + 1):
+        c.mark(i)
     c.fim()
     return c
 

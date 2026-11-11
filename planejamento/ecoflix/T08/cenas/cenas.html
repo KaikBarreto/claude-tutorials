@@ -60,7 +60,7 @@ body{font-family:M,sans-serif;color:var(--t);-webkit-font-smoothing:antialiased}
 :root{--vs:#16A34A;--as:#D97706;--rs:#DC2626}
 .ico{background:var(--vs);color:#fff}.ico.a{background:var(--as);color:#fff}
 .tag.v{background:var(--vs);color:#fff}.tag.a{background:var(--as);color:#fff}
-</style></head>
+</style><style id="saturado-aula">.ico.n,.tag.n,.op,.chk.x{background:#4B5563;color:#fff}.chk.v{background:var(--vs);color:#fff}</style></head>
 <body><div id="st"></div>
 <script>
 // ------------------------------------------------------------------ utilidades (as do kit, sem mudança)
@@ -193,10 +193,10 @@ CAPS[0]=()=>{
   const X1=360, Y=366, X0=-900, BR=9460;
   const precoW=el('<div class="ab" style="left:1086px;top:236px;width:150px;height:74px"></div>',g);
   const preco=el(`<div class="ab" style="left:0;top:0;width:150px;height:74px">
-      <svg class="ab" style="left:0;top:0;overflow:visible" width="150" height="74"><path d="M24 4 L138 4 Q146 4 146 12 L146 62 Q146 70 138 70 L24 70 L4 37 Z" fill="#FFF5DF" stroke="#F2B63D" stroke-width="3" stroke-linejoin="round"/>
+      <svg class="ab" style="left:0;top:0;overflow:visible" width="150" height="74"><path d="M24 4 L138 4 Q146 4 146 12 L146 62 Q146 70 138 70 L24 70 L4 37 Z" fill="#D97706" stroke="#D97706" stroke-width="3" stroke-linejoin="round"/>
         <circle cx="26" cy="37" r="6" fill="#fff" stroke="#F2B63D" stroke-width="3"/></svg>
-      <div class="ab num" style="left:46px;top:17px;font-size:30px;color:var(--ae)">R$ ?</div>
-      <div class="ab rel" style="left:120px;top:-20px;width:42px;height:42px;border-radius:50%;background:#fff;color:var(--ae);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(16,24,40,.16)">${ic('clock',24)}</div></div>`,precoW);
+      <div class="ab num" style="left:46px;top:17px;font-size:30px;color:#fff">R$ ?</div>
+      <div class="ab rel" style="left:120px;top:-20px;width:42px;height:42px;border-radius:50%;background:var(--as);color:#fff;border:2px solid #fff;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(16,24,40,.16)">${ic('clock',24)}</div></div>`,precoW);
   const rel=preco.querySelector('.rel');
   const tk=el(`<div class="card" style="left:300px;top:470px;width:460px;height:236px">
       <div class="row" style="position:absolute;left:26px;top:22px;gap:14px"><div class="ico" style="width:48px;height:48px">${ic('ticket',28)}</div>
@@ -245,7 +245,7 @@ CAPS[1]=()=>{
         ${['warehouse','wallet'].map(n=>`<div class="pi" style="position:relative;width:54px;height:54px"><div class="ico n" style="position:absolute;inset:0">${ic(n,30)}</div>
           <div class="ico ac" style="position:absolute;inset:0;opacity:0">${ic(n,30)}</div></div>`).join('')}</div>
       <div class="ttl" style="font-size:20px;margin-top:10px">Estoque e caixa</div>
-      <div class="ab bd" style="right:-14px;top:-14px;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--ac);color:var(--ae);opacity:0">${ic('hourglass',20)}</div>
+      <div class="ab bd" style="right:-14px;top:-14px;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--as);color:#fff;opacity:0">${ic('hourglass',20)}</div>
       <div class="ab bk" style="right:-14px;top:-14px;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--v);color:#fff;opacity:0">${ic('check',22)}</div></div>`,g);
     e._ac=[...e.querySelectorAll('.ac')]; e._pi=[...e.querySelectorAll('.pi')]; e._bd=e.querySelector('.bd'); e._bk=e.querySelector('.bk'); return e;};
   const acendeFim=(e,t,a)=>{const p=eo(pr(t,a,.45)); e._ac.forEach(x=>x.style.opacity=p.toFixed(3)); contorno(e,t,a,'#E1E8E4','#50D088');
@@ -399,9 +399,9 @@ CAPS[6]=()=>{
   const S1=.7, S2=.56, X2=170, Y2=600-222*S2-2, X2a=-420;
   T1.style.transform=`translate(704px,${(588-222*S1).toFixed(1)}px) scale(${S1})`;
   const aba=(x,num,nome,cls)=>el(`<div class="ab" style="left:${x}px;top:206px;width:340px;height:126px">
-      <div class="ab" style="left:0;top:0;width:118px;height:40px;border-radius:14px 14px 0 0;background:var(--${cls}c);display:flex;align-items:center;justify-content:center">
-        <span class="num" style="font-size:22px;color:var(--${cls}e)">${num}</span></div>
-      <div class="card" style="left:0;top:38px;width:340px;height:86px;border-radius:0 18px 18px 18px;border:2px solid var(--${cls}c)">
+      <div class="ab" style="left:0;top:0;width:118px;height:40px;border-radius:14px 14px 0 0;background:var(--${cls}s);display:flex;align-items:center;justify-content:center">
+        <span class="num" style="font-size:22px;color:#fff">${num}</span></div>
+      <div class="card" style="left:0;top:38px;width:340px;height:86px;border-radius:0 18px 18px 18px;border:2px solid var(--${cls}s)">
         <div class="ttl" style="position:absolute;left:22px;top:28px;font-size:21px">${nome}</div></div></div>`,g);
   const A1=aba(700,'#58','Cooperativa Recomeço','v'), A2=aba(140,'#59','Auto Peças Vale Forte','a');
   const sv=svgTela(g);
@@ -435,7 +435,7 @@ CAPS[7]=()=>{
         n3=no(g,540,286,210,'clipboard-list','Compra',{h:156}), n4=no(g,810,300,170,'circle-check','Finalizar');
   const rasc=el('<div class="tag a" style="position:absolute;left:52px;top:112px;font-size:16px;padding:5px 12px">rascunho</div>',n3);
   const fE=no(g,1040,196,170,'warehouse','Estoque'), fC=no(g,1040,404,170,'wallet','Caixa');
-  const badge=(e)=>({esp:el(`<div class="ab" style="right:-14px;top:-14px;width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--ac);color:var(--ae);opacity:0">${ic('hourglass',20)}</div>`,e),
+  const badge=(e)=>({esp:el(`<div class="ab" style="right:-14px;top:-14px;width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--as);color:#fff;opacity:0">${ic('hourglass',20)}</div>`,e),
     ok:el(`<div class="ab" style="right:-14px;top:-14px;width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--v);color:#fff;opacity:0">${ic('check',22)}</div>`,e)});
   const bE=badge(fE), bC=badge(fC);
   const s=(x0,y0,x1,y1)=>({c:caminho(sv,setaD(x0,y0,x1,y1,12),'#CBD1D8',4),v:caminho(sv,setaD(x0,y0,x1,y1,12),'var(--v)',4)});

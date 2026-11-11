@@ -43,7 +43,7 @@ body{font-family:M,sans-serif;color:var(--t);-webkit-font-smoothing:antialiased}
 .tag.v{background:var(--vc);color:var(--ve)} .tag.a{background:var(--ac);color:var(--ae)}
 .lbl{font-weight:700;font-size:17px;color:var(--c)}
 .num{font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
-.op{position:absolute;width:60px;height:60px;border-radius:50%;background:#F2F4F7;color:var(--t);display:flex;
+.op{position:absolute;width:60px;height:60px;border-radius:50%;background:#4B5563;color:#fff;display:flex;
   align-items:center;justify-content:center;font-weight:800;font-size:34px;line-height:1}
 /* mostrador da balança (painel escuro, número no acento) */
 .most{background:var(--e);border-radius:16px;padding:16px 22px 18px;box-shadow:0 16px 34px rgba(16,24,40,.22)}
@@ -52,14 +52,14 @@ body{font-family:M,sans-serif;color:var(--t);-webkit-font-smoothing:antialiased}
 .most .mn{margin-top:6px;font-weight:800;font-size:44px;color:var(--v);font-variant-numeric:tabular-nums;white-space:nowrap}
 .rip{position:absolute;width:56px;height:56px;margin:-28px 0 0 -28px;border-radius:50%;border:3px solid var(--v);opacity:0}
 /* T10: etiqueta neutra, placa de porta, chip com seta, sinal +/- */
-.tag.n{background:#F2F4F7;color:#374151}
+.tag.n{background:#4B5563;color:#fff}
 .placa{display:inline-block;padding:9px 18px;border-radius:12px;background:#fff;border:2px solid #E1E8E4;font-weight:800;
   font-size:21px;white-space:nowrap;box-shadow:0 6px 14px rgba(16,24,40,.06)}
 .chip{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;border-radius:999px;background:#fff;border:2px solid #E1E8E4;
   font-weight:800;font-size:19px;white-space:nowrap}
-.chip.e .ic{color:var(--ve)} .chip.s .ic{color:var(--ae)}
+.chip.e{background:var(--vs);border-color:var(--vs);color:#fff} .chip.s{background:var(--as);border-color:var(--as);color:#fff}
 .sgn{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:50%;font-weight:800;font-size:22px;line-height:1}
-.sgn.v{background:var(--vc);color:var(--ve)} .sgn.a{background:var(--ac);color:var(--ae)}
+.sgn.v{background:var(--vs);color:#fff} .sgn.a{background:var(--as);color:#fff}
 </style><style id="saturado">/* estilo saturado (Kaik, 11/11): selo, chip, etiqueta, quadrado de ícone e círculo de etapa
    com fundo cheio e ícone/texto branco; nunca fundo claro com conteúdo colorido, nunca ícone escuro sobre o verde */
 :root{--vs:#16A34A;--as:#D97706;--rs:#DC2626}
@@ -370,8 +370,8 @@ CAPS[2]=()=>{
     vis(sombra,t,te-.1,1e9,{dy:0}); vis(pilha,t,te-.1,1e9,{dy:18,sc:.94}); vis(card,t,te+.05,1e9,{dy:16}); vis(sub,t,ts-.05,1e9,{dy:6});
     vis(hE,t,ten-.1,1e9,{dy:0,dx:-14}); vis(sE,t,ten-.05,1e9,{dy:0,dx:-14});
     vis(hS,t,tsa-.1,1e9,{dy:0,dx:14}); vis(sS,t,tsa-.05,1e9,{dy:0,dx:14});
-    for(const [c,k] of E){vis(c,t,K[k]-.12,1e9,{dy:0,dx:-16}); luz(c,t,K[k]-.12,K[k]+1.0,{sombra:false});}
-    for(const [c,k] of S){vis(c,t,K[k]-.12,1e9,{dy:0,dx:16}); luz(c,t,K[k]-.12,K[k]+1.0,{sombra:false,cor:'#F2B63D',bg:'#FFF8EA',anel:'242,182,61'});}
+    for(const [c,k] of E){vis(c,t,K[k]-.12,1e9,{dy:0,dx:-16}); luz(c,t,K[k]-.12,K[k]+1.0,{sombra:false,fundo:false});}
+    for(const [c,k] of S){vis(c,t,K[k]-.12,1e9,{dy:0,dx:16}); luz(c,t,K[k]-.12,K[k]+1.0,{sombra:false,fundo:false,cor:'#F2B63D',bg:'#FFF8EA',anel:'242,182,61'});}
     pulsos(sE,t,E.map(([,k])=>K[k]),.08,.6); pulsos(sS,t,S.map(([,k])=>K[k]),.08,.6);
   };
 };
@@ -527,7 +527,7 @@ CAPS[5]=()=>{
   const q=(i,s)=>cards[i].querySelector(s);
   const mvC=q(0,'.mv'), rodaC=q(0,'.rodaC'), mvV=q(1,'.mv'), mvT=q(2,'.mv'), chk=q(3,'.chk'), lapis=q(3,'.mv'),
         risco=q(4,'.risco'), volta=q(4,'.volta'), latas=q(5,'.latas'), setaP=q(5,'.seta'), fardo=q(5,'.fardo'), band=q(6,'.band');
-  const cad=el(`<div class="ab" style="left:204px;top:14px;width:44px;height:44px;border-radius:12px;background:var(--ac);color:var(--ae);display:flex;align-items:center;justify-content:center">${ic('lock',24)}</div>`,cards[5]);
+  const cad=el(`<div class="ab" style="left:204px;top:14px;width:44px;height:44px;border-radius:12px;background:var(--as);color:#fff;display:flex;align-items:center;justify-content:center">${ic('lock',24)}</div>`,cards[5]);
   return t=>{
     const a0=W(2,'Compra')-.3;
     const T=[W(2,'Compra'),W(2,'Venda'),W(2,'Transferencia'),W(3,'Edicao'),W(3,'Exclusao'),W(4,'Producao'),W(4,'Saldo')];
@@ -562,7 +562,7 @@ CAPS[7]=()=>{
   const gA=grupo();
   const titA=titulo(gA,'Relatório','Projeção de Lucro');
   const fr=el('<div class="ab" style="left:740px;top:176px;width:420px;height:300px;border-radius:26px;border:3px dashed #B5BFC8;background:rgba(246,248,249,.7)"></div>',gA);
-  const nuvem=el(`<div class="ab" style="left:714px;top:150px;width:54px;height:54px;border-radius:50%;background:#fff;border:2px solid #D5DBE1;display:flex;align-items:center;justify-content:center;color:#6B7280">${ic('cloud',26)}</div>`,gA);
+  const nuvem=el(`<div class="ab" style="left:714px;top:150px;width:54px;height:54px;border-radius:50%;background:#4B5563;display:flex;align-items:center;justify-content:center;color:#fff">${ic('cloud',26)}</div>`,gA);
   const fant=el(`<div class="ab" style="left:150px;top:300px">${contornoMonte(300,150)}</div>`,gA);
   const pil=el(`<div class="ab" style="left:0;top:0">${monte(300,150,TONS.ferro,{seed:51,n:22,base:'#AEB6BE'})}</div>`,gA);
   const lC=el('<div class="ab" style="left:150px;top:494px;width:300px;text-align:center"><div class="tag n">comprado no mês</div></div>',gA);
@@ -738,7 +738,7 @@ CAPS[9]=()=>{
   const PS=[[560,350],[604,336],[648,330],[690,344]].map((dst,i)=>({...peca(['#B8733C','#C9884B','#A0602E','#D59A5E'][i],'#50D088'),o:[392,276],dst,i}));
   const PV=[[580,384],[624,370],[668,374],[712,390]].map((dst,i)=>({...peca(['#C9884B','#9A5B2E','#B8733C','#D59A5E'][i],'#F2B63D'),o:[392,508],dst,i}));
   const PF=[[640,338],[676,346],[700,360]].map((o,i)=>({...peca(['#B8733C','#C9884B','#A0602E'][i],'#B8733C'),o,dst:[968+36*i,326],i}));
-  const pq=el(`<div class="ab" style="left:0;top:204px;width:1280px;text-align:center"><div style="display:inline-flex;align-items:center;gap:10px;padding:10px 22px;border-radius:999px;background:#fff;border:2px solid var(--a);font-weight:800;font-size:26px;box-shadow:0 10px 24px rgba(16,24,40,.08)">${ic('circle-help',28,'#8A5A00')}De quem era cada quilo?</div></div>`,g);
+  const pq=el(`<div class="ab" style="left:0;top:204px;width:1280px;text-align:center"><div style="display:inline-flex;align-items:center;gap:10px;padding:10px 22px;border-radius:999px;background:var(--as);color:#fff;font-weight:800;font-size:26px;box-shadow:0 10px 24px rgba(16,24,40,.08)">${ic('circle-help',28,'#fff')}De quem era cada quilo?</div></div>`,g);
   const voa=(o,t,a,d,h)=>{const q=arco(o.d,t,a,d,o.o[0],o.o[1],o.dst[0],o.dst[1],h,30);const op=q>0?eo(cl(q/.15)):0;o.d.style.opacity=op.toFixed(3);o.d.style.visibility=op<=.001?'hidden':'visible';return q};
   return t=>{
     const a0=W(1,'proposito')-.3, tco=W(1,'cobre'), tsq=W(1,'Siqueira'), tfo=W(1,'foi'), tpi=W(1,'pilha'), tva=W(1,'Valdir'),
@@ -770,13 +770,13 @@ CAPS[10]=()=>{
   const lin=el('<div class="ab" style="left:90px;top:354px;width:1100px;height:4px;border-radius:2px;background:#C9D1D9"></div>',g);
   const mO=el(`<div class="ab kick" style="left:90px;top:396px;width:${XC-90}px;text-align:center;color:#6B7280">Outubro</div>`,g);
   const mN=el(`<div class="ab kick" style="left:${XC}px;top:396px;width:${1190-XC}px;text-align:center;color:#6B7280">Novembro</div>`,g);
-  const ponto=([x,s])=>el(`<div class="ab" style="left:${x-22}px;top:334px;width:44px;height:44px;border-radius:50%;background:${s==='+'?'#2E7D57':'#8A5A00'};color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:24px;line-height:1">${s}</div>`,g);
+  const ponto=([x,s])=>el(`<div class="ab" style="left:${x-22}px;top:334px;width:44px;height:44px;border-radius:50%;background:${s==='+'?'#16A34A':'#D97706'};color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:24px;line-height:1">${s}</div>`,g);
   const pO=[[170,'+'],[280,'+'],[390,'−'],[500,'+'],[610,'−'],[700,'−']].map(ponto), pN=[[810,'+'],[890,'−'],[970,'−'],[1050,'+'],[1130,'+']].map(ponto);
   const corte=el(`<div class="ab" style="left:${XC-1.5}px;top:236px;width:0;height:236px;border-left:3px dashed #8E979F"></div>`,g);
   const tCo=el(`<div class="ab" style="left:${XC-150}px;top:178px;width:300px;text-align:center"><div class="tag v">${ic('calendar-clock',20)}31/10 23:59</div></div>`,g);
   const visor=el(`<svg class="ab" style="left:0;top:0;overflow:visible" width="1280" height="800"><g fill="none" stroke="var(--v)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
       <path d="M${XC-50},250 H${XC-14} V286"/><path d="M84,446 V482 H120"/><path d="M${XC-14},446 V482 H${XC-50}"/></g></svg>`,g);
-  const cam=el(`<div class="ab" style="left:56px;top:222px;width:56px;height:56px;border-radius:50%;background:#fff;border:3px solid var(--v);display:flex;align-items:center;justify-content:center;color:var(--ve)">${ic('camera',28)}</div>`,g);
+  const cam=el(`<div class="ab" style="left:56px;top:222px;width:56px;height:56px;border-radius:50%;background:var(--vs);display:flex;align-items:center;justify-content:center;color:#fff">${ic('camera',28)}</div>`,g);
   const fora=el(`<div class="ab" style="left:${XC+20}px;top:262px;width:${1190-XC-20}px;text-align:center"><div class="tag a">fora da foto</div></div>`,g);
   const pol=el(`<div class="card" style="left:340px;top:520px;width:600px;height:232px;padding:16px 16px 0">
       <div style="height:176px;border-radius:10px;background:#F1FAF5;display:flex;justify-content:space-around;align-items:flex-end;padding:0 8px 16px">

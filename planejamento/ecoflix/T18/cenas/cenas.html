@@ -228,7 +228,7 @@ CAPS[0]=()=>{
           <div class="lbl" style="font-size:14px;color:var(--ae)">certificado</div></div>
         <div style="margin-top:14px;height:8px;border-radius:4px;background:#F1E6CC;width:100px"></div>
         <div style="margin-top:8px;height:8px;border-radius:4px;background:#F1E6CC;width:76px"></div>
-        <div class="ab" style="right:12px;bottom:10px;color:var(--ae)">${ic('clock',26)}</div></div></div>`,c2);
+        <div class="ab" style="right:12px;bottom:10px;background:var(--as);color:#fff;border-radius:50%;padding:6px">${ic('clock',26)}</div></div></div>`,c2);
   const quem=el(`<div class="ab row" style="left:26px;top:288px;gap:8px">
       <div class="tag a" style="font-size:16px;padding:6px 13px">Auto Peças Vale Forte</div></div>`,c2);
   const mes=el(`<div class="ab row" style="left:276px;top:288px"><div class="tag a" style="font-size:16px;padding:6px 13px">${ic('calendar-days',17)}outubro</div></div>`,c2);
@@ -285,7 +285,7 @@ CAPS[1]=()=>{
   const mtr=doc('MTR','v'), cdf=doc('CDF','a');
   // os dois papéis da Recicla Vale, em duas faixas
   const faixa=(y,esq,dir,papel,lado,sig,cls)=>{const f=el(`<div class="ab" style="left:0;top:${y}px;width:1280px;height:110px"></div>`,gA);
-    const nome=(x,txt,id)=>el(`<div class="ab" style="left:${x}px;top:0;width:300px;text-align:center"><div class="tag ${id}" style="font-size:21px;padding:9px 18px;background:#F3F5F7;color:#121212">${ic('building-2',21)}${txt}</div></div>`,f);
+    const nome=(x,txt,id)=>el(`<div class="ab" style="left:${x}px;top:0;width:300px;text-align:center"><div class="tag ${id}" style="font-size:21px;padding:9px 18px;background:#4B5563;color:#fff">${ic('building-2',21)}${txt}</div></div>`,f);
     const a=nome(130,esq,'fe'), b=nome(850,dir,'fd');
     const p=el(`<div class="ab" style="left:${lado==='e'?130:850}px;top:56px;width:300px;text-align:center"><div class="tag ${cls}" style="font-size:17px;padding:6px 14px">${papel}</div></div>`,f);
     const s=seta(f,462,24,818,24,'#C9D2DA',4);
@@ -307,8 +307,8 @@ CAPS[1]=()=>{
   const mB=DIAS.map(d=>el(`<div class="ab" style="left:${dia(d)-60}px;top:${YR-128}px;width:120px">
       <div class="mk row" style="width:120px;height:62px;gap:8px;padding:0 13px;border-radius:12px;background:#fff;border:2px solid #50D088;box-shadow:0 10px 22px rgba(16,24,40,.10)">
         <span class="row" style="color:var(--ve)">${ic('file-text',22)}</span><div style="font-weight:800;font-size:20px;color:var(--ve)">MTR</div></div>
-      <div class="ab ok" style="right:-12px;top:-12px"><div class="ico" style="width:32px;height:32px;border-radius:50%;background:#50D088;color:#fff">${ic('check',20)}</div></div>
-      <div class="ab cam" style="left:36px;top:76px"><div class="ico" style="width:46px;height:46px;border-radius:50%;background:#fff;border:2.5px solid #C9D2DA;color:#4B5563">${ic('truck',24)}</div></div></div>`,gB));
+      <div class="ab ok" style="right:-12px;top:-12px"><div class="ico" style="width:32px;height:32px;border-radius:50%;background:var(--vs);color:#fff">${ic('check',20)}</div></div>
+      <div class="ab cam" style="left:36px;top:76px"><div class="ico" style="width:46px;height:46px;border-radius:50%;background:#4B5563;border:2.5px solid #fff;color:#fff">${ic('truck',24)}</div></div></div>`,gB));
   const baixa=el(`<div class="ab" style="left:0;top:${YR+64}px;width:1280px;text-align:center"><div class="tag v" style="font-size:17px;padding:7px 15px">${ic('circle-check',19)}recebido e baixa</div></div>`,gB);
   const per=el(`<div class="ab" style="left:${X0}px;top:${YR-196}px;width:${X1-X0}px;height:40px">
       <div class="ab" style="left:0;top:22px;width:100%;height:14px;border:3px solid #F2B63D;border-bottom:none;border-radius:8px 8px 0 0"></div>
@@ -403,7 +403,7 @@ CAPS[2]=()=>{
     // a fiscalização pede os dois juntos
     vis(pr1,t,tfi-.15,1e9,{dx:24,dy:0}); vis(l1,t,tfi+.25,1e9,{dy:8}); vis(l2,t,tfi+.45,1e9,{dy:8});
     traco(s1.p,t,tpe-.1,.4); vis(s1.ponta,t,tpe+.25,1e9,{dy:0,din:.25});
-    [l1,l2].forEach((l,i)=>{const p=eo(pr(t,tju-.1+i*.15,.35)),cx=l.querySelector('.cx');cx.style.background=mix('#FFFFFF','#50D088',p);cx.style.borderColor=mix('#C3CAD2','#50D088',p)});
+    [l1,l2].forEach((l,i)=>{const p=eo(pr(t,tju-.1+i*.15,.35)),cx=l.querySelector('.cx');cx.style.background=mix('#FFFFFF','#16A34A',p);cx.style.borderColor=mix('#C3CAD2','#16A34A',p)});
     contorno(pasta,t,tju,V0,AA); anel(pasta,t,tju,RA);
   };
 };
@@ -453,7 +453,7 @@ CAPS[7]=()=>{
     const c=el(`<div class="ab" style="left:0;top:${y-14}px;width:130px;height:60px">${escala(caminhao(),130)}
       <div class="ab mt" style="left:30px;top:-28px"><div class="row" style="height:32px;gap:5px;padding:0 9px;border-radius:9px;background:#fff;border:2px solid #50D088;box-shadow:0 6px 14px rgba(16,24,40,.10)">
         <span class="row" style="color:var(--ve)">${ic('file-text',16)}</span><div style="font-weight:800;font-size:15px;color:var(--ve)">MTR</div></div>
-        <div class="ab ok" style="right:-14px;top:-12px"><div class="ico" style="width:26px;height:26px;border-radius:50%;background:#50D088;color:#fff">${ic('check',17)}</div></div></div></div>`,g);
+        <div class="ab ok" style="right:-14px;top:-12px"><div class="ico" style="width:26px;height:26px;border-radius:50%;background:var(--vs);color:#fff">${ic('check',17)}</div></div></div></div>`,g);
     const ok=c.querySelector('.ok');
     return {p,c,ok}});
   const bx=el(`<div class="ab" style="left:975px;top:446px;width:300px;text-align:center"><div class="tag v" style="font-size:16px;padding:6px 13px">${ic('circle-check',18)}baixa no SIGOR</div></div>`,g);
@@ -486,7 +486,7 @@ CAPS[8]=()=>{
   const g=grupo();
   const tit=titulo(g,'CDF','Onde guardar');
   const nb=el(`<div class="ab" style="left:60px;top:300px;width:250px">${notebookSvg(250)}</div>`,g);
-  const fora=el(`<div class="ab" style="left:60px;top:500px;width:250px;text-align:center"><div class="tag" style="font-size:16px;padding:6px 13px;background:#F3F5F7;color:#374151">${ic('log-out',17)}fora do sistema</div></div>`,g);
+  const fora=el(`<div class="ab" style="left:60px;top:500px;width:250px;text-align:center"><div class="tag" style="font-size:16px;padding:6px 13px;background:#4B5563;color:#fff">${ic('log-out',17)}fora do sistema</div></div>`,g);
   const pasta=pastaLicenca(390,214,g);
   const pdf=el(`<div class="ab" style="left:0;top:0;transform-origin:0 0">${folha('CDF','outubro<br>Auto Peças<br>Vale Forte','a',190,178)}
       <div class="ab" style="right:-14px;top:-14px"><div class="tag a" style="font-size:15px;padding:5px 11px">PDF</div></div></div>`,g);
@@ -531,7 +531,7 @@ CAPS[9]=()=>{
         <div style="font-weight:800;font-size:28px;color:var(--${cls}e)">${sig}</div>
         <div class="pp" style="font-weight:700;font-size:20px;white-space:nowrap">${papel}</div></div>
       ${para?`<div class="ab row para" style="left:88px;top:76px;gap:10px"><span class="row" style="color:#9AA3AD">${ic('arrow-right',20)}</span>
-        <div class="tag" style="font-size:15px;padding:5px 12px;background:#F3F5F7;color:#374151">${ic('landmark',16)}${para}</div></div>`:''}
+        <div class="tag" style="font-size:15px;padding:5px 12px;background:#4B5563;color:#fff">${ic('landmark',16)}${para}</div></div>`:''}
       <div class="ab lbl onde" style="right:24px;top:30px;font-size:17px;color:#4B5563;white-space:nowrap">${onde}</div></div>`,g);
     return c});
   const depois=el(`<div class="ab" style="left:608px;top:${498+74}px"><div class="tag a" style="font-size:15px;padding:5px 12px">${ic('clock',16)}depois</div></div>`,g);

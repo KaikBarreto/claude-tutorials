@@ -47,7 +47,7 @@ body{font-family:M,sans-serif;color:var(--t);-webkit-font-smoothing:antialiased}
 .tag.v{background:var(--vc);color:var(--ve)} .tag.a{background:var(--ac);color:var(--ae)}
 .lbl{font-weight:700;font-size:17px;color:var(--c)}
 .num{font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
-.op{position:absolute;width:60px;height:60px;border-radius:50%;background:#F2F4F7;color:var(--t);display:flex;
+.op{position:absolute;width:60px;height:60px;border-radius:50%;background:#4B5563;color:#fff;display:flex;
   align-items:center;justify-content:center;font-weight:800;font-size:34px;line-height:1}
 /* mostrador da balança (painel escuro, número no acento) */
 .most{background:var(--e);border-radius:16px;padding:16px 22px 18px;box-shadow:0 16px 34px rgba(16,24,40,.22)}
@@ -62,9 +62,9 @@ body{font-family:M,sans-serif;color:var(--t);-webkit-font-smoothing:antialiased}
    --p  violeta do chip "Saldo" (7,1)   --pc fundo claro   --pm contorno     --g cinza de "Pendente" (7,6)   --gc fundo
    Classe do cinza: .cz (o .g do kit é o grupo da cena, absoluto em 1280x800: não usar "g" em chip ou ícone). */
 :root{--r:#B42318;--rc:#FDECEA;--rm:#F2A49C;--p:#6D28D9;--pc:#F1EAFE;--pm:#C4B1F5;--g:#4B5563;--gc:#EEF1F4}
-.tag.r{background:var(--rc);color:var(--r)} .tag.p{background:var(--pc);color:var(--p)} .tag.cz{background:var(--gc);color:var(--g)}
+.tag.r{background:var(--rs);color:#fff} .tag.p{background:#7C3AED;color:#fff} .tag.cz{background:#4B5563;color:#fff}
 .tag.sm{font-size:16px;padding:7px 13px;gap:6px}
-.ico.r{background:var(--rc);color:var(--r)} .ico.cz{background:var(--gc);color:var(--g)} .ico.p{background:var(--pc);color:var(--p)}
+.ico.r{background:var(--rs);color:#fff} .ico.cz{background:#4B5563;color:#fff} .ico.p{background:#7C3AED;color:#fff}
 .card.b2{border-width:2px}
 .bdg{position:absolute;border-radius:50%;display:flex;align-items:center;justify-content:center;flex:none}
 .cel{position:absolute;display:flex;align-items:center;justify-content:center}
@@ -234,7 +234,7 @@ CAPS[0]=()=>{
     `<div class="card" style="left:0;top:0;width:250px;height:158px;border-radius:12px;padding:16px 18px">
        <div class="row" style="gap:12px"><div class="ico a" style="width:40px;height:40px">${ic('zap',22)}</div><div style="font-weight:800;font-size:22px">Energia</div></div>
        ${risco(150)}${risco(104)}<svg class="ab" style="left:18px;top:118px" width="214" height="26">${barras}</svg></div>
-     <div class="ab" style="left:112px;top:-22px;transform:rotate(-9deg)"><div class="tag a" style="font-size:17px;padding:7px 14px;border:2px solid #F2B63D">Vence hoje</div></div>`,
+     <div class="ab" style="left:112px;top:-22px;transform:rotate(-9deg)"><div class="tag a" style="font-size:17px;padding:7px 14px;border:2px solid var(--as)">Vence hoje</div></div>`,
     `<div class="card" style="left:0;top:0;width:230px;height:150px;border-radius:12px;padding:16px 18px">
        <div class="row" style="gap:12px"><div class="ico cz" style="width:40px;height:40px">${ic('droplet',22)}</div><div style="font-weight:800;font-size:22px">Água</div></div>
        ${risco(160)}${risco(120)}${risco(80)}</div>`,
@@ -248,7 +248,7 @@ CAPS[0]=()=>{
        <div style="font-weight:800;font-size:22px;line-height:1.3;margin-top:8px">Fundição<br>Bandeira do Vale</div>
        <svg class="ab" style="left:40px;top:150px" width="250" height="44"><path d="M2 12 q 14 -10 28 0 t 28 0 t 28 0 t 28 0 t 28 0 M2 36 q 12 -9 24 0 t 24 0 t 24 0"
          fill="none" stroke="#B8C0C8" stroke-width="3" stroke-linecap="round"/></svg></div>
-     <div class="bdg" style="left:288px;top:-20px;width:46px;height:46px;background:var(--ac);border:2px solid #F2B63D;color:var(--ae);font-weight:800;font-size:26px">?</div>`];
+     <div class="bdg" style="left:288px;top:-20px;width:46px;height:46px;background:var(--as);border:2px solid var(--as);color:#fff;font-weight:800;font-size:26px">?</div>`];
   const papeis=PAP.map(([cx,cy,rot,w,h],i)=>{const e=el(`<div class="ab" style="left:0;top:0;width:${w}px;height:${h}px;transform-origin:${w/2}px ${h/2}px">${html[i]}</div>`,g);
     return {e,card:e.firstElementChild,selo:i===0?e.children[1].firstElementChild:null,q:i===3?e.children[1]:null}});
 
@@ -298,8 +298,8 @@ CAPS[2]=()=>{
   const A0=X(1)-24, A1=X(HOJE-1)+22, B0=X(HOJE)-21, B1=X(LIM)+24;    // zonas: antes de hoje / de hoje a hoje + 7
   const zA=el(`<div class="ab" style="left:${A0}px;top:196px;width:${A1-A0}px;height:338px;border-radius:20px;background:rgba(180,35,24,.05);border:2px solid rgba(180,35,24,.26)"></div>`,c);
   const zB=el(`<div class="ab" style="left:${B0}px;top:196px;width:${B1-B0}px;height:338px;border-radius:20px;background:rgba(242,182,61,.12);border:2px solid rgba(242,182,61,.7)"></div>`,c);
-  const dias=[...Array(21)].map((_,i)=>el(`<div class="ab" style="left:${X(i+1)-20}px;top:470px;width:40px;height:44px;border-radius:10px;background:#F2F4F7;
-      display:flex;align-items:center;justify-content:center;font-weight:700;font-size:17px;color:#4B5563;${i+1===HOJE?'border:2px solid #121212;':''}">${i+1}</div>`,c));
+  const dias=[...Array(21)].map((_,i)=>el(`<div class="ab" style="left:${X(i+1)-20}px;top:470px;width:40px;height:44px;border-radius:10px;background:#4B5563;
+      display:flex;align-items:center;justify-content:center;font-weight:700;font-size:17px;color:#fff;${i+1===HOJE?'border:2px solid #121212;':''}">${i+1}</div>`,c));
   const mes=el(`<div class="ab lbl" style="left:${A0+4}px;top:552px">Novembro</div>`,c);
   const hoje=el(`<div class="ab" style="left:${X(HOJE)-50}px;top:516px;width:100px;text-align:center"><div style="margin:0 auto;width:3px;height:24px;background:#121212;border-radius:2px"></div>
       <div class="tag v sm" style="margin-top:4px">Hoje</div></div>`,c);
@@ -311,7 +311,7 @@ CAPS[2]=()=>{
   const fio=(x0,y0,x1,y1)=>el(`<svg class="ab" style="left:0;top:0;overflow:visible" width="1280" height="800"><path d="M${x0} ${y0} L${x1} ${y1}" fill="none"
       stroke="#AEB6BF" stroke-width="2.5" stroke-linecap="round"/></svg>`,c).querySelector('path');
   const fA=fio(X(AGUA),388,X(AGUA),466), fE=fio(X(HOJE)+50,388,X(HOJE)+4,466);
-  const corA=['#F2F4F7','#F9DCD8','#4B5563','#B42318'], corB=['#F2F4F7','#FCE9BD','#4B5563','#8A5A00'];
+  const corA=['#4B5563','#DC2626','#ffffff','#ffffff'], corB=['#4B5563','#D97706','#ffffff','#ffffff'];
 
   return t=>{
     const tV=WS(2,'Vencidas'), tPa=WS(2,'passou'), tVe=WS(2,'vencimento'), tAg=WS(2,'agua'), tVn=WS(2,'vence',1),
@@ -357,13 +357,13 @@ CAPS[6]=()=>{
       <div class="row" style="gap:12px"><div class="ico cz" style="width:44px;height:44px">${ic('truck',24)}</div><div class="lbl">Auto Peças Vale Forte</div></div>
       <div style="margin-top:12px;font-weight:800;font-size:21px;white-space:nowrap">Pneus do caminhão truck</div>
       <div class="row" style="margin-top:10px"><div class="num" style="font-size:28px">${brl(TOTAL)}</div><div class="tag v sm" style="margin-left:auto">${N}x</div></div></div>`,A);
-  const flag=el(`<div class="bdg" style="left:1146px;top:${Y+55}px;width:60px;height:60px;background:var(--vc);color:var(--ve);border:2px solid var(--vm)">${ic('flag',28)}</div>`,A);
+  const flag=el(`<div class="bdg" style="left:1146px;top:${Y+55}px;width:60px;height:60px;background:var(--vs);color:#fff;border:2px solid var(--vs)">${ic('flag',28)}</div>`,A);
   const labA=el(`<div class="ab row" style="left:60px;top:170px;gap:14px"><div class="tag v">Parcelar</div><div class="lbl" style="font-size:19px;color:#4B5563">Dívida com fim</div></div>`,g);
   const labB=el(`<div class="ab row" style="left:60px;top:440px;gap:14px"><div class="tag a">${ic('repeat',20)}Repetir</div><div class="lbl" style="font-size:19px;color:#4B5563">Volta todo mês</div></div>`,g);
   const MES=['Novembro','Dezembro','Janeiro','Fevereiro','Março'];
   const blocos=MES.map((m,i)=>el(`<div class="card" style="left:${60+i*216}px;top:490px;width:200px;height:150px;padding:20px 18px">
       <div class="ico a" style="width:44px;height:44px">${ic('calendar-days',24)}</div><div style="margin-top:16px;font-weight:800;font-size:21px">${m}</div></div>`,g));
-  const mais=el(`<div class="bdg" style="left:1146px;top:535px;width:60px;height:60px;background:var(--ac);color:var(--ae);border:2px solid #F5D08A">${ic('ellipsis',28)}</div>`,g);
+  const mais=el(`<div class="bdg" style="left:1146px;top:535px;width:60px;height:60px;background:var(--as);color:#fff;border:2px solid var(--as)">${ic('ellipsis',28)}</div>`,g);
   const rep=$('#t6rep');
 
   return t=>{
@@ -438,8 +438,8 @@ CAPS[8]=()=>{
   const [INI]=jan(8,'ilu08_futuras');
   const g=grupo(); const tit=titulo(g,'Recorrência','Qual conta muda?');
   const ops=el('<div class="ab row" style="left:0;top:188px;width:1280px;justify-content:center;gap:24px"></div>',g);
-  const o1=el('<div class="tag v" style="border:2px solid var(--vm)">Só esta conta</div>',ops);
-  const o2=el('<div class="tag a" style="border:2px solid #F5D08A">Esta e as futuras</div>',ops);
+  const o1=el('<div class="tag v" style="border:2px solid var(--vs)">Só esta conta</div>',ops);
+  const o2=el('<div class="tag a" style="border:2px solid var(--as)">Esta e as futuras</div>',ops);
   const BX=[235,505,775,1045], BY=480, MES=['Novembro','Dezembro','Janeiro','Fevereiro'];
   const fios=el(`<svg class="ab" style="left:0;top:0;overflow:visible" width="1280" height="800">${BX.map(x=>`<path d="M640 392 C 640 440, ${x} 430, ${x} ${BY-2}"
       fill="none" stroke="#D5DAE0" stroke-width="2.5" stroke-linecap="round"/>`).join('')}</svg>`,g);
@@ -454,12 +454,12 @@ CAPS[8]=()=>{
       <div class="ico" style="width:46px;height:46px">${ic('repeat',24)}</div>
       <div><div class="kick" style="font-size:13px;letter-spacing:.24em">Molde</div><div style="font-weight:800;font-size:22px;margin-top:2px">Aluguel da empilhadeira</div></div></div>`,g);
   const contas=MES.slice(0,3).map((m,i)=>conta(m,BX[i]-120,BY));
-  const bdg=(x,y,icn)=>el(`<div class="bdg" style="left:${x}px;top:${y}px;width:42px;height:42px;background:#fff;border:2px solid #E1E8E4;color:#4B5563">${ic(icn,20)}</div>`,g);
+  const bdg=(x,y,icn)=>el(`<div class="bdg" style="left:${x}px;top:${y}px;width:42px;height:42px;background:#4B5563;border:2px solid #4B5563;color:#fff">${ic(icn,20)}</div>`,g);
   const lDez=bdg(BX[1]+120-30,BY-16,'pencil'), lJan=bdg(BX[2]+120-30,BY-16,'pencil'), lMol=bdg(900-30,288-16,'pencil'), ok=bdg(BX[3]+120-30,BY-16,'check');
   const cor=(e,pV,pA)=>{if(pA>0){e.style.borderColor=mix(pV>0?VERDE[0]:BASE,AMBAR[0],pA);e.style.boxShadow=`0 0 0 ${(5*Math.max(pA,pV)).toFixed(2)}px ${AMBAR[1]},0 18px 40px rgba(16,24,40,.10)`}
     else anel(e,pV)};
-  const corB=(e,pV,pA)=>{e.style.color=pA>0?mix(pV>0?'#2E7D57':'#4B5563','#8A5A00',pA):mix('#4B5563','#2E7D57',pV);
-    e.style.borderColor=pA>0?mix(pV>0?VERDE[0]:BASE,AMBAR[0],pA):mix(BASE,VERDE[0],pV);e.style.background=pA>0?mix(pV>0?'#EAF8F0':'#FFFFFF','#FFF5DF',pA):mix('#FFFFFF','#EAF8F0',pV)};
+  const corB=(e,pV,pA)=>{e.style.color='#fff';
+    const bg=pA>0?mix(pV>0?'#16A34A':'#4B5563','#D97706',pA):mix('#4B5563','#16A34A',pV);e.style.borderColor=bg;e.style.background=bg};
 
   return t=>{
     const tS1=WS(2,'so',1), tDz=WS(2,'dezembro'), tE2=WS(2,'esta',2), tE3=WS(2,'esta',3), tPx=WS(2,'proximas'), tMo=WS(2,'molde'),
@@ -471,7 +471,7 @@ CAPS[8]=()=>{
     // as duas escolhas: a segunda acende e a primeira fica de lado (cinza)
     const m1=eo(pr(t,tDz-.15,.45)), m2=eo(pr(t,tE2,.45));
     vis(o1,t,ent+.1,1e9,{dy:10}); vis(o2,t,tE2-.05,1e9,{dy:10});
-    o1.style.color=mix('#2E7D57','#6B7280',m2); o1.style.background=mix('#EAF8F0','#F3F4F6',m2); o1.style.borderColor=mix('#A9E9C6','#D5DAE0',m2);
+    o1.style.color='#fff'; o1.style.background=mix('#16A34A','#4B5563',m2); o1.style.borderColor=mix('#16A34A','#4B5563',m2);
     // Só esta conta: só dezembro (verde). Esta e as futuras: dezembro, janeiro e o molde (âmbar); novembro não muda
     const aD=eo(pr(t,tE3,.45)), aJ=eo(pr(t,tPx,.45)), aM=eo(pr(t,tMo,.45));
     cor(contas[1],m1,aD); cor(contas[2],0,aJ); cor(molde,0,aM); anel(contas[0],0);
@@ -571,7 +571,7 @@ CAPS[10]=()=>{
   const g=grupo(); const tit=titulo(g,'Fiado','O fiado parcelado');
   const CX=[65,475,885], CW=330, R1=290, R2=540, BW=CW-44, SG=5, SW=(BW-(N-1)*SG)/N;
   const chipSaldo=`<div class="tag p sm">${ic('hand-coins',16)}Saldo</div>`;
-  const segs=(n,vazios=0)=>[...Array(n+vazios)].map((_,k)=>`<div style="width:${SW.toFixed(1)}px;height:18px;border-radius:9px;flex:none;${k<n?'background:var(--ac);border:2px solid #F2B63D':'border:2px dashed #CBD2D9'}"></div>`).join('');
+  const segs=(n,vazios=0)=>[...Array(n+vazios)].map((_,k)=>`<div style="width:${SW.toFixed(1)}px;height:18px;border-radius:9px;flex:none;${k<n?'background:var(--as);border:2px solid var(--as)':'border:2px dashed #CBD2D9'}"></div>`).join('');
   const barraS='<div style="height:18px;border-radius:9px;background:var(--pc);border:2px solid var(--pm)"></div>';
   const op1=(x,y,s)=>el(`<div class="op" style="left:${x-30}px;top:${y-30}px">${s}</div>`,g);
   // a venda a prazo (gera o saldo e as parcelas)
@@ -614,7 +614,7 @@ CAPS[10]=()=>{
       <div class="ab row" style="left:22px;top:46px;width:${BW}px;height:56px;border-radius:12px;border:2px solid var(--vm);background:#F4FBF7;padding:0 12px;gap:10px">
         ${chipSaldo}<div style="font-weight:800;font-size:17px;color:var(--ve);white-space:nowrap">Só o que sobra</div></div>
       <div class="ab row" style="left:22px;top:114px;width:${BW}px;gap:${SG}px">${[0,1].map(()=>`<div style="width:${SW.toFixed(1)}px;height:18px;flex:none"></div>`).join('')}
-        <div style="width:${SW.toFixed(1)}px;height:18px;border-radius:9px;flex:none;background:var(--vc);border:2px solid var(--v)"></div></div></div>`,g);
+        <div style="width:${SW.toFixed(1)}px;height:18px;border-radius:9px;flex:none;background:var(--v);border:2px solid var(--v)"></div></div></div>`,g);
   const sobra=lista2.children[2].lastElementChild;
   const menos2=op1(CX[1]-40,R2+75,'−'), igual2=op1(CX[2]-40,R2+75,'=');
 

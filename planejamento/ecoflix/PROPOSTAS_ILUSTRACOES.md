@@ -16,3 +16,6 @@ As do robô ficam em `Tnn/propostas_fala.md`; estas vieram dos agentes de ilustr
 | T13 | cap10 | O segundo caso da conta ficou sem número (R$ 5.000/3.000/2.000 não são do mundo). | Conferir. |
 | T14 | cap00 | A cena mostra R$ 44.933,47 e R$ 46.382,57, que dependem dos Pix da T13. | Conferir com a semente nova (robô da T14 avisado). |
 | Kit | `pulse()` | Usa a propriedade CSS `scale`, que desloca elemento posicionado por `transform`; chamado duas vezes no mesmo elemento, anula o primeiro; um chip com a classe "g" herda o `.g` de grupo do kit. | Corrigir na unificação do kit. |
+| T05 | cap04 | A hora do cupom de teste na cena (08:41:07, constante `QUANDO` no `CAPS[4]`) tem de bater com a cena de Windows 4. | Conferir quando gravar a T05. |
+| T27/T01 | — | O logo fictício da Recicla Vale tem texto azul-escuro em fundo transparente: lê mal no menu escuro do app. Fazer uma versão clara para fundo escuro (e as cenas da T27 embutem o logo: se o da T01 mudar, embutir de novo). | Logo do mundo. |
+| T05 | cap06, linha 10 | A troca "asas"→"Asaas" pegava dentro de "casas" (a legenda sairia "cAsaas decimais"): corrigido no `proc.py` e no `tempos_estimados.py` (só palavra inteira). | Resolvido. |

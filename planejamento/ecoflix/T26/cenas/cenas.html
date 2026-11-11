@@ -432,7 +432,7 @@ CAPS[6]=()=>{
   const gat=el(`<div class="ab" style="left:84px;top:630px;width:300px;display:flex;justify-content:center">${chip('gatilho','a','zap')}</div>`,gA);
   const cwA=el(`<div class="ab" style="left:0;top:0;visibility:hidden">${cartao(230,78,'#C9A57C')}</div>`,gA);
   const raio=el(`<div class="badge ico a" style="left:410px;top:356px;width:58px;height:58px">${ic('zap',30)}</div>`,gA);
-  const XC=[560,830,1100], DW=72, DH=210, BASE=480;
+  const XC=[520,760,1000], DW=72, DH=210, BASE=480;          // caídos, o último termina em x 1245 (dentro do quadro)
   const DM=XC.map(cx=>{const w=el(`<div class="ab" style="left:${cx-DW/2}px;top:${BASE-DH}px;width:${DW}px;height:${DH}px;transform-origin:${DW}px ${DH}px"></div>`,gA);
     el(domino(DW,DH),w);return w});
   const AC=[['Atribuir responsável','user-round'],['Criar tarefa','list-checks'],['Adicionar etiqueta','tag']].map(([x,i],k)=>
@@ -583,7 +583,7 @@ CAPS[11]=()=>{
   const X12=760+1+24+4*54, Y12=330+1+92+38;
   const ln=el(`<svg class="ab" style="left:0;top:0;overflow:visible" width="1280" height="800">
       <path d="M560 266 C 560 330, 330 360, 300 428" fill="none" stroke="var(--vm)" stroke-width="4" stroke-linecap="round"/>
-      <path d="M720 266 C 720 330, ${X12+23} 360, ${X12+23} ${Y12-2}" fill="none" stroke="var(--vm)" stroke-width="4" stroke-linecap="round"/></svg>`,g);
+      <path d="M720 266 C 980 266, ${X12+23} 300, ${X12+23} ${Y12-2}" fill="none" stroke="var(--vm)" stroke-width="4" stroke-linecap="round"/></svg>`,g);
   const [l1,l2]=ln.querySelectorAll('path');
   const ok=(e,c)=>e.querySelector(`.${c} .ok`);
 

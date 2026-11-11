@@ -64,8 +64,8 @@ body{font-family:M,sans-serif;color:var(--t);-webkit-font-smoothing:antialiased}
    --n cinza neutro (ícone e chip apagado)  .risco = traço que risca um chip ("não é despesa") */
 :root{--r:#E5484D;--re:#B42318;--rc:#FDECEC;--az:#3B82F6;--aze:#1D4ED8;--azc:#EAF1FE;--n:#4B5563;--nc:#F2F4F7}
 /* selos, chips e quadrados de ícone desta aula: fundo cheio, ícone e texto brancos (pedido do Kaik, 11/11) */
-.tag.r{background:var(--re);color:#fff} .tag.n{background:var(--n);color:#fff} .tag.az{background:var(--aze);color:#fff}
-.ico.r{background:var(--re);color:#fff} .ico.n{background:var(--n);color:#fff} .ico.az{background:var(--aze);color:#fff}
+.tag.r{background:var(--rs);color:#fff} .tag.n{background:var(--n);color:#fff} .tag.az{background:var(--aze);color:#fff}
+.ico.r{background:var(--rs);color:#fff} .ico.n{background:var(--n);color:#fff} .ico.az{background:var(--aze);color:#fff}
 .cab{display:flex;align-items:center;height:72px;padding:0 22px;gap:12px;border-bottom:1px solid var(--l);background:#FAFBFC}
 .cab b{font-weight:800;font-size:22px;white-space:nowrap}
 .ch{position:relative;display:inline-flex}
@@ -348,7 +348,7 @@ function cena01saida(){
       <div class="lbl" style="font-size:18px">Parcela</div>
       <div style="margin-top:6px;height:10px;border:3px solid #AEB6BF;border-bottom:none;border-radius:6px 6px 0 0"></div></div>`,c2);
   const sA=el('<div class="ab" style="left:24px;top:208px;width:190px;height:56px;border-radius:12px;background:var(--n);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:17px;color:#fff;white-space:nowrap">valor emprestado</div>',c2);
-  const sB=el('<div class="ab" style="left:218px;top:208px;width:92px;height:56px;border-radius:12px;background:var(--a);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px;color:#fff">juros</div>',c2);
+  const sB=el('<div class="ab" style="left:218px;top:208px;width:92px;height:56px;border-radius:12px;background:var(--as);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px;color:#fff">juros</div>',c2);
   const dA=el(`<div class="ab" style="left:24px;top:282px;width:190px;display:flex;justify-content:center">${chipR('n','despesa',18)}</div>`,c2), r2b=dA.querySelector('.risco');
   const s2=seta(c2,264,276,264,320,'var(--ae)');
   const rs=el('<div class="ab" style="left:196px;top:330px;width:140px;display:flex;justify-content:center"><div class="tag v" style="font-size:18px;padding:8px 16px">resultado</div></div>',c2);
@@ -522,7 +522,7 @@ CAPS[6]=()=>{
     out.style.transform=`translate(${lerp(X0+W4A+150,X0+W4A-14,po).toFixed(2)}px,0)`;
     const oo=t<tre-.2?eo(pr(t,tou-.1,.4)):1-eo(pr(t,tre-.2,.4)); out.style.opacity=oo.toFixed(3); out.style.visibility=oo<=.001?'hidden':'visible';
     vis(cOut,t,tou+.05,1e9,{dy:10});
-    const vr=eo(pr(t,tre-.2,.5)); B[3].style.background=mix('#EAF8F0','#50D088',vr); B[3].style.borderColor=mix('#A9E9C6','#3FBF77',vr);
+    const vr=eo(pr(t,tre-.2,.5)); B[3].style.background=mix('#EAF8F0','#16A34A',vr); B[3].style.borderColor=mix('#A9E9C6','#15803D',vr);
     L[3].style.color=mix('#2E7D57','#FFFFFF',vr); pulse(B[3],t,tre+.5,.035,.8);
   };
 };

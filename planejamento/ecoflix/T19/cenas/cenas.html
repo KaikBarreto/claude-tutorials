@@ -243,7 +243,7 @@ CAPS[0]=()=>{
     fill="none" stroke="#50D088" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg>`,g).querySelector('path');
   const carts=[['wallet','Saldo'],['receipt-text','Extrato'],['clock','Ponto']].map(([i,s],k)=>el(`<div class="card row" style="left:732px;top:${250+k*140}px;width:428px;height:112px;padding:0 26px;gap:20px">
       <div class="ico" style="width:64px;height:64px">${ic(i,34)}</div><div style="font-weight:800;font-size:30px">${s}</div>
-      <div class="cx ok" style="position:absolute;right:26px;top:30px;width:52px;height:52px;background:var(--v);color:#fff">${ic('check',30)}</div></div>`,g));
+      <div class="cx ok" style="position:absolute;right:26px;top:30px;width:52px;height:52px;background:var(--vs);color:#fff">${ic('check',30)}</div></div>`,g));
   return t=>{
     const J=janela([1,'num'],[1,'dela'],.6); if(!naJanela(g,t,J))return;
     const tv=W(1,'vale'),ts=W(1,'semana'),tc=W(1,'caderno'),tl=W(1,'lembrar'),ta=W(1,'aqui'),tca=W(1,'cada'),tco=W(1,'coisa'),
@@ -286,7 +286,7 @@ CAPS[2]=()=>{
   const chips=[];
   [['fundo de garantia'],['décimo terceiro','férias'],['INSS da empresa','EPI']].forEach((ls,k)=>{
     const r=el(`<div class="ab row" style="left:345px;top:${406+k*66}px;width:600px;justify-content:center;gap:12px"></div>`,g);
-    ls.forEach(s=>chips.push(el(`<div class="tag v" style="font-size:21px;padding:8px 16px;background:#fff;border:2px solid var(--vm)">${s}</div>`,r)))});
+    ls.forEach(s=>chips.push(el(`<div class="tag v" style="font-size:21px;padding:8px 16px">${s}</div>`,r)))});
   return t=>{
     const J=janela([4,'e'],[4,'ponta'],1.3); if(!naJanela(g,t,J))return;
     const tcu=W(4,'custa'),tsa=W(4,'salario'),tso=W(4,'so'),tpo=W(4,'ponta');
@@ -389,8 +389,8 @@ CAPS[6]=()=>{
   const cL=[...fila(bL,42,[['Vale','a'],['Bônus','v']]),...fila(bL,118,[['Recebimento','v']])];
   const sal=fila(bR,42,[[`Salário <span class="num">${brl(2900)}</span>`,'v']])[0];
   const cR=fila(bR,118,[['Vale','a'],['Bônus','v'],['Falta','a']]);
-  const cad=el(`<div class="cx" style="position:absolute;right:-20px;top:-20px;width:48px;height:48px;background:#F2F4F7;color:#4B5563;border:2px solid #CBD3DB">${ic('lock',24)}</div>`,bL);
-  const marco=el(`<div class="cx" style="position:absolute;left:592px;top:${Y-48}px;width:96px;height:96px;background:#fff;border:5px solid #50D088;color:var(--ve);box-shadow:0 10px 24px rgba(46,125,87,.18)">${ic('banknote',44)}</div>`,g);
+  const cad=el(`<div class="cx" style="position:absolute;right:-20px;top:-20px;width:48px;height:48px;background:#4B5563;color:#fff;border:2px solid #fff">${ic('lock',24)}</div>`,bL);
+  const marco=el(`<div class="cx" style="position:absolute;left:592px;top:${Y-48}px;width:96px;height:96px;background:var(--vs);border:5px solid #50D088;color:#fff;box-shadow:0 10px 24px rgba(46,125,87,.18)">${ic('banknote',44)}</div>`,g);
   const rotulo=(cx,html)=>el(`<div class="ab" style="left:${cx-220}px;top:${Y+62}px;width:440px;text-align:center">${html}</div>`,g);
   const lP=rotulo(640,'<div class="nm" style="font-size:24px">Pagamento</div>');
   const lF=rotulo(319,'<div class="tag c">mês fechado</div>'), lR=rotulo(961,'<div class="tag v">próximo pagamento</div>');
@@ -465,8 +465,8 @@ CAPS[8]=()=>{
   const celA=el(`<div class="ab" style="left:868px;top:214px;width:240px;height:440px">${celular(240,440,`
       <div class="ab" style="left:0;top:56px;width:218px;display:flex;justify-content:center"><div class="avA">${avatar(88,'#8A949E','#EEF1F4')}</div></div>
       <div class="ab nomeA" style="left:0;top:158px;width:218px;text-align:center"><span class="nm" style="font-size:26px">Gabriel</span></div>
-      <div class="ab bolha row" style="left:16px;top:222px;width:186px;height:54px;border-radius:16px;background:var(--vc);padding:0 14px;gap:8px">
-        ${ic('link',22,'#2E7D57')}<span style="font-weight:700;font-size:17px;color:var(--ve);white-space:nowrap">link do ponto</span></div>`)}</div>`,gA);
+      <div class="ab bolha row" style="left:16px;top:222px;width:186px;height:54px;border-radius:16px;background:var(--vs);padding:0 14px;gap:8px">
+        ${ic('link',22,'#fff')}<span style="font-weight:700;font-size:17px;color:#fff;white-space:nowrap">link do ponto</span></div>`)}</div>`,gA);
   const avA=celA.querySelector('.avA'), nomeA=celA.querySelector('.nomeA'), bolha=celA.querySelector('.bolha');
   const env=el(`<div class="ab" style="left:0;top:0;width:96px;height:68px">${envelope()}</div>`,gA);
   // ---- cena B
@@ -484,7 +484,7 @@ CAPS[8]=()=>{
       ${[...Array(6)].map(()=>`<div style="display:flex;flex-direction:column;align-items:center;gap:8px">${avatar(62)}<div style="width:64px;height:8px;border-radius:4px;background:#DCE1E7"></div></div>`).join('')}</div>`)}</div>`,gB);
   const subR=el('<div class="ab" style="left:720px;top:544px;width:460px;text-align:center"><span class="lbl" style="font-size:20px">um por empresa</span></div>',gB);
   const div=el(`<svg class="ab" style="left:0;top:0;overflow:visible" width="1280" height="800"><path d="M640 190 L640 640" fill="none" stroke="#B9C1C9" stroke-width="4" stroke-linecap="round" stroke-dasharray="2 14"/></svg>`,gB).querySelector('path');
-  const cad=el(`<div class="cx" style="position:absolute;left:600px;top:358px;width:80px;height:80px;background:#fff;border:4px solid #50D088;color:var(--ve);box-shadow:0 10px 24px rgba(16,24,40,.12)">${ic('lock',38)}</div>`,gB);
+  const cad=el(`<div class="cx" style="position:absolute;left:600px;top:358px;width:80px;height:80px;background:var(--vs);border:4px solid #50D088;color:#fff;box-shadow:0 10px 24px rgba(16,24,40,.12)">${ic('lock',38)}</div>`,gB);
   return t=>{
     const JA=janela([3,'aí'],[3,'mensagem'],.6);
     if(naJanela(gA,t,JA)){
@@ -560,7 +560,7 @@ CAPS[10]=()=>{
         <div class="ab" style="left:0;top:28px;width:186px;text-align:center" ><span class="lbl" style="font-size:22px">${s}</span></div>
         <div class="ab num" style="left:0;top:62px;width:186px;text-align:center;font-size:64px">${n}</div></div>`,g);
     let m=null;
-    if(st==='ok') m=el(`<div class="cx" style="position:absolute;left:61px;top:184px;width:64px;height:64px;background:var(--v);color:#fff">${ic('check',36)}</div>`,c);
+    if(st==='ok') m=el(`<div class="cx" style="position:absolute;left:61px;top:184px;width:64px;height:64px;background:var(--vs);color:#fff">${ic('check',36)}</div>`,c);
     if(st==='fer') m=el('<div class="ab" style="left:0;top:200px;width:186px;text-align:center"><span class="tag c" style="font-size:17px;padding:7px 14px">Feriado</span></div>',c);
     return {c,m};
   });
@@ -603,11 +603,11 @@ CAPS[11]=()=>{
     const top=292+k*92;
     const nm=el(`<div class="ab row" style="left:96px;top:${top+3}px;gap:12px">${avatar(46)}<div class="nm">${n}</div></div>`,g);
     const trk=el(`<div class="ab" style="left:${xh(6)}px;top:${top}px;width:${12*PX}px;height:52px;border-radius:12px;background:#F2F4F7"></div>`,g);
-    const emp=el(faixa(7,16,top,'#DDF4E6','#A9E9C6','07:00 às 16:00','#2E7D57'),g);
+    const emp=el(faixa(7,16,top,'#16A34A','#fff','07:00 às 16:00','#fff'),g);
     return {nm,trk,emp,top};
   });
   const julW=el(`<div class="ab" style="left:0;top:0;width:1280px;height:800px"></div>`,g);
-  const julI=el(`<div class="ab" style="left:0;top:0;width:1280px;height:800px">${faixa(8,17,rows[2].top,'#FFF1D6','#F2B63D','08:00 às 17:00','#8A5A00')}</div>`,julW);
+  const julI=el(`<div class="ab" style="left:0;top:0;width:1280px;height:800px">${faixa(8,17,rows[2].top,'#D97706','#fff','08:00 às 17:00','#fff')}</div>`,julW);
   const julB=julI.firstElementChild;
   const nmJ=rows[2].nm.querySelector('.nm'), avJ=rows[2].nm.querySelector('.av');
   const tagP=el(`<div class="ab" style="left:${xh(7)}px;top:668px;width:${9*PX}px;text-align:center"><div class="tag v">horário padrão</div></div>`,g);
@@ -647,7 +647,7 @@ CAPS[12]=()=>{
   const fW=el('<div class="ab" style="left:470px;top:168px;width:340px;height:104px;transform-origin:170px 52px"></div>',g);
   const fC=el(`<div class="card row" style="left:0;top:0;width:340px;height:104px;padding:0 22px;gap:14px">${avatar(60)}<div class="nm" style="font-size:24px">Rogério Batista</div></div>`,fW);
   const cxF=el(`<div class="ab" style="left:210px;top:404px;width:240px;height:190px">${caixaFrente()}</div>`,g);
-  const ok=el(`<div class="cx" style="position:absolute;left:418px;top:442px;width:52px;height:52px;background:var(--v);color:#fff">${ic('check',30)}</div>`,g);
+  const ok=el(`<div class="cx" style="position:absolute;left:418px;top:442px;width:52px;height:52px;background:var(--vs);color:#fff">${ic('check',30)}</div>`,g);
   const lA=el('<div class="ab" style="left:130px;top:610px;width:380px;text-align:center"><div class="tag v">Arquivar</div></div>',g);
   const dir=el('<div class="ab" style="left:0;top:0;width:1280px;height:800px"></div>',g);
   const lix=el(`<div class="ab" style="left:890px;top:420px;width:140px;height:170px">${lixeira()}</div>`,dir);
