@@ -465,3 +465,7 @@ Decisões:
 - 11/11 13:1x **Estilo saturado pronto em T13, T14 e T16** (17, 14 e 15 trocas; painéis grandes "Disponível no cofre" e
   "Diferença" da T14 ficaram claros; o carimbo "Cancelada" da T16 continua desenho; os elementos esmaecidos de propósito
   continuam esmaecidos). Folhas mandadas ao Kaik.
+- 11/11 13:1x **Ilustrações T20 e T26 prontas no estilo novo** (9 + 10 cenas; quadros do CRM só em esquema, dominós com os
+  rótulos do app) e **estilo saturado pronto em T07, T08 e T09** (~9, 8 e 12 ajustes, num bloco `saturado-aula` por aula;
+  ícones soltos sem fundo, linhas de resumo dentro de cartões e o navegador esquemático da T09 ficaram como estavam).
+  Todas as 26 aulas têm ilustração. Folhas mandadas ao Kaik. Faltam: estilo de T10-T12 e T17/T18/T19/T25 e o Cato (T21).

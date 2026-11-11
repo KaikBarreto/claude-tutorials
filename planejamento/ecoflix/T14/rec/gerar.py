@@ -232,3 +232,92 @@ class Cap:
             'seedExtra': list(SEMENTE[s.n]),
             'prewarm': ['/login'], 'setup': s.setup, 'steps': s.steps,
         }
+
+
+# ---------------------------------------------------------------- alvos
+MAIN = 'main'
+DLG = '[role=dialog]'
+ALERTA = '[role=alertdialog]'
+BTN = lambda n, within=None, **kw: {'role': 'button', 'name': n, 'exact': True, **({'within': within} if within else {}), **kw}
+BTNX = lambda n, within=None, **kw: {'role': 'button', 'name': n, **({'within': within} if within else {}), **kw}
+TXT = lambda t, within=None, **kw: {'text': t, 'exact': True, **({'within': within} if within else {}), **kw}
+SEL = lambda s, **kw: {'selector': s, **kw}
+ITEM = lambda n, **kw: {'role': 'menuitem', 'name': n, **kw}
+OPT = lambda n, **kw: {'role': 'option', 'name': n, **kw}
+AGUARDA = {'do': 'waitFor', 'idle': True}
+# lista lateral de contas (SettingsSidebarLayout): o botão da conta e, por cima dele, os "⋮" que só aparecem com o mouse na conta
+CONTA = lambda nome: SEL(f'div[class*="group/tab"] button:has(span:text-is("{nome}"))')
+PONTOS = lambda nome: SEL(f'div[class*="group/tab"]:has(span:text-is("{nome}")) div.absolute button')
+# linha da conciliação (ReconciliationTable: uma grade de 2 colunas por linha do extrato) achada pelo memo exato
+LINHA = lambda memo: f'div[class*="md:grid-cols-2"]:has(:text-is("{memo}"))'
+NA_LINHA = lambda memo, botao: SEL(f'{LINHA(memo)} button:has-text("{botao}")')
+
+
+def login():
+    return [{'do': 'waitFor', 'target': {'label': 'E-mail'}, 'timeout': 30},
+            {'do': 'type', 'target': {'label': 'E-mail'}, 'text': '$TUT_USER', 'cps': 40},
+            {'do': 'type', 'target': {'label': 'Senha', 'exact': True}, 'text': '$TUT_SENHA', 'cps': 40},
+            {'do': 'click', 'target': BTN('Entrar')},
+            {'do': 'waitFor', 'text': 'Olá, Rafael!', 'timeout': 30}, AGUARDA]
+
+
+def setup_mov(extra=()):
+    """login, Dashboard e a tela Movimentações Financeiras (abre na Conta Principal)"""
+    return login() + [{'do': 'goto', 'url': '/movimentacoes-bancarias'}, {'do': 'waitFor', 'text': 'Controle de pagamentos via Pix/Transferência', 'timeout': 30},
+                      AGUARDA, {'do': 'waitFor', 'target': CONTA('Conta Principal'), 'timeout': 20}] + list(extra)
+
+
+def setup_conc(extra=()):
+    """... e a aba Conciliação com o extrato aberto (Continuar)"""
+    return setup_mov([{'do': 'click', 'target': BTN('Conciliação')}, {'do': 'waitFor', 'text': 'Conta para conciliar', 'timeout': 20},
+                      {'do': 'click', 'target': BTN('Continuar')}, {'do': 'waitFor', 'text': 'Linha do extrato', 'timeout': 20}, AGUARDA] + list(extra))
+
+
+# ---------------------------------------------------------------- capítulos
+def cap00():
+    c = Cap(0, login(), pace=0.6)
+    c.mark(1)
+    c.mark(2)
+    c.mark(3)
+    c.hover(BTN('Financeiro'), seconds=0.8, at=c.A(3, 'caminho', 0.4), label='menu Financeiro')
+    c.mark(4)
+    c.hover(BTN('Financeiro'), seconds=0.6, at=c.A(4, 'tela', 0.5), label='menu Financeiro (vamos começar)')
+    c.fim()
+    return c
+
+
+def cap01():
+    c = Cap(1, login(), pace=0.55)
+    c.mark(1)
+    c.click(BTN('Financeiro'), at=c.A(1, 'Financeiro', 0.7), label='menu Financeiro', unless={'role': 'link', 'name': 'Movimentações Financeiras'})
+    c.click({'role': 'link', 'name': 'Movimentações Financeiras'}, at=c.A(1, 'Movimentações', 0.6), label='menu Movimentações Financeiras')
+    c.waitfor(text='Controle de pagamentos via Pix/Transferência', timeout=20)
+    c.hover(SEL('main h1:has-text("Movimentações Financeiras")'), seconds=0.8, at=c.A(1, 'nome', 0.5), label='título Movimentações Financeiras')
+    c.mark(2)
+    c.hover(CONTA('Resumo'), seconds=0.3, at=c.A(2, 'lado', 0.5), label='lista de contas')
+    c.hover(CONTA('DINHEIRO (COFRE)'), seconds=0.3, at=c.A(2, 'saldo', 0.5), label='saldo embaixo do nome')
+    c.hover(CONTA('DINHEIRO (COFRE)'), seconds=0.2, at=c.A(2, 'cofre', 0.4), label='o cofre primeiro')
+    c.hover(CONTA('Conta Principal'), seconds=0.2, at=c.A(2, 'principal', 0.5), label='a conta principal')
+    c.hover(CONTA('Conta Secundária'), seconds=0.3, at=c.A(2, 'outras', 0.5), label='as outras contas')
+    c.hover(BTNX('Nova Conta'), seconds=0.3, label='botões Nova Conta e Novo Cartão')
+    c.mark(3)
+    c.click(CONTA('Conta Principal'), at=c.A(3, 'Clicando', 0.5), label='abre a Conta Principal')
+    c.hover(SEL('main h2:has-text("R$"), main p:has-text("R$ 39.593,47")'), seconds=0.4, at=c.A(3, 'saldo', 0.5), label='cartão da Conta Principal')
+    c.hover(BTNX('Saque', within=MAIN), seconds=0.15, at=c.A(3, 'Saque', 0.45), label='Saque')
+    c.hover(BTNX('Sangria', within=MAIN), seconds=0.15, at=c.A(3, 'Sangria', 0.45), label='Sangria')
+    c.hover(BTNX('Nova Movimentação', within=MAIN), seconds=0.15, at=c.A(3, 'Nova', 0.45), label='Nova Movimentação')
+    c.hover(BTNX('Extrato', within=MAIN), seconds=0.3, at=c.A(3, 'Extrato', 0.45), label='Extrato')
+    c.mark(4)
+    c.hover(TXT('Histórico de Movimentações', within=MAIN), seconds=0.4, at=c.A(4, 'histórico', 0.5), label='Histórico de Movimentações')
+    c.hover(SEL('main button[role=combobox]:has-text("Este mês")'), seconds=0.2, at=c.A(4, 'mês', 0.5), label='período Este mês')
+    c.hover({'placeholder': 'Buscar por descrição ou valor...'}, seconds=0.4, at=c.A(4, 'busca', 0.5), label='busca por descrição ou valor')
+    c.mark(5)
+    c.click(CONTA('Resumo'), at=c.A(5, 'Resumo', 0.6), label='Resumo')
+    c.hover(TXT('Dinheiro e contas bancárias', within=MAIN), seconds=0.4, at=c.A(5, 'total', 0.5), label='total da empresa')
+    c.hover(TXT('Dinheiro', within=MAIN), seconds=0.3, at=c.A(5, 'cofre', 0.5), label='Dinheiro (cofre)')
+    c.hover(TXT('Contas bancárias', within=MAIN), seconds=0.4, at=c.A(5, 'banco', 0.5), label='Contas bancárias')
+    c.mark(6)
+    c.hover(BTN('Movimentações Financeiras', within=MAIN), seconds=0.4, at=c.A(6, 'Nesta', 0.5), label='aba Movimentações Financeiras')
+    c.hover(BTN('Conciliação', within=MAIN), seconds=0.6, at=c.A(6, 'Conciliação', 0.5), label='aba Conciliação')
+    c.fim()
+    return c

@@ -367,6 +367,7 @@ COMBO = lambda txt: SEL(f"{DLG} button[role=combobox]:has-text('{txt}')")
 CAMPO = lambda i: SEL(f'#{i}')
 SECAO = lambda t: SEL(f"{DLG} button[aria-expanded]:has-text('{t}')")                 # "Mais detalhes", "Parcelar ou repetir"
 DLG_BTN = lambda t: SEL(f"{DLG} button:has-text('{t}')")
+ALERTA_BTN = lambda t: SEL(f"[role=alertdialog] button:has-text('{t}')")       # a pergunta da recorrência (AlertDialog)
 RODAPE = lambda t: BTN(t)                                                            # botões do rodapé da janela (usar com noScroll)
 CARTAO_PAG = lambda rot: SEL(f"{DLG} button[aria-label='{rot}']")                    # "Dinheiro (Caixa)", "Pix / Transferência (Banco)"
 
@@ -689,11 +690,11 @@ def cap08():
     c.mark(2)
     c.click(NA_LINHA('12/12/2026', "button[title='Editar']"), at=c.A(2, 'editar', 0.7), label='lápis Editar na de dezembro')
     c.waitfor(text='Editar conta recorrente', timeout=8)
-    c.hover(DLG_BTN('Só esta conta'), 0.6, at=c.A(2, 'só', 0.6), label='Só esta conta')
-    c.hover(DLG_BTN('Esta e as futuras'), 0.8, at=c.A(2, 'esta', 0.6, nth=1), label='Esta e as futuras')
+    c.hover(ALERTA_BTN('Só esta conta'), 0.6, at=c.A(2, 'só', 0.6), label='Só esta conta')
+    c.hover(ALERTA_BTN('Esta e as futuras'), 0.8, at=c.A(2, 'esta', 0.6, nth=1), label='Esta e as futuras')
     c.mark(3)
     c.mark(4)
-    c.click(DLG_BTN('Esta e as futuras'), at=c.A(4, 'Escolho', 0.6), label='Esta e as futuras')
+    c.click(ALERTA_BTN('Esta e as futuras'), at=c.A(4, 'Escolho', 0.6), label='Esta e as futuras')
     c.waitfor(text='Altere os dados da conta.', timeout=8)
     escolhe_dia(c, CAMPO('bill-due'), '15', c.A(4, 'mudo', 0.7), c.A(4, 'quinze', 0.5), 'Vencimento 15/12/2026')
     c.hover({'text': 'Esta data e as futuras serão deslocadas pelo mesmo período.', 'within': DLG}, 1.4, at=c.A(4, 'aviso:', 0.6),
@@ -708,8 +709,8 @@ def cap08():
     c.mark(6)
     c.click(NA_LINHA('15/01/2027', "button[title='Excluir']"), at=c.A(6, 'Excluir', 0.7), label='lixeira Excluir na de janeiro')
     c.waitfor(text='Excluir conta recorrente', timeout=8)
-    c.hover(DLG_BTN('Esta e as futuras'), 1.2, at=c.A(6, 'Esta', 0.6), label='Esta e as futuras (vermelho)')
-    c.click(DLG_BTN('Cancelar'), at=c.A(6, 'cancelo.', 0.6), label='Cancelar')
+    c.hover(ALERTA_BTN('Esta e as futuras'), 1.2, at=c.A(6, 'Esta', 0.6), label='Esta e as futuras (vermelho)')
+    c.click(ALERTA_BTN('Cancelar'), at=c.A(6, 'cancelo.', 0.6), label='Cancelar')
     c.fim()
     return c
 

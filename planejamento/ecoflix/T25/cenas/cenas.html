@@ -56,7 +56,7 @@ body{font-family:M,sans-serif;color:var(--t);-webkit-font-smoothing:antialiased}
 /* ---------------------------------------------------------------- T25: objetos genéricos e textos desta aula */
 .lf{display:flex;align-items:center;justify-content:space-between;height:50px;border-bottom:1px dashed #DCE1E7;font-weight:700;font-size:23px;white-space:nowrap}
 .nm{font-weight:800;font-size:22px;white-space:nowrap}
-.tag.c{background:#F2F4F7;color:#4B5563}
+.tag.c{background:#4B5563;color:#fff}
 .cx{display:flex;align-items:center;justify-content:center;flex:none;border-radius:50%}
 </style><style id="saturado">/* estilo saturado (Kaik, 11/11): selo, chip, etiqueta, quadrado de ícone e círculo de etapa
    com fundo cheio e ícone/texto branco; nunca fundo claro com conteúdo colorido, nunca ícone escuro sobre o verde */
@@ -174,13 +174,13 @@ function listaRotina(pai,x,y,w,itens,alto=78){
   const rows=itens.map(([i,s],k)=>{const r=el(`<div class="ab row" style="left:24px;top:${14+k*alto}px;width:${w-48}px;height:${alto}px;gap:16px;
       ${k<itens.length-1?'border-bottom:1px dashed #DCE1E7':''}">
       <div class="ico" style="width:50px;height:50px">${ic(i,26)}</div><div class="nm it" style="font-size:24px">${s}</div>
-      <div class="cx ok" style="margin-left:auto;width:40px;height:40px;background:var(--v);color:#fff">${ic('check',24)}</div></div>`,c);
+      <div class="cx ok" style="margin-left:auto;width:40px;height:40px;background:var(--vs);color:#fff">${ic('check',24)}</div></div>`,c);
     return {r,ok:r.querySelector('.ok'),tx:r.querySelector('.it'),ico:r.querySelector('.ico')}});
   return {c,rows};
 }
 // item apagado (cinza) que acende (texto escuro, ícone verde, visto) em a
 function acende(it,t,a){const p=eo(pr(t,a,.45));it.tx.style.color=mix('#6B7280','#121212',p);
-  it.ico.style.background=mix('#F2F4F7','#EAF8F0',p);it.ico.style.color=mix('#8A949E','#2E7D57',p);vis(it.ok,t,a+.1,1e9,{sc:.6,dy:0})}
+  it.ico.style.background=mix('#4B5563','#16A34A',p);it.ico.style.color='#fff';vis(it.ok,t,a+.1,1e9,{sc:.6,dy:0})}
 // monte de sucata (ferro comprado parado no pátio), sobre o chão
 const monte=()=>`<svg viewBox="0 0 300 150" width="300" height="150" style="display:block;overflow:visible">
   <rect x="-30" y="140" width="360" height="7" rx="3.5" fill="#DDE2E7"/>
@@ -252,15 +252,15 @@ CAPS[1]=()=>{
   const cM=el('<div class="card" style="left:100px;top:172px;width:500px;height:520px"></div>',g); cab(cM,'chart-no-axes-column','','Margem');
   const lM=conta(cM,[['Vendas'],['− Compras']],92);
   const tM=el(`<div class="ab" style="left:30px;top:200px;width:440px"><div style="height:2px;background:#121212"></div>
-      <div class="lf" style="height:56px;border:0;font-size:26px;color:var(--ve)"><span>= Margem</span><span class="cx" style="width:44px;height:44px;background:var(--vc);color:var(--ve)">${ic('trending-up',26)}</span></div></div>`,cM);
+      <div class="lf" style="height:56px;border:0;font-size:26px;color:var(--ve)"><span>= Margem</span><span class="cx" style="width:44px;height:44px;background:var(--vs);color:#fff">${ic('trending-up',26)}</span></div></div>`,cM);
   // o caminhão do kit (reduzido num invólucro) leva do pátio o ferro comprado em outubro
   const chao=el('<div class="ab" style="left:24px;top:428px;width:452px;height:5px;border-radius:3px;background:#DDE2E7"></div>',cM);
   const camW=el('<div class="ab" style="left:36px;top:304px;width:280px;height:129px"></div>',cM);
   const cam=el(`<div style="width:500px;height:230px;transform:scale(.56);transform-origin:0 0">${caminhao()}</div>`,camW);
   const rodas=[...cam.querySelectorAll('.roda')];
   const out=el('<div class="ab" style="left:0;top:450px;width:500px;text-align:center"><div class="tag a">comprado em outubro</div></div>',cM);
-  const dif=el(`<div class="cx" style="position:absolute;left:608px;top:318px;width:64px;height:64px;background:#fff;border:3px solid #CBD3DB">
-      <svg viewBox="0 0 40 40" width="32" height="32"><g stroke="#4B5563" stroke-width="4.5" stroke-linecap="round"><line x1="8" y1="15" x2="32" y2="15"/>
+  const dif=el(`<div class="cx" style="position:absolute;left:608px;top:318px;width:64px;height:64px;background:#4B5563;border:3px solid #fff">
+      <svg viewBox="0 0 40 40" width="32" height="32"><g stroke="#fff" stroke-width="4.5" stroke-linecap="round"><line x1="8" y1="15" x2="32" y2="15"/>
       <line x1="8" y1="26" x2="32" y2="26"/><line x1="26" y1="6" x2="14" y2="35"/></g></svg></div>`,g);
   const cL=el('<div class="card" style="left:680px;top:172px;width:500px;height:432px"></div>',g); cab(cL,'badge-check','','Lucro');
   const lL=conta(cL,[['Vendas'],['− custo'],['− imposto'],['− despesa']],92);
@@ -310,7 +310,7 @@ CAPS[2]=()=>{
   const s31=sub(130,'31 dias'), s10=sub(770,'10 dias');
   const tagH=el('<div class="ab" style="left:770px;top:604px;width:380px;text-align:center"><div class="tag v">até hoje</div></div>',g);
   const seta=el(`<div class="ab" style="left:560px;top:292px;width:160px;height:200px;transform-origin:80px 70px">
-      <div class="cx circ" style="position:absolute;left:20px;top:0;width:120px;height:120px;background:var(--ac);color:var(--ae);border:3px solid #F2B63D;transform-origin:60px 60px">${ic('arrow-down',70)}</div>
+      <div class="cx circ" style="position:absolute;left:20px;top:0;width:120px;height:120px;background:var(--as);color:#fff;border:3px solid #F2B63D;transform-origin:60px 60px">${ic('arrow-down',70)}</div>
       <div class="ab tq" style="left:0;top:132px;width:160px;text-align:center"><div class="tag a">queda</div></div></div>`,g);
   const circ=seta.querySelector('.circ'), tq=seta.querySelector('.tq');
   return t=>{
@@ -344,12 +344,12 @@ CAPS[6]=()=>{
   const PAG=[['nov 2026','17'],['dez 2026','17'],['jan 2027','18']];
   const X=[230,510,790];
   const pags=PAG.map(([m,d],k)=>el(`<div class="card" style="left:${X[k]}px;top:400px;width:260px;height:240px;overflow:hidden">
-      <div class="cx" style="height:48px;border-radius:0;background:var(--vc);color:var(--ve);font-weight:800;font-size:19px">${m}</div>
+      <div class="cx" style="height:48px;border-radius:0;background:var(--vs);color:#fff;font-weight:800;font-size:19px">${m}</div>
       <div class="ab num dia" style="left:0;top:134px;width:260px;text-align:center;font-size:66px">${d}</div></div>`,g));
-  const parc=PAG.map(()=>el(`<div class="ab" style="left:0;top:0;width:212px;height:64px;border-radius:14px;background:var(--vc);border:2px solid var(--vm);
+  const parc=PAG.map(()=>el(`<div class="ab" style="left:0;top:0;width:212px;height:64px;border-radius:14px;background:var(--vs);border:2px solid #fff;
       display:flex;flex-direction:column;justify-content:center;align-items:center">
-      <div style="font-weight:800;font-size:15px;color:var(--ve);letter-spacing:.02em">A Receber</div>
-      <div class="num" style="font-size:22px;color:var(--ve)">${brl(4790)}</div></div>`,g));
+      <div style="font-weight:800;font-size:15px;color:#fff;letter-spacing:.02em">A Receber</div>
+      <div class="num" style="font-size:22px;color:#fff">${brl(4790)}</div></div>`,g));
   const so=el(`<div class="ab" style="left:0;top:676px;width:1280px;text-align:center"><div class="tag v">${ic('circle-check',20)}uma vez só</div></div>`,g);
   return t=>{
     const J=janela([3,'o'],[3,'dia'],.6); if(!naJanela(g,t,J))return;
@@ -422,7 +422,7 @@ CAPS[10]=()=>{
   const tit=titulo(g,'Rotina','Rotina mensal');
   const esq=el('<div class="ab" style="left:0;top:0;width:1280px;height:800px"></div>',g);   // lado esquerdo: começa no centro e vai para a esquerda quando a lista entra
   const pag=el(`<div class="card" style="left:110px;top:196px;width:210px;height:236px;overflow:hidden">
-      <div class="cx" style="height:48px;border-radius:0;background:var(--vc);color:var(--ve);font-weight:800;font-size:18px">todo mês</div>
+      <div class="cx" style="height:48px;border-radius:0;background:var(--vs);color:#fff;font-weight:800;font-size:18px">todo mês</div>
       <div class="ab num" style="left:0;top:64px;width:210px;text-align:center;font-size:84px">1º</div></div>`,esq);
   const fech=el('<div class="ab" style="left:65px;top:450px;width:300px;text-align:center"><div class="tag v">fechamento</div></div>',esq);
   const cr=el(`<div class="ab" style="left:338px;top:226px">${cronometro(176,'2','horas')}</div>`,esq);
