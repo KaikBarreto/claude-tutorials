@@ -18,6 +18,7 @@ case "$INST" in
   *"FAKE_NOW=$FAKE_NOW"*"FAKE_PORT=54311"*) ;;
   *) echo "instância 54311 não está com FAKE_NOW=$FAKE_NOW (achei: ${INST:-nada}); suba de novo fora da trava"; exit 3 ;;
 esac
+python3 -I rec/t11/t11_sementes.py >/dev/null || exit 4   # sementes sempre do mundo base atual
 python3 -I rec/t11/gerar.py "$NN" >/dev/null || exit 4
 if [ "$MODO" = rapido ]; then
   python3 -I rec/t11/ensaio.py "$NN" >/dev/null

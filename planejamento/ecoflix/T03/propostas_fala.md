@@ -33,3 +33,11 @@ geral aplica. Linha = número da linha da tabela Tela × Fala do capítulo (a me
 - **Campo de material** (Movimentar, Transferir, Nova Compra): o Enter não escolhe a opção (o `input` fica fora do `Command`); a
   escolha é sempre um clique na lista.
 - **Avisos (sonner)**: no ensaio, o aviso não é achado por papel (`status`) nem por `[data-sonner-toast]`; o robô mira o texto.
+
+## Notas para a junção
+
+- **Siqueira × Tabela Depósitos**: o cap07 (linha 6) liga o Depósito Irmãos Siqueira à Tabela Depósitos na tela, e a T4 liga de novo
+  em B (MUNDO_LINHA_DO_TEMPO §4). Não há contradição (a T3 é demonstração e a semente `t03/inicio` desliga o depósito), mas a ação
+  aparece em duas aulas.
+- **Caixa do cap07**: semente própria `t03/caixa-0830` (caixa #85 do Rafael, 08:30, R$ 1.500,00, sem lançamentos), como pede o §9; o
+  `base/caixa-aberto` (08:05) não é usado.
