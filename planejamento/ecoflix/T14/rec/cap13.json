@@ -1,0 +1,381 @@
+{
+ "name": "t14-cap13",
+ "title": "T14 · Cap. 13 · Desfazer e cancelar (narração ESTIMADA 60,1 s; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "seed": "t14-cap13",
+ "pace": 0.5,
+ "cps": 40,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 470
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true"
+ },
+ "seedExtra": [
+  "t14/inicio",
+  "t14/apos-cap02",
+  "t14/apos-cap03",
+  "t14/apos-cap04",
+  "t14/apos-cap06",
+  "t14/apos-cap07",
+  "t14/apos-cap08",
+  "t14/apos-cap09",
+  "t14/apos-cap10",
+  "t14/apos-cap11",
+  "t14/apos-cap12"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "waitFor",
+   "target": {
+    "label": "E-mail"
+   },
+   "timeout": 30
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "E-mail"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "Senha",
+    "exact": true
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Rafael!",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/movimentacoes-bancarias"
+  },
+  {
+   "do": "waitFor",
+   "text": "Controle de pagamentos via Pix/Transferência",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "div[class*=\"group/tab\"] button:has(span:text-is(\"Conta Principal\"))"
+   },
+   "timeout": 20
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Conciliação",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Conta para conciliar",
+   "timeout": 20
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Continuar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Linha do extrato",
+   "timeout": 20
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const c=[...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop,dy=c.scrollHeight-c.clientHeight-y0;if(dy<3)return 'ok';c.scrollTop=y0+dy;return 'fim:'+Math.round(c.scrollTop)})()"
+  },
+  {
+   "do": "wait",
+   "seconds": 0.3
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||null};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"PIX ENVIADO DEPOSITO IRMAOS SIQUEIRA\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-250);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;c.scrollTop=y0+dy;return Math.round(el.getBoundingClientRect().top)})()"
+  },
+  {
+   "do": "wait",
+   "seconds": 0.4
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|Algo deu errado|Falha ao|Something went wrong|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&!/fica indispon/i.test(m[0])&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{document.querySelectorAll('[data-sonner-toast][data-type=error]').forEach(t=>{const s='TOAST DE ERRO: '+t.textContent.trim().slice(0,90);if(!window.__avisos.includes(s)&&window.__avisos.length<10)window.__avisos.push(s)})},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "div[class*=\"md:grid-cols-2\"]:has(:text-is(\"PIX ENVIADO DEPOSITO IRMAOS SIQUEIRA\")) :text-is(\"Casada\")"
+   },
+   "seconds": 0.4,
+   "at": 1.8,
+   "label": "linha resolvida",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "div[class*=\"md:grid-cols-2\"]:has(:text-is(\"PIX ENVIADO DEPOSITO IRMAOS SIQUEIRA\")) button:has-text(\"Desfazer\")"
+   },
+   "at": 2.91,
+   "label": "Desfazer (Casada)"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "div[class*=\"md:grid-cols-2\"]:has(:text-is(\"PIX ENVIADO DEPOSITO IRMAOS SIQUEIRA\")) button:has-text(\"Casar com\")"
+   },
+   "timeout": 10
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 9.19
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "div[class*=\"md:grid-cols-2\"]:has(:text-is(\"PIX ENVIADO DEPOSITO IRMAOS SIQUEIRA\")) button:has-text(\"Casar com\")"
+   },
+   "at": 12.45,
+   "label": "casa de novo"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "div[class*=\"md:grid-cols-2\"]:has(:text-is(\"PIX ENVIADO DEPOSITO IRMAOS SIQUEIRA\")) :text-is(\"Casada\")"
+   },
+   "timeout": 10
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 13.56
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||null};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"TARIFA PACOTE SERVICOS\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-280);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/800),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 13.94,
+   "label": "rola até a Criada"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "div[class*=\"md:grid-cols-2\"]:has(:text-is(\"TARIFA PACOTE SERVICOS\")) :text-is(\"Criada\")"
+   },
+   "seconds": 0.4,
+   "at": 15.38,
+   "label": "selo Criada",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "div[class*=\"md:grid-cols-2\"]:has(:text-is(\"TARIFA PACOTE SERVICOS\")) button:has-text(\"Desfazer\")"
+   },
+   "seconds": 1.0,
+   "at": 18.9,
+   "label": "Desfazer da Criada (pede confirmação)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 24.01
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Cancelar conciliação",
+    "exact": true
+   },
+   "at": 24.62,
+   "label": "Cancelar conciliação"
+  },
+  {
+   "do": "waitFor",
+   "text": "Cancelar esta conciliação?",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "vínculo(s) com lançamento existente",
+    "within": "[role=alertdialog]"
+   },
+   "seconds": 0.6,
+   "at": 29.2,
+   "label": "o que volta (ZOOM)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Digite CANCELAR para confirmar",
+    "within": "[role=alertdialog]"
+   },
+   "seconds": 0.6,
+   "at": 35.12,
+   "label": "Digite CANCELAR",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Manter conciliação",
+    "exact": true
+   },
+   "at": 37.75,
+   "label": "Manter conciliação"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "alertdialog"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const c=[...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop;if(y0<3)return 'ok';const dy=-y0;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/500),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'topo'})()",
+   "label": "sobe a página"
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 39.62
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Voltar",
+    "exact": true
+   },
+   "at": 40.3,
+   "label": "Voltar"
+  },
+  {
+   "do": "waitFor",
+   "text": "Continuar conciliação",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Continuar conciliação",
+    "within": "main"
+   },
+   "seconds": 0.6,
+   "at": 42.3,
+   "label": "Continuar conciliação",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Continuar",
+    "exact": true
+   },
+   "at": 44.33,
+   "label": "Continuar"
+  },
+  {
+   "do": "waitFor",
+   "text": "Linha do extrato",
+   "timeout": 10
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 48.55
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const c=[...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop,dy=c.scrollHeight-c.clientHeight-y0;if(dy<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'fim:'+Math.round(c.scrollTop)})()",
+   "at": 49.46,
+   "label": "desce até a tabela"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "div[class*=\"md:grid-cols-2\"]:has(:text-is(\"PIX ENVIADO DEPOSITO IRMAOS SIQUEIRA\")) :text-is(\"Casada\")"
+   },
+   "seconds": 1.0,
+   "at": 52.52,
+   "label": "lançamento conciliado",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 60.15
+  }
+ ]
+}

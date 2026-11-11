@@ -67,6 +67,11 @@ def _get(porta, caminho):
         return json.loads(r.read().decode('utf8'))
 
 
+# só o que a aula grava (fora: sessão do login, eventos de uso e linhas do mundo base com data de hoje)
+TABELAS = {'suppliers', 'customers', 'balances', 'balance_movements', 'bank_transactions', 'cash_transactions', 'financial_bills',
+           'supplier_label_assignments', 'customer_label_assignments', 'entity_custom_prices', 'price_table_items'}
+
+
 def _post(porta, caminho, corpo):
     req = urllib.request.Request(f'http://127.0.0.1:{porta}{caminho}', data=json.dumps(corpo).encode(), method='POST',
                                  headers={'content-type': 'application/json'})
@@ -79,7 +84,7 @@ def captura(nn, porta):
     novas, patch = {}, {}
     for tab, info in sorted(schema.items()):
         cols = info.get('columns') or info
-        if not isinstance(cols, dict) or 'id' not in cols:
+        if tab not in TABELAS or not isinstance(cols, dict) or 'id' not in cols:
             continue
         if 'created_at' in cols:
             try:

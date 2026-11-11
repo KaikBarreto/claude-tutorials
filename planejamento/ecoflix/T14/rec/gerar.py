@@ -273,6 +273,43 @@ def setup_conc(extra=()):
                       {'do': 'click', 'target': BTN('Continuar')}, {'do': 'waitFor', 'text': 'Linha do extrato', 'timeout': 20}, AGUARDA] + list(extra))
 
 
+# ---------------------------------------------------------------- rolagem roteirizada (eval: o cursor não se mexe)
+# Contêiner que rola de verdade: o ancestral com overflowY auto/scroll e conteúdo maior (a tabela da conciliação rola dentro de uma
+# caixa de 60vh; a página rola no <main> de dentro).
+ACHA_ROLAGEM = ("const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);"
+                "if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}"
+                "return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||null};")
+SUAVE = ("await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/DUR),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;"
+         "c.scrollTop=DESTINO;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});")
+FOLHA = "[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===%s)"
+
+
+def js_rola_texto(texto, y=300, dur_ms=800):
+    """rolagem suave do contêiner que rola a folha do DOM cujo texto é `texto` até ela ficar em y px CSS; devolve o topo final"""
+    return ("(async()=>{" + ACHA_ROLAGEM + "const el=" + (FOLHA % json.dumps(texto)) + ";if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';"
+            f"const dy=Math.round(el.getBoundingClientRect().top-{int(y)});if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;"
+            + (SUAVE.replace('DUR', str(int(dur_ms))).replace('DESTINO', 'y0+dy*e') if dur_ms else "c.scrollTop=y0+dy;")
+            + "return Math.round(el.getBoundingClientRect().top)})()")
+
+
+def js_main_fim(dur_ms=0):
+    """leva o <main> que rola até o fim (a caixa da tabela da conciliação inteira acima do rodapé fixo); 0 = instantâneo"""
+    return ("(async()=>{const c=[...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);"
+            "if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop,dy=c.scrollHeight-c.clientHeight-y0;if(dy<3)return 'ok';"
+            + (SUAVE.replace('DUR', str(int(dur_ms))).replace('DESTINO', 'y0+dy*e') if dur_ms else "c.scrollTop=y0+dy;") + "return 'fim:'+Math.round(c.scrollTop)})()")
+
+
+def js_main_topo(dur_ms=0):
+    return ("(async()=>{const c=[...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);"
+            "if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop;if(y0<3)return 'ok';const dy=-y0;"
+            + (SUAVE.replace('DUR', str(int(dur_ms))).replace('DESTINO', 'y0+dy*e') if dur_ms else "c.scrollTop=0;") + "return 'topo'})()")
+
+
+def rola_setup(texto, y=300):
+    """no setup (fora do vídeo): a linha `texto` em y, sem animação"""
+    return {'do': 'eval', 'js': js_rola_texto(texto, y, 0)}
+
+
 # ---------------------------------------------------------------- capítulos
 def cap00():
     c = Cap(0, login(), pace=0.6)
@@ -319,6 +356,463 @@ def cap01():
     c.mark(6)
     c.hover(BTN('Movimentações Financeiras', within=MAIN), seconds=0.4, at=c.A(6, 'Nesta', 0.5), label='aba Movimentações Financeiras')
     c.hover(BTN('Conciliação', within=MAIN), seconds=0.6, at=c.A(6, 'Conciliação', 0.5), label='aba Conciliação')
+    c.fim()
+    return c
+
+
+def cap02():
+    c = Cap(2, setup_mov(), pace=0.5)
+    c.mark(1)
+    c.click(BTNX('Nova Conta'), at=c.A(1, 'Nova', 0.6), label='Nova Conta')
+    c.waitfor(text='Nova Conta Bancária', timeout=10)
+    c.mark(2)
+    c.click({'placeholder': 'Ex: Bradesco PJ'}, at=c.A(2, 'nome', 1.2), label='Nome da conta')
+    c.type({'placeholder': 'Ex: Bradesco PJ'}, 'Conta Cooperativa', at=c.A(2, 'Conta', 0.05, nth=1), noClick=True, label='digita Conta Cooperativa')
+    c.hover({'text': 'Selecione a instituição...', 'within': DLG}, seconds=0.6, at=c.A(2, 'instituição', 0.5), label='Instituição (opcional)')
+    c.mark(3)
+    c.click({'label': 'Valor em conta (R$)'}, at=c.A(3, 'Valor', 0.6), label='Valor em conta')
+    c.type({'label': 'Valor em conta (R$)'}, '5000,00', at=c.A(3, 'cinco', 0.05), noClick=True, label='digita 5.000,00 (ZOOM Valor em conta e Data desse saldo)')
+    c.hover({'text': 'Data desse saldo', 'within': DLG}, seconds=0.6, at=c.A(3, 'data', 0.5), label='Data desse saldo')
+    c.mark(4)
+    c.click(SEL('[role=dialog] button[title="#14B8A6"], [role=dialog] button[aria-label*="14B8A6" i]'), at=c.A(4, 'cor', 0.6), label='cor verde-azulada')
+    c.mark(5)
+    c.click(BTN('Criar Conta'), at=c.A(5, 'Criar', 0.6), label='Criar Conta')
+    c.waitfor(text='Conta criada com sucesso', timeout=10)
+    c.click(CONTA('Conta Cooperativa'), at=c.A(5, 'histórico', 0.9), label='abre a Conta Cooperativa')
+    c.hover(TXT('Ajuste de saldo - Saldo inicial', within=MAIN), seconds=0.8, at=c.A(5, 'Ajuste', 0.5), label='linha do ajuste: etiqueta e valor (ZOOM)')
+    c.hover(TXT('Ajuste', within=MAIN), seconds=0.6, at=c.A(5, 'receita', 0.5), label='etiqueta Ajuste')
+    c.mark(6)
+    c.hover(CONTA('Conta Cooperativa'), seconds=0.2, at=c.A(6, 'edite', 1.3), label='conta (mostra os três pontinhos)')
+    c.click(PONTOS('Conta Cooperativa'), label='três pontinhos da Conta Cooperativa')
+    c.click(ITEM('Editar'), label='Editar')
+    c.waitfor(text='Editar Conta Bancária', timeout=10)
+    c.hover({'text': 'Alterar este valor gerará um ajuste automático no saldo', 'within': DLG}, seconds=1.0, at=c.A(6, 'Correção', 0.5), label='dica do ajuste (ZOOM)')
+    c.click(BTN('Cancelar', within=DLG), at=c.A(6, 'inventada', 0.6), label='Cancelar (sem salvar)')
+    c.waitfor(gone={'role': 'dialog'}, timeout=8)
+    c.mark(7)
+    c.hover(CONTA('Conta Cooperativa'), seconds=0.2, at=c.A(7, 'menu', 1.0), label='conta (de novo)')
+    c.click(PONTOS('Conta Cooperativa'), label='três pontinhos (Tornar principal)')
+    c.hover(ITEM('Tornar principal'), seconds=1.0, at=c.A(7, 'Tornar', 0.5), label='Tornar principal (sem clicar)')
+    c.press('Escape', at=c.A(7, 'Aqui', 0.3), label='fecha o menu')
+    c.wait(0.4)
+    c.mark(8)
+    c.hover(CONTA('Poupança antiga'), seconds=0.3, at=c.A(8, 'poupança', 0.5), label='Poupança antiga')
+    c.click(PONTOS('Poupança antiga'), label='três pontinhos da Poupança antiga')
+    c.click(ITEM('Excluir'), at=c.A(8, 'Excluir', 0.6), label='Excluir')
+    c.waitfor(text='Remover conta bancária', timeout=10)
+    c.hover({'text': 'Oculta a conta mantendo todo o histórico'}, seconds=0.4, at=c.A(8, 'Arquivar', 0.5), label='as duas opções (ZOOM)')
+    c.hover({'text': 'Transfere transações para outra conta e exclui permanentemente'}, seconds=0.6, at=c.A(8, 'Migrar', 0.5), label='Migrar e Excluir')
+    c.mark(9)
+    c.click({'text': 'Oculta a conta mantendo todo o histórico'}, at=c.A(9, 'arquivar', 0.6), label='opção Arquivar')
+    c.waitfor(text='Arquivar conta', timeout=8)
+    c.hover({'text': 'A conta será ocultada das listagens'}, seconds=1.0, at=c.A(9, 'listas', 0.5), label='a conta será ocultada (ZOOM)')
+    c.mark(10)
+    c.click(SEL('[role=alertdialog] button:text-is("Arquivar"), [role=dialog] button:text-is("Arquivar")'), at=c.A(10, 'Arquivar', 0.6), label='Arquivar')
+    c.waitfor(text='Conta arquivada com sucesso', timeout=10)
+    c.hover(CONTA('Conta Secundária'), seconds=0.8, at=c.A(10, 'lista', 0.5), label='a lista sem a poupança')
+    c.fim()
+    return c
+
+
+def cap03():
+    c = Cap(3, setup_mov(), pace=0.5)
+    c.mark(1)
+    c.mark(2)
+    c.click(CONTA('DINHEIRO (COFRE)'), at=c.A(2, 'cofre', 0.6), label='DINHEIRO (COFRE)')
+    c.waitfor(text='O cofre da empresa', timeout=10)
+    c.hover({'text': 'R$ 18.500,00', 'exact': True, 'within': MAIN, 'nth': 1}, seconds=0.8, at=c.A(2, 'dezoito', 0.5), label='R$ 18.500,00 e Saldo Total em Dinheiro (ZOOM)')
+    c.hover({'text': 'Disponível no cofre', 'within': MAIN}, seconds=0.8, at=c.A(2, 'tudo', 0.5), label='Disponível no cofre')
+    c.mark(3)
+    c.hover({'text': 'R$ 18.500,00', 'exact': True, 'within': MAIN, 'nth': 1}, seconds=0.8, at=c.A(3, 'sistema', 0.5), label='o saldo que o sistema mostra')
+    c.mark(4)
+    c.hover(CONTA('DINHEIRO (COFRE)'), seconds=0.2, at=c.A(4, 'três', 1.1), label='cofre (mostra os três pontinhos)')
+    c.click(PONTOS('DINHEIRO (COFRE)'), label='três pontinhos do cofre')
+    c.hover(ITEM('Ajustar saldo'), seconds=0.3, label='Ajustar saldo (a única opção)')
+    c.click(ITEM('Ajustar saldo'), at=c.A(4, 'Ajustar', 0.4), label='Ajustar saldo')
+    c.waitfor(text='Saldo atual', timeout=10)
+    c.hover({'text': 'Saldo atual', 'within': DLG}, seconds=0.6, at=c.A(4, 'única', 0.5), label='Saldo atual R$ 18.500,00')
+    c.mark(5)
+    c.click({'label': 'Novo saldo'}, at=c.A(5, 'Novo', 1.0), label='Novo saldo')
+    c.type({'label': 'Novo saldo'}, '18560,00', at=c.A(5, 'contado', 0.05), noClick=True, label='digita 18.560,00 (ZOOM Novo saldo e Diferença)')
+    c.hover({'text': 'Diferença', 'within': DLG}, seconds=0.8, at=c.A(5, 'Diferença', 0.5), label='Diferença +R$ 60,00')
+    c.mark(6)
+    c.click({'placeholder': 'Ex: conferência de inventário'}, at=c.A(6, 'motivo', 0.6), label='Motivo')
+    c.type({'placeholder': 'Ex: conferência de inventário'}, 'Contagem do cofre', at=c.A(6, 'contagem', 0.05), noClick=True, label='digita Contagem do cofre')
+    c.click(BTN('Confirmar ajuste'), at=c.A(6, 'Confirmar', 0.6), label='Confirmar ajuste')
+    c.waitfor(text='Saldo ajustado', timeout=10)
+    c.mark(7)
+    c.ev(js_rola_texto('Histórico de Movimentações', 150, 900), at=c.A(7, 'ajuste', 0.9), label='desce ao histórico do cofre')
+    c.hover({'text': 'Ajuste de saldo — Contagem do cofre', 'within': MAIN}, seconds=0.6, at=c.A(7, 'histórico', 0.3), label='a linha do ajuste')
+    c.hover(TXT('Ajuste', within=MAIN), seconds=1.0, at=c.A(7, 'etiqueta', 0.5), label='etiqueta Ajuste')
+    c.fim()
+    return c
+
+
+def cap04():
+    c = Cap(4, setup_mov(), pace=0.5)
+    c.mark(1)
+    c.click(CONTA('Conta Principal'), at=c.A(1, 'banco', 0.6), label='Conta Principal')
+    c.hover(BTNX('Nova Movimentação', within=MAIN), seconds=0.4, at=c.A(1, 'combustível', 0.5), label='combustível: Nova Movimentação')
+    c.hover(CONTA('Conta Secundária'), seconds=0.4, at=c.A(1, 'Secundária', 0.5), label='dinheiro da Conta Secundária')
+    c.hover(BTNX('Saque', within=MAIN), seconds=0.6, at=c.A(1, 'sacou', 0.5), label='saque no caixa eletrônico')
+    c.mark(2)
+    c.click(BTNX('Nova Movimentação', within=MAIN), at=c.A(2, 'Nova', 0.6), label='Nova Movimentação')
+    c.waitfor(text='Nova Movimentação Financeira', timeout=10)
+    c.click(BTN('Saída', within=DLG), at=c.A(2, 'Saída', 1.1), label='tipo Saída')
+    c.hover({'text': 'Conta bancária', 'within': DLG}, seconds=0.5, at=c.A(2, 'Principal', 0.5), label='Conta bancária: Conta Principal')
+    c.mark(3)
+    c.click({'placeholder': 'Ex: Recebimento de pagamento'}, at=c.A(3, 'Descrição', 0.6), label='Descrição')
+    c.type({'placeholder': 'Ex: Recebimento de pagamento'}, 'Combustível da picape', at=c.A(3, 'combustível', 0.05), noClick=True, label='digita Combustível da picape')
+    c.click({'label': 'Valor *'}, at=c.A(3, 'Valor', 0.6), label='Valor')
+    c.type({'label': 'Valor *'}, '350,00', at=c.A(3, 'trezentos', 0.05), noClick=True, label='digita 350,00 (ZOOM Valor)')
+    c.click(SEL('[role=dialog] button[role=combobox]:has-text("Selecione a categoria")'), at=c.A(3, 'Categoria', 0.6), label='Categoria')
+    c.click(OPT('Combustível', exact=True), at=c.A(3, 'Combustível', 0.5, nth=1), label='Combustível')
+    c.click(SEL('[role=dialog] button[role=combobox]:has-text("centro de custo")'), at=c.A(3, 'centro', 0.6), label='Centro de custo')
+    c.click(OPT('Frota', exact=True), at=c.A(3, 'Frota', 0.5), label='Frota')
+    c.mark(4)
+    c.hover({'text': 'Não contar na DRE (saldo herdado / histórico)', 'within': DLG}, seconds=0.8, at=c.A(4, 'opção', 0.5), label='Não contar na DRE (desmarcada)')
+    c.click(BTN('Salvar', within=DLG), at=c.A(4, 'Salvar', 0.6), label='Salvar')
+    c.waitfor(text='Movimentação registrada com sucesso!', timeout=10)
+    c.mark(5)
+    c.mark(6)
+    c.click(BTNX('Nova Movimentação', within=MAIN), at=c.A(6, 'Por', 0.2), label='Nova Movimentação (transferência)')
+    c.waitfor(text='Nova Movimentação Financeira', timeout=10)
+    c.click(BTN('Transferência', within=DLG), at=c.A(6, 'transferência', 0.9), label='tipo Transferência')
+    c.click(SEL('[role=dialog] button[role=combobox]:near(:text("Conta de origem"))'), at=c.A(6, 'saiu', 0.6), label='Conta de origem')
+    c.click(OPT('Conta Secundária'), at=c.A(6, 'Secundária', 0.5), label='Conta Secundária')
+    c.click(SEL('[role=dialog] button[role=combobox]:near(:text("Conta de destino"))'), at=c.A(6, 'foi', 0.6), label='Conta de destino')
+    c.click(OPT('Conta Principal'), at=c.A(6, 'Principal', 0.5), label='Conta Principal')
+    c.click({'label': 'Valor *'}, at=c.A(6, 'Oito', 0.6), label='Valor da transferência')
+    c.type({'label': 'Valor *'}, '8000,00', at=c.A(6, 'mil', 0.05), noClick=True, label='digita 8.000,00')
+    c.hover({'text': 'Prévia da transferência:', 'within': DLG}, seconds=0.8, at=c.A(6, 'prévia', 0.5), label='Prévia da transferência (ZOOM)')
+    c.mark(7)
+    c.click(BTN('Transferir', within=DLG), at=c.A(7, 'Transferir', 0.6), label='Transferir')
+    c.waitfor(text='Transferência realizada com sucesso!', timeout=10)
+    c.mark(8)
+    c.click(BTNX('Saque', within=MAIN), at=c.A(8, 'saque', 0.6), label='Saque')
+    c.waitfor(text='Destino do saque', timeout=10)
+    c.hover({'text': 'Destino do saque', 'within': DLG}, seconds=0.6, at=c.A(8, 'cofre', 0.6), label='Destino do saque: o cofre')
+    c.mark(9)
+    c.click({'label': 'Valor do Saque'}, at=c.A(9, 'Dois', 0.9), label='Valor do Saque')
+    c.type({'label': 'Valor do Saque'}, '2000,00', at=c.A(9, 'mil', 0.05), noClick=True, label='digita 2.000,00 (ZOOM Saque e Tarifa)')
+    c.click(BTN('Sim', within=DLG), at=c.A(9, 'Sim', 0.6), label='Tem tarifa no saque? Sim')
+    c.click({'label': 'Valor da Tarifa'}, at=c.A(9, 'seis', 0.6), label='Valor da Tarifa')
+    c.type({'label': 'Valor da Tarifa'}, '6,50', at=c.A(9, 'cinquenta', 0.05), noClick=True, label='digita 6,50')
+    c.mark(10)
+    c.hover({'text': 'Efeitos desta transação:', 'within': DLG}, seconds=0.5, at=c.A(10, 'efeitos', 0.5), label='Efeitos desta transação (ZOOM)')
+    c.hover({'text': 'Saldo da Conta Bancária', 'within': DLG}, seconds=0.6, at=c.A(10, 'banco', 0.5), label='banco perde saque + tarifa')
+    c.hover({'text': 'Cofre (Conta DINHEIRO)', 'exact': True, 'within': DLG, 'nth': 'last'}, seconds=0.6, at=c.A(10, 'cofre', 0.5), label='cofre ganha só o saque')
+    c.mark(11)
+    c.click(BTN('Confirmar Saque'), at=c.A(11, 'Confirmar', 0.6), label='Confirmar Saque')
+    c.waitfor(text='Saque realizado com sucesso!', timeout=10)
+    c.hover(BTNX('Sangria', within=MAIN), seconds=0.8, at=c.A(11, 'Sangria', 0.5), label='Sangria, aqui do lado')
+    c.mark(12)
+    c.hover(BTNX('Saque', within=MAIN), seconds=1.0, at=c.A(12, 'saque', 0.5), label='Saque (dica do caixa aberto)')
+    c.fim()
+    return c
+
+
+def cap05():
+    c = Cap(5, setup_mov(), pace=0.5)
+    c.mark(1)
+    c.mark(2)
+    c.mark(3)
+    c.mark(4)
+    c.click(BTN('Conciliação', within=MAIN), at=c.A(4, 'Conciliação', 0.6), label='aba Conciliação')
+    c.waitfor(text='Nenhum extrato em conciliação', timeout=15)
+    c.hover(SEL('main button[role=combobox]:has-text("Conta Principal")'), seconds=0.6, at=c.A(4, 'escolhida', 0.5), label='Conta para conciliar: Conta Principal')
+    c.mark(5)
+    c.click(BTN('Como funciona?'), at=c.A(5, 'Como', 0.6), label='Como funciona?')
+    c.waitfor(text='Como funciona a conciliação bancária', timeout=10)
+    c.hover(TXT('O que é conciliar?', within=DLG), seconds=1.0, at=c.A(5, 'explica', 1.0), label='O que é conciliar? (ZOOM)')
+    c.press('Escape', at=c.A(5, 'Primeiro', 0.3), label='fecha o Como funciona')
+    c.waitfor(gone={'role': 'dialog'}, timeout=8)
+    c.fim()
+    return c
+
+
+def cap06():
+    c = Cap(6, setup_mov([{'do': 'click', 'target': BTN('Conciliação')}, {'do': 'waitFor', 'text': 'Nenhum extrato em conciliação', 'timeout': 20}, AGUARDA]), pace=0.5)
+    c.mark(1)
+    c.mark(2)
+    c.click(BTN('Importar novo extrato'), at=c.A(2, 'Importar', 0.6), label='Importar novo extrato')
+    c.waitfor(text='Importar extrato OFX', timeout=10)
+    c.click(TXT('Como pegar o arquivo do seu banco?', within=DLG), at=c.A(2, 'ensina', 1.2), label='Como pegar o arquivo do seu banco?')
+    c.hover({'text': 'Escolha o formato OFX', 'within': DLG}, seconds=1.2, at=c.A(2, 'alguns', 0.5), label='passo a passo (ZOOM)')
+    c.mark(3)
+    c.upload(TXT('Arraste o arquivo .ofx aqui ou clique para selecionar', within=DLG), 'arquivos/Extrato_20261101_20261110.ofx', at=c.A(3, 'Escolho', 0.7),
+             label='entrega o Extrato_20261101_20261110.ofx')
+    c.waitfor(text='Prévia do extrato', timeout=10)
+    c.mark(4)
+    c.hover(TXT('Prévia do extrato', within=DLG), seconds=0.3, at=c.A(4, 'prévia', 0.5), label='Prévia do extrato')
+    c.hover(TXT('Período', within=DLG), seconds=0.3, at=c.A(4, 'período', 0.5), label='Período, Transações e Saldo final (ZOOM)')
+    c.hover(TXT('Transações', within=DLG), seconds=0.3, at=c.A(4, 'dezessete', 0.5), label='Transações 17')
+    c.hover(TXT('Saldo final do extrato', within=DLG), seconds=0.6, at=c.A(4, 'saldo', 0.5), label='Saldo final do extrato')
+    c.confere('dlg', ['01/11/2026 — 10/11/2026', '17', 'R$ 44.933,47'], 'prévia: período, 17 transações e saldo final')
+    c.mark(5)
+    c.click(BTN('Importar', within=DLG), at=c.A(5, 'Importar', 0.6), label='Importar')
+    c.waitfor(text='17 de 17 linhas importadas', timeout=15)
+    c.hover(TXT('Tudo certo — nenhuma linha estava repetida.', within=DLG), seconds=0.8, at=c.A(5, 'reconhece', 0.5), label='nenhuma linha repetida')
+    c.click(BTN('Concluir'), at=c.A(5, 'duplica', 0.6), label='Concluir')
+    c.waitfor(text='Linha do extrato', timeout=15)
+    c.mark(6)
+    c.ev(js_main_fim(600), at=c.A(6, 'Pronto', 0.3), label='desce a página até a tabela')
+    c.hover(TXT('PIX ENVIADO DEPOSITO IRMAOS SIQUEIRA', within=MAIN), seconds=0.3, at=c.A(6, 'esquerda', 0.5), label='linha do banco (esquerda)')
+    c.hover(TXT('−R$ 2.250,00', within=MAIN), seconds=0.3, at=c.A(6, 'valor', 0.5), label='data e valor da linha')
+    c.hover(TXT('Casa com um lançamento no sistema', within=MAIN), seconds=0.6, at=c.A(6, 'direita', 0.5), label='o que fazer com ela (direita)')
+    c.mark(7)
+    c.ev(js_rola_texto('PIX RECEBIDO SERRA FINA ALUMINIO', 330, 900), at=c.A(7, 'repara', 0.9), label='rola até o Pix da Serra Fina')
+    c.hover(TXT('+R$ 4.815,00', within=MAIN), seconds=0.5, at=c.A(7, 'verde', 0.5), label='entrada em verde, com mais')
+    c.hover(TXT('−R$ 180,00', within=MAIN), seconds=0.6, at=c.A(7, 'vermelho', 0.5), label='saída em vermelho, com menos')
+    c.mark(8)
+    c.hover(TXT('Saldo do banco', within=MAIN), seconds=0.4, at=c.A(8, 'rodapé', 0.5), label='rodapé: os três números')
+    c.hover(TXT('Diferença', within=MAIN), seconds=0.4, at=c.A(8, 'três', 0.4), label='Diferença')
+    c.hover(BTN('Finalizar conciliação'), seconds=0.6, at=c.A(8, 'fim', 0.5), label='Finalizar conciliação (desabilitado)')
+    c.confere('main', ['Saldo do banco', 'R$ 44.933,47', 'Ainda há 17 linhas pendentes'], 'rodapé depois da importação')
+    c.fim()
+    return c
+
+
+SIQ, ALUG, APAR, VFORTE = 'PIX ENVIADO DEPOSITO IRMAOS SIQUEIRA', 'PIX ENVIADO ALUGUEL GALPAO NOV', 'PIX ENVIADO APARECIDA RAMOS', 'PIX ENVIADO AUTO PECAS VALE FORTE'
+AGUA, SERRA, PNEU, TARIFA = 'PAGTO BOLETO AGUA E ESGOTO', 'PIX RECEBIDO SERRA FINA ALUMINIO', 'PIX ENVIADO BORRACHARIA DOIS IRMAOS', 'TARIFA PACOTE SERVICOS'
+AVULSA, ESTORNO, ENERGIA, MORETTI = 'TARIFA AVULSA', 'ESTORNO TARIFA AVULSA', 'PIX ENVIADO CONCESSIONARIA ENERGIA', 'PIX ENVIADO HIDRAULICA MORETTI LTDA'
+POSTO, ACOS, TRANSF, SAQUE, TSAQUE = ('PIX ENVIADO AUTO POSTO BOA VIAGEM', 'PIX RECEBIDO ACOS QUIRIRIM LTDA', 'PIX RECEBIDO RECICLA VALE METAIS LTDA',
+                                      'SAQUE CAIXA ELETRONICO', 'TARIFA SAQUE')
+MEMO = lambda m: SEL(f'{LINHA(m)} :text-is("{m}")')
+
+
+def conc(memo, y=250):
+    """setup dos capítulos da conciliação: extrato aberto, página no fim (a caixa da tabela inteira acima do rodapé) e a linha do capítulo em y"""
+    return setup_conc([{'do': 'eval', 'js': js_main_fim()}, {'do': 'wait', 'seconds': 0.3}, rola_setup(memo, y), {'do': 'wait', 'seconds': 0.4}])
+
+
+def confirma(c, memo, at=None, label=None, y=300):
+    """sugestão verde de uma linha: rola até ela e clica em Confirmar / Casar com ..."""
+    c.ev(js_rola_texto(memo, y, 500), at=at, label=f'rola até {memo}')
+    c.click(SEL(f'{LINHA(memo)} button:has-text("Confirmar"), {LINHA(memo)} button:has-text("Casar com ")'), label=label or f'Confirmar ({memo})')
+    c.waitfor(target=SEL(f'{LINHA(memo)} :text-is("Casada")'), timeout=10)
+
+
+def cap07():
+    c = Cap(7, conc(SIQ, 250), pace=0.5)
+    c.mark(1)
+    c.hover(MEMO(SIQ), seconds=0.4, at=c.A(1, 'linha', 0.5), label='Pix do Depósito Irmãos Siqueira')
+    c.hover(SEL(f'{LINHA(SIQ)} :text-is("Casa com um lançamento no sistema")'), seconds=1.0, at=c.A(1, 'achou', 0.5), label='sugestão da compra (ZOOM)')
+    c.mark(2)
+    c.hover(SEL(f'{LINHA(SIQ)} :text("Depósito Irmãos Siqueira")'), seconds=0.4, at=c.A(2, 'parceiro', 0.5), label='data e parceiro')
+    c.click(NA_LINHA(SIQ, 'Casar com'), at=c.A(2, 'caso', 0.6), label='Casar com Compra (Depósito Irmãos Siqueira)')
+    c.waitfor(target=SEL(f'{LINHA(SIQ)} :text-is("Casada")'), timeout=10)
+    c.mark(3)
+    confirma(c, ALUG, at=c.A(3, 'outras', 0.9), label='Confirmar o aluguel')
+    for m in (PNEU, ENERGIA, MORETTI, POSTO, ACOS, SAQUE, TSAQUE):
+        confirma(c, m)
+    c.mark(4)
+    c.ev(js_rola_texto(TRANSF, 260, 600), label='rola até os oito mil')
+    c.hover(MEMO(TRANSF), seconds=0.4, at=c.A(4, 'oito', 0.5), label='Pix de 8.000,00 da Conta Secundária')
+    c.hover(SEL(f'{LINHA(TRANSF)} :text-is("Transferência: Conta Secundária → Conta Principal")'), seconds=0.6, at=c.A(4, 'transferência', 0.5),
+            label='a transferência registrada')
+    c.mark(5)
+    c.click(NA_LINHA(TRANSF, 'Mais ações'), at=c.A(5, 'Mais', 0.6), label='Mais ações (linha da transferência)')
+    c.click(ITEM('Casar com transferência'), at=c.A(5, 'Casar', 0.6), label='Casar com transferência')
+    c.waitfor(text='Escolha a transferência entre suas contas que corresponde às linhas do extrato.', timeout=10)
+    c.hover(SEL('[role=dialog] :text("Conta Secundária → Conta Principal")'), seconds=0.6, at=c.A(5, 'certa', 1.0), label='a candidata (ZOOM)')
+    c.click(SEL('[role=dialog] :text("Conta Secundária → Conta Principal")'), label='marca a candidata')
+    c.hover({'text': 'Isso só cria o vínculo da conciliação', 'within': DLG}, seconds=0.6, label='só cria o vínculo')
+    c.mark(6)
+    c.click(BTN('Casar transferência'), at=c.A(6, 'Casar', 0.6), label='Casar transferência')
+    c.waitfor(target=SEL(f'{LINHA(TRANSF)} :text-is("Casada")'), timeout=10)
+    c.hover(SEL(f'{LINHA(TRANSF)} :text-is("Casada")'), seconds=0.8, at=c.A(6, 'liga', 0.5), label='selo Casada')
+    c.mark(7)
+    c.hover(MEMO(TRANSF), seconds=1.0, at=c.A(7, 'dica', 0.5), label='dica: transferência')
+    c.fim()
+    return c
+
+
+def cap08():
+    c = Cap(8, conc(AGUA, 250), pace=0.5)
+    c.mark(1)
+    c.hover(MEMO(AGUA), seconds=0.5, at=c.A(1, 'boleto', 0.5), label='boleto da água')
+    c.hover(SEL(f'{LINHA(AGUA)} :text-is("−R$ 238,40")'), seconds=0.6, at=c.A(1, 'duzentos', 0.5), label='R$ 238,40')
+    c.mark(2)
+    c.click(NA_LINHA(AGUA, 'Baixar conta'), at=c.A(2, 'Baixar', 0.6), label='Baixar conta')
+    c.click(SEL(f'{LINHA(AGUA)} [role=combobox]'), at=c.A(2, 'lista', 1.0), label='Selecione a conta')
+    c.hover(OPT('Água e esgoto de outubro'), seconds=0.6, at=c.A(2, 'água', 0.5), label='Água e esgoto de outubro')
+    c.click(OPT('Água e esgoto de outubro'), label='escolhe a água')
+    c.mark(3)
+    c.click(NA_LINHA(AGUA, 'Dar baixa'), at=c.A(3, 'Dar', 0.6), label='Dar baixa de R$ 238,40 (ZOOM)')
+    c.waitfor(target=SEL(f'{LINHA(AGUA)} :text-is("Baixada")'), timeout=10)
+    c.hover(SEL(f'{LINHA(AGUA)} :text-is("Baixada")'), seconds=0.8, at=c.A(3, 'Baixada', 0.5), label='selo Baixada')
+    c.mark(4)
+    c.hover(SEL(f'{LINHA(AGUA)} :text-is("Baixada")'), seconds=1.0, at=c.A(4, 'inteiro', 0.5), label='baixa do valor inteiro')
+    c.fim()
+    return c
+
+
+def cap09():
+    c = Cap(9, conc(TARIFA, 250), pace=0.5)
+    c.mark(1)
+    c.hover(MEMO(TARIFA), seconds=0.5, at=c.A(1, 'linha', 0.5), label='tarifa do pacote')
+    c.hover(SEL(f'{LINHA(TARIFA)} :text-is("−R$ 64,90")'), seconds=0.6, at=c.A(1, 'sessenta', 0.5), label='R$ 64,90')
+    c.mark(2)
+    c.click(NA_LINHA(TARIFA, 'Mais ações'), at=c.A(2, 'Mais', 0.6), label='Mais ações (todos os destinos)')
+    c.hover(ITEM('Funcionário'), seconds=0.6, at=c.A(2, 'Funcionário', 0.5), label='Funcionário')
+    c.mark(3)
+    c.hover(ITEM('Buscar lançamento'), seconds=0.5, at=c.A(3, 'Buscar', 0.5), label='Buscar lançamento')
+    c.hover(ITEM('Funcionário'), seconds=0.5, at=c.A(3, 'painel', 0.5), label='o painel do Funcionário')
+    c.press('Escape', at=c.A(3, 'lembra', 0.2), label='fecha o menu')
+    c.wait(0.5)
+    c.mark(4)
+    c.click(NA_LINHA(TARIFA, 'Criar despesa'), at=c.A(4, 'Criar', 0.6), label='Criar despesa')
+    c.waitfor(text='Criar lançamento de saída', timeout=10)
+    c.hover(SEL(f'{LINHA(TARIFA)} input[value="TARIFA PACOTE SERVICOS"]'), seconds=0.5, at=c.A(4, 'descrição', 0.5), label='Descrição vem do extrato')
+    c.hover(SEL(f'{LINHA(TARIFA)} [role=switch]'), seconds=0.6, at=c.A(4, 'chave', 0.5), label='Não é receita nem despesa (desligada)')
+    c.mark(5)
+    c.click(SEL(f'{LINHA(TARIFA)} [role=combobox]'), at=c.A(5, 'categoria', 0.6), label='Categoria')
+    c.click(OPT('Tarifas', exact=True), at=c.A(5, 'Tarifas', 0.6), label='Tarifas')
+    c.hover(NA_LINHA(TARIFA, 'Criar R$ 64,90'), seconds=0.6, at=c.A(5, 'botão', 0.5), label='Categoria Tarifas e o botão Criar R$ 64,90 (ZOOM)')
+    c.mark(6)
+    c.click(NA_LINHA(TARIFA, 'Criar R$ 64,90'), at=c.A(6, 'Criar', 0.6), label='Criar R$ 64,90')
+    c.waitfor(target=SEL(f'{LINHA(TARIFA)} :text-is("Criada")'), timeout=10)
+    c.hover(SEL(f'{LINHA(TARIFA)} :text-is("Criada")'), seconds=0.8, at=c.A(6, 'Criada', 0.5), label='selo Criada')
+    c.fim()
+    return c
+
+
+def cap10():
+    c = Cap(10, conc(SERRA, 250), pace=0.5)
+    c.mark(1)
+    c.hover(MEMO(SERRA), seconds=0.4, at=c.A(1, 'Pix', 0.5), label='Pix da Serra Fina')
+    c.hover(SEL(f'{LINHA(SERRA)} :text-is("+R$ 4.815,00")'), seconds=0.4, at=c.A(1, 'quatro', 0.5), label='R$ 4.815,00')
+    c.hover(SEL(f'{LINHA(SERRA)} :text("Sem casamento automático")'), seconds=0.6, at=c.A(1, 'nada', 0.5), label='sem sugestão')
+    c.mark(2)
+    c.mark(3)
+    c.hover(NA_LINHA(SERRA, 'Criar receita'), seconds=0.4, at=c.A(3, 'criar', 0.5), label='Criar receita (não)')
+    c.click(NA_LINHA(SERRA, 'Mais ações'), at=c.A(3, 'Mais', 0.6), label='Mais ações')
+    c.click(ITEM('Buscar lançamento'), at=c.A(3, 'Buscar', 0.6), label='Buscar lançamento')
+    c.mark(4)
+    c.click({'placeholder': 'Nome do cliente/fornecedor, nº do pedido...'}, at=c.A(4, 'Digito', 0.7), label='campo da busca')
+    c.type({'placeholder': 'Nome do cliente/fornecedor, nº do pedido...'}, 'Serra', at=c.A(4, 'Serra', 0.05), noClick=True, label='digita Serra')
+    c.hover({'text': 'Mostra lançamentos de R$ 4.815,00', 'within': MAIN}, seconds=0.5, at=c.A(4, 'busca', 0.5), label='até R$ 2,00 de diferença')
+    c.hover(SEL(f'{LINHA(SERRA)} [aria-label="Lançamentos encontrados"] :text("Serra Fina")'), seconds=0.6, at=c.A(4, 'venda', 0.5), label='a venda com dif. −R$ 0,20 (ZOOM)')
+    c.click(SEL(f'{LINHA(SERRA)} [aria-label="Lançamentos encontrados"] :text("Serra Fina")'), label='marca a venda')
+    c.mark(5)
+    c.click(NA_LINHA(SERRA, 'Casar com selecionado'), at=c.A(5, 'Casar', 0.6), label='Casar com selecionado')
+    c.waitfor(text='Casar com valor diferente?', timeout=10)
+    c.hover(TXT('Casar com valor diferente?'), seconds=0.6, at=c.A(5, 'confirma', 0.5), label='Casar com valor diferente?')
+    c.mark(6)
+    c.click(BTN('Casar assim'), at=c.A(6, 'Casar', 1.0), label='Casar assim')
+    c.waitfor(target=SEL(f'{LINHA(SERRA)} :text-is("Casada")'), timeout=10)
+    c.hover(SEL('main button:has-text("Diferenças casadas")'), seconds=0.8, at=c.A(6, 'rodapé', 0.5), label='Diferenças casadas (ZOOM)')
+    c.fim()
+    return c
+
+
+def cap11():
+    c = Cap(11, conc(AVULSA, 250), pace=0.5)
+    c.mark(1)
+    c.hover(MEMO(AVULSA), seconds=0.4, at=c.A(1, 'linhas', 0.5), label='tarifa avulsa')
+    c.hover(MEMO(ESTORNO), seconds=0.6, at=c.A(1, 'devolveu', 0.5), label='estorno da tarifa')
+    c.mark(2)
+    c.mark(3)
+    c.click(SEL(f'{LINHA(AVULSA)} button[role=checkbox]'), at=c.A(3, 'Marco', 0.6), label='marca a tarifa avulsa')
+    c.click(SEL(f'{LINHA(ESTORNO)} button[role=checkbox]'), label='marca o estorno')
+    c.hover({'text': 'Soma: +R$ 0,00', 'within': MAIN}, seconds=0.6, at=c.A(3, 'soma', 0.5), label='2 selecionadas e Soma: +R$ 0,00 (ZOOM)')
+    c.mark(4)
+    c.click(BTN('Ignorar (2)'), at=c.A(4, 'Ignorar', 0.6), label='Ignorar (2)')
+    c.waitfor(text='Ignorar 2 linhas?', timeout=10)
+    c.click(SEL('[role=alertdialog] button:text-is("Ignorar"), [role=dialog] button:text-is("Ignorar")'), at=c.A(4, 'confirma', 1.0), label='confirma Ignorar')
+    c.waitfor(target=SEL(f'{LINHA(AVULSA)} :text-is("Ignorada")'), timeout=10)
+    c.hover(SEL(f'{LINHA(AVULSA)} :text-is("Ignorada")'), seconds=0.6, at=c.A(4, 'Ignorada', 0.5), label='selo Ignorada')
+    c.mark(5)
+    c.hover(SEL(f'{LINHA(ESTORNO)} :text-is("Ignorada")'), seconds=1.0, at=c.A(5, 'dica', 0.5), label='as duas ignoradas')
+    c.fim()
+    return c
+
+
+def cap12():
+    c = Cap(12, conc(APAR, 250), pace=0.5)
+    c.mark(1)
+    c.hover(SEL(f'{LINHA(APAR)} :text("Atenção: há 2 lançamentos")'), seconds=0.6, at=c.A(1, 'parecidas', 0.5), label='aviso âmbar da primeira linha (ZOOM)')
+    c.hover(MEMO(APAR), seconds=0.3, at=c.A(1, 'Um', 0.5), label='Pix de um')
+    c.hover(MEMO(VFORTE), seconds=0.6, at=c.A(1, 'outro', 0.5), label='Pix do outro')
+    c.mark(2)
+    c.mark(3)
+    c.click(NA_LINHA(APAR, 'Escolher lançamento'), at=c.A(3, 'Escolher', 0.6), label='Escolher lançamento')
+    c.hover(SEL(f'{LINHA(APAR)} [aria-label="Lançamentos que podem casar"]'), seconds=0.5, at=c.A(3, 'lista', 0.5), label='as duas compras')
+    c.hover(MEMO(APAR), seconds=0.3, at=c.A(3, 'extrato', 0.5), label='o nome no extrato')
+    c.hover(SEL(f'{LINHA(APAR)} [aria-label="Lançamentos que podem casar"] :text("Aparecida Ramos")'), seconds=0.5, at=c.A(3, 'qual', 0.4), label='a compra da Aparecida')
+    c.mark(4)
+    c.click(SEL(f'{LINHA(APAR)} [aria-label="Lançamentos que podem casar"] :text("Aparecida Ramos")'), at=c.A(4, 'Marco', 0.6), label='marca a compra da Aparecida')
+    c.click(NA_LINHA(APAR, 'Casar com o selecionado'), at=c.A(4, 'Casar', 0.6), label='Casar com o selecionado')
+    c.waitfor(target=SEL(f'{LINHA(APAR)} :text-is("Casada")'), timeout=10)
+    c.mark(5)
+    c.hover(SEL(f'{LINHA(VFORTE)} :text-is("Casa com um lançamento no sistema")'), seconds=0.6, at=c.A(5, 'outra', 0.5), label='a outra linha com a sugestão certa')
+    c.click(NA_LINHA(VFORTE, 'Casar com'), at=c.A(5, 'casar', 0.6), label='Casar com Compra (Auto Peças Vale Forte)')
+    c.waitfor(target=SEL(f'{LINHA(VFORTE)} :text-is("Casada")'), timeout=10)
+    c.mark(6)
+    c.hover(SEL(f'{LINHA(APAR)} :text-is("Casada")'), seconds=0.5, at=c.A(6, 'dica', 0.5), label='os dois selos Casada')
+    c.hover(SEL(f'{LINHA(VFORTE)} :text-is("Casada")'), seconds=0.8, at=c.A(6, 'nome', 0.5), label='Casada (Auto Peças)')
+    c.fim()
+    return c
+
+
+def cap13():
+    c = Cap(13, conc(SIQ, 250), pace=0.5)
+    c.mark(1)
+    c.hover(SEL(f'{LINHA(SIQ)} :text-is("Casada")'), seconds=0.4, at=c.A(1, 'resolvida', 0.5), label='linha resolvida')
+    c.click(NA_LINHA(SIQ, 'Desfazer'), at=c.A(1, 'Desfazer', 0.6), label='Desfazer (Casada)')
+    c.waitfor(target=NA_LINHA(SIQ, 'Casar com'), timeout=10)
+    c.mark(2)
+    c.click(NA_LINHA(SIQ, 'Casar com'), at=c.A(2, 'caso', 0.6), label='casa de novo')
+    c.waitfor(target=SEL(f'{LINHA(SIQ)} :text-is("Casada")'), timeout=10)
+    c.mark(3)
+    c.ev(js_rola_texto(TARIFA, 280, 800), at=c.A(3, 'Criada', 0.9), label='rola até a Criada')
+    c.hover(SEL(f'{LINHA(TARIFA)} :text-is("Criada")'), seconds=0.4, at=c.A(3, 'Baixada', 0.3), label='selo Criada')
+    c.hover(NA_LINHA(TARIFA, 'Desfazer'), seconds=1.0, at=c.A(3, 'confirmação', 0.5), label='Desfazer da Criada (pede confirmação)')
+    c.mark(4)
+    c.click(BTN('Cancelar conciliação'), at=c.A(4, 'Cancelar', 0.6), label='Cancelar conciliação')
+    c.waitfor(text='Cancelar esta conciliação?', timeout=10)
+    c.hover({'text': 'vínculo(s) com lançamento existente', 'within': ALERTA}, seconds=0.6, at=c.A(4, 'vínculos', 0.8), label='o que volta (ZOOM)')
+    c.hover({'text': 'Digite CANCELAR para confirmar', 'within': ALERTA}, seconds=0.6, at=c.A(4, 'digitar', 0.5), label='Digite CANCELAR')
+    c.click(BTN('Manter conciliação'), at=c.A(4, 'mantenho', 0.6), label='Manter conciliação')
+    c.waitfor(gone={'role': 'alertdialog'}, timeout=8)
+    c.mark(5)
+    c.ev(js_main_topo(500), label='sobe a página')
+    c.click(BTN('Voltar'), at=c.A(5, 'Voltar', 0.6), label='Voltar')
+    c.waitfor(text='Continuar conciliação', timeout=10)
+    c.hover({'text': 'Continuar conciliação', 'within': MAIN}, seconds=0.6, at=c.A(5, 'progresso', 0.5), label='Continuar conciliação')
+    c.click(BTN('Continuar'), at=c.A(5, 'Continuar', 0.6), label='Continuar')
+    c.waitfor(text='Linha do extrato', timeout=10)
+    c.mark(6)
+    c.ev(js_main_fim(600), at=c.A(6, 'dica', 0.3), label='desce até a tabela')
+    c.hover(SEL(f'{LINHA(SIQ)} :text-is("Casada")'), seconds=1.0, at=c.A(6, 'Excluir', 0.5), label='lançamento conciliado')
+    c.fim()
+    return c
+
+
+def cap14():
+    c = Cap(14, conc(SIQ, 250), pace=0.5)
+    c.mark(1)
+    c.hover(TXT('Saldo do banco', within=MAIN), seconds=0.5, at=c.A(1, 'Saldo', 0.5), label='Saldo do banco e Saldo conciliado (ZOOM)')
+    c.hover(TXT('Saldo conciliado', within=MAIN), seconds=0.6, at=c.A(1, 'conciliado', 0.5), label='Saldo conciliado')
+    c.mark(2)
+    c.hover(TXT('Diferença', within=MAIN), seconds=0.8, at=c.A(2, 'zero', 0.5), label='Diferença R$ 0,00')
+    c.confere('main', ['R$ 44.933,47', 'R$ 0,00', 'Diferenças casadas'], 'rodapé: banco = conciliado, diferença zero')
+    c.mark(3)
+    c.click(SEL('main button:has-text("Diferenças casadas")'), at=c.A(3, 'vinte', 0.6), label='Diferenças casadas')
+    c.waitfor(text='Diferenças de valor casadas', timeout=8)
+    c.press('Escape', at=c.A(3, 'travam', 0.2), label='fecha o quadro')
+    c.mark(4)
+    c.hover(BTN('Finalizar conciliação'), seconds=1.0, at=c.A(4, 'dica', 0.5), label='Finalizar conciliação habilitado')
+    c.mark(5)
+    c.click(BTN('Finalizar conciliação'), at=c.A(5, 'Finalizar', 0.6), label='Finalizar conciliação')
+    c.waitfor(text='Conciliação finalizada', timeout=10)
+    c.ev(js_main_topo(500), label='sobe a página')
+    c.hover({'text': 'Conciliação finalizada', 'within': MAIN}, seconds=0.6, at=c.A(5, 'selado', 0.5), label='faixa Conciliação finalizada')
+    c.mark(6)
+    c.click(BTN('Fechar', within=MAIN), at=c.A(6, 'Ele', 0.6), label='Fechar')
+    c.click({'text': 'Conciliações anteriores (1)', 'within': MAIN}, at=c.A(6, 'anteriores', 0.6), label='Conciliações anteriores (1)')
+    c.hover({'text': 'Conciliado', 'exact': True, 'within': MAIN}, seconds=0.8, at=c.A(6, 'Conciliado', 0.5), label='selo Conciliado')
     c.fim()
     return c
 

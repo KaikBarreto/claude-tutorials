@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
-# T06 · ensaio ou gravação de UM capítulo na instância do T06 (porta 54306), com o FAKE_NOW do capítulo (08:30 nos caps 0 a 9 e no 8b,
-# 17:40 nos caps 10 a 12). Uso: bash rec/t06/t06_rodar.sh NN|8b [--ens]
+# T06 · ensaio ou gravação de UM capítulo na instância do T06 (porta 54306), com o FAKE_NOW do capítulo (o mesmo de FAKE_NOW em gerar.py). Uso: bash rec/t06/t06_rodar.sh NN|8b [--ens]
 #   --ens: ensaio rápido (ensaio.py + --rapido + resumo.py --ens); sem ele, gravação completa (+ resumo.py).
 # A instância sobe FORA da trava (lição 82/140); só o robô roda sob `flock` (uma trava por capítulo). TUT_USER/TUT_SENHA vêm do ambiente.
 set -euo pipefail
@@ -8,7 +7,13 @@ cd "$(dirname "$0")/../.."          # $TUT_HOME
 CAP="$1"; MODO="${2:-}"
 PORTA=54306
 N="${CAP%b}"; N=$((10#$N))
-if [ "$N" -ge 10 ]; then NOW=2026-11-10T17:40:00-03:00; else NOW=2026-11-10T08:30:00-03:00; fi
+case "$N" in
+  0|1) NOW=2026-11-10T08:30:00-03:00 ;;
+  2) NOW=2026-11-10T08:30:55-03:00 ;;
+  3|4|5) NOW=2026-11-10T08:41:50-03:00 ;;
+  6|7|8|9) NOW=2026-11-10T08:45:00-03:00 ;;
+  *) NOW=2026-11-10T17:40:00-03:00 ;;
+esac
 NN=$(printf '%02d' "$N"); [ "${CAP: -1}" = b ] && NN="${NN}b"
 PIDF=rec/.runtime/fake${PORTA}.pid
 atual=""

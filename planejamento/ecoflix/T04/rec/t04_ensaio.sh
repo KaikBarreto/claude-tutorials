@@ -28,7 +28,7 @@ RC=$?
 tail -3 "$DIR/.t04-cap$NN.out"
 python3 -I rec/t04/resumo.py "$NN" $RES > "$DIR/t04-cap$NN.resumo.txt" 2>&1
 head -4 "$DIR/t04-cap$NN.resumo.txt"
-grep -c "SEM ALVO" "$DIR/t04-cap$NN.actions.json" 2>/dev/null | sed 's/^/SEM ALVO no actions: /'
+python3 -c "import json;a=json.load(open('$DIR/t04-cap$NN.actions.json'))['actions'];print('SEM ALVO nos valores:', sum(1 for x in a if 'SEM ALVO' in str(x.get('value',''))))" 2>/dev/null
 FALHOS=$(python3 -c "import json;a=json.load(open('$DIR/t04-cap$NN.actions.json'))['actions'];print(sum(1 for x in a if x.get('error') or x.get('ok') is False))" 2>/dev/null || echo '?')
 echo "rc=$RC falhos=$FALHOS"
 if [ "$MODO" = rapido ]; then rm -f "$DIR/t04-cap$NN.mp4"; [ "$FALHOS" = 0 ] && rm -f "$DIR/t04-cap$NN.contact.jpg"; fi

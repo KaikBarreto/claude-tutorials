@@ -1,0 +1,490 @@
+{
+ "name": "t14-cap02",
+ "title": "T14 · Cap. 2 · Cadastrar e arquivar contas (narração ESTIMADA 100,9 s; marcas L1..L10 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "seed": "t14-cap02",
+ "pace": 0.5,
+ "cps": 40,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 470
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true"
+ },
+ "seedExtra": [
+  "t14/inicio"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "waitFor",
+   "target": {
+    "label": "E-mail"
+   },
+   "timeout": 30
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "E-mail"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "Senha",
+    "exact": true
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Rafael!",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/movimentacoes-bancarias"
+  },
+  {
+   "do": "waitFor",
+   "text": "Controle de pagamentos via Pix/Transferência",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "div[class*=\"group/tab\"] button:has(span:text-is(\"Conta Principal\"))"
+   },
+   "timeout": 20
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|Algo deu errado|Falha ao|Something went wrong|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&!/fica indispon/i.test(m[0])&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{document.querySelectorAll('[data-sonner-toast][data-type=error]').forEach(t=>{const s='TOAST DE ERRO: '+t.textContent.trim().slice(0,90);if(!window.__avisos.includes(s)&&window.__avisos.length<10)window.__avisos.push(s)})},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Nova Conta"
+   },
+   "at": 6.25,
+   "label": "Nova Conta"
+  },
+  {
+   "do": "waitFor",
+   "text": "Nova Conta Bancária",
+   "timeout": 10
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 7.22
+  },
+  {
+   "do": "click",
+   "target": {
+    "placeholder": "Ex: Bradesco PJ"
+   },
+   "at": 7.22,
+   "label": "Nome da conta"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Ex: Bradesco PJ"
+   },
+   "text": "Conta Cooperativa",
+   "at": 11.79,
+   "label": "digita Conta Cooperativa",
+   "noClick": true
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Selecione a instituição...",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.6,
+   "at": 12.93,
+   "label": "Instituição (opcional)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 14.7
+  },
+  {
+   "do": "click",
+   "target": {
+    "label": "Valor em conta (R$)"
+   },
+   "at": 15.23,
+   "label": "Valor em conta"
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "Valor em conta (R$)"
+   },
+   "text": "5000,00",
+   "at": 19.95,
+   "label": "digita 5.000,00 (ZOOM Valor em conta e Data desse saldo)",
+   "noClick": true
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Data desse saldo",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.6,
+   "at": 20.95,
+   "label": "Data desse saldo",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 23.25
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[title=\"#14B8A6\"], [role=dialog] button[aria-label*=\"14B8A6\" i]"
+   },
+   "at": 24.46,
+   "label": "cor verde-azulada"
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 27.32
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Criar Conta",
+    "exact": true
+   },
+   "at": 27.62,
+   "label": "Criar Conta"
+  },
+  {
+   "do": "waitFor",
+   "text": "Conta criada com sucesso",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "div[class*=\"group/tab\"] button:has(span:text-is(\"Conta Cooperativa\"))"
+   },
+   "at": 29.07,
+   "label": "abre a Conta Cooperativa"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Ajuste de saldo - Saldo inicial",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.8,
+   "at": 31.97,
+   "label": "linha do ajuste: etiqueta e valor (ZOOM)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Ajuste",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.6,
+   "at": 38.35,
+   "label": "etiqueta Ajuste",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 40.27
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "div[class*=\"group/tab\"] button:has(span:text-is(\"Conta Cooperativa\"))"
+   },
+   "seconds": 0.2,
+   "at": 42.76,
+   "label": "conta (mostra os três pontinhos)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "div[class*=\"group/tab\"]:has(span:text-is(\"Conta Cooperativa\")) div.absolute button"
+   },
+   "label": "três pontinhos da Conta Cooperativa"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Editar"
+   },
+   "label": "Editar"
+  },
+  {
+   "do": "waitFor",
+   "text": "Editar Conta Bancária",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Alterar este valor gerará um ajuste automático no saldo",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.0,
+   "at": 48.49,
+   "label": "dica do ajuste (ZOOM)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Cancelar",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 55.68,
+   "label": "Cancelar (sem salvar)"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 56.57
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "div[class*=\"group/tab\"] button:has(span:text-is(\"Conta Cooperativa\"))"
+   },
+   "seconds": 0.2,
+   "at": 56.92,
+   "label": "conta (de novo)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "div[class*=\"group/tab\"]:has(span:text-is(\"Conta Cooperativa\")) div.absolute button"
+   },
+   "label": "três pontinhos (Tornar principal)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "menuitem",
+    "name": "Tornar principal"
+   },
+   "seconds": 1.0,
+   "at": 58.87,
+   "label": "Tornar principal (sem clicar)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 65.98,
+   "label": "fecha o menu"
+  },
+  {
+   "do": "wait",
+   "seconds": 0.4
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 69.22
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "div[class*=\"group/tab\"] button:has(span:text-is(\"Poupança antiga\"))"
+   },
+   "seconds": 0.3,
+   "at": 70.23,
+   "label": "Poupança antiga",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "div[class*=\"group/tab\"]:has(span:text-is(\"Poupança antiga\")) div.absolute button"
+   },
+   "label": "três pontinhos da Poupança antiga"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Excluir"
+   },
+   "at": 73.47,
+   "label": "Excluir"
+  },
+  {
+   "do": "waitFor",
+   "text": "Remover conta bancária",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Oculta a conta mantendo todo o histórico"
+   },
+   "seconds": 0.4,
+   "at": 76.9,
+   "label": "as duas opções (ZOOM)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Transfere transações para outra conta e exclui permanentemente"
+   },
+   "seconds": 0.6,
+   "at": 77.81,
+   "label": "Migrar e Excluir",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L9",
+   "at": 79.13
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Oculta a conta mantendo todo o histórico"
+   },
+   "at": 80.34,
+   "label": "opção Arquivar"
+  },
+  {
+   "do": "waitFor",
+   "text": "Arquivar conta",
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "A conta será ocultada das listagens"
+   },
+   "seconds": 1.0,
+   "at": 83.48,
+   "label": "a conta será ocultada (ZOOM)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L10",
+   "at": 93.91
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=alertdialog] button:text-is(\"Arquivar\"), [role=dialog] button:text-is(\"Arquivar\")"
+   },
+   "at": 94.21,
+   "label": "Arquivar"
+  },
+  {
+   "do": "waitFor",
+   "text": "Conta arquivada com sucesso",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "div[class*=\"group/tab\"] button:has(span:text-is(\"Conta Secundária\"))"
+   },
+   "seconds": 0.8,
+   "at": 95.98,
+   "label": "a lista sem a poupança",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 100.87
+  }
+ ]
+}

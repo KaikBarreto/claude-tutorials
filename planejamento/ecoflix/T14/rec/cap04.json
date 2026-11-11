@@ -1,0 +1,610 @@
+{
+ "name": "t14-cap04",
+ "title": "T14 · Cap. 4 · Movimentação, transferência e saque (narração ESTIMADA 120,0 s; marcas L1..L12 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "seed": "t14-cap04",
+ "pace": 0.5,
+ "cps": 40,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 470
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true"
+ },
+ "seedExtra": [
+  "t14/inicio",
+  "t14/apos-cap02",
+  "t14/apos-cap03"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "waitFor",
+   "target": {
+    "label": "E-mail"
+   },
+   "timeout": 30
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "E-mail"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "Senha",
+    "exact": true
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Rafael!",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/movimentacoes-bancarias"
+  },
+  {
+   "do": "waitFor",
+   "text": "Controle de pagamentos via Pix/Transferência",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "div[class*=\"group/tab\"] button:has(span:text-is(\"Conta Principal\"))"
+   },
+   "timeout": 20
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|Algo deu errado|Falha ao|Something went wrong|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&!/fica indispon/i.test(m[0])&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{document.querySelectorAll('[data-sonner-toast][data-type=error]').forEach(t=>{const s='TOAST DE ERRO: '+t.textContent.trim().slice(0,90);if(!window.__avisos.includes(s)&&window.__avisos.length<10)window.__avisos.push(s)})},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "div[class*=\"group/tab\"] button:has(span:text-is(\"Conta Principal\"))"
+   },
+   "at": 3.44,
+   "label": "Conta Principal"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Nova Movimentação",
+    "within": "main"
+   },
+   "seconds": 0.4,
+   "at": 4.83,
+   "label": "combustível: Nova Movimentação",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "div[class*=\"group/tab\"] button:has(span:text-is(\"Conta Secundária\"))"
+   },
+   "seconds": 0.4,
+   "at": 9.24,
+   "label": "dinheiro da Conta Secundária",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Saque",
+    "within": "main"
+   },
+   "seconds": 0.6,
+   "at": 10.22,
+   "label": "saque no caixa eletrônico",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 15.19
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Nova Movimentação",
+    "within": "main"
+   },
+   "at": 18.07,
+   "label": "Nova Movimentação"
+  },
+  {
+   "do": "waitFor",
+   "text": "Nova Movimentação Financeira",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Saída",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 19.54,
+   "label": "tipo Saída"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Conta bancária",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.5,
+   "at": 21.51,
+   "label": "Conta bancária: Conta Principal",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 22.29
+  },
+  {
+   "do": "click",
+   "target": {
+    "placeholder": "Ex: Recebimento de pagamento"
+   },
+   "at": 22.59,
+   "label": "Descrição"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Ex: Recebimento de pagamento"
+   },
+   "text": "Combustível da picape",
+   "at": 24.13,
+   "label": "digita Combustível da picape",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "label": "Valor *"
+   },
+   "at": 25.32,
+   "label": "Valor"
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "Valor *"
+   },
+   "text": "350,00",
+   "at": 26.56,
+   "label": "digita 350,00 (ZOOM Valor)",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]:has-text(\"Selecione a categoria\")"
+   },
+   "at": 28.21,
+   "label": "Categoria"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Combustível",
+    "exact": true
+   },
+   "at": 29.07,
+   "label": "Combustível"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]:has-text(\"centro de custo\")"
+   },
+   "at": 30.03,
+   "label": "Centro de custo"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Frota",
+    "exact": true
+   },
+   "at": 31.35,
+   "label": "Frota"
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 31.83
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Não contar na DRE (saldo herdado / histórico)",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.8,
+   "at": 32.61,
+   "label": "Não contar na DRE (desmarcada)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Salvar",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 41.85,
+   "label": "Salvar"
+  },
+  {
+   "do": "waitFor",
+   "text": "Movimentação registrada com sucesso!",
+   "timeout": 10
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 42.51
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 56.37
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Nova Movimentação",
+    "within": "main"
+   },
+   "at": 57.07,
+   "label": "Nova Movimentação (transferência)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Nova Movimentação Financeira",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Transferência",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 57.2,
+   "label": "tipo Transferência"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]:near(:text(\"Conta de origem\"))"
+   },
+   "at": 60.54,
+   "label": "Conta de origem"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Conta Secundária"
+   },
+   "at": 61.85,
+   "label": "Conta Secundária"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]:near(:text(\"Conta de destino\"))"
+   },
+   "at": 63.35,
+   "label": "Conta de destino"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Conta Principal"
+   },
+   "at": 64.59,
+   "label": "Conta Principal"
+  },
+  {
+   "do": "click",
+   "target": {
+    "label": "Valor *"
+   },
+   "at": 65.32,
+   "label": "Valor da transferência"
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "Valor *"
+   },
+   "text": "8000,00",
+   "at": 66.25,
+   "label": "digita 8.000,00",
+   "noClick": true
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Prévia da transferência:",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.8,
+   "at": 67.09,
+   "label": "Prévia da transferência (ZOOM)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 69.7
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Transferir",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 70.0,
+   "label": "Transferir"
+  },
+  {
+   "do": "waitFor",
+   "text": "Transferência realizada com sucesso!",
+   "timeout": 10
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 76.66
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Saque",
+    "within": "main"
+   },
+   "at": 77.56,
+   "label": "Saque"
+  },
+  {
+   "do": "waitFor",
+   "text": "Destino do saque",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Destino do saque",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.6,
+   "at": 80.6,
+   "label": "Destino do saque: o cofre",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L9",
+   "at": 81.18
+  },
+  {
+   "do": "click",
+   "target": {
+    "label": "Valor do Saque"
+   },
+   "at": 81.18,
+   "label": "Valor do Saque"
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "Valor do Saque"
+   },
+   "text": "2000,00",
+   "at": 82.41,
+   "label": "digita 2.000,00 (ZOOM Saque e Tarifa)",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Sim",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 84.44,
+   "label": "Tem tarifa no saque? Sim"
+  },
+  {
+   "do": "click",
+   "target": {
+    "label": "Valor da Tarifa"
+   },
+   "at": 84.97,
+   "label": "Valor da Tarifa"
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "Valor da Tarifa"
+   },
+   "text": "6,50",
+   "at": 86.51,
+   "label": "digita 6,50",
+   "noClick": true
+  },
+  {
+   "do": "mark",
+   "name": "L10",
+   "at": 86.85
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Efeitos desta transação:",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.5,
+   "at": 89.14,
+   "label": "Efeitos desta transação (ZOOM)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Saldo da Conta Bancária",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.6,
+   "at": 90.13,
+   "label": "banco perde saque + tarifa",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Cofre (Conta DINHEIRO)",
+    "exact": true,
+    "within": "[role=dialog]",
+    "nth": "last"
+   },
+   "seconds": 0.6,
+   "at": 93.24,
+   "label": "cofre ganha só o saque",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L11",
+   "at": 98.88
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Confirmar Saque",
+    "exact": true
+   },
+   "at": 99.18,
+   "label": "Confirmar Saque"
+  },
+  {
+   "do": "waitFor",
+   "text": "Saque realizado com sucesso!",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Sangria",
+    "within": "main"
+   },
+   "seconds": 0.8,
+   "at": 105.43,
+   "label": "Sangria, aqui do lado",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L12",
+   "at": 110.01
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Saque",
+    "within": "main"
+   },
+   "seconds": 1.0,
+   "at": 113.14,
+   "label": "Saque (dica do caixa aberto)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 120.01
+  }
+ ]
+}

@@ -173,6 +173,12 @@ class Cap:
         s.click(campo, at=at_clique, label=label + ' (clique no campo)')
         return s.type(campo, text, at=at_texto, label=label, cps=cps, noClick=True)
 
+    def cola(s, campo, text, at_clique, at_texto, label):
+        """clique no campo (ancorado) e o texto colado na palavra: nome ou chave longa que, digitado a ~0,17 s por letra (ensaio de
+        11/11, máquina com outros agentes), não cabe na fala (docs/04, colar())"""
+        s.click(campo, at=at_clique, label=label + ' (clique no campo)')
+        return s.ev(js_colar(text), at=at_texto, label=label + ' (colado)')
+
     def marcar(s, target, at=None, label=None):
         """registra o retângulo do alvo para a câmera (zoom) sem mexer no mouse: `type` sem clique e sem texto"""
         return s._p({'do': 'type', 'target': target, 'text': '', 'noClick': True, 'optional': True, 'timeout': 4}, at, label, {})
@@ -218,9 +224,9 @@ class Cap:
         s.steps.append({'do': 'eval', 'js': 'JSON.stringify(window.__avisos || "sem observador")', 'label': 'avisos de erro na tela'})
         s.steps.append({'do': 'mark', 'name': 'FIM', 'at': round(s.dur, 2)})
 
-    def encaixa_hovers(s, custo=0.6, minimo=0.15):
+    def encaixa_hovers(s, custo=0.9, minimo=0.15):
         """o hover termina antes do próximo passo com `at` (uma marca Ln, outro gesto): parada (`seconds`) encurtada até caber
-        (custo do movimento ~0,6 s a pace 0,5, o do prever.py); passo que não cabe nem com o mínimo fica para o prever.py acusar"""
+        (custo medido no ensaio de 11/11: 0,5 a 1,4 s além da parada; 0,9 em média); passo que não cabe nem com o mínimo fica para o prever.py acusar"""
         for k, st in enumerate(s.steps):
             if st.get('do') != 'hover' or st.get('at') is None:
                 continue
@@ -341,6 +347,12 @@ def js_colar(texto):
     """cola o texto no campo em foco (execCommand insertText: o React recebe o input), ~0,05 s em vez de digitar letra a letra"""
     return ("(()=>{const e=document.activeElement;if(!e||!/^(INPUT|TEXTAREA)$/.test(e.tagName))return 'SEM ALVO (nada em foco)';"
             f"document.execCommand('insertText',false,{json.dumps(texto)});return e.value}})()")
+
+
+def js_clica_botao(texto, escopo='main'):
+    """clique sem cursor (el.click()) no botão do escopo cujo texto é exatamente `texto`: abre a janela na hora (docs/08, T5 cap15)"""
+    return ("(()=>{const b=[...document.querySelectorAll(%s+' button')].find(x=>x.textContent.trim()===%s);if(!b)return 'SEM ALVO';b.click();return 'ok'})()"
+            % (json.dumps(escopo), json.dumps(texto)))
 
 
 def js_limpa_busca(placeholder):
@@ -502,41 +514,39 @@ def cap02():
     Pessoa Jurídica de outro cadastro novo mostra CNPJ, razão social e inscrição estadual (sem salvar)."""
     c = cap_novo(2, start=(900, 300))
     c.mark(1)
-    c.hover(ABA('Fornecedores'), 0.6, at=c.A(1, 'Fornecedores,', 0.5), label='aba Fornecedores (já aberta)')
-    c.click(NOVO_FORN, at=c.A(1, 'Novo', 0.6, nth=1), label='Novo Fornecedor')
+    c.hover(ABA('Fornecedores'), 1.0, at=c.A(1, 'fornecedor', 0.5), label='aba Fornecedores (já aberta)')
+    c.click(NOVO_FORN, at=c.A(1, 'Em', 0.6), label='Novo Fornecedor')
     c.waitfor(text='Identificação e contato', timeout=10)
     c.mark(2)
-    c.digita(CAMPO('name'), 'Rogério Alves Costa', c.A(2, 'único', 1.0), c.A(2, 'campo', 0.05), 'Nome Rogério Alves Costa')
+    c.cola(CAMPO('name'), 'Rogério Alves Costa', c.A(2, 'único', 1.0), c.A(2, 'Nome.', 0.1), 'Nome Rogério Alves Costa')
     c.mark(3)
-    c.digita(CAMPO('contact_name'), 'Rogério Eletricista', c.A(3, 'Apelido', 0.6, nth=0), c.A(3, 'Rogério', 0.05), 'Apelido Rogério Eletricista')
+    c.cola(CAMPO('contact_name'), 'Rogério Eletricista', c.A(3, 'Apelido', 0.6, nth=0), c.A(3, 'Rogério', 0.05), 'Apelido Rogério Eletricista')
     c.mark(4)
     c.digita(CAMPO('phone'), '12900002611', c.A(4, 'telefone.', 0.6, nth=0), c.A(4, 'Se', 0.05), 'Telefone (12) 90000-2611')
-    c.hover(SEL(f'{DLG} label[for=phone_unavailable]'), 1.4, at=c.A(4, 'Não', 0.5, nth=1), label='Não possui telefone (sem marcar)')
+    c.hover(SEL(f'{DLG} label[for=phone_unavailable]'), 1.0, at=c.A(4, 'marcar', 0.5), label='Não possui telefone (sem marcar)')
     c.mark(5)
-    c.digita(CAMPO('pix_key'), 'rogerio.costa@pix.example', c.A(5, 'chave', 0.6), c.A(5, 'Pix', 0.05), 'Chave PIX rogerio.costa@pix.example')
+    c.cola(CAMPO('pix_key'), 'rogerio.costa@pix.example', c.A(5, 'chave', 0.6), c.A(5, 'Pix', 0.05), 'Chave PIX rogerio.costa@pix.example')
     c.mark(6)
     c.ev(DLG_ROLA('Saldo inicial', 300, 900), at=c.L(6) - 0.9, label='desce a janela até o Saldo inicial (passa pelo Também é cliente)')
     c.hover(TXT('Saldo inicial', within=DLG), 1.0, at=c.A(6, 'Saldo', 0.5), label='Saldo inicial')
     c.hover({'role': 'button', 'name': 'Adicionar saldo inicial', 'within': DLG}, 1.2, at=c.A(6, 'registra', 0.5), label='+ Adicionar saldo inicial (sem clicar)')
-    c.hover(TXT('Comece com saldo zero ou registre um saldo de abertura.', within=DLG), 1.0, at=c.A(6, 'zero.', 0.5), label='Comece com saldo zero')
     c.mark(7)
     c.ev(js_dlg_topo(), at=c.L(7) - 0.9, label='sobe a janela até as abas')
     c.click(ABA_DLG('Dados Fiscais'), at=c.A(7, 'Dados', 0.6), label='aba Dados Fiscais')
     c.hover(BTN('Pessoa Física', DLG), 1.0, at=c.A(7, 'Pessoa', 0.5), label='Tipo de Pessoa: Pessoa Física (já vem marcado)')
-    c.digita(CAMPO('cpf_cnpj'), '41827356090', c.A(7, 'Rogério.', 0.4), c.A(7, 'Eu', 0.05), 'zoom: CPF 418.273.560-90 (L7)')
+    c.digita(CAMPO('cpf_cnpj'), '41827356090', c.A(7, 'CPF,', 0.6), c.A(7, 'como', 0.05), 'zoom: CPF 418.273.560-90 (L7)')
     c.confere_campos(['418.273.560-90'], 'CPF com a máscara')
     c.mark(8)
     c.click(SALVAR, at=c.A(8, 'Salvar.', 0.6), label='Salvar')
     c.waitfor(text='Fornecedor cadastrado com sucesso!', timeout=12)
     c.waitfor(gone={'role': 'dialog'}, timeout=8)
-    c.hover(NOME_LINHA('Rogério Alves Costa'), 1.0, at=c.A(8, 'Rogério', 0.5), label='Rogério Alves Costa na lista')
+    c.marcar(NOME_LINHA('Rogério Alves Costa'), label='Rogério Alves Costa na lista (sem mexer o mouse)')
     c.mark(9)
-    c.click(NOVO_FORN, at=c.A(9, 'Pra', 0.4), label='Novo Fornecedor (outro cadastro, só para mostrar a Pessoa Jurídica)')
+    c.ev(js_clica_botao('Novo Fornecedor'), at=c.L(9) - 0.9, label='Novo Fornecedor por eval (o clique logo depois de salvar levou 3,5 s no ensaio)')
     c.waitfor(text='Identificação e contato', timeout=10)
-    c.click(ABA_DLG('Dados Fiscais'), at=c.A(9, 'mesmo', 0.8), label='aba Dados Fiscais')
+    c.click(ABA_DLG('Dados Fiscais'), at=c.A(9, 'cadastro,', 0.8), label='aba Dados Fiscais')
     c.click(BTN('Pessoa Jurídica', DLG), at=c.A(9, 'Jurídica.', 0.6), label='Pessoa Jurídica')
-    c.hover(CAMPO('cpf_cnpj'), 0.4, at=c.A(9, 'CNPJ,', 0.5, nth=0), label='CNPJ (com a lupa)')
-    c.hover(CAMPO('razao_social'), 0.4, at=c.A(9, 'razão', 0.5), label='Razão Social')
+    c.hover(CAMPO('cpf_cnpj'), 0.2, at=c.A(9, 'CNPJ,', 0.7, nth=0), label='CNPJ (com a lupa)')
     c.hover(CAMPO('inscricao_estadual'), 0.6, at=c.A(9, 'inscrição', 0.5), label='Inscrição Estadual')
     c.hover(LUPA, 1.0, at=c.A(9, 'atalho.', 0.5), label='a lupa do CNPJ (o atalho)')
     c.fim()
@@ -549,7 +559,7 @@ def cap03():
     c.mark(1)
     c.click(NOVO_FORN, at=c.A(1, 'Chegou', 0.6), label='Novo Fornecedor')
     c.waitfor(text='Identificação e contato', timeout=10)
-    c.digita(CAMPO('name'), 'Serralheria Bem-Te-Vi', c.A(1, 'fornecedor:', 1.0), c.A(1, 'Serralheria', 0.05), 'Nome Serralheria Bem-Te-Vi')
+    c.cola(CAMPO('name'), 'Serralheria Bem-Te-Vi', c.A(1, 'fornecedor:', 1.0), c.A(1, 'Serralheria', 0.05), 'Nome Serralheria Bem-Te-Vi')
     c.mark(2)
     c.click(ABA_DLG('Dados Fiscais'), at=c.A(2, 'Dados', 0.6), label='aba Dados Fiscais')
     c.click(BTN('Pessoa Jurídica', DLG), at=c.A(2, 'Pessoa', 0.6), label='Pessoa Jurídica')

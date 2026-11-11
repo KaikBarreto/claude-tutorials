@@ -2,8 +2,9 @@
 """T6 · Caixa: abrir, fechar e o cofre (EcoFlix, EcoSistema 1.59.154): gera rec/t06/cap00..cap12.json (+ cap08b, o corte do Marcos)
 a partir da fala ($TUT_HOME/t06/narracao/capNN.json: o estimado até a voz chegar; com a voz, o da voz, sem mudar nada aqui).
 
-Computador 1280x800, Rafael Nogueira (master) na Recicla Vale Metais. FAKE_NOW 2026-11-10T08:30:00-03:00 nos caps 0 a 9 e
-2026-11-10T17:40:00-03:00 nos caps 10 a 12 (o mesmo no Supabase falso e no robô: rec/t06/t06_rodar.sh sobe a instância com o certo).
+Computador 1280x800, Rafael Nogueira (master) na Recicla Vale Metais. FAKE_NOW (o mesmo no Supabase falso e no robô: rec/t06/t06_rodar.sh
+sobe a instância com o certo): 08:30:00 nos caps 0 e 1, 08:30:55 no cap 2 (o #85 abre às 08:31), 08:41:50 nos caps 3 a 5 (o #86 abre às
+08:42), 08:45:00 nos caps 6 a 9 e no 8b, 17:40:00 nos caps 10 a 12 (todos em 10/11/2026, -03:00).
 Rodar de qualquer pasta: `python3 -I rec/t06/gerar.py [NN ...] [8b]` (ANCORAS=1 lista as âncoras). Depois:
 `node rec/record.mjs rec/t06/capNN.json --check`; gravar: `bash rec/t06/t06_rodar.sh NN [--ens]`.
 
@@ -41,7 +42,11 @@ NARR = os.path.join(TUT_HOME, 't06', 'narracao')
 AULA = 't06'
 MANHA = '2026-11-10T08:30:00-03:00'
 TARDE = '2026-11-10T17:40:00-03:00'
-FAKE_NOW = {n: (TARDE if n >= 10 else MANHA) for n in range(13)}
+# o relógio anda pela manhã como a história (MUNDO_LINHA_DO_TEMPO.md, "O dia 10/11"): o app grava a abertura com o minuto do campo
+# "Data e Hora de Abertura" no instante em que a janela abre, e nenhum caixa abre antes das 08:31 (#85 às 08:31, #86 às 08:42)
+FAKE_NOW = {0: MANHA, 1: MANHA, 2: '2026-11-10T08:30:55-03:00', 3: '2026-11-10T08:41:50-03:00', 4: '2026-11-10T08:41:50-03:00',
+            5: '2026-11-10T08:41:50-03:00', 6: '2026-11-10T08:45:00-03:00', 7: '2026-11-10T08:45:00-03:00', 8: '2026-11-10T08:45:00-03:00',
+            9: '2026-11-10T08:45:00-03:00', 10: TARDE, 11: TARDE, 12: TARDE}
 NOMES = ['Abertura', 'O caixa fechado', 'Abrir o caixa', 'Abrir com zero', 'O cofre da empresa', 'Saldo insuficiente',
          'Os dois cartões', 'Cada um com o seu caixa', 'O caixa dos outros', 'Saque e sangria', 'Fechar o caixa',
          'Reabrir um caixa', 'Recapitulando']
@@ -363,7 +368,7 @@ USUARIO = SEL(f'{DLG} button[role=combobox]')                            # "Abri
 INICIO = BTN('Início', MAIN)
 TAB85 = BTNX('#85 | Caixa - Rafael Nogueira', MAIN)                       # nome acessível "#85 | Caixa - Rafael Nogueira(você)"
 TAB86 = BTNX('#86 | Caixa - Marcos Antunes', MAIN)
-AJUDA = SEL('main button[aria-haspopup="dialog"]:not([aria-label])')    # o "?" à direita das abas (sem nome acessível)
+AJUDA = SEL('main button[aria-haspopup="dialog"]:has(svg[class*="help"])')   # o "?" à direita das abas (HelpCircle, sem nome acessível)
 TOTAL = BTN('Ver movimentações do dinheiro da empresa', MAIN)            # "Dinheiro total da empresa: R$ ... ›" (aria-label)
 OLHO = SEL('main button[aria-label="Ocultar saldo"]')
 OLHO2 = SEL('main button[aria-label="Mostrar saldo"]')
@@ -374,7 +379,7 @@ ALERTA_COFRE = '[role=dialog]:has-text("Saldo insuficiente em dinheiro")'   # 2a
 COMBO = lambda n: SEL(f'{DLG} button[role=combobox]', nth=n)            # seletores da janela, na ordem da tela
 VALOR = SEL(f'{DLG} #amount')
 DESCRICAO = SEL(f'{DLG} #description')
-TARIFA = SEL(f'{DLG} input[placeholder="R$ 0,00"]', nth=1)                # "Valor da Tarifa" (aparece com "Sim")
+TARIFA = SEL(f'{DLG} #fee')                                             # "Valor da Tarifa" (aparece com "Sim"; WithdrawalForm.tsx:775)
 
 
 def colar(c, seletor, texto, at=None, label=None):
@@ -560,11 +565,14 @@ def cap06():
     c.mark(4)
     c.confere('main', ['O cofre da empresa', 'R$ 18.500,00', 'Disponível no cofre: R$ 0,00 (0%)', 'Caixa de Rafael Nogueira: R$ 1.500,00 (8%)',
                        'Caixa de Marcos Antunes: R$ 17.000,00 (92%)'], 'barra do cofre (0 / 1.500 / 17.000)')
-    c.hover(TXTX('Caixa de Rafael Nogueira:'), at=c.A(4, 'barra', 0.5), label='ZOOM barra e legenda do cofre (L4)')
-    c.hover(TXTX('Caixa de Marcos Antunes:'), at=c.A(4, 'dezessete', 0.5), label='Caixa de Marcos Antunes: R$ 17.000,00 (92%)')
-    c.hover(TXTX('Disponível no cofre:'), at=c.A(4, 'nada', 0.5), label='Disponível no cofre: R$ 0,00 (0%)')
+    c.hover(TXT('92%'), at=c.A(4, 'barra', 0.5), label='ZOOM barra e legenda do cofre (L4)')
+    c.hover(BTNX('Caixa de Rafael Nogueira:', MAIN), at=c.A(4, 'mil', 0.5), label='Caixa de Rafael Nogueira: R$ 1.500,00 (8%)')
+    c.hover(BTNX('Caixa de Marcos Antunes:', MAIN), at=c.A(4, 'dezessete', 0.5), label='Caixa de Marcos Antunes: R$ 17.000,00 (92%)')
+    c.hover(BTNX('Disponível no cofre:', MAIN), at=c.A(4, 'nada', 0.5), label='Disponível no cofre: R$ 0,00 (0%)')
     c.mark(5)
-    c.click(LINK('Caixa'), at=c.A(5, 'volta', 0.6), label='menu Caixa (de volta)')
+    # no /movimentacoes-bancarias o grupo Financeiro do menu vem fechado: abre o grupo e clica em Caixa
+    c.click(FIN, at=c.A(5, 'De', 0.6), label='menu Financeiro')
+    c.click(LINK('Caixa'), at=c.A(5, 'caixa', 0.5, nth=0), label='menu Caixa (de volta)')
     c.waitfor(text='Gestão financeira e movimentações', timeout=12)
     c.hover(TXT('Saldo Bancário'), at=c.A(5, 'Saldo', 0.5), label='cartão Saldo Bancário')
     c.hover(SAQUE_SANGRIA, at=c.A(5, 'botões', 0.5), label='botões do Saldo Bancário')
@@ -638,7 +646,8 @@ def cap08b():
     c.confere('main', ['Dinheiro em Caixa', 'R$ 17.000,00', 'Aberto em: 10/11/2026 08:42'], 'caixa do Marcos sem abas')
     c.confere_js("(()=>document.querySelector('main').innerText.includes('Caixa - Rafael Nogueira')?'DIFERENTE: aparece a aba do Rafael':'OK: sem as abas')()",
                  'sem as abas dos outros caixas')
-    c.hover(SEL('main h1'), at=c.A(1, 'caixa', 0.5), label='ZOOM título Caixa com o selo #86, sem abas (L4)')
+    # título "Caixa" (y 76) e o selo "#86" (y 83) ficam acima da faixa de clique (y 96): noScroll
+    c.hover(TXT('#86'), at=c.A(1, 'caixa', 0.5), label='ZOOM título Caixa com o selo #86, sem abas (L4)', noScroll=True)
     c.mark(2)
     c.hover(TXT('Dinheiro em Caixa'), at=c.A(2, 'Histórico', 0.5), label='o caixa dele (mesma tela)')
     c.fim()
@@ -710,7 +719,8 @@ def cap09():
     return c
 
 
-FECHAMENTO = SEL(f'{DLG} input[inputmode=decimal]')                   # "Valor de Fechamento" (vem com o esperado)
+FECHAMENTO = SEL(f'{DLG} #closingBalance')                            # "Valor de Fechamento" (vem com o esperado; Caixa.tsx:3503)
+LINHA_CX = lambda n: SEL(f"{DLG} button:has-text('#{n}')")             # linha da lista "Reabrir outro caixa" (a 1a; o rodapé tem "Reabrir #N")
 LINHA = lambda txt: SEL(f"main tbody tr:has-text('{txt}')")
 
 
@@ -745,7 +755,7 @@ def cap10():
     c.mark(7)
     c.mark(8)
     c.mark(9)
-    c.confere_campo(f'{DLG} input[inputmode=decimal]', '1.007,10', 'Valor de Fechamento já com o esperado')
+    c.confere_campo(f'{DLG} #closingBalance', '1.007,10', 'Valor de Fechamento já com o esperado')
     c.hover(FECHAMENTO, at=c.A(9, 'Valor', 0.5), label='Valor de Fechamento (já com o esperado)')
     c.mark(10)
     c.click(FECHAMENTO, at=c.A(10, 'Contei', 0.6), label='campo Valor de Fechamento')
@@ -776,11 +786,11 @@ def cap11():
     c.click(BTN('reabrir outro caixa', MAIN), at=c.A(3, 'reabrir', 0.6), label='reabrir outro caixa')
     c.waitfor(text='Escolha qual caixa fechado deseja reabrir', timeout=10)
     c.confere('dlg', ['#85', 'R$ 1.007,10', '#84', 'R$ 1.250,00', '#83', 'Marcos Antunes', 'R$ 640,00'], 'lista: #85, #84 e #83 do Marcos')
-    c.hover(TXTX('#84', DLG), at=c.A(3, 'operadores', 0.5), label='lista dos últimos caixas fechados')
+    c.hover(LINHA_CX(84), at=c.A(3, 'operadores', 0.5), label='lista dos últimos caixas fechados (#84)')
     c.mark(4)
-    c.hover(TXTX('#83', DLG), at=c.A(4, 'outra', 0.5), label='o #83 do Marcos')
+    c.hover(LINHA_CX(83), at=c.A(4, 'outra', 0.5), label='o #83 do Marcos (R$ 640,00)')
     c.mark(5)
-    c.hover(TXTX('#85', DLG), at=c.A(5, 'meu', 0.5), label='o #85 já marcado')
+    c.hover(LINHA_CX(85), at=c.A(5, 'meu', 0.5), label='o #85 já marcado')
     c.click(BTN('Reabrir #85', DLG), at=c.A(5, 'reabrir', 0.6), label='Reabrir #85 (lista)')
     c.waitfor(text='Reabrir caixa #85?', timeout=10)
     c.hover(TXTX('O caixa será reaberto exatamente como estava', DLG), at=c.A(5, 'confirma', 0.5), label='Reabrir caixa #85? (como estava)')

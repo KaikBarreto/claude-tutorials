@@ -324,6 +324,14 @@ def js_rola(seletor, y, dur_ms=700):
             "if(Math.abs(dy)<3)return 'ok';" + SUAVE.replace('DUR', str(int(dur_ms))) + "return Math.round(el.getBoundingClientRect().top)})()")
 
 
+def js_rola_linha(texto, y, dur_ms=700):
+    """como js_rola, com o alvo = a 1ª linha da lista (main tbody tr) cujo texto contém `texto` (CSS puro não tem :has-text)"""
+    return ("(async()=>{" + ACHA_ROLAGEM + f"const el=[...document.querySelectorAll('main tbody tr')].filter(e=>e.offsetParent&&e.innerText.includes({json.dumps(texto)}))[0];"
+            "if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';"
+            f"let dy=Math.round(el.getBoundingClientRect().top-{int(y)});const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));"
+            "if(Math.abs(dy)<3)return 'ok';" + SUAVE.replace('DUR', str(int(dur_ms))) + "return Math.round(el.getBoundingClientRect().top)})()")
+
+
 def js_rola_texto(texto, y, dur_ms=700, escopo=DLG):
     """como js_rola, com o alvo achado pelo texto (o menor elemento do escopo cujo texto é exatamente `texto`)"""
     return ("(async()=>{" + ACHA_ROLAGEM + f"const el=[...document.querySelectorAll({json.dumps(escopo + ' *')})].filter(e=>e.textContent.trim()==={json.dumps(texto)}&&e.offsetParent)"
@@ -542,7 +550,7 @@ def cap04():
     c.mark(9)
     c.click(RODAPE('Criar conta'), at=c.A(9, 'Criar', 0.7), label='Criar conta', noScroll=True)
     c.waitfor(text='Conta criada', timeout=10)
-    c.ev(js_rola("main tbody tr:has-text('Manutenção da prensa enfardadeira')", 420), at=c.A(9, 'Pronto:', 0.3), label='desce a tela até a linha nova')
+    c.ev(js_rola_linha('Manutenção da prensa enfardadeira', 420), at=c.A(9, 'Pronto:', 0.3), label='desce a tela até a linha nova')
     c.hover(TXT_LINHA('Manutenção da prensa enfardadeira', 'Manutenção da prensa enfardadeira'), 1.2, at=c.A(9, 'manutenção', 0.6),
             label='ZOOM a linha nova, com 19/11/2026 e R$ 3.480,00')
     c.hover(TXT_LINHA('Manutenção da prensa enfardadeira', 'Pendente'), 0.6, at=c.A(9, 'pendente,', 0.6), label='Pendente')

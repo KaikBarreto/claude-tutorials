@@ -1,0 +1,344 @@
+{
+ "name": "t14-cap03",
+ "title": "T14 · Cap. 3 · O cofre e o ajuste de saldo (narração ESTIMADA 67,0 s; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "seed": "t14-cap03",
+ "pace": 0.5,
+ "cps": 40,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 470
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true"
+ },
+ "seedExtra": [
+  "t14/inicio",
+  "t14/apos-cap02"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "waitFor",
+   "target": {
+    "label": "E-mail"
+   },
+   "timeout": 30
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "E-mail"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "Senha",
+    "exact": true
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Rafael!",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/movimentacoes-bancarias"
+  },
+  {
+   "do": "waitFor",
+   "text": "Controle de pagamentos via Pix/Transferência",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "div[class*=\"group/tab\"] button:has(span:text-is(\"Conta Principal\"))"
+   },
+   "timeout": 20
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|Algo deu errado|Falha ao|Something went wrong|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&!/fica indispon/i.test(m[0])&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{document.querySelectorAll('[data-sonner-toast][data-type=error]').forEach(t=>{const s='TOAST DE ERRO: '+t.textContent.trim().slice(0,90);if(!window.__avisos.includes(s)&&window.__avisos.length<10)window.__avisos.push(s)})},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 13.59
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "div[class*=\"group/tab\"] button:has(span:text-is(\"DINHEIRO (COFRE)\"))"
+   },
+   "at": 14.58,
+   "label": "DINHEIRO (COFRE)"
+  },
+  {
+   "do": "waitFor",
+   "text": "O cofre da empresa",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "R$ 18.500,00",
+    "exact": true,
+    "within": "main",
+    "nth": 1
+   },
+   "seconds": 0.8,
+   "at": 16.57,
+   "label": "R$ 18.500,00 e Saldo Total em Dinheiro (ZOOM)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Disponível no cofre",
+    "within": "main"
+   },
+   "seconds": 0.8,
+   "at": 22.5,
+   "label": "Disponível no cofre",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 23.59
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "R$ 18.500,00",
+    "exact": true,
+    "within": "main",
+    "nth": 1
+   },
+   "seconds": 0.8,
+   "at": 32.26,
+   "label": "o saldo que o sistema mostra",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 33.43
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "div[class*=\"group/tab\"] button:has(span:text-is(\"DINHEIRO (COFRE)\"))"
+   },
+   "seconds": 0.2,
+   "at": 34.82,
+   "label": "cofre (mostra os três pontinhos)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "div[class*=\"group/tab\"]:has(span:text-is(\"DINHEIRO (COFRE)\")) div.absolute button"
+   },
+   "label": "três pontinhos do cofre"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "menuitem",
+    "name": "Ajustar saldo"
+   },
+   "seconds": 0.3,
+   "label": "Ajustar saldo (a única opção)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Ajustar saldo"
+   },
+   "at": 37.57,
+   "label": "Ajustar saldo"
+  },
+  {
+   "do": "waitFor",
+   "text": "Saldo atual",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Saldo atual",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.6,
+   "at": 38.91,
+   "label": "Saldo atual R$ 18.500,00",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 43.72
+  },
+  {
+   "do": "click",
+   "target": {
+    "label": "Novo saldo"
+   },
+   "at": 43.85,
+   "label": "Novo saldo"
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "Novo saldo"
+   },
+   "text": "18560,00",
+   "at": 46.47,
+   "label": "digita 18.560,00 (ZOOM Novo saldo e Diferença)",
+   "noClick": true
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Diferença",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.8,
+   "at": 46.85,
+   "label": "Diferença +R$ 60,00",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 51.51
+  },
+  {
+   "do": "click",
+   "target": {
+    "placeholder": "Ex: conferência de inventário"
+   },
+   "at": 51.96,
+   "label": "Motivo"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Ex: conferência de inventário"
+   },
+   "text": "Contagem do cofre",
+   "at": 54.33,
+   "label": "digita Contagem do cofre",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Confirmar ajuste",
+    "exact": true
+   },
+   "at": 55.23,
+   "label": "Confirmar ajuste"
+  },
+  {
+   "do": "waitFor",
+   "text": "Saldo ajustado",
+   "timeout": 10
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 56.64
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||null};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"Hist\\u00f3rico de Movimenta\\u00e7\\u00f5es\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-150);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 56.79,
+   "label": "desce ao histórico do cofre"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Ajuste de saldo — Contagem do cofre",
+    "within": "main"
+   },
+   "seconds": 0.6,
+   "at": 58.53,
+   "label": "a linha do ajuste",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Ajuste",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 1.0,
+   "at": 59.55,
+   "label": "etiqueta Ajuste",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 67.03
+  }
+ ]
+}

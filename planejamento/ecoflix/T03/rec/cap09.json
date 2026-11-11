@@ -94,7 +94,7 @@
   },
   {
    "do": "eval",
-   "js": "(()=>{if(window.__pdfs)return 'ja';window.__pdfs=[];const o=URL.createObjectURL.bind(URL);URL.createObjectURL=(b)=>{try{if(b&&b.type==='application/pdf')window.__pdfs.push(b)}catch(e){}return o(b)};return 'gancho'})()"
+   "js": "(()=>{if(window.__pdfs)return 'ja';window.__pdfs=[];window.__abas=[];const o=URL.createObjectURL.bind(URL);URL.createObjectURL=(b)=>{try{if(b&&b.type==='application/pdf')window.__pdfs.push(b)}catch(e){}return o(b)};const wo=window.open.bind(window);window.open=(...a)=>{const w=wo(...a);if(w)window.__abas.push(w);return w};return 'gancho'})()"
   },
   {
    "do": "eval",
@@ -222,7 +222,7 @@
   },
   {
    "do": "eval",
-   "js": "(async()=>{for(let i=0;i<30&&!(window.__pdfs&&window.__pdfs.length>0);i++)await new Promise(r=>setTimeout(r,200));const b=window.__pdfs&&window.__pdfs[0];if(!b)return 'SEM PDF';const u=new Uint8Array(await b.arrayBuffer());let s='';for(let i=0;i<u.length;i+=8192)s+=String.fromCharCode.apply(null,u.subarray(i,i+8192));const r=await fetch(\"http://127.0.0.1:54340/rest/v1/t03_pdfs\",{method:'POST',headers:{'content-type':'application/json',apikey:\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlzcyI6ImVjb2ZsaXgtZmFrZSIsImlhdCI6MTcwMDAwMDAwMCwiZXhwIjo0MTAyNDQ0ODAwfQ.rY1tN2278kUMFX6Wfm3N3PVpbWHbwP-QAgUZYNLmSLM\",Prefer:'return=minimal'},body:JSON.stringify({nome:\"lista-materiais\",bytes:u.length,b64:btoa(s)})});return {pdf:\"lista-materiais\",bytes:u.length,guardado:r.status}})()",
+   "js": "(async()=>{for(let i=0;i<30&&!(window.__pdfs&&window.__pdfs.length>0);i++)await new Promise(r=>setTimeout(r,200));const b=window.__pdfs&&window.__pdfs[0];if(!b)return 'SEM PDF';const u=new Uint8Array(await b.arrayBuffer());let s='';for(let i=0;i<u.length;i+=8192)s+=String.fromCharCode.apply(null,u.subarray(i,i+8192));const r=await fetch(\"http://127.0.0.1:54340/rest/v1/t03_pdfs\",{method:'POST',headers:{'content-type':'application/json',apikey:\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlzcyI6ImVjb2ZsaXgtZmFrZSIsImlhdCI6MTcwMDAwMDAwMCwiZXhwIjo0MTAyNDQ0ODAwfQ.rY1tN2278kUMFX6Wfm3N3PVpbWHbwP-QAgUZYNLmSLM\",Prefer:'return=minimal'},body:JSON.stringify({nome:\"lista-materiais\",bytes:u.length,b64:btoa(s)})});(window.__abas||[]).forEach(w=>{try{w.close()}catch(e){}});return {pdf:\"lista-materiais\",bytes:u.length,guardado:r.status}})()",
    "label": "PDF do estoque (para a edição)"
   },
   {
@@ -329,7 +329,7 @@
   },
   {
    "do": "eval",
-   "js": "(async()=>{for(let i=0;i<30&&!(window.__pdfs&&window.__pdfs.length>1);i++)await new Promise(r=>setTimeout(r,200));const b=window.__pdfs&&window.__pdfs[1];if(!b)return 'SEM PDF';const u=new Uint8Array(await b.arrayBuffer());let s='';for(let i=0;i<u.length;i+=8192)s+=String.fromCharCode.apply(null,u.subarray(i,i+8192));const r=await fetch(\"http://127.0.0.1:54340/rest/v1/t03_pdfs\",{method:'POST',headers:{'content-type':'application/json',apikey:\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlzcyI6ImVjb2ZsaXgtZmFrZSIsImlhdCI6MTcwMDAwMDAwMCwiZXhwIjo0MTAyNDQ0ODAwfQ.rY1tN2278kUMFX6Wfm3N3PVpbWHbwP-QAgUZYNLmSLM\",Prefer:'return=minimal'},body:JSON.stringify({nome:\"tabela-precos-depositos-a4\",bytes:u.length,b64:btoa(s)})});return {pdf:\"tabela-precos-depositos-a4\",bytes:u.length,guardado:r.status}})()",
+   "js": "(async()=>{for(let i=0;i<30&&!(window.__pdfs&&window.__pdfs.length>1);i++)await new Promise(r=>setTimeout(r,200));const b=window.__pdfs&&window.__pdfs[1];if(!b)return 'SEM PDF';const u=new Uint8Array(await b.arrayBuffer());let s='';for(let i=0;i<u.length;i+=8192)s+=String.fromCharCode.apply(null,u.subarray(i,i+8192));const r=await fetch(\"http://127.0.0.1:54340/rest/v1/t03_pdfs\",{method:'POST',headers:{'content-type':'application/json',apikey:\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlzcyI6ImVjb2ZsaXgtZmFrZSIsImlhdCI6MTcwMDAwMDAwMCwiZXhwIjo0MTAyNDQ0ODAwfQ.rY1tN2278kUMFX6Wfm3N3PVpbWHbwP-QAgUZYNLmSLM\",Prefer:'return=minimal'},body:JSON.stringify({nome:\"tabela-precos-depositos-a4\",bytes:u.length,b64:btoa(s)})});(window.__abas||[]).forEach(w=>{try{w.close()}catch(e){}});return {pdf:\"tabela-precos-depositos-a4\",bytes:u.length,guardado:r.status}})()",
    "label": "PDF da Tabela Depósitos A4 (para a edição: título e Cobre mel R$ 44,20)"
   },
   {

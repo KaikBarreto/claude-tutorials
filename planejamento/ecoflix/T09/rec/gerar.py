@@ -524,6 +524,96 @@ def cap07():
     return c
 
 
+TOAST = lambda t: SEL(f"[data-sonner-toast]:has-text('{t}')")
+PREVIA = "[role=alertdialog]:has-text('Vou desfazer tudo que este pedido criou:')"
+L_ESTORNO = "03/11/2026'):has-text('Estornado em"                            # a cópia de 03/11 da Aparecida (fecha o :has-text de LINHA)
+
+
+@capitulo
+def cap05():
+    """Excluir e o selo de estornado: as duas compras do Valdir (L1); a prévia da exclusão (L2, zoom); Excluir pedido (L3); Este mês e o
+    selo "Estornado em 05/11" com a dica (L4-L5, zoom); (ilustração L6); Configurações > Empresa > Ver histórico (L7)."""
+    c = Cap(5, setup=setup_pedidos('Hoje', extra=ITENS_50))
+    c.mark(1)
+    c.hover(SEL(LINHA(L_VALDIR)), 0.5, at=c.A(1, 'Valdir', 0.6), label='a compra do Valdir das 07:41')
+    c.hover(SEL(LINHA(L_DUP)), 0.8, at=c.A(1, 'duas', 0.6), label='[DESTAQUE] a mesma compra às 07:42 (duplicada)')
+    c.mark(2)
+    abre_menu_linha(c, L_DUP, c.A(2, 'Excluir,', 1.5), 'menu da compra das 07:42')
+    c.click(ITEM('Excluir'), at=c.A(2, 'Excluir,', 0.6), label='Excluir')
+    c.waitfor(text='Vou desfazer tudo que este pedido criou:', timeout=8)
+    c.waitfor(target=SEL(f"{PREVIA} :text-is('Estoque')"), timeout=10)
+    c.confere(PREVIA, ['Ferro misto', '280', 'Pagamento em dinheiro', '210,00', '(apaga)'], 'prévia: 280 kg de ferro misto e R$ 210,00 em dinheiro')
+    c.registra(SEL(f"{PREVIA} div.space-y-4"), at=c.A(2, 'mostra', 0.2), label='[ZOOM] os blocos Estoque e Financeiro da prévia')
+    c.hover(TXTX('Ferro misto', within=PREVIA), 0.6, at=c.A(2, 'duzentos', 0.6, nth=0), label='− Ferro misto 280 Kg')
+    c.hover(TXTX('Pagamento em dinheiro', within=PREVIA), 0.6, at=c.A(2, 'duzentos', 0.6, nth=1), label='− Pagamento em dinheiro R$ 210,00 (apaga)')
+    c.mark(3)
+    c.click(BTN('Excluir pedido'), at=c.A(3, 'Excluir', 0.7), label='Excluir pedido')
+    c.waitfor(text='Pedido excluído', timeout=10)
+    c.registra(TOAST('Pedido excluído'), at=c.A(3, 'aberto,', 0.2), label='aviso "Pedido excluído"')
+    c.mark(4)
+    c.click(PERIODO('Hoje'), at=c.A(4, 'Agora', 0.7), label='período')
+    c.click(OPT('Este mês'), at=c.A(4, 'repara', 0.5), label='Este mês')
+    c.waitfor(target=SEL(LINHA(L_ESTORNO)), timeout=10)
+    c.ev(js_ate_el("[...document.querySelectorAll('main tbody tr')].find(t=>t.innerText.includes('Estornado em'))", y=430, dur_ms=1100),
+         at=c.A(4, 'compra', 0.9, nth=0), label='rola a lista até as compras de 03/11 da Aparecida')
+    c.hover(SEL(f"{LINHA(L_ESTORNO)} :text('Estornado em')"), 2.6, at=c.A(4, 'cópia', 0.6), label='[ZOOM] o selo "Estornado em 05/11" e a dica')
+    c.mark(5)
+    c.hover(SEL(f"{LINHA(L_ESTORNO)} :text('Estornado em')"), 3.0, at=c.A(5, 'Ele', 0.2), label='a dica continua (correção no caixa do dia em que excluiu)')
+    c.mark(6)
+    c.cursor((700, 300), at=c.A(6, 'O', 0.2), label='cursor sai do selo (ilustração excluir x estornar)')
+    c.mark(7)
+    c.click(CONFIG_MENU, at=c.A(7, 'Só', 0.8), label='Configurações (rodapé do menu)', noScroll=True)
+    c.waitfor(text='Histórico de Exclusões', timeout=15)
+    c.ev(js_ate_el("[...document.querySelectorAll('main h3, main h2, main p, main div')].find(e=>e.children.length===0&&e.textContent.trim()==='Histórico de Exclusões')", y=360, dur_ms=800),
+         at=c.A(7, 'Configurações,', 0.5), label='desce até o cartão Histórico de Exclusões')
+    c.click(BTNX('Ver histórico'), at=c.A(7, 'Ver', 0.7), label='Ver histórico')
+    c.waitfor(text='Excluiu compra', timeout=15)
+    c.confere('main', ['Histórico de Exclusões', 'Excluiu compra', 'Valdir Pereira', 'rafael@reciclavalemetais.example'], 'a linha de hoje no Histórico de Exclusões')
+    c.registra(SEL("main :is(div,li):has(> * :text('Excluiu compra')):has-text('Valdir Pereira')"), at=c.A(7, 'histórico.', -0.6),
+               label='[ZOOM] a linha "Excluiu compra "Valdir Pereira"", com a hora e o e-mail')
+    c.fim()
+    return c
+
+
+@capitulo
+def cap06():
+    """Reimprimir e cupom sem valor: o 1º "Ver comprovante" cai no aviso "Popup bloqueado" (L1); (ilustração L2-L3); o 2º abre o PDF (L4,
+    o PDF vai para a edição); Cupom sem valor no Valdir (L5) e o selo (L6); o PDF sem valores (L7); a opção Mostrar valores (L8)."""
+    c = Cap(6, setup=setup_pedidos('Hoje'))
+    c.mark(1)
+    c.ev('(()=>{window.__bloqueia=1;return "o próximo pop-up sai bloqueado"})()', label='o navegador "bloqueia" o 1º pop-up (o aviso é o do app)')
+    c.hover(SEL(LINHA(L_CIDA)), 0.6, at=c.A(1, 'Aparecida', 0.6), label='a compra da Aparecida (42 kg, R$ 260,40)')
+    abre_menu_linha(c, L_CIDA, c.A(1, 'menu', 0.9), 'menu da compra da Aparecida')
+    c.click(ITEM('Ver comprovante'), at=c.A(1, 'Ver', 0.6), label='Ver comprovante (bloqueado)')
+    c.waitfor(target=TOAST('Popup bloqueado'), timeout=8)
+    c.registra(TOAST('Popup bloqueado'), at=c.A(1, 'aviso:', 0.2), label='[ZOOM] aviso "Popup bloqueado. Permita popups para gerar comprovantes."')
+    c.cursor((700, 300), at=c.A(1, 'Popup', -0.8), label='cursor descansa')
+    c.mark(2)
+    c.mark(3)
+    c.mark(4)
+    abre_menu_linha(c, L_CIDA, c.A(4, 'Pronto:', 1.6), 'menu da compra da Aparecida')
+    c.click(ITEM('Ver comprovante'), at=c.A(4, 'Pronto:', 0.7), label='Ver comprovante (abre a aba nova: o PDF entra na edição)')
+    c.ev(js_pdf(0, 'comprovante-aparecida'), label='PDF do comprovante da Aparecida (para a edição: 42 kg, R$ 260,40)')
+    c.mark(5)
+    c.hover(SEL(LINHA(L_VALDIR)), 0.6, at=c.A(5, 'Valdir.', 0.6), label='a compra do Valdir')
+    abre_menu_linha(c, L_VALDIR, c.A(5, 'menu,', 1.0), 'menu da compra do Valdir')
+    c.click(ITEM('Cupom sem valor'), at=c.A(5, 'Cupom', 0.6), label='Cupom sem valor')
+    c.waitfor(text='Cupom sem valor ativado', timeout=8)
+    c.mark(6)
+    c.hover(TXTX('Comprovante sem valores', within=LINHA(L_VALDIR)), 1.0, at=c.A(6, 'selo', 0.6), label='[ZOOM] o selo "Comprovante sem valores"')
+    c.mark(7)
+    abre_menu_linha(c, L_VALDIR, c.A(7, 'comprovante', 1.5), 'menu da compra do Valdir')
+    c.click(ITEM('Ver comprovante'), at=c.A(7, 'comprovante', 0.6), label='Ver comprovante do Valdir (PDF sem valores, para a edição)')
+    c.ev(js_pdf(1, 'comprovante-valdir-sem-valores'), label='PDF do comprovante do Valdir (para a edição: Ferro misto 280 kg, sem valores)')
+    c.mark(8)
+    abre_menu_linha(c, L_VALDIR, c.A(8, 'opção', 0.8), 'menu da compra do Valdir')
+    c.hover(ITEM('Mostrar valores no comprovante'), 1.2, at=c.A(8, 'Mostrar', 0.6), label='[DESTAQUE] "Mostrar valores no comprovante" (sem clicar)')
+    c.press('Escape', at=c.A(8, 'comprovante.', -0.6), label='fecha o menu')
+    c.cursor((700, 300), at=c.A(8, 'comprovante.', -0.9), label='cursor sai do menu')
+    c.fim()
+    return c
+
+
 # @@CAPITULOS@@
 
 

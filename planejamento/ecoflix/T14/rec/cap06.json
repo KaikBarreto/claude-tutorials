@@ -1,0 +1,441 @@
+{
+ "name": "t14-cap06",
+ "title": "T14 · Cap. 6 · Importar o extrato (narração ESTIMADA 76,9 s; marcas L1..L8 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "seed": "t14-cap06",
+ "pace": 0.5,
+ "cps": 40,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 470
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true"
+ },
+ "seedExtra": [
+  "t14/inicio",
+  "t14/apos-cap02",
+  "t14/apos-cap03",
+  "t14/apos-cap04"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "waitFor",
+   "target": {
+    "label": "E-mail"
+   },
+   "timeout": 30
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "E-mail"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "Senha",
+    "exact": true
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Rafael!",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/movimentacoes-bancarias"
+  },
+  {
+   "do": "waitFor",
+   "text": "Controle de pagamentos via Pix/Transferência",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "div[class*=\"group/tab\"] button:has(span:text-is(\"Conta Principal\"))"
+   },
+   "timeout": 20
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Conciliação",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Nenhum extrato em conciliação",
+   "timeout": 20
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|Algo deu errado|Falha ao|Something went wrong|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&!/fica indispon/i.test(m[0])&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{document.querySelectorAll('[data-sonner-toast][data-type=error]').forEach(t=>{const s='TOAST DE ERRO: '+t.textContent.trim().slice(0,90);if(!window.__avisos.includes(s)&&window.__avisos.length<10)window.__avisos.push(s)})},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 13.21
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Importar novo extrato",
+    "exact": true
+   },
+   "at": 13.74,
+   "label": "Importar novo extrato"
+  },
+  {
+   "do": "waitFor",
+   "text": "Importar extrato OFX",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Como pegar o arquivo do seu banco?",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 16.4,
+   "label": "Como pegar o arquivo do seu banco?"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Escolha o formato OFX",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.2,
+   "at": 19.31,
+   "label": "passo a passo (ZOOM)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 26.01
+  },
+  {
+   "do": "upload",
+   "target": {
+    "text": "Arraste o arquivo .ofx aqui ou clique para selecionar",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "file": "arquivos/Extrato_20261101_20261110.ofx",
+   "at": 26.21,
+   "label": "entrega o Extrato_20261101_20261110.ofx"
+  },
+  {
+   "do": "waitFor",
+   "text": "Prévia do extrato",
+   "timeout": 10
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 30.69
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Prévia do extrato",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.3,
+   "at": 32.84,
+   "label": "Prévia do extrato",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Período",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.3,
+   "at": 33.74,
+   "label": "Período, Transações e Saldo final (ZOOM)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Transações",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.3,
+   "at": 34.58,
+   "label": "Transações 17",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Saldo final do extrato",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.6,
+   "at": 36.48,
+   "label": "Saldo final do extrato",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"01/11/2026 — 10/11/2026\", \"17\", \"R$ 44.933,47\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,250));}return out})()",
+   "label": "confere prévia: período, 17 transações e saldo final"
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 39.01
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Importar",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 39.31,
+   "label": "Importar"
+  },
+  {
+   "do": "waitFor",
+   "text": "17 de 17 linhas importadas",
+   "timeout": 15
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Tudo certo — nenhuma linha estava repetida.",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.8,
+   "at": 44.57,
+   "label": "nenhuma linha repetida",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Concluir",
+    "exact": true
+   },
+   "at": 46.9,
+   "label": "Concluir"
+  },
+  {
+   "do": "waitFor",
+   "text": "Linha do extrato",
+   "timeout": 15
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 47.64
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const c=[...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop,dy=c.scrollHeight-c.clientHeight-y0;if(dy<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'fim:'+Math.round(c.scrollTop)})()",
+   "at": 48.24,
+   "label": "desce a página até a tabela"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "PIX ENVIADO DEPOSITO IRMAOS SIQUEIRA",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.3,
+   "at": 48.8,
+   "label": "linha do banco (esquerda)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "−R$ 2.250,00",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.3,
+   "at": 52.59,
+   "label": "data e valor da linha",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Casa com um lançamento no sistema",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.6,
+   "at": 53.27,
+   "label": "o que fazer com ela (direita)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 55.65
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||null};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"PIX RECEBIDO SERRA FINA ALUMINIO\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-330);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 56.56,
+   "label": "rola até o Pix da Serra Fina"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "+R$ 4.815,00",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.5,
+   "at": 59.39,
+   "label": "entrada em verde, com mais",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "−R$ 180,00",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.6,
+   "at": 61.74,
+   "label": "saída em vermelho, com menos",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 69.51
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Saldo do banco",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.4,
+   "at": 70.14,
+   "label": "rodapé: os três números",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Diferença",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.4,
+   "at": 71.45,
+   "label": "Diferença",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Finalizar conciliação",
+    "exact": true
+   },
+   "seconds": 0.6,
+   "at": 75.23,
+   "label": "Finalizar conciliação (desabilitado)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Saldo do banco\", \"R$ 44.933,47\", \"Ainda há 17 linhas pendentes\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,250));}return out})()",
+   "label": "confere rodapé depois da importação"
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 76.86
+  }
+ ]
+}

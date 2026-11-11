@@ -486,3 +486,6 @@ Decisões:
   #EF4444; também as cores fixas que as aulas tinham posto); folhas de todas as aulas sendo refeitas. **Piloto 3D** (three.js
   no Chromium) da pesagem da T07 com um agente, para o Kaik ver antes de levar 3D a outros conceitos (entrega em
   `T07/cenas3d/` e `previa_ilustracoes/T07_3d_piloto.mp4`).
+- 11/11 13:31 **Kaik** (sobre a T06): "essa ilustração de 'caixa' não tá muito clara, podia ser uma caixa registradora".
+  Um agente desenha a `registradora()` no kit (visor escuro com número no verde, teclado, gaveta que abre com notas e
+  moedas) e troca o caixa-gaveta na T06, T09, T19, T21 (variante escura) e na T00 se houver.

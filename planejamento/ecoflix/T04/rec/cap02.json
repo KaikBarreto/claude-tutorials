@@ -126,8 +126,8 @@
    "target": {
     "selector": "main div.no-scrollbar > button:has-text('Fornecedores')"
    },
-   "seconds": 0.46,
-   "at": 9.01,
+   "seconds": 1.0,
+   "at": 2.18,
    "label": "aba Fornecedores (já aberta)",
    "optional": true,
    "timeout": 4
@@ -140,7 +140,7 @@
     "exact": true,
     "within": "main"
    },
-   "at": 10.12,
+   "at": 8.68,
    "label": "Novo Fornecedor"
   },
   {
@@ -162,15 +162,10 @@
    "label": "Nome Rogério Alves Costa (clique no campo)"
   },
   {
-   "do": "type",
-   "target": {
-    "selector": "[role=dialog] #name"
-   },
-   "text": "Rogério Alves Costa",
-   "cps": 40,
-   "at": 12.92,
-   "label": "Nome Rogério Alves Costa",
-   "noClick": true
+   "do": "eval",
+   "js": "(()=>{const e=document.activeElement;if(!e||!/^(INPUT|TEXTAREA)$/.test(e.tagName))return 'SEM ALVO (nada em foco)';document.execCommand('insertText',false,\"Rog\\u00e9rio Alves Costa\");return e.value})()",
+   "at": 14.54,
+   "label": "Nome Rogério Alves Costa (colado)"
   },
   {
    "do": "mark",
@@ -186,15 +181,10 @@
    "label": "Apelido Rogério Eletricista (clique no campo)"
   },
   {
-   "do": "type",
-   "target": {
-    "selector": "[role=dialog] #contact_name"
-   },
-   "text": "Rogério Eletricista",
-   "cps": 40,
+   "do": "eval",
+   "js": "(()=>{const e=document.activeElement;if(!e||!/^(INPUT|TEXTAREA)$/.test(e.tagName))return 'SEM ALVO (nada em foco)';document.execCommand('insertText',false,\"Rog\\u00e9rio Eletricista\");return e.value})()",
    "at": 20.63,
-   "label": "Apelido Rogério Eletricista",
-   "noClick": true
+   "label": "Apelido Rogério Eletricista (colado)"
   },
   {
    "do": "mark",
@@ -225,8 +215,8 @@
    "target": {
     "selector": "[role=dialog] label[for=phone_unavailable]"
    },
-   "seconds": 0.89,
-   "at": 31.54,
+   "seconds": 1.0,
+   "at": 31.01,
    "label": "Não possui telefone (sem marcar)",
    "optional": true,
    "timeout": 4
@@ -245,15 +235,10 @@
    "label": "Chave PIX rogerio.costa@pix.example (clique no campo)"
   },
   {
-   "do": "type",
-   "target": {
-    "selector": "[role=dialog] #pix_key"
-   },
-   "text": "rogerio.costa@pix.example",
-   "cps": 40,
+   "do": "eval",
+   "js": "(()=>{const e=document.activeElement;if(!e||!/^(INPUT|TEXTAREA)$/.test(e.tagName))return 'SEM ALVO (nada em foco)';document.execCommand('insertText',false,\"rogerio.costa@pix.example\");return e.value})()",
    "at": 34.7,
-   "label": "Chave PIX rogerio.costa@pix.example",
-   "noClick": true
+   "label": "Chave PIX rogerio.costa@pix.example (colado)"
   },
   {
    "do": "mark",
@@ -289,19 +274,6 @@
    "seconds": 1.2,
    "at": 44.39,
    "label": "+ Adicionar saldo inicial (sem clicar)",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "Comece com saldo zero ou registre um saldo de abertura.",
-    "exact": true,
-    "within": "[role=dialog]"
-   },
-   "seconds": 0.15,
-   "at": 47.05,
-   "label": "Comece com saldo zero",
    "optional": true,
    "timeout": 4
   },
@@ -345,7 +317,7 @@
    "target": {
     "selector": "[role=dialog] #cpf_cnpj"
    },
-   "at": 54.55,
+   "at": 53.29,
    "label": "zoom: CPF 418.273.560-90 (L7) (clique no campo)"
   },
   {
@@ -355,7 +327,7 @@
    },
    "text": "41827356090",
    "cps": 40,
-   "at": 55.59,
+   "at": 54.37,
    "label": "zoom: CPF 418.273.560-90 (L7)",
    "noClick": true
   },
@@ -393,15 +365,15 @@
    "timeout": 8
   },
   {
-   "do": "hover",
+   "do": "type",
    "target": {
     "selector": "main aside button:has-text('Rogério Alves Costa') p.font-medium"
    },
-   "seconds": 1.0,
-   "at": 58.68,
-   "label": "Rogério Alves Costa na lista",
+   "text": "",
+   "noClick": true,
    "optional": true,
-   "timeout": 4
+   "timeout": 4,
+   "label": "Rogério Alves Costa na lista (sem mexer o mouse)"
   },
   {
    "do": "mark",
@@ -409,15 +381,10 @@
    "at": 60.6
   },
   {
-   "do": "click",
-   "target": {
-    "role": "button",
-    "name": "Novo Fornecedor",
-    "exact": true,
-    "within": "main"
-   },
-   "at": 61.1,
-   "label": "Novo Fornecedor (outro cadastro, só para mostrar a Pessoa Jurídica)"
+   "do": "eval",
+   "js": "(()=>{const b=[...document.querySelectorAll(\"main\"+' button')].find(x=>x.textContent.trim()===\"Novo Fornecedor\");if(!b)return 'SEM ALVO';b.click();return 'ok'})()",
+   "at": 60.6,
+   "label": "Novo Fornecedor por eval (o clique logo depois de salvar levou 3,5 s no ensaio)"
   },
   {
    "do": "waitFor",
@@ -431,7 +398,7 @@
     "name": "Dados Fiscais",
     "within": "[role=dialog]"
    },
-   "at": 62.14,
+   "at": 62.6,
    "label": "aba Dados Fiscais"
   },
   {
@@ -450,20 +417,9 @@
    "target": {
     "selector": "[role=dialog] #cpf_cnpj"
    },
-   "seconds": 0.15,
-   "at": 66.47,
+   "seconds": 0.2,
+   "at": 66.27,
    "label": "CNPJ (com a lupa)",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "[role=dialog] #razao_social"
-   },
-   "seconds": 0.4,
-   "at": 67.22,
-   "label": "Razão Social",
    "optional": true,
    "timeout": 4
   },
@@ -483,7 +439,7 @@
    "target": {
     "selector": "[role=dialog] button[aria-label='Buscar dados pelo CNPJ']"
    },
-   "seconds": 1.0,
+   "seconds": 0.91,
    "at": 71.25,
    "label": "a lupa do CNPJ (o atalho)",
    "optional": true,

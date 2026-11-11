@@ -20,8 +20,8 @@ done
 export FAKE_URL=http://127.0.0.1:54319 FAKE_NOW=2026-11-10T08:30:00-03:00
 : "${TUT_USER:?falta TUT_USER}" "${TUT_SENHA:?falta TUT_SENHA}"
 PID=$(cat rec/.runtime/fake54319.pid 2>/dev/null || true)
-if [[ -z "$PID" ]] || ! tr '\0' '\n' < "/proc/$PID/environ" 2>/dev/null | grep -q '^FAKE_PORT=54319$' \
-   || ! tr '\0' '\n' < "/proc/$PID/environ" | grep -q "^FAKE_NOW=$FAKE_NOW$"; then
+AMB=$( [[ -n "$PID" ]] && tr '\0' '\n' < "/proc/$PID/environ" 2>/dev/null || true)
+if [[ "$AMB" != *$'\nFAKE_PORT=54319\n'* && "$AMB" != FAKE_PORT=54319$'\n'* ]] || [[ "$AMB" != *"FAKE_NOW=$FAKE_NOW"* ]]; then
   echo "instância 54319 não é a desta aula (ou caiu): FAKE_NOW=$FAKE_NOW FAKE_PORT=54319 bash rec/run.sh fake"; exit 4
 fi
 python3 -I rec/t19/gerar.py "$NN" | tail -2
@@ -38,7 +38,7 @@ flock .heavy.lock bash -c '
   A="$2/t19-cap$3.actions.json"
   if [[ "'"$SEED"'" == 1 ]]; then
     F=$(python3 -c "import json,sys;a=json.load(open(sys.argv[1]));print(sum(1 for x in a[\"actions\"] if x.get(\"error\") or x.get(\"ok\") is False))" "$A" 2>/dev/null || echo X)
-    S=$(grep -c "SEM ALVO" "$1" || true)
+    S=$(grep -v SEMENTE "$1" | grep -c "SEM ALVO" || true)
     if [[ "$F" == 0 && "$S" == 0 ]]; then node rec/t19/t19_semente.mjs "apos-cap$3" >> "$1" 2>&1; else echo "SEMENTE NAO GRAVADA: falhos $F, SEM ALVO $S" >> "$1"; fi
   fi
   if [[ -n "'"$QUADROS"'" && -f "$2/t19-cap$3.mp4" ]]; then
@@ -50,4 +50,4 @@ tail -3 "$LOG"
 [[ -f "$OUTD/t19-cap$NN.mp4" ]] && mv -f "$OUTD/t19-cap$NN.mp4" "/dev/shm/t19/t19-cap$NN.$TAG.mp4"
 [[ -f "$OUTD/t19-cap$NN.contact.jpg" ]] && mv -f "$OUTD/t19-cap$NN.contact.jpg" "/dev/shm/t19/t19-cap$NN.$TAG.contact.jpg"
 python3 -I rec/t19/resumo.py "$NN" $([[ $ENS == 1 ]] && echo --ens) | grep -vE "^ +[0-9]+ (mark|wait|pause) " | head -80
-echo "SEM ALVO no log: $(grep -c 'SEM ALVO' "$LOG")"
+echo "SEM ALVO no log: $(grep -v 'SEMENTE' "$LOG" | grep -c 'SEM ALVO')"

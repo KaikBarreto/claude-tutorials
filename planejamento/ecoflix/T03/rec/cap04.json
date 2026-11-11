@@ -122,7 +122,7 @@
   {
    "do": "eval",
    "js": "(async()=>{const tr=[...document.querySelectorAll('main tbody tr')].find(r=>r.innerText.includes(\"Radiador de cobre\"));if(!tr)return 'SEM ALVO: linha';const b=tr.querySelector('td:last-child button');if(!b)return 'SEM ALVO: botao';b.dispatchEvent(new PointerEvent('pointerdown',{bubbles:true,cancelable:true,button:0,pointerType:'mouse'}));for(let i=0;i<30;i++){const it=[...document.querySelectorAll('[role=menuitem]')].find(e=>e.textContent.trim()===\"Editar\");if(it){it.click();return 'ok'}await new Promise(r=>setTimeout(r,100));}return 'SEM ALVO: item'})()",
-   "at": 11.94,
+   "at": 10.64,
    "label": "abre o Editar do radiador (por baixo da ilustração, sem cursor)"
   },
   {
@@ -187,8 +187,8 @@
     "placeholder": "Buscar por código NCM ou descrição..."
    },
    "text": "cobre",
-   "cps": 14,
-   "at": 24.75,
+   "cps": 30,
+   "at": 24.5,
    "label": "busca cobre"
   },
   {
@@ -321,6 +321,11 @@
    "label": "Atualizar"
   },
   {
+   "do": "mark",
+   "name": "L9",
+   "at": 78.3
+  },
+  {
    "do": "waitFor",
    "text": "Material atualizado!",
    "timeout": 10
@@ -331,11 +336,6 @@
     "role": "dialog"
    },
    "timeout": 8
-  },
-  {
-   "do": "mark",
-   "name": "L9",
-   "at": 78.3
   },
   {
    "do": "eval",

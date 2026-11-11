@@ -1,0 +1,354 @@
+{
+ "name": "t14-cap09",
+ "title": "T14 · Cap. 9 · Criar um lançamento (narração ESTIMADA 55,9 s; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "seed": "t14-cap09",
+ "pace": 0.5,
+ "cps": 40,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 470
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true"
+ },
+ "seedExtra": [
+  "t14/inicio",
+  "t14/apos-cap02",
+  "t14/apos-cap03",
+  "t14/apos-cap04",
+  "t14/apos-cap06",
+  "t14/apos-cap07",
+  "t14/apos-cap08"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "waitFor",
+   "target": {
+    "label": "E-mail"
+   },
+   "timeout": 30
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "E-mail"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "Senha",
+    "exact": true
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Rafael!",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/movimentacoes-bancarias"
+  },
+  {
+   "do": "waitFor",
+   "text": "Controle de pagamentos via Pix/Transferência",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "div[class*=\"group/tab\"] button:has(span:text-is(\"Conta Principal\"))"
+   },
+   "timeout": 20
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Conciliação",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Conta para conciliar",
+   "timeout": 20
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Continuar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Linha do extrato",
+   "timeout": 20
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const c=[...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop,dy=c.scrollHeight-c.clientHeight-y0;if(dy<3)return 'ok';c.scrollTop=y0+dy;return 'fim:'+Math.round(c.scrollTop)})()"
+  },
+  {
+   "do": "wait",
+   "seconds": 0.3
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||null};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"TARIFA PACOTE SERVICOS\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-250);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;c.scrollTop=y0+dy;return Math.round(el.getBoundingClientRect().top)})()"
+  },
+  {
+   "do": "wait",
+   "seconds": 0.4
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|Algo deu errado|Falha ao|Something went wrong|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&!/fica indispon/i.test(m[0])&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{document.querySelectorAll('[data-sonner-toast][data-type=error]').forEach(t=>{const s='TOAST DE ERRO: '+t.textContent.trim().slice(0,90);if(!window.__avisos.includes(s)&&window.__avisos.length<10)window.__avisos.push(s)})},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "div[class*=\"md:grid-cols-2\"]:has(:text-is(\"TARIFA PACOTE SERVICOS\")) :text-is(\"TARIFA PACOTE SERVICOS\")"
+   },
+   "seconds": 0.5,
+   "at": 0.74,
+   "label": "tarifa do pacote",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "div[class*=\"md:grid-cols-2\"]:has(:text-is(\"TARIFA PACOTE SERVICOS\")) :text-is(\"−R$ 64,90\")"
+   },
+   "seconds": 0.6,
+   "at": 6.66,
+   "label": "R$ 64,90",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 9.26
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "div[class*=\"md:grid-cols-2\"]:has(:text-is(\"TARIFA PACOTE SERVICOS\")) button:has-text(\"Mais ações\")"
+   },
+   "at": 9.79,
+   "label": "Mais ações (todos os destinos)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "menuitem",
+    "name": "Funcionário"
+   },
+   "seconds": 0.6,
+   "at": 13.77,
+   "label": "Funcionário",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 17.89
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "menuitem",
+    "name": "Buscar lançamento"
+   },
+   "seconds": 0.5,
+   "at": 23.91,
+   "label": "Buscar lançamento",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "menuitem",
+    "name": "Funcionário"
+   },
+   "seconds": 0.5,
+   "at": 27.7,
+   "label": "o painel do Funcionário",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 29.67,
+   "label": "fecha o menu"
+  },
+  {
+   "do": "wait",
+   "seconds": 0.5
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 30.39
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "div[class*=\"md:grid-cols-2\"]:has(:text-is(\"TARIFA PACOTE SERVICOS\")) button:has-text(\"Criar despesa\")"
+   },
+   "at": 31.9,
+   "label": "Criar despesa"
+  },
+  {
+   "do": "waitFor",
+   "text": "Criar lançamento de saída",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "div[class*=\"md:grid-cols-2\"]:has(:text-is(\"TARIFA PACOTE SERVICOS\")) input[value=\"TARIFA PACOTE SERVICOS\"]"
+   },
+   "seconds": 0.5,
+   "at": 33.29,
+   "label": "Descrição vem do extrato",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "div[class*=\"md:grid-cols-2\"]:has(:text-is(\"TARIFA PACOTE SERVICOS\")) [role=switch]"
+   },
+   "seconds": 0.6,
+   "at": 35.8,
+   "label": "Não é receita nem despesa (desligada)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 42.12
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "div[class*=\"md:grid-cols-2\"]:has(:text-is(\"TARIFA PACOTE SERVICOS\")) [role=combobox]"
+   },
+   "at": 42.58,
+   "label": "Categoria"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Tarifas",
+    "exact": true
+   },
+   "at": 44.63,
+   "label": "Tarifas"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "div[class*=\"md:grid-cols-2\"]:has(:text-is(\"TARIFA PACOTE SERVICOS\")) button:has-text(\"Criar R$ 64,90\")"
+   },
+   "seconds": 0.6,
+   "at": 45.71,
+   "label": "Categoria Tarifas e o botão Criar R$ 64,90 (ZOOM)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 47.56
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "div[class*=\"md:grid-cols-2\"]:has(:text-is(\"TARIFA PACOTE SERVICOS\")) button:has-text(\"Criar R$ 64,90\")"
+   },
+   "at": 47.86,
+   "label": "Criar R$ 64,90"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "div[class*=\"md:grid-cols-2\"]:has(:text-is(\"TARIFA PACOTE SERVICOS\")) :text-is(\"Criada\")"
+   },
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "div[class*=\"md:grid-cols-2\"]:has(:text-is(\"TARIFA PACOTE SERVICOS\")) :text-is(\"Criada\")"
+   },
+   "seconds": 0.8,
+   "at": 49.86,
+   "label": "selo Criada",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 55.89
+  }
+ ]
+}

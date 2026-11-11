@@ -288,6 +288,10 @@ class Cap:
               "await new Promise(r=>setTimeout(r,300));}return out})()") % (json.dumps(esp, ensure_ascii=False), json.dumps(escopo), json.dumps(escopo))
         return s.add({'do': 'eval', 'js': js, 'label': 'confere ' + label})
 
+    def marca(s, i):
+        """solta já as marcas até a da linha i (no tempo delas): esperas e conferências que vêm depois não as atrasam"""
+        s.flush(max(0.0, s.L(i) - 0.9))
+
     def fim(s):
         s.flush(1e9)
         s.steps.append({'do': 'eval', 'js': 'JSON.stringify(window.__avisos || "sem observador")', 'label': 'avisos de erro na tela'})
@@ -390,8 +394,9 @@ def js_clicar(seletor, texto=None):
             "if(!el)return 'SEM ALVO';el.click();return 'ok'})()")
 
 
-JS_PDF_GANCHO = ("(()=>{if(window.__pdfs)return 'ja';window.__pdfs=[];const o=URL.createObjectURL.bind(URL);"
-                 "URL.createObjectURL=(b)=>{try{if(b&&b.type==='application/pdf')window.__pdfs.push(b)}catch(e){}return o(b)};return 'gancho'})()")
+JS_PDF_GANCHO = ("(()=>{if(window.__pdfs)return 'ja';window.__pdfs=[];window.__abas=[];const o=URL.createObjectURL.bind(URL);"
+                 "URL.createObjectURL=(b)=>{try{if(b&&b.type==='application/pdf')window.__pdfs.push(b)}catch(e){}return o(b)};"
+                 "const wo=window.open.bind(window);window.open=(...a)=>{const w=wo(...a);if(w)window.__abas.push(w);return w};return 'gancho'})()")
 
 
 def js_pdf(k, nome):
@@ -403,7 +408,8 @@ def js_pdf(k, nome):
             "const b=window.__pdfs&&window.__pdfs[%d];if(!b)return 'SEM PDF';const u=new Uint8Array(await b.arrayBuffer());let s='';"
             "for(let i=0;i<u.length;i+=8192)s+=String.fromCharCode.apply(null,u.subarray(i,i+8192));"
             "const r=await fetch(%s,{method:'POST',headers:{'content-type':'application/json',apikey:%s,Prefer:'return=minimal'},"
-            "body:JSON.stringify({nome:%s,bytes:u.length,b64:btoa(s)})});return {pdf:%s,bytes:u.length,guardado:r.status}})()") % (
+            "body:JSON.stringify({nome:%s,bytes:u.length,b64:btoa(s)})});(window.__abas||[]).forEach(w=>{try{w.close()}catch(e){}});"
+            "return {pdf:%s,bytes:u.length,guardado:r.status}})()") % (
         k, k, json.dumps(url), json.dumps(MUNDO['env']['anonKey']), json.dumps(nome), json.dumps(nome))
 
 
@@ -593,14 +599,14 @@ def cap04():
     """O NCM e a nota fiscal: (ilustração L1, por baixo dela o Editar abre sem cursor) NCM pela busca do seletor (7404.00.00),
     Identificação/Produto Fiscal e a ajuda, (ilustrações L6, L7) Atualizar, (ilustração L9)."""
     c = Cap(4, setup_estoque(busca='radiador'))
-    c.ev(js_menu_item('Radiador de cobre', 'Editar'), w=(1, 'dentro'), label='abre o Editar do radiador (por baixo da ilustração, sem cursor)')
+    c.ev(js_menu_item('Radiador de cobre', 'Editar'), w=(1, 'vai', None, 1.0), label='abre o Editar do radiador (por baixo da ilustração, sem cursor)')
     c.waitfor(text='Editar Material', timeout=8)
     c.ev(js_rola_ate('Fiscal e organização', y=380, escopo=DLG), w=(2, 'cadastro,', None, 0.3), label='desce até Fiscal e organização')
     c.hover(CAMPO('ncm'), 0.6, w=(2, 'NCM.'), label='NCM (Nota Fiscal), vazio')
     c.hover(SEL(f"{DLG} button[title='Selecionar NCM padrão']"), 0.6, w=(2, 'interrogação'), label='interrogação Selecionar NCM padrão')
     c.click(SEL(f"{DLG} button[title='Selecionar NCM padrão']"), w=(3, 'janela'), label='abre Selecionar NCM para Materiais Recicláveis')
     c.waitfor(text='Selecionar NCM para Materiais Recicláveis', timeout=8)
-    c.type({'placeholder': 'Buscar por código NCM ou descrição...'}, 'cobre', w=(3, 'Busco'), cps=CPS, label='busca cobre')
+    c.type({'placeholder': 'Buscar por código NCM ou descrição...'}, 'cobre', w=(3, 'Busco', None, 1.2), cps=30, label='busca cobre')
     c.confere('dlg', ['Cobre', '7404.00.00'], 'cartão Cobre 7404.00.00')
     c.click(SEL(f"{DLG} div.space-y-2:has(span:text-is('7404.00.00')) button:has-text('Selecionar')"), w=(3, 'escolho'), label='Selecionar 7404.00.00')
     c.waitfor(gone=TXT('Selecionar NCM para Materiais Recicláveis'), timeout=8)
@@ -614,9 +620,9 @@ def cap04():
     # L6 e L7: ilustrações do nome fiscal; o robô fica parado
     c.hover(CAMPO('fiscal_name'), 0.8, w=(8, 'vazio,'), label='Identificação/Produto Fiscal fica vazio')
     c.click(BTN('Atualizar', within=DLG), w=(8, 'Atualizar.'), label='Atualizar')
+    c.marca(9)   # L9 é ilustração: a marca sai no tempo, as esperas vêm depois
     c.waitfor(text='Material atualizado!', timeout=10)
     c.waitfor(gone={'role': 'dialog'}, timeout=8)
-    # L9: ilustração (o que fica no material e nos cenários fiscais)
     c.fim()
     return c
 
@@ -640,24 +646,24 @@ def cap05():
     c.click(BTN('Adicionar', within=DLG), w=(4, 'Adicionar,'), label='Adicionar')
     c.waitfor(text='Grupo criado', timeout=8)
     c.confere('dlg', ['Radiadores'], 'Radiadores na lista de grupos')
-    c.hover(PD('Radiadores', exact=True), 0.5, w=(4, 'criado.'), label='Radiadores na lista')
-    fecha_janela(c, w=(5, 'Agora', None, 0.6))
-    c.type(BUSCA, 'radiador', w=(5, 'radiador'), cps=30, label='busca radiador')
+    fecha_janela(c, w=(4, 'criado.', None, 0.3))
+    # L5 é apertada (busca, menu, Editar, Grupo, a lista e o "+" em ~10 s): a busca, que a fala não cita, vai sem cursor
+    c.ev(js_valor('main input[placeholder="Buscar material por código ou nome..."]', 'radiador'), label='busca radiador (sem cursor: a fala não cita)')
     c.waitfor(target=P('Radiador de cobre'), timeout=8)
-    abre_acoes(c, 'Radiador de cobre', 'Editar', w=(5, 'nele,', None, 0.8))
+    abre_acoes(c, 'Radiador de cobre', 'Editar', w=(5, 'Agora', None, 0.3))
     c.waitfor(text='Editar Material', timeout=8)
     c.ev(js_rola_ate('Fiscal e organização', y=380, escopo=DLG), label='desce até o campo Grupo')
     c.click(CAMPO('group_id'), w=(5, 'Grupo', 0), label='campo Grupo (abre a lista)')
-    c.click(OPT('Radiadores'), w=(5, 'repara', None, 0.6), label='Radiadores')
+    c.click(OPT('Radiadores'), label='Radiadores')
     c.hover(SEL(f"{DLG} button[aria-label='Criar grupo']"), 1.4, w=(5, 'mais,'), label='botão + Criar grupo (sem clicar)')
     c.click(BTN('Atualizar', within=DLG), w=(6, 'Atualizar.'), label='Atualizar')
     c.waitfor(text='Material atualizado!', timeout=10)
     c.waitfor(gone={'role': 'dialog'}, timeout=8)
-    c.hover(CELULA('Radiador de cobre', 3), 1.2, w=(6, 'grupo'), label='Radiadores embaixo do nome, com a bolinha')
+    c.hover(CELULA('Radiador de cobre', 3), 0.8, w=(6, 'grupo'), label='Radiadores embaixo do nome, com a bolinha')
     c.confere('row:Radiador de cobre', ['Radiador de cobre', 'Radiadores'], 'grupo Radiadores na linha')
     # L7: o filtro abre no começo da pergunta para os cinco cliques caberem antes dos cartões (L8)
-    c.ev(js_valor('main input[placeholder="Buscar material por código ou nome..."]', ''), w=(6, 'dele.', None, -0.3), label='limpa a busca (sem cursor)')
-    c.click(BTNX('Todos os Materiais'), w=(7, 'E', None, 0.4), label='filtro Todos os Materiais')
+    c.ev(js_valor('main input[placeholder="Buscar material por código ou nome..."]', ''), w=(6, 'com', None, 0.3), label='limpa a busca (sem cursor)')
+    c.click(BTNX('Todos os Materiais'), label='filtro Todos os Materiais')
     c.waitfor(target=SEL(f"{POP} label:has-text('Alumínio')"), timeout=6)
     for k, g in enumerate(('Alumínio', 'Ferrosos', 'Metais', 'Outros', 'Radiadores')):
         c.click(SEL(f"{POP} label:has-text('{g}') button[role=checkbox]"), label=f'desmarca {g}')
@@ -813,7 +819,7 @@ def cap08():
     c.waitfor(text='Zerar Todo o Estoque', timeout=8)
     c.confere('dlg', ['Atenção: Ação irreversível', '16 de 16 selecionados'], 'todos marcados: 16 de 16 selecionados')
     c.hover(PD('selecionados'), 1.0, w=(7, 'marcados,'), label='16 de 16 selecionados')
-    c.hover(SEL(f"{DLG} label:has-text('Ferro pesado')"), 0.8, w=(7, 'desmarca'), label='um material (dá para desmarcar)')
+    c.hover(PD('Ferrosos'), 0.6, w=(7, 'desmarca'), label='um grupo (dá para desmarcar por grupo ou material)')
     c.hover(PD('Para confirmar, digite'), 1.6, w=(8, 'confirmar,'), label='Para confirmar, digite Zerar todo o meu estoque (zoom)')
     c.hover(BTNX('Zerar selecionados'), 1.0, w=(8, 'volta.'), label='Zerar selecionados apagado')
     c.click(BTN('Cancelar', within=DLG), w=(8, 'cancelo.'), label='Cancelar')
@@ -864,8 +870,9 @@ def cap10():
     c.click(BTN('Sim, Excluir'), w=(3, 'Sim,'), label='Sim, Excluir')
     c.waitfor(text='excluído', timeout=10)
     ini = round(c.W(3, 'Sim,') + 0.5, 2)   # o aviso (5 s) sobe logo depois do clique: o cursor vai a ele e fica até "Desfazer."
-    c.hover(BTN('Desfazer'), round(c.W(3, 'Desfazer.') + 0.4 - ini - 0.55, 2), label='aviso "Radiador de cobre" excluído com Desfazer (o mouse segura o aviso)')
-    c.click(BTN('Desfazer'), w=(4, 'Clicando'), label='Desfazer')
+    # o aviso do sonner não aparece para getByRole (o Radix ainda marca a página aria-hidden enquanto a janela sai): alvo pelo TEXTO
+    c.hover(TXT('Desfazer'), round(c.W(3, 'Desfazer.') + 0.4 - ini - 0.55, 2), label='aviso "Radiador de cobre" excluído com Desfazer (o mouse segura o aviso)')
+    c.click(TXT('Desfazer'), w=(4, 'Clicando'), label='Desfazer')
     c.waitfor(text='restaurado!', timeout=10)
     c.waitfor(target=P('Radiador de cobre'), timeout=10)
     c.hover(CELULA('Radiador de cobre', 4), 1.4, w=(4, 'saldo'), label='o radiador volta com 110 Kg')

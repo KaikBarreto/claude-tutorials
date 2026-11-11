@@ -235,6 +235,18 @@ add('app_config', { id: id('app_config.reconciliation_enabled'), key: 'reconcili
 add('currencies', { code: 'BRL', name: 'Real Brasileiro', symbol: 'R$', decimals: 2, locale: 'pt-BR' });
 add('currencies', { code: 'USD', name: 'Dólar Americano', symbol: 'US$', decimals: 2, locale: 'en-US' });
 add('currencies', { code: 'PYG', name: 'Guarani Paraguaio', symbol: '₲', decimals: 0, locale: 'es-PY' });
+// catálogo MTR das migrations (20260623150000_mtr_sistemas e as seguintes): com a configuração fiscal de B (UF SP), o app resolve o
+// sistema ambiental pela UF (useMtr: company_fiscal_config.uf -> mtr_uf_sistema -> mtr_sistemas); SP usa o SIGOR (T18)
+const MTR_CRIADO = '2026-06-23T15:00:00.000Z';
+for (const [sistema, nome, protocolo, auth_mode, base_url_prod, base_url_homolog, chave_header_nome] of [
+  ['sigor_sp', 'SIGOR-MTR / CETESB-SP', 'sinir', 'senha', 'https://mtrr.cetesb.sp.gov.br/apiws/rest', 'https://mtrr-hom.cetesb.sp.gov.br/apiws/rest', null],
+  ['sinir', 'SINIR Federal', 'sinir', 'token', 'https://admin.sinir.gov.br/api', 'https://homolog-admin.sinir.gov.br/api', null],
+  ['feam_mg', 'FEAM-MG', 'feam', 'senha', 'https://mtr.meioambiente.mg.gov.br/api', 'https://homologa.mtr.meioambiente.mg.gov.br/api', 'chave_feam'],
+  ['fepam_rs', 'FEPAM-RS', 'fepam', 'senha', 'https://mtr.fepam.rs.gov.br/mtrservice', 'https://mtr.fepam.rs.gov.br/mtrservice', null],
+  ['iema_es', 'IEMA-ES', 'feam', 'senha', 'https://mtr.iema.es.gov.br/api', 'https://apps.iema.es.gov.br:8443/api', null],
+]) add('mtr_sistemas', { sistema, nome, protocolo, auth_mode, base_url_prod, base_url_homolog, chave_header_nome, ativo: true, created_at: MTR_CRIADO, updated_at: '2026-08-12T16:00:00.000Z' });
+const UF_MTR = { SP: 'sigor_sp', MG: 'feam_mg', RS: 'fepam_rs', ES: 'iema_es' };
+for (const uf of ['SP', 'MG', 'RS', 'ES', 'AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'GO', 'MA', 'MT', 'MS', 'PA', 'PB', 'PR', 'PE', 'PI', 'RJ', 'RN', 'RO', 'RR', 'SC', 'SE', 'TO']) add('mtr_uf_sistema', { uf, sistema: UF_MTR[uf] || 'sinir', created_at: MTR_CRIADO, updated_at: MTR_CRIADO });
 
 for (const [k, name, color] of GRUPOS) add('material_groups', { id: id(`grupo.${k}`), company_id: COMPANY, name, color, icon: 'circle', created_at: '2026-07-28T12:00:00.000Z', updated_at: '2026-07-28T12:00:00.000Z' });
 for (const m of Object.values(MAT)) {
@@ -1079,6 +1091,7 @@ const VAZIAS = [
   'notification_preferences', 'user_header_shortcuts', 'contabil_export_jobs', 'blog_posts', 'company_group_members', 'company_groups', 'employees',
   'entity_custom_prices', 'entity_labels', 'entity_custom_field_definitions', 'customer_label_assignments', 'supplier_label_assignments',
   'invoices', 'invoice_items', 'invoice_orders', 'inbound_nfe', 'inbound_nfse', 'nfse_invoices', 'mtr_manifests', 'mtr_cdf',
+  'mtr_credentials', 'mtr_parceiros', 'mtr_manifest_items', 'mtr_manifest_attempts', // o SIGOR do Rafael e os parceiros são da semente da T18
   'production_orders', 'production_recipes', 'collection_orders', 'crm_opportunities', 'crm_pipelines', 'crm_stages',
   'bank_statement_imports', 'bank_statement_entries', 'reconciliation_matches', 'credit_card_bills', 'bill_payments', 'bill_payment_groups',
   'transaction_attachments', 'employee_movements', 'cato_events', 'cato_pending_actions', 'subscription_payments', 'subscription_history',
@@ -1106,7 +1119,7 @@ const json = (tabelas) => {
   return { texto: lines.join('\n') + '\n', linhas: ents.reduce((s, [, r]) => s + r.length, 0) };
 };
 const TABS = {
-  '01-empresa.json': ['companies', 'profiles', 'user_roles', 'user_permissions', 'user_shortcuts', 'nps_surveys', 'subscription_modules', 'subscription_plans', 'nfe_module_tiers', 'company_modules', 'app_config', 'currencies'],
+  '01-empresa.json': ['companies', 'profiles', 'user_roles', 'user_permissions', 'user_shortcuts', 'nps_surveys', 'subscription_modules', 'subscription_plans', 'nfe_module_tiers', 'company_modules', 'app_config', 'currencies', 'mtr_sistemas', 'mtr_uf_sistema'],
   '02-cadastros.json': ['material_groups', 'materials', 'price_tables', 'price_table_items', 'suppliers', 'customers', 'vehicles', 'drivers', 'bank_accounts', 'dre_groups', 'financial_categories', 'cost_centers', 'payment_conditions', 'company_fiscal_config', 'nfe_series'],
   '03-historico.json': ['cash_register', 'purchases', 'purchase_items', 'sales', 'sale_items', 'stock_movements', 'cash_transactions', 'bank_transactions', 'balances', 'balance_movements', 'financial_bills', 'recurring_bill_templates', 'weighing_tickets', 'schedule_tasks', 'invoices', 'invoice_items', 'nfse_invoices', 'nfse_invoice_services'],
 };
