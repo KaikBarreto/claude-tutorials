@@ -444,14 +444,29 @@ def filtros_bateria(c=None, ats=None):
                        else {'do': 'type', 'target': alvo, 'text': txt, 'noClick': True, 'cps': 40})
             out.append({'do': 'wait', 'seconds': 0.4})
         return out
-    ats = iter(ats)
-    for g, alvo, txt in passos:
-        if g == 'click':
-            c.click(alvo, at=next(ats), label=f'filtro: {txt}')
-        elif g == 'esc':
-            c.press('Escape', label=txt)
-        else:
-            c.type(alvo, txt, at=next(ats), noClick=True, cps=40, label=f'digita "{txt}" na busca do Material')
+    # no vídeo: o campo abre por `eval` (gatilho de Popover aceita .click(); a lista aparece sem o cursor) e só a opção que a fala
+    # cita leva o cursor; a busca "bat" do Material entra por `eval` (instantânea). Cada clique de cursor nesta tela custa 1,2 a 2,5 s.
+    at_tipo, at_compras, at_mat, at_bat, at_pag, at_pix = ats
+    c.ev(js_campo_filtro(0), at=at_tipo, label='abre o campo Tipo (sem cursor)')
+    c.click(OPCAO('Compras'), at=at_compras, label='filtro: Compras')
+    c.press('Escape', label='fecha a lista do Tipo')
+    c.ev(js_campo_filtro(1, 'bat'), at=at_mat, label='abre o campo Material e busca "bat" (sem cursor)')
+    c.click(OPCAO('Bateria automotiva'), at=at_bat, label='filtro: Bateria automotiva')
+    c.press('Escape', label='fecha a lista do Material')
+    c.ev(js_campo_filtro(2), at=at_pag, label='abre o campo Forma de Pagamento (sem cursor)')
+    c.click(OPCAO('Com Pix/Transferência'), at=at_pix, label='filtro: Com Pix/Transferência')
+
+
+def js_campo_filtro(k, busca=None):
+    """abre o k-ésimo campo do painel "Filtrar pedidos" (0 Tipo, 1 Material, 2 Forma de Pagamento) por .click(); com `busca`, digita
+    na busca da lista (setter nativo + evento input, como o React espera)"""
+    bus = ('' if busca is None else
+           "for(let i=0;i<20;i++){const inp=[...document.querySelectorAll('[data-radix-popper-content-wrapper] input[placeholder=\'Buscar...\']')].pop();"
+           "if(inp){Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set.call(inp,%s);inp.dispatchEvent(new Event('input',{bubbles:true}));return 'aberto e buscou'}"
+           "await new Promise(r=>setTimeout(r,100));}return 'SEM ALVO (busca)';" % json.dumps(busca))
+    return ("(async()=>{const p=[...document.querySelectorAll('[data-radix-popper-content-wrapper]')].find(w=>w.innerText.includes('Filtrar pedidos'));"
+            "const b=p&&[...p.querySelectorAll('button')].filter(x=>x.className.includes('justify-between'))[%d];if(!b)return 'SEM ALVO';b.click();"
+            "await new Promise(r=>setTimeout(r,150));%sreturn 'aberto'})()") % (k, bus)
 
 
 @capitulo
@@ -460,30 +475,30 @@ def cap03():
     (L3, zoom); Tipo, Material e Forma de Pagamento (L4); a linha que sobra aberta (L5, zoom); as etiquetas e o Limpar todos (L6)."""
     c = Cap(3, setup=setup_pedidos())
     c.mark(1)
-    c.click(PERIODO('Este mês'), at=c.A(1, 'período:', 0.9), label='período')
+    c.click(PERIODO('Este mês'), at=c.A(1, 'período:', 1.3), label='período')
     c.click(OPT('Mês passado'), at=c.A(1, 'Mês', 0.6), label='Mês passado')
     c.waitfor(target=PERIODO('Mês passado'), timeout=8)
     c.mark(2)
-    c.click(FILTROS, at=c.A(2, 'Filtros,', 0.8), label='Filtros')
+    c.click(FILTROS, at=c.A(2, 'Em', 0.2), label='Filtros')
     c.waitfor(text='Filtrar pedidos', timeout=8)
-    c.hover(BUSCA_PED, 0.5, at=c.A(2, 'busca', 0.6), label='a busca do painel (pedido, cliente, operador, placa)')
+    c.registra(BUSCA_PED, at=c.A(2, 'pelo', 0.2), label='a busca do painel (pedido, cliente, operador, placa)')
     c.click(BUSCA_PED, at=c.A(2, 'Digito', 0.7), label='clica na busca')
-    c.type(BUSCA_PED, 'Vale Forte', at=c.A(2, 'Vale', 0.05), noClick=True, cps=14, label='digita Vale Forte')
+    c.type(BUSCA_PED, 'Vale Forte', at=c.A(2, 'Vale', 0.05), noClick=True, cps=40, label='digita Vale Forte')
     c.mark(3)
     c.press('Escape', at=c.A(3, 'No', 0.3), label='fecha o painel (a lista fica à mostra)')
-    c.registra(SEL('main tbody'), at=c.A(3, 'nome', 0.2), label='[ZOOM] as compras de outubro da Auto Peças Vale Forte (nenhuma de bateria)')
+    c.registra(SEL("main tbody tr:has-text('Auto Peças Vale Forte')"), at=c.A(3, 'nome', 0.2), label='[ZOOM] as compras de outubro da Auto Peças Vale Forte (nenhuma de bateria)')
     c.cursor((700, 600), at=c.A(3, 'Auto', 0.6), label='cursor passa pelas linhas da Vale Forte')
-    c.click(FILTROS, at=c.A(3, 'aqui.', 0.6), label='Filtros de novo')
+    c.click(FILTROS, at=c.A(3, 'aqui.', 0.8), label='Filtros de novo')
     c.mark(4)
     c.type(BUSCA_PED, '', at=c.A(4, 'Então', 0.2), clear=True, label='apaga a busca')
-    filtros_bateria(c, [c.A(4, 'Tipo,', 0.8), c.A(4, 'Compras.', 0.6), c.A(4, 'Material,', 0.8), c.A(4, 'Bateria', 0.3),
-                        c.A(4, 'automotiva.', 0.5), c.A(4, 'forma', 0.8), c.A(4, 'Pix.', 0.6)])
+    filtros_bateria(c, [c.A(4, 'Tipo,', 0.1), c.A(4, 'Compras.', 0.9), c.A(4, 'Material,', 0.1), c.A(4, 'Bateria', 0.9),
+                        c.A(4, 'forma', 0.1), c.A(4, 'Pix.', 0.9)])
     c.mark(5)
     c.press('Escape', at=c.A(5, 'Achou:', 0.6), label='fecha a lista da forma de pagamento')
     c.press('Escape', at=c.A(5, 'Achou:', 0.3), label='fecha o painel Filtros')
     c.click(TXTX('21/10/2026', within='main tbody'), at=c.A(5, 'vinte', 0.6), label='abre a linha de 21/10 (Depósito Irmãos Siqueira, R$ 744,00)')
     c.confere('main tbody', ['21/10/2026', 'Depósito Irmãos Siqueira', 'Bateria automotiva', '744,00'], 'a linha da bateria (21/10, Siqueira, R$ 744,00)')
-    c.registra(SEL("main tbody"), at=c.A(5, 'quilos', 0.2), label='[ZOOM] a linha e o item: Bateria automotiva, 240 kg, R$ 744,00')
+    c.registra(SEL("main tbody tr:has-text('Fornecedor:')"), at=c.A(5, 'quilos', 0.2), label='[ZOOM] a linha e o item: Bateria automotiva, 240 kg, R$ 744,00')
     c.hover(TXTX('Bateria automotiva', within='main tbody'), 0.5, at=c.A(5, 'bateria,', 0.6), label='o item Bateria automotiva')
     c.hover(TXTX('Depósito Irmãos Siqueira', within='main tbody'), 0.6, at=c.A(5, 'Depósito', 0.6), label='o fornecedor errado: Depósito Irmãos Siqueira')
     c.mark(6)

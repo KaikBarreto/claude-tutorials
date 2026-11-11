@@ -584,12 +584,10 @@ def cap06():
 def cap07():
     """Caixa e competência: a DRE do grupo em Regime de Competência (CMV, Lucro Bruto, resultado); depois Caixa e Competência de novo, com a
     câmera no resultado."""
-    c = Cap(7, setup_fin() + [{'do': 'click', 'target': {'role': 'tab', 'name': 'Regime de Caixa'}}, {'do': 'waitFor', 'text': 'Compras de Material', 'timeout': 10},
-                              AGUARDA, rola_setup('Vendas de Material', 330)],
-            pace=0.5, start=(700, 300), storage_extra={'gerencial-financeiro-tab': 'dre'})
+    # roteiro: a DRE já abre em "Regime de Competência" (o padrão); a página desce um pouco para o Lucro Bruto sair de baixo do botão do Cato
+    c = Cap(7, setup_fin() + [rola_setup('Vendas de Material', 330)], pace=0.5, start=(700, 300), storage_extra={'gerencial-financeiro-tab': 'dre'})
     c.mark(1)
-    c.click({'role': 'tab', 'name': 'Regime de Competência'}, at=c.A(1, 'competência.', 0.6), label='Regime de Competência')
-    c.waitfor(text='CMV (Custo da Mercadoria Vendida)', timeout=10)
+    c.hover({'role': 'tab', 'name': 'Regime de Competência'}, 0.6, at=c.A(1, 'competência.', 0.5), label='Regime de Competência (o padrão)')
     c.hover(DRE_LINHA('CMV (Custo da Mercadoria Vendida)'), 1.0, at=c.A(1, 'CMV,', 0.5), label='CMV e Lucro Bruto (ZOOM)')
     c.hover(DRE_VALOR('CMV (Custo da Mercadoria Vendida)'), 1.2, at=c.A(1, 'duzentos', 0.5), label='CMV R$ 273.873,30')
     c.confere('main', ['R$ 273.873,30', 'R$ 64.966,70'], 'CMV e Lucro Bruto em competência')
@@ -634,11 +632,11 @@ def cap08():
             label='a unidade de onde veio (Filial Pindamonhangaba)')
     c.mark(5)
     c.click(TAB('relatorio'), at=c.A(5, 'Relatório', 0.6), label='Relatório de Estoque')
-    # os cartões do alto (a coluna Margem da tabela fica cortada à direita: a tabela rola de lado)
-    c.hover(TXT('Total Comprado', within=MAIN), 0.2, at=c.A(5, 'grupo', 0.9), label='Total Comprado')
-    c.hover(TXT('Total Vendido', within=MAIN), 0.2, at=c.A(5, 'vendeu', 1.0), label='Total Vendido')
-    c.hover(TXT('Lucro', within=MAIN), 0.2, at=c.A(5, 'lucro', 1.0), label='Lucro')
-    c.hover(TXT('Margem', within=MAIN), 0.8, at=c.A(5, 'margem.', 1.0), label='Margem')
+    # as colunas da tabela; a coluna "Margem" fica cortada à direita (a tabela rola de lado): para ela, o cartão "Margem" do alto
+    c.hover(TXT('Valor Comprado', within='main thead'), 0.2, at=c.A(5, 'grupo', 0.9), label='coluna Valor Comprado')
+    c.hover(TXT('Valor Vendido', within='main thead'), 0.2, at=c.A(5, 'vendeu', 1.0), label='coluna Valor Vendido')
+    c.hover(TXT('Lucro', within='main thead'), 0.1, at=c.A(5, 'lucro', 1.4), label='coluna Lucro')
+    c.hover(TXT('Margem', within=MAIN), 0.6, at=c.A(5, 'margem.', 1.0), label='Margem (cartão do alto)')
     c.fim()
     return c
 

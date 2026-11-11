@@ -24,6 +24,12 @@ Ilustrações (coluna Tela do roteiro):
 - **cap06** (Tela, rodapé depois da importação): "Saldo do banco" R$ 44.933,47, "Saldo conciliado" R$ 44.933,47, "Diferença" R$ 0,00 e
   "Ainda há 17 linhas pendentes" (não R$ 46.382,57 / R$ -1.449,10). A fala ("os três números do fechamento") vale.
 
+Ritmo (a conferir na gravação com a voz; nenhuma pausa aplicada ainda):
+- **cap07, linha 3** ("As outras sugestões vão do mesmo jeito..."): o robô confirma oito sugestões (aluguel, pneu, energia, Moretti,
+  combustível, Aços, saque e tarifa), ~1,6 s cada pelo modelo do `prever.py`, em ~13 s de fala. Se a gravação atrasar a linha 4, um
+  respiro de ~3 s depois da linha 3 (`pausas.py`) e o trecho acelerado na montagem, como o roteiro já prevê.
+- **cap04, linha 3** (descrição, valor, categoria e centro de custo em ~9 s): oito gestos de formulário; mesmo remédio se atrasar.
+
 ## Achados do app
 
 1. **Rodapé da conciliação** (`ReconciliationBalanceFooter.tsx:14-22`, `get_bank_reconciliation_state`): "Saldo conciliado" = abertura +
@@ -33,3 +39,10 @@ Ilustrações (coluna Tela do roteiro):
    `deposit` sem pedido na janela de 3 dias); o roteiro previa "Sem casamento automático".
 3. "Cancelar conciliação" abre uma janela comum (`role=dialog`), com a lista na ordem: "17 linha(s) do extrato serão canceladas", vínculos,
    contas reabertas, lançamentos criados, ignoradas (o roteiro bate).
+4. Números conferidos na tela (explorações e ensaios de 11/11, mundo base novo): cofre R$ 18.500,00; Conta Principal R$ 39.593,47 no
+   início, R$ 45.236,97 na hora da importação e R$ 44.933,67 no fim; Conta Secundária R$ 90.515,00; Resumo R$ 148.608,47 (4 fontes);
+   prévia do OFX "01/11/2026 — 10/11/2026", 17 transações, saldo final R$ 44.933,47; diferença casada R$ -0,20 (Venda #1732 · R$ 4.815,20).
+   A distribuição de lucros de 30/10 (R$ 40.000,00) não aparece em nenhuma tela da aula (histórico "Este mês" e extrato de novembro).
+5. "Nova Conta": o "Valor em conta (R$)" já vem preenchido com "R$ 0,00"; digitar sem apagar mantém R$ 0,00 (o robô limpa o campo).
+   Não é defeito, mas quem segue o tutorial precisa apagar o zero.
+6. O ajuste inicial da conta nova aparece no histórico sem usuário ("—"): o app grava esse lançamento sem `created_by`.

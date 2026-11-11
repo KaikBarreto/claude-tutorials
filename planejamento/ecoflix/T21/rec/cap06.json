@@ -270,7 +270,7 @@
   {
    "do": "eval",
    "js": "(async()=>{const el=[...document.querySelectorAll(\"main *\")].find(e=>e.children.length===0&&e.getClientRects().length&&e.textContent.trim()===\"Total geral\");if(!el)return 'SEM ALVO';let c=el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)break;c=c.parentElement;}if(!c||c===document.body)c=document.scrollingElement;const dy=Math.round(el.getBoundingClientRect().top-430);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/800),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});await new Promise(r=>setTimeout(r,60));return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 20.95,
+   "at": 21.45,
    "label": "desce até o Total geral"
   },
   {

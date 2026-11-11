@@ -332,11 +332,16 @@
     "text": "máx. 999 m³",
     "within": "[role=dialog]"
    },
-   "seconds": 0.8,
-   "at": 43.87,
+   "seconds": 0.4,
+   "at": 43.57,
    "label": "ajuda: máx. 999 m³",
    "optional": true,
    "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 47.2
   },
   {
    "do": "click",
@@ -346,18 +351,13 @@
     "exact": true,
     "within": "[role=dialog]"
    },
-   "at": 46.7,
+   "at": 47.2,
    "label": "Salvar o veículo"
   },
   {
    "do": "waitFor",
    "text": "Veículo atualizado",
    "timeout": 10
-  },
-  {
-   "do": "mark",
-   "name": "L6",
-   "at": 47.2
   },
   {
    "do": "hover",
@@ -426,62 +426,34 @@
     "selector": "#motorista-doc"
    },
    "at": 57.6,
-   "label": "CPF: 318.472.650-90 (campo)"
+   "label": "CPF (campo)"
   },
   {
-   "do": "type",
-   "target": {
-    "selector": "#motorista-doc"
-   },
-   "text": "31847265090",
-   "cps": 40,
+   "do": "eval",
+   "js": "(()=>{const el=document.querySelector(\"#motorista-doc\");if(!el)return 'SEM ALVO';el.focus();el.select&&el.select();document.execCommand('insertText',false,\"31847265090\");return 'colado: '+el.value.slice(0,60)})()",
    "at": 58.55,
-   "label": "CPF: 318.472.650-90",
-   "noClick": true
+   "label": "CPF: 318.472.650-90"
   },
   {
    "do": "click",
    "target": {
     "selector": "#motorista-cnh"
    },
-   "at": 59.8,
-   "label": "CNH: 04728193604 (campo)"
+   "at": 59.31,
+   "label": "CNH (campo)"
   },
   {
-   "do": "type",
-   "target": {
-    "selector": "#motorista-cnh"
-   },
-   "text": "04728193604",
-   "cps": 40,
-   "at": 60.7,
-   "label": "CNH: 04728193604",
-   "noClick": true
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "#motorista-cnh-cat"
-   },
-   "at": 61.92,
-   "label": "Categoria: C (abre)"
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "option",
-    "name": "C",
-    "exact": true
-   },
-   "at": 62.62,
-   "label": "Categoria: C"
+   "do": "eval",
+   "js": "(()=>{const el=document.querySelector(\"#motorista-cnh\");if(!el)return 'SEM ALVO';el.focus();el.select&&el.select();document.execCommand('insertText',false,\"04728193604\");return 'colado: '+el.value.slice(0,60)})()",
+   "at": 60.1,
+   "label": "CNH: 04728193604"
   },
   {
    "do": "click",
    "target": {
     "selector": "[role=dialog] label[for='motorista-cnh-val']"
    },
-   "at": 63.27,
+   "at": 60.43,
    "label": "Validade da CNH (campo)"
   },
   {
@@ -493,6 +465,24 @@
    "cps": 40,
    "label": "Validade da CNH: 18/03/2029",
    "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#motorista-cnh-cat"
+   },
+   "at": 62.12,
+   "label": "Categoria: C (abre)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "C",
+    "exact": true
+   },
+   "at": 62.92,
+   "label": "Categoria: C"
   },
   {
    "do": "mark",

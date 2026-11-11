@@ -33,10 +33,11 @@ custo médio e mostra R$ 10.350,00).
   Clientes 0 (a Fundição já é cliente da filial), Fornecedores 0.
 - **cap06 L1**: o Financeiro abre direto na aba DRE (a última aberta) e o período passa a "Mês passado" enquanto a fala diz "com outubro
   escolhido" (clicar na aba e no período dentro da linha atrasava a L2).
-- **cap07 L1**: o capítulo começa no consolidado em "Regime de Caixa" (onde o cap06 deixou) e o robô liga "Regime de Competência" na
-  palavra "competência"; na L4 os dois regimes trocam com a câmera parada no resultado.
-- **cap08 L5**: o robô aponta os cartões "Total Comprado", "Total Vendido", "Lucro" e "Margem" do Relatório de Estoque (a coluna "Margem"
-  da tabela fica cortada à direita; a tabela rola de lado). Os cartões mostram o mês corrente (1 a 10/11), sem número na fala.
+- **cap07 L4**: os dois cliques do seletor de regime são feitos sem levar o cursor (o seletor fica fora da tela quando o resultado está
+  no quadro): a câmera fica parada no resultado enquanto ele muda.
+- **cap08 L5**: o robô aponta as colunas "Valor Comprado", "Valor Vendido" e "Lucro" do Relatório de Estoque e, para a margem, o cartão
+  "Margem" do alto (a coluna "Margem" da tabela fica cortada à direita; a tabela rola de lado). O relatório mostra o mês corrente (1 a
+  10/11), sem número na fala.
 - **cap08 L4**: o Histórico de Materiais abre com a compra da filial de 09/11 16:20 (Rosa Medeiros: alumínio latinha e papelão) no alto, para
   "com a unidade de onde veio" mostrar "Filial Pindamonhangaba" na primeira linha.
 

@@ -109,7 +109,7 @@
    "target": {
     "selector": "main [role=combobox]:has-text('Este mês')"
    },
-   "at": 4.97,
+   "at": 4.57,
    "label": "período"
   },
   {
@@ -129,13 +129,18 @@
    "timeout": 8
   },
   {
+   "do": "mark",
+   "name": "L2",
+   "at": 7.84
+  },
+  {
    "do": "click",
    "target": {
     "role": "button",
     "name": "Filtros",
     "within": "main"
    },
-   "at": 7.47,
+   "at": 7.84,
    "label": "Filtros"
   },
   {
@@ -144,20 +149,16 @@
    "timeout": 8
   },
   {
-   "do": "mark",
-   "name": "L2",
-   "at": 7.84
-  },
-  {
-   "do": "hover",
+   "do": "type",
    "target": {
     "placeholder": "Pedido, cliente, operador, placa..."
    },
-   "seconds": 0.5,
-   "at": 8.65,
-   "label": "a busca do painel (pedido, cliente, operador, placa)",
+   "text": "",
+   "noClick": true,
    "optional": true,
-   "timeout": 4
+   "timeout": 4,
+   "at": 9.89,
+   "label": "a busca do painel (pedido, cliente, operador, placa)"
   },
   {
    "do": "click",
@@ -173,7 +174,7 @@
     "placeholder": "Pedido, cliente, operador, placa..."
    },
    "text": "Vale Forte",
-   "cps": 14,
+   "cps": 40,
    "at": 17.55,
    "label": "digita Vale Forte",
    "noClick": true
@@ -192,7 +193,7 @@
   {
    "do": "type",
    "target": {
-    "selector": "main tbody"
+    "selector": "main tbody tr:has-text('Auto Peças Vale Forte')"
    },
    "text": "",
    "noClick": true,
@@ -220,7 +221,7 @@
     "name": "Filtros",
     "within": "main"
    },
-   "at": 24.49,
+   "at": 24.29,
    "label": "Filtros de novo"
   },
   {
@@ -239,19 +240,17 @@
    "clear": true
   },
   {
-   "do": "click",
-   "target": {
-    "selector": "[data-radix-popper-content-wrapper]:has-text('Filtrar pedidos') button:has-text('Tipo')"
-   },
-   "at": 28.44,
-   "label": "filtro: Tipo"
+   "do": "eval",
+   "js": "(async()=>{const p=[...document.querySelectorAll('[data-radix-popper-content-wrapper]')].find(w=>w.innerText.includes('Filtrar pedidos'));const b=p&&[...p.querySelectorAll('button')].filter(x=>x.className.includes('justify-between'))[0];if(!b)return 'SEM ALVO';b.click();await new Promise(r=>setTimeout(r,150));return 'aberto'})()",
+   "at": 29.14,
+   "label": "abre o campo Tipo (sem cursor)"
   },
   {
    "do": "click",
    "target": {
     "selector": "[data-radix-popper-content-wrapper] label:has-text('Compras')"
    },
-   "at": 29.24,
+   "at": 28.94,
    "label": "filtro: Compras"
   },
   {
@@ -260,30 +259,17 @@
    "label": "fecha a lista do Tipo"
   },
   {
-   "do": "click",
-   "target": {
-    "selector": "[data-radix-popper-content-wrapper]:has-text('Filtrar pedidos') button:has-text('Material')"
-   },
-   "at": 29.72,
-   "label": "filtro: Material"
-  },
-  {
-   "do": "type",
-   "target": {
-    "placeholder": "Buscar..."
-   },
-   "text": "bat",
-   "cps": 40,
-   "at": 31.13,
-   "label": "digita \"bat\" na busca do Material",
-   "noClick": true
+   "do": "eval",
+   "js": "(async()=>{const p=[...document.querySelectorAll('[data-radix-popper-content-wrapper]')].find(w=>w.innerText.includes('Filtrar pedidos'));const b=p&&[...p.querySelectorAll('button')].filter(x=>x.className.includes('justify-between'))[1];if(!b)return 'SEM ALVO';b.click();await new Promise(r=>setTimeout(r,150));for(let i=0;i<20;i++){const inp=[...document.querySelectorAll('[data-radix-popper-content-wrapper] input[placeholder='Buscar...']')].pop();if(inp){Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set.call(inp,\"bat\");inp.dispatchEvent(new Event('input',{bubbles:true}));return 'aberto e buscou'}await new Promise(r=>setTimeout(r,100));}return 'SEM ALVO (busca)';return 'aberto'})()",
+   "at": 30.42,
+   "label": "abre o campo Material e busca \"bat\" (sem cursor)"
   },
   {
    "do": "click",
    "target": {
     "selector": "[data-radix-popper-content-wrapper] label:has-text('Bateria automotiva')"
    },
-   "at": 31.54,
+   "at": 30.54,
    "label": "filtro: Bateria automotiva"
   },
   {
@@ -292,19 +278,17 @@
    "label": "fecha a lista do Material"
   },
   {
-   "do": "click",
-   "target": {
-    "selector": "[data-radix-popper-content-wrapper]:has-text('Filtrar pedidos') button:has-text('Forma de Pagamento')"
-   },
-   "at": 32.46,
-   "label": "filtro: Forma de Pagamento"
+   "do": "eval",
+   "js": "(async()=>{const p=[...document.querySelectorAll('[data-radix-popper-content-wrapper]')].find(w=>w.innerText.includes('Filtrar pedidos'));const b=p&&[...p.querySelectorAll('button')].filter(x=>x.className.includes('justify-between'))[2];if(!b)return 'SEM ALVO';b.click();await new Promise(r=>setTimeout(r,150));return 'aberto'})()",
+   "at": 33.16,
+   "label": "abre o campo Forma de Pagamento (sem cursor)"
   },
   {
    "do": "click",
    "target": {
     "selector": "[data-radix-popper-content-wrapper] label:has-text('Com Pix/Transferência')"
    },
-   "at": 34.33,
+   "at": 34.03,
    "label": "filtro: Com Pix/Transferência"
   },
   {
@@ -341,7 +325,7 @@
   {
    "do": "type",
    "target": {
-    "selector": "main tbody"
+    "selector": "main tbody tr:has-text('Fornecedor:')"
    },
    "text": "",
    "noClick": true,

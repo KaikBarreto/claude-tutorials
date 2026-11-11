@@ -282,7 +282,9 @@ def vai(url, espera):
 
 
 TRILHA = vai('/ecoflix', 'Aprenda a usar o EcoSistema')
-ASSINATURA = vai('/assinatura', 'Gerencie seu plano, módulos e pagamentos')
+def assinatura(v):
+    return vai('/assinatura', 'Gerencie seu plano, módulos e pagamentos' if v == 'd' else 'Uso da conta')
+
 FECHAR_EVAL = (r"""(() => { const ds = [...document.querySelectorAll('[role=dialog]')]; const d = ds[ds.length - 1]; if (!d) return 'ja fechada'; """
                r"""const b = [...d.querySelectorAll('button')].find((x) => [x.textContent, x.getAttribute('aria-label')].some((v) => /^\s*fechar\s*$/i.test(v || ''))); """
                r"""if (!b) return 'sem botao Fechar'; b.click(); return 'fechada pelo botao'; })()""")
@@ -454,7 +456,7 @@ def cap03(v):
         rola_ate(c, 'CRM/Kanban', at=c.A(1, 'módulos', 1.4), label='desce ao último módulo (CRM/Kanban)', y=150, dur_ms=2200, dentro='main')
         c.hover(TXT('Não tem no seu plano'), 0.5, at=c.A(1, 'selo', 0.9), label='selo Não tem no seu plano')
         c.mark(2)
-        c.click(BTNX('CRM/Kanban', within='ol'), at=c.A(2, 'Pode', 1.1), label='aula CRM/Kanban (Conheça este módulo)')
+        c.click(BTNX('CRM/Kanban'), at=c.A(2, 'Pode', 1.1), label='aula CRM/Kanban (Conheça este módulo)')
         c.waitfor(text='Consultar fora da ordem?', timeout=8)
         c.click(BTN('Consultar esta aula'), at=c.A(2, 'É', 1.3), label='Consultar esta aula')
         c.waitfor(text='Conheça outros módulos', timeout=25)
@@ -496,10 +498,10 @@ def cap04(v):
     c.click(botao, at=0.0, label='Começar trilha (abre a aula Sua conta e sua empresa)')
     c.waitfor(text='Tirar dúvidas com o suporte', timeout=25)
     rola_ate(c, 'Tirar dúvidas com o suporte', at=c.A(1, 'Embaixo', 1.2), label='os detalhes descem ao botão verde', y=430, dur_ms=900)
-    c.hover(BTNX('Tirar dúvidas com o suporte'), 0.6, at=c.A(1, 'botão', 0.9), label='botão Tirar dúvidas com o suporte (sem clicar)')
+    c.hover(TXTX('Tirar dúvidas com o suporte'), 0.6, at=c.A(1, 'botão', 0.9), label='botão Tirar dúvidas com o suporte (sem clicar)')
     c.mark(2)
     c.mark(3)
-    c.hover(BTNX('Tirar dúvidas com o suporte'), 0.6, at=c.A(3, 'Assim,', 0.9), label='o botão em destaque de novo')
+    c.hover(TXTX('Tirar dúvidas com o suporte'), 0.6, at=c.A(3, 'Assim,', 0.9), label='o botão em destaque de novo')
     c.fim()
     return c
 
@@ -538,7 +540,7 @@ def cap06(v):
         c.mark(8)
         vis('Gerencial (Filiais)', c.A(8, 'Na', 1.5), 'o menu desce ao Gerencial (Filiais)')
         c.hover(ITEM_MENU('Agenda'), 0.4, at=c.A(8, 'Agenda,', 0.9), label='menu: Agenda')
-        c.hover(ITEM_MENU('Gerencial (Filiais)'), 0.4, at=c.A(8, 'Gerencial', 0.9), label='menu: Gerencial (Filiais)')
+        c.hover(GRUPO('Gerencial (Filiais)'), 0.4, at=c.A(8, 'Gerencial', 0.9), label='menu: Gerencial (Filiais)')
         c.mark(9)
         c.hover(BTN('Configurações'), 0.6, at=c.A(9, 'Configurações', 0.9), label='rodapé: Configurações')
         c.mark(10)
@@ -570,7 +572,7 @@ def cap06(v):
         # no celular o "Gerencial (Filiais)" vem antes da "Agenda" (ordem do menuItems): a câmera rola até ele na frase dele
         rola_ate(c, 'Gerencial (Filiais)', at=c.A(8, 'Na', 1.5), label='a gaveta desce ao Gerencial (Filiais)', y=420, dur_ms=600, dentro=DLG)
         c.hover(ITEM_MENU('Agenda'), 0.4, at=c.A(8, 'Agenda,', 0.9), label='gaveta: Agenda')
-        c.hover(ITEM_MENU('Gerencial (Filiais)'), 0.4, at=c.A(8, 'Gerencial', 0.9), label='gaveta: Gerencial (Filiais)')
+        c.hover(GRUPO('Gerencial (Filiais)'), 0.4, at=c.A(8, 'Gerencial', 0.9), label='gaveta: Gerencial (Filiais)')
         c.mark(9)
         c.hover(BTN('Configurações', within=DLG), 0.6, at=c.A(9, 'Configurações', 0.9), label='rodapé da gaveta: Configurações')
         c.mark(10)
@@ -634,13 +636,13 @@ def cap07(v):
         c.click(TXT('Aparência'), at=c.A(4, 'Aparência,', 1.2), label='aba Aparência')
         c.waitfor(text='Estilo de Navegação (Desktop)', timeout=12)
         c.marcar(TXT('Estilo de Navegação (Desktop)'), label='Estilo de Navegação (Desktop)')
-        c.marcar(TXT('Esta opção só afeta a visualização em desktop.'), at=c.A(4, 'Superior', 0.9), label='Esta opção só afeta a visualização em desktop.')
+        c.marcar(TXTX('Esta opção só afeta a visualização em desktop.'), at=c.A(4, 'Superior', 0.9), label='Esta opção só afeta a visualização em desktop.')
         c.mark(5)
         # a própria tela do celular: a barra de baixo e a gaveta
-        c.hover(BTN('Início'), 0.3, at=c.A(5, 'Início,', 0.9), label='barra de baixo: Início')
-        c.hover(BTN('Caixa'), 0.3, at=c.A(5, 'Caixa,', 0.9), label='barra de baixo: Caixa')
-        c.hover(BTN('Novo'), 0.3, at=c.A(5, 'Novo,', 0.9), label='barra de baixo: Novo')
-        c.hover(BTN('Estoque'), 0.3, at=c.A(5, 'Estoque', 0.9), label='barra de baixo: Estoque')
+        c.hover(TXT('Início', within='nav'), 0.3, at=c.A(5, 'Início,', 0.9), label='barra de baixo: Início')
+        c.hover(TXT('Caixa', within='nav'), 0.3, at=c.A(5, 'Caixa,', 0.9), label='barra de baixo: Caixa')
+        c.hover(SEL('nav button:has(svg.lucide-plus)'), 0.3, at=c.A(5, 'Novo,', 0.9), label='barra de baixo: Novo')
+        c.hover(TXT('Estoque', within='nav'), 0.3, at=c.A(5, 'Estoque', 0.9), label='barra de baixo: Estoque')
         c.toque(BTN('Menu'), at=c.A(5, 'Menu,', 1.3), label='Menu (abre a gaveta)')
         c.waitfor(text='Conta', timeout=8)
         rola_ate(c, 'Conta', at=c.A(5, 'conta.', 1.8), label='a gaveta desce à seção Conta', y=170, dur_ms=900, dentro=DLG)
@@ -666,7 +668,7 @@ def cap08(v):
     c.waitfor(text='Inverter os termos Cliente e Fornecedor', timeout=12)
     alvo_sw = BTNX('Inverter os termos Cliente e Fornecedor') if False else TXT('Inverter os termos Cliente e Fornecedor')
     c.hover(alvo_sw, 0.9, at=c.A(2, 'inverter', 0.9), label='Inverter os termos Cliente e Fornecedor (só olhar)')
-    rola_ate(c, 'Compras, vendas, vínculos, saldos e documentos fiscais continuam com a mesma lógica.', at=c.A(2, 'Por', 1.5),
+    rola_ate(c, 'Compra: Fornecedor', at=c.A(2, 'Por', 1.5),
              label='desce à frase da mesma lógica', y=360, dur_ms=700, prefixo=True)
     c.hover(TXTX('Compras, vendas, vínculos, saldos e documentos fiscais continuam com a mesma lógica.'), 0.8, at=c.A(2, 'nada', 0.9),
             label='Compras, vendas, vínculos, saldos e documentos fiscais continuam com a mesma lógica.')
@@ -687,7 +689,7 @@ def abrir_assinatura(c, v, a_menu, a_item):
         c.waitfor(text='Conta', timeout=8)
         rola_ate(c, 'Conta', at=round(a_menu + 0.9, 2), label='a gaveta desce à seção Conta', y=170, dur_ms=700, dentro=DLG)
         c.click(BTN('Assinatura', within=DLG), at=a_item, label='Assinatura')
-    c.waitfor(text='Gerencie seu plano, módulos e pagamentos', timeout=25)
+    c.waitfor(text='Gerencie seu plano, módulos e pagamentos' if v == 'd' else 'Uso da conta', timeout=25)
 
 
 def cap09(v):
@@ -721,7 +723,7 @@ def cap09(v):
 
 
 def cap10(v):
-    c = cap_novo(10, v, setup=ASSINATURA, prewarm=['/login', '/dashboard', '/assinatura'])
+    c = cap_novo(10, v, setup=assinatura(v), prewarm=['/login', '/dashboard', '/assinatura'])
     c.mark(1)
     rola_ate(c, 'Plano & módulos', at=c.A(1, 'Mais', 0.8), label='desce a Plano & módulos', y=140, dur_ms=1400, dentro='main')
     c.marcar(EM_MAIN('Plano & módulos'), label='cartão Plano & módulos')
@@ -734,7 +736,7 @@ def cap10(v):
 
 
 def cap11(v):
-    c = cap_novo(11, v, setup=ASSINATURA, prewarm=['/login', '/dashboard', '/assinatura'])
+    c = cap_novo(11, v, setup=assinatura(v), prewarm=['/login', '/dashboard', '/assinatura'])
     c.mark(1)
     rola_ate(c, 'Plano & módulos', at=0.0, label='desce ao cartão Plano & módulos', y=140, dur_ms=1000, dentro='main')
     rola_ate(c, 'Gerenciar plano', at=c.A(1, 'Em', 1.8), label='desce a Gerenciar plano', y=440 if v == 'd' else 380, dur_ms=1200, dentro='main', prefixo=True)
@@ -746,7 +748,7 @@ def cap11(v):
 
 
 def cap12(v):
-    c = cap_novo(12, v, setup=ASSINATURA, prewarm=['/login', '/dashboard', '/assinatura'])
+    c = cap_novo(12, v, setup=assinatura(v), prewarm=['/login', '/dashboard', '/assinatura'])
     c.mark(1)
     rola_ate(c, 'Formas de pagamento', at=0.0, label='a página no valor e nas formas de pagamento', y=300, dur_ms=600, dentro='main', so_se_fora=True)
     c.hover(EM_MAIN('Formas de pagamento', exact=True), 0.5, at=c.A(1, 'Pra', 0.4), label='Formas de pagamento: PIX, Boleto, Cartão')

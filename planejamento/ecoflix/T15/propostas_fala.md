@@ -25,3 +25,12 @@ revisão geral aplica. Linhas numeradas como no `capNN.json` (L1 = primeira linh
    (`RevenueExpenseList.tsx:1199` passa `accountName="a conta bancária"`; já estava no plano como handoff).
 4. **Rótulo "07 (-) Outras Receitas e Despesas"** com o aluguel de caçamba (receita) somando R$ 2.800,00 ao resultado: o "(-)" do
    rótulo não combina com a linha que soma.
+5. **Relatório abrindo** (cap03): entre "Processando relatório..." e os números, o banner mostra por ~0,5 s "R$ 0,00 · Equilibrado" e
+   "Nenhuma despesa no período" (o banner desenha antes das consultas). Na montagem, um corte curto em ~7,8 s do cap03 resolve.
+
+## Para a edição e a gravação final
+- Cap09: o `setup` aplica a comparação uma vez (defeito do achado 1); na tela o filtro aparece "Personalizado 01/10/26 → 31/10/26".
+- Cap10: a ilustração usa R$ 4.250,00 (compra de cobre), que não existe no mundo; a tela não mostra esse valor (a ilustração cobre o
+  Histórico filtrado pela energia), então não há conflito. Se quiser um número do mundo: a compra #1605 de 08/10 (34 kg de cobre mel,
+  R$ 1.445,00, dinheiro, balcão).
+- Cap11: "Exportar PDF" abre uma aba nova (o robô fica na do relatório) e o aviso "PDF gerado em nova aba" aparece.

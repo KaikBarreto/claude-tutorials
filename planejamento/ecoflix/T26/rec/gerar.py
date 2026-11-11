@@ -704,13 +704,13 @@ def cap07():
     c.mark(2)
     c.click(BTN('Nova checklist'), at=c.A(2, 'Nova', 0.9), label='Nova checklist')
     c.waitfor(selector='#crm-checklist-name', timeout=8)
-    c.type(SEL('#crm-checklist-name'), 'Documentos do fornecedor', at=c.A(2, 'Documentos', 0.9), cps=30, label='Nome: Documentos do fornecedor')
-    c.click(BTN('Adicionar item'), at=c.A(2, 'três', 0.8), label='Adicionar item (1)')
-    c.click(BTN('Adicionar item'), label='Adicionar item (2)')
-    c.click(BTN('Adicionar item'), label='Adicionar item (3)')
-    # três itens em ~5 s de fala: o texto entra colado (insertText) logo depois do clique no campo; digitado não cabe (71 letras)
-    for k, (item, palavra) in enumerate((('CNPJ conferido', 'CNPJ'), ('Local de retirada combinado', 'local'), ('Frequência da coleta combinada', 'frequência')), 1):
-        c.click(SEL(f"{CHK} input[aria-label='Texto do item {k}']"), at=c.A(2, palavra, 0.7), label=f'item {k}')
+    # o Nome abre com o foco (autoFocus em CrmChecklistsSection.tsx): digita sem clicar
+    c.type(SEL('#crm-checklist-name'), 'Documentos do fornecedor', at=c.A(2, 'Documentos', 0.3), noClick=True, cps=40, label='Nome: Documentos do fornecedor')
+    # três itens em ~5 s de fala: um por vez (Adicionar item, clique no campo novo, texto colado com insertText); digitado não cabe (71 letras)
+    for k, (item, palavra, folga) in enumerate((('CNPJ conferido', 'três', 0.8), ('Local de retirada combinado', 'local', 1.5),
+                                                 ('Frequência da coleta combinada', 'frequência', 1.5)), 1):
+        c.click(BTN('Adicionar item'), at=c.A(2, palavra, folga), label=f'Adicionar item ({k})')
+        c.click(SEL(f"{CHK} input[aria-label='Texto do item {k}']"), label=f'item {k}')
         c.ev(colar(item), label=f'item {k}: {item}')
     c.confere_campos(['Documentos do fornecedor', 'CNPJ conferido', 'Local de retirada combinado', 'Frequência da coleta combinada'], 'nome e itens', escopo=CHK)
     c.click(BTN('Salvar', within=CHK), at=c.A(2, 'Salvar.', 0.7), label='Salvar (Nova checklist)')
@@ -722,10 +722,10 @@ def cap07():
     c.waitfor(text='Etiquetas ajudam a classificar oportunidades no Kanban.', timeout=8)
     c.click(BTN('Nova etiqueta'), at=c.A(4, 'Nova', 0.9), label='Nova etiqueta')
     c.waitfor(selector='#crm-label-name', timeout=8)
-    c.type(SEL('#crm-label-name'), 'Indústria', at=c.A(4, 'Indústria,', 0.3), cps=22, label='Nome: Indústria')
-    c.hover(SEL('#crm-label-color'), 0.2, at=c.A(4, 'cor.', 0.6), label='Cor (o seletor de cor)')
+    c.type(SEL('#crm-label-name'), 'Indústria', at=c.A(4, 'Indústria,', 0.6), noClick=True, cps=30, label='Nome: Indústria')   # autoFocus
+    c.hover(SEL('#crm-label-color'), 0.05, at=c.A(4, 'com', 0.7), label='Cor (o seletor de cor)')
     c.ev(js_cor('#crm-label-color', '#6366f1'), label='Cor: #6366f1')
-    c.click(BTN('Salvar', within=ETQ), at=c.A(4, 'Salvar.', 0.7), label='Salvar (Nova etiqueta)')
+    c.click(BTN('Salvar', within=ETQ), at=c.A(4, 'Salvar.', 0.9), label='Salvar (Nova etiqueta)')
     c.waitfor(text='Etiqueta criada', timeout=10)
     c.mark(5)
     c.hover(TXT('Indústria', within=CFG), 2.0, at=c.A(5, 'modelos', 0.6), label='a etiqueta Indústria na lista')
