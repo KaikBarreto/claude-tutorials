@@ -377,7 +377,7 @@ CAPS[5]=()=>{
     }
     // B
     const b0=W(3,'Portal')-.3, bpa=W(3,'parceiro'), bco=W(3,'cor'), bto=W(3,'topo'), bre=W(3,'Recicla'), bro=W(3,'rodape'), bF=LE(3)+.6;
-    const tdes=W(4,'desligar'), sB=t>=b0-1&&t<tdes+.4; B.style.display=sB?'':'none'; B.style.opacity=(1-eo(pr(t,tdes-.4,.4))).toFixed(3);
+    const tdes=W(4,'desligar'), sB=t>=b0-1&&t<tdes+.4; B.style.display=sB?'':'none'; B.style.opacity=(1-eo(pr(t,tdes-.45,.4))).toFixed(3);
     if(sB){
       posTitulo(titB,t,b0-.6,b0+.25);
       vis(fone,t,b0+.15,1e9,{dy:16}); vis(corP,t,bco-.1,1e9,{dy:12});
@@ -389,7 +389,7 @@ CAPS[5]=()=>{
     const c0=W(4,'Uma')-.3, cde=W(4,'desligar'), cin=W(4,'interruptor'), cre=W(4,'remover'), clo=W(4,'logo'), cvo=W(4,'volta'), ccn=W(4,'continuam'), cro=W(4,'rodape');
     const sC=t>=c0-1; C.style.display=sC?'':'none';
     if(sC){
-      titC.style.top='46px'; vis(titC,t,cde-.35,1e9,{dy:8});
+      titC.style.top='46px'; vis(titC,t,cde,1e9,{dy:8});   // depois que o título do Portal saiu
       vis(P1.p,t,cde-.1,1e9,{dy:16}); P1.p.style.left=lerp(390,110,eio(pr(t,cre-.75,.7))).toFixed(2)+'px';
       const off=eo(pr(t,cin+.15,.6)); marca(P1.s,1-off); pintar(P1.s,1-off); P1.rod.style.opacity=off.toFixed(3);
       pulse(P1.h,t,cin,.08,.7);

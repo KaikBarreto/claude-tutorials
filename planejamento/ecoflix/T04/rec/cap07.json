@@ -1,0 +1,374 @@
+{
+ "name": "t04-cap07",
+ "title": "T4 · Cap. 7 · A ficha do parceiro (narração ESTIMADA 46,2 s; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "seed": "t04-cap07",
+ "pace": 0.5,
+ "cps": 40,
+ "tail": 1.5,
+ "start": {
+  "x": 700,
+  "y": 400
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true"
+ },
+ "seedExtra": [
+  "t04/inicio",
+  "t04/apos-cap06"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "waitFor",
+   "target": {
+    "label": "E-mail"
+   },
+   "timeout": 30
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "E-mail"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "Senha",
+    "exact": true
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Rafael!",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/clientes-fornecedores"
+  },
+  {
+   "do": "waitFor",
+   "text": "Aços Quiririm Ltda",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "header button.h-8.w-8"
+   }
+  },
+  {
+   "do": "wait",
+   "seconds": 0.8
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Fornecedores",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "placeholder": "Buscar fornecedor..."
+   },
+   "timeout": 15
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const a=document.getAnimations().filter(x=>x.currentTime<0);a.forEach(x=>x.startTime=document.timeline.currentTime);return a.length})()"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|Algo deu errado|Falha ao|Something went wrong|inv[áa]lid/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{document.querySelectorAll('[data-sonner-toast][data-type=error]').forEach(t=>{const s='TOAST DE ERRO: '+t.textContent.trim().slice(0,90);if(!window.__avisos.includes(s)&&window.__avisos.length<10)window.__avisos.push(s)})},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0.4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main aside button:has-text('Cooperativa Recomeço')"
+   },
+   "at": 2.08,
+   "label": "clica na Cooperativa Recomeço: a ficha abre em Visão geral"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "main section[aria-label='Detalhes de Cooperativa Recomeço']"
+   },
+   "timeout": 10
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Cooperativa Recomeço\", \"Fornecedor\", \"R$ 2.550,00\", \"a pagar\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main section[aria-label='Detalhes de Cooperativa Recome\\u00e7o']\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere cabeçalho da ficha"
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 7.44
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main section[aria-label='Detalhes de Cooperativa Recomeço'] h2, main section[aria-label='Detalhes de Cooperativa Recomeço'] h1",
+    "nth": 0
+   },
+   "seconds": 0.4,
+   "at": 9.05,
+   "label": "nome da cooperativa",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main section[aria-label='Detalhes de Cooperativa Recomeço'] .tabular-nums",
+    "nth": 0
+   },
+   "seconds": 0.5,
+   "at": 9.81,
+   "label": "saldo R$ 2.550,00 a pagar",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Editar",
+    "exact": true,
+    "within": "main section[aria-label='Detalhes de Cooperativa Recomeço']"
+   },
+   "seconds": 0.3,
+   "at": 11.41,
+   "label": "Editar",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Nova Movimentação",
+    "exact": true,
+    "within": "main section[aria-label='Detalhes de Cooperativa Recomeço']"
+   },
+   "seconds": 0.6,
+   "at": 12.32,
+   "label": "Nova Movimentação",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 14.17
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[aria-label='Seções da ficha'] button:has-text('Visão geral')"
+   },
+   "seconds": 0.2,
+   "at": 16.28,
+   "label": "aba Visão geral",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[aria-label='Seções da ficha'] button:has-text('Pedidos')"
+   },
+   "seconds": 0.2,
+   "at": 17.42,
+   "label": "aba Pedidos",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[aria-label='Seções da ficha'] button:has-text('Conta-corrente')"
+   },
+   "seconds": 0.2,
+   "at": 18.25,
+   "label": "aba Conta-corrente",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[aria-label='Seções da ficha'] button:has-text('Lucro estimado')"
+   },
+   "seconds": 0.2,
+   "at": 19.62,
+   "label": "aba Lucro estimado",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[aria-label='Seções da ficha'] button:has-text('Financeiro')"
+   },
+   "seconds": 0.2,
+   "at": 20.98,
+   "label": "aba Financeiro",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[aria-label='Seções da ficha'] button:has-text('Notas fiscais')"
+   },
+   "seconds": 0.2,
+   "at": 22.05,
+   "label": "aba Notas fiscais",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[aria-label='Seções da ficha'] button:has-text('Preços')"
+   },
+   "seconds": 0.2,
+   "at": 23.26,
+   "label": "aba Preços",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 23.77
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Cadastro",
+    "exact": true,
+    "within": "main section[aria-label='Detalhes de Cooperativa Recomeço']"
+   },
+   "seconds": 0.8,
+   "at": 26.68,
+   "label": "Cadastro",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Contato e endereço",
+    "exact": true,
+    "within": "main section[aria-label='Detalhes de Cooperativa Recomeço']"
+   },
+   "seconds": 0.8,
+   "at": 27.74,
+   "label": "Contato e endereço",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 29.36
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "input[aria-label='Link do portal']"
+   },
+   "seconds": 1.6,
+   "at": 30.06,
+   "label": "zoom: Acesso ao portal, o link e Copiar",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Copiar",
+    "exact": true,
+    "within": "main section[aria-label='Detalhes de Cooperativa Recomeço']"
+   },
+   "seconds": 1.0,
+   "at": 35.53,
+   "label": "Copiar (sem clicar)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 38.21
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[aria-label='Seções da ficha'] button:has-text('Lucro estimado')"
+   },
+   "seconds": 2.0,
+   "at": 38.77,
+   "label": "aba Lucro estimado (sem clicar)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 46.16
+  }
+ ]
+}

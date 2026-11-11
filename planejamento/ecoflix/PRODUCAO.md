@@ -421,3 +421,7 @@ Decisões:
   tempo, ou se o app põe o 5102 padrão (a ilustração viu 5102 no fluxo do app); se o app não trocar sozinho, é achado
   para o relatório de melhorias e o robô escolhe 6102. Ícone de uma letra ("x") agora carrega no render. Robô da T07
   lançado no lugar.
+- 11/11 12:1x **Ilustrações T00 prontas** (21 cenas; o cap00 e o cap05 são só ilustração, do primeiro ao último quadro;
+  janelas encostadas no cap00, cap05, cap10 e cap11: renderizar cada bloco de uma vez). A trava presa de ontem foi um
+  `--stills` vazio que caiu no modo vídeo (já recusado). Sinal dos saldos da T4 ambíguo no MUNDO (o vale de −300 do Valdir
+  é a receber?): o robô da T04 confere na tela. Robô da T08 lançado no lugar.

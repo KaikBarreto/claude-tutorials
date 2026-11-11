@@ -1,0 +1,521 @@
+{
+ "name": "t04-cap04",
+ "title": "T4 · Cap. 4 · Dados fiscais e o campo vermelho (narração ESTIMADA 86,3 s; marcas L1..L10 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "seed": "t04-cap04",
+ "pace": 0.5,
+ "cps": 40,
+ "tail": 1.5,
+ "start": {
+  "x": 640,
+  "y": 520
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true"
+ },
+ "seedExtra": [
+  "t04/inicio",
+  "t04/apos-cap02"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "waitFor",
+   "target": {
+    "label": "E-mail"
+   },
+   "timeout": 30
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "E-mail"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "Senha",
+    "exact": true
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Rafael!",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/clientes-fornecedores"
+  },
+  {
+   "do": "waitFor",
+   "text": "Aços Quiririm Ltda",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "header button.h-8.w-8"
+   }
+  },
+  {
+   "do": "wait",
+   "seconds": 0.8
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Fornecedores",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "placeholder": "Buscar fornecedor..."
+   },
+   "timeout": 15
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Novo Fornecedor",
+    "exact": true,
+    "within": "main"
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Identificação e contato",
+   "timeout": 10
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] #name"
+   },
+   "text": "Serralheria Bem-Te-Vi"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Dados Fiscais",
+    "within": "[role=dialog]"
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Pessoa Jurídica",
+    "exact": true,
+    "within": "[role=dialog]"
+   }
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] #cpf_cnpj"
+   },
+   "text": "46280719000124"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[aria-label='Buscar dados pelo CNPJ']"
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Dados preenchidos — confira antes de salvar",
+   "timeout": 12
+  },
+  {
+   "do": "waitFor",
+   "text": "Não veio da Receita — obrigatório para emitir NF-e",
+   "timeout": 8
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "text": "Dados preenchidos — confira antes de salvar"
+   },
+   "timeout": 15
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.textContent.trim()===\"Endere\\u00e7o Fiscal\"&&e.offsetParent).sort((a,b)=>a.textContent.length-b.textContent.length||a.children.length-b.children.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-150);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/300),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()"
+  },
+  {
+   "do": "wait",
+   "seconds": 0.5
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const a=document.getAnimations().filter(x=>x.currentTime<0);a.forEach(x=>x.startTime=document.timeline.currentTime);return a.length})()"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|Algo deu errado|Falha ao|Something went wrong|inv[áa]lid/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{document.querySelectorAll('[data-sonner-toast][data-type=error]').forEach(t=>{const s='TOAST DE ERRO: '+t.textContent.trim().slice(0,90);if(!window.__avisos.includes(s)&&window.__avisos.length<10)window.__avisos.push(s)})},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0.4
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] #numero"
+   },
+   "text": "",
+   "noClick": true,
+   "optional": true,
+   "timeout": 4,
+   "at": 0.4,
+   "label": "zoom: Número vazio e o aviso vermelho (L1-L2)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] #numero"
+   },
+   "seconds": 1.4,
+   "at": 1.5,
+   "label": "o campo Número (vazio)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 5.55
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Não veio da Receita — obrigatório para emitir NF-e",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.8,
+   "at": 6.25,
+   "label": "aviso: Não veio da Receita — obrigatório para emitir NF-e",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 10.68
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 20.75
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] #numero"
+   },
+   "at": 21.28,
+   "label": "Número 418 (clique no campo)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] #numero"
+   },
+   "text": "418",
+   "cps": 40,
+   "at": 23.72,
+   "label": "Número 418",
+   "noClick": true
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{for(let i=0;i<10;i++){const el=document.querySelector(\"[role=dialog]\");const t=el?el.innerText:'';if(!t.includes(\"N\\u00e3o veio da Receita \\u2014 obrigat\\u00f3rio para emitir NF-e\"))return 'OK: sumiu '+\"N\\u00e3o veio da Receita \\u2014 obrigat\\u00f3rio para emitir NF-e\";await new Promise(r=>setTimeout(r,300));}return 'DIFERENTE: ainda aparece '+\"N\\u00e3o veio da Receita \\u2014 obrigat\\u00f3rio para emitir NF-e\"})()",
+   "label": "confere o vermelho do Número sumiu"
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 26.64
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.textContent.trim()===\"Inscri\\u00e7\\u00e3o Estadual\"&&e.offsetParent).sort((a,b)=>a.textContent.length-b.textContent.length||a.children.length-b.children.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-230);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/800),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 26.64,
+   "label": "sobe a janela até a inscrição estadual"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] #inscricao_estadual"
+   },
+   "seconds": 0.3,
+   "at": 28.63,
+   "label": "Inscrição Estadual",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] div.space-y-2:has(> label:text-is('Indicador IE *')) button[role=combobox]"
+   },
+   "seconds": 0.3,
+   "at": 30.45,
+   "label": "Indicador IE",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] div:has(> label:has-text('Regime tributário do fornecedor')) button[role=combobox]"
+   },
+   "seconds": 0.6,
+   "at": 31.52,
+   "label": "Regime tributário do fornecedor",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] div.space-y-2:has(> label:text-is('Indicador IE *')) button[role=combobox]"
+   },
+   "at": 36.89,
+   "label": "abre o Indicador IE"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Contribuinte ICMS"
+   },
+   "at": 37.32,
+   "label": "Contribuinte ICMS"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] #inscricao_estadual"
+   },
+   "at": 38.25,
+   "label": "Inscrição Estadual 688412573032 (clique no campo)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] #inscricao_estadual"
+   },
+   "text": "688412573032",
+   "cps": 40,
+   "at": 39.11,
+   "label": "Inscrição Estadual 688412573032",
+   "noClick": true
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 39.22
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] div:has(> label:has-text('Regime tributário do fornecedor')) button[role=combobox]"
+   },
+   "seconds": 1.2,
+   "at": 42.12,
+   "label": "zoom: Regime Simples Nacional e a linha da consulta (L6)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Preenchido pela consulta do CNPJ: a Receita informa que esta empresa é optante pelo Simples Nacional.",
+    "exact": false,
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.6,
+   "at": 43.94,
+   "label": "Preenchido pela consulta do CNPJ",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Simples Nacional\", \"Contribuinte ICMS\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog],[role=alertdialog]\")];const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere regime e indicador"
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 47.54
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Salvar",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 47.84,
+   "label": "Salvar"
+  },
+  {
+   "do": "waitFor",
+   "text": "Fornecedor cadastrado com sucesso!",
+   "timeout": 12
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main aside button:has-text('Serralheria Bem-Te-Vi') .cursor-help:has(svg.lucide-badge-check)"
+   },
+   "seconds": 2.0,
+   "at": 51.58,
+   "label": "sinal verde da serralheria (Pronto para emitir NF-e)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Pronto para emitir NF-e\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"body\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere tooltip Pronto para emitir NF-e"
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 54.57
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main aside button:has-text('Rogério Alves Costa') .cursor-help:has(svg[class*=triangle])"
+   },
+   "seconds": 4.0,
+   "at": 60.13,
+   "label": "triângulo do Rogério (o que falta para a NF-e)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Faltam dados para emitir NF-e para este cadastro:\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"body\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere tooltip do incompleto"
+  },
+  {
+   "do": "mark",
+   "name": "L9",
+   "at": 64.79
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button[aria-pressed]:has-text('incompletos')"
+   },
+   "at": 65.39,
+   "label": "botão incompletos"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Rogério Alves Costa\", \"Valdir Pereira\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main aside\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere só os incompletos"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main aside button:has-text('Rogério Alves Costa') p.font-medium"
+   },
+   "seconds": 1.0,
+   "at": 71.41,
+   "label": "a lista só com os incompletos",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L10",
+   "at": 71.97
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button[aria-pressed]:has-text('Mostrar todos')"
+   },
+   "at": 72.27,
+   "label": "Mostrar todos (a lista volta)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main aside button:has-text('Serralheria Bem-Te-Vi') p.font-medium"
+   },
+   "seconds": 1.0,
+   "at": 78.59,
+   "label": "a lista inteira",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 86.3
+  }
+ ]
+}

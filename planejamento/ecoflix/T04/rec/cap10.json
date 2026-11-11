@@ -1,0 +1,297 @@
+{
+ "name": "t04-cap10",
+ "title": "T4 · Cap. 10 · Lucro estimado (narração ESTIMADA 77,0 s; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "seed": "t04-cap10",
+ "pace": 0.5,
+ "cps": 40,
+ "tail": 1.5,
+ "start": {
+  "x": 700,
+  "y": 400
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true"
+ },
+ "seedExtra": [
+  "t04/inicio",
+  "t04/apos-cap09"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "waitFor",
+   "target": {
+    "label": "E-mail"
+   },
+   "timeout": 30
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "E-mail"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "Senha",
+    "exact": true
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Rafael!",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/clientes-fornecedores"
+  },
+  {
+   "do": "waitFor",
+   "text": "Aços Quiririm Ltda",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "header button.h-8.w-8"
+   }
+  },
+  {
+   "do": "wait",
+   "seconds": 0.8
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Fornecedores",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "placeholder": "Buscar fornecedor..."
+   },
+   "timeout": 15
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main aside button:has-text('Cooperativa Recomeço')"
+   }
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "main section[aria-label^='Detalhes de'][aria-label='Detalhes de Cooperativa Recomeço']"
+   },
+   "timeout": 15
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const a=document.getAnimations().filter(x=>x.currentTime<0);a.forEach(x=>x.startTime=document.timeline.currentTime);return a.length})()"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|Algo deu errado|Falha ao|Something went wrong|inv[áa]lid/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{document.querySelectorAll('[data-sonner-toast][data-type=error]').forEach(t=>{const s='TOAST DE ERRO: '+t.textContent.trim().slice(0,90);if(!window.__avisos.includes(s)&&window.__avisos.length<10)window.__avisos.push(s)})},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0.4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[aria-label='Seções da ficha'] button:has-text('Lucro estimado')"
+   },
+   "at": 0.63,
+   "label": "aba Lucro estimado"
+  },
+  {
+   "do": "waitFor",
+   "text": "Margem estimada por material",
+   "timeout": 12
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main section[aria-label='Detalhes de Cooperativa Recomeço'] button:has-text('Este mês')"
+   },
+   "at": 7.01,
+   "label": "abre o período (Este mês)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Mês passado",
+    "exact": true
+   },
+   "at": 7.87,
+   "label": "Mês passado"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "main section[aria-label='Detalhes de Cooperativa Recomeço'] tr:has-text('Alumínio latinha')"
+   },
+   "timeout": 12
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"R$ 18.755,00\", \"R$ 5.998,00\", \"24,2%\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main section[aria-label='Detalhes de Cooperativa Recome\\u00e7o']\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere cartões de outubro"
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 10.25
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main section[aria-label='Detalhes de Cooperativa Recomeço'] tr:has-text('Alumínio latinha') td:nth-child(4)"
+   },
+   "seconds": 0.8,
+   "at": 12.77,
+   "label": "zoom: linhas latinha e papelão; latinha: Preço Médio Compra R$ 6,20",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main section[aria-label='Detalhes de Cooperativa Recomeço'] tr:has-text('Alumínio latinha') td:nth-child(6)"
+   },
+   "seconds": 0.8,
+   "at": 14.98,
+   "label": "latinha: Preço Médio Venda R$ 7,40",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main section[aria-label='Detalhes de Cooperativa Recomeço'] tr:has-text('Alumínio latinha') td:nth-child(7)"
+   },
+   "seconds": 1.4,
+   "at": 18.09,
+   "label": "latinha: Margem R$/kg R$ 1,20",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 22.52
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main section[aria-label='Detalhes de Cooperativa Recomeço'] tr:has-text('Papelão') td:nth-child(8)"
+   },
+   "seconds": 1.8,
+   "at": 29.21,
+   "label": "papelão: Margem Total R$ 2.100,00",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 31.37
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Margem estimada total",
+    "exact": true,
+    "within": "main section[aria-label='Detalhes de Cooperativa Recomeço']"
+   },
+   "seconds": 1.8,
+   "at": 33.13,
+   "label": "cartão Margem estimada total R$ 5.998,00",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 40.22
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Estimativa — sucata é fungível; a margem é calculada sobre o preço médio de venda do material no período, não é lucro realizado.",
+    "exact": false,
+    "within": "main section[aria-label='Detalhes de Cooperativa Recomeço']"
+   },
+   "seconds": 2.6,
+   "at": 46.01,
+   "label": "zoom: aviso âmbar Estimativa — sucata é fungível",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 48.99
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 62.4
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 76.96
+  }
+ ]
+}
