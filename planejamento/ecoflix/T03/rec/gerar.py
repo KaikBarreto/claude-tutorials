@@ -478,9 +478,8 @@ def cap00():
     """Abertura: Dashboard; ilustração do cardápio (L1, L2); menu Materiais > Estoque (L3); cartão "Antes" e o menu lateral recolhido (L4)."""
     c = Cap(0, setup_login() + vai('/materiais', 'Gerencie os materiais do estoque') + vai('/dashboard', 'Olá, Rafael!'), start=(700, 140))
     # L1 e L2: a ilustração do cardápio cobre a janela; o robô fica parado no Dashboard
-    # folgas medidas no ensaio (tAct - tStart): 1,4 s no 1º gesto do capítulo, 1,1 s no submenu que ainda está abrindo
-    c.click(BTN('Materiais'), w=(3, 'Materiais,', None, 1.4), label='menu Materiais (abre o grupo)')
-    c.click(SEL("a[href='/materiais']"), w=(3, 'Estoque.', None, 1.1), label='Estoque (submenu)')
+    c.click(BTN('Materiais'), w=(3, 'Materiais,'), label='menu Materiais (abre o grupo)')
+    c.click(SEL("a[href='/materiais']"), w=(3, 'Estoque.'), label='Estoque (submenu)')
     c.marca(4)  # a tela carrega já na L4
     c.waitfor(text='Gerencie os materiais do estoque', timeout=15)
     c.confere('main', ['Estoque', 'Tabelas de Preço', 'Principal', 'Movimentar estoque', 'Lista de Materiais'], 'tela Estoque carregada')
@@ -784,15 +783,10 @@ def cap07():
     c.confere_campos(['44,2'], 'Valor/kg 44,20', escopo='main')
     c.click({'placeholder': 'Escreva o nome ou código do material'}, w=(10, 'vinte.', None, -0.1), label='campo do material de novo')
     c.type({'placeholder': 'Escreva o nome ou código do material'}, 'bronze', w=(11, 'Já', None, 0.3), clicar=False, clear=True, cps=30, label='troca para bronze')
-    c.hover(OPT('Bronze', exact=False), 0.4, w=(11, 'bronze,', None, 0.55), label='Bronze na lista')
-    # o aviso vive 2 s e o clique de verdade só devolve depois que a página trata a escolha: no ensaio com a máquina cheia (11/11) o aviso
-    # sumiu antes de o cursor chegar. O cursor desce antes ao lugar do aviso e a escolha sai por JS (o item do cmdk aceita .click()):
-    # o aviso sobe embaixo do cursor, um passo curto do mouse em cima dele e o sonner segura o aviso até "aplicado."
+    c.click(OPT('Bronze', exact=False), w=(11, 'bronze,', None, 0.3), label='Bronze')
+    # o aviso vive 2 s: o cursor vai direto a ele, por coordenada (sem esperar a página), e fica em cima (o sonner pausa) até "aplicado."
     ini = round(c.W(11, 'bronze,') + 1.0, 2)
-    c.rolar(0, ponto=(990, 748), duration=0.35, after=0, label='cursor no lugar do aviso (embaixo à direita)')
-    c.ev("(()=>{const o=[...document.querySelectorAll('[role=option]')].filter(e=>e.offsetParent!==null&&e.innerText.includes('Bronze'))[0];"
-         "if(!o)return 'SEM ALVO: opção Bronze';o.click();return 'ok'})()", label='escolhe Bronze (clique por JS, com o cursor já no lugar do aviso)')
-    c.rolar(0, ponto=(1000, 752), duration=0.12, after=0, label='o mouse mexe em cima do aviso (o sonner pausa)')
+    c.rolar(0, ponto=(990, 748), duration=0.3, after=0, label='cursor no lugar do aviso (embaixo à direita)')
     c.hover({'text': 'Preço especial aplicado para Bronze'}, round(c.W(11, 'aplicado.') + 0.6 - ini - 0.55, 2), timeout=6,
             label='aviso Preço especial aplicado (o mouse segura o aviso) (zoom: Valor/kg 30,50 com o aviso)')
     c.confere('body', ['Preço especial aplicado para Bronze'], 'aviso Preço especial aplicado para Bronze')
@@ -805,13 +799,12 @@ def cap08():
     """Movimentar, transferir e zerar: saída de 2 kg do radiador, (ilustração L4) transferência de 8 kg para o Ferro misto, Zerar só mostrado."""
     c = Cap(8, setup_estoque())
     c.hover(BTN('Movimentar estoque'), 1.2, w=(1, 'ajuste'), label='Movimentar estoque')
-    # L2 diz 4 gestos em 4,2 s depois que a janela abre (~1 s): Movimentar na marca, Saída e material em sequência, o "2" em "janela"
     c.click(BTN('Movimentar estoque'), w=(2, 'Em', None, 0.9), label='Movimentar estoque')
     c.waitfor(text='Registre uma entrada ou saída manual', timeout=8)
-    c.click(BTN('Saída', within=DLG), primeiro=True, label='Saída')
-    c.type({'placeholder': 'Escreva o nome ou código do material'}, 'radiador', cps=40, label='Material: radiador')
+    c.click(BTN('Saída', within=DLG), w=(2, 'escolho'), primeiro=True, label='Saída')
+    c.type({'placeholder': 'Escreva o nome ou código do material'}, 'radiador', w=(2, 'radiador'), cps=40, label='Material: radiador')
     c.click(OPT('Radiador de cobre', exact=False), label='Radiador de cobre')
-    c.type(SEL('#movement-quantity'), '2', w=(2, 'janela'), label='Quantidade 2')
+    c.type(SEL('#movement-quantity'), '2', w=(2, 'dois'), label='Quantidade 2')
     c.confere('dlg', ['Estoque de Radiador de cobre', 'Estoque atual', '120', '2 Kg', 'Após a movimentação', '118'], 'antes 120, -2 Kg, depois 118')
     c.hover(PD('Após a movimentação'), 2.0, w=(2, 'antes'), label='Estoque de Radiador de cobre: 120 > -2 Kg > 118 (zoom)')
     c.type(SEL('#movement-description'), 'Ajuste de inventário', w=(3, 'escrevo'), cps=40, label='Descrição: Ajuste de inventário')
@@ -884,7 +877,7 @@ def cap10():
     c.waitfor(text='Confirmar Exclusão', timeout=8)
     c.confere('dlg', ['Radiador de cobre', 'Código: 70', 'Atenção: Este material possui 110 Kg em estoque.'], 'aviso 110 Kg em estoque')
     c.hover(PD('Atenção: Este material possui'), 2.4, w=(2, 'cento'), label='aviso: possui 110 Kg em estoque (zoom)')
-    c.click(BTN('Sim, Excluir'), w=(3, 'Sim,', None, 1.4), label='Sim, Excluir')   # 1,4 s até o clique, medido no ensaio
+    c.click(BTN('Sim, Excluir'), w=(3, 'Sim,'), label='Sim, Excluir')
     c.waitfor(text='excluído', timeout=10)
     # o aviso (5 s) sobe embaixo à direita e, logo depois da exclusão, a página fica ocupada uns segundos (o app recalcula o estoque):
     # o Playwright não achava o "Desfazer" a tempo (ensaios de 10 e 11/11). O cursor vai antes ao lugar do botão, por coordenada (sem
