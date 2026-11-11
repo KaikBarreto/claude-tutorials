@@ -547,3 +547,9 @@ Decisões:
   T12 copiaram uma pilha de chapas nas páginas; perguntado ao agente do kit).
 - 11/11 16:4x **Robôs da T18 e T25 lançados** (portas 54318 e 54325; T25 confere antes no `eco.mjs` como o app conta a
   compra estornada e a compensação em novembro). Falta o da T05, com o agente das cenas de Windows.
+- 11/11 16:4x **Retomada 8/20** (lembrete): trabalho andando; app (8080) e Supabase falso (54340) no ar; disco 4,8 GB livres;
+  17 agentes rodando e 12 robôs esperando a trava pesada (53 na fila). **Kit 3D com materiais reconhecíveis no lugar desde
+  16:33** (latinha com faixa de cor, PET transparente e verde, ferro e chapa enferrujados, cobre em fio e tubo, papelão,
+  terra, borracha, plástico, `bigBag`; mesma API, os montes caem nos mesmos lugares). As frentes 3D foram avisadas para
+  conferir e fazer as prévias com `--dsf 1`; o agente da T11/T12 foi retomado para as prévias dele. O `chaparia.js` não
+  foi apagado pelo agente do kit (perguntado à frente T17/T18).
