@@ -130,7 +130,7 @@
     "exact": true,
     "within": "main"
    },
-   "at": 2.08,
+   "at": 1.68,
    "label": "Novo Fornecedor"
   },
   {
@@ -143,14 +143,24 @@
    "target": {
     "selector": "[role=dialog] #name"
    },
-   "at": 2.82,
+   "at": 4.32,
    "label": "Nome Serralheria Bem-Te-Vi (clique no campo)"
   },
   {
    "do": "eval",
    "js": "(()=>{const e=document.activeElement;if(!e||!/^(INPUT|TEXTAREA)$/.test(e.tagName))return 'SEM ALVO (nada em foco)';document.execCommand('insertText',false,\"Serralheria Bem-Te-Vi\");return e.value})()",
-   "at": 4.98,
+   "at": 5.94,
    "label": "Nome Serralheria Bem-Te-Vi (colado)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Dados Fiscais",
+    "within": "[role=dialog]"
+   },
+   "at": 7.69,
+   "label": "aba Dados Fiscais"
   },
   {
    "do": "mark",
@@ -160,22 +170,12 @@
   {
    "do": "click",
    "target": {
-    "role": "tab",
-    "name": "Dados Fiscais",
-    "within": "[role=dialog]"
-   },
-   "at": 11.24,
-   "label": "aba Dados Fiscais"
-  },
-  {
-   "do": "click",
-   "target": {
     "role": "button",
     "name": "Pessoa Jurídica",
     "exact": true,
     "within": "[role=dialog]"
    },
-   "at": 12.52,
+   "at": 12.22,
    "label": "Pessoa Jurídica"
   },
   {
@@ -183,8 +183,8 @@
    "target": {
     "selector": "[role=dialog] #cpf_cnpj"
    },
-   "at": 14.35,
-   "label": "CNPJ 46.280.719/0001-24 (clique no campo)"
+   "at": 13.66,
+   "label": "zoom: CNPJ 46.280.719/0001-24 (L2; colado: 14 dígitos a ~0,16 s não cabem na frase) (clique no campo)"
   },
   {
    "do": "mark",
@@ -192,15 +192,10 @@
    "at": 15.53
   },
   {
-   "do": "type",
-   "target": {
-    "selector": "[role=dialog] #cpf_cnpj"
-   },
-   "text": "46280719000124",
-   "cps": 40,
+   "do": "eval",
+   "js": "(()=>{const e=document.activeElement;if(!e||!/^(INPUT|TEXTAREA)$/.test(e.tagName))return 'SEM ALVO (nada em foco)';document.execCommand('insertText',false,\"46280719000124\");return e.value})()",
    "at": 15.58,
-   "label": "CNPJ 46.280.719/0001-24",
-   "noClick": true
+   "label": "zoom: CNPJ 46.280.719/0001-24 (L2; colado: 14 dígitos a ~0,16 s não cabem na frase) (colado)"
   },
   {
    "do": "eval",
@@ -308,8 +303,8 @@
   },
   {
    "do": "eval",
-   "js": "(async()=>{const esp=[\"12062-150\", \"RUA DAS PALMEIRAS\", \"JARDIM SANTA LUZIA\"];let out='';for(let i=0;i<12;i++){const v=[...document.querySelectorAll(\"[role=dialog]\"+' input, '+\"[role=dialog]\"+' textarea')].map(e=>e.value).join(' | ');const falta=esp.filter(e=>!v.includes(e));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+v.slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
-   "label": "confere CEP, rua e bairro da busca"
+   "js": "(async()=>{const esp=[\"12062150\", \"RUA DAS PALMEIRAS\", \"JARDIM SANTA LUZIA\"];let out='';for(let i=0;i<12;i++){const v=[...document.querySelectorAll(\"[role=dialog]\"+' input, '+\"[role=dialog]\"+' textarea')].map(e=>e.value).join(' | ');const falta=esp.filter(e=>!v.includes(e));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+v.slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere CEP (sem máscara: achado), rua e bairro da busca"
   },
   {
    "do": "mark",
@@ -337,20 +332,9 @@
    "target": {
     "selector": "[role=dialog] #phone"
    },
-   "seconds": 0.15,
+   "seconds": 0.6,
    "at": 35.2,
-   "label": "Telefone (12) 90000-2742 (da busca)",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "[role=dialog] #email"
-   },
-   "seconds": 0.15,
-   "at": 36.19,
-   "label": "E-mail (da busca)",
+   "label": "Telefone e E-mail (da busca)",
    "optional": true,
    "timeout": 4
   },
@@ -359,7 +343,7 @@
    "target": {
     "selector": "[role=dialog] #name"
    },
-   "seconds": 1.4,
+   "seconds": 0.8,
    "at": 37.1,
    "label": "Nome: Serralheria Bem-Te-Vi (o digitado)",
    "optional": true,
@@ -396,8 +380,8 @@
    "target": {
     "selector": "[role=dialog] #numero"
    },
-   "seconds": 1.06,
-   "at": 46.34,
+   "seconds": 0.5,
+   "at": 45.43,
    "label": "o campo Número, vermelho (sem zoom)",
    "optional": true,
    "timeout": 4

@@ -502,3 +502,8 @@ Decisões:
   450/120 da T4 cap11; papelão −370 kg de 05/11 16:10 a 06/11 10:45; `lib/eco.mjs` soma a compra estornada e a
   compensação: novembro com compras de 19.171,05) — cada robô foi avisado do seu. **Os 16 robôs foram liberados para o
   ensaio completo**; robôs da T15, T16 e T17 lançados.
+- 11/11 14:3x **Piloto 3D pronto** (T07 cap06, three.js r170 local, argila/low-poly, câmera contínua; mesma API, âncoras e
+  números da cena 2D; em `T07/cenas3d/` com uma cópia do renderizador que liga `--allow-file-access-from-files` para o import
+  do módulo em `file://`). Custo: ~1,0 s por quadro em 2560×1600 (3,5× o 2D): ~17 min por cena de 36 s. Vídeo e folha
+  mandados ao Kaik; esperando ele dizer quais conceitos ganham 3D (o agente sugere T00 caminho do pátio, T08/T12 caminhão e
+  tara, T11 latinha e fardo, T10/T04 pilha e fardo, T05 EcoTray, T16-T18 carga e percurso; metáforas da T19, T15 e T26).

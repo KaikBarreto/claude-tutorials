@@ -43,7 +43,7 @@ export const naJanela = (r, j) => {
 /** Pedidos concluídos (compra ou venda) da empresa na janela. */
 export function pedidos(store, cid, tipo, j) {
   const t = tipo === 'purchase' || tipo === 'compra' ? 'purchases' : 'sales';
-  return store.rows(t).filter((p) => p.company_id === cid && p.status === 'completed' && (!j || naJanela(p, j)));
+  return store.rows(t).filter((p) => p.company_id === cid && p.status === 'completed' && !p.reverted_at && (!j || naJanela(p, j)));
 }
 /** Itens de uma lista de pedidos: Map pedidoId -> [itens]. */
 export function itensDe(store, tipo, lista) {
@@ -126,7 +126,7 @@ export function saldoCaixa(store, caixa) {
 export function lancamentosResultado(store, cid, j) {
   const out = [];
   for (const c of store.rows('cash_transactions')) {
-    if (c.company_id !== cid || c.excluded_from_dre || c.order_id || c.partner_id || !naJanela(c, j)) continue;
+    if (c.company_id !== cid || c.excluded_from_dre || c.order_id || c.partner_id || c.reversal_for_order_id || !naJanela(c, j)) continue;
     if (c.type === 'expense' || c.type === 'withdrawal') out.push({ ...c, valor: num(c.amount), natureza: 'expense' });
     else if (c.type === 'deposit') out.push({ ...c, valor: num(c.amount), natureza: 'income' });
   }
