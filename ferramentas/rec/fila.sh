@@ -1,9 +1,11 @@
 #!/usr/bin/env bash
 # Fila justa da trava pesada. O flock acorda quem espera em ordem quase aleatória: com 100 tarefas na fila (EcoFlix,
 # 11/11), uma tarefa esperava mais de 2 h sem nunca ser a escolhida e morria no prazo. Aqui cada tarefa tira uma senha e
-# espera a vez dela: a fila anda pela prioridade (menor primeiro; use o número da aula) e, na mesma prioridade, pela
-# ordem de chegada. Na vez, pega a trava de verdade (o mesmo flock de quem ainda chama o flock direto), a senha sai e o
-# comando roda. Senha de tarefa que morreu sai sozinha.
+# espera a vez dela: a fila anda pela hora de chegada mais 3 min por nível de prioridade (use o número da aula: a T01 passa
+# à frente da T15 que chegou até 42 min antes, mas ninguém espera mais de ~80 min a mais por causa da prioridade; com a
+# prioridade pura, a T00 e a T01, que voltam à fila logo depois de cada tarefa, deixavam as outras paradas). Na vez, pega
+# a trava de verdade (o mesmo flock de quem ainda chama o flock direto), a senha sai e o comando roda. Senha de tarefa que
+# morreu sai sozinha.
 # uso: bash rec/fila.sh [--prio NN] [--trava ARQ] -- comando arg...     (padrão: prioridade 50, $TUT_HOME/.heavy.lock)
 #      bash rec/fila.sh --ver                                            (a fila agora, na ordem em que vai andar)
 set -u
@@ -29,7 +31,8 @@ while [ $# -gt 0 ]; do
 done
 [ $# -gt 0 ] || { echo "uso: bash rec/fila.sh [--prio NN] -- comando ..." >&2; exit 2; }
 mkdir -p "$D"
-SENHA="$(printf '%02d' "$((10#$PRIO))")-$(date +%s%N)-$$"
+# "50-" deixa na frente as senhas do formato antigo (NN-hora-pid, prioridade pura) até elas acabarem
+SENHA="50-$(printf '%020d' "$(( $(date +%s%N) + 10#$PRIO * 180000000000 ))")-$$"
 printf '%s\n' "$*" > "$D/$SENHA"
 trap 'rm -f "$D/$SENHA"' EXIT
 trap 'rm -f "$D/$SENHA"; exit 143' INT TERM

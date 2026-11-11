@@ -623,3 +623,8 @@ Decisões:
   por `transform` e com pulsos que se somam; classe de grupo do kit com nome único (a "g" colidia, círculo gigante no tema
   do Cato); `descarrega` sem as peças 16 px abaixo do chão; exemplo "Tara e peso líquido" do kit sem chamar o caminhão vazio
   de tara (a T12, cadastro de veículo, fica como está). No kit e nas aulas que copiaram o código, conferindo antes e depois.
+- 11/11 20:3x **Fila com envelhecimento** (aviso do robô da T15: desde 19:44 só a T00 e a T01 rodavam, voltando à fila
+  logo depois de cada tarefa): a ordem agora é a hora de chegada + 3 min por nível de prioridade (a aula de número baixo
+  passa à frente, mas ninguém espera mais de ~80 min a mais). Senha nova com prefixo "50-": as antigas (prioridade pura)
+  andam primeiro, em ordem de aula, até acabarem; script trocado com `mv` (quem já roda segue no arquivo antigo). Conferido:
+  antigo E20 primeiro, depois C0, B15, D15.
