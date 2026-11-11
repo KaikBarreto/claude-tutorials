@@ -9,6 +9,15 @@ no gesto. Nada aqui foi aplicado: `roteiro.md` e `tts_textos.py` ficam para a re
 | 03 | 5 | Lá embaixo, no menu, fica o card com o seu nome e o nome da empresa. O selo Master é de quem administra a conta. | Lá embaixo, no menu, fica o card com o seu nome e o nome da empresa. | O selo "MASTER" não aparece no card na 1.59.154 (defeito, ver Achados 1). Fala que vale nas duas versões. |
 | 03 | 6 | Clicando nele, abre esse menu. Em Perfil ficam a sua foto e o seu nome. | Clicando nele, abre esse menu. Em Meu Perfil ficam a sua foto e o seu nome. | O item do menu é "Meu Perfil". |
 
+## Roteiro × mundo B (para a revisão; a fala não muda)
+
+- **Bairro:** a coluna Tela do cap06 diz "Jardim Vale do Sol"; o mundo B (`MUNDO_LINHA_DO_TEMPO.md`, seção 3) diz "Parque
+  Industrial". O robô segue B (a busca do CEP 12086-410 devolve Parque Industrial), porque o T1 cria a identidade que as outras
+  aulas mostram. A fala não diz o bairro.
+- **E-mail da empresa:** B (seção 3) traz `rafael@reciclavalemetais.example`; o cap06 L2 troca, na tela e na fala, para
+  `contato@reciclavalemetais.example`. O robô segue a fala; a semente `apos-cap06` sai com `contato@`. Decidir qual vale em B.
+- **Frase do comprovante:** a de 68 caracteres, sem sábado (junção); o contador mostra "68/2000 caracteres".
+
 ## Achados do app
 
 1. **Selo "MASTER" some do card da conta.** `components/layout/SidebarMenuContent.tsx:127` busca o perfil com `role` na chave

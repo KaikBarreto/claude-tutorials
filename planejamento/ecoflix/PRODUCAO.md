@@ -400,3 +400,8 @@ Decisões:
   **Para o robô da T21**: o `T21/plano.md` (respostas R1 a R9) ainda tem os números antigos e "Conta Reserva" (o mundo diz
   "Conta Secundária"): atualizar antes do robô da T21. Mais itens do kit para a unificação (etiquetas, escala em `svg()`,
   janela pelas âncoras, fundo opaco para cenas seguidas, balão de conversa, desenhos). Robô da T19 lançado no lugar.
+- 11/11 12:1x **Ilustrações T01 e T02 prontas** (12 + 9 cenas). **Para a revisão**: não existe logo da Recicla Vale; a T01
+  desenhou um símbolo fictício (caps 00, 05, 06 e 08): usar o MESMO logo do robô da T01 (o que ele sobe na tela) nas
+  cenas e no mundo. "Excluir Conta" vem de `config/routes.ts:245` (fora do inventário). Kit: `pulse()` chamado duas vezes no
+  mesmo quadro apaga o primeiro (o `CAPS[1]` do kit perde um pulso; corrigir na unificação). `render_cenas.cjs` com
+  `--stills` vazio renderizava o MP4 inteiro: agora recusa. Robô da T27 lançado no lugar.

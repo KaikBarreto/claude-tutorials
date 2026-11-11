@@ -605,7 +605,6 @@ def cap05():
     c.waitfor(text='Configurar Em contato', timeout=8)
     c.click(TAB('Regras'), at=c.A(1, 'Regras.', 0.8, nth=1), label='aba Regras')
     c.waitfor(text='Antes de sair desta etapa', timeout=8)
-    c.hover(TXT('Antes de sair desta etapa'), 0.8, label='Antes de sair desta etapa')
     c.mark(2)
     c.cursor((640, 300), at=c.A(2, 'Pensa', 0.2), label='cursor descansa (ilustração)')
     c.mark(3)

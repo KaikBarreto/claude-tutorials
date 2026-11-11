@@ -12,6 +12,8 @@ const HERE = __dirname;
 const [cap, tempos, saida] = process.argv.slice(2);
 const opt = (k, d) => { const i = process.argv.indexOf(k); return i > 0 ? process.argv[i + 1] : d; };
 const FPS = 30, CAUDA = parseFloat(opt('--cauda', '1.2')), STILLS = opt('--stills', null);
+// --stills sem instantes (lista vazia por engano) renderizaria o MP4 inteiro sob a trava: recusa.
+if (process.argv.includes('--stills') && !(STILLS || '').trim()) { console.error('render_cenas: --stills sem instantes'); process.exit(2); }
 const HTML = path.resolve(opt('--html', path.join(HERE, 'cenas.html')));
 const LUCIDE = path.join(path.dirname(require.resolve('lucide-static/package.json', { paths: [HERE, path.dirname(HTML)] })), 'icons');
 // ícones: todo texto entre aspas na página que for nome de um ícone do lucide (pega também os que vêm de listas)
