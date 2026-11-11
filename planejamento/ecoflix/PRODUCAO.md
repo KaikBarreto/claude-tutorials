@@ -584,3 +584,7 @@ Decisões:
   instante do clique na voz de verdade). Mudanças do robô levadas à skill: `ferramentas/rec/recorder/runner.mjs` e
   `ecotray-falso.mjs` (passos `balancas`, `mudo` e `comandos` do EcoTray falso; só acréscimos, padrão igual ao de antes) e
   a correção do upload multipart no `net.mjs` (T14/T01, do dia 10); o `$TUT_HOME/rec` e a skill estão iguais de novo.
+- 11/11 19:3x **Prévias 3D da T11 e T12 prontas** (kit novo, `--dsf 1`). Na revisão: T12 cap08 deixava "TARA 6.380 kg" no
+  mostrador com o caminhão cheio (lia como se o cheio pesasse 6.380; a fala diz "pesa mais") e T11 cap02 apontava "Entra /
+  Alumínio latinha" para o chão vazio depois da prensa. Agente retomado: carregado sobe para 9.460 kg e a diferença
+  "peso do material" 3.080 kg (números do mundo: o FKD2E41 do T08), pilha de latinha fica no "Entra". Mando ao Kaik depois.
