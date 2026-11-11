@@ -19,3 +19,6 @@ As do robô ficam em `Tnn/propostas_fala.md`; estas vieram dos agentes de ilustr
 | T05 | cap04 | A hora do cupom de teste na cena (08:41:07, constante `QUANDO` no `CAPS[4]`) tem de bater com a cena de Windows 4. | Conferir quando gravar a T05. |
 | T27/T01 | — | O logo fictício da Recicla Vale tem texto azul-escuro em fundo transparente: lê mal no menu escuro do app. Fazer uma versão clara para fundo escuro (e as cenas da T27 embutem o logo: se o da T01 mudar, embutir de novo). | Logo do mundo. |
 | T05 | cap06, linha 10 | A troca "asas"→"Asaas" pegava dentro de "casas" (a legenda sairia "cAsaas decimais"): corrigido no `proc.py` e no `tempos_estimados.py` (só palavra inteira). | Resolvido. |
+| T15 | cap10 | Os R$ 4.250,00 vêm do roteiro e não do mundo. | Conferir com a semente nova. |
+| T22 | cap10 | "Latinha prensada" vem do roteiro e não está no MUNDO. | Conferir com a semente nova. |
+| Kit | `descarrega` | Fora da balança, deixa as peças 16 px abaixo do chão. | Corrigir na unificação do kit. |

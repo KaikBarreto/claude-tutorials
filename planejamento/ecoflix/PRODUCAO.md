@@ -460,3 +460,5 @@ Decisões:
 - 11/11 13:0x **Estilo saturado pronto em T00, T01 e T02** (~22, 14 e 20 ajustes; "desligado" em cinza #9CA3AF com ícone
   branco que acende em verde ou âmbar). Ficaram como estavam: os cartões "Ligada/Desligada" da T01, os valores "R$ ••••"
   coloridos e o realce de texto `.hl` da T02 (texto sobre branco, não selo); se o Kaik quiser, viram chip. Folhas mandadas.
+- 11/11 13:0x **Ilustrações T15 e T22 prontas no estilo novo** (9 + 7 cenas; a junção mudou falas da T22 e as cenas foram
+  refeitas). Folhas mandadas ao Kaik. Faltam as ilustrações de T20+T26, o Cato (T21) e o estilo saturado de T07-T19 e T25.
