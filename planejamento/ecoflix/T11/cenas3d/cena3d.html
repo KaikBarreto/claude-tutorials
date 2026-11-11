@@ -142,16 +142,16 @@ CAPS[2] = () => {
 // 1 "Quando a latinha passa no ímã, as latas de aço que vieram no meio saem. Elas viram chaparia, que também tem valor. Mas quanto
 //    sai, só dá pra saber depois de separar."
 CAPS[4] = () => {
-  const BH = .9, M0 = -2.4, MP = 7.2, YM = 2.7, FX = 4.5, YPON = YM - .66 - .15;
+  const BH = .9, M0 = -2.4, MP = 6.4, YM = 2.7, FX = 3.7, YPON = YM - .66 - .15;
   chaoPatio(CENA, [1.5, 0, 0], { c: 28, l: 11, passo: 2.6 });
-  esteira(CENA, [-2, 0, 0], { c: 9.6, l: 1.25, h: BH });
+  esteira(CENA, [-1.8, 0, 0], { c: 8.2, l: 1.25, h: BH });
   const pS = [[M0 - .5, BH + .15, 0], [M0 + .5, BH + .15, 0]], Lac = latinhas(CENA, pS, { s: 1, cores: AÇO });
-  const pB = []; for (let x = -6.2; x < 2.5; x += .5) for (const z of [-.33, 0, .33]) { const px = x + ri(-.06, .06), pz = z + ri(-.04, .04);
+  const pB = []; for (let x = -5.6; x < 2.0; x += .5) for (const z of [-.33, 0, .33]) { const px = x + ri(-.06, .06), pz = z + ri(-.04, .04);
     if (Math.abs(pz) < .2 && pS.some(s => Math.abs(s[0] - px) < .42)) continue; if (rng() < .22) continue; pB.push([px, BH + .15, pz]); }
   const Lb = latinhas(CENA, pB, { s: 1, r: () => [0, ri(0, 2 * PI), 0] }), sB = tam(pB.length, 1.4, 1.6);
   const gF = grupo(CENA, [FX + .2, 0, 0]); palete(gF); fardoLatinhas(gF, [0, .115, 0]);
   const CH = grupo(CENA, [MP, 0, 0]); chaparia(CH, [0, 0, 0], { c: 1.7, l: 1.1, n: 5 });
-  const IM = ima(CENA, [M0, YM, 0]); trilho(CENA, -4.3, 8.9, YM + 1.39, 0);
+  const IM = ima(CENA, [M0, YM, 0]); trilho(CENA, -4.3, 7.9, YM + 1.39, 0);
   const tit = titulo('Ficha técnica', 'O coproduto');
   const tFd = chip('Fardo de alumínio', 'v'), tCh = chip('Chaparia', 'a');
   const valor = el('<div class="ab" style="width:44px;height:44px;border-radius:50%;background:var(--as);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;color:#fff;border:2px solid #fff;box-shadow:0 4px 12px rgba(16,24,40,.16)">R$</div>');
@@ -163,10 +163,10 @@ CAPS[4] = () => {
         tq = W(1, 'quanto'), tdp = W(1, 'depois');
   const tDrop = Math.max(tch - .45, tsa + 1.0), tLand = tDrop + .5, tVolta = tsa + 2.2;
   const aterra = [[MP - .3, .52, .12], [MP + .35, .52, -.1]], rAt = [[0, .6, PI / 2], [0, -.5, PI / 2 + .2]];
-  camera([[0, { x: 1.1, y: 1.9, z: 0, d: 21.5, az: .08, el: .27, oy: 20 }], [tdp + 2.5, { x: 1.3, y: 1.9, z: 0, d: 21, az: .07, el: .27, oy: 20 }, 'lin']]);
+  camera([[0, { x: .8, y: 1.8, z: 0, d: 24, az: .08, el: .27, oy: 60 }], [tdp + 2.5, { x: .9, y: 1.8, z: 0, d: 23.5, az: .07, el: .27, oy: 60 }, 'lin']]);
   return t => {
     GL.style.opacity = eo(pr(t, tl - .35, .5)).toFixed(3);
-    aplica(Lb, i => { const q = eo(pr(t, tl - .1 + (pB[i][0] + 6.2) * .045, .45)); return [pB[i][0], pB[i][1] + .5 * (1 - q), pB[i][2], 0, i, 0, ...Array(3).fill(sB[i] * Math.max(q, 1e-4))]; });
+    aplica(Lb, i => { const q = eo(pr(t, tl - .1 + (pB[i][0] + 5.6) * .045, .45)); return [pB[i][0], pB[i][1] + .5 * (1 - q), pB[i][2], 0, i, 0, ...Array(3).fill(sB[i] * Math.max(q, 1e-4))]; });
     // posição do ímã: sobre a esteira; leva as latas até o monte ("saem"), solta e volta
     const ida = eio(pr(t, tsa - .1, 1.0)), volta = eio(pr(t, tVolta, 1.3)), Mx = lerp(lerp(M0, MP, ida), M0, volta);
     IM.position.x = Mx; cresce(IM, t, tim - .15, .55, 0); IM.rotation.y = 0;
