@@ -39,6 +39,7 @@ as gravações). Cada item diz a aula em que apareceu. **No fim da produção, v
 - **Ticket "Sem valores" mostra preço na Pesagem avançada** (T8): a janela exibe Valor/Kg (R$ 6,20) e Valor estimado
   num ticket sem valores.
 - **Aba nova de ticket mostra "#1" por uns 4 s** antes do número certo (#58) (T8).
+- **"Rascunho encontrado" depois de salvar** (T4): o cadastro já salvo ainda oferece o rascunho ao abrir de novo.
 
 ## 2. Melhorias de uso
 - **Produção diz "peça" em produto vendido por quilo** (T11).
@@ -57,6 +58,9 @@ as gravações). Cada item diz a aula em que apareceu. **No fim da produção, v
 - **Usuários em 1280x800** (T2): o painel de detalhe passa da borda da tela e o rodapé da janela de limite de usuários
   fica colado nela.
 - **Compra e lista de tickets cortadas em 1280 px** (T8): com o menu lateral aberto, as duas telas passam da borda.
+- **Ficha do cliente/fornecedor em 1280 px** (T4): as 7 abas não cabem na largura.
+- **CEP sem máscara** no cadastro (T4).
+- **Dica da lupa é só o `title` do navegador** (T4): demora a aparecer e não segue o estilo do app.
 
 ## 3. Textos desatualizados (Central de Ajuda, Guia de Instalação e a fonte da Trilha EcoFlix)
 - **Guia de Instalação do EcoTray** ainda fala em arquivo ZIP (T5).

@@ -730,3 +730,11 @@ Decisões:
   depois que ele confirmar.
 - 11/11 23:5x **Robô da T05**: cap00 e cap04 aprovados no rápido; cap04 e `cap04w` vão ao completo (prever 3,4 s no
   "Testar" com a máquina cheia); relógio do cupom calibrado (`SETUP_S=10`); cap01 na fila, um por chamada.
+- 11/11 23:5x **Robô da T04 (parcial) retomado** um item por chamada: rápido aprovado em 00, 01 e 03; faltam 02 (agora
+  apaga o rascunho), 04-13 (o 09 tinha o menu aberto: setup corrigido) e os completos 03, 09, 12 (toast ou menu junto da
+  fala). Handlers: cnpj-lookup, ibge-cities, set_partner_labels, link_customer_supplier, update_balance,
+  create_manual_bank_transaction, get_supplier_profit_estimate, list_top_clients/suppliers_paginated,
+  get_clients_suppliers_inactive_count; hooks de suppliers/customers (código sequencial e espelho do cadastro duplo);
+  sementes `t04/inicio`, `apos-cap02/04/05/06/09`. Fala: cap03 "A tela pede pra conferir…" vai para a L4 (o toast some
+  antes da L7); respiros para digitar em 02 L2/L3, 03 L2, 04 L5 e 09 L9. Gravação final: caps 01 e 07 com `APP_ORIGIN`
+  no domínio (o link do portal saía 127.0.0.1). Achados no MELHORIAS.

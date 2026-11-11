@@ -41,8 +41,20 @@ fica para a revisão decidir com a voz real.
   "Acesso ao portal"). Para a gravação final, `APP_ORIGIN=https://ecosistematecnologia.com.br` (o domínio do `index.html` do app;
   confirmar o do produto) faz o app montar o link com o domínio (docs/04, "Endereço do produto na tela").
 
+## Sinal dos saldos (pedido do coordenador, 11/11)
+Conferido no código (`utils/balanceFormatting.ts`, `BalancesReportModal.tsx:109-119`) e nas folhas de contato dos caps 01 e 09
+(mundo B novo): cliente + verde "a receber" (Aços 4.870,00, Fundição 14.370,00); cliente − vermelho "a pagar" (Serra Fina
+−1.500,00); fornecedor + vermelho "a pagar" (Cooperativa 2.550,00 → 1.350,00 depois do Pix); fornecedor − verde "a receber"
+(Valdir −300,00, o vale que a Recicla adiantou); duplo na convenção do cliente (Depósito −840,00, vermelho nas duas abas). A fala dos
+caps 05, 09 e 12 bate com a tela: nada a propor. O cap12 confere as seis cores no relatório (`confere as cores dos 6 saldos`).
+
 ## Mundo (para a junção)
 - **Cida Ramos** (fornecedora PF, mesmo telefone da Aparecida, sem documento nem endereço) não está no mundo base B: entra pela semente
   `seeds-extra/t04/inicio` (código 6). Sem ela não há selo "Mesmo telefone" no cap01.
 - **Link do portal:** nenhum parceiro de B tem `portal_token`; a ficha mostraria "Portal ainda não configurado para este cadastro."
   no cap07. A `t04/inicio` grava um token fictício em todos (o app gera um ao criar com o módulo de portal).
+- **Financeiro da cooperativa (cap11):** a conta paga "Frete das entregas de outubro" (R$ 450,00, categoria Frete, venc. 31/10) e a
+  entrada no caixa #64 "Venda de sacos de ráfia usados" (R$ 120,00, Outras Receitas, 15/10) estão na `t04/inicio` (B não as tem).
+- **Gatilhos novos** (`rec/mundo/hooks/suppliers.mjs` e `customers.mjs`): código sequencial do parceiro criado na tela (Rogério 7,
+  serralheria 8, a serralheria cliente 5) e o espelho do cadastro duplo (tabela de preços padrão, nome, documento, contato, endereço),
+  como o banco faz. Valem para todas as aulas depois de `rec/run.sh fake`.
