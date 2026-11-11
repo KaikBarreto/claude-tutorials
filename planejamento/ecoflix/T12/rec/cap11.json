@@ -105,6 +105,28 @@
    "seconds": 0.8
   },
   {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Coletas & Logística",
+    "within": "aside, [data-sidebar=sidebar]"
+   }
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "role": "link",
+    "name": "Frota",
+    "exact": true,
+    "within": "aside, [data-sidebar=sidebar]"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "wait",
+   "seconds": 0.5
+  },
+  {
    "do": "eval",
    "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel|Algo deu errado|Falha ao|Transi[çc][ãa]o inv[áa]lida|n[ãa]o encontrad|Localiza[çc][ãa]o n[ãa]o registrada|Sem sinal de GPS/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');if(f&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA ECOFLIX'))window.__avisos.push('TRILHA ECOFLIX')},300);return 1})()"
   },
@@ -127,7 +149,7 @@
     "exact": true,
     "within": "aside, [data-sidebar=sidebar]"
    },
-   "at": 1.72,
+   "at": 1.22,
    "label": "menu Configurações (Coletas)"
   },
   {
@@ -142,8 +164,8 @@
     "within": "main",
     "exact": true
    },
-   "seconds": 0.6,
-   "at": 5.14,
+   "seconds": 0.8,
+   "at": 4.24,
    "label": "bloco Operação",
    "optional": true,
    "timeout": 4
@@ -158,7 +180,7 @@
    "target": {
     "selector": "#col-prefix"
    },
-   "seconds": 0.6,
+   "seconds": 1.0,
    "at": 6.55,
    "label": "Prefixo da numeração",
    "optional": true,
@@ -169,7 +191,7 @@
    "target": {
     "selector": "#col-prefix"
    },
-   "at": 11.46,
+   "at": 10.76,
    "label": "Prefixo (campo)"
   },
   {
@@ -206,7 +228,7 @@
     "within": "main",
     "exact": true
    },
-   "seconds": 0.5,
+   "seconds": 0.6,
    "at": 18.29,
    "label": "Janelas de coleta oferecidas",
    "optional": true,
@@ -217,8 +239,8 @@
    "target": {
     "selector": "main button:text-is('Dia todo')"
    },
-   "seconds": 0.8,
-   "at": 21.93,
+   "seconds": 1.2,
+   "at": 21.03,
    "label": "as janelas: Manhã, Tarde e Dia todo",
    "optional": true,
    "timeout": 4
@@ -230,8 +252,8 @@
     "within": "main",
     "exact": true
    },
-   "seconds": 1.2,
-   "at": 25.66,
+   "seconds": 1.5,
+   "at": 24.76,
    "label": "Exigir motorista e veículo para agendar",
    "optional": true,
    "timeout": 4
@@ -254,8 +276,7 @@
     "within": "main",
     "exact": true
    },
-   "seconds": 1.5,
-   "at": 31.24,
+   "seconds": 2.0,
    "label": "Exigir aprovação da solicitação",
    "optional": true,
    "timeout": 4
@@ -270,7 +291,7 @@
    "target": {
     "selector": "#col-lead"
    },
-   "seconds": 0.6,
+   "seconds": 1.0,
    "at": 41.99,
    "label": "Antecedência mínima (horas)",
    "optional": true,
@@ -281,7 +302,7 @@
    "target": {
     "selector": "#col-lead"
    },
-   "at": 47.06,
+   "at": 46.36,
    "label": "Antecedência (campo)"
   },
   {
@@ -291,7 +312,7 @@
    },
    "text": "24",
    "cps": 40,
-   "at": 48.14,
+   "at": 47.79,
    "label": "Antecedência: 24",
    "noClick": true,
    "clear": true
@@ -299,8 +320,12 @@
   {
    "do": "press",
    "key": "Tab",
-   "at": 49.26,
    "label": "sai do campo (salva a antecedência)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Antecedência mínima salva",
+   "timeout": 8
   },
   {
    "do": "hover",
@@ -309,33 +334,35 @@
     "within": "main",
     "exact": true
    },
-   "seconds": 0.4,
-   "at": 49.74,
+   "seconds": 0.3,
+   "at": 48.84,
    "label": "Dias aceitos para coleta",
    "optional": true,
    "timeout": 4
   },
   {
-   "do": "hover",
-   "target": {
-    "selector": "main button:text-is('Seg')"
+   "do": "scroll",
+   "point": {
+    "x": 388,
+    "y": 516
    },
-   "seconds": 0.3,
-   "at": 51.48,
-   "label": "Seg",
-   "optional": true,
-   "timeout": 4
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "at": 51.63,
+   "label": "Seg"
   },
   {
-   "do": "hover",
-   "target": {
-    "selector": "main button:text-is('Sáb')"
+   "do": "scroll",
+   "point": {
+    "x": 708,
+    "y": 516
    },
-   "seconds": 0.6,
-   "at": 52.24,
-   "label": "Sáb",
-   "optional": true,
-   "timeout": 4
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "at": 52.39,
+   "label": "Sáb"
   },
   {
    "do": "mark",

@@ -1,398 +1,134 @@
 <!doctype html>
 <html lang="pt-BR"><head><meta charset="utf-8">
-<!-- T07 cap06 · PILOTO 3D (Kaik, 11/11: "podem ter ilustrações de conceitos que ficariam melhor se fossem ilustradas/3D").
-     A mesma cena da ../cenas/cenas.html (CAPS[6]: tara, impureza e líquido + dupla pesagem), com as mesmas âncoras
-     W(linha,'palavra') e os mesmos números (412 − 96 = 316 kg), feita em 3D "argila" com three.js r170 local
-     (three.module.min.js ao lado; a página não usa rede). Rótulos em HTML por cima, no estilo saturado do kit.
-     Mesma API do kit: window.setup(dados) e window.R(t); WebGL com preserveDrawingBuffer.
-     Render: node render_cenas3d.cjs 6 ../cenas/tempos/cap06.json saida.mp4 --de 0.40 --ate 36.05
-     (o render_cenas3d.cjs é a cópia do render_cenas.cjs com --allow-file-access-from-files, que o import do módulo pede).
-     Custo medido (11/11, 2 vCPU com carga 3–5, WebGL no SwiftShader): 2560x1600 ≈ 1,0 s/quadro (a cena 2D: 0,29);
-     prévia --dsf 1.35 (1728x1080): 0,42 s/quadro, 452 s para os 1070 quadros. O 3D desenha a 1,5x no máximo (1920x1200).
-     Um só mundo: parte 1 em torno da origem (tara à esquerda, impureza à direita, o bruto na frente) e a parte 2 (balança
-     de pátio, carroça) em (12, 0, −2); a câmera viaja de uma para a outra na palavra "sucata". -->
-<style>
-@font-face{font-family:M;font-weight:500;src:url(../../../../ferramentas/web/fonts/montserrat-latin-500-normal.woff2) format('woff2')}
-@font-face{font-family:M;font-weight:600;src:url(../../../../ferramentas/web/fonts/montserrat-latin-600-normal.woff2) format('woff2')}
-@font-face{font-family:M;font-weight:700;src:url(../../../../ferramentas/web/fonts/montserrat-latin-700-normal.woff2) format('woff2')}
-@font-face{font-family:M;font-weight:800;src:url(../../../../ferramentas/web/fonts/montserrat-latin-800-normal.woff2) format('woff2')}
-@font-face{font-family:M;font-weight:500;src:url(../../../../ferramentas/web/fonts/montserrat-latin-ext-500-normal.woff2) format('woff2');unicode-range:U+0100-024F}
-@font-face{font-family:M;font-weight:700;src:url(../../../../ferramentas/web/fonts/montserrat-latin-ext-700-normal.woff2) format('woff2');unicode-range:U+0100-024F}
-@font-face{font-family:M;font-weight:800;src:url(../../../../ferramentas/web/fonts/montserrat-latin-ext-800-normal.woff2) format('woff2');unicode-range:U+0100-024F}
-/* paleta EcoFlix (a do kit) + estilo saturado (selo, chip e círculo com fundo cheio e texto branco) */
-:root{--v:#50D088;--ve:#2E7D57;--a:#F2B63D;--ae:#8A5A00;--t:#121212;--e:#121212;--vs:#50D088;--as:#F2B63D;--cz:#4B5563}
-*{box-sizing:border-box;margin:0;padding:0;transition:none!important;animation:none!important}
-html,body{width:1280px;height:800px;overflow:hidden;background:#fff}
-body{font-family:M,sans-serif;color:var(--t);-webkit-font-smoothing:antialiased}
-#st{position:absolute;inset:0;overflow:hidden;background:
-  radial-gradient(1100px 650px at 92% -12%,rgba(80,208,136,.09),transparent 62%),
-  radial-gradient(900px 600px at -12% 112%,rgba(80,208,136,.06),transparent 60%),#fff}
-#gl{position:absolute;left:0;top:0;width:1280px;height:800px}
-#ov{position:absolute;inset:0}
-.ab{position:absolute}
-.kick{font-weight:700;font-size:15px;letter-spacing:.3em;color:var(--ve);text-transform:uppercase}
-.h{font-weight:800;font-size:46px;letter-spacing:-.01em;line-height:1.1;white-space:nowrap}
-.tag{display:inline-flex;align-items:center;gap:9px;padding:9px 18px;border-radius:999px;font-weight:800;font-size:21px;
-  white-space:nowrap;color:#fff;background:var(--cz);box-shadow:0 6px 16px rgba(16,24,40,.12)}
-.tag.v{background:var(--vs)} .tag.a{background:var(--as)} .tag.e{background:var(--e)}
-.tag.p{font-size:15px;padding:5px 13px;box-shadow:0 3px 8px rgba(16,24,40,.10)}
-.sub{font-weight:600;font-size:17px;line-height:1.3;color:#4B5563;white-space:nowrap}
-.selo{position:absolute;display:flex;flex-direction:column;align-items:center;gap:8px}
-.col{position:absolute;width:200px;display:flex;flex-direction:column;align-items:center;gap:8px}
-.op{position:absolute;width:46px;height:46px;border-radius:50%;background:var(--cz);color:#fff;display:flex;align-items:center;
-  justify-content:center;font-weight:800;font-size:28px;line-height:1}
-.card{position:absolute;background:#fff;border:1px solid #E1E8E4;border-radius:18px;
-  box-shadow:0 18px 40px rgba(16,24,40,.10),0 3px 8px rgba(16,24,40,.06)}
-.cp{width:296px;height:112px;padding:16px 20px}
-.num{font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:-.01em;white-space:nowrap}
-.most{position:absolute;width:250px;background:var(--e);border-radius:16px;padding:14px 20px 16px;box-shadow:0 16px 34px rgba(16,24,40,.22)}
-.most .ml{position:relative;height:20px;font-weight:700;font-size:14px;letter-spacing:.2em;color:#A9E9C6;text-transform:uppercase}
-.most .ml span{position:absolute;left:0;top:0;white-space:nowrap}
-.most .mn{margin-top:6px;font-weight:800;font-size:42px;color:var(--v);font-variant-numeric:tabular-nums;white-space:nowrap}
-.rip{position:absolute;width:56px;height:56px;margin:-28px 0 0 -28px;border-radius:50%;border:3px solid var(--v);opacity:0}
-.ic{display:inline-flex;align-items:center;justify-content:center;flex:none}.ic svg{width:100%;height:100%}
-</style></head>
-<body><div id="st"><canvas id="gl" width="1280" height="800"></canvas><div id="ov"></div></div>
+<!-- T07 cap06 · cena final 3D da pesagem (kit perfis/ecoflix/cenas3d/kit3d.js; o piloto que o Kaik aprovou em 11/11, refeito
+     com o kit). A mesma cena da ../cenas/cenas.html (CAPS[6], que fica de reserva): tara (saco, tambor, caçamba), impureza
+     (terra, borracha, plástico) e Bruto − Tara − Impureza = Líquido, que vai pro estoque; depois a dupla pesagem da carroça,
+     412 − 96 = 316 kg. Mesmas âncoras W(linha,'palavra') e mesmos números da cena 2D.
+     Um só mundo: parte 1 em torno da origem (tara à esquerda, impureza à direita, o bruto na frente) e a parte 2 (balança de
+     pátio, carroça) em (12, 0, −2); a câmera viaja de uma para a outra na palavra "sucata".
+     Render (o render_cenas.cjs já sobe o Chromium com --allow-file-access-from-files):
+       node ferramentas/edit/cenas/render_cenas.cjs 6 <cap06.json> ilu06_pesagem.mp4 --html planejamento/ecoflix/T07/cenas3d/cena3d.html --de 0.10 --ate 36.08
+     Custo: ~1 s por quadro em 2560x1600; prévia com --dsf 1.35 (1728x1080) ~0,4 s. -->
+</head><body>
 <script type="module">
-import * as THREE from './three.module.min.js';
+import { THREE, PI, eo, eio, pr, lerp, rng, pega, W, L, el, ic, vis, ripple, pulse, kg, conta, posTitulo, titulo, selo, chip, coluna, op, onda,
+  cartao, mostrador, CENA, camera, ancora, mundo, M, argila, tinge, grupo, mancha, anel, destaque, cresce, pulso, domo, peca, monte,
+  saco, tambor, cacamba, sacoAberto, fardo, palete, carroca, balancaPatio, COR, cena } from '../../../../perfis/ecoflix/cenas3d/kit3d.js';
 
-// ------------------------------------------------------------------ utilidades (as do kit)
-const cl=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
-const eo=x=>1-Math.pow(1-cl(x),3);
-const eio=x=>{x=cl(x);return x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2};
-const pr=(t,a,d=.45)=>cl((t-a)/d);
-const lerp=(a,b,p)=>a+(b-a)*p;
-const OV=document.getElementById('ov');
-function el(html,parent=OV){const d=document.createElement('div');d.innerHTML=html.trim();const f=d.firstElementChild;parent.appendChild(f);return f}
-function ic(n,px){return `<span class="ic" style="width:${px}px;height:${px}px">${(window.ICONS||{})[n]||''}</span>`}
-function vis(e,t,a,b=1e9,o={}){
-  const din=o.din??.5,dout=o.dout??.4,dy=o.dy??16,dx=o.dx??0,sc=o.sc??.985;
-  const p=eo(pr(t,a,din)),q=1-eo(pr(t,b,dout)),op=Math.min(p,q);
-  e.style.opacity=op.toFixed(4);e.style.visibility=op<=.001?'hidden':'visible';
-  const s=sc+(1-sc)*p-(1-q)*(1-sc);
-  e.style.transform=`translate(${((1-p)*dx).toFixed(2)}px,${((1-p)*dy-(1-q)*dy*.5).toFixed(2)}px) scale(${s.toFixed(4)})`;
-  return op;
-}
-function ripple(r,t,a){const p=pr(t,a,.7);r.style.opacity=(p>0&&p<1)?(.6*(1-p)).toFixed(3):0;r.style.transform=`scale(${(.4+2.0*eo(p)).toFixed(3)})`}
-function pulse(e,t,a,amp=.045,dur=.9){const p=pr(t,a,dur);e.style.scale=(p>0&&p<1)?(1+amp*Math.sin(Math.PI*p)).toFixed(4):''}
-const NF=new Intl.NumberFormat('pt-BR');
-const kg=v=>NF.format(Math.round(v))+' kg';
-function conta(e,t,a,d,v0,v1){const s=kg(lerp(v0,v1,eo(pr(t,a,d))));if(e.textContent!==s)e.textContent=s}
-function posTitulo(e,t,a,sobe,sai=1e9){vis(e,t,a,sai,{dy:14});const p=eio(pr(t,sobe,.7));
-  e.style.top=lerp(318,46,p).toFixed(2)+'px';e.style.scale=lerp(1.12,1,p).toFixed(4)}
-
-// ------------------------------------------------------------------ tempos da fala (iguais ao kit)
-let D=null;
-const norm=w=>w.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9%./-]+/g,'');
-function W(linha,palavra,n=1,campo='s'){
-  const alvo=norm(palavra);let k=0;
-  for(const w of D.words){if(w.linha===linha&&norm(w.w).replace(/[.,]$/,'')===alvo){k++;if(k===n)return w[campo]}}
-  for(const w of D.words){if(w.linha===linha&&norm(w.w).startsWith(alvo)){k++;if(k>=n)return w[campo]}}
-  console.warn('palavra não achada',linha,palavra);return L(linha);
-}
-const L=i=>(D.linhas[i]||{s:0}).s;
-
-// ------------------------------------------------------------------ 3D: utilidades
-const Q=new URLSearchParams(location.search);   // variantes de custo (aa=0, sm=2048, st=pcf|vsm, rs=1); sem nada = o padrão
-const rng=(s=>()=>{s=s+0x6D2B79F5|0;let t=Math.imul(s^s>>>15,1|s);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296})(20261111);
-const ri=(a,b)=>lerp(a,b,rng());
-const PI=Math.PI;
-const MAT=o=>{if(Q.get('mt')==='l'){delete o.roughness;delete o.metalness;return new THREE.MeshLambertMaterial(o)}return new THREE.MeshStandardMaterial(o)};
-const MC={};   // materiais foscos reaproveitados (argila: roughness alto, sem metal)
-function M(c,o={}){const k=c+(o.f?'f':'')+(o.ds?'d':'')+(o.r??'');
-  return MC[k]||(MC[k]=MAT({color:c,roughness:o.r??.86,metalness:0,flatShading:!!o.f,side:o.ds?THREE.DoubleSide:THREE.FrontSide}))}
-function MU(c,o={}){return MAT({color:c,roughness:o.r??.88,metalness:0,side:o.ds?THREE.DoubleSide:THREE.FrontSide})} // material próprio (muda de cor)
-function poe(g,m,pai,p=[0,0,0],r=[0,0,0],s=1){const o=new THREE.Mesh(g,m);o.position.set(...p);o.rotation.set(...r);
-  if(Array.isArray(s))o.scale.set(...s);else o.scale.setScalar(s);o.castShadow=o.receiveShadow=true;pai.add(o);return o}
-function grupo(pai,p=[0,0,0]){const g=new THREE.Group();g.position.set(...p);pai.add(g);return g}
-// caixa de cantos arredondados (o RoundedBoxGeometry dos exemplos do three, sem addon)
-function rbox(w,h,d,r=.04,seg=2){seg=seg*2+1;r=Math.min(w/2,h/2,d/2,r);
-  const g=new THREE.BoxGeometry(1,1,1,seg,seg,seg).toNonIndexed(),P=g.attributes.position.array,N=g.attributes.normal.array;
-  const bx=w/2-r,by=h/2-r,bz=d/2-r,hs=.5/seg,n=new THREE.Vector3();
-  for(let i=0;i<P.length;i+=3){const x=P[i],y=P[i+1],z=P[i+2];
-    n.set(x-Math.sign(x)*hs,y-Math.sign(y)*hs,z-Math.sign(z)*hs).normalize();
-    P[i]=bx*Math.sign(x)+n.x*r;P[i+1]=by*Math.sign(y)+n.y*r;P[i+2]=bz*Math.sign(z)+n.z*r;N[i]=n.x;N[i+1]=n.y;N[i+2]=n.z}
-  g.deleteAttribute('uv');return g}
-// sombra de contato (mancha macia no chão, por baixo da sombra da luz)
-let TXS=null;
-function mancha(pai,w,d,op=.3,p=[0,0,0]){
-  if(!TXS){const c=document.createElement('canvas');c.width=c.height=128;const g=c.getContext('2d'),gr=g.createRadialGradient(64,64,0,64,64,64);
-    gr.addColorStop(0,'rgba(255,255,255,1)');gr.addColorStop(.5,'rgba(255,255,255,.5)');gr.addColorStop(1,'rgba(255,255,255,0)');
-    g.fillStyle=gr;g.fillRect(0,0,128,128);TXS=new THREE.CanvasTexture(c)}
-  const m=new THREE.Mesh(new THREE.PlaneGeometry(w,d),new THREE.MeshBasicMaterial({map:TXS,color:0x1d2b24,transparent:true,opacity:op,depthWrite:false}));
-  m.rotation.x=-PI/2;m.position.set(p[0],.004,p[2]);m.renderOrder=1;m.userData.op=op;pai.add(m);return m}
-// anel verde no chão (destaque) e a onda que sai dele
-function anel(pai,r,w=.07,p=[0,0,0]){const m=new THREE.Mesh(new THREE.RingGeometry(r-w/2,r+w/2,72),
-  new THREE.MeshBasicMaterial({color:0x50D088,transparent:true,opacity:0,depthWrite:false}));
-  m.rotation.x=-PI/2;m.position.set(p[0],.008,p[2]);m.renderOrder=2;pai.add(m);return m}
-function destaque(an,onda,t,a){const p=eo(pr(t,a,.45));an.material.opacity=.95*p;an.visible=p>0;an.scale.setScalar(lerp(.85,1,p));
-  const q=pr(t,a+.05,.9);onda.visible=q>0&&q<1;onda.material.opacity=.7*(1-q);onda.scale.setScalar(1+.7*eo(q))}
-// entrada de um objeto: cresce do chão (escala) com um leve giro; nada de pulo
-function cresce(o,t,a,d=.6,giro=.35){const p=eo(pr(t,a,d)),s=o.userData.s??1;o.visible=p>0;o.scale.setScalar(Math.max(1e-4,p)*s);
-  o.rotation.y=(o.userData.ry??0)-giro*(1-p);return p}
-function pulso(o,t,a,amp=.07,dur=.7){const p=pr(t,a,dur);if(p>0&&p<1)o.scale.multiplyScalar(1+amp*Math.sin(PI*p))}
-// monte: posições num domo de raio rx/rz e altura h, mais perto da superfície (o miolo não aparece)
-function monte(n,rx,rz,h,y0=0,sup=.45){const P=[];for(let i=0;i<n;i++){const a=rng()*2*PI,u=Math.sqrt(rng());
-  const top=h*Math.pow(1-u*u,.8);P.push([Math.cos(a)*u*rx,y0+top*(sup+(1-sup)*rng())+.03,Math.sin(a)*u*rz])}return P}
-
-// ------------------------------------------------------------------ 3D: peças de sucata e de impureza (genéricas)
-const GEO={};
-function geos(){
-  GEO.tubo=new THREE.CylinderGeometry(.042,.042,.46,12);   GEO.bobina=new THREE.TorusGeometry(.1,.032,8,18);
-  GEO.chapa=rbox(.32,.035,.24,.012,1);                      GEO.bloco=new THREE.DodecahedronGeometry(.12,0);
-  GEO.lata=new THREE.CylinderGeometry(.05,.05,.14,14);      GEO.perfil=rbox(.52,.055,.055,.014,1);
-  GEO.terra=new THREE.DodecahedronGeometry(.075,0);         GEO.pneu=new THREE.TorusGeometry(.12,.045,8,14,PI*1.1);
-  GEO.mangueira=new THREE.CylinderGeometry(.03,.03,.32,10); GEO.caco=rbox(.17,.014,.11,.006,1);
-  GEO.garrafa=new THREE.CylinderGeometry(.045,.05,.17,12);
-}
-const PAL={cobre:['#C8703A','#B45F2D','#D98C58'],alu:['#C9D1DA','#AFB9C4','#DDE3E9'],aco:['#7E8995','#646F7B','#8F99A4'],
-  ferrugem:['#9A5B3A','#86513A','#A86A48'],terra:['#7A5233','#8B6240','#6A4529'],borracha:['#22272E','#2E343C'],plastico:['#4F8EDC','#E6EEF7','#3E7BC6']};
-const TIPOS={cobre:['tubo','bobina','bloco','tubo','bobina'],alu:['lata','perfil','chapa','lata'],aco:['chapa','bloco','perfil','chapa'],
-  ferrugem:['bloco','chapa','perfil'],terra:['terra'],borracha:['pneu','mangueira'],plastico:['caco','caco','garrafa']};
-const pega=a=>a[Math.floor(rng()*a.length)];
-function giro(k){if(k==='tubo'||k==='mangueira'||k==='garrafa')return[ri(-.4,.4),ri(0,2*PI),PI/2+ri(-.4,.4)];
-  if(k==='bobina'||k==='pneu')return[PI/2+ri(-.5,.5),ri(0,2*PI),ri(-.4,.4)];
-  if(k==='bloco'||k==='terra')return[ri(0,2*PI),ri(0,2*PI),ri(0,2*PI)];
-  if(k==='lata')return[ri(-.4,.4)+(rng()<.5?PI/2:0),ri(0,2*PI),ri(-.4,.4)];
-  return[ri(-.3,.3),ri(0,2*PI),ri(-.3,.3)]}
-function peca(pai,metal,p,s=1){const k=pega(TIPOS[metal]),cor=pega(PAL[metal]);
-  const sc=(k==='bloco'||k==='terra')?[s*ri(.8,1.3),s*ri(.55,.95),s*ri(.8,1.25)]:s*ri(.85,1.15);
-  const o=poe(GEO[k],M(cor,{f:k==='bloco'||k==='terra'}),pai,p,giro(k),sc);o.receiveShadow=Q.get('rs')==='1';o.userData.s0=o.scale.clone();return o}
-
-// ------------------------------------------------------------------ 3D: desenhos (sem marca)
-// saco de ráfia fechado (tara)
-function saco(pai,p){const g=grupo(pai,p),mt=MU('#E9D6AC'),ml=MU('#B89A62'),mf=MU('#C9AF7E');
-  const pts=[[0,0],[.2,.004],[.29,.05],[.325,.17],[.335,.34],[.315,.5],[.26,.62],[.17,.71],[.085,.77],[.072,.81],[.1,.87],[.115,.92],[.07,.95],[0,.955]];
-  poe(new THREE.LatheGeometry(pts.map(([r,y])=>new THREE.Vector2(r,y)),30),mt,g,[0,0,0],[0,0,0],[1,1,.82]);
-  poe(new THREE.TorusGeometry(.083,.024,8,20),ml,g,[0,.79,0],[PI/2,0,0],[1,.82,1]);
-  for(const [y,r] of [[.25,.331],[.42,.33]])poe(new THREE.TorusGeometry(r,.007,6,40),mf,g,[0,y,0],[PI/2,0,0],[1,.82,1]);
-  return {g,mats:[[mt,'#E9D6AC'],[ml,'#B89A62'],[mf,'#C9AF7E']]}}
-// tambor de aço
-function tambor(pai,p){const g=grupo(pai,p),mt=MU('#557891'),ma=MU('#46667D');
-  poe(new THREE.CylinderGeometry(.29,.29,.86,36),mt,g,[0,.43,0]);
-  for(const y of [.29,.57])poe(new THREE.TorusGeometry(.292,.017,8,40),ma,g,[0,y,0],[PI/2,0,0]);
-  for(const y of [.012,.858])poe(new THREE.TorusGeometry(.282,.022,8,40),ma,g,[0,y,0],[PI/2,0,0]);
-  poe(new THREE.CylinderGeometry(.045,.045,.03,16),ma,g,[.14,.87,.06]);
-  return {g,mats:[[mt,'#557891'],[ma,'#46667D']]}}
-// caçamba pequena (de empilhadeira): corpo em trapézio, boca escura e dois patins
-function cacamba(pai,p){const g=grupo(pai,p),mt=MU('#6E7B88'),mi=MU('#56626F'),mp=MU('#2F353C');
-  const sh=new THREE.Shape();sh.moveTo(-.42,0);sh.lineTo(.42,0);sh.lineTo(.56,.5);sh.lineTo(-.56,.5);sh.closePath();
-  const geo=new THREE.ExtrudeGeometry(sh,{depth:.04,bevelEnabled:true,bevelThickness:.012,bevelSize:.012,bevelSegments:1,curveSegments:1});
-  geo.translate(0,.08,-.02);for(const z of [-.31,.31])poe(geo,mt,g,[0,0,z]);            // as duas pontas em trapézio
-  const inc=Math.atan2(.14,.5);for(const sx of [-1,1])poe(rbox(.045,.53,.66,.015,1),mt,g,[sx*.49,.33,0],[0,0,-sx*inc]);   // laterais inclinadas
-  poe(rbox(.86,.04,.62,.015,1),mi,g,[0,.1,0]);                                           // fundo (mais escuro: a boca aberta)
-  for(const x of [-.28,.28])poe(rbox(.13,.07,.72,.02,1),mp,g,[x,.035,0]);
-  return {g,mats:[[mt,'#6E7B88'],[mi,'#56626F'],[mp,'#2F353C']]}}
-// saco aberto (o bruto): ráfia por fora, sucata aparecendo na boca
-function sacoAberto(pai){const mt=MU('#E9D6AC',{ds:true}),mf=M('#C9AF7E');
-  const pts=[[0,0],[.24,.004],[.34,.05],[.385,.17],[.395,.34],[.38,.5],[.35,.62],[.33,.7],[.345,.75],[.365,.775]];
-  const g=grupo(pai);poe(new THREE.LatheGeometry(pts.map(([r,y])=>new THREE.Vector2(r,y)),34),mt,g,[0,0,0],[0,0,0],[1,1,.84]);
-  poe(new THREE.TorusGeometry(.358,.026,8,40),mf,g,[0,.765,0],[PI/2,0,0],[1,.84,1]);
-  for(const y of [.22,.4])poe(new THREE.TorusGeometry(.392,.007,6,44),mf,g,[0,y,0],[PI/2,0,0],[1,.84,1]);
-  return g}
-// fardo prensado com duas cintas
-function fardo(pai,p,cor){const g=grupo(pai,p);poe(rbox(.5,.42,.46,.035,2),M(cor),g,[0,.21,0]);
-  for(const x of [-.13,.13])poe(rbox(.03,.43,.47,.01,1),M('#2F353C'),g,[x,.21,0]);return g}
-// palete de madeira
-function palete(pai,p){const g=grupo(pai,p),m=M('#C9A27A'),m2=M('#B48C64');
-  for(const z of [-.4,0,.4])poe(rbox(1.3,.08,.13,.02,1),m2,g,[0,.04,z]);
-  for(let i=0;i<6;i++)poe(rbox(.18,.035,1.0,.012,1),m,g,[-.55+i*.22,.098,0]);return g}
-
-// ------------------------------------------------------------------ cena
-let RD,CENA,CAM,SOL,CHAO,CK=[],RENDER=null;
-function base(){
-  RD=new THREE.WebGLRenderer({canvas:document.getElementById('gl'),antialias:Q.get('aa')!=='0',alpha:true,preserveDrawingBuffer:true});
-  // 3D a 1920x1200 no máximo (o palco final é menor que isso); os rótulos HTML ficam na resolução cheia
-  RD.setPixelRatio(Math.min(window.devicePixelRatio||1,+(Q.get('pr')||1.5)));RD.setSize(1280,800,false);RD.setClearColor(0x000000,0);
-  RD.shadowMap.enabled=Q.get('sh')!=='0';RD.shadowMap.type={pcf:THREE.PCFShadowMap,vsm:THREE.VSMShadowMap}[Q.get('st')]??THREE.PCFSoftShadowMap;
-  CENA=new THREE.Scene();
-  CAM=new THREE.PerspectiveCamera(26,1280/800,.1,120);
-  CENA.add(new THREE.HemisphereLight(0xffffff,0xB9C2CB,1.7));
-  SOL=new THREE.DirectionalLight(0xffffff,2.3);SOL.castShadow=true;SOL.shadow.mapSize.setScalar(+(Q.get('sm')||1024));SOL.shadow.blurSamples=8;
-  const sc=SOL.shadow.camera;sc.left=-6.5;sc.right=6.5;sc.top=6.5;sc.bottom=-6.5;sc.near=1;sc.far=40;
-  SOL.shadow.bias=-.0004;SOL.shadow.normalBias=.02;SOL.shadow.radius=4;CENA.add(SOL,SOL.target);
-  const fill=new THREE.DirectionalLight(0xEAF4FF,.55);fill.position.set(6,3,8);CENA.add(fill);
-  CHAO=new THREE.Mesh(new THREE.PlaneGeometry(14,14),new THREE.ShadowMaterial({color:0x1d2b24,opacity:.16}));
-  CHAO.rotation.x=-PI/2;CHAO.receiveShadow=true;CENA.add(CHAO);   // só o quadrado que o mapa de sombra cobre (segue o alvo)
-  geos();
-}
-// câmera: alvo (x,y,z) + distância + azimute + elevação + deslocamento da imagem (oy px: positivo sobe o desenho)
-function pose(t){let k=CK[0][1];
-  if(t>CK[0][0])for(let i=1;i<CK.length;i++){const [t1,p1,modo,lift]=CK[i],[t0,p0]=CK[i-1];
-    if(t<=t1){const q0=(t-t0)/(t1-t0),q=modo==='eio'?eio(q0):q0;k={};for(const c in p0)k[c]=lerp(p0[c],p1[c],q);
-      if(lift)k.d+=lift*Math.sin(PI*q);return k}k=p1}
-  return k}
-function aplicaCam(k){const ce=Math.cos(k.el);
-  CAM.position.set(k.x+k.d*Math.sin(k.az)*ce,k.y+k.d*Math.sin(k.el),k.z+k.d*Math.cos(k.az)*ce);CAM.lookAt(k.x,k.y,k.z);
-  CAM.setViewOffset(1280,800,0,k.oy,1280,800);CAM.updateMatrixWorld();
-  SOL.position.set(k.x-4.5,9,k.z+5.5);SOL.target.position.set(k.x,0,k.z);SOL.target.updateMatrixWorld();CHAO.position.set(k.x,0,k.z)}
-const _v=new THREE.Vector3();
-function tela(p){_v.set(p[0],p[1],p[2]).project(CAM);return[(_v.x+1)*640,(1-_v.y)*400]}
-// prende um rótulo HTML a um ponto do mundo (ax/ay: que ponto do rótulo fica no ponto; dx/dy em px)
-function ancora(e,p,ax=.5,ay=1,dx=0,dy=0){if(e._w==null){e._w=e.offsetWidth;e._h=e.offsetHeight}const [x,y]=tela(p);
-  e.style.left=(x-e._w*ax+dx).toFixed(1)+'px';e.style.top=(y-e._h*ay+dy).toFixed(1)+'px'}
-
-function monta(){
+cena(() => {
   // ================= parte 1: tara (esquerda), impureza (direita), o bruto (frente) e o estoque
-  const P1=grupo(CENA);
-  const XA=-2.3,XB=2.55,B=[.5,0,.5],EST=[.5,0,2.2];
-  const tara=[saco(P1,[-3.3,0,.1]),tambor(P1,[-2.35,0,-.05]),cacamba(P1,[-1.25,0,.05])];
-  tara.forEach((o,i)=>{o.g.userData.ry=[.25,0,-.2][i];o.g.rotation.y=o.g.userData.ry;mancha(o.g,[.95,.85,1.45][i],[.85,.85,1.05][i],.28)});
-  const ARG=new THREE.Color('#DEE3E8');                       // argila crua: o desenho entra claro e ganha cor na palavra
-  // monte com impureza
-  const GI=grupo(P1,[XB,0,0]);mancha(GI,2.3,1.9,.3);
-  for(const p of monte(34,.9,.76,.56))peca(GI,pega(['aco','aco','ferrugem','cobre','alu']),p);
-  const imp={terra:[],borracha:[],plastico:[]};
-  for(const c of ['terra','borracha','plastico'])for(const p of monte(c==='terra'?7:c==='borracha'?4:5,.76,.62,.56,0,.88)){
-    const o=peca(GI,c,p,c==='terra'?1.1:1);imp[c].push(o)}
+  const P1 = grupo(CENA);
+  const XA = -2.3, XB = 2.55, B = [.5, 0, .5], EST = [.5, 0, 2.2];
+  const tara = [saco(P1, [-3.3, 0, .1]), tambor(P1, [-2.35, 0, -.05]), cacamba(P1, [-1.25, 0, .05])];
+  tara.forEach((g, i) => { g.userData.ry = [.25, 0, -.2][i]; g.rotation.y = g.userData.ry; mancha(g, [.95, .85, 1.45][i], [.85, .85, 1.05][i], .28); argila(g); });
+  // monte com impureza: a sucata e, por cima, terra, borracha e plástico (aparecem cada um na sua palavra)
+  const GI = monte(P1, [XB, 0, 0], { n: 34, rx: .9, rz: .76, h: .56, mancha: [2.3, 1.9] });
+  const imp = { terra: [], borracha: [], plastico: [] };
+  for (const c of ['terra', 'borracha', 'plastico']) for (const p of domo(c === 'terra' ? 7 : c === 'borracha' ? 4 : 5, .76, .62, .56, 0, .88))
+    imp[c].push(peca(GI, c, p, c === 'terra' ? 1.1 : 1));
   // o bruto: saco aberto com cobre e sujeira; a tara sobe e volta pro grupo da tara, a impureza voa pro monte
-  const GB=grupo(P1,B),bag=sacoAberto(GB),heap=grupo(GB),mB=mancha(GB,1.3,1.1,.32);
-  for(const p of monte(24,.3,.25,.95))peca(heap,pega(['cobre','cobre','cobre','alu']),p);
-  const voa=[];for(const c of ['terra','terra','terra','borracha','borracha','plastico','plastico']){
-    const p=monte(1,.22,.18,.95,0,.95)[0];const o=peca(P1,c,[0,0,0],c==='terra'?1.1:1);o.userData.loc=p;voa.push(o)}
-  const anB=anel(P1,.66,.07,B),ondB=anel(P1,.66,.05,B);
+  const GB = grupo(P1, B), bag = sacoAberto(GB), heap = grupo(GB), mB = mancha(GB, 1.3, 1.1, .32);
+  for (const p of domo(24, .3, .25, .95)) peca(heap, pega(['cobre', 'cobre', 'cobre', 'alu']), p);
+  const voa = []; for (const c of ['terra', 'terra', 'terra', 'borracha', 'borracha', 'plastico', 'plastico']) {
+    const p = domo(1, .22, .18, .95, 0, .95)[0]; const o = peca(P1, c, [0, 0, 0], c === 'terra' ? 1.1 : 1); o.userData.loc = p; voa.push(o); }
+  const anB = anel(P1, .66, .07, B), ondB = anel(P1, .66, .05, B);
   // estoque: palete com um fardo de alumínio; o cobre limpo chega e vira o fardo de cobre
-  const GE=grupo(P1,EST);palete(GE,[0,0,0]);fardo(GE,[-.3,.115,0],'#C9D1DA');const fCu=fardo(GE,[.32,.115,0],'#C8703A');mancha(GE,1.9,1.5,.3);
+  const GE = grupo(P1, EST); palete(GE, [0, 0, 0]); fardo(GE, [-.3, .115, 0], COR.alu); const fCu = fardo(GE, [.32, .115, 0], COR.cobre); mancha(GE, 1.9, 1.5, .3);
   // ================= parte 2: balança de pátio, mostrador, carroça e o monte descarregado
-  const PX=12,PZ=-2,P2=grupo(CENA,[PX,0,PZ]);
-  poe(rbox(3.8,.16,2.2,.05,2),M('#8E98A3'),P2,[0,.08,0]);poe(rbox(3.66,.02,2.06,.008,1),M('#B9C1CA'),P2,[0,.163,0]);
-  for(let i=0;i<9;i++)poe(rbox(.035,.012,1.9,.006,1),M('#A5AEB8'),P2,[-1.6+i*.4,.176,0]);
-  const sh=new THREE.Shape();sh.moveTo(0,0);sh.lineTo(.7,0);sh.lineTo(.7,.172);sh.closePath();
-  const rg=new THREE.ExtrudeGeometry(sh,{depth:2.0,bevelEnabled:false});rg.translate(0,0,-1);
-  poe(rg,M('#C5CCD4'),P2,[-2.6,0,0]);poe(rg,M('#C5CCD4'),P2,[2.6,0,0],[0,0,0],[-1,1,1]);
-  mancha(P2,6.4,3.0,.26);
-  poe(rbox(.34,.04,.34,.012,1),M('#9AA3AD'),P2,[2.25,.02,-1.35]);
-  poe(new THREE.CylinderGeometry(.045,.05,.96,14),M('#B9C1C9'),P2,[2.25,.5,-1.35]);
-  const TOPO=[PX+2.25,.99,PZ-1.35];
-  // carroça de mão: caixa âmbar, duas rodas, varais de madeira; a carga é ferro misto
-  const CAR=grupo(CENA,[0,0,PZ]),amb=M('#E3A33A'),ambE=M('#C98A26'),pau=M('#8A5A34');
-  const rodas=[];for(const z of [-.62,.62]){const r=grupo(CAR,[0,.36,z]);rodas.push(r);
-    poe(new THREE.TorusGeometry(.28,.08,10,30),M('#23282E'),r);
-    poe(new THREE.CylinderGeometry(.2,.2,.09,24),M('#AEB7C1'),r,[0,0,0],[PI/2,0,0]);
-    for(let k=0;k<3;k++)poe(rbox(.38,.04,.1,.012,1),M('#7E8995'),r,[0,0,0],[0,0,k*PI/3])}
-  poe(new THREE.CylinderGeometry(.035,.035,1.26,10),M('#2F353C'),CAR,[0,.36,0],[PI/2,0,0]);
-  for(const z of [-.38,.38])poe(rbox(.12,.2,.06,.015,1),M('#2F353C'),CAR,[0,.46,z]);
-  poe(rbox(1.7,.06,1.1,.02,1),ambE,CAR,[0,.56,0]);
-  for(const x of [-.82,.82])poe(rbox(.06,.42,1.1,.02,1),amb,CAR,[x,.77,0]);
-  for(const z of [-.52,.52])poe(rbox(1.7,.42,.06,.02,1),amb,CAR,[0,.77,z]);
-  for(const z of [-.38,.38])poe(new THREE.CylinderGeometry(.032,.032,1.22,10),pau,CAR,[1.45,.68,z],[0,0,PI/2-.03]);
-  poe(new THREE.CylinderGeometry(.034,.034,.9,10),pau,CAR,[2.05,.7,0],[PI/2,0,0]);
-  const mC=mancha(CAR,2.4,1.6,.3,[.4,0,0]);
-  const carga=monte(20,.7,.4,.5,.6).map(p=>{const o=peca(CENA,pega(['aco','aco','ferrugem','ferrugem','aco']),[0,0,0]);
-    o.userData.loc=p;o.userData.r0=o.rotation.clone();return o});
-  const MON=[PX-3.05,0,PZ+1.2],alvo=monte(20,.75,.62,.5),mM=mancha(CENA,2.2,1.9,.3,MON);
-  const anM=anel(CENA,.92,.08,MON),ondM=anel(CENA,.92,.05,MON);
-  // altura do chão sob as rodas (rampa da esquerda e plataforma)
-  const altura=x=>{const u=x-PX;return u<-2.6?0:u<-1.9?.172*(u+2.6)/.7:u<=1.9?.172:u<2.6?.172*(2.6-u)/.7:0};
+  const PX = 12, PZ = -2, P2 = balancaPatio(CENA, [PX, 0, PZ]), TOPO = mundo(P2, P2.userData.topo);
+  const CAR = carroca(CENA, [0, 0, PZ]), rodas = CAR.userData.rodas;
+  const carga = domo(20, .7, .4, .5, .6).map(p => { const o = peca(CENA, pega(['aco', 'aco', 'ferrugem', 'ferrugem', 'aco']), [0, 0, 0]);
+    o.userData.loc = p; o.userData.r0 = o.rotation.clone(); return o; });
+  const MON = [PX - 3.05, 0, PZ + 1.2], alvo = domo(20, .75, .62, .5), mM = mancha(CENA, 2.2, 1.9, .3, MON);
+  const anM = anel(CENA, .92, .08, MON), ondM = anel(CENA, .92, .05, MON);
+  const altura = x => P2.userData.altura(x - PX);   // chão sob as rodas (rampa da esquerda e plataforma)
 
   // ================= rótulos HTML
-  const tit=el(`<div class="ab" style="left:0;top:0;width:1280px;text-align:center"><div class="kick">Pesagem</div>
-    <div style="position:relative;height:51px;margin-top:12px"><div class="h ab h1" style="left:0;width:1280px">Tara, impureza e líquido</div>
-    <div class="h ab h2" style="left:0;width:1280px">Dupla pesagem</div></div></div>`);
-  const h1=tit.querySelector('.h1'),h2=tit.querySelector('.h2');
-  const selo=(cls,txt,sub)=>el(`<div class="selo"><div class="tag ${cls}">${txt}</div><div class="sub">${sub}</div></div>`);
-  const sTa=selo('v','Tara','o que não é material'),sIm=selo('a','Impureza','a sujeira que vem junto');
-  const chip=txt=>el(`<div class="tag p ab">${txt}</div>`);
-  const cTa=['saco','tambor','caçamba'].map(chip),cIm=['terra','borracha','plástico'].map(chip);
+  const tit = titulo('Pesagem', 'Tara, impureza e líquido', 'Dupla pesagem'), [h1, h2] = tit.hs;
+  const sTa = selo('v', 'Tara', 'o que não é material'), sIm = selo('a', 'Impureza', 'a sujeira que vem junto');
+  const cTa = ['saco', 'tambor', 'caçamba'].map(t => chip(t)), cIm = ['terra', 'borracha', 'plástico'].map(t => chip(t));
   // a conta da parte 1: Bruto − Tara − Impureza = Líquido (tudo junto, a embalagem, a sujeira, o material)
-  const col=(cx,cls,txt,sub)=>el(`<div class="col" style="left:${cx-100}px;top:676px"><div class="tag ${cls}">${txt}</div><div class="sub" style="font-size:16px">${sub}</div></div>`);
-  const k1=col(312,'e','Bruto','tudo junto'),k2=col(538,'v','Tara','a embalagem'),k3=col(772,'a','Impureza','a sujeira'),
-        k4=col(1002,'v','Líquido','o material');
-  const op=(cx,s)=>el(`<div class="op" style="left:${cx-23}px;top:678px">${s}</div>`);
-  const o1=op(424,'−'),o2=op(652,'−'),o3=op(888,'=');
-  const ripL=el('<div class="rip" style="left:100px;top:22px"></div>',k4);
-  const sEs=el(`<div class="selo"><div class="tag v">${ic('warehouse',24)}Estoque</div></div>`);
+  const k1 = coluna(312, 676, 'e', 'Bruto', 'tudo junto'), k2 = coluna(538, 676, 'v', 'Tara', 'a embalagem'),
+        k3 = coluna(772, 676, 'a', 'Impureza', 'a sujeira'), k4 = coluna(1002, 676, 'v', 'Líquido', 'o material');
+  const o1 = op(424, 678, '−'), o2 = op(652, 678, '−'), o3 = op(888, 678, '='), ripL = onda(k4, 100, 22);
+  const sEs = selo('v', `${ic('warehouse', 24)}Estoque`);
   // parte 2: mostrador (painel escuro, número verde) preso no poste, e a conta em cartões
-  const most=el(`<div class="most"><div class="ml"><span class="m1">1ª Pesagem</span><span class="m2">2ª Pesagem</span></div><div class="mn">0 kg</div></div>`);
-  const mn=most.querySelector('.mn'),m1=most.querySelector('.m1'),m2=most.querySelector('.m2');
-  const cartao=(x,cls,rot,sub,v,res)=>el(`<div class="card cp" style="left:${x}px;top:662px;${res?'border:2px solid var(--v);background:#F4FBF7':''}">
-    <div style="display:flex;align-items:center;gap:10px"><div class="tag p ${cls}" style="font-size:16px">${rot}</div><div class="sub" style="font-size:16px">${sub}</div></div>
-    <div class="num" style="margin-top:10px;font-size:36px;${res?'color:var(--ve)':''}">${kg(v)}</div></div>`);
-  const R1=412,R2=96;
-  const c1=cartao(122,'','1ª Pesagem','carroça cheia',R1),c2=cartao(492,'','2ª Pesagem','carroça vazia',R2),
-        c3=cartao(862,'v','Peso Bruto','a carga',R1-R2,true);
-  const oM=el('<div class="op" style="left:432px;top:695px">−</div>'),oI=el('<div class="op" style="left:802px;top:695px">=</div>');
-  const rip=el('<div class="rip" style="left:84px;top:78px"></div>',c3);
+  const most = mostrador('1ª Pesagem', '2ª Pesagem');
+  const R1 = 412, R2 = 96;
+  const c1 = cartao(122, 662, '', '1ª Pesagem', 'carroça cheia', R1), c2 = cartao(492, 662, '', '2ª Pesagem', 'carroça vazia', R2),
+        c3 = cartao(862, 662, 'v', 'Peso Bruto', 'a carga', R1 - R2, { res: true });
+  const oM = op(455, 695, '−'), oI = op(825, 695, '='), rip = onda(c3, 84, 78);
 
   // ================= tempos (as âncoras da cena 2D)
-  const j0=W(0,'antes')-.3,tta=W(0,'tara'),tna=W(0,'nao'),tsa=W(0,'saco'),ttb=W(0,'tambor'),tcc=W(0,'cacamba'),
-        tim=W(0,'impureza'),tsj=W(0,'sujeira'),tte=W(0,'terra'),tbo=W(0,'borracha'),tpl=W(0,'plastico');
-  const tl1=W(1,'liquido'),tbr=W(1,'bruto'),tm1=W(1,'menos'),tt1=W(1,'tara'),tm2=W(1,'menos',2),ti1=W(1,'impureza'),
-        tl2=W(1,'liquido',2),ten=W(1,'entra'),tes=W(1,'estoque');
-  const tsu=W(2,'sucata'),tcr=W(2,'carroca'),tdu=W(2,'dupla'),tch=W(2,'cheio'),tde=W(2,'descarrega'),tp2=W(2,'pesa',2),
-        tvz=W(2,'vazio'),tdi=W(2,'diferenca'),tca=W(2,'carga');
-  const TX=tsu-.1,L1=L(1)-.2,chegou=tcr+Math.max(1.2,tdu-tcr+.3),X0=PX+.45-6.0,X1=PX-.45;
+  const j0 = W(0, 'antes') - .3, tta = W(0, 'tara'), tna = W(0, 'nao'), tsa = W(0, 'saco'), ttb = W(0, 'tambor'), tcc = W(0, 'cacamba'),
+        tim = W(0, 'impureza'), tsj = W(0, 'sujeira'), tte = W(0, 'terra'), tbo = W(0, 'borracha'), tpl = W(0, 'plastico');
+  const tl1 = W(1, 'liquido'), tbr = W(1, 'bruto'), tm1 = W(1, 'menos'), tt1 = W(1, 'tara'), tm2 = W(1, 'menos', 2), ti1 = W(1, 'impureza'),
+        tl2 = W(1, 'liquido', 2), ten = W(1, 'entra'), tes = W(1, 'estoque');
+  const tsu = W(2, 'sucata'), tcr = W(2, 'carroca'), tdu = W(2, 'dupla'), tch = W(2, 'cheio'), tde = W(2, 'descarrega'), tp2 = W(2, 'pesa', 2),
+        tvz = W(2, 'vazio'), tdi = W(2, 'diferenca'), tca = W(2, 'carga');
+  const TX = tsu - .1, L1 = L(1) - .2, chegou = tcr + Math.max(1.2, tdu - tcr + .3), X0 = PX + .45 - 6.0, X1 = PX - .45;
   // câmera: perto da tara; abre para tara + impureza na "impureza"; desce para o bruto na fala 2; viaja para a balança
-  CK=[[0,{x:XA,y:.42,z:.05,d:7.2,az:-.07,el:.34,oy:-6}],
-      [tim-.7,{x:XA+.1,y:.42,z:.05,d:6.8,az:-.03,el:.34,oy:-6},'lin'],
-      [tim+.8,{x:.08,y:.4,z:.5,d:10.9,az:0,el:.37,oy:-8},'eio'],
-      [TX,{x:.12,y:.4,z:.6,d:10.3,az:.07,el:.38,oy:-4},'lin'],
-      [TX+2.7,{x:PX-.75,y:.45,z:PZ+.3,d:10.6,az:-.1,el:.3,oy:-22},'eio',2.2],
-      [60,{x:PX-.75,y:.45,z:PZ+.3,d:9.9,az:-.03,el:.3,oy:-22},'lin']];
-  const comp=(c,c0,c1,p)=>c.copy(c0).lerp(c1,p);
-  const CF=tara.map(o=>o.mats.map(([m,c])=>new THREE.Color(c)));
+  camera([[0, { x: XA, y: .42, z: .05, d: 7.2, az: -.07, el: .34, oy: -6 }],
+    [tim - .7, { x: XA + .1, y: .42, z: .05, d: 6.8, az: -.03, el: .34, oy: -6 }, 'lin'],
+    [tim + .8, { x: .08, y: .4, z: .5, d: 10.9, az: 0, el: .37, oy: -8 }, 'eio'],
+    [TX, { x: .12, y: .4, z: .6, d: 10.3, az: .07, el: .38, oy: -4 }, 'lin'],
+    [TX + 2.7, { x: PX - .75, y: .45, z: PZ + .3, d: 10.6, az: -.1, el: .3, oy: -22 }, 'eio', 2.2],
+    [60, { x: PX - .75, y: .45, z: PZ + .3, d: 9.9, az: -.03, el: .3, oy: -22 }, 'lin']]);
 
-  return t=>{
-    const k=pose(t);aplicaCam(k);
+  return t => {
     // ---------- parte 1 (3D)
-    P1.visible=t<TX+3;
-    tara.forEach((o,i)=>{cresce(o.g,t,tta-.05+i*.12,.65);const a=[tsa,ttb,tcc][i]-.15,p=eo(pr(t,a,.5));
-      o.mats.forEach(([m],j)=>comp(m.color,ARG,CF[i][j],p));pulso(o.g,t,a,.08,.7)});
-    cresce(GI,t,tim-.1,.7,.25);
-    for(const [c,a] of [['terra',tte],['borracha',tbo],['plastico',tpl]])imp[c].forEach((o,i)=>{const p=eo(pr(t,a-.12+i*.05,.4));
-      o.visible=p>0;o.scale.copy(o.userData.s0).multiplyScalar(Math.max(1e-4,p))});
-    const pB=cresce(GB,t,tbr-.3,.6,.3);
+    P1.visible = t < TX + 3;
+    tara.forEach((g, i) => { cresce(g, t, tta - .05 + i * .12, .65); const a = [tsa, ttb, tcc][i] - .15; tinge(g, eo(pr(t, a, .5))); pulso(g, t, a, .08, .7); });
+    cresce(GI, t, tim - .1, .7, .25);
+    for (const [c, a] of [['terra', tte], ['borracha', tbo], ['plastico', tpl]]) imp[c].forEach((o, i) => { const p = eo(pr(t, a - .12 + i * .05, .4));
+      o.visible = p > 0; o.scale.copy(o.userData.s0).multiplyScalar(Math.max(1e-4, p)); });
+    const pB = cresce(GB, t, tbr - .3, .6, .3);
     // a tara (o saco) sobe e vai para o grupo da tara, encolhendo
-    const qT=eio(pr(t,tt1-.1,1.15));bag.visible=qT<.999;
-    bag.position.set(lerp(0,XA-B[0],qT),lerp(0,.85,qT)+1.0*Math.sin(PI*qT),lerp(0,-B[2],qT));
-    bag.scale.setScalar(Math.max(1e-4,1-qT*qT));bag.rotation.z=.5*qT;
+    const qT = eio(pr(t, tt1 - .1, 1.15)); bag.visible = qT < .999;
+    bag.position.set(lerp(0, XA - B[0], qT), lerp(0, .85, qT) + 1.0 * Math.sin(PI * qT), lerp(0, -B[2], qT));
+    bag.scale.setScalar(Math.max(1e-4, 1 - qT * qT)); bag.rotation.z = .5 * qT;
     // a impureza sai do bruto e voa para o monte
-    voa.forEach((o,i)=>{const lp=o.userData.loc,q=eio(pr(t,ti1-.12+i*.06,1.0)),s0=o.userData.s0;
-      const x0=B[0]+lp[0]*pB,y0=lp[1]*pB,z0=B[2]+lp[2]*pB,x1=XB-.55+.07*i,y1=.3,z1=.25+.03*i;
-      o.visible=pB>0&&q<.999;o.position.set(lerp(x0,x1,q),lerp(y0,y1,q)+.28*Math.sin(PI*q),lerp(z0,z1,q));
-      o.scale.copy(s0).multiplyScalar(Math.max(1e-4,pB*(q<.75?1:1-(q-.75)/.25)))});
-    destaque(anB,ondB,t,tl2-.1);anB.material.opacity*=1-eo(pr(t,ten-.3,.4));
+    voa.forEach((o, i) => { const lp = o.userData.loc, q = eio(pr(t, ti1 - .12 + i * .06, 1.0)), s0 = o.userData.s0;
+      const x0 = B[0] + lp[0] * pB, y0 = lp[1] * pB, z0 = B[2] + lp[2] * pB, x1 = XB - .55 + .07 * i, y1 = .3, z1 = .25 + .03 * i;
+      o.visible = pB > 0 && q < .999; o.position.set(lerp(x0, x1, q), lerp(y0, y1, q) + .28 * Math.sin(PI * q), lerp(z0, z1, q));
+      o.scale.copy(s0).multiplyScalar(Math.max(1e-4, pB * (q < .75 ? 1 : 1 - (q - .75) / .25))); });
+    destaque(anB, ondB, t, tl2 - .1); anB.material.opacity *= 1 - eo(pr(t, ten - .3, .4));
     // o líquido entra no estoque: o monte limpo desliza para o palete e vira o fardo de cobre
-    cresce(GE,t,ten-.45,.6,.25);
-    const qE=eio(pr(t,ten-.05,.8)),as=eo(pr(t,tt1+.35,.7)),se=Math.max(1e-4,1-.65*qE*qE);
-    heap.position.set((EST[0]-B[0]+.32)*qE,.12*qE+.25*Math.sin(PI*qE),(EST[2]-B[2])*qE);
-    heap.scale.set((1+.22*as)*se,(1-.24*as)*se,(1+.22*as)*se);heap.visible=qE<.98;mB.material.opacity=mB.userData.op*(1-qE);
-    fCu.visible=qE>.6;fCu.scale.setScalar(Math.max(1e-4,eo((qE-.6)/.4)));pulso(fCu,t,tes,.06,.6);
+    cresce(GE, t, ten - .45, .6, .25);
+    const qE = eio(pr(t, ten - .05, .8)), as = eo(pr(t, tt1 + .35, .7)), se = Math.max(1e-4, 1 - .65 * qE * qE);
+    heap.position.set((EST[0] - B[0] + .32) * qE, .12 * qE + .25 * Math.sin(PI * qE), (EST[2] - B[2]) * qE);
+    heap.scale.set((1 + .22 * as) * se, (1 - .24 * as) * se, (1 + .22 * as) * se); heap.visible = qE < .98; mB.material.opacity = mB.userData.op * (1 - qE);
+    fCu.visible = qE > .6; fCu.scale.setScalar(Math.max(1e-4, eo((qE - .6) / .4))); pulso(fCu, t, tes, .06, .6);
     // ---------- parte 2 (3D)
-    const pa=eio(pr(t,tcr,chegou-tcr)),xc=lerp(X0,X1,pa);
-    CAR.position.set(xc,altura(xc),PZ);rodas.forEach(r=>r.rotation.z=-(xc-X1)/.36);
-    carga.forEach((o,i)=>{const lp=o.userData.loc,q=eio(pr(t,tde+.1+i*.055,.75)),a=alvo[i];
-      const x0=xc+lp[0],y0=altura(xc)+lp[1],z0=PZ+lp[2],x1=MON[0]+a[0],y1=a[1],z1=MON[2]+a[2];
-      o.position.set(lerp(x0,x1,q),lerp(y0,y1,q)+.6*Math.sin(PI*q),lerp(z0,z1,q));
-      o.rotation.set(o.userData.r0.x+2.2*q,o.userData.r0.y+1.2*q,o.userData.r0.z)});
-    mM.material.opacity=.3*eo(pr(t,tde+.4,1.2));destaque(anM,ondM,t,tca-.15);
-    const v2=t>TX-.5;P2.visible=v2;CAR.visible=v2;carga.forEach(o=>o.visible=v2);
-    RD.render(CENA,CAM);
+    const pa = eio(pr(t, tcr, chegou - tcr)), xc = lerp(X0, X1, pa);
+    CAR.position.set(xc, altura(xc), PZ); rodas.forEach(r => { r.rotation.z = -(xc - X1) / .36; });
+    carga.forEach((o, i) => { const lp = o.userData.loc, q = eio(pr(t, tde + .1 + i * .055, .75)), a = alvo[i];
+      const x0 = xc + lp[0], y0 = altura(xc) + lp[1], z0 = PZ + lp[2], x1 = MON[0] + a[0], y1 = a[1], z1 = MON[2] + a[2];
+      o.position.set(lerp(x0, x1, q), lerp(y0, y1, q) + .6 * Math.sin(PI * q), lerp(z0, z1, q));
+      o.rotation.set(o.userData.r0.x + 2.2 * q, o.userData.r0.y + 1.2 * q, o.userData.r0.z); });
+    mM.material.opacity = .3 * eo(pr(t, tde + .4, 1.2)); destaque(anM, ondM, t, tca - .15);
+    const v2 = t > TX - .5; P2.visible = v2; CAR.visible = v2; carga.forEach(o => { o.visible = v2; });
 
     // ---------- rótulos
-    posTitulo(tit,t,j0-.6,tta-.55);vis(h1,t,-9,TX,{dy:0,sc:1});vis(h2,t,TX+.05,1e9,{dy:10,sc:1});
-    vis(sTa,t,tta-.1,TX,{dy:12});vis(sTa.lastChild,t,tna-.1,1e9,{dy:6});ancora(sTa,[XA,1.12,0],.5,1);
-    pulse(sTa.firstChild,t,tt1+.75,.07,.7);
-    tara.forEach((o,i)=>{const e=cTa[i];vis(e,t,[tsa,ttb,tcc][i]-.15,L1,{dy:8,sc:.85});ancora(e,[o.g.position.x,0,o.g.position.z+.5],.5,0,0,10)});
-    vis(sIm,t,tim-.1,TX,{dy:12});vis(sIm.lastChild,t,tsj-.1,1e9,{dy:6});ancora(sIm,[XB,.95,0],.5,1);
-    pulse(sIm.firstChild,t,ti1+.8,.07,.7);
-    cIm.forEach((e,i)=>{vis(e,t,[tte,tbo,tpl][i]-.1,L1,{dy:8,sc:.85});ancora(e,[XB+(i-1)*.78,0,.95],.5,0,0,10)});
-    vis(k4,t,tl1-.1,TX,{dy:20,sc:.94});vis(o3,t,tl1+.15,TX,{sc:.6,dy:0});
-    vis(k1,t,tbr-.15,TX,{dy:20});vis(o1,t,tm1-.1,TX,{sc:.6,dy:0});vis(k2,t,tt1-.15,TX,{dy:20});
-    vis(o2,t,tm2-.1,TX,{sc:.6,dy:0});vis(k3,t,ti1-.15,TX,{dy:20});
-    pulse(k4,t,tl2,.05,.8);ripple(ripL,t,tl2);
-    vis(sEs,t,ten-.05,TX,{dy:12});ancora(sEs,[EST[0]+.72,.28,EST[2]],0,.5,10,0);pulse(sEs,t,tes,.06,.7);
+    posTitulo(tit, t, j0 - .6, tta - .55); vis(h1, t, -9, TX, { dy: 0, sc: 1 }); vis(h2, t, TX + .05, 1e9, { dy: 10, sc: 1 });
+    vis(sTa, t, tta - .1, TX, { dy: 12 }); vis(sTa.lastChild, t, tna - .1, 1e9, { dy: 6 }); ancora(sTa, [XA, 1.12, 0], .5, 1);
+    pulse(sTa.firstChild, t, tt1 + .75, .07, .7);
+    tara.forEach((g, i) => { const e = cTa[i]; vis(e, t, [tsa, ttb, tcc][i] - .15, L1, { dy: 8, sc: .85 }); ancora(e, [g.position.x, 0, g.position.z + .5], .5, 0, 0, 10); });
+    vis(sIm, t, tim - .1, TX, { dy: 12 }); vis(sIm.lastChild, t, tsj - .1, 1e9, { dy: 6 }); ancora(sIm, [XB, .95, 0], .5, 1);
+    pulse(sIm.firstChild, t, ti1 + .8, .07, .7);
+    cIm.forEach((e, i) => { vis(e, t, [tte, tbo, tpl][i] - .1, L1, { dy: 8, sc: .85 }); ancora(e, [XB + (i - 1) * .78, 0, .95], .5, 0, 0, 10); });
+    vis(k4, t, tl1 - .1, TX, { dy: 20, sc: .94 }); vis(o3, t, tl1 + .15, TX, { sc: .6, dy: 0 });
+    vis(k1, t, tbr - .15, TX, { dy: 20 }); vis(o1, t, tm1 - .1, TX, { sc: .6, dy: 0 }); vis(k2, t, tt1 - .15, TX, { dy: 20 });
+    vis(o2, t, tm2 - .1, TX, { sc: .6, dy: 0 }); vis(k3, t, ti1 - .15, TX, { dy: 20 });
+    pulse(k4, t, tl2, .05, .8); ripple(ripL, t, tl2);
+    vis(sEs, t, ten - .05, TX, { dy: 12 }); ancora(sEs, [EST[0] + .72, .28, EST[2]], 0, .5, 10, 0); pulse(sEs, t, tes, .06, .7);
     // parte 2
-    vis(most,t,TX+1.9,1e9,{dy:10});ancora(most,TOPO,.5,1,0,4);
-    if(t<tvz-.1)conta(mn,t,chegou-.15,.9,0,R1);else conta(mn,t,tvz-.1,.65,R1,R2);
-    const lt=eo(pr(t,tvz-.1,.35));m1.style.opacity=1-lt;m2.style.opacity=lt;
-    pulse(most,t,tch,.05,.7);pulse(most,t,tvz+.7,.05,.7);
-    vis(c1,t,tch-.15,1e9,{dy:22});vis(oM,t,tp2-.1,1e9,{sc:.6,dy:0});vis(c2,t,tvz+.3,1e9,{dy:22});
-    vis(oI,t,tdi-.1,1e9,{sc:.6,dy:0});vis(c3,t,tdi+.12,1e9,{dy:22,sc:.94});
-    pulse(c3,t,tca,.04,.8);ripple(rip,t,tca);
+    vis(most, t, TX + 1.9, 1e9, { dy: 10 }); ancora(most, TOPO, .5, 1, 0, 4);
+    if (t < tvz - .1) conta(most.mn, t, chegou - .15, .9, 0, R1); else conta(most.mn, t, tvz - .1, .65, R1, R2);
+    most.troca(t, tvz - .1); pulse(most, t, tch, .05, .7); pulse(most, t, tvz + .7, .05, .7);
+    vis(c1, t, tch - .15, 1e9, { dy: 22 }); vis(oM, t, tp2 - .1, 1e9, { sc: .6, dy: 0 }); vis(c2, t, tvz + .3, 1e9, { dy: 22 });
+    vis(oI, t, tdi - .1, 1e9, { sc: .6, dy: 0 }); vis(c3, t, tdi + .12, 1e9, { dy: 22, sc: .94 });
+    pulse(c3, t, tca, .04, .8); ripple(rip, t, tca);
   };
-}
-
-window.setup=d=>{D=d;OV.innerHTML='';if(!RD)base();RENDER=monta();for(const t of [20,33,0])RENDER(t);return true};
-window.R=t=>{RENDER(t);return true};
+}, { aquece: [20, 33] });
 </script></body></html>

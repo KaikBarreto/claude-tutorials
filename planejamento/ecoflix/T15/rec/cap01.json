@@ -1,0 +1,556 @@
+{
+ "name": "t15-cap01",
+ "title": "T15 · Cap. 1 · O plano de contas (narração ESTIMADA 165,2 s; marcas L1..L13 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "seed": "t15-cap01",
+ "pace": 0.5,
+ "cps": 40,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 470
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true"
+ },
+ "seedExtra": [
+  "t14/inicio",
+  "t14/apos-cap02",
+  "t14/apos-cap03",
+  "t14/apos-cap04",
+  "t14/apos-cap06",
+  "t14/apos-cap07",
+  "t14/apos-cap08",
+  "t14/apos-cap09",
+  "t14/apos-cap10",
+  "t14/apos-cap11",
+  "t14/apos-cap12",
+  "t14/apos-cap14",
+  "t15/inicio"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "waitFor",
+   "target": {
+    "label": "E-mail"
+   },
+   "timeout": 30
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "E-mail"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "Senha",
+    "exact": true
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Rafael!",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|Algo deu errado|Falha ao|Something went wrong|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&!/fica indispon/i.test(m[0])&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{document.querySelectorAll('[data-sonner-toast][data-type=error]').forEach(t=>{const s='TOAST DE ERRO: '+t.textContent.trim().slice(0,90);if(!window.__avisos.includes(s)&&window.__avisos.length<10)window.__avisos.push(s)})},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Financeiro",
+    "exact": true
+   },
+   "at": 2.81,
+   "label": "menu Financeiro",
+   "unless": {
+    "role": "link",
+    "name": "Categorias Financeiras"
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "link",
+    "name": "Categorias Financeiras"
+   },
+   "at": 3.97,
+   "label": "Categorias Financeiras"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie as categorias de receitas e despesas",
+   "timeout": 15
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 5.85
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Aluguel de caçamba",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.6,
+   "at": 17.03,
+   "label": "Aluguel de caçamba (receita)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"Categorias de despesa\"&&e.getClientRects().length);if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-120);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 18.75,
+   "label": "desce para as despesas"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Folha salarial",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.15,
+   "at": 21.2,
+   "label": "Folha salarial",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Energia elétrica",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.15,
+   "at": 22.13,
+   "label": "Energia elétrica",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Combustível",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.3,
+   "at": 23.05,
+   "label": "Combustível",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 23.88
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 34.33
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Impostos e deduções",
+    "within": "main"
+   },
+   "seconds": 0.4,
+   "at": 36.94,
+   "label": "divisória Impostos e deduções",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Custos adicionais",
+    "within": "main"
+   },
+   "seconds": 0.4,
+   "at": 38.07,
+   "label": "divisória Custos adicionais",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Despesas operacionais (OPEX)",
+    "within": "main"
+   },
+   "seconds": 0.6,
+   "at": 39.67,
+   "label": "divisória Despesas operacionais (OPEX)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 45.54
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Frete",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.6,
+   "at": 46.09,
+   "label": "cartão Frete (frete de compra)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Ações de Frete",
+    "exact": true
+   },
+   "at": 55.33,
+   "label": "Ações de Frete"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Adicionar subcategoria"
+   },
+   "at": 56.09,
+   "label": "Adicionar subcategoria"
+  },
+  {
+   "do": "waitFor",
+   "text": "Nova subcategoria",
+   "timeout": 8
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#financial-category-name"
+   },
+   "text": "Frete de entrega",
+   "at": 57.84,
+   "label": "Nome: Frete de entrega"
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 59.25
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]:has-text(\"Frete\")"
+   },
+   "seconds": 0.6,
+   "at": 60.79,
+   "label": "Categoria principal: Frete",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]:has-text(\"Custos adicionais\")"
+   },
+   "seconds": 0.6,
+   "at": 64.21,
+   "label": "Onde aparece no DRE: Custos adicionais (do pai)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]:has-text(\"Custos adicionais\")"
+   },
+   "at": 71.25,
+   "label": "abre Onde aparece no DRE"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Despesas operacionais (OPEX)"
+   },
+   "at": 72.05,
+   "label": "Despesas operacionais (OPEX)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Prévia no DRE padrão",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.0,
+   "at": 74.69,
+   "label": "Prévia no DRE padrão (ZOOM)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 78.13
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Criar categoria",
+    "exact": true
+   },
+   "at": 78.83,
+   "label": "Criar categoria"
+  },
+  {
+   "do": "waitFor",
+   "text": "Categoria criada",
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Subcategorias podem pertencer a outro grupo DRE",
+    "within": "main"
+   },
+   "seconds": 0.8,
+   "at": 83.31,
+   "label": "selo e nota do Frete de entrega (ZOOM)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Frete de entrega\", \"Subcategorias podem pertencer a outro grupo DRE\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,250));}return out})()",
+   "label": "confere subcategoria com o selo"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Subcategorias podem pertencer a outro grupo DRE",
+    "within": "main"
+   },
+   "seconds": 0.6,
+   "at": 93.34,
+   "label": "a nota do selo",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 96.02
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"Categorias de despesa\"&&e.getClientRects().length);if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-170);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/500),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 96.02,
+   "label": "sobe até Categorias de despesa"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Nova",
+    "exact": true,
+    "nth": 1
+   },
+   "at": 97.31,
+   "label": "Nova (despesa)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Nova categoria",
+   "timeout": 8
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#financial-category-name"
+   },
+   "text": "Máquinas e veículos",
+   "at": 99.63,
+   "label": "Nome: Máquinas e veículos"
+  },
+  {
+   "do": "mark",
+   "name": "L9",
+   "at": 102.37
+  },
+  {
+   "do": "mark",
+   "name": "L10",
+   "at": 110.54
+  },
+  {
+   "do": "mark",
+   "name": "L11",
+   "at": 124.86
+  },
+  {
+   "do": "mark",
+   "name": "L12",
+   "at": 130.3
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]:has-text(\"Despesas operacionais\")"
+   },
+   "at": 132.65,
+   "label": "abre Onde aparece no DRE"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Não compõe o DRE"
+   },
+   "at": 133.38,
+   "label": "Não compõe o DRE"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Prévia no DRE padrão",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.8,
+   "at": 137.75,
+   "label": "prévia: informativo, não altera o resultado (ZOOM)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||document.scrollingElement};const el=[...document.querySelectorAll('[role=dialog] *')].find(e=>e.children.length===0&&e.textContent.trim()===\"Grupo no Fluxo de Caixa (DFC)\"&&e.getClientRects().length);if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-330);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/500),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 139.35,
+   "label": "desce a janela até o DFC"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]:has-text(\"Atividades operacionais\")"
+   },
+   "at": 141.22,
+   "label": "abre Grupo no Fluxo de Caixa (DFC)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Atividades de investimento"
+   },
+   "at": 144.99,
+   "label": "Atividades de investimento"
+  },
+  {
+   "do": "mark",
+   "name": "L13",
+   "at": 146.97
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Criar categoria",
+    "exact": true
+   },
+   "at": 147.27,
+   "label": "Criar categoria"
+  },
+  {
+   "do": "waitFor",
+   "text": "Categoria criada",
+   "timeout": 8
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"M\\u00e1quinas e ve\\u00edculos\"&&e.getClientRects().length);if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-420);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 148.64,
+   "label": "desce até Não compõe o DRE"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Máquinas e veículos",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.8,
+   "at": 149.87,
+   "label": "Máquinas e veículos em Não compõe o DRE",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Não compõe o DRE\", \"Máquinas e veículos\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,250));}return out})()",
+   "label": "confere Máquinas e veículos na divisória Não compõe o DRE"
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 165.25
+  }
+ ]
+}

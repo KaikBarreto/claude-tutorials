@@ -105,6 +105,28 @@
    "seconds": 0.8
   },
   {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Coletas & Logística",
+    "within": "aside, [data-sidebar=sidebar]"
+   }
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "role": "link",
+    "name": "Frota",
+    "exact": true,
+    "within": "aside, [data-sidebar=sidebar]"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "wait",
+   "seconds": 0.5
+  },
+  {
    "do": "eval",
    "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel|Algo deu errado|Falha ao|Transi[çc][ãa]o inv[áa]lida|n[ãa]o encontrad|Localiza[çc][ãa]o n[ãa]o registrada|Sem sinal de GPS/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');if(f&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA ECOFLIX'))window.__avisos.push('TRILHA ECOFLIX')},300);return 1})()"
   },
@@ -127,7 +149,7 @@
     "exact": true,
     "within": "aside, [data-sidebar=sidebar]"
    },
-   "at": 1.35,
+   "at": 1.61,
    "label": "menu Frota"
   },
   {
@@ -136,30 +158,28 @@
    "timeout": 15
   },
   {
-   "do": "hover",
-   "target": {
-    "role": "tab",
-    "name": "Veículos",
-    "exact": true
+   "do": "scroll",
+   "point": {
+    "x": 340,
+    "y": 198
    },
-   "seconds": 0.3,
-   "at": 3.55,
-   "label": "aba Veículos",
-   "optional": true,
-   "timeout": 4
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "at": 3.7,
+   "label": "aba Veículos"
   },
   {
-   "do": "hover",
-   "target": {
-    "role": "tab",
-    "name": "Motoristas",
-    "exact": true
+   "do": "scroll",
+   "point": {
+    "x": 460,
+    "y": 198
    },
-   "seconds": 0.3,
-   "at": 4.61,
-   "label": "aba Motoristas",
-   "optional": true,
-   "timeout": 4
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "at": 4.76,
+   "label": "aba Motoristas"
   },
   {
    "do": "hover",
@@ -168,7 +188,7 @@
     "exact": true
    },
    "seconds": 0.8,
-   "at": 6.66,
+   "at": 5.76,
    "label": "mesma frota da pesagem",
    "optional": true,
    "timeout": 4
@@ -178,7 +198,7 @@
    "target": {
     "selector": "main button:has-text('FKD2E41'):has-text('Caminhão truck')"
    },
-   "at": 8.99,
+   "at": 8.49,
    "label": "FKD2E41"
   },
   {
@@ -194,26 +214,11 @@
   {
    "do": "hover",
    "target": {
-    "text": "Tara",
-    "within": "main",
-    "exact": true
+    "selector": "main div:has(> h3:text-is('Capacidade operacional')) + div.grid"
    },
-   "seconds": 0.3,
-   "at": 11.94,
-   "label": "Tara do FKD2E41",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "Capacidade",
-    "within": "main",
-    "exact": true
-   },
-   "seconds": 1.0,
-   "at": 12.63,
-   "label": "Capacidade do FKD2E41",
+   "seconds": 2.0,
+   "at": 11.04,
+   "label": "Tara e Capacidade do FKD2E41",
    "optional": true,
    "timeout": 4
   },
@@ -234,7 +239,7 @@
     "name": "Novo veículo",
     "exact": true
    },
-   "at": 28.87,
+   "at": 28.47,
    "label": "Novo veículo"
   },
   {
@@ -249,7 +254,6 @@
    "target": {
     "selector": "#veiculo-placa"
    },
-   "at": 30.61,
    "label": "Placa (campo)"
   },
   {
@@ -268,7 +272,6 @@
    "target": {
     "selector": "#veiculo-descricao"
    },
-   "at": 32.13,
    "label": "Descrição / Apelido (campo)"
   },
   {
@@ -291,18 +294,17 @@
    "target": {
     "selector": "#veiculo-uf"
    },
-   "at": 34.91,
+   "at": 37.7,
    "label": "abre UF de licenciamento"
   },
   {
    "do": "type",
    "target": {
-    "selector": "#veiculo-uf"
+    "selector": "[role=listbox]"
    },
    "text": "SP",
    "cps": 40,
-   "at": 38.7,
-   "label": "UF: SP (digitado na lista)",
+   "label": "UF: procura SP",
    "noClick": true
   },
   {
@@ -311,43 +313,70 @@
    "label": "UF: SP"
   },
   {
-   "do": "click",
-   "target": {
-    "selector": "#veiculo-categoria"
-   },
-   "at": 39.01,
-   "label": "abre Tipo"
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "option",
-    "name": "Veículo único (truck, toco, utilitário)",
-    "exact": true
-   },
-   "at": 40.09,
-   "label": "Tipo: Veículo único"
-  },
-  {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Tipo de rodado\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-420);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/500),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
    "label": "desce a janela do veículo"
   },
   {
-   "do": "click",
-   "target": {
-    "selector": "#veiculo-rodado"
-   },
-   "label": "abre Tipo de rodado"
+   "do": "eval",
+   "js": "(()=>{const t=[...document.querySelectorAll(\"#veiculo-categoria\")][0];if(!t)return 'SEM ALVO';t.focus();return 'foco'})()",
+   "at": 40.3,
+   "label": "Tipo: Veículo único (foco)"
   },
   {
-   "do": "click",
+   "do": "press",
+   "key": "Enter",
+   "label": "Tipo: Veículo único (abre)"
+  },
+  {
+   "do": "waitFor",
+   "selector": "[role=listbox]",
+   "timeout": 5
+  },
+  {
+   "do": "type",
    "target": {
-    "role": "option",
-    "name": "Toco",
-    "exact": true
+    "selector": "[role=listbox]"
    },
-   "at": 40.7,
+   "text": "V",
+   "cps": 40,
+   "label": "Tipo: Veículo único (procura)",
+   "noClick": true
+  },
+  {
+   "do": "press",
+   "key": "Enter",
+   "label": "Tipo: Veículo único"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const t=[...document.querySelectorAll(\"#veiculo-rodado\")][0];if(!t)return 'SEM ALVO';t.focus();return 'foco'})()",
+   "at": 40.9,
+   "label": "Tipo de rodado: Toco (foco)"
+  },
+  {
+   "do": "press",
+   "key": "Enter",
+   "label": "Tipo de rodado: Toco (abre)"
+  },
+  {
+   "do": "waitFor",
+   "selector": "[role=listbox]",
+   "timeout": 5
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=listbox]"
+   },
+   "text": "To",
+   "cps": 40,
+   "label": "Tipo de rodado: Toco (procura)",
+   "noClick": true
+  },
+  {
+   "do": "press",
+   "key": "Enter",
    "label": "Tipo de rodado: Toco"
   },
   {
@@ -379,7 +408,7 @@
    "target": {
     "selector": "#veiculo-cap-kg"
    },
-   "at": 44.67,
+   "at": 45.03,
    "label": "Capacidade (campo)"
   },
   {
@@ -435,12 +464,10 @@
   {
    "do": "hover",
    "target": {
-    "text": "FVL8A52",
-    "within": "main",
-    "exact": true
+    "selector": "main button:has-text('FVL8A52')"
    },
    "seconds": 1.0,
-   "at": 49.67,
+   "at": 48.77,
    "label": "FVL8A52 na frota",
    "optional": true,
    "timeout": 4
@@ -457,7 +484,7 @@
     "name": "Motoristas",
     "exact": true
    },
-   "at": 54.21,
+   "at": 53.71,
    "label": "aba Motoristas"
   },
   {
@@ -467,7 +494,7 @@
     "name": "Novo motorista",
     "exact": true
    },
-   "at": 56.26,
+   "at": 55.76,
    "label": "Novo motorista"
   },
   {
@@ -478,17 +505,17 @@
    "timeout": 10
   },
   {
+   "do": "mark",
+   "name": "L9",
+   "at": 58.42
+  },
+  {
    "do": "click",
    "target": {
     "selector": "#motorista-nome"
    },
-   "at": 58.07,
+   "at": 58.42,
    "label": "Nome (campo)"
-  },
-  {
-   "do": "mark",
-   "name": "L9",
-   "at": 58.42
   },
   {
    "do": "type",
@@ -497,7 +524,6 @@
    },
    "text": "Sérgio Paiva",
    "cps": 40,
-   "at": 58.72,
    "label": "Nome: Sérgio Paiva",
    "noClick": true
   },
@@ -506,7 +532,7 @@
    "target": {
     "selector": "#motorista-doc"
    },
-   "at": 61.74,
+   "at": 61.65,
    "label": "CPF (campo)"
   },
   {
@@ -516,16 +542,13 @@
    },
    "text": "46371820508",
    "cps": 40,
-   "at": 62.9,
    "label": "CPF",
    "noClick": true
   },
   {
-   "do": "click",
-   "target": {
-    "selector": "#motorista-tel"
-   },
-   "label": "Telefone (campo)"
+   "do": "press",
+   "key": "Tab",
+   "label": "vai ao Telefone"
   },
   {
    "do": "type",
@@ -547,7 +570,7 @@
    "target": {
     "selector": "#motorista-cnh"
    },
-   "at": 66.06,
+   "at": 65.56,
    "label": "CNH (campo)"
   },
   {
@@ -566,17 +589,21 @@
    "target": {
     "selector": "#motorista-cnh-cat"
    },
-   "at": 68.19,
    "label": "abre Categoria"
   },
   {
-   "do": "click",
+   "do": "type",
    "target": {
-    "role": "option",
-    "name": "C",
-    "exact": true
+    "selector": "[role=listbox]"
    },
-   "at": 69.25,
+   "text": "C",
+   "cps": 40,
+   "label": "Categoria: procura C",
+   "noClick": true
+  },
+  {
+   "do": "press",
+   "key": "Enter",
    "label": "Categoria C"
   },
   {
@@ -584,7 +611,7 @@
    "target": {
     "selector": "#motorista-cnh-val"
    },
-   "at": 71.45,
+   "at": 70.95,
    "label": "Validade da CNH (campo)"
   },
   {
@@ -594,7 +621,6 @@
    },
    "text": "18062030",
    "cps": 40,
-   "at": 72.2,
    "label": "Validade da CNH 18/06/2030",
    "noClick": true
   },
@@ -606,7 +632,7 @@
     "exact": true,
     "within": "[role=dialog]"
    },
-   "at": 72.56,
+   "at": 72.36,
    "label": "Cadastrar motorista"
   },
   {
@@ -622,12 +648,10 @@
   {
    "do": "hover",
    "target": {
-    "text": "Sérgio Paiva",
-    "within": "main",
-    "exact": true
+    "selector": "main button:has-text('Sérgio Paiva')"
    },
-   "seconds": 1.2,
-   "at": 75.37,
+   "seconds": 1.5,
+   "at": 74.47,
    "label": "Sérgio Paiva na lista",
    "optional": true,
    "timeout": 4

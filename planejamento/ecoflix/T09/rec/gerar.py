@@ -103,6 +103,15 @@ def js_pdf(k, nome):
         k, k, json.dumps(nome))
 
 
+def js_pdf_tamanho(k, nome, limite=2_500_000):
+    """como js_pdf, mas só devolve o arquivo se ele couber (o relatório de fechamento passa de 15 MB: o actions.json não leva; a cópia
+    para a edição sai de t09_pdfs.py --explorar)"""
+    return ("(async()=>{for(let i=0;i<40&&!(window.__pdfs&&window.__pdfs.length>%d);i++)await new Promise(r=>setTimeout(r,200));"
+            "const b=window.__pdfs&&window.__pdfs[%d];if(!b)return 'SEM PDF';if(b.size>%d)return {pdf:%s,bytes:b.size,grande:true};"
+            "const u=new Uint8Array(await b.arrayBuffer());let s='';for(let i=0;i<u.length;i+=8192)s+=String.fromCharCode.apply(null,u.subarray(i,i+8192));"
+            "return {pdf:%s,bytes:u.length,b64:btoa(s)}})()") % (k, k, limite, json.dumps(nome), json.dumps(nome))
+
+
 def js_aba_html(k, nome, espera_txt):
     """devolve o HTML da k-ésima aba aberta (relatório em HTML escrito pelo app) quando ele já tem `espera_txt`"""
     return ("(async()=>{let w=null,h='';for(let i=0;i<50;i++){w=window.__abas&&window.__abas[%d];try{h=w&&w.document&&w.document.documentElement.outerHTML||''}catch(e){h=''}"
@@ -676,7 +685,7 @@ def cap06():
     c.mark(4)
     abre_menu_linha(c, L_CIDA, c.A(4, 'Pronto:', 1.6), 'menu da compra da Aparecida')
     c.click(ITEM('Ver comprovante'), at=c.A(4, 'Pronto:', 0.7), label='Ver comprovante (abre a aba nova: o PDF entra na edição)')
-    c.ev(js_pdf(0, 'comprovante-aparecida'), label='PDF do comprovante da Aparecida (para a edição: 42 kg, R$ 260,40)')
+    c.ev(js_pdf_tamanho(0, 'comprovante-aparecida'), label='PDF do comprovante da Aparecida (para a edição: 42 kg, R$ 260,40)')
     c.mark(5)
     c.hover(SEL(LINHA(L_VALDIR)), 0.6, at=c.A(5, 'Valdir.', 0.6), label='a compra do Valdir')
     abre_menu_linha(c, L_VALDIR, c.A(5, 'menu,', 1.0), 'menu da compra do Valdir')
@@ -687,12 +696,143 @@ def cap06():
     c.mark(7)
     abre_menu_linha(c, L_VALDIR, c.A(7, 'comprovante', 1.5), 'menu da compra do Valdir')
     c.click(ITEM('Ver comprovante'), at=c.A(7, 'comprovante', 0.6), label='Ver comprovante do Valdir (PDF sem valores, para a edição)')
-    c.ev(js_pdf(1, 'comprovante-valdir-sem-valores'), label='PDF do comprovante do Valdir (para a edição: Ferro misto 280 kg, sem valores)')
+    c.ev(js_pdf_tamanho(1, 'comprovante-valdir-sem-valores'), label='PDF do comprovante do Valdir (para a edição: Ferro misto 280 kg, sem valores)')
     c.mark(8)
     abre_menu_linha(c, L_VALDIR, c.A(8, 'opção', 0.8), 'menu da compra do Valdir')
     c.hover(ITEM('Mostrar valores no comprovante'), 1.2, at=c.A(8, 'Mostrar', 0.6), label='[DESTAQUE] "Mostrar valores no comprovante" (sem clicar)')
     c.press('Escape', at=c.A(8, 'comprovante.', -0.6), label='fecha o menu')
     c.cursor((700, 300), at=c.A(8, 'comprovante.', -0.9), label='cursor sai do menu')
+    c.fim()
+    return c
+
+
+@capitulo
+def cap08():
+    """Relatórios do caixa (setup: a busca "21/10"): Ver comprovante do #70 (L1; o PDF do fechamento entra na edição: L2); Relatório de
+    estoque (L3; o relatório em HTML entra na edição, com a bateria: L4); L5 a tela."""
+    c = Cap(8, setup=setup_historico('21/10'))
+    c.mark(1)
+    c.click(ACOES_CX(70), at=c.A(1, 'ações', 0.7), label='Ações do #70')
+    c.click(ITEM('Ver comprovante'), at=c.A(1, 'Ver', 0.6), label='Ver comprovante (relatório de fechamento em aba nova: PDF na edição)')
+    c.ev(js_pdf_tamanho(0, 'relatorio-fechamento-70'), label='PDF do relatório de fechamento do #70 (para a edição)')
+    c.mark(2)
+    c.cursor((700, 520), at=c.A(2, 'Ele', 0.2), label='cursor descansa (o PDF do fechamento na edição)')
+    c.mark(3)
+    c.click(ACOES_CX(70), at=c.A(3, 'Já', 0.2), label='Ações do #70')
+    c.click(ITEM('Relatório de estoque'), at=c.A(3, 'Relatório', 0.5), label='Relatório de estoque (aba nova: o relatório em HTML na edição)')
+    c.ev(js_aba_html(1, 'relatorio-estoque-70', 'Bateria automotiva'), label='HTML do "Relatório de Estoque do Caixa #70" (para a edição: Bateria automotiva 240 kg, R$ 744,00)')
+    c.mark(4)
+    c.mark(5)
+    c.cursor((700, 520), at=c.A(5, 'Os', 0.2), label='cursor descansa')
+    c.fim()
+    return c
+
+
+ABA_CX = lambda n, quem: TXTX(f'#{n} | Caixa - {quem}', within='main')
+L_BATERIA_CX = "main tbody tr:has-text('Bateria'), main tbody tr:has-text('744,00')"
+
+
+@capitulo
+def cap09():
+    """Reabrir um caixa antigo (setup: a busca "21/10"): Ações > Reabrir caixa (L1-L2); a confirmação e o Caixa (L3); a aba do #70 e a
+    compra da bateria (L4); Editar e o fornecedor trocado (L5, zoom); Finalizar no Pix e Visualizar PDF (L6); de volta ao #70 (L7-L8);
+    Fechar Caixa com o valor esperado (L9); data e hora do fechamento 21/10 17:31 (L10, zoom); Confirmar Fechamento (L11); a aba do
+    meu caixa de hoje (L12)."""
+    c = Cap(9, setup=setup_historico('21/10'))
+    c.mark(1)
+    c.click(ACOES_CX(70), at=c.A(1, 'ações', 0.7), label='Ações do #70 (21/10)')
+    c.hover(ITEM('Reabrir caixa'), 2.0, at=c.A(1, 'Reabrir', 0.6), label='[ZOOM] Reabrir caixa (liberado: o Marcos não tem caixa aberto hoje)')
+    c.mark(2)
+    c.hover(ITEM('Reabrir caixa'), 3.0, at=c.A(2, 'Marcos', 0.6), label='Reabrir caixa (câmera no item)')
+    c.mark(3)
+    c.click(ITEM('Reabrir caixa'), at=c.A(3, 'O', 0.2), label='Reabrir caixa')
+    c.waitfor(text='Reabrir Último Caixa?', timeout=8)
+    c.registra(TXTX('O caixa será reaberto exatamente como estava', within='[role=alertdialog]'), at=c.A(3, 'confirma', 0.2),
+               label='[ZOOM] "O caixa será reaberto exatamente como estava antes do fechamento..." e "Fechado em: 21/10/2026 17:31"')
+    c.click(BTN('Reabrir Caixa'), at=c.A(3, 'Reabrir', 0.7), label='Reabrir Caixa')
+    c.waitfor(target=ABA_CX(70, 'Marcos Antunes'), timeout=15)
+    c.mark(4)
+    c.hover(ABA_CX(70, 'Marcos Antunes'), 0.8, at=c.A(4, 'aba', 0.6), label='[DESTAQUE] a aba "#70 | Caixa - Marcos Antunes"')
+    c.hover(ABA_CX(88, 'Rafael Nogueira'), 0.6, at=c.A(4, 'meu', 0.6), label='a aba "#88 | Caixa - Rafael Nogueira (você)"')
+    c.click(ABA_CX(70, 'Marcos Antunes'), at=c.A(4, 'Dentro', 0.7), label='abre a aba do #70')
+    c.waitfor(target=SEL("main tbody tr:has-text('Depósito Irmãos Siqueira')"), timeout=12)
+    c.ev(js_ate_el("[...document.querySelectorAll('main tbody tr')].find(t=>t.innerText.includes('Depósito Irmãos Siqueira'))", y=420, dur_ms=900),
+         at=c.A(4, 'compra', 0.9), label='desce até o Histórico de Transações (a compra da bateria)')
+    c.hover(SEL("main tbody tr:has-text('Depósito Irmãos Siqueira')"), 0.6, at=c.A(4, 'bateria.', 0.6), label='a compra do Depósito Irmãos Siqueira, R$ 744,00')
+    c.mark(5)
+    c.hover(SEL("main tbody tr:has-text('Depósito Irmãos Siqueira') button"), 0.3, at=c.A(5, 'Editar.', 1.4), label='menu da compra', optional=False, timeout=8)
+    c.click(ITEM('Editar'), at=c.A(5, 'Editar.', 0.6), label='Editar')
+    c.waitfor(text='O pedido será carregado para edição.', timeout=8)
+    c.click(BTN('Editar Pedido', within=DLG), at=c.A(5, 'Como', 0.6), label='Editar Pedido')
+    c.waitfor(target=EDITANDO, timeout=15)
+    c.waitfor(idle=True, timeout=10)
+    c.click(FORN, at=c.A(5, 'fornecedor,', 0.7), label='Fornecedor: Depósito Irmãos Siqueira')
+    c.waitfor(target=PH('Buscar por nome, apelido, CPF/CNPJ ou telefone...'), timeout=8)
+    c.type(PH('Buscar por nome, apelido, CPF/CNPJ ou telefone...'), 'Vale Forte', at=c.A(5, 'troco', 0.05), noClick=True, cps=14, label='busca Vale Forte')
+    c.click(SEL("[role=dialog] button:has-text('Auto Peças Vale Forte')"), at=c.A(5, 'Auto', 0.6), label='Auto Peças Vale Forte')
+    c.waitfor(gone={'role': 'dialog'}, timeout=8)
+    c.confere('main', ['Auto Peças Vale Forte', 'Bateria automotiva', '744,00'], 'Fornecedor Auto Peças Vale Forte e o item igual (R$ 744,00)')
+    c.confere_campos(['240', '3,10'], 'o item: 240 kg a R$ 3,10 (o preço não mudou com o fornecedor)', escopo="main tbody tr:has-text('Bateria automotiva')")
+    c.registra(FORN, at=c.A(5, 'resto', 0.2), label='[ZOOM] Fornecedor "Auto Peças Vale Forte" e o item Bateria automotiva, 240 kg, R$ 744,00')
+    c.hover(SEL("main tbody tr:has-text('Bateria automotiva')"), 1.0, at=c.A(5, 'duzentos', 0.6), label='o item: 240 kg, R$ 744,00')
+    c.mark(6)
+    c.click(FINALIZAR, at=c.A(6, 'Finalizar,', 0.2), label='Finalizar')
+    c.waitfor(text='Finalizar Pedido', timeout=10)
+    c.click(TILE('Pix/Transferência'), at=c.A(6, 'Pix', 0.6), label='Pix/Transferência (Conta Principal)')
+    c.hover(TXTX('Conta Principal', within=DLG), 0.3, at=c.A(6, 'conta', 0.6), label='Conta Principal')
+    c.click(CONFIRMA_PAG, at=c.A(6, 'Confirmar', 0.7), label='CONFIRMAR PAGAMENTO')
+    c.waitfor(text='Deseja imprimir o comprovante de compra?', timeout=15)
+    c.click(BTN('Visualizar PDF'), at=c.A(6, 'comprovante', 0.6), label='Visualizar PDF (aba nova: o comprovante no nome da Auto Peças entra na edição)')
+    c.ev(js_pdf_tamanho(0, 'comprovante-vale-forte-21-10'), label='PDF do comprovante corrigido (para a edição)')
+    c.mark(7)
+    c.click(SEL("main a:has-text('Voltar para o caixa')"), at=c.A(7, 'Repara:', 0.2), label='Voltar para o caixa', noScroll=True)
+    c.waitfor(target=ABA_CX(70, 'Marcos Antunes'), timeout=15)
+    c.click(ABA_CX(70, 'Marcos Antunes'), at=c.A(7, 'dia,', 0.7), label='a aba do #70')
+    c.waitfor(target=SEL("main tbody tr:has-text('Auto Peças Vale Forte')"), timeout=12)
+    c.ev(js_ate_el("[...document.querySelectorAll('main tbody tr')].find(t=>t.innerText.includes('Auto Peças Vale Forte'))", y=420, dur_ms=900),
+         at=c.A(7, 'Marcos.', 0.9), label='desce até a compra corrigida')
+    c.hover(SEL("main tbody tr:has-text('Auto Peças Vale Forte')"), 0.8, at=c.A(7, 'Marcos.', 0.0), label='[DESTAQUE] a compra no caixa do Marcos, agora da Auto Peças Vale Forte')
+    c.mark(8)
+    c.hover(SEL("main [role=tab]:has-text('Todas')"), 1.0, at=c.A(8, 'Todas', 0.6), label='a aba Todas do histórico')
+    c.mark(9)
+    c.ev(js_topo(), at=c.A(9, 'Agora', 0.2), label='sobe para o cartão do caixa')
+    c.click(BTNX('Fechar Caixa'), at=c.A(9, 'fechar', 0.7), label='Fechar Caixa')
+    c.waitfor(text='Valor de Fechamento', timeout=10)
+    c.confere_campos(['612,50'], 'Valor de Fechamento 612,50')
+    c.confere('dlg', ['Fechar Caixa #70', 'Marcos Antunes', '21/10/2026 07:02', 'R$ 612,50'], 'Fechar Caixa #70 do Marcos, esperado R$ 612,50')
+    c.hover(TXTX('Valor esperado pelo sistema', within=DLG), 1.0, at=c.A(9, 'seiscentos', 0.6), label='[ZOOM] Valor de Fechamento 612,50 e "Valor esperado pelo sistema: R$ 612,50"')
+    c.mark(10)
+    c.click(SEL(f"{DLG} button:has(svg.lucide-calendar)"), at=c.A(10, 'data', 0.7), label='a data do fechamento (hoje)')
+    c.click(SEL(f"{POP} button[name=previous-month], {POP} button[aria-label*='anterior' i], {POP} button[aria-label*='previous' i]"), at=c.A(10, 'fim', 0.6), label='mês anterior (outubro)')
+    c.click(SEL(f"{POP} button[name=day]:text-is('21'), {POP} [role=gridcell] button:text-is('21')"), at=c.A(10, 'vinte', 0.6), label='dia 21')
+    c.click(SEL(f"{DLG} input[aria-label=Hora]"), at=c.A(10, 'dezessete', 0.8), label='Hora')
+    c.type(SEL(f"{DLG} input[aria-label=Hora]"), '1731', at=c.A(10, 'dezessete', 0.05), noClick=True, cps=6, label='17:31')
+    c.confere('dlg', ['21/10/2026'], 'a data 21/10/2026 no botão')
+    c.confere_campos(['17:31'], 'a hora 17:31')
+    c.registra(TXTX('Data/hora do fechamento', within=DLG), at=c.A(10, 'trinta', 0.2), label='[ZOOM] "Data/hora do fechamento" com 21/10/2026 e 17:31')
+    c.mark(11)
+    c.click(BTN('Confirmar Fechamento'), at=c.A(11, 'Confirmar', 0.2), label='Confirmar Fechamento')
+    c.waitfor(text='Caixa fechado com sucesso!', timeout=15)
+    c.click(BTN('Não, obrigado'), at=c.A(11, 'reabriu,', 0.6), label='Imprimir Relatório: Não, obrigado')
+    c.mark(12)
+    c.hover(ABA_CX(88, 'Rafael Nogueira'), 1.2, at=c.A(12, 'dica:', 0.6), label='a aba do meu caixa de hoje (#88)')
+    c.cursor((760, 520), at=c.A(12, 'hoje,', 0.3), label='cursor descansa')
+    c.fim()
+    return c
+
+
+@capitulo
+def cap10():
+    """Recapitulando: base da montagem (a edição põe por cima os trechos dos capítulos). A tela Pedidos de Mês passado com os filtros
+    do cap03, já com a bateria no nome da Auto Peças Vale Forte (semente apos-cap09)."""
+    c = Cap(10, setup=setup_pedidos('Mês passado', extra=[{'do': 'click', 'target': FILTROS}, {'do': 'waitFor', 'text': 'Filtrar pedidos', 'timeout': 8}]
+                                     + filtros_bateria() + ESC + ESC + [{'do': 'waitFor', 'target': SEL(LINHA("21/10/2026")), 'timeout': 10}]))
+    c.mark(1)
+    c.registra(TXTX('Filtrando por', within='main'), at=0.4, label='as etiquetas "Filtrando por" e a linha de 21/10 (base da montagem)')
+    for i in range(2, len(c.linhas) + 1):
+        c.mark(i)
+    c.hover(SEL(LINHA('21/10/2026')), 1.0, at=c.A(6, 'corrigiu', 0.6), label='a linha de 21/10, agora da Auto Peças Vale Forte')
+    c.cursor((760, 520), at=c.A(7, 'No', 0.2), label='cursor descansa (cartão Próximo)')
     c.fim()
     return c
 

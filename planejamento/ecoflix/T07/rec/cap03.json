@@ -142,7 +142,7 @@
    "target": {
     "selector": "[role=dialog] button:has(svg.lucide-plus)"
    },
-   "at": 2.51,
+   "at": 1.91,
    "label": "+ (cadastrar)"
   },
   {
@@ -151,17 +151,26 @@
    "timeout": 10
   },
   {
-   "do": "hover",
+   "do": "type",
    "target": {
     "role": "tab",
     "name": "Dados de Contato",
     "exact": true
    },
-   "seconds": 0.8,
-   "at": 4.1,
-   "label": "Novo Fornecedor, Dados de Contato",
+   "text": "",
+   "noClick": true,
    "optional": true,
-   "timeout": 4
+   "timeout": 4,
+   "at": 4.6,
+   "label": "Novo Fornecedor, Dados de Contato"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#name"
+   },
+   "at": 7.23,
+   "label": "Nome"
   },
   {
    "do": "mark",
@@ -169,42 +178,23 @@
    "at": 7.52
   },
   {
-   "do": "click",
-   "target": {
-    "selector": "#name"
-   },
-   "at": 9.4,
-   "label": "Nome"
-  },
-  {
-   "do": "type",
-   "target": {
-    "selector": "#name"
-   },
-   "text": "José Carlos Moreira",
-   "cps": 24,
-   "noClick": true,
-   "at": 11.25,
-   "label": "Nome: José Carlos Moreira",
-   "clear": true
+   "do": "eval",
+   "js": "(()=>{const el=document.querySelector(\"#name\");if(!el)return 'SEM ALVO';el.focus();if(el.select)el.select();document.execCommand('insertText',false,\"José Carlos Moreira\");return el.value})()",
+   "at": 11.3,
+   "label": "Nome: José Carlos Moreira"
   },
   {
    "do": "click",
    "target": {
     "selector": "#contact_name"
    },
-   "at": 12.43,
+   "at": 11.83,
    "label": "Pessoa de Contato ou Apelido"
   },
   {
-   "do": "type",
-   "target": {
-    "selector": "#contact_name"
-   },
-   "text": "Zé Moreira",
-   "cps": 24,
-   "noClick": true,
-   "at": 13.91,
+   "do": "eval",
+   "js": "(()=>{const el=document.querySelector(\"#contact_name\");if(!el)return 'SEM ALVO';el.focus();if(el.select)el.select();document.execCommand('insertText',false,\"Zé Moreira\");return el.value})()",
+   "at": 13.96,
    "label": "apelido: Zé Moreira"
   },
   {
@@ -212,18 +202,8 @@
    "target": {
     "selector": "#phone"
    },
-   "at": 16.9,
+   "at": 16.3,
    "label": "Telefone"
-  },
-  {
-   "do": "type",
-   "target": {
-    "selector": "#phone"
-   },
-   "text": "12900004471",
-   "cps": 30,
-   "noClick": true,
-   "label": "Telefone (12) 90000-4471"
   },
   {
    "do": "mark",
@@ -231,22 +211,28 @@
    "at": 17.81
   },
   {
+   "do": "type",
+   "target": {
+    "selector": "#phone"
+   },
+   "text": "12900004471",
+   "cps": 40,
+   "noClick": true,
+   "at": 17.81,
+   "label": "Telefone (12) 90000-4471"
+  },
+  {
    "do": "click",
    "target": {
     "selector": "#pix_key"
    },
-   "at": 18.16,
+   "at": 17.81,
    "label": "Chave PIX"
   },
   {
-   "do": "type",
-   "target": {
-    "selector": "#pix_key"
-   },
-   "text": "(12) 90000-4471",
-   "cps": 30,
-   "noClick": true,
-   "at": 19.27,
+   "do": "eval",
+   "js": "(()=>{const el=document.querySelector(\"#pix_key\");if(!el)return 'SEM ALVO';el.focus();if(el.select)el.select();document.execCommand('insertText',false,\"(12) 90000-4471\");return el.value})()",
+   "at": 20.31,
    "label": "Chave PIX (12) 90000-4471"
   },
   {
@@ -254,24 +240,25 @@
    "target": {
     "selector": "[role=dialog] div:has(> label:has-text('Tabela de Preços Padrão')) button"
    },
-   "seconds": 0.8,
-   "at": 22.8,
+   "seconds": 0.6,
+   "at": 22.25,
    "label": "Tabela de Preços Padrão",
    "optional": true,
    "timeout": 4
   },
   {
-   "do": "mark",
-   "name": "L4",
-   "at": 27.73
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.offsetParent!==null&&e.textContent.trim().startsWith(\"Também é\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-420);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=()=>{const p=Math.min(1,(performance.now()-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 25.45,
+   "label": "rola a janela até Também é cliente"
   },
   {
    "do": "hover",
    "target": {
     "selector": "[role=dialog] label[for=also-counterpart]"
    },
-   "seconds": 0.8,
-   "at": 27.73,
+   "seconds": 0.6,
+   "at": 26.5,
    "label": "Também é cliente (desmarcado)",
    "optional": true,
    "timeout": 4
@@ -284,7 +271,7 @@
     "exact": true,
     "within": "[role=dialog]"
    },
-   "at": 27.93,
+   "at": 27.33,
    "label": "Salvar"
   },
   {
@@ -293,12 +280,17 @@
    "timeout": 10
   },
   {
+   "do": "mark",
+   "name": "L4",
+   "at": 27.73
+  },
+  {
    "do": "hover",
    "target": {
     "selector": "#supplier-desktop-top"
    },
    "seconds": 1.2,
-   "at": 30.36,
+   "at": 29.81,
    "label": "fornecedor José Carlos Moreira já escolhido",
    "optional": true,
    "timeout": 4

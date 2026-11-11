@@ -177,12 +177,10 @@
    "label": "Vencimento 09/11/2026 (ontem)"
   },
   {
-   "do": "click",
-   "target": {
-    "selector": "#bill-category"
-   },
-   "at": 14.23,
-   "label": "Categoria (abre a lista)"
+   "do": "eval",
+   "js": "(async()=>{const acha=()=>[...document.querySelectorAll(\"#bill-category\")].find(e=>e.offsetParent);let el=acha();for(let i=0;i<30&&!el;i++){await new Promise(r=>setTimeout(r,100));el=acha();}if(!el)return 'SEM ALVO';el.click();return 'ok: '+el.textContent.trim().slice(0,60)})()",
+   "at": 14.33,
+   "label": "Categoria (abre a lista, sem cursor)"
   },
   {
    "do": "type",
@@ -190,18 +188,10 @@
     "placeholder": "Pesquisar categoria..."
    },
    "text": "máquinas",
-   "at": 15.17,
-   "label": "busca máquinas",
-   "noClick": true
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "option",
-    "name": "Manutenção de máquinas"
-   },
-   "at": 15.88,
-   "label": "Manutenção de máquinas"
+   "at": 14.43,
+   "label": "Manutenção de máquinas (busca + Enter)",
+   "noClick": true,
+   "submit": true
   },
   {
    "do": "click",

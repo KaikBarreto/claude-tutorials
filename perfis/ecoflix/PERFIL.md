@@ -136,6 +136,9 @@ Zoom nos campos críticos da fonte: CNPJ, peso, valor, alíquota, chave de acess
 do kit `cenas/cenas_ecoflix.html` (estilo, utilidades e os exemplos "Tara e peso líquido" e "Caixa × competência"),
 presa às palavras da fala, renderizada só no trecho (`--de/--ate`) e encaixada sobre a janela do app
 (`docs/09-aula-ilustrada.md`, "Ilustração de conceito no meio do capítulo"); antes da voz, com tempos estimados.
+**Ilustração 3D** (Kaik aprovou o piloto em 11/11): conceito físico do pátio (caminhão e balança, carga, prensa, fardo)
+pode ir em 3D de argila com o kit `cenas3d/` (`LEIA.md`), em `planejamento/ecoflix/Tnn/cenas3d/cena3d.html`; o
+`ilustracoes.json` marca com `"3d"` e a cena 2D fica de reserva. Primeiras: T07 cap06 e T08 cap00, cap04 e cap06.
 Montagem com `perfis/ecoflix/aula.json` (trilha lo-fi própria: `music_seed` provisório 5, decide-se na prévia).
 
 ## Entrega

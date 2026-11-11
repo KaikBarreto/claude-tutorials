@@ -1,0 +1,550 @@
+{
+ "name": "t16-cap09",
+ "title": "T16 · Cap. 9 · Nota avulsa, do zero (narração ESTIMADA 125,0 s; marcas L1..L13 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "seed": "t16-cap09",
+ "pace": 0.5,
+ "cps": 40,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 400
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true"
+ },
+ "seedExtra": [
+  "t16/inicio",
+  "t16/apos-cap07"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "waitFor",
+   "target": {
+    "label": "E-mail"
+   },
+   "timeout": 30
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "E-mail"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "Senha",
+    "exact": true
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Rafael!",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/fiscal-ambiental/nfe/saida"
+  },
+  {
+   "do": "waitFor",
+   "text": "Nenhuma nota fiscal encontrada",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const a=document.getAnimations().filter(x=>x.currentTime<0);a.forEach(x=>x.startTime=document.timeline.currentTime);return a.length})()"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|Algo deu errado|Falha ao|Something went wrong|inv[áa]lid/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{document.querySelectorAll('[data-sonner-toast][data-type=error]').forEach(t=>{const s='TOAST DE ERRO: '+t.textContent.trim().slice(0,90);if(!window.__avisos.includes(s)&&window.__avisos.length<10)window.__avisos.push(s)})},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0.4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Nova Nota",
+    "exact": true,
+    "within": "main"
+   },
+   "at": 7.62,
+   "label": "Nova Nota"
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 9.19
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] :text-is('NF-e de Saída')"
+   },
+   "at": 10.78,
+   "label": "NF-e de Saída"
+  },
+  {
+   "do": "waitFor",
+   "text": "Para quem",
+   "timeout": 15
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] button:text-is('Dados')"
+   },
+   "seconds": 0.15,
+   "at": 14.8,
+   "label": "passo Dados",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] button:text-is('Itens')"
+   },
+   "seconds": 0.15,
+   "at": 15.41,
+   "label": "passo Itens",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 15.99
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] input[placeholder^='Buscar por nome, apelido']"
+   },
+   "at": 18.16,
+   "label": "Cliente (clique na busca)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[placeholder^='Buscar por nome, apelido']"
+   },
+   "text": "Serra Fina",
+   "cps": 40,
+   "at": 19.8,
+   "label": "busca Serra Fina",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] :text-is('Serra Fina Alumínio Reciclagem')"
+   },
+   "at": 20.11,
+   "label": "escolhe Serra Fina Alumínio Reciclagem",
+   "noScroll": true
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 20.21
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] div:has(> label:text-is('Natureza da Operação')) button[role=combobox]"
+   },
+   "at": 21.7,
+   "label": "Natureza da Operação (abre a lista)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Venda de mercadorias"
+   },
+   "at": 23.62,
+   "label": "Venda de mercadorias",
+   "noScroll": true
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] label:text-is('CFOP')"
+   },
+   "seconds": 1.0,
+   "at": 25.45,
+   "label": "zoom: CFOP 6102 (Serra Fina em Itamonte, MG)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"6102\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog],[role=alertdialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere CFOP 6102 da Serra Fina (MG)"
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 30.58
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] label:text-is('Número previsto')"
+   },
+   "text": "",
+   "noClick": true,
+   "optional": true,
+   "timeout": 4,
+   "at": 31.49,
+   "label": "zoom: Número previsto 1249 e \"Série 1 / Nº 1249\""
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] :text-matches('Esta nota será emitida como')"
+   },
+   "seconds": 1.0,
+   "at": 33.61,
+   "label": "Esta nota será emitida como Série 1 / Nº 1249",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Série 1 / Nº 1249\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog],[role=alertdialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Série 1 / Nº 1249"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] label:text-is('Data e hora da emissão')"
+   },
+   "seconds": 0.8,
+   "at": 38.24,
+   "label": "Data e hora da emissão em branco",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 40.12
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:text-is('Avançar')"
+   },
+   "at": 41.0,
+   "label": "Avançar",
+   "noScroll": true
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 43.2
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:has-text('Selecionar material...')"
+   },
+   "at": 43.4,
+   "label": "Selecionar material..."
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[cmdk-input], [role=dialog] input[placeholder*='uscar']",
+    "nth": -1
+   },
+   "text": "perfil",
+   "cps": 40,
+   "label": "busca perfil",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[cmdk-item]:has-text('Alumínio perfil'), [role=option]:has-text('Alumínio perfil')"
+   },
+   "at": 45.14,
+   "label": "Alumínio perfil",
+   "noScroll": true
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] th:text-is('NCM')"
+   },
+   "seconds": 0.4,
+   "at": 45.7,
+   "label": "NCM 7602.00.00 do cadastro",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] th:text-is('Vl. Unit.')"
+   },
+   "seconds": 0.4,
+   "at": 50.1,
+   "label": "preço de venda 10,40 do cadastro",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] tr.bg-primary\\/5 input",
+    "nth": 2
+   },
+   "at": 52.43,
+   "label": "Qtd (clique no campo)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] tr.bg-primary\\/5 input",
+    "nth": 2
+   },
+   "text": "320",
+   "cps": 30,
+   "at": 54.45,
+   "label": "zoom: Qtd 320 e Vl. Unit. 10,40",
+   "noClick": true,
+   "clear": true
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 56.68
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:has-text('Incluir')"
+   },
+   "at": 57.57,
+   "label": "Incluir"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] :text-is('Total da nota')"
+   },
+   "text": "",
+   "noClick": true,
+   "optional": true,
+   "timeout": 4,
+   "at": 58.8,
+   "label": "zoom: Total da nota R$ 3.328,00 e Pronta pra emitir"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] :text-is('Pronta pra emitir')"
+   },
+   "seconds": 0.54,
+   "at": 64.35,
+   "label": "selo Pronta pra emitir",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"3.328,00\", \"Pronta pra emitir\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog],[role=alertdialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere total R$ 3.328,00 e Pronta pra emitir"
+  },
+  {
+   "do": "mark",
+   "name": "L9",
+   "at": 65.84
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] button:text-is('Emitir Nota')"
+   },
+   "seconds": 1.0,
+   "at": 66.64,
+   "label": "o rodapé: Voltar, Salvar Rascunho, Emitir Nota",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L10",
+   "at": 78.95
+  },
+  {
+   "do": "mark",
+   "name": "L11",
+   "at": 92.05
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:text-is('Emitir Nota')"
+   },
+   "at": 92.93,
+   "label": "Emitir Nota",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "selector": "main tbody tr:has-text('#1249')",
+   "timeout": 20
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('#1249') td:has-text('SEFAZ')"
+   },
+   "seconds": 0.6,
+   "label": "#1249 Aguardando SEFAZ",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "waitFor",
+   "selector": "main tbody tr:has-text('#1249'):has-text('Autorizada')",
+   "timeout": 25
+  },
+  {
+   "do": "mark",
+   "name": "L12",
+   "at": 97.56
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('#1249') td:has-text('Autorizada')"
+   },
+   "seconds": 1.0,
+   "at": 103.71,
+   "label": "#1249 Autorizada",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L13",
+   "at": 109.22
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('#1249') td:last-child button"
+   },
+   "seconds": 0.15,
+   "at": 109.22,
+   "label": "abre o menu da linha #1249",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('#1249') td:last-child button"
+   },
+   "seconds": 0.15,
+   "label": "(menu #1249 aberto)",
+   "noScroll": true,
+   "unless": {
+    "role": "menuitem",
+    "name": "Visualizar"
+   },
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Visualizar"
+   },
+   "at": 109.75,
+   "label": "Visualizar",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "text": "NF-e #1249",
+   "timeout": 10
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] :text-is('Chave de Acesso')"
+   },
+   "text": "",
+   "noClick": true,
+   "optional": true,
+   "timeout": 4,
+   "at": 116.5,
+   "label": "zoom: Chave de Acesso e Protocolo"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] :text-is('Protocolo')"
+   },
+   "seconds": 1.0,
+   "at": 122.12,
+   "label": "Protocolo da SEFAZ",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 124.99
+  }
+ ]
+}

@@ -1,0 +1,313 @@
+{
+ "name": "t16-cap13",
+ "title": "T16 · Cap. 13 · Inutilizar numeração (narração ESTIMADA 65,4 s; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "seed": "t16-cap13",
+ "pace": 0.5,
+ "cps": 40,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 400
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true"
+ },
+ "seedExtra": [
+  "t16/inicio",
+  "t16/apos-cap12"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "waitFor",
+   "target": {
+    "label": "E-mail"
+   },
+   "timeout": 30
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "E-mail"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "Senha",
+    "exact": true
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Rafael!",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/fiscal-ambiental/nfe/saida"
+  },
+  {
+   "do": "waitFor",
+   "text": "#1250",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const a=document.getAnimations().filter(x=>x.currentTime<0);a.forEach(x=>x.startTime=document.timeline.currentTime);return a.length})()"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|Algo deu errado|Falha ao|Something went wrong|inv[áa]lid/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{document.querySelectorAll('[data-sonner-toast][data-type=error]').forEach(t=>{const s='TOAST DE ERRO: '+t.textContent.trim().slice(0,90);if(!window.__avisos.includes(s)&&window.__avisos.length<10)window.__avisos.push(s)})},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0.4
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 15.72
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 21.08
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button[aria-label='Mais opções de NF-e']"
+   },
+   "at": 21.97,
+   "label": "três pontinhos (Mais opções de NF-e)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Inutilizar numeração"
+   },
+   "at": 23.66,
+   "label": "Inutilizar numeração",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "text": "Inutilizar Numeração de NF-e",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] :text-is('Operação irreversível!')"
+   },
+   "seconds": 0.8,
+   "at": 26.09,
+   "label": "zoom: Operação irreversível!",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] :text-matches('NUNCA foram autorizados')"
+   },
+   "seconds": 0.8,
+   "at": 29.88,
+   "label": "Só funciona em números que NUNCA foram autorizados",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] :text-matches('use Cancelamento')"
+   },
+   "seconds": 0.16,
+   "at": 34.06,
+   "label": "Para anular nota emitida, use Cancelamento",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 35.17
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#numero-inicial"
+   },
+   "at": 37.95,
+   "label": "Número Inicial (clique no campo)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#numero-inicial"
+   },
+   "text": "1246",
+   "cps": 40,
+   "at": 39.74,
+   "label": "Número Inicial 1246",
+   "noClick": true,
+   "clear": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#numero-final"
+   },
+   "at": 40.41,
+   "label": "Número Final (clique no campo)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#numero-final"
+   },
+   "text": "1247",
+   "cps": 40,
+   "at": 42.33,
+   "label": "Número Final 1247",
+   "noClick": true,
+   "clear": true
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] :text-matches('Inutilizará as Notas')"
+   },
+   "seconds": 1.5,
+   "at": 43.07,
+   "label": "zoom: Inutilizará as Notas #1246 até #1247 da Série 1, ano 2026",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"#1246 até #1247\", \"Série 1\", \"2026\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog],[role=alertdialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere faixa 1246 a 1247 da série 1, 2026"
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 47.67
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] [role=tab]:has-text('Inutilizar Rejeitadas'), [role=dialog] button:has-text('Inutilizar Rejeitadas')"
+   },
+   "seconds": 1.2,
+   "at": 48.66,
+   "label": "zoom: aba Inutilizar Rejeitadas (sem clicar)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 54.7
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] textarea"
+   },
+   "at": 54.9,
+   "label": "Justificativa (clique no campo)"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const e=document.activeElement;if(!e||!/^(INPUT|TEXTAREA)$/.test(e.tagName))return 'SEM ALVO (nada em foco)';document.execCommand('insertText',false,\"Numera\\u00e7\\u00e3o pulada na emiss\\u00e3o de outubro e n\\u00e3o utilizada\");return e.value})()",
+   "at": 56.16,
+   "label": "Justificativa"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:has-text('Inutilizar na SEFAZ')"
+   },
+   "at": 56.98,
+   "label": "Inutilizar na SEFAZ"
+  },
+  {
+   "do": "waitFor",
+   "text": "Numeração inutilizada com sucesso",
+   "timeout": 10
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 59.31
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#tab-btn-inutilizadas"
+   },
+   "at": 60.34,
+   "label": "sub-aba Inutilizadas"
+  },
+  {
+   "do": "waitFor",
+   "text": "Numerações Inutilizadas",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('#1246')"
+   },
+   "seconds": 0.6,
+   "at": 62.19,
+   "label": "#1246 e #1247 Inutilizada",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 65.44
+  }
+ ]
+}

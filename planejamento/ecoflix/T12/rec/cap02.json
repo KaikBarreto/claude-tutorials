@@ -7,7 +7,7 @@
  "tail": 1.5,
  "start": {
   "x": 760,
-  "y": 420
+  "y": 470
  },
  "anonymous": true,
  "storage": {
@@ -101,64 +101,82 @@
    "at": 0
   },
   {
-   "do": "hover",
-   "target": {
-    "selector": "main h3:text-is('Solicitada')"
+   "do": "scroll",
+   "point": {
+    "x": 370,
+    "y": 256
    },
-   "seconds": 0.25,
-   "at": 3.39,
-   "label": "coluna Solicitada",
-   "optional": true,
-   "timeout": 4
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "at": 3.54,
+   "label": "coluna Solicitada"
   },
   {
-   "do": "hover",
-   "target": {
-    "selector": "main h3:text-is('Agendada')"
+   "do": "scroll",
+   "point": {
+    "x": 562,
+    "y": 254
    },
-   "seconds": 0.25,
-   "at": 4.45,
-   "label": "coluna Agendada",
-   "optional": true,
-   "timeout": 4
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "at": 4.6,
+   "label": "coluna Agendada"
   },
   {
-   "do": "hover",
-   "target": {
-    "selector": "main h3:text-is('A caminho')"
+   "do": "scroll",
+   "point": {
+    "x": 754,
+    "y": 254
    },
-   "seconds": 0.2,
-   "at": 5.41,
-   "label": "coluna A caminho",
-   "optional": true,
-   "timeout": 4
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "at": 5.56,
+   "label": "coluna A caminho"
   },
   {
-   "do": "hover",
-   "target": {
-    "selector": "main h3:text-is('Concluídas')"
+   "do": "scroll",
+   "point": {
+    "x": 936,
+    "y": 254
    },
-   "seconds": 0.4,
-   "at": 6.27,
-   "label": "coluna Concluídas",
-   "optional": true,
-   "timeout": 4
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "at": 6.42,
+   "label": "coluna Concluídas"
   },
   {
-   "do": "hover",
-   "target": {
-    "selector": "main h3:text-is('Cancelada')"
+   "do": "scroll",
+   "point": {
+    "x": 1138,
+    "y": 254
    },
-   "seconds": 0.6,
-   "at": 8.63,
-   "label": "coluna Cancelada",
-   "optional": true,
-   "timeout": 4
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "at": 8.78,
+   "label": "coluna Cancelada"
   },
   {
    "do": "eval",
-   "js": "(async()=>{const pares=[[\"Solicitada\", \"0\"], [\"Agendada\", \"1\"], [\"A caminho\", \"1\"], [\"Concluídas\", \"5\"], [\"Cancelada\", \"1\"]];let out='';for(let i=0;i<22;i++){const falta=[];for(const [rot,val] of pares){const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===rot);if(!el){falta.push(rot+'=?');continue;}let c=el.parentElement,ok=false;for(let k=0;k<4&&c;k++,c=c.parentElement){const ls=c.innerText.split('\\n').map(x=>x.trim()).filter(Boolean);if(ls.length>1){ok=ls.includes(val);if(!ok)falta.push(rot+'='+ls.filter(x=>x!==rot).slice(0,2).join('/'));break;}}}if(!falta.length)return 'OK: '+pares.map(p=>p.join(' ')).join(' | ');out='DIFERENTE: '+falta.join(' | ');await new Promise(r=>setTimeout(r,300));}return out})()",
+   "js": "(async()=>{const pares=[[\"Solicitada\", \"0\"], [\"Agendada\", \"1\"], [\"A caminho\", \"1\"], [\"Concluídas\", \"5\"], [\"Cancelada\", \"1\"]];let out='';for(let i=0;i<22;i++){const falta=[];for(const [rot,val] of pares){const el=[...document.querySelectorAll(\"main h3\")].find(e=>e.children.length===0&&e.textContent.trim()===rot);if(!el){falta.push(rot+'=?');continue;}let c=el.parentElement,ok=false;for(let k=0;k<4&&c;k++,c=c.parentElement){const ls=c.innerText.split('\\n').map(x=>x.trim()).filter(Boolean);if(ls.length>1){ok=ls.includes(val);if(!ok)falta.push(rot+'='+ls.filter(x=>x!==rot).slice(0,2).join('/'));break;}}}if(!falta.length)return 'OK: '+pares.map(p=>p.join(' ')).join(' | ');out='DIFERENTE: '+falta.join(' | ');await new Promise(r=>setTimeout(r,300));}return out})()",
    "label": "confere contagem das colunas"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Nenhuma ordem",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.3,
+   "at": 9.34,
+   "label": "Solicitada vazia (Nenhuma ordem)",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "mark",
@@ -172,9 +190,9 @@
     "exact": true,
     "within": "main"
    },
-   "seconds": 1.2,
+   "seconds": 1.0,
    "at": 10.19,
-   "label": "Solicitada vazia (Nenhuma ordem)",
+   "label": "Solicitada vazia (Nenhuma ordem) (continua)",
    "optional": true,
    "timeout": 4
   },
@@ -184,68 +202,73 @@
    "at": 19.42
   },
   {
-   "do": "hover",
-   "target": {
-    "selector": "main div.cursor-pointer.rounded-2xl:has(span.font-semibold:text-is('#8')) :text-is('#8')"
+   "do": "scroll",
+   "point": {
+    "x": 522,
+    "y": 318
    },
-   "seconds": 0.3,
-   "at": 20.72,
-   "label": "cartão #8: número",
-   "optional": true,
-   "timeout": 4
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "at": 20.87,
+   "label": "cartão #8: número"
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 585,
+    "y": 350
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "at": 22.46,
+   "label": "cartão #8: parceiro"
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 592,
+    "y": 318
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "at": 23.52,
+   "label": "cartão #8: período"
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 566,
+    "y": 405
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "at": 24.51,
+   "label": "cartão #8: motorista"
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 556,
+    "y": 423
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "at": 25.57,
+   "label": "cartão #8: placa"
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main div.cursor-pointer.rounded-2xl:has(span.font-semibold:text-is('#8')) :text-is('Depósito Irmãos Siqueira')"
+    "selector": "main div.cursor-pointer.rounded-2xl:has(span.font-semibold:text-is('#8'))"
    },
-   "seconds": 0.3,
-   "at": 22.31,
-   "label": "cartão #8: parceiro",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main div.cursor-pointer.rounded-2xl:has(span.font-semibold:text-is('#8')) :text-is('Manhã')"
-   },
-   "seconds": 0.3,
-   "at": 23.37,
-   "label": "cartão #8: período",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main div.cursor-pointer.rounded-2xl:has(span.font-semibold:text-is('#8')) :text-is('Edson Moura')"
-   },
-   "seconds": 0.3,
-   "at": 24.36,
-   "label": "cartão #8: motorista",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main div.cursor-pointer.rounded-2xl:has(span.font-semibold:text-is('#8')) :text-is('FKD2E41')"
-   },
-   "seconds": 0.6,
-   "at": 25.42,
-   "label": "cartão #8: placa",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main div.cursor-pointer.rounded-2xl:has(span.font-semibold:text-is('#8')) :text-is('Depósito Irmãos Siqueira')"
-   },
-   "seconds": 1.0,
-   "at": 28.99,
-   "label": "cartão #8: a troca de caçamba do Siqueira",
+   "seconds": 1.6,
+   "at": 26.57,
+   "label": "cartão #8: a troca de caçamba do Depósito Irmãos Siqueira",
    "optional": true,
    "timeout": 4
   },
@@ -255,37 +278,40 @@
    "at": 31.62
   },
   {
-   "do": "hover",
-   "target": {
-    "selector": "main div.cursor-pointer.rounded-2xl:has(span.font-semibold:text-is('#7')) :text-is('Tiago Freitas')"
+   "do": "scroll",
+   "point": {
+    "x": 757,
+    "y": 405
    },
-   "seconds": 0.6,
-   "at": 31.62,
-   "label": "cartão #7: Tiago Freitas",
-   "optional": true,
-   "timeout": 4
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "at": 31.77,
+   "label": "cartão #7: Tiago Freitas"
   },
   {
-   "do": "hover",
-   "target": {
-    "selector": "main div.cursor-pointer.rounded-2xl:has(span.font-semibold:text-is('#7')) :text-is('Marcelo Tavares')"
+   "do": "scroll",
+   "point": {
+    "x": 720,
+    "y": 350
    },
-   "seconds": 0.8,
-   "at": 35.03,
-   "label": "cartão #7: Marcelo Tavares",
-   "optional": true,
-   "timeout": 4
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "at": 35.18,
+   "label": "cartão #7: Marcelo Tavares"
   },
   {
-   "do": "hover",
-   "target": {
-    "selector": "main div.cursor-pointer.rounded-2xl:has(span.font-semibold:text-is('#7')) :text-is('Sem cadastro')"
+   "do": "scroll",
+   "point": {
+    "x": 791,
+    "y": 350
    },
-   "seconds": 1.0,
-   "at": 38.96,
-   "label": "cartão #7: Sem cadastro",
-   "optional": true,
-   "timeout": 4
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "at": 39.26,
+   "label": "cartão #7: Sem cadastro"
   },
   {
    "do": "mark",
@@ -299,22 +325,23 @@
     "name": "Filtros",
     "within": "main"
    },
-   "seconds": 0.6,
-   "at": 41.76,
+   "seconds": 0.5,
+   "at": 40.96,
    "label": "Filtros",
    "optional": true,
    "timeout": 4
   },
   {
-   "do": "hover",
-   "target": {
-    "selector": "main [aria-label='Lista']"
+   "do": "scroll",
+   "point": {
+    "x": 1070,
+    "y": 196
    },
-   "seconds": 0.6,
-   "at": 43.51,
-   "label": "Quadro / Lista",
-   "optional": true,
-   "timeout": 4
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "at": 43.66,
+   "label": "Quadro / Lista"
   },
   {
    "do": "hover",
@@ -324,7 +351,7 @@
     "exact": true
    },
    "seconds": 0.8,
-   "at": 46.01,
+   "at": 45.21,
    "label": "Nova ordem",
    "optional": true,
    "timeout": 4
@@ -343,30 +370,44 @@
    "by": 0,
    "duration": 0.3,
    "after": 0,
-   "at": 48.99,
+   "at": 48.94,
    "label": "cursor em repouso (a dica)"
   },
   {
-   "do": "hover",
-   "target": {
-    "selector": "main h3:text-is('Concluídas')"
+   "do": "scroll",
+   "point": {
+    "x": 936,
+    "y": 254
    },
-   "seconds": 0.4,
-   "at": 52.51,
-   "label": "dica: coluna Concluídas",
-   "optional": true,
-   "timeout": 4
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "at": 52.66,
+   "label": "dica: coluna Concluídas"
   },
   {
-   "do": "hover",
-   "target": {
-    "selector": "main h3:text-is('Cancelada')"
+   "do": "scroll",
+   "point": {
+    "x": 1138,
+    "y": 254
    },
-   "seconds": 1.2,
-   "at": 53.5,
-   "label": "dica: coluna Cancelada",
-   "optional": true,
-   "timeout": 4
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "at": 53.65,
+   "label": "dica: coluna Cancelada"
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 760,
+    "y": 470
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "at": 56.46,
+   "label": "cursor em repouso"
   },
   {
    "do": "eval",

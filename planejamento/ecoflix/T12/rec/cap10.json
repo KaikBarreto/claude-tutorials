@@ -105,6 +105,28 @@
    "seconds": 0.8
   },
   {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Coletas & Logística",
+    "within": "aside, [data-sidebar=sidebar]"
+   }
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "role": "link",
+    "name": "Frota",
+    "exact": true,
+    "within": "aside, [data-sidebar=sidebar]"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "wait",
+   "seconds": 0.5
+  },
+  {
    "do": "eval",
    "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel|Algo deu errado|Falha ao|Transi[çc][ãa]o inv[áa]lida|n[ãa]o encontrad|Localiza[çc][ãa]o n[ãa]o registrada|Sem sinal de GPS/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');if(f&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA ECOFLIX'))window.__avisos.push('TRILHA ECOFLIX')},300);return 1})()"
   },
@@ -127,7 +149,7 @@
     "exact": true,
     "within": "aside, [data-sidebar=sidebar]"
    },
-   "at": 1.04,
+   "at": 0.54,
    "label": "menu Relatório"
   },
   {
@@ -137,58 +159,28 @@
   },
   {
    "do": "eval",
-   "js": "(async()=>{const pares=[[\"Total de coletas\", \"4\"], [\"Concluídas\", \"1\"], [\"Canceladas\", \"0\"], [\"Taxa de conclusão\", \"25%\"]];let out='';for(let i=0;i<22;i++){const falta=[];for(const [rot,val] of pares){const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===rot);if(!el){falta.push(rot+'=?');continue;}let c=el.parentElement,ok=false;for(let k=0;k<4&&c;k++,c=c.parentElement){const ls=c.innerText.split('\\n').map(x=>x.trim()).filter(Boolean);if(ls.length>1){ok=ls.includes(val);if(!ok)falta.push(rot+'='+ls.filter(x=>x!==rot).slice(0,2).join('/'));break;}}}if(!falta.length)return 'OK: '+pares.map(p=>p.join(' ')).join(' | ');out='DIFERENTE: '+falta.join(' | ');await new Promise(r=>setTimeout(r,300));}return out})()",
+   "js": "(async()=>{const pares=[[\"Total de coletas\", \"4\"], [\"Concluídas\", \"1\"], [\"Canceladas\", \"0\"], [\"Taxa de conclusão\", \"25%\"]];let out='';for(let i=0;i<22;i++){const falta=[];for(const [rot,val] of pares){const el=[...document.querySelectorAll(\"main *\")].find(e=>e.children.length===0&&e.textContent.trim()===rot);if(!el){falta.push(rot+'=?');continue;}let c=el.parentElement,ok=false;for(let k=0;k<4&&c;k++,c=c.parentElement){const ls=c.innerText.split('\\n').map(x=>x.trim()).filter(Boolean);if(ls.length>1){ok=ls.includes(val);if(!ok)falta.push(rot+'='+ls.filter(x=>x!==rot).slice(0,2).join('/'));break;}}}if(!falta.length)return 'OK: '+pares.map(p=>p.join(' ')).join(' | ');out='DIFERENTE: '+falta.join(' | ');await new Promise(r=>setTimeout(r,300));}return out})()",
    "label": "confere Este mês: 4, 1, 0, 25%"
   },
   {
    "do": "hover",
    "target": {
-    "text": "Total de coletas",
-    "within": "main",
-    "exact": true
+    "selector": "main button[role=combobox]"
    },
-   "seconds": 0.4,
-   "at": 4.53,
-   "label": "Este mês: Total de coletas",
+   "seconds": 0.3,
+   "at": 2.19,
+   "label": "Período: Este mês",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "hover",
    "target": {
-    "text": "Concluídas",
-    "within": "main",
-    "exact": true
+    "selector": "main div.grid:has(:text-is('Total de coletas')) >> nth=-1"
    },
-   "seconds": 0.4,
-   "at": 6.27,
-   "label": "Este mês: Concluídas",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "Canceladas",
-    "within": "main",
-    "exact": true
-   },
-   "seconds": 0.4,
-   "at": 7.56,
-   "label": "Este mês: Canceladas",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "Taxa de conclusão",
-    "within": "main",
-    "exact": true
-   },
-   "seconds": 0.6,
-   "at": 8.7,
-   "label": "Este mês: Taxa de conclusão",
+   "seconds": 3.5,
+   "at": 4.03,
+   "label": "Este mês: os quatro números",
    "optional": true,
    "timeout": 4
   },
@@ -197,13 +189,8 @@
    "target": {
     "selector": "main button[role=combobox]"
    },
-   "at": 10.4,
+   "at": 9.92,
    "label": "abre Período"
-  },
-  {
-   "do": "mark",
-   "name": "L2",
-   "at": 10.8
   },
   {
    "do": "click",
@@ -212,65 +199,27 @@
     "name": "Mês passado",
     "exact": true
    },
-   "at": 10.8,
    "label": "Período: Mês passado"
   },
   {
    "do": "eval",
-   "js": "(async()=>{const pares=[[\"Total de coletas\", \"6\"], [\"Concluídas\", \"5\"], [\"Canceladas\", \"1\"], [\"Taxa de conclusão\", \"100%\"]];let out='';for(let i=0;i<22;i++){const falta=[];for(const [rot,val] of pares){const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===rot);if(!el){falta.push(rot+'=?');continue;}let c=el.parentElement,ok=false;for(let k=0;k<4&&c;k++,c=c.parentElement){const ls=c.innerText.split('\\n').map(x=>x.trim()).filter(Boolean);if(ls.length>1){ok=ls.includes(val);if(!ok)falta.push(rot+'='+ls.filter(x=>x!==rot).slice(0,2).join('/'));break;}}}if(!falta.length)return 'OK: '+pares.map(p=>p.join(' ')).join(' | ');out='DIFERENTE: '+falta.join(' | ');await new Promise(r=>setTimeout(r,300));}return out})()",
+   "js": "(async()=>{const pares=[[\"Total de coletas\", \"6\"], [\"Concluídas\", \"5\"], [\"Canceladas\", \"1\"], [\"Taxa de conclusão\", \"100%\"]];let out='';for(let i=0;i<22;i++){const falta=[];for(const [rot,val] of pares){const el=[...document.querySelectorAll(\"main *\")].find(e=>e.children.length===0&&e.textContent.trim()===rot);if(!el){falta.push(rot+'=?');continue;}let c=el.parentElement,ok=false;for(let k=0;k<4&&c;k++,c=c.parentElement){const ls=c.innerText.split('\\n').map(x=>x.trim()).filter(Boolean);if(ls.length>1){ok=ls.includes(val);if(!ok)falta.push(rot+'='+ls.filter(x=>x!==rot).slice(0,2).join('/'));break;}}}if(!falta.length)return 'OK: '+pares.map(p=>p.join(' ')).join(' | ');out='DIFERENTE: '+falta.join(' | ');await new Promise(r=>setTimeout(r,300));}return out})()",
    "label": "confere outubro: seis, cinco, uma, cem por cento"
   },
   {
    "do": "hover",
    "target": {
-    "text": "Total de coletas",
-    "within": "main",
-    "exact": true
+    "selector": "main div.grid:has(:text-is('Total de coletas')) >> nth=-1"
    },
-   "seconds": 0.4,
-   "at": 11.79,
-   "label": "outubro: Total de coletas",
+   "seconds": 4.0,
+   "label": "outubro: os quatro números",
    "optional": true,
    "timeout": 4
   },
   {
-   "do": "hover",
-   "target": {
-    "text": "Concluídas",
-    "within": "main",
-    "exact": true
-   },
-   "seconds": 0.4,
-   "at": 13.0,
-   "label": "outubro: Concluídas",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "Canceladas",
-    "within": "main",
-    "exact": true
-   },
-   "seconds": 0.4,
-   "at": 14.44,
-   "label": "outubro: Canceladas",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "Taxa de conclusão",
-    "within": "main",
-    "exact": true
-   },
-   "seconds": 1.0,
-   "at": 15.89,
-   "label": "outubro: Taxa de conclusão",
-   "optional": true,
-   "timeout": 4
+   "do": "mark",
+   "name": "L2",
+   "at": 10.8
   },
   {
    "do": "mark",
@@ -307,35 +256,9 @@
     "within": "main",
     "exact": true
    },
-   "seconds": 0.3,
-   "at": 28.73,
+   "seconds": 0.6,
+   "at": 27.83,
    "label": "Por status",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "Por motorista",
-    "within": "main",
-    "exact": true
-   },
-   "seconds": 0.3,
-   "at": 29.79,
-   "label": "Por motorista",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "Por veículo",
-    "within": "main",
-    "exact": true
-   },
-   "seconds": 0.3,
-   "at": 31.08,
-   "label": "Por veículo",
    "optional": true,
    "timeout": 4
   },
@@ -346,9 +269,9 @@
     "within": "main",
     "exact": true
    },
-   "seconds": 1.2,
-   "at": 32.15,
-   "label": "Por parceiro",
+   "seconds": 1.5,
+   "at": 31.25,
+   "label": "Por motorista, veículo e parceiro",
    "optional": true,
    "timeout": 4
   },
@@ -359,7 +282,7 @@
   },
   {
    "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"main *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Per\\u00edodo\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-160);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"main *\")].filter(e=>e.textContent.trim().startsWith(\"Per\\u00edodo\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-160);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
    "at": 38.19,
    "label": "sobe ao Período"
   },
@@ -368,8 +291,7 @@
    "target": {
     "selector": "main button[role=combobox]"
    },
-   "seconds": 1.5,
-   "at": 38.8,
+   "seconds": 3.0,
    "label": "Período (em que mês cada coleta entra)",
    "optional": true,
    "timeout": 4

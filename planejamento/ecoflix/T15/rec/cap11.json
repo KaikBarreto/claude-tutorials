@@ -1,0 +1,333 @@
+{
+ "name": "t15-cap11",
+ "title": "T15 · Cap. 11 · Exportar em Excel e PDF (narração ESTIMADA 45,4 s; marcas L1..L5 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "seed": "t15-cap11",
+ "pace": 0.5,
+ "cps": 40,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 470
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true",
+  "financial-report-tab": "historico"
+ },
+ "seedExtra": [
+  "t14/inicio",
+  "t14/apos-cap02",
+  "t14/apos-cap03",
+  "t14/apos-cap04",
+  "t14/apos-cap06",
+  "t14/apos-cap07",
+  "t14/apos-cap08",
+  "t14/apos-cap09",
+  "t14/apos-cap10",
+  "t14/apos-cap11",
+  "t14/apos-cap12",
+  "t14/apos-cap14",
+  "t15/inicio",
+  "t15/apos-cap01",
+  "t15/apos-cap02",
+  "t15/apos-cap10"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "waitFor",
+   "target": {
+    "label": "E-mail"
+   },
+   "timeout": 30
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "E-mail"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "Senha",
+    "exact": true
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Rafael!",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/relatorio-financeiro"
+  },
+  {
+   "do": "waitFor",
+   "text": "Visão completa das finanças do seu negócio",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "combobox",
+    "name": "Este mês"
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Mês passado"
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Exportar",
+   "timeout": 20
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Despesas"
+   }
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|Algo deu errado|Falha ao|Something went wrong|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&!/fica indispon/i.test(m[0])&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{document.querySelectorAll('[data-sonner-toast][data-type=error]').forEach(t=>{const s='TOAST DE ERRO: '+t.textContent.trim().slice(0,90);if(!window.__avisos.includes(s)&&window.__avisos.length<10)window.__avisos.push(s)})},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Exportar",
+    "exact": true
+   },
+   "at": 2.61,
+   "label": "Exportar do Histórico"
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 3.42
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "PDF"
+   },
+   "at": 5.16,
+   "label": "PDF"
+  },
+  {
+   "do": "waitFor",
+   "text": "Exportar Histórico (PDF)",
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Receitas",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.3,
+   "at": 12.32,
+   "label": "Receitas",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Despesas",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.3,
+   "at": 13.23,
+   "label": "Despesas",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Compras",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.5,
+   "at": 14.06,
+   "label": "Compras",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 14.7
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Exportar PDF",
+    "exact": true
+   },
+   "at": 18.11,
+   "label": "Exportar PDF"
+  },
+  {
+   "do": "waitFor",
+   "text": "PDF gerado em nova aba",
+   "timeout": 10
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 21.81
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Exportar",
+    "exact": true
+   },
+   "at": 22.41,
+   "label": "Exportar de novo"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "menuitem",
+    "name": "Fechamento completo (Excel)"
+   },
+   "seconds": 1.5,
+   "at": 23.35,
+   "label": "Fechamento completo (Excel) (ZOOM)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 32.98,
+   "label": "fecha o menu"
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 33.32
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#tab-btn-dre"
+   },
+   "at": 33.92,
+   "label": "aba DRE"
+  },
+  {
+   "do": "waitFor",
+   "text": "Demonstrativo Financeiro (DRE)",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Exportar",
+    "exact": true
+   },
+   "at": 35.13,
+   "label": "Exportar do DRE"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "menuitem",
+    "name": "Planilha Excel"
+   },
+   "seconds": 0.5,
+   "at": 36.75,
+   "label": "Planilha Excel",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "menuitem",
+    "name": "Documento PDF"
+   },
+   "seconds": 0.8,
+   "at": 38.19,
+   "label": "Documento PDF",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 43.81,
+   "label": "fecha sem escolher"
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 45.37
+  }
+ ]
+}

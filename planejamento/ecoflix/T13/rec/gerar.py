@@ -356,6 +356,15 @@ def js_topo(dur_ms=700):
             "if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop,dy=-y0;if(y0<3)return 'ok';" + SUAVE.replace('DUR', str(int(dur_ms))) + "return 'topo:'+Math.round(c.scrollTop)})()")
 
 
+def js_clica(css, texto=None, espera_ms=3000):
+    """clique por eval (sem cursor) no 1º elemento visível que casa o CSS (e contém `texto`), esperando até `espera_ms`: abre Popover e
+    escolhe item do cmdk (aceitam .click(); o gatilho do Select do Radix não: docs/08, T5). Devolve 'ok: <texto>' ou 'SEM ALVO'."""
+    filtro = f"&&e.textContent.includes({json.dumps(texto)})" if texto else ''
+    return ("(async()=>{const acha=()=>[...document.querySelectorAll(" + json.dumps(css) + ")].find(e=>e.offsetParent" + filtro + ");"
+            f"let el=acha();for(let i=0;i<{int(espera_ms / 100)}&&!el;i++){{await new Promise(r=>setTimeout(r,100));el=acha();}}"
+            "if(!el)return 'SEM ALVO';el.click();return 'ok: '+el.textContent.trim().slice(0,60)})()")
+
+
 def js_colar(texto):
     """cola o texto no campo em foco (execCommand insertText: o React recebe o input), ~0,05 s em vez de digitar letra a letra"""
     return ("(()=>{const e=document.activeElement;if(!e||!/^(INPUT|TEXTAREA)$/.test(e.tagName))return 'SEM ALVO (nada em foco)';"
@@ -503,7 +512,7 @@ def cap03():
     c.click(CAL_BTN, at=c.A(2, 'calendário,', 0.7), label='abre o Calendário')
     c.waitfor(target=DIA_CAL('10'), timeout=10)
     c.ev(ANIM)
-    c.ev(js_rola('main div.grid.grid-cols-7', 290), at=c.A(2, 'cada', 0.0), label='desce a tela: o aviso e as quatro primeiras semanas')
+    c.ev(js_rola('main div.grid.grid-cols-7', 290), at=c.A(2, 'dia', 0.0), label='desce a tela: o aviso e as quatro primeiras semanas')
     c.hover(ETIQ_CAL('Água e esgoto de outubro'), 0.6, at=c.A(2, 'Vermelho', 0.6), label='etiqueta vermelha: a pagar')
     c.hover(ETIQ_CAL('Fatura venda #'), 0.6, at=c.A(2, 'verde,', 0.6), label='etiqueta verde: a receber')
     c.mark(3)
@@ -512,15 +521,15 @@ def cap03():
     c.mark(4)
     c.click(DIA_CAL('10'), at=c.A(4, 'Clicando', 0.6), label='clica no dia 10')
     c.waitfor(text='Contas de 10/11/2026', timeout=8)
-    c.hover(DLG_BTN('Marcar pago'), 0.5, at=c.A(4, 'pagar', 0.6), label='Marcar pago (na janela do dia)')
-    c.hover(DLG_BTN('Editar'), 0.6, at=c.A(4, 'editar.', 0.6), label='Editar (na janela do dia)')
+    c.hover(DLG_BTN('Marcar pago'), 0.3, at=c.A(4, 'botões', 0.7), label='Marcar pago (na janela do dia)')
+    c.hover(DLG_BTN('Editar'), 0.2, at=c.A(4, 'pagar', -0.2), label='Editar (na janela do dia)')
     c.mark(5)
-    c.press('Escape', at=c.L(5) - 0.9, label='fecha a janela do dia (Esc)')
+    c.press('Escape', at=c.L(5) - 0.2, label='fecha a janela do dia (Esc)')
     c.wait(0.5)
     c.hover({'text': 'Saldos de clientes/fornecedores', 'within': MAIN}, 2.0, at=c.A(5, 'saldo', 0.6), label='o aviso do topo')
     c.hover({'text': 'Saldos de clientes/fornecedores', 'within': MAIN}, 1.0, at=c.A(5, 'avisa.', 0.6), label='a própria tela avisa')
     c.mark(6)
-    c.click(LISTA_BTN, at=c.A(6, 'Lista.', 0.7), label='volta para a Lista')
+    c.click(LISTA_BTN, at=c.A(6, 'clicar', 0.6), label='volta para a Lista')
     c.fim()
     return c
 
@@ -585,9 +594,9 @@ def cap05():
     c.mark(2)
     colar(c, CAMPO('bill-description'), 'Conserto do pneu da empilhadeira', c.A(2, 'Preencho', 0.2), c.A(2, 'como', 0.0), 'Descrição (colada)')
     escolhe_dia(c, CAMPO('bill-due'), '9', c.A(2, 'conta:', 0.3), c.A(2, 'valor,', 0.0), 'Vencimento 09/11/2026 (ontem)')
-    c.click(CAMPO('bill-category'), at=c.A(2, 'descrição,', -0.2), label='Categoria (abre a lista)')
-    c.type({'placeholder': 'Pesquisar categoria...'}, 'máquinas', at=c.A(2, 'data', 0.0), label='busca máquinas', noClick=True)
-    c.click(OPT('Manutenção de máquinas'), at=c.A(2, 'ontem,', -0.1), label='Manutenção de máquinas')
+    c.ev(js_clica('#bill-category'), at=c.A(2, 'descrição,', -0.3), label='Categoria (abre a lista, sem cursor)')
+    c.type({'placeholder': 'Pesquisar categoria...'}, 'máquinas', at=c.A(2, 'descrição,', -0.4), label='Manutenção de máquinas (busca + Enter)',
+           noClick=True, submit=True)
     c.click(CAMPO('bill-cost-center'), at=c.A(2, 'categoria', -0.3), label='Centro de custo (abre a lista)')
     c.mark(3)
     c.click(OPT('Pátio'), at=c.A(2, 'custo.', 0.4), label='Pátio')
@@ -624,14 +633,14 @@ def cap06():
     colar(c, CAMPO('bill-description'), 'Pneus do caminhão truck', c.A(2, 'não', 0.6), c.A(2, 'valor', 0.0, nth=1), 'Descrição (colada)')
     c.mark(3)
     escolhe_dia(c, CAMPO('bill-due'), '23', c.A(3, 'Vencimento,', 0.7), c.A(3, 'vinte', 0.5), 'Vencimento 23/11/2026 (1ª parcela)')
-    c.click(CAMPO('bill-category'), at=c.A(3, 'Categoria', 0.8), label='Categoria (abre a lista)')
+    # "Categoria e fornecedor, como antes": abre e escolhe por eval (sem cursor; a busca digitada aparece na tela)
+    c.ev(js_clica('#bill-category'), at=c.A(3, 'novembro.', 0.0), label='Categoria (abre a lista, sem cursor)')
     c.type({'placeholder': 'Pesquisar categoria...'}, 'veículos', at=c.A(3, 'Categoria', 0.05), label='Manutenção de veículos (busca + Enter)',
            noClick=True, submit=True)
-    c.click(COMBO('Selecione o fornecedor'), at=c.A(3, 'fornecedor,', 0.3), label='Selecione o fornecedor')
-    c.type({'placeholder': 'Pesquisar fornecedor...'}, 'Vale', at=c.A(3, 'como', 0.05), label='busca Vale', noClick=True)
-    c.waitfor(target=OPT('Auto Peças Vale Forte'), timeout=8)
+    c.ev(js_clica('[role=dialog] button[role=combobox]', 'Selecione o fornecedor'), at=c.A(3, 'fornecedor,', 0.0), label='Selecione o fornecedor (sem cursor)')
+    c.type({'placeholder': 'Pesquisar fornecedor...'}, 'Vale', at=c.A(3, 'fornecedor,', -0.3), label='busca Vale', noClick=True)
+    c.ev(js_clica('[cmdk-item],[role=option]', 'Auto Peças Vale Forte'), at=c.A(3, 'como', 0.0), label='Auto Peças Vale Forte (sem cursor)')
     c.mark(4)
-    c.click(OPT('Auto Peças Vale Forte'), at=c.A(3, 'antes.', 0.0), label='Auto Peças Vale Forte')
     c.ev(js_rola_texto('Parcelar ou repetir', 260), at=c.A(4, 'Embaixo,', 0.0), label='desce a janela até Parcelar ou repetir')
     c.click(SECAO('Parcelar ou repetir'), at=c.A(4, 'Parcelar', 0.3, nth=0), label='abre Parcelar ou repetir')
     c.click(CAMPO('installment-toggle'), at=c.A(4, 'ligo', 0.7), label='liga Parcelar')
@@ -641,7 +650,7 @@ def cap06():
     c.hover(SEL(f"{DLG}:has-text('Nº de parcelas') input[aria-label='Valor da parcela 2']"), 1.6, at=c.A(5, 'dois', 0.6),
             label='ZOOM as três linhas e a faixa Soma das parcelas')
     c.confere('dlg', ['Soma das parcelas', 'R$ 7.080,00', '23/11/2026', '23/12/2026', '23/01/2027'], 'as três datas e a soma R$ 7.080,00')
-    c.confere_campos(['2.360,00'], 'parcelas de 2.360,00')
+    c.confere_campos(['2.360'], 'parcelas de 2.360 (o campo mostra sem centavos)')
     c.hover({'text': 'Soma das parcelas', 'within': f"{DLG}:has-text('Nº de parcelas')"}, 1.2, at=c.A(5, 'faixa', 0.6), label='faixa verde Soma das parcelas')
     c.mark(6)
     c.click(RODAPE('Aplicar faturamento'), at=c.A(6, 'Aplicar', 0.7), label='Aplicar faturamento', noScroll=True)
@@ -669,8 +678,8 @@ def cap07():
     c.mark(2)
     c.digita(CAMPO('bill-amount'), '2300,00', c.L(2) - 0.9, c.A(2, 'Valor,', 0.3), 'ZOOM Valor 2.300,00')
     colar(c, CAMPO('bill-description'), 'Aluguel da empilhadeira', c.A(2, 'descrição', -0.1), c.A(2, 'e', 0.0, nth=0), 'Descrição (colada)')
-    c.click(CAMPO('bill-category'), at=c.A(2, 'categoria,', 0.0), label='Categoria (abre a lista)')
-    c.type({'placeholder': 'Pesquisar categoria...'}, 'Aluguel', at=c.A(2, 'como', 0.0), label='Aluguel (busca + Enter)', noClick=True, submit=True)
+    c.ev(js_clica('#bill-category'), at=c.A(2, 'categoria,', 0.0), label='Categoria (abre a lista, sem cursor)')
+    c.type({'placeholder': 'Pesquisar categoria...'}, 'Aluguel', at=c.A(2, 'categoria,', -0.1), label='Aluguel (busca + Enter)', noClick=True, submit=True)
     escolhe_dia(c, CAMPO('bill-due'), '12', c.A(2, 'Vencimento', 0.5), c.A(2, 'doze', 0.5), 'Vencimento 12/11/2026')
     c.mark(3)
     c.ev(js_rola_texto('Parcelar ou repetir', 260), at=c.L(3) - 0.9, label='desce a janela até Parcelar ou repetir')

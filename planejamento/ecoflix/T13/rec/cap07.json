@@ -161,12 +161,10 @@
    "label": "Descrição (colada)"
   },
   {
-   "do": "click",
-   "target": {
-    "selector": "#bill-category"
-   },
+   "do": "eval",
+   "js": "(async()=>{const acha=()=>[...document.querySelectorAll(\"#bill-category\")].find(e=>e.offsetParent);let el=acha();for(let i=0;i<30&&!el;i++){await new Promise(r=>setTimeout(r,100));el=acha();}if(!el)return 'SEM ALVO';el.click();return 'ok: '+el.textContent.trim().slice(0,60)})()",
    "at": 10.85,
-   "label": "Categoria (abre a lista)"
+   "label": "Categoria (abre a lista, sem cursor)"
   },
   {
    "do": "type",
@@ -174,7 +172,7 @@
     "placeholder": "Pesquisar categoria..."
    },
    "text": "Aluguel",
-   "at": 11.83,
+   "at": 10.95,
    "label": "Aluguel (busca + Enter)",
    "noClick": true,
    "submit": true

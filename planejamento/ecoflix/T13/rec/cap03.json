@@ -157,7 +157,7 @@
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=[...document.querySelectorAll(\"main div.grid.grid-cols-7\")].filter(e=>e.offsetParent)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-290);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 9.56,
+   "at": 9.94,
    "label": "desce a tela: o aviso e as quatro primeiras semanas"
   },
   {
@@ -232,8 +232,8 @@
    "target": {
     "selector": "[role=dialog] button:has-text('Marcar pago')"
    },
-   "seconds": 0.15,
-   "at": 27.72,
+   "seconds": 0.3,
+   "at": 26.86,
    "label": "Marcar pago (na janela do dia)",
    "optional": true,
    "timeout": 4
@@ -244,7 +244,7 @@
     "selector": "[role=dialog] button:has-text('Editar')"
    },
    "seconds": 0.15,
-   "at": 28.56,
+   "at": 28.52,
    "label": "Editar (na janela do dia)",
    "optional": true,
    "timeout": 4
@@ -257,7 +257,7 @@
   {
    "do": "press",
    "key": "Escape",
-   "at": 29.22,
+   "at": 29.92,
    "label": "fecha a janela do dia (Esc)"
   },
   {
@@ -299,7 +299,7 @@
     "role": "radio",
     "name": "Visão em lista"
    },
-   "at": 44.34,
+   "at": 43.68,
    "label": "volta para a Lista"
   },
   {

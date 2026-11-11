@@ -14,7 +14,7 @@ import urllib.request
 FAKE = os.environ.get('FAKE_URL', 'http://127.0.0.1:54307')
 HERE = os.path.dirname(os.path.abspath(__file__))
 SEEDS = os.path.normpath(os.path.join(HERE, '..', 'mundo', 'seeds-extra'))
-FORA = {'order_drafts', 'draft_editors', 'log_pesagens'}
+FORA = {'order_drafts', 'draft_editors', 'log_pesagens', 'active_sessions', 'usage_events'}   # rascunhos, log e telemetria da sessão
 INTERESSE = ['suppliers', 'customers', 'purchases', 'purchase_items', 'sales', 'sale_items', 'stock_movements', 'materials', 'cash_register',
              'cash_transactions', 'bank_transactions', 'balances', 'balance_movements', 'financial_bills']
 ISO = re.compile(r'^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}')

@@ -1,0 +1,362 @@
+{
+ "name": "t16-cap05",
+ "title": "T16 · Cap. 5 · Cenários fiscais (narração ESTIMADA 84,7 s; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "seed": "t16-cap05",
+ "pace": 0.5,
+ "cps": 40,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 400
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true"
+ },
+ "seedExtra": [
+  "t16/inicio",
+  "t16/apos-cap04"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "waitFor",
+   "target": {
+    "label": "E-mail"
+   },
+   "timeout": 30
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "E-mail"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "Senha",
+    "exact": true
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Rafael!",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/fiscal-ambiental/configuracao/cenarios"
+  },
+  {
+   "do": "waitFor",
+   "text": "Nenhum cenário cadastrado",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const a=document.getAnimations().filter(x=>x.currentTime<0);a.forEach(x=>x.startTime=document.timeline.currentTime);return a.length})()"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|Algo deu errado|Falha ao|Something went wrong|inv[áa]lid/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{document.querySelectorAll('[data-sonner-toast][data-type=error]').forEach(t=>{const s='TOAST DE ERRO: '+t.textContent.trim().slice(0,90);if(!window.__avisos.includes(s)&&window.__avisos.length<10)window.__avisos.push(s)})},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0.4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Cenários fiscais",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.6,
+   "at": 4.28,
+   "label": "Cenários fiscais",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Nenhum cenário cadastrado",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 1.0,
+   "at": 6.33,
+   "label": "Nenhum cenário cadastrado",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 10.48
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "O que você preenche aqui vai impresso na nota fiscal.",
+    "exact": false,
+    "within": "main"
+   },
+   "seconds": 1.5,
+   "at": 10.93,
+   "label": "zoom: aviso fixo O que você preenche aqui vai impresso na nota fiscal",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 24.42
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Criar o primeiro cenário",
+    "exact": true,
+    "within": "main"
+   },
+   "at": 32.82,
+   "label": "Criar o primeiro cenário"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[id$='-nome']"
+   },
+   "at": 35.3,
+   "label": "Nome do cenário: Venda para a Fundição Bandeira do Vale (clique no campo)"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const e=document.activeElement;if(!e||!/^(INPUT|TEXTAREA)$/.test(e.tagName))return 'SEM ALVO (nada em foco)';document.execCommand('insertText',false,\"Venda para a Fundi\\u00e7\\u00e3o Bandeira do Vale\");return e.value})()",
+   "at": 37.02,
+   "label": "Nome do cenário: Venda para a Fundição Bandeira do Vale"
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 37.53
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[id$='-operacao']"
+   },
+   "seconds": 0.15,
+   "at": 42.31,
+   "label": "Operação: Venda (já vem assim)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[id$='-parceiro_tipo']"
+   },
+   "at": 43.19,
+   "label": "Cliente da nota (abre a lista)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Um cliente/fornecedor específico"
+   },
+   "at": 44.28,
+   "label": "Um cliente/fornecedor específico",
+   "noScroll": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[id$='-parceiro_valor']"
+   },
+   "at": 44.89,
+   "label": "CNPJ da Fundição (clique no campo)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[id$='-parceiro_valor']"
+   },
+   "text": "94716352000191",
+   "cps": 40,
+   "at": 46.73,
+   "label": "zoom: o CNPJ da Fundição",
+   "noClick": true
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Qualquer",
+    "exact": false,
+    "within": "main"
+   },
+   "seconds": 0.15,
+   "at": 47.85,
+   "label": "o resto em Qualquer",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 48.66
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=[...document.querySelectorAll(\"main *\")].filter(e=>e.textContent.trim()===\"O que aplicar\"&&e.offsetParent).sort((a,b)=>a.textContent.length-b.textContent.length||a.children.length-b.children.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-120);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/800),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 49.34,
+   "label": "desce a O que aplicar"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main div:has(> label:text-is('CST do ICMS')) button[role=combobox]"
+   },
+   "at": 51.29,
+   "label": "CST do ICMS (abre a lista)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=option]:has-text('51')"
+   },
+   "at": 52.32,
+   "label": "CST do ICMS 51",
+   "noScroll": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[id$='-diferimento']"
+   },
+   "at": 53.03,
+   "label": "Diferimento (%) (clique no campo)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[id$='-diferimento']"
+   },
+   "text": "100",
+   "cps": 40,
+   "at": 54.37,
+   "label": "Diferimento 100",
+   "noClick": true
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Usar a configuração de Impostos",
+    "exact": false,
+    "within": "main"
+   },
+   "seconds": 0.8,
+   "at": 55.11,
+   "label": "campo em branco: usa o padrão",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 59.03
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Criar cenário",
+    "exact": true,
+    "within": "main"
+   },
+   "at": 59.91,
+   "label": "Criar cenário"
+  },
+  {
+   "do": "waitFor",
+   "text": "Cenário criado",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Não revisado",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.6,
+   "at": 62.59,
+   "label": "selo Não revisado",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Marcar como revisado",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.77,
+   "at": 67.0,
+   "label": "zoom: Marcar como revisado (sem clicar)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 68.72
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 84.72
+  }
+ ]
+}

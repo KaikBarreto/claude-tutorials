@@ -88,6 +88,10 @@ node render_cenas.cjs 7 ../../narracao/cap07.json ../out/ilu07_tara.mp4 --html c
 ```
   O editor faz a fusão de 0,35/0,30 s com a tela; o `repouso` segura a câmera parada embaixo, e nenhum zoom manual
   termina a menos de 1 s do `at` (`docs/05-edicao.md`).
+- **Cena 3D** (kit `perfis/ecoflix/cenas3d/`, ver o `LEIA.md` dele): argila em three.js com os mesmos rótulos HTML e a
+  mesma API. O `render_cenas.cjs` sobe o Chromium com `--allow-file-access-from-files` (o import de módulo em `file://`
+  pede; o 2D sai idêntico) e aceita `--dsf` (1,35 = prévia 1728x1080). Custa ~1 s por quadro em 2560x1600 (3,5x o 2D).
+  No `ilustracoes.json`, `"3d": "cenas3d/cena3d.html"` marca a cena que vai em 3D; a 2D fica de reserva.
 
 ## Vertical 9:16
 Molde `cenas/cenas_modelo_vertical.html` (copie para `<tutorial>/edit/cenas/cenas_vertical.html`): 1080x1920, cenas desenhadas na

@@ -256,7 +256,7 @@
    "target": {
     "placeholder": "Escreva o nome ou código do material"
    },
-   "at": 2.89,
+   "at": 2.29,
    "label": "Material"
   },
   {
@@ -277,7 +277,7 @@
     "name": "Cobre mel",
     "exact": false
    },
-   "at": 4.41,
+   "at": 3.81,
    "label": "Cobre mel"
   },
   {
@@ -286,10 +286,15 @@
     "selector": "main label:has-text('Estoque Disponível')"
    },
    "seconds": 1.0,
-   "at": 5.47,
+   "at": 4.92,
    "label": "Estoque Disponível 42",
    "optional": true,
    "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"42\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main div:has(> label:has-text('Estoque Dispon\\u00edvel'))\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Estoque Disponível 42 Kg de cobre mel"
   },
   {
    "do": "click",
@@ -298,7 +303,7 @@
     "name": "Incluir Item",
     "exact": true
    },
-   "at": 6.84,
+   "at": 6.24,
    "label": "Incluir Item (cobre mel)"
   },
   {
@@ -314,7 +319,7 @@
     "exact": false
    },
    "seconds": 2.4,
-   "at": 9.03,
+   "at": 8.48,
    "label": "Faltam 18 Kg de Cobre mel. (zoom)",
    "optional": true,
    "timeout": 4
@@ -325,16 +330,11 @@
    "label": "confere Faltam 18 Kg de Cobre mel."
   },
   {
-   "do": "mark",
-   "name": "L2",
-   "at": 12.75
-  },
-  {
    "do": "click",
    "target": {
     "selector": "[role=dialog] button[role=combobox]"
    },
-   "at": 12.75,
+   "at": 12.08,
    "label": "Origem do estoque (abre a lista)"
   },
   {
@@ -343,12 +343,17 @@
    "timeout": 8
   },
   {
+   "do": "mark",
+   "name": "L2",
+   "at": 12.75
+  },
+  {
    "do": "hover",
    "target": {
     "selector": "[data-radix-popper-content-wrapper] :text-is('Esta unidade')"
    },
    "seconds": 1.2,
-   "at": 15.99,
+   "at": 15.44,
    "label": "grupo Esta unidade",
    "optional": true,
    "timeout": 4
@@ -365,7 +370,7 @@
     "name": "Cobre misto",
     "exact": false
    },
-   "at": 35.32,
+   "at": 34.72,
    "label": "Cobre misto"
   },
   {
@@ -399,15 +404,10 @@
     "exact": false
    },
    "seconds": 1.2,
-   "at": 37.67,
+   "at": 37.12,
    "label": "Quantidade coberta",
    "optional": true,
    "timeout": 4
-  },
-  {
-   "do": "mark",
-   "name": "L5",
-   "at": 43.19
   },
   {
    "do": "click",
@@ -415,7 +415,7 @@
     "role": "button",
     "name": "Transferir e Adicionar"
    },
-   "at": 43.39,
+   "at": 42.79,
    "label": "Transferir e Adicionar"
   },
   {
@@ -431,13 +431,18 @@
    "label": "tira o cobre da balança"
   },
   {
+   "do": "mark",
+   "name": "L5",
+   "at": 43.19
+  },
+  {
    "do": "hover",
    "target": {
     "selector": "main tbody tr:has-text('Cobre mel')",
     "nth": 0
    },
    "seconds": 1.2,
-   "at": 46.95,
+   "at": 46.4,
    "label": "linha Cobre mel (Lucro R$ 324,00)",
    "optional": true,
    "timeout": 4
@@ -449,7 +454,7 @@
     "within": "main"
    },
    "seconds": 1.6,
-   "at": 54.55,
+   "at": 54.0,
    "label": "Total da Venda R$ 7.722,80 e Lucro estimado R$ 992,80 (zoom)",
    "optional": true,
    "timeout": 4
@@ -461,27 +466,9 @@
     "within": "main",
     "exact": false
    },
-   "seconds": 0.67,
-   "at": 62.06,
+   "seconds": 1.4,
+   "at": 61.51,
    "label": "Lucro estimado R$ 992,80",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "mark",
-   "name": "L6",
-   "at": 63.28
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "Lucro estimado",
-    "within": "main",
-    "exact": false
-   },
-   "seconds": 0.53,
-   "at": 63.28,
-   "label": "Lucro estimado R$ 992,80 (continua)",
    "optional": true,
    "timeout": 4
   },
@@ -491,12 +478,17 @@
    "label": "confere total 7.722,80 e lucro 992,80"
   },
   {
+   "do": "mark",
+   "name": "L6",
+   "at": 63.28
+  },
+  {
    "do": "hover",
    "target": {
     "selector": "main :text-matches('^Itens do Pedido')"
    },
    "seconds": 3.0,
-   "at": 63.63,
+   "at": 63.28,
    "label": "a lista (Cancelar, Inserir mesmo assim: só na fala)",
    "optional": true,
    "timeout": 4
@@ -513,7 +505,7 @@
     "name": "Finalizar",
     "exact": true
    },
-   "at": 76.13,
+   "at": 75.78,
    "label": "Finalizar"
   },
   {
@@ -526,7 +518,7 @@
    "target": {
     "selector": "[role=dialog] button:has(span:text-is('Pix/Transferência'))"
    },
-   "at": 76.82,
+   "at": 76.32,
    "label": "Pix/Transferência"
   },
   {
@@ -535,7 +527,7 @@
     "role": "button",
     "name": "CONFIRMAR PAGAMENTO"
    },
-   "at": 77.8,
+   "at": 77.2,
    "label": "CONFIRMAR PAGAMENTO"
   },
   {
@@ -556,7 +548,7 @@
     "exact": true,
     "within": "[role=dialog]"
    },
-   "at": 81.06,
+   "at": 80.46,
    "label": "Visualizar"
   },
   {
@@ -565,7 +557,7 @@
     "role": "button",
     "name": "Visualizar PDF"
    },
-   "at": 84.71,
+   "at": 84.11,
    "label": "Visualizar PDF (o PDF abre noutra aba)"
   },
   {

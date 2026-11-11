@@ -236,6 +236,63 @@ def captura(nn, porta):
     return d
 
 
+def js_dump(rotulo):
+    """`eval` para a exploração da aula inteira (e2): lê do Supabase falso (o fetch da página vai para o endereço do build e o explorador
+    o desvia para a instância da aula) as linhas criadas na aula e as do mundo que ela alterou. O log da exploração guarda o JSON
+    ("DUMP <rótulo>") e `de_dump` o transforma no apos-capNN.json."""
+    schema = json.load(open(os.path.join(MUNDO, 'schema.json'), encoding='utf8'))['tables']
+    mundo = json.load(open(os.path.join(MUNDO, 'mundo.json'), encoding='utf8'))['env']
+    tabs = []
+    for tab, info in sorted(schema.items()):
+        cols = info.get('columns') or info
+        if isinstance(cols, dict) and 'id' in cols and tab not in IGNORA and ('created_at' in cols or 'updated_at' in cols):
+            tabs.append([tab, 'created_at' in cols, 'updated_at' in cols])
+    tabs.append(['dfe_inbound_import_jobs', True, True])
+    return ("(async()=>{const U=%s,K=%s,T=%s,Z=%s;const h={apikey:K,Authorization:'Bearer '+K};const out={};"
+            "const get=async q=>{try{const r=await fetch(U+'/rest/v1/'+q,{headers:h});return r.ok?await r.json():[]}catch(e){return []}};"
+            "await Promise.all(T.map(async([t,c,u])=>{const n=c?await get(t+'?select=*&created_at=gte.'+Z):[];"
+            "const m=u?await get(t+'?select=*&updated_at=gte.'+Z+(c?'&created_at=lt.'+Z:'')):[];if(n.length||m.length)out[t]={n,m}}));"
+            "return 'DUMP %s '+JSON.stringify(out)})()") % (json.dumps(mundo['fakeUrl']), json.dumps(mundo['anonKey']), json.dumps(tabs),
+                                                              json.dumps(FAKE_NOW_Z), rotulo)
+
+
+def de_dump(arquivo_out, rotulo, nn, porta):
+    """apos-capNN.json a partir do "DUMP <rótulo>" do log de uma exploração (mesmo formato da captura)."""
+    linha = next(l for l in open(arquivo_out, encoding='utf8') if f'"DUMP {rotulo} ' in l)
+    bruto = json.loads(json.loads(linha[linha.index(': ') + 2:].strip()).split(' ', 2)[2])
+    novas = {t: v['n'] for t, v in bruto.items() if v['n']}
+    patch = {t: [{'match': {'id': r['id']}, 'set': {k: x for k, x in r.items() if k not in ('id', 'created_at')}} for r in v['m']]
+             for t, v in bruto.items() if v['m']}
+    _post(porta, '/__dev/reset', {})
+    _post(porta, '/__dev/seed', {'files': ['t16/inicio']})
+    for tab in list(novas):
+        if tab == 'dfe_inbound_import_jobs':
+            continue
+        ids = ','.join(r['id'] for r in novas[tab])
+        ja = {r['id'] for r in _get(porta, f'{tab}?select=id&id=in.({ids})')}
+        novas[tab] = [r for r in novas[tab] if r['id'] not in ja]
+        if not novas[tab]:
+            del novas[tab]
+    for tab, itens in list(patch.items()):
+        novos = []
+        for it in itens:
+            antes = _get(porta, f"{tab}?select=*&id=eq.{it['match']['id']}")
+            antes = antes[0] if antes else {}
+            mud = {k: v for k, v in it['set'].items() if antes.get(k) != v}
+            if mud:
+                novos.append({'match': it['match'], 'set': mud})
+        if novos:
+            patch[tab] = novos
+        else:
+            del patch[tab]
+    d = {'_doc': f'T16 · estado depois do cap{nn:02d} (cumulativo sobre t16/inicio), lido do Supabase falso na exploração da aula inteira '
+                 f'({os.path.basename(arquivo_out)}, "{rotulo}"), com os mesmos passos e dados do robô. Gerado por rec/t16/t16_sementes.py dump.'}
+    d.update(novas)
+    if patch:
+        d['_patch'] = patch
+    return d
+
+
 if __name__ == '__main__':
     os.makedirs(SAIDA, exist_ok=True)
     if sys.argv[1:2] == ['assets']:
@@ -243,6 +300,10 @@ if __name__ == '__main__':
         sys.exit(0)
     if sys.argv[1:2] == ['inicio']:
         nome, d = 'inicio', inicio()
+    elif sys.argv[1:2] == ['dump']:   # dump <arquivo .out> <rótulo> NN [--porta P]
+        porta = int(sys.argv[sys.argv.index('--porta') + 1]) if '--porta' in sys.argv else 54316
+        nn = int(sys.argv[4])
+        nome, d = f'apos-cap{nn:02d}', de_dump(sys.argv[2], sys.argv[3], nn, porta)
     elif sys.argv[1:2] == ['captura']:
         nn = int(sys.argv[2])
         porta = int(sys.argv[sys.argv.index('--porta') + 1]) if '--porta' in sys.argv else 54316

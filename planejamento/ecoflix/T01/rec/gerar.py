@@ -218,7 +218,8 @@ class Cap:
     def encaixa(s):
         """hover que invade o próximo gesto com `at` encolhe o `seconds` (deslocamento do cursor ~0,6 s a pace 0,5, ~0,8 s a 0,6):
         sem isso o atraso de um hover se soma ao do seguinte (docs/08, T7 cap. 1)"""
-        mov = 0.6 if s.pace <= 0.5 else 0.8
+        # custo medido na gravação com a máquina cheia (T1 cap00: 0,8 a 1,9 s); o do ensaio rápido (0,5 a 0,9) subestima
+        mov = 1.1 if s.pace <= 0.5 else 1.3
         # a marca da linha seguinte também limita: o cursor fica parado no alvo depois do passo, então encolher não tira nada
         # da tela e a marca não atrasa (T1 caps. 10-12)
         timed = [st for st in s.steps if 'at' in st]
@@ -342,13 +343,15 @@ def cap00():
     c.mark(1)
     c.mark(2)
     c.mark(3)
-    c.hover(TXT('Cadastro'), 0.8, at=c.A(3, 'Então', 0.5), label='título Cadastro')
-    c.hover(TXTP('Teste grátis por 7 dias'), 1.0, at=c.A(3, 'criar', 0.7), label='Teste grátis por 7 dias · Sem compromisso · Acesso total')
-    c.hover(TXT('Dados'), 0.5, at=c.A(3, 'entrar', 0.4), label='etapas Dados e Acesso')
-    c.hover(CAD_EMPRESA, 1.2, at=c.A(3, 'preencher', 0.4), label='Nome da Empresa (o cursor desce pelo formulário)')
-    c.hover(CAD_EMAIL, 0.6, at=c.A(3, 'Depois,', 0.5), label='Email')
+    # na gravação (máquina com outros agentes) cada deslocamento levou 0,8 a 1,9 s (no ensaio rápido 0,5 a 0,9): âncoras com
+    # esse custo e `seconds` curtos (o cursor fica no alvo até o passo seguinte)
+    c.hover(TXT('Cadastro'), 0.6, at=c.A(3, 'Então', 0.5), label='título Cadastro')
+    c.hover(TXTP('Teste grátis por 7 dias'), 0.35, at=c.A(3, 'criar', 1.0), label='Teste grátis por 7 dias · Sem compromisso · Acesso total')
+    c.hover(TXT('Dados'), 0.3, at=c.A(3, 'entrar', -0.05), label='etapas Dados e Acesso')
+    c.hover(CAD_EMPRESA, 0.8, at=c.A(3, 'preencher', -0.2), label='Nome da Empresa (o cursor desce pelo formulário)')
+    c.hover(CAD_EMAIL, 0.3, at=c.A(3, 'Depois,', 0.2), label='Email')
     c.hover(CAD_FONE, 0.5, at=c.A(3, 'pedido,', 0.4), label='Telefone')
-    c.hover(BTNX('Continuar'), 1.6, at=c.A(3, 'comprovante', 0.4, nth=0), label='Continuar (sem clicar)')
+    c.hover(BTNX('Continuar'), 1.4, at=c.A(3, 'comprovante', 0.35, nth=0), label='Continuar (sem clicar)')
     c.mark(4)
     c.cursor((1060, 330), at=c.A(4, 'Se', 0.6), label='cursor sai do formulário (cartão Antes: Bem-vindo ao EcoSistema)')
     c.fim()

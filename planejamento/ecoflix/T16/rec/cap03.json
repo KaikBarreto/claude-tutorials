@@ -1,0 +1,290 @@
+{
+ "name": "t16-cap03",
+ "title": "T16 · Cap. 3 · Subindo o certificado A1 (narração ESTIMADA 59,1 s; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "seed": "t16-cap03",
+ "pace": 0.5,
+ "cps": 40,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 400
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true"
+ },
+ "seedExtra": [
+  "t16/inicio"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "waitFor",
+   "target": {
+    "label": "E-mail"
+   },
+   "timeout": 30
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "E-mail"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "Senha",
+    "exact": true
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Rafael!",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/fiscal-ambiental/configuracao/certificado"
+  },
+  {
+   "do": "waitFor",
+   "text": "Certificado não configurado",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const a=document.getAnimations().filter(x=>x.currentTime<0);a.forEach(x=>x.startTime=document.timeline.currentTime);return a.length})()"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|Algo deu errado|Falha ao|Something went wrong|inv[áa]lid/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{document.querySelectorAll('[data-sonner-toast][data-type=error]').forEach(t=>{const s='TOAST DE ERRO: '+t.textContent.trim().slice(0,90);if(!window.__avisos.includes(s)&&window.__avisos.length<10)window.__avisos.push(s)})},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0.4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Certificado não configurado",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.6,
+   "at": 0.73,
+   "label": "Certificado não configurado",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Certificado Digital A1",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.8,
+   "at": 4.13,
+   "label": "Certificado Digital A1",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 8.28
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Arquivo do Certificado (.pfx ou .p12)",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.3,
+   "at": 8.8,
+   "label": "Arquivo do Certificado",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "upload",
+   "target": {
+    "role": "button",
+    "name": "Selecionar arquivo",
+    "exact": true,
+    "within": "main"
+   },
+   "file": "assets/recicla-vale-metais-a1.pfx",
+   "at": 11.26,
+   "label": "Selecionar arquivo: recicla-vale-metais-a1.pfx"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 17.05
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#certificado-senha"
+   },
+   "at": 17.48,
+   "label": "Senha do Certificado (clique no campo)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#certificado-senha"
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40,
+   "at": 20.18,
+   "label": "digita a senha (pontos)",
+   "noClick": true
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "#certificado-senha-ajuda"
+   },
+   "seconds": 0.15,
+   "at": 22.95,
+   "label": "zoom: Use a senha do próprio certificado",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 23.78
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Validar Certificado",
+    "exact": true,
+    "within": "main"
+   },
+   "at": 24.67,
+   "label": "Validar Certificado"
+  },
+  {
+   "do": "waitFor",
+   "text": "Certificado validado!",
+   "timeout": 15
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 28.84
+  },
+  {
+   "do": "type",
+   "target": {
+    "text": "RECICLA VALE METAIS LTDA",
+    "exact": false,
+    "within": "main"
+   },
+   "text": "",
+   "noClick": true,
+   "optional": true,
+   "timeout": 4,
+   "at": 29.44,
+   "label": "zoom: nome do certificado e Válido até 14/09/2027"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Válido até 14/09/2027",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 1.2,
+   "at": 32.1,
+   "label": "chip Válido até 14/09/2027",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 35.8
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 49.28
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Substituir Certificado",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.8,
+   "at": 53.22,
+   "label": "zoom: Substituir Certificado",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Próximo: Configurar Empresa",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 1.2,
+   "at": 55.8,
+   "label": "zoom: Próximo: Configurar Empresa (sem clicar)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 59.13
+  }
+ ]
+}

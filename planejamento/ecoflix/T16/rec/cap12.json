@@ -1,0 +1,321 @@
+{
+ "name": "t16-cap12",
+ "title": "T16 · Cap. 12 · Cancelar e corrigir (narração ESTIMADA 75,1 s; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "seed": "t16-cap12",
+ "pace": 0.5,
+ "cps": 40,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 400
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true"
+ },
+ "seedExtra": [
+  "t16/inicio",
+  "t16/apos-cap11"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "waitFor",
+   "target": {
+    "label": "E-mail"
+   },
+   "timeout": 30
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "E-mail"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "Senha",
+    "exact": true
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Rafael!",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/fiscal-ambiental/nfe/saida"
+  },
+  {
+   "do": "waitFor",
+   "text": "#1250",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const a=document.getAnimations().filter(x=>x.currentTime<0);a.forEach(x=>x.startTime=document.timeline.currentTime);return a.length})()"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|Algo deu errado|Falha ao|Something went wrong|inv[áa]lid/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{document.querySelectorAll('[data-sonner-toast][data-type=error]').forEach(t=>{const s='TOAST DE ERRO: '+t.textContent.trim().slice(0,90);if(!window.__avisos.includes(s)&&window.__avisos.length<10)window.__avisos.push(s)})},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0.4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('#1249')"
+   },
+   "seconds": 1.0,
+   "at": 8.53,
+   "label": "a nota 1249 (Serra Fina, Autorizada)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 12.38
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('#1249') td:last-child button"
+   },
+   "seconds": 0.27,
+   "at": 12.9,
+   "label": "abre o menu da linha #1249",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('#1249') td:last-child button"
+   },
+   "seconds": 0.15,
+   "label": "(menu #1249 aberto)",
+   "noScroll": true,
+   "unless": {
+    "role": "menuitem",
+    "name": "Cancelar"
+   },
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Cancelar"
+   },
+   "at": 14.12,
+   "label": "Cancelar",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "text": "Cancelar Nota Fiscal #1249",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] textarea"
+   },
+   "at": 14.93,
+   "label": "Motivo do Cancelamento (clique no campo)"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const e=document.activeElement;if(!e||!/^(INPUT|TEXTAREA)$/.test(e.tagName))return 'SEM ALVO (nada em foco)';document.execCommand('insertText',false,\"Pedido alterado pelo cliente antes de a mercadoria sair do p\\u00e1tio\");return e.value})()",
+   "at": 16.11,
+   "label": "Motivo do Cancelamento"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 19.48
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:has-text('Confirmar Cancelamento')"
+   },
+   "at": 19.68,
+   "label": "Confirmar Cancelamento"
+  },
+  {
+   "do": "waitFor",
+   "selector": "main tbody tr:has-text('#1249'):has-text('Cancelada')",
+   "timeout": 15
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('#1249') td:has-text('Cancelada')"
+   },
+   "seconds": 1.0,
+   "at": 22.46,
+   "label": "#1249 Cancelada",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 30.54
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 45.16
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('#1250') td:last-child button"
+   },
+   "seconds": 0.15,
+   "at": 45.16,
+   "label": "abre o menu da linha #1250",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('#1250') td:last-child button"
+   },
+   "seconds": 0.15,
+   "label": "(menu #1250 aberto)",
+   "noScroll": true,
+   "unless": {
+    "role": "menuitem",
+    "name": "Carta de Correção"
+   },
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Carta de Correção"
+   },
+   "at": 45.56,
+   "label": "Carta de Correção",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "text": "Carta de Correção - NF-e #1250",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] :text-matches('A Carta de Correção \\\\(CC-e\\\\) permite')"
+   },
+   "seconds": 2.0,
+   "at": 49.49,
+   "label": "zoom: aviso Importante (o que não dá pra corrigir)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 59.78
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] textarea"
+   },
+   "at": 60.21,
+   "label": "Texto da Correção (clique no campo)"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const e=document.activeElement;if(!e||!/^(INPUT|TEXTAREA)$/.test(e.tagName))return 'SEM ALVO (nada em foco)';document.execCommand('insertText',false,\"Onde se l\\u00ea 'Placa FJR3B27', leia-se 'Placa GKM5D18'. A transportadora trocou o ve\\u00edculo da carga.\");return e.value})()",
+   "at": 61.85,
+   "label": "Texto da Correção"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] :text-matches('Dica: Use o formato')"
+   },
+   "seconds": 0.77,
+   "at": 65.85,
+   "label": "zoom: Dica do formato",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 67.57
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:has-text('Enviar CC-e')"
+   },
+   "at": 68.45,
+   "label": "Enviar CC-e"
+  },
+  {
+   "do": "waitFor",
+   "text": "Carta de Correção enviada com sucesso!",
+   "timeout": 10
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 75.07
+  }
+ ]
+}

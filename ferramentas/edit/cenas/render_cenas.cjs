@@ -6,12 +6,15 @@
 //      de conceito no meio de um capítulo gravado: --de = o "at" dela no specs.json, --ate = at + dur.
 // A página (padrão: cenas.html ao lado) expõe window.setup(dados) e window.R(t); ícones lucide usados como ic('nome',...)
 // são achados sozinhos no HTML (npm i na pasta: lucide-static). Ver docs/09-aula-ilustrada.md.
+// Cena 3D (kit perfis/ecoflix/cenas3d, three.js em módulo ES): o Chromium sobe com --allow-file-access-from-files, sem o
+// qual o import de módulo em file:// cai no CORS (origem "null"); o 2D sai idêntico com ela. --dsf N: escala do dispositivo
+// (padrão 2 = 2560x1600; 1,35 = 1728x1080 para prévia; 1 = 1280x800 para conferir rápido).
 const { chromium } = require('playwright');
 const fs = require('fs'), path = require('path'), { spawn } = require('child_process');
 const HERE = __dirname;
 const [cap, tempos, saida] = process.argv.slice(2);
 const opt = (k, d) => { const i = process.argv.indexOf(k); return i > 0 ? process.argv[i + 1] : d; };
-const FPS = 30, CAUDA = parseFloat(opt('--cauda', '1.2')), STILLS = opt('--stills', null);
+const FPS = 30, CAUDA = parseFloat(opt('--cauda', '1.2')), STILLS = opt('--stills', null), DSF = parseFloat(opt('--dsf', '2'));
 // --stills sem instantes (lista vazia por engano) renderizaria o MP4 inteiro sob a trava: recusa.
 if (process.argv.includes('--stills') && !(STILLS || '').trim()) { console.error('render_cenas: --stills sem instantes'); process.exit(2); }
 const HTML = path.resolve(opt('--html', path.join(HERE, 'cenas.html')));
@@ -40,8 +43,9 @@ vivo();
     icons[n] = fs.readFileSync(f, 'utf8').replace(/<!--[\s\S]*?-->/g, '').replace(/width="24"/, '').replace(/height="24"/, '')
       .replace(/stroke-width="2"/, 'stroke-width="2.1"');
   }
-  const b = await chromium.launch();
-  const page = await b.newPage({ viewport: { width: 1280, height: 800 }, deviceScaleFactor: 2 });
+  const b = await chromium.launch({ args: ['--allow-file-access-from-files'] });
+  const page = await b.newPage({ viewport: { width: 1280, height: 800 }, deviceScaleFactor: DSF });
+  const erros = []; page.on('pageerror', e => erros.push(String(e)));
   await page.route('**/*', r => r.request().url().startsWith('file:') ? r.continue() : r.abort());
   await page.addInitScript(`window.ICONS=${JSON.stringify(icons)};`);
   await page.goto('file://' + HTML);
@@ -60,7 +64,7 @@ vivo();
   await page.evaluate(d => window.setup(d), dados);
   await page.evaluate(async () => { await Promise.all([...document.images].map(i => i.complete ? 0 : new Promise(r => { i.onload = i.onerror = r; }))); });
   vivo();
-  const avisos = []; page.on('console', m => { if (m.type() === 'warning') avisos.push(m.text()); });
+  const avisos = []; page.on('console', m => { if (m.type() === 'warning' && !/WebGL-|GL Driver|GPU stall/.test(m.text())) avisos.push(m.text()); });
   if (STILLS) {
     fs.mkdirSync(saida, { recursive: true });
     for (const s of STILLS.split(',')) {
@@ -69,6 +73,7 @@ vivo();
       vivo();
     }
     if (avisos.length) console.log('AVISOS:', [...new Set(avisos)].join(' | '));
+    if (erros.length) console.log('ERROS:', [...new Set(erros)].join(' | '));
     await b.close(); return;
   }
   const de = parseFloat(opt('--de', '0')), ate = parseFloat(opt('--ate', String(N.dur + CAUDA)));
@@ -90,5 +95,6 @@ vivo();
   if (code !== 0) { console.error('ffmpeg falhou', code); process.exit(1); }
   fs.renameSync(tmp, saida);
   if (avisos.length) console.log('AVISOS:', [...new Set(avisos)].join(' | '));
+  if (erros.length) console.log('ERROS:', [...new Set(erros)].join(' | '));
   console.log(`ok ${saida}: ${n} quadros, ${dur.toFixed(2)} s, ${((Date.now() - t0) / 1000).toFixed(0)} s de render`);
 })();

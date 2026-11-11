@@ -100,8 +100,17 @@ OBS = ("(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tent
        "if(!window.__avisos.includes(s)&&window.__avisos.length<10)window.__avisos.push(s)})},300);return 1})()")
 
 
+def js_obs(erros_ok=()):
+    """o OBS, sem os avisos que o roteiro pede na tela (ex.: o toast "Abra o caixa antes de realizar compras" do cap01)"""
+    if not erros_ok:
+        return OBS
+    ok = json.dumps(list(erros_ok), ensure_ascii=False)
+    return OBS.replace("window.__avisos.push(m[0]", f"!{ok}.some(x=>m[0].includes(x))&&window.__avisos.push(m[0]").replace(
+        "if(!window.__avisos.includes(s)&&", f"if(!{ok}.some(x=>s.includes(x))&&!window.__avisos.includes(s)&&")
+
+
 class Cap:
-    def __init__(s, n, setup, pace=0.5, cps=40, start=(760, 470), prewarm=('/login',), sub='', voz_de=None, user='rafael'):
+    def __init__(s, n, setup, pace=0.5, cps=40, start=(760, 470), prewarm=('/login',), sub='', voz_de=None, user='rafael', erros_ok=()):
         s.n, s.sub = n, sub
         s.nome = f'cap{n:02d}{sub}'
         s.words, s.linhas, s.dur, s.estimado = carregar_voz(n)
@@ -119,7 +128,7 @@ class Cap:
         s.pace, s.cps, s.start = pace, cps, start
         s.prewarm = list(prewarm)
         s.user = user
-        s.setup = list(setup) + [{'do': 'eval', 'js': OBS}]
+        s.setup = list(setup) + [{'do': 'eval', 'js': js_obs(erros_ok)}]
 
     # ---- tempo
     def L(s, i):
@@ -173,6 +182,13 @@ class Cap:
             s.steps.append({'do': 'mark', 'name': f'L{i}', 'at': 0})
         else:
             s.pending.append((round(t, 2), i))
+
+    def marca_em(s, i, at):
+        """marca Ln já no início de um passo que começa antes da linha e dura até ela (clique lento que tem de agir NA palavra):
+        sem isso a marca só sairia depois do passo, atrasada (docs/08, linhas 53 e 131)"""
+        s.flush(at)
+        s.pending = [(mt, mi) for mt, mi in s.pending if mi != i]
+        s.steps.append({'do': 'mark', 'name': f'L{i}', 'at': round(at, 2)})
 
     def _p(s, d, at, label, kw):
         if at is not None:
@@ -382,6 +398,7 @@ OLHO2 = SEL('main button[aria-label="Mostrar saldo"]')
 SAQUE_SANGRIA = BTNX('Saque / Sangria', MAIN)
 NOVA_MOV = BTNX('Nova Movimentação Bancária', MAIN)
 TOAST = SEL('[data-sonner-toast]')
+CARD_AMARELO = SEL('main div[class*="border-amber-500/40"]')            # cartão "Reabrir #N" (CashRegisterHomePanel.tsx:596)
 ALERTA_COFRE = '[role=dialog]:has-text("Saldo insuficiente em dinheiro")'   # 2a janela por cima do Abrir Caixa (o `within` pega a 1a que casa)
 COMBO = lambda n: SEL(f'{DLG} button[role=combobox]', nth=n)            # seletores da janela, na ordem da tela
 VALOR = SEL(f'{DLG} #amount')
@@ -425,13 +442,14 @@ def cap00():
 @cap
 def cap01():
     """O caixa fechado (aba Início do gestor, sem caixa aberto): Meu Caixa, cartão amarelo do #84, Painel Gerencial vazio, Shift+C."""
-    c = Cap(1, setup_caixa([{'do': 'waitFor', 'text': 'Nenhum caixa foi aberto neste dia.', 'timeout': 15}]))
+    c = Cap(1, setup_caixa([{'do': 'waitFor', 'text': 'Nenhum caixa foi aberto neste dia.', 'timeout': 15}]),
+            erros_ok=('Abra o caixa antes de realizar compras',))     # o aviso que a L5 mostra de propósito
     c.mark(1)
     c.confere('main', ['Meu Caixa', 'Abrir Caixa', '#84', 'R$ 1.250,00', 'Rafael Nogueira', '09/11 07:58 → 09/11 17:44', 'reabrir outro caixa',
                        'Reabrir #84', '0 caixas encontrados'], 'tela do caixa fechado (#84, R$ 1.250,00)')
     c.hover(ABRIR, at=c.A(1, 'botão', 0.5), label='botão Abrir Caixa (Meu Caixa)')
     c.mark(2)
-    c.hover(TXT('#84'), at=c.A(2, 'cartão', 0.5), label='ZOOM cartão amarelo #84 (L2)')
+    c.hover(CARD_AMARELO, at=c.A(2, 'cartão', 0.5), label='ZOOM cartão amarelo #84 (L2)')
     c.hover(TXTX('09/11 07:58'), at=c.A(2, 'horário', 0.5), label='horário do #84')
     c.hover(BTN('Reabrir #84', MAIN), at=c.A(2, 'reabrir', 0.5), label='Reabrir #84')
     c.mark(3)
@@ -468,11 +486,14 @@ def cap02():
     c.mark(3)
     c.hover(CAMPO_ABERTURA, at=c.A(3, 'digite', 0.5), label='campo (digite o que contou)')
     c.mark(4)
-    c.click(CAMPO_ABERTURA, at=c.A(4, 'contei', 0.6), label='campo Saldo de Abertura')
-    c.type(CAMPO_ABERTURA, '1.500,00', at=c.A(4, 'mil', 0.05), label='digita 1.500,00', noClick=True)
+    # a digitação na máscara do campo leva ~0,2 s por caractere (ensaio de 11/11: 2,3 s para "1.500,00") e o clique em "Abrir Caixa"
+    # da janela ~1,9 s até agir (a janela se ajeita quando o aviso do zero some): o campo começa cedo para o clique cair em "Abrir"
+    c.click(CAMPO_ABERTURA, at=c.A(4, 'Hoje', 0.6), label='campo Saldo de Abertura')
+    c.type(CAMPO_ABERTURA, '1.500,00', at=c.A(4, 'contei', 0.05), label='digita 1.500,00', noClick=True)
     c.confere_campo('#openingBalance', '1.500,00', 'campo com 1.500,00')
-    c.mark(5)
-    c.click(ABRIR_DLG, at=c.A(5, 'Abrir', 0.6), label='Abrir Caixa (janela)')
+    t = c.A(5, 'Abrir', 1.9)
+    c.marca_em(5, t)
+    c.click(ABRIR_DLG, at=t, label='Abrir Caixa (janela)')
     c.waitfor(text='Caixa aberto com sucesso!', timeout=10)
     c.hover(TXT('R$ 1.500,00'), at=c.A(5, 'abriu', 0.5), label='Dinheiro em Caixa R$ 1.500,00 (#85)')
     c.confere('main', ['#85 | Caixa - Rafael Nogueira', 'Dinheiro em Caixa', 'R$ 1.500,00', 'Aberto em: 10/11/2026 08:31'], 'caixa #85 aberto às 08:31')
@@ -790,7 +811,7 @@ def cap11():
     c.hover(BTN('Reabrir #85', MAIN), at=c.A(1, 'reabrir', 0.5), label='Reabrir #85')
     c.mark(2)
     c.confere('main', ['#85', 'R$ 1.007,10', 'reabrir outro caixa'], 'cartão amarelo do #85 com R$ 1.007,10')
-    c.hover(TXT('#85'), at=c.A(2, 'cartão', 0.5), label='ZOOM cartão amarelo #85 (L2)')
+    c.hover(CARD_AMARELO, at=c.A(2, 'cartão', 0.5), label='ZOOM cartão amarelo #85 (L2)')
     c.mark(3)
     c.click(BTN('reabrir outro caixa', MAIN), at=c.A(3, 'reabrir', 0.6), label='reabrir outro caixa')
     c.waitfor(text='Escolha qual caixa fechado deseja reabrir', timeout=10)

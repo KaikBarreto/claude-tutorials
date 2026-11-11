@@ -210,7 +210,7 @@ class Cap:
         esp = [esperados] if isinstance(esperados, str) else list(esperados)
         js = ("(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=%s;let out='';"
               "for(let i=0;i<%d;i++){const els=[...document.querySelectorAll(%s)];const el=els[els.length-1];"
-              "if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));"
+              "if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText+' '+[...el.querySelectorAll('input,textarea')].map(i=>i.value).join(' '));const falta=esp.filter(e=>!t.includes(norm(e)));"
               "if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}"
               "await new Promise(r=>setTimeout(r,250));}return out})()") % (json.dumps(esp, ensure_ascii=False), tentativas, json.dumps(sel))
         return s.add({'do': 'eval', 'js': js, 'label': 'confere ' + label})
@@ -447,7 +447,7 @@ def cap03():
     c.waitfor(text='Saldo ajustado', timeout=10)
     c.confere('main', ['R$ 18.560,00'], 'cofre com R$ 18.560,00')
     c.mark(7)
-    c.ev(js_rola_texto('Histórico de Movimentações', 150, 900), at=c.A(7, 'ajuste', 0.9), label='desce ao histórico do cofre')
+    c.rolar(320, at=c.A(7, 'ajuste', 1.1), label='desce ao histórico do cofre', ponto=(900, 520))
     c.hover({'text': 'Ajuste de saldo — Contagem do cofre', 'within': MAIN}, seconds=0.6, at=c.A(7, 'histórico', 0.3), label='a linha do ajuste')
     c.hover(TXT('Ajuste', within=MAIN), seconds=1.0, at=c.A(7, 'etiqueta', 0.5), label='etiqueta Ajuste')
     c.fim()

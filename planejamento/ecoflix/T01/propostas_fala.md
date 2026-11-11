@@ -17,6 +17,21 @@ no gesto. Nada aqui foi aplicado: `roteiro.md` e `tts_textos.py` ficam para a re
 - **E-mail da empresa:** B (seção 3) traz `rafael@reciclavalemetais.example`; o cap06 L2 troca, na tela e na fala, para
   `contato@reciclavalemetais.example`. O robô segue a fala; a semente `apos-cap06` sai com `contato@`. Decidir qual vale em B.
 - **Frase do comprovante:** a de 68 caracteres, sem sábado (junção); o contador mostra "68/2000 caracteres".
+- **Complemento:** o cap06 digita "Galpão 2" (a fala diz "galpão dois"); B (seção 3) não tem complemento. Depois do T1 o
+  endereço da empresa e o da Configuração Fiscal (Matriz) ficam com "Galpão 2". Decidir se B ganha o galpão.
+- **Configuração Fiscal no T1:** a aula parte da Matriz de B. Ao salvar no cap05 (endereço ainda vazio) o app grava o endereço
+  vazio nela (sem mexer na UF) e o cap06 grava o completo de novo; nada disso aparece na tela do T1. As sementes `apos-cap05`
+  e `apos-cap06` atualizam essa linha (não inserem outra).
+
+## Números da fala × tela (seção 18)
+
+Todos batem: duas etapas (Dados e Acesso), "Mínimo 8 caracteres", os dois links (Termos e Política), "7 dias grátis" e "5
+usuários" (cap02), até cinco contas salvas (`MAX_SESSIONS = 5`, não aparece na tela), código de 6 dígitos e "Reenviar código em
+60s" (cap04), "#30", "0030" e "30/11/26" nos exemplos da numeração (cap07), "68/2000", 30/60/90 com 33,33 + 33,33 + 33,34 =
+100% e "3 parcelas" (caps 10 e 13), Rua das Oficinas, 1250 (cap06). Os exemplos falados do cap09 não estão na tela e fecham
+com os preços de B (latinha R$ 6,20/kg: 37 kg = R$ 229,40; ferro misto R$ 0,75/kg: 190 kg = R$ 142,50, 200 kg = R$ 150,00).
+Para a junção corrigir na seção 18: o 1.250 do cap06 é o número da rua (seção 3), não o "fechamento do #84"; os "150 dias" dos
+caps 10 e 13 são a leitura de "sessenta e noventa dias" (60 e 90).
 
 ## Achados do app
 

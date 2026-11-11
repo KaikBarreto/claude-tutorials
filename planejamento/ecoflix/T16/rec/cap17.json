@@ -1,0 +1,347 @@
+{
+ "name": "t16-cap17",
+ "title": "T16 · Cap. 17 · Importar pelo XML (narração ESTIMADA 68,9 s; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "seed": "t16-cap17",
+ "pace": 0.5,
+ "cps": 40,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 400
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true"
+ },
+ "seedExtra": [
+  "t16/inicio",
+  "t16/apos-cap16"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "waitFor",
+   "target": {
+    "label": "E-mail"
+   },
+   "timeout": 30
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "E-mail"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "Senha",
+    "exact": true
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Rafael!",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/fiscal-ambiental/nfe/recebidas"
+  },
+  {
+   "do": "waitFor",
+   "text": "Notas emitidas contra o seu CNPJ",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const a=document.getAnimations().filter(x=>x.currentTime<0);a.forEach(x=>x.startTime=document.timeline.currentTime);return a.length})()"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|Algo deu errado|Falha ao|Something went wrong|inv[áa]lid/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{document.querySelectorAll('[data-sonner-toast][data-type=error]').forEach(t=>{const s='TOAST DE ERRO: '+t.textContent.trim().slice(0,90);if(!window.__avisos.includes(s)&&window.__avisos.length<10)window.__avisos.push(s)})},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0.4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Importar nota",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.15,
+   "at": 11.42,
+   "label": "Importar nota",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 12.15
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Importar nota",
+    "exact": true,
+    "within": "main"
+   },
+   "at": 13.04,
+   "label": "Importar nota"
+  },
+  {
+   "do": "waitFor",
+   "text": "Importar nota recebida",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] [role=tab]:has-text('Arquivo XML'), [role=dialog] button:has-text('Arquivo XML')"
+   },
+   "at": 15.26,
+   "label": "aba Arquivo XML"
+  },
+  {
+   "do": "upload",
+   "target": {
+    "selector": "[role=dialog] button:has-text('Selecione o XML'), [role=dialog] label:has-text('Selecione o XML')"
+   },
+   "file": "assets/NFe-3871-Cooperativa-Recomeco.xml",
+   "at": 16.83,
+   "label": "o XML da Cooperativa (NFe-3871-Cooperativa-Recomeco.xml)"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 19.56
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:text-is('Importar nota')"
+   },
+   "at": 19.77,
+   "label": "Importar nota (janela)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Nota importada",
+   "timeout": 15
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:text-is('Concluir')"
+   },
+   "at": 23.58,
+   "label": "Concluir"
+  },
+  {
+   "do": "waitFor",
+   "text": "Cooperativa Recomeço",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('Cooperativa Recomeço')"
+   },
+   "seconds": 0.15,
+   "at": 25.25,
+   "label": "a linha Cooperativa Recomeço R$ 7.550,00",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 25.91
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('Cooperativa Recomeço') td:last-child button"
+   },
+   "seconds": 0.15,
+   "at": 26.21,
+   "label": "abre o menu da linha Cooperativa Recomeço",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('Cooperativa Recomeço') td:last-child button"
+   },
+   "seconds": 0.15,
+   "label": "(menu Cooperativa Recomeço aberto)",
+   "noScroll": true,
+   "unless": {
+    "role": "menuitem",
+    "name": "Lançar compra…"
+   },
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Lançar compra…"
+   },
+   "at": 26.89,
+   "label": "Lançar compra…",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "text": "Importar NF-e nº 3871",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] :text-matches('^Fornecedor:')"
+   },
+   "seconds": 0.77,
+   "at": 30.77,
+   "label": "Fornecedor: Cooperativa Recomeço por CNPJ/CPF",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 32.49
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] :text-is('ALUMINIO LATINHA')"
+   },
+   "text": "",
+   "noClick": true,
+   "optional": true,
+   "timeout": 4,
+   "at": 33.24,
+   "label": "zoom: ALUMINIO LATINHA, selo alta, Alumínio latinha"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] :text-is('alta')",
+    "nth": 0
+   },
+   "seconds": 0.15,
+   "at": 42.13,
+   "label": "selo alta",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 42.63
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] :text-is('PLASTICO PET PRENSADO')"
+   },
+   "text": "",
+   "noClick": true,
+   "optional": true,
+   "timeout": 4,
+   "at": 43.39,
+   "label": "zoom: PLASTICO PET PRENSADO, selo confira, Plástico PET"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] :text-is('confira')",
+    "nth": 0
+   },
+   "seconds": 1.0,
+   "at": 48.78,
+   "label": "selo confira",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 54.52
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] :text-matches('A NF-e traz só o peso líquido')"
+   },
+   "seconds": 0.15,
+   "at": 56.49,
+   "label": "zoom: A NF-e traz só o peso líquido",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] button:has-text('Conferir na tela de compra')"
+   },
+   "seconds": 1.5,
+   "at": 57.33,
+   "label": "Conferir na tela de compra (sem clicar)",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 68.86
+  }
+ ]
+}

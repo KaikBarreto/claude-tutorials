@@ -1,0 +1,288 @@
+{
+ "name": "t16-cap07",
+ "title": "T16 · Cap. 7 · Transportadora e serviços (narração ESTIMADA 42,6 s; marcas L1..L5 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "seed": "t16-cap07",
+ "pace": 0.5,
+ "cps": 40,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 400
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true"
+ },
+ "seedExtra": [
+  "t16/inicio",
+  "t16/apos-cap06"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "waitFor",
+   "target": {
+    "label": "E-mail"
+   },
+   "timeout": 30
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "E-mail"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "Senha",
+    "exact": true
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Rafael!",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/fiscal-ambiental/configuracao/transportadora"
+  },
+  {
+   "do": "waitFor",
+   "text": "Nenhuma transportadora cadastrada",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const a=document.getAnimations().filter(x=>x.currentTime<0);a.forEach(x=>x.startTime=document.timeline.currentTime);return a.length})()"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|Algo deu errado|Falha ao|Something went wrong|inv[áa]lid/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{document.querySelectorAll('[data-sonner-toast][data-type=error]').forEach(t=>{const s='TOAST DE ERRO: '+t.textContent.trim().slice(0,90);if(!window.__avisos.includes(s)&&window.__avisos.length<10)window.__avisos.push(s)})},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0.4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Nova transportadora",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 1.0,
+   "at": 3.45,
+   "label": "Nova transportadora",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 12.23
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main input:near(:text-is('Razão Social *'))"
+   },
+   "at": 13.26,
+   "label": "Razão Social * (clique no campo)"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const e=document.activeElement;if(!e||!/^(INPUT|TEXTAREA)$/.test(e.tagName))return 'SEM ALVO (nada em foco)';document.execCommand('insertText',false,\"Cargas Vale do Sol Ltda\");return e.value})()",
+   "label": "Razão Social *: Cargas Vale do Sol Ltda"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main input:near(:text-is('CPF/CNPJ'))"
+   },
+   "at": 16.14,
+   "label": "CPF/CNPJ (clique no campo)"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const e=document.activeElement;if(!e||!/^(INPUT|TEXTAREA)$/.test(e.tagName))return 'SEM ALVO (nada em foco)';document.execCommand('insertText',false,\"41826537000192\");return e.value})()",
+   "label": "CPF/CNPJ: 41826537000192 (zoom: CPF/CNPJ)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main input:near(:text-is('Inscrição Estadual'))"
+   },
+   "at": 16.75,
+   "label": "Inscrição Estadual (clique no campo)"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const e=document.activeElement;if(!e||!/^(INPUT|TEXTAREA)$/.test(e.tagName))return 'SEM ALVO (nada em foco)';document.execCommand('insertText',false,\"688.115.922.408\");return e.value})()",
+   "label": "Inscrição Estadual: 688.115.922.408"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main div:has(> label:text-is('UF')) button[role=combobox]"
+   },
+   "label": "UF (abre a lista; trecho acelerado)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "SP",
+    "exact": true
+   },
+   "label": "UF SP",
+   "noScroll": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const set=Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set;const out=[];for(const [rot,val] of [[\"Logradouro\", \"Rua dos Ferroviários\"], [\"Número\", \"380\"], [\"Bairro\", \"Vila São José\"], [\"Cidade\", \"Taubaté\"]]){const l=[...document.querySelectorAll('main label')].find(x=>x.textContent.trim()===rot);const i=l&&(l.htmlFor?document.getElementById(l.htmlFor):l.parentElement.querySelector('input'));if(!i){out.push('SEM ALVO '+rot);continue;}set.call(i,val);i.dispatchEvent(new Event('input',{bubbles:true}));out.push(rot+'='+i.value)}return out.join(' | ')})()",
+   "at": 18.74,
+   "label": "endereço (sem cursor, trecho acelerado)"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 19.25
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main input[placeholder='ABC1D23']"
+   },
+   "at": 21.2,
+   "label": "Placa (clique no campo)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "main input[placeholder='ABC1D23']"
+   },
+   "text": "FJR3B27",
+   "cps": 40,
+   "at": 22.53,
+   "label": "Placa FJR3B27",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main div:has(> label:text-is('UF Veículo')) button[role=combobox]"
+   },
+   "at": 24.09,
+   "label": "UF Veículo (abre a lista)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "SP",
+    "exact": true
+   },
+   "label": "UF Veículo SP",
+   "noScroll": true
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 24.92
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button:text-is('Adicionar')"
+   },
+   "at": 25.8,
+   "label": "Adicionar"
+  },
+  {
+   "do": "waitFor",
+   "text": "Transportadora cadastrada!",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Cargas Vale do Sol Ltda",
+    "exact": false,
+    "within": "main"
+   },
+   "seconds": 0.15,
+   "at": 28.03,
+   "label": "a linha Cargas Vale do Sol Ltda",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 28.61
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#tab-btn-servicos"
+   },
+   "at": 28.96,
+   "label": "Serviços"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Nenhum serviço cadastrado",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 1.5,
+   "at": 39.92,
+   "label": "Nenhum serviço cadastrado",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 42.63
+  }
+ ]
+}

@@ -110,7 +110,7 @@
    "target": {
     "selector": "main div.cursor-pointer.rounded-2xl:has(span.font-semibold:text-is('#8')) button:text-is('A caminho')"
    },
-   "at": 6.81,
+   "at": 6.31,
    "label": "#8: A caminho"
   },
   {
@@ -123,8 +123,8 @@
    "target": {
     "selector": "main div.cursor-pointer.rounded-2xl:has(span.font-semibold:text-is('#8')) :text-is('#8')"
    },
-   "seconds": 0.8,
-   "at": 8.4,
+   "seconds": 1.0,
+   "at": 8.23,
    "label": "#8 na coluna A caminho",
    "optional": true,
    "timeout": 4
@@ -139,7 +139,7 @@
    "target": {
     "selector": "main div.cursor-pointer.rounded-2xl:has(span.font-semibold:text-is('#8')) button:text-is('Preencher')"
    },
-   "at": 13.61,
+   "at": 13.11,
    "label": "#8: Preencher"
   },
   {
@@ -153,8 +153,8 @@
     "text": "Agendamento",
     "exact": true
    },
-   "seconds": 0.6,
-   "at": 18.02,
+   "seconds": 1.0,
+   "at": 17.12,
    "label": "tela da ordem: o combinado",
    "optional": true,
    "timeout": 4
@@ -170,28 +170,40 @@
     "text": "Equipamentos",
     "exact": true
    },
-   "seconds": 0.6,
+   "seconds": 0.3,
    "at": 19.5,
    "label": "bloco Equipamentos (Entreguei e Recolhi)",
    "optional": true,
    "timeout": 4
   },
   {
-   "do": "click",
-   "target": {
-    "selector": "button[role=combobox] >> nth=1"
-   },
-   "at": 24.06,
-   "label": "Recolhi: Tipo de equipamento"
+   "do": "eval",
+   "js": "(()=>{const t=[...document.querySelectorAll(\"button[role=combobox]\")][1];if(!t)return 'SEM ALVO';t.focus();return 'foco'})()",
+   "label": "Recolhi: Caçamba 5 m³ (foco)"
   },
   {
-   "do": "click",
+   "do": "press",
+   "key": "Enter",
+   "label": "Recolhi: Caçamba 5 m³ (abre)"
+  },
+  {
+   "do": "waitFor",
+   "selector": "[role=listbox]",
+   "timeout": 5
+  },
+  {
+   "do": "type",
    "target": {
-    "role": "option",
-    "name": "Caçamba 5 m³",
-    "exact": true
+    "selector": "[role=listbox]"
    },
-   "at": 24.72,
+   "text": "C",
+   "cps": 40,
+   "label": "Recolhi: Caçamba 5 m³ (procura)",
+   "noClick": true
+  },
+  {
+   "do": "press",
+   "key": "Enter",
    "label": "Recolhi: Caçamba 5 m³"
   },
   {
@@ -199,7 +211,7 @@
    "target": {
     "selector": "button[role=combobox] >> nth=2"
    },
-   "at": 25.35,
+   "at": 23.56,
    "label": "Recolhi: Unidade"
   },
   {
@@ -209,7 +221,7 @@
     "name": "Caçamba 03",
     "exact": true
    },
-   "at": 26.64,
+   "at": 24.85,
    "label": "Recolhi: Caçamba 03"
   },
   {
@@ -217,16 +229,37 @@
    "target": {
     "selector": "button:has-text('Adicionar') >> nth=1"
    },
-   "at": 27.15,
    "label": "Recolhi: Adicionar"
   },
   {
-   "do": "click",
+   "do": "eval",
+   "js": "(()=>{const t=[...document.querySelectorAll(\"button[role=combobox]\")][0];if(!t)return 'SEM ALVO';t.focus();return 'foco'})()",
+   "label": "Entreguei: Caçamba 5 m³ (foco)"
+  },
+  {
+   "do": "press",
+   "key": "Enter",
+   "label": "Entreguei: Caçamba 5 m³ (abre)"
+  },
+  {
+   "do": "waitFor",
+   "selector": "[role=listbox]",
+   "timeout": 5
+  },
+  {
+   "do": "type",
    "target": {
-    "selector": "button[role=combobox] >> nth=0"
+    "selector": "[role=listbox]"
    },
-   "at": 28.66,
-   "label": "Entreguei: Tipo de equipamento"
+   "text": "C",
+   "cps": 40,
+   "label": "Entreguei: Caçamba 5 m³ (procura)",
+   "noClick": true
+  },
+  {
+   "do": "press",
+   "key": "Enter",
+   "label": "Entreguei: Caçamba 5 m³"
   },
   {
    "do": "mark",
@@ -236,50 +269,25 @@
   {
    "do": "click",
    "target": {
-    "role": "option",
-    "name": "Caçamba 5 m³",
-    "exact": true
-   },
-   "at": 29.55,
-   "label": "Entreguei: Caçamba 5 m³"
-  },
-  {
-   "do": "click",
-   "target": {
     "selector": "button[role=combobox] >> nth=1"
    },
-   "at": 30.79,
+   "at": 29.11,
    "label": "Entreguei: Unidade (só as da base)"
   },
   {
-   "do": "hover",
-   "target": {
-    "role": "option",
-    "name": "Caçamba 05",
-    "exact": true
-   },
-   "seconds": 1.2,
-   "at": 32.76,
-   "label": "Entreguei: lista só com as da base",
-   "optional": true,
-   "timeout": 4
-  },
-  {
    "do": "click",
    "target": {
     "role": "option",
     "name": "Caçamba 05",
     "exact": true
    },
-   "at": 35.04,
+   "at": 34.54,
    "label": "Entreguei: Caçamba 05"
   },
   {
-   "do": "click",
-   "target": {
-    "selector": "button:has-text('Adicionar') >> nth=0"
-   },
-   "label": "Entreguei: Adicionar"
+   "do": "eval",
+   "js": "(()=>{const b=[...document.querySelectorAll(\"button\")].find(b=>b.offsetParent!==null&&(b.textContent||'').includes(\"Adicionar\"));if(!b)return 'SEM ALVO';b.click();return 'clicado'})()",
+   "label": "Entreguei: Adicionar (sem cursor)"
   },
   {
    "do": "scroll",
@@ -326,8 +334,8 @@
     "text": "Relatório de Coleta 8",
     "exact": true
    },
-   "seconds": 1.0,
-   "at": 41.16,
+   "seconds": 1.5,
+   "at": 40.26,
    "label": "Relatório de Coleta 8",
    "optional": true,
    "timeout": 4
@@ -355,7 +363,7 @@
     "role": "button",
     "name": "Voltar às ordens"
    },
-   "at": 56.21,
+   "at": 55.71,
    "label": "Voltar às ordens"
   },
   {
@@ -374,7 +382,7 @@
     "selector": "main div.cursor-pointer.rounded-2xl:has(span.font-semibold:text-is('#8')) :text-is('#8')"
    },
    "seconds": 0.8,
-   "at": 59.55,
+   "at": 57.66,
    "label": "#8 em Concluídas",
    "optional": true,
    "timeout": 4
@@ -384,7 +392,7 @@
    "target": {
     "selector": "main div.cursor-pointer.rounded-2xl:has(span.font-semibold:text-is('#8')) :text-is('Depósito Irmãos Siqueira')"
    },
-   "at": 61.07,
+   "at": 60.57,
    "label": "abre a ficha da ordem 8"
   },
   {
@@ -398,20 +406,14 @@
    "at": 64.22
   },
   {
-   "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Equipamentos movimentados\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-200);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 64.22,
-   "label": "ficha: Equipamentos movimentados"
-  },
-  {
    "do": "hover",
    "target": {
     "text": "Equipamentos movimentados",
     "within": "[role=dialog]",
     "exact": true
    },
-   "seconds": 1.0,
-   "at": 64.98,
+   "seconds": 1.5,
+   "at": 64.22,
    "label": "Equipamentos movimentados",
    "optional": true,
    "timeout": 4
@@ -428,7 +430,7 @@
   },
   {
    "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Hist\\u00f3rico\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-200);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Hist\\u00f3rico\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-300);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/800),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
    "at": 68.29,
    "label": "ficha: Histórico"
   },
@@ -439,9 +441,9 @@
     "within": "[role=dialog]",
     "exact": true
    },
-   "seconds": 1.0,
-   "at": 69.06,
-   "label": "Histórico",
+   "seconds": 2.0,
+   "at": 69.07,
+   "label": "Histórico (cada mudança de etapa)",
    "optional": true,
    "timeout": 4
   },

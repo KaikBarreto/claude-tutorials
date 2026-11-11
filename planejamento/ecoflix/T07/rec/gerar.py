@@ -456,7 +456,7 @@ SEMENTE = {0: [], 1: [], 2: [], 3: [], 4: ['apos-cap03'], 5: ['apos-cap03'], 6: 
            9: ['apos-cap03'], 10: ['apos-cap09'], 11: ['apos-cap09'], 12: ['apos-cap09'], 13: ['apos-cap12'], 14: ['apos-cap12'],
            15: ['apos-cap14'], 16: ['apos-cap15']}
 EXTRA_BASE = {n: ['base/balanca-ativada'] for n in range(17)}
-FOLGA.update({'balanca': 0.0})
+FOLGA.update({'balanca': 0.0, 'click': 1.3, 'click1': 1.8, 'hover': 1.1, 'type': 1.4})   # medidas do ensaio do T07 com a máquina dividida (ver resumo.py --ens)
 
 # ---------------------------------------------------------------- alvos da compra e da venda (Purchase.tsx / Sale.tsx, 1.59.154)
 MAT = {'placeholder': 'Escreva o nome ou código do material'}
@@ -526,6 +526,12 @@ JS_OFFLINE = ("(()=>{Object.defineProperty(navigator,'onLine',{configurable:true
               "return 'offline'})()")
 JS_ONLINE = ("(()=>{Object.defineProperty(navigator,'onLine',{configurable:true,get:()=>true});window.dispatchEvent(new Event('online'));"
              "return 'online'})()")
+
+
+def js_colar(seletor, texto):
+    """texto no campo sem teclado (execCommand insertText: o React recebe o input), ~0,05 s"""
+    return ("(()=>{const el=document.querySelector(%s);if(!el)return 'SEM ALVO';el.focus();if(el.select)el.select();"
+            "document.execCommand('insertText',false,%s);return el.value})()") % (json.dumps(seletor), json.dumps(texto, ensure_ascii=False))
 
 
 def kg(peso):
@@ -694,17 +700,20 @@ def cap03():
                                  {'do': 'waitFor', 'text': 'Nenhum resultado encontrado.', 'timeout': 8}]))
     c.click(MAIS_MODAL, w=(1, 'mais.'), label='+ (cadastrar)')
     c.waitfor(text='Novo Fornecedor', timeout=10)
-    c.hover(TAB('Dados de Contato'), 0.8, w=(1, 'cadastro'), label='Novo Fornecedor, Dados de Contato')
-    c.click(SEL('#name'), w=(2, 'nome:'), primeiro=True, label='Nome')
-    c.type(SEL('#name'), 'José Carlos Moreira', w=(2, 'Jose'), clicar=False, clear=True, cps=24, label='Nome: José Carlos Moreira')
+    c.registra(TAB('Dados de Contato'), w=(1, 'cadastro'), label='Novo Fornecedor, Dados de Contato')
+    # a digitação mediu ~0,2 s por letra (máquina dividida) e a linha 2 não comporta três campos digitados: nome, apelido e chave Pix
+    # entram por colagem (execCommand insertText, ~0,05 s, o valor fica no actions.json) depois do clique do cursor no campo
+    c.click(SEL('#name'), w=(2, 'campo'), primeiro=True, label='Nome')
+    c.ev(js_colar('#name', 'José Carlos Moreira'), w=(2, 'Jose'), label='Nome: José Carlos Moreira')
     c.click(SEL('#contact_name'), w=(2, 'apelido,'), label='Pessoa de Contato ou Apelido')
-    c.type(SEL('#contact_name'), 'Zé Moreira', w=(2, 'Ze'), clicar=False, cps=24, label='apelido: Zé Moreira')
+    c.ev(js_colar('#contact_name', 'Zé Moreira'), w=(2, 'Ze'), label='apelido: Zé Moreira')
     c.click(SEL('#phone'), w=(2, 'telefone.'), label='Telefone')
-    c.type(SEL('#phone'), '12900004471', clicar=False, cps=30, label='Telefone (12) 90000-4471')
+    c.type(SEL('#phone'), '12900004471', w=(2, 'telefone.', None, -0.2), clicar=False, cps=40, label='Telefone (12) 90000-4471')
     c.click(SEL('#pix_key'), w=(3, 'chave'), label='Chave PIX')
-    c.type(SEL('#pix_key'), '(12) 90000-4471', w=(3, 'Pix'), clicar=False, cps=30, label='Chave PIX (12) 90000-4471')
-    c.hover(SEL(f"{DLG} div:has(> label:has-text('Tabela de Preços Padrão')) button"), 0.8, w=(3, 'tabela'), label='Tabela de Preços Padrão')
-    c.hover(SEL(f"{DLG} label[for=also-counterpart]"), 0.8, w=(3, 'cliente.'), label='Também é cliente (desmarcado)')
+    c.ev(js_colar('#pix_key', '(12) 90000-4471'), w=(3, 'telefone.'), label='Chave PIX (12) 90000-4471')
+    c.hover(SEL(f"{DLG} div:has(> label:has-text('Tabela de Preços Padrão')) button"), 0.6, w=(3, 'tabela'), label='Tabela de Preços Padrão')
+    c.ev(js_rola_ate('Também é', y=420, escopo=DLG, prefixo=True), w=(3, 'marcar', None, 0.4), label='rola a janela até Também é cliente')
+    c.hover(SEL(f"{DLG} label[for=also-counterpart]"), 0.6, w=(3, 'cliente.'), label='Também é cliente (desmarcado)')
     c.click(BTN('Salvar', within=DLG), w=(4, 'Salvar.'), label='Salvar')
     c.waitfor(text='Fornecedor cadastrado com sucesso!', timeout=10)
     c.hover(FORN, 1.2, w=(4, 'escolhido'), label='fornecedor José Carlos Moreira já escolhido')

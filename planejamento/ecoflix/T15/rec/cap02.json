@@ -1,0 +1,237 @@
+{
+ "name": "t15-cap02",
+ "title": "T15 · Cap. 2 · Centros de custo (narração ESTIMADA 65,9 s; marcas L1..L5 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "seed": "t15-cap02",
+ "pace": 0.5,
+ "cps": 40,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 470
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true"
+ },
+ "seedExtra": [
+  "t14/inicio",
+  "t14/apos-cap02",
+  "t14/apos-cap03",
+  "t14/apos-cap04",
+  "t14/apos-cap06",
+  "t14/apos-cap07",
+  "t14/apos-cap08",
+  "t14/apos-cap09",
+  "t14/apos-cap10",
+  "t14/apos-cap11",
+  "t14/apos-cap12",
+  "t14/apos-cap14",
+  "t15/inicio",
+  "t15/apos-cap01"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "waitFor",
+   "target": {
+    "label": "E-mail"
+   },
+   "timeout": 30
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "E-mail"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "Senha",
+    "exact": true
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Rafael!",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/categorias-financeiras"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie as categorias de receitas e despesas",
+   "timeout": 20
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|Algo deu errado|Falha ao|Something went wrong|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&!/fica indispon/i.test(m[0])&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{document.querySelectorAll('[data-sonner-toast][data-type=error]').forEach(t=>{const s='TOAST DE ERRO: '+t.textContent.trim().slice(0,90);if(!window.__avisos.includes(s)&&window.__avisos.length<10)window.__avisos.push(s)})},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#tab-btn-centros-de-custo"
+   },
+   "at": 5.27,
+   "label": "Centros de custo"
+  },
+  {
+   "do": "waitFor",
+   "text": "Novo centro de custo",
+   "timeout": 10
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 9.87
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 23.28
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Novo centro de custo",
+    "exact": true
+   },
+   "at": 23.98,
+   "label": "Novo centro de custo"
+  },
+  {
+   "do": "waitFor",
+   "text": "Defina um nome e uma cor para identificar o setor nos lançamentos.",
+   "timeout": 8
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#cost-center-name"
+   },
+   "text": "Produção",
+   "at": 29.65,
+   "label": "Nome: Produção"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Cor #8B5CF6",
+    "exact": true
+   },
+   "at": 31.25,
+   "label": "Cor #8B5CF6 (roxo)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#cost-center-description"
+   },
+   "text": "Prensa de latinha e papelão",
+   "at": 34.18,
+   "label": "Descrição"
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 35.17
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "#cost-center-active"
+   },
+   "seconds": 1.0,
+   "at": 38.91,
+   "label": "Ativo ligado (ZOOM)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 51.99
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Salvar",
+    "exact": true
+   },
+   "at": 52.19,
+   "label": "Salvar"
+  },
+  {
+   "do": "waitFor",
+   "text": "Centro de custo criado",
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Produção",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.8,
+   "at": 54.67,
+   "label": "Produção na lista",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Produção\", \"Prensa de latinha e papelão\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,250));}return out})()",
+   "label": "confere Produção criado"
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 65.86
+  }
+ ]
+}

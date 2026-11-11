@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<!-- T08 "Ticket de Pesagem" · cenas 3D do caminhão na balança (kit perfis/ecoflix/cenas3d/kit3d.js). As cenas 2D da
+     ../cenas/cenas.html ficam de reserva. Uma por capítulo (ilustracoes.json, chave "3d"):
+       cap00 peso agora, preço depois: o caminhão de latinha sobe na balança, "1ª Pesagem" 9.460 kg; o peso desce pro ticket e
+             o "R$ ?" espera ao lado;
+       cap04 entrada e saída: cheio na balança, dá ré e bascula a latinha no pátio, volta vazio; 9.460 − 6.380 = 3.080 kg
+             ("1ª Pesagem", "2ª Pesagem", "Peso Bruto", os rótulos da Pesagem avançada). A tara é a embalagem: o caminhão
+             vazio não é tara (a dupla pesagem já o tira), por isso a cena não fala em tara;
+       cap06 uma aba por caminhão: o truck da cooperativa (já pesado, vazio) na balança e o 3/4 da Auto Peças com bateria na
+             fila; cada um com a sua aba, #58 e #59.
+     Âncoras W(linha,'palavra') das falas do narracao/tts_textos.py; números da fala e do roteiro.
+     Render: node ferramentas/edit/cenas/render_cenas.cjs <cap> <capNN.json> saida.mp4 --html planejamento/ecoflix/T08/cenas3d/cena3d.html --de <at> --ate <at+dur> -->
+<style>
+.row{display:flex;align-items:center}
+.ttl{font-weight:800;font-size:22px;line-height:1.2;white-space:nowrap}
+.ico{display:flex;align-items:center;justify-content:center;flex:none;border-radius:14px;background:var(--vs);color:#fff}
+.aba .pega{position:absolute;left:0;top:0;width:118px;height:40px;border-radius:14px 14px 0 0;display:flex;align-items:center;justify-content:center}
+.aba .card{left:0;top:38px;width:340px;height:86px;border-radius:0 18px 18px 18px}
+.fio{position:absolute;width:3px;margin-left:-1.5px;border-radius:2px}
+</style>
+</head><body>
+<script type="module">
+import { PI, eo, eio, pr, lerp, rng, ri, W, el, ic, vis, ripple, pulse, kg, conta, posTitulo, titulo, chip, op, onda, cartao, mostrador,
+  CENA, GL, camera, ancora, mundo, tela, grupo, mancha, anel, destaque, domo, chaoPatio, balancaPatio, caminhao, anda, bascula, transfere, ordemPor,
+  COR, cena } from '../../../../perfis/ecoflix/cenas3d/kit3d.js';
+
+// pátio com a balança rodoviária (o poste do mostrador à direita, atrás); devolve a balança e o chão sob as rodas
+function patio(SX, o = {}) {
+  chaoPatio(CENA, [o.cx ?? SX - 2, 0, 0], { c: o.c ?? 34, l: 14, passo: 2.6, faixa: [3.3] });
+  const bal = balancaPatio(CENA, [SX, 0, 0], { c: 7.8, l: 3.0, rampa: 1.2, poste: [4.6, -2.0], hp: 2.3, rp: .07 });
+  return { bal, h: x => bal.userData.altura(x - SX), topo: mundo(bal, bal.userData.topo) };
+}
+const CAMINHAO = { carga: 'latinha', n: 380 };                                                                  // truck da cooperativa
+const TRES_QUARTOS = { cor: COR.ambar, c: 5.2, l: 2.1, R: .42, eixos: 2, cc: 1.7, hc: 1.55, bau: 'grade', carga: 'bateria' };   // 3/4 da Auto Peças
+const CAPS = {};
+
+// ------------------------------------------------------------------ CAPS[0] · Peso agora, preço depois (L1-L2)
+// 1 "Na Recicla Vale Metais, a Cooperativa Recomeço mandou um caminhão de latinha, e o preço só vai ser combinado depois."
+// 2 "Com o Ticket de Pesagem, você registra o peso agora e resolve o valor depois."
+CAPS[0] = () => {
+  const SX = 0, { h, topo } = patio(SX), T = caminhao(CENA, [0, 0, 0], CAMINHAO), BR = 9460, X0 = -11.5;
+  const tit = titulo('Ticket de Pesagem', 'Peso agora, preço depois');
+  const coop = el(`<div class="tag ab" style="left:96px;top:166px">${ic('users', 22)}Cooperativa Recomeço</div>`);
+  const most = mostrador('1ª Pesagem');
+  const precoW = el('<div class="ab" style="width:150px;height:74px"></div>');
+  const preco = el(`<div class="ab" style="left:0;top:0;width:150px;height:74px">
+      <svg class="ab" style="left:0;top:0;overflow:visible" width="150" height="74"><path d="M24 4 L138 4 Q146 4 146 12 L146 62 Q146 70 138 70 L24 70 L4 37 Z" fill="#F2B63D" stroke="#F2B63D" stroke-width="3" stroke-linejoin="round"/>
+        <circle cx="26" cy="37" r="6" fill="#fff" stroke="#F2B63D" stroke-width="3"/></svg>
+      <div class="ab num" style="left:46px;top:17px;font-size:30px;color:#fff">R$ ?</div>
+      <div class="ab rel" style="left:120px;top:-20px;width:42px;height:42px;border-radius:50%;background:var(--as);color:#fff;border:2px solid #fff;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(16,24,40,.16)">${ic('clock', 24)}</div></div>`, precoW);
+  const rel = preco.querySelector('.rel');
+  const tk = el(`<div class="card" style="left:300px;top:512px;width:460px;height:236px">
+      <div class="row" style="position:absolute;left:26px;top:22px;gap:14px"><div class="ico" style="width:48px;height:48px">${ic('ticket', 28)}</div>
+        <div class="ttl">Ticket de Pesagem</div></div>
+      <div class="ab sub" style="left:26px;top:88px">Cooperativa Recomeço</div>
+      <div class="ab sub" style="left:26px;top:116px">Alumínio latinha</div>
+      <div class="ab slot" style="left:26px;top:152px;width:408px;height:60px;border-radius:12px;border:2px dashed #CBD1D8"></div>
+      <div class="ab num pv" style="left:26px;top:158px;width:408px;text-align:center;font-size:36px;color:var(--ve);opacity:0">${kg(BR)}</div></div>`);
+  const pv = tk.querySelector('.pv'), slot = tk.querySelector('.slot');
+  const voa = el(`<div class="ab num" style="font-size:36px;color:var(--ve);white-space:nowrap;opacity:0;transform:translate(-50%,-50%)">${kg(BR)}</div>`);
+  const j0 = W(1, 'na') - .3, tco = W(1, 'cooperativa'), tca = W(1, 'caminhao'), tla = W(1, 'latinha'), tpr = W(1, 'preco'), tde = W(1, 'depois');
+  const tti = W(2, 'ticket'), tre = W(2, 'registra'), tpe = W(2, 'peso'), trs = W(2, 'resolve'), td2 = W(2, 'depois');
+  const chegou = tca + Math.max(1.2, tla - tca + .4), sai = tca - .35;
+  camera([[0, { x: .5, y: 1.0, z: 0, d: 19.5, az: .24, el: .32, oy: -70 }], [tti - .35, { x: .5, y: 1.0, z: 0, d: 18.8, az: .23, el: .32, oy: -70 }, 'lin'],
+    [tti + .65, { x: .6, y: 1.0, z: 0, d: 23.5, az: .2, el: .34, oy: 20 }, 'eio'], [td2 + 3, { x: .6, y: 1.0, z: 0, d: 23.1, az: .19, el: .34, oy: 20 }, 'lin']]);
+  return t => {
+    GL.style.opacity = eo(pr(t, tco - .25, .6)).toFixed(3);
+    const x = lerp(X0, SX, eio(pr(t, sai, chegou - sai))); anda(T, x, h); T.visible = t > sai - .05;
+    posTitulo(tit, t, j0 - .6, tco - .45);
+    vis(coop, t, tco - .1, 1e9, { dy: 10 });
+    vis(most, t, tco + .1, 1e9, { dy: 10 }); ancora(most, topo, .5, 1, 0, 4);
+    conta(most.mn, t, chegou - .15, .9, 0, BR); pulse(most, t, chegou + .8, .05, .7);
+    // o preço em aberto em cima da carga; na linha 2 ele vai esperar ao lado do ticket
+    vis(preco, t, tpr - .1, 1e9, { dy: 0, sc: .6 }); vis(rel, t, tde - .1, 1e9, { dy: 0, sc: .4 }); pulse(preco, t, tde, .06, .7); pulse(preco, t, td2, .06, .7);
+    const [ax, ay] = tela([x - 1.05, 1.5, 1.2]), qp = eio(pr(t, trs - .15, .8)), px0 = [ax - 75, ay - 37];
+    precoW.style.left = lerp(px0[0], 790, qp).toFixed(1) + 'px'; precoW.style.top = (lerp(px0[1], 622, qp) - 70 * 4 * qp * (1 - qp)).toFixed(1) + 'px';
+    // linha 2: o ticket; o peso desce do mostrador para ele
+    vis(tk, t, tti - .15, 1e9, { dy: 20, sc: .95 });
+    const dv = Math.max(.6, tpe - tre + .25), q = eio(pr(t, tre, dv)), x0 = parseFloat(most.style.left) + 125, y0 = parseFloat(most.style.top) + 66;
+    voa.style.left = lerp(x0, 530, q).toFixed(1) + 'px'; voa.style.top = (lerp(y0, 694, q) - 70 * 4 * q * (1 - q)).toFixed(1) + 'px';
+    voa.style.opacity = (t >= tre - .05 && q < 1) ? 1 : 0;
+    const ch = eo(pr(t, tre + dv - .05, .2)); pv.style.opacity = ch.toFixed(3); slot.style.opacity = (1 - ch).toFixed(3);
+  };
+};
+
+// ------------------------------------------------------------------ CAPS[4] · Entrada e saída (L0)
+// 0 "O caminhão descarregou e voltou vazio pra balança. A diferença entre as duas pesagens é a latinha que ficou no pátio."
+CAPS[4] = () => {
+  const SX = 2, { h, topo } = patio(SX), T = caminhao(CENA, [SX, 0, 0], CAMINHAO), R1 = 9460, R2 = 6380, XR = SX - 2.4;
+  const im = T.userData.carga, ordem = ordemPor(im, p => p.x), n = im.count;
+  const PIL = [SX - 6.95, 0, .15], alvo = domo(n, 1.3, 1.05, .78, .05, .5).map(([x, y, z]) => [PIL[0] + x, y, PIL[2] + z, ri(0, 2 * PI), ri(0, 2 * PI), ri(0, 2 * PI)]);
+  const mP = mancha(CENA, 3.4, 2.8, .3, PIL), anP = anel(CENA, 1.62, .08, PIL), ondP = anel(CENA, 1.62, .05, PIL);
+  const tit = titulo('Pesagem', 'Entrada e saída');
+  const most = mostrador('1ª Pesagem', '2ª Pesagem');
+  const c1 = cartao(122, 662, '', '1ª Pesagem', 'caminhão cheio', R1), c2 = cartao(492, 662, '', '2ª Pesagem', 'caminhão vazio', R2),
+        c3 = cartao(862, 662, 'v', 'Peso Bruto', 'a latinha', R1 - R2, { res: true });
+  const oM = op(455, 695, '−'), oI = op(825, 695, '='), rip = onda(c3, 84, 78);
+  const patioC = chip(`${ic('map-pin', 16)}ficou no pátio`);
+  const j0 = W(0, 'caminhao') - .3, tca = W(0, 'caminhao'), tds = W(0, 'descarregou'), tvo = W(0, 'voltou'), tdi = W(0, 'diferenca'),
+        tla = W(0, 'latinha'), tfi = W(0, 'ficou');
+  // dá ré até o pátio, bascula, a latinha cai no monte, a caçamba desce e o caminhão volta vazio pra balança
+  const r0 = tds - .3, b0 = r0 + .6, d0 = b0 + .15, bd = r0 + 1.55, f0 = bd + .15, volta = f0 + .8;
+  camera([[0, { x: .7, y: 1.1, z: 0, d: 21.8, az: .06, el: .32, oy: -40 }], [12, { x: .7, y: 1.1, z: 0, d: 21.0, az: .08, el: .32, oy: -40 }, 'lin']]);
+  return t => {
+    GL.style.opacity = eo(pr(t, tca - .3, .45)).toFixed(3);
+    const x = t < f0 ? lerp(SX, XR, eio(pr(t, r0, .7))) : lerp(XR, SX, eio(pr(t, f0, volta - f0))); anda(T, x, h);
+    bascula(T, .44 * (eio(pr(t, b0, .5)) - eio(pr(t, bd, .45))));
+    transfere(im, alvo, t, d0, .5, { ordem, passo: .45 / n, arco: .3 });
+    mP.material.opacity = .3 * eo(pr(t, d0 + .3, .8)); destaque(anP, ondP, t, tla - .15);
+    posTitulo(tit, t, j0 - .6, tca - .45);
+    vis(most, t, tca - .2, 1e9, { dy: 10 }); ancora(most, topo, .5, 1, 0, 4);
+    if (t < volta - .1) conta(most.mn, t, -9, .1, R1, R1); else conta(most.mn, t, volta - .1, .65, R1, R2);
+    most.troca(t, volta - .1); pulse(most, t, volta + .6, .05, .7);
+    vis(c1, t, tca + .25, 1e9, { dy: 22 }); vis(oM, t, tvo - .1, 1e9, { sc: .6, dy: 0 }); vis(c2, t, volta + .2, 1e9, { dy: 22 });
+    vis(oI, t, tdi - .1, 1e9, { sc: .6, dy: 0 }); vis(c3, t, tdi + .12, 1e9, { dy: 22, sc: .94 });
+    pulse(c3, t, tla, .04, .8); ripple(rip, t, tla);
+    vis(patioC, t, tfi - .1, 1e9, { dy: 8 }); ancora(patioC, [PIL[0], 0, PIL[2] + 1.35], .5, 0, 0, 12);
+  };
+};
+
+// ------------------------------------------------------------------ CAPS[6] · Uma aba por caminhão (L0)
+// 0 "Enquanto isso, chega o Jair Lopes, com o caminhão três quartos, trazendo bateria da Auto Peças Vale Forte."
+CAPS[6] = () => {
+  const SX = 3, { h } = patio(SX, { cx: SX - 4 }), T1 = caminhao(CENA, [SX, 0, 0], {}), T2 = caminhao(CENA, [0, 0, 0], TRES_QUARTOS);
+  anda(T1, SX, h); const X2 = SX - 8.3, X2a = X2 - 12;
+  const tit = titulo('Abas', 'Uma aba por caminhão');
+  const aba = (num, nome, cls) => el(`<div class="ab aba" style="width:340px;height:126px">
+      <div class="pega" style="background:var(--${cls}s)"><span class="num" style="font-size:22px;color:#fff">${num}</span></div>
+      <div class="card" style="border:2px solid var(--${cls}s)"><div class="ttl" style="position:absolute;left:22px;top:28px;font-size:21px">${nome}</div></div></div>`);
+  const A1 = aba('#58', 'Cooperativa Recomeço', 'v'), A2 = aba('#59', 'Auto Peças Vale Forte', 'a');
+  const f1 = el('<div class="fio" style="background:#A9E9C6"></div>'), f2 = el('<div class="fio" style="background:#F7DFA6"></div>');
+  const jair = chip(`${ic('user-round', 18)}Jair Lopes`), bat = chip(`${ic('battery', 18)}Bateria automotiva`);
+  const j0 = W(0, 'enquanto') - .3, tch = W(0, 'chega'), tja = W(0, 'jair'), tca = W(0, 'caminhao'), tau = W(0, 'auto'), tba = W(0, 'bateria');
+  const ch = tch + Math.max(1.4, tca - tch + .5);
+  camera([[0, { x: SX - 3.6, y: 1.0, z: 0, d: 25, az: .1, el: .3, oy: -100 }], [12, { x: SX - 3.6, y: 1.0, z: 0, d: 24.3, az: .12, el: .3, oy: -100 }, 'lin']]);
+  // aba presa acima do caminhão, com o fio descendo até o teto da cabine
+  const prende = (A, f, topo, alto) => { ancora(A, [topo[0], topo[1] + alto, topo[2]], .5, 1);
+    const [fx, fy] = tela(topo), y0 = parseFloat(A.style.top) + 124; f.style.left = fx.toFixed(1) + 'px'; f.style.top = y0.toFixed(1) + 'px';
+    f.style.height = Math.max(0, fy - y0 - 6).toFixed(1) + 'px'; };
+  return t => {
+    GL.style.opacity = eo(pr(t, tch - .35, .5)).toFixed(3);
+    const x2 = lerp(X2a, X2, eo(pr(t, tch, ch - tch))); anda(T2, x2, h); T2.visible = t > tch - .05;
+    posTitulo(tit, t, j0 - .6, tch - .55);
+    vis(A1, t, tch, 1e9, { dy: 12 }); vis(f1, t, tch + .15, 1e9, { dy: 0 }); prende(A1, f1, [SX - .4, 2.25, 0], 1.6);
+    vis(A2, t, tau - .15, 1e9, { dy: 12 }); vis(f2, t, tau, 1e9, { dy: 0 }); prende(A2, f2, [x2 - .2, 1.75, 0], 2.1);
+    vis(jair, t, tja - .1, 1e9, { dy: 8 }); ancora(jair, [x2 + 1.75, 0, 1.25], .5, 0, 0, 10);
+    vis(bat, t, tba - .15, 1e9, { dy: 8 }); ancora(bat, [x2 - 1.0, 0, 1.25], .5, 0, 0, 10);
+  };
+};
+
+cena(d => CAPS[d.cap](), { sombra: 11, mapa: 2048, chao: false });
+</script></body></html>

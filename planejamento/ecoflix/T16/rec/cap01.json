@@ -1,0 +1,355 @@
+{
+ "name": "t16-cap01",
+ "title": "T16 · Cap. 1 · Onde ficam as notas (narração ESTIMADA 62,8 s; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "seed": "t16-cap01",
+ "pace": 0.5,
+ "cps": 40,
+ "tail": 1.5,
+ "start": {
+  "x": 700,
+  "y": 360
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true"
+ },
+ "seedExtra": [
+  "t16/inicio"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "waitFor",
+   "target": {
+    "label": "E-mail"
+   },
+   "timeout": 30
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "E-mail"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "Senha",
+    "exact": true
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Rafael!",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const a=document.getAnimations().filter(x=>x.currentTime<0);a.forEach(x=>x.startTime=document.timeline.currentTime);return a.length})()"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|Algo deu errado|Falha ao|Something went wrong|inv[áa]lid/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{document.querySelectorAll('[data-sonner-toast][data-type=error]').forEach(t=>{const s='TOAST DE ERRO: '+t.textContent.trim().slice(0,90);if(!window.__avisos.includes(s)&&window.__avisos.length<10)window.__avisos.push(s)})},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0.4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "button:has(span:text-is('Fiscal & Ambiental'))"
+   },
+   "at": 1.57,
+   "label": "abre o grupo Fiscal & Ambiental"
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 3.34
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "a:has-text('Notas Fiscais (NF-e)')"
+   },
+   "seconds": 0.3,
+   "at": 6.91,
+   "label": "Notas Fiscais (NF-e)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "a:has-text('Notas de Serviço (NFS-e)')"
+   },
+   "seconds": 0.15,
+   "at": 8.42,
+   "label": "Notas de Serviço (NFS-e)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "a:has-text('Transporte (MDF-e)')"
+   },
+   "seconds": 0.26,
+   "at": 9.41,
+   "label": "Transporte (MDF-e)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "a:has-text('Ambiental (MTR/CDF)')"
+   },
+   "seconds": 0.15,
+   "at": 10.62,
+   "label": "Ambiental (MTR/CDF)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "a:has-text('Estoque Fiscal')"
+   },
+   "seconds": 0.3,
+   "at": 11.69,
+   "label": "Estoque Fiscal",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "a:has-text('Notas Fiscais (NF-e)')"
+   },
+   "seconds": 0.15,
+   "at": 15.25,
+   "label": "volta às Notas Fiscais (NF-e)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 16.22
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "a:has-text('Notas Fiscais (NF-e)')"
+   },
+   "at": 17.2,
+   "label": "Notas Fiscais (NF-e) (tela abre na sub-aba Entrada)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Nenhuma nota fiscal encontrada",
+   "timeout": 15
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const a=document.getAnimations().filter(x=>x.currentTime<0);a.forEach(x=>x.startTime=document.timeline.currentTime);return a.length})()"
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 19.6
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "#tab-btn-entrada"
+   },
+   "seconds": 0.15,
+   "at": 22.1,
+   "label": "sub-aba Entrada",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "#tab-btn-saida"
+   },
+   "seconds": 0.18,
+   "at": 22.94,
+   "label": "sub-aba Saída",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "#tab-btn-notas-recebidas"
+   },
+   "seconds": 0.15,
+   "at": 24.07,
+   "label": "sub-aba Notas Recebidas",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "#tab-btn-inutilizadas"
+   },
+   "seconds": 0.17,
+   "at": 24.98,
+   "label": "sub-aba Inutilizadas",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 26.1
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 36.32
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "#tab-btn-notas-recebidas"
+   },
+   "seconds": 0.8,
+   "at": 37.07,
+   "label": "zoom: Notas Recebidas",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "#tab-btn-inutilizadas"
+   },
+   "seconds": 0.8,
+   "at": 42.16,
+   "label": "zoom: Inutilizadas",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 48.44
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Configurações Fiscais",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.5,
+   "at": 50.64,
+   "label": "Configurações Fiscais",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main :text-matches('^[0-9.]+/[0-9.]+ Documentos$')"
+   },
+   "seconds": 0.4,
+   "at": 52.61,
+   "label": "selo da cota 0/1.000 Documentos",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main :text-is('Notas Emitidas')"
+   },
+   "seconds": 0.15,
+   "at": 56.03,
+   "label": "cartão Notas Emitidas",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main :text-is('Notas Pendentes')"
+   },
+   "seconds": 0.15,
+   "at": 56.94,
+   "label": "cartão Notas Pendentes",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main :text-is('Rejeitadas/Canceladas')"
+   },
+   "seconds": 0.3,
+   "at": 57.85,
+   "label": "cartão Rejeitadas/Canceladas",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Nova Nota",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 1.2,
+   "at": 60.58,
+   "label": "botão Nova Nota (sem clicar)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 62.77
+  }
+ ]
+}

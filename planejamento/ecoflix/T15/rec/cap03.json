@@ -1,0 +1,328 @@
+{
+ "name": "t15-cap03",
+ "title": "T15 · Cap. 3 · O Relatório Financeiro (narração ESTIMADA 84,6 s; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "seed": "t15-cap03",
+ "pace": 0.5,
+ "cps": 40,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 470
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true"
+ },
+ "seedExtra": [
+  "t14/inicio",
+  "t14/apos-cap02",
+  "t14/apos-cap03",
+  "t14/apos-cap04",
+  "t14/apos-cap06",
+  "t14/apos-cap07",
+  "t14/apos-cap08",
+  "t14/apos-cap09",
+  "t14/apos-cap10",
+  "t14/apos-cap11",
+  "t14/apos-cap12",
+  "t14/apos-cap14",
+  "t15/inicio",
+  "t15/apos-cap01",
+  "t15/apos-cap02"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "waitFor",
+   "target": {
+    "label": "E-mail"
+   },
+   "timeout": 30
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "E-mail"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "Senha",
+    "exact": true
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Rafael!",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|Algo deu errado|Falha ao|Something went wrong|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&!/fica indispon/i.test(m[0])&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{document.querySelectorAll('[data-sonner-toast][data-type=error]').forEach(t=>{const s='TOAST DE ERRO: '+t.textContent.trim().slice(0,90);if(!window.__avisos.includes(s)&&window.__avisos.length<10)window.__avisos.push(s)})},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Financeiro",
+    "exact": true
+   },
+   "at": 4.02,
+   "label": "menu Financeiro",
+   "unless": {
+    "role": "link",
+    "name": "Relatório Financeiro"
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "link",
+    "name": "Relatório Financeiro"
+   },
+   "at": 5.19,
+   "label": "Relatório Financeiro"
+  },
+  {
+   "do": "waitFor",
+   "text": "Visão completa das finanças do seu negócio",
+   "timeout": 15
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 6.91
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main button[role=combobox]:has-text(\"Este mês\")"
+   },
+   "seconds": 0.8,
+   "at": 8.45,
+   "label": "filtro de período: Este mês",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button[role=combobox]:has-text(\"Este mês\")"
+   },
+   "at": 14.12,
+   "label": "abre o filtro de período"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Mês passado"
+   },
+   "at": 14.92,
+   "label": "Mês passado"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 19.1
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main button[role=combobox]:has-text(\"Mês passado\")"
+   },
+   "seconds": 0.8,
+   "at": 23.22,
+   "label": "filtro em Mês passado",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 24.54
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "#tab-btn-dashboard"
+   },
+   "seconds": 0.3,
+   "at": 29.19,
+   "label": "aba Dashboard",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "#tab-btn-dre"
+   },
+   "seconds": 0.3,
+   "at": 30.55,
+   "label": "aba DRE",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "#tab-btn-centros-custo"
+   },
+   "seconds": 0.3,
+   "at": 32.0,
+   "label": "aba Centros de Custo",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "#tab-btn-historico"
+   },
+   "seconds": 0.4,
+   "at": 33.82,
+   "label": "aba Histórico",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 38.55
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#tab-btn-centros-custo"
+   },
+   "at": 39.16,
+   "label": "Centros de Custo"
+  },
+  {
+   "do": "waitFor",
+   "text": "Ranking dos centros de custo",
+   "timeout": 10
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"Ranking dos centros de custo\"&&e.getClientRects().length);if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-170);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 43.71,
+   "label": "desce até o Ranking dos centros de custo"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Pátio",
+    "exact": true,
+    "within": "main",
+    "nth": -1
+   },
+   "seconds": 0.5,
+   "at": 46.09,
+   "label": "Pátio no ranking",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Coleta",
+    "exact": true,
+    "within": "main",
+    "nth": -1
+   },
+   "seconds": 0.5,
+   "at": 49.81,
+   "label": "Coleta no ranking",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 55.15
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.includes(\"Esta vis\\u00e3o considera receitas\")&&e.getClientRects().length);if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-420);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 55.15,
+   "label": "desce até o aviso azul"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Esta visão considera receitas",
+    "within": "main"
+   },
+   "seconds": 1.0,
+   "at": 56.31,
+   "label": "aviso azul dos centros de custo (ZOOM)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 65.83
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||document.scrollingElement};const el=document.querySelector('main h1')||document.querySelector('main *');const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop;if(y0<3)return 'ok';const dy=-y0;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/800),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'topo'})()",
+   "at": 66.63,
+   "label": "sobe ao cabeçalho"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main h1"
+   },
+   "seconds": 0.8,
+   "at": 71.31,
+   "label": "cabeçalho do Relatório Financeiro",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 84.56
+  }
+ ]
+}

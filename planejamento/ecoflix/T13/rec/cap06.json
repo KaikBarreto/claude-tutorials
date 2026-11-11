@@ -182,12 +182,10 @@
    "label": "Vencimento 23/11/2026 (1ª parcela)"
   },
   {
-   "do": "click",
-   "target": {
-    "selector": "#bill-category"
-   },
-   "at": 23.3,
-   "label": "Categoria (abre a lista)"
+   "do": "eval",
+   "js": "(async()=>{const acha=()=>[...document.querySelectorAll(\"#bill-category\")].find(e=>e.offsetParent);let el=acha();for(let i=0;i<30&&!el;i++){await new Promise(r=>setTimeout(r,100));el=acha();}if(!el)return 'SEM ALVO';el.click();return 'ok: '+el.textContent.trim().slice(0,60)})()",
+   "at": 23.34,
+   "label": "Categoria (abre a lista, sem cursor)"
   },
   {
    "do": "type",
@@ -201,12 +199,10 @@
    "submit": true
   },
   {
-   "do": "click",
-   "target": {
-    "selector": "[role=dialog] button[role=combobox]:has-text('Selecione o fornecedor')"
-   },
-   "at": 24.71,
-   "label": "Selecione o fornecedor"
+   "do": "eval",
+   "js": "(async()=>{const acha=()=>[...document.querySelectorAll(\"[role=dialog] button[role=combobox]\")].find(e=>e.offsetParent&&e.textContent.includes(\"Selecione o fornecedor\"));let el=acha();for(let i=0;i<30&&!el;i++){await new Promise(r=>setTimeout(r,100));el=acha();}if(!el)return 'SEM ALVO';el.click();return 'ok: '+el.textContent.trim().slice(0,60)})()",
+   "at": 25.02,
+   "label": "Selecione o fornecedor (sem cursor)"
   },
   {
    "do": "type",
@@ -214,31 +210,20 @@
     "placeholder": "Pesquisar fornecedor..."
    },
    "text": "Vale",
-   "at": 26.03,
+   "at": 25.32,
    "label": "busca Vale",
    "noClick": true
   },
   {
-   "do": "waitFor",
-   "target": {
-    "role": "option",
-    "name": "Auto Peças Vale Forte"
-   },
-   "timeout": 8
+   "do": "eval",
+   "js": "(async()=>{const acha=()=>[...document.querySelectorAll(\"[cmdk-item],[role=option]\")].find(e=>e.offsetParent&&e.textContent.includes(\"Auto Pe\\u00e7as Vale Forte\"));let el=acha();for(let i=0;i<30&&!el;i++){await new Promise(r=>setTimeout(r,100));el=acha();}if(!el)return 'SEM ALVO';el.click();return 'ok: '+el.textContent.trim().slice(0,60)})()",
+   "at": 26.08,
+   "label": "Auto Peças Vale Forte (sem cursor)"
   },
   {
    "do": "mark",
    "name": "L4",
    "at": 26.44
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "option",
-    "name": "Auto Peças Vale Forte"
-   },
-   "at": 26.46,
-   "label": "Auto Peças Vale Forte"
   },
   {
    "do": "eval",
@@ -298,8 +283,8 @@
   },
   {
    "do": "eval",
-   "js": "(async()=>{const esp=[\"2.360,00\"];let out='';for(let i=0;i<12;i++){const v=[...document.querySelectorAll(\"[role=dialog]\"+' input, '+\"[role=dialog]\"+' textarea')].map(e=>e.value).join(' | ');const falta=esp.filter(e=>!v.includes(e));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+v.slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
-   "label": "confere parcelas de 2.360,00"
+   "js": "(async()=>{const esp=[\"2.360\"];let out='';for(let i=0;i<12;i++){const v=[...document.querySelectorAll(\"[role=dialog]\"+' input, '+\"[role=dialog]\"+' textarea')].map(e=>e.value).join(' | ');const falta=esp.filter(e=>!v.includes(e));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+v.slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere parcelas de 2.360 (o campo mostra sem centavos)"
   },
   {
    "do": "hover",

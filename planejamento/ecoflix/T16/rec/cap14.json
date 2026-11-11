@@ -1,0 +1,347 @@
+{
+ "name": "t16-cap14",
+ "title": "T16 · Cap. 14 · DANFE e XML (narração ESTIMADA 56,0 s; marcas L1..L8 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "seed": "t16-cap14",
+ "pace": 0.5,
+ "cps": 40,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 400
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true"
+ },
+ "seedExtra": [
+  "t16/inicio",
+  "t16/apos-cap13"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "waitFor",
+   "target": {
+    "label": "E-mail"
+   },
+   "timeout": 30
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "E-mail"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "Senha",
+    "exact": true
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Rafael!",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/fiscal-ambiental/nfe/saida"
+  },
+  {
+   "do": "waitFor",
+   "text": "#1250",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const a=document.getAnimations().filter(x=>x.currentTime<0);a.forEach(x=>x.startTime=document.timeline.currentTime);return a.length})()"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|Algo deu errado|Falha ao|Something went wrong|inv[áa]lid/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{document.querySelectorAll('[data-sonner-toast][data-type=error]').forEach(t=>{const s='TOAST DE ERRO: '+t.textContent.trim().slice(0,90);if(!window.__avisos.includes(s)&&window.__avisos.length<10)window.__avisos.push(s)})},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0.4
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 6.53
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 16.75
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('#1250') td:last-child button"
+   },
+   "seconds": 0.17,
+   "at": 18.34,
+   "label": "zoom: o menu da 1250 (Download XML, Download DANFE, Comprovante, Carta de Correção)",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('#1250') td:last-child button"
+   },
+   "seconds": 0.15,
+   "label": "(menu #1250 aberto)",
+   "noScroll": true,
+   "unless": {
+    "role": "menuitem",
+    "name": "Download DANFE"
+   },
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 19.46
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Download DANFE"
+   },
+   "at": 20.44,
+   "label": "Download DANFE (o PDF abre em outra aba)",
+   "noScroll": true
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 24.06
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('#1250') td:last-child button"
+   },
+   "seconds": 0.15,
+   "at": 24.21,
+   "label": "abre o menu da linha #1250",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('#1250') td:last-child button"
+   },
+   "seconds": 0.15,
+   "label": "(menu #1250 aberto)",
+   "noScroll": true,
+   "unless": {
+    "role": "menuitem",
+    "name": "Download XML"
+   },
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Download XML"
+   },
+   "at": 25.19,
+   "label": "Download XML",
+   "noScroll": true
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 29.87
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('#1250') td:last-child button"
+   },
+   "seconds": 0.15,
+   "at": 29.87,
+   "label": "abre o menu da linha #1250",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('#1250') td:last-child button"
+   },
+   "seconds": 0.15,
+   "label": "(menu #1250 aberto)",
+   "noScroll": true,
+   "unless": {
+    "role": "menuitem",
+    "name": "Visualizar"
+   },
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Visualizar"
+   },
+   "at": 30.55,
+   "label": "Visualizar",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "text": "NF-e #1250",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] [role=tab]:has-text('XML')"
+   },
+   "at": 32.07,
+   "label": "aba XML"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] :text-is('XML da nota')"
+   },
+   "seconds": 1.2,
+   "at": 34.12,
+   "label": "zoom: XML da nota (Mesmo arquivo enviado à SEFAZ) e Copiar XML",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 38.8
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 39.55,
+   "label": "fecha o Visualizar"
+  },
+  {
+   "do": "pause",
+   "seconds": 0.6
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('#1249') td:last-child button"
+   },
+   "seconds": 0.3,
+   "at": 42.06,
+   "label": "abre o menu da 1249 (Cancelada)",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "menuitem",
+    "name": "XML de Cancelamento"
+   },
+   "seconds": 1.0,
+   "at": 43.91,
+   "label": "zoom: XML de Cancelamento (sem clicar)",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 46.06
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 46.82,
+   "label": "fecha o menu"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button[aria-label='Mais opções de NF-e']"
+   },
+   "at": 48.77,
+   "label": "três pontinhos (Mais opções de NF-e)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "menuitem",
+    "name": "Exportação Contábil"
+   },
+   "seconds": 1.2,
+   "at": 50.23,
+   "label": "zoom: Exportação Contábil (sem clicar)",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 54.18,
+   "label": "fecha o menu"
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 55.99
+  }
+ ]
+}

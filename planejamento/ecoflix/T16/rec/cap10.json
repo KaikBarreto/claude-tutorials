@@ -1,0 +1,337 @@
+{
+ "name": "t16-cap10",
+ "title": "T16 · Cap. 10 · Nota a partir de um pedido (narração ESTIMADA 77,4 s; marcas L1..L8 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "seed": "t16-cap10",
+ "pace": 0.5,
+ "cps": 40,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 400
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true"
+ },
+ "seedExtra": [
+  "t16/inicio",
+  "t16/apos-cap09"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "waitFor",
+   "target": {
+    "label": "E-mail"
+   },
+   "timeout": 30
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "E-mail"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "Senha",
+    "exact": true
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Rafael!",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/fiscal-ambiental/nfe/saida"
+  },
+  {
+   "do": "waitFor",
+   "text": "#1249",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const a=document.getAnimations().filter(x=>x.currentTime<0);a.forEach(x=>x.startTime=document.timeline.currentTime);return a.length})()"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|Algo deu errado|Falha ao|Something went wrong|inv[áa]lid/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{document.querySelectorAll('[data-sonner-toast][data-type=error]').forEach(t=>{const s='TOAST DE ERRO: '+t.textContent.trim().slice(0,90);if(!window.__avisos.includes(s)&&window.__avisos.length<10)window.__avisos.push(s)})},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0.4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Nova Nota",
+    "exact": true,
+    "within": "main"
+   },
+   "at": 1.32,
+   "label": "Nova Nota"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] :text-is('NF-e de Saída')"
+   },
+   "at": 2.31,
+   "label": "NF-e de Saída"
+  },
+  {
+   "do": "waitFor",
+   "text": "Para quem",
+   "timeout": 15
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] button:text-is('Pedido')"
+   },
+   "seconds": 0.24,
+   "at": 13.69,
+   "label": "Importar de: Pedido",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 14.88
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:text-is('Pedido')"
+   },
+   "at": 17.13,
+   "label": "Pedido"
+  },
+  {
+   "do": "waitFor",
+   "text": "Importar de Pedido de Venda",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog]:has-text('Importar de Pedido de Venda') :text('Fundição Bandeira do Vale')",
+    "nth": 0
+   },
+   "seconds": 0.77,
+   "at": 19.66,
+   "label": "o pedido de 09/11 da Fundição Bandeira do Vale (R$ 23.950,00)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 21.38
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog]:has-text('Importar de Pedido de Venda') button:text-is('Importar')",
+    "nth": 0
+   },
+   "at": 22.26,
+   "label": "Importar"
+  },
+  {
+   "do": "waitFor",
+   "text": "Pedido importado",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] input[placeholder^='Buscar por nome, apelido']"
+   },
+   "seconds": 0.8,
+   "at": 23.27,
+   "label": "o cliente veio do pedido",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 25.91
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:text-is('Avançar')"
+   },
+   "at": 26.61,
+   "label": "Avançar",
+   "noScroll": true
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] td:has-text('Cobre mel')"
+   },
+   "text": "",
+   "noClick": true,
+   "optional": true,
+   "timeout": 4,
+   "at": 27.37,
+   "label": "zoom: Qtd 500 (Cobre mel)"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Cobre mel\", \"23.950,00\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog],[role=alertdialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Cobre mel 500 kg = R$ 23.950,00"
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 35.6
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 49.38
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 60.06
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:text-is('Transporte')"
+   },
+   "at": 63.37,
+   "label": "aba Transporte"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] div:has(> label:text-is('Modalidade do Frete')) button[role=combobox]"
+   },
+   "at": 65.19,
+   "label": "Modalidade do Frete (abre a lista)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=option]:has-text('Frete por conta do Remetente (CIF)')"
+   },
+   "at": 66.46,
+   "label": "0 - Frete por conta do Remetente (CIF)",
+   "noScroll": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]:has-text('Selecionar...')"
+   },
+   "at": 67.02,
+   "label": "Transportadora (abre a lista)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=option]:has-text('Cargas Vale do Sol')"
+   },
+   "at": 68.36,
+   "label": "Cargas Vale do Sol Ltda (FJR3B27)",
+   "noScroll": true
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] :text-is('Dados da Transportadora')"
+   },
+   "seconds": 0.15,
+   "at": 70.08,
+   "label": "Dados da Transportadora preenchidos",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 70.66
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:text-is('Emitir Nota')"
+   },
+   "at": 70.86,
+   "label": "Emitir Nota",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "selector": "main tbody tr:has-text('#1250')",
+   "timeout": 20
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('#1250') td:has-text('SEFAZ')"
+   },
+   "seconds": 0.6,
+   "label": "#1250 Aguardando SEFAZ",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "waitFor",
+   "selector": "main tbody tr:has-text('#1250'):has-text('Autorizada')",
+   "timeout": 25
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 77.39
+  }
+ ]
+}

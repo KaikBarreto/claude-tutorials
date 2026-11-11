@@ -511,3 +511,13 @@ Decisões:
   pesagem, caminhão, latinhas, prensa, fardo, impressora, computador, pátio), liga `--allow-file-access-from-files` no
   `render_cenas.cjs` (conferindo que o 2D sai idêntico) e converte a T07 (cap06) e a T08 (caminhão na balança). Depois do
   kit: T00 (caminho do pátio), T12, T11, T10/T04, T05 e T16-T18, como o Kaik não escolheu outra lista.
+- 11/11 15:1x **Kit 3D pronto** (`perfis/ecoflix/cenas3d/`: `kit3d.js`, three.js r170 + licença MIT, `LEIA.md`, `vitrine.html`
+  com todos os objetos). O `render_cenas.cjs` oficial liga `--allow-file-access-from-files` e ganhou `--dsf` (prévia 1,35);
+  o 2D da T08 cap04 saiu idêntico byte a byte (3 quadros e 30 quadros de MP4). Em 3D: T07 cap06 e T08 cap00, cap04 e cap06
+  (`"3d"` no `ilustracoes.json`; o cap05 da T08, só a conta, fica na 2D). Prévias T07_3d.mp4 e T08_3d.mp4 mandadas ao Kaik
+  às 15:2x.
+- 11/11 15:2x **3D nas outras aulas** (`_BRIEF_3D.md`): cinco agentes, T00 (Opus, a aula de abertura), T11+T12, T04+T10,
+  T05+T16 e T17+T18 (Sonnet). Objeto novo só em `perfis/ecoflix/cenas3d/objetos/` (nunca no `kit3d.js`); quadros e prévias
+  na trava leve com `nice -n 19` (a pesada é da gravação dos robôs, com 20 na fila). Nota para a edição: a ilustração
+  aparece numa caixa de ~1420 px de largura no vídeo final; renderizar o 3D final com `--dsf 1.35` (1728×1080) em vez de 2
+  corta ~45% do tempo (~1 s/quadro em 2560×1600) sem perda visível.
