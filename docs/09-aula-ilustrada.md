@@ -78,7 +78,7 @@ conceito (`[ILUSTRAÇÃO: ...]` no roteiro), e depois volta para a tela. Kit pro
 - **Movimento**: entrada e saída suaves com `vis`; `conta` (o número conta até o valor), `traco` (a linha se desenha),
   `arco` (o objeto viaja), `contorno` (a cor de destaque entra), `posTitulo` (o título começa grande no centro e sobe
   quando o desenho entra). Tudo preso a palavras com `W(linha, 'palavra')`.
-- **Exemplos**: `CAPS[1]` "Tara e peso líquido" (Peso bruto − Tara = Peso líquido) e `CAPS[2]` "Caixa × competência",
+- **Exemplos**: `CAPS[1]` "Dupla pesagem" (1ª Pesagem − 2ª Pesagem = Peso Bruto; tara é a embalagem, não o caminhão vazio) e `CAPS[2]` "Caixa × competência",
   com as falas e tempos estimados em `exemplo/`. Antes da voz, `python3 tempos_estimados.py capNN.json "fala 0" ...`
   faz um `capNN.json` estimado (790 caracteres/min); com o texto da aula, `--tts narracao/tts_textos.py --cap N` lê o
   `CAPS[N]` como o `proc.py` (tira as tags `[pause]`, que contam 0,5 s, e aplica as trocas: o `W()` procura a grafia da
