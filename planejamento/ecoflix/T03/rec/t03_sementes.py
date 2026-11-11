@@ -176,9 +176,24 @@ def marcos_sem_valores():
             '_remove': {'user_permissions': [{'user_id': '@id:user.marcos', 'permission': 'action_view_financial_values'}]}}
 
 
+def caixa_0830():
+    """o caixa do cap07 (Nova Compra pede caixa aberto): MUNDO_LINHA_DO_TEMPO §9 e §15, "a T3 e a T19 abrem, na semente delas, um caixa
+    do Rafael às 08:30" (o base/caixa-aberto é o #85 da T6, às 08:05). Número 85: o #84 é o último de B."""
+    quando = iso('08:30')
+    return {'_doc': 'T03 · cap07: caixa #85 do Rafael aberto às 08:30 de 10/11 com R$ 1.500,00 de troco, sem lançamentos '
+                    '(MUNDO_LINHA_DO_TEMPO §9: a T3 abre o caixa da semente às 08:30).',
+            'cash_register': [{'id': '@id:caixa.t03', 'company_id': '@id:company.reciclavale', 'register_number': 85, 'status': 'open',
+                               'opened_at': quando, 'opened_by': '@id:user.rafael', 'initial_opening_balance': 1500, 'opening_balance': 1500,
+                               'closing_balance': None, 'closed_at': None, 'currency': 'BRL', 'created_at': quando}],
+            'cash_transactions': [{'id': '@id:ct.t03.abertura', 'company_id': '@id:company.reciclavale', 'cash_register_id': '@id:caixa.t03',
+                                   'type': 'opening', 'amount': 1500, 'description': 'Abertura do Caixa #85', 'transaction_at': quando,
+                                   'transaction_date': '2026-11-10', 'created_at': quando, 'created_by': '@id:user.rafael',
+                                   'excluded_from_dre': False}]}
+
+
 def main():
     os.makedirs(SAIDA, exist_ok=True)
-    arquivos = {'inicio': inicio(), 'marcos-sem-valores': marcos_sem_valores()}
+    arquivos = {'inicio': inicio(), 'marcos-sem-valores': marcos_sem_valores(), 'caixa-0830': caixa_0830()}
     for cap in (2, 3, 4, 5, 6, 7, 8):
         arquivos[f'apos-cap{cap:02d}'] = apos(cap)
     for nome, d in arquivos.items():

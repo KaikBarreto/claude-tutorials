@@ -196,8 +196,8 @@
   },
   {
    "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Transferência\", \"2.180,000\", \"+320,000\", \"2.500,000\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main tbody tr\")].filter(e=>!true||e.innerText.includes(\"Transferência\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
-   "label": "confere Transferência: 2.180,000 > +320,000 > 2.500,000"
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Transferência\", \"2.180 Kg\", \"+320 Kg\", \"2.500 Kg\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main tbody tr\")].filter(e=>!true||e.innerText.includes(\"Transferência\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Transferência: 2.180 > +320 > 2.500 Kg"
   },
   {
    "do": "mark",
@@ -223,7 +223,7 @@
    },
    "seconds": 1.4,
    "at": 27.78,
-   "label": "Estoque Inicial 2.180,000 Kg",
+   "label": "Estoque Inicial 2.180 Kg",
    "optional": true,
    "timeout": 4
   },
@@ -234,7 +234,7 @@
    },
    "seconds": 1.2,
    "at": 30.89,
-   "label": "Movimentação +320,000 Kg",
+   "label": "Movimentação +320 Kg",
    "optional": true,
    "timeout": 4
   },
@@ -245,7 +245,7 @@
    },
    "seconds": 1.4,
    "at": 33.17,
-   "label": "Estoque Final 2.500,000 Kg",
+   "label": "Estoque Final 2.500 Kg",
    "optional": true,
    "timeout": 4
   },
@@ -257,27 +257,27 @@
   {
    "do": "hover",
    "target": {
-    "selector": "main tbody tr:has-text('+860,000') > td:nth-child(8)"
+    "selector": "main tbody tr:has-text('+860 Kg') > td:nth-child(8)"
    },
    "seconds": 1.4,
    "at": 38.68,
-   "label": "a Compra de ontem: +860,000 Kg",
+   "label": "a Compra de ontem: +860 Kg",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Compra\", \"1.320,000\", \"+860,000\", \"2.180,000\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main tbody tr\")].filter(e=>!true||e.innerText.includes(\"+860,000\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
-   "label": "confere Compra de 09/11: 1.320,000 > +860,000 > 2.180,000"
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Compra\", \"1.320 Kg\", \"+860 Kg\", \"2.180 Kg\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main tbody tr\")].filter(e=>!true||e.innerText.includes(\"+860 Kg\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Compra de 09/11: 1.320 > +860 > 2.180 Kg"
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main tbody tr:has-text('+860,000') > td:nth-child(9)"
+    "selector": "main tbody tr:has-text('+860 Kg') > td:nth-child(9)"
    },
    "seconds": 1.4,
    "at": 43.39,
-   "label": "[ZOOM] Estoque Final da compra 2.180,000",
+   "label": "[ZOOM] Estoque Final da compra 2.180 Kg",
    "optional": true,
    "timeout": 4
   },
@@ -288,7 +288,7 @@
    },
    "seconds": 1.2,
    "at": 46.88,
-   "label": "Estoque Inicial da transferência 2.180,000",
+   "label": "Estoque Inicial da transferência 2.180 Kg",
    "optional": true,
    "timeout": 4
   },

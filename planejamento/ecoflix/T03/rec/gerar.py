@@ -61,10 +61,11 @@ TROCAS = json.load(open(os.path.join(NARR, 'config_narracao.json'), encoding='ut
 NOMES = ['Abertura', 'A tela Estoque', 'Cadastrar um material', 'O código do material', 'O NCM e a nota fiscal', 'Grupos de material',
          'Editar preços em massa', 'Várias tabelas de preço', 'Movimentar, transferir e zerar', 'Exportar estoque e tabela',
          'Excluir um material', 'Recapitulando']
-# estado de partida (sementes extras sobre o mundo base): t03/inicio + o último apos-capNN; o cap07 abre o caixa do Rafael (base)
+# estado de partida (sementes extras sobre o mundo base): t03/inicio + o último apos-capNN; o cap07 (Nova Compra) abre o caixa #85 do
+# Rafael às 08:30 (MUNDO_LINHA_DO_TEMPO §9; o base/caixa-aberto é o das 08:05 da T6)
 SEMENTE = {0: [], 1: [], 2: [], 3: ['apos-cap02'], 4: ['apos-cap03'], 5: ['apos-cap04'], 6: ['apos-cap05'], 7: ['apos-cap06'],
            8: ['apos-cap07'], 9: ['apos-cap08'], 10: ['apos-cap08'], 11: ['apos-cap08']}
-EXTRA_BASE = {7: ['base/caixa-aberto']}
+EXTRA_BASE = {7: ['caixa-0830']}
 
 # folga de cada gesto: segundos entre o início do passo e o instante em que ele age (pace 0,5; medido no ensaio do T03 e na tabela
 # "Custo real dos gestos" do docs/04). O `at` = palavra - folga faz o cursor CHEGAR na palavra.
@@ -298,7 +299,7 @@ class Cap:
         s.steps.append({'do': 'mark', 'name': 'FIM', 'at': round(s.dur, 2)})
 
     def out(s):
-        sem = s.seed_extra if s.seed_extra is not None else ([f'{AULA}/inicio'] + [f'{AULA}/{x}' for x in SEMENTE[s.n]] + EXTRA_BASE.get(s.n, []))
+        sem = s.seed_extra if s.seed_extra is not None else ([f'{AULA}/inicio'] + [f'{AULA}/{x}' for x in SEMENTE[s.n]] + [f'{AULA}/{x}' for x in EXTRA_BASE.get(s.n, [])])
         corte = f'; corte das linhas da voz a partir de {str(s.voz_inicio).replace(".", ",")} s' if s.voz_inicio else ''
         d = {
             'name': f'{AULA}-{s.nome}',
@@ -544,7 +545,7 @@ def cap02():
     c.type(CAMPO('name'), 'Radiador de cobre', w=(3, 'pátio:', None, 0.0), clicar=False, cps=30, label='Nome: Radiador de cobre')
     c.click(CAMPO('unit'), w=(3, 'unidade'), label='Unidade (abre a lista)')
     c.hover(OPT('pç — Peça'), 0.5, w=(3, 'peça'), label='pç — Peça (o "fardo" fica abaixo da dobra da lista: rolar custava 2 s)')
-    c.click(OPT('Kg — Quilograma'), w=(3, 'aqui.'), label='fica em Kg — Quilograma')
+    c.click(OPT('Kg — Quilograma'), w=(3, 'trocar'), label='fica em Kg — Quilograma')  # no "aqui." a L4 (preços) já chegava
     c.click(CAMPO('purchase_price'), w=(4, 'compra,'), label='P. Compra')
     c.type(CAMPO('purchase_price'), '21,00', w=(4, 'vinte', 0), clicar=False, label='P. Compra 21,00 (zoom: P. Compra e P. Venda)')
     c.click(CAMPO('sale_price'), w=(4, 'venda,'), label='P. Venda')
@@ -577,9 +578,10 @@ def cap03():
     c.hover(CELULA('Radiador de cobre', 2), 1.6, w=(1, 'dezesseis'), label='célula Código 16 (zoom)')
     c.confere('row:Radiador de cobre', ['16', 'Radiador de cobre'], 'código 16')
     # L2 e L3: ilustração do código (fichas, caderno); o robô fica parado
-    abre_acoes(c, 'Radiador de cobre', 'Editar', w=(3, 'setenta.', None, 0.8), w_item=(4, 'Editar'))   # hover no fim da ilustração do L3
+    # o menu abre ainda por baixo da ilustração do L3 (a L4 "Abro o Editar e digito zero, sete, zero" não tem folga para ele)
+    abre_acoes(c, 'Radiador de cobre', 'Editar', w=(3, 'radiador', None, 0.8), w_item=(4, 'Abro', None, 0.7))
     c.waitfor(text='Editar Material', timeout=8)
-    c.click(CAMPO('code'), w=(4, 'digito', None, 1.0), label='campo Código', primeiro=True)
+    c.click(CAMPO('code'), w=(4, 'digito', None, 0.7), label='campo Código', primeiro=True)
     c.type(CAMPO('code'), '0', w=(4, 'zero', 0, 0.35), clicar=False, clear=True, label='apaga o 16 e digita 0: o campo fica vazio (zoom: Código e Fica assim)')
     c.type(CAMPO('code'), '7', w=(4, 'sete,'), clicar=False, label='digita 7')
     c.type(CAMPO('code'), '0', w=(4, 'zero', 1), clicar=False, label='digita 0: 70')
@@ -635,43 +637,43 @@ def cap05():
     c.hover(PD('Ferrosos'), 0.4, w=(1, 'ferrosos,'), label='Ferrosos')
     c.hover(PD('Outros'), 0.6, w=(1, 'outros.'), label='Outros (os cinco grupos)')
     # L2: ilustração das gavetas; o robô fica parado
-    c.ev(js_rola_ate('Novo grupo', y=180, escopo=DLG), w=(3, 'No', None, 0.6), label='desce até Novo grupo (Adicionar fica na tela)')
-    c.click(SEL(f"{DLG} input[placeholder='Ex: Metais, Plásticos, Papéis']"), w=(3, 'nome,'), label='Nome do grupo')
-    c.type(SEL(f"{DLG} input[placeholder='Ex: Metais, Plásticos, Papéis']"), 'Radiadores', clicar=False, cps=30, label='Nome: Radiadores')
-    c.hover(SEL(f"{DLG} input[type=color]"), 0.2, label='Cor')
+    # L3 "o nome, a cor e o ícone" cabe em 1,6 s: clique+digitação num passo só, e cada gesto na sua palavra
+    c.ev(js_rola_ate('Novo grupo', y=180, escopo=DLG, dur_ms=500), w=(3, 'No', None, 0.9), label='desce até Novo grupo (Adicionar fica na tela)')
+    c.type(SEL(f"{DLG} input[placeholder='Ex: Metais, Plásticos, Papéis']"), 'Radiadores', w=(3, 'novo'), cps=40, label='Nome do grupo: Radiadores')
+    c.hover(SEL(f"{DLG} input[type=color]"), 0.2, w=(3, 'cor'), label='Cor')
     c.ev(js_valor(f"{DLG} input[type=color]", '#0f766e'), label='Cor verde-petróleo #0F766E (valor do campo, sem a janela nativa)')
-    c.click(SEL(f"{DLG} button.rounded-full.w-12"), label='Ícone (abre a grade)')
+    c.click(SEL(f"{DLG} button.rounded-full.w-12"), w=(3, 'ícone.'), label='Ícone (abre a grade)')
     c.waitfor(target=SEL(f"{POP} button:has(svg.lucide-car)"), timeout=6)
     c.click(SEL(f"{POP} button:has(svg.lucide-car)"), w=(3, 'carro', 0), label='ícone carro')
     c.click(BTN('Adicionar', within=DLG), w=(4, 'Adicionar,'), label='Adicionar')
     c.waitfor(text='Grupo criado', timeout=8)
     c.confere('dlg', ['Radiadores'], 'Radiadores na lista de grupos')
-    fecha_janela(c, w=(4, 'criado.', None, 0.3))
+    fecha_janela(c, w=(4, 'está', None, 0.3))
     # L5 é apertada (busca, menu, Editar, Grupo, a lista e o "+" em ~10 s): a busca, que a fala não cita, vai sem cursor
     c.ev(js_valor('main input[placeholder="Buscar material por código ou nome..."]', 'radiador'), label='busca radiador (sem cursor: a fala não cita)')
     c.waitfor(target=P('Radiador de cobre'), timeout=8)
-    abre_acoes(c, 'Radiador de cobre', 'Editar', w=(5, 'Agora', None, 0.3))
+    abre_acoes(c, 'Radiador de cobre', 'Editar', w=(5, 'Agora', None, 0.9))
     c.waitfor(text='Editar Material', timeout=8)
-    c.ev(js_rola_ate('Fiscal e organização', y=380, escopo=DLG), label='desce até o campo Grupo')
+    c.ev(js_rola_ate('Fiscal e organização', y=380, escopo=DLG, dur_ms=450), label='desce até o campo Grupo')
     c.click(CAMPO('group_id'), w=(5, 'Grupo', 0), label='campo Grupo (abre a lista)')
     c.click(OPT('Radiadores'), label='Radiadores')
     c.hover(SEL(f"{DLG} button[aria-label='Criar grupo']"), 1.4, w=(5, 'mais,'), label='botão + Criar grupo (sem clicar)')
     c.click(BTN('Atualizar', within=DLG), w=(6, 'Atualizar.'), label='Atualizar')
-    c.waitfor(text='Material atualizado!', timeout=10)
-    c.waitfor(gone={'role': 'dialog'}, timeout=8)
-    c.hover(CELULA('Radiador de cobre', 3), 0.8, w=(6, 'grupo'), label='Radiadores embaixo do nome, com a bolinha')
+    c.waitfor(gone={'role': 'dialog'}, timeout=10)  # a janela só fecha depois de salvar; o confere da linha prova o grupo
+    c.hover(CELULA('Radiador de cobre', 3), 0.5, w=(6, 'grupo'), label='Radiadores embaixo do nome, com a bolinha')
     c.confere('row:Radiador de cobre', ['Radiador de cobre', 'Radiadores'], 'grupo Radiadores na linha')
-    # L7: o filtro abre no começo da pergunta para os cinco cliques caberem antes dos cartões (L8)
-    c.ev(js_valor('main input[placeholder="Buscar material por código ou nome..."]', ''), w=(6, 'com', None, 0.3), label='limpa a busca (sem cursor)')
+    # L7 tem 5 s e o filtro pede 6 cliques (~1,05 s cada): ele abre no fim da L6 ("com a cor dele") e os 5 desmarques ficam na L7
+    c.ev(js_valor('main input[placeholder="Buscar material por código ou nome..."]', ''), w=(6, 'nome,', None, 0.3), label='limpa a busca (sem cursor)')
     c.click(BTNX('Todos os Materiais'), label='filtro Todos os Materiais')
     c.waitfor(target=SEL(f"{POP} label:has-text('Alumínio')"), timeout=6)
+    c.marca(7)
     for k, g in enumerate(('Alumínio', 'Ferrosos', 'Metais', 'Outros', 'Radiadores')):
         c.click(SEL(f"{POP} label:has-text('{g}') button[role=checkbox]"), label=f'desmarca {g}')
     c.confere(POP, ['Cobre'], 'só o Cobre marcado')
     c.press('Escape', w=(7, 'cobre.', None, -0.4), label='fecha o filtro (botão: 3 materiais)')
     c.pause(0.4)
     c.confere('main', ['3 materiais'], 'botão do filtro: 3 materiais')
-    c.hover(P('Peso Total em Estoque'), 0.5, w=(8, 'peso'), label='cartões só do cobre (zoom)')
+    c.hover(P('Peso Total em Estoque'), 0.5, w=(8, 'peso', None, 1.1), label='cartões só do cobre (zoom)')  # peso e valor a 0,7 s um do outro
     c.hover(P('Total Pago'), 1.0, w=(8, 'valor'), label='Total Pago do cobre')
     c.click(BTNX('3 materiais'), w=(9, 'voltar,'), label='abre o filtro')
     c.click(SEL(f"{POP} label:has-text('Todos os Materiais') button[role=checkbox]"), w=(9, 'Todos'), label='Todos os Materiais')
@@ -789,12 +791,13 @@ def cap08():
     """Movimentar, transferir e zerar: saída de 2 kg do radiador, (ilustração L4) transferência de 8 kg para o Ferro misto, Zerar só mostrado."""
     c = Cap(8, setup_estoque())
     c.hover(BTN('Movimentar estoque'), 1.2, w=(1, 'ajuste'), label='Movimentar estoque')
-    c.click(BTN('Movimentar estoque'), w=(2, 'Em'), label='Movimentar estoque')
+    # L2 diz 4 gestos em 4,2 s depois que a janela abre (~1 s): Movimentar na marca, Saída e material em sequência, o "2" em "janela"
+    c.click(BTN('Movimentar estoque'), w=(2, 'Em', None, 0.9), label='Movimentar estoque')
     c.waitfor(text='Registre uma entrada ou saída manual', timeout=8)
-    c.click(BTN('Saída', within=DLG), w=(2, 'estoque,'), primeiro=True, label='Saída')
-    c.type({'placeholder': 'Escreva o nome ou código do material'}, 'radiador', w=(2, 'escolho'), cps=40, label='Material: radiador')
+    c.click(BTN('Saída', within=DLG), primeiro=True, label='Saída')
+    c.type({'placeholder': 'Escreva o nome ou código do material'}, 'radiador', cps=40, label='Material: radiador')
     c.click(OPT('Radiador de cobre', exact=False), label='Radiador de cobre')
-    c.type(SEL('#movement-quantity'), '2', w=(2, 'dois'), label='Quantidade 2')
+    c.type(SEL('#movement-quantity'), '2', w=(2, 'janela'), label='Quantidade 2')
     c.confere('dlg', ['Estoque de Radiador de cobre', 'Estoque atual', '120', '2 Kg', 'Após a movimentação', '118'], 'antes 120, -2 Kg, depois 118')
     c.hover(PD('Após a movimentação'), 2.0, w=(2, 'antes'), label='Estoque de Radiador de cobre: 120 > -2 Kg > 118 (zoom)')
     c.type(SEL('#movement-description'), 'Ajuste de inventário', w=(3, 'escrevo'), cps=40, label='Descrição: Ajuste de inventário')

@@ -154,17 +154,9 @@
   },
   {
    "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.offsetParent!==null&&e.textContent.trim()===\"Novo grupo\").sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-180);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=()=>{const p=Math.min(1,(performance.now()-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 20.54,
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.offsetParent!==null&&e.textContent.trim()===\"Novo grupo\").sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-180);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=()=>{const p=Math.min(1,(performance.now()-t0)/500),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 20.24,
    "label": "desce até Novo grupo (Adicionar fica na tela)"
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "[role=dialog] input[placeholder='Ex: Metais, Plásticos, Papéis']"
-   },
-   "at": 21.95,
-   "label": "Nome do grupo"
   },
   {
    "do": "type",
@@ -172,9 +164,9 @@
     "selector": "[role=dialog] input[placeholder='Ex: Metais, Plásticos, Papéis']"
    },
    "text": "Radiadores",
-   "cps": 30,
-   "noClick": true,
-   "label": "Nome: Radiadores"
+   "cps": 40,
+   "at": 20.87,
+   "label": "Nome do grupo: Radiadores"
   },
   {
    "do": "hover",
@@ -182,6 +174,7 @@
     "selector": "[role=dialog] input[type=color]"
    },
    "seconds": 0.2,
+   "at": 22.86,
    "label": "Cor",
    "optional": true,
    "timeout": 4
@@ -196,6 +189,7 @@
    "target": {
     "selector": "[role=dialog] button.rounded-full.w-12"
    },
+   "at": 23.32,
    "label": "Ícone (abre a grade)"
   },
   {
@@ -242,7 +236,7 @@
   {
    "do": "press",
    "key": "Escape",
-   "at": 30.45,
+   "at": 30.07,
    "label": "fecha a janela"
   },
   {
@@ -285,7 +279,7 @@
     "selector": "main tbody tr:has-text('Radiador de cobre') td:last-child button"
    },
    "seconds": 0.4,
-   "at": 31.4,
+   "at": 30.8,
    "label": "\"...\" da linha Radiador de cobre",
    "optional": false,
    "timeout": 8
@@ -327,7 +321,7 @@
   },
   {
    "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.offsetParent!==null&&e.textContent.trim()===\"Fiscal e organização\").sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-380);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=()=>{const p=Math.min(1,(performance.now()-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.offsetParent!==null&&e.textContent.trim()===\"Fiscal e organização\").sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-380);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=()=>{const p=Math.min(1,(performance.now()-t0)/450),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
    "label": "desce até o campo Grupo"
   },
   {
@@ -375,22 +369,17 @@
   },
   {
    "do": "waitFor",
-   "text": "Material atualizado!",
-   "timeout": 10
-  },
-  {
-   "do": "waitFor",
    "gone": {
     "role": "dialog"
    },
-   "timeout": 8
+   "timeout": 10
   },
   {
    "do": "hover",
    "target": {
     "selector": "main tbody tr:has-text('Radiador de cobre') td:nth-child(3)"
    },
-   "seconds": 0.8,
+   "seconds": 0.5,
    "at": 43.27,
    "label": "Radiadores embaixo do nome, com a bolinha",
    "optional": true,
@@ -404,7 +393,7 @@
   {
    "do": "eval",
    "js": "(()=>{const el=document.querySelector(\"main input[placeholder=\\\"Buscar material por c\\u00f3digo ou nome...\\\"]\");if(!el)return 'SEM ALVO';const set=Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set;set.call(el,\"\");el.dispatchEvent(new Event('input',{bubbles:true}));el.dispatchEvent(new Event('change',{bubbles:true}));return el.value})()",
-   "at": 46.02,
+   "at": 45.42,
    "label": "limpa a busca (sem cursor)"
   },
   {
@@ -421,6 +410,11 @@
     "selector": "[data-radix-popper-content-wrapper] label:has-text('Alumínio')"
    },
    "timeout": 6
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 46.99
   },
   {
    "do": "click",
@@ -464,11 +458,6 @@
   },
   {
    "do": "mark",
-   "name": "L7",
-   "at": 46.99
-  },
-  {
-   "do": "mark",
    "name": "L8",
    "at": 52.2
   },
@@ -494,7 +483,7 @@
     "within": "main"
    },
    "seconds": 0.5,
-   "at": 55.66,
+   "at": 55.11,
    "label": "cartões só do cobre (zoom)",
    "optional": true,
    "timeout": 4

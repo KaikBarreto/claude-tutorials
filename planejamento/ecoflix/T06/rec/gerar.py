@@ -344,6 +344,13 @@ def js_rola_topo(dur_ms=700):
             + SUAVE.replace('DUR', str(int(dur_ms))) + "return 'topo:'+Math.round(c.scrollTop)})()")
 
 
+def js_rola_fundo(esc=DLG, dur_ms=600):
+    """rolagem suave até o fim do contêiner que rola o conteúdo de `esc` (a janela aberta); devolve 'fim:<scrollTop>'"""
+    return ("(async()=>{" + ACHA_ROLAGEM + f"const d=document.querySelector({json.dumps(esc)});const el=d&&d.querySelector('label,p,h2');"
+            "if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop;const dy=c.scrollHeight-c.clientHeight-y0;"
+            "if(dy<3)return 'ok';" + SUAVE.replace('DUR', str(int(dur_ms))) + "return 'fim:'+Math.round(c.scrollTop)})()")
+
+
 def js_clicar(seletor, texto=None):
     """clique sem cursor (`el.click()`): o primeiro `seletor` visível (com o texto, se dado)"""
     cond = f"&&e.textContent.trim().startsWith({json.dumps(texto)})" if texto else ''
@@ -694,6 +701,7 @@ def cap09():
     c.waitfor(text='Transferir dinheiro do cofre ou de um caixa aberto para uma conta bancária', timeout=8)
     c.hover(COMBO(0), at=c.A(12, 'sai', 0.5), label='Origem da sangria')
     c.hover(COMBO(1), at=c.A(12, 'conta', 0.5), label='Conta de destino')
+    c.ev(js_rola_fundo(DLG, 600), at=c.A(12, 'recebe', -0.3), label='desce a janela da sangria até os botões')
     c.mark(13)
     c.click(BTN('Cancelar', DLG), at=c.L(13) - 0.9, label='Cancelar (sangria)')
     c.waitfor(gone={'role': 'dialog'}, timeout=6)
@@ -793,7 +801,7 @@ def cap11():
     c.hover(LINHA_CX(85), at=c.A(5, 'meu', 0.5), label='o #85 já marcado')
     c.click(BTN('Reabrir #85', DLG), at=c.A(5, 'reabrir', 0.6), label='Reabrir #85 (lista)')
     c.waitfor(text='Reabrir caixa #85?', timeout=10)
-    c.hover(TXTX('O caixa será reaberto exatamente como estava', DLG), at=c.A(5, 'confirma', 0.5), label='Reabrir caixa #85? (como estava)')
+    c.hover(TXTX('O caixa será reaberto exatamente como estava', ALERTA), at=c.A(5, 'confirma', 0.5), label='Reabrir caixa #85? (como estava)')
     c.mark(6)
     c.click(BTN('Reabrir Caixa'), at=c.A(6, 'Reabrir', 0.6), label='Reabrir Caixa')
     c.waitfor(text='Caixa reaberto com sucesso!', timeout=10)

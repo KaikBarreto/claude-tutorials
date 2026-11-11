@@ -80,12 +80,15 @@ def _post(porta, caminho, corpo):
         return r.read()
 
 
+IGNORA = {'active_sessions', 'usage_events'}   # sessão e telemetria do próprio login do robô: não são estado da aula
+
+
 def captura(nn, porta):
     schema = json.load(open(os.path.join(MUNDO, 'schema.json'), encoding='utf8'))['tables']
     novas, patch = {}, {}
     for tab, info in sorted(schema.items()):
         cols = info.get('columns') or info
-        if not isinstance(cols, dict) or 'id' not in cols:
+        if not isinstance(cols, dict) or 'id' not in cols or tab in IGNORA:
             continue
         if 'created_at' in cols:
             try:
@@ -101,9 +104,17 @@ def captura(nn, porta):
                 rows = []
             if rows:
                 patch[tab] = [{'match': {'id': r['id']}, 'set': {k: v for k, v in r.items() if k not in ('id', 'created_at')}} for r in rows]
-    if patch:   # só os campos que a aula mudou: compara com o mundo base + t13/inicio (o instante antes do 1º capítulo da cadeia)
-        _post(porta, '/__dev/reset', {})
-        _post(porta, '/__dev/seed', {'files': ['t13/inicio']})
+    # o instante antes do 1º capítulo da cadeia (mundo base + t13/inicio): linha "nova" que já existe ali é do mundo (created_at na
+    # hora da carga, ex. subscription_plans) e sai; o _patch fica só com os campos que a aula mudou
+    _post(porta, '/__dev/reset', {})
+    _post(porta, '/__dev/seed', {'files': ['t13/inicio']})
+    for tab in list(novas):
+        ids = ','.join(r['id'] for r in novas[tab])
+        ja = {r['id'] for r in _get(porta, f'{tab}?select=id&id=in.({ids})')}
+        novas[tab] = [r for r in novas[tab] if r['id'] not in ja]
+        if not novas[tab]:
+            del novas[tab]
+    if patch:
         for tab, itens in list(patch.items()):
             novos = []
             for it in itens:

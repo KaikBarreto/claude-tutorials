@@ -156,7 +156,7 @@
   {
    "do": "hover",
    "target": {
-    "selector": "main tbody tr:has-text('+860,000') > td:nth-child(4)"
+    "selector": "main tbody tr:has-text('+860 Kg') > td:nth-child(4)"
    },
    "seconds": 0.8,
    "at": 0.91,
@@ -179,7 +179,7 @@
   {
    "do": "click",
    "target": {
-    "selector": "main tbody tr:has-text('+860,000') > td:nth-child(6)"
+    "selector": "main tbody tr:has-text('+860 Kg') > td:nth-child(6)"
    },
    "at": 4.41,
    "label": "abre a compra de ontem"
@@ -204,7 +204,7 @@
    "optional": true,
    "timeout": 4,
    "at": 9.28,
-   "label": "[ZOOM] item: Ferro pesado, Peso 860,000, Valor Unit. R$ 0,95, Total R$ 817,00"
+   "label": "[ZOOM] item: Ferro pesado, Peso 860 Kg, Valor Unit. R$ 0,95, Total R$ 817,00"
   },
   {
    "do": "hover",
@@ -213,7 +213,7 @@
    },
    "seconds": 1.4,
    "at": 9.77,
-   "label": "Peso 860,000 Kg",
+   "label": "Peso 860 Kg",
    "optional": true,
    "timeout": 4
   },
@@ -257,8 +257,8 @@
   },
   {
    "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Ferro pesado\", \"860,000\", \"R$ 0,95\", \"R$ 817,00\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main table table tbody tr:has-text('Ferro pesado')\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
-   "label": "confere item 860,000 Kg a R$ 0,95 = R$ 817,00"
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Ferro pesado\", \"860 Kg\", \"R$ 0,95\", \"R$ 817,00\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main table table tbody tr:has-text('Ferro pesado')\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere item 860 Kg a R$ 0,95 = R$ 817,00"
   },
   {
    "do": "eval",

@@ -239,7 +239,7 @@ class Cap:
         s.steps.append({'do': 'eval', 'js': 'JSON.stringify(window.__avisos || "sem observador")', 'label': 'avisos de erro na tela'})
         s.steps.append({'do': 'mark', 'name': 'FIM', 'at': round(s.dur, 2)})
 
-    def encaixa_hovers(s, custo=0.6, minimo=0.15):
+    def encaixa_hovers(s, custo=0.9, minimo=0.15):
         """o hover termina antes do próximo passo com `at` (uma marca Ln, outro gesto): parada (`seconds`) encurtada até caber"""
         for k, st in enumerate(s.steps):
             if st.get('do') != 'hover' or st.get('at') is None:
@@ -445,14 +445,16 @@ def cap01():
     c.hover(COL('Status'), 0.6, at=c.A(3, 'status.', 0.4), label='coluna Status')
     c.mark(4)
     c.hover(TXT_LINHA('Água e esgoto de outubro', 'Água e esgoto de outubro'), 0.8, at=c.A(4, 'água', 0.6), label='a água de outubro')
-    c.hover(TXT_LINHA('Água e esgoto de outubro', 'Vencida'), 0.8, at=c.A(4, 'Vencida,', 0.6), label='status Vencida')
-    c.hover(TXT_LINHA('Água e esgoto de outubro', '05/11/2026'), 1.0, at=c.A(4, 'data', 0.6), label='vencimento 05/11/2026 em vermelho')
+    c.hover(TXT_LINHA('Água e esgoto de outubro', 'Vencida'), 0.3, at=c.A(4, 'Vencida,', 0.7), label='status Vencida')
+    c.hover(TXT_LINHA('Água e esgoto de outubro', '05/11/2026'), 0.5, at=c.A(4, 'data', 0.8), label='vencimento 05/11/2026 em vermelho')
     c.mark(5)
     c.hover(TXT_LINHA('Energia elétrica de outubro', 'Energia elétrica de outubro'), 0.6, at=c.A(5, 'energia', 0.6), label='a energia de outubro')
     c.hover(TXT_LINHA('Energia elétrica de outubro', 'Pendente'), 0.6, at=c.A(5, 'Pendente.', 0.6), label='status Pendente')
-    c.hover(TXT_LINHA('Aluguel do galpão de novembro', 'Aluguel do galpão de novembro'), 0.6, at=c.A(5, 'aluguel', 0.6), label='o aluguel do galpão')
+    c.ev(js_rola_linha('Aluguel do galpão de novembro', 380), at=c.A(5, 'Pendente.', -0.3), label='desce a tela até o aluguel do galpão')
+    c.hover(TXT_LINHA('Aluguel do galpão de novembro', 'Aluguel do galpão de novembro'), 0.6, at=c.A(5, 'aluguel', 0.3), label='o aluguel do galpão')
     c.hover(TXT_LINHA('Aluguel do galpão de novembro', 'Paga'), 0.8, at=c.A(5, 'Paga.', 0.6), label='status Paga e Quitada em 05/11/2026')
     c.mark(6)
+    c.ev(js_topo(700), at=c.L(6) - 0.9, label='sobe a tela até o topo')
     c.hover(NOVA, 1.4, at=c.A(6, 'este:', 0.6), label='botão Nova conta')
     c.fim()
     return c
