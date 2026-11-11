@@ -434,11 +434,23 @@ def rola_ate(c, esc, texto, at, label, y=200, dur_ms=700, prefixo=True):
     return c.ev(js_rola_ate(esc, texto, y, dur_ms, prefixo), at=at, label=label)
 
 
-def menu_linha(c, nome, item, at=None, label=None):
-    """menu "Ações de <nome>" da linha (HoverDropdownMenu: abre ao passar o mouse; clicar no gatilho fecharia o menu)"""
+def menu_linha(c, nome, item, at=None, label=None, rola=True):
+    """menu "Ações de <nome>" da linha (HoverDropdownMenu: abre ao passar o mouse; clicar no gatilho fecharia o menu). Antes, a lista
+    rola (eval, sem cursor) até a linha ficar no meio: com a linha na borda de baixo da lista o robô rolava a lista ao ir ao item,
+    o menu fechava e o clique não achava o item (cap03, 11/11)."""
+    if rola:
+        rola_ate(c, 'main [role=list]', nome, round(max(0.0, at - 0.6), 2) if at is not None else None, f'a lista mostra {nome} no meio',
+                 y=430, dur_ms=400, prefixo=False)
     c.hover(ACOES(nome), 0.5, at=at, label=label or f'menu ⋯ de {nome}', optional=False, timeout=8)
     c.hover(ACOES(nome), 0.4, label=f'menu ⋯ de {nome} de novo (só se não abriu)', unless=ITEM(item))
     return c.waitfor(target=ITEM(item), timeout=6)
+
+
+def item_menu(c, nome, item, at=None, label=None):
+    """clica no item do menu da linha: antes, um passar do mouse no "⋯" só se o item sumiu (o menu fecha 200 ms depois que o cursor
+    sai), e o clique sem rolar (T14)"""
+    c.hover(ACOES(nome), 0.2, label=f'menu ⋯ de {nome} (só se fechou)', unless=ITEM(item))
+    return c.click(ITEM(item), at=at, label=label or item, noScroll=True)
 
 
 def escolhe(c, combo, opcao, at_abre, at_opcao, label):
@@ -589,7 +601,7 @@ def cap03():
     c = cap_novo(3, setup=RH)
     c.mark(1)
     menu_linha(c, 'Gabriel Rocha', 'Editar', at=c.A(1, 'editando', 1.0), label='menu ⋯ do Gabriel')
-    c.click(ITEM('Editar'), at=c.A(1, 'cadastro,', 0.6), label='Editar')
+    item_menu(c, 'Gabriel Rocha', 'Editar', at=c.A(1, 'cadastro,', 0.6), label='Editar')
     c.waitfor(target=CAMPO('name'), timeout=10)
     c.click(DTAB('Remuneração'), at=c.A(1, 'Regime', 1.2), label='aba Remuneração')
     c.click(BDLG('CLT'), at=c.A(1, 'CLT.', 0.8), label='Regime de contratação: CLT')
@@ -636,7 +648,7 @@ def cap04():
     fechar_janela(c)
     c.mark(4)
     menu_linha(c, 'Edson Moura', 'Editar', at=c.A(4, 'Edson,', 1.0), label='menu ⋯ do Edson')
-    c.click(ITEM('Editar'), at=c.A(4, 'motorista,', 0.6), label='Editar o Edson')
+    item_menu(c, 'Edson Moura', 'Editar', at=c.A(4, 'motorista,', 0.6), label='Editar o Edson')
     c.waitfor(target=CAMPO('department'), timeout=10)
     escolhe(c, CAMPO('department'), 'Transporte', c.A(4, 'Departamento,', 0.9), c.A(4, 'Transporte', 0.6), 'Departamento: Transporte')
     c.click(BDLG('Atualizar'), at=c.A(4, 'atualizo.', 0.9), label='Atualizar')
@@ -814,7 +826,7 @@ def cap08():
     c = cap_novo(8, setup=RH)
     c.mark(1)
     menu_linha(c, 'Gabriel Rocha', 'Editar', at=c.A(1, 'cadastro,', 1.2), label='menu ⋯ do Gabriel')
-    c.click(ITEM('Editar'), at=c.A(1, 'aba', 0.7), label='Editar')
+    item_menu(c, 'Gabriel Rocha', 'Editar', at=c.A(1, 'aba', 0.7), label='Editar')
     c.waitfor(target=CAMPO('name'), timeout=10)
     c.click(DTAB('Ponto eletrônico'), at=c.A(1, 'Ponto', 0.9, nth=1), label='aba Ponto eletrônico')
     c.waitfor(target=CAMPO('ponto-enabled'), timeout=6)
@@ -827,7 +839,7 @@ def cap08():
     c.waitfor(gone={'role': 'dialog'}, timeout=8)
     c.mark(3)
     menu_linha(c, 'Gabriel Rocha', 'Copiar link do ponto', at=c.A(3, 'menu', 0.9), label='menu ⋯ do Gabriel')
-    c.click(ITEM('Copiar link do ponto'), at=c.A(3, 'Copiar', 0.6), label='Copiar link do ponto')
+    item_menu(c, 'Gabriel Rocha', 'Copiar link do ponto', at=c.A(3, 'Copiar', 0.6), label='Copiar link do ponto')
     c.waitfor(text='Link copiado', timeout=6)
     c.mark(4)
     c.cursor((1000, 140), at=c.A(4, 'Aí', 0.3), label='cursor descansa (ilustração do link no celular)')
@@ -1042,7 +1054,7 @@ def cap12():
     menu_linha(c, 'Rogério Batista', 'Arquivar', at=c.A(2, 'arquivar.', 1.0), label='menu ⋯ do Rogério')
     c.hover(ITEM('Arquivar'), 3.0, at=c.A(2, 'Assim', 0.5), label='Arquivar em destaque (sem clicar)', noScroll=True)
     c.mark(3)
-    c.click(ITEM('Arquivar'), at=c.A(3, 'Arquivar.', 0.6), label='Arquivar', noScroll=True)
+    item_menu(c, 'Rogério Batista', 'Arquivar', at=c.A(3, 'Arquivar.', 0.6), label='Arquivar')
     c.waitfor(text='Funcionário arquivado', timeout=8)
     c.waitfor(gone=LINHA('Rogério Batista'), timeout=8)
     c.mark(4)
@@ -1051,7 +1063,7 @@ def cap12():
     menu_linha(c, 'Rogério Batista', 'Reativar', at=c.A(4, 'voltar', 0.8), label='menu ⋯ do Rogério (Inativos)')
     c.hover(ITEM('Reativar'), 0.6, at=c.A(4, 'Reativar.', 0.6), label='Reativar (sem clicar)', noScroll=True)
     c.mark(5)
-    c.click(ITEM('Excluir definitivamente'), at=c.A(5, 'Excluir', 0.6), label='Excluir definitivamente', noScroll=True)
+    item_menu(c, 'Rogério Batista', 'Excluir definitivamente', at=c.A(5, 'Excluir', 0.6), label='Excluir definitivamente')
     c.waitfor(text='Atenção: esta ação é irreversível.', timeout=8)
     c.hover(TXTX('Atenção: esta ação é irreversível.', within='[role=alertdialog], [role=dialog]'), 2.0, at=c.A(5, 'histórico', 0.75),
             label='o texto do Excluir definitivamente (zoom)')
@@ -1070,7 +1082,7 @@ def cap13():
     c = cap_novo(13, setup=RH)
     c.mark(1)
     menu_linha(c, 'Gabriel Rocha', 'Editar', at=c.A(1, 'Gabriel', 1.0), label='menu ⋯ do Gabriel')
-    c.click(ITEM('Editar'), label='Editar o Gabriel')
+    item_menu(c, 'Gabriel Rocha', 'Editar', label='Editar o Gabriel')
     c.waitfor(target=CAMPO('name'), timeout=10)
     c.click(DTAB('Remuneração'), at=c.A(1, 'custo', 0.9), label='Remuneração: salário, custo mensal R$ 4.264,00 e CLT')
     c.hover(CAMPO('monthly_cost'), 0.8, label='Custo mensal total R$ 4.264,00')

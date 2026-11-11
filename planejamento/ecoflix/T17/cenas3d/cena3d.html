@@ -19,7 +19,7 @@
 </head><body>
 <script type="module">
 import { THREE, PI, eo, eio, pr, lerp, cl, rng, ri, pega, W, L, LE, el, ic, vis, ripple, pulse, posTitulo, titulo, chip, onda,
-  CENA, GL, camera, ancora, mundo, tela, M, grupo, poe, rbox, mancha, anel, destaque, cresce, pulso, domo, monte, chaoPatio, caminhao, anda,
+  CENA, GL, camera, ancora as ancoraK, mundo, tela, M, grupo, poe, rbox, mancha, anel, destaque, cresce, pulso, domo, monte, chaoPatio, caminhao, anda,
   peca, COR, PAL, cena } from '../../../../perfis/ecoflix/cenas3d/kit3d.js';
 import { folha } from '../../../../perfis/ecoflix/cenas3d/objetos/folha.js';
 import { motorista } from '../../../../perfis/ecoflix/cenas3d/objetos/motorista.js';
@@ -29,6 +29,16 @@ import { porticoEstado } from '../../../../perfis/ecoflix/cenas3d/objetos/portic
 import { pinoLocal } from '../../../../perfis/ecoflix/cenas3d/objetos/pinoLocal.js';
 import { galpao } from '../../../../perfis/ecoflix/cenas3d/objetos/galpao.js';
 import { cacambaEstacionaria } from '../../../../perfis/ecoflix/cenas3d/objetos/cacambaEstacionaria.js';
+
+
+// rótulo preso ao mundo, mantido dentro do quadro: nunca na faixa do título (topo >= 132 px), margem de 40 px; fora do quadro ele esmaece
+const TOPO = 132, _anc = ancoraK;
+function ancora(e, p, ax = .5, ay = 1, dx = 0, dy = 0) {
+  _anc(e, p, ax, ay, dx, dy); const w = e._w, h = e._h; let l = parseFloat(e.style.left), t = parseFloat(e.style.top);
+  t = Math.min(Math.max(t, TOPO), 760 - h); e.style.top = t.toFixed(1) + 'px';
+  const d = Math.max(40 - l, l + w - 1240, 0), f = Math.max(0, 1 - d / 40); const o = parseFloat(e.style.opacity || 1) * f; e.style.opacity = o.toFixed(4);
+  if (o > .5 && (l < 39 || l + w > 1241)) console.warn('FORA', e.textContent.slice(0, 30), l | 0, (l + w) | 0);
+}
 
 const CAPS = {};
 const nfSelo = (txt, sub) => el(`<div class="selo"><div class="tag v" style="font-size:19px;padding:7px 15px">${ic('file-text', 20)}${txt}</div>${sub ? `<div class="sub" style="font-size:15px;font-weight:700;color:#121212">${sub}</div>` : ''}</div>`);
@@ -54,7 +64,7 @@ CAPS[1] = () => {
   const EST = grupo(CENA, [-5.6, 0, 0]); estrada(EST, [8.5, 0, 0], { c: 17, l: 2.8 });
   const marco = x => { const m = grupo(CENA, [x, 0, -2.3]); poe(new THREE.CylinderGeometry(.06, .08, 1.1, 12), M('#9AA3AD'), m, [0, .55, 0]);
     poe(new THREE.SphereGeometry(.2, 18, 14), M(COR.verde), m, [0, 1.2, 0]); mancha(m, .8, .8, .25); return m; };
-  const mA = marco(-4.9), mE = marco(11.8);
+  const mA = marco(-4.9), mE = marco(10.4);
   const tit = titulo('Transporte', 'O documento da viagem');
   const s1 = nfSelo('NF-e', 'Alumínio perfil'), s2 = nfSelo('NF-e', 'Alumínio bloco');
   const sMD = el(`<div class="selo"><div class="tag v" style="font-size:25px;padding:8px 18px">${ic('file-text', 26)}MDF-e</div><div class="sub" style="font-size:16px;font-weight:700;color:#121212">documento da viagem</div></div>`);
@@ -66,7 +76,7 @@ CAPS[1] = () => {
   const tc = W(1, 'caminhao'), tal = W(1, 'aluminio'), tve = W(1, 'venda'), tn = W(1, 'nota'), tm = W(1, 'manifesto'),
         tmd = W(1, 'MDF-e'), tdo = W(1, 'documento'), tno = W(1, 'notas'), tca = W(1, 'caminhao', 2), tmo = W(1, 'motorista');
   const te = W(2, 'emitido'), tan = W(2, 'antes'), ts = W(2, 'sair'), ten = W(2, 'encerrado'), tvi = W(2, 'viagem'), tt = W(2, 'termina');
-  const j0 = W(1, 'Imagina') - .3, fim = tt + .15, sai = ts - .05, XF = 6.3, jun = L(2) - .5;
+  const j0 = W(1, 'Imagina') - .3, fim = tt + .15, sai = ts - .05, XF = 5.6, jun = L(2) - .5;
   camera([[0, { x: -.2, y: 1.3, z: 0, d: 16.3, az: .12, el: .33, oy: -100 }], [tca + .4, { x: -.2, y: 1.3, z: 0, d: 16.3, az: .12, el: .33, oy: -100 }, 'lin'],
     [te + 1.0, { x: 3.6, y: 1.2, z: 0, d: 24.6, az: .1, el: .35, oy: -40 }, 'eio'], [fim + 3, { x: 3.5, y: 1.2, z: 0, d: 24.3, az: .1, el: .35, oy: -40 }, 'lin']]);
   return t => {

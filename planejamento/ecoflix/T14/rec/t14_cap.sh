@@ -17,7 +17,7 @@ bash rec/fila.sh --prio 14 -- bash -c '
   nn=$1; modo=$2
   if [ "$modo" != "--so-completo" ]; then
     timeout 600 node rec/record.mjs rec/t14/_ens/cap$nn.json --rapido --preset ultrafast --crf 30 > rec/t14/.ens-$nn.out 2>&1
-    rm -f rec/t14/_ens/t14-cap$nn.mp4 rec/t14/_ens/t14-cap$nn.contact.jpg
+    rm -f rec/t14/_ens/t14-cap$nn.mp4
     r=$(python3 -I rec/t14/resumo.py $nn --ens 2>&1 | head -1); echo "RAPIDO $r"
     echo "$r" | grep -q "falhos 0," && ! grep -q "SEM ALVO" rec/t14/.ens-$nn.out || { echo "cap$nn: rápido com falha, sem gravação"; exit 0; }
     python3 -I rec/t14/prever.py $nn --ens 2>&1 | grep -iE "máx|max|prev" | tail -2

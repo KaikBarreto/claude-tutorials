@@ -470,7 +470,8 @@ def cap04():
     c.type(SEL('#description'), 'Combustível da picape', at=c.A(3, 'combustível', 0.05), noClick=True, label='digita Combustível da picape')
     c.click(SEL('#amount'), at=c.A(3, 'Valor', 0.6), label='Valor')
     c.type(SEL('#amount'), '350,00', at=c.A(3, 'trezentos', 0.4), noClick=True, clear=True, label='digita 350,00 (ZOOM Valor)')
-    c.click(SEL('[role=dialog] button[role=combobox]', hasText='Selecione uma categoria'), at=c.A(3, 'Categoria', 0.6), label='Categoria')
+    # a janela já abre com a 1ª categoria de sistema escolhida (NewBankTransactionModal.tsx:207-213): o gatilho mostra um nome, não o "Selecione"
+    c.click(SEL('[role=dialog] div.space-y-2:has(> label:has-text("Categoria")) button[role=combobox]'), at=c.A(3, 'Categoria', 0.6), label='Categoria')
     c.click(OPT('Combustível', exact=True), at=c.A(3, 'Combustível', 0.5, nth=1), label='Combustível')
     c.click(SEL('#cost-center'), at=c.A(3, 'centro', 0.6), label='Centro de custo')
     c.click(OPT('Frota', exact=True), at=c.A(3, 'Frota', 0.5), label='Frota')

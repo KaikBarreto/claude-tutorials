@@ -17,13 +17,23 @@
 </head><body>
 <script type="module">
 import { THREE, PI, eo, eio, pr, lerp, cl, ri, pega, W, L, LE, el, ic, vis, pulse, posTitulo, titulo, selo, chip,
-  CENA, GL, camera, ancora, mundo, tela, M, grupo, poe, rbox, mancha, anel, destaque, cresce, domo, monte, peca, fardo, prensa, palete, chaoPatio, caminhao, anda, baterias,
+  CENA, GL, camera, ancora as ancoraK, mundo, tela, M, grupo, poe, rbox, mancha, anel, destaque, cresce, domo, monte, peca, fardo, prensa, palete, chaoPatio, caminhao, anda, baterias,
   COR, PAL, cena } from '../../../../perfis/ecoflix/cenas3d/kit3d.js';
 import { folha } from '../../../../perfis/ecoflix/cenas3d/objetos/folha.js';
 import { motorista } from '../../../../perfis/ecoflix/cenas3d/objetos/motorista.js';
 import { fio } from '../../../../perfis/ecoflix/cenas3d/objetos/fio.js';
 import { estrada } from '../../../../perfis/ecoflix/cenas3d/objetos/estrada.js';
 import { galpao } from '../../../../perfis/ecoflix/cenas3d/objetos/galpao.js';
+
+
+// rótulo preso ao mundo, mantido dentro do quadro: nunca na faixa do título (topo >= 132 px), margem de 40 px; fora do quadro ele esmaece
+const TOPO = 132, _anc = ancoraK;
+function ancora(e, p, ax = .5, ay = 1, dx = 0, dy = 0) {
+  _anc(e, p, ax, ay, dx, dy); const w = e._w, h = e._h; let l = parseFloat(e.style.left), t = parseFloat(e.style.top);
+  t = Math.min(Math.max(t, TOPO), 760 - h); e.style.top = t.toFixed(1) + 'px';
+  const d = Math.max(40 - l, l + w - 1240, 0), f = Math.max(0, 1 - d / 40); const o = parseFloat(e.style.opacity || 1) * f; e.style.opacity = o.toFixed(4);
+  if (o > .5 && (l < 39 || l + w > 1241)) console.warn('FORA', e.textContent.slice(0, 30), l | 0, (l + w) | 0);
+}
 
 const CAPS = {};
 const TRES_QUARTOS = { cor: COR.ambar, c: 5.2, l: 2.1, R: .42, eixos: 2, cc: 1.7, hc: 1.55, bau: 'grade', carga: 'bateria' };   // 3/4 da Auto Peças (T08)
@@ -111,17 +121,17 @@ CAPS[5] = () => {
   return t => {
     GL.style.opacity = eo(pr(t, tp - .4, .5)).toFixed(3);
     posTitulo(tit, t, at - .6, tp - .2);
-    const ent = eio(pr(t, tmo - .5, 1.1)), x = lerp(-13, XT, ent); anda(T, x); T.visible = t > tmo - .55;
+    const x = XT; anda(T, x); T.visible = t > tp - .5;
     // a folha aparece na palavra, grande, ao lado, e vai para a mão do motorista
     const dp = [x + 4.2, 0, 1.3]; D.position.set(dp[0], 0, dp[2]); D.rotation.y = -.15; const qe = eo(pr(t, tmo - .1, .5)); D.visible = qe > 0; D.scale.setScalar(Math.max(1e-3, qe));
     D.updateMatrixWorld(true); const mao = mundo(D.userData.mao, [0, .02, .22]);
-    const A = [-.2, 3.4, 1.6], qq = eio(pr(t, tmo - .1, .9)), ph = arco(A, [mao[0] - .1, mao[1] + .15, mao[2] + .05], qq, 1.3);
+    const A = [-1.8, 2.3, 3.4], qq = eio(pr(t, tmo - .1, .9)), ph = arco(A, [mao[0] - .1, mao[1] + .15, mao[2] + .05], qq, 1.3);
     const qf = eo(pr(t, tp - .2, .5)), sc = lerp(1.35, .55, qq);
     F.position.set(...ph); F.visible = qf > 0; F.scale.setScalar(Math.max(1e-3, qf * sc)); F.rotation.y = lerp(.1, -.1, qq);
     vis(tF, t, tp - .15, 1e9, { dy: 8 }); ancora(tF, [ph[0], ph[1] + .62 * sc * 1.3, ph[2]], .5, 1, 0, -2);
     vis(cM, t, tmo - .05, 1e9, { dy: 8 }); ancora(cM, [dp[0], 2.1, dp[2]], .5, 1);
     vis(pl, t, tca - .15, 1e9, { dy: 8 }); ancora(pl, [x + 2.3, 2.95, 0], .5, 1);
-    cresce(cg, t, tmo - .5, .2, 0); const pp = pr(t, tca, .8); cg.scale.setScalar(1 + .04 * Math.sin(PI * pp));
+    cresce(cg, t, tp - .6, .2, 0); const pp = pr(t, tca, .8); cg.scale.setScalar(1 + .04 * Math.sin(PI * pp));
   };
 };
 

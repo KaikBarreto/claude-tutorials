@@ -618,8 +618,8 @@ Decisões:
 ## Retomar quando a fila andar (robôs parados à espera da vez)
 | Aula | Agente | O que falta | Comando |
 |---|---|---|---|
-| T20 | afdb1a0ff5d8d10fb | rápido cap03-cap10 e cap00/cap01 com MP4; completo dos caps 4-8 | `bash rec/t20/t20_fila.sh --rapido 3 4 5 6 7 8 9 10 0 1` |
-| T18 | a82b96199a5d77ce9 | rápido de 03, 04 (seletores corrigidos), 05, 06 (selo da cota) e os estritos com folha de 00-10; `prever.py`; derrubar a 54318 | `bash /home/claude/ecoflix/rec/t18/t18_lote.sh 04:r 03:r 05:s 06:r 00:s 01:s 02:s 07:s 08:s 09:s 10:s` |
+| T20 | afdb1a0ff5d8d10fb | rápido cap03-cap10 e cap00/cap01 com MP4; completo dos caps 4-8 | `bash rec/t20/t20_fila.sh --rapido 3 4 5 6 7 8 9 10 0 1` · **retomado 11/11 23:1x** (agente) |
+| T18 | a82b96199a5d77ce9 | rápido de 03, 04 (seletores corrigidos), 05, 06 (selo da cota) e os estritos com folha de 00-10; `prever.py`; derrubar a 54318 | `bash /home/claude/ecoflix/rec/t18/t18_lote.sh 04:r 03:r 05:s 06:r 00:s 01:s 02:s 07:s 08:s 09:s 10:s` · **rodando desde 11/11 21:4x** (cap04 feito às 23:0x); no fim, conferir o log e retomar o agente para o `prever.py` e o relatório |
 - 11/11 20:2x **Unificação do kit 2D lançada** (vaga aberta pelo robô da T20): `pulse()` sem deslocar elemento posicionado
   por `transform` e com pulsos que se somam; classe de grupo do kit com nome único (a "g" colidia, círculo gigante no tema
   do Cato); `descarrega` sem as peças 16 px abaixo do chão; exemplo "Tara e peso líquido" do kit sem chamar o caminhão vazio
@@ -675,3 +675,22 @@ Decisões:
   na 2D). Objetos novos: `pessoa`, `registradora`, `cedula`, `portao`, `guiche`, `baia`, `banco`. **Vigia do render**: com
   a máquina cheia, um quadro 3D em SCHED_IDLE passou de 90 s sem estar travado; o padrão agora é 600 s (90 s com
   `RENDER_PRIORIDADE=normal`). Cenas de Windows da T05: 1 de 8 trechos da prévia renderizado (fila prio 05).
+- 11/11 23:0x **T17 e T18 em 3D prontas e mandadas ao Kaik** (fecham as prévias 3D de todas as aulas). T17: ilu01_manifesto
+  (MDF-e com as NF-e da carga; "Autorizado antes de sair", "Encerrado no fim da viagem"), ilu03_percurso (estrada com
+  pórticos SP/RJ/MG, sem contorno de mapa; origem Tatuí, destino Itamonte), ilu06_servico (mercadoria × serviço). T18:
+  ilu01_cadeia (gerador → transportador → destinador, MTR e CDF), ilu05_pdf_motorista (3/4 GHT7B19 com chaparia),
+  ilu07_cargas_outubro (três 3/4 com baterias em 06/10, 16/10 e 27/10 e um CDF). Objetos novos: `folha`, `galpao`,
+  `cacambaEstacionaria`, `motorista`, `estrada`, `porticoEstado`, `pinoLocal`, `fio` (a chaparia usa o tipo `ferro` misto
+  do kit). **Na conferência, três ajustes pedidos ao agente** (refaz só esses trechos da prévia): na T17 o selo
+  "Encerrado" sai metade na borda direita e o "Carregamento (Origem)" fica cortado na esquerda; na T18 os selos MTR/PDF da
+  folha ficam em cima do título (e o quadro só tem a folha). Mandei as prévias ao Kaik já avisando dos ajustes.
+- 11/11 23:0x **Kaik: "temos algum do ecotray já?"** Respondido: nenhuma aula tem voz ainda; da T05 existem as cenas 3D
+  (16:17), as 8 cenas de Windows conferidas (folha de quadros + a cena 1 em vídeo mandadas agora; o ponto vermelho é a mira
+  do cursor, a página do navegador ainda provisória) e o robô no ensaio (cap00 passou; 01-11 na fila). **Prévia das cenas
+  de Windows numa vez só da fila**: a `previa.sh` mandava uma cena por vez, e cada cena voltava para o fim da fila (~1 h de
+  espera por cena, ~7 h para as 7); parei e juntei as 7 numa tarefa (`fila.sh --prio 00`, o lugar que a senha da T05 já
+  tinha; ~12 min de trava). Log `/home/claude/ecoflix/t05/windows/previa_resto.log`; o agente das cenas de Windows monta o
+  `T05_windows.mp4` quando o "fim" aparecer.
+- 11/11 23:1x **Robô da T20 retomado** (a fila com envelhecimento não deixa aula parada: não há "vez da prioridade 20").
+  Robôs que encerraram a vez com o lote ainda na fila (T01, T02, T03, T05, T07, T08, T09, T10, T11, T13, T14, T17, T19,
+  T26) seguem vivos: voltam sozinhos quando o lote ou o Monitor deles avisa.
