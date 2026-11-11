@@ -783,10 +783,15 @@ def cap07():
     c.confere_campos(['44,2'], 'Valor/kg 44,20', escopo='main')
     c.click({'placeholder': 'Escreva o nome ou código do material'}, w=(10, 'vinte.', None, -0.1), label='campo do material de novo')
     c.type({'placeholder': 'Escreva o nome ou código do material'}, 'bronze', w=(11, 'Já', None, 0.3), clicar=False, clear=True, cps=30, label='troca para bronze')
-    c.click(OPT('Bronze', exact=False), w=(11, 'bronze,', None, 0.3), label='Bronze')
-    # o aviso vive 2 s: o cursor vai direto a ele, por coordenada (sem esperar a página), e fica em cima (o sonner pausa) até "aplicado."
+    c.hover(OPT('Bronze', exact=False), 0.4, w=(11, 'bronze,', None, 0.55), label='Bronze na lista')
+    # o aviso vive 2 s, e o clique de verdade só devolve depois que a página trata a escolha: nos completos de 11/11 (16:40 e 19:40) o
+    # aviso sumiu antes de o cursor chegar. O cursor desce antes ao lugar do aviso e a escolha sai por JS (o item do cmdk aceita
+    # .click()): o aviso sobe embaixo do cursor, um passo curto do mouse em cima dele e o sonner segura o aviso até "aplicado."
     ini = round(c.W(11, 'bronze,') + 1.0, 2)
-    c.rolar(0, ponto=(990, 748), duration=0.3, after=0, label='cursor no lugar do aviso (embaixo à direita)')
+    c.rolar(0, ponto=(990, 748), duration=0.35, after=0, label='cursor no lugar do aviso (embaixo à direita)')
+    c.ev("(()=>{const o=[...document.querySelectorAll('[role=option]')].filter(e=>e.offsetParent!==null&&e.innerText.includes('Bronze'))[0];"
+         "if(!o)return 'SEM ALVO: opção Bronze';o.click();return 'ok'})()", label='escolhe Bronze (clique por JS, com o cursor já no lugar do aviso)')
+    c.rolar(0, ponto=(1000, 752), duration=0.12, after=0, label='o mouse mexe em cima do aviso (o sonner pausa)')
     c.hover({'text': 'Preço especial aplicado para Bronze'}, round(c.W(11, 'aplicado.') + 0.6 - ini - 0.55, 2), timeout=6,
             label='aviso Preço especial aplicado (o mouse segura o aviso) (zoom: Valor/kg 30,50 com o aviso)')
     c.confere('body', ['Preço especial aplicado para Bronze'], 'aviso Preço especial aplicado para Bronze')

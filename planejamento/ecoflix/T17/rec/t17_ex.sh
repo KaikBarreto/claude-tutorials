@@ -13,5 +13,5 @@ export FAKE_URL=http://127.0.0.1:$PORT FAKE_NOW=$FN TUT_USER=rafael@reciclavalem
 [ -n "${TUT_SENHA:-}" ] || export TUT_SENHA="$(head -c 12 /dev/urandom | base64)"
 mkdir -p rec/t17/_ex/$1
 echo "ex $1 $(date +%H:%M:%S) espera a trava"
-flock .heavy.lock node rec/t17/explorar.mjs rec/t17/_ex/$1.json --out rec/t17/_ex/$1 > rec/t17/_ex/$1.log 2>&1
+bash rec/fila.sh --prio 17 -- bash -c "node rec/t17/explorar.mjs rec/t17/_ex/$1.json --out rec/t17/_ex/$1 > rec/t17/_ex/$1.log 2>&1"
 echo "fim ex $1 $(date +%H:%M:%S) exit $?"

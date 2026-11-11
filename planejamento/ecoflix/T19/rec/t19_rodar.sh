@@ -4,7 +4,9 @@
 # prever.py depois do rápido e, com --seed, grava a semente apos-capNN (só de uma gravação que chegou ao fim: record exit 0).
 # MP4 e folha de contato vão para /dev/shm/t19 (apagar depois de olhar); actions/telemetry ficam em rec/t19 (o prever.py usa).
 #   bash rec/t19/t19_rodar.sh NN [--ens] [--final] [--seed] [--quadros "t1 t2 ..."]     (sem --ens/--final: só --ens)
-#   FLOCK_W=<s>: desiste da fila da trava depois de <s> segundos (saída 5), para o lote não morrer no meio de uma gravação.
+#   Pela fila justa da trava (rec/fila.sh --prio 19, um capítulo por vez). PRAZO_FIM=<epoch>: se a vez chegar a menos de 12 min do
+#   prazo do lote, não grava (saída 5), para o lote em segundo plano não morrer no meio de uma gravação.
+#   MP4 de ensaio (rápido e completo) com --preset ultrafast --crf 30: só para a folha de contato.
 # Instância: FAKE_PORT 54319 (só desta aula), FAKE_NOW 2026-11-10T08:30:00-03:00. Precisa de TUT_USER e TUT_SENHA no ambiente.
 set -uo pipefail
 TUT_HOME="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
@@ -31,15 +33,17 @@ fi
 python3 -I rec/t19/gerar.py "$NN" | tail -2
 [[ $ENS == 1 ]] && python3 -I rec/t19/ensaio.py "$NN"
 mkdir -p /dev/shm/t19
-export NN ENS FIN SEED QUADROS
-flock ${FLOCK_W:+-w "$FLOCK_W"} .heavy.lock bash -c '
+export NN ENS FIN SEED QUADROS PRAZO_FIM="${PRAZO_FIM:-0}"
+bash /home/claude/ecoflix/rec/fila.sh --prio 19 -- bash -c '
   set -uo pipefail
+  if (( PRAZO_FIM > 0 && $(date +%s) > PRAZO_FIM - 720 )); then echo "PRAZO: a vez chegou tarde, não gravei" > rec/t19/.cap$NN.prazo; exit 5; fi
+  rm -f rec/t19/.cap$NN.prazo
   falhos() { python3 -c "import json,sys;a=json.load(open(sys.argv[1]));print(sum(1 for x in a[\"actions\"] if x.get(\"error\") or x.get(\"ok\") is False))" "$1" 2>/dev/null || echo X; }
   semalvo() { grep -v SEMENTE "$1" | grep -c "SEM ALVO" || true; }
   boa=""
   if [[ $ENS == 1 ]]; then
     L=rec/t19/.cap$NN.ens.out
-    timeout 900 node rec/record.mjs rec/t19/_ens/cap$NN.json --rapido > "$L" 2>&1; echo "record exit $?" >> "$L"
+    timeout 900 node rec/record.mjs rec/t19/_ens/cap$NN.json --rapido --preset ultrafast --crf 30 > "$L" 2>&1; echo "record exit $?" >> "$L"
     grep -q "^record exit 0$" "$L" && boa=ens   # a semente só precisa do capítulo inteiro (passo opcional falho não muda o banco)
     python3 -I rec/t19/prever.py "$NN" --ens > rec/t19/.cap$NN.prever.out 2>&1
   fi
@@ -48,7 +52,7 @@ flock ${FLOCK_W:+-w "$FLOCK_W"} .heavy.lock bash -c '
   elif [[ $FIN == 1 ]]; then
     boa=""   # a semente sai do estado da ÚLTIMA gravação
     L=rec/t19/.cap$NN.final.out
-    timeout 900 node rec/record.mjs rec/t19/cap$NN.json > "$L" 2>&1; echo "record exit $?" >> "$L"
+    timeout 900 node rec/record.mjs rec/t19/cap$NN.json --preset ultrafast --crf 30 > "$L" 2>&1; echo "record exit $?" >> "$L"
     grep -q "^record exit 0$" "$L" && boa=final
     if [[ -n "$QUADROS" && -f rec/t19/t19-cap$NN.mp4 ]]; then
       mkdir -p /dev/shm/t19/q$NN
@@ -62,7 +66,7 @@ flock ${FLOCK_W:+-w "$FLOCK_W"} .heavy.lock bash -c '
   exit 0
 '
 RC=$?
-[[ $RC == 1 && -n "${FLOCK_W:-}" ]] && { echo "TRAVA: desisti da fila depois de ${FLOCK_W}s"; exit 5; }
+[[ -f rec/t19/.cap$NN.prazo ]] && { cat rec/t19/.cap$NN.prazo; exit 5; }
 for T in ens final; do
   D=rec/t19; [[ $T == ens ]] && D=rec/t19/_ens
   [[ -f "$D/t19-cap$NN.mp4" ]] && mv -f "$D/t19-cap$NN.mp4" "/dev/shm/t19/t19-cap$NN.$T.mp4"

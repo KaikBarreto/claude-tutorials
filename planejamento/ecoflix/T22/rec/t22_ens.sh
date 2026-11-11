@@ -9,7 +9,8 @@
 #                do lote antigo rec/t22/_ens/rN.log com rc=0): o ticket reserva vira só uma passagem de 0,1 s pela trava
 # Nos dois modos os quadros ficam (--keep-frames) e, FORA da trava, o t22_quadros.py monta o "storyboard" (um quadro depois de cada passo
 # com rótulo) em /dev/shm/t22rec/t22-capNN.quadros-K.jpg; a pasta dos quadros é apagada logo depois (olhar e apagar as folhas).
-# Vários capítulos podem esperar a trava ao mesmo tempo (cada um com a sua): cada gravação zera e semeia a minha instância (porta 54322,
+# A trava pesada é pega pela fila justa (bash rec/fila.sh --prio 22; regra de 11/11: no máximo UMA tarefa minha na fila, uma de cada
+# vez: rec/t22/t22_lote.sh); o MP4 de ensaio sai com --preset ultrafast --crf 30 (só para a folha). Cada gravação zera e semeia a minha instância (porta 54322,
 # FAKE_NOW 2026-11-10 08:30). Por isso este script NÃO religa a instância: se ela não for a minha, para (religar é à mão, sem gravação
 # minha em curso). O roteiro é gerado de novo DENTRO da trava (gerar.py, ~0,1 s), para a fila nunca gravar um roteiro velho.
 # (Trocar este arquivo só por cópia + mv: um bash na fila lê o script aos pedaços.)
@@ -32,11 +33,11 @@ QD=/dev/shm/t22rec/_frames_cap$NN
 mkdir -p rec/t22/_ens rec/t22/_estado /dev/shm/t22rec
 if [ "$MODO" = rapido ]; then
   PREP="python3 -I rec/t22/gerar.py $N > /dev/null && python3 -I rec/t22/ensaio.py $N > /dev/null"
-  REC="node rec/record.mjs rec/t22/_ens/cap$NN.json --out $TMP --name t22-cap$NN --keep-frames"
+  REC="node rec/record.mjs rec/t22/_ens/cap$NN.json --out $TMP --name t22-cap$NN --keep-frames --preset ultrafast --crf 30"
   DEST=rec/t22/_ens; LOG=rec/t22/_ens/.cap$NN.out; QARG=--ens
 else
   PREP="python3 -I rec/t22/gerar.py $N > /dev/null"
-  REC="node rec/record.mjs rec/t22/cap$NN.json --out $TMP --name t22-cap$NN --keep-frames"
+  REC="node rec/record.mjs rec/t22/cap$NN.json --out $TMP --name t22-cap$NN --keep-frames --preset ultrafast --crf 30"
   DEST=rec/t22; LOG=rec/t22/.cap$NN.out; QARG=""
 fi
 # as sementes de partida do capítulo têm de existir (o cap10 parte do apos-cap09, o cap11 do apos-cap10): sem elas, sai na hora (FALTA-SEMENTE)
@@ -50,7 +51,7 @@ if [ -n "$ESTADO" ]; then
   CMD="$CMD if [ \$rc = 0 ]; then python3 -I rec/t22/t22_estado.py $N > rec/t22/_estado/cap$NN.log 2>&1 || echo ESTADO-FALHOU; fi;"
 fi
 CMD="$CMD exit \$rc"
-flock .heavy.lock nice -n 5 bash -c "$CMD" > "$LOG" 2>&1
+bash rec/fila.sh --prio 22 -- nice -n 5 bash -c "$CMD" > "$LOG" 2>&1   # a fila justa da trava pesada (rec/fila.sh, prioridade 22)
 RC=$?
 if grep -q '^JA-FEITO' "$LOG" 2>/dev/null; then echo "=== cap$NN ($MODO) JA-FEITO $(date +%H:%M)"; exit 0; fi
 if grep -q '^FALTA-SEMENTE' "$LOG" 2>/dev/null; then echo "FALTA-SEMENTE: $(grep -m1 '^FALTA-SEMENTE' "$LOG") $(date +%H:%M)"; exit 3; fi

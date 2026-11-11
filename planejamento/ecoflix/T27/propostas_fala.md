@@ -19,5 +19,8 @@ número da linha do capítulo (1 = primeira linha da tabela Tela × Fala).
 3. **"Ver comprovante" no computador abre o PDF numa janela nova** (`pages/Orders.tsx:1146-1157`, `utils/openPdfInTab.ts`): o
    vídeo grava uma aba só. O robô guarda o PDF que o app gerou (`rec/t27/t27-cap05.comprovante.pdf`) e a edição o mostra como
    ilustração no cap05 L3 (o logo em cima, o fim sem o rodapé do EcoSistema).
-4. **A cor aplicada demora a aparecer:** depois do "Salvar Personalizações", o aviso sai na hora, mas o azul só entra quando a
+4. **Aviso no console ao digitar a cor:** o campo de texto da "Cor Primária" repassa cada pedaço digitado ("#", "#1"... "#1F5FA")
+   ao `<input type=color>` (`components/CompanySettings.tsx:1176-1189`) e o Chromium avisa "The specified value ... does not conform
+   to the required format" a cada tecla. Só console, nada na tela (entrou no `ruidoConsole` do `mundo.json`).
+5. **A cor aplicada demora a aparecer:** depois do "Salvar Personalizações", o aviso sai na hora, mas o azul só entra quando a
    consulta do White Label volta (`invalidateAllCompanyQueries`); medido no ensaio (ver relatório).

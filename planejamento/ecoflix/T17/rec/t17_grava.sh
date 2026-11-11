@@ -29,14 +29,14 @@ export FAKE_URL=http://127.0.0.1:$PORT FAKE_NOW=$FN TUT_USER=rafael@reciclavalem
 echo "cap$NN FAKE_NOW=$FN $(date +%H:%M:%S) $MODO"
 if [ "$MODO" = "--rapido" ]; then
   python3 -I rec/t17/ensaio.py "$NN" || exit 2
-  ROT="rec/t17/_ens/cap$NN.json"; OUT="rec/t17/_ens/.cap$NN.out"; EXTRA="--rapido --no-encode"
+  ROT="rec/t17/_ens/cap$NN.json"; OUT="rec/t17/_ens/.cap$NN.out"; EXTRA="--rapido --preset ultrafast --crf 30"
 else
   ROT="rec/t17/cap$NN.json"; OUT="rec/t17/.cap$NN.out"; EXTRA=""
 fi
 if [ -n "$SEED" ]; then
-  flock .heavy.lock bash -c "node rec/record.mjs $ROT $EXTRA > $OUT 2>&1; r=\$?; python3 -I rec/t17/t17_semente.py $SEED >> $OUT 2>&1; exit \$r"
+  bash rec/fila.sh --prio 17 -- bash -c "node rec/record.mjs $ROT $EXTRA > $OUT 2>&1; r=\$?; python3 -I rec/t17/t17_semente.py $SEED >> $OUT 2>&1; exit \$r"
 else
-  flock .heavy.lock node rec/record.mjs $ROT $EXTRA > "$OUT" 2>&1
+  bash rec/fila.sh --prio 17 -- bash -c "node rec/record.mjs $ROT $EXTRA > $OUT 2>&1"
 fi
 RC=$?
 echo "fim cap$NN $(date +%H:%M:%S) exit $RC"; grep -c "SEM ALVO" "$OUT" | sed 's/^/SEM ALVO: /'; tail -3 "$OUT"

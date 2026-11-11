@@ -1,18 +1,20 @@
 #!/bin/bash
-# T17 · fila de ensaios/gravações (um capítulo por trava, na ordem dada). Itens: NN:r (ensaio rápido) ou NN:c (gravação completa),
-# com :apos-capNN no fim para gravar a semente cumulativa logo depois (dentro da mesma trava).
-# Uso: bash rec/t17/t17_fila.sh 00:r 01:r 02:r:apos-cap02 ...   (rodar FORA de outro flock; em segundo plano com timeout de 2 h)
-# Para nunca ser morto no meio de uma gravação pelo prazo do segundo plano, a espera da trava tem limite (flock -w): passou de
-# ~1 h 50 min, o item não começa e a fila sai com "PARADA" (relançar com os itens que faltam).
+# T17 · ensaios/gravações em sequência, um capítulo por vez na fila justa da trava pesada (rec/fila.sh --prio 17: só UMA tarefa do T17
+# na fila de cada vez). Itens: NN:r (ensaio rápido, MP4 ultrafast/crf 30 para a folha de contato) ou NN:c (gravação completa), com
+# :apos-capNN no fim para gravar a semente cumulativa logo depois (dentro da mesma vez na trava, só se a gravação saiu sem falha).
+# Uso: bash rec/t17/t17_fila.sh 00:r 01:r 02:r:apos-cap02 ...   (rodar FORA de outro flock; em segundo plano com prazo de 2 h)
+# Prazo: o comando de cada item confere a hora ao ganhar a vez; passou de INICIO + 6300 s, não grava (sai 99) e a fila para com
+# "PARADA" (relançar com os itens que faltam). Assim o prazo de 2 h do segundo plano nunca mata uma gravação no meio.
 set -u
 cd /home/claude/ecoflix
 PORT=54317
 PIDF=rec/.runtime/fake$PORT.pid
-INICIO=$(date +%s)
+LIMITE=$(( $(date +%s) + 6300 ))
 LOG=rec/t17/fila.log
 for item in "$@"; do
   IFS=: read -r NN MODO SEED <<< "$item"
   NN=$(printf '%02d' "$((10#$NN))")
+  if [ "$(date +%s)" -ge "$LIMITE" ]; then echo "PARADA antes de cap$NN:$MODO (prazo)" | tee -a $LOG; exit 4; fi
   FN=$(python3 -I -c "import json,sys;print(json.load(open('rec/t17/fake_now.json'))[sys.argv[1]])" "$NN") || exit 2
   PID=$(cat "$PIDF" 2>/dev/null || true)
   ATUAL=$(tr '\0' '\n' < /proc/$PID/environ 2>/dev/null | grep '^FAKE_NOW=' | cut -d= -f2-)
@@ -28,22 +30,18 @@ for item in "$@"; do
   [ -n "${TUT_SENHA:-}" ] || export TUT_SENHA="$(head -c 12 /dev/urandom | base64)"
   if [ "$MODO" = "r" ]; then
     python3 -I rec/t17/ensaio.py "$NN" > /dev/null || exit 2
-    # processo de 11/11 18:46: o rápido monta o MP4 (folha de contato) e o completo só onde a regra pede (_BRIEF_ROBO.md, item 3)
-    ROT="rec/t17/_ens/cap$NN.json"; OUT="rec/t17/_ens/.cap$NN.out"; EXTRA="--rapido"
+    ROT="rec/t17/_ens/cap$NN.json"; OUT="rec/t17/_ens/.cap$NN.out"; EXTRA="--rapido --preset ultrafast --crf 30"
   else
     ROT="rec/t17/cap$NN.json"; OUT="rec/t17/.cap$NN.out"; EXTRA=""
   fi
-  RESTA=$(( 6600 - ($(date +%s) - INICIO) ))
-  if [ "$RESTA" -lt 300 ]; then echo "PARADA antes de cap$NN:$MODO (prazo)" | tee -a $LOG; exit 4; fi
-  echo "cap$NN:$MODO espera a trava $(date +%H:%M:%S) (limite ${RESTA}s)" | tee -a $LOG
-  : > "$OUT"
-  if [ -n "${SEED:-}" ]; then
-    flock -w "$RESTA" .heavy.lock bash -c "node rec/record.mjs $ROT $EXTRA > $OUT 2>&1; r=\$?; if [ \$r -eq 0 ]; then python3 -I rec/t17/t17_semente.py $SEED >> $OUT 2>&1; else echo 'semente NAO gravada (gravacao com falha)' >> $OUT; fi; exit \$r"
-  else
-    flock -w "$RESTA" .heavy.lock bash -c "node rec/record.mjs $ROT $EXTRA > $OUT 2>&1"
-  fi
+  SEMENTE=":"
+  [ -n "${SEED:-}" ] && SEMENTE="python3 -I rec/t17/t17_semente.py $SEED >> $OUT 2>&1"
+  echo "cap$NN:$MODO entra na fila $(date +%H:%M:%S)" | tee -a $LOG
+  bash rec/fila.sh --prio 17 -- bash -c "if [ \$(date +%s) -ge $LIMITE ]; then echo PRAZO > $OUT; exit 99; fi
+    node rec/record.mjs $ROT $EXTRA > $OUT 2>&1; r=\$?
+    if [ \$r -eq 0 ]; then $SEMENTE; else echo 'semente NAO gravada (gravacao com falha)' >> $OUT; fi; exit \$r"
   RC=$?
-  if [ ! -s "$OUT" ]; then echo "PARADA: trava não veio a tempo para cap$NN:$MODO" | tee -a $LOG; exit 4; fi
-  echo "fim cap$NN:$MODO $(date +%H:%M:%S) exit $RC; SEM ALVO $(grep -c 'SEM ALVO' "$OUT"); $(grep -E 'falhos|passos,' "$OUT" | tail -1 | cut -c1-120)" | tee -a $LOG
+  if [ "$RC" = "99" ]; then echo "PARADA: a vez de cap$NN:$MODO veio depois do prazo" | tee -a $LOG; exit 4; fi
+  echo "fim cap$NN:$MODO $(date +%H:%M:%S) exit $RC; SEM ALVO $(grep -c 'SEM ALVO' "$OUT")" | tee -a $LOG
 done
 echo "fila concluída $(date +%H:%M:%S)" | tee -a $LOG
