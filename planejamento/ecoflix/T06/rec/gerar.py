@@ -433,8 +433,9 @@ def cap00():
     # 1o clique do capítulo: o cursor vem do meio da tela até o menu (~1,3 s até o clique, ensaio de 11/11)
     c.click(FIN, at=c.A(4, 'Financeiro', 1.3), label='menu Financeiro')
     c.click(LINK('Caixa'), at=c.A(4, 'Caixa', 1.0), label='menu Caixa')
-    c.waitfor(text='Gestão financeira e movimentações', timeout=15)
     c.mark(5)
+    c.flush(1e9)          # a marca L5 sai antes da espera da página (o /caixa leva ~2 s para carregar)
+    c.waitfor(text='Gestão financeira e movimentações', timeout=15)
     c.fim()
     return c
 
@@ -447,19 +448,20 @@ def cap01():
     c.mark(1)
     c.confere('main', ['Meu Caixa', 'Abrir Caixa', '#84', 'R$ 1.250,00', 'Rafael Nogueira', '09/11 07:58 → 09/11 17:44', 'reabrir outro caixa',
                        'Reabrir #84', '0 caixas encontrados'], 'tela do caixa fechado (#84, R$ 1.250,00)')
-    c.hover(ABRIR, at=c.A(1, 'botão', 0.5), label='botão Abrir Caixa (Meu Caixa)')
+    # gravação de 11/11: o hover leva ~1,6 s até o cursor chegar (o --rapido anda mais depressa): as folgas vêm daí
+    c.hover(ABRIR, at=c.A(1, 'Meu', 0.6), label='botão Abrir Caixa (Meu Caixa)')
     c.mark(2)
     c.hover(CARD_AMARELO, at=c.A(2, 'cartão', 0.5), label='ZOOM cartão amarelo #84 (L2)')
-    c.hover(TXTX('09/11 07:58'), at=c.A(2, 'horário', 0.5), label='horário do #84')
-    c.hover(BTN('Reabrir #84', MAIN), at=c.A(2, 'reabrir', 0.5), label='Reabrir #84')
+    c.hover(BTN('Reabrir #84', MAIN), at=c.A(2, 'reabrir', 1.5), label='Reabrir #84')
     c.mark(3)
-    c.hover(TXT('Painel Gerencial'), at=c.A(3, 'Painel', 0.5), label='Painel Gerencial')
-    c.hover(TXT('Nenhum caixa foi aberto neste dia.'), at=c.A(3, 'nenhum', 0.5), label='Nenhum caixa foi aberto neste dia.')
+    c.hover(TXT('Painel Gerencial'), at=c.A(3, 'Painel', 1.4), label='Painel Gerencial')
+    c.hover(TXT('Nenhum caixa foi aberto neste dia.'), 0.3, at=c.A(3, 'Por', 0.5), label='Nenhum caixa foi aberto neste dia.')
     c.mark(4)
-    c.hover(TXT('Meu Caixa'), at=c.A(4, 'Quem', 0.3), label='volta ao topo (Meu Caixa)')
-    c.hover(ABRIR, at=c.A(4, 'botão', 0.5), label='o mesmo botão Abrir Caixa')
+    c.hover(ABRIR, at=c.A(4, 'Quem', 0.3), label='volta ao topo (o mesmo botão Abrir Caixa)')
     c.mark(5)
-    c.press('Shift+C', at=c.A(5, 'compra', 0.2), label='atalho Shift+C (Compra)')
+    # o /compra aparece por ~3 s ("Nova Compra", sem caixa) antes do aviso e da volta: o atalho sai em "lançar" para o aviso
+    # subir em "Abra o caixa..."
+    c.press('Shift+C', at=c.A(5, 'lançar', 0.2), label='atalho Shift+C (Compra)')
     c.waitfor(text='Abra o caixa antes de realizar compras', timeout=8)
     c.marcar(TOAST, label='ZOOM aviso Abra o caixa antes de realizar compras (L5)')
     c.waitfor(text='Gestão financeira e movimentações', timeout=8)
@@ -658,7 +660,7 @@ def cap08():
     c.mark(2)
     c.hover(BTN('Nova Compra', MAIN), at=c.A(2, 'lançar', 0.5, nth=0), label='Nova Compra (vai pro caixa do Marcos)')
     c.hover(BTN('Nova Receita', MAIN), at=c.A(2, 'meu', 0.5), label='Nova Receita')
-    c.hover(TAB86, at=c.A(2, 'aba', 0.5, nth=1), label='confira a aba')
+    c.hover(TAB86, 0.3, at=c.A(2, 'confira', 0.5), label='confira a aba')
     c.mark(3)
     c.hover(TAB85, at=c.A(3, 'administrador', 0.5), label='abas (quem vê e opera os caixas dos outros)')
     c.dur = c.L(4)        # o trecho acaba no início da linha 4: a edição junta o cap08b (Marcos) daí em diante
@@ -723,9 +725,10 @@ def cap09():
     c.waitfor(text='Transferir dinheiro do cofre ou de um caixa aberto para uma conta bancária', timeout=8)
     c.hover(COMBO(0), at=c.A(12, 'sai', 0.5), label='Origem da sangria')
     c.hover(COMBO(1), at=c.A(12, 'conta', 0.5), label='Conta de destino')
-    c.ev(js_rola_fundo(DLG, 600), at=c.A(12, 'recebe', -0.3), label='desce a janela da sangria até os botões')
+    # a sangria não é confirmada: Esc fecha a janela no fim da frase (o "Cancelar" fica abaixo da dobra, y 886: rolar e clicar não
+    # cabe no vão entre as linhas 12 e 13)
     c.mark(13)
-    c.click(BTN('Cancelar', DLG), at=c.L(13) - 0.9, label='Cancelar (sangria)')
+    c.press('Escape', at=c.A(12, 'recebe', -0.3), label='fecha a janela (sangria sem confirmar)')
     c.waitfor(gone={'role': 'dialog'}, timeout=6)
     c.click(NOVA_MOV, at=c.A(13, 'Nova', 0.6), label='Nova Movimentação Bancária')
     c.waitfor(text='Nova Movimentação Financeira', timeout=10)

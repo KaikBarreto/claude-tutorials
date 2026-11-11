@@ -1,40 +1,48 @@
 <!doctype html>
 <html lang="pt-BR"><head><meta charset="utf-8">
-<!-- Vitrine do kit 3D: todos os objetos, com o nome da função embaixo, em quatro paradas da câmera.
-     node ferramentas/edit/cenas/render_cenas.cjs 0 perfis/ecoflix/cenas/exemplo/cap01.json quadros_vitrine --html perfis/ecoflix/cenas3d/vitrine.html --stills 2,6,8,11,14.5 --dsf 1 -->
+<!-- Vitrine do kit 3D: todos os objetos e materiais, com o nome embaixo, em seis paradas da câmera
+     (1 pesagem · 2 caminhões · 3 e 4 materiais com peca(tipo) · 5 lotes, fardos e prensa · 6 escritório).
+     node ferramentas/edit/cenas/render_cenas.cjs 0 perfis/ecoflix/cenas/exemplo/cap01.json quadros_vitrine --html perfis/ecoflix/cenas3d/vitrine.html --stills 2,6,8,10.5,13.5,16.5,19.5 --dsf 1 -->
 </head><body>
 <script type="module">
-import { CENA, CHAO, PI, eio, pr, camera, ancora, chip, vis, grupo, saco, tambor, cacamba, monte, palete, fardo, carroca, balancaPatio, caminhao, anda, bascula,
-  latinhas, domo, prensa, aperta, fardoLatinhas, impressora, imprime, computador, chaoPatio, COR, cena } from './kit3d.js';
+import { CENA, CHAO, PI, eio, pr, camera, ancora, chip, vis, grupo, mancha, saco, tambor, cacamba, bigBag, monte, palete, fardo, carroca, balancaPatio,
+  caminhao, anda, bascula, latinhas, pets, domo, peca, prensa, aperta, fardoLatinhas, fardoPapelao, impressora, imprime, computador, chaoPatio, COR, cena } from './kit3d.js';
 
 cena(() => {
-  const nomes = [];
-  const rot = (txt, p) => { const e = chip(txt); nomes.push([e, p]); };
-  // parada 1: pesagem (os objetos do piloto)
-  saco(CENA, [-3.3, 0, .1]); rot('saco', [-3.3, 0, .6]); tambor(CENA, [-2.35, 0, 0]); rot('tambor', [-2.35, 0, .6]);
-  cacamba(CENA, [-1.1, 0, .05]); rot('cacamba', [-1.1, 0, .7]); monte(CENA, [.8, 0, 0]); rot('monte', [.8, 0, 1]);
-  const pl = palete(CENA, [2.9, 0, 0]); fardo(pl, [-.3, .115, 0]); fardo(pl, [.32, .115, 0], COR.cobre); rot('palete + fardo', [2.9, 0, .8]);
-  balancaPatio(CENA, [6.2, 0, -.3]); carroca(CENA, [5.9, .172, -.3]); rot('balancaPatio + carroca', [6.2, 0, 1.1]);
-  // parada 2: caminhões no chão do pátio
+  const nomes = [], rot = (txt, p) => nomes.push([chip(txt), p]);
+  const pilha = (tipo, x, z) => { const g = grupo(CENA, [x, 0, z]); for (const q of domo(16, .5, .42, .36)) peca(g, tipo, q, 1.25); mancha(g, 1.5, 1.25, .3); rot(`peca '${tipo}'`, [x, 0, z + .78]); };
+  // 1: pesagem
+  bigBag(CENA, [-4.4, 0, 0]); rot('bigBag', [-4.4, 0, .75]); bigBag(CENA, [-3.2, 0, .2], { estado: 'vazio' }); rot("bigBag 'vazio'", [-3.2, 0, .8]);
+  saco(CENA, [-2.1, 0, 0]); rot('saco', [-2.1, 0, .55]); tambor(CENA, [-1.25, 0, 0]); rot('tambor', [-1.25, 0, .55]);
+  cacamba(CENA, [-.05, 0, .05]); rot('cacamba', [-.05, 0, .7]); monte(CENA, [1.75, 0, 0]); rot('monte', [1.75, 0, 1]);
+  const pl = palete(CENA, [3.75, 0, 0]); fardo(pl, [-.3, .115, 0]); fardo(pl, [.32, .115, 0], COR.cobre); rot('palete + fardo', [3.75, 0, .8]);
+  balancaPatio(CENA, [7.1, 0, -.3]); const car = carroca(CENA, [6.8, .172, -.3]); for (const q of domo(18, .7, .4, .5, .6)) peca(car, 'ferro', q); rot("balancaPatio + carroca ('ferro')", [7.1, 0, 1.1]);
+  // 2: caminhões no chão do pátio
   chaoPatio(CENA, [30, 0, 0], { c: 26, l: 12, faixa: [3.2] });
   balancaPatio(CENA, [33, 0, 0], { c: 7.8, l: 3.0, rampa: 1.2, poste: [4.5, -2.0], hp: 2.3, rp: .07 });
   const T1 = caminhao(CENA, [33, 0, 0], { carga: 'latinha' }); anda(T1, 33, x => x > 27.9 && x < 38.1 ? .172 : 0); rot('caminhao (latinha)', [33, 0, 1.9]);
-  const T2 = caminhao(CENA, [23.2, 0, -.2], { cor: COR.ambar, c: 5.2, l: 2.1, R: .42, eixos: 2, cc: 1.7, hc: 1.55, bau: 'grade', carga: 'bateria' }); rot('caminhao 3/4 (bateria)', [23.2, 0, 1.7]);
+  caminhao(CENA, [23.2, 0, -.2], { cor: COR.ambar, c: 5.2, l: 2.1, R: .42, eixos: 2, cc: 1.7, hc: 1.55, bau: 'grade', carga: 'bateria' }); rot('caminhao 3/4 (bateria)', [23.2, 0, 1.7]);
   const T3 = caminhao(CENA, [31, 0, -6.5], { cor: COR.cinzaC }); rot('caminhao vazio, bascula', [31, 0, -4.6]);
-  // parada 3: latinhas, prensa e fardo
-  prensa(CENA, [58, 0, 0]); rot('prensa', [58, 0, 1]); fardoLatinhas(CENA, [60.2, 0, .1]); rot('fardoLatinhas', [60.2, 0, .9]);
-  latinhas(grupo(CENA, [62.3, 0, .2]), domo(90, .8, .6, .5)); rot('latinhas', [62.3, 0, 1]);
-  // parada 4: escritório
-  const imp = impressora(CENA, [79.6, 0, .1]); rot('impressora', [79.6, 0, .4]); computador(CENA, [80.4, 0, 0]); rot('computador', [80.4, 0, .45]);
-  camera([[0, { x: 1.4, y: .5, z: .2, d: 17, az: .1, el: .36, oy: 0 }], [3, { x: 1.5, y: .5, z: .2, d: 16.6, az: .12, el: .36, oy: 0 }, 'lin'],
+  // 3 e 4: materiais (peca)
+  ['latinha', 'pet', 'cobre', 'alu', 'papelao'].forEach((k, i) => pilha(k, 110 + (i - 2) * 1.3, 0));
+  ['ferro', 'aco', 'ferrugem', 'terra', 'borracha', 'plastico'].forEach((k, i) => pilha(k, 130 + (i - 2.5) * 1.2, 0));
+  // 5: lotes, fardos e prensa
+  latinhas(grupo(CENA, [146.4, 0, .3]), domo(110, .75, .6, .5, .02)); rot('latinhas', [146.4, 0, 1.15]);
+  pets(grupo(CENA, [148.4, 0, .3]), domo(55, .65, .55, .45, .02)); rot('pets', [148.4, 0, 1.1]);
+  fardoLatinhas(CENA, [150.3, 0, .1]); rot('fardoLatinhas', [150.3, 0, .95]); fardoPapelao(CENA, [152.2, 0, .1]); rot('fardoPapelao', [152.2, 0, .95]);
+  prensa(CENA, [154.3, 0, -.2]); rot('prensa', [154.3, 0, .8]);
+  // 6: escritório
+  const imp = impressora(CENA, [179.6, 0, .1]); rot('impressora', [179.6, 0, .4]); computador(CENA, [180.4, 0, 0]); rot('computador', [180.4, 0, .45]);
+  camera([[0, { x: 1.6, y: .5, z: .2, d: 19.5, az: .06, el: .36, oy: 0 }], [3, { x: 1.7, y: .5, z: .2, d: 19.1, az: .08, el: .36, oy: 0 }, 'lin'],
     [4.2, { x: 29.5, y: .9, z: -1.5, d: 26, az: .32, el: .36, oy: 0 }], [9, { x: 29.5, y: .9, z: -1.5, d: 25, az: .3, el: .36, oy: 0 }, 'lin'],
-    [10, { x: 60, y: .9, z: .2, d: 9.5, az: .2, el: .3, oy: 0 }], [13, { x: 60, y: .9, z: .2, d: 9.3, az: .22, el: .3, oy: 0 }, 'lin'],
-    [14, { x: 80, y: .3, z: .1, d: 3.6, az: .3, el: .36, oy: 0 }], [20, { x: 80, y: .3, z: .1, d: 3.5, az: .3, el: .36, oy: 0 }, 'lin']]);
+    [10, { x: 110, y: .25, z: .3, d: 9.4, az: 0, el: .42, oy: -20 }], [12, { x: 110, y: .25, z: .3, d: 9.2, az: .02, el: .42, oy: -20 }, 'lin'],
+    [13, { x: 130, y: .25, z: .3, d: 10.4, az: 0, el: .42, oy: -20 }], [15, { x: 130, y: .25, z: .3, d: 10.2, az: .02, el: .42, oy: -20 }, 'lin'],
+    [16, { x: 150.4, y: .7, z: .2, d: 13.5, az: .06, el: .34, oy: -20 }], [18, { x: 150.4, y: .7, z: .2, d: 13.3, az: .08, el: .34, oy: -20 }, 'lin'],
+    [19, { x: 180, y: .3, z: .1, d: 3.6, az: .3, el: .36, oy: 0 }], [22, { x: 180, y: .3, z: .1, d: 3.5, az: .3, el: .36, oy: 0 }, 'lin']]);
+  const pr0 = CENA.children.find(o => o.userData.placa);
   return t => {
-    CHAO.visible = t < 4;
-    bascula(T3, .55 * eio(pr(t, 6.5, 1.2)));
-    aperta(CENA.children.find(o => o.userData.placa), .5 + .5 * Math.sin(t * 2));
-    imprime(imp, eio(pr(t, 14, 1.5)));
+    CHAO.visible = t < 4 || t > 9.5;
+    bascula(T3, .55 * eio(pr(t, 6.5, 1.2))); aperta(pr0, .5 + .5 * Math.sin(t * 2)); imprime(imp, eio(pr(t, 19, 1.5)));
     for (const [e, p] of nomes) { vis(e, t, -1, 1e9, { dy: 0, sc: 1 }); ancora(e, p, .5, 0, 0, 8); }
   };
 }, { sombra: 14, mapa: 2048 });

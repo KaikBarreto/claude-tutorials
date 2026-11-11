@@ -1,0 +1,460 @@
+{
+ "name": "t20-cap03",
+ "title": "T20 · Cap. 3 · Escolher as abas (narração 70,1 s ESTIMADA; marcas L1..L8 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T15:00:00-03:00)",
+ "seed": "t20-cap03",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true"
+ },
+ "seedExtra": [
+  "t20/inicio"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "waitFor",
+   "target": {
+    "label": "E-mail"
+   },
+   "timeout": 30
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "E-mail"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "Senha",
+    "exact": true
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Rafael!",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/clientes-fornecedores"
+  },
+  {
+   "do": "waitFor",
+   "text": "Aços Quiririm Ltda",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "header button.h-8.w-8"
+   }
+  },
+  {
+   "do": "wait",
+   "seconds": 0.8
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main div.no-scrollbar > button:has-text('Fornecedores')"
+   }
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "placeholder": "Buscar fornecedor..."
+   },
+   "timeout": 15
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main aside button:has-text('Cooperativa Recomeço')"
+   }
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "main section[aria-label='Detalhes de Cooperativa Recomeço']"
+   },
+   "timeout": 15
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Editar",
+    "exact": true,
+    "within": "main section[aria-label='Detalhes de Cooperativa Recomeço']"
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Editar Fornecedor",
+   "timeout": 15
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Portal",
+    "exact": true,
+    "within": "[role=dialog]"
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "O que exibir no portal",
+   "timeout": 15
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "wait",
+   "seconds": 0.6
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel|Algo deu errado|Falha ao|Transi[çc][ãa]o inv[áa]lida|n[ãa]o encontrad|Localiza[çc][ãa]o n[ãa]o registrada|Sem sinal de GPS/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');if(f&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA ECOFLIX'))window.__avisos.push('TRILHA ECOFLIX')},300);return 1})()"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{if(window.__animFix)return 'ja';window.__animFix=setInterval(()=>{for(const a of document.getAnimations())if(a.currentTime!==null&&a.currentTime<0)a.startTime=document.timeline.currentTime},100);return 'anim fix'})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"O que exibir no portal\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-130);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/800),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 0.5,
+   "label": "rola até O que exibir no portal"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Tudo vem ligado. Desligue o que não quiser mostrar neste portal.",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.2,
+   "at": 2.1,
+   "label": "Tudo vem ligado",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 7.46
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Aba Histórico",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.3,
+   "at": 7.46,
+   "label": "Aba Histórico",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Cards de resumo (totais, ticket médio)",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.3,
+   "at": 9.82,
+   "label": "Cards de resumo",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Gráfico de materiais",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.3,
+   "at": 11.56,
+   "label": "Gráfico de materiais",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Valores financeiros (preços e totais)",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.3,
+   "at": 13.69,
+   "label": "Valores financeiros",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Fotos dos pedidos",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.3,
+   "at": 14.67,
+   "label": "Fotos dos pedidos",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 16.77
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Valores financeiros (preços e totais)",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 2.4,
+   "at": 16.77,
+   "label": "[ZOOM] Valores financeiros (preços e totais) e a chave",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Aba Saldo\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-170);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/800),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 23.55,
+   "label": "rola até Aba Saldo"
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 24.25
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Aba Saldo",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.3,
+   "at": 24.94,
+   "label": "Aba Saldo",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Aba Notas Fiscais",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.3,
+   "at": 25.85,
+   "label": "Aba Notas Fiscais",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Aba Relatório",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.3,
+   "at": 27.29,
+   "label": "Aba Relatório",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Mostrar valores (R$ e preço médio)",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.3,
+   "at": 28.09,
+   "label": "Mostrar valores (R$ e preço médio)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Mostrar aba Coletas",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.3,
+   "at": 28.43,
+   "label": "Mostrar aba Coletas",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Permitir solicitar coleta",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.3,
+   "at": 30.33,
+   "label": "Permitir solicitar coleta",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Formato do comprovante no portal\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-170);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/800),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 33.84,
+   "label": "rola até Formato do comprovante no portal"
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 34.54
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Automático (segue o formato da empresa)",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.5,
+   "at": 36.22,
+   "label": "Automático (marcado)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] label[for=rf-a4]"
+   },
+   "at": 43.03,
+   "label": "A4"
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 44.54
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Salvar exibição",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 44.82,
+   "label": "Salvar exibição"
+  },
+  {
+   "do": "waitFor",
+   "text": "Exibição do portal salva",
+   "timeout": 10
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 47.77
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 760,
+    "y": 420
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "at": 48.47,
+   "label": "cursor em repouso (ilustração)"
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 61.94
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 70.1
+  }
+ ]
+}

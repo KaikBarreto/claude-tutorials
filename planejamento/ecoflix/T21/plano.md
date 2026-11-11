@@ -83,7 +83,7 @@ no `response_payload`: é o que a edge `cato-assist` (`mode: "followups"`) devol
 R1 · "Como tá indo meu negócio esse mês?" (pergunta pronta)
 ```json
 {"toolsUsed":["resumo_financeiro"],"context":{"period":{"start":"2026-11-01","end":"2026-11-10","timezone":"America/Sao_Paulo"},"regime":"caixa","updatedAt":"<agora>"},
- "answer":"Novembro começou no azul. Olhando seus lançamentos de 1 a 10 de novembro:\n\n- **Vendas:** R$ 118.620,20\n- **Compras:** R$ 18.781,45\n- **Despesas:** R$ 32.234,10\n\nO resultado até aqui é de **R$ 67.604,65**, no regime de caixa. A Fundição Bandeira do Vale foi o maior cliente do período, com R$ 57.460,00 em vendas. Ainda faltam 20 dias pro mês fechar.",
+ "answer":"Novembro começou no azul. Olhando seus lançamentos de 1 a 10 de novembro:\n\n- **Vendas:** R$ 118.620,20\n- **Compras:** R$ 18.781,45\n- **Despesas:** R$ 30.249,20\n\nO resultado até aqui é de **R$ 69.589,55**, no regime de caixa. A Fundição Bandeira do Vale foi o maior cliente do período, com R$ 57.460,00 em vendas. Ainda faltam 20 dias pro mês fechar.",
  "followups":["Compara com outubro","Quais despesas tive esse mês?","Qual material mais vendi?"]}
 ```
 R2 · "Quem tá me devendo?"
@@ -102,7 +102,7 @@ R3 · "Quanto tenho em estoque agora?"
 R4 · "Qual o saldo das minhas contas no banco?"
 ```json
 {"toolsUsed":["resumo_bancario"],"context":{"period":{"start":"2026-11-01","end":"2026-11-10"},"updatedAt":"<agora>"},
- "answer":"Agora, suas contas no banco somam **R$ 132.448,67**:\n\n- **Conta Principal:** R$ 44.933,67\n- **Conta Secundária:** R$ 82.515,00\n- **Conta Cooperativa:** R$ 5.000,00\n\nEsse é o saldo de agora. Em novembro, até hoje, entraram **R$ 101.620,20** e saíram **R$ 43.554,10** nas contas, sem contar as transferências entre elas.",
+ "answer":"Agora, suas contas no banco somam **R$ 132.448,67**:\n\n- **Conta Principal:** R$ 44.933,67\n- **Conta Secundária:** R$ 82.515,00\n- **Conta Cooperativa:** R$ 5.000,00\n\nEsse é o saldo de agora. Em novembro, até hoje, entraram **R$ 114.620,20** e saíram **R$ 53.554,10** nas contas.",
  "followups":["Quais pagamentos saíram do banco esse mês?","Quanto tenho no cofre?","Compara as entradas com outubro"]}
 ```
 R5 · "Como tá meu caixa hoje?"

@@ -73,6 +73,38 @@
    "timeout": 20
   },
   {
+   "do": "goto",
+   "url": "/crm"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie oportunidades e acompanhe seu processo comercial.",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 15
+  },
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Rafael",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 15
+  },
+  {
+   "do": "wait",
+   "seconds": 1.5
+  },
+  {
    "do": "eval",
    "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel|Algo deu errado|Falha ao|Something went wrong/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);return 1})()"
   }

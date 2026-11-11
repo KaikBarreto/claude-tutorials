@@ -164,6 +164,11 @@
    "label": "confere linha da Aços Quiririm com o saldo"
   },
   {
+   "do": "eval",
+   "js": "(async()=>{const cor=e=>{for(const el of [e,...e.querySelectorAll('*')])for(const p of ['backgroundColor','color']){const m=(getComputedStyle(el)[p].match(/[\\d.]+/g)||[]).map(Number);if(m.length<3||(m.length>3&&m[3]===0))continue;const [r,g]=m;if(g>r+40)return 'verde';if(r>g+40)return 'vermelho'}return 'cinza'};for(let i=0;i<10;i++){const row=[...document.querySelectorAll(\"main aside button\")].find(x=>x.textContent.includes(\"A\\u00e7os Quiririm Ltda\"));const el=row&&row.querySelector(\".tabular-nums\");if(el){const k=cor(el);return (k===\"verde\"?'OK: ':'DIFERENTE: ')+\"A\\u00e7os Quiririm Ltda\"+' '+el.textContent.trim()+' '+k}await new Promise(r=>setTimeout(r,300))}return 'DIFERENTE: sem o saldo de '+\"A\\u00e7os Quiririm Ltda\"})()",
+   "label": "confere cor: Aços Quiririm (cliente +) verde"
+  },
+  {
    "do": "mark",
    "name": "L4",
    "at": 26.66

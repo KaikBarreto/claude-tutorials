@@ -237,6 +237,7 @@ class Cap:
         s.steps.append({'do': 'mark', 'name': 'FIM', 'at': round(s.dur, 2)})
 
     def out(s):
+        encurta_pausas(s.steps)
         est = ' ESTIMADA' if s.estimado else ''
         return {
             'name': f't02-cap{s.n:02d}',
@@ -376,6 +377,22 @@ def js_selo(nome, esperado):
             "const t=b?b.textContent.trim():'sem selo';return (t===%s?'OK: ':'DIFERENTE: ')+'%s '+t})()") % (nome, json.dumps(esperado), nome)
 
 
+def _invisivel(d):
+    return d['do'] in ('mark', 'waitFor') or (d['do'] == 'eval' and str(d.get('label', '')).startswith(('confere', 'avisos')))
+
+
+def encurta_pausas(steps):
+    """hover seguido (pulando marcas, esperas e conferências) de um gesto com `at`: a pausa no alvo não muda o vídeo (o cursor fica
+    ali até o `at` seguinte), só empurra o gesto seguinte quando a máquina está carregada (ensaio de 11/11: ação e pausa ~2,5x mais
+    lentas com render de cenas em paralelo). Fica 0,15 s. Os de ZOOM mantêm a pausa: a câmera usa o tEnd do passo."""
+    for k, d in enumerate(steps):
+        if d['do'] != 'hover' or 'ZOOM' in str(d.get('label', '')) or d.get('seconds', 0.9) <= 0.15:
+            continue
+        prox = next((x for x in steps[k + 1:] if not _invisivel(x)), None)
+        if prox is None or prox.get('at') is not None:
+            d['seconds'] = 0.15
+
+
 def cap_novo(n, setup=None, **kw):
     return Cap(n, setup=setup if setup is not None else SETUP_USUARIOS, **kw)
 
@@ -430,14 +447,16 @@ def cap02():
     c.click(CRIAR, at=c.A(1, 'Criar', 0.6), label='Criar Usuário')
     c.waitfor(text='Preencha os dados do novo usuário', timeout=10)
     c.mark(2)
-    c.click(SEL('#fullName'), at=c.A(2, 'nome', 1.0), label='campo Nome Completo')
-    c.type(SEL('#fullName'), 'Marcos Antunes', at=c.A(2, 'Marcos', 0.05), noClick=True, cps=30, label='Nome Completo: Marcos Antunes')
+    # com a máquina carregada a digitação do robô cai a ~0,2 s por letra (ensaio de 11/11): o nome começa já no "nome", o e-mail (41
+    # letras) entra colado e a senha vai mais rápida
+    c.click(SEL('#fullName'), at=c.A(2, 'Primeiro', 0.8), label='campo Nome Completo')
+    c.type(SEL('#fullName'), 'Marcos Antunes', at=c.A(2, 'nome', 0.05), noClick=True, cps=30, label='Nome Completo: Marcos Antunes')
     c.mark(3)
     c.click(SEL('#email'), at=c.A(3, 'e-mail.', 0.6), label='campo Email')
-    c.type(SEL('#email'), EMAIL_MARCOS, at=c.A(3, 'e-mail.', -0.35), noClick=True, cps=40, label='Email do Marcos')
+    c.ev(js_colar(EMAIL_MARCOS), at=c.A(3, 'e-mail.', -0.1), label='Email do Marcos (colado)')
     c.mark(4)
     c.click(SEL('#password'), at=c.A(4, 'senha', 0.6), label='campo Senha')
-    c.type(SEL('#password'), SENHA_MARCOS, at=c.A(4, 'define,', 0.05), noClick=True, cps=10, label='Senha (aparece em pontinhos)')
+    c.type(SEL('#password'), SENHA_MARCOS, at=c.A(4, 'define,', 0.05), noClick=True, cps=20, label='Senha (aparece em pontinhos)')
     c.confere('dlg', ['Senha forte. Deve conter:', 'Pelo menos 8 caracteres', 'Pelo menos 1 número', 'Pelo menos 1 letra minúscula',
                       'Pelo menos 1 letra maiúscula', 'Pelo menos 1 caractere especial'], 'Senha forte e os cinco itens')
     c.marcar(TXT('Senha forte. Deve conter:', DLG), at=c.A(4, 'Repara', 0.0), label='ZOOM indicador Senha forte e os cinco itens')
@@ -827,6 +846,7 @@ if __name__ == '__main__':
                     print(f'  aviso cap{n:02d}: at {stp["at"]} < {last} em "{stp.get("label") or stp.get("name")}"')
                 last = max(last, stp['at'])
         path = os.path.join(HERE, f'cap{n:02d}.json')
-        with open(path, 'w', encoding='utf-8') as f:
+        with open(path + '.tmp', 'w', encoding='utf-8') as f:   # troca atômica: um record.mjs na fila pode abrir o arquivo agora
             json.dump(d, f, ensure_ascii=False, indent=1)
+        os.replace(path + '.tmp', path)
         print(f'cap{n:02d}: {len(d["steps"])} passos, narração {c.dur:.1f} s{" (ESTIMADA)" if c.estimado else ""} -> {os.path.relpath(path, HERE)}')

@@ -189,19 +189,19 @@ CAPS[6] = () => {
   const gp = galpao(CENA, [RX + 1.2, 0, -3.2], { c: 5, l: 3, h: 1.6 });
   const K = cacambaEstacionaria(CENA, [RX - 1, 0, 1.3], { c: 2.8, l: 1.6, h: 1.05 });
   for (const q of domo(24, .9, .5, .5, .35, .5)) peca(K, pega(['aco', 'ferrugem', 'aco']), [q[0], q[1] + .1, q[2]], 1.4);
-  const N = folha(CENA, [-4.8, 2.9, 3.2], { w: .8, h: 1.05, cor: COR.verde }), S = folha(CENA, [10.4, 2.9, 3.2], { w: .8, h: 1.05, cor: COR.ambar });
+  const N = folha(CENA, [-4.8, 2.9, 3.2], { w: .8, h: 1.05, cor: COR.verde }), S = folha(CENA, [9.0, 2.9, 3.2], { w: .8, h: 1.05, cor: COR.ambar });
   const tit = titulo('Nota fiscal', 'Mercadoria × serviço');
   const doc = (cls, sigla, sub) => el(`<div class="selo"><div class="tag ${cls}" style="font-size:22px;padding:8px 18px">${ic('file-text', 24)}${sigla}</div><div class="sub dd" style="font-size:16px;font-weight:700;color:#121212">${sub}</div></div>`);
   const dN = doc('v', 'NF-e', 'nota de mercadoria'), dS = doc('a', 'NFS-e', 'nota de serviço'), sN = dN.querySelector('.dd'), sS = dS.querySelector('.dd');
   const tM = el(`<div class="tag v ab" style="font-size:24px;padding:9px 22px">Mercadoria</div>`), tS = el(`<div class="tag a ab" style="font-size:24px;padding:9px 22px">Serviço</div>`);
   const cSai = chip(`${ic('arrow-right', 18)}sai do pátio`, 'v'), cNao = chip(`${ic('package-x', 18)}não sai mercadoria`, 'a');
   const cCli = chip(`${ic('building-2', 18)}Aços Quiririm`, 'a'), cPre = chip(`${ic('landmark', 18)}Prefeitura`, 'a');
-  const aN = anel(CENA, 1.0, .08, [-4.8, 0, 3.2]), oN = anel(CENA, 1.0, .05, [-4.8, 0, 3.2]), aS = anel(CENA, 1.0, .08, [10.4, 0, 3.2]), oS = anel(CENA, 1.0, .05, [10.4, 0, 3.2]);
+  const aN = anel(CENA, 1.0, .08, [-4.8, 0, 3.2]), oN = anel(CENA, 1.0, .05, [-4.8, 0, 3.2]), aS = anel(CENA, 1.0, .08, [9.0, 0, 3.2]), oS = anel(CENA, 1.0, .05, [9.0, 0, 3.2]);
   const tv = W(1, 'vende'), tsu = W(1, 'sucata'), ts = W(1, 'sai'), tpa = W(1, 'patio'), tn = W(1, 'nota'), tme = W(1, 'mercadoria', 2), tnf = W(1, 'NF-e');
   const tco = W(2, 'cobra'), ttr = W(2, 'trabalho'), tca = W(2, 'cacamba'), tna = W(2, 'nao'), tn2 = W(2, 'nota'), tns = W(2, 'NFS-e'), tpr = W(2, 'prefeitura');
   const j0 = W(1, 'Pensa') - .3;
   camera([[0, { x: -4, y: 1.2, z: 0, d: 26, az: .08, el: .4, oy: -70 }], [tco - .5, { x: -4, y: 1.2, z: 0, d: 26, az: .08, el: .4, oy: -70 }, 'lin'],
-    [tco + 1.5, { x: .8, y: 1.2, z: 0, d: 32, az: .06, el: .42, oy: -70 }, 'eio'], [LE(2) + 3, { x: .8, y: 1.2, z: 0, d: 31.6, az: .06, el: .42, oy: -70 }, 'lin']]);
+    [tco + 1.5, { x: 1.4, y: 1.2, z: 0, d: 32, az: .06, el: .42, oy: -70 }, 'eio'], [LE(2) + 3, { x: 1.4, y: 1.2, z: 0, d: 31.6, az: .06, el: .42, oy: -70 }, 'lin']]);
   return t => {
     GL.style.opacity = eo(pr(t, tv - .3, .5)).toFixed(3);
     posTitulo(tit, t, j0 - .6, tv - .35);
@@ -218,8 +218,8 @@ CAPS[6] = () => {
     cresce(gp, t, tca - .2, .6, .2); cresce(K, t, tca - .1, .6, .2); vis(cCli, t, tca + .1, 1e9, { dy: 8 }); ancora(cCli, [RX - .6, gp.userData.topo[1] + .1, -3.2], .5, 1);
     vis(cNao, t, tna - .15, 1e9, { dy: 8 }); ancora(cNao, [2.6, 0, 3.4], .5, .5);
     const qs = eo(pr(t, tn2 - .1, .55)); S.visible = qs > 0; S.scale.setScalar(Math.max(1e-3, qs)); S.position.y = 2.9 + (1 - qs) * 1.0;
-    vis(dS, t, tn2 - .1, 1e9, { dy: 10 }); ancora(dS, [10.4, S.position.y + .62, 1.8], .5, 1); vis(sS, t, tns + .6, 1e9, { dy: 6 }); pulse(dS, t, tns, .05, .8); destaque(aS, oS, t, tns);
-    vis(cPre, t, tpr - .15, 1e9, { dy: 8 }); ancora(cPre, [10.4, 1.9, 3.2], .5, 0);
+    vis(dS, t, tn2 - .1, 1e9, { dy: 10 }); ancora(dS, [9.0, S.position.y + .62, 1.8], .5, 1); vis(sS, t, tns + .6, 1e9, { dy: 6 }); pulse(dS, t, tns, .05, .8); destaque(aS, oS, t, tns);
+    vis(cPre, t, tpr - .15, 1e9, { dy: 8 }); ancora(cPre, [9.0, 1.9, 3.2], .5, 0);
   };
 };
 

@@ -156,7 +156,8 @@
     "hasText": "Este mês"
    },
    "at": 8.96,
-   "label": "período: Mês passado (abre)"
+   "label": "período: Mês passado (abre)",
+   "noScroll": true
   },
   {
    "do": "click",
@@ -242,9 +243,9 @@
   },
   {
    "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"main *\")].filter(e=>e.offsetParent!==null&&e.textContent.trim().startsWith(\"Entrada × Saída no período\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-140);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"main *\")].filter(e=>e.offsetParent!==null&&e.textContent.trim().startsWith(\"Entrada × Saída no período\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-110);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
    "at": 37.66,
-   "label": "rola até os gráficos"
+   "label": "rola até o gráfico do mês"
   },
   {
    "do": "hover",
@@ -252,7 +253,7 @@
     "text": "Entrada × Saída no período",
     "within": "main"
    },
-   "seconds": 0.4,
+   "seconds": 0.3,
    "at": 38.25,
    "label": "Entrada × Saída no período",
    "optional": true,
@@ -264,11 +265,17 @@
     "text": "Distribuição por status",
     "within": "main"
    },
-   "seconds": 0.4,
+   "seconds": 0.3,
    "at": 40.67,
    "label": "Distribuição por status",
    "optional": true,
    "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"main *\")].filter(e=>e.offsetParent!==null&&e.textContent.trim().startsWith(\"Top Fornecedores\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-250);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 41.61,
+   "label": "rola até os rankings"
   },
   {
    "do": "hover",
@@ -276,7 +283,7 @@
     "text": "Top Fornecedores",
     "within": "main"
    },
-   "seconds": 0.4,
+   "seconds": 0.3,
    "at": 42.42,
    "label": "Top Fornecedores",
    "optional": true,

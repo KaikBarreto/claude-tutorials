@@ -132,7 +132,7 @@
     "selector": "main img[alt='Logo']"
    },
    "seconds": 0.2,
-   "at": 12.83,
+   "at": 12.43,
    "label": "o logo",
    "optional": true,
    "timeout": 3
@@ -143,7 +143,7 @@
     "selector": "main img[alt='Ícone']"
    },
    "seconds": 0.2,
-   "at": 13.59,
+   "at": 13.69,
    "label": "o ícone",
    "optional": true,
    "timeout": 3
@@ -151,7 +151,7 @@
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const m=[...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);return m||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"CNPJ/CPF\"&&e.offsetParent);if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-160);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 14.25,
+   "at": 14.95,
    "label": "o CNPJ, o contato e o endereço"
   },
   {
@@ -159,8 +159,8 @@
    "target": {
     "selector": "#company-cnpj"
    },
-   "seconds": 0.6,
-   "at": 15.2,
+   "seconds": 0.29,
+   "at": 15.7,
    "label": "CNPJ 47.318.506/0001-07",
    "optional": true,
    "timeout": 3
@@ -216,7 +216,7 @@
    "target": {
     "selector": "#receipt-phrase"
    },
-   "seconds": 0.8,
+   "seconds": 0.6,
    "at": 25.12,
    "label": "a frase da Recicla Vale",
    "optional": true,
@@ -259,7 +259,7 @@
     "exact": true
    },
    "seconds": 0.2,
-   "at": 31.09,
+   "at": 30.69,
    "label": "Impureza/Tara (ligada)",
    "optional": true,
    "timeout": 3
@@ -267,7 +267,7 @@
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const m=[...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);return m||document.scrollingElement};const c=rolagem(document.querySelector('main h1'));if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop,t0=performance.now();if(y0<3)return 'ok';await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0*(1-e),behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'topo:'+Math.round(c.scrollTop)})()",
-   "at": 31.55,
+   "at": 32.05,
    "label": "sobe às abas (de novo)"
   },
   {
@@ -275,7 +275,7 @@
    "target": {
     "selector": "#tab-btn-condicoes-pagamento"
    },
-   "at": 32.35,
+   "at": 32.75,
    "label": "aba Condições de Pagamento"
   },
   {
@@ -289,8 +289,8 @@
     "text": "30/60/90 dias",
     "exact": true
    },
-   "seconds": 0.2,
-   "at": 36.1,
+   "seconds": 0.4,
+   "at": 34.63,
    "label": "30/60/90 dias com o selo Padrão",
    "optional": true,
    "timeout": 3

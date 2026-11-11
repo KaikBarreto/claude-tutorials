@@ -360,10 +360,10 @@ LINHA = lambda txt, sub='': SEL(f"main tbody tr:has-text('{txt}') {sub}".strip()
 VEIC = lambda placa: SEL(f"main button:has-text('{placa}'):not([aria-label])")         # item da lista "Veículos da frota"
 
 
-def escolhe(c, gatilho, opcao, at_g, at_o, label, teclas=None):
+def escolhe(c, gatilho, opcao, at_g, at_o, label, teclas=None, fixo=False):
     """Select do Radix: clica o gatilho (cursor) e a opção; com `teclas`, escolhe pelo teclado (busca por digitação + Enter) quando a
-    opção fica fora da parte visível da lista (o robô rolaria a lista ~2,5 s)."""
-    c.click(gatilho, at=at_g, label=f'{label} (abre)')
+    opção fica fora da parte visível da lista (o robô rolaria a lista ~2,5 s). `fixo`: gatilho fora da faixa y 96..730 (noScroll)."""
+    c.click(gatilho, at=at_g, label=f'{label} (abre)', **({'noScroll': True} if fixo else {}))
     if teclas:
         for i, k in enumerate(teclas):
             c.press(k, at=round(at_o + 0.12 * i, 2) if i == 0 else None, label=label if i == 0 else None)
@@ -429,8 +429,8 @@ def cap02():
     c.hover(TXT('Dados de transporte', within='main section'), 0.4, at=c.A(2, 'transporte', 0.6), label='painel: Dados de transporte')
     c.click(BTN('Editar', within='main'), at=c.A(2, 'Editar.', 0.7), label='Editar o FKD2E41')
     c.waitfor(text='Editar veículo', timeout=10)
-    rola_ate(c, 'Dados de transporte (MDF-e / NF-e)', round(c.W(2, 'Editar.') + 0.9, 2), 'janela desce até Dados de transporte', y=110, escopo=DLG)
     c.mark(3)
+    rola_ate(c, 'Dados de transporte (MDF-e / NF-e)', round(max(c.L(3) - 0.2, c.W(2, 'Editar.') + 0.9), 2), 'janela desce até Dados de transporte', y=110, escopo=DLG)
     escolhe(c, SEL('#veiculo-uf'), 'SP', c.A(3, 'São', 0.9), c.A(3, 'Paulo.', 0.2), 'UF de licenciamento: SP', teclas=['S', 'P'])
     escolhe(c, SEL('#veiculo-categoria'), OPTX('Veículo único'), c.A(3, 'Tipo,', 0.6), c.A(3, 'único,', 0.4), 'Tipo: Veículo único')
     escolhe(c, SEL('#veiculo-rodado'), 'Truck', c.A(3, 'rodado', 0.6), c.A(3, 'truck,', 0.3), 'Tipo de rodado: Truck')
@@ -451,12 +451,14 @@ def cap02():
     c.click(BTN('Editar', within='main'), at=c.A(7, 'Editar.', 0.7), label='Editar o Edson')
     c.waitfor(text='Editar motorista', timeout=10)
     c.mark(8)
-    c.digita(SEL('#motorista-doc'), '31847265090', c.A(8, 'CPF', 0.8), c.A(8, 'CPF', 0.05), 'CPF: 318.472.650-90')
-    c.digita(SEL('#motorista-cnh'), '04728193604', c.A(8, 'completo', 0.5), c.A(8, 'CNH', 0.1), 'CNH: 04728193604')
-    escolhe(c, SEL('#motorista-cnh-cat'), 'C', c.A(8, 'categoria.', 0.8), c.A(8, 'categoria.', 0.0), 'Categoria: C')
-    c.digita(SEL('#motorista-cnh-val'), '18032029', round(c.W(8, 'categoria.') + 0.7, 2), round(c.W(8, 'categoria.') + 1.2, 2), 'Validade da CNH: 18/03/2029')
+    c.digita(SEL('#motorista-doc'), '31847265090', c.A(8, 'CPF', 0.9), c.A(8, 'CPF', -0.05), 'CPF: 318.472.650-90')
+    c.digita(SEL('#motorista-cnh'), '04728193604', c.A(8, 'completo', 0.9), c.A(8, 'completo', 0.0), 'CNH: 04728193604')
+    escolhe(c, SEL('#motorista-cnh-cat'), 'C', c.A(8, 'CNH', 0.3), c.A(8, 'categoria.', 0.2), 'Categoria: C')
+    # validade (a fala não cita; está no roteiro): o foco entra pelo rótulo (dia primeiro), sem cair no meio do campo de data
+    c.click(SEL("[role=dialog] label[for='motorista-cnh-val']"), at=round(c.W(8, 'categoria.') + 0.45, 2), label='Validade da CNH (campo)')
+    c.type(SEL('#motorista-cnh-val'), '18032029', label='Validade da CNH: 18/03/2029', cps=40, noClick=True)
     c.mark(9)
-    c.click(BTN('Salvar', within=DLG), at=c.A(9, 'Salvar.', 0.6), label='Salvar o motorista')
+    c.click(BTN('Salvar', within=DLG), at=c.A(9, 'Salvar.', 0.3), label='Salvar o motorista')
     c.waitfor(text='Motorista atualizado', timeout=10)
     c.hover(TXT('Carteira de habilitação', within='main section'), 0.8, at=c.A(9, 'motorista', 0.4), label='painel: Carteira de habilitação')
     c.fim()
@@ -516,9 +518,12 @@ def cap04():
     c.mark(5)
     c.click(BTN('Adicionar UF ao percurso'), at=c.A(5, 'adiciono', 0.7), label='Adicionar UF ao percurso')
     escolhe(c, SEL('[role=dialog] button[role=combobox]', hasText='Selecione a UF'), 'RJ', c.A(5, 'Rio', 0.7), c.A(5, 'Janeiro,', 0.3), 'Percurso: 1ª UF RJ', teclas=['R', 'J'])
+    # com a 1ª UF do percurso, o cartão do destino desce (cidade em y ~754, fora da faixa de clique): a janela sobe antes
+    rola_ate(c, 'Descarregamento (Destino)', round(c.L(6) - 0.9, 2), 'janela sobe até o destino', y=330, dur_ms=600, escopo=DLG)
     c.mark(6)
     escolhe(c, SEL(f'{DESTINO} button[role=combobox] >> nth=0'), 'MG', c.A(6, 'destino,', 0.6), c.A(6, 'Minas', 0.2), 'Destino: MG', teclas=['M', 'G'])
-    escolhe(c, SEL(f'{DESTINO} button[role=combobox] >> nth=1'), 'Itamonte', c.A(6, 'cidade', 0.6), c.A(6, 'Itamonte.', 0.3), 'Destino: Itamonte')
+    escolhe(c, SEL(f'{DESTINO} button[role=combobox] >> nth=1'), 'Itamonte', c.A(6, 'cidade', 0.6), c.A(6, 'Itamonte.', 0.3), 'Destino: Itamonte',
+            teclas=['I', 't', 'a', 'm'])
     c.mark(7)
     rola_ate(c, 'Peso Bruto Total (kg)', c.A(7, 'peso', 0.9), 'janela desce até o peso', y=330, escopo=DLG)
     c.hover(SEL("[role=dialog] div:has(> label:text-is('Peso Bruto Total (kg)')) input"), 0.8, at=c.A(7, 'cinco', 0.5), label='Peso Bruto Total (kg): 5800')
@@ -609,7 +614,7 @@ def cap07():
     c.click(TXTX('Aços Quiririm Ltda', within='[role=dialog] >> nth=-1'), at=c.A(2, 'Quiririm', 0.6), label='Aços Quiririm Ltda')
     c.mark(3)
     c.click(BTN('Avançar'), at=c.A(3, 'Avançar.', 0.7), label='Avançar (Serviço)')
-    c.hover(SEL('#nfse-municipio'), 0.6, at=c.A(3, 'Taubaté.', 0.6), label='Município: Taubaté')
+    c.hover(SEL('[role=dialog] button', hasText='Taubaté'), 0.6, at=c.A(3, 'Taubaté.', 0.6), label='Município: Taubaté')
     c.click(SEL('[role=dialog] button[role=combobox]', hasText='Selecionar código de tributação'), at=c.A(3, 'código', 0.7), label='Código de Tributação Nacional (abre)')
     c.type(PH('Buscar por código ou descrição...'), 'coleta', at=c.A(3, 'contador', 0.2), label='busca: coleta', cps=12, noClick=True)
     c.click(OPTX('Varrição, coleta, remoção'), at=c.A(3, 'coleta', 0.6), label='código: coleta e remoção de resíduos')
@@ -621,10 +626,14 @@ def cap07():
             at=c.A(5, 'feito,', 0.1), label='Descrição do serviço')
     c.mark(6)
     c.click(BTN('Avançar'), at=c.A(6, 'Avançar.', 0.7), label='Avançar (Valores)')
-    c.click(SEL("[role=dialog] input[placeholder='0,00'] >> nth=0"), at=c.A(6, 'valor', 0.6), label='Valor do serviço (campo)')
-    c.type(SEL("[role=dialog] input[placeholder='0,00'] >> nth=0"), '1850', at=c.A(6, 'mil', 0.1), label='Valor do serviço: 1850', cps=12, noClick=True)
+    c.click(SEL('#nfse-valor'), at=c.A(6, 'valor', 0.6), label='Valor do serviço (campo)')
+    c.type(SEL('#nfse-valor'), '1850', at=c.A(6, 'mil', 0.1), label='Valor do serviço: 1850', cps=12, noClick=True)
     c.mark(7)
-    c.hover(SEL('#nfse-iss-aliq'), 1.0, at=c.A(7, 'alíquota', 0.6), label='Alíquota ISS %: 3')
+    # 1.59.154: a alíquota da lista do município fica em service.issAliquota e não chega ao campo "Alíquota ISS %" da aba Valores
+    # (NovaNfseModal.tsx: estado issAliquota separado; vem 0,00). O robô digita os 3 % que o contador passou (proposta de fala).
+    c.click(SEL('#nfse-iss-aliq'), at=c.A(7, 'alíquota', 0.7), label='Alíquota ISS % (campo)')
+    c.type(SEL('#nfse-iss-aliq'), '3', at=c.A(7, 'alíquota', -0.5), label='Alíquota ISS %: 3', cps=12, noClick=True, clear=True)
+    c.hover(SEL('#nfse-iss-aliq'), 0.8, at=c.A(7, 'contador.', 0.9), label='Alíquota ISS %: 3,00 (o contador confirma)')
     c.mark(8)
     c.click(BTN('Avançar'), at=c.L(8) - 0.2, label='Avançar (Pré-visualização)')
     c.hover(TXTX('Pronta pra emitir', within=DLG), 0.8, at=c.A(8, 'selo', 0.6), label='selo Pronta pra emitir')
@@ -636,9 +645,10 @@ def cap07():
     c.waitfor(target=LINHA('#14', ":text-is('Autorizada')"), timeout=15)
     c.hover(LINHA('#14', 'td >> nth=0'), 1.0, at=c.A(10, 'catorze.', 0.6), label='nº 14 Autorizada')
     c.mark(11)
-    c.hover(LINHA('#14', 'button[aria-haspopup=menu]'), 0.4, at=c.A(11, 'menu,', 0.7), label='Ações da nº 14')
+    c.click(LINHA('#14', 'button[aria-haspopup=menu]'), at=c.A(11, 'menu,', 0.8), label='Ações da nº 14 (menu)')
     c.hover(ITEM('Baixar PDF'), 0.6, at=c.A(11, 'PDF', 0.6), label='Baixar PDF', noScroll=True)
     c.hover(ITEM('Histórico'), 0.8, at=c.A(11, 'Histórico.', 0.6), label='Histórico', noScroll=True)
+    c.press('Escape', at=round(c.W(11, 'Histórico.') + 0.9, 2), label='fecha o menu')
     c.fim()
     return c
 
@@ -663,8 +673,8 @@ def cap08():
     c.waitfor(text='Balanças Tremembé Manutenção Ltda', timeout=15)
     c.hover(SEL('main tbody'), 0.6, at=c.A(4, 'duas.', 0.6), label='duas notas recebidas')
     c.mark(5)
-    c.registra(SEL('main tbody'), at=c.A(5, 'honorários', 0.3), label='colunas Prestador e Valor (zoom)')
     c.hover(LINHA('Contabilidade Manacá', 'td >> nth=0'), 0.6, at=c.A(5, 'honorários', 0.6), label='Contabilidade Manacá Ltda R$ 1.650,00')
+    c.registra(SEL('main tbody'), label='colunas Prestador e Valor (zoom)')
     c.hover(LINHA('Balanças Tremembé', 'td >> nth=0'), 0.6, at=c.A(5, 'aferição', 0.6), label='Balanças Tremembé R$ 980,00')
     c.mark(6)
     c.hover(TXTX('A NFS-e é da prefeitura', within='main'), 1.2, at=c.A(6, 'cidade', 0.6), label='aviso: só chega nota de cidade do sistema nacional')
@@ -673,20 +683,20 @@ def cap08():
     c.click(ITEM('Lançar despesa / conta'), at=c.A(7, 'Lançar', 0.6), label='Lançar despesa / conta', noScroll=True)
     c.waitfor(text='Nova conta', timeout=10)
     c.mark(8)
-    c.hover(SEL("[role=dialog] input[placeholder='0,00']"), 0.6, at=c.A(8, 'valor', 0.6), label='Valor R$ 980,00 já preenchido')
-    c.click(SEL('#bill-due'), at=c.A(8, 'vencimento,', 0.7), label='Vencimento (campo)')
-    c.type(SEL('#bill-due'), '20112026', at=c.A(8, 'vinte,', 0.1), label='Vencimento: 20/11/2026', cps=40, noClick=True)
-    c.click(SEL('#bill-category'), at=c.A(8, 'categoria.', 0.7), label='Categoria (abre)')
-    c.type(PH('Pesquisar categoria...'), 'máquinas', at=c.A(8, 'categoria.', 0.0), label='busca: máquinas', cps=14, noClick=True)
-    c.click(OPTX('Manutenção de máquinas'), at=c.A(8, 'Criar', 1.4), label='Categoria: Manutenção de máquinas')
-    c.click(BTN('Criar conta'), at=c.A(8, 'Criar', 0.6), label='Criar conta')
+    c.hover(SEL('#bill-amount'), 0.6, at=c.A(8, 'valor', 0.6), label='Valor R$ 980,00 já preenchido')
+    c.click(SEL('#bill-due'), at=c.A(8, 'vencimento,', 0.7), label='Vencimento (abre o calendário)')
+    c.click(SEL("[data-radix-popper-content-wrapper] button[name=day]:text-is('20')"), at=c.A(8, 'vinte,', 0.5), label='Vencimento: 20/11/2026')
+    c.click(SEL('#bill-category'), at=c.A(8, 'categoria.', 0.9), label='Categoria (abre)')
+    c.type(PH('Pesquisar categoria...'), 'manut', at=c.A(8, 'categoria.', 0.3), label='busca: manut', cps=40, noClick=True)
+    c.click(OPTX('Manutenção de máquinas'), at=c.A(8, 'Criar', 0.5), label='Categoria: Manutenção de máquinas')
+    c.click(BTN('Criar conta'), at=c.A(8, 'Criar', 0.0), label='Criar conta')
     c.waitfor(target=LINHA('Balanças Tremembé', ":text-is('Lançada')"), timeout=10)
     c.hover(LINHA('Balanças Tremembé', "td:has-text('Lançada')"), 1.0, at=c.A(8, 'lançada.', 0.6), label='selo Lançada')
     c.fim()
     return c
 
 
-PERIODO = SEL('main button[role=combobox]', hasText='Este mês')
+PERIODO = SEL('main button[role=combobox]', hasText='Este mês')   # filtro de período do cabeçalho (y ~92, fora da faixa 96..730: fixo=True)
 
 
 @capitulo
@@ -697,7 +707,7 @@ def cap09():
     c.click(ITEM_MENU('Estoque Fiscal'), at=c.A(1, 'Estoque', 0.9), label='Estoque Fiscal no menu')
     c.waitfor(text='Pendentes + Rejeitadas', timeout=15)
     c.hover(SUBABA('Relatório fiscal'), 0.5, at=c.A(1, 'Relatório', 0.6), label='aba Relatório fiscal')
-    escolhe(c, PERIODO, 'Mês passado', c.A(1, 'Escolho', 0.7), c.A(1, 'passado,', 0.4), 'período: Mês passado')
+    escolhe(c, PERIODO, 'Mês passado', c.A(1, 'Escolho', 0.7), c.A(1, 'passado,', 0.4), 'período: Mês passado', fixo=True)
     c.mark(2)
     c.hover(CARTAO('Entrada'), 0.6, at=c.A(2, 'entrou', 0.6), label='cartão Entrada')
     c.hover(CARTAO('Saída'), 0.6, at=c.A(2, 'saiu', 0.6), label='cartão Saída')
@@ -706,10 +716,11 @@ def cap09():
     c.mark(4)
     c.hover(CARTAO('Pendentes + Rejeitadas'), 1.4, at=c.A(4, 'último', 0.6), label='cartão Pendentes + Rejeitadas')
     c.mark(5)
-    rola_ate(c, 'Entrada × Saída no período', c.L(5) - 0.2, 'rola até os gráficos', y=140, prefixo=True)
-    c.hover(TXTX('Entrada × Saída no período', within='main'), 0.4, at=c.A(5, 'gráfico', 0.6), label='Entrada × Saída no período')
-    c.hover(TXTX('Distribuição por status', within='main'), 0.4, at=c.A(5, 'status', 0.6), label='Distribuição por status')
-    c.hover(TXTX('Top Fornecedores', within='main'), 0.4, at=c.A(5, 'fornecedores', 0.6), label='Top Fornecedores')
+    rola_ate(c, 'Entrada × Saída no período', c.L(5) - 0.2, 'rola até o gráfico do mês', y=110, prefixo=True)
+    c.hover(TXTX('Entrada × Saída no período', within='main'), 0.3, at=c.A(5, 'gráfico', 0.6), label='Entrada × Saída no período')
+    c.hover(TXTX('Distribuição por status', within='main'), 0.3, at=c.A(5, 'status', 0.6), label='Distribuição por status')
+    rola_ate(c, 'Top Fornecedores', c.A(5, 'ranking', 0.5), 'rola até os rankings', y=250, dur_ms=700, prefixo=True)
+    c.hover(TXTX('Top Fornecedores', within='main'), 0.3, at=c.A(5, 'fornecedores', 0.6), label='Top Fornecedores')
     c.hover(TXTX('Top Clientes', within='main'), 0.6, at=c.A(5, 'clientes.', 0.6), label='Top Clientes')
     c.fim()
     return c
@@ -718,7 +729,10 @@ def cap09():
 @capitulo
 def cap10():
     """Posição do estoque (agora e 31/10 18:00), Histórico fiscal do metal amarelo e Fiscal × operacional (Delta) com a dica."""
-    c = Cap(10, start=(900, 440), setup=setup_em('/fiscal-ambiental/estoque-fiscal/relatorio'))
+    # o período do cabeçalho (o mesmo das abas Relatório e Fiscal × operacional) fica em "Mês passado" desde o cap09: escolhido no setup
+    c = Cap(10, start=(900, 440), setup=setup_em('/fiscal-ambiental/estoque-fiscal/relatorio', extra=[
+        {'do': 'click', 'target': PERIODO, 'noScroll': True}, {'do': 'click', 'target': OPT('Mês passado')},
+        {'do': 'waitFor', 'text': 'R$ 71.625,00', 'timeout': 15}, {'do': 'wait', 'seconds': 0.8}]))
     c.mark(1)
     c.click(SUBABA('Posição do estoque'), at=c.A(1, 'Posição', 0.8), label='aba Posição do estoque')
     c.hover(TXTX('Saldo fiscal agora, por material.', within='main'), 0.8, at=c.A(1, 'saldo', 0.6), label='Saldo fiscal agora, por material')
@@ -726,22 +740,26 @@ def cap10():
     c.mark(2)
     c.click(SEL('main button', hasText='10/11/2026'), at=c.A(2, 'data', 0.7), label='Data da posição (abre)')
     c.click(SEL('[data-radix-popper-content-wrapper] button[name=previous-month]'), at=c.A(2, 'hora,', 0.5), label='mês anterior')
-    c.click(SEL("[data-radix-popper-content-wrapper] [role=gridcell]:not([class*=outside]) >> text='31'"), at=c.A(2, 'fim', 0.6), label='dia 31/10')
-    c.click(SEL("main input[aria-label='Hora']"), at=c.A(2, 'outubro,', 0.5), label='Hora (campo)')
-    c.type(SEL("main input[aria-label='Hora']"), '1800', at=c.A(2, 'outubro,', -0.2), label='Hora: 18:00', cps=40, noClick=True)
-    c.click(BTN('Ver posição'), at=c.A(2, 'Ver', 0.7), label='Ver posição')
+    c.click(SEL("[data-radix-popper-content-wrapper] button[name=day]:text-is('31')"), at=c.A(2, 'fim', 0.6), label='dia 31/10')
+    # a hora: o cursor vai ao campo e o foco entra pelo começo (clique no meio do campo cairia nos minutos)
+    c.hover(SEL("main input[aria-label='Hora']"), 0.1, at=c.A(2, 'outubro,', 0.6), label='Hora (campo)')
+    c.ev("(()=>{const i=document.querySelector(\"main input[aria-label='Hora']\");if(!i)return 'SEM ALVO';i.focus();return 'foco na hora'})()")
+    c.type(SEL("main input[aria-label='Hora']"), '1800', label='Hora: 18:00', cps=14, noClick=True)
+    c.click(BTN('Ver posição'), at=c.A(2, 'Ver', 0.7, nth=1), label='Ver posição')
     c.mark(3)
     c.hover(TXTX('Saldo fiscal em', within='main'), 0.8, at=c.A(3, 'consulta.', 0.6), label='Saldo fiscal em 31/10')
     c.hover(BTN('Voltar para agora'), 1.0, at=c.A(3, 'passado,', 0.6), label='Voltar para agora')
+    c.click(BTN('Voltar para agora'), at=c.A(3, 'futuro.', 0.2), label='volta para agora')
     c.mark(4)
-    c.click(BTN('Voltar para agora'), at=c.L(4) - 0.2, label='volta para agora')
     c.click(SUBABA('Histórico fiscal'), at=c.A(4, 'Histórico', 0.7), label='aba Histórico fiscal')
     c.click(TXTX('Metal amarelo (latão)', within='main'), at=c.A(4, 'metal', 0.7), label='Materiais: Metal amarelo (latão)')
     c.hover(LINHA('1248', 'td >> nth=0'), 0.6, at=c.A(4, 'saída,', 0.6), label='saída de 30/10 (NF-e 1248, 600 kg)')
     c.hover(SEL("main th:has-text('Antes')"), 0.6, at=c.A(4, 'antes', 0.6), label='colunas Antes e Depois')
     c.mark(5)
     c.click(SUBABA('Fiscal × operacional'), at=c.A(5, 'última', 0.7), label='aba Fiscal × operacional')
-    c.hover(LINHA('Metal amarelo', "td >> nth=-1"), 1.2, at=c.A(5, 'amarelo:', 0.6), label='Metal amarelo: Mov. Fiscal, Mov. Operacional e Delta')
+    c.hover(TXTX('Comparação por material', within='main'), 0.4, at=c.A(5, 'lado', 0.6), label='Comparação por material')
+    rola_ate(c, 'Metal amarelo (latão)', c.A(5, 'Repara', 0.9), 'rola até o metal amarelo', y=420, dur_ms=900)
+    c.hover(LINHA('Metal amarelo', "td >> nth=-1"), 1.2, at=c.A(5, 'amarelo:', 0.5), label='Metal amarelo: Mov. Fiscal, Mov. Operacional e Delta')
     c.mark(6)
     c.cursor(NEUTRO, at=c.L(6) - 0.2, label='cursor em repouso (ilustração fiscal × operacional)')
     c.marca_ja(7)

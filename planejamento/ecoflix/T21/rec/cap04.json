@@ -1,0 +1,429 @@
+{
+ "name": "t21-cap04",
+ "title": "T21 · Cap. 4 · O que ele responde bem (narração ESTIMADA 55,6 s; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "seed": "t21-cap04",
+ "pace": 0.5,
+ "cps": 40,
+ "tail": 1.5,
+ "start": {
+  "x": 900,
+  "y": 560
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true"
+ },
+ "seedExtra": [
+  "t14/inicio",
+  "t14/apos-cap02",
+  "t14/apos-cap03",
+  "t14/apos-cap04",
+  "t14/apos-cap06",
+  "t14/apos-cap07",
+  "t14/apos-cap08",
+  "t14/apos-cap09",
+  "t14/apos-cap10",
+  "t14/apos-cap11",
+  "t14/apos-cap12",
+  "t14/apos-cap14",
+  "t15/inicio",
+  "t15/apos-cap01",
+  "t15/apos-cap02",
+  "t15/apos-cap10",
+  "t21/inicio",
+  "t21/apos-cap02"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "waitFor",
+   "target": {
+    "label": "E-mail"
+   },
+   "timeout": 30
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "E-mail"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "Senha",
+    "exact": true
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "selector": "button[aria-label=\"Sair\"]",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/materiais"
+  },
+  {
+   "do": "waitFor",
+   "selector": "button[aria-label=\"Abrir o Cato\"]",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const v={savedAt:Date.now(),sessionId:\"f43d3a45-ce41-5a72-b5d8-f8394ae1c023\",messages:[{\"role\": \"user\", \"content\": \"Como tá indo meu negócio esse mês?\", \"createdAt\": 1794310220000}, {\"role\": \"assistant\", \"content\": \"Novembro começou no azul. Olhando seus lançamentos de 1 a 10 de novembro:\\n\\n- **Vendas:** R$ 118.620,20\\n- **Compras:** R$ 18.781,45\\n- **Despesas:** R$ 30.249,20\\n\\nO resultado até aqui é de **R$ 69.589,55**, no regime de caixa. A Fundição Bandeira do Vale foi o maior cliente do período, com R$ 57.460,00 em vendas. Ainda faltam 20 dias pro mês fechar.\", \"toolsUsed\": [\"resumo_financeiro\"], \"chart\": null, \"table\": null, \"images\": null, \"action\": null, \"context\": {\"period\": {\"start\": \"2026-11-01\", \"end\": \"2026-11-10\", \"timezone\": \"America/Sao_Paulo\"}, \"regime\": \"caixa\", \"updatedAt\": \"2026-11-10T11:30:00.000Z\"}, \"interactionId\": \"c0ec2624-3fb6-52e0-8e56-f44f77ece665\", \"feedback\": null, \"budgetNotice\": null, \"cacheHit\": false, \"createdAt\": 1794310224000}],activeJobId:null,activeQuestion:null,activeJobStartedAt:null};sessionStorage.setItem(\"cato-conversation-v3:38814e47-876a-5977-a5f7-53af364c17bb:34c36c63-0890-5e89-8963-7c77b7996908\",JSON.stringify(v));return 'conversa '+v.messages.length})()"
+  },
+  {
+   "do": "goto",
+   "url": "/materiais",
+   "reload": true
+  },
+  {
+   "do": "waitFor",
+   "selector": "button[aria-label=\"Abrir o Cato\"]",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "button[aria-label=\"Abrir o Cato\"]"
+   },
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "selector": "[role=dialog][aria-label^=\"Cato.ai\"]",
+   "timeout": 10
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{for(let i=0;i<80;i++){const b=[...document.querySelectorAll(\"[role=dialog][aria-label^=\\\"Cato.ai\\\"] div.h-full.overflow-y-auto > div.items-start\")].pop();if(b&&b.innerText.replace(/\\s+/g,' ').includes(\"0 dias pro mês fechar.\"))return 'ok';await new Promise(r=>setTimeout(r,250));}return 'SEM ALVO: a resposta não terminou'})()"
+  },
+  {
+   "do": "wait",
+   "seconds": 0.8
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const c=document.querySelector(\"[role=dialog][aria-label^=\\\"Cato.ai\\\"] div.h-full.overflow-y-auto\");if(!c)return 'SEM PAINEL';const y0=c.scrollTop,dy=c.scrollHeight-c.clientHeight-y0;c.scrollTop=y0+dy;return 'fim '+Math.round(c.scrollTop)})()"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|Algo deu errado|Falha ao|Something went wrong|indispon[ií]vel|SEM RESPOSTA SIMULADA|Deu um problema|N[ãa]o consegui/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{document.querySelectorAll('[data-sonner-toast][data-type=error]').forEach(t=>{const s='TOAST DE ERRO: '+t.textContent.trim().slice(0,90);if(!window.__avisos.includes(s)&&window.__avisos.length<10)window.__avisos.push(s)})},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "textarea[aria-label=\"Mensagem para o Cato\"]"
+   },
+   "at": 2.23,
+   "label": "campo Pergunte ao Cato (R2)",
+   "noScroll": true
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "textarea[aria-label=\"Mensagem para o Cato\"]"
+   },
+   "text": "Quem tá me devendo?",
+   "cps": 40,
+   "at": 2.98,
+   "label": "digita: Quem tá me devendo?",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "button[aria-label=\"Enviar\"]"
+   },
+   "at": 4.69,
+   "label": "Enviar (R2)",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "text": "Consultei os saldos dos parceiros",
+   "timeout": 8
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 5.01
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const c=document.querySelector(\"[role=dialog][aria-label^=\\\"Cato.ai\\\"] div.h-full.overflow-y-auto\");if(!c)return 'SEM PAINEL';const el=[...document.querySelectorAll(\"[role=dialog][aria-label^=\\\"Cato.ai\\\"] div.h-full.overflow-y-auto div.items-end\")].filter(e=>e.getClientRects().length).pop();if(!el)return 'SEM ALVO';const dy=Math.round(el.getBoundingClientRect().top-165);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});await new Promise(r=>setTimeout(r,60));return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 7.88,
+   "label": "a conversa sobe até o começo da resposta (o gráfico empurrou)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog][aria-label^=\"Cato.ai\"] strong:has-text(\"R$ 17.540,00\")"
+   },
+   "seconds": 1.0,
+   "at": 8.14,
+   "label": "ZOOM total R$ 17.540,00",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog][aria-label^=\"Cato.ai\"] li:has-text(\"Fundição Bandeira do Vale: R$ 14.370,00\")"
+   },
+   "seconds": 1.2,
+   "at": 11.38,
+   "label": "ZOOM Fundição Bandeira do Vale: R$ 14.370,00",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 17.12
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "textarea[aria-label=\"Mensagem para o Cato\"]"
+   },
+   "at": 17.42,
+   "label": "campo Pergunte ao Cato (R3)",
+   "noScroll": true
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "textarea[aria-label=\"Mensagem para o Cato\"]"
+   },
+   "text": "Quanto tenho em estoque agora?",
+   "cps": 40,
+   "at": 18.17,
+   "label": "digita: Quanto tenho em estoque agora?",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "button[aria-label=\"Enviar\"]"
+   },
+   "at": 20.61,
+   "label": "Enviar (R3)",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "text": "Consultei seu estoque",
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog][aria-label^=\"Cato.ai\"] strong:has-text(\"R$ 96.076,00\")"
+   },
+   "seconds": 1.0,
+   "at": 22.46,
+   "label": "valor pelo custo médio R$ 96.076,00",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog][aria-label^=\"Cato.ai\"] li:has-text(\"Alumínio perfil: 3.385 kg\")"
+   },
+   "seconds": 1.0,
+   "at": 28.12,
+   "label": "alumínio perfil na frente",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 30.22
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "textarea[aria-label=\"Mensagem para o Cato\"]"
+   },
+   "at": 30.23,
+   "label": "campo Pergunte ao Cato (R4)",
+   "noScroll": true
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "textarea[aria-label=\"Mensagem para o Cato\"]"
+   },
+   "text": "Qual o saldo das minhas contas no banco?",
+   "cps": 40,
+   "at": 30.98,
+   "label": "digita: Qual o saldo das minhas contas no banco?",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "button[aria-label=\"Enviar\"]"
+   },
+   "at": 34.08,
+   "label": "Enviar (R4)",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "text": "Consultei seu resumo bancário",
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog][aria-label^=\"Cato.ai\"] strong:has-text(\"R$ 132.448,67\")"
+   },
+   "seconds": 0.8,
+   "at": 35.48,
+   "label": "saldo de agora R$ 132.448,67",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog][aria-label^=\"Cato.ai\"] li:has-text(\"Conta Cooperativa\")"
+   },
+   "seconds": 0.6,
+   "at": 36.92,
+   "label": "as três contas",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog][aria-label^=\"Cato.ai\"] p:has-text(\"entraram\")"
+   },
+   "seconds": 0.8,
+   "at": 38.49,
+   "label": "o que entrou e saiu no mês",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 40.22
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "textarea[aria-label=\"Mensagem para o Cato\"]"
+   },
+   "at": 40.59,
+   "label": "campo Pergunte ao Cato (R5)",
+   "noScroll": true
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "textarea[aria-label=\"Mensagem para o Cato\"]"
+   },
+   "text": "Como tá meu caixa hoje?",
+   "cps": 40,
+   "at": 41.34,
+   "label": "digita: Como tá meu caixa hoje?",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "button[aria-label=\"Enviar\"]"
+   },
+   "at": 43.31,
+   "label": "Enviar (R5)",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "text": "Consultei seu caixa",
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog][aria-label^=\"Cato.ai\"] strong:has-text(\"não tem caixa aberto\")"
+   },
+   "seconds": 0.6,
+   "at": 44.69,
+   "label": "hoje ainda não tem caixa aberto",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog][aria-label^=\"Cato.ai\"] strong:has-text(\"R$ 640,00\")"
+   },
+   "seconds": 1.0,
+   "at": 45.72,
+   "label": "os caixas de ontem",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 47.25
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 55.57
+  }
+ ]
+}

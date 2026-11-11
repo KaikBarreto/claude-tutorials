@@ -1,0 +1,367 @@
+{
+ "name": "t00-cap06",
+ "title": "T0 · Cap. 6 · Um passeio pelo menu (computador 1280x800; narração 67,2 s, ESTIMADA; marcas L1..L10 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
+ "fakeNow": "2026-11-10T08:30:00-03:00",
+ "seed": "t00-cap06",
+ "pace": 0.5,
+ "cps": 22,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 470
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true",
+  "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10"
+ },
+ "seedExtra": [
+  "t00/catalogo",
+  "t00/s2",
+  "t00/pagamentos"
+ ],
+ "prewarm": [
+  "/login",
+  "/dashboard"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/login"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "timeout": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "••••••••"
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Rafael",
+   "timeout": 45
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 20
+  },
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Rafael!",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 15
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel|Algo deu errado|Falha ao|Something went wrong|N[ãa]o conseguimos/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "link",
+    "name": "Dashboard",
+    "exact": true
+   },
+   "seconds": 0.5,
+   "at": 5.34,
+   "label": "menu: Dashboard",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 8.65
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Financeiro",
+    "exact": true
+   },
+   "at": 8.78,
+   "label": "Financeiro (abre o grupo)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "role": "link",
+    "name": "Contas a Pagar/Receber",
+    "exact": true
+   },
+   "text": "",
+   "noClick": true,
+   "at": 11.94,
+   "label": "subitens do Financeiro",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 15.91
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "link",
+    "name": "Pedidos",
+    "exact": true
+   },
+   "seconds": 0.5,
+   "at": 16.14,
+   "label": "menu: Pedidos",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 19.3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Fiscal & Ambiental",
+    "exact": true
+   },
+   "seconds": 0.5,
+   "at": 19.53,
+   "label": "menu: Fiscal & Ambiental (sem abrir)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 24.96
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Materiais",
+    "exact": true
+   },
+   "at": 25.09,
+   "label": "Materiais (abre o grupo; o Financeiro fecha)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "role": "link",
+    "name": "Ticket de Pesagem",
+    "exact": true
+   },
+   "text": "",
+   "noClick": true,
+   "at": 28.01,
+   "label": "subitens de Materiais",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const vis=e=>e.getClientRects().length>0&&getComputedStyle(e).visibility!=='hidden';const nz=t=>t.replace(/[\\s\\u00a0]+/g,' ').trim();const rolagem=(el)=>{let c=el.parentElement;while(c&&c!==document.body&&c!==document.documentElement){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const root=document.querySelector(\"body\")||document.body;const el=[...root.querySelectorAll('*')].filter(e=>vis(e)&&nz(e.textContent)===\"Coletas & Log\\u00edstica\"&&![...e.children].some(k=>nz(k.textContent)===\"Coletas & Log\\u00edstica\"))[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const r0=el.getBoundingClientRect();const cr=c.getBoundingClientRect?c.getBoundingClientRect():{top:0,bottom:innerHeight};const top0=c===document.scrollingElement?0:cr.top,bot0=c===document.scrollingElement?innerHeight:cr.bottom;if(r0.top>=top0+8&&r0.bottom<=bot0-8)return 'ok';const dy=Math.round(el.getBoundingClientRect().top-300);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/500),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 29.59,
+   "label": "o menu desce a Coletas & Logística"
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 30.09
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Coletas & Logística",
+    "exact": true
+   },
+   "seconds": 0.5,
+   "at": 30.32,
+   "label": "menu: Coletas & Logística (sem abrir)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 34.77
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "link",
+    "name": "Clientes e Fornecedores",
+    "exact": true
+   },
+   "seconds": 0.4,
+   "at": 36.74,
+   "label": "menu: Clientes e Fornecedores",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "link",
+    "name": "Funcionários (RH)",
+    "exact": true
+   },
+   "seconds": 0.4,
+   "at": 39.7,
+   "label": "menu: Funcionários (RH)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "link",
+    "name": "CRM/Kanban",
+    "exact": true
+   },
+   "seconds": 0.1,
+   "at": 42.21,
+   "label": "menu: CRM/Kanban",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const vis=e=>e.getClientRects().length>0&&getComputedStyle(e).visibility!=='hidden';const nz=t=>t.replace(/[\\s\\u00a0]+/g,' ').trim();const rolagem=(el)=>{let c=el.parentElement;while(c&&c!==document.body&&c!==document.documentElement){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const root=document.querySelector(\"body\")||document.body;const el=[...root.querySelectorAll('*')].filter(e=>vis(e)&&nz(e.textContent)===\"Gerencial (Filiais)\"&&![...e.children].some(k=>nz(k.textContent)===\"Gerencial (Filiais)\"))[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const r0=el.getBoundingClientRect();const cr=c.getBoundingClientRect?c.getBoundingClientRect():{top:0,bottom:innerHeight};const top0=c===document.scrollingElement?0:cr.top,bot0=c===document.scrollingElement?innerHeight:cr.bottom;if(r0.top>=top0+8&&r0.bottom<=bot0-8)return 'ok';const dy=Math.round(el.getBoundingClientRect().top-300);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/500),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 42.95,
+   "label": "o menu desce ao Gerencial (Filiais)"
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 43.55
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "link",
+    "name": "Agenda",
+    "exact": true
+   },
+   "seconds": 0.4,
+   "at": 43.77,
+   "label": "menu: Agenda",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "link",
+    "name": "Gerencial (Filiais)",
+    "exact": true
+   },
+   "seconds": 0.4,
+   "at": 46.66,
+   "label": "menu: Gerencial (Filiais)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L9",
+   "at": 50.27
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Configurações",
+    "exact": true
+   },
+   "seconds": 0.6,
+   "at": 51.72,
+   "label": "rodapé: Configurações",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L10",
+   "at": 54.04
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const vis=e=>e.getClientRects().length>0&&getComputedStyle(e).visibility!=='hidden';const nz=t=>t.replace(/[\\s\\u00a0]+/g,' ').trim();const rolagem=(el)=>{let c=el.parentElement;while(c&&c!==document.body&&c!==document.documentElement){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const root=document.querySelector(\"body\")||document.body;const el=[...root.querySelectorAll('*')].filter(e=>vis(e)&&nz(e.textContent)===\"Dashboard\"&&![...e.children].some(k=>nz(k.textContent)===\"Dashboard\"))[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const r0=el.getBoundingClientRect();const cr=c.getBoundingClientRect?c.getBoundingClientRect():{top:0,bottom:innerHeight};const top0=c===document.scrollingElement?0:cr.top,bot0=c===document.scrollingElement?innerHeight:cr.bottom;if(r0.top>=top0+8&&r0.bottom<=bot0-8)return 'ok';const dy=Math.round(el.getBoundingClientRect().top-120);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 54.14,
+   "label": "o menu volta ao topo"
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 760,
+    "y": 470
+   },
+   "by": 0,
+   "duration": 0.2,
+   "after": 0,
+   "at": 61.33,
+   "label": "cursor sai do menu"
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 67.16
+  }
+ ]
+}

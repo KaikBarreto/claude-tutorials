@@ -31,7 +31,9 @@ if [ "$MODO" = rapido ]; then
   head -1 "rec/t01/_ens/cap$NN.resumo.txt"; tail -1 "rec/t01/_ens/cap$NN.prever.txt"
 else
   mkdir -p "$SHM"; rm -rf "$SHM/_debug"
-  flock .heavy.lock node rec/record.mjs "rec/t01/cap$NN.json" --out "$SHM" > "rec/t01/cap$NN.log" 2>&1; echo "saida $?" >> "rec/t01/cap$NN.log"
+  # T01_ESPERA (s): espera máxima pela trava (fila cheia); sem trava no prazo sai "saida 75" e nada é gravado
+  flock -E 75 ${T01_ESPERA:+-w "$T01_ESPERA"} .heavy.lock node rec/record.mjs "rec/t01/cap$NN.json" --out "$SHM" > "rec/t01/cap$NN.log" 2>&1; echo "saida $?" >> "rec/t01/cap$NN.log"
+  grep -qx "saida 75" "rec/t01/cap$NN.log" && { echo "cap$NN: sem a trava no prazo"; exit 75; }
   cp -f "$SHM/t01-cap$NN.actions.json" "$SHM/t01-cap$NN.telemetry.json" rec/t01/ 2>/dev/null
   rm -rf "$SHM/_frames"
   python3 -I rec/t01/resumo.py "$NN" > "rec/t01/cap$NN.resumo.txt" 2>&1

@@ -120,3 +120,61 @@ e2 = {'seedExtra': SEEDS, 'start': '/dashboard', 'stopOnFail': False, 'steps': [
 ]}
 json.dump(e2, open(os.path.join(HERE, '_ex', 'e2.json'), 'w', encoding='utf8'), ensure_ascii=False, indent=1)
 print('e2 ok')
+
+# ---------------------------------------------------------------- e3: o fluxo inteiro dos caps 02 a 09, com o estado do banco depois de cada etapa
+# (para compor as sementes apos-cap02..07 sem rodar a cadeia de capítulos; a apos-cap09 sai do t08_semente.py logo depois)
+ESTADO = ("(async()=>{const u='http://127.0.0.1:54340/__dev/state?table=';const o={};for(const t of ['weighing_tickets','order_drafts'])"
+          "o[t]=await (await fetch(u+t)).json();return 'ESTADO '+JSON.stringify(o)})()")
+def etapa(nome):
+    return [{'do': 'wait', 'ms': 1800}, ev("'ETAPA %s'" % nome, 40), ev(ESTADO, 200000)]
+def mot(nome, busca):
+    return [opt({'do': 'keys', 'target': {'placeholder': 'Digite ou busque o motorista'}, 'text': busca}), {'do': 'wait', 'ms': 700},
+            opt({'do': 'click', 'target': {'role': 'option', 'name': nome}}), {'do': 'wait', 'ms': 600}]
+def placa(nome, busca):
+    return [opt({'do': 'keys', 'target': {'placeholder': 'Digite ou busque a placa'}, 'text': busca}), {'do': 'wait', 'ms': 700},
+            opt({'do': 'click', 'target': {'role': 'option', 'name': nome}}), {'do': 'wait', 'ms': 600}]
+def avancada_item():
+    return [opt({'do': 'click', 'target': {'selector': "button[aria-label='Ações do item']"}}), {'do': 'wait', 'ms': 600},
+            opt({'do': 'click', 'target': {'role': 'menuitem', 'name': 'Adicionar tara / pesagem avançada'}}), {'do': 'wait', 'ms': 1000}]
+e3 = {'seedExtra': SEEDS + ['t08/inicio'], 'start': '/dashboard', 'stopOnFail': True, 'steps': [
+    {'do': 'wait', 'ms': 2500},
+    {'do': 'goto', 'url': '/ticket-pesagem'}, {'do': 'waitFor', 'text': 'Gerencie tickets de pesagem rodoviária', 'timeout': 30}, {'do': 'wait', 'ms': 1200},
+    {'do': 'click', 'target': {'role': 'button', 'name': 'Novo Ticket de Pesagem'}}, {'do': 'wait', 'ms': 1500},
+    *forn('Cooperativa Recomeço', 'Recomeço'),
+    {'do': 'keys', 'target': {'placeholder': 'Escreva o nome ou código do material'}, 'text': 'latinha'}, {'do': 'wait', 'ms': 700},
+    {'do': 'click', 'target': {'role': 'option', 'name': 'Alumínio latinha'}}, {'do': 'wait', 'ms': 900},
+    *mot('Edson Moura', 'Edson'), {'do': 'wheel', 'x': 700, 'y': 500, 'dy': 120}, *placa('FKD2E41', 'FKD'),
+    *etapa('02'),
+    {'do': 'click', 'target': {'role': 'button', 'name': 'Pesagem avançada'}}, {'do': 'wait', 'ms': 1000},
+    {'do': 'keys', 'target': C('1ª Pesagem'), 'text': '9460'}, {'do': 'wait', 'ms': 400},
+    {'do': 'click', 'target': {'text': 'Completo', 'within': DLG}}, {'do': 'click', 'target': {'role': 'button', 'name': 'Confirmar'}}, {'do': 'wait', 'ms': 1200},
+    *etapa('03'),
+    *avancada_item(), {'do': 'keys', 'target': C('1ª Pesagem'), 'text': '9460'}, {'do': 'keys', 'target': C('2ª Pesagem'), 'text': '6380'}, {'do': 'wait', 'ms': 500},
+    {'do': 'click', 'target': {'role': 'button', 'name': 'Confirmar'}}, {'do': 'wait', 'ms': 1200},
+    *etapa('04'),
+    *avancada_item(), {'do': 'click', 'target': {'role': 'radio', 'name': '%'}}, {'do': 'wait', 'ms': 400}, {'do': 'keys', 'target': IMP, 'text': '2'},
+    {'do': 'wait', 'ms': 500}, {'do': 'click', 'target': {'role': 'button', 'name': 'Confirmar'}}, {'do': 'wait', 'ms': 1200},
+    *etapa('05'),
+    {'do': 'click', 'target': {'selector': "button[aria-label='Novo ticket de pesagem']"}}, {'do': 'wait', 'ms': 1200},
+    *forn('Auto Peças Vale Forte', 'Vale Forte'),
+    {'do': 'keys', 'target': {'placeholder': 'Escreva o nome ou código do material'}, 'text': 'bateria'}, {'do': 'wait', 'ms': 500}, {'do': 'press', 'key': 'Enter'},
+    {'do': 'wait', 'ms': 800}, {'do': 'wheel', 'x': 700, 'y': 500, 'dy': 120}, *mot('Jair Lopes', 'Jair'), *placa('GHT7B19', 'GHT'),
+    {'do': 'click', 'target': {'role': 'button', 'name': 'Pesagem avançada'}}, {'do': 'wait', 'ms': 900},
+    {'do': 'keys', 'target': C('1ª Pesagem'), 'text': '5640'}, {'do': 'wait', 'ms': 300}, {'do': 'click', 'target': {'role': 'button', 'name': 'Confirmar'}}, {'do': 'wait', 'ms': 1200},
+    {'do': 'click', 'target': {'selector': "main button[aria-expanded]:has-text('Seu rascunho')"}}, {'do': 'wait', 'ms': 800},
+    {'do': 'click', 'target': {'selector': "[data-radix-popper-content-wrapper] button:has-text('#58')"}}, {'do': 'wait', 'ms': 1200},
+    {'do': 'click', 'target': {'role': 'button', 'name': 'Salvar Ticket de Pesagem'}}, {'do': 'wait', 'ms': 2500},
+    {'do': 'click', 'target': {'role': 'button', 'name': 'Fechar', 'exact': True, 'within': DLG, 'nth': 0}}, {'do': 'wait', 'ms': 1000},
+    *etapa('06'),
+    {'do': 'click', 'target': {'role': 'button', 'name': 'Voltar'}}, {'do': 'wait', 'ms': 1800},
+    {'do': 'click', 'target': ACOES58}, {'do': 'wait', 'ms': 600}, {'do': 'click', 'target': {'role': 'menuitem', 'name': 'Valorizar'}}, {'do': 'wait', 'ms': 3500},
+    *etapa('07'),
+    {'do': 'goto', 'url': '/ticket-pesagem'}, {'do': 'wait', 'ms': 2500},
+    {'do': 'click', 'target': ACOES58}, {'do': 'wait', 'ms': 600}, {'do': 'click', 'target': {'role': 'menuitem', 'name': 'Valorizar'}}, {'do': 'wait', 'ms': 3500},
+    {'do': 'click', 'target': {'role': 'button', 'name': 'Finalizar'}}, {'do': 'wait', 'ms': 1500},
+    {'do': 'click', 'target': {'text': 'Pix/Transferência', 'within': DLG}}, {'do': 'wait', 'ms': 900},
+    {'do': 'click', 'target': {'role': 'button', 'name': 'CONFIRMAR PAGAMENTO'}}, {'do': 'wait', 'ms': 5000},
+    txt('main', 600), ev("'ETAPA 09'", 40),
+]}
+json.dump(e3, open(os.path.join(HERE, '_ex', 'e3.json'), 'w', encoding='utf8'), ensure_ascii=False, indent=1)
+print('e3 ok')

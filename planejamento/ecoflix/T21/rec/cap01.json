@@ -1,0 +1,180 @@
+{
+ "name": "t21-cap01",
+ "title": "T21 · Cap. 1 · Onde o Cato fica (narração ESTIMADA 25,3 s; marcas L1..L3 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "seed": "t21-cap01",
+ "pace": 0.6,
+ "cps": 40,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true"
+ },
+ "seedExtra": [
+  "t14/inicio",
+  "t14/apos-cap02",
+  "t14/apos-cap03",
+  "t14/apos-cap04",
+  "t14/apos-cap06",
+  "t14/apos-cap07",
+  "t14/apos-cap08",
+  "t14/apos-cap09",
+  "t14/apos-cap10",
+  "t14/apos-cap11",
+  "t14/apos-cap12",
+  "t14/apos-cap14",
+  "t15/inicio",
+  "t15/apos-cap01",
+  "t15/apos-cap02",
+  "t15/apos-cap10",
+  "t21/inicio"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "waitFor",
+   "target": {
+    "label": "E-mail"
+   },
+   "timeout": 30
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "E-mail"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "Senha",
+    "exact": true
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "selector": "button[aria-label=\"Sair\"]",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/materiais"
+  },
+  {
+   "do": "waitFor",
+   "selector": "button[aria-label=\"Abrir o Cato\"]",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|Algo deu errado|Falha ao|Something went wrong|indispon[ií]vel|SEM RESPOSTA SIMULADA|Deu um problema|N[ãa]o consegui/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{document.querySelectorAll('[data-sonner-toast][data-type=error]').forEach(t=>{const s='TOAST DE ERRO: '+t.textContent.trim().slice(0,90);if(!window.__avisos.includes(s)&&window.__avisos.length<10)window.__avisos.push(s)})},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "button[aria-label=\"Abrir o Cato\"]"
+   },
+   "seconds": 2.2,
+   "at": 4.1,
+   "label": "ZOOM botão redondo do Cato (Abrir o Cato)",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 820,
+    "y": 470
+   },
+   "by": 0,
+   "duration": 0.8,
+   "after": 100,
+   "at": 7.61,
+   "label": "cursor solta o botão (em qualquer tela)"
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 9.34
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 16.9
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "button[aria-label=\"Abrir o Cato\"]"
+   },
+   "at": 18.36,
+   "label": "clique no botão do Cato",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "text": "Antes da primeira conversa com o Cato",
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Antes da primeira conversa com o Cato",
+    "exact": true
+   },
+   "seconds": 1.2,
+   "at": 22.86,
+   "label": "janela Antes da primeira conversa com o Cato",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 25.3
+  }
+ ]
+}

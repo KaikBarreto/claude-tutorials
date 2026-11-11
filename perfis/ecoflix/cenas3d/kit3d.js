@@ -13,11 +13,13 @@ export const eo = x => 1 - Math.pow(1 - cl(x), 3);
 export const eio = x => { x = cl(x); return x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2; };
 export const pr = (t, a, d = .45) => cl((t - a) / d);
 export const lerp = (a, b, p) => a + (b - a) * p;
-let S = 0;   // sorteio com semente (mulberry32): a cena sai igual em todo quadro e em todo render
-export const semente = s => { S = s | 0; };
+let S = 0, S2 = 0;   // sorteio com semente (mulberry32): a cena sai igual em todo quadro e em todo render; S2 só escolhe variantes
+export const semente = s => { S = s | 0; S2 = (s ^ 0x5bd1e995) | 0; };
 export const rng = () => { S = S + 0x6D2B79F5 | 0; let t = Math.imul(S ^ S >>> 15, 1 | S); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
 export const ri = (a, b) => lerp(a, b, rng());
 export const pega = a => a[Math.floor(rng() * a.length)];
+const rng2 = () => { S2 = S2 + 0x6D2B79F5 | 0; let t = Math.imul(S2 ^ S2 >>> 15, 1 | S2); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+const ri2 = (a, b) => lerp(a, b, rng2()), pega2 = a => a[Math.floor(rng2() * a.length)];
 
 // ------------------------------------------------------------------ ponte com a fala (dados do renderizador)
 let D = null;
@@ -123,6 +125,7 @@ function base() {
     RD.shadowMap.enabled = Q.get('sh') !== '0';
     RD.shadowMap.type = { pcf: THREE.PCFShadowMap, vsm: THREE.VSMShadowMap }[Q.get('st')] ?? THREE.PCFSoftShadowMap;
   }
+  if (!ENV) { ENV = ambiente(); for (const m of METAL) { m.envMap = ENV; m.needsUpdate = true; } }
   CENA = new THREE.Scene(); CAM = new THREE.PerspectiveCamera(OPC.fov, 1280 / 800, .1, 300);
   CENA.add(new THREE.HemisphereLight(0xffffff, 0xB9C2CB, 1.7));
   SOL = new THREE.DirectionalLight(0xffffff, 2.3); SOL.castShadow = true; SOL.shadow.mapSize.setScalar(+(Q.get('sm') || OPC.mapa));
@@ -237,33 +240,190 @@ export function domo(n, rx, rz, h, y0 = 0, sup = .45) {
     P.push([Math.cos(a) * u * rx, y0 + top * (sup + (1 - sup) * rng()) + .03, Math.sin(a) * u * rz]); } return P;
 }
 
-// ------------------------------------------------------------------ 3D: peças de sucata e de impureza (genéricas)
-const GEO = {
-  tubo: new THREE.CylinderGeometry(.042, .042, .46, 12), bobina: new THREE.TorusGeometry(.1, .032, 8, 18), chapa: rbox(.32, .035, .24, .012, 1),
-  bloco: new THREE.DodecahedronGeometry(.12, 0), lata: new THREE.CylinderGeometry(.05, .05, .14, 14), perfil: rbox(.52, .055, .055, .014, 1),
-  terra: new THREE.DodecahedronGeometry(.075, 0), pneu: new THREE.TorusGeometry(.12, .045, 8, 14, PI * 1.1), mangueira: new THREE.CylinderGeometry(.03, .03, .32, 10),
-  caco: rbox(.17, .014, .11, .006, 1), garrafa: new THREE.CylinderGeometry(.045, .05, .17, 12), pino: new THREE.CylinderGeometry(1, 1, 1, 8) };
+// ------------------------------------------------------------------ 3D: materiais reconhecíveis (sucata, embalagem e impureza)
+// Cada material com o desenho de verdade: latinha (alumínio com brilho e faixa de rótulo genérico, inteira ou amassada),
+// garrafa PET (translúcida, transparente ou verde, inteira ou amassada), ferro (vergalhão dobrado, cano, chapa e perfil,
+// com ferrugem), cobre (fio enrolado, tubo, fio embolado), alumínio (lata, perfil, chapa), papelão (caixa amassada, folha),
+// terra (torrão), borracha (pedaço de pneu, mangueira), plástico (sacola, garrafa). As escolhas extras (variante, amassada,
+// cor da faixa) saem do segundo sorteio: o rng() da cena anda igual ao do kit antigo, e peca, monte, latinhas e
+// fardoLatinhas caem nos mesmos lugares.
+let ENV = null; const METAL = [];
+function ambiente() {   // estúdio de luz (degradê e dois painéis) que os metais e o PET refletem
+  const s = new THREE.Scene(), e = new THREE.SphereGeometry(20, 32, 16), P = e.attributes.position, C = [], c = new THREE.Color();
+  const topo = new THREE.Color('#FFFFFF'), meio = new THREE.Color('#E6EFEA'), chao = new THREE.Color('#68727D');
+  for (let i = 0; i < P.count; i++) { const y = P.getY(i) / 20; if (y > 0) c.copy(meio).lerp(topo, y); else c.copy(meio).lerp(chao, Math.min(1, -y * 2.5)); C.push(c.r, c.g, c.b); }
+  e.setAttribute('color', new THREE.Float32BufferAttribute(C, 3));
+  s.add(new THREE.Mesh(e, new THREE.MeshBasicMaterial({ side: THREE.BackSide, vertexColors: true })));
+  for (const [x, y, z, w, h, k] of [[-8, 12, 7, 10, 4, 3.2], [11, 5, -3, 4, 8, 1.8]]) {
+    const m = new THREE.Mesh(new THREE.PlaneGeometry(w, h), new THREE.MeshBasicMaterial({ color: new THREE.Color(k, k, k), side: THREE.DoubleSide }));
+    m.position.set(x, y, z); m.lookAt(0, 0, 0); s.add(m); }
+  const pm = new THREE.PMREMGenerator(RD), rt = pm.fromScene(s, .02); pm.dispose(); return rt.texture;
+}
+const lin = c => { const k = new THREE.Color(c); return `vec3(${k.r.toFixed(4)},${k.g.toFixed(4)},${k.b.toFixed(4)})`; };
+const FACETA = '#include <normal_fragment_begin>\n{ vec3 fn = normalize(cross(dFdx(vViewPosition), dFdy(vViewPosition))); normal = normalize(mix(normal, fn, vK)); }';
+// amassado no vertex shader (k de 0 a 1): dobras no raio, achata em z e encolhe em y
+const AMASSA = (k, a, b, ex, ez, ey) => `if (${k} > 0.0) { float an = atan(transformed.z, transformed.x + 1e-5), rr = length(transformed.xz);
+  rr *= 1.0 + ${k} * (${a} * sin(an * 5.0 + transformed.y * 45.0) + ${b} * sin(an * 3.0 - transformed.y * 70.0));
+  transformed.x = cos(an) * rr * (1.0 + ${ex} * ${k}); transformed.z = sin(an) * rr * (1.0 - ${ez} * ${k}); transformed.y *= 1.0 - ${ey} * ${k}; }`;
+export function MM(c, o = {}) {   // metal (brilho do ambiente); o.fer: manchas de ferrugem pela cor do vértice (r = mancha, g = tom)
+  const k = 'm' + c + (o.r ?? '') + (o.m ?? '') + (o.fer ? 'r' : '') + (o.f ? 'f' : '');
+  if (MC[k]) return MC[k];
+  const m = new THREE.MeshStandardMaterial({ color: c, roughness: o.r ?? .35, metalness: o.m ?? .75, flatShading: !!o.f, envMap: ENV, vertexColors: !!o.fer });
+  if (o.fer) { m.onBeforeCompile = sh => { sh.fragmentShader = sh.fragmentShader
+      .replace('#include <color_fragment>', `float fer = 0.0, tom = 0.0;\n#ifdef USE_COLOR\nfer = vColor.r; tom = vColor.g;\n#endif\ndiffuseColor.rgb = mix(diffuseColor.rgb, mix(${lin('#8B4726')}, ${lin('#5A311F')}, tom), fer);`)
+      .replace('#include <roughnessmap_fragment>', '#include <roughnessmap_fragment>\nroughnessFactor = mix(roughnessFactor, .95, fer);')
+      .replace('#include <metalnessmap_fragment>', '#include <metalnessmap_fragment>\nmetalnessFactor *= 1.0 - fer;'); };
+    m.customProgramCacheKey = () => 'ferrugem'; }
+  METAL.push(m); return MC[k] = m;
+}
+const MP = c => MC['p' + c] || (MC['p' + c] = new THREE.MeshStandardMaterial({ color: c, roughness: .5, metalness: 0, flatShading: true, transparent: true, opacity: .9 }));   // sacola
+function matLata() {   // alumínio com brilho; faixa de rótulo (cor da instância) onde |y| < aLata.y; amassada com aLata.x
+  if (MC.lata) return MC.lata;
+  const m = new THREE.MeshStandardMaterial({ color: '#DCE2E8', roughness: .2, metalness: .9, envMap: ENV, envMapIntensity: 1.25 });
+  m.onBeforeCompile = sh => {
+    sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nattribute vec2 aLata; varying float vYl; varying float vFx; varying float vK; varying vec3 vCorL;')
+      .replace('#include <begin_vertex>', '#include <begin_vertex>\nvYl = position.y; vFx = aLata.y; vK = aLata.x;\n#ifdef USE_INSTANCING_COLOR\nvCorL = instanceColor;\n#else\nvCorL = vec3(1.0);\n#endif\n' + AMASSA('vK', '.16', '.09', '.3', '.5', '.5'));
+    sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nvarying float vYl; varying float vFx; varying float vK; varying vec3 vCorL;')
+      .replace('#include <color_fragment>', 'float faixa = 1.0 - step(vFx, abs(vYl)); diffuseColor.rgb = mix(diffuseColor.rgb, vCorL, faixa);')
+      .replace('#include <roughnessmap_fragment>', '#include <roughnessmap_fragment>\nroughnessFactor = mix(roughnessFactor, .4, faixa);')
+      .replace('#include <metalnessmap_fragment>', '#include <metalnessmap_fragment>\nmetalnessFactor = mix(metalnessFactor, .25, faixa);')
+      .replace('#include <normal_fragment_begin>', FACETA);
+  };
+  m.customProgramCacheKey = () => 'lata'; METAL.push(m); return MC.lata = m;
+}
+function matPet() {   // PET translúcido (aPet.y: 0 transparente, 1 verde), tampa opaca (aParte 1); amassada com aPet.x
+  if (MC.pet) return MC.pet;
+  const m = new THREE.MeshStandardMaterial({ color: '#ffffff', roughness: .1, metalness: 0, transparent: true, envMap: ENV, envMapIntensity: 1.4 });
+  m.onBeforeCompile = sh => {
+    sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nattribute float aParte; attribute vec2 aPet; varying float vParte; varying float vTinta; varying float vK;')
+      .replace('#include <begin_vertex>', '#include <begin_vertex>\nvParte = aParte; vTinta = aPet.y; vK = aPet.x * (1.0 - smoothstep(.04, .11, position.y));\n' + AMASSA('vK', '.2', '.12', '.25', '.6', '.2'));
+    sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nvarying float vParte; varying float vTinta; varying float vK;')
+      .replace('#include <color_fragment>', `float tp = step(.5, vParte);\ndiffuseColor.rgb = mix(mix(${lin('#D8ECF4')}, ${lin('#3E9C5C')}, vTinta), mix(${lin('#2F6FD0')}, ${lin('#1F6B45')}, vTinta), tp);\ndiffuseColor.a = mix(mix(.4, .62, vTinta), 1.0, tp);`)
+      .replace('#include <normal_fragment_begin>', FACETA);
+  };
+  m.customProgramCacheKey = () => 'pet'; METAL.push(m); return MC.pet = m;
+}
+// formas: ruído pela posição (mesma posição, mesmo deslocamento: as quinas não racham), ferrugem na cor do vértice
+const hs = (x, y, z) => { const h = Math.sin(x * 127.1 + y * 311.7 + z * 74.7) * 43758.5453; return h - Math.floor(h); };
+function ruido(x, y, z) {
+  const X = Math.floor(x), Y = Math.floor(y), Z = Math.floor(z), u = x - X, v = y - Y, w = z - Z, f = t => t * t * (3 - 2 * t); let s = 0;
+  for (let i = 0; i < 2; i++) for (let j = 0; j < 2; j++) for (let k = 0; k < 2; k++) s += (i ? f(u) : 1 - f(u)) * (j ? f(v) : 1 - f(v)) * (k ? f(w) : 1 - f(w)) * hs(X + i, Y + j, Z + k);
+  return s;
+}
+function amassar(g, amp, esc, s = 0) {
+  const P = g.attributes.position;
+  for (let i = 0; i < P.count; i++) { const x = P.getX(i), y = P.getY(i), z = P.getZ(i);
+    P.setXYZ(i, x + (ruido(x * esc + s, y * esc, z * esc) - .5) * amp, y + (ruido(x * esc, y * esc + s + 7, z * esc) - .5) * amp, z + (ruido(x * esc + 3, y * esc, z * esc + s) - .5) * amp); }
+  g.computeVertexNormals(); return g;
+}
+function ferrugem(g, lim, esc = 9, s = 0) {
+  const P = g.attributes.position, C = [];
+  for (let i = 0; i < P.count; i++) { const x = P.getX(i), y = P.getY(i), z = P.getZ(i), n = ruido(x * esc + s, y * esc, z * esc) * .7 + ruido(x * esc * 3, y * esc * 3 + s, z * esc * 3) * .3;
+    C.push(cl((n - lim) / .1), ruido(x * 20, y * 20 + s, z * 20), 0); }
+  g.setAttribute('color', new THREE.Float32BufferAttribute(C, 3)); return g;
+}
+function junta(lista) {   // [[geometria, parte], ...] → uma geometria não indexada com o atributo aParte
+  const gs = lista.map(([g]) => g.index ? g.toNonIndexed() : g), n = gs.reduce((a, g) => a + g.attributes.position.count, 0);
+  const P = new Float32Array(n * 3), N = new Float32Array(n * 3), A = new Float32Array(n); let o = 0;
+  gs.forEach((g, i) => { const c = g.attributes.position.count; P.set(g.attributes.position.array, o * 3); N.set(g.attributes.normal.array, o * 3); A.fill(lista[i][1] ?? 0, o, o + c); o += c; });
+  const r = new THREE.BufferGeometry(); r.setAttribute('position', new THREE.BufferAttribute(P, 3)); r.setAttribute('normal', new THREE.BufferAttribute(N, 3));
+  r.setAttribute('aParte', new THREE.BufferAttribute(A, 1)); return r;
+}
+const GC = {}, geo = (k, f) => GC[k] || (GC[k] = f());
+const V3 = (x, y, z) => new THREE.Vector3(x, y, z), V2 = pts => pts.map(p => new THREE.Vector2(...p));
+const tuboG = (pts, r, n = 48, rs = 8, fecha = false) => new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts.map(p => V3(...p)), fecha), n, r, rs, fecha);
+const FORMA = {
+  vergalhao: (v, q) => { const g = tuboG([[[0, -.32, 0], [0, -.06, 0], [.015, .07, 0], [.13, .13, 0], [.3, .14, .02]], [[-.13, -.3, 0], [-.13, .04, 0], [-.09, .14, 0], [.07, .15, 0], [.13, .05, 0], [.13, -.22, 0]],
+      [[0, -.3, 0], [0, -.1, .01], [.13, 0, .03], [.19, .1, .03], [.2, .3, .02]]][v], .02, 64, 7), P = g.attributes.position, N = g.attributes.normal;
+    for (let i = 0; i < P.count; i++) { const d = .0018 * Math.sin(Math.floor(i / 8) * 1.7); P.setXYZ(i, P.getX(i) + N.getX(i) * d, P.getY(i) + N.getY(i) * d, P.getZ(i) + N.getZ(i) * d); }   // nervuras
+    g.computeVertexNormals(); return ferrugem(g, q, 9, v); },
+  cano: (v, q) => ferrugem(torno([[.04, -.26], [.052, -.26], [.052, -.13], [.052, 0], [.052, .13], [.052, .26], [.04, .26], [.04, .13], [.04, -.13], [.04, -.26]], 18), q, 9, v),
+  chapa: (v, q) => { const g = new THREE.BoxGeometry(.34, .016, .26, 10, 1, 8), P = g.attributes.position;
+    for (let i = 0; i < P.count; i++) P.setY(i, P.getY(i) + .07 * Math.sin((P.getX(i) / .34 + .5) * PI) * (v % 2 ? 1 : -.6) + .025 * Math.sin(P.getZ(i) * 14 + v));
+    return ferrugem(amassar(g, .02, 9, v), q, 9, v); },
+  perfil: (v, q) => { const L = [[0, 0], [.075, 0], [.075, .012], [.012, .012], [.012, .075], [0, .075]],
+      I = [[-.04, 0], [.04, 0], [.04, .01], [.006, .01], [.006, .07], [.04, .07], [.04, .08], [-.04, .08], [-.04, .07], [-.006, .07], [-.006, .01], [-.04, .01]];
+    const g = new THREE.ExtrudeGeometry(new THREE.Shape(V2(v === 1 ? I : L)), { depth: .54, steps: 14, bevelEnabled: false }); g.center(); g.rotateY(PI / 2); return ferrugem(g, q, 9, v); },
+  tuboCu: v => tuboG([[[0, -.26, 0], [0, .04, 0], [.03, .13, 0], [.14, .17, 0]], [[-.02, -.26, 0], [0, 0, .02], [.04, .12, 0], [.02, .26, .03]]][v % 2], .024, 40, 10),
+  bobina: () => { const L = []; for (let i = 0; i < 7; i++) { const r = .082 + .005 * (i % 4), a = i * .9, ps = [];
+      for (let k = 0; k < 16; k++) { const t = k / 16 * 2 * PI; ps.push([Math.cos(t) * r, Math.sin(t) * r, (i - 3) * .011 + .006 * Math.sin(t * 2 + a)]); }
+      L.push([tuboG(ps, .0085, 44, 5, true)]); } return junta(L); },
+  emaranhado: v => { const ps = []; for (let k = 0; k < 40; k++) { const t = k / 40 * 2 * PI;
+      ps.push([.08 * Math.sin(3 * t + v) + .04 * Math.sin(7 * t + 1), .05 * Math.sin(2 * t + .5) + .03 * Math.cos(5 * t + v), .08 * Math.cos(3 * t) + .04 * Math.cos(6 * t + 2)]); }
+    return tuboG(ps, .0075, 220, 5, true); },
+  perfilU: () => { const g = new THREE.ExtrudeGeometry(new THREE.Shape(V2([[-.03, 0], [.03, 0], [.03, .045], [.022, .045], [.022, .008], [-.022, .008], [-.022, .045], [-.03, .045]])),
+      { depth: .52, steps: 1, bevelEnabled: false }); g.center(); g.rotateY(PI / 2); return g; },
+  chapaAlu: v => { const g = new THREE.BoxGeometry(.32, .01, .24, 8, 1, 6), P = g.attributes.position;
+    for (let i = 0; i < P.count; i++) P.setY(i, P.getY(i) + .05 * Math.sin((P.getX(i) / .32 + .5) * PI * (v % 2 ? 1 : 1.6))); return amassar(g, .012, 10, v); },
+  torrao: v => { const g = new THREE.IcosahedronGeometry(.085, 1); g.scale(1, .72, 1); return amassar(g, .05, 14, v * 3.1); },
+  pneu: () => { const g = new THREE.TorusGeometry(.13, .05, 10, 60, PI * .95), P = g.attributes.position, N = g.attributes.normal;
+    for (let j = 0; j <= 10; j++) for (let i = 0; i <= 60; i++) { const ix = j * 61 + i, w = j / 10 * 2 * PI, u = i / 60 * PI * .95;   // banda de rodagem
+      if (Math.cos(w) > .25 && Math.sin(u * 22) > 0) P.setXYZ(ix, P.getX(ix) + N.getX(ix) * .014, P.getY(ix) + N.getY(ix) * .014, P.getZ(ix) + N.getZ(ix) * .014); }
+    g.computeVertexNormals(); return g; },
+  mangueira: v => tuboG(v % 2 ? [[0, -.26, 0], [.06, -.1, .03], [-.04, .05, -.02], [.05, .18, .03], [0, .28, 0]] : [[-.1, -.24, 0], [.05, -.15, .02], [.08, .02, -.02], [-.05, .12, .03], [.02, .27, 0]], .027, 44, 9),
+  sacola: v => { const b = new THREE.IcosahedronGeometry(.1, 2); b.scale(1, .45, .85); amassar(b, .06, 16, v * 2.3);
+    const a1 = new THREE.TorusGeometry(.035, .007, 5, 12, PI), a2 = a1.clone(); a1.translate(-.035, .035, 0); a2.translate(.035, .035, 0); a2.rotateY(.3); return junta([[b], [a1], [a2]]); },
+  caixa: v => { const b = amassar(new THREE.BoxGeometry(.3, .2, .24, 4, 3, 4), .035, 8, v), f1 = new THREE.BoxGeometry(.3, .006, .12), f2 = f1.clone();
+    f1.translate(0, 0, .06); f1.rotateX(-.7); f1.translate(0, .1, .12); f2.translate(0, 0, -.06); f2.rotateX(.5); f2.translate(0, .1, -.12); return junta([[b], [f1], [f2]]); },
+  folhaPap: v => { const g = new THREE.BoxGeometry(.42, .012, .32, 6, 1, 5), P = g.attributes.position;
+    for (let i = 0; i < P.count; i++) P.setY(i, P.getY(i) + .05 * Math.sin((P.getX(i) / .42 + .5) * PI * 1.3 + v)); return amassar(g, .02, 7, v); },
+};
+const LATA = () => geo('LATA', () => torno([[0, -.1], [.052, -.1], [.06, -.096], [.07, -.084], [.07, -.06], [.07, -.03], [.07, 0], [.07, .03], [.07, .06], [.07, .076], [.062, .09], [.058, .097], [.058, .1], [0, .1]], 16));
+const PET = () => geo('PET', () => { const g = junta([[torno([[0, 0], [.03, .002], [.044, .012], [.05, .03], [.05, .075], [.046, .085], [.05, .095], [.05, .14], [.046, .16], [.034, .185], [.022, .2], [.017, .207], [.017, .216]], 16), 0],
+  [new THREE.CylinderGeometry(.02, .02, .024, 14).translate(0, .226, 0), 1]]); g.translate(0, -.12, 0); g.scale(1.35, 1.35, 1.35); return g; });   // ~32 cm
+function umaInst(g, m, nome, attr, val) {   // uma peça só com o material das instâncias: o atributo de 1 instância fica na geometria
+  const gg = geo(nome, () => { const c = g.clone(); c.setAttribute(attr, new THREE.InstancedBufferAttribute(new Float32Array(val), val.length)); return c; });
+  return new THREE.InstancedMesh(gg, m, 1);
+}
+function lataUma(cor, k, fx) { const kq = Math.round(k * 4) / 4, im = umaInst(LATA(), matLata(), 'lata' + kq + '_' + fx, 'aLata', [kq, fx]); im.setColorAt(0, _c.set(cor)); return im; }
+const petUma = (tinta, k) => { const kq = Math.round(k * 4) / 4; return umaInst(PET(), matPet(), 'pet' + kq + '_' + tinta, 'aPet', [kq, tinta]); };
+export const CORES_LATA = ['#C8553D', '#5B8FD6', '#3FA45B', '#F2B63D', '#2F353C', '#E9EEF2', '#D9734A', '#50D088', '#2C5FA8', '#B23A48'];   // faixas genéricas
 export const PAL = { cobre: ['#C8703A', '#B45F2D', '#D98C58'], alu: ['#C9D1DA', '#AFB9C4', '#DDE3E9'], aco: ['#7E8995', '#646F7B', '#8F99A4'],
-  ferrugem: ['#9A5B3A', '#86513A', '#A86A48'], terra: ['#7A5233', '#8B6240', '#6A4529'], borracha: ['#22272E', '#2E343C'], plastico: ['#4F8EDC', '#E6EEF7', '#3E7BC6'] };
+  ferrugem: ['#8A6A5A', '#7A5E52', '#937062'], terra: ['#7A5233', '#8B6240', '#6A4529'], borracha: ['#22272E', '#2E343C'], plastico: ['#4F8EDC', '#E6EEF7', '#3E7BC6'],
+  latinha: CORES_LATA, pet: ['#D8ECF4', '#3E9C5C'], papelao: ['#B98B5A', '#A87C4E', '#C49A6A'], ferro: ['#6E7884', '#5E6872', '#7E8995'] };
 const TIPOS = { cobre: ['tubo', 'bobina', 'bloco', 'tubo', 'bobina'], alu: ['lata', 'perfil', 'chapa', 'lata'], aco: ['chapa', 'bloco', 'perfil', 'chapa'],
-  ferrugem: ['bloco', 'chapa', 'perfil'], terra: ['terra'], borracha: ['pneu', 'mangueira'], plastico: ['caco', 'caco', 'garrafa'] };
-function giro(k) {
-  if (k === 'tubo' || k === 'mangueira' || k === 'garrafa') return [ri(-.4, .4), ri(0, 2 * PI), PI / 2 + ri(-.4, .4)];
+  ferrugem: ['bloco', 'chapa', 'perfil'], terra: ['terra'], borracha: ['pneu', 'mangueira'], plastico: ['caco', 'caco', 'garrafa'],
+  latinha: ['lata'], pet: ['garrafa', 'garrafa'], papelao: ['caixa', 'caixa', 'folha'], ferro: ['vergalhao', 'cano', 'chapa', 'perfil', 'vergalhao'] };
+function giro(k) {   // os mesmos sorteios do kit antigo para os tipos antigos
+  if (k === 'tubo' || k === 'mangueira' || k === 'garrafa' || k === 'vergalhao' || k === 'cano') return [ri(-.4, .4), ri(0, 2 * PI), PI / 2 + ri(-.4, .4)];
   if (k === 'bobina' || k === 'pneu') return [PI / 2 + ri(-.5, .5), ri(0, 2 * PI), ri(-.4, .4)];
   if (k === 'bloco' || k === 'terra') return [ri(0, 2 * PI), ri(0, 2 * PI), ri(0, 2 * PI)];
   if (k === 'lata') return [ri(-.4, .4) + (rng() < .5 ? PI / 2 : 0), ri(0, 2 * PI), ri(-.4, .4)];
+  if (k === 'caixa') return [ri(-.2, .2), ri(0, 2 * PI), ri(-.2, .2)];
   return [ri(-.3, .3), ri(0, 2 * PI), ri(-.3, .3)];
 }
-export function peca(pai, metal, p, s = 1) {   // uma peça de sucata (cobre, alu, aco, ferrugem) ou de impureza (terra, borracha, plastico)
+const RUST = { aco: .66, ferro: .52, ferrugem: .36 };   // limiar da ferrugem: quanto menor, mais ferrugem
+function desenho(metal, k, cor) {
+  const v = Math.floor(rng2() * 3), Mh = (g, m) => new THREE.Mesh(g, m);
+  if (k === 'lata') { const u = rng2(), c = metal === 'latinha' ? cor : pega2(CORES_LATA); return lataUma(u < .3 ? '#DCE2E8' : c, rng2() < .4 ? ri2(.6, 1) : 0, u < .3 ? 0 : u < .8 ? .055 : .1); }
+  if (k === 'garrafa') return petUma(metal === 'pet' ? (cor === PAL.pet[1] ? 1 : 0) : (rng2() < .5 ? 1 : 0), rng2() < .45 ? ri2(.6, 1) : 0);
+  if (metal === 'cobre') return Mh(k === 'tubo' ? geo('tuboCu' + v % 2, () => FORMA.tuboCu(v)) : k === 'bobina' ? geo('bobina', FORMA.bobina) : geo('emaranhado' + v, () => FORMA.emaranhado(v)), MM(cor, { r: .3, m: .85 }));
+  if (metal === 'alu') return Mh(k === 'perfil' ? geo('perfilU', FORMA.perfilU) : geo('chapaAlu' + v, () => FORMA.chapaAlu(v)), MM(cor, { r: .28, m: .85, f: k === 'chapa' }));
+  if (metal in RUST) { const f = k === 'bloco' ? (rng2() < .6 ? 'vergalhao' : 'cano') : k, q = Math.round(cl(RUST[metal] + (metal === 'ferro' ? ri2(-.15, .15) : 0), .1, .9) * 10) / 10;
+    return Mh(geo(f + v + 'r' + q, () => FORMA[f](v, q)), MM(cor, { r: .5, m: .6, fer: true, f: f === 'chapa' })); }
+  if (k === 'terra') return Mh(geo('torrao' + v, () => FORMA.torrao(v)), M(cor, { f: true }));
+  if (k === 'pneu') return Mh(geo('pneu', FORMA.pneu), M(cor, { r: .92 }));
+  if (k === 'mangueira') return Mh(geo('mangueira' + v % 2, () => FORMA.mangueira(v)), M(cor, { r: .8 }));
+  if (k === 'caco') return Mh(geo('sacola' + v, () => FORMA.sacola(v)), MP(cor));
+  if (k === 'caixa') return Mh(geo('caixa' + v, () => FORMA.caixa(v)), M(cor, { f: true }));
+  return Mh(geo('folhaPap' + v, () => FORMA.folhaPap(v)), M(cor, { f: true }));
+}
+// uma peça: 'cobre', 'alu', 'aco', 'ferrugem', 'ferro' (ferro misto), 'latinha', 'pet', 'papelao' ou impureza ('terra',
+// 'borracha', 'plastico'); devolve o objeto (posição, giro, escala; userData.s0 = escala base)
+export function peca(pai, metal, p, s = 1) {
   const k = pega(TIPOS[metal]), cor = pega(PAL[metal]);
   const sc = (k === 'bloco' || k === 'terra') ? [s * ri(.8, 1.3), s * ri(.55, .95), s * ri(.8, 1.25)] : s * ri(.85, 1.15);
-  const o = poe(GEO[k], M(cor, { f: k === 'bloco' || k === 'terra' }), pai, p, giro(k), sc); o.receiveShadow = Q.get('rs') === '1'; o.userData.s0 = o.scale.clone(); return o;
+  const r = giro(k), o = desenho(metal, k, cor);
+  o.position.set(...p); o.rotation.set(...r); if (Array.isArray(sc)) o.scale.set(...sc); else o.scale.setScalar(sc);
+  o.castShadow = true; o.receiveShadow = Q.get('rs') === '1'; pai.add(o); o.userData.s0 = o.scale.clone(); return o;
 }
 export function monte(pai, p, o = {}) {   // monte de sucata; o: n, rx, rz, h, metais, mancha ([w, d] ou false)
   const g = grupo(pai, p), rx = o.rx ?? .9, rz = o.rz ?? .76;
   for (const q of domo(o.n ?? 34, rx, rz, o.h ?? .56)) peca(g, pega(o.metais ?? ['aco', 'aco', 'ferrugem', 'cobre', 'alu']), q);
   if (o.mancha !== false) mancha(g, ...(o.mancha ?? [rx * 2.55, rz * 2.5]), .3); return g;
 }
+
+const GEO = { pino: new THREE.CylinderGeometry(1, 1, 1, 8) };   // parafusos da roda
 
 // ------------------------------------------------------------------ 3D: lote de peças iguais (InstancedMesh) e o voo entre lugares
 const _m = new THREE.Matrix4(), _mi = new THREE.Matrix4(), _p = new THREE.Vector3(), _p2 = new THREE.Vector3(), _pp = new THREE.Vector3(),
@@ -383,12 +543,22 @@ export function balancaPatio(pai, p, o = {}) {
   g.userData.altura = u => u < -c / 2 - rp ? 0 : u < -c / 2 ? h * (u + c / 2 + rp) / rp : u <= c / 2 ? h : u < c / 2 + rp ? h * (c / 2 + rp - u) / rp : 0;
   return g;
 }
-// latinhas: um lote de latas (lathe) com a cor de cada uma; P = pontos no pai; o.r(i) = giro, o.cores
-const LATA = torno([[0, -.1], [.058, -.1], [.07, -.088], [.07, .078], [.06, .095], [.057, .1], [0, .1]], 10);
-export const CORES_LATA = ['#C9D1DA', '#AFB9C4', '#DDE3E9', '#BAC3CD', '#C9D1DA', '#AFB9C4', '#DDE3E9', '#BAC3CD', '#9AA6B2', '#C9D1DA', '#50D088', '#F2B63D', '#5B8FD6', '#C8553D'];
+// latinhas: um lote de latas de alumínio com brilho (faixa de cor genérica, inteiras e amassadas). P = pontos no pai;
+// o.r(i) = giro, o.s = escala, o.cores = cores da faixa, o.amassadas = fração amassada (padrão .35)
 export function latinhas(pai, P, o = {}) {
-  const im = lote(LATA, M('#ffffff', { r: .6 }), P.length, pai);
-  P.forEach((p, i) => { poeInst(im, i, p, o.r ? o.r(i) : [ri(0, 2 * PI), ri(0, 2 * PI), ri(0, 2 * PI)], o.s ?? ri(.9, 1.1)); im.setColorAt(i, _c.set(pega(o.cores ?? CORES_LATA))); });
+  const g = LATA().clone(), A = new Float32Array(P.length * 2); g.setAttribute('aLata', new THREE.InstancedBufferAttribute(A, 2));
+  const im = lote(g, matLata(), P.length, pai);
+  P.forEach((p, i) => { poeInst(im, i, p, o.r ? o.r(i) : [ri(0, 2 * PI), ri(0, 2 * PI), ri(0, 2 * PI)], o.s ?? ri(.9, 1.1)); im.setColorAt(i, _c.set(pega(o.cores ?? CORES_LATA)));
+    const u = rng2(); A[2 * i] = rng2() < (o.amassadas ?? .35) ? ri2(.55, 1) : 0; A[2 * i + 1] = u < .3 ? 0 : u < .8 ? .055 : .1; });
+  return im;
+}
+// garrafas PET num lote (translúcidas, transparentes e verdes, inteiras e amassadas). P = pontos no pai; o.r(i), o.s,
+// o.verdes (fração verde, padrão .4), o.amassadas (padrão .45)
+export function pets(pai, P, o = {}) {
+  const g = PET().clone(), A = new Float32Array(P.length * 2); g.setAttribute('aPet', new THREE.InstancedBufferAttribute(A, 2));
+  const im = lote(g, matPet(), P.length, pai);
+  P.forEach((p, i) => { poeInst(im, i, p, o.r ? o.r(i) : [PI / 2 + ri(-.5, .5), ri(0, 2 * PI), ri(-.4, .4)], o.s ?? ri(.9, 1.1));
+    A[2 * i] = rng2() < (o.amassadas ?? .45) ? ri2(.6, 1) : 0; A[2 * i + 1] = rng2() < (o.verdes ?? .4) ? 1 : 0; });
   return im;
 }
 // baterias automotivas (caixa escura, tampa, polos): P = [x, y (base), z, giro]
@@ -465,21 +635,48 @@ export function bascula(v, a) {
   const bx = u.x0 + L - .25, by = u.R + .5, tx = u.x0 + L * Math.cos(a), ty = u.yb + L * Math.sin(a), dx = tx - bx, dy = ty - by;
   u.pistao.visible = a > .02; u.pistao.position.set((bx + tx) / 2, (by + ty) / 2, 0); u.pistao.scale.set(1, Math.hypot(dx, dy), 1); u.pistao.rotation.z = -Math.atan2(dx, dy);
 }
-// fardo de latinhas prensadas: bloco de alumínio com os fundos das latas nas faces e duas cintas
-const FUNDO = new THREE.CylinderGeometry(.056, .056, .03, 10);
+// fardo de latinhas prensadas: bloco de alumínio com as latas amassadas nas faces (instâncias) e duas cintas
 export function fardoLatinhas(pai, p, o = {}) {
   const g = grupo(pai, p), w = o.w ?? 1.0, h = o.h ?? .78, d = o.d ?? .78, P = [], Rr = [], e = .13;
-  poe(rbox(w, h, d, .06, 2), M('#B4BDC7'), g, [0, h / 2, 0]);
+  poe(rbox(w, h, d, .06, 2), MM('#AEB7C1', { r: .5, m: .6 }), g, [0, h / 2, 0]);
   const grade = (a, b) => { const n = Math.floor((a - .12) / e), m = Math.floor((b - .12) / e), L = []; for (let i = 0; i < n; i++) for (let j = 0; j < m; j++) L.push([(i - (n - 1) / 2) * e + ri(-.02, .02), (j - (m - 1) / 2) * e + ri(-.02, .02)]); return L; };
-  for (const s of [-1, 1]) {
-    for (const [x, y] of grade(w, h)) { P.push([x, h / 2 + y, s * (d / 2 + .004)]); Rr.push([PI / 2 + ri(-.3, .3), 0, ri(-.3, .3)]); }
-    for (const [z, y] of grade(d, h)) { P.push([s * (w / 2 + .004), h / 2 + y, z]); Rr.push([ri(-.3, .3), 0, PI / 2 + ri(-.3, .3)]); }
+  for (const s of [-1, 1]) {   // a lata deita na face, achatada contra ela (z local = normal da face)
+    for (const [x, y] of grade(w, h)) { P.push([x, h / 2 + y, s * (d / 2 + .02)]); Rr.push([ri(-.3, .3) * .5, s < 0 ? PI : 0, ri(-.3, .3) / .3 * PI]); }
+    for (const [z, y] of grade(d, h)) { P.push([s * (w / 2 + .02), h / 2 + y, z]); Rr.push([ri(-.3, .3) * .5, s * PI / 2, ri(-.3, .3) / .3 * PI]); }
   }
-  for (const [x, z] of grade(w, d)) { P.push([x, h + .004, z]); Rr.push([ri(-.3, .3), 0, ri(-.3, .3)]); }
-  const im = lote(FUNDO, M('#ffffff', { r: .6 }), P.length, g);
-  P.forEach((q, i) => { poeInst(im, i, q, Rr[i], [ri(.75, 1.1), 1, ri(.75, 1.1)]); im.setColorAt(i, _c.set(pega(CORES_LATA))); });
+  for (const [x, z] of grade(w, d)) { P.push([x, h + .02, z]); Rr.push([-PI / 2 + ri(-.3, .3) * .5, 0, ri(-.3, .3) / .3 * PI]); }
+  const lg = LATA().clone(), A = new Float32Array(P.length * 2); lg.setAttribute('aLata', new THREE.InstancedBufferAttribute(A, 2));
+  const im = lote(lg, matLata(), P.length, g);
+  P.forEach((q, i) => { poeInst(im, i, q, Rr[i], [ri(.75, 1.1) * 1.25, ri(.75, 1.1) * 1.1, .55]); im.setColorAt(i, _c.set(pega(CORES_LATA)));
+    const u = rng2(); A[2 * i] = ri2(.75, 1); A[2 * i + 1] = u < .3 ? 0 : u < .8 ? .055 : .1; });
   for (const x of [-w * .28, w * .28]) poe(rbox(.035, h + .03, d + .03, .01, 1), M(COR.cinzaE), g, [x, h / 2, 0]);
   mancha(g, w + .7, d + .7, .28); return g;
+}
+// fardo de papelão prensado: camadas em tons de pardo e cintas de arame
+export function fardoPapelao(pai, p, o = {}) {
+  const g = grupo(pai, p), w = o.w ?? 1.1, h = o.h ?? .8, d = o.d ?? .8, n = Math.max(6, Math.round(h / .055)), e = (h - .02) / n;
+  for (let i = 0; i < n; i++) poe(rbox(w + ri2(-.04, .04), e * 1.02, d + ri2(-.04, .04), .01, 1), M(PAL.papelao[i % 3], { f: true }), g, [ri2(-.025, .025), (i + .5) * e + .01, ri2(-.025, .025)], [0, ri2(-.03, .03), 0]);
+  for (const x of [-w * .3, 0, w * .3]) poe(rbox(.02, h + .02, d + .06, .006, 1), M(COR.cinzaE), g, [x, h / 2, 0]);
+  mancha(g, w + .7, d + .7, .28); return g;
+}
+// big bag de ráfia clara, sem marca. o.estado: 'cheio' (alças nos quatro cantos e a boca de enchimento amarrada), 'aberto'
+// (a boca aberta: a cena põe a carga acima de y = h) ou 'vazio' (dobrado no chão). o.w, o.h, o.mancha (false: sem a
+// sombra de contato, para o bag que voa); userData.h = altura
+export function bigBag(pai, p, o = {}) {
+  const g = grupo(pai, p), w = o.w ?? .78, h = o.h ?? .82, mR = M('#ECE3CF'), mC = M('#D6C9AC'), mA = M('#E2D6BD'); g.userData.h = h;
+  if (o.estado === 'vazio') {
+    poe(amassar(rbox(w * 1.1, .085, w * .8, .035, 2), .025, 6, 1), mR, g, [0, .0425, 0]);
+    poe(rbox(w * 1.04, .012, .03, .006, 1), mC, g, [0, .088, -.05]);
+    for (const [x, z, r] of [[-.3, -.2, .5], [.3, -.2, -.4], [-.28, .22, 2.7], [.3, .2, -2.9]]) poe(new THREE.TorusGeometry(.075, .017, 6, 14, PI), mA, g, [x * w / .78, .095, z * w / .78], [-PI / 2, 0, r]);
+    if (o.mancha !== false) mancha(g, w * 1.7, w * 1.3, .26); return g;
+  }
+  const corpo = rbox(w, h, w, .14, 3), P = corpo.attributes.position;
+  for (let i = 0; i < P.count; i++) { const y = P.getY(i) / h * 2, b = 1 + .09 * (1 - y * y); P.setX(i, P.getX(i) * b); P.setZ(i, P.getZ(i) * b); }   // barriga
+  poe(corpo, mR, g, [0, h / 2, 0]);
+  for (const sx of [-1, 1]) for (const sz of [-1, 1]) poe(new THREE.TorusGeometry(.085, .02, 6, 16, PI), mA, g, [sx * (w / 2 - .07), h - .015, sz * (w / 2 - .07)], [0, sx * sz > 0 ? -PI / 4 : PI / 4, 0]);
+  if (o.estado === 'aberto') poe(new THREE.TorusGeometry(w * .44, .022, 6, 40), mC, g, [0, h - .005, 0], [PI / 2, 0, 0]);
+  else { poe(new THREE.CylinderGeometry(.11, .14, .14, 18), mR, g, [0, h + .06, 0]); poe(new THREE.TorusGeometry(.11, .016, 6, 20), mC, g, [0, h + .1, 0], [PI / 2, 0, 0]); }
+  if (o.mancha !== false) mancha(g, w * 1.75, w * 1.75, .3); return g;
 }
 // prensa vertical (câmara âmbar, colunas, cilindro e placa que desce): aperta(g, p) com p de 0 (aberta) a 1 (prensando)
 export function prensa(pai, p) {

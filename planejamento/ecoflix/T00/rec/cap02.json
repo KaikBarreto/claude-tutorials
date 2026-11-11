@@ -1,0 +1,305 @@
+{
+ "name": "t00-cap02",
+ "title": "T0 · Cap. 2 · Como funciona a trilha (computador 1280x800; narração 44,6 s, ESTIMADA; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
+ "fakeNow": "2026-11-10T08:30:00-03:00",
+ "seed": "t00-cap02",
+ "pace": 0.5,
+ "cps": 22,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 470
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true",
+  "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10"
+ },
+ "seedExtra": [
+  "t00/catalogo",
+  "t00/s2",
+  "t00/pagamentos"
+ ],
+ "prewarm": [
+  "/login",
+  "/dashboard",
+  "/ecoflix"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/login"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "timeout": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "••••••••"
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Rafael",
+   "timeout": 45
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 20
+  },
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Rafael!",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 15
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel|Algo deu errado|Falha ao|Something went wrong|N[ãa]o conseguimos/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Menu da conta",
+    "exact": true
+   },
+   "at": 2.21,
+   "label": "cartão Rafael Nogueira (menu da conta)"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "role": "menuitem",
+    "name": "Tutoriais | EcoFlix"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "menuitem",
+    "name": "Tutoriais | EcoFlix"
+   },
+   "seconds": 0.1,
+   "at": 4.23,
+   "label": "Tutoriais | EcoFlix",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Tutoriais | EcoFlix"
+   },
+   "at": 5.19,
+   "label": "Tutoriais | EcoFlix (abre a trilha)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Aprenda a usar o EcoSistema",
+   "timeout": 25
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 6.23
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Aprenda a usar o EcoSistema",
+    "exact": true
+   },
+   "seconds": 0.3,
+   "at": 6.33,
+   "label": "Aprenda a usar o EcoSistema",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Trilha do seu plano",
+    "exact": true
+   },
+   "seconds": 0.4,
+   "at": 7.74,
+   "label": "Trilha do seu plano e a barra",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const vis=e=>e.getClientRects().length>0&&getComputedStyle(e).visibility!=='hidden';const nz=t=>t.replace(/[\\s\\u00a0]+/g,' ').trim();const rolagem=(el)=>{let c=el.parentElement;while(c&&c!==document.body&&c!==document.documentElement){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const root=document.querySelector(\"main\")||document.body;const el=[...root.querySelectorAll('*')].filter(e=>vis(e)&&nz(e.textContent)===\"Bem-vindo ao EcoSistema\"&&![...e.children].some(k=>nz(k.textContent)===\"Bem-vindo ao EcoSistema\"))[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-120);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 9.92,
+   "label": "desce aos primeiros módulos"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 10.22
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Formação básica",
+    "exact": true
+   },
+   "seconds": 0.4,
+   "at": 11.36,
+   "label": "selo Formação básica",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const vis=e=>e.getClientRects().length>0&&getComputedStyle(e).visibility!=='hidden';const nz=t=>t.replace(/[\\s\\u00a0]+/g,' ').trim();const rolagem=(el)=>{let c=el.parentElement;while(c&&c!==document.body&&c!==document.documentElement){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const root=document.querySelector(\"main\")||document.body;const el=[...root.querySelectorAll('*')].filter(e=>vis(e)&&nz(e.textContent)===\"Nota Fiscal de mercadoria (NF-e)\"&&![...e.children].some(k=>nz(k.textContent)===\"Nota Fiscal de mercadoria (NF-e)\"))[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-130);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/2200),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 19.22,
+   "label": "desce ao primeiro módulo do plano (T16)"
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 19.52
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Tem no seu plano",
+    "exact": true
+   },
+   "seconds": 0.1,
+   "at": 22.86,
+   "label": "selo Tem no seu plano",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const vis=e=>e.getClientRects().length>0&&getComputedStyle(e).visibility!=='hidden';const nz=t=>t.replace(/[\\s\\u00a0]+/g,' ').trim();const rolagem=(el)=>{let c=el.parentElement;while(c&&c!==document.body&&c!==document.documentElement){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const root=document.querySelector(\"main\")||document.body;const el=[...root.querySelectorAll('*')].filter(e=>vis(e)&&nz(e.textContent)===\"Sua conta e sua empresa\"&&![...e.children].some(k=>nz(k.textContent)===\"Sua conta e sua empresa\"))[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-150);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/2200),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 23.61,
+   "label": "volta ao T1"
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 24.96
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Próxima aula recomendada",
+    "exact": true
+   },
+   "seconds": 0.6,
+   "at": 27.39,
+   "label": "Próxima aula recomendada",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const vis=e=>e.getClientRects().length>0&&getComputedStyle(e).visibility!=='hidden';const nz=t=>t.replace(/[\\s\\u00a0]+/g,' ').trim();const rolagem=(el)=>{let c=el.parentElement;while(c&&c!==document.body&&c!==document.documentElement){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const root=document.querySelector(\"main\")||document.body;const el=[...root.querySelectorAll('*')].filter(e=>vis(e)&&nz(e.textContent)===\"Materiais e tabelas de pre\\u00e7o\"&&![...e.children].some(k=>nz(k.textContent)===\"Materiais e tabelas de pre\\u00e7o\"))[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-330);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 32.84,
+   "label": "desce ao T3"
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 33.74
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Materiais e tabelas de preço"
+   },
+   "at": 36.73,
+   "label": "aula Materiais e tabelas de preço (fora da ordem)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Consultar fora da ordem?",
+   "timeout": 8
+  },
+  {
+   "do": "type",
+   "target": {
+    "text": "Consultar fora da ordem?",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "text": "",
+   "noClick": true,
+   "label": "diálogo Consultar fora da ordem?",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Voltar à trilha",
+    "exact": true
+   },
+   "at": 43.33,
+   "label": "Voltar à trilha"
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 44.58
+  }
+ ]
+}

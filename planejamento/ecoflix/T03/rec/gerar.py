@@ -711,8 +711,10 @@ def cap06():
     c.hover(PD('com alterações pendentes'), 1.4, w=(6, 'aviso'), label='aviso 3 material(is) com alterações pendentes')
     c.click(BTN('Salvar', within=DLG), w=(7, 'Salvar,'), noScroll=True, label='Salvar (rodapé da janela)')
     c.waitfor(text='Preços atualizados!', timeout=10)
-    ini = round(c.W(7, 'Salvar,') + 1.0, 2)   # o aviso (4 s) sobe logo depois do Salvar: o cursor vai direto a ele e fica até "vinculadas:"
-    c.hover({'text': 'As tabelas vinculadas serão recalculadas'}, round(c.W(7, 'vinculadas:') + 0.6 - ini - 0.55, 2),
+    ini = round(c.W(7, 'Salvar,') + 1.4, 2)   # o aviso (4 s) sobe logo depois do Salvar: o cursor vai direto a ele e fica até "vinculadas:"
+    # avisos embaixo à direita: o cursor vai por coordenada (a página fica ocupada logo depois de salvar; ver cap10)
+    c.rolar(0, ponto=(990, 748), duration=0.3, after=0, label='cursor no lugar do aviso (embaixo à direita)')
+    c.hover({'text': 'As tabelas vinculadas serão recalculadas'}, round(c.W(7, 'vinculadas:') + 0.6 - ini - 0.55, 2), timeout=8,
             label='aviso Preços atualizados! As tabelas vinculadas... (o mouse segura o aviso)')
     c.waitfor(gone={'role': 'dialog'}, timeout=8)
     c.confere('main', ['R$ 42,50', 'R$ 47,90'], 'Cobre mel 42,50 e 47,90 na lista')
@@ -747,9 +749,13 @@ def cap07():
     c.hover(MENU('/clientes-fornecedores'), 0.6, w=(6, 'ligar'), noScroll=True, label='menu lateral (abre ao passar o mouse)')
     c.click(MENU('/clientes-fornecedores'), w=(6, 'Clientes'), noScroll=True, label='Clientes e Fornecedores')
     c.rolar(0, ponto=(760, 420), duration=0.3, after=0, label='cursor sai do menu (ele recolhe)')
-    c.waitfor(target=BTN('Fornecedores', within='main'), timeout=12)
+    c.waitfor(target=BTNX('Fornecedores'), timeout=12)
     c.pause(0.5)
-    c.click(BTN('Fornecedores', within='main'), label='aba Fornecedores')
+    c.click(BTNX('Fornecedores'), label='aba Fornecedores')
+    # a aba trocou mesmo? (o depósito também é cliente: no ensaio de 11/11 a aba ficou em Clientes e o robô abriu o depósito-cliente)
+    c.pause(0.6)
+    c.click(BTNX('Fornecedores'), label='aba Fornecedores de novo (só se não trocou)', unless=BTN('Novo Fornecedor'))
+    c.waitfor(target=BTN('Novo Fornecedor'), timeout=30)
     c.waitfor(target=P('Depósito Irmãos Siqueira'), timeout=8)
     c.click(P('Depósito Irmãos Siqueira'), w=(6, 'Depósito'), label='Depósito Irmãos Siqueira')
     c.waitfor(text='1 preço personalizado', timeout=10)
@@ -780,8 +786,9 @@ def cap07():
     c.type({'placeholder': 'Escreva o nome ou código do material'}, 'bronze', w=(11, 'Já', None, 0.3), clicar=False, clear=True, cps=30, label='troca para bronze')
     c.click(OPT('Bronze', exact=False), w=(11, 'bronze,', None, 0.3), label='Bronze')
     # o aviso vive 2 s: o cursor vai direto para ele, sem conferência no meio, e fica em cima (o sonner pausa) até "aplicado."
-    ini = round(c.W(11, 'bronze,') + 0.6, 2)
-    c.hover({'text': 'Preço especial aplicado para Bronze'}, round(c.W(11, 'aplicado.') + 0.6 - ini - 0.55, 2),
+    ini = round(c.W(11, 'bronze,') + 1.0, 2)
+    c.rolar(0, ponto=(990, 748), duration=0.3, after=0, label='cursor no lugar do aviso (embaixo à direita)')
+    c.hover({'text': 'Preço especial aplicado para Bronze'}, round(c.W(11, 'aplicado.') + 0.6 - ini - 0.55, 2), timeout=6,
             label='aviso Preço especial aplicado (o mouse segura o aviso) (zoom: Valor/kg 30,50 com o aviso)')
     c.confere('body', ['Preço especial aplicado para Bronze'], 'aviso Preço especial aplicado para Bronze')
     c.confere_campos(['30,5'], 'Valor/kg 30,50', escopo='main')
@@ -872,12 +879,14 @@ def cap10():
     c.waitfor(text='Confirmar Exclusão', timeout=8)
     c.confere('dlg', ['Radiador de cobre', 'Código: 70', 'Atenção: Este material possui 110 Kg em estoque.'], 'aviso 110 Kg em estoque')
     c.hover(PD('Atenção: Este material possui'), 2.4, w=(2, 'cento'), label='aviso: possui 110 Kg em estoque (zoom)')
-    c.click(BTN('Sim, Excluir'), w=(3, 'Sim,'), label='Sim, Excluir')
+    c.click(BTN('Sim, Excluir'), w=(3, 'Sim,', None, 1.4), label='Sim, Excluir')   # 1,4 s até o clique, medido no ensaio
     c.waitfor(text='excluído', timeout=10)
-    ini = round(c.W(3, 'Sim,') + 0.5, 2)   # o aviso (5 s) sobe logo depois do clique: o cursor vai a ele e fica até "Desfazer."
-    # o aviso do sonner não aparece para getByRole (o Radix ainda marca a página aria-hidden enquanto a janela sai): alvo pelo TEXTO
-    c.hover(TXT('Desfazer'), round(c.W(3, 'Desfazer.') + 0.4 - ini - 0.55, 2), label='aviso "Radiador de cobre" excluído com Desfazer (o mouse segura o aviso)')
-    c.click(TXT('Desfazer'), w=(4, 'Clicando'), label='Desfazer')
+    # o aviso (5 s) sobe embaixo à direita e, logo depois da exclusão, a página fica ocupada uns segundos (o app recalcula o estoque):
+    # o Playwright não achava o "Desfazer" a tempo (ensaios de 10 e 11/11). O cursor vai antes ao lugar do botão, por coordenada (sem
+    # depender da página), e fica lá: com o mouse em cima o sonner segura o aviso até o clique na palavra "Clicando".
+    c.rolar(0, ponto=(1190, 746), duration=0.35, after=0, label='cursor no lugar do Desfazer (o aviso sobe embaixo à direita)')
+    c.hover(TXT('Desfazer'), 0.3, timeout=12, label='aviso "Radiador de cobre" excluído com Desfazer (o mouse segura o aviso)')
+    c.click(TXT('Desfazer'), w=(4, 'Clicando'), timeout=12, label='Desfazer')
     c.waitfor(text='restaurado!', timeout=10)
     c.waitfor(target=P('Radiador de cobre'), timeout=10)
     c.hover(CELULA('Radiador de cobre', 4), 1.4, w=(4, 'saldo'), label='o radiador volta com 110 Kg')

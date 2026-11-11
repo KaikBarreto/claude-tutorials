@@ -116,7 +116,7 @@
    "target": {
     "selector": "#company-email"
    },
-   "seconds": 0.95,
+   "seconds": 0.55,
    "at": 4.13,
    "label": "E-mail do cadastro",
    "optional": true,
@@ -132,7 +132,7 @@
    "target": {
     "selector": "#company-email"
    },
-   "seconds": 1.4,
+   "seconds": 1.0,
    "at": 7.21,
    "label": "o e-mail do cadastro é o do Rafael",
    "optional": true,
@@ -147,16 +147,10 @@
    "label": "E-mail"
   },
   {
-   "do": "type",
-   "target": {
-    "selector": "#company-email"
-   },
-   "text": "contato@reciclavalemetais.example",
-   "cps": 40,
-   "at": 11.0,
-   "label": "apaga e digita contato@reciclavalemetais.example",
-   "noClick": true,
-   "clear": true
+   "do": "eval",
+   "js": "(()=>{const el=document.activeElement;if(!el||!/^(INPUT|TEXTAREA)$/.test(el.tagName))return 'SEM ALVO: nada em foco';el.select();document.execCommand('insertText',false,\"contato@reciclavalemetais.example\");return el.value})()",
+   "at": 13.73,
+   "label": "troca pelo contato@reciclavalemetais.example (colado)"
   },
   {
    "do": "eval",
@@ -174,7 +168,7 @@
     "selector": "#show-phone"
    },
    "seconds": 0.2,
-   "at": 17.28,
+   "at": 16.88,
    "label": "chave Exibir nos documentos do Telefone",
    "optional": true,
    "timeout": 3
@@ -185,7 +179,7 @@
     "selector": "#show-email"
    },
    "seconds": 0.2,
-   "at": 18.57,
+   "at": 18.14,
    "label": "chave Exibir nos documentos do E-mail",
    "optional": true,
    "timeout": 3
@@ -212,7 +206,7 @@
     "placeholder": "00000-000",
     "exact": true
    },
-   "at": 27.2,
+   "at": 26.8,
    "label": "CEP"
   },
   {
@@ -223,7 +217,7 @@
    },
    "text": "12086410",
    "cps": 14,
-   "at": 28.05,
+   "at": 28.3,
    "label": "digita o CEP 12086-410",
    "noClick": true
   },
@@ -248,20 +242,8 @@
     "placeholder": "Rua, Avenida, etc."
    },
    "seconds": 0.2,
-   "at": 29.53,
-   "label": "Logradouro: Rua das Oficinas",
-   "optional": true,
-   "timeout": 3
-  },
-  {
-   "do": "hover",
-   "target": {
-    "placeholder": "Bairro",
-    "exact": true
-   },
-   "seconds": 0.2,
-   "at": 30.71,
-   "label": "Bairro: Parque Industrial",
+   "at": 30.88,
+   "label": "Logradouro: Rua das Oficinas (e o bairro do lado)",
    "optional": true,
    "timeout": 3
   },
@@ -270,8 +252,8 @@
    "target": {
     "selector": "main div:has(> label:text-is(\"Cidade\")) button[role=combobox]"
    },
-   "seconds": 0.4,
-   "at": 31.62,
+   "seconds": 0.2,
+   "at": 32.02,
    "label": "Cidade Taubaté e Estado SP - São Paulo",
    "optional": true,
    "timeout": 3
@@ -287,7 +269,7 @@
     "placeholder": "Nº",
     "exact": true
    },
-   "at": 34.91,
+   "at": 33.97,
    "label": "Número"
   },
   {
@@ -297,8 +279,8 @@
     "exact": true
    },
    "text": "1250",
-   "cps": 8,
-   "at": 36.37,
+   "cps": 14,
+   "at": 35.81,
    "label": "digita 1250",
    "noClick": true
   },
@@ -307,7 +289,7 @@
    "target": {
     "placeholder": "Sala, Galpão, etc. (opcional)"
    },
-   "at": 37.69,
+   "at": 37.0,
    "label": "Complemento"
   },
   {
@@ -316,7 +298,7 @@
     "placeholder": "Sala, Galpão, etc. (opcional)"
    },
    "text": "Galpão 2",
-   "cps": 14,
+   "cps": 30,
    "at": 38.89,
    "label": "digita Galpão 2",
    "noClick": true
@@ -331,20 +313,9 @@
    "target": {
     "text": "É este endereço que sai na nota fiscal."
    },
-   "seconds": 1.4,
+   "seconds": 2.0,
    "at": 41.28,
-   "label": "nota: é este endereço que sai na nota fiscal",
-   "optional": true,
-   "timeout": 3
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "É este endereço que sai na nota fiscal."
-   },
-   "seconds": 2.4,
-   "at": 45.65,
-   "label": "nota: a Configuração Fiscal usa o que estiver aqui",
+   "label": "nota: é este endereço que sai na nota fiscal (a Configuração Fiscal usa o que estiver aqui)",
    "optional": true,
    "timeout": 3
   },
@@ -387,7 +358,7 @@
     "name": "Logradouro"
    },
    "seconds": 0.2,
-   "at": 58.25,
+   "at": 57.85,
    "label": "caixas da prévia, pedaço por pedaço",
    "optional": true,
    "timeout": 3
@@ -398,8 +369,8 @@
     "role": "checkbox",
     "name": "CEP"
    },
-   "seconds": 0.5,
-   "at": 59.03,
+   "seconds": 0.3,
+   "at": 60.37,
    "label": "caixa CEP",
    "optional": true,
    "timeout": 3

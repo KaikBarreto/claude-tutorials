@@ -154,30 +154,36 @@
   {
    "do": "click",
    "target": {
-    "selector": "[role=dialog] input[placeholder^='Buscar por nome, apelido']"
+    "selector": "[role=dialog] button:has-text('Selecione o cliente')"
    },
-   "at": 18.16,
-   "label": "Cliente (clique na busca)"
+   "at": 16.69,
+   "label": "Cliente: Selecione o cliente (abre a busca)"
   },
   {
    "do": "type",
    "target": {
-    "selector": "[role=dialog] input[placeholder^='Buscar por nome, apelido']"
+    "selector": "[role=dialog]:has-text('Selecionar Cliente') input"
    },
    "text": "Serra Fina",
    "cps": 40,
-   "at": 19.8,
+   "at": 18.81,
    "label": "busca Serra Fina",
    "noClick": true
   },
   {
    "do": "click",
    "target": {
-    "selector": "[role=dialog] :text-is('Serra Fina Alumínio Reciclagem')"
+    "selector": "[role=dialog]:has-text('Selecionar Cliente') button:has-text('Serra Fina Alumínio Reciclagem')"
    },
-   "at": 20.11,
-   "label": "escolhe Serra Fina Alumínio Reciclagem",
-   "noScroll": true
+   "at": 19.25,
+   "label": "escolhe Serra Fina Alumínio Reciclagem"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "selector": "[role=dialog]:has-text('Selecionar Cliente')"
+   },
+   "timeout": 8
   },
   {
    "do": "mark",
@@ -185,22 +191,15 @@
    "at": 20.21
   },
   {
-   "do": "click",
+   "do": "hover",
    "target": {
     "selector": "[role=dialog] div:has(> label:text-is('Natureza da Operação')) button[role=combobox]"
    },
-   "at": 21.7,
-   "label": "Natureza da Operação (abre a lista)"
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "option",
-    "name": "Venda de mercadorias"
-   },
-   "at": 23.62,
-   "label": "Venda de mercadorias",
-   "noScroll": true
+   "seconds": 0.6,
+   "at": 21.8,
+   "label": "Natureza da Operação: Venda de mercadorias (já vem assim)",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "hover",
@@ -284,7 +283,7 @@
   {
    "do": "click",
    "target": {
-    "selector": "[role=dialog] button:has-text('Selecionar material...')"
+    "selector": "[role=dialog] input[placeholder='Selecionar material...']"
    },
    "at": 43.4,
    "label": "Selecionar material..."
@@ -292,8 +291,7 @@
   {
    "do": "type",
    "target": {
-    "selector": "[cmdk-input], [role=dialog] input[placeholder*='uscar']",
-    "nth": -1
+    "selector": "[role=dialog] input[placeholder='Selecionar material...']"
    },
    "text": "perfil",
    "cps": 40,
@@ -460,16 +458,11 @@
    "target": {
     "selector": "main tbody tr:has-text('#1249') td:has-text('Autorizada')"
    },
-   "seconds": 1.0,
+   "seconds": 0.6,
    "at": 103.71,
    "label": "#1249 Autorizada",
    "optional": true,
    "timeout": 4
-  },
-  {
-   "do": "mark",
-   "name": "L13",
-   "at": 109.22
   },
   {
    "do": "hover",
@@ -477,7 +470,7 @@
     "selector": "main tbody tr:has-text('#1249') td:last-child button"
    },
    "seconds": 0.15,
-   "at": 109.22,
+   "at": 108.32,
    "label": "abre o menu da linha #1249",
    "noScroll": true,
    "optional": true,
@@ -497,6 +490,11 @@
    },
    "optional": true,
    "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L13",
+   "at": 109.22
   },
   {
    "do": "click",

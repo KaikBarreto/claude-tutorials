@@ -310,6 +310,12 @@
    "label": "Percurso: 1ª UF RJ (Enter)"
   },
   {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].find(e=>e.children.length===0&&e.offsetParent!==null&&e.textContent.trim()===\"Descarregamento (Destino)\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-330);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 40.12,
+   "label": "janela sobe até o destino"
+  },
+  {
    "do": "mark",
    "name": "L6",
    "at": 40.82
@@ -346,14 +352,27 @@
    "label": "Destino: Itamonte (abre)"
   },
   {
-   "do": "click",
-   "target": {
-    "role": "option",
-    "name": "Itamonte",
-    "exact": true
-   },
+   "do": "press",
+   "key": "I",
    "at": 43.9,
    "label": "Destino: Itamonte"
+  },
+  {
+   "do": "press",
+   "key": "t"
+  },
+  {
+   "do": "press",
+   "key": "a"
+  },
+  {
+   "do": "press",
+   "key": "m"
+  },
+  {
+   "do": "press",
+   "key": "Enter",
+   "label": "Destino: Itamonte (Enter)"
   },
   {
    "do": "eval",
@@ -475,7 +494,9 @@
   },
   {
    "do": "waitFor",
-   "text": "Aguardando SEFAZ",
+   "target": {
+    "selector": "main tbody tr:has-text('FKD2E41') :text-is('Aguardando SEFAZ')"
+   },
    "timeout": 10
   },
   {
@@ -491,7 +512,9 @@
   },
   {
    "do": "waitFor",
-   "text": "Autorizado",
+   "target": {
+    "selector": "main tbody tr:has-text('FKD2E41') :text-is('Autorizado')"
+   },
    "timeout": 15
   },
   {

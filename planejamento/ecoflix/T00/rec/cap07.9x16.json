@@ -1,0 +1,383 @@
+{
+ "name": "t00-cap07b",
+ "title": "T0 · Cap. 7 · Os menus e a sua conta (celular 390x844, 9:16; narração 53,9 s, ESTIMADA; marcas L1..L5 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
+ "fakeNow": "2026-11-10T08:30:00-03:00",
+ "seed": "t00-cap07b",
+ "pace": 0.5,
+ "cps": 22,
+ "tail": 1.5,
+ "start": {
+  "x": 195,
+  "y": 600
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true",
+  "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10"
+ },
+ "seedExtra": [
+  "t00/catalogo",
+  "t00/s2",
+  "t00/pagamentos"
+ ],
+ "prewarm": [
+  "/login",
+  "/dashboard",
+  "/configuracoes?tab=appearance"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/login"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "timeout": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "••••••••"
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Rafael",
+   "timeout": 45
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 20
+  },
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Rafael!",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 15
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel|Algo deu errado|Falha ao|Something went wrong|N[ãa]o conseguimos/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Menu",
+    "exact": true
+   },
+   "at": 0.0,
+   "label": "Menu (barra de baixo)",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "text": "Conta",
+   "timeout": 8
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const vis=e=>e.getClientRects().length>0&&getComputedStyle(e).visibility!=='hidden';const nz=t=>t.replace(/[\\s\\u00a0]+/g,' ').trim();const rolagem=(el)=>{let c=el.parentElement;while(c&&c!==document.body&&c!==document.documentElement){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const root=document.querySelector(\"[role=dialog]\")||document.body;const el=[...root.querySelectorAll('*')].filter(e=>vis(e)&&nz(e.textContent)===\"Conta\"&&![...e.children].some(k=>nz(k.textContent)===\"Conta\"))[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-170);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/800),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 2.97,
+   "label": "a gaveta desce à seção Conta"
+  },
+  {
+   "do": "type",
+   "target": {
+    "text": "Conta",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "text": "",
+   "noClick": true,
+   "label": "seção Conta",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 5.77
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Perfil",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.4,
+   "at": 6.3,
+   "label": "Perfil",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Assinatura",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.4,
+   "at": 10.25,
+   "label": "Assinatura",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Tema",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.4,
+   "at": 13.28,
+   "label": "Tema (rodapé da gaveta)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 16.67
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Tutoriais | EcoFlix",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.4,
+   "at": 16.9,
+   "label": "Tutoriais | EcoFlix",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Central de Ajuda",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.4,
+   "at": 20.46,
+   "label": "Central de Ajuda",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Falar com o Suporte",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.4,
+   "at": 24.79,
+   "label": "Falar com o Suporte (sem clicar)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 28.18
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Configurações",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 29.02,
+   "label": "Configurações (rodapé da gaveta)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Aparência",
+   "timeout": 15
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Aparência",
+    "exact": true
+   },
+   "at": 31.83,
+   "label": "aba Aparência"
+  },
+  {
+   "do": "waitFor",
+   "text": "Estilo de Navegação (Desktop)",
+   "timeout": 12
+  },
+  {
+   "do": "type",
+   "target": {
+    "text": "Estilo de Navegação (Desktop)",
+    "exact": true
+   },
+   "text": "",
+   "noClick": true,
+   "label": "Estilo de Navegação (Desktop)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "type",
+   "target": {
+    "text": "Esta opção só afeta a visualização em desktop.",
+    "exact": true
+   },
+   "text": "",
+   "noClick": true,
+   "at": 34.55,
+   "label": "Esta opção só afeta a visualização em desktop.",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 39.76
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Início",
+    "exact": true
+   },
+   "seconds": 0.1,
+   "at": 42.57,
+   "label": "barra de baixo: Início",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Caixa",
+    "exact": true
+   },
+   "seconds": 0.29,
+   "at": 43.33,
+   "label": "barra de baixo: Caixa",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Novo",
+    "exact": true
+   },
+   "seconds": 0.3,
+   "at": 44.62,
+   "label": "barra de baixo: Novo",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Estoque",
+    "exact": true
+   },
+   "seconds": 0.1,
+   "at": 48.18,
+   "label": "barra de baixo: Estoque",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Menu",
+    "exact": true
+   },
+   "at": 40.58,
+   "label": "Menu (abre a gaveta)",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "text": "Conta",
+   "timeout": 8
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const vis=e=>e.getClientRects().length>0&&getComputedStyle(e).visibility!=='hidden';const nz=t=>t.replace(/[\\s\\u00a0]+/g,' ').trim();const rolagem=(el)=>{let c=el.parentElement;while(c&&c!==document.body&&c!==document.documentElement){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const root=document.querySelector(\"[role=dialog]\")||document.body;const el=[...root.querySelectorAll('*')].filter(e=>vis(e)&&nz(e.textContent)===\"Conta\"&&![...e.children].some(k=>nz(k.textContent)===\"Conta\"))[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-170);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 50.85,
+   "label": "a gaveta desce à seção Conta"
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 53.93
+  }
+ ],
+ "device": "phone"
+}

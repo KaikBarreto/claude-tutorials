@@ -422,8 +422,8 @@
     "selector": "input[placeholder='Ex: 000']",
     "nth": 0
    },
-   "at": 79.95,
-   "label": "IBS/CBS (trecho acelerado) 1/4"
+   "at": 76.13,
+   "label": "CST-IBS/CBS de Saída (clique no campo)"
   },
   {
    "do": "type",
@@ -433,65 +433,15 @@
    },
    "text": "000",
    "cps": 40,
-   "label": "IBS/CBS 000",
+   "at": 77.39,
+   "label": "CST-IBS/CBS 000",
    "noClick": true
   },
   {
-   "do": "click",
-   "target": {
-    "selector": "input[placeholder='Ex: 000001']",
-    "nth": 0
-   },
-   "label": "IBS/CBS (trecho acelerado) 2/4"
-  },
-  {
-   "do": "type",
-   "target": {
-    "selector": "input[placeholder='Ex: 000001']",
-    "nth": 0
-   },
-   "text": "000001",
-   "cps": 40,
-   "label": "IBS/CBS 000001",
-   "noClick": true
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "input[placeholder='Ex: 000']",
-    "nth": 1
-   },
-   "label": "IBS/CBS (trecho acelerado) 3/4"
-  },
-  {
-   "do": "type",
-   "target": {
-    "selector": "input[placeholder='Ex: 000']",
-    "nth": 1
-   },
-   "text": "000",
-   "cps": 40,
-   "label": "IBS/CBS 000",
-   "noClick": true
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "input[placeholder='Ex: 000001']",
-    "nth": 1
-   },
-   "label": "IBS/CBS (trecho acelerado) 4/4"
-  },
-  {
-   "do": "type",
-   "target": {
-    "selector": "input[placeholder='Ex: 000001']",
-    "nth": 1
-   },
-   "text": "000001",
-   "cps": 40,
-   "label": "IBS/CBS 000001",
-   "noClick": true
+   "do": "eval",
+   "js": "(()=>{const set=Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set;const out=[];for(const [ph,k,val] of [[\"Ex: 000001\", 0, \"000001\"], [\"Ex: 000\", 1, \"000\"], [\"Ex: 000001\", 1, \"000001\"]]){const i=[...document.querySelectorAll('input')].filter(x=>x.placeholder===ph&&x.offsetParent)[k];if(!i){out.push('SEM ALVO '+ph);continue;}set.call(i,val);i.dispatchEvent(new Event('input',{bubbles:true}));out.push(ph+'='+i.value)}return out.join(' | ')})()",
+   "at": 80.25,
+   "label": "cClassTrib 000001 e a Entrada (sem cursor, trecho acelerado)"
   },
   {
    "do": "mark",

@@ -1,0 +1,14 @@
+{
+ "_doc": "T21 · estado de partida (caps. 0 a 2), por cima do fim da T15 (t14/* e t15/*, como o rec/t21/gerar.py lista): o Cato ligado na empresa, mas ainda sem a autorização de uso de IA (o clique no botão abre 'Antes da primeira conversa com o Cato'); o Marcos com a permissão 'Usar o Cato (assistente de IA)' e o convite do beta já visto (o corte do cap. 2). Rafael já viu o convite no mundo base.",
+ "_patch": {
+  "companies": [
+   {"match": {"id": "@id:company.reciclavale"}, "set": {"cato_enabled": true, "ai_consent_at": null, "ai_consent_version": null, "ai_consent_by": null}}
+  ],
+  "profiles": [
+   {"match": {"id": "@id:user.marcos"}, "set": {"cato_invite_seen_at": "2026-08-03T10:15:00.000Z"}}
+  ]
+ },
+ "user_permissions": [
+  {"id": "@id:t21.perm.marcos.cato", "user_id": "@id:user.marcos", "permission": "action_use_cato", "created_at": "2026-08-03T10:10:00.000Z"}
+ ]
+}

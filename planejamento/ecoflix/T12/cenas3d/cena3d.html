@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<!-- T12 "Coletas" · cenas 3D (kit perfis/ecoflix/cenas3d/kit3d.js). As cenas 2D de ../cenas/cenas.html ficam de reserva.
+       cap08 a tara do caminhão (Frota, "Tara (kg)"): o caminhão vazio na balança é a tara (6.380 kg); carregado, a diferença é o peso
+             do material. Aqui, no cadastro de veículo das Coletas, a tara É o caminhão vazio;
+       cap09 o caminho da caçamba: dois poliguindastes trocam a Caçamba 05 (Entreguei, base para o parceiro) e a 03 (Recolhi, do
+             parceiro para a base) quando a ordem é concluída; a 06 entra na base pelo Movimentar, de Externo.
+     Âncoras W(linha,'palavra') das falas do narracao/tts_textos.py; textos e números iguais aos da 2D (campo "mostra").
+     Render: node ferramentas/edit/cenas/render_cenas.cjs <cap> <capNN.json> saida.mp4 --html planejamento/ecoflix/T12/cenas3d/cena3d.html --de <at> --ate <at+dur> -->
+<style>
+.row{display:flex;align-items:center}
+</style>
+</head><body>
+<script type="module">
+import { PI, THREE, cl, eo, eio, pr, lerp, W, el, ic, vis, pulse, conta, posTitulo, titulo, chip, mostrador,
+  CENA, GL, camera, ancora, mundo, grupo, poe, rbox, M, anel, destaque, chaoPatio, balancaPatio, caminhao, anda, cresce, COR, cena } from '../../../../perfis/ecoflix/cenas3d/kit3d.js';
+import { cacambaEstacionaria } from '../../../../perfis/ecoflix/cenas3d/objetos/cacambaEstacionaria.js';
+import { poliguindaste, posiciona, poseCacamba, lxCarga } from '../../../../perfis/ecoflix/cenas3d/objetos/poliguindaste.js';
+
+const CAPS = {};
+// pilha de chapas de aço (o objeto objetos/chaparia.js saiu da pasta; esta é a mesma ideia, local à cena)
+const CS = ['#A3ACB6', '#8E98A2', '#B5BDC6', '#97A1AB', '#ADB5BE', '#9AA3AD'];
+function chaparia(pai, p = [0, 0, 0], o = {}) {
+  const g = grupo(pai, p), c = o.c ?? 2.6, l = o.l ?? 1.5, n = o.n ?? 7, e = .075;
+  for (let i = 0; i < n; i++) { const w = c * (.9 + .1 * ((i * 7) % 3) / 2), d = l * (.88 + .12 * ((i * 5) % 3) / 2);
+    poe(rbox(w, e, d, .018, 1), M(CS[i % 6]), g, [((i % 2) - .5) * .12, e / 2 + i * (e + .004), ((i % 3) - 1) * .05], [0, (i % 2 ? -1 : 1) * .014 * (1 + i % 3), 0]); }
+  g.userData.topo = n * (e + .004); return g;
+}
+const _m = new THREE.Matrix4(), _q = new THREE.Quaternion(), _p = new THREE.Vector3(), _s = new THREE.Vector3();
+
+// ------------------------------------------------------------------ CAPS[8] · A tara do caminhão (L2)
+// 2 "A tara é o peso do caminhão vazio. Carregado, ele pesa mais na balança, e essa diferença é o peso do material."
+CAPS[8] = () => {
+  const SX = 0, TARA = 6380, X0 = -11.5;
+  chaoPatio(CENA, [SX - 2, 0, 0], { c: 34, l: 14, passo: 2.6, faixa: [3.3] });
+  const bal = balancaPatio(CENA, [SX, 0, 0], { c: 7.8, l: 3.0, rampa: 1.2, poste: [4.6, -2.0], hp: 2.3, rp: .07 });
+  const h = x => bal.userData.altura(x - SX), topo = mundo(bal, bal.userData.topo);
+  const T = caminhao(CENA, [0, 0, 0], { carga: 'latinha', n: 380 }), im = T.userData.carga, A = im.userData.A, n = im.count;
+  const ordem = A.map((a, i) => i).sort((i, j) => A[i].p.x - A[j].p.x), rk = []; ordem.forEach((i, k) => { rk[i] = k; });
+  const tit = titulo('Frota', 'A tara do caminhão');
+  const most = mostrador('Tara');
+  const tCar = el('<div class="tag a ab" style="font-size:22px">carregado</div>');
+  const tMat = el(`<div class="tag v ab" style="font-size:22px">${ic('package', 22)}peso do material</div>`);
+  const a0 = W(2, 'a') - .3, tta = W(2, 'tara'), tca = W(2, 'caminhao'), tva = W(2, 'vazio'), tcg = W(2, 'carregado'), tpe = W(2, 'pesa'),
+        tba = W(2, 'balanca'), tdi = W(2, 'diferenca'), tma = W(2, 'material');
+  const chegou = tta + Math.max(1.4, tva - tta + .5);
+  camera([[0, { x: .5, y: 1.0, z: 0, d: 19.5, az: .24, el: .32, oy: -20 }], [tma + 3, { x: .6, y: 1.0, z: 0, d: 18.8, az: .2, el: .32, oy: -20 }, 'lin']]);
+  return t => {
+    GL.style.opacity = eo(pr(t, tta - .3, .6)).toFixed(3);
+    const x = lerp(X0, SX, eio(pr(t, tta - .3, chegou - tta + .3))); anda(T, x, h); T.visible = t > tta - .35;
+    // carregado: as latinhas caem na caçamba, uma depois da outra (da traseira para a frente)
+    for (let i = 0; i < n; i++) { const q = eo(pr(t, tcg + .05 + rk[i] * .0045, .5)), a = A[i], sc = Math.max(q, 1e-4) * (typeof a.s === 'number' ? a.s : 1);
+      const pu = pr(t, tma + .1, .8), g = 1 + .12 * Math.sin(PI * (pu > 0 && pu < 1 ? pu : 0));
+      _m.compose(_p.set(a.p.x, a.p.y + 1.5 * (1 - q), a.p.z), a.q, _s.setScalar(sc * g)); im.setMatrixAt(i, _m); }
+    im.instanceMatrix.needsUpdate = true;
+    posTitulo(tit, t, a0 - .6, tta - .45);
+    vis(most, t, tta + .1, 1e9, { dy: 10 }); ancora(most, topo, .5, 1, 0, 4);
+    conta(most.mn, t, tva, .9, 0, TARA); pulse(most, t, tva + .95, .05, .7);
+    vis(tCar, t, tcg - .05, 1e9, { dy: 8 }); ancora(tCar, [x - .6, 0, 1.9], .5, 0, 0, 12);
+    vis(tMat, t, tdi, 1e9, { dx: -12, dy: 0 }); ancora(tMat, [x - 1.6, 2.4, 0], .5, 1, 0, -8);
+  };
+};
+
+// ------------------------------------------------------------------ CAPS[9] · O caminho da caçamba (L6)
+// 6 "Uma dica: a caçamba só muda de lugar quando alguém registra. Na coleta, é o Entreguei e o Recolhi da ordem, que valem quando ela
+//    é concluída. Fora da coleta, é o Movimentar, aqui."
+CAPS[9] = () => {
+  const XB = -7, XP = 7, LB = 1.8, XE = -2.6, ZE = 6.6, PK = [3.4, 1.7, 1.1];
+  chaoPatio(CENA, [0, 0, 1.2], { c: 32, l: 17, passo: 2.6, faixa: [0] });
+  const zona = (x, z, w, d, cor) => { const g = grupo(CENA, [x, 0, z]); poe(rbox(w, .03, d, .01, 1), M(cor), g, [0, .015, 0]).castShadow = false; return g; };
+  const zB = zona(XB, 0, 6.8, 7.6, '#DDF3E6'), zP = zona(XP, 0, 6.8, 7.6, '#FBEFD2'), zE = zona(XE, ZE, 5.2, 3.2, '#E9ECEF');
+  const XA = XB - 1.7, XQ = XP - 1.7, XR = XB + 1.7, XS = XP + 1.7;
+  const bin = (x, z) => { const k = cacambaEstacionaria(CENA, [x, 0, z], { c: PK[0], l: PK[1], h: PK[2] }); k.userData.c = PK[0]; return k; };
+  const K05 = bin(XA, LB), K03 = bin(XS, -LB), K06 = bin(XE, ZE);
+  chaparia(K03, [0, .2, 0], { c: 2.2, l: 1.1, n: 6 });   // a 03 está cheia
+  const P1 = poliguindaste(CENA, [0, 0, LB], { cor: COR.verde }), P2 = poliguindaste(CENA, [0, 0, -LB], { cor: COR.cinzaC });
+  const tit = titulo('Equipamentos', 'O caminho da caçamba');
+  const lug = (icn, nome) => el(`<div class="tag e ab" style="font-size:21px">${ic(icn, 21)}${nome}</div>`);
+  const cBase = lug('warehouse', 'Minha base'), cPar = lug('building-2', 'Parceiro'), cExt = lug('package', 'Externo');
+  const n05 = chip('Caçamba 05'), n03 = chip('Caçamba 03'), n06 = chip('Caçamba 06');
+  const tReg = el(`<div class="tag ab" style="font-size:19px">${ic('pencil', 19)}alguém registra</div>`);
+  const tCon = el(`<div class="tag v ab" style="font-size:19px">${ic('circle-check', 19)}ordem concluída</div>`);
+  const tEn = el('<div class="tag v ab" style="font-size:19px">Entreguei</div>'), tRe = el('<div class="tag v ab" style="font-size:19px">Recolhi</div>');
+  const tMo = el('<div class="tag v ab" style="font-size:19px">Movimentar</div>');
+  const an = anel(CENA, 1.55, .09, [XA, 0, LB]), on = anel(CENA, 1.55, .05, [XA, 0, LB]);
+  const a0 = W(6, 'Uma') - .3, tcc = W(6, 'cacamba'), tlu = W(6, 'lugar'), trg = W(6, 'registra'), ten = W(6, 'Entreguei'), trc = W(6, 'Recolhi'),
+        tco = W(6, 'concluida'), tfo = W(6, 'Fora'), tmv = W(6, 'Movimentar'), taq = W(6, 'aqui');
+  camera([[0, { x: 0, y: .9, z: 1.2, d: 33, az: .06, el: .38, oy: -55 }], [taq + 3, { x: 0, y: .9, z: 1.3, d: 32, az: .05, el: .38, oy: -55 }, 'lin']]);
+  // fases de cada caminhão: pegar (s 0→1), levar, soltar (s 1→0) e sair
+  const dP = 1.1, dL = 1.8, dS = .8;
+  const fase = (t, a) => { const p = eio(pr(t, a, dP)), l = eio(pr(t, a + dP + .15, dL)), s2 = eio(pr(t, a + dP + .15 + dL + .15, dP)), sa = eio(pr(t, a + 2 * dP + dL + .3 + .05, dS + .4)); return { p, l, s2, sa }; };
+  const caminha = (T, K, X0, X1, dir, z, t, a, entra, kfinal) => {   // X0 = onde a caçamba está, X1 = onde ela fica
+    const f = fase(t, a), park = X0 - dir * lxCarga(0);
+    let x, s;
+    if (t < a) { x = lerp(dir * 16, park, eo(pr(t, entra, 2.0))); s = 0; }
+    else if (f.l <= 0 && f.s2 <= 0) { s = f.p; x = X0 - dir * lxCarga(s); }
+    else if (f.s2 <= 0) { s = 1; x = lerp(X0 - dir * lxCarga(1), X1 - dir * lxCarga(1), f.l); }
+    else { s = 1 - f.s2; x = X1 - dir * lxCarga(s); if (f.sa > 0) x += dir * 6.6 * f.sa; }
+    posiciona(T, x, z, dir); T.visible = t > entra - .05;
+    if (t < entra + 1.2 || t < a - 1.2 && false) K.position.set(X0, 0, z); else if (t < a + 2 * dP + dL + .3) poseCacamba(T, K, s, dir); else { K.position.set(X1, 0, z); K.rotation.set(0, 0, 0); T.userData.braco.visible = T.userData.gancho.visible = false; }
+    if (t >= a + 2 * dP + dL + .3 && f.s2 >= 1) { /* já no chão */ }
+  };
+  return t => {
+    GL.style.opacity = eo(pr(t, tcc - .5, .6)).toFixed(3);
+    for (const [g, a] of [[zB, tcc - .1], [zP, tcc + .05]]) cresce(g, t, a, .5, 0);
+    cresce(K05, t, tcc + .2, .55, .3); cresce(K03, t, tcc + .3, .55, .3);
+    caminha(P1, K05, XA, XQ, 1, LB, t, ten, trg - .3);
+    caminha(P2, K03, XS, XR, -1, -LB, t, trc, trg - .3);
+    cresce(zE, t, tfo - .1, .5, 0); cresce(K06, t, tfo + .2, .55, .3);
+    const mv = eio(pr(t, tmv, 1.3)); if (t >= tmv) { K06.position.set(lerp(XE, XA, mv), .9 * 4 * mv * (1 - mv), lerp(ZE, LB, mv)); }
+    destaque(an, on, t, taq - .1);
+    posTitulo(tit, t, a0 - .6, tcc - .6);
+    vis(cBase, t, tcc - .1, 1e9, { dy: 10 }); ancora(cBase, [XB, 0, 3.95], .5, 0, 0, 6);
+    vis(cPar, t, tcc + .05, 1e9, { dy: 10 }); ancora(cPar, [XP, 0, 3.95], .5, 0, 0, 6);
+    const sob = (e, k, a, dy = 1.3) => { vis(e, t, a, 1e9, { dy: 8 }); ancora(e, [k.position.x, k.position.y + dy, k.position.z], .5, 1, 0, 0); };
+    sob(n05, K05, tcc + .3); sob(n03, K03, tcc + .4); sob(n06, K06, tmv + .35);
+    vis(tReg, t, trg - .1, 1e9, { dy: 8 }); ancora(tReg, [0, 3.7, -2.8], .5, 1, 0, 0);
+    vis(tEn, t, ten - .1, 1e9, { dy: 0, sc: .8 }); ancora(tEn, [K05.position.x, K05.position.y + 2.5, K05.position.z], .5, 1, 0, 0);
+    vis(tRe, t, trc - .1, 1e9, { dy: 0, sc: .8 }); ancora(tRe, [K03.position.x, K03.position.y + 2.5, K03.position.z], .5, 1, 0, 0);
+    vis(tCon, t, tco - .15, 1e9, { dy: 8 }); pulse(tCon, t, tco + .3, .05, .8); ancora(tCon, [0, 3.7, 2.4], .5, 1, 0, 0);
+    vis(cExt, t, tfo - .1, 1e9, { dx: 16, dy: 0 }); ancora(cExt, [XE, 0, ZE + 2.0], .5, 0, 0, 10);
+    vis(tMo, t, tmv - .1, 1e9, { dy: 0, sc: .8 }); ancora(tMo, [K06.position.x, K06.position.y + 1.9, K06.position.z], .5, 1, 0, 0);
+    pulse(n06, t, taq, .06, .7);
+  };
+};
+
+cena(d => CAPS[d.cap](), { sombra: 11, mapa: 2048, chao: false });
+</script></body></html>

@@ -454,7 +454,9 @@ def cap00():
 
 def cap01():
     """O funil de vendas: primeira abertura (o banco cria o Funil de vendas), as cinco colunas, ilustração, Nova oportunidade tracejado."""
-    c = cap_novo(1, recolhe=False, start=(760, 150))
+    # aquece a rota do CRM fora do vídeo (sem isso, o clique no menu mostrou a tela branca "Carregando..." por ~1,3 s com a máquina cheia);
+    # o banco já cria o Funil de vendas aqui, no preparo: na tela é igual
+    c = cap_novo(1, recolhe=False, start=(760, 150), setup=CRM + vai('/dashboard', 'Olá, Rafael') + [{'do': 'wait', 'seconds': 1.5}])
     c.mark(1)
     c.click(LINK('CRM/Kanban'), at=c.A(1, 'abre', 1.0), label='CRM/Kanban (menu lateral)')
     c.waitfor(target=CAB('Perdido'), timeout=25)

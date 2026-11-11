@@ -1,0 +1,322 @@
+{
+ "name": "t21-cap08",
+ "title": "T21 · Cap. 8 · Avaliar e falar com o suporte (narração ESTIMADA 36,2 s; marcas L1..L4 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "seed": "t21-cap08",
+ "pace": 0.5,
+ "cps": 40,
+ "tail": 1.5,
+ "start": {
+  "x": 900,
+  "y": 560
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true"
+ },
+ "seedExtra": [
+  "t14/inicio",
+  "t14/apos-cap02",
+  "t14/apos-cap03",
+  "t14/apos-cap04",
+  "t14/apos-cap06",
+  "t14/apos-cap07",
+  "t14/apos-cap08",
+  "t14/apos-cap09",
+  "t14/apos-cap10",
+  "t14/apos-cap11",
+  "t14/apos-cap12",
+  "t14/apos-cap14",
+  "t15/inicio",
+  "t15/apos-cap01",
+  "t15/apos-cap02",
+  "t15/apos-cap10",
+  "t21/inicio",
+  "t21/apos-cap02"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "waitFor",
+   "target": {
+    "label": "E-mail"
+   },
+   "timeout": 30
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "E-mail"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "Senha",
+    "exact": true
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "selector": "button[aria-label=\"Sair\"]",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/materiais"
+  },
+  {
+   "do": "waitFor",
+   "selector": "button[aria-label=\"Abrir o Cato\"]",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const v={savedAt:Date.now(),sessionId:\"f43d3a45-ce41-5a72-b5d8-f8394ae1c023\",messages:[{\"role\": \"user\", \"content\": \"Como tá indo meu negócio esse mês?\", \"createdAt\": 1794310220000}, {\"role\": \"assistant\", \"content\": \"Novembro começou no azul. Olhando seus lançamentos de 1 a 10 de novembro:\\n\\n- **Vendas:** R$ 118.620,20\\n- **Compras:** R$ 18.781,45\\n- **Despesas:** R$ 30.249,20\\n\\nO resultado até aqui é de **R$ 69.589,55**, no regime de caixa. A Fundição Bandeira do Vale foi o maior cliente do período, com R$ 57.460,00 em vendas. Ainda faltam 20 dias pro mês fechar.\", \"toolsUsed\": [\"resumo_financeiro\"], \"chart\": null, \"table\": null, \"images\": null, \"action\": null, \"context\": {\"period\": {\"start\": \"2026-11-01\", \"end\": \"2026-11-10\", \"timezone\": \"America/Sao_Paulo\"}, \"regime\": \"caixa\", \"updatedAt\": \"2026-11-10T11:30:00.000Z\"}, \"interactionId\": \"c0ec2624-3fb6-52e0-8e56-f44f77ece665\", \"feedback\": null, \"budgetNotice\": null, \"cacheHit\": false, \"createdAt\": 1794310224000}, {\"role\": \"user\", \"content\": \"Quem tá me devendo?\", \"createdAt\": 1794310240000}, {\"role\": \"assistant\", \"content\": \"Hoje, **3 parceiros** têm saldo a seu favor, somando **R$ 17.540,00**:\\n\\n1. **Fundição Bandeira do Vale:** R$ 14.370,00\\n2. **Aços Quiririm Ltda:** R$ 2.870,00\\n3. **Valdir Pereira:** R$ 300,00\\n\\nA Fundição concentra 82% do que você tem a receber.\", \"toolsUsed\": [\"saldos_parceiros\"], \"chart\": {\"type\": \"barra\", \"title\": \"Saldo a receber por parceiro\", \"valueFormat\": \"currency\", \"points\": [{\"label\": \"Fundição Bandeira do Vale\", \"value\": 14370}, {\"label\": \"Aços Quiririm Ltda\", \"value\": 2870}, {\"label\": \"Valdir Pereira\", \"value\": 300}]}, \"table\": null, \"images\": null, \"action\": null, \"context\": {\"updatedAt\": \"2026-11-10T11:30:00.000Z\"}, \"interactionId\": \"45bb22a1-183a-5e23-9430-380de8a31c5f\", \"feedback\": null, \"budgetNotice\": null, \"cacheHit\": false, \"createdAt\": 1794310244000}, {\"role\": \"user\", \"content\": \"Quanto tenho em estoque agora?\", \"createdAt\": 1794310260000}, {\"role\": \"assistant\", \"content\": \"Agora você tem **26.733 kg** de material no pátio. A custo médio, esse estoque vale **R$ 96.076,00**; pela tabela de venda, a projeção é de **R$ 116.689,40**.\\n\\nOs materiais que mais pesam no valor:\\n\\n1. **Alumínio perfil:** 3.385 kg, R$ 30.126,50\\n2. **Alumínio bloco:** 2.830 kg, R$ 20.093,00\\n3. **Bateria automotiva:** 3.960 kg, R$ 12.276,00\\n\\nSó o alumínio perfil e o bloco já passam da metade do valor do estoque.\", \"toolsUsed\": [\"estoque_atual\"], \"chart\": null, \"table\": null, \"images\": null, \"action\": null, \"context\": {\"period\": {\"start\": \"2026-11-10\", \"end\": \"2026-11-10\"}, \"updatedAt\": \"2026-11-10T11:30:00.000Z\"}, \"interactionId\": \"e7da12df-475f-58a5-827d-408bd07f99e0\", \"feedback\": null, \"budgetNotice\": null, \"cacheHit\": false, \"createdAt\": 1794310264000}, {\"role\": \"user\", \"content\": \"Qual o saldo das minhas contas no banco?\", \"createdAt\": 1794310280000}, {\"role\": \"assistant\", \"content\": \"Agora, suas contas no banco somam **R$ 132.448,67**:\\n\\n- **Conta Principal:** R$ 44.933,67\\n- **Conta Secundária:** R$ 82.515,00\\n- **Conta Cooperativa:** R$ 5.000,00\\n\\nEsse é o saldo de agora. Em novembro, até hoje, entraram **R$ 114.620,20** e saíram **R$ 53.554,10** nas contas.\", \"toolsUsed\": [\"resumo_bancario\"], \"chart\": null, \"table\": null, \"images\": null, \"action\": null, \"context\": {\"period\": {\"start\": \"2026-11-01\", \"end\": \"2026-11-10\"}, \"updatedAt\": \"2026-11-10T11:30:00.000Z\"}, \"interactionId\": \"809aa659-a51e-5c0c-bb2d-918ccf30a455\", \"feedback\": null, \"budgetNotice\": null, \"cacheHit\": false, \"createdAt\": 1794310284000}, {\"role\": \"user\", \"content\": \"Como tá meu caixa hoje?\", \"createdAt\": 1794310300000}, {\"role\": \"assistant\", \"content\": \"Hoje ainda **não tem caixa aberto**: ninguém abriu o caixa até agora. Ontem, dia 9, foram dois: o do Marcos Antunes fechou com **R$ 640,00** e o do Rafael Nogueira com **R$ 1.250,00**.\", \"toolsUsed\": [\"caixa\"], \"chart\": null, \"table\": null, \"images\": null, \"action\": null, \"context\": {\"period\": {\"start\": \"2026-11-10\", \"end\": \"2026-11-10\"}, \"updatedAt\": \"2026-11-10T11:30:00.000Z\"}, \"interactionId\": \"78815238-aba4-5ecc-a4a9-59ab4074bd32\", \"feedback\": null, \"budgetNotice\": null, \"cacheHit\": false, \"createdAt\": 1794310304000}, {\"role\": \"user\", \"content\": \"Compras e vendas dos últimos três meses\", \"createdAt\": 1794310320000}, {\"role\": \"assistant\", \"content\": \"Olhando suas compras e vendas dos últimos três meses:\\n\\n- **Setembro:** comprou R$ 201.784,25 e vendeu R$ 273.047,73\\n- **Outubro:** comprou R$ 256.860,00 e vendeu R$ 269.240,00\\n- **Novembro (até o dia 10):** comprou R$ 18.781,45 e vendeu R$ 118.620,20\\n\\nEm outubro, as compras quase alcançaram as vendas: o pátio encheu de ferro pesado. Em novembro, esse ferro saiu, e as vendas passaram longe das compras.\", \"toolsUsed\": [\"compras_vendas_mensais\"], \"chart\": {\"type\": \"linha\", \"title\": \"Compras e vendas por mês\", \"valueFormat\": \"currency\", \"series\": [{\"name\": \"Compras\", \"points\": [{\"label\": \"set/26\", \"value\": 201784.25}, {\"label\": \"out/26\", \"value\": 256860}, {\"label\": \"nov/26\", \"value\": 18781.45}]}, {\"name\": \"Vendas\", \"points\": [{\"label\": \"set/26\", \"value\": 273047.73}, {\"label\": \"out/26\", \"value\": 269240}, {\"label\": \"nov/26\", \"value\": 118620.2}]}]}, \"table\": null, \"images\": null, \"action\": null, \"context\": {\"period\": {\"start\": \"2026-09-01\", \"end\": \"2026-11-10\"}, \"updatedAt\": \"2026-11-10T11:31:00.000Z\"}, \"interactionId\": \"3f3c4d79-ca2f-5628-ab66-9229e003bbfc\", \"feedback\": null, \"budgetNotice\": null, \"cacheHit\": false, \"createdAt\": 1794310324000}, {\"role\": \"user\", \"content\": \"Pra quem eu mais vendi em outubro?\", \"createdAt\": 1794310340000}, {\"role\": \"assistant\", \"content\": \"Em outubro, olhando suas vendas, quem mais comprou de você foi:\\n\\n1. **Fundição Bandeira do Vale:** R$ 112.800,00\\n2. **Aços Quiririm Ltda:** R$ 77.460,60\\n3. **Serra Fina Alumínio Reciclagem:** R$ 60.349,20\\n\\nA Fundição ficou com 42% das vendas do mês.\", \"toolsUsed\": [\"top_parceiros\"], \"chart\": {\"type\": \"barra\", \"title\": \"Vendas por cliente em outubro\", \"valueFormat\": \"currency\", \"points\": [{\"label\": \"Fundição Bandeira do Vale\", \"value\": 112800}, {\"label\": \"Aços Quiririm Ltda\", \"value\": 77460.6}, {\"label\": \"Serra Fina Alumínio Reciclagem\", \"value\": 60349.2}]}, \"table\": null, \"images\": null, \"action\": null, \"context\": {\"period\": {\"start\": \"2026-10-01\", \"end\": \"2026-10-31\"}, \"updatedAt\": \"2026-11-10T11:31:00.000Z\"}, \"interactionId\": \"62df4037-b68f-52e4-b41b-c6862eb821fa\", \"feedback\": null, \"budgetNotice\": null, \"cacheHit\": false, \"createdAt\": 1794310344000}, {\"role\": \"user\", \"content\": \"Lista meu estoque em tabela\", \"createdAt\": 1794310360000}, {\"role\": \"assistant\", \"content\": \"Aqui está o seu estoque de agora, do maior valor para o menor. São **15 materiais**, somando **26.733 kg** e **R$ 96.076,00** a custo médio.\", \"toolsUsed\": [\"estoque_atual\"], \"chart\": null, \"table\": {\"title\": \"Estoque em 10/11/2026\", \"columns\": [\"Material\", \"Quantidade (kg)\", \"Valor em estoque\"], \"rows\": [[\"Alumínio perfil\", 3385, 30126.5], [\"Alumínio bloco\", 2830, 20093], [\"Bateria automotiva\", 3960, 12276], [\"Metal amarelo (latão)\", 214, 5885], [\"Cobre misto\", 148, 5328], [\"Ferro misto\", 6420, 4815], [\"Alumínio latinha\", 640, 3968], [\"Chaparia\", 3750, 2625], [\"Ferro pesado\", 2180, 2071], [\"Cobre mel\", 42, 1785], [\"Plástico PET\", 920, 1748], [\"Fio de cobre encapado\", 96, 1728], [\"Inox\", 260, 1508], [\"Bronze\", 38, 1102], [\"Papelão\", 1850, 1017.5]]}, \"images\": null, \"action\": null, \"context\": {\"period\": {\"start\": \"2026-11-10\", \"end\": \"2026-11-10\"}, \"updatedAt\": \"2026-11-10T11:31:00.000Z\"}, \"interactionId\": \"79eda481-4b39-56db-9bf3-d401e9150cda\", \"feedback\": null, \"budgetNotice\": null, \"cacheHit\": false, \"createdAt\": 1794310364000}, {\"role\": \"user\", \"content\": \"Emite a nota da venda pra Fundição Bandeira do Vale\", \"createdAt\": 1794310380000}, {\"role\": \"assistant\", \"content\": \"Emitir nota fica com você: eu consulto e explico, mas não emito. O caminho é este:\\n\\n1. Abra **Fiscal & Ambiental › Notas Fiscais (NF-e)**.\\n2. Na aba **Saída**, clique em **Nova Nota**.\\n3. Monte a nota da venda pra Fundição Bandeira do Vale, confira e emita.\\n\\nA tributação da nota quem define é o seu contador.\", \"toolsUsed\": [\"consultar_ajuda\"], \"chart\": null, \"table\": null, \"images\": null, \"action\": null, \"context\": null, \"interactionId\": \"494f2549-f71e-5d68-a092-1ef72fcca79c\", \"feedback\": null, \"budgetNotice\": null, \"cacheHit\": false, \"createdAt\": 1794310384000}],activeJobId:null,activeQuestion:null,activeJobStartedAt:null};sessionStorage.setItem(\"cato-conversation-v3:38814e47-876a-5977-a5f7-53af364c17bb:34c36c63-0890-5e89-8963-7c77b7996908\",JSON.stringify(v));return 'conversa '+v.messages.length})()"
+  },
+  {
+   "do": "goto",
+   "url": "/materiais",
+   "reload": true
+  },
+  {
+   "do": "waitFor",
+   "selector": "button[aria-label=\"Abrir o Cato\"]",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "button[aria-label=\"Abrir o Cato\"]"
+   },
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "selector": "[role=dialog][aria-label^=\"Cato.ai\"]",
+   "timeout": 10
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{for(let i=0;i<80;i++){const b=[...document.querySelectorAll(\"[role=dialog][aria-label^=\\\"Cato.ai\\\"] div.h-full.overflow-y-auto > div.items-start\")].pop();if(b&&b.innerText.replace(/\\s+/g,' ').includes(\"fine é o seu contador.\"))return 'ok';await new Promise(r=>setTimeout(r,250));}return 'SEM ALVO: a resposta não terminou'})()"
+  },
+  {
+   "do": "wait",
+   "seconds": 0.8
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const c=document.querySelector(\"[role=dialog][aria-label^=\\\"Cato.ai\\\"] div.h-full.overflow-y-auto\");if(!c)return 'SEM PAINEL';const y0=c.scrollTop,dy=c.scrollHeight-c.clientHeight-y0;c.scrollTop=y0+dy;return 'fim '+Math.round(c.scrollTop)})()"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|Algo deu errado|Falha ao|Something went wrong|indispon[ií]vel|SEM RESPOSTA SIMULADA|Deu um problema|N[ãa]o consegui/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{document.querySelectorAll('[data-sonner-toast][data-type=error]').forEach(t=>{const s='TOAST DE ERRO: '+t.textContent.trim().slice(0,90);if(!window.__avisos.includes(s)&&window.__avisos.length<10)window.__avisos.push(s)})},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const c=document.querySelector(\"[role=dialog][aria-label^=\\\"Cato.ai\\\"] div.h-full.overflow-y-auto\");if(!c)return 'SEM PAINEL';const el=[...document.querySelectorAll(\"[role=dialog][aria-label^=\\\"Cato.ai\\\"] div.h-full.overflow-y-auto button[aria-label=\\\"Resposta \\u00fatil\\\"]\")].filter(e=>e.getClientRects().length).at(-2);if(!el)return 'SEM ALVO';const dy=Math.round(el.getBoundingClientRect().top-260);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});await new Promise(r=>setTimeout(r,60));return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 0.51,
+   "label": "sobe até as ações da resposta da tabela"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog][aria-label^=\"Cato.ai\"] :nth-match(button[aria-label=\"Resposta útil\"], 8)"
+   },
+   "seconds": 0.5,
+   "at": 1.87,
+   "label": "joinha (Resposta útil)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog][aria-label^=\"Cato.ai\"] :nth-match(button[aria-label=\"Resposta não útil\"], 8)"
+   },
+   "seconds": 0.5,
+   "at": 2.71,
+   "label": "dedo pra baixo (Resposta não útil)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog][aria-label^=\"Cato.ai\"] :nth-match(button[aria-label=\"Resposta útil\"], 8)"
+   },
+   "at": 4.96,
+   "label": "clique no joinha da resposta da tabela"
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 6.38
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const c=document.querySelector(\"[role=dialog][aria-label^=\\\"Cato.ai\\\"] div.h-full.overflow-y-auto\");if(!c)return 'SEM PAINEL';const y0=c.scrollTop,dy=c.scrollHeight-c.clientHeight-y0;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'fim '+Math.round(c.scrollTop)})()",
+   "at": 7.01,
+   "label": "desce até a resposta da nota"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog][aria-label^=\"Cato.ai\"] :nth-match(button[aria-label=\"Resposta não útil\"], 9)"
+   },
+   "at": 8.12,
+   "label": "dedo pra baixo na resposta da nota"
+  },
+  {
+   "do": "waitFor",
+   "text": "Faltou detalhe",
+   "timeout": 5
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog][aria-label^=\"Cato.ai\"] button:text-is(\"Número errado\")"
+   },
+   "seconds": 0.4,
+   "at": 9.97,
+   "label": "os motivos",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog][aria-label^=\"Cato.ai\"] button:text-is(\"Faltou detalhe\")"
+   },
+   "at": 11.0,
+   "label": "Faltou detalhe"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 16.22
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog][aria-label^=\"Cato.ai\"] button:has-text(\"Falar com atendente\")"
+   },
+   "seconds": 0.6,
+   "at": 21.91,
+   "label": "Falar com atendente",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog][aria-label^=\"Cato.ai\"] button:has-text(\"Falar com atendente\")"
+   },
+   "at": 22.84,
+   "label": "clique em Falar com atendente",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "text": "Nos conte o que está acontecendo pra resolvermos mais rápido.",
+   "timeout": 8
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 24.39
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Em qual tela/módulo?",
+    "within": "[role=dialog]:has-text(\"Falar com o suporte\")"
+   },
+   "seconds": 0.5,
+   "at": 26.13,
+   "label": "Em qual tela/módulo? *",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "O que aconteceu? Descreva com detalhes",
+    "within": "[role=dialog]:has-text(\"Falar com o suporte\")"
+   },
+   "seconds": 0.5,
+   "at": 27.65,
+   "label": "O que aconteceu? Descreva com detalhes *",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Falar no WhatsApp",
+    "exact": true,
+    "within": "[role=dialog]:has-text(\"Falar com o suporte\")"
+   },
+   "seconds": 1.5,
+   "at": 29.98,
+   "label": "Falar no WhatsApp (sem clicar)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 35.38,
+   "label": "fecha a janela"
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 36.21
+  }
+ ]
+}

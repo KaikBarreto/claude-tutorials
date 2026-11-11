@@ -409,6 +409,7 @@ def cap01():
     c.hover(NOME_LINHA('Aços Quiririm Ltda'), 1.0, at=c.A(3, 'nome,', 0.5), label='linha Aços Quiririm: nome e CNPJ')
     c.hover(SALDO_ROW('Aços Quiririm Ltda'), 1.6, at=c.A(3, 'saldo,', 0.5), label='linha Aços Quiririm: saldo R$ 4.870,00')
     c.confere('main aside', ['Aços Quiririm Ltda', '98.463.027/0001-15', 'R$ 4.870,00'], 'linha da Aços Quiririm com o saldo')
+    c.add({'do': 'eval', 'js': js_cor('Aços Quiririm Ltda', 'verde'), 'label': 'confere cor: Aços Quiririm (cliente +) verde'})
     c.mark(4)
     c.hover(BUSCA('cliente'), 0.8, at=c.A(4, 'busca,', 0.5), label='busca Buscar cliente...')
     c.hover(SEL("main aside button[aria-label^='Filtros']"), 1.0, at=c.A(4, 'filtros', 0.9), label='Filtros (o Ordenar fica do lado)')
@@ -480,6 +481,18 @@ def js_abas_ficha(fim=True, dur_ms=500):
     return ("(async()=>{const s=document.querySelector(\"[aria-label='Seções da ficha']\");if(!s)return 'SEM ALVO';const x0=s.scrollLeft,dx=(%s)-x0;"
             "if(Math.abs(dx)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/%d),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;"
             "s.scrollLeft=x0+dx*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'faixa:'+Math.round(s.scrollLeft)})()") % (destino, int(dur_ms))
+
+
+def js_cor(nome, cor, linha='main aside button', alvo='.tabular-nums'):
+    """conferência da cor de um saldo (os 4 casos): no 1º `linha` cujo texto tem `nome`, o elemento `alvo`; verde/vermelho/cinza pela cor
+    do texto ou do fundo (a fala diz a cor)"""
+    return ("(async()=>{const cor=e=>{for(const el of [e,...e.querySelectorAll('*')])for(const p of ['backgroundColor','color']){"
+            "const m=(getComputedStyle(el)[p].match(/[\\d.]+/g)||[]).map(Number);if(m.length<3||(m.length>3&&m[3]===0))continue;const [r,g]=m;"
+            "if(g>r+40)return 'verde';if(r>g+40)return 'vermelho'}return 'cinza'};for(let i=0;i<10;i++){"
+            "const row=[...document.querySelectorAll(%s)].find(x=>x.textContent.includes(%s));const el=row&&row.querySelector(%s);"
+            "if(el){const k=cor(el);return (k===%s?'OK: ':'DIFERENTE: ')+%s+' '+el.textContent.trim()+' '+k}await new Promise(r=>setTimeout(r,300))}"
+            "return 'DIFERENTE: sem o saldo de '+%s})()") % (json.dumps(linha), json.dumps(nome), json.dumps(alvo), json.dumps(cor), json.dumps(nome), json.dumps(nome))
+
 
 AVISO_NUMERO = 'Não veio da Receita — obrigatório para emitir NF-e'
 TOAST_CNPJ = 'Dados preenchidos — confira antes de salvar'
@@ -666,6 +679,7 @@ def cap05():
     c.click(LINHA('Depósito Irmãos Siqueira'), at=c.A(4, 'Depósito', 0.6), label='clica no Depósito Irmãos Siqueira')
     c.waitfor(target=SEL(FICHA_DE('Depósito Irmãos Siqueira')), timeout=10)
     c.confere(FICHA_DE('Depósito Irmãos Siqueira'), ['Cliente+Fornecedor', 'R$ 840,00', 'a pagar'], 'ficha do depósito')
+    c.add({'do': 'eval', 'js': js_cor('Depósito Irmãos Siqueira', 'vermelho'), 'label': 'confere cor: depósito em Fornecedores (R$ 840,00) vermelho'})
     c.hover(SALDO_FICHA('Depósito Irmãos Siqueira'), 1.4, at=c.A(4, 'cliente', 0.5), label='ficha do depósito: R$ 840,00 a pagar')
     c.mark(5)   # ilustração do saldo unificado
     c.mark(6)
@@ -673,6 +687,7 @@ def cap05():
     c.click(ABA('Clientes'), at=c.A(7, 'Clientes,', 0.6), label='aba Clientes')
     c.waitfor(target=BUSCA('cliente'), timeout=10)
     c.confere('main aside', ['Depósito Irmãos Siqueira', '-R$ 840,00'], 'o depósito em Clientes com -R$ 840,00')
+    c.add({'do': 'eval', 'js': js_cor('Depósito Irmãos Siqueira', 'vermelho'), 'label': 'confere cor: depósito em Clientes (-R$ 840,00) vermelho'})
     c.hover(NOME_LINHA('Depósito Irmãos Siqueira'), 0.8, at=c.A(7, 'aparece', 0.5), label='zoom: linha do Depósito em Clientes (Cliente+Fornecedor)')
     c.hover(SALDO_ROW('Depósito Irmãos Siqueira'), 2.0, at=c.A(7, 'sinal', 0.5), label='-R$ 840,00 em vermelho')
     c.fim()

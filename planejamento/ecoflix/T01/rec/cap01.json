@@ -63,7 +63,7 @@
     "exact": true
    },
    "seconds": 0.2,
-   "at": 2.08,
+   "at": 1.02,
    "label": "etapa Dados",
    "optional": true,
    "timeout": 3
@@ -75,7 +75,7 @@
     "exact": true
    },
    "seconds": 0.2,
-   "at": 2.78,
+   "at": 2.38,
    "label": "etapa Acesso",
    "optional": true,
    "timeout": 3
@@ -86,8 +86,8 @@
     "text": "Preenchimento obrigatório",
     "exact": true
    },
-   "seconds": 1.6,
-   "at": 3.95,
+   "seconds": 1.2,
+   "at": 3.65,
    "label": "barra Preenchimento obrigatório em 0%",
    "optional": true,
    "timeout": 3
@@ -102,7 +102,7 @@
    "target": {
     "placeholder": "Ex: Minha Empresa Ltda"
    },
-   "at": 8.73,
+   "at": 7.7,
    "label": "Nome da Empresa"
   },
   {
@@ -111,8 +111,8 @@
     "placeholder": "Ex: Minha Empresa Ltda"
    },
    "text": "Recicla Vale Metais",
-   "cps": 16,
-   "at": 10.97,
+   "cps": 40,
+   "at": 9.2,
    "label": "digita Recicla Vale Metais",
    "noClick": true
   },
@@ -121,7 +121,7 @@
    "target": {
     "placeholder": "Ex: João Silva"
    },
-   "at": 13.08,
+   "at": 12.85,
    "label": "Seu Nome Completo"
   },
   {
@@ -130,8 +130,8 @@
     "placeholder": "Ex: João Silva"
    },
    "text": "Rafael Nogueira",
-   "cps": 16,
-   "at": 15.5,
+   "cps": 40,
+   "at": 14.42,
    "label": "digita Rafael Nogueira (a barra sobe)",
    "noClick": true
   },
@@ -145,26 +145,21 @@
    "target": {
     "placeholder": "email@exemplo.com"
    },
-   "at": 18.59,
+   "at": 18.49,
    "label": "Email"
   },
   {
-   "do": "type",
-   "target": {
-    "placeholder": "email@exemplo.com"
-   },
-   "text": "$TUT_USER",
-   "cps": 40,
-   "at": 20.13,
-   "label": "digita o e-mail do Rafael",
-   "noClick": true
+   "do": "eval",
+   "js": "(()=>{const el=document.activeElement;if(!el||!/^(INPUT|TEXTAREA)$/.test(el.tagName))return 'SEM ALVO: nada em foco';document.execCommand('insertText',false,\"rafael@reciclavalemetais.example\");return el.value})()",
+   "at": 20.23,
+   "label": "cola o e-mail do Rafael"
   },
   {
    "do": "click",
    "target": {
     "placeholder": "(21) 98765-4321"
    },
-   "at": 22.95,
+   "at": 22.4,
    "label": "Telefone"
   },
   {
@@ -173,8 +168,8 @@
     "placeholder": "(21) 98765-4321"
    },
    "text": "12900004410",
-   "cps": 12,
-   "at": 24.26,
+   "cps": 30,
+   "at": 23.9,
    "label": "digita o telefone (a máscara forma (12) 90000-4410)",
    "noClick": true
   },
@@ -194,8 +189,8 @@
     "text": "Recebeu um código de indicação?",
     "exact": true
    },
-   "seconds": 2.04,
-   "at": 30.05,
+   "seconds": 1.5,
+   "at": 29.55,
    "label": "link Recebeu um código de indicação? (sem clicar)",
    "optional": true,
    "timeout": 3
@@ -260,8 +255,8 @@
     "placeholder": "Mínimo 8 caracteres"
    },
    "text": "$TUT_SENHA",
-   "cps": 14,
-   "at": 47.8,
+   "cps": 24,
+   "at": 46.6,
    "label": "digita a senha (pontinhos; o indicador de força enche)",
    "noClick": true
   },
@@ -275,8 +270,8 @@
    "target": {
     "text": "Senha forte."
    },
-   "seconds": 1.2,
-   "at": 49.35,
+   "seconds": 0.3,
+   "at": 49.45,
    "label": "indicador de força: Senha forte",
    "optional": true,
    "timeout": 3
@@ -286,7 +281,7 @@
    "target": {
     "placeholder": "Digite a senha novamente"
    },
-   "at": 52.95,
+   "at": 51.3,
    "label": "Confirmar Senha"
   },
   {
@@ -295,8 +290,8 @@
     "placeholder": "Digite a senha novamente"
    },
    "text": "$TUT_SENHA",
-   "cps": 20,
-   "at": 54.23,
+   "cps": 24,
+   "at": 52.8,
    "label": "repete a senha",
    "noClick": true
   },
@@ -320,23 +315,12 @@
   {
    "do": "hover",
    "target": {
-    "text": "Ao criar sua conta, você concorda com os"
-   },
-   "seconds": 0.2,
-   "at": 58.13,
-   "label": "aviso Termos de Uso e Política de Privacidade",
-   "optional": true,
-   "timeout": 3
-  },
-  {
-   "do": "hover",
-   "target": {
     "role": "button",
     "name": "Termos de Uso",
     "exact": true
    },
-   "seconds": 0.22,
-   "at": 59.34,
+   "seconds": 0.3,
+   "at": 57.83,
    "label": "Termos de Uso (sem clicar)",
    "optional": true,
    "timeout": 3
@@ -349,7 +333,7 @@
     "exact": true
    },
    "seconds": 1.2,
-   "at": 60.71,
+   "at": 60.45,
    "label": "Política de Privacidade (sem clicar)",
    "optional": true,
    "timeout": 3

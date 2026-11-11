@@ -456,7 +456,7 @@ SEMENTE = {0: [], 1: [], 2: [], 3: [], 4: ['apos-cap03'], 5: ['apos-cap03'], 6: 
            9: ['apos-cap03'], 10: ['apos-cap09'], 11: ['apos-cap09'], 12: ['apos-cap09'], 13: ['apos-cap12'], 14: ['apos-cap12'],
            15: ['apos-cap14'], 16: ['apos-cap15']}
 EXTRA_BASE = {n: ['base/balanca-ativada'] for n in range(17)}
-FOLGA.update({'balanca': 0.0, 'click': 1.3, 'click1': 1.8, 'hover': 1.1, 'type': 1.4})   # medidas do ensaio do T07 com a máquina dividida (ver resumo.py --ens)
+FOLGA.update({'balanca': 0.0, 'click': 1.8, 'click1': 2.2, 'hover': 1.5, 'type': 1.8})   # medidas do ensaio do T07 com a máquina dividida (ver resumo.py --ens)
 
 # ---------------------------------------------------------------- alvos da compra e da venda (Purchase.tsx / Sale.tsx, 1.59.154)
 MAT = {'placeholder': 'Escreva o nome ou código do material'}
@@ -680,16 +680,19 @@ def cap01():
 def cap02():
     """Selecionar Fornecedor: Não informado (zoom; ilustração L3), o indicador do Valdir (L4-L5), o alfinete, a busca Moreira."""
     c = Cap(2, setup_tela())
+    # hovers longos não atravessam o início de linha (com a máquina dividida o cursor leva ~2 s para chegar e a marca sairia atrasada)
     c.click(FORN, w=(1, 'Clicando'), label='Selecionar fornecedor')
     c.waitfor(target=NAO_INF, timeout=10)
-    c.hover(NAO_INF, 6.0, w=(1, 'Nao'), label='Não informado (zoom)')
-    c.hover(INDICADOR('Valdir'), round(c.W(5, 'numero.') - c.W(4, 'aviso'), 2), w=(4, 'aviso'), label='indicador e balão Cadastro incompleto do Valdir, sem linha de telefone (zoom)')
+    c.hover(NAO_INF, 0.3, w=(1, 'Nao'), label='Não informado (zoom)')
+    c.hover(NAO_INF, 3.0, w=(2, 'Ela', None, 0.0), label='Não informado (zoom) (continua)')
+    c.hover(INDICADOR('Valdir'), max(1.0, round(c.L(5) - c.W(4, 'aviso') - 1.2, 2)), w=(4, 'aviso'), label='indicador e balão Cadastro incompleto do Valdir (zoom)')
     c.confere(POP, ['Cadastro incompleto', 'CPF/CNPJ não informado', 'Endereço não informado', 'Use o menu ao lado'], 'balão do Valdir')
+    c.hover(INDICADOR('Valdir'), max(1.0, round(c.L(6) - c.L(5) - 2.0, 2)), w=(5, 'Valdir', None, 0.0), label='o balão, sem linha de telefone (continua)')
     c.hover(ALFINETE('Aparecida Ramos'), 2.4, w=(6, 'alfinete'), label='alfinete Fixar como padrão (Aparecida)')
-    c.click(BUSCA_PARC, w=(7, 'Moreira.'), label='busca')
-    c.type(BUSCA_PARC, 'Moreira', w=(7, 'Na'), clicar=False, cps=20, label='busca Moreira')
+    c.click(BUSCA_PARC, w=(7, 'Moreira.', None, 2.4), label='busca')
+    c.type(BUSCA_PARC, 'Moreira', w=(7, 'Na', None, 0.2), clicar=False, cps=40, label='busca Moreira')
     c.confere('dlg', ['Nenhum resultado encontrado.'], 'Nenhum resultado encontrado.')
-    c.hover(PD('Nenhum resultado encontrado.'), 1.0, w=(7, 'ninguem.'), label='Nenhum resultado encontrado.')
+    c.registra(PD('Nenhum resultado encontrado.'), w=(7, 'ninguem.'), label='Nenhum resultado encontrado.')
     c.fim()
     return c
 
@@ -728,13 +731,12 @@ def cap04():
     c = Cap(4, setup_tela(extra=ZE))
     c.click(TABELA, w=(1, 'tabela'), label='Tabela de Preços (abre a lista)')
     c.waitfor(text='Tabela Depósitos', timeout=8)
-    c.hover(OPT('Principal', exact=False), 1.2, w=(1, 'principal,'), label='Principal com a estrela (zoom)')
-    c.hover(OPT('Tabela Depósitos', exact=False), 0.4, w=(1, 'estrela.', None, 0.2), label='Tabela Depósitos')
+    c.hover(OPT('Principal', exact=False), 0.6, w=(1, 'principal,'), label='a lista: Principal com a estrela e a Tabela Depósitos (zoom)')
     c.press('Escape', w=(1, 'estrela.', None, -0.6), label='fecha a lista (fica a Principal)')
     c.hover(FORN, 0.8, w=(4, 'Ze'), label='José Carlos Moreira')
     c.hover(TABELA, 0.8, w=(4, 'principal,'), label='tabela Principal')
     c.hover(FORN, 0.6, w=(4, 'fornecedor'), label='o fornecedor antes')
-    c.hover(MAT, 0.8, w=(4, 'materiais,'), label='depois o material')
+    c.hover(MAT, 0.8, w=(4, 'material.', 1), label='depois o material')
     c.fim()
     return c
 

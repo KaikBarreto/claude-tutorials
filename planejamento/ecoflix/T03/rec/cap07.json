@@ -335,9 +335,7 @@
    "do": "waitFor",
    "target": {
     "role": "button",
-    "name": "Fornecedores",
-    "exact": true,
-    "within": "main"
+    "name": "Fornecedores"
    },
    "timeout": 12
   },
@@ -349,11 +347,35 @@
    "do": "click",
    "target": {
     "role": "button",
-    "name": "Fornecedores",
-    "exact": true,
-    "within": "main"
+    "name": "Fornecedores"
    },
    "label": "aba Fornecedores"
+  },
+  {
+   "do": "pause",
+   "seconds": 0.6
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Fornecedores"
+   },
+   "label": "aba Fornecedores de novo (só se não trocou)",
+   "unless": {
+    "role": "button",
+    "name": "Novo Fornecedor",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "role": "button",
+    "name": "Novo Fornecedor",
+    "exact": true
+   },
+   "timeout": 30
   },
   {
    "do": "waitFor",
@@ -610,14 +632,25 @@
    "label": "Bronze"
   },
   {
+   "do": "scroll",
+   "point": {
+    "x": 990,
+    "y": 748
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "label": "cursor no lugar do aviso (embaixo à direita)"
+  },
+  {
    "do": "hover",
    "target": {
     "text": "Preço especial aplicado para Bronze"
    },
-   "seconds": 7.19,
+   "seconds": 6.79,
    "label": "aviso Preço especial aplicado (o mouse segura o aviso) (zoom: Valor/kg 30,50 com o aviso)",
-   "optional": true,
-   "timeout": 4
+   "timeout": 6,
+   "optional": true
   },
   {
    "do": "eval",

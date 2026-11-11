@@ -153,21 +153,19 @@
    "label": "Inscrição Estadual: 688.115.922.408"
   },
   {
-   "do": "click",
-   "target": {
-    "selector": "main div:has(> label:text-is('UF')) button[role=combobox]"
-   },
-   "label": "UF (abre a lista; trecho acelerado)"
+   "do": "eval",
+   "js": "(()=>{const l=[...document.querySelectorAll('main label')].find(x=>x.textContent.trim()===\"UF\");const b=l&&l.parentElement.querySelector('button[role=combobox]');if(!b)return 'SEM ALVO';b.focus();return 'foco ok'})()",
+   "label": "UF (foco no seletor, sem cursor)"
   },
   {
-   "do": "click",
-   "target": {
-    "role": "option",
-    "name": "SP",
-    "exact": true
-   },
-   "label": "UF SP",
-   "noScroll": true
+   "do": "press",
+   "key": "Enter",
+   "label": "UF (abre a lista pelo teclado)"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{for(let k=0;k<20;k++){const o=[...document.querySelectorAll('[role=option]')].find(x=>x.textContent.trim()===\"SP\");if(o){o.click();return 'escolhido '+\"SP\"}await new Promise(r=>setTimeout(r,50))}return 'SEM ALVO'})()",
+   "label": "UF SP (trecho acelerado)"
   },
   {
    "do": "eval",
@@ -200,22 +198,20 @@
    "noClick": true
   },
   {
-   "do": "click",
-   "target": {
-    "selector": "main div:has(> label:text-is('UF Veículo')) button[role=combobox]"
-   },
-   "at": 24.09,
-   "label": "UF Veículo (abre a lista)"
+   "do": "eval",
+   "js": "(()=>{const l=[...document.querySelectorAll('main label')].find(x=>x.textContent.trim()===\"UF Ve\\u00edculo\");const b=l&&l.parentElement.querySelector('button[role=combobox]');if(!b)return 'SEM ALVO';b.focus();return 'foco ok'})()",
+   "at": 24.49,
+   "label": "UF Veículo (foco no seletor, sem cursor)"
   },
   {
-   "do": "click",
-   "target": {
-    "role": "option",
-    "name": "SP",
-    "exact": true
-   },
-   "label": "UF Veículo SP",
-   "noScroll": true
+   "do": "press",
+   "key": "Enter",
+   "label": "UF Veículo (abre a lista pelo teclado)"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{for(let k=0;k<20;k++){const o=[...document.querySelectorAll('[role=option]')].find(x=>x.textContent.trim()===\"SP\");if(o){o.click();return 'escolhido '+\"SP\"}await new Promise(r=>setTimeout(r,50))}return 'SEM ALVO'})()",
+   "label": "UF Veículo SP"
   },
   {
    "do": "mark",

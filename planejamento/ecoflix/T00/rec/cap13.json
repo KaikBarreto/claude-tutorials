@@ -1,0 +1,161 @@
+{
+ "name": "t00-cap13",
+ "title": "T0 · Cap. 13 · Recapitulando (computador 1280x800; narração 42,6 s, ESTIMADA; marcas L1..L5 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
+ "fakeNow": "2026-11-10T08:30:00-03:00",
+ "seed": "t00-cap13",
+ "pace": 0.5,
+ "cps": 22,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 470
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true",
+  "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10"
+ },
+ "seedExtra": [
+  "t00/catalogo",
+  "t00/s1",
+  "t00/s13"
+ ],
+ "prewarm": [
+  "/login",
+  "/dashboard",
+  "/ecoflix"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/login"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "timeout": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "••••••••"
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Antes de usar o sistema",
+   "timeout": 45
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 20
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel|Algo deu errado|Falha ao|Something went wrong|N[ãa]o conseguimos/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 11.54
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 19.78
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 26.43
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Assisti ao vídeo até o final e entendi os combinados.",
+    "within": "[role=dialog][aria-label^=\"Introdução\"]"
+   },
+   "at": 27.07,
+   "label": "caixa Assisti ao vídeo (liga)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "role": "button",
+    "name": "Confirmar e começar a primeira aula",
+    "exact": true,
+    "within": "[role=dialog][aria-label^=\"Introdução\"]"
+   },
+   "text": "",
+   "noClick": true,
+   "at": 30.46,
+   "label": "botão Confirmar e começar a primeira aula",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Confirmar e começar a primeira aula",
+    "exact": true,
+    "within": "[role=dialog][aria-label^=\"Introdução\"]"
+   },
+   "at": 35.03,
+   "label": "Confirmar e começar a primeira aula"
+  },
+  {
+   "do": "waitFor",
+   "text": "Tirar dúvidas com o suporte",
+   "timeout": 25
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 34.98
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 42.63
+  }
+ ]
+}

@@ -62,7 +62,7 @@
     "text": "Acesse sua conta",
     "exact": true
    },
-   "seconds": 0.8,
+   "seconds": 0.61,
    "at": 1.62,
    "label": "Acesse sua conta",
    "optional": true,
@@ -73,7 +73,7 @@
    "target": {
     "placeholder": "seu@email.com"
    },
-   "at": 4.38,
+   "at": 3.78,
    "label": "E-mail"
   },
   {
@@ -82,22 +82,17 @@
    "at": 5.39
   },
   {
-   "do": "type",
-   "target": {
-    "placeholder": "seu@email.com"
-   },
-   "text": "$TUT_USER",
-   "cps": 40,
-   "at": 5.39,
-   "label": "digita o e-mail do Rafael",
-   "noClick": true
+   "do": "eval",
+   "js": "(()=>{const el=document.activeElement;if(!el||!/^(INPUT|TEXTAREA)$/.test(el.tagName))return 'SEM ALVO: nada em foco';document.execCommand('insertText',false,\"rafael@reciclavalemetais.example\");return el.value})()",
+   "at": 5.41,
+   "label": "cola o e-mail do Rafael"
   },
   {
    "do": "click",
    "target": {
     "selector": "input[type=password]"
    },
-   "at": 8.05,
+   "at": 5.49,
    "label": "Senha"
   },
   {
@@ -107,7 +102,7 @@
    },
    "text": "$TUT_SENHA",
    "cps": 40,
-   "at": 8.81,
+   "at": 6.98,
    "label": "digita a senha (pontinhos)",
    "noClick": true
   },
@@ -117,7 +112,7 @@
     "role": "checkbox",
     "name": "Lembrar de mim"
    },
-   "at": 9.59,
+   "at": 9.41,
    "label": "marca Lembrar de mim"
   },
   {
@@ -143,7 +138,7 @@
     "role": "button",
     "name": "Entrar com Google"
    },
-   "seconds": 1.6,
+   "seconds": 1.39,
    "at": 22.39,
    "label": "Entrar com Google: entra na conta que já existe",
    "optional": true,
@@ -157,7 +152,7 @@
     "exact": true
    },
    "seconds": 0.2,
-   "at": 26.01,
+   "at": 25.33,
    "label": "Cadastre-se",
    "optional": true,
    "timeout": 3
@@ -178,14 +173,14 @@
    "label": "Entrar"
   },
   {
-   "do": "waitFor",
-   "text": "Olá, Rafael!",
-   "timeout": 20
-  },
-  {
    "do": "mark",
    "name": "L5",
    "at": 31.35
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Rafael!",
+   "timeout": 20
   },
   {
    "do": "hover",
@@ -296,7 +291,7 @@
     "text": "Adicionar conta",
     "exact": true
    },
-   "seconds": 0.87,
+   "seconds": 0.47,
    "at": 75.2,
    "label": "Adicionar conta: até cinco contas",
    "optional": true,

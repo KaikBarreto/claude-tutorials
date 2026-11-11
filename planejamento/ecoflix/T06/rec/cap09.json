@@ -405,26 +405,15 @@
    "timeout": 4
   },
   {
-   "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||null};const d=document.querySelector(\"[role=dialog]\");const el=d&&d.querySelector('label,p,h2');if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop;const dy=c.scrollHeight-c.clientHeight-y0;if(dy<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'fim:'+Math.round(c.scrollTop)})()",
-   "at": 96.33,
-   "label": "desce a janela da sangria até os botões"
-  },
-  {
    "do": "mark",
    "name": "L13",
    "at": 96.09
   },
   {
-   "do": "click",
-   "target": {
-    "role": "button",
-    "name": "Cancelar",
-    "exact": true,
-    "within": "[role=dialog]"
-   },
-   "at": 96.09,
-   "label": "Cancelar (sangria)"
+   "do": "press",
+   "key": "Escape",
+   "at": 96.33,
+   "label": "fecha a janela (sangria sem confirmar)"
   },
   {
    "do": "waitFor",

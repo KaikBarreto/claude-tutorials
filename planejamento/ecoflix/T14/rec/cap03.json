@@ -140,6 +140,11 @@
    "timeout": 4
   },
   {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"O cofre da empresa\", \"R$ 18.500,00\", \"Saldo Total em Dinheiro\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText+' '+[...el.querySelectorAll('input,textarea')].map(i=>i.value).join(' '));const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,250));}return out})()",
+   "label": "confere cofre com R$ 18.500,00"
+  },
+  {
    "do": "mark",
    "name": "L3",
    "at": 23.59
@@ -234,9 +239,10 @@
     "selector": "#new-balance"
    },
    "text": "18560,00",
-   "at": 46.47,
+   "at": 46.12,
    "label": "digita 18.560,00 (ZOOM Novo saldo e Diferença)",
-   "noClick": true
+   "noClick": true,
+   "clear": true
   },
   {
    "do": "hover",
@@ -249,6 +255,11 @@
    "label": "Diferença +R$ 60,00",
    "optional": true,
    "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"R$ 18.500,00\", \"+R$ 60,00\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText+' '+[...el.querySelectorAll('input,textarea')].map(i=>i.value).join(' '));const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,250));}return out})()",
+   "label": "confere saldo atual e diferença +60"
   },
   {
    "do": "mark",
@@ -289,14 +300,25 @@
    "timeout": 10
   },
   {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"R$ 18.560,00\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText+' '+[...el.querySelectorAll('input,textarea')].map(i=>i.value).join(' '));const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,250));}return out})()",
+   "label": "confere cofre com R$ 18.560,00"
+  },
+  {
    "do": "mark",
    "name": "L7",
    "at": 56.64
   },
   {
-   "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||null};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"Hist\\u00f3rico de Movimenta\\u00e7\\u00f5es\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-150);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 56.79,
+   "do": "scroll",
+   "point": {
+    "x": 900,
+    "y": 520
+   },
+   "by": 320,
+   "duration": 0.5,
+   "after": 100,
+   "at": 56.64,
    "label": "desce ao histórico do cofre"
   },
   {

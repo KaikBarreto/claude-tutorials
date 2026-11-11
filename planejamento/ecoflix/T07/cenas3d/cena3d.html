@@ -3,7 +3,8 @@
 <!-- T07 cap06 · cena final 3D da pesagem (kit perfis/ecoflix/cenas3d/kit3d.js; o piloto que o Kaik aprovou em 11/11, refeito
      com o kit). A mesma cena da ../cenas/cenas.html (CAPS[6], que fica de reserva): tara (saco, tambor, caçamba), impureza
      (terra, borracha, plástico) e Bruto − Tara − Impureza = Líquido, que vai pro estoque; depois a dupla pesagem da carroça,
-     412 − 96 = 316 kg. Mesmas âncoras W(linha,'palavra') e mesmos números da cena 2D.
+     412 − 96 = 316 kg. Kaik, 11/11: o "saco" da tara é um big bag (a fala e o chip seguem "saco"); a embalagem que sai do bruto
+     vira o bag vazio dobrado; a carroça leva ferro misto (vergalhão, cano, chapa e perfil enferrujados). Mesmas âncoras W(linha,'palavra') e mesmos números da cena 2D.
      Um só mundo: parte 1 em torno da origem (tara à esquerda, impureza à direita, o bruto na frente) e a parte 2 (balança de
      pátio, carroça) em (12, 0, −2); a câmera viaja de uma para a outra na palavra "sucata".
      Render (o render_cenas.cjs já sobe o Chromium com --allow-file-access-from-files):
@@ -11,33 +12,35 @@
      Custo: ~1 s por quadro em 2560x1600; prévia com --dsf 1.35 (1728x1080) ~0,4 s. -->
 </head><body>
 <script type="module">
-import { THREE, PI, eo, eio, pr, lerp, rng, pega, W, L, el, ic, vis, ripple, pulse, kg, conta, posTitulo, titulo, selo, chip, coluna, op, onda,
+import { THREE, PI, cl, eo, eio, pr, lerp, rng, pega, W, L, el, ic, vis, ripple, pulse, kg, conta, posTitulo, titulo, selo, chip, coluna, op, onda,
   cartao, mostrador, CENA, camera, ancora, mundo, M, argila, tinge, grupo, mancha, anel, destaque, cresce, pulso, domo, peca, monte,
-  saco, tambor, cacamba, sacoAberto, fardo, palete, carroca, balancaPatio, COR, cena } from '../../../../perfis/ecoflix/cenas3d/kit3d.js';
+  bigBag, tambor, cacamba, fardo, palete, carroca, balancaPatio, COR, cena } from '../../../../perfis/ecoflix/cenas3d/kit3d.js';
 
 cena(() => {
   // ================= parte 1: tara (esquerda), impureza (direita), o bruto (frente) e o estoque
   const P1 = grupo(CENA);
   const XA = -2.3, XB = 2.55, B = [.5, 0, .5], EST = [.5, 0, 2.2];
-  const tara = [saco(P1, [-3.3, 0, .1]), tambor(P1, [-2.35, 0, -.05]), cacamba(P1, [-1.25, 0, .05])];
-  tara.forEach((g, i) => { g.userData.ry = [.25, 0, -.2][i]; g.rotation.y = g.userData.ry; mancha(g, [.95, .85, 1.45][i], [.85, .85, 1.05][i], .28); argila(g); });
+  // tara: o big bag cheio (o "saco" da fala), o tambor e a caçamba
+  const tara = [bigBag(P1, [-3.3, 0, .1]), tambor(P1, [-2.35, 0, -.05]), cacamba(P1, [-1.25, 0, .05])];
+  tara.forEach((g, i) => { g.userData.ry = [.25, 0, -.2][i]; g.rotation.y = g.userData.ry; if (i) mancha(g, [.85, 1.45][i - 1], [.85, 1.05][i - 1], .28); argila(g); });
   // monte com impureza: a sucata e, por cima, terra, borracha e plástico (aparecem cada um na sua palavra)
   const GI = monte(P1, [XB, 0, 0], { n: 34, rx: .9, rz: .76, h: .56, mancha: [2.3, 1.9] });
   const imp = { terra: [], borracha: [], plastico: [] };
   for (const c of ['terra', 'borracha', 'plastico']) for (const p of domo(c === 'terra' ? 7 : c === 'borracha' ? 4 : 5, .76, .62, .56, 0, .88))
     imp[c].push(peca(GI, c, p, c === 'terra' ? 1.1 : 1));
-  // o bruto: saco aberto com cobre e sujeira; a tara sobe e volta pro grupo da tara, a impureza voa pro monte
-  const GB = grupo(P1, B), bag = sacoAberto(GB), heap = grupo(GB), mB = mancha(GB, 1.3, 1.1, .32);
-  for (const p of domo(24, .3, .25, .95)) peca(heap, pega(['cobre', 'cobre', 'cobre', 'alu']), p);
+  // o bruto: big bag aberto com cobre e sujeira; a embalagem sai e vira o bag vazio dobrado junto da tara, a impureza voa pro monte
+  const GB = grupo(P1, B), bag = bigBag(GB, [0, 0, 0], { estado: 'aberto', mancha: false }), heap = grupo(GB), mB = mancha(GB, 1.4, 1.25, .32);
+  for (const p of domo(30, .34, .3, 1.02)) peca(heap, pega(['cobre', 'cobre', 'cobre', 'alu']), p);
+  const LV = [XA - .55, 0, .95], bagV = bigBag(P1, LV, { estado: 'vazio' }); bagV.userData.ry = .3;
   const voa = []; for (const c of ['terra', 'terra', 'terra', 'borracha', 'borracha', 'plastico', 'plastico']) {
-    const p = domo(1, .22, .18, .95, 0, .95)[0]; const o = peca(P1, c, [0, 0, 0], c === 'terra' ? 1.1 : 1); o.userData.loc = p; voa.push(o); }
+    const p = domo(1, .25, .2, 1.0, 0, .95)[0]; const o = peca(P1, c, [0, 0, 0], c === 'terra' ? 1.1 : 1); o.userData.loc = p; voa.push(o); }
   const anB = anel(P1, .66, .07, B), ondB = anel(P1, .66, .05, B);
   // estoque: palete com um fardo de alumínio; o cobre limpo chega e vira o fardo de cobre
   const GE = grupo(P1, EST); palete(GE, [0, 0, 0]); fardo(GE, [-.3, .115, 0], COR.alu); const fCu = fardo(GE, [.32, .115, 0], COR.cobre); mancha(GE, 1.9, 1.5, .3);
   // ================= parte 2: balança de pátio, mostrador, carroça e o monte descarregado
   const PX = 12, PZ = -2, P2 = balancaPatio(CENA, [PX, 0, PZ]), TOPO = mundo(P2, P2.userData.topo);
   const CAR = carroca(CENA, [0, 0, PZ]), rodas = CAR.userData.rodas;
-  const carga = domo(20, .7, .4, .5, .6).map(p => { const o = peca(CENA, pega(['aco', 'aco', 'ferrugem', 'ferrugem', 'aco']), [0, 0, 0]);
+  const carga = domo(20, .7, .4, .5, .6).map(p => { const o = peca(CENA, 'ferro', [0, 0, 0]);   // ferro misto do Zé
     o.userData.loc = p; o.userData.r0 = o.rotation.clone(); return o; });
   const MON = [PX - 3.05, 0, PZ + 1.2], alvo = domo(20, .75, .62, .5), mM = mancha(CENA, 2.2, 1.9, .3, MON);
   const anM = anel(CENA, .92, .08, MON), ondM = anel(CENA, .92, .05, MON);
@@ -83,10 +86,11 @@ cena(() => {
     for (const [c, a] of [['terra', tte], ['borracha', tbo], ['plastico', tpl]]) imp[c].forEach((o, i) => { const p = eo(pr(t, a - .12 + i * .05, .4));
       o.visible = p > 0; o.scale.copy(o.userData.s0).multiplyScalar(Math.max(1e-4, p)); });
     const pB = cresce(GB, t, tbr - .3, .6, .3);
-    // a tara (o saco) sobe e vai para o grupo da tara, encolhendo
+    // a tara (o big bag) sai de cima da carga, voa até a tara e chega vazio, dobrado
     const qT = eio(pr(t, tt1 - .1, 1.15)); bag.visible = qT < .999;
-    bag.position.set(lerp(0, XA - B[0], qT), lerp(0, .85, qT) + 1.0 * Math.sin(PI * qT), lerp(0, -B[2], qT));
-    bag.scale.setScalar(Math.max(1e-4, 1 - qT * qT)); bag.rotation.z = .5 * qT;
+    bag.position.set(lerp(0, LV[0] - B[0], qT), 1.1 * Math.sin(PI * qT) + .1 * qT, lerp(0, LV[2] - B[2], qT));
+    bag.scale.setScalar(Math.max(1e-4, 1 - eo(cl((qT - .65) / .35)))); bag.rotation.z = .35 * Math.sin(PI * qT);
+    cresce(bagV, t, tt1 - .1 + 1.15 * .7, .45, .3);
     // a impureza sai do bruto e voa para o monte
     voa.forEach((o, i) => { const lp = o.userData.loc, q = eio(pr(t, ti1 - .12 + i * .06, 1.0)), s0 = o.userData.s0;
       const x0 = B[0] + lp[0] * pB, y0 = lp[1] * pB, z0 = B[2] + lp[2] * pB, x1 = XB - .55 + .07 * i, y1 = .3, z1 = .25 + .03 * i;

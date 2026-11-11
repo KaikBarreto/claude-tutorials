@@ -32,6 +32,13 @@ const vivo = () => {
   vigia.unref();
 };
 vivo();
+// Prioridade mínima (SCHED_IDLE) para este processo e tudo o que ele abre (Chromium, ffmpeg herdam a política): como root,
+// o Chromium sobe sozinho o processo da GPU para nice -8, o que furava o "nice -n 19" e tirava CPU da gravação do robô
+// (11/11: a cena 3D a 57% de CPU, no mesmo nível da gravação). Em SCHED_IDLE o -8 não vale: a cena só usa CPU que sobra.
+// RENDER_PRIORIDADE=normal desliga (render sozinho na máquina, com pressa).
+if (process.env.RENDER_PRIORIDADE !== 'normal') {
+  try { require('child_process').execFileSync('chrt', ['-i', '-a', '-p', '0', String(process.pid)], { stdio: 'ignore' }); } catch (e) { /* sem chrt: segue */ }
+}
 
 (async () => {
   const N = JSON.parse(fs.readFileSync(tempos, 'utf8'));
@@ -45,6 +52,7 @@ vivo();
   }
   const b = await chromium.launch({ args: ['--allow-file-access-from-files'] });
   const page = await b.newPage({ viewport: { width: 1280, height: 800 }, deviceScaleFactor: DSF });
+  page.setDefaultTimeout(VIGIA_S * 1000);   // com a máquina cheia, um quadro 3D passou dos 30 s padrão da captura
   const erros = []; page.on('pageerror', e => erros.push(String(e)));
   await page.route('**/*', r => r.request().url().startsWith('file:') ? r.continue() : r.abort());
   await page.addInitScript(`window.ICONS=${JSON.stringify(icons)};`);

@@ -242,6 +242,17 @@
    "at": 41.99
   },
   {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('Contabilidade Manacá') td >> nth=0"
+   },
+   "seconds": 0.6,
+   "at": 41.99,
+   "label": "Contabilidade Manacá Ltda R$ 1.650,00",
+   "optional": true,
+   "timeout": 4
+  },
+  {
    "do": "type",
    "target": {
     "selector": "main tbody"
@@ -250,19 +261,7 @@
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "at": 42.11,
    "label": "colunas Prestador e Valor (zoom)"
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main tbody tr:has-text('Contabilidade Manacá') td >> nth=0"
-   },
-   "seconds": 0.6,
-   "at": 41.81,
-   "label": "Contabilidade Manacá Ltda R$ 1.650,00",
-   "optional": true,
-   "timeout": 4
   },
   {
    "do": "hover",
@@ -328,7 +327,7 @@
   {
    "do": "hover",
    "target": {
-    "selector": "[role=dialog] input[placeholder='0,00']"
+    "selector": "#bill-amount"
    },
    "seconds": 0.6,
    "at": 76.57,
@@ -342,25 +341,22 @@
     "selector": "#bill-due"
    },
    "at": 79.05,
-   "label": "Vencimento (campo)"
+   "label": "Vencimento (abre o calendário)"
   },
   {
-   "do": "type",
+   "do": "click",
    "target": {
-    "selector": "#bill-due"
+    "selector": "[data-radix-popper-content-wrapper] button[name=day]:text-is('20')"
    },
-   "text": "20112026",
-   "cps": 40,
-   "at": 81.02,
-   "label": "Vencimento: 20/11/2026",
-   "noClick": true
+   "at": 80.62,
+   "label": "Vencimento: 20/11/2026"
   },
   {
    "do": "click",
    "target": {
     "selector": "#bill-category"
    },
-   "at": 81.41,
+   "at": 81.2,
    "label": "Categoria (abre)"
   },
   {
@@ -368,10 +364,10 @@
    "target": {
     "placeholder": "Pesquisar categoria..."
    },
-   "text": "máquinas",
-   "cps": 14,
-   "at": 82.11,
-   "label": "busca: máquinas",
+   "text": "manut",
+   "cps": 40,
+   "at": 81.81,
+   "label": "busca: manut",
    "noClick": true
   },
   {
@@ -380,7 +376,7 @@
     "role": "option",
     "name": "Manutenção de máquinas"
    },
-   "at": 81.54,
+   "at": 82.44,
    "label": "Categoria: Manutenção de máquinas"
   },
   {
@@ -390,12 +386,14 @@
     "name": "Criar conta",
     "exact": true
    },
-   "at": 82.34,
+   "at": 82.94,
    "label": "Criar conta"
   },
   {
    "do": "waitFor",
-   "text": "Lançada",
+   "target": {
+    "selector": "main tbody tr:has-text('Balanças Tremembé') :text-is('Lançada')"
+   },
    "timeout": 10
   },
   {

@@ -1,0 +1,250 @@
+{
+ "name": "t00-cap03b",
+ "title": "T0 · Cap. 3 · Aulas de outros módulos (celular 390x844, 9:16; narração 32,0 s, ESTIMADA; marcas L1..L4 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
+ "fakeNow": "2026-11-10T08:30:00-03:00",
+ "seed": "t00-cap03b",
+ "pace": 0.5,
+ "cps": 22,
+ "tail": 1.5,
+ "start": {
+  "x": 195,
+  "y": 600
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true",
+  "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10"
+ },
+ "seedExtra": [
+  "t00/catalogo",
+  "t00/s2",
+  "t00/pagamentos",
+  "t00/s3"
+ ],
+ "prewarm": [
+  "/login",
+  "/dashboard",
+  "/ecoflix"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/login"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "timeout": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "••••••••"
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Rafael",
+   "timeout": 45
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 20
+  },
+  {
+   "do": "goto",
+   "url": "/ecoflix"
+  },
+  {
+   "do": "waitFor",
+   "text": "Aprenda a usar o EcoSistema",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 15
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel|Algo deu errado|Falha ao|Something went wrong|N[ãa]o conseguimos/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const vis=e=>e.getClientRects().length>0&&getComputedStyle(e).visibility!=='hidden';const nz=t=>t.replace(/[\\s\\u00a0]+/g,' ').trim();const rolagem=(el)=>{let c=el.parentElement;while(c&&c!==document.body&&c!==document.documentElement){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const root=document.querySelector(\"body\")||document.body;const el=[...root.querySelectorAll('*')].filter(e=>vis(e)&&nz(e.textContent)===\"CRM/Kanban\"&&![...e.children].some(k=>nz(k.textContent)===\"CRM/Kanban\"))[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-170);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/2200),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 0.0,
+   "label": "desce ao último módulo (CRM/Kanban)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "text": "Conheça este módulo",
+    "exact": true
+   },
+   "text": "",
+   "noClick": true,
+   "label": "Conheça este módulo",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 8.05
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "CRM/Kanban"
+   },
+   "at": 8.05,
+   "label": "aula CRM/Kanban (Conheça este módulo)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Consultar fora da ordem?",
+   "timeout": 8
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Consultar esta aula",
+    "exact": true
+   },
+   "at": 9.55,
+   "label": "Consultar esta aula"
+  },
+  {
+   "do": "waitFor",
+   "text": "Ver trilha",
+   "timeout": 25
+  },
+  {
+   "do": "type",
+   "target": {
+    "text": "Não tem no seu plano",
+    "exact": true
+   },
+   "text": "",
+   "noClick": true,
+   "label": "selo Não tem no seu plano (alto dos detalhes)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Ver trilha"
+   },
+   "at": 10.03,
+   "label": "Ver trilha (gaveta)",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "text": "Sua trilha",
+   "timeout": 8
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const vis=e=>e.getClientRects().length>0&&getComputedStyle(e).visibility!=='hidden';const nz=t=>t.replace(/[\\s\\u00a0]+/g,' ').trim();const rolagem=(el)=>{let c=el.parentElement;while(c&&c!==document.body&&c!==document.documentElement){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const root=document.querySelector(\"[role=dialog]\")||document.body;const el=[...root.querySelectorAll('*')].filter(e=>vis(e)&&nz(e.textContent)===\"Conhe\\u00e7a outros m\\u00f3dulos\"&&![...e.children].some(k=>nz(k.textContent)===\"Conhe\\u00e7a outros m\\u00f3dulos\"))[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-300);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/1500),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 10.31,
+   "label": "a gaveta desce a Conheça outros módulos"
+  },
+  {
+   "do": "type",
+   "target": {
+    "text": "Conheça outros módulos",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "text": "",
+   "noClick": true,
+   "label": "gaveta Conheça outros módulos",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 14.25
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 14.25,
+   "label": "fecha a gaveta"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const vis=e=>e.getClientRects().length>0&&getComputedStyle(e).visibility!=='hidden';const nz=t=>t.replace(/[\\s\\u00a0]+/g,' ').trim();const rolagem=(el)=>{let c=el.parentElement;while(c&&c!==document.body&&c!==document.documentElement){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const root=document.querySelector(\"body\")||document.body;const el=[...root.querySelectorAll('*')].filter(e=>vis(e)&&nz(e.textContent)===\"Conhe\\u00e7a agora. Ative quando fizer sentido.\"&&![...e.children].some(k=>nz(k.textContent)===\"Conhe\\u00e7a agora. Ative quando fizer sentido.\"))[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-250);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 15.42,
+   "label": "a página desce ao cartão Conheça agora"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Adicionar ao meu plano",
+    "exact": true
+   },
+   "seconds": 0.6,
+   "at": 18.95,
+   "label": "botão Adicionar ao meu plano (sem clicar)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 21.28
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 31.96
+  }
+ ],
+ "device": "phone"
+}

@@ -135,16 +135,12 @@
    "timeout": 15
   },
   {
-   "do": "hover",
+   "do": "click",
    "target": {
-    "text": "FKD2E41",
-    "within": "main aside"
+    "selector": "main button:has-text('FKD2E41'):not([aria-label])"
    },
-   "seconds": 0.4,
-   "at": 6.18,
-   "label": "Veículos da frota",
-   "optional": true,
-   "timeout": 4
+   "at": 6.08,
+   "label": "FKD2E41 (Caminhão truck) na lista"
   },
   {
    "do": "hover",
@@ -182,7 +178,7 @@
     "role": "button",
     "name": "Editar",
     "exact": true,
-    "within": "main section"
+    "within": "main"
    },
    "at": 17.59,
    "label": "Editar o FKD2E41"
@@ -193,15 +189,15 @@
    "timeout": 10
   },
   {
-   "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.offsetParent!==null&&e.textContent.trim().startsWith(\"Dados de transporte (MDF-e / NF-e)\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-160);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 19.19,
-   "label": "janela desce até Dados de transporte"
-  },
-  {
    "do": "mark",
    "name": "L3",
    "at": 19.05
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].find(e=>e.children.length===0&&e.offsetParent!==null&&e.textContent.trim()===\"Dados de transporte (MDF-e / NF-e)\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-110);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 19.19,
+   "label": "janela desce até Dados de transporte"
   },
   {
    "do": "click",
@@ -395,7 +391,7 @@
    "do": "hover",
    "target": {
     "text": "Edson Moura",
-    "within": "main aside"
+    "within": "main"
    },
    "seconds": 0.4,
    "at": 52.53,
@@ -409,7 +405,7 @@
     "role": "button",
     "name": "Editar",
     "exact": true,
-    "within": "main section"
+    "within": "main"
    },
    "at": 55.4,
    "label": "Editar o Edson"
@@ -429,7 +425,7 @@
    "target": {
     "selector": "#motorista-doc"
    },
-   "at": 57.7,
+   "at": 57.6,
    "label": "CPF: 318.472.650-90 (campo)"
   },
   {
@@ -439,7 +435,7 @@
    },
    "text": "31847265090",
    "cps": 40,
-   "at": 58.45,
+   "at": 58.55,
    "label": "CPF: 318.472.650-90",
    "noClick": true
   },
@@ -448,7 +444,7 @@
    "target": {
     "selector": "#motorista-cnh"
    },
-   "at": 60.2,
+   "at": 59.8,
    "label": "CNH: 04728193604 (campo)"
   },
   {
@@ -458,7 +454,7 @@
    },
    "text": "04728193604",
    "cps": 40,
-   "at": 62.12,
+   "at": 60.7,
    "label": "CNH: 04728193604",
    "noClick": true
   },
@@ -467,7 +463,7 @@
    "target": {
     "selector": "#motorista-cnh-cat"
    },
-   "at": 62.02,
+   "at": 61.92,
    "label": "Categoria: C (abre)"
   },
   {
@@ -477,16 +473,16 @@
     "name": "C",
     "exact": true
    },
-   "at": 62.82,
+   "at": 62.62,
    "label": "Categoria: C"
   },
   {
    "do": "click",
    "target": {
-    "selector": "#motorista-cnh-val"
+    "selector": "[role=dialog] label[for='motorista-cnh-val']"
    },
-   "at": 63.52,
-   "label": "Validade da CNH: 18/03/2029 (campo)"
+   "at": 63.27,
+   "label": "Validade da CNH (campo)"
   },
   {
    "do": "type",
@@ -495,9 +491,13 @@
    },
    "text": "18032029",
    "cps": 40,
-   "at": 64.02,
    "label": "Validade da CNH: 18/03/2029",
    "noClick": true
+  },
+  {
+   "do": "mark",
+   "name": "L9",
+   "at": 63.81
   },
   {
    "do": "click",
@@ -507,18 +507,13 @@
     "exact": true,
     "within": "[role=dialog]"
    },
-   "at": 63.41,
+   "at": 63.81,
    "label": "Salvar o motorista"
   },
   {
    "do": "waitFor",
    "text": "Motorista atualizado",
    "timeout": 10
-  },
-  {
-   "do": "mark",
-   "name": "L9",
-   "at": 63.81
   },
   {
    "do": "hover",

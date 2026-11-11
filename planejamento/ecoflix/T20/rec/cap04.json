@@ -1,0 +1,434 @@
+{
+ "name": "t20-cap04",
+ "title": "T20 · Cap. 4 · Usuário e senha (narração 66,1 s ESTIMADA; marcas L1..L8 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T15:00:00-03:00)",
+ "seed": "t20-cap04",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true"
+ },
+ "seedExtra": [
+  "t20/inicio",
+  "t20/apos-cap03"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "waitFor",
+   "target": {
+    "label": "E-mail"
+   },
+   "timeout": 30
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "E-mail"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "Senha",
+    "exact": true
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Rafael!",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/clientes-fornecedores"
+  },
+  {
+   "do": "waitFor",
+   "text": "Aços Quiririm Ltda",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "header button.h-8.w-8"
+   }
+  },
+  {
+   "do": "wait",
+   "seconds": 0.8
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main div.no-scrollbar > button:has-text('Fornecedores')"
+   }
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "placeholder": "Buscar fornecedor..."
+   },
+   "timeout": 15
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main aside button:has-text('Cooperativa Recomeço')"
+   }
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "main section[aria-label='Detalhes de Cooperativa Recomeço']"
+   },
+   "timeout": 15
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Editar",
+    "exact": true,
+    "within": "main section[aria-label='Detalhes de Cooperativa Recomeço']"
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Editar Fornecedor",
+   "timeout": 15
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Portal",
+    "exact": true,
+    "within": "[role=dialog]"
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "O que exibir no portal",
+   "timeout": 15
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "wait",
+   "seconds": 0.6
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel|Algo deu errado|Falha ao|Transi[çc][ãa]o inv[áa]lida|n[ãa]o encontrad|Localiza[çc][ãa]o n[ãa]o registrada|Sem sinal de GPS/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');if(f&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA ECOFLIX'))window.__avisos.push('TRILHA ECOFLIX')},300);return 1})()"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{if(window.__animFix)return 'ja';window.__animFix=setInterval(()=>{for(const a of document.getAnimations())if(a.currentTime!==null&&a.currentTime<0)a.startTime=document.timeline.currentTime},100);return 'anim fix'})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Exigir senha\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-130);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/800),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 0.5,
+   "label": "rola até Exigir senha"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Quando ligado, o portal pede usuário e senha antes de mostrar os dados.",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.2,
+   "at": 1.09,
+   "label": "Exigir senha: a chave Pedir login no portal (desligada)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#portal-password-enabled"
+   },
+   "at": 6.83,
+   "label": "liga Pedir login no portal"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "#portal-username"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 7.23
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#portal-username"
+   },
+   "at": 9.08,
+   "label": "Usuário: cooperativa.recomeco (campo)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#portal-username"
+   },
+   "text": "cooperativa.recomeco",
+   "cps": 40,
+   "at": 10.8,
+   "label": "Usuário: cooperativa.recomeco",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#portal-password"
+   },
+   "at": 13.13,
+   "label": "Senha (campo)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#portal-password"
+   },
+   "text": "$PORTAL_SENHA",
+   "cps": 40,
+   "at": 14.59,
+   "label": "Senha (pontinhos)",
+   "noClick": true
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 16.08
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Salvar acesso",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 16.37,
+   "label": "Salvar acesso"
+  },
+  {
+   "do": "waitFor",
+   "text": "Acesso salvo",
+   "timeout": 10
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"O que exibir no portal\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-130);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/800),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 17.85,
+   "label": "rola até O que exibir no portal"
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 18.25
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] [role=radiogroup][aria-label='Aba Histórico']"
+   },
+   "seconds": 2.2,
+   "at": 20.54,
+   "label": "[ZOOM] as pílulas Oculto, Livre e Com senha da Aba Histórico",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 27.64
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 760,
+    "y": 420
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "at": 28.14,
+   "label": "cursor em repouso (ilustração)"
+  },
+  {
+   "do": "goto",
+   "url": "/portal/recicla-vale-metais-cooperativa-1B2yVwaud00G8omJQvmXcn",
+   "at": 38.44,
+   "label": "navegador do parceiro: abre o link da cooperativa"
+  },
+  {
+   "do": "waitFor",
+   "text": "Acesso restrito",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 25
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 38.84
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Acesso restrito",
+    "exact": true
+   },
+   "seconds": 1.2,
+   "at": 42.72,
+   "label": "Acesso restrito",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 44.66
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#portal-user"
+   },
+   "at": 45.04,
+   "label": "Usuário (campo)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#portal-user"
+   },
+   "text": "cooperativa.recomeco",
+   "cps": 40,
+   "at": 45.79,
+   "label": "Usuário: cooperativa.recomeco",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#portal-pass"
+   },
+   "at": 46.16,
+   "label": "Senha (campo)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#portal-pass"
+   },
+   "text": "$PORTAL_SENHA",
+   "cps": 40,
+   "at": 46.71,
+   "label": "Senha (pontinhos)",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   },
+   "at": 47.52,
+   "label": "Entrar"
+  },
+  {
+   "do": "waitFor",
+   "text": "Histórico de Pedidos",
+   "timeout": 20
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 55.71
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "button[title='Sair']"
+   },
+   "seconds": 2.2,
+   "at": 56.45,
+   "label": "[ZOOM] o ícone Sair no cartão do parceiro (sem clicar)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 66.15
+  }
+ ]
+}

@@ -139,6 +139,8 @@ presa às palavras da fala, renderizada só no trecho (`--de/--ate`) e encaixada
 **Ilustração 3D** (Kaik aprovou o piloto em 11/11): conceito físico do pátio (caminhão e balança, carga, prensa, fardo)
 pode ir em 3D de argila com o kit `cenas3d/` (`LEIA.md`), em `planejamento/ecoflix/Tnn/cenas3d/cena3d.html`; o
 `ilustracoes.json` marca com `"3d"` e a cena 2D fica de reserva. Primeiras: T07 cap06 e T08 cap00, cap04 e cap06.
+Material sempre reconhecível (Kaik, 11/11): latinha com brilho e faixa de cor, PET translúcida (transparente e verde),
+ferro com ferrugem (vergalhão, cano, chapa, perfil), cobre em fio e tubo, papelão; tara em embalagem de verdade (big bag).
 Montagem com `perfis/ecoflix/aula.json` (trilha lo-fi própria: `music_seed` provisório 5, decide-se na prévia).
 
 ## Entrega

@@ -48,10 +48,10 @@ CAPS[0] = () => {
   const cn = cancela(CENA, [XC, 0, -1.7], { l: 3.3 });
   const fu = fundicao(CENA, [11.2, 0, -3.5], { c: 4.6, l: 3.8, h: 2.2 }); fu.userData.s = 1;
   // o monte de cobre (fio e tubo) e as peças que vão pra caçamba, cada uma no seu tempo
-  const N = 34; mancha(CENA, 3.0, 2.5, .3, [PIL[0], 0, PIL[1]]);
-  const src = domo(N, 1.1, .9, .7, 0, .35).map(p => [p[0] + PIL[0], p[1], p[2] + PIL[1]]);
-  const dst = domo(N, u.bau.cb / 2 - .4, u.bau.Wd / 2 - .3, .55, 0, .35).map(p => [u.x0 + u.bau.cb / 2 + p[0], u.yb + .14 + p[1], p[2]]);
-  const pcs = src.map(p => peca(g, 'cobre', p, 1.25));
+  const N = 60, mP = mancha(CENA, 3.0, 2.5, .3, [PIL[0], 0, PIL[1]]);
+  const src = domo(N, 1.25, 1.0, .95, 0, .35).map(p => [p[0] + PIL[0], p[1], p[2] + PIL[1]]);
+  const dst = domo(N, u.bau.cb / 2 - .35, u.bau.Wd / 2 - .25, .7, .5, .4).map(p => [u.x0 + u.bau.cb / 2 + p[0], u.yb + .14 + p[1], p[2]]);
+  const pcs = src.map(p => peca(g, 'cobre', p, 1.7));
   const tit = titulo('Fiscal', 'Carga e nota');
   const cRV = tagv('Recicla Vale Metais', 'e'), cF = tagv('Fundição', 'e');
   const tSem = tagv(`${ic('calendar-days', 20)}cobre toda semana`, 'a');
@@ -69,9 +69,10 @@ CAPS[0] = () => {
     const tPar = tMer + .3, X = lerp(X0, XEND, eio(pr(t, tPar, 1.9)));
     anda(T, X); ergue(cn, eio(pr(t, tMer, .6)));
     // carrega: cada pedaço salta do monte para a caçamba (e segue com o caminhão)
-    pcs.forEach((o, i) => { const q = eio(pr(t, tFim + .45 + i * .07, .75)), d = dst[i], B = [d[0] + X - X0 + (X0 - X0), d[1], d[2]];
+    pcs.forEach((o, i) => { const q = eio(pr(t, tFim + .45 + i * .05, .75)), d = dst[i], B = [d[0] + X - X0 + (X0 - X0), d[1], d[2]];
       B[0] = d[0] + X; o.position.set(lerp(src[i][0], B[0], q), lerp(src[i][1], B[1], q) + 2.3 * Math.sin(PI * q), lerp(src[i][2], B[2], q)); o.visible = t > tFim - .05; });
-    vis(cRV, t, tRec - .15, 1e9, { dy: 10 }); ancora(cRV, [-5.3, 0, 2.0], .5, 0, 0, 10);
+    mP.material.opacity = .3 * (1 - eo(pr(t, tFim + .45 + N * .05, .8)));
+    vis(cRV, t, tRec - .15, 1e9, { dy: 10 }); ancora(cRV, mundo(gal, gal.userData.topo), .5, 1, 0, -8);
     cresce(fu, t, tFun - .1, .8, .2); vis(cF, t, tFun + .1, 1e9, { dy: 10 }); ancora(cF, mundo(fu, fu.userData.topo), .5, 1, 0, -10);
     rota.forEach((m, i) => { const q = eio(pr(t, tCom - .1 + i * .03, .4)); m.visible = q > .01; m.scale.setScalar(Math.max(.01, q)); });
     vis(tSem, t, tCob, 1e9, { dy: 10 }); ancora(tSem, [XC, .06, 2.6], .5, 1, 0, -14);
@@ -92,16 +93,17 @@ CAPS[7] = () => {
   const g = grupo(CENA), XP = 0, NR = -.75;
   chaoPatio(CENA, [-3, 0, 0], { c: 30, l: 12, passo: 2.6, faixa: [2.9] });
   const T = caminhao(CENA, [XP, 0, 0], {}), u = T.userData;
-  const nf = folha(CENA, [-8.4, 2.3, 1.2], { cor: COR.verde, w: 1.5, h: 2.0, linhas: 3 }); nf.rotation.y = NR; nf.userData.s = 1;
+  const nf = folha(CENA, [-6.9, 2.0, 2.6], { cor: COR.verde, w: 1.5, h: 2.0, linhas: 3 }); nf.rotation.y = NR; nf.userData.s = 1.2;
+  poe(rbox(.1, .72, .08, .03, 1), M(COR.cinzaC), nf, [0, -1.32, -.06]); poe(rbox(.7, .06, .5, .03, 1), M(COR.cinzaE), nf, [0, -1.64, -.06]); mancha(nf, 1.4, .9, .26, [0, -1.66, 0]);
   // o quadro Transporte (moldura âmbar que fica verde) e o lugar da placa
   const quadro = grupo(nf, [0, -.38, .02]); const fm = [M('#DCE3DF'), M(COR.verde)];
   const bars = [[1.3, .035, 0, .39], [1.3, .035, 0, -.39], [.035, .8, -.65, 0], [.035, .8, .65, 0]].map(([w, h, x, y]) => poe(rbox(w, h, .012, .006, 1), fm[0], quadro, [x, y, 0]));
   const slot = grupo(quadro, [0, -.05, .01]);
-  const pl = placa(g, [0, 0, 0], PLACA.antiga); pl.userData.s = 1;
-  poe(rbox(.62, .22, .006, .01, 1), M('#C7CFD7'), slot);
+  const pl = placa(g, [0, 0, 0], PLACA.antiga, { w: .62 }); pl.userData.s = 1;
+  poe(rbox(.68, .26, .006, .01, 1), M('#C7CFD7'), slot);
   const tit = titulo('Transportadora', 'O caminhão na nota');
   const cNf = tagv('NF-e', 'v'), cTr = el(`<div class="row ab" style="gap:8px;font-weight:800;font-size:20px;white-space:nowrap">${ic('truck', 26)}Transporte</div>`), okB = el(`<div class="ab">${visto(46)}</div>`);
-  camera([[0, { x: -4.6, y: 1.5, z: 0, d: 19.5, az: -.62, el: .26, oy: -50 }], [60, { x: -4.6, y: 1.5, z: 0, d: 18.8, az: -.62, el: .26, oy: -50 }, 'lin']]);
+  camera([[0, { x: -3.0, y: 1.4, z: 1.0, d: 19.5, az: -.62, el: .26, oy: -30 }], [60, { x: -3.0, y: 1.4, z: 1.0, d: 18.8, az: -.62, el: .26, oy: -30 }, 'lin']]);
   return t => {
     const A = W(2, 'Veículo') - .3, tVe = W(2, 'Veículo'), tPl = W(2, 'placa'), tCa = W(2, 'caminhão'), tEn = W(2, 'entrega');
     GL.style.opacity = eo(pr(t, tVe - .35, .5)).toFixed(3);
@@ -112,13 +114,12 @@ CAPS[7] = () => {
     vis(cTr, t, tVe + .5, 1e9, { dy: 8 }); ancora(cTr, mundo(nf, [-.6, -.0, .03]), 0, .5, 0, 0);
     // a placa sai da traseira do caminhão e pousa no quadro
     nf.updateWorldMatrix(true, true); T.updateWorldMatrix(true, true);
-    const p0 = mundo(T, [-u.eixos.length * 0 - 3.32, .78, 0]), d0 = mundo(slot, [0, 0, .012]), q = eio(pr(t, tCa, .9));
+    const p0 = mundo(T, [-3.32, .78, 0]), d0 = mundo(slot, [0, 0, .012]), q = eio(pr(t, tCa, .9));
     pl.position.set(lerp(p0[0], d0[0], q), lerp(p0[1], d0[1], q) + 2.6 * Math.sin(PI * q), lerp(p0[2], d0[2], q));
-    pl.rotation.y = lerp(-PI / 2, NR, q); pl.scale.setScalar(lerp(1.0, .98, q)); pl.visible = t > tVe + .25;
-    pulse(pl, t, tPl, .0, .7);
+    pl.rotation.y = lerp(-PI / 2, NR, q); pl.visible = t > tVe + .25;
     const vp = eo(pr(t, tPl, .4)); pl.scale.setScalar(lerp(1.0, .98, q) * (1 + .15 * Math.sin(PI * pr(t, tPl, .7))));
     const ok = eo(pr(t, tEn - .1, .45)); bars.forEach(b => { b.material = ok > .5 ? fm[1] : fm[0]; });
-    vis(okB, t, tEn, 1e9, { dy: 0, sc: .5 }); ancora(okB, mundo(quadro, [.65, .4, .02]), .5, .5);
+    vis(okB, t, tEn, 1e9, { dy: 0, sc: .5 }); ancora(okB, mundo(quadro, [.72, .46, .02]), .5, .5);
   };
 };
 
@@ -126,12 +127,13 @@ CAPS[7] = () => {
 // 4 "...A nota leva sempre o peso líquido, já sem a tara e a impureza. Quinhentos quilos de cobre mel, a quarenta e sete e noventa: vinte e três mil novecentos e cinquenta reais."
 // 5 "Uma dica: quando o cliente disser que o peso da nota não bate com o ticket, quase sempre ele está comparando o bruto com o líquido."
 CAPS[10] = () => {
-  const g = grupo(CENA), SX = -2.6;
+  const g = grupo(CENA), SX = -2.3;
   chaoPatio(CENA, [2, 0, 0], { c: 28, l: 11, passo: 2.6, faixa: [3.0] });
   const bal = balancaPatio(CENA, [SX, 0, 0], { c: 4.2, l: 2.6, rampa: 1.0, poste: [2.3, -1.6], hp: 2.2, rp: .07 }), TOPO = mundo(bal, bal.userData.topo);
-  const heap = monte(CENA, [SX - .2, .172, 0], { metais: ['cobre'], n: 44, rx: 1.15, rz: .95, h: .75, mancha: false });
-  const imp = []; for (const c of ['terra', 'terra', 'borracha', 'borracha', 'plastico', 'plastico', 'terra']) { const p = domo(1, 1.0, .8, .78, .172, .9)[0], o = peca(CENA, c, [SX - .2 + p[0], p[1], p[2]], 1.3); o.userData.p0 = [SX - .2 + p[0], p[1], p[2]]; imp.push(o); }
-  const nf = folha(CENA, [5.6, 2.0, -.3], { cor: COR.verde, w: 2.0, h: 2.6, linhas: 0 }); nf.rotation.y = -.12; nf.userData.s = 1;
+  const heap = monte(CENA, [SX - .2, .172, 0], { metais: ['cobre'], n: 64, rx: 1.35, rz: 1.05, h: .95, mancha: false });
+  const imp = []; for (const c of ['terra', 'terra', 'borracha', 'borracha', 'plastico', 'plastico', 'terra']) { const p = domo(1, 1.1, .85, .98, .172, .9)[0], o = peca(CENA, c, [SX - .2 + p[0], p[1], p[2]], 1.3); o.userData.p0 = [SX - .2 + p[0], p[1], p[2]]; imp.push(o); }
+  const nf = folha(CENA, [4.5, 2.0, -.3], { cor: COR.verde, w: 2.0, h: 2.6, linhas: 0 }); nf.rotation.y = -.12; nf.userData.s = 1;
+  poe(rbox(.12, .72, .08, .03, 1), M(COR.cinzaC), nf, [0, -1.64, -.06]); poe(rbox(.9, .06, .6, .03, 1), M(COR.cinzaE), nf, [0, -1.98, -.06]);
   const tit = titulo('Emissão', 'Peso líquido na nota');
   const most = mostrador('Peso bruto', 'Peso líquido', 270); most.mn.textContent = kg(VENDA10.bruto);
   const tara = el(`<div class="tag a ab">Tara e impureza<span class="num" style="margin-left:6px">${kg(VENDA10.desconto)}</span></div>`);
@@ -144,7 +146,7 @@ CAPS[10] = () => {
     <div class="num tb" style="margin-top:2px;font-size:32px;color:var(--ae);display:inline-block;padding:0 8px;border-radius:10px;margin-left:-8px">${kg(VENDA10.bruto)}</div></div>`);
   const tb = tick.querySelector('.tb');
   const dif = el(`<div class="ab okc" style="width:60px;height:60px;background:#4B5563;border:3px solid #4B5563;font-weight:800;font-size:34px">≠</div>`);
-  camera([[0, { x: .9, y: 1.7, z: 0, d: 17.5, az: .1, el: .3, oy: -40 }], [60, { x: .9, y: 1.7, z: 0, d: 17.0, az: .1, el: .3, oy: -40 }, 'lin']]);
+  camera([[0, { x: .6, y: 1.7, z: .4, d: 18.5, az: .1, el: .3, oy: -40 }], [60, { x: .6, y: 1.7, z: .4, d: 18.0, az: .1, el: .3, oy: -40 }, 'lin']]);
   return t => {
     const A = W(4, 'peso') - .3, tPe = W(4, 'peso'), tLi = W(4, 'líquido'), tTa = W(4, 'tara'), tIm = W(4, 'impureza'), tCb = W(4, 'cobre'), tMe = W(4, 'mel', 1, 'e'), tRe = W(4, 'reais'),
           tNo = W(5, 'nota'), tTk = W(5, 'ticket'), tCm = W(5, 'comparando'), tBr = W(5, 'bruto'), tLq = W(5, 'líquido');
@@ -153,8 +155,8 @@ CAPS[10] = () => {
     vis(most, t, tPe, 1e9, { dy: 12 }); ancora(most, TOPO, .5, 1, 0, -6);
     // a tara e a impureza saem do monte; o mostrador passa do bruto ao líquido
     const q = eio(pr(t, tTa - .1, 1.1));
-    imp.forEach((o, i) => { const p0 = o.userData.p0, qi = eio(pr(t, tTa - .1 + i * .08, 1.0)); o.position.set(lerp(p0[0], SX - 4.6 + (i % 4) * .35, qi), lerp(p0[1], .22, qi) + 1.6 * Math.sin(PI * qi), lerp(p0[2], 1.6 + (i % 3) * .3, qi)); });
-    vis(tara, t, tTa - .15, 1e9, { dy: 0, sc: .7 }); ancora(tara, [SX - 4.2, 1.0, 1.6], .5, 1, 0, 0);
+    imp.forEach((o, i) => { const p0 = o.userData.p0, qi = eio(pr(t, tTa - .1 + i * .08, 1.0)); o.position.set(lerp(p0[0], SX - 1.3 + (i % 4) * .5, qi), lerp(p0[1], .2, qi) + 1.8 * Math.sin(PI * qi), lerp(p0[2], 2.5 + (i % 3) * .35, qi)); });
+    vis(tara, t, tTa - .15, 1e9, { dy: 0, sc: .7 }); ancora(tara, [SX - .3, .55, 2.7], .5, 1, 0, -6);
     conta(most.mn, t, tIm, .9, VENDA10.bruto, VENDA10.liquido); most.troca(t, tIm);
     // a nota entra com o líquido
     cresce(nf, t, tLi + .05, .7, .0); nf.rotation.y = -.12; nf.updateWorldMatrix(true, true);
@@ -168,8 +170,8 @@ CAPS[10] = () => {
     chipL.style.opacity = t >= tCb - .2 ? 1 : 0; chipL.style.visibility = t >= tCb - .2 ? 'visible' : 'hidden';
     const hl = eo(pr(t, tLq - .1, .4)); chipL.style.boxShadow = `0 0 0 ${(4 * hl).toFixed(2)}px #F2B63D`; if (t >= tLq - .1) pulse(chipL, t, tLq, .08, .7);
     // a dica: o ticket (bruto) × a nota (líquido)
-    vis(tick, t, tTk - .2, 1e9, { dy: -100, din: .7 }); tick.style.left = '120px'; tick.style.top = '470px';
-    vis(dif, t, tCm - .15, 1e9, { dy: 0, sc: .5 }); dif.style.left = '420px'; dif.style.top = '500px';
+    vis(tick, t, tTk - .2, 1e9, { dy: -100, din: .7 }); tick.style.left = '50px'; tick.style.top = '140px';
+    vis(dif, t, tCm - .15, 1e9, { dy: 0, sc: .5 }); dif.style.left = '330px'; dif.style.top = '170px';
     const hb = eo(pr(t, tBr - .1, .4)); tb.style.boxShadow = `0 0 0 ${(4 * hb).toFixed(2)}px #F2B63D`; tb.style.background = hb > .5 ? '#FFF5DF' : '#fff'; pulse(tb, t, tBr, .08, .7);
   };
 };
@@ -178,15 +180,17 @@ CAPS[10] = () => {
 // 0 "Agora, os arquivos da nota. Toda nota autorizada tem dois: o DANFE e o XML."
 // 1 "O DANFE é a folha impressa que acompanha a carga no caminhão. O XML é o arquivo oficial da nota, que o contador guarda."
 CAPS[14] = () => {
-  const g = grupo(CENA), XT = -6.3, XPA = 6.6;
+  const g = grupo(CENA), XT = -4.0, XPA = 4.5, NX = .3;
   chaoPatio(CENA, [0, 0, 0], { c: 30, l: 11, passo: 2.6, faixa: [3.0] });
-  const T = caminhao(CENA, [XT, 0, 0], {}), u = T.userData;
-  const pa = pasta(CENA, [XPA, 0, .4], { w: 1.2, h: .9 }); pa.scale.setScalar(2.3); pa.userData.s = 2.3;
-  const nf = folha(CENA, [0, 2.4, 0], { cor: COR.verde, w: 1.5, h: 2.0, linhas: 4 }); nf.userData.s = 1;
+  const T = caminhao(CENA, [XT, 0, 0], { c: 5.2, l: 2.1, R: .42, eixos: 2, cc: 1.7, hc: 1.55 }), u = T.userData;
+  const pa = pasta(CENA, [XPA, 0, .4], { w: 1.2, h: .9 }); pa.scale.setScalar(2.0); pa.userData.s = 2.0;
+  const nf = folha(CENA, [NX, 2.3, 0], { cor: COR.verde, w: 1.5, h: 2.0, linhas: 4 }); nf.userData.s = 1.35;
+  poe(rbox(.1, .7, .08, .03, 1), M(COR.cinzaC), nf, [0, -1.35, -.06]); poe(rbox(.8, .06, .55, .03, 1), M(COR.cinzaE), nf, [0, -1.7, -.06]);
   const dn = folha(CENA, [0, 2.4, -.05], { cor: COR.verde, w: 1.5, h: 2.0, linhas: 4 }), xm = folha(CENA, [0, 2.4, -.05], { cor: COR.ambar, w: 1.5, h: 2.0, linhas: 6 });
+  for (const f of [dn, xm]) f.traverse(o => { o.castShadow = false; });
   const tit = titulo('Documentos', 'DANFE e XML');
   const cNf = tagv('NF-e', 'v'), cAu = tagv(`${ic('check', 20)}Autorizada`, 'v'), cDa = tagv(`${ic('printer', 20)}DANFE`, 'v'), cXm = tagv(`${ic('file-code', 20)}XML`, 'a'), cCo = tagv('Contador', 'e');
-  camera([[0, { x: 0, y: 1.8, z: 0, d: 24, az: 0, el: .26, oy: -45 }], [60, { x: 0, y: 1.8, z: 0, d: 23.2, az: 0, el: .26, oy: -45 }, 'lin']]);
+  camera([[0, { x: -.1, y: 1.7, z: 0, d: 19, az: 0, el: .26, oy: -40 }], [60, { x: -.1, y: 1.7, z: 0, d: 18.5, az: 0, el: .26, oy: -40 }, 'lin']]);
   return t => {
     const A = W(0, 'Toda') - .3, tTo = W(0, 'Toda'), tAu = W(0, 'autorizada'), tDo = W(0, 'dois'), tDa = W(0, 'DANFE'), tXm = W(0, 'XML'),
           tIm = W(1, 'impressa'), tCg = W(1, 'carga'), tCm = W(1, 'caminhão'), tX2 = W(1, 'XML'), tOf = W(1, 'oficial'), tCo = W(1, 'contador'), tGu = W(1, 'guarda');
@@ -194,17 +198,17 @@ CAPS[14] = () => {
     posTitulo(tit, t, A - .6, tTo - .15);
     cresce(nf, t, tTo - .05, .6, 0); nf.updateWorldMatrix(true, true); pulse(cNf, t, tDo, .0, .7);
     vis(cNf, t, tTo, 1e9, { dy: 10 }); ancora(cNf, mundo(nf, nf.userData.topo), .5, 1, 0, -6);
-    vis(cAu, t, tAu - .1, 1e9, { dy: 0, sc: .7 }); ancora(cAu, mundo(nf, [0, -.55, .05]), .5, .5);
+    vis(cAu, t, tAu - .1, 1e9, { dy: 0, sc: .7 }); ancora(cAu, mundo(nf, [0, -.5, .05]), .5, .5);
     // o DANFE sai de trás da nota para a esquerda e o XML para a direita
     const qd = eio(pr(t, tDa - .1, .7)), qx = eio(pr(t, tXm - .1, .7));
     const X = lerp(-20, XT, eo(pr(t, tCg - .25, 1.0))); anda(T, X); T.visible = t > tCg - .3;
     // o DANFE vai com a carga (pousa na lateral da carroceria); o XML entra na pasta do contador
     const vd = eio(pr(t, tCm, .85)), Pd = [X + u.x0 + u.bau.cb / 2, u.yb + .95, u.bau.Wd / 2 + .08];
-    dn.position.set(lerp(lerp(0, -2.6, qd), Pd[0], vd), lerp(2.4, 2.2, qd) * (1 - vd) + Pd[1] * vd + 2.4 * Math.sin(PI * vd), lerp(-.05, Pd[2], vd));
-    dn.scale.setScalar(lerp(1, .55, vd) * Math.max(.001, eo(pr(t, tDa - .1, .3)))); dn.visible = t > tDa - .15;
+    dn.position.set(lerp(lerp(NX, NX - 2.6, qd), Pd[0], vd), lerp(2.4, 2.2, qd) * (1 - vd) + Pd[1] * vd + 2.4 * Math.sin(PI * vd), lerp(-.05, Pd[2], vd));
+    dn.scale.setScalar(lerp(1.35, .6, vd) * Math.max(.001, eo(pr(t, tDa - .1, .3)))); dn.visible = t > tDa - .15;
     const vx = eio(pr(t, tGu - .15, .8)), Px = mundo(pa, [0, .55, .02]);
-    xm.position.set(lerp(lerp(0, 2.6, qx), Px[0], vx), lerp(2.4, 2.2, qx) * (1 - vx) + (Px[1] + .1) * vx + 2.0 * Math.sin(PI * vx), lerp(-.05, Px[2], vx));
-    xm.scale.setScalar(lerp(1, .45, vx) * Math.max(.001, eo(pr(t, tXm - .1, .3)))); xm.visible = t > tXm - .15;
+    xm.position.set(lerp(lerp(NX, NX + 2.7, qx), Px[0], vx), lerp(2.4, 2.2, qx) * (1 - vx) + (Px[1] + .1) * vx + 2.0 * Math.sin(PI * vx), lerp(-.05, Px[2], vx));
+    xm.scale.setScalar(lerp(1.35, .5, vx) * Math.max(.001, eo(pr(t, tXm - .1, .3)))); xm.visible = t > tXm - .15;
     cresce(pa, t, tCo - .15, .6, 0); pa.userData.s = 2.3;
     dn.updateWorldMatrix(true, true); xm.updateWorldMatrix(true, true);
     vis(cDa, t, tDa - .05, 1e9, { dy: 8 }); ancora(cDa, mundo(dn, dn.userData.topo), .5, 1, 0, -6); pulse(cDa, t, tIm, .08, .8);

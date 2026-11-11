@@ -1,0 +1,216 @@
+{
+ "name": "t00-cap01",
+ "title": "T0 · Cap. 1 · Os combinados (computador 1280x800; narração 48,1 s, ESTIMADA; marcas L1..L5 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
+ "fakeNow": "2026-11-10T08:30:00-03:00",
+ "seed": "t00-cap01",
+ "pace": 0.5,
+ "cps": 22,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 470
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true",
+  "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10"
+ },
+ "seedExtra": [
+  "t00/catalogo",
+  "t00/s1"
+ ],
+ "prewarm": [
+  "/login",
+  "/dashboard"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/login"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "timeout": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "••••••••"
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Antes de usar o sistema",
+   "timeout": 45
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 20
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel|Algo deu errado|Falha ao|Something went wrong|N[ãa]o conseguimos/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Primeiro passo",
+    "within": "[role=dialog][aria-label^=\"Introdução\"]",
+    "exact": true
+   },
+   "seconds": 0.5,
+   "at": 0.64,
+   "label": "selo Primeiro passo",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Antes de usar o sistema",
+    "within": "[role=dialog][aria-label^=\"Introdução\"]"
+   },
+   "seconds": 0.5,
+   "at": 4.43,
+   "label": "Antes de usar o sistema",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 7.44
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Este vídeo explica os combinados",
+    "within": "[role=dialog][aria-label^=\"Introdução\"]"
+   },
+   "seconds": 0.8,
+   "at": 7.54,
+   "label": "Este vídeo explica os combinados importantes",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 18.49
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Assisti ao vídeo até o final e entendi os combinados.",
+    "within": "[role=dialog][aria-label^=\"Introdução\"]"
+   },
+   "seconds": 0.8,
+   "at": 20.32,
+   "label": "caixa Assisti ao vídeo (ainda apagada)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Assista até o final para confirmar",
+    "within": "[role=dialog][aria-label^=\"Introdução\"]"
+   },
+   "seconds": 0.6,
+   "at": 23.73,
+   "label": "botão Assista até o final para confirmar",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 25.9
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Você pode pular durante o teste",
+    "within": "[role=dialog][aria-label^=\"Introdução\"]"
+   },
+   "seconds": 0.29,
+   "at": 27.73,
+   "label": "quadro Você pode pular durante o teste",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Pular por agora",
+    "within": "[role=dialog][aria-label^=\"Introdução\"]"
+   },
+   "seconds": 0.8,
+   "at": 29.02,
+   "label": "botão Pular por agora (sem clicar)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 33.85
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 760,
+    "y": 470
+   },
+   "by": 0,
+   "duration": 0.2,
+   "after": 0,
+   "at": 34.15,
+   "label": "cursor sai de cima do botão"
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 48.1
+  }
+ ]
+}

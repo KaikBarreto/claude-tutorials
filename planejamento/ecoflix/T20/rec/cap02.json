@@ -1,0 +1,320 @@
+{
+ "name": "t20-cap02",
+ "title": "T20 · Cap. 2 · Pegar o link do portal (narração 48,4 s ESTIMADA; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T15:00:00-03:00)",
+ "seed": "t20-cap02",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 420
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true"
+ },
+ "seedExtra": [
+  "t20/inicio"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "waitFor",
+   "target": {
+    "label": "E-mail"
+   },
+   "timeout": 30
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "E-mail"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "Senha",
+    "exact": true
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Rafael!",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/clientes-fornecedores"
+  },
+  {
+   "do": "waitFor",
+   "text": "Aços Quiririm Ltda",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "header button.h-8.w-8"
+   }
+  },
+  {
+   "do": "wait",
+   "seconds": 0.8
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main div.no-scrollbar > button:has-text('Fornecedores')"
+   }
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "placeholder": "Buscar fornecedor..."
+   },
+   "timeout": 15
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main aside button:has-text('Cooperativa Recomeço')"
+   }
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "main section[aria-label='Detalhes de Cooperativa Recomeço']"
+   },
+   "timeout": 15
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel|Algo deu errado|Falha ao|Transi[çc][ãa]o inv[áa]lida|n[ãa]o encontrad|Localiza[çc][ãa]o n[ãa]o registrada|Sem sinal de GPS/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');if(f&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA ECOFLIX'))window.__avisos.push('TRILHA ECOFLIX')},300);return 1})()"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{if(window.__animFix)return 'ja';window.__animFix=setInterval(()=>{for(const a of document.getAnimations())if(a.currentTime!==null&&a.currentTime<0)a.startTime=document.timeline.currentTime},100);return 'anim fix'})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"main *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Acesso ao portal\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-330);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/800),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 0.7,
+   "label": "a câmera desce até Acesso ao portal"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "input[aria-label='Link do portal']"
+   },
+   "seconds": 1.6,
+   "at": 5.13,
+   "label": "[ZOOM] Acesso ao portal: o link e o botão Copiar",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 7.15
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Copiar",
+    "exact": true,
+    "within": "main section[aria-label='Detalhes de Cooperativa Recomeço']"
+   },
+   "at": 7.44,
+   "label": "Copiar"
+  },
+  {
+   "do": "waitFor",
+   "text": "Link do portal copiado",
+   "timeout": 8
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const e=document.querySelector('main section[aria-label^=\"Detalhes de\"]');e&&e.scrollTo&&e.scrollTo(0,0);return 'ok'})()",
+   "at": 14.16,
+   "label": "sobe ao cabeçalho da ficha"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 14.86
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "button[aria-label='Ações de Cooperativa Recomeço']"
+   },
+   "seconds": 0.8,
+   "at": 16.7,
+   "label": "o \"...\" do cabeçalho da ficha abre o menu",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "menuitem",
+    "name": "Portal do Fornecedor"
+   },
+   "seconds": 1.2,
+   "at": 17.73,
+   "label": "Portal do Fornecedor (sem clicar)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 20.15
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 20.25,
+   "label": "fecha o menu"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"main *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Acesso ao portal\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-330);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 20.55,
+   "label": "a câmera volta ao Acesso ao portal"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "input[aria-label='Link do portal']"
+   },
+   "seconds": 2.4,
+   "at": 20.61,
+   "label": "[ZOOM] o fim do endereço: recicla-vale-metais-cooperativa- e o código",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 30.83
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 900,
+    "y": 520
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "at": 31.33,
+   "label": "cursor em repouso (ilustração)"
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 39.83
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Editar",
+    "exact": true,
+    "within": "main section[aria-label='Detalhes de Cooperativa Recomeço']"
+   },
+   "at": 40.9,
+   "label": "Editar"
+  },
+  {
+   "do": "waitFor",
+   "text": "Editar Fornecedor",
+   "timeout": 12
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Portal",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 42.39,
+   "label": "aba Portal"
+  },
+  {
+   "do": "waitFor",
+   "text": "Link do portal",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Link do portal",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.2,
+   "at": 44.69,
+   "label": "Link do portal (sem clicar em Abrir portal)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 48.37
+  }
+ ]
+}

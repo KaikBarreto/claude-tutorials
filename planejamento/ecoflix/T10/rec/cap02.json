@@ -208,20 +208,20 @@
    "timeout": 4
   },
   {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Cobre mel\", \" 42Kg\", \"R$ 42,50\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main tbody tr\")].filter(e=>!true||e.innerText.includes(\"Cobre mel\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Cobre mel 42 Kg pagos a R$ 42,50"
+  },
+  {
    "do": "hover",
    "target": {
     "selector": "main tbody tr:has-text('Cobre mel') td:nth-child(6)"
    },
-   "seconds": 2.2,
+   "seconds": 2.87,
    "at": 27.4,
-   "label": "[ZOOM] Preço médio pago do Cobre mel (R$ 42,50)",
+   "label": "[ZOOM] Preço médio pago do Cobre mel (R$ 42,50) e a explicação",
    "optional": true,
    "timeout": 4
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Cobre mel\", \" 42Kg\", \"R$ 42,50\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main tbody tr\")].filter(e=>!true||e.innerText.includes(\"Cobre mel\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
-   "label": "confere Cobre mel 42 Kg pagos a R$ 42,50"
   },
   {
    "do": "mark",
@@ -231,11 +231,11 @@
   {
    "do": "hover",
    "target": {
-    "selector": "main thead th:has-text('Preço médio pago')"
+    "selector": "main tbody tr:has-text('Cobre mel') td:nth-child(6)"
    },
-   "seconds": 2.0,
-   "at": 31.85,
-   "label": "cabeçalho Preço médio pago (abre a explicação)",
+   "seconds": 3.53,
+   "at": 30.82,
+   "label": "[ZOOM] Preço médio pago do Cobre mel (R$ 42,50) e a explicação (continua)",
    "optional": true,
    "timeout": 4
   },

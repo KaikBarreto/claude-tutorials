@@ -534,3 +534,16 @@ Decisões:
   O agente do kit 3D (retomado) faz os materiais reconhecíveis no kit sem mudar a API (latinha, PET, ferro, cobre,
   papelão, terra, borracha, plástico; `bigBag`), troca o `kit3d.js` de uma vez e refaz as prévias da T07/T08; as cinco
   frentes 3D foram avisadas e refazem as prévias quando o kit trocar.
+- 11/11 16:3x **Prioridade dos renders**: a prévia 3D rodava com `nice -n 19`, mas o processo da GPU do Chromium aparecia
+  em nice -8 (como root, o Chromium sobe a prioridade dele) e disputava CPU com a gravação dos robôs (57 % contra 44 %). O
+  `render_cenas.cjs` agora se põe em SCHED_IDLE antes de abrir o navegador (Chromium e ffmpeg herdam; conferido: node,
+  GPU e renderer em SCHED_IDLE; captura com prazo de 90 s); `docs/09` e `docs/08-licoes`. Prévias 3D passam a `--dsf 1`
+  (a trava leve estava em ~7 min por trecho de 13 s) e só depois da troca dos materiais no kit.
+- 11/11 16:3x **3D da T11 e T12 prontos** (cenas e quadros): T11 cap00, cap02, cap04 (ímã e esteira) e cap08; T12 cap08
+  (tara do veículo, "Tara 6.380 kg") e cap09 (poliguindastes trocando as caçambas 05 e 03; a 06 chega do Externo pelo
+  Movimentar). Objetos novos `ima.js`, `esteira.js`, `poliguindaste.js`. As prévias em vídeo não saíram (a tarefa de fundo
+  bateu no limite de tempo com 4 de 10 trechos): renderizar depois da troca dos materiais (script do agente:
+  `scratchpad/previa.sh T11|T12`, passar a `--dsf 1`). O `objetos/chaparia.js` sumiu da pasta durante o trabalho (a T11 e a
+  T12 copiaram uma pilha de chapas nas páginas; perguntado ao agente do kit).
+- 11/11 16:4x **Robôs da T18 e T25 lançados** (portas 54318 e 54325; T25 confere antes no `eco.mjs` como o app conta a
+  compra estornada e a compensação em novembro). Falta o da T05, com o agente das cenas de Windows.

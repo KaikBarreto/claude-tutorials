@@ -5,6 +5,8 @@
       escreve t13/inicio.json (à mão, abaixo): o que a aula precisa e o mundo base não traz.
   python3 -I rec/t13/t13_sementes.py pdf
       escreve rec/t13/assets/comprovante-pix-energia-outubro.pdf (uma página, texto fictício, sem marca de banco).
+  python3 -I rec/t13/t13_sementes.py api NN [--porta 54313]      (NN = 7 a 11)
+      o mesmo apos-capNN sem navegador: as chamadas do app pela API do falso (logado como o Rafael) e a captura abaixo.
   python3 -I rec/t13/t13_sementes.py captura NN [--porta 54313]
       logo DEPOIS de um ensaio (ou gravação) do capítulo NN com 0 passo falho, lê a instância do Supabase falso (o estado que o robô
       deixou) e escreve t13/apos-capNN.json: as linhas criadas na aula (created_at >= FAKE_NOW) e, como _patch, as linhas do mundo que
@@ -127,7 +129,96 @@ def captura(nn, porta):
     d.update(novas)
     if patch:
         d['_patch'] = patch
+    return saldos_bancos(d, porta)
+
+
+def saldos_bancos(d, porta):
+    """o saldo gravado em bank_accounts (que o falso recalcula ao lançar, mas a carga de sementes não): saldo do mundo base + os lançamentos
+    da semente, como _patch. A instância fica no estado "antes" (mundo base + t13/inicio)."""
+    _post(porta, '/__dev/reset', {})
+    _post(porta, '/__dev/seed', {'files': ['t13/inicio']})
+    base = {r['id']: r['balance'] for r in _get(porta, 'bank_accounts?select=id,balance')}
+    soma = {}
+    for t in d.get('bank_transactions', []):
+        soma[t['bank_account_id']] = soma.get(t['bank_account_id'], 0) + float(t['amount'])
+    pt = [{'match': {'id': k}, 'set': {'balance': round(float(base[k]) + v, 2)}} for k, v in soma.items() if k in base and abs(v) > 0.001]
+    d.setdefault('_patch', {}).pop('bank_accounts', None)
+    if pt:
+        d['_patch']['bank_accounts'] = pt
+    elif not d['_patch']:
+        del d['_patch']
     return d
+
+
+def stable_id(chave):
+    """o mesmo UUID do `@id:<chave>` das sementes (rec/fakebase/core/util.mjs, stableId)"""
+    import hashlib
+    h = bytearray(hashlib.sha1(('domiflix-fake:' + chave).encode()).digest())
+    h[6] = (h[6] & 0x0F) | 0x50
+    h[8] = (h[8] & 0x3F) | 0x80
+    x = h[:16].hex()
+    return f'{x[:8]}-{x[8:12]}-{x[12:16]}-{x[16:20]}-{x[20:32]}'
+
+
+def _req(porta, metodo, caminho, corpo=None, token=None, extra=None):
+    chave = json.load(open(os.path.join(MUNDO, 'mundo.json'), encoding='utf8'))['env']['anonKey']
+    h = {'apikey': chave, 'Authorization': f'Bearer {token or chave}', 'content-type': 'application/json', **(extra or {})}
+    data = json.dumps(corpo).encode() if corpo is not None else None
+    req = urllib.request.Request(f'http://127.0.0.1:{porta}{caminho}', data=data, method=metodo, headers=h)
+    with urllib.request.urlopen(req, timeout=30) as r:
+        t = r.read().decode('utf8')
+        return json.loads(t) if t else None
+
+
+def api(nn, porta):
+    """apos-capNN SEM navegador: parte de t13/inicio + apos-cap(NN-1) e faz, pela API do Supabase falso e logado como o Rafael, as
+    MESMAS chamadas que o app faz no capítulo (hooks/useBills.ts, useTransactionAttachments.ts); depois captura como o `captura`.
+    Serve para os capítulos da cadeia não esperarem um pelo outro na fila da trava; a gravação de cada capítulo confere a tela."""
+    import secrets
+    _post(porta, '/__dev/reset', {})
+    _post(porta, '/__dev/seed', {'files': ['t13/inicio', f't13/apos-cap{nn - 1:02d}']})
+    tok = _req(porta, 'POST', '/auth/v1/token?grant_type=password',
+               {'email': 'rafael@reciclavalemetais.example', 'password': secrets.token_hex(8)})['access_token']   # o falso aceita qualquer senha
+    rpc = lambda nome, args: _req(porta, 'POST', f'/rest/v1/rpc/{nome}', args, tok)
+    get = lambda q: _req(porta, 'GET', f'/rest/v1/{q}', None, tok)
+    patch = lambda q, corpo: _req(porta, 'PATCH', f'/rest/v1/{q}', corpo, tok, {'Prefer': 'return=representation'})
+    post = lambda q, corpo: _req(porta, 'POST', f'/rest/v1/{q}', corpo, tok, {'Prefer': 'return=representation'})
+    principal, aluguel = stable_id('banco.principal'), stable_id('categoria.aluguel')
+    pagar = lambda bill, valor, resto=None: rpc('pay_financial_bill', {
+        'p_bill_id': bill, 'p_amount': valor, 'p_payment_method': 'transfer', 'p_bank_account_id': principal, 'p_cash_register_id': None,
+        'p_paid_date': '2026-11-10', 'p_fee_amount': 0, 'p_remainder_due_date': resto, 'p_notes': None, 'p_interest_amount': 0,
+        'p_interest_category_id': None, 'p_tenders': None})
+    if nn == 7:      # Repetir: aluguel da empilhadeira, mensal, 12/11/2026 até 12/04/2027 (sem previsto, sem parceiro)
+        rpc('create_recurring_bill_template', {
+            'p_client_request_id': stable_id('t13.cap07.aluguel-empilhadeira'), 'p_direction': 'payable', 'p_description': 'Aluguel da empilhadeira',
+            'p_category_id': aluguel, 'p_amount': 2300, 'p_partner_type': None, 'p_partner_id': None, 'p_notes': None, 'p_frequency': 'monthly',
+            'p_interval': 1, 'p_start_date': '2026-11-12', 'p_end_date': '2027-04-12', 'p_expected_payment_method': None,
+            'p_expected_bank_account_id': None})
+    elif nn == 8:    # Esta e as futuras a partir da de 12/12: molde + futuras não pagas (mesmos dados) e o deslocamento de +3 dias
+        t = get('recurring_bill_templates?select=id&description=eq.Aluguel%20da%20empilhadeira')[0]['id']
+        dados = {'description': 'Aluguel da empilhadeira', 'amount': 2300, 'category_id': aluguel, 'notes': None, 'direction': 'payable',
+                 'partner_type': None, 'partner_id': None}
+        patch(f'recurring_bill_templates?id=eq.{t}', dados)
+        patch(f'financial_bills?recurring_template_id=eq.{t}&due_date=gte.2026-12-12&status=neq.paid', dados)
+        rpc('shift_recurring_bills_due_date', {'p_template_id': t, 'p_from_due_date': '2026-12-12', 'p_new_due_date': '2026-12-15'})
+    elif nn == 9:    # baixa da energia inteira e da prensa em parte (o resto para 30/11), Pix da Conta Principal
+        pagar(stable_id('titulo.energia_out'), 1874.3)
+        prensa = get('financial_bills?select=id&description=eq.Manuten%C3%A7%C3%A3o%20da%20prensa%20enfardadeira')[0]['id']
+        pagar(prensa, 1740, '2026-11-30')
+    elif nn == 10:   # recebimento de 2.000,00 do saldo da Aços Quiririm, Pix na Conta Principal
+        rpc('pay_partner_balance', {'p_entity_type': 'customer', 'p_entity_id': stable_id('cliente.quiririm'), 'p_amount': 2000,
+                                    'p_payment_method': 'transfer', 'p_bank_account_id': principal, 'p_cash_register_id': None,
+                                    'p_paid_date': '2026-11-10', 'p_category_id': None})
+    elif nn == 11:   # comprovante na energia (a linha de transaction_attachments; o arquivo do storage do falso é de memória) e o Salvar
+        energia, emp = stable_id('titulo.energia_out'), stable_id('company.reciclavale')
+        nome = os.path.basename(PDF)
+        post('transaction_attachments', {'company_id': emp, 'ref_type': 'financial_bill', 'ref_id': energia, 'file_name': nome,
+                                          'storage_path': f'{emp}/financial_bill/{energia}/{stable_id("t13.cap11.pdf")}-{nome}',
+                                          'mime_type': 'application/pdf', 'size_bytes': os.path.getsize(PDF), 'created_by': stable_id('user.rafael')})
+        patch(f'financial_bills?id=eq.{energia}', {'description': 'Energia elétrica de outubro'})
+    else:
+        raise SystemExit(f'api: capítulo {nn} sem operações (só 7 a 11)')
+    return captura(nn, porta)
 
 
 if __name__ == '__main__':
@@ -135,8 +226,21 @@ if __name__ == '__main__':
     if sys.argv[1:2] == ['pdf']:
         pdf()
         sys.exit(0)
+    if sys.argv[1:2] == ['saldos']:   # acerta o saldo gravado das contas nas apos-capNN já capturadas: saldos NN [NN ...]
+        for a_ in sys.argv[2:]:
+            if a_.startswith('--'):
+                break
+            cam = os.path.join(SAIDA, f'apos-cap{int(a_):02d}.json')
+            d = saldos_bancos(json.load(open(cam, encoding='utf8')), 54313)
+            json.dump(d, open(cam, 'w', encoding='utf8'), ensure_ascii=False, indent=1)
+            print(f'apos-cap{int(a_):02d}: {d.get("_patch", {}).get("bank_accounts")}')
+        sys.exit(0)
     if sys.argv[1:2] == ['inicio']:
         nome, d = 'inicio', inicio()
+    elif sys.argv[1:2] == ['api']:
+        nn = int(sys.argv[2])
+        porta = int(sys.argv[sys.argv.index('--porta') + 1]) if '--porta' in sys.argv else 54313
+        nome, d = f'apos-cap{nn:02d}', api(nn, porta)
     elif sys.argv[1:2] == ['captura']:
         nn = int(sys.argv[2])
         porta = int(sys.argv[sys.argv.index('--porta') + 1]) if '--porta' in sys.argv else 54313

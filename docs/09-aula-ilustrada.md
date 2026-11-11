@@ -50,6 +50,9 @@ Cena travada (promessa que nunca resolve, laço sem fim no `setup` ou no `R`): o
 nada anda em 90 s (`--vigia S`), em vez de segurar a trava pesada dos outros.
 Quadros de conferência (poucos JPEG) não disputam a trava pesada com a gravação: trava leve própria e prioridade baixa,
 `flock $TUT_HOME/.stills.lock nice -n 19 timeout 300 node render_cenas.cjs ...` (a pesada fica para gravar e renderizar MP4).
+O `render_cenas.cjs` se põe sozinho em `SCHED_IDLE` (`chrt -i`), com o Chromium e o ffmpeg que ele abre: só usa a CPU
+que sobra da gravação. O `nice` não basta: como root, o Chromium sobe o processo da GPU para nice -8 (11/11, a cena 3D a
+57 % de CPU no mesmo nível da gravação). `RENDER_PRIORIDADE=normal` desliga (render sozinho na máquina).
 
 ## Render e montagem
 ```bash

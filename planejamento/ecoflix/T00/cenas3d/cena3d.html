@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<!-- T00 "Bem-vindo ao EcoSistema" · cenas 3D do caminho do pátio (kit perfis/ecoflix/cenas3d/kit3d.js + objetos/). As 2D da
+     ../cenas/cenas.html ficam de reserva. Um pátio só (a mesma montagem nos dois capítulos, patio()):
+       fachada em z = 0 de frente para a câmera, calçada e rua na frente; da esquerda para a direita, o portão, o guichê do caixa
+       (com a registradora no balcão) e, na calçada, a balança de plataforma; dentro, a baia do estoque com a latinha e o caminhão
+       carregado de latinha, de frente para a saída (+x); fora, à direita, o banco (só no cap00).
+       cap00 ilu00_caminho: a vista geral desse pátio; as seis estações (as da 2D) num alfinete em cima de cada lugar, ligadas
+             pela linha que acende de "portão" a "conta"; a carroça de latinha entra pelo portão em "sucata".
+       cap05 ilu05_portao, ilu05_balanca, ilu05_caixa, ilu05_estoque, ilu05_venda: a câmera viaja do portão à balança, ao
+             caixa, à baia e ao caminhão que sai, cada parada na palavra que a nomeia; no alto, o mesmo caminho da 2D (estações
+             acendendo nas mesmas palavras), para a troca com a ilu05_conta (2D) não mexer no alto da tela.
+     Textos e âncoras W(linha,'palavra') os da 2D (ilustracoes.json, "mostra"); números da fala (38 kg × R$ 6,20 = R$ 235,60).
+     Render: node ferramentas/edit/cenas/render_cenas.cjs <cap> <capNN.json> saida.mp4 --html planejamento/ecoflix/T00/cenas3d/cena3d.html --de <at> --ate <at+dur> -->
+<style>
+:root{--l:#E6E9EE;--c:#6B7280}
+.row{display:flex;align-items:center}
+.ico{display:flex;align-items:center;justify-content:center;flex:none;border-radius:14px;background:var(--vs);color:#fff}
+.ico.a{background:var(--as)}
+.tag.s{font-size:17px;padding:7px 14px;gap:7px}
+/* estações do caminho (as da 2D, T00/cenas/cenas.html) */
+.est{position:absolute;width:96px;height:96px;border-radius:50%;background:#fff;border:3px solid #D5DCD8;display:flex;
+  align-items:center;justify-content:center;color:#9AA3AD}
+.est .fill{position:absolute;inset:-3px;border-radius:50%;background:var(--vs);opacity:0}
+.est .ic{position:relative}
+.estl{position:absolute;width:172px;text-align:center;font-weight:700;font-size:22px;line-height:1.2;color:#6B7280}
+/* alfinete das estações na vista geral (cap00): o círculo da estação, menor, com o nome embaixo */
+.pino{position:absolute;width:190px;height:104px}
+.pino .est{left:65px;top:0;width:60px;height:60px;box-shadow:0 6px 14px rgba(16,24,40,.14)}
+.pino .estl{left:0;top:66px;width:190px;font-size:17px;color:#4B5563;text-shadow:0 0 6px #fff,0 0 3px #fff}
+.most2{position:absolute}
+.most2 .most{position:relative;width:200px;text-align:center;transform-origin:50% 100%;padding:12px 18px 14px}
+.most2 .mn{margin-top:0}
+</style>
+</head><body>
+<script type="module">
+import { THREE, PI, cl, eo, eio, pr, lerp, ri, W, L, LE, el, ic, vis, pulse, kg, conta, posTitulo, titulo, chip,
+  CENA, GL, camera, ancora, mundo, tela, grupo, mancha, anel, destaque, domo, chaoPatio, sacoAberto, carroca, caminhao, anda, latinhas,
+  transfere, cresce, COR, cena } from '../../../../perfis/ecoflix/cenas3d/kit3d.js';
+import { pessoa } from '../../../../perfis/ecoflix/cenas3d/objetos/pessoa.js';
+import { registradora } from '../../../../perfis/ecoflix/cenas3d/objetos/registradora.js';
+import { cedula } from '../../../../perfis/ecoflix/cenas3d/objetos/cedula.js';
+import { portao } from '../../../../perfis/ecoflix/cenas3d/objetos/portao.js';
+import { guiche } from '../../../../perfis/ecoflix/cenas3d/objetos/guiche.js';
+import { baia } from '../../../../perfis/ecoflix/cenas3d/objetos/baia.js';
+import { banco } from '../../../../perfis/ecoflix/cenas3d/objetos/banco.js';
+import { balancaPlataforma } from '../../../../perfis/ecoflix/cenas3d/objetos/balancaPlataforma.js';
+import { estrada } from '../../../../perfis/ecoflix/cenas3d/objetos/estrada.js';
+
+const brl = v => 'R$ ' + v.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+const KG = 38, PRECO = 6.20, TOTAL = KG * PRECO;                // Alumínio latinha, compra (MUNDO_FICTICIO.md)
+const EST = [['fence', 'Portão'], ['weight', 'Balança'], ['wallet', 'Caixa'], ['warehouse', 'Estoque'], ['handshake', 'Venda'], ['landmark', 'Dinheiro<br>na conta']];
+
+// ------------------------------------------------------------------ o pátio (metros; fachada em z = 0, rua na frente)
+const XG = -5.0;                                                  // centro do vão do portão
+const GUI = [-1.2, 0, -.55], BAL = [-3.5, 0, 3.2], BAI = [2.6, 0, -1.5], CAM = [7.8, 0, -2.7], BCO = [12.8, 0, -1.0], HP = 2.9;
+const ZC = 1.75, XPARA = -1.9, VARAL = 1.6;                       // a Dona Cida anda na calçada (z = ZC) e para em XPARA
+const SACOS = [[.42, .59, 0], [-.42, .59, 0]];                     // os dois sacos na caixa da carroça (local)
+function patio(o = {}) {
+  chaoPatio(CENA, [2, 0, -2], { c: 50, l: 30, passo: 2.5 });
+  estrada(CENA, [2, 0, 5.6], { c: 50, l: 2.8 });
+  const por = portao(CENA, [XG, 0, 0], { vao: 4.0, h: HP, cerca: 1.4, placa: o.placa });
+  const gui = guiche(CENA, GUI);
+  const reg = registradora(gui, [.42, gui.userData.balcao[1], gui.userData.balcao[2] - .06]); reg.userData.prende();
+  const bal = balancaPlataforma(CENA, BAL, { c: 1.3, l: 1.0 });
+  const bai = baia(CENA, BAI, { c: 2.8, l: 2.0, h: .95 });
+  const pil = grupo(bai); latinhas(pil, domo(420, 1.2, .78, .8, 0, .5));
+  const cam = caminhao(CENA, CAM, { c: 5.2, l: 2.1, R: .42, eixos: 2, cc: 1.7, hc: 1.55, carga: 'latinha', n: 260 });
+  const bco = o.banco ? banco(CENA, BCO) : null;
+  // a Dona Cida (figura de argila sem rosto) e a carroça com os dois sacos de latinha
+  const ci = pessoa(CENA, [0, 0, ZC], { pele: '#B97A57', cabelo: '#4A3428', camisa: '#C8664A', calca: '#4A5568', coque: true, s: .94 });
+  for (const [i, b] of ci.userData.bracos.entries()) b.rotation.x = i ? -.28 : .28;
+  const car = carroca(CENA, [0, 0, ZC]);
+  const sacos = SACOS.map(() => { const g = grupo(CENA), s = sacoAberto(g); s.scale.setScalar(.74);
+    g.userData.saco = s; g.userData.latas = latinhas(grupo(g, [0, .55, 0]), domo(24, .23, .18, .24, 0, .7)); return g; });
+  return { por, gui, reg, bal, bai, pil, cam, bco, ci, car, sacos, topoBal: mundo(bal, bal.userData.topo) };
+}
+// altura do monte da baia (domo 1.2 x .78 x .8) no ponto local (x, z)
+const ALT = (x, z) => { const u2 = (x / 1.2) ** 2 + (z / .78) ** 2; return u2 >= 1 ? 0 : .8 * Math.pow(1 - u2, .8); };
+// caminho no chão (pontos [x, z]) medido em metros: pos(s) e rumo(s) (rotation.y que leva a frente +x na tangente)
+function trilha(pts) {
+  const c = new THREE.CatmullRomCurve3(pts.map(([x, z]) => new THREE.Vector3(x, 0, z)), false, 'centripetal'), Lc = c.getLength();
+  const pos = s => { if (s <= 0) { const p = c.getPointAt(0), t = c.getTangentAt(0); return p.addScaledVector(t, s); } return c.getPointAt(Math.min(1, s / Lc)); };
+  const rumo = s => { const t = c.getTangentAt(cl(s / Lc, 0, 1)); return Math.atan2(-t.z, t.x); };
+  return { L: Lc, pos, rumo };
+}
+// a Dona Cida em s puxa a carroça (eixo VARAL metros atrás no caminho); f = fase do passo
+function puxa(P, tr, s, f) {
+  const p = tr.pos(s), q = tr.pos(s - VARAL);
+  P.ci.position.set(p.x, 0, p.z); P.ci.rotation.y = tr.rumo(s); P.ci.userData.anda(f, .1);
+  P.car.position.set(q.x, 0, q.z); P.car.rotation.y = tr.rumo(Math.max(0, s - VARAL)); P.car.userData.rodas.forEach(r => { r.rotation.z = -(s - VARAL) / .36; });
+}
+// perfil do andar: chega sem tranco (velocidade ~1,1x a média no começo, zero no fim)
+const chega = q => { q = cl(q); return 1.1 * q + .8 * q * q - .9 * q * q * q; };
+// os sacos na carroça (seguindo a carroça) até "a", depois pulam para a balança (de a até a + .7, um depois do outro)
+function sacosNaBalanca(P, t, a) {
+  P.sacos.forEach((g, i) => {
+    const q = eio(pr(t, a + i * .16, .7)), de = mundo(P.car, SACOS[i]), para = [BAL[0] + (i ? -.31 : .31), .144, BAL[2] + (i ? .03 : -.03)];
+    g.position.set(lerp(de[0], para[0], q), lerp(de[1], para[1], q) + .4 * Math.sin(PI * q), lerp(de[2], para[2], q));
+    g.rotation.y = lerp(P.car.rotation.y, .4 * (i ? 1 : -1), q);
+  });
+}
+const CAPS = {};
+
+// ------------------------------------------------------------------ CAPS[0] · a vista geral do pátio (L0)
+// 0 "Oi! Boas-vindas ao EcoSistema. A partir de agora, a sua empresa tem um lugar só pra organizar tudo, da sucata que entra no
+//    portão até o dinheiro na conta."
+CAPS[0] = () => {
+  const P = patio({ banco: true });
+  const tit = titulo('Primeira aula', 'Bem-vindo ao <span style="color:var(--ve)">EcoSistema</span>');
+  // alfinetes das seis estações (acima de cada lugar) e a linha que os liga (cinza; a verde corre de um ao outro)
+  const PINO = [[XG, HP + 1.2, 0], [BAL[0], 2.8, BAL[2]], [GUI[0], 3.7, GUI[2]], [BAI[0], 2.6, BAI[2]], [CAM[0], 3.6, CAM[2]], [BCO[0], 4.3, BCO[2]]];
+  const svg = el(`<svg class="ab" style="left:0;top:0;overflow:visible" width="1280" height="800"><polyline class="lc" fill="none" stroke="#DDE3E0"
+      stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><polyline class="lv" fill="none" stroke="#50D088" stroke-width="7"
+      stroke-linecap="round" stroke-linejoin="round"/></svg>`);
+  const lc = svg.querySelector('.lc'), lv = svg.querySelector('.lv');
+  const pinos = EST.map(([i, n]) => { const e = el(`<div class="pino"><div class="est ab"><div class="fill"></div>${ic(i, 28)}</div><div class="estl">${n.replace('<br>', ' ')}</div></div>`);
+    e.c = e.querySelector('.est'); e.f = e.querySelector('.fill'); e.l = e.querySelector('.estl'); return e; });
+  const tl = W(0, 'lugar'), ts = W(0, 'sucata'), tp = W(0, 'portao'), tc = W(0, 'conta');
+  const dd = Math.max(1, tc - tp), TS = [0, 1, 2, 3, 4, 5].map(k => tp + dd * k / 5);
+  // a carroça de latinha entra pelo portão: calçada, vira no vão e entra no pátio
+  const tr = trilha([[-15, ZC], [XG - 2.2, ZC], [XG - .5, ZC - .9], [XG, -.6], [XG + .1, -2.2]]);
+  const s1 = tr.L - .2, s0 = s1 - 7.6, a0 = tl - .25, a1 = tp + .45;
+  const an = anel(P.car, 1.45, .08, [.7, 0, 0]), onda = anel(P.car, 1.45, .05, [.7, 0, 0]);   // a sucata que entra: anel na carroça
+  camera([[0, { x: 1.2, y: .6, z: 0, d: 37.5, az: -.19, el: .54, oy: -112 }], [tl - .2, { x: 1.2, y: .6, z: 0, d: 37.5, az: -.19, el: .54, oy: -112 }],
+    [tc + 1.2, { x: 1.6, y: .6, z: 0, d: 35.8, az: -.13, el: .54, oy: -116 }, 'lin']]);
+  return t => {
+    GL.style.opacity = eo(pr(t, tl - .25, .6)).toFixed(3);
+    posTitulo(tit, t, -.6, tl - .1);
+    const q = chega(pr(t, a0, a1 - a0)), s = lerp(s0, s1, q); puxa(P, tr, s, (s - s1) * 4.4);
+    P.sacos.forEach((g, i) => { const p = mundo(P.car, SACOS[i]); g.position.set(...p); g.rotation.y = P.car.rotation.y; });
+    P.ci.visible = P.car.visible = t > a0 - .05; P.sacos.forEach(g => { g.visible = P.ci.visible; });
+    destaque(an, onda, t, ts - .1); an.material.opacity *= 1 - eo(pr(t, tp + .4, .5)); an.visible = an.material.opacity > .002;
+    // alfinetes e linha
+    const pts = PINO.map(p => tela(p));
+    pinos.forEach((e, k) => { vis(e, t, tl + .15 + .08 * k, 1e9, { sc: .7, dy: 8 }); ancora(e, PINO[k], .5, 30 / 104);
+      const a = eo(pr(t, TS[k], .35)); e.f.style.opacity = a.toFixed(3); e.c.style.borderColor = mixc('#D5DCD8', '#50D088', a);
+      e.c.style.color = mixc('#9AA3AD', '#FFFFFF', a); e.l.style.color = mixc('#4B5563', '#121212', a); pulse(e.c, t, TS[k], .1, .5); });
+    const seg = pts.slice(1).map((p, k) => Math.hypot(p[0] - pts[k][0], p[1] - pts[k][1])), tot = seg.reduce((a, b) => a + b, 0);
+    let feito = 0; for (let k = 1; k < 6; k++) { const d = Math.min(.6, TS[k] - TS[k - 1]); feito += seg[k - 1] * cl((t - TS[k] + d) / d); }
+    const str = pts.map(p => p[0].toFixed(1) + ',' + p[1].toFixed(1)).join(' ');
+    lc.setAttribute('points', str); lv.setAttribute('points', str);
+    lv.style.strokeDasharray = `${tot.toFixed(1)} ${(tot + 10).toFixed(1)}`; lv.style.strokeDashoffset = (tot - feito).toFixed(1); lv.style.opacity = t >= TS[0] ? 1 : 0;
+    vis(svg, t, tl + .15, 1e9, { dy: 0, sc: 1 });
+  };
+};
+
+// ------------------------------------------------------------------ o caminho no alto (o da 2D: mesmas estações, mesmo lugar)
+const EX = k => 215 + 176 * k, EY = 440, ELEN = EX(5) - EX(0);
+function caminho() {
+  const g = el('<div class="ab" style="left:0;top:0;width:1280px;height:800px;transform-origin:640px 400px"></div>');
+  const svg = el(`<svg class="ab" style="left:0;top:0;overflow:visible" width="1280" height="800">
+     <line x1="${EX(0)}" y1="${EY}" x2="${EX(5)}" y2="${EY}" stroke="#E3E8E5" stroke-width="8" stroke-linecap="round"/>
+     <line class="lv" x1="${EX(0)}" y1="${EY}" x2="${EX(5)}" y2="${EY}" stroke="#50D088" stroke-width="8" stroke-linecap="round"
+       style="stroke-dasharray:${ELEN};stroke-dashoffset:${ELEN}"/></svg>`, g);
+  const st = EST.map(([i, n], k) => {
+    const c = el(`<div class="est" style="left:${EX(k) - 48}px;top:${EY - 48}px"><div class="fill"></div>${ic(i, 42)}</div>`, g);
+    const l = el(`<div class="estl" style="left:${EX(k) - 86}px;top:${EY + 62}px">${n}</div>`, g);
+    return { c, l, fill: c.querySelector('.fill') }; });
+  return { g, svg, lv: svg.querySelector('.lv'), st };
+}
+const mixc = (a, b, p) => { const A = [1, 3, 5].map(i => parseInt(a.substr(i, 2), 16)), B = [1, 3, 5].map(i => parseInt(b.substr(i, 2), 16));
+  return `rgb(${A.map((v, i) => Math.round(v + (B[i] - v) * cl(p))).join(',')})`; };
+function acende(o, p) { o.fill.style.opacity = p.toFixed(3); o.c.style.borderColor = mixc('#D5DCD8', '#50D088', p);
+  o.c.style.color = mixc('#9AA3AD', '#FFFFFF', p); o.l.style.color = mixc('#6B7280', '#121212', p); }
+function caminhoEntra(E, t, a, b = 1e9) { vis(E.svg, t, a, b, { dy: 0, sc: 1 });
+  E.st.forEach((o, k) => { vis(o.c, t, a + .08 * k, b, { sc: .7, dy: 8 }); vis(o.l, t, a + .08 * k + .06, b, { dy: 8, sc: 1 }); }); }
+function caminhoAte(E, t, ts) {
+  let x = EX(0); for (let k = 1; k < 6; k++) { const d = Math.min(.6, ts[k] - ts[k - 1]);
+    if (t >= ts[k] - d) x = lerp(EX(k - 1), EX(k), d < .6 ? cl((t - ts[k] + d) / d) : eio(pr(t, ts[k] - d, d))); }
+  E.lv.style.strokeDashoffset = (ELEN - (x - EX(0))).toFixed(1); E.lv.style.opacity = t >= ts[0] ? 1 : 0;
+  E.st.forEach((o, k) => acende(o, eo(pr(t, ts[k], .35))));
+}
+
+// ------------------------------------------------------------------ CAPS[5] · Do portão até a conta (L0 a L4; a L5 e a L6 são 2D)
+// 0 "Bom, o que o EcoSistema resolve? Pensa num dia comum na Recicla Vale. A Dona Cida chega com latinha."  1 "A balança marca
+// trinta e oito quilos."  2 "No caixa, isso vira um pedido de compra: a seis reais e vinte o quilo, dá duzentos e trinta e cinco
+// reais e sessenta, pagos na hora."  3 "O material entra no estoque."  4 "Depois, a latinha juntada é vendida pra Serra Fina
+// Alumínio Reciclagem, com a nota fiscal."
+CAPS[5] = () => {
+  const P = patio({ placa: 'Recicla Vale Metais' });
+  // fundo do alto (o do palco, apagando para baixo): o título e o caminho ficam no branco, como na 2D
+  const fundo = el(`<div class="ab" style="left:0;top:0;width:1280px;height:340px;background:radial-gradient(1100px 650px at 1178px -96px,rgba(80,208,136,.09),transparent 62%),#fff;
+     -webkit-mask-image:linear-gradient(to bottom,#000 0,#000 250px,transparent 328px);mask-image:linear-gradient(to bottom,#000 0,#000 250px,transparent 328px)"></div>`);
+  const tit = titulo('O sistema', 'Do portão até a conta'), E = caminho();
+  // rótulos
+  const nCida = chip('Dona Cida', 'v s'), nLat = chip('Latinha', 'a s');
+  const most = el(`<div class="most2"><div class="most"><div class="mn">0 kg</div></div></div>`), mostIn = most.firstChild, mn = most.querySelector('.mn');
+  const rec = el(`<div class="card" style="width:330px;height:300px;padding:22px 26px">
+     <div class="row" style="gap:14px"><div class="ico a" style="width:46px;height:46px">${ic('clipboard-list', 26)}</div>
+       <div style="font-weight:800;font-size:22px">Pedido de compra</div></div>
+     <div class="r1" style="margin-top:18px;font-weight:700;font-size:19px">Alumínio latinha</div>
+     <div class="r2 num" style="margin-top:6px;font-size:22px">${kg(KG)} × ${brl(PRECO)}</div>
+     <div style="margin-top:16px;height:1px;background:var(--l)"></div>
+     <div class="r3 num" style="margin-top:12px;font-size:38px;color:var(--ve)">${brl(0)}</div>
+     <div class="r4 tag v s" style="margin-top:10px">${ic('circle-check', 18)}Pago na hora</div></div>`);
+  const [r1, r2, r3, r4] = ['.r1', '.r2', '.r3', '.r4'].map(s => rec.querySelector(s));
+  const est = el(`<div class="card" style="width:330px;height:182px;padding:22px 26px">
+     <div class="row" style="gap:14px"><div class="ico" style="width:48px;height:48px">${ic('warehouse', 26)}</div>
+       <div style="font-weight:800;font-size:23px">Estoque</div></div>
+     <div style="margin-top:14px;font-weight:700;font-size:19px;color:#374151">Alumínio latinha</div>
+     <div class="q num" style="margin-top:2px;font-size:44px;color:var(--ve)">+0 kg</div></div>`), estQ = est.querySelector('.q');
+  const cli = el(`<div class="card" style="left:936px;top:318px;width:300px;height:212px;padding:22px 24px">
+     <div class="ico" style="width:52px;height:52px">${ic('factory', 30)}</div>
+     <div style="margin-top:12px;font-weight:800;font-size:21px;line-height:1.25">Serra Fina Alumínio<br>Reciclagem</div>
+     <div class="tag v s" style="margin-top:10px">Cliente</div></div>`);
+  const nf = chip(`${ic('file-text', 18)}Nota fiscal`, 's');
+  // tempos (as âncoras da 2D)
+  const tPe = W(0, 'Pensa'), tDo = W(0, 'Dona'), tCh = W(0, 'chega'), tLa = W(0, 'latinha');
+  const tBa = W(1, 'balança'), tMa = W(1, 'marca');
+  const tCx = W(2, 'caixa'), tPd = W(2, 'pedido'), tQu = W(2, 'quilo'), tDa = W(2, 'dá'), tPg = W(2, 'pagos');
+  const tMt = W(3, 'material'), tEn = W(3, 'entra'), tEs = W(3, 'estoque');
+  const tDe = W(4, 'Depois'), tJu = W(4, 'juntada'), tVe = W(4, 'vendida'), tSe = W(4, 'Serra'), tNo = W(4, 'nota');
+  const tCo = W(5, 'conta'), tCd = W(6, 'Cada');
+  // a Dona Cida: anda na calçada da esquerda até o guichê (de quando o pátio aparece até "latinha"), puxando a carroça
+  const tr = trilha([[-30, ZC], [XPARA, ZC], [XPARA + 4, ZC]]), sPara = XPARA + 30, sIni = sPara - 7.6, w0 = tPe + .25, w1 = tLa + .35;
+  // os sacos pulam da carroça para a balança em "balança"; o mostrador acende quando eles assentam
+  const h0 = tBa - .05, h1 = h0 + .16 + .7, m0 = Math.max(tMa, h1 - .1);
+  // no caixa: larga a carroça, vira para a janela e dá um passo; recebe as cédulas da gaveta
+  const v0 = tCx - .35, v1 = v0 + .8, JAN = [XPARA + .25, ZC - .45];
+  const notas = [0, 1, 2].map(i => { const n = cedula(CENA, [0, 0, 0], { cor: ['#9ED9B5', '#7CC69B', '#B7E4C7'][i] }); n.visible = false; return n; });
+  // a latinha dos sacos entra no estoque: cada lata voa do saco para a frente do monte da baia
+  const dest = P.sacos.map(g => Array.from({ length: g.userData.latas.count }, () => {
+    const x = ri(-.75, .75), z = ri(.05, .55); return [BAI[0] + x, ALT(x, z) + .07, BAI[2] + z, ri(0, 2 * PI), ri(0, 2 * PI), ri(0, 2 * PI)]; }));
+  // câmera (elevação fixa): portão, balança, guichê, baia (mais aberta, para o voo das latas) e o caminhão, que ela acompanha
+  const k = (x, y, z, d, az, oy) => ({ x, y, z, d, az, el: .28, oy });
+  const m1 = tLa + .45, m2 = tCx - .55, m3 = tMt - .5, m4 = tDe - .4, sai = tVe, ANDA = 6, DUR = 2.8;
+  const V = k(9.8, 1.0, -1.8, 13.5, 0, -185);
+  camera([[0, k(-5.3, 1.3, .6, 13.2, -.02, -150)], [m1, k(-4.8, 1.3, .6, 12.5, 0, -148), 'lin'],
+    [m1 + 1.25, k(-2.9, .8, 2.4, 10.4, .02, -128)], [m2, k(-2.9, .8, 2.4, 9.9, .02, -128), 'lin'],
+    [m2 + 1.3, k(-.4, 1.2, 1.0, 10.2, 0, -166)], [m3, k(-.4, 1.2, 1.0, 9.8, 0, -166), 'lin'],
+    [m3 + 1.6, k(0, .9, 1.5, 15.5, .1, -212)], [m4, k(0, .9, 1.5, 15.2, .1, -212), 'lin'],
+    [Math.max(m4 + 1.9, tJu), V], [sai, { ...V, d: 13.3 }, 'lin'],
+    [sai + DUR, { ...V, x: V.x + ANDA, d: 13.3 }], [LE(4) + 4, { ...V, x: V.x + ANDA, d: 13.1 }, 'lin']]);
+  return t => {
+    GL.style.opacity = eo(pr(t, tPe + .25, .6)).toFixed(3);
+    fundo.style.opacity = GL.style.opacity;
+    posTitulo(tit, t, -.6, tPe - .1);
+    // o caminho no alto (como na 2D)
+    caminhoEntra(E, t, tPe + .45); caminhoAte(E, t, [tCh, tBa, tCx, tEs, tVe, tCo]);
+    const gr = eio(pr(t, tCd, .9)); E.g.style.transform = `translate(0,${lerp(-224, 0, gr).toFixed(2)}px) scale(${lerp(.72, 1, gr).toFixed(4)})`;
+    // 1 portão: a Dona Cida chega com a latinha
+    const s = lerp(sIni, sPara, chega(pr(t, w0, w1 - w0))); puxa(P, tr, s, (s - sPara) * 4.4);
+    if (t > v0) { const q = eio(pr(t, v0, v1 - v0)); P.ci.position.set(lerp(XPARA, JAN[0], q), 0, lerp(ZC, JAN[1], q));
+      P.ci.rotation.y = lerp(0, PI / 2, q); P.ci.userData.anda(2 * PI * q, .1 + .15 * q); }
+    vis(nCida, t, tDo + .3, tMt - .25, { dy: 8 }); ancora(nCida, mundo(P.ci, [0, 1.95, 0]), .5, 1, 0, -6);
+    vis(nLat, t, tLa - .05, tBa - .2, { dy: 8 }); ancora(nLat, mundo(P.car, [0, 1.3, 0]), .5, 1, 0, -6);
+    // 2 balança: os sacos pulam para a plataforma; o mostrador conta até 38 kg e cresce
+    sacosNaBalanca(P, t, h0);
+    vis(most, t, h1 - .25, tCx - .2, { dy: 10 }); ancora(most, P.topoBal, .5, 1, 40, -6);
+    conta(mn, t, m0, 1.1, 0, KG);
+    mostIn.style.transform = `scale(${lerp(1, 1.18, eio(pr(t, m0, Math.max(.8, LE(1) - m0)))).toFixed(4)})`;
+    // 3 caixa: o cupom sai da registradora, o pedido de compra e o dinheiro na hora
+    P.reg.userData.cupom.userData.sai(eio(pr(t, tPd - .2, .7)));
+    vis(rec, t, tPd - .15, tMt - .25, { dy: 22, sc: .94 }); ancora(rec, [.75, 1.35, .9], 0, .5, 14, 0);
+    vis(r1, t, tPd + .2, 1e9, { dy: 8, sc: 1 }); vis(r2, t, tQu - .05, 1e9, { dy: 8, sc: 1 });
+    conta(r3, t, tDa, 1.6, 0, TOTAL, brl); vis(r4, t, tPg - .05, 1e9, { dy: 8, sc: .9 });
+    P.reg.userData.visor(t < tDa ? '' : brl(TOTAL * eo(pr(t, tDa, 1.6))).replace('R$ ', ''));
+    P.reg.userData.abre(eio(pr(t, tPg - .3, .45)));
+    const gav = mundo(P.reg, [0, .07, .36]), mao = mundo(P.ci.userData.mao[1], [0, 0, 0]);
+    notas.forEach((n, i) => { const q = eio(pr(t, tPg - .05 + i * .12, .75)); n.visible = q > 0;
+      n.position.set(lerp(gav[0] + (i - 1) * .06, mao[0], q), lerp(gav[1], mao[1] + .02 * i, q) + .45 * Math.sin(PI * q), lerp(gav[2], mao[2], q));
+      n.rotation.set(.3 * Math.sin(PI * q), lerp(0, PI / 2 + .3 * (i - 1), q), .2 * Math.sin(2 * PI * q)); });
+    // 4 estoque: as latas dos sacos voam para o monte da baia; os sacos murcham
+    P.sacos.forEach((g, i) => { transfere(g.userData.latas, dest[i], t, tEn - .1 + i * .12, .7, { passo: .02, arco: 1.4 });
+      g.userData.saco.scale.y = .74 * lerp(1, .55, eo(pr(t, tEn + .35 + i * .12, .5))); });
+    vis(est, t, tMt - .1, tDe - .1, { dy: 20, sc: .94 }); ancora(est, [BAI[0] + .3, 1.25, BAI[2] - 1.3], .5, 1, 0, -6);
+    conta(estQ, t, tEn, 1, 0, KG, v => '+' + kg(v)); pulse(est, t, tEs, .04, .7);
+    // 5 venda: o caminhão carregado de latinha sai para a Serra Fina, com a nota fiscal (a câmera vai junto)
+    const xc = CAM[0] + ANDA * eio(pr(t, sai, DUR)); anda(P.cam, xc);
+    vis(cli, t, tSe - .1, 1e9, { dy: 20, sc: .94 });
+    vis(nf, t, tNo - .1, 1e9, { dy: 8 }); ancora(nf, [xc + 1.75, 2.62, CAM[2]], .5, 1, 0, -4); pulse(nf, t, tNo + .5, .05, .6);
+  };
+};
+
+cena(d => CAPS[d.cap](), d => ({ sombra: d.cap === 0 ? 17 : 11, mapa: 2048, chao: false }));
+</script></body></html>

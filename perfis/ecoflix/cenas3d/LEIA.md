@@ -32,13 +32,23 @@ No `ilustracoes.json` da aula, `"3d": "cenas3d/cena3d.html"` marca a cena que va
   #F2B63D), `M`/`MU`, `argila` + `tinge` (argila crua → cor na palavra), `cresce`, `pulso`, `mancha` (sombra de contato),
   `anel` + `destaque`, `rbox`, `torno`, `domo` (pontos de monte), `peca`, `lote` + `transfere` (as peças voam de um lugar
   a outro, cada uma no seu tempo) + `ordemPor`.
-- **Objetos** (unidade ≈ metro; frente do veículo para +x; roda gira em z): `saco`, `sacoAberto`, `tambor`, `cacamba`,
-  `monte`, `palete`, `fardo`, `carroca`, `balancaPatio` (`topo` do poste, `altura(x)` das rampas), `caminhao` (verde ou
-  `cor`; `eixos` 2|3; `bau` basculante|grade; `carga` latinha|bateria|vazio) + `anda` (rampa e rodas) + `bascula`, `roda`,
-  `latinhas`, `baterias`, `prensa` + `aperta`, `fardoLatinhas`, `impressora` + `imprime`, `computador` (tela lisa) e
+- **Materiais** (Kaik, 11/11: "mais claros do que são"): `peca(pai, tipo, p, s)` desenha a peça de verdade.
+  `latinha` (alumínio com brilho, faixa de cor genérica, inteira ou amassada), `pet` (translúcida, transparente ou verde,
+  com tampa, inteira ou amassada), `cobre` (fio enrolado, tubo, fio embolado), `alu` (lata, perfil U, chapa), `ferro`
+  (ferro misto: vergalhão dobrado, cano, chapa e perfil L/I com ferrugem), `aco` (pouca ferrugem), `ferrugem` (muita),
+  `papelao` (caixa amassada, folha), e a impureza: `terra` (torrão), `borracha` (pedaço de pneu, mangueira), `plastico`
+  (sacola, garrafa). `monte(pai, p, {metais})` mistura os tipos. Muitas peças iguais: `latinhas` e `pets` (instâncias).
+  As variantes (amassada, cor da faixa) saem de um segundo sorteio: o `rng()` da cena anda como no kit antigo e os montes
+  caem nos mesmos lugares. Metal com brilho: `MM(cor, {r, m, fer})`.
+- **Objetos** (unidade ≈ metro; frente do veículo para +x; roda gira em z): `bigBag` (ráfia clara, alças e boca de
+  enchimento; `estado` cheio|aberto|vazio dobrado), `saco`, `sacoAberto`, `tambor`, `cacamba`, `monte`, `palete`, `fardo`,
+  `fardoLatinhas`, `fardoPapelao`, `carroca`, `balancaPatio` (`topo` do poste, `altura(x)` das rampas), `caminhao` (verde
+  ou `cor`; `eixos` 2|3; `bau` basculante|grade; `carga` latinha|bateria|vazio) + `anda` (rampa e rodas) + `bascula`,
+  `roda`, `latinhas`, `pets`, `baterias`, `prensa` + `aperta`, `impressora` + `imprime`, `computador` (tela lisa) e
   `chaoPatio` (juntas e faixa âmbar).
 
 ## Regras
-Nada de marca, tela do app ou dado inventado: rótulos do inventário da aula, números da fala. Ícone lucide com o nome
+Nada de marca, tela do app ou dado inventado: rótulos do inventário da aula, números da fala. Latinha e PET sem marca
+(só faixa de cor lisa). Ícone lucide com o nome
 literal na página da cena (`ic('ticket', 28)`): o renderizador só procura no HTML. Tara é a embalagem: na dupla pesagem o
 caminhão vazio não é tara. Quadros na trava leve com `nice -n 19`.

@@ -114,7 +114,7 @@
    "target": {
     "text": "Defina parcelamentos padrão"
    },
-   "seconds": 1.89,
+   "seconds": 1.49,
    "at": 3.06,
    "label": "Defina parcelamentos padrão (à vista, 30/60/90…)",
    "optional": true,
@@ -163,7 +163,7 @@
     "selector": "#pc-name"
    },
    "text": "30/60/90 dias",
-   "cps": 14,
+   "cps": 30,
    "at": 21.6,
    "label": "digita 30/60/90 dias (Nome)",
    "noClick": true
@@ -209,26 +209,32 @@
    "at": 36.43
   },
   {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Adicionar parcela"
+   },
+   "at": 36.45,
+   "label": "Adicionar parcela (2ª)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Adicionar parcela"
+   },
+   "at": 37.94,
+   "label": "Adicionar parcela (3ª)"
+  },
+  {
    "do": "hover",
    "target": {
     "text": "Dias após emissão",
     "exact": true
    },
-   "seconds": 0.45,
-   "at": 38.48,
+   "seconds": 0.05,
+   "at": 38.95,
    "label": "Dias após emissão",
-   "optional": true,
-   "timeout": 3
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "% do total",
-    "exact": true
-   },
-   "seconds": 0.2,
-   "at": 40.08,
-   "label": "% do total",
    "optional": true,
    "timeout": 3
   },
@@ -239,10 +245,16 @@
     "nth": 0
    },
    "text": "30",
-   "cps": 8,
-   "at": 41.25,
-   "label": "1ª parcela: 30 dias",
+   "cps": 14,
+   "at": 40.68,
+   "label": "1ª parcela: 30 dias (o cursor passa pelo % do total)",
    "clear": true
+  },
+  {
+   "do": "press",
+   "key": "Tab",
+   "at": 43.85,
+   "label": "Tab: % da 1ª parcela"
   },
   {
    "do": "type",
@@ -251,19 +263,19 @@
     "nth": 0
    },
    "text": "33,33",
-   "cps": 10,
-   "at": 43.39,
+   "cps": 20,
+   "at": 44.39,
    "label": "1ª parcela: 33,33%",
-   "clear": true
+   "noClick": true
   },
   {
-   "do": "click",
-   "target": {
-    "role": "button",
-    "name": "Adicionar parcela"
-   },
-   "at": 46.03,
-   "label": "Adicionar parcela (2ª)"
+   "do": "press",
+   "key": [
+    "Tab",
+    "Tab"
+   ],
+   "at": 47.12,
+   "label": "Tab: dias da 2ª parcela"
   },
   {
    "do": "type",
@@ -272,9 +284,16 @@
     "nth": 1
    },
    "text": "60",
-   "cps": 8,
-   "at": 46.96,
-   "label": "2ª parcela: 60 dias"
+   "cps": 14,
+   "at": 47.96,
+   "label": "2ª parcela: 60 dias",
+   "noClick": true
+  },
+  {
+   "do": "press",
+   "key": "Tab",
+   "at": 49.25,
+   "label": "Tab: % da 2ª parcela"
   },
   {
    "do": "type",
@@ -283,18 +302,19 @@
     "nth": 1
    },
    "text": "33,33",
-   "cps": 14,
-   "at": 48.7,
-   "label": "2ª parcela: 33,33%"
+   "cps": 20,
+   "at": 49.7,
+   "label": "2ª parcela: 33,33%",
+   "noClick": true
   },
   {
-   "do": "click",
-   "target": {
-    "role": "button",
-    "name": "Adicionar parcela"
-   },
-   "at": 50.34,
-   "label": "Adicionar parcela (3ª)"
+   "do": "press",
+   "key": [
+    "Tab",
+    "Tab"
+   ],
+   "at": 50.96,
+   "label": "Tab: dias da 3ª parcela"
   },
   {
    "do": "type",
@@ -303,9 +323,16 @@
     "nth": 2
    },
    "text": "90",
-   "cps": 8,
-   "at": 51.14,
-   "label": "3ª parcela: 90 dias"
+   "cps": 14,
+   "at": 51.45,
+   "label": "3ª parcela: 90 dias",
+   "noClick": true
+  },
+  {
+   "do": "press",
+   "key": "Tab",
+   "at": 52.36,
+   "label": "Tab: % da 3ª parcela"
   },
   {
    "do": "type",
@@ -314,9 +341,10 @@
     "nth": 2
    },
    "text": "33,34",
-   "cps": 10,
-   "at": 52.84,
-   "label": "3ª parcela: 33,34%"
+   "cps": 20,
+   "at": 53.05,
+   "label": "3ª parcela: 33,34%",
+   "noClick": true
   },
   {
    "do": "eval",
@@ -379,7 +407,7 @@
     "text": "30/60/90 dias",
     "exact": true
    },
-   "seconds": 0.44,
+   "seconds": 0.2,
    "at": 67.95,
    "label": "30/60/90 dias na lista",
    "optional": true,
@@ -391,7 +419,7 @@
     "text": "3 parcelas"
    },
    "seconds": 0.2,
-   "at": 69.54,
+   "at": 69.24,
    "label": "selo Padrão e 30 / 60 / 90 dias · 3 parcelas",
    "optional": true,
    "timeout": 3
@@ -406,7 +434,7 @@
    "target": {
     "selector": "main [role=switch]"
    },
-   "seconds": 2.0,
+   "seconds": 1.87,
    "at": 71.03,
    "label": "chave da condição (desliga sem apagar, sem clicar)",
    "optional": true,

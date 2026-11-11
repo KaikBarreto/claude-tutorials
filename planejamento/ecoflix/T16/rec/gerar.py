@@ -367,6 +367,7 @@ VAZIO = 'Nenhuma nota fiscal encontrada'                                 # lista
 LINHA = lambda t: SEL(f"main tbody tr:has-text('{t}')")
 TRIG = lambda t: SEL(f"main tbody tr:has-text('{t}') td:last-child button")   # "⋯" da linha (HoverDropdownMenu: abre no hover)
 ITEM = lambda n: {'role': 'menuitem', 'name': n}
+TRIG_REC = lambda t: SEL(f"main tr:has-text('{t}') button[title='Ações']")   # menu da nota recebida (DropdownMenu: abre no clique)
 DLG_BTN = lambda t: SEL(f"{DLG} button:has-text('{t}')")
 DLG_TXT = lambda t: SEL(f"{DLG} :text-is('{t}')")
 CAMPO = lambda i: SEL(f'#{i}')
@@ -565,10 +566,10 @@ def cap04():
     c.ev(js_rola_texto('Reforma Tributária (IBS/CBS)', 120, 800, MAIN), at=c.A(9, 'fim,', 0.9), label='desce à Reforma Tributária (IBS/CBS)')
     c.click(SEL("div.border.rounded-lg:has(label:text-is('Calcular IBS e CBS automaticamente')) button[role=switch]"),
             at=c.A(9, 'Ligado', 0.7), label='liga Calcular IBS e CBS automaticamente')
-    for k, (ph, v, pal) in enumerate([("Ex: 000", '000', 'códigos'), ("Ex: 000001", '000001', None), ("Ex: 000", '000', None), ("Ex: 000001", '000001', None)]):
-        campo = SEL(f"input[placeholder='{ph}']", nth=k // 2)
-        c.click(campo, at=(c.A(9, pal, 0.6) if pal else None), label=f'IBS/CBS (trecho acelerado) {k + 1}/4')
-        c.type(campo, v, label=f'IBS/CBS {v}', cps=40, noClick=True)
+    c.click(SEL("input[placeholder='Ex: 000']", nth=0), at=c.A(9, 'sistema', 0.7), label='CST-IBS/CBS de Saída (clique no campo)')
+    c.type(SEL("input[placeholder='Ex: 000']", nth=0), '000', at=c.A(9, 'calcula', 0.05), label='CST-IBS/CBS 000', cps=40, noClick=True)
+    c.ev(js_preenche_ph([("Ex: 000001", 0, '000001'), ("Ex: 000", 1, '000'), ("Ex: 000001", 1, '000001')]), at=c.A(9, 'códigos', 0.3),
+         label='cClassTrib 000001 e a Entrada (sem cursor, trecho acelerado)')
     c.mark(10)
     c.mark(11)
     c.click(BTN('Salvar configuração'), at=c.A(11, 'Salvar', 0.7), label='Salvar configuração', noScroll=True)
@@ -653,6 +654,22 @@ def js_preenche(pares):
             "set.call(i,val);i.dispatchEvent(new Event('input',{bubbles:true}));out.push(rot+'='+i.value)}return out.join(' | ')})()")
 
 
+def js_preenche_ph(itens):
+    """preenche campos pelo placeholder (e a ordem entre os iguais), sem cursor: trecho acelerado"""
+    return ("(()=>{const set=Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set;const out=[];"
+            f"for(const [ph,k,val] of {json.dumps(itens, ensure_ascii=False)}){{const i=[...document.querySelectorAll('input')].filter(x=>x.placeholder===ph&&x.offsetParent)[k];"
+            "if(!i){out.push('SEM ALVO '+ph);continue;}set.call(i,val);i.dispatchEvent(new Event('input',{bubbles:true}));out.push(ph+'='+i.value)}return out.join(' | ')})()")
+
+
+def js_select_teclado(rotulo, opcao):
+    """Select do Radix sem cursor (docs/08, T5): foco no gatilho do rótulo; o robô aperta Enter e outro eval clica a opção"""
+    foco = ("(()=>{const l=[...document.querySelectorAll('main label')].find(x=>x.textContent.trim()===%s);"
+            "const b=l&&l.parentElement.querySelector('button[role=combobox]');if(!b)return 'SEM ALVO';b.focus();return 'foco ok'})()") % json.dumps(rotulo)
+    escolhe = ("(async()=>{for(let k=0;k<20;k++){const o=[...document.querySelectorAll('[role=option]')].find(x=>x.textContent.trim()===%s);"
+               "if(o){o.click();return 'escolhido '+%s}await new Promise(r=>setTimeout(r,50))}return 'SEM ALVO'})()") % (json.dumps(opcao), json.dumps(opcao))
+    return foco, escolhe
+
+
 def cap07():
     """Transportadora e serviços: o formulário vazio (L1), razão social, CNPJ e IE com o cursor e o endereço sem cursor (L2, trecho
     acelerado), a placa (L3), Adicionar (L4) e Serviços (L5)."""
@@ -665,15 +682,19 @@ def cap07():
         pal = ['Cargas', 'CNPJ,', 'inscrição'][k]
         c.click(campo, at=c.A(2, pal, 0.7), label=f'{rot} (clique no campo)')
         c.ev(js_colar(val), label=f'{rot}: {val}' + (' (zoom: CPF/CNPJ)' if k == 1 else ''))
-    c.click(SEL("main div:has(> label:text-is('UF')) button[role=combobox]"), label='UF (abre a lista; trecho acelerado)')
-    c.click(OPT('SP', exact=True), label='UF SP', noScroll=True)
+    foco, escolhe = js_select_teclado('UF', 'SP')
+    c.ev(foco, label='UF (foco no seletor, sem cursor)')
+    c.press('Enter', label='UF (abre a lista pelo teclado)')
+    c.ev(escolhe, label='UF SP (trecho acelerado)')
     c.ev(js_preenche([('Logradouro', 'Rua dos Ferroviários'), ('Número', '380'), ('Bairro', 'Vila São José'), ('Cidade', 'Taubaté')]),
          at=c.A(2, 'endereço.', 0.3), label='endereço (sem cursor, trecho acelerado)')
     c.mark(3)
     c.click(SEL("main input[placeholder='ABC1D23']"), at=c.A(3, 'placa', 0.7), label='Placa (clique no campo)')
     c.type(SEL("main input[placeholder='ABC1D23']"), 'FJR3B27', at=c.A(3, 'caminhão', 0.05), label='Placa FJR3B27', cps=40, noClick=True)
-    c.click(SEL("main div:has(> label:text-is('UF Veículo')) button[role=combobox]"), at=c.A(3, 'entrega.', 0.7), label='UF Veículo (abre a lista)')
-    c.click(OPT('SP', exact=True), label='UF Veículo SP', noScroll=True)
+    foco, escolhe = js_select_teclado('UF Veículo', 'SP')
+    c.ev(foco, at=c.A(3, 'entrega.', 0.3), label='UF Veículo (foco no seletor, sem cursor)')
+    c.press('Enter', label='UF Veículo (abre a lista pelo teclado)')
+    c.ev(escolhe, label='UF Veículo SP')
     c.mark(4)
     c.click(SEL("main button:text-is('Adicionar')"), at=c.A(4, 'Adicionar,', 0.7), label='Adicionar')
     c.waitfor(text='Transportadora cadastrada!', timeout=10)
@@ -704,8 +725,10 @@ def cap08():
 # ---------------------------------------------------------------- a janela da nota (NovaNotaModal)
 ABA_NOTA = lambda t: SEL(f"{DLG} button:text-is('{t}')")                 # Dados, Itens, Transporte...
 SEL_PERTO = lambda rot: SEL(f"{DLG} div:has(> label:text-is('{rot}')) button[role=combobox]")
-BUSCA_PARC = SEL(f"{DLG} input[placeholder^='Buscar por nome, apelido']")
-MATERIAL = SEL(f"{DLG} button:has-text('Selecionar material...')")
+CLIENTE_BTN = SEL(f"{DLG} button:has-text('Selecione o cliente')")            # abre a janela "Selecionar Cliente" (EntitySearchModal)
+BUSCA_PARC = SEL("[role=dialog]:has-text('Selecionar Cliente') input")
+ESCOLHE_PARC = lambda n: SEL(f"[role=dialog]:has-text('Selecionar Cliente') button:has-text('{n}')")
+MATERIAL = SEL(f"{DLG} input[placeholder='Selecionar material...']")
 QTD = SEL(f"{DLG} tr.bg-primary\\/5 input", nth=2)                        # linha de inserção: NCM, CFOP, Qtd, Vl. Unit., Desconto
 RESUMO = SEL(f"{DLG} :text-is('Total da nota')")
 
@@ -733,12 +756,12 @@ def cap09():
     c.hover(ABA_NOTA('Dados'), 0.4, at=c.A(2, 'Dados', 0.6), label='passo Dados')
     c.hover(ABA_NOTA('Itens'), 0.6, at=c.A(2, 'Itens.', 0.6), label='passo Itens')
     c.mark(3)
-    c.click(BUSCA_PARC, at=c.A(3, 'cliente:', 0.7), label='Cliente (clique na busca)')
-    c.type(BUSCA_PARC, 'Serra Fina', at=c.A(3, 'Serra', 0.05), label='busca Serra Fina', cps=40, noClick=True)
-    c.click(SEL(f"{DLG} :text-is('Serra Fina Alumínio Reciclagem')"), at=c.A(3, 'Fina.', 0.2), label='escolhe Serra Fina Alumínio Reciclagem', noScroll=True)
+    c.click(CLIENTE_BTN, at=round(c.L(3) - 0.2, 2), label='Cliente: Selecione o cliente (abre a busca)')
+    c.type(BUSCA_PARC, 'Serra Fina', at=c.A(3, 'cliente:', 0.05), label='busca Serra Fina', cps=40, noClick=True)
+    c.click(ESCOLHE_PARC('Serra Fina Alumínio Reciclagem'), at=c.A(3, 'Serra', 0.6), label='escolhe Serra Fina Alumínio Reciclagem')
+    c.waitfor(gone={'selector': "[role=dialog]:has-text('Selecionar Cliente')"}, timeout=8)
     c.mark(4)
-    c.click(SEL_PERTO('Natureza da Operação'), at=c.A(4, 'natureza', 0.7), label='Natureza da Operação (abre a lista)')
-    c.click(OPT('Venda de mercadorias'), at=c.A(4, 'venda', 0.6), label='Venda de mercadorias', noScroll=True)
+    c.hover(SEL_PERTO('Natureza da Operação'), 0.6, at=c.A(4, 'natureza', 0.6), label='Natureza da Operação: Venda de mercadorias (já vem assim)')
     c.hover(SEL(f"{DLG} label:text-is('CFOP')"), 1.0, at=c.A(4, 'CFOP', 0.6), label='zoom: CFOP 6102 (Serra Fina em Itamonte, MG)')
     c.confere('dlg', ['6102'], 'CFOP 6102 da Serra Fina (MG)')
     c.mark(5)
@@ -750,7 +773,7 @@ def cap09():
     c.click(ROD('Avançar'), at=c.A(6, 'Avançar,', 0.7), label='Avançar', noScroll=True)
     c.mark(7)
     c.click(MATERIAL, at=c.A(7, 'Escolho', 0.7), label='Selecionar material...')
-    c.type(SEL("[cmdk-input], [role=dialog] input[placeholder*='uscar']", nth=-1), 'perfil', label='busca perfil', cps=40, noClick=True)
+    c.type(MATERIAL, 'perfil', label='busca perfil', cps=40, noClick=True)
     c.click(SEL("[cmdk-item]:has-text('Alumínio perfil'), [role=option]:has-text('Alumínio perfil')"), at=c.A(7, 'perfil.', 0.4), label='Alumínio perfil', noScroll=True)
     c.hover(SEL(f"{DLG} th:text-is('NCM')"), 0.4, at=c.A(7, 'NCM,', 0.6), label='NCM 7602.00.00 do cadastro')
     c.hover(SEL(f"{DLG} th:text-is('Vl. Unit.')"), 0.4, at=c.A(7, 'preço', 0.6), label='preço de venda 10,40 do cadastro')
@@ -767,9 +790,9 @@ def cap09():
     c.mark(11)
     emite_e_espera(c, 1249, c.A(11, 'Emitir', 0.7), 'Emitir Nota')
     c.mark(12)
-    c.hover(SEL("main tbody tr:has-text('#1249') td:has-text('Autorizada')"), 1.0, at=c.A(12, 'autorizada', 0.6, nth=1), label='#1249 Autorizada')
+    c.hover(SEL("main tbody tr:has-text('#1249') td:has-text('Autorizada')"), 0.6, at=c.A(12, 'autorizada', 0.6, nth=1), label='#1249 Autorizada')
     c.mark(13)
-    menu_item(c, '#1249', 'Visualizar', c.A(13, 'Visualizar', 0.6), 'Visualizar', at_menu=c.A(13, 'Visualizar', 1.4))
+    menu_item(c, '#1249', 'Visualizar', c.A(13, 'Visualizar', 0.6), 'Visualizar', at_menu=round(c.L(13) - 1.8, 2))
     c.waitfor(text='NF-e #1249', timeout=10)
     c.marcar(SEL(f"{DLG} :text-is('Chave de Acesso')"), at=c.A(13, 'chave', 0.3), label='zoom: Chave de Acesso e Protocolo')
     c.hover(SEL(f"{DLG} :text-is('Protocolo')"), 1.0, at=c.A(13, 'protocolo', 0.6), label='Protocolo da SEFAZ')
@@ -794,10 +817,10 @@ def cap10():
     c.mark(3)
     c.click(SEL(f"{DLG}:has-text('Importar de Pedido de Venda') button:text-is('Importar')", nth=0), at=c.A(3, 'Importar.', 0.7), label='Importar')
     c.waitfor(text='Pedido importado', timeout=10)
-    c.hover(BUSCA_PARC, 0.8, at=c.A(3, 'cliente', 0.6), label='o cliente veio do pedido')
+    c.hover(SEL(f"{DLG} button:has-text('Fundição Bandeira do Vale')", nth=0), 0.8, at=c.A(3, 'cliente', 0.6), label='o cliente veio do pedido')
     c.mark(4)
     c.click(ROD('Avançar'), at=round(c.L(4) - 0.2, 2), label='Avançar', noScroll=True)
-    c.marcar(SEL(f"{DLG} td:has-text('Cobre mel')"), at=c.A(4, 'quantidade:', 0.2), label='zoom: Qtd 500 (Cobre mel)')
+    c.marcar(SEL(f"{DLG} :text-is('Cobre mel')", nth=-1), at=c.A(4, 'quantidade:', 0.2), label='zoom: Qtd 500 (Cobre mel)')
     c.confere('dlg', ['Cobre mel', '23.950,00'], 'Cobre mel 500 kg = R$ 23.950,00')
     c.mark(5)
     c.mark(6)
@@ -833,6 +856,7 @@ def cap11():
     c.click(SEL(f"{DLG} :text-is('Marcos Antunes')"), at=c.A(3, 'Marcos,', 0.6), label='o caixa do Marcos (Fechado, 09/11 07:02)')
     c.mark(4)
     c.click(SEL(f"{DLG} button:has-text('Selecionar todos sem NF-e')"), at=c.A(4, 'Seleciono', 0.7), label='Selecionar todos sem NF-e (3/3)')
+    c.confere('dlg', ['3/3 selecionados'], '3/3 selecionados')
     c.mark(5)
     c.click(SEL(f"{DLG} :text-is('Uma nota consolidada')"), at=c.A(5, 'Uma', 0.7, nth=0), label='Uma nota consolidada')
     c.marcar(SEL(f"{DLG} :text-is('Faixa prevista para este lote')"), at=c.A(5, 'faixa:', 0.3), label='zoom: Faixa prevista NF-e nº 1251 e Valor dos pedidos R$ 803,30')
@@ -871,9 +895,9 @@ def cap12():
     c.hover(SEL("main tbody tr:has-text('#1249') td:has-text('Cancelada')"), 1.0, at=c.A(3, 'cancelada.', 0.5), label='#1249 Cancelada')
     c.mark(4)
     c.mark(5)
-    menu_item(c, '#1250', 'Carta de Correção', c.A(5, 'Ela', 0.5), 'Carta de Correção', at_menu=round(c.L(5) - 1.4, 2))
+    menu_item(c, '#1250', 'Carta de Correção', c.A(5, 'Ela', 0.5), 'Carta de Correção', at_menu=round(c.L(5) - 2.4, 2))
     c.waitfor(text='Carta de Correção - NF-e #1250', timeout=10)
-    c.hover(SEL(f"{DLG} :text-matches('A Carta de Correção \\\\(CC-e\\\\) permite')"), 2.0, at=c.A(5, 'tela', 0.6), label='zoom: aviso Importante (o que não dá pra corrigir)')
+    c.hover(SEL(f"{DLG} :text-matches('permite corrigir erros em campos')"), 2.0, at=c.A(5, 'tela', 0.6), label='zoom: aviso Importante (o que não dá pra corrigir)')
     c.mark(6)
     colar(c, SEL(f"{DLG} textarea"), CCE, c.A(6, 'texto,', 0.7), c.A(6, 'formato', 0.2), 'Texto da Correção')
     c.hover(SEL(f"{DLG} :text-matches('Dica: Use o formato')"), 1.0, at=c.A(6, 'leia-se', 0.6), label='zoom: Dica do formato')
@@ -935,14 +959,13 @@ def cap14():
     c.mark(5)
     menu_item(c, '#1250', 'Download XML', c.A(5, 'XML', 0.6), 'Download XML', at_menu=c.A(5, 'Download', 0.9))
     c.mark(6)
-    menu_item(c, '#1250', 'Visualizar', c.A(6, 'Visualizar,', 0.6), 'Visualizar', at_menu=c.A(6, 'Visualizar,', 1.4))
+    menu_item(c, '#1250', 'Visualizar', c.A(6, 'Visualizar,', 0.6), 'Visualizar', at_menu=round(c.L(6) - 2.0, 2))
     c.waitfor(text='NF-e #1250', timeout=10)
     c.click(SEL(f"{DLG} [role=tab]:has-text('XML')"), at=c.A(6, 'XML', 0.6), label='aba XML')
     c.hover(SEL(f"{DLG} :text-is('XML da nota')"), 1.2, at=c.A(6, 'arquivo', 0.6), label='zoom: XML da nota (Mesmo arquivo enviado à SEFAZ) e Copiar XML')
     c.mark(7)
     c.press('Escape', at=c.A(7, 'menu', 0.3), label='fecha o Visualizar')
     c.pause(0.6)
-    menu_item(c, '#1249', 'XML de Cancelamento', None, None, at_menu=c.A(7, 'cancelada,', 0.6)) if False else None
     c.hover(TRIG('#1249'), 0.3, at=c.A(7, 'cancelada,', 0.6), label='abre o menu da 1249 (Cancelada)', noScroll=True)
     c.hover(ITEM('XML de Cancelamento'), 1.0, at=c.A(7, 'XML', 0.5), label='zoom: XML de Cancelamento (sem clicar)', noScroll=True)
     c.mark(8)
@@ -992,11 +1015,12 @@ def cap16():
     c.hover(SEL("main tbody tr:has-text('Auto Peças Vale Forte') :text-is('Ciência')"), 1.0, at=c.A(1, 'Ciência.', 0.6), label='Ciência')
     c.mark(2)
     c.mark(3)
-    c.hover(TRIG('Depósito Irmãos Siqueira'), 0.3, at=c.A(3, 'Depósito', 0.6), label='abre o menu da nota do Depósito', noScroll=True)
+    c.click(TRIG_REC('Depósito Irmãos Siqueira'), at=c.A(3, 'Depósito', 0.7), label='abre o menu da nota do Depósito')
     c.hover(ITEM('Ver XML'), 0.6, at=c.A(3, 'XML', 0.6), label='Ver XML apagado (XML ainda não disponível)', noScroll=True)
-    menu_item(c, 'Depósito Irmãos Siqueira', 'Buscar documento', c.A(3, 'Buscar', 0.6), 'Buscar documento')
+    c.hover(ITEM('Buscar documento'), 0.6, at=c.A(3, 'Buscar', 0.6), label='Buscar documento (baixa o XML e o DANFE)', noScroll=True)
+    c.click(ITEM('Buscar documento'), at=c.A(3, 'nada.', 0.5), label='Buscar documento', noScroll=True)
     c.mark(4)
-    c.hover(TRIG('Auto Peças Vale Forte'), 0.3, at=c.A(4, 'respostas', 0.6), label='abre o menu da Auto Peças', noScroll=True)
+    c.click(TRIG_REC('Auto Peças Vale Forte'), at=c.A(4, 'respostas', 0.7), label='abre o menu da Auto Peças')
     c.hover(ITEM('Confirmar operação'), 0.6, at=c.A(4, 'Confirmar', 0.6), label='zoom: Confirmar operação', noScroll=True)
     c.hover(ITEM('Desconhecer operação'), 0.6, at=c.A(4, 'Desconhecer', 0.6), label='Desconhecer operação', noScroll=True)
     c.hover(ITEM('Operação não realizada'), 0.6, at=c.A(4, 'Operação', 0.6, nth=1), label='Operação não realizada', noScroll=True)
@@ -1004,7 +1028,7 @@ def cap16():
     c.hover(ITEM('Desconhecer operação'), 0.6, at=c.A(5, 'últimas', 0.6), label='as duas últimas pedem justificativa', noScroll=True)
     c.hover(ITEM('Operação não realizada'), 0.8, at=c.A(5, 'desfeitas.', 0.6), label='e não podem ser desfeitas', noScroll=True)
     c.mark(6)
-    menu_item(c, 'Auto Peças Vale Forte', 'Confirmar operação', c.A(6, 'confirmo', 0.6), 'Confirmar operação')
+    c.click(ITEM('Confirmar operação'), at=c.A(6, 'confirmo', 0.6), label='Confirmar operação', noScroll=True)
     c.waitfor(text='Operação confirmada junto à SEFAZ', timeout=10)
     c.hover(SEL("main tbody tr:has-text('Auto Peças Vale Forte') :text-is('Confirmada')"), 1.0, at=c.A(6, 'confirmada.', 0.6), label='Confirmada')
     c.fim()
@@ -1031,7 +1055,8 @@ def cap17():
     c.waitfor(text='Cooperativa Recomeço', timeout=10)
     c.hover(LINHA('Cooperativa Recomeço'), 0.8, at=c.A(3, 'outras.', 0.6), label='a linha Cooperativa Recomeço R$ 7.550,00')
     c.mark(4)
-    menu_item(c, 'Cooperativa Recomeço', 'Lançar compra…', c.A(4, 'Lançar', 0.6), 'Lançar compra…', at_menu=c.A(4, 'Agora,', 0.6))
+    c.click(TRIG_REC('Cooperativa Recomeço'), at=c.A(4, 'Agora,', 0.6), label='abre o menu da nota da Cooperativa')
+    c.click(ITEM('Lançar compra…'), at=c.A(4, 'Lançar', 0.6), label='Lançar compra…', noScroll=True)
     c.waitfor(text='Importar NF-e nº 3871', timeout=10)
     c.hover(SEL(f"{DLG} :text-matches('^Fornecedor:')"), 1.0, at=c.A(4, 'fornecedor', 0.6), label='Fornecedor: Cooperativa Recomeço por CNPJ/CPF')
     c.mark(5)

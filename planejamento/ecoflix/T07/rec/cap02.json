@@ -116,7 +116,7 @@
    "target": {
     "selector": "#supplier-desktop-top"
    },
-   "at": 2.29,
+   "at": 1.79,
    "label": "Selecionar fornecedor"
   },
   {
@@ -131,8 +131,8 @@
    "target": {
     "selector": "[role=dialog] button:has-text('Não informado')"
    },
-   "seconds": 1.14,
-   "at": 7.27,
+   "seconds": 0.3,
+   "at": 6.87,
    "label": "Não informado (zoom)",
    "optional": true,
    "timeout": 4
@@ -147,8 +147,8 @@
    "target": {
     "selector": "[role=dialog] button:has-text('Não informado')"
    },
-   "seconds": 4.66,
-   "at": 8.96,
+   "seconds": 3.0,
+   "at": 9.86,
    "label": "Não informado (zoom) (continua)",
    "optional": true,
    "timeout": 4
@@ -168,11 +168,16 @@
    "target": {
     "selector": "[role=dialog] button[aria-label*='pendências cadastrais de Valdir']"
    },
-   "seconds": 9.94,
-   "at": 35.88,
-   "label": "indicador e balão Cadastro incompleto do Valdir, sem linha de telefone (zoom)",
+   "seconds": 9.09,
+   "at": 35.48,
+   "label": "indicador e balão Cadastro incompleto do Valdir (zoom)",
    "optional": true,
    "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Cadastro incompleto\", \"CPF/CNPJ não informado\", \"Endereço não informado\", \"Use o menu ao lado\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[data-radix-popper-content-wrapper]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere balão do Valdir"
   },
   {
    "do": "mark",
@@ -184,16 +189,11 @@
    "target": {
     "selector": "[role=dialog] button[aria-label*='pendências cadastrais de Valdir']"
    },
-   "seconds": 16.93,
-   "at": 46.37,
-   "label": "indicador e balão Cadastro incompleto do Valdir, sem linha de telefone (zoom) (continua)",
+   "seconds": 15.74,
+   "at": 47.42,
+   "label": "o balão, sem linha de telefone (continua)",
    "optional": true,
    "timeout": 4
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Cadastro incompleto\", \"CPF/CNPJ não informado\", \"Endereço não informado\", \"Use o menu ao lado\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[data-radix-popper-content-wrapper]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
-   "label": "confere balão do Valdir"
   },
   {
    "do": "mark",
@@ -206,7 +206,7 @@
     "selector": "[role=dialog] div:has(> button:has-text('Aparecida Ramos')) button:has(svg.lucide-pin)"
    },
    "seconds": 2.4,
-   "at": 64.21,
+   "at": 64.11,
    "label": "alfinete Fixar como padrão (Aparecida)",
    "optional": true,
    "timeout": 4
@@ -221,7 +221,7 @@
    "target": {
     "placeholder": "Buscar por nome, apelido, CPF/CNPJ ou telefone..."
    },
-   "at": 74.76,
+   "at": 73.66,
    "label": "busca"
   },
   {
@@ -230,9 +230,9 @@
     "placeholder": "Buscar por nome, apelido, CPF/CNPJ ou telefone..."
    },
    "text": "Moreira",
-   "cps": 20,
+   "cps": 40,
    "noClick": true,
-   "at": 76.7,
+   "at": 76.55,
    "label": "busca Moreira"
   },
   {
@@ -241,16 +241,17 @@
    "label": "confere Nenhum resultado encontrado."
   },
   {
-   "do": "hover",
+   "do": "type",
    "target": {
     "text": "Nenhum resultado encontrado.",
     "within": "[role=dialog]"
    },
-   "seconds": 1.0,
-   "at": 76.7,
-   "label": "Nenhum resultado encontrado.",
+   "text": "",
+   "noClick": true,
    "optional": true,
-   "timeout": 4
+   "timeout": 4,
+   "at": 77.61,
+   "label": "Nenhum resultado encontrado."
   },
   {
    "do": "eval",

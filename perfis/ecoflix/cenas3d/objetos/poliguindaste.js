@@ -17,6 +17,8 @@ export function poliguindaste(pai, p, o = {}) {
   u.gancho = poe(new THREE.TorusGeometry(.13, .035, 8, 16, PI * 1.5), M(COR.aco), g); u.gancho.visible = false;
   u.rodasR = u.R; return g;
 }
+// x local (no caminhão) do centro da caçamba para o avanço s: o x do caminhão no mundo = x_caçamba - dir·lxCarga(s)
+export const lxCarga = s => lerp(X_CARGA - D_DESLIZE, X_CARGA, eo(cl(s)));
 export function posiciona(g, x, z, dir = 1) {
   g.position.set(x, 0, z); g.rotation.y = dir > 0 ? 0 : PI; g.userData.rodas.forEach(r => { r.rotation.z = -dir * x / g.userData.R; });
 }

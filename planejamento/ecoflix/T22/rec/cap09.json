@@ -1,0 +1,374 @@
+{
+ "name": "t22-cap09",
+ "title": "T22 · Cap. 9 · Enviar Ativos (narração ESTIMADA 74,5 s; marcas L1..L8 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira (matriz))",
+ "seed": "t22-cap09",
+ "pace": 0.5,
+ "cps": 40,
+ "tail": 1.5,
+ "start": {
+  "x": 700,
+  "y": 300
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true"
+ },
+ "seedExtra": [
+  "t22/inicio",
+  "t22/apos-cap02",
+  "t22/apos-cap03"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "waitFor",
+   "target": {
+    "label": "E-mail"
+   },
+   "timeout": 30
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "E-mail"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "label": "Senha",
+    "exact": true
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Rafael!",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/gerencial/configuracoes"
+  },
+  {
+   "do": "waitFor",
+   "text": "Código de Convite",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/gerencial"
+  },
+  {
+   "do": "waitFor",
+   "text": "Dashboard Gerencial",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|Algo deu errado|Falha ao|Something went wrong|indispon[ií]vel|Access denied/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&!/fica indispon/i.test(m[0])&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{document.querySelectorAll('[data-sonner-toast][data-type=error]').forEach(t=>{const s='TOAST DE ERRO: '+t.textContent.trim().slice(0,90);if(!window.__avisos.includes(s)&&window.__avisos.length<10)window.__avisos.push(s)})},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "a[href=\"/gerencial/configuracoes\"]"
+   },
+   "at": 0.31,
+   "label": "Configurações do Gerencial (menu)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Código de Convite",
+   "timeout": 15
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#tab-btn-materiais"
+   },
+   "at": 6.56,
+   "label": "Catálogo de Materiais"
+  },
+  {
+   "do": "waitFor",
+   "text": "Importar do Estoque da Matriz",
+   "timeout": 10
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 8.35
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Importar do Estoque da Matriz"
+   },
+   "at": 10.1,
+   "label": "Importar do Estoque da Matriz"
+  },
+  {
+   "do": "waitFor",
+   "text": "importado(s) do estoque",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Alumínio latinha",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.8,
+   "at": 13.08,
+   "label": "os materiais da matriz no catálogo",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 15.39
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#tab-btn-precos"
+   },
+   "at": 15.91,
+   "label": "Tabelas de Preço"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Tabelas de Preço do Grupo",
+    "within": "main"
+   },
+   "seconds": 1.0,
+   "at": 18.6,
+   "label": "as tabelas da matriz entram sozinhas",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 21.51
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#tab-btn-clientes"
+   },
+   "at": 22.03,
+   "label": "Clientes e Fornecedores"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Fundição Bandeira do Vale",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.8,
+   "at": 28.06,
+   "label": "Fundição Bandeira do Vale",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Fundição Bandeira do Vale",
+    "exact": true,
+    "within": "main"
+   },
+   "at": 32.74,
+   "label": "marca a Fundição Bandeira do Vale"
+  },
+  {
+   "do": "waitFor",
+   "text": "Disponibilizado para filiais",
+   "timeout": 8
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 33.32
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#tab-btn-categorias"
+   },
+   "at": 34.0,
+   "label": "Categorias Financeiras"
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 38.08
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#tab-btn-unidades"
+   },
+   "at": 40.35,
+   "label": "Unidades"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"Filial Pindamonhangaba\"&&e.getClientRects().length);if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-360);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 40.41,
+   "label": "desce até a filial"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main div.rounded-lg:has(p:text-is(\"Filial Pindamonhangaba\")) button:has-text(\"Enviar Ativos\")"
+   },
+   "at": 41.41,
+   "label": "Enviar Ativos"
+  },
+  {
+   "do": "waitFor",
+   "text": "Confirmar Envio",
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Materiais",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.6,
+   "at": 45.61,
+   "label": "Materiais, Categorias, Tabelas, Clientes, Fornecedores",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Sobrescrever preços existentes",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.2,
+   "at": 52.22,
+   "label": "Sobrescrever preços existentes (desligado)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 54.6
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Confirmar Envio",
+    "exact": true
+   },
+   "at": 54.9,
+   "label": "Confirmar Envio"
+  },
+  {
+   "do": "waitFor",
+   "text": "novo(s)",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Materiais",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.0,
+   "at": 60.01,
+   "label": "n novo(s) por linha",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Fechar",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 62.18,
+   "label": "Fechar"
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 62.69
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main div.rounded-lg:has(p:text-is(\"Filial Pindamonhangaba\")) button.text-destructive"
+   },
+   "seconds": 1.5,
+   "at": 64.23,
+   "label": "lixeira da linha da filial (ZOOM, sem clicar)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 74.51
+  }
+ ]
+}

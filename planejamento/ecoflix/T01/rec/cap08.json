@@ -119,7 +119,7 @@
     "text": "Frase Personalizada",
     "exact": true
    },
-   "seconds": 0.57,
+   "seconds": 0.2,
    "at": 6.18,
    "label": "Frase Personalizada",
    "optional": true,
@@ -143,7 +143,7 @@
    "target": {
     "selector": "#receipt-phrase"
    },
-   "at": 11.46,
+   "at": 11.16,
    "label": "caixa da frase"
   },
   {
@@ -152,15 +152,10 @@
    "at": 13.41
   },
   {
-   "do": "type",
-   "target": {
-    "selector": "#receipt-phrase"
-   },
-   "text": "Obrigado pela parceria! Atendemos de segunda a sexta, das 7h às 17h.",
-   "cps": 40,
+   "do": "eval",
+   "js": "(()=>{const el=document.activeElement;if(!el||!/^(INPUT|TEXTAREA)$/.test(el.tagName))return 'SEM ALVO: nada em foco';document.execCommand('insertText',false,\"Obrigado pela parceria! Atendemos de segunda a sexta, das 7h \\u00e0s 17h.\");return el.value})()",
    "at": 14.31,
-   "label": "digita a frase do comprovante",
-   "noClick": true
+   "label": "cola a frase do comprovante"
   },
   {
    "do": "eval",
@@ -172,8 +167,8 @@
    "target": {
     "text": "/2000 caracteres"
    },
-   "seconds": 1.6,
-   "at": 19.1,
+   "seconds": 1.2,
+   "at": 18.7,
    "label": "contador 68/2000 caracteres",
    "optional": true,
    "timeout": 3
@@ -189,7 +184,7 @@
     "text": "Alinhar à esquerda",
     "exact": true
    },
-   "seconds": 2.19,
+   "seconds": 1.2,
    "at": 27.73,
    "label": "Alinhar à esquerda (desligada)",
    "optional": true,
@@ -200,8 +195,8 @@
    "target": {
     "selector": "#phrase-align-left"
    },
-   "seconds": 1.0,
-   "at": 31.07,
+   "seconds": 0.5,
+   "at": 30.77,
    "label": "chave Alinhar à esquerda: fica no centro",
    "optional": true,
    "timeout": 3

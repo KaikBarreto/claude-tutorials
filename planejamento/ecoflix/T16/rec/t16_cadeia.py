@@ -76,6 +76,8 @@ def converte(n):
             out.append({'do': 'press', 'key': s['key']})
         elif do == 'eval':
             out.append({'do': 'eval', 'js': s['js'], '_l': tag, 'max': 400})
+        elif do == 'waitFor' and s.get('gone'):
+            out.append({'do': 'waitFor', 'target': s['gone'], 'state': 'hidden', 'timeout': s.get('timeout', 10)})
         elif do == 'waitFor':
             w = {k: s[k] for k in ('text', 'selector', 'target', 'timeout') if k in s}
             if w and not s.get('idle'):

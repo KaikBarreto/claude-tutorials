@@ -494,9 +494,10 @@ def cap02():
     c.ev(js_rola_ate('Lista de Materiais', y=110), w=(4, 'Olha', None, 0.9), label='desce até a Lista de Materiais')
     c.hover(CELULA('Cobre mel', 3), 0.5, w=(4, 'cobre'), label='linha Cobre mel')
     c.hover(CELULA('Cobre mel', 4), 1.4, w=(4, 'quilos'), label='[ZOOM] Estoque Atual do Cobre mel (42 Kg)')
-    c.hover(CELULA('Cobre mel', 6), 2.2, w=(4, 'média'), label='[ZOOM] Preço médio pago do Cobre mel (R$ 42,50)')
     c.confere('row:Cobre mel', ['Cobre mel', ' 42Kg', 'R$ 42,50'], 'Cobre mel 42 Kg pagos a R$ 42,50')
-    c.hover(TH('Preço médio pago'), 2.0, w=(5, 'preço'), label='cabeçalho Preço médio pago (abre a explicação)')
+    # a explicação ("Custo médio ponderado do estoque atual ... Estimativa.") abre ao passar o mouse no VALOR, não no cabeçalho: o cursor
+    # fica no R$ 42,50 do L4 até o fim do L5 (a explicação na tela enquanto a fala a resume) e a câmera vai ao selo do cabeçalho
+    c.hover(CELULA('Cobre mel', 6), 6.6, w=(4, 'média'), label='[ZOOM] Preço médio pago do Cobre mel (R$ 42,50) e a explicação')
     c.registra(SEL("main thead th:has-text('Preço médio pago') :text-is('estimativa')"), w=(5, 'selo'), label='[ZOOM] selo estimativa')
     # L6: ilustração "o que mexe no saldo" (robô parado)
     c.hover(CELULA('Ferro misto', 4), 3.0, w=(7, 'ferro'), label='[ZOOM] Estoque Atual do Ferro misto (6.420 Kg)')

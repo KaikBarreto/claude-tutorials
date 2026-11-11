@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<!-- T18 "MTR e CDF, a parte ambiental" · cenas 3D (kit perfis/ecoflix/cenas3d/kit3d.js; objetos novos em .../cenas3d/objetos/).
+     As cenas 2D da ../cenas/cenas.html ficam de reserva. Uma por capítulo (ilustracoes.json, chave "3d"):
+       cap01 ilu01_cadeia: gerador (galpão com o resíduo), transportador (caminhão) e destinador (galpão com a prensa); o MTR vai
+             com a carga e o CDF volta confirmando; depois a Recicla Vale nos dois papéis (duas faixas: Aços Quiririm recebe o MTR
+             da Recicla; a Auto Peças Vale Forte recebe o CDF da Recicla);
+       cap05 ilu05_pdf_motorista: o PDF do MTR vai para a mão do motorista, junto com a carga de chaparia no 3/4 (GHT7B19);
+       cap07 ilu07_cargas_outubro: três cargas da Auto Peças (06/10, 16/10, 27/10), cada uma com o seu MTR e a baixa no SIGOR,
+             chegam à Recicla Vale; um CDF de outubro junta os três.
+     Âncoras W(linha,'palavra') das falas do narracao/tts_textos.py; textos e rótulos os da cena 2D.
+     Render: node ferramentas/edit/cenas/render_cenas.cjs <cap> <capNN.json> saida.mp4 --html planejamento/ecoflix/T18/cenas3d/cena3d.html --de <at> --ate <at+dur> -->
+<style>
+.ico{display:flex;align-items:center;justify-content:center;flex:none;border-radius:14px;background:var(--vs);color:#fff}
+.placa{display:inline-flex;align-items:center;justify-content:center;padding:3px 12px;border:2.5px solid #1F2933;border-radius:7px;background:#fff;font-weight:800;font-size:18px;letter-spacing:.08em;color:#121212;white-space:nowrap;box-shadow:0 5px 12px rgba(16,24,40,.14)}
+</style>
+</head><body>
+<script type="module">
+import { THREE, PI, eo, eio, pr, lerp, cl, ri, pega, W, L, LE, el, ic, vis, pulse, posTitulo, titulo, selo, chip,
+  CENA, GL, camera, ancora, mundo, tela, M, grupo, poe, rbox, mancha, anel, destaque, cresce, domo, monte, peca, fardo, prensa, palete, chaoPatio, caminhao, anda, baterias,
+  COR, PAL, cena } from '../../../../perfis/ecoflix/cenas3d/kit3d.js';
+import { folha } from '../../../../perfis/ecoflix/cenas3d/objetos/folha.js';
+import { motorista } from '../../../../perfis/ecoflix/cenas3d/objetos/motorista.js';
+import { fio } from '../../../../perfis/ecoflix/cenas3d/objetos/fio.js';
+import { estrada } from '../../../../perfis/ecoflix/cenas3d/objetos/estrada.js';
+import { galpao } from '../../../../perfis/ecoflix/cenas3d/objetos/galpao.js';
+
+const CAPS = {};
+const TRES_QUARTOS = { cor: COR.ambar, c: 5.2, l: 2.1, R: .42, eixos: 2, cc: 1.7, hc: 1.55, bau: 'grade', carga: 'bateria' };   // 3/4 da Auto Peças (T08)
+const FERRO = PAL.ferro ? 'ferro' : 'aco';              // chaparia = chapa de ferro (tipo do kit; 'aco' enquanto o kit não tem 'ferro')
+const arco = (a, b, q, h) => [lerp(a[0], b[0], q), lerp(a[1], b[1], q) + h * 4 * q * (1 - q), lerp(a[2], b[2], q)];
+const mtrTag = (cls, txt, icone) => `<div class="tag ${cls}" style="font-size:19px;padding:7px 15px">${ic(icone, 20)}${txt}</div>`;
+const sheet = (f, p, q) => { f.position.set(...p); f.visible = q > .01; f.scale.setScalar(Math.max(1e-3, q)); };
+
+// ------------------------------------------------------------------ CAPS[1] · A cadeia do resíduo (L0-L3)
+CAPS[1] = () => {
+  chaoPatio(CENA, [0, 0, 0], { c: 30, l: 7.4, passo: 2.5 }); const f2 = chaoPatio(CENA, [0, 0, -10.4], { c: 30, l: 7.4, passo: 2.5 });
+  const GX = -9.5, DX = 9.5, Z2 = -10.4;
+  const estG = (x, z, comMonte) => { const g = grupo(CENA, [x, 0, z]); galpao(g, [0, 0, -1.2], { c: 3.6, l: 3, h: 1.5 }); if (comMonte) monte(g, [-.2, 0, 1.9], { n: 46, rx: 1.1, rz: .9, h: .7, mancha: [2.9, 2.5] }); return g; };
+  const estD = (x, z) => { const g = grupo(CENA, [x, 0, z]); galpao(g, [1.9, 0, -1.2], { c: 3.6, l: 3, h: 1.5 }); prensa(g, [-1.9, 0, -.2]); fardo(g, [.5, 0, 1.4], COR.alu); fardo(g, [1.15, 0, 1.4], COR.alu); fardo(g, [.82, .42, 1.4], COR.alu); return g; };
+  const eG = estG(GX, 0, true), eD = estD(DX, 0), eG2 = estG(GX, Z2, false), eD2 = estD(DX, Z2);
+  const T = caminhao(CENA, [0, 0, 0], {}), T2 = caminhao(CENA, [0, 0, Z2], TRES_QUARTOS);
+  const tit = titulo('Ambiental', 'A cadeia do resíduo');
+  const sG = selo('v', 'Gerador', 'produz o resíduo'), sT = selo('v', 'Transportador', 'leva'), sD = selo('v', 'Destinador', 'dá o destino');
+  const sGs = sG.querySelector('.sub'), sTs = sT.querySelector('.sub'), sDs = sD.querySelector('.sub');
+  const MT = folha(CENA, [0, 0, 0], { w: .8, h: 1.05, cor: COR.verde }), CD = folha(CENA, [0, 0, 0], { w: .8, h: 1.05, cor: COR.ambar });
+  MT.rotation.y = CD.rotation.y = .1;
+  const tMT = el(`<div class="ab">${mtrTag('v', 'MTR', 'file-text')}</div>`), tCD = el(`<div class="ab">${mtrTag('a', 'CDF', 'file-check')}</div>`);
+  const nome = txt => chip(`${ic('building-2', 18)}${txt}`, ''), nRV = nome('Recicla Vale'), nAQ = nome('Aços Quiririm'), nAP = nome('Auto Peças Vale Forte'), nRV2 = nome('Recicla Vale');
+  const pap = (txt, cls) => chip(txt, cls), pGe = pap('geradora', 'v'), pDe = pap('destinadora', 'a');
+  const ring = anel(CENA, 1.1, .08, [11.6, 0, 1.6]), ring2 = anel(CENA, 1.1, .05, [11.6, 0, 1.6]);
+  const tg = W(0, 'Gerador'), tpr = W(0, 'produz'), ttr = W(0, 'Transportador'), tle = W(0, 'leva'), tde = W(0, 'destinador'), tdo = W(0, 'destino');
+  const tm = W(1, 'MTR'), tac = W(1, 'acompanha'), tca = W(1, 'carga'), tds = W(1, 'destino');
+  const tc = W(2, 'CDF'), tcf = W(2, 'confirmando'), tre = W(2, 'recebeu'), td2 = W(2, 'destino');
+  const tpa = W(3, 'papeis'), tma = W(3, 'manda'), taq = W(3, 'Acos'), tgr = W(3, 'geradora'), tm3 = W(3, 'MTR'), tau = W(3, 'Auto'), tcc = W(3, 'ca'), tdn = W(3, 'destinadora'), tc3 = W(3, 'CDF');
+  const j0 = tg - .3, XT0 = -2.8, XT1 = 2.2;
+  const A = { x: .6, y: 1.2, z: .6, d: 42, az: .06, el: .42, oy: -45 }, B = { x: .6, y: .6, z: -4.6, d: 54, az: .05, el: .56, oy: -5 };
+  camera([[0, A], [tpa - .9, A, 'lin'], [tpa + 1.3, B, 'eio'], [LE(3) + 3, { ...B, d: 53.5 }, 'lin']]);
+  const SG = [-5.6, 3.7, 1.6], SD = [6.6, 3.9, 1.6], SD2 = [DX + 1.9, 4.0, Z2 + 1.6], CDR = [-2.6, 3.7, 1.6], CDS = [11.6, 3.9, 1.6];
+  return t => {
+    GL.style.opacity = eo(pr(t, tg - .2, .5)).toFixed(3);
+    posTitulo(tit, t, j0 - .6, tg - .25);
+    f2.visible = t > tau - .3; f2.scale.z = Math.max(1e-3, eo(pr(t, tau - .3, .5)));
+    // as três estações: gerador (galpão e resíduo), transportador (caminhão), destinador (galpão e prensa)
+    cresce(eG, t, tg - .15, .6, .2); vis(sG, t, tg - .1, 1e9, { dy: 10 }); ancora(sG, [GX + .2, 0, 2.9], .5, 0, 0, 4); vis(sGs, t, tpr - .15, 1e9, { dy: 5 });
+    cresce(eD, t, tde - .15, .6, .2); vis(sD, t, tde - .1, 1e9, { dy: 10 }); ancora(sD, [DX + 1.6, 0, 3.0], .5, 0, 0, 4); vis(sDs, t, tdo - .15, 1e9, { dy: 5 });
+    const q = eio(pr(t, tca - .05, Math.max(1.2, tds - tca + .2))), x = lerp(XT0, XT1, q);
+    anda(T, x); T.visible = t > ttr - .35; const ent = eo(pr(t, ttr - .3, .7)); T.position.z = (1 - ent) * 3; T.scale.setScalar(1);
+    vis(sT, t, ttr - .1, 1e9, { dy: 10 }); ancora(sT, [x, 0, 2.5], .5, 0, 0, 6); vis(sTs, t, tle - .15, 1e9, { dy: 5 });
+    // o MTR sai do gerador, sobe no caminhão e vai com a carga até o destinador; o CDF volta com o visto
+    let mp, mq = eo(pr(t, tm - .1, .5));
+    const a1 = eio(pr(t, tac, .7)), a2 = eio(pr(t, tds + .05, .7)), onT = [x - .3, 3.55, 0];
+    mp = t < tac ? SG : arco(SG, onT, a1, .8); if (t >= tac + .7) mp = onT; if (t > tds) mp = arco(onT, SD, a2, .6);
+    // faixa 2: o MTR volta para o gerador na palavra "manda" e vai de novo na palavra "MTR"
+    const b1 = eio(pr(t, tma - .2, .9)), b2 = eio(pr(t, tm3 - .15, .9));
+    if (t > tma - .3) { const from = SD, via = arco(from, SG, b1, 1.0); mp = t < tm3 - .2 ? via : arco(SG, SD, b2, 1.0); }
+    sheet(MT, mp, mq); vis(tMT, t, tm - .1, 1e9, { dy: 6 }); ancora(tMT, [mp[0] - .2, mp[1] + .72, mp[2]], .5, 1);
+    // o CDF: aparece no destinador, volta ao gerador confirmando; na faixa 2 vai da Recicla (destinadora) à Auto Peças
+    const c1 = eio(pr(t, tcf - .05, Math.max(1.2, td2 - tcf + .3))), c2 = eio(pr(t, tdn - .35, .9)), c3 = eio(pr(t, tc3 - .1, .9));
+    let cp = t < tcf ? CDS : arco(CDS, CDR, c1, .9);
+    if (t > tdn - .4) cp = t < tc3 - .15 ? arco(CDR, SD2, c2, 1.0) : arco(SD2, [-2.6, 3.7, Z2 + 1.6], c3, 1.0);
+    sheet(CD, cp, eo(pr(t, tc - .1, .5))); vis(tCD, t, tc - .1, 1e9, { dy: 6 }); ancora(tCD, [cp[0] + .2, cp[1] + .72, cp[2]], .5, 1);
+    pulse(tCD, t, tre, .1, .7); destaque(ring, ring2, t, tre);
+    // os dois papéis: a faixa de baixo (Auto Peças → Recicla) entra com o 3/4 de bateria
+    vis(nRV, t, tma - .1, 1e9, { dy: 8 }); ancora(nRV, [GX, 3.2, -1.2], .5, 1); vis(nAQ, t, taq - .15, 1e9, { dy: 8 }); ancora(nAQ, [DX + 1.9, 3.2, -1.2], .5, 1);
+    vis(pGe, t, tgr - .15, 1e9, { dy: 6 }); ancora(pGe, [GX, 3.2, -1.2], .5, 0, 0, 4);
+    cresce(eG2, t, tau - .15, .6, .2); vis(nAP, t, tau - .1, 1e9, { dy: 8 }); ancora(nAP, [GX, 3.2, Z2 - 1.2], .5, 1);
+    cresce(eD2, t, tcc - .2, .6, .2); vis(nRV2, t, tcc - .15, 1e9, { dy: 8 }); ancora(nRV2, [DX + 1.9, 3.2, Z2 - 1.2], .5, 1);
+    vis(pDe, t, tdn - .15, 1e9, { dy: 6 }); ancora(pDe, [DX + 1.9, 3.2, Z2 - 1.2], .5, 0, 0, 4);
+    const r2 = eio(pr(t, tau + .9, Math.max(1.4, tcc - tau + 1.6))); anda(T2, lerp(-8, 2.2, r2)); T2.visible = t > tau + .85; 
+    T2.position.z = Z2;
+  };
+};
+
+// ------------------------------------------------------------------ CAPS[5] · O PDF vai com o motorista (L2)
+// 2 "Baixar PDF. O PDF do MTR vai com o motorista, junto com a carga."
+CAPS[5] = () => {
+  chaoPatio(CENA, [2, 0, 0], { c: 30, l: 12, passo: 2.5 });
+  const T = caminhao(CENA, [0, 0, 0], TRES_QUARTOS), B = T.userData.cacamba; T.userData.carga.b.visible = T.userData.carga.tp.visible = T.userData.carga.po.visible = false;
+  const cg = grupo(B, [1.6, .1, 0]);
+  for (const q of domo(60, 1.2, .8, .9, .02, .6)) peca(cg, FERRO, q, 2.2);
+  const D = motorista(CENA, [0, 0, 1.3]);
+  const F = folha(CENA, [0, 0, 0], { w: .9, h: 1.2 });
+  F.rotation.y = .1;
+  const tit = titulo('MTR', 'O PDF vai com o motorista');
+  const tF = el(`<div class="ab" style="display:flex;gap:8px;align-items:center">${mtrTag('v', 'MTR', 'file-text')}<div class="tag a" style="font-size:16px;padding:6px 12px">PDF</div></div>`);
+  const cM = chip(`${ic('user-round', 18)}Motorista`, 'v'), pl = el('<div class="placa ab">GHT7B19</div>');
+  const tp = W(2, 'PDF', 2), tmo = W(2, 'motorista'), tca = W(2, 'carga'), at = tp - .3;
+  const XT = 0;
+  camera([[0, { x: 1.5, y: 1.4, z: 0, d: 17.5, az: .1, el: .3, oy: -40 }], [tca + 3, { x: 1.5, y: 1.4, z: 0, d: 17, az: .12, el: .3, oy: -40 }, 'lin']]);
+  return t => {
+    GL.style.opacity = eo(pr(t, tp - .4, .5)).toFixed(3);
+    posTitulo(tit, t, at - .6, tp - .2);
+    const ent = eio(pr(t, tmo - .5, 1.1)), x = lerp(-13, XT, ent); anda(T, x); T.visible = t > tmo - .55;
+    // a folha aparece na palavra, grande, ao lado, e vai para a mão do motorista
+    const dp = [x + 4.2, 0, 1.3]; D.position.set(dp[0], 0, dp[2]); D.rotation.y = -.15; const qe = eo(pr(t, tmo - .1, .5)); D.visible = qe > 0; D.scale.setScalar(Math.max(1e-3, qe));
+    D.updateMatrixWorld(true); const mao = mundo(D.userData.mao, [0, .02, .22]);
+    const A = [-.2, 3.4, 1.6], qq = eio(pr(t, tmo - .1, .9)), ph = arco(A, [mao[0] - .1, mao[1] + .15, mao[2] + .05], qq, 1.3);
+    const qf = eo(pr(t, tp - .2, .5)), sc = lerp(1.35, .55, qq);
+    F.position.set(...ph); F.visible = qf > 0; F.scale.setScalar(Math.max(1e-3, qf * sc)); F.rotation.y = lerp(.1, -.1, qq);
+    vis(tF, t, tp - .15, 1e9, { dy: 8 }); ancora(tF, [ph[0], ph[1] + .62 * sc * 1.3, ph[2]], .5, 1, 0, -2);
+    vis(cM, t, tmo - .05, 1e9, { dy: 8 }); ancora(cM, [dp[0], 2.1, dp[2]], .5, 1);
+    vis(pl, t, tca - .15, 1e9, { dy: 8 }); ancora(pl, [x + 2.3, 2.95, 0], .5, 1);
+    cresce(cg, t, tmo - .5, .2, 0); const pp = pr(t, tca, .8); cg.scale.setScalar(1 + .04 * Math.sin(PI * pp));
+  };
+};
+
+// ------------------------------------------------------------------ CAPS[7] · As cargas de outubro (L1-L2)
+// 1 "Em outubro, a Auto Peças Vale Forte mandou três cargas de sucata pra cá, cada uma com o MTR dela. A Recicla Vale recebeu e deu baixa
+//    no SIGOR."  2 "Agora sai um CDF só, que cobre outubro e junta os três."   (janela até "junta" + 1,1 s)
+CAPS[7] = () => {
+  chaoPatio(CENA, [0, 0, 0], { c: 34, l: 13, passo: 2.5 });
+  const ZS = [-3.8, 0, 3.8], DATAS = ['06/10', '16/10', '27/10'], XA = -9, XB = 5.4;
+  const gA = galpao(CENA, [-13, 0, 0], { c: 11, l: 3.4, h: 2 }), gR = galpao(CENA, [13, 0, 0], { c: 11, l: 3.4, h: 2 }); gA.rotation.y = PI / 2; gR.rotation.y = -PI / 2;
+  const TS = ZS.map(z => caminhao(CENA, [XA, 0, z], TRES_QUARTOS));
+  const rua = ZS.map(z => { const e = estrada(CENA, [-1.4, 0, z], { c: 20, l: 2.6 }); return e; });
+  const MTRs = ZS.map(() => folha(CENA, [0, 0, 0], { w: .62, h: .82, cor: COR.verde })), fios = ZS.map(() => fio(CENA, COR.ambar, .035));
+  const CD = folha(CENA, [0, 0, 0], { w: 1.2, h: 1.6, cor: COR.ambar, linhas: 5 }); CD.rotation.y = .05;
+  const nAP = chip(`${ic('building-2', 18)}Auto Peças Vale Forte`, 'a'), nRV = chip(`${ic('building-2', 18)}Recicla Vale`, 'v');
+  const dt = DATAS.map(d => chip(d, 'a')), mt = ZS.map(() => chip(`${ic('file-text', 16)}MTR`, 'v')), ok = ZS.map(() => el(`<div class="ico" style="position:absolute;width:26px;height:26px;border-radius:50%">${ic('check', 17)}</div>`));
+  const bx = chip(`${ic('circle-check', 18)}baixa no SIGOR`, 'v');
+  const sCD = el(`<div class="selo"><div class="tag a" style="font-size:22px;padding:8px 18px">${ic('file-check', 24)}CDF</div><div class="sub oc" style="font-size:16px;font-weight:700;color:#121212">outubro</div></div>`), sOc = sCD.querySelector('.oc');
+  const tit = titulo('CDF', 'As cargas de outubro');
+  const tou = W(1, 'outubro'), tau = W(1, 'Auto'), tcg = W(1, 'cargas'), tcc = W(1, 'ca'), tm = W(1, 'MTR'), trv = W(1, 'Recicla'), tre = W(1, 'recebeu'), tbx = W(1, 'baixa');
+  const tcd = W(2, 'CDF'), to2 = W(2, 'outubro'), tju = W(2, 'junta'), at = W(1, 'Em') - .3;
+  const CP = [11.2, 5.2, 0];
+  camera([[0, { x: -.4, y: 1.0, z: 0, d: 51, az: .06, el: .52, oy: -30 }], [LE(2) + 3, { x: -.4, y: 1.0, z: 0, d: 49.5, az: .06, el: .52, oy: -30 }, 'lin']]);
+  return t => {
+    GL.style.opacity = eo(pr(t, tau - .4, .5)).toFixed(3);
+    posTitulo(tit, t, at - .6, tau - .35);
+    cresce(gA, t, tau - .15, .6, 0); gA.rotation.y = PI / 2; vis(nAP, t, tau - .1, 1e9, { dy: 8 }); ancora(nAP, [-13, 3.2, 0], .5, 1);
+    cresce(gR, t, tcc - .45, .6, 0); gR.rotation.y = -PI / 2; vis(nRV, t, tcc - .4, 1e9, { dy: 8 }); ancora(nRV, [13, 3.2, 0], .5, 1);
+    TS.forEach((T, i) => {
+      const st = tcg + i * .35, q = eio(pr(t, st, 1.7)), x = lerp(XA, XB, q); anda(T, x); T.position.z = ZS[i]; T.visible = t > st - .15;
+      rua[i].visible = t > tcg - .25 + i * .2; rua[i].scale.x = Math.max(1e-3, eo(pr(t, tcg - .25 + i * .2, .5)));
+      vis(dt[i], t, tcg - .25 + i * .2, 1e9, { dy: 8 }); ancora(dt[i], [-9.5, 0, ZS[i] + 1.7], .5, .5);
+      // o MTR de cada carga, preso à cabine; some quando se junta ao CDF
+      const sp = [x + 1.4, 3.35, ZS[i]], qm = eo(pr(t, tm - .15 + i * .15, .5)), j = eio(pr(t, tju - .1 + i * .18, .8)), pj = arco(sp, [CP[0], CP[1] - .3, CP[2]], j, 1.4);
+      sheet(MTRs[i], pj, qm * (1 - .85 * j)); MTRs[i].rotation.y = .1;
+      vis(mt[i], t, tm - .15 + i * .15, tju - .1 + i * .18, { dy: 6 }); ancora(mt[i], [sp[0], sp[1] + .55, sp[2]], .5, 1);
+      vis(ok[i], t, tre + i * .2, 1e9, { dy: 0, sc: .5 }); ancora(ok[i], [sp[0] + 1.0, sp[1] + .52, sp[2]], .5, 1);
+      fios[i].liga([x + 1.4, 3.0, ZS[i]], [CP[0] - .5, CP[1] - .6, CP[2] + (i - 1) * .3], eio(pr(t, tju - .1 + i * .15, .6)));
+    });
+    vis(bx, t, tbx - .15, 1e9, { dy: 8 }); ancora(bx, [9.2, 0, 6.0], .5, .5);
+    const qc = eo(pr(t, tcd - .1, .55)); CD.position.set(CP[0], CP[1] + (1 - qc) * 1.2, CP[2]); CD.visible = qc > 0; CD.scale.setScalar(Math.max(1e-3, qc));
+    vis(sCD, t, tcd - .1, 1e9, { dy: 8 }); ancora(sCD, [CP[0], CP[1] + 1.0, CP[2]], .5, 1); vis(sOc, t, to2 - .15, 1e9, { dy: 4 }); pulse(sCD, t, to2, .05, .8);
+  };
+};
+
+cena(d => CAPS[d.cap](), { sombra: 20, mapa: 2048, chao: false });
+</script></body></html>

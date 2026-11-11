@@ -81,7 +81,7 @@ def main():
     notas = [
         # T16 (cap09 a cap12): 1249 cancelada (a Serra Fina mudou o pedido), 1250 com carta de correção, 1251 do caixa de 09/11
         nota(1249, hoje, '08:41', 'saida', '6102', [('al_perfil', nomes['al_perfil'], 320, 10.40)], 52714093,
-             cliente='@id:cliente.serrafina', cancelada=(utc(hoje, '08:57'), 'Pedido alterado pelo cliente antes de a mercadoria sair do pátio')),
+             cliente='@id:cliente.serrafina', status='cancelada', cancelada=(utc(hoje, '08:57'), 'Pedido alterado pelo cliente antes de a mercadoria sair do pátio')),
         nota(1250, hoje, '08:46', 'saida', '5102', [('cobre_mel', nomes['cobre_mel'], 500, 47.90)], 61830257, cliente='@id:cliente.bandeira'),
         nota(1251, hoje, '08:51', 'entrada', '1102', [('al_latinha', nomes['al_latinha'], 64, 6.20), ('papelao', nomes['papelao'], 180, 0.55),
                                                        ('ferro_misto', nomes['ferro_misto'], 410, 0.75)], 70493618,

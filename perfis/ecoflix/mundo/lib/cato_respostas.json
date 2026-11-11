@@ -1,0 +1,377 @@
+{
+ "_doc": "Gerado por rec/t21/t21_respostas.py a partir de planejamento/ecoflix/T21/plano.md (R1 a R9). Não editar à mão.",
+ "respostas": [
+  {
+   "chave": "R1",
+   "pergunta": "Como tá indo meu negócio esse mês?",
+   "espera": 3.2,
+   "hora": "08:30",
+   "sugestoes": [
+    "Compara com outubro",
+    "Quais despesas tive esse mês?",
+    "Qual material mais vendi?"
+   ],
+   "payload": {
+    "toolsUsed": [
+     "resumo_financeiro"
+    ],
+    "context": {
+     "period": {
+      "start": "2026-11-01",
+      "end": "2026-11-10",
+      "timezone": "America/Sao_Paulo"
+     },
+     "regime": "caixa",
+     "updatedAt": "<agora>"
+    },
+    "answer": "Novembro começou no azul. Olhando seus lançamentos de 1 a 10 de novembro:\n\n- **Vendas:** R$ 118.620,20\n- **Compras:** R$ 18.781,45\n- **Despesas:** R$ 30.249,20\n\nO resultado até aqui é de **R$ 69.589,55**, no regime de caixa. A Fundição Bandeira do Vale foi o maior cliente do período, com R$ 57.460,00 em vendas. Ainda faltam 20 dias pro mês fechar."
+   }
+  },
+  {
+   "chave": "R2",
+   "pergunta": "Quem tá me devendo?",
+   "espera": 1.6,
+   "hora": "08:30",
+   "sugestoes": [
+    "Pra quem eu tô devendo?",
+    "Quais contas vencem essa semana?",
+    "Quanto a Fundição me pagou em outubro?"
+   ],
+   "payload": {
+    "toolsUsed": [
+     "saldos_parceiros"
+    ],
+    "context": {
+     "updatedAt": "<agora>"
+    },
+    "answer": "Hoje, **3 parceiros** têm saldo a seu favor, somando **R$ 17.540,00**:\n\n1. **Fundição Bandeira do Vale:** R$ 14.370,00\n2. **Aços Quiririm Ltda:** R$ 2.870,00\n3. **Valdir Pereira:** R$ 300,00\n\nA Fundição concentra 82% do que você tem a receber.",
+    "chart": {
+     "type": "barra",
+     "title": "Saldo a receber por parceiro",
+     "valueFormat": "currency",
+     "points": [
+      {
+       "label": "Fundição Bandeira do Vale",
+       "value": 14370
+      },
+      {
+       "label": "Aços Quiririm Ltda",
+       "value": 2870
+      },
+      {
+       "label": "Valdir Pereira",
+       "value": 300
+      }
+     ]
+    }
+   }
+  },
+  {
+   "chave": "R3",
+   "pergunta": "Quanto tenho em estoque agora?",
+   "espera": 1.6,
+   "hora": "08:30",
+   "sugestoes": [
+    "Lista meu estoque em tabela",
+    "Quanto vale meu alumínio?",
+    "O que está parado há mais tempo?"
+   ],
+   "payload": {
+    "toolsUsed": [
+     "estoque_atual"
+    ],
+    "context": {
+     "period": {
+      "start": "2026-11-10",
+      "end": "2026-11-10"
+     },
+     "updatedAt": "<agora>"
+    },
+    "answer": "Agora você tem **26.733 kg** de material no pátio. A custo médio, esse estoque vale **R$ 96.076,00**; pela tabela de venda, a projeção é de **R$ 116.689,40**.\n\nOs materiais que mais pesam no valor:\n\n1. **Alumínio perfil:** 3.385 kg, R$ 30.126,50\n2. **Alumínio bloco:** 2.830 kg, R$ 20.093,00\n3. **Bateria automotiva:** 3.960 kg, R$ 12.276,00\n\nSó o alumínio perfil e o bloco já passam da metade do valor do estoque."
+   }
+  },
+  {
+   "chave": "R4",
+   "pergunta": "Qual o saldo das minhas contas no banco?",
+   "espera": 1.6,
+   "hora": "08:30",
+   "sugestoes": [
+    "Quais pagamentos saíram do banco esse mês?",
+    "Quanto tenho no cofre?",
+    "Compara as entradas com outubro"
+   ],
+   "payload": {
+    "toolsUsed": [
+     "resumo_bancario"
+    ],
+    "context": {
+     "period": {
+      "start": "2026-11-01",
+      "end": "2026-11-10"
+     },
+     "updatedAt": "<agora>"
+    },
+    "answer": "Agora, suas contas no banco somam **R$ 132.448,67**:\n\n- **Conta Principal:** R$ 44.933,67\n- **Conta Secundária:** R$ 82.515,00\n- **Conta Cooperativa:** R$ 5.000,00\n\nEsse é o saldo de agora. Em novembro, até hoje, entraram **R$ 114.620,20** e saíram **R$ 53.554,10** nas contas."
+   }
+  },
+  {
+   "chave": "R5",
+   "pergunta": "Como tá meu caixa hoje?",
+   "espera": 1.6,
+   "hora": "08:30",
+   "sugestoes": [
+    "Quanto tenho no cofre?",
+    "Quanto comprei ontem?",
+    "Mostra os caixas da semana"
+   ],
+   "payload": {
+    "toolsUsed": [
+     "caixa"
+    ],
+    "context": {
+     "period": {
+      "start": "2026-11-10",
+      "end": "2026-11-10"
+     },
+     "updatedAt": "<agora>"
+    },
+    "answer": "Hoje ainda **não tem caixa aberto**: ninguém abriu o caixa até agora. Ontem, dia 9, foram dois: o do Marcos Antunes fechou com **R$ 640,00** e o do Rafael Nogueira com **R$ 1.250,00**."
+   }
+  },
+  {
+   "chave": "R6",
+   "pergunta": "Compras e vendas dos últimos três meses",
+   "espera": 1.6,
+   "hora": "08:31",
+   "sugestoes": [
+    "Qual foi meu resultado em outubro?",
+    "Por que outubro teve tanta compra?",
+    "Compara com agosto"
+   ],
+   "payload": {
+    "toolsUsed": [
+     "compras_vendas_mensais"
+    ],
+    "context": {
+     "period": {
+      "start": "2026-09-01",
+      "end": "2026-11-10"
+     },
+     "updatedAt": "<agora>"
+    },
+    "answer": "Olhando suas compras e vendas dos últimos três meses:\n\n- **Setembro:** comprou R$ 201.784,25 e vendeu R$ 273.047,73\n- **Outubro:** comprou R$ 256.860,00 e vendeu R$ 269.240,00\n- **Novembro (até o dia 10):** comprou R$ 18.781,45 e vendeu R$ 118.620,20\n\nEm outubro, as compras quase alcançaram as vendas: o pátio encheu de ferro pesado. Em novembro, esse ferro saiu, e as vendas passaram longe das compras.",
+    "chart": {
+     "type": "linha",
+     "title": "Compras e vendas por mês",
+     "valueFormat": "currency",
+     "series": [
+      {
+       "name": "Compras",
+       "points": [
+        {
+         "label": "set/26",
+         "value": 201784.25
+        },
+        {
+         "label": "out/26",
+         "value": 256860
+        },
+        {
+         "label": "nov/26",
+         "value": 18781.45
+        }
+       ]
+      },
+      {
+       "name": "Vendas",
+       "points": [
+        {
+         "label": "set/26",
+         "value": 273047.73
+        },
+        {
+         "label": "out/26",
+         "value": 269240
+        },
+        {
+         "label": "nov/26",
+         "value": 118620.2
+        }
+       ]
+      }
+     ]
+    }
+   }
+  },
+  {
+   "chave": "R7",
+   "pergunta": "Pra quem eu mais vendi em outubro?",
+   "espera": 1.6,
+   "hora": "08:31",
+   "sugestoes": [
+    "Quanto a Fundição me deve?",
+    "Qual material mais vendi em outubro?",
+    "Compara com setembro"
+   ],
+   "payload": {
+    "toolsUsed": [
+     "top_parceiros"
+    ],
+    "context": {
+     "period": {
+      "start": "2026-10-01",
+      "end": "2026-10-31"
+     },
+     "updatedAt": "<agora>"
+    },
+    "answer": "Em outubro, olhando suas vendas, quem mais comprou de você foi:\n\n1. **Fundição Bandeira do Vale:** R$ 112.800,00\n2. **Aços Quiririm Ltda:** R$ 77.460,60\n3. **Serra Fina Alumínio Reciclagem:** R$ 60.349,20\n\nA Fundição ficou com 42% das vendas do mês.",
+    "chart": {
+     "type": "barra",
+     "title": "Vendas por cliente em outubro",
+     "valueFormat": "currency",
+     "points": [
+      {
+       "label": "Fundição Bandeira do Vale",
+       "value": 112800
+      },
+      {
+       "label": "Aços Quiririm Ltda",
+       "value": 77460.6
+      },
+      {
+       "label": "Serra Fina Alumínio Reciclagem",
+       "value": 60349.2
+      }
+     ]
+    }
+   }
+  },
+  {
+   "chave": "R8",
+   "pergunta": "Lista meu estoque em tabela",
+   "espera": 1.6,
+   "hora": "08:31",
+   "sugestoes": [
+    "Quanto vale meu estoque pela tabela de venda?",
+    "Me mostra num gráfico",
+    "O que está parado há mais tempo?"
+   ],
+   "payload": {
+    "toolsUsed": [
+     "estoque_atual"
+    ],
+    "context": {
+     "period": {
+      "start": "2026-11-10",
+      "end": "2026-11-10"
+     },
+     "updatedAt": "<agora>"
+    },
+    "answer": "Aqui está o seu estoque de agora, do maior valor para o menor. São **15 materiais**, somando **26.733 kg** e **R$ 96.076,00** a custo médio.",
+    "table": {
+     "title": "Estoque em 10/11/2026",
+     "columns": [
+      "Material",
+      "Quantidade (kg)",
+      "Valor em estoque"
+     ],
+     "rows": [
+      [
+       "Alumínio perfil",
+       3385,
+       30126.5
+      ],
+      [
+       "Alumínio bloco",
+       2830,
+       20093
+      ],
+      [
+       "Bateria automotiva",
+       3960,
+       12276
+      ],
+      [
+       "Metal amarelo (latão)",
+       214,
+       5885
+      ],
+      [
+       "Cobre misto",
+       148,
+       5328
+      ],
+      [
+       "Ferro misto",
+       6420,
+       4815
+      ],
+      [
+       "Alumínio latinha",
+       640,
+       3968
+      ],
+      [
+       "Chaparia",
+       3750,
+       2625
+      ],
+      [
+       "Ferro pesado",
+       2180,
+       2071
+      ],
+      [
+       "Cobre mel",
+       42,
+       1785
+      ],
+      [
+       "Plástico PET",
+       920,
+       1748
+      ],
+      [
+       "Fio de cobre encapado",
+       96,
+       1728
+      ],
+      [
+       "Inox",
+       260,
+       1508
+      ],
+      [
+       "Bronze",
+       38,
+       1102
+      ],
+      [
+       "Papelão",
+       1850,
+       1017.5
+      ]
+     ]
+    }
+   }
+  },
+  {
+   "chave": "R9",
+   "pergunta": "Emite a nota da venda pra Fundição Bandeira do Vale",
+   "espera": 1.6,
+   "hora": null,
+   "sugestoes": [
+    "Onde vejo as notas emitidas?",
+    "Como cancelar uma nota?",
+    "Como emitir nota de entrada?"
+   ],
+   "payload": {
+    "toolsUsed": [
+     "consultar_ajuda"
+    ],
+    "context": null,
+    "answer": "Emitir nota fica com você: eu consulto e explico, mas não emito. O caminho é este:\n\n1. Abra **Fiscal & Ambiental › Notas Fiscais (NF-e)**.\n2. Na aba **Saída**, clique em **Nova Nota**.\n3. Monte a nota da venda pra Fundição Bandeira do Vale, confira e emita.\n\nA tributação da nota quem define é o seu contador."
+   }
+  }
+ ]
+}
