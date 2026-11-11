@@ -690,7 +690,9 @@ def cap11():
     c.hover(TXT('Receitas', within=DLG), seconds=0.3, at=c.A(2, 'escolho', 1.0), label='Incluir no arquivo: Receitas')
     # na aba Despesas a janela abre com Receitas e Despesas marcadas e Compras desmarcada (11/11): "eu escolho o que entra" = marcar Compras
     c.click(TXT('Compras', within=DLG), at=c.A(2, 'despesas', 0.8), label='marca Compras')
-    c.confere('dlg', ['Compras'], 'janela do PDF')
+    c.ev("(async()=>{for(let i=0;i<8;i++){const c=[...document.querySelectorAll('[role=dialog] [role=checkbox]')].map(x=>x.getAttribute('data-state'));"
+         "if(c.length>=3&&c.slice(0,3).every(v=>v==='checked'))return 'OK: receitas, despesas e compras marcadas';await new Promise(r=>setTimeout(r,150))}"
+         "return 'DIFERENTE: '+[...document.querySelectorAll('[role=dialog] [role=checkbox]')].map(x=>x.getAttribute('data-state')).join(',')})()", label='confere Incluir no arquivo: as três marcadas')
     c.mark(3)
     c.click(BTN('Exportar PDF'), at=c.A(3, 'PDF', 0.8), label='Exportar PDF')
     c.waitfor(text='PDF gerado em nova aba', timeout=6, optional=True)

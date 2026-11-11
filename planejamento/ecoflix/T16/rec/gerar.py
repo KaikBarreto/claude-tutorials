@@ -740,11 +740,14 @@ def js_valor_campo(material):
             "const t=document.querySelector('[role=dialog]').innerText;return (v.includes('500,00')&&t.includes('23.950,00')?'OK: ':'DIFERENTE: ')+v})()") % json.dumps(material)
 
 
-def emite_e_espera(c, num, at, label, linha_aut=None, at_aut=None):
+def emite_e_espera(c, num, at, label, linha_aut=None, at_aut=None, marca=None):
     """Emitir Nota (rodapé fixo, sem rolar): a janela fecha, a linha #num aparece "Aguardando SEFAZ" e, no polling de 5 s, "Autorizada"."""
     c.click(ROD('Emitir Nota'), at=at, label=label, noScroll=True)
     c.waitfor(selector=f"main tbody tr:has-text('#{num}')", timeout=20)
     c.hover(SEL(f"main tbody tr:has-text('#{num}') td:has-text('SEFAZ')"), 0.6, label=f'#{num} Aguardando SEFAZ')
+    if marca:   # a linha seguinte começa na hora dela: a espera da autorização (polling de 5 s do app) não segura a marca
+        c.mark(marca)
+        c.flush(1e9)
     c.waitfor(selector=f"main tbody tr:has-text('#{num}'):has-text('Autorizada')", timeout=25)
     if linha_aut is not None:
         c.hover(SEL(f"main tbody tr:has-text('#{num}') td:has-text('Autorizada')"), 1.0, at=at_aut, label=f'#{num} Autorizada')
@@ -760,11 +763,11 @@ def cap09():
     c.mark(2)
     c.click(DLG_TXT('NF-e de Saída'), at=c.A(2, 'NF-e', 0.9), label='NF-e de Saída')
     c.waitfor(text='Para quem', timeout=15)
-    c.hover(ABA_NOTA('Dados'), 0.4, at=c.A(2, 'Dados', 0.6), label='passo Dados')
-    c.hover(ABA_NOTA('Itens'), 0.6, at=c.A(2, 'Itens.', 0.6), label='passo Itens')
+    c.hover(ABA_NOTA('Dados'), 0.2, at=c.A(2, 'Dados', 1.3), label='passo Dados')
+    c.hover(ABA_NOTA('Itens'), 0.3, at=c.A(2, 'Itens.', 0.7), label='passo Itens')
     c.mark(3)
     c.click(CLIENTE_BTN, at=round(c.L(3) - 0.2, 2), label='Cliente: Selecione o cliente (abre a busca)')
-    c.type(BUSCA_PARC, 'Serra Fina', at=c.A(3, 'cliente:', 0.05), label='busca Serra Fina', cps=40, noClick=True)
+    c.type(BUSCA_PARC, 'Serra Fina', at=c.A(3, 'escolho', 0.05), label='busca Serra Fina', cps=40, noClick=True)
     c.click(ESCOLHE_PARC('Serra Fina Alumínio Reciclagem'), at=c.A(3, 'Serra', 0.6), label='escolhe Serra Fina Alumínio Reciclagem')
     c.waitfor(gone={'selector': "[role=dialog]:has-text('Selecionar Cliente')"}, timeout=8)
     c.mark(4)
@@ -779,11 +782,11 @@ def cap09():
     c.mark(6)
     c.click(ROD('Avançar'), at=c.A(6, 'Avançar,', 0.7), label='Avançar', noScroll=True)
     c.mark(7)
-    c.click(MATERIAL, at=c.A(7, 'Escolho', 0.7), label='Selecionar material...')
-    c.type(MATERIAL, 'perfil', label='busca perfil', cps=40, noClick=True)
-    c.click(SEL("[cmdk-item]:has-text('Alumínio perfil'), [role=option]:has-text('Alumínio perfil')"), at=c.A(7, 'perfil.', 0.4), label='Alumínio perfil', noScroll=True)
-    c.hover(SEL(f"{DLG} th:text-is('NCM')"), 0.4, at=c.A(7, 'NCM,', 0.6), label='NCM 7602.00.00 do cadastro')
-    c.hover(SEL(f"{DLG} th:text-is('Vl. Unit.')"), 0.4, at=c.A(7, 'preço', 0.6), label='preço de venda 10,40 do cadastro')
+    c.click(MATERIAL, at=round(c.L(7) - 0.9, 2), label='Selecionar material...')
+    c.type(MATERIAL, 'perfil', at=c.A(7, 'Escolho', 0.05), label='busca perfil', cps=40, noClick=True)
+    c.click(SEL("[cmdk-item]:has-text('Alumínio perfil'), [role=option]:has-text('Alumínio perfil')"), at=c.A(7, 'perfil.', 0.5), label='Alumínio perfil', noScroll=True)
+    c.hover(SEL(f"{DLG} tr.bg-primary\\/5 input", nth=1), 0.6, at=c.A(7, 'NCM,', 0.4), label='NCM 7602.00.00 do cadastro')
+    c.hover(SEL(f"{DLG} tr.bg-primary\\/5 input", nth=3), 0.6, at=c.A(7, 'preço', 0.5), label='preço de venda 10,40 do cadastro')
     c.click(QTD, at=c.A(7, 'Trezentos', 0.7), label='Qtd (clique no campo)')
     c.type(QTD, '320', at=c.A(7, 'quilos,', 0.05), label='zoom: Qtd 320 e Vl. Unit. 10,40', cps=30, noClick=True, clear=True)
     c.mark(8)
@@ -795,8 +798,7 @@ def cap09():
     c.hover(ROD('Emitir Nota'), 1.0, at=c.A(9, 'dica:', 0.4), label='o rodapé: Voltar, Salvar Rascunho, Emitir Nota', noScroll=True)
     c.mark(10)
     c.mark(11)
-    emite_e_espera(c, 1249, c.A(11, 'Emitir', 0.7), 'Emitir Nota')
-    c.mark(12)
+    emite_e_espera(c, 1249, c.A(11, 'Emitir', 0.7), 'Emitir Nota', marca=12)
     c.hover(SEL("main tbody tr:has-text('#1249') td:has-text('Autorizada')"), 0.6, at=c.A(12, 'autorizada', 0.6, nth=1), label='#1249 Autorizada')
     c.mark(13)
     menu_item(c, '#1249', 'Visualizar', c.A(13, 'Visualizar', 0.6), 'Visualizar', at_menu=round(c.L(13) - 1.8, 2))

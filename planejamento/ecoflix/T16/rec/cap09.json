@@ -129,8 +129,8 @@
    "target": {
     "selector": "[role=dialog] button:text-is('Dados')"
    },
-   "seconds": 0.15,
-   "at": 14.8,
+   "seconds": 0.2,
+   "at": 14.1,
    "label": "passo Dados",
    "optional": true,
    "timeout": 4
@@ -141,7 +141,7 @@
     "selector": "[role=dialog] button:text-is('Itens')"
    },
    "seconds": 0.15,
-   "at": 15.41,
+   "at": 15.31,
    "label": "passo Itens",
    "optional": true,
    "timeout": 4
@@ -166,7 +166,7 @@
    },
    "text": "Serra Fina",
    "cps": 40,
-   "at": 18.81,
+   "at": 18.05,
    "label": "busca Serra Fina",
    "noClick": true
   },
@@ -285,7 +285,7 @@
    "target": {
     "selector": "[role=dialog] input[placeholder='Selecionar material...']"
    },
-   "at": 43.4,
+   "at": 43.2,
    "label": "Selecionar material..."
   },
   {
@@ -295,6 +295,7 @@
    },
    "text": "perfil",
    "cps": 40,
+   "at": 44.05,
    "label": "busca perfil",
    "noClick": true
   },
@@ -303,17 +304,18 @@
    "target": {
     "selector": "[cmdk-item]:has-text('Alumínio perfil'), [role=option]:has-text('Alumínio perfil')"
    },
-   "at": 45.14,
+   "at": 45.04,
    "label": "Alumínio perfil",
    "noScroll": true
   },
   {
    "do": "hover",
    "target": {
-    "selector": "[role=dialog] th:text-is('NCM')"
+    "selector": "[role=dialog] tr.bg-primary\\/5 input",
+    "nth": 1
    },
-   "seconds": 0.4,
-   "at": 45.7,
+   "seconds": 0.6,
+   "at": 45.9,
    "label": "NCM 7602.00.00 do cadastro",
    "optional": true,
    "timeout": 4
@@ -321,10 +323,11 @@
   {
    "do": "hover",
    "target": {
-    "selector": "[role=dialog] th:text-is('Vl. Unit.')"
+    "selector": "[role=dialog] tr.bg-primary\\/5 input",
+    "nth": 3
    },
-   "seconds": 0.4,
-   "at": 50.1,
+   "seconds": 0.6,
+   "at": 50.2,
    "label": "preço de venda 10,40 do cadastro",
    "optional": true,
    "timeout": 4
@@ -444,14 +447,14 @@
    "timeout": 4
   },
   {
-   "do": "waitFor",
-   "selector": "main tbody tr:has-text('#1249'):has-text('Autorizada')",
-   "timeout": 25
-  },
-  {
    "do": "mark",
    "name": "L12",
    "at": 97.56
+  },
+  {
+   "do": "waitFor",
+   "selector": "main tbody tr:has-text('#1249'):has-text('Autorizada')",
+   "timeout": 25
   },
   {
    "do": "hover",

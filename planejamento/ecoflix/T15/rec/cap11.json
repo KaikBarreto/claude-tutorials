@@ -193,8 +193,8 @@
   },
   {
    "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Compras\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,250));}return out})()",
-   "label": "confere janela do PDF"
+   "js": "(async()=>{for(let i=0;i<8;i++){const c=[...document.querySelectorAll('[role=dialog] [role=checkbox]')].map(x=>x.getAttribute('data-state'));if(c.length>=3&&c.slice(0,3).every(v=>v==='checked'))return 'OK: receitas, despesas e compras marcadas';await new Promise(r=>setTimeout(r,150))}return 'DIFERENTE: '+[...document.querySelectorAll('[role=dialog] [role=checkbox]')].map(x=>x.getAttribute('data-state')).join(',')})()",
+   "label": "confere Incluir no arquivo: as três marcadas"
   },
   {
    "do": "mark",
