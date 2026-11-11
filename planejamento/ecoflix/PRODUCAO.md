@@ -493,3 +493,12 @@ Decisões:
   trocada na T06 (4 cenas; a gaveta abre quando entra dinheiro e o visor conta), T19 (o vale volta para a gaveta), T21 (tema
   escuro do Cato, fechada em R$ 0,00) e T00 (a etapa "Caixa" e o glossário). A T09 não tinha gaveta desenhada. Folha da
   T06 mandada ao Kaik.
+- 11/11 14:1x **Mundo base novo pronto** (seção 16 da linha do tempo no gerador; 272 conferências passam; smoke 17 rotas ok;
+  sementes antigas no scratch `gen/seeds-antigos`). Decisões do agente: distribuição de lucros de R$ 40.000,00 em 30/10 fora
+  da DRE (sem ela a Principal fica negativa no fim do mês); cooperativa de agosto e setembro pela tabela do T4; Tabela
+  Depósitos desligada no depósito (a T4 liga na tela); pedidos começam em #1253. **Pendências**: sementes de aula afetadas
+  (t01 `apos-cap05` e t19 inserem outra `company_fiscal_config`; t06 `dia-10` e `apos-cap09` com saldos antigos; t11 com
+  índices e números fixos e o estorno de 50 kg sobre 42 kg de cobre mel) e números da seção 18 que não fecham (cooperativa
+  450/120 da T4 cap11; papelão −370 kg de 05/11 16:10 a 06/11 10:45; `lib/eco.mjs` soma a compra estornada e a
+  compensação: novembro com compras de 19.171,05) — cada robô foi avisado do seu. **Os 16 robôs foram liberados para o
+  ensaio completo**; robôs da T15, T16 e T17 lançados.
