@@ -472,3 +472,6 @@ Decisões:
 - 11/11 13:2x **Estilo saturado pronto em T10, T11 e T12** (~11, 9 e 10 pontos: etapas de cinza a verde cheio com ícone
   branco, balões de pergunta em âmbar cheio, sinais e operadores em cinza; a etiqueta "Cancelada" da T12 cap10 segue
   apagada como o cartão cancelado). Folhas mandadas. Faltam o estilo de T17/T18/T19/T25 e o Cato (T21).
+- 11/11 13:2x **Estilo saturado pronto em T17, T18, T19 e T25** (7, 8, 13 e 8 elementos; desenhos como cédulas, avatares,
+  ícones soltos de pasta e arquivo e os cartões "NF-e/Pedido" da régua da T17 ficaram como estavam). **As 26 aulas estão
+  no estilo novo**, menos o Cato (T21), que está sendo refeito no tema escuro. Folhas mandadas ao Kaik.

@@ -302,7 +302,7 @@ def cap01():
     c.hover(BTNX('Nova Conta'), seconds=0.3, label='botões Nova Conta e Novo Cartão')
     c.mark(3)
     c.click(CONTA('Conta Principal'), at=c.A(3, 'Clicando', 0.5), label='abre a Conta Principal')
-    c.hover(SEL('main h2:has-text("R$"), main p:has-text("R$ 39.593,47")'), seconds=0.4, at=c.A(3, 'saldo', 0.5), label='cartão da Conta Principal')
+    c.hover(SEL('main div.text-4xl.font-bold'), seconds=0.4, at=c.A(3, 'saldo', 0.5), label='cartão da Conta Principal')
     c.hover(BTNX('Saque', within=MAIN), seconds=0.15, at=c.A(3, 'Saque', 0.45), label='Saque')
     c.hover(BTNX('Sangria', within=MAIN), seconds=0.15, at=c.A(3, 'Sangria', 0.45), label='Sangria')
     c.hover(BTNX('Nova Movimentação', within=MAIN), seconds=0.15, at=c.A(3, 'Nova', 0.45), label='Nova Movimentação')
