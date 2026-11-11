@@ -398,8 +398,8 @@ def cap01():
     c.mark(1)
     c.click(CONFIG_RODAPE, at=c.A(1, 'Configurações,', 1.5), label='Configurações (rodapé do menu)', noScroll=True)   # cursor cruza a tela: ~1,5 s
     c.waitfor(text='Configurações do Sistema', timeout=15)
-    c.hover(ABA_EMPRESA, 0.4, at=c.A(1, 'Empresa,', 1.0), label='aba Empresa')
-    c.hover(IDENTIDADE, 0.6, at=c.A(1, 'Identidade', 0.9), label='Identidade Visual')
+    c.hover(ABA_EMPRESA, 0.4, at=c.A(1, 'Empresa,', 0.5), label='aba Empresa')   # a página abre com "Carregando configurações..." (~1 s)
+    c.hover(IDENTIDADE, 0.6, at=c.A(1, 'Identidade', 0.4), label='Identidade Visual')
     c.mark(2)
     c.hover(WL_GAVETA, 0.3, at=c.A(2, 'gaveta', 0.7), label='gaveta White Label (Personalize o sistema com sua marca)')
     c.click(WL_GAVETA, at=c.A(2, 'aqui.', 0.5), label='abre a gaveta White Label')

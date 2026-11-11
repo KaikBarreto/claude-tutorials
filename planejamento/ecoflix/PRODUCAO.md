@@ -588,3 +588,8 @@ Decisões:
   mostrador com o caminhão cheio (lia como se o cheio pesasse 6.380; a fala diz "pesa mais") e T11 cap02 apontava "Entra /
   Alumínio latinha" para o chão vazio depois da prensa. Agente retomado: carregado sobe para 9.460 kg e a diferença
   "peso do material" 3.080 kg (números do mundo: o FKD2E41 do T08), pilha de latinha fica no "Entra". Mando ao Kaik depois.
+- 11/11 19:3x **3D da T05 e T16 prontos** (8 cenas, nenhuma ficou na 2D): T05 cap01 (a ponte: balança de plataforma,
+  computador, impressora e cabos; 18,6 kg vai ao Pedido e o cupom volta), cap04 (térmica e cupom de teste, 08:41:07) e cap05
+  (largura do papel); T16 cap00 (carga de cobre, cancela, nota, fundição), cap07 (placa na nota), cap10 (506 kg bruto,
+  500 kg líquido, R$ 23.950,00) e cap14 (DANFE e XML). Objetos novos: `balancaPlataforma`, `cabo`, `cupom`, `placa`,
+  `cancela`, `fundicao`, `pasta`. Na revisão: o mostrador da T16 cap10 cobre o título por um instante; agente retomado.
