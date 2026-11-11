@@ -356,13 +356,20 @@ def js_topo(dur_ms=700):
             "if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop,dy=-y0;if(y0<3)return 'ok';" + SUAVE.replace('DUR', str(int(dur_ms))) + "return 'topo:'+Math.round(c.scrollTop)})()")
 
 
-def js_clica(css, texto=None, espera_ms=3000):
+def js_clica(css, texto=None, espera_ms=3000, confirma=None):
     """clique por eval (sem cursor) no 1º elemento visível que casa o CSS (e contém `texto`), esperando até `espera_ms`: abre Popover e
-    escolhe item do cmdk (aceitam .click(); o gatilho do Select do Radix não: docs/08, T5). Devolve 'ok: <texto>' ou 'SEM ALVO'."""
+    escolhe item do cmdk (aceitam .click(); o gatilho do Select do Radix não: docs/08, T5). Com `confirma` (CSS do que tem de aparecer,
+    ex. o campo de busca do Popover), confere por 1 s e clica de novo uma vez se não abriu (o Popover de data que ainda fecha devolve o
+    foco e fecha o novo: T13 cap05, 11/11). Devolve 'ok: <texto>' (ou '... (2º clique)') ou 'SEM ALVO'."""
     filtro = f"&&e.textContent.includes({json.dumps(texto)})" if texto else ''
+    conf = ''
+    if confirma:
+        conf = ("const viu=async()=>{for(let i=0;i<10;i++){if([...document.querySelectorAll(" + json.dumps(confirma) + ")].some(e=>e.offsetParent))return true;"
+                "await new Promise(r=>setTimeout(r,100));}return false};if(!(await viu())){const e2=acha();if(e2){e2.click();"
+                "return 'ok: '+e2.textContent.trim().slice(0,60)+' (2º clique)'+((await viu())?'':' SEM ALVO: não abriu')}}")
     return ("(async()=>{const acha=()=>[...document.querySelectorAll(" + json.dumps(css) + ")].find(e=>e.offsetParent" + filtro + ");"
             f"let el=acha();for(let i=0;i<{int(espera_ms / 100)}&&!el;i++){{await new Promise(r=>setTimeout(r,100));el=acha();}}"
-            "if(!el)return 'SEM ALVO';el.click();return 'ok: '+el.textContent.trim().slice(0,60)})()")
+            "if(!el)return 'SEM ALVO';el.click();" + conf + "return 'ok: '+el.textContent.trim().slice(0,60)})()")
 
 
 def js_colar(texto):
@@ -593,7 +600,8 @@ def cap05():
     c.mark(2)
     colar(c, CAMPO('bill-description'), 'Conserto do pneu da empilhadeira', c.A(2, 'Preencho', 0.2), c.A(2, 'como', 0.0), 'Descrição (colada)')
     escolhe_dia(c, CAMPO('bill-due'), '9', c.A(2, 'conta:', 0.3), c.A(2, 'valor,', 0.0), 'Vencimento 09/11/2026 (ontem)')
-    c.ev(js_clica('#bill-category'), at=c.A(2, 'descrição,', -0.3), label='Categoria (abre a lista, sem cursor)')
+    c.waitfor(gone=SEL(f"{POP} table[role=grid]"), timeout=4)
+    c.ev(js_clica('#bill-category', confirma="input[placeholder='Pesquisar categoria...']"), at=c.A(2, 'descrição,', -0.3), label='Categoria (abre a lista, sem cursor)')
     c.type({'placeholder': 'Pesquisar categoria...'}, 'máquinas', at=c.A(2, 'descrição,', -0.4), label='Manutenção de máquinas (busca + Enter)',
            noClick=True, submit=True)
     c.click(CAMPO('bill-cost-center'), at=c.A(2, 'categoria', -0.3), label='Centro de custo (abre a lista)')
@@ -633,10 +641,11 @@ def cap06():
     c.mark(3)
     escolhe_dia(c, CAMPO('bill-due'), '23', c.A(3, 'Vencimento,', 0.7), c.A(3, 'vinte', 0.5), 'Vencimento 23/11/2026 (1ª parcela)')
     # "Categoria e fornecedor, como antes": abre e escolhe por eval (sem cursor; a busca digitada aparece na tela)
-    c.ev(js_clica('#bill-category'), at=c.A(3, 'novembro.', 0.0), label='Categoria (abre a lista, sem cursor)')
+    c.waitfor(gone=SEL(f"{POP} table[role=grid]"), timeout=4)
+    c.ev(js_clica('#bill-category', confirma="input[placeholder='Pesquisar categoria...']"), at=c.A(3, 'novembro.', 0.0), label='Categoria (abre a lista, sem cursor)')
     c.type({'placeholder': 'Pesquisar categoria...'}, 'veículos', at=c.A(3, 'Categoria', 0.05), label='Manutenção de veículos (busca + Enter)',
            noClick=True, submit=True)
-    c.ev(js_clica('[role=dialog] button[role=combobox]', 'Selecione o fornecedor'), at=c.A(3, 'fornecedor,', 0.0), label='Selecione o fornecedor (sem cursor)')
+    c.ev(js_clica('[role=dialog] button[role=combobox]', 'Selecione o fornecedor', confirma="input[placeholder='Pesquisar fornecedor...']"), at=c.A(3, 'fornecedor,', 0.0), label='Selecione o fornecedor (sem cursor)')
     c.type({'placeholder': 'Pesquisar fornecedor...'}, 'Vale', at=c.A(3, 'fornecedor,', -0.3), label='busca Vale', noClick=True)
     c.ev(js_clica('[cmdk-item],[role=option]', 'Auto Peças Vale Forte'), at=c.A(3, 'como', 0.0), label='Auto Peças Vale Forte (sem cursor)')
     c.mark(4)
@@ -677,7 +686,7 @@ def cap07():
     c.mark(2)
     c.digita(CAMPO('bill-amount'), '2300,00', c.L(2) - 0.9, c.A(2, 'Valor,', 0.3), 'ZOOM Valor 2.300,00')
     colar(c, CAMPO('bill-description'), 'Aluguel da empilhadeira', c.A(2, 'descrição', -0.1), c.A(2, 'e', 0.0, nth=0), 'Descrição (colada)')
-    c.ev(js_clica('#bill-category'), at=c.A(2, 'categoria,', 0.0), label='Categoria (abre a lista, sem cursor)')
+    c.ev(js_clica('#bill-category', confirma="input[placeholder='Pesquisar categoria...']"), at=c.A(2, 'categoria,', 0.0), label='Categoria (abre a lista, sem cursor)')
     c.type({'placeholder': 'Pesquisar categoria...'}, 'Aluguel', at=c.A(2, 'categoria,', -0.1), label='Aluguel (busca + Enter)', noClick=True, submit=True)
     escolhe_dia(c, CAMPO('bill-due'), '12', c.A(2, 'Vencimento', 0.5), c.A(2, 'doze', 0.5), 'Vencimento 12/11/2026')
     c.mark(3)

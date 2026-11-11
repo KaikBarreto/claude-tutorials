@@ -541,7 +541,9 @@ def cap04():
     """Kardex: menu (recolhido) Materiais > Histórico (Kardex); L2 ilustração; Ferro pesado; a Transferência (2.180 > +320 > 2.500) e a
     Compra de 09/11 (+860, final 2.180); L6 ilustração; Filtros sem contador (Este mês); Filtros > Período > Este ano > Aplicar."""
     c = Cap(4, setup_estoque())
-    c.hover(MENU_GRUPO('Materiais'), 0.5, w=(1, 'Agora', None, 0.0), noScroll=True, label='menu lateral (o menu recolhido abre)')
+    c.hover(MENU_GRUPO('Materiais'), 0.3, w=(1, 'Agora', None, 0.4), noScroll=True, label='menu lateral (o menu recolhido abre)')
+    # aberto pelo mouse, o menu traz o grupo Materiais FECHADO (ensaio de 11/11): abre o grupo, só se o item ainda não aparece
+    c.click(MENU_GRUPO('Materiais'), noScroll=True, unless=MENU_LINK('Histórico (Kardex)'), label='abre o grupo Materiais')
     c.click(MENU_LINK('Histórico (Kardex)'), w=(1, 'Kardex'), noScroll=True, label='Histórico (Kardex)')
     c.waitfor(text='Geral (Todos)', timeout=15)
     c.ev(JS_PAPELAO, label='confere o papelão negativo (Kardex Geral) fora da tela')
@@ -659,7 +661,8 @@ def cap07():
     """Relatório: menu (recolhido) Materiais > Relatório; Este mês > Mês passado; os quatro cartões; Total Comprado aberto; Projeção de
     Lucro (estimativa) aberta; L7-L9 ilustrações."""
     c = Cap(7, setup_estoque())
-    c.hover(MENU_GRUPO('Materiais'), 0.4, w=(1, 'Agora', None, 0.0), noScroll=True, label='menu lateral (o menu recolhido abre)')
+    c.hover(MENU_GRUPO('Materiais'), 0.3, w=(1, 'Agora', None, 0.4), noScroll=True, label='menu lateral (o menu recolhido abre)')
+    c.click(MENU_GRUPO('Materiais'), noScroll=True, unless=MENU_LINK('Relatório'), label='abre o grupo Materiais')
     c.click(MENU_LINK('Relatório'), w=(1, 'Estoque:'), noScroll=True, label='Relatório')
     c.waitfor(text='Análise detalhada de compras, vendas e lucro por material', timeout=15)
     c.cursor((760, 420), w=(1, 'comprou'), label='o cursor sai do menu (ele recolhe)')

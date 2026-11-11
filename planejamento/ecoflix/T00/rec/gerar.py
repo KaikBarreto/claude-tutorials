@@ -476,7 +476,7 @@ def cap03(v):
         c.mark(2)
         c.click(BTNX('CRM/Kanban'), at=c.A(2, 'Pode', 1.1), label='aula CRM/Kanban (Conheça este módulo)')
         c.waitfor(text='Consultar fora da ordem?', timeout=8)
-        c.click(BTN('Consultar esta aula'), at=c.A(2, 'É', 1.3), label='Consultar esta aula')
+        c.toque(BTN('Consultar esta aula'), at=c.A(2, 'É', 1.3), label='Consultar esta aula')
         c.waitfor(text='Ver trilha', timeout=25)
         c.marcar(TXT('Não tem no seu plano'), label='selo Não tem no seu plano (alto dos detalhes)')
         c.toque(BTNX('Ver trilha'), at=c.A(2, 'jeito', 1.2), label='Ver trilha (gaveta)')

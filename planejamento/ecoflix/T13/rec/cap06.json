@@ -182,8 +182,15 @@
    "label": "Vencimento 23/11/2026 (1ª parcela)"
   },
   {
+   "do": "waitFor",
+   "gone": {
+    "selector": "[data-radix-popper-content-wrapper] table[role=grid]"
+   },
+   "timeout": 4
+  },
+  {
    "do": "eval",
-   "js": "(async()=>{const acha=()=>[...document.querySelectorAll(\"#bill-category\")].find(e=>e.offsetParent);let el=acha();for(let i=0;i<30&&!el;i++){await new Promise(r=>setTimeout(r,100));el=acha();}if(!el)return 'SEM ALVO';el.click();return 'ok: '+el.textContent.trim().slice(0,60)})()",
+   "js": "(async()=>{const acha=()=>[...document.querySelectorAll(\"#bill-category\")].find(e=>e.offsetParent);let el=acha();for(let i=0;i<30&&!el;i++){await new Promise(r=>setTimeout(r,100));el=acha();}if(!el)return 'SEM ALVO';el.click();const viu=async()=>{for(let i=0;i<10;i++){if([...document.querySelectorAll(\"input[placeholder='Pesquisar categoria...']\")].some(e=>e.offsetParent))return true;await new Promise(r=>setTimeout(r,100));}return false};if(!(await viu())){const e2=acha();if(e2){e2.click();return 'ok: '+e2.textContent.trim().slice(0,60)+' (2º clique)'+((await viu())?'':' SEM ALVO: não abriu')}}return 'ok: '+el.textContent.trim().slice(0,60)})()",
    "at": 23.34,
    "label": "Categoria (abre a lista, sem cursor)"
   },
@@ -200,7 +207,7 @@
   },
   {
    "do": "eval",
-   "js": "(async()=>{const acha=()=>[...document.querySelectorAll(\"[role=dialog] button[role=combobox]\")].find(e=>e.offsetParent&&e.textContent.includes(\"Selecione o fornecedor\"));let el=acha();for(let i=0;i<30&&!el;i++){await new Promise(r=>setTimeout(r,100));el=acha();}if(!el)return 'SEM ALVO';el.click();return 'ok: '+el.textContent.trim().slice(0,60)})()",
+   "js": "(async()=>{const acha=()=>[...document.querySelectorAll(\"[role=dialog] button[role=combobox]\")].find(e=>e.offsetParent&&e.textContent.includes(\"Selecione o fornecedor\"));let el=acha();for(let i=0;i<30&&!el;i++){await new Promise(r=>setTimeout(r,100));el=acha();}if(!el)return 'SEM ALVO';el.click();const viu=async()=>{for(let i=0;i<10;i++){if([...document.querySelectorAll(\"input[placeholder='Pesquisar fornecedor...']\")].some(e=>e.offsetParent))return true;await new Promise(r=>setTimeout(r,100));}return false};if(!(await viu())){const e2=acha();if(e2){e2.click();return 'ok: '+e2.textContent.trim().slice(0,60)+' (2º clique)'+((await viu())?'':' SEM ALVO: não abriu')}}return 'ok: '+el.textContent.trim().slice(0,60)})()",
    "at": 25.02,
    "label": "Selecione o fornecedor (sem cursor)"
   },

@@ -664,3 +664,14 @@ Decisões:
   com relógio próprio para o cupom 08:41:07 (a calibrar); trechos `device: windows` só como roteiro (`cap02w`, `cap04w`,
   `cap06w`, `cap09w`); completo provável em cap06, cap09 e cap10.
 - 11/11 22:3x **Robô da T18 (parcial)**: gerador dos 11 capítulos, handlers do SIGOR (`mtr_set_credential`, `sigor-mtr-sync-ref`, `-emit`, `-cancel`, `sigor-cdf-emit`, `lib/mtr_sigor.mjs`), sementes `inicio` e `apos-cap03..07`, `propostas_fala.md` (pausas e a 1ª linha do cap01 que falta na voz). Rápido passou em 0, 1, 2, 5-8 e 10; 3, 4 e 9 corrigidos sem rodar de novo; 6 com o selo da cota sem alvo. Na tabela de retomada.
+- 11/11 22:5x **Unificação do kit 2D concluída** (kit e as 26 aulas): `pulse()` agora acrescenta `scale()` no fim do
+  `transform` (sem deslocar; pulsos do mesmo quadro se multiplicam; chamar depois do `vis`); grupo `.g` → `.eco-grupo`;
+  `descarrega` com o monte na linha da roda (compensado onde havia balança: kit, T07, T08, T15, T22, sem mudar a imagem);
+  exemplo do kit vira "Dupla pesagem" (1ª − 2ª = Peso Bruto). Mudou na imagem: o pulso (sem escorregar e com os pulsos que
+  se perdiam; >20 aulas) e o monte da T16 cap00 (um pouco mais alto). Conferido aqui: as 27 cópias com o código novo e dois
+  quadros (T01 cap10 e T21 cap00, tema do Cato) sem erro.
+- 11/11 22:5x **T00 em 3D pronta e mandada ao Kaik** (cap00 vista do pátio com as seis paradas; cap05 um pátio contínuo
+  com a câmera do portão à balança 38 kg, à caixa registradora R$ 235,60, à baia e ao caminhão da Serra Fina; ilu05_conta
+  na 2D). Objetos novos: `pessoa`, `registradora`, `cedula`, `portao`, `guiche`, `baia`, `banco`. **Vigia do render**: com
+  a máquina cheia, um quadro 3D em SCHED_IDLE passou de 90 s sem estar travado; o padrão agora é 600 s (90 s com
+  `RENDER_PRIORIDADE=normal`). Cenas de Windows da T05: 1 de 8 trechos da prévia renderizado (fila prio 05).

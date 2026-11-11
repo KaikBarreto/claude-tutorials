@@ -24,7 +24,9 @@ const ICONS = [...new Set([...fs.readFileSync(HTML, 'utf8').matchAll(/['"]([a-z]
   .filter(n => fs.existsSync(path.join(LUCIDE, n + '.svg')));
 // Vigia: cena travada (promessa que nunca resolve, laço sem fim no setup ou no R) sai com erro em vez de segurar a trava
 // pesada dos outros (10/11: um render de quadros parado prendeu a fila de 18 agentes por 10 min). --vigia S (padrão 90).
-const VIGIA_S = parseFloat(opt('--vigia', '90'));
+// Em SCHED_IDLE (abaixo) o render só usa CPU que sobra: com a máquina cheia, um quadro 3D chegou a passar de 90 s sem
+// estar travado (11/11, T00). Aí o padrão é 600 s; com RENDER_PRIORIDADE=normal, 90 s.
+const VIGIA_S = parseFloat(opt('--vigia', process.env.RENDER_PRIORIDADE === 'normal' ? '90' : '600'));
 let vigia = null;
 const vivo = () => {
   clearTimeout(vigia);

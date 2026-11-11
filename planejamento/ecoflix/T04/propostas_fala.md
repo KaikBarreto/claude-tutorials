@@ -32,6 +32,15 @@ fica para a revisão decidir com a voz real.
 - **Aviso do React no console** quando a busca preenche UF e cidade ("Select is changing from uncontrolled to controlled", Selects do
   Radix que nasceram sem valor): só console. Entrou no `ruidoConsole` do `mundo.json` para não contar como problema da gravação.
 
+- **"Rascunho encontrado" depois de salvar (cap02 L9):** ao abrir "Novo Fornecedor" logo depois de salvar o Rogério, a janela
+  mostra "Rascunho encontrado — Você tem um preenchimento anterior não finalizado." com "Descartar"/"Retomar". O Salvar chama
+  `clearDraft()` antes da gravação assíncrona (`EntityFormDialog.tsx:859`) e o efeito de autosave de `hooks/useFormDraft.ts` regrava
+  o `sessionStorage` (`form-draft:entity-form-supplier`) enquanto a janela ainda está aberta. Defeito para o time do app; o robô apaga
+  a chave antes de abrir a segunda janela (como a página deveria ter feito), e a tela segue o roteiro.
+- **Link do portal com o endereço local:** a ficha mostra "http://127.0.0.1:8080/portal/..." (cap01, ficha da Aços; cap07, zoom no
+  "Acesso ao portal"). Para a gravação final, `APP_ORIGIN=https://ecosistematecnologia.com.br` (o domínio do `index.html` do app;
+  confirmar o do produto) faz o app montar o link com o domínio (docs/04, "Endereço do produto na tela").
+
 ## Mundo (para a junção)
 - **Cida Ramos** (fornecedora PF, mesmo telefone da Aparecida, sem documento nem endereço) não está no mundo base B: entra pela semente
   `seeds-extra/t04/inicio` (código 6). Sem ela não há selo "Mesmo telefone" no cap01.

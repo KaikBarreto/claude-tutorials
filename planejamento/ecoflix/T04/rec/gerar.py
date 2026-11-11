@@ -557,6 +557,9 @@ def cap02():
     c.waitfor(gone={'role': 'dialog'}, timeout=8)
     c.marcar(NOME_LINHA('Rogério Alves Costa'), label='Rogério Alves Costa na lista (sem mexer o mouse)')
     c.mark(9)
+    # defeito do app: o rascunho do formulário (sessionStorage) é regravado depois do clearDraft() do Salvar, e a janela nova abria com
+    # "Rascunho encontrado" (folha de contato do ensaio de 11/11 22:11); o robô apaga a chave antes, como a página faria (Achados do app)
+    c.ev("(()=>{sessionStorage.removeItem('form-draft:entity-form-supplier');return 'rascunho apagado'})()", label='apaga o rascunho regravado pelo app (defeito)')
     c.ev(js_clica_botao('Novo Fornecedor'), at=c.L(9) - 0.9, label='Novo Fornecedor por eval (o clique logo depois de salvar levou 3,5 s no ensaio)')
     c.waitfor(text='Identificação e contato', timeout=10)
     c.click(ABA_DLG('Dados Fiscais'), at=c.A(9, 'cadastro,', 0.8), label='aba Dados Fiscais')

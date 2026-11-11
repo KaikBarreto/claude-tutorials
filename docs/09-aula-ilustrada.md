@@ -47,7 +47,7 @@ node render_cenas.cjs 2 ../../narracao/cap02.json stills --stills 3.4,11.3,20.6 
 Pegue 2 instantes por linha (meio e fim), monte uma folha de contato e olhe tudo: texto cortado, sobreposição, elemento
 que não entrou, composição vazia. No piloto, a revisão pegou 9 problemas antes do render.
 Cena travada (promessa que nunca resolve, laço sem fim no `setup` ou no `R`): o `render_cenas.cjs` sai com código 3 quando
-nada anda em 90 s (`--vigia S`), em vez de segurar a trava pesada dos outros.
+nada anda em 600 s (90 s com `RENDER_PRIORIDADE=normal`; `--vigia S`), em vez de segurar a trava dos outros.
 Quadros de conferência (poucos JPEG) não disputam a trava pesada com a gravação: trava leve própria e prioridade baixa,
 `flock $TUT_HOME/.stills.lock nice -n 19 timeout 300 node render_cenas.cjs ...` (a pesada fica para gravar e renderizar MP4).
 O `render_cenas.cjs` se põe sozinho em `SCHED_IDLE` (`chrt -i`), com o Chromium e o ffmpeg que ele abre: só usa a CPU
