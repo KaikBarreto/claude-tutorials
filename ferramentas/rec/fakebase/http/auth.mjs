@@ -3,6 +3,7 @@ import { config } from '../core/config.mjs';
 import { store } from '../core/store.mjs';
 import { unknown } from '../core/log.mjs';
 import { readJson, sendJson, send, signJwt, decodeJwt, userFromRequest } from './common.mjs';
+import { now } from '../core/util.mjs';
 
 const TEN_YEARS = 10 * 365 * 86400;
 
@@ -66,7 +67,9 @@ export function toAuthUser(u) {
 }
 
 export function buildSession(u) {
-  const nowSec = Math.floor(Date.now() / 1000);
+  // relógio do mundo (FAKE_NOW): o EcoSistema 1.59 recusa o login pela tela quando o `iat` do token difere mais de 5 min do
+  // relógio do navegador (Auth.tsx, detectAuthClockSkew); sem FAKE_NOW é o relógio de sempre
+  const nowSec = Math.floor(now().getTime() / 1000);
   const exp = nowSec + TEN_YEARS;
   const user = toAuthUser(u);
   const access_token = signJwt({
@@ -149,6 +152,14 @@ export async function handleAuth(req, res, url, ctx) {
       return sendJson(res, 200, out);
     }
     return sendJson(res, 200, toAuthUser(u));
+  }
+
+  // verifyOtp (código do "Esqueci minha senha"): entra como o dono do e-mail, com qualquer código (como a senha)
+  if (route === 'verify' && method === 'POST') {
+    const body = (await readJson(req)) || {};
+    const u = findUserByEmail(body.email);
+    if (!u) return authError(res, 403, 'otp_expired', 'Token has expired or is invalid');
+    return sendJson(res, 200, buildSession(u));
   }
 
   if (route === 'logout') return send(res, 204, null);

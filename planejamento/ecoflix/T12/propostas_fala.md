@@ -7,7 +7,12 @@ geral aplica; `roteiro.md` e `tts_textos.py` não foram mexidos.
 
 | Cap. | Linha | Texto atual | Texto novo | Motivo |
 |---|---|---|---|---|
-| — | — | (preenchido depois do ensaio completo) | | |
+| — | — | Nenhuma troca de texto até aqui: os números da tela conferem com a fala (cap02 colunas 0/1/1/5/1; cap05 #9 com Jair Lopes e GHT7B19; cap06 ficha da 8 com Caçamba 03 recolhida e 05 entregue; cap07 pedido #10; cap08 FKD2E41 6.380 kg e 14.000 kg; cap10 4/1/0/25% e 6/5/1/100%, conferidos por `confere*` no robô). | — | — |
+
+Respiros que a voz de verdade pode pedir (`pausas.py`, a medir na gravação final, não é troca de texto):
+- cap06 L7 ("De volta ao quadro"): o quadro leva ~1 s para montar depois de "Voltar às ordens".
+- cap07 L7 ("Agora, do lado da Recicla Vale"): a troca do portal para o sistema (rota da Frota) leva ~1 s.
+- cap08 L5 ("Aqui, São Paulo, veículo único e toco"): três seletores em ~2 s; o robô usa o teclado (sem cursor) no Tipo e no rodado.
 
 ## Coluna Tela do roteiro (não muda a fala)
 
@@ -26,5 +31,7 @@ geral aplica; `roteiro.md` e `tts_textos.py` não foram mexidos.
   sem hora do relatório (`agendamento.data`, "2026-11-10") é lida como meia-noite UTC e mostrada em Brasília, um dia antes
   (`pages/CollectionOrderPage.tsx`, `fmtDate`). A ficha e o quadro mostram 10/11 certo. A câmera fica no relatório em "Concluir coleta" e
   na dica: melhor não aproximar o bloco do Agendamento na edição.
+- Campo de data nativo (Data agendada, Data preferida, Validade da CNH) mostra "dd/mm/yyyy" vazio no Chromium do robô (o valor sai
+  13/11/2026 certo): é o navegador da gravação, não o app.
 - Cartão da ordem cancelada (#4) oferece o botão "Preencher" (`CollectionOrdersBoard.tsx`, cartão das colunas que não são
   "Solicitada": "Preencher" quando não é concluída), embora a ordem não mude mais de etapa.

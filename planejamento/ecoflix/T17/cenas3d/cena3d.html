@@ -36,7 +36,9 @@ const TOPO = 132, _anc = ancoraK;
 function ancora(e, p, ax = .5, ay = 1, dx = 0, dy = 0) {
   _anc(e, p, ax, ay, dx, dy); const w = e._w, h = e._h; let l = parseFloat(e.style.left), t = parseFloat(e.style.top);
   t = Math.min(Math.max(t, TOPO), 760 - h); e.style.top = t.toFixed(1) + 'px';
-  const d = Math.max(40 - l, l + w - 1240, 0), f = Math.max(0, 1 - d / 40); const o = parseFloat(e.style.opacity || 1) * f; e.style.opacity = o.toFixed(4);
+  const d = Math.max(40 - l, l + w - 1240, 0);                       // até 60 px de invasão da margem: empurra para dentro; além disso, esmaece
+  if (d <= 60) { l = Math.min(Math.max(l, 40), 1240 - w); e.style.left = l.toFixed(1) + 'px'; }
+  const f = d <= 30 ? 1 : Math.max(0, 1 - (d - 30) / 30); const o = parseFloat(e.style.opacity || 1) * f; e.style.opacity = o.toFixed(4);
   if (o > .5 && (l < 39 || l + w > 1241)) console.warn('FORA', e.textContent.slice(0, 30), l | 0, (l + w) | 0);
 }
 

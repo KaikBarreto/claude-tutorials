@@ -694,3 +694,20 @@ Decisões:
 - 11/11 23:1x **Robô da T20 retomado** (a fila com envelhecimento não deixa aula parada: não há "vez da prioridade 20").
   Robôs que encerraram a vez com o lote ainda na fila (T01, T02, T03, T05, T07, T08, T09, T10, T11, T13, T14, T17, T19,
   T26) seguem vivos: voltam sozinhos quando o lote ou o Monitor deles avisa.
+- 11/11 23:2x **Robô da T13 (parcial) retomado**: cap04 aprovado no completo (maxLate 0,65 s; os 8,2 s sob os renders
+  sumiram); cap06 e cap09 gravados sob carga (regravar); cap05 completo falhou (o calendário fechando fechava a lista da
+  categoria; corrigido); 00-03 só no rápido sem folha olhada; 07, 08, 10-13 não rodaram. Novos: 5 handlers
+  (`pay_financial_bill`, `pay_partner_balance`, `create_installment_bills`, `create_recurring_bill_template`,
+  `shift_recurring_bills_due_date`), sementes `t13/inicio` e `apos-cap04..11` (Conta Principal fecha em 39.593,47). Fala:
+  cap07 L6/L7 e cap08 L5 (com "Repetir até" o app cria as 6 contas de nov a abr, não a janela de 3 meses; as ilustrações
+  mudam junto). Mundo: o `generate_due_recurring_bills` não completa a janela de 3 meses; as baixas lançam às 12:00 do dia
+  pago. **Causa da parada**: o lote de 13 capítulos numa chamada só em segundo plano morre nas 2 h (cada capítulo espera
+  45-60 min na fila). Regra nova no `_BRIEF_ROBO.md`: um capítulo por chamada; lote que morreu depois de rodar parte não é
+  "morreu sem rodar". T13 e T18 retomadas assim (o lote da T18 rodou o cap04 e morreria às 23:45 antes do cap03).
+  Robô que parar por isso: retomar com a mesma instrução.
+- 11/11 23:2x **Supabase falso da skill atualizado** com os ajustes da cópia viva: valor entre aspas em `or=(...)`
+  (`core/filters.mjs`, T13) e, no `http/auth.mjs`, o `iat` do token pelo relógio do mundo (o app 1.59 recusa login com
+  diferença > 5 min) e o `verifyOtp` do "Esqueci minha senha".
+- 11/11 23:2x **Kaik: "esses 3D vão intercalando com o conteúdo no sistema né?"** Sim: cada ilustração entra no meio do
+  capítulo gravado, no lugar da janela do app, de uma palavra a outra da fala (5 a 20 s), e a gravação volta mostrando onde
+  se faz aquilo; as prévias só emendam as ilustrações. 35 cenas em 3D no total.

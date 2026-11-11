@@ -87,6 +87,8 @@ function parseLogicTerm(term) {
       const ref = parseColumnRef(parts.slice(0, i).join('.'));
       const ov = parseOpValue(parts.slice(i).join('.'));
       if (!ov) return null;
+      // valor entre aspas dentro de or=(...) (PostgREST: `name.ilike."%x%"`, usePartnerSearch do app): tira as aspas (T13, 11/11)
+      if (typeof ov.value === 'string' && ov.value.length >= 2 && ov.value[0] === '"' && ov.value.endsWith('"')) ov.value = ov.value.slice(1, -1).replace(/\\(["\\])/g, '$1');
       return { t: 'cond', ...ref, ...ov };
     }
   }
