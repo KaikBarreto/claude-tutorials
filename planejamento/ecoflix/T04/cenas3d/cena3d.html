@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<!-- T04 "Clientes e Fornecedores" · cenas 3D (kit perfis/ecoflix/cenas3d/kit3d.js). As cenas 2D da ../cenas/cenas.html ficam de
+     reserva. Uma por capítulo (ilustracoes.json, chave "3d"):
+       cap00 o pátio: quem traz sucata (carroça do carroceiro, caminhão da cooperativa, caminhão da oficina) chega pela esquerda; quem
+             leva material (siderúrgica e fundição) vem buscar pela direita; o saldo fica no meio, embaixo;
+       cap08 peso x valor: a pilha de fardos de papelão (59% do peso, R$ 0,55 o quilo) ao lado do saco pequeno de latinha (9% do
+             peso, R$ 6,20 o quilo);
+       cap10 sucata é fungível: a latinha da cooperativa, da Dona Cida e de todo mundo voa pro mesmo fardo; o fardo segue pro cliente
+             (Serra Fina); a conta da margem (7,40 − 6,20 = 1,20 o quilo, "Estimativa") entra embaixo.
+     Âncoras W(linha,'palavra') das falas do narracao/tts_textos.py; números da fala e do MUNDO_FICTICIO.
+     Render: node ferramentas/edit/cenas/render_cenas.cjs <cap> <capNN.json> saida.mp4 --html planejamento/ecoflix/T04/cenas3d/cena3d.html --de <at> --ate <at+dur> -->
+<style>
+.ttl{font-weight:800;font-size:24px;line-height:1.2;white-space:nowrap}
+.row{display:flex;align-items:center}
+.ico{display:flex;align-items:center;justify-content:center;flex:none;border-radius:12px;background:var(--vs);color:#fff}
+.tag.r{background:#E5484D}
+.lbl{font-weight:600;font-size:17px;color:#4B5563;white-space:nowrap}
+</style>
+</head><body>
+<script type="module">
+import { THREE, PI, eo, eio, pr, lerp, rng, ri, pega, W, el, ic, vis, ripple, pulse, kg, conta, posTitulo, titulo, chip, selo, op,
+  CENA, GL, camera, ancora, mundo, tela, grupo, mancha, anel, destaque, domo, peca, monte, chaoPatio, caminhao, carroca, fardo, saco,
+  sacoAberto, latinhas, fardoLatinhas, transfere, ordemPor, cresce, pulso, COR, M, cena } from '../../../../perfis/ecoflix/cenas3d/kit3d.js';
+import { galpao } from '../../../../perfis/ecoflix/cenas3d/objetos/galpao.js';
+import { fardoPapelao } from '../../../../perfis/ecoflix/cenas3d/objetos/fardoPapelao.js';
+
+const brl = v => 'R$ ' + v.toFixed(2).replace('.', ',');
+const traco = (p, t, a, d) => { const L = p.getTotalLength(), q = eo(pr(t, a, d)); p.style.strokeDasharray = L; p.style.strokeDashoffset = (L * (1 - q)).toFixed(1); p.style.opacity = q > 0 ? 1 : 0; };
+// rodas girando em função da distância andada para a frente (o veículo virado para -x anda s = x0 - x)
+const rola = (v, s) => { for (const r of v.userData.rodas) r.rotation.z = -s / v.userData.R; };
+// etiqueta de parceiro: ícone + nome (o ícone vem com o nome literal na página)
+const nome = (icone, txt, cls = '') => el(`<div class="tag ${cls}" style="font-size:19px;padding:8px 16px">${icone}${txt}</div>`);
+const CAPS = {};
+
+// ------------------------------------------------------------------ CAPS[0] · Quem entra e sai (o pátio)
+// 0 "Oi! Neste tutorial a gente vai montar a base de quem entra e sai do pátio da Recicla Vale Metais."
+// 1 "De um lado, quem traz sucata: o carroceiro, a cooperativa, a oficina. Do outro, quem leva: a siderúrgica, a fundição."
+// 2 "E entre os dois fica o saldo: quem está te devendo, e quem tem crédito com você. É isso que a gente vai aprender a ler."
+CAPS[0] = () => {
+  chaoPatio(CENA, [0, 0, 0], { c: 34, l: 16, passo: 2.6 });
+  const GAL = galpao(CENA, [0, 0, -2.2], { c: 4.4, l: 3.0, h: 1.7 });
+  const PIL = monte(CENA, [0, 0, 1.3], { n: 40, rx: 1.15, rz: .9, h: .8, mancha: [3, 2.4] });
+  // quem traz: carroça (carroceiro), caminhão de latinha (cooperativa), caminhão com sucata (oficina), pela esquerda
+  const XE = -7.6, XL = -17;
+  const car = carroca(CENA, [XE, 0, 3.8]);
+  for (const p of domo(20, .7, .4, .42, .62)) peca(car, pega(['aco', 'ferrugem', 'aco', 'cobre']), p);
+  const coop = caminhao(CENA, [XE, 0, .1], { c: 4.8, l: 2.0, R: .4, cc: 1.6, hc: 1.5, eixos: 2, carga: 'latinha', n: 240 });
+  const ofi = caminhao(CENA, [XE, 0, -3.9], { cor: COR.ambar, c: 4.6, l: 2.0, R: .4, cc: 1.55, hc: 1.5, eixos: 2, bau: 'grade' });
+  { const B = ofi.userData.cacamba, cb = ofi.userData.bau.cb; for (const p of domo(18, cb / 2 - .25, .7, .42, .1)) peca(B, pega(['aco', 'ferrugem', 'alu', 'cobre']), [cb / 2 + p[0], p[1], p[2]]); }
+  // quem leva: siderúrgica e fundição vêm buscar pela direita (viradas para -x), com fardos na caçamba
+  const XD = 7.6, XR = 17;
+  const carrega = (v, cor) => { const B = v.userData.cacamba; for (const [x, y, z] of [[.5, 0, -.5], [.5, 0, .5], [1.1, 0, -.5], [1.1, 0, .5], [1.7, 0, -.5], [1.7, 0, .5], [.8, .42, -.5], [.8, .42, .5], [1.4, .42, 0]]) fardo(B, [x, .1 + y, z], cor); };
+  const sid = caminhao(CENA, [0, 0, 0], { c: 4.8, l: 2.0, R: .4, cc: 1.6, hc: 1.5, eixos: 2, bau: 'grade' }), fun = caminhao(CENA, [0, 0, 0], { cor: COR.ambar, c: 4.8, l: 2.0, R: .4, cc: 1.6, hc: 1.5, eixos: 2, bau: 'grade' });
+  carrega(sid, COR.aco); carrega(fun, COR.cobre);
+  const SID = grupo(CENA, [XR, 0, -2.5]), FUN = grupo(CENA, [XR, 0, 2.7]); SID.rotation.y = FUN.rotation.y = PI; SID.add(sid); FUN.add(fun);
+  const tit = titulo('Parceiros', 'Quem entra e sai');
+  const rec = el('<div class="ttl" style="position:absolute;font-size:25px">Recicla Vale Metais</div>');
+  const hE = el('<div class="tag" style="position:absolute;font-size:19px;padding:7px 16px">trazem sucata</div>'), hD = el('<div class="tag a" style="position:absolute;font-size:19px;padding:7px 16px">levam material</div>');
+  const nC = nome(ic('user-round', 22), 'Carroceiro'), nO = nome(ic('users', 22), 'Cooperativa'), nF = nome(ic('wrench', 22), 'Oficina');
+  const nS = nome(ic('factory', 22), 'Siderúrgica', 'a'), nU = nome(ic('flame', 22), 'Fundição', 'a');
+  const sal = el(`<div class="card" style="left:440px;top:636px;width:400px;height:132px;padding:18px 24px">
+    <div class="row" style="gap:12px;justify-content:center"><div class="ico" style="width:40px;height:40px;background:var(--cz)">${ic('scale', 22)}</div><div style="font-weight:800;font-size:24px">Saldo</div></div>
+    <div class="row" style="gap:14px;justify-content:center;margin-top:16px"><div class="tag" id="deve" style="font-size:18px;padding:7px 16px;background:var(--vs)">te deve</div>
+      <div class="tag r" id="cred" style="font-size:18px;padding:7px 16px">tem crédito</div></div></div>`);
+  const deve = sal.querySelector('#deve'), cred = sal.querySelector('#cred');
+  const lig = el('<svg class="ab" style="left:0;top:0;overflow:visible" width="1280" height="800"><g fill="none" stroke="#B5BFC8" stroke-width="4" stroke-linecap="round" stroke-dasharray="1 9"></g></svg>');
+  const mk = d => { const p = document.createElementNS('http://www.w3.org/2000/svg', 'path'); p.setAttribute('d', d); p.setAttribute('fill', 'none'); p.setAttribute('stroke', '#9AA6B2'); p.setAttribute('stroke-width', 4); p.setAttribute('stroke-linecap', 'round'); lig.appendChild(p); return p; };
+  const lE = mk('M250 700 C 330 740, 380 706, 436 702'), lD = mk('M1030 700 C 950 740, 900 706, 844 702');
+  const t0 = W(0, 'oi'), tqu = W(0, 'quem'), ten = W(0, 'entra'), tre = W(0, 'recicla');
+  const ttr = W(1, 'traz'), tca = W(1, 'carroceiro'), tco = W(1, 'cooperativa'), tof = W(1, 'oficina'), tle = W(1, 'leva'), tsi = W(1, 'siderurgica'), tfu = W(1, 'fundicao');
+  const tdo = W(2, 'dois'), tsa = W(2, 'saldo'), tde = W(2, 'devendo'), tcr = W(2, 'credito'), tler = W(2, 'ler');
+  const R = 1.3;   // tempo de a roda chegar
+  camera([[0, { x: 0, y: 1.2, z: 0, d: 31, az: 0, el: .4, oy: 38 }], [60, { x: 0, y: 1.2, z: 0, d: 29.5, az: .03, el: .4, oy: 38 }, 'lin']]);
+  return t => {
+    GL.style.opacity = eo(pr(t, tqu - .3, .6)).toFixed(3);
+    posTitulo(tit, t, t0 - .6, tqu - .5);
+    GAL.visible = PIL.visible = t > ten - .2; const ge = eo(pr(t, ten - .15, .6)); GAL.scale.setScalar(Math.max(1e-4, ge)); PIL.scale.setScalar(Math.max(1e-4, ge));
+    GAL.position.y = 0;
+    vis(rec, t, tre - .1, 1e9, { dy: 8 }); ancora(rec, mundo(GAL, GAL.userData.topo ?? [0, 2.6, 0]), .5, 1, 0, -14);
+    // chegadas pela esquerda
+    const ch = (v, a, z, dur = 1.5) => { const x = lerp(XL, XE, eio(pr(t, a - .9, dur))); v.position.x = x; v.visible = t > a - .95; if (v === car) { for (const r of car.userData.rodas) r.rotation.z = -x / car.userData.R; } else v.userData.rodas.forEach(r => { r.rotation.z = -x / v.userData.R; }); };
+    ch(car, tca, 3.8); ch(coop, tco, .1); ch(ofi, tof, -3.9);
+    vis(hE, t, ttr - .1, 1e9, { dy: 8 }); ancora(hE, [-9, 4.6, -.5], .5, 1);
+    const lado = (e, v, z, a, dx = 0) => { vis(e, t, a, 1e9, { dx: -16, dy: 0 }); };
+    vis(nC, t, tca + .2, 1e9, { dx: -16, dy: 0 }); ancora(nC, [XE - 2.45, 1.0, 3.8], 1, .5, -6, 0);
+    vis(nO, t, tco + .2, 1e9, { dx: -16, dy: 0 }); ancora(nO, [XE - 2.9, 1.2, .1], 1, .5, -6, 0);
+    vis(nF, t, tof + .2, 1e9, { dx: -16, dy: 0 }); ancora(nF, [XE - 2.9, 1.2, -3.9], 1, .5, -6, 0);
+    // saídas pela direita
+    const vm = (G, v, a) => { const x = lerp(XR, XD, eio(pr(t, a - .9, 1.5))); G.position.x = x; G.visible = t > a - .95; rola(v, XR - x); };
+    vm(SID, sid, tsi); vm(FUN, fun, tfu);
+    vis(hD, t, tle - .1, 1e9, { dy: 8 }); ancora(hD, [9, 4.6, 0], .5, 1);
+    vis(nS, t, tsi + .2, 1e9, { dx: 16, dy: 0 }); ancora(nS, [XD + 2.9, 1.2, -2.5], 0, .5, 6, 0);
+    vis(nU, t, tfu + .2, 1e9, { dx: 16, dy: 0 }); ancora(nU, [XD + 2.9, 1.2, 2.7], 0, .5, 6, 0);
+    traco(lE, t, tdo - .25, .8); traco(lD, t, tdo - .25, .8);
+    vis(sal, t, tsa - .15, 1e9, { dy: 18 }); vis(deve, t, tde - .1, 1e9, { dy: 8, sc: .9 }); vis(cred, t, tcr - .1, 1e9, { dy: 8, sc: .9 });
+    pulse(sal, t, tler - .2, .035, .8);
+  };
+};
+
+// ------------------------------------------------------------------ CAPS[8] · Peso × valor (L3)
+// 3 "Já a latinha é só nove por cento do peso. Mas o quilo da latinha vale seis e vinte, e o do papelão, cinquenta e cinco centavos."
+CAPS[8] = () => {
+  chaoPatio(CENA, [0, 0, 0], { c: 26, l: 12, passo: 2.6 });
+  const PX = -3.8, SXX = 3.6, PIL = grupo(CENA, [PX, 0, 0]);
+  const fard = [];   // pilha 3-2-1, duas fileiras de fundo
+  [[3, 0], [2, .8], [1, 1.6]].forEach(([n, y], r) => { for (let i = 0; i < n; i++) for (const z of [-.5, .5]) { const o = fardoPapelao(PIL, [(i - (n - 1) / 2) * 1.15, y, z], { mancha: false }); o.userData.s = 1; o.userData.r = r; fard.push(o); } });
+  mancha(PIL, 5.2, 3.2, .3);
+  const BAG = grupo(CENA, [SXX, 0, 0]); BAG.scale.setScalar(1.35); BAG.userData.s = 1.35; mancha(BAG, 1.5, 1.4, .3);
+  sacoAberto(BAG);
+  const lat = latinhas(BAG, domo(46, .31, .25, .3, .7, .9));
+  const tit = titulo('Ficha', 'Peso × valor');
+  const rot = (txt, chipTxt) => el(`<div class="ab" style="width:300px;text-align:center"><div class="ttl n1">${txt}</div><div class="ch" style="margin-top:8px"><span class="tag" style="font-size:18px;padding:7px 15px">${chipTxt}</span></div></div>`);
+  const rP = rot('Papelão', '59% do peso'), rL = rot('Alumínio latinha', '9% do peso');
+  const preco = (v, dest) => el(`<div class="card" style="width:${dest ? 220 : 180}px;padding:${dest ? '18px 20px' : '14px 18px'};text-align:center;${dest ? 'border:2px solid var(--v);background:#F4FBF7' : ''}">
+      <div class="num" style="font-size:${dest ? 40 : 30}px;${dest ? 'color:var(--ve)' : ''}">${brl(v)}</div><div class="lbl" style="margin-top:2px">o quilo</div></div>`);
+  const pL = preco(6.2, true), pP = preco(.55, false), fio = el('<div class="ab" style="width:2px;height:60px;background:#C9D1D8"></div>');
+  const tja = W(3, 'ja'), tla = W(3, 'latinha', 1), tpe = W(3, 'peso'), tva = W(3, 'vale'), tpa = W(3, 'papelao');
+  camera([[0, { x: 0, y: 1.0, z: 0, d: 21, az: .1, el: .3, oy: -30 }], [30, { x: .2, y: 1.0, z: 0, d: 19.5, az: .14, el: .3, oy: -30 }, 'lin']]);
+  return t => {
+    GL.style.opacity = eo(pr(t, tja - .15, .5)).toFixed(3);
+    posTitulo(tit, t, tja - .6, tja - .3);
+    fard.forEach((o, i) => { const a = tja + .12 + o.userData.r * .22 + (i % 2) * .05; cresce(o, t, a, .5, .15); });
+    vis(rP, t, tja + .3, 1e9, { dy: 10 }); ancora(rP, [PX, 0, 1.45], .5, 0, 0, 14);
+    const be = eo(pr(t, tla - .1, .55)); BAG.visible = be > 0; BAG.scale.setScalar(Math.max(1e-4, be) * 1.35);
+    vis(rL.firstElementChild, t, tla, 1e9, { dy: 8 }); vis(rL.querySelector('.ch'), t, tpe - .2, 1e9, { dy: 8, sc: .9 }); ancora(rL, [SXX, 0, 1.45], .5, 0, 0, 14);
+    vis(pL, t, tva - .15, 1e9, { dy: 16 }); ancora(pL, [SXX, 1.55, 0], .5, 1, 0, -26); pulse(pL, t, tva + .45, .04, .8);
+    vis(fio, t, tva - .1, 1e9, { dy: 0 }); ancora(fio, [SXX, 1.55, 0], .5, 1, 0, -26 + 0);
+    vis(pP, t, tpa - .1, 1e9, { dy: 16 }); ancora(pP, [PX, 2.5, 0], .5, 1, 0, -10);
+  };
+};
+
+// ------------------------------------------------------------------ CAPS[10] · Sucata é fungível (L5-L6)
+// 5 "Fungível quer dizer que se mistura. A latinha da cooperativa vai pro mesmo fardo da latinha da Dona Cida e de todo mundo. Na venda, ninguém separa de quem era cada lata."
+// 6 "Por isso a margem usa o preço médio de venda do material no mês. Ela não vai bater com o extrato, e tudo bem: ela mostra quanto cada material desse fornecedor rende."
+CAPS[10] = () => {
+  const VENDA = 7.40, COMPRA = 6.20, MARGEM = Math.round((VENDA - COMPRA) * 100) / 100;
+  chaoPatio(CENA, [1, 0, 0], { c: 34, l: 16, passo: 2.6 });
+  const FX = -.4, FZ = 0, FARDO = fardoLatinhas(CENA, [FX, 0, FZ]), FH = .78;
+  const SZ = [-3.6, 0, 3.6], SXA = -6.2, orig = [];
+  const dest = k => Array.from({ length: 14 }, (_, i) => [FX + ri(-.36, .36), FH + .06, FZ + ri(-.3, .3), ri(0, 2 * PI), ri(0, 2 * PI), ri(0, 2 * PI)]);
+  SZ.forEach((z, k) => { const g = grupo(CENA, [SXA, 0, z]); g.rotation.y = .3 * (k - 1); mancha(g, 1.5, 1.4, .3); sacoAberto(g); const im = latinhas(g, domo(14, .3, .24, .3, .7, .9)); orig.push({ g, im, B: dest(k), ord: ordemPor(im, p => p.x) }); });
+  // o cliente: caminhão virado para +x, a caçamba ao lado do fardo
+  const TX = 6.2, TR = caminhao(CENA, [TX, 0, 0], { c: 4.8, l: 2.0, R: .4, cc: 1.6, hc: 1.5, eixos: 2, bau: 'grade' }), tu = TR.userData;
+  tu.rodas.forEach(r => { r.rotation.z = -TX / tu.R; });
+  const bedX = TX + tu.cacamba.position.x + tu.bau.cb / 2, bedY = tu.cacamba.position.y + .1;
+  const tit = titulo('Ficha', 'Sucata é fungível');
+  const nm = (icone, txt) => nome(icone, txt, '');
+  const nCo = nm(ic('users', 22), 'Cooperativa Recomeço'), nDo = nm(ic('user-round', 22), 'Dona Cida'), nTo = nm(ic('users-round', 22), 'todo mundo');
+  const nAl = el('<div class="ttl" style="position:absolute;font-size:21px">Alumínio latinha</div>'), nSe = el('<div class="tag a" style="position:absolute;font-size:16px;padding:6px 17px">ninguém separa</div>');
+  const sf = el(`<div class="card row" style="width:220px;height:104px;padding:0 18px;gap:14px"><div class="ico" style="width:48px;height:48px;border-radius:14px;background:var(--cz)">${ic('factory', 26)}</div>
+      <div><div style="font-weight:800;font-size:21px;white-space:nowrap">Serra Fina</div><div class="lbl" style="margin-top:2px">cliente</div></div></div>`);
+  const linha = el('<div class="ab" style="left:0;top:560px;width:1280px;height:160px"></div>');
+  const cart = (x, rot, sub, v, res) => el(`<div class="card" style="left:${x}px;top:0;width:318px;height:150px;padding:20px 24px;${res ? 'border:2px solid var(--v);background:#F4FBF7' : ''}">
+      <div style="font-weight:800;font-size:21px;${res ? 'color:var(--ve)' : ''}">${rot}</div><div class="lbl" style="margin-top:3px">${sub}</div>
+      <div class="row" style="margin-top:12px;gap:8px;align-items:baseline"><span class="num" style="font-size:34px;${res ? 'color:var(--ve)' : ''}">${brl(v)}</span><span class="lbl">o quilo</span></div></div>`, linha);
+  const qV = cart(70, 'Venda média', 'do mês', VENDA), qC = cart(481, 'Compra', 'da cooperativa', COMPRA), qM = cart(892, 'Margem estimada', 'o que sobra', MARGEM, 1);
+  const oM = el('<div class="op" style="left:405px;top:45px">−</div>', linha), oI = el('<div class="op" style="left:816px;top:45px">=</div>', linha);
+  const selo2 = el('<div class="ab" style="left:1062px;top:-20px"><span class="tag a" style="display:inline-flex;font-size:16px;padding:6px 14px;transform:rotate(-6deg)">Estimativa</span></div>', linha);
+  const tfu = W(5, 'fungivel'), tmi = W(5, 'mistura'), tco = W(5, 'cooperativa'), tci = W(5, 'cida'), tmu = W(5, 'mundo'), tto = W(5, 'todo'), tve = W(5, 'venda'), tsp = W(5, 'separa');
+  const tma = W(6, 'margem'), tme = W(6, 'medio'), tba = W(6, 'bater'), tfo = W(6, 'fornecedor'), tre = W(6, 'rende');
+  const VOO = [tco + .3, tci + .2, tmu - .1], DUR = .75, FIM = VOO[2] + DUR + .55;
+  const tmov = Math.max(tve + .05, FIM + .1), DM = 1.0;
+  camera([[0, { x: 0, y: 1.0, z: 0, d: 30, az: .02, el: .42, oy: 10 }], [tma - .7, { x: 0, y: 1.0, z: 0, d: 30.5, az: .03, el: .42, oy: 10 }, 'lin'],
+    [tma + .3, { x: 0, y: 1.0, z: 0, d: 34, az: .03, el: .4, oy: 165 }], [tre + 4, { x: 0, y: 1.0, z: 0, d: 34.4, az: .04, el: .4, oy: 165 }, 'lin']]);
+  return t => {
+    GL.style.opacity = eo(pr(t, tfu - .2, .6)).toFixed(3);
+    posTitulo(tit, t, tfu - .6, tmi - .75);
+    const pf = eo(pr(t, tmi - .15, .5)); FARDO.visible = pf > 0; FARDO.scale.setScalar(Math.max(1e-4, pf));
+    const pv = eio(pr(t, tmov, DM)), fx = lerp(FX, bedX, pv), fy = lerp(0, bedY, eo(pr(t, tmov + .15, DM - .3))) + .5 * Math.sin(PI * pv);
+    FARDO.position.set(fx, fy, lerp(FZ, 0, pv));
+    orig.forEach((o, k) => { const a = VOO[k]; o.g.visible = t > [tco, tci, tto][k] - .2; const ps = eo(pr(t, [tco, tci, tto][k] - .2, .5)); o.g.scale.setScalar(Math.max(1e-4, ps));
+      transfere(o.im, o.B, t, a, DUR, { ordem: o.ord, passo: .5 / o.B.length, arco: 1.3 }); o.im.visible = t < a + DUR + .55; });
+    VOO.forEach(a => pulso(FARDO, t, a + DUR + .15, .035, .45));
+    [[nCo, tco, 0], [nDo, tci, 1], [nTo, tto, 2]].forEach(([e, a, k]) => { vis(e, t, a - .15, 1e9, { dx: -20, dy: 0 }); ancora(e, [SXA - .5, 0.7, SZ[k]], 1, .5, -4, 0); });
+    vis(nAl, t, tmi - .1, 1e9, { dy: 8 }); ancora(nAl, [fx, 0, FZ + .9], .5, 0, 0, 12);
+    vis(nSe, t, tsp - .15, 1e9, { dy: 6, sc: .9 }); ancora(nSe, [fx, 0, FZ + .9], .5, 0, 0, 44);
+    vis(sf, t, tve - .15, 1e9, { dx: 20, dy: 0 }); ancora(sf, [TX + 3.3, 0, 0], 0, .5, 0, -30);
+    vis(qV, t, tma - .05, 1e9, { dy: 22 }); vis(oM, t, tma + .2, 1e9, { sc: .6, dy: 0 }); vis(qC, t, tma + .35, 1e9, { dy: 22 });
+    vis(oI, t, tma + .6, 1e9, { sc: .6, dy: 0 }); vis(qM, t, tma + .75, 1e9, { dy: 22, sc: .94 });
+    pulse(qV, t, tme, .035, .8); vis(selo2, t, tba - .15, 1e9, { dy: -10, sc: .8 }); pulse(qC, t, tfo - .1, .035, .8); pulse(qM, t, tre - .1, .04, .8);
+  };
+};
+
+cena(d => CAPS[d.cap](), { sombra: 14, mapa: 2048, chao: false });
+</script></body></html>
