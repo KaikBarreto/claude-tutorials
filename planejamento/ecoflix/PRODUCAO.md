@@ -619,3 +619,7 @@ Decisões:
 | Aula | Agente | O que falta | Comando |
 |---|---|---|---|
 | T20 | afdb1a0ff5d8d10fb | rápido cap03-cap10 e cap00/cap01 com MP4; completo dos caps 4-8 | `bash rec/t20/t20_fila.sh --rapido 3 4 5 6 7 8 9 10 0 1` |
+- 11/11 20:2x **Unificação do kit 2D lançada** (vaga aberta pelo robô da T20): `pulse()` sem deslocar elemento posicionado
+  por `transform` e com pulsos que se somam; classe de grupo do kit com nome único (a "g" colidia, círculo gigante no tema
+  do Cato); `descarrega` sem as peças 16 px abaixo do chão; exemplo "Tara e peso líquido" do kit sem chamar o caminhão vazio
+  de tara (a T12, cadastro de veículo, fica como está). No kit e nas aulas que copiaram o código, conferindo antes e depois.
