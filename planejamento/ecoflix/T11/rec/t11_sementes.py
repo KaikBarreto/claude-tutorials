@@ -15,10 +15,12 @@ Cadeia (cada capítulo abre um navegador novo e parte da lista acumulada; ver SE
   apos-cap12   "Bloquear finalização quando faltar matéria-prima em estoque" ligado
   apos-cap13   a #2 excluída, com o estorno no Kardex (fio +80, cobre mel -50)
 
-O histórico do mundo base não tem fio de cobre para duas produções de 80 kg em 03/11 (o estoque era 74 kg). Para o Kardex de
-novembro fechar sem saldo negativo e o estoque de hoje continuar o do mundo base (fio 96 kg, cobre mel 212,5 kg), esta semente
-desloca o saldo dos movimentos ANTERIORES à produção de 03/11 (fio +160 kg, cobre mel -100 kg, no saldo inicial de 01/08 e nas
-colunas "Estoque inicial"/"Estoque final" até 03/11 16:00). Nada disso aparece na tela da aula ("Este mês" só mostra novembro).
+O histórico do mundo base não tem fio de cobre para duas produções de 80 kg em 03/11. Para o Kardex de novembro fechar sem saldo
+negativo, esta semente desloca o saldo dos movimentos ANTERIORES à produção de 03/11 (fio +160 kg; cobre mel -50 kg, só a ordem #1),
+no saldo inicial de 01/08 e nas colunas "Estoque inicial"/"Estoque final" até 03/11 16:00. A #2 (a ordem duplicada) fica por cima do
+mundo base no cobre mel: os movimentos POSTERIORES somam +50 kg e o cobre mel de hoje é o do mundo base + 50 kg; a exclusão do cap13
+devolve o do mundo base (a #2 inflava o estoque, e o mundo base tem menos de 50 kg de cobre mel). O fio de hoje é o do mundo base.
+Os saldos do mundo base são lidos do histórico e conferidos com o cadastro (nada fixo aqui).
 Uso: python3 -I rec/t11/t11_sementes.py
 """
 import json
@@ -66,6 +68,22 @@ def desloca(h, mat, delta):
     return out
 
 
+def desloca_depois(h, mat, delta):
+    """_patch dos movimentos do material a partir do CORTE: as colunas de estoque somam `delta`."""
+    return [{'match': {'id': m['id']}, 'set': {'stock_before': round(m['stock_before'] + delta, 3), 'stock_after': round(m['stock_after'] + delta, 3)}}
+            for m in movs(h, mat) if m['transaction_at'] >= CORTE]
+
+
+def estoque_b(h, mat):
+    """Saldo do material no mundo base: o último movimento do histórico, conferido com o cadastro."""
+    saldo = round(movs(h, mat)[-1]['stock_after'], 3)
+    cad = json.load(open(os.path.join(MUNDO, 'seeds', '02-cadastros.json'), encoding='utf8'))['materials']
+    atual = [float(m['current_stock']) for m in cad if m['id'] == mat]
+    if atual and abs(atual[0] - saldo) > 0.0005:
+        raise SystemExit(f'{mat}: o histórico termina em {saldo} e o cadastro diz {atual[0]}')
+    return saldo
+
+
 def saldo_no_corte(h, mat, delta):
     ant = [m for m in movs(h, mat) if m['transaction_at'] < CORTE]
     return round(ant[-1]['stock_after'] + delta, 3)
@@ -82,8 +100,8 @@ def mov(id_, mat, qtd, antes, at, desc, ordem, entrada, rel=None):
 
 
 def inicio(h):
-    fio0 = saldo_no_corte(h, FIO, 160)        # 74 + 160 = 234 às 16:00 de 03/11
-    cobre0 = saldo_no_corte(h, COBRE_MEL, -100)   # 176 - 100 = 76
+    fio0 = saldo_no_corte(h, FIO, 160)          # as duas ordens saem do saldo deslocado
+    cobre0 = saldo_no_corte(h, COBRE_MEL, -50)  # a #1 absorvida; a #2 fica por cima
     d = {
         'materials': [{
             'id': FARDO, 'company_id': CID, 'code': '16', 'name': 'Fardo de alumínio', 'fiscal_name': None, 'group_id': '@id:grupo.aluminio',
@@ -142,7 +160,8 @@ def inicio(h):
         cobre0 += 50
     d['_patch'] = {
         'companies': [{'match': {'id': CID}, 'set': {'production_loss_tolerance_pct': 2, 'production_daily_goal': 250}}],
-        'stock_movements': desloca(h, FIO, 160) + desloca(h, COBRE_MEL, -100),
+        'stock_movements': desloca(h, FIO, 160) + desloca(h, COBRE_MEL, -50) + desloca_depois(h, COBRE_MEL, 50),
+        'materials': [{'match': {'id': COBRE_MEL}, 'set': {'current_stock': round(estoque_b(h, COBRE_MEL) + 50, 3)}}],
     }
     return d
 
@@ -189,7 +208,8 @@ def apos_cap06():
     }}
 
 
-def apos_cap09():
+def apos_cap09(h):
+    lat, chap = estoque_b(h, LATINHA), estoque_b(h, CHAPARIA)
     at = '2026-11-10T20:33:00.000Z'   # 17:33 em Brasília (FAKE_NOW 17:30 do cap07 em diante)
     return {
         'production_order_entries': [{
@@ -207,13 +227,13 @@ def apos_cap09():
             {'id': '@id:t11.worker.3.claudio.dia', 'order_id': OP[3], 'entry_id': ENT[3], 'employee_id': CLAUDIO, 'company_id': CID, 'produced_qty': 260, 'created_at': at},
             {'id': '@id:t11.worker.3.diego.dia', 'order_id': OP[3], 'entry_id': ENT[3], 'employee_id': DIEGO, 'company_id': CID, 'produced_qty': 220, 'created_at': at}],
         'stock_movements': [
-            mov('@id:t11.sm.3.latinha', LATINHA, -498, 640, at, 'Consumo de produção (lançamento)', OP[3], ENT[3]),
+            mov('@id:t11.sm.3.latinha', LATINHA, -498, lat, at, 'Consumo de produção (lançamento)', OP[3], ENT[3]),
             mov('@id:t11.sm.3.fardo', FARDO, 480, 0, at, 'Produto de produção (lançamento)', OP[3], ENT[3]),
-            mov('@id:t11.sm.3.chaparia', CHAPARIA, 14, 3150, at, 'Coproduto de produção (lançamento)', OP[3], ENT[3])],
+            mov('@id:t11.sm.3.chaparia', CHAPARIA, 14, chap, at, 'Coproduto de produção (lançamento)', OP[3], ENT[3])],
         '_patch': {
-            'materials': [{'match': {'id': LATINHA}, 'set': {'current_stock': 142, 'updated_at': at}},
+            'materials': [{'match': {'id': LATINHA}, 'set': {'current_stock': round(lat - 498, 3), 'updated_at': at}},
                           {'match': {'id': FARDO}, 'set': {'current_stock': 480, 'updated_at': at}},
-                          {'match': {'id': CHAPARIA}, 'set': {'current_stock': 3164, 'updated_at': at}}],
+                          {'match': {'id': CHAPARIA}, 'set': {'current_stock': round(chap + 14, 3), 'updated_at': at}}],
             'production_orders': [{'match': {'id': OP[3]}, 'set': {'status': 'in_progress', 'produced_qty': 480, 'total_material_cost': 3087.6,
                                                                   'cost_per_unit': 6.4325, 'updated_at': at}}],
         },
@@ -231,18 +251,19 @@ def apos_cap12():
     return {'_patch': {'companies': [{'match': {'id': CID}, 'set': {'production_block_on_insufficient_stock': True}}]}}
 
 
-def apos_cap13():
+def apos_cap13(h):
     at = '2026-11-10T20:40:00.000Z'
+    cobre, fio = round(estoque_b(h, COBRE_MEL) + 50, 3), estoque_b(h, FIO)   # o cobre mel com a #2 por cima
     return {
         'stock_movements': [
-            mov('@id:t11.sm.2.cobre_mel.estorno', COBRE_MEL, -50, 212.5, at, 'Estorno de produção (exclusão da OP)', OP[2], ENT[2], '@id:t11.sm.2.cobre_mel'),
-            mov('@id:t11.sm.2.fio.estorno', FIO, 80, 96, at, 'Estorno de produção (exclusão da OP)', OP[2], ENT[2], '@id:t11.sm.2.fio')],
+            mov('@id:t11.sm.2.cobre_mel.estorno', COBRE_MEL, -50, cobre, at, 'Estorno de produção (exclusão da OP)', OP[2], ENT[2], '@id:t11.sm.2.cobre_mel'),
+            mov('@id:t11.sm.2.fio.estorno', FIO, 80, fio, at, 'Estorno de produção (exclusão da OP)', OP[2], ENT[2], '@id:t11.sm.2.fio')],
         '_remove': {
             'production_orders': [{'id': OP[2]}], 'production_order_entries': [{'id': ENT[2]}],
             'production_order_consumption': [{'production_order_id': OP[2]}], 'production_order_outputs': [{'production_order_id': OP[2]}],
             'production_order_workers': [{'order_id': OP[2]}]},
-        '_patch': {'materials': [{'match': {'id': FIO}, 'set': {'current_stock': 176, 'updated_at': at}},
-                                 {'match': {'id': COBRE_MEL}, 'set': {'current_stock': 162.5, 'updated_at': at}}]},
+        '_patch': {'materials': [{'match': {'id': FIO}, 'set': {'current_stock': round(fio + 80, 3), 'updated_at': at}},
+                                 {'match': {'id': COBRE_MEL}, 'set': {'current_stock': round(cobre - 50, 3), 'updated_at': at}}]},
     }
 
 
@@ -250,7 +271,7 @@ def main():
     h = base()
     os.makedirs(SAIDA, exist_ok=True)
     arquivos = {'inicio': inicio(h), 'apos-cap03': apos_cap03(), 'apos-cap04': apos_cap04(), 'apos-cap05': apos_cap05(), 'apos-cap06': apos_cap06(),
-                'apos-cap09': apos_cap09(), 'apos-cap10': apos_cap10(), 'apos-cap12': apos_cap12(), 'apos-cap13': apos_cap13()}
+                'apos-cap09': apos_cap09(h), 'apos-cap10': apos_cap10(), 'apos-cap12': apos_cap12(), 'apos-cap13': apos_cap13(h)}
     for nome, d in arquivos.items():
         d = {'_doc': f'T11 · Produção: {nome} (gerado por rec/t11/t11_sementes.py; não editar à mão)', **d}
         with open(os.path.join(SAIDA, f'{nome}.json'), 'w', encoding='utf8') as f:

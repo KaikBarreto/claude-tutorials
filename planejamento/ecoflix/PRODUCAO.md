@@ -405,3 +405,10 @@ Decisões:
   cenas e no mundo. "Excluir Conta" vem de `config/routes.ts:245` (fora do inventário). Kit: `pulse()` chamado duas vezes no
   mesmo quadro apaga o primeiro (o `CAPS[1]` do kit perde um pulso; corrigir na unificação). `render_cenas.cjs` com
   `--stills` vazio renderizava o MP4 inteiro: agora recusa. Robô da T27 lançado no lugar.
+- 11/11 12:2x **Ilustrações T07 e T08 prontas** (10 + 8 cenas). **Erro de conceito no exemplo do kit** "Tara e peso
+  líquido" (o que foi na prévia da marca): ele chama o caminhão vazio de "Tara", mas no app essa é a "2ª Pesagem", a
+  diferença entre as duas é o "Peso Bruto" e tara é a embalagem (saco, tambor, caçamba). As cenas da T07 e da T08 seguem o
+  app (a da T07 virou carroça com 412, 96 e 316 kg: caminhão com 412 kg seria falso); corrigir o `CAPS[1]` do kit na
+  unificação e avisar o Kaik. Agentes da T05 e da T10+T12 avisados. Kit: kg com decimais, seta e tracejado no `traco()`,
+  carroça, caminhão com carga e vazio, balança; o render não carrega ícone de uma letra ("x"). T08 cap08 usa 1.200 e 800
+  kg do roteiro, fora do mundo (conferir na revisão). Robô da T06 lançado no lugar.
