@@ -410,3 +410,280 @@ def cap01():
     c.hover(TXT('Saldos de fornecedores'), 0.6, at=c.A(9, 'pagar.', 0.5), label='Saldos de fornecedores (a pagar)')
     c.fim()
     return c
+
+
+def js_dlg_topo(dur_ms=600):
+    """sobe a rolagem da janela aberta até o topo (as abas da janela ficam à vista)"""
+    return ("(async()=>{const d=document.querySelector('[role=dialog]');if(!d)return 'sem janela';const c=[...d.querySelectorAll('*')].find(e=>{const s=getComputedStyle(e);"
+            "return /(auto|scroll)/.test(s.overflowY)&&e.scrollHeight>e.clientHeight+4});if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop,dy=-y0;if(y0<3)return 'ok';"
+            + SUAVE.replace('DUR', str(int(dur_ms))) + "return 'topo:'+Math.round(c.scrollTop)})()")
+
+
+def js_ficha_topo(dur_ms=600):
+    """sobe a rolagem do contêiner da ficha (ou da página) até o topo"""
+    return ("(async()=>{" + ACHA_ROLAGEM + "const s=document.querySelector(\"main section[aria-label^='Detalhes de']\");if(!s)return 'SEM ALVO';"
+            "const c=rolagem(s.firstElementChild||s);if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop,dy=-y0;if(y0<3)return 'ok';"
+            + SUAVE.replace('DUR', str(int(dur_ms))) + "return 'topo:'+Math.round(c.scrollTop)})()")
+
+
+def js_sem_texto(texto, escopo='[role=dialog]'):
+    """conferência: o texto NÃO está mais na tela (ex.: o aviso vermelho some depois de preencher o Número)"""
+    return ("(async()=>{for(let i=0;i<10;i++){const el=document.querySelector(%s);const t=el?el.innerText:'';if(!t.includes(%s))return 'OK: sumiu '+%s;"
+            "await new Promise(r=>setTimeout(r,300));}return 'DIFERENTE: ainda aparece '+%s})()") % (json.dumps(escopo), json.dumps(texto), json.dumps(texto), json.dumps(texto))
+
+
+AVISO_NUMERO = 'Não veio da Receita — obrigatório para emitir NF-e'
+TOAST_CNPJ = 'Dados preenchidos — confira antes de salvar'
+CEP_IN = SEL(f"{DLG} input[placeholder='00000-000']")
+CIDADE = SEL(f"{DLG} button[role=combobox]:has-text('Taubaté')")
+IND_IE = SEL(f"{DLG} div.space-y-2:has(> label:text-is('Indicador IE *')) button[role=combobox]")
+REGIME = SEL(f"{DLG} div:has(> label:has-text('Regime tributário do fornecedor')) button[role=combobox]")
+TABELA_PADRAO = SEL(f"{DLG} div:has(> label:has-text('Tabela de Preços Padrão')) button")
+AVISO_AZUL = TXT('Mudanças em nome, CPF/CNPJ, contato, endereço e tabela de preços padrão refletem automaticamente no cadastro de cliente vinculado.', within=DLG)
+TAMBEM_CLIENTE = SEL(f"{DLG} label:has-text('Também é cliente')")
+BTN_FICHA = lambda nome, b: BTN(b, FICHA_DE(nome))
+SALDO_FICHA = lambda nome: SEL(f"{FICHA_DE(nome)} .tabular-nums", nth=0)
+COOP = 'Cooperativa Recomeço'
+FC = FICHA_DE(COOP)
+
+# setup do cap04: refaz fora do vídeo o formulário do cap03 e para no Endereço Fiscal com o Número vermelho
+REFAZ_CAP03 = [
+    {'do': 'click', 'target': NOVO_FORN}, {'do': 'waitFor', 'text': 'Identificação e contato', 'timeout': 10},
+    {'do': 'type', 'target': CAMPO('name'), 'text': 'Serralheria Bem-Te-Vi'},
+    {'do': 'click', 'target': ABA_DLG('Dados Fiscais')}, {'do': 'click', 'target': BTN('Pessoa Jurídica', DLG)},
+    {'do': 'type', 'target': CAMPO('cpf_cnpj'), 'text': '46280719000124'},
+    {'do': 'click', 'target': LUPA}, {'do': 'waitFor', 'text': TOAST_CNPJ, 'timeout': 12},
+    {'do': 'waitFor', 'text': AVISO_NUMERO, 'timeout': 8},
+    {'do': 'waitFor', 'gone': {'text': TOAST_CNPJ}, 'timeout': 15},
+    {'do': 'eval', 'js': js_rola_texto('Endereço Fiscal', 150, 300)}, {'do': 'wait', 'seconds': 0.5},
+]
+
+
+def cap02():
+    """Pessoa física e pessoa jurídica: Novo Fornecedor do Rogério (nome, apelido, telefone, Pix, saldo inicial, CPF), Salvar; depois a
+    Pessoa Jurídica de outro cadastro novo mostra CNPJ, razão social e inscrição estadual (sem salvar)."""
+    c = cap_novo(2, start=(900, 300))
+    c.mark(1)
+    c.hover(ABA('Fornecedores'), 0.6, at=c.A(1, 'Fornecedores,', 0.5), label='aba Fornecedores (já aberta)')
+    c.click(NOVO_FORN, at=c.A(1, 'Novo', 0.6, nth=1), label='Novo Fornecedor')
+    c.waitfor(text='Identificação e contato', timeout=10)
+    c.mark(2)
+    c.digita(CAMPO('name'), 'Rogério Alves Costa', c.A(2, 'único', 1.0), c.A(2, 'campo', 0.05), 'Nome Rogério Alves Costa')
+    c.mark(3)
+    c.digita(CAMPO('contact_name'), 'Rogério Eletricista', c.A(3, 'Apelido', 0.6), c.A(3, 'Rogério', 0.05), 'Apelido Rogério Eletricista')
+    c.mark(4)
+    c.digita(CAMPO('phone'), '12900002611', c.A(4, 'telefone.', 0.6, nth=0), c.A(4, 'Se', 0.05), 'Telefone (12) 90000-2611')
+    c.hover(SEL(f'{DLG} label[for=phone_unavailable]'), 1.4, at=c.A(4, 'Não', 0.5), label='Não possui telefone (sem marcar)')
+    c.mark(5)
+    c.digita(CAMPO('pix_key'), 'rogerio.costa@pix.example', c.A(5, 'chave', 0.6), c.A(5, 'Pix', 0.05), 'Chave PIX rogerio.costa@pix.example')
+    c.mark(6)
+    c.ev(DLG_ROLA('Saldo inicial', 300, 900), at=c.L(6) - 0.9, label='desce a janela até o Saldo inicial (passa pelo Também é cliente)')
+    c.hover(TXT('Saldo inicial', within=DLG), 1.0, at=c.A(6, 'Saldo', 0.5), label='Saldo inicial')
+    c.hover({'role': 'button', 'name': 'Adicionar saldo inicial', 'within': DLG}, 1.2, at=c.A(6, 'registra', 0.5), label='+ Adicionar saldo inicial (sem clicar)')
+    c.hover(TXT('Comece com saldo zero ou registre um saldo de abertura.', within=DLG), 1.0, at=c.A(6, 'zero.', 0.5), label='Comece com saldo zero')
+    c.mark(7)
+    c.ev(js_dlg_topo(), at=c.L(7) - 0.9, label='sobe a janela até as abas')
+    c.click(ABA_DLG('Dados Fiscais'), at=c.A(7, 'Dados', 0.6), label='aba Dados Fiscais')
+    c.hover(BTN('Pessoa Física', DLG), 1.0, at=c.A(7, 'Pessoa', 0.5), label='Tipo de Pessoa: Pessoa Física (já vem marcado)')
+    c.digita(CAMPO('cpf_cnpj'), '41827356090', c.A(7, 'digito', 0.6), c.A(7, 'CPF', 0.05, nth=1), 'CPF 418.273.560-90')
+    c.confere_campos(['418.273.560-90'], 'CPF com a máscara')
+    c.mark(8)
+    c.click(SALVAR, at=c.A(8, 'Salvar.', 0.6), label='Salvar')
+    c.waitfor(text='Fornecedor cadastrado com sucesso!', timeout=12)
+    c.waitfor(gone={'role': 'dialog'}, timeout=8)
+    c.hover(NOME_LINHA('Rogério Alves Costa'), 1.0, at=c.A(8, 'lista.', 0.5), label='Rogério Alves Costa na lista')
+    c.mark(9)
+    c.click(NOVO_FORN, at=c.A(9, 'Pra', 0.4), label='Novo Fornecedor (outro cadastro, só para mostrar a Pessoa Jurídica)')
+    c.waitfor(text='Identificação e contato', timeout=10)
+    c.click(ABA_DLG('Dados Fiscais'), at=c.A(9, 'mesmo', 0.8), label='aba Dados Fiscais')
+    c.click(BTN('Pessoa Jurídica', DLG), at=c.A(9, 'Jurídica.', 0.6), label='Pessoa Jurídica')
+    c.hover(CAMPO('cpf_cnpj'), 0.4, at=c.A(9, 'CNPJ,', 0.5), label='CNPJ (com a lupa)')
+    c.hover(CAMPO('razao_social'), 0.4, at=c.A(9, 'razão', 0.5), label='Razão Social')
+    c.hover(CAMPO('inscricao_estadual'), 0.6, at=c.A(9, 'inscrição', 0.5), label='Inscrição Estadual')
+    c.hover(LUPA, 1.0, at=c.A(9, 'atalho.', 0.5), label='a lupa do CNPJ (o atalho)')
+    c.fim()
+    return c
+
+
+def cap03():
+    """Buscar dados pelo CNPJ: Serralheria Bem-Te-Vi; CNPJ, lupa (consulta simulada), razão social e nome fantasia, endereço, contato."""
+    c = cap_novo(3, start=(900, 300))
+    c.mark(1)
+    c.click(NOVO_FORN, at=c.A(1, 'Chegou', 0.6), label='Novo Fornecedor')
+    c.waitfor(text='Identificação e contato', timeout=10)
+    c.digita(CAMPO('name'), 'Serralheria Bem-Te-Vi', c.A(1, 'fornecedor:', 1.0), c.A(1, 'Serralheria', 0.05), 'Nome Serralheria Bem-Te-Vi')
+    c.mark(2)
+    c.click(ABA_DLG('Dados Fiscais'), at=c.A(2, 'Dados', 0.6), label='aba Dados Fiscais')
+    c.click(BTN('Pessoa Jurídica', DLG), at=c.A(2, 'Pessoa', 0.6), label='Pessoa Jurídica')
+    c.digita(CAMPO('cpf_cnpj'), '46280719000124', c.A(2, 'digito', 0.6), c.A(2, 'CNPJ.', 0.05), 'CNPJ 46.280.719/0001-24')
+    c.confere_campos(['46.280.719/0001-24'], 'CNPJ com a máscara')
+    c.mark(3)
+    c.hover(LUPA, 1.6, at=c.A(3, 'lupa:', 0.5), label='lupa: Buscar dados da empresa pelo CNPJ (dica nativa: aviso na edição)')
+    c.ev(js_title(f"{DLG} button[aria-label='Buscar dados pelo CNPJ']"), label='texto da dica (title) da lupa')
+    c.click(LUPA, at=c.A(3, 'clique,', 0.6), label='clica na lupa: consulta a Receita')
+    c.waitfor(text=TOAST_CNPJ, timeout=12)
+    c.mark(4)
+    c.confere_campos(['BEM-TE-VI SERRALHERIA E ESTRUTURAS LTDA', 'SERRALHERIA BEM-TE-VI'], 'razão social e nome fantasia da busca')
+    c.hover(CAMPO('razao_social'), 0.8, at=c.A(4, 'razão', 0.5), label='Razão Social (da busca)')
+    c.hover(CAMPO('nome_fantasia'), 0.8, at=c.A(4, 'fantasia.', 0.5), label='Nome Fantasia (da busca)')
+    c.mark(5)
+    c.ev(DLG_ROLA('Endereço Fiscal', 150, 700), at=c.L(5) - 0.9, label='desce a janela até o Endereço Fiscal')
+    c.hover(CEP_IN, 0.3, at=c.A(5, 'CEP,', 0.5), label='CEP 12062-150')
+    c.hover(CIDADE, 0.3, at=c.A(5, 'cidade,', 0.5), label='Cidade Taubaté')
+    c.hover(CAMPO('bairro'), 0.6, at=c.A(5, 'bairro.', 0.5), label='Logradouro e Bairro')
+    c.confere('dlg', ['Taubaté'], 'a cidade casou com Taubaté')
+    c.confere_campos(['12062-150', 'RUA DAS PALMEIRAS', 'JARDIM SANTA LUZIA'], 'CEP, rua e bairro da busca')
+    c.mark(6)
+    c.ev(js_dlg_topo(), at=c.L(6) - 0.9, label='sobe a janela até as abas')
+    c.click(ABA_DLG('Dados de Contato'), at=c.A(6, 'Dados', 0.6), label='aba Dados de Contato')
+    c.hover(CAMPO('phone'), 0.6, at=c.A(6, 'telefone', 0.5), label='Telefone (12) 90000-2742 (da busca)')
+    c.hover(CAMPO('email'), 0.8, at=c.A(6, 'e-mail.', 0.5), label='E-mail (da busca)')
+    c.hover(CAMPO('name'), 1.4, at=c.A(6, 'nome', 0.5), label='Nome: Serralheria Bem-Te-Vi (o digitado)')
+    c.confere_campos(['Serralheria Bem-Te-Vi', '(12) 90000-2742', 'contato@serralheriabemtevi.example'], 'nome, telefone e e-mail')
+    c.mark(7)
+    c.click(ABA_DLG('Dados Fiscais'), at=c.A(7, 'conferir', 0.6), label='volta à aba Dados Fiscais')
+    c.ev(DLG_ROLA('Endereço Fiscal', 150, 800), at=c.A(7, 'repara', 0.9), label='desce até o Número (vermelho)')
+    c.hover(CAMPO('numero'), 1.2, at=c.A(7, 'vermelho.', 0.5), label='o campo Número, vermelho (sem zoom)')
+    c.fim()
+    return c
+
+
+def cap04():
+    """Dados fiscais e o campo vermelho: Número 418, inscrição estadual (Contribuinte ICMS), regime da consulta, Salvar; sinal verde,
+    triângulo do Rogério e o botão de incompletos."""
+    c = cap_novo(4, extra=REFAZ_CAP03, start=(640, 520))
+    c.mark(1)
+    c.marcar(CAMPO('numero'), at=0.35, label='zoom: Número vazio e o aviso vermelho (L1-L2)')
+    c.hover(CAMPO('numero'), 1.4, at=c.A(1, 'Número.', 0.5), label='o campo Número (vazio)')
+    c.mark(2)
+    c.hover(TXT(AVISO_NUMERO, within=DLG), 1.8, at=c.A(2, 'aviso', 0.5), label='aviso: Não veio da Receita — obrigatório para emitir NF-e')
+    c.mark(3)   # ilustração: a nota leva o endereço
+    c.mark(4)
+    c.digita(CAMPO('numero'), '418', c.A(4, 'completo', 0.6), c.A(4, 'quatrocentos', 0.05), 'Número 418')
+    c.add({'do': 'eval', 'js': js_sem_texto(AVISO_NUMERO), 'label': 'confere o vermelho do Número sumiu'})
+    c.mark(5)
+    c.ev(DLG_ROLA('Inscrição Estadual', 230, 800), at=c.L(5) - 0.9, label='sobe a janela até a inscrição estadual')
+    c.hover(CAMPO('inscricao_estadual'), 0.3, at=c.A(5, 'inscrição', 0.5), label='Inscrição Estadual')
+    c.hover(IND_IE, 0.3, at=c.A(5, 'indicador', 0.5), label='Indicador IE')
+    c.hover(REGIME, 0.6, at=c.A(5, 'regime', 0.5), label='Regime tributário do fornecedor')
+    c.click(IND_IE, at=c.A(5, 'Eu', 0.6), label='abre o Indicador IE')
+    c.click(OPT('Contribuinte ICMS'), at=c.A(5, 'preencho', 0.4), label='Contribuinte ICMS')
+    c.digita(CAMPO('inscricao_estadual'), '688412573032', c.A(5, 'ele', 0.6), c.A(5, 'passou.', 0.05), 'Inscrição Estadual 688412573032')
+    c.mark(6)
+    c.hover(REGIME, 1.2, at=c.A(6, 'Simples', 0.5), label='zoom: Regime Simples Nacional e a linha da consulta (L6)')
+    c.hover(TXT('Preenchido pela consulta do CNPJ: a Receita informa que esta empresa é optante pelo Simples Nacional.', within=DLG, exact=False), 1.6,
+            at=c.A(6, 'regime', 0.5, nth=1), label='Preenchido pela consulta do CNPJ')
+    c.confere('dlg', ['Simples Nacional', 'Contribuinte ICMS'], 'regime e indicador')
+    c.mark(7)
+    c.click(SALVAR, at=c.A(7, 'Salvar.', 0.6), label='Salvar')
+    c.waitfor(text='Fornecedor cadastrado com sucesso!', timeout=12)
+    c.waitfor(gone={'role': 'dialog'}, timeout=8)
+    c.hover(FISCAL_OK('Serralheria Bem-Te-Vi'), 2.0, at=c.A(7, 'verde:', 0.5), label='sinal verde da serralheria (Pronto para emitir NF-e)')
+    c.confere('body', ['Pronto para emitir NF-e'], 'tooltip Pronto para emitir NF-e')
+    c.mark(8)
+    c.hover(INCOMPLETO('Rogério Alves Costa'), 4.0, at=c.A(8, 'triângulo', 0.5), label='triângulo do Rogério (o que falta para a NF-e)')
+    c.confere('body', ['Faltam dados para emitir NF-e para este cadastro:'], 'tooltip do incompleto')
+    c.mark(9)
+    c.click(INCOMPLETOS, at=c.A(9, 'botão', 0.6), label='botão incompletos')
+    c.confere('main aside', ['Rogério Alves Costa', 'Valdir Pereira'], 'só os incompletos')
+    c.hover(NOME_LINHA('Rogério Alves Costa'), 1.0, at=c.A(9, 'metade.', 0.5), label='a lista só com os incompletos')
+    c.mark(10)
+    c.click(MOSTRAR_TODOS, at=c.A(10, 'Uma', 0.6), label='Mostrar todos (a lista volta)')
+    c.hover(NOME_LINHA('Serralheria Bem-Te-Vi'), 1.0, at=c.A(10, 'nome,', 0.5), label='a lista inteira')
+    c.fim()
+    return c
+
+
+def cap05():
+    """Cliente e fornecedor ao mesmo tempo: Editar a serralheria e marcar Também é cliente; o selo roxo; o depósito (ilustração do saldo
+    único) e a aba Clientes com o mesmo saldo."""
+    c = cap_novo(5, start=(700, 400))
+    c.mark(1)
+    c.click(LINHA('Serralheria Bem-Te-Vi'), at=c.A(1, 'serralheria', 0.6), label='clica na Serralheria Bem-Te-Vi: a ficha abre ao lado')
+    c.waitfor(target=SEL(FICHA_DE('Serralheria Bem-Te-Vi')), timeout=10)
+    c.hover(SALDO_FICHA('Serralheria Bem-Te-Vi'), 1.0, at=c.A(1, 'fornecedora', 0.5), label='a ficha da serralheria (Fornecedor)')
+    c.mark(2)
+    c.click(BTN_FICHA('Serralheria Bem-Te-Vi', 'Editar'), at=c.A(2, 'editar', 0.8), label='Editar')
+    c.waitfor(text='Editar Fornecedor', timeout=10)
+    c.ev(DLG_ROLA('Também é cliente', 420, 500), label='desce a janela até Também é cliente')
+    c.click(TAMBEM_CLIENTE, at=c.A(2, 'cliente.', 0.6), label='marca Também é cliente')
+    c.mark(3)
+    c.click(SALVAR, at=c.A(3, 'Salvar.', 0.6), label='Salvar')
+    c.waitfor(text='Cadastro criado também como cliente.', timeout=12)
+    c.waitfor(gone={'role': 'dialog'}, timeout=8)
+    c.confere(FICHA_DE('Serralheria Bem-Te-Vi'), ['Cliente+Fornecedor'], 'selo Cliente+Fornecedor na ficha')
+    c.hover(TXT('Cliente+Fornecedor', within=FICHA_DE('Serralheria Bem-Te-Vi')), 1.4, at=c.A(3, 'selo', 0.5), label='selo roxo Cliente+Fornecedor')
+    c.hover(ABA('Clientes'), 0.8, at=c.A(3, 'duas', 0.5), label='as duas abas')
+    c.mark(4)
+    c.click(LINHA('Depósito Irmãos Siqueira'), at=c.A(4, 'Depósito', 0.6), label='clica no Depósito Irmãos Siqueira')
+    c.waitfor(target=SEL(FICHA_DE('Depósito Irmãos Siqueira')), timeout=10)
+    c.confere(FICHA_DE('Depósito Irmãos Siqueira'), ['Cliente+Fornecedor', 'R$ 840,00', 'a pagar'], 'ficha do depósito')
+    c.hover(SALDO_FICHA('Depósito Irmãos Siqueira'), 1.4, at=c.A(4, 'cliente', 0.5), label='ficha do depósito: R$ 840,00 a pagar')
+    c.mark(5)   # ilustração do saldo unificado
+    c.mark(6)
+    c.mark(7)
+    c.click(ABA('Clientes'), at=c.A(7, 'Clientes,', 0.6), label='aba Clientes')
+    c.waitfor(target=BUSCA('cliente'), timeout=10)
+    c.confere(f"main aside button:has(p)", ['Depósito Irmãos Siqueira', '-R$ 840,00'], 'o depósito em Clientes com -R$ 840,00')
+    c.hover(NOME_LINHA('Depósito Irmãos Siqueira'), 0.8, at=c.A(7, 'aparece', 0.5), label='zoom: linha do Depósito em Clientes (Cliente+Fornecedor)')
+    c.hover(SALDO_ROW('Depósito Irmãos Siqueira'), 2.0, at=c.A(7, 'sinal', 0.5), label='-R$ 840,00 em vermelho')
+    c.fim()
+    return c
+
+
+def cap06():
+    """Tabela de preço do parceiro: Editar o depósito, Tabela de Preços Padrão Principal -> Tabela Depósitos, o aviso azul, Salvar;
+    (ilustração da ordem dos preços) e a aba Preços da ficha."""
+    c = cap_novo(6, start=(700, 400))
+    c.mark(1)
+    c.click(LINHA('Depósito Irmãos Siqueira'), at=c.A(1, 'Depósito', 0.6), label='clica no Depósito Irmãos Siqueira')
+    c.waitfor(target=SEL(FICHA_DE('Depósito Irmãos Siqueira')), timeout=10)
+    c.mark(2)
+    c.click(BTN_FICHA('Depósito Irmãos Siqueira', 'Editar'), at=c.A(2, 'Editar,', 0.6), label='Editar')
+    c.waitfor(text='Editar Fornecedor', timeout=10)
+    c.ev(DLG_ROLA('Tabela de Preços Padrão', 360, 600), label='desce a janela até a Tabela de Preços Padrão')
+    c.hover(TABELA_PADRAO, 1.0, at=c.A(2, 'Principal.', 0.5), label='Tabela de Preços Padrão: Principal')
+    c.click(TABELA_PADRAO, at=c.A(2, 'troco', 0.6), label='abre a lista de tabelas')
+    c.click(OPT('Tabela Depósitos'), at=c.A(2, 'Depósitos.', 0.4), label='Tabela Depósitos')
+    c.mark(3)
+    c.ev(js_dlg_topo(), at=c.L(3) - 0.9, label='sobe a janela até o aviso azul')
+    c.hover(AVISO_AZUL, 2.4, at=c.A(3, 'aviso', 0.5), label='zoom: aviso azul do cadastro vinculado')
+    c.mark(4)
+    c.click(SALVAR, at=c.A(4, 'Salvar.', 0.6), label='Salvar')
+    c.waitfor(text='Fornecedor atualizado!', timeout=12)
+    c.waitfor(gone={'role': 'dialog'}, timeout=8)
+    c.mark(5)   # ilustração: qual preço vale na compra
+    c.mark(6)
+    c.click(ABA_FICHA('Preços'), at=c.A(6, 'ficha', 0.6), label='aba Preços da ficha')
+    c.waitfor(text='Preços Personalizados', timeout=12)
+    c.hover(TXT('Preços Personalizados', within=FICHA_DE('Depósito Irmãos Siqueira')), 1.2, at=c.A(6, 'Preços.', 0.5), label='Preços Personalizados (Compra e Venda)')
+    c.fim()
+    return c
+
+
+def cap07():
+    """A ficha do parceiro: Cooperativa Recomeço, cabeçalho, as 7 abas, Visão geral, Acesso ao portal, a aba Lucro estimado."""
+    c = cap_novo(7, start=(700, 400))
+    c.mark(1)
+    c.click(LINHA(COOP), at=c.A(1, 'Cooperativa', 0.6), label='clica na Cooperativa Recomeço: a ficha abre em Visão geral')
+    c.waitfor(target=SEL(FC), timeout=10)
+    c.confere(FC, ['Cooperativa Recomeço', 'Fornecedor', 'R$ 2.550,00', 'a pagar'], 'cabeçalho da ficha')
+    c.mark(2)
+    c.hover(SEL(f'{FC} h2, {FC} h1', nth=0), 0.4, at=c.A(2, 'nome,', 0.5), label='nome da cooperativa')
+    c.hover(SALDO_FICHA(COOP), 0.5, at=c.A(2, 'saldo', 0.5), label='saldo R$ 2.550,00 a pagar')
+    c.hover(BTN_FICHA(COOP, 'Editar'), 0.3, at=c.A(2, 'editar', 0.5), label='Editar')
+    c.hover(BTN_FICHA(COOP, 'Nova Movimentação'), 0.6, at=c.A(2, 'lançar', 0.5), label='Nova Movimentação')
+    c.mark(3)
+    for palavra, aba in [('Visão', 'Visão geral'), ('Pedidos,', 'Pedidos'), ('Conta-corrente,', 'Conta-corrente'), ('Lucro', 'Lucro estimado'),
+                         ('Financeiro,', 'Financeiro'), ('Notas', 'Notas fiscais'), ('Preços.', 'Preços')]:
+        c.hover(ABA_FICHA(aba), 0.2, at=c.A(3, palavra, 0.45), label=f'aba {aba}')
+    c.mark(4)
+    c.hover(TXT('Cadastro', within=FC), 0.8, at=c.A(4, 'cadastro,', 0.5), label='Cadastro')
+    c.hover(TXT('Contato e endereço', within=FC), 0.8, at=c.A(4, 'contato', 0.5), label='Contato e endereço')
+    c.mark(5)
+    c.hover(SEL("input[aria-label='Link do portal']"), 1.6, at=c.A(5, 'link', 0.5), label='zoom: Acesso ao portal, o link e Copiar')
+    c.hover(BTN('Copiar', FC), 1.0, at=c.A(5, 'portal', 0.5, nth=1), label='Copiar (sem clicar)')
+    c.mark(6)
+    c.hover(ABA_FICHA('Lucro estimado'), 2.0, at=c.A(6, 'Lucro', 0.5), label='aba Lucro estimado (sem clicar)')
+    c.fim()
+    return c

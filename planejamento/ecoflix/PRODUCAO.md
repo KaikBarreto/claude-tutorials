@@ -412,3 +412,12 @@ Decisões:
   unificação e avisar o Kaik. Agentes da T05 e da T10+T12 avisados. Kit: kg com decimais, seta e tracejado no `traco()`,
   carroça, caminhão com carga e vazio, balança; o render não carrega ícone de uma letra ("x"). T08 cap08 usa 1.200 e 800
   kg do roteiro, fora do mundo (conferir na revisão). Robô da T06 lançado no lugar.
+- 11/11 12:0x **Disco liberado com o ok do Kaik** (12:00): só os intermediários pesados das pastas de 29 a 31/10
+  (arquivos acima de 1 MB em `fix-29out/work` e `brand-fix/work`, 4,6 GB) e as bibliotecas do projeto da animação
+  (`gancho-whats/node_modules`, 0,5 GB). Ficaram os originais, os finais (`saida`, `entrega`), ferramentas, ajustes e
+  parâmetros de cada vídeo e o projeto da animação: dá para editar de novo (só refaz os intermediários). Disco: 5,7 GB livres.
+- 11/11 12:0x **Ilustrações T16 prontas** (19 cenas, uma por capítulo; a cota sem número, como a fala nova). **Para o robô
+  da T16**: conferir na tela se a NF-e da Serra Fina (Itamonte, MG) sai com CFOP 6102, como dizem o roteiro e a linha do
+  tempo, ou se o app põe o 5102 padrão (a ilustração viu 5102 no fluxo do app); se o app não trocar sozinho, é achado
+  para o relatório de melhorias e o robô escolhe 6102. Ícone de uma letra ("x") agora carrega no render. Robô da T07
+  lançado no lugar.

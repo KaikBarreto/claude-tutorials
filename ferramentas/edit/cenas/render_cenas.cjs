@@ -17,7 +17,7 @@ if (process.argv.includes('--stills') && !(STILLS || '').trim()) { console.error
 const HTML = path.resolve(opt('--html', path.join(HERE, 'cenas.html')));
 const LUCIDE = path.join(path.dirname(require.resolve('lucide-static/package.json', { paths: [HERE, path.dirname(HTML)] })), 'icons');
 // ícones: todo texto entre aspas na página que for nome de um ícone do lucide (pega também os que vêm de listas)
-const ICONS = [...new Set([...fs.readFileSync(HTML, 'utf8').matchAll(/['"]([a-z][a-z0-9-]{1,40})['"]/g)].map(m => m[1]))]
+const ICONS = [...new Set([...fs.readFileSync(HTML, 'utf8').matchAll(/['"]([a-z][a-z0-9-]{0,40})['"]/g)].map(m => m[1]))]
   .filter(n => fs.existsSync(path.join(LUCIDE, n + '.svg')));
 // Vigia: cena travada (promessa que nunca resolve, laço sem fim no setup ou no R) sai com erro em vez de segurar a trava
 // pesada dos outros (10/11: um render de quadros parado prendeu a fila de 18 agentes por 10 min). --vigia S (padrão 90).
