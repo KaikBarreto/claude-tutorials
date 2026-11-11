@@ -569,13 +569,15 @@ def js_rola_form(px=140, dur_ms=0):
 
 
 # ---------------------------------------------------------------- setup: login e o que não é semente, refeito pela tela (fora do vídeo)
-def setup_tela(url='/compra', espera='Voltar para o caixa', recolhe=True, extra=()):
+def setup_tela(url='/compra', espera='Voltar para o caixa', recolhe=True, extra=(), sem_aviso=True):
     st = setup_login() + vai(url, espera)
     if recolhe:
         st += RECOLHE
     if url in ('/compra', '/venda'):
         st += [{'do': 'eval', 'js': js_rola_form()}, {'do': 'pause', 'seconds': 0.4}]
-    return st + list(extra)
+    # aviso verde que o setup deixou ("Pesagem do item atualizada", "Preço da tabela aplicado") não entra no 1º quadro do capítulo
+    fim = [{'do': 'waitFor', 'gone': {'selector': '[data-sonner-toast]'}, 'timeout': 12}] if extra and sem_aviso else []
+    return st + list(extra) + fim
 
 
 def st_balanca(peso, pausa=2.4):

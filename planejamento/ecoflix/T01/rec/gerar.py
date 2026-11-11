@@ -979,7 +979,7 @@ def cap13():
     c.mark(2)
     c.hover(LOGO_IMG, 0.1, at=c.A(2, 'logo,', 1.0), label='o logo')
     c.hover(ICONE_IMG, 0.05, at=c.A(2, 'ícone', 0.5), label='o ícone')
-    rola_ate(c, 'CNPJ/CPF', at=c.A(2, 'CNPJ,', 0.0), label='o CNPJ, o contato e o endereço', y=160, dur_ms=700, escopo='main')
+    rola_ate(c, 'CNPJ/CPF', at=c.A(2, 'CNPJ,', 0.0), label='o CNPJ, o contato e o endereço', y=160, dur_ms=700, prefixo=True, escopo='main')   # o rótulo tem o ícone dentro (não é folha)
     c.hover(SEL('#company-cnpj'), 0.3, at=c.A(2, 'preencheu', 0.0), label='CNPJ 47.318.506/0001-07')
     rola_ate(c, 'Prévia no comprovante', at=c.A(2, 'escolhendo', 0.9), label='a Prévia no comprovante', y=280, dur_ms=800, escopo='main')
     c.hover(PREVIA, 0.8, at=c.A(2, 'comprovante.', 0.5), label='o endereço sem o galpão')

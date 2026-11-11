@@ -29,6 +29,8 @@ Linha = número da linha da coluna Fala no capítulo (L1 = a primeira).
 
 ## Mundo (para o coordenador)
 
+- **1.200 e 800 kg (ilustração das pesagens mescladas, cap08 L5)**: não aparecem na tela do app. O cap08 grava a lista, a janela "Gerar comprovante do ticket" e Configurações › Integrações; o ticket #58 não tem pesagens mescladas. Os números ficam só na ilustração, e a fala não os diz.
+
 - **Ticket #57 do mundo base com 0 kg**: está "Aguardando valorização" com `items: []`, então o cartão (cap01, L4, zoom na coluna) e a
   Lista (cap09) mostram "Bateria automotiva 0 kg" / "0 kg líq.". O `MUNDO_FICTICIO.md` fala em "#57 em rascunho"; o T8 pede pendente. A
   semente da junção precisa de um item com peso no #57 (não mexi: é do mundo base).

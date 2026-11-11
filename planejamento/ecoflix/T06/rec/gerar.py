@@ -789,6 +789,8 @@ def cap10():
     c.hover(TXT('Restante em Caixa', DLG), at=c.A(6, 'Restante', 0.5), label='Restante em Caixa R$ 1.007,10')
     c.mark(7)
     c.mark(8)
+    # o corpo da janela (ResponsiveDialog max-w-4xl) rola: o campo desce até a vista ainda sob a ilustração (L7 e L8)
+    c.ev(js_rola_ate('Valor de Fechamento', y=380, dur_ms=800, esc=DLG), at=c.L(9) - 2.2, label='desce a janela até o Valor de Fechamento')
     c.mark(9)
     c.confere_campo(f'{DLG} #closingBalance', '1.007,10', 'Valor de Fechamento já com o esperado')
     c.hover(FECHAMENTO, at=c.A(9, 'Valor', 0.5), label='Valor de Fechamento (já com o esperado)')
@@ -799,7 +801,8 @@ def cap10():
     c.hover(TXTX('Valor esperado pelo sistema', DLG), at=c.A(11, 'diferença', 0.5, nth=0), label='Valor esperado pelo sistema: R$ 1.007,10')
     c.mark(12)
     c.mark(13)
-    c.click(BTN('Confirmar Fechamento', DLG), at=c.A(13, 'Confirmar', 0.6), label='Confirmar Fechamento')
+    # rodapé fixo da janela (pode ficar abaixo de y 730): sem rolar à toa
+    c.click(BTN('Confirmar Fechamento', DLG), at=c.A(13, 'Confirmar', 0.6), label='Confirmar Fechamento', noScroll=True)
     c.waitfor(text='Deseja imprimir o relatório de fechamento de caixa?', timeout=12)
     c.mark(14)
     c.click(BTN('Não, obrigado'), at=c.A(14, 'não', 0.6), label='Não, obrigado')

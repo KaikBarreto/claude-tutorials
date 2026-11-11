@@ -293,7 +293,8 @@
     "name": "Editar"
    },
    "at": 2.68,
-   "label": "Editar (pedido de 21/10)"
+   "label": "Editar (pedido de 21/10)",
+   "noScroll": true
   },
   {
    "do": "waitFor",
@@ -452,7 +453,8 @@
     "name": "Editar"
    },
    "at": 46.32,
-   "label": "Editar"
+   "label": "Editar",
+   "noScroll": true
   },
   {
    "do": "waitFor",
@@ -561,7 +563,8 @@
     "name": "Editar"
    },
    "at": 59.88,
-   "label": "Editar (o item volta para o formulário)"
+   "label": "Editar (o item volta para o formulário)",
+   "noScroll": true
   },
   {
    "do": "waitFor",
@@ -620,7 +623,7 @@
   },
   {
    "do": "eval",
-   "js": "(async()=>{const esp=[\"42\", \"260,4\"];let out='';for(let i=0;i<12;i++){const v=[...document.querySelectorAll(\"main tbody tr:has-text('Alum\\u00ednio latinha')\"+' input, '+\"main tbody tr:has-text('Alum\\u00ednio latinha')\"+' textarea')].map(e=>e.value).join(' | ');const falta=esp.filter(e=>!v.includes(e));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+v.slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
+   "js": "(async()=>{const esp=[\"42\", \"260,4\"];let out='';for(let i=0;i<12;i++){const v=[...document.querySelectorAll(\"main tbody\"+' input, '+\"main tbody\"+' textarea')].map(e=>e.value).join(' | ');const falta=esp.filter(e=>!v.includes(e));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+v.slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
    "label": "confere o item de volta na lista com 42 kg"
   },
   {

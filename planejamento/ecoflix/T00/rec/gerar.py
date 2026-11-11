@@ -355,7 +355,7 @@ def cap01(v):
     P = lambda t, **kw: {'text': t, 'within': PORTAO, **kw}
     c.mark(1)
     c.hover(P('Primeiro passo', exact=True), 0.5, at=c.A(1, 'primeiro', 0.9), label='selo Primeiro passo', noScroll=True)
-    c.hover(P('Antes de usar o sistema'), 0.5, at=c.A(1, 'antes', 0.9), label='Antes de usar o sistema')
+    c.hover(P('Antes de usar o sistema'), 0.5, at=c.A(1, 'antes', 0.9), label='Antes de usar o sistema', noScroll=ph)
     c.mark(2)
     if ph:
         rola_ate(c, 'Antes de usar o sistema', at=c.A(2, 'Os', 1.4), label='sobe ao painel do portão', y=110, dur_ms=700, dentro=PORTAO)
@@ -369,6 +369,8 @@ def cap01(v):
     if ph:
         rola_ate(c, 'Você pode pular durante o teste', at=c.A(4, 'Começou', 1.6), label='desce ao quadro do teste', y=260, dur_ms=800, dentro=PORTAO)
     c.hover(P('Você pode pular durante o teste'), 0.7, at=c.A(4, 'teste', 0.9), label='quadro Você pode pular durante o teste')
+    if ph:
+        rola_ate(c, 'Pular por agora', at=c.A(4, 'pular', 1.8), label='desce ao botão Pular por agora', y=520, dur_ms=700, dentro=PORTAO)
     c.hover(P('Pular por agora'), 0.8, at=c.A(4, 'pular', 0.9), label='botão Pular por agora (sem clicar)')
     c.mark(5)
     c.cursor((760, 470) if not ph else (195, 600), at=c.A(5, 'Uma', 0.6), label='cursor sai de cima do botão')

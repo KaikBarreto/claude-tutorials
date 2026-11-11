@@ -15,6 +15,8 @@ export FAKE_URL=http://127.0.0.1:54327 FAKE_NOW=2026-11-10T08:30:00-03:00
 nn=$1; modo=${2:-rapido}
 ens=rec/t27/_ens/cap$nn.out; grv=rec/t27/cap$nn.grav.out
 ENC=(--preset ultrafast --crf 30)
+# "SEM ALVO" no VALOR devolvido por um `eval` (o actions.json guarda também o começo do js, que traz o texto 'SEM ALVO' do próprio teste)
+semalvo() { python3 -I -c "import json,sys; a=json.load(open(sys.argv[1]))['actions']; print(sum(1 for x in a if x.get('do')=='eval' and 'SEM ALVO' in json.dumps(x.get('value'), ensure_ascii=False)))" "$1" 2>/dev/null || echo X; }
 mkdir -p rec/t27/_ens
 pid=$(cat rec/.runtime/fake54327.pid 2>/dev/null)
 env_ok() { tr '\0' '\n' < "/proc/$pid/environ" 2>/dev/null | grep -q "^$1$"; }
@@ -24,7 +26,7 @@ if [ "$modo" != completo ]; then
   timeout 600 node rec/record.mjs "rec/t27/_ens/cap$nn.json" --rapido "${ENC[@]}" >> "$ens" 2>&1
   echo "### exit $?" >> "$ens"
   python3 -I rec/t27/resumo.py "$nn" --ens >> "$ens" 2>&1
-  sa=$(grep -c "SEM ALVO" "rec/t27/_ens/t27-cap$nn.actions.json" 2>/dev/null || echo X)
+  sa=$(semalvo "rec/t27/_ens/t27-cap$nn.actions.json")
   echo "SEM ALVO no actions.json: $sa" >> "$ens"
   rm -f "/home/claude/ecoflix/rec/t27/_ens/t27-cap$nn.mp4"
   [ -f "rec/t27/_ens/t27-cap$nn.contact.jpg" ] && mv -f "rec/t27/_ens/t27-cap$nn.contact.jpg" "/dev/shm/t27-ens-cap$nn.contact.jpg"
@@ -35,7 +37,7 @@ fi
 timeout 600 node rec/record.mjs "rec/t27/cap$nn.json" "${ENC[@]}" > "$grv" 2>&1
 echo "### exit $?" >> "$grv"
 python3 -I rec/t27/resumo.py "$nn" >> "$grv" 2>&1
-grep -c "SEM ALVO" "rec/t27/t27-cap$nn.actions.json" 2>/dev/null | sed 's/^/SEM ALVO no actions.json: /' >> "$grv"
+echo "SEM ALVO no actions.json: $(semalvo "rec/t27/t27-cap$nn.actions.json")" >> "$grv"
 rm -f "/home/claude/ecoflix/rec/t27/t27-cap$nn.mp4"
 [ -f "rec/t27/t27-cap$nn.contact.jpg" ] && mv -f "rec/t27/t27-cap$nn.contact.jpg" "/dev/shm/t27-cap$nn.contact.jpg"
 echo "cap$nn pronto"
