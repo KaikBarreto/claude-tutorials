@@ -469,3 +469,6 @@ Decisões:
   rótulos do app) e **estilo saturado pronto em T07, T08 e T09** (~9, 8 e 12 ajustes, num bloco `saturado-aula` por aula;
   ícones soltos sem fundo, linhas de resumo dentro de cartões e o navegador esquemático da T09 ficaram como estavam).
   Todas as 26 aulas têm ilustração. Folhas mandadas ao Kaik. Faltam: estilo de T10-T12 e T17/T18/T19/T25 e o Cato (T21).
+- 11/11 13:2x **Estilo saturado pronto em T10, T11 e T12** (~11, 9 e 10 pontos: etapas de cinza a verde cheio com ícone
+  branco, balões de pergunta em âmbar cheio, sinais e operadores em cinza; a etiqueta "Cancelada" da T12 cap10 segue
+  apagada como o cartão cancelado). Folhas mandadas. Faltam o estilo de T17/T18/T19/T25 e o Cato (T21).
