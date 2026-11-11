@@ -462,3 +462,6 @@ Decisões:
   coloridos e o realce de texto `.hl` da T02 (texto sobre branco, não selo); se o Kaik quiser, viram chip. Folhas mandadas.
 - 11/11 13:0x **Ilustrações T15 e T22 prontas no estilo novo** (9 + 7 cenas; a junção mudou falas da T22 e as cenas foram
   refeitas). Folhas mandadas ao Kaik. Faltam as ilustrações de T20+T26, o Cato (T21) e o estilo saturado de T07-T19 e T25.
+- 11/11 13:1x **Estilo saturado pronto em T13, T14 e T16** (17, 14 e 15 trocas; painéis grandes "Disponível no cofre" e
+  "Diferença" da T14 ficaram claros; o carimbo "Cancelada" da T16 continua desenho; os elementos esmaecidos de propósito
+  continuam esmaecidos). Folhas mandadas ao Kaik.

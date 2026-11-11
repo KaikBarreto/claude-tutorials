@@ -66,7 +66,7 @@ body{font-family:M,sans-serif;color:var(--t);-webkit-font-smoothing:antialiased}
 :root{--vs:#16A34A;--as:#D97706;--rs:#DC2626}
 .ico{background:var(--vs);color:#fff}.ico.a{background:var(--as);color:#fff}
 .tag.v{background:var(--vs);color:#fff}.tag.a{background:var(--as);color:#fff}
-</style></head>
+</style><style id="saturado-aula">.tag.n,.op{background:#4B5563;color:#fff}.chk.v{background:var(--vs);color:#fff}</style></head>
 <body><div id="st"></div>
 <script>
 // ------------------------------------------------------------------ utilidades (as do cenas_modelo.html + as da EcoFlix)
@@ -259,8 +259,8 @@ S.ilu00_pedido=g=>{
         <div class="barra" style="width:70%"></div><div class="barra" style="margin-top:12px;width:48%"></div>
         <div class="barra" style="margin-top:24px;width:86%"></div><div class="barra" style="margin-top:12px;width:62%"></div>
         <div class="barra" style="margin-top:12px;width:74%"></div><div class="barra" style="margin-top:24px;width:40%;height:14px"></div></div>`).join('')}</div>`,g);
-  const qq=el(`<div class="ab" style="left:1000px;top:470px;width:96px;height:96px;border-radius:50%;background:#FFF5DF;border:4px solid #F2B63D;
-      display:flex;align-items:center;justify-content:center;font-weight:800;font-size:54px;color:#8A5A00;box-shadow:0 10px 24px rgba(16,24,40,.12)">?</div>`,g);
+  const qq=el(`<div class="ab" style="left:1000px;top:470px;width:96px;height:96px;border-radius:50%;background:var(--as);border:4px solid #D97706;
+      display:flex;align-items:center;justify-content:center;font-weight:800;font-size:54px;color:#fff;box-shadow:0 10px 24px rgba(16,24,40,.12)">?</div>`,g);
   let A=null;
   return (t,J)=>{
     if(!A)A={ac:W(0,'achar'),se:W(0,'semanas'),at:W(0,'atras'),co:W(0,'corrigir'),im:W(0,'imprimir'),
@@ -294,7 +294,7 @@ S.ilu01_telas=g=>{
         <div style="font-weight:800;font-size:27px;white-space:nowrap">${nome}</div><div class="row acs" style="margin-left:auto;gap:10px"></div></div>
       <div style="margin-top:18px;height:1px;background:#E6E9EE"></div></div>`,pai);
   const ped=cartao(PX,'','clipboard-list','Pedidos',gP), his=cartao(HX,'a','history','Histórico do Caixa',g);
-  const acs=['search','pencil','printer'].map(c=>el(`<span class="ab0" style="width:44px;height:44px;border-radius:12px;background:#EAF8F0;display:flex;align-items:center;justify-content:center">${ic(c,22,'#2E7D57')}</span>`,ped.querySelector('.acs')));
+  const acs=['search','pencil','printer'].map(c=>el(`<span class="ab0" style="width:44px;height:44px;border-radius:12px;background:var(--vs);display:flex;align-items:center;justify-content:center">${ic(c,22,'#fff')}</span>`,ped.querySelector('.acs')));
   // as linhas de pedido (cada compra e cada venda), de caixas diferentes
   const RW=[['Compra','v','10/11'],['Venda','a','10/11'],['Compra','v','21/10']];
   const lin=RW.map(([k,c,d],i)=>el(`<div class="ab row" style="left:${PX+26}px;top:${RY(i)}px;width:${PW-52}px;height:70px;padding:0 18px;gap:16px;border:1px solid #E6E9EE;border-radius:14px;background:#fff">
@@ -311,8 +311,8 @@ S.ilu01_telas=g=>{
   // todo pedido nasce dentro de um caixa: a compra de 21/10 liga na gaveta do Marcos de 21/10
   const y3=RY(2)+35;
   const liga=seta(g,`M${PX+PW-20},${y3} C${PX+PW+30},${y3} ${HX-30},${y3} ${HX+20},${y3}`,'#50D088',4);
-  const elo=el(`<div class="ab" style="left:${PX+PW+50-30}px;top:${PY+28}px;width:60px;height:60px;border-radius:50%;background:#fff;border:2px solid #A9E9C6;
-      display:flex;align-items:center;justify-content:center;box-shadow:0 8px 18px rgba(16,24,40,.10)">${ic('link-2',28,'#2E7D57')}</div>`,g);
+  const elo=el(`<div class="ab" style="left:${PX+PW+50-30}px;top:${PY+28}px;width:60px;height:60px;border-radius:50%;background:var(--vs);border:2px solid #fff;
+      display:flex;align-items:center;justify-content:center;box-shadow:0 8px 18px rgba(16,24,40,.10)">${ic('link-2',28,'#fff')}</div>`,g);
   let A=null;
   return (t,J)=>{
     if(!A)A={pe:W(0,'pedidos'),ca:W(0,'cada',1),co:W(0,'compra'),ve:W(0,'venda'),to:W(0,'todos'),ah:W(0,'achar'),cr:W(0,'corrigir'),im:W(0,'imprimir'),
@@ -351,11 +351,11 @@ S.ilu04_soma=g=>{
       <div class="ico ${cls}" style="width:56px;height:56px">${ic('receipt-text',28)}</div>
       <div><div style="font-weight:800;font-size:23px;white-space:nowrap">${nome}</div><div class="num vl" style="margin-top:6px;font-size:22px;color:#374151;white-space:nowrap">${val}</div></div>
       <span class="badge" style="margin-left:auto;width:48px;height:48px;border-radius:50%;background:${bfundo};display:flex;align-items:center;justify-content:center;opacity:0">${ic(bic,26,bcor)}</span></div>`,g);
-  const pA=pedido(XA,'a','Pedido antigo',`${kg(24)} · ${brl(148.8)}`,'undo-2','#8A5A00','#FFF5DF');
-  const pN=pedido(XN,'','Pedido certo',`${kg(42)} · ${brl(260.4)}`,'check','#2E7D57','#EAF8F0');
+  const pA=pedido(XA,'a','Pedido antigo',`${kg(24)} · ${brl(148.8)}`,'undo-2','#fff','#D97706');
+  const pN=pedido(XN,'','Pedido certo',`${kg(42)} · ${brl(260.4)}`,'check','#fff','#16A34A');
   const vA=pA.querySelector('.vl'), bA=pA.querySelector('.badge'), bN=pN.querySelector('.badge');
   const livro=(x,icn,nome)=>el(`<div class="card" style="left:${x}px;top:${YL}px;width:${CW}px;height:372px;padding:22px 26px">
-      <div class="row" style="gap:14px"><div class="ico" style="width:52px;height:52px;background:#EEF1F4;color:#374151">${ic(icn,26)}</div>
+      <div class="row" style="gap:14px"><div class="ico" style="width:52px;height:52px;background:#4B5563;color:#fff">${ic(icn,26)}</div>
         <div style="font-weight:800;font-size:24px">${nome}</div></div>
       ${[[96,56],[162,56],[256,62]].map(([y,h])=>`<div style="position:absolute;left:26px;right:26px;top:${y}px;height:${h}px;border:2px dashed #DCE1E7;border-radius:12px"></div>`).join('')}
       <div class="dv" style="position:absolute;left:26px;right:26px;top:236px;height:2px;background:#D7DDE3;transform-origin:0 50%"></div></div>`,g);
@@ -410,7 +410,7 @@ S.ilu04_soma=g=>{
 S.ilu05_estornado=g=>{
   const tit=titulo(g,'Correções','O pedido estornado');
   const gav=el(`<div class="card" style="left:80px;top:196px;width:520px;height:380px;padding:24px 26px;background:#FBFCFD">
-      <div class="row" style="gap:14px"><div class="ico" style="width:52px;height:52px;background:#EEF1F4;color:#4B5563">${ic('archive',26)}</div>
+      <div class="row" style="gap:14px"><div class="ico" style="width:52px;height:52px;background:#4B5563;color:#fff">${ic('archive',26)}</div>
         <div><div style="font-weight:800;font-size:24px;white-space:nowrap">Caixa de 03/11</div><div class="lbl" style="margin-top:3px">fechado</div></div>
         <span style="margin-left:auto">${ic('lock',30,'#6B7280')}</span></div></div>`,g);
   const ped=el(`<div class="card" style="left:110px;top:330px;width:460px;height:150px;padding:22px 24px">
@@ -429,8 +429,8 @@ S.ilu05_estornado=g=>{
         <span style="margin-left:auto">${ic('ban',22,'#8A5A00')}</span></div></div>`,g);
   const fora=tot.querySelector('.fora');
   // sem editar nem excluir
-  const btn=(n,i)=>`<span class="row ${n}" style="height:50px;padding:0 18px;gap:10px;border-radius:12px;background:#F2F4F7;color:#6B7280;font-weight:800;font-size:19px">
-      ${ic(i,20)}${n==='be'?'Editar':'Excluir'}<span class="trv" style="display:inline-flex;margin-left:4px;opacity:0">${ic('lock',18,'#8A5A00')}</span></span>`;
+  const btn=(n,i)=>`<span class="row ${n}" style="height:50px;padding:0 18px;gap:10px;border-radius:12px;background:#4B5563;color:#fff;font-weight:800;font-size:19px">
+      ${ic(i,20)}${n==='be'?'Editar':'Excluir'}<span class="trv" style="display:inline-flex;margin-left:4px;opacity:0">${ic('lock',18,'#fff')}</span></span>`;
   const aco=el(`<div class="card row" style="left:660px;top:488px;width:540px;height:110px;padding:0 26px;gap:16px">${btn('be','pencil')}${btn('bx','trash-2')}</div>`,g);
   const [be,bx]=[aco.querySelector('.be'),aco.querySelector('.bx')];
   let A=null;
@@ -463,7 +463,7 @@ S.ilu06_popups=g=>{
       <div class="row" style="height:60px;padding:0 18px;gap:14px;border-bottom:1px solid #E6E9EE">
         <div class="row" style="flex:1;height:40px;padding:0 16px;gap:12px;border-radius:20px;background:#F2F4F7">
           <span class="cad" style="display:inline-flex">${ic('lock',20,'#374151')}</span><span style="font-weight:600;font-size:17px;color:#374151">ecosistematecnologia.com.br</span>
-          <span class="blq" style="margin-left:auto;display:inline-flex;opacity:0">${ic('ban',20,'#8A5A00')}</span></div></div>
+          <span class="blq" style="margin-left:auto;display:inline-flex;opacity:0;background:var(--as);border-radius:50%;padding:4px">${ic('ban',20,'#fff')}</span></div></div>
       <div style="padding:34px 40px">
         <div class="barra" style="width:34%;height:14px"></div><div class="barra" style="margin-top:22px;width:82%"></div>
         <div class="barra" style="margin-top:14px;width:74%"></div><div class="barra" style="margin-top:14px;width:78%"></div>

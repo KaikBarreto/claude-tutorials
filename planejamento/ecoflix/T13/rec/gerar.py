@@ -214,13 +214,15 @@ class Cap:
     def confere(s, escopo, esperados, label, tentativas=20):
         """`eval` que LÊ a tela e compara com a fala: "OK: ..." ou "DIFERENTE: ..." (o resumo.py acusa). Escopo: 'dlg' (a última
         janela aberta), 'main', 'body' ou um seletor CSS. Tenta por ~tentativas x 0,3 s."""
-        sel = {'dlg': '[role=dialog],[role=alertdialog]', 'main': 'main', 'body': 'body'}.get(escopo, escopo)
+        linha = escopo[4:] if escopo.startswith('row:') else None   # 'row:<texto>': a linha da lista que contém o texto
+        sel = 'main tbody tr' if linha is not None else {'dlg': '[role=dialog],[role=alertdialog]', 'main': 'main', 'body': 'body'}.get(escopo, escopo)
         esp = [esperados] if isinstance(esperados, str) else list(esperados)
         js = ("(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=%s;let out='';"
-              "for(let i=0;i<%d;i++){const els=[...document.querySelectorAll(%s)];const el=%s?els[els.length-1]:els[0];"
+              "for(let i=0;i<%d;i++){const els=[...document.querySelectorAll(%s)].filter(e=>!%s||e.innerText.includes(%s));const el=%s?els[els.length-1]:els[0];"
               "if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));"
               "if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}"
               "await new Promise(r=>setTimeout(r,300));}return out})()") % (json.dumps(esp, ensure_ascii=False), tentativas, json.dumps(sel),
+                                                                            'true' if linha is not None else 'false', json.dumps(linha or ''),
                                                                             'true' if escopo == 'dlg' else 'false')
         return s.add({'do': 'eval', 'js': js, 'label': 'confere ' + label})
 
@@ -546,7 +548,7 @@ def cap04():
     c.hover(TXT_LINHA('Manutenção da prensa enfardadeira', '19/11/2026'), 0.4, at=c.A(9, 'data,', 0.6), label='vencimento 19/11/2026')
     c.hover(TXT_LINHA('Manutenção da prensa enfardadeira', 'Manutenção de máquinas'), 0.4, at=c.A(9, 'categoria', 0.6), label='categoria e Conta Principal')
     c.hover(TXT_LINHA('Manutenção da prensa enfardadeira', 'Hidráulica Moretti Ltda'), 0.8, at=c.A(9, 'fornecedor.', 0.6), label='Hidráulica Moretti Ltda')
-    c.confere(LINHA('Manutenção da prensa enfardadeira')['selector'], ['19/11/2026', 'R$ 3.480,00', 'Pendente', 'Hidráulica Moretti Ltda'], 'a linha nova')
+    c.confere('row:Manutenção da prensa enfardadeira', ['19/11/2026', 'R$ 3.480,00', 'Pendente', 'Hidráulica Moretti Ltda'], 'a linha nova')
     c.fim()
     return c
 
@@ -582,7 +584,7 @@ def cap05():
     c.waitfor(target=LINHA('Conserto do pneu da empilhadeira'), timeout=8)
     c.hover(TXT_LINHA('Conserto do pneu da empilhadeira', 'Paga'), 1.0, at=c.A(5, 'Paga,', 0.5), label='ZOOM a linha Paga, Quitada em 09/11/2026')
     c.hover(TXT_LINHA('Conserto do pneu da empilhadeira', 'Conta Principal'), 1.2, at=c.A(5, 'Conta', 0.6, nth=1), label='Conta Principal')
-    c.confere(LINHA('Conserto do pneu da empilhadeira')['selector'], ['R$ 180,00', 'Paga', '09/11/2026'], 'a conta nasceu paga')
+    c.confere('row:Conserto do pneu da empilhadeira', ['R$ 180,00', 'Paga', '09/11/2026'], 'a conta nasceu paga')
     c.mark(6)
     c.hover(TXT_LINHA('Conserto do pneu da empilhadeira', '09/11/2026'), 1.5, at=c.A(6, 'opção', 0.6), label='a linha (a câmera fica)')
     c.fim()
@@ -739,7 +741,7 @@ def cap09():
     c.click(RODAPE('Confirmar pagamento'), at=c.A(5, 'Confirmar', 0.7), label='Confirmar pagamento', noScroll=True)
     c.waitfor(text='Pagamento registrado', timeout=10)
     c.hover(TXT_LINHA('Energia elétrica de outubro', 'Paga'), 1.0, at=c.A(5, 'Paga.', 0.5), label='a energia está Paga')
-    c.confere(LINHA('Energia elétrica de outubro')['selector'], ['Paga', '10/11/2026'], 'energia paga')
+    c.confere('row:Energia elétrica de outubro', ['Paga', '10/11/2026'], 'energia paga')
     c.mark(6)
     c.digita(BUSCA, 'prensa', c.A(6, 'dica:', 0.0), c.A(6, 'baixa', 0.0), 'busca prensa (sob a ilustração)', clear=True)
     c.waitfor(target=LINHA('Manutenção da prensa enfardadeira'), timeout=8)
@@ -763,7 +765,7 @@ def cap09():
             label='ZOOM Parcial, pago R$ 1.740,00 de R$ 3.480,00 e 30/11/2026')
     c.hover({'text': 'pago R$ 1.740,00 de R$ 3.480,00', 'within': MAIN}, 1.0, at=c.A(11, 'quanto', 0.5, nth=0), label='pago R$ 1.740,00 de R$ 3.480,00')
     c.hover(TXT_LINHA('Manutenção da prensa enfardadeira', '30/11/2026'), 0.8, at=c.A(11, 'trinta.', 0.6), label='vence dia 30')
-    c.confere(LINHA('Manutenção da prensa enfardadeira')['selector'], ['Parcial', 'pago R$ 1.740,00 de R$ 3.480,00', '30/11/2026'], 'prensa parcial')
+    c.confere('row:Manutenção da prensa enfardadeira', ['Parcial', 'pago R$ 1.740,00 de R$ 3.480,00', '30/11/2026'], 'prensa parcial')
     c.fim()
     return c
 
@@ -781,7 +783,7 @@ def cap10():
     c.mark(2)
     c.hover(TXT_LINHA('Aços Quiririm Ltda', 'Saldo'), 1.6, at=c.A(2, 'linha', 0.6), label='ZOOM o chip Saldo e o valor R$ 4.870,00')
     c.hover(TXT_LINHA('Aços Quiririm Ltda', 'Cliente'), 1.0, at=c.A(2, 'cliente', 0.6), label='Aços Quiririm Ltda, Cliente')
-    c.confere(LINHA('Aços Quiririm Ltda')['selector'], ['Saldo', 'R$ 4.870,00', 'Cliente'], 'linha de saldo da Aços Quiririm')
+    c.confere('row:Aços Quiririm Ltda', ['Saldo', 'R$ 4.870,00', 'Cliente'], 'linha de saldo da Aços Quiririm')
     c.mark(3)
     c.click(NA_LINHA('Aços Quiririm Ltda', "button[title='Receber']"), at=c.A(3, 'Receber.', 0.7), label='Receber (saldo da Aços Quiririm)')
     c.waitfor(text='Receber de Aços Quiririm Ltda', timeout=8)
@@ -797,7 +799,7 @@ def cap10():
     c.click(RODAPE('Confirmar recebimento'), at=c.A(5, 'Confirmar', 0.7), label='Confirmar recebimento', noScroll=True)
     c.waitfor(text='Recebimento registrado', timeout=10)
     c.hover(TXT_LINHA('Aços Quiririm Ltda', 'R$ 2.870,00'), 1.4, at=c.A(5, 'caiu', 0.5), label='o saldo caiu para R$ 2.870,00')
-    c.confere(LINHA('Aços Quiririm Ltda')['selector'], ['R$ 2.870,00'], 'saldo de 2.870,00')
+    c.confere('row:Aços Quiririm Ltda', ['R$ 2.870,00'], 'saldo de 2.870,00')
     c.mark(6)
     c.digita(BUSCA, 'Fundição', c.A(6, 'Agora', 0.2), c.A(6, 'repara', 0.05), 'busca Fundição', clear=True)
     c.waitfor(target=LINHA('18/01/2027'), timeout=8)
