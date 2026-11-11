@@ -637,3 +637,7 @@ Decisões:
 - 11/11 21:1x **T11 em 3D mandada ao Kaik** (a pilha de latinha fica no "Entra"). T12 cap08: carregado agora sobe a
   "Carregado 9.460 kg" com "peso do material 3.080 kg", mas o "Tara 6.380 kg" ficava só ~0,4 s (a conta terminava em
   "Carregado"): agente retomado para chegar à tara até "peso" e segurar até "Carregado".
+- 11/11 21:3x **T16 em 3D mandada ao Kaik** (cap10 corrigido: o título sobe antes do mostrador). Pendência para o render
+  final: no cap07 ("O caminhão na nota") o caminhão passa sob o título grande por ~0,3 s no começo; fazer o título subir
+  antes de o caminhão entrar no quadro (mesma correção do cap10). Regra geral para o render final das cenas 3D: conferir
+  o primeiro segundo de cada cena (título grande × objeto entrando).
