@@ -572,3 +572,7 @@ Decisões:
   - **Esteira por aula** (próximo): a aula cujo robô terminar segue sozinha (revisão das falas dela → voz → gravação
     final → edição), sem esperar as outras; a primeira vira o piloto completo para o Kaik aprovar o acabamento.
   - Robô da T05 e cenas de Windows: o limite de 20 subagentes ao mesmo tempo barrou o lançamento; entram na primeira vaga.
+- 11/11 19:0x **Robô da T05 lançado** (porta 54305; EcoTray falso, gravações `device: windows` para as cenas de Windows,
+  hora do cupom de teste 08:41:07). O agente das **cenas de Windows da T05** (8 momentos, `planejamento/ecoflix/T05/windows/`)
+  esbarrou no limite de 20 subagentes duas vezes: entra quando um agente terminar de vez (o briefing está pronto nesta
+  sessão).
