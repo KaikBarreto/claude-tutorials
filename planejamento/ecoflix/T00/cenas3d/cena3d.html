@@ -268,7 +268,7 @@ CAPS[5] = () => {
     // 4 estoque: as latas dos sacos voam para o monte da baia; os sacos murcham
     P.sacos.forEach((g, i) => { transfere(g.userData.latas, dest[i], t, tEn - .1 + i * .12, .7, { passo: .02, arco: 1.4 });
       g.userData.saco.scale.y = .74 * lerp(1, .55, eo(pr(t, tEn + .35 + i * .12, .5))); });
-    vis(est, t, tMt - .1, tDe - .1, { dy: 20, sc: .94 }); ancora(est, [BAI[0] + .3, 1.25, BAI[2] - 1.3], .5, 1, 0, -6);
+    vis(est, t, tMt + .2, tDe - .1, { dy: 20, sc: .94 });   // depois de o pedido sair (os dois ficam à direita) ancora(est, [BAI[0] + .3, 1.25, BAI[2] - 1.3], .5, 1, 0, -6);
     conta(estQ, t, tEn, 1, 0, KG, v => '+' + kg(v)); pulse(est, t, tEs, .04, .7);
     // 5 venda: o caminhão carregado de latinha sai para a Serra Fina, com a nota fiscal (a câmera vai junto)
     const xc = CAM[0] + ANDA * eio(pr(t, sai, DUR)); anda(P.cam, xc);

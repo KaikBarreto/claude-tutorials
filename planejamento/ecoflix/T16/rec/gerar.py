@@ -839,9 +839,9 @@ def cap10():
     c.click(SEL("[role=option]:has-text('Frete por conta do Remetente (CIF)')"), at=c.A(7, 'frete', 0.5), label='0 - Frete por conta do Remetente (CIF)', noScroll=True)
     c.click(SEL(f"{DLG} button[role=combobox]:has-text('Selecionar...')"), at=c.A(7, 'Cargas', 0.7), label='Transportadora (abre a lista)')
     c.click(SEL("[role=option]:has-text('Cargas Vale do Sol')"), at=c.A(7, 'Sol,', 0.5), label='Cargas Vale do Sol Ltda (FJR3B27)', noScroll=True)
-    c.hover(SEL(f"{DLG} :text-is('Dados da Transportadora')"), 0.8, at=c.A(7, 'placa.', 0.6), label='Dados da Transportadora preenchidos')
+    c.hover(SEL(f"{DLG} :text-is('Dados da Transportadora')"), 0.3, at=c.A(7, 'placa.', 0.8), label='Dados da Transportadora preenchidos')
     c.mark(8)
-    emite_e_espera(c, 1250, c.A(8, 'Emitir', 0.7), 'Emitir Nota')
+    emite_e_espera(c, 1250, round(c.L(8) - 0.9, 2), 'Emitir Nota')
     c.fim()
     return c
 

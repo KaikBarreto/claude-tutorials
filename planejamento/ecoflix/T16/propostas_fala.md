@@ -8,6 +8,7 @@ Não editei `roteiro.md` nem `tts_textos.py`.
 |---|---|---|---|---|
 | 02 | L2 | Na esquerda ficam as seções, em três grupos: emissão, regras fiscais e documentos. | Em cima ficam as seções, na ordem em que se preenche: do certificado até os serviços. | Na 1.59.154 a Configuração Fiscal mostra as seções como abas no alto da página (`ConfiguracaoFiscal.tsx:1208-1213`, `desktopVariant="underline"`), sem trilho à esquerda e sem os rótulos de grupo. |
 | 02 | L3 | Repara que Empresa, Impostos, Numeração e Transportadora estão apagados, com o aviso precisa do certificado digital. | Repara que Empresa, Impostos, Numeração e Transportadora estão apagadas: elas só abrem depois do certificado digital. | As abas travadas aparecem só acinzentadas; "precisa do certificado digital" é dica nativa do navegador (`title`, `SettingsSidebarLayout.tsx:179`), que não aparece na gravação. |
+| 10 | L8 | Emitir Nota. Pronto: a mil duzentos e cinquenta está autorizada. | Emitir Nota. Ela entra como Aguardando SEFAZ e, em instantes, a mil duzentos e cinquenta está autorizada. | O selo só vira "Autorizada" na consulta de status do app, ~5 s depois do clique (polling de 5 s, `NotasFiscais.tsx:565-624`); no ensaio completo a autorização chegou 0,85 s depois do fim da fala. Alternativa: respiro de ~2 s depois de "Emitir Nota." (`pausas.py`). |
 
 ## Achados do app
 

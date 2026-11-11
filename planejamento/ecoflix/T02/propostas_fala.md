@@ -24,6 +24,9 @@ máximo 0,35 s). Os do cap02 e do cap07 atrasaram 6,96 s e 2,49 s, gravados com 
   "Personalizado" e "32 permissões configuradas individualmente."; o Editar recalcula e marca "Operador Padrão".
 - **Foto no Editar**: depois de "Foto atualizada com sucesso!" a foto da própria janela continua nas iniciais ("MA"); a lista, atrás
   da janela, já mostra a foto, e a janela só mostra ao reabrir (como o roteiro diz). A fala "No Editar, ela sobe na hora" vale pelo aviso.
+- **Menu "..." preso aberto** (`hover-dropdown-menu.tsx`): nos 220 ms depois de abrir (`openGraceMs`) o `mouseleave` é ignorado; se
+  o cursor sai do botão nesse intervalo, nada mais fecha o menu (visto no ensaio rápido do cap10, com o cursor indo do "..." para a
+  coroa). O robô fica pelo menos 0,45 s no "..." antes de sair.
 - **A busca da lista de permissões refaz a lista**: ao limpar a busca, as telas que estavam abertas ("Clique para ver N ações") voltam
   fechadas.
 - **Rodapé da janela "Sua equipe cresceu! 🎉"** a 1280x800: "Cancelar" e "Continuar" ficam em y 714 a 754, colados na borda de baixo

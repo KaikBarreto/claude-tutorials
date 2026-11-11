@@ -384,11 +384,17 @@ def _invisivel(d):
 def encurta_pausas(steps):
     """hover seguido (pulando marcas, esperas e conferências) de um gesto com `at`: a pausa no alvo não muda o vídeo (o cursor fica
     ali até o `at` seguinte), só empurra o gesto seguinte quando a máquina está carregada (ensaio de 11/11: ação e pausa ~2,5x mais
-    lentas com render de cenas em paralelo). Fica 0,15 s. Os de ZOOM mantêm a pausa: a câmera usa o tEnd do passo."""
+    lentas com render de cenas em paralelo). Fica 0,15 s. Os de ZOOM mantêm a pausa (a câmera usa o tEnd do passo), e os do menu "..."
+    também (carência de 220 ms do HoverDropdownMenu)."""
     for k, d in enumerate(steps):
         if d['do'] != 'hover' or 'ZOOM' in str(d.get('label', '')) or d.get('seconds', 0.9) <= 0.15:
             continue
         prox = next((x for x in steps[k + 1:] if not _invisivel(x)), None)
+        if 'Ações de' in json.dumps(d['target'], ensure_ascii=False):
+            # menu "...": o app ignora o mouseleave nos 220 ms depois de abrir (openGraceMs); sair antes deixa o menu aberto
+            if prox is None or prox.get('at') is not None:
+                d['seconds'] = max(d['seconds'], 0.45)
+            continue
         if prox is None or prox.get('at') is not None:
             d['seconds'] = 0.15
 
