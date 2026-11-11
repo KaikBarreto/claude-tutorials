@@ -94,6 +94,14 @@
    "seconds": 0.8
   },
   {
+   "do": "eval",
+   "js": "(()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const c=rolagem(document.querySelector('main *'));if(!c)return 'SEM ROLAGEM';c.scrollTop=140;return 'rolado:'+Math.round(c.scrollTop)})()"
+  },
+  {
+   "do": "pause",
+   "seconds": 0.4
+  },
+  {
    "do": "click",
    "target": {
     "selector": "#customer-desktop-top"

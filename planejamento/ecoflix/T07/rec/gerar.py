@@ -541,11 +541,23 @@ def js_espera_valor(sel, valor, ms=7000):
 QTD_CSS = "main div:has(> label:has-text('Quantidade (Kg)')) input"
 
 
+def js_rola_form(px=140, dur_ms=0):
+    """rola a página da compra/venda para o cartão Pesagem caber inteiro na faixa de clique do robô (y 96..730: "Incluir Item" fica em
+    y ~761 com a página no topo) e o "Total da Compra" sair de baixo do botão do Cato; o Fornecedor continua em y ~119"""
+    if not dur_ms:
+        return ("(()=>{" + ACHA_ROLAGEM + "const c=rolagem(document.querySelector('main *'));if(!c)return 'SEM ROLAGEM';c.scrollTop=%d;"
+                "return 'rolado:'+Math.round(c.scrollTop)})()") % px
+    return ("(async()=>{" + ACHA_ROLAGEM + "const c=rolagem(document.querySelector('main *'));if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop;"
+            + SUAVE.replace('DUR', str(int(dur_ms))).replace('DESTINO', 'y0+(%d-y0)*e' % px) + "return 'rolado:'+Math.round(c.scrollTop)})()")
+
+
 # ---------------------------------------------------------------- setup: login e o que não é semente, refeito pela tela (fora do vídeo)
 def setup_tela(url='/compra', espera='Voltar para o caixa', recolhe=True, extra=()):
     st = setup_login() + vai(url, espera)
     if recolhe:
         st += RECOLHE
+    if url in ('/compra', '/venda'):
+        st += [{'do': 'eval', 'js': js_rola_form()}, {'do': 'pause', 'seconds': 0.4}]
     return st + list(extra)
 
 
@@ -965,6 +977,7 @@ def cap13():
     c.ev(JS_BLUR, w=(1, 'vender.', None, 0.3), label='foco fora de campo')
     c.press('Shift+V', w=(1, 'vender.'), label='Shift+V (Nova Venda)')
     c.waitfor(text='Selecionar cliente', timeout=15)
+    c.ev(js_rola_form(dur_ms=500), label='rola o formulário (o cartão Pesagem inteiro)')
     c.click(CLIENTE, w=(1, 'cliente,'), label='Selecionar cliente')
     c.type(BUSCA_PARC, 'bandeira', w=(1, 'preco', None, 0.3), cps=30, label='busca bandeira')
     c.click(PARCEIRO('Fundição Bandeira do Vale'), w=(2, 'Fundicao'), label='Fundição Bandeira do Vale')
@@ -1048,6 +1061,7 @@ def cap15():
     c.ev(JS_BLUR, w=(1, 'internet.', 1, 0.4), label='foco fora de campo')
     c.press('Shift+C', w=(1, 'internet.', 1, 0.2), label='Shift+C (Nova Compra)')
     c.waitfor(text='Voltar para o caixa', timeout=15)
+    c.ev(js_rola_form(dur_ms=500), label='rola o formulário (o cartão Pesagem inteiro)')
     c.click(FORN, w=(2, 'Chegou'), label='Selecionar fornecedor')
     c.type(BUSCA_PARC, 'cida', w=(2, 'Dona'), cps=30, label='busca cida')
     c.click(PARCEIRO('Aparecida Ramos'), w=(2, 'latinha.'), label='Aparecida Ramos')
