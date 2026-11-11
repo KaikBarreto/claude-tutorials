@@ -303,7 +303,7 @@
     "role": "button",
     "name": "Editar Pedido",
     "exact": true,
-    "within": "[role=dialog]"
+    "within": "[role=dialog], [role=alertdialog]"
    },
    "at": 45.24,
    "label": "Editar Pedido"
@@ -396,6 +396,12 @@
    "timeout": 4
   },
   {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll('main button')].find(b=>b.textContent.trim()==='Finalizar');if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-560);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 59.6,
+   "label": "a tela desce até o Finalizar (fica atrás do rodapé)"
+  },
+  {
    "do": "mark",
    "name": "L6",
    "at": 61.02
@@ -420,20 +426,8 @@
    "target": {
     "selector": "[role=dialog] button:has(span:text-is('Pix/Transferência'))"
    },
-   "at": 61.6,
+   "at": 61.7,
    "label": "Pix/Transferência (Conta Principal)"
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "Conta Principal",
-    "within": "[role=dialog]"
-   },
-   "seconds": 0.3,
-   "at": 62.13,
-   "label": "Conta Principal",
-   "optional": true,
-   "timeout": 4
   },
   {
    "do": "click",

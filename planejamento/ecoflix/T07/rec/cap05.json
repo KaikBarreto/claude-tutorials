@@ -189,7 +189,7 @@
   },
   {
    "do": "eval",
-   "js": "(async()=>{let v='';for(let i=0;i<35;i++){const l=[...document.querySelectorAll('main label')].find(x=>x.textContent.includes(\"Quantidade (Kg)\"));const el=l&&l.parentElement.querySelector('input');v=el?el.value:'SEM ALVO';if(v===\"12,4\")return 'OK: '+v;await new Promise(r=>setTimeout(r,200));}return 'DIFERENTE: '+v})()",
+   "js": "(async()=>{let v='';for(let i=0;i<35;i++){const l=[...document.querySelectorAll('main label')].find(x=>x.textContent.includes(\"Quantidade (Kg)\"));let p=l;while(p&&p!==document.body&&!p.querySelector('input'))p=p.parentElement;const el=l&&p&&p.querySelector('input');v=el?el.value:'SEM ALVO';if(v===\"12,4\")return 'OK: '+v;await new Promise(r=>setTimeout(r,200));}return 'DIFERENTE: '+v})()",
    "label": "confere Quantidade 12,4 da balança"
   },
   {
@@ -223,7 +223,7 @@
   {
    "do": "type",
    "target": {
-    "selector": "main div:has(> label:has-text('Quantidade (Kg)')) input"
+    "selector": "main div:has(> div > label:has-text('Quantidade (Kg)')) input"
    },
    "text": "",
    "noClick": true,
@@ -258,7 +258,7 @@
   {
    "do": "hover",
    "target": {
-    "selector": "main div:has(> label:has-text('Quantidade (Kg)')) button[aria-label='Capturar peso da balança']"
+    "selector": "main div:has(> div > label:has-text('Quantidade (Kg)')) button[aria-label='Capturar peso da balança']"
    },
    "seconds": 3.0,
    "at": 26.82,
@@ -295,7 +295,7 @@
   },
   {
    "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"446,40\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"446,40\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText+' '+[...el.querySelectorAll('input,textarea')].map(i=>i.value).join(' '));const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
    "label": "confere Valor Total do Item R$ 446,40"
   },
   {
@@ -364,13 +364,13 @@
   },
   {
    "do": "eval",
-   "js": "(async()=>{let v='';for(let i=0;i<35;i++){const l=[...document.querySelectorAll('main label')].find(x=>x.textContent.includes(\"Quantidade (Kg)\"));const el=l&&l.parentElement.querySelector('input');v=el?el.value:'SEM ALVO';if(v===\"21,6\")return 'OK: '+v;await new Promise(r=>setTimeout(r,200));}return 'DIFERENTE: '+v})()",
+   "js": "(async()=>{let v='';for(let i=0;i<35;i++){const l=[...document.querySelectorAll('main label')].find(x=>x.textContent.includes(\"Quantidade (Kg)\"));let p=l;while(p&&p!==document.body&&!p.querySelector('input'))p=p.parentElement;const el=l&&p&&p.querySelector('input');v=el?el.value:'SEM ALVO';if(v===\"21,6\")return 'OK: '+v;await new Promise(r=>setTimeout(r,200));}return 'DIFERENTE: '+v})()",
    "label": "confere Quantidade 21,6 da balança"
   },
   {
    "do": "type",
    "target": {
-    "selector": "main div:has(> label:has-text('Quantidade (Kg)')) input"
+    "selector": "main div:has(> div > label:has-text('Quantidade (Kg)')) input"
    },
    "text": "",
    "noClick": true,
@@ -416,7 +416,7 @@
   },
   {
    "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"130,20\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"130,20\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText+' '+[...el.querySelectorAll('input,textarea')].map(i=>i.value).join(' '));const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
    "label": "confere Valor Total do Item R$ 130,20"
   },
   {

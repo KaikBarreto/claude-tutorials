@@ -38,9 +38,10 @@
       "Isso pode significar que o saldo não foi registrado",
       "sendCommand('list_printers'): timeout",
       "list_printers failed, trying get_status fallback",
-      "Select is changing from uncontrolled to controlled"
+      "Select is changing from uncontrolled to controlled",
+      "does not conform to the required format.  The value must be a valid CSS color"
     ],
-    "_ruidoConsole": "Avisos que o próprio app escreve no console: em toda compra em dinheiro (utils/paymentMethodsHelper.ts) e quando duas telas pedem a lista de impressoras ao EcoTray ao mesmo tempo (services/ecotrayService.ts guarda uma espera por tipo de resposta: a primeira vence o tempo e cai no get_status). Não contam como problema da gravação. T4 (11/11): o aviso do React 'Select is changing from uncontrolled to controlled' sai quando a busca do CNPJ preenche UF e cidade do endereço (Selects do Radix que nasceram sem valor, components/CitySelector.tsx): só console, nada na tela."
+    "_ruidoConsole": "Avisos que o próprio app escreve no console: em toda compra em dinheiro (utils/paymentMethodsHelper.ts) e quando duas telas pedem a lista de impressoras ao EcoTray ao mesmo tempo (services/ecotrayService.ts guarda uma espera por tipo de resposta: a primeira vence o tempo e cai no get_status). Não contam como problema da gravação. T4 (11/11): o aviso do React 'Select is changing from uncontrolled to controlled' sai quando a busca do CNPJ preenche UF e cidade do endereço (Selects do Radix que nasceram sem valor, components/CitySelector.tsx): só console, nada na tela. T27 (11/11): ao digitar a Cor Primária no campo de texto, o app passa cada pedaço ('#', '#1', ... '#1F5FA') também ao <input type=color> (components/CompanySettings.tsx:1176-1189) e o Chromium avisa 'The specified value ... does not conform to the required format': só console, nada na tela."
   },
   "defaults": {},
   "smoke": {

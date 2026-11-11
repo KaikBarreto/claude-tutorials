@@ -432,7 +432,7 @@ def cap00():
     c.mark(3)
     c.mark(4)
     # 1o clique do capítulo: o cursor vem do meio da tela até o menu (~1,3 s até o clique, ensaio de 11/11)
-    c.click(FIN, at=c.A(4, 'Financeiro', 1.3), label='menu Financeiro')
+    c.click(FIN, at=c.A(4, 'Financeiro', 1.6), label='menu Financeiro')
     c.click(LINK('Caixa'), at=c.A(4, 'Caixa', 1.0), label='menu Caixa')
     c.mark(5)
     c.flush(1e9)          # a marca L5 sai antes da espera da página (o /caixa leva ~2 s para carregar)
@@ -499,7 +499,7 @@ def cap02():
     c.marca_em(5, t)
     c.click(ABRIR_DLG, at=t, label='Abrir Caixa (janela)')
     c.waitfor(text='Caixa aberto com sucesso!', timeout=10)
-    c.hover(TXT('R$ 1.500,00'), at=c.A(5, 'abriu', 0.5), label='Dinheiro em Caixa R$ 1.500,00 (#85)')
+    c.hover(TXT('R$ 1.500,00'), at=c.A(5, 'mil', 0.5), label='Dinheiro em Caixa R$ 1.500,00 (#85)')
     c.confere('main', ['#85 | Caixa - Rafael Nogueira', 'Dinheiro em Caixa', 'R$ 1.500,00', 'Aberto em: 10/11/2026 08:31'], 'caixa #85 aberto às 08:31')
     c.fim()
     return c

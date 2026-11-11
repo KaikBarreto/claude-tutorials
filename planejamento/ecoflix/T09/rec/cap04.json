@@ -304,7 +304,7 @@
    "do": "type",
    "target": {
     "text": "Se o pedido for de um caixa já fechado",
-    "within": "[role=dialog]"
+    "within": "[role=dialog], [role=alertdialog]"
    },
    "text": "",
    "noClick": true,
@@ -317,7 +317,7 @@
    "do": "hover",
    "target": {
     "text": "Se o pedido for de um caixa já fechado",
-    "within": "[role=dialog]"
+    "within": "[role=dialog], [role=alertdialog]"
    },
    "seconds": 1.0,
    "at": 7.01,
@@ -353,7 +353,7 @@
     "role": "button",
     "name": "Cancelar",
     "exact": true,
-    "within": "[role=dialog]"
+    "within": "[role=dialog], [role=alertdialog]"
    },
    "at": 33.12,
    "label": "Cancelar"
@@ -361,7 +361,7 @@
   {
    "do": "waitFor",
    "gone": {
-    "role": "dialog"
+    "text": "O pedido será carregado para edição."
    },
    "timeout": 8
   },
@@ -465,7 +465,7 @@
     "role": "button",
     "name": "Editar Pedido",
     "exact": true,
-    "within": "[role=dialog]"
+    "within": "[role=dialog], [role=alertdialog]"
    },
    "at": 46.88,
    "label": "Editar Pedido (abre a tela Compra em edição)"
@@ -538,19 +538,6 @@
    "seconds": 0.2,
    "at": 56.42,
    "label": "o preço",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "role": "button",
-    "name": "Finalizar",
-    "exact": true
-   },
-   "seconds": 0.4,
-   "at": 57.18,
-   "label": "Finalizar (a forma de pagamento sai ali)",
    "optional": true,
    "timeout": 4
   },
@@ -680,13 +667,19 @@
    "at": 101.39
   },
   {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll('main button')].find(b=>b.textContent.trim()==='Finalizar');if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-560);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 110.28,
+   "label": "a tela desce até o Finalizar (fica atrás do rodapé)"
+  },
+  {
    "do": "click",
    "target": {
     "role": "button",
     "name": "Finalizar",
     "exact": true
    },
-   "at": 111.08,
+   "at": 111.18,
    "label": "Finalizar"
   },
   {
@@ -742,7 +735,7 @@
    "do": "type",
    "target": {
     "text": "Deseja imprimir o comprovante de compra?",
-    "within": "[role=dialog]"
+    "within": "[role=dialog], [role=alertdialog]"
    },
    "text": "",
    "noClick": true,

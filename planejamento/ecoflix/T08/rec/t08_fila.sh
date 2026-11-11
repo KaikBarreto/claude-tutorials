@@ -8,7 +8,7 @@ for NN in "$@"; do
   FE=$(grep -c '!!ERRO' "rec/t08/_ens/cap$NN.resumo" 2>/dev/null); FC=$(grep -c '!!ERRO' "rec/t08/cap$NN.resumo" 2>/dev/null)
   S=$(cat "rec/t08/_ens/.cap$NN.out" "rec/t08/.cap$NN.out" 2>/dev/null | grep -c 'SEM ALVO')
   echo "cap$NN rc=$RC falhos ens=$FE completa=$FC semalvo=$S | $(head -1 "rec/t08/cap$NN.resumo" 2>/dev/null)"
-  rm -f "/home/claude/ecoflix/rec/t08/_ens/t08-cap$NN.mp4" "/home/claude/ecoflix/rec/t08/_ens/t08-cap$NN.contact.jpg" "/home/claude/ecoflix/rec/t08/t08-cap$NN.mp4"
+  rm -f "/home/claude/ecoflix/rec/t08/_ens/t08-cap$NN.mp4" "/home/claude/ecoflix/rec/t08/t08-cap$NN.mp4"   # as folhas de contato ficam para serem olhadas
   [ "$NN" = 08 ] && python3 -I rec/t08/t08_pdf.py > rec/t08/cap08.pdf.txt 2>&1
 done
 echo "fila fim $(date +%H:%M:%S)"

@@ -19,3 +19,15 @@ Não editei `roteiro.md` nem `tts_textos.py`.
 - **Lista vazia**: o texto é "Nenhuma nota fiscal encontrada" (não "Nenhuma nota fiscal de entrada encontrada").
 - **Inscrição Estadual digitada no cap04**: a do mundo base B (688.123.456.117, a da configuração fiscal da matriz), e não
   688.047.314.106 do `plano.md`, para a cadeia T16 → T17 → T18 chegar ao mesmo estado de B. A fala não diz o número.
+- **Serra Fina sem código IBGE no mundo base**: B deixa o código em branco ("a busca de CEP do app preenche"), mas a NF-e exige o
+  campo (`lib/nfe/partnerFiscalReadiness.ts`, `codigo_ibge` obrigatório): a nota ficava com "1 pendência pra emitir" ("Cliente com
+  dados fiscais incompletos"). A semente `t16/inicio` completa o cadastro com 3132503 (Itamonte, o código do handler do IBGE do
+  mundo), como o plano pede ("cadastro fiscal completo, sem selo Incompleto"). Para a junção: vale pôr o código em B.
+- **CFOP da Serra Fina**: confere. Ao escolher a cliente, o app troca sozinho para 6102 e mostra o aviso "CFOP atualizado para
+  interestadual (6102) — UF destino: MG" (o robô confere 6102 na tela e no item: "6102").
+- **Valores que já vêm prontos**: na NF-e de Saída a "Natureza da Operação" já nasce "Venda de mercadorias"; no editor de cenário a
+  "Operação *" já nasce "Venda". O robô só aponta os campos (a fala continua certa).
+- **Botão "Importar nota"** (Notas Recebidas): o nome acessível é "Importar nota recebida" (`aria-label`); na tela, "Importar nota".
+- **Download DANFE**: o PDF abre em outra aba do navegador, que a gravação não pega (o robô grava uma aba só); a edição mostra o
+  PDF como ilustração. O "Download XML" baixa o arquivo sem mudar a tela.
+

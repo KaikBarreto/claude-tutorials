@@ -23,7 +23,8 @@ EMP = '@id:company.reciclavale'
 RAFAEL = '@id:user.rafael'
 T14 = ['t14/inicio'] + [f't14/apos-cap{n:02d}' for n in (2, 3, 4, 6, 7, 8, 9, 10, 11, 12, 14)]
 T15 = ['t15/inicio', 't15/apos-cap01', 't15/apos-cap02', 't15/apos-cap10']
-CADEIA = T14 + T15 + ['t21/inicio', 't21/apos-cap02']   # o fim da T21, de onde a T25 parte (MUNDO_LINHA_DO_TEMPO, seção 14)
+T13 = ['t13/inicio', 't13/apos-cap11']
+CADEIA = T13 + T14 + T15 + ['t21/inicio', 't21/apos-cap02']   # o fim da T21, de onde a T25 parte (MUNDO_LINHA_DO_TEMPO, seção 14)
 
 
 def tarefa(k, titulo, data, hora, categoria='tarefa', **extra):

@@ -38,9 +38,12 @@ else
   REC="node rec/record.mjs rec/t22/cap$NN.json --out $TMP --name t22-cap$NN --keep-frames"
   DEST=rec/t22; LOG=rec/t22/.cap$NN.out; QARG=""
 fi
+# as sementes de partida do capítulo têm de existir (o cap10 parte do apos-cap09, o cap11 do apos-cap10): sem elas, sai na hora (FALTA-SEMENTE)
+SEMS=$(python3 -I -c "import sys; sys.path.insert(0, 'rec/t22'); import gerar; print(' '.join(gerar.SEMENTE[$N]))" 2>/dev/null)
+CHECA="for f in $SEMS; do [ -f rec/mundo/seeds-extra/\$f.json ] || { echo FALTA-SEMENTE \$f; exit 3; }; done;"
 SKIP=""
 [ -n "$FALTA" ] && SKIP="if [ -f $OK ] || grep -qs '=== cap$NN ($MODO) rc=0' rec/t22/_ens/r$N.log; then echo JA-FEITO; exit 0; fi;"
-CMD="$SKIP $PREP && rm -rf $TMP && mkdir -p $TMP && timeout 900 $REC; rc=\$?; mv -f $TMP/t22-cap$NN.actions.json $TMP/t22-cap$NN.telemetry.json $DEST/ 2>/dev/null;"
+CMD="$SKIP $CHECA $PREP && rm -rf $TMP && mkdir -p $TMP && timeout 900 $REC; rc=\$?; mv -f $TMP/t22-cap$NN.actions.json $TMP/t22-cap$NN.telemetry.json $DEST/ 2>/dev/null;"
 CMD="$CMD mv -f $TMP/t22-cap$NN.mp4 $TMP/t22-cap$NN.contact.jpg /dev/shm/t22rec/ 2>/dev/null; rm -rf $QD; mv $TMP/_frames $QD 2>/dev/null; rm -rf $TMP;"
 if [ -n "$ESTADO" ]; then
   CMD="$CMD if [ \$rc = 0 ]; then python3 -I rec/t22/t22_estado.py $N > rec/t22/_estado/cap$NN.log 2>&1 || echo ESTADO-FALHOU; fi;"
@@ -49,6 +52,7 @@ CMD="$CMD exit \$rc"
 flock .heavy.lock nice -n 5 bash -c "$CMD" > "$LOG" 2>&1
 RC=$?
 if grep -q '^JA-FEITO' "$LOG" 2>/dev/null; then echo "=== cap$NN ($MODO) JA-FEITO $(date +%H:%M)"; exit 0; fi
+if grep -q '^FALTA-SEMENTE' "$LOG" 2>/dev/null; then echo "FALTA-SEMENTE: $(grep -m1 '^FALTA-SEMENTE' "$LOG") $(date +%H:%M)"; exit 3; fi
 [ $RC = 0 ] && { mkdir -p rec/t22/_fila; touch $OK; }
 echo "=== cap$NN ($MODO) rc=$RC $(date +%H:%M)"
 tail -3 "$LOG" | cut -c1-240

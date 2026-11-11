@@ -250,14 +250,14 @@ class Cap:
     def confere(s, escopo, esperados, label):
         """LÊ a tela e compara com o que a fala diz: 'OK: ...' ou 'DIFERENTE: ...'. Escopo 'dlg' (a última janela), 'main', 'body',
         'row:<texto>' (a linha da lista com esse texto) ou um seletor CSS. Tenta por ~6 s."""
-        sel = {'dlg': '[role=dialog]', 'main': 'main', 'body': 'body'}.get(escopo, escopo)
+        sel = {'dlg': '[role=dialog]', 'adlg': '[role=alertdialog]', 'main': 'main', 'body': 'body'}.get(escopo, escopo)
         linha = escopo[4:] if escopo.startswith('row:') else None
         if linha is not None:
             sel = 'main tbody tr'
         esp = [esperados] if isinstance(esperados, str) else list(esperados)
         js = ("(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=%s;let out='';"
               "for(let i=0;i<20;i++){const els=[...document.querySelectorAll(%s)].filter(e=>!%s||e.innerText.includes(%s));const el=%s?els[els.length-1]:els[0];"
-              "if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));"
+              "if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText+' '+[...el.querySelectorAll('input,textarea')].map(i=>i.value).join(' '));const falta=esp.filter(e=>!t.includes(norm(e)));"
               "if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}"
               "await new Promise(r=>setTimeout(r,300));}return out})()") % (json.dumps(esp, ensure_ascii=False), json.dumps(sel), 'true' if linha is not None else 'false',
                                                                            json.dumps(linha or '', ensure_ascii=False), 'true' if escopo == 'dlg' else 'false')
@@ -460,9 +460,9 @@ FOLGA.update({'balanca': 0.0})   # os custos do T03 (docs/04); os ensaios de 13:
 
 # ---------------------------------------------------------------- alvos da compra e da venda (Purchase.tsx / Sale.tsx, 1.59.154)
 MAT = {'placeholder': 'Escreva o nome ou código do material'}
-QTD = SEL("main div:has(> label:has-text('Quantidade (Kg)')) input")
+QTD = SEL("main div:has(> div > label:has-text('Quantidade (Kg)')) input")   # div.space-y-1.5 > div.flex > label + o campo
 TARA = SEL("main div:has(> label:has-text('Tara/Imp.')) input")
-CAPTURA = SEL("main div:has(> label:has-text('Quantidade (Kg)')) button[aria-label='Capturar peso da balança']")
+CAPTURA = SEL("main div:has(> div > label:has-text('Quantidade (Kg)')) button[aria-label='Capturar peso da balança']")
 VALOR_KG = SEL("main div:has(> label:has-text('Valor/Kg')) input")
 VISOR = SEL("main button:has-text('Balança do pátio')")
 AO_VIVO = {'text': 'ao vivo', 'within': 'main'}
@@ -521,6 +521,7 @@ VOLTAR = SEL("main a:has-text('Voltar para o caixa')")
 ACAO_RAPIDA = lambda n: SEL(f"[cmdk-group]:has([cmdk-group-heading]:text-is('Ações Rápidas')) [cmdk-item]:has(span:text-is('{n}'))")
 LINHA_SEM_VALOR = SEL(f"{POP} div:has(> div > p:text-is('Comprovante sem valores'))")
 
+ADLG = '[role=alertdialog]'   # janelas de confirmação (Mesclar pesagens): AlertDialog do Radix
 JS_BLUR = "(()=>{const a=document.activeElement;if(a&&a!==document.body)a.blur();return 'foco fora: '+(document.activeElement&&document.activeElement.tagName)})()"
 JS_OFFLINE = ("(()=>{Object.defineProperty(navigator,'onLine',{configurable:true,get:()=>false});window.dispatchEvent(new Event('offline'));"
               "return 'offline'})()")
@@ -534,6 +535,14 @@ def js_colar(seletor, texto):
             "document.execCommand('insertText',false,%s);return el.value})()") % (json.dumps(seletor), json.dumps(texto, ensure_ascii=False))
 
 
+def js_espera_peso(peso, ms=8000):
+    """espera o visor da balança marcar o peso (2 leituras iguais) e mais 0,7 s para o app considerar estável; no ensaio rápido (sem
+    os `at`) é o que impede o clique da balança de capturar o peso ainda subindo"""
+    return ("(async()=>{const alvo=%s;let ok=0,v='';for(let i=0;i<%d;i++){const b=[...document.querySelectorAll('button')].find(x=>/balan.a do p.tio/i.test(x.textContent));"
+            "v=b?b.textContent.replace(/\\s+/g,' '):'SEM ALVO';ok=v.includes(alvo)?ok+1:0;if(ok>=2){await new Promise(r=>setTimeout(r,700));return 'OK: '+alvo}"
+            "await new Promise(r=>setTimeout(r,300));}return 'DIFERENTE: '+v})()") % (json.dumps(kg(peso)), ms // 300)
+
+
 def kg(peso):
     """o valor que a leitura contínua põe no campo (1 casa: base/balanca-ativada)"""
     return f'{peso:.1f}'.replace('.', ',')
@@ -542,7 +551,7 @@ def kg(peso):
 def js_espera_valor(rotulo, valor, ms=7000):
     """espera o <input> do campo de rótulo `rotulo` (main) chegar ao valor (a leitura contínua da balança): OK/DIFERENTE"""
     return ("(async()=>{let v='';for(let i=0;i<%d;i++){const l=[...document.querySelectorAll('main label')].find(x=>x.textContent.includes(%s));"
-            "const el=l&&l.parentElement.querySelector('input');v=el?el.value:'SEM ALVO';if(v===%s)return 'OK: '+v;"
+            "let p=l;while(p&&p!==document.body&&!p.querySelector('input'))p=p.parentElement;const el=l&&p&&p.querySelector('input');v=el?el.value:'SEM ALVO';if(v===%s)return 'OK: '+v;"
             "await new Promise(r=>setTimeout(r,200));}return 'DIFERENTE: '+v})()") % (ms // 200, json.dumps(rotulo, ensure_ascii=False), json.dumps(valor))
 
 
@@ -606,7 +615,7 @@ def st_mescla():
     return st_item('latinha', 'Alumínio latinha', 18.4, '0,4') + [
         {'do': 'click', 'target': MESCLAR('Alumínio latinha')}, {'do': 'waitFor', 'text': 'Mesclar pesagens', 'timeout': 8},
         {'do': 'click', 'target': BTN('Mesclar Todas')}, {'do': 'waitFor', 'text': 'pesagens mescladas com sucesso', 'timeout': 8},
-        {'do': 'waitFor', 'gone': {'role': 'dialog'}, 'timeout': 8}]
+        {'do': 'pause', 'seconds': 0.8}]
 
 
 def st_desconto():
@@ -782,21 +791,24 @@ def cap05():
 def cap06():
     """Ilustrações (L1-L3); Ferro misto e Pesagem avançada: 1ª 412, 2ª 96, bruto 316; impureza 3 % (9,48), líquido 306,52; Completo; Confirmar."""
     c = Cap(6, setup_tela(extra=ZE_DOIS))
-    c.click(MAT, w=(4, 'Escolho'), label='Material')
-    c.type(MAT, 'ferro mi', w=(4, 'ferro', 1, 0.2), clicar=False, cps=30, label='material: ferro mi')
+    c.click(MAT, w=(4, 'carroca.'), label='Material')
+    c.type(MAT, 'ferro mi', w=(4, 'Escolho', None, 0.05), clicar=False, cps=40, label='material: ferro mi')
     c.click(OPT('Ferro misto', exact=False), w=(4, 'misto'), label='Ferro misto')
     c.click(BTN('Pesagem avançada'), w=(4, 'Pesagem'), label='Pesagem avançada')
     c.waitfor(text='Registre pesagem dupla', timeout=10)
     c.add({'do': 'balanca', 'peso': 412, 'subir': 0.8, 'oscilar': 0.8, 'at': c.at((5, 'Carroca', 0, 2.0), 'balanca'), 'label': 'carroça cheia na balança (412 kg)'})
+    c.ev(js_espera_peso(412), label='espera o visor marcar 412,0 (estável)')
     c.click(CAP_PES('1ª Pesagem'), w=(5, 'primeira'), primeiro=True, label='balança da 1ª Pesagem (412)')
     c.add({'do': 'balanca', 'peso': 96, 'subir': 0.8, 'oscilar': 0.8, 'at': c.at((5, 'Carroca', 1, 1.5), 'balanca'), 'label': 'carroça vazia na balança (96 kg)'})
+    c.ev(js_espera_peso(96), label='espera o visor marcar 96,0 (estável)')
     c.click(CAP_PES('2ª Pesagem'), w=(5, 'segunda'), label='balança da 2ª Pesagem (96)')
     c.hover(BRUTO, 2.0, w=(5, 'bruto'), label='1ª Pesagem, 2ª Pesagem e Peso Bruto (Kg) 316 (zoom)')
     c.confere('dlg', ['412', '96', '316'], '1ª 412, 2ª 96, bruto 316')
     c.add({'do': 'balanca', 'peso': 0, 'subir': 0.5, 'oscilar': 0.3, 'label': 'carroça sai da balança'})
-    c.click(IMP_PCT, w=(6, 'por'), label='Impureza em %')
-    c.click(IMP_IN, w=(6, 'impureza.', None, 0.9), label='campo Impureza')
-    c.type(IMP_IN, '3', w=(6, 'impureza.'), clicar=False, label='impureza 3 %')
+    c.click(IMP_PCT, w=(6, 'tres'), label='Impureza em %')
+    c.ev("(()=>{const l=[...document.querySelectorAll('[role=dialog] label')].find(x=>x.textContent.trim()==='Impureza');let p=l;while(p&&!p.querySelector('input'))p=p.parentElement;const i=p&&p.querySelector('input');if(!i)return 'SEM ALVO';i.focus();return 'foco na impureza'})()",
+         label='foco no campo Impureza (sem cursor: o campo troca ao mudar para %)')
+    c.type(IMP_IN, '3', w=(6, 'impureza.', None, 0.05), clicar=False, label='impureza 3 %')
     c.hover(SEL(f"{DLG} :text-matches('sobre bruto')"), 1.2, w=(6, 'converte:'), label='Impureza = 9,48 Kg e Líquido (Kg) 306,52 (zoom)')
     c.hover(LIQUIDO, 1.2, w=(6, 'liquido'), label='Líquido (Kg) 306,52')
     c.confere('dlg', ['9,48', '306,52'], 'impureza 9,48 kg e líquido 306,52')
@@ -806,8 +818,8 @@ def cap06():
     c.confere('dlg', ['229,89'], 'Valor estimado R$ 229,89')
     c.ev(js_rola_ate('Como exibir no comprovante', y=180, escopo=DLG), w=(8, 'Aqui', None, 0.9), label='rola a janela até o comprovante')
     c.click(COMPLETO, w=(8, 'Completo,'), label='Completo')
-    c.hover(DCAMPO('Motorista'), 0.6, w=(8, 'Motorista'), label='Motorista (vazio)')
-    c.hover(SEL(f"{DLG} label:has-text('Placa')"), 0.5, w=(8, 'placa'), label='Placa do veículo (vazio)')
+    c.hover(DCAMPO('Motorista'), 0.3, w=(8, 'Motorista'), label='Motorista (vazio)')
+    c.registra(SEL(f"{DLG} label:has-text('Placa')"), w=(8, 'placa'), label='Placa do veículo (vazio)')
     c.click(CONFIRMAR, w=(8, 'Confirmar,'), label='Confirmar')
     c.waitfor(gone={'role': 'dialog'}, timeout=8)
     c.hover(LINHA('Ferro misto'), 3.0, w=(9, 'Pesou'), label='linha Ferro misto 316 e 9,48 (zoom)')
@@ -832,9 +844,9 @@ def cap07():
     c.hover(MESCLAR('Alumínio latinha'), 1.4, w=(2, 'botao'), label='Mesclar 2 pesagens deste material')
     c.click(MESCLAR('Alumínio latinha'), w=(2, 'janela'), label='mesclar')
     c.waitfor(text='Pesagens atuais:', timeout=8)
-    c.hover(PD('Pesagens atuais:'), 1.0, w=(2, 'cada'), label='Pesagens atuais: e Total mesclado: (zoom)')
-    c.hover(PD('Total mesclado:', exact=False), 2.0, w=(2, 'total:'), label='Total mesclado: 40 kg (tara: 1), R$ 6,20/kg (média)')
-    c.confere('dlg', ['40', '6,20'], 'Total mesclado 40 kg, R$ 6,20/kg')
+    c.hover({'text': 'Pesagens atuais:', 'within': ADLG}, 1.0, w=(2, 'cada'), label='Pesagens atuais: e Total mesclado: (zoom)')
+    c.hover({'text': 'Total mesclado:', 'within': ADLG}, 2.0, w=(2, 'total:'), label='Total mesclado: 40 kg (tara: 1), R$ 6,20/kg (média)')
+    c.confere('adlg', ['40', '6,20'], 'Total mesclado 40 kg, R$ 6,20/kg')
     c.click(BTN('Mesclar Todas'), w=(3, 'Mesclar'), label='Mesclar Todas')
     c.waitfor(text='pesagens mescladas com sucesso', timeout=8)
     c.hover(LINHA('Alumínio latinha'), 1.4, w=(3, 'valor'), label='uma linha de latinha, R$ 241,80')

@@ -128,6 +128,10 @@ class Cap:
             raise SystemExit(f'cap{s.n:02d}: palavra "{palavra}" (#{nth}) não achada na linha {i}: ' + ' '.join(w['w'] for w in s.words if w['linha'] == i - 1))
         return hits[nth]['e' if fim else 's']
 
+    def tem(s, i, palavra):
+        """a palavra está na linha i da fala de hoje? (para um gesto que só existe se a fala citar o elemento)"""
+        return any(w['linha'] == i - 1 and norm(w['w']) == norm(palavra) for w in s.words)
+
     def A(s, i, palavra, folga=0.6, nth=0):
         t = round(max(0.0, s.W(i, palavra, nth) - folga), 2)
         s.anchors.append((i, palavra, t))
@@ -274,11 +278,14 @@ ACHA_ROLAGEM = ("const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==do
 SUAVE = ("await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/DUR),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;"
          "c.scrollTop=DESTINO;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});")
 FOLHA = "[...document.querySelectorAll('%s *')].find(e=>e.children.length===0&&e.textContent.trim()===%s&&e.getClientRects().length)"
+# sem folha com o texto (ex.: <h2><svg/> Resumo por Unidade</h2>): o elemento com um nó de texto direto igual ao texto
+FOLHA2 = ("[...document.querySelectorAll('%s *')].find(e=>[...e.childNodes].some(n=>n.nodeType===3&&n.textContent.trim()===%s)"
+          "&&e.getClientRects().length)")
 
 
 def js_rola_texto(texto, y=300, dur_ms=800, escopo='main'):
     """rolagem suave do contêiner que rola a folha do DOM cujo texto é `texto` até ela ficar em y px CSS; devolve o topo final"""
-    achar = FOLHA % (escopo, json.dumps(texto))
+    achar = FOLHA % (escopo, json.dumps(texto)) + '||' + FOLHA2 % (escopo, json.dumps(texto))
     return ("(async()=>{" + ACHA_ROLAGEM + "const el=" + achar + ";if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';"
             f"const dy=Math.round(el.getBoundingClientRect().top-{int(y)});if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;"
             + (SUAVE.replace('DUR', str(int(dur_ms))).replace('DESTINO', 'y0+dy*e') if dur_ms else "c.scrollTop=y0+dy;")
@@ -350,6 +357,15 @@ def fecha_menu_ger():
     return [{'do': 'eval', 'js': js_menu_ger(False)}]
 
 
+def js_menu_rola(rota, dur_ms=500):
+    """rolagem suave (sem cursor) da lista do menu lateral até o item `rota` aparecer inteiro acima do cartão da conta"""
+    return ("(async()=>{const a=document.querySelector('a[href=\"%s\"]');if(!a)return 'SEM ALVO';let c=a.parentElement;"
+            "while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)break;c=c.parentElement;}"
+            "if(!c||c===document.body)return 'SEM ROLAGEM';const dy=Math.round(a.getBoundingClientRect().bottom-(c.getBoundingClientRect().bottom-8));"
+            "if(dy<=0)return 'ok';const y0=c.scrollTop;" % rota
+            + SUAVE.replace('DUR', str(int(dur_ms))).replace('DESTINO', 'y0+dy*e') + "return Math.round(a.getBoundingClientRect().top)})()")
+
+
 def menu_mostra(rota):
     """rola (sem animação, fora do vídeo) a lista do menu lateral até o item `rota` aparecer inteiro acima do cartão da conta"""
     js = ("(()=>{const a=document.querySelector('a[href=\"%s\"]');if(!a)return 'SEM ALVO';let c=a.parentElement;"
@@ -363,15 +379,15 @@ def cap00():
     """Abertura: Dashboard do EcoSistema da matriz; o cursor abre o grupo "Gerencial (Filiais)" do menu (ilustração na L2)."""
     c = Cap(0, login() + vai('/gerencial', 'Configurar Grupo') + vai('/dashboard', 'Olá, Rafael!') + fecha_menu_ger(), pace=0.6, start=(760, 420))
     c.mark(1)
-    c.hover(MENU_GER, 0.6, at=c.A(1, 'matriz', 0.6), label='menu Gerencial (Filiais)')
-    c.click(MENU_GER, at=c.A(1, 'enxergar', 0.5), label='abre o grupo Gerencial (Filiais)', unless=SEL('a[href="/gerencial/configuracoes"]'))
+    c.hover(MENU_GER, 0.4, at=c.A(1, 'gente', 0.6), label='menu Gerencial (Filiais)')
+    c.click(MENU_GER, at=c.A(1, 'Recicla', 0.6), label='abre o grupo Gerencial (Filiais)', unless=SEL('a[href="/gerencial/configuracoes"]'))
     c.waitfor(target=SEL('a[href="/gerencial/configuracoes"]'), timeout=8)
-    c.hover(LINK_GER('Dashboard', '/gerencial'), 0.3, at=c.A(1, 'filial', 0.5), label='Dashboard')
-    c.hover(LINK_GER('Financeiro', '/gerencial/financeiro'), 0.2, label='Financeiro')
-    c.hover(LINK_GER('Estoque', '/gerencial/estoque'), 0.2, label='Estoque')
-    c.rolar(140, ponto=(120, 640), duration=0.4, after=150)
-    c.hover(LINK_GER('Assinaturas', '/gerencial/assinaturas'), 0.2, label='Assinaturas')
-    c.hover(LINK_GER('Configurações', '/gerencial/configuracoes'), 0.6, label='Configurações')
+    c.ev(js_menu_rola('/gerencial/configuracoes'), label='a lista do menu desce até Configurações (os itens do grupo aparecem)')
+    c.hover(LINK_GER('Dashboard', '/gerencial'), 0.2, at=c.A(1, 'Taubaté,', 0.6), label='Dashboard')
+    c.hover(LINK_GER('Financeiro', '/gerencial/financeiro'), 0.1, label='Financeiro')
+    c.hover(LINK_GER('Estoque', '/gerencial/estoque'), 0.1, label='Estoque')
+    c.hover(LINK_GER('Assinaturas', '/gerencial/assinaturas'), 0.1, label='Assinaturas')
+    c.hover(LINK_GER('Configurações', '/gerencial/configuracoes'), 0.4, label='Configurações')
     c.mark(2)
     c.mark(3)
     c.hover(MENU_GER, 1.2, at=c.A(3, 'Gerencial.', 0.5), label='Gerencial (Filiais) (cartão Módulo Gerencial)')
@@ -386,8 +402,8 @@ def cap01():
     c.mark(1)
     c.click(LINK_GER('Dashboard', '/gerencial'), at=0.1, label='Dashboard do Gerencial (menu)')
     c.waitfor(text='Módulo Gerencial', timeout=15)
-    c.hover(TXT('Módulo Gerencial', within=MAIN), 0.6, at=c.A(1, 'começa', 0.5), label='Módulo Gerencial (sem grupo)')
-    c.hover(BTNX('Configurar Grupo'), 1.0, at=c.A(1, 'criar', 0.5), label='Configurar Grupo')
+    c.hover(TXT('Módulo Gerencial', within=MAIN), 0.4, at=c.A(1, 'começa', 0.5), label='Módulo Gerencial (sem grupo)')
+    c.hover(BTNX('Configurar Grupo'), 0.5, at=c.A(1, 'pedindo', 0.4), label='Configurar Grupo')
     c.mark(2)
     c.mark(3)
     c.mark(4)
@@ -409,8 +425,8 @@ def cap02():
     c.waitfor(text='Código de Convite', timeout=15)
     c.ev(ANIMA)
     c.mark(3)
-    c.hover(TAB('unidades'), 0.3, at=c.A(3, 'abas', 0.5), label='abas do grupo')
-    c.hover(TAB('categorias'), 0.3, label='abas do grupo (até Categorias Financeiras)')
+    c.hover(TAB('unidades'), 0.3, at=c.A(3, 'Pronto.', 0.3), label='abas do grupo')
+    c.hover(TAB('categorias'), 0.1, label='abas do grupo (até Categorias Financeiras)')
     c.hover(TXTP('Configure o grupo', within=MAIN), 1.0, at=c.A(3, 'passo', 0.5), label='passo a passo Configure o grupo')
     c.mark(4)
     c.ev(js_rola_texto('Código de Convite', 170, 700), at=c.L(4) - 0.9, label='desce até o código de convite')
@@ -437,7 +453,7 @@ def cap03():
     c.hover(CONFIG_RODAPE, 0.8, at=c.A(1, 'sistema', 0.6), label='Configurações (rodapé do menu)', noScroll=True)
     c.click(CONFIG_RODAPE, at=c.A(1, 'Configurações,', 0.6), label='Configurações (rodapé do menu)', noScroll=True)
     c.waitfor(text='Configurações do Sistema', timeout=15)
-    c.hover(TAB('company'), 0.8, at=c.A(1, 'Empresa.', 0.5), label='aba Empresa')
+    c.hover(TAB('company'), 0.3, at=c.A(1, 'na', 0.6), label='aba Empresa')
     c.mark(2)
     c.ev(js_rola_texto('Se esta empresa é uma filial, vincule-a à empresa-mãe usando o código de convite', 260, 900), at=c.L(2) - 0.9,
          label='desce até o cartão Filial')
@@ -451,7 +467,7 @@ def cap03():
     c.mark(4)
     c.click(BTNX('Vincular'), at=c.A(4, 'Vincular.', 0.6), label='Vincular')
     c.waitfor(text='Vinculada ao grupo', timeout=10)
-    c.hover(TXT('Vinculada ao grupo', within=MAIN), 1.0, at=c.A(4, 'Grupo', 0.5), label='Vinculada ao grupo · Grupo Recicla Vale · Ativa')
+    c.hover(TXT('Vinculada ao grupo', within=MAIN), 0.4, at=c.A(4, 'está', 0.5), label='Vinculada ao grupo · Grupo Recicla Vale · Ativa')
     c.mark(5)
     c.fim()
     return c
@@ -469,7 +485,7 @@ def cap04():
     c.click(LINK_GER('Dashboard', '/gerencial'), at=c.A(1, 'Dashboard', 0.7), label='Dashboard do Gerencial (menu)')
     c.waitfor(text='Receita Total', timeout=15)
     c.ev(ANIMA)
-    c.hover(TXTP('unidades', within=MAIN), 1.0, at=c.A(1, 'duas', 0.5), label='Grupo Recicla Vale • 2 unidades')
+    c.hover(TXTP('unidades', within=MAIN), 0.6, at=c.A(1, 'mostra', 0.5), label='Grupo Recicla Vale • 2 unidades')
     c.mark(2)
     c.click(PERIODO('Este mês'), at=c.A(2, 'outubro', 0.6), label='período', noScroll=True)
     c.click(OPT('Mês passado'), at=c.A(2, 'Mês', 0.3), label='Mês passado')
@@ -529,12 +545,12 @@ def cap06():
     """A DRE do grupo: Financeiro › DRE › Mês passado (Consolidado); Regime de Caixa: vendas, compras, resultado de caixa; impostos, despesas,
     outras receitas e o resultado do período; Comparativo e a linha Resultado por unidade."""
     c = Cap(6, setup_ger(url='/gerencial/financeiro', espera='Financeiro Gerencial', extra=vai('/gerencial', 'Dashboard Gerencial') + abre_menu_ger()),
-            pace=0.5, start=(700, 300), storage_extra={'gerencial-financeiro-tab': 'dashboard'})
+            pace=0.5, start=(700, 300), storage_extra={'gerencial-financeiro-tab': 'dre'})
     c.mark(1)
     c.click(LINK_GER('Financeiro', '/gerencial/financeiro'), at=0.1, label='Financeiro do Gerencial (menu)')
     c.waitfor(text='Financeiro Gerencial', timeout=15)
-    c.click(TAB('dre'), at=c.A(1, 'DRE,', 0.7), label='aba DRE')
-    c.click(PERIODO('Este mês'), at=c.A(1, 'outubro', 0.6), label='período')
+    # o Financeiro abre na aba DRE (a última usada); o período sai de "Este mês" para "Mês passado" enquanto a fala diz "com outubro escolhido"
+    c.click(PERIODO('Este mês'), at=c.A(1, 'DRE,', 0.3), label='período', noScroll=True)
     c.click(OPT('Mês passado'), at=c.A(1, 'escolhido,', 0.3), label='Mês passado')
     c.waitfor(text='CMV (Custo da Mercadoria Vendida)', timeout=15)
     c.hover(BTNX('Consolidado'), 0.6, at=c.A(1, 'grupo', 0.5), label='Consolidado: a DRE do grupo')
@@ -546,7 +562,7 @@ def cap06():
     c.confere('main', ['R$ 341.240,00', 'R$ 318.860,00', 'R$ 19.980,00'], 'vendas, compras e resultado de caixa')
     c.mark(3)
     c.ev(js_rola_texto('(-) Impostos e Deduções', 200, 800), at=c.L(3) - 0.9, label='desce até impostos e resultado')
-    c.hover(DRE_LINHA('(-) Impostos e Deduções'), 0.8, at=c.A(3, 'impostos', 0.5), label='impostos, despesas, outras receitas e resultado (ZOOM)')
+    c.hover(DRE_LINHA('(-) Impostos e Deduções'), 0.3, at=c.A(3, 'impostos', 0.5), label='impostos, despesas, outras receitas e resultado (ZOOM)')
     c.hover(DRE_LINHA('Total Despesas'), 0.8, at=c.A(3, 'despesas', 0.5), label='Total Despesas')
     c.hover(DRE_LINHA('Receitas Diversas (Caixa + Banco)'), 0.8, at=c.A(3, 'aluguel', 0.5), label='Outras Receitas (aluguel de caçamba)')
     c.hover(DRE_RESULTADO, 1.2, at=c.A(3, 'vermelho:', 0.5), label='Resultado do Período')
@@ -555,8 +571,9 @@ def cap06():
     c.ev(js_topo(700), at=c.L(4) - 0.9, label='sobe para o alto da DRE')
     c.click(BTNX('Comparativo'), at=c.A(4, 'Comparativo', 0.6), label='Comparativo')
     c.waitfor(text='DRE Comparativo por Unidade', timeout=10)
+    c.ev(js_rola_texto('DRE Comparativo por Unidade', 150, 600), label='desce até a tabela do Comparativo (a linha Resultado aparece)')
     c.mark(5)
-    c.hover(LINHA('Resultado'), 1.0, at=c.A(5, 'vermelho', 0.5), label='linha Resultado (ZOOM)')
+    c.hover(LINHA('Resultado'), 0.6, at=c.A(5, 'vermelho', 0.5), label='linha Resultado (ZOOM)')
     c.hover(SEL('main tbody tr:has-text("Resultado") td:nth-child(2)'), 1.0, at=c.A(5, 'matriz,', 0.5), label='Resultado da matriz')
     c.hover(SEL('main tbody tr:has-text("Resultado") td:nth-child(3)'), 1.0, at=c.A(5, 'filial.', 0.5), label='Resultado da filial')
     c.confere('main tbody', ['R$ 27.650,00', 'R$ 1.000,00'], 'Resultado da matriz e da filial')
@@ -607,17 +624,21 @@ def cap08():
     c.confere('main tbody', ['640', '1.850', '2.490'], 'latinha 640, 1.850 e 2.490 kg')
     c.mark(3)
     c.click(TAB('posicao'), at=c.A(3, 'Posição', 0.6), label='Posição de Estoque')
-    c.hover(TXT('Custo médio', within=MAIN), 0.6, at=c.A(3, 'custo', 0.5), label='Custo médio')
-    c.hover(TXT('Valor em estoque', within=MAIN), 0.4, at=c.A(3, 'valor.', 0.5), label='Valor em estoque')
+    c.hover(TXT('Custo médio', within=MAIN), 0.3, at=c.A(3, 'com', 0.9), label='Custo médio')
+    c.hover(TXT('Valor em estoque', within=MAIN), 0.2, at=c.A(3, 'valor.', 1.2), label='Valor em estoque')
     c.mark(4)
     c.click(TAB('historico'), at=c.A(4, 'Histórico', 0.6), label='Histórico de Materiais')
-    c.hover(TXT('Filial', within='main thead'), 0.6, at=c.A(4, 'unidade', 0.5), label='coluna Filial')
-    c.hover(SEL('main tbody tr:first-child td:has-text("Filial Pindamonhangaba")'), 0.5, at=c.A(4, 'veio.', 0.5),
-            label='a unidade de onde veio (a compra da filial de 09/11)')
+    c.hover(SEL('main tbody tr:first-child'), 0.5, at=c.A(4, 'entrada', 0.5), label='cada entrada e saída (a compra da filial de 09/11)')
+    c.hover(TXT('Filial', within='main thead'), 0.2, at=c.A(4, 'com', 0.5), label='coluna Filial')
+    c.hover(SEL('main tbody tr:first-child td:has-text("Filial Pindamonhangaba")'), 0.1, at=c.A(4, 'veio.', 1.0),
+            label='a unidade de onde veio (Filial Pindamonhangaba)')
     c.mark(5)
     c.click(TAB('relatorio'), at=c.A(5, 'Relatório', 0.6), label='Relatório de Estoque')
-    c.hover(TXT('Lucro', within='main thead'), 0.6, at=c.A(5, 'lucro', 0.5), label='coluna Lucro')
-    c.hover(TXT('Margem', within='main thead'), 0.8, at=c.A(5, 'margem.', 0.5), label='coluna Margem')
+    # os cartões do alto (a coluna Margem da tabela fica cortada à direita: a tabela rola de lado)
+    c.hover(TXT('Total Comprado', within=MAIN), 0.2, at=c.A(5, 'grupo', 0.9), label='Total Comprado')
+    c.hover(TXT('Total Vendido', within=MAIN), 0.2, at=c.A(5, 'vendeu', 1.0), label='Total Vendido')
+    c.hover(TXT('Lucro', within=MAIN), 0.2, at=c.A(5, 'lucro', 1.0), label='Lucro')
+    c.hover(TXT('Margem', within=MAIN), 0.8, at=c.A(5, 'margem.', 1.0), label='Margem')
     c.fim()
     return c
 
@@ -644,22 +665,23 @@ def cap09():
     c.mark(4)
     c.click(TAB('clientes'), at=c.A(4, 'Clientes', 0.6), label='Clientes e Fornecedores')
     c.hover(TXT('Fundição Bandeira do Vale', within=MAIN), 0.8, at=c.A(4, 'Fundição', 0.5), label='Fundição Bandeira do Vale')
-    c.click(TXT('Fundição Bandeira do Vale', within=MAIN), at=c.A(4, 'marco.', 0.6), label='marca a Fundição Bandeira do Vale')
+    c.click(TXT('Fundição Bandeira do Vale', within=MAIN), at=c.A(4, 'então', 0.6), label='marca a Fundição Bandeira do Vale')
     c.waitfor(text='Disponibilizado para filiais', timeout=8)
     c.mark(5)
     c.click(TAB('categorias'), at=c.A(5, 'categorias', 0.6), label='Categorias Financeiras')
     c.mark(6)
-    c.click(TAB('unidades'), at=c.A(6, 'Unidades,', 0.6), label='Unidades')
-    c.ev(js_rola_texto('Filial Pindamonhangaba', 360, 700), at=c.A(6, 'Enviar', 1.6), label='desce até a filial')
-    c.click(ENVIAR_ATIVOS, at=c.A(6, 'Enviar', 0.6), label='Enviar Ativos')
+    c.click(TAB('unidades'), at=c.A(6, 'Com', 0.3), label='Unidades')
+    c.ev(js_rola_texto('Filial Pindamonhangaba', 360, 700), label='desce até a filial')
+    c.click(ENVIAR_ATIVOS, at=c.A(6, 'Enviar', 0.9), label='Enviar Ativos')
     c.waitfor(text='Confirmar Envio', timeout=8)
     c.hover(TXT('Materiais', within=DLG), 0.6, at=c.A(6, 'tinha', 0.5), label='Materiais, Categorias, Tabelas, Clientes, Fornecedores')
-    c.hover(TXT('Sobrescrever preços existentes', within=DLG), 1.2, at=c.A(6, 'Sobrescrever', 0.5), label='Sobrescrever preços existentes (desligado)')
+    if c.tem(6, 'Sobrescrever'):   # a proposta de fala tira esta frase (propostas_fala.md): sem ela, sem o gesto
+        c.hover(TXT('Sobrescrever preços existentes', within=DLG), 1.2, at=c.A(6, 'Sobrescrever', 0.5), label='Sobrescrever preços existentes (desligado)')
     c.mark(7)
     c.click(BTN('Confirmar Envio'), at=c.A(7, 'Confirmar', 0.6), label='Confirmar Envio')
     c.waitfor(text='novo(s)', timeout=10)
-    c.hover(TXT('Materiais', within=DLG), 1.0, at=c.A(7, 'mesmo', 0.5), label='n novo(s) por linha')
-    c.click(BTN('Fechar', within=DLG), at=c.A(7, 'nome.', 0.6), label='Fechar')
+    c.hover(TXT('Materiais', within=DLG), 0.6, at=c.A(7, 'mesmo', 0.5), label='n novo(s) por linha')
+    c.click(BTN('Fechar', within=DLG), at=c.A(7, 'com', 0.6), label='Fechar')
     c.mark(8)
     c.hover(LIXEIRA_FILIAL, 1.5, at=c.A(8, 'tirar', 0.5), label='lixeira da linha da filial (ZOOM, sem clicar)')
     c.fim()
@@ -677,6 +699,8 @@ def cap10():
     c.waitfor(text='Exigir aprovação em transferências', timeout=8)
     c.click(SWITCH_TEXTO('Exigir aprovação em transferências'), at=c.A(1, 'ligo', 0.6), label='liga Exigir aprovação em transferências')
     c.mark(2)
+    # o cartão das transferências fica embaixo dos dois de configuração: a página desce até ele (o formulário da Nova abre embaixo do título)
+    c.ev(js_rola_texto('Transferências Inter-Unidades', 150, 700), at=c.L(2), label='desce até Transferências Inter-Unidades')
     c.click(BTN('Nova'), at=c.A(2, 'Nova,', 0.6), label='Nova')
     c.waitfor(text='Unidade de origem...', timeout=8)
     c.click(COMBO('Unidade de origem...'), at=c.A(2, 'origem', 0.6), label='Origem')
@@ -716,12 +740,15 @@ def cap10():
 # cada pergunta e este eval espera a próxima e marca a cobrança como recebida ~0,4 s antes dela, por REST no Supabase falso (endereço do build;
 # o robô desvia para a instância da aula). Devolve o status do PATCH.
 BAKED = 'http://127.0.0.1:54340'
-JS_ESCUTA_POLL = ("(()=>{if(window.__polls)return 'ja';window.__polls=[];const f=window.fetch;window.fetch=function(u,o){try{const s=String(u&&u.url||u);"
-                  "if(s.includes('check-asaas-payment'))window.__polls.push(performance.now())}catch(e){}return f.apply(this,arguments)};return 'ok'})()")
-JS_PAGA = ("(async()=>{const p=window.__polls||[];const ult=p.length?p[p.length-1]:performance.now();let alvo=ult+5000-450;"
-           "while(alvo<performance.now()+150)alvo+=5000;await new Promise(r=>setTimeout(r,Math.max(0,alvo-performance.now())));"
+# as consultas vêm do supabase-js, que guardou o `fetch` original ao nascer: o instante de cada uma sai do Resource Timing (PerformanceObserver)
+JS_ESCUTA_POLL = ("(()=>{if(window.__polls)return 'ja';window.__polls=[];try{performance.setResourceTimingBufferSize(5000)}catch(e){}"
+                  "new PerformanceObserver(l=>{for(const e of l.getEntries()){if(String(e.name).includes('check-asaas-payment'))window.__polls.push(e.startTime)}})"
+                  ".observe({type:'resource',buffered:true});return 'ok'})()")
+JS_PAGA = ("(async()=>{await new Promise(r=>setTimeout(r,300));const p=window.__polls||[];let alvo;"
+           "if(p.length){alvo=p[p.length-1]+5000-450;while(alvo<performance.now()+150)alvo+=5000;}else{alvo=performance.now()+1500;}"
+           "await new Promise(r=>setTimeout(r,Math.max(0,alvo-performance.now())));"
            "const r=await fetch(%s,{method:'PATCH',headers:{'content-type':'application/json',Prefer:'return=minimal'},body:JSON.stringify({status:'RECEIVED'})});"
-           "return r.status})()") % json.dumps(BAKED + '/rest/v1/subscription_payments?status=eq.PENDING')
+           "return r.status+' (consultas vistas: '+p.length+')'})()") % json.dumps(BAKED + '/rest/v1/subscription_payments?status=eq.PENDING')
 
 
 def cap11():
@@ -733,13 +760,14 @@ def cap11():
     c.mark(1)
     c.click(LINK_GER('Assinaturas', '/gerencial/assinaturas'), at=c.A(1, 'assinaturas.', 0.7), label='Assinaturas do Gerencial (menu)')
     c.waitfor(text='Pagar tudo de uma vez', timeout=15)
-    c.hover(TXT('Recicla Vale Metais', within=MAIN), 0.6, at=c.A(1, 'todas:', 0.5), label='a matriz e a filial')
-    c.hover(TXT('Filial Pindamonhangaba', within=MAIN), 0.6, at=c.A(1, 'plano,', 0.5), label='plano de cada unidade (sem zoom nos valores)')
-    c.hover(TXT('Ativa', within=MAIN, nth=1), 0.6, at=c.A(1, 'ativa', 0.5), label='Ativa')
+    unid = lambda nome: f'main div.divide-y > div:has(p:text-is("{nome}"))'
+    c.hover(SEL(unid('Recicla Vale Metais') + ' p:text-is("Recicla Vale Metais")'), 0.4, at=c.A(1, 'todas:', 0.5), label='a matriz e a filial')
+    c.hover(SEL(unid('Filial Pindamonhangaba') + ' p.text-xs'), 0.6, at=c.A(1, 'plano,', 0.5), label='plano e vencimento de cada unidade (sem zoom nos valores)')
+    c.hover(SEL(unid('Filial Pindamonhangaba') + ' span:text-is("Ativa")'), 0.6, at=c.A(1, 'ativa', 0.5), label='Ativa')
     c.mark(2)
     c.hover(BTNX('Pagar tudo de uma vez'), 1.2, at=c.A(2, 'pagar', 0.5), label='Pagar tudo de uma vez (ZOOM)')
     c.mark(3)
-    c.click(BTNX('Pagar tudo de uma vez'), at=c.A(3, 'Repara', 0.6), label='Pagar tudo de uma vez')
+    c.click(BTNX('Pagar tudo de uma vez'), at=c.A(2, 'na', 0.2), label='Pagar tudo de uma vez')
     c.waitfor(text='Unidades cobradas juntas', timeout=15)
     c.ev(ANIMA)
     c.hover(TXTP('Ao pagar, as cobranças individuais das unidades são canceladas'), 1.5, at=c.A(3, 'aviso:', 0.5), label='aviso das cobranças (ZOOM)')
@@ -751,7 +779,8 @@ def cap11():
     c.click(BTNX('PIX Instantâneo'), at=c.A(5, 'Escolho', 0.4), label='PIX')
     c.waitfor(text='Aguardando confirmação do pagamento', timeout=12)   # PixPaymentView: QR, "Ou copie o código PIX:" e a espera
     c.mark(6)
-    c.ev(JS_PAGA, label='bastidor: o Pix é pago (a cobrança fica RECEIVED antes da próxima consulta)')
+    # com `at` na marca da L6 (sem ele a marca L6 só sairia no fim do capítulo); o eval espera a hora certa por dentro
+    c.ev(JS_PAGA, at=c.L(6) - 0.9, label='bastidor: o Pix é pago (a cobrança fica RECEIVED antes da próxima consulta)')
     c.waitfor(text='Pagamento Confirmado!', timeout=8)
     c.registra(TXT('Pagamento Confirmado!'), label='Pagamento Confirmado!')
     c.fim()

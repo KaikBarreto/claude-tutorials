@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-# T19 · UM capítulo por trava: gera o roteiro e, na MESMA trava, grava o ensaio rápido (--ens) e/ou o completo (--final), roda o
+# T19 · UM capítulo por trava: gera o roteiro e, na MESMA trava, grava o ensaio rápido (--ens) e/ou o completo (--final; só se o
+# rápido chegou ao fim), roda o
 # prever.py depois do rápido e, com --seed, grava a semente apos-capNN (só de uma gravação que chegou ao fim: record exit 0).
 # MP4 e folha de contato vão para /dev/shm/t19 (apagar depois de olhar); actions/telemetry ficam em rec/t19 (o prever.py usa).
 #   bash rec/t19/t19_rodar.sh NN [--ens] [--final] [--seed] [--quadros "t1 t2 ..."]     (sem --ens/--final: só --ens)
@@ -42,7 +43,10 @@ flock ${FLOCK_W:+-w "$FLOCK_W"} .heavy.lock bash -c '
     grep -q "^record exit 0$" "$L" && boa=ens   # a semente só precisa do capítulo inteiro (passo opcional falho não muda o banco)
     python3 -I rec/t19/prever.py "$NN" --ens > rec/t19/.cap$NN.prever.out 2>&1
   fi
-  if [[ $FIN == 1 ]]; then
+  if [[ $FIN == 1 && $ENS == 1 && -z "$boa" ]]; then
+    echo "completo NÃO gravado: o rápido não chegou ao fim" > rec/t19/.cap$NN.final.out
+  elif [[ $FIN == 1 ]]; then
+    boa=""   # a semente sai do estado da ÚLTIMA gravação
     L=rec/t19/.cap$NN.final.out
     timeout 900 node rec/record.mjs rec/t19/cap$NN.json > "$L" 2>&1; echo "record exit $?" >> "$L"
     grep -q "^record exit 0$" "$L" && boa=final

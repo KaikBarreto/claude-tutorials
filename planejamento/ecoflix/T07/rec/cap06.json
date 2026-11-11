@@ -178,7 +178,7 @@
   },
   {
    "do": "eval",
-   "js": "(async()=>{let v='';for(let i=0;i<35;i++){const l=[...document.querySelectorAll('main label')].find(x=>x.textContent.includes(\"Quantidade (Kg)\"));const el=l&&l.parentElement.querySelector('input');v=el?el.value:'SEM ALVO';if(v===\"12,4\")return 'OK: '+v;await new Promise(r=>setTimeout(r,200));}return 'DIFERENTE: '+v})()"
+   "js": "(async()=>{let v='';for(let i=0;i<35;i++){const l=[...document.querySelectorAll('main label')].find(x=>x.textContent.includes(\"Quantidade (Kg)\"));let p=l;while(p&&p!==document.body&&!p.querySelector('input'))p=p.parentElement;const el=l&&p&&p.querySelector('input');v=el?el.value:'SEM ALVO';if(v===\"12,4\")return 'OK: '+v;await new Promise(r=>setTimeout(r,200));}return 'DIFERENTE: '+v})()"
   },
   {
    "do": "click",
@@ -241,7 +241,7 @@
   },
   {
    "do": "eval",
-   "js": "(async()=>{let v='';for(let i=0;i<35;i++){const l=[...document.querySelectorAll('main label')].find(x=>x.textContent.includes(\"Quantidade (Kg)\"));const el=l&&l.parentElement.querySelector('input');v=el?el.value:'SEM ALVO';if(v===\"21,6\")return 'OK: '+v;await new Promise(r=>setTimeout(r,200));}return 'DIFERENTE: '+v})()"
+   "js": "(async()=>{let v='';for(let i=0;i<35;i++){const l=[...document.querySelectorAll('main label')].find(x=>x.textContent.includes(\"Quantidade (Kg)\"));let p=l;while(p&&p!==document.body&&!p.querySelector('input'))p=p.parentElement;const el=l&&p&&p.querySelector('input');v=el?el.value:'SEM ALVO';if(v===\"21,6\")return 'OK: '+v;await new Promise(r=>setTimeout(r,200));}return 'DIFERENTE: '+v})()"
   },
   {
    "do": "click",
@@ -311,7 +311,7 @@
    "target": {
     "placeholder": "Escreva o nome ou código do material"
    },
-   "at": 37.49,
+   "at": 36.8,
    "label": "Material"
   },
   {
@@ -320,9 +320,9 @@
     "placeholder": "Escreva o nome ou código do material"
    },
    "text": "ferro mi",
-   "cps": 30,
+   "cps": 40,
    "noClick": true,
-   "at": 38.75,
+   "at": 38.14,
    "label": "material: ferro mi"
   },
   {
@@ -332,7 +332,7 @@
     "name": "Ferro misto",
     "exact": false
    },
-   "at": 38.75,
+   "at": 38.7,
    "label": "Ferro misto"
   },
   {
@@ -359,6 +359,11 @@
    "label": "carroça cheia na balança (412 kg)"
   },
   {
+   "do": "eval",
+   "js": "(async()=>{const alvo=\"412,0\";let ok=0,v='';for(let i=0;i<26;i++){const b=[...document.querySelectorAll('button')].find(x=>/balan.a do p.tio/i.test(x.textContent));v=b?b.textContent.replace(/\\s+/g,' '):'SEM ALVO';ok=v.includes(alvo)?ok+1:0;if(ok>=2){await new Promise(r=>setTimeout(r,700));return 'OK: '+alvo}await new Promise(r=>setTimeout(r,300));}return 'DIFERENTE: '+v})()",
+   "label": "espera o visor marcar 412,0 (estável)"
+  },
+  {
    "do": "mark",
    "name": "L5",
    "at": 43.33
@@ -378,6 +383,11 @@
    "oscilar": 0.8,
    "at": 48.5,
    "label": "carroça vazia na balança (96 kg)"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const alvo=\"96,0\";let ok=0,v='';for(let i=0;i<26;i++){const b=[...document.querySelectorAll('button')].find(x=>/balan.a do p.tio/i.test(x.textContent));v=b?b.textContent.replace(/\\s+/g,' '):'SEM ALVO';ok=v.includes(alvo)?ok+1:0;if(ok>=2){await new Promise(r=>setTimeout(r,700));return 'OK: '+alvo}await new Promise(r=>setTimeout(r,300));}return 'DIFERENTE: '+v})()",
+   "label": "espera o visor marcar 96,0 (estável)"
   },
   {
    "do": "click",
@@ -400,7 +410,7 @@
   },
   {
    "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"412\", \"96\", \"316\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"412\", \"96\", \"316\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText+' '+[...el.querySelectorAll('input,textarea')].map(i=>i.value).join(' '));const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
    "label": "confere 1ª 412, 2ª 96, bruto 316"
   },
   {
@@ -420,16 +430,13 @@
    "target": {
     "selector": "[role=dialog] div:has(> div > label:text-is('Impureza')) button:text-is('%')"
    },
-   "at": 62.4,
+   "at": 62.02,
    "label": "Impureza em %"
   },
   {
-   "do": "click",
-   "target": {
-    "selector": "[role=dialog] div:has(> div > label:text-is('Impureza')) input"
-   },
-   "at": 63.19,
-   "label": "campo Impureza"
+   "do": "eval",
+   "js": "(()=>{const l=[...document.querySelectorAll('[role=dialog] label')].find(x=>x.textContent.trim()==='Impureza');let p=l;while(p&&!p.querySelector('input'))p=p.parentElement;const i=p&&p.querySelector('input');if(!i)return 'SEM ALVO';i.focus();return 'foco na impureza'})()",
+   "label": "foco no campo Impureza (sem cursor: o campo troca ao mudar para %)"
   },
   {
    "do": "type",
@@ -465,7 +472,7 @@
   },
   {
    "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"9,48\", \"306,52\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"9,48\", \"306,52\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText+' '+[...el.querySelectorAll('input,textarea')].map(i=>i.value).join(' '));const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
    "label": "confere impureza 9,48 kg e líquido 306,52"
   },
   {
@@ -510,7 +517,7 @@
   },
   {
    "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"229,89\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"229,89\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText+' '+[...el.querySelectorAll('input,textarea')].map(i=>i.value).join(' '));const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
    "label": "confere Valor estimado R$ 229,89"
   },
   {
@@ -537,22 +544,23 @@
    "target": {
     "selector": "[role=dialog] div:has(> label:text-is('Motorista'))"
    },
-   "seconds": 0.6,
+   "seconds": 0.3,
    "at": 94.46,
    "label": "Motorista (vazio)",
    "optional": true,
    "timeout": 4
   },
   {
-   "do": "hover",
+   "do": "type",
    "target": {
     "selector": "[role=dialog] label:has-text('Placa')"
    },
-   "seconds": 0.5,
-   "at": 95.37,
-   "label": "Placa do veículo (vazio)",
+   "text": "",
+   "noClick": true,
    "optional": true,
-   "timeout": 4
+   "timeout": 4,
+   "at": 95.87,
+   "label": "Placa do veículo (vazio)"
   },
   {
    "do": "click",
@@ -591,7 +599,7 @@
   },
   {
    "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"316\", \"9,48\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main tbody tr\")].filter(e=>!true||e.innerText.includes(\"Ferro misto\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"316\", \"9,48\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main tbody tr\")].filter(e=>!true||e.innerText.includes(\"Ferro misto\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText+' '+[...el.querySelectorAll('input,textarea')].map(i=>i.value).join(' '));const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
    "label": "confere ferro 316 com 9,48 de impureza"
   },
   {

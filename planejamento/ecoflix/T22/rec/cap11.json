@@ -126,7 +126,7 @@
   },
   {
    "do": "eval",
-   "js": "(()=>{if(window.__polls)return 'ja';window.__polls=[];const f=window.fetch;window.fetch=function(u,o){try{const s=String(u&&u.url||u);if(s.includes('check-asaas-payment'))window.__polls.push(performance.now())}catch(e){}return f.apply(this,arguments)};return 'ok'})()"
+   "js": "(()=>{if(window.__polls)return 'ja';window.__polls=[];try{performance.setResourceTimingBufferSize(5000)}catch(e){}new PerformanceObserver(l=>{for(const e of l.getEntries()){if(String(e.name).includes('check-asaas-payment'))window.__polls.push(e.startTime)}}).observe({type:'resource',buffered:true});return 'ok'})()"
   },
   {
    "do": "eval",
@@ -159,11 +159,9 @@
   {
    "do": "hover",
    "target": {
-    "text": "Recicla Vale Metais",
-    "exact": true,
-    "within": "main"
+    "selector": "main div.divide-y > div:has(p:text-is(\"Recicla Vale Metais\")) p:text-is(\"Recicla Vale Metais\")"
    },
-   "seconds": 0.6,
+   "seconds": 0.4,
    "at": 5.59,
    "label": "a matriz e a filial",
    "optional": true,
@@ -172,23 +170,18 @@
   {
    "do": "hover",
    "target": {
-    "text": "Filial Pindamonhangaba",
-    "exact": true,
-    "within": "main"
+    "selector": "main div.divide-y > div:has(p:text-is(\"Filial Pindamonhangaba\")) p.text-xs"
    },
    "seconds": 0.6,
    "at": 6.43,
-   "label": "plano de cada unidade (sem zoom nos valores)",
+   "label": "plano e vencimento de cada unidade (sem zoom nos valores)",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "hover",
    "target": {
-    "text": "Ativa",
-    "exact": true,
-    "within": "main",
-    "nth": 1
+    "selector": "main div.divide-y > div:has(p:text-is(\"Filial Pindamonhangaba\")) span:text-is(\"Ativa\")"
    },
    "seconds": 0.6,
    "at": 7.71,
@@ -214,17 +207,12 @@
    "timeout": 4
   },
   {
-   "do": "mark",
-   "name": "L3",
-   "at": 14.47
-  },
-  {
    "do": "click",
    "target": {
     "role": "button",
     "name": "Pagar tudo de uma vez"
    },
-   "at": 14.77,
+   "at": 13.98,
    "label": "Pagar tudo de uma vez"
   },
   {
@@ -235,6 +223,11 @@
   {
    "do": "eval",
    "js": "(()=>{const a=document.getAnimations().filter(x=>x.currentTime<0);a.forEach(x=>x.startTime=document.timeline.currentTime);return a.length})()"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 14.47
   },
   {
    "do": "hover",
@@ -279,12 +272,18 @@
   },
   {
    "do": "waitFor",
-   "text": "Copia e Cola",
+   "text": "Aguardando confirmação do pagamento",
    "timeout": 12
   },
   {
+   "do": "mark",
+   "name": "L6",
+   "at": 40.72
+  },
+  {
    "do": "eval",
-   "js": "(async()=>{const p=window.__polls||[];const ult=p.length?p[p.length-1]:performance.now();let alvo=ult+5000-450;while(alvo<performance.now()+150)alvo+=5000;await new Promise(r=>setTimeout(r,Math.max(0,alvo-performance.now())));const r=await fetch(\"http://127.0.0.1:54340/rest/v1/subscription_payments?status=eq.PENDING\",{method:'PATCH',headers:{'content-type':'application/json',Prefer:'return=minimal'},body:JSON.stringify({status:'RECEIVED'})});return r.status})()",
+   "js": "(async()=>{await new Promise(r=>setTimeout(r,300));const p=window.__polls||[];let alvo;if(p.length){alvo=p[p.length-1]+5000-450;while(alvo<performance.now()+150)alvo+=5000;}else{alvo=performance.now()+1500;}await new Promise(r=>setTimeout(r,Math.max(0,alvo-performance.now())));const r=await fetch(\"http://127.0.0.1:54340/rest/v1/subscription_payments?status=eq.PENDING\",{method:'PATCH',headers:{'content-type':'application/json',Prefer:'return=minimal'},body:JSON.stringify({status:'RECEIVED'})});return r.status+' (consultas vistas: '+p.length+')'})()",
+   "at": 40.72,
    "label": "bastidor: o Pix é pago (a cobrança fica RECEIVED antes da próxima consulta)"
   },
   {
@@ -303,11 +302,6 @@
    "optional": true,
    "timeout": 4,
    "label": "Pagamento Confirmado!"
-  },
-  {
-   "do": "mark",
-   "name": "L6",
-   "at": 40.72
   },
   {
    "do": "eval",

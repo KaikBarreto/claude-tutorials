@@ -13,7 +13,7 @@ export NN MODO
 FN=$(python3 -I -c "import json,sys;print(json.load(open('rec/t08/fake_now.json'))[sys.argv[1]])" "$NN") || exit 2
 export FAKE_URL=http://127.0.0.1:54308 FAKE_NOW=$FN TUT_USER=rafael@reciclavalemetais.example
 [ -n "${TUT_SENHA:-}" ] || export TUT_SENHA="$(head -c 12 /dev/urandom | base64)"
-[ "$MODO" = "--rapido" ] || [ "$MODO" = "--os-dois" ] && { python3 -I rec/t08/ensaio.py "$NN" || exit 2; }
+[ "$MODO" = "--rapido" ] || [ "$MODO" = "--os-dois" ] || [ "$MODO" = "--auto" ] && { python3 -I rec/t08/ensaio.py "$NN" || exit 2; }
 echo "cap$NN FAKE_NOW=$FN fila $(date +%H:%M:%S)"
 flock .heavy.lock bash -c '
   PIDF=rec/.runtime/fake54308.pid; PID=$(cat "$PIDF" 2>/dev/null || true); ATUAL=""; PORTA=""
@@ -26,11 +26,17 @@ flock .heavy.lock bash -c '
   if [ "$ATUAL" != "$FAKE_NOW" ] || [ "$PORTA" != 54308 ] || [ -n "$MUDOU" ]; then FAKE_PORT=54308 bash rec/run.sh fake | tail -1; fi
   tr "\0" "\n" < /proc/$(cat "$PIDF")/environ | grep -q "^FAKE_PORT=54308$" || { echo "instância 54308 não é a minha"; exit 3; }
   echo "trava $(date +%H:%M:%S)"
-  if [ "$MODO" = "--rapido" ] || [ "$MODO" = "--os-dois" ]; then
+  if [ "$MODO" = "--rapido" ] || [ "$MODO" = "--os-dois" ] || [ "$MODO" = "--auto" ]; then
     node rec/record.mjs rec/t08/_ens/cap$NN.json --rapido > rec/t08/_ens/.cap$NN.out 2>&1
     python3 -I rec/t08/resumo.py $NN --ens > rec/t08/_ens/cap$NN.resumo 2>&1
+    python3 -I rec/t08/prever.py $NN --ens > rec/t08/_ens/cap$NN.prever 2>&1
     [ "$MODO" = "--rapido" ] && exit 0
     grep -q "!!ERRO" rec/t08/_ens/cap$NN.resumo && exit 4
+    if [ "$MODO" = "--auto" ]; then
+      # regra do coordenador (18:46): completo só com pouca folga no prever (>= 0,4 s) ou aviso no rápido
+      python3 -I -c "import re,sys;p=open(\"rec/t08/_ens/cap$NN.prever\").read();m=re.search(r\"maior atraso ([0-9.]+)\",p);r=open(\"rec/t08/_ens/cap$NN.resumo\").read();sys.exit(1 if (m and float(m.group(1))>=0.4) or \"[aviso:\" in r or re.search(r\"avisos de erro na tela.*=> .\\[[^\\]]\",r) else 0)" && { echo "só o rápido (prever com folga)"; exit 0; }
+      echo "precisa do completo"
+    fi
   fi
   for vez in 1 2; do
     node rec/record.mjs rec/t08/cap$NN.json > rec/t08/.cap$NN.out 2>&1

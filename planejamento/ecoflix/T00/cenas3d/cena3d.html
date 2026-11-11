@@ -7,10 +7,14 @@
        carregado de latinha, de frente para a saída (+x); fora, à direita, o banco (só no cap00).
        cap00 ilu00_caminho: a vista geral desse pátio; as seis estações (as da 2D) num alfinete em cima de cada lugar, ligadas
              pela linha que acende de "portão" a "conta"; a carroça de latinha entra pelo portão em "sucata".
-       cap05 ilu05_portao, ilu05_balanca, ilu05_caixa, ilu05_estoque, ilu05_venda: a câmera viaja do portão à balança, ao
-             caixa, à baia e ao caminhão que sai, cada parada na palavra que a nomeia; no alto, o mesmo caminho da 2D (estações
-             acendendo nas mesmas palavras), para a troca com a ilu05_conta (2D) não mexer no alto da tela.
+       cap05 ilu05_portao, ilu05_balanca, ilu05_caixa, ilu05_estoque, ilu05_venda: a câmera (elevação fixa, sem zoom brusco)
+             viaja do portão à balança, ao caixa, à baia e ao caminhão, cada parada na palavra que a nomeia, e acompanha o
+             caminhão quando ele sai (o caminhão fica parado na tela, o pátio corre). No alto, o mesmo caminho da 2D (estações
+             acendendo nas mesmas palavras) sobre o fundo branco do palco, que apaga para baixo: a troca com a ilu05_conta (2D)
+             não mexe no alto da tela. A Dona Cida já vem andando quando o pátio aparece (em "Pensa"), para a caminhada não
+             correr; o rótulo "Dona Cida" entra em "Dona". As cenas são encostadas: renderizar o trecho inteiro (0,1 a 33,3 s).
      Textos e âncoras W(linha,'palavra') os da 2D (ilustracoes.json, "mostra"); números da fala (38 kg × R$ 6,20 = R$ 235,60).
+     Latinha só a do kit (latinhas()). Mapa de sombra 2048 no render final e 1024 com --dsf menor que 2 (conferência, prévia).
      Render: node ferramentas/edit/cenas/render_cenas.cjs <cap> <capNN.json> saida.mp4 --html planejamento/ecoflix/T00/cenas3d/cena3d.html --de <at> --ate <at+dur> -->
 <style>
 :root{--l:#E6E9EE;--c:#6B7280}

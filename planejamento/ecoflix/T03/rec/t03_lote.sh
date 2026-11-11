@@ -2,6 +2,7 @@
 # T03 · ensaio (rápido ou completo) de vários capítulos, UMA trava por capítulo (docs/04: os jobs dos outros agentes entram entre os meus).
 #   TUT_USER=... TUT_SENHA=... bash rec/t03/t03_lote.sh rapido 00 01 01b 02 ...     (ensaio.py + record.mjs --rapido + resumo.py --ens)
 #   TUT_USER=... TUT_SENHA=... bash rec/t03/t03_lote.sh completo 00 01 ...          (record.mjs com os `at` + resumo.py)
+#   TUT_USER=... TUT_SENHA=... bash rec/t03/t03_lote.sh misto c07 c10 r00 r01b ...  (c = completo, r = rápido, por capítulo)
 # O prazo (timeout) vale por capítulo e roda DENTRO da trava (a espera na fila não conta). Apaga o MP4 logo depois do resumo; a folha de
 # contato fica para olhar (apague depois de ver). Saída de cada capítulo: rec/t03[/_ens]/.capNN.out e o resumo em .capNN.resumo.
 # Nunca edite este arquivo com um lote rodando (o bash lê o script aos poucos): copie para outro nome.
@@ -12,8 +13,10 @@ limite=$(( $(date +%s) + ${T03_LOTE_MIN:-110} * 60 ))
 cd "${TUT_HOME:-$(dirname "$0")/../..}" || exit 1   # $TUT_HOME (rodando uma cópia fora daqui: passe TUT_HOME)
 : "${TUT_USER:?defina TUT_USER}" "${TUT_SENHA:?defina TUT_SENHA}"
 export TUT_USER TUT_SENHA FAKE_URL=http://127.0.0.1:54303 FAKE_NOW=2026-11-10T08:30:00-03:00
-modo="$1"; shift
+modo_lote="$1"; shift
 for nn in "$@"; do
+  modo=$modo_lote
+  if [ "$modo_lote" = misto ]; then case "$nn" in c*) modo=completo;; r*) modo=rapido;; esac; nn=${nn:1}; fi
   if [ "$modo" = rapido ]; then
     python3 -I rec/t03/ensaio.py "$nn" >/dev/null
     dir=rec/t03/_ens; extra=--rapido; prazo=420; res="--ens"

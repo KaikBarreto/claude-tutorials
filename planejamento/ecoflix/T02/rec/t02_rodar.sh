@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# T2 · grava UM capítulo sob a trava pesada: o ensaio rápido (--ens: sem os `at`, sem codificar o MP4) ou a gravação completa.
+# T2 · grava UM capítulo sob a trava pesada: o ensaio rápido (--ens: sem os `at`, com o MP4 e a folha de contato) ou a gravação completa.
 # Saídas em /dev/shm/t02rec (o disco de /home está quase cheio); o actions.json e o telemetry.json voltam para rec/t02/ (ou
 # rec/t02/_ens/), que o resumo.py e o prever.py leem. O MP4 e a folha de contato ficam só em /dev/shm: apague depois de olhar.
 #   TUT_USER=rafael@reciclavalemetais.example TUT_SENHA=<qualquer> bash rec/t02/t02_rodar.sh 03 [--ens]
@@ -26,7 +26,7 @@ if [ "$ENS" = "--ens" ]; then
   ln -sfn ../assets rec/t02/_ens/assets   # o upload do cap05 usa assets/ relativo à pasta do roteiro
   ROT=rec/t02/_ens/cap$N.json
   DEST=rec/t02/_ens
-  EXTRA=--no-encode
+  EXTRA=   # o rápido também monta o MP4: a folha de contato dele é a conferência da tela (regra de 11/11, 18:46)
 else
   ROT=rec/t02/cap$N.json
   DEST=rec/t02

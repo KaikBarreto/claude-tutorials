@@ -673,6 +673,7 @@ def cap09():
     """Notas Fiscais > Saída (a NF-e 1254 da Aços Quiririm, R$ 3.528,00); depois Ambiental > MTR com o 2611000318."""
     c = Cap(9, start=(900, 470), setup=setup_em(ROTA_CDF, aquece=['/fiscal-ambiental/nfe/saida', ROTA_MTR]))
     c.mark(1)
+    abre_grupo(c, 'Fiscal & Ambiental', 'Notas Fiscais (NF-e)', c.A(1, 'conversa', 0.6), 'abre Fiscal & Ambiental')
     c.click(ITEM_MENU('Notas Fiscais (NF-e)'), at=c.A(1, 'nota', 0.9), label='Notas Fiscais (NF-e) no menu')
     c.click(SUBABA('Saída'), at=c.A(1, 'carga', 0.8), label='aba Saída')
     c.registra(LINHA('1254'), at=c.A(1, 'venda', 0.4), label='NF-e 1254 da Aços Quiririm (R$ 3.528,00, Autorizada)')

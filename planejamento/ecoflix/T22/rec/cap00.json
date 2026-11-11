@@ -117,8 +117,8 @@
     "role": "button",
     "name": "Gerencial (Filiais)"
    },
-   "seconds": 0.6,
-   "at": 2.76,
+   "seconds": 0.4,
+   "at": 1.4,
    "label": "menu Gerencial (Filiais)",
    "optional": true,
    "timeout": 4
@@ -129,7 +129,7 @@
     "role": "button",
     "name": "Gerencial (Filiais)"
    },
-   "at": 6.43,
+   "at": 3.52,
    "label": "abre o grupo Gerencial (Filiais)",
    "unless": {
     "selector": "a[href=\"/gerencial/configuracoes\"]"
@@ -143,12 +143,17 @@
    "timeout": 8
   },
   {
+   "do": "eval",
+   "js": "(async()=>{const a=document.querySelector('a[href=\"/gerencial/configuracoes\"]');if(!a)return 'SEM ALVO';let c=a.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)break;c=c.parentElement;}if(!c||c===document.body)return 'SEM ROLAGEM';const dy=Math.round(a.getBoundingClientRect().bottom-(c.getBoundingClientRect().bottom-8));if(dy<=0)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/500),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(a.getBoundingClientRect().top)})()",
+   "label": "a lista do menu desce até Configurações (os itens do grupo aparecem)"
+  },
+  {
    "do": "hover",
    "target": {
     "selector": "a[href=\"/gerencial\"]"
    },
-   "seconds": 0.3,
-   "at": 7.26,
+   "seconds": 0.2,
+   "at": 5.49,
    "label": "Dashboard",
    "optional": true,
    "timeout": 4
@@ -158,7 +163,7 @@
    "target": {
     "selector": "a[href=\"/gerencial/financeiro\"]"
    },
-   "seconds": 0.2,
+   "seconds": 0.1,
    "label": "Financeiro",
    "optional": true,
    "timeout": 4
@@ -168,27 +173,17 @@
    "target": {
     "selector": "a[href=\"/gerencial/estoque\"]"
    },
-   "seconds": 0.2,
+   "seconds": 0.1,
    "label": "Estoque",
    "optional": true,
    "timeout": 4
-  },
-  {
-   "do": "scroll",
-   "point": {
-    "x": 120,
-    "y": 640
-   },
-   "by": 140,
-   "duration": 0.4,
-   "after": 150
   },
   {
    "do": "hover",
    "target": {
     "selector": "a[href=\"/gerencial/assinaturas\"]"
    },
-   "seconds": 0.2,
+   "seconds": 0.1,
    "label": "Assinaturas",
    "optional": true,
    "timeout": 4
@@ -198,7 +193,7 @@
    "target": {
     "selector": "a[href=\"/gerencial/configuracoes\"]"
    },
-   "seconds": 0.6,
+   "seconds": 0.4,
    "label": "Configurações",
    "optional": true,
    "timeout": 4

@@ -49,11 +49,17 @@ suba a sua instância de novo.
    handler novo em `rec/mundo/handlers/` (um arquivo por RPC ou function). Arquivo compartilhado (`rec/mundo/lib/eco.mjs`,
    `schema.json`, `mundo.json`, um handler que já existe): mudança mínima, só com Edit (nunca reescrever o arquivo), e
    conte no relatório. As sementes do mundo base (`rec/mundo/seeds/`, `gerar/`) são da junção: não mude.
-3. **Ensaio aprovado de TODOS os capítulos**: o rápido (`ensaio.py` + `--rapido` + `resumo.py --ens`: 0 passo falho, nenhum
-   "SEM ALVO") e o completo com os tempos estimados (`prever.py`, depois a gravação sem `--rapido` e `resumo.py`):
-   `lateBy` < 0,8 s, `pageIssues` vazio, gesto na palavra certa (coluna `voz:`), e a folha de contato
-   (`<nome>.contact.jpg`) olhada: Recicla Vale Metais, versão 1.59.154, nenhum dado real, nenhum erro na tela que o
-   roteiro não pede, nada cortado.
+3. **Ensaio aprovado de TODOS os capítulos**. Sempre o rápido (`ensaio.py` + `--rapido` + `resumo.py --ens`: 0 passo falho,
+   nenhum "SEM ALVO", `pageIssues` vazio), gravado COM a montagem do MP4 (sem `--no-encode`) para ter a folha de contato
+   (`<nome>.contact.jpg`) olhada: Recicla Vale Metais, versão 1.59.154, nenhum dado real, nenhum erro na tela que o roteiro
+   não pede, nada cortado. E o `prever.py` com os tempos estimados.
+   **O completo** (a gravação sem `--rapido`, `resumo.py`: `lateBy` < 0,8 s, gesto na palavra certa na coluna `voz:`) **só
+   no capítulo que** (Kaik, 11/11 18:46: acelerar sem perder qualidade; a gravação final, com a voz, confere o resto):
+   - o `prever.py` mostra com pouca folga (algum gesto previsto com atraso ≥ 0,4 s); ou
+   - tem gesto sensível a espera: arrasto, menu ou lista aberta enquanto a fala anda, aviso que some sozinho, digitação
+     longa, celular, dois navegadores, tela que recarrega ou muda sozinha; ou
+   - teve qualquer aviso no rápido (passo refeito, alvo achado tarde, erro de console).
+   No relatório, diga quais capítulos ficaram só no rápido. Completo que já passou não se grava de novo.
 4. **`planejamento/ecoflix/Tnn/propostas_fala.md`**: o que a fala precisa mudar para bater com a tela ou caber no gesto
    (capítulo, linha, texto atual, texto novo, motivo) e, numa seção "Achados do app", bug ou rótulo diferente do
    roteiro. **Não edite `roteiro.md` nem `tts_textos.py`**: a revisão geral aplica tudo de uma vez.

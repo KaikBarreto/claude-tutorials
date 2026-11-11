@@ -41,5 +41,5 @@ head -4 "$DIR/t25-cap$NN.resumo.txt"
 grep -c "SEM ALVO" "$DIR/t25-cap$NN.actions.json" 2>/dev/null | sed 's/^/SEM ALVO no actions: /'
 FALHOS=$(python3 -I -c "import json;a=json.load(open('$DIR/t25-cap$NN.actions.json'))['actions'];print(sum(1 for x in a if x.get('error') or x.get('ok') is False))" 2>/dev/null || echo '?')
 echo "rc=$RC falhos=$FALHOS"
-if [ "$MODO" = rapido ]; then rm -f "$DIR/t25-cap$NN.mp4"; [ "$FALHOS" = 0 ] && rm -f "$DIR/t25-cap$NN.contact.jpg"; fi
+if [ "$MODO" = rapido ]; then rm -f "$DIR/t25-cap$NN.mp4"; fi
 [ -f "$DIR/.t25-cap$NN.semente" ] && [ "$SEM" = 1 ] && cat "$DIR/.t25-cap$NN.semente" && rm -f "$DIR/.t25-cap$NN.semente"

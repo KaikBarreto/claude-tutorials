@@ -28,7 +28,8 @@ for item in "$@"; do
   [ -n "${TUT_SENHA:-}" ] || export TUT_SENHA="$(head -c 12 /dev/urandom | base64)"
   if [ "$MODO" = "r" ]; then
     python3 -I rec/t17/ensaio.py "$NN" > /dev/null || exit 2
-    ROT="rec/t17/_ens/cap$NN.json"; OUT="rec/t17/_ens/.cap$NN.out"; EXTRA="--rapido --no-encode"
+    # processo de 11/11 18:46: o rápido monta o MP4 (folha de contato) e o completo só onde a regra pede (_BRIEF_ROBO.md, item 3)
+    ROT="rec/t17/_ens/cap$NN.json"; OUT="rec/t17/_ens/.cap$NN.out"; EXTRA="--rapido"
   else
     ROT="rec/t17/cap$NN.json"; OUT="rec/t17/.cap$NN.out"; EXTRA=""
   fi

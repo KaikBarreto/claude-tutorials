@@ -46,7 +46,7 @@ flock .heavy.lock bash -c '
   }
   echo "== $(date +%H:%M:%S) trava ok (cap$NN $MODO)"
   if [ "$MODO" != final ]; then
-    grava "rec/t26/_ens/cap$NN.json" "rec/t26/.cap$NN.ens.out" --no-encode
+    grava "rec/t26/_ens/cap$NN.json" "rec/t26/.cap$NN.ens.out"   # com o MP4: a folha de contato do rápido é obrigatória (_BRIEF_ROBO item 3, 11/11 18:46)
     [ "$GRAVA" = 1 ] && node rec/t26/aux/t26_semente.mjs "apos-cap$NN"
   fi
   if [ "$MODO" != ens ]; then

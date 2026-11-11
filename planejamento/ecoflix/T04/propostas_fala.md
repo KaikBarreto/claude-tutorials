@@ -11,6 +11,11 @@ Linhas numeradas como no `capNN.json` (L1 = 1ª linha da tabela do capítulo).
 | 03 | L2 | "Em Dados Fiscais, Pessoa Jurídica, e eu digito o CNPJ." | "Em Dados Fiscais, Pessoa Jurídica, e eu preencho o CNPJ." ou respiro de ~2 s depois de "CNPJ." | os 14 dígitos digitados levam ~2,3 s depois de dois cliques de ~1,5 a 3 s (aba e Pessoa Jurídica): hoje o CNPJ é colado em "CNPJ." |
 | 04 | L5 | "...é o contador. Eu preencho o que ele passou." | "...é o contador. Eu preencho o que ele passou: contribuinte de ICMS, com a inscrição estadual." | escolher o indicador e digitar 12 dígitos leva ~5 s; a frase dá 2,6 s depois de "Eu": hoje o indicador sai em "Quem define" e a inscrição é colada em "Eu" |
 | 09 | L9 | "...Em Observação, eu anoto o motivo." | (igual) ou respiro de ~2 s depois de "motivo." | "Acerto parcial da entrega de 06/11" (34 letras) digitado levaria ~5 s: hoje é colado em "anoto" |
+| 03 | L4 e L7 | L4 "Pronto. Vieram a razão social e o nome fantasia." / L7 "A tela pede pra conferir antes de salvar. E repara que um campo ficou vermelho." | L4 "Pronto. A tela pede pra conferir antes de salvar. Vieram a razão social e o nome fantasia." / L7 "E repara que um campo ficou vermelho." | o pedido é o toast "Dados preenchidos — confira antes de salvar", que sai com a lupa (~23 s) e some ~4 s depois; na L7 (~41 s) ele já sumiu |
+
+As linhas 02 L2/L3, 03 L2, 04 L5 e 09 L9 vêm de medidas feitas entre 13:30 e 17:35, com renders 3D ao lado (gestos 1,5 a 2x mais
+lentos, aviso do coordenador): com a máquina normal a digitação pode caber; o robô cola esses textos de qualquer jeito, e a proposta
+fica para a revisão decidir com a voz real.
 
 ## Achados do app (1.59.154)
 - **Lupa do CNPJ (cap03 L3):** a dica "Buscar dados da empresa pelo CNPJ" é o `title` nativo do botão

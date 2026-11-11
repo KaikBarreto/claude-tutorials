@@ -562,3 +562,13 @@ Decisões:
 - 11/11 17:50 **Limite semanal batido** (volta em 18/11 11:00 Lisboa): pararam o agente do kit 3D, o 3D da T00 e o robô da
   T18. 17:5x **Kaik usou um reset** ("pode continuar como estava"): os três retomados com SendMessage de onde pararam; o
   ritmo segue o de antes (até ~20 agentes).
+- 11/11 18:42 **Kaik perguntou o andamento**: ~45% do total (roteiros, mundo e ilustrações 2D prontos; robôs ~metade, com
+  ~45% dos 340 capítulos no ensaio rápido e ~10% no completo; 3D ~1/3; faltam revisão, voz, gravação final, edição e
+  entrega; uns 3 a 4 dias de máquina). 18:46 **Kaik: "isso, faça o que for acelerar o processo, sem perder qualidade"**.
+  - **Ensaio completo só onde precisa** (`_BRIEF_ROBO.md` item 3; aviso aos 25 robôs): sempre o rápido COM a folha de
+    contato e o `prever.py`; o completo só com pouca folga prevista (≥ 0,4 s), gesto sensível a espera (arrasto, menu
+    aberto, aviso que some, digitação longa, celular, dois navegadores, tela que muda sozinha) ou aviso no rápido. A
+    gravação final, com a voz, confere o resto. Corta ~10 a 15 h da trava pesada.
+  - **Esteira por aula** (próximo): a aula cujo robô terminar segue sozinha (revisão das falas dela → voz → gravação
+    final → edição), sem esperar as outras; a primeira vira o piloto completo para o Kaik aprovar o acabamento.
+  - Robô da T05 e cenas de Windows: o limite de 20 subagentes ao mesmo tempo barrou o lançamento; entram na primeira vaga.

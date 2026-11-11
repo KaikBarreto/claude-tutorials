@@ -8,6 +8,7 @@ revisão geral aplica. Linhas numeradas como no `capNN.json` (L1 = primeira linh
 | Cap. | Linha | Texto atual | Texto novo | Motivo |
 |---|---|---|---|---|
 | 02 | L3 | "A terceira frente vai ser a produção, a prensa que enfarda latinha e papelão." | "Agora, uma frente nova: a produção, a prensa que enfarda latinha e papelão." | A lista já tem quatro centros (Coleta, Escritório, Frota e Pátio: o T13 criou Escritório e Frota e a junção manteve). "Terceira" só vale para a ilustração. A coluna Tela do cap02 também diz "a lista com Coleta e Pátio": são quatro. |
+| 10 | L3 | "Dá pra filtrar também por cliente ou fornecedor, por centro de custo e pela fonte." | "Dá pra filtrar também por cliente ou fornecedor e por centro de custo." | O filtro "Fonte" só aparece quando a lista tem mais de uma fonte (`RevenueExpenseList.tsx:889`, `sources.length > 1`); as despesas de outubro são todas do banco, então o painel mostra só Categoria, Cliente/Fornecedor e Centro de custo. |
 | 10 | L5 | "Clico na lixeira da segunda e em Excluir." | "Clico na lixeira da primeira, a que foi lançada depois, e em Excluir." | A lista mostra a mais nova em cima: a cópia das 16:40 é a 1ª linha e a das 09:12 (a que o mundo mantém, T21) a 2ª. O robô exclui a das 16:40. |
 
 ## Achados do app

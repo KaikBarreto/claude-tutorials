@@ -35,7 +35,7 @@ flock .heavy.lock bash -c '
   if [ "$MODO" != "--so-completo" ]; then
     node rec/record.mjs "rec/t06/_ens/cap$NN.json" --rapido > "rec/t06/_ens/.cap$NN.out" 2>&1
     python3 -I rec/t06/resumo.py "$CAP" --ens --tudo > "rec/t06/_ens/cap$NN.resumo.txt" 2>&1
-    rm -f "rec/t06/_ens/t06-cap$NN.mp4" "rec/t06/_ens/t06-cap$NN.contact.jpg"
+    rm -f "rec/t06/_ens/t06-cap$NN.mp4"          # a folha de contato fica até ser olhada (depois: rm à mão)
     falhos=$(sed -n "1s/.*falhos \([0-9]*\).*/\1/p" "rec/t06/_ens/cap$NN.resumo.txt")
     semalvo=$(grep -c "SEM ALVO" "rec/t06/_ens/.cap$NN.out")
     echo "rápido: falhos=${falhos:-?} SEM_ALVO=$semalvo"
@@ -44,6 +44,7 @@ flock .heavy.lock bash -c '
   fi
   node rec/record.mjs "rec/t06/cap$NN.json" > "rec/t06/.cap$NN.out" 2>&1
   python3 -I rec/t06/resumo.py "$CAP" > "rec/t06/cap$NN.resumo.txt" 2>&1
+  rm -f "rec/t06/t06-cap$NN.mp4"
   echo "completo: $(head -1 rec/t06/cap$NN.resumo.txt) SEM_ALVO=$(grep -c "SEM ALVO" rec/t06/.cap$NN.out)"
 '
 curl -s "$FAKE_URL/__dev/unknowns" | python3 -c "import json,sys; d=json.load(sys.stdin); print('desconhecidos:', [i['kind']+' '+i['name'] for i in d['items'] if i['kind']!='TABELA_SEM_SEED'])"

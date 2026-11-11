@@ -272,6 +272,7 @@ SEL = lambda s, **kw: {'selector': s, **kw}
 OPT = lambda n, **kw: {'role': 'option', 'name': n, **kw}
 ITEM = lambda n, **kw: {'role': 'menuitem', 'name': n, **kw}
 DLG = '[role=dialog]'
+DLGS = '[role=dialog], [role=alertdialog]'                                  # janela do Radix: Dialog ou AlertDialog
 PH = lambda p, **kw: {'placeholder': p, **kw}
 MENU = '[data-sidebar=sidebar]'
 
@@ -398,8 +399,8 @@ def cap02():
     c.click(TXT('Resumo do período filtrado', within='main'), at=c.A(2, 'resumo', 0.8), label='abre o Resumo do período filtrado (vem fechado)')
     c.waitfor(target=TXT('Saldo', within='main'), timeout=6)
     c.registra(TXT('Resumo do período filtrado', within='main'), at=c.A(2, 'quanto', 0.2), label='[ZOOM] Resumo do período filtrado: Compras e Vendas por forma de pagamento')
-    c.hover(TXT('Compras', within='main'), 0.4, at=c.A(2, 'compras', 0.6), label='Compras')
-    c.hover(TXT('Vendas', within='main'), 0.4, at=c.A(2, 'vendas,', 0.6), label='Vendas')
+    c.hover(TXTX('Compras', within='main'), 0.4, at=c.A(2, 'compras', 0.6), label='Compras')
+    c.hover(TXTX('Vendas', within='main'), 0.4, at=c.A(2, 'vendas,', 0.6), label='Vendas')
     c.hover(TXT('Dinheiro', within='main'), 0.2, at=c.A(2, 'dinheiro,', 0.6), label='Dinheiro')
     c.hover(TXT('Saldo', within='main'), 0.2, at=c.A(2, 'saldo.', 0.6), label='Saldo')
     c.mark(3)
@@ -407,7 +408,9 @@ def cap02():
                               ('Cliente/Fornecedor', 'cliente', 0), ('Pagamento', 'pago', 0), ('Valor', 'valor.', 0)):
         c.hover(SEL(f"main thead th:has-text('{col}')"), 0.2, at=c.A(3, palavra, 0.6, nth=nth), label=f'coluna {col}')
     c.mark(4)
-    c.click(TXT(L_CIDA, within='main'), at=c.A(4, 'Clicando', 0.6), label='abre a linha da latinha da Aparecida (hoje 07:22)')
+    c.ev(js_ate_el(f"[...document.querySelectorAll('main tbody tr')].find(t=>t.innerText.includes('{L_CIDA}'))", y=300, dur_ms=700),
+         at=c.A(4, 'Clicando', 0.2), label='a lista sobe: a linha da Aparecida e o que ela abre cabem na tela')
+    c.click(TXT(L_CIDA, within='main'), at=c.A(4, 'linha,', 0.6), label='abre a linha da latinha da Aparecida (hoje 07:22)')
     c.hover(TXT('Alumínio latinha', within=f"main tbody tr:has-text('Fornecedor:')"), 0.4, at=c.A(4, 'materiais,', 0.6), label='o material da linha')
     c.hover(TXTX('24.00 Kg', within='main'), 0.8, at=c.A(4, 'vinte', 0.6), label='[ZOOM] o peso: 24 kg')
     c.mark(5)
@@ -553,6 +556,7 @@ INCLUIR = BTN('Incluir Item')
 FINALIZAR = BTN('Finalizar')
 TILE = lambda n: SEL(f"[role=dialog] button:has(span:text-is('{n}'))")       # forma de pagamento (Finalizar Pedido)
 CONFIRMA_PAG = BTNX('CONFIRMAR PAGAMENTO')
+ROLA_FINALIZAR = js_ate_el("[...document.querySelectorAll('main button')].find(b=>b.textContent.trim()==='Finalizar')", y=560, dur_ms=600)
 
 
 @capitulo
@@ -565,14 +569,14 @@ def cap04():
     abre_menu_linha(c, L_BATERIA, c.A(1, 'Editar,', 1.5), 'menu do pedido de 21/10')
     c.click(ITEM('Editar'), at=c.A(1, 'Editar,', 0.6), label='Editar (pedido de 21/10)')
     c.waitfor(text='O pedido será carregado para edição.', timeout=8)
-    c.registra(TXTX('Se o pedido for de um caixa já fechado', within=DLG), at=c.A(1, 'avisa:', 0.2),
+    c.registra(TXTX('Se o pedido for de um caixa já fechado', within=DLGS), at=c.A(1, 'avisa:', 0.2),
                label='[ZOOM] "Se o pedido for de um caixa já fechado, o acerto do dinheiro é lançado no caixa de hoje..." (segue na L2)')
-    c.hover(TXTX('Se o pedido for de um caixa já fechado', within=DLG), 1.0, at=c.A(1, 'fechado,', 0.6), label='o aviso do caixa fechado')
+    c.hover(TXTX('Se o pedido for de um caixa já fechado', within=DLGS), 1.0, at=c.A(1, 'fechado,', 0.6), label='o aviso do caixa fechado')
     c.mark(2)
     c.cursor((640, 560), at=c.A(2, 'dica:', 0.3), label='cursor descansa na janela (dica: reabrir o caixa)')
     c.mark(3)
-    c.click(BTN('Cancelar', within=DLG), at=c.A(3, 'cancelo', 0.7), label='Cancelar')
-    c.waitfor(gone={'role': 'dialog'}, timeout=8)
+    c.click(BTN('Cancelar', within=DLGS), at=c.A(3, 'cancelo', 0.7), label='Cancelar')
+    c.waitfor(gone=TXTX('O pedido será carregado para edição.'), timeout=8)
     c.click(PERIODO('Mês passado'), at=c.A(3, 'começo', 0.7), label='período')
     c.click(OPT('Hoje'), at=c.A(3, 'hoje.', 0.6), label='Hoje')
     c.click(TXTX('Limpar todos', within='main'), at=c.A(3, 'Lembra', 0.6), label='Limpar todos')
@@ -583,7 +587,7 @@ def cap04():
     abre_menu_linha(c, L_CIDA, c.A(4, 'editar.', 1.5), 'menu da latinha da Aparecida')
     c.click(ITEM('Editar'), at=c.A(4, 'editar.', 0.6), label='Editar')
     c.waitfor(text='O pedido será carregado para edição.', timeout=8)
-    c.click(BTN('Editar Pedido', within=DLG), at=c.A(4, 'compra', 0.8, nth=0), label='Editar Pedido (abre a tela Compra em edição)')
+    c.click(BTN('Editar Pedido', within=DLGS), at=c.A(4, 'compra', 0.8, nth=0), label='Editar Pedido (abre a tela Compra em edição)')
     c.waitfor(target=EDITANDO, timeout=15)
     c.waitfor(idle=True, timeout=10)
     c.hover(EDITANDO, 0.8, at=c.A(4, 'selo', 0.6), label='[DESTAQUE] o selo "Editando Compra #N"')
@@ -591,7 +595,6 @@ def cap04():
     c.hover(SEL("main tbody tr:has-text('Alumínio latinha')"), 0.3, at=c.A(4, 'itens,', 0.6), label='os itens')
     c.hover(SEL("main tbody tr:has-text('Alumínio latinha') input", nth=0), 0.2, at=c.A(4, 'peso,', 0.6), label='o peso')
     c.hover(SEL("main tbody tr:has-text('Alumínio latinha') input", nth=1), 0.2, at=c.A(4, 'preço', 0.6), label='o preço')
-    c.hover(FINALIZAR, 0.4, at=c.A(4, 'forma', 0.6), label='Finalizar (a forma de pagamento sai ali)')
     c.mark(5)
     c.click(ACOES_ITEM('Alumínio latinha'), at=c.A(5, 'No', 0.2), label='Ações do item')
     c.click(ITEM('Editar'), at=c.A(5, 'Editar.', 0.6), label='Editar (o item volta para o formulário)')
@@ -609,14 +612,15 @@ def cap04():
     c.mark(8)
     c.mark(9)
     c.mark(10)
-    c.click(FINALIZAR, at=c.A(10, 'Finalizar', 0.8), label='Finalizar')
+    c.ev(ROLA_FINALIZAR, at=c.A(10, 'Finalizar', 1.6), label='a tela desce até o Finalizar (fica atrás do rodapé)')
+    c.click(FINALIZAR, at=c.A(10, 'Finalizar', 0.7), label='Finalizar')
     c.waitfor(text='Finalizar Pedido', timeout=10)
     c.click(TILE('Dinheiro'), at=c.A(10, 'dinheiro,', 0.6), label='Dinheiro (R$ 260,40)')
     c.click(CONFIRMA_PAG, at=c.A(10, 'Confirmar', 0.7), label='CONFIRMAR PAGAMENTO')
     c.waitfor(text='Compra registrada!', timeout=15)
     c.registra(SEL('[data-sonner-toaster]'), at=c.A(10, 'avisos', 0.2), label='[ZOOM] os avisos: Revertendo pedido original... / Pedido original revertido! Criando pedido editado... / Compra registrada!')
     c.mark(11)
-    c.registra(TXTX('Deseja imprimir o comprovante de compra?', within=DLG), at=c.A(11, 'dica:', 0.2), label='a compra editada registrada (janela Imprimir Comprovante)')
+    c.registra(TXTX('Deseja imprimir o comprovante de compra?', within=DLGS), at=c.A(11, 'dica:', 0.2), label='a compra editada registrada (janela Imprimir Comprovante)')
     c.click(BTN('Não, obrigado'), at=c.A(11, 'correto.', 0.5), label='Imprimir Comprovante: Não, obrigado')
     c.fim()
     return c
@@ -774,7 +778,7 @@ def cap09():
     c.hover(SEL("main tbody tr:has-text('Depósito Irmãos Siqueira') button"), 0.3, at=c.A(5, 'Editar.', 1.4), label='menu da compra', optional=False, timeout=8)
     c.click(ITEM('Editar'), at=c.A(5, 'Editar.', 0.6), label='Editar')
     c.waitfor(text='O pedido será carregado para edição.', timeout=8)
-    c.click(BTN('Editar Pedido', within=DLG), at=c.A(5, 'Como', 0.6), label='Editar Pedido')
+    c.click(BTN('Editar Pedido', within=DLGS), at=c.A(5, 'Como', 0.6), label='Editar Pedido')
     c.waitfor(target=EDITANDO, timeout=15)
     c.waitfor(idle=True, timeout=10)
     c.click(FORN, at=c.A(5, 'fornecedor,', 0.7), label='Fornecedor: Depósito Irmãos Siqueira')
@@ -786,11 +790,11 @@ def cap09():
     c.confere_campos(['240', '3,10'], 'o item: 240 kg a R$ 3,10 (o preço não mudou com o fornecedor)', escopo="main tbody tr:has-text('Bateria automotiva')")
     c.registra(FORN, at=c.A(5, 'resto', 0.2), label='[ZOOM] Fornecedor "Auto Peças Vale Forte" e o item Bateria automotiva, 240 kg, R$ 744,00')
     c.hover(SEL("main tbody tr:has-text('Bateria automotiva')"), 1.0, at=c.A(5, 'duzentos', 0.6), label='o item: 240 kg, R$ 744,00')
+    c.ev(ROLA_FINALIZAR, at=c.A(5, 'quatro', 0.2), label='a tela desce até o Finalizar (fica atrás do rodapé)')
     c.mark(6)
     c.click(FINALIZAR, at=c.A(6, 'Finalizar,', 0.2), label='Finalizar')
     c.waitfor(text='Finalizar Pedido', timeout=10)
-    c.click(TILE('Pix/Transferência'), at=c.A(6, 'Pix', 0.6), label='Pix/Transferência (Conta Principal)')
-    c.hover(TXTX('Conta Principal', within=DLG), 0.3, at=c.A(6, 'conta', 0.6), label='Conta Principal')
+    c.click(TILE('Pix/Transferência'), at=c.A(6, 'Pix', 0.5), label='Pix/Transferência (Conta Principal)')
     c.click(CONFIRMA_PAG, at=c.A(6, 'Confirmar', 0.7), label='CONFIRMAR PAGAMENTO')
     c.waitfor(text='Deseja imprimir o comprovante de compra?', timeout=15)
     c.click(BTN('Visualizar PDF'), at=c.A(6, 'comprovante', 0.6), label='Visualizar PDF (aba nova: o comprovante no nome da Auto Peças entra na edição)')

@@ -28,7 +28,17 @@ custo médio e mostra R$ 10.350,00).
 - **cap10 L6**: a lista de transferências mostra só "Concluída"; os saldos que a fala diz (matriz 1.840 kg, filial 650 kg, total 2.490 kg)
   aparecem no Estoque Gerencial. O robô confirma, mostra "Concluída" e abre Estoque › Visão Geral na linha do alumínio latinha.
 - **cap09 L2**: depois do "Importar do Estoque da Matriz" cada material do catálogo aparece com "1 vínculo(s)" (o gatilho do banco liga o
-  material da matriz de mesmo nome, migration 20260727181000); depois do "Enviar Ativos", "2 vínculo(s)".
+  material da matriz de mesmo nome, migration 20260727181000); depois do "Enviar Ativos", "2 vínculo(s)". No resultado do envio:
+  Materiais 0 novo(s) (os 15 da filial já existiam e só foram ligados), Categorias 8, Tabelas de Preço 1 (a "Tabela Depósitos"),
+  Clientes 0 (a Fundição já é cliente da filial), Fornecedores 0.
+- **cap06 L1**: o Financeiro abre direto na aba DRE (a última aberta) e o período passa a "Mês passado" enquanto a fala diz "com outubro
+  escolhido" (clicar na aba e no período dentro da linha atrasava a L2).
+- **cap07 L1**: o capítulo começa no consolidado em "Regime de Caixa" (onde o cap06 deixou) e o robô liga "Regime de Competência" na
+  palavra "competência"; na L4 os dois regimes trocam com a câmera parada no resultado.
+- **cap08 L5**: o robô aponta os cartões "Total Comprado", "Total Vendido", "Lucro" e "Margem" do Relatório de Estoque (a coluna "Margem"
+  da tabela fica cortada à direita; a tabela rola de lado). Os cartões mostram o mês corrente (1 a 10/11), sem número na fala.
+- **cap08 L4**: o Histórico de Materiais abre com a compra da filial de 09/11 16:20 (Rosa Medeiros: alumínio latinha e papelão) no alto, para
+  "com a unidade de onde veio" mostrar "Filial Pindamonhangaba" na primeira linha.
 
 ## Achados do app
 

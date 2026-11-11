@@ -35,9 +35,10 @@ FAKE_NOW = '2026-11-10T08:30:00-03:00'
 NOMES = ['Abertura', 'Comprado, vendido e margem', 'Seis meses e o comparativo', 'Semanas e rankings', 'O painel do seu jeito',
          'Tarefas no calendário', 'Os avisos automáticos', 'Atalhos e o Ctrl+K', 'A rotina diária', 'A rotina semanal', 'A rotina mensal',
          'Recapitulando']
+_T13 = ['t13/inicio', 't13/apos-cap11']   # o fim da T13 (pneus em 3 parcelas, baixas): a linha do tempo é T13 → T14 → T15 → T21 → T25
 _T14 = ['t14/inicio'] + [f't14/apos-cap{n:02d}' for n in (2, 3, 4, 6, 7, 8, 9, 10, 11, 12, 14)]
 _T15 = ['t15/inicio', 't15/apos-cap01', 't15/apos-cap02', 't15/apos-cap10']
-CADEIA = _T14 + _T15 + ['t21/inicio', 't21/apos-cap02']   # o fim da T21, de onde a T25 parte (MUNDO_LINHA_DO_TEMPO, seção 14)
+CADEIA = _T13 + _T14 + _T15 + ['t21/inicio', 't21/apos-cap02']   # o fim da T21, de onde a T25 parte (MUNDO_LINHA_DO_TEMPO, seção 14)
 _I = CADEIA + ['t25/inicio']
 _5 = _I + ['t25/apos-cap05']
 SEMENTE = {**{n: _I for n in range(0, 6)}, **{n: _5 for n in range(6, 11)}, 11: _5 + ['t25/apos-cap10']}
@@ -382,7 +383,7 @@ GRAF = lambda t: SEL(f"{SEC_CSS}:has-text('{t}') .recharts-wrapper")
 ALCA = lambda t: SEL(f"{SEC_CSS}:has-text('{t}') > button.cursor-grab")
 FILTRO = lambda v: {'role': 'combobox', 'hasText': v}
 OPCAO = lambda n: {'role': 'option', 'name': n}
-CONFIG = BTN('Configurações')
+CONFIG = BTN('Configurações', MAIN)
 DIA_AG = lambda d: SEL(f"main div.grid.grid-cols-7 > div:not(.opacity-40):has(> span:text-is('{d}'))")   # dia do calendário da Agenda
 AG_TAREFA = lambda t: SEL(f"main div.grid.grid-cols-7 button:has-text('{t}')")
 AG_FERIADO = lambda t: SEL(f"main div.grid.grid-cols-7 div:has-text('{t}'):not(:has(div:has-text('{t}')))")
