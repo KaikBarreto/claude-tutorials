@@ -351,22 +351,17 @@
    "timeout": 10
   },
   {
-   "do": "balanca",
-   "peso": 412,
-   "subir": 0.8,
-   "oscilar": 0.8,
-   "at": 42.23,
-   "label": "carroça cheia na balança (412 kg)"
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const alvo=\"412,0\";let ok=0,v='';for(let i=0;i<26;i++){const b=[...document.querySelectorAll('button')].find(x=>/balan.a do p.tio/i.test(x.textContent));v=b?b.textContent.replace(/\\s+/g,' '):'SEM ALVO';ok=v.includes(alvo)?ok+1:0;if(ok>=2){await new Promise(r=>setTimeout(r,700));return 'OK: '+alvo}await new Promise(r=>setTimeout(r,300));}return 'DIFERENTE: '+v})()",
-   "label": "espera o visor marcar 412,0 (estável)"
-  },
-  {
    "do": "mark",
    "name": "L5",
    "at": 43.33
+  },
+  {
+   "do": "balanca",
+   "peso": 412,
+   "subir": 0.6,
+   "oscilar": 0.6,
+   "at": 44.23,
+   "label": "carroça cheia na balança (412 kg)"
   },
   {
    "do": "click",
@@ -379,15 +374,9 @@
   {
    "do": "balanca",
    "peso": 96,
-   "subir": 0.8,
-   "oscilar": 0.8,
-   "at": 48.5,
-   "label": "carroça vazia na balança (96 kg)"
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const alvo=\"96,0\";let ok=0,v='';for(let i=0;i<26;i++){const b=[...document.querySelectorAll('button')].find(x=>/balan.a do p.tio/i.test(x.textContent));v=b?b.textContent.replace(/\\s+/g,' '):'SEM ALVO';ok=v.includes(alvo)?ok+1:0;if(ok>=2){await new Promise(r=>setTimeout(r,700));return 'OK: '+alvo}await new Promise(r=>setTimeout(r,300));}return 'DIFERENTE: '+v})()",
-   "label": "espera o visor marcar 96,0 (estável)"
+   "subir": 0.6,
+   "oscilar": 0.6,
+   "label": "carroça vazia na balança (96 kg): logo depois da 1ª captura, para assentar até a 2ª"
   },
   {
    "do": "click",
@@ -485,7 +474,7 @@
    "target": {
     "selector": "[role=dialog] div:has(> label:has-text('Tara (')) input"
    },
-   "seconds": 0.8,
+   "seconds": 0.4,
    "at": 74.45,
    "label": "Tara (Kg) vazio",
    "optional": true,
@@ -496,7 +485,7 @@
    "target": {
     "selector": "[role=dialog] div:has(> div > label:text-is('Impureza')) button:text-is('kg')"
    },
-   "seconds": 0.6,
+   "seconds": 0.4,
    "at": 79.83,
    "label": "chave kg / %",
    "optional": true,
@@ -509,7 +498,7 @@
     "within": "[role=dialog]",
     "exact": false
    },
-   "seconds": 1.2,
+   "seconds": 1.0,
    "at": 81.58,
    "label": "Valor estimado R$ 229,89",
    "optional": true,
@@ -544,23 +533,11 @@
    "target": {
     "selector": "[role=dialog] div:has(> label:text-is('Motorista'))"
    },
-   "seconds": 0.3,
+   "seconds": 0.6,
    "at": 94.46,
-   "label": "Motorista (vazio)",
+   "label": "Motorista e Placa do veículo (vazios)",
    "optional": true,
    "timeout": 4
-  },
-  {
-   "do": "type",
-   "target": {
-    "selector": "[role=dialog] label:has-text('Placa')"
-   },
-   "text": "",
-   "noClick": true,
-   "optional": true,
-   "timeout": 4,
-   "at": 95.87,
-   "label": "Placa do veículo (vazio)"
   },
   {
    "do": "click",

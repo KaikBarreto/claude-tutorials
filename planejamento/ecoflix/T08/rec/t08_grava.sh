@@ -5,7 +5,8 @@
 # descritores da trava antes de subir o servidor (fecha_trava, docs/08), então o servidor não fica com ela.
 # Modos: --rapido (só o ensaio rápido) · --os-dois (rápido e, com 0 passo falho, a gravação completa; se a completa sair com
 # lateBy >= 0,8 s, mais uma completa) · sem modo (só a completa).
-# Uso: bash rec/t08/t08_grava.sh NN [--rapido|--os-dois]   (rodar FORA de outro flock: a trava é pega aqui)
+# Trava: pela fila justa do coordenador (rec/fila.sh --prio 08), no máximo uma tarefa do T08 na fila; MP4 de ensaio ultrafast/crf 30.
+# Uso: bash rec/t08/t08_grava.sh NN [--rapido|--os-dois|--auto]   (rodar FORA de outro flock: a trava é pega aqui)
 set -u
 cd /home/claude/ecoflix
 NN=$(printf '%02d' "$((10#$1))"); MODO=${2:-}
@@ -15,7 +16,7 @@ export FAKE_URL=http://127.0.0.1:54308 FAKE_NOW=$FN TUT_USER=rafael@reciclavalem
 [ -n "${TUT_SENHA:-}" ] || export TUT_SENHA="$(head -c 12 /dev/urandom | base64)"
 [ "$MODO" = "--rapido" ] || [ "$MODO" = "--os-dois" ] || [ "$MODO" = "--auto" ] && { python3 -I rec/t08/ensaio.py "$NN" || exit 2; }
 echo "cap$NN FAKE_NOW=$FN fila $(date +%H:%M:%S)"
-flock .heavy.lock bash -c '
+bash /home/claude/ecoflix/rec/fila.sh --prio 08 -- bash -c '
   PIDF=rec/.runtime/fake54308.pid; PID=$(cat "$PIDF" 2>/dev/null || true); ATUAL=""; PORTA=""
   if [ -n "$PID" ] && [ -r /proc/$PID/environ ]; then
     ATUAL=$(tr "\0" "\n" < /proc/$PID/environ | grep "^FAKE_NOW=" | cut -d= -f2-)
@@ -27,7 +28,7 @@ flock .heavy.lock bash -c '
   tr "\0" "\n" < /proc/$(cat "$PIDF")/environ | grep -q "^FAKE_PORT=54308$" || { echo "instância 54308 não é a minha"; exit 3; }
   echo "trava $(date +%H:%M:%S)"
   if [ "$MODO" = "--rapido" ] || [ "$MODO" = "--os-dois" ] || [ "$MODO" = "--auto" ]; then
-    node rec/record.mjs rec/t08/_ens/cap$NN.json --rapido > rec/t08/_ens/.cap$NN.out 2>&1
+    node rec/record.mjs rec/t08/_ens/cap$NN.json --rapido --preset ultrafast --crf 30 > rec/t08/_ens/.cap$NN.out 2>&1
     python3 -I rec/t08/resumo.py $NN --ens > rec/t08/_ens/cap$NN.resumo 2>&1
     python3 -I rec/t08/prever.py $NN --ens > rec/t08/_ens/cap$NN.prever 2>&1
     [ "$MODO" = "--rapido" ] && exit 0
@@ -39,7 +40,7 @@ flock .heavy.lock bash -c '
     fi
   fi
   for vez in 1 2; do
-    node rec/record.mjs rec/t08/cap$NN.json > rec/t08/.cap$NN.out 2>&1
+    node rec/record.mjs rec/t08/cap$NN.json --preset ultrafast --crf 30 > rec/t08/.cap$NN.out 2>&1
     python3 -I rec/t08/resumo.py $NN > rec/t08/cap$NN.resumo 2>&1
     python3 -I -c "import re,sys;l=open(\"rec/t08/cap$NN.resumo\").readline();m=re.search(r\"maxLate ([0-9.]+)\",l);f=re.search(r\"falhos (\d+)\",l);sys.exit(0 if m and f and float(m.group(1))<0.8 and f.group(1)==\"0\" else 1)" && break
     [ $vez = 1 ] && echo "completa $vez: $(head -1 rec/t08/cap$NN.resumo) -> de novo"

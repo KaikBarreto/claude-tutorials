@@ -6,8 +6,10 @@
 # O prazo (timeout) vale por capítulo e roda DENTRO da trava (a espera na fila não conta). Apaga o MP4 logo depois do resumo; a folha de
 # contato fica para olhar (apague depois de ver). Saída de cada capítulo: rec/t03[/_ens]/.capNN.out e o resumo em .capNN.resumo.
 # Nunca edite este arquivo com um lote rodando (o bash lê o script aos poucos): copie para outro nome.
-# T03_LOTE_MIN (padrão 110): o lote para sozinho antes desse tempo. A espera na fila usa `flock -w` com o que sobra (menos o prazo do
-# capítulo), para nenhum corte de tempo da ferramenta cair no meio de uma gravação com a trava na mão.
+# Trava pesada pela fila justa do coordenador (rec/fila.sh, prioridade 03 = a aula), um capítulo por vez: nunca mais de uma tarefa
+# minha na fila. T03_LOTE_MIN (padrão 110): o lote para sozinho antes desse tempo; a espera na fila tem um `timeout` com o que sobra
+# (mais o prazo do capítulo), para nenhum corte de tempo da ferramenta cair no meio de uma gravação. MP4 de ensaio em ultrafast/crf 30
+# (só serve para a folha de contato).
 set -u
 limite=$(( $(date +%s) + ${T03_LOTE_MIN:-110} * 60 ))
 cd "${TUT_HOME:-$(dirname "$0")/../..}" || exit 1   # $TUT_HOME (rodando uma cópia fora daqui: passe TUT_HOME)
@@ -29,7 +31,7 @@ for nn in "$@"; do
   espera=$(( limite - $(date +%s) - prazo - 60 ))
   if [ "$espera" -lt 60 ]; then echo "== cap$nn e seguintes: sem tempo neste lote (rode de novo)"; break; fi
   echo "== cap$nn ($modo) fila $(date +%T)"
-  flock -w "$espera" .heavy.lock bash -c "echo \"   trava \$(date +%T)\"; timeout $prazo node rec/record.mjs $dir/cap$nn.json $extra" > "$dir/.cap$nn.out" 2>&1
+  timeout $((espera + prazo + 60)) bash rec/fila.sh --prio 03 -- bash -c "echo \"   trava \$(date +%T)\"; timeout $prazo node rec/record.mjs $dir/cap$nn.json $extra --preset ultrafast --crf 30" > "$dir/.cap$nn.out" 2>&1
   rc=$?
   if ! grep -q "trava" "$dir/.cap$nn.out"; then echo "   sem vez na fila até $(date +%T): cap$nn e seguintes ficam para o próximo lote"; break; fi
   echo "   fim $(date +%T) rc=$rc"

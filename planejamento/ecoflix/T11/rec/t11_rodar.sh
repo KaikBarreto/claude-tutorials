@@ -23,16 +23,16 @@ python3 -I rec/t11/t11_sementes.py >/dev/null || exit 4   # sementes sempre do m
 python3 -I rec/t11/gerar.py "$NN" >/dev/null || exit 4
 if [ "$MODO" = rapido ] || [ "$MODO" = rapidomp4 ]; then
   # rapidomp4: o rápido COM a montagem do MP4, para a folha de contato (regra do coordenador de 11/11 18:46)
-  ENC=--no-encode; [ "$MODO" = rapidomp4 ] && ENC=
+  ENC=--no-encode; [ "$MODO" = rapidomp4 ] && ENC="--preset ultrafast --crf 30"   # MP4 de ensaio: só para a folha
   python3 -I rec/t11/ensaio.py "$NN" >/dev/null
-  flock .heavy.lock timeout 900 node rec/record.mjs "rec/t11/_ens/cap$NN.json" $ENC > "rec/t11/_ens/.ens-$NN.out" 2>&1
+  bash /home/claude/ecoflix/rec/fila.sh --prio 11 -- timeout 900 node rec/record.mjs "rec/t11/_ens/cap$NN.json" $ENC > "rec/t11/_ens/.ens-$NN.out" 2>&1
   echo "rc=$?" >> "rec/t11/_ens/.ens-$NN.out"
   python3 -I rec/t11/resumo.py "$NN" --ens --tudo > "rec/t11/_ens/.resumo-$NN.txt" 2>&1
   grep -c "SEM ALVO" "rec/t11/_ens/.ens-$NN.out" "rec/t11/_ens/t11-cap$NN.actions.json" 2>/dev/null | sed 's/^/SEM ALVO: /'
   head -3 "rec/t11/_ens/.resumo-$NN.txt"; grep -E "ERRO|DIFERENTE|FALHOU" "rec/t11/_ens/.resumo-$NN.txt" "rec/t11/_ens/.ens-$NN.out" | head -12
 else
   python3 -I rec/t11/prever.py "$NN" --ens > "rec/t11/.prever-$NN.txt" 2>&1
-  flock .heavy.lock timeout 1200 node rec/record.mjs "rec/t11/cap$NN.json" > "rec/t11/.rec-$NN.out" 2>&1
+  bash /home/claude/ecoflix/rec/fila.sh --prio 11 -- timeout 1200 node rec/record.mjs "rec/t11/cap$NN.json" --preset ultrafast --crf 30 > "rec/t11/.rec-$NN.out" 2>&1
   echo "rc=$?" >> "rec/t11/.rec-$NN.out"
   python3 -I rec/t11/resumo.py "$NN" > "rec/t11/.resumo-$NN.txt" 2>&1
   grep -c "SEM ALVO" "rec/t11/t11-cap$NN.actions.json" 2>/dev/null | sed 's/^/SEM ALVO: /'

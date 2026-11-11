@@ -6,9 +6,10 @@ estimados (`t02/narracao/capNN.json`, sem a voz), já com a fala da junção.
 
 ## Fala
 
-Nenhuma mudança necessária até aqui: as 11 falas batem com a tela (rótulos, contagens, avisos) e todos os gestos cabem nas
-palavras com a fala estimada (prévia `prever.py --ens` abaixo de 0,8 s em todos os capítulos). O ensaio completo (gravação com os
-`at`) fica para depois do mundo base novo.
+Nenhuma mudança necessária: as 11 falas batem com a tela (rótulos, contagens, avisos) e todos os gestos cabem nas palavras com a
+fala estimada (`prever.py --ens`: no máximo 0,61 s, no cap04). No mundo base novo, os completos do cap00 e do cap01 passaram (atraso
+máximo 0,35 s). Os do cap02 e do cap07 atrasaram 6,96 s e 2,49 s, gravados com render de cenas em paralelo (captura a ~9 qps contra
+~20 sem ele), e ficam para regravar: esse atraso não é motivo de mudança de fala.
 
 | Cap. | Linha | Texto atual | Texto novo | Motivo |
 |---|---|---|---|---|

@@ -129,7 +129,7 @@ CAPS[0] = () => {
   camera([[0, { x: .8, y: .6, z: 1, d: 34.4, az: -.28, el: .45, oy: -150 }], [tl - .2, { x: .8, y: .6, z: 1, d: 34.4, az: -.28, el: .45, oy: -150 }],
     [tc + 1.2, { x: 1.1, y: .6, z: 1, d: 32.8, az: -.22, el: .45, oy: -155 }, 'lin']]);
   return t => {
-    GL.style.opacity = eo(pr(t, tl - .25, .6)).toFixed(3);
+    GL.style.opacity = eo(pr(t, tl + .15, .6)).toFixed(3);   // o pátio entra com o caminho da 2D, depois de o título começar a subir
     posTitulo(tit, t, -.6, tl - .1);
     const q = chega(pr(t, a0, a1 - a0)), s = lerp(s0, s1, q); puxa(P, tr, s, (s - s1) * 4.4);
     P.sacos.forEach((g, i) => { const p = mundo(P.car, SACOS[i]); g.position.set(...p); g.rotation.y = P.car.rotation.y; });

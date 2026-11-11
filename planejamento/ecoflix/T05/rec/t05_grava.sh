@@ -7,7 +7,7 @@ NN="$1"; EXTRA="${2:-}"; K="${NN:0:2}"
 FN=$(python3 -I -c "import json;print(json.load(open('rec/t05/fake_now.json'))['$K'])")
 export FAKE_NOW="$FN" FAKE_URL=http://127.0.0.1:54305 TUT_USER=rafael@reciclavalemetais.example
 : "${TUT_SENHA:?}"
-flock .heavy.lock bash -c '
+bash /home/claude/ecoflix/rec/fila.sh --prio 05 -- bash -c '
   atual=$(tr "\0" "\n" < /proc/$(cat rec/.runtime/fake54305.pid)/environ | sed -n "s/^FAKE_NOW=//p")
   [ "$atual" = "$FAKE_NOW" ] || FAKE_PORT=54305 bash rec/run.sh fake >/dev/null
   timeout 900 node rec/record.mjs rec/t05/cap'"$NN"'.json '"$EXTRA"' > rec/t05/cap'"$NN"'.out 2>&1'

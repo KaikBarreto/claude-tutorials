@@ -10,11 +10,11 @@ if ! tr '\0' '\n' < /proc/$(cat rec/.runtime/fake54305.pid)/environ | grep -q "^
 if [ "$MODO" = "--rapido" ]; then
   python3 -I rec/t05/ensaio.py "$NN" >/dev/null
   SAIDA="rec/t05/_ens/cap$NN.json"; OUT="rec/t05/_ens/cap$NN.out"
-  flock .heavy.lock timeout 900 node rec/record.mjs "$SAIDA" --rapido > "$OUT" 2>&1
+  bash /home/claude/ecoflix/rec/fila.sh --prio 05 -- timeout 900 node rec/record.mjs "$SAIDA" --rapido --preset ultrafast --crf 30 > "$OUT" 2>&1
   python3 -I rec/t05/resumo.py "$NN" --ens > "rec/t05/_ens/cap$NN.resumo.txt" 2>&1
 else
   OUT="rec/t05/cap$NN.out"
-  flock .heavy.lock timeout 900 node rec/record.mjs "rec/t05/cap$NN.json" > "$OUT" 2>&1
+  bash /home/claude/ecoflix/rec/fila.sh --prio 05 -- timeout 900 node rec/record.mjs "rec/t05/cap$NN.json" > "$OUT" 2>&1
   python3 -I rec/t05/resumo.py "$NN" > "rec/t05/cap$NN.resumo.txt" 2>&1
 fi
 echo "fim $NN $MODO rc=$?" >> rec/t05/_ens/fila.log

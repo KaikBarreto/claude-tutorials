@@ -34,6 +34,8 @@ as gravações). Cada item diz a aula em que apareceu. **No fim da produção, v
 - **CRM: automação vira linha sem texto no Histórico** (T26).
 - **CRM: selo de tarefas abertas não atualiza depois do arraste** que dispara a automação (T26): só com outra mudança de
   tarefa ou depois de 30 s.
+- **Foto nova no "Editar" do usuário só aparece ao reabrir a janela** (T2).
+- **Limpar a busca do menu fecha as telas abertas** (T2).
 
 ## 2. Melhorias de uso
 - **Produção diz "peça" em produto vendido por quilo** (T11).
@@ -48,6 +50,9 @@ as gravações). Cada item diz a aula em que apareceu. **No fim da produção, v
 - **Gráficos do Gerencial cortam nomes longos** (T22): a filial teve de se chamar "Filial Pindamonhangaba".
 - **Portal diz "Portal do Cliente" também para fornecedor** (T20).
 - **"Orientação para o time" só aparece na janela da etapa** (T26): nem o quadro nem o cartão do CRM mostram.
+- **Busca "nota" mostra o bloco do Cato** (T2): o atalho de assistente aparece no meio dos resultados da busca.
+- **Usuários em 1280x800** (T2): o painel de detalhe passa da borda da tela e o rodapé da janela de limite de usuários
+  fica colado nela.
 
 ## 3. Textos desatualizados (Central de Ajuda, Guia de Instalação e a fonte da Trilha EcoFlix)
 - **Guia de Instalação do EcoTray** ainda fala em arquivo ZIP (T5).

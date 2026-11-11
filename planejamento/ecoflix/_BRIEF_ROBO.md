@@ -34,7 +34,7 @@ Porta = 54300 + o número da aula (T03 → 54303, T26 → 54326). `FAKE_NOW` do 
 cd /home/claude/ecoflix
 FAKE_NOW=2026-11-10T08:30:00-03:00 FAKE_PORT=54303 bash rec/run.sh fake
 python3 -I rec/t03/ensaio.py 2
-FAKE_NOW=2026-11-10T08:30:00-03:00 FAKE_URL=http://127.0.0.1:54303 flock .heavy.lock node rec/record.mjs rec/t03/_ens/cap02.json --rapido
+FAKE_NOW=2026-11-10T08:30:00-03:00 FAKE_URL=http://127.0.0.1:54303 bash rec/fila.sh --prio 03 -- node rec/record.mjs rec/t03/_ens/cap02.json --rapido --preset ultrafast --crf 30
 ```
 Antes de cada gravação, confira que a instância ainda é a sua (`RELIGAR.md`). Mudou handler, hook ou `rec/mundo/lib`:
 suba a sua instância de novo.
@@ -68,10 +68,15 @@ suba a sua instância de novo.
 - Tudo na tela sai do app real 1.59.154: nenhuma tela, resultado ou função inventada; erro na tela só quando o roteiro
   pede (PERFIL → "Fala"). Dados do mundo fictício; nenhuma credencial na tela, em log ou em arquivo.
 - Ritmo calmo, sem gesto brusco: o cursor chega na palavra; digitação no `cps` do docs/04; rolagem suave.
-- **Uma tarefa pesada por vez**: TODO comando que abre navegador (gravação, ensaio, `explorar.mjs`, smoke) sob
-  `flock /home/claude/ecoflix/.heavy.lock`, um capítulo por trava. A fila da trava pode passar de 10 minutos (outros
-  agentes): rode em segundo plano e acompanhe, ou use timeout de 600000 ms no Bash; prazo por capítulo com folga (~3× a
-  duração), nunca um prazo curto para um lote.
+- **Uma tarefa pesada por vez, pela fila** (11/11: com o `flock` direto, 100 tarefas esperavam em ordem aleatória e
+  algumas morriam no prazo sem rodar): TODO comando que abre navegador (gravação, ensaio, `explorar.mjs`, smoke) entra
+  com `bash /home/claude/ecoflix/rec/fila.sh --prio NN -- <comando>`, NN = o número da aula, um capítulo por vez. A fila
+  anda por prioridade (menor primeiro) e, na mesma prioridade, por ordem de chegada (`bash rec/fila.sh --ver` mostra).
+  **No máximo uma tarefa sua na fila** (nada de laço de capítulos esperando nem tarefa repetida). Em segundo plano com o
+  prazo máximo (7200000 ms); se morrer no prazo sem ter rodado, relance uma vez; se morrer de novo, pare e entregue o
+  relatório parcial com os comandos exatos que faltam (o coordenador retoma quando a fila andar).
+- **MP4 de ensaio** (rápido ou completo) com `--preset ultrafast --crf 30` no `record.mjs`: serve só para a folha de
+  contato e monta ~3x mais rápido dentro da trava. A gravação final volta ao padrão.
 - **Disco quase cheio**: apague cada MP4 de ensaio e cada `*.contact.jpg` logo depois de olhar (fique com `actions.json` e
   `telemetry.json`, que o `prever.py` usa). Temporário grande vai para `/dev/shm`.
 - Não mexa em `perfis/`, `ferramentas/`, outras aulas, `MUNDO_FICTICIO.md`, `PRODUCAO.md` nem no repositório do app (só

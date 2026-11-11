@@ -26,9 +26,9 @@ export FAKE_URL=http://127.0.0.1:$PORT FAKE_NOW=$FN TUT_USER=rafael@reciclavalem
 [ -n "${TUT_SENHA:-}" ] || export TUT_SENHA="$(head -c 12 /dev/urandom | base64)"
 echo "cap$NN FAKE_NOW=$FN $(date +%H:%M:%S)"
 if [ "$MODO" = "--rapido" ]; then
-  python3 -I rec/t20/ensaio.py "$NN" && flock .heavy.lock node rec/record.mjs "rec/t20/_ens/cap$NN.json" --rapido > "rec/t20/_ens/.cap$NN.out" 2>&1
+  python3 -I rec/t20/ensaio.py "$NN" && bash /home/claude/ecoflix/rec/fila.sh --prio 20 -- node rec/record.mjs "rec/t20/_ens/cap$NN.json" --rapido --preset ultrafast --crf 30 > "rec/t20/_ens/.cap$NN.out" 2>&1
 else
-  flock .heavy.lock node rec/record.mjs "rec/t20/cap$NN.json" > "rec/t20/.cap$NN.out" 2>&1
+  bash /home/claude/ecoflix/rec/fila.sh --prio 20 -- node rec/record.mjs "rec/t20/cap$NN.json" > "rec/t20/.cap$NN.out" 2>&1
 fi
 RC=$?
 echo "fim cap$NN $(date +%H:%M:%S) exit $RC"; exit $RC

@@ -2,12 +2,12 @@
 """T6 · Caixa: abrir, fechar e o cofre (EcoFlix, EcoSistema 1.59.154): gera rec/t06/cap00..cap12.json (+ cap08b, o corte do Marcos)
 a partir da fala ($TUT_HOME/t06/narracao/capNN.json: o estimado até a voz chegar; com a voz, o da voz, sem mudar nada aqui).
 
-Computador 1280x800, Rafael Nogueira (master) na Recicla Vale Metais. FAKE_NOW (o mesmo no Supabase falso e no robô: rec/t06/t06_rodar.sh
+Computador 1280x800, Rafael Nogueira (master) na Recicla Vale Metais. FAKE_NOW (o mesmo no Supabase falso e no robô: rec/t06/t06_cap.sh
 sobe a instância com o certo): 08:30:00 nos caps 0 e 1, 08:30:55 no cap 2 (o #85 abre às 08:31), 08:41:50 nos caps 3 a 5 (o #86 abre às
 08:42), 08:45:00 nos caps 6 a 9 e no 8b, 17:40:00 no cap 10 (fecha às 17:42), 17:42:40 no 11 (reabre às 17:43) e 17:44:00 no 12
 (todos em 10/11/2026, -03:00).
 Rodar de qualquer pasta: `python3 -I rec/t06/gerar.py [NN ...] [8b]` (ANCORAS=1 lista as âncoras). Depois:
-`node rec/record.mjs rec/t06/capNN.json --check`; gravar: `bash rec/t06/t06_rodar.sh NN [--ens]`.
+`node rec/record.mjs rec/t06/capNN.json --check`; ensaiar: `bash rec/t06/t06_cap.sh NN [--so-rapido]` (pela fila rec/fila.sh).
 
 LOGIN: todo capítulo é "anonymous" e o setup entra pela tela de login com "$TUT_USER"/"$TUT_SENHA" do ambiente (o Supabase falso
 aceita qualquer senha; o valor nunca vai para arquivo nem log). O corte do Marcos (cap08b, "o computador da balança") entra com o

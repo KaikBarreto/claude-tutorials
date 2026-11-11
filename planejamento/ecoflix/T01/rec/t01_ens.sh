@@ -21,10 +21,10 @@ if [ "$MODO" = rapido ]; then
   python3 -I rec/t01/ensaio.py "$NN"
   mkdir -p "$SHM/_ens"; rm -rf "$SHM/_ens/_debug"   # _debug: fotos dos passos que falharam (ficam para olhar)
   # com o MP4 (regra nova do coordenador, 11/11 18:46): a folha de contato do rápido é a conferência visual do capítulo
-  CMD="node rec/record.mjs rec/t01/_ens/cap$NN.json --rapido --out $SHM/_ens"
+  CMD="node rec/record.mjs rec/t01/_ens/cap$NN.json --rapido --preset ultrafast --crf 30 --out $SHM/_ens"
   [ "$SEED" = --seed ] && CMD="$CMD && python3 -I rec/t01/t01_semente.py $NN"
-  flock -E 75 ${T01_ESPERA:+-w "$T01_ESPERA"} .heavy.lock bash -c "$CMD" > "rec/t01/_ens/cap$NN.log" 2>&1; echo "saida $?" >> "rec/t01/_ens/cap$NN.log"
-  grep -qx "saida 75" "rec/t01/_ens/cap$NN.log" && { echo "cap$NN: sem a trava no prazo"; exit 75; }
+  # a trava pesada pela fila justa (rec/fila.sh, prioridade = número da aula; regra do coordenador, 11/11)
+  bash rec/fila.sh --prio 01 -- bash -c "$CMD" > "rec/t01/_ens/cap$NN.log" 2>&1; echo "saida $?" >> "rec/t01/_ens/cap$NN.log"
   cp -f "$SHM/_ens/t01-cap$NN.actions.json" "$SHM/_ens/t01-cap$NN.telemetry.json" rec/t01/_ens/ 2>/dev/null
   rm -rf "$SHM/_ens/_frames"
   python3 -I rec/t01/resumo.py "$NN" --ens > "rec/t01/_ens/cap$NN.resumo.txt" 2>&1
@@ -33,9 +33,8 @@ if [ "$MODO" = rapido ]; then
   head -1 "rec/t01/_ens/cap$NN.resumo.txt"; tail -1 "rec/t01/_ens/cap$NN.prever.txt"
 else
   mkdir -p "$SHM"; rm -rf "$SHM/_debug"
-  # T01_ESPERA (s): espera máxima pela trava (fila cheia); sem trava no prazo sai "saida 75" e nada é gravado
-  flock -E 75 ${T01_ESPERA:+-w "$T01_ESPERA"} .heavy.lock node rec/record.mjs "rec/t01/cap$NN.json" --out "$SHM" > "rec/t01/cap$NN.log" 2>&1; echo "saida $?" >> "rec/t01/cap$NN.log"
-  grep -qx "saida 75" "rec/t01/cap$NN.log" && { echo "cap$NN: sem a trava no prazo"; exit 75; }
+  # a trava pesada pela fila justa (rec/fila.sh); o MP4 do ensaio é só para a folha de contato: ultrafast/crf 30
+  bash rec/fila.sh --prio 01 -- node rec/record.mjs "rec/t01/cap$NN.json" --preset ultrafast --crf 30 --out "$SHM" > "rec/t01/cap$NN.log" 2>&1; echo "saida $?" >> "rec/t01/cap$NN.log"
   cp -f "$SHM/t01-cap$NN.actions.json" "$SHM/t01-cap$NN.telemetry.json" rec/t01/ 2>/dev/null
   rm -rf "$SHM/_frames"
   python3 -I rec/t01/resumo.py "$NN" > "rec/t01/cap$NN.resumo.txt" 2>&1

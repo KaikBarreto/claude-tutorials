@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# T2 · grava UM capítulo sob a trava pesada: o ensaio rápido (--ens: sem os `at`, com o MP4 e a folha de contato) ou a gravação completa.
+# T2 · grava UM capítulo na fila justa da trava pesada (rec/fila.sh, prioridade 02): o ensaio rápido (--ens: sem os `at`, com o MP4 e a folha de contato) ou a gravação completa.
 # Saídas em /dev/shm/t02rec (o disco de /home está quase cheio); o actions.json e o telemetry.json voltam para rec/t02/ (ou
 # rec/t02/_ens/), que o resumo.py e o prever.py leem. O MP4 e a folha de contato ficam só em /dev/shm: apague depois de olhar.
 #   TUT_USER=rafael@reciclavalemetais.example TUT_SENHA=<qualquer> bash rec/t02/t02_rodar.sh 03 [--ens]
@@ -26,15 +26,15 @@ if [ "$ENS" = "--ens" ]; then
   ln -sfn ../assets rec/t02/_ens/assets   # o upload do cap05 usa assets/ relativo à pasta do roteiro
   ROT=rec/t02/_ens/cap$N.json
   DEST=rec/t02/_ens
-  EXTRA=   # o rápido também monta o MP4: a folha de contato dele é a conferência da tela (regra de 11/11, 18:46)
+  EXTRA='--preset ultrafast --crf 30'   # o rápido também monta o MP4: a folha de contato é a conferência da tela
 else
   ROT=rec/t02/cap$N.json
   DEST=rec/t02
-  EXTRA=
+  EXTRA='--preset ultrafast --crf 30'   # MP4 de ensaio (a gravação final é outra, com a voz)
 fi
 rm -f "$OUT/t02-cap$N".*
 st=0
-flock .heavy.lock node rec/record.mjs "$ROT" --out "$OUT" $EXTRA > "$OUT/t02-cap$N.log" 2>&1 || st=$?
+bash rec/fila.sh --prio 02 -- node rec/record.mjs "$ROT" --out "$OUT" $EXTRA > "$OUT/t02-cap$N.log" 2>&1 || st=$?
 cp "$OUT/t02-cap$N.actions.json" "$OUT/t02-cap$N.telemetry.json" "$DEST/" 2>/dev/null || true
 grep -E "FALHOU|seeds extras|^saidas" "$OUT/t02-cap$N.log" || true
 qps=$(python3 -I -c "import json,sys; a=json.load(open(sys.argv[1])); print(a['stats'].get('captureFps'), a['late']['maxS'])" "$OUT/t02-cap$N.actions.json" 2>/dev/null || echo "? ?")

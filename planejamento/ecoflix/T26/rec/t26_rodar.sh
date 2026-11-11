@@ -37,11 +37,13 @@ GRAVA=$(python3 -c "import runpy,sys;g=runpy.run_path('rec/t26/gerar.py');print(
 [ "$SEMENTE" = 1 ] || GRAVA=0
 [ "$MODO" = final ] || python3 -I rec/t26/ensaio.py "$((10#$NN))"
 echo "== $(date +%H:%M:%S) cap$NN ($MODO) esperando a trava..."
-flock .heavy.lock bash -c '
+# fila justa da trava pesada (rec/fila.sh, prioridade 26 = o número da aula; no máximo UMA tarefa da T26 na fila)
+bash rec/fila.sh --prio 26 -- bash -c '
   set -e
   NN=$1; MODO=$2; GRAVA=$3
   grava() {  # $1 roteiro, $2 log
-    node rec/record.mjs "$1" ${3:-} > "$2" 2>&1 || { echo "FALHOU $1 (log: $2)"; grep -E "FALHOU|Error" "$2" | tail -n 3; return 1; }
+    # MP4 de ensaio: só para a folha de contato (x264 ultrafast, crf 30)
+    node rec/record.mjs "$1" --preset ultrafast --crf 30 > "$2" 2>&1 || { echo "FALHOU $1 (log: $2)"; grep -E "FALHOU|Error" "$2" | tail -n 3; return 1; }
     grep -E "^\s+mp4|\"durationS\"" "$2" | head -n 1 || true
   }
   echo "== $(date +%H:%M:%S) trava ok (cap$NN $MODO)"

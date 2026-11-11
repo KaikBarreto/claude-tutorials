@@ -593,3 +593,15 @@ Decisões:
   (largura do papel); T16 cap00 (carga de cobre, cancela, nota, fundição), cap07 (placa na nota), cap10 (506 kg bruto,
   500 kg líquido, R$ 23.950,00) e cap14 (DANFE e XML). Objetos novos: `balancaPlataforma`, `cabo`, `cupom`, `placa`,
   `cancela`, `fundicao`, `pasta`. Na revisão: o mostrador da T16 cap10 cobre o título por um instante; agente retomado.
+- 11/11 19:4x **Fila justa na trava pesada**: o `flock` direto acorda os que esperam em ordem quase aleatória; com 101
+  tarefas na fila, tarefas esperavam mais de 2 h e morriam no prazo sem rodar (o robô da T02 desistiu de cap03/cap04/cap05/
+  cap08 assim). **`ferramentas/rec/fila.sh`** (cópia em `$TUT_HOME/rec/fila.sh`): senha por prioridade (o número da aula,
+  menor primeiro) e ordem de chegada; só a primeira senha tenta a trava (`flock -n`), então quem chega com prioridade maior
+  passa à frente; senha de tarefa morta sai sozinha; `--ver` mostra a fila (conferido: A rodando, B prio 30 chegou antes de
+  C e D prio 10, ordem A, C, D, B; código de saída preservado). Aviso aos 26 robôs e à cena de Windows: trocar o `flock`
+  pelo `fila.sh --prio NN`, uma tarefa por vez, MP4 de ensaio com `--preset ultrafast --crf 30`, prazo máximo e, se morrer
+  duas vezes no prazo, relatório parcial (retomo quando a fila andar). Efeito esperado: as aulas fecham em ordem (T00,
+  T01, T02...), e a esteira (revisão → voz → gravação final → edição) começa pelas primeiras sem esperar as últimas.
+- 11/11 19:3x **Robô da T02 (parcial)**: cap00 e cap01 aprovados no completo; rápido dos 11 no mundo antigo; cap02 e cap07
+  pedem completo de novo (render ao lado); faltam os completos de cap04, cap05, cap06 e cap09 e o rápido com MP4 de cap03,
+  cap08 e cap10. Retomado com prioridade 02. Achados do app no `MELHORIAS_ECOSISTEMA.md`.

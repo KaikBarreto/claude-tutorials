@@ -27,13 +27,13 @@ else
 fi
 # gravação e captura da semente na MESMA trava (outra gravação na instância reseta o banco: docs/08, T5)
 SEM=0; [ "${3:-}" = --semente ] && SEM=1
-flock .heavy.lock bash -c '
-  timeout 900 node rec/record.mjs "$1" $2 > "$3/.t25-cap$4.out" 2>&1; rc=$?
+bash rec/fila.sh --prio 25 -- bash -c '
+  timeout 900 node rec/record.mjs "$1" $2 $6 > "$3/.t25-cap$4.out" 2>&1; rc=$?
   if [ "$5" = 1 ] && [ $rc = 0 ]; then
     f=$(python3 -I -c "import json;a=json.load(open(\"$3/t25-cap$4.actions.json\"))[\"actions\"];print(sum(1 for x in a if x.get(\"error\") or x.get(\"ok\") is False))" 2>/dev/null || echo x)
     if [ "$f" = 0 ]; then python3 -I rec/t25/t25_sementes.py captura "$((10#$4))" --porta 54325 > "$3/.t25-cap$4.semente" 2>&1; fi
   fi
-  exit $rc' _ "$ROT" "$EXTRA" "$DIR" "$NN" "$SEM"
+  exit $rc' _ "$ROT" "$EXTRA" "$DIR" "$NN" "$SEM" "$([ "$MODO" = rapido ] && echo "--preset ultrafast --crf 30")"
 RC=$?
 tail -3 "$DIR/.t25-cap$NN.out"
 python3 -I rec/t25/resumo.py "$NN" $RES > "$DIR/t25-cap$NN.resumo.txt" 2>&1
