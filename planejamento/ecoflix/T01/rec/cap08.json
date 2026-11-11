@@ -156,7 +156,7 @@
    "target": {
     "selector": "#receipt-phrase"
    },
-   "text": "Obrigado pela parceria! Atendemos de segunda a sexta, das 7h às 17h, e aos sábados, das 7h às 12h.",
+   "text": "Obrigado pela parceria! Atendemos de segunda a sexta, das 7h às 17h.",
    "cps": 40,
    "at": 14.31,
    "label": "digita a frase do comprovante",
@@ -164,8 +164,8 @@
   },
   {
    "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"98/2000 caracteres\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
-   "label": "confere contador 98/2000"
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"68/2000 caracteres\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere contador 68/2000"
   },
   {
    "do": "hover",
@@ -174,7 +174,7 @@
    },
    "seconds": 0.8,
    "at": 22.9,
-   "label": "contador 98/2000 caracteres",
+   "label": "contador 68/2000 caracteres",
    "optional": true,
    "timeout": 3
   },

@@ -68,6 +68,7 @@ body{font-family:M,sans-serif;color:var(--t);-webkit-font-smoothing:antialiased}
 .tag.sm{font-size:16px;padding:7px 13px;gap:6px}
 .ico.r{background:var(--rc);color:var(--r)} .ico.cz{background:var(--gc);color:var(--g)} .ico.p{background:var(--pc);color:var(--p)}
 .card.b2{border-width:2px}
+.num{white-space:nowrap}                     /* valor nunca quebra em duas linhas */
 .bdg{position:absolute;border-radius:50%;display:flex;align-items:center;justify-content:center;flex:none}
 .cel{position:absolute;display:flex;align-items:center;justify-content:center}
 .hd{position:absolute;text-align:center;font-weight:700;font-size:17px;color:var(--ve)}
@@ -171,7 +172,7 @@ const ANC=/*ANC*/{
       "mostra":["DINHEIRO (COFRE)","Disponível no cofre","Caixa de Marcos Antunes","Banco","Conta Principal","Conta Secundária","Conta Cooperativa","Total da empresa"]}],
 "4":[{"id":"ilu04_lugar","de":[4,"Uma",1],"ate":[4,"DRE",1],"cauda":0.6,
       "resumo":"transferência e saque só mudam o dinheiro de pote: o total da empresa não muda e nada entra na DRE",
-      "mostra":["Total da empresa","Conta Secundária","Conta Principal","DINHEIRO (COFRE)","Transferência","R$ 8.000,00","Saque","R$ 2.000,00","Não muda","Fora da DRE"]}],
+      "mostra":["Conta Secundária","Conta Principal","DINHEIRO (COFRE)","Total da empresa","Transferência · R$ 8.000,00","Saque · R$ 2.000,00","Não muda","Fora da DRE"]}],
 "5":[{"id":"ilu05_conciliar","de":[0,"Com",1],"ate":[2,"certo",1],"cauda":0.6,
       "resumo":"conciliar é dar a cada linha do extrato um par no sistema; com tudo pareado a diferença é zero; a linha que sobra (a tarifa) vira lançamento",
       "mostra":["Extrato do banco","Lançamentos do sistema","03/11","05/11","09/11","10/11","−R$ 2.250,00","−R$ 6.800,00","−R$ 180,00","−R$ 1.874,30","Diferença","R$ 0,00","−R$ 11.104,30","TARIFA PACOTE SERVICOS","−R$ 64,90","Tarifas"]}],
@@ -300,42 +301,41 @@ CAPS[4]=()=>{
   const [INI]=jan(4,'ilu04_lugar');
   const TR=8000, SQ=2000, S0=[25000,39243.47,18560], MAX=50000;
   const g=grupo(); const tit=titulo(g,'Movimentações','O dinheiro muda de lugar');
-  const COR=['#8B5CF6','#3B82F6','#50D088'], NOME=['Conta Secundária','Conta Principal','DINHEIRO (COFRE)'], PX=[140,510,880], PW=260;
-  const rot=el('<div class="ab" style="left:140px;top:158px;font-weight:800;font-size:20px">Total da empresa</div>',g);
-  const nm=el(`<div class="ab" style="left:900px;top:152px;width:240px;text-align:right"><div class="tag v sm">${ic('equal',16)}Não muda</div></div>`,g);
-  const barra=el('<div class="ab" style="left:140px;top:192px;width:1000px;height:44px;border-radius:14px;overflow:hidden;background:#F2F4F7"></div>',g);
-  const seg=COR.map(c=>el(`<div class="ab" style="left:0;top:0;height:44px;background:${c}"></div>`,barra));
-  const potes=NOME.map((n,i)=>el(`<div class="card b2" style="left:${PX[i]}px;top:286px;width:${PW}px;height:330px;padding:20px 20px">
+  const COR=['#8B5CF6','#3B82F6','#50D088'], NOME=['Conta Secundária','Conta Principal','DINHEIRO (COFRE)'], PX=[140,510,880], PW=260, PY=214;
+  const potes=NOME.map((n,i)=>el(`<div class="card b2" style="left:${PX[i]}px;top:${PY}px;width:${PW}px;height:310px;padding:20px 20px">
       <div class="ab" style="left:20px;top:20px;width:${PW-44}px;height:224px;border-radius:16px;background:#F7F8FA;border:2px solid #E6E9EE;overflow:hidden">
         <div class="ab" style="left:0;bottom:0;width:100%;background:${COR[i]};opacity:.85"></div></div>
       <div class="ab" style="left:0;top:262px;width:${PW-4}px;text-align:center;font-weight:800;font-size:19px">${n}</div></div>`,g));
   const nivel=potes.map(p=>p.firstElementChild.firstElementChild);
-  const ficha=(v)=>el(`<div class="ab" style="left:0;top:0"><div class="tag" style="background:#fff;border:2px solid #121212;color:#121212;font-size:18px;padding:7px 14px">${brl(v)}</div></div>`,g);
-  const fT=ficha(TR), fS=ficha(SQ);
-  const rotulo=(x,txt)=>el(`<div class="ab" style="left:${x-100}px;top:250px;width:200px;text-align:center;font-weight:700;font-size:17px;color:#4B5563">${txt}</div>`,g);
-  const rT=rotulo((PX[0]+PX[1]+PW)/2,'Transferência'), rS=rotulo((PX[1]+PX[2]+PW)/2,'Saque');
-  const dre=el(`<div class="ab" style="left:0;top:650px;width:1280px;text-align:center"><div class="tag a">${ic('ban',20)}Fora da DRE</div></div>`,g);
+  // o total da empresa, embaixo: as três partes mudam de tamanho, o comprimento não
+  const rot=el('<div class="ab" style="left:140px;top:578px;font-weight:800;font-size:20px">Total da empresa</div>',g);
+  const nm=el(`<div class="ab" style="left:900px;top:572px;width:240px;text-align:right"><div class="tag v sm">${ic('equal',16)}Não muda</div></div>`,g);
+  const barra=el('<div class="ab" style="left:140px;top:612px;width:1000px;height:44px;border-radius:14px;overflow:hidden;background:#F2F4F7"></div>',g);
+  const seg=COR.map(c=>el(`<div class="ab" style="left:0;top:0;height:44px;background:${c}"></div>`,barra));
+  const dre=el(`<div class="ab" style="left:0;top:684px;width:1280px;text-align:center"><div class="tag a">${ic('ban',20)}Fora da DRE</div></div>`,g);
+  // as fichas (o que muda de lugar) levam o nome da operação
+  const ficha=(txt,v)=>el(`<div class="ab" style="left:0;top:0"><div class="tag" style="background:#fff;border:2px solid #121212;color:#121212;font-size:17px;padding:7px 14px">${txt} · ${brl(v)}</div></div>`,g);
+  const fT=ficha('Transferência',TR), fS=ficha('Saque',SQ);
+  const wT=fT.firstElementChild.offsetWidth, wS=fS.firstElementChild.offsetWidth;
 
   return t=>{
     const tUm=WS(4,'Uma'), tTr=WS(4,'transferencia'), tSq=WS(4,'saque'), tLu=WS(4,'lugar'), tRi=WS(4,'rica'), tPo=WS(4,'pobre'), tDR=WS(4,'DRE');
     posT(tit,t,INI,tUm-.1);
-    const ent=Math.max(tUm+.2,INI+.75);                             // o total fica no caminho do título: entra depois que ele subiu
-    vis(rot,t,ent,1e9,{dx:-10,dy:0}); vis(barra,t,ent+.05,1e9,{dy:0,sc:.99});
-    potes.forEach((p,i)=>vis(p,t,tUm+.3+i*.1,1e9,{dy:18}));
-    // a transferência: R$ 8.000,00 sai da Secundária e cai na Principal; o saque: R$ 2.000,00 da Principal para o cofre
+    const ent=Math.max(tUm+.3,INI+.75);                             // os potes ficam no caminho do título: entram depois que ele subiu
+    potes.forEach((p,i)=>vis(p,t,ent+i*.1,1e9,{dy:18}));
+    vis(rot,t,ent+.2,1e9,{dx:-10,dy:0}); vis(barra,t,ent+.25,1e9,{dy:0,sc:.99});
+    // a transferência: sai da Secundária e afunda na Principal; o saque: da Principal para o cofre
     const pT=eio(pr(t,tTr,1.0)), pS=eio(pr(t,tSq,1.0));
-    const cx=i=>PX[i]+PW/2-62, y0=290;
-    // a ficha sai do pote, viaja e afunda no pote de destino (vira nível)
-    const voa=(f,a,i,j,p)=>{const k=eio(pr(t,a+1.0,.45)); arco(f,t,a,1.0,cx(i),y0,cx(j),y0,-90);
-      if(k>0) f.style.transform=`translate(${cx(j)}px,${(y0+60*k).toFixed(2)}px) scale(${(1-.4*k).toFixed(4)})`; op(f,p>0?Math.min(1,p*5)*(1-k):0)};
-    voa(fT,tTr,0,1,pT); voa(fS,tSq,1,2,pS);
-    vis(rT,t,tTr-.05,1e9,{dy:8}); vis(rS,t,tSq-.05,1e9,{dy:8});
+    const cx=(i,w)=>PX[i]+PW/2-w/2, y0=PY+6;
+    const voa=(f,w,a,i,j,p)=>{const k=eio(pr(t,a+1.0,.45)); arco(f,t,a,1.0,cx(i,w),y0,cx(j,w),y0,-44);
+      if(k>0) f.style.transform=`translate(${cx(j,w).toFixed(2)}px,${(y0+60*k).toFixed(2)}px) scale(${(1-.4*k).toFixed(4)})`; op(f,p>0?Math.min(1,p*5)*(1-k):0)};
+    voa(fT,wT,tTr,0,1,pT); voa(fS,wS,tSq,1,2,pS);
     const a=eo(cl((pT-.75)/.25)), b=eo(cl((pS-.75)/.25)), s0=eo(cl(pT/.25)), s1=eo(cl(pS/.25));
     const v=[S0[0]-TR*s0, S0[1]+TR*a-SQ*s1, S0[2]+SQ*b], tot=S0[0]+S0[1]+S0[2];
     nivel.forEach((e,i)=>{e.style.height=(224*v[i]/MAX).toFixed(1)+'px'});
     let x=0; seg.forEach((e,i)=>{const w=1000*v[i]/tot; e.style.left=x.toFixed(1)+'px'; e.style.width=w.toFixed(1)+'px'; x+=w;});
     // a empresa não fica mais rica nem mais pobre: o total não muda; nada disso entra na DRE
-    vis(nm,t,tRi-.1,1e9,{sc:.85,dy:0}); pulse(barra,t,tPo,.02,.8); vis(dre,t,tDR-.15,1e9,{dy:10});
+    pulse(barra,t,tLu,.02,.8); vis(nm,t,tRi-.1,1e9,{sc:.85,dy:0}); pulse(barra,t,tPo,.02,.8); vis(dre,t,tDR-.15,1e9,{dy:10});
   };
 };
 
@@ -354,18 +354,18 @@ CAPS[5]=()=>{
       <div class="row" style="gap:12px"><div class="ico ${cls}" style="width:44px;height:44px">${ic(icn,24)}</div><div style="font-weight:800;font-size:21px">${nome}</div></div></div>`,g);
   const cB=cart(90,'landmark','cz','Extrato do banco'), cS=cart(720,'monitor','','Lançamentos do sistema');
   const linha=(pai,d,v,meio)=>el(`<div class="ab row" style="left:20px;top:0;width:426px;height:56px;padding:0 14px;gap:12px;border-radius:12px;background:#FAFBFC;border:2px solid #EEF1F4">
-      <div class="tag cz sm">${d}</div>${meio}<div class="num" style="margin-left:auto;font-size:18px;color:${corSinal(v)}">${sinal(v)}</div></div>`,pai);
+      <div class="tag cz sm">${d}</div>${meio}<div class="num" style="margin-left:auto;font-size:18px;white-space:nowrap;color:${corSinal(v)}">${sinal(v)}</div></div>`,pai);
   const Y=i=>88+i*64;
   const lB=LIN.map(([d,v],i)=>{const e=linha(cB,d,v,risco(120+(i%2)*40));e.style.top=Y(i)+'px';return e});
   const lS=LIN.map(([d,v],i)=>{const e=linha(cS,d,v,risco(150-(i%2)*30));e.style.top=Y(i)+'px';return e});
-  const tB=linha(cB,TAR[0],TAR[1],'<div style="font-weight:800;font-size:15px;white-space:nowrap">TARIFA PACOTE SERVICOS</div>'); tB.style.top=Y(4)+'px';
+  const tB=linha(cB,TAR[0],TAR[1],'<div style="font-weight:800;font-size:14px;white-space:nowrap">TARIFA PACOTE SERVICOS</div>'); tB.style.top=Y(4)+'px';
   const vaga=el(`<div class="ab" style="left:20px;top:${Y(4)}px;width:426px;height:56px;border-radius:12px;border:2px dashed #CBD2D9"></div>`,cS);
   const tS=linha(cS,TAR[0],TAR[1],'<div class="tag a sm">Tarifas</div>'); tS.style.top=Y(4)+'px';
   const fios=el(`<svg class="ab" style="left:0;top:0;overflow:visible" width="1280" height="800">${[0,1,2,3,4].map(i=>`<path d="M560 ${150+Y(i)+28} L720 ${150+Y(i)+28}"
       fill="none" stroke="var(--v)" stroke-width="4" stroke-linecap="round"/>`).join('')}</svg>`,g);
   const fio=[...fios.querySelectorAll('path')];
-  const plac=el(`<div class="card b2" style="left:470px;top:604px;width:340px;height:96px;padding:0 26px;display:flex;align-items:center;justify-content:space-between">
-      <div style="font-weight:800;font-size:20px">Diferença</div><div class="num" style="font-size:28px">${brl(0)}</div></div>`,g);
+  const plac=el(`<div class="card b2" style="left:420px;top:604px;width:440px;height:96px;padding:0 28px;display:flex;align-items:center;justify-content:space-between">
+      <div style="font-weight:800;font-size:20px">Diferença</div><div class="num" style="font-size:28px;white-space:nowrap">${brl(0)}</div></div>`,g);
   const pv=plac.lastElementChild, TOT=LIN.reduce((s,l)=>s+l[1],0);
 
   return t=>{
@@ -411,7 +411,7 @@ CAPS[6]=()=>{
   const [lO,lP]=[fO,fP].map(e=>e.querySelector('.lbl')); lO.textContent='Pra conciliar'; lP.textContent='Pra ler';
   const setas=[0,1,2].map(i=>el(`<div class="ab ic" style="left:${34+i*262+226}px;top:170px;width:30px;height:30px;color:#9AA3AD">${ic('arrow-right',30)}</div>`,jan6));
   const pasta=el(`<div class="card b2" style="left:700px;top:530px;width:480px;height:170px;padding:18px 24px">
-      <div class="row" style="gap:14px"><div class="ico a" style="width:48px;height:48px">${ic('folder-down',26)}</div><div style="font-weight:800;font-size:22px">Downloads</div></div></div>`,g);
+      <div class="ab row" style="left:24px;top:104px;gap:14px"><div class="ico a" style="width:48px;height:48px">${ic('folder-down',26)}</div><div style="font-weight:800;font-size:22px">Downloads</div></div></div>`,g);   // o arquivo pousa em cima; o nome da pasta fica embaixo
   const arq=el(`<div class="ab" style="left:0;top:0"><div class="tag v" style="border:2px solid var(--v);font-size:17px">${ic('file-down',18)}Extrato_20261101_20261110.ofx</div></div>`,g);
 
   return t=>{
@@ -427,7 +427,7 @@ CAPS[6]=()=>{
     vis(lO,t,tCo-.1,1e9,{dy:6}); anel(fO,eo(pr(t,tCo,.45)),VERDE,'#E1E8E4',4,false);
     // o arquivo desce para Downloads
     vis(pasta,t,tO2-.6,1e9,{dy:14});
-    const pa=arco(arq,t,tO2-.15,.9,820,380,724,616,-40); op(arq,pa>0?Math.min(1,pa*4):0); anel(pasta,eo(pr(t,tO2+.6,.4)),AMBAR);
+    const pa=arco(arq,t,tO2-.15,.9,820,380,724,552,-30); op(arq,pa>0?Math.min(1,pa*4):0); anel(pasta,eo(pr(t,tO2+.6,.4)),AMBAR);
   };
 };
 
@@ -549,10 +549,12 @@ CAPS[12]=()=>{
   const cart=(x,w,icn,cls,nome)=>el(`<div class="card b2" style="left:${x}px;top:170px;width:${w}px;height:420px;padding:22px 24px">
       <div class="row" style="gap:12px"><div class="ico ${cls}" style="width:44px;height:44px">${ic(icn,24)}</div><div style="font-weight:800;font-size:21px">${nome}</div></div></div>`,g);
   const cB=cart(60,480,'landmark','cz','Extrato do banco'), cS=cart(740,480,'monitor','','Lançamentos do sistema');
-  const lin=(pai,y,a,b,dt)=>el(`<div class="ab" style="left:20px;top:${y}px;width:436px;height:120px;padding:16px 18px;border-radius:14px;background:#FAFBFC;border:2px solid #EEF1F4">
-      <div style="font-weight:800;font-size:${dt?15:18}px;white-space:nowrap">${a}</div>
-      <div class="row" style="margin-top:12px;gap:10px">${dt?`<div class="tag cz sm">${dt}</div>`:`<div class="lbl" style="font-size:16px">${b}</div>`}
-        <div class="num" style="margin-left:auto;font-size:20px;color:var(--r)">${sinal(V)}</div></div></div>`,pai);
+  // linha do banco: o memo em cima, a data e o valor embaixo; compra do sistema: o parceiro e o valor em cima, o que foi comprado embaixo
+  const lin=(pai,y,a,b,dt)=>el(`<div class="ab" style="left:20px;top:${y}px;width:436px;height:120px;padding:16px 18px;border-radius:14px;background:#FAFBFC;border:2px solid #EEF1F4">${dt?
+      `<div style="font-weight:800;font-size:15px;white-space:nowrap">${a}</div>
+      <div class="row" style="margin-top:12px;gap:10px"><div class="tag cz sm">${dt}</div><div class="num" style="margin-left:auto;font-size:20px;color:var(--r)">${sinal(V)}</div></div>`:
+      `<div class="row" style="gap:10px"><div style="font-weight:800;font-size:18px;white-space:nowrap">${a}</div><div class="num" style="margin-left:auto;font-size:20px;color:var(--r)">${sinal(V)}</div></div>
+      <div class="lbl" style="margin-top:12px;font-size:16px;white-space:nowrap">${b}</div>`}</div>`,pai);
   const b1=lin(cB,92,'PIX ENVIADO COOPERATIVA RECOMECO','', '06/11'), b2=lin(cB,236,'PIX ENVIADO AUTO PECAS VALE FORTE','','06/11');
   const s1=lin(cS,92,'Cooperativa Recomeço','Compra · 200 kg de plástico PET'), s2=lin(cS,236,'Auto Peças Vale Forte','Compra · 400 kg de ferro pesado');
   const YB=[170+92+60,170+236+60];
@@ -561,7 +563,7 @@ CAPS[12]=()=>{
   const F=[...fios.querySelectorAll('path')];                 // 0: coop→coop, 1: coop→auto (a errada), 2: auto→coop, 3: auto→auto
   const xis=el(`<div class="bdg" style="left:619px;top:${(YB[0]+YB[1])/2-21}px;width:42px;height:42px;background:var(--rc);border:2px solid #E5484D;color:var(--r)">${ic('x',22)}</div>`,g);
   const pend=el('<div class="ab" style="left:0;top:0"><div class="tag a sm" style="border:2px solid #F2B63D">Pendente</div></div>',s1);
-  pend.style.left='auto'; pend.style.right='18px'; pend.style.top='14px';
+  pend.style.left='auto'; pend.style.right='18px'; pend.style.top='-17px';   // selo na borda de cima da compra (as duas linhas dela estão ocupadas)
 
   return t=>{
     const tAq=WS(1,'Aqui'), tEs=WS(1,'escolha'), tEr=WS(1,'errada'), tOu=WS(1,'outra'), tPe=WS(1,'pendente'), tSe=WS(1,'sempre');
@@ -601,7 +603,8 @@ CAPS[14]=()=>{
       <div class="ab" style="left:0;top:90px;width:${PW}px;height:26px;border-radius:0 0 140px 140px;background:${cor};opacity:.9"></div>
       <div class="ab" style="left:0;top:132px;width:${PW}px;text-align:center"><div class="tag ${cls}">${nome}</div></div></div>`,g);
   const pB=prato('Saldo do banco','v','#50D088'), pS=prato('Saldo conciliado','a','#F2B63D');
-  const fichas=[0,1,2].map(()=>el('<div class="ab" style="left:0;top:0;width:96px;height:22px;border-radius:7px;background:#fff;border:2px solid #C9CED6"></div>',g));
+  const fichas=[0,1,2].map(()=>el(`<div class="ab row" style="left:0;top:0;width:96px;height:24px;border-radius:7px;background:var(--vc);border:2px solid var(--v);padding:0 6px;gap:6px">
+      <div class="ic" style="width:14px;height:14px;color:var(--ve)">${ic('check',14)}</div>${risco(56,6,'#A9E9C6')}</div>`,g));   // linha resolvida
   const gap=el('<div class="ab" style="left:0;top:0"><div class="tag a sm">Diferença</div></div>',g);
   const plac=el(`<div class="card b2" style="left:470px;top:650px;width:340px;height:84px;padding:0 26px;display:flex;align-items:center;justify-content:space-between">
       <div style="font-weight:800;font-size:20px">Diferença</div><div class="num" style="font-size:28px">${brl(0)}</div></div>`,g);
@@ -619,7 +622,7 @@ CAPS[14]=()=>{
     const ex=[CX-BR*Math.cos(rad),CX+BR*Math.cos(rad)], ey=[CY-BR*Math.sin(rad),CY+BR*Math.sin(rad)];
     [pB,pS].forEach((p,i)=>{const o=vis(p,t,ent+.1+i*.1,1e9,{dy:14}); pos(p,ex[i]-PW/2,ey[i]+(1-o)*14);});
     fichas.forEach((f,i)=>{const p=eio(pr(t,tAg+i*.25,.6)), x1=ex[1]-48+(i-1)*44, y1=ey[1]+64-i*4;
-      pos(f,lerp(x1+90,x1,p),lerp(y1-190,y1,p)); op(f,p>0?Math.min(1,p*3):0);});
+      pos(f,lerp(x1+60,x1,p),lerp(y1-110,y1,p)); op(f,p>0?Math.min(1,p*3):0);});
     // a diferença é a distância entre os dois pratos
     const yL=ey[0]+103, yR=ey[1]+103, xr=ex[1]-PW/2-24, pg=eo(pr(t,tDs-.1,.45))*(1-eo(pr(t,tZe-.15,.4)));
     guia.setAttribute('d',`M${(ex[0]+PW/2+8).toFixed(1)} ${yL.toFixed(1)} L${(xr+10).toFixed(1)} ${yL.toFixed(1)}`);

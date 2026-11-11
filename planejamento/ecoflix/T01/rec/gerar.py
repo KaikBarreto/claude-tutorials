@@ -593,10 +593,10 @@ def cap06():
     c.click(PH('00000-000'), at=c.A(5, 'digitar', 0.8), label='CEP')
     c.type(PH('00000-000'), '12086410', at=c.A(5, 'CEP.', 0.1), cps=10, noClick=True, label='digita o CEP 12086-410')
     c.waitfor(text='Endereço encontrado!', timeout=8)
-    c.confere_campos(['12086-410', 'Rua das Oficinas', 'Jardim Vale do Sol'], 'endereço achado pelo CEP')
+    c.confere_campos(['12086-410', 'Rua das Oficinas', 'Parque Industrial'], 'endereço achado pelo CEP')
     c.confere('main', ['SP - São Paulo', 'Taubaté'], 'Estado e Cidade')
     c.hover(PH('Rua, Avenida, etc.'), 0.3, at=c.A(5, 'rua,', 0.5), label='Logradouro: Rua das Oficinas')
-    c.hover(PH('Bairro'), 0.4, at=c.A(5, 'bairro,', 0.5), label='Bairro: Jardim Vale do Sol')
+    c.hover(PH('Bairro'), 0.4, at=c.A(5, 'bairro,', 0.5), label='Bairro: Parque Industrial')
     c.hover(COMBO_ROTULO('Cidade'), 0.3, at=c.A(5, 'cidade', 0.5), label='Cidade: Taubaté')
     c.hover(COMBO_ROTULO('Estado'), 0.6, at=c.A(5, 'estado', 0.5), label='Estado: SP - São Paulo')
     c.mark(6)
@@ -609,13 +609,13 @@ def cap06():
     c.hover(TXTP('É este endereço que sai na nota fiscal.'), 2.4, at=c.A(7, 'Configuração', 0.5), label='nota: a Configuração Fiscal usa o que estiver aqui')
     c.mark(8)
     rola_ate(c, 'Prévia no comprovante', at=c.A(8, 'Mais', 0.9), label='desce até a Prévia no comprovante', y=210, dur_ms=900, escopo='main')
-    c.confere('main', ['Rua das Oficinas, 1250 - Galpão 2 - Jardim Vale do Sol - Taubaté/SP - CEP: 12086-410'], 'prévia com o galpão')
+    c.confere('main', ['Rua das Oficinas, 1250 - Galpão 2 - Parque Industrial - Taubaté/SP - CEP: 12086-410'], 'prévia com o galpão')
     c.hover(PREVIA, 3.0, at=c.A(8, 'Prévia', 0.6), label='Prévia no comprovante: o endereço como sai impresso')
     c.mark(9)
     c.hover(CHK('Logradouro'), 0.5, at=c.A(9, 'escolher', 0.6), label='caixas da prévia, pedaço por pedaço')
     c.hover(CHK('CEP'), 0.5, at=c.A(9, 'pedaço.', 0.5), label='caixa CEP')
     c.click(CHK('Complemento'), at=c.A(9, 'desmarco', 0.8), label='desmarca o Complemento')
-    c.confere('main', ['Rua das Oficinas, 1250 - Jardim Vale do Sol - Taubaté/SP - CEP: 12086-410'], 'prévia sem o galpão')
+    c.confere('main', ['Rua das Oficinas, 1250 - Parque Industrial - Taubaté/SP - CEP: 12086-410'], 'prévia sem o galpão')
     c.hover(PREVIA, 1.4, at=c.A(9, 'some', 0.6), label='a prévia sem o galpão')
     c.fim()
     return c
@@ -668,11 +668,11 @@ def cap07():
     return c
 
 
-FRASE = 'Obrigado pela parceria! Atendemos de segunda a sexta, das 7h às 17h, e aos sábados, das 7h às 12h.'
+FRASE = 'Obrigado pela parceria! Atendemos de segunda a sexta, das 7h às 17h.'   # 68 caracteres (junção: sem sábado)
 
 
 def cap08():
-    """A frase do comprovante: liga No comprovante, digita a frase (98 caracteres), o contador, Alinhar à esquerda (desligada) e
+    """A frase do comprovante: liga No comprovante, digita a frase (68 caracteres), o contador, Alinhar à esquerda (desligada) e
     Salvar alterações. L5 é ilustração. Vira apos-cap08."""
     c = Cap(8, pace=0.5, setup=setup_config(), start=(760, 420))
     c.mark(1)
@@ -684,8 +684,8 @@ def cap08():
     c.click(SEL('#receipt-phrase'), at=c.A(2, 'papel.', 0.3), label='caixa da frase')
     c.mark(3)
     c.type(SEL('#receipt-phrase'), FRASE, at=c.A(3, 'A', 0.0), cps=40, noClick=True, label='digita a frase do comprovante')
-    c.confere('main', ['98/2000 caracteres'], 'contador 98/2000')
-    c.hover(TXTP('/2000 caracteres'), 0.8, at=c.A(3, 'foram.', 0.3), label='contador 98/2000 caracteres')
+    c.confere('main', ['68/2000 caracteres'], 'contador 68/2000')
+    c.hover(TXTP('/2000 caracteres'), 0.8, at=c.A(3, 'foram.', 0.3), label='contador 68/2000 caracteres')
     c.mark(4)
     c.hover(TXT('Alinhar à esquerda'), 2.6, at=c.A(4, 'Alinhar', 0.6), label='Alinhar à esquerda (desligada)')
     c.hover(SEL('#phrase-align-left'), 1.0, at=c.A(4, 'curta,', 0.6), label='chave Alinhar à esquerda: fica no centro')

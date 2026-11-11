@@ -395,3 +395,8 @@ Decisões:
   T22, T25 e T27 (a cota da NF-e da T16 saiu da fala). A comparação roteiro × tts foi parcial: fica para a revisão geral.
   **Semente do mundo base** (seção 16) com um agente novo; os robôs seguem no gerador e no ensaio rápido e só fazem o
   ensaio completo depois do aviso de mundo novo pronto (a T26 não depende e segue).
+- 11/11 12:0x **Ilustrações T11 e T21 prontas** (12 + 9 cenas; folhas em `previa_ilustracoes/`): o Cato só como balão de
+  conversa; diferença e perda em âmbar; valores da T21 já com os números da junção (17.540, 112.800, 14.370, 96.076).
+  **Para o robô da T21**: o `T21/plano.md` (respostas R1 a R9) ainda tem os números antigos e "Conta Reserva" (o mundo diz
+  "Conta Secundária"): atualizar antes do robô da T21. Mais itens do kit para a unificação (etiquetas, escala em `svg()`,
+  janela pelas âncoras, fundo opaco para cenas seguidas, balão de conversa, desenhos). Robô da T19 lançado no lugar.
