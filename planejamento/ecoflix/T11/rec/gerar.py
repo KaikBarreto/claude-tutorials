@@ -914,10 +914,13 @@ def cap13():
     c.click(SEL("main [role=list] button:has-text('Fio de cobre encapado')"), at=c.A(4, 'tudo.', 0.6), label='Fio de cobre encapado')
     c.waitfor(text='Fio de cobre encapado', timeout=10)
     c.confere('main', ['KARDEX', 'Fio de cobre encapado', 'Produção'], 'Kardex do fio')
-    c.hover(SEL("main tbody tr:has-text('Estorno')"), 1.0, at=c.A(4, 'estorno', 0.6), label='a linha do estorno (+80 Kg)')
+    SAIDA_PROD = "main tbody tr:has-text('Produção'):has-text('-80')"
+    c.hover(SEL(SAIDA_PROD, nth=1), 0.4, at=c.A(4, 'saídas', 0.6), label='a saída da #1 (-80 Kg)')
+    c.hover(SEL(SAIDA_PROD), 0.6, at=c.A(4, 'continuam', 0.6), label='a saída da #2 (-80 Kg)')
+    c.hover(SEL("main tbody tr:has-text('Produção'):has-text('+80')"), 1.0, at=c.A(4, 'estorno', 0.6), label='a linha do estorno (+80 Kg)')
     c.mark(5)
     c.mark(6)
-    c.hover(SEL("main tbody tr td :text-is('Produção')"), 1.6, at=c.A(6, 'Produção.', 0.6), label='[ZOOM] o selo Produção')
+    c.hover(SEL("main tbody tr:has-text('+80') td :text-is('Produção')"), 1.6, at=c.A(6, 'Produção.', 0.6), label='[ZOOM] o selo Produção')
     c.fim()
     return c
 
