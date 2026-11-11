@@ -457,3 +457,6 @@ Decisões:
   "=", "×" e "?"; ficaram como estavam o ícone nu no degrau da T03 cap07, o maço de notas com borda verde da T06 e os
   marcadores grandes). Folhas mandadas ao Kaik (T05, T27, T03, T04, T06). Trocas de pronúncia agora só em palavra inteira
   (a "asas"→"Asaas" pegava em "casas" na T05).
+- 11/11 13:0x **Estilo saturado pronto em T00, T01 e T02** (~22, 14 e 20 ajustes; "desligado" em cinza #9CA3AF com ícone
+  branco que acende em verde ou âmbar). Ficaram como estavam: os cartões "Ligada/Desligada" da T01, os valores "R$ ••••"
+  coloridos e o realce de texto `.hl` da T02 (texto sobre branco, não selo); se o Kaik quiser, viram chip. Folhas mandadas.
