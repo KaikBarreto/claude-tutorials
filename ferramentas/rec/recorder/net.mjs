@@ -49,6 +49,10 @@ export async function isolateNetwork(context, { verbose = false } = {}) {
   if (de && para && de !== para) {
     await context.route((url) => url.toString().startsWith(de), async (route) => {
       try {
+        // upload (corpo multipart): o Chromium não entrega à interceptação os bytes do arquivo, e o route.fetch mandava a parte
+        // do arquivo com 0 byte (T14; T1: logo e ícone da empresa quebrados). Com continue quem manda o corpo é o próprio
+        // navegador, só com o endereço trocado.
+        if (/multipart\/form-data/i.test(route.request().headers()['content-type'] || '')) return await route.continue({ url: route.request().url().replace(de, para) });
         const resp = await route.fetch({ url: route.request().url().replace(de, para) });
         await route.fulfill({ response: resp });
       } catch (e) {

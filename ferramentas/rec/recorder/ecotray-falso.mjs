@@ -54,6 +54,8 @@ export async function instalarEcoTray(context, cfgEntrada = {}, { fakeUrl, baked
     impressora: cfg.impressora,
     peso: Object.fromEntries(cfg.balancas.map((b) => [b.id, Number(cfg.pesoInicial) || 0])),
     alvo: {},
+    semComandos: false, // T5: true = só a porta do peso (8053) atende; a 8054 recusa até o passo `comandos` (a impressora demora a voltar)
+    mudo: cfg.mudo === true, // T5: EcoTray conectado e balança cadastrada, mas sem mandar peso ("Aguardando peso")
     atividade: [],
     impressoes: [],
     clientes: { 8053: new Set(), 8054: new Set() },
@@ -87,7 +89,7 @@ export async function instalarEcoTray(context, cfgEntrada = {}, { fakeUrl, baked
 
   // leitura contínua do peso (~5 Hz), só destravada e com o EcoTray ligado
   const tick = setInterval(() => {
-    if (!est.ligado || !est.destravada) return;
+    if (!est.ligado || !est.destravada || est.mudo) return;
     for (const b of est.balancas) {
       if (!b.connected) continue;
       const a = est.alvo[b.id];
@@ -218,7 +220,7 @@ export async function instalarEcoTray(context, cfgEntrada = {}, { fakeUrl, baked
   const rota = /^ws:\/\/(127\.0\.0\.1|localhost):(8053|8054)\/?$/;
   await context.routeWebSocket(rota, (ws) => {
     const porta = Number(new URL(ws.url()).port);
-    if (!est.ligado) {
+    if (!est.ligado || (porta === 8054 && est.semComandos)) {
       ws.connectToServer(); // EcoTray fechado: tenta a porta de verdade, onde não há ninguém (falha como no Windows)
       return;
     }
@@ -245,16 +247,36 @@ export async function instalarEcoTray(context, cfgEntrada = {}, { fakeUrl, baked
     /** Põe (ou tira, com 0) material na balança: sobe, oscila e estabiliza no peso pedido. */
     peso(kg, { subir = 1.0, oscilar = 1.0, balanca } = {}) {
       const id = balanca || est.padrao;
+      est.mudo = false;
       est.alvo[id] = { de: est.peso[id] || 0, para: Number(kg) || 0, subir: Math.max(0.05, subir), oscilar: Math.max(0, oscilar), t0: Date.now() };
     },
     /** Abre ou fecha o EcoTray (fechado: as conexões caem e as novas falham). */
-    ligar(sim = true) {
+    ligar(sim = true, { comandos = true } = {}) {
       est.ligado = !!sim;
+      est.semComandos = !comandos;
       if (!sim) {
         for (const p of [8053, 8054]) for (const ws of est.clientes[p]) ws.close({ code: 1006, reason: 'EcoTray fechado' }).catch?.(() => {});
         for (const p of [8053, 8054]) est.clientes[p].clear();
         registra('EcoTray fechado', 'warn');
       }
+    },
+    /** T5: troca a lista de balanças cadastradas no EcoTray (ex.: o "Gravar" da janela "Configurar Balanças"); avisa quem está na 8053. */
+    definirBalancas(lista, padrao) {
+      est.balancas = (lista || []).map((b) => ({ porta: 'COM3', ...b, connected: b.connected !== false }));
+      est.padrao = padrao || est.balancas[0]?.id;
+      for (const b of est.balancas) if (est.peso[b.id] === undefined) est.peso[b.id] = 0;
+      if (est.destravada) manda(8053, listaBalancas());
+      for (const b of est.balancas) registra(`[scale:${b.name}] conectada`, 'ok');
+    },
+    /** T5: religa (true) ou derruba (false) só a porta de comandos 8054, com o EcoTray ligado (impressora, destravar). */
+    comandos(sim = true) {
+      est.semComandos = !sim;
+      if (!sim) for (const ws of est.clientes[8054]) ws.close({ code: 1006, reason: 'comandos fora' }).catch?.(() => {});
+      if (!sim) est.clientes[8054].clear();
+    },
+    /** T5: true = o EcoTray para de mandar peso (o rodapé fica em "Aguardando peso"); o próximo passo "balanca" volta a mandar. */
+    silenciar(sim = true) {
+      est.mudo = !!sim;
     },
     parar() {
       clearInterval(tick);

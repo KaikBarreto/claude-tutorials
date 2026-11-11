@@ -1,0 +1,287 @@
+{
+ "name": "t05-cap05",
+ "title": "T05 · Cap. 5 · Largura do papel e impressão turbo (narração 68,4 s ESTIMADA; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
+ "seed": "t05-cap05",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 1000,
+  "y": 560
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.59.154",
+  "notification_shown_version": "1.59.154",
+  "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true"
+ },
+ "seedExtra": [
+  "t05/apos-cap04"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "waitFor",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "timeout": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "••••••••"
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "url": "/dashboard",
+   "timeout": 40
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 25
+  },
+  {
+   "do": "goto",
+   "url": "/dashboard"
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 25
+  },
+  {
+   "do": "goto",
+   "url": "/configuracoes?tab=integrations"
+  },
+  {
+   "do": "waitFor",
+   "text": "Configure integrações com impressora e balança digital",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 25
+  },
+  {
+   "do": "wait",
+   "seconds": 1.5
+  },
+  {
+   "do": "waitFor",
+   "text": "Conectado ao EcoTray",
+   "timeout": 20
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel|Algo deu errado|Falha ao|Balan[çc]a desconectada|Pop-up bloqueado|Popup bloqueado/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');if(f&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA ECOFLIX'))window.__avisos.push('TRILHA ECOFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll('main label')].find(e=>e.textContent.trim()===\"Escala e Largura do Comprovante\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-200);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 0.3,
+   "label": "mostra Escala e Largura do Comprovante"
+  },
+  {
+   "do": "type",
+   "target": {
+    "text": "Papel 80mm · Escala 100%"
+   },
+   "text": "",
+   "noClick": true,
+   "optional": true,
+   "timeout": 4,
+   "at": 1.49,
+   "label": "Escala e Largura do Comprovante: Papel 80mm · Escala 100%"
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 12.93
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 23.52
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Ajustar Escala",
+    "exact": true
+   },
+   "at": 23.52,
+   "label": "Ajustar Escala"
+  },
+  {
+   "do": "waitFor",
+   "text": "Ajuste do Comprovante Térmico",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "58 mm",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 24.95,
+   "label": "58 mm (bobina pequena)"
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 32.23
+  },
+  {
+   "do": "type",
+   "target": {
+    "text": "O comprovante será gerado no tamanho exato do papel selecionado",
+    "within": "[role=dialog]"
+   },
+   "text": "",
+   "noClick": true,
+   "optional": true,
+   "timeout": 4,
+   "at": 32.38,
+   "label": "nota: tamanho exato do papel"
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 42.75
+  },
+  {
+   "do": "type",
+   "target": {
+    "text": "Escala fina",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "text": "",
+   "noClick": true,
+   "optional": true,
+   "timeout": 4,
+   "at": 42.9,
+   "label": "Escala fina (100%)"
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 50.16
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Testar impressão",
+    "exact": true
+   },
+   "at": 50.16,
+   "label": "Testar impressão"
+  },
+  {
+   "do": "waitFor",
+   "text": "Comprovante de teste enviado para a impressora!",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Salvar",
+    "exact": true
+   },
+   "at": 55.28,
+   "label": "Salvar"
+  },
+  {
+   "do": "waitFor",
+   "text": "Papel 58mm · Escala 100%",
+   "timeout": 10
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 56.96
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll('main label')].find(e=>e.textContent.trim()===\"Impressão térmica turbo (beta)\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-300);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 56.96,
+   "label": "mostra a impressão térmica turbo"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "main label:text-is(\"Impressão térmica turbo (beta)\")"
+   },
+   "text": "",
+   "noClick": true,
+   "optional": true,
+   "timeout": 4,
+   "at": 58.63,
+   "label": "Impressão térmica turbo (beta)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main label:text-is(\"Impressão térmica turbo (beta)\") ~ svg"
+   },
+   "seconds": 0.8,
+   "at": 62.19,
+   "label": "? do turbo",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 68.39
+  }
+ ],
+ "ecotray": {
+  "balancas": [],
+  "casas": 3
+ }
+}

@@ -578,3 +578,9 @@ Decisões:
   sessão).
 - 11/11 19:1x **Agente das cenas de Windows da T05 lançado** (abriu vaga). Agora todas as frentes estão rodando: 26 robôs, as
   cenas de Windows da T05, o kit 3D (prévias T07/T08) e as frentes 3D (T00, T04+T10, T05+T16, T17+T18, prévias T11/T12).
+- 11/11 19:2x **T05**: robô e cenas de Windows entregaram parciais (a trava pesada com 40+ na fila); deixaram os ensaios
+  rápidos e as capturas do EcoTray na fila e acordam quando rodarem. Hora do cupom de teste alinhada: **08:41:07** na
+  ilustração do cap04, na Atividade Recente do EcoTray (cena 4) e no relógio próprio do cap04 do robô (calculado a partir do
+  instante do clique na voz de verdade). Mudanças do robô levadas à skill: `ferramentas/rec/recorder/runner.mjs` e
+  `ecotray-falso.mjs` (passos `balancas`, `mudo` e `comandos` do EcoTray falso; só acréscimos, padrão igual ao de antes) e
+  a correção do upload multipart no `net.mjs` (T14/T01, do dia 10); o `$TUT_HOME/rec` e a skill estão iguais de novo.

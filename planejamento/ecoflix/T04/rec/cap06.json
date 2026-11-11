@@ -83,12 +83,20 @@
   {
    "do": "click",
    "target": {
-    "selector": "header button.h-8.w-8"
-   }
+    "selector": "header button:has(svg[class*='panel-left'])"
+   },
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "header button svg[class*='panel-left']:not([class*='close'])"
+   },
+   "timeout": 8
   },
   {
    "do": "wait",
-   "seconds": 0.8
+   "seconds": 0.6
   },
   {
    "do": "click",

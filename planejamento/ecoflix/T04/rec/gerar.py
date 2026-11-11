@@ -261,7 +261,8 @@ SEL = lambda s, **kw: {'selector': s, **kw}
 OPT = lambda n, **kw: {'role': 'option', 'name': n, **kw}
 ITEM = lambda n, **kw: {'role': 'menuitem', 'name': n, **kw}
 AGUARDA = {'do': 'waitFor', 'idle': True}
-TOGGLE = SEL('header button.h-8.w-8')                                                # recolher/abrir o menu lateral (sem rótulo)
+TOGGLE = SEL("header button:has(svg[class*='panel-left'])")                         # recolher/abrir o menu lateral (sem rótulo; ícone PanelLeft/PanelLeftClose)
+MENU_RECOLHIDO = SEL("header button svg[class*='panel-left']:not([class*='close'])")   # o ícone vira PanelLeft com o menu recolhido
 ABA = lambda n: SEL(f"main div.no-scrollbar > button:has-text('{n}')")               # abas da tela (MobilePillTabs: <button>, não role=tab)
 LINHA = lambda nome: SEL(f"main aside button:has-text('{nome}')")                    # a linha da lista (o <button> inteiro)
 NOME_LINHA = lambda nome: SEL(f"main aside button:has-text('{nome}') p.font-medium")  # "código · nome" da linha
@@ -299,7 +300,9 @@ LOGIN = [{'do': 'waitFor', 'target': {'label': 'E-mail'}, 'timeout': 30},
          {'do': 'click', 'target': {'role': 'button', 'name': 'Entrar', 'exact': True}},
          {'do': 'waitFor', 'text': 'Olá, Rafael!', 'timeout': 30}, AGUARDA]
 IR_TELA = [{'do': 'goto', 'url': '/clientes-fornecedores'}, {'do': 'waitFor', 'text': 'Aços Quiririm Ltda', 'timeout': 30}, AGUARDA]
-RECOLHE = [{'do': 'click', 'target': TOGGLE}, {'do': 'wait', 'seconds': 0.8}]
+# o botão fica no cabeçalho (y ~27, fora da faixa 96..730 do clique): sem `noScroll` o robô tentava rolar e o menu ficava aberto
+# (achado na folha de contato do ensaio de 11/11 19:00)
+RECOLHE = [{'do': 'click', 'target': TOGGLE, 'noScroll': True}, {'do': 'waitFor', 'target': MENU_RECOLHIDO, 'timeout': 8}, {'do': 'wait', 'seconds': 0.6}]
 
 
 def setup_tela(aba=None, ficha=None, extra=()):
@@ -526,7 +529,7 @@ def cap02():
     Pessoa Jurídica de outro cadastro novo mostra CNPJ, razão social e inscrição estadual (sem salvar)."""
     c = cap_novo(2, start=(900, 300))
     c.mark(1)
-    c.hover(ABA('Fornecedores'), 1.0, at=c.A(1, 'fornecedor', 0.5), label='aba Fornecedores (já aberta)')
+    c.hover(ABA('Fornecedores'), 1.0, at=c.A(1, 'fornecedor', 0.5, nth=0), label='aba Fornecedores (já aberta)')
     c.click(NOVO_FORN, at=c.A(1, 'Em', 0.6), label='Novo Fornecedor')
     c.waitfor(text='Identificação e contato', timeout=10)
     c.mark(2)
@@ -546,7 +549,7 @@ def cap02():
     c.ev(js_dlg_topo(), at=c.L(7) - 0.9, label='sobe a janela até as abas')
     c.click(ABA_DLG('Dados Fiscais'), at=c.A(7, 'Dados', 0.6), label='aba Dados Fiscais')
     c.hover(BTN('Pessoa Física', DLG), 1.0, at=c.A(7, 'Pessoa', 0.5), label='Tipo de Pessoa: Pessoa Física (já vem marcado)')
-    c.digita(CAMPO('cpf_cnpj'), '41827356090', c.A(7, 'CPF,', 0.6), c.A(7, 'como', 0.05), 'zoom: CPF 418.273.560-90 (L7)')
+    c.digita(CAMPO('cpf_cnpj'), '41827356090', c.A(7, 'CPF,', 0.6, nth=0), c.A(7, 'como', 0.05), 'zoom: CPF 418.273.560-90 (L7)')
     c.confere_campos(['418.273.560-90'], 'CPF com a máscara')
     c.mark(8)
     c.click(SALVAR, at=c.A(8, 'Salvar.', 0.6), label='Salvar')
@@ -811,7 +814,7 @@ def cap09():
     c.hover(SEL(f'{DLG} label[for=debit]'), 0.8, at=c.A(7, 'vem', 0.5), label='Tipo de Operação: Pagar (já marcado)')
     c.mark(8)
     c.digita(SEL(f'{DLG} #amount'), '1200', c.A(8, 'valor:', 0.6), c.A(8, 'mil', 0.05), 'zoom: Valor R$ 1.200,00')
-    c.confere_campos(['1.200,00'], 'valor R$ 1.200,00')
+    c.confere_campos(['1.200'], 'valor R$ 1.200 (o campo mostra 1.200 enquanto digita)')
     c.mark(9)
     c.hover(TXT('Pix/Transferência', within=DLG), 0.8, at=c.A(9, 'Pix', 0.5), label='Pix/Transferência (já marcado: nenhum caixa aberto)')
     c.hover(TXT('Conta bancária', within=DLG, exact=False), 0.6, at=c.A(9, 'conta', 0.5), label='Conta bancária (a principal)')

@@ -603,7 +603,10 @@ const STEPS = {
   },
   async ecotray(ctx, step) {
     if (!ctx.session.ecotray) throw new Error('"ecotray": o EcoTray falso está desligado neste roteiro');
-    if (step.ligado !== undefined) ctx.session.ecotray.ligar(!!step.ligado);
+    if (step.ligado !== undefined) ctx.session.ecotray.ligar(!!step.ligado, { comandos: step.comandos !== false });
+    else if (step.comandos !== undefined) ctx.session.ecotray.comandos(!!step.comandos);
+    if (step.balancas !== undefined) ctx.session.ecotray.definirBalancas(step.balancas, step.padrao);
+    if (step.mudo !== undefined) ctx.session.ecotray.silenciar(!!step.mudo);
     if (step.seconds) await ctx.page.waitForTimeout(step.seconds * 1000);
   },
   async geo(ctx, step) {
