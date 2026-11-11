@@ -425,3 +425,6 @@ Decisões:
   janelas encostadas no cap00, cap05, cap10 e cap11: renderizar cada bloco de uma vez). A trava presa de ontem foi um
   `--stills` vazio que caiu no modo vídeo (já recusado). Sinal dos saldos da T4 ambíguo no MUNDO (o vale de −300 do Valdir
   é a receber?): o robô da T04 confere na tela. Robô da T08 lançado no lugar.
+- 11/11 12:2x **Ilustrações T10 e T12 prontas** (13 + 7 cenas): "Ajuste manual" nos dois lados (é o rótulo do app); a tara
+  da T10 é o saco ("Tara/Imp."); a cena da pesagem da T12 sem "Peso bruto" nem "Peso líquido" (tara do caminhão 6.380 da
+  junção); sem desenho de tela do app. Robô da T09 lançado no lugar.
