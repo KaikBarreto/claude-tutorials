@@ -1,0 +1,141 @@
+{
+ "_doc": "T20 · depois do cap08: coleta #11 solicitada pelo portal e o aviso para os três usuários (cumulativo sobre t20/inicio).",
+ "_patch": {
+  "suppliers": [
+   {
+    "match": {
+     "id": "@id:fornecedor.recomeco"
+    },
+    "set": {
+     "portal_config": {
+      "historico": true,
+      "resumo": true,
+      "grafico": true,
+      "valores": true,
+      "fotos": true,
+      "saldo": true,
+      "notas": true,
+      "relatorio": true,
+      "relatorio_valores": true,
+      "coletas": true,
+      "solicitar_coleta": true,
+      "precos": false,
+      "locked": {
+       "historico": true,
+       "saldo": true,
+       "notas": true,
+       "relatorio": true,
+       "coletas": true,
+       "precos": true
+      }
+     },
+     "portal_receipt_format": "a4",
+     "portal_password_enabled": true,
+     "portal_username": "cooperativa.recomeco",
+     "portal_password_hash": "78edb65783ca2a717f3cf8234834999d43065c00cbb9faaa22fc367b30f917f7"
+    }
+   }
+  ],
+  "balances": [
+   {
+    "match": {
+     "id": "@id:saldo.supplier:@id:fornecedor.recomeco"
+    },
+    "set": {
+     "balance": 0,
+     "updated_at": "2026-11-10T18:05:00.000Z"
+    }
+   }
+  ]
+ },
+ "balance_movements": [
+  {
+   "id": "@id:t20.bm.pix1350",
+   "company_id": "@id:company.reciclavale",
+   "balance_id": "@id:saldo.supplier:@id:fornecedor.recomeco",
+   "entity_type": "supplier",
+   "entity_id": "@id:fornecedor.recomeco",
+   "movement_type": "payment",
+   "amount": -1350,
+   "description": "Valor Pago a Cooperativa Recomeço · Acerto da entrega de 06/11",
+   "transaction_at": "2026-11-10T18:05:00.000Z",
+   "transaction_date": "2026-11-10",
+   "created_at": "2026-11-10T18:05:00.000Z",
+   "created_by": "@id:user.rafael",
+   "is_settled": false,
+   "payment_method": "transfer"
+  }
+ ],
+ "collection_orders": [
+  {
+   "id": "@id:t20.coleta.11",
+   "company_id": "@id:company.reciclavale",
+   "numero": 11,
+   "status": "solicitada",
+   "origem": "portal",
+   "partner_type": "supplier",
+   "partner_id": "@id:fornecedor.recomeco",
+   "partner_nome": "Cooperativa Recomeço",
+   "contato_telefone": null,
+   "logradouro": "Rua do Trabalho",
+   "numero_end": "57",
+   "bairro": "Vila Nossa Senhora das Graças",
+   "cidade": "Taubaté",
+   "uf": "SP",
+   "cep": "12060-640",
+   "scheduled_date": "2026-11-12",
+   "scheduled_window": "manha",
+   "driver_id": null,
+   "driver_name": null,
+   "vehicle_id": null,
+   "vehicle_plate": null,
+   "material_estimado": "Papelão e PET prensados - 2.500 kg",
+   "observacoes": "Os fardos ficam na doca do galpão.",
+   "completed_at": null,
+   "public_short_code": "q7mhx3kd9wrt",
+   "created_at": "2026-11-10T18:12:00.000Z",
+   "updated_at": "2026-11-10T18:12:00.000Z"
+  }
+ ],
+ "user_notifications": [
+  {
+   "id": "@id:t20.notif.rafael",
+   "user_id": "@id:user.rafael",
+   "company_id": "@id:company.reciclavale",
+   "type": "collection_request",
+   "title": "Nova solicitação de coleta",
+   "message": "Cooperativa Recomeço solicitou uma coleta (#11).",
+   "action_url": "/coletas/ordens",
+   "icon": "package",
+   "expires_at": "2026-11-17T18:12:00.000Z",
+   "created_at": "2026-11-10T18:12:00.000Z",
+   "read_at": null
+  },
+  {
+   "id": "@id:t20.notif.juliana",
+   "user_id": "@id:user.juliana",
+   "company_id": "@id:company.reciclavale",
+   "type": "collection_request",
+   "title": "Nova solicitação de coleta",
+   "message": "Cooperativa Recomeço solicitou uma coleta (#11).",
+   "action_url": "/coletas/ordens",
+   "icon": "package",
+   "expires_at": "2026-11-17T18:12:00.000Z",
+   "created_at": "2026-11-10T18:12:00.000Z",
+   "read_at": null
+  },
+  {
+   "id": "@id:t20.notif.marcos",
+   "user_id": "@id:user.marcos",
+   "company_id": "@id:company.reciclavale",
+   "type": "collection_request",
+   "title": "Nova solicitação de coleta",
+   "message": "Cooperativa Recomeço solicitou uma coleta (#11).",
+   "action_url": "/coletas/ordens",
+   "icon": "package",
+   "expires_at": "2026-11-17T18:12:00.000Z",
+   "created_at": "2026-11-10T18:12:00.000Z",
+   "read_at": null
+  }
+ ]
+}

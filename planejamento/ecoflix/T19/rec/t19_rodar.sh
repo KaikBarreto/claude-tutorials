@@ -1,22 +1,25 @@
 #!/usr/bin/env bash
-# T19 · um capítulo por trava: gera o roteiro, grava (ensaio rápido ou completo), resume e, com --seed, grava a semente apos-capNN
-# (só com 0 passo falho e nenhum "SEM ALVO"), tudo na MESMA trava da gravação. O MP4 vai para /dev/shm e a folha de contato fica
-# para conferir (apagar depois de olhar).
-#   bash rec/t19/t19_rodar.sh NN [--ens] [--seed] [--quadros "t1 t2 ..."]
+# T19 · UM capítulo por trava: gera o roteiro e, na MESMA trava, grava o ensaio rápido (--ens) e/ou o completo (--final), roda o
+# prever.py depois do rápido e, com --seed, grava a semente apos-capNN (só de uma gravação com 0 passo falho e nenhum "SEM ALVO").
+# MP4 e folha de contato vão para /dev/shm/t19 (apagar depois de olhar); actions/telemetry ficam em rec/t19 (o prever.py usa).
+#   bash rec/t19/t19_rodar.sh NN [--ens] [--final] [--seed] [--quadros "t1 t2 ..."]     (sem --ens/--final: só --ens)
+#   FLOCK_W=<s>: desiste da fila da trava depois de <s> segundos (saída 5), para o lote não morrer no meio de uma gravação.
 # Instância: FAKE_PORT 54319 (só desta aula), FAKE_NOW 2026-11-10T08:30:00-03:00. Precisa de TUT_USER e TUT_SENHA no ambiente.
 set -uo pipefail
 TUT_HOME="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 cd "$TUT_HOME"
 NN=$(printf %02d "$((10#$1))"); shift
-ENS=0; SEED=0; QUADROS=""
+ENS=0; FIN=0; SEED=0; QUADROS=""
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --ens) ENS=1 ;;
+    --final) FIN=1 ;;
     --seed) SEED=1 ;;
     --quadros) QUADROS="$2"; shift ;;
   esac
   shift
 done
+[[ $ENS == 0 && $FIN == 0 ]] && ENS=1
 export FAKE_URL=http://127.0.0.1:54319 FAKE_NOW=2026-11-10T08:30:00-03:00
 : "${TUT_USER:?falta TUT_USER}" "${TUT_SENHA:?falta TUT_SENHA}"
 PID=$(cat rec/.runtime/fake54319.pid 2>/dev/null || true)
@@ -25,29 +28,52 @@ if [[ "$AMB" != *$'\nFAKE_PORT=54319\n'* && "$AMB" != FAKE_PORT=54319$'\n'* ]] |
   echo "instância 54319 não é a desta aula (ou caiu): FAKE_NOW=$FAKE_NOW FAKE_PORT=54319 bash rec/run.sh fake"; exit 4
 fi
 python3 -I rec/t19/gerar.py "$NN" | tail -2
-if [[ $ENS == 1 ]]; then
-  python3 -I rec/t19/ensaio.py "$NN"
-  ROT=rec/t19/_ens/cap$NN.json; OUTD=rec/t19/_ens; ARGS=(--rapido); TAG=ens
-else
-  ROT=rec/t19/cap$NN.json; OUTD=rec/t19; ARGS=(); TAG=final
-fi
-LOG=rec/t19/.cap$NN.$TAG.out
-flock .heavy.lock bash -c '
+[[ $ENS == 1 ]] && python3 -I rec/t19/ensaio.py "$NN"
+mkdir -p /dev/shm/t19
+export NN ENS FIN SEED QUADROS
+flock ${FLOCK_W:+-w "$FLOCK_W"} .heavy.lock bash -c '
   set -uo pipefail
-  timeout 900 node rec/record.mjs "$0" "${@:4}" > "$1" 2>&1; echo "record exit $?" >> "$1"
-  A="$2/t19-cap$3.actions.json"
-  if [[ "'"$SEED"'" == 1 ]]; then
-    F=$(python3 -c "import json,sys;a=json.load(open(sys.argv[1]));print(sum(1 for x in a[\"actions\"] if x.get(\"error\") or x.get(\"ok\") is False))" "$A" 2>/dev/null || echo X)
-    S=$(grep -v SEMENTE "$1" | grep -c "SEM ALVO" || true)
-    if [[ "$F" == 0 && "$S" == 0 ]]; then node rec/t19/t19_semente.mjs "apos-cap$3" >> "$1" 2>&1; else echo "SEMENTE NAO GRAVADA: falhos $F, SEM ALVO $S" >> "$1"; fi
+  falhos() { python3 -c "import json,sys;a=json.load(open(sys.argv[1]));print(sum(1 for x in a[\"actions\"] if x.get(\"error\") or x.get(\"ok\") is False))" "$1" 2>/dev/null || echo X; }
+  semalvo() { grep -v SEMENTE "$1" | grep -c "SEM ALVO" || true; }
+  boa=""
+  if [[ $ENS == 1 ]]; then
+    L=rec/t19/.cap$NN.ens.out
+    timeout 900 node rec/record.mjs rec/t19/_ens/cap$NN.json --rapido > "$L" 2>&1; echo "record exit $?" >> "$L"
+    [[ "$(falhos rec/t19/_ens/t19-cap$NN.actions.json)" == 0 && "$(semalvo "$L")" == 0 ]] && boa=ens
+    python3 -I rec/t19/prever.py "$NN" --ens > rec/t19/.cap$NN.prever.out 2>&1
   fi
-  if [[ -n "'"$QUADROS"'" && -f "$2/t19-cap$3.mp4" ]]; then
-    mkdir -p /dev/shm/t19/q$3
-    for t in '"$QUADROS"'; do ffmpeg -loglevel error -y -ss "$t" -i "$2/t19-cap$3.mp4" -frames:v 1 -vf scale=1280:-1 "/dev/shm/t19/q$3/t$t.jpg"; done
+  if [[ $FIN == 1 ]]; then
+    L=rec/t19/.cap$NN.final.out
+    timeout 900 node rec/record.mjs rec/t19/cap$NN.json > "$L" 2>&1; echo "record exit $?" >> "$L"
+    [[ "$(falhos rec/t19/t19-cap$NN.actions.json)" == 0 && "$(semalvo "$L")" == 0 ]] && boa=final
+    if [[ -n "$QUADROS" && -f rec/t19/t19-cap$NN.mp4 ]]; then
+      mkdir -p /dev/shm/t19/q$NN
+      for t in $QUADROS; do ffmpeg -loglevel error -y -ss "$t" -i rec/t19/t19-cap$NN.mp4 -frames:v 1 -vf scale=1280:-1 "/dev/shm/t19/q$NN/t$t.jpg"; done
+    fi
   fi
-' "$ROT" "$LOG" "$OUTD" "$NN" "${ARGS[@]}"
-tail -3 "$LOG"
-[[ -f "$OUTD/t19-cap$NN.mp4" ]] && mv -f "$OUTD/t19-cap$NN.mp4" "/dev/shm/t19/t19-cap$NN.$TAG.mp4"
-[[ -f "$OUTD/t19-cap$NN.contact.jpg" ]] && mv -f "$OUTD/t19-cap$NN.contact.jpg" "/dev/shm/t19/t19-cap$NN.$TAG.contact.jpg"
-python3 -I rec/t19/resumo.py "$NN" $([[ $ENS == 1 ]] && echo --ens) | grep -vE "^ +[0-9]+ (mark|wait|pause) " | head -80
-echo "SEM ALVO no log: $(grep -v 'SEMENTE' "$LOG" | grep -c 'SEM ALVO')"
+  if [[ $SEED == 1 ]]; then
+    if [[ -n "$boa" ]]; then node rec/t19/t19_semente.mjs "apos-cap$NN" > rec/t19/.cap$NN.semente.out 2>&1; echo "semente ($boa): $(cat rec/t19/.cap$NN.semente.out)";
+    else echo "SEMENTE NAO GRAVADA (nenhuma gravação limpa)" | tee rec/t19/.cap$NN.semente.out; fi
+  fi
+  exit 0
+'
+RC=$?
+[[ $RC == 1 && -n "${FLOCK_W:-}" ]] && { echo "TRAVA: desisti da fila depois de ${FLOCK_W}s"; exit 5; }
+for T in ens final; do
+  D=rec/t19; [[ $T == ens ]] && D=rec/t19/_ens
+  [[ -f "$D/t19-cap$NN.mp4" ]] && mv -f "$D/t19-cap$NN.mp4" "/dev/shm/t19/t19-cap$NN.$T.mp4"
+  [[ -f "$D/t19-cap$NN.contact.jpg" ]] && mv -f "$D/t19-cap$NN.contact.jpg" "/dev/shm/t19/t19-cap$NN.$T.contact.jpg"
+done
+if [[ $ENS == 1 ]]; then
+  echo "== ENSAIO RÁPIDO cap$NN"; tail -1 rec/t19/.cap$NN.ens.out
+  python3 -I rec/t19/resumo.py "$NN" --ens | grep -vE "^ +[0-9]+ (mark|wait|pause) " | grep -E 'falhos|ERRO|DIFERENTE|SEM ALVO|avisos de erro|conferências' | head -30
+  echo "SEM ALVO no log: $(grep -v SEMENTE rec/t19/.cap$NN.ens.out | grep -c 'SEM ALVO')"
+  echo "== PREVER cap$NN"; grep -E 'previsto|>= ?0[.,]8|L[0-9]+ ' rec/t19/.cap$NN.prever.out | head -12
+fi
+if [[ $FIN == 1 ]]; then
+  echo "== COMPLETO cap$NN"; tail -1 rec/t19/.cap$NN.final.out
+  python3 -I rec/t19/resumo.py "$NN" | grep -vE "^ +[0-9]+ (wait|pause) " | head -90
+  echo "SEM ALVO no log: $(grep -v SEMENTE rec/t19/.cap$NN.final.out | grep -c 'SEM ALVO')"
+fi
+[[ $SEED == 1 ]] && cat rec/t19/.cap$NN.semente.out
+exit 0

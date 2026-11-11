@@ -136,6 +136,16 @@
    "label": "o cartão Jornada Padrão da Empresa"
   },
   {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Exigir selfie\", \"Exigir localização\", \"Dias em que a empresa trabalha\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere regras do ponto"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const esp=[\"60\", \"10\"];let out='';for(let i=0;i<12;i++){const sc=[...document.querySelectorAll(\"main\")].pop();const v=sc?[...sc.querySelectorAll('input, textarea')].map(e=>e.value).join(' | '):'';const falta=esp.filter(e=>!v.includes(e));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+v.slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere intervalo 60 e tolerância 10"
+  },
+  {
    "do": "hover",
    "target": {
     "text": "Exigir selfie",
@@ -313,6 +323,11 @@
     "role": "dialog"
    },
    "timeout": 8
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"08:00-17:00\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main table\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere a jornada da Juliana na tabela"
   },
   {
    "do": "hover",

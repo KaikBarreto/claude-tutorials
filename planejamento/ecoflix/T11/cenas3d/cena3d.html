@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<!-- T11 "Produção" · cenas 3D (kit perfis/ecoflix/cenas3d/kit3d.js). As cenas 2D de ../cenas/cenas.html ficam de reserva.
+     Uma por capítulo (ilustracoes.json, chave "3d"):
+       cap00 o problema do pátio: a latinha solta, com terra, água e lata de aço, vai à prensa e vira fardo; "R$ por kg?";
+       cap02 a ficha é a receita: entra latinha, sai fardo (a prensa no meio); uma ficha vale para todas as ordens;
+       cap04 o coproduto: o ímã tira as latas de aço da esteira e elas viram chaparia ("quantos kg?" só depois de separar);
+       cap08 teórico (a ficha × o produzido) contra o real da balança; a diferença de 18 kg é aço, terra e água.
+     Âncoras W(linha,'palavra') das falas do narracao/tts_textos.py; textos e números iguais aos da 2D (campo "mostra").
+     Render: node ferramentas/edit/cenas/render_cenas.cjs <cap> <capNN.json> saida.mp4 --html planejamento/ecoflix/T11/cenas3d/cena3d.html --de <at> --ate <at+dur> -->
+<style>
+.row{display:flex;align-items:center}
+.ttl{font-weight:800;font-size:22px;line-height:1.2;white-space:nowrap}
+.lbl{font-weight:700;font-size:17px;color:#4B5563;white-space:nowrap}
+.ico{display:flex;align-items:center;justify-content:center;flex:none;border-radius:14px;background:var(--vs);color:#fff}
+.nm{font-weight:800;font-size:22px;white-space:nowrap}
+</style>
+</head><body>
+<script type="module">
+import { PI, THREE, cl, eo, eio, pr, lerp, rng, ri, W, el, ic, vis, pulse, kg, conta, posTitulo, titulo, chip, mostrador,
+  CENA, GL, camera, ancora, grupo, poe, peca, rbox, M, mancha, anel, destaque, domo, chaoPatio, lote, latinhas, palete, fardoLatinhas, prensa, aperta,
+  cresce, COR, cena } from '../../../../perfis/ecoflix/cenas3d/kit3d.js';
+import { balancaPlataforma } from '../../../../perfis/ecoflix/cenas3d/objetos/balancaPlataforma.js';
+import { chaparia } from '../../../../perfis/ecoflix/cenas3d/objetos/chaparia.js';
+import { esteira } from '../../../../perfis/ecoflix/cenas3d/objetos/esteira.js';
+import { ima, campo, trilho } from '../../../../perfis/ecoflix/cenas3d/objetos/ima.js';
+
+const CAPS = {};
+const AÇO = ['#5B6672', '#69737F', '#76808B'];
+// escreve a matriz de cada peça de um lote (posição, giro e escala por peça): f(i) = [x, y, z, rx, ry, rz, sx, sy, sz]
+const _m = new THREE.Matrix4(), _q = new THREE.Quaternion(), _e = new THREE.Euler(), _p = new THREE.Vector3(), _s = new THREE.Vector3();
+function aplica(im, f) {
+  for (let i = 0; i < im.count; i++) { const o = f(i);
+    _m.compose(_p.set(o[0], o[1], o[2]), _q.setFromEuler(_e.set(o[3], o[4], o[5])), _s.set(o[6], o[7], o[8])); im.setMatrixAt(i, _m); }
+  im.instanceMatrix.needsUpdate = true;
+}
+const giros = n => Array.from({ length: n }, () => [ri(0, 2 * PI), ri(0, 2 * PI), ri(0, 2 * PI)]);
+const tam = (n, a, b) => Array.from({ length: n }, () => ri(a, b));
+const arco = (a, b, q, h) => [lerp(a[0], b[0], q), lerp(a[1], b[1], q) + h * 4 * q * (1 - q), lerp(a[2], b[2], q)];
+const camada = (n, x0, z0, ax, az, y0, camadas, dy) => Array.from({ length: n }, (_, i) => [x0 + ri(-ax, ax), y0 + (i % camadas) * dy + ri(0, .03), z0 + ri(-az, az)]);
+
+// ------------------------------------------------------------------ CAPS[0] · O problema do pátio (L1)
+// 1 "Na Recicla Vale Metais, a latinha chega solta, com terra, água e até lata de aço no meio. Prensada, ela vira fardo e vende melhor.
+//    Mas quanto custou cada quilo desse fardo?"
+CAPS[0] = () => {
+  const PX = -4.5, PZ = .2, PRX = .9, FX = 4.1;
+  chaoPatio(CENA, [0, 0, 0], { c: 26, l: 12, passo: 2.6 });
+  // o monte de latinha solta; por cima, o aço, a terra e a água (cada um na sua palavra)
+  const nC = 150, pC = domo(nC, 1.4, 1.1, .95, .14, .45).map(([x, y, z]) => [PX + x, y, PZ + z]), rC = giros(nC), sC = tam(nC, 1.4, 1.7);
+  const Lc = latinhas(CENA, pC, { s: 1 });
+  const nT = 16, pT = domo(nT, 1.15, .9, .95, .22, .85).map(([x, y, z]) => [PX + x, y + .02, PZ + z]), rT = giros(nT), sT = tam(nT, .8, 1.3);
+  const Lt = pT.map((p, i) => peca(CENA, 'terra', p, 2.2 * sT[i]));   // terra: peça do kit
+  const nA = 7, pA = domo(nA, 1.1, .85, .9, .2, .85).map(([x, y, z]) => [PX + x, y + .03, PZ + z]), sA = tam(nA, .8, 1.1);
+  const La = lote(new THREE.SphereGeometry(.15, 14, 10), M('#6FA8E8', { r: .3 }), nA, CENA);
+  const pAc = [[PX - .45, 1.0, PZ + .55], [PX + .55, .95, PZ + .3]], rAc = [[.5, 1, 1.3], [1.2, .4, -1.1]];
+  const Lac = latinhas(CENA, pAc, { s: 1, cores: AÇO });
+  const poca = poe(new THREE.CylinderGeometry(1.7, 1.7, .012, 40), M('#BBD9F5', { r: .3 }), CENA, [PX + .1, .008, PZ + .3]); poca.castShadow = false;
+  mancha(CENA, 4.4, 3.6, .3, [PX, 0, PZ]);
+  // prensa; a carga fica em cima da câmara e a placa desce achatando
+  const PR = prensa(CENA, [PRX, 0, 0]);
+  const nK = 54, pK = camada(nK, PRX, 0, .42, .36, 1.69, 3, .2), sK = tam(nK, 1.15, 1.35), K = latinhas(CENA, pK, { s: 1, r: () => [0, ri(0, 2 * PI), 0] });
+  const gF = grupo(CENA, [FX, 0, 0]); palete(gF); fardoLatinhas(gF, [0, .115, 0]);
+  const tit = titulo('Produção', 'O problema do pátio');
+  const solta = chip('latinha solta'), melhor = chip('vende melhor', 'v');
+  const bal = el(`<div class="ab" style="width:250px;height:110px"><div class="ab" style="left:0;top:0;width:250px;height:84px;border-radius:20px;background:var(--as);
+      display:flex;align-items:center;justify-content:center;font-weight:800;font-size:31px;color:#fff;box-shadow:0 10px 24px rgba(16,24,40,.12)">R$ por kg?</div>
+      <div class="ab" style="left:112px;top:72px;width:24px;height:24px;background:var(--as);transform:rotate(45deg)"></div></div>`);
+  const j0 = W(1, 'na') - .3, tl = W(1, 'latinha'), ts = W(1, 'solta'), tte = W(1, 'terra'), tag = W(1, 'agua'), tac = W(1, 'aco'), tp = W(1, 'prensada'),
+        tvi = W(1, 'vira'), tf = W(1, 'fardo', 1), tme = W(1, 'melhor'), tq = W(1, 'quanto');
+  camera([[0, { x: -.1, y: 1.5, z: 0, d: 19.5, az: .1, el: .3, oy: 110 }], [tq + 3, { x: .1, y: 1.5, z: 0, d: 19, az: .08, el: .3, oy: 110 }, 'lin']]);
+  return t => {
+    GL.style.opacity = eo(pr(t, tl - .4, .6)).toFixed(3);
+    aplica(Lc, i => { const q = eo(pr(t, tl - .1 + i * .0035, .5)); return [pC[i][0], pC[i][1] + .7 * (1 - q), pC[i][2], ...rC[i], ...Array(3).fill(sC[i] * Math.max(q, 1e-4) / 1.55 * 1.55 / 1)]; });
+    Lt.forEach((o, i) => { const q = eo(pr(t, tte - .1 + i * .035, .45)); o.position.set(pT[i][0], pT[i][1] + 1.6 * (1 - q), pT[i][2]); o.scale.copy(o.userData.s0).multiplyScalar(Math.max(q, 1e-4)); });
+    aplica(La, i => { const q = eo(pr(t, tag - .1 + i * .05, .45)); return [pA[i][0], pA[i][1] + 1.6 * (1 - q), pA[i][2], 0, 0, 0, ...[1, .65, 1].map(v => v * sA[i] * Math.max(q, 1e-4))]; });
+    poca.scale.set(Math.max(1e-3, eo(pr(t, tag + .15, .8))), 1, Math.max(1e-3, eo(pr(t, tag + .15, .8)))); poca.visible = t > tag;
+    aplica(Lac, i => { const q = eo(pr(t, tac - .15 + i * .12, .5)), pu = pr(t, tac + .5 + i * .12, .8); return [pAc[i][0], pAc[i][1] + 1.8 * (1 - q), pAc[i][2], ...rAc[i], ...Array(3).fill(2.1 * Math.max(q, 1e-4) * (1 + .14 * Math.sin(PI * (pu > 0 && pu < 1 ? pu : 0))))]; });
+    cresce(PR, t, tp - .2, .6);
+    const dn = eio(pr(t, tp + .35, .8)), up = eio(pr(t, tvi - .05, .55)), qq = dn * (1 - up); aperta(PR, qq);
+    const k = Math.max(.035, cl((lerp(2.22, 1.64, qq) - .05 - 1.57) / .6)), van = 1 - eo(pr(t, tf - .05, .4));
+    aplica(K, i => { const q = eo(pr(t, tp + .05 + i * .004, .45));
+      return [pK[i][0], 1.57 + (pK[i][1] - 1.57) * k + 1.1 * (1 - q), pK[i][2], 0, rK(i), 0, ...[1, k, 1].map(v => v * sK[i] * 1.0 * Math.max(q * van, 1e-4))]; });
+    cresce(gF, t, tf - .1, .65, .5);
+    posTitulo(tit, t, j0 - .6, tl - .35);
+    vis(solta, t, ts - .1, 1e9, { dy: 8 }); ancora(solta, [PX, 0, 1.9], .5, 0, 0, 12);
+    vis(melhor, t, tme - .25, 1e9, { dy: 8 }); ancora(melhor, [FX, 0, 1.0], .5, 0, 0, 12);
+    vis(bal, t, tq - .15, 1e9, { dy: 14, sc: .92 }); ancora(bal, [FX, 1.35, 0], .5, 1, 0, -8);
+  };
+  function rK(i) { return i * 1.7; }
+};
+
+// ------------------------------------------------------------------ CAPS[2] · A ficha é a receita (L1)
+// 1 "Na receita do fardo, entra latinha e sai fardo de alumínio. Uma ficha por produto, e ela vale pra todas as ordens dele."
+CAPS[2] = () => {
+  const PX = -4.6, PRX = .6, FX = 3.9;
+  chaoPatio(CENA, [0, 0, 0], { c: 24, l: 11, passo: 2.6 });
+  const nC = 54, pC = domo(nC, 1.1, .9, .75, .14, .45).map(([x, y, z]) => [PX + x, y, z + .2]), rC = giros(nC), sC = tam(nC, 1.4, 1.65);
+  const Lc = latinhas(CENA, pC, { s: 1 });
+  mancha(CENA, 3.6, 3.0, .3, [PX, 0, .2]);
+  const PR = prensa(CENA, [PRX, 0, 0]);
+  const pK = camada(nC, PRX, 0, .42, .36, 1.69, 3, .2), yaw = pK.map(() => ri(0, 2 * PI));
+  const gF = grupo(CENA, [FX, 0, 0]); palete(gF); fardoLatinhas(gF, [0, .115, 0]);
+  const tit = titulo('Ficha técnica', 'A ficha é a receita');
+  const rec = el(`<div class="card" style="width:300px;height:74px"><div class="row" style="height:74px;padding:0 20px;gap:14px"><div class="ico" style="width:44px;height:44px">${ic('file-text', 24)}</div>
+      <div class="ttl" style="font-size:22px">Fardo de alumínio</div></div></div>`);
+  const tEn = el('<div class="tag a ab" style="font-size:22px">Entra</div>'), tSa = el('<div class="tag v ab" style="font-size:22px">Sai</div>');
+  const nEn = el('<div class="nm ab">Alumínio latinha</div>'), nSa = el('<div class="nm ab">Fardo de alumínio</div>');
+  const uma = el('<div class="tag v ab" style="font-size:22px">1 ficha por produto</div>');
+  const ords = [0, 1, 2].map(k => el(`<div class="card" style="left:990px;top:${150 + k * 110}px;width:240px;height:88px;padding:0 20px;display:flex;align-items:center;gap:14px">
+      <div class="ico" style="width:44px;height:44px">${ic('clipboard-list', 24)}</div><div class="ttl">Ordem</div></div>`));
+  const fios = el('<svg class="ab" style="left:0;top:0;overflow:visible" width="1280" height="800"></svg>');
+  fios.innerHTML = [0, 1, 2].map(() => '<path pathLength="1" fill="none" stroke="#50D088" stroke-width="4" stroke-linecap="round"/>').join('');
+  const fp = [...fios.querySelectorAll('path')];
+  const tfd = W(1, 'fardo', 1), te = W(1, 'entra'), tl = W(1, 'latinha'), ts = W(1, 'sai'), tf2 = W(1, 'fardo', 2), tpd = W(1, 'produto'), tto = W(1, 'todas'), tor = W(1, 'ordens'),
+        A = W(1, 'na') - .3;
+  camera([[0, { x: -.7, y: 1.5, z: 0, d: 17.5, az: .1, el: .3, oy: -45 }], [tor + 2, { x: -.5, y: 1.5, z: 0, d: 18, az: .09, el: .3, oy: -45 }, 'lin']]);
+  return t => {
+    GL.style.opacity = eo(pr(t, tfd - .4, .6)).toFixed(3);
+    cresce(PR, t, tfd - .2, .6);
+    aplica(Lc, i => { const q0 = eo(pr(t, te - .1 + i * .006, .5)), f = eio(pr(t, tl + .2 + i * .008, .6)), k = Math.max(.035, cl((lerp(2.22, 1.64, eio(pr(t, ts - .1, .6))) - .05 - 1.57) / .6)),
+        van = 1 - eo(pr(t, tf2 + .2, .35)), a = pC[i], b = [pK[i][0], 1.57 + (pK[i][1] - 1.57) * k, pK[i][2]], pos = arco(a, b, f, 1.1);
+      const ks = lerp(1, k, f > .98 ? 1 : 0), sc = sC[i] * Math.max(q0 * van, 1e-4);
+      return [pos[0], pos[1] + .7 * (1 - q0), pos[2], lerp(rC[i][0], 0, f), lerp(rC[i][1], yaw[i], f), lerp(rC[i][2], 0, f), sc, sc * (f > .98 ? k : 1), sc]; });
+    aperta(PR, eio(pr(t, ts - .1, .6)) * (1 - eio(pr(t, tf2 + .35, .5))));
+    cresce(gF, t, tf2 - .1, .65, .5);
+    posTitulo(tit, t, A - .6, tfd - .4);
+    vis(rec, t, tfd - .25, 1e9, { dy: 22 }); ancora(rec, [PRX, 3.45, 0], .5, 1, 0, -12);
+    vis(tEn, t, te - .2, 1e9, { dy: 8 }); ancora(tEn, [PX, 1.2, .2], .5, 1, 0, -6);
+    vis(nEn, t, tl - .1, 1e9, { dy: 8 }); ancora(nEn, [PX, 0, 1.7], .5, 0, 0, 14);
+    vis(tSa, t, ts - .15, 1e9, { dy: 8 }); ancora(tSa, [FX, 1.45, 0], .5, 1, 0, -6);
+    vis(nSa, t, tf2 - .05, 1e9, { dy: 8 }); ancora(nSa, [FX, 0, 1.2], .5, 0, 0, 14);
+    vis(uma, t, tpd - .3, 1e9, { dy: 10 }); ancora(uma, [PRX, 0, 2.5], .5, 0, 0, 40);
+    const r = parseFloat(rec.style.left) + 300, y0 = parseFloat(rec.style.top) + 37;
+    fp.forEach((p, k) => { const y1 = 150 + k * 110 + 44, d = pr(t, tto + k * .12, .6);
+      p.setAttribute('d', `M${r.toFixed(1)} ${y0.toFixed(1)} C ${(r + 120).toFixed(1)} ${y0.toFixed(1)}, ${(985 - 120)} ${y1}, 985 ${y1}`);
+      p.style.strokeDasharray = '1 1'; p.style.strokeDashoffset = (1 - eo(d)).toFixed(4); p.style.opacity = d > 0 ? 1 : 0; });
+    ords.forEach((o, k) => vis(o, t, tor - .2 + k * .14, 1e9, { dx: -18, dy: 0 }));
+  };
+};
+
+// ------------------------------------------------------------------ CAPS[4] · O coproduto (L1)
+// 1 "Quando a latinha passa no ímã, as latas de aço que vieram no meio saem. Elas viram chaparia, que também tem valor. Mas quanto
+//    sai, só dá pra saber depois de separar."
+CAPS[4] = () => {
+  const BH = .9, M0 = -2.4, MP = 7.2, YM = 2.7, FX = 4.5, YPON = YM - .66 - .15;
+  chaoPatio(CENA, [1.5, 0, 0], { c: 28, l: 11, passo: 2.6 });
+  esteira(CENA, [-2, 0, 0], { c: 9.6, l: 1.25, h: BH });
+  const pS = [[M0 - .5, BH + .15, 0], [M0 + .5, BH + .15, 0]], Lac = latinhas(CENA, pS, { s: 1, cores: AÇO });
+  const pB = []; for (let x = -6.2; x < 2.5; x += .5) for (const z of [-.33, 0, .33]) { const px = x + ri(-.06, .06), pz = z + ri(-.04, .04);
+    if (Math.abs(pz) < .2 && pS.some(s => Math.abs(s[0] - px) < .42)) continue; if (rng() < .22) continue; pB.push([px, BH + .15, pz]); }
+  const Lb = latinhas(CENA, pB, { s: 1, r: () => [0, ri(0, 2 * PI), 0] }), sB = tam(pB.length, 1.4, 1.6);
+  const gF = grupo(CENA, [FX + .2, 0, 0]); palete(gF); fardoLatinhas(gF, [0, .115, 0]);
+  const CH = grupo(CENA, [MP, 0, 0]); chaparia(CH, [0, 0, 0], { c: 1.7, l: 1.1, n: 5 });
+  const IM = ima(CENA, [M0, YM, 0]); trilho(CENA, -4.3, 8.9, YM + 1.39, 0);
+  const tit = titulo('Ficha técnica', 'O coproduto');
+  const tFd = chip('Fardo de alumínio', 'v'), tCh = chip('Chaparia', 'a');
+  const valor = el('<div class="ab" style="width:44px;height:44px;border-radius:50%;background:var(--as);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;color:#fff;border:2px solid #fff;box-shadow:0 4px 12px rgba(16,24,40,.16)">R$</div>');
+  const selo = el(`<div class="ab" style="width:220px;height:110px"><div class="ab" style="left:0;top:0;width:220px;height:86px;border-radius:18px;background:var(--as);box-shadow:0 10px 24px rgba(16,24,40,.12);
+      display:flex;flex-direction:column;align-items:center;justify-content:center"><div style="font-weight:800;font-size:22px;color:#fff">quantos kg?</div>
+      <div class="sd row" style="gap:6px;margin-top:4px;font-weight:700;font-size:17px;color:#fff">${ic('hourglass', 17)}só depois</div></div>
+      <div class="ab" style="left:99px;top:75px;width:22px;height:22px;background:var(--as);transform:rotate(45deg)"></div></div>`), sd = selo.querySelector('.sd');
+  const A = W(1, 'quando') - .3, tl = W(1, 'latinha'), tim = W(1, 'ima'), tac = W(1, 'aco'), tsa = W(1, 'saem'), tch = W(1, 'chaparia'), tva = W(1, 'valor'),
+        tq = W(1, 'quanto'), tdp = W(1, 'depois');
+  const tDrop = Math.max(tch - .45, tsa + 1.0), tLand = tDrop + .5, tVolta = tsa + 2.2;
+  const aterra = [[MP - .3, .52, .12], [MP + .35, .52, -.1]], rAt = [[0, .6, PI / 2], [0, -.5, PI / 2 + .2]];
+  camera([[0, { x: 1.1, y: 1.9, z: 0, d: 21.5, az: .08, el: .27, oy: 20 }], [tdp + 2.5, { x: 1.3, y: 1.9, z: 0, d: 21, az: .07, el: .27, oy: 20 }, 'lin']]);
+  return t => {
+    GL.style.opacity = eo(pr(t, tl - .35, .5)).toFixed(3);
+    aplica(Lb, i => { const q = eo(pr(t, tl - .1 + (pB[i][0] + 6.2) * .045, .45)); return [pB[i][0], pB[i][1] + .5 * (1 - q), pB[i][2], 0, i, 0, ...Array(3).fill(sB[i] * Math.max(q, 1e-4))]; });
+    // posição do ímã: sobre a esteira; leva as latas até o monte ("saem"), solta e volta
+    const ida = eio(pr(t, tsa - .1, 1.0)), volta = eio(pr(t, tVolta, 1.3)), Mx = lerp(lerp(M0, MP, ida), M0, volta);
+    IM.position.x = Mx; cresce(IM, t, tim - .15, .55, 0); IM.rotation.y = 0;
+    campo(IM, eo(pr(t, tim + .1, .5)) * (1 - eo(pr(t, tDrop, .3))) + eo(pr(t, tLand + .2, .5)) * (1 - eo(pr(t, tVolta, .3))));
+    aplica(Lac, i => { const sobe = eio(pr(t, tac + i * .15, .7)), cai = eio(pr(t, tDrop + i * .08, .5)), pu = pr(t, tac - .25 + i * .1, .6);
+      const alvoI = [Mx + (i ? .5 : -.5), YPON, 0], a = pS[i], p1 = arco(a, alvoI, sobe, .5), p2 = [lerp(p1[0], aterra[i][0], cai), lerp(p1[1], aterra[i][1], cai) - .0, lerp(p1[2], aterra[i][2], cai)];
+      const tomb = cai > 0 ? .0 : 0; return [p2[0], p2[1], p2[2], lerp(0, rAt[i][0], cai), lerp(0, rAt[i][1], cai), lerp(0, rAt[i][2], cai), ...Array(3).fill(1.6 * (1 + .12 * Math.sin(PI * (pu > 0 && pu < 1 ? pu : 0))) * Math.max(eo(pr(t, tl - .1, .5)), 1e-4))]; });
+    cresce(gF, t, tl + .2, .6, .5); cresce(CH, t, tLand - .3, .5, .3);
+    posTitulo(tit, t, A - .6, tl - .35);
+    vis(tFd, t, tl + .4, 1e9, { dy: 8 }); ancora(tFd, [FX + .2, 0, 1.2], .5, 0, 0, 12);
+    vis(tCh, t, Math.max(tch - .1, tLand - .2), 1e9, { dy: 8 }); ancora(tCh, [MP, 0, 1.2], .5, 0, 0, 12); pulse(tCh, t, Math.max(tch, tLand) + .3, .06, .7);
+    vis(valor, t, tva - .15, 1e9, { dy: 8, sc: .8 }); ancora(valor, [MP + 1.15, .62, .6], .5, .5);
+    vis(selo, t, tq - .15, 1e9, { dy: 12, sc: .92 }); vis(sd, t, tdp - .15, 1e9, { dy: 6 }); ancora(selo, [MP, 1.0, 0], .5, 1, 0, -6);
+  };
+};
+
+// ------------------------------------------------------------------ CAPS[8] · Teórico × real (L1)
+// 1 "Só que na balança, a latinha usada deu quatrocentos e noventa e oito quilos. Esse é o real. A diferença são dezoito quilos:
+//    as latas de aço, a terra e a água que saíram."
+CAPS[8] = () => {
+  const SX = 3.5, SUP = .144;
+  chaoPatio(CENA, [1.5, 0, 0], { c: 22, l: 10, passo: 2.6 });
+  const BL = balancaPlataforma(CENA, [SX, 0, 0], { c: 3.0, l: 2.2 }), topo = [SX + BL.userData.topo[0], BL.userData.topo[1], BL.userData.topo[2]];
+  const nC = 120, pC = domo(nC, 1.15, .85, .8, SUP + .13, .45).map(([x, y, z]) => [SX - .1 + x, y, z + .1]), rC = giros(nC), sC = tam(nC, 1.2, 1.45), Lc = latinhas(CENA, pC, { s: 1 });
+  // aço, terra e água em cima do monte; na palavra de cada um saem para o chão, à frente
+  const HZ = 2.5, HX = [-.2, 1.1, 2.4];
+  const nA = 2, pA = [[SX - .5, .98, .2], [SX + .4, .93, .0]], dA = [[HX[0] - .25, .13, HZ], [HX[0] + .25, .13, HZ + .1]], Lac = latinhas(CENA, pA, { s: 1, cores: AÇO });
+  const nT = 9, pT = domo(nT, .8, .6, .85, .5, .8).map(([x, y, z]) => [SX + .1 + x, y + .05, z + .15]), rT = giros(nT), dT = domo(nT, .38, .3, .26, 0, .6).map(([x, y, z]) => [HX[1] + x, y + .08, HZ + z]);
+  const Lt = pT.map(p => peca(CENA, 'terra', p, 2));   // terra: peça do kit
+  const nW = 5, pW = domo(nW, .8, .6, .85, .45, .8).map(([x, y, z]) => [SX - .2 + x, y + .05, z + .25]), dW = domo(nW, .32, .28, .1, 0, .6).map(([x, y, z]) => [HX[2] + x, y + .06, HZ + z]);
+  const Lw = lote(new THREE.SphereGeometry(.12, 14, 10), M('#6FA8E8', { r: .3 }), nW, CENA);
+  const poca = poe(new THREE.CylinderGeometry(.62, .62, .012, 36), M('#BBD9F5', { r: .3 }), CENA, [HX[2], .008, HZ]); poca.castShadow = false;
+  const tit = titulo('Lançamento', 'Teórico × real');
+  const lin = (r, v, mt = 14) => `<div class="row" style="justify-content:space-between;margin-top:${mt}px"><span class="lbl">${r}</span><span class="num" style="font-size:22px">${v}</span></div>`;
+  const teo = el(`<div class="card" style="left:70px;top:212px;width:380px;height:360px;padding:26px 28px"><div class="tag v">Teórico</div>${lin('ficha', '1 kg por kg', 22)}${lin('fardo', '× 480 kg')}
+      <div style="height:1px;background:#E1E8E4;margin:22px 0 18px"></div><div class="num" style="font-size:44px;color:var(--ve)">480 kg</div><div class="lbl" style="margin-top:4px">de latinha</div></div>`);
+  const most = mostrador('Real'), tReal = chip('Real', 'a');
+  const dif = el('<div class="ab lbl" style="font-size:19px">diferença</div>'), d18 = el('<div class="tag a ab" style="font-size:28px;padding:10px 22px">+18 kg</div>');
+  const rot = ['aço', 'terra', 'água'].map(s => chip(s));
+  const ts = W(1, 'so'), tb = W(1, 'balanca'), td = W(1, 'deu'), tq = W(1, 'quilos', 1), tr = W(1, 'real'), tdi = W(1, 'diferenca'), tsa = W(1, 'sao'),
+        tac = W(1, 'aco'), tte = W(1, 'terra'), tag = W(1, 'agua'), A = W(1, 'so') - .3;
+  camera([[0, { x: 1.2, y: 1.3, z: .6, d: 13.5, az: .1, el: .3, oy: 0 }], [tag + 3, { x: 1.4, y: 1.3, z: .6, d: 13.1, az: .08, el: .3, oy: 0 }, 'lin']]);
+  return t => {
+    GL.style.opacity = eo(pr(t, tb - .35, .6)).toFixed(3);
+    BL.visible = t > tb - .4; BL.scale.setScalar(Math.max(1e-3, eo(pr(t, tb - .35, .5)))); BL.position.set(SX, 0, 0);
+    aplica(Lc, i => { const q = eo(pr(t, tb - .05 + i * .004, .5)); return [pC[i][0], pC[i][1] + .6 * (1 - q), pC[i][2], ...rC[i], ...Array(3).fill(sC[i] * Math.max(q, 1e-4))]; });
+    const ent = eo(pr(t, tb + .3, .5));
+    aplica(Lac, i => { const q = eo(pr(t, tac - .1 + i * .1, .75)), p = arco(pA[i], dA[i], q, 1.4);
+      return [p[0], p[1], p[2], 0, 0, lerp(.4, PI / 2, q), ...Array(3).fill(1.7 * Math.max(ent, 1e-4))]; });
+    Lt.forEach((o, i) => { const q = eo(pr(t, tte - .1 + i * .05, .75)), p = arco(pT[i], dT[i], q, 1.4); o.position.set(p[0], p[1], p[2]); o.scale.copy(o.userData.s0).multiplyScalar(Math.max(ent, 1e-4)); });
+    aplica(Lw, i => { const q = eo(pr(t, tag - .1 + i * .06, .75)), p = arco(pW[i], dW[i], q, 1.4); return [p[0], p[1], p[2], 0, 0, 0, 1, .65, 1].map((v, k) => k > 5 ? v * Math.max(ent, 1e-4) : v); });
+    const pq = Math.max(1e-3, eo(pr(t, tag + .4, .7))); poca.scale.set(pq, 1, pq); poca.visible = t > tag + .1;
+    posTitulo(tit, t, A - .6, ts - .1);
+    vis(teo, t, ts - .05, 1e9, { dy: 22 });
+    vis(most, t, tb - .15, 1e9, { dy: 14 }); ancora(most, topo, .5, 1, 0, 4);
+    conta(most.mn, t, td, Math.max(1, tq - td + .3), 0, 498); pulse(most, t, tq + .35, .05, .7);
+    vis(tReal, t, tr - .15, 1e9, { dy: 8 }); ancora(tReal, [SX, 0, 1.55], .5, 0, 0, 10); pulse(tReal, t, tr + .3, .06, .7);
+    vis(dif, t, tdi - .15, 1e9, { dy: 8 }); ancora(dif, [HX[1], 1.55, HZ], .5, 1, 0, -50);
+    vis(d18, t, tsa - .05, 1e9, { dy: 10, sc: .9 }); ancora(d18, [HX[1], 1.55, HZ], .5, 1, 0, -4);
+    [tac, tte, tag].forEach((a, k) => { vis(rot[k], t, a + .35, 1e9, { dy: 8 }); ancora(rot[k], [HX[k], 0, HZ + .85], .5, 0, 0, 10); });
+  };
+};
+
+cena(d => CAPS[d.cap](), { sombra: 11, mapa: 2048, chao: false });
+</script></body></html>

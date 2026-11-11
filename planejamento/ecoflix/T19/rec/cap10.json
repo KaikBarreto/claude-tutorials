@@ -366,6 +366,11 @@
    "label": "rola até o rodapé da folha"
   },
   {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Total do mês\", \"1 com atestado\", \"1 dia(s) sem saída registrada não entram no saldo\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere rodapé e aviso do dia aberto"
+  },
+  {
    "do": "hover",
    "target": {
     "text": "Total do mês",

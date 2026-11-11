@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<!-- T05 "Balança e impressora: o EcoTray" · cenas 3D (kit perfis/ecoflix/cenas3d/kit3d.js). As cenas 2D da ../cenas/cenas.html
+     ficam de reserva. Uma por capítulo (ilustracoes.json, chave "3d"):
+       cap01 a ponte do EcoTray: o navegador (EcoSistema) não chega na balança de plataforma nem na impressora; o EcoTray, no
+             computador delas, liga os dois lados por cabo; o peso (18,6 kg, o saco de latinha da Dona Cida) vai da balança ao
+             Pedido e o cupom volta do Comprovante até a impressora;
+       cap04 (A) a impressora térmica ligada no computador do EcoTray pelo cabo USB; (B) o cupom de teste sai com data e hora
+             (QUANDO, a mesma da 2D), mas cortado do lado: o desenho é de 80 mm e a bobina, de 58 mm;
+       cap05 a largura do papel: o cupom feito para 80 mm sai cortado na bobina de 58 mm; feito para 58 mm, sai inteiro.
+     Objetos novos em perfis/ecoflix/cenas3d/objetos/: balancaPlataforma, cabo, cupom. Âncoras W(linha,'palavra') das falas do
+     narracao/tts_textos.py; textos e números da cena 2D.
+     Render: node ferramentas/edit/cenas/render_cenas.cjs <cap> <capNN.json> saida.mp4 --html planejamento/ecoflix/T05/cenas3d/cena3d.html --de <início> --ate <fim> -->
+<style>
+.row{display:flex;align-items:center}
+.ico{display:flex;align-items:center;justify-content:center;flex:none;border-radius:12px;background:var(--vs);color:#fff}
+.ico.a{background:var(--as)}
+.ttl{font-weight:800;font-size:22px;line-height:1.2;white-space:nowrap}
+.pill{display:inline-flex;align-items:center;padding:8px 18px;border-radius:999px;background:var(--vs);color:#fff;font-weight:800;font-size:24px;white-space:nowrap;box-shadow:0 6px 16px rgba(16,24,40,.16)}
+.ficha{display:flex;align-items:center;justify-content:center;width:52px;height:52px;border-radius:14px;background:var(--vs);color:#fff;box-shadow:0 6px 16px rgba(16,24,40,.16)}
+.xis{display:flex;align-items:center;justify-content:center;width:68px;height:68px;border-radius:50%;background:var(--as);box-shadow:0 6px 16px rgba(16,24,40,.16)}
+.campo{position:relative;width:296px;height:68px;border:2px solid #D0D5DD;border-radius:14px;background:#fff;display:flex;align-items:center;padding:0 18px;gap:10px}
+.campo .cv{font-weight:800;font-size:34px;font-variant-numeric:tabular-nums;color:var(--ve);min-width:78px}
+.campo .un{font-weight:700;font-size:22px;color:#4B5563}
+.campo .ci{position:absolute;right:14px;top:17px;width:30px;height:30px}
+.dot{width:11px;height:11px;border-radius:50%;background:#C9CED6;display:inline-block}
+</style>
+</head><body>
+<script type="module">
+import { THREE, PI, eo, eio, pr, lerp, cl, W, LE, el, ic, vis, ripple, pulse, kgd, conta, posTitulo, titulo, chip, mostrador, onda,
+  CENA, GL, camera, ancora, tela, mundo, M, grupo, poe, rbox, mancha, cresce, impressora, computador, saco, COR, cena } from '../../../../perfis/ecoflix/cenas3d/kit3d.js';
+import { balancaPlataforma } from '../../../../perfis/ecoflix/cenas3d/objetos/balancaPlataforma.js';
+import { cabo, caboAte } from '../../../../perfis/ecoflix/cenas3d/objetos/cabo.js';
+import { cupom } from '../../../../perfis/ecoflix/cenas3d/objetos/cupom.js';
+
+const QUANDO = '10/11/2026, 08:41:07';        // hora do teste no roteiro (a mesma da cena 2D e da cena de Windows 4)
+const CAPS = {};
+const VERMX = '<svg width="30" height="30" viewBox="0 0 30 30"><path d="M7 7 L23 23 M23 7 L7 23" stroke="#fff" stroke-width="4" stroke-linecap="round"/></svg>';
+
+// ponto de uma poligonal em px (u de 0 a 1, por comprimento)
+function poli(P, u) {
+  const L = []; let tot = 0; for (let i = 1; i < P.length; i++) { const d = Math.hypot(P[i][0] - P[i - 1][0], P[i][1] - P[i - 1][1]); L.push(d); tot += d; }
+  let r = cl(u) * tot; for (let i = 0; i < L.length; i++) { if (r <= L[i] || i === L.length - 1) { const q = L[i] ? r / L[i] : 1;
+    return [lerp(P[i][0], P[i + 1][0], q), lerp(P[i][1], P[i + 1][1], q)]; } r -= L[i]; }
+  return P[P.length - 1];
+}
+// o que viaja: sobe até o ponto e some ao chegar (ou fica, se fica = true)
+function viaja(e, P, t, a, d, fica = false) {
+  const q = eio(pr(t, a, d)), [x, y] = poli(P, q);
+  e.style.left = (x - e.offsetWidth / 2).toFixed(1) + 'px'; e.style.top = (y - e.offsetHeight / 2).toFixed(1) + 'px';
+  const op = t < a ? 0 : Math.min(1, (t - a) / .18) * (fica ? 1 : 1 - eo(pr(t, a + d, .25)));
+  e.style.opacity = op.toFixed(3); e.style.visibility = op <= .001 ? 'hidden' : 'visible';
+}
+
+// ------------------------------------------------------------------ CAPS[1] · A ponte do EcoTray (L1-L3)
+// 1 "Mas o que é o EcoTray? O EcoSistema roda no navegador. E o navegador, sozinho, não conversa com a balança nem com a impressora."
+// 2 "O EcoTray é um programa pequeno, instalado no computador onde elas estão ligadas. Ele faz a ponte."
+// 3 "A balança manda o peso pro EcoTray, e ele passa pro sistema. Na volta, o sistema manda o cupom, e o EcoTray entrega na impressora."
+CAPS[1] = () => {
+  const PESO = 18.6, g = grupo(CENA), BX = 4.35, BZ = -1.6, PX = 4.1, PZ = 1.9, CXN = -3.75;
+  const comp = computador(g, [.2, 0, 0]); comp.scale.setScalar(2.7); comp.userData.s = 2.7;
+  const bal = balancaPlataforma(g, [BX, 0, BZ]); bal.scale.setScalar(2.2); bal.userData.s = 2.2;
+  const bag = saco(g, [BX, bal.userData.sup * 2.2, BZ]); bag.scale.setScalar(1.15); bag.userData.s = 1.15;
+  const imp = impressora(g, [PX, 0, PZ]); imp.scale.setScalar(3.6); imp.userData.s = 3.6; imp.userData.papel.visible = false;
+  const cp = cupom(imp, [0, .196, .068], { papel: 58, desenho: 58, tipo: 'generico', alt: 64 }); cp.rotation.x = -.2;
+  imp.updateWorldMatrix(true, true); cp.userData.corteEm(mundo(imp, [0, .196, .068])[1]);
+  // cabos: computador → balança e computador → impressora; as duas linhas verdes da ponte (computador → sistema)
+  const sB = mundo(bal, bal.userData.saida);
+  const cB = cabo(g, [[.8, .04, -.55], [2.2, .03, -1.1], [3.4, .03, -2.5], [sB[0], .05, -2.5], [sB[0], .06, sB[2]]], { r: .028 });
+  const cP = cabo(g, [[.8, .04, .6], [2.0, .03, 1.4], [3.0, .03, 2.1], [PX - .66, .12, PZ + .1]], { r: .028 });
+  const vA = cabo(g, [[-.55, .04, .3], [-1.6, .03, .5], [CXN + 1.5, .03, .5]], { r: .03, cor: COR.verde });
+  const vB = cabo(g, [[-.55, .04, .6], [-1.6, .03, .95], [CXN + 1.5, .03, .95]], { r: .03, cor: COR.verde });
+  // o sem-ponte: pontilhado cinza do sistema até a balança e até a impressora, com o X no meio
+  const pts = (a, b, c, n) => Array.from({ length: n }, (_, i) => { const u = (i + 1) / (n + 1), v = 1 - u;
+    return [v * v * a[0] + 2 * u * v * b[0] + u * u * c[0], .06, v * v * a[2] + 2 * u * v * b[2] + u * u * c[2]]; });
+  const sem = [pts([CXN + 1.6, 0, .1], [.2, 0, -1.3], [BX - 1.3, 0, BZ + .3], 16), pts([CXN + 1.6, 0, .3], [.2, 0, 1.5], [PX - 1.0, 0, PZ], 16)]
+    .map(L => L.map(p => { const m = new THREE.Mesh(new THREE.SphereGeometry(.07, 10, 8), M('#B7BEC6')); m.position.set(...p); m.castShadow = true; g.add(m); return m; }));
+  // rótulos: o navegador com o Pedido e o Comprovante; o mostrador da balança; o EcoTray
+  const tit = titulo('EcoTray', 'A ponte do EcoTray');
+  const nav = el(`<div class="card" style="width:340px;height:330px;overflow:hidden;border-radius:16px">
+    <div class="row" style="height:46px;background:#EEF1F4;border-bottom:1px solid #E1E8E4;padding:0 16px;gap:7px"><span class="dot"></span><span class="dot"></span><span class="dot"></span>
+      <div style="margin-left:14px;align-self:flex-end;height:36px;padding:0 18px;border-radius:10px 10px 0 0;background:#fff;display:flex;align-items:center;font-weight:700;font-size:16px">EcoSistema</div></div>
+    <div class="ab" style="left:22px;top:66px;width:300px"><div class="row" style="gap:12px"><div class="ico" style="width:40px;height:40px">${ic('clipboard-list', 22)}</div><div style="font-weight:800;font-size:21px">Pedido</div></div>
+      <div style="margin-top:14px"><div class="campo"><div class="cv"></div><div class="un">kg</div><div class="ci">${ic('circle-check', 30)}</div></div></div></div>
+    <div class="card" style="left:22px;top:222px;width:296px;height:84px;border-radius:14px;padding:0 20px;display:flex;align-items:center;gap:14px;box-shadow:0 8px 20px rgba(16,24,40,.08)">
+      <div class="ico a" style="width:48px;height:48px">${ic('file-text', 26)}</div><div style="font-weight:800;font-size:21px">Comprovante</div></div></div>`);
+  const cv = nav.querySelector('.cv'), campo = nav.querySelector('.campo'), ci = nav.querySelector('.ci');
+  const most = mostrador('', '', 214); most.querySelector('.ml').style.display = 'none';
+  const eco = el(`<div class="tag v ab" style="font-size:20px;padding:8px 18px 8px 14px">${ic('plug-zap', 22)}EcoTray</div>`);
+  const xis = el(`<div class="xis ab">${VERMX}</div>`);
+  const pilula = el(`<div class="pill ab">${kgd(PESO)}</div>`), ficha = el(`<div class="ficha ab">${ic('file-text', 28)}</div>`);
+  const rip = onda(OVL(), 0, 0), ripT = onda(OVL(), 0, 0);
+  function OVL() { return nav.parentElement; }
+  const NAVC = { x: 0.2 };      // o navegador entra no centro e vai para a esquerda quando a balança e a impressora chegam
+  const CAMA = { x: .3, y: 1.0, z: 0, d: 15.8, az: .1, el: .36, oy: -10 };
+  camera([[0, CAMA]]);
+  return t => {
+    const t0 = W(1, 'Mas') - .3, tes = W(1, 'EcoSistema'), tna = W(1, 'navegador'), tba = W(1, 'balanca'), tim = W(1, 'impressora');
+    const tpg = W(2, 'programa'), tcp = W(2, 'computador'), tli = W(2, 'ligadas'), tpo = W(2, 'ponte');
+    const tma = W(3, 'manda'), tet = W(3, 'EcoTray'), tpa = W(3, 'passa'), tsi = W(3, 'sistema'), tma2 = W(3, 'manda', 2), tet2 = W(3, 'EcoTray', 2),
+          ten = W(3, 'entrega'), tim3 = W(3, 'impressora');
+    GL.style.opacity = eo(pr(t, tes - .25, .6)).toFixed(3);
+    posTitulo(tit, t, t0 - .6, tes - .15);
+    // o sistema no navegador: no centro, depois para a esquerda
+    const cx = lerp(0.2, CXN, eio(pr(t, tba - .75, .7)));
+    vis(nav, t, tes - .15, 1e9, { dy: 16 }); ancora(nav, [cx, 1.45, 0], .5, .5, 0, 0); pulse(nav, t, tna, .025, .7);
+    const [fx, fy] = (() => { const [x0, y0] = tela([cx, 1.45, 0]); return [x0 - 170 + 22 + 150, y0 - 165 + 66 + 14 + 40 + 34]; })();   // meio do campo do Pedido
+    // balança e impressora chegam
+    const pb = cresce(bal, t, tba - .1, .7); const pbg = cresce(bag, t, tba + .1, .6);
+    vis(most, t, tba, 1e9, { dy: 10 }); ancora(most, mundo(bal, bal.userData.topo), .5, 1, 0, -6); conta(most.mn, t, tba + .2, .8, 0, PESO, kgd);
+    cresce(imp, t, tim - .15, .7, .3);
+    // o X no lugar do cabo, até o EcoTray entrar
+    const xa = tim + .15, xs = tpg - .1;
+    sem.forEach((L, k) => L.forEach((m, i) => { const q = eio(pr(t, xa + k * .08 + i * .012, .35)); m.visible = q > .01 && t < xs + .35; m.scale.setScalar(Math.max(.01, q * (1 - eo(pr(t, xs, .35))))); }));
+    vis(xis, t, xa + .25, xs, { sc: .7, dy: 0 }); ancora(xis, [.2, .9, .2], .5, .5);
+    // o EcoTray: programa pequeno no computador; os cabos na palavra "ligadas"; a linha verde acende na "ponte"
+    vis(eco, t, tpg - .1, 1e9, { dy: 10 }); ancora(eco, [.2, 0, 1.15], .5, 0, 0, 4); pulse(eco, t, tet, .06, .7); pulse(eco, t, tet2, .06, .7);
+    cresce(comp, t, tcp - .15, .7, .3);
+    ripple(ripT, t, tcp + .35); { const [x, y] = tela([.9, .5, .3]); ripT.style.left = x + 'px'; ripT.style.top = y + 'px'; }
+    caboAte(cB, eio(pr(t, tli - .2, .6))); caboAte(cP, eio(pr(t, tli - .1, .6)));
+    caboAte(vA, eio(pr(t, tpo - .25, .5))); caboAte(vB, eio(pr(t, tpo - .2, .5)));
+    const gl = (1 + 0 * t) * Math.sin(PI * pr(t, tpo, .9)); vA.scale.y = vA.scale.z = vB.scale.y = vB.scale.z = 1 + .9 * gl;
+    // o peso vai da balança ao EcoTray e dele ao sistema; o cupom faz o caminho de volta, até a impressora
+    const pB = tela(mundo(bal, bal.userData.topo)), pC = tela([.2, 1.0, .4]), pS = [fx, fy];
+    const d1 = Math.max(.8, tet - tma + .25), b2 = tpa - .2, d2 = Math.max(.7, tsi - tpa + .35), a1 = tma - .05;
+    if (t < Math.max(a1 + d1, b2)) viaja(pilula, [[pB[0], pB[1] + 20], pC], t, a1, d1, true);
+    else viaja(pilula, [pC, pS], t, Math.max(a1 + d1, b2), d2);
+    const chega = Math.max(a1 + d1, b2) + d2, ok = eo(pr(t, chega, .4));
+    const txt = t >= chega ? '18,6' : ''; if (cv.textContent !== txt) cv.textContent = txt;
+    campo.style.borderColor = `rgb(${lerp(208, 80, ok) | 0},${lerp(213, 208, ok) | 0},${lerp(221, 136, ok) | 0})`; ci.style.opacity = ok.toFixed(3);
+    ripple(rip, t, chega - .05); { const [x, y] = tela([cx - 1.2, 1.7, 0]); rip.style.left = (x + 20) + 'px'; rip.style.top = (y - 6) + 'px'; }
+    const pD = [fx, fy + 100], e1 = Math.max(.7, tet2 - tma2 + .1), e2b = ten - .2, e2 = Math.max(.7, tim3 - ten + .15), b0 = tma2 - .1;
+    const pI = tela(mundo(imp, [0, .22, .1]));
+    if (t < Math.max(b0 + e1, e2b)) viaja(ficha, [pD, pC], t, b0, e1, true);
+    else viaja(ficha, [pC, pI], t, Math.max(b0 + e1, e2b), e2);
+    cp.userData.sai(eio(pr(t, Math.max(b0 + e1, e2b) + e2 - .1, 1.0)));
+    pulse(nav, t, tsi, .025, .6);
+  };
+};
+
+// ------------------------------------------------------------------ CAPS[4] · Impressora térmica (A) e cupom de teste (B)
+// 0 "Agora a impressora. A impressora térmica, aquela de cupom, vai ligada no computador pelo cabo USB."
+// 4 "Na impressora sai um cupom de teste, com a data e a hora. Saiu o cupom? A ligação está funcionando. Mas repara: ele saiu cortado do lado."
+CAPS[4] = () => {
+  // ---- A: a impressora, o computador (o do EcoTray) e o cabo USB
+  const gA = grupo(CENA), PA = 1.9;
+  const impA = impressora(gA, [0, 0, .3]); impA.scale.setScalar(4.2); impA.userData.s = 4.2; impA.userData.papel.visible = false;
+  const cpA = cupom(impA, [0, .196, .068], { papel: 58, desenho: 58, tipo: 'generico', alt: 64 }); cpA.rotation.x = -.2;
+  impA.updateWorldMatrix(true, true); cpA.userData.corteEm(mundo(impA, [0, .196, .068])[1]);
+  const compA = computador(gA, [-2.9, 0, 0]); compA.scale.setScalar(3.1); compA.userData.s = 3.1;
+  const usb = cabo(gA, [[-1.5, .05, .55], [-.6, .03, .9], [.3, .03, .9], [PA - .78, .12, .55]], { r: .04 });
+  const chipU = el(`<div class="tag v ab">${ic('usb', 22)}USB</div>`);
+  const titA = titulo('Impressora', 'Impressora térmica');
+  // ---- B: o cupom de teste sai cortado do lado
+  const gB = grupo(CENA);
+  const impB = impressora(gB, [-.2, 0, 0]); impB.scale.setScalar(4.3); impB.userData.s = 4.3; impB.userData.papel.visible = false;
+  const cpB = cupom(impB, [0, .196, .068], { papel: 58, desenho: 80, tipo: 'teste', quando: QUANDO }); cpB.rotation.x = -.2;
+  impB.updateWorldMatrix(true, true); cpB.userData.corteEm(mundo(impB, [0, .196, .068])[1]);
+  const ub = cpB.userData, esc = ub.esc;
+  const dt = new THREE.Mesh(new THREE.PlaneGeometry(32 * esc, 5.6 * esc), new THREE.MeshBasicMaterial({ color: 0x50D088, transparent: true, opacity: 0, depthWrite: false }));
+  dt.position.set((40 - 29) * esc, 13 * esc, .0045); cpB.add(dt);
+  const okB = el(`<div class="tag v ab">${ic('circle-check', 24)}Funcionando</div>`), cortB = el(`<div class="tag a ab">Cortado</div>`);
+  const titB = titulo('Impressora', 'Cupom de teste');
+  camera([[0, { x: -.4, y: 1.0, z: .3, d: 10.4, az: .08, el: .34, oy: -20 }], [20, { x: -.4, y: 1.0, z: .3, d: 10.4, az: .08, el: .34, oy: -20 }, 'lin'],
+          [20.5, { x: .3, y: .9, z: 0, d: 7.8, az: .08, el: .3, oy: -30 }, 'lin'], [60, { x: .3, y: .9, z: 0, d: 7.6, az: .08, el: .3, oy: -30 }, 'lin']]);
+  return t => {
+    const a0 = W(0, 'impressora', 2) - .3, ate = W(0, 'termica'), acu = W(0, 'cupom'), aco = W(0, 'computador'), aca = W(0, 'cabo'), aus = W(0, 'USB'), aF = LE(0) + .6;
+    const showA = t < aF + .5; gA.visible = showA;
+    const b0 = W(4, 'Na') - .3, bim = W(4, 'impressora'), bsa = W(4, 'sai'), bda = W(4, 'data'), bfu = W(4, 'funcionando'), bco = W(4, 'cortado'), bF = LE(4) + .8;
+    const showB = t >= b0 - 1 && t < bF + .5; gB.visible = showB;
+    GL.style.opacity = (showA ? eo(pr(t, ate - .3, .6)) : showB ? eo(pr(t, bim - .3, .6)) : 0).toFixed(3);
+    if (showA) {
+      posTitulo(titA, t, a0 - .6, ate - .15);
+      cresce(impA, t, ate - .1, .7, .3);
+      impA.position.x = lerp(-.4, PA, eio(pr(t, aco - .55, .7)));       // a impressora vai para a direita quando o computador chega
+      cpA.userData.sai(eio(pr(t, acu, .9)));
+      cresce(compA, t, aco - .15, .7, .3);
+      caboAte(usb, eio(pr(t, aca - .15, .6)));
+      vis(chipU, t, aus - .1, 1e9, { dy: 8, sc: .9 }); ancora(chipU, [(-1.5 + PA - 1.5) / 2 - .1, .05, .9], .5, 1, 0, -10);
+    } else { titA.style.opacity = 0; chipU.style.visibility = 'hidden'; }
+    if (showB) {
+      posTitulo(titB, t, b0 - .6, bim - .15);
+      cresce(impB, t, bim - .1, .7, .3);
+      ub.sai(eio(pr(t, bsa, 1.3)));
+      dt.material.opacity = .42 * eo(pr(t, bda, .4)) * (1 - eo(pr(t, bfu, .5)));
+      const fy = tela(mundo(cpB, [-ub.larg / 2 - .02, ub.alt * .5, 0]));
+      vis(okB, t, bfu - .1, 1e9, { dy: 10 }); ancora(okB, mundo(cpB, [-ub.larg / 2 - .08, ub.alt * .5, 0]), 1, .5, 0, 0);
+      const pf = eo(pr(t, bco - .05, .5)); ub.fantasma.visible = pf > .01; ub.corte.visible = pf > .01;
+      ub.fantasma.children[0].material.opacity = pf; ub.corte.scale.y = pf; ub.corte.scale.x = ub.corte.scale.z = 1 + .6 * Math.sin(PI * pr(t, bco + .1, .8));
+      vis(cortB, t, bco + .15, 1e9, { dy: 10 }); ancora(cortB, mundo(cpB, [ub.larg / 2 + (80 - 58) * esc + .1, ub.alt * .5, 0]), 0, .5, 0, 0);
+    } else { titB.style.opacity = 0; okB.style.visibility = cortB.style.visibility = 'hidden'; }
+  };
+};
+
+// ------------------------------------------------------------------ CAPS[5] · A largura do papel (L1)
+// 1 "Com o papel mais estreito que o cupom, o lado sai cortado. Uma dica: cupom cortado quase sempre é a largura, e não a impressora."
+CAPS[5] = () => {
+  const g = grupo(CENA), XL = -2.7, XR = 2.7, ESC = 5.3;
+  const mk = (x, desenho) => { const im = impressora(g, [x, 0, 0]); im.scale.setScalar(ESC); im.userData.s = ESC; im.userData.papel.visible = false;
+    const c = cupom(im, [0, .196, .068], { papel: 58, desenho, tipo: 'generico', alt: 64 }); c.rotation.x = -.2;
+    im.updateWorldMatrix(true, true); c.userData.corteEm(mundo(im, [0, .196, .068])[1]); return { im, c }; };
+  const L = mk(XL, 80), R = mk(XR, 58), eL = L.c.userData.esc, wl = 58 * eL;
+  const regua = (im, mm, cor, cx) => { const gr = grupo(im, [cx, .196 + 64 * eL + .07, .05]), w = mm * eL;
+    poe(rbox(w, .009, .012, .004, 1), M(cor), gr); for (const s of [-1, 1]) poe(rbox(.009, .035, .012, .004, 1), M(cor), gr, [s * w / 2, .0, 0]); return gr; };
+  const r58a = regua(L.im, 58, COR.verde, 0), r80 = regua(L.im, 80, COR.ambar, 11 * eL), r58b = regua(R.im, 58, COR.verde, 0);
+  r80.position.y += .06; r58a.position.y -= .01; L.c.userData.tinta.visible = false;
+  const t58a = el(`<div class="tag v ab">58 mm</div>`), t80 = el(`<div class="tag a ab">80 mm</div>`), t58b = el(`<div class="tag v ab">58 mm</div>`), okI = el(`<div class="tag v ab">${ic('circle-check', 24)}Inteiro</div>`);
+  const tit = titulo('Impressora', 'A largura do papel');
+  const C0 = { x: XL + .5, y: 1.5, z: 0, d: 9.0, az: .06, el: .3, oy: -30 }, C1 = { x: 0, y: 1.3, z: 0, d: 13.0, az: .06, el: .3, oy: -30 };
+  camera([[0, C0], [14.2, C0, 'lin'], [15.3, C1, 'eio'], [60, C1, 'lin']]);
+  return t => {
+    const t0 = W(1, 'Com') - .3, tpa = W(1, 'papel'), tes = W(1, 'estreito'), tcu = W(1, 'cupom'), tco = W(1, 'cortado'), tc2 = W(1, 'cortado', 2), tla = W(1, 'largura'), tim = W(1, 'impressora');
+    GL.style.opacity = eo(pr(t, tpa - .3, .6)).toFixed(3);
+    posTitulo(tit, t, t0 - .6, tpa - .15);
+    cresce(L.im, t, tpa - .1, .7, .3); L.c.userData.sai(eio(pr(t, tpa + .3, .9)));
+    vis(t58a, t, tpa + .1, 1e9, { dy: -8 }); ancora(t58a, mundo(r58a, [-58 * eL / 2, 0, 0]), 1, .5, -10, 0); pulse(t58a, t, tes, .08, .7);
+    // o cupom de 80 mm: a régua âmbar e o texto aparecem; na palavra "cortado" o lado de fora vira o fantasma
+    const op = eo(pr(t, tcu - .15, .5)); L.c.userData.tinta.visible = op > .01; L.c.userData.tinta.material.opacity = op;
+    vis(t80, t, tcu - .1, 1e9, { dy: -8 }); ancora(t80, mundo(r80, [80 * eL / 2, 0, 0]), 0, .5, 12, 0);
+    r80.visible = t > tcu - .1; const u = L.c.userData, pf = eo(pr(t, tco + .1, .5));
+    u.fantasma.visible = pf > .01; u.fantasma.children[0].material.opacity = pf; u.corte.visible = pf > .01; u.corte.scale.y = pf;
+    u.corte.scale.x = u.corte.scale.z = 1 + .7 * Math.sin(PI * pr(t, tc2, .8));
+    r58a.visible = t > tpa; r58b.visible = t > tla;
+    // a largura certa: o mesmo cupom, feito para 58 mm, sai inteiro
+    cresce(R.im, t, tla - .1, .7, .3); R.c.userData.sai(eio(pr(t, tla + .25, .9)));
+    vis(t58b, t, tla + .1, 1e9, { dy: -8 }); ancora(t58b, mundo(r58b, [0, .06, 0]), .5, 1, 0, -4);
+    vis(okI, t, tla + .35, 1e9, { dy: 10 }); ancora(okI, mundo(R.im, [0, 0, .2]), .5, 0, 0, 10); pulse(okI, t, tim, .06, .8);
+  };
+};
+
+cena(d => CAPS[d.cap](), { sombra: 8, mapa: 2048, chao: true });
+</script></body></html>

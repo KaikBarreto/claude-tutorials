@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<!-- T17 "MDF-e, NFS-e e o pacote do contador" · cenas 3D (kit perfis/ecoflix/cenas3d/kit3d.js; objetos novos em .../cenas3d/objetos/).
+     As cenas 2D da ../cenas/cenas.html ficam de reserva. Uma por capítulo (ilustracoes.json, chave "3d"):
+       cap01 o manifesto é o documento da viagem: o truck sai com alumínio de duas vendas (uma NF-e por venda), o MDF-e junta as
+             notas, o caminhão e o motorista; depois, emitido antes de sair (Autorizado) e encerrado no fim da viagem;
+       cap03 o percurso: Taubaté (SP) → RJ → Itamonte (MG) numa estrada com pórticos de divisa (sem contorno de mapa); o RJ é o
+             estado do meio do caminho e vai para o Percurso (UFs Atravessadas) de cada manifesto;
+       cap06 mercadoria × serviço: o pátio da Recicla Vale (o caminhão sai carregado, NF-e) e a caçamba parada na Aços Quiririm
+             (não sai mercadoria, NFS-e da prefeitura).
+     Âncoras W(linha,'palavra') das falas do narracao/tts_textos.py; textos e rótulos os da cena 2D.
+     Render: node ferramentas/edit/cenas/render_cenas.cjs <cap> <capNN.json> saida.mp4 --html planejamento/ecoflix/T17/cenas3d/cena3d.html --de <at> --ate <at+dur> -->
+<style>
+.ttl{font-weight:800;font-size:22px;line-height:1.2;white-space:nowrap}
+.fim .tag{background:#4B5563}
+.card .row{display:flex;align-items:center}
+.ico{display:flex;align-items:center;justify-content:center;flex:none;border-radius:14px;background:var(--vs);color:#fff}
+</style>
+</head><body>
+<script type="module">
+import { THREE, PI, eo, eio, pr, lerp, cl, rng, ri, pega, W, L, LE, el, ic, vis, ripple, pulse, posTitulo, titulo, chip, onda,
+  CENA, GL, camera, ancora, mundo, tela, M, grupo, poe, rbox, mancha, anel, destaque, cresce, pulso, domo, monte, chaoPatio, caminhao, anda,
+  peca, COR, PAL, cena } from '../../../../perfis/ecoflix/cenas3d/kit3d.js';
+import { folha } from '../../../../perfis/ecoflix/cenas3d/objetos/folha.js';
+import { motorista } from '../../../../perfis/ecoflix/cenas3d/objetos/motorista.js';
+import { fio } from '../../../../perfis/ecoflix/cenas3d/objetos/fio.js';
+import { estrada } from '../../../../perfis/ecoflix/cenas3d/objetos/estrada.js';
+import { porticoEstado } from '../../../../perfis/ecoflix/cenas3d/objetos/porticoEstado.js';
+import { pinoLocal } from '../../../../perfis/ecoflix/cenas3d/objetos/pinoLocal.js';
+import { galpao } from '../../../../perfis/ecoflix/cenas3d/objetos/galpao.js';
+import { cacambaEstacionaria } from '../../../../perfis/ecoflix/cenas3d/objetos/cacambaEstacionaria.js';
+
+const CAPS = {};
+const nfSelo = (txt, sub) => el(`<div class="selo"><div class="tag v" style="font-size:19px;padding:7px 15px">${ic('file-text', 20)}${txt}</div>${sub ? `<div class="sub" style="font-size:15px;font-weight:700;color:#121212">${sub}</div>` : ''}</div>`);
+const COLOR = c => new THREE.Color(c);
+const mix = (a, b, p) => '#' + [1, 3, 5].map(i => Math.round(lerp(parseInt(a.substr(i, 2), 16), parseInt(b.substr(i, 2), 16), p)).toString(16).padStart(2, '0')).join('');
+
+// ------------------------------------------------------------------ CAPS[1] · O documento da viagem (L1-L2)
+// 1 "Imagina o caminhão saindo com alumínio de duas vendas. Cada venda tem a sua nota fiscal. O manifesto, o MDF-e, é o documento
+//    da viagem: ele junta as notas da carga, o caminhão e o motorista."
+// 2 "Ele é emitido antes de o caminhão sair e encerrado quando a viagem termina."
+CAPS[1] = () => {
+  chaoPatio(CENA, [3, 0, 0], { c: 40, l: 14, passo: 2.6 });
+  const T = caminhao(CENA, [0, 0, 0], {}), B = T.userData.cacamba;
+  // carga: alumínio perfil (feixe de barras) na frente da caçamba e alumínio bloco (blocos empilhados) atrás
+  const cPerf = grupo(B, [1.2, .1, 0]), cBloc = grupo(B, [3.3, .1, 0]);
+  // o material é o do kit (alumínio): um monte em cada metade da caçamba, uma por venda
+  for (const [G, rx] of [[cPerf, .75], [cBloc, .75]]) for (const q of domo(60, rx, .8, 1.5, .05, .6)) peca(G, 'alu', q, 2.3);
+  const D = motorista(CENA, [4.4, 0, .8]); D.rotation.y = -.35;
+  const N1 = folha(CENA, [0, 0, 0], { w: .8, h: 1.05 }), N2 = folha(CENA, [0, 0, 0], { w: .8, h: 1.05 }), MD = folha(CENA, [0, 0, 0], { w: 1.1, h: 1.45, linhas: 5 });
+  N1.rotation.y = N2.rotation.y = .08; MD.rotation.y = .1;
+  const f1 = fio(CENA, '#C9D2DA', .02), f2 = fio(CENA, '#C9D2DA', .02), g1 = fio(CENA, COR.verde, .03), g2 = fio(CENA, COR.verde, .03), g3 = fio(CENA, COR.verde, .03), g4 = fio(CENA, COR.verde, .03);
+  // viagem: estrada, dois marcos (Autorizado antes de sair, Encerrado no fim)
+  const EST = grupo(CENA, [-5.6, 0, 0]); estrada(EST, [8.5, 0, 0], { c: 17, l: 2.8 });
+  const marco = x => { const m = grupo(CENA, [x, 0, -2.3]); poe(new THREE.CylinderGeometry(.06, .08, 1.1, 12), M('#9AA3AD'), m, [0, .55, 0]);
+    poe(new THREE.SphereGeometry(.2, 18, 14), M(COR.verde), m, [0, 1.2, 0]); mancha(m, .8, .8, .25); return m; };
+  const mA = marco(-4.9), mE = marco(11.8);
+  const tit = titulo('Transporte', 'O documento da viagem');
+  const s1 = nfSelo('NF-e', 'Alumínio perfil'), s2 = nfSelo('NF-e', 'Alumínio bloco');
+  const sMD = el(`<div class="selo"><div class="tag v" style="font-size:25px;padding:8px 18px">${ic('file-text', 26)}MDF-e</div><div class="sub" style="font-size:16px;font-weight:700;color:#121212">documento da viagem</div></div>`);
+  const sDoc = sMD.querySelector('.sub');
+  const cNo = chip(`${ic('circle-check', 18)}Notas da carga`, 'v'), cCa = chip(`${ic('circle-check', 18)}Caminhão`, 'v'), cMo = chip(`${ic('circle-check', 18)}Motorista`, 'v');
+  const sA = el(`<div class="selo"><div class="tag v" style="font-size:19px;padding:7px 15px">${ic('circle-check', 20)}Autorizado</div><div class="sub rA" style="font-size:15px;font-weight:700;color:#121212">antes de sair</div></div>`);
+  const sE = el(`<div class="selo"><div class="tag v sE" style="font-size:19px;padding:7px 15px">${ic('circle-check', 20)}Encerrado</div><div class="sub rE" style="font-size:15px;font-weight:700;color:#121212">fim da viagem</div></div>`);
+  const sEt = sE.querySelector('.sE'), rA = sA.querySelector('.rA'), rE = sE.querySelector('.rE');
+  const tc = W(1, 'caminhao'), tal = W(1, 'aluminio'), tve = W(1, 'venda'), tn = W(1, 'nota'), tm = W(1, 'manifesto'),
+        tmd = W(1, 'MDF-e'), tdo = W(1, 'documento'), tno = W(1, 'notas'), tca = W(1, 'caminhao', 2), tmo = W(1, 'motorista');
+  const te = W(2, 'emitido'), tan = W(2, 'antes'), ts = W(2, 'sair'), ten = W(2, 'encerrado'), tvi = W(2, 'viagem'), tt = W(2, 'termina');
+  const j0 = W(1, 'Imagina') - .3, fim = tt + .15, sai = ts - .05, XF = 6.3, jun = L(2) - .5;
+  camera([[0, { x: -.2, y: 1.3, z: 0, d: 16.3, az: .12, el: .33, oy: -100 }], [tca + .4, { x: -.2, y: 1.3, z: 0, d: 16.3, az: .12, el: .33, oy: -100 }, 'lin'],
+    [te + 1.0, { x: 3.6, y: 1.2, z: 0, d: 24.6, az: .1, el: .35, oy: -40 }, 'eio'], [fim + 3, { x: 3.5, y: 1.2, z: 0, d: 24.3, az: .1, el: .35, oy: -40 }, 'lin']]);
+  return t => {
+    GL.style.opacity = eo(pr(t, tc - .3, .45)).toFixed(3);
+    posTitulo(tit, t, j0 - .6, tc - .45);
+    // o caminhão chega com alumínio de duas vendas e para
+    const xc = lerp(-15, 0, eio(pr(t, tc - .25, 1.5))), xt = xc + lerp(0, XF, eio(pr(t, sai, Math.max(1.2, fim - sai))));
+    anda(T, xt); T.visible = t > tc - .3;
+    cresce(cPerf, t, tal - .1, .6, .2); cresce(cBloc, t, tal + .2, .6, .2);
+    // as duas notas, uma por venda, presas à carga por um fio; na linha 2 elas se juntam no MDF-e
+    const sob = 3.05, q1 = eo(pr(t, tve - .1, .5)), q2 = eo(pr(t, tn - .05, .5)), gj = eio(pr(t, jun, .8));
+    const mp1 = [xt - 5.0, 2.5, 0], mp2 = [xt - 1.2, 3.55, 0], mp = [lerp(mp1[0], mp2[0], gj), lerp(mp1[1], mp2[1], gj), 0];
+    const p1 = [lerp(xt - 2.05, mp[0], gj), lerp(sob, mp[1], gj), 0], p2 = [lerp(xt + .05, mp[0], gj), lerp(sob, mp[1], gj), 0];
+    const k1 = Math.max(1e-3, q1 * (1 - gj)), k2 = Math.max(1e-3, q2 * (1 - gj));
+    N1.position.set(...p1); N2.position.set(...p2); N1.visible = q1 * (1 - gj) > .01; N2.visible = q2 * (1 - gj) > .01; N1.scale.setScalar(k1); N2.scale.setScalar(k2);
+    f1.liga([p1[0], p1[1] - .55, 0], [p1[0], 1.7, 0], q1 * (1 - gj)); f2.liga([p2[0], p2[1] - .55, 0], [p2[0], 1.85, 0], q2 * (1 - gj));
+    vis(s1, t, tve - .05, jun, { dy: 8 }); ancora(s1, [p1[0], p1[1] + .55, 0], .5, 1, 0, -4);
+    vis(s2, t, tn, jun, { dy: 8 }); ancora(s2, [p2[0], p2[1] + .55, 0], .5, 1, 0, -4);
+    // o MDF-e: o documento da viagem, que junta as notas, o caminhão e o motorista
+    const qm = eo(pr(t, tm - .1, .6));
+    MD.position.set(mp[0], mp[1] + (1 - qm) * 1.2, mp[2]); MD.visible = qm > 0; MD.scale.setScalar(Math.max(1e-3, qm));
+    vis(sMD, t, tmd - .1, 1e9, { dy: 8 }); ancora(sMD, [mp[0], mp[1] + .82, 0], .5, 1, 0, -2); vis(sDoc, t, tdo - .1, 1e9, { dy: 4 }); pulse(sMD, t, tmd, .04, .8);
+    const E = [mp[0] + .55, mp[1] + .25, 0], ff = 1 - gj;
+    g1.liga(E, [xt - 2.1, 2.9, 0], eio(pr(t, tno - .1, .6)) * ff); g2.liga(E, [xt + .0, 2.9, 0], eio(pr(t, tno + .1, .6)) * ff);
+    g3.liga(E, [xt + 2.4, 2.75, 0], eio(pr(t, tca - .1, .6)) * ff); g4.liga(E, [D.position.x, D.position.y + 1.95 * D.scale.x, D.position.z], eio(pr(t, tmo - .1, .6)) * ff);
+    vis(cNo, t, tno - .05, jun, { dy: 8 }); ancora(cNo, [xt - 1.05, 2.3, 0], .5, .5);
+    vis(cCa, t, tca - .05, jun, { dy: 8 }); ancora(cCa, [xt + 2.4, 3.15, 0], .5, 1);
+    vis(cMo, t, tmo - .05, jun, { dy: 8 }); ancora(cMo, [D.position.x, D.position.y + 2.2 * (1 - eio(pr(t, ts - .5, .6)) * .98), D.position.z], .5, 1);
+    pulse(s1, t, tno, .05, .8); pulse(s2, t, tno + .12, .05, .8);
+    // o motorista entra na palavra e, na hora de sair, sobe na cabine
+    const qd = eio(pr(t, ts - .5, .6)), qe = eo(pr(t, tmo - .2, .5));
+    D.position.set(lerp(4.4, xt + 2.5, qd), qd * 1.0, lerp(.8, 1.1, qd)); D.scale.setScalar(Math.max(1e-3, (1 - qd * .98) * qe)); D.visible = t > tmo - .2 && qd < .98;
+    D.rotation.y = -.35 + .35 * eo(pr(t, tmo - .2, .5)) * 0;
+    // a viagem: a estrada cresce entre os dois marcos; Autorizado antes de sair, Encerrado no fim
+    EST.scale.x = Math.max(1e-3, eio(pr(t, te - .3, .9))); EST.visible = t > te - .3;
+    vis(sA, t, te - .1, 1e9, { dy: 10 }); ancora(sA, [mA.position.x, 1.55, mA.position.z], .5, 1); vis(rA, t, tan - .15, 1e9, { dy: 5 }); pulse(sA, t, te + .3, .05, .7);
+    cresce(mA, t, te - .3, .5, 0); cresce(mE, t, ten - .3, .5, 0);
+    const ch = eo(pr(t, sai + Math.max(1.2, fim - sai) - .1, .4));
+    vis(sE, t, ten - .1, 1e9, { dy: 10 }); sE.style.opacity = (parseFloat(sE.style.opacity) * lerp(.55, 1, ch)).toFixed(3); ancora(sE, [mE.position.x, 1.55, mE.position.z], .5, 1);
+    sEt.style.background = mix('#4B5563', '#50D088', ch); vis(rE, t, tvi - .15, 1e9, { dy: 5 }); pulse(sE, t, fim + .05, .06, .7);
+  };
+};
+
+// ------------------------------------------------------------------ CAPS[3] · O percurso (L3-L5)
+// 3 "Agora, o percurso. Hoje o caminhão leva alumínio pra Serra Fina, em Itamonte, Minas Gerais."  4 "Ele sai de Taubaté, passa
+// pelo Rio de Janeiro e sobe pra Minas. São Paulo é a origem, Minas Gerais é o destino, e o Rio de Janeiro é o estado do meio do
+// caminho."  5 "O estado do meio do caminho vai no Percurso. E isso a gente preenche em cada manifesto, na hora de emitir."
+// Três chãos lado a lado (SP, RJ, MG) cortados por pórticos de divisa sobre uma estrada: nada de contorno de mapa.
+CAPS[3] = () => {
+  const X0 = -13.5, XS = [-9, 0, 9];                      // centros dos três estados; divisas em -4.5 e 4.5
+  const TINT = ['#E6EBF0', '#EAF6EE', '#E6EBF0'], chao = [];
+  XS.forEach((x, i) => { const m = poe(rbox(8.9, .14, 11, .07, 2), M(TINT[i]), CENA, [x, -.07, 0]); m.castShadow = false; chao.push(m); });
+  estrada(CENA, [0, 0, 0], { c: 27, l: 2.8 });
+  const pSP = porticoEstado(CENA, [-4.5, 0, 0], { l: 2.8 }), pMG = porticoEstado(CENA, [4.5, 0, 0], { l: 2.8 });
+  const pT = pinoLocal(CENA, [-11.6, 0, -2.6]), pI = pinoLocal(CENA, [11.6, 0, -2.6]);
+  const T = caminhao(CENA, [0, 0, 0], { c: 5.4, l: 2.1, R: .42, eixos: 2, cc: 1.7 }), B = T.userData.cacamba, cg = grupo(B, [2.2, .1, 0]);
+  for (const q of domo(60, .9, .75, 1.3, .05, .6)) peca(cg, 'alu', q, 2.2);
+  const tit = titulo('Transporte', 'O percurso');
+  const uf = s => el(`<div class="tag" style="font-size:26px;padding:8px 22px;position:absolute">${s}</div>`);
+  const uSP = uf('SP'), uRJ = uf('RJ'), uMG = uf('MG');
+  const nT = chip(`${ic('map-pin', 16)}Taubaté (SP)`, 'v'), nI = chip(`${ic('map-pin', 16)}Itamonte (MG)`, 'v');
+  const tag = (txt, cls) => el(`<div class="tag p ab ${cls}" style="font-size:16px;padding:6px 14px">${txt}</div>`);
+  const eO = tag('Carregamento (Origem)', 'v'), eD = tag('Descarregamento (Destino)', 'v'), eM = tag('meio do caminho', 'a');
+  const per = el(`<div class="card" style="left:810px;top:150px;width:400px;height:192px">
+      <div class="ab" style="left:26px;top:24px;font-weight:800;font-size:25px">Percurso</div>
+      <div class="ab sub" style="left:26px;top:58px">(UFs Atravessadas)</div>
+      <div class="ab" style="left:26px;top:106px;width:348px;height:58px;padding:0 16px;border-radius:12px;background:#F7F9FA;border:1px solid #E1E8E4;display:flex;align-items:center">
+        <div style="font-weight:700;font-size:18px;color:#4B5563">1ª UF</div></div></div>`);
+  const rjc = el(`<div class="tag v ab" style="font-size:20px;padding:7px 18px">RJ</div>`);
+  const cada = el(`<div class="ab" style="left:836px;top:360px;display:flex;align-items:center;gap:12px"><div class="ico" style="width:40px;height:40px;border-radius:11px">${ic('file-text', 21)}</div>
+      <div class="sub" style="font-size:19px">em cada manifesto</div></div>`);
+  const aRJ = anel(CENA, 3.6, .1, [0, 0, 0]), oRJ = anel(CENA, 3.6, .06, [0, 0, 0]);
+  const ts = W(3, 'caminhao'), tit3 = W(3, 'percurso'), tI = W(3, 'Itamonte'), tMg = W(3, 'Minas');
+  const tsa = W(4, 'sai'), tTa = W(4, 'Taubate'), tJa = W(4, 'Janeiro'), tsb = W(4, 'sobe'), tMi = W(4, 'Minas'), tri = W(4, 'Rio'), tor = W(4, 'origem'),
+        tde = W(4, 'destino'), tme = W(4, 'meio');
+  const tv = W(5, 'vai'), tpe = W(5, 'Percurso'), tma = W(5, 'manifesto');
+  const j0 = W(3, 'Agora') - .3, XT0 = -11.6, XT1 = 9.6;
+  const c0 = { x: -7, y: 1.0, z: 0, d: 25, az: .1, el: .42, oy: -50 };
+  camera([[0, c0], [tsa - .3, c0, 'lin'], [tJa + .6, { x: 0, y: 1.0, z: 0, d: 30, az: .08, el: .44, oy: -50 }, 'eio'], [tMi + .5, { x: 4, y: 1.0, z: 0, d: 31, az: .08, el: .45, oy: -50 }, 'eio'],
+    [tv - .2, { x: 4, y: 1.0, z: 0, d: 31, az: .08, el: .45, oy: -50 }, 'lin'], [tv + 1.2, { x: .3, y: 1.0, z: 0, d: 38.5, az: .06, el: .5, oy: -120 }, 'eio'], [LE(5) + 3, { x: .3, y: 1.0, z: 0, d: 38, az: .06, el: .5, oy: -120 }, 'lin']]);
+  return t => {
+    GL.style.opacity = eo(pr(t, tit3 - .4, .6)).toFixed(3);
+    posTitulo(tit, t, j0 - .6, tit3 - .3);
+    const sp = XS.map((_, i) => eo(pr(t, tit3 - .1 + i * .15, .5))); chao.forEach((m, i) => { m.visible = sp[i] > 0; m.scale.y = Math.max(1e-3, sp[i]); });
+    cresce(pSP, t, tit3, .5, 0); cresce(pMG, t, tit3 + .1, .5, 0);
+    vis(uSP, t, tit3, 1e9, { dy: 8 }); ancora(uSP, [-9, 0, 3.4], .5, 1, 0, 4); vis(uMG, t, tit3, 1e9, { dy: 8 }); ancora(uMG, [9, 0, 3.4], .5, 1, 0, 4);
+    vis(uRJ, t, tit3, 1e9, { dy: 8 }); ancora(uRJ, [0, 0, 3.4], .5, 1, 0, 4);
+    // o caminhão com alumínio no pátio de Taubaté; o pino de Itamonte na palavra
+    const q = eio(pr(t, tsa - .05, Math.max(5, tMi - tsa + .5))), x = lerp(XT0, XT1, q);
+    anda(T, x); T.visible = t > ts - .3; cresce(cg, t, ts, .5, 0);
+    cresce(pT, t, ts - .1, .5, .3); vis(nT, t, ts, 1e9, { dy: 8 }); ancora(nT, [-11.6, 1.35, -2.6], .5, 1, 0, -2);
+    cresce(pI, t, tI - .1, .5, .3); vis(nI, t, tI, 1e9, { dy: 8 }); ancora(nI, [11.6, 1.35, -2.6], .5, 1, 0, -2);
+    vis(eO, t, tor - .15, 1e9, { dy: 8 }); ancora(eO, [-9, 0, -3.4], .5, .5);
+    vis(eD, t, tde - .15, 1e9, { dy: 8 }); ancora(eD, [7, 0, -3.4], .5, .5);
+    // o RJ acende como o estado do meio do caminho
+    const rr = eo(pr(t, tme - .1, .5)); chao[1].material = chao[1].material; chao[1].material.color.set(mix('#EAF6EE', '#C8EED8', rr));
+    destaque(aRJ, oRJ, t, tme - .05); aRJ.position.set(0, .01, 0); oRJ.position.set(0, .01, 0);
+    vis(eM, t, tme - .12, 1e9, { dy: 8 }); ancora(eM, [0, 0, -3.4], .5, .5);
+    // o RJ vai para o Percurso
+    vis(per, t, tpe - .15, 1e9, { dx: 24, dy: 0 }); const qq = eio(pr(t, tpe + .15, .9));
+    const [x0, y0] = tela([0, 0, 3.4]); rjc.style.left = lerp(x0 - 40, 810 + 26 + 348 - 16 - 78, qq).toFixed(1) + 'px'; rjc.style.top = (lerp(y0 - 30, 150 + 106 + 9, qq) - 80 * 4 * qq * (1 - qq)).toFixed(1) + 'px';
+    const o = eo(pr(t, tpe + .15, .2)); rjc.style.opacity = o.toFixed(3); rjc.style.visibility = o > 0 ? 'visible' : 'hidden'; pulse(rjc, t, tpe + 1.1, .06, .7);
+    vis(cada, t, tma - .15, 1e9, { dy: 10 });
+  };
+};
+
+// ------------------------------------------------------------------ CAPS[6] · Mercadoria × serviço (L1-L2)
+// 1 "Pensa assim: quando a Recicla Vale vende sucata, a mercadoria sai do pátio. A nota dessa venda é a nota fiscal de mercadoria,
+//    a NF-e."  2 "Quando ela cobra um trabalho, como a coleta com caçamba, não sai mercadoria nenhuma. Essa é a nota de serviço, a
+//    NFS-e, que é da prefeitura."
+// Dois chãos lado a lado: o pátio da Recicla Vale (o caminhão sai carregado) e a Aços Quiririm (a caçamba fica parada).
+CAPS[6] = () => {
+  const LX = -7, RX = 7, zl = chaoPatio(CENA, [LX, 0, 0], { c: 11, l: 9, passo: 2.75 }), zr = chaoPatio(CENA, [RX, 0, 0], { c: 11, l: 9, passo: 2.75 });
+  const mM = monte(CENA, [-9.4, 0, -2.2], { n: 60, rx: 1.3, rz: 1.1, h: .8, mancha: [3.4, 2.9] });
+  const gate = grupo(CENA, [-2.4, 0, 0]);
+  for (const z of [-2.6, 2.6]) poe(rbox(.22, 3.6, .22, .05, 1), M('#9AA3AD'), gate, [0, 1.8, z]);
+  poe(rbox(.2, .16, 5.4, .04, 1), M(COR.ambar), gate, [0, 3.6, 0]);
+  const T = caminhao(CENA, [0, 0, 0], {}), B = T.userData.cacamba, cg = grupo(B, [2.2, .1, 0]);
+  for (const q of domo(60, .9, .8, 1.5, .05, .6)) peca(cg, pega(['aco', 'aco', 'cobre', 'alu', 'ferrugem']), q, 2.0);
+  const gp = galpao(CENA, [RX + 1.2, 0, -3.2], { c: 5, l: 3, h: 1.6 });
+  const K = cacambaEstacionaria(CENA, [RX - 1, 0, 1.3], { c: 2.8, l: 1.6, h: 1.05 });
+  for (const q of domo(24, .9, .5, .5, .35, .5)) peca(K, pega(['aco', 'ferrugem', 'aco']), [q[0], q[1] + .1, q[2]], 1.4);
+  const N = folha(CENA, [-4.8, 2.9, 3.2], { w: .8, h: 1.05, cor: COR.verde }), S = folha(CENA, [9.4, 2.9, 3.2], { w: .8, h: 1.05, cor: COR.ambar });
+  const tit = titulo('Nota fiscal', 'Mercadoria × serviço');
+  const doc = (cls, sigla, sub) => el(`<div class="selo"><div class="tag ${cls}" style="font-size:22px;padding:8px 18px">${ic('file-text', 24)}${sigla}</div><div class="sub dd" style="font-size:16px;font-weight:700;color:#121212">${sub}</div></div>`);
+  const dN = doc('v', 'NF-e', 'nota de mercadoria'), dS = doc('a', 'NFS-e', 'nota de serviço'), sN = dN.querySelector('.dd'), sS = dS.querySelector('.dd');
+  const tM = el(`<div class="tag v ab" style="font-size:24px;padding:9px 22px">Mercadoria</div>`), tS = el(`<div class="tag a ab" style="font-size:24px;padding:9px 22px">Serviço</div>`);
+  const cSai = chip(`${ic('arrow-right', 18)}sai do pátio`, 'v'), cNao = chip(`${ic('package-x', 18)}não sai mercadoria`, 'a');
+  const cCli = chip(`${ic('building-2', 18)}Aços Quiririm`, 'a'), cPre = chip(`${ic('landmark', 18)}Prefeitura`, 'a');
+  const aN = anel(CENA, 1.0, .08, [-4.8, 0, 3.2]), oN = anel(CENA, 1.0, .05, [-4.8, 0, 3.2]), aS = anel(CENA, 1.0, .08, [9.4, 0, 3.2]), oS = anel(CENA, 1.0, .05, [9.4, 0, 3.2]);
+  const tv = W(1, 'vende'), tsu = W(1, 'sucata'), ts = W(1, 'sai'), tpa = W(1, 'patio'), tn = W(1, 'nota'), tme = W(1, 'mercadoria', 2), tnf = W(1, 'NF-e');
+  const tco = W(2, 'cobra'), ttr = W(2, 'trabalho'), tca = W(2, 'cacamba'), tna = W(2, 'nao'), tn2 = W(2, 'nota'), tns = W(2, 'NFS-e'), tpr = W(2, 'prefeitura');
+  const j0 = W(1, 'Pensa') - .3;
+  camera([[0, { x: -4, y: 1.2, z: 0, d: 26, az: .08, el: .4, oy: -70 }], [tco - .5, { x: -4, y: 1.2, z: 0, d: 26, az: .08, el: .4, oy: -70 }, 'lin'],
+    [tco + 1.5, { x: .8, y: 1.2, z: 0, d: 32, az: .06, el: .42, oy: -70 }, 'eio'], [LE(2) + 3, { x: .8, y: 1.2, z: 0, d: 31.6, az: .06, el: .42, oy: -70 }, 'lin']]);
+  return t => {
+    GL.style.opacity = eo(pr(t, tv - .3, .5)).toFixed(3);
+    posTitulo(tit, t, j0 - .6, tv - .35);
+    zl.visible = t > tv - .3; zr.visible = t > tco - .3; for (const [g, a] of [[zl, tv - .3], [zr, tco - .3]]) g.scale.y = Math.max(1e-3, eo(pr(t, a, .5)));
+    cresce(mM, t, tv - .1, .6, .2); cresce(gate, t, tv, .5, 0);
+    vis(tM, t, tv - .15, 1e9, { dy: 10 }); ancora(tM, [-7, 0, 4.9], .5, .5);
+    // o caminhão está no pátio, carregado, e sai pelo portão na palavra "sai"
+    const x = lerp(-8.4, -.4, eio(pr(t, ts - .1, 1.6))); anda(T, x); T.visible = t > tv - .1; cresce(cg, t, tsu - .1, .5, 0);
+    vis(cSai, t, tpa - .2, 1e9, { dy: 8 }); ancora(cSai, [-2.4, 0, 3.4], .5, .5);
+    const qn = eo(pr(t, tn - .1, .55)); N.visible = qn > 0; N.scale.setScalar(Math.max(1e-3, qn)); N.position.y = 2.9 + (1 - qn) * 1.0;
+    vis(dN, t, tn - .1, 1e9, { dy: 10 }); ancora(dN, [-4.8, N.position.y + .62, 1.8], .5, 1); vis(sN, t, tme - .15, 1e9, { dy: 6 }); pulse(dN, t, tnf, .05, .8); destaque(aN, oN, t, tnf);
+    // o serviço: entra na palavra "cobra"; a caçamba e a Aços Quiririm na palavra "caçamba"
+    vis(tS, t, tco - .15, 1e9, { dy: 10 }); ancora(tS, [7, 0, 4.9], .5, .5);
+    cresce(gp, t, tca - .2, .6, .2); cresce(K, t, tca - .1, .6, .2); vis(cCli, t, tca + .1, 1e9, { dy: 8 }); ancora(cCli, [RX + 1.2, gp.userData.topo[1] + .1, -3.2], .5, 1);
+    vis(cNao, t, tna - .15, 1e9, { dy: 8 }); ancora(cNao, [2.6, 0, 3.4], .5, .5);
+    const qs = eo(pr(t, tn2 - .1, .55)); S.visible = qs > 0; S.scale.setScalar(Math.max(1e-3, qs)); S.position.y = 2.9 + (1 - qs) * 1.0;
+    vis(dS, t, tn2 - .1, 1e9, { dy: 10 }); ancora(dS, [9.4, S.position.y + .62, 1.8], .5, 1); vis(sS, t, tns + .6, 1e9, { dy: 6 }); pulse(dS, t, tns, .05, .8); destaque(aS, oS, t, tns);
+    vis(cPre, t, tpr - .15, 1e9, { dy: 8 }); ancora(cPre, [9.4, 1.9, 3.2], .5, 0);
+  };
+};
+
+cena(d => CAPS[d.cap](), { sombra: 11, mapa: 2048, chao: false });
+</script></body></html>

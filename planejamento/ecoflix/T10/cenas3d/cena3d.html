@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<!-- T10 "Estoque" · cenas 3D (kit perfis/ecoflix/cenas3d/kit3d.js). As cenas 2D da ../cenas/cenas.html ficam de reserva. Uma por
+     capítulo (ilustracoes.json, chave "3d"):
+       cap03 separação no pátio: o Marcos tira 320 kg de ferro pesado do meio do ferro misto e leva ao monte do ferro pesado; o peso é
+             o mesmo, só muda de material (6.420 → 6.100 kg e 2.180 → 2.500 kg);
+       cap09 a pilha não tem dono: o cobre do Siqueira (caminhão) e o do Valdir (carroça) caem na mesma pilha de cobre; a Fundição
+             (caminhão) leva da pilha: de quem era cada quilo?
+     Âncoras W(linha,'palavra') das falas do narracao/tts_textos.py; números da fala (T10/plano.md).
+     Render: node ferramentas/edit/cenas/render_cenas.cjs <cap> <capNN.json> saida.mp4 --html planejamento/ecoflix/T10/cenas3d/cena3d.html --de <at> --ate <at+dur> -->
+<style>
+.ttl{font-weight:800;font-size:22px;line-height:1.2;white-space:nowrap}
+.row{display:flex;align-items:center}
+.lbl{font-weight:600;font-size:17px;color:#4B5563;white-space:nowrap}
+</style>
+</head><body>
+<script type="module">
+import { THREE, PI, eo, eio, pr, lerp, rng, ri, pega, W, el, ic, vis, pulse, kg, conta, posTitulo, titulo, selo,
+  CENA, GL, camera, ancora, mundo, tela, grupo, mancha, domo, peca, monte, chaoPatio, caminhao, carroca, cresce, COR, M, cena } from '../../../../perfis/ecoflix/cenas3d/kit3d.js';
+
+const traco = (p, t, a, d) => { const L = p.getTotalLength(), q = eo(pr(t, a, d)); p.style.strokeDasharray = L; p.style.strokeDashoffset = (L * (1 - q)).toFixed(1); p.style.opacity = q > 0 ? 1 : 0; };
+const CAPS = {};
+const FERRO = ['aco', 'ferrugem'];   // ferro: sucata de aço e de ferrugem do kit
+
+// ------------------------------------------------------------------ CAPS[3] · Separação no pátio (L0-L1)
+// 0 "Agora, a transferência. Ontem, na separação, o Marcos tirou trezentos e vinte quilos de ferro pesado do meio do ferro misto."
+// 1 "O peso é o mesmo, só mudou de material. A transferência registra isso: sai de um, entra no outro."
+CAPS[3] = () => {
+  const MISTO = 6420, PESADO = 2180, TR = 320, XM = -3.7, XP = 3.7;
+  chaoPatio(CENA, [0, 0, 0], { c: 30, l: 12, passo: 2.6 });
+  const gM = monte(CENA, [XM, 0, 0], { n: 70, rx: 1.7, rz: 1.3, h: 1.0, metais: FERRO, mancha: [4.4, 3.4] });
+  const gP = monte(CENA, [XP, 0, 0], { n: 36, rx: 1.2, rz: .95, h: .66, metais: ['aco'], mancha: [3.1, 2.5] });
+  // o feixe de ferro pesado: peças maiores que saem do monte do ferro misto e vão para o do ferro pesado
+  const FX = grupo(CENA); for (const p of domo(12, .45, .3, .28, 0, .9)) peca(FX, 'aco', p, 1.35);
+  const tit = titulo('Estoque', 'Separação no pátio');
+  const tMa = el(`<div class="tag ab" style="font-size:19px;padding:8px 16px">${ic('user-round', 22)}Marcos</div>`);
+  const t320 = el(`<div class="tag v ab" style="font-size:20px">${kg(TR)}</div>`);
+  const card = (x, nome, v, cls, d) => el(`<div class="card" style="left:${x}px;top:520px;width:340px;padding:16px 22px 18px"><div style="font-weight:800;font-size:22px">${nome}</div>
+      <div class="row" style="margin-top:6px;gap:12px"><div class="num" style="font-size:34px">${kg(v)}</div><div class="tag ${cls}" style="font-size:17px;padding:6px 14px">${d}</div></div></div>`);
+  const cM = card(250, 'Ferro misto', MISTO, 'a', '−' + kg(TR)), cP = card(800, 'Ferro pesado', PESADO, 'v', '+' + kg(TR));
+  const nM = cM.querySelector('.num'), nP = cP.querySelector('.num'), dM = cM.querySelector('.tag'), dP = cP.querySelector('.tag');
+  const tT = el('<div class="ab" style="left:590px;top:534px;width:210px;text-align:center"><div class="tag v" style="font-size:17px;padding:6px 12px">Transferência</div></div>');
+  const sT = el('<svg class="ab" style="left:0;top:0;overflow:visible" width="1280" height="800"><path d="M606,602 H782 M770,590 L784,602 L770,614" fill="none" stroke="var(--v)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>').querySelector('path');
+  const mesmo = el(`<div class="ab" style="left:0;top:692px;width:1280px;text-align:center"><div class="tag v">${ic('scale', 22)}mesmo peso</div></div>`);
+  const a0 = W(0, 'Agora'), tse = W(0, 'separacao'), tma = W(0, 'Marcos'), tl = W(0, 'tirou'), tpz = W(0, 'pesado');
+  const tme = W(1, 'mesmo'), tmu = W(1, 'mudou'), ttr = W(1, 'transferencia'), trg = W(1, 'registra'), tsa = W(1, 'sai'), ten = W(1, 'entra');
+  const d0 = tpz + .35, DV = 1.3;
+  camera([[0, { x: 0, y: .9, z: 0, d: 18, az: .05, el: .36, oy: 95 }], [30, { x: 0, y: .9, z: 0, d: 17.2, az: .08, el: .36, oy: 95 }, 'lin']]);
+  return t => {
+    GL.style.opacity = eo(pr(t, tse - .25, .6)).toFixed(3);
+    posTitulo(tit, t, a0 - .6, tse - .55);
+    const pm = eo(pr(t, tse - .1, .6)); gM.visible = pm > 0; gM.scale.setScalar(Math.max(1e-4, pm));
+    vis(cM, t, tse + .1, 1e9, { dy: 16 });
+    vis(tMa, t, tma + .1, 1e9, { dy: 8 }); ancora(tMa, [XM - 1.0, 0, 1.9], .5, 0, 0, 6);
+    const pp = eo(pr(t, tpz - .1, .6)); gP.visible = pp > 0; gP.scale.setScalar(Math.max(1e-4, pp));
+    vis(cP, t, tpz + .05, 1e9, { dy: 16 });
+    const up = eo(pr(t, tl, .6)), pa = eio(pr(t, d0, DV)), op = eo(pr(t, tl - .2, .4));
+    FX.visible = op > 0; FX.scale.setScalar(Math.max(1e-4, op));
+    FX.position.set(lerp(XM, XP, pa), lerp(1.0 + .7 * up, .72, pa) + .85 * Math.sin(PI * pa), lerp(.1, .05, pa));
+    vis(t320, t, tl + .45, 1e9, { dy: 8 }); ancora(t320, [FX.position.x, FX.position.y + .55, 0], .5, 1, 0, -4);
+    vis(mesmo, t, tme - .15, 1e9, { dy: 12 });
+    pulse(cM, t, tmu, .03, .8); pulse(cP, t, tmu + .3, .03, .8);
+    vis(tT, t, ttr - .1, 1e9, { dy: 8 }); traco(sT, t, trg - .1, .6);
+    if (t < tsa) nM.textContent = kg(MISTO); else conta(nM, t, tsa, .8, MISTO, MISTO - TR);
+    if (t < ten) nP.textContent = kg(PESADO); else conta(nP, t, ten, .8, PESADO, PESADO + TR);
+    vis(dM, t, tsa, 1e9, { dy: 0, sc: .7 }); vis(dP, t, ten, 1e9, { dy: 0, sc: .7 });
+  };
+};
+
+// ------------------------------------------------------------------ CAPS[9] · A pilha não tem dono (L1)
+// 1 "É de propósito. O cobre misto do Siqueira foi pra mesma pilha do cobre do Valdir. Quando a Fundição compra, não tem como saber de quem era cada quilo."
+CAPS[9] = () => {
+  chaoPatio(CENA, [0, 0, 0], { c: 34, l: 14, passo: 2.6 });
+  const PX = 0, PZ = 0, PIL = monte(CENA, [PX, 0, PZ], { n: 48, rx: 1.4, rz: 1.1, h: .85, metais: ['cobre'], mancha: [3.6, 3] });
+  const XE = -6.0, XD = 5.9, XR = 17, ZS = -2.9, ZV = 2.9, ZF = 0;
+  const TRUCK = { c: 4.2, l: 1.8, R: .36, cc: 1.4, hc: 1.35, eixos: 2, bau: 'grade' };
+  const sq = caminhao(CENA, [XE, 0, ZS], { ...TRUCK }), va = carroca(CENA, [XE - .4, 0, ZV]);
+  const cobreBed = (B, cb) => { for (const p of domo(16, cb / 2 - .25, .6, .38, .1)) peca(B, 'cobre', [cb / 2 + p[0], p[1], p[2]], 1); };
+  cobreBed(sq.userData.cacamba, sq.userData.bau.cb);
+  for (const p of domo(16, .7, .4, .42, .62)) peca(va, 'cobre', p);
+  const fu = caminhao(CENA, [0, 0, 0], { cor: COR.ambar, ...TRUCK }), FU = grupo(CENA, [XR, 0, ZF]); FU.rotation.y = PI; FU.add(fu);
+  FU.position.x = XD; FU.updateMatrixWorld(true);
+  const bedF = mundo(fu.userData.cacamba, [fu.userData.bau.cb / 2, .45, 0]);
+  const o1 = mundo(sq.userData.cacamba, [sq.userData.bau.cb / 2, .7, 0]), o2 = mundo(va, [0, 1.2, 0]);
+  FU.position.x = XR; FU.updateMatrixWorld(true);
+  // peças voadoras: cobre com um brilho da cor do dono (verde = Siqueira, âmbar = Valdir) que some quando misturam
+  const voa = (n, orig, cor, alvo) => Array.from({ length: n }, (_, i) => { const o = peca(CENA, 'cobre', [0, 0, 0], 1.7); o.material = o.material.clone(); o.material.emissive = new THREE.Color(cor); o.material.emissiveIntensity = .5;
+    return { o, a: orig, b: alvo(i), i }; });
+  const dp = () => domo(1, 1.1, .85, .72, 0, .9)[0];
+  const PS = voa(5, o1, '#50D088', () => dp()), PV = voa(5, o2, '#F2B63D', () => dp());
+  const PF = Array.from({ length: 4 }, (_, i) => { const o = peca(CENA, 'cobre', [0, 0, 0], 1.7); return { o, a: dp(), b: [bedF[0] + (i - 1.5) * .3, bedF[1] + .05 * i, bedF[2] + (i % 2 - .5) * .5], i }; });
+  const tit = titulo('Relatório', 'A pilha não tem dono');
+  const tPil = el('<div class="tag ab" style="font-size:19px;padding:8px 16px">Cobre misto</div>');
+  const aS = selo('', 'Siqueira', 'fornecedor'), aV = selo('', 'Valdir', 'fornecedor'), aF = selo('a', 'Fundição', 'cliente');
+  const pq = el(`<div class="ab" style="left:0;top:700px;width:1280px;text-align:center"><div style="display:inline-flex;align-items:center;gap:10px;padding:10px 22px;border-radius:999px;background:var(--as);color:#fff;font-weight:800;font-size:26px;box-shadow:0 10px 24px rgba(16,24,40,.08)">${ic('circle-help', 28)}De quem era cada quilo?</div></div>`);
+  const a0 = W(1, 'proposito'), tco = W(1, 'cobre'), tsq = W(1, 'Siqueira'), tfo = W(1, 'foi'), tpi = W(1, 'pilha'), tva = W(1, 'Valdir'),
+        tfu = W(1, 'Fundicao'), tcp = W(1, 'compra'), tqu = W(1, 'quem');
+  const mistura = Math.max(tfo + .05 + .48 + 1, tva + .15 + .48 + 1) + .2;
+  const voo = (o, t, a, d, h) => { const q = eio(pr(t, a, d)); o.o.visible = t >= a - .02; const s = Math.min(1, q * 8); o.o.scale.setScalar(Math.max(1e-4, s));
+    o.o.position.set(lerp(o.a[0], PX + o.b[0], q), lerp(o.a[1], o.b[1], q) + h * Math.sin(PI * q), lerp(o.a[2], PZ + o.b[2], q)); return q; };
+  camera([[0, { x: 0, y: 1.0, z: 0, d: 22.5, az: .02, el: .44, oy: -20 }], [30, { x: 0, y: 1.0, z: 0, d: 21.5, az: .05, el: .44, oy: -20 }, 'lin']]);
+  return t => {
+    GL.style.opacity = eo(pr(t, tco - .3, .6)).toFixed(3);
+    posTitulo(tit, t, a0 - .6, tco - .55);
+    const pp = eo(pr(t, tco - .1, .6)); PIL.visible = pp > 0; PIL.scale.setScalar(Math.max(1e-4, pp));
+    vis(tPil, t, tco + .15, 1e9, { dy: 8 }); ancora(tPil, [PX, 0, PZ + 1.6], .5, 0, 0, 4);
+    cresce(sq, t, tsq - .2, .6, .2); vis(aS, t, tsq - .1, 1e9, { dx: -18, dy: 0 }); ancora(aS, [XE + 2.4, 1.0, ZS], 0, .5, 10, 0);
+    cresce(va, t, tva - .25, .6, .2); vis(aV, t, tva - .15, 1e9, { dx: -18, dy: 0 }); ancora(aV, [XE + 1.8, .9, ZV], 0, .5, 10, 0);
+    const sem = eo(pr(t, mistura, .6));
+    PS.forEach(o => { voo(o, t, tfo + .05 + .12 * o.i, .9, 1.3); o.o.material.emissiveIntensity = .5 * (1 - sem); });
+    PV.forEach(o => { voo(o, t, tva + .15 + .12 * o.i, .9, 1.1); o.o.material.emissiveIntensity = .5 * (1 - sem); });
+    const x = lerp(XR, XD, eio(pr(t, tfu - .9, 1.5))); FU.position.x = x; FU.visible = t > tfu - .95; for (const r of fu.userData.rodas) r.rotation.z = -(XR - x) / fu.userData.R;
+    vis(aF, t, tfu + .2, 1e9, { dx: 18, dy: 0 }); ancora(aF, [XD - 2.4, 1.0, ZF], 1, .5, -10, 0);
+    PF.forEach(o => { const q = eio(pr(t, tcp + .1 + .14 * o.i, 1.0)); o.o.visible = q > 0; o.o.scale.setScalar(Math.max(1e-4, Math.min(1, q * 8)));
+      o.o.position.set(lerp(PX + o.a[0], o.b[0], q), lerp(o.a[1], o.b[1], q) + 1.5 * Math.sin(PI * q), lerp(PZ + o.a[2], o.b[2], q)); });
+    vis(pq, t, tqu - .25, 1e9, { dy: 10 }); pulse(tPil, t, tpi, .05, .8); pulse(tPil, t, tqu + .1, .05, .8);
+  };
+};
+
+cena(d => CAPS[d.cap](), { sombra: 14, mapa: 2048, chao: false });
+</script></body></html>

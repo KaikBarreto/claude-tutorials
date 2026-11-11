@@ -4,6 +4,7 @@
 // senha de portal, sem anexos de pedido, sem tabela de preços, sem campos personalizados nem etiquetas (o mundo não usa).
 import { parteDoPortal, temModulo } from '../../lib/coletas.mjs';
 import { agoraMs } from '../../lib/eco.mjs';
+import { anexos, sessaoValida } from '../../lib/portal.mjs';
 
 const desc = (k) => (a, b) => String(b[k] ?? '').localeCompare(String(a[k] ?? ''));
 export default (body, { store, url, FunctionError }) => {
@@ -12,7 +13,7 @@ export default (body, { store, url, FunctionError }) => {
   const p = parteDoPortal(store, token);
   if (!p) throw new FunctionError('Token inválido ou expirado', 404);
   if (!temModulo(store, p.companyId, 'portal_cliente')) throw new FunctionError('Portal indisponível', 403, { reason: 'portal_module_inactive' });
-  if (p.senha) return { requiresLogin: true };
+  if (p.senha && !sessaoValida(url.searchParams.get('session'), p.ids)) return { requiresLogin: true };
   const co = store.rows('companies').find((c) => c.id === p.companyId) || {};
   const ent = p.row;
   const cfg = p.cfg;
@@ -34,7 +35,7 @@ export default (body, { store, url, FunctionError }) => {
     item_discount: i.item_discount ?? null });
   const pedido = (r, tipo, itens) => ({ id: r.id, order_number: r.order_number, order_ref: r.order_ref, total_amount: r.total_amount, currency: r.currency,
     status: r.status, created_at: r.created_at, payment_method: r.payment_method, hide_financial_details: r.hide_financial_details, order_type: tipo,
-    items: itens.map(item), attachments: [] });
+    items: itens.map(item), attachments: cfg.fotos ? anexos(store, r.id, tipo) : [] });
   let orders = [];
   if (cfg.historico) {
     if (p.customerId) {

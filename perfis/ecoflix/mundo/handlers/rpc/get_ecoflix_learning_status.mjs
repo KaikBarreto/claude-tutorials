@@ -1,5 +1,8 @@
 // Trilha guiada da EcoFlix: cliente pagante, sem lembrete (o catálogo de aulas da EcoFlix não faz parte deste mundo).
-export default (a, { store, companyId, userId }) => {
+import { statusCompleto } from '../../lib/ecoflix_status.mjs';
+export default (a, ctx) => {
+  const { store, companyId, userId } = ctx;
+  if (store.rows('ecoflix_learning_paths').length) return statusCompleto(a, ctx); // T0: catálogo da EcoFlix carregado (semente t00/catalogo)
   const prof = store.rows('profiles').find((p) => p.id === userId) || {};
   const comp = store.rows('companies').find((c) => c.id === companyId) || {};
   const slug = a?.p_path_slug || 'tutoriais-do-sistema';

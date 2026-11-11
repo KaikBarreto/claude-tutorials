@@ -118,6 +118,54 @@
    "idle": true
   },
   {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Comparar períodos",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Prévia das colunas",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Período anterior",
+    "exact": true,
+    "within": "[role=dialog]"
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Aplicar comparação",
+    "exact": true
+   },
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "text": "31/10/26",
+   "timeout": 10
+  },
+  {
+   "do": "waitFor",
+   "text": "Demonstrativo Financeiro (DRE)",
+   "timeout": 15
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||document.scrollingElement};const el=document.querySelector('main h1')||document.querySelector('main *');const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop;if(y0<3)return 'ok';const dy=-y0;c.scrollTop=0;return 'topo'})()"
+  },
+  {
    "do": "eval",
    "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|Algo deu errado|Falha ao|Something went wrong|indispon[ií]vel/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&!/fica indispon/i.test(m[0])&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{document.querySelectorAll('[data-sonner-toast][data-type=error]').forEach(t=>{const s='TOAST DE ERRO: '+t.textContent.trim().slice(0,90);if(!window.__avisos.includes(s)&&window.__avisos.length<10)window.__avisos.push(s)})},300);return 1})()"
   }
@@ -130,7 +178,7 @@
   },
   {
    "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"Evolu\\u00e7\\u00e3o Mensal\"&&e.getClientRects().length);if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-110);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/1500),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.getClientRects().length&&(e=>e.children.length===0?e.textContent.trim():[...e.childNodes].filter(n=>n.nodeType===3).map(n=>n.textContent).join('').trim())(e)===\"Evolu\\u00e7\\u00e3o Mensal\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-110);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/1500),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
    "at": 0.3,
    "label": "desce até a Evolução Mensal"
   },
@@ -174,7 +222,7 @@
   },
   {
    "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"Comparar per\\u00edodos\"&&e.getClientRects().length);if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-200);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.getClientRects().length&&(e=>e.children.length===0?e.textContent.trim():[...e.childNodes].filter(n=>n.nodeType===3).map(n=>n.textContent).join('').trim())(e)===\"Comparar per\\u00edodos\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-200);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
    "at": 20.17,
    "label": "sobe até o cabeçalho da tabela"
   },
@@ -221,9 +269,14 @@
   },
   {
    "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===\"(+) Receita Bruta\"&&e.getClientRects().length);if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-110);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/1500),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||document.scrollingElement};const el=[...document.querySelectorAll('main *')].find(e=>e.getClientRects().length&&(e=>e.children.length===0?e.textContent.trim():[...e.childNodes].filter(n=>n.nodeType===3).map(n=>n.textContent).join('').trim())(e)===\"(+) Receita Bruta\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-110);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/1500),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
    "at": 31.89,
    "label": "desce pelas linhas comparadas"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Setembro de 2026\", \"Outubro de 2026\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,250));}return out})()",
+   "label": "confere as duas colunas lado a lado"
   },
   {
    "do": "mark",
@@ -233,10 +286,7 @@
   {
    "do": "click",
    "target": {
-    "text": "Despesas operacionais",
-    "exact": true,
-    "within": "main",
-    "nth": 0
+    "selector": "main button:has(span:text-is(\"06.01\"))"
    },
    "at": 38.47,
    "label": "abre as categorias das despesas operacionais"

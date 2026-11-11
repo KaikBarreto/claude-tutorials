@@ -527,3 +527,10 @@ Decisões:
   soma real das unidades. Opus na T21 e na T22 (números financeiros), Sonnet na T00 e na T20. Faltam os robôs da T05 (com o
   agente das cenas de Windows), T18 e T25 (conferir no `eco.mjs` a compra estornada e a compensação de novembro): entram
   quando a fila de agentes abrir.
+- 11/11 15:30 **Kaik sobre as prévias 3D da T07/T08**: "ficou ótimo". Pediu materiais mais claros ("latinhas (coloridas e
+  metálicas), garrafas pet (transparentes e verdes, amassadas e inteiras), ferro etc") e um big bag no lugar da carroça
+  na dupla pesagem. Perguntado (a fala e a gravação contam a carroça do Zé e a aula ensina que saco é tara), escolheu
+  **big bag como tara**: o saco do exemplo de tara vira big bag; a dupla pesagem fica com a carroça, com o ferro visível.
+  O agente do kit 3D (retomado) faz os materiais reconhecíveis no kit sem mudar a API (latinha, PET, ferro, cobre,
+  papelão, terra, borracha, plástico; `bigBag`), troca o `kit3d.js` de uma vez e refaz as prévias da T07/T08; as cinco
+  frentes 3D foram avisadas e refazem as prévias quando o kit trocar.

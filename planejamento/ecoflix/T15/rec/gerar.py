@@ -249,12 +249,13 @@ ACHA_ROLAGEM = ("const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==do
                 "return [...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4)||document.scrollingElement};")
 SUAVE = ("await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/DUR),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;"
          "c.scrollTop=DESTINO;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});")
-FOLHA = "[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.trim()===%s&&e.getClientRects().length)"
+PROPRIO = "(e=>e.children.length===0?e.textContent.trim():[...e.childNodes].filter(n=>n.nodeType===3).map(n=>n.textContent).join('').trim())"
+FOLHA = "[...document.querySelectorAll('main *')].find(e=>e.getClientRects().length&&" + PROPRIO + "(e)===%s)"
 
 
 def js_rola_texto(texto, y=300, dur_ms=800, nth=0):
     """rolagem suave do contêiner que rola a folha do DOM cujo texto é `texto` até ela ficar em y px CSS; devolve o topo final"""
-    achar = FOLHA % json.dumps(texto) if not nth else ("[...document.querySelectorAll('main *')].filter(e=>e.children.length===0&&e.textContent.trim()===%s&&e.getClientRects().length)[%d]" % (json.dumps(texto), nth))
+    achar = FOLHA % json.dumps(texto) if not nth else ("[...document.querySelectorAll('main *')].filter(e=>e.getClientRects().length&&" + PROPRIO + "(e)===%s).at(%d)" % (json.dumps(texto), nth))
     return ("(async()=>{" + ACHA_ROLAGEM + "const el=" + achar + ";if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';"
             f"const dy=Math.round(el.getBoundingClientRect().top-{int(y)});if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;"
             + (SUAVE.replace('DUR', str(int(dur_ms))).replace('DESTINO', 'y0+dy*e') if dur_ms else "c.scrollTop=y0+dy;")
@@ -280,7 +281,7 @@ def setup_relatorio(marca, extra=()):
                       {'do': 'waitFor', 'text': marca, 'timeout': 20}, AGUARDA] + list(extra)
 
 
-FOLHA_CONTEM = "[...document.querySelectorAll('main *')].find(e=>e.children.length===0&&e.textContent.includes(%s)&&e.getClientRects().length)"
+FOLHA_CONTEM = "[...document.querySelectorAll('main *')].find(e=>e.getClientRects().length&&" + PROPRIO + "(e).includes(%s))"
 
 
 def js_rola_contem(trecho, y=300, dur_ms=800):
@@ -304,7 +305,7 @@ ABA_C = lambda v: SEL(f'#tab-btn-{v}')          # Categorias Financeiras: catego
 
 def js_rola_dlg(texto, y=300, dur_ms=600):
     """rolagem (suave) DENTRO da janela aberta até a folha `texto` ficar em y px"""
-    return ("(async()=>{" + ACHA_ROLAGEM + "const el=[...document.querySelectorAll('[role=dialog] *')].find(e=>e.children.length===0&&e.textContent.trim()===%s&&e.getClientRects().length);"
+    return ("(async()=>{" + ACHA_ROLAGEM + "const el=[...document.querySelectorAll('[role=dialog] *')].find(e=>e.getClientRects().length&&" + PROPRIO + "(e)===%s);"
             "if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';" % json.dumps(texto)
             + f"const dy=Math.round(el.getBoundingClientRect().top-{int(y)});if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;"
             + (SUAVE.replace('DUR', str(int(dur_ms))).replace('DESTINO', 'y0+dy*e') if dur_ms else "c.scrollTop=y0+dy;")
@@ -459,6 +460,7 @@ def js_tab(nome):
 
 
 REGIME = lambda n: {'role': 'tab', 'name': n}
+GRUPO = lambda cod: SEL(f'main button:has(span:text-is("{cod}"))')   # 04.01 custos, 06.01 despesas operacionais
 LINHA = lambda t, nth=0: TXT(t, within=MAIN, nth=nth)
 
 
@@ -525,7 +527,7 @@ def cap06():
     c.mark(4)
     c.ev(js_rola_texto('(+) Receita Bruta', 110, 1500), at=c.L(4) - 0.9, label='desce pela tabela do DRE')
     c.mark(5)
-    c.click(LINHA('Despesas operacionais'), at=c.A(5, 'grupo', 0.6), label='abre o grupo Despesas operacionais')
+    c.click(GRUPO('06.01'), at=c.A(5, 'grupo', 0.6), label='abre o grupo Despesas operacionais')
     c.mark(6)
     c.hover(LINHA('Folha salarial'), seconds=1.0, at=c.A(6, 'pesa', 0.5), label='% da receita da Folha salarial (ZOOM)')
     c.mark(7)
@@ -563,8 +565,8 @@ def cap07():
     c.hover(LINHA('-R$ 31.500,00'), seconds=1.0, at=c.A(10, 'trinta', 0.5), label='caixa: -R$ 31.500,00 (ZOOM)')
     c.confere('main', ['-R$ 31.500,00'], 'resultado de outubro em caixa')
     c.mark(11)
-    c.ev(js_rola_texto('Custos dos materiais vendidos', 330, 800), at=c.L(11) - 0.9, label='sobe até 04 Custos Operacionais')
-    c.click(LINHA('Custos dos materiais vendidos'), at=c.A(11, 'linha', 0.6), label='abre o grupo do custo')
+    c.ev(js_rola_texto('04.01', 330, 800), at=c.L(11) - 0.9, label='sobe até 04 Custos Operacionais')
+    c.click(GRUPO('04.01'), at=c.A(11, 'linha', 0.6), label='abre o grupo do custo')
     c.hover(LINHA('CMV / Compras de materiais'), seconds=1.0, at=c.A(11, 'Compras', 0.5), label='CMV / Compras de materiais (ZOOM)')
     c.confere('main', ['CMV / Compras de materiais', 'R$ 256.860,00'], 'CMV em caixa')
     c.ev(js_tab('Regime de Competência'), at=c.A(11, 'competência', 0.2), label='troca para competência (sem cursor)')
@@ -598,13 +600,17 @@ def cap08():
     c.mark(4)
     c.mark(5)
     c.mark(6)
-    c.hover(BTNX('Exportar Patrimônio'), seconds=1.0, at=c.A(6, 'Exportar', 0.5), label='Exportar Patrimônio (ZOOM)')
+    c.hover(SEL('[title="Exportar Patrimônio"]'), seconds=1.0, at=c.A(6, 'Exportar', 0.5), label='Exportar Patrimônio (ZOOM)')
     c.fim()
     return c
 
 
 def cap09():
-    c = Cap(9, setup_relatorio('Demonstrativo Financeiro (DRE)'), pace=0.5)
+    pre = [{'do': 'click', 'target': BTN('Comparar períodos')}, {'do': 'waitFor', 'text': 'Prévia das colunas', 'timeout': 10},
+           {'do': 'click', 'target': TXT('Período anterior', within=DLG)}, {'do': 'click', 'target': BTN('Aplicar comparação'), 'noScroll': True},
+           {'do': 'waitFor', 'text': '31/10/26', 'timeout': 10}, {'do': 'waitFor', 'text': 'Demonstrativo Financeiro (DRE)', 'timeout': 15}, AGUARDA,
+           {'do': 'eval', 'js': js_topo(0)}]
+    c = Cap(9, setup_relatorio('Demonstrativo Financeiro (DRE)', pre), pace=0.5)
     c.mark(1)
     c.ev(js_rola_texto('Evolução Mensal', 110, 1500), at=0.3, label='desce até a Evolução Mensal')
     c.hover(LINHA('Evolução Mensal'), seconds=0.6, at=c.A(1, 'seis', 0.5), label='Evolução Mensal')
@@ -618,8 +624,9 @@ def cap09():
     c.mark(4)
     c.click(BTN('Aplicar comparação'), at=c.A(4, 'Aplico', 0.6), label='Aplicar comparação', noScroll=True)
     c.ev(js_rola_texto('(+) Receita Bruta', 110, 1500), at=c.A(4, 'lado', 0.3), label='desce pelas linhas comparadas')
+    c.confere('main', ['Setembro de 2026', 'Outubro de 2026'], 'as duas colunas lado a lado')
     c.mark(5)
-    c.click(LINHA('Despesas operacionais'), at=c.A(5, 'categoria', 0.6), label='abre as categorias das despesas operacionais')
+    c.click(GRUPO('06.01'), at=c.A(5, 'categoria', 0.6), label='abre as categorias das despesas operacionais')
     c.hover(LINHA('Energia elétrica'), seconds=1.0, at=c.A(5, 'renomear', 0.5), label='linhas casadas pelo nome da categoria')
     c.fim()
     return c
@@ -669,7 +676,7 @@ def cap11():
     c.hover(TXT('Compras', within=DLG), seconds=0.5, at=c.A(2, 'compras', 0.5), label='Compras')
     c.mark(3)
     c.click(BTN('Exportar PDF'), at=c.A(3, 'PDF', 0.6), label='Exportar PDF')
-    c.waitfor(text='PDF gerado em nova aba', timeout=10)
+    c.waitfor(text='PDF gerado em nova aba', timeout=6, optional=True)
     c.mark(4)
     c.click(BTN('Exportar'), at=c.A(4, 'Fechamento', 0.6), label='Exportar de novo')
     c.hover(ITEM('Fechamento completo (Excel)'), seconds=1.5, at=c.A(4, 'completo', 0.5), label='Fechamento completo (Excel) (ZOOM)')

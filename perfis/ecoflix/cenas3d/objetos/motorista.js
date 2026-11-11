@@ -9,7 +9,7 @@ export function motorista(pai, p = [0, 0, 0], o = {}) {
   for (const z of [-.09, .09]) { poe(new THREE.CapsuleGeometry(.075, .62, 4, 10), mCal, g, [0, .45, z]); poe(rbox(.27, .08, .13, .03, 1), M(COR.pneu), g, [.04, .04, z]); }
   poe(new THREE.CapsuleGeometry(.2, .42, 5, 14), mCam, g, [0, 1.15, 0], [0, 0, 0], [.72, 1, 1.1]);
   poe(new THREE.CapsuleGeometry(.062, .5, 4, 10), mCam, g, [0, 1.1, -.27], [0, 0, 0]);
-  const br = grupo(g, [0, 1.35, .24]); br.rotation.z = -1.25;
+  const br = grupo(g, [0, 1.35, .24]); br.rotation.z = 1.25;
   poe(new THREE.CapsuleGeometry(.062, .46, 4, 10), mCam, br, [0, -.3, 0]);
   const mao = grupo(br, [0, -.62, 0]); poe(new THREE.SphereGeometry(.07, 12, 10), mPele, mao);
   poe(new THREE.CylinderGeometry(.05, .06, .08, 10), mPele, g, [0, 1.52, 0]);

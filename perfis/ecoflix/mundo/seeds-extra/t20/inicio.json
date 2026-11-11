@@ -1,0 +1,360 @@
+{
+ "_doc": "T20 · mundo do portal em 10/11/2026 15:00 (gerado por rec/t20/t20_sementes.py; não editar à mão).",
+ "_patch": {
+  "companies": [
+   {
+    "match": {
+     "id": "@id:company.reciclavale"
+    },
+    "set": {
+     "show_photo_qr_on_receipt": true,
+     "receipt_format": "thermal_80mm"
+    }
+   }
+  ],
+  "suppliers": [
+   {
+    "match": {
+     "id": "@id:fornecedor.recomeco"
+    },
+    "set": {
+     "portal_token": "@id:t20.portal.recomeco",
+     "portal_config": null,
+     "portal_password_enabled": false,
+     "portal_username": null,
+     "portal_password_hash": null,
+     "portal_receipt_format": "auto"
+    }
+   }
+  ],
+  "customers": [
+   {
+    "match": {
+     "id": "@id:cliente.bandeira"
+    },
+    "set": {
+     "portal_token": "@id:t20.portal.bandeira",
+     "portal_config": null,
+     "portal_password_enabled": false,
+     "portal_username": null,
+     "portal_password_hash": null,
+     "portal_receipt_format": "auto"
+    }
+   }
+  ],
+  "balances": [
+   {
+    "match": {
+     "id": "@id:saldo.supplier:@id:fornecedor.recomeco"
+    },
+    "set": {
+     "balance": 1350,
+     "updated_at": "2026-11-10T11:35:00.000Z"
+    }
+   }
+  ]
+ },
+ "balance_movements": [
+  {
+   "id": "@id:t20.bm.pix1200",
+   "company_id": "@id:company.reciclavale",
+   "balance_id": "@id:saldo.supplier:@id:fornecedor.recomeco",
+   "entity_type": "supplier",
+   "entity_id": "@id:fornecedor.recomeco",
+   "movement_type": "payment",
+   "amount": -1200,
+   "description": "Valor Pago a Cooperativa Recomeço · Acerto parcial da entrega de 06/11",
+   "transaction_at": "2026-11-10T11:35:00.000Z",
+   "transaction_date": "2026-11-10",
+   "created_at": "2026-11-10T11:35:00.000Z",
+   "created_by": "@id:user.rafael",
+   "is_settled": false,
+   "payment_method": "transfer"
+  }
+ ],
+ "purchases": [
+  {
+   "id": "@id:t20.compra.1761",
+   "company_id": "@id:company.reciclavale",
+   "order_number": 1761,
+   "order_seq": 1761,
+   "order_period": null,
+   "order_ref": "#1761",
+   "status": "completed",
+   "total_amount": 18714.08,
+   "paid_amount": 18714.08,
+   "payment_method": "transfer",
+   "created_by": "@id:user.rafael",
+   "transaction_at": "2026-11-10T12:00:00.000Z",
+   "transaction_date": "2026-11-10",
+   "created_at": "2026-11-10T12:00:00.000Z",
+   "currency": "BRL",
+   "hide_financial_details": false,
+   "notes": null,
+   "driver_name": null,
+   "vehicle_plate": null,
+   "driver_id": null,
+   "vehicle_id": null,
+   "supplier_id": "@id:fornecedor.recomeco"
+  }
+ ],
+ "purchase_items": [
+  {
+   "id": "@id:t20.pii.1761.0",
+   "purchase_id": "@id:t20.compra.1761",
+   "material_id": "@id:material.al_latinha",
+   "material_name": "Alumínio latinha",
+   "quantity": 3018.4,
+   "unit_price": 6.2,
+   "total_price": 18714.08,
+   "impurity": 0,
+   "impurity_kg": null,
+   "impurity_pct": null,
+   "item_discount": 0,
+   "tare_weight": null,
+   "first_weight": null,
+   "second_weight": null,
+   "weighing_mode": null,
+   "weight_source": "manual"
+  }
+ ],
+ "sales": [
+  {
+   "id": "@id:t20.venda.1760",
+   "company_id": "@id:company.reciclavale",
+   "order_number": 1760,
+   "order_seq": 1760,
+   "order_period": null,
+   "order_ref": "#1760",
+   "status": "completed",
+   "total_amount": 7722.8,
+   "paid_amount": 7722.8,
+   "payment_method": "transfer",
+   "created_by": "@id:user.rafael",
+   "transaction_at": "2026-11-10T11:35:00.000Z",
+   "transaction_date": "2026-11-10",
+   "created_at": "2026-11-10T11:35:00.000Z",
+   "currency": "BRL",
+   "hide_financial_details": true,
+   "notes": null,
+   "driver_name": null,
+   "vehicle_plate": null,
+   "driver_id": null,
+   "vehicle_id": null,
+   "customer_id": "@id:cliente.bandeira"
+  }
+ ],
+ "sale_items": [
+  {
+   "id": "@id:t20.sii.1760.0",
+   "sale_id": "@id:t20.venda.1760",
+   "material_id": "@id:material.latao",
+   "material_name": "Metal amarelo (latão)",
+   "quantity": 152,
+   "unit_price": 31.9,
+   "total_price": 4848.8,
+   "impurity": 0,
+   "impurity_kg": null,
+   "impurity_pct": null,
+   "item_discount": 0,
+   "tare_weight": null,
+   "first_weight": null,
+   "second_weight": null,
+   "weighing_mode": null,
+   "weight_source": "manual"
+  },
+  {
+   "id": "@id:t20.sii.1760.1",
+   "sale_id": "@id:t20.venda.1760",
+   "material_id": "@id:material.cobre_mel",
+   "material_name": "Cobre mel",
+   "quantity": 60,
+   "unit_price": 47.9,
+   "total_price": 2874.0,
+   "impurity": 0,
+   "impurity_kg": null,
+   "impurity_pct": null,
+   "item_discount": 0,
+   "tare_weight": null,
+   "first_weight": null,
+   "second_weight": null,
+   "weighing_mode": null,
+   "weight_source": "manual"
+  }
+ ],
+ "invoices": [
+  {
+   "id": "@id:t20.nfe.1250",
+   "company_id": "@id:company.reciclavale",
+   "fiscal_config_id": "@id:fiscal.matriz",
+   "invoice_number": 1250,
+   "serie": 1,
+   "modelo": 55,
+   "invoice_type": "saida",
+   "status": "emitida",
+   "environment": "producao",
+   "finalidade": 1,
+   "nature_operation": "Venda de mercadorias",
+   "cfop_default": "5102",
+   "modalidade_frete": 9,
+   "is_consumer_final": false,
+   "customer_id": "@id:cliente.bandeira",
+   "supplier_id": null,
+   "destinatario_avulso": null,
+   "order_id": null,
+   "order_type": null,
+   "issue_date": "2026-11-10T11:44:00.000Z",
+   "authorized_at": "2026-11-10T11:45:00.000Z",
+   "nfe_key": "35261147318506000107550010000012501532176840",
+   "nfe_protocol": "135260130933615",
+   "plugnotas_id": "pn-001250",
+   "total_products": 23950,
+   "total_amount": 23950,
+   "total_freight": 0,
+   "other_expenses": 0,
+   "valor_desconto_total": 0,
+   "computa_estoque_fiscal": true,
+   "baixa_estoque_ao_emitir": false,
+   "created_by": "@id:user.juliana",
+   "created_at": "2026-11-10T11:44:00.000Z",
+   "updated_at": "2026-11-10T11:45:00.000Z"
+  }
+ ],
+ "collection_orders": [
+  {
+   "id": "@id:t20.coleta.1",
+   "company_id": "@id:company.reciclavale",
+   "numero": 1,
+   "status": "coletada",
+   "origem": "interna",
+   "partner_type": "supplier",
+   "partner_id": "@id:fornecedor.recomeco",
+   "partner_nome": "Cooperativa Recomeço",
+   "contato_telefone": null,
+   "logradouro": "Rua do Trabalho",
+   "numero_end": "57",
+   "bairro": "Vila Nossa Senhora das Graças",
+   "cidade": "Taubaté",
+   "uf": "SP",
+   "cep": "12060-640",
+   "scheduled_date": "2026-10-02",
+   "scheduled_window": "manha",
+   "driver_id": null,
+   "driver_name": null,
+   "vehicle_id": null,
+   "vehicle_plate": null,
+   "material_estimado": "~500 kg de latinha",
+   "observacoes": null,
+   "completed_at": "2026-10-02T12:40:00.000Z",
+   "public_short_code": "cff2db39a2aa",
+   "created_at": "2026-09-30T13:00:00.000Z",
+   "updated_at": "2026-10-02T12:40:00.000Z"
+  },
+  {
+   "id": "@id:t20.coleta.5",
+   "company_id": "@id:company.reciclavale",
+   "numero": 5,
+   "status": "coletada",
+   "origem": "interna",
+   "partner_type": "supplier",
+   "partner_id": "@id:fornecedor.recomeco",
+   "partner_nome": "Cooperativa Recomeço",
+   "contato_telefone": null,
+   "logradouro": "Rua do Trabalho",
+   "numero_end": "57",
+   "bairro": "Vila Nossa Senhora das Graças",
+   "cidade": "Taubaté",
+   "uf": "SP",
+   "cep": "12060-640",
+   "scheduled_date": "2026-10-23",
+   "scheduled_window": "tarde",
+   "driver_id": null,
+   "driver_name": null,
+   "vehicle_id": null,
+   "vehicle_plate": null,
+   "material_estimado": "~700 kg de PET",
+   "observacoes": null,
+   "completed_at": "2026-10-23T18:40:00.000Z",
+   "public_short_code": "a225c35396ed",
+   "created_at": "2026-10-21T12:00:00.000Z",
+   "updated_at": "2026-10-23T18:40:00.000Z"
+  },
+  {
+   "id": "@id:t20.coleta.10",
+   "company_id": "@id:company.reciclavale",
+   "numero": 10,
+   "status": "agendada",
+   "origem": "portal",
+   "partner_type": "supplier",
+   "partner_id": "@id:fornecedor.recomeco",
+   "partner_nome": "Cooperativa Recomeço",
+   "contato_telefone": null,
+   "logradouro": "Rua do Trabalho",
+   "numero_end": "57",
+   "bairro": "Vila Nossa Senhora das Graças",
+   "cidade": "Taubaté",
+   "uf": "SP",
+   "cep": "12060-640",
+   "scheduled_date": "2026-11-13",
+   "scheduled_window": "tarde",
+   "driver_id": null,
+   "driver_name": null,
+   "vehicle_id": null,
+   "vehicle_plate": null,
+   "material_estimado": "PET prensado — 800 kg",
+   "observacoes": null,
+   "completed_at": null,
+   "public_short_code": "322dfb32a72e",
+   "created_at": "2026-11-10T10:22:00.000Z",
+   "updated_at": "2026-11-10T10:22:00.000Z"
+  }
+ ],
+ "order_attachments": [
+  {
+   "id": "@id:t20.foto.papelao",
+   "company_id": "@id:company.reciclavale",
+   "order_id": "@id:compra.1749",
+   "order_kind": "purchase",
+   "file_name": "t20-carga-papelao.jpg",
+   "storage_path": "t20/t20-carga-papelao.jpg",
+   "mime": "image/jpeg",
+   "file_size": 200000,
+   "created_by": "@id:user.marcos",
+   "created_at": "2026-11-06T13:00:00.000Z"
+  },
+  {
+   "id": "@id:t20.foto.pet",
+   "company_id": "@id:company.reciclavale",
+   "order_id": "@id:compra.1749",
+   "order_kind": "purchase",
+   "file_name": "t20-carga-pet.jpg",
+   "storage_path": "t20/t20-carga-pet.jpg",
+   "mime": "image/jpeg",
+   "file_size": 200000,
+   "created_by": "@id:user.marcos",
+   "created_at": "2026-11-06T13:10:00.000Z"
+  },
+  {
+   "id": "@id:t20.foto.latinha",
+   "company_id": "@id:company.reciclavale",
+   "order_id": "@id:compra.1749",
+   "order_kind": "purchase",
+   "file_name": "t20-carga-latinha.jpg",
+   "storage_path": "t20/t20-carga-latinha.jpg",
+   "mime": "image/jpeg",
+   "file_size": 200000,
+   "created_by": "@id:user.marcos",
+   "created_at": "2026-11-06T13:20:00.000Z"
+  }
+ ],
+ "order_photo_shares": [
+  {
+   "id": "@id:t20.share.1749",
+   "company_id": "@id:company.reciclavale",
+   "order_id": "@id:compra.1749",
+   "order_kind": "purchase",
+   "token": "@id:t20.fotos.compra1749",
+   "created_at": "2026-11-06T13:30:00.000Z"
+  }
+ ]
+}
