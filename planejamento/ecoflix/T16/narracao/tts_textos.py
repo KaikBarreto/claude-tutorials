@@ -119,7 +119,7 @@ Clico em Montar nota consolidada. A nota fica em nome da própria Recicla Vale, 
 Confiro os itens e clico em Emitir Nota. Pronto: a mil duzentos e cinquenta e um está autorizada, com as compras do dia inteiro.""",
 13: """Venda e compra são as notas do dia a dia, mas a natureza da operação tem bem mais: remessa pra conserto, remessa pra demonstração, transferência entre unidades, baixa por perda. E, se a sua não estiver na lista, Outra operação deixa escrever o nome.
 Um exemplo: material que estragou ou foi furtado. Na baixa de estoque por perda, a nota sai contra a própria empresa, sem cliente, e o cê-éfe-ó-pê muda sozinho. A tela lembra que o valor é o custo do material.
-Por padrão, essa nota só informa a sefás e não mexe no seu estoque. Marcando esta opção, o sistema dá baixa no estoque quando a nota é autorizada. E, se a nota for cancelada, o estoque volta.
+Com o material incluído, aparece uma opção nos dados da nota. Por padrão, essa nota só informa a sefás e não mexe no seu estoque. Marcando, o sistema dá baixa no estoque quando a nota é autorizada. E, se a nota for cancelada, o estoque volta.
 Qual natureza usar em cada caso, e com qual cê-éfe-ó-pê, é o contador quem diz. Saio sem emitir.""",
 14: """E quando a nota não deixa emitir? Olha esta venda pra Metalúrgica Pinhal, um cliente novo. O selo de cima conta as pendências. Enquanto ele estiver vermelho, o Emitir Nota fica travado.
 Passando o mouse, ele diz o que falta. Aqui são três coisas: o cadastro do cliente está incompleto, falta a inscrição estadual dele, e a nota ainda não tem item.
