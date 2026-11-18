@@ -1,111 +1,105 @@
-# Motion e acabamento v2 · kit 3D e kit 2D da EcoFlix (piloto de 18/11)
+# Biblioteca de motion do kit v2 (EcoFlix) · para reaproveitar em outro estilo
 
-Pedido do Kaik: ilustrações "mais refinadas, com mais qualidade técnica de motion, princípios do design, estética". A
-identidade aprovada não muda (argila fosca, selos saturados com ícone branco, verde #50D088, Montserrat): sobe o
-acabamento. **Piloto, esperando a aprovação do Kaik**: o v1 continua intacto e as cenas atuais continuam renderizando nele.
+**Situação (18/11).** O piloto de refino em argila foi encerrado antes da entrega: o Kaik escolheu outros estilos na
+folha de estilos (vidro escuro e gradientes suaves), então a parte de ESTÉTICA do v2 (luz, argila, chão, fichas de
+sombra dos rótulos) não vai ser usada como está. O que serve a qualquer estilo é a **biblioteca de motion** descrita
+aqui: funções puras do tempo, sem dependência de cor, material ou tema. O kit v1 e as cenas atuais não foram tocados.
+Não foi gerado vídeo antes/depois (nada em `~/ecoflix/previa_ilustracoes/`).
 
-- `kit3d_v2.js` (este diretório) e `../cenas/cenas_ecoflix_v2.html`: os kits.
-- Pilotos: `planejamento/ecoflix/T08/cenas3d/cena3d_v2.html` (CAPS[4], dupla pesagem) e
-  `planejamento/ecoflix/T08/cenas/cenas_v2.html` (CAPS[7], "Só no Finalizar", o conceito abstrato escolhido).
-- Antes/depois: `~/ecoflix/previa_ilustracoes/motion_v2_3d.mp4`, `motion_v2_2d.mp4` e as folhas `.jpg`.
+Arquivos (todos novos):
+- `perfis/ecoflix/cenas3d/kit3d_v2.js`: kit 3D v2 (cópia do v1 com trocas; mesma API). Linhas citadas abaixo como `3D:n`.
+- `perfis/ecoflix/cenas/cenas_ecoflix_v2.html`: kit 2D v1 inteiro + blocos `KIT 2D V2` (linhas 342 a 427). `2D:n`.
+- Exemplos de uso: `planejamento/ecoflix/T08/cenas3d/cena3d_v2.html` (`CAPS[4]`, linha 93) e
+  `planejamento/ecoflix/T08/cenas/cenas_v2.html` (`CAPS[7]`, ajudantes `anda/chega/recua/espera` nas linhas 465 a 470).
 
-## Princípios aplicados
-1. **Curva com intenção.** Entrada arranca na hora e desacelera por muito tempo (`eo5`); saída curta e acelerando (`ei`);
-   movimento com peso (`eio5`); `passa` (passa um pouco e volta) só em quem entra por escala. Nada linear: até a deriva
-   `'lin'` da câmera começa e termina em curva.
-2. **Peso.** Mola amortecida analítica (`mola`, resposta ao degrau) e `golpe` (resposta ao impulso). O caminhão arranca e
-   freia com a suspensão respondendo à aceleração; a carroceria sobe quando a carga sai; a caçamba desce e bate; a peça
-   cai acelerando e dá um quique curto; a leitura da balança passa do valor e volta.
-3. **Uma coisa puxa a outra** (sobreposição e escalonamento): a chamada do título entra 90 ms antes do título; a caçamba
-   começa a subir no fim da ré; o caminhão arranca com a caçamba ainda descendo; filas com 60 a 120 ms (`escalona`).
-4. **Ação secundária discreta**: pó (`poeira` + `sopra`), suspensão, luz do mostrador âmbar enquanto a leitura mexe,
-   ampulheta que balança no cartão que espera.
-5. **Um foco por momento** (`foco`): o que não é o assunto recua em opacidade e saturação, sem sumir (o que foi dito
-   continua legível). O rótulo entra depois do objeto que nomeia; número que é resultado conta até o valor.
-6. **Câmera de operador**: chaves alisadas por uma janela em sino (inércia), respiração de milésimos de radiano, e o
-   enquadramento acompanha o assunto (perto na pesagem, abre na descarga, fecha na conta). Sem corte e sem zoom brusco.
-7. **Luz com direção e profundidade**: sol morno mais de lado (a sombra cai à vista), céu frio, contraluz que solta a
-   silhueta, estúdio fraco em tudo (a face de baixo escurece), névoa clara, chão que se desfaz no fundo da página.
-8. **Material com variação**: argila com manchas largas e miúdas na cor e na rugosidade, escuro de contato perto do chão
-   e brilho rasante leve. Concreto pintado (manchas, grão, juntas com sombra e fio de luz, faixa gasta).
-9. **Um sistema só de rótulo** (3D e 2D): raios `--r1/--r2/--r3/--rp`, sombras `--s1/--s2/--s3` (com a mesma direção da
-   luz do 3D), fio de luz em selo e chip (`--lz`), ritmo de letra do título e dos números.
+Regra de base: tudo é função só de `t` (o render é quadro a quadro, em qualquer ordem). Nada de relógio, estado entre
+quadros, `requestAnimationFrame` ou física com passo. `pr(t, a, d)` = avanço de 0 a 1 a partir do instante `a`, por `d` s.
 
-Tudo continua função pura de `t` (nada de relógio, estado entre quadros ou física com passo): `dirige` calcula a
-suspensão por convolução da aceleração de `fx(t)`, e a câmera alisa amostrando as próprias chaves.
-
-## O que mudou no kit 3D
-| Área | v1 | v2 |
+## 1. Curvas (`3D:20-33`; no 2D dentro de `V2`, `2D:373-381`)
+| Função | O que faz | Quando usar |
 |---|---|---|
-| Curvas | `eo`, `eio` | + `eo5`, `ei`, `eio5`, `passa`, `mola`, `golpe`, `escalona` (as antigas ficam) |
-| `vis` | cúbica nos dois sentidos | opacidade chega antes da posição, cauda longa; saída curta; `sc < .9` passa e volta |
-| `pulse`, `pulso`, `ripple`, `destaque`, `cresce` | seno simétrico / cúbica | golpe de mola, onda mais longa, anel e objeto que passam e assentam |
-| `conta` | cúbica | cauda longa; **novo `pesa(mostrador, ...)`**: leitura que passa e volta, de 10 em 10 kg, luz âmbar → verde |
-| `posTitulo`, `mostrador.troca` | sobem juntos / troca seca | chamada antes do título, letras fechando; rótulo 1 sobe e sai, 2 sobe e entra |
-| Câmera | interpolação por trecho | média em sino de 9 amostras (`inercia`, padrão 0,34 s) + respiração (`respira`) |
-| Luz | hemisfério 1,7 + sol 2,3 + preenchimento | sol morno de lado 2,7, hemisfério 0,82 frio/quente, contraluz, estúdio 0,34, névoa (`nevoa`) |
-| Material `M`/`MU` | cor chapada | `barro`: variação de cor e rugosidade, escuro de contato, brilho rasante (sem textura) |
-| `mancha` | degradê de 3 paradas | miolo mais denso, borda mais longa |
-| `transfere` | voo suave (eio) | queda com gravidade e quique; `{ suave: true }` volta ao voo do v1 |
-| `caminhao` | um grupo só | rodas na raiz, o resto em `userData.corpo`; moldura de janela, vinco e maçaneta da porta, saia, escapamento |
-| `chaoPatio` | caixa + juntas em malha | placa com textura feita na hora, bordas que se desfazem (`borda`, `tom`) |
-| Novos | | `suspende`, `dirige`, `poeira`, `sopra`, `foco`, `pesa` |
+| `eo5(x)` | quíntica de saída: arranca na hora, desacelera por muito tempo | entrada de rótulo, contagem, onda |
+| `ei(x)` | cúbica de entrada: acelera | saída (curta, não pede atenção) |
+| `eio5(x)` | quíntica nos dois lados | movimento com peso (título que sobe, conta que viaja) |
+| `passa(x, k)` | passa do alvo e volta (k = quanto; 1,1 ≈ 4 %) | quem entra por escala (selo, operador, anel) |
+| `eo`, `eio` | as cúbicas do v1, mantidas | as cenas chamam direto |
+| `escalona(a, i, passo = .09)` | instante do item `i` de uma fila | stagger de 60 a 120 ms |
 
-Opções novas de `cena(..., {inercia, respira, nevoa})`: `inercia: 0` e `respira: 0` devolvem a câmera do v1.
-O sorteio da cena (`rng`) anda igual: montes e cargas caem nos mesmos lugares (o kit usa um sorteio próprio, `hsh`).
+## 2. Molas (`3D:26` e `3D:31`; `2D:378` e `2D:380`)
+- `mola(x, z = .5)`: resposta ao degrau de uma mola amortecida, analítica, 0 → 1 com x de 0 a 1. `z` = amortecimento
+  (0,3 balança muito; 0,7 passa uma vez; ≥ 1 não passa). A frequência é escolhida para o resto ser < 0,1 % em x = 1.
+- `golpe(x, n = 1.6, a = 4.2)`: resposta ao impulso (sai de 0, bate, oscila e volta a 0). `n` = idas e voltas, `a` =
+  quanto morre. Pico ≈ 1: multiplicar pela amplitude. Serve para pulso, tremor de batente, cartão que balança.
 
-## O que mudou no kit 2D
-`cenas_ecoflix_v2.html` = o v1 inteiro + dois blocos no fim (`<style id="v2">` e `<script id="v2">`, entre os comentários
-`KIT 2D V2 · INÍCIO/FIM`). O estilo troca o acabamento (as mesmas fichas do 3D); o script redefine `vis`, `ripple`, `pulse`,
-`conta`, `traco`, `arco` e `posTitulo` com os mesmos nomes e parâmetros. O que é novo fica em `V2.*` (`eo5`, `ei`, `eio5`,
-`passa`, `mola`, `golpe`, `escalona`, `foco`, `curso`, `sobre`, `pesa`), porque há aulas com `foco()`, `segue()` e
-`viaja()` próprios.
-
-## Tempo de render por quadro (prévia `--dsf 1.35`, 1728x1080, CPU, trava leve, `nice 19`)
-Medido no mesmo lote, um depois do outro, com a varredura dos robôs rodando (carga da máquina entre parênteses):
-
-| Cena | v1 | v2 |
+## 3. Entrada, saída e ênfase de rótulo (HTML; independem do tema)
+| Função | Onde | O que faz |
 |---|---|---|
-| 3D · T08 cap04 (291 quadros) | __A3__ | __D3__ |
-| 2D · T08 cap07 (360 quadros) | __A2__ | __D2__ |
+| `vis(e, t, a, b, {dy, dx, sc, din, dout})` | `3D:105`, `2D:397` | entra em `a`, sai em `b`. Opacidade em 62 % do tempo e posição com cauda de 130 % (`eo5`): já se lê enquanto assenta. Saída em 70 % do tempo, acelerando. `sc < .9` usa `passa` |
+| `pulse(e, t, a, amp, dur)` | `3D:115`, `2D:408` | ênfase por `golpe` (bate e assenta). No 2D compõe com o `transform` do `vis`: chamar depois dele |
+| `ripple(r, t, a)` | `3D:113`, `2D:405` | onda que abre com `eo5` e some com potência 1,6 |
+| `foco(e, t, a, b, {min, fora, d})` | `3D:119`, `V2.foco` `2D:383` | um assunto por momento: fora de `[a, b]` o elemento recua (opacidade × `min`, saturação 35 %); `fora: true` inverte. Chamar depois do `vis` |
+| `posTitulo(e, t, a, sobe, sai)` | `3D:134`, `2D:421` | título grande no centro que sobe com `eio5`; a chamada entra antes, com o espaçamento das letras fechando de .42 a .3 em, e o título 90 ms depois |
+| `mostrador().troca(t, a)` | `3D:157` | rótulo 1 sobe e sai, rótulo 2 sobe e entra (80 ms de defasagem) |
 
-Nenhum efeito de tela (sem pós-processamento, sem passe extra). O custo novo é por pixel no material de argila (três
-senos), a névoa, o estúdio como luz ambiente e o chão com textura (que tira ~30 malhas de junta da cena).
+## 4. Contagem
+- `conta(e, t, a, d, v0, v1, fmt)` (`3D:125`, `2D:415`): número que conta com `eo5` (cauda 15 % mais longa que `d`).
+- `pesa(mostrador, t, a, d, v0, v1, {z, passo, fmt})` (`3D:128`): leitura de balança. O valor segue `mola` (passa e
+  volta, `z` .74 ≈ 4 %), anda de `passo` em `passo` (10) enquanto mexe e crava o valor exato no fim; acende a luz
+  `.md` do mostrador em âmbar até 93 % e verde depois. No 2D, `V2.pesa(elementoDoNumero, ...)` (`2D:390`), sem a luz.
 
-## Migração das cenas existentes
-### 3D (12 arquivos `Tnn/cenas3d/cena3d.html`, 35 cenas) · ganham sozinhas
-Um passo por arquivo, sem tocar em nenhum `CAPS`: trocar o caminho do import para `kit3d_v2.js`. Quando a cena usa
-`objetos/*.js` (que importam `../kit3d.js`), em vez disso pôr um importmap no `<head>`, antes do módulo, que leva o kit
-e os objetos juntos para o v2:
-```html
-<script type="importmap">{"imports":{"../../../../perfis/ecoflix/cenas3d/kit3d.js":"../../../../perfis/ecoflix/cenas3d/kit3d_v2.js"}}</script>
-```
-Conferido assim, sem editar a cena: T08 cap00 e cap06 (import trocado) e T04 cap00 (importmap, com `objetos/`).
-Vêm de graça: curvas de entrada e saída, pulso, contagem, título escalonado, câmera com inércia, luz, sombra, névoa,
-argila, sombra de contato, queda das peças, caminhão novo e chão do pátio.
+## 5. Traço e viagem sobre traço (2D)
+- `traco(path, t, a, d)` (`2D:417`) e `arco(e, t, a, d, x0, y0, x1, y1, h, rot)` (`2D:418`): mistura de `eio` com `eo5`
+  (arranca com peso, chega desacelerando).
+- `V2.curso(path, q)` (`2D:386`): desenha o `<path>` até a fração `q` (o traço segue um objeto).
+- `V2.sobre(e, path, q)` (`2D:388`): põe o elemento no ponto da fração `q` do `<path>`.
+  Juntos fazem "a conta que viaja pelo caminho e acende o nó quando chega": ver `anda()` em `T08/cenas/cenas_v2.html:465`.
 
-Depois de trocar, **olhar os quadros de cada cena** (a folha de sempre), porque três coisas mudam de lugar:
-- a sombra cai mais para a direita (o sol está mais de lado): conferir se não cobre rótulo preso ao chão;
-- o `chaoPatio` agora se desfaz nas bordas: cena que mostrava a quina da placa de propósito passa `borda: [0, 0, 0, 0]`;
-- câmera com duas chaves quase juntas (um "corte") vira um movimento de ~0,7 s: `inercia: 0` nessa cena.
+## 6. Câmera 3D (`3D:169`, `3D:196-218`)
+- `camera([[t, {x, y, z, d, az, el, oy}, 'eio'|'lin', arco], ...])`: as chaves do v1, sem mudança.
+- `poseBruta(t)` (`3D:197`): a interpolação do v1. `pose(t)` (`3D:210`): média de 9 amostras de `poseBruta` em
+  `t ± inercia` com peso em sino (`1 + cos`): toda quina de velocidade vira curva (arranque e parada com peso; a deriva
+  `'lin'` não começa de tranco). Depois soma a respiração do operador: `az` ± 0,0032 e 0,0015 rad, `el` ± 0,002 rad, em
+  senos lentos de `t`.
+- Opções de `cena(monta, {inercia: .34, respira: 1})`; `0` em cada uma devolve a câmera do v1. Duas chaves quase juntas
+  (um corte) viram ~0,7 s de movimento: usar `inercia: 0` nessa cena.
+- A técnica vale para qualquer câmera ou valor com chaves: alisar amostrando a própria função, em vez de filtrar no tempo.
 
-### 3D · o que pede mudança na cena (opcional, cena por cena)
-| Para ter | Trocar |
-|---|---|
-| Suspensão no veículo | `anda(T, x, h)` por `dirige(T, t, fx, h, {carga, golpes})`, com `fx = u => ...` (a posição como função do tempo) |
-| Leitura de balança que assenta | `conta(most.mn, ...)` por `pesa(most, t, a, d, v0, v1)` |
-| Pó | `const p = poeira(CENA)` na montagem e `sopra(p, t, a, [x, y, z], {...})` no quadro |
-| Um foco por momento | `foco(e, t, a, b)` depois do `vis` do mesmo elemento |
-| Peça levada (não jogada) | `transfere(..., { suave: true })` |
+## 7. Objetos com peso (3D)
+| Função | Onde | O que faz |
+|---|---|---|
+| `cresce(o, t, a, d, giro)` | `3D:315` | objeto entra por escala com `passa` (3 %) e giro que desacelera com `eo5` |
+| `pulso(o, t, a, amp, dur)` | `3D:319` | ênfase de objeto por `golpe` |
+| `destaque(anel, onda, t, a)` | `3D:310` | anel que passa e assenta + onda longa |
+| `transfere(im, B, t, a, d, {ordem, passo, arco, suave})` | `3D:526` | peças de um lote caem com gravidade (horizontal quase linear, vertical ao quadrado, arco que perde força) e um quique nos últimos 18 %; `passo` escalona; `suave: true` = voo do v1 |
+| `suspende(v, arfa, afunda, rola)` | `3D:730` | mexe a carroceria (`userData.corpo`) sem tirar as rodas do chão |
+| `dirige(v, t, fx, h, {k, hz, z, carga, golpes})` | `3D:736` | o veículo segue `x = fx(t)`; a suspensão é a convolução da aceleração de `fx` (diferença finita) com a resposta ao impulso de uma mola (54 amostras de 1/30 s). `golpes: [[t0, força]]` = trancos verticais; `carga(t)` de 0 a 1 afunda a mola |
+| `poeira(pai, n, cor)` + `sopra(p, t, a, [x, y, z], {d, r, dir, alto, op})` | `3D:744`, `3D:750` | sopro de `n` sprites macios: abrem com `eo5`, sobem, somem com potência 1,4; atraso e direção de cada um vêm de `hsh` (sorteio fixo, `3D:34`) |
 
-Modelo: o `CAPS[4]` do `T08/cenas3d/cena3d_v2.html`.
+`dirige` precisa do veículo com as rodas na raiz e o resto em `userData.corpo` (como o `caminhao` do v2, `3D:664`).
+O `hsh` existe para o kit não consumir o `rng()` da cena (montes e cargas caem nos mesmos lugares do v1).
 
-### 2D (26 arquivos `Tnn/cenas/cenas.html`) · ganham sozinhas
-Colar os dois blocos `KIT 2D V2` do `cenas_ecoflix_v2.html` antes do `</body>` (o script tem de vir depois do script da
-aula). Nenhum `CAPS` muda. Conferir a folha de cada aula: o `pulse` agora bate e assenta (pico ~25 % maior e mais cedo) e
-a entrada tem cauda ~30 % mais longa (quem dependia do fim exato de um `vis` para emendar outro movimento pode pedir
-ajuste de 0,1 s). Cena do Cato (T21, tema escuro): o bloco de estilo troca raio, sombra e ritmo de letra de `.card`,
-`.tag`, `.ico`, `.op` e `.most` e redefine o fundo do `#st`; conferir a folha dela antes de adotar.
+## Levar para outro estilo
+- **2D**: copiar o bloco `<script id="v2">` (`2D:368-426`) para depois do script da cena. Ele redefine `vis`, `ripple`,
+  `pulse`, `conta`, `traco`, `arco` e `posTitulo` com os mesmos nomes e parâmetros e expõe o resto em `V2.*` (há aulas
+  com `foco()`, `segue()` e `viaja()` próprios). Depende só de `pr`, `eo`, `eio`, `lerp`, `cl` e `kg` do kit base.
+  O `<style id="v2">` (`2D:347-367`) é estética do estilo claro: **não levar**.
+- **3D**: as seções 1 a 4, 6 e 7 não dependem de material. Num kit de outro estilo, copiar as linhas citadas; `vis`,
+  `foco`, `pulse`, `conta`, `pesa` e `posTitulo` só mexem em `style` de elementos HTML.
+- **Não levar** (estética da argila): `CSS` (`3D:57`), luz, névoa e `LUZ` (`3D:170-190`), `barro` (`3D:252`), a textura
+  de `mancha`, o `chaoPatio` pintado (`3D:851`) e os detalhes novos do `caminhao`.
 
-Redesenho com o que é novo (`V2.foco`, `V2.curso` + `V2.sobre` para algo viajar sobre um traço, `V2.golpe`): cena por
-cena, como o `CAPS[7]` do `T08/cenas/cenas_v2.html`.
+## O que ficou medido e o que ficou em aberto
+- Render de prévia (`--dsf 1.35`, CPU, trava leve, máquina com carga ~11 pela varredura dos robôs):
+  3D T08 cap04, 291 quadros: v1 776 s (2,7 s/quadro), v2 1.355 s (4,7 s/quadro). 2D T08 cap07, 360 quadros: v1 74 s
+  (0,21 s/quadro), v2 85 s (0,24 s/quadro).
+- **O 3D v2 ficou ~1,75x mais caro e a causa não foi isolada.** Numa medição alternada de 15 quadros, tirar o estúdio
+  como luz ambiente (`?env=0`) ou o material `barro` (`?br=0`) mudou a mediana em menos de 7 % cada. Faltou medir a
+  névoa (`?nv=0`), o contraluz (`?cl=0`), a anisotropia do chão (`?an=1`) e o chão transparente. Nada disso é motion:
+  a biblioteca de motion roda em JavaScript por quadro e custa pouco (`dirige` faz ~160 chamadas de `fx`, `pose` 9
+  interpolações), mas isso não foi medido em separado.
+- Conferido só em quadros parados (folhas de contato): o `CAPS[4]` 3D e o `CAPS[7]` 2D redesenhados; T08 cap00 e cap06
+  com o import trocado; T04 cap00 por importmap (kit e `objetos/` juntos no v2), que é o caminho de migração sem
+  editar `CAPS`:
+  `<script type="importmap">{"imports":{"../../../../perfis/ecoflix/cenas3d/kit3d.js":"../../../../perfis/ecoflix/cenas3d/kit3d_v2.js"}}</script>`
+- Não conferido: o movimento em vídeo (só um render do `CAPS[4]` foi olhado por amostra de quadros, antes do último
+  ajuste do pó), as outras cenas 3D e 2D no v2, e a cena do Cato com o bloco 2D.
