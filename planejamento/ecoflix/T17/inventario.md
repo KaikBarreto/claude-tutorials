@@ -1,4 +1,4 @@
-# Inventário · T17 Transporte, serviço e o contador (EcoSistema 1.59.154)
+# Inventário · T17 Transporte, serviço e o contador (EcoSistema 1.59.154, com o adendo do 1.60.10 no fim)
 
 Código lido em `/home/claude/ecoflix/app-src-1.59.154/` (só leitura). Caminhos relativos a `src/`. Rótulo entre aspas =
 texto exato da tela. 🔒 Módulo **Notas Fiscais** (`screen_notas_fiscais`, todas as telas abaixo).
@@ -177,3 +177,67 @@ texto exato da tela. 🔒 Módulo **Notas Fiscais** (`screen_notas_fiscais`, tod
 - H2. A ajuda do cartão de Exportação diz "estrutura plana" para um mês só, mas o código sempre cria a pasta `AAAA-MM/`
   (`runExportPipeline.ts:280-300`).
 - H3. "Configurações do MDF-e" não fala de percurso, e a fonte (cap. 3) ainda chama de "Configuração rodoviária".
+
+
+## 11. Adendo 1.60.10 (18/11): o que vale no lugar das seções acima
+Auditoria completa em `cobertura_160.md` (M1 a M26 e L1 a L33). Aqui, só os rótulos e as chamadas que o roteiro novo usa (texto
+exato do código em `/dev/shm/ecoflix-src/src`, 1.60.10).
+- **Menu (seção 1):** "Fiscal & Ambiental" termina em "Estoque Fiscal" (`/fiscal-ambiental/estoque-fiscal/posicao`) e "Relatórios
+  Fiscais" (`/fiscal-ambiental/relatorios/nfe`). "SPED Fiscal" (BETA) fica fora da aula.
+- **Manifestos (seção 3):** emitir, consultar, encerrar, baixar e cancelar chamam a function `mdfe-contingency` (`action` prepare,
+  status, enclose, download, cancel). Toasts: "MDF-e #1 criado", "MDF-e #1 enviado ao motor fiscal próprio", "MDF-e #1 autorizado!",
+  "MDF-e #1: encerramento confirmado pela SEFAZ". Menu do "Rejeitado": "Ver Erro", "Reemitir", "Excluir". Diálogos: "Erro no MDF-e
+  #N" ("Fechar"); "Cancelar MDF-e #N" ("O cancelamento será enviado à SEFAZ e é irreversível.", "Atenção: O prazo para cancelamento
+  geralmente é de 24 horas após a autorização, variando conforme a UF.", "Motivo do cancelamento (mín. 15 caracteres)", "Voltar",
+  "Confirmar Cancelamento"). Busca "Buscar por nº, placa ou motorista..."; clique na linha abre "Detalhes do MDF-e #N". Selos de
+  recusa: "Rejeitado", "Encerramento recusado", "Cancelamento recusado"; de contingência: "Preparando contingência", "Em
+  contingência", "Falha na contingência", "Contingência recusada".
+- **Novo MDF-e (seção 5):** tela cheia, quadro "Documento" / "Modelo 58". Etapa 1: "Importar nota pela chave de acesso", "Cole os 44
+  dígitos da chave", "Adicionar", "Use quando a NF-e foi emitida por outra empresa. Se ela já estiver em Notas Recebidas,
+  preenchemos emitente e valor sozinhos.", selos "Nota recebida" / "Externa", "Valor (opcional)", "Remover NF-e N"; toast "NF-e #884
+  encontrada em Notas Recebidas"; rodapé "N NF-e(s) vinculada(s) • Valor total: R$ ...". Etapa 2: "Reboques / Carretas (opcional)"
+  ("Nenhuma carreta cadastrada. Marque suas carretas como Carreta / Reboque em Transporte → Frota para montá-las aqui."); "Frete de
+  terceiros (CIOT)" + "Opcional" ("O CIOT é exigido no transporte rodoviário remunerado de cargas de terceiros. Não se aplica ao
+  transporte de carga própria sem cobrança de frete."), "RNTRC", "CIOT", "CPF/CNPJ do gerador do CIOT" ("Obrigatório junto do
+  CIOT"), "Contratante — CPF/CNPJ", "Contratante — Nome"; o balão "Como gerar o CIOT?" cita marca de parceiro: não abrir. Etapa 3:
+  "Peso Bruto Total (kg)" ("Somado das notas selecionadas — edite se o peso bruto real diferir."), "Valor Total da Carga (R$)"
+  ("Sugerido pelas notas — pode ajustar."), "OBSERVAÇÕES". Etapa 4: "Como emitir": "Normal" ("Envia para a SEFAZ agora") e
+  "Contingência" ("Use quando a SEFAZ estiver indisponível"): "Motivo da contingência *", "Tipo de carga *", "NCM do produto *",
+  "Produto predominante *", "Imprima o DAMDFE em papel antes de liberar o caminhão. Prazo de regularização: até 168 horas.";
+  "Ainda faltam informações" / "Tudo pronto para criar e emitir o MDF-e". Botões do rodapé (fixos): "Cancelar", "Voltar",
+  "Continuar", "Criar MDF-e".
+- **Nova NFS-e (seção 6):** tela cheia, "Informe o tomador, o serviço e os valores antes de transmitir ao município.", quadro
+  "Ambiente" / "Produção". "Pessoas": "Série da DPS" ("Série 1"), "Próxima DPS: nº 14" (RPC `get_next_nfse_number`, tabela
+  `nfse_series`), "Cliente ou fornecedor", "Buscar pelo CNPJ". "Valores": "Ajustes (deduções e descontos)", "Alíquota ISS %", "ISS
+  retido na fonte" ("Tomador é responsável por reter e recolher."), "Retenções federais (R$)" ("Informe o valor efetivamente retido
+  de cada tributo."), "Valor líquido". Pré-visualização: "Série", "Nº RPS (previsto)", selo "Pronta pra emitir". Rodapé (fixo):
+  "Cancelar" / "Voltar", "Salvar rascunho", "Avançar", "Emitir NFS-e". Toast "NFS-e enviada. A confirmação oficial aparecerá na
+  lista.". Bloqueios antes de emitir: RPC `fiscal_onboarding_status` (certificado) e, em produção, a cobertura do município
+  (`plugnotas-nfse-servicos-municipio`). A alíquota do município continua sem chegar a "Alíquota ISS %" (o robô digita 3).
+- **NFS-e recebidas (seção 7):** ativar grava direto em `company_fiscal_config` (`nfse_dfe_ativo`, `nfse_dfe_fonte: "sefin"`); toast
+  "Notas de serviço recebidas ativado"; faixa "Busca solicitada no Ambiente Nacional. A lista atualiza automaticamente em até 10
+  minutos."; "Recurso ativo", "Sincronizar agora", "Última sincronização há ...". As notas chegam pelo motor fiscal (no mundo falso:
+  semente lateral `nfse-recebidas`). "Nova conta": "Tipo", "Descrição", "Vencimento", "Valor", "Categoria"; "Criar conta".
+- **Relatórios Fiscais (era a 1ª aba da seção 8):** título "Relatórios Fiscais", abas "NF-e" e "NFS-e". "NF-e": RPC
+  `get_invoice_dashboard_secure`; o cartão "Entrada" abre "Emitidas por você", "Recebidas de Fornecedor", "Recebidas ainda não
+  classificadas" (cada linha só aparece com quantidade maior que zero). "NFS-e": RPC `get_nfse_dashboard`; cartões "Serviços
+  autorizados", "ISS apurado" ("Somente NFS-e válidas"), "Retenções federais" ("PIS, COFINS, CSLL, INSS e IRRF"), "Pendentes +
+  rejeitadas"; "Top tomadores", "Top serviços".
+- **Estoque Fiscal (seção 8):** abas "Saldo atual", "Posição em uma data", "Movimentações", "Fiscal × operacional". "Saldo atual":
+  "Saldo fiscal atualizado, por material. Não altera o estoque operacional.", "Buscar material ou código", faixa "Alguns saldos
+  foram apurados pelas notas disponíveis, pois ainda não têm saldo inicial informado.", menu "⋯" da linha ("Ações de <material>")
+  com "Informar saldo inicial"; atualiza ao abrir, ao voltar à aba e a cada 10 s. Diálogo "Informar saldo inicial" ("O saldo fica só
+  no estoque fiscal e passa a ser a base dos movimentos posteriores."): "CNPJ", "Data-base", "Manual" ("Material", "Quantidade") /
+  "Planilha" ("Baixar modelo", "Escolher planilha"), "Confirmar saldo inicial" → toast "Saldo inicial registrado" (RPC
+  `record_fiscal_inventory_entries`). "Posição em uma data": "Posição do estoque em uma data", "Data e hora da posição", "Ver
+  posição", "Saldo fiscal em 31/10/2026 às 18:00." (não existe mais "Voltar para agora"). "Movimentações": "Materiais", "Geral
+  (Todos)", "Filtros" ("De", "Até", "Tipo": "Todos os tipos", "Entrada", "Saída", "Saldo inicial", "Ajuste", "Estorno"; "Nota, chave
+  ou parceiro"; "Limpar filtros"), "KARDEX FISCAL — ...", colunas "Data", "Origem" ("Nota fiscal", "Estorno", "Saldo inicial",
+  "Ajuste manual", com o motivo embaixo), "Material", "Nota / CFOP", "Movimento", "Antes", "Depois". Regra do 1.60.6: nota cancelada
+  gera "Estorno" na data do cancelamento; devolução entra por 1202/2202 e sai por 5202/6202. "Fiscal × operacional": cartões
+  "Materiais com divergência" e "Alertas", "Comparação por material", "Como ler o Delta (fiscal − operacional)", "Exportar" ("Exportar
+  estoque fiscal": "PDF", "Excel").
+- **Exportação Contábil (seção 9):** blocos novos "Emitente / CNPJ" ("Todos os CNPJs"; "Selecione um CNPJ para gerar o pacote
+  somente daquele emitente.") e "Origem dos documentos" com "Incluir notas destinadas ao CNPJ" ("XMLs de NF-e emitidas por
+  fornecedores contra a sua empresa. Entram na pasta “xmls/destinadas”."); prévia "Destinadas: N XML(s)"; toast "Exportação pronta"
+  / "12 saída + 9 entrada + 0 destinada(s) baixados".
