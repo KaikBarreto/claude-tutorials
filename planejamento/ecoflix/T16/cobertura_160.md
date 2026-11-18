@@ -235,21 +235,21 @@ pedido pela conversa. Isso fica no tutorial do Cato."
 
 | Item | Palavras de fala | Segundos (2,6 palavras/s) |
 |---|---|---|
-| Ajustes nos capítulos 01 a 14 (3.1) | ~560 | ~215 |
-| N1 Impostos e outras abas | ~330 | ~127 |
-| N2 Pendências | ~215 | ~83 |
-| N3 Rejeição | ~330 | ~127 |
-| N4 Devolução | ~300 | ~115 |
-| N5 Complementar | ~185 | ~71 |
-| N6 Outras operações | ~105 | ~40 |
-| Resumo | ~45 | ~17 |
-| **Total** | **~2.070** | **~795 s (≈ 13 min de fala)** |
+| Ajustes nos capítulos 01 a 14 (3.1) | 547 | 210 |
+| N1 Impostos e outras abas | 284 | 109 |
+| N2 Pendências | 185 | 71 |
+| N3 Rejeição | 269 | 103 |
+| N4 Devolução | 265 | 102 |
+| N5 Complementar | 154 | 59 |
+| N6 Outras operações | 87 | 33 |
+| Resumo | ~45 | 17 |
+| **Total** | **~1.840** | **~705 s (≈ 12 min de fala)** |
 
-Capítulos novos: **5** (N1 a N5) mais **1 trecho** (N6); com vinhetas e esperas de SEFAZ, a aula vai de ~22 min para ~37 min.
+Capítulos novos: **5** (N1 a N5) mais **1 trecho** (N6); com vinhetas e esperas de SEFAZ, a aula vai de ~22 min para ~35 min.
 Regravar por mudança de tela: caps 03, 06, 09, 10 e 11 (inteiros) e os zooms dos caps 01 e 02.
 
 ## 5. Decisões que dependem do Kaik
-1. **Tamanho**: ~37 min numa aula só, ou partir em duas (T16a configuração, caps 00 a 08; T16b emissão e correções).
+1. **Tamanho**: ~35 min numa aula só, ou partir em duas (T16a configuração, caps 00 a 08; T16b emissão e correções).
 2. **Complementar (N5)**: o exemplo de diferença de preço precisa do aval do contador e do ensaio; sem isso, vira só citação.
 3. **Quem emite a devolução (N4)**: a aula mostra a Recicla Vale emitindo a entrada de devolução de um cliente contribuinte;
    na prática muitos contadores pedem que o cliente emita. A fala já manda confirmar, mas o exemplo pode trocar para
