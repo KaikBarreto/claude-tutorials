@@ -799,3 +799,12 @@ Decisões:
   de conceito e motivada pela câmera; câmera contínua entre "estações". Piloto: T08 ilu04+ilu05. O piloto de motion em
   argila (kit v2) foi encerrado; a biblioteca de motion dele (`MOTION_V2.md`) é reaproveitada. As 35 cenas 3D e as 2D
   serão migradas depois da aprovação do piloto. Também: tutorial do Cato = T21 (confirmado); "Montar o plano" fica na T00.
+- 18/11 16:5x **Varredura no 1.60.10 completa** (cópia em `planejamento/ecoflix/varredura_160/`; capítulos sem falha /
+  total): T00 14/14, T01 13/14, T02 8/11, T03 13/13, T04 12/14, T05 14/16, T06 13/14, T07 ver arquivo, T08 8/11, T09 0/11,
+  T10 9/13, T11 10/15, T12 10/12, T13 13/14, T14 14/15, T15 12/12, T16 12/19, T17 4/14, T18 10/11, T19 5/14, T20 3/11,
+  T21 8/10, T22 10/12, T25 9/12, T26 10/14, T27 8/8. T09, T17, T19 e T20: parte é robô inacabado em 12/11. As chamadas de
+  2 h do sistema cortaram as duas frentes; relançadas em lotes menores. **Junção do mundo em andamento**
+  (`_BRIEF_JUNCAO_160.md` → `JUNCAO_160.md`); depois dela, a aplicação por aula (roteiro, fala, robô).
+- 18/11 16:4x **Piloto do estilo v3 mandado ao Kaik** (`estilo_v3_piloto.mp4`, `estilo_v3_climas.jpg`; kit em
+  `perfis/ecoflix/cenas_v3/`, 0,8 s/quadro). Aguardando aprovação; ilustrações antigas paradas. Migração estimada: 35 cenas
+  3D (faltam ~25 objetos) e 218 cenas 2D.
