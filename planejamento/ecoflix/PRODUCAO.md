@@ -852,3 +852,10 @@ Decisões:
   tem `:has-text(...)` dentro de um `confere` (vira `querySelectorAll`: seletor inválido; 4 ocorrências no `cap08.json`);
   o cap18 tem 1 passo falho e o `record.mjs` sai com exceção (linha 48), sem folha; o cap19 depende da `apos-cap18`.
   **Fica para depois do piloto T08**: agente novo e pequeno, só esses três capítulos, lendo `T07/andamento_160.md`.
+- 18/11 22:29 **Kaik sobre a T08**: "a animação ficou boa, só cuidado com desalinhamentos" (quadro aos 0:37: texto
+  estourando o cartão "Compra ou venda", setas coladas, cartões cortados na borda, arco do fundo por cima) e "falaria da
+  pesagem avulsa mas sem tanta ênfase, é algo mais de ponta; focar nos tickets, valorização, conceito, casos de uso".
+  → Dois agentes: (1) cap11 encurtado para 5-6 linhas, casos de uso no cap01, valorização conferida, reensaio em lote;
+  (2) correção na raiz do kit v3 (cartões medem o texto, respiro igual, fundo sempre atrás) + **verificação automática de
+  quadro** que todas as aulas vão ter de passar, cenas da T08 revistas, ilu11 só com a 1ª janela, prévia nova.
+  **Regra para todas as aulas**: recurso de ponta entra curto; o tempo vai para o fluxo principal e os casos de uso.
