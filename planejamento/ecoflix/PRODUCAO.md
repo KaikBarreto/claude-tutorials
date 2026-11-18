@@ -859,3 +859,9 @@ Decisões:
   (2) correção na raiz do kit v3 (cartões medem o texto, respiro igual, fundo sempre atrás) + **verificação automática de
   quadro** que todas as aulas vão ter de passar, cenas da T08 revistas, ilu11 só com a 1ª janela, prévia nova.
   **Regra para todas as aulas**: recurso de ponta entra curto; o tempo vai para o fluxo principal e os casos de uso.
+- 18/11 23:04 **Kaik aprovou a voz da T08 ("pode")**. Fala final: 2.017 palavras, 11.209 caracteres (avulsa enxuta,
+  casos de uso no cap01). **Voz gerada** no fluxo novo "EcoFlix · Vozes de todas as aulas" (flow `E2aF9NQaqA00Zo9ZhjLg`,
+  voz Kaik Barreto, eleven_v4, 1 versão por nó): 14 nós de capítulo (cap00 a cap13, na ordem) + 1 nó com os 13 títulos;
+  **11.643 créditos** (1,04 crédito por caractere). Nó de estimativa vazio `K9N41E6d3H8t6Loh1RSJ` (sem geração; pode
+  apagar). Próximo: o Kaik exporta o zip do fluxo e anexa; `proc.py` + `titulos.py`; gravação final da T08 com a voz;
+  cenas v3 reancoradas nos tempos reais; edição.
