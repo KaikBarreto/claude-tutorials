@@ -297,7 +297,9 @@ RAFAEL = stable_id('user.rafael')
 VERSAO = '1.60.10'
 HOJE = FAKE_NOW[:10]
 STORAGE = {'app_version': VERSAO, 'notification_shown_version': VERSAO, 'pwa-install-dismissed': 'true', 'theme': 'light',
-           f'daily-tasks-reminder-last-shown-{RAFAEL}': HOJE, 'initial-preferences-set': 'true'}
+           f'daily-tasks-reminder-last-shown-{RAFAEL}': HOJE, 'initial-preferences-set': 'true',
+           # cala o balão de dica do Cato, que cobre o canto de baixo da tela (JUNCAO_160, regra do mundo)
+           f'cato_adoption_nudge_38814e47-876a-5977-a5f7-53af364c17bb_{RAFAEL}': '{"count":99,"lastShownAt":4102444800000}'}
 LOGIN = [{'do': 'waitFor', 'target': {'label': 'E-mail'}, 'timeout': 30},
          {'do': 'type', 'target': {'label': 'E-mail'}, 'text': '$TUT_USER', 'cps': 40},
          {'do': 'type', 'target': {'label': 'Senha', 'exact': True}, 'text': '$TUT_SENHA', 'cps': 40},
@@ -332,7 +334,7 @@ def js_rola_linha(texto, y, dur_ms=700):
 
 def js_rola_texto(texto, y, dur_ms=700, escopo=DLG):
     """como js_rola, com o alvo achado pelo texto (o menor elemento do escopo cujo texto é exatamente `texto`)"""
-    return ("(async()=>{" + ACHA_ROLAGEM + f"const el=[...document.querySelectorAll({json.dumps(escopo + ' *')})].filter(e=>e.textContent.trim()==={json.dumps(texto)}&&e.offsetParent)"
+    return ("(async()=>{" + ACHA_ROLAGEM + f"const el=[...document.querySelectorAll({json.dumps(escopo + ' *')})].filter(e=>e.textContent.trim().toLowerCase()==={json.dumps(texto.lower())}&&e.offsetParent)"
             ".sort((a,b)=>a.textContent.length-b.textContent.length||a.children.length-b.children.length)[0];if(!el)return 'SEM ALVO';"
             "const c=rolagem(el);if(!c)return 'SEM ROLAGEM';"
             f"let dy=Math.round(el.getBoundingClientRect().top-{int(y)});const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));"
@@ -542,7 +544,7 @@ def cap04():
     Salvar configuração (L11)."""
     c = Cap(4, setup=setup_cfg('certificado', 'Certificado validado!'), start=(760, 400))
     c.mark(1)
-    c.click(BTN('Próximo: Configurar Empresa', MAIN), at=c.A(1, 'dados', 0.7), label='Próximo: Configurar Empresa', optional=True, timeout=3)
+    c.click(BTN('Próximo: Configurar Empresa', MAIN), at=c.A(1, 'dados', 0.7), label='Próximo: Configurar Empresa', when=BTN('Próximo: Configurar Empresa', MAIN))
     c.click(TRILHO('Empresa'), label='(aba Empresa, se o botão Próximo não estiver na tela)', unless={'text': 'Passo 2 de 3:', 'exact': False})
     c.waitfor(text='Passo 2 de 3:', timeout=10)
     c.mark(2)
@@ -962,7 +964,7 @@ def cap10():
     c.mark(8)
     passos_volumes(c, {'rola': c.A(8, 'Volumes', 0.9), 'qtd': c.A(8, 'quantidade,', 0.7), 'esp': c.A(8, 'espécie', 0.7),
                        'bruto': c.A(8, 'quinhentos', 0.7, nth=0), 'liq': c.A(8, 'quinhentos', 0.7, nth=1)})
-    c.confere_campos(['Granel', '506,000', '500,000'], 'volumes: Granel, 506,000 e 500,000')
+    c.confere_campos(['Granel', '506,00', '500,00'], 'volumes: Granel, 506,00 e 500,00')
     c.hover(SEL(f"{DLG} label:text-is('Valor do Frete')"), 0.8, at=c.A(8, 'frete', 0.6), label='Valor do Frete')
     c.mark(9)
     c.hover(ROD('Emitir Nota'), 0.8, at=c.A(9, 'pronta', 0.6), label='Emitir Nota (sem clicar)', noScroll=True)
@@ -1100,6 +1102,7 @@ def cap12():
     c.click(SEL(f"{DLG}:has-text('Emitir NF-e em massa') button:has-text('Hoje')"), at=c.A(3, 'Escolho', 0.7), label='data (abre o calendário)')
     c.click(SEL("[data-radix-popper-content-wrapper] button[name='day']:not(.day-outside):text-is('9')"), at=c.A(3, 'nove', 0.6),
             label='9 de novembro', noScroll=True)
+    c.click(SEL(f"{DLG} :text-is('Emitir NF-e em massa')"), label='fecha o calendário (clique fora)')
     c.click(SEL(f"{DLG} :text-is('Marcos Antunes')"), at=c.A(3, 'Marcos,', 0.6), label='o caixa do Marcos (Fechado, 09/11 07:02)')
     c.waitfor(text='Pedido #1756', timeout=10)
     c.mark(4)
@@ -1145,11 +1148,12 @@ def cap13():
     c.hover(SEL(f"{DLG} label:text-is('CFOP')"), 0.8, at=c.A(2, 'CFOP', 0.6), label='CFOP 5927')
     c.confere('dlg', ['5927', 'Nota emitida contra a própria empresa'], 'baixa por perda: CFOP 5927, sem cliente')
     c.mark(3)
-    c.hover(SEL(f"{DLG} :text-is('Dar baixa no estoque físico ao autorizar')"), 1.0, at=c.A(3, 'opção,', 0.6), label='zoom: Dar baixa no estoque físico ao autorizar')
-    c.hover(SEL(f"{DLG} :text-matches('^Por padrão a nota fiscal só informa a SEFAZ')"), 1.5, at=c.A(3, 'cancelada,', 0.6), label='o texto da opção')
+    c.hover(SEL(f"{DLG} label:text-matches('Dar baixa no estoque', 'i')"), 1.0, at=c.A(3, 'opção,', 0.6), label='zoom: Dar baixa no estoque físico ao autorizar')
+    c.hover(SEL(f"{DLG} p:text-matches('Por padrão a nota fiscal só informa', 'i')"), 1.5, at=c.A(3, 'cancelada,', 0.6), label='o texto da opção')
     c.mark(4)
     c.click(SAIR_NOTA, at=c.A(4, 'Saio', 0.6), label='Sair', noScroll=True)
-    c.click(DESCARTAR, label='Descartar (se a tela perguntar)', optional=True, timeout=3)
+    c.pause(0.6)
+    c.click(DESCARTAR, label='Descartar (se a tela perguntar)', when=DESCARTAR)
     c.fim()
     return c
 
@@ -1183,7 +1187,7 @@ def cap14():
     c.click(SEL(f"{DLG} button:has-text('Completar cadastro')"), at=c.A(6, 'Completar', 0.7), label='Completar cadastro')
     c.waitfor(text='Editar Cliente', timeout=10)
     ED = "[role=dialog]:has-text('Editar Cliente')"
-    c.ev(js_rola(f"{ED} input[placeholder='00000-000']", 330, 500), label='o Endereço Fiscal na tela')
+    c.ev(js_rola("[role=dialog] input[placeholder='00000-000']", 330, 500), label='o Endereço Fiscal na tela')
     c.click(SEL(f"{ED} input[placeholder='00000-000']"), at=c.A(6, 'CEP.', 0.7), label='CEP (clique no campo)')
     c.type(SEL(f"{ED} input[placeholder='00000-000']"), '12086410', at=c.A(6, 'Preencho,', 0.05), label='CEP 12086-410', cps=40, noClick=True)
     c.click(SEL(f"{ED} button:text-is('Salvar')"), at=c.A(6, 'salvo,', 0.6), label='Salvar (cliente)', noScroll=True)
@@ -1236,8 +1240,10 @@ def cap15():
     c.hover(SEL("[role=dialog] :text-is('Rejeição')"), 0.8, at=c.A(4, 'recusa', 0.6), label='Rejeição (Erro)')
     c.confere('dlg', ['Histórico da NF-e', 'Rejeição', 'Envio para SEFAZ'], 'histórico: envio e rejeição')
     c.mark(5)
-    c.press('Escape', at=round(c.L(5) - 0.6, 2), label='fecha o Histórico')
-    c.press('Escape', label='fecha o Visualizar', optional=True)
+    FECHAR = SEL("[role=dialog] button:text-is('Fechar')", nth=-1)
+    c.click(FECHAR, at=round(c.L(5) - 1.2, 2), label='fecha o Histórico')
+    c.pause(0.5)
+    c.click(FECHAR, label='fecha o Visualizar', when=SEL("[role=dialog]:has-text('NF-e #1252')"))
     c.waitfor(gone={'selector': DLG}, timeout=8)
     c.hover(TRIG('#1252'), 0.4, at=c.A(5, 'menu', 0.6), label='abre o menu da 1252', noScroll=True)
     c.hover(ITEM('Editar e reenviar (mesmo número)'), 0.8, at=c.A(5, 'Editar', 0.6, nth=0), label='zoom: Editar e reenviar (mesmo número)', noScroll=True)
@@ -1423,7 +1429,7 @@ def cap19():
     c.click(SEL(f"{DLG} [role=tab]:has-text('Por Faixa'), {DLG} button:has-text('Por Faixa')"), at=c.A(5, 'autorizada.', 0.4), label='volta à aba Por Faixa')
     c.confere('dlg', ['#1246 até #1247'], 'a faixa continua preenchida')
     c.mark(6)
-    colar(c, SEL(f"{DLG} textarea"), JUSTIF, c.A(6, 'Escrevo', 0.7), c.A(6, 'justificativa', 0.2), 'Justificativa')
+    colar(c, SEL(f"{DLG} textarea:visible"), JUSTIF, c.A(6, 'Escrevo', 0.7), c.A(6, 'justificativa', 0.2), 'Justificativa')
     c.click(SEL(f"{DLG} button:has-text('Inutilizar na SEFAZ')"), at=c.A(6, 'clico', 0.6), label='Inutilizar na SEFAZ')
     c.waitfor(text='Numeração inutilizada com sucesso', timeout=10)
     c.mark(7)

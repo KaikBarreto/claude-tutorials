@@ -16,7 +16,8 @@
   "pwa-install-dismissed": "true",
   "theme": "light",
   "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
-  "initial-preferences-set": "true"
+  "initial-preferences-set": "true",
+  "cato_adoption_nudge_38814e47-876a-5977-a5f7-53af364c17bb_34c36c63-0890-5e89-8963-7c77b7996908": "{\"count\":99,\"lastShownAt\":4102444800000}"
  },
  "seedExtra": [
   "t16/inicio",
@@ -237,21 +238,28 @@
    "label": "confere histórico: envio e rejeição"
   },
   {
-   "do": "mark",
-   "name": "L5",
-   "at": 52.44
-  },
-  {
-   "do": "press",
-   "key": "Escape",
-   "at": 52.74,
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:text-is('Fechar')",
+    "nth": -1
+   },
+   "at": 52.14,
    "label": "fecha o Histórico"
   },
   {
-   "do": "press",
-   "key": "Escape",
+   "do": "pause",
+   "seconds": 0.5
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:text-is('Fechar')",
+    "nth": -1
+   },
    "label": "fecha o Visualizar",
-   "optional": true
+   "when": {
+    "selector": "[role=dialog]:has-text('NF-e #1252')"
+   }
   },
   {
    "do": "waitFor",
@@ -259,6 +267,11 @@
     "selector": "[role=dialog]"
    },
    "timeout": 8
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 52.44
   },
   {
    "do": "hover",

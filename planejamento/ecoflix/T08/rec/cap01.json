@@ -1,6 +1,6 @@
 {
  "name": "t08-cap01",
- "title": "T08 · Cap. 1 · Quando usar o ticket (narração 63,0 s ESTIMADA; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:40:00-03:00)",
+ "title": "T08 · Cap. 1 · Quando usar o ticket (narração 78,9 s ESTIMADA; marcas L1..L8 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:40:00-03:00)",
  "seed": "t08-cap01",
  "pace": 0.5,
  "cps": 9,
@@ -158,6 +158,57 @@
    "at": 32.15
   },
   {
+   "do": "hover",
+   "target": {
+    "selector": "main div.rounded-lg:has([aria-label='Selecionar ticket #57']):not(:has(div.rounded-lg [aria-label='Selecionar ticket #57']))"
+   },
+   "seconds": 0.8,
+   "at": 35.47,
+   "label": "caso 1: um ticket esperando o preço (cartão #57)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 42.52
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Novo Ticket de Pesagem",
+    "exact": true
+   },
+   "seconds": 0.8,
+   "at": 45.46,
+   "label": "caso 2: um ticket por caminhão (Novo Ticket de Pesagem, sem clicar)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 51.91
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 1000,
+    "y": 560
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "at": 52.41,
+   "label": "caso 3: ticket de venda (cursor descansa)"
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 59.54
+  },
+  {
    "do": "type",
    "target": {
     "selector": "main div:has(> h3:text-is(\"Aguardando valorização\"))"
@@ -166,7 +217,7 @@
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "at": 32.25,
+   "at": 59.64,
    "label": "kanban: as duas colunas"
   },
   {
@@ -175,7 +226,7 @@
     "selector": "main h3:text-is('Aguardando valorização')"
    },
    "seconds": 0.5,
-   "at": 32.73,
+   "at": 60.12,
    "label": "coluna Aguardando valorização (com o #57)",
    "optional": true,
    "timeout": 4
@@ -186,15 +237,15 @@
     "selector": "main h3:text-is('Valorizados')"
    },
    "seconds": 0.5,
-   "at": 37.45,
+   "at": 64.84,
    "label": "coluna Valorizados",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
-   "name": "L5",
-   "at": 41.69
+   "name": "L8",
+   "at": 69.08
   },
   {
    "do": "click",
@@ -202,13 +253,8 @@
     "role": "tab",
     "name": "Pesagens avulsas"
    },
-   "at": 41.69,
+   "at": 69.08,
    "label": "aba Pesagens avulsas"
-  },
-  {
-   "do": "mark",
-   "name": "L6",
-   "at": 50.69
   },
   {
    "do": "hover",
@@ -218,7 +264,7 @@
     "exact": true
    },
    "seconds": 0.6,
-   "at": 50.69,
+   "at": 72.63,
    "label": "Nova Pesagem Avulsa (sem clicar)",
    "optional": true,
    "timeout": 4
@@ -229,7 +275,7 @@
     "role": "tab",
     "name": "Tickets padrão"
    },
-   "at": 60.32,
+   "at": 76.28,
    "label": "volta para Tickets padrão"
   },
   {
@@ -240,7 +286,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 62.95
+   "at": 78.91
   }
  ]
 }

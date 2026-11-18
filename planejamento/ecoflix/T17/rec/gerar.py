@@ -47,6 +47,8 @@ except OSError:
 HOJE = '2026-11-10'
 STORAGE = {
     'app_version': VERSAO, 'notification_shown_version': VERSAO, f'dominex:daily-tasks-shown:{RAFAEL}': HOJE,
+    # o balão de dica do Cato fica calado (JUNCAO_160.md, regra do mundo: só a T00 e a T21 mostram)
+    'cato_adoption_nudge_38814e47-876a-5977-a5f7-53af364c17bb_' + RAFAEL: '{"count":99,"lastShownAt":4102444800000}',
     'pwa-install-dismissed': 'true', 'theme': 'light', f'daily-tasks-reminder-last-shown-{RAFAEL}': HOJE, 'initial-preferences-set': 'true',
 }
 NOMES = ['Abertura', 'O que é o MDF-e', 'Veículo e motorista', 'Numeração e percurso', 'Emitir o manifesto', 'Encerrar no fim da viagem',
@@ -318,12 +320,14 @@ def ir(rota, espera=0.8):
     return st + [{'do': 'waitFor', 'idle': True, 'timeout': 25}, {'do': 'wait', 'seconds': espera}]
 
 
-def setup_em(rota, extra=(), aquece=()):
-    """login, aquece as rotas que o capítulo visita e para em `rota`"""
+def setup_em(rota, extra=(), aquece=(), menu=None):
+    """login, aquece as rotas que o capítulo visita e para em `rota`; `menu` = item do grupo Fiscal & Ambiental que o capítulo clica
+    (no 1.60.10 o grupo abre fechado mesmo nas páginas fiscais: o setup o deixa aberto antes de gravar)"""
     st = list(LOGIN)
     for r in aquece:
         st += ir(r, 0.3)
-    return st + ir(rota) + list(extra)
+    abre = [{'do': 'eval', 'js': js_abrir_grupo('Fiscal & Ambiental', menu)}, {'do': 'wait', 'seconds': 0.8}] if menu else []
+    return st + ir(rota) + abre + list(extra)
 
 
 def js_abrir_grupo(grupo, filho):
@@ -525,7 +529,7 @@ JS_TOPO = ("(async()=>{" + ACHA_ROLAGEM + "const el=document.querySelector('main
 def cap04():
     """Novo MDF-e (tela cheia): as NF-e 1255 e 1256 da Serra Fina, a nota de outra empresa pela chave (entra e sai), FKD2E41 + Edson,
     reboques e CIOT (só mostra), RJ no percurso, Itamonte/MG, 5.800 kg, contingência (abre e volta ao Normal); criar; autorizado."""
-    c = Cap(4, start=(900, 440), setup=setup_em('/fiscal-ambiental/transporte'))
+    c = Cap(4, start=(900, 440), setup=setup_em('/fiscal-ambiental/transporte'), obs=False)
     c.mark(1)
     c.click(BTN('Novo MDF-e'), at=c.A(1, 'Novo', 1.0), label='Novo MDF-e')
     c.waitfor(text='NF-ES VINCULADAS', timeout=10)
@@ -697,7 +701,7 @@ def cap06():
 @capitulo
 def cap07():
     """Notas de Serviço: a lista (14 ainda não existe: 13 e 12), mercadoria × serviço (ilustração), colunas e Configurações Fiscais."""
-    c = Cap(7, start=(900, 440), setup=setup_em('/fiscal-ambiental/transporte', aquece=['/fiscal-ambiental/nfse']))
+    c = Cap(7, start=(900, 440), setup=setup_em('/fiscal-ambiental/transporte', aquece=['/fiscal-ambiental/nfse'], menu='Notas de Serviço (NFS-e)'))
     c.mark(1)
     c.click(ITEM_MENU('Notas de Serviço (NFS-e)'), at=c.A(1, 'Notas', 0.9), label='Notas de Serviço (NFS-e) no menu')
     c.waitfor(text=PAGINAS['/fiscal-ambiental/nfse'], timeout=15)
@@ -734,7 +738,7 @@ def cap08():
     c.click(SEL('[role=dialog] button', hasText='Cliente ou fornecedor'), at=c.A(3, 'tomador,', 0.7), label='Tomador: Cliente ou fornecedor')
     c.waitfor(text='Selecionar tomador', timeout=10)
     c.type(PH('Buscar por nome, CNPJ/CPF ou código...'), 'Aços', at=c.A(3, 'escolho', 0.2), label='busca: Aços', cps=12, noClick=True)
-    c.click(TXTX('Aços Quiririm Ltda', within='[role=dialog] >> nth=-1'), at=c.A(3, 'Quiririm', 0.6), label='Aços Quiririm Ltda')
+    c.click(TXTX('Aços Quiririm', within='[role=dialog] >> nth=-1'), at=c.A(3, 'Quiririm', 0.6), label='Aços Quiririm (a busca mostra a razão social)')
     c.hover(TXT('Buscar pelo CNPJ', within=DLG), 1.0, at=c.A(3, 'buscar', 0.6), label='Buscar pelo CNPJ (tomador sem cadastro)')
     c.mark(4)
     c.click(BTN('Avançar'), at=c.A(4, 'Avançar.', 0.7), label='Avançar (Serviço)', noScroll=True)
@@ -792,7 +796,7 @@ def cap08():
 def cap09():
     """NFS-e recebidas: Notas Fiscais > Notas Recebidas > NFS-e, ativar; a busca fica pedida ao Ambiente Nacional (as notas só chegam
     depois: capítulo 10)."""
-    c = Cap(9, start=(900, 440), setup=setup_em('/fiscal-ambiental/nfse', aquece=['/fiscal-ambiental/nfe/saida']))
+    c = Cap(9, start=(900, 440), setup=setup_em('/fiscal-ambiental/nfse', aquece=['/fiscal-ambiental/nfe/saida'], menu='Notas Fiscais (NF-e)'))
     c.mark(1)
     c.click(ITEM_MENU('Notas Fiscais (NF-e)'), at=c.A(1, 'Notas', 0.9), label='Notas Fiscais (NF-e) no menu')
     c.click(SUBABA('Notas Recebidas'), at=c.A(1, 'Recebidas,', 0.7), label='aba Notas Recebidas')
@@ -856,7 +860,7 @@ PERIODO = SEL('main button[role=combobox]', hasText='Este mês')   # filtro de p
 def cap11():
     """Relatórios Fiscais (menu próprio no 1.60.10): aba NF-e de outubro (Entrada, Saída, Saldo R$ 71.625,00, Pendentes + Rejeitadas,
     o cartão Entrada aberto, gráficos e rankings) e aba NFS-e (cartões e rankings)."""
-    c = Cap(11, start=(900, 440), setup=setup_em('/fiscal-ambiental/nfe/recebidas-nfse', aquece=['/fiscal-ambiental/relatorios/nfe']))
+    c = Cap(11, start=(900, 440), setup=setup_em('/fiscal-ambiental/nfe/recebidas-nfse', aquece=['/fiscal-ambiental/relatorios/nfe'], menu='Relatórios Fiscais'))
     c.mark(1)
     c.click(ITEM_MENU('Relatórios Fiscais'), at=c.A(1, 'Relatórios', 0.9), label='Relatórios Fiscais no menu')
     c.waitfor(text='Pendentes + Rejeitadas', timeout=15)
@@ -909,7 +913,7 @@ SALDO = lambda nome, sub='': SEL(f"main tbody tr:has-text('{nome}') {sub}".strip
 @capitulo
 def cap12():
     """Estoque Fiscal > Saldo atual: a tabela, o alumínio já descontado, a busca, o saldo em vermelho (só fala) e a faixa amarela."""
-    c = Cap(12, start=(900, 440), setup=setup_em('/fiscal-ambiental/relatorios/nfe', aquece=[POSICAO]))
+    c = Cap(12, start=(900, 440), setup=setup_em('/fiscal-ambiental/relatorios/nfe', aquece=[POSICAO], menu='Estoque Fiscal'))
     c.mark(1)
     c.click(ITEM_MENU('Estoque Fiscal'), at=c.A(1, 'estoque', 0.9), label='Estoque Fiscal no menu')
     c.waitfor(text=PAGINAS[POSICAO], timeout=15)
@@ -1029,7 +1033,7 @@ def cap15():
     c.waitfor(target=LINHA('1253'), timeout=10)
     c.hover(LINHA('1253', 'td >> nth=1'), 0.8, at=c.A(5, 'quarenta', 0.6), label='NF-e 1253: devolução da Fundição')
     c.hover(LINHA('1253', "td:has-text('CFOP')"), 1.2, at=c.A(5, 'nota', 0.6), label='NF-e 1253, CFOP de devolução, +40 kg')
-    c.confere('main', ['1253', 'Fundição Bandeira do Vale'], 'devolução da Fundição no Kardex do cobre mel')
+    c.confere('main', ['1253', 'CFOP 1202'], 'devolução (NF-e 1253) no Kardex do cobre mel')
     c.mark(6)
     c.cursor(NEUTRO, at=c.L(6) - 0.1, label='cursor em repouso (ilustração: setas da devolução)')
     c.mark(7)
@@ -1075,7 +1079,7 @@ def cap16():
 def cap17():
     """Exportação Contábil: Notas Fiscais > Saída > ⋮ > Exportação Contábil, Emitente / CNPJ, Mês passado, notas destinadas marcadas,
     tudo marcado, 21 notas e "Destinadas: 0 XML(s)", Baixar Pacote."""
-    c = Cap(17, start=(900, 440), setup=setup_em(POSICAO, aquece=['/fiscal-ambiental/nfe/saida']))
+    c = Cap(17, start=(900, 440), setup=setup_em(POSICAO, aquece=['/fiscal-ambiental/nfe/saida'], menu='Notas Fiscais (NF-e)'))
     c.mark(1)
     c.click(ITEM_MENU('Notas Fiscais (NF-e)'), at=c.A(1, 'Notas', 0.9), label='Notas Fiscais (NF-e) no menu')
     c.click(SUBABA('Saída'), at=c.A(1, 'Fiscais,', 0.0), label='aba Saída')

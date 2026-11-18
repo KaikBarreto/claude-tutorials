@@ -50,7 +50,7 @@ const CSS = [500, 600, 700, 800].map(w => ff(w) + ff(w, 1)).join('') + `
 *{box-sizing:border-box;margin:0;padding:0;transition:none!important;animation:none!important}
 html,body{width:1280px;height:800px;overflow:hidden;background:#F4F7F6}
 body{font-family:M,sans-serif;-webkit-font-smoothing:antialiased;text-rendering:geometricPrecision}
-#st,#cu,#ce,#tr,#fr,#hud{position:absolute;left:0;top:0;width:1280px;height:800px;overflow:hidden;isolation:isolate}
+#st,#cu,#ce,#tr,#dc,#fr,#hud{position:absolute;left:0;top:0;width:1280px;height:800px;overflow:hidden;isolation:isolate}
 #gl{position:absolute;left:0;top:0;width:1280px;height:800px}
 #cu{background:linear-gradient(180deg,#F1F6F5 0%,#F6F9F8 58%,#FBFCFB 100%)}
 #ce{opacity:0;background:radial-gradient(900px 620px at 50% 58%,rgba(80,208,136,.13),transparent 70%),radial-gradient(700px 520px at 100% 0%,rgba(80,208,136,.10),transparent 70%),
@@ -111,10 +111,10 @@ body{font-family:M,sans-serif;-webkit-font-smoothing:antialiased;text-rendering:
 .ic{display:inline-flex;align-items:center;justify-content:center;flex:none}.ic svg{width:100%;height:100%}
 .onda{position:absolute;inset:-2px;border-radius:calc(var(--r3) + 2px);border:2px solid var(--v);opacity:0;pointer-events:none}`;
 
-export let ST = null, GL = null, TR = null, FR = null, HUD = null, CE = null;
+export let ST = null, GL = null, TR = null, DC = null, FR = null, HUD = null, CE = null;
 { const s = document.createElement('style'); s.textContent = CSS; document.head.prepend(s);
-  document.body.insertAdjacentHTML('afterbegin', '<div id="st"><div id="cu"></div><div id="ce"></div><div id="tr"></div><canvas id="gl" width="1280" height="800"></canvas><div id="fr"></div><div id="hud"></div></div>');
-  const q = i => document.getElementById(i); ST = q('st'); GL = q('gl'); TR = q('tr'); FR = q('fr'); HUD = q('hud'); CE = q('ce'); }
+  document.body.insertAdjacentHTML('afterbegin', '<div id="st"><div id="cu"></div><div id="ce"></div><div id="tr"></div><div id="dc"></div><canvas id="gl" width="1280" height="800"></canvas><div id="fr"></div><div id="hud"></div></div>');
+  const q = i => document.getElementById(i); ST = q('st'); GL = q('gl'); TR = q('tr'); DC = q('dc'); FR = q('fr'); HUD = q('hud'); CE = q('ce'); }
 
 export function el(html, pai = HUD) { const d = document.createElement('div'); d.innerHTML = html.trim(); const f = d.firstElementChild; pai.appendChild(f); return f; }
 export function ic(n, px) { return `<span class="ic" style="width:${px}px;height:${px}px">${(window.ICONS || {})[n] || ''}</span>`; }   // o nome tem de estar literal na PÁGINA da cena
@@ -207,7 +207,7 @@ function base() {
     RD.outputColorSpace = THREE.LinearSRGBColorSpace;   // as cores do material já são as da tela (hex da marca sem conversão)
   }
   CENA = new THREE.Scene(); CAM = new THREE.PerspectiveCamera(OPC.fov, 1280 / 800, .2, 400);
-  PLANOS.length = 0; TR.innerHTML = ''; FR.innerHTML = ''; HUD.innerHTML = ''; MC.clear();
+  PLANOS.length = 0; TR.innerHTML = ''; DC.innerHTML = ''; DC.style.clipPath = DC._cp = ''; FR.innerHTML = ''; HUD.innerHTML = ''; MC.clear();
 }
 const hex = c => { const n = parseInt(c.slice(1), 16); return new THREE.Vector3((n >> 16 & 255) / 255, (n >> 8 & 255) / 255, (n & 255) / 255); };
 const VS = `varying vec3 vN; varying vec3 vW; varying vec3 vC;
@@ -361,19 +361,23 @@ export function enquadra(p, folga = .6, o = {}) {
 // ------------------------------------------------------------------ planos HTML no espaço (a mesma câmera do 3D)
 // plano(html, { pos, rot [rx, ry, rz], esc (metros por px), anc [ax, ay] (ponto do plano que fica em pos), clima, tras
 // (atrás do 3D), em (lugar) }). Devolve p: p.e = o elemento (use vis/foco/pulso nele), p.pos e p.rot mexem por quadro,
-// p.op = opacidade do plano inteiro, p.w/p.h px.
+// p.op = opacidade do plano inteiro, p.w/p.h px. Papéis (ver "Acabamento" no LEIA.md): tras = fundo macio (mancha, brilho,
+// pontos); tras + deco = traço decorativo (anel, linha): fica numa camada que o motor RECORTA atrás de todo cartão de
+// vidro, então nunca cruza conteúdo; deco sozinho = enfeite na frente (poeira de luz), fora da verificação; sobre = plano
+// posto de propósito em cima de outro (selo na quina de um cartão); sangra = pode ser cortado pela borda do quadro.
 const PLANOS = [];
 const _m = new THREE.Matrix4(), _m2 = new THREE.Matrix4(), _q = new THREE.Quaternion(), _e = new THREE.Euler(), _s = new THREE.Vector3(), _p = new THREE.Vector3();
 export function plano(html, o = {}) {
-  const pl = document.createElement('div'); pl.className = 'pl ' + (o.clima ?? 'claro'); pl.innerHTML = html.trim(); (o.tras ? TR : FR).appendChild(pl);
+  const pl = document.createElement('div'); pl.className = 'pl ' + (o.clima ?? 'claro'); pl.innerHTML = html.trim(); (o.tras ? (o.deco ? DC : TR) : FR).appendChild(pl); cabe(pl);
   const p = { pl, e: pl.firstElementChild, pos: [...(o.pos ?? [0, 0, 0])], rot: [...(o.rot ?? [0, 0, 0])], esc: o.esc ?? .011, anc: o.anc ?? [.5, .5], em: o.em ?? null, op: 1, z: o.z ?? 0,
-    w: 0, h: 0, prof: 0, escTela: 0,
+    w: 0, h: 0, prof: 0, escTela: 0, tras: !!o.tras, deco: !!o.deco, sobre: !!o.sobre, sangra: !!o.sangra, M: new Float64Array(16), MW: new Float64Array(16), on: false, cx: null,
     mede() { this.w = pl.offsetWidth; this.h = pl.offsetHeight; return this; },
+    ret() { const x0 = this.pos[0] - this.anc[0] * this.w * this.esc, y1 = this.pos[1] + this.anc[1] * this.h * this.esc; return [x0, y1 - this.h * this.esc, x0 + this.w * this.esc, y1]; },   // [x0, y0, x1, y1] em metros, no lugar do plano (plano sem giro)
     centro() { const m = matrizPlano(this); _v.set(this.w / 2, this.h / 2, 0).applyMatrix4(m); return [_v.x, _v.y, _v.z]; },
     ponto(u, v) { const m = matrizPlano(this); _v.set(u, v, 0).applyMatrix4(m); return [_v.x, _v.y, _v.z]; },   // px do plano → mundo
     azMundo() { return this.rot[1] + (this.em ? this.em.az : 0); },
     dist() { const c = this.centro(); return Math.hypot(c[0] - CAM.position.x, c[1] - CAM.position.y, c[2] - CAM.position.z); } };
-  PLANOS.push(p); return p.mede();
+  PLANOS.push(p); p.mede(); if (!p.tras && !p.deco) p.cx = contornos(pl); return p;
 }
 function matrizPlano(p) {
   _e.set(p.rot[0], p.rot[1], p.rot[2], 'YXZ'); _q.setFromEuler(_e); _p.set(p.pos[0], p.pos[1], p.pos[2]); _s.set(p.esc, -p.esc, p.esc);
@@ -384,16 +388,17 @@ function projeta() {
   _pv.multiplyMatrices(CAM.projectionMatrix, CAM.matrixWorldInverse);
   const f = 400 / Math.tan(CAM.fov * PI / 360);
   for (const p of PLANOS) {
-    if (p.op <= .002) { p.pl.style.display = 'none'; continue; }
-    _c.multiplyMatrices(_pv, matrizPlano(p)); const m = _c.elements;   // colunas: u, v, z, t → linhas x, y, z, w do recorte
+    p.on = false; if (p.op <= .002) { p.pl.style.display = 'none'; continue; }
+    _c.multiplyMatrices(_pv, matrizPlano(p)); const m = _c.elements; p.MW.set(_m.elements);   // colunas: u, v, z, t → linhas x, y, z, w do recorte
     // algum canto atrás (ou colado) da câmera: não desenha (quem atravessa a câmera some antes, por p.op)
     let wmin = 1e9, wc = 0; for (const [u, v] of [[0, 0], [p.w, 0], [0, p.h], [p.w, p.h]]) { const w = m[3] * u + m[7] * v + m[15]; wmin = Math.min(wmin, w); wc += w / 4; }
     if (wmin < .35) { p.pl.style.display = 'none'; continue; }
     const X = i => 640 * (m[i] + m[i + 3]), Y = i => 400 * (m[i + 3] - m[i + 1]);
-    p.pl.style.display = ''; p.prof = wc; p.escTela = p.esc * f / wc;
+    p.pl.style.display = ''; p.prof = wc; p.escTela = p.esc * f / wc; p.M.set(m); p.on = true;
     p.pl.style.transform = `matrix3d(${X(0)},${Y(0)},0,${m[3]},${X(4)},${Y(4)},0,${m[7]},0,0,1,0,${X(12)},${Y(12)},0,${m[15]})`;
     p.pl.style.opacity = p.op >= .999 ? '' : p.op.toFixed(4); p.pl.style.zIndex = String(Math.round(200000 - wc * 400 + p.z));
   }
+  if (DC.childElementCount) furos();
 }
 
 // ------------------------------------------------------------------ clima do quadro e a cena
@@ -403,7 +408,8 @@ export function clima(k) { U.uClima.value = k; CE.style.opacity = k.toFixed(4); 
 let RENDER = null;
 export function cena(monta, o = {}) {
   window.setup = d => { D = d; Object.assign(OPC, o); base(); semente(OPC.semente); clima(0); GL.style.opacity = ''; camera([[0, PD]]); aplicaCam(pose(0)); RENDER = monta(d); quadro(0); return true; };
-  window.R = t => { quadro(t); return true; };
+  window.R = t => { document.getElementById('aud')?.remove(); quadro(t); return true; };
+  window.auditar = (t, op) => auditar(t, op);   // verificação de acabamento do quadro (ver "Acabamento" no LEIA.md e auditar.cjs)
 }
 function quadro(t) { aplicaCam(pose(t)); RENDER(t); projeta(); RD.render(CENA, CAM); }
 
@@ -438,3 +444,136 @@ export function pintura(w, h, desenha, o = {}) {
 }
 // estilo: CSS de um componente, posto uma vez só (cada arquivo de dados/ traz o seu; lê as variáveis do clima do plano)
 export function estilo(id, css) { if (document.getElementById('es-' + id)) return; const s = document.createElement('style'); s.id = 'es-' + id; s.textContent = css; document.head.appendChild(s); }
+
+// ------------------------------------------------------------------ acabamento: o texto cabe, o enfeite fica atrás, o quadro é verificado
+// Mínimos (px do desenho, a 1280x800): respiro do texto até a borda do cartão, margem até a borda do quadro, folga do
+// título, respiro entre seta e cartão e entre caixas, velocidade (px/s) abaixo da qual um elemento conta como parado, e a
+// faixa do "quase alinhado" (diferença maior que a tolerância e menor que o que seria um degrau de propósito).
+export const RESP = { texto: 10, textoV: 2, borda: 40, titulo: 10, seta: 8, caixas: 8, parado: 40, alinha: [1.5, 6] };
+const SEL = '.cartao,.chip,.visor,.op,.papel,.d-mo,.bo,[data-caixa]';   // o que é "caixa de conteúdo" num plano (data-caixa marca uma caixa própria da cena)
+function* textosDe(c) {   // os textos que pertencem à caixa c (não os de uma caixa dentro dela), com o retângulo de cada um
+  const w = document.createTreeWalker(c, NodeFilter.SHOW_TEXT), rg = document.createRange(), cx = c.matches(SEL) ? c : null; let n;
+  while ((n = w.nextNode())) { if (!/\S/.test(n.nodeValue) || n.parentElement.closest(SEL) !== cx) continue; rg.selectNodeContents(n); const r = rg.getBoundingClientRect(); if (r.width > 0) yield { n, r }; }
+}
+// cabe: todo .cartao mede o próprio texto e cresce até sobrar o respiro mínimo à direita (texto nunca estoura nem encosta
+// na borda). O plano() chama sozinho; chame de novo se trocar o texto de um cartão por outro mais comprido.
+export function cabe(raiz) {
+  for (const c of raiz.querySelectorAll('.cartao')) for (let k = 0; k < 3; k++) {
+    const r = c.getBoundingClientRect(); if (!r.width) break;
+    const lim = r.right - Math.max(parseFloat(getComputedStyle(c).paddingRight) || 0, RESP.texto); let mx = -1e9;
+    for (const q of textosDe(c)) mx = Math.max(mx, q.r.right);
+    if (mx <= lim + .5) break; c.style.width = c.style.minWidth = Math.ceil(r.width + mx - lim) + 'px';
+  }
+}
+function contornos(pl) {   // contorno (px do plano, cantos redondos) de cada caixa de conteúdo; medido na criação, sem transformação
+  const o = pl.getBoundingClientRect(), L = [];
+  for (const e of pl.querySelectorAll(SEL)) { if (e.parentElement.closest(SEL)) continue; const r = e.getBoundingClientRect(); if (!r.width) continue;
+    const x = r.left - o.left, y = r.top - o.top, w = r.width, h = r.height, rr = Math.min(parseFloat(getComputedStyle(e).borderTopLeftRadius) || 0, w / 2, h / 2), c = [];
+    for (const [cx, cy, a0] of [[x + w - rr, y + rr, -PI / 2], [x + w - rr, y + h - rr, 0], [x + rr, y + h - rr, PI / 2], [x + rr, y + rr, PI]]) for (let i = 0; i <= 3; i++) c.push([cx + rr * Math.cos(a0 + i * PI / 6), cy + rr * Math.sin(a0 + i * PI / 6)]);
+    L.push({ e, c }); }
+  return L;
+}
+const naTela = (m, u, v) => { const w = m[3] * u + m[7] * v + m[15]; return [640 * ((m[0] * u + m[4] * v + m[12]) / w + 1), 400 * (1 - (m[1] * u + m[5] * v + m[13]) / w)]; };   // px do plano → px do quadro
+function opInline(e, fim) { let k = 1; for (; e && e !== fim; e = e.parentElement) { const s = e.style; if (s.visibility === 'hidden' || s.display === 'none') return 0; if (s.opacity !== '') k *= +s.opacity; } return k; }
+// furos: a camada dos traços decorativos (plano tras + deco) é recortada onde há caixa de vidro: o anel passa ATRÁS do cartão
+function furos() {
+  let d = ''; const visto = new Set();
+  for (const p of PLANOS) { if (!p.on || !p.cx || p.op < .2 || !p.pl.classList.contains('escuro')) continue;
+    for (const { e, c } of p.cx) { if (opInline(e, p.pl) * p.op < .2) continue; let s = '', k = '';
+      c.forEach(([u, v], i) => { const [x, y] = naTela(p.M, u, v); s += (i ? 'L' : 'M') + x.toFixed(1) + ' ' + y.toFixed(1); if (i % 8 === 0) k += Math.round(x / 6) + ',' + Math.round(y / 6) + ';'; });
+      if (!visto.has(k)) { visto.add(k); d += s + 'Z'; } } }   // dois cartões no mesmo lugar (troca por fusão) = um furo só
+  const cp = d ? `path(evenodd,"M0 0H1280V800H0Z${d}")` : ''; if (DC._cp !== cp) DC.style.clipPath = DC._cp = cp;
+}
+// enquadraRet: pose de frente que põe um retângulo do lugar (metros: [x0, y0, x1, y1]; use p.ret() e uneRet) INTEIRO na área
+// útil do quadro. o: margem (px dos lados e de baixo; padrão 64 = os 40 da regra + folga para a deriva), topo (px livres
+// para o título; padrão 150), max (teto de px por metro, para não fechar demais), z, az, el (do olhar, dentro do lugar).
+export function enquadraRet(lg, ret, o = {}) {
+  const mg = o.margem ?? 64, topo = o.topo ?? 150, chao = 800 - (o.base ?? mg), f = 400 / Math.tan((o.fov ?? OPC.fov) * PI / 360);
+  const s = Math.min((1280 - 2 * mg) / (ret[2] - ret[0]), (chao - topo) / (ret[3] - ret[1]), o.max ?? 1e9);
+  const k = { x: (ret[0] + ret[2]) / 2, y: (ret[1] + ret[3]) / 2 + ((topo + chao) / 2 - 400) / s, z: o.z ?? 0, d: f / s, az: o.az ?? 0, el: o.el ?? 0 };
+  return lg ? lg.pose(k) : k;
+}
+export const uneRet = (...r) => [Math.min(...r.map(a => a[0])), Math.min(...r.map(a => a[1])), Math.max(...r.map(a => a[2])), Math.max(...r.map(a => a[3]))];
+
+// auditar(t): a verificação automática do quadro. Devolve a lista de problemas [{ tipo, chave, msg, ret [x0, y0, x1, y1] }]:
+//   texto     texto maior que a caixa (cartão, chip, visor, papel) ou a menos do respiro mínimo da borda dela
+//   borda     caixa ou traço cortado pela borda do quadro, ou a menos de 40 px dela, estando PARADO (câmera parada ou fim de
+//             movimento; o que cruza a borda em trânsito, a mais de 40 px/s, passa). plano(..., { sangra: true }) libera
+//   titulo    caixa ou traço em cima do título (ou a menos de 10 px dele)
+//   respiro   seta colada no cartão ou com respiro diferente nas duas pontas; fio que nem encosta nem afasta; caixas coladas
+//   sobreposicao  duas caixas uma em cima da outra (plano(..., { sobre: true }) libera o selo posto de propósito na quina)
+//   alinhamento   caixas vizinhas quase alinhadas (topo, meio ou base fora por 1,5 a 6 px)
+// Mede no desenho (px do plano, sem a perspectiva) e projeta com a câmera do quadro. o.marca: desenha os problemas no quadro.
+function opReal(e, fim) { let k = 1; for (; e; e = e.parentElement) { const s = getComputedStyle(e); if (s.display === 'none' || s.visibility === 'hidden') return 0; k *= +s.opacity; if (e === fim) break; } return k; }
+const nomeDe = e => (e.textContent || '').replace(/\s+/g, ' ').trim().slice(0, 34) || e.className || e.tagName;
+function coleta() {
+  const A = PLANOS.filter(p => p.on && !p.tras && !p.deco && p.op > .12), tf = A.map(p => p.pl.style.transform), B = [], Ln = [], Tx = [];
+  A.forEach(p => { p.pl.style.transform = 'none'; });
+  for (const [p, raiz] of [...A.map(p => [p, p.pl]), [null, HUD]]) {
+    const o = p ? raiz.getBoundingClientRect() : { left: 0, top: 0 }, rel = r => [r.left - o.left, r.top - o.top, r.right - o.left, r.bottom - o.top];
+    let els = [...raiz.querySelectorAll(SEL)].filter(e => !e.closest('.tit'));
+    if (p && !els.length && p.e && p.e.tagName !== 'svg' && /\S/.test(p.e.textContent)) els = [p.e];
+    if (!p) els.push(...[...HUD.children].filter(e => !e.matches('.tit,' + SEL) && /\S/.test(e.textContent)));
+    for (const e of els) { const r = e.getBoundingClientRect(); if (r.width < 1 || r.height < 1) continue; const op = opReal(e, raiz); if (op < .12) continue;
+      const b = { e, p, op, l: rel(r), nome: nomeDe(e), impl: !e.matches(SEL), filho: !!e.parentElement.closest(SEL), k: p ? p.escTela : 1 }; B.push(b);
+      if (!b.impl) for (const { n, r: q } of textosDe(e)) if (opReal(n.parentElement, e) >= .05) Tx.push({ b, txt: n.nodeValue.replace(/\s+/g, ' ').trim().slice(0, 30), l: rel(q) }); }
+    for (const sv of raiz.querySelectorAll('svg.seta,svg.fluxo')) { const op = opReal(sv, raiz); if (op < .12) continue;
+      const r = sv.getBoundingClientRect(), vb = sv.viewBox.baseVal, kx = vb.width ? r.width / vb.width : 1, ky = vb.height ? r.height / vb.height : 1, seta = sv.classList.contains('seta');
+      const loc = q => [r.left - o.left + (q.x - vb.x) * kx, r.top - o.top + (q.y - vb.y) * ky];
+      for (const ph of sv.querySelectorAll(seta ? '.sb' : '.fb')) { const n = ph.getTotalLength(); if (!(n > 0)) continue; const a = loc(ph.getPointAtLength(0)); let z = loc(ph.getPointAtLength(n));
+        const sp = seta && sv.querySelector('.sp'); if (sp) { const m = sp.getTotalLength(); let fd = Math.hypot(z[0] - a[0], z[1] - a[1]); for (const u of [0, .25, .5, .75, 1]) { const q = loc(sp.getPointAtLength(m * u)), dd = Math.hypot(q[0] - a[0], q[1] - a[1]); if (dd > fd) { fd = dd; z = q; } } }
+        Ln.push({ e: ph, p, op, seta, a, z, hw: (parseFloat(ph.getAttribute('stroke-width')) || 2) / 2, k: p ? p.escTela : 1, nome: seta ? 'seta' : 'fio' }); } }
+  }
+  A.forEach((p, i) => { p.pl.style.transform = tf[i]; });
+  const T = (p, u, v) => p ? naTela(p.M, u, v) : [u, v];
+  for (const b of B) { const q = [[b.l[0], b.l[1]], [b.l[2], b.l[1]], [b.l[2], b.l[3]], [b.l[0], b.l[3]]].map(([u, v]) => T(b.p, u, v)), xs = q.map(a => a[0]), ys = q.map(a => a[1]);
+    b.s = [Math.min(...xs), Math.min(...ys), Math.max(...xs), Math.max(...ys)]; b.c = [(b.s[0] + b.s[2]) / 2, (b.s[1] + b.s[3]) / 2]; }
+  for (const l of Ln) { l.sa = T(l.p, ...l.a); l.sz = T(l.p, ...l.z); l.s = [Math.min(l.sa[0], l.sz[0]), Math.min(l.sa[1], l.sz[1]), Math.max(l.sa[0], l.sz[0]), Math.max(l.sa[1], l.sz[1])]; l.c = [(l.s[0] + l.s[2]) / 2, (l.s[1] + l.s[3]) / 2]; }
+  return { B, Ln, Tx };
+}
+export function auditar(t, o = {}) {
+  const R = RESP, dt = .2, antes = new Map(), P = [], visto = new Set();
+  const add = (tipo, chave, msg, s) => { chave = tipo + ': ' + chave; if (visto.has(chave)) return; visto.add(chave); P.push({ tipo, chave, msg, ret: s.map(v => Math.round(v)) }); };
+  quadro(t - dt); { const a = coleta(); for (const b of [...a.B, ...a.Ln]) antes.set(b.e, b.c); }
+  quadro(t); const { B, Ln, Tx } = coleta(), f1 = v => (Math.round(v * 10) / 10).toString().replace('.', ',');
+  for (const b of [...B, ...Ln]) { const a = antes.get(b.e); b.parado = !!a && Math.hypot(b.c[0] - a[0], b.c[1] - a[1]) / dt <= R.parado; }
+  // 1 · texto na caixa
+  for (const x of Tx) { const b = x.b.l, q = x.l, h = Math.max(b[0] + R.texto - q[0], q[2] - (b[2] - R.texto)), v = Math.max(b[1] + R.textoV - q[1], q[3] - (b[3] - R.textoV));
+    if (Math.max(h, v) > .75) add('texto', x.b.nome + ' | ' + x.txt, `o texto "${x.txt}" ${h > v ? (h > R.texto ? 'estoura a largura' : 'encosta na borda') : 'estoura a altura'} de "${x.b.nome}" (faltam ${f1(Math.max(h, v))} px para o respiro de ${h > v ? R.texto : R.textoV} px)`, x.b.s); }
+  // 2 · borda do quadro (só o que está parado)
+  const livre = s => s[2] <= 0 || s[3] <= 0 || s[0] >= 1280 || s[1] >= 800, falta = s => Math.max(R.borda - s[0], R.borda - s[1], s[2] - (1280 - R.borda), s[3] - (800 - R.borda));
+  for (const b of [...B, ...Ln]) { if (b.filho || !b.parado || (b.p && b.p.sangra) || livre(b.s)) continue; const m = falta(b.s); if (m <= .75) continue;
+    const lado = m === R.borda - b.s[0] ? 'esquerda' : m === R.borda - b.s[1] ? 'de cima' : m === b.s[2] - (1280 - R.borda) ? 'direita' : 'de baixo';
+    add('borda', b.nome + (b.seta != null ? ' @' + Math.round(b.c[0] / 40) + ',' + Math.round(b.c[1] / 40) : ''), `"${b.nome}" ${m > R.borda ? `cortado pela borda ${lado} do quadro (${f1(m - R.borda)} px para fora)` : `a ${f1(R.borda - m)} px da borda ${lado} (mínimo ${R.borda})`}`, b.s); }
+  // 3 · título
+  const rg = document.createRange();
+  for (const tt of HUD.querySelectorAll('.tit')) { if (opReal(tt, HUD) < .3) continue;
+    for (const pt of tt.children) { if (opReal(pt, tt) < .3) continue; rg.selectNodeContents(pt); const r = rg.getBoundingClientRect(), g = R.titulo;
+      for (const b of [...B, ...Ln]) if (!b.filho && b.op >= .3 && b.s[0] < r.right + g && b.s[2] > r.left - g && b.s[1] < r.bottom + g && b.s[3] > r.top - g)
+        add('titulo', b.nome, `"${b.nome}" em cima do título "${nomeDe(tt)}" (ou a menos de ${g} px dele)`, b.s); } }
+  // 4 · respiro: seta e fio contra a caixa mais próxima de cada ponta; caixas entre si
+  const Bv = B.filter(b => !b.filho && b.op >= .3);
+  for (const l of Ln) { if (!l.parado) continue;
+    const g = [l.sa, l.sz].map(q => { let m = 1e9, bb = null; for (const b of Bv) { const d = Math.hypot(Math.max(b.s[0] - q[0], 0, q[0] - b.s[2]), Math.max(b.s[1] - q[1], 0, q[1] - b.s[3])); if (d < m) { m = d; bb = b; } } return [Math.max(0, m / l.k - l.hw), bb]; });
+    if (g.some(([, b]) => b && !b.parado)) continue;
+    const chave = l.nome + ' ' + g.map(([, b]) => b ? b.nome : '').join(' > '), perto = g.filter(([d, b]) => b && d < 30 && (l.seta || d > .75));
+    for (const [d, b] of perto) if (d < R.seta - .5) add('respiro', chave + ' | ' + b.nome, `${l.nome} ${l.seta ? 'colada em' : 'nem encostado nem afastado de'} "${b.nome}": respiro de ${f1(d)} px (mínimo ${R.seta}${l.seta ? '' : ', ou encostar'})`, l.s);
+    if (perto.length === 2 && Math.abs(perto[0][0] - perto[1][0]) > 2) add('respiro', chave + ' | desigual', `${l.nome} com respiro desigual: ${f1(perto[0][0])} px de "${perto[0][1].nome}" e ${f1(perto[1][0])} px de "${perto[1][1].nome}"`, l.s); }
+  const Bp = Bv.filter(b => b.op >= .5 && b.parado), sobre = b => b.p && b.p.sobre;
+  for (let i = 0; i < Bp.length; i++) for (let j = i + 1; j < Bp.length; j++) { const a = Bp[i], b = Bp[j]; if (a.e.contains(b.e) || b.e.contains(a.e) || sobre(a) || sobre(b)) continue;
+    const ix = Math.min(a.s[2], b.s[2]) - Math.max(a.s[0], b.s[0]), iy = Math.min(a.s[3], b.s[3]) - Math.max(a.s[1], b.s[1]), k = Math.min(a.k, b.k), u = [Math.min(a.s[0], b.s[0]), Math.min(a.s[1], b.s[1]), Math.max(a.s[2], b.s[2]), Math.max(a.s[3], b.s[3])];
+    if (ix > 1.5 && iy > 1.5) { const ar = q => (q.s[2] - q.s[0]) * (q.s[3] - q.s[1]); if (ix * iy / (ar(a) + ar(b) - ix * iy) < .8) add('sobreposicao', a.nome + ' | ' + b.nome, `"${a.nome}" e "${b.nome}" sobrepostos (${f1(Math.min(ix, iy) / k)} px)`, u); }
+    else { const gp = iy > 1.5 ? -ix : ix > 1.5 ? -iy : 1e9; if (gp / k < R.caixas - .5) add('respiro', a.nome + ' | ' + b.nome, `"${a.nome}" e "${b.nome}" colados: ${f1(Math.max(0, gp / k))} px (mínimo ${R.caixas})`, u); }
+    // 5 · alinhamento: só entre planos paralelos e na mesma profundidade (mede no espaço, não na tela)
+    if (!a.p || !b.p) continue; const A = a.p.MW, Bm = b.p.MW, ax = i => { const n = Math.hypot(A[i], A[i + 1], A[i + 2]); return [A[i] / n, A[i + 1] / n, A[i + 2] / n]; }, bx = i => { const n = Math.hypot(Bm[i], Bm[i + 1], Bm[i + 2]); return [Bm[i] / n, Bm[i + 1] / n, Bm[i + 2] / n]; };
+    const E = [ax(0), ax(4), ax(8)], dot = (p, q) => p[0] * q[0] + p[1] * q[1] + p[2] * q[2]; if (dot(E[0], bx(0)) < .99999 || dot(E[1], bx(4)) < .99999) continue;
+    const pm = (m, u2, v2) => [m[0] * u2 + m[4] * v2 + m[12], m[1] * u2 + m[5] * v2 + m[13], m[2] * u2 + m[6] * v2 + m[14]], cx = (q, m) => { const p0 = pm(m, q.l[0], q.l[1]), p1 = pm(m, q.l[2], q.l[3]); return [dot(p0, E[0]), dot(p0, E[1]), dot(p1, E[0]), dot(p1, E[1]), dot(p0, E[2])]; };
+    const ra = cx(a, A), rb = cx(b, Bm), px = Math.max(a.p.esc, b.p.esc), [lo, hi] = R.alinha; if (Math.abs(ra[4] - rb[4]) > .7) continue;
+    for (const [i0, i1, eixo] of [[1, 3, 'na horizontal'], [0, 2, 'na vertical']]) { const j0 = 1 - i0, j1 = j0 + 2, cruza = Math.min(ra[j1], rb[j1]) - Math.max(ra[j0], rb[j0]);   // vizinhos nesse eixo = não se cruzam no outro
+      if (cruza > 0) continue; const ov = Math.min(ra[i1], rb[i1]) - Math.max(ra[i0], rb[i0]); if (ov < .5 * Math.min(ra[i1] - ra[i0], rb[i1] - rb[i0])) continue;
+      const dd = Math.min(Math.abs(ra[i0] - rb[i0]), Math.abs(ra[i1] - rb[i1]), Math.abs(ra[i0] + ra[i1] - rb[i0] - rb[i1]) / 2) / px;
+      if (dd > lo && dd < hi) add('alinhamento', a.nome + ' | ' + b.nome, `"${a.nome}" e "${b.nome}" quase alinhados ${eixo}: fora por ${f1(dd)} px`, u); } }
+  if (o.marca) { document.getElementById('aud')?.remove(); const d = el('<div id="aud" style="position:absolute;left:0;top:0;width:1280px;height:800px;z-index:9"></div>', ST);
+    for (const q of P) d.insertAdjacentHTML('beforeend', `<div style="position:absolute;left:${q.ret[0]}px;top:${q.ret[1]}px;width:${q.ret[2] - q.ret[0]}px;height:${q.ret[3] - q.ret[1]}px;outline:2px solid #FF3B5C;outline-offset:2px"><span style="position:absolute;left:-2px;top:-19px;font:700 11px M,sans-serif;color:#fff;background:#FF3B5C;padding:1px 6px;border-radius:3px;white-space:nowrap">${q.tipo}</span></div>`); }
+  return P;
+}

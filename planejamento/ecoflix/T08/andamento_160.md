@@ -72,3 +72,20 @@ FAKE_PORT=54308 bash rec/run.sh down
   aula mostra quando a internet cai e o navegador continua "online" (roteador ligado). Correção: `networkMode: 'always'` nessa mutação.
   A linha "Sem internet (queda simulada no robô)" do `propostas_fala.md` fica substituída por este achado (não editei aquele arquivo).
 - Também visto: sem internet a aba nova mostra "#1" no lugar do próximo número (previsto no código, `WeighingTicket.tsx:3765`).
+
+## Ajuste de foco a pedido do Kaik (18/11, 22:45): avulsa enxuta, mais ticket
+- **Fala** (`tts_textos.py`, `roteiro.md`, `plano.md` → "Ajuste de foco"): 2.154 → 2.017 palavras; narração estimada 993,8 → 932,2 s.
+  - cap11: 13 → 6 linhas, 311 → 121 palavras, 138,5 → 55,0 s (1ª frase intacta: âncora da ilustração). Saíram os campos do cadastro
+    rápido, a placa, o tipo de caminhão, o "Completo", a divisão entre formas, a trava e o estorno.
+  - cap01: + 3 linhas com os casos de uso (preço que fecha depois; vários caminhões; ticket de venda); avulsa numa frase (63,0 → 78,9 s).
+  - cap08: L4 "Como este ticket foi feito sem valores, o preço vem da tabela"; L5 + "Já no ticket com valores, como o do Jair, vale o
+    preço que está no ticket." (78,6 → 87,7 s). cap10: sem mudança. cap13: L5 encurtada.
+- **Robô** (`gerar.py`): cap01 (3 gestos novos, calmos) e cap11 refeito (61 passos; sem Editar/valor travado). cap08, cap12 e cap13 só mudaram de tempo.
+- **Ensaio** (um lote, `rec/t08/lote160_avulsa1.log`): 01, 08, 11, 12, 13 no rápido com MP4: 0 falho, 0 SEM ALVO, conferências OK,
+  avisos de erro `[]`, folhas olhadas (`_folhas/_ens-capNN.jpg`). Sementes `apos-cap08` e `apos-cap11` regravadas; o cap12 deu o #61.
+  PDF novo do comprovante da avulsa em `rec/t08/arquivos/cap11-comprovante-avulsa.pdf` (sem placa, sem tipo de caminhão, sem as duas pesagens).
+- **Pendente:** completa do cap11 não rodada. O `prever` (com as esperas do rápido, que saem maiores) aponta até ~3 s de atraso no
+  trecho cliente → peso (L2 e L3): conferir com `bash rec/t08/t08_lote160.sh 11:` depois que a voz chegar; se atrasar, a folga está nas
+  L5 e L6. O `cenas/ilustracoes.json` não foi mexido: a entrada do cap11 ainda descreve três janelas (comprovante com placa e as três formas).
+- **Achado do app:** o comprovante da avulsa (serviço ao cliente) sai com "Fornecedor: Areal Boa Vista" e "Itens comprados".
+- Instância 54308 derrubada.
