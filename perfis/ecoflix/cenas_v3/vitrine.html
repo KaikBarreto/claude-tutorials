@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<!-- Kit v3 · VITRINE: todos os objetos 3D e componentes de dados, com o nome embaixo, nos dois climas.
+     setup({ cap: 0 | 1 (clima claro | escuro), pagina: 1..N }) e R(t) (t = 9 mostra tudo parado; t de 0 a 6 anima as entradas).
+     Abrir no navegador: vitrine.html?k=0&p=1 (precisa de --allow-file-access-from-files). Páginas em PAGINAS, lá embaixo.
+     Ícones do lucide usados aqui (o nome tem de estar literal na página): 'file-text' 'truck' 'scale' 'recycle' 'route'
+     'package' 'wallet' 'receipt' 'badge-check' 'user' 'lock' 'calendar' 'bot' 'check' 'arrow-right' 'coins' 'shield-check'
+     'trending-up' 'landmark' 'banknote' 'clipboard-list' 'printer' 'sparkles' 'key-round' 'eye' 'pencil' 'factory' -->
+</head><body>
+<script type="module">
+import { PI, cl, pr, eo, eio, ic, el, vis, kg, titulo, htmlChip, CENA, U, piso, mancha, camera, plano, clima, cena, ancora, grupo, mat, caixa, malha } from './motor.js';
+import { PAGINAS } from './vitrine_paginas.js';
+cena(d => {
+  const K = d.cap ? 1 : 0, C = K ? 'escuro' : 'claro', pg = PAGINAS[(d.pagina ?? 1) - 1], rot = [], anim = [];
+  if (!K) U.uNevoa.value.set(.955, .975, .965, .0); else U.uNevoa.value.set(.075, .085, .09, .0);
+  const bola = (cor, w, pos, esc = .05) => plano(`<div style="width:${w}px;height:${w}px;border-radius:50%;background:radial-gradient(circle,${cor} 0%,${cor.replace(/[\d.]+\)$/, '0)')} 68%)"></div>`, { pos, esc, tras: true, clima: C });
+  if (!K) { bola('rgba(189,239,212,.95)', 1300, [-36, 10, -70]); bola('rgba(207,228,255,.95)', 1200, [32, 20, -80]); bola('rgba(252,231,184,.8)', 1100, [28, -8, -60]); }
+  else { bola('rgba(80,208,136,.16)', 900, [0, 2, -30], .06); bola('rgba(90,150,255,.12)', 700, [-24, 12, -40], .06); }
+  const nome = (txt, sub = '') => el(`<div class="ab ${C}" style="text-align:center;white-space:nowrap"><div style="font:800 ${pg.fn ?? 11}px M;color:var(--tx);letter-spacing:.01em">${txt}</div>${sub ? `<div style="font:600 ${(pg.fn ?? 11) - 2.5}px M;color:var(--tx2);margin-top:1px">${sub}</div>` : ''}</div>`);
+  if (pg.tipo === '3d') {
+    piso({ r: pg.piso ?? 40, x: 0, z: pg.pz ?? 0, passo: pg.passo ?? 1.3 });
+    let z = 0;
+    for (const linha of pg.linhas) {
+      const larg = linha.reduce((s, it) => s + it.w, 0) + (linha.length - 1) * (pg.vao ?? 1), prof = Math.max(...linha.map(it => it.d ?? 2)); let x = -larg / 2;
+      z += prof / 2;
+      for (const it of linha) { const g = grupo(CENA, [x + it.w / 2 + (it.dx ?? 0), 0, z + (it.dz ?? 0)]); const r = it.faz(g, K); if (r && r.anima) anim.push(r.anima);
+        rot.push([nome(it.nome, it.sub), [x + it.w / 2, 0, z + prof / 2 + (pg.margem ?? .5)]]); x += it.w + (pg.vao ?? 1); }
+      z += prof / 2 + (pg.entre ?? 2.2);
+    }
+  } else {
+    for (const it of pg.itens) { const p = plano(it.html(C), { pos: it.pos, esc: pg.esc ?? .01, clima: C, anc: [.5, 0] }); const r = it.liga ? it.liga(p.e, p) : null; if (r) anim.push(r);
+      rot.push([nome(it.nome, it.sub), null, p, it.dy ?? 0]); }
+  }
+  const tt = titulo(`Kit v3 · ${K ? 'clima escuro' : 'clima claro'} · ${d.pagina ?? 1}/${PAGINAS.length}`, pg.titulo, C); tt.style.top = '14px'; tt.querySelector('.h').style.fontSize = '26px'; tt.querySelector('.kick').style.fontSize = '10px'; tt.querySelector('.h').style.marginTop = '4px';
+  clima(K); camera([[0, pg.cam], [9, pg.cam]]);
+  return t => { clima(K); for (const a of anim) a(t);
+    for (const [e, p, pl, dy] of rot) { if (p) ancora(e, p, .5, 0); else { pl.mede(); ancora(e, pl.ponto(pl.w / 2, pl.h), .5, 0, 0, 8 + dy); } } };
+}, { inercia: 0, respira: 0, pr: 2 });
+const q = new URLSearchParams(location.search); if (q.has('p')) addEventListener('load', () => { window.setup({ cap: +(q.get('k') ?? 0), pagina: +q.get('p'), words: [], linhas: [], dur: 10 }); window.R(+(q.get('t') ?? 9)); });
+</script></body></html>

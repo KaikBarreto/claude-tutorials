@@ -406,3 +406,35 @@ export function cena(monta, o = {}) {
   window.R = t => { quadro(t); return true; };
 }
 function quadro(t) { aplicaCam(pose(t)); RENDER(t); projeta(); RD.render(CENA, CAM); }
+
+// ------------------------------------------------------------------ biblioteca de objetos (objetos/*.js e dados/*.js)
+// Só acréscimos: nada acima mudou. Formas a mais, lotes de peças iguais, material com desenho e CSS de componente.
+export const pega = a => a[Math.floor(rng() * a.length)];
+export const torno = (pts, seg = 28) => new THREE.LatheGeometry(pts.map(([r, y]) => new THREE.Vector2(r, y)), seg);   // perfil [raio, y] de baixo para cima
+export const esfera = (r, e = [1, 1, 1], seg = 20) => { const g = new THREE.SphereGeometry(r, seg, Math.max(8, Math.round(seg * .7))); g.scale(e[0], e[1], e[2]); return g; };
+export const capsula = (r, h, seg = 12) => new THREE.CapsuleGeometry(r, h, 5, seg);
+export const toro = (R, r, seg = 36, arco = 2 * PI) => new THREE.TorusGeometry(R, r, 8, seg, arco);
+export function tubo(pts, r = .02, seg = 48) {   // tubo por uma curva suave que passa pelos pontos; g.userData.curva.getPoint(u)
+  const c = new THREE.CatmullRomCurve3(pts.map(p => new THREE.Vector3(p[0], p[1], p[2]))), g = new THREE.TubeGeometry(c, seg, r, 8, false); g.userData.curva = c; return g;
+}
+export function mundo(o, p = [0, 0, 0]) { o.updateWorldMatrix(true, false); _v.set(p[0], p[1], p[2]); o.localToWorld(_v); return [_v.x, _v.y, _v.z]; }   // ponto local → mundo
+// lote: N peças iguais numa chamada de desenho (InstancedMesh). poeInst põe a peça i; a cor é a da tela (hex sem conversão)
+const _lm = new THREE.Matrix4(), _lq = new THREE.Quaternion(), _le = new THREE.Euler(), _lp = new THREE.Vector3(), _ls = new THREE.Vector3(), _lc = new THREE.Color();
+export function lote(geo, m, n, pai) { const im = new THREE.InstancedMesh(geo, m, n); im.frustumCulled = false; if (pai) pai.add(im); return im; }
+export function poeInst(im, i, pos, rot = [0, 0, 0], esc = 1, cor = null) {
+  _le.set(rot[0], rot[1], rot[2]); _lq.setFromEuler(_le); _lp.set(pos[0], pos[1], pos[2]); if (Array.isArray(esc)) _ls.set(esc[0], esc[1], esc[2]); else _ls.set(esc, esc, esc);
+  im.setMatrixAt(i, _lm.compose(_lp, _lq, _ls)); im.instanceMatrix.needsUpdate = true;
+  if (cor) { const h = parseInt(cor.slice(1), 16); im.setColorAt(i, _lc.setRGB((h >> 16 & 255) / 255, (h >> 8 & 255) / 255, (h & 255) / 255, THREE.LinearSRGBColorSpace)); im.instanceColor.needsUpdate = true; }
+}
+// pintura: material com um desenho de canvas (placa, visor de aparelho, cupom, letreiro). desenha(ctx, w, h) pinta; no clima
+// escuro o desenho fica com o.emi do brilho (papel .5; tela de aparelho 1). m.userData.refaz(f) redesenha; uUV = recorte.
+export function pintura(w, h, desenha, o = {}) {
+  const cv = document.createElement('canvas'); cv.width = w; cv.height = h; const ctx = cv.getContext('2d'), tx = new THREE.CanvasTexture(cv); tx.anisotropy = 8;
+  const m = new THREE.ShaderMaterial({ side: o.ds ? THREE.DoubleSide : THREE.FrontSide, transparent: !!o.transp,
+    vertexShader: 'uniform vec4 uUV; varying vec2 vU; void main(){ vU = uv * uUV.zw + uUV.xy; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }',
+    fragmentShader: 'uniform sampler2D uMapa; uniform float uClima, uEmi, uEmiC; varying vec2 vU; void main(){ vec4 c = texture2D(uMapa, vU); gl_FragColor = vec4(mix(c.rgb * uEmiC, c.rgb * uEmi, uClima), c.a); }',
+    uniforms: { uMapa: { value: tx }, uClima: U.uClima, uEmi: { value: o.emi ?? .5 }, uEmiC: { value: o.emiC ?? 1 }, uUV: { value: new THREE.Vector4(0, 0, 1, 1) } } });
+  m.userData = { ctx, cv, refaz(f = desenha) { ctx.clearRect(0, 0, w, h); f(ctx, w, h); tx.needsUpdate = true; } }; m.userData.refaz(); return m;
+}
+// estilo: CSS de um componente, posto uma vez só (cada arquivo de dados/ traz o seu; lê as variáveis do clima do plano)
+export function estilo(id, css) { if (document.getElementById('es-' + id)) return; const s = document.createElement('style'); s.id = 'es-' + id; s.textContent = css; document.head.appendChild(s); }
