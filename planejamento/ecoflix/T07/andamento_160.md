@@ -16,8 +16,14 @@ antigos 09→11, 10→13, 11→14, 12→15, 13→16, 14→17, 15→18, 16→19. 
 - [ ] Completo (sem `--rapido`) onde a regra pede: 05, 09, 10, 11, 18 (lista aberta, aviso que some, tela que muda sozinha).
 - [ ] Derrubar a instância no fim.
 
-## Estado por capítulo (ensaio rápido no 1.60.10)
-(preencher: NN ok | NN falha: motivo)
+## Estado por capítulo (ensaio no 1.60.10, 18/11)
+- Lote 1 (rápido, `rec/t07/_ens/lote1.log`): ok 00 01 02 03 04 05 09 11 12 13 14 15 17 (folhas olhadas); falharam 06 07 08 10 16 18 19,
+  corrigidos no `gerar.py` (dica que some na pesagem avançada, "241,8", detalhe que abre sozinho, link Voltar fora da tela, Valor/Kg da
+  linha por colagem, compra e caixa visitados antes da queda da internet, semente apos-cap18).
+- Lote 2 (`rec/t07/_ens/lote2.log`): rápido de 06 07 08 10 16 18 19 e COMPLETO de 05 a 18:
+  `TUT_SENHA=<8+> bash rec/t07/t07_lote160b.sh "06 07 08 10 16 18 19" "05 06 07 08 09 10 11 12 13 14 15 16 17 18"`.
+  Resultado do completo: `rec/t07/capNN.resumo.txt` (lateBy) e folha reduzida em `/dev/shm/t07_gNN.jpg`.
+- Lote 3 (último): só o que o lote 2 não fechar.
 
 ## Comandos
 ```bash
