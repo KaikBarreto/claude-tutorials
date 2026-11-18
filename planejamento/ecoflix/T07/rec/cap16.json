@@ -290,21 +290,10 @@
    "label": "Valor/Kg na linha do latão"
   },
   {
-   "do": "type",
-   "target": {
-    "selector": "main tbody tr:has-text('Metal amarelo') td:has(span.truncate.text-muted-foreground) input"
-   },
-   "text": "32,00",
-   "cps": 10,
-   "noClick": true,
-   "at": 50.97,
-   "label": "Valor/Kg 32,00",
-   "clear": true
-  },
-  {
-   "do": "press",
-   "key": "Tab",
-   "label": "sai do campo (grava)"
+   "do": "eval",
+   "js": "(()=>{const tr=[...document.querySelectorAll('main tbody tr')].find(r=>r.innerText.includes(\"Metal amarelo\"));const sp=tr&&tr.querySelector('span.truncate.text-muted-foreground');const el=sp&&sp.closest('td').querySelector('input');if(!el)return 'SEM ALVO';el.focus();el.select();document.execCommand('insertText',false,\"32,00\");return el.value})()",
+   "at": 51.02,
+   "label": "Valor/Kg 32,00"
   },
   {
    "do": "hover",
@@ -348,20 +337,14 @@
    "label": "Valor/Kg de novo"
   },
   {
-   "do": "type",
-   "target": {
-    "selector": "main tbody tr:has-text('Metal amarelo') td:has(span.truncate.text-muted-foreground) input"
-   },
-   "text": "31,90",
-   "cps": 10,
-   "noClick": true,
-   "label": "Valor/Kg de volta a 31,90",
-   "clear": true
+   "do": "eval",
+   "js": "(()=>{const tr=[...document.querySelectorAll('main tbody tr')].find(r=>r.innerText.includes(\"Metal amarelo\"));const sp=tr&&tr.querySelector('span.truncate.text-muted-foreground');const el=sp&&sp.closest('td').querySelector('input');if(!el)return 'SEM ALVO';el.focus();el.select();document.execCommand('insertText',false,\"31,90\");return el.value})()",
+   "label": "Valor/Kg de volta a 31,90"
   },
   {
-   "do": "press",
-   "key": "Tab",
-   "label": "sai do campo (grava)"
+   "do": "eval",
+   "js": "(()=>{const a=document.activeElement;if(a&&a!==document.body)a.blur();return 'foco fora: '+(document.activeElement&&document.activeElement.tagName)})()",
+   "label": "foco fora de campo"
   },
   {
    "do": "eval",

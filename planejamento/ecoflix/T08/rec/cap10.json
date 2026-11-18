@@ -250,12 +250,10 @@
   {
    "do": "click",
    "target": {
-    "role": "button",
-    "name": "Ações",
-    "within": "main div.rounded-lg:has([aria-label='Selecionar ticket #58']):not(:has(div.rounded-lg [aria-label='Selecionar ticket #58']))"
+    "selector": "main button:has-text('Ações') >> nth=-1"
    },
    "at": 44.52,
-   "label": "Ações do #58 (valorizado)"
+   "label": "Ações do #58 (valorizado: o último cartão, na coluna Valorizados)"
   },
   {
    "do": "hover",
@@ -329,16 +327,14 @@
   {
    "do": "click",
    "target": {
-    "selector": "[data-radix-popper-content-wrapper] button:has-text('Status')"
+    "selector": "[role=dialog] button[aria-haspopup=dialog]:has-text('Status')"
    },
    "label": "Status"
   },
   {
    "do": "hover",
    "target": {
-    "text": "Cancelado",
-    "exact": true,
-    "within": "[data-radix-popper-content-wrapper]"
+    "selector": "[role=dialog] :text-is('Cancelado') >> nth=-1"
    },
    "seconds": 0.5,
    "at": 57.34,
@@ -386,7 +382,7 @@
   {
    "do": "hover",
    "target": {
-    "selector": "[data-radix-popper-content-wrapper] button:has-text('Tipo')"
+    "selector": "[role=dialog] button[aria-haspopup=dialog]:has-text('Tipo')"
    },
    "seconds": 0.3,
    "at": 64.62,
@@ -397,7 +393,7 @@
   {
    "do": "hover",
    "target": {
-    "selector": "[data-radix-popper-content-wrapper] button:has-text('Status')"
+    "selector": "[role=dialog] button[aria-haspopup=dialog]:has-text('Status')"
    },
    "seconds": 0.3,
    "at": 65.23,
@@ -408,7 +404,7 @@
   {
    "do": "hover",
    "target": {
-    "selector": "[data-radix-popper-content-wrapper] button:has-text('Usuário')"
+    "selector": "[role=dialog] button[aria-haspopup=dialog]:has-text('Usuário')"
    },
    "seconds": 0.4,
    "at": 66.06,

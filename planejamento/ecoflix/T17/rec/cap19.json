@@ -1,0 +1,134 @@
+{
+ "name": "t17-cap19",
+ "title": "T17 · Cap. 19 · Recapitulando (narração 52,2 s ESTIMADA; marcas L1..L4 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T14:40:00-03:00)",
+ "seed": "t17-cap19",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 900,
+  "y": 470
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.60.10",
+  "notification_shown_version": "1.60.10",
+  "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true"
+ },
+ "seedExtra": [
+  "t17/inicio",
+  "t17/apos-cap13",
+  "t17/mdfe2-rejeitado"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "waitFor",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "timeout": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "••••••••"
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "url": "/dashboard",
+   "timeout": 40
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 25
+  },
+  {
+   "do": "goto",
+   "url": "/fiscal-ambiental/transporte"
+  },
+  {
+   "do": "waitFor",
+   "text": "Manifesto Eletrônico de Documentos Fiscais (MDF-e)",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 25
+  },
+  {
+   "do": "wait",
+   "seconds": 0.8
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{if(window.__animFix)return 'ja';window.__animFix=setInterval(()=>{for(const a of document.getAnimations())if(a.currentTime!==null&&a.currentTime<0)a.startTime=document.timeline.currentTime},100);return 'anim fix'})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 900,
+    "y": 470
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "at": 0.5,
+   "label": "cursor em repouso (montagem)"
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 18.69
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 28.16
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 43.92
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 52.23
+  }
+ ]
+}

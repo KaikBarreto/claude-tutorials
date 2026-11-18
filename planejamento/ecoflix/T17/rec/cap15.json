@@ -1,0 +1,347 @@
+{
+ "name": "t17-cap15",
+ "title": "T17 · Cap. 15 · Cancelamento e devolução (narração 78,0 s ESTIMADA; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T14:40:00-03:00)",
+ "seed": "t17-cap15",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 900,
+  "y": 440
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.60.10",
+  "notification_shown_version": "1.60.10",
+  "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true"
+ },
+ "seedExtra": [
+  "t17/inicio",
+  "t17/apos-cap13"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "waitFor",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "timeout": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "••••••••"
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "url": "/dashboard",
+   "timeout": 40
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 25
+  },
+  {
+   "do": "goto",
+   "url": "/fiscal-ambiental/estoque-fiscal/posicao"
+  },
+  {
+   "do": "waitFor",
+   "text": "Saldo fiscal atualizado, por material.",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 25
+  },
+  {
+   "do": "wait",
+   "seconds": 0.8
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Movimentações",
+    "exact": true,
+    "within": "nav[aria-label='Navegação da seção']"
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "KARDEX FISCAL",
+   "timeout": 15
+  },
+  {
+   "do": "wait",
+   "seconds": 0.8
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel|Algo deu errado|Falha ao|n[ãa]o encontrad|recusou|rejeitad[ao]!/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');if(f&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA ECOFLIX'))window.__avisos.push('TRILHA ECOFLIX')},300);return 1})()"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{if(window.__animFix)return 'ja';window.__animFix=setInterval(()=>{for(const a of document.getAnimations())if(a.currentTime!==null&&a.currentTime<0)a.startTime=document.timeline.currentTime},100);return 'anim fix'})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main section[aria-label='Materiais do Kardex fiscal'] button[aria-expanded]"
+   },
+   "at": 2.25,
+   "label": "Filtros (abre)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#history-search"
+   },
+   "at": 7.4,
+   "label": "Nota, chave ou parceiro: 1249 (campo)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#history-search"
+   },
+   "text": "1249",
+   "cps": 40,
+   "at": 8.96,
+   "label": "Nota, chave ou parceiro: 1249",
+   "noClick": true
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "main tbody tr:has-text('Estorno')"
+   },
+   "timeout": 10
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "main tbody"
+   },
+   "text": "",
+   "noClick": true,
+   "optional": true,
+   "timeout": 4,
+   "at": 10.55,
+   "label": "as duas linhas da 1249 (zoom)"
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 11.1
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('Nota fiscal') td >> nth=1"
+   },
+   "seconds": 0.8,
+   "at": 11.1,
+   "label": "Nota fiscal 1249: saída de 320 kg",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('Estorno') td >> nth=1"
+   },
+   "seconds": 0.8,
+   "at": 16.78,
+   "label": "Estorno 1249: +320 kg",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Pedido alterado pelo cliente",
+    "within": "main tbody"
+   },
+   "seconds": 1.0,
+   "at": 18.07,
+   "label": "motivo do cancelamento",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Estorno\", \"Pedido alterado pelo cliente antes de a mercadoria sair do pátio\", \"320\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere saída e estorno da 1249"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 20.64
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 900,
+    "y": 470
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "at": 20.74,
+   "label": "cursor em repouso (ilustração: régua do estorno)"
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 34.2
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('Estorno') td >> nth=-1"
+   },
+   "seconds": 1.5,
+   "at": 39.96,
+   "label": "coluna Depois do estorno",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 42.15
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Limpar filtros",
+    "exact": true
+   },
+   "at": 42.15,
+   "label": "Limpar filtros"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main section[aria-label='Materiais do Kardex fiscal'] button",
+    "hasText": "Cobre mel"
+   },
+   "at": 43.04,
+   "label": "Materiais: Cobre mel"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "main tbody tr:has-text('1253')"
+   },
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('1253') td >> nth=1"
+   },
+   "seconds": 0.8,
+   "at": 45.7,
+   "label": "NF-e 1253: devolução da Fundição",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('1253') td:has-text('CFOP')"
+   },
+   "seconds": 1.2,
+   "at": 48.12,
+   "label": "NF-e 1253, CFOP de devolução, +40 kg",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"1253\", \"Fundição Bandeira do Vale\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere devolução da Fundição no Kardex do cobre mel"
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 56.16
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 900,
+    "y": 470
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "at": 56.26,
+   "label": "cursor em repouso (ilustração: setas da devolução)"
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 66.0
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('1253') td >> nth=-3"
+   },
+   "seconds": 1.5,
+   "at": 75.4,
+   "label": "Movimento: +40 kg",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 77.96
+  }
+ ]
+}

@@ -557,6 +557,13 @@ JS_FECHA_DLG = ("(async()=>{await new Promise(r=>setTimeout(r,600));const d=docu
                 "if(!b)return 'sem botao Fechar';b.click();return 'fechada pelo botao'})()")
 
 
+def js_vkg_linha(nome, valor):
+    """Valor/Kg da linha (OrderUnitPriceInput, modo inteligente): o texto inteiro entra de uma vez (seleciona e insere)"""
+    return ("(()=>{const tr=[...document.querySelectorAll('main tbody tr')].find(r=>r.innerText.includes(%s));const sp=tr&&tr.querySelector('span.truncate.text-muted-foreground');"
+            "const el=sp&&sp.closest('td').querySelector('input');if(!el)return 'SEM ALVO';el.focus();el.select();document.execCommand('insertText',false,%s);return el.value})()") % (
+        json.dumps(nome, ensure_ascii=False), json.dumps(valor))
+
+
 def js_colar(seletor, texto):
     """texto no campo sem teclado (execCommand insertText: o React recebe o input), ~0,05 s"""
     return ("(()=>{const el=document.querySelector(%s);if(!el)return 'SEM ALVO';el.focus();if(el.select)el.select();"
@@ -875,8 +882,8 @@ def cap06():
     c.hover(SEL('label[for=wm-net]'), 1.2, w=(8, 'Resumido,'), label='Resumido: Só o peso líquido cobrado.')
     c.hover(SEL('label[for=wm-detailed]'), 1.6, w=(8, 'Detalhado,'), label='Detalhado: Bruto, tara, impureza e líquido.')
     c.confere('dlg', ['Só o peso líquido cobrado.', 'Bruto, tara, impureza e líquido.'], 'Resumido e Detalhado')
-    c.ev(js_rola_ate('Preencha 1ª e 2ª pesagem', y=200, escopo=DLG, prefixo=True), w=(9, 'carroca.', None, 0.9), label='rola a janela de volta às pesagens')
-    c.hover(PD('Preencha 1ª e 2ª pesagem', exact=False), 2.4, w=(9, 'tambor', 0), label='dica: só a 1ª conta como bruto (zoom)')
+    c.ev(js_rola_ate('1ª Pesagem', y=200, escopo=DLG), w=(9, 'carroca.', None, 0.9), label='rola a janela de volta às pesagens')
+    c.hover(DCAMPO('1ª Pesagem'), 2.4, w=(9, 'tambor', 0), label='1ª Pesagem: sozinha, conta como bruto (zoom)')
     c.hover(TARA_DLG, 2.0, w=(9, 'Tara', 0), label='Tara (Kg) (zoom)')
     c.ev(js_rola_ate('Motorista', y=420, escopo=DLG), w=(10, 'Motorista', None, 0.9), label='rola a janela até o motorista')
     c.hover(DCAMPO('Motorista'), 0.6, w=(10, 'Motorista'), label='Motorista e Placa do veículo (vazios)')
@@ -910,7 +917,7 @@ def cap07():
     c.click(BTN('Mesclar Todas'), w=(3, 'Mesclar'), label='Mesclar Todas')
     c.waitfor(text='pesagens mescladas com sucesso', timeout=8)
     c.hover(LINHA('Alumínio latinha'), 1.4, w=(3, 'valor'), label='uma linha de latinha, R$ 241,80')
-    c.confere('row:Alumínio latinha', ['241,80'], 'latinha mesclada R$ 241,80')
+    c.confere('row:Alumínio latinha', ['241,8'], 'latinha mesclada R$ 241,80 (a célula mostra 241,8)')
     c.hover(DESMESCLAR, 2.0, w=(4, 'botao'), label='Desmesclar pesagens (zoom)')
     c.fim()
     return c
@@ -934,7 +941,9 @@ def cap08():
     c.hover(LINHA('Ferro misto'), 0.8, w=(4, 'ferro'), label='ferro R$ 225,00')
     c.hover(TOTAL_C, 1.6, w=(4, 'total'), label='Total da Compra R$ 913,20 (zoom)')
     c.confere('main', ['913,20'], 'Total da Compra R$ 913,20')
-    c.click(CEL_MAT('Ferro misto'), w=(5, 'Clicando'), label='linha do ferro (abre o detalhe)')
+    c.ev("(()=>{const tr=[...document.querySelectorAll('main tbody tr')].find(r=>r.innerText.includes('Ferro misto'));const b=tr&&tr.querySelector(\"button[aria-label='Ver detalhes da pesagem']\");"
+         "if(!b)return 'SEM ALVO';if(/1ª pesagem/i.test(document.querySelector('main').innerText)){b.click();return 'detalhe fechado'}return 'ja fechado'})()", label='fecha o detalhe que abriu sozinho')
+    c.click(SEL("main tbody tr:has-text('Ferro misto') button[aria-label='Ver detalhes da pesagem']"), w=(5, 'Clicando'), label='linha do ferro (abre o detalhe)')
     c.waitfor(text='1ª pesagem', timeout=8)
     c.hover(SEL("main tr:has-text('1ª pesagem')"), 3.0, w=(5, 'duas'), label='detalhe da pesagem (zoom)')
     c.hover(LAPIS_TOTAL, 2.0, w=(6, 'lapis'), label='lápis Editar valor total (zoom)')
@@ -1003,7 +1012,8 @@ def cap10():
     descarta de novo e Excluir definitivamente; o Cancelar do rodapé (sem clicar)."""
     c = Cap(10, setup_tela(extra=ZE_COMPLETO + st_deposito()))
     c.hover(BARRA, 2.0, w=(1, 'rascunhos.'), label='a barra com os dois pedidos (sob a ilustração)')
-    c.click(VOLTAR, w=(2, 'No', None, 1.4), noScroll=True, label='Voltar para o caixa')
+    c.ev(js_rola_topo(dur_ms=400), w=(2, 'No', None, 2.0), label='rola ao topo')
+    c.click(VOLTAR, w=(2, 'No', None, 1.4), label='Voltar para o caixa')
     c.waitfor(text='Pedidos Não Finalizados', timeout=15)
     c.click(SEL("main button:has-text('Pedidos Não Finalizados')"), w=(2, 'Pedidos'), label='Pedidos Não Finalizados 2 (zoom)')
     c.hover(P('José Carlos Moreira', exact=False), 1.6, w=(2, 'dica:'), label='os cartões do Zé e do Depósito')
@@ -1257,14 +1267,13 @@ def cap16():
     c.confere('main', ['668,80', '4.848,80'], 'lucro 668,80 e total 4.848,80')
     c.hover(SEL("main button:has(svg.lucide-eye), main button:has(svg.lucide-eye-off)"), 1.2, w=(3, 'olho'), label='o olho do lucro estimado')
     c.click(VKG_LINHA('Metal amarelo'), w=(4, 'corrigir'), label='Valor/Kg na linha do latão')
-    c.type(VKG_LINHA('Metal amarelo'), '32,00', w=(4, 'Mudou'), clicar=False, clear=True, cps=10, label='Valor/Kg 32,00')
-    c.press('Tab', label='sai do campo (grava)')
+    c.ev(js_vkg_linha('Metal amarelo', '32,00'), w=(4, 'Mudou'), label='Valor/Kg 32,00')
     c.hover(LEGENDA('Metal amarelo'), 1.6, w=(4, 'legenda'), label='legenda Preço informado (zoom)')
     c.confere('row:Metal amarelo', ['Preço informado'], 'legenda Preço informado')
     c.hover(SEL("main thead th:has-text('Valor Total')"), 2.0, w=(5, 'Valor'), label='Valor Total da linha: só reduz')
     c.click(VKG_LINHA('Metal amarelo'), w=(5, 'aumentar,'), label='Valor/Kg de novo')
-    c.type(VKG_LINHA('Metal amarelo'), '31,90', clicar=False, clear=True, cps=10, label='Valor/Kg de volta a 31,90')
-    c.press('Tab', label='sai do campo (grava)')
+    c.ev(js_vkg_linha('Metal amarelo', '31,90'), label='Valor/Kg de volta a 31,90')
+    c.ev(JS_BLUR, label='foco fora de campo')
     c.confere('main', ['668,80', '4.848,80'], 'de volta: lucro 668,80 e total 4.848,80')
     c.click(MAT, w=(6, 'dica:'), label='Material')
     c.type(MAT, 'latão', w=(6, 'Estoque', 0, 0.6), clicar=False, cps=30, label='material: latão de novo')
@@ -1328,10 +1337,10 @@ def cap17():
 def cap18():
     """A internet cai: faixa e Modo Offline; Shift+C, Dona Cida com 14,6 kg de latinha em dinheiro: Compra salva localmente; Pendências no
     caixa; a internet volta e sincroniza; (ilustração L5)."""
-    c = Cap(18, setup_tela('/venda', 'Selecionar cliente'))
+    c = Cap(18, setup_login() + vai('/caixa', 'Nova Venda') + vai('/compra', 'Voltar para o caixa') + setup_tela('/venda', 'Selecionar cliente')[len(setup_login()):])
     c.ev(JS_OFFLINE, w=(1, 'cair'), label='a internet cai (navigator.onLine e evento offline)')
     c.waitfor(text='Sem conexão', timeout=8)
-    c.hover(P('Sem conexão', exact=False), 1.6, w=(1, 'faixa'), label='faixa Sem conexão (zoom)')
+    c.hover({'text': 'Sem conexão', 'exact': False}, 1.6, w=(1, 'faixa'), label='faixa Sem conexão (zoom)')
     c.hover(P('Modo Offline', exact=False), 1.0, w=(1, 'trabalho'), label='Modo Offline')
     c.ev(JS_BLUR, w=(1, 'internet.', 1, 0.4), label='foco fora de campo')
     c.press('Shift+C', w=(1, 'internet.', 1, 0.2), label='Shift+C (Nova Compra)')
@@ -1355,7 +1364,8 @@ def cap18():
     c.click(CONFIRMA_PAG, w=(2, 'guardada'), label='CONFIRMAR PAGAMENTO')
     c.waitfor(text='Compra salva localmente', timeout=12)
     c.hover(SEL("[data-sonner-toast]:has-text('salva localmente')"), 1.8, w=(2, 'numero'), noScroll=True, label='aviso Compra salva localmente (OFFLINE-C-...) (zoom)')
-    c.click(VOLTAR, w=(3, 'No', None, 1.2), noScroll=True, label='Voltar para o caixa')
+    c.ev(js_rola_topo(dur_ms=400), label='rola ao topo')
+    c.click(VOLTAR, w=(3, 'No', None, 1.2), label='Voltar para o caixa')
     c.waitfor(text='Pendências de Sincronização', timeout=12)
     c.hover(P('Aparecida Ramos', exact=False), 2.0, w=(3, 'Pendencias'), label='cartão Aparecida Ramos em Pendências de Sincronização (zoom)')
     c.ev(JS_ONLINE, w=(4, 'Quando', None, 1.6), label='a internet volta (evento online)')

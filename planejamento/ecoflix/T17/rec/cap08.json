@@ -1,6 +1,6 @@
 {
  "name": "t17-cap08",
- "title": "T17 · Cap. 8 · O serviço que você tomou (narração 87,4 s ESTIMADA; marcas L1..L8 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T14:20:00-03:00)",
+ "title": "T17 · Cap. 8 · Emitir e acompanhar (narração 142,1 s ESTIMADA; marcas L1..L15 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T14:20:00-03:00)",
  "seed": "t17-cap08",
  "pace": 0.5,
  "cps": 9,
@@ -21,7 +21,7 @@
  },
  "seedExtra": [
   "t17/inicio",
-  "t17/apos-cap07"
+  "t17/apos-cap05"
  ],
  "prewarm": [
   "/login"
@@ -70,24 +70,6 @@
   },
   {
    "do": "goto",
-   "url": "/fiscal-ambiental/nfe/saida"
-  },
-  {
-   "do": "waitFor",
-   "text": "Notas Recebidas",
-   "timeout": 30
-  },
-  {
-   "do": "waitFor",
-   "idle": true,
-   "timeout": 25
-  },
-  {
-   "do": "wait",
-   "seconds": 0.3
-  },
-  {
-   "do": "goto",
    "url": "/fiscal-ambiental/nfse"
   },
   {
@@ -122,290 +104,536 @@
   {
    "do": "click",
    "target": {
-    "role": "link",
-    "name": "Notas Fiscais (NF-e)",
-    "exact": true,
-    "within": "aside, [data-sidebar=sidebar]"
-   },
-   "at": 4.59,
-   "label": "Notas Fiscais (NF-e) no menu"
-  },
-  {
-   "do": "click",
-   "target": {
     "role": "button",
-    "name": "Notas Recebidas",
-    "exact": true,
-    "within": "nav[aria-label='Navegação da seção']"
-   },
-   "at": 6.84,
-   "label": "aba Notas Recebidas"
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "tab",
-    "name": "NFS-e",
+    "name": "Nova NFS-e",
     "exact": true
    },
-   "at": 8.45,
-   "label": "aba NFS-e"
+   "at": 4.94,
+   "label": "Nova NFS-e"
   },
   {
    "do": "waitFor",
-   "text": "Ative as Notas de Serviço Recebidas",
+   "text": "Data de competência",
    "timeout": 10
   },
   {
    "do": "mark",
    "name": "L2",
-   "at": 10.87
+   "at": 8.15
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] label[for='nfse-competencia']"
+   },
+   "at": 8.58,
+   "label": "Data de competência (campo)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#nfse-competencia"
+   },
+   "text": "06112026",
+   "cps": 40,
+   "at": 11.81,
+   "label": "Data de competência: 06/11/2026",
+   "noClick": true
   },
   {
    "do": "hover",
    "target": {
-    "text": "prestadores emitem contra o CNPJ",
-    "within": "main"
+    "text": "Série da DPS",
+    "exact": true,
+    "within": "[role=dialog]"
    },
-   "seconds": 1.0,
-   "at": 14.5,
-   "label": "texto: notas emitidas contra o CNPJ",
+   "seconds": 0.5,
+   "at": 12.83,
+   "label": "Série da DPS: Série 1",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Próxima DPS: nº 14",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.5,
+   "at": 13.69,
+   "label": "Próxima DPS: nº 14",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 23.14
+   "at": 18.82
   },
   {
    "do": "click",
    "target": {
-    "role": "button",
-    "name": "Ativar NFS-e Recebidas",
-    "exact": true
+    "selector": "[role=dialog] button",
+    "hasText": "Cliente ou fornecedor"
    },
-   "at": 23.22,
-   "label": "Ativar NFS-e Recebidas"
+   "at": 18.82,
+   "label": "Tomador: Cliente ou fornecedor"
   },
   {
    "do": "waitFor",
-   "text": "Ativar o recebimento de notas de serviço?",
+   "text": "Selecionar tomador",
    "timeout": 10
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Buscar por nome, CNPJ/CPF ou código..."
+   },
+   "text": "Aços",
+   "cps": 12,
+   "at": 21.48,
+   "label": "busca: Aços",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Aços Quiririm Ltda",
+    "within": "[role=dialog] >> nth=-1"
+   },
+   "at": 22.21,
+   "label": "Aços Quiririm Ltda"
   },
   {
    "do": "hover",
    "target": {
-    "text": "cada nota de serviço recebida passa a contar",
+    "text": "Buscar pelo CNPJ",
+    "exact": true,
     "within": "[role=dialog]"
    },
-   "seconds": 0.6,
-   "at": 27.15,
-   "label": "aviso da cota",
+   "seconds": 1.0,
+   "at": 26.62,
+   "label": "Buscar pelo CNPJ (tomador sem cadastro)",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 36.1
+   "at": 28.73
   },
   {
    "do": "click",
    "target": {
     "role": "button",
-    "name": "Ativar mesmo assim",
+    "name": "Avançar",
     "exact": true
    },
-   "at": 36.1,
-   "label": "Ativar mesmo assim"
-  },
-  {
-   "do": "waitFor",
-   "text": "Balanças Tremembé Manutenção Ltda",
-   "timeout": 15
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main tbody"
-   },
-   "seconds": 0.6,
-   "at": 40.78,
-   "label": "duas notas recebidas",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "mark",
-   "name": "L5",
-   "at": 41.99
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main tbody tr:has-text('Contabilidade Manacá') td >> nth=0"
-   },
-   "seconds": 0.6,
-   "at": 41.99,
-   "label": "Contabilidade Manacá Ltda R$ 1.650,00",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "type",
-   "target": {
-    "selector": "main tbody"
-   },
-   "text": "",
-   "noClick": true,
-   "optional": true,
-   "timeout": 4,
-   "label": "colunas Prestador e Valor (zoom)"
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main tbody tr:has-text('Balanças Tremembé') td >> nth=0"
-   },
-   "seconds": 0.6,
-   "at": 48.49,
-   "label": "Balanças Tremembé R$ 980,00",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "mark",
-   "name": "L6",
-   "at": 53.72
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "A NFS-e é da prefeitura",
-    "within": "main"
-   },
-   "seconds": 1.2,
-   "at": 56.05,
-   "label": "aviso: só chega nota de cidade do sistema nacional",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "mark",
-   "name": "L7",
-   "at": 66.37
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "main tbody tr:has-text('Balanças Tremembé') button[aria-haspopup]"
-   },
-   "at": 71.11,
-   "label": "Ações da nota da balança"
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "menuitem",
-    "name": "Lançar despesa / conta"
-   },
-   "at": 72.73,
-   "label": "Lançar despesa / conta",
+   "at": 28.73,
+   "label": "Avançar (Serviço)",
    "noScroll": true
   },
   {
-   "do": "waitFor",
-   "text": "Nova conta",
-   "timeout": 10
-  },
-  {
-   "do": "mark",
-   "name": "L8",
-   "at": 75.38
-  },
-  {
    "do": "hover",
    "target": {
-    "selector": "#bill-amount"
+    "selector": "[role=dialog] button",
+    "hasText": "Taubaté"
    },
-   "seconds": 0.6,
-   "at": 76.57,
-   "label": "Valor R$ 980,00 já preenchido",
+   "seconds": 0.2,
+   "at": 30.64,
+   "label": "Município: Taubaté",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "click",
    "target": {
-    "selector": "#bill-due"
+    "selector": "[role=dialog] button[role=combobox]",
+    "hasText": "Selecionar código de tributação"
    },
-   "at": 78.75,
-   "label": "Vencimento (abre o calendário)"
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "[data-radix-popper-content-wrapper] button[name=day]:text-is('20')"
-   },
-   "at": 80.32,
-   "label": "Vencimento: 20/11/2026"
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "#bill-category"
-   },
-   "at": 80.92,
-   "label": "Categoria (abre)"
+   "at": 31.58,
+   "label": "Código de Tributação Nacional (abre)"
   },
   {
    "do": "type",
    "target": {
-    "placeholder": "Pesquisar categoria..."
+    "placeholder": "Buscar por código ou descrição..."
    },
-   "text": "manut",
-   "cps": 40,
-   "at": 81.51,
-   "label": "busca: manut",
+   "text": "coleta",
+   "cps": 12,
+   "at": 34.05,
+   "label": "busca: coleta",
    "noClick": true
   },
   {
    "do": "click",
    "target": {
     "role": "option",
-    "name": "Manutenção de máquinas"
+    "name": "Varrição, coleta, remoção"
    },
-   "at": 82.2,
-   "label": "Categoria: Manutenção de máquinas"
+   "at": 35.77,
+   "label": "código: coleta e remoção de resíduos"
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 38.8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] button",
+    "hasText": "Puxar serviço salvo"
+   },
+   "seconds": 0.6,
+   "at": 44.4,
+   "label": "Puxar serviço salvo",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 46.36
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#nfse-discriminacao"
+   },
+   "at": 46.36,
+   "label": "Descrição do serviço (campo)"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const el=document.querySelector(\"#nfse-discriminacao\");if(!el)return 'SEM ALVO';el.focus();el.select&&el.select();document.execCommand('insertText',false,\"Coleta e remoção de resíduos metálicos com caçamba no pátio da Aços Quiririm em 06/11/2026.\");return 'colado: '+el.value.slice(0,60)})()",
+   "at": 48.44,
+   "label": "Descrição do serviço"
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 52.03
   },
   {
    "do": "click",
    "target": {
     "role": "button",
-    "name": "Criar conta",
+    "name": "Avançar",
     "exact": true
    },
-   "at": 83.04,
-   "label": "Criar conta"
+   "at": 52.03,
+   "label": "Avançar (Valores)",
+   "noScroll": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#nfse-valor"
+   },
+   "at": 52.26,
+   "label": "Valor do serviço (campo)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#nfse-valor"
+   },
+   "text": "1850",
+   "cps": 20,
+   "at": 54.28,
+   "label": "Valor do serviço: 1850",
+   "noClick": true
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 57.31
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#nfse-iss-aliq"
+   },
+   "at": 57.31,
+   "label": "Alíquota ISS % (campo)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#nfse-iss-aliq"
+   },
+   "text": "3",
+   "cps": 12,
+   "at": 60.6,
+   "label": "Alíquota ISS %: 3",
+   "noClick": true,
+   "clear": true
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "#nfse-iss-aliq"
+   },
+   "seconds": 0.8,
+   "at": 65.88,
+   "label": "Alíquota ISS %: 3,00 (o contador confirma)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L9",
+   "at": 67.68
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "ISS retido na fonte",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.2,
+   "at": 74.68,
+   "label": "ISS retido na fonte (desligado)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Retenções federais (R$)",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.0,
+   "at": 77.61,
+   "label": "Retenções federais (R$)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Informe o valor efetivamente retido de cada tributo",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.0,
+   "at": 81.86,
+   "label": "Informe o valor efetivamente retido de cada tributo.",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L10",
+   "at": 84.66
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Ajustes (deduções e descontos)",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.8,
+   "at": 92.46,
+   "label": "Ajustes (deduções e descontos)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Valor líquido",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.0,
+   "at": 98.61,
+   "label": "Valor líquido: R$ 1.850,00",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L11",
+   "at": 100.27
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Avançar",
+    "exact": true
+   },
+   "at": 100.27,
+   "label": "Avançar (Pré-visualização)",
+   "noScroll": true
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Nº RPS (previsto)",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.8,
+   "at": 104.73,
+   "label": "Série 1 e Nº RPS (previsto) 14",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Pronta pra emitir",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.6,
+   "at": 106.4,
+   "label": "selo Pronta pra emitir",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Pronta pra emitir\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")];const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere nenhuma pendência"
+  },
+  {
+   "do": "mark",
+   "name": "L12",
+   "at": 110.49
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Salvar rascunho",
+    "exact": true
+   },
+   "seconds": 1.2,
+   "at": 114.34,
+   "label": "Salvar rascunho (sem clicar)",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L13",
+   "at": 117.98
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Emitir NFS-e",
+    "exact": true
+   },
+   "at": 117.98,
+   "label": "Emitir NFS-e",
+   "noScroll": true
   },
   {
    "do": "waitFor",
    "target": {
-    "selector": "main tbody tr:has-text('Balanças Tremembé') :text-is('Lançada')"
+    "selector": "main tbody tr:has-text('#14') :text-is('Processando')"
    },
    "timeout": 10
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main tbody tr:has-text('Balanças Tremembé') td:has-text('Lançada')"
+    "selector": "main tbody tr:has-text('#14') td:has-text('Processando')"
    },
-   "seconds": 1.0,
-   "at": 85.38,
-   "label": "selo Lançada",
+   "seconds": 0.6,
+   "at": 122.89,
+   "label": "nº 14 Processando",
    "optional": true,
    "timeout": 4
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "main tbody tr:has-text('#14') :text-is('Autorizada')"
+   },
+   "timeout": 15
+  },
+  {
+   "do": "mark",
+   "name": "L14",
+   "at": 124.63
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('#14') td >> nth=0"
+   },
+   "seconds": 1.0,
+   "at": 128.56,
+   "label": "nº 14 Autorizada",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L15",
+   "at": 129.99
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main tbody tr:has-text('#14') button[aria-haspopup=menu]"
+   },
+   "at": 129.99,
+   "label": "Ações da nº 14 (menu)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "menuitem",
+    "name": "Baixar PDF"
+   },
+   "seconds": 0.6,
+   "at": 131.56,
+   "label": "Baixar PDF",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "menuitem",
+    "name": "Histórico"
+   },
+   "seconds": 0.6,
+   "at": 136.12,
+   "label": "Histórico",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "menuitem",
+    "name": "Cancelar"
+   },
+   "seconds": 0.8,
+   "at": 139.68,
+   "label": "Cancelar",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 141.18,
+   "label": "fecha o menu"
   },
   {
    "do": "eval",
@@ -415,7 +643,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 87.41
+   "at": 142.1
   }
  ]
 }

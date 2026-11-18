@@ -8,8 +8,9 @@
 //  - O saldo inicial ATIVO (o mais recente por material, sem estorno) vira a base: só entram os movimentos depois dele.
 import crypto from 'node:crypto';
 
-const ENTRA = new Set(['1102', '2102', '1202', '1910']);
-const SAI = new Set(['5102', '6102', '6101', '5502', '6502', '5927', '5151', '5152', '6151', '6152']);
+// 1.60.6 (migration 20261117203000): devoluções 1202/2202 entram e 5202/6202 saem, dentro ou fora do estado
+const ENTRA = new Set(['1102', '2102', '1202', '2202', '1910']);
+const SAI = new Set(['5102', '6102', '6101', '5202', '6202', '5502', '6502', '5927', '5151', '5152', '6151', '6152']);
 export const efeitoCfop = (cfop) => (ENTRA.has(String(cfop)) ? 1 : SAI.has(String(cfop)) ? -1 : 0);
 const uuidMd5 = (s) => {
   const h = crypto.createHash('md5').update(s).digest('hex');
@@ -43,6 +44,25 @@ export function movimentos(store, cid, cfgId = null) {
       out.push({ ...base, movement_id: uuidMd5(`outbound:cancelled:${n.id}:${it.id}`), movement_type: 'reversal',
         occurred_at: n.cancelled_at || n.updated_at || n.issue_date, quantity_delta: -Number(it.quantity) * ef,
         reason: (n.cancellation_reason || '').trim() || 'Cancelamento da NF-e' });
+    }
+  }
+  // 1.60.6: NF-e RECEBIDA com lançamento fiscal (`inbound_nfe_fiscal_entries`) entra pela data de emissão; cancelada depois
+  // de chegar, ganha o estorno na data do cancelamento (migration 20261117203000, inbound_issued / inbound_cancelled)
+  for (const fe of store.rows('inbound_nfe_fiscal_entries')) {
+    if (fe.company_id !== cid) continue;
+    const n = store.rows('inbound_nfe').find((x) => x.id === fe.inbound_nfe_id && x.company_id === cid);
+    const m = mats.get(fe.material_id) || null;
+    if (!n || !m || (cfgId && n.fiscal_config_id !== cfgId)) continue;
+    const base = {
+      source_type: 'invoice', source_id: n.id, fiscal_config_id: n.fiscal_config_id, material_id: m.id,
+      material_name: (m.fiscal_name || '').trim() || m.name, material_code: m.code, unit: m.unit || fe.unit, invoice_id: n.id,
+      invoice_number: String(n.numero), nfe_key: n.chave || null, cfop: n.cfop_principal || null, partner_name: n.emitente_nome || null,
+      created_by_name: perfil(fe.created_by),
+    };
+    out.push({ ...base, movement_id: fe.id, movement_type: 'entry', occurred_at: n.data_emissao || fe.created_at, quantity_delta: Number(fe.quantity), reason: null });
+    if (n.situacao_sefaz === 'cancelada') {
+      out.push({ ...base, movement_id: uuidMd5(`inbound:cancelled:${n.id}:${fe.id}`), movement_type: 'reversal',
+        occurred_at: n.cancelled_at || n.updated_at || n.data_emissao, quantity_delta: -Number(fe.quantity), reason: 'Cancelamento da NF-e recebida' });
     }
   }
   for (const e of store.rows('fiscal_inventory_entries')) {

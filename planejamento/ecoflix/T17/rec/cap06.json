@@ -1,6 +1,6 @@
 {
  "name": "t17-cap06",
- "title": "T17 · Cap. 6 · A nota de serviço (narração 51,8 s ESTIMADA; marcas L1..L5 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T14:20:00-03:00)",
+ "title": "T17 · Cap. 6 · Quando o manifesto não passa (narração 56,6 s ESTIMADA; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T14:20:00-03:00)",
  "seed": "t17-cap06",
  "pace": 0.5,
  "cps": 9,
@@ -21,7 +21,8 @@
  },
  "seedExtra": [
   "t17/inicio",
-  "t17/apos-cap05"
+  "t17/apos-cap05",
+  "t17/mdfe2-rejeitado"
  ],
  "prewarm": [
   "/login"
@@ -70,24 +71,6 @@
   },
   {
    "do": "goto",
-   "url": "/fiscal-ambiental/nfse"
-  },
-  {
-   "do": "waitFor",
-   "text": "Nota Fiscal de Serviço (NFS-e)",
-   "timeout": 30
-  },
-  {
-   "do": "waitFor",
-   "idle": true,
-   "timeout": 25
-  },
-  {
-   "do": "wait",
-   "seconds": 0.3
-  },
-  {
-   "do": "goto",
    "url": "/fiscal-ambiental/transporte"
   },
   {
@@ -106,10 +89,6 @@
   },
   {
    "do": "eval",
-   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel|Algo deu errado|Falha ao|n[ãa]o encontrad|recusou|rejeitad[ao]!/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');if(f&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA ECOFLIX'))window.__avisos.push('TRILHA ECOFLIX')},300);return 1})()"
-  },
-  {
-   "do": "eval",
    "js": "(()=>{if(window.__animFix)return 'ja';window.__animFix=setInterval(()=>{for(const a of document.getAnimations())if(a.currentTime!==null&&a.currentTime<0)a.startTime=document.timeline.currentTime},100);return 'anim fix'})()"
   }
  ],
@@ -120,119 +99,151 @@
    "at": 0
   },
   {
-   "do": "click",
+   "do": "hover",
    "target": {
-    "role": "link",
-    "name": "Notas de Serviço (NFS-e)",
-    "exact": true,
-    "within": "aside, [data-sidebar=sidebar]"
+    "selector": "main tbody tr:has-text('GHT7B19') td:has-text('Rejeitado')"
    },
-   "at": 2.54,
-   "label": "Notas de Serviço (NFS-e) no menu"
+   "seconds": 1.0,
+   "at": 7.32,
+   "label": "nº 2 Rejeitado",
+   "optional": true,
+   "timeout": 4
   },
   {
-   "do": "waitFor",
-   "text": "Nota Fiscal de Serviço (NFS-e)",
-   "timeout": 15
+   "do": "hover",
+   "target": {
+    "text": "MDF-e Rejeitados",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 1.0,
+   "at": 10.43,
+   "label": "MDF-e Rejeitados: 1",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "mark",
    "name": "L2",
-   "at": 4.95
+   "at": 12.09
   },
   {
-   "do": "scroll",
-   "point": {
-    "x": 900,
-    "y": 470
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('GHT7B19') button[aria-haspopup=menu]"
    },
-   "by": 0,
-   "duration": 0.3,
-   "after": 0,
-   "at": 4.95,
-   "label": "cursor em repouso (ilustração mercadoria × serviço)"
+   "seconds": 0.4,
+   "at": 12.09,
+   "label": "Ações do nº 2",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Ver Erro"
+   },
+   "at": 13.2,
+   "label": "Ver Erro",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "text": "Erro no MDF-e #2",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "CPF do condutor",
+    "within": "[role=alertdialog]"
+   },
+   "seconds": 1.5,
+   "at": 16.77,
+   "label": "Erro no MDF-e #2: CPF do condutor",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 16.54
+   "at": 19.8
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Fechar",
+    "exact": true
+   },
+   "at": 19.8,
+   "label": "Fechar"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('GHT7B19') button[aria-haspopup=menu]"
+   },
+   "seconds": 0.3,
+   "at": 20.59,
+   "label": "Ações do nº 2 (de novo)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "menuitem",
+    "name": "Reemitir"
+   },
+   "seconds": 0.4,
+   "at": 21.63,
+   "label": "Reemitir",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "menuitem",
+    "name": "Excluir"
+   },
+   "seconds": 0.5,
+   "at": 22.46,
+   "label": "Excluir",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 29.34
-  },
-  {
-   "do": "type",
-   "target": {
-    "selector": "main thead"
-   },
-   "text": "",
-   "noClick": true,
-   "optional": true,
-   "timeout": 4,
-   "at": 29.46,
-   "label": "colunas da lista (zoom)"
+   "at": 23.8
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main th:has-text('Número')"
+    "role": "menuitem",
+    "name": "Reemitir"
    },
-   "seconds": 0.2,
-   "at": 32.66,
-   "label": "coluna Número",
+   "seconds": 1.0,
+   "at": 26.81,
+   "label": "Reemitir (falha de momento)",
+   "noScroll": true,
    "optional": true,
    "timeout": 4
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main th:has-text('Tomador')"
-   },
-   "seconds": 0.3,
-   "at": 36.15,
-   "label": "coluna Tomador",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main th:has-text('Valor')"
-   },
-   "seconds": 0.2,
-   "at": 37.13,
-   "label": "coluna Valor",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main th:has-text('Status')"
-   },
-   "seconds": 0.4,
-   "at": 37.89,
-   "label": "coluna Status",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "mark",
-   "name": "L5",
-   "at": 39.25
-  },
-  {
-   "do": "hover",
-   "target": {
-    "role": "button",
-    "name": "Configurações Fiscais",
-    "exact": true
+    "role": "menuitem",
+    "name": "Excluir"
    },
    "seconds": 1.2,
-   "at": 45.76,
-   "label": "Configurações Fiscais",
+   "at": 31.52,
+   "label": "Excluir (erro num dado do manifesto)",
    "noScroll": true,
    "optional": true,
    "timeout": 4
@@ -246,18 +257,71 @@
    "by": 0,
    "duration": 0.3,
    "after": 0,
-   "at": 50.1,
-   "label": "cursor sai do botão"
+   "at": 35.11,
+   "label": "cursor sai do menu"
   },
   {
-   "do": "eval",
-   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
-   "label": "avisos de erro na tela"
+   "do": "mark",
+   "name": "L5",
+   "at": 36.44
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 900,
+    "y": 470
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "at": 36.54,
+   "label": "cursor em repouso (ilustração dos selos de recusa)"
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 46.06
+  },
+  {
+   "do": "hover",
+   "target": {
+    "placeholder": "Buscar por nº, placa ou motorista..."
+   },
+   "seconds": 0.8,
+   "at": 48.62,
+   "label": "Buscar por nº, placa ou motorista...",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main tbody tr:has-text('FKD2E41') td:has-text('Edson')"
+   },
+   "at": 51.71,
+   "label": "abre a linha do nº 1"
+  },
+  {
+   "do": "waitFor",
+   "text": "Detalhes do MDF-e #1",
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Detalhes do MDF-e #1",
+    "within": "main"
+   },
+   "seconds": 1.0,
+   "at": 54.28,
+   "label": "Detalhes do MDF-e #1",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "mark",
    "name": "FIM",
-   "at": 51.81
+   "at": 56.57
   }
  ]
 }

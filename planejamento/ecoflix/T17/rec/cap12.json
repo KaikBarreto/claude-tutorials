@@ -1,13 +1,13 @@
 {
  "name": "t17-cap12",
- "title": "T17 · Cap. 12 · O que o contador faz (narração 44,3 s ESTIMADA; marcas L1..L4 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T14:20:00-03:00)",
+ "title": "T17 · Cap. 12 · O estoque pelas notas (narração 41,4 s ESTIMADA; marcas L1..L5 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T14:40:00-03:00)",
  "seed": "t17-cap12",
  "pace": 0.5,
  "cps": 9,
  "tail": 1.5,
  "start": {
   "x": 900,
-  "y": 470
+  "y": 440
  },
  "anonymous": true,
  "storage": {
@@ -21,7 +21,7 @@
  },
  "seedExtra": [
   "t17/inicio",
-  "t17/apos-cap08"
+  "t17/apos-cap10"
  ],
  "prewarm": [
   "/login"
@@ -70,11 +70,29 @@
   },
   {
    "do": "goto",
-   "url": "/fiscal-ambiental/nfe/saida"
+   "url": "/fiscal-ambiental/estoque-fiscal/posicao"
   },
   {
    "do": "waitFor",
-   "text": "Notas Recebidas",
+   "text": "Saldo fiscal atualizado, por material.",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 25
+  },
+  {
+   "do": "wait",
+   "seconds": 0.3
+  },
+  {
+   "do": "goto",
+   "url": "/fiscal-ambiental/relatorios/nfe"
+  },
+  {
+   "do": "waitFor",
+   "text": "Pendentes + Rejeitadas",
    "timeout": 30
   },
   {
@@ -102,31 +120,158 @@
    "at": 0
   },
   {
-   "do": "scroll",
-   "point": {
-    "x": 900,
-    "y": 470
+   "do": "click",
+   "target": {
+    "role": "link",
+    "name": "Estoque Fiscal",
+    "exact": true,
+    "within": "aside, [data-sidebar=sidebar]"
    },
-   "by": 0,
-   "duration": 0.3,
-   "after": 0,
-   "at": 0.5,
-   "label": "cursor em repouso (ilustração do pacote)"
+   "at": 0.33,
+   "label": "Estoque Fiscal no menu"
+  },
+  {
+   "do": "waitFor",
+   "text": "Saldo fiscal atualizado, por material.",
+   "timeout": 15
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Saldo atual",
+    "exact": true,
+    "within": "nav[aria-label='Navegação da seção']"
+   },
+   "seconds": 0.5,
+   "at": 5.49,
+   "label": "aba Saldo atual",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main thead th:has-text('Saldo fiscal')"
+   },
+   "seconds": 0.8,
+   "at": 8.38,
+   "label": "tabela: Código, Material, Saldo fiscal",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "mark",
    "name": "L2",
-   "at": 13.0
+   "at": 10.19
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "main tbody tr:has-text('Alumínio perfil')"
+   },
+   "text": "",
+   "noClick": true,
+   "optional": true,
+   "timeout": 4,
+   "at": 11.15,
+   "label": "linhas do alumínio (zoom)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('Alumínio bloco') td >> nth=2"
+   },
+   "seconds": 0.6,
+   "at": 13.13,
+   "label": "Alumínio bloco: já sem os 2.600 kg de hoje",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('Alumínio perfil') td >> nth=2"
+   },
+   "seconds": 1.0,
+   "at": 16.4,
+   "label": "Alumínio perfil: já sem os 3.200 kg de hoje",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 21.48
+   "at": 18.51
+  },
+  {
+   "do": "click",
+   "target": {
+    "placeholder": "Buscar material ou código"
+   },
+   "at": 20.29,
+   "label": "busca: cobre (campo)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Buscar material ou código"
+   },
+   "text": "cobre",
+   "cps": 40,
+   "at": 21.6,
+   "label": "busca: cobre",
+   "noClick": true
+  },
+  {
+   "do": "press",
+   "key": "Control+a",
+   "at": 23.39,
+   "label": "limpa a busca (seleciona)"
+  },
+  {
+   "do": "press",
+   "key": "Backspace",
+   "label": "limpa a busca"
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 30.18
+   "at": 23.65
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main thead th:has-text('Saldo fiscal')"
+   },
+   "seconds": 1.2,
+   "at": 25.3,
+   "label": "coluna Saldo fiscal (negativo aparece em vermelho)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 31.28
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "apurados pelas notas disponíveis",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 2.0,
+   "at": 31.64,
+   "label": "faixa amarela: saldos sem saldo inicial informado",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"apurados pelas notas disponíveis\", \"Bateria automotiva\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere faixa amarela e a bateria sem saldo inicial"
   },
   {
    "do": "eval",
@@ -136,7 +281,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 44.34
+   "at": 41.42
   }
  ]
 }

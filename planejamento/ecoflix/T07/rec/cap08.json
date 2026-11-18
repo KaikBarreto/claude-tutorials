@@ -678,6 +678,11 @@
    "label": "confere Total da Compra R$ 913,20"
   },
   {
+   "do": "eval",
+   "js": "(()=>{const tr=[...document.querySelectorAll('main tbody tr')].find(r=>r.innerText.includes('Ferro misto'));const b=tr&&tr.querySelector(\"button[aria-label='Ver detalhes da pesagem']\");if(!b)return 'SEM ALVO';if(/1ª pesagem/i.test(document.querySelector('main').innerText)){b.click();return 'detalhe fechado'}return 'ja fechado'})()",
+   "label": "fecha o detalhe que abriu sozinho"
+  },
+  {
    "do": "mark",
    "name": "L5",
    "at": 51.08
@@ -685,8 +690,7 @@
   {
    "do": "click",
    "target": {
-    "selector": "main tbody tr:has-text('Ferro misto') td:nth-child(2)",
-    "nth": 0
+    "selector": "main tbody tr:has-text('Ferro misto') button[aria-label='Ver detalhes da pesagem']"
    },
    "at": 51.28,
    "label": "linha do ferro (abre o detalhe)"

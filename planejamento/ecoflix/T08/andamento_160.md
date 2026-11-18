@@ -25,3 +25,20 @@ bash rec/t08/t08_lote160.sh 08:--os-dois             # rápido + completa de um 
 FAKE_PORT=54308 bash rec/run.sh down                 # derrubar a instância no fim
 ```
 Um capítulo da cadeia só roda depois do anterior ter gravado a semente (07 → 08 → 09 e 10 → 11 → 12 e 13).
+
+## Estado em 18/11 19:55 (três lotes usados; instância 54308 derrubada)
+| Cap. | Rápido (MP4 + folha olhada) | Completa |
+|---|---|---|
+| 00 a 06 | aprovado (0 falho, sem aviso de erro na tela) | não pedida (06: o respiro de ~3 s da L2/L3 continua valendo) |
+| 07 | aprovado; semente `apos-cap07` gravada | **falta**: duas completas saíram com atraso (0,81 s no "Fechar"; depois 1,80 s na marca L6). O `gerar.py` já foi ajustado (Salvar na L6, "Fechar" na palavra "valor"); não foi rodado de novo |
+| 08 | aprovado; semente `apos-cap08` gravada | aprovada (maxLate 0,72 s) |
+| 09 | aprovado (liga, mostra e desliga as assinaturas; PDF novo em `rec/t08/arquivos/cap09-comprovante-termico.pdf`) | não rodada |
+| 10 | **não fechou**: 4 `hover` do painel "Filtros" não acharam o alvo (opção "Cancelado" e os botões "Tipo", "Status", "Usuário" na 2ª abertura); o resto passou (finalizar, "Ver pedido", Exportar, #59). Seletores trocados no `gerar.py` (`FILTRO(...)`, `[role=dialog]`), sem novo ensaio |
+| 11, 12, 13 | **não rodaram** (dependem das sementes `apos-cap10` e `apos-cap11`). Os fluxos do 11 e do 12 foram feitos passo a passo nas explorações `_ex/e7` e `_ex/e8` (telas e números conferidos), mas o roteiro do robô deles nunca rodou |
+
+Para fechar (um lote só, nesta ordem):
+```bash
+cd /home/claude/ecoflix && bash rec/t08/t08_lote160.sh 10:--os-dois 11:--os-dois 12 13 07: 09:
+grep -n '!!ERRO\|DIFERENTE:\|SEM ALVO' rec/t08/_ens/cap1[0-3].resumo rec/t08/cap*.resumo; tail -8 rec/t08/lote160.txt
+FAKE_PORT=54308 bash rec/run.sh down
+```

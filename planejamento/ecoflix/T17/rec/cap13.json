@@ -1,13 +1,13 @@
 {
  "name": "t17-cap13",
- "title": "T17 · Cap. 13 · Recapitulando (narração 42,0 s ESTIMADA; marcas L1..L4 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T14:20:00-03:00)",
+ "title": "T17 · Cap. 13 · O saldo inicial (narração 67,1 s ESTIMADA; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T14:40:00-03:00)",
  "seed": "t17-cap13",
  "pace": 0.5,
  "cps": 9,
  "tail": 1.5,
  "start": {
   "x": 900,
-  "y": 470
+  "y": 440
  },
  "anonymous": true,
  "storage": {
@@ -21,7 +21,7 @@
  },
  "seedExtra": [
   "t17/inicio",
-  "t17/apos-cap08"
+  "t17/apos-cap10"
  ],
  "prewarm": [
   "/login"
@@ -70,11 +70,11 @@
   },
   {
    "do": "goto",
-   "url": "/fiscal-ambiental/transporte"
+   "url": "/fiscal-ambiental/estoque-fiscal/posicao"
   },
   {
    "do": "waitFor",
-   "text": "Manifesto Eletrônico de Documentos Fiscais (MDF-e)",
+   "text": "Saldo fiscal atualizado, por material.",
    "timeout": 30
   },
   {
@@ -102,6 +102,183 @@
    "at": 0
   },
   {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('Bateria automotiva') td >> nth=1"
+   },
+   "seconds": 0.8,
+   "at": 9.97,
+   "label": "Bateria automotiva (sem saldo inicial)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('Bateria automotiva') button[aria-label='Ações de Bateria automotiva']"
+   },
+   "seconds": 0.3,
+   "at": 10.79,
+   "label": "menu ⋯ da bateria",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Informar saldo inicial"
+   },
+   "at": 11.95,
+   "label": "Informar saldo inicial",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "text": "O saldo fica só no estoque fiscal",
+   "timeout": 10
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 14.52
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] label[for='opening-date']"
+   },
+   "at": 14.78,
+   "label": "Data-base (campo)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#opening-date"
+   },
+   "text": "31102026",
+   "cps": 40,
+   "at": 19.4,
+   "label": "Data-base: 31/10/2026",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#opening-quantity"
+   },
+   "at": 20.93,
+   "label": "Quantidade: 3320 (campo)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#opening-quantity"
+   },
+   "text": "3320",
+   "cps": 40,
+   "at": 22.49,
+   "label": "Quantidade: 3320",
+   "noClick": true
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 25.5
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "O saldo fica só no estoque fiscal",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.5,
+   "at": 27.07,
+   "label": "O saldo fica só no estoque fiscal",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 34.88
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Planilha",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 38.17,
+   "label": "aba Planilha"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Baixar modelo",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.8,
+   "at": 40.17,
+   "label": "Baixar modelo",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Escolher planilha",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.8,
+   "at": 43.28,
+   "label": "Escolher planilha",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Manual",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 47.38,
+   "label": "volta para Manual"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Bateria automotiva\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")];const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere material da linha já escolhido"
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 48.44
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Confirmar saldo inicial",
+    "exact": true
+   },
+   "at": 48.44,
+   "label": "Confirmar saldo inicial"
+  },
+  {
+   "do": "waitFor",
+   "text": "Saldo inicial registrado",
+   "timeout": 10
+  },
+  {
    "do": "scroll",
    "point": {
     "x": 900,
@@ -110,23 +287,29 @@
    "by": 0,
    "duration": 0.3,
    "after": 0,
-   "at": 0.5,
-   "label": "cursor em repouso (montagem)"
+   "at": 50.39,
+   "label": "a faixa amarela some"
   },
   {
    "do": "mark",
-   "name": "L2",
-   "at": 15.81
+   "name": "L6",
+   "at": 57.67
   },
   {
-   "do": "mark",
-   "name": "L3",
-   "at": 23.68
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('Bateria automotiva') td >> nth=2"
+   },
+   "seconds": 2.0,
+   "at": 58.64,
+   "label": "Bateria automotiva: 3.960 kg",
+   "optional": true,
+   "timeout": 4
   },
   {
-   "do": "mark",
-   "name": "L4",
-   "at": 33.67
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"3.960\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere bateria com 3.960 kg"
   },
   {
    "do": "eval",
@@ -136,7 +319,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 41.99
+   "at": 67.05
   }
  ]
 }
