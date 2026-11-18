@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><title>5 · Low-poly 3D facetado</title>
+<!-- Low-poly: poucos polígonos à mostra, cada face com um tom (sombreamento chapado), chanfros largos, terreno triangulado e sombra nítida. -->
+<style>
+#fd{background:linear-gradient(180deg,#F4F8F6 0,#E3F1EA 55%,#D5E9DF 100%)}
+.visor{border-radius:6px;clip-path:polygon(14px 0,100% 0,100% calc(100% - 14px),calc(100% - 14px) 100%,0 100%,0 14px);background:#1B1E22}
+.chip{border-radius:5px;clip-path:polygon(9px 0,100% 0,100% calc(100% - 9px),calc(100% - 9px) 100%,0 100%,0 9px);background:#3DBB78}
+</style></head><body>
+<script type="module">
+import { palco, prende, pronto, sorteio } from './comum.js';
+import { THREE, cena3d, palco3d, PI } from './mundo3d.js';
+const p = palco(), P = palco3d({ mapa: 4096, sombraRaio: 1.5, sol: 2.6, hemi: 1.1, chaoLuz: 0x9DB8AA, luz: [-5, 8, 4.5], cam: { oy: -52 } });
+const rnd = sorteio(5), ri = (a, b) => a + (b - a) * rnd();
+const mat = c => new THREE.MeshStandardMaterial({ color: c, roughness: .8, metalness: 0, flatShading: true });
+const C = cena3d({ r: .1, seg: 1, nr: 9, np: 6, carga: 'bloco', nLata: 80, nFerro: 15, frisos: false, monte: .5, mat });
+P.cena.add(C.raiz);
+// terreno triangulado: malha irregular com altura sorteada longe da balança, uma cor por face
+const tg = new THREE.PlaneGeometry(46, 34, 26, 20); tg.rotateX(-PI / 2); const tp = tg.attributes.position;
+for (let i = 0; i < tp.count; i++) { const x = tp.getX(i), z = tp.getZ(i), longe = Math.max(0, Math.min(1, (Math.hypot(x * .8, z * 1.5) - 5.2) / 5));
+  tp.setXYZ(i, x + ri(-.5, .5), ri(-.04, .5) * longe - .03, z + ri(-.5, .5)); }
+const tn = tg.toNonIndexed(), cor = new Float32Array(tn.attributes.position.count * 3), a = new THREE.Color('#DCEBE3'), b = new THREE.Color('#BCDCCB'), k = new THREE.Color();
+for (let i = 0; i < cor.length; i += 9) { k.copy(a).lerp(b, rnd()); for (let j = 0; j < 9; j += 3) cor.set([k.r, k.g, k.b], i + j); }
+tn.setAttribute('color', new THREE.BufferAttribute(cor, 3)); tn.computeVertexNormals();
+const ter = new THREE.Mesh(tn, new THREE.MeshStandardMaterial({ vertexColors: true, roughness: .95, flatShading: true })); ter.receiveShadow = true; P.cena.add(ter);
+// montes de sucata e pedras facetadas ao fundo
+const poe = (g, c, pos, s = [1, 1, 1], r = 0) => { const m = new THREE.Mesh(g, mat(c)); m.position.set(...pos); m.scale.set(...s); m.rotation.y = r; m.castShadow = m.receiveShadow = true; P.cena.add(m); };
+for (const [x, z, s, c] of [[-4.6, -4.6, 1.5, '#8FA0AE'], [-2.6, -5.4, 1.05, '#A8603A'], [-6.2, -3.4, .9, '#B9C4CE'], [7.6, -5.6, 1.3, '#8FA0AE'], [-5.4, 3.6, .55, '#B9C4CE'], [6.4, 3.4, .5, '#9FB0A6']])
+  poe(new THREE.DodecahedronGeometry(1, 0), c, [x, s * .35, z], [s * 1.2, s * .8, s], ri(0, 3));
+for (const [x, z, h] of [[-7.4, -5.6, 2.6], [-8.3, -4.2, 2.0], [9.2, -3.6, 2.3]]) { poe(new THREE.CylinderGeometry(.12, .16, .6, 5), '#8A6A4F', [x, .3, z]); poe(new THREE.ConeGeometry(.85, h, 6), '#4FB980', [x, .6 + h / 2, z], [1, 1, 1], ri(0, 1)); }
+P.desenha();
+prende(p.visor, ...P.tela(C.topoPoste), .74, 1); prende(p.chip, ...P.tela(C.topoCarga));
+pronto();
+</script></body></html>

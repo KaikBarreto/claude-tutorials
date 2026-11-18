@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><title>6 · 3D toon (cel shading com contorno)</title>
+<!-- Toon: 3D com luz em 3 degraus (sem degradê), contorno escuro em casca invertida, sombra dura e retícula no fundo. -->
+<style>
+#fd{background:linear-gradient(180deg,#EEF7F2 0,#EEF7F2 53%,#CFEBDD 53%,#CFEBDD 100%)}
+#fd:after{content:"";position:absolute;inset:0;background-image:radial-gradient(#BFE6D1 3.2px,transparent 3.6px);background-size:16px 16px;
+  -webkit-mask-image:linear-gradient(200deg,#000 0,transparent 42%)}
+.h{font-weight:800}
+.visor{border:3px solid #161618;border-radius:14px;box-shadow:6px 6px 0 #161618;background:#22262B}
+.chip{border:3px solid #161618;box-shadow:4px 4px 0 #161618;height:44px;background:#50D088;color:#161618}
+</style></head><body>
+<script type="module">
+import { palco, prende, pronto } from './comum.js';
+import { THREE, cena3d, palco3d, casca } from './mundo3d.js';
+const p = palco(), P = palco3d({ sombraDura: true, mapa: 4096, sol: 2.6, hemi: 1.5, cam: { oy: -52 } });
+const deg = new THREE.DataTexture(new Uint8Array([105, 105, 105, 255, 190, 190, 190, 255, 255, 255, 255, 255]), 3, 1); deg.minFilter = deg.magFilter = THREE.NearestFilter; deg.needsUpdate = true;
+const SAT = { '#50D088': '#3FD887', '#98A2AD': '#9FB0C4', '#7E8995': '#7C8DA3', '#8E98A3': '#93A4B8', '#B9C1CA': '#C6D3E0', '#C5CCD4': '#B4C2D2', '#2F353C': '#343B47', '#CFE0EA': '#BFE9FA' };
+const C = cena3d({ r: .06, seg: 3, nr: 28, moldura: true, nLata: 120, nFerro: 12, mat: (c, t) => t === 'traco' ? new THREE.MeshBasicMaterial({ color: c }) :
+  t === 'luz' || t === 'vidro' ? new THREE.MeshBasicMaterial({ color: SAT[c] || c }) : new THREE.MeshToonMaterial({ color: SAT[c] || c, gradientMap: deg }) });
+casca(C.raiz, .032); P.cena.add(C.raiz);
+// chão: faixa chapada no fundo (CSS) e sombra dura
+const ch = new THREE.Mesh(new THREE.PlaneGeometry(40, 40), new THREE.ShadowMaterial({ color: 0x1F4A36, opacity: .42 })); ch.rotation.x = -Math.PI / 2; ch.receiveShadow = true; P.cena.add(ch);
+P.desenha();
+prende(p.visor, ...P.tela(C.topoPoste), .74, 1); prende(p.chip, ...P.tela(C.topoCarga));
+pronto();
+</script></body></html>

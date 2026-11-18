@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><title>8 · Blueprint / desenho técnico</title>
+<!-- Blueprint: papel azul quadriculado, traço claro fino, cotas, linhas de centro, hachura e carimbo; o verde só no peso. -->
+<style>
+#fd{background:#12365F;background-image:linear-gradient(rgba(255,255,255,.10) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.10) 1px,transparent 1px),
+  linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);
+  background-size:104px 104px,104px 104px,20.8px 20.8px,20.8px 20.8px;background-position:-1px -1px}
+#fd:after{content:"";position:absolute;inset:0;background:radial-gradient(520px 620px at 50% 55%,rgba(60,130,200,.28),transparent 70%)}
+.kick{color:#8FC2F2}.h{color:#EAF3FC;font-weight:700;letter-spacing:.01em}
+.visor{background:#12365F;border:1.6px solid #EAF3FC;border-radius:4px;outline:1.2px solid rgba(234,243,252,.55);outline-offset:4px;width:220px}
+.vl{color:#BBD9F5}.vn{color:#6BE3A0}
+.chip{background:#12365F;border:1.6px solid #6BE3A0;color:#6BE3A0;border-radius:4px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:15px;height:36px}
+text{font-family:M,sans-serif}
+</style></head><body>
+<script type="module">
+import { palco, prende, pronto } from './comum.js';
+import { partes, svg, G, CH, X0, BX, BY, VISOR, SELO, POSTE } from './lado.js';
+const C = '#EAF3FC', BG = '#12365F', T = `stroke="${C}" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"`;
+const SEM = { cabFaixa: 1, deckTopo: 1, lataFaixa: 1 };
+const est = p => SEM[p.g] ? null : p.g === 'porta' ? `fill="none" ${T}` : p.g === 'deck' || p.g === 'rampa' ? `fill="url(#hc)" ${T}` : p.g === 'lata' ? `fill="${BG}" stroke="${C}" stroke-width="1.1"` :
+  p.g === 'janela' ? `fill="url(#hj)" ${T}` : `fill="${BG}" ${T}`;
+const defs = `<pattern id="hc" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="7" height="7" fill="${BG}"/><path d="M0 0V7" stroke="${C}" stroke-width="1" opacity=".55"/></pattern>
+  <pattern id="hj" width="9" height="9" patternUnits="userSpaceOnUse" patternTransform="rotate(-55)"><rect width="9" height="9" fill="${BG}"/><path d="M0 0V9" stroke="${C}" stroke-width=".9" opacity=".4"/></pattern>
+  <marker id="st" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M0 1.6L9 5L0 8.4Z" fill="${C}"/></marker>`;
+const fino = (d, x = '') => `<path d="${d}" fill="none" stroke="${C}" stroke-width="1" ${x}/>`;
+const cota = (x1, y1, x2, y2) => fino(`M${x1} ${y1}L${x2} ${y2}`, 'marker-start="url(#st)" marker-end="url(#st)"');
+const tx = (x, y, s, o = {}) => `<text x="${x}" y="${y}" fill="${o.c || C}" font-size="${o.fs || 12}" font-weight="${o.w || 600}" letter-spacing="${o.ls ?? '.12em'}" text-anchor="${o.a || 'middle'}" ${o.x || ''}>${s}</text>`;
+const centro = (x, y) => fino(`M${x - 46} ${y}H${x + 46}M${x} ${y - 46}V${y + 46}`, 'stroke-dasharray="12 4 2 4" opacity=".8"');
+const antes = `<rect x="16" y="16" width="696" height="848" fill="none" stroke="${C}" stroke-width="1.6"/><rect x="22" y="22" width="684" height="836" fill="none" stroke="${C}" stroke-width=".8" opacity=".7"/>
+  ${fino(`M30 ${CH}H698`, 'stroke-width="1.5"')}`;
+const depois = [X0 + 75, X0 + 150, X0 + 424].map(x => centro(x, G - 34)).join('')
+  // cotas: comprimento da balança, entre-eixos, altura
+  + fino(`M44 ${CH + 8}V${CH + 62}M684 ${CH + 8}V${CH + 62}`) + cota(44, CH + 50, 684, CH + 50) + `<rect x="318" y="${CH + 40}" width="92" height="20" fill="${BG}"/>` + tx(364, CH + 55, '18,00 m', { fs: 13 })
+  + fino(`M${X0 + 150} ${CH + 6}V${CH + 30}M${X0 + 424} ${CH + 6}V${CH + 30}`) + cota(X0 + 150, CH + 22, X0 + 424, CH + 22) + `<rect x="${X0 + 250}" y="${CH + 13}" width="74" height="18" fill="${BG}"/>` + tx(X0 + 287, CH + 27, '4,20 m', { fs: 12 })
+  + fino(`M${X0 - 8} ${BY - 128}H${X0 - 62}M${X0 - 8} ${G}H${X0 - 62}`) + cota(X0 - 52, BY - 128, X0 - 52, G) + tx(X0 - 60, G - 100, '2,70 m', { fs: 12, x: `transform="rotate(-90 ${X0 - 60} ${G - 100})"` })
+  // chamadas
+  + fino(`M${X0 + 250} ${G - 200}L${X0 + 300} ${G - 262}H${X0 + 330}`) + `<circle cx="${X0 + 250}" cy="${G - 200}" r="3" fill="${C}"/>` + tx(X0 + 336, G - 258, 'CARGA · SUCATA MISTA', { a: 'start', fs: 11.5 })
+  + fino(`M${BX + 100} ${CH - 9}L${BX + 74} ${CH + 82}H${BX - 30}`) + `<circle cx="${BX + 100}" cy="${CH - 9}" r="3" fill="${C}"/>` + tx(BX - 36, CH + 86, 'CÉLULA DE CARGA', { a: 'end', fs: 11.5 })
+  // carimbo
+  + `<g transform="translate(440 ${CH + 88})"><rect width="252" height="58" fill="${BG}" stroke="${C}" stroke-width="1.4"/>${fino('M0 29H252M172 29V58M100 29V58')}
+    ${tx(10, 19, 'BALANÇA RODOVIÁRIA · PLANTA 02', { a: 'start', fs: 10.5, w: 700 })}${tx(10, 48, 'FOLHA 01/26', { a: 'start', fs: 10 })}${tx(108, 48, 'ESC 1:50', { a: 'start', fs: 10 })}${tx(180, 48, 'kg · m', { a: 'start', fs: 10 })}</g>`
+  + tx(40, CH + 136, 'VISTA LATERAL', { a: 'start', fs: 11, w: 700 }) + fino(`M40 ${CH + 143}H148`);
+const p = palco({ meio: svg(partes({ carga: { n: 80, esc: 1.12 } }), est, { defs, antes, depois }) });
+prende(p.visor, VISOR.x - 8, VISOR.y - 5, 1, 1); prende(p.chip, SELO.x - 60, SELO.y - 6);
+pronto();
+</script></body></html>

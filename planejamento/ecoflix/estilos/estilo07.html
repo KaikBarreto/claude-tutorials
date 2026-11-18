@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><title>7 · Papel recortado em camadas</title>
+<!-- Papel: cada forma é uma folha fosca com sombra projetada na de baixo; fundo em camadas de morro; grão de papel por cima. -->
+<style>
+#fd{background:#F1ECE1}
+.h{color:#2B2A27}
+.kick{color:#3B7A57}
+.visor{background:#2B2A27;border-radius:12px;box-shadow:0 2px 2px rgba(60,45,20,.25),0 12px 16px rgba(60,45,20,.30)}
+.vn{color:#6BD79B}
+.chip{background:#3FA871;border-radius:10px;box-shadow:0 2px 2px rgba(60,45,20,.25),0 8px 12px rgba(60,45,20,.28)}
+#gr{position:absolute;inset:0;mix-blend-mode:multiply;opacity:.55;pointer-events:none}
+</style></head><body>
+<script type="module">
+import { palco, prende, pronto, LG, AL } from './comum.js';
+import { partes, svg, G, CH, X0, VISOR, SELO } from './lado.js';
+const LATA = ['#C4614A', '#6C93C9', '#5E9E6A', '#E3B14A', '#EFE9DC', '#D18257', '#5CC08A', '#44669E', '#A9505A'];
+const COR = { poste: '#8C8F8B', posteBase: '#6F726F', rampa: '#B9B6AC', deck: '#9A9A93', deckTopo: '#C9C6BB', celula: '#6F726F', chassi: '#3A3936', subcab: '#3A3936', tanque: '#B7B4AA',
+  parachoque: '#2B2A27', estrado: '#4A4945', bauFrente: '#7B7F80', viga: '#A9643F', tubo: '#8A8E8E', tuboFuro: '#55585A', chapa: '#6C7173', lata: '#E6E1D6',
+  bau: '#989C9C', bauBorda: '#777B7C', bauFriso: '#858989', cab: '#57C48A', cabFaixa: '#45AD76', janela: '#DCEBEA', macaneta: '#2F7A54', farol: '#F6E3A4',
+  espelho: '#2B2A27', pneu: '#2B2A27', aro: '#E6E1D6', cubo: '#8A8E8E' };
+const S1 = 'filter="url(#s1)"', S2 = 'filter="url(#s2)"', S3 = 'filter="url(#s3)"';
+const NIV = { cab: S3, bau: S3, pneu: S3, deck: S2, rampa: S2, chassi: S2, bauBorda: S2, aro: S1, janela: S1, tanque: S2, parachoque: S2, bauFrente: S2, subcab: S1, estrado: S1,
+  viga: S1, tubo: S1, chapa: S1, lata: S1, bauFriso: S1, farol: S1, espelho: S2, cubo: S1, poste: S2, posteBase: S1, macaneta: S1, cabFaixa: '', deckTopo: '', lataFaixa: '', tuboFuro: '', celula: '' };
+const est = p => p.g === 'porta' ? 'fill="none" stroke="#3E9F6C" stroke-width="2.5" stroke-linecap="round"' : `fill="${p.g === 'lataFaixa' ? LATA[p.ci] : COR[p.g]}" ${NIV[p.g] ?? ''}`;
+const ds = (id, dy, b, o) => `<filter id="${id}" x="-30%" y="-30%" width="160%" height="180%"><feDropShadow dx="0" dy="${dy}" stdDeviation="${b}" flood-color="#3C2D14" flood-opacity="${o}"/></filter>`;
+const defs = ds('s1', 1.5, 1.2, .38) + ds('s2', 3, 2.4, .36) + ds('s3', 6, 4.5, .34) + ds('s4', 9, 8, .30);
+const onda = (y, a, f, k) => { let d = `M-20 ${y}`; for (let x = -20; x <= 748; x += 16) d += `L${x} ${(y + a * Math.sin(x * f + k) + a * .4 * Math.sin(x * f * 2.3 + k * 2)).toFixed(1)}`; return d + 'L748 900L-20 900Z'; };
+const antes = `<circle cx="150" cy="300" r="64" fill="#F6D98C" filter="url(#s3)"/>
+  <path d="${onda(G - 250, 26, .011, 1.2)}" fill="#DDE9D6" filter="url(#s4)"/>
+  <path d="${onda(G - 150, 22, .014, 3.4)}" fill="#C4DDC6" filter="url(#s4)"/>
+  <path d="${onda(G - 60, 14, .017, .4)}" fill="#A6CDB2" filter="url(#s4)"/>
+  <rect x="-20" y="${CH}" width="768" height="${900 - CH}" fill="#E2D8C3" filter="url(#s4)"/>
+  <rect x="-20" y="${CH + 86}" width="768" height="200" fill="#D2C6AD" filter="url(#s3)"/>
+  ${[40, 196, 352, 508, 664].map(x => `<rect x="${x}" y="${CH + 40}" width="84" height="11" rx="2" fill="#E9B44C" filter="url(#s1)"/>`).join('')}
+  <g fill="#FBF8F1" filter="url(#s3)"><rect x="470" y="212" width="120" height="30" rx="15"/><rect x="498" y="192" width="64" height="30" rx="15"/></g>
+  <g fill="#FBF8F1" filter="url(#s2)"><rect x="260" y="250" width="88" height="24" rx="12"/></g>`;
+const p = palco({ meio: svg(partes({ carga: { n: 86, esc: 1.15 } }), est, { defs, antes }) + `<svg id="gr" width="${LG}" height="${AL}"><filter id="g"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="3" seed="4"/><feColorMatrix values="0 0 0 0 .5  0 0 0 0 .45  0 0 0 0 .38  0 0 0 .34 0"/></filter><rect width="100%" height="100%" filter="url(#g)"/></svg>` });
+prende(p.visor, VISOR.x, VISOR.y, 1, 1); prende(p.chip, SELO.x, SELO.y);
+pronto();
+</script></body></html>

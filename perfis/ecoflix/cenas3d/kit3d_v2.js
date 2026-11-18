@@ -1,0 +1,882 @@
+// EcoFlix · kit 3D de argila, VERSÃO 2 (refino de motion e de acabamento, 18/11). Mesma API do kit3d.js: a cena troca só
+// o caminho do import (ou põe um importmap) e ganha sozinha as curvas, a câmera com inércia, a luz, o chão e os rótulos
+// novos. O que é novo e pede mudança na cena (dirige, suspende, poeira, pesa, foco) está no MOTION_V2.md.
+// three.js r170 local: ./three.module.min.js, licença MIT em three.LICENSE. Ver LEIA.md e MOTION_V2.md.
+// Uma cena 3D é uma página com <script type="module"> que importa este arquivo e chama cena(monta): o render_cenas.cjs
+// (com --allow-file-access-from-files, que o import de módulo em file:// pede) chama window.setup(dados) e window.R(t),
+// a mesma API da cena 2D. A página não usa rede. O kit monta o palco (#st, a tela WebGL #gl e a camada de rótulos #ov).
+// Nada de marca, de tela do app nem de dado inventado nos objetos: rótulos e números vêm da fala e do inventário da aula.
+import * as THREE from './three.module.min.js';
+export { THREE };
+
+// ------------------------------------------------------------------ tempo e movimento (os do kit 2D)
+export const PI = Math.PI;
+export const cl = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+export const eo = x => 1 - Math.pow(1 - cl(x), 3);
+export const eio = x => { x = cl(x); return x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2; };
+export const pr = (t, a, d = .45) => cl((t - a) / d);
+export const lerp = (a, b, p) => a + (b - a) * p;
+// v2 · curvas com intenção. eo/eio ficam como eram (as cenas chamam direto); o kit usa as de baixo por dentro.
+export const eo5 = x => 1 - Math.pow(1 - cl(x), 5);                      // entrada: arranca rápido, desacelera por muito tempo
+export const ei = x => { x = cl(x); return x * x * x; };                 // saída: curta e acelerando (não pede atenção)
+export const eio5 = x => { x = cl(x); return x < .5 ? 16 * x ** 5 : 1 - Math.pow(-2 * x + 2, 5) / 2; };   // movimento com peso
+export const passa = (x, k = 1.1) => { x = cl(x) - 1; return 1 + (k + 1) * x * x * x + k * x * x; };       // passa um pouco e volta
+// mola amortecida de verdade (resposta ao degrau, analítica): 0 → 1 em x de 0 a 1; z = amortecimento (0,3 balança muito,
+// 0,7 passa uma vez só, 1 não passa). Determinística: é função só de x.
+export function mola(x, z = .5) {
+  x = cl(x); if (x >= 1) return 1; if (z >= 1) { const w = 9; return 1 - Math.exp(-w * x) * (1 + w * x); }
+  const w = 7 / z, wd = w * Math.sqrt(1 - z * z); return 1 - Math.exp(-z * w * x) * (Math.cos(wd * x) + z * w / wd * Math.sin(wd * x));
+}
+// golpe: sai de 0, bate e morre oscilando (resposta ao impulso). x de 0 a 1; n = quantas idas e voltas; pico ≈ 1
+export const golpe = (x, n = 1.6, a = 4.2) => (x <= 0 || x >= 1) ? 0 : Math.exp(-a * x) * Math.sin(2 * PI * n * x) * (1 - x) * 1.55;
+// escalona: instante de cada item de uma fila (60 a 120 ms entre um e outro)
+export const escalona = (a, i, passo = .09) => a + i * passo;
+const hsh = n => { const h = Math.sin(n * 127.1 + 311.7) * 43758.5453; return h - Math.floor(h); };   // sorteio fixo do kit (não mexe no rng da cena)
+let S = 0, S2 = 0;   // sorteio com semente (mulberry32): a cena sai igual em todo quadro e em todo render; S2 só escolhe variantes
+export const semente = s => { S = s | 0; S2 = (s ^ 0x5bd1e995) | 0; };
+export const rng = () => { S = S + 0x6D2B79F5 | 0; let t = Math.imul(S ^ S >>> 15, 1 | S); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+export const ri = (a, b) => lerp(a, b, rng());
+export const pega = a => a[Math.floor(rng() * a.length)];
+const rng2 = () => { S2 = S2 + 0x6D2B79F5 | 0; let t = Math.imul(S2 ^ S2 >>> 15, 1 | S2); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+const ri2 = (a, b) => lerp(a, b, rng2()), pega2 = a => a[Math.floor(rng2() * a.length)];
+
+// ------------------------------------------------------------------ ponte com a fala (dados do renderizador)
+let D = null;
+const norm = w => w.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9%./-]+/g, '');
+export function W(linha, palavra, n = 1, campo = 's') {   // instante da n-ésima "palavra" da linha (campo 'e' = fim)
+  const alvo = norm(palavra); let k = 0;
+  for (const w of D.words) if (w.linha === linha && norm(w.w).replace(/[.,]$/, '') === alvo && ++k === n) return w[campo];
+  for (const w of D.words) if (w.linha === linha && norm(w.w).startsWith(alvo) && ++k >= n) return w[campo];
+  console.warn('palavra não achada', linha, palavra); return L(linha);
+}
+export const L = i => (D.linhas[i] || { s: 0 }).s, LE = i => (D.linhas[i] || { e: D.dur }).e;
+
+// ------------------------------------------------------------------ palco e rótulos HTML (estilo saturado da marca)
+const FT = new URL('../../../ferramentas/web/fonts/', import.meta.url).href;   // se não achar, o renderizador põe as da skill
+const ff = (w, x) => `@font-face{font-family:M;font-weight:${w};src:url(${FT}montserrat-latin${x ? '-ext' : ''}-${w}-normal.woff2) format('woff2')${x ? ';unicode-range:U+0100-024F' : ''}}`;
+const CSS = [500, 600, 700, 800].map(w => ff(w) + ff(w, 1)).join('') + `
+:root{--v:#50D088;--ve:#2E7D57;--a:#F2B63D;--ae:#8A5A00;--t:#121212;--e:#121212;--vs:#50D088;--as:#F2B63D;--cz:#4B5563;
+  --r1:10px;--r2:14px;--r3:18px;--rp:999px;
+  --s1:0 1px 2px rgba(16,24,40,.08),2px 5px 12px -2px rgba(16,24,40,.14);
+  --s2:0 1px 2px rgba(16,24,40,.05),3px 14px 30px -8px rgba(16,24,40,.16),0 2px 6px rgba(16,24,40,.04);
+  --s3:0 2px 4px rgba(0,0,0,.14),5px 22px 44px -12px rgba(16,24,40,.38);
+  --lz:inset 0 1px 0 rgba(255,255,255,.28),inset 0 -1px 0 rgba(0,0,0,.07)}
+*{box-sizing:border-box;margin:0;padding:0;transition:none!important;animation:none!important}
+html,body{width:1280px;height:800px;overflow:hidden;background:#fff}
+body{font-family:M,sans-serif;color:var(--t);-webkit-font-smoothing:antialiased;text-rendering:geometricPrecision}
+#st{position:absolute;inset:0;overflow:hidden;background:radial-gradient(1100px 650px at 92% -12%,rgba(80,208,136,.10),transparent 62%),
+  radial-gradient(900px 600px at -12% 112%,rgba(80,208,136,.06),transparent 60%),
+  linear-gradient(180deg,#fff 0%,#fff 46%,#F6F8F9 100%)}
+#gl{position:absolute;left:0;top:0;width:1280px;height:800px}
+#ov{position:absolute;inset:0}
+.ab{position:absolute}
+.kick{font-weight:700;font-size:14px;letter-spacing:.3em;color:var(--ve);text-transform:uppercase;white-space:nowrap}
+.h{font-weight:800;font-size:46px;letter-spacing:-.02em;line-height:1.1;white-space:nowrap}
+.tag{display:inline-flex;align-items:center;gap:9px;padding:9px 18px;border-radius:var(--rp);font-weight:800;font-size:21px;line-height:1.2;
+  letter-spacing:-.005em;white-space:nowrap;color:#fff;background:var(--cz);box-shadow:var(--s1),var(--lz)}
+.tag.v{background:var(--vs)} .tag.a{background:var(--as)} .tag.e{background:var(--e)}
+.tag.p{font-size:15px;padding:6px 13px;gap:7px}
+.sub{font-weight:600;font-size:17px;line-height:1.3;color:#4B5563;white-space:nowrap}
+.selo{position:absolute;display:flex;flex-direction:column;align-items:center;gap:8px}
+.col{position:absolute;width:200px;display:flex;flex-direction:column;align-items:center;gap:8px}
+.op{position:absolute;width:46px;height:46px;border-radius:50%;background:var(--cz);color:#fff;display:flex;align-items:center;
+  justify-content:center;font-weight:800;font-size:28px;line-height:1;box-shadow:var(--s1),var(--lz)}
+.card{position:absolute;background:#fff;border:1px solid #E3E9E6;border-radius:var(--r3);box-shadow:var(--s2)}
+.cp{width:296px;height:112px;padding:16px 20px}
+.num{font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:-.015em;white-space:nowrap}
+.most{position:absolute;width:250px;background:linear-gradient(180deg,#1B1D1C 0%,#121212 55%);border-radius:var(--r3);padding:14px 20px 16px;
+  box-shadow:var(--s3),inset 0 1px 0 rgba(255,255,255,.10),inset 0 0 0 1px rgba(255,255,255,.05)}
+.most .ml{position:relative;height:20px;font-weight:700;font-size:13px;letter-spacing:.2em;color:#A9E9C6;text-transform:uppercase}
+.most .ml span{position:absolute;left:0;top:0;white-space:nowrap}
+.most .md{position:absolute;right:0;top:4px;width:9px;height:9px;border-radius:50%;background:var(--v);opacity:0}
+.most .mn{margin-top:6px;font-weight:800;font-size:42px;letter-spacing:-.015em;color:var(--v);font-variant-numeric:tabular-nums;white-space:nowrap}
+.rip{position:absolute;width:56px;height:56px;margin:-28px 0 0 -28px;border-radius:50%;border:3px solid var(--v);opacity:0}
+.ic{display:inline-flex;align-items:center;justify-content:center;flex:none}.ic svg{width:100%;height:100%}`;
+export let OV = null, GL = null;   // GL: a tela 3D inteira (GL.style.opacity faz o mundo entrar sem transparência nos objetos)
+{ const s = document.createElement('style'); s.textContent = CSS; document.head.prepend(s);
+  document.body.insertAdjacentHTML('afterbegin', '<div id="st"><canvas id="gl" width="1280" height="800"></canvas><div id="ov"></div></div>');
+  OV = document.getElementById('ov'); GL = document.getElementById('gl'); }
+
+export function el(html, pai = OV) { const d = document.createElement('div'); d.innerHTML = html.trim(); const f = d.firstElementChild; pai.appendChild(f); return f; }
+export function ic(n, px) { return `<span class="ic" style="width:${px}px;height:${px}px">${(window.ICONS || {})[n] || ''}</span>`; }   // nome literal na página
+// v2: a entrada arranca na hora e desacelera por muito tempo (a opacidade chega antes da posição: o rótulo já se lê
+// enquanto assenta); a saída é curta e acelerando. Quem entra por escala (sc < .9: operador, selo de ícone) passa um
+// pouco do tamanho e volta. Mesmos parâmetros do v1; o.dy/dx/sc/din/dout.
+export function vis(e, t, a, b = 1e9, o = {}) {
+  const din = o.din ?? .5, dout = o.dout ?? .4, dy = o.dy ?? 16, dx = o.dx ?? 0, sc = o.sc ?? .985;
+  const x = pr(t, a, din * 1.3), p = eo5(x), po = eo(pr(t, a, din * .62)), y = pr(t, b, dout * .7), q = 1 - ei(y), op = Math.min(po, 1 - y * y);
+  e.style.opacity = op.toFixed(4); e.style.visibility = op <= .001 ? 'hidden' : 'visible';
+  const ps = sc < .9 ? passa(pr(t, a, din * 1.1), 1.6) : p, s = sc + (1 - sc) * ps - (1 - q) * (1 - sc) * .6;
+  e.style.transform = `translate(${((1 - p) * dx).toFixed(2)}px,${((1 - p) * dy - (1 - q) * dy * .4).toFixed(2)}px) scale(${s.toFixed(4)})`;
+  return op;
+}
+export function ripple(r, t, a) { const p = pr(t, a, .85); r.style.opacity = (p > 0 && p < 1) ? (.7 * Math.pow(1 - p, 1.6)).toFixed(3) : 0; r.style.transform = `scale(${(.4 + 2.2 * eo5(p)).toFixed(3)})`; }
+// pulso: bate rápido e assenta (mola), em vez de inchar e desinchar igual dos dois lados
+export function pulse(e, t, a, amp = .045, dur = .9) { const p = pr(t, a, dur); e.style.scale = (p > 0 && p < 1) ? (1 + amp * 1.25 * golpe(p, 1.1, 3.4)).toFixed(4) : ''; }
+// foco: um assunto por momento. O elemento recua (opacidade e saturação) fora de [a, b] e volta inteiro dentro.
+// Chamar DEPOIS do vis (multiplica a opacidade que ele deixou). o.min = opacidade recuada (padrão .42); o.fora = true
+// inverte (recua DENTRO de [a, b])
+export function foco(e, t, a, b = 1e9, o = {}) {
+  let k = Math.min(eo(pr(t, a, o.d ?? .4)), 1 - eo(pr(t, b, o.d ?? .4))); if (o.fora) k = 1 - k; const m = o.min ?? .42;
+  e.style.opacity = ((+e.style.opacity || 0) * lerp(m, 1, k)).toFixed(4); e.style.filter = k > .995 ? '' : `saturate(${lerp(.35, 1, k).toFixed(3)})`; return k;
+}
+const NF = new Intl.NumberFormat('pt-BR'), NF1 = new Intl.NumberFormat('pt-BR', { maximumFractionDigits: 1 });
+export const kg = v => NF.format(Math.round(v)) + ' kg', kgd = v => NF1.format(Math.round(v * 10) / 10) + ' kg';
+export function conta(e, t, a, d, v0, v1, fmt = kg) { const s = fmt(lerp(v0, v1, eo5(pr(t, a, d * 1.15)))); if (e.textContent !== s) e.textContent = s; }
+// leitura de balança: o número passa do valor e volta (mola), andando de `passo` em `passo` kg enquanto mexe, e a luz do
+// mostrador fica âmbar até estabilizar. e = o mostrador(); o.z (amortecimento), o.passo (padrão 10), o.fmt
+export function pesa(e, t, a, d, v0, v1, o = {}) {
+  const x = pr(t, a, d), ps = o.passo ?? 10, v = lerp(v0, v1, mola(x, o.z ?? .74));
+  const s = (o.fmt || kg)(x <= 0 ? v0 : x >= 1 ? v1 : Math.round(v / ps) * ps); if (e.mn.textContent !== s) e.mn.textContent = s;
+  const m = x > 0 && x < .93; e.md.style.opacity = '1'; e.md.style.background = m ? '#F2B63D' : '#50D088';
+  e.md.style.boxShadow = m ? '0 0 0 3px rgba(242,182,61,.22)' : '0 0 0 3px rgba(80,208,136,.22)'; return x;
+}
+export function posTitulo(e, t, a, sobe, sai = 1e9) {   // título grande no meio que sobe quando o desenho entra
+  vis(e, t, a, sai, { dy: 14 }); const p = eio5(pr(t, sobe - .05, .85));
+  e.style.top = lerp(318, 46, p).toFixed(2) + 'px'; e.style.scale = lerp(1.12, 1, p).toFixed(4);
+  // a chamada chega primeiro, com as letras fechando; o título vem 90 ms depois (escalonado)
+  const k = e.firstElementChild, h = k.nextElementSibling, pk = eo5(pr(t, a, .9)), ph = eo5(pr(t, a + .09, .75));
+  k.style.letterSpacing = lerp(.42, .3, pk).toFixed(4) + 'em'; h.style.transform = `translateY(${((1 - ph) * 10).toFixed(2)}px)`; h.style.opacity = eo(pr(t, a + .09, .4)).toFixed(3);
+}
+export function titulo(kick, ...hs) {   // chamada + um ou mais títulos no mesmo lugar (troca com vis em cada e.hs[i])
+  const e = el(`<div class="ab" style="left:0;top:0;width:1280px;text-align:center"><div class="kick">${kick}</div>
+    <div style="position:relative;height:51px;margin-top:12px">${hs.map(h => `<div class="h ab" style="left:0;width:1280px">${h}</div>`).join('')}</div></div>`);
+  e.hs = [...e.querySelectorAll('.h')]; return e;
+}
+// selo (etiqueta cheia + legenda embaixo), chip (etiqueta pequena), coluna da conta, operador, cartão de número, onda
+export const selo = (cls, txt, sub = '') => el(`<div class="selo"><div class="tag ${cls}">${txt}</div>${sub ? `<div class="sub">${sub}</div>` : ''}</div>`);
+export const chip = (txt, cls = '') => el(`<div class="tag p ab ${cls}">${txt}</div>`);
+export const coluna = (cx, y, cls, txt, sub) => el(`<div class="col" style="left:${cx - 100}px;top:${y}px"><div class="tag ${cls}">${txt}</div><div class="sub" style="font-size:16px">${sub}</div></div>`);
+export const op = (cx, y, s) => el(`<div class="op" style="left:${cx - 23}px;top:${y}px">${s}</div>`);
+export const onda = (pai, x, y) => el(`<div class="rip" style="left:${x}px;top:${y}px"></div>`, pai);
+export function cartao(x, y, cls, rot, sub, v, o = {}) {   // o.res: cartão do resultado (contorno verde); o.fmt: kg ou kgd
+  return el(`<div class="card cp" style="left:${x}px;top:${y}px;${o.w ? `width:${o.w}px;` : ''}${o.res ? 'border:2px solid var(--v);background:#F4FBF7' : ''}">
+    <div style="display:flex;align-items:center;gap:10px"><div class="tag p ${cls}" style="font-size:16px">${rot}</div><div class="sub" style="font-size:16px">${sub}</div></div>
+    <div class="num" style="margin-top:10px;font-size:36px;${o.res ? 'color:var(--ve)' : ''}">${(o.fmt || kg)(v)}</div></div>`);
+}
+export function mostrador(r1, r2 = '', w = 250) {   // painel escuro com o número verde; e.troca(t, a) passa do rótulo 1 ao 2 (o 1 sobe e some, o 2 sobe e entra)
+  const e = el(`<div class="most" style="width:${w}px"><div class="ml"><span class="m1">${r1}</span><span class="m2">${r2}</span><i class="md"></i></div><div class="mn">0 kg</div></div>`);
+  e.mn = e.querySelector('.mn'); e.m1 = e.querySelector('.m1'); e.m2 = e.querySelector('.m2'); e.md = e.querySelector('.md');
+  e.troca = (t, a) => { const p = eo5(pr(t, a, .5)), q = eo(pr(t, a, .22)); e.m1.style.opacity = (1 - q).toFixed(3); e.m2.style.opacity = eo(pr(t, a + .08, .3)).toFixed(3);
+    e.m1.style.transform = `translateY(${(-7 * q).toFixed(2)}px)`; e.m2.style.transform = `translateY(${(7 * (1 - p)).toFixed(2)}px)`; };
+  e.troca(0, 1e9); return e;
+}
+
+// ------------------------------------------------------------------ 3D: palco, luz, sombra macia e câmera
+const Q = new URLSearchParams(location.search);   // variantes de custo (aa=0, sm=2048, st=pcf|vsm, pr=1, sh=0, mt=l, rs=1)
+export let RD = null, CENA = null, CAM = null, SOL = null, CHAO = null;
+// v2: inercia = meia janela (s) do alisamento da câmera (0 desliga); respira = mão do operador (0 desliga); nevoa = false desliga
+const OPC = { sombra: 6.5, mapa: 1024, fov: 26, chao: true, aquece: [], inercia: .34, respira: 1, nevoa: true };
+const LUZ = new THREE.Vector3(-6.2, 8.4, 4.2).normalize();   // mais de lado que no v1: a sombra cai à direita do objeto, à vista
+function base() {
+  if (!RD) {   // 3D a 1,5x no máximo (1920x1200); os rótulos HTML ficam na resolução cheia
+    RD = new THREE.WebGLRenderer({ canvas: GL, antialias: Q.get('aa') !== '0', alpha: true, preserveDrawingBuffer: true });
+    RD.setPixelRatio(Math.min(window.devicePixelRatio || 1, +(Q.get('pr') || 1.5))); RD.setSize(1280, 800, false); RD.setClearColor(0x000000, 0);
+    RD.shadowMap.enabled = Q.get('sh') !== '0';
+    RD.shadowMap.type = { pcf: THREE.PCFShadowMap, vsm: THREE.VSMShadowMap }[Q.get('st')] ?? THREE.PCFSoftShadowMap;
+  }
+  if (!ENV) { ENV = ambiente(); for (const m of METAL) { m.envMap = ENV; m.needsUpdate = true; } }
+  CENA = new THREE.Scene(); CAM = new THREE.PerspectiveCamera(OPC.fov, 1280 / 800, .1, 300);
+  // luz: sol morno de frente-esquerda (dá a direção), céu frio e chão quente no hemisfério, preenchimento frio e um
+  // contraluz que solta a silhueta; o estúdio (ENV) entra fraco em tudo: a face de baixo de cada peça escurece sozinha
+  if (Q.get('env') !== '0') { CENA.environment = ENV; CENA.environmentIntensity = .34; }
+  if (OPC.nevoa && Q.get('nv') !== '0') CENA.fog = new THREE.Fog(0xffffff, 10, 90);
+  CENA.add(new THREE.HemisphereLight(0xF3F7FF, 0xC9C2B8, .82));
+  const contra = new THREE.DirectionalLight(0xE8FFF2, .5); contra.position.set(5, 6, -9); if (Q.get('cl') !== '0') CENA.add(contra);
+  SOL = new THREE.DirectionalLight(0xFFF4E2, 2.7); SOL.castShadow = true; SOL.shadow.mapSize.setScalar(+(Q.get('sm') || OPC.mapa));
+  const r = OPC.sombra, sc = SOL.shadow.camera; sc.left = sc.bottom = -r; sc.right = sc.top = r; sc.near = 1; sc.far = 6 * r + 40;
+  SOL.shadow.bias = -.0004; SOL.shadow.normalBias = .02; SOL.shadow.radius = 4; SOL.shadow.blurSamples = 8; CENA.add(SOL, SOL.target);
+  const fill = new THREE.DirectionalLight(0xDCEBFF, .62); fill.position.set(6, 3, 8); CENA.add(fill);
+  // chão invisível que só recebe sombra (o quadrado que o mapa de sombra cobre, seguindo o alvo da câmera)
+  CHAO = new THREE.Mesh(new THREE.PlaneGeometry(2 * r + 1, 2 * r + 1), new THREE.ShadowMaterial({ color: 0x1d2b24, opacity: .2 }));
+  CHAO.rotation.x = -PI / 2; CHAO.receiveShadow = true; CHAO.visible = OPC.chao; CENA.add(CHAO);
+}
+// câmera: chaves [t, {x,y,z (alvo), d (distância), az, el (radianos), oy (px; positivo sobe o desenho)}, 'eio'|'lin', arco]
+let CK = [[0, { x: 0, y: 0, z: 0, d: 12, az: 0, el: .35, oy: 0 }]];
+export const camera = ck => { CK = ck; };
+function poseBruta(t) {
+  let k = CK[0][1];
+  if (t > CK[0][0]) for (let i = 1; i < CK.length; i++) {
+    const [t1, p1, modo, arco] = CK[i], [t0, p0] = CK[i - 1];
+    if (t <= t1) { const q0 = (t - t0) / (t1 - t0), q = modo === 'lin' ? q0 : eio(q0); k = {};
+      for (const c in p0) k[c] = lerp(p0[c], p1[c], q); if (arco) k.d += arco * Math.sin(PI * q); return k; }
+    k = p1;
+  }
+  return k;
+}
+// v2: operador humano. A pose das chaves passa por uma média com janela em sino (9 amostras, ±inercia s): toda quina de
+// velocidade vira curva (a câmera arranca e para com peso, e a deriva 'lin' não começa de tranco), e a mão respira de
+// leve (milésimos de radiano). Função só de t: o quadro 137 sai igual em qualquer ordem de render.
+export function pose(t) {
+  const w = OPC.inercia; let k = {};
+  if (w > 0 && CK.length > 1) { let s = 0;
+    for (let i = -4; i <= 4; i++) { const g = 1 + Math.cos(PI * i / 5), p = poseBruta(t + i / 4 * w); s += g; for (const c in p) k[c] = (k[c] ?? 0) + g * p[c]; }
+    for (const c in k) k[c] /= s; } else k = { ...poseBruta(t) };
+  const r = OPC.respira; if (r) { k.az += r * (.0032 * Math.sin(t * .83 + 1.3) + .0015 * Math.sin(t * 1.9 + .4)); k.el += r * .002 * Math.sin(t * .67 + 2.1); }
+  return k;
+}
+function aplicaCam(k) {
+  const ce = Math.cos(k.el), dl = 2 * OPC.sombra + 6;
+  CAM.position.set(k.x + k.d * Math.sin(k.az) * ce, k.y + k.d * Math.sin(k.el), k.z + k.d * Math.cos(k.az) * ce); CAM.lookAt(k.x, k.y, k.z);
+  CAM.setViewOffset(1280, 800, 0, k.oy, 1280, 800); CAM.updateMatrixWorld();
+  SOL.position.set(k.x + LUZ.x * dl, LUZ.y * dl, k.z + LUZ.z * dl); SOL.target.position.set(k.x, 0, k.z); SOL.target.updateMatrixWorld();
+  CHAO.position.set(k.x, 0, k.z);
+  if (CENA.fog) { CENA.fog.near = k.d * .92; CENA.fog.far = k.d + 62; }   // névoa clara: o fundo recua
+}
+const _v = new THREE.Vector3();
+export function tela(p) { _v.set(p[0], p[1], p[2]).project(CAM); return [(_v.x + 1) * 640, (1 - _v.y) * 400]; }   // mundo → px
+// prende um rótulo HTML a um ponto do mundo (ax/ay: que ponto do rótulo fica no ponto; dx/dy em px)
+export function ancora(e, p, ax = .5, ay = 1, dx = 0, dy = 0) {
+  if (e._w == null) { e._w = e.offsetWidth; e._h = e.offsetHeight; } const [x, y] = tela(p);
+  e.style.left = (x - e._w * ax + dx).toFixed(1) + 'px'; e.style.top = (y - e._h * ay + dy).toFixed(1) + 'px';
+}
+export function mundo(o, p) { o.updateWorldMatrix(true, false); _v.set(p[0], p[1], p[2]); o.localToWorld(_v); return [_v.x, _v.y, _v.z]; }
+// a cena: monta(dados) devolve a função do tempo; o = opções (sombra: meia largura coberta, mapa, fov, chao, aquece, semente)
+let RENDER = null;
+export function cena(monta, o = {}) {
+  window.setup = d => { D = d; Object.assign(OPC, typeof o === 'function' ? o(d) : o); OV.innerHTML = ''; base(); semente(OPC.semente ?? 20261111);
+    camera([[0, { x: 0, y: 0, z: 0, d: 12, az: 0, el: .35, oy: 0 }]]); RENDER = monta(d);
+    for (const t of OPC.aquece) quadro(t); quadro(0); return true; };
+  window.R = t => { quadro(t); return true; };
+}
+function quadro(t) { aplicaCam(pose(t)); RENDER(t); RD.render(CENA, CAM); }
+
+// ------------------------------------------------------------------ 3D: argila na paleta da marca
+export const COR = { verde: '#50D088', verdeE: '#2E7D57', escuro: '#121212', ambar: '#F2B63D', ambarE: '#C98A26', argila: '#DEE3E8',
+  cinza: '#8E98A3', cinzaC: '#B9C1CA', cinzaE: '#2F353C', pneu: '#23282E', aro: '#AEB7C1', vidro: '#CFE0EA', farol: '#FFF4DA',
+  aco: '#7E8995', alu: '#C9D1DA', cobre: '#C8703A', madeira: '#C9A27A', madeiraE: '#B48C64', rafia: '#E9D6AC', rafiaE: '#B89A62',
+  concreto: '#EBEEF1', junta: '#DCE1E6', papel: '#FBFBF7', tela: '#EAF8F0' };
+// v2: argila com variação. Manchas largas e miúdas na cor e na rugosidade (no espaço da peça: não escorregam quando ela
+// anda), um escuro de contato perto do chão (y do mundo) e um brilho rasante de leve, que arredonda a forma. Sem textura
+// e sem passe extra: três senos por pixel.
+function barro(m) {
+  m.onBeforeCompile = sh => {
+    sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nvarying vec3 vOb; varying float vYw;')
+      .replace('#include <project_vertex>', '#include <project_vertex>\n{ vec4 wA = vec4(transformed, 1.0);\n#ifdef USE_INSTANCING\nwA = instanceMatrix * wA;\n#endif\nvOb = wA.xyz; vYw = (modelMatrix * wA).y; }');
+    sh.fragmentShader = sh.fragmentShader.replace('#include <common>', `#include <common>\nvarying vec3 vOb; varying float vYw;
+float nzB(vec3 p){ return sin(p.x*2.3+sin(p.z*1.7+p.y*2.1)*1.3)*sin(p.z*2.9+sin(p.x*1.3-p.y*1.9)*1.1); }`)
+      .replace('#include <color_fragment>', '#include <color_fragment>\nfloat nB = nzB(vOb * 1.6) * .6 + nzB(vOb * 6.3 + 7.0) * .4;\ndiffuseColor.rgb *= (1.0 + .06 * nB) * mix(.76, 1.0, smoothstep(-.02, .5, vYw));')
+      .replace('#include <roughnessmap_fragment>', '#include <roughnessmap_fragment>\nroughnessFactor = clamp(roughnessFactor + .07 * nB, .05, 1.0);')
+      .replace('#include <emissivemap_fragment>', '#include <emissivemap_fragment>\n{ float frB = pow(1.0 - clamp(dot(normalize(vViewPosition), normal), 0.0, 1.0), 3.0); totalEmissiveRadiance += diffuseColor.rgb * frB * .09; }');
+  };
+  m.customProgramCacheKey = () => 'barro'; return m;
+}
+const clona = m => { const c = m.clone(); c.onBeforeCompile = m.onBeforeCompile; c.customProgramCacheKey = m.customProgramCacheKey; return c; };
+const MAT = o => { if (Q.get('mt') === 'l') { delete o.roughness; delete o.metalness; return new THREE.MeshLambertMaterial(o); } return Q.get('br') === '0' ? new THREE.MeshStandardMaterial(o) : barro(new THREE.MeshStandardMaterial(o)); };
+const MC = {};
+export function M(c, o = {}) {   // material fosco reaproveitado (argila: rugosidade alta, sem metal); f = facetado, ds = dois lados
+  const k = c + (o.f ? 'f' : '') + (o.ds ? 'd' : '') + (o.r ?? '');
+  return MC[k] || (MC[k] = MAT({ color: c, roughness: o.r ?? .86, metalness: 0, flatShading: !!o.f, side: o.ds ? THREE.DoubleSide : THREE.FrontSide }));
+}
+export const MU = (c, o = {}) => MAT({ color: c, roughness: o.r ?? .88, metalness: 0, side: o.ds ? THREE.DoubleSide : THREE.FrontSide });
+export const ARGILA = { verde: M(COR.verde), escuro: M(COR.escuro), ambar: M(COR.ambar) };   // as três cores da marca
+export const ARG = new THREE.Color(COR.argila);   // argila crua
+export function argila(g) {   // o objeto ganha materiais próprios para tinge(g, p): argila crua (0) → cor dele (1)
+  const L = []; g.traverse(o => { if (o.isMesh && !o.isInstancedMesh && (o.material.isMeshStandardMaterial || o.material.isMeshLambertMaterial)) {
+    o.material = clona(o.material); L.push([o.material, o.material.color.clone()]); } });
+  g.userData.tinta = L; return g;
+}
+export function tinge(g, p) { for (const [m, c] of g.userData.tinta) m.color.copy(ARG).lerp(c, p); }
+
+// ------------------------------------------------------------------ 3D: utilidades de forma e de movimento
+export function poe(g, m, pai, p = [0, 0, 0], r = [0, 0, 0], s = 1) {
+  const o = new THREE.Mesh(g, m); o.position.set(...p); o.rotation.set(...r);
+  if (Array.isArray(s)) o.scale.set(...s); else o.scale.setScalar(s); o.castShadow = o.receiveShadow = true; pai.add(o); return o;
+}
+export function grupo(pai, p = [0, 0, 0]) { const g = new THREE.Group(); g.position.set(...p); pai.add(g); return g; }
+export const torno = (pts, n) => new THREE.LatheGeometry(pts.map(([r, y]) => new THREE.Vector2(r, y)), n);
+// caixa de cantos arredondados (o RoundedBoxGeometry dos exemplos do three, sem addon)
+export function rbox(w, h, d, r = .04, seg = 2) {
+  seg = seg * 2 + 1; r = Math.min(w / 2, h / 2, d / 2, r);
+  const g = new THREE.BoxGeometry(1, 1, 1, seg, seg, seg).toNonIndexed(), P = g.attributes.position.array, N = g.attributes.normal.array;
+  const bx = w / 2 - r, by = h / 2 - r, bz = d / 2 - r, hs = .5 / seg, n = new THREE.Vector3();
+  for (let i = 0; i < P.length; i += 3) { const x = P[i], y = P[i + 1], z = P[i + 2];
+    n.set(x - Math.sign(x) * hs, y - Math.sign(y) * hs, z - Math.sign(z) * hs).normalize();
+    P[i] = bx * Math.sign(x) + n.x * r; P[i + 1] = by * Math.sign(y) + n.y * r; P[i + 2] = bz * Math.sign(z) + n.z * r; N[i] = n.x; N[i + 1] = n.y; N[i + 2] = n.z; }
+  g.deleteAttribute('uv'); return g;
+}
+let TXS = null;   // sombra de contato: mancha macia no chão, por baixo da sombra da luz
+export function mancha(pai, w, d, op = .3, p = [0, 0, 0]) {
+  if (!TXS) { const c = document.createElement('canvas'); c.width = c.height = 128; const g = c.getContext('2d'), gr = g.createRadialGradient(64, 64, 0, 64, 64, 64);
+    gr.addColorStop(0, 'rgba(255,255,255,1)'); gr.addColorStop(.35, 'rgba(255,255,255,.72)'); gr.addColorStop(.62, 'rgba(255,255,255,.3)'); gr.addColorStop(.85, 'rgba(255,255,255,.07)'); gr.addColorStop(1, 'rgba(255,255,255,0)');
+    g.fillStyle = gr; g.fillRect(0, 0, 128, 128); TXS = new THREE.CanvasTexture(c); }
+  const m = new THREE.Mesh(new THREE.PlaneGeometry(w, d), new THREE.MeshBasicMaterial({ map: TXS, color: 0x16221c, transparent: true, opacity: op * 1.25, depthWrite: false }));
+  m.rotation.x = -PI / 2; m.position.set(p[0], .004, p[2]); m.renderOrder = 1; m.userData.op = op * 1.25; pai.add(m); return m;
+}
+export function anel(pai, r, w = .07, p = [0, 0, 0]) {   // anel verde no chão (destaque); um segundo anel faz a onda
+  const m = new THREE.Mesh(new THREE.RingGeometry(r - w / 2, r + w / 2, 72), new THREE.MeshBasicMaterial({ color: 0x50D088, transparent: true, opacity: 0, depthWrite: false }));
+  m.rotation.x = -PI / 2; m.position.set(p[0], p[1] + .008, p[2]); m.renderOrder = 2; pai.add(m); return m;
+}
+export function destaque(an, onda3, t, a) {   // v2: o anel passa do tamanho e assenta; a onda sai devagar
+  const x = pr(t, a, .6), p = eo(pr(t, a, .3)); an.material.opacity = .95 * p; an.visible = p > 0; an.scale.setScalar(lerp(.8, 1, passa(x, 1.5)));
+  const q = pr(t, a + .08, 1.1); onda3.visible = q > 0 && q < 1; onda3.material.opacity = .65 * Math.pow(1 - q, 1.5); onda3.scale.setScalar(1 + .75 * eo5(q));
+}
+// entrada de um objeto: cresce do chão (escala) com um leve giro; nada de pulo. userData.s = escala base, userData.ry = giro base
+export function cresce(o, t, a, d = .6, giro = .35) {   // v2: cresce, passa 3% do tamanho e assenta; o giro desacelera por mais tempo
+  const x = pr(t, a, d * 1.15), p = passa(x, .9), s = o.userData.s ?? 1; o.visible = x > 0; o.scale.setScalar(Math.max(1e-4, p) * s);
+  o.rotation.y = (o.userData.ry ?? 0) - giro * (1 - eo5(x)); return Math.min(1, p);
+}
+export function pulso(o, t, a, amp = .07, dur = .7) { const p = pr(t, a, dur); if (p > 0 && p < 1) o.scale.multiplyScalar(1 + amp * 1.2 * golpe(p, 1.1, 3.4)); }
+// pontos de um monte: domo de raio rx/rz e altura h, mais perto da superfície (o miolo não aparece)
+export function domo(n, rx, rz, h, y0 = 0, sup = .45) {
+  const P = []; for (let i = 0; i < n; i++) { const a = rng() * 2 * PI, u = Math.sqrt(rng()), top = h * Math.pow(1 - u * u, .8);
+    P.push([Math.cos(a) * u * rx, y0 + top * (sup + (1 - sup) * rng()) + .03, Math.sin(a) * u * rz]); } return P;
+}
+
+// ------------------------------------------------------------------ 3D: materiais reconhecíveis (sucata, embalagem e impureza)
+// Cada material com o desenho de verdade: latinha (alumínio com brilho e faixa de rótulo genérico, inteira ou amassada),
+// garrafa PET (translúcida, transparente ou verde, inteira ou amassada), ferro (vergalhão dobrado, cano, chapa e perfil,
+// com ferrugem), cobre (fio enrolado, tubo, fio embolado), alumínio (lata, perfil, chapa), papelão (caixa amassada, folha),
+// terra (torrão), borracha (pedaço de pneu, mangueira), plástico (sacola, garrafa). As escolhas extras (variante, amassada,
+// cor da faixa) saem do segundo sorteio: o rng() da cena anda igual ao do kit antigo, e peca, monte, latinhas e
+// fardoLatinhas caem nos mesmos lugares.
+let ENV = null; const METAL = [];
+function ambiente() {   // estúdio de luz (degradê e dois painéis) que os metais e o PET refletem
+  const s = new THREE.Scene(), e = new THREE.SphereGeometry(20, 32, 16), P = e.attributes.position, C = [], c = new THREE.Color();
+  const topo = new THREE.Color('#FFFFFF'), meio = new THREE.Color('#E6EFEA'), chao = new THREE.Color('#68727D');
+  for (let i = 0; i < P.count; i++) { const y = P.getY(i) / 20; if (y > 0) c.copy(meio).lerp(topo, y); else c.copy(meio).lerp(chao, Math.min(1, -y * 2.5)); C.push(c.r, c.g, c.b); }
+  e.setAttribute('color', new THREE.Float32BufferAttribute(C, 3));
+  s.add(new THREE.Mesh(e, new THREE.MeshBasicMaterial({ side: THREE.BackSide, vertexColors: true })));
+  for (const [x, y, z, w, h, k] of [[-8, 12, 7, 10, 4, 3.2], [11, 5, -3, 4, 8, 1.8]]) {
+    const m = new THREE.Mesh(new THREE.PlaneGeometry(w, h), new THREE.MeshBasicMaterial({ color: new THREE.Color(k, k, k), side: THREE.DoubleSide }));
+    m.position.set(x, y, z); m.lookAt(0, 0, 0); s.add(m); }
+  const pm = new THREE.PMREMGenerator(RD), rt = pm.fromScene(s, .02); pm.dispose(); return rt.texture;
+}
+const lin = c => { const k = new THREE.Color(c); return `vec3(${k.r.toFixed(4)},${k.g.toFixed(4)},${k.b.toFixed(4)})`; };
+const FACETA = '#include <normal_fragment_begin>\n{ vec3 fn = normalize(cross(dFdx(vViewPosition), dFdy(vViewPosition))); normal = normalize(mix(normal, fn, vK)); }';
+// amassado no vertex shader (k de 0 a 1): dobras no raio, achata em z e encolhe em y
+const AMASSA = (k, a, b, ex, ez, ey) => `if (${k} > 0.0) { float an = atan(transformed.z, transformed.x + 1e-5), rr = length(transformed.xz);
+  rr *= 1.0 + ${k} * (${a} * sin(an * 5.0 + transformed.y * 45.0) + ${b} * sin(an * 3.0 - transformed.y * 70.0));
+  transformed.x = cos(an) * rr * (1.0 + ${ex} * ${k}); transformed.z = sin(an) * rr * (1.0 - ${ez} * ${k}); transformed.y *= 1.0 - ${ey} * ${k}; }`;
+export function MM(c, o = {}) {   // metal (brilho do ambiente); o.fer: manchas de ferrugem pela cor do vértice (r = mancha, g = tom)
+  const k = 'm' + c + (o.r ?? '') + (o.m ?? '') + (o.fer ? 'r' : '') + (o.f ? 'f' : '');
+  if (MC[k]) return MC[k];
+  const m = new THREE.MeshStandardMaterial({ color: c, roughness: o.r ?? .35, metalness: o.m ?? .75, flatShading: !!o.f, envMap: ENV, vertexColors: !!o.fer });
+  if (o.fer) { m.onBeforeCompile = sh => { sh.fragmentShader = sh.fragmentShader
+      .replace('#include <color_fragment>', `float fer = 0.0, tom = 0.0;\n#ifdef USE_COLOR\nfer = vColor.r; tom = vColor.g;\n#endif\ndiffuseColor.rgb = mix(diffuseColor.rgb, mix(${lin('#8B4726')}, ${lin('#5A311F')}, tom), fer);`)
+      .replace('#include <roughnessmap_fragment>', '#include <roughnessmap_fragment>\nroughnessFactor = mix(roughnessFactor, .95, fer);')
+      .replace('#include <metalnessmap_fragment>', '#include <metalnessmap_fragment>\nmetalnessFactor *= 1.0 - fer;'); };
+    m.customProgramCacheKey = () => 'ferrugem'; }
+  METAL.push(m); return MC[k] = m;
+}
+const MP = c => MC['p' + c] || (MC['p' + c] = new THREE.MeshStandardMaterial({ color: c, roughness: .5, metalness: 0, flatShading: true, transparent: true, opacity: .9 }));   // sacola
+function matLata() {   // alumínio com brilho; faixa de rótulo (cor da instância) onde |y| < aLata.y; amassada com aLata.x
+  if (MC.lata) return MC.lata;
+  const m = new THREE.MeshStandardMaterial({ color: '#DCE2E8', roughness: .2, metalness: .9, envMap: ENV, envMapIntensity: 1.25 });
+  m.onBeforeCompile = sh => {
+    sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nattribute vec2 aLata; varying float vYl; varying float vFx; varying float vK; varying vec3 vCorL;')
+      .replace('#include <begin_vertex>', '#include <begin_vertex>\nvYl = position.y; vFx = aLata.y; vK = aLata.x;\n#ifdef USE_INSTANCING_COLOR\nvCorL = instanceColor;\n#else\nvCorL = vec3(1.0);\n#endif\n' + AMASSA('vK', '.16', '.09', '.3', '.5', '.5'));
+    sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nvarying float vYl; varying float vFx; varying float vK; varying vec3 vCorL;')
+      .replace('#include <color_fragment>', 'float faixa = 1.0 - step(vFx, abs(vYl)); diffuseColor.rgb = mix(diffuseColor.rgb, vCorL, faixa);')
+      .replace('#include <roughnessmap_fragment>', '#include <roughnessmap_fragment>\nroughnessFactor = mix(roughnessFactor, .4, faixa);')
+      .replace('#include <metalnessmap_fragment>', '#include <metalnessmap_fragment>\nmetalnessFactor = mix(metalnessFactor, .25, faixa);')
+      .replace('#include <normal_fragment_begin>', FACETA);
+  };
+  m.customProgramCacheKey = () => 'lata'; METAL.push(m); return MC.lata = m;
+}
+function matPet() {   // PET translúcido (aPet.y: 0 transparente, 1 verde), tampa opaca (aParte 1); amassada com aPet.x
+  if (MC.pet) return MC.pet;
+  const m = new THREE.MeshStandardMaterial({ color: '#ffffff', roughness: .1, metalness: 0, transparent: true, envMap: ENV, envMapIntensity: 1.4 });
+  m.onBeforeCompile = sh => {
+    sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nattribute float aParte; attribute vec2 aPet; varying float vParte; varying float vTinta; varying float vK;')
+      .replace('#include <begin_vertex>', '#include <begin_vertex>\nvParte = aParte; vTinta = aPet.y; vK = aPet.x * (1.0 - smoothstep(.04, .11, position.y));\n' + AMASSA('vK', '.2', '.12', '.25', '.6', '.2'));
+    sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nvarying float vParte; varying float vTinta; varying float vK;')
+      .replace('#include <color_fragment>', `float tp = step(.5, vParte);\ndiffuseColor.rgb = mix(mix(${lin('#D8ECF4')}, ${lin('#3E9C5C')}, vTinta), mix(${lin('#2F6FD0')}, ${lin('#1F6B45')}, vTinta), tp);\ndiffuseColor.a = mix(mix(.4, .62, vTinta), 1.0, tp);`)
+      .replace('#include <normal_fragment_begin>', FACETA);
+  };
+  m.customProgramCacheKey = () => 'pet'; METAL.push(m); return MC.pet = m;
+}
+// formas: ruído pela posição (mesma posição, mesmo deslocamento: as quinas não racham), ferrugem na cor do vértice
+const hs = (x, y, z) => { const h = Math.sin(x * 127.1 + y * 311.7 + z * 74.7) * 43758.5453; return h - Math.floor(h); };
+function ruido(x, y, z) {
+  const X = Math.floor(x), Y = Math.floor(y), Z = Math.floor(z), u = x - X, v = y - Y, w = z - Z, f = t => t * t * (3 - 2 * t); let s = 0;
+  for (let i = 0; i < 2; i++) for (let j = 0; j < 2; j++) for (let k = 0; k < 2; k++) s += (i ? f(u) : 1 - f(u)) * (j ? f(v) : 1 - f(v)) * (k ? f(w) : 1 - f(w)) * hs(X + i, Y + j, Z + k);
+  return s;
+}
+function amassar(g, amp, esc, s = 0) {
+  const P = g.attributes.position;
+  for (let i = 0; i < P.count; i++) { const x = P.getX(i), y = P.getY(i), z = P.getZ(i);
+    P.setXYZ(i, x + (ruido(x * esc + s, y * esc, z * esc) - .5) * amp, y + (ruido(x * esc, y * esc + s + 7, z * esc) - .5) * amp, z + (ruido(x * esc + 3, y * esc, z * esc + s) - .5) * amp); }
+  g.computeVertexNormals(); return g;
+}
+function ferrugem(g, lim, esc = 9, s = 0) {
+  const P = g.attributes.position, C = [];
+  for (let i = 0; i < P.count; i++) { const x = P.getX(i), y = P.getY(i), z = P.getZ(i), n = ruido(x * esc + s, y * esc, z * esc) * .7 + ruido(x * esc * 3, y * esc * 3 + s, z * esc * 3) * .3;
+    C.push(cl((n - lim) / .1), ruido(x * 20, y * 20 + s, z * 20), 0); }
+  g.setAttribute('color', new THREE.Float32BufferAttribute(C, 3)); return g;
+}
+function junta(lista) {   // [[geometria, parte], ...] → uma geometria não indexada com o atributo aParte
+  const gs = lista.map(([g]) => g.index ? g.toNonIndexed() : g), n = gs.reduce((a, g) => a + g.attributes.position.count, 0);
+  const P = new Float32Array(n * 3), N = new Float32Array(n * 3), A = new Float32Array(n); let o = 0;
+  gs.forEach((g, i) => { const c = g.attributes.position.count; P.set(g.attributes.position.array, o * 3); N.set(g.attributes.normal.array, o * 3); A.fill(lista[i][1] ?? 0, o, o + c); o += c; });
+  const r = new THREE.BufferGeometry(); r.setAttribute('position', new THREE.BufferAttribute(P, 3)); r.setAttribute('normal', new THREE.BufferAttribute(N, 3));
+  r.setAttribute('aParte', new THREE.BufferAttribute(A, 1)); return r;
+}
+const GC = {}, geo = (k, f) => GC[k] || (GC[k] = f());
+const V3 = (x, y, z) => new THREE.Vector3(x, y, z), V2 = pts => pts.map(p => new THREE.Vector2(...p));
+const tuboG = (pts, r, n = 48, rs = 8, fecha = false) => new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts.map(p => V3(...p)), fecha), n, r, rs, fecha);
+const FORMA = {
+  vergalhao: (v, q) => { const g = tuboG([[[0, -.32, 0], [0, -.06, 0], [.015, .07, 0], [.13, .13, 0], [.3, .14, .02]], [[-.13, -.3, 0], [-.13, .04, 0], [-.09, .14, 0], [.07, .15, 0], [.13, .05, 0], [.13, -.22, 0]],
+      [[0, -.3, 0], [0, -.1, .01], [.13, 0, .03], [.19, .1, .03], [.2, .3, .02]]][v], .02, 64, 7), P = g.attributes.position, N = g.attributes.normal;
+    for (let i = 0; i < P.count; i++) { const d = .0018 * Math.sin(Math.floor(i / 8) * 1.7); P.setXYZ(i, P.getX(i) + N.getX(i) * d, P.getY(i) + N.getY(i) * d, P.getZ(i) + N.getZ(i) * d); }   // nervuras
+    g.computeVertexNormals(); return ferrugem(g, q, 9, v); },
+  cano: (v, q) => ferrugem(torno([[.04, -.26], [.052, -.26], [.052, -.13], [.052, 0], [.052, .13], [.052, .26], [.04, .26], [.04, .13], [.04, -.13], [.04, -.26]], 18), q, 9, v),
+  chapa: (v, q) => { const g = new THREE.BoxGeometry(.34, .016, .26, 10, 1, 8), P = g.attributes.position;
+    for (let i = 0; i < P.count; i++) P.setY(i, P.getY(i) + .07 * Math.sin((P.getX(i) / .34 + .5) * PI) * (v % 2 ? 1 : -.6) + .025 * Math.sin(P.getZ(i) * 14 + v));
+    return ferrugem(amassar(g, .02, 9, v), q, 9, v); },
+  perfil: (v, q) => { const L = [[0, 0], [.075, 0], [.075, .012], [.012, .012], [.012, .075], [0, .075]],
+      I = [[-.04, 0], [.04, 0], [.04, .01], [.006, .01], [.006, .07], [.04, .07], [.04, .08], [-.04, .08], [-.04, .07], [-.006, .07], [-.006, .01], [-.04, .01]];
+    const g = new THREE.ExtrudeGeometry(new THREE.Shape(V2(v === 1 ? I : L)), { depth: .54, steps: 14, bevelEnabled: false }); g.center(); g.rotateY(PI / 2); return ferrugem(g, q, 9, v); },
+  tuboCu: v => tuboG([[[0, -.26, 0], [0, .04, 0], [.03, .13, 0], [.14, .17, 0]], [[-.02, -.26, 0], [0, 0, .02], [.04, .12, 0], [.02, .26, .03]]][v % 2], .024, 40, 10),
+  bobina: () => { const L = []; for (let i = 0; i < 7; i++) { const r = .082 + .005 * (i % 4), a = i * .9, ps = [];
+      for (let k = 0; k < 16; k++) { const t = k / 16 * 2 * PI; ps.push([Math.cos(t) * r, Math.sin(t) * r, (i - 3) * .011 + .006 * Math.sin(t * 2 + a)]); }
+      L.push([tuboG(ps, .0085, 44, 5, true)]); } return junta(L); },
+  emaranhado: v => { const ps = []; for (let k = 0; k < 40; k++) { const t = k / 40 * 2 * PI;
+      ps.push([.08 * Math.sin(3 * t + v) + .04 * Math.sin(7 * t + 1), .05 * Math.sin(2 * t + .5) + .03 * Math.cos(5 * t + v), .08 * Math.cos(3 * t) + .04 * Math.cos(6 * t + 2)]); }
+    return tuboG(ps, .0075, 220, 5, true); },
+  perfilU: () => { const g = new THREE.ExtrudeGeometry(new THREE.Shape(V2([[-.03, 0], [.03, 0], [.03, .045], [.022, .045], [.022, .008], [-.022, .008], [-.022, .045], [-.03, .045]])),
+      { depth: .52, steps: 1, bevelEnabled: false }); g.center(); g.rotateY(PI / 2); return g; },
+  chapaAlu: v => { const g = new THREE.BoxGeometry(.32, .01, .24, 8, 1, 6), P = g.attributes.position;
+    for (let i = 0; i < P.count; i++) P.setY(i, P.getY(i) + .05 * Math.sin((P.getX(i) / .32 + .5) * PI * (v % 2 ? 1 : 1.6))); return amassar(g, .012, 10, v); },
+  torrao: v => { const g = new THREE.IcosahedronGeometry(.085, 1); g.scale(1, .72, 1); return amassar(g, .05, 14, v * 3.1); },
+  pneu: () => { const g = new THREE.TorusGeometry(.13, .05, 10, 60, PI * .95), P = g.attributes.position, N = g.attributes.normal;
+    for (let j = 0; j <= 10; j++) for (let i = 0; i <= 60; i++) { const ix = j * 61 + i, w = j / 10 * 2 * PI, u = i / 60 * PI * .95;   // banda de rodagem
+      if (Math.cos(w) > .25 && Math.sin(u * 22) > 0) P.setXYZ(ix, P.getX(ix) + N.getX(ix) * .014, P.getY(ix) + N.getY(ix) * .014, P.getZ(ix) + N.getZ(ix) * .014); }
+    g.computeVertexNormals(); return g; },
+  mangueira: v => tuboG(v % 2 ? [[0, -.26, 0], [.06, -.1, .03], [-.04, .05, -.02], [.05, .18, .03], [0, .28, 0]] : [[-.1, -.24, 0], [.05, -.15, .02], [.08, .02, -.02], [-.05, .12, .03], [.02, .27, 0]], .027, 44, 9),
+  sacola: v => { const b = new THREE.IcosahedronGeometry(.1, 2); b.scale(1, .45, .85); amassar(b, .06, 16, v * 2.3);
+    const a1 = new THREE.TorusGeometry(.035, .007, 5, 12, PI), a2 = a1.clone(); a1.translate(-.035, .035, 0); a2.translate(.035, .035, 0); a2.rotateY(.3); return junta([[b], [a1], [a2]]); },
+  caixa: v => { const b = amassar(new THREE.BoxGeometry(.3, .2, .24, 4, 3, 4), .035, 8, v), f1 = new THREE.BoxGeometry(.3, .006, .12), f2 = f1.clone();
+    f1.translate(0, 0, .06); f1.rotateX(-.7); f1.translate(0, .1, .12); f2.translate(0, 0, -.06); f2.rotateX(.5); f2.translate(0, .1, -.12); return junta([[b], [f1], [f2]]); },
+  folhaPap: v => { const g = new THREE.BoxGeometry(.42, .012, .32, 6, 1, 5), P = g.attributes.position;
+    for (let i = 0; i < P.count; i++) P.setY(i, P.getY(i) + .05 * Math.sin((P.getX(i) / .42 + .5) * PI * 1.3 + v)); return amassar(g, .02, 7, v); },
+};
+const LATA = () => geo('LATA', () => torno([[0, -.1], [.052, -.1], [.06, -.096], [.07, -.084], [.07, -.06], [.07, -.03], [.07, 0], [.07, .03], [.07, .06], [.07, .076], [.062, .09], [.058, .097], [.058, .1], [0, .1]], 16));
+const PET = () => geo('PET', () => { const g = junta([[torno([[0, 0], [.03, .002], [.044, .012], [.05, .03], [.05, .075], [.046, .085], [.05, .095], [.05, .14], [.046, .16], [.034, .185], [.022, .2], [.017, .207], [.017, .216]], 16), 0],
+  [new THREE.CylinderGeometry(.02, .02, .024, 14).translate(0, .226, 0), 1]]); g.translate(0, -.12, 0); g.scale(1.35, 1.35, 1.35); return g; });   // ~32 cm
+function umaInst(g, m, nome, attr, val) {   // uma peça só com o material das instâncias: o atributo de 1 instância fica na geometria
+  const gg = geo(nome, () => { const c = g.clone(); c.setAttribute(attr, new THREE.InstancedBufferAttribute(new Float32Array(val), val.length)); return c; });
+  return new THREE.InstancedMesh(gg, m, 1);
+}
+function lataUma(cor, k, fx) { const kq = Math.round(k * 4) / 4, im = umaInst(LATA(), matLata(), 'lata' + kq + '_' + fx, 'aLata', [kq, fx]); im.setColorAt(0, _c.set(cor)); return im; }
+const petUma = (tinta, k) => { const kq = Math.round(k * 4) / 4; return umaInst(PET(), matPet(), 'pet' + kq + '_' + tinta, 'aPet', [kq, tinta]); };
+export const CORES_LATA = ['#C8553D', '#5B8FD6', '#3FA45B', '#F2B63D', '#2F353C', '#E9EEF2', '#D9734A', '#50D088', '#2C5FA8', '#B23A48'];   // faixas genéricas
+export const PAL = { cobre: ['#C8703A', '#B45F2D', '#D98C58'], alu: ['#C9D1DA', '#AFB9C4', '#DDE3E9'], aco: ['#7E8995', '#646F7B', '#8F99A4'],
+  ferrugem: ['#8A6A5A', '#7A5E52', '#937062'], terra: ['#7A5233', '#8B6240', '#6A4529'], borracha: ['#22272E', '#2E343C'], plastico: ['#4F8EDC', '#E6EEF7', '#3E7BC6'],
+  latinha: CORES_LATA, pet: ['#D8ECF4', '#3E9C5C'], papelao: ['#B98B5A', '#A87C4E', '#C49A6A'], ferro: ['#6E7884', '#5E6872', '#7E8995'] };
+const TIPOS = { cobre: ['tubo', 'bobina', 'bloco', 'tubo', 'bobina'], alu: ['lata', 'perfil', 'chapa', 'lata'], aco: ['chapa', 'bloco', 'perfil', 'chapa'],
+  ferrugem: ['bloco', 'chapa', 'perfil'], terra: ['terra'], borracha: ['pneu', 'mangueira'], plastico: ['caco', 'caco', 'garrafa'],
+  latinha: ['lata'], pet: ['garrafa', 'garrafa'], papelao: ['caixa', 'caixa', 'folha'], ferro: ['vergalhao', 'cano', 'chapa', 'perfil', 'vergalhao'] };
+function giro(k) {   // os mesmos sorteios do kit antigo para os tipos antigos
+  if (k === 'tubo' || k === 'mangueira' || k === 'garrafa' || k === 'vergalhao' || k === 'cano') return [ri(-.4, .4), ri(0, 2 * PI), PI / 2 + ri(-.4, .4)];
+  if (k === 'bobina' || k === 'pneu') return [PI / 2 + ri(-.5, .5), ri(0, 2 * PI), ri(-.4, .4)];
+  if (k === 'bloco' || k === 'terra') return [ri(0, 2 * PI), ri(0, 2 * PI), ri(0, 2 * PI)];
+  if (k === 'lata') return [ri(-.4, .4) + (rng() < .5 ? PI / 2 : 0), ri(0, 2 * PI), ri(-.4, .4)];
+  if (k === 'caixa') return [ri(-.2, .2), ri(0, 2 * PI), ri(-.2, .2)];
+  return [ri(-.3, .3), ri(0, 2 * PI), ri(-.3, .3)];
+}
+const RUST = { aco: .66, ferro: .52, ferrugem: .36 };   // limiar da ferrugem: quanto menor, mais ferrugem
+function desenho(metal, k, cor) {
+  const v = Math.floor(rng2() * 3), Mh = (g, m) => new THREE.Mesh(g, m);
+  if (k === 'lata') { const u = rng2(), c = metal === 'latinha' ? cor : pega2(CORES_LATA); return lataUma(u < .3 ? '#DCE2E8' : c, rng2() < .4 ? ri2(.6, 1) : 0, u < .3 ? 0 : u < .8 ? .055 : .1); }
+  if (k === 'garrafa') return petUma(metal === 'pet' ? (cor === PAL.pet[1] ? 1 : 0) : (rng2() < .5 ? 1 : 0), rng2() < .45 ? ri2(.6, 1) : 0);
+  if (metal === 'cobre') return Mh(k === 'tubo' ? geo('tuboCu' + v % 2, () => FORMA.tuboCu(v)) : k === 'bobina' ? geo('bobina', FORMA.bobina) : geo('emaranhado' + v, () => FORMA.emaranhado(v)), MM(cor, { r: .3, m: .85 }));
+  if (metal === 'alu') return Mh(k === 'perfil' ? geo('perfilU', FORMA.perfilU) : geo('chapaAlu' + v, () => FORMA.chapaAlu(v)), MM(cor, { r: .28, m: .85, f: k === 'chapa' }));
+  if (metal in RUST) { const f = k === 'bloco' ? (rng2() < .6 ? 'vergalhao' : 'cano') : k, q = Math.round(cl(RUST[metal] + (metal === 'ferro' ? ri2(-.15, .15) : 0), .1, .9) * 10) / 10;
+    return Mh(geo(f + v + 'r' + q, () => FORMA[f](v, q)), MM(cor, { r: .5, m: .6, fer: true, f: f === 'chapa' })); }
+  if (k === 'terra') return Mh(geo('torrao' + v, () => FORMA.torrao(v)), M(cor, { f: true }));
+  if (k === 'pneu') return Mh(geo('pneu', FORMA.pneu), M(cor, { r: .92 }));
+  if (k === 'mangueira') return Mh(geo('mangueira' + v % 2, () => FORMA.mangueira(v)), M(cor, { r: .8 }));
+  if (k === 'caco') return Mh(geo('sacola' + v, () => FORMA.sacola(v)), MP(cor));
+  if (k === 'caixa') return Mh(geo('caixa' + v, () => FORMA.caixa(v)), M(cor, { f: true }));
+  return Mh(geo('folhaPap' + v, () => FORMA.folhaPap(v)), M(cor, { f: true }));
+}
+// uma peça: 'cobre', 'alu', 'aco', 'ferrugem', 'ferro' (ferro misto), 'latinha', 'pet', 'papelao' ou impureza ('terra',
+// 'borracha', 'plastico'); devolve o objeto (posição, giro, escala; userData.s0 = escala base)
+export function peca(pai, metal, p, s = 1) {
+  const k = pega(TIPOS[metal]), cor = pega(PAL[metal]);
+  const sc = (k === 'bloco' || k === 'terra') ? [s * ri(.8, 1.3), s * ri(.55, .95), s * ri(.8, 1.25)] : s * ri(.85, 1.15);
+  const r = giro(k), o = desenho(metal, k, cor);
+  o.position.set(...p); o.rotation.set(...r); if (Array.isArray(sc)) o.scale.set(...sc); else o.scale.setScalar(sc);
+  o.castShadow = true; o.receiveShadow = Q.get('rs') === '1'; pai.add(o); o.userData.s0 = o.scale.clone(); return o;
+}
+export function monte(pai, p, o = {}) {   // monte de sucata; o: n, rx, rz, h, metais, mancha ([w, d] ou false)
+  const g = grupo(pai, p), rx = o.rx ?? .9, rz = o.rz ?? .76;
+  for (const q of domo(o.n ?? 34, rx, rz, o.h ?? .56)) peca(g, pega(o.metais ?? ['aco', 'aco', 'ferrugem', 'cobre', 'alu']), q);
+  if (o.mancha !== false) mancha(g, ...(o.mancha ?? [rx * 2.55, rz * 2.5]), .3); return g;
+}
+
+const GEO = { pino: new THREE.CylinderGeometry(1, 1, 1, 8) };   // parafusos da roda
+
+// ------------------------------------------------------------------ 3D: lote de peças iguais (InstancedMesh) e o voo entre lugares
+const _m = new THREE.Matrix4(), _mi = new THREE.Matrix4(), _p = new THREE.Vector3(), _p2 = new THREE.Vector3(), _pp = new THREE.Vector3(),
+  _q = new THREE.Quaternion(), _q2 = new THREE.Quaternion(), _pq = new THREE.Quaternion(), _s = new THREE.Vector3(), _e = new THREE.Euler(), _c = new THREE.Color();
+export function lote(geo, mat, n, pai) {
+  const im = new THREE.InstancedMesh(geo, mat, n); im.castShadow = true; im.receiveShadow = Q.get('rs') === '1'; im.frustumCulled = false;
+  im.userData.A = []; pai.add(im); return im;
+}
+export function poeInst(im, i, p, r = [0, 0, 0], s = 1) {
+  _m.compose(_p.set(p[0], p[1], p[2]), _q.setFromEuler(_e.set(r[0], r[1], r[2])), Array.isArray(s) ? _s.set(...s) : _s.setScalar(s));
+  im.setMatrixAt(i, _m); im.userData.A[i] = { p: _p.clone(), q: _q.clone(), s }; im.instanceMatrix.needsUpdate = true;
+}
+// leva cada peça do lugar de origem (A, no pai do lote) ao destino B[i] = [x, y, z, rx, ry, rz] no MUNDO, com arco e
+// cada uma no seu tempo (a + ordem[i]·passo); chamar a cada quadro (o pai pode se mover: a peça que chegou fica no lugar)
+// v2: cada peça cai como coisa que tem peso (arranca devagar, acelera na descida, bate e dá um quique curto que morre),
+// em vez de flutuar de um ponto ao outro. o.suave = true volta ao voo do v1 (peça levada pela mão, não jogada).
+export function transfere(im, B, t, a, d, o = {}) {
+  const A = im.userData.A, pai = im.parent; pai.updateWorldMatrix(true, false);
+  const PW = pai.matrixWorld; _mi.copy(PW).invert(); PW.decompose(_pp, _pq, _s);
+  const passo = o.passo ?? .002, arco = o.arco ?? .5;
+  for (let i = 0; i < A.length; i++) {
+    const s0 = pr(t, a + (o.ordem ? o.ordem[i] : i) * passo, d), Ai = A[i], s = Ai.s, b = B[i];
+    const sv = Array.isArray(s) ? _s.set(...s) : _s.setScalar(s);
+    if (s0 <= 0) { _m.compose(Ai.p, Ai.q, sv); im.setMatrixAt(i, _m); continue; }
+    _p.copy(Ai.p).applyMatrix4(PW); _q.copy(_pq).multiply(Ai.q); _q2.setFromEuler(_e.set(b[3] ?? 0, b[4] ?? 0, b[5] ?? 0));
+    if (o.suave) { const q = eio(s0); _p.lerp(_p2.set(b[0], b[1], b[2]), q); _p.y += arco * Math.sin(PI * q); _q.slerp(_q2, q); }
+    else { const f = cl(s0 / .82), y0 = _p.y, h = f * (.55 + .45 * f), qv = b[1] < y0 ? f * f : f * (2 - f);
+      _p.lerp(_p2.set(b[0], b[1], b[2]), h); _p.y = lerp(y0, b[1], qv) + arco * 4 * f * (1 - f) * (1 - .5 * f);
+      if (s0 > .82) { const k = (s0 - .82) / .18; _p.y += Math.min(.14, .03 + .05 * Math.abs(y0 - b[1])) * 4 * k * (1 - k) * (1 - .35 * k); }
+      _q.slerp(_q2, f * f * (3 - 2 * f)); }
+    _m.compose(_p, _q, sv).premultiply(_mi); im.setMatrixAt(i, _m);
+  }
+  im.instanceMatrix.needsUpdate = true;
+}
+export const ordemPor = (im, f) => { const A = im.userData.A, ix = A.map((_, i) => i).sort((i, j) => f(A[i].p) - f(A[j].p)), o = []; ix.forEach((i, k) => { o[i] = k; }); return o; };
+
+// ------------------------------------------------------------------ 3D: objetos do pátio (sem marca)
+// saco de ráfia fechado (tara)
+export function saco(pai, p) {
+  const g = grupo(pai, p), s = [1, 1, .82];
+  poe(torno([[0, 0], [.2, .004], [.29, .05], [.325, .17], [.335, .34], [.315, .5], [.26, .62], [.17, .71], [.085, .77], [.072, .81], [.1, .87], [.115, .92], [.07, .95], [0, .955]], 30), M(COR.rafia), g, [0, 0, 0], [0, 0, 0], s);
+  poe(new THREE.TorusGeometry(.083, .024, 8, 20), M(COR.rafiaE), g, [0, .79, 0], [PI / 2, 0, 0], [1, .82, 1]);
+  for (const [y, r] of [[.25, .331], [.42, .33]]) poe(new THREE.TorusGeometry(r, .007, 6, 40), M('#C9AF7E'), g, [0, y, 0], [PI / 2, 0, 0], [1, .82, 1]);
+  return g;
+}
+// saco aberto (o bruto): ráfia por fora; a carga vai num grupo à parte, na boca (y até .75)
+export function sacoAberto(pai, p = [0, 0, 0]) {
+  const g = grupo(pai, p), mf = M('#C9AF7E');
+  poe(torno([[0, 0], [.24, .004], [.34, .05], [.385, .17], [.395, .34], [.38, .5], [.35, .62], [.33, .7], [.345, .75], [.365, .775]], 34), M(COR.rafia, { ds: true }), g, [0, 0, 0], [0, 0, 0], [1, 1, .84]);
+  poe(new THREE.TorusGeometry(.358, .026, 8, 40), mf, g, [0, .765, 0], [PI / 2, 0, 0], [1, .84, 1]);
+  for (const y of [.22, .4]) poe(new THREE.TorusGeometry(.392, .007, 6, 44), mf, g, [0, y, 0], [PI / 2, 0, 0], [1, .84, 1]);
+  return g;
+}
+// tambor de aço
+export function tambor(pai, p) {
+  const g = grupo(pai, p), mt = M('#557891'), ma = M('#46667D');
+  poe(new THREE.CylinderGeometry(.29, .29, .86, 36), mt, g, [0, .43, 0]);
+  for (const y of [.29, .57]) poe(new THREE.TorusGeometry(.292, .017, 8, 40), ma, g, [0, y, 0], [PI / 2, 0, 0]);
+  for (const y of [.012, .858]) poe(new THREE.TorusGeometry(.282, .022, 8, 40), ma, g, [0, y, 0], [PI / 2, 0, 0]);
+  poe(new THREE.CylinderGeometry(.045, .045, .03, 16), ma, g, [.14, .87, .06]);
+  return g;
+}
+// caçamba pequena (de empilhadeira): corpo em trapézio, boca escura e dois patins
+export function cacamba(pai, p) {
+  const g = grupo(pai, p), mt = M('#6E7B88');
+  const sh = new THREE.Shape(); sh.moveTo(-.42, 0); sh.lineTo(.42, 0); sh.lineTo(.56, .5); sh.lineTo(-.56, .5); sh.closePath();
+  const geo = new THREE.ExtrudeGeometry(sh, { depth: .04, bevelEnabled: true, bevelThickness: .012, bevelSize: .012, bevelSegments: 1, curveSegments: 1 });
+  geo.translate(0, .08, -.02); for (const z of [-.31, .31]) poe(geo, mt, g, [0, 0, z]);
+  const inc = Math.atan2(.14, .5); for (const sx of [-1, 1]) poe(rbox(.045, .53, .66, .015, 1), mt, g, [sx * .49, .33, 0], [0, 0, -sx * inc]);
+  poe(rbox(.86, .04, .62, .015, 1), M('#56626F'), g, [0, .1, 0]);
+  for (const x of [-.28, .28]) poe(rbox(.13, .07, .72, .02, 1), M(COR.cinzaE), g, [x, .035, 0]);
+  return g;
+}
+// fardo prensado com duas cintas
+export function fardo(pai, p, cor = COR.alu) {
+  const g = grupo(pai, p); poe(rbox(.5, .42, .46, .035, 2), M(cor), g, [0, .21, 0]);
+  for (const x of [-.13, .13]) poe(rbox(.03, .43, .47, .01, 1), M(COR.cinzaE), g, [x, .21, 0]); return g;
+}
+// palete de madeira (tampo a .115 do chão)
+export function palete(pai, p) {
+  const g = grupo(pai, p), m = M(COR.madeira), m2 = M(COR.madeiraE);
+  for (const z of [-.4, 0, .4]) poe(rbox(1.3, .08, .13, .02, 1), m2, g, [0, .04, z]);
+  for (let i = 0; i < 6; i++) poe(rbox(.18, .035, 1.0, .012, 1), m, g, [-.55 + i * .22, .098, 0]); return g;
+}
+// roda (pneu de perfil arredondado, aro e parafusos; eixo em z): gira em rotation.z
+export function roda(pai, p, R, w) {
+  const g = grupo(pai, p), k = .3 * w, r0 = R * .6;
+  poe(torno([[r0, -w / 2], [R - k, -w / 2], [R - k * .25, -w / 2 + k * .25], [R, -w / 2 + k], [R, w / 2 - k], [R - k * .25, w / 2 - k * .25], [R - k, w / 2], [r0, w / 2]], 26), M(COR.pneu), g, [0, 0, 0], [PI / 2, 0, 0]);
+  poe(new THREE.CylinderGeometry(r0, r0, w * .84, 22), M(COR.aro), g, [0, 0, 0], [PI / 2, 0, 0]);
+  poe(new THREE.CylinderGeometry(R * .2, R * .2, w * .92, 12), M(COR.cinzaE), g, [0, 0, 0], [PI / 2, 0, 0]);
+  for (let i = 0; i < 5; i++) { const a = i * 2 * PI / 5; poe(GEO.pino, M(COR.cinzaE), g, [Math.cos(a) * R * .38, Math.sin(a) * R * .38, 0], [PI / 2, 0, 0], [R * .07, w * .9, R * .07]); }
+  return g;
+}
+// carroça de mão: caixa âmbar, duas rodas, varais de madeira (o fundo da caixa a y .59); userData.rodas, R
+export function carroca(pai, p) {
+  const g = grupo(pai, p), amb = M(COR.ambar), ambE = M(COR.ambarE), pau = M('#8A5A34'); g.userData.R = .36; g.userData.rodas = [];
+  for (const z of [-.62, .62]) { const r = grupo(g, [0, .36, z]); g.userData.rodas.push(r);
+    poe(new THREE.TorusGeometry(.28, .08, 10, 30), M(COR.pneu), r);
+    poe(new THREE.CylinderGeometry(.2, .2, .09, 24), M(COR.aro), r, [0, 0, 0], [PI / 2, 0, 0]);
+    for (let k = 0; k < 3; k++) poe(rbox(.38, .04, .1, .012, 1), M(COR.aco), r, [0, 0, 0], [0, 0, k * PI / 3]); }
+  poe(new THREE.CylinderGeometry(.035, .035, 1.26, 10), M(COR.cinzaE), g, [0, .36, 0], [PI / 2, 0, 0]);
+  for (const z of [-.38, .38]) poe(rbox(.12, .2, .06, .015, 1), M(COR.cinzaE), g, [0, .46, z]);
+  poe(rbox(1.7, .06, 1.1, .02, 1), ambE, g, [0, .56, 0]);
+  for (const x of [-.82, .82]) poe(rbox(.06, .42, 1.1, .02, 1), amb, g, [x, .77, 0]);
+  for (const z of [-.52, .52]) poe(rbox(1.7, .42, .06, .02, 1), amb, g, [0, .77, z]);
+  for (const z of [-.38, .38]) poe(new THREE.CylinderGeometry(.032, .032, 1.22, 10), pau, g, [1.45, .68, z], [0, 0, PI / 2 - .03]);
+  poe(new THREE.CylinderGeometry(.034, .034, .9, 10), pau, g, [2.05, .7, 0], [PI / 2, 0, 0]);
+  mancha(g, 2.4, 1.6, .3, [.4, 0, 0]); return g;
+}
+// balança de pátio (plataforma com rampas e o poste do mostrador). o: c (comprimento), l (largura), rampa, poste [x, z],
+// hp (altura do poste), rp (raio do poste). userData.topo = ponto (local) para o mostrador; userData.altura(x local) = chão
+export function balancaPatio(pai, p, o = {}) {
+  const c = o.c ?? 3.8, l = o.l ?? 2.2, rp = o.rampa ?? .7, h = .172, g = grupo(pai, p);
+  poe(rbox(c, .16, l, .05, 2), M('#8E98A3'), g, [0, .08, 0]); poe(rbox(c - .14, .02, l - .14, .008, 1), M(COR.cinzaC), g, [0, .163, 0]);
+  const n = Math.floor((c - .6) / .4) + 1; for (let i = 0; i < n; i++) poe(rbox(.035, .012, l - .3, .006, 1), M('#A5AEB8'), g, [(i - (n - 1) / 2) * .4, .176, 0]);
+  const sh = new THREE.Shape(); sh.moveTo(0, 0); sh.lineTo(rp, 0); sh.lineTo(rp, h); sh.closePath();
+  const rg = new THREE.ExtrudeGeometry(sh, { depth: l - .2, bevelEnabled: false }); rg.translate(0, 0, -(l - .2) / 2);
+  poe(rg, M('#C5CCD4'), g, [-c / 2 - rp, 0, 0]); poe(rg, M('#C5CCD4'), g, [c / 2 + rp, 0, 0], [0, 0, 0], [-1, 1, 1]);
+  if (o.mancha !== false) mancha(g, c + 2 * rp + 1.2, l + .8, .26);
+  const [px, pz] = o.poste ?? [c / 2 + .35, -(l / 2 + .25)], hp = o.hp ?? .96, r = o.rp ?? .045;
+  poe(rbox(r * 7.5, .04, r * 7.5, .012, 1), M('#9AA3AD'), g, [px, .02, pz]); poe(new THREE.CylinderGeometry(r, r * 1.1, hp, 14), M('#B9C1C9'), g, [px, hp / 2 + .02, pz]);
+  g.userData.topo = [px, hp + .03, pz];
+  g.userData.altura = u => u < -c / 2 - rp ? 0 : u < -c / 2 ? h * (u + c / 2 + rp) / rp : u <= c / 2 ? h : u < c / 2 + rp ? h * (c / 2 + rp - u) / rp : 0;
+  return g;
+}
+// latinhas: um lote de latas de alumínio com brilho (faixa de cor genérica, inteiras e amassadas). P = pontos no pai;
+// o.r(i) = giro, o.s = escala, o.cores = cores da faixa, o.amassadas = fração amassada (padrão .35)
+export function latinhas(pai, P, o = {}) {
+  const g = LATA().clone(), A = new Float32Array(P.length * 2); g.setAttribute('aLata', new THREE.InstancedBufferAttribute(A, 2));
+  const im = lote(g, matLata(), P.length, pai);
+  P.forEach((p, i) => { poeInst(im, i, p, o.r ? o.r(i) : [ri(0, 2 * PI), ri(0, 2 * PI), ri(0, 2 * PI)], o.s ?? ri(.9, 1.1)); im.setColorAt(i, _c.set(pega(o.cores ?? CORES_LATA)));
+    const u = rng2(); A[2 * i] = rng2() < (o.amassadas ?? .35) ? ri2(.55, 1) : 0; A[2 * i + 1] = u < .3 ? 0 : u < .8 ? .055 : .1; });
+  return im;
+}
+// garrafas PET num lote (translúcidas, transparentes e verdes, inteiras e amassadas). P = pontos no pai; o.r(i), o.s,
+// o.verdes (fração verde, padrão .4), o.amassadas (padrão .45)
+export function pets(pai, P, o = {}) {
+  const g = PET().clone(), A = new Float32Array(P.length * 2); g.setAttribute('aPet', new THREE.InstancedBufferAttribute(A, 2));
+  const im = lote(g, matPet(), P.length, pai);
+  P.forEach((p, i) => { poeInst(im, i, p, o.r ? o.r(i) : [PI / 2 + ri(-.5, .5), ri(0, 2 * PI), ri(-.4, .4)], o.s ?? ri(.9, 1.1));
+    A[2 * i] = rng2() < (o.amassadas ?? .45) ? ri2(.6, 1) : 0; A[2 * i + 1] = rng2() < (o.verdes ?? .4) ? 1 : 0; });
+  return im;
+}
+// baterias automotivas (caixa escura, tampa, polos): P = [x, y (base), z, giro]
+const BAT = rbox(.34, .2, .22, .025, 1), TAMPA = rbox(.35, .035, .23, .012, 1), POLO = new THREE.CylinderGeometry(.026, .026, .045, 8);
+export function baterias(pai, P) {
+  const b = lote(BAT, M(COR.cinzaE), P.length, pai), tp = lote(TAMPA, M('#4B5563'), P.length, pai), po = lote(POLO, M('#ffffff'), 2 * P.length, pai);
+  P.forEach(([x, y, z, r = 0], i) => { poeInst(b, i, [x, y + .1, z], [0, r, 0]); poeInst(tp, i, [x, y + .2175, z], [0, r, 0]);
+    [[-.11, '#C8553D'], [.11, COR.pneu]].forEach(([sx, cor], k) => { poeInst(po, 2 * i + k, [x + Math.cos(r) * sx, y + .25, z - Math.sin(r) * sx]); po.setColorAt(2 * i + k, _c.set(cor)); }); });
+  return { b, tp, po };
+}
+// caminhão (frente para +x). o: cor (cabine; padrão verde), c (comprimento), l (largura), R (roda), eixos (2 ou 3), cc/hc
+// (cabine), bau ('basculante' | 'grade'), hb, carga ('latinha' | 'bateria' | nada = vazio), n (latas).
+// userData: rodas, R, eixos (x de cada eixo), cacamba (pivô da caçamba, gira em z para bascular), carga, bau {cb, hb}.
+export function caminhao(pai, p, o = {}) {
+  const c = o.c ?? 6.6, Wd = o.l ?? 2.3, R = o.R ?? .46, ww = .34, cc = o.cc ?? 1.85, hc = o.hc ?? 1.7, y0 = 2 * R + .06, bt = .06;
+  // v2: as rodas ficam na raiz e todo o resto no grupo u.corpo, que a suspensão mexe (suspende, dirige) sem tirar a roda do chão
+  const raiz = grupo(pai, p), u = raiz.userData, g = grupo(raiz), mC = M(o.cor ?? COR.verde), mE = M(COR.cinzaE), mV = M('#BFD4E2', { r: .22 });
+  u.corpo = g;
+  u.R = R; u.rodas = []; u.eixos = [c / 2 - .95, ...(o.eixos === 2 ? [-c / 2 + 1.15] : [-c / 2 + 1.0, -c / 2 + 2.0])];
+  poe(rbox(c - .45, .26, Wd * .44, .04, 1), mE, g, [-.05, R + .2, 0]);                                        // chassi
+  for (const x of u.eixos) for (const s of [-1, 1]) u.rodas.push(roda(raiz, [x, R, s * (Wd / 2 - ww / 2 - .03)], R, ww));
+  poe(new THREE.CylinderGeometry(.2, .2, .8, 16), M(COR.cinzaC), g, [c / 2 - cc - .55, R + .1, Wd / 2 - .32], [0, 0, PI / 2]);   // tanque
+  poe(rbox(cc - .1, y0 - R - .3, Wd - 2 * ww - .25, .03, 1), mE, g, [c / 2 - cc / 2, (R + .33 + y0) / 2, 0]);        // sob a cabine
+  poe(rbox(.2, .3, Wd + .04, .05, 1), mE, g, [c / 2 + .06, R + .32, 0]);                                         // para-choque
+  // cabine: perfil com o para-brisa inclinado, extrudado com borda arredondada
+  const cab = grupo(g, [c / 2 - cc / 2, y0, 0]);
+  const eg = new THREE.ExtrudeGeometry(new THREE.Shape([[0, 0], [cc, 0], [cc, hc * .56], [cc - .3, hc * .93], [cc - .44, hc], [0, hc]].map(v => new THREE.Vector2(...v))),
+    { depth: Wd - 2 * bt, bevelEnabled: true, bevelThickness: bt, bevelSize: bt, bevelSegments: 3, curveSegments: 1 });
+  eg.translate(-cc / 2, 0, -(Wd - 2 * bt) / 2); poe(eg, mC, cab);
+  const th = Math.atan2(.3, .37 * hc), Ls = Math.hypot(.3, .37 * hc);
+  poe(rbox(.03, Ls * .8, Wd - .44, .012, 1), mV, cab, [cc / 2 - .15 + Math.cos(th) * (bt + .01), hc * .745 + Math.sin(th) * (bt + .01), 0], [0, 0, th]);   // para-brisa
+  poe(rbox(.03, hc * .24, Wd * .46, .01, 1), mE, cab, [cc / 2 + bt + .004, hc * .3, 0]);                         // grade
+  poe(rbox(cc + .03, .15, Wd + .03, .03, 1), mE, cab, [0, .075, 0]);                                               // saia escura (dá base à cabine)
+  poe(new THREE.CylinderGeometry(.055, .055, hc * .95, 12), MM('#C9D1DA', { r: .3, m: .85 }), g, [c / 2 - cc - .15, y0 + hc * .52, -(Wd / 2 - .22)]);   // escapamento
+  for (const s of [-1, 1]) {
+    poe(rbox(.86, hc * .36, .016, .012, 1), mE, cab, [cc / 2 - .7, hc * .72, s * (Wd / 2 + .002)]);              // moldura da janela
+    poe(rbox(.78, hc * .29, .02, .01, 1), mV, cab, [cc / 2 - .7, hc * .725, s * (Wd / 2 + .006)]);                // janela
+    poe(rbox(.014, hc * .8, .012, .005, 1), M('#' + new THREE.Color(o.cor ?? COR.verde).multiplyScalar(.72).getHexString()), cab, [cc / 2 - 1.2, hc * .47, s * (Wd / 2 + .001)]);    // vinco da porta
+    poe(rbox(.13, .035, .02, .01, 1), mE, cab, [cc / 2 - 1.02, hc * .44, s * (Wd / 2 + .008)]);                   // maçaneta
+    poe(rbox(.03, .14, .3, .01, 1), M(COR.farol, { r: .5 }), cab, [cc / 2 + bt + .004, hc * .2, s * (Wd / 2 - .34)]);   // farol
+    poe(rbox(.03, .12, .12, .01, 1), M(COR.ambar), cab, [cc / 2 + bt + .004, hc * .2, s * (Wd / 2 - .12)]);     // pisca
+    poe(rbox(.2, .035, .035, .01, 1), mE, cab, [cc / 2 - .12, hc * .68, s * (Wd / 2 + .1)]);                       // braço do espelho
+    poe(rbox(.05, .32, .12, .02, 1), M(COR.escuro), cab, [cc / 2 - .02, hc * .62, s * (Wd / 2 + .2)]);           // espelho
+  }
+  // caçamba (pivô no fundo de trás): basculante de aço ou carroceria de grade de madeira
+  const cb = c - cc - .32, grade = o.bau === 'grade', hb = o.hb ?? (grade ? .55 : .9), x0 = -c / 2 + .04;
+  poe(rbox(cb - .3, .15, Wd * .5, .03, 1), mE, g, [x0 + cb / 2, R + .33 + .075, 0]);                           // estrado
+  const B = grupo(g, [x0, y0 - .04, 0]); u.cacamba = B; u.bau = { cb, hb, Wd };
+  const mB = M(o.corB ?? (grade ? COR.madeira : '#98A2AD')), mR = M(grade ? COR.madeiraE : COR.aco);
+  poe(rbox(cb, .1, Wd, .03, 1), grade ? mE : mB, B, [cb / 2, .05, 0]);
+  if (grade) {
+    for (const y of [.17, .33, .49]) { for (const s of [-1, 1]) poe(rbox(cb, .12, .06, .02, 1), mB, B, [cb / 2, y, s * (Wd / 2 - .03)]);
+      for (const x of [.03, cb - .03]) poe(rbox(.06, .12, Wd, .02, 1), mB, B, [x, y, 0]); }
+    for (const x of [.05, cb / 3, 2 * cb / 3, cb - .05]) for (const s of [-1, 1]) poe(rbox(.08, hb + .06, .08, .02, 1), mE, B, [x, .1 + (hb + .06) / 2 - .03, s * (Wd / 2 - .03)]);
+  } else {
+    for (const s of [-1, 1]) { poe(rbox(cb, hb, .07, .02, 1), mB, B, [cb / 2, .1 + hb / 2, s * (Wd / 2 - .035)]);
+      poe(rbox(cb + .04, .07, .13, .02, 1), mR, B, [cb / 2, .1 + hb, s * (Wd / 2 - .035)]);
+      for (let i = 1; i < 5; i++) poe(rbox(.07, hb - .06, .05, .015, 1), mR, B, [i * cb / 5, .1 + hb / 2, s * (Wd / 2 + .012)]); }
+    poe(rbox(.08, hb + .3, Wd, .02, 1), mB, B, [cb - .04, .1 + (hb + .3) / 2, 0]);
+    poe(rbox(.08, hb, Wd - .02, .02, 1), mR, B, [.04, .1 + hb / 2, 0]);
+    u.pistao = poe(new THREE.CylinderGeometry(.075, .075, 1, 12), M(COR.aco), g); u.pistao.visible = false; u.x0 = x0; u.yb = y0 - .04;
+  }
+  if (o.carga === 'latinha') { const P = [], rx = cb / 2 - .15, rz = Wd / 2 - .15;
+    for (let i = 0; i < (o.n ?? 380); i++) { const x = ri(-1, 1), z = ri(-1, 1); P.push([cb / 2 + x * rx, .1 + hb + .24 * (1 - x ** 4) * (1 - z ** 4) - ri(0, .32), z * rz]); }
+    u.carga = latinhas(B, P); }
+  if (o.carga === 'bateria') { const P = [], nx = Math.floor((cb - .2) / .38), nz = Math.floor((Wd - .2) / .27);
+    for (let k = 0; k < 2; k++) for (let i = 0; i < nx; i++) for (let j = 0; j < nz; j++) if (k === 0 || rng() < .8)
+      P.push([.1 + (i + .5) * (cb - .2) / nx, .1 + k * .235, (j - (nz - 1) / 2) * .27, ri(-.06, .06)]);
+    u.carga = baterias(B, P); }
+  u.mancha = mancha(raiz, c + .8, Wd + .9, .3); return raiz;
+}
+// põe o veículo no ponto x (chão h(x) no mundo: rampas), com a inclinação entre o eixo da frente e o de trás e as rodas girando
+export function anda(v, x, h = () => 0) {
+  const u = v.userData, xf = u.eixos[0], xr = u.eixos.length > 2 ? (u.eixos[1] + u.eixos[2]) / 2 : u.eixos[1], yf = h(x + xf), yr = h(x + xr);
+  v.position.x = x; v.position.y = (yr * xf - yf * xr) / (xf - xr); v.rotation.z = Math.atan2(yf - yr, xf - xr);
+  for (const r of u.rodas) r.rotation.z = -x / u.R;
+}
+// v2 · suspensão: a carroceria (u.corpo) arfa e afunda sobre as rodas. arfa em radianos (positivo levanta a frente),
+// afunda em metros (positivo desce), rola em radianos
+export function suspende(v, arfa = 0, afunda = 0, rola = 0) { const c = v.userData.corpo; if (!c) return; c.rotation.z = arfa; c.rotation.x = rola; c.position.y = -afunda; }
+// v2 · dirige: o veículo segue x = fx(t) e a suspensão responde à aceleração como mola amortecida de verdade (arranca:
+// a frente levanta; freia: mergulha, passa e assenta). A resposta é a convolução da aceleração de fx com a resposta ao
+// impulso da mola, calculada só com fx: função pura de t (sem estado entre quadros). o: k (ganho do arfar), hz, z
+// (amortecimento), golpes [[t0, força]] (tranco vertical: caçamba que bate, carga que cai), carga(t) de 0 a 1 (peso que
+// afunda a mola; sem ela, não afunda). Devolve x.
+export function dirige(v, t, fx, h = () => 0, o = {}) {
+  const x = fx(t), w = 2 * PI * (o.hz ?? 1.25), z = o.z ?? .3, wd = w * Math.sqrt(1 - z * z), dt = 1 / 30, e = 1 / 30; let r = 0, hv = 0;
+  for (let k = 0; k < 54; k++) { const u = t - k * dt, a = (fx(u + e) - 2 * fx(u) + fx(u - e)) / (e * e), tau = k * dt; r += a * Math.exp(-z * w * tau) * Math.sin(wd * tau) / wd * dt; }
+  for (const [t0, f] of o.golpes ?? []) { const tau = t - t0; if (tau > 0 && tau < 2) hv += f * Math.exp(-z * 1.4 * w * tau) * Math.sin(wd * 1.3 * tau); }
+  anda(v, x, h); suspende(v, cl((o.k ?? .5) * r, -.06, .06), (o.carga ? .055 * o.carga(t) : 0) + hv, 0); return x;
+}
+// v2 · poeira: sopro de pó claro (ação secundária de quem freia, bate ou cai). p = poeira(pai, n); a cada quadro,
+// sopra(p, t, a, [x, y, z], {d: duração, r: raio, dir: [dx, dz] (para onde vai), alto, op}). Função só de t.
+export function poeira(pai, n = 10, cor = '#BFBBB3') {
+  if (!TXS) mancha(new THREE.Group(), 1, 1);   // garante a textura macia (TXS)
+  const g = grupo(pai); g.userData.S = [];
+  for (let i = 0; i < n; i++) { const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: TXS, color: cor, transparent: true, opacity: 0, depthWrite: false })); sp.visible = false; sp.renderOrder = 3; g.add(sp); g.userData.S.push(sp); }
+  return g;
+}
+export function sopra(g, t, a, p, o = {}) {
+  const S = g.userData.S, d = o.d ?? 1.2, r = o.r ?? .9, dir = o.dir ?? [0, 0], alto = o.alto ?? .35, opm = o.op ?? .5;
+  S.forEach((sp, i) => { const x = pr(t, a + hsh(i + 3) * .16, d * (.75 + .5 * hsh(i + 11))); if (x <= 0 || x >= 1) { sp.visible = false; return; }
+    const an = hsh(i + 1) * 2 * PI, k = eo5(x), rr = r * (.35 + .65 * hsh(i + 5)) * k;
+    sp.visible = true; sp.position.set(p[0] + Math.cos(an) * rr + dir[0] * k * r, p[1] + .08 + alto * (.3 + .7 * hsh(i + 7)) * (k * .7 + x * .3), p[2] + Math.sin(an) * rr * .6 + dir[1] * k * r);
+    sp.scale.setScalar(r * (.45 + .9 * k) * (.7 + .6 * hsh(i + 9))); sp.material.opacity = opm * Math.min(1, x / .12) * Math.pow(1 - x, 1.4); });
+}
+// bascula a caçamba (a em radianos), com o pistão aparecendo por baixo
+export function bascula(v, a) {
+  const u = v.userData; u.cacamba.rotation.z = a; if (!u.pistao) return; const L = u.bau.cb * .62;
+  const bx = u.x0 + L - .25, by = u.R + .5, tx = u.x0 + L * Math.cos(a), ty = u.yb + L * Math.sin(a), dx = tx - bx, dy = ty - by;
+  u.pistao.visible = a > .02; u.pistao.position.set((bx + tx) / 2, (by + ty) / 2, 0); u.pistao.scale.set(1, Math.hypot(dx, dy), 1); u.pistao.rotation.z = -Math.atan2(dx, dy);
+}
+// fardo de latinhas prensadas: bloco de alumínio com as latas amassadas nas faces (instâncias) e duas cintas
+export function fardoLatinhas(pai, p, o = {}) {
+  const g = grupo(pai, p), w = o.w ?? 1.0, h = o.h ?? .78, d = o.d ?? .78, P = [], Rr = [], e = .13;
+  poe(rbox(w, h, d, .06, 2), MM('#AEB7C1', { r: .5, m: .6 }), g, [0, h / 2, 0]);
+  const grade = (a, b) => { const n = Math.floor((a - .12) / e), m = Math.floor((b - .12) / e), L = []; for (let i = 0; i < n; i++) for (let j = 0; j < m; j++) L.push([(i - (n - 1) / 2) * e + ri(-.02, .02), (j - (m - 1) / 2) * e + ri(-.02, .02)]); return L; };
+  for (const s of [-1, 1]) {   // a lata deita na face, achatada contra ela (z local = normal da face)
+    for (const [x, y] of grade(w, h)) { P.push([x, h / 2 + y, s * (d / 2 + .02)]); Rr.push([ri(-.3, .3) * .5, s < 0 ? PI : 0, ri(-.3, .3) / .3 * PI]); }
+    for (const [z, y] of grade(d, h)) { P.push([s * (w / 2 + .02), h / 2 + y, z]); Rr.push([ri(-.3, .3) * .5, s * PI / 2, ri(-.3, .3) / .3 * PI]); }
+  }
+  for (const [x, z] of grade(w, d)) { P.push([x, h + .02, z]); Rr.push([-PI / 2 + ri(-.3, .3) * .5, 0, ri(-.3, .3) / .3 * PI]); }
+  const lg = LATA().clone(), A = new Float32Array(P.length * 2); lg.setAttribute('aLata', new THREE.InstancedBufferAttribute(A, 2));
+  const im = lote(lg, matLata(), P.length, g);
+  P.forEach((q, i) => { poeInst(im, i, q, Rr[i], [ri(.75, 1.1) * 1.25, ri(.75, 1.1) * 1.1, .55]); im.setColorAt(i, _c.set(pega(CORES_LATA)));
+    const u = rng2(); A[2 * i] = ri2(.75, 1); A[2 * i + 1] = u < .3 ? 0 : u < .8 ? .055 : .1; });
+  for (const x of [-w * .28, w * .28]) poe(rbox(.035, h + .03, d + .03, .01, 1), M(COR.cinzaE), g, [x, h / 2, 0]);
+  mancha(g, w + .7, d + .7, .28); return g;
+}
+// fardo de papelão prensado: camadas em tons de pardo e cintas de arame
+export function fardoPapelao(pai, p, o = {}) {
+  const g = grupo(pai, p), w = o.w ?? 1.1, h = o.h ?? .8, d = o.d ?? .8, n = Math.max(6, Math.round(h / .055)), e = (h - .02) / n;
+  for (let i = 0; i < n; i++) poe(rbox(w + ri2(-.04, .04), e * 1.02, d + ri2(-.04, .04), .01, 1), M(PAL.papelao[i % 3], { f: true }), g, [ri2(-.025, .025), (i + .5) * e + .01, ri2(-.025, .025)], [0, ri2(-.03, .03), 0]);
+  for (const x of [-w * .3, 0, w * .3]) poe(rbox(.02, h + .02, d + .06, .006, 1), M(COR.cinzaE), g, [x, h / 2, 0]);
+  mancha(g, w + .7, d + .7, .28); return g;
+}
+// big bag de ráfia clara, sem marca. o.estado: 'cheio' (alças nos quatro cantos e a boca de enchimento amarrada), 'aberto'
+// (a boca aberta: a cena põe a carga acima de y = h) ou 'vazio' (dobrado no chão). o.w, o.h, o.mancha (false: sem a
+// sombra de contato, para o bag que voa); userData.h = altura
+export function bigBag(pai, p, o = {}) {
+  const g = grupo(pai, p), w = o.w ?? .78, h = o.h ?? .82, mR = M('#ECE3CF'), mC = M('#D6C9AC'), mA = M('#E2D6BD'); g.userData.h = h;
+  if (o.estado === 'vazio') {
+    poe(amassar(rbox(w * 1.1, .085, w * .8, .035, 2), .025, 6, 1), mR, g, [0, .0425, 0]);
+    poe(rbox(w * 1.04, .012, .03, .006, 1), mC, g, [0, .088, -.05]);
+    for (const [x, z, r] of [[-.3, -.2, .5], [.3, -.2, -.4], [-.28, .22, 2.7], [.3, .2, -2.9]]) poe(new THREE.TorusGeometry(.075, .017, 6, 14, PI), mA, g, [x * w / .78, .095, z * w / .78], [-PI / 2, 0, r]);
+    if (o.mancha !== false) mancha(g, w * 1.7, w * 1.3, .26); return g;
+  }
+  const corpo = rbox(w, h, w, .14, 3), P = corpo.attributes.position;
+  for (let i = 0; i < P.count; i++) { const y = P.getY(i) / h * 2, b = 1 + .09 * (1 - y * y); P.setX(i, P.getX(i) * b); P.setZ(i, P.getZ(i) * b); }   // barriga
+  poe(corpo, mR, g, [0, h / 2, 0]);
+  for (const sx of [-1, 1]) for (const sz of [-1, 1]) poe(new THREE.TorusGeometry(.085, .02, 6, 16, PI), mA, g, [sx * (w / 2 - .07), h - .015, sz * (w / 2 - .07)], [0, sx * sz > 0 ? -PI / 4 : PI / 4, 0]);
+  if (o.estado === 'aberto') poe(new THREE.TorusGeometry(w * .44, .022, 6, 40), mC, g, [0, h - .005, 0], [PI / 2, 0, 0]);
+  else { poe(new THREE.CylinderGeometry(.11, .14, .14, 18), mR, g, [0, h + .06, 0]); poe(new THREE.TorusGeometry(.11, .016, 6, 20), mC, g, [0, h + .1, 0], [PI / 2, 0, 0]); }
+  if (o.mancha !== false) mancha(g, w * 1.75, w * 1.75, .3); return g;
+}
+// prensa vertical (câmara âmbar, colunas, cilindro e placa que desce): aperta(g, p) com p de 0 (aberta) a 1 (prensando)
+export function prensa(pai, p) {
+  const g = grupo(pai, p), mA = M(COR.ambar), mAE = M(COR.ambarE), mE = M(COR.cinzaE), mS = M('#9AA4AE');
+  poe(rbox(1.5, .12, 1.3, .03, 1), mE, g, [0, .06, 0]);
+  poe(rbox(1.4, 1.45, 1.2, .05, 2), mA, g, [0, .845, 0]);                                                         // câmara
+  poe(rbox(1.04, 1.0, .06, .03, 1), mAE, g, [0, .7, .61]); poe(rbox(.06, .42, .08, .02, 1), mE, g, [.4, .72, .66]);  // porta e trinco
+  poe(rbox(.9, .2, .04, .02, 1), M(COR.pneu), g, [0, 1.38, .605]);                                                 // boca de carga
+  for (const x of [-.6, .6]) poe(rbox(.16, 1.25, .16, .03, 1), mE, g, [x, 2.195, 0]);                              // colunas
+  poe(rbox(1.5, .24, .5, .04, 1), mA, g, [0, 2.94, 0]);                                                            // travessa
+  poe(new THREE.CylinderGeometry(.13, .13, .5, 18), mS, g, [0, 2.57, 0]);                                         // cilindro
+  const haste = poe(new THREE.CylinderGeometry(.055, .055, 1, 12), M(COR.aco), g), placa = poe(rbox(1.04, .1, .96, .03, 1), mS, g);
+  poe(rbox(.1, .4, .3, .02, 1), mE, g, [.75, 1.15, .25]);                                                           // comando
+  poe(new THREE.CylinderGeometry(.045, .045, .04, 14), M(COR.verde), g, [.81, 1.22, .25], [0, 0, PI / 2]);
+  poe(new THREE.CylinderGeometry(.045, .045, .04, 14), M(COR.ambar), g, [.81, 1.08, .25], [0, 0, PI / 2]);
+  g.userData.haste = haste; g.userData.placa = placa; mancha(g, 2.2, 2.0, .3); aperta(g, 0); return g;
+}
+export function aperta(g, p) { const y = lerp(2.22, 1.64, cl(p)), u = g.userData; u.placa.position.set(0, y, 0); u.haste.position.set(0, (2.32 + y) / 2, 0); u.haste.scale.set(1, 2.32 - y, 1); }
+// impressora térmica (corpo escuro, tampa, fenda, botão verde); imprime(g, p): o papel sai da fenda (0 a 1)
+export function impressora(pai, p) {
+  const g = grupo(pai, p);
+  poe(rbox(.34, .13, .4, .05, 2), M(COR.cinzaE), g, [0, .065, 0]); poe(rbox(.32, .08, .25, .04, 2), M('#3A414A'), g, [0, .155, -.06]);
+  poe(rbox(.26, .012, .014, .004, 1), M(COR.escuro), g, [0, .196, .066]);
+  poe(new THREE.CylinderGeometry(.018, .018, .012, 14), M(COR.verde), g, [.12, .133, .15]);
+  const pp = grupo(g, [0, .196, .068]); poe(rbox(.22, .32, .004, .002, 1), M(COR.papel), pp, [0, .16, 0]);
+  for (let i = 0; i < 4; i++) poe(rbox(.15 - .03 * (i % 2), .008, .002, .001, 1), M('#C9CED4'), pp, [-.02 * (i % 2), .26 - i * .055, .003]);
+  g.userData.papel = pp; mancha(g, .6, .6, .25); imprime(g, 0); return g;
+}
+export function imprime(g, p) { const pp = g.userData.papel; pp.visible = p > .001; pp.scale.set(1, Math.max(1e-4, p), 1); pp.rotation.x = .3 * p; }
+// computador (monitor com a tela lisa, sem nada do app; teclado e mouse); userData.tela = a malha da tela
+export function computador(pai, p) {
+  const g = grupo(pai, p), mC = M(COR.cinzaE), cz = M('#D5DBE1');
+  poe(rbox(.26, .02, .17, .01, 1), mC, g, [0, .01, -.06]); poe(rbox(.06, .24, .04, .015, 1), mC, g, [0, .13, -.1]);
+  const mon = grupo(g, [0, .4, -.07]); mon.rotation.x = -.08; poe(rbox(.66, .42, .035, .02, 2), M(COR.escuro), mon);
+  g.userData.tela = poe(rbox(.61, .36, .01, .005, 1), M(COR.tela, { r: .5 }), mon, [0, .01, .018]);
+  poe(rbox(.52, .025, .17, .01, 1), cz, g, [0, .0125, .22]);
+  for (let i = 0; i < 4; i++) poe(rbox(.46, .008, .026, .004, 1), M('#BCC4CC'), g, [0, .028, .16 + i * .04]);
+  poe(new THREE.SphereGeometry(.035, 14, 10), cz, g, [.36, .02, .23], [0, 0, 0], [1, .55, 1.4]);
+  mancha(g, 1.0, .7, .22); return g;
+}
+// chão do pátio: placa de concreto (topo em y 0) com juntas e, se pedir, faixas âmbar (o.faixa = lista de z).
+// Com ele, cena(..., {chao: false}) (sem o chão invisível de sombra).
+// v2: o chão é uma placa pintada (textura feita na hora, sem arquivo): concreto com manchas largas e grão, juntas com
+// sombra e fio de luz, faixa âmbar gasta, e as bordas se desfazem no fundo da página (o pátio não acaba numa quina; o
+// fundo clareia com a distância). o.borda = fração que se desfaz em cada lado (padrão [.16, .34, .16, .2]: esq, fundo,
+// dir, frente); o.tom = cor do concreto.
+export function chaoPatio(pai, p, o = {}) {
+  const c = o.c ?? 16, l = o.l ?? 9, e = o.passo ?? 2.5, g = grupo(pai, p), ppm = Math.min(72, 2048 / c), Wc = Math.round(c * ppm), Hc = Math.round(l * ppm);
+  const cv = document.createElement('canvas'); cv.width = Wc; cv.height = Hc; const x = cv.getContext('2d');
+  const gv = x.createLinearGradient(0, 0, 0, Hc); gv.addColorStop(0, '#DCE1E5'); gv.addColorStop(1, o.tom ?? '#C9D0D6'); x.fillStyle = gv; x.fillRect(0, 0, Wc, Hc);
+  for (let i = 0; i < 46; i++) {   // manchas largas: o concreto não é uma cor só
+    const px = hsh(i * 3 + 1) * Wc, py = hsh(i * 3 + 2) * Hc, r = (1.2 + 2.6 * hsh(i * 3 + 3)) * ppm, gr = x.createRadialGradient(px, py, 0, px, py, r), esc = hsh(i + 77) < .55;
+    gr.addColorStop(0, esc ? 'rgba(96,110,124,.045)' : 'rgba(255,255,255,.2)'); gr.addColorStop(1, esc ? 'rgba(96,110,124,0)' : 'rgba(255,255,255,0)');
+    x.fillStyle = gr; x.fillRect(px - r, py - r, 2 * r, 2 * r); }
+  const gt = document.createElement('canvas'); gt.width = gt.height = 160; const gx = gt.getContext('2d'), im = gx.createImageData(160, 160);   // grão
+  for (let i = 0; i < 160 * 160; i++) { const v = hsh(i * 1.37 + 5), cz = v < .5 ? 60 : 255; im.data[4 * i] = im.data[4 * i + 1] = im.data[4 * i + 2] = cz; im.data[4 * i + 3] = Math.abs(v - .5) * 34; }
+  gx.putImageData(im, 0, 0); x.fillStyle = x.createPattern(gt, 'repeat'); x.fillRect(0, 0, Wc, Hc);
+  const lj = Math.max(1.6, .03 * ppm);   // juntas: sulco escuro macio + fio de luz do lado do sol
+  const junta = (x0, y0, x1, y1) => { x.lineCap = 'butt';
+    x.strokeStyle = 'rgba(120,132,144,.16)'; x.lineWidth = lj * 3.2; x.beginPath(); x.moveTo(x0, y0); x.lineTo(x1, y1); x.stroke();
+    x.strokeStyle = 'rgba(112,124,136,.5)'; x.lineWidth = lj; x.beginPath(); x.moveTo(x0, y0); x.lineTo(x1, y1); x.stroke();
+    x.strokeStyle = 'rgba(255,255,255,.75)'; x.lineWidth = lj * .6; x.beginPath(); x.moveTo(x0 + (x0 === x1 ? lj : 0), y0 + (y0 === y1 ? lj : 0)); x.lineTo(x1 + (x0 === x1 ? lj : 0), y1 + (y0 === y1 ? lj : 0)); x.stroke(); };
+  for (let u = -c / 2 + e; u < c / 2 - .2; u += e) junta((u + c / 2) * ppm, 0, (u + c / 2) * ppm, Hc);
+  for (let z = -l / 2 + e; z < l / 2 - .2; z += e) junta(0, (z + l / 2) * ppm, Wc, (z + l / 2) * ppm);
+  for (const z of o.faixa ?? []) for (let u = -c / 2 + .6, i = 0; u < c / 2 - 1; u += 1.6, i++) {   // faixa âmbar, com desgaste
+    const fx = (u + c / 2) * ppm, fy = (z + l / 2 - .055) * ppm, fw = .9 * ppm, fh = .11 * ppm;
+    x.fillStyle = 'rgba(242,182,61,.9)'; x.beginPath(); x.roundRect(fx, fy, fw, fh, fh * .3); x.fill();
+    x.fillStyle = 'rgba(232,236,239,.5)'; for (let k = 0; k < 5; k++) x.fillRect(fx + hsh(i * 7 + k) * fw * .9, fy + hsh(i * 5 + k + 40) * fh * .7, fw * .06 * (1 + hsh(k + i)), fh * .22); }
+  const [bl, bf, br, bn] = o.borda ?? [.16, .34, .16, .2];   // as bordas se desfazem
+  x.globalCompositeOperation = 'destination-in';
+  const fade = (x0, y0, x1, y1, a, b) => { const gr = x.createLinearGradient(x0, y0, x1, y1); gr.addColorStop(0, 'rgba(0,0,0,0)'); gr.addColorStop(Math.max(.001, a), 'rgba(0,0,0,.45)'); gr.addColorStop(Math.max(.002, b), 'rgba(0,0,0,1)'); gr.addColorStop(1, 'rgba(0,0,0,1)'); x.fillStyle = gr; x.fillRect(0, 0, Wc, Hc); };
+  fade(0, 0, Wc, 0, bl * .5, bl); fade(Wc, 0, 0, 0, br * .5, br); fade(0, 0, 0, Hc, bf * .5, bf); fade(0, Hc, 0, 0, bn * .5, bn);
+  x.globalCompositeOperation = 'source-over';
+  const tx = new THREE.CanvasTexture(cv); tx.colorSpace = THREE.SRGBColorSpace; tx.anisotropy = +(Q.get('an') || 8);
+  const m = new THREE.Mesh(new THREE.PlaneGeometry(c, l), new THREE.MeshStandardMaterial({ map: tx, transparent: true, roughness: .97, metalness: 0 }));
+  m.rotation.x = -PI / 2; m.receiveShadow = true; m.renderOrder = -1; g.add(m); g.userData.placa = m;
+  return g;
+}

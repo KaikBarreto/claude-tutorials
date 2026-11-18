@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><title>4 · Traço fino com acento verde</title>
+<!-- Traço: tudo em linha escura de espessura única, ponta redonda; a cor é só o verde, em chapas deslocadas do traço. -->
+<style>
+#fd{background:#F7F9F8}
+.h{font-weight:700}
+.visor{background:#fff;border:2.5px solid #161618;border-radius:14px;box-shadow:7px 7px 0 #50D088}
+.vl{color:#161618}.vn{color:#161618}
+.chip{background:#fff;color:#161618;border:2.5px solid #161618;box-shadow:4px 4px 0 #50D088}
+.chip svg{color:#2E7D57}
+</style></head><body>
+<script type="module">
+import { palco, prende, pronto } from './comum.js';
+import { partes, svg, G, CH, X0, BX, BY, VISOR, SELO } from './lado.js';
+const T = 'stroke="#161618" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"', F = '#F7F9F8';
+const VERDE = { cab: 1, deck: 1 }, SEM = { cabFaixa: 1, deckTopo: 1, lataFaixa: 1, celula: 1 };
+const est = p => {
+  if (SEM[p.g]) return null;
+  if (p.g === 'porta') return `fill="none" ${T}`;
+  if (p.g === 'lata') return `fill="${p.ci === 6 || p.ci === 2 ? '#50D088' : F}" stroke="#161618" stroke-width="1.8" stroke-linejoin="round"`;
+  if (p.g === 'pneu') return [`fill="${F}" ${T}`];
+  if (p.g === 'cubo' || p.g === 'tuboFuro' || p.g === 'macaneta' || p.g === 'espelho') return `fill="#161618" ${T}`;
+  if (VERDE[p.g]) return [`fill="#50D088" transform="translate(8 8)"`, `fill="${F}" ${T}`];
+  if (p.g === 'janela') return [`fill="#CDF1DD" ${T}`];
+  return `fill="${F}" ${T}`;
+};
+const tr = (d, w = 2.6) => `<path d="${d}" fill="none" stroke="#161618" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round"/>`;
+const antes = `<circle cx="372" cy="${G - 190}" r="232" fill="#E4F6EC"/>
+  ${tr(`M92 276h74M118 256h96M250 276h18`, 2.6)}${tr(`M326 226h92M352 206h40`, 2.6)}
+  ${tr(`M22 ${CH}H706`)}${tr(`M60 ${CH + 22}h120M214 ${CH + 22}h26M470 ${CH + 22}h160`, 2.6)}${tr(`M150 ${CH + 44}h60M520 ${CH + 44}h34`, 2.6)}`;
+const raio = (x, y) => [0, 1, 2, 3, 4, 5].map(i => { const a = i * Math.PI / 3 + .3; return `M${(x + 9 * Math.cos(a)).toFixed(1)} ${(y + 9 * Math.sin(a)).toFixed(1)}L${(x + 15 * Math.cos(a)).toFixed(1)} ${(y + 15 * Math.sin(a)).toFixed(1)}`; }).join('');
+const depois = tr(`M${BX + 76} ${BY - 106}l-12 24M${BX + 90} ${BY - 106}l-12 24`, 2.2)
+  + [X0 + 75, X0 + 150, X0 + 424].map(x => tr(raio(x, G - 34), 2.2)).join('')
+  + tr(`M${X0 - 26} ${G - 120}h-34M${X0 - 26} ${G - 96}h-52M${X0 - 26} ${G - 72}h-24`, 2.6)
+  + `<g fill="#50D088">${[[56, 470], [668, 596], [610, 214]].map(([x, y]) => `<path d="M${x - 9} ${y - 2.5}h6.5v-6.5h5v6.5h6.5v5h-6.5v6.5h-5v-6.5h-6.5z"/>`).join('')}</g>`;
+const p = palco({ meio: svg(partes({ carga: { n: 84, esc: 1.12 } }), est, { antes, depois }) });
+prende(p.visor, VISOR.x - 6, VISOR.y - 6, 1, 1); prende(p.chip, SELO.x, SELO.y);
+pronto();
+</script></body></html>

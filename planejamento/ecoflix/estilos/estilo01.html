@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><title>1 · Argila 3D fosca (o atual)</title>
+<!-- Argila: o estilo atual da trilha, com o próprio kit (perfis/ecoflix/cenas3d/kit3d.js): material fosco, canto arredondado, sombra macia,
+     metal com reflexo de estúdio na carga. O kit desenha em 1280x800; aqui o miolo do quadro é recortado para o painel 728x880 (escala 1,1). -->
+</head><body>
+<script type="module">
+window.ICONS = { 'circle-check': '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m8.5 12.3 2.4 2.4 4.6-4.9"/></svg>' };
+Object.defineProperty(window, 'devicePixelRatio', { get: () => 2.2 });
+try { if (!location.search) history.replaceState(null, '', location.pathname + '?pr=2.2&sm=2048'); } catch (e) { /* segue em 1,5x */ }
+const K = await import('../../../perfis/ecoflix/cenas3d/kit3d.js');
+const { CENA, cena, camera, chaoPatio, balancaPatio, caminhao, anda, mundo, mostrador, titulo, posTitulo, chip, ic, ancora, monte } = K;
+{ const s = document.createElement('style'); s.textContent = 'html,body{width:728px!important;height:880px!important;background:#fff}#st{left:-340px!important;right:auto!important;bottom:auto!important;top:0;width:1280px;height:800px;transform:scale(1.1);transform-origin:0 0}.h{font-size:38.2px!important}.kick{font-size:13.6px!important}.tag.sel{font-size:18px;padding:8px 16px 8px 12px}'; document.head.appendChild(s); }
+cena(() => {
+  chaoPatio(K.CENA, [-1, 0, 0], { c: 34, l: 15, passo: 2.6, faixa: [3.4] });
+  const bal = balancaPatio(K.CENA, [0, 0, 0], { c: 7.4, l: 3.0, rampa: .9, poste: [4.05, -1.9], hp: 3.25, rp: .07 });
+  const T = caminhao(K.CENA, [0, 0, 0], { carga: 'latinha', n: 380 }); anda(T, 0, x => bal.userData.altura(x));
+  const cb = T.userData.bau, B = T.userData.cacamba;
+  monte(B, [cb.cb / 2, .95, 0], { n: 16, rx: cb.cb / 2 - .5, rz: cb.Wd / 2 - .45, h: .42, metais: ['aco', 'ferro', 'cobre'], mancha: false });   // ferro por cima da latinha
+  const tit = titulo('Dupla pesagem', 'Entrada na balança'), most = mostrador('1ª pesagem', '', 226), sel = chip(`${ic('circle-check', 21)}Carregado`, 'v sel');
+  most.mn.textContent = '9.460 kg';
+  camera([[0, { x: .9, y: 1.1, z: 0, d: 25.8, az: .47, el: .36, oy: -47 }]]);
+  return t => { posTitulo(tit, 99, 0, 1); tit.style.top = '53px'; ancora(most, mundo(bal, bal.userData.topo), .74, 1, 0, 2); ancora(sel, [-1.05, 3.05, 0], .5, 1); };
+}, { sombra: 8, mapa: 2048 });
+window.setup({ linhas: [], words: [], dur: 10 }); window.R(5);
+await document.fonts.ready; await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
+window.PRONTO = true; if (parent !== window) parent.postMessage({ pronto: location.pathname }, '*');
+</script></body></html>

@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><title>3 · Isométrico vetorial</title>
+<!-- Isométrico: projeção sem perspectiva a 30°, três tons chapados por cor (topo, frente, lado), sombra chapada, a cena sobre uma laje; rótulos no plano da cena. -->
+<style>
+#fd{background:#F3F7F5}
+.visor{transform-origin:0 0;box-shadow:none}
+.fio{position:absolute;width:3px;background:#2E7D57;border-radius:2px}
+.visor{border-radius:10px;left:0;top:0}
+.chip{border-radius:8px;background:#2E7D57}
+</style></head><body>
+<script type="module">
+import { palco, prende, pronto } from './comum.js';
+import { THREE, cena3d, palco3d, PI } from './mundo3d.js';
+const p = palco(), P = palco3d({ orto: 6.95, sombraDura: true, mapa: 4096, luz: [-3, 9, 6], raio: 9, cam: { x: .45, y: .8, z: -.1, d: 60, az: PI / 4, el: Math.atan(Math.SQRT1_2), oy: -105 } });
+// três tons por cor conforme a face: topo claro, frente (+z) médio, lado (+x) escuro; nenhuma luz, nenhum degradê
+const mat = c => new THREE.ShaderMaterial({ uniforms: { c: { value: new THREE.Color(c) } },
+  vertexShader: 'varying vec3 n;void main(){n=normalize(mat3(modelMatrix)*normal);gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}',
+  fragmentShader: 'uniform vec3 c;varying vec3 n;void main(){vec3 m=normalize(n);float k=m.y>.55?1.:(m.x>m.z?.58:.78);vec3 o=m.y>.55?mix(c,vec3(1.),.16):c*k;gl_FragColor=vec4(o,1.);\n#include <colorspace_fragment>\n}' });
+const C = cena3d({ r: 0, nr: 28, bc: 7.2, rampa: .8, nLata: 110, nFerro: 12, nlata: 8, poste: [3.95, -1.75], hp: 3.0, mat });
+P.cena.add(C.raiz);
+// laje (a "ilha" da ilustração isométrica), faixa âmbar e a sombra chapada
+const cx = (w, h, d, c, pos) => { const m = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), mat(c)); m.position.set(...pos); P.cena.add(m); return m; };
+cx(9.4, .5, 4.8, '#DDE5E1', [.1, -.25, -.1]); cx(9.4, .5, 4.8, '#B5C4BC', [.1, -.75, -.1]);
+for (let x = -4.1; x < 3.6; x += 1.5) cx(.9, .012, .12, '#F2B63D', [x + .45, .006, 1.95]);
+for (const [x, z, s] of [[-4.0, -2.0, .7], [-3.2, -2.15, .45]]) cx(s, s, s, '#9AA3AD', [x, s / 2, z]);
+for (const [y, top] of [[.004, 0], [.19, 1]]) { const s = new THREE.Mesh(new THREE.PlaneGeometry(top ? 7.06 : 9.4, top ? 2.86 : 4.8), new THREE.ShadowMaterial({ color: 0x24483A, opacity: .30 }));
+  s.rotation.x = -PI / 2; s.position.set(top ? 0 : .1, y, top ? 0 : -.1); s.receiveShadow = true; P.cena.add(s); }
+C.raiz.traverse(o => { if (o.isMesh) o.receiveShadow = false; });
+P.desenha();
+// rótulos deitados no plano da cena (matriz afim a partir de três pontos projetados): visor na frente do poste, selo sobre a carga
+function plano(e, o, ux, uy, esc) {   // o: ponto do mundo do canto de cima/esquerda; ux, uy: direções do mundo de "direita" e "baixo"; esc: unidades do mundo por px
+  const a = P.tela(o), b = P.tela([o[0] + ux[0], o[1] + ux[1], o[2] + ux[2]]), c = P.tela([o[0] + uy[0], o[1] + uy[1], o[2] + uy[2]]);
+  e.style.transform = `matrix(${(b[0] - a[0]) * esc},${(b[1] - a[1]) * esc},${(c[0] - a[0]) * esc},${(c[1] - a[1]) * esc},${a[0]},${a[1]})`;
+}
+const E = .0165, vw = p.visor.offsetWidth, vh = p.visor.offsetHeight, [px, py, pz] = C.topoPoste;
+plano(p.visor, [px - vw * E / 2, py + vh * E - .25, pz + .09], [1, 0, 0], [0, -1, 0], E);
+const [sx, sy] = P.tela([C.topoCarga[0], C.topoCarga[1] - .55, 0]); prende(p.chip, sx, sy - 44);
+p.ov.insertAdjacentHTML('beforeend', `<div class="fio" style="left:${sx - 1.5}px;top:${sy - 46}px;height:44px"></div><div class="fio" style="left:${sx - 6}px;top:${sy - 8}px;width:12px;height:12px;border-radius:50%"></div>`);
+pronto();
+</script></body></html>

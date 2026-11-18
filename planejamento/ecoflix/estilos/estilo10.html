@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><title>10 · Gradientes suaves e formas geométricas</title>
+<!-- Gradiente: formas geométricas puras (pílula, círculo, retângulo de canto largo), degradê macio em tudo, sombra larga e difusa, fundo em manchas de cor. -->
+<style>
+#fd{background:#F4F7F6;overflow:hidden}
+.bl{position:absolute;border-radius:50%;filter:blur(70px)}
+.h{background:linear-gradient(100deg,#161618 30%,#2E7D57);-webkit-background-clip:text;color:transparent}
+.visor{background:rgba(255,255,255,.86);border-radius:22px;box-shadow:0 30px 60px rgba(30,80,60,.20),0 4px 10px rgba(30,80,60,.08),inset 0 0 0 1px #fff;backdrop-filter:blur(12px)}
+.vl{color:#6B7A74}.vn{background:linear-gradient(100deg,#1FA867,#50D088 60%,#8BE0B4);-webkit-background-clip:text;color:transparent}
+.chip{background:linear-gradient(100deg,#35B877,#6FDDA3);box-shadow:0 14px 28px rgba(53,184,119,.38),inset 0 1px 0 rgba(255,255,255,.5)}
+</style></head><body>
+<script type="module">
+import { palco, prende, pronto, CORES_LATA } from './comum.js';
+import { partes, svg, G, CH, X0, BX, BY, VISOR, SELO } from './lado.js';
+const GR = { cab: 'v', cabFaixa: null, bau: 'c', bauBorda: 'c2', bauFrente: 'c2', pneu: 'p', aro: 'a', cubo: 'c2', deck: 'd', rampa: 'd2', deckTopo: null, chassi: 'p', subcab: 'p', estrado: 'p',
+  parachoque: 'p', tanque: 'a', janela: 'j', farol: 'f', espelho: 'p', poste: 'd', posteBase: 'c2', lata: 'a', viga: 'am', tubo: 'c', tuboFuro: 'p', chapa: 'c2', celula: null };
+const est = p => p.g === 'lataFaixa' ? `fill="${CORES_LATA[p.ci]}" opacity=".9"` : GR[p.g] === null ? null : `fill="url(#${GR[p.g]})"`;
+const lg = (id, a, b, x2 = 0, y2 = 1) => `<linearGradient id="${id}" x1="0" y1="0" x2="${x2}" y2="${y2}"><stop offset="0" stop-color="${a}"/><stop offset="1" stop-color="${b}"/></linearGradient>`;
+const defs = lg('v', '#8CEBB8', '#2FB271', .6, 1) + lg('c', '#DCE3EA', '#98A3B0') + lg('c2', '#AEB8C4', '#7A8694') + lg('p', '#4A545F', '#191D22') + lg('a', '#FFFFFF', '#C3CCD6', .7, 1)
+  + lg('d', '#C9D1DA', '#93A0AD') + lg('d2', '#E0E6EC', '#B7C1CC') + lg('j', '#FFFFFF', '#BFE6F2', 1, 1) + lg('f', '#FFF6D2', '#F7CE5E') + lg('am', '#F7C866', '#D98A3A', 1, 0)
+  + `<filter id="so" x="-30%" y="-200%" width="160%" height="500%"><feGaussianBlur stdDeviation="16"/></filter>
+  <linearGradient id="fx" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".55"/><stop offset=".5" stop-color="#fff" stop-opacity="0"/></linearGradient>
+  <radialGradient id="rd" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#DDF3E7"/></radialGradient>`;
+const antes = `<circle cx="364" cy="${G - 150}" r="250" fill="url(#rd)" opacity=".9"/>
+  <path d="M0 ${CH + 4}H728V880H0Z" fill="#fff" opacity=".55"/>
+  <ellipse cx="364" cy="${CH + 16}" rx="330" ry="22" fill="#1E5A40" opacity=".30" filter="url(#so)"/>`;
+// brilho diagonal na cabine e na caçamba, filete de luz no topo
+const depois = `<path d="M${BX + 4} ${BY - 124}h96l-60 60h-36z" fill="url(#fx)"/><rect x="${X0 + 6}" y="${G - 148}" width="326" height="26" rx="4" fill="url(#fx)" opacity=".8"/>
+  <rect x="94" y="${G}" width="540" height="3" rx="1.5" fill="#fff" opacity=".8"/>`;
+const p = palco({ meio: svg(partes({ simples: true, carga: { n: 58, esc: 1.4, ferro: 5 } }), est, { defs, antes, depois }) });
+p.fd.innerHTML = `<div class="bl" style="left:-140px;top:120px;width:460px;height:460px;background:#BDEFD4"></div><div class="bl" style="left:440px;top:-80px;width:420px;height:420px;background:#CFE4FF"></div>
+  <div class="bl" style="left:380px;top:600px;width:480px;height:380px;background:#FCE7B8"></div><div class="bl" style="left:-120px;top:680px;width:380px;height:300px;background:#D3F5E3"></div>`;
+prende(p.visor, VISOR.x, VISOR.y, 1, 1); prende(p.chip, SELO.x, SELO.y);
+pronto();
+</script></body></html>

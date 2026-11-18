@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><title>2 · Flat vetorial 2D</title>
+<!-- Flat: cor chapada, sem contorno e sem degradê; profundidade só por tom (faixa mais escura, sombra chapada). -->
+<style>
+#fd{background:#F3F7F5}
+.visor{border-radius:14px}
+.chip{background:#2E7D57}
+</style></head><body>
+<script type="module">
+import { palco, prende, pronto, CORES_LATA } from './comum.js';
+import { partes, svg, G, CH, X0, BX, BY, VISOR, SELO } from './lado.js';
+const COR = { poste: '#8E98A3', posteBase: '#6B7580', rampa: '#AEB7C1', deck: '#8E98A3', deckTopo: '#B9C1CA', celula: '#7E8995', chassi: '#2F353C', subcab: '#2F353C', tanque: '#AEB7C1',
+  parachoque: '#23282E', estrado: '#3A424C', bauFrente: '#6B7580', viga: '#A8603A', tubo: '#7E8995', tuboFuro: '#4A535D', chapa: '#5F6B77', lata: '#DDE3E9',
+  bau: '#8E98A3', bauBorda: '#6B7580', bauFriso: '#7A8590', cab: '#50D088', cabFaixa: '#3BB873', janela: '#D5ECF5', macaneta: '#2E7D57', farol: '#FFE9A8',
+  espelho: '#23282E', pneu: '#23282E', aro: '#DDE3E9', cubo: '#8E98A3' };
+const est = p => p.g === 'porta' ? 'fill="none" stroke="#3BB873" stroke-width="3" stroke-linecap="round"' : p.g === 'lataFaixa' ? `fill="${CORES_LATA[p.ci]}"` : `fill="${COR[p.g]}"`;
+// fundo: disco claro, galpão e montes em silhueta, nuvens em pílula, chão em faixa
+const antes = `
+  <circle cx="364" cy="${G - 170}" r="268" fill="#E2F3EA"/>
+  <path d="M40 ${CH}V${G - 150}L150 ${G - 205}L260 ${G - 150}V${CH}Z" fill="#CFE6DA"/><rect x="92" y="${G - 96}" width="116" height="109" rx="6" fill="#BCDACA"/>
+  <path d="M470 ${CH}Q520 ${G - 150} 590 ${G - 96}Q640 ${G - 190} 700 ${G - 70}L728 ${G - 40}V${CH}Z" fill="#CFE6DA"/>
+  <rect x="64" y="246" width="150" height="34" rx="17" fill="#fff"/><rect x="118" y="222" width="76" height="34" rx="17" fill="#fff"/>
+  <rect x="300" y="196" width="112" height="28" rx="14" fill="#fff"/>
+  <rect x="0" y="${CH}" width="728" height="${880 - CH}" fill="#DDE6E1"/><rect x="0" y="${CH}" width="728" height="10" fill="#C9D5CE"/>
+  <rect x="96" y="${CH + 10}" width="536" height="16" rx="8" fill="#C9D5CE"/>
+  ${[60, 190, 320, 450, 580].map(x => `<rect x="${x}" y="${G + 96}" width="78" height="10" rx="5" fill="#F2B63D"/>`).join('')}`;
+// brilho chapado na janela e sombra chapada sob a carroceria
+const depois = `<path d="M${BX + 78} ${BY - 110}h14l-22 32h-10z" fill="#fff" opacity=".7"/>
+  <rect x="${X0 + 3}" y="${G - 84}" width="332" height="12" fill="#6B7580"/>`;
+const p = palco({ meio: svg(partes(), est, { antes, depois }) });
+prende(p.visor, VISOR.x, VISOR.y, 1, 1); prende(p.chip, SELO.x, SELO.y);
+pronto();
+</script></body></html>
