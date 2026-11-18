@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<!-- Kit v3 · a MESMA cena nos dois climas (prova de que é um sistema só): cap 0 = claro (mundo físico), cap 1 = escuro
+     (mundo dos dados). Mesmos objetos 3D, mesmos componentes HTML, mesma câmera; só muda clima(k) e a classe dos planos.
+     Quadros: node ferramentas/edit/cenas/render_cenas.cjs 0 <tempos.json> <pasta> --html perfis/ecoflix/cenas_v3/climas.html --dsf 1.35 --stills 2
+              (repita com cap 1). Serve também de vitrine dos componentes: título, visor, chip, selo, cartão, operador, fluxo. -->
+</head><body>
+<script type="module">
+import { ic, kg, titulo, htmlChip, htmlCartao, htmlOp, htmlVisor, ligaVisor, htmlFluxo, fluxo, CENA, U, piso, mancha, camera, plano, clima, cena } from './motor.js';
+import { caminhao, dirige } from './objetos/caminhao.js';
+import { balanca } from './objetos/balanca.js';
+cena(d => {
+  const K = d.cap ? 1 : 0, C = K ? 'escuro' : 'claro';
+  piso({ r: 30, x: 0, z: -2 }); if (!K) U.uNevoa.value.set(.955, .975, .965, .8); else U.uNevoa.value.set(.075, .085, .09, .9);
+  const B = balanca(CENA, [0, 0, 0], { c: 7.7 }), T = caminhao(CENA, { carga: 250 }); dirige(T, 0, B.userData.altura); mancha(8.6, 3.5, [0, .25, .15], { op: .8 });
+  const bola = (cor, w, pos, esc = .05) => plano(`<div style="width:${w}px;height:${w}px;border-radius:50%;background:radial-gradient(circle,${cor} 0%,${cor.replace(/[\d.]+\)$/, '0)')} 68%)"></div>`, { pos, esc, tras: true, clima: C });
+  if (!K) { plano('<div style="width:1500px;height:1500px;border-radius:50%;background:radial-gradient(circle at 42% 36%,#fff 0%,#fff 38%,rgba(232,247,239,.9) 62%,rgba(221,243,231,0) 71%)"></div>', { pos: [-.8, 3.4, -14], esc: .0135, tras: true });
+    bola('rgba(189,239,212,.95)', 1300, [-36, 10, -70]); bola('rgba(207,228,255,.95)', 1200, [32, 20, -80]); bola('rgba(252,231,184,.8)', 1100, [28, -8, -60]); }
+  else { plano('<div style="width:3200px;height:2000px;background-image:radial-gradient(rgba(255,255,255,.13) 1.5px,transparent 2.2px);background-size:40px 40px;-webkit-mask-image:radial-gradient(1500px 900px at 50% 50%,#000 20%,transparent 78%)"></div>', { pos: [0, 4, -24], esc: .03, tras: true, clima: C });
+    bola('rgba(80,208,136,.26)', 700, [0, 1.5, -6], .03); bola('rgba(90,150,255,.14)', 560, [-14, 9, -14], .04);
+    plano(`<svg width="1400" height="1400" viewBox="-700 -700 1400 1400" fill="none" stroke="rgba(108,240,168,.17)" stroke-width="1.6"><circle r="330"/><circle r="470" stroke-dasharray="4 12"/><circle r="640" opacity=".55"/></svg>`, { pos: [0, 1.6, -5], esc: .017, tras: true, clima: C }); }
+  const P = B.userData.poste, visor = plano(htmlVisor(['1ª Pesagem']), { pos: [P[0], P[1] + .78, P[2]], rot: [-.1, .12, 0], esc: .012, clima: C }); ligaVisor(visor.e); visor.e.vn.textContent = kg(9460);
+  plano(htmlChip(`${ic('circle-check', 18)}Carregado`), { pos: [-2.9, 3.55, 0], rot: [-.1, .1, 0], esc: .012, anc: [.5, 1], clima: C });
+  const ROT = [-.2, .1, 0], EC = .0084, Z = 7.2, cart = (x, ...a) => plano(htmlCartao(...a), { pos: [x, .95, Z], rot: ROT, esc: EC, clima: C });
+  cart(-1.5, 'truck', '1ª Pesagem', 'caminhão cheio', kg(9460)); cart(1.7, 'truck', '2ª Pesagem', 'caminhão vazio', kg(6380)); cart(4.9, 'scale', 'Peso Bruto', 'a latinha', kg(3080), { res: true });
+  plano(htmlOp('−'), { pos: [.1, .95, Z + .05], rot: ROT, esc: EC, clima: C }); plano(htmlOp('='), { pos: [3.3, .95, Z + .05], rot: ROT, esc: EC, clima: C });
+  titulo('Dupla pesagem', 'Entrada na balança', C).style.top = '40px';
+  clima(K);
+  camera([[0, { x: .9, y: 1.75, z: .6, d: 21.2, az: .2, el: .22, oy: 0 }], [6, { x: .9, y: 1.75, z: .6, d: 20.8, az: .14, el: .22, oy: 0 }, 'lin']]);
+  return t => { clima(K); };
+});
+</script></body></html>
