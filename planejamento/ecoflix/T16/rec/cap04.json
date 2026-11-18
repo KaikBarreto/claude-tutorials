@@ -1,6 +1,6 @@
 {
  "name": "t16-cap04",
- "title": "T16 · Cap. 4 · Empresa e impostos (narração ESTIMADA 97,2 s; marcas L1..L11 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "title": "T16 · Cap. 4 · Empresa e impostos (narração ESTIMADA 157,8 s; marcas L1..L14 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
  "seed": "t16-cap04",
  "pace": 0.5,
  "cps": 40,
@@ -104,7 +104,20 @@
     "within": "main"
    },
    "at": 2.2,
-   "label": "Próximo: Configurar Empresa"
+   "label": "Próximo: Configurar Empresa",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#tab-btn-empresa"
+   },
+   "label": "(aba Empresa, se o botão Próximo não estiver na tela)",
+   "unless": {
+    "text": "Passo 2 de 3:",
+    "exact": false
+   }
   },
   {
    "do": "waitFor",
@@ -260,11 +273,55 @@
    "at": 31.57
   },
   {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=[...document.querySelectorAll(\"main *\")].filter(e=>e.textContent.trim()===\"Logo para Nota Fiscal\"&&e.offsetParent).sort((a,b)=>a.textContent.length-b.textContent.length||a.children.length-b.children.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-330);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 31.95,
+   "label": "desce ao Logo para Nota Fiscal"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Enviar Logo",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.8,
+   "at": 34.07,
+   "label": "Logo para Nota Fiscal: Enviar Logo (sem clicar)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Responsável técnico (CSRT)",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 1.0,
+   "at": 36.73,
+   "label": "Responsável técnico (CSRT)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 43.46
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const c=[...document.querySelectorAll('main')].find(e=>/(auto|scroll)/.test(getComputedStyle(e).overflowY)&&e.scrollHeight>e.clientHeight+4);if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop,dy=-y0;if(y0<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/400),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'topo:'+Math.round(c.scrollTop)})()",
+   "at": 43.86,
+   "label": "volta ao topo"
+  },
+  {
    "do": "click",
    "target": {
     "selector": "#tab-btn-impostos"
    },
-   "at": 33.06,
+   "at": 44.95,
    "label": "Impostos (padrão)"
   },
   {
@@ -278,7 +335,7 @@
     "selector": "main button[role=combobox]",
     "nth": 0
    },
-   "at": 34.88,
+   "at": 46.77,
    "label": "Regime Tributário (abre a lista)"
   },
   {
@@ -287,14 +344,14 @@
     "role": "option",
     "name": "Lucro Real"
    },
-   "at": 37.61,
+   "at": 49.51,
    "label": "Lucro Real",
    "noScroll": true
   },
   {
    "do": "mark",
-   "name": "L6",
-   "at": 41.33
+   "name": "L7",
+   "at": 53.22
   },
   {
    "do": "type",
@@ -307,7 +364,7 @@
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "at": 42.03,
+   "at": 53.92,
    "label": "zoom: o quadro Lucro Real:"
   },
   {
@@ -317,21 +374,21 @@
     "exact": false,
     "within": "main"
    },
-   "seconds": 0.17,
-   "at": 46.18,
+   "seconds": 0.16,
+   "at": 58.08,
    "label": "PIS e COFINS ajustados",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
-   "name": "L7",
-   "at": 47.3
+   "name": "L8",
+   "at": 59.19
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=[...document.querySelectorAll(\"main *\")].filter(e=>e.textContent.trim()===\"Contribuinte de ICMS\"&&e.offsetParent).sort((a,b)=>a.textContent.length-b.textContent.length||a.children.length-b.children.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-140);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/800),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 47.68,
+   "at": 59.57,
    "label": "desce ao ICMS"
   },
   {
@@ -342,7 +399,7 @@
     "within": "main"
    },
    "seconds": 0.15,
-   "at": 54.2,
+   "at": 66.09,
    "label": "zoom: Alíquota do ICMS interno",
    "optional": true,
    "timeout": 4
@@ -355,20 +412,108 @@
     "within": "main"
    },
    "seconds": 0.6,
-   "at": 55.27,
+   "at": 67.16,
    "label": "os CST do ICMS",
    "optional": true,
    "timeout": 4
   },
   {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=[...document.querySelectorAll(\"main *\")].filter(e=>e.textContent.trim()===\"Usar diferimento para ind\\u00fastrias\"&&e.offsetParent).sort((a,b)=>a.textContent.length-b.textContent.length||a.children.length-b.children.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-330);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 70.56,
+   "label": "desce ao diferimento"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Usar diferimento para indústrias",
+    "exact": false,
+    "within": "main"
+   },
+   "seconds": 0.8,
+   "at": 71.26,
+   "label": "Usar diferimento para indústrias",
+   "optional": true,
+   "timeout": 4
+  },
+  {
    "do": "mark",
-   "name": "L8",
-   "at": 57.67
+   "name": "L9",
+   "at": 74.73
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=[...document.querySelectorAll(\"main *\")].filter(e=>e.textContent.trim()===\"PIS / COFINS\"&&e.offsetParent).sort((a,b)=>a.textContent.length-b.textContent.length||a.children.length-b.children.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-150);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/800),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 75.64,
+   "label": "desce a PIS / COFINS"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Regime PIS/COFINS",
+    "exact": false,
+    "within": "main"
+   },
+   "seconds": 0.6,
+   "at": 78.37,
+   "label": "Regime PIS/COFINS: Não Cumulativo",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "CST PIS Saída",
+    "exact": false,
+    "within": "main"
+   },
+   "seconds": 0.5,
+   "at": 82.54,
+   "label": "CST de saída",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "CST PIS Entrada",
+    "exact": false,
+    "within": "main"
+   },
+   "seconds": 0.15,
+   "at": 84.06,
+   "label": "CST de entrada",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=[...document.querySelectorAll(\"main *\")].filter(e=>e.textContent.trim()===\"IPI - Imposto sobre Produtos Industrializados\"&&e.offsetParent).sort((a,b)=>a.textContent.length-b.textContent.length||a.children.length-b.children.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-330);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 84.37,
+   "label": "desce ao IPI"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Empresa apura IPI",
+    "exact": false,
+    "within": "main"
+   },
+   "seconds": 1.0,
+   "at": 85.75,
+   "label": "IPI: Empresa apura IPI (desligado)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L10",
+   "at": 94.51
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=[...document.querySelectorAll(\"main *\")].filter(e=>e.textContent.trim()===\"CFOPs Padr\\u00e3o\"&&e.offsetParent).sort((a,b)=>a.textContent.length-b.textContent.length||a.children.length-b.children.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-140);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/800),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 58.58,
+   "at": 95.42,
    "label": "desce aos CFOPs Padrão"
   },
   {
@@ -379,7 +524,7 @@
     "within": "main"
    },
    "seconds": 0.15,
-   "at": 66.7,
+   "at": 103.54,
    "label": "CFOP de venda",
    "optional": true,
    "timeout": 4
@@ -392,20 +537,76 @@
     "within": "main"
    },
    "seconds": 0.6,
-   "at": 67.69,
+   "at": 104.53,
    "label": "CFOP de compra",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
-   "name": "L9",
-   "at": 69.63
+   "name": "L11",
+   "at": 106.47
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=[...document.querySelectorAll(\"main *\")].filter(e=>e.textContent.trim()===\"Informa\\u00e7\\u00f5es Complementares Padr\\u00e3o\"&&e.offsetParent).sort((a,b)=>a.textContent.length-b.textContent.length||a.children.length-b.children.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-150);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/800),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 106.62,
+   "label": "desce a Informações Complementares Padrão"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Informações Complementares Padrão",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 1.0,
+   "at": 113.3,
+   "label": "zoom: Informações Complementares Padrão",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=[...document.querySelectorAll(\"main *\")].filter(e=>e.textContent.trim()===\"Reservado ao Fisco (padr\\u00e3o)\"&&e.offsetParent).sort((a,b)=>a.textContent.length-b.textContent.length||a.children.length-b.children.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-200);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 116.41,
+   "label": "desce ao Reservado ao Fisco"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Reservado ao Fisco (padrão)",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.6,
+   "at": 118.18,
+   "label": "Reservado ao Fisco (padrão)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Código de Benefício Fiscal (cBenef)",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.8,
+   "at": 120.59,
+   "label": "Código de Benefício Fiscal (cBenef)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L12",
+   "at": 124.28
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=[...document.querySelectorAll(\"main *\")].filter(e=>e.textContent.trim()===\"Reforma Tribut\\u00e1ria (IBS/CBS)\"&&e.offsetParent).sort((a,b)=>a.textContent.length-b.textContent.length||a.children.length-b.children.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-120);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/800),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 69.86,
+   "at": 124.51,
    "label": "desce à Reforma Tributária (IBS/CBS)"
   },
   {
@@ -413,7 +614,7 @@
    "target": {
     "selector": "div.border.rounded-lg:has(label:text-is('Calcular IBS e CBS automaticamente')) button[role=switch]"
    },
-   "at": 72.26,
+   "at": 126.91,
    "label": "liga Calcular IBS e CBS automaticamente"
   },
   {
@@ -422,7 +623,7 @@
     "selector": "input[placeholder='Ex: 000']",
     "nth": 0
    },
-   "at": 76.13,
+   "at": 130.78,
    "label": "CST-IBS/CBS de Saída (clique no campo)"
   },
   {
@@ -433,25 +634,25 @@
    },
    "text": "000",
    "cps": 40,
-   "at": 77.39,
+   "at": 132.04,
    "label": "CST-IBS/CBS 000",
    "noClick": true
   },
   {
    "do": "eval",
    "js": "(()=>{const set=Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set;const out=[];for(const [ph,k,val] of [[\"Ex: 000001\", 0, \"000001\"], [\"Ex: 000\", 1, \"000\"], [\"Ex: 000001\", 1, \"000001\"]]){const i=[...document.querySelectorAll('input')].filter(x=>x.placeholder===ph&&x.offsetParent)[k];if(!i){out.push('SEM ALVO '+ph);continue;}set.call(i,val);i.dispatchEvent(new Event('input',{bubbles:true}));out.push(ph+'='+i.value)}return out.join(' | ')})()",
-   "at": 80.25,
+   "at": 137.25,
    "label": "cClassTrib 000001 e a Entrada (sem cursor, trecho acelerado)"
   },
   {
    "do": "mark",
-   "name": "L10",
-   "at": 82.36
+   "name": "L13",
+   "at": 143.0
   },
   {
    "do": "mark",
-   "name": "L11",
-   "at": 88.63
+   "name": "L14",
+   "at": 149.28
   },
   {
    "do": "click",
@@ -460,7 +661,7 @@
     "name": "Salvar configuração",
     "exact": true
    },
-   "at": 89.52,
+   "at": 150.16,
    "label": "Salvar configuração",
    "noScroll": true
   },
@@ -477,7 +678,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 97.19
+   "at": 157.83
   }
  ]
 }

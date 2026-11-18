@@ -1,6 +1,6 @@
 {
  "name": "t16-cap11",
- "title": "T16 · Cap. 11 · Nota de um caixa fechado (narração ESTIMADA 88,0 s; marcas L1..L8 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "title": "T16 · Cap. 11 · Impostos e as outras abas (narração ESTIMADA 166,0 s; marcas L1..L12 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
  "seed": "t16-cap11",
  "pace": 0.5,
  "cps": 40,
@@ -20,7 +20,7 @@
  },
  "seedExtra": [
   "t16/inicio",
-  "t16/apos-cap10"
+  "t16/apos-cap09"
  ],
  "prewarm": [
   "/login"
@@ -69,16 +69,169 @@
   },
   {
    "do": "goto",
-   "url": "/fiscal-ambiental/nfe/entrada"
+   "url": "/fiscal-ambiental/nfe/saida"
   },
   {
    "do": "waitFor",
-   "text": "Nenhuma nota fiscal encontrada",
+   "text": "#1249",
    "timeout": 30
   },
   {
    "do": "waitFor",
    "idle": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Nova Nota",
+    "exact": true,
+    "within": "main"
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] :text-is('NF-e de Saída')"
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Para quem",
+   "timeout": 15
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:text-is('Pedido')"
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Importar de Pedido de Venda",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog]:has-text('Importar de Pedido de Venda') button:text-is('Importar')",
+    "nth": 0
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Pedido importado",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:text-is('Transporte')"
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] div:has(> label:text-is('Modalidade do Frete')) button[role=combobox]"
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=option]:has-text('Frete por conta do Remetente (CIF)')"
+   },
+   "noScroll": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]:has-text('Selecionar...')"
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=option]:has-text('Cargas Vale do Sol')"
+   },
+   "noScroll": true
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.textContent.trim()===\"Volumes Transportados\"&&e.offsetParent).sort((a,b)=>a.textContent.length-b.textContent.length||a.children.length-b.children.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-300);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='0']"
+   }
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='0']"
+   },
+   "text": "1",
+   "cps": 30,
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='Caixa, Fardo...']"
+   }
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='Caixa, Fardo...']"
+   },
+   "text": "Granel",
+   "cps": 40,
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='0,000']",
+    "nth": 0
+   }
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='0,000']",
+    "nth": 0
+   },
+   "text": "506,000",
+   "cps": 40,
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='0,000']",
+    "nth": 1
+   }
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='0,000']",
+    "nth": 1
+   },
+   "text": "500,000",
+   "cps": 40,
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:text-is('Itens')"
+   }
+  },
+  {
+   "do": "pause",
+   "seconds": 5
   },
   {
    "do": "eval",
@@ -98,218 +251,528 @@
   {
    "do": "click",
    "target": {
-    "role": "button",
-    "name": "Nova Nota",
-    "exact": true,
-    "within": "main"
+    "selector": "[role=dialog] button:text-is('Impostos')"
    },
-   "at": 3.52,
-   "label": "Nova Nota"
+   "at": 3.57,
+   "label": "aba Impostos"
   },
   {
-   "do": "click",
+   "do": "hover",
    "target": {
-    "selector": "[role=dialog] :text-is('NF-e de Entrada')"
+    "selector": "[role=dialog] :text-matches('Cenário fiscal aplicado')"
    },
-   "at": 8.15,
-   "label": "NF-e de Entrada"
+   "seconds": 1.5,
+   "at": 6.56,
+   "label": "zoom: Cenário fiscal aplicado: Venda para a Fundição Bandeira do Vale",
+   "optional": true,
+   "timeout": 4
   },
   {
-   "do": "waitFor",
-   "text": "Para quem",
-   "timeout": 15
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Cenário fiscal aplicado\", \"Venda para a Fundição Bandeira do Vale\", \"Diferimento 100%\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog],[role=alertdialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere cenário da Fundição aplicado"
   },
   {
    "do": "mark",
    "name": "L2",
-   "at": 12.3
+   "at": 13.13
   },
   {
-   "do": "click",
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.textContent.trim()===\"Tributos desta nota\"&&e.offsetParent).sort((a,b)=>a.textContent.length-b.textContent.length||a.children.length-b.children.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-270);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 13.97,
+   "label": "desce a Tributos desta nota"
+  },
+  {
+   "do": "hover",
    "target": {
-    "selector": "[role=dialog] button:has-text('Emissão em Massa (Caixa)')"
+    "selector": "[role=dialog] :text-matches('^CST 51')"
    },
-   "at": 19.48,
-   "label": "Emissão em Massa (Caixa)"
+   "seconds": 0.8,
+   "at": 18.14,
+   "label": "zoom: ICMS CST 51, diferimento 100%",
+   "optional": true,
+   "timeout": 4
   },
   {
-   "do": "waitFor",
-   "text": "Emitir NF-e em massa",
-   "timeout": 10
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] :text-is('Operação (cheio)')"
+   },
+   "seconds": 0.34,
+   "at": 22.62,
+   "label": "Operação (cheio)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] :text-matches('^Diferido')"
+   },
+   "seconds": 0.5,
+   "at": 23.91,
+   "label": "Diferido (100%)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] :text-is('A recolher')"
+   },
+   "seconds": 0.8,
+   "at": 25.73,
+   "label": "A recolher R$ 0,00",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"CST 51\", \"A recolher\", \"CST 08\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog],[role=alertdialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere ICMS CST 51 e PIS/COFINS CST 08"
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 21.68
+   "at": 27.98
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] :text-matches('^CST 08')",
+    "nth": 0
+   },
+   "seconds": 0.8,
+   "at": 28.66,
+   "label": "PIS e COFINS: CST 08",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.textContent.trim()===\"Pr\\u00e9via de Impostos\"&&e.offsetParent).sort((a,b)=>a.textContent.length-b.textContent.length||a.children.length-b.children.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-300);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 32.88,
+   "label": "sobe ao selo"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] :text-is('PIS/COFINS Suspenso (CST 08)')"
+   },
+   "seconds": 1.5,
+   "at": 33.67,
+   "label": "zoom: selo PIS/COFINS Suspenso (CST 08)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 41.09
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 56.85
   },
   {
    "do": "click",
    "target": {
-    "selector": "[role=dialog]:has-text('Emitir NF-e em massa') button:has-text('Hoje')"
+    "selector": "[role=dialog] button:has-text('Ajustar impostos desta nota')"
    },
-   "at": 21.88,
-   "label": "data (abre o calendário)"
+   "at": 62.29,
+   "label": "Ajustar impostos desta nota (abre)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] :text-is('CST e alíquota valem só nesta nota')"
+   },
+   "seconds": 1.2,
+   "at": 65.81,
+   "label": "zoom: CST e alíquota valem só nesta nota",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:has-text('Ajustar impostos desta nota')"
+   },
+   "at": 68.31,
+   "label": "Ajustar impostos desta nota (fecha, sem mudar)"
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 69.42
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.textContent.trim()===\"IBS devido (UF + munic\\u00edpio): R$ 23,95\"&&e.offsetParent).sort((a,b)=>a.textContent.length-b.textContent.length||a.children.length-b.children.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-300);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 69.73,
+   "label": "desce ao bloco IBS / CBS"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] :text-matches('^IBS devido')"
+   },
+   "seconds": 1.0,
+   "at": 73.52,
+   "label": "zoom: bloco IBS / CBS Reforma Tributária",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] :text-matches('^Fica fora do Valor Aprox')"
+   },
+   "seconds": 1.5,
+   "at": 81.34,
+   "label": "Fica fora do Valor Aprox. Tributos",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 86.71
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:text-is('Faturamento')"
+   },
+   "at": 87.13,
+   "label": "aba Faturamento"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:text-is('A prazo')"
+   },
+   "at": 94.52,
+   "label": "A prazo"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] div:has(> label:text-is('Forma de pagamento (fiscal)')) button[role=combobox]"
+   },
+   "at": 95.71,
+   "label": "Forma de pagamento (fiscal) (abre a lista)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=option]:has-text('Boleto (15)')"
+   },
+   "at": 96.52,
+   "label": "Boleto (15)",
+   "noScroll": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:has-text('Adicionar parcela')"
+   },
+   "at": 97.0,
+   "label": "Adicionar parcela"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.textContent.trim()===\"Duplicatas / Parcelas\"&&e.offsetParent).sort((a,b)=>a.textContent.length-b.textContent.length||a.children.length-b.children.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-290);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "label": "as parcelas na tela"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] :text-is('Duplicatas / Parcelas')"
+   },
+   "text": "",
+   "noClick": true,
+   "optional": true,
+   "timeout": 4,
+   "at": 100.29,
+   "label": "zoom: duas parcelas de 11.975,00"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const esp=[\"001\", \"002\", \"11.975,00\"];let out='';for(let i=0;i<12;i++){const v=[...document.querySelectorAll(\"[role=dialog]\"+' input, '+\"[role=dialog]\"+' textarea')].map(e=>e.value).join(' | ');const falta=esp.filter(e=>!v.includes(e));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+v.slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere duas parcelas de 11.975,00"
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 105.43
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:has-text('dd/mm/aaaa')",
+    "nth": 0
+   },
+   "at": 106.39,
+   "label": "Vencimento da parcela 001 (abre o calendário)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] button[name='next-month']"
+   },
+   "label": "dezembro",
+   "noScroll": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] button[name='day']:not(.day-outside):text-is('10')"
+   },
+   "label": "10/12/2026",
+   "noScroll": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:has-text('dd/mm/aaaa')",
+    "nth": 0
+   },
+   "label": "Vencimento da parcela 002 (abre o calendário)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] button[name='next-month']"
+   },
+   "label": "dezembro",
+   "noScroll": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] button[name='next-month']"
+   },
+   "label": "janeiro",
+   "noScroll": true
   },
   {
    "do": "click",
    "target": {
     "selector": "[data-radix-popper-content-wrapper] button[name='day']:not(.day-outside):text-is('9')"
    },
-   "at": 23.27,
-   "label": "9 de novembro",
+   "label": "09/01/2027",
    "noScroll": true
   },
   {
-   "do": "click",
-   "target": {
-    "selector": "[role=dialog] :text-is('Marcos Antunes')"
-   },
-   "at": 26.08,
-   "label": "o caixa do Marcos (Fechado, 09/11 07:02)"
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"10/12/2026\", \"09/01/2027\", \"Soma das parcelas: R$ 23.950,00\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog],[role=alertdialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere vencimentos e soma das parcelas"
   },
   {
-   "do": "mark",
-   "name": "L4",
-   "at": 29.7
-  },
-  {
-   "do": "click",
+   "do": "hover",
    "target": {
-    "selector": "[role=dialog] button:has-text('Selecionar todos sem NF-e')"
+    "selector": "[role=dialog] :text-matches('^Soma das parcelas')"
    },
-   "at": 29.9,
-   "label": "Selecionar todos sem NF-e (3/3)"
+   "seconds": 1.0,
+   "at": 108.77,
+   "label": "Soma das parcelas = Total da nota",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"3/3 selecionados\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog],[role=alertdialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
-   "label": "confere 3/3 selecionados"
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.textContent.trim()===\"Condi\\u00e7\\u00e3o de pagamento\"&&e.offsetParent).sort((a,b)=>a.textContent.length-b.textContent.length||a.children.length-b.children.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-300);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 114.73,
+   "label": "sobe à Condição de pagamento"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] div:has(> label:text-is('Condição de pagamento')) button[role=combobox]"
+   },
+   "seconds": 1.0,
+   "at": 116.89,
+   "label": "Condição de pagamento (sem escolher)",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "mark",
-   "name": "L5",
-   "at": 33.32
+   "name": "L9",
+   "at": 121.42
   },
   {
    "do": "click",
    "target": {
-    "selector": "[role=dialog] :text-is('Uma nota consolidada')"
+    "selector": "[role=dialog] button:text-is('Opções')"
    },
-   "at": 36.7,
-   "label": "Uma nota consolidada"
+   "at": 121.85,
+   "label": "aba Opções"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#purchase-order-number"
+   },
+   "at": 122.84,
+   "label": "Nº do pedido (xPed) (clique no campo)"
   },
   {
    "do": "type",
    "target": {
-    "selector": "[role=dialog] :text-is('Faixa prevista para este lote')"
+    "selector": "#purchase-order-number"
    },
-   "text": "",
-   "noClick": true,
-   "optional": true,
-   "timeout": 4,
-   "at": 39.99,
-   "label": "zoom: Faixa prevista NF-e nº 1251 e Valor dos pedidos R$ 803,30"
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"1251\", \"803,30\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog],[role=alertdialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
-   "label": "confere faixa 1251 e R$ 803,30"
+   "text": "4500123456",
+   "cps": 40,
+   "at": 124.25,
+   "label": "Nº do pedido 4500123456",
+   "noClick": true
   },
   {
    "do": "mark",
-   "name": "L6",
-   "at": 46.72
-  },
-  {
-   "do": "mark",
-   "name": "L7",
-   "at": 62.79
+   "name": "L10",
+   "at": 129.59
   },
   {
    "do": "click",
    "target": {
-    "selector": "[role=dialog] button:has-text('Montar nota consolidada')"
+    "selector": "[role=dialog] button:text-is('Itens')"
    },
-   "at": 63.67,
-   "label": "Montar nota consolidada",
-   "noScroll": true
+   "at": 130.71,
+   "label": "aba Itens"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.textContent.trim()===\"Informa\\u00e7\\u00f5es Adicionais\"&&e.offsetParent).sort((a,b)=>a.textContent.length-b.textContent.length||a.children.length-b.children.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-270);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 131.41,
+   "label": "desce a Informações Adicionais"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#nota-informacoes-complementares"
+   },
+   "at": 132.91,
+   "label": "Informações complementares (clique no campo)"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const e=document.activeElement;if(!e||!/^(INPUT|TEXTAREA)$/.test(e.tagName))return 'SEM ALVO (nada em foco)';document.execCommand('insertText',false,\"Carga conferida na balan\\u00e7a do p\\u00e1tio em 10/11/2026.\");return e.value})()",
+   "at": 135.83,
+   "label": "Informações complementares"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] :text-is('Somar aos textos herdados')",
+    "nth": 0
+   },
+   "seconds": 0.6,
+   "at": 137.79,
+   "label": "Somar aos textos herdados",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] :text-is('Substituir nesta nota')",
+    "nth": 0
+   },
+   "seconds": 0.62,
+   "at": 140.9,
+   "label": "Substituir nesta nota",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L11",
+   "at": 142.47
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:text-is('Pré-visualização')"
+   },
+   "at": 143.89,
+   "label": "aba Pré-visualização"
   },
   {
    "do": "waitFor",
-   "text": "pedido(s) importado(s) com sucesso",
+   "text": "SEM VALOR FISCAL",
    "timeout": 10
   },
   {
    "do": "hover",
    "target": {
-    "selector": "[role=dialog] :text-is('Consumidor Final / Não Identificado')"
+    "selector": "[role=dialog] :text-is('SEM VALOR FISCAL')",
+    "nth": 0
    },
-   "seconds": 0.6,
-   "at": 69.62,
-   "label": "Consumidor Final / Não Identificado",
+   "seconds": 0.72,
+   "at": 148.08,
+   "label": "zoom: SEM VALOR FISCAL",
    "optional": true,
    "timeout": 4
   },
   {
-   "do": "click",
-   "target": {
-    "selector": "[role=dialog] div:has(> label:text-is('Natureza da Operação')) button[role=combobox]"
-   },
-   "at": 71.34,
-   "label": "Natureza da Operação (abre a lista)"
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=[...document.querySelectorAll(\"[role=dialog] table\")].filter(e=>e.offsetParent)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-420);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/2500),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 149.75,
+   "label": "desce pelo DANFE: destinatário, duplicatas, imposto, transporte"
   },
   {
-   "do": "click",
-   "target": {
-    "role": "option",
-    "name": "Entrada de sucata para revenda (pessoa física)"
-   },
-   "at": 73.21,
-   "label": "Entrada de sucata para revenda (pessoa física)",
-   "noScroll": true
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Boleto (15)\", \"11.975,00\", \"Cargas Vale do Sol\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog],[role=alertdialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere prévia com as duplicatas e o transporte"
   },
   {
    "do": "mark",
-   "name": "L8",
-   "at": 76.27
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "[role=dialog] button:text-is('Avançar')"
-   },
-   "at": 76.57,
-   "label": "Avançar (os três itens)",
-   "noScroll": true
+   "name": "L12",
+   "at": 155.12
   },
   {
    "do": "click",
    "target": {
     "selector": "[role=dialog] button:text-is('Emitir Nota')"
    },
-   "at": 78.6,
+   "at": 156.23,
    "label": "Emitir Nota",
    "noScroll": true
   },
   {
    "do": "waitFor",
-   "selector": "main tbody tr:has-text('#1251')",
+   "selector": "main tbody tr:has-text('#1250')",
    "timeout": 20
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main tbody tr:has-text('#1251') td:has-text('SEFAZ')"
+    "selector": "main tbody tr:has-text('#1250') td:has-text('SEFAZ')"
    },
    "seconds": 0.6,
-   "label": "#1251 Aguardando SEFAZ",
+   "label": "#1250 Aguardando SEFAZ",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "waitFor",
-   "selector": "main tbody tr:has-text('#1251'):has-text('Autorizada')",
+   "selector": "main tbody tr:has-text('#1250'):has-text('Autorizada')",
    "timeout": 25
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('#1250') td:has-text('Autorizada')"
+   },
+   "seconds": 1.0,
+   "at": 163.77,
+   "label": "#1250 Autorizada",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "eval",
@@ -319,7 +782,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 88.02
+   "at": 166.03
   }
  ]
 }

@@ -1,6 +1,6 @@
 {
  "name": "t16-cap17",
- "title": "T16 · Cap. 17 · Importar pelo XML (narração ESTIMADA 68,9 s; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "title": "T16 · Cap. 17 · Nota de devolução (narração ESTIMADA 138,7 s; marcas L1..L9 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
  "seed": "t16-cap17",
  "pace": 0.5,
  "cps": 40,
@@ -69,11 +69,11 @@
   },
   {
    "do": "goto",
-   "url": "/fiscal-ambiental/nfe/recebidas"
+   "url": "/fiscal-ambiental/nfe/entrada"
   },
   {
    "do": "waitFor",
-   "text": "Notas emitidas contra o seu CNPJ",
+   "text": "#1251",
    "timeout": 30
   },
   {
@@ -96,223 +96,362 @@
    "at": 0.4
   },
   {
-   "do": "hover",
-   "target": {
-    "role": "button",
-    "name": "Importar nota recebida",
-    "exact": true,
-    "within": "main"
-   },
-   "seconds": 0.15,
-   "at": 11.42,
-   "label": "Importar nota",
-   "optional": true,
-   "timeout": 4
-  },
-  {
    "do": "mark",
    "name": "L2",
-   "at": 12.15
+   "at": 17.39
   },
   {
    "do": "click",
    "target": {
     "role": "button",
-    "name": "Importar nota recebida",
+    "name": "Nova Nota",
     "exact": true,
     "within": "main"
    },
-   "at": 13.04,
-   "label": "Importar nota"
-  },
-  {
-   "do": "waitFor",
-   "text": "Importar nota recebida",
-   "timeout": 10
+   "at": 17.69,
+   "label": "Nova Nota"
   },
   {
    "do": "click",
    "target": {
-    "selector": "[role=dialog] [role=tab]:has-text('Arquivo XML'), [role=dialog] button:has-text('Arquivo XML')"
+    "selector": "[role=dialog] :text-is('NF-e de Entrada')"
    },
-   "at": 15.26,
-   "label": "aba Arquivo XML"
-  },
-  {
-   "do": "upload",
-   "target": {
-    "selector": "[role=dialog] button:has-text('Selecione o XML'), [role=dialog] label:has-text('Selecione o XML')"
-   },
-   "file": "assets/NFe-3871-Cooperativa-Recomeco.xml",
-   "at": 16.83,
-   "label": "o XML da Cooperativa (NFe-3871-Cooperativa-Recomeco.xml)"
-  },
-  {
-   "do": "mark",
-   "name": "L3",
-   "at": 19.56
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "[role=dialog] button:text-is('Importar nota')"
-   },
-   "at": 19.77,
-   "label": "Importar nota (janela)"
+   "at": 21.16,
+   "label": "NF-e de Entrada"
   },
   {
    "do": "waitFor",
-   "text": "Nota importada",
+   "text": "Para quem",
    "timeout": 15
   },
   {
    "do": "click",
    "target": {
-    "selector": "[role=dialog] button:text-is('Concluir')"
+    "selector": "[role=dialog] div:has(> label:text-is('Natureza da Operação')) button[role=combobox]"
    },
-   "at": 23.58,
-   "label": "Concluir"
+   "at": 23.66,
+   "label": "Natureza da Operação (abre a lista)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Devolução de venda"
+   },
+   "at": 24.55,
+   "label": "Devolução de venda",
+   "noScroll": true
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] label:text-is('CFOP')"
+   },
+   "seconds": 0.6,
+   "at": 26.12,
+   "label": "CFOP 1202",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] :text-is('Chave da NF-e original (devolução)')"
+   },
+   "seconds": 0.93,
+   "at": 30.44,
+   "label": "zoom: Chave da NF-e original (devolução)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"1202\", \"Chave da NF-e original (devolução)\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog],[role=alertdialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere CFOP 1202 e o campo da chave"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{await new Promise(r=>setTimeout(r,200));const el=document.querySelector(\"[role=dialog]\");const t=(el?el.innerText:'').replace(/[\\s\\u00a0]+/g,' ').toLowerCase();return t.includes(\"faturamento\")?'DIFERENTE: apareceu '+\"Faturamento\":'OK: ausente '+\"Faturamento\"})()",
+   "label": "confere sem a aba Faturamento"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 32.32
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:has-text('Selecionar nota do sistema')"
+   },
+   "at": 40.49,
+   "label": "Selecionar nota do sistema"
   },
   {
    "do": "waitFor",
-   "text": "Cooperativa Recomeço",
+   "text": "Importar NF-e de Saída para Devolução",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog]:has-text('Importar NF-e de Saída para Devolução') button:has-text('NF-e #1250')"
+   },
+   "at": 42.69,
+   "label": "NF-e #1250 da Fundição Bandeira do Vale"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "selector": "[role=dialog]:has-text('Importar NF-e de Saída para Devolução')"
+   },
    "timeout": 10
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main tbody tr:has-text('Cooperativa Recomeço')"
+    "selector": "[role=dialog] button:has-text('Fundição Bandeira do Vale')",
+    "nth": 0
    },
    "seconds": 0.15,
-   "at": 25.25,
-   "label": "a linha Cooperativa Recomeço R$ 7.550,00",
+   "at": 45.98,
+   "label": "o cliente veio da nota",
    "optional": true,
    "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] :text-matches('^Vincula esta nota à original')"
+   },
+   "seconds": 0.36,
+   "at": 47.07,
+   "label": "zoom: a chave de 44 dígitos da nota original",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const esp=[\"35261147318506000107550010000012501\"];let out='';for(let i=0;i<12;i++){const v=[...document.querySelectorAll(\"[role=dialog]\"+' input, '+\"[role=dialog]\"+' textarea')].map(e=>e.value).join(' | ');const falta=esp.filter(e=>!v.includes(e));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+v.slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere a chave da 1250 no campo"
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 25.91
+   "at": 48.38
   },
   {
    "do": "click",
    "target": {
-    "selector": "main tr:has-text('Cooperativa Recomeço') button[title='Ações']"
+    "selector": "[role=dialog] button:text-is('Itens')"
    },
-   "at": 26.21,
-   "label": "abre o menu da nota da Cooperativa"
+   "at": 48.98,
+   "label": "aba Itens"
   },
   {
    "do": "click",
    "target": {
-    "role": "menuitem",
-    "name": "Lançar compra…"
+    "selector": "[role=dialog] input[placeholder='0,00']",
+    "nth": 3
    },
-   "at": 26.89,
-   "label": "Lançar compra…",
-   "noScroll": true
+   "at": 49.57,
+   "label": "Qtd do Cobre mel (clique no campo)"
   },
   {
-   "do": "waitFor",
-   "text": "Importar NF-e nº 3871",
-   "timeout": 10
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "[role=dialog] :text-matches('^Fornecedor:')"
-   },
-   "seconds": 0.77,
-   "at": 30.77,
-   "label": "Fornecedor: Cooperativa Recomeço por CNPJ/CPF",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "mark",
-   "name": "L5",
-   "at": 32.49
+   "do": "press",
+   "key": [
+    "Control+A",
+    "Backspace"
+   ],
+   "label": "apaga 500"
   },
   {
    "do": "type",
    "target": {
-    "selector": "[role=dialog] :text-is('ALUMINIO LATINHA')"
+    "selector": "[role=dialog] input[placeholder='0,00']",
+    "nth": 3
    },
-   "text": "",
-   "noClick": true,
-   "optional": true,
-   "timeout": 4,
-   "at": 33.24,
-   "label": "zoom: ALUMINIO LATINHA, selo alta, Alumínio latinha"
+   "text": "40",
+   "cps": 30,
+   "at": 52.12,
+   "label": "zoom: Qtd 40",
+   "noClick": true
   },
   {
    "do": "hover",
    "target": {
-    "selector": "[role=dialog] :text-is('alta')",
-    "nth": 0
+    "selector": "[role=dialog] :text-is('Total da nota')"
+   },
+   "seconds": 1.0,
+   "at": 55.06,
+   "label": "Total da nota R$ 1.916,00",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"1.916,00\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog],[role=alertdialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere total R$ 1.916,00"
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 57.69
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.textContent.trim()===\"Nota de origem de cada item\"&&e.offsetParent).sort((a,b)=>a.textContent.length-b.textContent.length||a.children.length-b.children.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-270);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 57.69,
+   "label": "desce a Nota de origem de cada item"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] :text-is('Nota de origem de cada item')"
+   },
+   "seconds": 1.0,
+   "at": 59.13,
+   "label": "zoom: Nota de origem de cada item",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] :text-matches('^Origem: 3526')"
+   },
+   "seconds": 0.8,
+   "at": 69.15,
+   "label": "Origem: a chave da 1250",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] :text-is('Informe o número do item na nota de origem')"
    },
    "seconds": 0.15,
-   "at": 42.13,
-   "label": "selo alta",
+   "at": 72.62,
+   "label": "Informe o número do item na nota de origem",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L6",
-   "at": 42.63
+   "at": 73.45
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] input[id^='ref-item-origem']"
+   },
+   "at": 78.51,
+   "label": "Item na origem (clique no campo)"
   },
   {
    "do": "type",
    "target": {
-    "selector": "[role=dialog] :text-is('PLASTICO PET PRENSADO')"
+    "selector": "[role=dialog] input[id^='ref-item-origem']"
    },
-   "text": "",
-   "noClick": true,
-   "optional": true,
-   "timeout": 4,
-   "at": 43.39,
-   "label": "zoom: PLASTICO PET PRENSADO, selo confira, Plástico PET"
+   "text": "1",
+   "cps": 30,
+   "at": 81.36,
+   "label": "Item na origem: 1",
+   "noClick": true
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Pronta pra emitir\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog],[role=alertdialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Pronta pra emitir depois do item na origem"
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 94.75
   },
   {
    "do": "hover",
    "target": {
-    "selector": "[role=dialog] :text-is('confira')",
-    "nth": 0
+    "selector": "[role=dialog] button:text-is('Transporte')"
    },
-   "seconds": 1.0,
-   "at": 48.78,
-   "label": "selo confira",
+   "seconds": 0.8,
+   "at": 96.34,
+   "label": "zoom: as abas, sem Faturamento",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:text-is('Impostos')"
+   },
+   "at": 100.34,
+   "label": "aba Impostos"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] :text-matches('^Nota de Entrada')"
+   },
+   "seconds": 1.5,
+   "at": 102.42,
+   "label": "a prévia de impostos da devolução (Nota de Entrada)",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
-   "name": "L7",
-   "at": 54.52
+   "name": "L8",
+   "at": 109.38
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:text-is('Emitir Nota')"
+   },
+   "at": 109.58,
+   "label": "Emitir Nota",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "selector": "main tbody tr:has-text('#1253')",
+   "timeout": 20
   },
   {
    "do": "hover",
    "target": {
-    "selector": "[role=dialog] :text-matches('A NF-e traz só o peso líquido')"
+    "selector": "main tbody tr:has-text('#1253') td:has-text('SEFAZ')"
    },
-   "seconds": 0.15,
-   "at": 56.49,
-   "label": "zoom: A NF-e traz só o peso líquido",
+   "seconds": 0.6,
+   "label": "#1253 Aguardando SEFAZ",
    "optional": true,
    "timeout": 4
   },
   {
+   "do": "waitFor",
+   "selector": "main tbody tr:has-text('#1253'):has-text('Autorizada')",
+   "timeout": 25
+  },
+  {
    "do": "hover",
    "target": {
-    "selector": "[role=dialog] button:has-text('Conferir na tela de compra')"
+    "selector": "main tbody tr:has-text('#1253') td:has-text('Autorizada')"
    },
-   "seconds": 1.5,
-   "at": 57.33,
-   "label": "Conferir na tela de compra (sem clicar)",
-   "noScroll": true,
+   "seconds": 1.0,
+   "at": 115.15,
+   "label": "#1253 Autorizada",
    "optional": true,
    "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L9",
+   "at": 118.08
   },
   {
    "do": "eval",
@@ -322,7 +461,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 68.86
+   "at": 138.71
   }
  ]
 }

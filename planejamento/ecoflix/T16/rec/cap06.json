@@ -1,6 +1,6 @@
 {
  "name": "t16-cap06",
- "title": "T16 · Cap. 6 · Série e numeração (narração ESTIMADA 55,7 s; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "title": "T16 · Cap. 6 · Série e numeração (narração ESTIMADA 77,7 s; marcas L1..L8 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
  "seed": "t16-cap06",
  "pace": 0.5,
  "cps": 40,
@@ -114,40 +114,38 @@
    "at": 10.17
   },
   {
-   "do": "hover",
-   "target": {
-    "text": "Entrada e saída usam a mesma série",
-    "exact": true,
-    "within": "main"
-   },
-   "seconds": 0.8,
-   "at": 11.08,
-   "label": "zoom: Entrada e saída usam a mesma série",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "Série padrão",
-    "exact": true,
-    "within": "main"
-   },
-   "seconds": 0.8,
-   "at": 14.57,
-   "label": "zoom: Série padrão 1",
-   "optional": true,
-   "timeout": 4
-  },
-  {
    "do": "mark",
    "name": "L3",
-   "at": 18.34
+   "at": 23.21
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "está definida como padrão, mas não foi cadastrada",
+    "exact": false,
+    "within": "main"
+   },
+   "seconds": 1.2,
+   "at": 25.1,
+   "label": "zoom: aviso Série 1 está definida como padrão, mas não foi cadastrada",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "#default-serie-input"
+   },
+   "seconds": 0.8,
+   "at": 29.5,
+   "label": "Série padrão travada: Adicione uma série primeiro",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 31.37
+   "at": 32.74
   },
   {
    "do": "click",
@@ -157,7 +155,7 @@
     "exact": true,
     "within": "main"
    },
-   "at": 31.8,
+   "at": 33.17,
    "label": "Adicionar série"
   },
   {
@@ -165,7 +163,7 @@
    "target": {
     "selector": "#serie-number"
    },
-   "at": 33.04,
+   "at": 34.41,
    "label": "Número da série (clique no campo)"
   },
   {
@@ -175,7 +173,7 @@
    },
    "text": "1",
    "cps": 40,
-   "at": 35.11,
+   "at": 36.47,
    "label": "série 1",
    "noClick": true
   },
@@ -184,7 +182,7 @@
    "target": {
     "selector": "#last-number"
    },
-   "at": 35.9,
+   "at": 37.27,
    "label": "Última nota emitida nessa série (clique no campo)"
   },
   {
@@ -194,7 +192,7 @@
    },
    "text": "1248",
    "cps": 40,
-   "at": 37.92,
+   "at": 39.28,
    "label": "zoom: Última nota emitida nessa série 1248",
    "noClick": true,
    "clear": true
@@ -202,7 +200,7 @@
   {
    "do": "mark",
    "name": "L5",
-   "at": 39.84
+   "at": 41.21
   },
   {
    "do": "hover",
@@ -210,7 +208,7 @@
     "selector": "[role=dialog] :text-is('Se você nunca emitiu nada nessa série, deixe em 0. O sistema vai começar a próxima do nº 1.')"
    },
    "seconds": 1.0,
-   "at": 43.64,
+   "at": 45.0,
    "label": "zoom: ajuda do zero",
    "optional": true,
    "timeout": 4
@@ -218,14 +216,14 @@
   {
    "do": "mark",
    "name": "L6",
-   "at": 46.87
+   "at": 48.24
   },
   {
    "do": "click",
    "target": {
     "selector": "[role=dialog] button:text-is('Adicionar')"
    },
-   "at": 47.76,
+   "at": 49.12,
    "label": "Adicionar"
   },
   {
@@ -236,15 +234,88 @@
   {
    "do": "hover",
    "target": {
-    "text": "Série 1",
-    "exact": true,
+    "text": "Última nota emitida: 1248",
+    "exact": false,
     "within": "main"
    },
    "seconds": 1.2,
-   "at": 49.6,
+   "at": 50.97,
    "label": "a linha Série 1 com Última nota emitida: 1248",
    "optional": true,
    "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 55.73
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "#default-serie-input"
+   },
+   "seconds": 1.0,
+   "at": 57.09,
+   "label": "zoom: Série padrão: Série 1",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{await new Promise(r=>setTimeout(r,200));const el=document.querySelector(\"main\");const t=(el?el.innerText:'').replace(/[\\s\\u00a0]+/g,' ').toLowerCase();return t.includes(\"mas n\\u00e3o foi cadastrada\")?'DIFERENTE: apareceu '+\"mas n\\u00e3o foi cadastrada\":'OK: ausente '+\"mas n\\u00e3o foi cadastrada\"})()",
+   "label": "confere o aviso âmbar sumiu"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Entrada e saída usam a mesma série",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.8,
+   "at": 61.11,
+   "label": "zoom: Entrada e saída usam a mesma série",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 67.31
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#toggle-same-serie"
+   },
+   "at": 72.53,
+   "label": "desliga Entrada e saída usam a mesma série"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Série padrão pra ENTRADA",
+    "exact": false,
+    "within": "main"
+   },
+   "seconds": 0.6,
+   "at": 74.22,
+   "label": "Série padrão pra ENTRADA e pra SAÍDA",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Série padrão pra ENTRADA\", \"Série padrão pra SAÍDA\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere as duas séries padrão"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#toggle-same-serie"
+   },
+   "at": 76.19,
+   "label": "liga de novo (a Recicla Vale usa uma série só)"
   },
   {
    "do": "eval",
@@ -254,7 +325,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 55.66
+   "at": 77.7
   }
  ]
 }

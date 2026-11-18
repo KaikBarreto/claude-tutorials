@@ -1,6 +1,6 @@
 {
  "name": "t16-cap13",
- "title": "T16 · Cap. 13 · Inutilizar numeração (narração ESTIMADA 65,4 s; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "title": "T16 · Cap. 13 · Outras operações (narração ESTIMADA 61,6 s; marcas L1..L4 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
  "seed": "t16-cap13",
  "pace": 0.5,
  "cps": 40,
@@ -91,213 +91,198 @@
  ],
  "steps": [
   {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Nova Nota",
+    "exact": true,
+    "within": "main"
+   },
+   "at": 0.0,
+   "label": "Nova Nota"
+  },
+  {
    "do": "mark",
    "name": "L1",
    "at": 0.4
   },
   {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] :text-is('NF-e de Saída')"
+   },
+   "at": 1.57,
+   "label": "NF-e de Saída"
+  },
+  {
+   "do": "waitFor",
+   "text": "Para quem",
+   "timeout": 15
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] div:has(> label:text-is('Natureza da Operação')) button[role=combobox]"
+   },
+   "at": 3.5,
+   "label": "zoom: Natureza da Operação (abre a lista)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "option",
+    "name": "Remessa para conserto"
+   },
+   "seconds": 0.3,
+   "at": 7.32,
+   "label": "Remessa para conserto",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "option",
+    "name": "Remessa para demonstração"
+   },
+   "seconds": 0.26,
+   "at": 9.14,
+   "label": "Remessa para demonstração",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "option",
+    "name": "Transferência de mercadorias"
+   },
+   "seconds": 0.3,
+   "at": 10.35,
+   "label": "Transferência de mercadorias",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "option",
+    "name": "Baixa de estoque por perda"
+   },
+   "seconds": 0.3,
+   "at": 12.78,
+   "label": "Baixa de estoque por perda",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "option",
+    "name": "Outra operação"
+   },
+   "seconds": 1.0,
+   "at": 16.95,
+   "label": "Outra operação",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 4
+  },
+  {
    "do": "mark",
    "name": "L2",
-   "at": 15.72
+   "at": 19.89
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Baixa de estoque por perda"
+   },
+   "at": 24.36,
+   "label": "escolhe Baixa de estoque por perda",
+   "noScroll": true
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] :text-matches('^Nota emitida contra a própria empresa')"
+   },
+   "seconds": 1.0,
+   "at": 27.47,
+   "label": "zoom: Nota emitida contra a própria empresa",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] label:text-is('CFOP')"
+   },
+   "seconds": 0.8,
+   "at": 31.04,
+   "label": "CFOP 5927",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"5927\", \"Nota emitida contra a própria empresa\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog],[role=alertdialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere baixa por perda: CFOP 5927, sem cliente"
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 21.08
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "main button[aria-label='Mais opções de NF-e']"
-   },
-   "at": 21.97,
-   "label": "três pontinhos (Mais opções de NF-e)"
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "menuitem",
-    "name": "Inutilizar numeração"
-   },
-   "at": 23.66,
-   "label": "Inutilizar numeração",
-   "noScroll": true
-  },
-  {
-   "do": "waitFor",
-   "text": "Inutilizar Numeração de NF-e",
-   "timeout": 10
+   "at": 36.79
   },
   {
    "do": "hover",
    "target": {
-    "selector": "[role=dialog] :text-is('Operação irreversível!')"
+    "selector": "[role=dialog] :text-is('Dar baixa no estoque físico ao autorizar')"
    },
-   "seconds": 0.8,
-   "at": 26.09,
-   "label": "zoom: Operação irreversível!",
+   "seconds": 1.0,
+   "at": 43.46,
+   "label": "zoom: Dar baixa no estoque físico ao autorizar",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "hover",
    "target": {
-    "selector": "[role=dialog] :text-matches('NUNCA foram autorizados')"
+    "selector": "[role=dialog] :text-matches('^Por padrão a nota fiscal só informa a SEFAZ')"
    },
-   "seconds": 0.8,
-   "at": 29.88,
-   "label": "Só funciona em números que NUNCA foram autorizados",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "[role=dialog] :text-matches('use Cancelamento')"
-   },
-   "seconds": 0.16,
-   "at": 34.06,
-   "label": "Para anular nota emitida, use Cancelamento",
+   "seconds": 1.38,
+   "at": 49.99,
+   "label": "o texto da opção",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 35.17
+   "at": 52.32
   },
   {
    "do": "click",
    "target": {
-    "selector": "#numero-inicial"
+    "selector": "[role=dialog] button[aria-label='Sair da nova nota fiscal']"
    },
-   "at": 37.95,
-   "label": "Número Inicial (clique no campo)"
-  },
-  {
-   "do": "type",
-   "target": {
-    "selector": "#numero-inicial"
-   },
-   "text": "1246",
-   "cps": 40,
-   "at": 39.74,
-   "label": "Número Inicial 1246",
-   "noClick": true,
-   "clear": true
+   "at": 58.99,
+   "label": "Sair",
+   "noScroll": true
   },
   {
    "do": "click",
    "target": {
-    "selector": "#numero-final"
+    "selector": "button:text-is('Descartar')"
    },
-   "at": 40.41,
-   "label": "Número Final (clique no campo)"
-  },
-  {
-   "do": "type",
-   "target": {
-    "selector": "#numero-final"
-   },
-   "text": "1247",
-   "cps": 40,
-   "at": 42.33,
-   "label": "Número Final 1247",
-   "noClick": true,
-   "clear": true
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "[role=dialog] :text-matches('Inutilizará as Notas')"
-   },
-   "seconds": 1.5,
-   "at": 43.07,
-   "label": "zoom: Inutilizará as Notas #1246 até #1247 da Série 1, ano 2026",
+   "label": "Descartar (se a tela perguntar)",
    "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"#1246 até #1247\", \"Série 1\", \"2026\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog],[role=alertdialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
-   "label": "confere faixa 1246 a 1247 da série 1, 2026"
-  },
-  {
-   "do": "mark",
-   "name": "L5",
-   "at": 47.67
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "[role=dialog] [role=tab]:has-text('Inutilizar Rejeitadas'), [role=dialog] button:has-text('Inutilizar Rejeitadas')"
-   },
-   "seconds": 1.2,
-   "at": 48.66,
-   "label": "zoom: aba Inutilizar Rejeitadas (sem clicar)",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "mark",
-   "name": "L6",
-   "at": 54.7
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "[role=dialog] textarea"
-   },
-   "at": 54.9,
-   "label": "Justificativa (clique no campo)"
-  },
-  {
-   "do": "eval",
-   "js": "(()=>{const e=document.activeElement;if(!e||!/^(INPUT|TEXTAREA)$/.test(e.tagName))return 'SEM ALVO (nada em foco)';document.execCommand('insertText',false,\"Numera\\u00e7\\u00e3o pulada na emiss\\u00e3o de outubro e n\\u00e3o utilizada\");return e.value})()",
-   "at": 56.16,
-   "label": "Justificativa"
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "[role=dialog] button:has-text('Inutilizar na SEFAZ')"
-   },
-   "at": 56.98,
-   "label": "Inutilizar na SEFAZ"
-  },
-  {
-   "do": "waitFor",
-   "text": "Numeração inutilizada com sucesso",
-   "timeout": 10
-  },
-  {
-   "do": "mark",
-   "name": "L7",
-   "at": 59.31
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "#tab-btn-inutilizadas"
-   },
-   "at": 60.34,
-   "label": "sub-aba Inutilizadas"
-  },
-  {
-   "do": "waitFor",
-   "text": "Numerações Inutilizadas",
-   "timeout": 10
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main tbody tr:has-text('#1246')"
-   },
-   "seconds": 0.6,
-   "at": 62.19,
-   "label": "#1246 e #1247 Inutilizada",
-   "optional": true,
-   "timeout": 4
+   "timeout": 3
   },
   {
    "do": "eval",
@@ -307,7 +292,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 65.44
+   "at": 61.64
   }
  ]
 }

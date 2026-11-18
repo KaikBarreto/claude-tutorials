@@ -101,9 +101,11 @@ O comprovante sai marcado como pesagem avulsa, sem valor comercial, com o peso e
 Atenção: depois de cobrada, o valor fica travado. E a pesagem não pode ser excluída sem antes estornar o recebimento.
 Se fosse no saldo, o cliente ficava devendo, e nascia uma conta a receber. Dá pra dividir entre as três formas. E, sem valor nenhum, a avulsa é só o comprovante de peso.""",
 12: """E se a internet cair com o caminhão em cima da balança? O ticket continua funcionando.
-O sistema avisa que está sem internet, e você pesa e salva normalmente. O ticket fica guardado neste computador.
-O comprovante do motorista sai como provisório, sem o número oficial. Quando a conexão volta, o ticket sobe sozinho e ganha o número de verdade.
-Só três coisas esperam a internet: valorizar, editar um ticket já salvo e anexar foto.""",
+O sistema avisa que está sem internet, e que dá pra pesar e finalizar normalmente.
+Você pesa do mesmo jeito, confirma e salva. O ticket fica guardado neste computador, e o comprovante do motorista sai como provisório, sem o número oficial.
+Só três coisas esperam a internet. Anexar foto é uma delas: o botão mostra que só fica disponível com internet.
+Valorizar é outra: o sistema avisa pra valorizar quando a conexão voltar. E editar um ticket já salvo, a mesma coisa: fica pra depois.
+Quando a conexão volta, o ticket sobe sozinho e ganha o número de verdade.""",
 13: """Pronto! Recapitulando: a gente criou o ticket da cooperativa com o fornecedor, o material, o motorista e a placa.
 Fez a primeira pesagem na entrada, viu o rascunho salvo sozinho e fez a segunda na saída, com o bruto saindo sozinho.
 Aplicou a impureza em porcentagem, atendeu um segundo caminhão em outra aba e salvou o ticket dele com valores.

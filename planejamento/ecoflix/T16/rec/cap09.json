@@ -1,6 +1,6 @@
 {
  "name": "t16-cap09",
- "title": "T16 · Cap. 9 · Nota avulsa, do zero (narração ESTIMADA 125,0 s; marcas L1..L13 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "title": "T16 · Cap. 9 · Nota avulsa, do zero (narração ESTIMADA 183,3 s; marcas L1..L16 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
  "seed": "t16-cap09",
  "pace": 0.5,
  "cps": 40,
@@ -127,10 +127,21 @@
   {
    "do": "hover",
    "target": {
+    "selector": "[role=dialog] button:text-is('Pré-visualização')"
+   },
+   "seconds": 0.3,
+   "at": 15.56,
+   "label": "as abas da nota",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
     "selector": "[role=dialog] button:text-is('Dados')"
    },
-   "seconds": 0.2,
-   "at": 14.1,
+   "seconds": 0.15,
+   "at": 19.64,
    "label": "passo Dados",
    "optional": true,
    "timeout": 4
@@ -141,7 +152,7 @@
     "selector": "[role=dialog] button:text-is('Itens')"
    },
    "seconds": 0.15,
-   "at": 15.31,
+   "at": 20.34,
    "label": "passo Itens",
    "optional": true,
    "timeout": 4
@@ -149,14 +160,71 @@
   {
    "do": "mark",
    "name": "L3",
-   "at": 15.99
+   "at": 20.93
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] :text-is('Nova NF-e de Saída')"
+   },
+   "text": "",
+   "noClick": true,
+   "optional": true,
+   "timeout": 4,
+   "at": 21.75,
+   "label": "zoom: cabeçalho Nova NF-e de Saída, Número previsto Nº 1249 e Ambiente"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] :text-is('Nº 1249')"
+   },
+   "seconds": 0.57,
+   "at": 22.44,
+   "label": "Número previsto Nº 1249 Série 1",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "#nfe-environment-header"
+   },
+   "seconds": 1.2,
+   "at": 23.96,
+   "label": "Ambiente: Produção",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Nº 1249\", \"Produção\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog],[role=alertdialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere cabeçalho Nº 1249 e Produção"
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 31.53
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] :text-is('Quem emite')"
+   },
+   "seconds": 0.8,
+   "at": 32.06,
+   "label": "Quem emite: Recicla Vale Metais Ltda",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "click",
    "target": {
     "selector": "[role=dialog] button:has-text('Selecione o cliente')"
    },
-   "at": 16.69,
+   "at": 39.02,
    "label": "Cliente: Selecione o cliente (abre a busca)"
   },
   {
@@ -166,7 +234,7 @@
    },
    "text": "Serra Fina",
    "cps": 40,
-   "at": 18.05,
+   "at": 40.65,
    "label": "busca Serra Fina",
    "noClick": true
   },
@@ -175,7 +243,7 @@
    "target": {
     "selector": "[role=dialog]:has-text('Selecionar Cliente') button:has-text('Serra Fina Alumínio Reciclagem')"
    },
-   "at": 19.25,
+   "at": 41.85,
    "label": "escolhe Serra Fina Alumínio Reciclagem"
   },
   {
@@ -187,8 +255,8 @@
   },
   {
    "do": "mark",
-   "name": "L4",
-   "at": 20.21
+   "name": "L5",
+   "at": 42.81
   },
   {
    "do": "hover",
@@ -196,7 +264,7 @@
     "selector": "[role=dialog] div:has(> label:text-is('Natureza da Operação')) button[role=combobox]"
    },
    "seconds": 0.6,
-   "at": 21.8,
+   "at": 44.4,
    "label": "Natureza da Operação: Venda de mercadorias (já vem assim)",
    "optional": true,
    "timeout": 4
@@ -207,7 +275,7 @@
     "selector": "[role=dialog] label:text-is('CFOP')"
    },
    "seconds": 1.0,
-   "at": 25.45,
+   "at": 48.04,
    "label": "zoom: CFOP 6102 (Serra Fina em Itamonte, MG)",
    "optional": true,
    "timeout": 4
@@ -219,8 +287,8 @@
   },
   {
    "do": "mark",
-   "name": "L5",
-   "at": 30.58
+   "name": "L6",
+   "at": 53.18
   },
   {
    "do": "type",
@@ -231,7 +299,7 @@
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "at": 31.49,
+   "at": 54.08,
    "label": "zoom: Número previsto 1249 e \"Série 1 / Nº 1249\""
   },
   {
@@ -240,7 +308,7 @@
     "selector": "[role=dialog] :text-matches('Esta nota será emitida como')"
    },
    "seconds": 1.0,
-   "at": 33.61,
+   "at": 56.21,
    "label": "Esta nota será emitida como Série 1 / Nº 1249",
    "optional": true,
    "timeout": 4
@@ -256,46 +324,46 @@
     "selector": "[role=dialog] label:text-is('Data e hora da emissão')"
    },
    "seconds": 0.8,
-   "at": 38.24,
+   "at": 60.84,
    "label": "Data e hora da emissão em branco",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
-   "name": "L6",
-   "at": 40.12
+   "name": "L7",
+   "at": 67.04
   },
   {
    "do": "click",
    "target": {
     "selector": "[role=dialog] button:text-is('Avançar')"
    },
-   "at": 41.0,
+   "at": 67.92,
    "label": "Avançar",
    "noScroll": true
   },
   {
    "do": "mark",
-   "name": "L7",
-   "at": 43.2
+   "name": "L8",
+   "at": 70.12
   },
   {
    "do": "click",
    "target": {
-    "selector": "[role=dialog] input[placeholder='Selecionar material...']"
+    "selector": "[role=dialog] input[placeholder='Escreva o nome ou código do material']"
    },
-   "at": 43.2,
-   "label": "Selecionar material..."
+   "at": 70.12,
+   "label": "Material (cartão Adicionar item)"
   },
   {
    "do": "type",
    "target": {
-    "selector": "[role=dialog] input[placeholder='Selecionar material...']"
+    "selector": "[role=dialog] input[placeholder='Escreva o nome ou código do material']"
    },
    "text": "perfil",
    "cps": 40,
-   "at": 44.05,
+   "at": 70.97,
    "label": "busca perfil",
    "noClick": true
   },
@@ -304,18 +372,18 @@
    "target": {
     "selector": "[cmdk-item]:has-text('Alumínio perfil'), [role=option]:has-text('Alumínio perfil')"
    },
-   "at": 45.04,
+   "at": 71.97,
    "label": "Alumínio perfil",
    "noScroll": true
   },
   {
    "do": "hover",
    "target": {
-    "selector": "[role=dialog] tr.bg-primary\\/5 input",
-    "nth": 1
+    "selector": "[role=dialog] input[placeholder='0000.00.00']",
+    "nth": 0
    },
    "seconds": 0.6,
-   "at": 45.9,
+   "at": 72.83,
    "label": "NCM 7602.00.00 do cadastro",
    "optional": true,
    "timeout": 4
@@ -323,48 +391,53 @@
   {
    "do": "hover",
    "target": {
-    "selector": "[role=dialog] tr.bg-primary\\/5 input",
-    "nth": 3
+    "selector": "[role=dialog] input[placeholder='0,00']",
+    "nth": 1
    },
    "seconds": 0.6,
-   "at": 50.2,
-   "label": "preço de venda 10,40 do cadastro",
+   "at": 77.13,
+   "label": "Valor 10,40 do cadastro",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "click",
    "target": {
-    "selector": "[role=dialog] tr.bg-primary\\/5 input",
-    "nth": 2
+    "selector": "[role=dialog] input[placeholder='0,00']",
+    "nth": 0
    },
-   "at": 52.43,
+   "at": 79.36,
    "label": "Qtd (clique no campo)"
   },
   {
    "do": "type",
    "target": {
-    "selector": "[role=dialog] tr.bg-primary\\/5 input",
-    "nth": 2
+    "selector": "[role=dialog] input[placeholder='0,00']",
+    "nth": 0
    },
    "text": "320",
    "cps": 30,
-   "at": 54.45,
-   "label": "zoom: Qtd 320 e Vl. Unit. 10,40",
+   "at": 81.38,
+   "label": "zoom: Qtd 320 e Valor 10,40",
    "noClick": true,
    "clear": true
   },
   {
+   "do": "eval",
+   "js": "(async()=>{const esp=[\"7602.00.00\", \"10,40\"];let out='';for(let i=0;i<12;i++){const v=[...document.querySelectorAll(\"[role=dialog]\"+' input, '+\"[role=dialog]\"+' textarea')].map(e=>e.value).join(' | ');const falta=esp.filter(e=>!v.includes(e));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+v.slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere NCM e Valor do cadastro"
+  },
+  {
    "do": "mark",
-   "name": "L8",
-   "at": 56.68
+   "name": "L9",
+   "at": 83.61
   },
   {
    "do": "click",
    "target": {
     "selector": "[role=dialog] button:has-text('Incluir')"
    },
-   "at": 57.57,
+   "at": 84.49,
    "label": "Incluir"
   },
   {
@@ -376,7 +449,7 @@
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "at": 58.8,
+   "at": 85.73,
    "label": "zoom: Total da nota R$ 3.328,00 e Pronta pra emitir"
   },
   {
@@ -384,9 +457,10 @@
    "target": {
     "selector": "[role=dialog] :text-is('Pronta pra emitir')"
    },
-   "seconds": 0.54,
-   "at": 64.35,
+   "seconds": 0.55,
+   "at": 91.27,
    "label": "selo Pronta pra emitir",
+   "noScroll": true,
    "optional": true,
    "timeout": 4
   },
@@ -397,8 +471,59 @@
   },
   {
    "do": "mark",
-   "name": "L9",
-   "at": 65.84
+   "name": "L10",
+   "at": 92.77
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[aria-label='Mostrar detalhes do item']"
+   },
+   "at": 94.64,
+   "label": "Mostrar detalhes do item"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] :text-is('CFOP do item')"
+   },
+   "seconds": 0.8,
+   "at": 96.48,
+   "label": "zoom: CFOP do item 6102 (Natureza da operação)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] :text-is('Desconto do item')"
+   },
+   "seconds": 0.15,
+   "at": 100.12,
+   "label": "Desconto do item: Adicionar desconto",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"CFOP do item\", \"6102\", \"Desconto do item\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog],[role=alertdialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere detalhes do item"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] button:has-text('Desconto geral')"
+   },
+   "seconds": 1.0,
+   "at": 100.12,
+   "label": "botão Desconto geral (sem clicar)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L11",
+   "at": 105.87
   },
   {
    "do": "hover",
@@ -406,7 +531,7 @@
     "selector": "[role=dialog] button:text-is('Emitir Nota')"
    },
    "seconds": 1.0,
-   "at": 66.64,
+   "at": 106.67,
    "label": "o rodapé: Voltar, Salvar Rascunho, Emitir Nota",
    "noScroll": true,
    "optional": true,
@@ -414,20 +539,37 @@
   },
   {
    "do": "mark",
-   "name": "L10",
-   "at": 78.95
+   "name": "L12",
+   "at": 118.98
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] button:has-text('Salvar Rascunho')"
+   },
+   "seconds": 1.5,
+   "at": 121.63,
+   "label": "zoom: Salvar Rascunho (sem clicar)",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "mark",
-   "name": "L11",
-   "at": 92.05
+   "name": "L13",
+   "at": 130.11
+  },
+  {
+   "do": "mark",
+   "name": "L14",
+   "at": 143.21
   },
   {
    "do": "click",
    "target": {
     "selector": "[role=dialog] button:text-is('Emitir Nota')"
    },
-   "at": 92.93,
+   "at": 144.09,
    "label": "Emitir Nota",
    "noScroll": true
   },
@@ -448,8 +590,8 @@
   },
   {
    "do": "mark",
-   "name": "L12",
-   "at": 97.56
+   "name": "L15",
+   "at": 148.72
   },
   {
    "do": "waitFor",
@@ -462,7 +604,7 @@
     "selector": "main tbody tr:has-text('#1249') td:has-text('Autorizada')"
    },
    "seconds": 0.6,
-   "at": 103.71,
+   "at": 154.87,
    "label": "#1249 Autorizada",
    "optional": true,
    "timeout": 4
@@ -473,7 +615,7 @@
     "selector": "main tbody tr:has-text('#1249') td:last-child button"
    },
    "seconds": 0.15,
-   "at": 108.32,
+   "at": 166.62,
    "label": "abre o menu da linha #1249",
    "noScroll": true,
    "optional": true,
@@ -496,8 +638,8 @@
   },
   {
    "do": "mark",
-   "name": "L13",
-   "at": 109.22
+   "name": "L16",
+   "at": 167.52
   },
   {
    "do": "click",
@@ -505,7 +647,7 @@
     "role": "menuitem",
     "name": "Visualizar"
    },
-   "at": 109.75,
+   "at": 168.05,
    "label": "Visualizar",
    "noScroll": true
   },
@@ -523,7 +665,7 @@
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "at": 116.5,
+   "at": 174.79,
    "label": "zoom: Chave de Acesso e Protocolo"
   },
   {
@@ -532,7 +674,7 @@
     "selector": "[role=dialog] :text-is('Protocolo')"
    },
    "seconds": 1.0,
-   "at": 122.12,
+   "at": 180.41,
    "label": "Protocolo da SEFAZ",
    "optional": true,
    "timeout": 4
@@ -545,7 +687,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 124.99
+   "at": 183.28
   }
  ]
 }

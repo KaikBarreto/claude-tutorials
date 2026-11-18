@@ -679,7 +679,7 @@
   },
   {
    "do": "eval",
-   "js": "(()=>{const tr=[...document.querySelectorAll('main tbody tr')].find(r=>r.innerText.includes('Ferro misto'));const b=tr&&tr.querySelector(\"button[aria-label='Ver detalhes da pesagem']\");if(!b)return 'SEM ALVO';if(/1ª pesagem/i.test(document.querySelector('main').innerText)){b.click();return 'detalhe fechado'}return 'ja fechado'})()",
+   "js": "(()=>{const b=document.querySelector(\"main tbody tr button[aria-label='Recolher pesagem']\");if(!b)return 'ja fechado';b.click();return 'detalhe fechado'})()",
    "label": "fecha o detalhe que abriu sozinho"
   },
   {
@@ -693,23 +693,30 @@
     "selector": "main tbody tr:has-text('Ferro misto') button[aria-label='Ver detalhes da pesagem']"
    },
    "at": 51.28,
-   "label": "linha do ferro (abre o detalhe)"
+   "label": "seta da linha do ferro (abre o detalhe)"
   },
   {
    "do": "waitFor",
-   "text": "1ª pesagem",
+   "target": {
+    "selector": "main tbody tr button[aria-label='Recolher pesagem']"
+   },
    "timeout": 8
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main tr:has-text('1ª pesagem')"
+    "selector": "main tbody tr:has-text('Ferro misto') + tr"
    },
    "seconds": 3.0,
    "at": 55.45,
    "label": "detalhe da pesagem (zoom)",
    "optional": true,
    "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"412\", \"96\", \"316\", \"9,48\", \"4,89\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main tbody tr:has-text('Ferro misto') + tr\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText+' '+[...el.querySelectorAll('input,textarea')].map(i=>i.value).join(' '));const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere detalhe: 412, 96, 316, 9,48 e desconto 4,89"
   },
   {
    "do": "mark",

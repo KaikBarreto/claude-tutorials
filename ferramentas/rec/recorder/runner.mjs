@@ -617,6 +617,36 @@ const STEPS = {
     if (step.forward !== undefined) await ctx.page.clock.fastForward(step.forward);
     else if (step.set) await ctx.page.clock.setSystemTime(new Date(step.set));
   },
+  // (ACRÉSCIMO da T08 cap. 12 "Sem internet", 18/11; levar à skill) Queda de internet DE VERDADE no meio do roteiro, com a
+  // página do app carregada. { do: 'rede', offline: true|false, modo: 'servidor'|'navegador', avisar: true|false }
+  //   modo 'servidor' (padrão): toda requisição HTTP ao backend (Supabase falso, endereço do build ou FAKE_URL) é abortada na
+  //     rede (net::ERR_INTERNET_DISCONNECTED), mas o navegador continua se dizendo online: o roteador ligado e o link caído.
+  //     O app local (dist) e o EcoTray falso continuam respondendo. O WebSocket do realtime não é cortado.
+  //   modo 'navegador': context.setOffline (cabo/wi-fi desligado: navigator.onLine falso e os eventos offline/online do navegador).
+  //   avisar: dispara na página o evento `offline`/`online` (como o navegador faz quando a placa de rede pisca), para o app
+  //     medir a conexão na hora em vez de esperar o ping de 1 em 1 minuto. Só vale no modo 'servidor'.
+  async rede(ctx, step) {
+    const context = ctx.session.context;
+    const off = !!step.offline;
+    const modo = step.modo || 'servidor';
+    if (modo === 'navegador') {
+      await context.setOffline(off);
+    } else {
+      const { BAKED_FAKE_URL } = await import('./env.mjs');
+      const bases = [BAKED_FAKE_URL, FAKE_URL].filter(Boolean).map((u) => String(u).replace(/\/$/, ''));
+      const st = (ctx.session.__rede ||= { handler: null, pred: (url) => bases.some((b) => url.toString().startsWith(b)) });
+      if (off && !st.handler) {
+        st.handler = (route) => route.abort('internetdisconnected').catch(() => {});
+        await context.route(st.pred, st.handler); // a rota mais nova vence o desvio do isolateNetwork
+      } else if (!off && st.handler) {
+        await context.unroute(st.pred, st.handler);
+        st.handler = null;
+      }
+      if (step.avisar) await ctx.page.evaluate((ev) => { window.dispatchEvent(new Event(ev)); }, off ? 'offline' : 'online');
+    }
+    if (step.seconds) await sleep(step.seconds * 1000);
+    return { rede: off ? 'offline' : 'online', modo };
+  },
   async wait(ctx, step) {
     await sleep((step.seconds ?? 1) * 1000);
     return { seconds: step.seconds ?? 1 };

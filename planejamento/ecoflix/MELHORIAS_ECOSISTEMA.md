@@ -71,7 +71,10 @@ as gravações). Cada item diz a aula em que apareceu. **No fim da produção, v
 - **Editar a pesagem avulsa #60 mostra "#61"** no título (T8, 1.60.10).
 - **Ticket "Com valores" não puxa o preço combinado** do fornecedor (T8, 1.60.10; ver também o item da tabela do fornecedor acima).
 - **Barra "1 selecionado" da lista de tickets continua aparecendo em outras telas** (T8, 1.60.10).
-- **Salvar do ticket fica girando sem internet** (T8, 1.60.10, queda simulada): confirmar se o app deveria guardar e sincronizar depois.
+- **Salvar do ticket gira até a rede voltar quando o computador perde a rede de vez** (T8, 1.60.10): com o cabo ou o wi-fi
+  fora (navegador offline), o "Salvar Ticket de Pesagem" não conclui; só conclui offline quando o roteador segue ligado e é
+  a internet que cai. `saveTicket` em `src/pages/WeighingTicket.tsx:1947` sem `networkMode: 'always'`. É o caso mais
+  comum no pátio, e a tela promete que dá para salvar.
 - **Cartão do White Label continua "Ativo" com o interruptor travado** por falta de logo (T27).
 - **Ajuda do checklist das Coletas promete escolher o modelo por ordem**, e a janela da ordem não tem essa opção (T12).
 - **"Confirmar no órgão" do MTR não mostra resultado na tela** (T18).

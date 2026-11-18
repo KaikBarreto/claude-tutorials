@@ -1,6 +1,6 @@
 {
  "name": "t16-cap05",
- "title": "T16 · Cap. 5 · Cenários fiscais (narração ESTIMADA 84,7 s; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "title": "T16 · Cap. 5 · Cenários fiscais (narração ESTIMADA 100,9 s; marcas L1..L8 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
  "seed": "t16-cap05",
  "pace": 0.5,
  "cps": 40,
@@ -242,8 +242,71 @@
   },
   {
    "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=[...document.querySelectorAll(\"main *\")].filter(e=>e.textContent.trim()===\"Regime do cliente\"&&e.offsetParent).sort((a,b)=>a.textContent.length-b.textContent.length||a.children.length-b.children.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-300);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 50.79,
+   "label": "as outras condições na tela"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Qualquer material",
+    "exact": false,
+    "within": "main"
+   },
+   "seconds": 0.5,
+   "at": 51.49,
+   "label": "Material: Qualquer material",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Destino",
+    "exact": false,
+    "within": "main"
+   },
+   "seconds": 0.5,
+   "at": 54.04,
+   "label": "Destino",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Regime do cliente",
+    "exact": false,
+    "within": "main"
+   },
+   "seconds": 0.5,
+   "at": 57.38,
+   "label": "Regime do cliente",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Peso mínimo da nota (kg)",
+    "exact": false,
+    "within": "main"
+   },
+   "seconds": 0.8,
+   "at": 59.58,
+   "label": "Peso mínimo e máximo da nota",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 64.87
+  },
+  {
+   "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=[...document.querySelectorAll(\"main *\")].filter(e=>e.textContent.trim()===\"O que aplicar\"&&e.offsetParent).sort((a,b)=>a.textContent.length-b.textContent.length||a.children.length-b.children.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-120);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/800),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 49.34,
+   "at": 65.55,
    "label": "desce a O que aplicar"
   },
   {
@@ -251,7 +314,7 @@
    "target": {
     "selector": "main div:has(> label:text-is('CST do ICMS')) button[role=combobox]"
    },
-   "at": 51.29,
+   "at": 67.5,
    "label": "CST do ICMS (abre a lista)"
   },
   {
@@ -259,7 +322,7 @@
    "target": {
     "selector": "[role=option]:has-text('51')"
    },
-   "at": 52.32,
+   "at": 68.53,
    "label": "CST do ICMS 51",
    "noScroll": true
   },
@@ -268,7 +331,7 @@
    "target": {
     "selector": "[id$='-diferimento']"
    },
-   "at": 53.03,
+   "at": 69.25,
    "label": "Diferimento (%) (clique no campo)"
   },
   {
@@ -278,7 +341,7 @@
    },
    "text": "100",
    "cps": 40,
-   "at": 54.37,
+   "at": 70.58,
    "label": "Diferimento 100",
    "noClick": true
   },
@@ -290,15 +353,15 @@
     "within": "main"
    },
    "seconds": 0.8,
-   "at": 55.11,
+   "at": 71.32,
    "label": "campo em branco: usa o padrão",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
-   "name": "L6",
-   "at": 59.03
+   "name": "L7",
+   "at": 75.24
   },
   {
    "do": "click",
@@ -308,7 +371,7 @@
     "exact": true,
     "within": "main"
    },
-   "at": 59.91,
+   "at": 76.13,
    "label": "Criar cenário"
   },
   {
@@ -324,7 +387,7 @@
     "within": "main"
    },
    "seconds": 0.6,
-   "at": 62.59,
+   "at": 78.81,
    "label": "selo Não revisado",
    "optional": true,
    "timeout": 4
@@ -338,15 +401,15 @@
     "within": "main"
    },
    "seconds": 0.77,
-   "at": 67.0,
+   "at": 83.21,
    "label": "zoom: Marcar como revisado (sem clicar)",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
-   "name": "L7",
-   "at": 68.72
+   "name": "L8",
+   "at": 84.93
   },
   {
    "do": "eval",
@@ -356,7 +419,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 84.72
+   "at": 100.93
   }
  ]
 }

@@ -1,6 +1,6 @@
 {
  "name": "t16-cap12",
- "title": "T16 · Cap. 12 · Cancelar e corrigir (narração ESTIMADA 75,1 s; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "title": "T16 · Cap. 12 · Nota de um caixa fechado (narração ESTIMADA 88,0 s; marcas L1..L8 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
  "seed": "t16-cap12",
  "pace": 0.5,
  "cps": 40,
@@ -69,11 +69,11 @@
   },
   {
    "do": "goto",
-   "url": "/fiscal-ambiental/nfe/saida"
+   "url": "/fiscal-ambiental/nfe/entrada"
   },
   {
    "do": "waitFor",
-   "text": "#1250",
+   "text": "Nenhuma nota fiscal encontrada",
    "timeout": 30
   },
   {
@@ -96,216 +96,236 @@
    "at": 0.4
   },
   {
-   "do": "hover",
+   "do": "click",
    "target": {
-    "selector": "main tbody tr:has-text('#1249')"
+    "role": "button",
+    "name": "Nova Nota",
+    "exact": true,
+    "within": "main"
    },
-   "seconds": 1.0,
-   "at": 8.53,
-   "label": "a nota 1249 (Serra Fina, Autorizada)",
-   "optional": true,
-   "timeout": 4
+   "at": 3.52,
+   "label": "Nova Nota"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] :text-is('NF-e de Entrada')"
+   },
+   "at": 8.15,
+   "label": "NF-e de Entrada"
+  },
+  {
+   "do": "waitFor",
+   "text": "Para quem",
+   "timeout": 15
   },
   {
    "do": "mark",
    "name": "L2",
-   "at": 12.38
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main tbody tr:has-text('#1249') td:last-child button"
-   },
-   "seconds": 0.27,
-   "at": 12.9,
-   "label": "abre o menu da linha #1249",
-   "noScroll": true,
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main tbody tr:has-text('#1249') td:last-child button"
-   },
-   "seconds": 0.15,
-   "label": "(menu #1249 aberto)",
-   "noScroll": true,
-   "unless": {
-    "role": "menuitem",
-    "name": "Cancelar"
-   },
-   "optional": true,
-   "timeout": 4
+   "at": 12.3
   },
   {
    "do": "click",
    "target": {
-    "role": "menuitem",
-    "name": "Cancelar"
+    "selector": "[role=dialog] button:has-text('Emissão em Massa (Caixa)')"
    },
-   "at": 14.12,
-   "label": "Cancelar",
-   "noScroll": true
+   "at": 19.48,
+   "label": "Emissão em Massa (Caixa)"
   },
   {
    "do": "waitFor",
-   "text": "Cancelar Nota Fiscal #1249",
+   "text": "Emitir NF-e em massa",
    "timeout": 10
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "[role=dialog] textarea"
-   },
-   "at": 14.93,
-   "label": "Motivo do Cancelamento (clique no campo)"
-  },
-  {
-   "do": "eval",
-   "js": "(()=>{const e=document.activeElement;if(!e||!/^(INPUT|TEXTAREA)$/.test(e.tagName))return 'SEM ALVO (nada em foco)';document.execCommand('insertText',false,\"Pedido alterado pelo cliente antes de a mercadoria sair do p\\u00e1tio\");return e.value})()",
-   "at": 16.11,
-   "label": "Motivo do Cancelamento"
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 19.48
+   "at": 21.68
   },
   {
    "do": "click",
    "target": {
-    "selector": "[role=dialog] button:has-text('Confirmar Cancelamento')"
+    "selector": "[role=dialog]:has-text('Emitir NF-e em massa') button:has-text('Hoje')"
    },
-   "at": 19.68,
-   "label": "Confirmar Cancelamento"
+   "at": 21.88,
+   "label": "data (abre o calendário)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] button[name='day']:not(.day-outside):text-is('9')"
+   },
+   "at": 23.27,
+   "label": "9 de novembro",
+   "noScroll": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] :text-is('Marcos Antunes')"
+   },
+   "at": 26.08,
+   "label": "o caixa do Marcos (Fechado, 09/11 07:02)"
   },
   {
    "do": "waitFor",
-   "selector": "main tbody tr:has-text('#1249'):has-text('Cancelada')",
-   "timeout": 15
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main tbody tr:has-text('#1249') td:has-text('Cancelada')"
-   },
-   "seconds": 1.0,
-   "at": 22.46,
-   "label": "#1249 Cancelada",
-   "optional": true,
-   "timeout": 4
+   "text": "Pedido #1756",
+   "timeout": 10
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 30.54
+   "at": 29.7
   },
   {
-   "do": "hover",
+   "do": "click",
    "target": {
-    "selector": "main tbody tr:has-text('#1250') td:last-child button"
+    "selector": "[role=dialog] button:has-text('Selecionar todos sem NF-e')"
    },
-   "seconds": 0.3,
-   "at": 43.66,
-   "label": "abre o menu da linha #1250",
-   "noScroll": true,
-   "optional": true,
-   "timeout": 4
+   "at": 29.9,
+   "label": "Selecionar todos sem NF-e (3/3)"
   },
   {
-   "do": "hover",
-   "target": {
-    "selector": "main tbody tr:has-text('#1250') td:last-child button"
-   },
-   "seconds": 0.15,
-   "label": "(menu #1250 aberto)",
-   "noScroll": true,
-   "unless": {
-    "role": "menuitem",
-    "name": "Carta de Correção"
-   },
-   "optional": true,
-   "timeout": 4
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"3/3 selecionados\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog],[role=alertdialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere 3/3 selecionados"
   },
   {
    "do": "mark",
    "name": "L5",
-   "at": 45.16
+   "at": 33.32
   },
   {
    "do": "click",
    "target": {
-    "role": "menuitem",
-    "name": "Carta de Correção"
+    "selector": "[role=dialog] :text-is('Uma nota consolidada')"
    },
-   "at": 45.56,
-   "label": "Carta de Correção",
-   "noScroll": true
+   "at": 36.7,
+   "label": "Uma nota consolidada"
   },
   {
-   "do": "waitFor",
-   "text": "Carta de Correção - NF-e #1250",
-   "timeout": 10
-  },
-  {
-   "do": "hover",
+   "do": "type",
    "target": {
-    "selector": "[role=dialog] :text-matches('permite corrigir erros em campos')"
+    "selector": "[role=dialog] :text-is('Faixa prevista para este lote')"
    },
-   "seconds": 2.0,
-   "at": 49.49,
-   "label": "zoom: aviso Importante (o que não dá pra corrigir)",
+   "text": "",
+   "noClick": true,
    "optional": true,
-   "timeout": 4
+   "timeout": 4,
+   "at": 39.99,
+   "label": "zoom: Faixa prevista NF-e nº 1251 e Valor dos pedidos R$ 803,30"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"1251\", \"803,30\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog],[role=alertdialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere faixa 1251 e R$ 803,30"
   },
   {
    "do": "mark",
    "name": "L6",
-   "at": 59.78
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "[role=dialog] textarea"
-   },
-   "at": 60.21,
-   "label": "Texto da Correção (clique no campo)"
-  },
-  {
-   "do": "eval",
-   "js": "(()=>{const e=document.activeElement;if(!e||!/^(INPUT|TEXTAREA)$/.test(e.tagName))return 'SEM ALVO (nada em foco)';document.execCommand('insertText',false,\"Onde se l\\u00ea 'Placa FJR3B27', leia-se 'Placa GKM5D18'. A transportadora trocou o ve\\u00edculo da carga.\");return e.value})()",
-   "at": 61.85,
-   "label": "Texto da Correção"
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "[role=dialog] :text-matches('Dica: Use o formato')"
-   },
-   "seconds": 0.77,
-   "at": 65.85,
-   "label": "zoom: Dica do formato",
-   "optional": true,
-   "timeout": 4
+   "at": 46.72
   },
   {
    "do": "mark",
    "name": "L7",
-   "at": 67.57
+   "at": 62.79
   },
   {
    "do": "click",
    "target": {
-    "selector": "[role=dialog] button:has-text('Enviar CC-e')"
+    "selector": "[role=dialog] button:has-text('Montar nota consolidada')"
    },
-   "at": 68.45,
-   "label": "Enviar CC-e"
+   "at": 63.67,
+   "label": "Montar nota consolidada",
+   "noScroll": true
   },
   {
    "do": "waitFor",
-   "text": "Carta de Correção enviada com sucesso!",
+   "text": "pedido(s) importado(s) com sucesso",
    "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] :text-is('Consumidor Final / Não Identificado')"
+   },
+   "seconds": 0.6,
+   "at": 69.62,
+   "label": "Consumidor Final / Não Identificado",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] div:has(> label:text-is('Natureza da Operação')) button[role=combobox]"
+   },
+   "at": 71.34,
+   "label": "Natureza da Operação (abre a lista)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Entrada de sucata para revenda (pessoa física)"
+   },
+   "at": 73.21,
+   "label": "Entrada de sucata para revenda (pessoa física)",
+   "noScroll": true
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 76.27
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:text-is('Avançar')"
+   },
+   "at": 76.57,
+   "label": "Avançar (os três itens)",
+   "noScroll": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:text-is('Emitir Nota')"
+   },
+   "at": 78.6,
+   "label": "Emitir Nota",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "selector": "main tbody tr:has-text('#1251')",
+   "timeout": 20
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('#1251') td:has-text('SEFAZ')"
+   },
+   "seconds": 0.6,
+   "label": "#1251 Aguardando SEFAZ",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "waitFor",
+   "selector": "main tbody tr:has-text('#1251'):has-text('Autorizada')",
+   "timeout": 25
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('#1251') td:has-text('Autorizada')"
+   },
+   "seconds": 1.0,
+   "at": 83.25,
+   "label": "#1251 Autorizada",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "eval",
@@ -315,7 +335,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 75.07
+   "at": 88.02
   }
  ]
 }

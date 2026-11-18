@@ -1,6 +1,6 @@
 {
  "name": "t16-cap15",
- "title": "T16 · Cap. 15 · As notas recebidas (narração ESTIMADA 59,7 s; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "title": "T16 · Cap. 15 · A SEFAZ recusou a nota (narração ESTIMADA 149,0 s; marcas L1..L11 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
  "seed": "t16-cap15",
  "pace": 0.5,
  "cps": 40,
@@ -20,7 +20,8 @@
  },
  "seedExtra": [
   "t16/inicio",
-  "t16/apos-cap14"
+  "t16/apos-cap14",
+  "t16/rejeitada-1252"
  ],
  "prewarm": [
   "/login"
@@ -73,7 +74,7 @@
   },
   {
    "do": "waitFor",
-   "text": "#1250",
+   "text": "#1252",
    "timeout": 30
   },
   {
@@ -96,178 +97,388 @@
    "at": 0.4
   },
   {
-   "do": "click",
+   "do": "hover",
    "target": {
-    "selector": "#tab-btn-notas-recebidas"
+    "selector": "main tbody tr:has-text('#1252') td:has-text('Rejeitada pela SEFAZ')"
    },
-   "at": 4.79,
-   "label": "sub-aba Notas Recebidas"
+   "seconds": 0.77,
+   "at": 14.45,
+   "label": "zoom: #1252 Rejeitada pela SEFAZ",
+   "optional": true,
+   "timeout": 4
   },
   {
-   "do": "waitFor",
-   "text": "Ative as Notas Recebidas",
-   "timeout": 10
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Serra Fina\", \"1.560,00\", \"Rejeitada pela SEFAZ\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main tbody tr\")].filter(e=>!true||e.innerText.includes(\"#1252\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere 1252 da Serra Fina, R$ 1.560,00, rejeitada"
   },
   {
    "do": "mark",
    "name": "L2",
-   "at": 5.54
+   "at": 16.17
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 17.89
+   "at": 29.2
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('#1252') td:last-child button"
+   },
+   "seconds": 0.15,
+   "at": 29.2,
+   "label": "abre o menu da linha #1252",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('#1252') td:last-child button"
+   },
+   "seconds": 0.15,
+   "label": "(menu #1252 aberto)",
+   "noScroll": true,
+   "unless": {
+    "role": "menuitem",
+    "name": "Visualizar"
+   },
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "click",
    "target": {
-    "role": "button",
-    "name": "Ativar Notas Recebidas",
-    "exact": true,
-    "within": "main"
+    "role": "menuitem",
+    "name": "Visualizar"
    },
-   "at": 18.77,
-   "label": "Ativar Notas Recebidas"
+   "at": 29.73,
+   "label": "Visualizar",
+   "noScroll": true
   },
   {
    "do": "waitFor",
-   "text": "Ativar consulta de notas recebidas?",
+   "text": "Nota rejeitada pela SEFAZ",
    "timeout": 10
   },
   {
    "do": "hover",
    "target": {
-    "selector": "[role=alertdialog] :text-matches('Ao ativar, cada nota fiscal recebida'), [role=dialog] :text-matches('Ao ativar, cada nota fiscal recebida')"
+    "selector": "[role=dialog] :text-matches('^Nota rejeitada pela SEFAZ')"
    },
-   "seconds": 2.0,
-   "at": 21.23,
-   "label": "zoom: Ao ativar, cada nota fiscal recebida passa a contar na sua cota",
+   "seconds": 1.0,
+   "at": 30.94,
+   "label": "zoom: faixa Nota rejeitada pela SEFAZ, Cód. 778",
    "optional": true,
    "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] :text-matches('O que fazer')"
+   },
+   "seconds": 1.5,
+   "at": 36.41,
+   "label": "O que fazer: NCM inexistente em um dos itens",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Cód. 778\", \"NCM inexistente em um dos itens\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog],[role=alertdialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Cód. 778 e a dica do NCM"
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 28.72
+   "at": 42.76
   },
   {
    "do": "click",
    "target": {
-    "selector": "[role=alertdialog] button:has-text('Ativar mesmo assim'), [role=dialog] button:has-text('Ativar mesmo assim')"
+    "selector": "[role=dialog] button:has-text('Histórico')"
    },
-   "at": 28.92,
-   "label": "Ativar mesmo assim"
+   "at": 46.07,
+   "label": "Histórico (no alto do Visualizar)"
   },
   {
    "do": "waitFor",
-   "text": "Notas emitidas contra o seu CNPJ",
-   "timeout": 10
-  },
-  {
-   "do": "waitFor",
-   "text": "Auto Peças Vale Forte",
+   "text": "Histórico da NF-e",
    "timeout": 10
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main tbody tr:has-text('Auto Peças Vale Forte')"
+    "selector": "[role=dialog] :text-is('Envio para SEFAZ')"
    },
-   "seconds": 0.8,
-   "at": 36.3,
-   "label": "Auto Peças Vale Forte R$ 1.984,00",
+   "seconds": 0.15,
+   "at": 48.75,
+   "label": "Envio para SEFAZ (Enviado)",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main tbody tr:has-text('Depósito Irmãos Siqueira')"
+    "selector": "[role=dialog] :text-is('Rejeição')"
    },
    "seconds": 0.8,
-   "at": 42.23,
-   "label": "Depósito Irmãos Siqueira R$ 2.100,00",
+   "at": 49.59,
+   "label": "Rejeição (Erro)",
    "optional": true,
    "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Histórico da NF-e\", \"Rejeição\", \"Envio para SEFAZ\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog],[role=alertdialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere histórico: envio e rejeição"
   },
   {
    "do": "mark",
    "name": "L5",
-   "at": 44.25
+   "at": 52.44
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 52.74,
+   "label": "fecha o Histórico"
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "label": "fecha o Visualizar",
+   "optional": true
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "selector": "[role=dialog]"
+   },
+   "timeout": 8
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main thead th:has-text('Emitente')"
+    "selector": "main tbody tr:has-text('#1252') td:last-child button"
    },
-   "seconds": 0.15,
-   "at": 46.3,
-   "label": "zoom: coluna Emitente",
+   "seconds": 0.4,
+   "at": 52.97,
+   "label": "abre o menu da 1252",
+   "noScroll": true,
    "optional": true,
    "timeout": 4
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main thead th:has-text('Valor')"
+    "role": "menuitem",
+    "name": "Editar e reenviar (mesmo número)"
    },
-   "seconds": 0.15,
-   "at": 47.21,
-   "label": "zoom: coluna Valor",
+   "seconds": 0.8,
+   "at": 56.16,
+   "label": "zoom: Editar e reenviar (mesmo número)",
+   "noScroll": true,
    "optional": true,
    "timeout": 4
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main thead th:has-text('Emissão')"
+    "role": "menuitem",
+    "name": "Editar e reemitir com novo número"
    },
-   "seconds": 0.3,
-   "at": 48.04,
-   "label": "zoom: coluna Emissão",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main thead th:has-text('SEFAZ')"
-   },
-   "seconds": 0.15,
-   "at": 49.71,
-   "label": "zoom: coluna SEFAZ",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main thead th:has-text('Manifestação')"
-   },
-   "seconds": 0.16,
-   "at": 50.47,
-   "label": "zoom: coluna Manifestação",
+   "seconds": 1.0,
+   "at": 59.05,
+   "label": "Editar e reemitir com novo número",
+   "noScroll": true,
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L6",
-   "at": 51.58
+   "at": 66.39
   },
   {
    "do": "hover",
    "target": {
-    "role": "button",
-    "name": "Sincronizar agora",
-    "exact": true,
-    "within": "main"
+    "role": "menuitem",
+    "name": "Inutilizar numeração"
    },
    "seconds": 1.5,
-   "at": 55.37,
-   "label": "zoom: Sincronizar agora (sem clicar)",
+   "at": 72.61,
+   "label": "zoom: Inutilizar numeração (sem clicar)",
+   "noScroll": true,
    "optional": true,
    "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('#1252') td:last-child button"
+   },
+   "seconds": 0.15,
+   "label": "(menu 1252 aberto)",
+   "noScroll": true,
+   "unless": {
+    "role": "menuitem",
+    "name": "Editar e reenviar (mesmo número)"
+   },
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 76.68
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Editar e reenviar (mesmo número)"
+   },
+   "at": 77.41,
+   "label": "Editar e reenviar (mesmo número)",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "text": "Reemitir NF-e de Saída",
+   "timeout": 15
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] :text-matches('^Reemissão com mesmo número')"
+   },
+   "seconds": 1.0,
+   "at": 81.23,
+   "label": "zoom: Reemissão com mesmo número: nº 1252",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] :text-matches('Esta nota será reemitida como')"
+   },
+   "seconds": 1.0,
+   "at": 85.33,
+   "label": "Esta nota será reemitida como Série 1 / Nº 1252",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Reemitir NF-e de Saída\", \"Série 1 / Nº 1252\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog],[role=alertdialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere reemissão como Série 1 / Nº 1252"
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 89.71
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:text-is('Itens')"
+   },
+   "at": 90.71,
+   "label": "aba Itens"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='0000.00.00']",
+    "nth": 1
+   },
+   "at": 91.05,
+   "label": "zoom: NCM 7602.00.99 (clique no campo)"
+  },
+  {
+   "do": "press",
+   "key": [
+    "Control+A",
+    "Backspace"
+   ],
+   "label": "apaga o NCM errado"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='0000.00.00']",
+    "nth": 1
+   },
+   "text": "76020000",
+   "cps": 30,
+   "at": 95.49,
+   "label": "NCM 7602.00.00",
+   "noClick": true
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const esp=[\"7602.00.00\"];let out='';for(let i=0;i<12;i++){const v=[...document.querySelectorAll(\"[role=dialog]\"+' input, '+\"[role=dialog]\"+' textarea')].map(e=>e.value).join(' | ');const falta=esp.filter(e=>!v.includes(e));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+v.slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere NCM corrigido"
+  },
+  {
+   "do": "mark",
+   "name": "L9",
+   "at": 102.89
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:text-is('Emitir Nota')"
+   },
+   "at": 103.09,
+   "label": "Emitir Nota",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "selector": "main tbody tr:has-text('#1252')",
+   "timeout": 20
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('#1252') td:has-text('SEFAZ')"
+   },
+   "seconds": 0.6,
+   "label": "#1252 Aguardando SEFAZ",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "waitFor",
+   "selector": "main tbody tr:has-text('#1252'):has-text('Autorizada')",
+   "timeout": 25
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('#1252') td:has-text('Autorizada')"
+   },
+   "seconds": 0.15,
+   "at": 108.27,
+   "label": "#1252 Autorizada",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L10",
+   "at": 109.23
+  },
+  {
+   "do": "mark",
+   "name": "L11",
+   "at": 133.8
   },
   {
    "do": "eval",
@@ -277,7 +488,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 59.69
+   "at": 149.05
   }
  ]
 }

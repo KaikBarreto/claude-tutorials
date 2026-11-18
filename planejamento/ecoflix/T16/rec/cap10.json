@@ -1,6 +1,6 @@
 {
  "name": "t16-cap10",
- "title": "T16 · Cap. 10 · Nota a partir de um pedido (narração ESTIMADA 77,4 s; marcas L1..L8 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "title": "T16 · Cap. 10 · Nota a partir de um pedido (narração ESTIMADA 98,3 s; marcas L1..L9 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
  "seed": "t16-cap10",
  "pace": 0.5,
  "cps": 40,
@@ -208,8 +208,8 @@
   {
    "do": "type",
    "target": {
-    "selector": "[role=dialog] th:text-is('Qtd')",
-    "nth": -1
+    "selector": "[role=dialog] input[placeholder='0,00']",
+    "nth": 3
    },
    "text": "",
    "noClick": true,
@@ -219,9 +219,26 @@
    "label": "zoom: Qtd 500 (Cobre mel)"
   },
   {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='0,00']",
+    "nth": 3
+   },
+   "seconds": 1.0,
+   "at": 28.03,
+   "label": "Qtd 500,00",
+   "optional": true,
+   "timeout": 4
+  },
+  {
    "do": "eval",
-   "js": "(()=>{const rs=[...document.querySelectorAll('[role=dialog] tr')].filter(r=>[...r.querySelectorAll('input')].some(i=>i.value.includes(\"Cobre mel\")));if(!rs.length)return 'DIFERENTE: sem a linha';const v=[...rs[rs.length-1].querySelectorAll('input')].map(i=>i.value).join(' | ');const t=document.querySelector('[role=dialog]').innerText;return (v.includes('500,00')&&t.includes('23.950,00')?'OK: ':'DIFERENTE: ')+v})()",
-   "label": "confere Qtd do Cobre mel (500,00) e o total R$ 23.950,00"
+   "js": "(async()=>{const esp=[\"Cobre mel\", \"500,00\", \"47,90\"];let out='';for(let i=0;i<12;i++){const v=[...document.querySelectorAll(\"[role=dialog]\"+' input, '+\"[role=dialog]\"+' textarea')].map(e=>e.value).join(' | ');const falta=esp.filter(e=>!v.includes(e));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+v.slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Cobre mel 500,00 a 47,90"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"23.950,00\", \"Pronta pra emitir\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog],[role=alertdialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere total R$ 23.950,00"
   },
   {
    "do": "mark",
@@ -297,33 +314,143 @@
    "at": 70.66
   },
   {
-   "do": "click",
-   "target": {
-    "selector": "[role=dialog] button:text-is('Emitir Nota')"
-   },
-   "at": 70.66,
-   "label": "Emitir Nota",
-   "noScroll": true
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.textContent.trim()===\"Volumes Transportados\"&&e.offsetParent).sort((a,b)=>a.textContent.length-b.textContent.length||a.children.length-b.children.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-300);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 70.88,
+   "label": "desce a Volumes Transportados"
   },
   {
-   "do": "waitFor",
-   "selector": "main tbody tr:has-text('#1250')",
-   "timeout": 20
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='0']"
+   },
+   "at": 73.21,
+   "label": "Volumes: Quantidade (clique no campo)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='0']"
+   },
+   "text": "1",
+   "cps": 30,
+   "label": "Quantidade 1",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='Caixa, Fardo...']"
+   },
+   "at": 74.42,
+   "label": "Espécie (clique no campo)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='Caixa, Fardo...']"
+   },
+   "text": "Granel",
+   "cps": 40,
+   "label": "Espécie Granel",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='0,000']",
+    "nth": 0
+   },
+   "at": 76.78,
+   "label": "Peso Bruto (kg) (clique no campo)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='0,000']",
+    "nth": 0
+   },
+   "text": "506,000",
+   "cps": 40,
+   "label": "zoom: Peso Bruto 506,000",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='0,000']",
+    "nth": 1
+   },
+   "at": 79.51,
+   "label": "Peso Líquido (kg) (clique no campo)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='0,000']",
+    "nth": 1
+   },
+   "text": "500,000",
+   "cps": 40,
+   "label": "Peso Líquido 500,000",
+   "noClick": true
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const esp=[\"Granel\", \"506,000\", \"500,000\"];let out='';for(let i=0;i<12;i++){const v=[...document.querySelectorAll(\"[role=dialog]\"+' input, '+\"[role=dialog]\"+' textarea')].map(e=>e.value).join(' | ');const falta=esp.filter(e=>!v.includes(e));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+v.slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere volumes: Granel, 506,000 e 500,000"
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main tbody tr:has-text('#1250') td:has-text('SEFAZ')"
+    "selector": "[role=dialog] label:text-is('Valor do Frete')"
    },
-   "seconds": 0.6,
-   "label": "#1250 Aguardando SEFAZ",
+   "seconds": 0.8,
+   "at": 83.94,
+   "label": "Valor do Frete",
    "optional": true,
    "timeout": 4
   },
   {
-   "do": "waitFor",
-   "selector": "main tbody tr:has-text('#1250'):has-text('Autorizada')",
-   "timeout": 25
+   "do": "mark",
+   "name": "L9",
+   "at": 88.62
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] button:text-is('Emitir Nota')"
+   },
+   "seconds": 0.8,
+   "at": 90.06,
+   "label": "Emitir Nota (sem clicar)",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] button:text-is('Impostos')"
+   },
+   "seconds": 0.15,
+   "at": 93.63,
+   "label": "aba Impostos",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] button:text-is('Pré-visualização')"
+   },
+   "seconds": 1.0,
+   "at": 94.36,
+   "label": "até a Pré-visualização",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "eval",
@@ -333,7 +460,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 77.39
+   "at": 98.32
   }
  ]
 }

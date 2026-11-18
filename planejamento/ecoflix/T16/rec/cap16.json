@@ -1,6 +1,6 @@
 {
  "name": "t16-cap16",
- "title": "T16 · Cap. 16 · Manifestar a nota (narração ESTIMADA 57,7 s; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "title": "T16 · Cap. 16 · Cancelar e corrigir (narração ESTIMADA 109,1 s; marcas L1..L9 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
  "seed": "t16-cap16",
  "pace": 0.5,
  "cps": 40,
@@ -69,11 +69,11 @@
   },
   {
    "do": "goto",
-   "url": "/fiscal-ambiental/nfe/recebidas"
+   "url": "/fiscal-ambiental/nfe/saida"
   },
   {
    "do": "waitFor",
-   "text": "Notas emitidas contra o seu CNPJ",
+   "text": "#1252",
    "timeout": 30
   },
   {
@@ -96,148 +96,124 @@
    "at": 0.4
   },
   {
-   "do": "type",
-   "target": {
-    "selector": "main thead th:has-text('Manifestação')"
-   },
-   "text": "",
-   "noClick": true,
-   "optional": true,
-   "timeout": 4,
-   "at": 2.83,
-   "label": "zoom: coluna Manifestação com Ciência nas duas"
-  },
-  {
    "do": "hover",
    "target": {
-    "selector": "main tbody tr:has-text('Auto Peças Vale Forte') :text-is('Ciência')"
+    "selector": "main tbody tr:has-text('#1249')"
    },
-   "seconds": 0.15,
-   "at": 5.87,
-   "label": "Ciência",
+   "seconds": 1.0,
+   "at": 10.12,
+   "label": "a nota 1249 (Serra Fina, Autorizada)",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L2",
-   "at": 6.61
+   "at": 13.97
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('#1249') td:last-child button"
+   },
+   "seconds": 0.26,
+   "at": 14.5,
+   "label": "abre o menu da linha #1249",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('#1249') td:last-child button"
+   },
+   "seconds": 0.15,
+   "label": "(menu #1249 aberto)",
+   "noScroll": true,
+   "unless": {
+    "role": "menuitem",
+    "name": "Cancelar"
+   },
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Cancelar"
+   },
+   "at": 15.71,
+   "label": "Cancelar",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "text": "Cancelar Nota Fiscal #1249",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] textarea"
+   },
+   "at": 16.52,
+   "label": "Motivo do Cancelamento (clique no campo)"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const e=document.activeElement;if(!e||!/^(INPUT|TEXTAREA)$/.test(e.tagName))return 'SEM ALVO (nada em foco)';document.execCommand('insertText',false,\"Pedido alterado pelo cliente antes de a mercadoria sair do p\\u00e1tio\");return e.value})()",
+   "at": 17.71,
+   "label": "Motivo do Cancelamento"
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 16.6
+   "at": 21.08
   },
   {
    "do": "click",
    "target": {
-    "selector": "main tr:has-text('Depósito Irmãos Siqueira') button[title='Ações']"
+    "selector": "[role=dialog] button:has-text('Confirmar Cancelamento')"
    },
-   "at": 17.18,
-   "label": "abre o menu da nota do Depósito"
+   "at": 21.28,
+   "label": "Confirmar Cancelamento"
   },
   {
-   "do": "type",
-   "target": {
-    "role": "menuitem",
-    "name": "Ver XML"
-   },
-   "text": "",
-   "noClick": true,
-   "optional": true,
-   "timeout": 4,
-   "at": 21.07,
-   "label": "zoom: Ver XML apagado (XML ainda não disponível)"
+   "do": "waitFor",
+   "selector": "main tbody tr:has-text('#1249'):has-text('Cancelada')",
+   "timeout": 15
   },
   {
    "do": "hover",
    "target": {
-    "role": "menuitem",
-    "name": "Buscar documento"
+    "selector": "main tbody tr:has-text('#1249') td:has-text('Cancelada')"
    },
-   "seconds": 0.6,
-   "at": 24.41,
-   "label": "Buscar documento (baixa o XML e o DANFE)",
-   "noScroll": true,
+   "seconds": 0.15,
+   "at": 24.06,
+   "label": "#1249 Cancelada",
    "optional": true,
    "timeout": 4
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "menuitem",
-    "name": "Buscar documento"
-   },
-   "at": 28.16,
-   "label": "Buscar documento",
-   "noScroll": true
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 28.56
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "main tr:has-text('Auto Peças Vale Forte') button[title='Ações']"
-   },
-   "at": 28.99,
-   "label": "abre o menu da Auto Peças"
-  },
-  {
-   "do": "hover",
-   "target": {
-    "role": "menuitem",
-    "name": "Confirmar operação"
-   },
-   "seconds": 0.6,
-   "at": 31.9,
-   "label": "zoom: Confirmar operação",
-   "noScroll": true,
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "role": "menuitem",
-    "name": "Desconhecer operação"
-   },
-   "seconds": 0.15,
-   "at": 35.17,
-   "label": "Desconhecer operação",
-   "noScroll": true,
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "role": "menuitem",
-    "name": "Operação não realizada"
-   },
-   "seconds": 0.6,
-   "at": 36.08,
-   "label": "Operação não realizada",
-   "noScroll": true,
-   "optional": true,
-   "timeout": 4
+   "at": 24.84
   },
   {
    "do": "mark",
    "name": "L5",
-   "at": 43.64
+   "at": 47.29
   },
   {
    "do": "hover",
    "target": {
-    "role": "menuitem",
-    "name": "Desconhecer operação"
+    "selector": "main tbody tr:has-text('#1250') td:last-child button"
    },
-   "seconds": 0.6,
-   "at": 44.55,
-   "label": "as duas últimas pedem justificativa",
+   "seconds": 0.3,
+   "at": 60.41,
+   "label": "abre o menu da linha #1250",
    "noScroll": true,
    "optional": true,
    "timeout": 4
@@ -245,44 +221,187 @@
   {
    "do": "hover",
    "target": {
-    "role": "menuitem",
-    "name": "Operação não realizada"
+    "selector": "main tbody tr:has-text('#1250') td:last-child button"
    },
    "seconds": 0.15,
-   "at": 48.2,
-   "label": "e não podem ser desfeitas",
+   "label": "(menu #1250 aberto)",
    "noScroll": true,
+   "unless": {
+    "role": "menuitem",
+    "name": "Carta de Correção"
+   },
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L6",
-   "at": 49.08
+   "at": 61.91
   },
   {
    "do": "click",
    "target": {
     "role": "menuitem",
-    "name": "Confirmar operação"
+    "name": "Carta de Correção"
    },
-   "at": 53.1,
-   "label": "Confirmar operação",
+   "at": 62.31,
+   "label": "Carta de Correção",
    "noScroll": true
   },
   {
    "do": "waitFor",
-   "text": "Operação confirmada junto à SEFAZ",
+   "text": "Carta de Correção - NF-e #1250",
    "timeout": 10
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main tbody tr:has-text('Auto Peças Vale Forte') :text-is('Confirmada')"
+    "selector": "[role=dialog] :text-matches('permite corrigir erros em campos')"
    },
-   "seconds": 1.0,
-   "at": 55.45,
-   "label": "Confirmada",
+   "seconds": 2.0,
+   "at": 66.24,
+   "label": "zoom: aviso Importante (o que não dá pra corrigir)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 76.53
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] textarea"
+   },
+   "at": 76.96,
+   "label": "Texto da Correção (clique no campo)"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const e=document.activeElement;if(!e||!/^(INPUT|TEXTAREA)$/.test(e.tagName))return 'SEM ALVO (nada em foco)';document.execCommand('insertText',false,\"Onde se l\\u00ea 'Placa FJR3B27', leia-se 'Placa GKM5D18'. A transportadora trocou o ve\\u00edculo da carga.\");return e.value})()",
+   "at": 78.6,
+   "label": "Texto da Correção"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] :text-matches('Dica: Use o formato')"
+   },
+   "seconds": 0.77,
+   "at": 82.6,
+   "label": "zoom: Dica do formato",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 84.32
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:has-text('Enviar CC-e')"
+   },
+   "at": 85.2,
+   "label": "Enviar CC-e"
+  },
+  {
+   "do": "waitFor",
+   "text": "Carta de Correção enviada com sucesso!",
+   "timeout": 10
+  },
+  {
+   "do": "mark",
+   "name": "L9",
+   "at": 90.52
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 90.72,
+   "label": "fecha a janela da carta (se ainda estiver aberta)"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "selector": "[role=dialog]"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('#1250') td:last-child button"
+   },
+   "seconds": 0.15,
+   "at": 91.52,
+   "label": "abre o menu da linha #1250",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('#1250') td:last-child button"
+   },
+   "seconds": 0.15,
+   "label": "(menu #1250 aberto)",
+   "noScroll": true,
+   "unless": {
+    "role": "menuitem",
+    "name": "Carta de Correção"
+   },
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Carta de Correção"
+   },
+   "at": 91.67,
+   "label": "Carta de Correção (de novo)",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "text": "1 CC-e enviada",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] :text-is('1 CC-e enviada')"
+   },
+   "seconds": 0.18,
+   "at": 94.69,
+   "label": "zoom: 1 CC-e enviada",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] button:text-is('PDF'), [role=dialog] a:text-is('PDF')"
+   },
+   "seconds": 0.6,
+   "at": 95.82,
+   "label": "PDF da carta",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] :text-matches('Registrada na SEFAZ')"
+   },
+   "seconds": 1.2,
+   "at": 101.59,
+   "label": "Registrada na SEFAZ · protocolo",
    "optional": true,
    "timeout": 4
   },
@@ -294,7 +413,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 57.72
+   "at": 109.09
   }
  ]
 }

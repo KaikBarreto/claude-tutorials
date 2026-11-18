@@ -1,6 +1,6 @@
 {
  "name": "t16-cap18",
- "title": "T16 · Cap. 18 · Recapitulando (narração ESTIMADA 58,4 s; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "title": "T16 · Cap. 18 · Nota complementar (narração ESTIMADA 92,7 s; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
  "seed": "t16-cap18",
  "pace": 0.5,
  "cps": 40,
@@ -69,11 +69,11 @@
   },
   {
    "do": "goto",
-   "url": "/fiscal-ambiental/configuracao/certificado"
+   "url": "/fiscal-ambiental/nfe/saida"
   },
   {
    "do": "waitFor",
-   "text": "Certificado validado!",
+   "text": "#1250",
    "timeout": 30
   },
   {
@@ -96,235 +96,313 @@
    "at": 0.4
   },
   {
-   "do": "hover",
-   "target": {
-    "text": "Certificado validado!",
-    "exact": true,
-    "within": "main"
-   },
-   "seconds": 0.6,
-   "at": 2.91,
-   "label": "Certificado validado!",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "#tab-btn-impostos"
-   },
-   "at": 6.23,
-   "label": "Impostos (padrão)"
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "Lucro Real:",
-    "exact": true,
-    "within": "main"
-   },
-   "seconds": 0.6,
-   "at": 7.24,
-   "label": "o quadro Lucro Real:",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "#tab-btn-cenarios"
-   },
-   "at": 8.81,
-   "label": "Cenários"
-  },
-  {
    "do": "mark",
    "name": "L2",
-   "at": 12.53
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "#tab-btn-numeracao"
-   },
-   "at": 13.64,
-   "label": "Numeração (Série 1)"
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "#tab-btn-transportadora"
-   },
-   "at": 16.45,
-   "label": "Transportadora (Cargas Vale do Sol)"
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "button:has(span:text-is('Fiscal & Ambiental'))"
-   },
-   "at": 17.74,
-   "label": "Fiscal & Ambiental",
-   "unless": {
-    "selector": "a:has-text('Notas Fiscais (NF-e)')"
-   }
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "a:has-text('Notas Fiscais (NF-e)')"
-   },
-   "at": 18.29,
-   "label": "Notas Fiscais (NF-e)"
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "#tab-btn-saida"
-   },
-   "at": 19.89,
-   "label": "sub-aba Saída"
+   "at": 20.5
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main :text-matches('^[0-9.]+/[0-9.]+ Documentos$')"
+    "selector": "main tbody tr:has-text('#1250') td:last-child button"
    },
-   "seconds": 0.47,
-   "at": 20.95,
-   "label": "o selo da cota",
+   "seconds": 0.3,
+   "at": 21.03,
+   "label": "abre o menu da linha #1250",
    "noScroll": true,
    "optional": true,
    "timeout": 4
   },
   {
-   "do": "mark",
-   "name": "L3",
-   "at": 22.37
-  },
-  {
    "do": "hover",
    "target": {
-    "selector": "main tbody tr:has-text('#1249')"
+    "selector": "main tbody tr:has-text('#1250') td:last-child button"
    },
-   "seconds": 0.4,
-   "at": 25.7,
-   "label": "#1249 (do zero)",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main tbody tr:has-text('#1250')"
+   "seconds": 0.15,
+   "label": "(menu #1250 aberto)",
+   "noScroll": true,
+   "unless": {
+    "role": "menuitem",
+    "name": "Gerar nota complementar"
    },
-   "seconds": 0.4,
-   "at": 27.45,
-   "label": "#1250 (do pedido)",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "click",
    "target": {
-    "selector": "#tab-btn-entrada"
+    "role": "menuitem",
+    "name": "Gerar nota complementar"
    },
-   "at": 29.17,
-   "label": "sub-aba Entrada"
+   "at": 22.93,
+   "label": "Gerar nota complementar",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "text": "Chave da NF-e original (complementar)",
+   "timeout": 15
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main tbody tr:has-text('#1251')"
+    "selector": "[role=dialog] button:has-text('Fundição Bandeira do Vale')",
+    "nth": 0
    },
-   "seconds": 0.15,
-   "at": 29.93,
-   "label": "#1251 (do caixa fechado)",
+   "seconds": 0.5,
+   "at": 26.19,
+   "label": "o cliente: Fundição Bandeira do Vale",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] div:has(> label:text-is('Natureza da Operação')) button[role=combobox]"
+   },
+   "seconds": 0.6,
+   "at": 27.86,
+   "label": "zoom: natureza Complementar de venda",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] :text-is('Chave da NF-e original (complementar)')"
+   },
+   "seconds": 0.92,
+   "at": 29.84,
+   "label": "Chave da NF-e original (complementar)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Complementar de venda\", \"Fundição Bandeira do Vale\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog],[role=alertdialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere complementar de venda da Fundição"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const esp=[\"35261147318506000107550010000012501\"];let out='';for(let i=0;i<12;i++){const v=[...document.querySelectorAll(\"[role=dialog]\"+' input, '+\"[role=dialog]\"+' textarea')].map(e=>e.value).join(' | ');const falta=esp.filter(e=>!v.includes(e));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+v.slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere a chave da 1250 no campo"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 31.71
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] :text-is('Contar esta nota no Estoque Fiscal')"
+   },
+   "seconds": 1.0,
+   "at": 33.0,
+   "label": "zoom: Contar esta nota no Estoque Fiscal (desmarcado)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] :text-matches('^Marque só se este complemento')"
+   },
+   "seconds": 1.5,
+   "at": 40.36,
+   "label": "Marque só se este complemento for de PESO/QUANTIDADE",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 30.46
+   "at": 45.42
   },
   {
    "do": "click",
    "target": {
-    "selector": "#tab-btn-saida"
+    "selector": "[role=dialog] button:text-is('Avançar')"
    },
-   "at": 30.66,
-   "label": "sub-aba Saída"
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main tbody tr:has-text('#1249') td:has-text('Cancelada')"
-   },
-   "seconds": 0.5,
-   "at": 31.75,
-   "label": "#1249 Cancelada",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main tbody tr:has-text('#1250')"
-   },
-   "seconds": 0.15,
-   "at": 33.87,
-   "label": "#1250 com a carta de correção",
-   "optional": true,
-   "timeout": 4
+   "at": 46.42,
+   "label": "Avançar",
+   "noScroll": true
   },
   {
    "do": "click",
    "target": {
-    "selector": "#tab-btn-inutilizadas"
+    "selector": "[role=dialog] input[placeholder='Escreva o nome ou código do material']"
    },
-   "at": 34.68,
-   "label": "sub-aba Inutilizadas (1246 e 1247)"
+   "at": 50.43,
+   "label": "Material (cartão Adicionar item)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='Escreva o nome ou código do material']"
+   },
+   "text": "cobre mel",
+   "cps": 40,
+   "label": "busca cobre mel",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[cmdk-item]:has-text('Cobre mel'), [role=option]:has-text('Cobre mel')"
+   },
+   "at": 51.62,
+   "label": "Cobre mel",
+   "noScroll": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='0,00']",
+    "nth": 0
+   },
+   "at": 52.83,
+   "label": "Qtd (clique no campo)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='0,00']",
+    "nth": 0
+   },
+   "text": "500",
+   "cps": 30,
+   "label": "Qtd 500",
+   "noClick": true,
+   "clear": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='0,00']",
+    "nth": 1
+   },
+   "at": 55.34,
+   "label": "Valor (clique no campo)"
+  },
+  {
+   "do": "press",
+   "key": [
+    "Control+A",
+    "Backspace"
+   ],
+   "label": "apaga o preço do cadastro"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='0,00']",
+    "nth": 1
+   },
+   "text": "0,50",
+   "cps": 30,
+   "at": 57.66,
+   "label": "zoom: Qtd 500 e Valor 0,50",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:has-text('Incluir')"
+   },
+   "at": 59.09,
+   "label": "Incluir"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] :text-is('Total da nota')"
+   },
+   "seconds": 0.72,
+   "at": 59.89,
+   "label": "Total da nota R$ 250,00",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"250,00\", \"Pronta pra emitir\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog],[role=alertdialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere total R$ 250,00 e Pronta pra emitir"
   },
   {
    "do": "mark",
    "name": "L5",
-   "at": 41.21
+   "at": 61.56
   },
   {
    "do": "click",
    "target": {
-    "selector": "#tab-btn-notas-recebidas"
+    "selector": "[role=dialog] button:text-is('Impostos')"
    },
-   "at": 41.56,
-   "label": "sub-aba Notas Recebidas"
+   "at": 61.99,
+   "label": "aba Impostos"
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main tbody tr:has-text('Auto Peças Vale Forte') :text-is('Confirmada')"
+    "selector": "[role=dialog] :text-is('Prévia de Impostos')"
    },
-   "seconds": 0.6,
-   "at": 43.87,
-   "label": "Confirmada",
+   "seconds": 1.0,
+   "at": 63.53,
+   "label": "Prévia de Impostos da complementar",
    "optional": true,
    "timeout": 4
   },
   {
-   "do": "hover",
-   "target": {
-    "selector": "main tbody tr:has-text('Cooperativa Recomeço')"
-   },
-   "seconds": 0.8,
-   "at": 45.76,
-   "label": "a nota importada da Cooperativa",
-   "optional": true,
-   "timeout": 4
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.textContent.trim()===\"Tributos desta nota\"&&e.offsetParent).sort((a,b)=>a.textContent.length-b.textContent.length||a.children.length-b.children.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-270);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 66.72,
+   "label": "desce a Tributos desta nota"
   },
   {
    "do": "mark",
    "name": "L6",
-   "at": 48.55
+   "at": 77.4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:text-is('Emitir Nota')"
+   },
+   "at": 77.6,
+   "label": "Emitir Nota",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "selector": "main tbody tr:has-text('#1254')",
+   "timeout": 20
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('#1254') td:has-text('SEFAZ')"
+   },
+   "seconds": 0.6,
+   "label": "#1254 Aguardando SEFAZ",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "waitFor",
+   "selector": "main tbody tr:has-text('#1254'):has-text('Autorizada')",
+   "timeout": 25
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('#1254') td:has-text('Autorizada')"
+   },
+   "seconds": 1.0,
+   "at": 83.55,
+   "label": "#1254 Autorizada",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "eval",
@@ -334,7 +412,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 58.4
+   "at": 92.72
   }
  ]
 }

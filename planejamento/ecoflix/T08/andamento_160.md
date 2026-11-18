@@ -42,3 +42,33 @@ cd /home/claude/ecoflix && bash rec/t08/t08_lote160.sh 10:--os-dois 11:--os-dois
 grep -n '!!ERRO\|DIFERENTE:\|SEM ALVO' rec/t08/_ens/cap1[0-3].resumo rec/t08/cap*.resumo; tail -8 rec/t08/lote160.txt
 FAKE_PORT=54308 bash rec/run.sh down
 ```
+
+## Cap. 12 "Sem internet" refeito com queda de verdade (18/11, 21:20)
+- **Como o app decide:** `src/hooks/useOnlineStatus.ts` mede por ping (`/auth/v1/health`, 1 por minuto, 2 falhas seguidas derrubam, 2
+  sucessos levantam); `navigator.onLine` e os eventos `online`/`offline` só disparam a medição. O Salvar sem internet vai para a fila
+  do IndexedDB (`WeighingTicket.tsx:2076` → `weighingTicketFinalize.ts`) e sobe pelo `OfflineBanner.tsx` quando `isOnline` volta.
+- **Passo novo no robô (levar à skill):** `rede` em `rec/recorder/runner.mjs` (só acréscimo, antes do `wait`):
+  `{do:'rede', offline:true|false, modo:'servidor'|'navegador', avisar:true}`. `servidor` (padrão) aborta na rede toda requisição ao
+  backend (o navegador segue online: roteador ligado, link caído); `navegador` = `context.setOffline`; `avisar` dispara o evento
+  `online`/`offline` para o app medir na hora. O mesmo passo entrou em `rec/t08/explorar.mjs`.
+- **Capítulo:** no `setup` o ticket é preenchido (Cooperativa Recomeço, Alumínio latinha, Edson Moura, FKD2E41), a rede cai
+  (`rede` + relógio do navegador adiantado 2 x 61 s para os dois pings; a tela começa 09:22). No vídeo: aviso âmbar; Pesagem avançada
+  7210, Confirmar, Salvar → "Ticket OFF-01 guardado neste aparelho" + "Comprovante provisório (sem número oficial)"; Opções avançadas
+  → "Anexar · Disponível com internet."; lista → Ações do #59 → Valorizar e Editar (os dois avisos vermelhos com o motivo); a conexão
+  volta (`rede` + `avisar`) e em ~4 s o ticket aparece numerado em "Aguardando valorização".
+- **Fala:** 4 → 6 linhas (35,8 → 53,5 s estimados), na ordem da tela (as três coisas antes da volta); `roteiro.md` (coluna Tela) refeito.
+- **Ensaio** (exploração `_ex/e9`, `t08_ex3.py`/`t08_ex9.sh`): rápido 0 falho, 8 conferências OK, folha olhada; completo 0 falho,
+  maxLate 0,71 s (o "Valorizar" do menu; o `at` dele foi levado 0,3 s para a frente depois, sem novo ensaio). Folhas em `_folhas/`.
+- **Pendência:** a semente `apos-cap11` ainda não existe (o cap10 não fechou a completa). O ensaio usou `T08_SEM12=apos-cap08`
+  (o ticket virou #60); com a `apos-cap11` o `gerar.py` espera o **#61** (a avulsa do cap11 é a #60): conferir no lote.
+  `T08_SEM12=apos-cap08 python3 -I rec/t08/gerar.py 12 && bash rec/t08/t08_grava.sh 12 --os-dois` repete o ensaio sem a cadeia
+  (o `t08_lote160.sh` roda o `gerar.py` sem a variável, ou seja, com a `apos-cap11`).
+- **Defeito do app (lista de melhorias):** com o navegador offline de verdade (cabo/wi-fi desligado: o navegador dispara o evento
+  `offline`), "Salvar Ticket de Pesagem" fica girando e nada vai para a fila até a rede voltar. Causa: `saveTicket = useMutation({...})`
+  em `src/pages/WeighingTicket.tsx:1947` não tem `networkMode: 'always'`; o react-query v5 (padrão `online`, `App.tsx:298` sem
+  `mutations.networkMode`) pausa a mutação enquanto o `onlineManager` está offline, então o ramo offline (`:2076`) nem roda. As
+  consultas da mesma tela já usam `networkMode: 'always'` (`:863`). Visto no `_ex/e9` passo 120-131 (`setOffline`: botão desabilitado
+  girando 15 s, fila vazia; na volta salvou online como #61) e no ensaio antigo (evento `offline` simulado, 18 s). Só funciona como a
+  aula mostra quando a internet cai e o navegador continua "online" (roteador ligado). Correção: `networkMode: 'always'` nessa mutação.
+  A linha "Sem internet (queda simulada no robô)" do `propostas_fala.md` fica substituída por este achado (não editei aquele arquivo).
+- Também visto: sem internet a aba nova mostra "#1" no lugar do próximo número (previsto no código, `WeighingTicket.tsx:3765`).

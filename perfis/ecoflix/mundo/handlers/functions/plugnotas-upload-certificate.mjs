@@ -18,6 +18,8 @@ export default (body, { store, db, companyId, FunctionError }) => {
   const info = { filename: nome, uploaded_at: agora, valid_until: '2027-09-15T02:59:59.000Z', hash: 'a1f3c92e7d', cn: 'RECICLA VALE METAIS LTDA' };
   db.update('company_fiscal_config', { id: cfg.id }, {
     plugnotas_certificate_id: 'cert-recicla-vale-a1', plugnotas_certificate_uploaded: true, plugnotas_certificate_info: info,
+    // app 1.60: o estado do certificado vem da RPC fiscal_onboarding_status, que lê estes campos da configuração (T16, cap03)
+    fiscal_certificate_status: 'valid', fiscal_certificate_validated_at: agora, fiscal_certificate_valid_until: info.valid_until,
   });
   return {
     success: true, message: 'Certificado digital validado com sucesso!', certificateId: 'cert-recicla-vale-a1', vaultStored: true,

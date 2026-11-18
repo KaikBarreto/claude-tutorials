@@ -1,6 +1,6 @@
 {
  "name": "t16-cap03",
- "title": "T16 · Cap. 3 · Subindo o certificado A1 (narração ESTIMADA 59,1 s; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "title": "T16 · Cap. 3 · Subindo o certificado A1 (narração ESTIMADA 77,4 s; marcas L1..L9 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
  "seed": "t16-cap03",
  "pace": 0.5,
  "cps": 40,
@@ -98,12 +98,12 @@
    "do": "hover",
    "target": {
     "text": "Certificado não configurado",
-    "exact": true,
+    "exact": false,
     "within": "main"
    },
    "seconds": 0.6,
    "at": 0.73,
-   "label": "Certificado não configurado",
+   "label": "Certificado não configurado. Envie o A1 para continuar.",
    "optional": true,
    "timeout": 4
   },
@@ -128,39 +128,67 @@
   {
    "do": "hover",
    "target": {
-    "text": "Arquivo do Certificado (.pfx ou .p12)",
-    "exact": true,
+    "text": "Arraste o certificado ou clique para selecionar",
+    "exact": false,
     "within": "main"
    },
-   "seconds": 0.3,
-   "at": 8.8,
-   "label": "Arquivo do Certificado",
+   "seconds": 0.6,
+   "at": 8.96,
+   "label": "zoom: a área Arraste o certificado ou clique para selecionar",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "upload",
    "target": {
-    "role": "button",
-    "name": "Selecionar arquivo",
-    "exact": true,
+    "text": "Arraste o certificado ou clique para selecionar",
+    "exact": false,
     "within": "main"
    },
    "file": "assets/recicla-vale-metais-a1.pfx",
-   "at": 11.26,
-   "label": "Selecionar arquivo: recicla-vale-metais-a1.pfx"
+   "at": 14.22,
+   "label": "clica na área e escolhe recicla-vale-metais-a1.pfx"
+  },
+  {
+   "do": "waitFor",
+   "selector": "#certificado-senha",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Arquivo selecionado",
+    "exact": false,
+    "within": "main"
+   },
+   "seconds": 0.6,
+   "at": 16.35,
+   "label": "Arquivo selecionado · clique ou arraste outro para trocar",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "#certificado-senha"
+   },
+   "seconds": 0.15,
+   "at": 19.43,
+   "label": "aparece o campo Senha do Certificado",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 17.05
+   "at": 20.01
   },
   {
    "do": "click",
    "target": {
     "selector": "#certificado-senha"
    },
-   "at": 17.48,
+   "at": 20.44,
    "label": "Senha do Certificado (clique no campo)"
   },
   {
@@ -170,7 +198,7 @@
    },
    "text": "$TUT_SENHA",
    "cps": 40,
-   "at": 20.18,
+   "at": 23.14,
    "label": "digita a senha (pontos)",
    "noClick": true
   },
@@ -180,7 +208,7 @@
     "selector": "#certificado-senha-ajuda"
    },
    "seconds": 0.15,
-   "at": 22.95,
+   "at": 25.91,
    "label": "zoom: Use a senha do próprio certificado",
    "optional": true,
    "timeout": 4
@@ -188,18 +216,18 @@
   {
    "do": "mark",
    "name": "L4",
-   "at": 23.78
+   "at": 26.74
   },
   {
    "do": "click",
    "target": {
     "role": "button",
-    "name": "Validar Certificado",
+    "name": "Validar e salvar A1",
     "exact": true,
     "within": "main"
    },
-   "at": 24.67,
-   "label": "Validar Certificado"
+   "at": 27.63,
+   "label": "Validar e salvar A1"
   },
   {
    "do": "waitFor",
@@ -209,7 +237,7 @@
   {
    "do": "mark",
    "name": "L5",
-   "at": 28.84
+   "at": 31.95
   },
   {
    "do": "type",
@@ -222,7 +250,7 @@
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "at": 29.44,
+   "at": 32.55,
    "label": "zoom: nome do certificado e Válido até 14/09/2027"
   },
   {
@@ -233,7 +261,7 @@
     "within": "main"
    },
    "seconds": 1.2,
-   "at": 32.1,
+   "at": 35.21,
    "label": "chip Válido até 14/09/2027",
    "optional": true,
    "timeout": 4
@@ -241,12 +269,12 @@
   {
    "do": "mark",
    "name": "L6",
-   "at": 35.8
+   "at": 38.91
   },
   {
    "do": "mark",
    "name": "L7",
-   "at": 49.28
+   "at": 52.39
   },
   {
    "do": "hover",
@@ -257,10 +285,47 @@
     "within": "main"
    },
    "seconds": 0.8,
-   "at": 53.22,
+   "at": 56.34,
    "label": "zoom: Substituir Certificado",
    "optional": true,
    "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 58.21
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Válido até 14/09/2027",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 1.0,
+   "at": 61.47,
+   "label": "o A1 vence todo ano",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Substituir Certificado",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 1.2,
+   "at": 67.85,
+   "label": "a renovação: Substituir Certificado",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L9",
+   "at": 73.06
   },
   {
    "do": "hover",
@@ -271,7 +336,7 @@
     "within": "main"
    },
    "seconds": 1.2,
-   "at": 55.8,
+   "at": 74.12,
    "label": "zoom: Próximo: Configurar Empresa (sem clicar)",
    "optional": true,
    "timeout": 4
@@ -284,7 +349,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 59.13
+   "at": 77.44
   }
  ]
 }

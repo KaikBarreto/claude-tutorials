@@ -1,6 +1,6 @@
 {
  "name": "t16-cap14",
- "title": "T16 · Cap. 14 · DANFE e XML (narração ESTIMADA 56,0 s; marcas L1..L8 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "title": "T16 · Cap. 14 · O que trava a emissão (narração ESTIMADA 109,2 s; marcas L1..L8 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
  "seed": "t16-cap14",
  "pace": 0.5,
  "cps": 40,
@@ -20,7 +20,7 @@
  },
  "seedExtra": [
   "t16/inicio",
-  "t16/apos-cap13"
+  "t16/apos-cap12"
  ],
  "prewarm": [
   "/login"
@@ -96,242 +96,399 @@
    "at": 0.4
   },
   {
-   "do": "mark",
-   "name": "L2",
-   "at": 6.53
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Nova Nota",
+    "exact": true,
+    "within": "main"
+   },
+   "at": 0.6,
+   "label": "Nova Nota"
   },
   {
-   "do": "mark",
-   "name": "L3",
-   "at": 16.75
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] :text-is('NF-e de Saída')"
+   },
+   "at": 2.38,
+   "label": "NF-e de Saída"
+  },
+  {
+   "do": "waitFor",
+   "text": "Para quem",
+   "timeout": 15
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:has-text('Selecione o cliente')"
+   },
+   "at": 3.04,
+   "label": "Cliente: Selecione o cliente (abre a busca)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog]:has-text('Selecionar Cliente') input"
+   },
+   "text": "Pinhal",
+   "cps": 40,
+   "at": 4.45,
+   "label": "busca Pinhal",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog]:has-text('Selecionar Cliente') button:has-text('Metalúrgica Pinhal')"
+   },
+   "at": 5.11,
+   "label": "escolhe Metalúrgica Pinhal"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "selector": "[role=dialog]:has-text('Selecionar Cliente')"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "waitFor",
+   "text": "Usar IE 688204776112 e salvar no cadastro",
+   "timeout": 15
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main tbody tr:has-text('#1250') td:last-child button"
+    "selector": "[role=dialog] :text-matches('pendências? pra emitir')"
    },
-   "seconds": 0.17,
-   "at": 18.34,
-   "label": "zoom: o menu da 1250 (Download XML, Download DANFE, Comprovante, Carta de Correção)",
+   "seconds": 1.5,
+   "at": 7.01,
+   "label": "zoom: selo 3 pendências pra emitir",
    "noScroll": true,
    "optional": true,
    "timeout": 4
   },
   {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"3 pendências pra emitir\", \"Incompleto\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog],[role=alertdialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere 3 pendências e o selo Incompleto"
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 1136,
+    "y": 732
+   },
+   "by": 0,
+   "duration": 0.5,
+   "after": 100,
+   "at": 12.25,
+   "label": "o Emitir Nota travado (rodapé)"
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 14.28
+  },
+  {
    "do": "hover",
    "target": {
-    "selector": "main tbody tr:has-text('#1250') td:last-child button"
+    "selector": "[role=dialog] :text-matches('pendências? pra emitir')"
    },
-   "seconds": 0.15,
-   "label": "(menu #1250 aberto)",
+   "seconds": 6.0,
+   "at": 14.68,
+   "label": "a dica do selo: Falta resolver",
    "noScroll": true,
-   "unless": {
-    "role": "menuitem",
-    "name": "Download DANFE"
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Falta resolver:\", \"Cliente com dados fiscais incompletos\", \"Adicione pelo menos um item\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"body\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere a dica Falta resolver"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 27.53
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] :text-matches('^Este cliente é empresa')"
    },
+   "seconds": 2.0,
+   "at": 29.5,
+   "label": "zoom: aviso da inscrição estadual e o botão Usar IE",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 19.46
+   "at": 43.37
   },
   {
    "do": "click",
    "target": {
-    "role": "menuitem",
-    "name": "Download DANFE"
+    "selector": "[role=dialog] button:has-text('Usar IE 688204776112 e salvar no cadastro')"
    },
-   "at": 20.44,
-   "label": "Download DANFE (o PDF abre em outra aba)",
-   "noScroll": true
+   "at": 43.8,
+   "label": "Usar IE 688204776112 e salvar no cadastro"
+  },
+  {
+   "do": "waitFor",
+   "text": "IE 688204776112 salva no cadastro",
+   "timeout": 10
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{await new Promise(r=>setTimeout(r,1000));const el=document.querySelector(\"[role=dialog]\");const t=(el?el.innerText:'').replace(/[\\s\\u00a0]+/g,' ').toLowerCase();return t.includes(\"este cliente \\u00e9 empresa\")?'DIFERENTE: apareceu '+\"Este cliente \\u00e9 empresa\":'OK: ausente '+\"Este cliente \\u00e9 empresa\"})()",
+   "label": "confere o aviso da IE sumiu"
   },
   {
    "do": "mark",
    "name": "L5",
-   "at": 24.06
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main tbody tr:has-text('#1250') td:last-child button"
-   },
-   "seconds": 0.15,
-   "at": 24.21,
-   "label": "abre o menu da linha #1250",
-   "noScroll": true,
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main tbody tr:has-text('#1250') td:last-child button"
-   },
-   "seconds": 0.15,
-   "label": "(menu #1250 aberto)",
-   "noScroll": true,
-   "unless": {
-    "role": "menuitem",
-    "name": "Download XML"
-   },
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "menuitem",
-    "name": "Download XML"
-   },
-   "at": 25.19,
-   "label": "Download XML",
-   "noScroll": true
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main tbody tr:has-text('#1250') td:last-child button"
-   },
-   "seconds": 0.15,
-   "at": 28.77,
-   "label": "abre o menu da linha #1250",
-   "noScroll": true,
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main tbody tr:has-text('#1250') td:last-child button"
-   },
-   "seconds": 0.15,
-   "label": "(menu #1250 aberto)",
-   "noScroll": true,
-   "unless": {
-    "role": "menuitem",
-    "name": "Visualizar"
-   },
-   "optional": true,
-   "timeout": 4
+   "at": 48.96
   },
   {
    "do": "mark",
    "name": "L6",
-   "at": 29.87
+   "at": 58.95
   },
   {
    "do": "click",
    "target": {
-    "role": "menuitem",
-    "name": "Visualizar"
+    "selector": "[role=dialog] button:has-text('Completar cadastro')"
    },
-   "at": 30.55,
-   "label": "Visualizar",
+   "at": 62.12,
+   "label": "Completar cadastro"
+  },
+  {
+   "do": "waitFor",
+   "text": "Editar Cliente",
+   "timeout": 10
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=[...document.querySelectorAll(\"[role=dialog]:has-text('Editar Cliente') input[placeholder='00000-000']\")].filter(e=>e.offsetParent)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-330);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/500),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "label": "o Endereço Fiscal na tela"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog]:has-text('Editar Cliente') input[placeholder='00000-000']"
+   },
+   "at": 68.87,
+   "label": "CEP (clique no campo)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog]:has-text('Editar Cliente') input[placeholder='00000-000']"
+   },
+   "text": "12086410",
+   "cps": 40,
+   "at": 69.9,
+   "label": "CEP 12086-410",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog]:has-text('Editar Cliente') button:text-is('Salvar')"
+   },
+   "at": 70.26,
+   "label": "Salvar (cliente)",
    "noScroll": true
   },
   {
    "do": "waitFor",
-   "text": "NF-e #1250",
+   "gone": {
+    "selector": "[role=dialog]:has-text('Editar Cliente')"
+   },
    "timeout": 10
   },
   {
-   "do": "click",
-   "target": {
-    "selector": "[role=dialog] [role=tab]:has-text('XML')"
-   },
-   "at": 32.07,
-   "label": "aba XML"
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "[role=dialog] :text-is('XML da nota')"
-   },
-   "seconds": 1.2,
-   "at": 34.12,
-   "label": "zoom: XML da nota (Mesmo arquivo enviado à SEFAZ) e Copiar XML",
-   "optional": true,
-   "timeout": 4
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"1 pendência pra emitir\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog],[role=alertdialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere sobrou 1 pendência (o item)"
   },
   {
    "do": "mark",
    "name": "L7",
-   "at": 38.8
-  },
-  {
-   "do": "press",
-   "key": "Escape",
-   "at": 39.55,
-   "label": "fecha o Visualizar"
-  },
-  {
-   "do": "pause",
-   "seconds": 0.6
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main tbody tr:has-text('#1249') td:last-child button"
-   },
-   "seconds": 0.3,
-   "at": 42.06,
-   "label": "abre o menu da 1249 (Cancelada)",
-   "noScroll": true,
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "role": "menuitem",
-    "name": "XML de Cancelamento"
-   },
-   "seconds": 1.0,
-   "at": 43.91,
-   "label": "zoom: XML de Cancelamento (sem clicar)",
-   "noScroll": true,
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "mark",
-   "name": "L8",
-   "at": 46.06
-  },
-  {
-   "do": "press",
-   "key": "Escape",
-   "at": 46.82,
-   "label": "fecha o menu"
+   "at": 72.74
   },
   {
    "do": "click",
    "target": {
-    "selector": "main button[aria-label='Mais opções de NF-e']"
+    "selector": "[role=dialog] button:text-is('Avançar')"
    },
-   "at": 48.77,
-   "label": "três pontinhos (Mais opções de NF-e)"
+   "at": 73.74,
+   "label": "Avançar",
+   "noScroll": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='Escreva o nome ou código do material']"
+   },
+   "at": 74.79,
+   "label": "Material (cartão Adicionar item)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='Escreva o nome ou código do material']"
+   },
+   "text": "ferro misto",
+   "cps": 40,
+   "label": "busca ferro misto",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[cmdk-item]:has-text('Ferro misto'), [role=option]:has-text('Ferro misto')"
+   },
+   "label": "Ferro misto",
+   "noScroll": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='0,00']",
+    "nth": 0
+   },
+   "at": 75.62,
+   "label": "Qtd (clique no campo)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='0,00']",
+    "nth": 0
+   },
+   "text": "1000",
+   "cps": 30,
+   "label": "Qtd 1.000",
+   "noClick": true,
+   "clear": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:has-text('Incluir')"
+   },
+   "at": 76.79,
+   "label": "Incluir"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Pronta pra emitir\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog],[role=alertdialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Pronta pra emitir depois do item"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='0000.00.00']",
+    "nth": 1
+   },
+   "at": 77.93,
+   "label": "zoom: NCM do item (clique no campo)"
+  },
+  {
+   "do": "press",
+   "key": [
+    "Control+A",
+    "Backspace"
+   ],
+   "at": 79.31,
+   "label": "apaga o NCM"
   },
   {
    "do": "hover",
    "target": {
-    "role": "menuitem",
-    "name": "Exportação Contábil"
+    "selector": "[role=dialog] :text-matches('pendências? pra emitir')"
    },
-   "seconds": 1.2,
-   "at": 50.23,
-   "label": "zoom: Exportação Contábil (sem clicar)",
+   "seconds": 0.8,
+   "at": 80.51,
+   "label": "o selo acusa: item sem NCM",
    "noScroll": true,
    "optional": true,
    "timeout": 4
   },
   {
-   "do": "press",
-   "key": "Escape",
-   "at": 54.18,
-   "label": "fecha o menu"
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"pendência\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog],[role=alertdialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere pendência do NCM"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='0000.00.00']",
+    "nth": 1
+   },
+   "at": 88.91,
+   "label": "NCM (clique no campo)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='0000.00.00']",
+    "nth": 1
+   },
+   "text": "72044900",
+   "cps": 40,
+   "label": "NCM 7204.49.00 de volta",
+   "noClick": true
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] :text-is('Pronta pra emitir')"
+   },
+   "seconds": 0.44,
+   "at": 91.82,
+   "label": "zoom: Pronta pra emitir",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Pronta pra emitir\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog],[role=alertdialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Pronta pra emitir"
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 93.21
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[aria-label='Sair da nova nota fiscal']"
+   },
+   "at": 95.94,
+   "label": "Sair",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "text": "Descartar nota fiscal?",
+   "timeout": 8
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "button:text-is('Descartar')"
+   },
+   "at": 96.47,
+   "label": "Descartar",
+   "noScroll": true
   },
   {
    "do": "eval",
@@ -341,7 +498,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 55.99
+   "at": 109.21
   }
  ]
 }

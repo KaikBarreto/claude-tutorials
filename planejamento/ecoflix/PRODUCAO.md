@@ -834,3 +834,9 @@ Decisões:
   Fable); e quer, no fim, **a lista completa de melhorias e correções do app, com os detalhes finos**
   (`MELHORIAS_ECOSISTEMA.md`: todo "achado" de agente entra ali na hora; no fim, revisar item a item contra o 1.60.10,
   tirar o que já foi corrigido e entregar organizado por tela e gravidade).
+- 18/11 21:2x **T08 cap12 "Sem internet" refeito com queda de verdade** (passo novo `rede` no `runner.mjs`: `offline`,
+  `modo` servidor/navegador, `avisar`; levado à skill): mostra o aviso, pesar e salvar ("Ticket OFF-01 guardado neste
+  aparelho", comprovante provisório), os três bloqueios com motivo e a volta com o número oficial. Rápido 0 falhos,
+  completo maxLate 0,71 s; fala 4 → 6 linhas. **Defeito real do app** no MELHORIAS (navegador offline: o Salvar gira).
+  T08: completos aprovados em 07, 08, 09, 12; cap10 com o painel Filtros corrigido (fica aberto da linha 6 para a 7);
+  lote rápido 10, 11, 12, 13 rodando (`lote160_coord3.log`). Cenas v3 prontas (`T08_v3.mp4` mandado ao Kaik).

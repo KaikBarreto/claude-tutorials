@@ -24,7 +24,7 @@ for it in "$@"; do
   python3 -I rec/t17/prever.py $NN $FLAG > $DIR/cap$NN.prever.txt 2>&1
   rm -f /home/claude/ecoflix/rec/t17/_ens/t17-cap$NN.mp4 2>/dev/null
   [ "$MODO" = "c" ] && rm -f /home/claude/ecoflix/rec/t17/t17-cap$NN.mp4 2>/dev/null
-  SEMALVO=$(grep -c 'SEM ALVO' "$OUT" 2>/dev/null); DIF=$(grep -c 'DIFERENTE' $DIR/cap$NN.resumo.txt 2>/dev/null)
+  SEMALVO=$(grep -c 'SEM ALVO' "$OUT" 2>/dev/null); DIF=$(grep -c '=> "\?DIFERENTE' $DIR/cap$NN.resumo.txt 2>/dev/null)
   echo "cap$NN:$MODO rc=$RC semalvo=$SEMALVO diferente=$DIF $(grep -m1 -iE 'falh|passos' $DIR/cap$NN.resumo.txt | cut -c1-200)" >> $SAIDA
   if [ "$RC" = "4" ] || [ "$RC" = "3" ]; then echo "PARADA em cap$NN (rc=$RC): relançar daqui" >> $SAIDA; break; fi
 done

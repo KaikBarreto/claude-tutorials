@@ -1,13 +1,13 @@
 {
  "name": "t08-cap12",
- "title": "T08 · Cap. 12 · Sem internet (narração 35,8 s ESTIMADA; marcas L1..L4 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T09:20:00-03:00)",
+ "title": "T08 · Cap. 12 · Sem internet (narração 53,5 s ESTIMADA; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T09:20:00-03:00)",
  "seed": "t08-cap12",
  "pace": 0.5,
  "cps": 9,
  "tail": 1.5,
  "start": {
-  "x": 700,
-  "y": 420
+  "x": 900,
+  "y": 520
  },
  "anonymous": true,
  "storage": {
@@ -108,13 +108,113 @@
    "timeout": 20
   },
   {
-   "do": "eval",
-   "js": "(()=>{const of=window.fetch;window.fetch=function(u,...a){const s=String((u&&u.url)||u);if(s.includes('/auth/v1/health'))return Promise.reject(new TypeError('Failed to fetch'));return of.call(this,u,...a)};Object.defineProperty(navigator,'onLine',{configurable:true,get:()=>false});window.dispatchEvent(new Event('offline'));return 'offline'})()"
+   "do": "click",
+   "target": {
+    "text": "Selecionar fornecedor",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Selecionar Fornecedor",
+   "timeout": 8
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Cooperativa Recomeço",
+    "within": "[role=dialog]"
+   }
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Escreva o nome ou código do material"
+   },
+   "text": "latinha",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Alumínio latinha"
+   }
+  },
+  {
+   "do": "wait",
+   "seconds": 1.0
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Digite ou busque o motorista"
+   },
+   "text": "Edson",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Edson Moura"
+   }
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Digite ou busque a placa"
+   },
+   "text": "FKD",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "FKD2E41"
+   }
+  },
+  {
+   "do": "wait",
+   "seconds": 2.5
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 20
+  },
+  {
+   "do": "rede",
+   "offline": true
+  },
+  {
+   "do": "clock",
+   "forward": "01:01"
+  },
+  {
+   "do": "wait",
+   "seconds": 1.5
+  },
+  {
+   "do": "clock",
+   "forward": "01:01"
   },
   {
    "do": "waitFor",
    "text": "Você pode pesar e finalizar normalmente",
-   "timeout": 40
+   "timeout": 30
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"main *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Sem internet.\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-272);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/200),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()"
   },
   {
    "do": "wait",
@@ -135,7 +235,7 @@
    "do": "scroll",
    "point": {
     "x": 1000,
-    "y": 560
+    "y": 600
    },
    "by": 0,
    "duration": 0.3,
@@ -149,15 +249,16 @@
    "at": 7.16
   },
   {
-   "do": "hover",
+   "do": "type",
    "target": {
-    "text": "Sem conexão"
+    "selector": "div.bg-red-600"
    },
-   "seconds": 0.5,
-   "at": 7.52,
-   "label": "faixa vermelha: Sem conexão",
+   "text": "",
+   "noClick": true,
    "optional": true,
-   "timeout": 4
+   "timeout": 4,
+   "at": 7.52,
+   "label": "faixa vermelha: Sem conexão — operações serão salvas localmente"
   },
   {
    "do": "hover",
@@ -165,7 +266,7 @@
     "text": "Você pode pesar e finalizar normalmente"
    },
    "seconds": 0.8,
-   "at": 10.3,
+   "at": 7.62,
    "label": "aviso: Sem internet. Você pode pesar e finalizar normalmente",
    "optional": true,
    "timeout": 4
@@ -179,8 +280,7 @@
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "at": 13.74,
-   "label": "o ticket fica guardado neste aparelho"
+   "label": "aviso âmbar de sem internet na criação do ticket"
   },
   {
    "do": "eval",
@@ -188,26 +288,202 @@
    "label": "confere aviso de sem internet na criação"
   },
   {
-   "do": "mark",
-   "name": "L3",
-   "at": 16.24
+   "do": "scroll",
+   "point": {
+    "x": 960,
+    "y": 600
+   },
+   "by": 220,
+   "duration": 0.4,
+   "after": 0,
+   "at": 9.46,
+   "label": "desce até a pesagem e o Salvar"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Pesagem avançada",
+    "exact": true
+   },
+   "at": 10.56,
+   "label": "Pesagem avançada",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "text": "Registre pesagem dupla, tara, impureza e dados do transporte",
+   "timeout": 8
+  },
+  {
+   "do": "pause",
+   "seconds": 0.3
   },
   {
    "do": "type",
    "target": {
-    "text": "Você pode pesar e finalizar normalmente"
+    "selector": "[role=dialog] div:has(> label:has-text('1ª Pesagem')) input"
+   },
+   "text": "7210",
+   "at": 12.31,
+   "label": "digita 7210 na 1ª Pesagem",
+   "noClick": true
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 13.96
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Confirmar",
+    "exact": true
+   },
+   "at": 14.25,
+   "label": "Confirmar"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Salvar Ticket de Pesagem",
+    "exact": true
+   },
+   "at": 16.22,
+   "label": "Salvar Ticket de Pesagem (sem internet)",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "text": "O que deseja fazer com este ticket de pesagem?",
+   "timeout": 12
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog]"
    },
    "text": "",
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "at": 18.87,
-   "label": "comprovante provisório; o número oficial vem na sincronização"
+   "at": 18.42,
+   "label": "Ticket OFF-01 guardado neste aparelho"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Ticket OFF-01 guardado neste aparelho\", \"Comprovante provisório (sem número oficial)\", \"Valorizar (precisa de internet)\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")];const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere salvo sem internet: OFF-01, provisório"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] p:has-text('sem número oficial')"
+   },
+   "seconds": 1.0,
+   "at": 22.9,
+   "label": "Comprovante provisório (sem número oficial)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] p:has-text('sem número oficial')"
+   },
+   "text": "",
+   "noClick": true,
+   "optional": true,
+   "timeout": 4,
+   "at": 25.12,
+   "label": "sem número oficial: a 2ª via já sai numerada"
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 27.9
+   "at": 26.69
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Fechar",
+    "exact": true,
+    "within": "[role=dialog]",
+    "nth": 0
+   },
+   "at": 26.69,
+   "label": "Fechar"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Opções avançadas"
+   },
+   "at": 28.74,
+   "label": "Opções avançadas (o sinal cortado no botão)",
+   "noScroll": true
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Disponível com internet"
+   },
+   "seconds": 0.6,
+   "at": 32.34,
+   "label": "Fotos do pedido · Anexar: Disponível com internet.",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper]"
+   },
+   "text": "",
+   "noClick": true,
+   "optional": true,
+   "timeout": 4,
+   "label": "Anexar foto: Disponível com internet."
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Anexar\", \"Disponível com internet.\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[data-radix-popper-content-wrapper]\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere anexar foto espera a internet"
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 33.98,
+   "label": "fecha as opções"
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 960,
+    "y": 600
+   },
+   "by": -220,
+   "duration": 0.4,
+   "after": 0,
+   "label": "volta ao alto (o Voltar à vista)"
   },
   {
    "do": "click",
@@ -216,8 +492,9 @@
     "name": "Voltar",
     "exact": true
    },
-   "at": 27.9,
-   "label": "Voltar para a lista"
+   "at": 34.98,
+   "label": "Voltar para a lista",
+   "noScroll": true
   },
   {
    "do": "waitFor",
@@ -225,12 +502,91 @@
    "timeout": 15
   },
   {
+   "do": "mark",
+   "name": "L5",
+   "at": 35.69
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Ações",
+    "within": "main div.rounded-lg:has([aria-label='Selecionar ticket #59']):not(:has(div.rounded-lg [aria-label='Selecionar ticket #59']))"
+   },
+   "at": 36.39,
+   "label": "Ações do Ticket #59",
+   "noScroll": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Valorizar"
+   },
+   "at": 37.1,
+   "label": "Valorizar (sem internet)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[data-sonner-toast]:has-text('valorizar agora')"
+   },
+   "text": "",
+   "noClick": true,
+   "optional": true,
+   "timeout": 4,
+   "at": 38.34,
+   "label": "Sem internet: não é possível valorizar agora. Valorize quando a conexão voltar."
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Sem internet: não é possível valorizar agora.\", \"Valorize quando a conexão voltar.\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"body\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere motivo do Valorizar"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Ações",
+    "within": "main div.rounded-lg:has([aria-label='Selecionar ticket #59']):not(:has(div.rounded-lg [aria-label='Selecionar ticket #59']))"
+   },
+   "at": 40.76,
+   "label": "Ações do Ticket #59 (de novo)",
+   "noScroll": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Editar"
+   },
+   "at": 41.91,
+   "label": "Editar (sem internet)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[data-sonner-toast]:has-text('editar um ticket')"
+   },
+   "text": "",
+   "noClick": true,
+   "optional": true,
+   "timeout": 4,
+   "at": 43.33,
+   "label": "Sem internet: não é possível editar um ticket já salvo."
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Sem internet: não é possível editar um ticket já salvo.\", \"Você pode criar tickets novos normalmente.\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"body\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere motivo do Editar"
+  },
+  {
    "do": "hover",
    "target": {
     "text": "Valorizar, editar ticket já salvo e anexar foto precisam de internet"
    },
    "seconds": 0.8,
-   "at": 30.31,
+   "at": 44.02,
    "label": "Valorizar, editar ticket já salvo e anexar foto precisam de internet",
    "optional": true,
    "timeout": 4
@@ -238,19 +594,68 @@
   {
    "do": "type",
    "target": {
-    "text": "Valorizar, editar ticket já salvo e anexar foto precisam de internet"
+    "selector": "main div.border-amber-300"
    },
    "text": "",
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "at": 31.7,
-   "label": "o que espera a internet"
+   "label": "aviso da lista: 1 ticket aguardando; as três coisas que precisam de internet"
   },
   {
    "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Valorizar, editar ticket já salvo e anexar foto precisam de internet\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"1 ticket aguardando\", \"Valorizar, editar ticket já salvo e anexar foto precisam de internet\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
    "label": "confere aviso da lista sem internet"
+  },
+  {
+   "do": "rede",
+   "offline": false,
+   "avisar": true,
+   "at": 46.15,
+   "label": "a conexão volta"
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 46.75
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 1000,
+    "y": 560
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "at": 46.75,
+   "label": "cursor descansa"
+  },
+  {
+   "do": "waitFor",
+   "text": "Ticket #61",
+   "timeout": 20
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main div.rounded-lg:has([aria-label='Selecionar ticket #61']):not(:has(div.rounded-lg [aria-label='Selecionar ticket #61']))"
+   },
+   "seconds": 1.0,
+   "at": 50.75,
+   "label": "Ticket #61: subiu sozinho e ganhou o número",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Ticket #61\", \"Cooperativa Recomeço\", \"7.210 kg\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere o ticket sem internet virou o #61"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Aguardando valorização\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"body\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere lista de volta, sem aviso"
   },
   {
    "do": "eval",
@@ -260,7 +665,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 35.76
+   "at": 53.54
   }
  ]
 }

@@ -6,41 +6,48 @@
 - **Antes:** Relatório Financeiro e DRE (T15). **Próximo:** Transporte, serviço e o contador (T17).
 - **Regime do exemplo:** Lucro Real (Kaik, 10/11). A fala mostra os campos e diz que quem define é o contador; nenhum
   valor de imposto é explicado. **Emissão simulada:** não há SEFAZ, provedor, cota real nem numeração a queimar.
-- **Duração:** alvo da fonte ~25 min; fala de ~18,3 min (2.858 palavras) e ~22 min de vídeo com as vinhetas e as esperas (`roteiro.md`).
-- Base: `inventario.md` (código 1.59.154). Usuário logado: Rafael Nogueira (MASTER), desktop 1280×800, tema claro.
+- **Duração:** ~35 min de vídeo (5.241 palavras de fala, ~33,6 min), numa aula só (Kaik, 18/11: "uma aula só do fiscal, mesmo que grande"). Passada do app 1.60.10 em 18/11: `cobertura_160.md` aplicada, 25 capítulos (6 novos: 11, 13, 14, 15, 17 e 18).
+- Base: `inventario.md` (código 1.59.154) + `cobertura_160.md` e a seção 15 do inventário (o que mudou no 1.60.10, conferido na tela). Usuário logado: Rafael Nogueira (MASTER), desktop 1280×800, tema claro.
   `FAKE_NOW=2026-11-10T08:30:00-03:00`; todos os capítulos no mesmo dia, em ordem.
 
 ## Capítulos (os da fonte, na ordem)
 
 | cap | Vinheta (área / título) | O que se mostra | Estado de partida |
 |---|---|---|---|
-| 00 | sem vinheta | Abertura: o problema (a carga de cobre só sai com nota), 🔒, "Antes: Relatório Financeiro e DRE". [ILUSTRAÇÃO: carga e nota] | `inicio` |
-| 01 | FISCAL / Onde ficam as notas | Menu "Fiscal & Ambiental" → "Notas Fiscais (NF-e)"; sub-abas "Entrada", "Saída", "Notas Recebidas", "Inutilizadas"; "Configurações Fiscais", selo da cota, cartões, "Nova Nota". [ILUSTRAÇÃO: entrada × saída] | `inicio` |
-| 02 | CONFIGURAÇÃO / O certificado vem primeiro | "Configuração Fiscal": trilho com Empresa, Impostos, Numeração e Transportadora apagados ("precisa do certificado digital"); "Passo 1 de 3". [ILUSTRAÇÃO: o certificado assina a nota; passos 1, 2, 3] | `inicio` |
-| 03 | CERTIFICADO / Subindo o certificado A1 | "Selecionar arquivo" (.pfx), "Senha do Certificado", "Validar Certificado" → "Certificado validado!", "Válido até 14/09/2027"; dica da validade. [ILUSTRAÇÃO: régua de um ano] | `inicio` |
-| 04 | CONFIGURAÇÃO / Empresa e impostos | "Empresa": "Importar dados", Razão Social, IE; "Impostos (padrão)": "Lucro Real" e o quadro, ICMS, CFOPs Padrão, "Reforma Tributária (IBS/CBS)"; "Salvar configuração" → "Empresa cadastrada no sistema de NF-e!". [ILUSTRAÇÃO: o padrão vale para toda nota] | `apos-cap03` |
-| 05 | CENÁRIOS / Cenários fiscais | Aviso fixo; "Criar o primeiro cenário": "Venda para a Fundição Bandeira do Vale" (Venda, cliente específico); "O que aplicar" como o contador passou; "Criar cenário". [ILUSTRAÇÃO: regra geral × exceção estreita] | `apos-cap04` |
-| 06 | NUMERAÇÃO / Série e numeração | "Série padrão das suas notas"; "Adicionar série": Série 1, última 1248 → "Série adicionada com sucesso". [ILUSTRAÇÃO: a sequência continua] | `apos-cap05` |
-| 07 | CONFIGURAÇÃO / Transportadora e serviços | "Nova transportadora": Cargas Vale do Sol Ltda + placa FJR3B27 → "Transportadora cadastrada!"; "Serviços" vazio (é da NFS-e, T17). [ILUSTRAÇÃO: os dados do caminhão vão na nota] | `apos-cap06` |
-| 08 | COTA / A cota de documentos | Selo "0/1.000 Documentos" e a dica do mouse (a fala não diz a cota: depende do plano); o que conta; tolerância de 5. [ILUSTRAÇÃO: a barra da cota] | `apos-cap07` |
-| 09 | EMISSÃO / Nota avulsa, do zero | "Nova Nota" → "NF-e de Saída" → Dados (Serra Fina, "Venda de mercadorias", Série 1 / Nº 1249) → Itens (Alumínio perfil 320 kg) → "Emitir Nota" → "Aguardando SEFAZ" → "Autorizada"; "Visualizar": chave e protocolo. [ILUSTRAÇÃO: o caminho da nota] | `apos-cap07` |
-| 10 | EMISSÃO / Nota a partir de um pedido | "Importar de" → "Pedido" → venda de ontem (09/11) à Fundição (Cobre mel, 500 kg líquidos) → Transporte (Cargas Vale do Sol) → nº 1250 autorizada. [ILUSTRAÇÃO: bruto, desconto e líquido] | `apos-cap09` |
-| 11 | EMISSÃO / Nota de um caixa fechado | "NF-e de Entrada" → "Emissão em Massa (Caixa)" → "Por Caixa", 09/11, caixa do Marcos "Fechado" → "Uma nota consolidada" → "Montar nota consolidada" → nº 1251 autorizada. [ILUSTRAÇÃO: várias compras viram uma nota] | `apos-cap10` |
-| 12 | CORREÇÕES / Cancelar e corrigir | Cancelar a 1249 (a Serra Fina mudou o pedido antes de a carga sair; a carga grande sai na T17) → "Cancelada"; "Carta de Correção" na 1250 (troca da placa) → "Carta de Correção enviada com sucesso!". [ILUSTRAÇÃO: cancelar × corrigir] | `apos-cap11` |
-| 13 | NUMERAÇÃO / Inutilizar numeração | Três pontinhos → "Inutilizar numeração" → "Por Faixa" 1246 a 1247 (puladas em outubro) → "Inutilizar na SEFAZ"; sub-aba "Inutilizadas". [ILUSTRAÇÃO: números fechados com cadeado] | `apos-cap12` |
-| 14 | DOCUMENTOS / DANFE e XML | Menu da 1250: "Download DANFE" (PDF em aba nova), "Download XML"; na 1249, "XML de Cancelamento". [ILUSTRAÇÃO: DANFE viaja com a carga, XML vai pro contador] | `apos-cap13` |
-| 15 | NOTAS RECEBIDAS / As notas recebidas | "Notas Recebidas" → "Ativar Notas Recebidas" → "Ativar mesmo assim" → "Notas emitidas contra o seu CNPJ" (Auto Peças Vale Forte e Depósito Irmãos Siqueira). [ILUSTRAÇÃO: o fornecedor emite contra o seu CNPJ] | `apos-cap14` |
-| 16 | NOTAS RECEBIDAS / Manifestar a nota | Selo "Ciência"; "Buscar documento"; "Confirmar operação" na Auto Peças → "Confirmada"; "Desconhecer operação" e "Operação não realizada" só mostrados. [ILUSTRAÇÃO: as respostas possíveis] | `apos-cap15` |
-| 17 | NOTAS RECEBIDAS / Importar pelo XML | "Importar nota" → "Arquivo XML" (Cooperativa Recomeço, nº 3871) → "Nota importada"; "Lançar compra…" → casamento: "alta" e "confira". [ILUSTRAÇÃO: nome do XML × material do cadastro] | `apos-cap16` |
-| 18 | RESUMO / Recapitulando | Montagem do que foi feito; "Próximo: Transporte, serviço e o contador"; "Até lá!" | (trechos) |
+| 00 | sem vinheta | Abertura: o problema (a carga de cobre só sai com nota), 🔒, "Antes: Relatório Financeiro e DRE". [ILUSTRAÇÃO] | `inicio` |
+| 01 | FISCAL / Onde ficam as notas | Menu "Fiscal & Ambiental" (com "Relatórios Fiscais") → "Notas Fiscais (NF-e)"; sub-abas; "Configurações Fiscais", cota, cartões, "Nova Nota" (só com permissão de emitir). [ILUSTRAÇÃO] | `inicio` |
+| 02 | CONFIGURAÇÃO / O certificado vem primeiro | "Configuração Fiscal": abas no alto, quatro apagadas; "1 · Certificado digital · primeira etapa da configuração fiscal". [ILUSTRAÇÃO ×2] | `inicio` |
+| 03 | CERTIFICADO / Subindo o certificado A1 | Área de arrastar (.pfx), "Senha do Certificado", "Validar e salvar A1" → "Certificado validado!", "Válido até 14/09/2027"; a renovação anual. [ILUSTRAÇÃO] | `inicio` |
+| 04 | CONFIGURAÇÃO / Empresa e impostos | "Empresa": "Importar dados", IE, endereço, logo e CSRT; "Impostos (padrão)": Lucro Real, ICMS e diferimento, PIS/COFINS, IPI, CFOPs, Informações Complementares Padrão, cBenef, IBS/CBS (par obrigatório); "Salvar configuração". [ILUSTRAÇÃO] | `apos-cap03` |
+| 05 | CENÁRIOS / Cenários fiscais | Aviso fixo; cenário da Fundição (Venda, CNPJ; CST 51, diferimento 100); as outras condições (material, destino, regime, peso). [ILUSTRAÇÃO] | `apos-cap04` |
+| 06 | NUMERAÇÃO / Série e numeração | O aviso âmbar da série não cadastrada; "Adicionar série" 1 / 1248; a série padrão (lista); séries separadas de entrada e saída. [ILUSTRAÇÃO] | `apos-cap05` |
+| 07 | CONFIGURAÇÃO / Transportadora e serviços | Cargas Vale do Sol + placa; "Serviços" vazio. [ILUSTRAÇÃO] | `apos-cap06` |
+| 08 | COTA / A cota de documentos | Selo "0/1.000 Documentos", o que conta, tolerância de 5. [ILUSTRAÇÃO] | `apos-cap07` |
+| 09 | EMISSÃO / Nota avulsa, do zero | Nota em tela cheia: cabeçalho (número previsto, ambiente), "Quem emite", Serra Fina, natureza, numeração, cartão "Adicionar item" (Alumínio perfil 320 kg), detalhes do item, "Desconto geral", "Salvar Rascunho" → 1249 autorizada; "Visualizar". [ILUSTRAÇÃO] | `apos-cap07` |
+| 10 | EMISSÃO / Nota a partir de um pedido | "Importar de" → "Pedido" (Fundição, Cobre mel 500 kg); "Transporte": frete, transportadora e "Volumes Transportados" (506 / 500 kg). Não emite. [ILUSTRAÇÃO] | `apos-cap09` |
+| 11 | IMPOSTOS / Impostos e as outras abas | **Novo.** Na nota da Fundição: "Cenário fiscal aplicado", ICMS diferido, "PIS/COFINS Suspenso (CST 08)" (cliente indústria), "Ajustar impostos desta nota", IBS/CBS; "Faturamento" a prazo, boleto, 2 × R$ 11.975,00; "Opções" (xPed); "Informações complementares"; "Pré-visualização" → 1250 autorizada. [ILUSTRAÇÃO] | `apos-cap09` (o setup reabre a nota) |
+| 12 | EMISSÃO / Nota de um caixa fechado | "Emissão em Massa (Caixa)", 09/11, caixa do Marcos → "Uma nota consolidada" → 1251 autorizada. [ILUSTRAÇÃO] | `apos-cap11` |
+| 13 | EMISSÃO / Outras operações | **Novo.** A lista de naturezas; "Baixa de estoque por perda" (CFOP 5927, nota contra a própria empresa, "Dar baixa no estoque físico ao autorizar"); sai sem emitir. | `apos-cap12` |
+| 14 | EMISSÃO / O que trava a emissão | **Novo.** Metalúrgica Pinhal: selo "3 pendências pra emitir", "Falta resolver:", aviso da IE (consulta por CNPJ) e "Usar IE ... e salvar no cadastro", "Completar cadastro" (CEP), item sem NCM → "Pronta pra emitir"; "Descartar". [ILUSTRAÇÃO] | `apos-cap12` |
+| 15 | REJEIÇÃO / A SEFAZ recusou a nota | **Novo.** 1252 "Rejeitada pela SEFAZ" (Cód. 778): "Visualizar", "Histórico", os dois caminhos do menu, "Editar e reenviar (mesmo número)", NCM corrigido → autorizada. [ILUSTRAÇÃO ×2] | `apos-cap14` + `rejeitada-1252` |
+| 16 | CORREÇÕES / Cancelar e corrigir | Cancelar a 1249; o prazo (24 h, até 20 dias, depois devolução); CC-e na 1250 e a lista "1 CC-e enviada". [ILUSTRAÇÃO ×2] | `apos-cap15` |
+| 17 | DEVOLUÇÃO / Nota de devolução | **Novo.** NF-e de Entrada, "Devolução de venda" (CFOP 1202), "Selecionar nota do sistema" (1250), 40 kg = R$ 1.916,00, "Nota de origem de cada item" (item 1), sem Faturamento → 1253 autorizada. [ILUSTRAÇÃO ×2] | `apos-cap16` |
+| 18 | COMPLEMENTAR / Nota complementar | **Novo.** Menu da 1250 → "Gerar nota complementar"; "Contar esta nota no Estoque Fiscal"; item Cobre mel 500 kg × R$ 0,50 = R$ 250,00; a prévia de impostos (sem ensinar valor) → 1254 autorizada. [ILUSTRAÇÃO] | `apos-cap17` |
+| 19 | NUMERAÇÃO / Inutilizar numeração | "Inutilizar numeração": aviso (com o prazo do dia 10), "Por Faixa" 1246 a 1247, "Inutilizar Rejeitadas" (vazia); sub-aba "Inutilizadas". [ILUSTRAÇÃO] | `apos-cap18` |
+| 20 | DOCUMENTOS / DANFE e XML | Menu da 1250 (DANFE, XML, Comprovante), o DANFE novo e a Reforma em 1º/12, "Visualizar" › XML, "XML de Cancelamento", detalhes da linha, busca/período/"Filtros"/"Homologação", "Exportação Contábil". [ILUSTRAÇÃO] | `apos-cap19` |
+| 21 | NOTAS RECEBIDAS / As notas recebidas | "Ativar Notas Recebidas" → as duas notas. [ILUSTRAÇÃO] | `apos-cap19` |
+| 22 | NOTAS RECEBIDAS / Manifestar a nota | "Ciência"; "Buscar documento"; grupos "Financeiro" e "Manifestar"; "Confirmar operação". [ILUSTRAÇÃO] | `apos-cap21` |
+| 23 | NOTAS RECEBIDAS / Importar pelo XML | "Importar nota" (XML da Cooperativa) → "Lançar compra…": "alta" e "confira". [ILUSTRAÇÃO] | `apos-cap22` |
+| 24 | RESUMO / Recapitulando | Montagem; o Cato fica no tutorial dele; "Próximo: Transporte, serviço e o contador". | `apos-cap23` |
 
 Transições faladas: 01→02 "Antes de qualquer nota, a configuração"; 02→03 "Então, o certificado"; 03→04 "Com o
 certificado validado, os dados da empresa"; 04→05 "E quando uma venda não segue o padrão?"; 05→06 "Agora, de qual
 número a primeira nota sai"; 06→07 "Mais dois cadastros"; 07→08 "Antes de emitir, a cota"; 08→09 "Agora sim, a primeira
 nota"; 09→10 "Quase sempre a nota nasce de uma venda que já está no sistema"; 10→11 "E as compras do dia, de quem não
-emite nota?"; 11→12 "Nota emitida, e se algo mudar?"; 12→13 "E o número que nunca virou nota?"; 13→14 "Agora, os
-arquivos da nota"; 14→15 "Até aqui, as notas que a Recicla Vale emite. Agora, as que ela recebe"; 15→16 "Chegou a nota,
-e agora?"; 16→17 "E a nota que ainda não apareceu na lista?".
+emite nota?" (numeração de antes do 1.60.10). Novas: 10→11 "Antes de emitir, vale conferir o imposto"; 12→13 "Venda e compra são as
+notas do dia a dia, mas..."; 13→14 "E quando a nota não deixa emitir?"; 14→15 "A nota passou pelas pendências... e mesmo assim
+a SEFAZ recusou"; 15→16 "Nota autorizada, e se algo mudar?"; 16→17 "E quando a mercadoria volta?"; 17→18 "Último caso: a nota
+saiu com valor a menor"; 18→19 "E o número que nunca virou nota?".
 
 **Cuidados (⚠️) e o que não acontece (🚫), falados como na PERFIL:**
 
@@ -82,6 +89,18 @@ Recebidas desligado (`dfe_ativo` false); `companies.nfe_tier` 1. Endereço da em
 | Inutilização (cap 13) | Série 1, ano 2026, 1246 a 1247, justificativa "Numeração pulada na emissão de outubro e não utilizada" |
 | Notas recebidas (cap 15) | Auto Peças Vale Forte, NF-e nº 2157 de 05/11, "SUCATA DE BATERIA AUTOMOTIVA" 640 kg × R$ 3,10 = R$ 1.984,00 (a compra de 05/11, Pix da Conta Secundária); Depósito Irmãos Siqueira, nº 884 de 06/11, "FERRO PESADO" 1.200 kg × R$ 0,95, "FERRO MISTO" 320 kg × R$ 0,75 e "COBRE MISTO" 20 kg × R$ 36,00 = R$ 2.100,00 (a compra no saldo do T4). As duas "Autorizada", manifestação "Ciência", com XML |
 | XML importado (cap 17) | `NFe-3871-Cooperativa-Recomeco.xml`: Cooperativa Recomeço (CNPJ da semente), nº 3871 de 09/11, "ALUMINIO LATINHA" 850 KG × 6,20 e "PLASTICO PET PRENSADO" 1.200 KG × 1,90 = R$ 7.550,00 (dá "alta" e "confira" pela regra do inventário 13) |
+
+**Mundo novo do 1.60.10 (JUNCAO_160, seção 6):**
+
+| Item | Valores (fictícios) |
+|---|---|
+| Certificado no 1.60 | o estado vem da RPC `fiscal_onboarding_status`, que lê `company_fiscal_config.fiscal_certificate_status`: `missing` na `inicio`, `valid` depois do envio (o handler `plugnotas-upload-certificate` grava) |
+| Metalúrgica Pinhal Ltda (cap 14) | na `inicio`: CNPJ **91.647.382/0001-03**, Rua das Oficinas, 820, Parque Industrial, Taubaté/SP, **sem CEP e sem IE**; o cache da consulta de IE (`cnpj_registros_estaduais`) traz a inscrição **688204776112** ativa em SP (nada sai da máquina). Na aula: CEP 12086-410 e a IE gravados; nada é emitido |
+| 1250 (cap 11) | a prazo, "Boleto (15)", 2 duplicatas de R$ 11.975,00 (10/12/2026 e 09/01/2027), xPed 4500123456, "Carga conferida na balança do pátio em 10/11/2026.", volumes 1 / Granel / 506 / 500 kg |
+| 1252 (cap 15) | semente `rejeitada-1252`: Serra Fina, Alumínio perfil **150 kg × R$ 10,40 = R$ 1.560,00**, rejeitada com "Rejeição 778: Informado NCM inexistente [nItem:1]" (NCM 7602.00.99 no item) e os eventos do Histórico; corrigida para 7602.00.00 e autorizada com o mesmo número |
+| 1253 (cap 17) | entrada, "Devolução de venda", CFOP 1202, referência à 1250, Cobre mel **40 kg × R$ 47,90 = R$ 1.916,00**, item na origem 1 (digitado: a 1250 do mundo não guarda o número do item). Só a nota |
+| 1254 (cap 18) | "Complementar de venda", referência à 1250, Cobre mel **500 kg × R$ 0,50 = R$ 250,00**; CFOP e imposto os que a tela propõe |
+| Fim da aula | notas 1249 (cancelada) a 1254; próxima livre **1255** (T17) |
 
 **Fica para as próximas:** as três notas (1249 cancelada, 1250 com CC-e, 1251), a série em 1251, a transportadora, o
 cenário, Notas Recebidas ligado com as três notas (a da Auto Peças confirmada). O T17 parte daqui (MDF-e da carga da 1250,

@@ -134,6 +134,8 @@ def recebida(k, nsu, com_xml):
 
 
 VAZIO_CFG = {   # o que a aula preenche na tela volta a vazio (o resto da linha, inclusive NFS-e e endereço, fica como em B)
+    # app 1.60: a RPC fiscal_onboarding_status lê o estado do certificado daqui (o envio do cap03 grava 'valid')
+    'fiscal_certificate_status': 'missing', 'fiscal_certificate_validated_at': None, 'fiscal_certificate_valid_until': None,
     'razao_social': None, 'nome_fantasia': None, 'cnpj': None, 'inscricao_estadual': None, 'telefone': None, 'email': None,
     'regime_tributario': None, 'is_simples_nacional': True, 'pis_cofins_regime': None, 'pis_aliquota': None, 'cofins_aliquota': None,
     'cst_pis': None, 'cst_cofins': None, 'cst_pis_saida': None, 'cst_pis_entrada': None, 'cst_cofins_saida': None,

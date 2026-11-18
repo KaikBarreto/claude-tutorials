@@ -827,9 +827,8 @@ def cap10():
     c.hover(SEL("[role=dialog] :text-is('Cancelado') >> nth=-1"), 0.5, at=c.A(6, 'Cancelado', 0.6, nth=0), label='status Cancelado (opção do filtro)')
     c.mark(7)
     c.press('Escape', at=round(c.L(7) - 0.2, 2), label='fecha a lista de status')
-    c.press('Escape', label='fecha Filtros')
+    # 18/11: o painel Filtros fica aberto da linha 6 para a 7 (fechar com Escape e reabrir deixava o painel invisível no 1.60.10)
     c.hover(SEL("main button[role=combobox]:has-text('Este mês')"), 0.8, at=c.A(7, 'período', 0.7), label='período (Este mês), só na Lista')
-    c.click(BTN('Filtros'), at=c.A(7, 'filtros', 0.7), label='Filtros')
     c.hover(FILTRO('Tipo'), 0.3, at=c.A(7, 'tipo', 0.5), label='filtro Tipo')
     c.hover(FILTRO('Status'), 0.3, at=c.A(7, 'situação', 0.5), label='filtro Status')
     c.hover(FILTRO('Usuário'), 0.4, at=c.A(7, 'usuário', 0.5), label='filtro Usuário')
@@ -962,36 +961,94 @@ def cap11():
 
 
 # ---------------------------------------------------------------- sem internet
-# Queda simulada: o app decide por ping (/auth/v1/health); `navigator.onLine` falso e o evento `offline` só disparam a medição
-# (hooks/useOnlineStatus.ts). O ping passa a falhar e o app mostra a faixa vermelha e o aviso âmbar. Nada é salvo neste capítulo
-# (no ensaio de 18/11 o Salvar ficou girando com a queda simulada: ver andamento_160.md), a aba aberta é descartada.
-OFF_JS = ("(()=>{const of=window.fetch;window.fetch=function(u,...a){const s=String((u&&u.url)||u);if(s.includes('/auth/v1/health'))return Promise.reject(new TypeError('Failed to fetch'));"
-          "return of.call(this,u,...a)};Object.defineProperty(navigator,'onLine',{configurable:true,get:()=>false});window.dispatchEvent(new Event('offline'));return 'offline'})()")
+# Queda DE VERDADE (passo `rede` do runner, acréscimo de 18/11): toda requisição ao backend é abortada na rede e o navegador segue
+# se dizendo online (roteador ligado, link caído). O app decide por ping (/auth/v1/health, hooks/useOnlineStatus.ts): 2 falhas
+# seguidas do ping de 1 em 1 minuto. No `setup` o relógio do navegador é adiantado 2 x 61 s para o app medir (a tela começa 09:22);
+# na volta, `avisar` dispara o evento `online`, que só faz o app medir na hora (2 pings bons, ~3 s) em vez de esperar até 2 min.
+# NÃO usar `modo: navegador` (setOffline): com o evento `offline` do navegador o react-query pausa a mutação do Salvar e o botão
+# fica girando até a rede voltar (defeito do app, andamento_160.md). Explorado em _ex/e9 (t08_ex3.py).
+# Semente: apos-cap11 (o ticket novo ganha o #61). Para ensaiar sem ela: T08_SEM12=apos-cap08 (aí o número é o #60).
+SEM12 = os.environ.get('T08_SEM12') or SEMENTE[12]
+SEMENTE[12] = SEM12
+NUM12 = 61 if SEM12 == 'apos-cap11' else 60
 AVISO_FORM = TXTX('Você pode pesar e finalizar normalmente')
 AVISO_LISTA = TXTX('Valorizar, editar ticket já salvo e anexar foto precisam de internet')
+AVISO_PROV = SEL("[role=dialog] p:has-text('sem número oficial')")
+TOAST = lambda t: SEL(f"[data-sonner-toast]:has-text('{t}')")
+CAI = [{'do': 'rede', 'offline': True}, {'do': 'clock', 'forward': '01:01'}, {'do': 'wait', 'seconds': 1.5}, {'do': 'clock', 'forward': '01:01'},
+       {'do': 'waitFor', 'text': 'Você pode pesar e finalizar normalmente', 'timeout': 30}]
 
 
 @capitulo
 def cap12():
-    """Sem internet: o aviso na criação do ticket (pesa e salva normalmente, comprovante provisório) e, na lista, o que espera a conexão."""
-    c = Cap(12, start=(700, 420), setup=setup_lista([
-        {'do': 'click', 'target': BTN('Novo Ticket de Pesagem')}, {'do': 'waitFor', 'text': CRIAR_OK, 'timeout': 20}, {'do': 'waitFor', 'idle': True, 'timeout': 20},
-        {'do': 'eval', 'js': OFF_JS}, {'do': 'waitFor', 'text': 'Você pode pesar e finalizar normalmente', 'timeout': 40}, {'do': 'wait', 'seconds': 1.0}]))
+    """Sem internet: o aviso, pesar e salvar (Ticket OFF-01 guardado neste aparelho, comprovante provisório), as três coisas que esperam
+    a internet com o motivo da tela (Anexar, Valorizar, Editar) e a volta da conexão: o ticket sobe sozinho e ganha o número."""
+    prep = [{'do': 'click', 'target': BTN('Novo Ticket de Pesagem')}, {'do': 'waitFor', 'text': CRIAR_OK, 'timeout': 20}, {'do': 'waitFor', 'idle': True, 'timeout': 20},
+            {'do': 'click', 'target': SEL_FORN}, {'do': 'waitFor', 'text': 'Selecionar Fornecedor', 'timeout': 8},
+            {'do': 'click', 'target': FORN('Cooperativa Recomeço')}, {'do': 'waitFor', 'gone': {'role': 'dialog'}, 'timeout': 8},
+            *MATERIAL_LATINHA,
+            {'do': 'type', 'target': MOT, 'text': 'Edson', 'cps': 40}, {'do': 'click', 'target': OPT('Edson Moura')},
+            {'do': 'type', 'target': PLACA, 'text': 'FKD', 'cps': 40}, {'do': 'click', 'target': OPT('FKD2E41')},
+            {'do': 'wait', 'seconds': 2.5}, {'do': 'waitFor', 'idle': True, 'timeout': 20},      # o rascunho sobe antes da queda
+            *CAI,
+            {'do': 'eval', 'js': js_ate('Sem internet.', y=272, dur_ms=200)}, {'do': 'wait', 'seconds': 1.0}]
+    c = Cap(12, start=(900, 520), setup=setup_lista(prep))
     c.mark(1)   # L1: ilustração do caminhão na balança com o sinal cortado
-    c.cursor(NEUTRO, at=0.3, label='cursor descansa')
+    c.cursor((1000, 600), at=0.3, label='cursor descansa')
     c.mark(2)
-    c.hover(TXTX('Sem conexão'), 0.5, at=c.A(2, 'avisa', 0.6), label='faixa vermelha: Sem conexão')
-    c.hover(AVISO_FORM, 0.8, at=c.A(2, 'pesa', 0.7), label='aviso: Sem internet. Você pode pesar e finalizar normalmente')
-    c.registra(AVISO_FORM, at=c.A(2, 'guardado', 0.3), label='o ticket fica guardado neste aparelho')
+    # a faixa vermelha só é registrada para a câmera (o cursor não vai até ela: fica fora da faixa do robô, y 18)
+    c.registra(SEL('div.bg-red-600'), at=c.A(2, 'avisa', 0.6), label='faixa vermelha: Sem conexão — operações serão salvas localmente')
+    c.hover(AVISO_FORM, 0.8, at=c.A(2, 'avisa', 0.5), label='aviso: Sem internet. Você pode pesar e finalizar normalmente')
+    c.registra(AVISO_FORM, label='aviso âmbar de sem internet na criação do ticket')
     c.confere('main', ['Sem internet.', 'o ticket fica guardado neste aparelho', 'provisório'], 'aviso de sem internet na criação')
+    # desce 220 px: "Pesagem avançada" e "Salvar Ticket de Pesagem" ficam os dois à vista (o Salvar sem rolagem custa ~1 s, não 2,7 s)
+    c.rolar(220, at=round(c.A(2, 'pesar', 0.9) - 1.1, 2), ponto=(960, 600), duration=0.4, after=0, label='desce até a pesagem e o Salvar')
+    c.click(PES_AV, at=c.A(2, 'pesar', 0.9), noScroll=True, label='Pesagem avançada')
+    c.waitfor(text='Registre pesagem dupla, tara, impureza e dados do transporte', timeout=8)
+    c.pause(0.3)
+    c.type(C1, '7210', at=c.A(2, 'finalizar', -0.25), noClick=True, label='digita 7210 na 1ª Pesagem')
     c.mark(3)
-    c.registra(AVISO_FORM, at=c.A(3, 'provisório', 0.3), label='comprovante provisório; o número oficial vem na sincronização')
+    c.click(CONFIRMAR, at=c.A(3, 'mesmo', 0.9), label='Confirmar')
+    c.waitfor(gone={'role': 'dialog'}, timeout=8)
+    c.click(SALVAR, at=c.A(3, 'salva', 0.9), noScroll=True, label='Salvar Ticket de Pesagem (sem internet)')
+    c.waitfor(text='O que deseja fazer com este ticket de pesagem?', timeout=12)
+    c.registra(SEL(DLG), at=c.A(3, 'guardado', 0.3), label='Ticket OFF-01 guardado neste aparelho')
+    c.confere('dlg', ['Ticket OFF-01 guardado neste aparelho', 'Comprovante provisório (sem número oficial)', 'Valorizar (precisa de internet)'],
+              'salvo sem internet: OFF-01, provisório')
+    c.hover(AVISO_PROV, 1.0, at=c.A(3, 'provisório', 0.9), label='Comprovante provisório (sem número oficial)')
+    c.registra(AVISO_PROV, at=c.A(3, 'número', 0.2), label='sem número oficial: a 2ª via já sai numerada')
     c.mark(4)
-    c.click(BTN('Voltar'), at=round(c.L(4) - 0.2, 2), label='Voltar para a lista')
+    c.click({'role': 'button', 'name': 'Fechar', 'exact': True, 'within': DLG, 'nth': 0}, at=round(c.L(4) - 0.2, 2), label='Fechar')
+    c.waitfor(gone={'role': 'dialog'}, timeout=8)
+    c.click(BTNX('Opções avançadas'), at=c.A(4, 'Anexar', 0.8), noScroll=True, label='Opções avançadas (o sinal cortado no botão)')
+    c.hover(TXTX('Disponível com internet'), 0.6, at=c.A(4, 'disponível', 1.3), label='Fotos do pedido · Anexar: Disponível com internet.')
+    c.registra(SEL(POP), label='Anexar foto: Disponível com internet.')
+    c.confere(POP, ['Anexar', 'Disponível com internet.'], 'anexar foto espera a internet')
+    c.press('Escape', at=c.A(4, 'com', 0.5), label='fecha as opções')
+    c.rolar(-220, ponto=(960, 600), duration=0.4, after=0, label='volta ao alto (o Voltar à vista)')
+    c.click(BTN('Voltar'), at=c.A(4, 'com', -0.5), noScroll=True, label='Voltar para a lista')
     c.waitfor(text=TICKET_OK, timeout=15)
-    c.hover(AVISO_LISTA, 0.8, at=c.A(4, 'valorizar', 0.6), label='Valorizar, editar ticket já salvo e anexar foto precisam de internet')
-    c.registra(AVISO_LISTA, at=c.A(4, 'editar', 0.2), label='o que espera a internet')
-    c.confere('main', ['Valorizar, editar ticket já salvo e anexar foto precisam de internet'], 'aviso da lista sem internet')
+    c.mark(5)
+    # o #59 é o primeiro cartão da coluna nas duas sementes: o "Ações" dele está à vista sem rolar
+    c.click(ACOES(59), at=c.A(5, 'Valorizar', -0.5), noScroll=True, label='Ações do Ticket #59')
+    c.click(ITEM('Valorizar'), at=c.A(5, 'o', -0.3), label='Valorizar (sem internet)')
+    c.registra(TOAST('valorizar agora'), at=c.A(5, 'avisa', -0.1), label='Sem internet: não é possível valorizar agora. Valorize quando a conexão voltar.')
+    c.confere('body', ['Sem internet: não é possível valorizar agora.', 'Valorize quando a conexão voltar.'], 'motivo do Valorizar')
+    c.click(ACOES(59), at=c.A(5, 'E', 0.9, nth=1), noScroll=True, label='Ações do Ticket #59 (de novo)')
+    c.click(ITEM('Editar'), at=c.A(5, 'editar', -0.1), label='Editar (sem internet)')
+    c.registra(TOAST('editar um ticket'), at=c.A(5, 'salvo', 0.0), label='Sem internet: não é possível editar um ticket já salvo.')
+    c.confere('body', ['Sem internet: não é possível editar um ticket já salvo.', 'Você pode criar tickets novos normalmente.'], 'motivo do Editar')
+    c.hover(AVISO_LISTA, 0.8, at=c.A(5, 'coisa', 0.6), label='Valorizar, editar ticket já salvo e anexar foto precisam de internet')
+    c.registra(SEL("main div.border-amber-300"), label='aviso da lista: 1 ticket aguardando; as três coisas que precisam de internet')
+    c.confere('main', ['1 ticket aguardando', 'Valorizar, editar ticket já salvo e anexar foto precisam de internet'], 'aviso da lista sem internet')
+    c.mark(6)
+    # a volta: o app mede (2 pings, ~3 s), sincroniza e a lista recarrega (~4 s no ensaio): disparada 0,6 s antes da linha
+    c.add({'do': 'rede', 'offline': False, 'avisar': True, 'at': round(c.L(6) - 0.8, 2), 'label': 'a conexão volta'})
+    c.cursor(NEUTRO, at=round(c.L(6) - 0.2, 2), label='cursor descansa')
+    c.waitfor(text=f'Ticket #{NUM12}', timeout=20)
+    c.hover(SEL(CARTAO(NUM12)), 1.0, at=c.A(6, 'número', 0.6), label=f'Ticket #{NUM12}: subiu sozinho e ganhou o número')
+    c.confere('main', [f'Ticket #{NUM12}', 'Cooperativa Recomeço', '7.210 kg'], f'o ticket sem internet virou o #{NUM12}')
+    c.confere('body', ['Aguardando valorização'], 'lista de volta, sem aviso')
     c.fim()
     return c
 

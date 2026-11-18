@@ -72,6 +72,19 @@
   },
   {
    "do": "goto",
+   "url": "/caixa"
+  },
+  {
+   "do": "waitFor",
+   "text": "Nova Venda",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
    "url": "/compra"
   },
   {
@@ -766,7 +779,7 @@
    "target": {
     "selector": "div:has(> button[aria-label='Novo pedido de compra']) > button:not([aria-label])"
    },
-   "seconds": 2.0,
+   "seconds": 1.0,
    "at": 1.82,
    "label": "a barra com os dois pedidos (sob a ilustração)",
    "optional": true,
@@ -775,16 +788,17 @@
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const c=rolagem(document.querySelector(\"main\"+' *'));if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop;if(y0<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=()=>{const p=Math.min(1,(performance.now()-t0)/400),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0*(1-e);p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'topo:'+Math.round(c.scrollTop)})()",
-   "at": 9.53,
-   "label": "rola ao topo"
+   "at": 6.86,
+   "label": "rola ao topo (sob a ilustração)"
   },
   {
    "do": "click",
    "target": {
     "selector": "main a:has-text('Voltar para o caixa')"
    },
-   "at": 10.13,
-   "label": "Voltar para o caixa"
+   "at": 7.37,
+   "label": "Voltar para o caixa (sob a ilustração)",
+   "noScroll": true
   },
   {
    "do": "waitFor",
@@ -824,7 +838,7 @@
   },
   {
    "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const c=rolagem(document.querySelector(\"main\"+' *'));if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop;if(y0<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=()=>{const p=Math.min(1,(performance.now()-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0*(1-e);p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'topo:'+Math.round(c.scrollTop)})()",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const c=rolagem(document.querySelector(\"main\"+' *'));if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop;if(y0<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=()=>{const p=Math.min(1,(performance.now()-t0)/400),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0*(1-e);p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'topo:'+Math.round(c.scrollTop)})()",
    "at": 16.55,
    "label": "rola ao topo do caixa"
   },
@@ -834,16 +848,11 @@
     "role": "button",
     "name": "Fechar Caixa"
    },
-   "seconds": 2.4,
+   "seconds": 1.6,
    "at": 16.9,
    "label": "Fechar Caixa travado",
    "optional": true,
    "timeout": 4
-  },
-  {
-   "do": "mark",
-   "name": "L3",
-   "at": 23.13
   },
   {
    "do": "click",
@@ -852,7 +861,7 @@
     "name": "Nova Compra",
     "exact": true
    },
-   "at": 23.48,
+   "at": 22.53,
    "label": "Nova Compra (volta aos pedidos)"
   },
   {
@@ -869,6 +878,11 @@
    "do": "eval",
    "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"(2)\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText+' '+[...el.querySelectorAll('input,textarea')].map(i=>i.value).join(' '));const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
    "label": "confere os dois rascunhos continuam abertos"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 23.13
   },
   {
    "do": "click",

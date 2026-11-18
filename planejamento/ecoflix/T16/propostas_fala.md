@@ -32,3 +32,7 @@ Não editei `roteiro.md` nem `tts_textos.py`.
 - **Download DANFE**: o PDF abre em outra aba do navegador, que a gravação não pega (o robô grava uma aba só); a edição mostra o
   PDF como ilustração. O "Download XML" baixa o arquivo sem mudar a tela.
 
+
+
+## 18/11 · passada do 1.60.10
+As três propostas da tabela acima foram aplicadas no `roteiro.md` e no `tts_textos.py` (cap02 L2 e L3; a do cap10 L8 virou a última linha do cap11, que agora emite a 1250). Nada pendente.
