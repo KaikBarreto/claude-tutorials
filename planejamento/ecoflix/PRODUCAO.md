@@ -872,3 +872,6 @@ Decisões:
   criar nós novos. Necessário: T08 = 11.643 créditos; trilha inteira ≈ 366 mil caracteres ≈ 380-400 mil créditos (259 mil
   antigos + ~107 mil dos capítulos novos, a ~12 caracteres por segundo e 1,04 crédito por caractere, com 5% de folga).
   O plano do Kaik (Creator) renova em 28/11.
+- 18/11 23:5x **Voz da T08 rodando** (Kaik pôs crédito): os MESMOS 15 nós via `creative_run_flow_nodes` (1 versão,
+  11.642 créditos estimados). Status consultado: sem falha, 1 gerando e os demais na fila (limite de concorrência da conta,
+  o ElevenLabs tenta de novo sozinho). Falta confirmar o término e receber o zip do Kaik.
