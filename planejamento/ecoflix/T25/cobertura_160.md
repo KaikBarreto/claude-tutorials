@@ -115,7 +115,7 @@ alimentado pelo `get_financial_dre_summary` e `get_dre_expenses_by_group` do pla
 | Tela | Fala |
 | --- | --- |
 | Capítulo novo (`apos-cap05`), na Agenda de novembro; clique no dia 9: à direita, "09 de novembro", "segunda-feira", e a tarefa "Ligar pro contador sobre as notas de outubro", 16:00. | Tarefa feita, tarefa concluída. Ontem o Rafael ligou pro contador, e a tarefa ainda está aberta. |
-| Clique no círculo à esquerda da tarefa: ela fica riscada; o toast "Tarefa atualizada". | É só clicar no círculo do lado dela. Ela fica riscada, e para de aparecer nos lembretes. |
+| Clique no círculo à esquerda da tarefa: ela fica riscada; o toast "Tarefa atualizada". | É só clicar no círculo do lado dela. Ela fica riscada. E tarefa concluída não aparece mais nos lembretes do dia. |
 | A câmera fica na tarefa riscada. | Clicou sem querer? Um clique de novo, e ela volta a ficar pendente. |
 | Clique no dia 13; passa o mouse na "Revisão do caminhão truck": aparecem o lápis e a lixeira; clique no lápis: a janela "Editar Tarefa"; troca "Horário" para 10:30; "Salvar": "Tarefa atualizada". | Pra mudar uma tarefa, passe o mouse nela e clique no lápis. Troco o horário da revisão pra dez e meia, e salvo. |
 | Clique no dia 18; passa o mouse em "Buscar a lona nova do caminhão"; clique na lixeira: "Excluir Tarefa" ("Tem certeza que deseja excluir esta tarefa?"); clique em "Excluir Tarefa": o toast "Tarefa excluída". | E a lixeira exclui. O sistema pede a confirmação, e a tarefa sai do calendário. |
