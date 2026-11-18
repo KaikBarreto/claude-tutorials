@@ -865,3 +865,10 @@ Decisões:
   **11.643 créditos** (1,04 crédito por caractere). Nó de estimativa vazio `K9N41E6d3H8t6Loh1RSJ` (sem geração; pode
   apagar). Próximo: o Kaik exporta o zip do fluxo e anexa; `proc.py` + `titulos.py`; gravação final da T08 com a voz;
   cenas v3 reancoradas nos tempos reais; edição.
+- 18/11 23:46 **CORREÇÃO: a voz da T08 NÃO foi gerada.** As 15 gerações falharam por falta de crédito no ElevenLabs
+  ("quota of 286000, 415 credits remaining"); nada foi cobrado. O coordenador tinha anotado "gerada" sem consultar o
+  status: **regra**: depois de mandar gerar, consultar o status uma vez antes de dizer que saiu. Os 15 nós estão no fluxo
+  `E2aF9NQaqA00Zo9ZhjLg` com o texto certo: quando houver crédito, rodar os MESMOS nós (`creative_run_flow_nodes`), sem
+  criar nós novos. Necessário: T08 = 11.643 créditos; trilha inteira ≈ 366 mil caracteres ≈ 380-400 mil créditos (259 mil
+  antigos + ~107 mil dos capítulos novos, a ~12 caracteres por segundo e 1,04 crédito por caractere, com 5% de folga).
+  O plano do Kaik (Creator) renova em 28/11.
