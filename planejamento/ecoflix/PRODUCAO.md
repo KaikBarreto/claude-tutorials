@@ -848,3 +848,7 @@ Decisões:
   mundo base (pendentes)**: handler de `GET /auth/v1/health`; ligar o Depósito Irmãos Siqueira à Tabela Depósitos; e, da
   T00, mensalidade 1.350,00 + `extra_users` 1; da T08, o #57 com item. Ilustrações v3 pendentes: `ilu05_botao_cores`,
   `ilu10_rascunho`.
+- 18/11 22:0x **T07: caps 08, 18 e 19 continuam abertos** (lote do coordenador, `rec/t07/lote160_coord.log`): o cap08 ainda
+  tem `:has-text(...)` dentro de um `confere` (vira `querySelectorAll`: seletor inválido; 4 ocorrências no `cap08.json`);
+  o cap18 tem 1 passo falho e o `record.mjs` sai com exceção (linha 48), sem folha; o cap19 depende da `apos-cap18`.
+  **Fica para depois do piloto T08**: agente novo e pequeno, só esses três capítulos, lendo `T07/andamento_160.md`.
