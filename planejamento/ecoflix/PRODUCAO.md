@@ -808,3 +808,8 @@ Decisões:
 - 18/11 16:4x **Piloto do estilo v3 mandado ao Kaik** (`estilo_v3_piloto.mp4`, `estilo_v3_climas.jpg`; kit em
   `perfis/ecoflix/cenas_v3/`, 0,8 s/quadro). Aguardando aprovação; ilustrações antigas paradas. Migração estimada: 35 cenas
   3D (faltam ~25 objetos) e 218 cenas 2D.
+- 18/11 17:18 **Kaik aprovou o estilo v3**: "Ficou ótimo a prévia da animação". Estilo das ilustrações da trilha = kit
+  `perfis/ecoflix/cenas_v3/` (dois climas, câmera contínua). Próximo: biblioteca de objetos v3 (os que as cenas antigas
+  usam) e, por aula, as cenas no v3 depois que a aplicação do 1.60.10 fechar o `ilustracoes.json` dela.
+- 18/11 17:0x **Junção 1.60 aplicada** (`JUNCAO_160.md`; 280 conferências). **Aplicação por aula em andamento**
+  (`_BRIEF_APLICAR_160.md`): primeira leva T16, T07, T08, T00.

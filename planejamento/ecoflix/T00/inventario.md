@@ -1,6 +1,7 @@
 # Inventário · T0 · Bem-vindo ao EcoSistema
 
-Código lido: EcoSistema **1.59.154** (`src/config/version.ts:16`), cópia em `/home/claude/ecoflix/app-src-1.59.154/`.
+Código lido: EcoSistema **1.60.10** (cópia em `/dev/shm/ecoflix-src`), atualizado em 18/11 a partir do inventário do 1.59.154 e da
+`cobertura_160.md` (as linhas citadas abaixo das seções 1 a 9 são as do 1.59.154, salvo as da seção 10, que são do 1.60.10).
 Caminhos relativos a `src/`. Rótulo entre aspas = texto exato da tela (pt-BR). Só o que a aula usa.
 A cópia não traz `supabase/migrations`: o que as RPCs fazem por dentro vem da fonte (que conferiu os ⚠️) e do front.
 
@@ -67,7 +68,7 @@ A cópia não traz `supabase/migrations`: o que as RPCs fazem por dentro vem da 
   "Dashboard"; "Financeiro" (Caixa, Histórico do Caixa, Movimentações Bancárias ou "Movimentações Financeiras" com a Conta
   Dinheiro ligada (`hooks/useFinancialMovementsLabel.ts`), Relatório Financeiro, Contas a Pagar/Receber, Categorias
   Financeiras); "Pedidos"; "Fiscal & Ambiental" (Notas Fiscais (NF-e), SPED Fiscal "BETA", Notas de Serviço (NFS-e),
-  Transporte (MDF-e), Ambiental (MTR/CDF), Estoque Fiscal); "Materiais" (Estoque, "Histórico (Kardex)", Relatório, Ticket de
+  Transporte (MDF-e), Ambiental (MTR/CDF), Estoque Fiscal, **Relatórios Fiscais** (1.60: `routes.ts:511`, rota `/fiscal-ambiental/relatorios/nfe`; o SPED não aparece no mundo)); "Materiais" (Estoque, "Histórico (Kardex)", Relatório, Ticket de
   Pesagem, Produção); "Coletas & Logística" (Ordens de Coleta, Frota, Equipamentos, Rastreamento, Rotas, Relatório,
   Configurações); "Clientes e Fornecedores"; "Funcionários (RH)"; "CRM/Kanban"; "Agenda"; depois de um traço, "Gerencial
   (Filiais)" (só com o módulo `modulo_gerencial`, `SidebarMenuContent.tsx:260`). Um grupo aberto por vez (`:234-238`).
@@ -151,3 +152,36 @@ A cópia não traz `supabase/migrations`: o que as RPCs fazem por dentro vem da 
 4. Pix: a fonte diz que a cobrança automática só existe se o cliente **ligar** o Pix Automático; no checkout ele **nasce ligado**
    (decisão de 14/10/2026), e funciona se o banco aceitar.
 5. Sem rota de Guia Técnico no app: a ajuda por escrito dentro do sistema é a "Central de Ajuda".
+
+## 10. O que entrou com o 1.60.10 (conferido na tela em 18/11)
+- **Cato** (`components/cato/CatoFab.tsx`): botão redondo fixo, nome "Abrir o Cato" (computador: canto inferior direito; celular: inferior
+  esquerdo, acima da barra); com dica pendente, "Abrir 1 notificação do Cato". **Balão de dica** 15 s depois de a tela abrir (`:24-27,244-278`),
+  some em 11 s, com a frase, o link "Abrir Cato" e o xis "Fechar dica do Cato"; calado por `localStorage`
+  `cato_adoption_nudge_<empresa>_<usuário>` = `{"count":16,...}`. Sem o aceite da empresa, o clique abre **"Antes da primeira conversa com o
+  Cato"** · "Leia rapidinho como ele trata os dados da sua empresa." (`CatoAiConsentDialog.tsx`), com os itens "O Cato lê os dados da sua
+  conta pra te responder…", "Quer falar em vez de digitar? O microfone só liga quando você toca nele…", "O Cato pode errar…". Painel (só com
+  aceite; é da T21): "Cato.ai — agente de IA da EcoSistema", "Pergunte ao Cato…", botão "Falar". RPC `track_cato_adoption_event`.
+- **Cabeçalho**: botões "Buscar" (Ctrl + K) e "Notificações" (nomes acessíveis conferidos na tela).
+- **Menu da conta**: "Tema" abre "Claro", "Escuro", "Sistema"; "Central de Ajuda" abre a gaveta com "Pesquisar artigos..."; "Falar com o
+  Suporte" abre "Falar com o suporte" · "Nos conte o que está acontecendo pra resolvermos mais rápido." · "Ver vídeos" / "Ver artigos" ·
+  "Em qual tela/módulo? *" · "O que aconteceu? Descreva com detalhes *" · "Você já assistiu aos nossos tutoriais sobre isso? *" (Sim / Não)
+  · "Falar no WhatsApp"; o cartão do fim ("Trocar de conta") abre "Apenas essa conta está salva. Use "+ Adicionar conta" pra incluir outra.",
+  "Adicionar conta" e "Sair de todas as contas"; "Sair" no rodapé, ao lado de "Configurações".
+- **Celular, "Novo"** (`MobileBottomNav.tsx:41-68`): leque em duas fileiras, "Compra" e "Venda" embaixo, "Ticket de pesagem" e "Nota Fiscal" em cima.
+- **EcoFlix**: abas "Início", "Módulos", "Lives", "Minha Lista"; "Buscar aula" na trilha. **Player** (`pages/EcoFlixWatch.tsx`): "Ativar ou
+  escolher legenda" → "Legendas" · "Escolha a faixa e ajuste como o texto aparece." ("Sem legendas", a faixa, "Tamanho da legenda", "Estilo da
+  legenda"); "Velocidade de reprodução: 1x"; "Voltar 10 segundos"; "Avançar 10 segundos"; "Reproduzir próxima aula"; "Abrir em tela cheia".
+  No fim do vídeo: "Aula concluída" · "Vamos para a próxima" · "A próxima aula começa em {n} segundos." (avança sozinho em 4 s; o mouse por
+  cima pausa) · "Ficar nesta aula" / "Próxima aula agora" (`:449-455,665-694`). "Materiais e extras" nos detalhes. Tabelas
+  `ecoflix_episode_subtitles` e `ecoflix_episode_resources` (fora do `schema.json`: entram pela semente da T0).
+- **Assinatura**: "· Nível {n}" ao lado do módulo de notas em "Módulos ativos" (`ModulesManagementCard.tsx:505-507`); "Adicione ao seu plano"
+  com o cartão do módulo que falta e o botão próprio (CRM: "Ativar meu CRM"); no teste, só "Ative sua Assinatura" e "Escolher Plano e Ativar".
+  **"Montar plano"** · "Monte seu plano e veja como fica ao vivo": "Voltar aos planos", "Escolha os módulos" (9 cartões com valor),
+  "Nível de Notas Fiscais" (Nível 1, 2, 3), "Usuários adicionais" ("3 usuários", "2 base + 1 extra"), resumo "SEU PLANO", "Ciclo" Mensal /
+  Anual, "Total mensal", "Ver valor e aplicar"; em "Voltar aos planos": "Plano Start", "Plano Avançado", "Plano Master" e "Personalizado"
+  ("Escolha módulo por módulo e monte o plano do seu jeito"). Reabre sempre a partir da assinatura vigente (`:331-343`).
+  **"Cancelar Assinatura"** · "Nos ajude a entender o motivo": "Motivo do cancelamento" (8 motivos); em "Preço muito alto", "Não estou
+  usando o suficiente", "Faltam funcionalidades que preciso" e "Dificuldade em usar o sistema" aparece o cartão com "Falar com o Sucesso do
+  Cliente" (nos outros quatro motivos, não); "Continuar" → "Confirmar cancelamento" · "Tem certeza que deseja cancelar?" · "Ao confirmar:"
+  (5 itens) · "Que tal reduzir seu plano?" (oferta com valores) · "Voltar" / "Confirmar Cancelamento".
+  Histórico: o cartão se chama "Cobrança • {empresa}"; "Nota nº", "Baixar PDF", "Baixar XML"; sem nota, "Solicitar Nota Fiscal".
