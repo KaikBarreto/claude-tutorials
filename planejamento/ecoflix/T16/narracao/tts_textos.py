@@ -111,7 +111,7 @@ Por último, a Pré-visualização. É a nota como ela vai sair, ainda sem valor
 Tudo certo. Emitir Nota. Ela entra como Aguardando sefás e, em instantes, a mil duzentos e cinquenta está autorizada.""",
 12: """E as compras do dia, de quem não emite nota? A Dona Cida e o Valdir vendem sucata como pessoa física, e a nota de entrada dessas compras sai pela Recicla Vale.
 Em vez de uma nota por compra, dá pra juntar o dia todo. Na barra Importar de, clico em Emissão em Massa, Caixa.
-Escolho ontem, nove de novembro. Aparece o caixa do Marcos, já fechado, com as compras do dia.
+Hoje ainda não tem caixa fechado, e a tela avisa. Escolho ontem, nove de novembro. Aparece o caixa do Marcos, já fechado, com as compras do dia.
 Seleciono todas as que ainda não têm nota.
 Em Como as notas serão geradas, escolho Uma nota consolidada. A tela mostra a faixa: /ˈẽniˈɛfiˈe/ mil duzentos e cinquenta e um, de oitocentos e três reais e trinta.
 Ela junta os itens iguais: sessenta e quatro quilos de latinha, cento e oitenta de papelão e quatrocentos e dez de ferro misto. Quem prefere uma nota por compra usa a outra opção, Uma nota por pedido.

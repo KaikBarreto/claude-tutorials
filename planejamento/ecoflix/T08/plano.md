@@ -109,3 +109,20 @@ receita "Serviço de pesagem", lançamento "Serviço de pesagem avulsa #60" de R
 **Backend novo:** `finalize_weighing_ticket_v4`, `apply_standalone_weighing_charge_v1`, colunas `weighing_tickets.standalone_*`.
 **Ilustrações novas (só o `cenas/ilustracoes.json`, estilo v3 pendente):** caminhão de areia (11), comprovante da avulsa (11, PDF do
 app), as três formas de receber (11), sem internet (12).
+
+## 18/11 (noite) · Ajuste de foco, a pedido do Kaik (vale sobre a tabela acima)
+"Na T08 falaria da pesagem avulsa mas sem tanta ênfase, é algo mais de ponta; focar nos tickets de pesagem, valorização, conceito,
+casos de uso." Fala: 2.154 → 2.017 palavras (tempos estimados: 993,8 → 932,2 s de narração; aula ~16 min).
+
+| # | O que mudou |
+|---|---|
+| 1 | + três casos de uso do ticket padrão (preço que só fecha depois: fim do dia ou depois de classificar; vários caminhões no pátio; ticket de venda); a avulsa vira uma frase. 6 → 8 linhas, 63,0 → 78,9 s |
+| 8 | de onde vem o preço: ticket sem valores → tabela (na ordem preço especial, tabela do fornecedor, tabela padrão); ticket com valores → o preço do próprio ticket (`WeighingTicket.tsx`, `priceItems`: `pricing_mode === "priced"` preserva o preço salvo). 78,6 → 87,7 s |
+| 10 | sem mudança (o efeito no estoque e na conta, e o momento, já estavam claros) |
+| 11 | enxuto: 13 → 6 linhas, 311 → 121 palavras, 138,5 → 55,0 s. Fica: o que é, cadastrar o cliente só com o nome, areia média, 23.840 − 9.120 = 14.720 kg, R$ 60,00 por Pix (dinheiro e saldo só citados), "Ticket #60 salvo" e o comprovante. Saem: os campos do cadastro rápido (telefone, CPF/CNPJ, Chave PIX), a placa HBN3F27, o tipo de caminhão, o "Completo", a divisão entre formas, a conta a receber, o valor travado no "Editar" e o estorno |
+| 13 | a frase da avulsa e do sem internet encurtada |
+
+**Mundo:** a pesagem avulsa #60 agora nasce sem placa, sem tipo de caminhão e com o comprovante no modo padrão (a semente `apos-cap11`
+é regravada no ensaio). **Ilustração do cap11:** a âncora (1ª frase) não mudou; as janelas 2 e 3 da cena (comprovante e três formas)
+perderam a fala em que se apoiavam: o comprovante cabe na última linha ("O comprovante sai marcado como pesagem avulsa"); as três
+formas saíram da fala (só "também dá em dinheiro ou no saldo do cliente"). O `cenas/ilustracoes.json` não foi mexido (é de quem cuida das cenas).
