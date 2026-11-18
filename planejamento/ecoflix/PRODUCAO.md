@@ -751,3 +751,20 @@ Decisões:
   resultado 18.336,70, diferença 44.986,70), cap09 L6 sem a frase do Sobrescrever. **Código do grupo agora GRP-7C4E9A**
   (o que o app gera no mundo): trocado no MUNDO_FICTICIO, plano, roteiro (coluna Tela) e na ilustração do cap03 (a voz
   não lê o código). Gravação final: cap03 como Sandra Pires. Achados no MELHORIAS.
+
+## Retomada de 18/11 (app 1.60.10, pouco limite)
+- 18/11 13:29 **Kaik**: "continue de onde parou e tente não estourar tão rápido meu limite; use fable onde achar
+  interessante; o app em si mudou bastante no repositório". Todos os agentes antigos morreram no limite semanal de 12/11
+  (contextos de 300-700 mil tokens: **não retomar**; agente novo e pequeno por aula quando precisar).
+- **App passou de 1.59.154 (f37573ea0) para 1.60.10 (origin/main 5290be4cd, 270 commits)**: Compra, Venda, Ticket e
+  Usuários mudaram muito; Cato virou agente (1.60.0); Estoque Fiscal em abas (1.60.6); preenchimento inteligente de contas
+  (1.60.5-8); CNPJ traz IE e regime (1.59.157); contas bancárias por usuário (1.59.165); pesagem avulsa com recebimento
+  (1.59.163). Build novo em `app/dist` (o antigo em `app/dist-1.59.154`), `schema.json`, `defaults.json` e sementes
+  regenerados (272 conferências). Script do build: ver RELIGAR (trocar o commit).
+- **Varredura sem agente** (`rec/varredura/varrer.sh`, duas frentes): ensaio rápido sem MP4 de todos os capítulos no app
+  novo; uma linha por capítulo em `rec/varredura/tNN.txt` e as chamadas desconhecidas em `tNN.unknowns.json`.
+- 18/11 13:38 **Kaik (regra nova)**: "garanto que todos os tutoriais cubram tudo em detalhes, não tem problema ficar um
+  pouco mais longo e explicar bem as coisas, principalmente na parte fiscal do sistema, e cobrir cada função e o máximo
+  de casos de uso pertinente". → Depois da varredura, **auditoria de cobertura** por aula contra o 1.60.10 (cada função
+  da tela e casos de uso), com peso nas fiscais (T16, T17, T18 e a parte fiscal da T04/T07/T03); capítulos novos onde
+  faltar. Entra na mesma passada que adapta a aula ao app novo.
