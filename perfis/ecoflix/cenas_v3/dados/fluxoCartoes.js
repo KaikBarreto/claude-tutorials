@@ -25,6 +25,6 @@ export function fluxoCartoes(e, t, a, b = 1e9, o = {}) {
   vis(e, t, a, b, { dy: 0, sc: 1 }); const C = pt(e, '.cartao'), S = pt(e, ':scope > svg'), vao = +e.dataset.vao, v = e.classList.contains('v'), T = i => quando(o, a, i, .55, .1);
   C.forEach((c, i) => entra(c, t, T(i), { dy: 18, sc: .95, d: .5 }));
   S.forEach((s, i) => { const t0 = T(i + 1) - .42, p = eio(pr(t, t0, .4)), q = pr(t, t0, .45), l = s.querySelector('.sl'), r0 = +(e.dataset.r ?? 8), x = r0 + (vao - 2 * r0) * eio(q);
-    s.style.opacity = eo(pr(t, T(i) + .1, .3)).toFixed(3); s.querySelector('.st').setAttribute('stroke-dashoffset', (1 - p).toFixed(4)); s.querySelector('.sp').setAttribute('opacity', eo(pr(t, t0 + .3, .15)).toFixed(3));
+    s.style.opacity = eo(pr(t, Math.max(T(i) + .1, t0 - .18), .3)).toFixed(3);   /* a seta só aparece quando vai se desenhar: não fica apontando para o vazio */ s.querySelector('.st').setAttribute('stroke-dashoffset', (1 - p).toFixed(4)); s.querySelector('.sp').setAttribute('opacity', eo(pr(t, t0 + .3, .15)).toFixed(3));
     l.setAttribute(v ? 'cy' : 'cx', x.toFixed(1)); l.setAttribute('opacity', (q > 0 && q < 1 ? Math.sin(PI * q) ** .5 : 0).toFixed(3)); });
 }

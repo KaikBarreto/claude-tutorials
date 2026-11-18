@@ -6,6 +6,8 @@ Um mundo 3D só, dois climas, câmera contínua. Sai a argila; ficam o verde #50
 - `motor.js`: palco, os dois climas, câmera e estações, planos HTML no espaço, material 3D, componentes e curvas.
 - `objetos/`: a biblioteca 3D, um arquivo por objeto (tabela abaixo). Cada arquivo abre com o `uso:` e o `userData`.
 - `dados/`: os componentes de DADOS (HTML para `plano()`), um arquivo por componente (tabela abaixo).
+- `fundo.js`: os fundos em profundidade dos dois climas (`ceuClaro`, `mundoEscuro` + `E.fundo`), já com o enfeite atrás.
+- `auditar.cjs`: a **verificação automática de acabamento**. Toda cena tem de passar nela (seção "Acabamento").
 - `vitrine.html` + `vitrine_paginas.js`: tudo com o nome embaixo, 7 páginas, nos dois climas
   (`vitrine.html?k=0&p=1`; imagens em `ecoflix/previa_ilustracoes/v3_vitrine_{claro,escuro}[_1..7].jpg`).
 - `climas.html`: a mesma cena nos dois climas (cap 0 = claro, cap 1 = escuro).
@@ -50,6 +52,44 @@ cena(() => {
   referencial do outro lado; `enquadra(plano)` devolve a pose que o põe de frente.
 - Regras de direção: um movimento por conceito e com motivo (seguir o assunto, abrir para o contexto, fechar no
   resultado, atravessar a tela); nada cortado pela borda num plano parado; ícone do lucide com o nome literal na página.
+- **Acabamento**: `plano()` aceita `deco`, `sobre`, `sangra` e `z` (ordem de desenho sem mudar a profundidade); `p.ret()`,
+  `enquadraRet`, `uneRet`, `cabe`, `auditar`. Ver a seção "Acabamento": a cena só está pronta quando o `auditar.cjs` aprova.
+
+## Acabamento (obrigatório: toda cena passa na verificação antes da prévia)
+Pedido do Kaik na prévia da T08 (18/11): "a animação ficou boa, só cuidado com desalinhamentos". O kit resolve na raiz e
+confere sozinho; a cena só precisa usar o que está aqui.
+```bash
+# a aula inteira, pelas janelas do ilustracoes.json (tempos em $TUT_HOME/tNN/narracao; ou --tempos <pasta>)
+nice -n 19 node perfis/ecoflix/cenas_v3/auditar.cjs --aula planejamento/ecoflix/T08 [--id ilu01_quando_usar] [--quadros /dev/shm/v3_t08/aud]
+# um capítulo ou um trecho           node .../auditar.cjs <cena.html> <cap> <capNN.json> [--de S --ate S] [--passo 0.5]
+# página sem fala (a vitrine)        node .../auditar.cjs vitrine.html 1 - --t 9 --dados '{"pagina":7}'
+```
+Roda a cena de 0,5 em 0,5 s (sem captura: ~0,2 s por instante, sem trava) e sai com 1 se achar algo. `--quadros` grava o
+quadro de cada problema com a marca vermelha. Na página: `window.auditar(t)` devolve a lista; `auditar(t, { marca: true })` desenha.
+O que acusa (mínimos em `RESP`, no `motor.js`; medidas em px do desenho, a 1280x800):
+
+| Tipo | Acusa | Como resolver |
+|---|---|---|
+| `texto` | texto maior que a caixa (cartão, chip, visor, papel) ou a menos de 10 px da borda dela | o `.cartao` já cresce sozinho (`cabe`); fileira de `htmlFluxoCartoes` = todos da largura do maior. Sobrou? `cw` maior ou texto menor |
+| `borda` | caixa, seta ou fio PARADO (anda menos de 40 px/s de t - 0,3 a t + 0,3) cortado pela borda ou a menos de 40 px dela | a câmera para com o grupo inteiro no quadro: `enquadraRet`. O que não é do grupo sai de cena (`p.op`, opacidade da parte) antes de a câmera parar. Em trânsito pode cruzar a borda; o assunto da fala, nunca (isso é no olho) |
+| `titulo` | conteúdo em cima do título ou a menos de 10 px dele (em qualquer instante) | baixar o desenho (`y` da pose, `topo` do `enquadraRet`), afastar o visor |
+| `respiro` | seta a menos de 8 px do cartão ou com respiro diferente nas pontas; fio que nem encosta (0) nem afasta (8); caixas a menos de 8 px | seta de `htmlFluxoCartoes` já sai certa; fio de `htmlFluxo` começa e acaba NA borda da caixa ou a 10 px dela |
+| `sobreposicao` | duas caixas uma em cima da outra | afastar; selo posto de propósito na quina: `plano(..., { sobre: true })` |
+| `alinhamento` | caixas vizinhas quase alinhadas (topo, meio ou base fora por 1,5 a 6 px) | mesma coordenada, mesma altura de cartão; coisas na mesma conta ficam na MESMA profundidade (`z: n` do plano decide quem fica na frente sem criar paralaxe) |
+
+- **Enfeite fica atrás e nunca cruza conteúdo.** Fundo macio (mancha, brilho, pontos, poeira) = `tras: true`. Traço decorativo
+  (anel, linha) = `tras: true, deco: true`: vai para uma camada que o motor recorta atrás de toda caixa de vidro (o anel
+  passa atrás do cartão, não por dentro dele). Use `fundo.js` (`ceuClaro()`, `mundoEscuro(EIXO, ZD, EE)` + `E.fundo(cx, cy)`)
+  em vez de copiar o fundo de outra cena. Diagrama com fios finos (garfo, ligações): `E.fundo(cx, cy, { aneis: false })`, para
+  o anel não se confundir com os fios.
+- **Câmera por grupo**: `enquadraRet(lugar, ret, { margem, topo, max, az })` devolve a pose que põe o retângulo (metros;
+  `p.ret()` de um plano, `uneRet(a, b)` de vários) inteiro na área útil: 64 px dos lados e de baixo, 150 px livres em cima
+  para o título. Fechar em parte de uma fileira = sumir com o resto da fileira (`parte(e, i)`, `seta(e, i)` do
+  `fluxoCartoes.js`) enquanto a câmera viaja; ele volta no plano geral.
+- **Largura real**: componente que mede o texto pode sair mais largo que o pedido. Posicione pelo que saiu (`p.w`, `p.h`,
+  `p.ret()`), não pela conta de cabeça (`4 * CW + 3 * VAO`).
+- O que a verificação NÃO vê: objeto 3D (caminhão sob o título, objeto cortado), o assunto da fala cortado em trânsito,
+  legibilidade e composição. Continue olhando os quadros (1280x800 e ampliados).
 
 ## Migrar uma cena antiga
 - **3D (`Tnn/cenas3d/cena3d.html`, 35 cenas)**: as chaves de câmera e as âncoras `W()` servem como estão; `vis`, `foco`,
@@ -60,7 +100,7 @@ cena(() => {
 - **2D (`Tnn/cenas/cenas.html`, 218 cenas)**: cada elemento com `left/top` vira um `plano` (o grupo todo num plano só já
   dá câmera e clima; separar em camadas dá paralaxe); `.card/.tag/.op/.most` → `htmlCartao/htmlChip/htmlOp/htmlVisor`.
   Cena de conta, fluxo ou documento = clima escuro; cena de pátio = claro, com objeto 3D quando o objeto é o assunto.
-- Modelo: o piloto (`T08/cenas_v3/cena.html`).
+- Modelo: o piloto (`T08/cenas_v3/cena.html`), que passa no `auditar.cjs` sem nenhum problema.
 
 ## Biblioteca · objetos 3D (`objetos/`)
 Mesma convenção em todos: `nome(pai, [x, y, z], o)` devolve o grupo; base em y 0; medidas REAIS em metros (pessoa 1,72;
@@ -125,8 +165,8 @@ Leem as variáveis do clima: no escuro são vidro aceso; no claro, papel branco.
 | `extrato.js` | `htmlExtrato({ icone, titulo, sub, linhas [[icone, rot, sub, valor]], total [k, v], fmt, w })` (nº = R$ com sinal; texto = como está) | `extrato` (linhas em cascata, total que conta), `marca(e, i, t, a)` |
 | `barras.js` | `htmlBarras({ titulo, sub, dados [[rot, v]], destaque, fmt, selo, w, h })` | `barras`: crescem do chão, valor conta |
 | `grafLinha.js` | `htmlGrafLinha({ titulo, sub, pontos, rotulos, valor, selo, w, h })` | `grafLinha`: a linha se desenha, a área acende, o ponto final bate |
-| `linhaTempo.js` | `htmlLinhaTempo({ etapas [[icone, rot, sub, cor]], w, vertical, passo })` | `linhaTempo(..., { tempos, pendente })`: o trilho acende até a etapa |
-| `fluxoCartoes.js` | `htmlFluxoCartoes({ cartoes [[icone, rot, sub, 'res' \| 'a' \| 'n']], cw, vao, vertical })` | `fluxoCartoes`: seta com ponto de luz e cartão; `parte(e, i)` |
+| `linhaTempo.js` | `htmlLinhaTempo({ etapas [[icone, rot, sub, cor]], w, vertical, passo })` (etapas da largura do nome mais comprido: não se encostam) | `linhaTempo(..., { tempos, pendente })`: o trilho acende até a etapa |
+| `fluxoCartoes.js` | `htmlFluxoCartoes({ cartoes [[icone, rot, sub, 'res' \| 'a' \| 'n']], cw (largura MÍNIMA), vao, respiro, vertical })`: cartões todos da largura do texto mais comprido, seta com o mesmo respiro (12) nas duas pontas | `fluxoCartoes`: seta com ponto de luz e cartão; `parte(e, i)`, `seta(e, i)` |
 | `balao.js` | `htmlBalao({ lado 'e' \| 'd', icone, nome, texto, w })` (Cato: ícone genérico, sem logo) | `balao(..., { pensa, d })`: pontinhos e texto palavra a palavra |
 | `calendario.js` | `htmlCalendario({ mes, ano, inicio, dias, hoje, marcas [[dia, '' \| 'a']], faixa [de, ate], icone })` | `calendario`: dias em cascata, marcas batem |
 | `cadeado.js` | `htmlCadeado({ px })`, `htmlPermissao({ icone, papel, sub, itens [[rot, ligado]] })` | `cadeado(..., { abre })`, `permissao(..., { liga [[i, t]] })` |

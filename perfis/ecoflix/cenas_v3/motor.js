@@ -462,7 +462,9 @@ export function cabe(raiz) {
     const r = c.getBoundingClientRect(); if (!r.width) break;
     const lim = r.right - Math.max(parseFloat(getComputedStyle(c).paddingRight) || 0, RESP.texto); let mx = -1e9;
     for (const q of textosDe(c)) mx = Math.max(mx, q.r.right);
-    if (mx <= lim + .5) break; c.style.width = c.style.minWidth = Math.ceil(r.width + mx - lim) + 'px';
+    if (mx <= lim + .5) break; const w0 = [c.style.width, c.style.minWidth]; c.style.width = c.style.minWidth = Math.ceil(r.width + mx - lim) + 'px';
+    let m2 = -1e9; for (const q of textosDe(c)) m2 = Math.max(m2, q.r.right);   // texto preso à direita anda junto com a borda: crescer não resolve, desfaz
+    if (m2 - mx > mx - lim - 1) { [c.style.width, c.style.minWidth] = w0; break; }
   }
 }
 function contornos(pl) {   // contorno (px do plano, cantos redondos) de cada caixa de conteúdo; medido na criação, sem transformação
@@ -502,11 +504,18 @@ export const uneRet = (...r) => [Math.min(...r.map(a => a[0])), Math.min(...r.ma
 //   titulo    caixa ou traço em cima do título (ou a menos de 10 px dele)
 //   respiro   seta colada no cartão ou com respiro diferente nas duas pontas; fio que nem encosta nem afasta; caixas coladas
 //   sobreposicao  duas caixas uma em cima da outra (plano(..., { sobre: true }) libera o selo posto de propósito na quina)
-//   alinhamento   caixas vizinhas quase alinhadas (topo, meio ou base fora por 1,5 a 6 px)
+//   alinhamento   caixas vizinhas (planos paralelos do mesmo lugar) quase alinhadas: topo, meio ou base fora por 1,5 a 6 px
 // Mede no desenho (px do plano, sem a perspectiva) e projeta com a câmera do quadro. o.marca: desenha os problemas no quadro.
+function aoQuad(p, q) {   // distância (px do quadro) de um ponto ao quadrilátero de uma caixa na tela; 0 se está dentro
+  let d = 1e9, sn = 0, den = true;
+  for (let i = 0; i < 4; i++) { const a = q[i], b = q[(i + 1) % 4], vx = b[0] - a[0], vy = b[1] - a[1], wx = p[0] - a[0], wy = p[1] - a[1], cr = vx * wy - vy * wx;
+    if (cr) { if (sn && Math.sign(cr) !== sn) den = false; sn = sn || Math.sign(cr); }
+    const u = cl((wx * vx + wy * vy) / (vx * vx + vy * vy || 1)); d = Math.min(d, Math.hypot(wx - u * vx, wy - u * vy)); }
+  return den ? 0 : d;
+}
 function opReal(e, fim) { let k = 1; for (; e; e = e.parentElement) { const s = getComputedStyle(e); if (s.display === 'none' || s.visibility === 'hidden') return 0; k *= +s.opacity; if (e === fim) break; } return k; }
 const nomeDe = e => (e.textContent || '').replace(/\s+/g, ' ').trim().slice(0, 34) || e.className || e.tagName;
-function coleta() {
+function coleta(leve) {
   const A = PLANOS.filter(p => p.on && !p.tras && !p.deco && p.op > .12), tf = A.map(p => p.pl.style.transform), B = [], Ln = [], Tx = [];
   A.forEach(p => { p.pl.style.transform = 'none'; });
   for (const [p, raiz] of [...A.map(p => [p, p.pl]), [null, HUD]]) {
@@ -515,8 +524,8 @@ function coleta() {
     if (p && !els.length && p.e && p.e.tagName !== 'svg' && /\S/.test(p.e.textContent)) els = [p.e];
     if (!p) els.push(...[...HUD.children].filter(e => !e.matches('.tit,' + SEL) && /\S/.test(e.textContent)));
     for (const e of els) { const r = e.getBoundingClientRect(); if (r.width < 1 || r.height < 1) continue; const op = opReal(e, raiz); if (op < .12) continue;
-      const b = { e, p, op, l: rel(r), nome: nomeDe(e), impl: !e.matches(SEL), filho: !!e.parentElement.closest(SEL), k: p ? p.escTela : 1 }; B.push(b);
-      if (!b.impl) for (const { n, r: q } of textosDe(e)) if (opReal(n.parentElement, e) >= .05) Tx.push({ b, txt: n.nodeValue.replace(/\s+/g, ' ').trim().slice(0, 30), l: rel(q) }); }
+      const b = { e, p, op, l: rel(r), nome: nomeDe(e), impl: !e.matches(SEL), filho: !!e.parentElement.closest(SEL), k: p ? p.escTela : 1, pulsa: !!(e.style.scale || (p && p.e.style.scale)) }; B.push(b);   // pulsa = no meio de um pulso(): o respiro não é medido
+      if (!b.impl && !leve) for (const { n, r: q } of textosDe(e)) if (opReal(n.parentElement, e) >= .05) Tx.push({ b, txt: n.nodeValue.replace(/\s+/g, ' ').trim().slice(0, 30), l: rel(q) }); }
     for (const sv of raiz.querySelectorAll('svg.seta,svg.fluxo')) { const op = opReal(sv, raiz); if (op < .12) continue;
       const r = sv.getBoundingClientRect(), vb = sv.viewBox.baseVal, kx = vb.width ? r.width / vb.width : 1, ky = vb.height ? r.height / vb.height : 1, seta = sv.classList.contains('seta');
       const loc = q => [r.left - o.left + (q.x - vb.x) * kx, r.top - o.top + (q.y - vb.y) * ky];
@@ -527,16 +536,17 @@ function coleta() {
   A.forEach((p, i) => { p.pl.style.transform = tf[i]; });
   const T = (p, u, v) => p ? naTela(p.M, u, v) : [u, v];
   for (const b of B) { const q = [[b.l[0], b.l[1]], [b.l[2], b.l[1]], [b.l[2], b.l[3]], [b.l[0], b.l[3]]].map(([u, v]) => T(b.p, u, v)), xs = q.map(a => a[0]), ys = q.map(a => a[1]);
-    b.s = [Math.min(...xs), Math.min(...ys), Math.max(...xs), Math.max(...ys)]; b.c = [(b.s[0] + b.s[2]) / 2, (b.s[1] + b.s[3]) / 2]; }
+    b.q = q; b.s = [Math.min(...xs), Math.min(...ys), Math.max(...xs), Math.max(...ys)]; b.c = [(b.s[0] + b.s[2]) / 2, (b.s[1] + b.s[3]) / 2]; }
   for (const l of Ln) { l.sa = T(l.p, ...l.a); l.sz = T(l.p, ...l.z); l.s = [Math.min(l.sa[0], l.sz[0]), Math.min(l.sa[1], l.sz[1]), Math.max(l.sa[0], l.sz[0]), Math.max(l.sa[1], l.sz[1])]; l.c = [(l.s[0] + l.s[2]) / 2, (l.s[1] + l.s[3]) / 2]; }
   return { B, Ln, Tx };
 }
 export function auditar(t, o = {}) {
-  const R = RESP, dt = .2, antes = new Map(), P = [], visto = new Set();
+  const R = RESP, dt = .3, P = [], visto = new Set();
   const add = (tipo, chave, msg, s) => { chave = tipo + ': ' + chave; if (visto.has(chave)) return; visto.add(chave); P.push({ tipo, chave, msg, ret: s.map(v => Math.round(v)) }); };
-  quadro(t - dt); { const a = coleta(); for (const b of [...a.B, ...a.Ln]) antes.set(b.e, b.c); }
+  // parado = quase não anda na tela de t - 0,3 a t + 0,3 s (câmera parada, deriva lenta ou fim de movimento seguido de pausa)
+  const onde = u => { quadro(u); const a = coleta(true), m = new Map(); for (const b of [...a.B, ...a.Ln]) m.set(b.e, b.c); return m; }, antes = onde(t - dt), depois = onde(t + dt);
   quadro(t); const { B, Ln, Tx } = coleta(), f1 = v => (Math.round(v * 10) / 10).toString().replace('.', ',');
-  for (const b of [...B, ...Ln]) { const a = antes.get(b.e); b.parado = !!a && Math.hypot(b.c[0] - a[0], b.c[1] - a[1]) / dt <= R.parado; }
+  for (const b of [...B, ...Ln]) b.parado = [antes, depois].every(m => { const a = m.get(b.e); return !!a && Math.hypot(b.c[0] - a[0], b.c[1] - a[1]) / dt <= R.parado; });
   // 1 · texto na caixa
   for (const x of Tx) { const b = x.b.l, q = x.l, h = Math.max(b[0] + R.texto - q[0], q[2] - (b[2] - R.texto)), v = Math.max(b[1] + R.textoV - q[1], q[3] - (b[3] - R.textoV));
     if (Math.max(h, v) > .75) add('texto', x.b.nome + ' | ' + x.txt, `o texto "${x.txt}" ${h > v ? (h > R.texto ? 'estoura a largura' : 'encosta na borda') : 'estoura a altura'} de "${x.b.nome}" (faltam ${f1(Math.max(h, v))} px para o respiro de ${h > v ? R.texto : R.textoV} px)`, x.b.s); }
@@ -554,24 +564,25 @@ export function auditar(t, o = {}) {
   // 4 · respiro: seta e fio contra a caixa mais próxima de cada ponta; caixas entre si
   const Bv = B.filter(b => !b.filho && b.op >= .3);
   for (const l of Ln) { if (!l.parado) continue;
-    const g = [l.sa, l.sz].map(q => { let m = 1e9, bb = null; for (const b of Bv) { const d = Math.hypot(Math.max(b.s[0] - q[0], 0, q[0] - b.s[2]), Math.max(b.s[1] - q[1], 0, q[1] - b.s[3])); if (d < m) { m = d; bb = b; } } return [Math.max(0, m / l.k - l.hw), bb]; });
-    if (g.some(([, b]) => b && !b.parado)) continue;
+    const g = [l.sa, l.sz].map(q => { let m = 1e9, bb = null; for (const b of Bv) { const d = aoQuad(q, b.q); if (d < m) { m = d; bb = b; } } return [Math.max(0, m / l.k - l.hw), bb]; });
+    if (g.some(([, b]) => b && (!b.parado || b.pulsa))) continue;
     const chave = l.nome + ' ' + g.map(([, b]) => b ? b.nome : '').join(' > '), perto = g.filter(([d, b]) => b && d < 30 && (l.seta || d > .75));
     for (const [d, b] of perto) if (d < R.seta - .5) add('respiro', chave + ' | ' + b.nome, `${l.nome} ${l.seta ? 'colada em' : 'nem encostado nem afastado de'} "${b.nome}": respiro de ${f1(d)} px (mínimo ${R.seta}${l.seta ? '' : ', ou encostar'})`, l.s);
-    if (perto.length === 2 && Math.abs(perto[0][0] - perto[1][0]) > 2) add('respiro', chave + ' | desigual', `${l.nome} com respiro desigual: ${f1(perto[0][0])} px de "${perto[0][1].nome}" e ${f1(perto[1][0])} px de "${perto[1][1].nome}"`, l.s); }
-  const Bp = Bv.filter(b => b.op >= .5 && b.parado), sobre = b => b.p && b.p.sobre;
+    if (perto.length === 2 && Math.abs(perto[0][0] - perto[1][0]) > (l.seta ? 2 : 3)) add('respiro', chave + ' | desigual', `${l.nome} com respiro desigual: ${f1(perto[0][0])} px de "${perto[0][1].nome}" e ${f1(perto[1][0])} px de "${perto[1][1].nome}"`, l.s); }
+  const Bp = Bv.filter(b => b.op >= .5 && b.parado && !b.pulsa), sobre = b => b.p && b.p.sobre;
   for (let i = 0; i < Bp.length; i++) for (let j = i + 1; j < Bp.length; j++) { const a = Bp[i], b = Bp[j]; if (a.e.contains(b.e) || b.e.contains(a.e) || sobre(a) || sobre(b)) continue;
     const ix = Math.min(a.s[2], b.s[2]) - Math.max(a.s[0], b.s[0]), iy = Math.min(a.s[3], b.s[3]) - Math.max(a.s[1], b.s[1]), k = Math.min(a.k, b.k), u = [Math.min(a.s[0], b.s[0]), Math.min(a.s[1], b.s[1]), Math.max(a.s[2], b.s[2]), Math.max(a.s[3], b.s[3])];
     if (ix > 1.5 && iy > 1.5) { const ar = q => (q.s[2] - q.s[0]) * (q.s[3] - q.s[1]); if (ix * iy / (ar(a) + ar(b) - ix * iy) < .8) add('sobreposicao', a.nome + ' | ' + b.nome, `"${a.nome}" e "${b.nome}" sobrepostos (${f1(Math.min(ix, iy) / k)} px)`, u); }
     else { const gp = iy > 1.5 ? -ix : ix > 1.5 ? -iy : 1e9; if (gp / k < R.caixas - .5) add('respiro', a.nome + ' | ' + b.nome, `"${a.nome}" e "${b.nome}" colados: ${f1(Math.max(0, gp / k))} px (mínimo ${R.caixas})`, u); }
-    // 5 · alinhamento: só entre planos paralelos e na mesma profundidade (mede no espaço, não na tela)
-    if (!a.p || !b.p) continue; const A = a.p.MW, Bm = b.p.MW, ax = i => { const n = Math.hypot(A[i], A[i + 1], A[i + 2]); return [A[i] / n, A[i + 1] / n, A[i + 2] / n]; }, bx = i => { const n = Math.hypot(Bm[i], Bm[i + 1], Bm[i + 2]); return [Bm[i] / n, Bm[i + 1] / n, Bm[i + 2] / n]; };
-    const E = [ax(0), ax(4), ax(8)], dot = (p, q) => p[0] * q[0] + p[1] * q[1] + p[2] * q[2]; if (dot(E[0], bx(0)) < .99999 || dot(E[1], bx(4)) < .99999) continue;
-    const pm = (m, u2, v2) => [m[0] * u2 + m[4] * v2 + m[12], m[1] * u2 + m[5] * v2 + m[13], m[2] * u2 + m[6] * v2 + m[14]], cx = (q, m) => { const p0 = pm(m, q.l[0], q.l[1]), p1 = pm(m, q.l[2], q.l[3]); return [dot(p0, E[0]), dot(p0, E[1]), dot(p1, E[0]), dot(p1, E[1]), dot(p0, E[2])]; };
-    const ra = cx(a, A), rb = cx(b, Bm), px = Math.max(a.p.esc, b.p.esc), [lo, hi] = R.alinha; if (Math.abs(ra[4] - rb[4]) > .7) continue;
-    for (const [i0, i1, eixo] of [[1, 3, 'na horizontal'], [0, 2, 'na vertical']]) { const j0 = 1 - i0, j1 = j0 + 2, cruza = Math.min(ra[j1], rb[j1]) - Math.max(ra[j0], rb[j0]);   // vizinhos nesse eixo = não se cruzam no outro
-      if (cruza > 0) continue; const ov = Math.min(ra[i1], rb[i1]) - Math.max(ra[i0], rb[i0]); if (ov < .5 * Math.min(ra[i1] - ra[i0], rb[i1] - rb[i0])) continue;
-      const dd = Math.min(Math.abs(ra[i0] - rb[i0]), Math.abs(ra[i1] - rb[i1]), Math.abs(ra[i0] + ra[i1] - rb[i0] - rb[i1]) / 2) / px;
+    // 5 · alinhamento: só entre planos paralelos do mesmo lugar, na mesma profundidade e vizinhos (mede no espaço, não na tela)
+    if (!a.p || !b.p || a.p.em !== b.p.em || a.p.rot.some((v, n) => Math.abs(v - b.p.rot[n]) > 1e-6)) continue;
+    const no = q => { const m = q.p.MW, c = [[q.l[0], q.l[1]], [q.l[2], q.l[1]], [q.l[2], q.l[3]], [q.l[0], q.l[3]]].map(([u2, v2]) => { const w = [m[0] * u2 + m[4] * v2 + m[12], m[1] * u2 + m[5] * v2 + m[13], m[2] * u2 + m[6] * v2 + m[14]]; return q.p.em ? q.p.em.local(w) : w; });
+      return [Math.min(...c.map(w => w[0])), Math.min(...c.map(w => w[1])), Math.max(...c.map(w => w[0])), Math.max(...c.map(w => w[1])), c[0][2]]; };
+    const ra = no(a), rb = no(b), px = Math.max(a.p.esc, b.p.esc), [lo, hi] = R.alinha; if (Math.abs(ra[4] - rb[4]) > .7) continue;
+    for (const [i0, i1, eixo] of [[1, 3, 'na horizontal'], [0, 2, 'na vertical']]) { const j0 = 1 - i0, j1 = j0 + 2, vao = Math.max(ra[j0], rb[j0]) - Math.min(ra[j1], rb[j1]);   // vizinhos nesse eixo: não se cruzam no outro e estão perto
+      if (vao < 0 || vao / px > 320) continue; const ov = Math.min(ra[i1], rb[i1]) - Math.max(ra[i0], rb[i0]); if (ov < .5 * Math.min(ra[i1] - ra[i0], rb[i1] - rb[i0])) continue;
+      const ta = ra[i1] - ra[i0], tb = rb[i1] - rb[i0], meio = Math.abs(ra[i0] + ra[i1] - rb[i0] - rb[i1]) / 2;   // bordas só se comparam entre caixas de tamanho parecido; o meio, sempre
+      const dd = (Math.min(ta, tb) / Math.max(ta, tb) > .6 ? Math.min(Math.abs(ra[i0] - rb[i0]), Math.abs(ra[i1] - rb[i1]), meio) : meio) / px;
       if (dd > lo && dd < hi) add('alinhamento', a.nome + ' | ' + b.nome, `"${a.nome}" e "${b.nome}" quase alinhados ${eixo}: fora por ${f1(dd)} px`, u); } }
   if (o.marca) { document.getElementById('aud')?.remove(); const d = el('<div id="aud" style="position:absolute;left:0;top:0;width:1280px;height:800px;z-index:9"></div>', ST);
     for (const q of P) d.insertAdjacentHTML('beforeend', `<div style="position:absolute;left:${q.ret[0]}px;top:${q.ret[1]}px;width:${q.ret[2] - q.ret[0]}px;height:${q.ret[3] - q.ret[1]}px;outline:2px solid #FF3B5C;outline-offset:2px"><span style="position:absolute;left:-2px;top:-19px;font:700 11px M,sans-serif;color:#fff;background:#FF3B5C;padding:1px 6px;border-radius:3px;white-space:nowrap">${q.tipo}</span></div>`); }
