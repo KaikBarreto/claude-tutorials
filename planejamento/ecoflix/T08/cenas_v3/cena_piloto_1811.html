@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<!-- PILOTO DO ESTILO V3 (18/11; perfis/ecoflix/cenas_v3/LEIA.md): um mundo 3D, dois climas, câmera contínua.
+     T08 "Ticket de Pesagem" · ilu04_entrada_saida emendada na ilu05_conta_liquido, numa cena só:
+       clima claro (mundo físico): o caminhão cheio na balança (1ª Pesagem 9.460 kg), dá ré, bascula a latinha no pátio,
+         volta vazio (2ª Pesagem 6.380 kg); 9.460 − 6.380 = 3.080 kg de latinha que ficou no pátio;
+       passagem: o visor da balança mostra o Peso Bruto e a câmera mergulha nele (o visor é a única superfície escura do
+         mundo claro: a porta dos dados); do outro lado, o mesmo número já está no cartão Bruto;
+       clima escuro (mundo dos dados): Bruto 3.080 − Tara 0 − Impureza 61,6 = Líquido 3.018,4 kg.
+     Mesmos textos, números e âncoras de fala das cenas atuais (cenas3d/cena3d_v2.html CAPS[4] e cenas/cenas.html CAPS[5]).
+     O caminhão vazio não é tara: a dupla pesagem já o tira; a Tara (embalagem) fica em branco, 0 kg.
+     Tempos do piloto: tempos_piloto.json (cap04 linha 0 + cap05 linha 3, deslocada para emendar).
+     Render: node ferramentas/edit/cenas/render_cenas.cjs 4 planejamento/ecoflix/T08/cenas_v3/tempos_piloto.json saida.mp4 \
+               --html planejamento/ecoflix/T08/cenas_v3/cena.html --dsf 1.35 --cauda 0 -->
+</head><body>
+<script type="module">
+import { PI, cl, lerp, pr, eo, eio, eo5, ei, eio5, eis, golpe, mola, rng, ri, W, el, ic, vis, foco, pulso, ondaEm, kg, kg1, conta, pesa, titulo, posTitulo,
+  htmlChip, htmlCartao, htmlOp, htmlVisor, ligaVisor, htmlFluxo, fluxo, CENA, GL, mat, malha, mancha, piso, anel, destaque, U, camera, pose, posCam, olho, mergulho, lugarDeFrente, plano, clima, cena, THREE }
+  from '../../../../perfis/ecoflix/cenas_v3/motor.js';
+import { caminhao, dirige, bascula, TRAS } from '../../../../perfis/ecoflix/cenas_v3/objetos/caminhao.js';
+import { balanca } from '../../../../perfis/ecoflix/cenas_v3/objetos/balanca.js';
+import { domo, despeja } from '../../../../perfis/ecoflix/cenas_v3/objetos/latinhas.js';
+
+cena(() => {
+  const R1 = 9460, R2 = 6380, BR = R1 - R2, IMP = 61.6, LIQ = 3018.4;
+  // ---------------------------------------------------------------- âncoras de fala
+  // 0 "O caminhão descarregou e voltou vazio pra balança. A diferença entre as duas pesagens é a latinha que ficou no pátio."
+  // 3 "E o líquido fecha a conta: o bruto, menos a tara, menos a impureza."
+  const tca = W(0, 'caminhao'), tds = W(0, 'descarregou'), tvo = W(0, 'voltou'), tdi = W(0, 'diferenca'), tla = W(0, 'latinha'), tfi = W(0, 'ficou'), tpa = W(0, 'patio', 1, 'e');
+  const tE = W(3, 'e'), tli = W(3, 'liquido'), tbr = W(3, 'bruto'), tm1 = W(3, 'menos'), tta = W(3, 'tara'), tm2 = W(3, 'menos', 2), tim = W(3, 'impureza');
+  // a ação do pátio: ré (a caçamba já sobe no fim da ré), as latas escorregam, a caçamba desce enquanto ele arranca de volta
+  const re0 = tds - .42, b0 = re0 + .74, d0 = b0 + .34, bd = d0 + .78, f0 = bd + .36, volta = f0 + 1.02, le0 = volta - .46;
+
+  // ================================================================ CLIMA CLARO · o mundo físico
+  const SX = 2, XR = SX - 2.0, PIL = [-4.95, 0, .45];
+  piso({ r: 30, x: 1, z: -2, passo: 1.3 }); U.uNevoa.value.set(.955, .975, .965, .8);
+  const B = balanca(CENA, [SX, 0, 0], { c: 7.7, l: 3.1, hp: 3.25 }), h = B.userData.altura;
+  const T = caminhao(CENA, { carga: 250 }), sT = mancha(8.6, 3.5, [SX, .25, .15], { op: .8 });
+  const alvo = domo(250, PIL, { r: 1.5, h: .95 }), sP = mancha(4.6, 3.4, [PIL[0], 0, PIL[2] + .1], { op: 0 }), an = anel(1.9, PIL);
+  // fundo em profundidade (atrás do 3D): o disco claro atrás do assunto e as manchas de cor, cada um numa distância
+  const halo = plano('<div style="width:1500px;height:1500px;border-radius:50%;background:radial-gradient(circle at 42% 36%,#fff 0%,#fff 38%,rgba(232,247,239,.9) 62%,rgba(221,243,231,0) 71%)"></div>',
+    { pos: [1.2, 3.4, -14], esc: .0135, tras: true });
+  const bola = (cor, w, pos) => plano(`<div style="width:${w}px;height:${w}px;border-radius:50%;background:radial-gradient(circle,${cor} 0%,${cor.replace(/[\d.]+\)$/, '0)')} 68%)"></div>`, { pos, esc: .05, tras: true });
+  const fundo = [bola('rgba(189,239,212,.95)', 1300, [-34, 10, -70]), bola('rgba(207,228,255,.95)', 1200, [34, 20, -80]), bola('rgba(252,231,184,.8)', 1100, [30, -8, -60]), bola('rgba(211,245,227,.9)', 900, [-22, -9, -50])];
+  // o visor: um aparelho (tela escura) no topo do poste, de frente para onde a câmera vai mergulhar
+  const P4 = { x: .95, y: 1.15, z: .6, d: 20.5, az: .078, el: .225, oy: 6 };   // o plano aberto do fim (de onde sai o mergulho)
+  const VP = [B.userData.poste[0], B.userData.poste[1] + .78, B.userData.poste[2]], EIXO = lugarDeFrente(VP, posCam(P4));
+  const visor = plano(htmlVisor(['1ª Pesagem', '2ª Pesagem', 'Peso Bruto']), { em: EIXO, pos: [0, 0, 0], esc: .012, anc: [.5, .5] }); ligaVisor(visor.e);
+  // a conta do pátio: três cartões de pé na frente da balança
+  const FY = .95, FZ = 8, ROT = [-.2, .1, 0], EC = .0084, FX = 1.4, FD = 3.2;
+  const cart = (x, ...a) => plano(htmlCartao(...a), { pos: [x, FY, FZ], rot: ROT, esc: EC });
+  const c1 = cart(FX - FD, 'truck', '1ª Pesagem', 'caminhão cheio', kg(R1)), c2 = cart(FX, 'truck', '2ª Pesagem', 'caminhão vazio', kg(R2)),
+        c3 = cart(FX + FD, 'scale', 'Peso Bruto', 'a latinha', kg(BR), { res: true });
+  const oM = plano(htmlOp('−'), { pos: [FX - FD / 2, FY, FZ + .05], rot: ROT, esc: EC }), oI = plano(htmlOp('='), { pos: [FX + FD / 2, FY, FZ + .05], rot: ROT, esc: EC });
+  const sC = [FX - FD, FX, FX + FD].map(x => mancha(3.2, 1.25, [x, 0, FZ - .1], { op: 0 }));
+  const n2 = c2.e.querySelector('.num'), n3 = c3.e.querySelector('.num'), on3 = c3.e.querySelector('.onda');
+  const chipP = plano(htmlChip(`${ic('map-pin', 18)}ficou no pátio`), { pos: [PIL[0], 2.05, PIL[2]], rot: [-.2, .1, 0], esc: .0135, anc: [.5, 1] });
+  const tit1 = titulo('Pesagem', 'Entrada e saída');
+  const CLAROS = [halo, ...fundo, c1, c2, c3, oM, oI, chipP];
+
+  // ================================================================ CLIMA ESCURO · o mundo dos dados (do outro lado do visor)
+  // tudo no referencial do EIXO do mergulho (z = para trás do visor): a câmera segue reto e as estações já estão lá
+  const ZF = -2.5, ZD = ZF - 12.2, EE = .0112, CX = 4.0, LY = -3.3, OX = 0, OY = -.3;   // CX: distância entre os cartões; LY: altura do Líquido
+  const E = (html, x, y, z = 0, o = {}) => plano(html, { em: EIXO, pos: [x + OX, y + OY, ZD + z], esc: EE, clima: 'escuro', ...o });
+  const pontos = E('<div style="width:3200px;height:2000px;background-image:radial-gradient(rgba(255,255,255,.13) 1.5px,transparent 2.2px);background-size:40px 40px;-webkit-mask-image:radial-gradient(1500px 900px at 50% 50%,#000 20%,transparent 78%)"></div>',
+    CX, -1.6, -16, { esc: .03, tras: true });
+  const brilho = (cor, w, x, y, z) => E(`<div style="width:${w}px;height:${w}px;border-radius:50%;background:radial-gradient(circle,${cor} 0%,${cor.replace(/[\d.]+\)$/, '0)')} 68%)"></div>`, x, y, z, { esc: .04, tras: true });
+  const brilhos = [brilho('rgba(80,208,136,.20)', 620, CX, LY, -5), brilho('rgba(90,150,255,.14)', 560, -9, 7, -12), brilho('rgba(80,208,136,.13)', 520, 16, 4, -10)];
+  const aneis = E(`<svg width="1400" height="1400" viewBox="-700 -700 1400 1400" fill="none" stroke="rgba(108,240,168,.17)" stroke-width="1.6"><circle r="330"/><circle r="470" stroke-dasharray="4 12"/><circle r="640" opacity=".55"/></svg>`,
+    CX, LY, -3, { esc: .017, tras: true });
+  // partículas de luz entre a câmera e os cartões (paralaxe: dão a medida do movimento)
+  const poeira = []; for (let i = 0; i < 12; i++) { const w = Math.round(ri(26, 84));
+    poeira.push(E(`<div style="width:${w}px;height:${w}px;border-radius:50%;background:radial-gradient(circle,rgba(140,245,190,${ri(.06, .16).toFixed(2)}) 0%,rgba(140,245,190,0) 70%)"></div>`,
+      ri(-7, 16), ri(-8, 4.5), ri(3, 11), { esc: .008 })); }
+  const W3 = 300, H3 = 132, mX = 1 / EE;   // px por metro nos planos escuros
+  const cB = E(htmlCartao('scale', 'Bruto', 'as duas pesagens', kg(BR), { cls: '' }), 0, 0), cT = E(htmlCartao('package-open', 'Tara', 'em branco', '0 kg'), CX, 0),
+        cI = E(htmlCartao('droplets', 'Impureza', '2%', kg1(IMP), { cls: 'a' }), 2 * CX, 0),
+        cL = E(htmlCartao('badge-check', 'Líquido', 'o que vale', kg1(0), { res: true, w: 430, h: 168, fn: 54, selo: 46, mt: 14 }), CX, LY);
+  const o1 = E(htmlOp('−'), CX / 2, 0, .5), o2 = E(htmlOp('−'), 1.5 * CX, 0, .5), o3 = E(htmlOp('='), CX, (LY + .2) / 2 - .05, .5);
+  const mat5 = E(htmlChip(`${ic('package', 18)}Alumínio latinha`, 'n'), -1.68, LY, .6, { anc: [0, .5] });
+  // fios da conta: de cada parcela até o Líquido
+  const fw = Math.round((2 * CX + 2) * mX), fh = Math.round((-LY + 1) * mX), X = x => ((x + 1) * mX), Y = y => ((.5 - y) * mX), yb = -H3 * EE / 2 - .12, ym = -1.62, yl = LY + 168 * EE / 2 + .1;
+  const quina = (x0, xt) => { const r = 26, s = Math.sign(xt - x0); return `M${X(x0)} ${Y(yb)}V${Y(ym) - r}Q${X(x0)} ${Y(ym)} ${X(x0) + s * r} ${Y(ym)}H${X(xt) - s * r}Q${X(xt)} ${Y(ym)} ${X(xt)} ${Y(ym) + r}V${Y(yl)}`; };
+  const fios = E(htmlFluxo(fw, fh, [quina(0, CX - 1.1), `M${X(CX)} ${Y(yb)}V${Y(yl)}`, quina(2 * CX, CX + 1.1)]), -1, .5, -.25, { anc: [0, 0] });
+  fios.e.children[2].querySelector('.ft').setAttribute('stroke', '#F2B63D'); fios.e.children[2].querySelector('.fh').setAttribute('fill', '#F2B63D');
+  const nL = cL.e.querySelector('.num'), onL = cL.e.querySelector('.onda');
+  const vaga = el('<div class="ab" style="left:22px;bottom:22px;width:268px;height:58px;border-radius:14px;border:2px dashed rgba(190,245,218,.34)"></div>', cL.e);   // o lugar do número, até a conta chegar
+  const tit2 = titulo('Pesagem', 'A conta do líquido', 'escuro');
+  const ESCUROS = [pontos, ...brilhos, aneis, ...poeira, cB, cT, cI, cL, o1, o2, o3, mat5, fios];
+
+  // ================================================================ CÂMERA · os planos da peça
+  const P0 = { x: 3.1, y: 2.0, z: 0, d: 17.6, az: .25, el: .2, oy: -8 },            // 1 · a pesagem: caminhão e visor
+        P1 = { x: -.05, y: 1.6, z: .6, d: 22.6, az: .1, el: .225, oy: 6 },       // 2 · a descarga: abre para o pátio
+        P2 = { x: 1.3, y: 1.25, z: .6, d: 20.9, az: .135, el: .222, oy: 6 },           // 3 · de volta à balança (2ª pesagem)
+        P3 = { x: 1.05, y: 1.2, z: .6, d: 21.3, az: .105, el: .225, oy: 6 };         // 4 · a conta, com tudo em quadro
+  const tM = tpa + .1, tC = tli + .3;                                               // o mergulho: sai depois de "pátio", chega em "E o líquido"
+  const G = EIXO.pose({ x: 0, y: 0, z: ZD, d: 12.2 }),                               // 6 · chegou: o cartão Bruto de frente
+        H = EIXO.pose({ x: 2.05 + OX, y: -1.4 + OY, z: ZD, d: 16.3, az: -.075, el: -.02 }),     // 7 · recua: aparece o Líquido
+        I = EIXO.pose({ x: CX + OX, y: -1.22 + OY, z: ZD, d: 17.6, az: .06, el: .01 });        // 8 · a conta inteira
+  const merg = mergulho(EIXO.local(posCam(P4))[2], ZF, .5);   // o visor cresce em razão constante, sem tranco; do outro lado a câmera assenta longo
+  camera([[0, P0], [re0 + .05, { ...P0, d: 17.3, az: .24 }, 'lin'], [b0 + .6, P1], [bd + .1, { ...P1, d: 22.3, az: .09 }, 'lin'], [volta + .3, P2],
+    [tdi - .1, { ...P2, d: 20.8, az: .13 }, 'lin'], [tdi + 1.5, P3], [tla - .2, { ...P3, d: 20.6, az: .09 }, 'lin'], [tfi + .4, { ...P4, d: 20.7, az: .085 }], [tM, P4, 'lin'],
+    [tC, G, merg, { reta: true, mira: x => eis(cl(x * 2.1)) }], [tli + 1.35, H], [tm1 - .1, { ...H, d: 16.6, az: H.az + .02 }, 'lin'], [tim + .5, I],
+    [tim + 2.5, { ...I, d: 17.2, az: I.az + .02 }, 'lin']]);
+  // a troca de clima acontece no instante em que o visor cobre o quadro inteiro (a câmera a 2,15 m dele): ninguém vê
+  const zCam = u => { const k = pose(u); return EIXO.local([k.px, k.py, k.pz])[2]; };
+  let tX = tM; while (tX < tC && zCam(tX) > 2.15) tX += 1 / 120;
+  return t => {
+    // ---------------- o pátio
+    const fx = u => u < f0 ? lerp(SX, XR, eio(pr(u, re0, .96))) : lerp(XR, SX, eio(pr(u, f0, volta - f0)));
+    const sem = eo(pr(t, d0 + .1, .7)), x = fx(t), ac = (fx(t + .06) - 2 * fx(t) + fx(t - .06)) / .0036;
+    dirige(T, x, h, { sobe: .05 * sem + .012 * golpe(pr(t, bd + .5, .5), 1.2), arfa: cl(ac * .0016, -.012, .012) + .006 * golpe(pr(t, volta - .02, .7), 1.3) - .006 * golpe(pr(t, re0 + .9, .6), 1.3) });
+    const sobe = eio(pr(t, b0, .78)), desce = Math.pow(pr(t, bd, .5), 2.2);
+    bascula(T, Math.max(0, .43 * (sobe - desce) + .012 * golpe(pr(t, b0 + .74, .5), 1.4) + .014 * Math.abs(golpe(pr(t, bd + .49, .42), 1.2, 5))));
+    T.updateWorldMatrix(true, true); despeja(T.userData.carga, T.userData.locais, alvo, t, d0, { d: .62, passo: .6 / 250, arco: .2 });
+    sT.position.x = x + .1; sP.material.uniforms.uOp.value = .85 * eo(pr(t, d0 + .4, .9)); destaque(an, t, tla - .1);
+    GL.style.opacity = eo(pr(t, tca + .08, .5)).toFixed(3);   // o mundo entra depois que o título saiu do meio
+    posTitulo(tit1, t, tca - .9, tca - .45, tM + .5);
+    // visor: 1ª pesagem firme; na volta a leitura desce, passa e assenta; no fim mostra o resultado (o Bruto)
+    const tB = tfi + .55; visor.e.zera();
+    vis(visor.e, t, tca + .3, 1e9, { dy: 10 });
+    if (t < le0) pesa(visor.e, t, -9, .1, R1, R1); else if (t < tB) pesa(visor.e, t, le0, .95, R1, R2); else conta(visor.e.vn, t, tB, .6, R2, BR);
+    visor.e.troca(t, le0 + .05, 1); visor.e.troca(t, tB - .05, 2); pulso(visor.e, t, le0 + .9, .04, .7); pulso(visor.e, t, tB + .55, .05, .8);
+    // a conta: cada cartão depois do que ele nomeia; a 2ª pesagem acompanha a leitura; o resultado conta
+    vis(c1.e, t, b0 + .25, 1e9, { dy: 22 }); vis(oM.e, t, tvo - .1, 1e9, { sc: .6, dy: 0 });
+    vis(c2.e, t, le0 + .32, 1e9, { dy: 22 }); if (t >= le0 && t < tB) { const s = visor.e.vn.textContent; if (n2.textContent !== s) n2.textContent = s; } else if (n2.textContent !== kg(R2)) n2.textContent = kg(R2);
+    vis(oI.e, t, tdi - .1, 1e9, { sc: .6, dy: 0 }); vis(c3.e, t, tdi + .12, 1e9, { dy: 22, sc: .94 }); conta(n3, t, tdi + .2, .75, 0, BR);
+    pulso(c3.e, t, tla, .04, .8); ondaEm(on3, t, tla);
+    for (const e of [c1, oM, c2, oI]) foco(e.e, t, -9, tla - .1, { min: .7 });
+    [c1, c2, c3].forEach((c, i) => { sC[i].material.uniforms.uOp.value = .55 * (+c.e.style.opacity || 0); });
+    vis(chipP.e, t, tfi - .1, 1e9, { dy: 10 });
+    // ---------------- a passagem: quando o visor cobre o quadro, o dia sai por trás dele; depois o vidro some e ficam os dados
+    const z = EIXO.local(olho())[2], dentro = t >= tX ? 1 : 0;
+    clima(dentro); GL.style.visibility = dentro ? 'hidden' : 'visible'; for (const p of CLAROS) p.op = dentro ? 0 : 1; for (const p of ESCUROS) p.op = dentro;
+    visor.op = t > tX + .5 ? 0 : cl((z - .5) / 1.3);
+    // ---------------- os dados
+    vis(cB.e, t, tX - .2, 1e9, { dy: 0 }); posTitulo(tit2, t, tX + .25, -9, 1e9); tit2.style.opacity = (+tit2.style.opacity * dentro).toFixed(3);
+    vis(mat5.e, t, tli - .15, 1e9, { dy: 10 });
+    vis(cL.e, t, tli - .05, 1e9, { dy: 26, sc: .94 }); vis(o3.e, t, tli + .3, 1e9, { sc: .6, dy: 0 });
+    fios.e.style.opacity = eo(pr(t, tli + .1, .6)).toFixed(3);
+    fluxo(fios.e, 0, t, tbr - .1, .7, { luz: [tbr - .1, .75] }); pulso(cB.e, t, tbr - .15, .04, .8);
+    vis(o1.e, t, tm1 - .1, 1e9, { sc: .6, dy: 0 }); vis(cT.e, t, tta - .15, 1e9, { dy: 22 }); fluxo(fios.e, 1, t, tta + .05, .55, { luz: [tta + .05, .6], fica: .3 });
+    vis(o2.e, t, tm2 - .1, 1e9, { sc: .6, dy: 0 }); vis(cI.e, t, tim - .15, 1e9, { dy: 22 }); fluxo(fios.e, 2, t, tim + .05, .6, { luz: [tim + .05, .65] });
+    // o Líquido é a conta andando: recebe o bruto, a tara não tira nada, a impureza desconta
+    const chega = eo(pr(t, tbr + .4, .3)); nL.style.opacity = chega.toFixed(3); vaga.style.opacity = (1 - chega).toFixed(3);
+    if (t < tim + .5) conta(nL, t, tbr + .45, .6, 0, BR, kg1); else conta(nL, t, tim + .55, .55, BR, LIQ, kg1);
+    pulso(cL.e, t, tbr + .5, .02, .6); pulso(cL.e, t, tim + .95, .04, .9); ondaEm(onL, t, tim + .95);
+    for (const e of [cB, o1, cT, o2, cI]) foco(e.e, t, -9, tim + .95, { min: .8 });
+  };
+}, { fov: 26 });
+</script></body></html>
