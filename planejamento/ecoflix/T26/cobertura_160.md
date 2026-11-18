@@ -30,7 +30,7 @@ Consequência: os rótulos do `roteiro.md` e do `inventario.md` continuam exatos
 | 12 | "Aplicar, e ficam dois cartões" | Os filtros valem na hora, a cada escolha; "Aplicar" só fecha a janela. A fala não está errada, mas o quadro muda antes do clique. | `pages/Crm.tsx:756` |
 | 10 | Lista o que há em "Detalhes" sem o botão | Entre "Estágio"/"Responsável" e os cartões existe o botão **"Criar Tarefa"** (fora do inventário). | `components/crm/detail/OpportunityDetailsTab.tsx:281-283` |
 | 08 | "Meio de transporte" com cinco opções | Existe uma sexta, a primeira da lista: **"— Não definido —"**. | `OpportunityFormDialog.tsx:332` |
-| 11 | Selo "CRM" na Agenda | Certo no cartão do dia (categoria "CRM"), que ainda traz o link **"Abrir oportunidade →"**; no balão do calendário mensal o selo é **"Tarefa de CRM"**. | `components/agenda/TaskCard.tsx:103-105`, `i18n/locales/pt-BR/agenda.json:39-40` |
+| 11 | Selo "CRM" na Agenda | Certo no cartão do dia (categoria "CRM"), que ainda traz o link **"Abrir oportunidade →"**; no balão do calendário mensal o selo é **"Tarefa de CRM"**. | `components/agenda/TaskCard.tsx:108`, `:194`, `:205`, `i18n/locales/pt-BR/agenda.json:39-40` |
 
 ## 2. Falta cobrir
 
@@ -45,7 +45,7 @@ Só o que está no código. "Vale" = sim (trecho ou capítulo na seção 3), só
 | 3 | **Ordem dentro da coluna**: o cartão fica onde foi solto e a ordem se mantém (`Crm.tsx:452-480`; nota 1.59.x "O cartão arrastado agora fica onde você soltou"). | Deixar em cima o que vai atacar primeiro. | **sim** (P8) |
 | 4 | **Fechar o negócio**: arrastar para "Ganho" ou "Perdido" e ver "Ganhos" e "Em negociação" mudarem (`Crm.tsx:316-323`). A aula só mostra cartões que já estavam lá. | O caso de uso principal do funil. | **sim** (P8) |
 | 5 | Trocar de funil na barra; cada funil tem seus cartões e seus totais (`Crm.tsx:614-625`). | Empresa com mais de um funil. | **sim** (P1) |
-| 6 | Atalhos da barra: engrenagem **"Configurar estágios"** (abre as configurações com o funil já aberto) e **"+"** **"Criar funil"** (`Crm.tsx:626-631`); **"+"** do cabeçalho da coluna, "Adicionar em <etapa>" (`:145`). | Chegar mais rápido; criar o cartão já na etapa certa. | só citar (P1, P4) |
+| 6 | Atalhos da barra: engrenagem **"Configurar estágios"** (abre as configurações com o funil já aberto) e **"+"** **"Criar funil"** (`Crm.tsx:626-631`); **"+"** do cabeçalho da coluna, "Adicionar em <etapa>" (`:149`). | Chegar mais rápido; criar o cartão já na etapa certa. | só citar (P1, P4) |
 | 7 | **Excluir oportunidade** pelo cartão (lixeira no passar do mouse, confirmação do navegador `Excluir a oportunidade “<título>”?`, toast "Oportunidade excluída") (`Crm.tsx:493-501`). | Cartão criado por engano. | **sim**, pela ficha (P7) |
 | 8 | Telefone e e-mail como selos no rodapé do cartão (`OpportunityCard.tsx:190-203`). | Ligar sem abrir a ficha. | só citar (P4) |
 | 9 | Filtros "Valor mínimo", "Valor máximo", "Material", "Meio de transporte" e o status "Perdidos"/"Ganhos": a aula lista e só usa dois (`Crm.tsx:684-739`). | Rever o que perdeu; separar os negócios grandes. | **sim**, mais um exemplo (P8) |
@@ -248,25 +248,26 @@ A 2,6 palavras por segundo (a conta do roteiro):
 
 | Proposta | Onde | Palavras | Segundos de fala |
 | --- | --- | --- | --- |
-| P1 | cap03 | 95 | 37 |
-| P2 | cap05, cap06 | 45 | 17 |
-| P3 | **cap07b** (novo) | 330 | 127 |
-| P4 + P4b | cap08, cap07 | 105 | 40 |
-| P5 | **cap10b** (novo) | 150 | 58 |
-| P6 | **cap10c** (novo) | 255 | 98 |
-| P7 | cap10c | 115 | 44 |
-| P8 | cap12 | 110 | 42 |
-| P9 | cap11 | 110 | 42 |
+| P1 | cap03 | 73 | 28 |
+| P2 | cap05, cap06 | 41 | 16 |
+| P3 | **cap07b** (novo) | 284 | 109 |
+| P4 + P4b | cap08, cap07 | 92 | 35 |
+| P5 | **cap10b** (novo) | 114 | 44 |
+| P6 | **cap10c** (novo) | 174 | 67 |
+| P7 | cap10c | 90 | 35 |
+| P8 | cap12 | 86 | 33 |
+| P9 | cap11 | 80 | 31 |
 | cap13 | recapitulação | 30 | 12 |
-| **Total** | | **≈ 1.345** | **≈ 517 s (8,6 min)** |
+| **Total** | | **≈ 1.064** | **≈ 410 s (6,8 min)** |
 
 - **Capítulos novos: 3** (`cap07b`, `cap10b`, `cap10c`), mais 3 vinhetas e 1 ilustração (barra de probabilidade).
-- A aula vai de ~15 min para ~25 min de vídeo (fala de 11,6 para ~20,2 min, mais o tempo das ações).
+- A aula vai de ~15 min para ~23 min de vídeo (fala de 11,6 para ~18,4 min, mais o tempo das ações e das vinhetas).
 - Mudanças do app a aplicar: **0**. Divergências antigas a acertar: 5 (seção 1.1; só a do responsável mexe na fala).
+- Lacunas levantadas: 41 (20 "sim", 15 "só citar", 6 "não").
 
 ## 5. Depende de decisão
 
-1. **Tamanho**: +8,6 min de fala numa aula de 15. Se for demais, a ordem de corte sugerida é P9, P4b, P7, P2 (a
+1. **Tamanho**: +6,8 min de fala numa aula de 15. Se for demais, a ordem de corte sugerida é P9, P4b, P7, P2 (a
    aula perde detalhe, não perde função principal). P3, P5, P6 e P8 são o que hoje mais falta.
 2. **"Definir prazo do cartão" troca a previsão de 30/11 para 25/11** no cartão da história. Alternativa sem efeito
    colateral: trocar a segunda ação por "Adicionar etiqueta" com uma etiqueta nova (pede criar a etiqueta no cap07).
