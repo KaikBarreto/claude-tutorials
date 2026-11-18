@@ -31,3 +31,21 @@ Não editei `roteiro.md` nem `tts_textos.py`: a revisão geral aplica.
 - **Janela "Mesclar pesagens"** é um AlertDialog (`role=alertdialog`); "Esc" e alvo de janela comum não a acham.
 - **Plano/roteiro do cap05** ("tabela padrão sem item explícito, então sem aviso de preço"): no mundo base a Principal tem itens, e o
   aviso "Preço da tabela aplicado" aparece (ver propostas dos caps. 04 e 05).
+
+## 18/11/2026 · aplicação do 1.60.10 (as três propostas acima foram aplicadas no roteiro e na fala)
+
+Achados do app no 1.60.10 (para o MELHORIAS):
+- **Corrigido no 1.60.10:** nenhum dos achados acima foi visto corrigido; o corte dos números nas células a 1280 px continua ("241,8",
+  "446,4", "374,4").
+- **H4** a mesma linha tem o aviso "Preço especial aplicado" e a legenda "Preço personalizado" (dois nomes para a mesma coisa).
+- **H6** "Cadastrar «Moreira»" na busca não leva o texto para o "Nome *" (no Ticket de Pesagem leva).
+- A legenda da origem do preço fica "Preço informado" mesmo depois de o Valor/Kg voltar ao preço da tabela (cap16).
+- O Valor/Kg da linha (6 casas) aceita dígito por dígito de um jeito diferente dos outros campos de valor: digitando "3200" depois de
+  limpar, vira 0,0032 (visto no ensaio; por colagem de "32,00" entra certo). Vale conferir com teclado de verdade.
+- Depois de "Recuperar", o rascunho recuperado aparece com o número #1759 e o do Zé muda (o número da barra é uma prévia pela ordem).
+- O detalhe da pesagem abre sozinho depois de "Confirmar" na pesagem avançada; o botão da seta muda de "Ver detalhes da pesagem" para
+  "Recolher pesagem".
+- Sem internet, ir para a Compra numa sessão que ainda não abriu essa tela mostra "Abra o caixa antes de realizar compras" e manda para
+  o Caixa vazio (a consulta do caixa aberto só existe em cache se a tela já foi visitada com internet).
+- A dica "Preencha 1ª e 2ª pesagem para o bruto…" some quando as duas pesagens estão preenchidas.
+- `GET /auth/v1/health` não tem handler no backend falso (responde 200 e aparece nos desconhecidos): pedido ao mundo base.

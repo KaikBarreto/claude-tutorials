@@ -10,20 +10,19 @@ antigos 09→11, 10→13, 11→14, 12→15, 13→16, 14→17, 15→18, 16→19. 
   ligado à Tabela Depósitos; sementes renomeadas (apos-cap11, apos-cap15: ainda as de 11/11, regravar no ensaio).
 - [x] Exploração da tela nova: `rec/t07/_ex/e160.json` → `o160.log` (seletores da barra, rascunhos, troca de fornecedor, excesso).
 
-## Falta
-- [ ] Ensaio rápido dos 20 capítulos, um por chamada: `TUT_SENHA=<8+> bash rec/t07/t07_ens.sh NN` (gera, ensaia pela fila, resume e
-  grava a semente nos caps 03, 11, 15, 17 e 18). Olhar `rec/t07/_ens/t07-capNN.contact.jpg` e apagar MP4 e JPG depois.
-- [ ] Completo (sem `--rapido`) onde a regra pede: 05, 09, 10, 11, 18 (lista aberta, aviso que some, tela que muda sozinha).
-- [ ] Derrubar a instância no fim.
-
-## Estado por capítulo (ensaio no 1.60.10, 18/11)
-- Lote 1 (rápido, `rec/t07/_ens/lote1.log`): ok 00 01 02 03 04 05 09 11 12 13 14 15 17 (folhas olhadas); falharam 06 07 08 10 16 18 19,
-  corrigidos no `gerar.py` (dica que some na pesagem avançada, "241,8", detalhe que abre sozinho, link Voltar fora da tela, Valor/Kg da
-  linha por colagem, compra e caixa visitados antes da queda da internet, semente apos-cap18).
-- Lote 2 (`rec/t07/_ens/lote2.log`): rápido de 06 07 08 10 16 18 19 e COMPLETO de 05 a 18:
-  `TUT_SENHA=<8+> bash rec/t07/t07_lote160b.sh "06 07 08 10 16 18 19" "05 06 07 08 09 10 11 12 13 14 15 16 17 18"`.
-  Resultado do completo: `rec/t07/capNN.resumo.txt` (lateBy) e folha reduzida em `/dev/shm/t07_gNN.jpg`.
-- Lote 3 (último): só o que o lote 2 não fechar.
+## Estado final (18/11, 3 lotes usados; instância 54307 derrubada)
+- **Rápido aprovado (0 falho, folha olhada):** 00 01 02 03 04 05 06 07 09 10 11 12 13 14 15 16 17.
+- **Completo com 0 falho:** 05 06 07 09 10 11 12 13 14 15 16 17. `lateBy` < 0,8 só no 14 (0,35); os outros saíram com 1,2 a 4 s
+  (cap17: 13 s) com a máquina dividida (cliques de 2 a 5 s): reconferir na gravação final com a voz.
+- **Não fechou (corrigido no `gerar.py` depois do 3º lote, sem rodar de novo):**
+  - cap08: o `confere` do detalhe usava seletor inválido (agora lê o `main`); o resto do capítulo passou.
+  - cap18: a queda e a volta da internet funcionam (compra salva local, pendência, sincronização); falhou só o `hover` no aviso
+    "Operações sincronizadas com sucesso!", que some sozinho (agora `registra`, sem mouse). Sem 0 falho, a `apos-cap18` não foi gravada.
+  - cap19: depende da semente `apos-cap18`.
+- **Falta rodar** (sobe a instância, um por vez, nesta ordem; depois o completo de 08 e 18):
+  `FAKE_NOW=2026-11-10T08:35:00-03:00 FAKE_PORT=54307 bash rec/run.sh fake`
+  `TUT_SENHA=<8+> bash rec/t07/t07_lote160b.sh "08 18 19" "08 18"` ; `FAKE_PORT=54307 bash rec/run.sh down`
+- Sementes: `apos-cap03`, `apos-cap11`, `apos-cap15`, `apos-cap17` regravadas no 1.60.10; falta `apos-cap18`.
 
 ## Comandos
 ```bash

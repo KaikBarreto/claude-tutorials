@@ -840,3 +840,11 @@ Decisões:
   completo maxLate 0,71 s; fala 4 → 6 linhas. **Defeito real do app** no MELHORIAS (navegador offline: o Salvar gira).
   T08: completos aprovados em 07, 08, 09, 12; cap10 com o painel Filtros corrigido (fica aberto da linha 6 para a 7);
   lote rápido 10, 11, 12, 13 rodando (`lote160_coord3.log`). Cenas v3 prontas (`T08_v3.mp4` mandado ao Kaik).
+- 18/11 21:5x **T08 pronta para a voz**: 14 capítulos com rápido aprovado (completo em 07, 08, 09, 12); texto mandado ao
+  Kaik (`T08_narracao.md`, 2.154 palavras, 11.974 caracteres ≈ 12-13 mil créditos). **Aguardando o ok do Kaik para a voz.**
+- 18/11 21:5x **T07 aplicada no 1.60.10**: 20 capítulos (novos 09 dois pedidos, 10 rascunho, 12 abater o vale), fala
+  2.517 → 3.557 palavras (~23 min). Rápido aprovado em 00-07 e 09-17; completos com atraso por máquina dividida (refazer
+  na gravação final); 08, 18, 19 corrigidos e rodando no lote do coordenador (`rec/t07/lote160_coord.log`). **Pedidos ao
+  mundo base (pendentes)**: handler de `GET /auth/v1/health`; ligar o Depósito Irmãos Siqueira à Tabela Depósitos; e, da
+  T00, mensalidade 1.350,00 + `extra_users` 1; da T08, o #57 com item. Ilustrações v3 pendentes: `ilu05_botao_cores`,
+  `ilu10_rascunho`.

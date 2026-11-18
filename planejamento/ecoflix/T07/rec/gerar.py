@@ -946,7 +946,7 @@ def cap08():
     c.click(SEL("main tbody tr:has-text('Ferro misto') button[aria-label='Ver detalhes da pesagem']"), w=(5, 'Clicando'), label='seta da linha do ferro (abre o detalhe)')
     c.waitfor(target=SEL("main tbody tr button[aria-label='Recolher pesagem']"), timeout=8)
     c.hover(SEL("main tbody tr:has-text('Ferro misto') + tr"), 3.0, w=(5, 'duas'), label='detalhe da pesagem (zoom)')
-    c.confere("main tbody tr:has-text('Ferro misto') + tr", ['412', '96', '316', '9,48', '4,89'], 'detalhe: 412, 96, 316, 9,48 e desconto 4,89')
+    c.confere('main', ['412', '96', '316', '9,48', '4,89'], 'detalhe: 412, 96, 316, 9,48 e desconto 4,89')
     c.hover(LAPIS_TOTAL, 2.0, w=(6, 'lapis'), label='lápis Editar valor total (zoom)')
     c.hover(P('Projeção de Lucro', exact=False), 2.0, w=(6, 'Projecao'), label='Projeção de Lucro da compra')
     c.confere('main', ['Projeção de Lucro'], 'Projeção de Lucro no rodapé')
@@ -1370,7 +1370,7 @@ def cap18():
     c.hover(P('Aparecida Ramos', exact=False), 2.0, w=(3, 'Pendencias'), label='cartão Aparecida Ramos em Pendências de Sincronização (zoom)')
     c.ev(JS_ONLINE, w=(4, 'Quando', None, 1.6), label='a internet volta (evento online)')
     c.waitfor(text='sincronizadas com sucesso', timeout=20)
-    c.hover({'text': 'sincronizadas com sucesso', 'exact': False}, 1.6, w=(4, 'Pronto:'), label='Operações sincronizadas com sucesso! (zoom)')
+    c.registra({'text': 'sincronizadas com sucesso', 'exact': False}, w=(4, 'Pronto:'), label='Operações sincronizadas com sucesso! (zoom; o aviso some sozinho: sem mover o mouse)')
     c.fim()
     return c
 
