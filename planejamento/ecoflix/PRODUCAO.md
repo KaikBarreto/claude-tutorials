@@ -826,3 +826,11 @@ Decisões:
   completo (`bash rec/t00/t00_um.sh 07 --completo`). **Pedido ao mundo base (pendente)**: mensalidade 1.350,00 e
   `extra_users` 1. Ilustração nova: `ilu10_selos_status`. Valores em reais aparecem na tela de "Montar plano" e na oferta
   do cancelamento (a fala não cita). Próxima na fila de aplicação: T17. Depois: cenas v3 da T00 (`_BRIEF_CENAS_V3.md`).
+- 18/11 19:01 **Kaik: "vamos montar a T08 toda do zero primeiro pra ser um piloto"**. T08 aplicada (14 capítulos, fala
+  1.243 → 2.114 palavras, ~12,2 mil caracteres); rápido aprovado em 00-09, completa só no 08; o coordenador rodou o lote
+  final (`t08_lote160.sh 10:--os-dois 11:--os-dois 12 13 07: 09:`, log `rec/t08/lote160_coord.log`). Cenas v3 da T08 em
+  andamento. Nenhuma aula nova abre até o piloto sair (T16, T07, T17 terminam o que começaram).
+- 18/11 20:05 **Kaik**: pode usar mais o Fable 5.2 "desde que seja eficiente" (tem 2 resets: 3x o limite semanal de
+  Fable); e quer, no fim, **a lista completa de melhorias e correções do app, com os detalhes finos**
+  (`MELHORIAS_ECOSISTEMA.md`: todo "achado" de agente entra ali na hora; no fim, revisar item a item contra o 1.60.10,
+  tirar o que já foi corrigido e entregar organizado por tela e gravidade).

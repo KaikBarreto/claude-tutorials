@@ -67,6 +67,15 @@ as gravações). Cada item diz a aula em que apareceu. **No fim da produção, v
 - **Plural errado no plano** (T0, 1.60.10): "10 módulo" e "4 pagamento realizado" no singular.
 - **Player da EcoFlix**: os botões de 10 s não têm nome acessível (T0).
 - **"Falar com o Sucesso do Cliente" só aparece em 4 dos 8 motivos** de cancelamento (T0).
+- **Comprovante da pesagem avulsa diz "Fornecedor" e "Itens comprados"** (T8, 1.60.10): a avulsa é serviço prestado, não compra.
+- **Editar a pesagem avulsa #60 mostra "#61"** no título (T8, 1.60.10).
+- **Ticket "Com valores" não puxa o preço combinado** do fornecedor (T8, 1.60.10; ver também o item da tabela do fornecedor acima).
+- **Barra "1 selecionado" da lista de tickets continua aparecendo em outras telas** (T8, 1.60.10).
+- **Salvar do ticket fica girando sem internet** (T8, 1.60.10, queda simulada): confirmar se o app deveria guardar e sincronizar depois.
+- **Cartão do White Label continua "Ativo" com o interruptor travado** por falta de logo (T27).
+- **Ajuda do checklist das Coletas promete escolher o modelo por ordem**, e a janela da ordem não tem essa opção (T12).
+- **"Confirmar no órgão" do MTR não mostra resultado na tela** (T18).
+- **Sugestão de preenchimento nunca traz receita lançada direto no banco** (T13/T14, 1.60.8): a régua não considera esse tipo.
 
 ## 3. Textos desatualizados (Central de Ajuda, Guia de Instalação e a fonte da Trilha EcoFlix)
 - **Guia de Instalação do EcoTray** ainda fala em arquivo ZIP (T5).
