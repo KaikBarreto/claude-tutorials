@@ -5,7 +5,7 @@
 import { PI, mat, torno, toro, malha, grupo, mancha } from '../motor.js';
 import { pecas, pontosMonte } from './monte.js';
 export function saco(pai, pos = [0, 0, 0], o = {}) {
-  const g = grupo(pai, pos), s = o.s ?? 1, c = grupo(g), rafia = mat(o.cor ?? '#EBDDB9', { alt: 1.1 * s, bri: .16, emi: .5, ds: !!o.aberto }), fio = mat('#C6AB78', { alt: 1.1 * s, emi: .5 });
+  const g = grupo(pai, pos), s = o.s ?? 1, c = grupo(g), rafia = mat(o.cor ?? '#EBDDB9', { alt: 1.1 * s, bri: .16, emi: .14, ds: !!o.aberto }), fio = mat('#C6AB78', { alt: 1.1 * s, emi: .14 });
   c.scale.set(s, s, s * .84); mancha(1.5 * s, 1.3 * s, [0, 0, .05], { pai: g, op: .7 });
   if (o.aberto) {
     malha(torno([[0, 0], [.24, .004], [.34, .05], [.385, .17], [.395, .34], [.38, .5], [.35, .62], [.33, .7], [.345, .75], [.365, .775]], 34), rafia, [0, 0, 0], c);

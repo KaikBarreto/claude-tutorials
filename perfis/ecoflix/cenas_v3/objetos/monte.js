@@ -8,7 +8,8 @@
 // o: n, r (raio em x), rz (padrão r * .78), h (altura do monte), s (escala das peças), mancha (false tira a sombra).
 // userData: lotes, h, topo [x, y, z] local (prenda ali o chip do material).
 import { THREE, PI, cl, lerp, rng, ri, pega, golpe, mat, caixa, perfil, cil, toro, torno, grupo, mancha, lote, poeInst } from '../motor.js';
-import { CORES_LATA } from './caminhao.js';
+// as mesmas cores da carga do caminhão (caminhao.js): alumínio com algumas estampas
+const CORES_LATA = ['#E9EEF2', '#DCE3EA', '#F4F6F8', '#CDD6DE', '#E9EEF2', '#DCE3EA', '#F4F6F8', '#C8553D', '#5B8FD6', '#3FA45B', '#F2B63D', '#D9734A', '#50D088', '#2C5FA8'];
 
 export const CORES = {
   latinha: CORES_LATA, pet: ['#E3F3FA', '#D3ECF6', '#EEF8FC', '#DDF1F8', '#62C783', '#49AD6C', '#62C783'], tampa: ['#E5574A', '#3D7DD8', '#F4F6F8', '#F2B63D', '#3FA45B'],

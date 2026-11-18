@@ -85,3 +85,27 @@ o rascunho do Jair (se incomodar alguma aula, apagar na semente).
   automática usa a largura de Integrações) (`WeighingTicket.tsx:3127-3142,3367-3372`).
 - H5 Na janela "Pesagem avançada" de um ticket sem valores, "Valor/Kg", "Valor estimado", "Desconto (R$)" e "Valor final"
   continuam aparecendo (ficam vazios).
+
+## 18/11 · Aplicação do app 1.60.10 (vale sobre o que está acima quando divergir)
+Fonte: `cobertura_160.md`, `JUNCAO_160.md` (linhas da T08) e as explorações de 18/11 na tela. Fala: 1.243 → 2.114 palavras (~17 min de aula).
+
+| # | Vinheta (área / título) | O que mudou |
+|---|---|---|
+| 1 | TICKET / Quando usar o ticket | a avulsa deixa de ser "só comprovante": pode cobrar e já lança o recebimento |
+| 2 | TICKET / Criar o ticket | + "Não informado" e o pino ("Fixar como padrão") na janela do fornecedor; + os "+" de "Gerenciar motoristas" e "Gerenciar placas" |
+| 6 | ABAS / Vários veículos ao mesmo tempo | + "Rascunhos apagados" (a lixeira de rascunhos), com um rascunho do Valdir para recuperar |
+| **7** | **VALORES / Ticket com valores (novo)** | a aba do Jair vira "Com valores": 2ª pesagem 4.180 kg, R$ 3,40/kg, total R$ 4.964,00; salva o #59; a opção "Permitir forma de pagamento no ticket de pesagem" |
+| 8 | VALORIZAR / Valorizar o ticket (era 7) | + "Valorizar 2 tickets" (#58 e #56 da cooperativa); + a ordem do preço; "Pouco depois" no lugar de "No fim do dia" |
+| 9 | COMPROVANTE / Imprimir o comprovante (era 8) | + "Assinaturas no comprovante" e "Quem assina" (liga, mostra e desliga), "Marca de ticket não valorizado", "Exigir cliente/fornecedor no Ticket de Pesagem" |
+| 10 | VALORIZAR / Quando o ticket sai dos pendentes (era 9) | + "Editar" e "Excluir", "Ver pedido", o período e os filtros da Lista, "Exportar" (PDF e Excel), a restrição por usuário; o ticket do Jair fecha o capítulo pendente, já com valor |
+| **11** | **AVULSA / Pesagem avulsa com cobrança (novo)** | Areal Boa Vista cadastrada pela busca ("Cadastrar «…»", "Chave PIX"), areia média, 23.840 − 9.120 = 14.720 kg, HBN3F27, caçamba, R$ 60,00 por Pix na Conta Principal; ticket #60; valor travado no Editar |
+| **12** | **OFFLINE / Sem internet (novo)** | o aviso na criação e na lista (queda simulada); o salvar sem internet fica para testar na gravação final |
+| 13 | RESUMO / Recapitulando (era 10) | + duas frases (valores, avulsa e sem internet) |
+
+**Mundo (semente da aula, nada segue para a T9):** `inicio` ganhou o ticket **#56** pendente da Cooperativa Recomeço (09/11 15:44,
+Alumínio perfil, 7.930 − 7.518 = 412 kg, Edson Moura, FKD2E41) e um rascunho apagado do Rafael (Valdir Pereira, Ferro misto 380 kg);
+o #57 segue com o item de 6.840 kg. Criados na tela: #59 com valores (R$ 4.964,00), cliente "Areal Boa Vista", categoria de
+receita "Serviço de pesagem", lançamento "Serviço de pesagem avulsa #60" de R$ 60,00 na Conta Principal.
+**Backend novo:** `finalize_weighing_ticket_v4`, `apply_standalone_weighing_charge_v1`, colunas `weighing_tickets.standalone_*`.
+**Ilustrações novas (só o `cenas/ilustracoes.json`, estilo v3 pendente):** caminhão de areia (11), comprovante da avulsa (11, PDF do
+app), as três formas de receber (11), sem internet (12).

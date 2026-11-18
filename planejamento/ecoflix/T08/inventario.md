@@ -89,3 +89,37 @@ Levantado em 10/11/2026 contra o código gravado (`APP_VERSION = "1.59.154"`), c
 `finalize_weighing_ticket_v3`, `order_drafts` (insert/update na valorização), `drivers` e `vehicles` (sugestões),
 `suppliers`/`customers`, preços (`entity_custom_prices`, tabelas), `profiles` (preferências), `purchases` e o RPC de
 compra do T7 (`create_purchase_atomic`).
+
+## 5. Atualização para o 1.60.10 (18/11/2026; rótulos vistos na tela nas explorações `rec/t08/_ex/e5` a `e8`)
+- **Lista:** botão **"Rascunhos apagados"** (contador; janela "Rascunhos apagados", "Recupere um rascunho que foi apagado por engano.
+  Ele volta como uma aba ativa.", "Recuperar", "Excluir definitivamente"); cabeçalho da coluna "Aguardando valorização" soma os
+  tickets com valor ("R$ 4.964,00"); no modo Lista, o período no alto ("Este mês"); "Filtros": "Tipo", "Status", "Usuário";
+  "Exportar" › "PDF" / "Excel" → "Exportar PDF" ("Escolha quais tickets serão incluídos no relatório": "Período", "Tipo de Ticket"
+  com "Compras" e "Vendas", "Status" com "Pendente", "Valorizado", "Cancelado", "Usuário que criou").
+- **Seleção em conjunto:** "Selecionar" → "Selecionado"; barra "2 selecionados" · **"Valorizar 2 tickets"** · x; ticket de outro
+  parceiro fica apagado com a dica "Selecione tickets do mesmo cliente ou fornecedor".
+- **Menu "Ações" do cartão pendente:** "Valorizar", "Ver comprovante", "Editar", "Excluir"; valorizado: "Ver pedido".
+- **Janela do parceiro:** "+" ("Cadastrar novo"), "Não informado", pino "Fixar como padrão", "Nenhum resultado encontrado." e
+  **"Cadastrar «texto»"** → "Cadastro Rápido de Cliente" ("Cadastre um novo cliente rapidamente": "Nome *", "Telefone", "Não possui
+  telefone", "CPF/CNPJ", **"Chave PIX"**, "Tabela de Preços Padrão", "Saldo inicial", "Também é fornecedor", "Criar Cliente";
+  aviso "Cliente cadastrado com sucesso!").
+- **Criação:** "+" de "Gerenciar motoristas" (janela "Motoristas", "Novo motorista") e "Gerenciar placas"; "Com valores": "Tabela
+  de Preços" ("Principal"), colunas "Valor/Kg", "Desc. (R$)", "Total", "Total geral: R$ …", a aba mostra "Valor".
+- **Pesagem avulsa:** "Nova Pesagem Avulsa" ("Preencha a pesagem avulsa. Use as abas para atender vários veículos."), "Tipo"
+  "Serviço ao cliente", "Cliente", "Descrição do material" ("Ex.: Areia, terra, entulho"), "Tipo de caminhão" ("Ex.: Carreta,
+  caçamba, bitrem"), "Valor cobrado pela pesagem", "Itens da Pesagem", "Salvar Pesagem Avulsa" → "Finalizar Pedido" ("Total: R$
+  60,00", "Cliente: …", "Saldo atual: R$ 0,00", "Múltiplas formas de pagamento", "Dinheiro", "Pix/Transferência", "Saldo do
+  Cliente", "CONFIRMAR PAGAMENTO") → "Ticket #60 salvo" com "PESAGEM AVULSA" ("Somente comprovante de peso. Esta pesagem não
+  possui valor comercial e não pode ser valorizada."). Lista: "Pesagens Avulsas", "Sem valor comercial", selo "Pesagem avulsa";
+  "Ações": "Ver comprovante", "Editar", "Excluir"; edição: "Editar Pesagem Avulsa #60", "Cobrança já lançada no financeiro. O
+  valor não pode mais ser alterado.". Com um caixa só, "Caixa que recebe o dinheiro" não aparece.
+- **Configurações › Usabilidade:** "Assinaturas no comprovante" (aviso "Assinaturas ativadas no comprovante"), "Quem assina"
+  ("Operador e cliente/fornecedor", "Só o cliente/fornecedor", "Só o operador"), "Marca de ticket não valorizado", "Exigir
+  cliente/fornecedor no Ticket de Pesagem", "Permitir forma de pagamento no ticket de pesagem".
+- **Sem internet:** faixa "Sem conexão — operações serão salvas localmente até reconectar na internet"; na criação, "Sem internet.
+  Você pode pesar e finalizar normalmente: …"; na lista, "Sem internet. Você continua pesando e imprimindo: …" e "A lista abaixo
+  mostra só o que já está no servidor. Valorizar, editar ticket já salvo e anexar foto precisam de internet."
+- **Backend:** `finalize_weighing_ticket_v4` (no lugar da v3), `apply_standalone_weighing_charge_v1`, `weighing_tickets.standalone_*`,
+  `customers` insert (cadastro rápido), `companies` update (assinaturas), `financial_categories` ("Serviço de pesagem").
+- **Comprovante térmico:** título "Ticket de pesagem N° #58"; o da avulsa traz "PESAGEM AVULSA", "SEM VALOR COMERCIAL", "Tipo de
+  caminhão: Caçamba", "Valor da pesagem: R$ 60,00", "Formas de Pagamento: PIX/Transferência: R$ 60,00".

@@ -18,15 +18,17 @@ cena(d => {
   else { bola('rgba(80,208,136,.16)', 900, [0, 2, -30], .06); bola('rgba(90,150,255,.12)', 700, [-24, 12, -40], .06); }
   const nome = (txt, sub = '') => el(`<div class="ab ${C}" style="text-align:center;white-space:nowrap"><div style="font:800 ${pg.fn ?? 11}px M;color:var(--tx);letter-spacing:.01em">${txt}</div>${sub ? `<div style="font:600 ${(pg.fn ?? 11) - 2.5}px M;color:var(--tx2);margin-top:1px">${sub}</div>` : ''}</div>`);
   if (pg.tipo === '3d') {
-    piso({ r: pg.piso ?? 40, x: 0, z: pg.pz ?? 0, passo: pg.passo ?? 1.3 });
-    let z = 0;
+    let z = 0, wmax = 0;
     for (const linha of pg.linhas) {
-      const larg = linha.reduce((s, it) => s + it.w, 0) + (linha.length - 1) * (pg.vao ?? 1), prof = Math.max(...linha.map(it => it.d ?? 2)); let x = -larg / 2;
+      const larg = linha.reduce((s, it) => s + it.w, 0) + (linha.length - 1) * (pg.vao ?? 1); wmax = Math.max(wmax, larg); const prof = Math.max(...linha.map(it => it.d ?? 2)); let x = -larg / 2;
       z += prof / 2;
       for (const it of linha) { const g = grupo(CENA, [x + it.w / 2 + (it.dx ?? 0), 0, z + (it.dz ?? 0)]); const r = it.faz(g, K); if (r && r.anima) anim.push(r.anima);
         rot.push([nome(it.nome, it.sub), [x + it.w / 2, 0, z + prof / 2 + (pg.margem ?? .5)]]); x += it.w + (pg.vao ?? 1); }
       z += prof / 2 + (pg.entre ?? 2.2);
     }
+    z -= pg.entre ?? 2.2;   // a câmera se acerta sozinha: olha para o meio do chão ocupado, de longe o bastante para caber a linha mais larga
+    pg.cam = { x: 0, y: pg.cy ?? 0, z: z / 2 + (pg.cz ?? 0), d: pg.d ?? (wmax + (pg.folga ?? wmax * .07)) / .739, az: 0, el: pg.el ?? .5 };
+    piso({ r: Math.max(wmax, z) * .9 + 6, x: 0, z: z / 2, passo: pg.passo ?? 1.3 });
   } else {
     for (const it of pg.itens) { const p = plano(it.html(C), { pos: it.pos, esc: pg.esc ?? .01, clima: C, anc: [.5, 0] }); const r = it.liga ? it.liga(p.e, p) : null; if (r) anim.push(r);
       rot.push([nome(it.nome, it.sub), null, p, it.dy ?? 0]); }

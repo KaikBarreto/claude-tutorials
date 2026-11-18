@@ -2,20 +2,26 @@
 
 Pronto para o ensaio e a voz (sem etapa de aprovação). Coluna Fala = narração (voz Kaik Barreto), na grafia da legenda;
 a grafia de pronúncia vai em `narracao/tts_textos.py`. Coluna Tela = o que o robô faz e onde a câmera fica, com os rótulos
-como no código (`T08/inventario.md`, 1.59.154).
+como no código (`T08/inventario.md`; app **1.60.10**, conferidos na tela nas explorações de 18/11).
+
+**18/11 · aplicação do 1.60.10** (`cobertura_160.md` + `JUNCAO_160.md`): capítulos novos **07** (ticket com valores), **11** (pesagem
+avulsa com cobrança) e **12** (sem internet); os antigos 07, 08, 09 e 10 viraram **08, 09, 10 e 13**. Trechos novos nos caps 01, 02,
+06, 08, 09 e 10. As propostas antigas (`propostas_fala.md`) entraram.
 
 - **Título:** Ticket de Pesagem
 - **Antes:** Comprar e vender sucata (T7)
 - **Próximo:** Pedidos e histórico do caixa (T9)
-- **Vinhetas (áreas):** TICKET · TICKET · PESAGEM · PESAGEM · PESAGEM · ABAS · VALORIZAR · COMPROVANTE · VALORIZAR ·
-  RESUMO (todos os capítulos menos o 0)
-- **Duração estimada:** ~10 min (1.243 palavras de fala, ~8 min a 2,6 palavras/s, mais 10 vinhetas, a digitação nas
-  janelas, a aba do PDF e as ilustrações); alvo da fonte, 11 min.
-- **Gravação:** computador 1280×800, logado como Rafael Nogueira; `FAKE_NOW=2026-11-10T08:30:00-03:00`; EcoTray falso
-  ligado como no fim do T5 ("Balança do pátio" com 0 kg), sem cena de Windows. Cada capítulo parte de um navegador novo
-  com a semente do fim do anterior (`inicio`, `apos-cap02` a `apos-cap07`); quando o capítulo continua a criação, o
-  `setup` reabre a aba por "Rascunhos abertos" fora do vídeo. Pesos digitados (decisão 1 do plano). O número "#58" vem
-  de `get_next_ticket_number` (ajustar ao mundo; a fala não lê números de ticket nem de pedido).
+- **Vinhetas (áreas):** TICKET · TICKET · PESAGEM · PESAGEM · PESAGEM · ABAS · VALORES · VALORIZAR · COMPROVANTE · VALORIZAR ·
+  AVULSA · OFFLINE · RESUMO (todos os capítulos menos o 0)
+- **Duração estimada:** ~17 min (2.114 palavras de fala, ~13,6 min a 2,6 palavras/s, mais 13 vinhetas, a digitação nas
+  janelas e as ilustrações).
+- **Gravação:** computador 1280×800, logado como Rafael Nogueira; `FAKE_NOW` por capítulo (`rec/fake_now.json`: 08:40 nos caps 0 a
+  3, 08:49 nos 4 e 5, 08:51 no 6, 08:55 no 7, 08:58 nos 8 a 10, 09:12 no 11, 09:20 nos 12 e 13, de 10/11/2026); EcoTray falso
+  ligado como no fim do T5 ("Balança do pátio" com 0 kg), sem cena de Windows. Cada capítulo parte de um navegador novo com a
+  semente do fim do anterior (`inicio`, `apos-cap02` a `apos-cap08`, `apos-cap10`, `apos-cap11`); quando o capítulo continua a
+  criação, o `setup` reabre a aba por "Rascunhos abertos" fora do vídeo. Pesos digitados (decisão 1 do plano). Números na tela:
+  ticket da cooperativa **#58**, do Jair **#59**, pesagem avulsa **#60** (a fala não lê números de ticket nem de pedido). O balão
+  de dica do Cato é calado pelo robô (`localStorage`). Nada do que a aula cria segue para a T9 (JUNCAO_160).
 - **Marcas:** `[BACKEND: ...]`, `[ILUSTRAÇÃO: ...]`, `[ZOOM: ...]` (dura a frase inteira), `[GRAVAÇÃO: ...]`,
   `[TESTAR: ...]`.
 
@@ -36,9 +42,9 @@ como no código (`T08/inventario.md`, 1.59.154).
 | Capítulo novo (semente `inicio`), no Dashboard; no menu lateral, clique em "Materiais" e em "Ticket de Pesagem": cabeçalho "Ticket de Pesagem" ("Gerencie tickets de pesagem rodoviária"). | O ticket fica no menu Materiais, em Ticket de Pesagem. |
 | [ILUSTRAÇÃO: Dois caminhos: em cima, "Compra direta": pesa, põe o preço, paga, e o estoque e o caixa mexem na hora; embaixo, "Ticket": pesa agora, o ticket fica salvo, depois "Valorizar" vira compra ou venda e só no "Finalizar" o estoque e o caixa mexem. Na palavra "fechado" acende o de cima; na palavra "depois", o de baixo.] | Com o preço fechado, você faz a compra direto, como no tutorial anterior. Com o preço em aberto, você pesa no ticket e transforma em compra ou venda depois. |
 | [ILUSTRAÇÃO, continua: o ticket com o peso; o estoque e o caixa ficam cinza até o "Finalizar".] | Ticket salvo é peso registrado, e só. Nenhum quilo entra no estoque e nenhum centavo entra ou sai do caixa por causa dele. Isso só acontece quando o pedido que nasce dele é finalizado. |
-| De volta à tela; zoom nas colunas "Aguardando valorização" (cabeçalho âmbar, com o cartão do #57) e "Valorizados" (verde). | Os tickets ficam aqui. Em Aguardando valorização, o que ainda espera o preço. Em Valorizados, o que já virou pedido. |
-| Clique na aba "Pesagens avulsas": título "Pesagens Avulsas", "Nenhuma pesagem avulsa registrada" e o botão "Nova Pesagem Avulsa". | Na aba Pesagens avulsas fica outro caso: quem só quer saber o peso, como o caminhão de areia de um vizinho. |
-| Zoom em "Nova Pesagem Avulsa", sem clicar; depois clique em "Tickets padrão". | A pesagem avulsa é só um comprovante de peso. Ela não vira pedido, não mexe no estoque, e o comprovante sai marcado sem valor comercial. |
+| De volta à tela; zoom nas colunas "Aguardando valorização" (cabeçalho âmbar, com os cartões do #57 e do #56) e "Valorizados" (verde). | Os tickets ficam aqui. Em Aguardando valorização, o que ainda espera o preço. Em Valorizados, o que já virou pedido. |
+| Clique na aba "Pesagens avulsas": título "Pesagens Avulsas", "Nenhuma pesagem avulsa registrada" e o botão "Nova Pesagem Avulsa". | Na aba Pesagens avulsas fica outro caso: quem só quer usar a balança, como o caminhão de areia de um vizinho. |
+| Zoom em "Nova Pesagem Avulsa", sem clicar; depois clique em "Tickets padrão". | A pesagem avulsa não vira pedido e não mexe no estoque. E, se você cobra pelo serviço, ela já lança o recebimento. A gente faz uma mais adiante. |
 
 ### cap02 · Criar o ticket (vinheta: TICKET)
 
@@ -46,10 +52,12 @@ como no código (`T08/inventario.md`, 1.59.154).
 | --- | --- |
 | Capítulo novo (semente `inicio`), em "Ticket de Pesagem". Clique em "Novo Ticket de Pesagem": cabeçalho "Novo Ticket de Pesagem" ("Preencha o ticket. Use as abas para atender vários veículos."). | O caminhão da cooperativa chegou. Clico em Novo Ticket de Pesagem. |
 | Zoom na barra de cima: "Modalidade" em "Ticket padrão", "Tipo" em "Compra" e "Valores" em "Sem valores". | Em cima ficam três chaves: ticket padrão; compra, porque a gente vai comprar a latinha; e sem valores, porque o preço ainda não fechou. |
-| Zoom em "Com valores", sem clicar. | Quando o preço já está combinado, dá pra fazer o ticket com valores, e ele já guarda o preço de cada material. |
-| Clique em "Selecionar fornecedor": janela "Selecionar Fornecedor" ("Buscar por nome, apelido, CPF/CNPJ ou telefone..."); digita "Recomeço" e clica em "Cooperativa Recomeço". [BACKEND: `suppliers` com a Cooperativa Recomeço] | O fornecedor é a Cooperativa Recomeço. |
+| Zoom em "Com valores", sem clicar. | Quando o preço já está combinado, dá pra fazer o ticket com valores, e ele já guarda o preço de cada material. A gente faz um assim mais adiante. |
+| Clique em "Selecionar fornecedor": janela "Selecionar Fornecedor" ("Buscar por nome, apelido, CPF/CNPJ ou telefone...", com o "+" de "Cadastrar novo" ao lado). O cursor passa em "Não informado" (primeira opção) e no pino ao lado de "Cooperativa Recomeço" (dica "Fixar como padrão"), sem clicar. | Agora o fornecedor. Se ele não quiser se identificar, existe a opção Não informado. E o pino, ao lado do nome, deixa um fornecedor fixo para os próximos tickets. |
+| Clique em "Cooperativa Recomeço" (a janela já lista os cinco fornecedores, sem busca). [BACKEND: `suppliers` com a Cooperativa Recomeço] | Aqui, o fornecedor é a Cooperativa Recomeço. |
 | No card "Pesagem", em "Material" ("Escreva o nome ou código do material"), digita "latinha" e escolhe "Alumínio latinha". [BACKEND: com a balança ligada, "Quantidade (Kg)" pode receber "0,000" da Balança do pátio ao escolher o material; não atrapalha] | No card Pesagem, o material: alumínio latinha. |
 | Em "Motorista" ("Digite ou busque o motorista") digita "Edson" e escolhe "Edson Moura"; em "Placa do Veículo" ("Digite ou busque a placa") escolhe "FKD2E41". [BACKEND: `drivers` e `vehicles` do mundo] | E, aqui dentro, o motorista e a placa. O Edson Moura e o caminhão dele já estão cadastrados, então é só escolher na lista. |
+| O cursor passa no "+" ao lado de "Motorista" ("Gerenciar motoristas": abre a janela "Motoristas", com "Novo motorista") e no "+" de "Placa do Veículo" ("Gerenciar placas"), sem clicar. | Motorista novo? O botão de mais, ao lado do campo, abre o cadastro de motoristas sem sair do ticket. O mesmo vale para a placa. |
 | Zoom na barra escura de abas, à direita: "Número" "#58", "Peso" "0 kg", "CLIENTE/FORNECEDOR" "Cooperativa Recomeço" e, embaixo, "Seu rascunho". | Do lado direito fica a aba deste ticket, com o número, o peso e o fornecedor. |
 
 ### cap03 · A primeira pesagem e o rascunho (vinheta: PESAGEM)
@@ -98,47 +106,97 @@ como no código (`T08/inventario.md`, 1.59.154).
 | Na barra de abas, clique em "+ Novo ticket": abre uma aba em branco ("#59", "Sem cliente/fornecedor"; a barra mostra "(2)"). | Cada caminhão ganha a sua aba. Em Novo ticket, abre uma aba em branco. |
 | Na aba nova (o preenchimento pode ser acelerado na edição): "Selecionar fornecedor" → "Auto Peças Vale Forte"; "Material" → "Bateria automotiva"; "Motorista" → "Jair Lopes"; "Placa do Veículo" → "GHT7B19"; "Pesagem avançada": "1ª Pesagem" 5640 → "Confirmar". | Fornecedor, material, motorista, placa e a primeira pesagem: cinco mil seiscentos e quarenta quilos. |
 | Clique na barra escura: a lista mostra "#58" "3.080 kg" "Cooperativa Recomeço" e "#59" "5.640 kg" "Auto Peças Vale Forte". [ZOOM: a lista das duas abas] | Na barra de cima, a gente troca de um caminhão pro outro. Cada aba guarda o seu rascunho, e nada se mistura. |
-| Clique em "#58": volta o ticket da cooperativa. Clique em "Salvar Ticket de Pesagem": aviso "Ticket de pesagem salvo" e a janela "Ticket #58 salvo" ("O que deseja fazer com este ticket de pesagem?"), com "Imprimir comprovante", "Valorizar" e "Fechar". [BACKEND: RPC `finalize_weighing_ticket_v3` → `ticket_number` 58, `status` pending] | O ticket da cooperativa está pronto, então eu salvo. Agora sim, ele ganha o número de verdade. |
+| Clique em "#58": volta o ticket da cooperativa. Clique em "Salvar Ticket de Pesagem": aviso "Ticket de pesagem salvo" e a janela "Ticket #58 salvo" ("O que deseja fazer com este ticket de pesagem?"), com "Imprimir comprovante", "Valorizar" e "Fechar". [BACKEND: RPC `finalize_weighing_ticket_v4` → `ticket_number` 58, `status` pending] | O ticket da cooperativa está pronto, então eu salvo. Agora sim, ele ganha o número de verdade. |
 | Clique em "Fechar": fica a aba do Jair ("#59", "Auto Peças Vale Forte", "Seu rascunho"). | O valor a gente resolve depois. E a aba do Jair continua aberta, esperando ele descarregar. |
 | Clique na barra escura: na lista de abas, zoom no "x" da aba do Jair, sem clicar (ele pede "Descartar este ticket?", com "Manter ticket" e "Descartar ticket"); fecha a lista. | Se alguém fechar uma aba no x, o sistema pergunta antes de descartar o ticket. |
+| Clique em "Voltar": a tela dos tickets; clique em "Rascunhos apagados" (com "1"): janela "Rascunhos apagados" ("Recupere um rascunho que foi apagado por engano. Ele volta como uma aba ativa."), com um rascunho do Valdir Pereira ("Ferro misto", "380 kg", "Apagado há cerca de 19 horas por Rafael Nogueira"), "Recuperar" e o botão de excluir definitivamente; fecha sem recuperar. [BACKEND: rascunho apagado na semente `inicio`] | E se descartar sem querer, o rascunho vai para Rascunhos apagados, na tela dos tickets. Dali dá pra recuperar. |
 
-### cap07 · Valorizar o ticket (vinheta: VALORIZAR)
+### cap07 · Ticket com valores (vinheta: VALORES)
 
 | Tela | Fala |
 | --- | --- |
-| Capítulo novo (semente `apos-cap06`), em "Ticket de Pesagem": em "Aguardando valorização", o cartão "Ticket #58" ("COMPRA", "Fornecedor: Cooperativa Recomeço", "Sem valores", "Alumínio latinha", "3.018,4 kg", "10/11/26 08:52"). | No fim do dia, o preço com a cooperativa fechou. É hora de valorizar: transformar o peso em pedido. |
-| No cartão, "Ações" → "Valorizar". [BACKEND: `order_drafts` insert com o item e o preço da tabela principal, R$ 6,20] A tela vai para a Compra (`/compra`) com o rascunho: fornecedor "Cooperativa Recomeço", "Alumínio latinha", o peso, "Tara/Imp." 61,6, "Valor/Kg" 6,20 e o total. | Em Ações, Valorizar. O sistema abre uma compra já preenchida: a cooperativa, a latinha, o peso e a impureza. |
+| Capítulo novo (semente `apos-cap06`; `FAKE_NOW` 08:55; o `setup` reabre a aba do Jair por "Rascunhos abertos"): "Auto Peças Vale Forte", "Bateria automotiva", "#59", "5.640 kg". O cursor passa na chave "Valores". | O Jair descarregou. E com a Auto Peças o preço da bateria já está combinado. Então este ticket pode ser feito com valores. |
+| Clique em "Com valores": aparece "Tabela de Preços" ("Principal") embaixo de "Fornecedor"; os itens ganham "Valor/Kg", "Desc. (R$)" e "Total", e "Total geral: R$ 0,00"; a aba passa a mostrar "Valor". [ZOOM: "Tabela de Preços" e as colunas novas] | Mudo a chave para Com valores. Aparecem a Tabela de Preços, embaixo do fornecedor, e as colunas de valor nos itens. |
+| No item, "Ações do item" → "Adicionar tara / pesagem avançada": "1ª Pesagem" 5640 (digitada de novo, como no cap04), "2ª Pesagem" 4180 ("Peso Bruto (Kg)" "1.460", "|5.640 − 4.180|"); "Valor/Kg" 3,40: "Valor estimado R$ 4.964,00", "R$/Kg efetivo: R$ 3,40". | No item, eu completo a pesagem: a segunda deu quatro mil cento e oitenta quilos. E ponho o preço combinado: três e quarenta o quilo. |
+| Clique em "Confirmar": "Pesagem do item atualizada". [ZOOM: "Total geral: R$ 4.964,00"] | Confirmar. São mil quatrocentos e sessenta quilos de bateria, e o total do ticket aparece embaixo: quatro mil novecentos e sessenta e quatro reais. |
+| A câmera fica no total. | Atenção: mesmo com valores, o ticket não paga ninguém. Ele só guarda o preço. O dinheiro continua saindo só quando a compra é finalizada. |
+| Clique em "Salvar Ticket de Pesagem": "Ticket de pesagem salvo" e a janela "Ticket #59 salvo"; "Fechar". [BACKEND: `finalize_weighing_ticket_v4`, `pricing_mode` priced, `price_table_id` da "Principal"] | Salvo o ticket do Jair. Ele vai para Aguardando valorização, já com o valor. |
+| Configurações › "Usabilidade"; a tela desce até "Permitir forma de pagamento no ticket de pesagem" ("O balanceiro escolhe a forma de pagamento já no ticket com valores; a compra/venda abre pré-preenchida."), desligada. [ZOOM: a opção] | E, se quiser, o balanceiro já deixa a forma de pagamento escolhida no ticket com valores. É só ligar esta opção em Configurações, Usabilidade. |
+
+### cap08 · Valorizar o ticket (vinheta: VALORIZAR)
+
+| Tela | Fala |
+| --- | --- |
+| Capítulo novo (semente `apos-cap07`; `FAKE_NOW` 08:58), em "Ticket de Pesagem": "Aguardando valorização" ("R$ 4.964,00", 4) com os cartões #59, #58, #57 e #56; o cursor vai ao cartão "Ticket #58" ("COMPRA", "Fornecedor: Cooperativa Recomeço", "Sem valores", "Alumínio latinha", "3.018,4 kg", "10/11/26 08:52"). | Pouco depois, o preço com a cooperativa fechou. É hora de valorizar: transformar o peso em pedido. |
+| Marca "Selecionar" no #58; a coluna desce e marca "Selecionar" no #56 (o ticket de ontem da cooperativa, "Alumínio perfil", "412 kg"): aparece a barra "2 selecionados" com **"Valorizar 2 tickets"**; o "Selecionar" do #57 (Auto Peças) fica apagado, com a dica "Selecione tickets do mesmo cliente ou fornecedor". Não clica em valorizar. [ZOOM: a barra] [BACKEND: ticket #56 na semente `inicio`] | Uma dica: se o mesmo fornecedor tem mais de um ticket esperando, marque Selecionar em cada um e use Valorizar dois tickets. Vira uma compra só. Precisa ser o mesmo fornecedor e o mesmo tipo. |
+| Fecha a barra no "x" (limpa a seleção) e a coluna volta ao alto. No cartão do #58, "Ações" → "Valorizar". [BACKEND: `order_drafts` insert com o item e o preço da tabela principal, R$ 6,20] A tela vai para a Compra (`/compra`) com o rascunho: fornecedor "Cooperativa Recomeço", "Alumínio latinha", o peso, "Tara/Imp." 61,6, "Valor/Kg" 6,20 e o total. | Hoje eu valorizo só o ticket de hoje. Em Ações, Valorizar. O sistema abre uma compra já preenchida: a cooperativa, a latinha, o peso e a impureza. |
 | [ZOOM: o "Valor/Kg" 6,20 e o total da linha, R$ 18.714,08] | O preço vem da tabela: seis e vinte o quilo. Dá dezoito mil setecentos e catorze reais e oito centavos. |
+| A câmera fica no "Valor/Kg". | O sistema procura o preço nesta ordem: o preço especial do fornecedor, se existir; depois a tabela dele; e por último a tabela padrão. |
 | Zoom na célula "Valor/Kg". | Se o preço combinado for outro, é só mudar o valor do quilo aqui, antes de finalizar. Num ticket de venda, abre uma venda do mesmo jeito. |
 | [ILUSTRAÇÃO: o caminho: ticket, "Valorizar", compra em rascunho, "Finalizar", estoque e caixa; o estoque e o caixa só acendem no "Finalizar".] | Repara: até aqui, nada entrou no estoque e nada saiu do caixa. A compra está em rascunho, e o efeito só acontece quando ela for finalizada. |
 
-### cap08 · Imprimir o comprovante (vinheta: COMPROVANTE)
+### cap09 · Imprimir o comprovante (vinheta: COMPROVANTE)
 
 | Tela | Fala |
 | --- | --- |
-| Capítulo novo (semente `apos-cap07`), em "Ticket de Pesagem"; no cartão "Ticket #58", "Ações" → "Ver comprovante": janela "Gerar comprovante do ticket" ("Escolha o formato do comprovante deste ticket de pesagem."), com "A4" ("Folha") e "Térmico" ("80mm"). | O motorista leva o comprovante do ticket. Em Ações, Ver comprovante, e o formato: Térmico, o cupom, ou A4, a folha. |
-| Clique em "Térmico": abre a aba nova com o PDF do comprovante. [GRAVAÇÃO: gravar a aba nova] [ZOOM: a faixa "TICKET DE PESAGEM" / "NÃO VALORIZADO" e "Documento sem valor financeiro definitivo"] | Repara no papel: ticket de pesagem, não valorizado. É o comprovante do peso, ainda sem valor de compra. |
+| Capítulo novo (semente `apos-cap08`), em "Ticket de Pesagem"; no cartão "Ticket #58", "Ações" → "Ver comprovante": janela "Gerar comprovante do ticket" ("Escolha o formato do comprovante deste ticket de pesagem."), com "A4" ("Folha") e "Térmico" ("80mm"). | O motorista leva o comprovante do ticket. Em Ações, Ver comprovante, e o formato: Térmico, o cupom, ou A4, a folha. |
+| Clique em "Térmico": abre a aba nova com o PDF do comprovante. [GRAVAÇÃO: gravar a aba nova] [ZOOM: a faixa "TICKET DE PESAGEM" / "NÃO VALORIZADO", "Documento sem valor financeiro definitivo" e o título "Ticket de pesagem N° #58"] | Repara no papel: ticket de pesagem, não valorizado. É o comprovante do peso, ainda sem valor de compra. |
 | [ZOOM: "Motorista: Edson Moura" e "Placa: FKD2E41", e as linhas "1ª pesagem", "2ª pesagem", "Bruto", "Impureza" (com "(2%)") e o peso líquido] | Com o modo Completo, sai a conta inteira: o motorista, a placa, as duas pesagens, o bruto, a impureza e o líquido. |
 | De volta à aba do sistema: Configurações › "Integrações"; zoom em "Imprimir comprovante do Ticket de Pesagem" ("Envia o comprovante térmico direto pra impressora ao salvar um ticket"), desligada. | E se quiser que o cupom saia sozinho na impressora ao salvar cada ticket, ligue Imprimir comprovante do Ticket de Pesagem, em Configurações, Integrações. |
-| [ILUSTRAÇÃO: Pesagens mescladas: duas linhas de ferro misto, "1.200 kg" e "800 kg", viram uma linha só, "2.000 kg", no comprovante; na palavra "Desmesclar", o botão "Desmesclar pesagens" separa as duas de novo.] | Uma dica: se o ticket tiver pesagens do mesmo material mescladas numa linha, o comprovante mostra só a soma. Pra conferir cada pesagem no papel, use o Desmesclar pesagens antes de imprimir. |
+| Configurações › "Usabilidade"; a tela desce até "Assinaturas no comprovante" ("Linhas para assinar no rodapé. Escolha quem assina: o operador, o cliente/fornecedor ou os dois. No ticket de pesagem, o operador aparece como Empresa."); liga a chave (aviso "Assinaturas ativadas no comprovante"): aparece "Quem assina"; abre a lista: "Operador e cliente/fornecedor", "Só o cliente/fornecedor", "Só o operador". [ZOOM: a lista] | Quer que o motorista assine o peso? Em Usabilidade, ligue Assinaturas no comprovante e escolha quem assina: os dois, só o fornecedor, ou só o operador. |
+| Escolhe "Só o cliente/fornecedor"; o cursor vai à frase "No ticket de pesagem, o operador aparece como Empresa." | No ticket de pesagem, o lado do operador sai escrito Empresa. |
+| O cursor passa em "Marca de ticket não valorizado" (ligada: "Mantém o aviso igual na tela, no PDF e na impressão. Tickets provisórios offline continuam identificados.") e a tela desce até "Exigir cliente/fornecedor no Ticket de Pesagem" (desligada). | Aqui também ficam duas regras do ticket: tirar do papel a marca de não valorizado, e exigir o fornecedor para salvar. |
+| [GRAVAÇÃO: por baixo da ilustração, o robô devolve "Quem assina" a "Operador e cliente/fornecedor" e desliga "Assinaturas no comprovante" (regra do mundo: assinatura desligada).] [ILUSTRAÇÃO: Pesagens mescladas: duas linhas de ferro misto, "1.200 kg" e "800 kg", viram uma linha só, "2.000 kg", no comprovante; na palavra "Desmesclar", o botão "Desmesclar pesagens" separa as duas de novo.] | Uma dica: se o ticket tiver pesagens do mesmo material mescladas numa linha, o comprovante mostra só a soma. Pra conferir cada pesagem no papel, use o Desmesclar pesagens antes de imprimir. |
 
-### cap09 · Quando o ticket sai da lista de pendentes (vinheta: VALORIZAR)
+### cap10 · Quando o ticket sai da lista de pendentes (vinheta: VALORIZAR)
 
 | Tela | Fala |
 | --- | --- |
-| Capítulo novo (semente `apos-cap07`), em "Ticket de Pesagem": o "Ticket #58" segue em "Aguardando valorização". [ZOOM: o cartão] | E quando o ticket sai de Aguardando valorização? Mesmo com a compra em rascunho, ele continua aqui. |
-| "Ações" → "Valorizar": aviso "Estes tickets já tinham um pedido em aberto — retomando." ("Atualizado com os itens atuais do ticket (1 item, R$ 18.714,08)."); abre a mesma compra. [BACKEND: `order_drafts` reaproveitado (update)] | Valorizando de novo, o sistema retoma a mesma compra, sem duplicar. |
+| Capítulo novo (semente `apos-cap08`), em "Ticket de Pesagem": o "Ticket #58" segue em "Aguardando valorização". [ZOOM: o cartão] | E quando o ticket sai de Aguardando valorização? Mesmo com a compra em rascunho, ele continua aqui. |
+| No cartão do #58, "Ações": o cursor passa em "Editar" e "Excluir", sem clicar (o menu fica aberto). | Enquanto ele espera, dá pra corrigir em Editar ou apagar em Excluir. Depois de valorizado, ele trava, e a correção passa a ser no pedido. |
+| No mesmo menu, "Valorizar": aviso "Estes tickets já tinham um pedido em aberto — retomando." ("Atualizado com os itens atuais do ticket (1 item, R$ 18.714,08)."); abre a mesma compra. [BACKEND: `order_drafts` reaproveitado (update)] | Valorizando de novo, o sistema retoma a mesma compra, sem duplicar. |
 | Clique em "Finalizar": "Finalizar Pedido"; escolhe "Pix/Transferência" e a conta bancária principal; clique em "CONFIRMAR PAGAMENTO": "Compra registrada!" e "Pedido finalizado — voltando ao Ticket de Pesagem" (o meio pode ser acelerado na edição). [BACKEND: caixa do Rafael aberto; finalizar da compra do T7; o ticket vira `valorized` com `valorized_order_id`] [TESTAR: se abrir "Imprimir Comprovante", fechar antes da volta] | Finalizo como no tutorial anterior: Pix, e confirmar pagamento. Agora sim, a latinha entrou no estoque e o pagamento saiu da conta. |
-| A tela volta sozinha para "Ticket de Pesagem": o "Ticket #58" está em "Valorizados", com "Valorizado pelo pedido #…". [ZOOM: "Valorizado pelo pedido #…"] | E o sistema volta sozinho pro Ticket de Pesagem. O ticket passou pra Valorizados, com o número da compra. |
-| Clique no botão "Lista" (ao lado da busca): a tabela com o selo "Valorizado" (verde) no #58 e "Aguardando valorização" (âmbar) no #57; depois clique em "Filtros": "Status" com "Aguardando valorização", "Valorizado" e "Cancelado"; fecha o painel e volta ao "Kanban". | Na lista, cada ticket mostra a situação. São três: Aguardando valorização, em amarelo; Valorizado, em verde; e Cancelado, em vermelho. |
-| Zoom em "Rascunhos abertos" com "1". | E o ticket do Jair continua no rascunho. Ele entra na lista quando for salvo. |
+| A tela volta sozinha para "Ticket de Pesagem": o "Ticket #58" está em "Valorizados", com "Valorizado pelo pedido #…". [ZOOM: "Valorizado pelo pedido #…"] Depois, "Ações" do #58: o cursor passa em "Ver pedido", sem clicar; fecha o menu. | E o sistema volta sozinho pro Ticket de Pesagem. O ticket passou pra Valorizados, com o número da compra. E, em Ações, o Ver pedido abre essa compra. |
+| Clique no botão "Lista" (ao lado da busca): a tabela com o selo "Valorizado" (verde) no #58 e "Aguardando valorização" (âmbar) nos outros; depois "Filtros" › "Status": "Aguardando valorização", "Valorizado" e "Cancelado". | Na lista, cada ticket mostra a situação. São três: Aguardando valorização, em amarelo; Valorizado, em verde; e Cancelado. |
+| Fecha o filtro. O cursor vai ao período no alto ("Este mês", que só existe no modo Lista) e abre "Filtros": "Tipo", "Status", "Usuário". | O período, lá no alto, vale para a lista inteira. E os filtros separam por tipo, situação e usuário. |
+| "Exportar" › "PDF" (a outra opção é "Excel"): janela "Exportar PDF" ("Escolha quais tickets serão incluídos no relatório") com "Período", "Tipo de Ticket" ("Compras", "Vendas"), "Status" ("Pendente", "Valorizado", "Cancelado") e "Usuário que criou". [ZOOM: a janela] | Em Exportar sai o relatório dos tickets, em PDF ou Excel, com o período, o tipo, a situação e o usuário que você escolher. |
+| Fecha a janela sem gerar; a câmera fica na lista. | Um detalhe: o dono pode limitar um balanceiro a ver só os tickets que ele mesmo criou. Isso fica em Usuários e Permissões. |
+| Volta ao "Kanban"; o cursor vai ao cartão "Ticket #59" ("Auto Peças Vale Forte", "R$ 4.964,00", "1.460 kg") em "Aguardando valorização". | E o ticket do Jair segue em Aguardando valorização, já com o valor, esperando a vez dele. |
 
-### cap10 · Recapitulando (vinheta: RESUMO)
+### cap11 · Pesagem avulsa com cobrança (vinheta: AVULSA)
+
+| Tela | Fala |
+| --- | --- |
+| Capítulo novo (semente `apos-cap10`; `FAKE_NOW` 09:12), em "Ticket de Pesagem". [ILUSTRAÇÃO: um caminhão caçamba de areia, de fora, sobe na balança da Recicla Vale Metais; uma placa "Serviço de pesagem".] | Agora o outro caso: um caminhão de areia, que não é fornecedor nem cliente da Recicla Vale, só quer usar a balança. E a empresa cobra por esse serviço. |
+| Aba "Pesagens avulsas" → "Nova Pesagem Avulsa": título "Nova Pesagem Avulsa" ("Preencha a pesagem avulsa. Use as abas para atender vários veículos."); "Modalidade" em "Pesagem avulsa"; "Tipo" fixo em "Serviço ao cliente"; campo "Cliente". [ZOOM: a barra de cima] | Em Pesagens avulsas, Nova Pesagem Avulsa. O tipo já vem como Serviço ao cliente: aqui a empresa não compra nem vende, ela presta um serviço. |
+| "Selecionar cliente": janela "Selecionar Cliente"; digita "Areal Boa Vista": "Nenhum resultado encontrado." e o botão **"Cadastrar «Areal Boa Vista»"**. [ZOOM: o botão] | O dono do caminhão ainda não tem cadastro. Eu busco pelo nome, o sistema não acha, e oferece cadastrar com o que eu digitei. |
+| Clique no botão: "Cadastro Rápido de Cliente" ("Cadastre um novo cliente rapidamente") com "Nome" já em "Areal Boa Vista"; o cursor passa em "Telefone", "CPF/CNPJ" e **"Chave PIX"** ("Email, CPF, telefone ou chave aleatória"); "Criar Cliente": "Cliente cadastrado com sucesso!" e o cliente volta escolhido no ticket. [BACKEND: `customers` insert] | O nome já vem preenchido. Dá pra completar telefone, CPF ou CNPJ e a chave Pix, que é novidade no cadastro rápido. Eu crio só com o nome, e o cliente já volta escolhido. Esse atalho vale também para o fornecedor, no ticket padrão. |
+| Em "Descrição do material" ("Ex.: Areia, terra, entulho") digita "Areia média". | Na pesagem avulsa não tem material cadastrado. Eu escrevo o que é: areia média. |
+| "Pesagem avançada": "1ª Pesagem" 23840, "2ª Pesagem" 9120 ("Peso Bruto (Kg)" "14.720", "|23.840 − 9.120|"); "Completo"; "Confirmar": "Itens da Pesagem (1)", "Areia média", "14.720". | E peso do mesmo jeito, entrada e saída: catorze mil setecentos e vinte quilos. |
+| A tela desce. "Placa do Veículo": "HBN3F27"; "Tipo de caminhão" ("Ex.: Carreta, caçamba, bitrem"): "Caçamba"; **"Valor cobrado pela pesagem"**: "60,00". [ZOOM: os dois campos] | Depois a placa, o tipo de caminhão e o valor cobrado pela pesagem: sessenta reais. |
+| "Salvar Pesagem Avulsa": abre "Finalizar Pedido" ("Total: R$ 60,00", "Cliente: Areal Boa Vista", "Saldo atual: R$ 0,00") com "Dinheiro", "Pix/Transferência" e "Saldo do Cliente" (e a chave "Múltiplas formas de pagamento"). [ZOOM: as três formas] | Como tem valor, ao salvar o sistema pergunta como o cliente pagou: dinheiro, Pix, ou saldo do cliente, que é pôr na conta dele. |
+| Clique em "Pix/Transferência": aparece a conta "Conta Principal" (com o saldo); "CONFIRMAR PAGAMENTO". [BACKEND: `finalize_weighing_ticket_v4` + `apply_standalone_weighing_charge_v1`: receita de R$ 60,00 na Conta Principal, categoria "Serviço de pesagem", descrição "Serviço de pesagem avulsa #60"] | Foi no Pix. A conta que recebe já vem escolhida, e eu confirmo o pagamento. |
+| Aviso "Ticket de pesagem salvo" e a janela "Ticket #60 salvo" com o selo "PESAGEM AVULSA" ("Somente comprovante de peso. Esta pesagem não possui valor comercial e não pode ser valorizada."), só "Imprimir comprovante" e "Fechar". [ZOOM: a janela] | Pronto. Os sessenta reais já entraram na conta, como receita de serviço de pesagem. Sem pedido e sem mexer no estoque. E repara: aqui não tem o botão Valorizar. Pesagem avulsa nunca vira compra ou venda. |
+| "Imprimir comprovante" → "Térmico". [ILUSTRAÇÃO com o PDF do app (`rec/t08/arquivos/cap11-comprovante-avulsa.pdf`): faixa "PESAGEM AVULSA" / "SEM VALOR COMERCIAL", "Ticket de pesagem N° #60", "Placa: HBN3F27", "Tipo de caminhão: Caçamba", "Areia média 14.720 Kg", "Valor da pesagem: R$ 60,00", "PIX/Transferência: R$ 60,00".] [GRAVAÇÃO: por baixo da ilustração, o robô volta à lista ("Pesagens Avulsas": "#60", "Areal Boa Vista", "14.720 kg líq.", "Sem valor comercial") e abre "Ações" → "Editar".] | O comprovante sai marcado como pesagem avulsa, sem valor comercial, com o peso e o valor da pesagem. |
+| "Editar Pesagem Avulsa #60": o campo "Valor cobrado pela pesagem" travado, com "Cobrança já lançada no financeiro. O valor não pode mais ser alterado." [ZOOM: o campo e o aviso] | Atenção: depois de cobrada, o valor fica travado. E a pesagem não pode ser excluída sem antes estornar o recebimento. |
+| [ILUSTRAÇÃO: três caminhos saindo de "Valor cobrado pela pesagem": "Dinheiro" → caixa; "Pix/Transferência" → conta bancária; "Saldo do Cliente" → conta a receber.] Por baixo, "Voltar" sem mudar nada. | Se fosse no saldo, o cliente ficava devendo, e nascia uma conta a receber. Dá pra dividir entre as três formas. E, sem valor nenhum, a avulsa é só o comprovante de peso. |
+
+### cap12 · Sem internet (vinheta: OFFLINE)
+
+| Tela | Fala |
+| --- | --- |
+| Capítulo novo (semente `apos-cap11`; `FAKE_NOW` 09:20; variante lateral: nada do que acontece aqui segue). O `setup` abre "Novo Ticket de Pesagem" e simula a queda (o ping do app passa a falhar). [ILUSTRAÇÃO: o caminhão na balança, o sinal de internet cortado; na tela, a faixa "Sem internet."] | E se a internet cair com o caminhão em cima da balança? O ticket continua funcionando. |
+| A criação do ticket com a faixa vermelha no alto ("Sem conexão — operações serão salvas localmente até reconectar na internet") e o aviso âmbar "Sem internet. Você pode pesar e finalizar normalmente: o ticket fica guardado neste aparelho e sobe sozinho quando a conexão voltar. O comprovante do motorista sai como provisório — o número oficial é atribuído na sincronização." [ZOOM: o aviso] | O sistema avisa que está sem internet, e você pesa e salva normalmente. O ticket fica guardado neste computador. |
+| A câmera fica no aviso ("provisório"). [TESTAR na gravação final: salvar o ticket sem internet para mostrar "Ticket guardado neste aparelho" e "Comprovante provisório (sem número oficial)"; com a queda simulada do ensaio o "Salvar" ficou girando] | O comprovante do motorista sai como provisório, sem o número oficial. Quando a conexão volta, o ticket sobe sozinho e ganha o número de verdade. |
+| "Voltar": a tela dos tickets com o aviso "Sem internet. Você continua pesando e imprimindo…" e, embaixo, "A lista abaixo mostra só o que já está no servidor. Valorizar, editar ticket já salvo e anexar foto precisam de internet." [ZOOM: a segunda frase] | Só três coisas esperam a internet: valorizar, editar um ticket já salvo e anexar foto. |
+
+### cap13 · Recapitulando (vinheta: RESUMO)
 
 | Tela | Fala |
 | --- | --- |
 | Montagem rápida: "Novo Ticket de Pesagem" com a cooperativa, o Edson e a placa. | Pronto! Recapitulando: a gente criou o ticket da cooperativa com o fornecedor, o material, o motorista e a placa. |
 | Montagem rápida: a "1ª Pesagem", "Rascunhos abertos" e o "Peso Bruto (Kg)" 3.080. | Fez a primeira pesagem na entrada, viu o rascunho salvo sozinho e fez a segunda na saída, com o bruto saindo sozinho. |
-| Montagem rápida: a impureza "2" com "%", as duas abas e "Ticket #58 salvo". | Aplicou a impureza em porcentagem, atendeu um segundo caminhão em outra aba e salvou o ticket. |
-| Montagem rápida: a compra preenchida, o comprovante "NÃO VALORIZADO" e a coluna "Valorizados". | Valorizou o ticket, que virou uma compra já preenchida, imprimiu o comprovante e viu o ticket ir pra Valorizados quando a compra foi finalizada. |
+| Montagem rápida: a impureza "2" com "%", as duas abas e "Ticket #58 salvo". | Aplicou a impureza em porcentagem, atendeu um segundo caminhão em outra aba e salvou o ticket dele com valores. |
+| Montagem rápida: a compra preenchida, o comprovante "NÃO VALORIZADO" e a coluna "Valorizados". | Valorizou o ticket da cooperativa, que virou uma compra já preenchida, imprimiu o comprovante e viu o ticket ir pra Valorizados quando a compra foi finalizada. |
+| Montagem rápida: "Valor cobrado pela pesagem" 60,00, "Ticket #60 salvo" e o aviso "Sem internet." | E ainda fez uma pesagem avulsa, cobrando pelo serviço, e viu que o ticket continua funcionando sem internet. |
 | Cartão "Próximo: Pedidos e histórico do caixa"; cartela final. | No próximo tutorial, a gente acha e corrige um pedido antigo. Até lá! |

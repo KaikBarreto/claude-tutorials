@@ -1,5 +1,9 @@
 # Propostas de fala · T8 Ticket de Pesagem
 
+> **18/11 (app 1.60.10): aplicadas.** As três propostas da tabela "Fala" entraram no `roteiro.md` e no `tts_textos.py` (a do cap06
+> continua valendo como respiro na edição; os capítulos 07 e 09 da tabela agora são o 08 e o 10). O #57 com 0 kg está resolvido na
+> semente `t08/inicio` (um item, 6.840 kg). Achados novos no fim.
+
 Do robô e do ensaio (rec/t08, app 1.59.154, voz ESTIMADA). Não editam `roteiro.md` nem `tts_textos.py`: a revisão geral aplica.
 Linha = número da linha da coluna Fala no capítulo (L1 = a primeira).
 
@@ -35,3 +39,19 @@ Linha = número da linha da coluna Fala no capítulo (L1 = a primeira).
 - **Ticket #57 do mundo base com 0 kg**: está "Aguardando valorização" com `items: []`, então o cartão (cap01, L4, zoom na coluna) e a
   Lista (cap09) mostram "Bateria automotiva 0 kg" / "0 kg líq.". O `MUNDO_FICTICIO.md` fala em "#57 em rascunho"; o T8 pede pendente. A
   semente da junção precisa de um item com peso no #57 (não mexi: é do mundo base).
+
+## Achados do app no 1.60.10 (18/11, para o MELHORIAS)
+
+- **Barra da seleção fica na tela errada:** com um ticket marcado em "Selecionar", a barra "1 selecionado · Valorizar ticket"
+  continua flutuando por cima da criação do ticket, da pesagem avulsa e da lista das avulsas (só some no x).
+- **Comprovante da pesagem avulsa com rótulos de compra:** o cliente sai como "Fornecedor: Areal Boa Vista", a lista como "Itens
+  comprados:" e o rodapé "Obrigado pela preferência!".
+- **Editar pesagem avulsa:** o título diz "Editar Pesagem Avulsa #60", mas a barra das abas mostra "#61" (o próximo número).
+- **Ticket "Com valores" não puxa o preço combinado:** virando a chave num rascunho que já tinha item, o "Valor/Kg" fica vazio (nem o
+  preço especial do fornecedor, R$ 3,40, nem o da tabela "Principal"); a aula digita o preço.
+- **Pagamento da avulsa:** "Caixa que recebe o dinheiro" não aparece quando só há um caixa aberto; e o `payment_intent` guarda o
+  caixa mesmo quando o pagamento é só Pix.
+- **Sem internet (queda simulada no robô):** o aviso aparece certo, mas "Salvar Ticket de Pesagem" ficou girando 18 s e a janela do
+  comprovante provisório não abriu. Pode ser limite da simulação (só o ping falha); vale testar com queda de verdade.
+- **Corrigido no 1.60.10** (estava na lista antiga): nada da lista antiga da T8 mudou; os valores "Valor estimado" e "R$/Kg efetivo"
+  continuam aparecendo na "Pesagem avançada" de ticket "Sem valores" (H5).

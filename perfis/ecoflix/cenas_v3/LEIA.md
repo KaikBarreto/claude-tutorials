@@ -1,12 +1,14 @@
-# EcoFlix · kit de ilustrações v3 (piloto de 18/11, esperando a aprovação do Kaik)
+# EcoFlix · kit de ilustrações v3 (estilo aprovado pelo Kaik em 18/11: "Ficou ótimo a prévia da animação")
 
 Um mundo 3D só, dois climas, câmera contínua. Sai a argila; ficam o verde #50D088, a Montserrat, os selos saturados com
 ícone branco, nada de marca de terceiros nem de tela do app. Os kits antigos (`../cenas3d/`, `../cenas/`) não mudaram.
 
 - `motor.js`: palco, os dois climas, câmera e estações, planos HTML no espaço, material 3D, componentes e curvas.
-- `objetos/`: `caminhao.js` (truck basculante + carga de latinha), `balanca.js` (rodoviária com poste), `latinhas.js`
-  (monte e despejo com gravidade).
-- `climas.html`: a mesma cena nos dois climas (cap 0 = claro, cap 1 = escuro); serve de vitrine dos componentes.
+- `objetos/`: a biblioteca 3D, um arquivo por objeto (tabela abaixo). Cada arquivo abre com o `uso:` e o `userData`.
+- `dados/`: os componentes de DADOS (HTML para `plano()`), um arquivo por componente (tabela abaixo).
+- `vitrine.html` + `vitrine_paginas.js`: tudo com o nome embaixo, 7 páginas, nos dois climas
+  (`vitrine.html?k=0&p=1`; imagens em `ecoflix/previa_ilustracoes/v3_vitrine_{claro,escuro}[_1..7].jpg`).
+- `climas.html`: a mesma cena nos dois climas (cap 0 = claro, cap 1 = escuro).
 - Piloto: `planejamento/ecoflix/T08/cenas_v3/cena.html` (ilu04 emendada na ilu05) + `tempos_piloto.json`.
 
 ## A regra dos climas
@@ -52,14 +54,114 @@ cena(() => {
 ## Migrar uma cena antiga
 - **3D (`Tnn/cenas3d/cena3d.html`, 35 cenas)**: as chaves de câmera e as âncoras `W()` servem como estão; `vis`, `foco`,
   `conta`, `pesa`, `posTitulo` têm os mesmos parâmetros. Mudam: (1) objeto do kit de argila → objeto v3 (copiar a
-  geometria e trocar `M(cor)` por `mat(cor)`; caminhão, balança e latinhas já existem; faltam ~25 de `cenas3d/objetos/` e
-  os do kit: monte, fardo, prensa, tambor, pessoa); (2) rótulo `el()` + `ancora()` → `plano()` no espaço; (3) decidir o
+  geometria e trocar `M(cor)` por `mat(cor)`; todos os objetos do kit de argila já existem em `objetos/`: ver a
+  tabela da biblioteca); (2) rótulo `el()` + `ancora()` → `plano()` no espaço; (3) decidir o
   clima de cada momento e onde fica a tela que leva aos dados.
 - **2D (`Tnn/cenas/cenas.html`, 218 cenas)**: cada elemento com `left/top` vira um `plano` (o grupo todo num plano só já
   dá câmera e clima; separar em camadas dá paralaxe); `.card/.tag/.op/.most` → `htmlCartao/htmlChip/htmlOp/htmlVisor`.
   Cena de conta, fluxo ou documento = clima escuro; cena de pátio = claro, com objeto 3D quando o objeto é o assunto.
 - Modelo: o piloto (`T08/cenas_v3/cena.html`).
 
+## Biblioteca · objetos 3D (`objetos/`)
+Mesma convenção em todos: `nome(pai, [x, y, z], o)` devolve o grupo; base em y 0; medidas REAIS em metros (pessoa 1,72;
+truck 7,3; galpão 12 x 8). Material `mat()` do motor: o mesmo objeto serve nos dois climas, sem trocar nada. `userData.topo`
+= ponto acima do objeto (prenda ali o chip). Objeto pequeno (registradora, impressora, computador, cédula, folha, placa,
+pino) tem `o.s`/`o.w` para crescer até ler ao lado de gente e caminhão. Peças de material têm tamanho de ilustração (lata
+de 26 cm), igual à carga do caminhão. Construção como ícone de estação: `g.scale.setScalar(.4)`.
+
+| Arquivo · função | Parâmetros (`o`) | Animações e pontos |
+|---|---|---|
+| `caminhao.js` · `caminhao(pai, o)` | `tipo` 'truck' \| 'tres4' (3/4), `bau` 'basculante' \| 'grade' \| 'nenhum', `carga` nº de latinhas \| 0 \| 'bateria', `placa` 'ABC1D23', `cor`, `cubo` | `dirige(T, x, altura, { sobe, arfa })`, `bascula(T, ang)`; `userData.bau`, `dim`, `carga`, `locais` |
+| `poliguindaste.js` · `poliguindaste(pai, o)` | os do caminhão | `posiciona(T, x, z, dir)`, `poseCacamba(T, k, s)` (0 no chão → 1 nos trilhos), `lxCarga(s)` |
+| `cacambaEstacionaria.js` | `c` 3.4, `l` 1.7, `h` 1.1, `cor` | `boca`, `pinos`; carga com `pecas()` |
+| `balanca.js` · `balanca` (rodoviária) | `c`, `l`, `h`, `rampa`, `poste`, `hp` | `userData.altura(x)`, `poste` (visor) |
+| `balancaPlataforma.js` | `c` 1.2, `l` 1.0, `hp` | `sup` (tampo), `topo`/`tela` (visor), `saida` (cabo) |
+| `carroca.js` · `carroca` | `carga` (tipo), `n`, `cor` | `puxa(c, x)`; `rodas`, `dentro` |
+| `pessoa.js` · `pessoa` | `s`, `pele`, `cabelo`, `camisa`, `calca`, `coque`, `bone`, `colete` | `userData.anda(fase, braco)`; `mao[0..1]` |
+| `motorista.js` · `motorista` | os da pessoa, `braco` | `estende(a)`; `mao` (segura a folha) |
+| `monte.js` · `monte` | `tipo` latinha \| pet \| ferro \| papelao \| cobre \| aluminio \| plastico \| bateria \| misto, `n`, `r`, `rz`, `h`, `s` | `cai(m, t, a, { d, queda, alt })`; `pecas(pai, tipo, P, { s })`, `pontosMonte(n, r, rz, h, y0)` |
+| `latinhas.js` · `domo`, `despeja` | alvo do despejo do caminhão | `despeja(im, locais, alvo, t, a, o)` |
+| `baterias.js` · `baterias` | `nx`, `nz`, `camadas`, `P`, `s` | `lotes` (para `cai`) |
+| `fardo.js` · `fardo` (`fardoLatinhas`, `fardoPapelao`) | `tipo` latinha \| pet \| papelao \| aluminio \| cobre \| plastico \| ferro, `w`, `h`, `d`, `cintas`, `mancha` | empilha em `[x, h, z]` |
+| `saco.js` · `saco` (`sacoAberto`) | `aberto`, `carga` (tipo), `n`, `s`, `cor` | `boca`, `lotes` |
+| `bigBag.js` · `bigBag` | `estado` 'cheio' \| 'aberto' \| 'vazio', `carga`, `w`, `h` | `h`, `lotes` |
+| `tambor.js` · `tambor` | `cor`, `corE`, `aberto` | `boca` |
+| `cacamba.js` · `cacamba` (de pátio) | `s`, `cor` | `boca`, `dentro` |
+| `palete.js` · `palete` | `mancha` | `sup` |
+| `prensa.js` · `prensa` | `cor` | `aperta(p, 0..1)`; `boca`, `saida` |
+| `esteira.js` · `esteira` | `c` 9, `l` 1.2, `h` .9 | `corre(e, dist)`; `topo` |
+| `ima.js` · `ima`, `trilho` | `R` | `campo(im, 0..1)`; `ponta`, `topo` |
+| `baia.js` · `baia` | `c` 4, `l` 3, `h` 1.5, `cor` (borda) | `dentro`, `topo` |
+| `cancela.js` · `cancela` | `l` 4.5 | `ergue(c, 0..1)` |
+| `chaoPatio.js` · `chaoPatio` | `c`, `l`, `passo`, `faixa` [z...] | |
+| `guiche.js` · `guiche` | `c`, `l`, `h`, `cor`, `laje` | `balcao`, `janela` |
+| `registradora.js` · `registradora` | `s`, `valor`, `cupom` | `userData.abre(p)`, `visor(txt)`, `cupom.userData.sai(p)` |
+| `impressora.js` · `impressora` | `s`, `cupom` { tipo, h } | `imprime(i, 0..1)`; `fenda`, `entrada` |
+| `cupom.js` · `cupom` | `w`, `h`, `tipo` 'generico' \| 'teste' \| 'branco', `quando`, `dobra` | `userData.sai(p)` |
+| `computador.js` · `computador` | `s`, `mesa` | `tela` { centro, w, h, incl }: a porta dos dados |
+| `cabo.js` · `cabo(pai, pontos, o)` | `r`, `cor`, `conector` | `caboAte(c, p)`, `sinal(c, u)` |
+| `fio.js` · `fio(pai, cor, r)` | | `f.liga(a, b, p)` |
+| `folha.js` · `folha` | `w`, `h`, `cor`, `linhas` | mexer em position/rotation |
+| `pasta.js` · `pasta` | `w`, `h`, `cor` | `dentro`, `boca` |
+| `placa.js` · `placa(pai, pos, texto, o)` | `w` | `userData.troca(texto)` |
+| `cedula.js` · `cedula`, `maco(pai, pos, n, o)` | `w`, `d`, `cor` | |
+| `pinoLocal.js` · `pinoLocal` | `s`, `cor` | flutuar com position.y |
+| `galpao.js`, `fundicao.js` | `c`, `l`, `h` (+ `porta`, `cor`, `telhado`) | `porta`, `placa`, `chamine` |
+| `banco.js` · `banco` | `s` | `porta` |
+| `portao.js` · `portao` | `vao`, `h`, `cerca`, `hc`, `placa` (texto) | `placa`, `vao` |
+| `estrada.js`, `porticoEstado.js` | `c`, `l` / `l`, `h` | `topo` (chip da sigla) |
+
+O que era do kit de argila e mudou de nome: `balancaPatio` → `balanca({ c, l })`; `latinhas(pai, P)` / `pets(pai, P)` →
+`pecas(pai, 'latinha' | 'pet', P)`; `anda` → `dirige`; `M(cor)` → `mat(cor)`; `mostrador` → `htmlVisor` num `plano`.
+
+## Biblioteca · componentes de dados (`dados/`)
+Convenção: `htmlNome(o)` devolve o HTML para um `plano(..., { clima: 'escuro' })` e `nome(p.e, t, a, b, o)` anima (entra em
+`a`, sai em `b`; `o.tempos` = instantes das partes, vindos de `W()`; sem ele, escalonado). Depois valem `foco` e `pulso`.
+Leem as variáveis do clima: no escuro são vidro aceso; no claro, papel branco. Ícone = nome do lucide, literal na página.
+
+| Arquivo | Monta | Anima |
+|---|---|---|
+| `documento.js` | `htmlDocumento({ icone, tipo, sigla, numero, campos [[k, v]], itens [[desc, qtd, valor]], total [k, v], status, statusCor, cor, w })` (nota, manifesto, MTR: layout do kit, sem marca) | `documento`: campos, itens, total, chave e o carimbo que bate |
+| `extrato.js` | `htmlExtrato({ icone, titulo, sub, linhas [[icone, rot, sub, valor]], total [k, v], fmt, w })` (nº = R$ com sinal; texto = como está) | `extrato` (linhas em cascata, total que conta), `marca(e, i, t, a)` |
+| `barras.js` | `htmlBarras({ titulo, sub, dados [[rot, v]], destaque, fmt, selo, w, h })` | `barras`: crescem do chão, valor conta |
+| `grafLinha.js` | `htmlGrafLinha({ titulo, sub, pontos, rotulos, valor, selo, w, h })` | `grafLinha`: a linha se desenha, a área acende, o ponto final bate |
+| `linhaTempo.js` | `htmlLinhaTempo({ etapas [[icone, rot, sub, cor]], w, vertical, passo })` | `linhaTempo(..., { tempos, pendente })`: o trilho acende até a etapa |
+| `fluxoCartoes.js` | `htmlFluxoCartoes({ cartoes [[icone, rot, sub, 'res' \| 'a' \| 'n']], cw, vao, vertical })` | `fluxoCartoes`: seta com ponto de luz e cartão; `parte(e, i)` |
+| `balao.js` | `htmlBalao({ lado 'e' \| 'd', icone, nome, texto, w })` (Cato: ícone genérico, sem logo) | `balao(..., { pensa, d })`: pontinhos e texto palavra a palavra |
+| `calendario.js` | `htmlCalendario({ mes, ano, inicio, dias, hoje, marcas [[dia, '' \| 'a']], faixa [de, ate], icone })` | `calendario`: dias em cascata, marcas batem |
+| `cadeado.js` | `htmlCadeado({ px })`, `htmlPermissao({ icone, papel, sub, itens [[rot, ligado]] })` | `cadeado(..., { abre })`, `permissao(..., { liga [[i, t]] })` |
+| `moeda.js` | `htmlMoeda({ px, txt })`, `htmlSaldo({ rot, sub, valor, moedas, res, cor 'v' })` | `moeda` (entra girando), `saldo(..., { de, tConta })`: pilha cai, número conta |
+
+Os do motor continuam: `htmlCartao`, `htmlChip`, `htmlOp`, `htmlVisor` + `ligaVisor`, `htmlFluxo` + `fluxo`, `titulo`.
+
+## Exemplo mínimo · duas estações (claro → escuro)
+```js
+import { W, kg, vis, cl, eis, CENA, piso, camera, posCam, olho, mergulho, lugarDeFrente, plano, clima, cena, GL, htmlVisor, ligaVisor } from '.../cenas_v3/motor.js';
+import { balancaPlataforma } from '.../cenas_v3/objetos/balancaPlataforma.js';
+import { saco } from '.../cenas_v3/objetos/saco.js';
+import { htmlDocumento, documento } from '.../cenas_v3/dados/documento.js';
+cena(() => {   // ícone usado: 'file-text'
+  piso(); const b = balancaPlataforma(CENA, [0, 0, 0]); saco(b, [0, b.userData.sup, 0]);
+  // estação 1 (claro): o saco na balança e o visor, que é a porta dos dados
+  const P1 = { x: 0, y: .8, z: 0, d: 7, az: .3, el: .25 }, VP = b.userData.topo, EIXO = lugarDeFrente(VP, posCam(P1));
+  const v = plano(htmlVisor(['Peso']), { em: EIXO, pos: [0, 0, 0], esc: .004 }); ligaVisor(v.e); v.e.vn.textContent = kg(42);
+  // estação 2 (escuro): do outro lado do visor, no mesmo eixo, o documento
+  const doc = plano(htmlDocumento({ icone: 'file-text', tipo: 'Ticket', sigla: 'TK', numero: 'Nº 0118', campos: [['Material', 'Cobre'], ['Peso', '42 kg']], status: 'Pesado' }),
+    { em: EIXO, pos: [0, 0, -13], esc: .01, clima: 'escuro' });   // 11 m além de onde a câmera para (z = -2)
+  const tM = W(1, 'ticket') - 1.2, tC = tM + 1.5, P2 = EIXO.pose({ x: 0, y: 0, z: -13, d: 11 });
+  camera([[0, P1], [tM, { ...P1, d: 6.6 }, 'lin'], [tC, P2, mergulho(EIXO.local(posCam(P1))[2], -2), { reta: true, mira: x => eis(cl(x * 2)) }]]);
+  return t => {
+    const dentro = EIXO.local(olho())[2] < .6 ? 1 : 0;        // a tela cobriu o quadro: troca o clima escondido
+    clima(dentro); GL.style.visibility = dentro ? 'hidden' : 'visible'; v.op = dentro ? 0 : 1; doc.op = dentro;
+    vis(v.e, t, .3); documento(doc.e, t, tC - .4);
+  };
+});
+```
+
 ## Tempo de render
 Prévia `--dsf 1.35` (1728x1080), CPU, trava leve, `nice 19`, máquina carregada (carga ~10 em 2 núcleos): **0,8 s por
 quadro no claro (3D + planos) e também 0,8 s no escuro (só planos)**. O piloto inteiro (531 quadros) sai em ~7 min.
+Com a biblioteca (18/11): cena de teste com caminhão (250 latas, placa), balança, monte de PET caindo (150), baia com
+monte de cobre, prensa, 2 fardos, 2 pessoas e 4 planos, `--dsf 1.35`, `nice 19`, trava leve, carga ~4: **0,63 s por quadro**
+(0,09 s de cena + 0,55 s de captura). Cada monte são 2 a 6 chamadas de desenho (lotes); o custo é a captura, não o 3D.
+No clima escuro, corpo de objeto usa `emi` baixo (.1 a .3) e só luz, tela e destaque passam de 1: é o que mantém o vidro.
