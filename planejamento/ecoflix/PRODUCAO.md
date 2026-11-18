@@ -768,3 +768,8 @@ Decisões:
   de casos de uso pertinente". → Depois da varredura, **auditoria de cobertura** por aula contra o 1.60.10 (cada função
   da tela e casos de uso), com peso nas fiscais (T16, T17, T18 e a parte fiscal da T04/T07/T03); capítulos novos onde
   faltar. Entra na mesma passada que adapta a aula ao app novo.
+- 18/11 **Cobertura 1.60.10 das fiscais pronta** (`Tnn/cobertura_160.md`): T16 (18 mudanças, 5 capítulos novos, +705 s,
+  ~35 min), T17 (26 mudanças, 3 capítulos novos + trechos, +395 s, ~20 min), T18 (4 mudanças, 3 capítulos novos, +243 s,
+  ~15 min). **Kaik (13:47): "acho que uma aula só do fiscal, mesmo que grande mesmo"** → a T16 NÃO se divide: uma aula
+  só de ~35 min. Decisões do coordenador: SPED (BETA) fora da T17; CIOT sem citar a marca do parceiro; a complementar só
+  mostra a tela, sem ensinar valor de imposto. Em conferência: T07, T03, T02.
