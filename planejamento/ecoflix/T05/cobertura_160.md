@@ -57,7 +57,7 @@ chave "Peso somente pela balança". Ou seja: **caps. 0, 1, 4, 5 e 10 batem como 
 
 **cap08 · O indicador de peso**
 
-7. O rodapé mostra **"EcoSistema v1.60.10"** (`components/Footer.tsx:44`, `config/version.ts:17`): coluna Tela da linha 1
+7. O rodapé mostra **"EcoSistema v1.60.10"** (`components/Footer.tsx:44`, `config/version.ts:16`): coluna Tela da linha 1
    e `storage.app_version` / `notification_shown_version` de todos os `rec/cap*.json` e `rec/gerar.py:5,50,52`.
 
 **cap01 · pendência de teste**
@@ -93,12 +93,12 @@ cenas 3, 4, 5, 7 não mudam; a 6 muda se entrar o trecho P2.
 | L3 | **"Imprimir Automaticamente"** ("Envia o comprovante direto para a impressora ao finalizar pedidos"); sem a impressão direta o rótulo é "Gerar Comprovante Automaticamente" ("Gera e abre o PDF do comprovante automaticamente ao finalizar pedidos") (`SettingsIntegrationsContent.tsx:511-547`) | Balcão que imprime todo pedido | **Sim**, trecho no cap05 (P4). Nenhum roteiro da trilha mostra essa chave |
 | L4 | **"Imprimir comprovante do Ticket de Pesagem"** ("Envia o comprovante térmico direto pra impressora ao salvar um ticket") (`:549-584`) | Quem usa ticket | **Só citar** em P4; o uso é da **T8** |
 | L5 | **Renomear a balança pelo sistema**: lápis "Renomear balança", Enter ou "Salvar nome"; aviso `Balança renomeada para "..."` (`:116,821-838`) | Trocar o nome sem abrir o EcoTray | **Sim**, curto (P5) |
-| L6 | **Balança padrão com mais de uma**: lista de escolha em "Balanças"; aviso "Balança padrão definida: ..." (`:140,786`); no EcoTray, "Definir padrão" | Pátio com duas balanças | **Só citar** em P5. O mundo tem uma balança só (`MUNDO_FICTICIO.md:101`) |
+| L6 | **Balança padrão com mais de uma**: lista de escolha em "Balanças"; aviso "Balança padrão definida: ..." (`:140,784`); no EcoTray, "Definir padrão" | Pátio com duas balanças | **Só citar** em P5. O mundo tem uma balança só (`MUNDO_FICTICIO.md:101`) |
 | L7 | **"Editar" e "Remover"** em "Configurar Balanças"; sem seleção, "Selecione uma balança." (`dashboard.py:1907-1928`) | Trocar a porta ou tirar uma balança | **Só citar** em P5 |
 | L8 | **Lista de protocolos**: "Automático", "WeighTech (wn…kg)", "Toledo", "Filizola", "UPX", "Micheletti", "Genérico", "Extração por delimitador" (`dashboard.py:1401-1410`); "Detectar automaticamente"; "Nenhuma balança detectada nessa porta." | Balança que o Automático não reconhece | **Só citar** as marcas (P2, uma frase). Abrir a lista: não, é assunto de suporte |
 | L9 | **Aba "Logs" do painel**: "Registro do EcoTray" ("últimas ~200 linhas  •  inclui bytes crus [RAW] da balança"), subabas "Geral" e uma por balança, "Copiar tudo", "Abrir pasta do log", "Rodar diagnóstico", "Atualizar" (`dashboard.py:894-1158`) | O suporte pede o registro | **Sim**, no capítulo novo (P6) |
 | L10 | **"Atualizar Versão"** (rodapé do painel e menu): "Verificando..." → "✓ Já atualizado" / "↑ Atualizando para v..." / "✗ Erro ao verificar" (`dashboard.py:374-409`); o EcoTray também procura versão nova a cada 6 horas (`ecotray.py:236`) | Selo "EcoTray desatualizado" no sistema | **Sim**, no capítulo novo (P6) |
-| L11 | **"Reconectar balança"** no menu da bandeja (`tray_app.py:304`) | Cabo trocado, balança religada | **Sim**, uma frase em P6 |
+| L11 | **"Reconectar balança"** no menu da bandeja (`tray_app.py:306`) | Cabo trocado, balança religada | **Sim**, uma frase em P6 |
 | L12 | **"Desinstalar"** no menu: "Desinstalar EcoTray", "Deseja desinstalar o EcoTray?" (`tray_app.py:353-385`) | Trocar de computador | **Só citar** em P6 (não clicar) |
 | L13 | **"Testar conexão" / "Testar novamente" / "Desconectar"** do cartão de teste (`TesteConexaoBalanca.tsx`) | Conferir a balança sem abrir um pedido | **Só citar**: uma frase no cap06, linha do teste verde (P5) |
 | L14 | **"Restaurar padrão"** no "Ajuste do Comprovante Térmico" (`ReceiptScaleModal.tsx`) | Voltar a 80 mm e 100% | **Só citar** no cap05, sem trecho próprio |
@@ -157,7 +157,7 @@ só mostrar, com a fala "Na Recicla Vale, por enquanto, fica desligada."
 |---|---|
 | Semente `apos-cap06`. [CENA WINDOWS 9, atualizar: clique no ícone da bandeja; o painel abre; zoom no rodapé "EcoTray  v1.7.25" e "Atualizar Versão"; clique em "Atualizar Versão": "Verificando..." e, em seguida, "✓ Já atualizado" (verde, 4 s).] | O EcoTray se atualiza sozinho. Mas, se o sistema avisar que ele está desatualizado, clique em Atualizar Versão, aqui no rodapé da janela. |
 | (cena) Clique na aba "Logs": "Registro do EcoTray", "últimas ~200 linhas  •  inclui bytes crus [RAW] da balança", subabas "Geral" e "Balança do pátio", botões "Copiar tudo", "Abrir pasta do log", "Rodar diagnóstico" e "Atualizar". | Na aba Logs fica o registro de tudo que o EcoTray fez. |
-| (cena) Clique em "Copiar tudo". `[TESTAR: o texto que o botão mostra depois do clique, dashboard.py:1060-1073]` | Uma dica: se o suporte pedir, clique em Copiar tudo e cole na conversa. Assim a gente vê na hora o que a balança está mandando. |
+| (cena) Clique em "Copiar tudo": o botão mostra "✓ Copiado" por 1,8 s (`dashboard.py:1072-1073`). | Uma dica: se o suporte pedir, clique em Copiar tudo e cole na conversa. Assim a gente vê na hora o que a balança está mandando. |
 | [CENA WINDOWS 10, menu: botão direito no ícone da bandeja; o menu com "EcoTray v1.7.25", "Balança: COM3@9600", "Impressora: POS-58", "Reconectar balança", "Configurações", "Atualizar Versão", "Desinstalar", "Sair"; o cursor para em "Reconectar balança" e depois em "Desinstalar", sem clicar; Esc.] | No botão direito do ícone, o Reconectar balança chama a balança de novo, depois de trocar um cabo. E o Desinstalar remove o EcoTray, se o computador da balança mudar. |
 
 Recap (cap11): acrescentar à linha 4 "e onde atualizar o EcoTray e copiar o registro pro suporte".
