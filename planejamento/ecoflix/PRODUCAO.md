@@ -813,3 +813,10 @@ Decisões:
   usam) e, por aula, as cenas no v3 depois que a aplicação do 1.60.10 fechar o `ilustracoes.json` dela.
 - 18/11 17:0x **Junção 1.60 aplicada** (`JUNCAO_160.md`; 280 conferências). **Aplicação por aula em andamento**
   (`_BRIEF_APLICAR_160.md`): primeira leva T16, T07, T08, T00.
+- 18/11 17:25 **Kaik: "já gastou 26 por cento do meu limite semanal, tente economizar mais"**. Onde foi: 26 auditorias
+  (~6 M de tokens, uma vez só), junção, estilos. **Regras de economia daqui em diante**: (1) ensaio em LOTE, o agente
+  acorda uma vez por lote e não por capítulo (era o maior gasto: ~330 mil tokens por acordada); (2) no máximo 4 agentes
+  de aula ao mesmo tempo, nenhum agente retomado com contexto > 400 mil (agente novo lendo o `andamento_160.md`);
+  (3) Sonnet 5 nas aulas não fiscais de robô simples; Fable só em fiscal, Cato e direção de arte; (4) ilustração v3 só
+  onde o conceito não se entende pela tela (enxugar as 218 cenas 2D na migração: meta de até ~4 por aula);
+  (5) o coordenador responde curto e não comenta notificação de "esperando".

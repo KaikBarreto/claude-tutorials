@@ -28,10 +28,14 @@ a gravação final no 1.60.10. Sem aprovação no meio: termine e relate.
 3. **Robô**: atualize o `gerar.py` (capítulos novos, seletores e fluxos que mudaram), as sementes
    `rec/mundo/seeds-extra/tNN/` e os handlers que só a sua aula usa (um arquivo por RPC, espelhando a migration em
    `/dev/shm/ecoflix-src/supabase/migrations`). Mundo base e handlers compartilhados: só leitura (peça no relatório).
-4. **Ensaio de todos os capítulos** como no `_BRIEF_ROBO.md` item 3 (rápido com MP4 e folha de contato olhada; completo só
-   onde a regra pede), na sua instância 543NN, pela fila (`rec/fila.sh --prio NN`). **Um capítulo por chamada em segundo
-   plano, e o comando do capítulo é a própria chamada (`run_in_background`, prazo 7200000). Nada de Monitor nem de laço
-   de espera.** Capítulo que já passava na varredura e não mudou: basta o rápido.
+4. **Ensaio de todos os capítulos, em LOTE** (regra de economia de 18/11: cada vez que você acorda relê o contexto
+   inteiro, então acorde pouco). Termine primeiro TODAS as edições de todos os capítulos (passos 1 a 3). Depois lance UM
+   script em segundo plano (`run_in_background`, prazo 7200000) que ensaia em sequência todos os capítulos (cada um pela
+   fila `rec/fila.sh --prio NN`, rápido com MP4 `--preset ultrafast --crf 30`, `resumo.py --ens` e `prever.py` gravados em
+   arquivo; religando a instância 543NN se o `FAKE_NOW` do capítulo mudar) e só olhe quando o lote inteiro terminar
+   (resumos por `grep`/`tail`, folhas de contato juntas). Corrija tudo de uma vez; segundo lote só com os que falharam e
+   com os completos que o `_BRIEF_ROBO.md` item 3 pede. No máximo 3 lotes: o que não fechar vai no relatório com o comando
+   exato. Nada de Monitor, de laço de espera nem de relatório intermediário.
 5. **Ilustrações**: o estilo está sendo trocado (kit v3, aguardando o Kaik). NÃO construa cena. Só atualize
    `cenas/ilustracoes.json`: entradas novas ou alteradas com `cap`, `id`, `de`, `ate`, `resumo`, `mostra` (textos e
    números exatos) e `"clima": "fisico"` (pátio, caminhão, material, gente, papel) ou `"dados"` (conta, saldo,
