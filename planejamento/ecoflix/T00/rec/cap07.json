@@ -1,6 +1,6 @@
 {
  "name": "t00-cap07",
- "title": "T0 · Cap. 7 · Os menus e a sua conta (computador 1280x800; narração 53,9 s, ESTIMADA; marcas L1..L5 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
+ "title": "T0 · Cap. 7 · Os menus e a sua conta (computador 1280x800; narração 75,1 s, ESTIMADA; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
  "fakeNow": "2026-11-10T08:30:00-03:00",
  "seed": "t00-cap07",
  "pace": 0.5,
@@ -12,6 +12,7 @@
  },
  "anonymous": true,
  "storage": {
+  "cato_adoption_nudge_38814e47-876a-5977-a5f7-53af364c17bb_34c36c63-0890-5e89-8963-7c77b7996908": "{\"count\": 16, \"lastShownAt\": 1794310200000}",
   "app_version": "1.60.10",
   "notification_shown_version": "1.60.10",
   "pwa-install-dismissed": "true",
@@ -149,21 +150,31 @@
    "timeout": 4
   },
   {
-   "do": "hover",
+   "do": "click",
    "target": {
     "role": "menuitem",
     "name": "Tema"
    },
-   "seconds": 0.4,
    "at": 13.28,
-   "label": "Tema",
+   "label": "Tema (abre Claro, Escuro e Sistema)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "text": "Sistema",
+    "exact": true
+   },
+   "text": "",
+   "noClick": true,
+   "at": 18.06,
+   "label": "Tema: Claro, Escuro, Sistema (sem trocar)",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 16.67
+   "at": 18.87
   },
   {
    "do": "hover",
@@ -172,44 +183,194 @@
     "name": "Tutoriais | EcoFlix"
    },
    "seconds": 0.4,
-   "at": 16.9,
+   "at": 19.1,
    "label": "Tutoriais | EcoFlix",
    "optional": true,
    "timeout": 4
   },
   {
-   "do": "hover",
+   "do": "click",
    "target": {
     "role": "menuitem",
     "name": "Central de Ajuda"
    },
-   "seconds": 0.4,
-   "at": 20.46,
-   "label": "Central de Ajuda",
+   "at": 22.57,
+   "label": "Central de Ajuda (abre a gaveta de artigos)"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "placeholder": "Pesquisar artigos..."
+   },
+   "timeout": 10
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Pesquisar artigos..."
+   },
+   "text": "",
+   "noClick": true,
+   "at": 24.58,
+   "label": "Pesquisar artigos...",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 25.27,
+   "label": "fecha a Central de Ajuda"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Menu da conta",
+    "exact": true
+   },
+   "at": 26.07,
+   "label": "menu da conta de novo"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "role": "menuitem",
+    "name": "Falar com o Suporte"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Falar com o Suporte"
+   },
+   "at": 26.97,
+   "label": "Falar com o Suporte (abre a janela)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Nos conte o que está acontecendo",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Em qual tela/módulo?",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.36,
+   "at": 30.11,
+   "label": "Em qual tela/módulo? *",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "hover",
    "target": {
-    "role": "menuitem",
-    "name": "Falar com o Suporte"
+    "text": "O que aconteceu?",
+    "within": "[role=dialog]"
    },
-   "seconds": 0.4,
-   "at": 24.79,
-   "label": "Falar com o Suporte (sem clicar)",
+   "seconds": 0.5,
+   "at": 31.47,
+   "label": "O que aconteceu? Descreva com detalhes *",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Falar no WhatsApp",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.8,
+   "at": 34.28,
+   "label": "Falar no WhatsApp (apagado até preencher; sem clicar)",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 28.18
+   "at": 36.45
+  },
+  {
+   "do": "eval",
+   "js": "(() => { const ds = [...document.querySelectorAll('[role=dialog]')]; const d = ds[ds.length - 1]; if (!d) return 'ja fechada'; const b = [...d.querySelectorAll('button')].find((x) => [x.textContent, x.getAttribute('aria-label')].some((v) => /^\\s*fechar\\s*$/i.test(v || ''))); if (!b) return 'sem botao Fechar'; b.click(); return 'fechada pelo botao'; })()",
+   "at": 36.5,
+   "label": "fecha a janela do suporte sem enviar"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Menu da conta",
+    "exact": true
+   },
+   "at": 37.0,
+   "label": "menu da conta"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "role": "button",
+    "name": "Trocar de conta",
+    "exact": true
+   },
+   "timeout": 8
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Trocar de conta",
+    "exact": true
+   },
+   "at": 37.59,
+   "label": "cartão da conta (Trocar de conta): abre Adicionar conta"
+  },
+  {
+   "do": "type",
+   "target": {
+    "text": "Adicionar conta"
+   },
+   "text": "",
+   "noClick": true,
+   "label": "Adicionar conta",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "press",
    "key": "Escape",
-   "at": 28.48,
+   "at": 41.65,
+   "label": "fecha o menu da conta"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Sair",
+    "exact": true
+   },
+   "seconds": 0.8,
+   "at": 42.91,
+   "label": "rodapé: Sair (NUNCA clicar)",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 46.07
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 46.37,
    "label": "fecha o menu da conta"
   },
   {
@@ -219,7 +380,7 @@
     "name": "Configurações",
     "exact": true
    },
-   "at": 30.74,
+   "at": 48.12,
    "label": "rodapé: Configurações",
    "noScroll": true
   },
@@ -234,7 +395,7 @@
     "text": "Aparência",
     "exact": true
    },
-   "at": 32.03,
+   "at": 49.91,
    "label": "aba Aparência"
   },
   {
@@ -259,7 +420,7 @@
    "target": {
     "selector": "label[for=topbar-nav]"
    },
-   "at": 34.45,
+   "at": 52.34,
    "label": "Menu Superior (o menu passa para a barra do topo)"
   },
   {
@@ -273,8 +434,8 @@
   },
   {
    "do": "mark",
-   "name": "L5",
-   "at": 39.76
+   "name": "L6",
+   "at": 57.65
   },
   {
    "do": "scroll",
@@ -285,7 +446,7 @@
    "by": 0,
    "duration": 0.2,
    "after": 0,
-   "at": 40.06,
+   "at": 57.95,
    "label": "cursor ao centro"
   },
   {
@@ -296,7 +457,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 53.93
+   "at": 75.08
   }
  ]
 }

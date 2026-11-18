@@ -1,6 +1,6 @@
 {
  "name": "t00-cap10",
- "title": "T0 · Cap. 10 · Módulos e permissões (computador 1280x800; narração 47,2 s, ESTIMADA; marcas L1..L4 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
+ "title": "T0 · Cap. 10 · A sua assinatura (computador 1280x800; narração 61,7 s, ESTIMADA; marcas L1..L8 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
  "fakeNow": "2026-11-10T08:30:00-03:00",
  "seed": "t00-cap10",
  "pace": 0.5,
@@ -12,6 +12,7 @@
  },
  "anonymous": true,
  "storage": {
+  "cato_adoption_nudge_38814e47-876a-5977-a5f7-53af364c17bb_34c36c63-0890-5e89-8963-7c77b7996908": "{\"count\": 16, \"lastShownAt\": 1794310200000}",
   "app_version": "1.60.10",
   "notification_shown_version": "1.60.10",
   "pwa-install-dismissed": "true",
@@ -78,11 +79,11 @@
   },
   {
    "do": "goto",
-   "url": "/assinatura"
+   "url": "/dashboard"
   },
   {
    "do": "waitFor",
-   "text": "Gerencie seu plano, módulos e pagamentos",
+   "text": "Olá, Rafael!",
    "timeout": 30
   },
   {
@@ -102,56 +103,245 @@
    "at": 0
   },
   {
-   "do": "eval",
-   "js": "(async()=>{const vis=e=>e.getClientRects().length>0&&getComputedStyle(e).visibility!=='hidden';const nz=t=>t.replace(/[\\s\\u00a0]+/g,' ').trim();const rolagem=(el)=>{let c=el.parentElement;while(c&&c!==document.body&&c!==document.documentElement){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const root=document.querySelector(\"main\")||document.body;const el=[...root.querySelectorAll('*')].filter(e=>vis(e)&&nz(e.textContent)===\"Plano & m\\u00f3dulos\"&&![...e.children].some(k=>nz(k.textContent)===\"Plano & m\\u00f3dulos\"))[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-140);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/1400),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 0.0,
-   "label": "desce a Plano & módulos"
-  },
-  {
-   "do": "type",
+   "do": "click",
    "target": {
-    "text": "Plano & módulos",
-    "within": "main"
-   },
-   "text": "",
-   "noClick": true,
-   "label": "cartão Plano & módulos",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const vis=e=>e.getClientRects().length>0&&getComputedStyle(e).visibility!=='hidden';const nz=t=>t.replace(/[\\s\\u00a0]+/g,' ').trim();const rolagem=(el)=>{let c=el.parentElement;while(c&&c!==document.body&&c!==document.documentElement){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const root=document.querySelector(\"main\")||document.body;const el=[...root.querySelectorAll('*')].filter(e=>vis(e)&&nz(e.textContent)===\"M\\u00f3dulos ativos\"&&![...e.children].some(k=>nz(k.textContent)===\"M\\u00f3dulos ativos\"))[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-170);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/800),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 1.1,
-   "label": "desce a Módulos ativos"
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "Módulos ativos",
-    "within": "main",
+    "role": "button",
+    "name": "Menu da conta",
     "exact": true
    },
-   "seconds": 0.6,
-   "at": 3.22,
-   "label": "Módulos ativos",
-   "optional": true,
-   "timeout": 4
+   "at": 1.81,
+   "label": "cartão Rafael Nogueira (menu da conta)"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "role": "menuitem",
+    "name": "Assinatura"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Assinatura"
+   },
+   "at": 2.82,
+   "label": "Assinatura"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie seu plano, módulos e pagamentos",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "text": "Uso da conta",
+   "timeout": 15
   },
   {
    "do": "mark",
    "name": "L2",
-   "at": 9.87
+   "at": 6.0
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 24.34
+   "at": 13.64
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const vis=e=>e.getClientRects().length>0&&getComputedStyle(e).visibility!=='hidden';const nz=t=>t.replace(/[\\s\\u00a0]+/g,' ').trim();const rolagem=(el)=>{let c=el.parentElement;while(c&&c!==document.body&&c!==document.documentElement){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const root=document.querySelector(\"main\")||document.body;const el=[...root.querySelectorAll('*')].filter(e=>vis(e)&&nz(e.textContent)===\"Recicla Vale Metais Ltda\"&&![...e.children].some(k=>nz(k.textContent)===\"Recicla Vale Metais Ltda\"))[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const r0=el.getBoundingClientRect();const cr=c.getBoundingClientRect?c.getBoundingClientRect():{top:0,bottom:innerHeight};const top0=c===document.scrollingElement?0:cr.top,bot0=c===document.scrollingElement?innerHeight:cr.bottom;if(r0.top>=top0+8&&r0.bottom<=bot0-8)return 'ok';const dy=Math.round(el.getBoundingClientRect().top-170);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/500),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 13.64,
+   "label": "a página no alto do cartão do plano"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Recicla Vale Metais Ltda",
+    "within": "main",
+    "exact": true
+   },
+   "seconds": 0.4,
+   "at": 13.87,
+   "label": "nome da empresa",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Ativa",
+    "within": "main",
+    "exact": true
+   },
+   "seconds": 0.4,
+   "at": 16.83,
+   "label": "selo Ativa",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Plano Personalizado",
+    "within": "main"
+   },
+   "seconds": 0.4,
+   "at": 18.42,
+   "label": "Plano Personalizado • 10 módulos",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 32.51
+   "at": 21.58
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "25 dias restantes",
+    "within": "main"
+   },
+   "seconds": 0.22,
+   "at": 23.32,
+   "label": "25 dias restantes",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Vencimento",
+    "within": "main",
+    "exact": true
+   },
+   "seconds": 0.6,
+   "at": 24.54,
+   "label": "Vencimento 05/12/2026",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 27.39
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const vis=e=>e.getClientRects().length>0&&getComputedStyle(e).visibility!=='hidden';const nz=t=>t.replace(/[\\s\\u00a0]+/g,' ').trim();const rolagem=(el)=>{let c=el.parentElement;while(c&&c!==document.body&&c!==document.documentElement){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const root=document.querySelector(\"main\")||document.body;const el=[...root.querySelectorAll('*')].filter(e=>vis(e)&&nz(e.textContent)===\"Formas de pagamento\"&&![...e.children].some(k=>nz(k.textContent)===\"Formas de pagamento\"))[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-330);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/800),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 34.18,
+   "label": "a página desce ao valor e às formas de pagamento"
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 34.88
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Valor mensal",
+    "within": "main",
+    "exact": true
+   },
+   "seconds": 0.4,
+   "at": 35.86,
+   "label": "Valor mensal (sem zoom no valor)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Formas de pagamento",
+    "within": "main",
+    "exact": true
+   },
+   "seconds": 0.44,
+   "at": 37.84,
+   "label": "Formas de pagamento: PIX, Boleto, Cartão",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const vis=e=>e.getClientRects().length>0&&getComputedStyle(e).visibility!=='hidden';const nz=t=>t.replace(/[\\s\\u00a0]+/g,' ').trim();const rolagem=(el)=>{let c=el.parentElement;while(c&&c!==document.body&&c!==document.documentElement){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const root=document.querySelector(\"main\")||document.body;const el=[...root.querySelectorAll('*')].filter(e=>vis(e)&&nz(e.textContent)===\"Uso da conta\"&&![...e.children].some(k=>nz(k.textContent)===\"Uso da conta\"))[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-150);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/800),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 39.28,
+   "label": "a página sobe a Uso da conta"
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 39.78
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Usuários",
+    "within": "main",
+    "exact": true
+   },
+   "seconds": 0.5,
+   "at": 43.58,
+   "label": "Uso da conta: Usuários 1 / 3",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Notas fiscais este mês",
+    "within": "main",
+    "exact": true
+   },
+   "seconds": 0.5,
+   "at": 45.25,
+   "label": "Uso da conta: Notas fiscais este mês",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const vis=e=>e.getClientRects().length>0&&getComputedStyle(e).visibility!=='hidden';const nz=t=>t.replace(/[\\s\\u00a0]+/g,' ').trim();const rolagem=(el)=>{let c=el.parentElement;while(c&&c!==document.body&&c!==document.documentElement){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const root=document.querySelector(\"main\")||document.body;const el=[...root.querySelectorAll('*')].filter(e=>vis(e)&&nz(e.textContent).startsWith(\"Pagar Agora\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-520);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/800),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 47.1,
+   "label": "a página desce a Pagar Agora"
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 47.8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Pagar Agora"
+   },
+   "seconds": 0.1,
+   "at": 52.05,
+   "label": "botão Pagar Agora (sem clicar)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const vis=e=>e.getClientRects().length>0&&getComputedStyle(e).visibility!=='hidden';const nz=t=>t.replace(/[\\s\\u00a0]+/g,' ').trim();const rolagem=(el)=>{let c=el.parentElement;while(c&&c!==document.body&&c!==document.documentElement){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const root=document.querySelector(\"main\")||document.body;const el=[...root.querySelectorAll('*')].filter(e=>vis(e)&&nz(e.textContent).startsWith(\"Gerenciar plano\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-520);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/1200),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 52.26,
+   "label": "a página desce a Gerenciar plano"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Gerenciar plano"
+   },
+   "seconds": 0.6,
+   "at": 53.27,
+   "label": "botão Gerenciar plano (sem clicar)",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "eval",
@@ -161,7 +351,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 47.22
+   "at": 61.75
   }
  ]
 }

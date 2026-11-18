@@ -1,6 +1,6 @@
 {
  "name": "t07-cap09",
- "title": "T07 · Cap. 9 · Finalizar o pedido (narração 64,1 s ESTIMADA; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:35:00-03:00; usuário rafael)",
+ "title": "T07 · Cap. 9 · Dois pedidos ao mesmo tempo (narração 86,3 s ESTIMADA; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:35:00-03:00; usuário rafael)",
  "seed": "t07-cap09",
  "pace": 0.5,
  "cps": 14,
@@ -16,7 +16,8 @@
   "pwa-install-dismissed": "true",
   "theme": "light",
   "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
-  "initial-preferences-set": "true"
+  "initial-preferences-set": "true",
+  "cato_adoption_nudge_38814e47-876a-5977-a5f7-53af364c17bb_34c36c63-0890-5e89-8963-7c77b7996908": "{\"count\":99,\"lastShownAt\":0}"
  },
  "seedExtra": [
   "t07/inicio",
@@ -592,179 +593,427 @@
    "at": 0.0
   },
   {
-   "do": "click",
-   "target": {
-    "role": "button",
-    "name": "Finalizar",
-    "exact": true
-   },
-   "at": 1.98,
-   "label": "Finalizar"
-  },
-  {
-   "do": "waitFor",
-   "text": "Finalizar Pedido",
-   "timeout": 10
-  },
-  {
    "do": "hover",
    "target": {
-    "text": "Fornecedor:",
-    "exact": true
+    "selector": "div:has(> button[aria-label='Novo pedido de compra']) > button:not([aria-label])"
    },
-   "seconds": 0.6,
-   "at": 7.13,
-   "label": "Resumo: fornecedor",
+   "seconds": 2.0,
+   "at": 2.58,
+   "label": "barra de pedidos: #1759, R$ 913,20, José Carlos Moreira (zoom)",
    "optional": true,
    "timeout": 4
   },
   {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"#1759\", \"913,20\", \"José Carlos Moreira\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText+' '+[...el.querySelectorAll('input,textarea')].map(i=>i.value).join(' '));const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere barra com o pedido do Zé"
+  },
+  {
    "do": "hover",
    "target": {
-    "text": "Qtd.",
-    "exact": true
+    "selector": "div:has(> button[aria-label='Novo pedido de compra']) > button:not([aria-label])"
    },
-   "seconds": 0.6,
-   "at": 8.42,
-   "label": "Resumo: itens",
+   "seconds": 1.6,
+   "at": 6.83,
+   "label": "o número, o valor e o fornecedor",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L2",
-   "at": 9.72
+   "at": 9.41
   },
   {
    "do": "hover",
    "target": {
-    "text": "Valor total",
-    "exact": true
+    "selector": "button[aria-label='Novo pedido de compra']"
    },
-   "seconds": 0.8,
-   "at": 9.72,
-   "label": "Resumo: Valor total R$ 913,20",
+   "seconds": 0.6,
+   "at": 16.67,
+   "label": "botão Novo pedido",
    "optional": true,
    "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "button[aria-label='Novo pedido de compra']"
+   },
+   "at": 17.89,
+   "label": "Novo pedido (abre o 2º pedido)"
+  },
+  {
+   "do": "waitFor",
+   "text": "#1760",
+   "timeout": 10
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 25.63
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "[role=dialog] button:has(span:text-is('Pix/Transferência'))"
-   },
-   "at": 26.06,
-   "label": "Pix/Transferência"
+   "at": 21.0
   },
   {
    "do": "hover",
    "target": {
-    "text": "Chave PIX do fornecedor",
-    "within": "[role=dialog]",
-    "exact": false
+    "selector": "div:has(> button[aria-label='Novo pedido de compra']) > button:not([aria-label])"
    },
-   "seconds": 2.0,
-   "at": 30.46,
-   "label": "Chave PIX do fornecedor (zoom)",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "mark",
-   "name": "L4",
-   "at": 33.8
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "[role=dialog] button:has(span:text-is('Saldo do Fornecedor'))"
-   },
-   "at": 34.22,
-   "label": "Saldo do Fornecedor"
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "Saldo após o pedido:"
-   },
-   "seconds": 2.0,
-   "at": 35.21,
-   "label": "Saldo após o pedido: Você deverá a ele (zoom)",
+   "seconds": 1.2,
+   "at": 21.0,
+   "label": "barra: #1760, R$ 0,00 e o contador (2)",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Você deverá a ele\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"body\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText+' '+[...el.querySelectorAll('input,textarea')].map(i=>i.value).join(' '));const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
-   "label": "confere Você deverá a ele"
-  },
-  {
-   "do": "mark",
-   "name": "L5",
-   "at": 39.91
+   "js": "(()=>{const b=document.querySelector(\"button[aria-label='Novo pedido de compra']\");return b?b.parentElement.innerText.replace(/\\s+/g,' '):'SEM ALVO'})()",
+   "label": "texto da barra no pedido novo (lido)"
   },
   {
    "do": "click",
    "target": {
-    "selector": "[role=dialog] button:has(span:text-is('Dinheiro'))"
+    "selector": "#supplier-desktop-top"
    },
-   "at": 42.17,
-   "label": "Dinheiro"
+   "at": 21.0,
+   "label": "Selecionar fornecedor"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "[role=dialog] button:has-text('Não informado')"
+   },
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:has-text('Não informado')"
+   },
+   "at": 26.21,
+   "label": "Não informado"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "balanca",
+   "peso": 10,
+   "subir": 0.6,
+   "oscilar": 0.6,
+   "label": "cobre na balança (10 kg)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "placeholder": "Escreva o nome ou código do material"
+   },
+   "label": "Material"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Escreva o nome ou código do material"
+   },
+   "text": "cobre mi",
+   "cps": 40,
+   "noClick": true,
+   "label": "material: cobre mi"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Cobre misto",
+    "exact": false
+   },
+   "at": 27.43,
+   "label": "Cobre misto"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{let v='';for(let i=0;i<35;i++){const l=[...document.querySelectorAll('main label')].find(x=>x.textContent.includes(\"Quantidade (Kg)\"));let p=l;while(p&&p!==document.body&&!p.querySelector('input'))p=p.parentElement;const el=l&&p&&p.querySelector('input');v=el?el.value:'SEM ALVO';if(v===\"10,0\")return 'OK: '+v;await new Promise(r=>setTimeout(r,200));}return 'DIFERENTE: '+v})()",
+   "label": "confere Quantidade 10,0 da balança"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Incluir Item",
+    "exact": true
+   },
+   "at": 28.56,
+   "label": "Incluir Item (cobre, 10 kg)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Itens do Pedido (1)",
+   "timeout": 8
+  },
+  {
+   "do": "balanca",
+   "peso": 0,
+   "subir": 0.5,
+   "oscilar": 0.3,
+   "label": "tira o cobre da balança"
   },
   {
    "do": "hover",
    "target": {
-    "text": "Saldo atual do caixa",
-    "within": "[role=dialog]",
-    "exact": false
+    "selector": "main tbody tr:has-text('Cobre misto') span.truncate.text-muted-foreground",
+    "nth": 0
    },
-   "seconds": 0.6,
-   "at": 45.35,
-   "label": "Saldo atual do caixa",
+   "seconds": 3.0,
+   "at": 30.46,
+   "label": "legenda embaixo do Valor/Kg: Principal (zoom)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"36,00\", \"Principal\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main tbody tr\")].filter(e=>!true||e.innerText.includes(\"Cobre misto\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText+' '+[...el.querySelectorAll('input,textarea')].map(i=>i.value).join(' '));const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere cobre a 36,00 com a legenda Principal"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"360,00\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText+' '+[...el.querySelectorAll('input,textarea')].map(i=>i.value).join(' '));const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Total da Compra R$ 360,00"
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 36.15
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#supplier-desktop-top"
+   },
+   "at": 36.5,
+   "label": "campo Fornecedor"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Buscar por nome, apelido, CPF/CNPJ ou telefone..."
+   },
+   "text": "siqueira",
+   "cps": 30,
+   "at": 37.09,
+   "label": "busca siqueira"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:has-text('Depósito Irmãos Siqueira')"
+   },
+   "at": 40.07,
+   "label": "Depósito Irmãos Siqueira"
+  },
+  {
+   "do": "waitFor",
+   "text": "Trocar fornecedor?",
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Itens que mudam",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.4,
+   "at": 47.51,
+   "label": "Itens que mudam 1 de 1 e Total se atualizar (zoom)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Total se atualizar",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.05,
+   "at": 49.18,
+   "label": "Total se atualizar: R$ 360,00 riscado e R$ 374,40",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 50.78
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Total se atualizar",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.35,
+   "at": 50.78,
+   "label": "Total se atualizar: R$ 360,00 riscado e R$ 374,40 (continua)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"O pedido já tem 1 item lançado. Escolha o que fazer com os preços atuais.\", \"Não informado\", \"Depósito Irmãos Siqueira\", \"1 de 1\", \"R$ 360,00\", \"R$ 374,40\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText+' '+[...el.querySelectorAll('input,textarea')].map(i=>i.value).join(' '));const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere janela Trocar fornecedor?"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Só nos próximos",
+    "exact": true
+   },
+   "seconds": 2.2,
+   "at": 51.13,
+   "label": "Só nos próximos",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Atualizar 1 item"
+   },
+   "seconds": 1.8,
+   "at": 57.2,
+   "label": "Atualizar 1 item",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L6",
-   "at": 46.34
+   "at": 61.15
   },
   {
    "do": "click",
    "target": {
     "role": "button",
-    "name": "CONFIRMAR PAGAMENTO"
+    "name": "Atualizar 1 item"
    },
-   "at": 46.54,
-   "label": "CONFIRMAR PAGAMENTO"
+   "at": 61.35,
+   "label": "Atualizar 1 item (clique)"
   },
   {
    "do": "waitFor",
-   "text": "Compra registrada!",
-   "timeout": 12
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 8
   },
   {
-   "do": "waitFor",
-   "text": "Imprimir Comprovante",
-   "timeout": 10
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('Cobre misto')",
+    "nth": 0
+   },
+   "seconds": 1.2,
+   "at": 62.49,
+   "label": "a linha: 37,44 e Tabela Depósitos, total R$ 374,40 (zoom)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('Cobre misto') span.truncate.text-muted-foreground",
+    "nth": 0
+   },
+   "seconds": 1.6,
+   "at": 66.89,
+   "label": "legenda Tabela Depósitos",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"37,44\", \"Tabela Depósitos\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main tbody tr\")].filter(e=>!true||e.innerText.includes(\"Cobre misto\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText+' '+[...el.querySelectorAll('input,textarea')].map(i=>i.value).join(' '));const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere cobre a 37,44 pela Tabela Depósitos"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"374,40\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText+' '+[...el.querySelectorAll('input,textarea')].map(i=>i.value).join(' '));const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Total da Compra R$ 374,40"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main button:has-text('Tabela Depósitos')"
+   },
+   "seconds": 0.82,
+   "at": 73.27,
+   "label": "Tabela de Preços: Tabela Depósitos",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 74.64
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main button:has-text('Tabela Depósitos')"
+   },
+   "seconds": 0.38,
+   "at": 74.64,
+   "label": "Tabela de Preços: Tabela Depósitos (continua)",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "click",
    "target": {
-    "role": "button",
-    "name": "Imprimir direto"
+    "selector": "div:has(> button[aria-label='Novo pedido de compra']) > button:not([aria-label])"
    },
-   "at": 57.39,
-   "label": "Imprimir direto"
+   "at": 77.49,
+   "label": "barra de pedidos (abre a lista)"
   },
   {
    "do": "waitFor",
-   "text": "Comprovante enviado para a impressora",
-   "timeout": 10
+   "target": {
+    "selector": "div:has(> button[aria-label='Descartar pedido']) > button:has-text('José Carlos')"
+   },
+   "timeout": 6
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "div:has(> button[aria-label='Descartar pedido']) > button:has-text('José Carlos')"
+   },
+   "at": 78.1,
+   "label": "o pedido do Zé na lista"
+  },
+  {
+   "do": "waitFor",
+   "text": "Itens do Pedido (3)",
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main :text-matches('^Itens do Pedido')"
+   },
+   "seconds": 2.0,
+   "at": 81.82,
+   "label": "o pedido do Zé de volta: 3 itens, R$ 913,20",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"913,20\", \"Ferro misto\", \"José Carlos Moreira\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText+' '+[...el.querySelectorAll('input,textarea')].map(i=>i.value).join(' '));const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere pedido do Zé de volta"
   },
   {
    "do": "eval",
@@ -774,7 +1023,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 64.08
+   "at": 86.31
   }
  ]
 }

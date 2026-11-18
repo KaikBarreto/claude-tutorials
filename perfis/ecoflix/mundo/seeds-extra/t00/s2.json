@@ -1,5 +1,20 @@
 {
- "_doc": "S2: conta ativa; o T0 concluído e a introdução confirmada (sem portão). Faça seedExtra [t00/catalogo, t00/s2, t00/pagamentos].",
+ "_doc": "S2: conta ativa; o T0 concluído e a introdução confirmada (sem portão); mensalidade 1.350,00 = soma do catálogo, 1 usuário extra. Faça seedExtra [t00/catalogo, t00/s2, t00/pagamentos].",
+ "_patch": {
+  "companies": [
+   {
+    "match": {
+     "id": "@id:company.reciclavale"
+    },
+    "set": {
+     "subscription_value": 1350,
+     "base_subscription_value": 1350,
+     "extra_users": 1,
+     "max_users": 3
+    }
+   }
+  ]
+ },
  "ecoflix_user_progress": [
   {
    "id": "@id:ecoflix.progress.t00",

@@ -1,6 +1,6 @@
 {
  "name": "t00-cap06",
- "title": "T0 · Cap. 6 · Um passeio pelo menu (computador 1280x800; narração 67,2 s, ESTIMADA; marcas L1..L10 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
+ "title": "T0 · Cap. 6 · Um passeio pelo menu (computador 1280x800; narração 83,3 s, ESTIMADA; marcas L1..L11 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
  "fakeNow": "2026-11-10T08:30:00-03:00",
  "seed": "t00-cap06",
  "pace": 0.5,
@@ -12,6 +12,7 @@
  },
  "anonymous": true,
  "storage": {
+  "cato_adoption_nudge_38814e47-876a-5977-a5f7-53af364c17bb_34c36c63-0890-5e89-8963-7c77b7996908": "{\"count\": 16, \"lastShownAt\": 1794310200000}",
   "app_version": "1.60.10",
   "notification_shown_version": "1.60.10",
   "pwa-install-dismissed": "true",
@@ -167,22 +168,97 @@
    "at": 19.3
   },
   {
-   "do": "hover",
+   "do": "click",
    "target": {
     "role": "button",
     "name": "Fiscal & Ambiental",
     "exact": true
    },
-   "seconds": 0.5,
-   "at": 19.53,
-   "label": "menu: Fiscal & Ambiental (sem abrir)",
+   "at": 19.43,
+   "label": "Fiscal & Ambiental (abre o grupo; o Financeiro fecha)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "link",
+    "name": "Notas Fiscais (NF-e)",
+    "exact": true
+   },
+   "seconds": 0.3,
+   "at": 21.65,
+   "label": "Fiscal & Ambiental: Notas Fiscais (NF-e)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "link",
+    "name": "Notas de Serviço (NFS-e)",
+    "exact": true
+   },
+   "seconds": 0.1,
+   "at": 24.16,
+   "label": "Fiscal & Ambiental: Notas de Serviço (NFS-e)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "link",
+    "name": "Transporte (MDF-e)",
+    "exact": true
+   },
+   "seconds": 0.29,
+   "at": 25.14,
+   "label": "Fiscal & Ambiental: Transporte (MDF-e)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "link",
+    "name": "Ambiental (MTR/CDF)",
+    "exact": true
+   },
+   "seconds": 0.3,
+   "at": 26.43,
+   "label": "Fiscal & Ambiental: Ambiental (MTR/CDF)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "link",
+    "name": "Estoque Fiscal",
+    "exact": true
+   },
+   "seconds": 0.3,
+   "at": 28.48,
+   "label": "Fiscal & Ambiental: Estoque Fiscal",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "link",
+    "name": "Relatórios Fiscais",
+    "exact": true
+   },
+   "seconds": 0.3,
+   "at": 30.0,
+   "label": "Fiscal & Ambiental: Relatórios Fiscais",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L5",
-   "at": 24.96
+   "at": 31.87
   },
   {
    "do": "click",
@@ -191,8 +267,8 @@
     "name": "Materiais",
     "exact": true
    },
-   "at": 25.09,
-   "label": "Materiais (abre o grupo; o Financeiro fecha)"
+   "at": 32.0,
+   "label": "Materiais (abre o grupo; o Fiscal & Ambiental fecha)"
   },
   {
    "do": "type",
@@ -203,7 +279,7 @@
    },
    "text": "",
    "noClick": true,
-   "at": 28.01,
+   "at": 34.92,
    "label": "subitens de Materiais",
    "optional": true,
    "timeout": 4
@@ -211,13 +287,13 @@
   {
    "do": "eval",
    "js": "(async()=>{const vis=e=>e.getClientRects().length>0&&getComputedStyle(e).visibility!=='hidden';const nz=t=>t.replace(/[\\s\\u00a0]+/g,' ').trim();const rolagem=(el)=>{let c=el.parentElement;while(c&&c!==document.body&&c!==document.documentElement){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const root=document.querySelector(\"body\")||document.body;const el=[...root.querySelectorAll('*')].filter(e=>vis(e)&&nz(e.textContent)===\"Coletas & Log\\u00edstica\"&&![...e.children].some(k=>nz(k.textContent)===\"Coletas & Log\\u00edstica\"))[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const r0=el.getBoundingClientRect();const cr=c.getBoundingClientRect?c.getBoundingClientRect():{top:0,bottom:innerHeight};const top0=c===document.scrollingElement?0:cr.top,bot0=c===document.scrollingElement?innerHeight:cr.bottom;if(r0.top>=top0+8&&r0.bottom<=bot0-8)return 'ok';const dy=Math.round(el.getBoundingClientRect().top-300);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/500),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 29.59,
+   "at": 36.5,
    "label": "o menu desce a Coletas & Logística"
   },
   {
    "do": "mark",
    "name": "L6",
-   "at": 30.09
+   "at": 37.0
   },
   {
    "do": "hover",
@@ -227,7 +303,7 @@
     "exact": true
    },
    "seconds": 0.5,
-   "at": 30.32,
+   "at": 37.23,
    "label": "menu: Coletas & Logística (sem abrir)",
    "optional": true,
    "timeout": 4
@@ -235,7 +311,7 @@
   {
    "do": "mark",
    "name": "L7",
-   "at": 34.77
+   "at": 41.68
   },
   {
    "do": "hover",
@@ -245,7 +321,7 @@
     "exact": true
    },
    "seconds": 0.4,
-   "at": 36.74,
+   "at": 43.65,
    "label": "menu: Clientes e Fornecedores",
    "optional": true,
    "timeout": 4
@@ -258,7 +334,7 @@
     "exact": true
    },
    "seconds": 0.4,
-   "at": 39.7,
+   "at": 46.61,
    "label": "menu: Funcionários (RH)",
    "optional": true,
    "timeout": 4
@@ -271,7 +347,7 @@
     "exact": true
    },
    "seconds": 0.1,
-   "at": 42.21,
+   "at": 49.12,
    "label": "menu: CRM/Kanban",
    "optional": true,
    "timeout": 4
@@ -279,13 +355,13 @@
   {
    "do": "eval",
    "js": "(async()=>{const vis=e=>e.getClientRects().length>0&&getComputedStyle(e).visibility!=='hidden';const nz=t=>t.replace(/[\\s\\u00a0]+/g,' ').trim();const rolagem=(el)=>{let c=el.parentElement;while(c&&c!==document.body&&c!==document.documentElement){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const root=document.querySelector(\"body\")||document.body;const el=[...root.querySelectorAll('*')].filter(e=>vis(e)&&nz(e.textContent)===\"Gerencial (Filiais)\"&&![...e.children].some(k=>nz(k.textContent)===\"Gerencial (Filiais)\"))[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const r0=el.getBoundingClientRect();const cr=c.getBoundingClientRect?c.getBoundingClientRect():{top:0,bottom:innerHeight};const top0=c===document.scrollingElement?0:cr.top,bot0=c===document.scrollingElement?innerHeight:cr.bottom;if(r0.top>=top0+8&&r0.bottom<=bot0-8)return 'ok';const dy=Math.round(el.getBoundingClientRect().top-300);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/500),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 42.95,
+   "at": 49.85,
    "label": "o menu desce ao Gerencial (Filiais)"
   },
   {
    "do": "mark",
    "name": "L8",
-   "at": 43.55
+   "at": 50.45
   },
   {
    "do": "hover",
@@ -295,7 +371,7 @@
     "exact": true
    },
    "seconds": 0.4,
-   "at": 43.77,
+   "at": 50.68,
    "label": "menu: Agenda",
    "optional": true,
    "timeout": 4
@@ -308,7 +384,7 @@
     "exact": true
    },
    "seconds": 0.4,
-   "at": 46.66,
+   "at": 53.57,
    "label": "menu: Gerencial (Filiais)",
    "optional": true,
    "timeout": 4
@@ -316,7 +392,7 @@
   {
    "do": "mark",
    "name": "L9",
-   "at": 50.27
+   "at": 57.18
   },
   {
    "do": "hover",
@@ -326,7 +402,7 @@
     "exact": true
    },
    "seconds": 0.6,
-   "at": 51.72,
+   "at": 58.63,
    "label": "rodapé: Configurações",
    "noScroll": true,
    "optional": true,
@@ -335,12 +411,45 @@
   {
    "do": "mark",
    "name": "L10",
-   "at": 54.04
+   "at": 60.95
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Buscar",
+    "exact": true
+   },
+   "seconds": 0.6,
+   "at": 62.77,
+   "label": "alto da tela: Buscar (sem abrir)",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Notificações",
+    "exact": true
+   },
+   "seconds": 0.6,
+   "at": 68.31,
+   "label": "alto da tela: Notificações (sem abrir)",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L11",
+   "at": 70.18
   },
   {
    "do": "eval",
    "js": "(async()=>{const vis=e=>e.getClientRects().length>0&&getComputedStyle(e).visibility!=='hidden';const nz=t=>t.replace(/[\\s\\u00a0]+/g,' ').trim();const rolagem=(el)=>{let c=el.parentElement;while(c&&c!==document.body&&c!==document.documentElement){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const root=document.querySelector(\"body\")||document.body;const el=[...root.querySelectorAll('*')].filter(e=>vis(e)&&nz(e.textContent)===\"Dashboard\"&&![...e.children].some(k=>nz(k.textContent)===\"Dashboard\"))[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const r0=el.getBoundingClientRect();const cr=c.getBoundingClientRect?c.getBoundingClientRect():{top:0,bottom:innerHeight};const top0=c===document.scrollingElement?0:cr.top,bot0=c===document.scrollingElement?innerHeight:cr.bottom;if(r0.top>=top0+8&&r0.bottom<=bot0-8)return 'ok';const dy=Math.round(el.getBoundingClientRect().top-120);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 54.14,
+   "at": 70.28,
    "label": "o menu volta ao topo"
   },
   {
@@ -352,7 +461,7 @@
    "by": 0,
    "duration": 0.2,
    "after": 0,
-   "at": 61.33,
+   "at": 77.47,
    "label": "cursor sai do menu"
   },
   {
@@ -363,7 +472,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 67.16
+   "at": 83.29
   }
  ]
 }

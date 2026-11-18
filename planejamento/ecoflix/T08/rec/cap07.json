@@ -1,16 +1,17 @@
 {
  "name": "t08-cap07",
- "title": "T08 · Cap. 7 · Valorizar o ticket (narração 49,4 s ESTIMADA; marcas L1..L5 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:58:00-03:00)",
+ "title": "T08 · Cap. 7 · Ticket com valores (narração 71,9 s ESTIMADA; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:55:00-03:00)",
  "seed": "t08-cap07",
  "pace": 0.5,
  "cps": 9,
  "tail": 1.5,
  "start": {
-  "x": 700,
-  "y": 420
+  "x": 1150,
+  "y": 330
  },
  "anonymous": true,
  "storage": {
+  "cato_adoption_nudge_38814e47-876a-5977-a5f7-53af364c17bb_34c36c63-0890-5e89-8963-7c77b7996908": "{\"count\":99,\"lastShownAt\":4102444800000}",
   "app_version": "1.60.10",
   "notification_shown_version": "1.60.10",
   "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
@@ -89,12 +90,24 @@
    "seconds": 0.8
   },
   {
-   "do": "eval",
-   "js": "(()=>{const w=document.querySelector('[data-state][data-collapsible]');if(w&&w.getAttribute('data-state')==='collapsed')return 'ja recolhido';const b=document.querySelector(\"button[aria-label='Toggle Sidebar']\");if(!b)return 'sem botao';b.click();return 'recolhido'})()"
+   "do": "click",
+   "target": {
+    "text": "Rascunhos abertos"
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Preencha o ticket. Use as abas para atender vários veículos.",
+   "timeout": 20
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 20
   },
   {
    "do": "wait",
-   "seconds": 0.8
+   "seconds": 1.0
   },
   {
    "do": "eval",
@@ -110,148 +123,310 @@
   {
    "do": "hover",
    "target": {
-    "selector": "main div.rounded-lg:has([aria-label='Selecionar ticket #58']):not(:has(div.rounded-lg [aria-label='Selecionar ticket #58']))"
+    "role": "button",
+    "name": "Com valores",
+    "exact": true
    },
-   "seconds": 0.8,
-   "at": 4.43,
-   "label": "cartão do Ticket #58",
+   "seconds": 0.6,
+   "at": 8.46,
+   "label": "chave Valores (sem clicar)",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L2",
-   "at": 8.44
+   "at": 9.89
   },
   {
    "do": "click",
    "target": {
     "role": "button",
-    "name": "Ações",
-    "within": "main div.rounded-lg:has([aria-label='Selecionar ticket #58']):not(:has(div.rounded-lg [aria-label='Selecionar ticket #58']))"
+    "name": "Com valores",
+    "exact": true
    },
-   "at": 8.44,
-   "label": "Ações do #58"
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "menuitem",
-    "name": "Valorizar"
-   },
-   "label": "Valorizar"
+   "at": 10.76,
+   "label": "Com valores"
   },
   {
    "do": "waitFor",
-   "text": "Origem: Ticket de Pesagem",
-   "timeout": 15
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Origem: Ticket de Pesagem #58\", \"R$ 18.714,08\", \"61,6\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
-   "label": "confere compra do #58: total R$ 18.714,08"
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const esp=[\"6,20\"];let out='';for(let i=0;i<12;i++){const v=[...document.querySelectorAll(\"main tbody\"+' input, '+\"main tbody\"+' textarea')].map(e=>e.value).join(' | ');const falta=esp.filter(e=>!v.includes(e));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+v.slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
-   "label": "confere Valor/Kg 6,20"
+   "text": "Total geral",
+   "timeout": 8
   },
   {
    "do": "hover",
    "target": {
-    "role": "button",
-    "name": "Cooperativa Recomeço",
-    "exact": true,
-    "within": "main"
+    "selector": "main div:has(> label:has-text('Tabela de Preços')) button[role=combobox]"
    },
-   "seconds": 0.3,
-   "at": 12.81,
-   "label": "compra: fornecedor Cooperativa Recomeço",
+   "seconds": 0.6,
+   "at": 12.68,
+   "label": "Tabela de Preços (Principal)",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main tr:has-text('Alumínio latinha') td:nth-child(2)"
-   },
-   "seconds": 0.3,
-   "at": 14.29,
-   "label": "compra: Alumínio latinha",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main tr:has-text('Alumínio latinha') td:nth-child(4)"
+    "selector": "main th:has-text('Valor/Kg')"
    },
    "seconds": 0.5,
-   "at": 15.96,
-   "label": "compra: peso líquido e Tara/Imp. 61,6",
+   "at": 16.47,
+   "label": "colunas Valor/Kg, Desc. (R$) e Total",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 17.67
+   "at": 19.35
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button[aria-label='Ações do item']"
+   },
+   "at": 19.35,
+   "label": "Ações do item (⋮)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Adicionar tara / pesagem avançada"
+   },
+   "label": "Adicionar tara / pesagem avançada"
+  },
+  {
+   "do": "waitFor",
+   "text": "Registre pesagem dupla, tara, impureza e dados do transporte",
+   "timeout": 8
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] div:has(> label:has-text('1ª Pesagem')) input"
+   },
+   "label": "campo 1ª Pesagem"
   },
   {
    "do": "type",
    "target": {
-    "selector": "main tr:has-text('Alumínio latinha') td:nth-child(5)"
+    "selector": "[role=dialog] div:has(> label:has-text('1ª Pesagem')) input"
+   },
+   "text": "5640",
+   "cps": 40,
+   "label": "digita 5640 na 1ª Pesagem (a entrada)",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] div:has(> label:has-text('2ª Pesagem')) input"
+   },
+   "at": 21.63,
+   "label": "campo 2ª Pesagem"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] div:has(> label:has-text('2ª Pesagem')) input"
+   },
+   "text": "4180",
+   "at": 23.25,
+   "label": "digita 4180 na 2ª Pesagem",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] div:has(> label:has-text('Valor/Kg')) input"
+   },
+   "at": 25.96,
+   "label": "campo Valor/Kg"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] div:has(> label:has-text('Valor/Kg')) input"
+   },
+   "text": "3,40",
+   "at": 28.1,
+   "label": "digita 3,40 no Valor/Kg",
+   "noClick": true
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"1.460\", \"|5.640 − 4.180|\", \"R$ 4.964,00\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")];const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere bruto 1.460 e valor estimado R$ 4.964,00"
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 30.25
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Confirmar",
+    "exact": true
+   },
+   "at": 30.25,
+   "label": "Confirmar"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tr:has-text('Bateria automotiva')"
+   },
+   "seconds": 0.5,
+   "at": 30.99,
+   "label": "item: 1.460 kg de bateria a 3,40",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "main tr:has-text('Total geral')"
    },
    "text": "",
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "at": 19.47,
-   "label": "Valor/Kg 6,20"
+   "at": 35.32,
+   "label": "Total geral: R$ 4.964,00"
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main tr:has-text('Alumínio latinha') td:nth-child(6)"
-   },
-   "seconds": 0.6,
-   "at": 21.07,
-   "label": "total da linha R$ 18.714,08",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "mark",
-   "name": "L4",
-   "at": 26.07
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main tr:has-text('Alumínio latinha') td:nth-child(5)"
+    "selector": "main tr:has-text('Total geral')"
    },
    "seconds": 0.8,
-   "at": 30.38,
-   "label": "célula Valor/Kg",
+   "at": 36.84,
+   "label": "Total geral",
    "optional": true,
    "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Total geral: R$ 4.964,00\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere total do ticket R$ 4.964,00"
   },
   {
    "do": "mark",
    "name": "L5",
-   "at": 37.35
+   "at": 42.14
   },
   {
    "do": "scroll",
    "point": {
-    "x": 760,
+    "x": 1000,
     "y": 560
    },
    "by": 0,
    "duration": 0.3,
    "after": 0,
-   "at": 37.85,
+   "at": 42.74,
    "label": "cursor descansa"
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 53.28
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Salvar Ticket de Pesagem",
+    "exact": true
+   },
+   "at": 53.28,
+   "label": "Salvar Ticket de Pesagem"
+  },
+  {
+   "do": "waitFor",
+   "text": "O que deseja fazer com este ticket de pesagem?",
+   "timeout": 12
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Ticket #59 salvo\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")];const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere número do ticket do Jair: #59"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Fechar",
+    "exact": true,
+    "within": "[role=dialog]",
+    "nth": 0
+   },
+   "at": 55.58,
+   "label": "Fechar"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 59.62
+  },
+  {
+   "do": "goto",
+   "url": "/configuracoes?tab=usability",
+   "at": 59.72,
+   "label": "Configurações > Usabilidade"
+  },
+  {
+   "do": "waitFor",
+   "text": "Permitir forma de pagamento no ticket de pesagem",
+   "timeout": 15
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"main *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Permitir forma de pagamento no ticket de pesagem\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-380);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 61.04,
+   "label": "rola até a opção"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Permitir forma de pagamento no ticket de pesagem",
+    "exact": true
+   },
+   "seconds": 0.8,
+   "at": 62.41,
+   "label": "Permitir forma de pagamento no ticket de pesagem (desligada)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "type",
+   "target": {
+    "text": "Permitir forma de pagamento no ticket de pesagem",
+    "exact": true
+   },
+   "text": "",
+   "noClick": true,
+   "optional": true,
+   "timeout": 4,
+   "at": 67.04,
+   "label": "a opção, em Configurações > Usabilidade"
   },
   {
    "do": "eval",
@@ -261,7 +436,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 49.39
+   "at": 71.88
   }
  ]
 }

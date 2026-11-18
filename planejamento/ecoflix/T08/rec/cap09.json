@@ -1,6 +1,6 @@
 {
  "name": "t08-cap09",
- "title": "T08 · Cap. 9 · Quando o ticket sai dos pendentes (narração 52,0 s ESTIMADA; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:58:00-03:00)",
+ "title": "T08 · Cap. 9 · Imprimir o comprovante (narração 85,0 s ESTIMADA; marcas L1..L8 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:58:00-03:00)",
  "seed": "t08-cap09",
  "pace": 0.5,
  "cps": 9,
@@ -11,6 +11,7 @@
  },
  "anonymous": true,
  "storage": {
+  "cato_adoption_nudge_38814e47-876a-5977-a5f7-53af364c17bb_34c36c63-0890-5e89-8963-7c77b7996908": "{\"count\":99,\"lastShownAt\":4102444800000}",
   "app_version": "1.60.10",
   "notification_shown_version": "1.60.10",
   "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
@@ -23,7 +24,7 @@
   "base/balanca-ativada",
   "base/caixa-aberto",
   "t08/inicio",
-  "t08/apos-cap07"
+  "t08/apos-cap08"
  ],
  "prewarm": [
   "/login"
@@ -98,6 +99,10 @@
   },
   {
    "do": "eval",
+   "js": "(()=>{const o=window.open;window.__pops=[];window.open=function(...a){const w=o.apply(this,a);window.__pops.push(w);return w};return 'ok'})()"
+  },
+  {
+   "do": "eval",
    "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel|Algo deu errado|Falha ao|Balan[çc]a desconectada|Pop-up bloqueado|Popup bloqueado/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');if(f&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA ECOFLIX'))window.__avisos.push('TRILHA ECOFLIX')},300);return 1})()"
   }
  ],
@@ -108,219 +113,301 @@
    "at": 0
   },
   {
-   "do": "hover",
-   "target": {
-    "selector": "main div.rounded-lg:has([aria-label='Selecionar ticket #58']):not(:has(div.rounded-lg [aria-label='Selecionar ticket #58']))"
-   },
-   "seconds": 0.8,
-   "at": 7.09,
-   "label": "cartão #58 ainda em Aguardando valorização",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "mark",
-   "name": "L2",
-   "at": 8.29
-  },
-  {
    "do": "click",
    "target": {
     "role": "button",
     "name": "Ações",
     "within": "main div.rounded-lg:has([aria-label='Selecionar ticket #58']):not(:has(div.rounded-lg [aria-label='Selecionar ticket #58']))"
    },
-   "at": 8.29,
+   "at": 3.12,
    "label": "Ações do #58"
   },
   {
    "do": "click",
    "target": {
     "role": "menuitem",
-    "name": "Valorizar"
+    "name": "Ver comprovante"
    },
-   "at": 10.2,
-   "label": "Valorizar de novo (retomando)"
+   "label": "Ver comprovante"
   },
   {
    "do": "waitFor",
-   "text": "Origem: Ticket de Pesagem",
-   "timeout": 15
+   "text": "Escolha o formato do comprovante deste ticket de pesagem.",
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Térmico",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.4,
+   "at": 6.48,
+   "label": "Térmico (80mm)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "A4",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.4,
+   "at": 8.37,
+   "label": "A4 (Folha)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Térmico",
+    "within": "[role=dialog]"
+   },
+   "at": 10.33,
+   "label": "Térmico: o PDF abre na aba nova"
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 10.72
   },
   {
    "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"retomando\", \"1 item, R$ 18.714,08\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"body\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
-   "label": "confere aviso: retoma a mesma compra"
+   "js": "(async()=>{const w=(window.__pops||[]).slice(-1)[0];if(!w)return 'SEM JANELA';for(let i=0;i<40;i++){let f=null;try{f=w.document&&w.document.querySelector('#pdf-frame')}catch(e){return 'ERRO '+e}if(f&&f.src){const b=await (await fetch(f.src.split('#')[0])).blob();const u=new Uint8Array(await b.arrayBuffer());let s='';for(let k=0;k<u.length;k+=8192)s+=String.fromCharCode.apply(null,u.subarray(k,k+8192));return 'PDF:'+btoa(s)}await new Promise(r=>setTimeout(r,250))}return 'SEM PDF'})()",
+   "at": 10.92,
+   "label": "PDF do comprovante térmico (aba nova, para a ilustração)"
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 14.11
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "button",
-    "name": "Finalizar",
-    "exact": true
-   },
-   "at": 14.11,
-   "label": "Finalizar"
-  },
-  {
-   "do": "waitFor",
-   "text": "Finalizar Pedido",
-   "timeout": 10
-  },
-  {
-   "do": "click",
-   "target": {
-    "text": "Pix/Transferência",
-    "within": "[role=dialog]"
-   },
-   "at": 16.59,
-   "label": "Pix/Transferência"
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "button",
-    "name": "CONFIRMAR PAGAMENTO",
-    "exact": true
-   },
-   "at": 17.18,
-   "label": "CONFIRMAR PAGAMENTO"
-  },
-  {
-   "do": "waitFor",
-   "text": "Valorizado pelo pedido",
-   "timeout": 20
+   "at": 19.41
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 24.94
+   "at": 29.4
+  },
+  {
+   "do": "goto",
+   "url": "/configuracoes?tab=integrations",
+   "at": 29.4,
+   "label": "Configurações > Integrações"
+  },
+  {
+   "do": "waitFor",
+   "text": "Imprimir comprovante do Ticket de Pesagem",
+   "timeout": 15
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"main *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Imprimir comprovante do Ticket de Pesagem\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-400);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 30.67,
+   "label": "rola até a chave"
   },
   {
    "do": "hover",
    "target": {
-    "text": "Valorizado pelo pedido"
+    "text": "Imprimir comprovante do Ticket de Pesagem",
+    "exact": true
    },
    "seconds": 0.8,
-   "at": 31.37,
-   "label": "Valorizado pelo pedido #…",
+   "at": 35.23,
+   "label": "chave Imprimir comprovante do Ticket de Pesagem (desligada)",
    "optional": true,
    "timeout": 4
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Valorizados\", \"Valorizado pelo pedido\", \"3.018,4 kg\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
-   "label": "confere o #58 em Valorizados"
   },
   {
    "do": "mark",
    "name": "L5",
-   "at": 33.49
+   "at": 41.89
+  },
+  {
+   "do": "goto",
+   "url": "/configuracoes?tab=usability",
+   "at": 41.89,
+   "label": "Configurações > Usabilidade"
+  },
+  {
+   "do": "waitFor",
+   "text": "Assinaturas no comprovante",
+   "timeout": 15
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"main *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Assinaturas no comprovante\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-300);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 43.49,
+   "label": "rola até Assinaturas no comprovante"
   },
   {
    "do": "click",
    "target": {
-    "role": "radio",
-    "name": "Lista"
+    "selector": "main div:has(label:text-is('Assinaturas no comprovante')):not(:has(label:text-is('Marca de ticket não valorizado'))) button[role=switch]"
    },
-   "at": 33.49,
-   "label": "Lista"
+   "at": 45.49,
+   "label": "liga Assinaturas no comprovante"
   },
   {
-   "do": "hover",
-   "target": {
-    "text": "Aguardando valorização",
-    "exact": true,
-    "within": "main tbody"
-   },
-   "seconds": 0.4,
-   "at": 37.26,
-   "label": "selo Aguardando valorização (#57)",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "Valorizado",
-    "exact": true,
-    "within": "main tbody"
-   },
-   "seconds": 0.3,
-   "at": 40.29,
-   "label": "selo Valorizado (#58)",
-   "optional": true,
-   "timeout": 4
+   "do": "waitFor",
+   "text": "Quem assina",
+   "timeout": 8
   },
   {
    "do": "click",
    "target": {
-    "role": "button",
-    "name": "Filtros",
-    "exact": true
+    "selector": "#receipt-signature-mode"
    },
-   "at": 41.88,
-   "label": "Filtros"
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "[data-radix-popper-content-wrapper] button:has-text('Status')"
-   },
-   "label": "Status"
+   "at": 48.15,
+   "label": "Quem assina (abre a lista)"
   },
   {
    "do": "hover",
    "target": {
     "role": "option",
-    "name": "Cancelado",
-    "exact": true
+    "name": "Operador e cliente/fornecedor"
    },
-   "seconds": 0.5,
-   "at": 43.63,
-   "label": "status Cancelado (opção do filtro)",
+   "seconds": 0.4,
+   "at": 50.33,
+   "label": "Operador e cliente/fornecedor",
    "optional": true,
    "timeout": 4
-  },
-  {
-   "do": "press",
-   "key": "Escape",
-   "label": "fecha a lista de status"
-  },
-  {
-   "do": "mark",
-   "name": "L6",
-   "at": 45.14
-  },
-  {
-   "do": "press",
-   "key": "Escape",
-   "at": 45.14,
-   "label": "fecha Filtros"
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "radio",
-    "name": "Kanban"
-   },
-   "label": "volta ao Kanban"
   },
   {
    "do": "hover",
    "target": {
-    "text": "Rascunhos abertos"
+    "role": "option",
+    "name": "Só o cliente/fornecedor"
    },
-   "seconds": 0.8,
-   "at": 47.09,
-   "label": "Rascunhos abertos (1): o do Jair",
+   "seconds": 0.4,
+   "at": 51.31,
+   "label": "Só o cliente/fornecedor",
    "optional": true,
    "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "option",
+    "name": "Só o operador"
+   },
+   "seconds": 0.4,
+   "at": 52.98,
+   "label": "Só o operador",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 54.39
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Só o cliente/fornecedor"
+   },
+   "at": 54.39,
+   "label": "escolhe Só o cliente/fornecedor"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "o operador aparece como Empresa"
+   },
+   "seconds": 0.8,
+   "at": 56.57,
+   "label": "No ticket de pesagem, o operador aparece como Empresa.",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 59.6
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Marca de ticket não valorizado",
+    "exact": true
+   },
+   "seconds": 0.6,
+   "at": 62.46,
+   "label": "Marca de ticket não valorizado (ligada)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"main *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Exigir cliente/fornecedor no Ticket de Pesagem\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-420);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/800),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 65.15,
+   "label": "rola até Exigir cliente/fornecedor"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Exigir cliente/fornecedor no Ticket de Pesagem",
+    "exact": true
+   },
+   "seconds": 0.8,
+   "at": 66.05,
+   "label": "Exigir cliente/fornecedor no Ticket de Pesagem (desligada)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 69.21
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"main *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Assinaturas no comprovante\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-300);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/500),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 69.71,
+   "label": "volta até Assinaturas no comprovante"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#receipt-signature-mode"
+   },
+   "label": "Quem assina (de volta ao padrão)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Operador e cliente/fornecedor"
+   },
+   "label": "Operador e cliente/fornecedor"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main div:has(label:text-is('Assinaturas no comprovante')):not(:has(label:text-is('Marca de ticket não valorizado'))) button[role=switch]"
+   },
+   "label": "desliga Assinaturas no comprovante (mundo: assinatura desligada)"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{await new Promise(r=>setTimeout(r,900));const s=document.querySelector(\"main div:has(label:text-is('Assinaturas no comprovante')):not(:has(label:text-is('Marca de ticket n\\u00e3o valorizado'))) button[role=switch]\");return s?'assinaturas: '+s.getAttribute('aria-checked'):'SEM ALVO'})()",
+   "label": "confere assinaturas desligadas (aria-checked false)"
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 800,
+    "y": 560
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "label": "cursor descansa"
   },
   {
    "do": "eval",
@@ -330,7 +417,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 52.01
+   "at": 85.04
   }
  ]
 }

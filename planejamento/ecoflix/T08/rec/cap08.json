@@ -1,6 +1,6 @@
 {
  "name": "t08-cap08",
- "title": "T08 · Cap. 8 · Imprimir o comprovante (narração 57,7 s ESTIMADA; marcas L1..L5 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:58:00-03:00)",
+ "title": "T08 · Cap. 8 · Valorizar o ticket (narração 78,6 s ESTIMADA; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:58:00-03:00)",
  "seed": "t08-cap08",
  "pace": 0.5,
  "cps": 9,
@@ -11,6 +11,7 @@
  },
  "anonymous": true,
  "storage": {
+  "cato_adoption_nudge_38814e47-876a-5977-a5f7-53af364c17bb_34c36c63-0890-5e89-8963-7c77b7996908": "{\"count\":99,\"lastShownAt\":4102444800000}",
   "app_version": "1.60.10",
   "notification_shown_version": "1.60.10",
   "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
@@ -98,10 +99,6 @@
   },
   {
    "do": "eval",
-   "js": "(()=>{const o=window.open;window.__pops=[];window.open=function(...a){const w=o.apply(this,a);window.__pops.push(w);return w};return 'ok'})()"
-  },
-  {
-   "do": "eval",
    "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel|Algo deu errado|Falha ao|Balan[çc]a desconectada|Pop-up bloqueado|Popup bloqueado/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');if(f&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA ECOFLIX'))window.__avisos.push('TRILHA ECOFLIX')},300);return 1})()"
   }
  ],
@@ -112,129 +109,255 @@
    "at": 0
   },
   {
+   "do": "hover",
+   "target": {
+    "selector": "main div.rounded-lg:has([aria-label='Selecionar ticket #58']):not(:has(div.rounded-lg [aria-label='Selecionar ticket #58']))"
+   },
+   "seconds": 0.8,
+   "at": 4.36,
+   "label": "cartão do Ticket #58",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 8.37
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[aria-label='Selecionar ticket #58']"
+   },
+   "at": 13.34,
+   "label": "Selecionar no #58"
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 420,
+    "y": 500
+   },
+   "by": 270,
+   "duration": 0.5,
+   "after": 100,
+   "at": 14.54,
+   "label": "desce até o #56"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[aria-label='Selecionar ticket #56']"
+   },
+   "at": 15.1,
+   "label": "Selecionar no #56 (o outro ticket da cooperativa)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "div.fixed:has-text('selecionad')"
+   },
+   "text": "",
+   "noClick": true,
+   "optional": true,
+   "timeout": 4,
+   "at": 15.66,
+   "label": "barra: 2 selecionados, Valorizar 2 tickets"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Valorizar 2 tickets"
+   },
+   "seconds": 0.8,
+   "at": 15.86,
+   "label": "Valorizar 2 tickets (sem clicar)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"2 selecionados\", \"Valorizar 2 tickets\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"body\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere barra da seleção em conjunto"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[aria-label='Selecionar ticket #57']"
+   },
+   "seconds": 1.0,
+   "at": 19.21,
+   "label": "#57, de outro fornecedor, fica apagado (dica: mesmo cliente ou fornecedor)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 23.53
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "div.fixed:has-text('selecionad') > button"
+   },
+   "at": 23.53,
+   "label": "x da barra: limpa a seleção"
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 420,
+    "y": 500
+   },
+   "by": -270,
+   "duration": 0.4,
+   "after": 100,
+   "label": "volta ao alto da coluna"
+  },
+  {
    "do": "click",
    "target": {
     "role": "button",
     "name": "Ações",
     "within": "main div.rounded-lg:has([aria-label='Selecionar ticket #58']):not(:has(div.rounded-lg [aria-label='Selecionar ticket #58']))"
    },
-   "at": 3.12,
+   "at": 26.14,
    "label": "Ações do #58"
   },
   {
    "do": "click",
    "target": {
     "role": "menuitem",
-    "name": "Ver comprovante"
+    "name": "Valorizar"
    },
-   "label": "Ver comprovante"
+   "label": "Valorizar"
   },
   {
    "do": "waitFor",
-   "text": "Escolha o formato do comprovante deste ticket de pesagem.",
-   "timeout": 8
-  },
-  {
-   "do": "hover",
-   "target": {
-    "role": "button",
-    "name": "Térmico",
-    "within": "[role=dialog]"
-   },
-   "seconds": 0.4,
-   "at": 6.48,
-   "label": "Térmico (80mm)",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "role": "button",
-    "name": "A4",
-    "within": "[role=dialog]"
-   },
-   "seconds": 0.4,
-   "at": 8.37,
-   "label": "A4 (Folha)",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "button",
-    "name": "Térmico",
-    "within": "[role=dialog]"
-   },
-   "at": 10.33,
-   "label": "Térmico: o PDF abre na aba nova"
-  },
-  {
-   "do": "mark",
-   "name": "L2",
-   "at": 10.72
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const w=(window.__pops||[]).slice(-1)[0];if(!w)return 'SEM JANELA';for(let i=0;i<40;i++){let f=null;try{f=w.document&&w.document.querySelector('#pdf-frame')}catch(e){return 'ERRO '+e}if(f&&f.src){const b=await (await fetch(f.src.split('#')[0])).blob();const u=new Uint8Array(await b.arrayBuffer());let s='';for(let k=0;k<u.length;k+=8192)s+=String.fromCharCode.apply(null,u.subarray(k,k+8192));return 'PDF:'+btoa(s)}await new Promise(r=>setTimeout(r,250))}return 'SEM PDF'})()",
-   "at": 10.92,
-   "label": "PDF do comprovante térmico (aba nova, para a ilustração)"
-  },
-  {
-   "do": "mark",
-   "name": "L3",
-   "at": 19.41
-  },
-  {
-   "do": "mark",
-   "name": "L4",
-   "at": 29.4
-  },
-  {
-   "do": "goto",
-   "url": "/configuracoes?tab=integrations",
-   "at": 29.4,
-   "label": "Configurações > Integrações"
-  },
-  {
-   "do": "waitFor",
-   "text": "Imprimir comprovante do Ticket de Pesagem",
+   "text": "Origem: Ticket de Pesagem",
    "timeout": 15
   },
   {
    "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"main *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Imprimir comprovante do Ticket de Pesagem\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-400);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 30.67,
-   "label": "rola até a chave"
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Origem: Ticket de Pesagem #58\", \"R$ 18.714,08\", \"61,6\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere compra do #58: total R$ 18.714,08"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const esp=[\"6,20\"];let out='';for(let i=0;i<12;i++){const v=[...document.querySelectorAll(\"main tbody\"+' input, '+\"main tbody\"+' textarea')].map(e=>e.value).join(' | ');const falta=esp.filter(e=>!v.includes(e));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+v.slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Valor/Kg 6,20"
   },
   {
    "do": "hover",
    "target": {
-    "text": "Imprimir comprovante do Ticket de Pesagem",
-    "exact": true
+    "text": "Cooperativa Recomeço",
+    "within": "main"
    },
-   "seconds": 0.8,
-   "at": 35.23,
-   "label": "chave Imprimir comprovante do Ticket de Pesagem (desligada)",
+   "seconds": 0.3,
+   "at": 30.77,
+   "label": "compra: fornecedor Cooperativa Recomeço",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tr:has-text('Alumínio latinha') td:nth-child(2)"
+   },
+   "seconds": 0.3,
+   "at": 32.26,
+   "label": "compra: Alumínio latinha",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tr:has-text('Alumínio latinha') td:nth-child(4)"
+   },
+   "seconds": 0.5,
+   "at": 33.93,
+   "label": "compra: peso líquido e Tara/Imp. 61,6",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 35.64
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "main tr:has-text('Alumínio latinha') td:nth-child(5)"
+   },
+   "text": "",
+   "noClick": true,
+   "optional": true,
+   "timeout": 4,
+   "at": 37.44,
+   "label": "Valor/Kg 6,20"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tr:has-text('Alumínio latinha') td:nth-child(6)"
+   },
+   "seconds": 0.6,
+   "at": 39.03,
+   "label": "total da linha R$ 18.714,08",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L5",
-   "at": 41.89
+   "at": 44.04
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tr:has-text('Alumínio latinha') td:nth-child(5)"
+   },
+   "seconds": 0.8,
+   "at": 45.16,
+   "label": "Valor/Kg: de onde vem o preço",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 55.24
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tr:has-text('Alumínio latinha') td:nth-child(5)"
+   },
+   "seconds": 0.8,
+   "at": 59.55,
+   "label": "célula Valor/Kg",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 66.52
   },
   {
    "do": "scroll",
    "point": {
-    "x": 800,
+    "x": 760,
     "y": 560
    },
    "by": 0,
    "duration": 0.3,
    "after": 0,
-   "at": 42.39,
+   "at": 67.02,
    "label": "cursor descansa"
   },
   {
@@ -245,7 +368,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 57.73
+   "at": 78.56
   }
  ]
 }

@@ -1,6 +1,6 @@
 {
  "name": "t00-cap11",
- "title": "T0 · Cap. 11 · Quando a empresa cresce (computador 1280x800; narração 50,6 s, ESTIMADA; marcas L1..L5 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
+ "title": "T0 · Cap. 11 · Módulos e permissões (computador 1280x800; narração 64,1 s, ESTIMADA; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
  "fakeNow": "2026-11-10T08:30:00-03:00",
  "seed": "t00-cap11",
  "pace": 0.5,
@@ -12,6 +12,7 @@
  },
  "anonymous": true,
  "storage": {
+  "cato_adoption_nudge_38814e47-876a-5977-a5f7-53af364c17bb_34c36c63-0890-5e89-8963-7c77b7996908": "{\"count\": 16, \"lastShownAt\": 1794310200000}",
   "app_version": "1.60.10",
   "notification_shown_version": "1.60.10",
   "pwa-install-dismissed": "true",
@@ -103,47 +104,89 @@
   },
   {
    "do": "eval",
-   "js": "(async()=>{const vis=e=>e.getClientRects().length>0&&getComputedStyle(e).visibility!=='hidden';const nz=t=>t.replace(/[\\s\\u00a0]+/g,' ').trim();const rolagem=(el)=>{let c=el.parentElement;while(c&&c!==document.body&&c!==document.documentElement){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const root=document.querySelector(\"main\")||document.body;const el=[...root.querySelectorAll('*')].filter(e=>vis(e)&&nz(e.textContent)===\"Plano & m\\u00f3dulos\"&&![...e.children].some(k=>nz(k.textContent)===\"Plano & m\\u00f3dulos\"))[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-140);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/1000),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "js": "(async()=>{const vis=e=>e.getClientRects().length>0&&getComputedStyle(e).visibility!=='hidden';const nz=t=>t.replace(/[\\s\\u00a0]+/g,' ').trim();const rolagem=(el)=>{let c=el.parentElement;while(c&&c!==document.body&&c!==document.documentElement){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const root=document.querySelector(\"main\")||document.body;const el=[...root.querySelectorAll('*')].filter(e=>vis(e)&&nz(e.textContent)===\"Plano & m\\u00f3dulos\"&&![...e.children].some(k=>nz(k.textContent)===\"Plano & m\\u00f3dulos\"))[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-140);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/1400),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
    "at": 0.0,
-   "label": "desce ao cartão Plano & módulos"
+   "label": "desce a Plano & módulos"
+  },
+  {
+   "do": "type",
+   "target": {
+    "text": "Plano & módulos",
+    "within": "main"
+   },
+   "text": "",
+   "noClick": true,
+   "label": "cartão Plano & módulos",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "eval",
-   "js": "(async()=>{const vis=e=>e.getClientRects().length>0&&getComputedStyle(e).visibility!=='hidden';const nz=t=>t.replace(/[\\s\\u00a0]+/g,' ').trim();const rolagem=(el)=>{let c=el.parentElement;while(c&&c!==document.body&&c!==document.documentElement){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const root=document.querySelector(\"main\")||document.body;const el=[...root.querySelectorAll('*')].filter(e=>vis(e)&&nz(e.textContent).startsWith(\"Gerenciar plano\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-440);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/1200),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 0.0,
-   "label": "desce a Gerenciar plano"
+   "js": "(async()=>{const vis=e=>e.getClientRects().length>0&&getComputedStyle(e).visibility!=='hidden';const nz=t=>t.replace(/[\\s\\u00a0]+/g,' ').trim();const rolagem=(el)=>{let c=el.parentElement;while(c&&c!==document.body&&c!==document.documentElement){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const root=document.querySelector(\"main\")||document.body;const el=[...root.querySelectorAll('*')].filter(e=>vis(e)&&nz(e.textContent)===\"M\\u00f3dulos ativos\"&&![...e.children].some(k=>nz(k.textContent)===\"M\\u00f3dulos ativos\"))[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-170);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/800),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 1.1,
+   "label": "desce a Módulos ativos"
   },
   {
    "do": "hover",
    "target": {
-    "role": "button",
-    "name": "Gerenciar plano"
+    "text": "Módulos ativos",
+    "within": "main",
+    "exact": true
    },
-   "seconds": 0.8,
-   "at": 3.6,
-   "label": "botão Gerenciar plano (sem abrir)",
+   "seconds": 0.6,
+   "at": 3.22,
+   "label": "Módulos ativos",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L2",
-   "at": 8.66
+   "at": 9.87
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "· Nível 1",
+    "within": "main"
+   },
+   "seconds": 0.8,
+   "at": 13.21,
+   "label": "Notas Fiscais · Nível 1 (Módulos ativos)",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 21.23
+   "at": 18.42
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 900,
+    "y": 300
+   },
+   "by": 0,
+   "duration": 0.2,
+   "after": 0,
+   "at": 18.82,
+   "label": "cursor sai de cima"
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 25.68
+   "at": 26.74
   },
   {
    "do": "mark",
    "name": "L5",
-   "at": 36.66
+   "at": 41.21
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 49.38
   },
   {
    "do": "eval",
@@ -153,7 +196,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 50.61
+   "at": 64.09
   }
  ]
 }

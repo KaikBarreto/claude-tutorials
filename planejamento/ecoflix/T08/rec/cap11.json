@@ -1,0 +1,850 @@
+{
+ "name": "t08-cap11",
+ "title": "T08 · Cap. 11 · Pesagem avulsa com cobrança (narração 138,5 s ESTIMADA; marcas L1..L13 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T09:12:00-03:00)",
+ "seed": "t08-cap11",
+ "pace": 0.5,
+ "cps": 9,
+ "tail": 1.5,
+ "start": {
+  "x": 700,
+  "y": 420
+ },
+ "anonymous": true,
+ "storage": {
+  "cato_adoption_nudge_38814e47-876a-5977-a5f7-53af364c17bb_34c36c63-0890-5e89-8963-7c77b7996908": "{\"count\":99,\"lastShownAt\":4102444800000}",
+  "app_version": "1.60.10",
+  "notification_shown_version": "1.60.10",
+  "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true"
+ },
+ "seedExtra": [
+  "base/balanca-ativada",
+  "base/caixa-aberto",
+  "t08/inicio",
+  "t08/apos-cap10"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "waitFor",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "timeout": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "••••••••"
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "url": "/dashboard",
+   "timeout": 40
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 25
+  },
+  {
+   "do": "goto",
+   "url": "/ticket-pesagem"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie tickets de pesagem rodoviária",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 25
+  },
+  {
+   "do": "wait",
+   "seconds": 0.8
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const o=window.open;window.__pops=[];window.open=function(...a){const w=o.apply(this,a);window.__pops.push(w);return w};return 'ok'})()"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel|Algo deu errado|Falha ao|Balan[çc]a desconectada|Pop-up bloqueado|Popup bloqueado/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');if(f&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA ECOFLIX'))window.__avisos.push('TRILHA ECOFLIX')},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 1000,
+    "y": 560
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "at": 0.3,
+   "label": "cursor descansa"
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 12.54
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Pesagens avulsas"
+   },
+   "at": 12.54,
+   "label": "aba Pesagens avulsas"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Nova Pesagem Avulsa",
+    "exact": true
+   },
+   "at": 13.79,
+   "label": "Nova Pesagem Avulsa"
+  },
+  {
+   "do": "waitFor",
+   "text": "Preencha a pesagem avulsa. Use as abas para atender vários veículos.",
+   "timeout": 15
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Serviço ao cliente",
+    "exact": true
+   },
+   "seconds": 0.8,
+   "at": 16.93,
+   "label": "Tipo: Serviço ao cliente",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "type",
+   "target": {
+    "text": "Serviço ao cliente",
+    "exact": true
+   },
+   "text": "",
+   "noClick": true,
+   "optional": true,
+   "timeout": 4,
+   "at": 19.0,
+   "label": "Modalidade Pesagem avulsa, Tipo Serviço ao cliente"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 24.05
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Selecionar cliente",
+    "exact": true
+   },
+   "at": 24.05,
+   "label": "Selecionar cliente"
+  },
+  {
+   "do": "waitFor",
+   "text": "Selecionar Cliente",
+   "timeout": 8
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[placeholder^='Buscar por nome']"
+   },
+   "text": "Areal Boa Vista",
+   "cps": 14,
+   "at": 27.45,
+   "label": "busca Areal Boa Vista"
+  },
+  {
+   "do": "waitFor",
+   "text": "Nenhum resultado encontrado.",
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] button:has-text('Cadastrar «')"
+   },
+   "seconds": 0.8,
+   "at": 30.41,
+   "label": "botão Cadastrar «Areal Boa Vista»",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 34.2
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:has-text('Cadastrar «')"
+   },
+   "at": 34.3,
+   "label": "Cadastrar «Areal Boa Vista»"
+  },
+  {
+   "do": "waitFor",
+   "text": "Cadastre um novo cliente rapidamente",
+   "timeout": 8
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const esp=[\"Areal Boa Vista\"];let out='';for(let i=0;i<12;i++){const v=[...document.querySelectorAll(\"[role=dialog]\"+' input, '+\"[role=dialog]\"+' textarea')].map(e=>e.value).join(' | ');const falta=esp.filter(e=>!v.includes(e));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+v.slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Nome já preenchido"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] #name"
+   },
+   "seconds": 0.4,
+   "at": 34.85,
+   "label": "Nome: Areal Boa Vista",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] #phone"
+   },
+   "seconds": 0.3,
+   "at": 37.16,
+   "label": "Telefone",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] #cpf_cnpj"
+   },
+   "seconds": 0.3,
+   "at": 38.07,
+   "label": "CPF/CNPJ",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] #pix_key"
+   },
+   "seconds": 0.8,
+   "at": 39.29,
+   "label": "Chave PIX (novo no cadastro rápido)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Criar Cliente",
+    "exact": true
+   },
+   "at": 42.96,
+   "label": "Criar Cliente"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 10
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Areal Boa Vista\", \"#60\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere cliente escolhido no ticket"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Areal Boa Vista",
+    "within": "main",
+    "nth": 0
+   },
+   "seconds": 0.6,
+   "at": 45.87,
+   "label": "Cliente: Areal Boa Vista",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 52.69
+  },
+  {
+   "do": "click",
+   "target": {
+    "placeholder": "Ex.: Areia, terra, entulho"
+   },
+   "at": 55.79,
+   "label": "Descrição do material"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Ex.: Areia, terra, entulho"
+   },
+   "text": "Areia média",
+   "cps": 12,
+   "at": 57.83,
+   "label": "digita Areia média",
+   "noClick": true
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 59.27
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Pesagem avançada",
+    "exact": true
+   },
+   "at": 59.27,
+   "label": "Pesagem avançada"
+  },
+  {
+   "do": "waitFor",
+   "text": "Registre pesagem dupla, tara, impureza e dados do transporte",
+   "timeout": 8
+  },
+  {
+   "do": "pause",
+   "seconds": 0.3
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] div:has(> label:has-text('1ª Pesagem')) input"
+   },
+   "text": "23840",
+   "at": 61.06,
+   "label": "digita 23840 na 1ª Pesagem",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] div:has(> label:has-text('2ª Pesagem')) input"
+   },
+   "label": "campo 2ª Pesagem"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] div:has(> label:has-text('2ª Pesagem')) input"
+   },
+   "text": "9120",
+   "at": 61.92,
+   "label": "digita 9120 na 2ª Pesagem",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Completo",
+    "within": "[role=dialog]"
+   },
+   "label": "Completo (o comprovante sai com as duas pesagens)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] div:has(> label:has-text('Peso Bruto'))"
+   },
+   "text": "",
+   "noClick": true,
+   "optional": true,
+   "timeout": 4,
+   "at": 62.51,
+   "label": "Peso Bruto 14.720 |23.840 − 9.120|"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"14.720\", \"|23.840 − 9.120|\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")];const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere bruto 14.720"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Confirmar",
+    "exact": true
+   },
+   "at": 65.66,
+   "label": "Confirmar"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 65.92
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 700,
+    "y": 460
+   },
+   "by": 300,
+   "duration": 0.4,
+   "after": 0,
+   "at": 66.02,
+   "label": "desce até placa, tipo de caminhão e valor"
+  },
+  {
+   "do": "click",
+   "target": {
+    "placeholder": "Digite ou busque a placa"
+   },
+   "at": 66.5,
+   "label": "campo Placa do Veículo"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Digite ou busque a placa"
+   },
+   "text": "HBN3F27",
+   "cps": 14,
+   "label": "digita HBN3F27",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#standalone-vehicle-type"
+   },
+   "at": 66.93,
+   "label": "Tipo de caminhão"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#standalone-vehicle-type"
+   },
+   "text": "Caçamba",
+   "cps": 14,
+   "label": "digita Caçamba",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#standalone-weighing-fee"
+   },
+   "at": 68.53,
+   "label": "Valor cobrado pela pesagem"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#standalone-weighing-fee"
+   },
+   "text": "60",
+   "at": 71.41,
+   "label": "digita 60",
+   "noClick": true
+  },
+  {
+   "do": "press",
+   "key": "Tab",
+   "label": "sai do campo (vira 60,00)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "main div.grid:has(#standalone-weighing-fee)"
+   },
+   "text": "",
+   "noClick": true,
+   "optional": true,
+   "timeout": 4,
+   "at": 71.99,
+   "label": "Tipo de caminhão Caçamba e Valor cobrado pela pesagem R$ 60,00"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const esp=[\"HBN3F27\", \"Caçamba\", \"60,00\"];let out='';for(let i=0;i<12;i++){const v=[...document.querySelectorAll(\"main\"+' input, '+\"main\"+' textarea')].map(e=>e.value).join(' | ');const falta=esp.filter(e=>!v.includes(e));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+v.slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere placa, tipo e valor"
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 72.87
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Salvar Pesagem Avulsa",
+    "exact": true
+   },
+   "at": 73.86,
+   "label": "Salvar Pesagem Avulsa"
+  },
+  {
+   "do": "waitFor",
+   "text": "Finalizar Pedido",
+   "timeout": 10
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Total: R$ 60,00\", \"Cliente: Areal Boa Vista\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")];const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere pagamento da pesagem: R$ 60,00"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Dinheiro",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.3,
+   "at": 77.96,
+   "label": "Dinheiro",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Pix/Transferência",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.3,
+   "at": 78.87,
+   "label": "Pix/Transferência",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Saldo do Cliente",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.6,
+   "at": 79.63,
+   "label": "Saldo do Cliente",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L9",
+   "at": 83.69
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Pix/Transferência",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 83.82,
+   "label": "Pix/Transferência"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]"
+   },
+   "seconds": 0.6,
+   "at": 84.36,
+   "label": "conta que recebe: Conta Principal",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Conta Principal\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")];const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Conta Principal já escolhida"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "CONFIRMAR PAGAMENTO",
+    "exact": true
+   },
+   "at": 87.44,
+   "label": "CONFIRMAR PAGAMENTO"
+  },
+  {
+   "do": "waitFor",
+   "text": "O que deseja fazer com este ticket de pesagem?",
+   "timeout": 12
+  },
+  {
+   "do": "mark",
+   "name": "L10",
+   "at": 89.97
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog]"
+   },
+   "text": "",
+   "noClick": true,
+   "optional": true,
+   "timeout": 4,
+   "at": 90.17,
+   "label": "Ticket #60 salvo, PESAGEM AVULSA (Imprimir comprovante, Fechar)"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Ticket #60 salvo\", \"PESAGEM AVULSA\", \"não pode ser valorizada\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")];const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere pesagem avulsa #60 salva"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Somente comprovante de peso",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.8,
+   "at": 101.06,
+   "label": "sem botão Valorizar: não pode ser valorizada",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L11",
+   "at": 106.11
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Imprimir comprovante",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 106.11,
+   "label": "Imprimir comprovante"
+  },
+  {
+   "do": "waitFor",
+   "text": "Escolha o formato do comprovante deste ticket de pesagem.",
+   "timeout": 8
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Térmico",
+    "within": "[role=dialog]"
+   },
+   "label": "Térmico: o PDF abre na aba nova"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const w=(window.__pops||[]).slice(-1)[0];if(!w)return 'SEM JANELA';for(let i=0;i<40;i++){let f=null;try{f=w.document&&w.document.querySelector('#pdf-frame')}catch(e){return 'ERRO '+e}if(f&&f.src){const b=await (await fetch(f.src.split('#')[0])).blob();const u=new Uint8Array(await b.arrayBuffer());let s='';for(let k=0;k<u.length;k+=8192)s+=String.fromCharCode.apply(null,u.subarray(k,k+8192));return 'PDF:'+btoa(s)}await new Promise(r=>setTimeout(r,250))}return 'SEM PDF'})()",
+   "label": "PDF do comprovante da pesagem avulsa (aba nova, para a ilustração)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Voltar",
+    "exact": true
+   },
+   "label": "Voltar para a lista (aba Pesagens avulsas)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie tickets de pesagem rodoviária",
+   "timeout": 15
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"#60\", \"Areal Boa Vista\", \"14.720 kg\", \"Sem valor comercial\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere a #60 na lista das avulsas"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main tbody tr:has-text('#60') td:last-child button"
+   },
+   "label": "Ações da #60"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Editar"
+   },
+   "label": "Editar"
+  },
+  {
+   "do": "waitFor",
+   "text": "Editar Pesagem Avulsa #60",
+   "timeout": 15
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 700,
+    "y": 460
+   },
+   "by": 300,
+   "duration": 0.4,
+   "after": 200,
+   "label": "desce até o valor cobrado"
+  },
+  {
+   "do": "mark",
+   "name": "L12",
+   "at": 114.43
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Cobrança já lançada no financeiro"
+   },
+   "seconds": 0.8,
+   "at": 117.14,
+   "label": "Cobrança já lançada no financeiro. O valor não pode mais ser alterado.",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "main div.grid:has(#standalone-weighing-fee)"
+   },
+   "text": "",
+   "noClick": true,
+   "optional": true,
+   "timeout": 4,
+   "at": 117.84,
+   "label": "valor travado depois da cobrança"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Cobrança já lançada no financeiro. O valor não pode mais ser alterado.\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere valor travado"
+  },
+  {
+   "do": "mark",
+   "name": "L13",
+   "at": 124.04
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 700,
+    "y": 460
+   },
+   "by": -300,
+   "duration": 0.4,
+   "after": 100,
+   "at": 124.54,
+   "label": "volta ao alto"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Voltar",
+    "exact": true
+   },
+   "label": "Voltar sem mudar nada"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie tickets de pesagem rodoviária",
+   "timeout": 15
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 1000,
+    "y": 560
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "label": "cursor descansa"
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 138.5
+  }
+ ]
+}

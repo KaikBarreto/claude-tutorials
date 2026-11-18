@@ -31,3 +31,29 @@ Ver a tabela no fim deste arquivo (atualizada a cada capítulo).
 ## Pendências conhecidas
 - `cenas/tempos/capNN.json` e `cenas/cenas.html` ainda estão na numeração antiga (as cenas serão refeitas no kit v3).
 - `T00/rec/` (cópia no git do robô) é do coordenador: copiar de `$TUT_HOME/rec/t00` no fim.
+
+## Ensaio no 1.60.10 (18/11, três lotes; resultados em `$TUT_HOME/rec/t00/_ens/lote/*.txt` e `rec/t00/.capNN.out.resumo`)
+| Capítulos | Rápido (0 falho, sem "SEM ALVO", folha olhada) | Completo |
+|---|---|---|
+| Computador 00 a 15, 40, 41 | todos | 04, 08, 12, 14 (maior atraso 0,59 / 0,35 / 0,62 / 0,85 s, este no primeiro gesto, já era assim); 07 com 0,88 s na aba "Aparência" |
+| Celular 00b a 15b, 40b, 41b | todos | 07b (0,11 s) e 08b (0,00 s) |
+
+- Depois do último lote só mudou uma âncora do cap07 (o clique em "Configurações" 0,5 s mais cedo, por causa do 0,88 s): **não foi ensaiada**.
+  Para conferir: `TUT_SENHA=<8+> bash rec/t00/t00_um.sh 07 --completo` (com a instância 54300 de pé).
+- Ficaram só no rápido (sem gesto sensível novo): 00, 01, 02, 03, 05, 06, 09, 10, 11, 13, 15, 40, 41 e os de celular menos 07b e 08b.
+  O `prever.py` acusa folga curta antiga no 09 (aba "Usabilidade", 1,1 s), no 10 ("Gerenciar plano", 0,8 s) e no 15 (L5, 2,0 s, depois
+  do "Confirmar"): a gravação final com a voz confere.
+- A instância 54300 foi derrubada.
+
+## Diferenças do celular (9:16) achadas no ensaio
+- Trilha: sem "Buscar aula" nem "Minha Lista" na tela (cap02 L3 fica parado); cabeçalho sem "Buscar" (cap06 L10: só fecha a gaveta).
+- Player em pé: sem "Abrir em tela cheia". Janelas "Montar plano" e "Cancelar Assinatura" são gavetas sem botão "Fechar": o robô fecha com Esc.
+
+## Achados do app (para o MELHORIAS)
+- Assinatura: "Plano Personalizado • 10 módulo" (no alto) e "4 pagamento realizado" (histórico) saem no singular.
+- "Montar plano" soma o catálogo e ignora o valor contratado: com a mensalidade do mundo base (1.025,00, `extra_users` 0, `max_users` 3) abre com
+  "2 usuários" e "+R$ 300,00 vs plano atual" sem o cliente mexer em nada. A semente da T0 usa 1.350,00 e `extra_users` 1.
+- Player: os botões de voltar e avançar 10 s do computador não têm nome acessível (os do celular têm).
+- Fim da aula: "A próxima aula começa em 4 segundos" avança sozinho; só pausa se o mouse passar por cima.
+- Cancelar: o botão "Falar com o Sucesso do Cliente" só aparece em 4 dos 8 motivos (em "Pausa temporária", por exemplo, não).
+- Antigo, continua: o histórico chama o pagamento de "Cobrança • empresa" (não "Renovação").

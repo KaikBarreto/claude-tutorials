@@ -1,6 +1,6 @@
 {
  "name": "t00-cap04",
- "title": "T0 · Cap. 4 · Dúvida depois da aula (computador 1280x800; narração 24,6 s, ESTIMADA; marcas L1..L3 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
+ "title": "T0 · Cap. 4 · Assistir e tirar dúvidas (computador 1280x800; narração 50,2 s, ESTIMADA; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
  "fakeNow": "2026-11-10T08:30:00-03:00",
  "seed": "t00-cap04",
  "pace": 0.5,
@@ -12,6 +12,7 @@
  },
  "anonymous": true,
  "storage": {
+  "cato_adoption_nudge_38814e47-876a-5977-a5f7-53af364c17bb_34c36c63-0890-5e89-8963-7c77b7996908": "{\"count\": 16, \"lastShownAt\": 1794310200000}",
   "app_version": "1.60.10",
   "notification_shown_version": "1.60.10",
   "pwa-install-dismissed": "true",
@@ -116,10 +117,223 @@
    "timeout": 25
   },
   {
+   "do": "hover",
+   "target": {
+    "selector": "video"
+   },
+   "seconds": 0.1,
+   "at": 1.48,
+   "label": "o player (os controles aparecem)",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "button[aria-label=\"Ativar ou escolher legenda\"]:visible, button[aria-label^=\"Trocar legenda\"]:visible"
+   },
+   "at": 2.46,
+   "label": "Legendas (abre a faixa, o tamanho e o estilo)",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "text": "Português",
+   "timeout": 8
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "radio",
+    "name": "Português"
+   },
+   "at": 3.87,
+   "label": "faixa Português (liga a legenda)",
+   "noScroll": true
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=radiogroup][aria-label=\"Tamanho da legenda\"]:visible"
+   },
+   "seconds": 0.1,
+   "at": 4.97,
+   "label": "Tamanho da legenda",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "button[aria-label=\"Ativar ou escolher legenda\"]:visible, button[aria-label^=\"Trocar legenda\"]:visible"
+   },
+   "at": 5.78,
+   "label": "fecha o quadro das legendas",
+   "noScroll": true
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 900,
+    "y": 300
+   },
+   "by": 0,
+   "duration": 0.2,
+   "after": 0,
+   "at": 6.58,
+   "label": "o mouse no player (os controles voltam)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "button[title=\"Velocidade\"]:visible"
+   },
+   "seconds": 0.1,
+   "at": 7.19,
+   "label": "Velocidade",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "button.sm\\:block:has(svg):visible",
+    "nth": 0
+   },
+   "seconds": 0.1,
+   "at": 7.85,
+   "label": "Voltar 10 segundos",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "button.sm\\:block:has(svg):visible",
+    "nth": 1
+   },
+   "seconds": 0.3,
+   "at": 8.61,
+   "label": "Avançar 10 segundos",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "button[aria-label=\"Abrir em tela cheia\"]:visible"
+   },
+   "seconds": 0.1,
+   "at": 11.04,
+   "label": "Abrir em tela cheia (sem entrar)",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 4
+  },
+  {
    "do": "eval",
-   "js": "(async()=>{const vis=e=>e.getClientRects().length>0&&getComputedStyle(e).visibility!=='hidden';const nz=t=>t.replace(/[\\s\\u00a0]+/g,' ').trim();const rolagem=(el)=>{let c=el.parentElement;while(c&&c!==document.body&&c!==document.documentElement){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const root=document.querySelector(\"body\")||document.body;const el=[...root.querySelectorAll('*')].filter(e=>vis(e)&&nz(e.textContent)===\"Tirar d\\u00favidas com o suporte\"&&![...e.children].some(k=>nz(k.textContent)===\"Tirar d\\u00favidas com o suporte\"))[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-430);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 1.93,
-   "label": "os detalhes descem ao botão verde"
+   "js": "(()=>{const v=document.querySelector('video');if(!v)return 'SEM ALVO: video';v.pause();v.dispatchEvent(new Event('ended'));return 'fim do vídeo (evento ended)'})()",
+   "at": 12.0,
+   "label": "o vídeo chega ao fim"
+  },
+  {
+   "do": "waitFor",
+   "text": "Aula concluída",
+   "timeout": 12
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 12.3
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Vamos para a próxima",
+    "exact": true
+   },
+   "seconds": 0.5,
+   "at": 15.26,
+   "label": "quadro Aula concluída · Vamos para a próxima",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Próxima aula agora",
+    "exact": true
+   },
+   "seconds": 0.44,
+   "at": 16.93,
+   "label": "Próxima aula agora (sem clicar)",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Ficar nesta aula",
+    "exact": true
+   },
+   "at": 18.37,
+   "label": "Ficar nesta aula",
+   "noScroll": true
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 18.72
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const vis=e=>e.getClientRects().length>0&&getComputedStyle(e).visibility!=='hidden';const nz=t=>t.replace(/[\\s\\u00a0]+/g,' ').trim();const rolagem=(el)=>{let c=el.parentElement;while(c&&c!==document.body&&c!==document.documentElement){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const root=document.querySelector(\"body\")||document.body;const el=[...root.querySelectorAll('*')].filter(e=>vis(e)&&nz(e.textContent)===\"Materiais e extras\"&&![...e.children].some(k=>nz(k.textContent)===\"Materiais e extras\"))[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-420);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 19.02,
+   "label": "os detalhes descem a Materiais e extras"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Materiais e extras",
+    "exact": true
+   },
+   "seconds": 0.5,
+   "at": 20.47,
+   "label": "Materiais e extras",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "type",
+   "target": {
+    "text": "Lista de conferência do cadastro da empresa"
+   },
+   "text": "",
+   "noClick": true,
+   "at": 23.22,
+   "label": "material Lista de conferência do cadastro da empresa (sem abrir)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 25.6
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const vis=e=>e.getClientRects().length>0&&getComputedStyle(e).visibility!=='hidden';const nz=t=>t.replace(/[\\s\\u00a0]+/g,' ').trim();const rolagem=(el)=>{let c=el.parentElement;while(c&&c!==document.body&&c!==document.documentElement){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const root=document.querySelector(\"body\")||document.body;const el=[...root.querySelectorAll('*')].filter(e=>vis(e)&&nz(e.textContent)===\"Tirar d\\u00favidas com o suporte\"&&![...e.children].some(k=>nz(k.textContent)===\"Tirar d\\u00favidas com o suporte\"))[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-330);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 25.9,
+   "label": "os detalhes no botão verde"
   },
   {
    "do": "hover",
@@ -127,20 +341,20 @@
     "text": "Tirar dúvidas com o suporte"
    },
    "seconds": 0.6,
-   "at": 3.98,
+   "at": 29.62,
    "label": "botão Tirar dúvidas com o suporte (sem clicar)",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
-   "name": "L2",
-   "at": 6.99
+   "name": "L5",
+   "at": 32.63
   },
   {
    "do": "mark",
-   "name": "L3",
-   "at": 18.04
+   "name": "L6",
+   "at": 43.69
   },
   {
    "do": "hover",
@@ -148,7 +362,7 @@
     "text": "Tirar dúvidas com o suporte"
    },
    "seconds": 0.6,
-   "at": 18.04,
+   "at": 43.69,
    "label": "o botão em destaque de novo",
    "optional": true,
    "timeout": 4
@@ -161,7 +375,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 24.55
+   "at": 50.2
   }
  ]
 }

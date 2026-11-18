@@ -1,6 +1,6 @@
 {
  "name": "t08-cap06",
- "title": "T08 · Cap. 6 · Vários veículos ao mesmo tempo (narração 55,0 s ESTIMADA; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:51:00-03:00)",
+ "title": "T08 · Cap. 6 · Vários veículos ao mesmo tempo (narração 64,1 s ESTIMADA; marcas L1..L8 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:51:00-03:00)",
  "seed": "t08-cap06",
  "pace": 0.5,
  "cps": 9,
@@ -11,6 +11,7 @@
  },
  "anonymous": true,
  "storage": {
+  "cato_adoption_nudge_38814e47-876a-5977-a5f7-53af364c17bb_34c36c63-0890-5e89-8963-7c77b7996908": "{\"count\":99,\"lastShownAt\":4102444800000}",
   "app_version": "1.60.10",
   "notification_shown_version": "1.60.10",
   "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
@@ -459,6 +460,63 @@
    "label": "fecha a lista"
   },
   {
+   "do": "mark",
+   "name": "L8",
+   "at": 54.42
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Voltar",
+    "exact": true
+   },
+   "at": 54.52,
+   "label": "Voltar para a tela dos tickets"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie tickets de pesagem rodoviária",
+   "timeout": 15
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button:has-text('Rascunhos apagados')"
+   },
+   "at": 57.54,
+   "label": "Rascunhos apagados (1)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Recupere um rascunho que foi apagado por engano.",
+   "timeout": 8
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Valdir Pereira\", \"Ferro misto\", \"Recuperar\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")];const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere lixeira de rascunhos"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Recuperar",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.8,
+   "at": 61.92,
+   "label": "Recuperar (sem clicar)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "label": "fecha Rascunhos apagados"
+  },
+  {
    "do": "eval",
    "js": "JSON.stringify(window.__avisos || \"sem observador\")",
    "label": "avisos de erro na tela"
@@ -466,7 +524,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 55.02
+   "at": 64.1
   }
  ]
 }

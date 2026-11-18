@@ -1,6 +1,6 @@
 {
  "name": "t07-cap10",
- "title": "T07 · Cap. 10 · Até três formas de pagamento (narração 68,2 s ESTIMADA; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:35:00-03:00; usuário rafael)",
+ "title": "T07 · Cap. 10 · Rascunho: sair, descartar e recuperar (narração 77,6 s ESTIMADA; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:35:00-03:00; usuário rafael)",
  "seed": "t07-cap10",
  "pace": 0.5,
  "cps": 14,
@@ -16,11 +16,12 @@
   "pwa-install-dismissed": "true",
   "theme": "light",
   "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
-  "initial-preferences-set": "true"
+  "initial-preferences-set": "true",
+  "cato_adoption_nudge_38814e47-876a-5977-a5f7-53af364c17bb_34c36c63-0890-5e89-8963-7c77b7996908": "{\"count\":99,\"lastShownAt\":0}"
  },
  "seedExtra": [
   "t07/inicio",
-  "t07/apos-cap09",
+  "t07/apos-cap03",
   "base/balanca-ativada"
  ],
  "prewarm": [
@@ -102,6 +103,654 @@
    "seconds": 0.4
   },
   {
+   "do": "click",
+   "target": {
+    "selector": "#supplier-desktop-top"
+   }
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "placeholder": "Buscar por nome, apelido, CPF/CNPJ ou telefone..."
+   },
+   "timeout": 10
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Buscar por nome, apelido, CPF/CNPJ ou telefone..."
+   },
+   "text": "moreira",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:has-text('José Carlos Moreira')"
+   }
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "balanca",
+   "peso": 12.4,
+   "subir": 0.6,
+   "oscilar": 0.6
+  },
+  {
+   "do": "pause",
+   "seconds": 2.4
+  },
+  {
+   "do": "click",
+   "target": {
+    "placeholder": "Escreva o nome ou código do material"
+   }
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Escreva o nome ou código do material"
+   },
+   "text": "cobre mi",
+   "noClick": true,
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Cobre misto",
+    "exact": false
+   }
+  },
+  {
+   "do": "pause",
+   "seconds": 0.6
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{let v='';for(let i=0;i<35;i++){const l=[...document.querySelectorAll('main label')].find(x=>x.textContent.includes(\"Quantidade (Kg)\"));let p=l;while(p&&p!==document.body&&!p.querySelector('input'))p=p.parentElement;const el=l&&p&&p.querySelector('input');v=el?el.value:'SEM ALVO';if(v===\"12,4\")return 'OK: '+v;await new Promise(r=>setTimeout(r,200));}return 'DIFERENTE: '+v})()"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Incluir Item",
+    "exact": true
+   }
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "balanca",
+   "peso": 0,
+   "subir": 0.6,
+   "oscilar": 0.6
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "balanca",
+   "peso": 21.6,
+   "subir": 0.6,
+   "oscilar": 0.6
+  },
+  {
+   "do": "pause",
+   "seconds": 2.4
+  },
+  {
+   "do": "click",
+   "target": {
+    "placeholder": "Escreva o nome ou código do material"
+   }
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Escreva o nome ou código do material"
+   },
+   "text": "latinha",
+   "noClick": true,
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Alumínio latinha",
+    "exact": false
+   }
+  },
+  {
+   "do": "pause",
+   "seconds": 0.6
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{let v='';for(let i=0;i<35;i++){const l=[...document.querySelectorAll('main label')].find(x=>x.textContent.includes(\"Quantidade (Kg)\"));let p=l;while(p&&p!==document.body&&!p.querySelector('input'))p=p.parentElement;const el=l&&p&&p.querySelector('input');v=el?el.value:'SEM ALVO';if(v===\"21,6\")return 'OK: '+v;await new Promise(r=>setTimeout(r,200));}return 'DIFERENTE: '+v})()"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main div:has(> label:has-text('Tara/Imp.')) input"
+   }
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "main div:has(> label:has-text('Tara/Imp.')) input"
+   },
+   "text": "0,6",
+   "noClick": true,
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Incluir Item",
+    "exact": true
+   }
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "balanca",
+   "peso": 0,
+   "subir": 0.6,
+   "oscilar": 0.6
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "click",
+   "target": {
+    "placeholder": "Escreva o nome ou código do material"
+   }
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Escreva o nome ou código do material"
+   },
+   "text": "ferro mi",
+   "noClick": true,
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Ferro misto",
+    "exact": false
+   }
+  },
+  {
+   "do": "pause",
+   "seconds": 0.6
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Pesagem avançada",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Registre pesagem dupla",
+   "timeout": 10
+  },
+  {
+   "do": "balanca",
+   "peso": 412,
+   "subir": 0.6,
+   "oscilar": 0.6
+  },
+  {
+   "do": "pause",
+   "seconds": 2.4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] div:has(> label:text-is('1ª Pesagem')) button[aria-label='Capturar peso da balança']"
+   }
+  },
+  {
+   "do": "pause",
+   "seconds": 0.6
+  },
+  {
+   "do": "balanca",
+   "peso": 96,
+   "subir": 0.6,
+   "oscilar": 0.6
+  },
+  {
+   "do": "pause",
+   "seconds": 2.4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] div:has(> label:text-is('2ª Pesagem')) button[aria-label='Capturar peso da balança']"
+   }
+  },
+  {
+   "do": "pause",
+   "seconds": 0.6
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] div:has(> div > label:text-is('Impureza')) button:text-is('%')"
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] div:has(> div > label:text-is('Impureza')) input"
+   }
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] div:has(> div > label:text-is('Impureza')) input"
+   },
+   "text": "3",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "label[for=wm-two]"
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Confirmar",
+    "exact": true,
+    "within": "[role=dialog]"
+   }
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "balanca",
+   "peso": 0,
+   "subir": 0.6,
+   "oscilar": 0.6
+  },
+  {
+   "do": "pause",
+   "seconds": 0.6
+  },
+  {
+   "do": "balanca",
+   "peso": 18.4,
+   "subir": 0.6,
+   "oscilar": 0.6
+  },
+  {
+   "do": "pause",
+   "seconds": 2.4
+  },
+  {
+   "do": "click",
+   "target": {
+    "placeholder": "Escreva o nome ou código do material"
+   }
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Escreva o nome ou código do material"
+   },
+   "text": "latinha",
+   "noClick": true,
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Alumínio latinha",
+    "exact": false
+   }
+  },
+  {
+   "do": "pause",
+   "seconds": 0.6
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{let v='';for(let i=0;i<35;i++){const l=[...document.querySelectorAll('main label')].find(x=>x.textContent.includes(\"Quantidade (Kg)\"));let p=l;while(p&&p!==document.body&&!p.querySelector('input'))p=p.parentElement;const el=l&&p&&p.querySelector('input');v=el?el.value:'SEM ALVO';if(v===\"18,4\")return 'OK: '+v;await new Promise(r=>setTimeout(r,200));}return 'DIFERENTE: '+v})()"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main div:has(> label:has-text('Tara/Imp.')) input"
+   }
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "main div:has(> label:has-text('Tara/Imp.')) input"
+   },
+   "text": "0,4",
+   "noClick": true,
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Incluir Item",
+    "exact": true
+   }
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "balanca",
+   "peso": 0,
+   "subir": 0.6,
+   "oscilar": 0.6
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main tbody tr:has-text('Alumínio latinha') button:has(svg.lucide-merge)"
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Mesclar pesagens",
+   "timeout": 8
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Mesclar Todas",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "pesagens mescladas com sucesso",
+   "timeout": 8
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main tbody tr:has-text('Ferro misto') button[aria-label='Ações do item']"
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Adicionar tara / pesagem avançada"
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Registre pesagem dupla",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] div:has(> label:text-is('Valor final')) input"
+   }
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] div:has(> label:text-is('Valor final')) input"
+   },
+   "text": "225,00",
+   "noClick": true,
+   "clear": true,
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Confirmar",
+    "exact": true,
+    "within": "[role=dialog]"
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Pesagem do item atualizada",
+   "timeout": 10
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "button[aria-label='Novo pedido de compra']"
+   }
+  },
+  {
+   "do": "pause",
+   "seconds": 1.2
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#supplier-desktop-top"
+   }
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "[role=dialog] button:has-text('Não informado')"
+   },
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:has-text('Não informado')"
+   }
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "pause",
+   "seconds": 0.6
+  },
+  {
+   "do": "balanca",
+   "peso": 10,
+   "subir": 0.6,
+   "oscilar": 0.6
+  },
+  {
+   "do": "pause",
+   "seconds": 2.4
+  },
+  {
+   "do": "click",
+   "target": {
+    "placeholder": "Escreva o nome ou código do material"
+   }
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Escreva o nome ou código do material"
+   },
+   "text": "cobre mi",
+   "noClick": true,
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Cobre misto",
+    "exact": false
+   }
+  },
+  {
+   "do": "pause",
+   "seconds": 0.6
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{let v='';for(let i=0;i<35;i++){const l=[...document.querySelectorAll('main label')].find(x=>x.textContent.includes(\"Quantidade (Kg)\"));let p=l;while(p&&p!==document.body&&!p.querySelector('input'))p=p.parentElement;const el=l&&p&&p.querySelector('input');v=el?el.value:'SEM ALVO';if(v===\"10,0\")return 'OK: '+v;await new Promise(r=>setTimeout(r,200));}return 'DIFERENTE: '+v})()"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Incluir Item",
+    "exact": true
+   }
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "balanca",
+   "peso": 0,
+   "subir": 0.6,
+   "oscilar": 0.6
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#supplier-desktop-top"
+   }
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "placeholder": "Buscar por nome, apelido, CPF/CNPJ ou telefone..."
+   },
+   "timeout": 10
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Buscar por nome, apelido, CPF/CNPJ ou telefone..."
+   },
+   "text": "siqueira",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:has-text('Depósito Irmãos Siqueira')"
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Trocar fornecedor?",
+   "timeout": 8
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Atualizar 1 item"
+   }
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "pause",
+   "seconds": 0.8
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "div:has(> button[aria-label='Novo pedido de compra']) > button:not([aria-label])"
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "div:has(> button[aria-label='Descartar pedido']) > button:has-text('José Carlos')"
+   }
+  },
+  {
+   "do": "pause",
+   "seconds": 1.0
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "selector": "[data-sonner-toast]"
+   },
+   "timeout": 12
+  },
+  {
    "do": "eval",
    "js": "(()=>{window.__avisos=[];const re=new RegExp(\"N[\\u00e3a]o foi poss[i\\u00ed]vel|Erro ao|Tente novamente|indispon[i\\u00ed]vel|Algo deu errado|Something went wrong|Falha ao|Pop-up bloqueado|Sem permiss[\\u00e3a]o\",'i');const ign=new RegExp(\"$^\",'i');const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&!ign.test(m[0])&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);return 1})()"
   }
@@ -113,30 +762,267 @@
    "at": 0.0
   },
   {
-   "do": "click",
+   "do": "hover",
    "target": {
-    "selector": "#supplier-desktop-top"
+    "selector": "div:has(> button[aria-label='Novo pedido de compra']) > button:not([aria-label])"
    },
-   "at": 1.52,
-   "label": "Selecionar fornecedor"
-  },
-  {
-   "do": "type",
-   "target": {
-    "placeholder": "Buscar por nome, apelido, CPF/CNPJ ou telefone..."
-   },
-   "text": "vale forte",
-   "cps": 30,
-   "at": 2.72,
-   "label": "busca vale forte"
+   "seconds": 2.0,
+   "at": 1.82,
+   "label": "a barra com os dois pedidos (sob a ilustração)",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "click",
    "target": {
-    "selector": "[role=dialog] button:has-text('Auto Peças Vale Forte')"
+    "selector": "main a:has-text('Voltar para o caixa')"
    },
-   "at": 6.08,
-   "label": "Auto Peças Vale Forte"
+   "at": 10.13,
+   "label": "Voltar para o caixa",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "text": "Pedidos Não Finalizados",
+   "timeout": 15
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 10.63
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button:has-text('Pedidos Não Finalizados')"
+   },
+   "at": 13.03,
+   "label": "Pedidos Não Finalizados 2 (zoom)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "José Carlos Moreira",
+    "within": "main",
+    "exact": false
+   },
+   "seconds": 1.6,
+   "at": 15.39,
+   "label": "os cartões do Zé e do Depósito",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"José Carlos Moreira\", \"Depósito Irmãos Siqueira\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText+' '+[...el.querySelectorAll('input,textarea')].map(i=>i.value).join(' '));const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere os dois pedidos não finalizados no caixa"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const c=rolagem(document.querySelector(\"main\"+' *'));if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop;if(y0<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=()=>{const p=Math.min(1,(performance.now()-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0*(1-e);p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'topo:'+Math.round(c.scrollTop)})()",
+   "at": 16.55,
+   "label": "rola ao topo do caixa"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Fechar Caixa"
+   },
+   "seconds": 2.4,
+   "at": 16.9,
+   "label": "Fechar Caixa travado",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 23.13
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Nova Compra",
+    "exact": true
+   },
+   "at": 23.48,
+   "label": "Nova Compra (volta aos pedidos)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Voltar para o caixa",
+   "timeout": 15
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const c=rolagem(document.querySelector('main *'));if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=()=>{const p=Math.min(1,(performance.now()-t0)/400),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+(140-y0)*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'rolado:'+Math.round(c.scrollTop)})()",
+   "label": "rola o formulário"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"(2)\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText+' '+[...el.querySelectorAll('input,textarea')].map(i=>i.value).join(' '));const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere os dois rascunhos continuam abertos"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "div:has(> button[aria-label='Novo pedido de compra']) > button:not([aria-label])"
+   },
+   "at": 27.28,
+   "label": "barra de pedidos (abre a lista)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "div:has(> button:has-text('Depósito')) > button[aria-label='Descartar pedido']"
+   },
+   "seconds": 0.8,
+   "at": 28.26,
+   "label": "lixeira Descartar pedido (Depósito)",
+   "optional": false,
+   "timeout": 8
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "div:has(> button:has-text('Depósito')) > button[aria-label='Descartar pedido']"
+   },
+   "at": 29.33,
+   "label": "Descartar pedido"
+  },
+  {
+   "do": "waitFor",
+   "text": "Descartar este pedido?",
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Descartar este pedido?",
+    "within": "[role=alertdialog]"
+   },
+   "seconds": 2.0,
+   "at": 31.07,
+   "label": "janela Descartar este pedido? (zoom)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Ele tem 1 material incluído. Você pode recuperá-lo depois em Rascunhos apagados.\", \"Manter pedido\", \"Descartar\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=alertdialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText+' '+[...el.querySelectorAll('input,textarea')].map(i=>i.value).join(' '));const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Descartar este pedido?"
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 34.11
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Descartar",
+    "exact": true,
+    "within": "[role=alertdialog]"
+   },
+   "at": 34.31,
+   "label": "Descartar"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "selector": "[role=alertdialog]"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const c=rolagem(document.querySelector(\"main\"+' *'));if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop;if(y0<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=()=>{const p=Math.min(1,(performance.now()-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0*(1-e);p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'topo:'+Math.round(c.scrollTop)})()",
+   "at": 36.24,
+   "label": "rola ao topo (Rascunhos apagados)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main button:has-text('Rascunhos apagados')"
+   },
+   "seconds": 1.2,
+   "at": 37.88,
+   "label": "Rascunhos apagados com 1 (zoom)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button:has-text('Rascunhos apagados')"
+   },
+   "at": 39.39,
+   "label": "Rascunhos apagados (abre)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Recupere um rascunho",
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Apagado",
+    "within": "[role=dialog]",
+    "exact": false
+   },
+   "seconds": 1.65,
+   "at": 42.58,
+   "label": "Apagado ... por Rafael Nogueira",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 44.78
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Apagado",
+    "within": "[role=dialog]",
+    "exact": false
+   },
+   "seconds": 0.55,
+   "at": 44.78,
+   "label": "Apagado ... por Rafael Nogueira (continua)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Recupere um rascunho que foi apagado por engano. Ele volta como uma aba ativa.\", \"Depósito Irmãos Siqueira\", \"por Rafael Nogueira\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText+' '+[...el.querySelectorAll('input,textarea')].map(i=>i.value).join(' '));const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere janela Rascunhos apagados"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Recuperar",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 44.98,
+   "label": "Recuperar"
+  },
+  {
+   "do": "waitFor",
+   "text": "Rascunho recuperado",
+   "timeout": 8
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{await new Promise(r=>setTimeout(r,600));const d=document.querySelector('[role=dialog]');if(!d)return 'ja fechada';const b=[...d.querySelectorAll('button')].find(x=>[x.textContent,x.getAttribute('aria-label')].some(v=>/^\\s*(fechar|close)\\s*$/i.test(v||'')));if(!b)return 'sem botao Fechar';b.click();return 'fechada pelo botao'})()",
+   "label": "fecha a janela (se não fechou sozinha)"
   },
   {
    "do": "waitFor",
@@ -146,341 +1032,156 @@
    "timeout": 8
   },
   {
-   "do": "balanca",
-   "peso": 186,
-   "subir": 0.6,
-   "oscilar": 0.6,
-   "label": "bateria na balança (186 kg)"
-  },
-  {
-   "do": "click",
-   "target": {
-    "placeholder": "Escreva o nome ou código do material"
-   },
-   "label": "Material"
-  },
-  {
-   "do": "type",
-   "target": {
-    "placeholder": "Escreva o nome ou código do material"
-   },
-   "text": "bateria",
-   "cps": 40,
-   "noClick": true,
-   "label": "material: bateria"
-  },
-  {
-   "do": "mark",
-   "name": "L2",
-   "at": 6.91
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "option",
-    "name": "Bateria automotiva",
-    "exact": false
-   },
-   "at": 7.31,
-   "label": "Bateria automotiva"
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const c=rolagem(document.querySelector('main *'));if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=()=>{const p=Math.min(1,(performance.now()-t0)/400),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+(140-y0)*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'rolado:'+Math.round(c.scrollTop)})()",
+   "label": "rola o formulário"
   },
   {
    "do": "hover",
    "target": {
-    "selector": "[data-sonner-toast]:has-text('Preço especial')"
+    "selector": "div:has(> button[aria-label='Novo pedido de compra']) > button:not([aria-label])"
    },
    "seconds": 1.6,
-   "at": 8.27,
-   "label": "aviso Preço especial aplicado (o mouse segura o aviso)",
-   "noScroll": true,
+   "at": 46.57,
+   "label": "o pedido do Depósito de volta na barra (2)",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Preço especial aplicado para Bateria automotiva\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"body\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText+' '+[...el.querySelectorAll('input,textarea')].map(i=>i.value).join(' '));const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
-   "label": "confere aviso Preço especial aplicado"
-  },
-  {
-   "do": "type",
-   "target": {
-    "selector": "main div:has(> label:has-text('Valor/Kg')) input"
-   },
-   "text": "",
-   "noClick": true,
-   "optional": true,
-   "timeout": 4,
-   "at": 14.67,
-   "label": "Valor/Kg 3,40 (zoom)"
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const esp=[\"3,40\"];let out='';for(let i=0;i<12;i++){const v=[...document.querySelectorAll(\"main\"+' input, '+\"main\"+' textarea')].map(e=>e.value).join(' | ');const falta=esp.filter(e=>!v.includes(e));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+v.slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
-   "label": "confere Valor/Kg 3,40"
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{let v='';for(let i=0;i<35;i++){const l=[...document.querySelectorAll('main label')].find(x=>x.textContent.includes(\"Quantidade (Kg)\"));let p=l;while(p&&p!==document.body&&!p.querySelector('input'))p=p.parentElement;const el=l&&p&&p.querySelector('input');v=el?el.value:'SEM ALVO';if(v===\"186,0\")return 'OK: '+v;await new Promise(r=>setTimeout(r,200));}return 'DIFERENTE: '+v})()",
-   "label": "confere Quantidade 186,0 da balança"
-  },
-  {
-   "do": "mark",
-   "name": "L3",
-   "at": 18.57
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "button",
-    "name": "Incluir Item",
-    "exact": true
-   },
-   "at": 19.08,
-   "label": "Incluir Item (bateria)"
-  },
-  {
-   "do": "balanca",
-   "peso": 64,
-   "subir": 0.6,
-   "oscilar": 0.6,
-   "label": "cobre na balança (64 kg)"
-  },
-  {
-   "do": "click",
-   "target": {
-    "placeholder": "Escreva o nome ou código do material"
-   },
-   "label": "Material"
-  },
-  {
-   "do": "type",
-   "target": {
-    "placeholder": "Escreva o nome ou código do material"
-   },
-   "text": "cobre mi",
-   "cps": 40,
-   "noClick": true,
-   "label": "material: cobre mi"
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "option",
-    "name": "Cobre misto",
-    "exact": false
-   },
-   "at": 22.34,
-   "label": "Cobre misto"
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{let v='';for(let i=0;i<35;i++){const l=[...document.querySelectorAll('main label')].find(x=>x.textContent.includes(\"Quantidade (Kg)\"));let p=l;while(p&&p!==document.body&&!p.querySelector('input'))p=p.parentElement;const el=l&&p&&p.querySelector('input');v=el?el.value:'SEM ALVO';if(v===\"64,0\")return 'OK: '+v;await new Promise(r=>setTimeout(r,200));}return 'DIFERENTE: '+v})()",
-   "label": "confere Quantidade 64,0 da balança"
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "button",
-    "name": "Incluir Item",
-    "exact": true
-   },
-   "at": 24.62,
-   "label": "Incluir Item (cobre)"
-  },
-  {
-   "do": "balanca",
-   "peso": 0,
-   "subir": 0.5,
-   "oscilar": 0.3,
-   "label": "tira o cobre da balança"
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "Total da Compra",
-    "within": "main"
-   },
-   "seconds": 1.6,
-   "at": 25.76,
-   "label": "Total da Compra R$ 2.936,40 (zoom)",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"2.936,40\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText+' '+[...el.querySelectorAll('input,textarea')].map(i=>i.value).join(' '));const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
-   "label": "confere Total da Compra R$ 2.936,40"
-  },
-  {
-   "do": "mark",
-   "name": "L4",
-   "at": 29.86
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "button",
-    "name": "Finalizar",
-    "exact": true
-   },
-   "at": 30.21,
-   "label": "Finalizar"
-  },
-  {
-   "do": "waitFor",
-   "text": "Finalizar Pedido",
-   "timeout": 10
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "#multiple-payments"
-   },
-   "at": 39.47,
-   "label": "Múltiplas formas de pagamento"
-  },
-  {
-   "do": "mark",
-   "name": "L5",
-   "at": 42.58
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "[role=dialog] button:has(span:text-is('Dinheiro'))"
-   },
-   "seconds": 0.3,
-   "at": 42.93,
-   "label": "Dinheiro (já vem marcado)",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "[role=dialog] button:has(span:text-is('Pix/Transferência'))"
-   },
-   "at": 43.61,
-   "label": "Pix/Transferência"
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Formas de pagamento (máx. 3)\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText+' '+[...el.querySelectorAll('input,textarea')].map(i=>i.value).join(' '));const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
-   "label": "confere rótulo Formas de pagamento (máx. 3)"
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "[role=dialog] button:has(span:text-is('Saldo do Fornecedor'))"
-   },
-   "at": 43.99,
-   "label": "Saldo do Fornecedor"
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "#cash-amount"
-   },
-   "at": 44.6,
-   "label": "valor do Dinheiro"
-  },
-  {
-   "do": "type",
-   "target": {
-    "selector": "#cash-amount"
-   },
-   "text": "200,00",
-   "cps": 14,
-   "noClick": true,
-   "at": 46.16,
-   "label": "Dinheiro 200,00",
-   "clear": true
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "#balance-amount"
-   },
-   "at": 46.42,
-   "label": "valor do Saldo"
-  },
-  {
-   "do": "type",
-   "target": {
-    "selector": "#balance-amount"
-   },
-   "text": "2000,00",
-   "cps": 14,
-   "noClick": true,
-   "at": 47.98,
-   "label": "Saldo 2000,00",
-   "clear": true
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "#transfer-amount"
-   },
-   "seconds": 2.0,
-   "at": 51.2,
-   "label": "os três valores: Pix completa 736,40 (zoom)",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const esp=[\"200,00\", \"736,40\"];let out='';for(let i=0;i<12;i++){const v=[...document.querySelectorAll(\"[role=dialog]\"+' input, '+\"[role=dialog]\"+' textarea')].map(e=>e.value).join(' | ');const falta=esp.filter(e=>!v.includes(e));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+v.slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
-   "label": "confere Dinheiro 200,00 e Pix 736,40 (o saldo 2.000 confere no resumo)"
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"(2)\", \"Depósito Irmãos Siqueira\", \"374,40\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText+' '+[...el.querySelectorAll('input,textarea')].map(i=>i.value).join(' '));const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere rascunho recuperado como estava"
   },
   {
    "do": "mark",
    "name": "L6",
-   "at": 56.67
+   "at": 50.52
   },
   {
-   "do": "hover",
+   "do": "click",
    "target": {
-    "selector": "[role=dialog] button:has-text('Conta Principal')"
+    "selector": "div:has(> button[aria-label='Novo pedido de compra']) > button:not([aria-label])"
    },
-   "seconds": 0.8,
-   "at": 56.67,
-   "label": "a conta do Pix (Conta Principal; a Vale Forte não tem chave Pix)",
-   "optional": true,
-   "timeout": 4
+   "at": 50.72,
+   "label": "barra de pedidos (abre a lista)"
   },
   {
-   "do": "hover",
+   "do": "click",
    "target": {
-    "text": "Total",
-    "within": "[role=dialog]",
-    "exact": true
+    "selector": "div:has(> button:has-text('Depósito')) > button[aria-label='Descartar pedido']"
    },
-   "seconds": 1.4,
-   "at": 57.17,
-   "label": "bloco Total (sem Faltam nem Excesso)",
-   "optional": true,
-   "timeout": 4
+   "at": 53.76,
+   "label": "Descartar pedido (de novo)"
   },
   {
-   "do": "hover",
-   "target": {
-    "text": "Distribuição do pagamento"
-   },
-   "seconds": 1.2,
-   "at": 60.89,
-   "label": "Distribuição do pagamento",
-   "optional": true,
-   "timeout": 4
+   "do": "waitFor",
+   "text": "Descartar este pedido?",
+   "timeout": 8
   },
   {
-   "do": "hover",
+   "do": "click",
    "target": {
     "role": "button",
-    "name": "CONFIRMAR PAGAMENTO"
+    "name": "Descartar",
+    "exact": true,
+    "within": "[role=alertdialog]"
    },
-   "seconds": 1.0,
-   "at": 63.7,
-   "label": "CONFIRMAR PAGAMENTO liberado",
+   "at": 54.67,
+   "label": "Descartar"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "selector": "[role=alertdialog]"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button:has-text('Rascunhos apagados')"
+   },
+   "at": 56.41,
+   "label": "Rascunhos apagados"
+  },
+  {
+   "do": "waitFor",
+   "text": "Recupere um rascunho",
+   "timeout": 8
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[aria-label='Excluir definitivamente']"
+   },
+   "at": 57.17,
+   "label": "lixeira Excluir definitivamente"
+  },
+  {
+   "do": "waitFor",
+   "text": "Excluir de vez?",
+   "timeout": 6
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Sim, excluir"
+   },
+   "label": "Sim, excluir"
+  },
+  {
+   "do": "waitFor",
+   "text": "Rascunho excluído definitivamente",
+   "timeout": 8
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{await new Promise(r=>setTimeout(r,600));const d=document.querySelector('[role=dialog]');if(!d)return 'ja fechada';const b=[...d.querySelectorAll('button')].find(x=>[x.textContent,x.getAttribute('aria-label')].some(v=>/^\\s*(fechar|close)\\s*$/i.test(v||'')));if(!b)return 'sem botao Fechar';b.click();return 'fechada pelo botao'})()",
+   "label": "fecha a janela Rascunhos apagados"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 59.83
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const c=rolagem(document.querySelector('main *'));if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=()=>{const p=Math.min(1,(performance.now()-t0)/500),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+(140-y0)*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'rolado:'+Math.round(c.scrollTop)})()",
+   "at": 59.83,
+   "label": "rola o formulário (rodapé)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main button:text-is('Cancelar')"
+   },
+   "seconds": 3.0,
+   "at": 60.55,
+   "label": "Cancelar do rodapé, sem clicar (zoom)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"913,20\", \"José Carlos Moreira\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText+' '+[...el.querySelectorAll('input,textarea')].map(i=>i.value).join(' '));const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere sobrou só o pedido do Zé"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "div:has(> button[aria-label='Novo pedido de compra']) > button:not([aria-label])"
+   },
+   "seconds": 2.4,
+   "at": 68.6,
+   "label": "a barra (aviso de colega: só na fala)",
    "optional": true,
    "timeout": 4
   },
@@ -492,7 +1193,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 68.19
+   "at": 77.57
   }
  ]
 }

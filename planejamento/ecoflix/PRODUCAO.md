@@ -820,3 +820,9 @@ Decisões:
   (3) Sonnet 5 nas aulas não fiscais de robô simples; Fable só em fiscal, Cato e direção de arte; (4) ilustração v3 só
   onde o conceito não se entende pela tela (enxugar as 218 cenas 2D na migração: meta de até ~4 por aula);
   (5) o coordenador responde curto e não comenta notificação de "esperando".
+- 18/11 18:5x **T00 aplicada no 1.60.10**: 16 capítulos (novos: 8 "O Cato, o seu agente", 12 "Montar o plano";
+  renumerados 8-13 → 9, 10, 11, 13, 14, 15), fala 1.544 → 2.066 palavras (~15,5 min). Rápido aprovado em todos
+  (computador e celular, variantes cap40/cap41); completo em 04, 08, 12, 14, 07b, 08b; **falta** reensaiar o cap07
+  completo (`bash rec/t00/t00_um.sh 07 --completo`). **Pedido ao mundo base (pendente)**: mensalidade 1.350,00 e
+  `extra_users` 1. Ilustração nova: `ilu10_selos_status`. Valores em reais aparecem na tela de "Montar plano" e na oferta
+  do cancelamento (a fala não cita). Próxima na fila de aplicação: T17. Depois: cenas v3 da T00 (`_BRIEF_CENAS_V3.md`).

@@ -64,6 +64,9 @@ as gravações). Cada item diz a aula em que apareceu. **No fim da produção, v
 - **Ficha do cliente/fornecedor em 1280 px** (T4): as 7 abas não cabem na largura.
 - **CEP sem máscara** no cadastro (T4).
 - **Dica da lupa é só o `title` do navegador** (T4): demora a aparecer e não segue o estilo do app.
+- **Plural errado no plano** (T0, 1.60.10): "10 módulo" e "4 pagamento realizado" no singular.
+- **Player da EcoFlix**: os botões de 10 s não têm nome acessível (T0).
+- **"Falar com o Sucesso do Cliente" só aparece em 4 dos 8 motivos** de cancelamento (T0).
 
 ## 3. Textos desatualizados (Central de Ajuda, Guia de Instalação e a fonte da Trilha EcoFlix)
 - **Guia de Instalação do EcoTray** ainda fala em arquivo ZIP (T5).

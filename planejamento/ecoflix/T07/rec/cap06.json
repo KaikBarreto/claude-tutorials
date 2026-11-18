@@ -1,6 +1,6 @@
 {
  "name": "t07-cap06",
- "title": "T07 · Cap. 6 · Tara, impureza e dupla pesagem (narração 117,2 s ESTIMADA; marcas L1..L9 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:35:00-03:00; usuário rafael)",
+ "title": "T07 · Cap. 6 · Tara, impureza e dupla pesagem (narração 147,5 s ESTIMADA; marcas L1..L11 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:35:00-03:00; usuário rafael)",
  "seed": "t07-cap06",
  "pace": 0.5,
  "cps": 14,
@@ -16,7 +16,8 @@
   "pwa-install-dismissed": "true",
   "theme": "light",
   "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
-  "initial-preferences-set": "true"
+  "initial-preferences-set": "true",
+  "cato_adoption_nudge_38814e47-876a-5977-a5f7-53af364c17bb_34c36c63-0890-5e89-8963-7c77b7996908": "{\"count\":99,\"lastShownAt\":0}"
  },
  "seedExtra": [
   "t07/inicio",
@@ -538,10 +539,83 @@
   {
    "do": "hover",
    "target": {
+    "selector": "label[for=wm-net]"
+   },
+   "seconds": 1.2,
+   "at": 94.69,
+   "label": "Resumido: Só o peso líquido cobrado.",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "label[for=wm-detailed]"
+   },
+   "seconds": 1.6,
+   "at": 98.86,
+   "label": "Detalhado: Bruto, tara, impureza e líquido.",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Só o peso líquido cobrado.\", \"Bruto, tara, impureza e líquido.\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText+' '+[...el.querySelectorAll('input,textarea')].map(i=>i.value).join(' '));const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Resumido e Detalhado"
+  },
+  {
+   "do": "mark",
+   "name": "L9",
+   "at": 105.08
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.offsetParent!==null&&e.textContent.trim().startsWith(\"Preencha 1ª e 2ª pesagem\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-200);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=()=>{const p=Math.min(1,(performance.now()-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 106.37,
+   "label": "rola a janela de volta às pesagens"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Preencha 1ª e 2ª pesagem",
+    "within": "[role=dialog]",
+    "exact": false
+   },
+   "seconds": 2.4,
+   "at": 109.15,
+   "label": "dica: só a 1ª conta como bruto (zoom)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] div:has(> label:has-text('Tara (')) input"
+   },
+   "seconds": 2.0,
+   "at": 116.37,
+   "label": "Tara (Kg) (zoom)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L10",
+   "at": 124.41
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.offsetParent!==null&&e.textContent.trim()===\"Motorista\").sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-420);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=()=>{const p=Math.min(1,(performance.now()-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 124.41,
+   "label": "rola a janela até o motorista"
+  },
+  {
+   "do": "hover",
+   "target": {
     "selector": "[role=dialog] div:has(> label:text-is('Motorista'))"
    },
    "seconds": 0.6,
-   "at": 94.46,
+   "at": 124.76,
    "label": "Motorista e Placa do veículo (vazios)",
    "optional": true,
    "timeout": 4
@@ -554,7 +628,7 @@
     "exact": true,
     "within": "[role=dialog]"
    },
-   "at": 98.03,
+   "at": 128.33,
    "label": "Confirmar"
   },
   {
@@ -566,8 +640,8 @@
   },
   {
    "do": "mark",
-   "name": "L9",
-   "at": 101.37
+   "name": "L11",
+   "at": 131.67
   },
   {
    "do": "hover",
@@ -576,7 +650,7 @@
     "nth": 0
    },
    "seconds": 3.0,
-   "at": 104.75,
+   "at": 135.06,
    "label": "linha Ferro misto 316 e 9,48 (zoom)",
    "optional": true,
    "timeout": 4
@@ -594,7 +668,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 117.22
+   "at": 147.52
   }
  ]
 }

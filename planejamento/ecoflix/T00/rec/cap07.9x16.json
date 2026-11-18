@@ -1,6 +1,6 @@
 {
  "name": "t00-cap07b",
- "title": "T0 · Cap. 7 · Os menus e a sua conta (celular 390x844, 9:16; narração 53,9 s, ESTIMADA; marcas L1..L5 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
+ "title": "T0 · Cap. 7 · Os menus e a sua conta (celular 390x844, 9:16; narração 75,1 s, ESTIMADA; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
  "fakeNow": "2026-11-10T08:30:00-03:00",
  "seed": "t00-cap07b",
  "pace": 0.5,
@@ -12,6 +12,7 @@
  },
  "anonymous": true,
  "storage": {
+  "cato_adoption_nudge_38814e47-876a-5977-a5f7-53af364c17bb_34c36c63-0890-5e89-8963-7c77b7996908": "{\"count\": 16, \"lastShownAt\": 1794310200000}",
   "app_version": "1.60.10",
   "notification_shown_version": "1.60.10",
   "pwa-install-dismissed": "true",
@@ -185,7 +186,7 @@
   {
    "do": "mark",
    "name": "L3",
-   "at": 16.67
+   "at": 18.87
   },
   {
    "do": "hover",
@@ -196,7 +197,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 0.4,
-   "at": 16.9,
+   "at": 19.1,
    "label": "Tutoriais | EcoFlix",
    "optional": true,
    "timeout": 4
@@ -210,7 +211,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 0.4,
-   "at": 20.46,
+   "at": 22.67,
    "label": "Central de Ajuda",
    "optional": true,
    "timeout": 4
@@ -224,7 +225,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 0.4,
-   "at": 24.79,
+   "at": 27.07,
    "label": "Falar com o Suporte (sem clicar)",
    "optional": true,
    "timeout": 4
@@ -232,7 +233,32 @@
   {
    "do": "mark",
    "name": "L4",
-   "at": 28.18
+   "at": 36.45
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const vis=e=>e.getClientRects().length>0&&getComputedStyle(e).visibility!=='hidden';const nz=t=>t.replace(/[\\s\\u00a0]+/g,' ').trim();const rolagem=(el)=>{let c=el.parentElement;while(c&&c!==document.body&&c!==document.documentElement){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const root=document.querySelector(\"[role=dialog]\")||document.body;const el=[...root.querySelectorAll('*')].filter(e=>vis(e)&&nz(e.textContent)===\"Sair\"&&![...e.children].some(k=>nz(k.textContent)===\"Sair\"))[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const r0=el.getBoundingClientRect();const cr=c.getBoundingClientRect?c.getBoundingClientRect():{top:0,bottom:innerHeight};const top0=c===document.scrollingElement?0:cr.top,bot0=c===document.scrollingElement?innerHeight:cr.bottom;if(r0.top>=top0+8&&r0.bottom<=bot0-8)return 'ok';const dy=Math.round(el.getBoundingClientRect().top-700);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 36.75,
+   "label": "a gaveta desce ao rodapé"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Sair",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.8,
+   "at": 42.91,
+   "label": "rodapé da gaveta: Sair (NUNCA clicar)",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 46.07
   },
   {
    "do": "click",
@@ -242,7 +268,7 @@
     "exact": true,
     "within": "[role=dialog]"
    },
-   "at": 29.02,
+   "at": 46.91,
    "label": "Configurações (rodapé da gaveta)",
    "noScroll": true
   },
@@ -257,7 +283,7 @@
     "text": "Aparência",
     "exact": true
    },
-   "at": 31.83,
+   "at": 49.71,
    "label": "aba Aparência"
   },
   {
@@ -284,62 +310,82 @@
    },
    "text": "",
    "noClick": true,
-   "at": 34.55,
+   "at": 52.44,
    "label": "Esta opção só afeta a visualização em desktop.",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
-   "name": "L5",
-   "at": 39.76
+   "name": "L6",
+   "at": 57.65
   },
   {
-   "do": "hover",
+   "do": "type",
    "target": {
     "text": "Início",
     "exact": true,
     "within": "nav"
    },
-   "seconds": 0.1,
-   "at": 42.57,
+   "text": "",
+   "noClick": true,
+   "at": 60.96,
    "label": "barra de baixo: Início",
    "optional": true,
    "timeout": 4
   },
   {
-   "do": "hover",
+   "do": "type",
    "target": {
     "text": "Caixa",
     "exact": true,
     "within": "nav"
    },
-   "seconds": 0.29,
-   "at": 43.33,
+   "text": "",
+   "noClick": true,
+   "at": 61.72,
    "label": "barra de baixo: Caixa",
    "optional": true,
    "timeout": 4
   },
   {
-   "do": "hover",
+   "do": "click",
    "target": {
     "selector": "nav button:has(svg.lucide-plus)"
    },
-   "seconds": 0.3,
-   "at": 44.62,
-   "label": "barra de baixo: Novo",
+   "at": 62.41,
+   "label": "barra de baixo: Novo (abre o leque)",
+   "noScroll": true
+  },
+  {
+   "do": "type",
+   "target": {
+    "text": "Ticket de pesagem",
+    "exact": true
+   },
+   "text": "",
+   "noClick": true,
+   "at": 66.8,
+   "label": "leque do Novo: Compra, Venda, Ticket de pesagem, Nota Fiscal",
    "optional": true,
    "timeout": 4
   },
   {
-   "do": "hover",
+   "do": "eval",
+   "js": "(()=>{const e=document.elementFromPoint(195,150);if(!e)return 'SEM ALVO';e.dispatchEvent(new MouseEvent('pointerdown',{bubbles:true}));e.click();return 'toque fora: '+e.tagName})()",
+   "at": 68.73,
+   "label": "toque fora fecha o leque"
+  },
+  {
+   "do": "type",
    "target": {
     "text": "Estoque",
     "exact": true,
     "within": "nav"
    },
-   "seconds": 0.1,
-   "at": 48.18,
+   "text": "",
+   "noClick": true,
+   "at": 69.83,
    "label": "barra de baixo: Estoque",
    "optional": true,
    "timeout": 4
@@ -351,7 +397,7 @@
     "name": "Menu",
     "exact": true
    },
-   "at": 48.69,
+   "at": 69.84,
    "label": "Menu (abre a gaveta)",
    "noScroll": true
   },
@@ -363,7 +409,7 @@
   {
    "do": "eval",
    "js": "(async()=>{const vis=e=>e.getClientRects().length>0&&getComputedStyle(e).visibility!=='hidden';const nz=t=>t.replace(/[\\s\\u00a0]+/g,' ').trim();const rolagem=(el)=>{let c=el.parentElement;while(c&&c!==document.body&&c!==document.documentElement){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const root=document.querySelector(\"[role=dialog]\")||document.body;const el=[...root.querySelectorAll('*')].filter(e=>vis(e)&&nz(e.textContent)===\"Conta\"&&![...e.children].some(k=>nz(k.textContent)===\"Conta\"))[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-170);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 50.85,
+   "at": 72.0,
    "label": "a gaveta desce à seção Conta"
   },
   {
@@ -374,7 +420,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 53.93
+   "at": 75.08
   }
  ],
  "device": "phone"

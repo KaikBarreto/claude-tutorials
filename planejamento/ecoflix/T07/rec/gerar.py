@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """T07 · Comprar e vender sucata · gera rec/t07/capNN.json (roteiros do robô) a partir da voz (t07/narracao/capNN.json).
 
-EcoSistema 1.59.154 no COMPUTADOR (janela 1280x800), Recicla Vale Metais, Rafael Nogueira (MASTER), FAKE_NOW 10/11/2026 08:35 (todos os
+EcoSistema 1.60.10 no COMPUTADOR (janela 1280x800), Recicla Vale Metais, Rafael Nogueira (MASTER), FAKE_NOW 10/11/2026 08:35 (todos os
 capítulos; a junção: depois do #85 da T6, aberto às 08:31). Uso, de qualquer pasta:  python3 -I rec/t07/gerar.py [NN ...]
 Depois: ensaio.py NN (rápido) -> record.mjs --rapido -> resumo.py NN --ens -> t07_semente.py NN -> prever.py NN --ens -> gravação -> resumo.py NN.
 
@@ -456,14 +456,15 @@ def js_menu_item(nome, item):
 
 # ================================================================ T07 (o que vem acima é o molde do T03; daqui para baixo, a aula)
 NOMES = ['Abertura', 'Onde ficam a compra e a venda', 'Escolher o fornecedor', 'Cadastrar o fornecedor na hora', 'Qual preço vale',
-         'O peso da balança', 'Tara, impureza e dupla pesagem', 'Mesclar pesagens', 'Desconto e conferência', 'Finalizar o pedido',
-         'Até três formas de pagamento', 'Fiado com parcelas', 'O cupom e o cupom sem valor', 'A tela de venda', 'Estoque insuficiente',
-         'Sem internet', 'Recapitulando']
-# estado de partida: t07/inicio + o último apos-capNN que mudou o banco (t07_semente.py) + base/balanca-ativada; o resto o setup refaz
+         'O peso da balança', 'Tara, impureza e dupla pesagem', 'Mesclar pesagens', 'Desconto e conferência', 'Dois pedidos ao mesmo tempo',
+         'Rascunho: sair, descartar e recuperar', 'Finalizar o pedido', 'Abater o vale na compra', 'Até três formas de pagamento',
+         'Fiado com parcelas', 'O cupom e o cupom sem valor', 'A tela de venda', 'Estoque insuficiente', 'Sem internet', 'Recapitulando']
+# estado de partida: t07/inicio + o último apos-capNN que mudou o banco (t07_semente.py) + base/balanca-ativada; o resto o setup refaz.
+# 1.60.10 (18/11): capítulos novos 09, 10 e 12 (não mudam o banco); os antigos 09..16 viraram 11 e 13..19.
 SEMENTE = {0: [], 1: [], 2: [], 3: [], 4: ['apos-cap03'], 5: ['apos-cap03'], 6: ['apos-cap03'], 7: ['apos-cap03'], 8: ['apos-cap03'],
-           9: ['apos-cap03'], 10: ['apos-cap09'], 11: ['apos-cap09'], 12: ['apos-cap09'], 13: ['apos-cap12'], 14: ['apos-cap12'],
-           15: ['apos-cap14'], 16: ['apos-cap15']}
-EXTRA_BASE = {n: ['base/balanca-ativada'] for n in range(17)}
+           9: ['apos-cap03'], 10: ['apos-cap03'], 11: ['apos-cap03'], 12: ['apos-cap11'], 13: ['apos-cap11'], 14: ['apos-cap11'],
+           15: ['apos-cap11'], 16: ['apos-cap15'], 17: ['apos-cap15'], 18: ['apos-cap17'], 19: ['apos-cap18']}
+EXTRA_BASE = {n: ['base/balanca-ativada'] for n in range(20)}
 FOLGA.update({'balanca': 0.0})   # os custos do T03 (docs/04); os ensaios de 13:30 a 17:35 de 11/11 saíram 1,5 a 2x lentos (renders ao lado)   # medidas do ensaio do T07 com a máquina dividida (ver resumo.py --ens)
 
 # ---------------------------------------------------------------- alvos da compra e da venda (Purchase.tsx / Sale.tsx, 1.59.154)
@@ -477,6 +478,7 @@ AO_VIVO = {'text': 'ao vivo', 'within': 'main'}
 ESTOQUE_DISP = SEL("main label:has-text('Estoque Disponível')")
 VALOR_ITEM = SEL("main label:has-text('Valor Total do Item')")
 INCLUIR = BTN('Incluir Item')
+MAIS_MAT = SEL('main button.rounded-r-md:has(svg.lucide-plus)')   # o + do campo Material (dica "Cadastrar novo material")
 FORN = SEL('#supplier-desktop-top')
 CLIENTE = SEL('#customer-desktop-top')
 CAD_FORN = SEL("main button[aria-label='Cadastrar novo fornecedor']")
@@ -499,7 +501,7 @@ PARCEIRO = lambda nome: SEL(f"[role=dialog] button:has-text('{nome}')")
 NAO_INF = SEL("[role=dialog] button:has-text('Não informado')")
 INDICADOR = lambda nome: SEL(f"[role=dialog] button[aria-label*='pendências cadastrais de {nome}']")
 ALFINETE = lambda nome: SEL(f"[role=dialog] div:has(> button:has-text('{nome}')) button:has(svg.lucide-pin)")
-MAIS_MODAL = SEL("[role=dialog] button:has(svg.lucide-plus)")
+MAIS_MODAL = SEL("[role=dialog] button[aria-label='Cadastrar novo']")
 # Pesagem avançada (AdvancedWeighingDialog.tsx)
 DCAMPO = lambda rot: SEL(f"[role=dialog] div:has(> label:text-is('{rot}'))")
 CAP_PES = lambda rot: SEL(f"[role=dialog] div:has(> label:text-is('{rot}')) button[aria-label='Capturar peso da balança']")
@@ -529,12 +531,30 @@ VOLTAR = SEL("main a:has-text('Voltar para o caixa')")
 ACAO_RAPIDA = lambda n: SEL(f"[cmdk-group]:has([cmdk-group-heading]:text-is('Ações Rápidas')) [cmdk-item]:has(span:text-is('{n}'))")
 LINHA_SEM_VALOR = SEL(f"{POP} div:has(> div > p:text-is('Comprovante sem valores'))")
 
-ADLG = '[role=alertdialog]'   # janelas de confirmação (Mesclar pesagens): AlertDialog do Radix
+# 1.60.10: busca que oferece cadastrar, legenda da origem do preço, barra de pedidos, rascunhos apagados, troca de fornecedor com itens
+CAD_BUSCA = SEL("[role=dialog] button:has-text('Cadastrar «')")
+VKG_LINHA = lambda nome: SEL(f"main tbody tr:has-text('{nome}') td:has(span.truncate.text-muted-foreground) input")
+LEGENDA = lambda nome, k=0: SEL(f"main tbody tr:has-text('{nome}') span.truncate.text-muted-foreground", nth=k)
+NOVO_PEDIDO = SEL("button[aria-label='Novo pedido de compra']")
+BARRA = SEL("div:has(> button[aria-label='Novo pedido de compra']) > button:not([aria-label])")
+BARRA_LINHA = lambda nome: SEL(f"div:has(> button[aria-label='Descartar pedido']) > button:has-text('{nome}')")
+DESCARTAR = lambda nome: SEL(f"div:has(> button:has-text('{nome}')) > button[aria-label='Descartar pedido']")
+RASC_APAG = SEL("main button:has-text('Rascunhos apagados')")
+CANCELAR_RODAPE = SEL("main button:text-is('Cancelar')")
+ARREDONDAR = SEL('label[for=round-payment]')
+ADLG = '[role=alertdialog]'    # janelas de confirmação (Mesclar pesagens): AlertDialog do Radix
 JS_BLUR = "(()=>{const a=document.activeElement;if(a&&a!==document.body)a.blur();return 'foco fora: '+(document.activeElement&&document.activeElement.tagName)})()"
-JS_OFFLINE = ("(()=>{Object.defineProperty(navigator,'onLine',{configurable:true,get:()=>false});window.dispatchEvent(new Event('offline'));"
+# 1.60.10: o app não acredita só no navegador, ele testa /auth/v1/health (hooks/useOnlineStatus.ts): a queda derruba esse endereço na página
+JS_OFFLINE = ("(()=>{window.__off=true;if(!window.__f){window.__f=window.fetch.bind(window);window.fetch=(u,o)=>(window.__off&&String((u&&u.url)||u).includes('/auth/v1/health'))"
+              "?Promise.reject(new TypeError('Failed to fetch')):window.__f(u,o)}Object.defineProperty(navigator,'onLine',{configurable:true,get:()=>false});window.dispatchEvent(new Event('offline'));"
               "return 'offline'})()")
-JS_ONLINE = ("(()=>{Object.defineProperty(navigator,'onLine',{configurable:true,get:()=>true});window.dispatchEvent(new Event('online'));"
+JS_ONLINE = ("(()=>{window.__off=false;Object.defineProperty(navigator,'onLine',{configurable:true,get:()=>true});window.dispatchEvent(new Event('online'));"
              "return 'online'})()")
+
+
+JS_FECHA_DLG = ("(async()=>{await new Promise(r=>setTimeout(r,600));const d=document.querySelector('[role=dialog]');if(!d)return 'ja fechada';"
+                "const b=[...d.querySelectorAll('button')].find(x=>[x.textContent,x.getAttribute('aria-label')].some(v=>/^\\s*(fechar|close)\\s*$/i.test(v||'')));"
+                "if(!b)return 'sem botao Fechar';b.click();return 'fechada pelo botao'})()")
 
 
 def js_colar(seletor, texto):
@@ -637,7 +657,22 @@ def st_desconto():
 
 
 ZE = st_parceiro('moreira', 'José Carlos Moreira')
+
+
+def st_deposito():
+    """1.60.10: o 2º pedido (Novo pedido), Não informado + cobre misto 10 kg, troca para o Depósito Irmãos Siqueira com "Atualizar 1 item"
+    (37,44, Tabela Depósitos) e volta ao pedido do Zé pela barra"""
+    return ([{'do': 'click', 'target': NOVO_PEDIDO}, {'do': 'pause', 'seconds': 1.2}, {'do': 'click', 'target': FORN},
+             {'do': 'waitFor', 'target': NAO_INF, 'timeout': 10}, {'do': 'click', 'target': NAO_INF},
+             {'do': 'waitFor', 'gone': {'role': 'dialog'}, 'timeout': 8}, {'do': 'pause', 'seconds': 0.6}]
+            + st_item('cobre mi', 'Cobre misto', 10)
+            + [{'do': 'click', 'target': FORN}, {'do': 'waitFor', 'target': BUSCA_PARC, 'timeout': 10},
+               {'do': 'type', 'target': BUSCA_PARC, 'text': 'siqueira', 'cps': 40}, {'do': 'click', 'target': PARCEIRO('Depósito Irmãos Siqueira')},
+               {'do': 'waitFor', 'text': 'Trocar fornecedor?', 'timeout': 8}, {'do': 'click', 'target': BTNX('Atualizar 1 item')},
+               {'do': 'waitFor', 'gone': {'role': 'dialog'}, 'timeout': 8}, {'do': 'pause', 'seconds': 0.8},
+               {'do': 'click', 'target': BARRA}, {'do': 'click', 'target': BARRA_LINHA('José Carlos')}, {'do': 'pause', 'seconds': 1.0}])
 ZE_DOIS = ZE + st_item('cobre mi', 'Cobre misto', 12.4) + st_item('latinha', 'Alumínio latinha', 21.6, '0,6')
+ZE_COMPLETO = ZE_DOIS + st_ferro() + st_mescla() + st_desconto()   # o pedido do Zé pronto para pagar: R$ 913,20
 VALE_FORTE = (st_parceiro('vale forte', 'Auto Peças Vale Forte') + st_item('bateria', 'Bateria automotiva', 186)
               + st_item('cobre mi', 'Cobre misto', 64))
 TRES_FORMAS = [{'do': 'click', 'target': FINALIZAR}, {'do': 'waitFor', 'text': 'Finalizar Pedido', 'timeout': 10},
@@ -712,6 +747,8 @@ def cap02():
     c.type(BUSCA_PARC, 'Moreira', w=(7, 'Na', None, 0.2), clicar=False, cps=40, label='busca Moreira')
     c.confere('dlg', ['Nenhum resultado encontrado.'], 'Nenhum resultado encontrado.')
     c.registra(PD('Nenhum resultado encontrado.'), w=(7, 'ninguem.'), label='Nenhum resultado encontrado.')
+    c.hover(CAD_BUSCA, 1.6, w=(7, 'oferece'), label='botão Cadastrar «Moreira» (zoom)')
+    c.confere('dlg', ['Cadastrar «Moreira»'], 'Cadastrar «Moreira»')
     c.fim()
     return c
 
@@ -721,7 +758,9 @@ def cap03():
     c = Cap(3, setup_tela(extra=[{'do': 'click', 'target': FORN}, {'do': 'waitFor', 'target': BUSCA_PARC, 'timeout': 10},
                                  {'do': 'type', 'target': BUSCA_PARC, 'text': 'Moreira', 'cps': 40},
                                  {'do': 'waitFor', 'text': 'Nenhum resultado encontrado.', 'timeout': 8}]))
-    c.click(MAIS_MODAL, w=(1, 'mais.'), label='+ (cadastrar)')
+    c.hover(CAD_BUSCA, 0.5, w=(1, 'Cadastrar,'), label='Cadastrar «Moreira»')
+    c.hover(MAIS_MODAL, 0.5, w=(1, 'mais'), label='o + lá de cima (Cadastrar novo)')
+    c.click(CAD_BUSCA, w=(1, 'Abre'), label='Cadastrar «Moreira» (abre o cadastro)')
     c.waitfor(text='Novo Fornecedor', timeout=10)
     c.registra(TAB('Dados de Contato'), w=(1, 'cadastro'), label='Novo Fornecedor, Dados de Contato')
     # a digitação mediu ~0,2 s por letra (máquina dividida) e a linha 2 não comporta três campos digitados: nome, apelido e chave Pix
@@ -748,14 +787,14 @@ def cap03():
 def cap04():
     """Tabela de Preços (lista com a estrela e a Tabela Depósitos; Esc); ilustração da hierarquia (L2, L3); o Zé na tabela principal."""
     c = Cap(4, setup_tela(extra=ZE))
-    c.click(TABELA, w=(1, 'tabela'), label='Tabela de Preços (abre a lista)')
+    c.click(TABELA, w=(1, 'tabela', 0), label='Tabela de Preços (abre a lista)')
     c.waitfor(text='Tabela Depósitos', timeout=8)
     c.hover(OPT('Principal', exact=False), 0.6, w=(1, 'principal,'), label='a lista: Principal com a estrela e a Tabela Depósitos (zoom)')
     c.press('Escape', w=(1, 'estrela.', None, -0.6), label='fecha a lista (fica a Principal)')
     c.hover(FORN, 0.8, w=(4, 'Ze'), label='José Carlos Moreira')
     c.hover(TABELA, 0.8, w=(4, 'principal,'), label='tabela Principal')
-    c.hover(FORN, 0.6, w=(4, 'fornecedor'), label='o fornecedor antes')
-    c.hover(MAT, 0.8, w=(4, 'material.', 1), label='depois o material')
+    c.hover(MAT, 0.8, w=(4, 'material.'), label='o preço entra ao escolher o material')
+    c.hover(FORN, 0.8, w=(4, 'fornecedor'), label='trocar o fornecedor depois')
     c.fim()
     return c
 
@@ -772,25 +811,33 @@ def cap05():
     c.confere_campos(['36,00'], 'Valor/Kg 36,00', escopo='main')
     c.hover(VISOR, 0.4, w=(1, 'peso:'), label='visor da balança 12,4 kg, Quantidade (Kg) e AO VIVO (zoom)')
     c.registra(QTD, w=(1, 'direto'), label='Quantidade (Kg) 12,4 da balança')
+    c.hover(MAIS_MAT, 1.0, w=(1, 'mais'), label='+ do Material (Cadastrar Novo Material)')
     c.registra(AO_VIVO, w=(2, 'AO'), label='selo AO VIVO')
     c.hover(CAPTURA, 3.0, w=(3, 'botao'), label='botão azul da balança dentro do campo (zoom)')
-    c.hover(ESTOQUE_DISP, 0.8, w=(4, 'estoque'), label='Estoque Disponível')
-    c.hover(VALOR_ITEM, 1.2, w=(4, 'valor'), label='Valor Total do Item R$ 446,40 (zoom)')
+    c.click(CAPTURA, w=(4, 'clica'), label='botão da balança com peso no campo')
+    c.waitfor(text='pelo peso da balança', timeout=6)
+    c.hover({'text': 'pelo peso da balança', 'exact': False}, 1.6, w=(4, 'pergunta'), label='Substituir 12,4 pelo peso da balança? (zoom)')
+    c.confere('body', ['Substituir', 'pelo peso da balança'], 'pergunta de substituir o peso')
+    c.click(SEL(f"{POP} button:text-is('Cancelar'), [role=dialog] button:text-is('Cancelar')"), w=(4, 'Assim'), label='Cancelar (fica o peso)')
+    c.hover(ESTOQUE_DISP, 0.8, w=(6, 'estoque'), label='Estoque Disponível')
+    c.hover(VALOR_ITEM, 1.2, w=(6, 'valor'), label='Valor Total do Item R$ 446,40 (zoom)')
     c.confere('main', ['446,40'], 'Valor Total do Item R$ 446,40')
-    c.click(INCLUIR, w=(4, 'Incluir'), label='Incluir Item (cobre)')
+    c.click(INCLUIR, w=(6, 'Incluir'), label='Incluir Item (cobre)')
     c.waitfor(text='Itens do Pedido (1)', timeout=8)
+    c.hover(LEGENDA('Cobre misto'), 1.2, w=(6, 'origem'), label='legenda da origem do preço: Principal (zoom)')
+    c.confere('row:Cobre misto', ['Principal'], 'legenda Principal na linha do cobre')
     c.add({'do': 'balanca', 'peso': 0, 'subir': 0.5, 'oscilar': 0.3, 'label': 'tira o cobre da balança'})
-    c.add({'do': 'balanca', 'peso': 21.6, 'subir': 0.6, 'oscilar': 0.6, 'at': c.at((5, 'Agora', None, 0.6), 'balanca'), 'label': 'latinha na balança (21,6 kg)'})
-    c.click(MAT, w=(5, 'Agora'), label='Material')
-    c.type(MAT, 'latinha', w=(5, 'latinha,', None, 0.05), clicar=False, cps=40, label='material: latinha')
-    c.click(OPT('Alumínio latinha', exact=False), w=(5, 'rafia:'), label='Alumínio latinha')
+    c.add({'do': 'balanca', 'peso': 21.6, 'subir': 0.6, 'oscilar': 0.6, 'at': c.at((7, 'Agora', None, 0.6), 'balanca'), 'label': 'latinha na balança (21,6 kg)'})
+    c.click(MAT, w=(7, 'Agora'), label='Material')
+    c.type(MAT, 'latinha', w=(7, 'latinha,', None, 0.05), clicar=False, cps=40, label='material: latinha')
+    c.click(OPT('Alumínio latinha', exact=False), w=(7, 'rafia:'), label='Alumínio latinha')
     c.ev(js_espera_valor(QTD_CSS, '21,6'), label='confere Quantidade 21,6 da balança')
-    c.registra(QTD, w=(5, 'vinte'), label='Quantidade (Kg) 21,6 e Tara/Imp. (zoom)')
-    c.click(TARA, w=(5, 'Tara/Imp.,'), label='Tara/Imp.')
-    c.type(TARA, '0,6', w=(5, 'zero'), clicar=False, cps=10, label='tara 0,6')
-    c.hover(VALOR_ITEM, 1.2, w=(6, 'valor'), label='Valor Total do Item R$ 130,20 (zoom)')
+    c.registra(QTD, w=(7, 'vinte'), label='Quantidade (Kg) 21,6 e Tara/Imp. (zoom)')
+    c.click(TARA, w=(7, 'Tara/Imp.,'), label='Tara/Imp.')
+    c.type(TARA, '0,6', w=(7, 'zero'), clicar=False, cps=10, label='tara 0,6')
+    c.hover(VALOR_ITEM, 1.2, w=(8, 'valor'), label='Valor Total do Item R$ 130,20 (zoom)')
     c.confere('main', ['130,20'], 'Valor Total do Item R$ 130,20')
-    c.click(INCLUIR, w=(6, 'Incluir'), label='Incluir Item (latinha)')
+    c.click(INCLUIR, w=(8, 'Incluir'), label='Incluir Item (latinha)')
     c.waitfor(text='Itens do Pedido (2)', timeout=8)
     c.add({'do': 'balanca', 'peso': 0, 'subir': 0.5, 'oscilar': 0.3, 'label': 'tira a latinha da balança'})
     c.fim()
@@ -825,10 +872,17 @@ def cap06():
     c.confere('dlg', ['229,89'], 'Valor estimado R$ 229,89')
     c.ev(js_rola_ate('Como exibir no comprovante', y=180, escopo=DLG), w=(8, 'Aqui', None, 0.9), label='rola a janela até o comprovante')
     c.click(COMPLETO, w=(8, 'Completo,'), label='Completo')
-    c.hover(DCAMPO('Motorista'), 0.6, w=(8, 'Motorista'), label='Motorista e Placa do veículo (vazios)')
-    c.click(CONFIRMAR, w=(8, 'Confirmar,'), label='Confirmar')
+    c.hover(SEL('label[for=wm-net]'), 1.2, w=(8, 'Resumido,'), label='Resumido: Só o peso líquido cobrado.')
+    c.hover(SEL('label[for=wm-detailed]'), 1.6, w=(8, 'Detalhado,'), label='Detalhado: Bruto, tara, impureza e líquido.')
+    c.confere('dlg', ['Só o peso líquido cobrado.', 'Bruto, tara, impureza e líquido.'], 'Resumido e Detalhado')
+    c.ev(js_rola_ate('Preencha 1ª e 2ª pesagem', y=200, escopo=DLG, prefixo=True), w=(9, 'carroca.', None, 0.9), label='rola a janela de volta às pesagens')
+    c.hover(PD('Preencha 1ª e 2ª pesagem', exact=False), 2.4, w=(9, 'tambor', 0), label='dica: só a 1ª conta como bruto (zoom)')
+    c.hover(TARA_DLG, 2.0, w=(9, 'Tara', 0), label='Tara (Kg) (zoom)')
+    c.ev(js_rola_ate('Motorista', y=420, escopo=DLG), w=(10, 'Motorista', None, 0.9), label='rola a janela até o motorista')
+    c.hover(DCAMPO('Motorista'), 0.6, w=(10, 'Motorista'), label='Motorista e Placa do veículo (vazios)')
+    c.click(CONFIRMAR, w=(10, 'Confirmar,'), label='Confirmar')
     c.waitfor(gone={'role': 'dialog'}, timeout=8)
-    c.hover(LINHA('Ferro misto'), 3.0, w=(9, 'Pesou'), label='linha Ferro misto 316 e 9,48 (zoom)')
+    c.hover(LINHA('Ferro misto'), 3.0, w=(11, 'Pesou'), label='linha Ferro misto 316 e 9,48 (zoom)')
     c.confere('row:Ferro misto', ['316', '9,48'], 'ferro 316 com 9,48 de impureza')
     c.fim()
     return c
@@ -884,13 +938,127 @@ def cap08():
     c.waitfor(text='1ª pesagem', timeout=8)
     c.hover(SEL("main tr:has-text('1ª pesagem')"), 3.0, w=(5, 'duas'), label='detalhe da pesagem (zoom)')
     c.hover(LAPIS_TOTAL, 2.0, w=(6, 'lapis'), label='lápis Editar valor total (zoom)')
+    c.hover(P('Projeção de Lucro', exact=False), 2.0, w=(6, 'Projecao'), label='Projeção de Lucro da compra')
+    c.confere('main', ['Projeção de Lucro'], 'Projeção de Lucro no rodapé')
     c.fim()
     return c
 
 
 def cap09():
+    """1.60.10 · A barra de pedidos; Novo pedido (#1760); Não informado + cobre 10 kg (legenda Principal); troca para o Depósito Irmãos
+    Siqueira: "Trocar fornecedor?" -> Atualizar 1 item (37,44, Tabela Depósitos, R$ 374,40); volta ao pedido do Zé pela barra."""
+    c = Cap(9, setup_tela(extra=ZE_COMPLETO))
+    c.hover(BARRA, 2.0, w=(1, 'barra'), label='barra de pedidos: #1759, R$ 913,20, José Carlos Moreira (zoom)')
+    c.confere('main', ['#1759', '913,20', 'José Carlos Moreira'], 'barra com o pedido do Zé')
+    c.hover(BARRA, 1.6, w=(1, 'numero,'), label='o número, o valor e o fornecedor')
+    c.hover(NOVO_PEDIDO, 0.6, w=(2, 'botao'), label='botão Novo pedido')
+    c.click(NOVO_PEDIDO, w=(2, 'abre'), label='Novo pedido (abre o 2º pedido)')
+    c.waitfor(text='#1760', timeout=10)
+    c.hover(BARRA, 1.2, w=(2, 'guardado.'), label='barra: #1760, R$ 0,00 e o contador (2)')
+    c.ev("(()=>{const b=document.querySelector(\"button[aria-label='Novo pedido de compra']\");return b?b.parentElement.innerText.replace(/\\s+/g,' '):'SEM ALVO'})()", label='texto da barra no pedido novo (lido)')
+    c.click(FORN, w=round(c.L(3) - 0.9, 2), label='Selecionar fornecedor')
+    c.waitfor(target=NAO_INF, timeout=10)
+    c.click(NAO_INF, w=(3, 'Nao', 1), label='Não informado')
+    c.waitfor(gone={'role': 'dialog'}, timeout=8)
+    c.add({'do': 'balanca', 'peso': 10, 'subir': 0.6, 'oscilar': 0.6, 'label': 'cobre na balança (10 kg)'})
+    c.click(MAT, label='Material')
+    c.type(MAT, 'cobre mi', clicar=False, cps=40, label='material: cobre mi')
+    c.click(OPT('Cobre misto', exact=False), w=(3, 'ja'), label='Cobre misto')
+    c.ev(js_espera_valor(QTD_CSS, '10,0'), label='confere Quantidade 10,0 da balança')
+    c.click(INCLUIR, w=(3, 'quilos'), label='Incluir Item (cobre, 10 kg)')
+    c.waitfor(text='Itens do Pedido (1)', timeout=8)
+    c.add({'do': 'balanca', 'peso': 0, 'subir': 0.5, 'oscilar': 0.3, 'label': 'tira o cobre da balança'})
+    c.hover(LEGENDA('Cobre misto'), 3.0, w=(3, 'Embaixo'), label='legenda embaixo do Valor/Kg: Principal (zoom)')
+    c.confere('row:Cobre misto', ['36,00', 'Principal'], 'cobre a 36,00 com a legenda Principal')
+    c.confere('main', ['360,00'], 'Total da Compra R$ 360,00')
+    c.click(FORN, w=(4, 'carga'), label='campo Fornecedor')
+    c.type(BUSCA_PARC, 'siqueira', w=(4, 'Deposito'), cps=30, label='busca siqueira')
+    c.click(PARCEIRO('Depósito Irmãos Siqueira'), w=(4, 'tabela'), label='Depósito Irmãos Siqueira')
+    c.waitfor(text='Trocar fornecedor?', timeout=8)
+    c.hover(PD('Itens que mudam'), 1.4, w=(4, 'quantos'), label='Itens que mudam 1 de 1 e Total se atualizar (zoom)')
+    c.hover(PD('Total se atualizar'), 1.6, w=(4, 'quanto'), label='Total se atualizar: R$ 360,00 riscado e R$ 374,40')
+    c.confere('dlg', ['O pedido já tem 1 item lançado. Escolha o que fazer com os preços atuais.', 'Não informado', 'Depósito Irmãos Siqueira',
+                      '1 de 1', 'R$ 360,00', 'R$ 374,40'], 'janela Trocar fornecedor?')
+    c.hover(BTN('Só nos próximos'), 2.2, w=(5, 'So'), label='Só nos próximos')
+    c.hover(BTNX('Atualizar 1 item'), 1.8, w=(5, 'Atualizar'), label='Atualizar 1 item')
+    c.click(BTNX('Atualizar 1 item'), w=(6, 'Atualizar.'), label='Atualizar 1 item (clique)')
+    c.waitfor(gone={'role': 'dialog'}, timeout=8)
+    c.hover(LINHA('Cobre misto'), 1.2, w=(6, 'cobre'), label='a linha: 37,44 e Tabela Depósitos, total R$ 374,40 (zoom)')
+    c.hover(LEGENDA('Cobre misto'), 1.6, w=(6, 'legenda'), label='legenda Tabela Depósitos')
+    c.confere('row:Cobre misto', ['37,44', 'Tabela Depósitos'], 'cobre a 37,44 pela Tabela Depósitos')
+    c.confere('main', ['374,40'], 'Total da Compra R$ 374,40')
+    c.hover(SEL("main button:has-text('Tabela Depósitos')"), 1.4, w=(6, 'tabela', 1), label='Tabela de Preços: Tabela Depósitos')
+    c.click(BARRA, w=(7, 'barra'), label='barra de pedidos (abre a lista)')
+    c.waitfor(target=BARRA_LINHA('José Carlos'), timeout=6)
+    c.click(BARRA_LINHA('José Carlos'), w=(7, 'escolher'), label='o pedido do Zé na lista')
+    c.waitfor(text='Itens do Pedido (3)', timeout=8)
+    c.hover(ITENS, 2.0, w=(7, 'itens,'), label='o pedido do Zé de volta: 3 itens, R$ 913,20')
+    c.confere('main', ['913,20', 'Ferro misto', 'José Carlos Moreira'], 'pedido do Zé de volta')
+    c.fim()
+    return c
+
+
+def cap10():
+    """1.60.10 · (ilustração L1) Caixa: Pedidos Não Finalizados (2); lixeira da lista: Descartar este pedido?; Rascunhos apagados: Recuperar;
+    descarta de novo e Excluir definitivamente; o Cancelar do rodapé (sem clicar)."""
+    c = Cap(10, setup_tela(extra=ZE_COMPLETO + st_deposito()))
+    c.hover(BARRA, 2.0, w=(1, 'rascunhos.'), label='a barra com os dois pedidos (sob a ilustração)')
+    c.click(VOLTAR, w=(2, 'No', None, 1.4), noScroll=True, label='Voltar para o caixa')
+    c.waitfor(text='Pedidos Não Finalizados', timeout=15)
+    c.click(SEL("main button:has-text('Pedidos Não Finalizados')"), w=(2, 'Pedidos'), label='Pedidos Não Finalizados 2 (zoom)')
+    c.hover(P('José Carlos Moreira', exact=False), 1.6, w=(2, 'dica:'), label='os cartões do Zé e do Depósito')
+    c.confere('main', ['José Carlos Moreira', 'Depósito Irmãos Siqueira'], 'os dois pedidos não finalizados no caixa')
+    c.ev(js_rola_topo(), w=(2, 'fecha', None, 0.9), label='rola ao topo do caixa')
+    c.hover(BTNX('Fechar Caixa'), 2.4, w=(2, 'fecha'), label='Fechar Caixa travado')
+    c.click(BTN('Nova Compra'), w=(3, 'motorista'), label='Nova Compra (volta aos pedidos)')
+    c.waitfor(text='Voltar para o caixa', timeout=15)
+    c.ev(js_rola_form(dur_ms=400), label='rola o formulário')
+    c.confere('main', ['(2)'], 'os dois rascunhos continuam abertos')
+    c.click(BARRA, w=(3, 'lista,'), label='barra de pedidos (abre a lista)')
+    c.hover(DESCARTAR('Depósito'), 0.8, w=(3, 'lixeira'), optional=False, timeout=8, label='lixeira Descartar pedido (Depósito)')
+    c.click(DESCARTAR('Depósito'), w=(3, 'descarta'), label='Descartar pedido')
+    c.waitfor(text='Descartar este pedido?', timeout=8)
+    c.hover({'text': 'Descartar este pedido?', 'within': ADLG}, 2.0, w=(3, 'janela'), label='janela Descartar este pedido? (zoom)')
+    c.confere('adlg', ['Ele tem 1 material incluído. Você pode recuperá-lo depois em Rascunhos apagados.', 'Manter pedido', 'Descartar'], 'Descartar este pedido?')
+    c.click(BTN('Descartar', within=ADLG), w=(4, 'Descartar.'), label='Descartar')
+    c.waitfor(gone={'selector': ADLG}, timeout=8)
+    c.ev(js_rola_topo(), w=(4, 'La', None, 0.9), label='rola ao topo (Rascunhos apagados)')
+    c.hover(RASC_APAG, 1.2, w=(4, 'Rascunhos'), label='Rascunhos apagados com 1 (zoom)')
+    c.click(RASC_APAG, w=(4, 'fica'), label='Rascunhos apagados (abre)')
+    c.waitfor(text='Recupere um rascunho', timeout=8)
+    c.hover(PD('Apagado', exact=False), 2.4, w=(4, 'dia,'), label='Apagado ... por Rafael Nogueira')
+    c.confere('dlg', ['Recupere um rascunho que foi apagado por engano. Ele volta como uma aba ativa.', 'Depósito Irmãos Siqueira', 'por Rafael Nogueira'], 'janela Rascunhos apagados')
+    c.click(BTN('Recuperar', within=DLG), w=(5, 'Recuperar,'), label='Recuperar')
+    c.waitfor(text='Rascunho recuperado', timeout=8)
+    c.ev(JS_FECHA_DLG, label='fecha a janela (se não fechou sozinha)')
+    c.waitfor(gone={'role': 'dialog'}, timeout=8)
+    c.ev(js_rola_form(dur_ms=400), label='rola o formulário')
+    c.hover(BARRA, 1.6, w=(5, 'volta'), label='o pedido do Depósito de volta na barra (2)')
+    c.confere('main', ['(2)', 'Depósito Irmãos Siqueira', '374,40'], 'rascunho recuperado como estava')
+    c.click(BARRA, w=(6, 'Como'), label='barra de pedidos (abre a lista)')
+    c.click(DESCARTAR('Depósito'), w=(6, 'descarto'), label='Descartar pedido (de novo)')
+    c.waitfor(text='Descartar este pedido?', timeout=8)
+    c.click(BTN('Descartar', within=ADLG), w=(6, 'novo'), label='Descartar')
+    c.waitfor(gone={'selector': ADLG}, timeout=8)
+    c.click(RASC_APAG, w=(6, 'excluo'), label='Rascunhos apagados')
+    c.waitfor(text='Recupere um rascunho', timeout=8)
+    c.click(SEL("[role=dialog] button[aria-label='Excluir definitivamente']"), w=(6, 'vez,', 1), label='lixeira Excluir definitivamente')
+    c.waitfor(text='Excluir de vez?', timeout=6)
+    c.click(BTNX('Sim, excluir'), label='Sim, excluir')
+    c.waitfor(text='Rascunho excluído definitivamente', timeout=8)
+    c.ev(JS_FECHA_DLG, label='fecha a janela Rascunhos apagados')
+    c.waitfor(gone={'role': 'dialog'}, timeout=8)
+    c.ev(js_rola_form(dur_ms=500), w=(7, 'Ja', None, 0.9), label='rola o formulário (rodapé)')
+    c.hover(CANCELAR_RODAPE, 3.0, w=(7, 'Cancelar'), label='Cancelar do rodapé, sem clicar (zoom)')
+    c.confere('main', ['913,20', 'José Carlos Moreira'], 'sobrou só o pedido do Zé')
+    c.hover(BARRA, 2.4, w=(7, 'colega'), label='a barra (aviso de colega: só na fala)')
+    c.fim()
+    return c
+
+
+def cap11():
     """Finalizar: resumo; (ilustração L2) Pix com a chave; Saldo "Você deverá a ele"; Dinheiro com o saldo do caixa; confirmar; Imprimir direto."""
-    c = Cap(9, setup_tela(extra=ZE_DOIS + st_ferro() + st_mescla() + st_desconto()))
+    c = Cap(11, setup_tela(extra=ZE_COMPLETO))
     c.click(FINALIZAR, w=(1, 'Finalizar'), label='Finalizar')
     c.waitfor(text='Finalizar Pedido', timeout=10)
     # o "Resumo do Pedido" flutua ao lado da janela (FloatingSummaryPanel), fora do [role=dialog]
@@ -904,18 +1072,70 @@ def cap09():
     c.confere('body', ['Você deverá a ele'], 'Você deverá a ele')
     c.click(TILE('Dinheiro'), w=(5, 'Dinheiro,', 1), label='Dinheiro')
     c.hover(PD('Saldo atual do caixa', exact=False), 0.6, w=(5, 'caixa'), label='Saldo atual do caixa')
-    c.click(CONFIRMA_PAG, w=(6, 'Confirmar'), label='CONFIRMAR PAGAMENTO')
+    c.hover(ARREDONDAR, 3.0, w=(6, 'Arredondar'), label='Arredondar para baixo, desmarcado (zoom)')
+    c.confere('dlg', ['Arredondar para baixo'], 'caixa Arredondar para baixo')
+    c.click(V_DIN, w=(7, 'nota'), label='valor do Dinheiro')
+    c.type(V_DIN, '920,00', w=(7, 'paga'), clicar=False, clear=True, cps=10, label='Dinheiro 920,00')
+    c.hover(PD('Excesso', exact=False), 1.4, w=(7, 'excesso'), label='Excesso: R$ 6,80 (zoom)')
+    c.confere('dlg', ['Excesso: R$ 6,80', 'Deixar no saldo de José Carlos Moreira'], 'Excesso: R$ 6,80 e o link do saldo')
+    c.click(SEL("[role=dialog] button:has-text('Deixar no saldo')"), w=(7, 'oferece'), label='Deixar no saldo de José Carlos Moreira')
+    c.hover(PD('Sobra de', exact=False), 2.4, w=(7, 'devendo'), label='Sobra de R$ 6,80 vai pro saldo (zoom)')
+    c.confere('dlg', ['Sobra de R$ 6,80 vai pro saldo', 'José Carlos Moreira ficará te devendo R$ 6,80'], 'sobra de R$ 6,80 no saldo do Zé')
+    c.click(SEL("[role=dialog] button:has-text('Desfazer')"), w=(8, 'desfaco'), label='Desfazer')
+    c.click(V_DIN, label='valor do Dinheiro')
+    c.type(V_DIN, '913,20', w=(8, 'valor'), clicar=False, clear=True, cps=10, label='Dinheiro de volta a 913,20')
+    c.confere_campos(['913,20'], 'Dinheiro 913,20')
+    c.ev("(()=>{const t=document.querySelector('[role=dialog]').innerText;return /Excesso|Faltam|Sobra/.test(t)?'DIFERENTE: '+t.match(/(Excesso|Faltam|Sobra)[^\\n]*/)[0]:'OK: sem excesso'})()", label='confere sem Excesso nem Faltam')
+    c.click(CONFIRMA_PAG, w=(9, 'Confirmar'), label='CONFIRMAR PAGAMENTO')
     c.waitfor(text='Compra registrada!', timeout=12)
     c.waitfor(text='Imprimir Comprovante', timeout=10)
-    c.click(BTNX('Imprimir direto'), w=(6, 'cupom'), label='Imprimir direto')
+    c.click(BTNX('Imprimir direto'), w=(9, 'cupom'), label='Imprimir direto')
     c.waitfor(text='Comprovante enviado para a impressora', timeout=10)
     c.fim()
     return c
 
 
-def cap10():
+def cap12():
+    """1.60.10 · Valdir Pereira (vale de R$ 300,00): Ferro misto 200 kg = R$ 150,00; Finalizar > Saldo do Fornecedor: Saldo atual e Saldo após
+    o pedido (Ele te deverá); fecha sem confirmar; Cancelar > Sim, cancelar. O saldo do Valdir não muda (junção)."""
+    c = Cap(12, setup_tela())
+    c.click(FORN, w=(1, 'caso.'), label='Selecionar fornecedor')
+    c.type(BUSCA_PARC, 'valdir', w=(1, 'Imagina'), cps=30, label='busca valdir')
+    c.click(PARCEIRO('Valdir Pereira'), w=(1, 'Valdir'), label='Valdir Pereira')
+    c.waitfor(gone={'role': 'dialog'}, timeout=8)
+    c.add({'do': 'balanca', 'peso': 200, 'subir': 0.6, 'oscilar': 0.6, 'label': 'ferro na balança (200 kg)'})
+    c.click(MAT, w=(1, 'vale', 1), label='Material')
+    c.type(MAT, 'ferro mi', clicar=False, cps=40, label='material: ferro mi')
+    c.click(OPT('Ferro misto', exact=False), w=(1, 'duzentos'), label='Ferro misto')
+    c.ev(js_espera_valor(QTD_CSS, '200,0'), label='confere Quantidade 200,0 da balança')
+    c.click(INCLUIR, w=(1, 'misto.'), label='Incluir Item (ferro, 200 kg)')
+    c.waitfor(text='Itens do Pedido (1)', timeout=8)
+    c.add({'do': 'balanca', 'peso': 0, 'subir': 0.5, 'oscilar': 0.3, 'label': 'tira o ferro da balança'})
+    c.hover(TOTAL_C, 1.8, w=(1, 'cento'), label='Total da Compra R$ 150,00 (zoom)')
+    c.confere('main', ['150,00'], 'Total da Compra R$ 150,00')
+    c.click(FINALIZAR, w=(2, 'Finalizar,'), label='Finalizar')
+    c.waitfor(text='Finalizar Pedido', timeout=10)
+    c.click(TILE('Saldo do Fornecedor'), w=(2, 'Saldo', 0), primeiro=True, label='Saldo do Fornecedor')
+    c.hover({'text': 'Saldo atual:'}, 1.6, w=(2, 'antes'), label='Saldo atual: e Saldo após o pedido: (zoom)')
+    c.hover({'text': 'Saldo após o pedido:'}, 3.0, w=(2, 'depois:'), label='Saldo após o pedido: (Ele te deverá)')
+    c.confere('body', ['Ele te deverá'], 'Ele te deverá')
+    c.ev("(()=>{const m=document.body.innerText.replace(/\\s+/g,' ').match(/Saldo atual:.{0,200}/);return m?m[0]:'SEM ALVO'})()", label='resumo do saldo do Valdir (lido)')
+    c.press('Escape', w=(3, 'fecho'), label='fecha o pagamento sem confirmar')
+    c.ev(JS_FECHA_DLG, label='Fechar (se o Esc não fechou)')
+    c.waitfor(gone={'role': 'dialog'}, timeout=8)
+    c.click(CANCELAR_RODAPE, w=(3, 'Cancelar,'), label='Cancelar (rodapé)')
+    c.waitfor(text='Cancelar pedido?', timeout=8)
+    c.confere('body', ['Isso irá limpar todos os itens adicionados neste pedido. Esta ação não pode ser desfeita.', 'Sim, cancelar'], 'janela Cancelar pedido?')
+    c.click(BTNX('Sim, cancelar'), w=(3, 'limpa'), label='Sim, cancelar')
+    c.waitfor(text='Pedido cancelado e limpo com sucesso!', timeout=8)
+    c.confere('main', ['Nenhum item adicionado'], 'pedido limpo')
+    c.fim()
+    return c
+
+
+def cap13():
     """Auto Peças Vale Forte: bateria com preço especial 3,40 (186 kg), cobre misto 64 kg, total 2.936,40; Finalizar com 3 formas."""
-    c = Cap(10, setup_tela())
+    c = Cap(13, setup_tela())
     c.click(FORN, w=(1, 'Chegou'), label='Selecionar fornecedor')
     c.type(BUSCA_PARC, 'vale forte', w=(1, 'Auto'), cps=30, label='busca vale forte')
     c.click(PARCEIRO('Auto Peças Vale Forte'), w=(1, 'oficina.'), label='Auto Peças Vale Forte')
@@ -929,9 +1149,11 @@ def cap10():
     c.registra(VALOR_KG, w=(2, 'tres', 0), label='Valor/Kg 3,40 (zoom)')
     c.confere_campos(['3,40'], 'Valor/Kg 3,40', escopo='main')
     c.ev(js_espera_valor(QTD_CSS, '186,0'), label='confere Quantidade 186,0 da balança')
-    c.click(INCLUIR, w=(3, 'cento'), label='Incluir Item (bateria)')
+    c.click(INCLUIR, w=(2, 'Na', 1), label='Incluir Item (bateria)')
+    c.hover(LEGENDA('Bateria automotiva'), 1.6, w=(2, 'Preco', 2), label='legenda Preço personalizado na linha da bateria (zoom)')
+    c.confere('row:Bateria automotiva', ['Preço personalizado'], 'legenda Preço personalizado')
     c.add({'do': 'balanca', 'peso': 64, 'subir': 0.6, 'oscilar': 0.6, 'label': 'cobre na balança (64 kg)'})
-    c.click(MAT, label='Material')
+    c.click(MAT, w=(3, 'Sao'), label='Material')
     c.type(MAT, 'cobre mi', clicar=False, cps=40, label='material: cobre mi')
     c.click(OPT('Cobre misto', exact=False), w=(3, 'sessenta'), label='Cobre misto')
     c.ev(js_espera_valor(QTD_CSS, '64,0'), label='confere Quantidade 64,0 da balança')
@@ -942,14 +1164,14 @@ def cap10():
     c.click(FINALIZAR, w=(4, 'dono'), label='Finalizar')
     c.waitfor(text='Finalizar Pedido', timeout=10)
     c.click(MULTI, w=(4, 'Multiplas'), primeiro=True, label='Múltiplas formas de pagamento')
-    c.hover(TILE('Dinheiro'), 0.3, w=(5, 'Escolho', 0), label='Dinheiro (já vem marcado)')
-    c.click(TILE('Pix/Transferência'), w=(5, 'tres'), label='Pix/Transferência')
+    c.hover(TILE('Dinheiro'), 0.3, w=(5, 'dinheiro', 0), label='Dinheiro (já vem marcado)')
+    c.click(TILE('Pix/Transferência'), w=(5, 'Pix', 0), label='Pix/Transferência')
     c.confere('dlg', ['Formas de pagamento (máx. 3)'], 'rótulo Formas de pagamento (máx. 3)')
-    c.click(TILE('Saldo do Fornecedor'), w=(5, 'formas.'), label='Saldo do Fornecedor')
+    c.click(TILE('Saldo do Fornecedor'), w=(5, 'saldo.', 0), label='Saldo do Fornecedor')
     c.click(V_DIN, w=(5, 'Duzentos'), label='valor do Dinheiro')
-    c.type(V_DIN, '200,00', w=(5, 'dinheiro,'), clicar=False, clear=True, cps=14, label='Dinheiro 200,00')
+    c.type(V_DIN, '200,00', w=(5, 'dinheiro,', 1), clicar=False, clear=True, cps=14, label='Dinheiro 200,00')
     c.click(V_SALDO, w=(5, 'dois'), label='valor do Saldo')
-    c.type(V_SALDO, '2000,00', w=(5, 'saldo,'), clicar=False, clear=True, cps=14, label='Saldo 2000,00')
+    c.type(V_SALDO, '2000,00', w=(5, 'saldo,', 1), clicar=False, clear=True, cps=14, label='Saldo 2000,00')
     c.hover(V_PIX, 2.0, w=(5, 'setecentos'), label='os três valores: Pix completa 736,40 (zoom)')
     c.confere_campos(['200,00', '736,40'], 'Dinheiro 200,00 e Pix 736,40 (o saldo 2.000 confere no resumo)')
     c.hover(SEL(f"{DLG} button:has-text('Conta Principal')"), 0.8, w=(5, 'conta.'), label='a conta do Pix (Conta Principal; a Vale Forte não tem chave Pix)')
@@ -960,14 +1182,16 @@ def cap10():
     return c
 
 
-def cap11():
+def cap14():
     """Vencimento (opcional); Configurar faturamento: 2 parcelas, a 1ª em 25/11; (ilustração L4) Aplicar; confirmar."""
-    c = Cap(11, setup_tela(extra=VALE_FORTE + TRES_FORMAS))
+    c = Cap(14, setup_tela(extra=VALE_FORTE + TRES_FORMAS))
     c.hover(VENC, 2.0, w=(1, 'Vencimento.'), label='Vencimento (opcional) (zoom)')
     c.click(FATURAR, w=(2, 'Configurar'), label='Configurar faturamento (parcelas)')
     c.waitfor(text='Parcelar R$', timeout=8)
     c.hover(SEL(f"{SUB} label:has-text('Condição de pagamento')"), 0.8, w=(2, 'partes,'), label='Condição de pagamento: Manual')
     c.click(SEL(f"{SUB} button:text-is('2')"), w=(3, 'Duas'), primeiro=True, label='Nº de parcelas: 2')
+    c.hover(SEL(f"{SUB} input[aria-label='Quantidade de parcelas']"), 1.2, w=(3, 'quantidade'), label='campo Quantidade de parcelas (1 a 120)')
+    c.confere('dlg', ['Use um atalho ou digite de 1 a 120 parcelas'], 'dica do número de parcelas')
     c.click(SEL('#installment-due-1'), w=(3, 'mudo'), label='data da 1ª parcela')
     c.click(SEL(f"{POP} button:text-is('25')"), w=(3, 'vinte'), label='25 de novembro')
     c.hover(SEL('#installment-due-2'), 0.8, w=(3, 'dez'), label='2ª parcela 10/12/2026')
@@ -984,9 +1208,9 @@ def cap11():
     return c
 
 
-def cap12():
+def cap15():
     """Imprimir Comprovante (Imprimir direto / Visualizar), (ilustração L3) Opções avançadas: Comprovante sem valores e o balão."""
-    c = Cap(12, setup_tela(extra=VALE_FORTE + TRES_FORMAS + PARCELAS + [
+    c = Cap(15, setup_tela(extra=VALE_FORTE + TRES_FORMAS + PARCELAS + [
         {'do': 'click', 'target': CONFIRMA_PAG}, {'do': 'waitFor', 'text': 'Compra registrada!', 'timeout': 12},
         {'do': 'waitFor', 'text': 'Deseja imprimir o comprovante', 'timeout': 10}, {'do': 'pause', 'seconds': 1.0}]))
     c.hover(BTNX('Imprimir direto'), 1.2, w=(1, 'Imprimir'), label='Imprimir direto')
@@ -1000,14 +1224,19 @@ def cap12():
     c.hover(OPCOES, 0.6, w=(4, 'Opcoes'), label='botão Opções avançadas, do lado do Finalizar')
     c.hover(INFO_SEM_VALOR, 6.0, w=(5, 'pedido', 0), label='balão: o pedido é salvo normalmente (zoom)')
     c.hover(LINHA_SEM_VALOR, 4.0, w=(5, 'dica:'), label='Comprovante sem valores (desligado)')
-    c.press('Escape', w=(5, 'venda.', None, -0.4), label='fecha o menu sem ligar nada')
+    c.hover(SEL(f"{POP} :text('Data e hora do pedido')"), 4.0, w=(6, 'Data', 0), label='Data e hora do pedido (zoom)')
+    c.confere(POP, ['Data e hora do pedido'], 'Data e hora do pedido no menu')
+    c.hover(SEL(f"{POP} button:has-text('Anexar')"), 2.4, w=(7, 'anexar'), label='fotos: Anexar')
+    c.press('Escape', w=(7, 'fora', None, 0.3), label='fecha o menu sem ligar nada')
+    c.ev(js_rola_ate('Observação', y=420, prefixo=True), w=(7, 'embaixo', None, 0.4), label='rola até a Observação')
+    c.hover(SEL("main textarea"), 2.0, w=(7, 'Observacao'), label='campo Observação')
     c.fim()
     return c
 
 
-def cap13():
+def cap16():
     """Shift+V: Nova Venda; Fundição; latão 152 kg (Lucro 668,80); (ilustração L3) o olho; Estoque Disponível 62; Comprovante sem valores."""
-    c = Cap(13, setup_tela())
+    c = Cap(16, setup_tela())
     c.ev(JS_BLUR, w=(1, 'vender.', None, 0.3), label='foco fora de campo')
     c.press('Shift+V', w=(1, 'vender.'), label='Shift+V (Nova Venda)')
     c.waitfor(text='Selecionar cliente', timeout=15)
@@ -1027,22 +1256,32 @@ def cap13():
     c.hover(P('Lucro estimado', exact=False), 1.6, w=(2, 'estimado'), label='Lucro estimado R$ 668,80')
     c.confere('main', ['668,80', '4.848,80'], 'lucro 668,80 e total 4.848,80')
     c.hover(SEL("main button:has(svg.lucide-eye), main button:has(svg.lucide-eye-off)"), 1.2, w=(3, 'olho'), label='o olho do lucro estimado')
-    c.click(MAT, w=(4, 'dica:'), label='Material')
-    c.type(MAT, 'latão', w=(4, 'Estoque', 0, 0.6), clicar=False, cps=30, label='material: latão de novo')
-    c.click(OPT('Metal amarelo (latão)', exact=False), w=(4, 'Estoque', 0, 0.2), label='Metal amarelo (latão), sem incluir')
-    c.hover(ESTOQUE_DISP, 4.0, w=(4, 'Tinha'), label='Estoque Disponível 62, Em estoque 214, Nesta venda -152 (zoom)')
+    c.click(VKG_LINHA('Metal amarelo'), w=(4, 'corrigir'), label='Valor/Kg na linha do latão')
+    c.type(VKG_LINHA('Metal amarelo'), '32,00', w=(4, 'Mudou'), clicar=False, clear=True, cps=10, label='Valor/Kg 32,00')
+    c.press('Tab', label='sai do campo (grava)')
+    c.hover(LEGENDA('Metal amarelo'), 1.6, w=(4, 'legenda'), label='legenda Preço informado (zoom)')
+    c.confere('row:Metal amarelo', ['Preço informado'], 'legenda Preço informado')
+    c.hover(SEL("main thead th:has-text('Valor Total')"), 2.0, w=(5, 'Valor'), label='Valor Total da linha: só reduz')
+    c.click(VKG_LINHA('Metal amarelo'), w=(5, 'aumentar,'), label='Valor/Kg de novo')
+    c.type(VKG_LINHA('Metal amarelo'), '31,90', clicar=False, clear=True, cps=10, label='Valor/Kg de volta a 31,90')
+    c.press('Tab', label='sai do campo (grava)')
+    c.confere('main', ['668,80', '4.848,80'], 'de volta: lucro 668,80 e total 4.848,80')
+    c.click(MAT, w=(6, 'dica:'), label='Material')
+    c.type(MAT, 'latão', w=(6, 'Estoque', 0, 0.6), clicar=False, cps=30, label='material: latão de novo')
+    c.click(OPT('Metal amarelo (latão)', exact=False), w=(6, 'Estoque', 0, 0.2), label='Metal amarelo (latão), sem incluir')
+    c.hover(ESTOQUE_DISP, 4.0, w=(6, 'Tinha'), label='Estoque Disponível 62, Em estoque 214, Nesta venda -152 (zoom)')
     c.confere_rotulo('Estoque Disponível', ['62', 'Em estoque: 214', '152'], 'Estoque Disponível 62: 214 em estoque, -152 nesta venda')
-    c.click(OPCOES, w=(5, 'Opcoes'), label='Opções avançadas')
+    c.click(OPCOES, w=(7, 'Opcoes'), label='Opções avançadas')
     c.waitfor(text='Ajustes usados de vez em quando', timeout=8)
-    c.click(SW_SEM_VALOR, w=(5, 'ligo'), label='liga Comprovante sem valores')
-    c.press('Escape', w=(5, 'valores.', None, -0.5), label='fecha o menu')
+    c.click(SW_SEM_VALOR, w=(7, 'ligo'), label='liga Comprovante sem valores')
+    c.press('Escape', w=(7, 'valores.', None, -0.5), label='fecha o menu')
     c.fim()
     return c
 
 
-def cap14():
+def cap17():
     """Cobre mel 60 kg x 42 em estoque: Estoque insuficiente, origem Cobre misto 18 kg, Transferir e Adicionar; Pix; PDF sem valores."""
-    c = Cap(14, setup_tela('/venda', 'Selecionar cliente', extra=st_parceiro('bandeira', 'Fundição Bandeira do Vale', CLIENTE)
+    c = Cap(17, setup_tela('/venda', 'Selecionar cliente', extra=st_parceiro('bandeira', 'Fundição Bandeira do Vale', CLIENTE)
                            + st_item('latão', 'Metal amarelo (latão)', 152) + [
                                {'do': 'click', 'target': OPCOES}, {'do': 'waitFor', 'text': 'Ajustes usados de vez em quando', 'timeout': 8},
                                {'do': 'click', 'target': SW_SEM_VALOR}, {'do': 'press', 'key': 'Escape'}, {'do': 'pause', 'seconds': 0.6},
@@ -1064,6 +1303,7 @@ def cap14():
     c.click(SEL(f"{DLG} div:has(> label:has-text('Quantidade')) input"), w=(3, 'dezoito', None, 0.9), label='Quantidade (Kg)')
     c.type(SEL(f"{DLG} div:has(> label:has-text('Quantidade')) input"), '18', w=(3, 'dezoito'), clicar=False, clear=True, label='18 kg')
     c.hover(PD('Quantidade coberta', exact=False), 1.2, w=(3, 'misto.', 1), label='Quantidade coberta')
+    c.hover(BTNX('Adicionar origem'), 1.4, w=(3, 'somar'), label='Adicionar origem (sem clicar)')
     c.click(BTNX('Transferir e Adicionar'), w=(5, 'Transferir'), label='Transferir e Adicionar')
     c.waitfor(text='agendada para a finalização da venda', timeout=8)
     c.add({'do': 'balanca', 'peso': 0, 'subir': 0.5, 'oscilar': 0.3, 'label': 'tira o cobre da balança'})
@@ -1085,10 +1325,10 @@ def cap14():
     return c
 
 
-def cap15():
+def cap18():
     """A internet cai: faixa e Modo Offline; Shift+C, Dona Cida com 14,6 kg de latinha em dinheiro: Compra salva localmente; Pendências no
     caixa; a internet volta e sincroniza; (ilustração L5)."""
-    c = Cap(15, setup_tela('/venda', 'Selecionar cliente'))
+    c = Cap(18, setup_tela('/venda', 'Selecionar cliente'))
     c.ev(JS_OFFLINE, w=(1, 'cair'), label='a internet cai (navigator.onLine e evento offline)')
     c.waitfor(text='Sem conexão', timeout=8)
     c.hover(P('Sem conexão', exact=False), 1.6, w=(1, 'faixa'), label='faixa Sem conexão (zoom)')
@@ -1125,16 +1365,16 @@ def cap15():
     return c
 
 
-def cap16():
+def cap19():
     """Recapitulando: a montagem é da edição; o robô passa pelo caixa do dia."""
-    c = Cap(16, setup_tela('/caixa', 'Nova Venda', recolhe=False))
+    c = Cap(19, setup_tela('/caixa', 'Nova Venda', recolhe=False))
     c.hover(BTN('Nova Compra'), 1.0, w=(1, 'caixa,'), label='Nova Compra')
-    c.hover(BTN('Nova Venda'), 1.0, w=(4, 'vendeu'), label='Nova Venda')
+    c.hover(BTN('Nova Venda'), 1.0, w=(5, 'vendeu'), label='Nova Venda')
     c.fim()
     return c
 
 
-CAPS = {f'{n:02d}': globals()[f'cap{n:02d}'] for n in range(17)}
+CAPS = {f'{n:02d}': globals()[f'cap{n:02d}'] for n in range(20)}
 
 if __name__ == '__main__':
     pedidos = sys.argv[1:] or sorted(CAPS)

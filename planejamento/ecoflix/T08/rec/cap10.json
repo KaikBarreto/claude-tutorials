@@ -1,16 +1,17 @@
 {
  "name": "t08-cap10",
- "title": "T08 · Cap. 10 · Recapitulando (narração 45,1 s ESTIMADA; marcas L1..L5 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:58:00-03:00)",
+ "title": "T08 · Cap. 10 · Quando o ticket sai dos pendentes (narração 96,1 s ESTIMADA; marcas L1..L10 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:58:00-03:00)",
  "seed": "t08-cap10",
  "pace": 0.5,
  "cps": 9,
  "tail": 1.5,
  "start": {
-  "x": 900,
-  "y": 440
+  "x": 700,
+  "y": 420
  },
  "anonymous": true,
  "storage": {
+  "cato_adoption_nudge_38814e47-876a-5977-a5f7-53af364c17bb_34c36c63-0890-5e89-8963-7c77b7996908": "{\"count\":99,\"lastShownAt\":4102444800000}",
   "app_version": "1.60.10",
   "notification_shown_version": "1.60.10",
   "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
@@ -23,7 +24,7 @@
   "base/balanca-ativada",
   "base/caixa-aberto",
   "t08/inicio",
-  "t08/apos-cap09"
+  "t08/apos-cap08"
  ],
  "prewarm": [
   "/login"
@@ -90,6 +91,14 @@
   },
   {
    "do": "eval",
+   "js": "(()=>{const w=document.querySelector('[data-state][data-collapsible]');if(w&&w.getAttribute('data-state')==='collapsed')return 'ja recolhido';const b=document.querySelector(\"button[aria-label='Toggle Sidebar']\");if(!b)return 'sem botao';b.click();return 'recolhido'})()"
+  },
+  {
+   "do": "wait",
+   "seconds": 0.8
+  },
+  {
+   "do": "eval",
    "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel|Algo deu errado|Falha ao|Balan[çc]a desconectada|Pop-up bloqueado|Popup bloqueado/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{const f=document.querySelector('section[aria-label^=\"Lembrete da trilha\"]');if(f&&window.__avisos.length<10&&!window.__avisos.includes('TRILHA ECOFLIX'))window.__avisos.push('TRILHA ECOFLIX')},300);return 1})()"
   }
  ],
@@ -100,6 +109,397 @@
    "at": 0
   },
   {
+   "do": "hover",
+   "target": {
+    "selector": "main div.rounded-lg:has([aria-label='Selecionar ticket #58']):not(:has(div.rounded-lg [aria-label='Selecionar ticket #58']))"
+   },
+   "seconds": 0.8,
+   "at": 7.09,
+   "label": "cartão #58 ainda em Aguardando valorização",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 8.29
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Ações",
+    "within": "main div.rounded-lg:has([aria-label='Selecionar ticket #58']):not(:has(div.rounded-lg [aria-label='Selecionar ticket #58']))"
+   },
+   "at": 9.87,
+   "label": "Ações do #58"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "menuitem",
+    "name": "Editar"
+   },
+   "seconds": 0.5,
+   "at": 11.18,
+   "label": "Editar (sem clicar)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "menuitem",
+    "name": "Excluir"
+   },
+   "seconds": 0.5,
+   "at": 12.7,
+   "label": "Excluir (sem clicar)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 19.58
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Valorizar"
+   },
+   "at": 21.48,
+   "label": "Valorizar de novo (retomando)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Origem: Ticket de Pesagem",
+   "timeout": 15
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"retomando\", \"1 item, R$ 18.714,08\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"body\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere aviso: retoma a mesma compra"
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 25.39
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Finalizar",
+    "exact": true
+   },
+   "at": 25.39,
+   "label": "Finalizar"
+  },
+  {
+   "do": "waitFor",
+   "text": "Finalizar Pedido",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Pix/Transferência",
+    "within": "[role=dialog]"
+   },
+   "at": 27.88,
+   "label": "Pix/Transferência"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "CONFIRMAR PAGAMENTO",
+    "exact": true
+   },
+   "at": 28.46,
+   "label": "CONFIRMAR PAGAMENTO"
+  },
+  {
+   "do": "waitFor",
+   "text": "Valorizado pelo pedido",
+   "timeout": 20
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 36.22
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Valorizado pelo pedido"
+   },
+   "seconds": 0.8,
+   "at": 42.65,
+   "label": "Valorizado pelo pedido #…",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Valorizados\", \"Valorizado pelo pedido\", \"3.018,4 kg\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere o #58 em Valorizados"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Ações",
+    "within": "main div.rounded-lg:has([aria-label='Selecionar ticket #58']):not(:has(div.rounded-lg [aria-label='Selecionar ticket #58']))"
+   },
+   "at": 44.52,
+   "label": "Ações do #58 (valorizado)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "menuitem",
+    "name": "Ver pedido"
+   },
+   "seconds": 0.8,
+   "at": 45.56,
+   "label": "Ver pedido (sem clicar)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 48.15,
+   "label": "fecha o menu"
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 48.41
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "radio",
+    "name": "Lista"
+   },
+   "at": 48.41,
+   "label": "Lista"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Aguardando valorização",
+    "exact": true,
+    "within": "main tbody",
+    "nth": 0
+   },
+   "seconds": 0.4,
+   "at": 52.18,
+   "label": "selo Aguardando valorização",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Valorizado",
+    "exact": true,
+    "within": "main tbody"
+   },
+   "seconds": 0.3,
+   "at": 55.22,
+   "label": "selo Valorizado (#58)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Filtros",
+    "exact": true
+   },
+   "at": 56.8,
+   "label": "Filtros"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] button:has-text('Status')"
+   },
+   "label": "Status"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Cancelado",
+    "exact": true,
+    "within": "[data-radix-popper-content-wrapper]"
+   },
+   "seconds": 0.5,
+   "at": 57.34,
+   "label": "status Cancelado (opção do filtro)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 58.92
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 58.92,
+   "label": "fecha a lista de status"
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "label": "fecha Filtros"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main button[role=combobox]:has-text('Este mês')"
+   },
+   "seconds": 0.8,
+   "at": 58.92,
+   "label": "período (Este mês), só na Lista",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Filtros",
+    "exact": true
+   },
+   "at": 62.9,
+   "label": "Filtros"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] button:has-text('Tipo')"
+   },
+   "seconds": 0.3,
+   "at": 64.62,
+   "label": "filtro Tipo",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] button:has-text('Status')"
+   },
+   "seconds": 0.3,
+   "at": 65.23,
+   "label": "filtro Status",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] button:has-text('Usuário')"
+   },
+   "seconds": 0.4,
+   "at": 66.06,
+   "label": "filtro Usuário",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 67.39
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 67.39,
+   "label": "fecha Filtros"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Exportar",
+    "exact": true
+   },
+   "at": 67.39,
+   "label": "Exportar"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "menuitem",
+    "name": "Excel"
+   },
+   "seconds": 0.3,
+   "at": 68.56,
+   "label": "Excel",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "PDF"
+   },
+   "at": 72.71,
+   "label": "PDF"
+  },
+  {
+   "do": "waitFor",
+   "text": "Escolha quais tickets serão incluídos no relatório",
+   "timeout": 8
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog]"
+   },
+   "text": "",
+   "noClick": true,
+   "optional": true,
+   "timeout": 4,
+   "at": 72.91,
+   "label": "Exportar PDF: Período, Tipo de Ticket, Status, Usuário que criou"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Usuário que criou",
+    "within": "[role=dialog]",
+    "nth": 0
+   },
+   "seconds": 0.6,
+   "at": 75.34,
+   "label": "Usuário que criou",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L9",
+   "at": 78.14
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 78.14,
+   "label": "fecha o Exportar sem gerar"
+  },
+  {
    "do": "scroll",
    "point": {
     "x": 1000,
@@ -108,28 +508,37 @@
    "by": 0,
    "duration": 0.3,
    "after": 0,
-   "at": 0.3,
    "label": "cursor descansa"
   },
   {
    "do": "mark",
-   "name": "L2",
-   "at": 9.66
+   "name": "L10",
+   "at": 87.98
   },
   {
-   "do": "mark",
-   "name": "L3",
-   "at": 19.27
+   "do": "click",
+   "target": {
+    "role": "radio",
+    "name": "Kanban"
+   },
+   "at": 87.98,
+   "label": "volta ao Kanban"
   },
   {
-   "do": "mark",
-   "name": "L4",
-   "at": 26.98
+   "do": "hover",
+   "target": {
+    "selector": "main div.rounded-lg:has([aria-label='Selecionar ticket #59']):not(:has(div.rounded-lg [aria-label='Selecionar ticket #59']))"
+   },
+   "seconds": 0.8,
+   "at": 88.65,
+   "label": "Ticket #59 do Jair: Aguardando valorização, R$ 4.964,00",
+   "optional": true,
+   "timeout": 4
   },
   {
-   "do": "mark",
-   "name": "L5",
-   "at": 38.65
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Ticket #59\", \"R$ 4.964,00\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere o #59 segue pendente com o valor"
   },
   {
    "do": "eval",
@@ -139,7 +548,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 45.06
+   "at": 96.07
   }
  ]
 }

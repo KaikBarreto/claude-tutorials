@@ -73,6 +73,7 @@ AULAS.forEach(([id, titulo, min, grupo, code, desc], i) => {
   if (code) tmods.push({ id: `@id:ecoflix.titlemod.${id}`, title_id: `@id:ecoflix.title.${id}`, module_code: code });
 });
 
+const MENSALIDADE = 1350;
 const REMOVE_MARCOS_JULIANA = {
   profiles: [{ id: '@id:user.marcos' }, { id: '@id:user.juliana' }],
   user_roles: [{ user_id: '@id:user.marcos' }, { user_id: '@id:user.juliana' }],
@@ -86,6 +87,12 @@ grava('catalogo', {
   _doc: 'T0 (Bem-vindo ao EcoSistema): o catálogo da EcoFlix (trilha tutoriais-do-sistema, 26 aulas na ordem da TRILHA.md, um episódio por aula, vídeo fictício local) e só o Rafael como usuário (o T2 cria Juliana e Marcos). Gerado por rec/t00/t00_catalogo.mjs.',
   ecoflix_learning_paths: [{ id: '@id:ecoflix.path.tutoriais', slug: 'tutoriais-do-sistema', title: 'Tutoriais do sistema', description: null, cover_url: null, is_onboarding: true, is_active: true, order_index: 0 }],
   ecoflix_titles: titles, ecoflix_seasons: seasons, ecoflix_episodes: episodes, ecoflix_title_modules: tmods,
+  // 1.60.10: seção da trilha (a "próxima aula" sai da ordem da seção), uma faixa de legenda e um material no T1 (cap04)
+  ecoflix_sections: [{ id: '@id:ecoflix.section.tutoriais', label: 'Tutoriais do sistema', description: null, is_active: true, order_index: 0, created_at: '2026-10-20T12:00:00.000Z', updated_at: '2026-10-20T12:00:00.000Z' }],
+  ecoflix_section_titles: AULAS.map(([id], i) => ({ id: `@id:ecoflix.sectiontitle.${id}`, section_id: '@id:ecoflix.section.tutoriais', title_id: `@id:ecoflix.title.${id}`, order_index: i, created_at: '2026-10-20T12:00:00.000Z' })),
+  ecoflix_episode_subtitles: [{ id: '@id:ecoflix.legenda.t01', episode_id: '@id:ecoflix.episode.t01', language_code: 'pt-BR', label: 'Português', format: 'vtt', is_default: false, order_index: 0, storage_path: null,
+    content: 'WEBVTT\n\n00:00:00.000 --> 00:00:06.000\nNeste tutorial, você deixa o sistema com a cara da sua empresa.\n\n00:00:06.000 --> 00:12:00.000\nSua conta e sua empresa\n' }],
+  ecoflix_episode_resources: [{ id: '@id:ecoflix.material.t01', episode_id: '@id:ecoflix.episode.t01', title: 'Lista de conferência do cadastro da empresa', description: 'O que ter em mãos antes de preencher: CNPJ, endereço e logo.', resource_type: 'link', url: 'https://materiais.exemplo.example/lista-cadastro-empresa.pdf', storage_path: null, order_index: 0 }],
   _patch: { companies: [{ match: { id: '@id:company.reciclavale' }, set: { name: 'Recicla Vale Metais Ltda' } }], profiles: [{ match: { id: '@id:user.rafael' }, set: { navigation_style: 'sidebar' } }] },
   _remove: REMOVE_MARCOS_JULIANA,
 });
@@ -93,8 +100,11 @@ grava('catalogo', {
 // S2: o mundo base da trilha antes do T1: assinatura ativa, Rafael já confirmou a introdução (T0 concluído)
 const rafael = '@id:user.rafael';
 const progT0 = { id: '@id:ecoflix.progress.t00', user_id: rafael, episode_id: '@id:ecoflix.episode.t00', title_id: '@id:ecoflix.title.t00', completed: true, progress_seconds: 720, duration_seconds: 720, watched_at: '2026-11-09T18:00:00.000Z', last_progress_at: '2026-11-09T18:00:00.000Z', company_id: '@id:company.reciclavale' };
+// 1.60.10: o "Montar plano" abre a partir da assinatura vigente e soma módulos + nível de notas + usuários extras. Para a janela abrir sem
+// "+R$ ... vs plano atual", a mensalidade do S2 é a soma do catálogo: Kit 125 + 4x100 + 4x150 + 200 + 1 usuário extra (25) = 1.350,00; 3 usuários.
 grava('s2', {
-  _doc: 'S2: conta ativa; o T0 concluído e a introdução confirmada (sem portão). Faça seedExtra [t00/catalogo, t00/s2, t00/pagamentos].',
+  _doc: 'S2: conta ativa; o T0 concluído e a introdução confirmada (sem portão); mensalidade 1.350,00 = soma do catálogo, 1 usuário extra. Faça seedExtra [t00/catalogo, t00/s2, t00/pagamentos].',
+  _patch: { companies: [{ match: { id: '@id:company.reciclavale' }, set: { subscription_value: MENSALIDADE, base_subscription_value: MENSALIDADE, extra_users: 1, max_users: 3 } }] },
   ecoflix_user_progress: [progT0],
   ecoflix_intro_acknowledgements: [{ id: '@id:ecoflix.ack.rafael', user_id: rafael, learning_path_id: '@id:ecoflix.path.tutoriais', episode_id: '@id:ecoflix.episode.t00', acknowledged_at: '2026-11-09T18:01:00.000Z' }],
 });
@@ -103,6 +113,12 @@ grava('s2', {
 grava('s3', {
   _doc: 'S3: S2 sem crm_kanban em company_modules (só o cap03). seedExtra [t00/catalogo, t00/s2, t00/pagamentos, t00/s3].',
   _remove: { company_modules: [{ module_code: 'crm_kanban' }] },
+});
+
+// TESTE: a tela Assinatura no período de teste, sem o portão (S2 + empresa em teste): a linha "Ainda está no período de teste?" do cap10
+grava('teste', {
+  _doc: 'TESTE: S2 com a empresa em teste (5 dias restantes); o Rafael já confirmou a introdução, então o portão não abre. seedExtra [t00/catalogo, t00/s2, t00/teste].',
+  _patch: { companies: [{ match: { id: '@id:company.reciclavale' }, set: { subscription_status: 'testing', subscription_expires_at: '2026-11-15T23:59:59.000Z' } }] },
 });
 
 // S1: empresa em teste, sem progresso nem confirmação (o portão abre sozinho)
@@ -125,8 +141,8 @@ const pag = (n, mes, tipo, valor) => ({
   nfse_xml_url: `https://notas.exemplo.example/nfse-${mes}.xml`,
 });
 grava('pagamentos', {
-  _doc: 'Histórico de Pagamentos (S2): quatro mensalidades de R$ 1.025,00 pagas pelo Asaas (valor = subscription_value da empresa), com nota. O cartão de 05/11 acende a faixa "Débito recorrente ativo no cartão de crédito" (a empresa tem asaas_subscription_id).',
-  subscription_payments: [pag(1, '2026-08-05', 'BOLETO', 1025), pag(2, '2026-09-05', 'PIX', 1025), pag(3, '2026-10-05', 'CREDIT_CARD', 1025), pag(4, '2026-11-05', 'CREDIT_CARD', 1025)],
+  _doc: 'Histórico de Pagamentos (S2): quatro mensalidades de R$ 1.350,00 pagas pelo Asaas (valor = subscription_value da empresa), com nota. O cartão de 05/11 acende a faixa "Débito recorrente ativo no cartão de crédito" (a empresa tem asaas_subscription_id).',
+  subscription_payments: [pag(1, '2026-08-05', 'BOLETO', MENSALIDADE), pag(2, '2026-09-05', 'PIX', MENSALIDADE), pag(3, '2026-10-05', 'CREDIT_CARD', MENSALIDADE), pag(4, '2026-11-05', 'CREDIT_CARD', MENSALIDADE)],
   _patch: { companies: [{ match: { id: '@id:company.reciclavale' }, set: { asaas_subscription_id: 'sub_ficticio_recicla', asaas_customer_id: 'cus_ficticio_recicla' } }] },
 });
 console.log(`t00: ${AULAS.length} aulas; sementes em ${path.relative(process.cwd(), OUT)}`);

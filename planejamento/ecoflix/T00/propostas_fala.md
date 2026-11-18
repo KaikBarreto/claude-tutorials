@@ -1,6 +1,8 @@
 # T00 · propostas de fala e achados do app (robô, ensaio com voz estimada)
 
-Nada aqui foi aplicado no `roteiro.md` nem no `tts_textos.py`: a revisão geral decide.
+**18/11 (1.60.10): aplicado.** As quatro propostas não pediam mudança de fala; o e-mail da ilustração do cap04 foi corrigido no roteiro e em
+`cenas/ilustracoes.json`, e o roteiro passou a dizer "Cobrança • Recicla Vale Metais Ltda". A numeração abaixo é a antiga (hoje 09 = cap10 e
+12 = cap14). Achados novos: `andamento_160.md`.
 
 ## Propostas de fala
 

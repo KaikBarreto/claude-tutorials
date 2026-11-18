@@ -6,6 +6,7 @@
 # Modos: --rapido (só o ensaio rápido) · --os-dois (rápido e, com 0 passo falho, a gravação completa; se a completa sair com
 # lateBy >= 0,8 s, mais uma completa) · sem modo (só a completa).
 # Trava: pela fila justa do coordenador (rec/fila.sh --prio 08), no máximo uma tarefa do T08 na fila; MP4 de ensaio ultrafast/crf 30.
+# 18/11: religa SEMPRE (if true), para o relógio de cada capítulo começar no FAKE_NOW dele (as sementes saem do ensaio).
 # Uso: bash rec/t08/t08_grava.sh NN [--rapido|--os-dois|--auto]   (rodar FORA de outro flock: a trava é pega aqui)
 set -u
 cd /home/claude/ecoflix
@@ -24,7 +25,7 @@ bash /home/claude/ecoflix/rec/fila.sh --prio 08 -- bash -c '
     [ "$PORTA" != 54308 ] && rm -f /home/claude/ecoflix/rec/.runtime/fake54308.pid
   fi
   MUDOU=$(find rec/mundo/handlers rec/mundo/hooks rec/mundo/lib rec/mundo/schema.json -newer "$PIDF" 2>/dev/null | head -1)
-  if [ "$ATUAL" != "$FAKE_NOW" ] || [ "$PORTA" != 54308 ] || [ -n "$MUDOU" ]; then FAKE_PORT=54308 bash rec/run.sh fake | tail -1; fi
+  if true; then FAKE_PORT=54308 bash rec/run.sh fake | tail -1; fi
   tr "\0" "\n" < /proc/$(cat "$PIDF")/environ | grep -q "^FAKE_PORT=54308$" || { echo "instância 54308 não é a minha"; exit 3; }
   echo "trava $(date +%H:%M:%S)"
   if [ "$MODO" = "--rapido" ] || [ "$MODO" = "--os-dois" ] || [ "$MODO" = "--auto" ]; then

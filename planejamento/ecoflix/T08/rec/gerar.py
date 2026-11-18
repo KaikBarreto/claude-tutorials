@@ -1,19 +1,24 @@
 #!/usr/bin/env python3
-"""T08 · Ticket de Pesagem: gera rec/t08/cap00..cap10.json (roteiros do robô) a partir da voz (t08/narracao/capNN.json).
+"""T08 · Ticket de Pesagem: gera rec/t08/cap00..cap13.json (roteiros do robô) a partir da voz (t08/narracao/capNN.json).
 
-EcoSistema 1.59.154 no Supabase falso (mundo da Recicla Vale Metais), computador 1280x800, logado como Rafael Nogueira (MASTER),
+EcoSistema 1.60.10 no Supabase falso (mundo da Recicla Vale Metais), computador 1280x800, logado como Rafael Nogueira (MASTER),
 EcoTray falso ligado (semente base/balanca-ativada: "Balança do pátio" e a térmica POS-58) e o caixa do Rafael aberto (base/caixa-aberto).
 Cada passo é preso a uma palavra da fala: `at` = início da palavra - folga (o custo do gesto, docs/04 "Custo real dos gestos"), e a marca
 Ln entra no início de cada linha. Quando a voz chegar, rodar de novo com o capNN.json da voz (nada a reescrever).
-Rodar de qualquer pasta: `python3 -I rec/t08/gerar.py [NN ...]`; gravar/ensaiar: `bash rec/t08/t08_grava.sh NN [--rapido]`.
+Rodar de qualquer pasta: `python3 -I rec/t08/gerar.py [NN ...]`; ensaiar: `bash rec/t08/t08_grava.sh NN [--rapido]` ou o lote `t08_lote160.sh`.
 
+18/11 (app 1.60.10, cobertura_160 + JUNCAO_160): 14 capítulos. Novos: 07 (ticket com valores), 11 (pesagem avulsa com cobrança) e
+12 (sem internet); os antigos 07, 08, 09 e 10 viraram 08, 09, 10 e 13.
 Relógio (MUNDO_LINHA_DO_TEMPO.md, "O dia 10/11"): o ticket #58 é das 08:40 às 09:00. FAKE_NOW por capítulo (fake_now.json, que o
-t08_grava.sh usa para religar a instância 54308): 08:40 (caps 0 a 3, o caminhão chega e pesa cheio), 08:49 (caps 4 e 5, volta vazio),
-08:51 (cap 6: o ticket é salvo e nasce às 08:52) e 08:58 (caps 7 a 10: valorizar e finalizar perto das 09:00).
-Cadeia de sementes (seeds-extra/t08, feitas por t08_semente.py a partir do estado da instância depois do ensaio de cada capítulo):
-inicio (= mundo base + balança + caixa) -> apos-cap02 (rascunho com a cooperativa, o Edson e a placa) -> apos-cap03 (item 9.460) ->
-apos-cap04 (1ª e 2ª) -> apos-cap05 (impureza) -> apos-cap06 (#58 salvo, rascunho #59 do Jair) -> apos-cap07 (compra em rascunho) ->
-apos-cap09 (compra finalizada, #58 valorizado).
+t08_grava.sh usa para religar a instância 54308): 08:40 (caps 0 a 3), 08:49 (caps 4 e 5), 08:51 (cap 6: o #58 nasce às 08:52),
+08:55 (cap 7: o #59 do Jair é salvo com valores), 08:58 (caps 8 a 10: valorizar e finalizar perto das 09:00), 09:12 (cap 11, a
+pesagem avulsa #60) e 09:20 (caps 12 e 13).
+Cadeia de sementes (seeds-extra/t08, apos-capNN = estado depois do capítulo NN, cumulativo desde a base; as de 07 em diante são
+feitas por t08_semente.py a partir da instância logo depois do ensaio do capítulo):
+inicio (mundo base + #57 com item + #56 pendente da cooperativa + um rascunho na lixeira) -> apos-cap02 -> apos-cap03 -> apos-cap04 ->
+apos-cap05 -> apos-cap06 (#58 salvo, rascunho do Jair) -> apos-cap07 (#59 salvo com valores, R$ 4.964,00) -> apos-cap08 (compra do
+#58 em rascunho) -> apos-cap10 (compra finalizada, #58 valorizado) -> apos-cap11 (pesagem avulsa #60 cobrada por Pix, R$ 60,00).
+Nada disso segue para a T09 (JUNCAO_160: "A, não segue").
 """
 import hashlib
 import json
@@ -24,9 +29,9 @@ import unicodedata
 HERE = os.path.dirname(os.path.abspath(__file__))
 TUT = os.path.normpath(os.path.join(HERE, '..', '..'))
 NARR = os.path.join(TUT, 't08', 'narracao')
-N08_40, N08_49, N08_51, N08_58 = ('2026-11-10T08:40:00-03:00', '2026-11-10T08:49:00-03:00', '2026-11-10T08:51:00-03:00',
-                                  '2026-11-10T08:58:00-03:00')
-FAKE_NOW = {0: N08_40, 1: N08_40, 2: N08_40, 3: N08_40, 4: N08_49, 5: N08_49, 6: N08_51, 7: N08_58, 8: N08_58, 9: N08_58, 10: N08_58}
+N08_40, N08_49, N08_51, N08_55, N08_58, N09_12, N09_20 = (f'2026-11-10T{h}:00-03:00' for h in ('08:40', '08:49', '08:51', '08:55', '08:58', '09:12', '09:20'))
+FAKE_NOW = {0: N08_40, 1: N08_40, 2: N08_40, 3: N08_40, 4: N08_49, 5: N08_49, 6: N08_51, 7: N08_55, 8: N08_58, 9: N08_58, 10: N08_58,
+            11: N09_12, 12: N09_20, 13: N09_20}
 
 
 def stable_id(chave):
@@ -44,17 +49,19 @@ try:
 except OSError:
     VERSAO = '1.60.10'
 HOJE = '2026-11-10'
+EMPRESA = '38814e47-876a-5977-a5f7-53af364c17bb'
 STORAGE = {
+    f'cato_adoption_nudge_{EMPRESA}_{RAFAEL}': '{"count":99,"lastShownAt":4102444800000}',   # cala o balão de dica do Cato (JUNCAO_160, regra do mundo)
     'app_version': VERSAO, 'notification_shown_version': VERSAO, f'dominex:daily-tasks-shown:{RAFAEL}': HOJE,
     'pwa-install-dismissed': 'true', 'theme': 'light', f'daily-tasks-reminder-last-shown-{RAFAEL}': HOJE, 'initial-preferences-set': 'true',
 }
 NOMES = ['Abertura', 'Quando usar o ticket', 'Criar o ticket', 'A primeira pesagem e o rascunho', 'Descarregar e a segunda pesagem',
-         'Impureza em porcentagem ou em quilos', 'Vários veículos ao mesmo tempo', 'Valorizar o ticket', 'Imprimir o comprovante',
-         'Quando o ticket sai dos pendentes', 'Recapitulando']
+         'Impureza em porcentagem ou em quilos', 'Vários veículos ao mesmo tempo', 'Ticket com valores', 'Valorizar o ticket',
+         'Imprimir o comprovante', 'Quando o ticket sai dos pendentes', 'Pesagem avulsa com cobrança', 'Sem internet', 'Recapitulando']
 BASE = ['base/balanca-ativada', 'base/caixa-aberto', 't08/inicio']
-CADEIA = ['apos-cap02', 'apos-cap03', 'apos-cap04', 'apos-cap05', 'apos-cap06', 'apos-cap07', 'apos-cap09']
+CADEIA = ['apos-cap02', 'apos-cap03', 'apos-cap04', 'apos-cap05', 'apos-cap06', 'apos-cap07', 'apos-cap08', 'apos-cap10', 'apos-cap11']
 SEMENTE = {0: None, 1: None, 2: None, 3: 'apos-cap02', 4: 'apos-cap03', 5: 'apos-cap04', 6: 'apos-cap05', 7: 'apos-cap06', 8: 'apos-cap07',
-           9: 'apos-cap07', 10: 'apos-cap09'}
+           9: 'apos-cap08', 10: 'apos-cap08', 11: 'apos-cap10', 12: 'apos-cap11', 13: 'apos-cap11'}
 
 
 def sementes(n):
@@ -347,8 +354,8 @@ def cap01():
     c.mark(5)
     c.click(ABA_AVULSAS, at=c.A(5, 'Pesagens', 1.0), label='aba Pesagens avulsas')
     c.mark(6)
-    c.hover(BTN('Nova Pesagem Avulsa'), 0.6, at=c.A(6, 'comprovante', 1.4), label='Nova Pesagem Avulsa (sem clicar)')
-    c.click(ABA_PADRAO, at=c.A(6, 'comercial', 2.2), label='volta para Tickets padrão')
+    c.hover(BTN('Nova Pesagem Avulsa'), 0.6, at=c.A(6, 'pesagem', 0.6), label='Nova Pesagem Avulsa (sem clicar)')
+    c.click(ABA_PADRAO, at=c.A(6, 'adiante', 1.2), label='volta para Tickets padrão')
     c.fim()
     return c
 
@@ -362,6 +369,7 @@ NOVO_TICKET = SEL("main button[aria-label='Novo ticket de pesagem']")
 CHAVES = SEL("main div:has(> div > label:has-text('Modalidade')):has(> div > label:has-text('Valores'))")
 SEL_FORN = TXT('Selecionar fornecedor')
 FORN = lambda nome: {'text': nome, 'within': DLG}
+PINO = lambda nome: SEL(f"[role=dialog] button:has(+ button[aria-label='Ações de {nome}'])")
 MAT = PH('Escreva o nome ou código do material')
 MOT = PH('Digite ou busque o motorista')
 PLACA = PH('Digite ou busque a placa')
@@ -383,6 +391,7 @@ DETALHE = SEL("main button[aria-label='Ver detalhes da pesagem']")
 LINHA_ITEM = SEL("main tr:has-text('Alumínio latinha')")
 SALVAR = BTN('Salvar Ticket de Pesagem')
 RASCUNHOS = TXTX('Rascunhos abertos')
+APAGADOS = SEL("main button:has-text('Rascunhos apagados')")
 CARTAO = lambda n: (f"main div.rounded-lg:has([aria-label='Selecionar ticket #{n}'])"
                     f":not(:has(div.rounded-lg [aria-label='Selecionar ticket #{n}']))")
 ACOES = lambda n: {'role': 'button', 'name': 'Ações', 'within': CARTAO(n)}
@@ -424,23 +433,29 @@ def cap02():
     c.mark(4)
     c.click(SEL_FORN, at=c.A(4, 'fornecedor', 1.0), label='Selecionar fornecedor')
     c.waitfor(text='Selecionar Fornecedor', timeout=8)
-    c.click(FORN('Cooperativa Recomeço'), at=c.A(4, 'Recomeço', 0.9), label='Cooperativa Recomeço')
+    c.hover(BTN('Não informado', within=DLG), 0.6, at=c.A(4, 'Não', 0.6), label='opção Não informado')
+    c.hover(PINO('Cooperativa Recomeço'), 0.9, at=c.A(4, 'pino', 0.6), label='pino Fixar como padrão (sem clicar)')
     c.mark(5)
-    c.click(MAT, at=c.A(5, 'material', 1.0), label='campo Material')
-    c.type(MAT, 'latinha', cps=40, noClick=True, label='digita latinha')
-    c.click(OPT('Alumínio latinha'), at=c.A(5, 'latinha', 0.3), label='Alumínio latinha')
+    c.click(FORN('Cooperativa Recomeço'), at=c.A(5, 'Recomeço', 0.9), label='Cooperativa Recomeço')
     c.mark(6)
-    c.rolar(ROLA_FORM, at=c.A(6, 'E', 0.1), ponto=(700, 460), duration=0.4, after=0, label='desce até motorista e placa')
-    c.click(MOT, at=c.A(6, 'motorista', 1.0), label='campo Motorista')
+    c.click(MAT, at=c.A(6, 'material', 1.0), label='campo Material')
+    c.type(MAT, 'latinha', cps=40, noClick=True, label='digita latinha')
+    c.click(OPT('Alumínio latinha'), at=c.A(6, 'latinha', 0.3), label='Alumínio latinha')
+    c.mark(7)
+    c.rolar(ROLA_FORM, at=c.A(7, 'E', 0.1), ponto=(700, 460), duration=0.4, after=0, label='desce até motorista e placa')
+    c.click(MOT, at=c.A(7, 'motorista', 1.0), label='campo Motorista')
     c.type(MOT, 'Edson', cps=40, noClick=True, label='digita Edson')
-    c.click(OPT('Edson Moura'), at=c.A(6, 'Moura', 0.3), label='Edson Moura')
+    c.click(OPT('Edson Moura'), at=c.A(7, 'Moura', 0.3), label='Edson Moura')
     c.click(PLACA, label='campo Placa do Veículo')
     c.type(PLACA, 'FKD', cps=40, noClick=True, label='digita FKD')
-    c.click(OPT('FKD2E41'), at=c.A(6, 'escolher', 0.5), label='FKD2E41')
-    c.mark(7)
-    c.hover(BARRA, 0.8, at=c.A(7, 'aba', 0.7), label='aba deste ticket: número, peso e fornecedor')
-    c.registra(BARRA, at=c.A(7, 'número', 0.2), label='barra das abas: #58, 0 kg, Cooperativa Recomeço, Seu rascunho')
-    c.cursor(NEUTRO, at=c.A(7, 'fornecedor', -0.6), label='cursor sai da barra')
+    c.click(OPT('FKD2E41'), at=c.A(7, 'escolher', 0.5), label='FKD2E41')
+    c.mark(8)
+    c.hover(SEL("main button[aria-label='Gerenciar motoristas']"), 0.8, at=c.A(8, 'botão', 0.6), label='botão + do Motorista (Gerenciar motoristas), sem clicar')
+    c.hover(SEL("main button[aria-label='Gerenciar placas']"), 0.6, at=c.A(8, 'placa', 0.6), label='botão + da Placa (Gerenciar placas), sem clicar')
+    c.mark(9)
+    c.hover(BARRA, 0.8, at=c.A(9, 'aba', 0.7), label='aba deste ticket: número, peso e fornecedor')
+    c.registra(BARRA, at=c.A(9, 'número', 0.2), label='barra das abas: #58, 0 kg, Cooperativa Recomeço, Seu rascunho')
+    c.cursor(NEUTRO, at=c.A(9, 'fornecedor', -0.6), label='cursor sai da barra')
     c.fim()
     return c
 
@@ -592,6 +607,64 @@ def cap06():
     c.click(BARRA, at=c.A(7, 'fechar', 0.7), label='abre a lista das abas')
     c.hover(X_ABA, 0.8, at=c.A(7, 'x', 0.6), label='o x da aba (Descartar ticket), sem clicar')
     c.press('Escape', at=c.A(7, 'ticket', -0.4), label='fecha a lista')
+    c.mark(8)
+    c.click(BTN('Voltar'), at=c.A(8, 'E', 0.1), label='Voltar para a tela dos tickets')
+    c.waitfor(text=TICKET_OK, timeout=15)
+    c.click(APAGADOS, at=c.A(8, 'Rascunhos', 0.8), label='Rascunhos apagados (1)')
+    c.waitfor(text='Recupere um rascunho que foi apagado por engano.', timeout=8)
+    c.confere('dlg', ['Valdir Pereira', 'Ferro misto', 'Recuperar'], 'lixeira de rascunhos')
+    c.hover(BTN('Recuperar', within=DLG), 0.8, at=c.A(8, 'recuperar', 0.6), label='Recuperar (sem clicar)')
+    c.press('Escape', label='fecha Rascunhos apagados')
+    c.fim()
+    return c
+
+
+# ---------------------------------------------------------------- ticket com valores (aba do Jair)
+VKG = CAMPO('Valor/Kg')
+USAB = '/configuracoes?tab=usability'
+
+
+@capitulo
+def cap07():
+    """Ticket com valores: a aba do Jair vira "Com valores", 2ª pesagem 4.180 kg e R$ 3,40/kg (R$ 4.964,00); salva o #59."""
+    c = Cap(7, start=(1150, 330), setup=setup_lista(REABRE))
+    c.mark(1)
+    c.hover(BTN('Com valores'), 0.6, at=c.A(1, 'valores', 0.6), label='chave Valores (sem clicar)')
+    c.mark(2)
+    c.click(BTN('Com valores'), at=c.A(2, 'Com', 0.7), label='Com valores')
+    c.waitfor(text='Total geral', timeout=8)
+    c.hover(SEL("main div:has(> label:has-text('Tabela de Preços')) button[role=combobox]"), 0.6, at=c.A(2, 'Tabela', 0.6), label='Tabela de Preços (Principal)')
+    c.hover(SEL("main th:has-text('Valor/Kg')"), 0.5, at=c.A(2, 'colunas', 0.6), label='colunas Valor/Kg, Desc. (R$) e Total')
+    c.mark(3)
+    abre_pesagem_item(c, c.A(3, 'item', 0.8))
+    c.click(C1, label='campo 1ª Pesagem')
+    c.type(C1, '5640', noClick=True, cps=40, label='digita 5640 na 1ª Pesagem (a entrada)')
+    c.click(C2, at=c.A(3, 'segunda', 0.8), label='campo 2ª Pesagem')
+    c.type(C2, '4180', at=c.A(3, 'quatro', 0.1), noClick=True, label='digita 4180 na 2ª Pesagem')
+    c.click(VKG, at=c.A(3, 'preço', 0.8), label='campo Valor/Kg')
+    c.type(VKG, '3,40', at=c.A(3, 'três', 0.1), noClick=True, label='digita 3,40 no Valor/Kg')
+    c.confere('dlg', ['1.460', '|5.640 − 4.180|', 'R$ 4.964,00'], 'bruto 1.460 e valor estimado R$ 4.964,00')
+    c.mark(4)
+    c.click(CONFIRMAR, at=c.A(4, 'Confirmar', 0.7), label='Confirmar')
+    c.waitfor(gone={'role': 'dialog'}, timeout=8)
+    c.hover(SEL("main tr:has-text('Bateria automotiva')"), 0.5, at=c.A(4, 'mil', 0.6), label='item: 1.460 kg de bateria a 3,40')
+    c.registra(SEL("main tr:has-text('Total geral')"), at=c.A(4, 'total', 0.3), label='Total geral: R$ 4.964,00')
+    c.hover(SEL("main tr:has-text('Total geral')"), 0.8, at=c.A(4, 'embaixo', 0.6), label='Total geral')
+    c.confere('main', ['Total geral: R$ 4.964,00'], 'total do ticket R$ 4.964,00')
+    c.mark(5)
+    c.cursor(NEUTRO, at=c.L(5) + 0.4, label='cursor descansa')
+    c.mark(6)
+    c.click(SALVAR, at=c.A(6, 'Salvo', 0.8), label='Salvar Ticket de Pesagem')
+    c.waitfor(text='O que deseja fazer com este ticket de pesagem?', timeout=12)
+    c.confere('dlg', ['Ticket #59 salvo'], 'número do ticket do Jair: #59')
+    c.click({'role': 'button', 'name': 'Fechar', 'exact': True, 'within': DLG, 'nth': 0}, at=c.A(6, 'Aguardando', 0.7), label='Fechar')
+    c.waitfor(gone={'role': 'dialog'}, timeout=8)
+    c.mark(7)
+    c._p({'do': 'goto', 'url': USAB}, c.A(7, 'E', 0.1), 'Configurações > Usabilidade', {})
+    c.waitfor(text='Permitir forma de pagamento no ticket de pesagem', timeout=15)
+    c.ev(js_ate('Permitir forma de pagamento no ticket de pesagem', y=380, dur_ms=900), at=c.A(7, 'balanceiro', 0.3), label='rola até a opção')
+    c.hover(TXT('Permitir forma de pagamento no ticket de pesagem'), 0.8, at=c.A(7, 'forma', 0.6), label='Permitir forma de pagamento no ticket de pesagem (desligada)')
+    c.registra(TXT('Permitir forma de pagamento no ticket de pesagem'), at=c.A(7, 'ligar', 0.3), label='a opção, em Configurações > Usabilidade')
     c.fim()
     return c
 
@@ -608,6 +681,9 @@ PDF_JS = ("(async()=>{const w=(window.__pops||[]).slice(-1)[0];if(!w)return 'SEM
           "if(f&&f.src){const b=await (await fetch(f.src.split('#')[0])).blob();const u=new Uint8Array(await b.arrayBuffer());let s='';"
           "for(let k=0;k<u.length;k+=8192)s+=String.fromCharCode.apply(null,u.subarray(k,k+8192));return 'PDF:'+btoa(s)}"
           "await new Promise(r=>setTimeout(r,250))}return 'SEM PDF'})()")
+SELEC = lambda n: SEL(f"[aria-label='Selecionar ticket #{n}']")
+BARRA_SEL = "div.fixed:has-text('selecionad')"       # barra flutuante "2 selecionados | Valorizar 2 tickets | x"
+ROLA_KANBAN = 270                                    # o #56 é o 4º cartão da coluna: fica abaixo da dobra
 
 
 def setup_valorizar(extra=()):
@@ -615,35 +691,57 @@ def setup_valorizar(extra=()):
 
 
 @capitulo
-def cap07():
-    """Valorizar: Ações > Valorizar abre a compra preenchida pela tabela (R$ 6,20/kg, R$ 18.714,08), ainda em rascunho."""
-    c = Cap(7, start=(700, 420), setup=setup_valorizar())
+def cap08():
+    """Valorizar: a dica do Valorizar 2 tickets (#58 e #56, mesmo fornecedor) e Ações > Valorizar abre a compra (R$ 6,20/kg, R$ 18.714,08)."""
+    c = Cap(8, start=(700, 420), setup=setup_valorizar())
     c.mark(1)
     c.hover(SEL(CARTAO(58)), 0.8, at=c.A(1, 'valorizar', 0.6), label='cartão do Ticket #58')
     c.mark(2)
-    c.click(ACOES(58), at=c.A(2, 'Ações', 0.7), label='Ações do #58')
+    c.click(SELEC(58), at=c.A(2, 'Selecionar', 1.0), label='Selecionar no #58')
+    c.rolar(ROLA_KANBAN, at=c.A(2, 'Selecionar', -0.2), ponto=(420, 500), duration=0.5, after=100, label='desce até o #56')
+    c.click(SELEC(56), at=c.A(2, 'cada', 0.3), label='Selecionar no #56 (o outro ticket da cooperativa)')
+    c.registra(SEL(BARRA_SEL), at=c.A(2, 'Valorizar', 0.8), label='barra: 2 selecionados, Valorizar 2 tickets')
+    c.hover(BTNX('Valorizar 2 tickets'), 0.8, at=c.A(2, 'Valorizar', 0.6), label='Valorizar 2 tickets (sem clicar)')
+    c.confere('body', ['2 selecionados', 'Valorizar 2 tickets'], 'barra da seleção em conjunto')
+    c.hover(SELEC(57), 1.0, at=c.A(2, 'Precisa', 0.6), label='#57, de outro fornecedor, fica apagado (dica: mesmo cliente ou fornecedor)')
+    c.mark(3)
+    c.click(SEL(f'{BARRA_SEL} > button'), at=round(c.L(3) - 0.2, 2), label='x da barra: limpa a seleção')
+    c.rolar(-ROLA_KANBAN, ponto=(420, 500), duration=0.4, after=100, label='volta ao alto da coluna')
+    c.click(ACOES(58), at=c.A(3, 'Ações', 0.7), label='Ações do #58')
     c.click(ITEM('Valorizar'), label='Valorizar')
     c.waitfor(text='Origem: Ticket de Pesagem', timeout=15)
     c.confere('main', ['Origem: Ticket de Pesagem #58', 'R$ 18.714,08', '61,6'], 'compra do #58: total R$ 18.714,08')
     c.confere_campos(['6,20'], 'Valor/Kg 6,20', escopo='main tbody')
-    c.hover(BTN('Cooperativa Recomeço', within='main'), 0.3, at=c.A(2, 'cooperativa', 1.0), label='compra: fornecedor Cooperativa Recomeço')
-    c.hover(CEL(2), 0.3, at=c.A(2, 'latinha', 0.8), label='compra: Alumínio latinha')
-    c.hover(CEL(4), 0.5, at=c.A(2, 'impureza', 0.8), label='compra: peso líquido e Tara/Imp. 61,6')
-    c.mark(3)
-    c.registra(CEL(5), at=c.A(3, 'seis', 0.3), label='Valor/Kg 6,20')
-    c.hover(CEL(6), 0.6, at=c.A(3, 'dezoito', 0.6), label='total da linha R$ 18.714,08')
+    c.hover(TXTX('Cooperativa Recomeço', within='main'), 0.3, at=c.A(3, 'cooperativa', 1.0), label='compra: fornecedor Cooperativa Recomeço')
+    c.hover(CEL(2), 0.3, at=c.A(3, 'latinha', 0.8), label='compra: Alumínio latinha')
+    c.hover(CEL(4), 0.5, at=c.A(3, 'impureza', 0.8), label='compra: peso líquido e Tara/Imp. 61,6')
     c.mark(4)
-    c.hover(CEL(5), 0.8, at=c.A(4, 'aqui', 0.6), label='célula Valor/Kg')
-    c.mark(5)   # L5: ilustração do caminho até o estoque e o caixa
-    c.cursor((760, 560), at=c.L(5) + 0.3, label='cursor descansa')
+    c.registra(CEL(5), at=c.A(4, 'seis', 0.3), label='Valor/Kg 6,20')
+    c.hover(CEL(6), 0.6, at=c.A(4, 'dezoito', 0.6), label='total da linha R$ 18.714,08')
+    c.mark(5)
+    c.hover(CEL(5), 0.8, at=c.A(5, 'preço', 0.6), label='Valor/Kg: de onde vem o preço')
+    c.mark(6)
+    c.hover(CEL(5), 0.8, at=c.A(6, 'aqui', 0.6), label='célula Valor/Kg')
+    c.mark(7)   # L7: ilustração do caminho até o estoque e o caixa
+    c.cursor((760, 560), at=c.L(7) + 0.3, label='cursor descansa')
     c.fim()
     return c
 
 
+def linha_conf(rot, antes_de):
+    """a linha de uma opção de Configurações > Usabilidade (o rótulo `rot`, sem a opção seguinte `antes_de`)"""
+    return f"main div:has(label:text-is('{rot}')):not(:has(label:text-is('{antes_de}')))"
+
+
+SW_ASSINA = SEL(linha_conf('Assinaturas no comprovante', 'Marca de ticket não valorizado') + ' button[role=switch]')
+QUEM = SEL('#receipt-signature-mode')
+
+
 @capitulo
-def cap08():
-    """O comprovante do ticket (Ações > Ver comprovante > Térmico, PDF na aba nova) e a chave da impressão sozinha em Integrações."""
-    c = Cap(8, start=(700, 420), setup=setup_valorizar([{'do': 'eval', 'js': POPS}]))
+def cap09():
+    """O comprovante do ticket (Térmico, PDF na aba nova), a impressão sozinha em Integrações e, em Usabilidade, as assinaturas
+    (liga, mostra Quem assina e desliga de novo: regra do mundo), a marca de não valorizado e o exigir fornecedor."""
+    c = Cap(9, start=(700, 420), setup=setup_valorizar([{'do': 'eval', 'js': POPS}]))
     c.mark(1)
     c.click(ACOES(58), at=c.A(1, 'Ações', 0.7), label='Ações do #58')
     c.click(ITEM('Ver comprovante'), label='Ver comprovante')
@@ -659,52 +757,244 @@ def cap08():
     c.waitfor(text='Imprimir comprovante do Ticket de Pesagem', timeout=15)
     c.ev(js_ate('Imprimir comprovante do Ticket de Pesagem', y=400, dur_ms=900), at=c.A(4, 'cupom', 0.3), label='rola até a chave')
     c.hover(TXT('Imprimir comprovante do Ticket de Pesagem'), 0.8, at=c.A(4, 'Imprimir', 0.6), label='chave Imprimir comprovante do Ticket de Pesagem (desligada)')
-    c.mark(5)   # L5: ilustração das pesagens mescladas
-    c.cursor((800, 560), at=c.L(5) + 0.3, label='cursor descansa')
-    c.fim()
-    return c
-
-
-@capitulo
-def cap09():
-    """Valorizar de novo retoma a mesma compra; finalizar com Pix; o ticket vai para Valorizados; os três status; o rascunho do Jair."""
-    c = Cap(9, start=(700, 420), setup=setup_valorizar())
-    c.mark(1)
-    c.hover(SEL(CARTAO(58)), 0.8, at=c.A(1, 'aqui', 0.6), label='cartão #58 ainda em Aguardando valorização')
-    c.mark(2)
-    c.click(ACOES(58), at=c.A(2, 'Valorizando', 0.7), label='Ações do #58')
-    c.click(ITEM('Valorizar'), at=c.A(2, 'retoma', 0.8), label='Valorizar de novo (retomando)')
-    c.waitfor(text='Origem: Ticket de Pesagem', timeout=15)
-    c.confere('body', ['retomando', '1 item, R$ 18.714,08'], 'aviso: retoma a mesma compra')
-    c.mark(3)
-    c.click(BTN('Finalizar'), at=c.A(3, 'Finalizo', 0.7), label='Finalizar')
-    c.waitfor(text='Finalizar Pedido', timeout=10)
-    c.click({'text': 'Pix/Transferência', 'within': DLG}, at=c.A(3, 'Pix', 0.6), label='Pix/Transferência')
-    c.click(BTN('CONFIRMAR PAGAMENTO'), at=c.A(3, 'confirmar', 0.7), label='CONFIRMAR PAGAMENTO')
-    c.waitfor(text='Valorizado pelo pedido', timeout=20)
-    c.mark(4)
-    c.hover(TXTX('Valorizado pelo pedido'), 0.8, at=c.A(4, 'número', 0.6), label='Valorizado pelo pedido #…')
-    c.confere('main', ['Valorizados', 'Valorizado pelo pedido', '3.018,4 kg'], 'o #58 em Valorizados')
     c.mark(5)
-    c.click({'role': 'radio', 'name': 'Lista'}, at=c.A(5, 'lista', 0.7), label='Lista')
-    c.hover(TXT('Aguardando valorização', within='main tbody'), 0.4, at=c.A(5, 'Aguardando', 0.6), label='selo Aguardando valorização (#57)')
-    c.hover(TXT('Valorizado', within='main tbody'), 0.3, at=c.A(5, 'Valorizado', 0.6), label='selo Valorizado (#58)')
-    c.click(BTN('Filtros'), at=c.A(5, 'verde', 0.3), label='Filtros')
-    c.click(SEL(f"{POP} button:has-text('Status')"), label='Status')
-    c.hover(OPT('Cancelado', exact=True), 0.5, at=c.A(5, 'vermelho', 0.6), label='status Cancelado (opção do filtro)')
-    c.press('Escape', label='fecha a lista de status')
+    c._p({'do': 'goto', 'url': USAB}, c.A(5, 'Quer', 0.2), 'Configurações > Usabilidade', {})
+    c.waitfor(text='Assinaturas no comprovante', timeout=15)
+    c.ev(js_ate('Assinaturas no comprovante', y=300, dur_ms=700), at=c.A(5, 'assine', 0.2), label='rola até Assinaturas no comprovante')
+    c.click(SW_ASSINA, at=c.A(5, 'ligue', 0.7), label='liga Assinaturas no comprovante')
+    c.waitfor(text='Quem assina', timeout=8)
+    c.click(QUEM, at=c.A(5, 'escolha', 0.7), label='Quem assina (abre a lista)')
+    c.hover(OPT('Operador e cliente/fornecedor'), 0.4, at=c.A(5, 'dois', 0.5), label='Operador e cliente/fornecedor')
+    c.hover(OPT('Só o cliente/fornecedor'), 0.4, at=c.A(5, 'fornecedor', 0.5), label='Só o cliente/fornecedor')
+    c.hover(OPT('Só o operador'), 0.4, at=c.A(5, 'operador', 0.5), label='Só o operador')
     c.mark(6)
-    c.press('Escape', at=c.L(6) - 0.2, label='fecha Filtros')
-    c.click({'role': 'radio', 'name': 'Kanban'}, label='volta ao Kanban')
-    c.hover(RASCUNHOS, 0.8, at=c.A(6, 'rascunho', 0.6), label='Rascunhos abertos (1): o do Jair')
+    c.click(OPT('Só o cliente/fornecedor'), at=round(c.L(6) - 0.2, 2), label='escolhe Só o cliente/fornecedor')
+    c.hover(TXTX('o operador aparece como Empresa'), 0.8, at=c.A(6, 'operador', 0.6), label='No ticket de pesagem, o operador aparece como Empresa.')
+    c.mark(7)
+    c.hover(TXT('Marca de ticket não valorizado'), 0.6, at=c.A(7, 'tirar', 0.6), label='Marca de ticket não valorizado (ligada)')
+    c.ev(js_ate('Exigir cliente/fornecedor no Ticket de Pesagem', y=420, dur_ms=800), at=c.A(7, 'exigir', 1.4), label='rola até Exigir cliente/fornecedor')
+    c.hover(TXT('Exigir cliente/fornecedor no Ticket de Pesagem'), 0.8, at=c.A(7, 'exigir', 0.5), label='Exigir cliente/fornecedor no Ticket de Pesagem (desligada)')
+    c.mark(8)   # L8: ilustração das pesagens mescladas; por baixo, o robô devolve as assinaturas ao padrão do mundo (desligadas)
+    c.ev(js_ate('Assinaturas no comprovante', y=300, dur_ms=500), at=c.L(8) + 0.3, label='volta até Assinaturas no comprovante')
+    c.click(QUEM, label='Quem assina (de volta ao padrão)')
+    c.click(OPT('Operador e cliente/fornecedor'), label='Operador e cliente/fornecedor')
+    c.click(SW_ASSINA, label='desliga Assinaturas no comprovante (mundo: assinatura desligada)')
+    c.ev("(async()=>{await new Promise(r=>setTimeout(r,900));const s=document.querySelector(%s);return s?'assinaturas: '+s.getAttribute('aria-checked'):'SEM ALVO'})()"
+         % json.dumps(SW_ASSINA['selector']), label='confere assinaturas desligadas (aria-checked false)')
+    c.cursor((800, 560), label='cursor descansa')
     c.fim()
     return c
 
 
 @capitulo
 def cap10():
+    """Editar/Excluir enquanto espera; valorizar de novo retoma a compra; finalizar com Pix; Valorizados e Ver pedido; a lista com
+    os status, o período, os filtros e o Exportar; o ticket do Jair segue pendente."""
+    c = Cap(10, start=(700, 420), setup=setup_valorizar())
+    c.mark(1)
+    c.hover(SEL(CARTAO(58)), 0.8, at=c.A(1, 'aqui', 0.6), label='cartão #58 ainda em Aguardando valorização')
+    c.mark(2)
+    c.click(ACOES(58), at=c.A(2, 'corrigir', 0.9), label='Ações do #58')
+    c.hover(ITEM('Editar'), 0.5, at=c.A(2, 'Editar', 0.5), label='Editar (sem clicar)')
+    c.hover(ITEM('Excluir'), 0.5, at=c.A(2, 'Excluir', 0.5), label='Excluir (sem clicar)')
+    c.mark(3)
+    c.click(ITEM('Valorizar'), at=c.A(3, 'retoma', 0.8), label='Valorizar de novo (retomando)')
+    c.waitfor(text='Origem: Ticket de Pesagem', timeout=15)
+    c.confere('body', ['retomando', '1 item, R$ 18.714,08'], 'aviso: retoma a mesma compra')
+    c.mark(4)
+    c.click(BTN('Finalizar'), at=c.A(4, 'Finalizo', 0.7), label='Finalizar')
+    c.waitfor(text='Finalizar Pedido', timeout=10)
+    c.click({'text': 'Pix/Transferência', 'within': DLG}, at=c.A(4, 'Pix', 0.6), label='Pix/Transferência')
+    c.click(BTN('CONFIRMAR PAGAMENTO'), at=c.A(4, 'confirmar', 0.7), label='CONFIRMAR PAGAMENTO')
+    c.waitfor(text='Valorizado pelo pedido', timeout=20)
+    c.mark(5)
+    c.hover(TXTX('Valorizado pelo pedido'), 0.8, at=c.A(5, 'número', 0.6), label='Valorizado pelo pedido #…')
+    c.confere('main', ['Valorizados', 'Valorizado pelo pedido', '3.018,4 kg'], 'o #58 em Valorizados')
+    c.click(ACOES(58), at=c.A(5, 'Ações', 0.7), label='Ações do #58 (valorizado)')
+    c.hover(ITEM('Ver pedido'), 0.8, at=c.A(5, 'Ver', 0.5), label='Ver pedido (sem clicar)')
+    c.press('Escape', at=c.A(5, 'compra', -0.5, nth=1), label='fecha o menu')
+    c.mark(6)
+    c.click({'role': 'radio', 'name': 'Lista'}, at=c.A(6, 'lista', 0.7), label='Lista')
+    c.hover(TXT('Aguardando valorização', within='main tbody', nth=0), 0.4, at=c.A(6, 'Aguardando', 0.6), label='selo Aguardando valorização')
+    c.hover(TXT('Valorizado', within='main tbody'), 0.3, at=c.A(6, 'Valorizado', 0.6), label='selo Valorizado (#58)')
+    c.click(BTN('Filtros'), at=c.A(6, 'verde', 0.3), label='Filtros')
+    c.click(SEL(f"{POP} button:has-text('Status')"), label='Status')
+    c.hover(TXT('Cancelado', within=POP), 0.5, at=c.A(6, 'Cancelado', 0.6, nth=0), label='status Cancelado (opção do filtro)')
+    c.mark(7)
+    c.press('Escape', at=round(c.L(7) - 0.2, 2), label='fecha a lista de status')
+    c.press('Escape', label='fecha Filtros')
+    c.hover(SEL("main button[role=combobox]:has-text('Este mês')"), 0.8, at=c.A(7, 'período', 0.7), label='período (Este mês), só na Lista')
+    c.click(BTN('Filtros'), at=c.A(7, 'filtros', 0.7), label='Filtros')
+    c.hover(SEL(f"{POP} button:has-text('Tipo')"), 0.3, at=c.A(7, 'tipo', 0.5), label='filtro Tipo')
+    c.hover(SEL(f"{POP} button:has-text('Status')"), 0.3, at=c.A(7, 'situação', 0.5), label='filtro Status')
+    c.hover(SEL(f"{POP} button:has-text('Usuário')"), 0.4, at=c.A(7, 'usuário', 0.5), label='filtro Usuário')
+    c.mark(8)
+    c.press('Escape', at=round(c.L(8) - 0.2, 2), label='fecha Filtros')
+    c.click(BTN('Exportar'), at=c.A(8, 'Exportar', 0.6), label='Exportar')
+    c.hover(ITEM('Excel'), 0.3, at=c.A(8, 'relatório', 0.4), label='Excel')
+    c.click(ITEM('PDF'), at=c.A(8, 'pê', 0.5), label='PDF')
+    c.waitfor(text='Escolha quais tickets serão incluídos no relatório', timeout=8)
+    c.registra(SEL(DLG), at=c.A(8, 'período', 0.3), label='Exportar PDF: Período, Tipo de Ticket, Status, Usuário que criou')
+    c.hover(TXTX('Usuário que criou', within=DLG, nth=0), 0.6, at=c.A(8, 'usuário', 0.6), label='Usuário que criou')
+    c.mark(9)
+    c.press('Escape', at=round(c.L(9) - 0.2, 2), label='fecha o Exportar sem gerar')
+    c.cursor(NEUTRO, label='cursor descansa')
+    c.mark(10)
+    c.click({'role': 'radio', 'name': 'Kanban'}, at=round(c.L(10) - 0.2, 2), label='volta ao Kanban')
+    c.hover(SEL(CARTAO(59)), 0.8, at=c.A(10, 'Jair', 0.6), label='Ticket #59 do Jair: Aguardando valorização, R$ 4.964,00')
+    c.confere('main', ['Ticket #59', 'R$ 4.964,00'], 'o #59 segue pendente com o valor')
+    c.fim()
+    return c
+
+
+# ---------------------------------------------------------------- pesagem avulsa com cobrança
+AVULSA_OK = 'Preencha a pesagem avulsa. Use as abas para atender vários veículos.'
+BUSCA_CLI = SEL("[role=dialog] input[placeholder^='Buscar por nome']")
+CADASTRAR = SEL("[role=dialog] button:has-text('Cadastrar «')")
+DESC = PH('Ex.: Areia, terra, entulho')
+TIPO_CAM = SEL('#standalone-vehicle-type')
+TAXA = SEL('#standalone-weighing-fee')
+LINHA_60 = "main tbody tr:has-text('#60')"
+
+
+@capitulo
+def cap11():
+    """Pesagem avulsa da Areal Boa Vista (cadastrada pela busca): areia média, 23.840 − 9.120 = 14.720 kg, HBN3F27, caçamba, R$ 60,00
+    por Pix na Conta Principal; ticket #60, comprovante (PDF para a ilustração) e o valor travado no Editar."""
+    c = Cap(11, start=(700, 420), setup=setup_lista([{'do': 'eval', 'js': POPS}]))
+    c.mark(1)   # L1: ilustração do caminhão de areia
+    c.cursor(NEUTRO, at=0.3, label='cursor descansa')
+    c.mark(2)
+    c.click(ABA_AVULSAS, at=c.A(2, 'Pesagens', 0.8), label='aba Pesagens avulsas')
+    c.click(BTN('Nova Pesagem Avulsa'), at=c.A(2, 'Nova', 0.7), label='Nova Pesagem Avulsa')
+    c.waitfor(text=AVULSA_OK, timeout=15)
+    c.hover(TXT('Serviço ao cliente'), 0.8, at=c.A(2, 'Serviço', 0.6), label='Tipo: Serviço ao cliente')
+    c.registra(TXT('Serviço ao cliente'), at=c.A(2, 'aqui', 0.2), label='Modalidade Pesagem avulsa, Tipo Serviço ao cliente')
+    c.mark(3)
+    c.click(TXT('Selecionar cliente'), at=c.A(3, 'dono', 0.8), label='Selecionar cliente')
+    c.waitfor(text='Selecionar Cliente', timeout=8)
+    c.type(BUSCA_CLI, 'Areal Boa Vista', at=c.A(3, 'busco', 0.3), cps=14, label='busca Areal Boa Vista')
+    c.waitfor(text='Nenhum resultado encontrado.', timeout=8)
+    c.hover(CADASTRAR, 0.8, at=c.A(3, 'oferece', 0.6), label='botão Cadastrar «Areal Boa Vista»')
+    c.mark(4)
+    c.click(CADASTRAR, at=c.A(4, 'O', 0.1), label='Cadastrar «Areal Boa Vista»')
+    c.waitfor(text='Cadastre um novo cliente rapidamente', timeout=8)
+    c.confere_campos(['Areal Boa Vista'], 'Nome já preenchido')
+    c.hover(SEL('[role=dialog] #name'), 0.4, at=c.A(4, 'nome', -0.3), label='Nome: Areal Boa Vista')
+    c.hover(SEL('[role=dialog] #phone'), 0.3, at=c.A(4, 'telefone', 0.5), label='Telefone')
+    c.hover(SEL('[role=dialog] #cpf_cnpj'), 0.3, at=c.A(4, 'CPF', 0.5), label='CPF/CNPJ')
+    c.hover(SEL('[role=dialog] #pix_key'), 0.8, at=c.A(4, 'chave', 0.5), label='Chave PIX (novo no cadastro rápido)')
+    c.click(BTN('Criar Cliente'), at=c.A(4, 'crio', 0.7), label='Criar Cliente')
+    c.waitfor(gone={'role': 'dialog'}, timeout=10)
+    c.confere('main', ['Areal Boa Vista', '#60'], 'cliente escolhido no ticket')
+    c.hover(BTNX('Areal Boa Vista', within='main', nth=0), 0.6, at=c.A(4, 'volta', 0.6), label='Cliente: Areal Boa Vista')
+    c.mark(5)
+    c.click(DESC, at=c.A(5, 'escrevo', 0.9), label='Descrição do material')
+    c.type(DESC, 'Areia média', at=c.A(5, 'areia', 0.3), noClick=True, cps=12, label='digita Areia média')
+    c.mark(6)
+    c.click(PES_AV, at=c.A(6, 'peso', 0.8), label='Pesagem avançada')
+    c.waitfor(text='Registre pesagem dupla, tara, impureza e dados do transporte', timeout=8)
+    c.pause(0.3)
+    c.type(C1, '23840', at=c.A(6, 'entrada', 0.3), noClick=True, label='digita 23840 na 1ª Pesagem')
+    c.click(C2, label='campo 2ª Pesagem')
+    c.type(C2, '9120', at=c.A(6, 'saída', 0.2), noClick=True, label='digita 9120 na 2ª Pesagem')
+    c.click(COMPLETO, label='Completo (o comprovante sai com as duas pesagens)')
+    c.registra(BRUTO, at=c.A(6, 'catorze', 0.3), label='Peso Bruto 14.720 |23.840 − 9.120|')
+    c.confere('dlg', ['14.720', '|23.840 − 9.120|'], 'bruto 14.720')
+    c.click(CONFIRMAR, at=c.A(6, 'quilos', -0.5), label='Confirmar')
+    c.waitfor(gone={'role': 'dialog'}, timeout=8)
+    c.mark(7)
+    c.rolar(300, at=round(c.L(7) - 0.1, 2), ponto=(700, 460), duration=0.4, after=0, label='desce até placa, tipo de caminhão e valor')
+    c.click(PLACA, at=c.A(7, 'placa', 0.3), label='campo Placa do Veículo')
+    c.type(PLACA, 'HBN3F27', noClick=True, cps=14, label='digita HBN3F27')
+    c.click(TIPO_CAM, at=c.A(7, 'tipo', 0.7), label='Tipo de caminhão')
+    c.type(TIPO_CAM, 'Caçamba', noClick=True, cps=14, label='digita Caçamba')
+    c.click(TAXA, at=c.A(7, 'valor', 0.7), label='Valor cobrado pela pesagem')
+    c.type(TAXA, '60', at=c.A(7, 'sessenta', 0.1), noClick=True, label='digita 60')
+    c.press('Tab', label='sai do campo (vira 60,00)')
+    c.registra(SEL("main div.grid:has(#standalone-weighing-fee)"), at=c.A(7, 'reais', 0.2), label='Tipo de caminhão Caçamba e Valor cobrado pela pesagem R$ 60,00')
+    c.confere_campos(['HBN3F27', 'Caçamba', '60,00'], 'placa, tipo e valor', escopo='main')
+    c.mark(8)
+    c.click(BTN('Salvar Pesagem Avulsa'), at=c.A(8, 'salvar', 0.8), label='Salvar Pesagem Avulsa')
+    c.waitfor(text='Finalizar Pedido', timeout=10)
+    c.confere('dlg', ['Total: R$ 60,00', 'Cliente: Areal Boa Vista'], 'pagamento da pesagem: R$ 60,00')
+    c.hover(BTN('Dinheiro', within=DLG), 0.3, at=c.A(8, 'dinheiro', 0.5), label='Dinheiro')
+    c.hover(BTN('Pix/Transferência', within=DLG), 0.3, at=c.A(8, 'Pix', 0.5), label='Pix/Transferência')
+    c.hover(BTN('Saldo do Cliente', within=DLG), 0.6, at=c.A(8, 'saldo', 0.5), label='Saldo do Cliente')
+    c.mark(9)
+    c.click(BTN('Pix/Transferência', within=DLG), at=c.A(9, 'Pix', 0.6), label='Pix/Transferência')
+    c.hover(SEL('[role=dialog] button[role=combobox]'), 0.6, at=c.A(9, 'conta', 0.6), label='conta que recebe: Conta Principal')
+    c.confere('dlg', ['Conta Principal'], 'Conta Principal já escolhida')
+    c.click(BTN('CONFIRMAR PAGAMENTO'), at=c.A(9, 'confirmo', 0.7), label='CONFIRMAR PAGAMENTO')
+    c.waitfor(text='O que deseja fazer com este ticket de pesagem?', timeout=12)
+    c.mark(10)
+    c.registra(SEL(DLG), at=c.A(10, 'Pronto', 0.0), label='Ticket #60 salvo, PESAGEM AVULSA (Imprimir comprovante, Fechar)')
+    c.confere('dlg', ['Ticket #60 salvo', 'PESAGEM AVULSA', 'não pode ser valorizada'], 'pesagem avulsa #60 salva')
+    c.hover(TXTX('Somente comprovante de peso', within=DLG), 0.8, at=c.A(10, 'Valorizar', 0.8), label='sem botão Valorizar: não pode ser valorizada')
+    c.mark(11)   # L11: o PDF do app vira a ilustração; por baixo, o robô volta à lista e abre o Editar da #60
+    c.click(BTN('Imprimir comprovante', within=DLG), at=round(c.L(11) - 0.2, 2), label='Imprimir comprovante')
+    c.waitfor(text='Escolha o formato do comprovante deste ticket de pesagem.', timeout=8)
+    c.click(BTNX('Térmico', within=DLG), label='Térmico: o PDF abre na aba nova')
+    c.ev(PDF_JS, label='PDF do comprovante da pesagem avulsa (aba nova, para a ilustração)')
+    c.click(BTN('Voltar'), label='Voltar para a lista (aba Pesagens avulsas)')
+    c.waitfor(text=TICKET_OK, timeout=15)
+    c.confere('main', ['#60', 'Areal Boa Vista', '14.720 kg', 'Sem valor comercial'], 'a #60 na lista das avulsas')
+    c.click(SEL(f'{LINHA_60} td:last-child button'), label='Ações da #60')
+    c.click(ITEM('Editar'), label='Editar')
+    c.waitfor(text='Editar Pesagem Avulsa #60', timeout=15)
+    c.rolar(300, ponto=(700, 460), duration=0.4, after=200, label='desce até o valor cobrado')
+    c.mark(12)
+    c.hover(TXTX('Cobrança já lançada no financeiro'), 0.8, at=c.A(12, 'travado', 0.9), label='Cobrança já lançada no financeiro. O valor não pode mais ser alterado.')
+    c.registra(SEL("main div.grid:has(#standalone-weighing-fee)"), at=c.A(12, 'travado', 0.2), label='valor travado depois da cobrança')
+    c.confere('main', ['Cobrança já lançada no financeiro. O valor não pode mais ser alterado.'], 'valor travado')
+    c.mark(13)   # L13: ilustração das três formas
+    c.rolar(-300, at=round(c.L(13) + 0.3, 2), ponto=(700, 460), duration=0.4, after=100, label='volta ao alto')
+    c.click(BTN('Voltar'), label='Voltar sem mudar nada')
+    c.waitfor(text=TICKET_OK, timeout=15)
+    c.cursor(NEUTRO, label='cursor descansa')
+    c.fim()
+    return c
+
+
+# ---------------------------------------------------------------- sem internet
+# Queda simulada: o app decide por ping (/auth/v1/health); `navigator.onLine` falso e o evento `offline` só disparam a medição
+# (hooks/useOnlineStatus.ts). O ping passa a falhar e o app mostra a faixa vermelha e o aviso âmbar. Nada é salvo neste capítulo
+# (no ensaio de 18/11 o Salvar ficou girando com a queda simulada: ver andamento_160.md), a aba aberta é descartada.
+OFF_JS = ("(()=>{const of=window.fetch;window.fetch=function(u,...a){const s=String((u&&u.url)||u);if(s.includes('/auth/v1/health'))return Promise.reject(new TypeError('Failed to fetch'));"
+          "return of.call(this,u,...a)};Object.defineProperty(navigator,'onLine',{configurable:true,get:()=>false});window.dispatchEvent(new Event('offline'));return 'offline'})()")
+AVISO_FORM = TXTX('Você pode pesar e finalizar normalmente')
+AVISO_LISTA = TXTX('Valorizar, editar ticket já salvo e anexar foto precisam de internet')
+
+
+@capitulo
+def cap12():
+    """Sem internet: o aviso na criação do ticket (pesa e salva normalmente, comprovante provisório) e, na lista, o que espera a conexão."""
+    c = Cap(12, start=(700, 420), setup=setup_lista([
+        {'do': 'click', 'target': BTN('Novo Ticket de Pesagem')}, {'do': 'waitFor', 'text': CRIAR_OK, 'timeout': 20}, {'do': 'waitFor', 'idle': True, 'timeout': 20},
+        {'do': 'eval', 'js': OFF_JS}, {'do': 'waitFor', 'text': 'Você pode pesar e finalizar normalmente', 'timeout': 40}, {'do': 'wait', 'seconds': 1.0}]))
+    c.mark(1)   # L1: ilustração do caminhão na balança com o sinal cortado
+    c.cursor(NEUTRO, at=0.3, label='cursor descansa')
+    c.mark(2)
+    c.hover(TXTX('Sem conexão'), 0.5, at=c.A(2, 'avisa', 0.6), label='faixa vermelha: Sem conexão')
+    c.hover(AVISO_FORM, 0.8, at=c.A(2, 'pesa', 0.7), label='aviso: Sem internet. Você pode pesar e finalizar normalmente')
+    c.registra(AVISO_FORM, at=c.A(2, 'guardado', 0.3), label='o ticket fica guardado neste aparelho')
+    c.confere('main', ['Sem internet.', 'o ticket fica guardado neste aparelho', 'provisório'], 'aviso de sem internet na criação')
+    c.mark(3)
+    c.registra(AVISO_FORM, at=c.A(3, 'provisório', 0.3), label='comprovante provisório; o número oficial vem na sincronização')
+    c.mark(4)
+    c.click(BTN('Voltar'), at=round(c.L(4) - 0.2, 2), label='Voltar para a lista')
+    c.waitfor(text=TICKET_OK, timeout=15)
+    c.hover(AVISO_LISTA, 0.8, at=c.A(4, 'valorizar', 0.6), label='Valorizar, editar ticket já salvo e anexar foto precisam de internet')
+    c.registra(AVISO_LISTA, at=c.A(4, 'editar', 0.2), label='o que espera a internet')
+    c.confere('main', ['Valorizar, editar ticket já salvo e anexar foto precisam de internet'], 'aviso da lista sem internet')
+    c.fim()
+    return c
+
+
+@capitulo
+def cap13():
     """Recapitulando: a montagem é da edição; o robô só deixa a lista parada (o #58 em Valorizados) com as marcas."""
-    c = Cap(10, setup=setup_lista())
+    c = Cap(13, setup=setup_lista())
     c.mark(1)
     c.cursor(NEUTRO, at=0.3, label='cursor descansa')
     for i in range(2, len(c.linhas) + 1):

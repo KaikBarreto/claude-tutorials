@@ -1,6 +1,6 @@
 {
  "name": "t07-cap05",
- "title": "T07 · Cap. 5 · O peso da balança (narração 83,1 s ESTIMADA; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:35:00-03:00; usuário rafael)",
+ "title": "T07 · Cap. 5 · O peso da balança (narração 118,6 s ESTIMADA; marcas L1..L8 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:35:00-03:00; usuário rafael)",
  "seed": "t07-cap05",
  "pace": 0.5,
  "cps": 14,
@@ -16,7 +16,8 @@
   "pwa-install-dismissed": "true",
   "theme": "light",
   "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
-  "initial-preferences-set": "true"
+  "initial-preferences-set": "true",
+  "cato_adoption_nudge_38814e47-876a-5977-a5f7-53af364c17bb_34c36c63-0890-5e89-8963-7c77b7996908": "{\"count\":99,\"lastShownAt\":0}"
  },
  "seedExtra": [
   "t07/inicio",
@@ -208,7 +209,7 @@
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "at": 7.18,
+   "at": 6.88,
    "label": "Valor/Kg 36,00 (zoom)"
   },
   {
@@ -222,15 +223,10 @@
     "selector": "main button:has-text('Balança do pátio')"
    },
    "seconds": 0.4,
-   "at": 9.8,
+   "at": 9.49,
    "label": "visor da balança 12,4 kg, Quantidade (Kg) e AO VIVO (zoom)",
    "optional": true,
    "timeout": 4
-  },
-  {
-   "do": "mark",
-   "name": "L2",
-   "at": 13.18
   },
   {
    "do": "type",
@@ -241,8 +237,24 @@
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "at": 13.18,
+   "at": 12.87,
    "label": "Quantidade (Kg) 12,4 da balança"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main button.rounded-r-md:has(svg.lucide-plus)"
+   },
+   "seconds": 1.0,
+   "at": 16.55,
+   "label": "+ do Material (Cadastrar Novo Material)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 19.59
   },
   {
    "do": "type",
@@ -254,13 +266,13 @@
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "at": 22.94,
+   "at": 28.41,
    "label": "selo AO VIVO"
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 26.32
+   "at": 31.78
   },
   {
    "do": "hover",
@@ -268,7 +280,7 @@
     "selector": "main div:has(> div > label:has-text('Quantidade (Kg)')) button[aria-label='Capturar peso da balança']"
    },
    "seconds": 3.0,
-   "at": 26.82,
+   "at": 32.28,
    "label": "botão azul da balança dentro do campo (zoom)",
    "optional": true,
    "timeout": 4
@@ -276,7 +288,55 @@
   {
    "do": "mark",
    "name": "L4",
-   "at": 41.39
+   "at": 46.86
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main div:has(> div > label:has-text('Quantidade (Kg)')) button[aria-label='Capturar peso da balança']"
+   },
+   "at": 49.41,
+   "label": "botão da balança com peso no campo"
+  },
+  {
+   "do": "waitFor",
+   "text": "pelo peso da balança",
+   "timeout": 6
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "pelo peso da balança",
+    "exact": false
+   },
+   "seconds": 1.6,
+   "at": 51.46,
+   "label": "Substituir 12,4 pelo peso da balança? (zoom)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Substituir\", \"pelo peso da balança\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"body\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText+' '+[...el.querySelectorAll('input,textarea')].map(i=>i.value).join(' '));const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere pergunta de substituir o peso"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] button:text-is('Cancelar'), [role=dialog] button:text-is('Cancelar')"
+   },
+   "at": 53.29,
+   "label": "Cancelar (fica o peso)"
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 56.78
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 73.37
   },
   {
    "do": "hover",
@@ -284,7 +344,7 @@
     "selector": "main label:has-text('Estoque Disponível')"
    },
    "seconds": 0.8,
-   "at": 42.73,
+   "at": 74.7,
    "label": "Estoque Disponível",
    "optional": true,
    "timeout": 4
@@ -295,7 +355,7 @@
     "selector": "main label:has-text('Valor Total do Item')"
    },
    "seconds": 1.2,
-   "at": 45.62,
+   "at": 77.59,
    "label": "Valor Total do Item R$ 446,40 (zoom)",
    "optional": true,
    "timeout": 4
@@ -312,13 +372,30 @@
     "name": "Incluir Item",
     "exact": true
    },
-   "at": 50.48,
+   "at": 82.45,
    "label": "Incluir Item (cobre)"
   },
   {
    "do": "waitFor",
    "text": "Itens do Pedido (1)",
    "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('Cobre misto') span.truncate.text-muted-foreground",
+    "nth": 0
+   },
+   "seconds": 1.2,
+   "at": 86.39,
+   "label": "legenda da origem do preço: Principal (zoom)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Principal\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main tbody tr\")].filter(e=>!true||e.innerText.includes(\"Cobre misto\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText+' '+[...el.querySelectorAll('input,textarea')].map(i=>i.value).join(' '));const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere legenda Principal na linha do cobre"
   },
   {
    "do": "balanca",
@@ -329,15 +406,15 @@
   },
   {
    "do": "mark",
-   "name": "L5",
-   "at": 53.81
+   "name": "L7",
+   "at": 89.28
   },
   {
    "do": "balanca",
    "peso": 21.6,
    "subir": 0.6,
    "oscilar": 0.6,
-   "at": 54.11,
+   "at": 89.58,
    "label": "latinha na balança (21,6 kg)"
   },
   {
@@ -345,7 +422,7 @@
    "target": {
     "placeholder": "Escreva o nome ou código do material"
    },
-   "at": 54.11,
+   "at": 89.58,
    "label": "Material"
   },
   {
@@ -356,7 +433,7 @@
    "text": "latinha",
    "cps": 40,
    "noClick": true,
-   "at": 55.27,
+   "at": 90.74,
    "label": "material: latinha"
   },
   {
@@ -366,7 +443,7 @@
     "name": "Alumínio latinha",
     "exact": false
    },
-   "at": 56.75,
+   "at": 92.21,
    "label": "Alumínio latinha"
   },
   {
@@ -383,7 +460,7 @@
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "at": 58.08,
+   "at": 93.54,
    "label": "Quantidade (Kg) 21,6 e Tara/Imp. (zoom)"
   },
   {
@@ -391,13 +468,13 @@
    "target": {
     "selector": "main div:has(> label:has-text('Tara/Imp.')) input"
    },
-   "at": 63.65,
+   "at": 99.12,
    "label": "Tara/Imp."
   },
   {
    "do": "mark",
-   "name": "L6",
-   "at": 65.52
+   "name": "L8",
+   "at": 100.98
   },
   {
    "do": "type",
@@ -407,7 +484,7 @@
    "text": "0,6",
    "cps": 10,
    "noClick": true,
-   "at": 65.52,
+   "at": 100.98,
    "label": "tara 0,6"
   },
   {
@@ -416,7 +493,7 @@
     "selector": "main label:has-text('Valor Total do Item')"
    },
    "seconds": 1.2,
-   "at": 72.58,
+   "at": 108.05,
    "label": "Valor Total do Item R$ 130,20 (zoom)",
    "optional": true,
    "timeout": 4
@@ -433,7 +510,7 @@
     "name": "Incluir Item",
     "exact": true
    },
-   "at": 80.63,
+   "at": 116.09,
    "label": "Incluir Item (latinha)"
   },
   {
@@ -456,7 +533,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 83.14
+   "at": 118.61
   }
  ]
 }

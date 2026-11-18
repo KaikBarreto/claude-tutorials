@@ -160,7 +160,30 @@ def inicio():
         '_patch': {'company_fiscal_config': [{'match': {'id': CFG}, 'set': VAZIO_CFG}],
                    'customers': [{'match': {'name': 'Serra Fina Alumínio Reciclagem'}, 'set': {'codigo_ibge': '3132503'}}]},
         'inbound_nfe': [recebida('valeforte', 81247, True), recebida('siqueira', 81302, False)],
+        # 1.60.10 (cap14, "O que trava a emissão"): cliente novo com o cadastro fiscal incompleto (sem CEP e sem inscrição estadual) e a
+        # consulta de IE por CNPJ já em cache (utils/consultaIeCache.ts lê cnpj_registros_estaduais antes de ir à rede: nada sai da máquina)
+        'customers': [PINHAL],
+        'cnpj_registros_estaduais': [{'cnpj': PINHAL_CNPJ, 'razao_social': 'Metalúrgica Pinhal Ltda', 'situacao_cadastral': 'Ativa',
+                                      'fonte': 'cnpj.ws', 'consultado_em': '2026-11-09T18:00:00.000Z',
+                                      'inscricoes': [{'inscricao_estadual': PINHAL_IE, 'ativo': True, 'atualizado_em': '2026-10-02T12:00:00.000Z',
+                                                      'estado': {'sigla': 'SP'}}]}],
     }
+
+
+PINHAL_CNPJ = '91647382000103'      # JUNCAO_160: Metalúrgica Pinhal Ltda, Taubaté/SP, sem IE e sem CEP; nada é emitido para ela
+PINHAL_IE = '688204776112'          # IE de SP com dígitos válidos (fictícia); só no cache da consulta por CNPJ
+PINHAL = {
+    'id': '@id:customer.pinhal', 'company_id': EMP, 'name': 'Metalúrgica Pinhal Ltda', 'nome_fantasia': None,
+    'razao_social': 'Metalúrgica Pinhal Ltda', 'cpf_cnpj': '91.647.382/0001-03', 'phone': '(12) 90000-1912', 'phone_unavailable': False,
+    'email': 'compras@metalurgicapinhal.example', 'contact_name': 'Renata Lopes',
+    'address': 'Rua das Oficinas, 820 - Parque Industrial, Taubaté - SP', 'logradouro': 'Rua das Oficinas', 'numero': '820',
+    'bairro': 'Parque Industrial', 'cep': None, 'cidade': 'Taubaté', 'uf': 'SP', 'codigo_ibge': '3554102', 'code': '5', 'is_mei': False,
+    'created_by': '@id:user.rafael', 'created_at': '2026-11-09T17:40:00.000Z', 'updated_at': '2026-11-09T17:40:00.000Z',
+    'indicador_ie': None, 'inscricao_estadual': None, 'is_industry': False, 'is_intermediary': False, 'regime_tributario': None,
+    'custom_fields': {}, 'portal_config': {}, 'portal_password_enabled': False, 'portal_receipt_format': 'auto',
+    'show_address_in_docs': True, 'show_bank_in_docs': True, 'show_cpf_cnpj_in_docs': True, 'show_phone_in_docs': False,
+    'show_pix_in_docs': True,
+}
 
 
 def assets():
