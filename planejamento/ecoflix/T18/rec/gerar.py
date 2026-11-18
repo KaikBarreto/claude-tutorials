@@ -39,9 +39,9 @@ def stable_id(chave):
 
 RAFAEL = stable_id('user.rafael')
 try:
-    VERSAO = open(os.path.join(TUT, 'app', 'dist', '.versao-app'), encoding='utf8').read().strip() or '1.59.154'
+    VERSAO = open(os.path.join(TUT, 'app', 'dist', '.versao-app'), encoding='utf8').read().strip() or '1.60.10'
 except OSError:
-    VERSAO = '1.59.154'
+    VERSAO = '1.60.10'
 HOJE = '2026-11-10'
 STORAGE = {
     'app_version': VERSAO, 'notification_shown_version': VERSAO, f'dominex:daily-tasks-shown:{RAFAEL}': HOJE,
@@ -361,7 +361,7 @@ ABA_MTR = lambda n: SEL(f"main div.border-b button:text-is('{n}')")             
 NOVO_MTR_DICA = SEL("main span[tabindex='0']:has-text('Novo MTR')")                    # o botão desligado fica dentro deste span
 CAMPO = lambda rotulo, tag='input': SEL(f"[role=dialog] div:has(> label:text-is('{rotulo}')) {tag}")
 GATILHO = lambda rotulo, esc='main': SEL(f"{esc} div:has(> label:text-is('{rotulo}')) button[role=combobox]")   # o formulário do resíduo é um cartão (main)
-COTA = SEL(r"div:text-matches('^[\d.]+/[\d.]+ Documentos$')")                          # selo da cota no cabeçalho
+COTA = SEL("div:text-matches('^[0-9.]+/[0-9.]+ Documentos$')")                          # selo da cota no cabeçalho
 CPF_RAFAEL = '27491350879'                                                             # 274.913.508-79 (fictício, mundo)
 CNPJ_RECICLA = '47318506000107'
 CNPJ_QUIRIRIM = '98463027000115'

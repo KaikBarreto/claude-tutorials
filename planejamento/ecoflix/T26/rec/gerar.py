@@ -44,9 +44,9 @@ VOZ_PROV = os.path.join(HERE, '_voz')
 
 RAFAEL = '34c36c63-0890-5e89-8963-7c77b7996908'      # stableId('user.rafael') do mundo
 try:
-    VERSAO = open(os.path.join(TUT_HOME, 'app', 'dist', '.versao-app'), encoding='utf8').read().strip() or '1.59.154'
+    VERSAO = open(os.path.join(TUT_HOME, 'app', 'dist', '.versao-app'), encoding='utf8').read().strip() or '1.60.10'
 except OSError:
-    VERSAO = '1.59.154'
+    VERSAO = '1.60.10'
 FAKE_NOW = {n: '2026-11-10T08:30:00-03:00' for n in range(14)}
 FAKE_NOW[12] = FAKE_NOW[13] = '2026-11-10T17:30:00-03:00'   # o fim do dia (cap12) e o passeio do resumo no mesmo estado
 HOJE = {n: FAKE_NOW[n][:10] for n in range(14)}
@@ -787,7 +787,7 @@ def cap08():
     c.click(BTN('Salvar', within=OPP), at=c.A(8, 'Salvar,', 0.8), label='Salvar (Nova oportunidade)')
     c.waitfor(text='Oportunidade criada', timeout=10)
     c.waitfor(target=CARTAO(JEQ), timeout=10)
-    c.confere(CARTAO(JEQ)['selector'], [JEQ, 'Paulo Lacerda', 'Metalúrgica Jequitibá', 'Chaparia', '12.000 Kg', 'R$ 8.400,00', '30/11/2026'],
+    c.confere('main', [JEQ, 'Paulo Lacerda', 'Metalúrgica Jequitibá', 'Chaparia', '12.000 Kg', 'R$ 8.400,00', '30/11/2026'],
               'o cartão em Novo')
     c.hover(CARTAO(JEQ), 2.4, at=c.A(8, 'Novo,', 0.6), label='o cartão no Novo: material, valor e previsão')
     c.mark(9)

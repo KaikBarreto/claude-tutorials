@@ -21,7 +21,8 @@ ESTADO DE PARTIDA (rec/mundo/seeds-extra/): o fim da T15, de onde o T21 parte (c
 os `t14/apos-capNN` e os `t15/*`, a mesma lista do rec/t15/gerar.py) + `t21/inicio` (Cato ligado, sem a autorização de IA; o Marcos
 com "Usar o Cato") nos caps. 0 a 2 e no 2b; + `t21/apos-cap02` (autorizado, versão 2.0) nos caps. 3 a 8.
 RESPOSTAS DO CATO: simuladas no Supabase falso (rec/mundo/lib/cato.mjs, com as respostas R1 a R9 do plano.md copiadas por
-rec/t21/t21_respostas.py): edge cato-background → jobId; cato_jobs de "processing" a "completed" (R1 em ~4 s, as outras em ~1 s);
+rec/t21/t21_respostas.py): edge cato-background → jobId; cato_jobs de "processing" a "completed" (R1 aparece ~4,8 s depois do
+clique, as outras ~1,7 s; ver Cap.resposta);
 edge cato-assist (mode "followups") → as 3 sugestões. Os caps. 3 a 8 são UMA conversa: cada capítulo da 4 em diante restaura, no
 setup, as perguntas e respostas dos anteriores pelo sessionStorage (`cato-conversation-v3:<empresa>:<usuário>`, o formato do
 hooks/useCato.tsx), recarrega a página e abre o painel; o "Atualizado às" de cada resposta é fixo (08:30 de R1 a R5, 08:31 de R6 a
@@ -37,6 +38,7 @@ PARTICULARIDADES DA 1.59.154 (explorações rec/t21/_ex/):
 """
 import hashlib
 import json
+import math
 import os
 import re
 import sys
@@ -47,7 +49,7 @@ TUT = os.path.normpath(os.path.join(HERE, '..', '..'))
 AULA = 't21'
 NARR = os.path.join(TUT, AULA, 'narracao')
 FAKE_NOW = '2026-11-10T08:30:00-03:00'
-VERSAO = '1.59.154'
+VERSAO = '1.60.10'
 HOJE = FAKE_NOW[:10]
 NOMES = ['Abertura', 'Onde o Cato fica', 'Autorizar o Cato', 'As perguntas prontas', 'O que ele responde bem', 'Gráfico ou tabela',
          'De onde vêm os números', 'Os limites do Cato', 'Avaliar e falar com o suporte', 'Recapitulando']
@@ -58,6 +60,13 @@ AUTORIZADO = INICIO + [f'{AULA}/apos-cap02']
 SEMENTE = {0: INICIO, 1: INICIO, 2: INICIO, **{n: AUTORIZADO for n in range(3, 9)}}
 EMAIL_MARCOS = 'marcos.antunes@reciclavalemetais.example'
 RESPOSTAS = json.load(open(os.path.normpath(os.path.join(HERE, '..', 'mundo', 'lib', 'cato_respostas.json')), encoding='utf8'))['respostas']
+RESP = {r['chave']: r for r in RESPOSTAS}
+# A resposta do Cato no tempo (medido nos ensaios completos dos caps. 3 e 4, 11/11): o clique que manda a pergunta age ~0,47 s
+# depois do `at` (viagem do cursor); a tela consulta cato_jobs logo e a cada ~1,03 s e mostra a resposta ~0,69 s + 1,03 s × (nº de
+# consultas até a `espera` vencer) depois do `at` + 0,47; o texto "digita" a ~25 ms por pedaço (palavra ou espaço) com a conversa
+# rolando junto até o fim (o alvo só para quando a digitação acaba: apontar antes faz o robô esperar ~2 s), e a rolagem suave assenta
+# ~0,35 s depois. A digitação da pergunta: clique no campo + 0,75 s, 0,3 s + (1,6/cps + 0,03) s por letra.
+CLIQUE, POR_PEDACO, ASSENTA = 0.47, 0.025, 0.35
 
 sys.path.insert(0, NARR)
 try:
@@ -137,6 +146,7 @@ class Cap:
             s.linhas = [dict(li, i=li['i'] - (a - 1), s=round(li['s'] - off, 3), e=round(li['e'] - off, 3)) for li in s.linhas[a - 1:b]]
             s.dur = round(fim - off, 2)
         s.steps, s.pending, s.anchors = [], [], []
+        s.aparece, s.estavel, s.previsto = 0.0, 0.0, []
         s.pace, s.cps, s.start = pace, cps, start
         s.prewarm = list(prewarm)
         s.user = user
@@ -232,19 +242,75 @@ class Cap:
               "await new Promise(r=>setTimeout(r,250));}return out})()") % (json.dumps(esp, ensure_ascii=False), tentativas, json.dumps(sel))
         return s.add({'do': 'eval', 'js': js, 'label': 'confere ' + label})
 
+    def dur_pergunta(s, texto, cps=None):
+        """do clique no campo ao clique em Enviar (o mínimo): clique 0,75 s, digitação 0,3 s + (1,6/cps + 0,03) s por letra, 0,15 s"""
+        return 0.75 + 0.3 + len(texto) * (1.6 / (cps or s.cps) + 0.03) + 0.15
+
+    def enviar_para(s, chave, assenta_em):
+        """o `at` do Enviar para a resposta `chave` assentar (texto todo na tela, conversa parada) em `assenta_em`"""
+        r = RESP[chave]
+        consultas = math.ceil(max(0.0, r['espera'] - 0.15) / 1.03)
+        pedacos = len(re.split(r'(\s+)', r['payload']['answer']))
+        return round(assenta_em - (CLIQUE + 0.69 + 1.03 * consultas + pedacos * POR_PEDACO + ASSENTA), 2)
+
+    def agenda(s, texto, enviar, cedo, cps=None):
+        """(at do campo, at do Enviar): a digitação termina em `enviar`, mas nunca começa antes de `cedo` (o gesto anterior)"""
+        d = s.dur_pergunta(texto, cps)
+        campo = round(max(cedo, enviar - d), 2)
+        return campo, round(max(enviar, campo + d), 2)
+
+    def resposta(s, chave, at_clique):
+        """prevê (ver CLIQUE, POR_PEDACO e ASSENTA) quando a resposta `chave` aparece (s.aparece) e assenta (s.estavel), a partir do
+        `at` do clique que manda a pergunta (Enviar ou pergunta pronta)"""
+        r = RESP[chave]
+        consultas = math.ceil(max(0.0, r['espera'] - 0.15) / 1.03)
+        pedacos = len(re.split(r'(\s+)', r['payload']['answer']))
+        s.aparece = round(at_clique + CLIQUE + 0.69 + 1.03 * consultas, 2)
+        s.estavel = round(s.aparece + pedacos * POR_PEDACO + ASSENTA, 2)
+        s.previsto.append(f'{chave}: clique {at_clique:.2f} s, aparece ~{s.aparece:.2f}, assenta ~{s.estavel:.2f}')
+        return s.estavel
+
+    def depois(s, at, quem=''):
+        """`at` de um gesto sobre a última resposta: nunca antes de ela assentar (anota quando a palavra vem antes)"""
+        t = round(max(at, s.estavel), 2)
+        if t - at > 0.05:
+            s.previsto.append(f'   {quem or "gesto"}: palavra em {at:.2f}, a resposta assenta em {s.estavel:.2f} (+{t - at:.2f} s)')
+        return t
+
     def pergunta(s, texto, at_campo, at_enviar=None, label='', cps=None):
         """clica no campo "Pergunte ao Cato…" (`at_campo`), digita a pergunta sem clicar de novo (~0,75 s depois: o custo do clique) e
-        clica em "Enviar" em `at_enviar` (ou logo que a digitação acaba: ~0,066 s por letra a cps 40, 0,054 a cps 60)"""
+        clica em "Enviar" em `at_enviar` (ou logo que a digitação acaba). Marca de linha que cai no clique ou na digitação entra no
+        tempo dela: o clique (ou a digitação) começa nela, ou a digitação sai em dois pedaços com a marca no meio. Com `label` = R1..R9,
+        prevê a resposta (s.aparece, s.estavel); marca que cai antes de a resposta aparecer entra logo depois do Enviar."""
         cps = cps or s.cps
-        s.click(CAMPO, at=at_campo, label=f'campo Pergunte ao Cato ({label})', noScroll=True)
-        t_txt = round(at_campo + 0.75, 2)
-        s.type(CAMPO, texto, at=t_txt, label=f'digita: {texto}', noClick=True, cps=cps)
-        fim_txt = t_txt + 0.3 + len(texto) * (1.45 / cps + 0.03)
+        por_letra = 1.6 / cps + 0.03
+        for mt, mi in sorted(s.pending):     # o clique no campo dura ~0,45 s
+            if at_campo + 0.25 < mt <= at_campo + 0.45:
+                at_campo = mt
+        d0 = s.click(CAMPO, at=at_campo, label=f'campo Pergunte ao Cato ({label})', noScroll=True)
+        t, resto, pedaco = round(d0['at'] + 0.75, 2), texto, 0
+        for mt, mi in sorted(s.pending):
+            if not (t < mt < t + 0.3 + len(resto) * por_letra - 0.3):
+                continue
+            if mt - t < 0.6:      # perto do começo: a digitação começa na marca
+                s.flush(mt)
+                t = round(mt, 2)
+                continue
+            n1 = max(1, int((mt - t - 0.3) / por_letra))
+            s.type(CAMPO, resto[:n1], at=t, label=f'digita{" (continua)" if pedaco else ""}: {resto[:n1]}', noClick=True, cps=cps)
+            resto, t, pedaco = resto[n1:], round(mt, 2), pedaco + 1
+            s.flush(mt)
+        s.type(CAMPO, resto, at=t, label=f'digita{" (continua)" if pedaco else ""}: {resto}', noClick=True, cps=cps)
+        fim_txt = t + 0.3 + len(resto) * por_letra
         if at_enviar is None or at_enviar < fim_txt + 0.1:
-            if at_enviar is not None:
+            if at_enviar is not None and at_enviar < fim_txt - 0.2:
                 print(f'  AVISO {s.nome}: Enviar ({label}) pedido em {at_enviar} s, mas a digitação acaba ~{fim_txt:.2f} s')
             at_enviar = fim_txt + 0.15
-        return s.click(ENVIAR, at=round(at_enviar, 2), label=f'Enviar ({label})', noScroll=True)
+        d = s.click(ENVIAR, at=round(at_enviar, 2), label=f'Enviar ({label})', noScroll=True)
+        if label in RESP:
+            s.resposta(label, d['at'])
+            s.flush(s.aparece + 0.2)
+        return d
 
     def fim(s):
         s.flush(1e9)
@@ -506,12 +572,13 @@ def cap03():
     c.hover(CAMPO, seconds=0.8, at=c.A(2, 'escrever', 0.6), label='campo Pergunte ao Cato…', noScroll=True)
     c.hover(ENVIAR, seconds=0.8, at=c.A(2, 'jeito', 0.6), label='botão Enviar', noScroll=True)
     c.mark(3)
-    c.click(NO_PAINEL('button:has-text("Como tá indo meu negócio esse mês?")'), at=c.A(3, 'primeira', 0.7), label='clique em Como tá indo meu negócio esse mês?')
+    d = c.click(NO_PAINEL('button:has-text("Como tá indo meu negócio esse mês?")'), at=c.A(3, 'primeira', 0.7), label='clique em Como tá indo meu negócio esse mês?')
+    c.resposta('R1', d['at'])
     c.waitfor(text='Pensando…', timeout=6)
     c.mark(4)
     c.flush(1e9)   # a marca entra já (antes da espera pela resposta), no tempo dela
     c.waitfor(text='Consultei seu resumo financeiro', timeout=12)
-    c.hover(LI('Vendas: R$ 118.620,20'), seconds=1.2, at=c.A(4, 'vendeu', 0.6), label='ZOOM Vendas R$ 118.620,20')
+    c.hover(LI('Vendas: R$ 118.620,20'), seconds=1.2, at=c.depois(c.A(4, 'vendeu', 0.6), 'Vendas'), label='ZOOM Vendas R$ 118.620,20')
     c.hover(FORTE('R$ 69.589,55'), seconds=1.5, at=c.A(4, 'resultado', 0.6), label='ZOOM resultado R$ 69.589,55')
     c.confere('painel', ['Vendas: R$ 118.620,20', 'R$ 69.589,55', 'Regime de caixa'], 'R1 na tela')
     c.mark(5)
@@ -532,25 +599,42 @@ def cap04():
     c.mark(2)
     c.flush(1e9)
     c.waitfor(text='Consultei os saldos dos parceiros', timeout=8)
-    c.ev(js_msgs_rola(achar_ultimo('div.items-end'), 165, 600), at=c.A(2, 'somam', 0.0), label='a conversa sobe até o começo da resposta (o gráfico empurrou)')
-    c.hover(FORTE('R$ 17.540,00'), seconds=1.0, at=c.A(2, 'dezessete', -0.2), label='ZOOM total R$ 17.540,00')
-    c.hover(LI('Fundição Bandeira do Vale: R$ 14.370,00'), seconds=1.2, at=c.A(2, 'Fundição', 0.6), label='ZOOM Fundição Bandeira do Vale: R$ 14.370,00')
+    t = c.depois(c.A(2, 'somam', 0.0), 'sobe a conversa (R2)')
+    c.ev(js_msgs_rola(achar_ultimo('div.items-end'), 165, 600), at=t, label='a conversa sobe até o começo da resposta (o gráfico empurrou)')
+    c.hover(FORTE('R$ 17.540,00'), seconds=1.0, at=max(c.A(2, 'dezessete', -0.2), t + 0.75), label='ZOOM total R$ 17.540,00')
+    t = c.A(2, 'Fundição', 0.6)
+    c.hover(LI('Fundição Bandeira do Vale: R$ 14.370,00'), seconds=1.2, at=t, label='ZOOM Fundição Bandeira do Vale: R$ 14.370,00')
+    livre = t + 0.45 + 1.2 + 0.3
     c.mark(3)
-    c.pergunta('Quanto tenho em estoque agora?', c.A(3, 'No', 0.6), None, 'R3')
+    # cada resposta "digita" ~2 a 3,5 s depois de ~1,7 s de "Pensando…", e a fala já descreve a resposta: a pergunta é digitada no fim
+    # da linha anterior (depois do último gesto dela) e o Enviar cai para a resposta assentar na palavra que a fala aponta
+    texto = 'Quanto tenho em estoque agora?'
+    campo, enviar = c.agenda(texto, c.enviar_para('R3', c.A(3, 'noventa', 0.0)), livre)
+    c.pergunta(texto, campo, enviar, 'R3')
     c.waitfor(text='Consultei seu estoque', timeout=8)
-    c.hover(FORTE('R$ 96.076,00'), seconds=1.0, at=c.A(3, 'noventa', 0.5), label='valor pelo custo médio R$ 96.076,00')
-    c.hover(LI('Alumínio perfil: 3.385 kg'), seconds=1.0, at=c.A(3, 'alumínio', 0.6), label='alumínio perfil na frente')
+    c.hover(FORTE('R$ 96.076,00'), seconds=1.0, at=c.depois(c.A(3, 'noventa', 0.5), 'R$ 96.076,00'), label='valor pelo custo médio R$ 96.076,00')
+    c.hover(NO_PAINEL('p:has-text("Os materiais que mais pesam no valor") >> nth=-1'), seconds=0.8, at=c.depois(c.A(3, 'materiais', 0.5)),
+            label='os materiais que mais pesam no valor')
+    t = c.depois(c.A(3, 'alumínio', 0.6))
+    c.hover(LI('Alumínio perfil: 3.385 kg'), seconds=0.6, at=t, label='alumínio perfil na frente')
+    livre = t + 0.45 + 0.6 + 0.3
     c.mark(4)
-    c.pergunta('Qual o saldo das minhas contas no banco?', c.A(4, 'No', 0.9), None, 'R4')
+    # R4: a L4 fala do total logo no começo: digita mais rápido, logo depois do alumínio; o total aparece "digitando" na fala dele
+    texto = 'Qual o saldo das minhas contas no banco?'
+    campo, enviar = c.agenda(texto, c.enviar_para('R4', c.A(4, 'três', 0.5)), livre, cps=60)
+    c.pergunta(texto, campo, enviar, 'R4', cps=60)
     c.waitfor(text='Consultei seu resumo bancário', timeout=8)
-    c.hover(FORTE('R$ 132.448,67'), seconds=0.8, at=c.A(4, 'dois', 0.5), label='saldo de agora R$ 132.448,67')
-    c.hover(LI('Conta Cooperativa'), seconds=0.6, at=c.A(4, 'três', 0.5), label='as três contas')
-    c.hover(NO_PAINEL('p:has-text("entraram")'), seconds=0.8, at=c.A(4, 'entrou', 0.6), label='o que entrou e saiu no mês')
+    t = c.depois(c.A(4, 'três', 0.5), 'as três contas')
+    c.hover(NO_PAINEL('ul:has-text("Conta Cooperativa") >> nth=-1'), seconds=0.5, at=t, label='as três contas')
+    t = max(c.depois(c.A(4, 'entrou', 0.6)), t + 0.45 + 0.5 + 0.1)
+    c.hover(NO_PAINEL('p:has-text("entraram") >> nth=-1'), seconds=0.5, at=t, label='o que entrou e saiu no mês')
+    livre = t + 0.45 + 0.5 + 0.2
     c.mark(5)
-    c.pergunta('Como tá meu caixa hoje?', c.A(4, 'mês', -0.2), None, 'R5')
+    texto = 'Como tá meu caixa hoje?'
+    campo, enviar = c.agenda(texto, c.enviar_para('R5', c.A(5, 'fecharam', 0.4)), livre, cps=60)
+    c.pergunta(texto, campo, enviar, 'R5', cps=60)
     c.waitfor(text='Consultei seu caixa', timeout=8)
-    c.hover(FORTE('não tem caixa aberto'), seconds=0.6, at=c.A(5, 'ele', 0.3), label='hoje ainda não tem caixa aberto')
-    c.hover(FORTE('R$ 640,00'), seconds=1.0, at=c.A(5, 'fecharam', 0.4), label='os caixas de ontem')
+    c.hover(FORTE('R$ 640,00'), seconds=0.6, at=c.depois(c.A(5, 'fecharam', 0.4), 'os caixas de ontem'), label='os caixas de ontem (R$ 640,00 e R$ 1.250,00)')
     c.mark(6)
     c.fim()
     return c
@@ -561,26 +645,42 @@ def cap05():
     movimentado (L4, L5), R8 estoque em tabela (L6), ilustração da regra (L7)."""
     c = Cap(5, restaura(5), pace=0.5, start=(900, 560))
     c.mark(1)
+    # a pergunta é digitada enquanto a fala a diz; a resposta digita ~3,3 s: o gráfico (que chega inteiro, embaixo do texto) é
+    # apontado quando a conversa para, já em "outubro"
     c.pergunta('Compras e vendas dos últimos três meses', c.A(1, 'pergunta', 0.6), c.A(1, 'meses', 0.4), 'R6')
     c.waitfor(text='Consultei suas compras e vendas', timeout=8)
-    c.hover(NO_PAINEL('div.rounded-2xl:has-text("Compras e vendas por mês")'), seconds=1.0, at=c.A(1, 'linha', 0.6), label='gráfico de linha Compras e vendas por mês')
     c.mark(2)
-    c.hover(NO_PAINEL('div.rounded-2xl:has-text("Compras e vendas por mês") circle.recharts-dot >> nth=1'), seconds=1.5, at=c.A(2, 'outubro', 0.6), label='outubro: as compras quase alcançam as vendas (dica do gráfico)')
-    c.hover(NO_PAINEL('div.rounded-2xl:has-text("Compras e vendas por mês") circle.recharts-dot >> nth=5'), seconds=1.5, at=c.A(2, 'novembro', 0.6), label='novembro: as vendas passam longe das compras (dica do gráfico)')
+    GRAF = 'div.rounded-2xl:has-text("Compras e vendas por mês")'
+    c.hover(NO_PAINEL(f'{GRAF} circle.recharts-dot >> nth=1'), seconds=1.5, at=c.depois(c.A(2, 'outubro', 0.6), 'outubro no gráfico'),
+            label='outubro: as compras quase alcançam as vendas (dica do gráfico)')
+    t = c.A(2, 'novembro', 0.6)
+    c.hover(NO_PAINEL(f'{GRAF} circle.recharts-dot >> nth=5'), seconds=1.5, at=t, label='novembro: as vendas passam longe das compras (dica do gráfico)')
+    livre = t + 0.45 + 1.5 + 0.3
     c.mark(3)
-    c.pergunta('Pra quem eu mais vendi em outubro?', c.A(3, 'Agora', 0.7), None, 'R7')
+    # R7: o zoom na Fundição em "oitocentos" pede a resposta parada ~0,6 s antes (a conversa ainda sobe até o começo dela)
+    texto = 'Pra quem eu mais vendi em outubro?'
+    campo, enviar = c.agenda(texto, c.enviar_para('R7', c.A(3, 'oitocentos', 0.4) - 0.6), livre)
+    c.pergunta(texto, campo, enviar, 'R7')
     c.waitfor(text='Fundição Bandeira do Vale: R$ 112.800,00', timeout=8)
-    c.ev(js_msgs_rola(achar_ultimo('div.items-end'), 165, 500), at=c.A(3, 'doze', 0.1), label='a conversa sobe até o começo da resposta (o gráfico empurrou)')
-    c.hover(LI('Fundição Bandeira do Vale: R$ 112.800,00'), seconds=0.6, at=c.A(3, 'oitocentos', 0.4), label='ZOOM Fundição Bandeira do Vale: R$ 112.800,00')
+    t = c.depois(c.A(3, 'doze', 0.1), 'sobe a conversa (R7)')
+    c.ev(js_msgs_rola(achar_ultimo('div.items-end'), 165, 500), at=t, label='a conversa sobe até o começo da resposta (o gráfico empurrou)')
+    c.hover(LI('Fundição Bandeira do Vale: R$ 112.800,00'), seconds=0.7, at=max(c.A(3, 'oitocentos', 0.4), t + 0.6),
+            label='ZOOM Fundição Bandeira do Vale: R$ 112.800,00')
     c.mark(4)
     c.mark(5)
     c.mark(6)
-    c.pergunta('Lista meu estoque em tabela', c.A(5, 'diferentes', -0.4), None, 'R8')
+    # R8: a digitação começa sob a ilustração (L4 e L5) e termina à vista; a tabela chega em "monta uma tabela"
+    texto = 'Lista meu estoque em tabela'
+    campo, enviar = c.agenda(texto, c.enviar_para('R8', c.A(6, 'com', 0.15)), c.A(5, 'São', 0.0))
+    c.pergunta(texto, campo, enviar, 'R8')
     c.waitfor(text='Estoque em 10/11/2026', timeout=8)
-    c.ev(js_msgs_rola(achar_ultimo('div.items-end'), 165, 500), at=c.A(6, 'com', 0.0), label='a conversa sobe até o começo da resposta (a tabela empurrou)')
-    c.hover(NO_PAINEL('th:has-text("Material")'), seconds=0.15, at=c.A(6, 'material', 0.0), label='tabela: Material')
-    c.hover(NO_PAINEL('th:has-text("Quantidade")'), seconds=0.15, at=c.A(6, 'quantidade', 0.2), label='tabela: Quantidade (kg)')
-    c.hover(NO_PAINEL('th:has-text("Valor em estoque")'), seconds=0.15, at=c.A(6, 'valor', 0.5), label='tabela: Valor em estoque')
+    t = c.depois(c.A(6, 'com', 0.15), 'sobe a conversa (R8)')
+    c.ev(js_msgs_rola(achar_ultimo('div.items-end'), 165, 500), at=t, label='a conversa sobe até o começo da resposta (a tabela empurrou)')
+    t = max(c.A(6, 'material', 0.0), t + 0.6)
+    c.hover(NO_PAINEL('th:has-text("Material") >> nth=-1'), seconds=0.15, at=t, label='tabela: Material')
+    t = max(c.A(6, 'quantidade', 0.2), t + 0.65)
+    c.hover(NO_PAINEL('th:has-text("Quantidade") >> nth=-1'), seconds=0.15, at=t, label='tabela: Quantidade (kg)')
+    c.hover(NO_PAINEL('th:has-text("Valor em estoque") >> nth=-1'), seconds=0.15, at=max(c.A(6, 'valor', 0.5), t + 0.65), label='tabela: Valor em estoque')
     c.mark(7)
     c.fim()
     return c
@@ -624,10 +724,11 @@ def cap07():
     c = Cap(7, restaura(8), pace=0.5, start=(900, 560))
     c.mark(1)
     c.mark(2)
+    # "Emitir nota fica com você" digita na fala dela ("Ele explica que emitir nota fica com você"), mas a conversa só para no fim
+    # da digitação (~9 s): o cursor aponta só os passos, em "caminho"
     c.pergunta('Emite a nota da venda pra Fundição Bandeira do Vale', 0.0, None, 'R9', cps=60)
     c.waitfor(text='Consultei a central de ajuda', timeout=8)
-    c.hover(NO_PAINEL('p:has-text("Emitir nota fica com você") >> nth=-1'), seconds=0.8, at=c.A(2, 'fica', 0.6), label='Emitir nota fica com você')
-    c.hover(NO_PAINEL('ol >> nth=-1'), seconds=1.5, at=c.A(2, 'caminho', 0.6), label='o caminho no sistema, passo a passo')
+    c.hover(NO_PAINEL('ol >> nth=-1'), seconds=1.5, at=c.depois(c.A(2, 'caminho', 0.6), 'os passos'), label='o caminho no sistema, passo a passo')
     c.mark(3)
     c.mark(4)
     c.fim()
@@ -680,6 +781,9 @@ def main():
         if os.environ.get('ANCORAS'):
             for i, p, t in c.anchors:
                 print(f'   {c.nome} L{i} {p!r} -> {t}')
+        if os.environ.get('PREVISTO'):
+            for linha in c.previsto:
+                print(f'   {c.nome} {linha}')
     print('\n'.join(feitos))
 
 

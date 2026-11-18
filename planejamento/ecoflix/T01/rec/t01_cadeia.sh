@@ -4,11 +4,14 @@
 # Uso: TUT_USER=... TUT_SENHA=... [T01_MODO=rapido] bash rec/t01/t01_cadeia.sh 02 03 ...   (a senha só no ambiente)
 # T01_MODO=rapido: ensaio rápido COM o MP4 (folha de contato em /dev/shm/t01_rec/_ens); o padrão é o completo.
 cd "$(dirname "${BASH_SOURCE[0]}")/../.." || exit 1   # $TUT_HOME
-INI=$(date +%s); PRAZO=${T01_PRAZO:-7000}
+INI=${T01_INI:-$(date +%s)}; PRAZO=${T01_PRAZO:-7000}   # T01_INI: início comum a duas chamadas seguidas (rápido e completo)
 while [ $# -gt 0 ]; do
   n=$1
   rest=$(( PRAZO - ($(date +%s) - INI) - 900 ))
   if [ "$rest" -lt 60 ]; then echo "PAUSA (prazo): faltam $*"; break; fi
+  if [ "${T01_MODO:-completo}" = completo ] && ! head -1 "rec/t01/_ens/cap$n.resumo.txt" 2>/dev/null | grep -q "falhos 0,"; then
+    echo "PULA cap$n: o rápido não passou"; shift; continue
+  fi
   echo "== cap$n $(date +%T)"
   bash rec/t01/t01_ens.sh "${T01_MODO:-completo}" "$n" > /dev/null 2>&1
   d=rec/t01; [ "${T01_MODO:-completo}" = rapido ] && d=rec/t01/_ens

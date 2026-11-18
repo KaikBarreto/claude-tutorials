@@ -47,9 +47,9 @@ def stable_id(chave):
 
 RAFAEL = stable_id('user.rafael')
 try:
-    VERSAO = open(os.path.join(TUT, 'app', 'dist', '.versao-app'), encoding='utf8').read().strip() or '1.59.154'
+    VERSAO = open(os.path.join(TUT, 'app', 'dist', '.versao-app'), encoding='utf8').read().strip() or '1.60.10'
 except OSError:
-    VERSAO = '1.59.154'
+    VERSAO = '1.60.10'
 HOJE = '2026-11-11'
 STORAGE = {
     'app_version': VERSAO, 'notification_shown_version': VERSAO, f'dominex:daily-tasks-shown:{RAFAEL}': HOJE,
@@ -590,19 +590,19 @@ def cap04():
     c.mark(2)
     c.cursor((640, 560), at=c.A(2, 'dica:', 0.3), label='cursor descansa na janela (dica: reabrir o caixa)')
     c.mark(3)
-    c.click(BTN('Cancelar', within=DLGS), at=c.A(3, 'cancelo', 0.7), label='Cancelar')
+    c.click(BTN('Cancelar', within=DLGS), at=c.A(3, 'Então', 0.2), label='Cancelar')
     c.waitfor(gone=TXTX('O pedido será carregado para edição.'), timeout=8)
-    c.click(PERIODO('Mês passado'), at=c.A(3, 'começo', 0.7), label='período')
+    c.click(PERIODO('Mês passado'), at=c.A(3, 'começo', 0.9), label='período')
     c.click(OPT('Hoje'), at=c.A(3, 'hoje.', 0.6), label='Hoje')
     c.click(TXTX('Limpar todos', within='main'), at=c.A(3, 'Lembra', 0.6), label='Limpar todos')
     c.waitfor(target=SEL(LINHA(L_CIDA)), timeout=10)
-    c.hover(SEL(LINHA(L_CIDA)), 0.8, at=c.A(3, 'latinha', 0.6), label='a latinha da Aparecida (24 kg, R$ 148,80)')
+    c.hover(SEL(LINHA(L_CIDA)), 0.6, at=c.A(3, 'Aparecida?', 0.6), label='a latinha da Aparecida (24 kg, R$ 148,80)')
     c.hover(TXTX('R$ 148,80', within=LINHA(L_CIDA)), 0.6, at=c.A(3, 'vinte', 0.6), label='R$ 148,80 (24 kg)')
     c.mark(4)
-    abre_menu_linha(c, L_CIDA, c.A(4, 'editar.', 1.5), 'menu da latinha da Aparecida')
-    c.click(ITEM('Editar'), at=c.A(4, 'editar.', 0.6), label='Editar', noScroll=True)
+    abre_menu_linha(c, L_CIDA, c.A(4, 'O', 0.2), 'menu da latinha da Aparecida')
+    c.click(ITEM('Editar'), at=c.A(4, 'aberto,', 0.6), label='Editar', noScroll=True)
     c.waitfor(text='O pedido será carregado para edição.', timeout=8)
-    c.click(BTN('Editar Pedido', within=DLGS), at=c.A(4, 'compra', 0.8, nth=0), label='Editar Pedido (abre a tela Compra em edição)')
+    c.click(BTN('Editar Pedido', within=DLGS), at=c.A(4, 'editar.', 0.6), label='Editar Pedido (abre a tela Compra em edição)')
     c.waitfor(target=EDITANDO, timeout=15)
     c.waitfor(idle=True, timeout=10)
     c.hover(EDITANDO, 0.8, at=c.A(4, 'selo', 0.6), label='[DESTAQUE] o selo "Editando Compra #N"')
@@ -627,13 +627,13 @@ def cap04():
     c.mark(8)
     c.mark(9)
     c.mark(10)
-    c.ev(ROLA_FINALIZAR, at=c.A(10, 'Finalizar', 1.6), label='a tela desce até o Finalizar (fica atrás do rodapé)')
+    c.ev(ROLA_FINALIZAR, at=c.A(9, 'caixa', 0.2), label='a tela desce até o Finalizar (fica atrás do rodapé; sob a ilustração)')
     c.click(FINALIZAR, at=c.A(10, 'Finalizar', 0.7), label='Finalizar')
     c.waitfor(text='Finalizar Pedido', timeout=10)
     c.click(TILE('Dinheiro'), at=c.A(10, 'dinheiro,', 0.6), label='Dinheiro (R$ 260,40)')
     c.click(CONFIRMA_PAG, at=c.A(10, 'Confirmar', 0.7), label='CONFIRMAR PAGAMENTO')
     c.waitfor(text='Compra registrada!', timeout=15)
-    c.registra(SEL('[data-sonner-toaster]'), at=c.A(10, 'avisos', 0.2), label='[ZOOM] os avisos: Revertendo pedido original... / Pedido original revertido! Criando pedido editado... / Compra registrada!')
+    c.registra(TOAST('Compra registrada!'), at=c.A(10, 'avisos', 0.2), label='[ZOOM] os avisos: Revertendo pedido original... / Pedido original revertido! Criando pedido editado... / Compra registrada!')
     c.mark(11)
     c.registra(TXTX('Deseja imprimir o comprovante de compra?', within=DLGS), at=c.A(11, 'dica:', 0.2), label='a compra editada registrada (janela Imprimir Comprovante)')
     c.click(BTN('Não, obrigado'), at=c.A(11, 'correto.', 0.5), label='Imprimir Comprovante: Não, obrigado')

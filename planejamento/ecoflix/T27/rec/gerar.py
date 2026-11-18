@@ -39,7 +39,7 @@ import unicodedata
 HERE = os.path.dirname(os.path.abspath(__file__))
 TUT = os.path.normpath(os.path.join(HERE, '..', '..'))
 NARR = os.path.join(TUT, 't27', 'narracao')
-VERSAO = '1.59.154'
+VERSAO = '1.60.10'
 FAKE_NOW = '2026-11-10T08:30:00-03:00'
 HOJE = '2026-11-10'
 EMAIL_JULIANA = 'juliana.prado@reciclavalemetais.example'   # usuária fictícia do mundo (T2); a senha vem de $TUT_SENHA

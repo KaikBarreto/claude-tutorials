@@ -178,3 +178,17 @@ e3 = {'seedExtra': SEEDS + ['t08/inicio'], 'start': '/dashboard', 'stopOnFail': 
 ]}
 json.dump(e3, open(os.path.join(HERE, '_ex', 'e3.json'), 'w', encoding='utf8'), ensure_ascii=False, indent=1)
 print('e3 ok')
+
+# ---------------------------------------------------------------- e4: o #57 no formato do formulário (coordenador, 11/11): lista, Lista e o ticket aberto na aba
+ACOES57 = {'role': 'button', 'name': 'Ações', 'within': "main div.rounded-lg:has([aria-label='Selecionar ticket #57']):not(:has(div.rounded-lg [aria-label='Selecionar ticket #57']))"}
+e4 = {'seedExtra': SEEDS + ['t08/inicio'], 'start': '/dashboard', 'stopOnFail': False, 'steps': [
+    {'do': 'wait', 'ms': 2500},
+    {'do': 'goto', 'url': '/ticket-pesagem'}, {'do': 'waitFor', 'text': 'Gerencie tickets de pesagem rodoviária', 'timeout': 30}, {'do': 'wait', 'ms': 1500},
+    {'do': 'shot', 'name': '01-kanban'}, txt('main', 700),
+    opt({'do': 'click', 'target': {'role': 'radio', 'name': 'Lista'}}), {'do': 'wait', 'ms': 1200}, txt('main', 900),
+    opt({'do': 'click', 'target': {'role': 'radio', 'name': 'Kanban'}}), {'do': 'wait', 'ms': 1000},
+    opt({'do': 'click', 'target': ACOES57}), {'do': 'wait', 'ms': 600}, ev(dump('[role=menu]'), 800),
+    opt({'do': 'click', 'target': {'role': 'menuitem', 'name': 'Editar'}}), {'do': 'wait', 'ms': 2500}, {'do': 'shot', 'name': '02-editar-57'}, txt('main', 1500), txt('body', 300),
+]}
+json.dump(e4, open(os.path.join(HERE, '_ex', 'e4.json'), 'w', encoding='utf8'), ensure_ascii=False, indent=1)
+print('e4 ok')

@@ -11,8 +11,8 @@
  },
  "anonymous": true,
  "storage": {
-  "app_version": "1.59.154",
-  "notification_shown_version": "1.59.154",
+  "app_version": "1.60.10",
+  "notification_shown_version": "1.60.10",
   "pwa-install-dismissed": "true",
   "theme": "light",
   "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
@@ -184,17 +184,6 @@
    "timeout": 8
   },
   {
-   "do": "hover",
-   "target": {
-    "selector": "[role=dialog][aria-label^=\"Cato.ai\"] div.rounded-2xl:has-text(\"Compras e vendas por mês\")"
-   },
-   "seconds": 1.0,
-   "at": 7.62,
-   "label": "gráfico de linha Compras e vendas por mês",
-   "optional": true,
-   "timeout": 4
-  },
-  {
    "do": "mark",
    "name": "L2",
    "at": 9.19
@@ -205,7 +194,7 @@
     "selector": "[role=dialog][aria-label^=\"Cato.ai\"] div.rounded-2xl:has-text(\"Compras e vendas por mês\") circle.recharts-dot >> nth=1"
    },
    "seconds": 1.5,
-   "at": 9.71,
+   "at": 10.97,
    "label": "outubro: as compras quase alcançam as vendas (dica do gráfico)",
    "optional": true,
    "timeout": 4
@@ -222,18 +211,18 @@
    "timeout": 4
   },
   {
-   "do": "mark",
-   "name": "L3",
-   "at": 21.22
-  },
-  {
    "do": "click",
    "target": {
     "selector": "textarea[aria-label=\"Mensagem para o Cato\"]"
    },
-   "at": 21.43,
+   "at": 20.24,
    "label": "campo Pergunte ao Cato (R7)",
    "noScroll": true
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 21.22
   },
   {
    "do": "type",
@@ -242,7 +231,7 @@
    },
    "text": "Pra quem eu mais vendi em outubro?",
    "cps": 40,
-   "at": 22.18,
+   "at": 21.22,
    "label": "digita: Pra quem eu mais vendi em outubro?",
    "noClick": true
   },
@@ -251,7 +240,7 @@
    "target": {
     "selector": "button[aria-label=\"Enviar\"]"
    },
-   "at": 24.88,
+   "at": 24.05,
    "label": "Enviar (R7)",
    "noScroll": true
   },
@@ -263,7 +252,7 @@
   {
    "do": "eval",
    "js": "(async()=>{const c=document.querySelector(\"[role=dialog][aria-label^=\\\"Cato.ai\\\"] div.h-full.overflow-y-auto\");if(!c)return 'SEM PAINEL';const el=[...document.querySelectorAll(\"[role=dialog][aria-label^=\\\"Cato.ai\\\"] div.h-full.overflow-y-auto div.items-end\")].filter(e=>e.getClientRects().length).pop();if(!el)return 'SEM ALVO';const dy=Math.round(el.getBoundingClientRect().top-165);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/500),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});await new Promise(r=>setTimeout(r,60));return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 28.4,
+   "at": 28.57,
    "label": "a conversa sobe até o começo da resposta (o gráfico empurrou)"
   },
   {
@@ -271,8 +260,8 @@
    "target": {
     "selector": "[role=dialog][aria-label^=\"Cato.ai\"] li:has-text(\"Fundição Bandeira do Vale: R$ 112.800,00\")"
    },
-   "seconds": 0.6,
-   "at": 28.94,
+   "seconds": 0.7,
+   "at": 29.17,
    "label": "ZOOM Fundição Bandeira do Vale: R$ 112.800,00",
    "optional": true,
    "timeout": 4
@@ -288,16 +277,11 @@
    "at": 43.25
   },
   {
-   "do": "mark",
-   "name": "L6",
-   "at": 55.3
-  },
-  {
    "do": "click",
    "target": {
     "selector": "textarea[aria-label=\"Mensagem para o Cato\"]"
    },
-   "at": 55.33,
+   "at": 53.49,
    "label": "campo Pergunte ao Cato (R8)",
    "noScroll": true
   },
@@ -306,10 +290,26 @@
    "target": {
     "selector": "textarea[aria-label=\"Mensagem para o Cato\"]"
    },
-   "text": "Lista meu estoque em tabela",
+   "text": "Lista meu ",
    "cps": 40,
-   "at": 56.08,
-   "label": "digita: Lista meu estoque em tabela",
+   "at": 54.24,
+   "label": "digita: Lista meu ",
+   "noClick": true
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 55.3
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "textarea[aria-label=\"Mensagem para o Cato\"]"
+   },
+   "text": "estoque em tabela",
+   "cps": 40,
+   "at": 55.3,
+   "label": "digita (continua): estoque em tabela",
    "noClick": true
   },
   {
@@ -317,7 +317,7 @@
    "target": {
     "selector": "button[aria-label=\"Enviar\"]"
    },
-   "at": 58.32,
+   "at": 56.94,
    "label": "Enviar (R8)",
    "noScroll": true
   },
@@ -329,16 +329,16 @@
   {
    "do": "eval",
    "js": "(async()=>{const c=document.querySelector(\"[role=dialog][aria-label^=\\\"Cato.ai\\\"] div.h-full.overflow-y-auto\");if(!c)return 'SEM PAINEL';const el=[...document.querySelectorAll(\"[role=dialog][aria-label^=\\\"Cato.ai\\\"] div.h-full.overflow-y-auto div.items-end\")].filter(e=>e.getClientRects().length).pop();if(!el)return 'SEM ALVO';const dy=Math.round(el.getBoundingClientRect().top-165);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/500),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});await new Promise(r=>setTimeout(r,60));return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 60.45,
+   "at": 60.71,
    "label": "a conversa sobe até o começo da resposta (a tabela empurrou)"
   },
   {
    "do": "hover",
    "target": {
-    "selector": "[role=dialog][aria-label^=\"Cato.ai\"] th:has-text(\"Material\")"
+    "selector": "[role=dialog][aria-label^=\"Cato.ai\"] th:has-text(\"Material\") >> nth=-1"
    },
    "seconds": 0.15,
-   "at": 60.9,
+   "at": 61.31,
    "label": "tabela: Material",
    "optional": true,
    "timeout": 4
@@ -346,10 +346,10 @@
   {
    "do": "hover",
    "target": {
-    "selector": "[role=dialog][aria-label^=\"Cato.ai\"] th:has-text(\"Quantidade\")"
+    "selector": "[role=dialog][aria-label^=\"Cato.ai\"] th:has-text(\"Quantidade\") >> nth=-1"
    },
    "seconds": 0.15,
-   "at": 61.76,
+   "at": 61.96,
    "label": "tabela: Quantidade (kg)",
    "optional": true,
    "timeout": 4
@@ -357,10 +357,10 @@
   {
    "do": "hover",
    "target": {
-    "selector": "[role=dialog][aria-label^=\"Cato.ai\"] th:has-text(\"Valor em estoque\")"
+    "selector": "[role=dialog][aria-label^=\"Cato.ai\"] th:has-text(\"Valor em estoque\") >> nth=-1"
    },
    "seconds": 0.15,
-   "at": 62.6,
+   "at": 62.61,
    "label": "tabela: Valor em estoque",
    "optional": true,
    "timeout": 4

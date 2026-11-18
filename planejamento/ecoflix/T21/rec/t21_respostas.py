@@ -23,7 +23,12 @@ if '--plano' in sys.argv:
     PLANO = sys.argv[sys.argv.index('--plano') + 1]
 SAIDA = os.path.normpath(os.path.join(HERE, '..', 'mundo', 'lib', 'cato_respostas.json'))
 
-ESPERA = {'R1': 3.2}            # demais: 1,6 s (completa no 3º poll, ~2 s depois do Enviar)
+# A tela consulta cato_jobs logo depois do Enviar e a cada ~1,03 s; o job completa na 1ª consulta com `espera` vencida. Valores
+# longe da hora de cada consulta, para a resposta chegar sempre na mesma (medido no ensaio completo, 11/11):
+#   R1 3,5 s → 5ª consulta, a resposta aparece ~4,8 s depois do clique ("Em poucos segundos ele responde", cap03);
+#   demais 0,9 s → 2ª consulta, ~1,7 s depois do clique ("Pensando…" à vista; a fala do cap04 não cabe 3 s por pergunta).
+ESPERA = {'R1': 3.5}
+ESPERA_PADRAO = 0.9
 HORA = {**{f'R{i}': '08:30' for i in range(1, 6)}, **{f'R{i}': '08:31' for i in range(6, 9)}}
 
 txt = open(PLANO, encoding='utf8').read()
@@ -37,7 +42,7 @@ out = []
 for chave, pergunta, js in achados:
     d = json.loads(js)
     follow = d.pop('followups', [])
-    out.append({'chave': chave, 'pergunta': pergunta, 'espera': ESPERA.get(chave, 1.6), 'hora': HORA.get(chave),
+    out.append({'chave': chave, 'pergunta': pergunta, 'espera': ESPERA.get(chave, ESPERA_PADRAO), 'hora': HORA.get(chave),
                 'sugestoes': follow, 'payload': d})
 json.dump({'_doc': 'Gerado por rec/t21/t21_respostas.py a partir de planejamento/ecoflix/T21/plano.md (R1 a R9). Não editar à mão.',
            'respostas': out}, open(SAIDA, 'w', encoding='utf8'), ensure_ascii=False, indent=1)

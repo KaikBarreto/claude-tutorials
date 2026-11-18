@@ -23,7 +23,11 @@ PARTICULARIDADES DA 1.59.154 (T03 e este ensaio):
    capítulos 2 a 12 começam com ele recolhido (setup). Menu recolhido abre ao passar o mouse (fecha 500 ms depois de sair): depois de
    navegar por ele, o cursor sai para um ponto neutro. O item do menu é "Histórico (Kardex)" (o roteiro diz "Histórico").
  - A barra de seleção do Estoque ("2 selecionados", "Transferir Estoque") é fixa no pé da tela (y ~750, fora da faixa 96..730): noScroll.
- - Kardex: o "Filtros" abre uma folha (role=dialog) e os filtros valem na hora; "Aplicar filtros" só fecha a folha. Linha de compra ou
+ - Menu recolhido aberto pelo mouse traz o grupo Materiais FECHADO (mesmo com a página dentro dele): clique no grupo só se o item ainda não
+   aparece (`unless`), depois o item.
+ - Quantidades sem casas fixas: "6.420 Kg", "42 Kg", "+320 Kg"; o aviso é "Transferido 320 Kg de Ferro misto para Ferro pesado".
+ - Kardex: o "Filtros" abre uma folha (role=dialog) e os filtros valem na hora; "Aplicar filtros" só fecha a folha. "Aplicar filtros" e
+   "Limpar filtros" ficam no rodapé da folha (y ~770, fora da faixa 96..730): noScroll (sem ele, ~7 s rolando em vão). Linha de compra ou
    venda abre o pedido numa tabela de dentro (main table table); a de Edição Manual abre Observação, Estoque antes -> depois, usuário e hora.
  - Relatório: os cartões são CollapsibleTrigger com aria-label (botão "Total Comprado"...); o cabeçalho "Lucro s/ Vendas" ORDENA ao clicar
    (só passar o mouse). Fornecedores é um "chip" (o nome do botão vira o do fornecedor marcado).
@@ -422,7 +426,7 @@ def setup_kardex(material='Ferro pesado', periodo=None):
     if periodo:
         st += [{'do': 'click', 'target': FILTROS}, {'do': 'waitFor', 'text': 'Filtros do Kardex', 'timeout': 8},
                {'do': 'click', 'target': COMBO('Este mês', DLG)}, {'do': 'click', 'target': OPT(periodo)}, {'do': 'pause', 'seconds': 0.6},
-               {'do': 'click', 'target': BTN('Aplicar filtros')}, {'do': 'waitFor', 'gone': {'role': 'dialog'}, 'timeout': 8},
+               {'do': 'click', 'target': BTN('Aplicar filtros'), 'noScroll': True}, {'do': 'waitFor', 'gone': {'role': 'dialog'}, 'timeout': 8},
                {'do': 'waitFor', 'idle': True}]
     return st + [{'do': 'scroll', 'point': {'x': 700, 'y': 420}, 'by': 0, 'duration': 0.2, 'after': 0}]
 
@@ -484,8 +488,8 @@ def cap01():
 
 
 def cap02():
-    """O saldo: os três cartões; Peso Total; Total Pago e Projeção; Cobre mel (42,000 e R$ 42,50); o cabeçalho Preço médio pago (estimativa);
-    L6 ilustração; Ferro misto 6.420,000."""
+    """O saldo: os três cartões; Peso Total; Total Pago e Projeção; Cobre mel (42 Kg e R$ 42,50) com a explicação do preço médio; o selo
+    estimativa; L6 ilustração; Ferro misto 6.420 Kg."""
     c = Cap(2, setup_estoque())
     c.hover(P('Total Pago', exact=True), 1.4, w=(1, 'cartões'), label='os três cartões de cima')
     c.hover(P('Peso Total em Estoque', exact=True), 2.4, w=(2, 'Peso'), label='[ZOOM] Peso Total em Estoque')
@@ -507,8 +511,8 @@ def cap02():
 
 
 def cap03():
-    """Transferir: (L1-L2 ilustração; por baixo a lista sobe) "..." do Ferro misto > Transferir estoque; 6.420,000; destino Ferro pesado,
-    320; Transferir: 6.100,000 e 2.500,000; marca Cobre mel e Cobre misto: a barra com Transferir Estoque (sem clicar); desmarca."""
+    """Transferir: (L1-L2 ilustração; por baixo a lista sobe) "..." do Ferro misto > Transferir estoque; 6.420 Kg; destino Ferro pesado,
+    320; Transferir: 6.100 e 2.500 Kg; marca Cobre mel e Cobre misto: a barra com Transferir Estoque (sem clicar); desmarca."""
     c = Cap(3, setup_estoque())
     c.ev(js_rola_ate('Lista de Materiais', y=110), w=(2, 'entra', None, 0.0), label='a lista sobe (por baixo da ilustração)')
     abre_acoes(c, 'Ferro misto', 'Transferir estoque', w=(3, 'ferro'), w_item=(3, 'clico'))   # hover no "..." custou 2,5 s com a máquina carregada
@@ -570,11 +574,11 @@ def cap04():
     c.hover(OPT('Este ano'), 0.3, w=(8, 'Este'), label='Este ano')
     c.hover(OPT('Todos os tempos'), 0.5, w=(8, 'Todos'), label='Todos os tempos')
     c.click(OPT('Este ano'), w=(8, 'Assim,'), label='escolhe Este ano')
-    c.click(BTN('Aplicar filtros'), w=(8, 'abre'), label='Aplicar filtros')
+    c.click(BTN('Aplicar filtros'), noScroll=True, w=(8, 'abre'), label='Aplicar filtros')
     c.waitfor(gone={'role': 'dialog'}, timeout=8)
     c.hover(FILTROS, 1.2, w=(8, 'histórico'), label='[ZOOM] Filtros com 1')
     c.ev(js_rola_ate('Edição Manual', y=420), w=(8, 'sumiu:', None, 0.0), label='desce: entram as linhas de outubro')
-    c.confere('main', ['Edição Manual', 'Exclusão'], 'Este ano: entram as linhas de outubro')
+    c.confere('main', ['Edição Manual', '31/10'], 'Este ano: entram as linhas de outubro')
     c.fim()
     return c
 
@@ -594,7 +598,7 @@ def cap05():
     # L3-L5: ilustração dos tipos (robô parado, a lista aberta por baixo)
     c.click(OPCAO('Edição Manual'), w=(6, 'deixar'), label='marca Edição Manual')
     c.click(OPCAO('Exclusão'), w=(6, 'dois'), label='marca Exclusão')
-    c.click(BTN('Aplicar filtros'), w=(6, 'No'), label='Aplicar filtros (fecha a lista e a folha)')
+    c.click(BTN('Aplicar filtros'), noScroll=True, w=(6, 'No'), label='Aplicar filtros (fecha a lista e a folha)')
     c.waitfor(gone={'role': 'dialog'}, timeout=8)
     c.ev(JS_TIPOS, label='tipos na lista (Edição Manual e Exclusão)')
     c.hover(KCEL('Edição Manual', 3), 0.8, w=(6, 'sábado,'), label='Data 31/10 da Edição Manual')
@@ -616,21 +620,21 @@ def cap05():
     c.click(SEL(f"{POP} button:has-text('Desmarcar todos')"), w=(9, 'Fornecedores'), label='Desmarcar todos')
     c.click(BTN('Fornecedores', within=DLG), w=(9, 'Clientes:'), label='Fornecedores (abre a lista)')
     c.click(OPCAO('Depósito Irmãos Siqueira'), w=(9, 'fornecedor'), label='marca Depósito Irmãos Siqueira')
-    c.click(BTN('Aplicar filtros'), w=(9, 'compras,'), label='Aplicar filtros')
+    c.click(BTN('Aplicar filtros'), noScroll=True, w=(9, 'compras,'), label='Aplicar filtros')
     c.waitfor(gone={'role': 'dialog'}, timeout=8)
     c.ev(JS_TIPOS, label='tipos na lista (só Compra e Venda)')
     c.registra(SEL('main tbody'), w=(10, 'saem'), label='a lista sem Transferência, Edição Manual e Exclusão')
     c.hover(KBADGE('Venda'), 1.2, w=(10, 'cliente.'), label='as vendas continuam')
     c.click(FILTROS, w=(11, 'ver'), label='Filtros')
     c.waitfor(text='Filtros do Kardex', timeout=8)
-    c.click(BTN('Limpar filtros'), w=(11, 'limpar'), label='Limpar filtros')
-    c.click(BTN('Aplicar filtros'), w=(11, 'filtros.'), label='fecha a folha (a lista volta em Este mês)')
+    c.click(BTN('Limpar filtros'), noScroll=True, w=(11, 'limpar'), label='Limpar filtros')
+    c.click(BTN('Aplicar filtros'), noScroll=True, w=(11, 'filtros.'), label='fecha a folha (a lista volta em Este mês)')
     c.fim()
     return c
 
 
 def cap06():
-    """O pedido: (setup: Kardex do Ferro pesado, Este mês) a compra de 09/11 aberta: item (860,000, R$ 0,95, R$ 817,00); Fornecedor,
+    """O pedido: (setup: Kardex do Ferro pesado, Este mês) a compra de 09/11 aberta: item (860 Kg, R$ 0,95, R$ 817,00); Fornecedor,
     Formas de Pagamento (Pix), Total do Pedido; Fotos anexadas: a 1ª amplia e fecha."""
     c = Cap(6, setup_kardex('Ferro pesado'))
     c.hover(KCEL('+860 Kg', 4), 0.8, w=(1, 'compra', 0), label='linha Compra de 09/11')

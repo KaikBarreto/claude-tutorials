@@ -773,3 +773,20 @@ Decisões:
   ~15 min). **Kaik (13:47): "acho que uma aula só do fiscal, mesmo que grande mesmo"** → a T16 NÃO se divide: uma aula
   só de ~35 min. Decisões do coordenador: SPED (BETA) fora da T17; CIOT sem citar a marca do parceiro; a complementar só
   mostra a tela, sem ensinar valor de imposto. Em conferência: T07, T03, T02.
+- 18/11 14:1x **Cobertura 1.60.10 das 26 aulas pronta** (`Tnn/cobertura_160.md`, agentes pequenos no Fable, ~230 mil
+  tokens cada). Soma: ~84 capítulos novos e ~8.950 s (~2 h 30) de fala a mais. Por aula (capítulos novos / segundos):
+  T00 2/207 · T01 1/306 · T02 3/296 · T03 1/172 · T04 4/445 · T05 1/130 (EcoTray 1.7.25: refazer as cenas de Windows 3-7)
+  · T06 2/325 · T07 2/367 · T08 3/300 · T09 1/222 · T10 2/278 · T11 4/395 · T12 3/400 · T13 6/405 · T14 3/354 (com cartão
+  de crédito e 2º OFX) · T15 4/400 (DFC completa) · T16 5/705 · T17 3/395 · T18 3/243 · T19 5/390 · T20 4/410 · T21 10/565
+  (refeita: o Cato virou agente) · T22 6/488 · T25 2/215 · T26 3/410 · T27 1/125.
+  **Decisões do coordenador** (Kaik: aula única mesmo grande): nenhuma aula se divide; SPED (BETA) fora; CIOT sem marca;
+  edição em caixa fechado só na T09; excluir em lote na T14, categoria em lote na T15; pedido pelo portal na T20;
+  Rastreamento entra na T12 ("Rotas" não); automação da folha na T19; WhatsApp só até o botão. **Na junção do mundo**:
+  despesa/sangria da T06 (fechamento 957,10 afeta a T09), dois Pix da T13 (OFX da T14 e DRE da T15), cartão de crédito,
+  devolução e notas 1252-1254 (T16 → T17/T18/T20), Aços Quiririm em Lucro Real/"É Indústria" (T04 → T16/T17),
+  MUNDO_FICTICIO × plano da T22. Valores de folha (T19) e de imposto: só o que a tela mostrar no ensaio.
+- 18/11 14:12 **Varredura: defeito corrigido**. Os `gerar.py` fixavam `VERSAO = '1.59.154'` no localStorage, e o app novo
+  abria a janela "Sistema atualizado" por cima das telas (falhas falsas). Trocado para 1.60.10 nos 26 `gerar.py` e nos 354
+  `capNN.json`; T00-T07 rodaram antes: **rodar de novo** quando as frentes terminarem. Handler novo
+  `rpc/get_my_scale_weight_lock.mjs` (sem ele o peso travava na T07/T08). A fazer no mundo: `fiscal_onboarding_status`
+  (faixa vermelha do certificado A1), balão do Cato (`cato_adoption_nudge_*` no localStorage), `app_config.app_version`.

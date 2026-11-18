@@ -292,7 +292,7 @@ def stable_id(chave):
 
 
 RAFAEL = stable_id('user.rafael')
-VERSAO = '1.59.154'
+VERSAO = '1.60.10'
 HOJE = FAKE_NOW[:10]
 # Capítulo "anonymous": o robô abre o app sem sessão e o setup entra pela tela de login com $TUT_USER e $TUT_SENHA do ambiente (o
 # valor nunca vai para arquivo nem log). Sem a sessão pronta do robô, o localStorage que ele poria vai aqui: versão já vista,
@@ -454,10 +454,12 @@ def cap02():
     c.waitfor(text='Preencha os dados do novo usuário', timeout=10)
     c.mark(2)
     c.click(SEL('#fullName'), at=c.A(2, 'nome', 1.0), label='campo Nome Completo')
-    c.type(SEL('#fullName'), 'Marcos Antunes', at=c.A(2, 'Marcos', 0.05), noClick=True, cps=30, label='Nome Completo: Marcos Antunes')
+    # a digitação anda a ~0,1 s por letra (14 letras: 1,6 s); começando no "Marcos" ela empurrava a marca L3 0,94 s (completo de 11/11,
+    # 23:13, 19,8 qps): começa no "completo:" e termina antes da marca
+    c.type(SEL('#fullName'), 'Marcos Antunes', at=c.A(2, 'completo:', 0.25), noClick=True, cps=30, label='Nome Completo: Marcos Antunes')
     c.mark(3)
     c.click(SEL('#email'), at=c.A(3, 'e-mail.', 0.6), label='campo Email')
-    c.type(SEL('#email'), EMAIL_MARCOS, at=c.A(3, 'e-mail.', -0.35), noClick=True, cps=40, label='Email do Marcos')
+    c.type(SEL('#email'), EMAIL_MARCOS, at=c.A(3, 'e-mail.', -0.1), noClick=True, cps=40, label='Email do Marcos')   # 41 letras: 3,4 s
     c.mark(4)
     c.click(SEL('#password'), at=c.A(4, 'senha', 0.6), label='campo Senha')
     c.type(SEL('#password'), SENHA_MARCOS, at=c.A(4, 'define,', 0.05), noClick=True, cps=10, label='Senha (aparece em pontinhos)')

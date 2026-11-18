@@ -11,8 +11,8 @@
  },
  "anonymous": true,
  "storage": {
-  "app_version": "1.59.154",
-  "notification_shown_version": "1.59.154",
+  "app_version": "1.60.10",
+  "notification_shown_version": "1.60.10",
   "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-11",
   "pwa-install-dismissed": "true",
   "theme": "light",
@@ -356,7 +356,7 @@
     "exact": true,
     "within": "[role=dialog], [role=alertdialog]"
    },
-   "at": 33.12,
+   "at": 32.93,
    "label": "Cancelar"
   },
   {
@@ -371,7 +371,7 @@
    "target": {
     "selector": "main [role=combobox]:has-text('Mês passado')"
    },
-   "at": 33.88,
+   "at": 33.68,
    "label": "período"
   },
   {
@@ -404,8 +404,8 @@
    "target": {
     "selector": "main tbody tr:has-text('11/11/2026 07:22')"
    },
-   "seconds": 0.8,
-   "at": 36.79,
+   "seconds": 0.6,
+   "at": 37.62,
    "label": "a latinha da Aparecida (24 kg, R$ 148,80)",
    "optional": true,
    "timeout": 4
@@ -433,7 +433,7 @@
     "selector": "main tbody tr:has-text('11/11/2026 07:22') button"
    },
    "seconds": 0.3,
-   "at": 45.42,
+   "at": 43.54,
    "label": "menu da latinha da Aparecida",
    "optional": false,
    "timeout": 8
@@ -452,7 +452,7 @@
     "role": "menuitem",
     "name": "Editar"
    },
-   "at": 46.32,
+   "at": 44.73,
    "label": "Editar",
    "noScroll": true
   },
@@ -469,7 +469,7 @@
     "exact": true,
     "within": "[role=dialog], [role=alertdialog]"
    },
-   "at": 46.88,
+   "at": 46.32,
    "label": "Editar Pedido (abre a tela Compra em edição)"
   },
   {
@@ -672,8 +672,8 @@
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll('main button')].find(b=>b.textContent.trim()==='Finalizar');if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-560);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 110.28,
-   "label": "a tela desce até o Finalizar (fica atrás do rodapé)"
+   "at": 106.55,
+   "label": "a tela desce até o Finalizar (fica atrás do rodapé; sob a ilustração)"
   },
   {
    "do": "click",
@@ -720,7 +720,7 @@
   {
    "do": "type",
    "target": {
-    "selector": "[data-sonner-toaster]"
+    "selector": "[data-sonner-toast]:has-text('Compra registrada!')"
    },
    "text": "",
    "noClick": true,

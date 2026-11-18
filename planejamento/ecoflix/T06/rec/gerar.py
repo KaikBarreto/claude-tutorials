@@ -307,7 +307,7 @@ def stable_id(chave):
     return f'{x[:8]}-{x[8:12]}-{x[12:16]}-{x[16:20]}-{x[20:32]}'
 
 
-VERSAO = '1.59.154'
+VERSAO = '1.60.10'
 HOJE = MANHA[:10]
 
 
@@ -773,11 +773,11 @@ def cap10():
                              {'do': 'waitFor', 'text': 'Aços Quiririm Ltda', 'timeout': 10}]))
     c.mark(1)
     c.confere('main', ['R$ 1.007,10', 'Aços Quiririm Ltda', 'Aparecida Ramos', 'Valdir Pereira'], 'movimento do dia no #85')
-    c.hover(TXT('R$ 1.007,10'), at=c.A(1, 'caixa', 0.5, nth=0), label='Dinheiro em Caixa R$ 1.007,10')
+    c.hover(TXT('R$ 1.007,10'), 0.3, at=0.4, label='Dinheiro em Caixa R$ 1.007,10')
     c.ev(js_rola_ate('Histórico de Transações', y=120, dur_ms=1000, prefixo=False), at=c.A(1, 'venda', 1.2), label='desce ao Histórico de Transações')
     c.hover(LINHA('Aços Quiririm Ltda'), at=c.A(1, 'Aços', 0.5), label='venda Aços Quiririm (Pix/Transferência)')
     c.hover(LINHA('Aparecida Ramos'), at=c.A(1, 'Aparecida', 0.5), label='compra da Aparecida (Dinheiro)')
-    c.hover(LINHA('Valdir Pereira'), at=c.A(1, 'Valdir', 0.5), label='compra do Valdir (Dinheiro)')
+    c.hover(LINHA('Valdir Pereira'), 0.3, at=c.A(1, 'Valdir', 0.5), label='compra do Valdir (Dinheiro)')
     c.mark(2)
     c.ev(js_rola_topo(900), at=c.L(2) - 0.9, label='volta ao topo')
     c.hover(BTN('Fechar Caixa', MAIN), at=c.A(2, 'Fechar', 0.5), label='Fechar Caixa (sem cadeado)')

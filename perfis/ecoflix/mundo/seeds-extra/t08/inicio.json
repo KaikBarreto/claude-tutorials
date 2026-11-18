@@ -1,4 +1,35 @@
 {
- "_doc": "T8 (Ticket de Pesagem): estado de partida = fim do T7 no que a aula usa. Vai junto de base/balanca-ativada (EcoTray, balança e impressão direta no perfil do Rafael) e base/caixa-aberto (caixa do Rafael aberto: a compra do cap09). Nenhum rascunho de ticket do Rafael; o #57 pendente vem do mundo base (próximo número 58). Quando a semente do fim do T7 existir, ela entra antes desta na cadeia do rec/t08/gerar.py (BASE).",
- "weighing_tickets": []
+ "_doc": "T8 (Ticket de Pesagem): estado de partida = fim do T7 no que a aula usa. Vai junto de base/balanca-ativada (EcoTray, balança e impressão direta no perfil do Rafael) e base/caixa-aberto (caixa do Rafael aberto: a compra do cap09). Nenhum rascunho de ticket do Rafael; o #57 pendente vem do mundo base (próximo número 58). Quando a semente do fim do T7 existir, ela entra antes desta na cadeia do rec/t08/gerar.py (BASE). O #57 (pendente, de 09/11) vai no formato do formulário (coordenador, 11/11): um item de Bateria automotiva com quantity 6.840 (a 1ª pesagem vira o bruto), weighing_mode two_weighings, 1ª/2ª nulas no item, sem impureza, tara e preço; os campos legados material_id e material_name nulos e first_weight 0 (first_weight e first_weight_at são NOT NULL: o formulário grava 0 e a hora da criação, como nos tickets que a aula cria). Sem items o app o tratava como legado (0 kg na lista).",
+ "_patch": {
+  "weighing_tickets": [
+   {
+    "match": {
+     "id": "f95dca4d-ed43-546b-b03d-9288cb8e9298"
+    },
+    "set": {
+     "items": [
+      {
+       "material_id": "7a85b694-4a9d-5e16-9d46-884315c38cec",
+       "material_name": "Bateria automotiva",
+       "material_unit": "Kg",
+       "quantity": 6840,
+       "impurity": 0,
+       "unit_price": 0,
+       "total_price": 0,
+       "tare_weight": 0,
+       "impurity_kg": 0,
+       "weighing_mode": "two_weighings",
+       "_seq": 0,
+       "item_discount": 0,
+       "first_weight": null,
+       "second_weight": null
+      }
+     ],
+     "first_weight": 0,
+     "material_id": null,
+     "material_name": null
+    }
+   }
+  ]
+ }
 }

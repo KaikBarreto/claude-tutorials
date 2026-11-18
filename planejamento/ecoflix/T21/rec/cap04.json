@@ -11,8 +11,8 @@
  },
  "anonymous": true,
  "storage": {
-  "app_version": "1.59.154",
-  "notification_shown_version": "1.59.154",
+  "app_version": "1.60.10",
+  "notification_shown_version": "1.60.10",
   "pwa-install-dismissed": "true",
   "theme": "light",
   "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
@@ -174,7 +174,7 @@
    "target": {
     "selector": "button[aria-label=\"Enviar\"]"
    },
-   "at": 3.47,
+   "at": 3.54,
    "label": "Enviar (R2)",
    "noScroll": true
   },
@@ -191,7 +191,7 @@
   {
    "do": "eval",
    "js": "(async()=>{const c=document.querySelector(\"[role=dialog][aria-label^=\\\"Cato.ai\\\"] div.h-full.overflow-y-auto\");if(!c)return 'SEM PAINEL';const el=[...document.querySelectorAll(\"[role=dialog][aria-label^=\\\"Cato.ai\\\"] div.h-full.overflow-y-auto div.items-end\")].filter(e=>e.getClientRects().length).pop();if(!el)return 'SEM ALVO';const dy=Math.round(el.getBoundingClientRect().top-165);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});await new Promise(r=>setTimeout(r,60));return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 7.88,
+   "at": 8.01,
    "label": "a conversa sobe até o começo da resposta (o gráfico empurrou)"
   },
   {
@@ -200,7 +200,7 @@
     "selector": "[role=dialog][aria-label^=\"Cato.ai\"] strong:has-text(\"R$ 17.540,00\")"
    },
    "seconds": 1.0,
-   "at": 8.54,
+   "at": 8.76,
    "label": "ZOOM total R$ 17.540,00",
    "optional": true,
    "timeout": 4
@@ -217,16 +217,11 @@
    "timeout": 4
   },
   {
-   "do": "mark",
-   "name": "L3",
-   "at": 17.12
-  },
-  {
    "do": "click",
    "target": {
     "selector": "textarea[aria-label=\"Mensagem para o Cato\"]"
    },
-   "at": 17.42,
+   "at": 13.65,
    "label": "campo Pergunte ao Cato (R3)",
    "noScroll": true
   },
@@ -237,16 +232,21 @@
    },
    "text": "Quanto tenho em estoque agora?",
    "cps": 40,
-   "at": 18.17,
+   "at": 14.4,
    "label": "digita: Quanto tenho em estoque agora?",
    "noClick": true
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 17.12
   },
   {
    "do": "click",
    "target": {
     "selector": "button[aria-label=\"Enviar\"]"
    },
-   "at": 20.61,
+   "at": 17.12,
    "label": "Enviar (R3)",
    "noScroll": true
   },
@@ -261,8 +261,19 @@
     "selector": "[role=dialog][aria-label^=\"Cato.ai\"] strong:has-text(\"R$ 96.076,00\")"
    },
    "seconds": 1.0,
-   "at": 22.46,
+   "at": 23.14,
    "label": "valor pelo custo médio R$ 96.076,00",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog][aria-label^=\"Cato.ai\"] p:has-text(\"Os materiais que mais pesam no valor\") >> nth=-1"
+   },
+   "seconds": 0.8,
+   "at": 24.96,
+   "label": "os materiais que mais pesam no valor",
    "optional": true,
    "timeout": 4
   },
@@ -271,11 +282,20 @@
    "target": {
     "selector": "[role=dialog][aria-label^=\"Cato.ai\"] li:has-text(\"Alumínio perfil: 3.385 kg\")"
    },
-   "seconds": 1.0,
+   "seconds": 0.6,
    "at": 28.12,
    "label": "alumínio perfil na frente",
    "optional": true,
    "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "textarea[aria-label=\"Mensagem para o Cato\"]"
+   },
+   "at": 29.47,
+   "label": "campo Pergunte ao Cato (R4)",
+   "noScroll": true
   },
   {
    "do": "mark",
@@ -283,22 +303,13 @@
    "at": 30.22
   },
   {
-   "do": "click",
-   "target": {
-    "selector": "textarea[aria-label=\"Mensagem para o Cato\"]"
-   },
-   "at": 30.23,
-   "label": "campo Pergunte ao Cato (R4)",
-   "noScroll": true
-  },
-  {
    "do": "type",
    "target": {
     "selector": "textarea[aria-label=\"Mensagem para o Cato\"]"
    },
    "text": "Qual o saldo das minhas contas no banco?",
-   "cps": 40,
-   "at": 30.98,
+   "cps": 60,
+   "at": 30.22,
    "label": "digita: Qual o saldo das minhas contas no banco?",
    "noClick": true
   },
@@ -307,7 +318,7 @@
    "target": {
     "selector": "button[aria-label=\"Enviar\"]"
    },
-   "at": 34.08,
+   "at": 32.94,
    "label": "Enviar (R4)",
    "noScroll": true
   },
@@ -319,21 +330,10 @@
   {
    "do": "hover",
    "target": {
-    "selector": "[role=dialog][aria-label^=\"Cato.ai\"] strong:has-text(\"R$ 132.448,67\")"
+    "selector": "[role=dialog][aria-label^=\"Cato.ai\"] ul:has-text(\"Conta Cooperativa\") >> nth=-1"
    },
-   "seconds": 0.8,
-   "at": 35.48,
-   "label": "saldo de agora R$ 132.448,67",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "[role=dialog][aria-label^=\"Cato.ai\"] li:has-text(\"Conta Cooperativa\")"
-   },
-   "seconds": 0.6,
-   "at": 36.92,
+   "seconds": 0.5,
+   "at": 37.56,
    "label": "as três contas",
    "optional": true,
    "timeout": 4
@@ -341,13 +341,22 @@
   {
    "do": "hover",
    "target": {
-    "selector": "[role=dialog][aria-label^=\"Cato.ai\"] p:has-text(\"entraram\")"
+    "selector": "[role=dialog][aria-label^=\"Cato.ai\"] p:has-text(\"entraram\") >> nth=-1"
    },
-   "seconds": 0.8,
-   "at": 38.49,
+   "seconds": 0.5,
+   "at": 38.61,
    "label": "o que entrou e saiu no mês",
    "optional": true,
    "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "textarea[aria-label=\"Mensagem para o Cato\"]"
+   },
+   "at": 39.76,
+   "label": "campo Pergunte ao Cato (R5)",
+   "noScroll": true
   },
   {
    "do": "mark",
@@ -355,22 +364,13 @@
    "at": 40.22
   },
   {
-   "do": "click",
-   "target": {
-    "selector": "textarea[aria-label=\"Mensagem para o Cato\"]"
-   },
-   "at": 40.59,
-   "label": "campo Pergunte ao Cato (R5)",
-   "noScroll": true
-  },
-  {
    "do": "type",
    "target": {
     "selector": "textarea[aria-label=\"Mensagem para o Cato\"]"
    },
    "text": "Como tá meu caixa hoje?",
-   "cps": 40,
-   "at": 41.34,
+   "cps": 60,
+   "at": 40.51,
    "label": "digita: Como tá meu caixa hoje?",
    "noClick": true
   },
@@ -379,7 +379,7 @@
    "target": {
     "selector": "button[aria-label=\"Enviar\"]"
    },
-   "at": 43.31,
+   "at": 42.26,
    "label": "Enviar (R5)",
    "noScroll": true
   },
@@ -391,22 +391,11 @@
   {
    "do": "hover",
    "target": {
-    "selector": "[role=dialog][aria-label^=\"Cato.ai\"] strong:has-text(\"não tem caixa aberto\")"
-   },
-   "seconds": 0.6,
-   "at": 44.69,
-   "label": "hoje ainda não tem caixa aberto",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
     "selector": "[role=dialog][aria-label^=\"Cato.ai\"] strong:has-text(\"R$ 640,00\")"
    },
-   "seconds": 1.0,
-   "at": 45.72,
-   "label": "os caixas de ontem",
+   "seconds": 0.6,
+   "at": 46.43,
+   "label": "os caixas de ontem (R$ 640,00 e R$ 1.250,00)",
    "optional": true,
    "timeout": 4
   },

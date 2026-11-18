@@ -34,7 +34,7 @@ TUT = os.path.normpath(os.path.join(HERE, '..', '..'))
 AULA = 't22'
 NARR = os.path.join(TUT, AULA, 'narracao')
 FAKE_NOW = '2026-11-10T08:30:00-03:00'
-VERSAO = '1.59.154'
+VERSAO = '1.60.10'
 HOJE = FAKE_NOW[:10]
 CODIGO = 'GRP-7C4E9A'   # generate_group_invite_code: 'GRP-' + 6 hexadecimais (o handler fixa este)
 SANDRA_EMAIL = 'sandra.pires@reciclavalemetais.example'
@@ -717,6 +717,8 @@ def cap10():
     c.hover(TXTP('Este grupo exige aprovação', within=MAIN), 1.2, at=c.A(4, 'aviso', 0.5), label='aviso do resumo')
     c.click(BTNX('Solicitar 1 transferência'), at=c.A(4, 'Solicitar', 0.6), label='Solicitar 1 transferência')
     c.waitfor(text='Pendente', timeout=10)
+    # o formulário fecha e a página volta ao alto: a linha pendente fica no pé, com os botões embaixo do aviso "Solicitação criada"
+    c.ev(js_rola_texto('Transferências Inter-Unidades', 150, 600), label='desce até a transferência pendente')
     c.mark(5)
     c.hover(TXT('Pendente', within=MAIN), 1.0, at=c.A(5, 'pendente.', 0.5), label='Pendente')
     c.click(BTN('Executar'), at=c.A(5, 'Executar.', 0.6), label='Executar')   # exato: "Executar todas (1)" vem antes no cabeçalho

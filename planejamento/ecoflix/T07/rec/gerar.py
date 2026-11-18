@@ -271,6 +271,14 @@ class Cap:
               "await new Promise(r=>setTimeout(r,300));}return out})()") % (json.dumps(esp, ensure_ascii=False), json.dumps(escopo), json.dumps(escopo))
         return s.add({'do': 'eval', 'js': js, 'label': 'confere ' + label})
 
+    def confere_rotulo(s, rotulo, esperados, label):
+        """LÊ o bloco do campo de rótulo `rotulo` (main: o rótulo e o valor, dois níveis acima) e compara com a fala"""
+        js = ("(async()=>{const esp=%s;let out='';for(let i=0;i<20;i++){const l=[...document.querySelectorAll('main label')].find(x=>x.textContent.includes(%s));"
+              "const b=l&&l.parentElement&&l.parentElement.parentElement;const t=b?b.innerText.replace(/[\\s\\u00a0]+/g,' '):'';"
+              "const falta=esp.filter(e=>!t.includes(e));if(b&&!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,200);"
+              "await new Promise(r=>setTimeout(r,300));}return out})()") % (json.dumps(esperados, ensure_ascii=False), json.dumps(rotulo, ensure_ascii=False))
+        return s.add({'do': 'eval', 'js': js, 'label': 'confere ' + label})
+
     def fim(s):
         s.flush(1e9)
         s.steps.append({'do': 'eval', 'js': 'JSON.stringify(window.__avisos || "sem observador")', 'label': 'avisos de erro na tela'})
@@ -964,7 +972,7 @@ def cap11():
     c.click(SEL(f"{POP} button:text-is('25')"), w=(3, 'vinte'), label='25 de novembro')
     c.hover(SEL('#installment-due-2'), 0.8, w=(3, 'dez'), label='2ª parcela 10/12/2026')
     c.hover(SEL(f"{SUB} :text-is('Soma das parcelas')"), 1.4, w=(3, 'soma'), label='as duas linhas e a Soma das parcelas (zoom)')
-    c.confere(SUB, ['25/11/2026', '10/12/2026', 'Soma das parcelas'], 'parcelas 25/11 e 10/12')
+    c.confere('dlg', ['25/11/2026', '10/12/2026', 'Soma das parcelas'], 'parcelas 25/11 e 10/12')   # 'dlg' = a última janela (a de parcelas)
     c.click(BTNX('Aplicar faturamento'), w=(5, 'Aplicar'), label='Aplicar faturamento')
     c.waitfor(text='1ª em 25/11/2026', timeout=8)
     c.hover(PD('1ª em 25/11/2026', exact=False), 2.0, w=(5, 'parcelas,', 0), label='2 parcelas, 1ª em 25/11/2026 (zoom)')
@@ -1023,7 +1031,7 @@ def cap13():
     c.type(MAT, 'latão', w=(4, 'Estoque', 0, 0.6), clicar=False, cps=30, label='material: latão de novo')
     c.click(OPT('Metal amarelo (latão)', exact=False), w=(4, 'Estoque', 0, 0.2), label='Metal amarelo (latão), sem incluir')
     c.hover(ESTOQUE_DISP, 4.0, w=(4, 'Tinha'), label='Estoque Disponível 62, Em estoque 214, Nesta venda -152 (zoom)')
-    c.confere("main div:has(> label:has-text('Estoque Disponível'))", ['62', 'Em estoque: 214', '152'], 'Estoque Disponível 62: 214 em estoque, -152 nesta venda')
+    c.confere_rotulo('Estoque Disponível', ['62', 'Em estoque: 214', '152'], 'Estoque Disponível 62: 214 em estoque, -152 nesta venda')
     c.click(OPCOES, w=(5, 'Opcoes'), label='Opções avançadas')
     c.waitfor(text='Ajustes usados de vez em quando', timeout=8)
     c.click(SW_SEM_VALOR, w=(5, 'ligo'), label='liga Comprovante sem valores')
@@ -1044,7 +1052,7 @@ def cap14():
     c.type(MAT, 'cobre mel', w=(1, 'mel,', None, 0.4), clicar=False, cps=30, label='material: cobre mel')
     c.click(OPT('Cobre mel', exact=False), w=(1, 'sistema'), label='Cobre mel')
     c.hover(ESTOQUE_DISP, 1.0, w=(1, 'quarenta'), label='Estoque Disponível 42')
-    c.confere("main div:has(> label:has-text('Estoque Disponível'))", ['42'], 'Estoque Disponível 42 Kg de cobre mel')
+    c.confere_rotulo('Estoque Disponível', ['42'], 'Estoque Disponível 42 Kg de cobre mel')
     c.click(INCLUIR, w=(1, 'incluir,'), label='Incluir Item (cobre mel)')
     c.waitfor(text='Estoque insuficiente nesta unidade', timeout=8)
     c.hover(PD('Faltam', exact=False), 2.4, w=(1, 'faltam'), label='Faltam 18 Kg de Cobre mel. (zoom)')

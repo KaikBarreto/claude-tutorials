@@ -33,7 +33,7 @@ TUT = os.path.normpath(os.path.join(HERE, '..', '..'))
 AULA = 't14'
 NARR = os.path.join(TUT, AULA, 'narracao')
 FAKE_NOW = '2026-11-10T08:30:00-03:00'
-VERSAO = '1.59.154'
+VERSAO = '1.60.10'
 HOJE = FAKE_NOW[:10]
 NOMES = ['Abertura', 'A tela e as contas', 'Cadastrar e arquivar contas', 'O cofre e o ajuste de saldo', 'Movimentação, transferência e saque',
          'O que é conciliar', 'Importar o extrato', 'Casar com o sistema', 'Baixar uma conta', 'Criar um lançamento', 'Buscar e aceitar centavos',

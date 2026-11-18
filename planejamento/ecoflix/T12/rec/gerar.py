@@ -46,9 +46,9 @@ def stable_id(chave):
 RAFAEL = stable_id('user.rafael')
 TOKEN_COOP = stable_id('t12.portal.recomeco')   # portal_token da Cooperativa Recomeço (t12_sementes.py)
 try:
-    VERSAO = open(os.path.join(TUT, 'app', 'dist', '.versao-app'), encoding='utf8').read().strip() or '1.59.154'
+    VERSAO = open(os.path.join(TUT, 'app', 'dist', '.versao-app'), encoding='utf8').read().strip() or '1.60.10'
 except OSError:
-    VERSAO = '1.59.154'
+    VERSAO = '1.60.10'
 HOJE = '2026-11-10'
 STORAGE = {
     'app_version': VERSAO, 'notification_shown_version': VERSAO, f'dominex:daily-tasks-shown:{RAFAEL}': HOJE,
@@ -141,7 +141,7 @@ class Cap:
 
     def add(s, d):
         if d.get('at') is not None:
-            lim = 0.8 if d.get('do') == 'hover' else 0.25
+            lim = 0.8 if d.get('do') == 'hover' else 0.5   # gesto que começa até 0,5 s antes da linha espera a marca (marca no início da linha)
             for mt, mi in s.pending:
                 if d['at'] < mt <= d['at'] + lim:
                     d['at'] = round(mt, 2)
@@ -420,7 +420,7 @@ def cap00():
         c.mark(i)
         c.flush(1e9)
     c.mark(5)
-    c.click(GRUPO, at=c.A(5, 'Coletas', 0.9), label='abre Coletas & Logística')
+    c.click(GRUPO, at=c.A(5, 'Coletas', 0.9), label='abre Coletas & Logística', unless=ITEM_MENU('Ordens de Coleta'))
     c.click(ITEM_MENU('Ordens de Coleta'), at=c.A(5, 'Ordens', 0.8), label='Ordens de Coleta')
     c.waitfor(text=PAGINAS['/coletas/ordens'], timeout=15)
     c.cursor((760, 470), at=c.A(5, 'Antes', 0.2), label='cursor sai do menu (o quadro abre)')
@@ -665,7 +665,7 @@ def cap07():
     c.add({'do': 'goto', 'url': '/coletas/frota', 'at': round(c.L(7) - 0.2, 2), 'label': 'de volta ao sistema (Frota)'})
     c.waitfor(text=PAGINAS['/coletas/frota'], timeout=15)
     c.hover(GRUPO, 1.4, at=c.A(7, 'menu', FH), label='o ponto vermelho no menu Coletas & Logística')
-    c.click(GRUPO, label='abre Coletas & Logística')
+    c.click(GRUPO, label='abre Coletas & Logística', unless=ITEM_MENU('Ordens de Coleta'))
     c.click(ITEM_MENU('Ordens de Coleta'), at=c.A(7, 'coluna', FC), label='Ordens de Coleta')
     c.waitfor(text=PAGINAS['/coletas/ordens'], timeout=15)
     c.hover(CARD(10), 1.0, at=c.A(7, 'pedido', FH), label='#10 na Solicitada')
@@ -685,7 +685,11 @@ def cap07():
     return c
 
 
-ABRE_GRUPO = [{'do': 'click', 'target': GRUPO}, {'do': 'waitFor', 'target': ITEM_MENU('Frota'), 'timeout': 8}, {'do': 'wait', 'seconds': 0.5}]
+# o grupo da página atual pode já vir aberto (o clique o fecharia): só clica se o link filho ainda não aparece (08-licoes, T5 cap. 17)
+JS_ABRE_GRUPO = ("(()=>{if([...document.querySelectorAll('a')].some(a=>a.textContent.trim()==='Frota'&&a.offsetParent))return 'ja aberto';"
+                 "const b=[...document.querySelectorAll('button')].find(b=>b.textContent.trim().startsWith('Coletas & Logística'));"
+                 "if(!b)return 'SEM ALVO';b.click();return 'aberto'})()")
+ABRE_GRUPO = [{'do': 'eval', 'js': JS_ABRE_GRUPO}, {'do': 'waitFor', 'target': ITEM_MENU('Frota'), 'timeout': 8}, {'do': 'wait', 'seconds': 0.5}]
 
 
 @capitulo

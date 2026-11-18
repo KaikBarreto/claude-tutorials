@@ -32,9 +32,9 @@ NARR = os.path.join(TUT_HOME, 't00', 'narracao')
 
 RAFAEL = '34c36c63-0890-5e89-8963-7c77b7996908'      # stableId('user.rafael') do mundo
 try:
-    VERSAO = open(os.path.join(TUT_HOME, 'app', 'dist', '.versao-app'), encoding='utf8').read().strip() or '1.59.154'
+    VERSAO = open(os.path.join(TUT_HOME, 'app', 'dist', '.versao-app'), encoding='utf8').read().strip() or '1.60.10'
 except OSError:
-    VERSAO = '1.59.154'
+    VERSAO = '1.60.10'
 FAKE_NOW = '2026-11-10T08:30:00-03:00'
 HOJE = FAKE_NOW[:10]
 
@@ -521,7 +521,7 @@ def cap06(v):
             """garante o item do menu dentro da área visível do menu lateral (rolagem suave do próprio menu)"""
             rola_ate(c, texto, at=at, label=label, y=300, dur_ms=500, so_se_fora=True)
         c.mark(1)
-        c.hover(ITEM_MENU('Dashboard'), 0.5, at=c.A(1, 'Dashboard,', 0.9), label='menu: Dashboard')
+        c.hover(ITEM_MENU('Dashboard'), 0.5, at=c.A(1, 'Dashboard,', 0.9), label='menu: Dashboard', noScroll=True)
         c.mark(2)
         c.click(GRUPO('Financeiro'), at=c.A(2, 'Financeiro', 1.0), label='Financeiro (abre o grupo)')
         c.marcar(ITEM_MENU('Contas a Pagar/Receber'), at=c.A(2, 'contas', 0.2), label='subitens do Financeiro')
@@ -544,7 +544,7 @@ def cap06(v):
         c.hover(ITEM_MENU('Agenda'), 0.4, at=c.A(8, 'Agenda,', 0.9), label='menu: Agenda')
         c.hover(GRUPO('Gerencial (Filiais)'), 0.4, at=c.A(8, 'Gerencial', 0.9), label='menu: Gerencial (Filiais)')
         c.mark(9)
-        c.hover(BTN('Configurações'), 0.6, at=c.A(9, 'Configurações', 0.9), label='rodapé: Configurações')
+        c.hover(BTN('Configurações'), 0.6, at=c.A(9, 'Configurações', 0.9), label='rodapé: Configurações', noScroll=True)
         c.mark(10)
         rola_ate(c, 'Dashboard', at=c.A(10, 'Algumas', 0.8), label='o menu volta ao topo', y=120, dur_ms=600, so_se_fora=True)
         c.cursor((760, 470), at=c.A(10, 'dependem', 0.6), label='cursor sai do menu')
@@ -552,7 +552,7 @@ def cap06(v):
         c.mark(1)
         c.toque(BTN('Menu'), at=c.A(1, 'menu', 1.4), label='Menu (barra de baixo)')
         c.waitfor(text='Conta', timeout=8)
-        c.hover(ITEM_MENU('Dashboard'), 0.5, at=c.A(1, 'Dashboard,', 0.9), label='gaveta: Dashboard')
+        c.hover(ITEM_MENU('Dashboard'), 0.5, at=c.A(1, 'Dashboard,', 0.9), label='gaveta: Dashboard', noScroll=True)
         c.mark(2)
         c.click(GRUPO('Financeiro'), at=c.A(2, 'Financeiro', 1.0), label='Financeiro (abre o grupo)')
         c.marcar(ITEM_MENU('Contas a Pagar/Receber'), at=c.A(2, 'contas', 0.2), label='subitens do Financeiro')
@@ -576,7 +576,7 @@ def cap06(v):
         c.hover(ITEM_MENU('Agenda'), 0.4, at=c.A(8, 'Agenda,', 0.9), label='gaveta: Agenda')
         c.hover(GRUPO('Gerencial (Filiais)'), 0.4, at=c.A(8, 'Gerencial', 0.9), label='gaveta: Gerencial (Filiais)')
         c.mark(9)
-        c.hover(BTN('Configurações', within=DLG), 0.6, at=c.A(9, 'Configurações', 0.9), label='rodapé da gaveta: Configurações')
+        c.hover(BTN('Configurações', within=DLG), 0.6, at=c.A(9, 'Configurações', 0.9), label='rodapé da gaveta: Configurações', noScroll=True)
         c.mark(10)
         rola_ate(c, 'Dashboard', at=c.A(10, 'Algumas', 0.8), label='a gaveta volta ao topo', y=120, dur_ms=600, dentro=DLG)
     c.fim()
@@ -585,7 +585,7 @@ def cap06(v):
 
 # ================================================================ cap07 · Os menus e a sua conta (S2)
 def abrir_config_aba_d(c, a_cfg, a_aba, aba, espera):
-    c.click(BTN('Configurações'), at=a_cfg, label='rodapé: Configurações')
+    c.click(BTN('Configurações'), at=a_cfg, label='rodapé: Configurações', noScroll=True)
     c.waitfor(text='Gerencie as configurações', timeout=15, optional=True) if False else c.waitfor(target=TXT(aba, within='main'), timeout=15)
     c.click(TXT(aba), at=a_aba, label=f'aba {aba}')
     c.waitfor(text=espera, timeout=12)
@@ -607,7 +607,7 @@ def cap07(v):
         c.hover(ITEM('Falar com o Suporte'), 0.4, at=c.A(3, 'Falar', 0.9), label='Falar com o Suporte (sem clicar)')
         c.mark(4)
         c.press('Escape', at=c.A(4, 'Prefere', 0.6), label='fecha o menu da conta')
-        c.click(BTN('Configurações'), at=c.A(4, 'Configurações,', 1.0), label='rodapé: Configurações')
+        c.click(BTN('Configurações'), at=c.A(4, 'Configurações,', 1.0), label='rodapé: Configurações', noScroll=True)
         c.waitfor(text='Aparência', timeout=15)
         c.click(TXT('Aparência'), at=c.A(4, 'Aparência,', 1.0), label='aba Aparência')
         c.waitfor(text='Estilo de Navegação (Desktop)', timeout=12)
@@ -633,7 +633,7 @@ def cap07(v):
         c.hover(BTN('Central de Ajuda', within=DLG), 0.4, at=c.A(3, 'Central', 0.9), label='Central de Ajuda')
         c.hover(BTN('Falar com o Suporte', within=DLG), 0.4, at=c.A(3, 'Falar', 0.9), label='Falar com o Suporte (sem clicar)')
         c.mark(4)
-        c.click(BTN('Configurações', within=DLG), at=c.A(4, 'Em', 1.2), label='Configurações (rodapé da gaveta)')
+        c.click(BTN('Configurações', within=DLG), at=c.A(4, 'Em', 1.2), label='Configurações (rodapé da gaveta)', noScroll=True)
         c.waitfor(text='Aparência', timeout=15)
         c.click(TXT('Aparência'), at=c.A(4, 'Aparência,', 1.2), label='aba Aparência')
         c.waitfor(text='Estilo de Navegação (Desktop)', timeout=12)
@@ -645,7 +645,7 @@ def cap07(v):
         c.hover(TXT('Caixa', within='nav'), 0.3, at=c.A(5, 'Caixa,', 0.9), label='barra de baixo: Caixa')
         c.hover(SEL('nav button:has(svg.lucide-plus)'), 0.3, at=c.A(5, 'Novo,', 0.9), label='barra de baixo: Novo')
         c.hover(TXT('Estoque', within='nav'), 0.3, at=c.A(5, 'Estoque', 0.9), label='barra de baixo: Estoque')
-        c.toque(BTN('Menu'), at=c.A(5, 'Menu,', 1.3), label='Menu (abre a gaveta)')
+        c.toque(BTN('Menu'), at=c.A(5, 'Menu,', 1.3, nth=1), label='Menu (abre a gaveta)')
         c.waitfor(text='Conta', timeout=8)
         rola_ate(c, 'Conta', at=c.A(5, 'conta.', 1.8), label='a gaveta desce à seção Conta', y=170, dur_ms=900, dentro=DLG)
     c.fim()
@@ -658,13 +658,13 @@ def cap08(v):
     c.mark(1)
     c.mark(2)
     if v == 'd':
-        c.click(BTN('Configurações'), at=c.A(2, 'Uma', 1.4), label='rodapé: Configurações')
+        c.click(BTN('Configurações'), at=c.A(2, 'Uma', 1.4), label='rodapé: Configurações', noScroll=True)
         c.waitfor(text='Usabilidade', timeout=15)
         c.click(TXT('Usabilidade'), at=c.A(2, 'dica:', 0.9), label='aba Usabilidade')
     else:
         c.toque(BTN('Menu'), at=c.A(2, 'Uma', 1.8), label='Menu (barra de baixo)')
         c.waitfor(text='Conta', timeout=8)
-        c.click(BTN('Configurações', within=DLG), at=c.A(2, 'dica:', 0.9), label='Configurações (rodapé da gaveta)')
+        c.click(BTN('Configurações', within=DLG), at=c.A(2, 'dica:', 0.9), label='Configurações (rodapé da gaveta)', noScroll=True)
         c.waitfor(text='Usabilidade', timeout=15)
         c.click(TXT('Usabilidade'), at=c.A(2, 'ao', 1.0), label='aba Usabilidade')
     c.waitfor(text='Inverter os termos Cliente e Fornecedor', timeout=12)
@@ -718,7 +718,7 @@ def cap09(v):
     c.mark(6)
     rola_ate(c, 'Pagar Agora', at=c.A(6, 'Uma', 1.6), label='a página desce a Pagar Agora', y=520 if v == 'd' else 380, dur_ms=800, dentro='main', prefixo=True)
     c.hover(BTNX('Pagar Agora'), 0.5, at=c.A(6, 'Pagar', 0.9), label='botão Pagar Agora (sem clicar)')
-    rola_ate(c, 'Gerenciar plano', at=c.A(6, 'mudar', 1.8), label='a página desce a Gerenciar plano', y=520 if v == 'd' else 380, dur_ms=1200, dentro='main', prefixo=True)
+    rola_ate(c, 'Gerenciar plano', at=c.A(6, 'mudar', 1.3), label='a página desce a Gerenciar plano', y=520 if v == 'd' else 380, dur_ms=1200, dentro='main', prefixo=True)
     c.hover(BTNX('Gerenciar plano'), 0.6, at=c.A(6, 'plano', 0.9), label='botão Gerenciar plano (sem clicar)')
     c.fim()
     return c
@@ -789,7 +789,7 @@ def cap13(v):
         rola_ate(c, 'Assisti ao vídeo até o final e entendi os combinados.', at=c.A(4, 'Agora', 1.6), label='desce à caixa', y=300, dur_ms=800, dentro=PORTAO)
     c.click(P('Assisti ao vídeo até o final e entendi os combinados.'), at=c.A(4, 'marcar', 1.1), label='caixa Assisti ao vídeo (liga)')
     c.marcar(BTN('Confirmar e começar a primeira aula', within=PORTAO), at=c.A(4, 'clicar', 1.5), label='botão Confirmar e começar a primeira aula')
-    c.click(BTN('Confirmar e começar a primeira aula', within=PORTAO), at=c.E(4, 'aula.', 0.5), label='Confirmar e começar a primeira aula')
+    c.click(BTN('Confirmar e começar a primeira aula', within=PORTAO), at=c.E(4, 'aula.', 0.8), label='Confirmar e começar a primeira aula')
     c.waitfor(text='Tirar dúvidas com o suporte', timeout=25)
     c.mark(5)
     c.fim()

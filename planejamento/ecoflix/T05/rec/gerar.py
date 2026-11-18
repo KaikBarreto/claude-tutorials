@@ -27,7 +27,7 @@ FAKE_NOW = {n: FN for n in range(12)}
 # abre (o setup, fora do vídeo, também gasta relógio): FAKE_NOW do cap04 = 08:41:07 - SETUP_S - instante do clique em "Testar" (no capNN.json).
 # SETUP_S: calibrar com o `eval` "hora do cupom" do ensaio (hora do navegador no clique) e o `tAct` do "Testar" no actions.json.
 HORA_CUPOM = (8, 41, 7)
-SETUP_S = 20.0
+SETUP_S = 10.0   # medido (04/11 ensaio): o relógio do app já marca 08:30:10 no 1º quadro
 NOMES = ['Abertura', 'O que é o EcoTray', 'Baixar e instalar', 'O pareamento automático', 'Conectar a impressora',
          'Largura do papel e impressão turbo', 'Conectar a balança', 'Peso somente pela balança', 'O indicador de peso',
          'Quando o EcoTray cai', 'Driver incompatível', 'Recapitulando']
@@ -47,9 +47,9 @@ def stable_id(chave):
 
 RAFAEL = stable_id('user.rafael')
 try:
-    VERSAO = open(os.path.join(TUT, 'app', 'dist', '.versao-app'), encoding='utf8').read().strip() or '1.59.154'
+    VERSAO = open(os.path.join(TUT, 'app', 'dist', '.versao-app'), encoding='utf8').read().strip() or '1.60.10'
 except OSError:
-    VERSAO = '1.59.154'
+    VERSAO = '1.60.10'
 HOJE = '2026-11-10'
 STORAGE = {
     'app_version': VERSAO, 'notification_shown_version': VERSAO, f'dominex:daily-tasks-shown:{RAFAEL}': HOJE,
@@ -442,7 +442,8 @@ def cap04():
     c.click(SW_IMP, at=c.A(2, 'ligo', 0.9), label='chave Integração com Impressora')
     c.waitfor(text='Conectado ao EcoTray', timeout=15)
     c.mark(3)
-    c.click(COMBO, at=c.A(3, 'lista', 0.9), label='lista Selecione a impressora')
+    # a cena de Windows 4 clica na bandeja em 15,5 s: o cursor do robô fica parado até lá (a lista abre depois, em 'impressoras')
+    c.click(COMBO, at=c.A(3, 'impressoras', 0.4), label='lista Selecione a impressora')
     c.click(OPT('POS-58'), at=c.A(3, 'Escolho', 0.9), label='impressora POS-58')
     c.waitfor(target=BTN('Testar'), timeout=10)
     c.mark(4)

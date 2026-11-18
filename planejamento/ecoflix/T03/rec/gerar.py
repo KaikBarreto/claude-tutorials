@@ -15,6 +15,9 @@ COMO O GERADOR PRENDE O ROBÔ À FALA (regras que valem para toda aula):
    cujo `at` já passou dela; passo que começaria até 0,25 s antes da marca (0,8 s num hover) é puxado para ela; hover que atravessa o
    início de uma linha é partido em dois (T14/T15/T21). Nunca se chama mark() à mão.
  - Passo sem `w` corre logo depois do anterior (espera do app, conferência, segundo clique de um menu).
+ - O 1º gesto com cursor do capítulo ganha AQUECE (0,9 s) a mais de folga: a 1ª busca de alvo numa página nova custa ~1,5 s até agir.
+ - Calibre as folgas pelo ensaio rápido (tAct - tStart no actions.json) e confira com o prever.py antes do completo; medida tirada com a
+   máquina carregada (renders, 11/11 13:30-17:35) não vale: grave de novo antes de mexer em âncora.
  - `confere*` LÊ a tela e compara com a fala ("OK"/"DIFERENTE", o resumo.py acusa); `OBS` guarda em window.__avisos todo aviso de erro
    do app e o último passo devolve a lista (tem de sair vazia).
  - Ilustração que cobre a janela (roteiro [ILUSTRAÇÃO]): o robô fica parado ou mexe só por `eval` (sem cursor, sem zoom automático).
@@ -73,6 +76,7 @@ EXTRA_BASE = {7: ['caixa-0830']}
 
 # folga de cada gesto: segundos entre o início do passo e o instante em que ele age (pace 0,5; medido no ensaio do T03 e na tabela
 # "Custo real dos gestos" do docs/04). O `at` = palavra - folga faz o cursor CHEGAR na palavra.
+AQUECE = 0.9   # folga a mais do 1º gesto com cursor de cada capítulo (ver Cap._p)
 FOLGA = {'click': 0.7, 'click1': 1.3, 'hover': 0.55, 'type': 0.95, 'typen': 0.05, 'press': 0.05, 'scroll': 0.15, 'eval': 0.0}
 CPS = 14            # digitação "de gente" (0,17 s por letra); textos longos sem graça visual a 40
 
@@ -147,6 +151,7 @@ class Cap:
             s.linhas = [dict(l, i=l['i'] - (a - 1), s=round(l['s'] - off, 3), e=round(l['e'] - off, 3)) for l in s.linhas[a - 1:b]]
             s.dur = round(fim - off, 2)
         s.pace, s.cps, s.start = pace, cps, start
+        s.aquecido = False
         s.prewarm = list(prewarm)
         s.user = user
         s.setup = list(setup) + [{'do': 'eval', 'js': js_obs(erros_ok)}]
@@ -171,15 +176,15 @@ class Cap:
             raise SystemExit(f'{s.nome}: "{palavra}" #{k} não existe na linha {i} ({len(hits)} ocorrências): {linha}')
         return hits[k]['s']
 
-    def at(s, w, gesto):
-        """w = (linha, 'palavra'[, nth][, folga]) ou um número (segundos); devolve o `at` = palavra - folga do gesto"""
+    def at(s, w, gesto, extra=0.0):
+        """w = (linha, 'palavra'[, nth][, folga]) ou um número (segundos); devolve o `at` = palavra - folga do gesto (- extra)"""
         if w is None:
             return None
         if isinstance(w, (int, float)):
             return round(max(0.0, w), 2)
         i, palavra = w[0], w[1]
         nth = w[2] if len(w) > 2 else None
-        folga = w[3] if len(w) > 3 else FOLGA[gesto]
+        folga = (w[3] if len(w) > 3 else FOLGA[gesto]) + extra
         t = round(max(0.0, s.W(i, palavra, nth) - folga), 2)
         s.anchors.append((i, palavra, gesto, t))
         return t
@@ -214,7 +219,13 @@ class Cap:
         return d
 
     def _p(s, d, w, gesto, label, kw):
-        at = s.at(w, gesto)
+        # 1º gesto com cursor do capítulo: o robô ainda aquece (1ª busca de alvo na página nova), ~0,9 s a mais até agir (ensaios rápidos
+        # de 11/11 após 17:35: 1,4 a 1,7 s no cap00, cap06 e cap07, contra 0,7 a 0,8 s dos outros gestos)
+        extra = 0.0
+        if 'target' in d and d['do'] in ('click', 'hover', 'type') and not s.aquecido:
+            s.aquecido = True
+            extra = AQUECE
+        at = s.at(w, gesto, extra)
         if at is not None:
             d['at'] = at
         if label:
@@ -228,7 +239,11 @@ class Cap:
     def hover(s, alvo, seconds=0.6, w=None, label=None, **kw):
         kw.setdefault('optional', True)
         kw.setdefault('timeout', 4)
-        at = s.at(w, 'hover')
+        extra = 0.0
+        if not s.aquecido:   # 1º gesto com cursor do capítulo (ver _p)
+            s.aquecido = True
+            extra = AQUECE
+        at = s.at(w, 'hover', extra)
         if at is not None:
             for mt, mi in sorted(s.pending):   # marca logo depois do início: o hover começa junto com a linha (a marca vem antes)
                 if at < mt <= at + 0.8:
@@ -734,7 +749,8 @@ def cap07():
     c.hover(BTN('Principal'), 1.0, w=(1, 'principal.'), label='só a Principal')
     c.click(BTN('Nova Tabela'), w=(2, 'Nova'), label='Nova Tabela')
     c.waitfor(text='Nova Tabela de Preços', timeout=8)
-    c.type({'placeholder': 'Ex: Atacado, Varejo, Premium...'}, 'Tabela Depósitos', w=(2, 'nome'), cps=30, label='Nome da Tabela: Tabela Depósitos')
+    # o campo do nome tem autoFocus (PriceTableSettingsModal): digita sem ir até ele (o clique custava ~1 s e atrasava o "Marco Vincular")
+    c.type({'placeholder': 'Ex: Atacado, Varejo, Premium...'}, 'Tabela Depósitos', w=(2, 'com'), clicar=False, cps=30, label='Nome da Tabela: Tabela Depósitos')
     c.click(SEL(f"{DLG} #is-linked"), w=(2, 'Marco'), label='Vincular à tabela principal')
     c.waitfor(text='Exemplo de cálculo', timeout=6)
     c.type(SEL(f"{DLG} input[inputmode=decimal]"), '4', w=(2, 'quatro'), clear=True, label='Valor da variação 4')
@@ -750,22 +766,22 @@ def cap07():
     c.hover(CELULA('Cobre mel', 8), 1.0, w=(5, 'venda,'), label='Preço de Venda R$ 47,90 (o da principal)')
     # L6: menu lateral recolhido (abre ao passar o mouse) > Clientes e Fornecedores > Fornecedores > o depósito (na lista, sem busca) > Editar
     c.hover(MENU('/clientes-fornecedores'), 0.6, w=(6, 'ligar'), noScroll=True, label='menu lateral (abre ao passar o mouse)')
-    c.click(MENU('/clientes-fornecedores'), w=(6, 'Clientes'), noScroll=True, label='Clientes e Fornecedores')
+    # L6: menu, aba, depósito e Editar em 5,5 s de fala; cada gesto na sua palavra, sem pausa no meio (prever de 11/11: 1,3 s de atraso)
+    c.click(MENU('/clientes-fornecedores'), w=(6, 'Em', 0, 1.0), noScroll=True, label='Clientes e Fornecedores')
     c.rolar(0, ponto=(760, 420), duration=0.3, after=0, label='cursor sai do menu (ele recolhe)')
     c.waitfor(target=BTNX('Fornecedores'), timeout=12)
-    c.pause(0.5)
-    c.click(BTNX('Fornecedores'), label='aba Fornecedores')
+    c.click(BTNX('Fornecedores'), w=(6, 'Fornecedores,'), label='aba Fornecedores')
     # a aba trocou mesmo? (o depósito também é cliente: no ensaio de 11/11 a aba ficou em Clientes e o robô abriu o depósito-cliente)
-    c.pause(0.6)
+    c.pause(0.3)
     c.click(BTNX('Fornecedores'), label='aba Fornecedores de novo (só se não trocou)', unless=BTN('Novo Fornecedor'))
     c.waitfor(target=BTN('Novo Fornecedor'), timeout=30)
     c.waitfor(target=P('Depósito Irmãos Siqueira'), timeout=8)
     c.click(P('Depósito Irmãos Siqueira'), w=(6, 'Depósito'), label='Depósito Irmãos Siqueira')
     c.waitfor(text='1 preço personalizado', timeout=10)
-    c.click(BTN('Editar', within='main'), w=(6, 'Editar.'), label='Editar')
+    c.click(BTN('Editar', within='main'), w=(6, 'clico'), label='Editar')
     c.waitfor(text='Editar Fornecedor', timeout=10)
     c.ev(js_rola_ate('Tabela de Preços Padrão', y=380, escopo=DLG), w=(7, 'Em', None, 0.6), label='desce até Tabela de Preços Padrão')
-    c.click(SEL(f"{DLG} div.space-y-2:has(> label:has-text('Tabela de Preços Padrão')) button[role=combobox]"), w=(7, 'escolho'), label='Tabela de Preços Padrão (abre)')
+    c.click(SEL(f"{DLG} div.space-y-2:has(> label:has-text('Tabela de Preços Padrão')) button[role=combobox]"), w=(7, 'Padrão,'), label='Tabela de Preços Padrão (abre)')
     c.click(OPT('Tabela Depósitos'), w=(7, 'Depósitos'), label='Tabela Depósitos (zoom)')
     c.click(BTN('Salvar', within=DLG), w=(7, 'salvo.'), noScroll=True, label='Salvar')
     c.waitfor(text='Fornecedor atualizado!', timeout=10)
@@ -774,24 +790,26 @@ def cap07():
     c.waitfor(text='Nova Compra', timeout=15)
     c.click(SEL("main button:has-text('Nova Compra')"), w=(9, 'abro'), label='Nova Compra')
     c.waitfor(target=SEL('#supplier-desktop-top'), timeout=15)
-    c.click(SEL('#supplier-desktop-top'), w=(9, 'Escolho', None, 1.6), label='Selecionar Fornecedor')
+    c.click(SEL('#supplier-desktop-top'), w=(9, 'Escolho', None, 2.6), label='Selecionar Fornecedor')  # a busca e o clique vêm em seguida
     c.type({'placeholder': 'Buscar por nome, apelido, CPF/CNPJ ou telefone...'}, 'Depósito', clicar=False, cps=30, label='busca Depósito')
     c.click(PD('Depósito Irmãos Siqueira'), w=(9, 'depósito,'), label='Depósito Irmãos Siqueira')
     c.confere('main', ['Tabela Depósitos'], 'Tabela de Preços passou para Tabela Depósitos')
     c.registra(SEL("main button[role=combobox]:has-text('Tabela Depósitos')"), w=(9, 'tabela'), label='Tabela de Preços: Tabela Depósitos (zoom, sem o mouse)')
     c.click({'placeholder': 'Escreva o nome ou código do material'}, w=(9, 'selecionada.'), label='campo do material')
-    c.type({'placeholder': 'Escreva o nome ou código do material'}, 'cobre', w=(10, 'No'), clicar=False, cps=30, label='material: cobre')
+    c.type({'placeholder': 'Escreva o nome ou código do material'}, 'cobre', w=(10, 'No', None, 0.6), clicar=False, cps=30, label='material: cobre')
     c.click(OPT('Cobre mel', exact=False), w=(10, 'mel,'), label='Cobre mel')
     c.confere('body', ['Preço da tabela aplicado para Cobre mel'], 'aviso Preço da tabela aplicado')
     c.registra(VALOR_KG, w=(10, 'quarenta'), label='Valor/kg 44,20 (zoom)')
     c.confere_campos(['44,2'], 'Valor/kg 44,20', escopo='main')
-    c.click({'placeholder': 'Escreva o nome ou código do material'}, w=(10, 'vinte.', None, -0.1), label='campo do material de novo')
-    c.type({'placeholder': 'Escreva o nome ou código do material'}, 'bronze', w=(11, 'Já', None, 0.3), clicar=False, clear=True, cps=30, label='troca para bronze')
-    c.click(OPT('Bronze', exact=False), w=(11, 'bronze,', None, 0.3), label='Bronze')
+    # L11: campo, troca e Bronze não cabem entre "vinte." e "bronze,": o campo abre no "quatro" e o Bronze sai no "depósito" (o 30,50 e o
+    # aviso aparecem no "personalizado")
+    c.click({'placeholder': 'Escreva o nome ou código do material'}, w=(10, 'quatro', None, 0.0), label='campo do material de novo')
+    c.type({'placeholder': 'Escreva o nome ou código do material'}, 'bronze', w=(11, 'Já', None, 0.65), clicar=False, clear=True, cps=30, label='troca para bronze')
+    c.click(OPT('Bronze', exact=False), w=(11, 'depósito'), label='Bronze')
     # o aviso vive 2 s: o cursor vai direto a ele, por coordenada (sem esperar a página), e fica em cima (o sonner pausa) até "aplicado."
     # noScroll SEMPRE em aviso: ele fica abaixo da faixa útil do robô (96..730 px) e, sem isso, o hover rola a página e tira o cursor
     # de cima do aviso, que some (era a causa das falhas do aviso no cap06, cap07 e cap10)
-    ini = round(c.W(11, 'bronze,') + 1.0, 2)
+    ini = round(c.W(11, 'depósito') + 0.9, 2)
     c.rolar(0, ponto=(990, 748), duration=0.3, after=0, label='cursor no lugar do aviso (embaixo à direita)')
     c.hover({'text': 'Preço especial aplicado para Bronze'}, round(c.W(11, 'aplicado.') + 0.6 - ini - 0.55, 2), timeout=6, noScroll=True,
             label='aviso Preço especial aplicado (o mouse segura o aviso) (zoom: Valor/kg 30,50 com o aviso)')
@@ -889,7 +907,8 @@ def cap10():
     # o Playwright não achava o "Desfazer" a tempo (ensaios de 10 e 11/11). O cursor vai antes ao lugar do botão, por coordenada (sem
     # depender da página), e fica lá: com o mouse em cima o sonner segura o aviso até o clique na palavra "Clicando".
     c.rolar(0, ponto=(1190, 746), duration=0.35, after=0, label='cursor no lugar do Desfazer (o aviso sobe embaixo à direita)')
-    c.hover(TXT('Desfazer'), 0.3, timeout=12, noScroll=True, label='aviso "Radiador de cobre" excluído com Desfazer (o mouse segura o aviso)')
+    # o cursor já está parado em cima do aviso (o sonner o segura): só o retângulo para o zoom, sem mexer o mouse (o hover custava ~1 s)
+    c.registra({'text': 'excluído'}, label='aviso "Radiador de cobre" excluído com Desfazer (zoom)')
     c.click(TXT('Desfazer'), w=(4, 'Clicando'), timeout=12, noScroll=True, label='Desfazer')
     c.waitfor(text='restaurado!', timeout=10)
     c.waitfor(target=P('Radiador de cobre'), timeout=10)

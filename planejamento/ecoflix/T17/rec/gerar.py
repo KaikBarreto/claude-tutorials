@@ -38,9 +38,9 @@ def stable_id(chave):
 
 RAFAEL = stable_id('user.rafael')
 try:
-    VERSAO = open(os.path.join(TUT, 'app', 'dist', '.versao-app'), encoding='utf8').read().strip() or '1.59.154'
+    VERSAO = open(os.path.join(TUT, 'app', 'dist', '.versao-app'), encoding='utf8').read().strip() or '1.60.10'
 except OSError:
-    VERSAO = '1.59.154'
+    VERSAO = '1.60.10'
 HOJE = '2026-11-10'
 STORAGE = {
     'app_version': VERSAO, 'notification_shown_version': VERSAO, f'dominex:daily-tasks-shown:{RAFAEL}': HOJE,
@@ -447,8 +447,10 @@ def cap02():
     c.hover(TXT('Dados de transporte', within='main section'), 0.6, at=c.A(6, 'pronto', 0.5), label='painel: Dados de transporte preenchido')
     c.mark(7)
     c.click(TAB('Motoristas'), at=c.A(7, 'motorista.', 0.8), label='aba Motoristas')
-    c.hover(TXTX('Edson Moura', within='main'), 0.4, at=c.A(7, 'Edson', 0.6), label='Edson Moura na lista')
-    c.click(BTN('Editar', within='main'), at=c.A(7, 'Editar.', 0.7), label='Editar o Edson')
+    # o nome na lista fica ao lado do "⋯" da linha (menu que abre ao passar o mouse e tranca a página): o cursor vai ao painel
+    PAINEL = "main section[aria-label='Detalhes de Edson Moura']"
+    c.hover(SEL(f'{PAINEL} h2'), 0.4, at=c.A(7, 'Edson', 0.6), label='Edson Moura (já na lista)')
+    c.click(SEL(f'{PAINEL} button', hasText='Editar'), at=c.A(7, 'Editar.', 0.7), label='Editar o Edson')
     c.waitfor(text='Editar motorista', timeout=10)
     c.mark(8)
     # CPF e CNH entram colados (11 dígitos cada, o valor aparece de uma vez) para caber a validade, que o roteiro preenche e a fala

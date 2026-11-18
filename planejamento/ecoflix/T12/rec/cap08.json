@@ -11,8 +11,8 @@
  },
  "anonymous": true,
  "storage": {
-  "app_version": "1.59.154",
-  "notification_shown_version": "1.59.154",
+  "app_version": "1.60.10",
+  "notification_shown_version": "1.60.10",
   "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
   "pwa-install-dismissed": "true",
   "theme": "light",
@@ -105,12 +105,8 @@
    "seconds": 0.8
   },
   {
-   "do": "click",
-   "target": {
-    "role": "button",
-    "name": "Coletas & Logística",
-    "within": "aside, [data-sidebar=sidebar]"
-   }
+   "do": "eval",
+   "js": "(()=>{if([...document.querySelectorAll('a')].some(a=>a.textContent.trim()==='Frota'&&a.offsetParent))return 'ja aberto';const b=[...document.querySelectorAll('button')].find(b=>b.textContent.trim().startsWith('Coletas & Logística'));if(!b)return 'SEM ALVO';b.click();return 'aberto'})()"
   },
   {
    "do": "waitFor",
@@ -423,6 +419,11 @@
    "noClick": true
   },
   {
+   "do": "mark",
+   "name": "L7",
+   "at": 48.23
+  },
+  {
    "do": "scroll",
    "point": {
     "x": 821,
@@ -431,7 +432,7 @@
    "by": 0,
    "duration": 0.3,
    "after": 0,
-   "at": 47.73,
+   "at": 48.23,
    "label": "Cadastrar veículo (cursor)"
   },
   {
@@ -444,11 +445,6 @@
    "label": "Cadastrar veículo",
    "optional": true,
    "timeout": 4
-  },
-  {
-   "do": "mark",
-   "name": "L7",
-   "at": 48.23
   },
   {
    "do": "eval",

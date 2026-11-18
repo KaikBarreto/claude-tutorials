@@ -12,8 +12,8 @@
  },
  "anonymous": true,
  "storage": {
-  "app_version": "1.59.154",
-  "notification_shown_version": "1.59.154",
+  "app_version": "1.60.10",
+  "notification_shown_version": "1.60.10",
   "pwa-install-dismissed": "true",
   "theme": "light",
   "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
@@ -430,7 +430,7 @@
   },
   {
    "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Retalho de chapa da Metalúrgica Jequitibá\", \"Paulo Lacerda\", \"Metalúrgica Jequitibá\", \"Chaparia\", \"12.000 Kg\", \"R$ 8.400,00\", \"30/11/2026\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main section div.rounded-lg:has(> div p:text-is('Retalho de chapa da Metal\\u00fargica Jequitib\\u00e1'))\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Retalho de chapa da Metalúrgica Jequitibá\", \"Paulo Lacerda\", \"Metalúrgica Jequitibá\", \"Chaparia\", \"12.000 Kg\", \"R$ 8.400,00\", \"30/11/2026\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
    "label": "confere o cartão em Novo"
   },
   {
