@@ -6,6 +6,9 @@
 //   node gerar/sementes.mjs --saida <pasta> -> grava em <pasta>/seeds e <pasta>/seeds-extra/base (para conferir antes)
 // Tudo fictício (planejamento/ecoflix/MUNDO_FICTICIO.md): CPF/CNPJ com dígito válido, e-mails .example, telefones
 // (12) 9 0000-xxxx, placas inventadas. Data do mundo: FAKE_NOW=2026-11-10T08:30:00-03:00.
+// Junção 1.60 (18/11, planejamento/ecoflix/JUNCAO_160.md): EcoTray 1.7.25; inscrição estadual válida da Aços Quiririm; o gás da
+// empilhadeira em dinheiro (agosto e setembro, tirado do diesel da picape); "Internet do escritório"; a bateria a R$ 3,40 da Auto
+// Peças Vale Forte; tabelas vazias novas do 1.60.10. Nenhum número falado mudou no mundo base.
 // O mundo é o da junção de 10/11 (planejamento/ecoflix/MUNDO_LINHA_DO_TEMPO.md, seção 16 aplicada sobre a semente de
 // 51224e1): histórico de 01/08 a 09/11/2026 montado por plano, não por sorteio solto. Outubro no centavo do T15 por
 // fornecedor e por cliente (seção 5), setembro e agosto pela regra da seção 6, novembro com os fatos da seção 7, bancos e
@@ -229,8 +232,8 @@ add('subscription_plans', { id: id('plano.personalizado'), code: 'personalizado'
 confere(empresa.nfe_tier === 1 && T.nfe_module_tiers.find((x) => x.level === 1).doc_limit === 1000, 'item 11: nfe_tier no Nível 1 do catálogo (1.000 documentos)');
 for (const code of DA_TRILHA) add('company_modules', { id: id(`company_module.${code}`), company_id: COMPANY, module_code: code, added_at: '2026-07-27T13:00:00.000Z', removed_at: null, effective_until: null, price_override: null });
 
-add('app_config', { id: id('app_config.app_version'), key: 'app_version', value: '1.59.154', description: 'Versão publicada do app', updated_at: '2026-11-07T19:05:00.000Z' });
-add('app_config', { id: id('app_config.ecotray_version'), key: 'ecotray_version', value: '1.7.22', description: 'Versão publicada do EcoTray', updated_at: '2026-10-28T12:00:00.000Z' });
+add('app_config', { id: id('app_config.app_version'), key: 'app_version', value: '1.60.10', description: 'Versão publicada do app', updated_at: '2026-11-07T19:05:00.000Z' });
+add('app_config', { id: id('app_config.ecotray_version'), key: 'ecotray_version', value: '1.7.25', description: 'Versão publicada do EcoTray', updated_at: '2026-11-06T12:00:00.000Z' });
 add('app_config', { id: id('app_config.reconciliation_enabled'), key: 'reconciliation_enabled', value: 'true', description: 'Conciliação bancária ligada', updated_at: '2026-09-08T12:00:00.000Z' });
 add('currencies', { code: 'BRL', name: 'Real Brasileiro', symbol: 'R$', decimals: 2, locale: 'pt-BR' });
 add('currencies', { code: 'USD', name: 'Dólar Americano', symbol: 'US$', decimals: 2, locale: 'en-US' });
@@ -264,6 +267,9 @@ for (const m of Object.values(MAT)) {
   add('price_table_items', { id: id(`pti.padrao.${m.k}`), price_table_id: id('tabela.padrao'), material_id: m.id, purchase_price: m.pc, sale_price: m.pv, is_override: false, created_at: '2026-07-28T12:20:00.000Z', updated_at: '2026-10-20T12:00:00.000Z' });
   add('price_table_items', { id: id(`pti.depositos.${m.k}`), price_table_id: id('tabela.depositos'), material_id: m.id, purchase_price: Math.round(m.pc * 1040) / 1000, sale_price: Math.round(m.pv * 1040) / 1000, is_override: false, created_at: '2026-11-09T17:50:00.000Z', updated_at: '2026-11-09T17:50:00.000Z' });
 }
+// junção 1.60 (T7, T8, T9): a bateria a R$ 3,40 para a Auto Peças Vale Forte é estado de partida das três aulas; combinado em 09/11 à
+// tarde (a compra de 05/11, da nota 2157, ainda foi a R$ 3,10). As sementes das aulas não repetem esta linha.
+add('entity_custom_prices', { id: id('ecp.valeforte.bateria'), company_id: COMPANY, entity_type: 'supplier', entity_id: id('fornecedor.valeforte'), material_id: MAT.bateria.id, price_table_id: null, custom_price: 3.4, is_linked: false, is_override: true, variation_type: null, variation_direction: null, variation_amount: null, created_by: RAFAEL, created_at: at('2026-11-09', '16:40'), updated_at: at('2026-11-09', '16:40') });
 const parceiroBase = (p) => ({
   company_id: COMPANY, name: p.name, nome_fantasia: p.nome_fantasia || null, razao_social: p.razao || (p.pf ? p.name : null), cpf_cnpj: p.doc,
   phone: p.phone || null, phone_unavailable: !!p.phone_unavailable, email: p.pf ? null : `contato@${p.k === 'siqueira' ? 'irmaossiqueira' : p.k}.example`, contact_name: p.contact || null,
@@ -272,9 +278,14 @@ const parceiroBase = (p) => ({
   indicador_ie: p.pf ? 9 : 1, inscricao_estadual: p.pf ? null : `68${pad(Number(p.code) * 731 % 1000, 3)}${pad(Number(p.code) * 4127 % 100000, 5)}`,
 });
 for (const f of FORNECEDORES) add('suppliers', { id: id(`fornecedor.${f.k}`), ...parceiroBase(f), linked_customer_id: f.k === 'siqueira' ? id('cliente.siqueira') : null, is_industry: false, default_price_table_id: null });
+// junção 1.60 (T04 N1): a Aços Quiririm é o exemplo de Lucro Real + "É Indústria". Em B ela já está certa (inscrição estadual de SP
+// com dígito válido, regime e indústria); a semente `t04/inicio` troca pela inscrição errada IE_QUIRIRIM_ERRADA (também com
+// dígito válido, um dígito da base trocado), tira o regime e desliga a indústria, e a aula corrige na tela.
+const IE_QUIRIRIM = ieSP('68804271', '11');
+const IE_QUIRIRIM_ERRADA = ieSP('68804281', '11');
 for (const c of CLIENTES) {
   add('customers', {
-    id: id(`cliente.${c.k}`), ...parceiroBase(c), linked_supplier_id: c.k === 'siqueira' ? id('fornecedor.siqueira') : null,
+    id: id(`cliente.${c.k}`), ...parceiroBase(c), ...(c.k === 'quiririm' ? { inscricao_estadual: IE_QUIRIRIM } : {}), linked_supplier_id: c.k === 'siqueira' ? id('fornecedor.siqueira') : null,
     is_industry: c.industria, is_intermediary: !c.industria, default_price_table_id: null,
     regime_tributario: c.industria ? 'lucro_real' : 'simples_nacional',
   });
@@ -509,7 +520,11 @@ planoVendas('2026-08', Object.fromEntries(KS.map((k) => [k, COMPRADO_AGO[k] - AC
 // valor planejado das vendas do mês (base do imposto sobre vendas)
 const vendasPlanejadas = (mes) => r2(OUT_PLAN.vendas.filter((v) => v.mes === mes).reduce((s, v) => s + v.kg * MAT[v.mat].pv, 0));
 
-// despesas e receitas fora dos pedidos: { d, h, cat, cc, valor, desc, conta, receita }
+// despesas e receitas fora dos pedidos: { d, h, cat, cc, valor, desc, conta, receita, dinheiro }
+// junção 1.60 (T06 P1): o "Gás da empilhadeira" (Combustível · Pátio · Dinheiro) foi pago 4 vezes em dinheiro, no caixa do Marcos, em
+// agosto e setembro (R$ 50,00 cada). O valor sai do diesel da picape do mesmo mês, para o Combustível de cada mês não mudar; outubro
+// fica sem gás (o Combustível de outubro é todo da Coleta no T15).
+const GAS_EMPILHADEIRA = 50;
 const DESPESAS = [];
 const desp = (d, h, cat, cc, valor, desc, conta = 'principal') => DESPESAS.push({ d, h, cat, cc, valor: r2(valor), desc, conta });
 function despesasFixas(mes, c) {
@@ -523,7 +538,8 @@ function despesasFixas(mes, c) {
   desp(c.energia[0], c.energia[1], 'energia', 'patio', c.energia[2], 'Conta de energia');
   c.combustivel.forEach(([d, v, desc]) => desp(d, '11:20', 'combustivel', 'coleta', v, desc));
   if (c.manutencao) desp(c.manutencao[0], '10:30', 'manut_veiculos', 'coleta', c.manutencao[1], c.manutencao[2]);
-  desp(dia(15), '09:30', 'telefone', null, 289.9, 'Internet e telefone do escritório');
+  desp(dia(15), '09:30', 'telefone', null, 289.9, 'Internet do escritório'); // junção 1.60 (T13): a descrição que o preenchimento inteligente procura
+  (c.gas || []).forEach((d) => DESPESAS.push({ d, h: '13:40', cat: 'combustivel', cc: 'patio', valor: GAS_EMPILHADEIRA, desc: 'Gás da empilhadeira', dinheiro: true }));
   desp(dia(20), '11:00', 'impostos_vendas', null, c.impostos, 'DARF PIS/COFINS sobre vendas');
   c.frete.forEach(([d, v]) => desp(d, '17:10', 'frete', null, v, 'Frete da carga do Depósito Irmãos Siqueira'));
   desp(ultimoDia(mes), '18:00', 'tarifas', null, c.tarifasPix, 'Tarifas de Pix e TED do mês');
@@ -538,13 +554,13 @@ despesasFixas(OUTM, { // T15: os lançamentos de outubro (a energia uma vez só;
 });
 despesasFixas('2026-09', {
   aluguel: 6500, folha: [14300, 3100, 2400], energia: ['2026-09-14', '09:05', 3420], impostos: r2(vendasPlanejadas('2026-09') * 0.013275), tarifasPix: 82.5,
-  combustivel: [['2026-09-04', 990, 'Diesel do caminhão truck'], ['2026-09-11', 990, 'Diesel do caminhão 3/4'], ['2026-09-18', 990, 'Diesel do caminhão truck'], ['2026-09-25', 990, 'Diesel e gasolina da picape']],
+  combustivel: [['2026-09-04', 990, 'Diesel do caminhão truck'], ['2026-09-11', 990, 'Diesel do caminhão 3/4'], ['2026-09-18', 990, 'Diesel do caminhão truck'], ['2026-09-25', 890, 'Diesel e gasolina da picape']], gas: ['2026-09-09', '2026-09-23'],
   manutencao: ['2026-09-22', 780, 'Troca de pneu da picape'], frete: [['2026-09-17', 1800]],
   cacamba: [['2026-09-10', 1400, 'Aluguel de caçamba - obra no Jardim das Nações'], ['2026-09-24', 700, 'Aluguel de caçamba - limpeza de terreno']],
 });
 despesasFixas('2026-08', {
   aluguel: 6500, folha: [13600, 3100, 2200], energia: ['2026-08-13', '09:10', 3180], impostos: r2(vendasPlanejadas('2026-08') * 0.013275), tarifasPix: 71.3,
-  combustivel: [['2026-08-07', 910, 'Diesel do caminhão truck'], ['2026-08-14', 910, 'Diesel do caminhão 3/4'], ['2026-08-21', 910, 'Diesel do caminhão truck'], ['2026-08-28', 910, 'Diesel e gasolina da picape']],
+  combustivel: [['2026-08-07', 910, 'Diesel do caminhão truck'], ['2026-08-14', 910, 'Diesel do caminhão 3/4'], ['2026-08-21', 910, 'Diesel do caminhão truck'], ['2026-08-28', 810, 'Diesel e gasolina da picape']], gas: ['2026-08-12', '2026-08-26'],
   manutencao: ['2026-08-18', 1240, 'Revisão do caminhão truck'], frete: [['2026-08-20', 1200]],
   cacamba: [['2026-08-26', 1400, 'Aluguel de caçamba - obra no Jardim das Nações']],
 });
@@ -573,9 +589,13 @@ function bankTx(contaK, d, hhmm, type, amount, description, extra = {}) {
   if (contaK === 'cofre') cofre = r2(cofre + row.amount);
   return row;
 }
+// os ids `ct.N` seguem a ordem de criação e as sementes das aulas apontam para eles: lançamento novo da junção 1.60 entra com id
+// próprio (extra.id) e não anda o contador
+let ctSeq = 0;
+let gasPago = 0; // gás da empilhadeira já pago em dinheiro (fora da conta do reforço do cofre, para os reforços não mudarem)
 function cashTx(caixa, d, hhmm, type, amount, description, extra = {}) {
   const row = add('cash_transactions', {
-    id: id(`ct.${T.cash_transactions?.length || 0}`), company_id: COMPANY, cash_register_id: caixa ? caixa.id : null, type, amount: r2(amount), description,
+    id: extra.id || id(`ct.${ctSeq++}`), company_id: COMPANY, cash_register_id: caixa ? caixa.id : null, type, amount: r2(amount), description,
     transaction_at: at(d, hhmm), transaction_date: d, created_at: at(d, hhmm), created_by: caixa?.opened_by || RAFAEL, excluded_from_dre: false, ...extra,
   });
   if (!['opening', 'closing', 'transfer'].includes(type)) cofre = r2(cofre + (SINAL[type] || 0) * row.amount);
@@ -709,7 +729,7 @@ DIAS.forEach((d, iDia) => {
   if (diaDeReforco(d, iDia)) {
     let ate = iDia + 1; while (ate < DIAS.length && !diaDeReforco(DIAS[ate], ate)) ate++;
     const precisa = DIAS.slice(iDia, ate).reduce((s, x) => s + saidaDinheiro(x), 0);
-    let valor = Math.ceil((precisa + 6000 - cofre) / 1000) * 1000;
+    let valor = Math.ceil((precisa + 6000 - (cofre + gasPago)) / 1000) * 1000;
     if (ate >= DIAS.length) valor = r2(18500 + precisa - cofre); // o último: o cofre chega a 09/11 com R$ 18.500,00
     if (valor !== 0) {
       const g = id(`grupo_transf.${d}`);
@@ -793,7 +813,8 @@ DIAS.forEach((d, iDia) => {
       mov(e.mat, d, e.excluida, -e.kg, 'EXCLUSAO', { id: pid, tipo: 'purchase' }, `Exclusão do pedido #${num} (lançado em duplicidade)`, RAFAEL);
     } else if (e.kind === 'despesa') {
       const extra = { category_id: id(`categoria.${e.cat}`), cost_center_id: e.cc ? id(`cc.${e.cc}`) : null, payment_method: 'transfer' };
-      if (e.receita) bankTx(e.conta, d, e.h, 'deposit', e.valor, e.desc, extra);
+      if (e.dinheiro) { cashTx(cxM, d, e.h, 'withdrawal', e.valor, e.desc, { id: id(`ct.gas.${d}`), category_id: extra.category_id, cost_center_id: extra.cost_center_id }); gasPago = r2(gasPago + e.valor); } // despesa do caixa (Nova Despesa, "Dinheiro (Caixa)")
+      else if (e.receita) bankTx(e.conta, d, e.h, 'deposit', e.valor, e.desc, extra);
       else bankTx(e.conta, d, e.h, 'withdrawal', -e.valor, e.desc, extra);
     } else if (e.kind === 'pagSaldo') {
       const ent = id(`${e.tipo === 'supplier' ? 'fornecedor' : 'cliente'}.${e.quem}`);
@@ -1017,6 +1038,30 @@ confere(soma(sc) === 201784.25 && soma(sv) === 273047.73, `item 4: setembro com 
 const despOut = DESPESAS.filter((e) => mesDe(e.d) === OUTM);
 confere(despOut.filter((e) => e.receita).map((e) => `${e.d} ${e.valor}`).join() === '2026-10-13 950,2026-10-29 1850', 'item 5: caçamba de outubro 13/10 R$ 950,00 (Fundição) e 29/10 R$ 1.850,00 (Aços Quiririm)');
 confere(r2(despOut.filter((e) => e.cat === 'tarifas').reduce((s, e) => s + e.valor, 0)) === 186 && !DESPESAS.some((e) => e.cat === 'tarifas' && mesDe(e.d) === NOV), 'item 6: Tarifas de outubro R$ 186,00 e nenhuma tarifa em novembro');
+// ---- junção 1.60 (planejamento/ecoflix/JUNCAO_160.md): o que entrou no mundo base para o app 1.60.10
+{
+  const gas = T.cash_transactions.filter((c) => c.description === 'Gás da empilhadeira');
+  const cxDe = (c) => T.cash_register.find((x) => x.id === c.cash_register_id);
+  confere(gas.length === 4 && gas.every((c) => c.type === 'withdrawal' && c.amount === 50 && c.category_id === id('categoria.combustivel') && c.cost_center_id === id('cc.patio') && !c.order_id && cxDe(c)?.opened_by === MARCOS)
+    && gas.map((c) => c.transaction_date).join() === '2026-08-12,2026-08-26,2026-09-09,2026-09-23',
+    'junção 1.60 (T06): "Gás da empilhadeira" 4 vezes em dinheiro no caixa do Marcos (Combustível · Pátio), a última em 23/09');
+  const comb = (mes) => r2(DESPESAS.filter((e) => e.cat === 'combustivel' && mesDe(e.d) === mes).reduce((s, e) => s + e.valor, 0));
+  confere(comb('2026-08') === 3640 && comb('2026-09') === 3960 && comb(OUTM) === 4280 && !DESPESAS.some((e) => e.dinheiro && mesDe(e.d) >= OUTM)
+    && DESPESAS.filter((e) => e.cat === 'combustivel' && mesDe(e.d) === OUTM).every((e) => e.cc === 'coleta'),
+    'junção 1.60 (T06 × T15): Combustível do mês não muda (agosto 3.640,00, setembro 3.960,00, outubro 4.280,00 todo na Coleta)');
+  confere(T.bank_transactions.filter((b) => b.description === 'Internet do escritório' && b.amount === -289.9 && b.category_id === id('categoria.telefone')).length === 3
+    && !T.bank_transactions.some((b) => /Internet e telefone/.test(b.description)), 'junção 1.60 (T13): "Internet do escritório" 3 vezes (ago, set, out), R$ 289,90, em "Telefone e internet"');
+  const aq = T.customers.find((c) => c.id === id('cliente.quiririm'));
+  confere(aq.inscricao_estadual === IE_QUIRIRIM && IE_QUIRIRIM !== IE_QUIRIRIM_ERRADA && /^\d{3}\.\d{3}\.\d{3}\.\d{3}$/.test(IE_QUIRIRIM) && aq.regime_tributario === 'lucro_real' && aq.is_industry === true && aq.indicador_ie === 1,
+    `junção 1.60 (T04): Aços Quiririm em Lucro Real, "É Indústria", IE ${IE_QUIRIRIM} (a errada da semente t04/inicio: ${IE_QUIRIRIM_ERRADA})`);
+  confere(T.entity_custom_prices.length === 1 && T.entity_custom_prices[0].custom_price === 3.4 && T.entity_custom_prices[0].entity_id === id('fornecedor.valeforte') && T.entity_custom_prices[0].material_id === MAT.bateria.id,
+    'junção 1.60 (T7, T8, T9): bateria a R$ 3,40 para a Auto Peças Vale Forte');
+  confere(T.app_config.find((x) => x.key === 'ecotray_version').value === '1.7.25' && T.app_config.find((x) => x.key === 'app_version').value === '1.60.10', 'junção 1.60 (T05): EcoTray 1.7.25 e app 1.60.10 no app_config');
+  confere(!T.bank_accounts.some((b) => b.kind === 'card') && !(T.credit_card_bills || []).length, 'junção 1.60 (T14): nenhum cartão de crédito no mundo base (o "Cartão Empresa" nasce na T14)');
+  // as contas que as aulas falam continuam onde estavam
+  const cx = (n) => T.cash_register.find((c) => c.register_number === n);
+  confere(cx(70).closing_balance === 612.5 && cx(83).closing_balance === 640 && cx(84).closing_balance === 1250 && T.cash_register.length === 84, 'junção 1.60: caixas #70 (612,50), #83 (640,00) e #84 (1.250,00) como antes; 84 caixas');
+}
 // DRE do mês nos dois regimes (mesma régua do lib/eco.mjs: custo médio = preço de compra da tabela)
 function dre(mes) {
   const c = doMes(mes, 'purchase'), v = doMes(mes, 'sale');
@@ -1106,6 +1151,9 @@ const VAZIAS = [
   'draft_editors',
   // existem no banco mas não no types.ts da 1.59.154: tentativas de envio do MTR e os resíduos salvos (T18)
   'mtr_manifest_attempts', 'mtr_residuo_presets',
+  // junção 1.60: o 1.60.10 consulta em toda tela (varredura de 18/11: sem semente nas 26 aulas); a de opt-out do aviso do certificado
+  // e a de eventos do pedido (log_order_activity) existem no banco mas não no types.ts
+  'cs_agents', 'affiliates', 'salespeople', 'biometric_credentials', 'dfe_certificate_notice_opt_outs', 'order_activity_events',
 ];
 
 // ---------------------------------------------------------------- grava (numa pasta ao lado; depois troca arquivo a arquivo)
@@ -1123,7 +1171,7 @@ const json = (tabelas) => {
 };
 const TABS = {
   '01-empresa.json': ['companies', 'profiles', 'user_roles', 'user_permissions', 'user_shortcuts', 'nps_surveys', 'subscription_modules', 'subscription_plans', 'nfe_module_tiers', 'company_modules', 'app_config', 'currencies', 'mtr_sistemas', 'mtr_uf_sistema'],
-  '02-cadastros.json': ['material_groups', 'materials', 'price_tables', 'price_table_items', 'suppliers', 'customers', 'vehicles', 'drivers', 'bank_accounts', 'dre_groups', 'financial_categories', 'cost_centers', 'payment_conditions', 'company_fiscal_config', 'nfe_series'],
+  '02-cadastros.json': ['material_groups', 'materials', 'price_tables', 'price_table_items', 'suppliers', 'customers', 'vehicles', 'drivers', 'bank_accounts', 'dre_groups', 'financial_categories', 'cost_centers', 'payment_conditions', 'company_fiscal_config', 'nfe_series', 'entity_custom_prices'],
   '03-historico.json': ['cash_register', 'purchases', 'purchase_items', 'sales', 'sale_items', 'stock_movements', 'cash_transactions', 'bank_transactions', 'balances', 'balance_movements', 'financial_bills', 'recurring_bill_templates', 'weighing_tickets', 'schedule_tasks', 'invoices', 'invoice_items', 'nfse_invoices', 'nfse_invoice_services'],
 };
 const todas = Object.values(TABS).flat();

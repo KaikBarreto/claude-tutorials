@@ -10,6 +10,10 @@ Se o app pedir um dado que não está aqui, inventar no mesmo estilo e anotar ne
 **Junção (10/11):** a história única das 26 aulas, o estado de partida de cada uma, as decisões dos conflitos, as mudanças
 para o gerador e a conferência de todo número falado estão em `MUNDO_LINHA_DO_TEMPO.md`; ela vale sobre o que diverge aqui.
 
+**Junção 1.60 (18/11):** o que mudou no mundo para o app 1.60.10 (o que entrou no mundo base, o que fica na semente de
+cada aula, os números que mudaram e a parte de cada aula) está em `JUNCAO_160.md`; ela vale sobre a linha do tempo no
+que diverge. Resumo no fim deste arquivo ("Junção 1.60").
+
 ## Data do mundo
 `FAKE_NOW=2026-11-10T08:30:00-03:00` (terça). Histórico fechado de agosto a outubro de 2026 (o "dia 31" do T10 é
 31/10, um sábado); novembro só com os primeiros dias.
@@ -135,7 +139,7 @@ vendeu pouco num mês) cabem num dos meses.
   NF-e de 3.600 kg de chaparia para a Aços Quiririm; dois MTR (um cancelado) e um CDF de outubro da Auto Peças Vale
   Forte; a carga vai no GHT7B19 com o Jair Lopes (o FKD2E41 está na viagem da T17).
 - **EcoTray** (T5): impressora térmica POS-58 (58 mm); "Balança do pátio" na COM3; pesos de 18,6 e 312 kg; duas
-  impressoras no cap10; `ecotray_version` 1.7.22; chaves gravadas por usuário (Rafael). Sem trecho de celular (o indicador
+  impressoras no cap10; `ecotray_version` **1.7.25** (junção 1.60; era 1.7.22); chaves gravadas por usuário (Rafael). Sem trecho de celular (o indicador
   de peso não aparece em tela menor que 1024 px).
 - **Ticket de Pesagem** (T8): próximo ticket 58; caminhão da Cooperativa Recomeço com 9.460 kg na entrada e 6.380 kg na
   saída, 2 % de impureza (3.018,4 kg de Alumínio latinha a R$ 6,20 = R$ 18.714,08, pago por Pix); rascunho do Jair Lopes
@@ -148,7 +152,9 @@ vendeu pouco num mês) cabem num dos meses.
 - **Caixas** (T6, T9): numeração sequencial no histórico; o último antes da T6 é o #84. T6 (10/11): Rafael abre o #85 com
   R$ 1.500,00; para o #86 do Marcos tenta R$ 20.000,00, o cofre bloqueia e ele usa o disponível (R$ 17.000,00); saque
   de R$ 3.000,00 + tarifa R$ 6,50; saída "Tarifas bancárias" R$ 39,90; corte às 17:40, fecha sem diferença
-  (R$ 1.007,10) e reabre. T9 (`FAKE_NOW` 11/11 08:30): o #88 do Rafael aberto; o #70 do Marcos (21/10) com 240 kg de
+  (**R$ 957,10** desde a junção 1.60, com a despesa de R$ 50,00 do gás da empilhadeira; era R$ 1.007,10) e reabre. Na
+  junção 1.60 entram também a receita de R$ 120,00 de aluguel de caçamba (Pix, Conta Principal) e a sangria de
+  R$ 5.000,00 do #86 para a Conta Principal às 17:3x (o #86 fica com R$ 15.000,00). T9 (`FAKE_NOW` 11/11 08:30): o #88 do Rafael aberto; o #70 do Marcos (21/10) com 240 kg de
   bateria (R$ 744,00) lançados no fornecedor errado, reaberto, corrigido para a Auto Peças Vale Forte e fechado de novo
   com a data de 21/10; um pedido estornado em 05/11; a latinha da Aparecida vai de 24 para 42 kg; uma compra duplicada do
   Valdir é excluída.
@@ -160,6 +166,9 @@ vendeu pouco num mês) cabem num dos meses.
   "Grupo Recicla Vale", código GRP-7C4E9A; Sandra Pires, MASTER da filial (cap03). Outubro na T22: matriz vendeu
   R$ 186 mil e gastou R$ 180 mil, filial vendeu R$ 72 mil e gastou R$ 71 mil, CMV R$ 194 mil (**conferir com a T15 e a T25
   na junção**). Latinha: matriz 4.300 kg e filial 1.850 kg, depois 5.500 kg e 650 kg.
+  **Acerto (junções de 10/11 e 1.60; vale este):** a matriz tem o outubro da T15 (receita R$ 272.040,00, despesa
+  R$ 299.690,00, resultado −R$ 27.650,00 em caixa); o grupo, R$ 344.040,00 e R$ 370.690,00 (caixa −R$ 26.650,00,
+  competência +R$ 18.350,00); a latinha da matriz é a de B, **640 kg**. Os números da frase acima não valem mais.
 
 ## Semente do mundo base (`perfis/ecoflix/mundo`, gerada por `gerar/sementes.mjs`)
 O estado de 10/11 08:30 que todas as aulas recebem. O gerador confere os números falados abaixo e para se algum não bater.
@@ -206,3 +215,37 @@ O estado de 10/11 08:30 que todas as aulas recebem. O gerador confere os número
 7. Demonstração com `_remove`, como a semente fez.
 8. Fica o T7 (latão 214, cobre mel 42: a falta de 18 kg da aula depende dele); mudam o T10 e o T21. O estoque de 10/11 ganha o
    lote de alumínio da T17 (3.200 kg de perfil e 2.600 de bloco) e a chaparia da T18 (3.750 kg): R$ 96.076,00. As 2 fotos entram.
+
+## Junção 1.60 (18/11/2026, app 1.60.10) · detalhe em `JUNCAO_160.md`
+**No mundo base** (nenhum número falado mudou; o gerador passa em 280 conferências):
+- `ecotray_version` 1.7.25.
+- Aços Quiririm Ltda: Lucro Real, "É Indústria", inscrição estadual 688.042.711.117 (o exemplo fiscal da T04; a semente
+  da T04 começa com a inscrição errada 688.042.819.111, sem regime e sem indústria, e a aula corrige).
+- "Gás da empilhadeira": 4 despesas em dinheiro de R$ 50,00 no caixa do Marcos (12/08, 26/08, 09/09 e 23/09),
+  "Combustível", centro "Pátio", tiradas do diesel da picape do mesmo mês (o Combustível de cada mês não muda; outubro
+  não tem gás). É o "Padrão encontrado" da T06.
+- "Internet do escritório": descrição dos R$ 289,90 mensais (categoria "Telefone e internet"); era "Internet e telefone
+  do escritório".
+- Bateria a R$ 3,40 para a Auto Peças Vale Forte como preço combinado em B (de 09/11; T7, T8 e T9 partem dele).
+
+**Na semente das aulas** (cada uma cria o seu; as da cadeia herdam):
+- T06: despesa de R$ 50,00 (gás, dinheiro) e receita de R$ 120,00 (aluguel de caçamba, Pix, Conta Principal); sangria de
+  R$ 5.000,00 do #86; o #85 fecha com R$ 957,10. A T09 herda (#86 com R$ 15.000,00).
+- T08: pesagem avulsa da "Areal Boa Vista", placa HBN3F27, 23.840 kg / 9.120 kg, R$ 60,00 por Pix na Conta Principal,
+  categoria "Serviço de pesagem"; não segue para outras aulas.
+- T11: material "Capa de fio" (código 16, Outros, R$ 0,10 / R$ 0,30) e a máquina "Prensa 01", só na T11.
+- T12: Tiago Freitas com login (`tiago.freitas@reciclavalemetais.example`) para o Rastreamento, só na T12.
+- T13: "Vale Fibra Telecom Ltda" (CNPJ 93.518.274/0001-58); Pix de R$ 2.415,00 (aluguel da empilhadeira) e de
+  R$ 4.720,00 (duas parcelas dos pneus) em 10/11, **pela Conta Secundária** (o extrato da Conta Principal da T14 não
+  muda). A Secundária entra na T14 com R$ 83.380,00 e sai com R$ 75.380,00.
+- T14: "Cartão Empresa" (fecha dia 25, vence dia 5, limite R$ 10.000,00, uma despesa de R$ 180,00), em variante que não
+  segue para a T15; segundo extrato, da Conta Secundária (`Extrato_Secundaria_20261106_20261109.ofx`, 8 linhas, saldo
+  final R$ 90.175,00).
+- T16: "Metalúrgica Pinhal Ltda" (CNPJ 91.647.382/0001-03, o cliente com pendência); NF-e **1252** (Serra Fina, 150 kg de
+  Alumínio perfil, R$ 1.560,00, rejeitada e corrigida), **1253** (devolução da Fundição, 40 kg de Cobre mel, R$ 1.916,00)
+  e **1254** (complementar da 1250, R$ 250,00).
+- T17: as NF-e do alumínio são **1255 e 1256**; saldo inicial fiscal da bateria 3.320 kg em 31/10. T18: a NF-e da
+  chaparia é a **1257**.
+- T19: Marcos com 1 dependente e vale-transporte de R$ 220,00, sem o pagamento de 09/11 no RH.
+- T20: aba Preços do portal da Cooperativa Recomeço com os preços de B.
+- T22: código do grupo GRP-7C4E9A (já era).
