@@ -790,3 +790,12 @@ Decisões:
   `capNN.json`; T00-T07 rodaram antes: **rodar de novo** quando as frentes terminarem. Handler novo
   `rpc/get_my_scale_weight_lock.mjs` (sem ele o peso travava na T07/T08). A fazer no mundo: `fiscal_onboarding_status`
   (faixa vermelha do certificado A1), balão do Cato (`cato_adoption_nudge_*` no localStorage), `app_config.app_version`.
+- 18/11 15:42 **Kaik escolheu o estilo das ilustrações** na folha de 10 estilos (`planejamento/ecoflix/estilos/`,
+  `estilos_10.jpg`): "vidro escuro e gradientes suaves me pegaram, daria pra intercalar de forma que não fique bagunçado?
+  e esses estilos quando necessário ter algum tipo de 3D também"; "as transições entre um conceito e outro parecer que
+  foram cenas e planos planejados, com transição de câmera 3D como se fosse um plano que vai mudando, a câmera dando zoom
+  em relação ao plano". **A argila 3D sai.** Proposta em piloto (`_BRIEF_ESTILO_V3.md`, kit `perfis/ecoflix/cenas_v3/`):
+  um sistema só com dois climas (claro/gradientes = mundo físico; escuro/vidro = mundo dos dados), troca só na passagem
+  de conceito e motivada pela câmera; câmera contínua entre "estações". Piloto: T08 ilu04+ilu05. O piloto de motion em
+  argila (kit v2) foi encerrado; a biblioteca de motion dele (`MOTION_V2.md`) é reaproveitada. As 35 cenas 3D e as 2D
+  serão migradas depois da aprovação do piloto. Também: tutorial do Cato = T21 (confirmado); "Montar o plano" fica na T00.
