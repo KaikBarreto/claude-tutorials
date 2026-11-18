@@ -263,7 +263,7 @@ A 2,6 palavras por segundo (a conta do roteiro):
 - **Capítulos novos: 3** (`cap07b`, `cap10b`, `cap10c`), mais 3 vinhetas e 1 ilustração (barra de probabilidade).
 - A aula vai de ~15 min para ~23 min de vídeo (fala de 11,6 para ~18,4 min, mais o tempo das ações e das vinhetas).
 - Mudanças do app a aplicar: **0**. Divergências antigas a acertar: 5 (seção 1.1; só a do responsável mexe na fala).
-- Lacunas levantadas: 41 (20 "sim", 15 "só citar", 6 "não").
+- Lacunas levantadas: 41 (25 "sim", 13 "só citar", 3 "não").
 
 ## 5. Depende de decisão
 
