@@ -3,19 +3,21 @@
 Roteiro pronto para o ensaio gravado e, depois da revisão geral, para a voz (voz Kaik Barreto, ElevenLabs eleven_v4). Coluna
 Fala = texto da narração na grafia da legenda (uma linha da tabela = uma linha da fala); a grafia de pronúncia do TTS está em
 `narracao/tts_textos.py`. Coluna Tela = o que o robô faz e onde a câmera foca, com os rótulos entre aspas como no código
-(`T00/inventario.md`, versão 1.59.154). Estados S1, S2, S3 e S13, dados novos e o que muda no vertical: `T00/plano.md`.
+(`T00/inventario.md`, versão **1.60.10**; a cobertura que gerou os trechos novos: `T00/cobertura_160.md`). Estados S1, S2, S3, S13 e TESTE, dados novos e o que muda no vertical: `T00/plano.md`.
 Marcas: `[BACKEND: ...]` (o backend falso ainda não tem), `[ZOOM: ...]` (dura a frase inteira), `[ILUSTRAÇÃO: ...]` (cena
 desenhada, nunca tela inventada), `[CELULAR]` (gravação 390×844), `[TESTAR]` (o robô confere antes de gravar).
-Sem preço na fala: o valor da mensalidade e o da economia anual ficam na tela, sem destaque.
+Sem preço na fala: o valor da mensalidade, o da economia anual e os das janelas "Montar plano" e "Cancelar Assinatura" ficam na tela, sem zoom e sem destaque (Kaik, 18/11).
+`[VARIANTE: ...]` = a mesma linha do tempo gravada de novo em outro estado (arquivo `capNN.<estado>.json`); a edição usa só aquela linha.
+Renumeração de 18/11 (1.60.10): entraram o cap08 (o Cato) e o cap12 (Montar o plano); os antigos 8, 9, 10, 11, 12 e 13 viraram 9, 10, 11, 13, 14 e 15.
 
 - **Título:** Bem-vindo ao EcoSistema
 - **Antes:** nenhum (primeira aula; vídeo obrigatório do primeiro acesso, sem cartão "Antes:")
 - **Próximo:** Sua conta e sua empresa (T1)
-- **Vinhetas (áreas):** COMEÇANDO · TRILHA · TRILHA · AJUDA · O SISTEMA · MENU · MENU · VOCABULÁRIO · ASSINATURA ·
-  ASSINATURA · ASSINATURA · ASSINATURA · RESUMO (todos os capítulos menos o 0)
+- **Vinhetas (áreas):** COMEÇANDO · TRILHA · TRILHA · TRILHA · O SISTEMA · MENU · MENU · O SISTEMA · VOCABULÁRIO · ASSINATURA ·
+  ASSINATURA · ASSINATURA · ASSINATURA · ASSINATURA · RESUMO (todos os capítulos menos o 0)
 - **Formatos:** 16:9 e 9:16 (vertical), mesmo áudio e mesma legenda
-- **Duração estimada:** ~11,5 min de vídeo (1.544 palavras de fala, ~9,9 min de voz a 2,6 palavras/s; 8.307 caracteres, ~10,5 min a 790 por minuto, mais a vinheta de abertura,
-  13 vinhetas de capítulo e a cartela); alvo da fonte ~12 min
+- **Duração estimada:** ~15,5 min de vídeo (2.053 palavras de fala, ~13,2 min de voz a 2,6 palavras/s; 10.978 caracteres, mais a vinheta de abertura,
+  15 vinhetas de capítulo e a cartela). Era ~11,5 min (1.544 palavras) no 1.59.154; o Kaik aceitou a aula mais longa para cobrir tudo (18/11)
 
 ### cap00 · Abertura
 
@@ -43,6 +45,7 @@ Sem preço na fala: o valor da mensalidade e o da economia anual ficam na tela, 
 | --- | --- |
 | Capítulo novo (S2), no Dashboard. Clique no cartão "Rafael Nogueira" (selo "MASTER", "Recicla Vale Metais Ltda"), no rodapé do menu; o menu da conta abre; destaque em "Tutoriais \| EcoFlix" e clique. [BACKEND: S2 (plano, "Mundo"): trilha `tutoriais-do-sistema` com as 26 aulas; T0 concluído] | E a trilha, como funciona? Ela fica no menu da sua conta, em Tutoriais EcoFlix. |
 | A trilha abre: "Olá, Rafael · continue sua trilha", "Aprenda a usar o EcoSistema", o botão "Começar trilha", "Trilha do seu plano" e a barra. | Aqui estão todas as aulas, já na ordem certa. |
+| Destaque, no alto da EcoFlix, nas abas "Início", "Módulos", "Lives" e "Minha Lista" e na lupa da busca ("Buscar títulos..."), sem clicar. | No alto, dá pra buscar uma aula pelo nome, e em Minha Lista ficam as aulas que você guardou pra ver depois. |
 | A câmera desce pelos primeiros módulos, com o selo "Formação básica": "Bem-vindo ao EcoSistema" ("Concluída") e "Sua conta e sua empresa" ("Próxima aula recomendada"). | Primeiro vem a Formação básica: o que todo ferro-velho usa no dia a dia, como compra, venda, caixa e estoque. |
 | A câmera desce até o primeiro módulo com o selo "Tem no seu plano" (T16) e para no selo. | Depois vêm os módulos do seu plano, com o selo Tem no seu plano. |
 | A câmera volta ao T1; destaque em "Próxima aula recomendada". | A próxima aula recomendada fica marcada, e o progresso fica salvo: dá pra parar e continuar de onde parou. |
@@ -53,16 +56,20 @@ Sem preço na fala: o valor da mensalidade e o da economia anual ficam na tela, 
 | Tela | Fala |
 | --- | --- |
 | Capítulo novo (S3), na trilha; a câmera desce até o último módulo, "CRM/Kanban", com o selo "Não tem no seu plano" e a aula marcada "Conheça este módulo". [BACKEND: S3 = S2 sem `crm_kanban` em `company_modules`; no T26, `includedInPlan` false e `requiredForUser` false] | E os módulos que não estão no seu plano? Eles também aparecem na trilha, com o selo Não tem no seu plano. |
+| O mesmo quadro, com o selo em destaque (o selo "Liberado no teste" só existe com a conta em teste: `EcoFlixModuleBadge.tsx:23-29`; não se grava outro estado para uma frase). | No período de teste, o selo é outro: Liberado no teste. |
 | Clique na aula; "Consultar fora da ordem?" → "Consultar esta aula". A aula abre; destaque no painel da trilha em "Conheça outros módulos" e "Você pode assistir e contratar direto pela aula.". | Pode assistir à vontade. É um jeito de conhecer a função antes de contratar. |
 | A câmera desce aos detalhes da aula: o selo "Não tem no seu plano" e o cartão "Conheça agora. Ative quando fizer sentido.", com o botão "Adicionar ao meu plano" (sem clicar; sem zoom no texto do valor). | Se fizer sentido, a contratação sai da própria aula, pelo administrador da empresa. |
 | [ILUSTRAÇÃO: a barra "Trilha do seu plano": os blocos "Formação básica" e "Módulos do seu plano" entram na barra e enchem o progresso, na frase "contam só"; os blocos "Outros módulos" ficam ao lado, fora da barra] | E essas aulas não mexem no seu progresso. Na barra da trilha, contam só a Formação básica e os módulos do seu plano. |
 
-### cap04 · Dúvida depois da aula (vinheta: AJUDA)
+### cap04 · Assistir e tirar dúvidas (vinheta: TRILHA)
 
 | Tela | Fala |
 | --- | --- |
-| Capítulo novo (S2), na trilha: clique em "Começar trilha"; abre a aula "Sua conta e sua empresa". A câmera desce do player aos detalhes e para no botão verde "Tirar dúvidas com o suporte" (sem clicar). | Ficou alguma dúvida depois da aula? Embaixo do vídeo tem o botão Tirar dúvidas com o suporte. |
-| [ILUSTRAÇÃO: "Mensagem pronta para o suporte": um balão de conversa genérico, sem marca de aplicativo, onde entram, um por vez, os itens da mensagem do app (`EcoFlixLessonDetails.tsx:45-55`): "E-mail do usuário: rafael.nogueira@reciclavalemetais.example", "Empresa: Recicla Vale Metais Ltda", "Trilha: Tutoriais do sistema", "Módulo: Sua conta e sua empresa" e, por último, "Minha dúvida:" com o cursor piscando] | Ele abre o WhatsApp do suporte com a mensagem pronta: o seu e-mail, a sua empresa, a trilha e a aula. É só escrever a dúvida e enviar. |
+| Capítulo novo (S2), na trilha: clique em "Começar trilha"; abre a aula "Sua conta e sua empresa". O mouse sobre o player mostra os controles: clique em "Ativar ou escolher legenda" (abre "Legendas": a faixa "Português", "Tamanho da legenda", "Estilo da legenda"), liga "Português"; destaque em "Velocidade", em "Voltar 10 segundos", "Avançar 10 segundos" e "Abrir em tela cheia" (sem entrar em tela cheia). [BACKEND: uma faixa de legenda "Português" no T1, `ecoflix_episode_subtitles`] | E na hora de assistir? No player, dá pra ligar a legenda e escolher o tamanho dela, mudar a velocidade, voltar ou avançar dez segundos e abrir em tela cheia. |
+| O vídeo fictício chega ao fim (o robô leva o vídeo ao último segundo): o quadro "Aula concluída" · "Vamos para a próxima", com "Ficar nesta aula" e "Próxima aula agora"; no fim da frase, clique em "Ficar nesta aula". | Quando a aula termina, o sistema marca como concluída e já oferece a próxima. |
+| A câmera desce aos detalhes da aula e para em "Materiais e extras", com o material "Lista de conferência do cadastro da empresa". [BACKEND: um material no T1, `ecoflix_episode_resources`] | Embaixo do vídeo, em Materiais e extras, ficam os arquivos da aula, quando tem. |
+| Destaque no botão verde "Tirar dúvidas com o suporte" (sem clicar). | Ficou alguma dúvida depois da aula? Ali também tem o botão Tirar dúvidas com o suporte. |
+| [ILUSTRAÇÃO: "Mensagem pronta para o suporte": um balão de conversa genérico, sem marca de aplicativo, onde entram, um por vez, os itens da mensagem do app (`EcoFlixLessonDetails.tsx:45-55`): "E-mail do usuário: rafael@reciclavalemetais.example", "Empresa: Recicla Vale Metais Ltda", "Trilha: Tutoriais do sistema", "Módulo: Sua conta e sua empresa" e, por último, "Minha dúvida:" com o cursor piscando] | Ele abre o WhatsApp do suporte com a mensagem pronta: o seu e-mail, a sua empresa, a trilha e a aula. É só escrever a dúvida e enviar. |
 | A ilustração sai; a aula volta, com o botão em destaque. | Assim, quem te atende já sabe de qual aula você está falando. |
 
 ### cap05 · Do portão até a conta (vinheta: O SISTEMA)
@@ -84,12 +91,13 @@ Sem preço na fala: o valor da mensalidade e o da economia anual ficam na tela, 
 | Capítulo novo (S2), no Dashboard ("Olá, Rafael!"); a câmera enquadra o menu lateral inteiro, sem abrir nada. [TESTAR: lembretes e checklist do Dashboard fechados pelo `setup`] | Agora, onde fica cada coisa. O menu tem as áreas do sistema. Primeiro, o Dashboard, com o resumo dos números. |
 | Clique em "Financeiro": abrem "Caixa", "Histórico do Caixa", "Movimentações Financeiras" (o nome com a Conta Dinheiro ligada), "Relatório Financeiro", "Contas a Pagar/Receber" e "Categorias Financeiras". | No Financeiro ficam o caixa, as contas a pagar e a receber, os bancos e os relatórios. |
 | Destaque em "Pedidos". | Em Pedidos, cada compra e cada venda. |
-| Destaque em "Fiscal & Ambiental" (sem abrir). | Em Fiscal & Ambiental, as notas fiscais e os documentos ambientais. |
-| Clique em "Materiais": abrem "Estoque", "Histórico (Kardex)", "Relatório", "Ticket de Pesagem" e "Produção" (o "Financeiro" fecha sozinho). | Em Materiais, o estoque, o ticket de pesagem e a produção. |
+| Clique em "Fiscal & Ambiental" (o "Financeiro" fecha sozinho): abrem "Notas Fiscais (NF-e)", "Notas de Serviço (NFS-e)", "Transporte (MDF-e)", "Ambiental (MTR/CDF)", "Estoque Fiscal" e "Relatórios Fiscais" (novo no 1.60); o destaque desce pelos itens, cada um na sua palavra. ("SPED Fiscal", BETA, não aparece no mundo e a fala não cita.) | Em Fiscal & Ambiental ficam as notas fiscais de mercadoria e de serviço, o transporte, os documentos ambientais, o estoque fiscal e os relatórios fiscais. |
+| Clique em "Materiais": abrem "Estoque", "Histórico (Kardex)", "Relatório", "Ticket de Pesagem" e "Produção" (o "Fiscal & Ambiental" fecha sozinho). | Em Materiais, o estoque, o ticket de pesagem e a produção. |
 | Destaque em "Coletas & Logística" (sem abrir). | Em Coletas & Logística, as ordens de coleta e a frota. |
 | Destaque em "Clientes e Fornecedores", "Funcionários (RH)" e "CRM/Kanban", um por vez, cada um na sua palavra. | Depois, os cadastros em Clientes e Fornecedores, a equipe em Funcionários e as negociações no CRM. |
 | Destaque em "Agenda" e, depois do traço, em "Gerencial (Filiais)". | Na Agenda, as tarefas e os avisos. E o Gerencial é pra quem tem matriz e filiais. |
 | Destaque no botão "Configurações", no rodapé do menu. | No rodapé ficam as Configurações da empresa. |
+| Destaque, no alto à direita, na lupa "Buscar" e no sino "Notificações" (sem abrir). | No alto da tela ficam a busca, que acha uma tela, um cliente ou um material pelo nome, e o sino com os avisos. |
 | A câmera volta ao menu inteiro. | Algumas dessas áreas são módulos, como as notas fiscais, as coletas e o Gerencial. Elas dependem do plano contratado, e cada uma tem a sua aula. |
 
 ### cap07 · Os menus e a sua conta (vinheta: MENU)
@@ -97,12 +105,24 @@ Sem preço na fala: o valor da mensalidade e o da economia anual ficam na tela, 
 | Tela | Fala |
 | --- | --- |
 | Capítulo novo (S2), no Dashboard. Clique no cartão "Rafael Nogueira", no rodapé do menu: o menu da conta abre. | Agora, o menu da sua conta. No computador, ele abre clicando no seu nome. |
-| Destaque em "Meu Perfil", "Assinatura" e "Tema", um por vez (sem clicar). | No seu perfil, você troca a foto, o nome e a senha. Em Assinatura, acompanha o seu plano. Em Tema, escolhe a tela clara ou escura. |
-| Destaque em "Tutoriais \| EcoFlix", "Central de Ajuda" e "Falar com o Suporte", um por vez. | Em Tutoriais EcoFlix, você volta pra trilha. Na Central de Ajuda, procura a resposta por escrito. E em Falar com o Suporte, chama o suporte. |
+| Destaque em "Meu Perfil" e "Assinatura"; o mouse em "Tema" abre "Claro", "Escuro" e "Sistema" (sem trocar). | No seu perfil, você troca a foto, o nome e a senha. Em Assinatura, acompanha o seu plano. Em Tema, escolhe a tela clara, a escura ou a mesma do seu aparelho. |
+| Destaque em "Tutoriais \| EcoFlix"; clique em "Central de Ajuda": a gaveta com "Pesquisar artigos..."; fecha. De novo o menu da conta e clique em "Falar com o Suporte": a janela "Falar com o suporte", com "Em qual tela/módulo? *", a descrição e "Você já assistiu aos nossos tutoriais sobre isso? *"; destaque em "Falar no WhatsApp" (apagado até preencher); fecha sem enviar. | Em Tutoriais EcoFlix, você volta pra trilha. Na Central de Ajuda, pesquisa a resposta por escrito. E em Falar com o Suporte, você diz em qual tela está e o que aconteceu, e a conversa já abre no WhatsApp com tudo isso. |
+| O menu da conta de novo: destaque no cartão do fim ("Trocar de conta") e, fechado o menu, no botão "Sair", ao lado de "Configurações" (sem clicar). | No fim do menu dá pra trocar de conta, pra quem tem mais de uma empresa. E o botão Sair fica ao lado das Configurações. |
 | Esc fecha o menu; clique em "Configurações" (rodapé) e na aba "Aparência": "Estilo de Navegação (Desktop)". Clique em "Menu Superior": o toast "Estilo de navegação alterado para Menu Superior" e o menu passa para a barra no topo. [BACKEND: `UPDATE profiles SET navigation_style = 'topbar'`; o capítulo seguinte parte de novo com `sidebar`] [TESTAR: janela de 1280 px mostra a barra do topo] | Prefere o menu em cima da tela? Em Configurações, Aparência, é só escolher Menu Superior. Vale pro computador, e dá pra voltar quando quiser. |
-| [CELULAR] (no 16:9, a gravação do celular entra no centro do palco): a barra de baixo "Início", "Caixa", "Novo", "Estoque" e "Menu"; toque em "Menu": a gaveta com as mesmas áreas e, no fim, a seção "Conta". | No celular, o menu fica embaixo: Início, Caixa, o botão Novo, pra começar uma compra ou uma venda, Estoque e o Menu, com todas as áreas e a sua conta. |
+| [CELULAR] (no 16:9, a gravação do celular entra no centro do palco): a barra de baixo "Início", "Caixa", "Novo", "Estoque" e "Menu"; toque em "Menu": antes, toque em "Novo": o leque com "Compra", "Venda", "Ticket de pesagem" e "Nota Fiscal" (o botão do Cato some enquanto o leque está aberto); toque fora fecha; depois "Menu": a gaveta com as mesmas áreas e, no fim, a seção "Conta". | No celular, o menu fica embaixo: Início, Caixa, o botão Novo, pra começar uma compra, uma venda, um ticket de pesagem ou uma nota fiscal, Estoque e o Menu, com todas as áreas e a sua conta. |
 
-### cap08 · As palavras do pátio (vinheta: VOCABULÁRIO)
+### cap08 · O Cato, o seu agente (vinheta: O SISTEMA)
+
+Apresentação curta (Kaik, 18/11): o tutorial do Cato é a T21. Nenhuma pergunta é enviada. É o único capítulo com o balão de dica ligado (nos outros o robô cala o balão no `localStorage`).
+
+| Tela | Fala |
+| --- | --- |
+| Capítulo novo (S2), no Dashboard. Destaque no botão redondo do canto inferior direito (nome "Abrir o Cato"; no celular, embaixo à esquerda, acima da barra). | E esse botão redondo, no canto da tela? É o Cato, o agente de inteligência artificial do EcoSistema. Ele acompanha você em todas as telas. |
+| O balão de dica sobe sozinho ao lado do botão (15 s depois de a tela abrir), com uma frase do Cato e o link "Abrir Cato"; destaque no balão e no xis "Fechar dica do Cato" (sem fechar). [TESTAR: o balão sobe na frase; o `setup` recarrega o Dashboard para o relógio dos 15 s partir junto com a gravação] | De vez em quando ele manda uma dica, num balão ao lado do botão. É só clicar pra abrir, ou fechar no xis. |
+| Clique em "Abrir Cato", no balão: como é a primeira vez do Rafael, abre "Antes da primeira conversa com o Cato" · "Leia rapidinho como ele trata os dados da sua empresa."; a câmera fica na janela (sem aceitar: o aceite e a primeira pergunta são da T21). | Na primeira vez, ele explica como cuida dos dados da sua empresa. Depois, você pergunta do seu jeito, escrevendo ou falando, e ele responde com os números da sua empresa. Ele também prepara lançamentos, como uma compra ou uma venda, e nada é lançado sem a sua confirmação. |
+| A janela fecha no xis; destaque no botão do Cato de novo. | Quem libera o Cato pra cada usuário é o administrador. E ele tem uma aula só dele, mais pra frente na trilha. |
+
+### cap09 · As palavras do pátio (vinheta: VOCABULÁRIO)
 
 | Tela | Fala |
 | --- | --- |
@@ -117,37 +137,54 @@ Sem preço na fala: o valor da mensalidade e o da economia anual ficam na tela, 
 | [cartão "MTR": um documento que viaja junto com a carga no caminhão] | E o MTR é o documento ambiental que acompanha o transporte do resíduo. |
 | [os sete cartões juntos, em grade] | Cada uma dessas palavras tem a sua aula. Por enquanto, basta saber o que ela quer dizer. |
 
-### cap09 · A sua assinatura (vinheta: ASSINATURA)
+### cap10 · A sua assinatura (vinheta: ASSINATURA)
 
 | Tela | Fala |
 | --- | --- |
 | Capítulo novo (S2), no Dashboard. Clique no cartão "Rafael Nogueira" → "Assinatura": a tela "Assinatura" ("Gerencie seu plano, módulos e pagamentos"). [BACKEND: S2: assinatura, módulos e pagamentos do plano ("Mundo")] | Agora, o seu plano. Tudo sobre ele fica em Assinatura, no menu da sua conta. |
+| [VARIANTE: estado TESTE, `cap10.teste.json`] a mesma tela "Assinatura" de uma conta em teste: só o cartão "Ative sua Assinatura" e o botão "Escolher Plano e Ativar" (sem clicar). | Ainda está no período de teste? Aí esta tela mostra só o convite pra escolher o plano e ativar. |
 | Destaque no alto do cartão: "Recicla Vale Metais Ltda", o selo "Ativa" e "Plano Personalizado • 10 módulos". | No alto, o status da assinatura, aqui Ativa, e o nome do plano, com os módulos que ele tem. |
 | [ZOOM: "25 dias restantes" e "Vencimento" 05/12/2026] | Logo abaixo, quantos dias faltam e o vencimento: cinco de dezembro. |
+| [ILUSTRAÇÃO: os três selos de status lado a lado, "Ativa", "Vence em breve" e "Vencida", sobre uma régua do mês com o vencimento 05/12; cada um acende na sua palavra; "Vence em breve" marca os 7 dias antes do vencimento] | Faltando poucos dias, o selo muda pra Vence em breve. Passou do vencimento, vira Vencida. |
 | Destaque em "Valor mensal" e em "Formas de pagamento" ("PIX", "Boleto", "Cartão"), sem zoom no valor. | Embaixo, o valor da mensalidade e as formas de pagamento. |
 | [ZOOM: "Uso da conta": "Usuários" 1 / 3 e "Notas fiscais este mês"] | Em Uso da conta, você vê quantos usuários estão cadastrados e quantas notas fiscais saíram no mês. |
 | Destaque em "Pagar Agora" e, mais abaixo, em "Gerenciar plano" (sem clicar). | Uma dica: ver esta tela é uma coisa, mexer é outra. Pagar e mudar o plano ficam com o administrador, ou com quem tem a permissão de gerenciar a assinatura. |
 
-### cap10 · Módulos e permissões (vinheta: ASSINATURA)
+### cap11 · Módulos e permissões (vinheta: ASSINATURA)
 
 | Tela | Fala |
 | --- | --- |
 | Capítulo novo (S2), em "Assinatura"; a câmera desce até "Plano & módulos" ("Plano Personalizado • 10 módulos • Mensal") e para em "Módulos ativos". | Mais abaixo ficam os Módulos ativos. Cada módulo libera uma parte do sistema, como as notas fiscais, as coletas ou o Gerencial. |
+| Destaque em "Notas Fiscais · Nível 1", na lista "Módulos ativos". | No módulo de notas fiscais aparece também o nível, que é a quantidade de notas que dá pra emitir por mês. |
+| [VARIANTE: estado S3, `cap11.s3.json`] a mesma tela sem o CRM no plano: abaixo de "Módulos ativos", a seção "Adicione ao seu plano" com o cartão "CRM/Kanban" e o botão "Ativar meu CRM" (sem clicar, sem zoom no valor). | Se faltar algum módulo, ele aparece logo abaixo, em Adicione ao seu plano, com o botão pra ativar. |
 | [ILUSTRAÇÃO: dois cartões lado a lado; acende o primeiro, "Módulo fora do plano": uma tela com um cadeado e a frase "o que o módulo faz e como ativar"] | Se uma tela não aparece pra você, pode ser por dois motivos. Ou ela é de um módulo que não está no plano: aí, no lugar da função, a tela mostra o que o módulo faz e como ativar. |
 | [ILUSTRAÇÃO: acende o segundo cartão, "Usuário sem permissão": o item sai do menu; embaixo, "Quem libera: o administrador, em Usuários e Permissões"] | Ou o seu usuário não tem permissão pra ela. Quem libera é o administrador, em Usuários e Permissões. |
 | [ILUSTRAÇÃO: linha do tempo "Período de teste", com todos os módulos acesos, → "Assinatura ativa", com só os contratados acesos; na frase "é só ligar", um módulo apagado acende de novo com a etiqueta "Módulo ligado"] | Uma dica: no teste, todos os módulos ficam liberados. Com a assinatura ativa, ficam os que você contratou. Pra ter de volta uma tela do teste, é só ligar o módulo. |
 
-### cap11 · Quando a empresa cresce (vinheta: ASSINATURA)
+### cap12 · Montar o plano (vinheta: ASSINATURA)
+
+Os valores aparecem na tela (decisão do Kaik, 18/11); a câmera não dá zoom neles e a fala não cita. Nada é aplicado.
 
 | Tela | Fala |
 | --- | --- |
-| Capítulo novo (S2), em "Assinatura", no cartão "Plano & módulos"; destaque em "Gerenciar plano" (sem abrir). | E quando a empresa cresce, o plano cresce junto. Em Gerenciar plano, você liga um módulo novo ou mais usuários. |
-| [ILUSTRAÇÃO: a régua do mês: "Último pagamento 05/11", "Hoje", "Vencimento 05/12"; na frase "só a diferença", o trecho de hoje até o vencimento acende em verde com a etiqueta "Só a diferença, pelos dias que faltam"; sem valores em R$] | Mudou no meio do mês? Antes de confirmar, o sistema mostra o valor. Quando tem cobrança na hora, é só a diferença, pelos dias que faltam até o vencimento. |
+| Capítulo novo (S2), em "Assinatura", no cartão "Plano & módulos"; clique em "Gerenciar plano": abre a janela "Montar plano" · "Monte seu plano e veja como fica ao vivo", já no montador (o plano é Personalizado). | E quando a empresa cresce, o plano cresce junto. Clicando em Gerenciar plano, abre o Montar plano. |
+| O destaque percorre a esquerda, a janela rolando: "Escolha os módulos", "Nível de Notas Fiscais" e "Usuários adicionais" ("3 usuários", "2 base + 1 extra"); depois o resumo "SEU PLANO", à direita (sem zoom no "Total mensal"). | De um lado, você escolhe os módulos, o nível de notas fiscais e os usuários adicionais. Do outro, o resumo do seu plano vai se atualizando. |
+| Destaque na chave "Mensal" / "Anual" (sem trocar); clique em "Voltar aos planos": a lista "Plano Start", "Plano Avançado", "Plano Master" e o cartão "Personalizado" ("Escolha módulo por módulo e monte o plano do seu jeito"). | Dá também pra trocar entre mensal e anual, ou voltar e escolher um plano pronto. |
+| Clique no cartão "Personalizado" (volta ao montador com o plano atual); destaque no botão "Ver valor e aplicar" (sem clicar). | Nada muda enquanto você não clicar em Ver valor e aplicar. Aí o sistema mostra o valor exato pra você conferir antes de confirmar. |
+| A janela fecha no xis; a tela "Assinatura" volta igual. | Uma dica: fechou a janela sem aplicar? A escolha é descartada, e da próxima vez ela abre de novo com o seu plano atual. |
+
+### cap13 · Mudança de plano e usuários (vinheta: ASSINATURA)
+
+Só ilustrações; a gravação fica parada na tela "Assinatura".
+
+| Tela | Fala |
+| --- | --- |
+| [ILUSTRAÇÃO: a régua do mês: "Último pagamento 05/11", "Hoje", "Vencimento 05/12"; na frase "só a diferença", o trecho de hoje até o vencimento acende em verde com a etiqueta "Só a diferença, pelos dias que faltam"; sem valores em R$] | Mudou o plano no meio do mês? Antes de confirmar, o sistema mostra o valor. Quando tem cobrança na hora, é só a diferença, pelos dias que faltam até o vencimento. |
 | [ILUSTRAÇÃO: na mesma régua, "Pagamento confirmado" e o módulo novo acende] | E o plano novo libera assim que o pagamento confirma. |
 | [ILUSTRAÇÃO: uma pessoa com um computador e um celular, os dois ligados ao mesmo usuário; ao lado, o contador "Usuários 3 / 3"] | Uma dica: o limite de usuários é de cadastros, não de gente conectada ao mesmo tempo. O mesmo usuário entra do computador e do celular. |
 | [ILUSTRAÇÃO: um cartão com o título do app "Sua equipe cresceu! 🎉", a linha "Nova mensalidade (estimada)" sem valor e o selo "Plano Personalizado"] | Bateu o limite? Ao criar mais um usuário, o sistema abre o aviso Sua equipe cresceu!, mostra a nova mensalidade, e o plano passa a se chamar Personalizado. |
 
-### cap12 · Formas de pagamento (vinheta: ASSINATURA)
+### cap14 · Formas de pagamento (vinheta: ASSINATURA)
 
 | Tela | Fala |
 | --- | --- |
@@ -156,16 +193,17 @@ Sem preço na fala: o valor da mensalidade e o da economia anual ficam na tela, 
 | [ILUSTRAÇÃO: três colunas: "Cartão", um calendário que se marca sozinho mês a mês; "Pix", um mês por vez, até o interruptor "Pix Automático" ligar e os meses passarem a se marcar sozinhos, com a nota "se o banco aceitar"; "Boleto", um mês por vez] | No boleto, você paga cada mês. No Pix também, a não ser com o Pix Automático, que aparece na hora de pagar: ligado, ele repete a cobrança, se o seu banco aceitar. |
 | [ILUSTRAÇÃO: a coluna "Boleto" acende] | Uma dica: se o QR Code do Pix demorar a aparecer, o boleto é o caminho mais rápido. |
 | De volta à tela: a câmera desce até o cartão "Economize … por ano" ("Mude para o plano anual e pague 12 meses com 20% de desconto (Pix ou Boleto).") e para nele, sem zoom no valor. | Também dá pra passar pro plano anual: os doze meses de uma vez, no Pix ou no boleto, com desconto. A tela mostra quanto você economiza. |
-| A câmera desce até "Histórico de Pagamentos" ("4 pagamentos realizados"): os cartões "Renovação • Recicla Vale Metais Ltda", com o selo "Pago", a forma ("Cartão", "PIX", "Boleto") e "Baixar PDF"; o carrossel rola devagar. | No Histórico de Pagamentos fica cada mensalidade paga, com a nota fiscal pra baixar. |
+| A câmera desce até "Histórico de Pagamentos" ("4 pagamentos realizados"): os cartões "Cobrança • Recicla Vale Metais Ltda" (o nome que a tela dá ao pagamento vindo da cobrança automática), com o selo "Pago", a forma ("Cartão", "PIX", "Boleto"), "Nota nº" e os botões "Baixar PDF" e "Baixar XML", em destaque no primeiro cartão (sem clicar). ("Solicitar Nota Fiscal" só aparece em pagamento sem nota: fica na fala.) | No Histórico de Pagamentos fica cada mensalidade paga, com a nota fiscal pra baixar, em PDF ou em XML. Se a nota ainda não saiu, o botão Solicitar Nota Fiscal pede na hora. |
 | Destaque em "Baixar PDF" do primeiro cartão (sem clicar). | Uma dica: pra nota da assinatura sair, o cadastro da empresa precisa estar completo, com CNPJ e endereço. |
-| A câmera sobe até "Cancelar assinatura", ao lado de "Gerenciar plano" (sem clicar). | E, se um dia cancelar, a cobrança automática para, e o acesso continua até o vencimento. |
+| A câmera sobe até "Cancelar assinatura", ao lado de "Gerenciar plano", e clica: a janela "Cancelar Assinatura" · "Nos ajude a entender o motivo"; em "Motivo do cancelamento", escolhe "Pausa temporária"; "Continuar" → "Confirmar cancelamento", com a lista "Ao confirmar:" ("Você continuará tendo acesso até o vencimento", "Cobranças em aberto referentes a períodos futuros serão canceladas automaticamente", "Você pode reativar a qualquer momento"). | E, se um dia for cancelar, o sistema pede o motivo e mostra o que acontece: o acesso continua até o vencimento, as cobranças futuras são canceladas, e dá pra reativar quando quiser. |
+| "Voltar" ao primeiro passo: destaque no botão verde "Falar com o Sucesso do Cliente" (sem clicar); a janela fecha no xis, sem confirmar nada. | Antes de confirmar, tem um botão pra falar com a nossa equipe. Muitas vezes dá pra resolver sem cancelar. |
 
-### cap13 · Recapitulando (vinheta: RESUMO)
+### cap15 · Recapitulando (vinheta: RESUMO)
 
 | Tela | Fala |
 | --- | --- |
 | Montagem rápida: o portão (cap01) e a trilha com os selos (cap02 e cap03). | Pronto! Recapitulando: a gente firmou os combinados e viu como a trilha funciona, na ordem, com as aulas dos outros módulos liberadas pra conhecer. |
-| Montagem rápida: o botão "Tirar dúvidas com o suporte", o menu com o "Financeiro" aberto e o menu da conta. | Viu onde tirar dúvida, passeou pelo menu e pelo menu da sua conta, e aprendeu as palavras do pátio. |
-| Montagem rápida: a tela "Assinatura" (o alto, os "Módulos ativos" e o "Histórico de Pagamentos"). | E conheceu a sua assinatura: o plano, os módulos, como crescer e como pagar. |
+| Montagem rápida: o botão "Tirar dúvidas com o suporte", o menu com o "Financeiro" aberto, o menu da conta e o botão do Cato com o balão. | Viu onde tirar dúvida, passeou pelo menu e pelo menu da sua conta, conheceu o Cato e aprendeu as palavras do pátio. |
+| Montagem rápida: a tela "Assinatura" (o alto, os "Módulos ativos", a janela "Montar plano" e o "Histórico de Pagamentos"). | E conheceu a sua assinatura: o plano, os módulos, como montar o plano e como pagar. |
 | Capítulo novo (S13): o portão abre sobre o Dashboard, com o vídeo já visto; clique na caixa "Assisti ao vídeo até o final e entendi os combinados." (liga); [ZOOM: a caixa marcada e o botão "Confirmar e começar a primeira aula"]; no fim da frase, clique no botão. [BACKEND: S13; `acknowledge_ecoflix_intro` grava e a tela segue para a aula do T1] | Agora é só marcar que assistiu e entendeu os combinados, e clicar em Confirmar e começar a primeira aula. |
 | Cartão "Próximo: Sua conta e sua empresa"; cartela final. | No próximo tutorial, você deixa o sistema com a cara da sua empresa. Até lá! |

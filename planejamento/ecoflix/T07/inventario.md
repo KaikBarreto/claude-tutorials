@@ -169,3 +169,51 @@ Tabelas: `suppliers` (select/insert), `customers`, `materials`, `price_tables`/i
 - H2: o tooltip do botão da balança mostra o peso com ponto ("Peso estável: 12.400 kg", `InputPesoBalanca.tsx:315`).
 - H3: a Central de Ajuda (t7-c03) chama a janela de "Cadastro Rápido de Fornecedor"; na tela é "Novo Fornecedor". E (t7-problemas)
   diz que "Comprovante sem valores" fica gravado de um pedido pro outro; o código zera a cada pedido.
+
+## 1.60.10 (18/11/2026): o que mudou e o que entrou na aula
+Código lido em `/dev/shm/ecoflix-src/src` (`5290be4cd`); detalhe e linhas em `cobertura_160.md`. Rótulos conferidos na tela
+(exploração de 18/11 na instância 54307) quando marcados com ✔.
+
+- **Busca de fornecedor/cliente** (`components/EntitySearchModal.tsx`): com a busca sem resultado, botão "Cadastrar «texto»" ✔ embaixo
+  de "Nenhum resultado encontrado." ✔; o "+" tem aria "Cadastrar novo" ✔. Na Compra e na Venda o texto NÃO vai para o "Nome *" (H6).
+- **Barra de pedidos** (`components/OrderSwitcher.tsx`): colunas "Número", "Valor", "FORNECEDOR" ✔; botão "Novo pedido" ✔ (aria "Novo
+  pedido de compra" / "Nova venda"); contador "(2)" ✔; lista com uma linha por pedido e a lixeira (aria "Descartar pedido") ✔;
+  "Descartar este pedido?" · "Ele tem 1 material incluído. Você pode recuperá-lo depois em Rascunhos apagados." · "Manter pedido" /
+  "Descartar" ✔. Rascunhos em `order_drafts` (até 20 abas).
+- **"Rascunhos apagados"** (`components/DeletedDraftsDialog.tsx`), botão no topo da tela ✔: "Recupere um rascunho que foi apagado por
+  engano. Ele volta como uma aba ativa." ✔; cartão com fornecedor, "1 item", "10 kg", total e "Apagado há menos de um minuto por Rafael
+  Nogueira" ✔; "Recuperar" ✔ → "Rascunho recuperado"; lixeira (aria "Excluir definitivamente") → "Excluir de vez?" / "Sim, excluir" →
+  "Rascunho excluído definitivamente".
+- **Caixa** (`components/UnfinishedOrdersTabs.tsx`): bloco "Pedidos Não Finalizados" com o contador ✔ (sanfona fechada: clicar para
+  ver os cartões); com pedido não finalizado o "Fechar Caixa" fica travado ✔ ("Não é possível fechar o caixa com pedidos não
+  finalizados", `pages/Caixa.tsx`).
+- **Trocar fornecedor/tabela com itens** (`components/orders/OrderPriceContextChangeDialog.tsx`): "Trocar fornecedor?" · "O pedido já
+  tem 1 item lançado. Escolha o que fazer com os preços atuais." · "Não informado → Depósito Irmãos Siqueira" · "Itens que mudam" "1 de
+  1" · "Total se atualizar" R$ 360,00 (riscado) e R$ 374,40 · "Cancelar", "Só nos próximos", "Atualizar 1 item" ✔. Na venda, "Trocar
+  cliente?"; trocando só a tabela, "Trocar tabela de preços?".
+- **Legenda da origem do preço** embaixo do Valor/Kg de cada linha (`lib/orders/itemPriceOrigin.ts`): nome da tabela ("Principal" ✔,
+  "Tabela Depósitos" ✔), "Preço personalizado", "Preço do material", "Preço informado", "Preço importado", "Preços combinados",
+  "Preço gravado".
+- **Tabela do pedido novo** (`lib/precos/priceTablePreference.ts`): a do fornecedor/cliente → a fixada pelo usuário → a principal.
+- **Finalizar Pedido** (`components/MultiPaymentDialog.tsx`): "Arredondar para baixo" ✔ (marcada mostra "(−R$ X)"; a escolha fica
+  gravada por operador); pagando a mais: "Excesso: R$ X" ✔ + link "Deixar no saldo de {fornecedor}" ✔ → "Sobra de R$ X vai pro saldo" ✔
+  + "{fornecedor} ficará te devendo R$ X" (com saldo a pagar: "Você ainda deverá R$ X a {fornecedor}" ✔) + "Desfazer" ✔ (o valor
+  digitado fica; o excesso volta). "Saldo atual:" / "Saldo após o pedido:" com "(Ele te deverá)" / "(Quitado)". Só na compra, o
+  "Finalizar" relê o fornecedor no servidor antes de abrir.
+- **Parcelas** (`components/InstallmentsConfigDialog.tsx`): campo "Quantidade de parcelas", dica "Use um atalho ou digite de 1 a 120
+  parcelas. O total é redistribuído automaticamente.", botão "Adicionar e redistribuir".
+- **Rodapé**: "Projeção de Lucro" ✔ (com o olho) na compra; "Cancelar" → "Cancelar pedido?" · "Isso irá limpar todos os itens
+  adicionados neste pedido. Esta ação não pode ser desfeita." · "Não" / "Sim, cancelar" → "Pedido cancelado e limpo com sucesso!".
+  Campo "OBSERVAÇÃO" ✔ embaixo do cartão "Pesagem" (não embaixo da lista).
+- **Botão da balança** (`components/InputPesoBalanca.tsx`): com valor no campo, "Substituir X pelo peso da balança (Y kg)?" "Cancelar" /
+  "Substituir"; azul = conectada e recebendo peso; âmbar = "Conectada, aguardando peso da balança. Verifique se ela está ligada e
+  enviando peso — ou digite manualmente."; vermelho = "Balança desconectada. Clique para ir às configurações.". O "+" do campo
+  Material tem a dica "Cadastrar novo material".
+- **Pesagem avançada** (sem mudança no 1.60.10; agora na fala): "Resumido" ("Só o peso líquido cobrado."), "Detalhado" ("Bruto, tara,
+  impureza e líquido."), dica "Preencha 1ª e 2ª pesagem para o bruto, informe só a 1ª (conta como bruto) ou digite o bruto direto.".
+- **Sem internet** (`hooks/useOnlineStatus.ts`): teste real em `/auth/v1/health`; 2 falhas seguidas para cair e 2 acertos para voltar.
+- **Backend falso**: `order_drafts` (leitura, gravação, `deleted_at`) já atende; `log_order_activity`, `claim_draft_editing`,
+  `get_cash_register_other_order_ids`, `preview_next_order_ref` já existem; `GET /auth/v1/health` responde 200 sem handler (aparece
+  em `__dev/unknowns` como AUTH_SEM_HANDLER: pedido ao mundo base).
+- Handoffs novos: H4 aviso "Preço especial aplicado" × legenda "Preço personalizado"; H5 "Fornecedor atual → …" quando o campo estava
+  vazio; H6 "Cadastrar «texto»" não leva o texto ao "Nome *"; H7 mensagens antigas de edição em caixa fechado (`cobertura_160.md`).

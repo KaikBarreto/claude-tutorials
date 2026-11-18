@@ -58,8 +58,8 @@ No fim do menu dá pra trocar de conta, pra quem tem mais de uma empresa. E o bo
 Prefere o menu em cima da tela? Em Configurações, Aparência, é só escolher Menu Superior. Vale pro computador, e dá pra voltar quando quiser.
 No celular, o menu fica embaixo: Início, Caixa, o botão Novo, pra começar uma compra, uma venda, um ticket de pesagem ou uma nota fiscal, Estoque e o Menu, com todas as áreas e a sua conta.""",
 8: """E esse botão redondo, no canto da tela? É o Cáto, o agente de inteligência artificial do Ecossistema. Ele acompanha você em todas as telas.
-Você pergunta do seu jeito, escrevendo ou falando, e ele responde com os números da sua empresa. Ele também prepara lançamentos, como uma compra ou uma venda, e nada é lançado sem a sua confirmação.
 De vez em quando ele manda uma dica, num balão ao lado do botão. É só clicar pra abrir, ou fechar no xis.
+Na primeira vez, ele explica como cuida dos dados da sua empresa. Depois, você pergunta do seu jeito, escrevendo ou falando, e ele responde com os números da sua empresa. Ele também prepara lançamentos, como uma compra ou uma venda, e nada é lançado sem a sua confirmação.
 Quem libera o Cáto pra cada usuário é o administrador. E ele tem uma aula só dele, mais pra frente na trilha.""",
 9: """Antes das telas, umas palavras que aparecem o tempo todo. A mais importante: cliente é pra quem você vende o material. Fornecedor é de quem você compra: o catador, o carroceiro, outro depósito.
 Uma dica: se no seu pátio se fala ao contrário, dá pra inverter só os nomes, em Configurações, Usabilidade. Por dentro, nada muda: a compra segue com o fornecedor, a venda com o cliente, e as notas fiscais também.

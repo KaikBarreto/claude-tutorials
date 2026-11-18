@@ -32,7 +32,7 @@ O Zé é novo e está na tabela principal, então vale o preço dessa tabela. O 
 Quem traz esse peso é o Ecotrêi, o programa que fica aberto no computador, ligado na balança. O selo ao vivo quer dizer que o peso está chegando agora.
 O botão azul dentro do campo puxa o peso de novo, quando você precisar. A leitura da balança faz parte do módulo de balança, que depende do plano contratado. Sem ele, é só digitar o peso.
 Se já tem peso no campo e você clica no botão, a tela pergunta antes de trocar. Assim ninguém perde uma pesagem sem querer.
-O botão também avisa pela cor: azul, tudo certo. Âmbar, esperando o peso parar. Vermelho, a balança caiu, e clicando nele você vai pra configuração.
+O botão também avisa pela cor: azul, tudo certo. Âmbar, conectado, mas o peso não está chegando: confira se a balança está ligada. Vermelho, a balança caiu, e clicando nele você vai pra configuração.
 Embaixo, o estoque disponível desse material e o valor do item: quatrocentos e quarenta e seis reais e quarenta. Incluir Item, e o cobre entra na lista, com a origem do preço escrita embaixo dele.
 Agora a latinha, em três sacos de ráfia: vinte e um quilos e seiscentos. Cada saco pesa duzentos gramas. Então, no campo tara-ímp, vai zero vírgula seis.
 A balança nunca preenche esse campo sozinha: a tara é você que informa. O valor sai pelo peso sem os sacos: vinte e um quilos, a seis e vinte, dá cento e trinta reais e vinte. Incluir Item.""",
@@ -58,7 +58,7 @@ Confirmar. O ferro fechou em duzentos e vinte e cinco, e o total da compra ficou
 Clicando na linha, abre o detalhe da pesagem: as duas pesagens, o bruto, a impureza e o desconto. É assim que você confere antes de finalizar.
 E se o combinado for o valor do pedido inteiro, o lápis do lado deixa digitar o total fechado. A tela continua mostrando embaixo o valor calculado, pra conferência. E quem tem permissão de ver lucro acompanha aqui embaixo a Projeção de Lucro da compra.""",
 9: """Antes de pagar o Zé, repara nesta barra escura. Ela é o pedido que está aberto agora: o número, o valor e o fornecedor.
-Enquanto o Zé confere a carga dele, chegou uma caminhonete. Não precisa fechar nada: o mais abre outro pedido, e o do Zé fica guardado.
+Enquanto o Zé confere a carga dele, chegou uma caminhonete. Não precisa fechar nada: o botão Novo pedido abre outro, e o do Zé fica guardado.
 O motorista ainda não disse de quem é a carga, então começo com Não informado e já peso: dez quilos de cobre misto. Embaixo do preço, a tela mostra de onde ele veio: da tabela Principal.
 A carga é do Depósito Irmãos Siqueira, que tem tabela própria. Como já tem item lançado, a tela pergunta o que fazer com o preço. Ela mostra quantos itens mudam e quanto fica o total.
 Só nos próximos troca o fornecedor e deixa o que já foi pesado no preço antigo. Atualizar refaz o preço dos itens pela tabela nova.
@@ -101,7 +101,7 @@ Pronto. O cupom sai com o material, o peso, o preço e como foi pago. Esse papel
 E quando o papel vai na mão do motorista, sem mostrar preço? É o Comprovante sem valores, aqui em Opções avançadas, do lado do Finalizar.
 O pedido guarda todos os valores. Eles só ficam escondidos no comprovante e no portal. Uma dica: ligue antes de finalizar, porque vale só pra aquele pedido. O próximo já nasce com os valores. A gente usa isso já já, na venda.
 No mesmo menu fica a Data e hora do pedido, pra lançar hoje uma compra que aconteceu ontem. Quando a data é de outro dia, a tela pergunta em qual caixa lançar: o daquele dia ou o que está aberto agora. Só aparece pra quem tem essa permissão.
-Aqui também dá pra anexar fotos da carga, o que faz parte do Portal do Cliente e depende do plano contratado. E fora do menu, embaixo dos itens, o campo Observação guarda um recado no pedido.""",
+Aqui também dá pra anexar fotos da carga, o que faz parte do Portal do Cliente e depende do plano contratado. E fora do menu, embaixo do cartão da pesagem, o campo Observação guarda um recado no pedido.""",
 16: """Agora o outro lado: vender. A tela da venda é igual à da compra. Só que aqui vem o cliente, e o preço que entra é o de venda.
 A Fundição Bandeira do Vale leva cento e cinquenta e dois quilos de latão, a trinta e um e noventa. Repara na coluna nova: o lucro de cada item. E embaixo do total, o lucro estimado da venda: seiscentos e sessenta e oito reais e oitenta.
 O lucro estimado compara o preço de venda com o preço de compra do material. No latão, são quatro e quarenta por quilo. E o olho do lado esconde o valor, se tiver alguém olhando a tela.
