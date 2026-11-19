@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """T07 · Comprar e vender sucata · gera rec/t07/capNN.json (roteiros do robô) a partir da voz (t07/narracao/capNN.json).
 
-EcoSistema 1.60.10 no COMPUTADOR (janela 1280x800), Recicla Vale Metais, Rafael Nogueira (MASTER), FAKE_NOW 10/11/2026 08:35 (todos os
+EcoSistema 1.60.18 no COMPUTADOR (janela 1280x800), Recicla Vale Metais, Rafael Nogueira (MASTER), FAKE_NOW 10/11/2026 08:35 (todos os
 capítulos; a junção: depois do #85 da T6, aberto às 08:31). Uso, de qualquer pasta:  python3 -I rec/t07/gerar.py [NN ...]
 Depois: ensaio.py NN (rápido) -> record.mjs --rapido -> resumo.py NN --ens -> t07_semente.py NN -> prever.py NN --ens -> gravação -> resumo.py NN.
 
@@ -460,7 +460,7 @@ NOMES = ['Abertura', 'Onde ficam a compra e a venda', 'Escolher o fornecedor', '
          'Rascunho: sair, descartar e recuperar', 'Finalizar o pedido', 'Abater o vale na compra', 'Até três formas de pagamento',
          'Fiado com parcelas', 'O cupom e o cupom sem valor', 'A tela de venda', 'Estoque insuficiente', 'Sem internet', 'Recapitulando']
 # estado de partida: t07/inicio + o último apos-capNN que mudou o banco (t07_semente.py) + base/balanca-ativada; o resto o setup refaz.
-# 1.60.10 (18/11): capítulos novos 09, 10 e 12 (não mudam o banco); os antigos 09..16 viraram 11 e 13..19.
+# 1.60.18 (18/11): capítulos novos 09, 10 e 12 (não mudam o banco); os antigos 09..16 viraram 11 e 13..19.
 SEMENTE = {0: [], 1: [], 2: [], 3: [], 4: ['apos-cap03'], 5: ['apos-cap03'], 6: ['apos-cap03'], 7: ['apos-cap03'], 8: ['apos-cap03'],
            9: ['apos-cap03'], 10: ['apos-cap03'], 11: ['apos-cap03'], 12: ['apos-cap11'], 13: ['apos-cap11'], 14: ['apos-cap11'],
            15: ['apos-cap11'], 16: ['apos-cap15'], 17: ['apos-cap15'], 18: ['apos-cap17'], 19: ['apos-cap18']}
@@ -531,7 +531,7 @@ VOLTAR = SEL("main a:has-text('Voltar para o caixa')")
 ACAO_RAPIDA = lambda n: SEL(f"[cmdk-group]:has([cmdk-group-heading]:text-is('Ações Rápidas')) [cmdk-item]:has(span:text-is('{n}'))")
 LINHA_SEM_VALOR = SEL(f"{POP} div:has(> div > p:text-is('Comprovante sem valores'))")
 
-# 1.60.10: busca que oferece cadastrar, legenda da origem do preço, barra de pedidos, rascunhos apagados, troca de fornecedor com itens
+# 1.60.18: busca que oferece cadastrar, legenda da origem do preço, barra de pedidos, rascunhos apagados, troca de fornecedor com itens
 CAD_BUSCA = SEL("[role=dialog] button:has-text('Cadastrar «')")
 VKG_LINHA = lambda nome: SEL(f"main tbody tr:has-text('{nome}') td:has(span.truncate.text-muted-foreground) input")
 LEGENDA = lambda nome, k=0: SEL(f"main tbody tr:has-text('{nome}') span.truncate.text-muted-foreground", nth=k)
@@ -544,7 +544,7 @@ CANCELAR_RODAPE = SEL("main button:text-is('Cancelar')")
 ARREDONDAR = SEL('label[for=round-payment]')
 ADLG = '[role=alertdialog]'    # janelas de confirmação (Mesclar pesagens): AlertDialog do Radix
 JS_BLUR = "(()=>{const a=document.activeElement;if(a&&a!==document.body)a.blur();return 'foco fora: '+(document.activeElement&&document.activeElement.tagName)})()"
-# 1.60.10: o app não acredita só no navegador, ele testa /auth/v1/health (hooks/useOnlineStatus.ts): a queda derruba esse endereço na página
+# 1.60.18: o app não acredita só no navegador, ele testa /auth/v1/health (hooks/useOnlineStatus.ts): a queda derruba esse endereço na página
 JS_OFFLINE = ("(()=>{window.__off=true;if(!window.__f){window.__f=window.fetch.bind(window);window.fetch=(u,o)=>(window.__off&&String((u&&u.url)||u).includes('/auth/v1/health'))"
               "?Promise.reject(new TypeError('Failed to fetch')):window.__f(u,o)}Object.defineProperty(navigator,'onLine',{configurable:true,get:()=>false});window.dispatchEvent(new Event('offline'));"
               "return 'offline'})()")
@@ -667,7 +667,7 @@ ZE = st_parceiro('moreira', 'José Carlos Moreira')
 
 
 def st_deposito():
-    """1.60.10: o 2º pedido (Novo pedido), Não informado + cobre misto 10 kg, troca para o Depósito Irmãos Siqueira com "Atualizar 1 item"
+    """1.60.18: o 2º pedido (Novo pedido), Não informado + cobre misto 10 kg, troca para o Depósito Irmãos Siqueira com "Atualizar 1 item"
     (37,44, Tabela Depósitos) e volta ao pedido do Zé pela barra"""
     return ([{'do': 'click', 'target': NOVO_PEDIDO}, {'do': 'pause', 'seconds': 1.2}, {'do': 'click', 'target': FORN},
              {'do': 'waitFor', 'target': NAO_INF, 'timeout': 10}, {'do': 'click', 'target': NAO_INF},
@@ -955,7 +955,7 @@ def cap08():
 
 
 def cap09():
-    """1.60.10 · A barra de pedidos; Novo pedido (#1760); Não informado + cobre 10 kg (legenda Principal); troca para o Depósito Irmãos
+    """1.60.18 · A barra de pedidos; Novo pedido (#1760); Não informado + cobre 10 kg (legenda Principal); troca para o Depósito Irmãos
     Siqueira: "Trocar fornecedor?" -> Atualizar 1 item (37,44, Tabela Depósitos, R$ 374,40); volta ao pedido do Zé pela barra."""
     c = Cap(9, setup_tela(extra=ZE_COMPLETO))
     c.hover(BARRA, 2.0, w=(1, 'barra'), label='barra de pedidos: #1759, R$ 913,20, José Carlos Moreira (zoom)')
@@ -1008,7 +1008,7 @@ def cap09():
 
 
 def cap10():
-    """1.60.10 · (ilustração L1) Caixa: Pedidos Não Finalizados (2); lixeira da lista: Descartar este pedido?; Rascunhos apagados: Recuperar;
+    """1.60.18 · (ilustração L1) Caixa: Pedidos Não Finalizados (2); lixeira da lista: Descartar este pedido?; Rascunhos apagados: Recuperar;
     descarta de novo e Excluir definitivamente; o Cancelar do rodapé (sem clicar)."""
     c = Cap(10, setup_login() + vai('/caixa', 'Nova Venda') + setup_tela(extra=ZE_COMPLETO + st_deposito())[len(setup_login()):])
     c.hover(BARRA, 1.0, w=(1, 'rascunhos.'), label='a barra com os dois pedidos (sob a ilustração)')
@@ -1106,7 +1106,7 @@ def cap11():
 
 
 def cap12():
-    """1.60.10 · Valdir Pereira (vale de R$ 300,00): Ferro misto 200 kg = R$ 150,00; Finalizar > Saldo do Fornecedor: Saldo atual e Saldo após
+    """1.60.18 · Valdir Pereira (vale de R$ 300,00): Ferro misto 200 kg = R$ 150,00; Finalizar > Saldo do Fornecedor: Saldo atual e Saldo após
     o pedido (Ele te deverá); fecha sem confirmar; Cancelar > Sim, cancelar. O saldo do Valdir não muda (junção)."""
     c = Cap(12, setup_tela())
     c.click(FORN, w=(1, 'caso.'), label='Selecionar fornecedor')

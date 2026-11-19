@@ -294,7 +294,7 @@ def stable_id(chave):
 
 
 RAFAEL = stable_id('user.rafael')
-VERSAO = '1.60.10'
+VERSAO = '1.60.18'
 HOJE = FAKE_NOW[:10]
 STORAGE = {'app_version': VERSAO, 'notification_shown_version': VERSAO, 'pwa-install-dismissed': 'true', 'theme': 'light',
            f'daily-tasks-reminder-last-shown-{RAFAEL}': HOJE, 'initial-preferences-set': 'true'}

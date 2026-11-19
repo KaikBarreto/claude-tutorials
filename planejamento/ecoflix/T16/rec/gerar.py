@@ -2,7 +2,7 @@
 """T16 · gera rec/t16/cap00..cap24.json (roteiros do robô) a partir da voz (t16/narracao/capNN.json).
 
 Nota Fiscal de mercadoria (NF-e) no COMPUTADOR (janela 1280x800), logado como Rafael Nogueira (MASTER, Recicla Vale Metais), EcoSistema
-1.60.10 (25 capítulos desde a passada de 18/11: cobertura_160.md). FAKE_NOW 2026-11-10T08:30:00-03:00 (terça) em todos os capítulos. Emissão, certificado, SEFAZ e notas recebidas simulados no
+1.60.18 (25 capítulos desde a passada de 18/11: cobertura_160.md). FAKE_NOW 2026-11-10T08:30:00-03:00 (terça) em todos os capítulos. Emissão, certificado, SEFAZ e notas recebidas simulados no
 Supabase falso (rec/mundo/handlers: plugnotas-*, get_invoices_paged, get_next_invoice_number, search_orders_for_invoice,
 certificate_vault_status, dfe_inbound_import_enqueue + a fila dfe_inbound_import_jobs; lib/nfe.mjs): nada sai da máquina.
 Cada passo é preso a uma palavra da fala: `at` = início da palavra − o custo do gesto (A(linha, palavra, folga)), para o cursor CHEGAR
@@ -294,7 +294,7 @@ def stable_id(chave):
 
 
 RAFAEL = stable_id('user.rafael')
-VERSAO = '1.60.10'
+VERSAO = '1.60.18'
 HOJE = FAKE_NOW[:10]
 STORAGE = {'app_version': VERSAO, 'notification_shown_version': VERSAO, 'pwa-install-dismissed': 'true', 'theme': 'light',
            f'daily-tasks-reminder-last-shown-{RAFAEL}': HOJE, 'initial-preferences-set': 'true',
@@ -793,7 +793,7 @@ def js_valor_campo(material):
             "const t=document.querySelector('[role=dialog]').innerText;return (v.includes('500,00')&&t.includes('23.950,00')?'OK: ':'DIFERENTE: ')+v})()") % json.dumps(material)
 
 
-# ---------------------------------------------------------------- a nota em tela cheia (1.60.10)
+# ---------------------------------------------------------------- a nota em tela cheia (1.60.18)
 SAIR_NOTA = SEL(f"{DLG} button[aria-label='Sair da nova nota fiscal']")
 DESCARTAR = SEL("button:text-is('Descartar')")
 MAT_CARD = SEL(f"{DLG} input[placeholder='Escreva o nome ou código do material']")

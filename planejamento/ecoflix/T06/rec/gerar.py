@@ -307,7 +307,7 @@ def stable_id(chave):
     return f'{x[:8]}-{x[8:12]}-{x[12:16]}-{x[16:20]}-{x[20:32]}'
 
 
-VERSAO = '1.60.10'
+VERSAO = '1.60.18'
 HOJE = MANHA[:10]
 
 

@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 """T08 · Ticket de Pesagem: gera rec/t08/cap00..cap13.json (roteiros do robô) a partir da voz (t08/narracao/capNN.json).
 
-EcoSistema 1.60.10 no Supabase falso (mundo da Recicla Vale Metais), computador 1280x800, logado como Rafael Nogueira (MASTER),
+EcoSistema 1.60.18 no Supabase falso (mundo da Recicla Vale Metais), computador 1280x800, logado como Rafael Nogueira (MASTER),
 EcoTray falso ligado (semente base/balanca-ativada: "Balança do pátio" e a térmica POS-58) e o caixa do Rafael aberto (base/caixa-aberto).
 Cada passo é preso a uma palavra da fala: `at` = início da palavra - folga (o custo do gesto, docs/04 "Custo real dos gestos"), e a marca
 Ln entra no início de cada linha. Quando a voz chegar, rodar de novo com o capNN.json da voz (nada a reescrever).
 Rodar de qualquer pasta: `python3 -I rec/t08/gerar.py [NN ...]`; ensaiar: `bash rec/t08/t08_grava.sh NN [--rapido]` ou o lote `t08_lote160.sh`.
 
-18/11 (app 1.60.10, cobertura_160 + JUNCAO_160): 14 capítulos. Novos: 07 (ticket com valores), 11 (pesagem avulsa com cobrança) e
+18/11 (app 1.60.18, cobertura_160 + JUNCAO_160): 14 capítulos. Novos: 07 (ticket com valores), 11 (pesagem avulsa com cobrança) e
 12 (sem internet); os antigos 07, 08, 09 e 10 viraram 08, 09, 10 e 13.
 Relógio (MUNDO_LINHA_DO_TEMPO.md, "O dia 10/11"): o ticket #58 é das 08:40 às 09:00. FAKE_NOW por capítulo (fake_now.json, que o
 t08_grava.sh usa para religar a instância 54308): 08:40 (caps 0 a 3), 08:49 (caps 4 e 5), 08:51 (cap 6: o #58 nasce às 08:52),
@@ -45,9 +45,9 @@ def stable_id(chave):
 
 RAFAEL = stable_id('user.rafael')
 try:
-    VERSAO = open(os.path.join(TUT, 'app', 'dist', '.versao-app'), encoding='utf8').read().strip() or '1.60.10'
+    VERSAO = open(os.path.join(TUT, 'app', 'dist', '.versao-app'), encoding='utf8').read().strip() or '1.60.18'
 except OSError:
-    VERSAO = '1.60.10'
+    VERSAO = '1.60.18'
 HOJE = '2026-11-10'
 EMPRESA = '38814e47-876a-5977-a5f7-53af364c17bb'
 STORAGE = {
@@ -833,7 +833,7 @@ def cap10():
     c.hover(SEL("[role=dialog] :text-is('Cancelado') >> nth=-1"), 0.5, at=c.A(6, 'Cancelado', 0.6, nth=0), label='status Cancelado (opção do filtro)')
     c.mark(7)
     c.press('Escape', at=round(c.L(7) - 0.2, 2), label='fecha a lista de status')
-    # 18/11: o painel Filtros fica aberto da linha 6 para a 7 (fechar com Escape e reabrir deixava o painel invisível no 1.60.10)
+    # 18/11: o painel Filtros fica aberto da linha 6 para a 7 (fechar com Escape e reabrir deixava o painel invisível no 1.60.18)
     c.hover(SEL("main button[role=combobox]:has-text('Este mês')"), 0.8, at=c.A(7, 'período', 0.7), label='período (Este mês), só na Lista')
     c.hover(FILTRO('Tipo'), 0.3, at=c.A(7, 'tipo', 0.5), label='filtro Tipo')
     c.hover(FILTRO('Status'), 0.3, at=c.A(7, 'situação', 0.5), label='filtro Status')

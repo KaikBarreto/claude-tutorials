@@ -46,9 +46,9 @@ def stable_id(chave):
 RAFAEL = stable_id('user.rafael')
 TOKEN_COOP = stable_id('t12.portal.recomeco')   # portal_token da Cooperativa Recomeço (t12_sementes.py)
 try:
-    VERSAO = open(os.path.join(TUT, 'app', 'dist', '.versao-app'), encoding='utf8').read().strip() or '1.60.10'
+    VERSAO = open(os.path.join(TUT, 'app', 'dist', '.versao-app'), encoding='utf8').read().strip() or '1.60.18'
 except OSError:
-    VERSAO = '1.60.10'
+    VERSAO = '1.60.18'
 HOJE = '2026-11-10'
 STORAGE = {
     'app_version': VERSAO, 'notification_shown_version': VERSAO, f'dominex:daily-tasks-shown:{RAFAEL}': HOJE,

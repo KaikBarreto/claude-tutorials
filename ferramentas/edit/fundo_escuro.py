@@ -74,6 +74,14 @@ img += luz
 img += cv2.GaussianBlur(luz, (0, 0), 18) * 0.45 + cv2.GaussianBlur(luz, (0, 0), 60) * 0.30
 img *= (1 - 0.30 * np.clip(((u - 0.5) / 0.65) ** 2 + ((v - 0.5) / 0.8) ** 2, 0, 1))[..., None]
 img += np.random.default_rng(7).normal(0, 2.4, (H, W, 1)).astype(np.float32)
+# marca.json -> "palco": {"brilho": 0.55} apaga o fundo inteiro (EcoFlix, 19/11: "levemente escurecido"); sem a chave, 1.0 (idêntico)
+try:
+    import json as _json
+    _mp = ui.caminho_marca()
+    _br = float((_json.load(open(_mp)).get("palco") or {}).get("brilho", 1.0)) if _mp else 1.0
+except Exception:
+    _br = 1.0
+img *= _br
 img = np.clip(img, 0, 255).astype(np.uint8)
 os.makedirs(os.path.dirname(OUT), exist_ok=True)
 cv2.imwrite(OUT, cv2.cvtColor(img, cv2.COLOR_RGB2BGR))

@@ -905,3 +905,26 @@ Decisões:
 - Janelas das cenas com a voz real: `ilu05` passou a ir até "quatrocentos" (o resultado é falado com ele na tela); auditoria
   `auditar.cjs --passo 0.25` aprovada depois de 3 ajustes de margem e do título no mergulho.
 - Montagem: `t08/edit/montar_t08.sh` (render dos capítulos ~2,5 min cada, `finish.py` ~13 min, legendas). Aula: 13 min 50 s.
+
+## 19/11 (noite) · retorno do Kaik sobre o piloto T08 e app 1.60.18
+- **Decisões do Kaik**: gravar em **16:9, tela de 1600x900** (escolheu entre 1920x1080 e 1600x900 vendo os dois no palco);
+  **fundo do palco escurecido** (brilho 0,55, aprovado). T08 cap09: "quando fala de abrir o comprovante 80mm não mostra nada
+  na tela": o comprovante abre em outra aba; **toda aula que fala de PDF/comprovante mostra o papel real na tela** (ilustração
+  com as páginas do PDF gerado pelo app, zoom acompanhando a fala). Vale também para o cap11 (avulsa).
+- **Como ficou no código**: `mundo.json -> navegador.tela {1600, 900, escala 1.8}` (quadros 2880x1620), lido por
+  `rec/recorder/browser.mjs` (`TUT_VIEWPORT`/`TUT_SCALE` vencem); `marca.json -> palco.brilho 0.55`, lido por
+  `fundo_escuro.py` (sem a chave sai idêntico; `identidade_domiflix.sh` conferido). O palco se ajusta sozinho ao 16:9
+  (janela 1832x1030 em (44, 25)). **As cenas v3 são 1280x800 (16:10): precisam de versão 16:9** e a caixa das ilustrações no
+  specs muda para a janela nova.
+- **App 1.60.18** (`e8edc9e6d`, 93 commits depois da 1.60.10) no build de gravação (`app/dist`; a 1.60.10 ficou em
+  `app/dist-1.60.10`). Handoffs do Kaik em `planejamento/ecoflix/handoffs/`: fiscal (Relatório/Estoque Fiscal em 7 abas,
+  status "Encerramento enviado"/"Cancelamento enviado", aba Empresa, endereço fiscal próprio, Pré-visualização com DANFE/XML
+  reais, textos automáticos; **homologação só por CNPJ: não anunciar; DANFE modelo novo não é o de produção até 01/12**),
+  caixa (abrir zerado nunca é barrado; aviso "Saldo insuficiente em dinheiro" com "Abrir zerado (R$ 0,00)" e link do
+  tutorial `TUTORIAL_DINHEIRO_FISICO_URL` em `src/lib/caixa.ts`, **que temos de avisar quando a estrutura da EcoFlix mudar**),
+  resposta às nossas correções (quase tudo corrigido; ver arquivo) e a novidade **margem automática na tabela de preços**
+  (T03: Materiais > Editar Preços em tela cheia, chave "Margem automática", por tabela ou por material, % ou R$/kg, resumo
+  com "Venda abaixo da compra"/"Sem preço"/"Margem típica", calculadora no cadastro; margem sempre sobre a compra).
+- Aulas com mudança visível (lista do Kaik): T07, T08, T02, T00, T04, T06/T09, T10, T11, T19, T20, T22, T26, T05, T18, T27;
+  mais T03 (margem), T16/T17 (fiscal). Todas serão reensaiadas de qualquer forma (versão e tela novas).
+- Varredura 1.60.18 em 1600x900: `rec/varredura/tudo.sh` (resultado anterior em `rec/varredura/v160_10/`).

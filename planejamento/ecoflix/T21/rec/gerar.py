@@ -49,7 +49,7 @@ TUT = os.path.normpath(os.path.join(HERE, '..', '..'))
 AULA = 't21'
 NARR = os.path.join(TUT, AULA, 'narracao')
 FAKE_NOW = '2026-11-10T08:30:00-03:00'
-VERSAO = '1.60.10'
+VERSAO = '1.60.18'
 HOJE = FAKE_NOW[:10]
 NOMES = ['Abertura', 'Onde o Cato fica', 'Autorizar o Cato', 'As perguntas prontas', 'O que ele responde bem', 'Gráfico ou tabela',
          'De onde vêm os números', 'Os limites do Cato', 'Avaliar e falar com o suporte', 'Recapitulando']

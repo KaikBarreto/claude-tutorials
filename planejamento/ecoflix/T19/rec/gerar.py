@@ -42,9 +42,9 @@ from t19_sementes import t19_slug  # noqa: E402  (o mesmo slug do handler rpc/ge
 
 RAFAEL = '34c36c63-0890-5e89-8963-7c77b7996908'      # stableId('user.rafael') do mundo
 try:
-    VERSAO = open(os.path.join(TUT_HOME, 'app', 'dist', '.versao-app'), encoding='utf8').read().strip() or '1.60.10'
+    VERSAO = open(os.path.join(TUT_HOME, 'app', 'dist', '.versao-app'), encoding='utf8').read().strip() or '1.60.18'
 except OSError:
-    VERSAO = '1.60.10'
+    VERSAO = '1.60.18'
 FAKE_NOW = {n: '2026-11-10T08:30:00-03:00' for n in range(14)}
 HOJE = {n: FAKE_NOW[n][:10] for n in range(14)}
 

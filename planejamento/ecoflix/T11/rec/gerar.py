@@ -50,9 +50,9 @@ def stable_id(chave):
 
 RAFAEL = stable_id('user.rafael')
 try:
-    VERSAO = open(os.path.join(TUT, 'app', 'dist', '.versao-app'), encoding='utf8').read().strip() or '1.60.10'
+    VERSAO = open(os.path.join(TUT, 'app', 'dist', '.versao-app'), encoding='utf8').read().strip() or '1.60.18'
 except OSError:
-    VERSAO = '1.60.10'
+    VERSAO = '1.60.18'
 HOJE = '2026-11-10'
 # "já vi" dos avisos que atrapalhariam a gravação (o que o robô põe sozinho na sessão logada; aqui a sessão nasce no login)
 STORAGE = {

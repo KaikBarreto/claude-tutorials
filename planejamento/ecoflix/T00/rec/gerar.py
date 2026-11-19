@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """T0 · gera rec/t00/capNN.json (computador, 1280x800) e rec/t00/capNN.9x16.json (celular 390x844, `device: phone`) de cap00 a cap15,
 a partir da voz ($TUT_HOME/t00/narracao/capNN.json, estimada ou da voz de verdade), logado como Rafael Nogueira (MASTER, Recicla Vale
-Metais Ltda), no EcoSistema 1.60.10 (18/11: capítulos novos 8, o Cato, e 12, Montar o plano; os antigos 8..13 viraram 9, 10, 11, 13, 14, 15).
+Metais Ltda), no EcoSistema 1.60.18 (18/11: capítulos novos 8, o Cato, e 12, Montar o plano; os antigos 8..13 viraram 9, 10, 11, 13, 14, 15).
 
 DUAS VERSÕES (planejamento/ecoflix/T00/plano.md, "Vertical"): mesmo áudio, mesma linha do tempo, os mesmos `label`. No 9:16 cada tela real é
 gravada de novo no celular (390x844, toque), nunca o computador reduzido. O cap07 linha 6 usa a gravação do celular também no 16:9 (a edição
@@ -22,7 +22,7 @@ semente do catálogo); o player toca um vídeo fictício local, mudo (ext handle
 Balão de dica do Cato: calado no `localStorage` em todos os capítulos, menos no cap08 (o `setup` recarrega o Dashboard e espera
 BALAO_ESPERA para o balão subir na frase dele).
 
-Abertos SEM confirmar (1.60.10, Kaik 18/11): "Gerenciar plano" (Montar plano; nunca "Ver valor e aplicar"), "Cancelar assinatura" (até
+Abertos SEM confirmar (1.60.18, Kaik 18/11): "Gerenciar plano" (Montar plano; nunca "Ver valor e aplicar"), "Cancelar assinatura" (até
 "Confirmar cancelamento"; nunca "Confirmar Cancelamento"), "Falar com o Suporte" (nunca "Falar no WhatsApp"), o aviso do Cato (nunca o aceite).
 Nunca clicados (saem do app ou cobram): "Tirar dúvidas com o suporte", "Pagar Agora", "Adicionar ao meu plano", "Ativar meu CRM",
 "Pular por agora" (só hover), "Baixar PDF", "Baixar XML", "Sair", "Falar com o Sucesso do Cliente".
@@ -43,9 +43,9 @@ RAFAEL = '34c36c63-0890-5e89-8963-7c77b7996908'      # stableId('user.rafael') d
 EMPRESA = '38814e47-876a-5977-a5f7-53af364c17bb'     # stableId('company.reciclavale')
 AGORA_MS = 1794310200000                             # FAKE_NOW em ms (2026-11-10T08:30:00-03:00)
 try:
-    VERSAO = open(os.path.join(TUT_HOME, 'app', 'dist', '.versao-app'), encoding='utf8').read().strip() or '1.60.10'
+    VERSAO = open(os.path.join(TUT_HOME, 'app', 'dist', '.versao-app'), encoding='utf8').read().strip() or '1.60.18'
 except OSError:
-    VERSAO = '1.60.10'
+    VERSAO = '1.60.18'
 FAKE_NOW = '2026-11-10T08:30:00-03:00'
 HOJE = FAKE_NOW[:10]
 

@@ -287,7 +287,7 @@ def stable_id(chave):
 
 
 RAFAEL = stable_id('user.rafael')
-VERSAO = '1.60.10'
+VERSAO = '1.60.18'
 HOJE = FAKE_NOW[:10]
 # Capítulo "anonymous": o robô abre o app sem sessão e o setup entra pela tela de login com $TUT_USER e $TUT_SENHA do ambiente (o
 # valor nunca vai para arquivo nem log). O localStorage da sessão vem aqui: versão já vista, PWA dispensado, tema claro e as chaves

@@ -13,8 +13,9 @@ import { Telemetry } from './telemetry.mjs';
 
 // TUT_VIEWPORT=1920x1080 e TUT_SCALE=1.5 trocam a tela do computador (19/11, EcoFlix: 16:9 a pedido do Kaik; quadros 2880x1620).
 const _vp = /^(\d+)x(\d+)$/.exec(process.env.TUT_VIEWPORT || '');
-export const VIEWPORT = _vp ? { width: +_vp[1], height: +_vp[2] } : { width: 1280, height: 800 };
-export const SCALE = Number(process.env.TUT_SCALE) || 2;
+const _tela = MUNDO.navegador?.tela; // mundo.json -> navegador.tela {largura, altura, escala}
+export const VIEWPORT = _vp ? { width: +_vp[1], height: +_vp[2] } : _tela ? { width: _tela.largura, height: _tela.altura } : { width: 1280, height: 800 };
+export const SCALE = Number(process.env.TUT_SCALE) || _tela?.escala || 2;
 /** Aparelhos para "device" no roteiro (o VIEWPORT acima muda no início da sessão: um processo grava um capítulo). */
 export const DEVICES = {
   phone: {

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """T17 · Transporte, serviço e o contador: gera rec/t17/cap00..cap19.json (roteiros do robô) a partir da voz (t17/narracao/capNN.json).
 
-EcoSistema 1.60.10 no Supabase falso (mundo da Recicla Vale Metais), computador 1280x800, logado como Rafael Nogueira (MASTER).
+EcoSistema 1.60.18 no Supabase falso (mundo da Recicla Vale Metais), computador 1280x800, logado como Rafael Nogueira (MASTER).
 Cada passo é preso a uma palavra da fala: `at` = início da palavra - folga (o custo do gesto, docs/04 "Custo real dos gestos"), e a marca
 Ln entra no início de cada linha. Quando a voz chegar, rodar de novo com o capNN.json da voz (nada a reescrever).
 Rodar de qualquer pasta: `python3 -I rec/t17/gerar.py [NN ...]`; ensaiar/gravar: `bash rec/t17/t17_grava.sh NN [--rapido]`.
@@ -41,9 +41,9 @@ def stable_id(chave):
 
 RAFAEL = stable_id('user.rafael')
 try:
-    VERSAO = open(os.path.join(TUT, 'app', 'dist', '.versao-app'), encoding='utf8').read().strip() or '1.60.10'
+    VERSAO = open(os.path.join(TUT, 'app', 'dist', '.versao-app'), encoding='utf8').read().strip() or '1.60.18'
 except OSError:
-    VERSAO = '1.60.10'
+    VERSAO = '1.60.18'
 HOJE = '2026-11-10'
 STORAGE = {
     'app_version': VERSAO, 'notification_shown_version': VERSAO, f'dominex:daily-tasks-shown:{RAFAEL}': HOJE,
@@ -322,7 +322,7 @@ def ir(rota, espera=0.8):
 
 def setup_em(rota, extra=(), aquece=(), menu=None):
     """login, aquece as rotas que o capítulo visita e para em `rota`; `menu` = item do grupo Fiscal & Ambiental que o capítulo clica
-    (no 1.60.10 o grupo abre fechado mesmo nas páginas fiscais: o setup o deixa aberto antes de gravar)"""
+    (no 1.60.18 o grupo abre fechado mesmo nas páginas fiscais: o setup o deixa aberto antes de gravar)"""
     st = list(LOGIN)
     for r in aquece:
         st += ir(r, 0.3)
@@ -757,7 +757,7 @@ def cap08():
     c.click(SEL('#nfse-valor'), at=c.A(7, 'valor', 0.8), label='Valor do serviço (campo)')
     c.type(SEL('#nfse-valor'), '1850', at=c.A(7, 'mil', 0.3), label='Valor do serviço: 1850', cps=20, noClick=True)
     c.mark(8)
-    # 1.60.10: a alíquota da lista do município continua sem chegar ao campo "Alíquota ISS %" (MELHORIAS): o robô digita os 3 %
+    # 1.60.18: a alíquota da lista do município continua sem chegar ao campo "Alíquota ISS %" (MELHORIAS): o robô digita os 3 %
     c.click(SEL('#nfse-iss-aliq'), at=c.A(8, 'alíquota', 0.7), label='Alíquota ISS % (campo)')
     c.type(SEL('#nfse-iss-aliq'), '3', at=c.A(8, 'três', 0.1), label='Alíquota ISS %: 3', cps=12, noClick=True, clear=True)
     c.hover(SEL('#nfse-iss-aliq'), 0.8, at=c.A(8, 'contador.', 0.9), label='Alíquota ISS %: 3,00 (o contador confirma)')
@@ -858,7 +858,7 @@ PERIODO = SEL('main button[role=combobox]', hasText='Este mês')   # filtro de p
 
 @capitulo
 def cap11():
-    """Relatórios Fiscais (menu próprio no 1.60.10): aba NF-e de outubro (Entrada, Saída, Saldo R$ 71.625,00, Pendentes + Rejeitadas,
+    """Relatórios Fiscais (menu próprio no 1.60.18): aba NF-e de outubro (Entrada, Saída, Saldo R$ 71.625,00, Pendentes + Rejeitadas,
     o cartão Entrada aberto, gráficos e rankings) e aba NFS-e (cartões e rankings)."""
     c = Cap(11, start=(900, 440), setup=setup_em('/fiscal-ambiental/nfe/recebidas-nfse', aquece=['/fiscal-ambiental/relatorios/nfe'], menu='Relatórios Fiscais'))
     c.mark(1)

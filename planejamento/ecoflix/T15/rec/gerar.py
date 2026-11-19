@@ -31,7 +31,7 @@ TUT = os.path.normpath(os.path.join(HERE, '..', '..'))
 AULA = 't15'
 NARR = os.path.join(TUT, AULA, 'narracao')
 FAKE_NOW = '2026-11-10T08:30:00-03:00'
-VERSAO = '1.60.10'
+VERSAO = '1.60.18'
 HOJE = FAKE_NOW[:10]
 NOMES = ['Abertura', 'O plano de contas', 'Centros de custo', 'O Relatório Financeiro', 'O Dashboard do mês', 'Fornecedores, clientes e ticket médio',
          'Lendo o DRE', 'Caixa ou competência', 'O patrimônio de hoje', 'Mês a mês', 'O Histórico', 'Exportar em Excel e PDF']
