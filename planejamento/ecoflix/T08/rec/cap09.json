@@ -1,6 +1,6 @@
 {
  "name": "t08-cap09",
- "title": "T08 · Cap. 9 · Imprimir o comprovante (narração 85,0 s ESTIMADA; marcas L1..L8 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:58:00-03:00)",
+ "title": "T08 · Cap. 9 · Imprimir o comprovante (narração 67,4 s; marcas L1..L8 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:58:00-03:00)",
  "seed": "t08-cap09",
  "pace": 0.5,
  "cps": 9,
@@ -119,7 +119,7 @@
     "name": "Ações",
     "within": "main div.rounded-lg:has([aria-label='Selecionar ticket #58']):not(:has(div.rounded-lg [aria-label='Selecionar ticket #58']))"
    },
-   "at": 3.12,
+   "at": 2.14,
    "label": "Ações do #58"
   },
   {
@@ -143,7 +143,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 0.4,
-   "at": 6.48,
+   "at": 5.28,
    "label": "Térmico (80mm)",
    "optional": true,
    "timeout": 4
@@ -156,7 +156,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 0.4,
-   "at": 8.37,
+   "at": 7.12,
    "label": "A4 (Folha)",
    "optional": true,
    "timeout": 4
@@ -168,34 +168,34 @@
     "name": "Térmico",
     "within": "[role=dialog]"
    },
-   "at": 10.33,
+   "at": 9.06,
    "label": "Térmico: o PDF abre na aba nova"
   },
   {
    "do": "mark",
    "name": "L2",
-   "at": 10.72
+   "at": 9.12
   },
   {
    "do": "eval",
    "js": "(async()=>{const w=(window.__pops||[]).slice(-1)[0];if(!w)return 'SEM JANELA';for(let i=0;i<40;i++){let f=null;try{f=w.document&&w.document.querySelector('#pdf-frame')}catch(e){return 'ERRO '+e}if(f&&f.src){const b=await (await fetch(f.src.split('#')[0])).blob();const u=new Uint8Array(await b.arrayBuffer());let s='';for(let k=0;k<u.length;k+=8192)s+=String.fromCharCode.apply(null,u.subarray(k,k+8192));return 'PDF:'+btoa(s)}await new Promise(r=>setTimeout(r,250))}return 'SEM PDF'})()",
-   "at": 10.92,
+   "at": 9.32,
    "label": "PDF do comprovante térmico (aba nova, para a ilustração)"
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 19.41
+   "at": 16.33
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 29.4
+   "at": 24.33
   },
   {
    "do": "goto",
    "url": "/configuracoes?tab=integrations",
-   "at": 29.4,
+   "at": 24.33,
    "label": "Configurações > Integrações"
   },
   {
@@ -206,7 +206,7 @@
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"main *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Imprimir comprovante do Ticket de Pesagem\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-400);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 30.67,
+   "at": 24.95,
    "label": "rola até a chave"
   },
   {
@@ -216,7 +216,7 @@
     "exact": true
    },
    "seconds": 0.8,
-   "at": 35.23,
+   "at": 28.57,
    "label": "chave Imprimir comprovante do Ticket de Pesagem (desligada)",
    "optional": true,
    "timeout": 4
@@ -224,12 +224,12 @@
   {
    "do": "mark",
    "name": "L5",
-   "at": 41.89
+   "at": 33.77
   },
   {
    "do": "goto",
    "url": "/configuracoes?tab=usability",
-   "at": 41.89,
+   "at": 33.77,
    "label": "Configurações > Usabilidade"
   },
   {
@@ -240,7 +240,7 @@
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"main *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Assinaturas no comprovante\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-300);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 43.49,
+   "at": 34.73,
    "label": "rola até Assinaturas no comprovante"
   },
   {
@@ -248,7 +248,7 @@
    "target": {
     "selector": "main div:has(label:text-is('Assinaturas no comprovante')):not(:has(label:text-is('Marca de ticket não valorizado'))) button[role=switch]"
    },
-   "at": 45.49,
+   "at": 36.39,
    "label": "liga Assinaturas no comprovante"
   },
   {
@@ -261,7 +261,7 @@
    "target": {
     "selector": "#receipt-signature-mode"
    },
-   "at": 48.15,
+   "at": 38.71,
    "label": "Quem assina (abre a lista)"
   },
   {
@@ -271,7 +271,7 @@
     "name": "Operador e cliente/fornecedor"
    },
    "seconds": 0.4,
-   "at": 50.33,
+   "at": 40.51,
    "label": "Operador e cliente/fornecedor",
    "optional": true,
    "timeout": 4
@@ -283,7 +283,7 @@
     "name": "Só o cliente/fornecedor"
    },
    "seconds": 0.4,
-   "at": 51.31,
+   "at": 41.39,
    "label": "Só o cliente/fornecedor",
    "optional": true,
    "timeout": 4
@@ -295,7 +295,7 @@
     "name": "Só o operador"
    },
    "seconds": 0.4,
-   "at": 52.98,
+   "at": 42.83,
    "label": "Só o operador",
    "optional": true,
    "timeout": 4
@@ -303,7 +303,7 @@
   {
    "do": "mark",
    "name": "L6",
-   "at": 54.39
+   "at": 43.77
   },
   {
    "do": "click",
@@ -311,7 +311,7 @@
     "role": "option",
     "name": "Só o cliente/fornecedor"
    },
-   "at": 54.39,
+   "at": 43.77,
    "label": "escolhe Só o cliente/fornecedor"
   },
   {
@@ -320,7 +320,7 @@
     "text": "o operador aparece como Empresa"
    },
    "seconds": 0.8,
-   "at": 56.57,
+   "at": 45.29,
    "label": "No ticket de pesagem, o operador aparece como Empresa.",
    "optional": true,
    "timeout": 4
@@ -328,7 +328,7 @@
   {
    "do": "mark",
    "name": "L7",
-   "at": 59.6
+   "at": 47.85
   },
   {
    "do": "hover",
@@ -337,7 +337,7 @@
     "exact": true
    },
    "seconds": 0.6,
-   "at": 62.46,
+   "at": 50.01,
    "label": "Marca de ticket não valorizado (ligada)",
    "optional": true,
    "timeout": 4
@@ -345,7 +345,7 @@
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"main *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Exigir cliente/fornecedor no Ticket de Pesagem\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-420);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/800),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 65.15,
+   "at": 51.85,
    "label": "rola até Exigir cliente/fornecedor"
   },
   {
@@ -355,7 +355,7 @@
     "exact": true
    },
    "seconds": 0.8,
-   "at": 66.05,
+   "at": 52.75,
    "label": "Exigir cliente/fornecedor no Ticket de Pesagem (desligada)",
    "optional": true,
    "timeout": 4
@@ -363,12 +363,12 @@
   {
    "do": "mark",
    "name": "L8",
-   "at": 69.21
+   "at": 55.02
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"main *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Assinaturas no comprovante\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-300);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/500),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 69.71,
+   "at": 55.52,
    "label": "volta até Assinaturas no comprovante"
   },
   {
@@ -417,7 +417,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 85.04
+   "at": 67.44
   }
  ]
 }

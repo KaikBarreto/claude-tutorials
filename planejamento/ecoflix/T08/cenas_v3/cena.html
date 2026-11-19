@@ -116,16 +116,16 @@ function pesagem(C5) {
   const P0 = { x: 3.1, y: 2.0, z: 0, d: 17.6, az: .25, el: .2, oy: -8 },            // 1 · a pesagem: caminhão e visor
         P1 = { x: .1, y: 1.6, z: .6, d: 22.6, az: .1, el: .225, oy: 6 },       // 2 · a descarga: abre para o pátio
         P2 = { x: 1.0, y: 1.25, z: .6, d: 21.8, az: .135, el: .222, oy: 6 },           // 3 · de volta à balança (2ª pesagem)
-        P3 = { x: 1.05, y: 1.2, z: .6, d: 21.3, az: .105, el: .225, oy: 6 };         // 4 · a conta, com tudo em quadro
+        P3 = { x: 1.05, y: 1.2, z: .6, d: 21.7, az: .105, el: .225, oy: 6 };         // 4 · a conta, com tudo em quadro
   const tM = C5 ? tE + .3 : tpa + .1, tC = C5 ? tbr + .15 : NUNCA, tf0 = tC + .3;                                               // o mergulho: sai depois de "pátio", chega em "E o líquido"
   const G = EIXO.pose({ x: 0, y: 0, z: ZD, d: 12.2 }),                               // 6 · chegou: o cartão Bruto de frente
         H = EIXO.pose({ x: 2.05 + OX, y: -1.4 + OY, z: ZD, d: 16.3, az: -.075, el: -.02 }),     // 7 · recua: aparece o Líquido
         I = EIXO.pose({ x: CX + OX, y: -1.22 + OY, z: ZD, d: 17.6, az: .06, el: .01 });        // 8 · a conta inteira
   const merg = mergulho(EIXO.local(posCam(P4))[2], ZF, .5);   // o visor cresce em razão constante, sem tranco; do outro lado a câmera assenta longo
   const PATIO = [[tca - 3, P0], [re0 + .05, { ...P0, d: 17.3, az: .24 }, 'lin'], [b0 + .6, P1], [bd + .1, { ...P1, d: 22.3, az: .09 }, 'lin'], [volta + .3, P2],
-    [tdi - .1, { ...P2, d: 21.7, az: .13 }, 'lin'], [tdi + 1.5, P3], [tla - .2, { ...P3, d: 20.6, az: .09 }, 'lin'], [tfi + .4, { ...P4, d: 20.7, az: .085 }], [tM, P4, 'lin']];
+    [tdi - .1, { ...P2, d: 21.7, az: .13 }, 'lin'], [tdi + 1.5, P3], [tla - .2, { ...P3, d: 21.0, az: .09 }, 'lin'], [tfi + .4, { ...P4, d: 20.7, az: .085 }], [tM, P4, 'lin']];
   camera(C5 ? [...PATIO, [tC, G, merg, { reta: true, mira: x => eis(cl(x * 2.1)) }], [tC + 1.05, H], [tta + .35, { ...H, d: 16.6, az: H.az + .02 }, 'lin'], [tim + .1, I],
-    [tim + 2.5, { ...I, d: 17.2, az: I.az + .02 }, 'lin']] : [...PATIO, [tM + 4, { ...P4, d: 20.3, az: .07 }, 'lin']]);
+    [tim + 2.5, { ...I, d: 17.8, az: I.az + .02 }, 'lin']] : [...PATIO, [tM + 4, { ...P4, d: 20.3, az: .07 }, 'lin']]);
   // a troca de clima acontece no instante em que o visor cobre o quadro inteiro (a câmera a 2,15 m dele): ninguém vê
   const zCam = u => { const k = pose(u); return EIXO.local([k.px, k.py, k.pz])[2]; };
   let tX = NUNCA; if (C5) { tX = tM; while (tX < tC && zCam(tX) > 2.15) tX += 1 / 120; }
@@ -139,7 +139,7 @@ function pesagem(C5) {
     T.updateWorldMatrix(true, true); despeja(T.userData.carga, T.userData.locais, alvo, t, d0, { d: .62, passo: .6 / 250, arco: .2 });
     sT.position.x = x + .1; sP.material.uniforms.uOp.value = .85 * eo(pr(t, d0 + .4, .9)); destaque(an, t, tla - .1);
     GL.style.opacity = eo(pr(t, tca + .08, .5)).toFixed(3);   // o mundo entra depois que o título saiu do meio
-    posTitulo(tit1, t, tca - .9, tca - .45, tM + .5);
+    posTitulo(tit1, t, tca - .9, tca - .45, C5 ? tM - .15 : 1e9);
     // visor: 1ª pesagem firme; na volta a leitura desce, passa e assenta; no fim mostra o resultado (o Bruto)
     const tB = tfi + .55; visor.e.zera();
     vis(visor.e, t, tca + .3, 1e9, { dy: 10 });
