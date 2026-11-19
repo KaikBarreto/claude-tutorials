@@ -34,7 +34,7 @@ if (tem('--aula')) {
     if (!it.v3 || !/\.html$/.test(it.v3) || (so && it.id !== so)) continue;
     const N = lerN(path.join(tdir, `cap${String(it.cap).padStart(2, '0')}.json`));
     for (const j of it.janelas || [it]) { const de = palavra(N, j.de, 's'), ate = palavra(N, j.ate, 'e') + (j.cauda ?? it.cauda ?? .6);
-      rodadas.push({ html: path.resolve(aula, it.v3), cap: it.cap, N, nome: it.id + (it.janelas ? ` · janela ${j.janela}` : ''), instantes: instantes(de, ate) }); }
+      rodadas.push({ html: path.resolve(aula, it.v3), cap: it.cap, N, anexo: it.anexo ? 'file://' + path.resolve(process.env.TUT_HOME || '.', it.anexo) : null, nome: it.id + (it.janelas ? ` · janela ${j.janela}` : ''), instantes: instantes(de, ate) }); }
   }
 } else {
   const [html, cap, tempos] = arg; if (!html || cap == null) { console.error('uso: node auditar.cjs --aula <pasta da aula> | <cena.html> <cap> <capNN.json | -> [--de S --ate S | --t S,S]'); process.exit(2); }
@@ -55,7 +55,7 @@ const extra = JSON.parse(opt('--dados', '{}'));
     await page.addInitScript(`window.ICONS=${JSON.stringify(icons)};`); await page.goto('file://' + r.html);
     await page.evaluate(async dir => { for (const w of [500, 600, 700, 800]) { let ok = false; try { ok = (await document.fonts.load(`${w} 20px M`)).some(f => f.status === 'loaded'); } catch (e) { ok = false; }
       if (!ok) document.fonts.add(await new FontFace('M', `url("file://${dir}/montserrat-latin-${w}-normal.woff2")`, { weight: String(w) }).load()); } await document.fonts.ready; }, path.join(RAIZ, 'ferramentas/web/fonts'));
-    await page.evaluate(d => window.setup(d), { cap: r.cap, dur: r.N.dur, words: r.N.words.map(w => ({ w: w.w, linha: w.linha, s: w.s, e: w.e })), linhas: (r.N.linhas || []).map(l => ({ i: l.i, s: l.s, e: l.e })), ...extra });
+    await page.evaluate(d => window.setup(d), { cap: r.cap, dur: r.N.dur, words: r.N.words.map(w => ({ w: w.w, linha: w.linha, s: w.s, e: w.e })), linhas: (r.N.linhas || []).map(l => ({ i: l.i, s: l.s, e: l.e })), anexo: r.anexo, ...extra });
     if (!(await page.evaluate(() => typeof window.auditar === 'function'))) { console.error(`${r.nome}: a página não tem window.auditar (a cena usa o motor.js do kit v3?)`); process.exit(2); }
     const achados = new Map();   // chave → { tipo, msg, ts: [] }
     for (const t of r.instantes) { const P = await page.evaluate(t => window.auditar(t), t);

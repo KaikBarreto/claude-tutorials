@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8">
+<!-- T08 "Ticket de Pesagem" · o COMPROVANTE REAL na tela (kit v3, clima claro: papel é mundo físico).
+     Pedido do Kaik (19/11): "quando fala de abrir o comprovante/cupom 80mm do ticket de pesagem, não mostra nada na tela,
+     parece que estava em outra aba". O app abre o PDF numa aba nova; o robô devolve esse PDF (PDF_JS no gerar.py) e a
+     edição o rasteriza em $TUT_HOME/t08/edit/out/comprovantes/capNN-1.png (pdftoppm -r 720). Aqui o papel é a imagem
+     real, sem redesenho: só a câmera passeia por ele e um marca-texto verde acompanha a fala.
+       cap09 · cupom09   ilu09_comprovante   "Repara no papel ... o bruto, a impureza e o líquido."
+       cap11 · cupom11   ilu11_comprovante   "O comprovante sai marcado como pesagem avulsa."
+     Coordenadas dos campos: pontos do PDF (pdftotext -bbox), página de 226,77 pt de largura, desenhada com 1,5 px por pt.
+     Render: render_cenas.cjs <cap> <capNN.json> saida.mp4 --html .../comprovante.html --anexo $TUT_HOME/t08/edit/out/comprovantes
+             --larg 1422 --dsf 1.3 --de <s> --ate <s>.  Auditoria: auditar.cjs --aula planejamento/ecoflix/T08 --larg 1422 -->
+</head><body>
+<script type="module">
+import { pr, eo, W, vis, titulo, posTitulo, GL, mancha, piso, U, camera, plano, cena, estilo, enquadraRet }
+  from '../../../../perfis/ecoflix/cenas_v3/motor.js';
+import { ceuClaro } from '../../../../perfis/ecoflix/cenas_v3/fundo.js';
+
+const K = 1.5, LP = 226.77, WP = Math.round(LP * K), E = .01, YC = 4.35;   // px por pt, largura da página (pt e px), metros por px
+// zoom de leitura: ~2,9 px de quadro por px do papel (o corpo de 6 pt sai com ~26 px num quadro de 800)
+const LEITURA = 2.87 / E;
+
+function papel(src, hpt, marcas) {
+  estilo('cupom', `
+.cupom{position:relative;width:${WP}px;background:#fff;border-radius:7px 7px 0 0;box-shadow:0 34px 60px -18px rgba(30,80,60,.38),0 8px 16px -6px rgba(30,80,60,.14)}
+.cupom img{display:block;width:${WP}px;border-radius:7px 7px 0 0}
+.cupom .z{position:absolute;left:0;bottom:-8px;display:block}
+.cupom .mk{position:absolute;border-radius:4px;background:rgba(80,208,136,.46);mix-blend-mode:multiply;transform-origin:0 50%;transform:scaleX(0)}`);
+  const h = Math.round(hpt * K), n = Math.round(WP / 14), z = Array.from({ length: n + 1 }, (_, i) => `${(i * WP / n).toFixed(1)},${i % 2 ? 8 : 0}`).join(' ');
+  const mk = Object.entries(marcas).map(([id, [x0, y0, x1, y1]]) =>
+    `<i class="mk" data-m="${id}" style="left:${(x0 * K).toFixed(1)}px;top:${(y0 * K).toFixed(1)}px;width:${((x1 - x0) * K).toFixed(1)}px;height:${((y1 - y0) * K).toFixed(1)}px"></i>`).join('');
+  return { h, html: `<div class="cupom" style="height:${h}px"><img src="${src}" style="height:${h}px" alt="">${mk}<svg class="z" width="${WP}" height="8"><polygon points="0,0 ${z} ${WP},0" fill="#fff"/></svg></div>` };
+}
+const marca = (e, id, t, a) => { const m = (e._mk ??= {})[id] ??= e.querySelector(`[data-m="${id}"]`); m.style.transform = `scaleX(${eo(pr(t, a, .45)).toFixed(4)})`; };
+// faixa de linhas do papel (pt, de cima para baixo) em metros, na largura inteira: para enquadraRet
+const faixa = (h, y0, y1) => [-WP / 2 * E, YC + (h / 2 - y1 * K) * E, WP / 2 * E, YC + (h / 2 - y0 * K) * E];
+const palco = () => { piso({ r: 24, x: 0, z: -2, passo: 1.3 }); U.uNevoa.value.set(.955, .975, .965, .8); ceuClaro({ halo: [.2, 3.4, -12] }); };
+
+// =====================================================================================================================
+// cap09, linhas 1 e 2 · "Repara no papel: ticket de pesagem, não valorizado. É o comprovante do peso, ainda sem valor de
+// compra. Com o modo Completo, sai a conta inteira: o motorista, a placa, as duas pesagens, o bruto, a impureza e o líquido."
+// O papel inteiro sobe; a câmera desce até a faixa NÃO VALORIZADO (marca na palavra) e, no "Completo", desce de novo até o
+// bloco do motorista e das pesagens; cada termo falado ganha o marca-texto na hora.
+function cupom09(d) {
+  const t0 = W(1, 'repara'), ttk = W(1, 'ticket'), tnv = W(1, 'nao'), tsem = W(1, 'sem'), tco = W(2, 'completo'), tmo = W(2, 'motorista'), tpl = W(2, 'placa'),
+    tps = W(2, 'pesagens'), tbr = W(2, 'bruto'), tim = W(2, 'impureza'), tli = W(2, 'liquido'), tfim = W(2, 'liquido', 1, 'e');
+  palco();
+  const P = papel(`${d.anexo}/cap09-1.png`, 530.08, {
+    nv: [64, 145, 163, 158.6], doc: [51, 163.6, 176.4, 173.2], mot: [12, 297.2, 112, 308.2], pla: [150, 297.2, 214.4, 308.2],
+    p12: [33.6, 386.8, 192.8, 398.8], bru: [43.6, 399.6, 96.4, 411.6], imp: [98, 399.6, 183.4, 411.6], liq: [166.6, 361.6, 202.4, 373.6], tot: [12, 413.8, 108.6, 425.8] });
+  const pp = plano(P.html, { pos: [0, YC, 0], esc: E, sangra: true }), sp = mancha(5.2, 1.6, [0, 0, .1], { op: 0 });
+  const tit = titulo('Comprovante', 'O cupom do ticket');
+  const o = { topo: 70, margem: 56, max: LEITURA, el: .015 };   // de perto o título já saiu: o papel ocupa o quadro
+  const TUDO = enquadraRet(null, faixa(P.h, 0, 530), { topo: 150, margem: 40, el: .02, az: .05 });
+  const F1 = enquadraRet(null, faixa(P.h, 128, 205), { ...o, az: .035 }), F2 = enquadraRet(null, faixa(P.h, 292, 430), { ...o, az: -.025 });
+  camera([[t0 - 3, TUDO], [ttk - .45, { ...TUDO, d: TUDO.d * .975, az: .045 }, 'lin'], [tnv + .15, F1], [tco - .25, { ...F1, d: F1.d * .985, az: .02 }, 'lin'],
+    [tmo + .1, F2], [tfim + 2, { ...F2, d: F2.d * .98, az: -.035 }, 'lin']]);
+  return t => {
+    GL.style.opacity = eo(pr(t, t0 + .08, .5)).toFixed(3); posTitulo(tit, t, t0 - .9, t0 - .45, ttk - .55);   // sai antes do mergulho
+    vis(pp.e, t, t0 - .15, 1e9, { dy: 30 }); sp.material.uniforms.uOp.value = .55 * (+pp.e.style.opacity || 0);
+    marca(pp.e, 'nv', t, tnv - .1); marca(pp.e, 'doc', t, tsem - .1);
+    marca(pp.e, 'mot', t, tmo - .1); marca(pp.e, 'pla', t, tpl - .1); marca(pp.e, 'p12', t, tps - .15);
+    marca(pp.e, 'bru', t, tbr - .1); marca(pp.e, 'imp', t, tim - .1); marca(pp.e, 'liq', t, tli - .1); marca(pp.e, 'tot', t, tli + .15);
+  };
+}
+
+// =====================================================================================================================
+// cap11, linha 5 (o fim) · "O comprovante sai marcado como pesagem avulsa." Janela curta: o papel sobe já de perto, na faixa
+// PESAGEM AVULSA / SERVIÇO DE PESAGEM, com o número e o cliente; a faixa ganha o marca-texto no "marcado".
+function cupom11(d) {
+  const t0 = W(5, 'comprovante'), tma = W(5, 'marcado'), tav = W(5, 'avulsa'), tfim = W(5, 'avulsa', 1, 'e');
+  palco();
+  const P = papel(`${d.anexo}/cap11-1.png`, 490.39, { srv: [53.4, 145, 174, 158.6], tk: [30.4, 174.6, 197.2, 190.2], cli: [48.6, 198.8, 178.4, 212.2] });
+  const pp = plano(P.html, { pos: [0, YC, 0], esc: E, sangra: true }), sp = mancha(5.2, 1.6, [0, 0, .1], { op: 0 });
+  // sem título: a janela é curta e já começa de perto (o título passaria por cima do papel)
+  const F = enquadraRet(null, faixa(P.h, 126, 216), { topo: 70, margem: 56, max: LEITURA, el: .015, az: .03 });
+  camera([[t0 - 3, { ...F, d: F.d * 1.22, az: .07 }], [t0 + 1.1, F], [tfim + 2, { ...F, d: F.d * .975, az: .015 }, 'lin']]);
+  return t => {
+    GL.style.opacity = eo(pr(t, t0 + .08, .5)).toFixed(3);
+    vis(pp.e, t, t0 - .2, 1e9, { dy: 30 }); sp.material.uniforms.uOp.value = .55 * (+pp.e.style.opacity || 0);
+    marca(pp.e, 'srv', t, tma - .05); marca(pp.e, 'tk', t, tav + .1); marca(pp.e, 'cli', t, tav + .3);
+  };
+}
+
+const CAPS = { 9: cupom09, 11: cupom11 };
+cena(d => CAPS[d.cap](d), { fov: 26 });
+</script></body></html>

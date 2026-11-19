@@ -72,7 +72,9 @@ async function esperaRobo() {
 (async () => {
   const N = JSON.parse(fs.readFileSync(tempos, 'utf8'));
   const dados = { cap: parseInt(cap, 10), dur: N.dur, words: N.words.map(w => ({ w: w.w, linha: w.linha, s: w.s, e: w.e })),
-    linhas: (N.linhas || []).map(l => ({ i: l.i, s: l.s, e: l.e })) };
+    linhas: (N.linhas || []).map(l => ({ i: l.i, s: l.s, e: l.e })),
+    // --anexo <pasta>: arquivos da cena que não vão para o git (ex.: o PNG do comprovante real gerado pelo app); a página lê d.anexo
+    anexo: opt('--anexo', null) ? 'file://' + path.resolve(opt('--anexo')) : null };
   const icons = {};
   for (const n of ICONS) {
     const f = path.join(LUCIDE, n + '.svg');

@@ -37,8 +37,8 @@ Não existe um status de esperando a segunda pesagem. O ticket fica aqui, aberto
 Mesmo saindo da tela, o rascunho continua lá, em Rascunhos abertos.
 Uma dica: quando o rascunho é reaberto, confira o que já estava preenchido antes de salvar.""",
 4: """O caminhão descarregou e voltou vazio pra balança. A diferença entre as duas pesagens é a latinha que ficou no pátio.
-No item, em Adicionar tara, pesagem avançada. O peso da entrada está no bruto.
-A gente passa ele pra primeira pesagem e põe a segunda, com o caminhão vazio: seis mil trezentos e oitenta quilos.
+No item, em Adicionar tara, pesagem avançada. O peso da entrada já está na primeira pesagem.
+Agora é só pôr a segunda, com o caminhão vazio: seis mil trezentos e oitenta quilos.
 Pronto: o bruto sai sozinho, a diferença das duas. Três mil e oitenta quilos de latinha.
 A tara é o peso do que vem junto e não é material, como uma caçamba. Aqui o caminhão já saiu na segunda pesagem, então a tara fica em branco.
 Confirmar, e a pesagem do item está atualizada.
@@ -58,8 +58,9 @@ O valor a gente resolve depois. E a aba do Jair continua aberta, esperando ele d
 Se alguém fechar uma aba no x, o sistema pergunta antes de descartar o ticket.
 E se descartar sem querer, o rascunho vai para Rascunhos apagados, na tela dos tickets. Dali dá pra recuperar.""",
 7: """O Jair descarregou. E com a Auto Peças o preço da bateria já está combinado. Então este ticket pode ser feito com valores.
-Mudo a chave para Com valores. Aparecem a Tabela de Preços, embaixo do fornecedor, e as colunas de valor nos itens.
-No item, eu completo a pesagem: a segunda deu quatro mil cento e oitenta quilos. E ponho o preço combinado: três e quarenta o quilo.
+Mudo a chave para Com valores. O item está sem preço, então o sistema pergunta se quer colocar. Ele já traz o preço combinado com a Auto Peças: três e quarenta o quilo. Preencher.
+Aparecem a Tabela de Preços, embaixo do fornecedor, e as colunas de valor nos itens.
+No item, eu completo a pesagem: a segunda deu quatro mil cento e oitenta quilos. O preço já veio preenchido.
 Confirmar. São mil quatrocentos e sessenta quilos de bateria, e o total do ticket aparece embaixo: quatro mil novecentos e sessenta e quatro reais.
 Atenção: mesmo com valores, o ticket não paga ninguém. Ele só guarda o preço. O dinheiro continua saindo só quando a compra é finalizada.
 Salvo o ticket do Jair. Ele vai para Aguardando valorização, já com o valor.

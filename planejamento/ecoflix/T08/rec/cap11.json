@@ -495,7 +495,7 @@
   {
    "do": "type",
    "target": {
-    "text": "Somente comprovante de peso",
+    "text": "Serviço de pesagem cobrado",
     "within": "[role=dialog]"
    },
    "text": "",
@@ -503,7 +503,7 @@
    "optional": true,
    "timeout": 4,
    "at": 48.58,
-   "label": "sem botão Valorizar: não pode ser valorizada"
+   "label": "Serviço de pesagem cobrado: R$ 60,00 (não vira pedido)"
   },
   {
    "do": "click",
@@ -553,7 +553,7 @@
   },
   {
    "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"#60\", \"Areal Boa Vista\", \"14.720 kg\", \"Sem valor comercial\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"#60\", \"Areal Boa Vista\", \"14.720 kg\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
    "label": "confere a #60 na lista das avulsas"
   },
   {
