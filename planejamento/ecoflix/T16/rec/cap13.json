@@ -1,6 +1,6 @@
 {
  "name": "t16-cap13",
- "title": "T16 · Cap. 13 · Outras operações (narração ESTIMADA 61,6 s; marcas L1..L4 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "title": "T16 · Cap. 13 · Outras operações (narração ESTIMADA 65,7 s; marcas L1..L4 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
  "seed": "t16-cap13",
  "pace": 0.5,
  "cps": 40,
@@ -241,38 +241,113 @@
    "at": 36.79
   },
   {
-   "do": "hover",
+   "do": "click",
    "target": {
-    "selector": "[role=dialog] label:text-matches('Dar baixa no estoque', 'i')"
+    "selector": "[role=dialog] button:text-is('Avançar')"
    },
-   "seconds": 1.0,
-   "at": 43.46,
-   "label": "zoom: Dar baixa no estoque físico ao autorizar",
-   "optional": true,
-   "timeout": 4
+   "at": 37.39,
+   "label": "Avançar",
+   "noScroll": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='Escreva o nome ou código do material']"
+   },
+   "label": "Material (cartão Adicionar item)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='Escreva o nome ou código do material']"
+   },
+   "text": "papelão",
+   "cps": 40,
+   "label": "busca papelão",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[cmdk-item]:has-text('Papelão'), [role=option]:has-text('Papelão')"
+   },
+   "label": "Papelão",
+   "noScroll": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='0,00']",
+    "nth": 0
+   },
+   "label": "Qtd (clique no campo)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='0,00']",
+    "nth": 0
+   },
+   "text": "80",
+   "cps": 30,
+   "label": "Qtd 80",
+   "noClick": true,
+   "clear": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:has-text('Incluir')"
+   },
+   "at": 38.13,
+   "label": "Incluir (80 kg de Papelão)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:text-is('Dados')"
+   },
+   "at": 39.85,
+   "label": "aba Dados"
   },
   {
    "do": "hover",
    "target": {
-    "selector": "[role=dialog] p:text-matches('Por padrão a nota fiscal só informa', 'i')"
+    "selector": "[role=dialog] label[for='baixa-estoque-perda']"
    },
-   "seconds": 1.38,
-   "at": 49.99,
-   "label": "o texto da opção",
+   "seconds": 1.0,
+   "at": 42.25,
+   "label": "zoom: Dar baixa no estoque físico ao autorizar (desmarcado)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Dar baixa no estoque físico ao autorizar\", \"Por padrão a nota fiscal só informa a SEFAZ\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog],[role=alertdialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere a opção de baixa no estoque físico"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "#baixa-estoque-perda"
+   },
+   "seconds": 1.5,
+   "at": 47.26,
+   "label": "a caixa de marcar (sem marcar)",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 52.32
+   "at": 56.34
   },
   {
    "do": "click",
    "target": {
     "selector": "[role=dialog] button[aria-label='Sair da nova nota fiscal']"
    },
-   "at": 58.99,
+   "at": 63.02,
    "label": "Sair",
    "noScroll": true
   },
@@ -298,7 +373,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 61.64
+   "at": 65.66
   }
  ]
 }

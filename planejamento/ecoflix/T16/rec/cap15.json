@@ -240,25 +240,34 @@
   {
    "do": "click",
    "target": {
-    "selector": "[role=dialog] button:text-is('Fechar')",
+    "selector": "[role=dialog] button:has(.sr-only)",
     "nth": -1
    },
-   "at": 52.14,
-   "label": "fecha o Histórico"
+   "at": 51.74,
+   "label": "fecha o Histórico (X)"
   },
   {
    "do": "pause",
-   "seconds": 0.5
+   "seconds": 0.6
   },
   {
-   "do": "click",
-   "target": {
-    "selector": "[role=dialog] button:text-is('Fechar')",
-    "nth": -1
-   },
+   "do": "press",
+   "key": "Escape",
    "label": "fecha o Visualizar",
    "when": {
-    "selector": "[role=dialog]:has-text('NF-e #1252')"
+    "selector": "[role=dialog]"
+   }
+  },
+  {
+   "do": "pause",
+   "seconds": 0.6
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "label": "(fecha o que sobrou)",
+   "when": {
+    "selector": "[role=dialog]"
    }
   },
   {

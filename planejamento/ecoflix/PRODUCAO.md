@@ -875,3 +875,13 @@ Decisões:
 - 18/11 23:5x **Voz da T08 rodando** (Kaik pôs crédito): os MESMOS 15 nós via `creative_run_flow_nodes` (1 versão,
   11.642 créditos estimados). Status consultado: sem falha, 1 gerando e os demais na fila (limite de concorrência da conta,
   o ElevenLabs tenta de novo sozinho). Falta confirmar o término e receber o zip do Kaik.
+- 19/11 00:0x **Contêiner reiniciado** (00:0x). `/dev/shm` zerou: código do app 1.60.10 reextraído em
+  `/dev/shm/ecoflix-src` (só `git archive 5290be4cd`, sem `node_modules`: serve para leitura; o build segue em
+  `app/dist`); app religado na 8080; instâncias do Supabase falso todas paradas. Lotes perdidos: T16
+  (`t16_lote160.sh --completo 9 11 14 15 17 18`; o rápido de 3, 13, 15-24 já tinha terminado) e T17 (lote2: rápidos feitos,
+  completos de 04 e 05 feitos, o resto dos completos não).
+  **Estado T16** (25 capítulos; `rec/t16/_ens/_lote.txt`): rápido com falha em 15, 16, 17, 18 e 24; os demais ok.
+  **Estado T17** (20 capítulos, 3.197 palavras; `rec/t17/_ens/lote2.txt`): rápido com falha em 08, 09 e 11; os demais ok.
+  Os agentes da T16 e da T17 ficaram esperando lotes que não existem mais (contextos de ~510 mil tokens): **não
+  retomar**; depois do piloto T08, agente novo por aula lendo `Tnn/andamento_160.md` + este registro, só para os
+  capítulos com falha. Os completos ficam para a gravação final com a voz.

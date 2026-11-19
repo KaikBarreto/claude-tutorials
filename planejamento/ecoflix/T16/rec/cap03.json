@@ -243,8 +243,8 @@
   {
    "do": "type",
    "target": {
-    "text": "RECICLA VALE METAIS LTDA",
-    "exact": false,
+    "text": "Certificado validado!",
+    "exact": true,
     "within": "main"
    },
    "text": "",
@@ -252,7 +252,7 @@
    "optional": true,
    "timeout": 4,
    "at": 32.55,
-   "label": "zoom: nome do certificado e Válido até 14/09/2027"
+   "label": "zoom: Certificado validado! e Válido até 14/09/2027"
   },
   {
    "do": "hover",
@@ -339,6 +339,28 @@
    "seconds": 1.2,
    "at": 74.12,
    "label": "zoom: Próximo: Configurar Empresa (sem clicar)",
+   "when": {
+    "role": "button",
+    "name": "Próximo: Configurar Empresa",
+    "exact": true,
+    "within": "main"
+   },
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "#tab-btn-empresa"
+   },
+   "seconds": 1.0,
+   "label": "(no Supabase falso o botão Próximo não aparece: a aba Empresa)",
+   "unless": {
+    "role": "button",
+    "name": "Próximo: Configurar Empresa",
+    "exact": true,
+    "within": "main"
+   },
    "optional": true,
    "timeout": 4
   },
