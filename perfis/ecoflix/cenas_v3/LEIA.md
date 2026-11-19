@@ -210,3 +210,9 @@ No clima escuro, corpo de objeto usa `emi` baixo (.1 a .3) e só luz, tela e des
 Renderize em `--dsf 1.35` (a caixa da ilustração no palco tem 1587x992; `--dsf 2` não ganha nitidez e, nas cenas escuras de
 vidro, o Chromium fotografa antes de pintar um bloco: cartões somem por 1 a 3 quadros). Depois de todo render:
 `python3 -I perfis/ecoflix/cenas_v3/piscadas.py <cena>.mp4` (sai com 1 se algum elemento some e volta).
+
+## 16:9 (19/11)
+A gravação da trilha passou a 16:9 (1600x900), e a janela do palco a 1832x1030. O desenho das cenas continua com 800 de
+altura; a largura (`LARG` do motor) acompanha a janela: `--larg 1422` no `render_cenas.cjs` e no `auditar.cjs`. Cena pensada
+em 1280 ganha 71 px de respiro de cada lado (a câmera enquadra pela altura). Render final: `--larg 1422 --dsf 1.3`
+(1849x1040). Toda aula passa no `auditar.cjs --larg 1422`. As 6 janelas da T08 passam.

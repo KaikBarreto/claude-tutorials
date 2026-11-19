@@ -9,6 +9,8 @@
 // --quadros <pasta>: grava um JPEG 1280x800 do primeiro instante de cada problema, com o problema marcado em vermelho.
 // --lista: imprime todo instante de cada problema (o padrão junta: primeiro instante, último e quantas vezes).
 // Não usa a trava nem captura vídeo (leve: ~0,2 s por instante); rode com nice -n 19 se houver robô gravando.
+// --larg N: largura do desenho (1280 = 16:10; 1422 = 16:9). A altura é sempre 800.
+const LARG = (() => { const i = process.argv.indexOf('--larg'); return i > 0 ? Number(process.argv[i + 1]) : 1280; })();
 const fs = require('fs'), path = require('path');
 const AQUI = __dirname, RAIZ = path.resolve(AQUI, '../../..'), CENAS = path.join(RAIZ, 'ferramentas/edit/cenas');
 const { chromium } = require(require.resolve('playwright', { paths: [CENAS] }));
@@ -48,7 +50,7 @@ const extra = JSON.parse(opt('--dados', '{}'));
   for (const r of rodadas) {
     const icons = {}; for (const n of new Set([...fs.readFileSync(r.html, 'utf8').matchAll(/['"]([a-z][a-z0-9-]{0,40})['"]/g)].map(m => m[1]))) { const f = path.join(LUCIDE, n + '.svg');
       if (fs.existsSync(f)) icons[n] = fs.readFileSync(f, 'utf8').replace(/<!--[\s\S]*?-->/g, '').replace(/width="24"/, '').replace(/height="24"/, '').replace(/stroke-width="2"/, 'stroke-width="2.1"'); }
-    const page = await b.newPage({ viewport: { width: 1280, height: 800 }, deviceScaleFactor: 1 }); const erros = []; page.on('pageerror', e => erros.push(String(e))); page.on('console', m => { if (/palavra não achada/.test(m.text())) erros.push('âncora W() sem palavra na fala: ' + m.text().replace('palavra não achada', '').trim()); });
+    const page = await b.newPage({ viewport: { width: LARG, height: 800 }, deviceScaleFactor: 1 }); const erros = []; page.on('pageerror', e => erros.push(String(e))); page.on('console', m => { if (/palavra não achada/.test(m.text())) erros.push('âncora W() sem palavra na fala: ' + m.text().replace('palavra não achada', '').trim()); });
     await page.route('**/*', q => q.request().url().startsWith('file:') ? q.continue() : q.abort());
     await page.addInitScript(`window.ICONS=${JSON.stringify(icons)};`); await page.goto('file://' + r.html);
     await page.evaluate(async dir => { for (const w of [500, 600, 700, 800]) { let ok = false; try { ok = (await document.fonts.load(`${w} 20px M`)).some(f => f.status === 'loaded'); } catch (e) { ok = false; }

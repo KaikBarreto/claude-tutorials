@@ -45,13 +45,15 @@ export const L = i => (D.linhas.find(l => l.i === i) || { s: 0 }).s, LE = i => (
 // (.claro ou .escuro). Nada de backdrop-filter nem de blur por quadro: vidro = degradê translúcido + fio de luz + sombra.
 const FT = new URL('../../../ferramentas/web/fonts/', import.meta.url).href;   // se não achar, o renderizador põe as da skill
 const ff = (w, x) => `@font-face{font-family:M;font-weight:${w};src:url(${FT}montserrat-latin${x ? '-ext' : ''}-${w}-normal.woff2) format('woff2')${x ? ';unicode-range:U+0100-024F' : ''}}`;
+// Largura do desenho: 1280 (16:10) ou a da janela quando ela é mais larga (16:9 = 1422x800; EcoFlix desde 19/11). A altura é sempre 800.
+export const LARG = Math.max(1280, Math.min(1600, Math.round(globalThis.innerWidth || 1280)));
 const CSS = [500, 600, 700, 800].map(w => ff(w) + ff(w, 1)).join('') + `
 :root{--v:#50D088;--ve:#2E7D57;--vc:#6CF0A8;--a:#F2B63D;--r1:12px;--r2:16px;--r3:22px;--rp:999px}
 *{box-sizing:border-box;margin:0;padding:0;transition:none!important;animation:none!important}
-html,body{width:1280px;height:800px;overflow:hidden;background:#F4F7F6}
+html,body{width:${LARG}px;height:800px;overflow:hidden;background:#F4F7F6}
 body{font-family:M,sans-serif;-webkit-font-smoothing:antialiased;text-rendering:geometricPrecision}
-#st,#cu,#ce,#tr,#dc,#fr,#hud{position:absolute;left:0;top:0;width:1280px;height:800px;overflow:hidden;isolation:isolate}
-#gl{position:absolute;left:0;top:0;width:1280px;height:800px}
+#st,#cu,#ce,#tr,#dc,#fr,#hud{position:absolute;left:0;top:0;width:${LARG}px;height:800px;overflow:hidden;isolation:isolate}
+#gl{position:absolute;left:0;top:0;width:${LARG}px;height:800px}
 #cu{background:linear-gradient(180deg,#F1F6F5 0%,#F6F9F8 58%,#FBFCFB 100%)}
 #ce{opacity:0;background:radial-gradient(900px 620px at 50% 58%,rgba(80,208,136,.13),transparent 70%),radial-gradient(700px 520px at 100% 0%,rgba(80,208,136,.10),transparent 70%),
   radial-gradient(640px 520px at 0% 4%,rgba(90,150,255,.09),transparent 70%),linear-gradient(180deg,#17191A,#131415)}
@@ -77,7 +79,7 @@ body{font-family:M,sans-serif;-webkit-font-smoothing:antialiased;text-rendering:
   --chn:linear-gradient(160deg,rgba(255,255,255,.17),rgba(255,255,255,.06));--chns:0 10px 26px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.25);
   --op:linear-gradient(160deg,rgba(255,255,255,.20),rgba(255,255,255,.07));--opt:#F4F6F5;--ops:0 10px 22px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.28);--opb:1px solid rgba(255,255,255,.22);
   --kick:#6CF0A8;--h:linear-gradient(100deg,#FFFFFF 40%,#BFF5DA)}
-.tit{position:absolute;left:0;top:0;width:1280px;text-align:center}
+.tit{position:absolute;left:0;top:0;width:${LARG}px;text-align:center}
 .kick{font-weight:700;font-size:14px;letter-spacing:.3em;color:var(--kick);text-transform:uppercase;white-space:nowrap}
 .h{display:inline-block;margin-top:10px;font-weight:800;font-size:46px;letter-spacing:-.02em;line-height:1.14;white-space:nowrap;padding:0 4px 3px;
   background:var(--h);-webkit-background-clip:text;background-clip:text;color:transparent}
@@ -203,10 +205,10 @@ export const U = { uClima: { value: 0 }, uNevoa: { value: new THREE.Vector4(1, 1
 function base() {
   if (!RD) {
     RD = new THREE.WebGLRenderer({ canvas: GL, antialias: true, alpha: true, preserveDrawingBuffer: true });
-    RD.setPixelRatio(Math.min(window.devicePixelRatio || 1, OPC.pr)); RD.setSize(1280, 800, false); RD.setClearColor(0x000000, 0);
+    RD.setPixelRatio(Math.min(window.devicePixelRatio || 1, OPC.pr)); RD.setSize(LARG, 800, false); RD.setClearColor(0x000000, 0);
     RD.outputColorSpace = THREE.LinearSRGBColorSpace;   // as cores do material já são as da tela (hex da marca sem conversão)
   }
-  CENA = new THREE.Scene(); CAM = new THREE.PerspectiveCamera(OPC.fov, 1280 / 800, .2, 400);
+  CENA = new THREE.Scene(); CAM = new THREE.PerspectiveCamera(OPC.fov, LARG / 800, .2, 400);
   PLANOS.length = 0; TR.innerHTML = ''; DC.innerHTML = ''; DC.style.clipPath = DC._cp = ''; FR.innerHTML = ''; HUD.innerHTML = ''; MC.clear();
 }
 const hex = c => { const n = parseInt(c.slice(1), 16); return new THREE.Vector3((n >> 16 & 255) / 255, (n >> 8 & 255) / 255, (n & 255) / 255); };
@@ -332,10 +334,10 @@ export let POSE = null;
 export const olho = () => [CAM.position.x, CAM.position.y, CAM.position.z];   // onde a câmera está neste quadro
 function aplicaCam(k) {
   POSE = k; CAM.fov = k.fov; CAM.position.set(k.px, k.py, k.pz);
-  CAM.rotation.set(-k.el, k.az, k.rol, 'YXZ'); CAM.setViewOffset(1280, 800, 0, k.oy, 1280, 800); CAM.updateProjectionMatrix(); CAM.updateMatrixWorld(); CAM.matrixWorldInverse.copy(CAM.matrixWorld).invert();
+  CAM.rotation.set(-k.el, k.az, k.rol, 'YXZ'); CAM.setViewOffset(LARG, 800, 0, k.oy, LARG, 800); CAM.updateProjectionMatrix(); CAM.updateMatrixWorld(); CAM.matrixWorldInverse.copy(CAM.matrixWorld).invert();
 }
 const _v = new THREE.Vector3(), _v4 = new THREE.Vector4();
-export function tela(p) { _v.set(p[0], p[1], p[2]).project(CAM); return [(_v.x + 1) * 640, (1 - _v.y) * 400]; }   // mundo → px
+export function tela(p) { _v.set(p[0], p[1], p[2]).project(CAM); return [(_v.x + 1) * LARG / 2, (1 - _v.y) * 400]; }   // mundo → px
 export function ancora(e, p, ax = .5, ay = 1, dx = 0, dy = 0) {   // prende um rótulo do HUD a um ponto do mundo
   if (e._w == null) { e._w = e.offsetWidth; e._h = e.offsetHeight; } const [x, y] = tela(p);
   e.style.left = (x - e._w * ax + dx).toFixed(1) + 'px'; e.style.top = (y - e._h * ay + dy).toFixed(1) + 'px';
@@ -393,7 +395,7 @@ function projeta() {
     // algum canto atrás (ou colado) da câmera: não desenha (quem atravessa a câmera some antes, por p.op)
     let wmin = 1e9, wc = 0; for (const [u, v] of [[0, 0], [p.w, 0], [0, p.h], [p.w, p.h]]) { const w = m[3] * u + m[7] * v + m[15]; wmin = Math.min(wmin, w); wc += w / 4; }
     if (wmin < .35) { p.pl.style.display = 'none'; continue; }
-    const X = i => 640 * (m[i] + m[i + 3]), Y = i => 400 * (m[i + 3] - m[i + 1]);
+    const X = i => LARG / 2 * (m[i] + m[i + 3]), Y = i => 400 * (m[i + 3] - m[i + 1]);
     p.pl.style.display = ''; p.prof = wc; p.escTela = p.esc * f / wc; p.M.set(m); p.on = true;
     p.pl.style.transform = `matrix3d(${X(0)},${Y(0)},0,${m[3]},${X(4)},${Y(4)},0,${m[7]},0,0,1,0,${X(12)},${Y(12)},0,${m[15]})`;
     p.pl.style.opacity = p.op >= .999 ? '' : p.op.toFixed(4); p.pl.style.zIndex = String(Math.round(200000 - wc * 400 + p.z));
@@ -475,7 +477,7 @@ function contornos(pl) {   // contorno (px do plano, cantos redondos) de cada ca
     L.push({ e, c }); }
   return L;
 }
-const naTela = (m, u, v) => { const w = m[3] * u + m[7] * v + m[15]; return [640 * ((m[0] * u + m[4] * v + m[12]) / w + 1), 400 * (1 - (m[1] * u + m[5] * v + m[13]) / w)]; };   // px do plano → px do quadro
+const naTela = (m, u, v) => { const w = m[3] * u + m[7] * v + m[15]; return [LARG / 2 * ((m[0] * u + m[4] * v + m[12]) / w + 1), 400 * (1 - (m[1] * u + m[5] * v + m[13]) / w)]; };   // px do plano → px do quadro
 function opInline(e, fim) { let k = 1; for (; e && e !== fim; e = e.parentElement) { const s = e.style; if (s.visibility === 'hidden' || s.display === 'none') return 0; if (s.opacity !== '') k *= +s.opacity; } return k; }
 // furos: a camada dos traços decorativos (plano tras + deco) é recortada onde há caixa de vidro: o anel passa ATRÁS do cartão
 function furos() {
@@ -484,14 +486,14 @@ function furos() {
     for (const { e, c } of p.cx) { if (opInline(e, p.pl) * p.op < .2) continue; let s = '', k = '';
       c.forEach(([u, v], i) => { const [x, y] = naTela(p.M, u, v); s += (i ? 'L' : 'M') + x.toFixed(1) + ' ' + y.toFixed(1); if (i % 8 === 0) k += Math.round(x / 6) + ',' + Math.round(y / 6) + ';'; });
       if (!visto.has(k)) { visto.add(k); d += s + 'Z'; } } }   // dois cartões no mesmo lugar (troca por fusão) = um furo só
-  const cp = d ? `path(evenodd,"M0 0H1280V800H0Z${d}")` : ''; if (DC._cp !== cp) DC.style.clipPath = DC._cp = cp;
+  const cp = d ? `path(evenodd,"M0 0H${LARG}V800H0Z${d}")` : ''; if (DC._cp !== cp) DC.style.clipPath = DC._cp = cp;
 }
 // enquadraRet: pose de frente que põe um retângulo do lugar (metros: [x0, y0, x1, y1]; use p.ret() e uneRet) INTEIRO na área
 // útil do quadro. o: margem (px dos lados e de baixo; padrão 64 = os 40 da regra + folga para a deriva), topo (px livres
 // para o título; padrão 150), max (teto de px por metro, para não fechar demais), z, az, el (do olhar, dentro do lugar).
 export function enquadraRet(lg, ret, o = {}) {
   const mg = o.margem ?? 64, topo = o.topo ?? 150, chao = 800 - (o.base ?? mg), f = 400 / Math.tan((o.fov ?? OPC.fov) * PI / 360);
-  const s = Math.min((1280 - 2 * mg) / (ret[2] - ret[0]), (chao - topo) / (ret[3] - ret[1]), o.max ?? 1e9);
+  const s = Math.min((LARG - 2 * mg) / (ret[2] - ret[0]), (chao - topo) / (ret[3] - ret[1]), o.max ?? 1e9);
   const k = { x: (ret[0] + ret[2]) / 2, y: (ret[1] + ret[3]) / 2 + ((topo + chao) / 2 - 400) / s, z: o.z ?? 0, d: f / s, az: o.az ?? 0, el: o.el ?? 0 };
   return lg ? lg.pose(k) : k;
 }
@@ -551,9 +553,9 @@ export function auditar(t, o = {}) {
   for (const x of Tx) { const b = x.b.l, q = x.l, h = Math.max(b[0] + R.texto - q[0], q[2] - (b[2] - R.texto)), v = Math.max(b[1] + R.textoV - q[1], q[3] - (b[3] - R.textoV));
     if (Math.max(h, v) > .75) add('texto', x.b.nome + ' | ' + x.txt, `o texto "${x.txt}" ${h > v ? (h > R.texto ? 'estoura a largura' : 'encosta na borda') : 'estoura a altura'} de "${x.b.nome}" (faltam ${f1(Math.max(h, v))} px para o respiro de ${h > v ? R.texto : R.textoV} px)`, x.b.s); }
   // 2 · borda do quadro (só o que está parado)
-  const livre = s => s[2] <= 0 || s[3] <= 0 || s[0] >= 1280 || s[1] >= 800, falta = s => Math.max(R.borda - s[0], R.borda - s[1], s[2] - (1280 - R.borda), s[3] - (800 - R.borda));
+  const livre = s => s[2] <= 0 || s[3] <= 0 || s[0] >= LARG || s[1] >= 800, falta = s => Math.max(R.borda - s[0], R.borda - s[1], s[2] - (LARG - R.borda), s[3] - (800 - R.borda));
   for (const b of [...B, ...Ln]) { if (b.filho || !b.parado || (b.p && b.p.sangra) || livre(b.s)) continue; const m = falta(b.s); if (m <= .75) continue;
-    const lado = m === R.borda - b.s[0] ? 'esquerda' : m === R.borda - b.s[1] ? 'de cima' : m === b.s[2] - (1280 - R.borda) ? 'direita' : 'de baixo';
+    const lado = m === R.borda - b.s[0] ? 'esquerda' : m === R.borda - b.s[1] ? 'de cima' : m === b.s[2] - (LARG - R.borda) ? 'direita' : 'de baixo';
     add('borda', b.nome + (b.seta != null ? ' @' + Math.round(b.c[0] / 40) + ',' + Math.round(b.c[1] / 40) : ''), `"${b.nome}" ${m > R.borda ? `cortado pela borda ${lado} do quadro (${f1(m - R.borda)} px para fora)` : `a ${f1(R.borda - m)} px da borda ${lado} (mínimo ${R.borda})`}`, b.s); }
   // 3 · título
   const rg = document.createRange();
@@ -584,7 +586,7 @@ export function auditar(t, o = {}) {
       const ta = ra[i1] - ra[i0], tb = rb[i1] - rb[i0], meio = Math.abs(ra[i0] + ra[i1] - rb[i0] - rb[i1]) / 2;   // bordas só se comparam entre caixas de tamanho parecido; o meio, sempre
       const dd = (Math.min(ta, tb) / Math.max(ta, tb) > .6 ? Math.min(Math.abs(ra[i0] - rb[i0]), Math.abs(ra[i1] - rb[i1]), meio) : meio) / px;
       if (dd > lo && dd < hi) add('alinhamento', a.nome + ' | ' + b.nome, `"${a.nome}" e "${b.nome}" quase alinhados ${eixo}: fora por ${f1(dd)} px`, u); } }
-  if (o.marca) { document.getElementById('aud')?.remove(); const d = el('<div id="aud" style="position:absolute;left:0;top:0;width:1280px;height:800px;z-index:9"></div>', ST);
+  if (o.marca) { document.getElementById('aud')?.remove(); const d = el('<div id="aud" style="position:absolute;left:0;top:0;width:' + LARG + 'px;height:800px;z-index:9"></div>', ST);
     for (const q of P) d.insertAdjacentHTML('beforeend', `<div style="position:absolute;left:${q.ret[0]}px;top:${q.ret[1]}px;width:${q.ret[2] - q.ret[0]}px;height:${q.ret[3] - q.ret[1]}px;outline:2px solid #FF3B5C;outline-offset:2px"><span style="position:absolute;left:-2px;top:-19px;font:700 11px M,sans-serif;color:#fff;background:#FF3B5C;padding:1px 6px;border-radius:3px;white-space:nowrap">${q.tipo}</span></div>`); }
   return P;
 }

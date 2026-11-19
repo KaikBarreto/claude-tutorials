@@ -9,6 +9,8 @@
 // Cena 3D (kit perfis/ecoflix/cenas3d, three.js em módulo ES): o Chromium sobe com --allow-file-access-from-files, sem o
 // qual o import de módulo em file:// cai no CORS (origem "null"); o 2D sai idêntico com ela. --dsf N: escala do dispositivo
 // (padrão 2 = 2560x1600; 1,35 = 1728x1080 para prévia; 1 = 1280x800 para conferir rápido).
+// --larg N: largura do desenho (1280 = 16:10; 1422 = 16:9). A altura é sempre 800.
+const LARG = (() => { const i = process.argv.indexOf('--larg'); return i > 0 ? Number(process.argv[i + 1]) : 1280; })();
 const { chromium } = require('playwright');
 const fs = require('fs'), path = require('path'), { spawn } = require('child_process');
 const HERE = __dirname;
@@ -78,7 +80,7 @@ async function esperaRobo() {
       .replace(/stroke-width="2"/, 'stroke-width="2.1"');
   }
   const b = await chromium.launch({ args: ['--allow-file-access-from-files'] });
-  const page = await b.newPage({ viewport: { width: 1280, height: 800 }, deviceScaleFactor: DSF });
+  const page = await b.newPage({ viewport: { width: LARG, height: 800 }, deviceScaleFactor: DSF });
   page.setDefaultTimeout(VIGIA_S * 1000);   // com a máquina cheia, um quadro 3D passou dos 30 s padrão da captura
   const erros = []; page.on('pageerror', e => erros.push(String(e)));
   await page.route('**/*', r => r.request().url().startsWith('file:') ? r.continue() : r.abort());
