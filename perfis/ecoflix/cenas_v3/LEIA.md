@@ -205,3 +205,8 @@ Com a biblioteca (18/11): cena de teste com caminhão (250 latas, placa), balan�
 monte de cobre, prensa, 2 fardos, 2 pessoas e 4 planos, `--dsf 1.35`, `nice 19`, trava leve, carga ~4: **0,63 s por quadro**
 (0,09 s de cena + 0,55 s de captura). Cada monte são 2 a 6 chamadas de desenho (lotes); o custo é a captura, não o 3D.
 No clima escuro, corpo de objeto usa `emi` baixo (.1 a .3) e só luz, tela e destaque passam de 1: é o que mantém o vidro.
+
+## Render final e piscadas (19/11)
+Renderize em `--dsf 1.35` (a caixa da ilustração no palco tem 1587x992; `--dsf 2` não ganha nitidez e, nas cenas escuras de
+vidro, o Chromium fotografa antes de pintar um bloco: cartões somem por 1 a 3 quadros). Depois de todo render:
+`python3 -I perfis/ecoflix/cenas_v3/piscadas.py <cena>.mp4` (sai com 1 se algum elemento some e volta).

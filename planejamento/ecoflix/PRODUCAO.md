@@ -885,3 +885,23 @@ Decisões:
   Os agentes da T16 e da T17 ficaram esperando lotes que não existem mais (contextos de ~510 mil tokens): **não
   retomar**; depois do piloto T08, agente novo por aula lendo `Tnn/andamento_160.md` + este registro, só para os
   capítulos com falha. Os completos ficam para a gravação final com a voz.
+
+## 19/11 · T08 piloto: voz real, gravação final e montagem
+- Voz da T08 alinhada (`proc.py` + `titulos.py`): 14 capítulos e 13 títulos, nenhuma palavra errada (as "fracas" eram artefato do
+  reconhecedor; trecho do cap13 conferido em câmera lenta). Área de edição instalada com `instalar.sh` (TUTORIAL=t08 PERFIL=ecoflix);
+  `models` é link para os da Domiflix.
+- Gravação final: `rec/t08/t08_final.sh NN ...` (qualidade padrão, religa a instância no FAKE_NOW de cada capítulo). ~3 a 5 min por
+  capítulo com a máquina livre.
+- **A voz real saiu mais rápida que a estimada**: 06, 10, 11 e 12 atrasaram (até 4,9 s). Respiros com `pausas.py` nos vãos REAIS de
+  silêncio (o `vad` do `emendas/capNN.orig.json`; vão de vírgula não serve, o script recusa). **Conferir o código de saída do
+  `pausas.py`**: com `| tail -1` o erro passou batido e regravei 10 e 11 à toa. Respiro ANTES da linha não cura atraso que nasce
+  dentro da frase (âncoras são por palavra): o respiro vai DEPOIS do trecho denso, e a edição acelera o silêncio (`acelera` no
+  specs: cap06 3x, cap11 2x). Para as próximas aulas: no `gerar.py`, prever folga para voz ~8% mais rápida que a estimativa.
+- Câmera: digitação com `noClick` na Pesagem avançada reprovou em 11 e 12; zoom manual `escala 1.4` no specs resolveu.
+- **Ilustração v3 em `--dsf 2` pisca** nas cenas escuras de vidro (o Chromium fotografa antes de pintar um bloco: cartões somem por 1
+  a 3 quadros; 8 piscadas na `ilu01`). Em `--dsf 1.35` (1728x1080, maior que a caixa de 1587x992 do palco) sai limpo e 4x mais
+  rápido (141 s contra 9 min). **Padrão da trilha: `--dsf 1.35`, e `python3 -I perfis/ecoflix/cenas_v3/piscadas.py *.mp4` em toda
+  cena renderizada** (acha elemento que some e volta; calibrado na `ilu01`).
+- Janelas das cenas com a voz real: `ilu05` passou a ir até "quatrocentos" (o resultado é falado com ele na tela); auditoria
+  `auditar.cjs --passo 0.25` aprovada depois de 3 ajustes de margem e do título no mergulho.
+- Montagem: `t08/edit/montar_t08.sh` (render dos capítulos ~2,5 min cada, `finish.py` ~13 min, legendas). Aula: 13 min 50 s.
