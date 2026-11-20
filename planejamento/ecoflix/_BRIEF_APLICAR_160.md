@@ -8,6 +8,28 @@ leitura em `/dev/shm/ecoflix-src`). A aula já tem roteiro, fala e robô feitos 
 ficar mais longo; nenhuma aula se divide; profundidade extra no fiscal.** **Tarefa**: deixar a aula pronta para a voz e
 a gravação final no 1.60.10. Sem aprovação no meio: termine e relate.
 
+## Valem por cima de tudo abaixo (20/11)
+- **O app agora é o 1.60.18** (commit `e8edc9e6d`; build em `$TUT_HOME/app/dist`; código só leitura em `/dev/shm/ecoflix-src`).
+  Onde está escrito 1.60.10 abaixo, leia 1.60.18. O robô de toda aula já aponta para 1.60.18.
+- **Tela da gravação: 1600x900** (16:9, escolha do Kaik; já é o padrão em `rec/mundo/mundo.json -> navegador.tela`).
+  Telas mais largas: confira na folha de contato o que mudou de lugar (painel lateral, colunas, menus).
+- **O que mudou no app desde o 1.60.10** está em `planejamento/ecoflix/handoffs/` (leia os 3: correções do nosso handoff,
+  fiscal e caixa/cofre) e a novidade **margem automática** (T03): Materiais > Editar Preços em tela cheia, chave
+  "Margem automática" (uma margem para a tabela ou uma por material, em % ou R$ por quilo), resumo com "Venda abaixo da
+  compra", "Sem preço" e "Margem típica", calculadora no preço de venda do cadastro; a margem é sempre sobre a compra.
+  Confirme cada rótulo no código antes de pôr na fala. **Não anunciar**: a nota de teste (homologação) é liberada por
+  CNPJ; o modelo novo da DANFE só vale em produção a partir de 01/12/2026.
+- **Resultado do robô atual no 1.60.18**: `planejamento/ecoflix/varredura_160/VARREDURA_1.60.18.md` (a seção da sua aula).
+- **Sementes antigas podem estar velhas**: o app novo grava campos que o antigo não gravava (ex.: T08, item com só a 1ª
+  pesagem passou a guardar `first_weight`, commit `4d19302a3`). Se uma tela reaberta de semente sair diferente do que o
+  app faz ao vivo, corrija a semente.
+- **PDF e comprovante aparecem na tela** (pedido do Kaik, 19/11): o app abre PDF em aba nova e a gravação filma uma aba
+  só. Toda fala que fala de um PDF/comprovante/relatório impresso precisa que o robô devolva o PDF (padrão `POPS` +
+  `PDF_JS` do `$TUT_HOME/rec/t08/gerar.py`) e de uma entrada no `cenas/ilustracoes.json` com `"tipo": "comprovante"`,
+  `"cena": "pdf"`, a janela da fala e, em `mostra`, os campos que a voz cita. A cena em si o coordenador faz.
+- **Ensaio**: o lote em segundo plano usa SÓ a fila (`rec/fila.sh`); nunca rode `record.mjs` fora dela (19/11: um
+  ensaio fora da fila junto com a gravação final deu 16 s de atraso).
+
 ## Ler (só isto)
 1. `planejamento/ecoflix/Tnn/cobertura_160.md` inteiro; em `planejamento/ecoflix/JUNCAO_160.md`, a seção da sua aula e a
    tabela de números que mudaram; em `PRODUCAO.md`, só "Retomada de 18/11" (decisões do coordenador: valem sobre a
