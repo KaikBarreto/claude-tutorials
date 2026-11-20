@@ -1,6 +1,6 @@
-# Inventário · T2 Usuários e permissões (EcoSistema 1.59.154)
+# Inventário · T2 Usuários e permissões (EcoSistema 1.60.18; seções 1 a 7 do 1.59.154, conferidas na cobertura 1.60.10 e acrescidas na seção 8)
 
-Código: `/home/claude/ecoflix/app-src-1.59.154/` (`APP_VERSION = "1.59.154"`, `src/config/version.ts:16`). Leitura estática.
+Código: `/dev/shm/ecoflix-src` (1.60.18, commit `e8edc9e6d`). As seções 1 a 7 foram feitas no 1.59.154; **a seção 8 as corrige e acrescenta o que mudou** (vale sobre elas quando divergirem). Leitura estática.
 Caminhos relativos a `src/`, exceto `supabase/functions/...`. Rótulos entre aspas = texto exato da tela.
 
 ## 1. Caminho até a aba
@@ -111,3 +111,50 @@ Caminhos relativos a `src/`, exceto `supabase/functions/...`. Rótulos entre asp
    usa só o exemplo do Caixa.
 4. Excluir: a edge aceita quem tem "Gerenciar Usuários", a tela mostra o botão só ao master. A fala segue a tela.
 5. A janela do limite mostra o preço do usuário extra e a mensalidade estimada (dado real de preço na tela).
+
+## 8. O que mudou até a 1.60.18 (vale sobre as seções 1 a 7)
+Siglas: `UM` `pages/UserManagement.tsx`, `PE` `components/settings/PermissionsEditor.tsx`, `UMD` `components/settings/UsersMasterDetail.tsx`,
+`RT` `config/routes.ts`; linhas do 1.60.10 (a cobertura) e conferidas no 1.60.18.
+- **Detalhe do usuário** (`UMD:309-337`): três colunas, "Perfil de acesso", "Última atividade" e **"Peso dos pedidos"** ("Padrão da
+  empresa" + "Acompanha a regra definida em Integrações." / "Balança obrigatória" / "Digitação manual liberada" + "Exceção configurada
+  especificamente para este usuário."). Busca da lista "Buscar por nome ou e-mail", "N encontrado(s)" (`UMD:182-218`).
+- **Janela Criar/Editar** (`UM:1140-1445`): coluna "Dados do usuário" fixa; **a foto e a tela inicial da criação gravam** (a edge devolve
+  `userId`, `UM:415-460`; o rótulo segue "Foto opcional para o novo usuário"); entre "Tela inicial" e os perfis, **"Peso dos pedidos"**
+  ("Herdar padrão da empresa", "Exigir peso da balança", "Permitir digitação manual"; ajuda "A exceção vale para compras e vendas deste
+  usuário. Sem exceção, futuras mudanças no padrão da empresa são aplicadas automaticamente."); ajuda da tela inicial "Só aparecem
+  telas liberadas acima. Se a permissão mudar, o sistema escolhe outra tela válida.".
+- **Perfis rápidos** (`PE:140-181`): "Acesso Total", "Operador Padrão" (selo **"Recomendado"** dentro do botão quando não marcado; nome
+  acessível "Operador Padrão Recomendado"), "Somente Visualização" e **"Personalizado" como quarto botão** (cinza; marcado, âmbar com o
+  visto). Sem perfil escolhido: aviso âmbar **"Escolha primeiro o perfil deste usuário"** + "O Operador Padrão cobre a rotina diária. Use
+  Personalizado quando quiser montar o acesso tela por tela."; busca e lista apagadas e sem clique; "Restrições" escondida; "Criar Usuário"
+  devolve "Escolha um perfil de acesso para o novo usuário" (`UM:772-776`). **O perfil rápido é gravado na criação** (achado 2 resolvido:
+  o detalhe diz "Operador Padrão"; `create-company-user/index.ts:365-370`).
+- **"Confira esta combinação"** (`UM:319-341,1276-1290`): "Ticket de Pesagem está liberado, mas o usuário não poderá criar tickets de Compra
+  nem de Venda."; "Registrar Compra está ligado, mas a tela Caixa está desligada."; "Registrar Venda está ligado, mas a tela Caixa está
+  desligada."; "O Cato ficará indisponível: ele consulta dados gerais da empresa e poderia revelar registros de outros usuários.".
+- **Busca da lista de permissões** (1.60.18): limpar a busca **não fecha** as telas abertas; a busca "nota" **não mostra** mais o bloco do
+  Cato (ele só aparece quando o termo casa com o nome da permissão, `PE:105-120`).
+- **Catálogo** (`RT:111-146,216-311`): 24 telas e 60 ações; Caixa 10, Movimentações Bancárias 5 ("Usar Contas Bancárias", "Gerenciar
+  Contas Bancárias", "Conciliar Extrato Bancário", "Registrar Movimentação Bancária", "Registrar Transferências Financeiras"), Contas a
+  Pagar/Receber 4, Fiscal & Ambiental 11 (NF-e, NFS-e, MDF-e, documentos ambientais, "Manifestar Notas Recebidas", "Exportar Pacote
+  Contábil" e cinco do SPED), Estoque 3, Ticket de Pesagem 4, Produção 3, Clientes e Fornecedores 4, Funcionários 3, Configurações 7.
+- **Restrições** (`RT:338-367`, `PE:493-530`): "Ver somente clientes e fornecedores que cadastrar", "Ver somente os pedidos que lançar", "Ver somente os
+  tíquetes de pesagem que criar", "Usar somente as contas bancárias liberadas"; "Ficam desligadas por padrão. Ative somente para uma
+  exceção consciente."; ligar uma tira o perfil pronto e deixa o Cato indisponível; não valem para "Acesso Total". A quarta abre **"Contas
+  liberadas para este usuário"** ("Marque as contas que poderão aparecer em pagamentos por Pix ou transferência.") com um cartão por conta
+  ("Liberar conta <nome>"; sem conta marcada: "Selecione pelo menos uma conta bancária para este usuário."; sem conta cadastrada: "Nenhuma
+  conta bancária ativa foi encontrada. Cadastre uma conta antes de salvar esta restrição."); "Cofre e cartões não são afetados".
+- **Relatório por Usuário** (`UM:1094-1097`, `components/EmployeeOrdersReportDialog.tsx`): janela "Relatório por Usuário" ("Exporte um
+  relatório de compras e vendas por usuário"); "Período" (padrão "Este mês"); "Usuários incluídos (N de N)", "Desmarcar todos" / "Marcar
+  todos"; botões "Excel" ("Relatório exportado com sucesso!") e "Visualizar / PDF" ("Relatório gerado com sucesso!"). O relatório abre em
+  **outra aba** (`window.open`, `utils/employeeOrdersReportHtmlGenerator.ts`): "Relatório de Compras e Vendas por Usuário", "Total de
+  Vendas", "Total de Compras", "Resumo por Usuário", "Vendas Detalhadas", "Compras Detalhadas", botão "Salvar PDF".
+- **Limite excedido** (`components/UserExcessModal.tsx:165-166`): "Limite de Usuários Excedido", "Seu plano permite N usuários ativos, mas você
+  tem M. Selecione X usuário(s) para desativar." (só falado; exigiria um mundo com excesso).
+- **Backend (1.60.18)**: listar embute `user_bank_account_access!user_bank_account_access_user_id_fkey(bank_account_id)` e lê
+  `user_scale_weight_policies` e `bank_accounts`; criar manda `preset` e `bank_account_ids` e a resposta traz `userId` (a tela então
+  grava `profiles.initial_screen_path` e chama `set_user_scale_weight_policy`); salvar é `save_user_permissions_and_bank_accounts`
+  (`p_user_id`, `p_permissions`, `p_preset`, `p_bank_account_ids`, `p_scale_weight_override`).
+- **Achados do app (1.60.18) para o MELHORIAS**: os achados 1 e 2 da seção 7 foram **corrigidos** (foto, tela inicial e perfil gravam na
+  criação); "limpar a busca fecha as telas abertas" e "busca nota mostra o Cato" **corrigidos**; o relatório por usuário abre uma página HTML
+  que carrega o `html2pdf` de uma CDN (sem rede, "Salvar PDF" não faz nada).

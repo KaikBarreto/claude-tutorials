@@ -66,13 +66,16 @@ from tts_textos import CAPS as TEXTOS  # noqa: E402  (texto atual de cada capít
 TROCAS = json.load(open(os.path.join(NARR, 'config_narracao.json'), encoding='utf8'))['trocas']
 
 NOMES = ['Abertura', 'A tela Estoque', 'Cadastrar um material', 'O código do material', 'O NCM e a nota fiscal', 'Grupos de material',
-         'Editar preços em massa', 'Várias tabelas de preço', 'Movimentar, transferir e zerar', 'Exportar estoque e tabela',
-         'Excluir um material', 'Recapitulando']
+         'Editar preços em massa', 'Margem automática: a tabela toda', 'Margem automática: uma por material', 'O resumo e a margem fora da regra',
+         'A margem no cadastro do material', 'Várias tabelas de preço', 'Duplicar, fixar e trocar a principal', 'Movimentar, transferir e zerar',
+         'Exportar estoque e tabela', 'Excluir um material', 'Recapitulando']
 # estado de partida (sementes extras sobre o mundo base): t03/inicio + o último apos-capNN; o cap07 (Nova Compra) abre o caixa #85 do
 # Rafael às 08:30 (MUNDO_LINHA_DO_TEMPO §9; o base/caixa-aberto é o das 08:05 da T6)
-SEMENTE = {0: [], 1: [], 2: [], 3: ['apos-cap02'], 4: ['apos-cap03'], 5: ['apos-cap04'], 6: ['apos-cap05'], 7: ['apos-cap06'],
-           8: ['apos-cap07'], 9: ['apos-cap08'], 10: ['apos-cap08'], 11: ['apos-cap08']}
-EXTRA_BASE = {7: ['caixa-0830']}
+SEMENTE = {0: [], 1: [], 2: [], 3: ['apos-cap02'], 4: ['apos-cap03'], 5: ['apos-cap04'], 6: ['apos-cap05'], 7: ['apos-cap06'], 8: ['apos-cap06'],
+           9: ['apos-cap06', 'margem-fora'], 10: ['apos-cap06', 'margem-material'], 11: ['apos-cap06'], 12: ['apos-cap07'], 13: ['apos-cap07'],
+           14: ['apos-cap08'], 15: ['apos-cap08'], 16: ['apos-cap08']}
+# (os nomes apos-capNN das sementes são os da numeração antiga, de antes da margem automática; ver plano.md)
+EXTRA_BASE = {11: ['caixa-0830']}
 
 # folga de cada gesto: segundos entre o início do passo e o instante em que ele age (pace 0,5; medido no ensaio do T03 e na tabela
 # "Custo real dos gestos" do docs/04). O `at` = palavra - folga faz o cursor CHEGAR na palavra.
@@ -515,8 +518,9 @@ def cap01():
     c.hover(P('Tabelas de Preço'), 0.6, w=(1, 'coluna'), label='coluna Tabelas de Preço')
     c.hover(BTN('Principal'), 0.8, w=(1, 'principal,'), label='Principal com a estrela')
     c.hover(BTN('Nova Tabela'), 0.6, w=(1, 'outra.'), label='Nova Tabela')
+    c.hover(SEL("main button[title='Como funciona']"), 0.9, w=(1, 'interrogação'), label='interrogação Como funciona (os tipos de tabela)')
     c.hover(BTN('Movimentar estoque'), 0.2, w=(2, 'Movimentar'), label='Movimentar estoque')
-    c.hover(BTN('Editar Tabela'), 0.2, w=(2, 'Editar'), label='Editar Tabela')
+    c.hover(BTN('Editar Preços'), 0.2, w=(2, 'Editar'), label='Editar Preços')
     c.hover(BTN('Grupos'), 0.15, w=(2, 'Grupos,'), label='Grupos')
     c.hover(BTNX('Exportar'), 0.15, w=(2, 'Exportar'), label='Exportar')
     c.hover(BTN('Zerar Estoque'), 0.6, w=(2, 'Zerar'), label='Zerar Estoque')
@@ -529,6 +533,8 @@ def cap01():
     c.hover(TH('Preço de Compra'), 0.4, w=(5, 'preços'), label='colunas de preço')
     c.hover(P('estimativa'), 1.2, w=(5, 'estimativa,'), label='selo estimativa do Preço médio pago')
     c.confere('main', ['Código', 'Nome', 'Estoque', 'Valor', 'Preço médio pago', 'estimativa', 'Preço de', 'Compra', 'Venda', 'Ações'], 'colunas da lista')
+    c.click(TH('Estoque'), w=(5, 'título'), label='clique em Estoque Atual: ordena a lista')
+    c.click(TH('Código'), w=(5, 'ordena'), label='clique em Código: volta à ordem do código')
     # L6: corte para o Marcos (cap01b); aqui a página volta ao topo por baixo do corte, para o L7 começar igual ao corte
     c.ev(js_rola_topo(), w=(6, 'quem'), label='volta ao topo (por baixo do corte do Marcos)')
     c.hover(BTNX('Todos os Materiais'), 0.3, w=(7, 'filtro,'), label='filtro Todos os Materiais')
@@ -704,35 +710,76 @@ def cap05():
     return c
 
 
+# ---------------------------------------------------------------- Editar Preços (1.60.18: tela cheia) e Margem automática
+CHAVE = {'role': 'switch', 'name': 'Margem automática'}
+ASIDE = SEL(f"{DLG} aside[aria-label='Resumo e regras da tabela']")
+BUSCA_PRECOS = SEL(f"{DLG} input[placeholder='Buscar por código ou nome...']")
+ALERTA = '[role=alertdialog]'
+LINHA = lambda nome: SEL(f"{DLG} tbody tr:has-text('{nome}')")
+CAMPOS = lambda nome, k: SEL(f"{DLG} tbody tr:has-text('{nome}') input", nth=k)   # com margem ligada: 0 compra, 1 margem, 2 venda; sem: 0 compra, 1 venda
+TABELA_TODA = {'role': 'button', 'name': 'Tabela toda', 'exact': False, 'within': DLG}
+RESUMO_LINHA = lambda rotulo: SEL(f"{DLG} aside button:has-text('{rotulo}'), {DLG} aside div:has(> span:text-is('{rotulo}'))")
+GRADE_LINHA = lambda i: f"{DLG} tbody tr:nth-child({i})"
+
+
+def abre_editar_precos(c, w, label='Editar Preços (tela cheia)'):
+    c.click(BTN('Editar Preços'), w=w, label=label)
+    c.waitfor(text='Editar Tabelas de Preço', timeout=10)
+    c.waitfor(target=LINHA('Ferro pesado'), timeout=10)
+
+
+def sair_cancelando(c, w, label='Cancelar (nada é salvo)'):
+    c.click(BTN('Cancelar', within=DLG), w=w, noScroll=True, label=label)
+    c.waitfor(gone={'role': 'dialog'}, timeout=8)
+
+
 def cap06():
-    """Editar preços em massa: Editar Tabela, busca cobre, +0,50 na compra e na venda dos três cobres, Salvar."""
+    """Editar preços em massa (1.60.18): Editar Preços em tela cheia, busca cobre, +0,50 nos três cobres, dica da venda abaixo da compra
+    (bronze: 28,00, Salvar, aviso, Cancelar, volta a 33,50), Salvar."""
     c = Cap(6, setup_estoque())
-    c.hover(BTN('Editar Tabela'), 0.6, w=(1, 'Editar'), label='Editar Tabela')
-    c.click(BTN('Editar Tabela'), w=(2, 'Abre'), label='abre Editar Preços em Massa')
-    c.waitfor(text='Editar Preços em Massa', timeout=10)
-    c.hover(PD('Compra (R$)'), 0.3, w=(2, 'compra'), label='Compra (R$)')
-    c.hover(PD('Venda (R$)'), 0.3, w=(2, 'venda'), label='Venda (R$)')
-    c.hover(PD('Tabela principal'), 0.6, w=(2, 'esquerda'), label='Tabelas disponíveis: Principal (Padrão)')
-    c.type(SEL(f"{DLG} input[placeholder='Buscar por código ou nome...']"), 'cobre', w=(3, 'Busco'), cps=CPS, label='busca cobre')
+    c.hover(BTN('Editar Preços'), 0.6, w=(1, 'Editar'), label='Editar Preços')
+    abre_editar_precos(c, (2, 'abre'), 'abre Editar Tabelas de Preço (tela cheia)')
+    c.hover(PD('Tabelas disponíveis'), 0.5, w=(2, 'esquerda'), label='Tabelas disponíveis: Principal (Padrão)')
+    c.hover(SEL(f"{DLG} thead th:has-text('Compra')"), 0.3, w=(2, 'compra'), label='Compra (R$)')
+    c.hover(SEL(f"{DLG} thead th:has-text('Venda')"), 0.3, w=(2, 'venda'), label='Venda (R$)')
+    c.hover(ASIDE, 0.6, w=(2, 'resumo'), label='Resumo da tabela (coluna da direita)')
+    c.hover(BTN('Sair', within=DLG), 0.3, w=(2, 'Sair'), label='Sair')
+    c.hover(BTN('Cancelar', within=DLG), 0.4, w=(2, 'Cancelar'), label='Cancelar')
+    c.type(BUSCA_PRECOS, 'cobre', w=(3, 'Busco'), cps=CPS, label='busca cobre')
     c.confere('dlg', ['Cobre mel', 'Cobre misto', 'Fio de cobre encapado', 'Radiador de cobre'], 'ficam só os cobres')
-    c.click(GRADE('Cobre mel', 0), w=(4, 'compra'), label='Cobre mel: Compra')
-    c.type(GRADE('Cobre mel', 0), '42,50', w=(4, 'quarenta', 0), clicar=False, clear=True, label='Cobre mel compra 42,50 (zoom: linha Cobre mel)')
-    c.click(GRADE('Cobre mel', 1), w=(4, 'venda'), label='Cobre mel: Venda')
-    c.type(GRADE('Cobre mel', 1), '47,90', w=(4, 'quarenta', 1), clicar=False, clear=True, label='Cobre mel venda 47,90')
+    c.click(CAMPOS('Cobre mel', 0), w=(4, 'compra'), label='Cobre mel: Compra')
+    c.type(CAMPOS('Cobre mel', 0), '42,50', w=(4, 'quarenta', 0), clicar=False, clear=True, label='Cobre mel compra 42,50 (zoom: linha Cobre mel)')
+    c.click(CAMPOS('Cobre mel', 1), w=(4, 'venda'), label='Cobre mel: Venda')
+    c.type(CAMPOS('Cobre mel', 1), '47,90', w=(4, 'quarenta', 1), clicar=False, clear=True, label='Cobre mel venda 47,90')
     for k, (nome, comp, vend) in enumerate((('Cobre misto', '36,00', '41,50'), ('Fio de cobre encapado', '18,00', '22,00'))):
         w0 = (5, 'Faço') if k == 0 else None
-        c.type(GRADE(nome, 0), comp, w=w0, clear=True, cps=24, label=f'{nome} compra {comp} (selo 4x)')
-        c.type(GRADE(nome, 1), vend, clear=True, cps=24, label=f'{nome} venda {vend} (selo 4x)')
+        c.type(CAMPOS(nome, 0), comp, w=w0, clear=True, cps=24, label=f'{nome} compra {comp} (selo 4x)')
+        c.type(CAMPOS(nome, 1), vend, clear=True, cps=24, label=f'{nome} venda {vend} (selo 4x)')
     c.press('Tab', label='sai da célula (o valor assenta)')
     c.confere('dlg', ['3 material(is) com alterações pendentes'], 'aviso 3 material(is) com alterações pendentes')
-    c.hover(GRADE('Cobre misto', 0), 0.8, w=(6, 'células'), label='células alteradas destacadas')
-    c.hover(PD('com alterações pendentes'), 1.4, w=(6, 'aviso'), label='aviso 3 material(is) com alterações pendentes')
-    c.click(BTN('Salvar', within=DLG), w=(7, 'Salvar,'), noScroll=True, label='Salvar (rodapé da janela)')
+    c.hover(CAMPOS('Cobre misto', 0), 0.8, w=(6, 'células'), label='células alteradas com a marca')
+    c.hover(PD('com alterações pendentes'), 1.4, w=(6, 'aviso'), label='aviso 3 material(is) com alterações pendentes (rodapé)')
+    # L7 e L8: venda abaixo da compra (nada disso é salvo: o robô desfaz)
+    c.type(BUSCA_PRECOS, 'bronze', w=(7, 'bronze'), clear=True, cps=CPS, label='busca bronze')
+    c.type(CAMPOS('Bronze', 1), '28,00', w=(7, 'oito'), clear=True, label='Bronze venda 28,00 (abaixo da compra de 29,00)')
+    c.press('Tab', label='sai da célula')
+    c.confere('dlg', ['Venda abaixo da compra'], 'resumo: Venda abaixo da compra')
+    c.hover(PD('Venda abaixo da compra'), 1.2, w=(7, 'resumo'), label='Resumo: Venda abaixo da compra 1 (zoom)')
+    c.click(BTN('Salvar', within=DLG), w=(8, 'Salvar', 0), noScroll=True, label='Salvar (com a venda abaixo da compra)')
+    c.waitfor(text='Preço de venda abaixo do custo', timeout=8)
+    c.hover({'text': 'Preço de venda abaixo do custo'}, 1.6, w=(8, 'prejuízo'), label='Preço de venda abaixo do custo (zoom: a janela)')
+    c.click(BTN('Cancelar', within=ALERTA), w=(8, 'cancelo'), label='Cancelar (a janela fecha, nada foi salvo)')
+    c.waitfor(gone={'role': 'alertdialog'}, timeout=6)
+    c.type(CAMPOS('Bronze', 1), '33,50', w=(8, 'volto'), clear=True, label='Bronze venda de volta a 33,50')
+    c.press('Tab', label='sai da célula')
+    c.ev(js_valor(f"{DLG} input[placeholder='Buscar por código ou nome...']", ''), w=(8, 'Se', 1), label='limpa a busca (sem cursor)')
+    c.confere('dlg', ['3 material(is) com alterações pendentes'], 'voltou a 3 alterações')
+    # L9: Salvar (o aviso vive 4 s: o cursor vai direto a ele)
+    c.click(BTN('Salvar', within=DLG), w=(9, 'Salvar.'), noScroll=True, label='Salvar (rodapé da tela)')
     c.waitfor(text='Preços atualizados!', timeout=10)
-    ini = round(c.W(7, 'Salvar,') + 1.4, 2)   # o aviso (4 s) sobe logo depois do Salvar: o cursor vai direto a ele e fica até "vinculadas:"
-    # avisos embaixo à direita: o cursor vai por coordenada (a página fica ocupada logo depois de salvar; ver cap10)
+    ini = round(c.W(9, 'Salvar.') + 1.4, 2)
     c.rolar(0, ponto=(990, 748), duration=0.3, after=0, label='cursor no lugar do aviso (embaixo à direita)')
-    c.hover({'text': 'As tabelas vinculadas serão recalculadas'}, round(c.W(7, 'vinculadas:') + 0.6 - ini - 0.55, 2), timeout=8, noScroll=True,
+    c.hover({'text': 'As tabelas vinculadas serão recalculadas'}, round(c.W(9, 'vinculadas:') + 0.6 - ini - 0.55, 2), timeout=8, noScroll=True,
             label='aviso Preços atualizados! As tabelas vinculadas... (o mouse segura o aviso)')
     c.waitfor(gone={'role': 'dialog'}, timeout=8)
     c.confere('main', ['R$ 42,50', 'R$ 47,90'], 'Cobre mel 42,50 e 47,90 na lista')
@@ -741,10 +788,175 @@ def cap06():
 
 
 def cap07():
+    """Margem automática, alcance Tabela toda: liga a chave, Tabela toda, 15 %, Compra fica, Aplicar; compra 38 > venda 43,70; venda 46 > compra 40;
+    Editar margem 20 %; cadeado do Ferro misto (40 %); Cancelar (nada é salvo)."""
+    c = Cap(7, setup_estoque())
+    abre_editar_precos(c, (1, 'Editar'), 'abre Editar Preços')
+    c.hover(CHAVE, 0.8, w=(1, 'cartão'), label='cartão Margem automática (a chave)')
+    c.click(CHAVE, w=(2, 'Ligo'), label='liga a chave Margem automática')
+    c.waitfor(text='Alcance da margem', timeout=6)
+    c.hover(TABELA_TODA, 0.4, w=(2, 'Tabela', 0), label='alcance Tabela toda')
+    c.hover({'role': 'button', 'name': 'Por material', 'exact': False, 'within': DLG}, 0.4, w=(2, 'Por'), label='alcance Por material')
+    c.click(TABELA_TODA, w=(2, 'Escolho'), label='escolhe Tabela toda')
+    c.waitfor(target=SEL('input[aria-label="Margem da tabela"]'), timeout=6)
+    c.hover(PD('Sobre a compra:'), 1.0, w=(3, 'dez'), label='Sobre a compra: R$ 10,00 com 30% vira R$ 13,00 (zoom)')
+    c.type(SEL('input[aria-label="Margem da tabela"]'), '15', w=(3, 'quinze'), clear=True, label='margem da tabela 15')
+    c.hover(SEL(f"{DLG} button[aria-pressed]:text-is('R$')"), 0.6, w=(3, 'reais', 2), label='botão R$ (margem em reais por quilo)')
+    c.hover(SEL(f"{DLG} button[aria-pressed]:has-text('A venda é recalculada')"), 0.4, w=(4, 'compra', 0), label='Qual preço fica como está: Compra')
+    c.hover(SEL(f"{DLG} button[aria-pressed]:has-text('A compra é recalculada')"), 0.4, w=(4, 'venda', 1), label='Qual preço fica como está: Venda')
+    c.click(SEL(f"{DLG} button[aria-pressed]:has-text('A venda é recalculada')"), w=(4, 'Deixo'), label='Compra fica como está')
+    c.click(BTN('Aplicar', within=DLG), w=(4, 'Aplicar'), label='Aplicar')
+    c.waitfor(text='Tabela toda · 15%', timeout=8)
+    c.hover(CAMPOS('Cobre misto', 0), 0.6, w=(5, 'cobre'), label='Cobre misto: compra 36,00')
+    c.confere_campos(['36,00', '41,40'], 'Cobre misto 36,00 e 41,40', escopo=LINHA('Cobre misto')['selector'])
+    c.hover(CAMPOS('Cobre misto', 2), 1.0, w=(5, 'quarenta', 0), label='Cobre misto: venda 41,40 (zoom: linha Cobre misto)')
+    c.hover(CAMPOS('Ferro pesado', 2), 1.0, w=(5, 'milésimo'), label='Ferro pesado: venda 1,093 (o milésimo)')
+    c.hover(PD('com alterações pendentes'), 1.2, w=(5, 'aviso'), label='aviso: margem automática com alterações pendentes (rodapé)')
+    c.type(CAMPOS('Cobre misto', 0), '38,00', w=(6, 'trinta'), clear=True, label='Cobre misto compra 38,00')
+    c.press('Tab', label='sai da célula')
+    c.confere_campos(['38,00', '43,70'], 'Cobre misto 38,00 e 43,70', escopo=LINHA('Cobre misto')['selector'])
+    c.hover(CAMPOS('Cobre misto', 2), 1.0, w=(6, 'quarenta'), label='Cobre misto: venda 43,70 (zoom)')
+    c.type(CAMPOS('Cobre misto', 2), '46,00', w=(7, 'quarenta', 0), clear=True, label='Cobre misto venda 46,00')
+    c.press('Tab', label='sai da célula')
+    c.confere_campos(['40,00', '46,00'], 'Cobre misto 40,00 e 46,00', escopo=LINHA('Cobre misto')['selector'])
+    c.hover(CAMPOS('Cobre misto', 0), 1.0, w=(7, 'quarenta', 1), label='Cobre misto: compra 40,00 (zoom)')
+    c.click(BTN('Editar margem', within=DLG, exact=False), w=(8, 'Editar'), label='Editar margem')
+    c.waitfor(target=SEL('input[aria-label="Margem da tabela"]'), timeout=6)
+    c.type(SEL('input[aria-label="Margem da tabela"]'), '20', w=(8, 'vinte'), clear=True, label='margem da tabela 20')
+    c.confere_campos(['40,00', '48,00'], 'Cobre misto 40,00 e 48,00', escopo=LINHA('Cobre misto')['selector'])
+    c.hover(CAMPOS('Cobre misto', 2), 1.0, w=(8, 'tabela', 0), label='venda recalculada na hora')
+    cad = lambda n: SEL(f"{DLG} tbody tr:has-text('{n}') button[aria-label='Personalizar a margem deste material']")
+    c.click(cad('Ferro misto'), w=(9, 'cadeado', 0), label='abre o cadeado do Ferro misto')
+    c.type(CAMPOS('Ferro misto', 1), '40', w=(9, 'quarenta'), clear=True, label='Ferro misto margem 40')
+    c.press('Tab', label='sai da célula')
+    c.confere('dlg', ['personalizada'], 'selo personalizada no Ferro misto')
+    c.hover(LINHA('Ferro misto'), 1.2, w=(9, 'personalizada'), label='Ferro misto: selo personalizada (zoom na linha)')
+    c.click(SEL(f"{DLG} tbody tr:has-text('Ferro misto') button[aria-label='Voltar à margem da tabela']"), w=(9, 'Fechando'), label='fecha o cadeado do Ferro misto')
+    c.hover(BTN('Salvar', within=DLG), 0.5, w=(10, 'Salvar'), label='Salvar')
+    sair_cancelando(c, (10, 'Cancelar.'))
+    c.fim()
+    return c
+
+
+def cap08():
+    """Margem automática, alcance Por material: liga a chave, unidade %, Aplicar (nenhum preço muda); cobre misto 15 %; bronze em R$ (5,00); compra 30;
+    Mesma margem em vários materiais (busca alumínio, 20 %); Cancelar."""
+    c = Cap(8, setup_estoque())
+    abre_editar_precos(c, (1, 'Abro'), 'abre Editar Preços')
+    c.click(CHAVE, w=(1, 'ligo'), label='liga a chave Margem automática')
+    c.waitfor(text='Manter a margem que cada material já tem hoje', timeout=6)
+    c.hover(SEL(f"{DLG} aside button[aria-pressed='true']:text-is('%')"), 0.5, w=(2, 'porcentagem', 0), label='unidade %')
+    c.hover(SEL(f"{DLG} aside button[aria-pressed='false']:text-is('R$')"), 0.5, w=(2, 'reais'), label='unidade R$')
+    c.click(BTN('Aplicar', within=DLG), w=(2, 'Aplicar'), label='Aplicar')
+    c.waitfor(text='Por material · cada material com a sua margem', timeout=8)
+    c.hover(SEL(f"{DLG} thead th:has-text('Margem')"), 0.4, w=(3, 'coluna'), label='coluna Margem')
+    c.hover(CAMPOS('Cobre mel', 1), 0.8, w=(3, 'cobre'), label='Cobre mel: margem 12,71 (zoom)')
+    c.hover(CAMPOS('Ferro misto', 1), 0.8, w=(3, 'ferro'), label='Ferro misto: margem 40')
+    c.hover(CAMPOS('Cobre misto', 1), 0.5, w=(4, 'cobre'), label='Cobre misto: margem 15,28')
+    c.type(CAMPOS('Cobre misto', 1), '15', w=(4, 'quinze', 1), clear=True, label='Cobre misto margem 15')
+    c.press('Tab', label='sai da célula')
+    c.confere_campos(['36,00', '15', '41,40'], 'Cobre misto 36,00, 15% e 41,40', escopo=LINHA('Cobre misto')['selector'])
+    c.hover(CAMPOS('Cobre misto', 2), 0.9, w=(4, 'quarenta', 0), label='Cobre misto: venda 41,40 (zoom)')
+    c.click(SEL(f"{DLG} tbody tr:has-text('Bronze') button[title^='Margem em porcentagem']"), w=(5, 'clico'), label='botão de reais da linha do Bronze')
+    c.confere_campos(['29,00', '4,50', '33,50'], 'Bronze 29,00, R$ 4,50 e 33,50', escopo=LINHA('Bronze')['selector'])
+    c.hover(CAMPOS('Bronze', 1), 0.9, w=(5, 'quatro', 0), label='Bronze: margem 4,50 (zoom)')
+    c.type(CAMPOS('Bronze', 1), '5', w=(5, 'digito'), clear=True, label='Bronze margem R$ 5')
+    c.press('Tab', label='sai da célula')
+    c.confere_campos(['29,00', '5', '34,00'], 'Bronze 29,00, R$ 5 e 34,00', escopo=LINHA('Bronze')['selector'])
+    c.type(CAMPOS('Bronze', 0), '30,00', w=(6, 'compra', 0), clear=True, label='Bronze compra 30,00')
+    c.press('Tab', label='sai da célula')
+    c.confere_campos(['30,00', '35,00'], 'Bronze 30,00 e 35,00', escopo=LINHA('Bronze')['selector'])
+    c.hover(CAMPOS('Bronze', 2), 1.0, w=(6, 'trinta', 1), label='Bronze: venda 35,00 (zoom)')
+    c.type(BUSCA_PRECOS, 'alumínio', w=(7, 'busco'), clear=True, cps=CPS, label='busca alumínio')
+    c.click(BTN('Editar margem', within=DLG, exact=False), w=(7, 'abro'), label='Editar margem')
+    c.waitfor(text='Mesma margem em vários materiais', timeout=6)
+    c.hover(PD('Mesma margem em vários materiais'), 0.8, w=(7, 'Mesma', 1), label='Mesma margem em vários materiais')
+    c.type(SEL('input[aria-label="Margem para todos"]'), '20', w=(7, 'vinte'), clear=True, label='margem para todos 20')
+    c.hover(BTN('Aplicar em 3 material(is) exibido(s)', within=DLG), 1.0, w=(7, 'Aplicar'), label='Aplicar em 3 material(is) exibido(s) (zoom)')
+    c.click(BTN('Aplicar em 3 material(is) exibido(s)', within=DLG), w=(7, 'esses'), label='Aplicar em 3 material(is) exibido(s)')
+    c.confere('dlg', ['Alumínio latinha', '7,44', '10,68', '8,52'], 'os três alumínios com 20%')
+    c.hover(PD('Alumínio latinha'), 0.8, w=(7, 'mudam'), label='os três alumínios recalculados')
+    c.click(CHAVE, w=(8, 'desligar'), label='desliga a chave (só a configuração)')
+    c.confere('dlg', ['Desligada'], 'resumo: Margem automática Desligada')
+    c.hover(PD('Desligada'), 0.8, w=(8, 'configuração'), label='Margem automática: Desligada')
+    sair_cancelando(c, (8, 'Cancelar', 1))
+    c.fim()
+    return c
+
+
+def cap09():
+    """Resumo e margem fora da regra (semente margem-fora: margem Por material gravada, Alumínio latinha com venda 7,80): Bronze -5 %, plástico PET
+    zerado (Sem preço), Margem típica, Fora da margem, clique no selo; Cancelar."""
+    c = Cap(9, setup_estoque())
+    abre_editar_precos(c, (1, 'Editar'), 'abre Editar Preços (margem já ligada)')
+    c.confere('dlg', ['Por material', 'Fora da margem'], 'margem ligada e Fora da margem no resumo')
+    c.hover(CHAVE, 0.6, w=(1, 'cartão'), label='cartão Margem automática ligado')
+    c.hover(ASIDE, 0.8, w=(1, 'resumo'), label='Resumo da tabela')
+    c.hover(PD('Venda abaixo da compra'), 0.6, w=(2, 'Venda', 0), label='Resumo: Venda abaixo da compra')
+    c.type(CAMPOS('Bronze', 1), '-5', w=(2, 'menos', 1), clear=True, label='Bronze margem -5')
+    c.press('Tab', label='sai da célula')
+    c.confere_campos(['29,00', '-5', '27,55'], 'Bronze 29,00, -5% e 27,55', escopo=LINHA('Bronze')['selector'])
+    c.hover(PD('Venda abaixo da compra'), 1.2, w=(2, 'avisa'), label='Resumo: Venda abaixo da compra 1 (zoom)')
+    c.type(CAMPOS('Plástico PET', 0), '0', w=(3, 'Zerando'), clear=True, label='Plástico PET compra 0')
+    c.type(CAMPOS('Plástico PET', 2), '0', clear=True, label='Plástico PET venda 0')
+    c.press('Tab', label='sai da célula')
+    c.confere('dlg', ['Sem preço'], 'resumo: Sem preço')
+    c.hover(PD('Sem preço'), 0.8, w=(3, 'Sem', 0), label='Resumo: Sem preço 1')
+    c.click(SEL(f"{DLG} aside button[title='Filtrar a grade por este item']:has-text('Sem preço')"), w=(3, 'clicando'), label='clique em Sem preço: a lista mostra só ele')
+    c.confere('dlg', ['Plástico PET'], 'lista só com o Plástico PET')
+    c.click(SEL(f"{DLG} [role=group][aria-label='Filtros rápidos'] button:has-text('Todos')"), w=(4, 'Margem', 0), label='filtro Todos')
+    c.hover(SEL(f"{DLG} aside div[title^='Metade']"), 1.0, w=(4, 'meio'), label='Margem típica (zoom)')
+    c.hover(SEL(f"{DLG} aside button[title='Filtrar a grade por este item']:has-text('Fora da margem')"), 0.8, w=(5, 'Fora'), label='Resumo: Fora da margem 1')
+    c.click(SEL(f"{DLG} aside button[title='Filtrar a grade por este item']:has-text('Fora da margem')"), w=(5, 'Esse'), label='clique em Fora da margem')
+    c.confere('dlg', ['Alumínio latinha', 'fora da margem'], 'lista só com o Alumínio latinha fora da margem')
+    c.hover(CAMPOS('Alumínio latinha', 2), 1.0, w=(6, 'sete', 0), label='Alumínio latinha: venda 7,80 (zoom)')
+    selo = SEL(f"{DLG} tbody tr:has-text('Alumínio latinha') button:text-is('fora da margem')")
+    c.hover(selo, 0.5, w=(6, 'selo'), label='selo fora da margem')
+    c.click(selo, w=(6, 'sistema'), label='clique no selo: recalcula a venda pela compra')
+    c.confere_campos(['6,20', '7,40'], 'Alumínio latinha volta a 6,20 e 7,40', escopo=LINHA('Alumínio latinha')['selector'])
+    sair_cancelando(c, (6, 'cancelo'))
+    c.fim()
+    return c
+
+
+def cap10():
+    """A margem no cadastro do material (semente margem-material): Editar do radiador, linha Margem automática, calculadora (20 % > venda 25,20), compra 22
+    > venda 26,40, Tirar a margem deste material (só mostrado), Cancelar."""
+    c = Cap(10, setup_estoque(busca='radiador'))
+    abre_acoes(c, 'Radiador de cobre', 'Editar', (1, 'Abro'), 'menu da linha do radiador', w_item=(1, 'Editar'))
+    c.waitfor(text='Editar Material', timeout=10)
+    c.ev(js_rola_ate('Valores e estoque', y=150, escopo=DLG), w=(1, 'Como', None, 0.6), label='desce até Valores e estoque')
+    c.confere_campos(['21,00', '24,50'], 'P. Compra 21,00 e P. Venda 24,50')
+    c.hover(SEL(f"{DLG} p:has-text('Margem automática de')"), 1.4, w=(1, 'avisa'), label='linha Margem automática de ...: a venda acompanha a compra (zoom)')
+    CALC = SEL('button[aria-label="Calcular a venda pela margem"]')
+    c.click(CALC, w=(2, 'calculadora', 0), label='calculadora ao lado do P. Venda')
+    c.waitfor(text='Calcular venda pela margem', timeout=6)
+    c.type(SEL(f"{POP} input"), '20', w=(2, 'Ponho'), clear=True, label='margem 20')
+    c.confere('body', ['Venda R$ 25,20'], 'a conta: compra 21,00 > venda 25,20')
+    c.hover(PD('Compra R$', within=POP) if False else SEL(f"{POP} p:has-text('Compra R$')"), 1.4, w=(2, 'conta'), label='a conta: Compra R$ 21,00 > Venda R$ 25,20 (zoom)')
+    c.click(BTN('Aplicar', within=POP), w=(2, 'Aplicar'), label='Aplicar')
+    c.waitfor(gone={'selector': POP}, timeout=6)
+    c.confere_campos(['25,20'], 'P. Venda 25,20')
+    c.type(CAMPO('purchase_price'), '22', w=(3, 'Mudo'), clear=True, label='P. Compra 22')
+    c.press('Tab', label='sai do campo')
+    c.confere_campos(['22', '26,40'], 'P. Compra 22 e P. Venda 26,40')
+    c.hover(CAMPO('sale_price'), 1.2, w=(3, 'vinte', 1), label='P. Venda 26,40 (zoom)')
+    c.click(CALC, w=(4, 'Na'), label='abre a calculadora de novo')
+    c.waitfor(text='Tirar a margem deste material', timeout=6)
+    c.hover(BTN('Tirar a margem deste material', within=POP), 1.0, w=(4, 'Tirar'), label='Tirar a margem deste material')
+    c.press('Escape', w=(5, 'Uma', None, 0.2), label='fecha a calculadora')
+    c.waitfor(gone={'selector': POP}, timeout=6)
+    c.click(BTN('Cancelar', within=DLG), w=(5, 'Cancelar'), noScroll=True, label='Cancelar (nada é salvo)')
+    c.waitfor(gone={'role': 'dialog'}, timeout=8)
+    c.fim()
+    return c
+
+
+def cap11():
     """Várias tabelas de preço: Nova Tabela vinculada +4 %, Cobre mel 44,20; Depósito Irmãos Siqueira > Editar > Tabela de Preços Padrão;
     (ilustração da ordem, L8) compra só para ver o preço: tabela no cobre mel, preço personalizado no bronze."""
     st = setup_estoque(aquecer=(('/clientes-fornecedores', 'Clientes e Fornecedores'), ('/caixa', 'Nova Compra')))
-    c = Cap(7, st)
+    c = Cap(11, st)
     c.hover(P('Tabelas de Preço'), 0.6, w=(1, 'tabela'), label='coluna Tabelas de Preço')
     c.hover(BTN('Principal'), 1.0, w=(1, 'principal.'), label='só a Principal')
     c.click(BTN('Nova Tabela'), w=(2, 'Nova'), label='Nova Tabela')
@@ -764,54 +976,68 @@ def cap07():
     c.confere('row:Cobre mel', ['Cobre mel', 'R$ 44,20', 'R$ 47,90'], 'Cobre mel R$ 44,20 na Tabela Depósitos, venda R$ 47,90')
     c.hover(CELULA('Cobre mel', 7), 1.4, w=(5, 'quarenta'), label='Cobre mel Preço de Compra R$ 44,20 (zoom: linha Cobre mel)')
     c.hover(CELULA('Cobre mel', 8), 1.0, w=(5, 'venda,'), label='Preço de Venda R$ 47,90 (o da principal)')
+    # L6 e L7 (novas): Editar Preços > Tabela Depósitos na lista da esquerda > cadeado do fio de cobre; sem o cartão da margem (vinculada)
+    c.ev(js_rola_topo(), w=(6, 'Dá', 0, 1.6), label='volta ao topo (a barra com o Editar Preços)')
+    c.click(BTN('Editar Preços'), w=(6, 'Preços.'), label='Editar Preços')
+    c.waitfor(text='Editar Tabelas de Preço', timeout=10)
+    c.click(SEL(f"{DLG} aside[aria-label='Tabelas de preços disponíveis'] button:has-text('Tabela Depósitos')"), w=(6, 'Escolho'), label='Tabela Depósitos na lista da esquerda')
+    c.waitfor(text='Tabela vinculada', timeout=8)
+    c.hover(SEL(f"{DLG} thead th:has-text('Variação')"), 0.5, w=(6, 'Variação', 0), label='coluna Variação')
+    c.hover(SEL(f"{DLG} tbody tr:has-text('Fio de cobre') button[title^='Variação padrão']"), 0.5, w=(6, 'cadeado'), label='cadeado fechado (Variação padrão)')
+    c.click(SEL(f"{DLG} tbody tr:has-text('Fio de cobre') button[title^='Variação padrão']"), w=(6, 'Abrindo'), label='abre o cadeado do fio de cobre encapado')
+    c.type(SEL(f"{DLG} tbody tr:has-text('Fio de cobre') td:nth-child(4) input"), '2', w=(6, 'porcentagem'), clear=True, label='variação própria do fio de cobre: 2')
+    c.hover(SEL(f"{DLG} tbody tr:has-text('Fio de cobre')"), 1.0, w=(6, 'regra.'), label='só o fio de cobre mudou (zoom na linha)')
+    c.hover(SEL(f"{DLG} aside[aria-label='Resumo e regras da tabela']"), 1.0, w=(7, 'Repara'), label='painel da direita: sem o cartão Margem automática')
+    c.click(BTN('Cancelar', within=DLG), w=(7, 'Na'), noScroll=True, label='Cancelar (nada é salvo)')
+    c.waitfor(gone={'role': 'dialog'}, timeout=8)
     # L6: menu lateral recolhido (abre ao passar o mouse) > Clientes e Fornecedores > Fornecedores > o depósito (na lista, sem busca) > Editar
-    c.hover(MENU('/clientes-fornecedores'), 0.6, w=(6, 'ligar'), noScroll=True, label='menu lateral (abre ao passar o mouse)')
+    c.hover(MENU('/clientes-fornecedores'), 0.6, w=(8, 'ligar'), noScroll=True, label='menu lateral (abre ao passar o mouse)')
     # L6: menu, aba, depósito e Editar em 5,5 s de fala; cada gesto na sua palavra, sem pausa no meio (prever de 11/11: 1,3 s de atraso)
-    c.click(MENU('/clientes-fornecedores'), w=(6, 'Em', 0, 1.0), noScroll=True, label='Clientes e Fornecedores')
+    c.click(MENU('/clientes-fornecedores'), w=(8, 'Em', 0, 1.0), noScroll=True, label='Clientes e Fornecedores')
     c.rolar(0, ponto=(760, 420), duration=0.3, after=0, label='cursor sai do menu (ele recolhe)')
     c.waitfor(target=BTNX('Fornecedores'), timeout=12)
-    c.click(BTNX('Fornecedores'), w=(6, 'Fornecedores,'), label='aba Fornecedores')
+    c.click(BTNX('Fornecedores'), w=(8, 'Fornecedores,'), label='aba Fornecedores')
     # a aba trocou mesmo? (o depósito também é cliente: no ensaio de 11/11 a aba ficou em Clientes e o robô abriu o depósito-cliente)
     c.pause(0.3)
     c.click(BTNX('Fornecedores'), label='aba Fornecedores de novo (só se não trocou)', unless=BTN('Novo Fornecedor'))
     c.waitfor(target=BTN('Novo Fornecedor'), timeout=30)
     c.waitfor(target=P('Depósito Irmãos Siqueira'), timeout=8)
-    c.click(P('Depósito Irmãos Siqueira'), w=(6, 'Depósito'), label='Depósito Irmãos Siqueira')
+    c.click(P('Depósito Irmãos Siqueira'), w=(8, 'Depósito'), label='Depósito Irmãos Siqueira')
     c.waitfor(text='1 preço personalizado', timeout=10)
-    c.click(BTN('Editar', within='main'), w=(6, 'clico'), label='Editar')
+    c.click(BTN('Editar', within='main'), w=(8, 'clico'), label='Editar')
     c.waitfor(text='Editar Fornecedor', timeout=10)
-    c.ev(js_rola_ate('Tabela de Preços Padrão', y=380, escopo=DLG), w=(7, 'Em', None, 0.6), label='desce até Tabela de Preços Padrão')
-    c.click(SEL(f"{DLG} div.space-y-2:has(> label:has-text('Tabela de Preços Padrão')) button[role=combobox]"), w=(7, 'Padrão,'), label='Tabela de Preços Padrão (abre)')
-    c.click(OPT('Tabela Depósitos'), w=(7, 'Depósitos'), label='Tabela Depósitos (zoom)')
-    c.click(BTN('Salvar', within=DLG), w=(7, 'salvo.'), noScroll=True, label='Salvar')
+    c.ev(js_rola_ate('Tabela de Preços Padrão', y=380, escopo=DLG), w=(9, 'Em', None, 0.6), label='desce até Tabela de Preços Padrão')
+    c.click(SEL(f"{DLG} div.space-y-2:has(> label:has-text('Tabela de Preços Padrão')) button[role=combobox]"), w=(9, 'Padrão,'), label='Tabela de Preços Padrão (abre)')
+    c.click(OPT('Tabela Depósitos'), w=(9, 'Depósitos'), label='Tabela Depósitos (zoom)')
+    c.click(BTN('Salvar', within=DLG), w=(9, 'salvo.'), noScroll=True, label='Salvar')
     c.waitfor(text='Fornecedor atualizado!', timeout=10)
     # L8: ilustração da escada de prioridade; por baixo dela o robô vai ao Caixa sem cursor
-    c.ev("(()=>{history.pushState({},'','/caixa');window.dispatchEvent(new PopStateEvent('popstate'));return location.pathname})()", w=(8, 'Uma'), label='vai ao Caixa (por baixo da ilustração)')
+    c.ev("(()=>{history.pushState({},'','/caixa');window.dispatchEvent(new PopStateEvent('popstate'));return location.pathname})()", w=(10, 'Uma'), label='vai ao Caixa (por baixo da ilustração)')
     c.waitfor(text='Nova Compra', timeout=15)
-    c.click(SEL("main button:has-text('Nova Compra')"), w=(9, 'abro'), label='Nova Compra')
+    c.click(SEL("main button:has-text('Nova Compra')"), w=(11, 'abro'), label='Nova Compra')
     c.waitfor(target=SEL('#supplier-desktop-top'), timeout=15)
-    c.click(SEL('#supplier-desktop-top'), w=(9, 'Escolho', None, 2.6), label='Selecionar Fornecedor')  # a busca e o clique vêm em seguida
+    c.click(SEL('#supplier-desktop-top'), w=(11, 'Escolho', None, 2.6), label='Selecionar Fornecedor')  # a busca e o clique vêm em seguida
     c.type({'placeholder': 'Buscar por nome, apelido, CPF/CNPJ ou telefone...'}, 'Depósito', clicar=False, cps=30, label='busca Depósito')
-    c.click(PD('Depósito Irmãos Siqueira'), w=(9, 'depósito,'), label='Depósito Irmãos Siqueira')
+    c.click(PD('Depósito Irmãos Siqueira'), w=(11, 'depósito,'), label='Depósito Irmãos Siqueira')
     c.confere('main', ['Tabela Depósitos'], 'Tabela de Preços passou para Tabela Depósitos')
-    c.registra(SEL("main button[role=combobox]:has-text('Tabela Depósitos')"), w=(9, 'tabela'), label='Tabela de Preços: Tabela Depósitos (zoom, sem o mouse)')
-    c.click({'placeholder': 'Escreva o nome ou código do material'}, w=(9, 'selecionada.'), label='campo do material')
-    c.type({'placeholder': 'Escreva o nome ou código do material'}, 'cobre', w=(10, 'No', None, 0.6), clicar=False, cps=30, label='material: cobre')
-    c.click(OPT('Cobre mel', exact=False), w=(10, 'mel,'), label='Cobre mel')
+    c.registra(SEL("main button[role=combobox]:has-text('Tabela Depósitos')"), w=(11, 'tabela'), label='Tabela de Preços: Tabela Depósitos (zoom, sem o mouse)')
+    c.click({'placeholder': 'Escreva o nome ou código do material'}, w=(11, 'selecionada.'), label='campo do material')
+    c.type({'placeholder': 'Escreva o nome ou código do material'}, 'cobre', w=(12, 'No', None, 0.6), clicar=False, cps=30, label='material: cobre')
+    c.click(OPT('Cobre mel', exact=False), w=(12, 'mel,'), label='Cobre mel')
     c.confere('body', ['Preço da tabela aplicado para Cobre mel'], 'aviso Preço da tabela aplicado')
-    c.registra(VALOR_KG, w=(10, 'quarenta'), label='Valor/kg 44,20 (zoom)')
+    c.registra(VALOR_KG, w=(12, 'quarenta'), label='Valor/kg 44,20 (zoom)')
     c.confere_campos(['44,2'], 'Valor/kg 44,20', escopo='main')
     # L11: campo, troca e Bronze não cabem entre "vinte." e "bronze,": o campo abre no "quatro" e o Bronze sai no "depósito" (o 30,50 e o
     # aviso aparecem no "personalizado")
-    c.click({'placeholder': 'Escreva o nome ou código do material'}, w=(10, 'quatro', None, 0.0), label='campo do material de novo')
-    c.type({'placeholder': 'Escreva o nome ou código do material'}, 'bronze', w=(11, 'Já', None, 0.65), clicar=False, clear=True, cps=30, label='troca para bronze')
-    c.click(OPT('Bronze', exact=False), w=(11, 'depósito'), label='Bronze')
+    c.click({'placeholder': 'Escreva o nome ou código do material'}, w=(12, 'quatro', None, 0.0), label='campo do material de novo')
+    c.type({'placeholder': 'Escreva o nome ou código do material'}, 'bronze', w=(13, 'Já', 0, 0.65), clicar=False, clear=True, cps=30, label='troca para bronze')
+    c.click(OPT('Bronze', exact=False), w=(13, 'depósito'), label='Bronze')
     # o aviso vive 2 s: o cursor vai direto a ele, por coordenada (sem esperar a página), e fica em cima (o sonner pausa) até "aplicado."
     # noScroll SEMPRE em aviso: ele fica abaixo da faixa útil do robô (96..730 px) e, sem isso, o hover rola a página e tira o cursor
     # de cima do aviso, que some (era a causa das falhas do aviso no cap06, cap07 e cap10)
-    ini = round(c.W(11, 'depósito') + 0.9, 2)
+    ini = round(c.W(13, 'depósito') + 0.9, 2)
     c.rolar(0, ponto=(990, 748), duration=0.3, after=0, label='cursor no lugar do aviso (embaixo à direita)')
-    c.hover({'text': 'Preço especial aplicado para Bronze'}, round(c.W(11, 'aplicado.') + 0.6 - ini - 0.55, 2), timeout=6, noScroll=True,
+    c.hover({'text': 'Preço especial aplicado para Bronze'}, round(c.W(13, 'aplicado.') + 0.6 - ini - 0.55, 2), timeout=6, noScroll=True,
             label='aviso Preço especial aplicado (o mouse segura o aviso) (zoom: Valor/kg 30,50 com o aviso)')
     c.confere('body', ['Preço especial aplicado para Bronze'], 'aviso Preço especial aplicado para Bronze')
     c.confere_campos(['30,5'], 'Valor/kg 30,50', escopo='main')
@@ -819,9 +1045,58 @@ def cap07():
     return c
 
 
-def cap08():
+def cap12():
+    """Duplicar, fixar e trocar a principal (menu "..." da tabela): Configurações (só mostra), Duplicar tabela, Excluir a cópia, Fixar, Remover minha tabela
+    fixada, Definir como principal da empresa (só mostra e cancela). O mundo termina igual ao da entrada (semente apos-cap07)."""
+    c = Cap(12, setup_estoque())
+    TAB = lambda n: SEL(f"main button:has-text('{n}')")
+    TRES = lambda n: SEL(f"main button:has-text('{n}') span:has(svg[class*='lucide-ellipsis'], svg[class*='lucide-more-horizontal'])")
+
+    def menu(nome, w, label):
+        c.hover(TAB(nome), 0.2, w=w, label=f'passa o mouse na tabela {nome}')
+        return c.click(TRES(nome), label=label)
+
+    c.hover(TAB('Tabela Depósitos'), 0.5, w=(1, 'menu'), label='Tabela Depósitos (o mouse faz os três pontinhos aparecerem)')
+    c.click(TRES('Tabela Depósitos'), w=(1, 'pontinhos'), label='três pontinhos da Tabela Depósitos')
+    c.waitfor(target=ITEM('Configurações'), timeout=6)
+    c.hover(ITEM('Excluir'), 0.8, label='o menu inteiro: Configurações, Duplicar, Fixar, Definir como principal, Excluir')
+    c.click(ITEM('Configurações'), w=(2, 'Configurações'), label='Configurações')
+    c.waitfor(text='Editar Tabela de Preços', timeout=8)
+    c.hover(PD('Editar Tabela de Preços'), 0.8, w=(2, 'variação'), label='Editar Tabela de Preços: nome e variação (zoom)')
+    c.click(BTN('Cancelar', within=DLG), w=(2, 'muda'), label='Cancelar')
+    c.waitfor(gone={'role': 'dialog'}, timeout=6)
+    c.click(TRES('Tabela Depósitos'), w=(3, 'Duplicar', 0), label='três pontinhos')
+    c.click(ITEM('Duplicar tabela'), w=(3, 'cria'), label='Duplicar tabela')
+    c.waitfor(text='duplicada com sucesso', timeout=10)
+    c.waitfor(target=TAB('Tabela Depósitos (cópia)'), timeout=8)
+    c.hover(TAB('Tabela Depósitos (cópia)'), 1.4, w=(3, 'corrente'), label='Tabela Depósitos (cópia): sem a corrente (zoom na tabela nova)')
+    c.click(TRES('Tabela Depósitos (cópia)'), w=(4, 'Como'), label='três pontinhos da cópia')
+    c.click(ITEM('Excluir'), w=(4, 'excluo'), label='Excluir')
+    c.waitfor(text='Excluir Tabela de Preços', timeout=8)
+    c.hover({'text': 'Esta ação não pode ser desfeita', 'within': ALERTA}, 1.0, w=(4, 'volta'), label='Excluir Tabela de Preços: não pode ser desfeita (zoom)')
+    c.click(BTN('Excluir', within=ALERTA), w=(4, 'principal'), label='Excluir')
+    c.waitfor(text='Tabela de preço excluída!', timeout=8)
+    c.waitfor(gone=TAB('Tabela Depósitos (cópia)'), timeout=8)
+    c.click(TRES('Tabela Depósitos'), w=(5, 'Agora'), label='três pontinhos da Tabela Depósitos')
+    c.click(ITEM('Fixar para meus pedidos e tickets'), w=(5, 'Fixar'), label='Fixar para meus pedidos e tickets')
+    c.waitfor(text='Tabela fixada para seus novos pedidos e tickets', timeout=8)
+    c.hover(SEL("main button:has-text('Tabela Depósitos') svg[aria-label='Fixada para meus pedidos e tickets']"), 1.2, w=(5, 'usuário'), label='o alfinete ao lado do nome (zoom)')
+    c.click(TRES('Tabela Depósitos'), w=(7, 'Rafael'), label='três pontinhos da Tabela Depósitos')
+    c.click(ITEM('Remover minha tabela fixada'), w=(7, 'removo'), label='Remover minha tabela fixada')
+    c.waitfor(text='Tabela pessoal removida', timeout=8)
+    c.click(TRES('Tabela Depósitos'), w=(8, 'Por'), label='três pontinhos da Tabela Depósitos')
+    c.click(ITEM('Definir como principal da empresa'), w=(8, 'Definir'), label='Definir como principal da empresa')
+    c.waitfor(target={'role': 'alertdialog'}, timeout=8)
+    c.hover({'text': 'Os preços desta tabela virarão a base da empresa', 'within': ALERTA}, 1.4, w=(8, 'Os'), label='Definir “Tabela Depósitos” como principal? (zoom no texto)')
+    c.click(BTN('Cancelar', within=ALERTA), w=(8, 'cancelo'), label='Cancelar')
+    c.waitfor(gone={'role': 'alertdialog'}, timeout=6)
+    c.fim()
+    return c
+
+
+def cap13():
     """Movimentar, transferir e zerar: saída de 2 kg do radiador, (ilustração L4) transferência de 8 kg para o Ferro misto, Zerar só mostrado."""
-    c = Cap(8, setup_estoque())
+    c = Cap(13, setup_estoque())
     c.hover(BTN('Movimentar estoque'), 1.2, w=(1, 'ajuste'), label='Movimentar estoque')
     c.click(BTN('Movimentar estoque'), w=(2, 'Em', None, 0.9), label='Movimentar estoque')
     c.waitfor(text='Registre uma entrada ou saída manual', timeout=8)
@@ -862,10 +1137,10 @@ def cap08():
     return c
 
 
-def cap09():
+def cap14():
     """Exportar: o menu; Estoque (PDF) com as colunas, Exportar (aba nova: o PDF fica no actions.json); Tabela Depósitos > Tabela de
     Preços (PDF) > Exportar PDF > A4."""
-    c = Cap(9, setup_estoque(extra=[{'do': 'eval', 'js': JS_PDF_GANCHO}]))
+    c = Cap(14, setup_estoque(extra=[{'do': 'eval', 'js': JS_PDF_GANCHO}]))
     c.click(BTNX('Exportar'), w=(1, 'Exportar.'), label='Exportar (abre o menu)')
     c.waitfor(target=ITEM('Estoque (PDF)'), timeout=6)
     c.hover(ITEM('Estoque (PDF)'), 0.5, w=(1, 'PDF', 0), label='Estoque (PDF)')
@@ -894,9 +1169,9 @@ def cap09():
     return c
 
 
-def cap10():
+def cap15():
     """Excluir um material: (ilustração L1; no fim dela o Excluir abre sem cursor) aviso de 110 kg, Sim, Excluir; o aviso com Desfazer; Desfazer."""
-    c = Cap(10, setup_estoque(busca='radiador'))
+    c = Cap(15, setup_estoque(busca='radiador'))
     c.ev(js_menu_item('Radiador de cobre', 'Excluir'), w=(1, 'continuam', None, 0.3), label='abre o Excluir do radiador (fim da ilustração, sem cursor)')
     c.waitfor(text='Confirmar Exclusão', timeout=8)
     c.confere('dlg', ['Radiador de cobre', 'Código: 70', 'Atenção: Este material possui 110 Kg em estoque.'], 'aviso 110 Kg em estoque')
@@ -918,27 +1193,28 @@ def cap10():
     return c
 
 
-def cap11():
+def cap16():
     """Recapitulando: passa pelo estado final (radiador 70 no grupo Radiadores, Tabela Depósitos +4 %); a edição monta os trechos dos
     capítulos por cima."""
-    c = Cap(11, setup_estoque())
+    c = Cap(16, setup_estoque())
     c.type(BUSCA, 'radiador', w=(1, 'cadastrou'), cps=24, label='busca radiador')
     c.hover(CELULA('Radiador de cobre', 7), 1.0, w=(1, 'preços'), label='preços do radiador')
     c.hover(CELULA('Radiador de cobre', 2), 1.0, w=(1, 'código', 0), label='código 70')
     c.hover(CELULA('Radiador de cobre', 3), 1.2, w=(2, 'grupo'), label='grupo Radiadores')
     c.ev(js_valor('main input[placeholder="Buscar material por código ou nome..."]', ''), w=(3, 'Reajustou', None, 0.3), label='limpa a busca (sem cursor)')
-    c.click(BTNX('Tabela Depósitos'), w=(3, 'Tabela', 0), label='Tabela Depósitos +4%')
+    c.hover(BTN('Editar Preços'), 0.6, w=(3, 'Editar'), label='Editar Preços (a margem automática)')
+    c.click(BTNX('Tabela Depósitos'), w=(4, 'Tabela', 0), label='Tabela Depósitos +4%')
     c.waitfor(text='Exibindo preços da tabela: Tabela Depósitos', timeout=8)
-    c.hover(P('Exibindo preços da tabela: Tabela Depósitos'), 1.2, w=(3, 'Siqueira'), label='Exibindo preços da tabela: Tabela Depósitos')
-    c.click(BTN('Principal'), w=(4, 'Ajustou'), label='volta à Principal')
-    c.hover(BTN('Movimentar estoque'), 0.6, w=(4, 'transferiu'), label='Movimentar estoque')
-    c.hover(BTNX('Exportar'), 0.6, w=(4, 'exportou'), label='Exportar')
-    c.hover(P('Lista de Materiais'), 0.8, w=(4, 'excluir'), label='a lista')
+    c.hover(P('Exibindo preços da tabela: Tabela Depósitos'), 1.2, w=(4, 'Siqueira'), label='Exibindo preços da tabela: Tabela Depósitos')
+    c.click(BTN('Principal'), w=(5, 'Ajustou'), label='volta à Principal')
+    c.hover(BTN('Movimentar estoque'), 0.6, w=(5, 'transferiu'), label='Movimentar estoque')
+    c.hover(BTNX('Exportar'), 0.6, w=(5, 'exportou'), label='Exportar')
+    c.hover(P('Lista de Materiais'), 0.8, w=(5, 'excluir'), label='a lista')
     c.fim()
     return c
 
 
-CAPS = {f'{n:02d}': globals()[f'cap{n:02d}'] for n in range(12)}
+CAPS = {f'{n:02d}': globals()[f'cap{n:02d}'] for n in range(17)}
 CAPS['01b'] = cap01b
 
 if __name__ == '__main__':

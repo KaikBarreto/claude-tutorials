@@ -1,13 +1,13 @@
 {
  "name": "t04-cap06",
- "title": "T4 · Cap. 6 · Tabela de preço do parceiro (narração ESTIMADA 54,4 s; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "title": "T4 · Cap. 6 · Os avisos da consulta (narração ESTIMADA 73,4 s; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
  "seed": "t04-cap06",
  "pace": 0.5,
  "cps": 40,
  "tail": 1.5,
  "start": {
-  "x": 700,
-  "y": 400
+  "x": 900,
+  "y": 300
  },
  "anonymous": true,
  "storage": {
@@ -20,7 +20,7 @@
  },
  "seedExtra": [
   "t04/inicio",
-  "t04/apos-cap05"
+  "t04/apos-cap04"
  ],
  "prewarm": [
   "/login"
@@ -133,152 +133,231 @@
   {
    "do": "click",
    "target": {
-    "selector": "main aside button:has-text('Depósito Irmãos Siqueira')"
+    "role": "button",
+    "name": "Novo Fornecedor",
+    "exact": true,
+    "within": "main"
    },
-   "at": 7.92,
-   "label": "clica no Depósito Irmãos Siqueira"
+   "at": 3.02,
+   "label": "Novo Fornecedor"
   },
   {
    "do": "waitFor",
-   "target": {
-    "selector": "main section[aria-label='Detalhes de Depósito Irmãos Siqueira']"
-   },
+   "text": "Identificação e contato",
    "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] #name"
+   },
+   "at": 4.2,
+   "label": "Nome Oficina do Tonho (clique no campo)"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const e=document.activeElement;if(!e||!/^(INPUT|TEXTAREA)$/.test(e.tagName))return 'SEM ALVO (nada em foco)';document.execCommand('insertText',false,\"Oficina do Tonho\");return e.value})()",
+   "at": 5.34,
+   "label": "Nome Oficina do Tonho (colado)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Dados Fiscais",
+    "within": "[role=dialog]"
+   },
+   "at": 8.07,
+   "label": "aba Dados Fiscais"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Pessoa Jurídica",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 8.22,
+   "label": "Pessoa Jurídica"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] #cpf_cnpj"
+   },
+   "at": 9.06,
+   "label": "CNPJ 52.917.384/0001-05 (clique no campo)"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const e=document.activeElement;if(!e||!/^(INPUT|TEXTAREA)$/.test(e.tagName))return 'SEM ALVO (nada em foco)';document.execCommand('insertText',false,\"52917384000105\");return e.value})()",
+   "at": 9.36,
+   "label": "CNPJ 52.917.384/0001-05 (colado)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[aria-label='Buscar dados pelo CNPJ']"
+   },
+   "at": 9.97,
+   "label": "clica na lupa"
+  },
+  {
+   "do": "waitFor",
+   "text": "Dados preenchidos — confira antes de salvar",
+   "timeout": 12
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Atenção: a Receita informa que este CNPJ está Baixada.\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog],[role=alertdialog]\")];const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere o alerta vermelho de CNPJ baixado"
   },
   {
    "do": "mark",
    "name": "L2",
-   "at": 9.95
+   "at": 10.48
   },
   {
-   "do": "click",
+   "do": "type",
    "target": {
-    "role": "button",
-    "name": "Editar",
-    "exact": true,
-    "within": "main section[aria-label='Detalhes de Depósito Irmãos Siqueira']"
+    "text": "Atenção: a Receita informa que este CNPJ está",
+    "exact": false,
+    "within": "[role=dialog]"
    },
-   "at": 10.47,
-   "label": "Editar"
+   "text": "",
+   "noClick": true,
+   "optional": true,
+   "timeout": 4,
+   "at": 10.88,
+   "label": "zoom: o alerta vermelho Atenção: a Receita informa que este CNPJ está Baixada (L2-L3)"
   },
   {
-   "do": "waitFor",
-   "text": "Editar Fornecedor",
-   "timeout": 10
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.textContent.trim()===\"Tabela de Pre\\u00e7os Padr\\u00e3o\"&&e.offsetParent).sort((a,b)=>a.textContent.length-b.textContent.length||a.children.length-b.children.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-360);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "label": "desce a janela até a Tabela de Preços Padrão"
-  },
-  {
-   "do": "click",
+   "do": "hover",
    "target": {
-    "selector": "[role=dialog] div:has(> label:has-text('Tabela de Preços Padrão')) button"
+    "text": "Atenção: a Receita informa que este CNPJ está",
+    "exact": false,
+    "within": "[role=dialog]"
    },
-   "at": 14.57,
-   "label": "Tabela de Preços Padrão: Principal (abre a lista)"
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "option",
-    "name": "Tabela Depósitos"
-   },
-   "at": 15.94,
-   "label": "Tabela Depósitos"
+   "seconds": 2.0,
+   "at": 11.87,
+   "label": "o alerta vermelho: CNPJ Baixada",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 17.81
+   "at": 18.12
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 26.75
   },
   {
    "do": "eval",
-   "js": "(async()=>{const d=document.querySelector('[role=dialog]');if(!d)return 'sem janela';const c=[...d.querySelectorAll('*')].find(e=>{const s=getComputedStyle(e);return /(auto|scroll)/.test(s.overflowY)&&e.scrollHeight>e.clientHeight+4});if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop,dy=-y0;if(y0<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'topo:'+Math.round(c.scrollTop)})()",
-   "at": 17.81,
-   "label": "sobe a janela até o aviso azul"
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.textContent.trim()===\"Inscri\\u00e7\\u00e3o Estadual\"&&e.offsetParent).sort((a,b)=>a.textContent.length-b.textContent.length||a.children.length-b.children.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-230);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/800),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 26.75,
+   "label": "desce até a inscrição estadual"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"A Sintegra não tem inscrição estadual ativa para este CNPJ. Se ele for isento, marque Isento de Inscrição.\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog],[role=alertdialog]\")];const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere o aviso: sem inscrição ativa"
   },
   {
    "do": "hover",
    "target": {
-    "text": "Mudanças em nome, CPF/CNPJ, contato, endereço e tabela de preços padrão refletem automaticamente no cadastro de cliente vinculado.",
-    "exact": true,
+    "text": "A Sintegra não tem inscrição estadual ativa",
+    "exact": false,
     "within": "[role=dialog]"
    },
-   "seconds": 2.4,
-   "at": 21.1,
-   "label": "zoom: aviso azul do cadastro vinculado",
+   "seconds": 2.2,
+   "at": 28.44,
+   "label": "zoom: A Sintegra não tem inscrição estadual ativa (L4)",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
-   "name": "L4",
-   "at": 26.51
+   "name": "L5",
+   "at": 39.77
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.textContent.trim()===\"CNPJ\"&&e.offsetParent).sort((a,b)=>a.textContent.length-b.textContent.length||a.children.length-b.children.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-200);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 39.77,
+   "label": "sobe até o CNPJ"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] #cpf_cnpj"
+   },
+   "at": 42.96,
+   "label": "clica no CNPJ"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const e=document.querySelector('[role=dialog] #cpf_cnpj');if(!e)return 'SEM ALVO';e.focus();e.select();document.execCommand('delete');return 'cnpj apagado: '+JSON.stringify(e.value)})()",
+   "at": 44.02,
+   "label": "apaga o CNPJ"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] #cpf_cnpj"
+   },
+   "text": "46280719000124",
+   "cps": 30,
+   "at": 46.55,
+   "label": "digita o CNPJ da serralheria",
+   "noClick": true
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{for(let i=0;i<10;i++){const el=document.querySelector(\"[role=dialog]\");const t=el?el.innerText:'';if(!t.includes(\"Aten\\u00e7\\u00e3o: a Receita informa que este CNPJ est\\u00e1\"))return 'OK: sumiu '+\"Aten\\u00e7\\u00e3o: a Receita informa que este CNPJ est\\u00e1\";await new Promise(r=>setTimeout(r,300));}return 'DIFERENTE: ainda aparece '+\"Aten\\u00e7\\u00e3o: a Receita informa que este CNPJ est\\u00e1\"})()",
+   "label": "confere o alerta vermelho sumiu"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{for(let i=0;i<10;i++){const el=document.querySelector(\"[role=dialog]\");const t=el?el.innerText:'';if(!t.includes(\"A Sintegra n\\u00e3o tem inscri\\u00e7\\u00e3o estadual ativa\"))return 'OK: sumiu '+\"A Sintegra n\\u00e3o tem inscri\\u00e7\\u00e3o estadual ativa\";await new Promise(r=>setTimeout(r,300));}return 'DIFERENTE: ainda aparece '+\"A Sintegra n\\u00e3o tem inscri\\u00e7\\u00e3o estadual ativa\"})()",
+   "label": "confere o aviso da inscrição sumiu"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Já existe um fornecedor cadastrado como “Serralheria Bem-Te-Vi” com este CPF/CNPJ.\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog],[role=alertdialog]\")];const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere o aviso de CNPJ já cadastrado"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Já existe um fornecedor cadastrado",
+    "exact": false,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.15,
+   "at": 59.38,
+   "label": "Já existe um fornecedor cadastrado com este CPF/CNPJ",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 60.47
   },
   {
    "do": "click",
    "target": {
     "role": "button",
-    "name": "Salvar",
+    "name": "Cancelar",
     "exact": true,
     "within": "[role=dialog]"
    },
-   "at": 26.81,
-   "label": "Salvar"
-  },
-  {
-   "do": "waitFor",
-   "text": "Fornecedor atualizado!",
-   "timeout": 12
-  },
-  {
-   "do": "waitFor",
-   "gone": {
-    "role": "dialog"
-   },
-   "timeout": 8
-  },
-  {
-   "do": "mark",
-   "name": "L5",
-   "at": 35.44
-  },
-  {
-   "do": "mark",
-   "name": "L6",
-   "at": 47.33
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const s=document.querySelector(\"[aria-label='Seções da ficha']\");if(!s)return 'SEM ALVO';const x0=s.scrollLeft,dx=(s.scrollWidth-s.clientWidth)-x0;if(Math.abs(dx)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/500),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;s.scrollLeft=x0+dx*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'faixa:'+Math.round(s.scrollLeft)})()",
-   "at": 47.33,
-   "label": "rola a faixa das abas até Preços"
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "[aria-label='Seções da ficha'] button:has-text('Preços')"
-   },
-   "seconds": 0.24,
-   "at": 50.92,
-   "label": "aba Preços",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "[aria-label='Seções da ficha'] button:has-text('Preços')"
-   },
-   "at": 52.11,
-   "label": "aba Preços da ficha: Preços Personalizados (Compra e Venda)"
-  },
-  {
-   "do": "waitFor",
-   "text": "Preços Personalizados",
-   "timeout": 12
+   "at": 71.78,
+   "label": "Cancelar (nada é salvo)"
   },
   {
    "do": "eval",
@@ -288,7 +367,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 54.37
+   "at": 73.43
   }
  ]
 }

@@ -1,6 +1,6 @@
 {
  "name": "t02-cap02",
- "title": "T2 · Cap. 2 · Criar o usuário (narração ESTIMADA 47,5 s; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "title": "T2 · Cap. 2 · Criar o usuário (narração ESTIMADA 60,5 s; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
  "seed": "t02-cap02",
  "pace": 0.5,
  "cps": 30,
@@ -281,24 +281,27 @@
    "at": 30.12
   },
   {
-   "do": "hover",
+   "do": "upload",
    "target": {
     "role": "button",
     "name": "Selecionar foto",
     "exact": true,
     "within": "[role=dialog]"
    },
-   "seconds": 0.15,
-   "note": "L5 foto,",
-   "at": 31.59,
-   "label": "Foto do Usuário: Selecionar foto (sem clicar)",
-   "optional": true,
-   "timeout": 4
+   "file": "assets/marcos-antunes.jpg",
+   "note": "L5 Escolho",
+   "at": 31.57,
+   "label": "Foto do Usuário: Selecionar foto, marcos-antunes.jpg"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const i=document.querySelector('[role=dialog] img');return i?'OK: a foto aparece na bolinha':'DIFERENTE: sem foto na bolinha'})()",
+   "label": "confere foto na bolinha"
   },
   {
    "do": "mark",
    "name": "L6",
-   "at": 37.0
+   "at": 42.01
   },
   {
    "do": "hover",
@@ -309,8 +312,35 @@
    },
    "seconds": 0.15,
    "note": "L6 Agora,",
-   "at": 43.47,
+   "at": 51.72,
    "label": "coluna Permissões (sem clicar)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "type",
+   "target": {
+    "text": "Escolha primeiro o perfil deste usuário",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "text": "",
+   "noClick": true,
+   "optional": true,
+   "timeout": 4,
+   "note": "L6 Repara",
+   "at": 55.33,
+   "label": "ZOOM aviso Escolha primeiro o perfil deste usuário (frase inteira)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Escolha primeiro o perfil deste usuário",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.15,
+   "label": "aviso Escolha primeiro o perfil deste usuário",
    "optional": true,
    "timeout": 4
   },
@@ -322,7 +352,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 47.46
+   "at": 60.49
   }
  ]
 }

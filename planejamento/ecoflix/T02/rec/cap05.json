@@ -1,6 +1,6 @@
 {
  "name": "t02-cap05",
- "title": "T2 · Cap. 5 · O balanceiro e o escritório (narração ESTIMADA 66,2 s; marcas L1..L8 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "title": "T2 · Cap. 5 · O balanceiro e o escritório (narração ESTIMADA 100,4 s; marcas L1..L10 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
  "seed": "t02-cap05",
  "pace": 0.5,
  "cps": 30,
@@ -131,7 +131,7 @@
   },
   {
    "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Editar Usuário\", \"Operador Padrão\", \"Nova Senha (opcional)\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog],[role=alertdialog]\")];const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Editar Usuário\", \"Operador Padrão\", \"Nova Senha (opcional)\", \"Peso dos pedidos\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog],[role=alertdialog]\")];const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
    "label": "confere Editar Usuário com o Operador Padrão marcado"
   },
   {
@@ -148,9 +148,9 @@
     "within": "[role=dialog]"
    },
    "file": "assets/marcos-antunes.jpg",
-   "note": "L2 foto",
-   "at": 10.78,
-   "label": "Selecionar foto: marcos-antunes.jpg"
+   "note": "L2 escolho",
+   "at": 13.89,
+   "label": "Selecionar foto: marcos-antunes.jpg (troca)"
   },
   {
    "do": "waitFor",
@@ -160,7 +160,7 @@
   {
    "do": "mark",
    "name": "L3",
-   "at": 14.32
+   "at": 17.66
   },
   {
    "do": "click",
@@ -168,7 +168,7 @@
     "selector": "[role=dialog] #initial-screen"
    },
    "note": "L3 Tela",
-   "at": 14.85,
+   "at": 18.19,
    "label": "Tela inicial (Automática)"
   },
   {
@@ -179,19 +179,120 @@
     "exact": true
    },
    "note": "L3 Caixa.",
-   "at": 16.82,
+   "at": 20.16,
    "label": "Tela inicial: Caixa"
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 22.18
+   "at": 25.52
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] p:has-text('Só aparecem telas liberadas acima')"
+   },
+   "seconds": 0.15,
+   "note": "L4 telas",
+   "at": 27.44,
+   "label": "Só aparecem telas liberadas acima. Se a permissão mudar, o sistema escolhe outra",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 34.23
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] label[for='scale-weight-policy']"
+   },
+   "seconds": 0.15,
+   "note": "L5 Embaixo",
+   "at": 34.63,
+   "label": "Peso dos pedidos",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] #scale-weight-policy"
+   },
+   "note": "L5 exceção",
+   "at": 37.49,
+   "label": "abre o Peso dos pedidos (Herdar padrão da empresa)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=listbox]"
+   },
+   "text": "",
+   "noClick": true,
+   "optional": true,
+   "timeout": 4,
+   "note": "L5 obrigar",
+   "at": 38.96,
+   "label": "ZOOM Peso dos pedidos: as três opções"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "option",
+    "name": "Exigir peso da balança"
+   },
+   "seconds": 0.15,
+   "note": "L5 obrigar",
+   "at": 39.26,
+   "label": "Exigir peso da balança",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "option",
+    "name": "Permitir digitação manual"
+   },
+   "seconds": 0.15,
+   "note": "L5 liberar",
+   "at": 42.14,
+   "label": "Permitir digitação manual",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "option",
+    "name": "Herdar padrão da empresa"
+   },
+   "seconds": 0.15,
+   "note": "L5 padrão",
+   "at": 51.33,
+   "label": "Herdar padrão da empresa (marcado)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "note": "L5 empresa #1",
+   "at": 53.39,
+   "label": "fecha sem trocar"
   },
   {
    "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=document.querySelector(\"[role=dialog] input[placeholder=\\\"Buscar tela ou a\\u00e7\\u00e3o...\\\"]\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-150);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 22.98,
-   "label": "desce o corpo da janela"
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Herdar padrão da empresa\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog],[role=alertdialog]\")];const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Peso dos pedidos segue Herdar padrão da empresa"
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 56.37
   },
   {
    "do": "hover",
@@ -199,16 +300,22 @@
     "selector": "[role=dialog] #password"
    },
    "seconds": 0.15,
-   "note": "L4 Nova",
-   "at": 26.83,
+   "note": "L6 Nova",
+   "at": 61.01,
    "label": "Nova Senha (opcional) (sem digitar)",
    "optional": true,
    "timeout": 4
   },
   {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=document.querySelector(\"[role=dialog] input[placeholder=\\\"Buscar tela ou a\\u00e7\\u00e3o...\\\"]\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-150);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 63.07,
+   "label": "desce o corpo da janela"
+  },
+  {
    "do": "mark",
-   "name": "L5",
-   "at": 29.29
+   "name": "L7",
+   "at": 63.47
   },
   {
    "do": "click",
@@ -216,8 +323,8 @@
     "placeholder": "Buscar tela ou ação...",
     "within": "[role=dialog]"
    },
-   "note": "L5 Busco",
-   "at": 29.59,
+   "note": "L7 Busco",
+   "at": 63.77,
    "label": "Buscar tela ou ação..."
   },
   {
@@ -228,8 +335,8 @@
    },
    "text": "lucro",
    "cps": 20,
-   "note": "L5 lucro,",
-   "at": 30.59,
+   "note": "L7 lucro,",
+   "at": 64.77,
    "label": "busca: lucro",
    "noClick": true
   },
@@ -241,8 +348,8 @@
     "exact": true,
     "within": "[role=dialog]"
    },
-   "note": "L5 aparece",
-   "at": 31.48,
+   "note": "L7 aparece",
+   "at": 65.66,
    "label": "Clique para ver 1 ação (Caixa)"
   },
   {
@@ -251,8 +358,8 @@
     "selector": "[role=dialog] div.items-start:has(> [role=switch][aria-label='Ver Projeção de Lucro'])"
    },
    "seconds": 0.15,
-   "note": "L5 Projeção",
-   "at": 32.14,
+   "note": "L7 Projeção",
+   "at": 66.32,
    "label": "aparece o Ver Projeção de Lucro, dentro do Caixa",
    "optional": true,
    "timeout": 4
@@ -264,29 +371,35 @@
     "name": "Ver Projeção de Lucro",
     "exact": true
    },
-   "note": "L5 Desligo.",
-   "at": 34.82,
+   "note": "L7 Desligo.",
+   "at": 69.01,
    "label": "desliga Ver Projeção de Lucro"
   },
   {
-   "do": "eval",
-   "js": "(()=>{const p=document.querySelector('[role=dialog] span.bg-amber-500');const a=[...document.querySelectorAll('[role=dialog] button.bg-primary')].filter(b=>['Acesso Total','Operador Padrão','Somente Visualização'].includes(b.textContent.trim()));return (p&&!a.length?'OK: ':'DIFERENTE: ')+'Personalizado '+!!p+', perfis marcados '+a.length})()",
-   "label": "confere perfil virou Personalizado"
+   "do": "mark",
+   "name": "L8",
+   "at": 69.74
   },
   {
-   "do": "mark",
-   "name": "L6",
-   "at": 35.56
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.textContent.trim()===\"Perfis r\\u00e1pidos\").sort((a,b)=>a.textContent.length-b.textContent.length||a.children.length-b.children.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-230);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 70.74,
+   "label": "sobe até os Perfis rápidos"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const p=document.querySelector('[role=dialog] button.bg-amber-500');const a=[...document.querySelectorAll('[role=dialog] button.bg-primary')].filter(b=>['Acesso Total','Operador Padrão','Somente Visualização'].includes(b.textContent.trim()));return (p&&!a.length?'OK: ':'DIFERENTE: ')+'Personalizado '+!!p+', perfis marcados '+a.length})()",
+   "label": "confere perfil virou Personalizado"
   },
   {
    "do": "hover",
    "target": {
-    "selector": "[role=dialog] span.bg-amber-500"
+    "selector": "[role=dialog] button.bg-amber-500"
    },
    "seconds": 1.2,
-   "note": "L6 Personalizado.",
-   "at": 37.93,
-   "label": "ZOOM Perfis rápidos com o selo Personalizado",
+   "note": "L8 Personalizado.",
+   "at": 72.11,
+   "label": "ZOOM Perfis rápidos: o botão Personalizado marcado",
    "optional": true,
    "timeout": 4
   },
@@ -295,20 +408,20 @@
    "target": {
     "role": "button",
     "name": "Operador Padrão",
-    "exact": true,
+    "exact": false,
     "within": "[role=dialog]"
    },
    "seconds": 0.15,
-   "note": "L6 Operador",
-   "at": 39.83,
+   "note": "L8 Operador",
+   "at": 74.01,
    "label": "Operador Padrão (desmarcado)",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
-   "name": "L7",
-   "at": 42.14
+   "name": "L9",
+   "at": 76.32
   },
   {
    "do": "click",
@@ -318,8 +431,8 @@
     "exact": true,
     "within": "[role=dialog]"
    },
-   "note": "L7 Atualizar.",
-   "at": 42.44,
+   "note": "L9 Atualizar.",
+   "at": 76.62,
    "label": "Atualizar"
   },
   {
@@ -349,16 +462,16 @@
     "within": "main"
    },
    "seconds": 0.15,
-   "note": "L7 continua",
-   "at": 48.99,
+   "note": "L9 continua",
+   "at": 83.17,
    "label": "Marcos na lista: foto e 31 permissões",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
-   "name": "L8",
-   "at": 53.5
+   "name": "L10",
+   "at": 87.68
   },
   {
    "do": "click",
@@ -367,8 +480,8 @@
     "exact": true,
     "within": "main"
    },
-   "note": "L8 escritório.",
-   "at": 54.1,
+   "note": "L10 escritório.",
+   "at": 88.28,
    "label": "clica na Juliana"
   },
   {
@@ -388,8 +501,8 @@
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=[...document.querySelectorAll(\"main *\")].filter(e=>e.textContent.trim()===\"Telas (7)\").sort((a,b)=>a.textContent.length-b.textContent.length||a.children.length-b.children.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-420);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/500),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "note": "L8 escritório.",
-   "at": 55.0,
+   "note": "L10 escritório.",
+   "at": 89.18,
    "label": "o detalhe desce até Telas (7)"
   },
   {
@@ -400,8 +513,8 @@
     "within": "main"
    },
    "seconds": 0.15,
-   "note": "L8 contas,",
-   "at": 56.41,
+   "note": "L10 contas,",
+   "at": 90.58,
    "label": "Contas a Pagar/Receber (as contas)",
    "optional": true,
    "timeout": 4
@@ -414,8 +527,8 @@
     "within": "main"
    },
    "seconds": 0.15,
-   "note": "L8 banco,",
-   "at": 57.31,
+   "note": "L10 banco,",
+   "at": 91.5,
    "label": "Movimentações Bancárias (o banco)",
    "optional": true,
    "timeout": 4
@@ -428,8 +541,8 @@
     "within": "main"
    },
    "seconds": 0.15,
-   "note": "L8 relatório",
-   "at": 58.15,
+   "note": "L10 relatório",
+   "at": 92.33,
    "label": "Relatório Financeiro",
    "optional": true,
    "timeout": 4
@@ -437,8 +550,8 @@
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=[...document.querySelectorAll(\"main *\")].filter(e=>e.textContent.trim()===\"Telas (7)\").sort((a,b)=>a.textContent.length-b.textContent.length||a.children.length-b.children.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-330);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/350),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "note": "L8 relatório",
-   "at": 59.0,
+   "note": "L10 relatório",
+   "at": 93.18,
    "label": "o detalhe desce mais um pouco (Fiscal & Ambiental)"
   },
   {
@@ -449,8 +562,8 @@
     "within": "main"
    },
    "seconds": 0.15,
-   "note": "L8 notas.",
-   "at": 59.29,
+   "note": "L10 notas.",
+   "at": 93.47,
    "label": "Fiscal & Ambiental (as notas); a lista não tem o Caixa",
    "optional": true,
    "timeout": 4
@@ -463,7 +576,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 66.23
+   "at": 100.41
   }
  ]
 }

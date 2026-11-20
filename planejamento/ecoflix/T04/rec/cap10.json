@@ -1,6 +1,6 @@
 {
  "name": "t04-cap10",
- "title": "T4 · Cap. 10 · Lucro estimado (narração ESTIMADA 77,0 s; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "title": "T4 · Cap. 10 · A ficha do parceiro (narração ESTIMADA 46,2 s; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
  "seed": "t04-cap10",
  "pace": 0.5,
  "cps": 40,
@@ -20,7 +20,7 @@
  },
  "seedExtra": [
   "t04/inicio",
-  "t04/apos-cap09"
+  "t04/apos-cap06"
  ],
  "prewarm": [
   "/login"
@@ -116,23 +116,6 @@
    "idle": true
   },
   {
-   "do": "click",
-   "target": {
-    "selector": "main aside button:has-text('Cooperativa Recomeço')"
-   }
-  },
-  {
-   "do": "waitFor",
-   "target": {
-    "selector": "main section[aria-label^='Detalhes de'][aria-label='Detalhes de Cooperativa Recomeço']"
-   },
-   "timeout": 15
-  },
-  {
-   "do": "waitFor",
-   "idle": true
-  },
-  {
    "do": "eval",
    "js": "(()=>{const a=document.getAnimations().filter(x=>x.currentTime<0);a.forEach(x=>x.startTime=document.timeline.currentTime);return a.length})()"
   },
@@ -150,144 +133,249 @@
   {
    "do": "click",
    "target": {
-    "selector": "[aria-label='Seções da ficha'] button:has-text('Lucro estimado')"
+    "selector": "main aside button:has-text('Cooperativa Recomeço')"
    },
-   "at": 0.63,
-   "label": "aba Lucro estimado"
-  },
-  {
-   "do": "waitFor",
-   "text": "Margem estimada por material",
-   "timeout": 12
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "main section[aria-label='Detalhes de Cooperativa Recomeço'] button:has-text('Este mês')"
-   },
-   "at": 7.01,
-   "label": "abre o período (Este mês)"
-  },
-  {
-   "do": "click",
-   "target": {
-    "text": "Mês passado",
-    "exact": true
-   },
-   "at": 7.87,
-   "label": "Mês passado"
+   "at": 2.08,
+   "label": "clica na Cooperativa Recomeço: a ficha abre em Visão geral"
   },
   {
    "do": "waitFor",
    "target": {
-    "selector": "main section[aria-label='Detalhes de Cooperativa Recomeço'] tr:has-text('Alumínio latinha')"
+    "selector": "main section[aria-label='Detalhes de Cooperativa Recomeço']"
    },
-   "timeout": 12
+   "timeout": 10
   },
   {
    "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"R$ 18.755,00\", \"R$ 5.998,00\", \"24,2%\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main section[aria-label='Detalhes de Cooperativa Recome\\u00e7o']\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
-   "label": "confere cartões de outubro"
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Cooperativa Recomeço\", \"Fornecedor\", \"R$ 2.550,00\", \"a pagar\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main section[aria-label='Detalhes de Cooperativa Recome\\u00e7o']\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere cabeçalho da ficha"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const f=document.querySelector(\"[aria-label='Seções da ficha']\");if(!f)return 'DIFERENTE: sem a faixa das abas';const r=f.getBoundingClientRect();const bs=[...f.querySelectorAll('button')];const ult=bs[bs.length-1].getBoundingClientRect();return (bs.length===7?'OK':'DIFERENTE')+': '+bs.length+' abas; faixa '+Math.round(f.scrollWidth)+'/'+Math.round(f.clientWidth)+' px; última aba termina em '+Math.round(ult.right)+' de '+Math.round(r.right)})()",
+   "label": "confere: as 7 abas da ficha em 1600x900"
   },
   {
    "do": "mark",
    "name": "L2",
-   "at": 10.25
+   "at": 7.44
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main section[aria-label='Detalhes de Cooperativa Recomeço'] tr:has-text('Alumínio latinha') td:nth-child(4)"
+    "selector": "main section[aria-label='Detalhes de Cooperativa Recomeço'] h2, main section[aria-label='Detalhes de Cooperativa Recomeço'] h1",
+    "nth": 0
    },
-   "seconds": 0.8,
-   "at": 12.77,
-   "label": "zoom: linhas latinha e papelão; latinha: Preço Médio Compra R$ 6,20",
+   "seconds": 0.15,
+   "at": 9.05,
+   "label": "nome da cooperativa",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main section[aria-label='Detalhes de Cooperativa Recomeço'] tr:has-text('Alumínio latinha') td:nth-child(6)"
+    "selector": "main section[aria-label='Detalhes de Cooperativa Recomeço'] .tabular-nums",
+    "nth": 0
    },
-   "seconds": 0.8,
-   "at": 14.98,
-   "label": "latinha: Preço Médio Venda R$ 7,40",
+   "seconds": 0.5,
+   "at": 9.81,
+   "label": "saldo R$ 2.550,00 a pagar",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main section[aria-label='Detalhes de Cooperativa Recomeço'] tr:has-text('Alumínio latinha') td:nth-child(7)"
+    "role": "button",
+    "name": "Editar",
+    "exact": true,
+    "within": "main section[aria-label='Detalhes de Cooperativa Recomeço']"
    },
-   "seconds": 1.4,
-   "at": 18.09,
-   "label": "latinha: Margem R$/kg R$ 1,20",
+   "seconds": 0.15,
+   "at": 11.41,
+   "label": "Editar",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Nova Movimentação",
+    "exact": true,
+    "within": "main section[aria-label='Detalhes de Cooperativa Recomeço']"
+   },
+   "seconds": 0.6,
+   "at": 12.32,
+   "label": "Nova Movimentação",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 22.52
+   "at": 14.17
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main section[aria-label='Detalhes de Cooperativa Recomeço'] tr:has-text('Papelão') td:nth-child(8)"
+    "selector": "[aria-label='Seções da ficha'] button:has-text('Visão geral')"
    },
-   "seconds": 1.21,
-   "at": 29.21,
-   "label": "papelão: Margem Total R$ 2.100,00",
+   "seconds": 0.15,
+   "at": 16.28,
+   "label": "aba Visão geral",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[aria-label='Seções da ficha'] button:has-text('Pedidos')"
+   },
+   "seconds": 0.15,
+   "at": 17.42,
+   "label": "aba Pedidos",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[aria-label='Seções da ficha'] button:has-text('Conta-corrente')"
+   },
+   "seconds": 0.15,
+   "at": 18.25,
+   "label": "aba Conta-corrente",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[aria-label='Seções da ficha'] button:has-text('Lucro estimado')"
+   },
+   "seconds": 0.15,
+   "at": 19.62,
+   "label": "aba Lucro estimado",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[aria-label='Seções da ficha'] button:has-text('Financeiro')"
+   },
+   "seconds": 0.15,
+   "at": 20.98,
+   "label": "aba Financeiro",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const s=document.querySelector(\"[aria-label='Seções da ficha']\");if(!s)return 'SEM ALVO';const x0=s.scrollLeft,dx=(s.scrollWidth-s.clientWidth)-x0;if(Math.abs(dx)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/450),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;s.scrollLeft=x0+dx*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'faixa:'+Math.round(s.scrollLeft)})()",
+   "at": 21.13,
+   "label": "rola a faixa das abas até Preços (só se não couber)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[aria-label='Seções da ficha'] button:has-text('Notas fiscais')"
+   },
+   "seconds": 0.15,
+   "at": 22.05,
+   "label": "aba Notas fiscais",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[aria-label='Seções da ficha'] button:has-text('Preços')"
+   },
+   "seconds": 0.15,
+   "at": 23.26,
+   "label": "aba Preços",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 31.37
+   "at": 23.77
   },
   {
    "do": "hover",
    "target": {
-    "text": "Margem estimada total",
+    "text": "Cadastro",
     "exact": true,
     "within": "main section[aria-label='Detalhes de Cooperativa Recomeço']"
    },
-   "seconds": 1.8,
-   "at": 33.13,
-   "label": "cartão Margem estimada total R$ 5.998,00",
+   "seconds": 0.15,
+   "at": 26.68,
+   "label": "Cadastro",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Contato e endereço",
+    "exact": true,
+    "within": "main section[aria-label='Detalhes de Cooperativa Recomeço']"
+   },
+   "seconds": 0.67,
+   "at": 27.74,
+   "label": "Contato e endereço",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L5",
-   "at": 40.22
+   "at": 29.36
   },
   {
    "do": "hover",
    "target": {
-    "text": "Estimativa — sucata é fungível; a margem é calculada sobre o preço médio de venda do material no período, não é lucro realizado.",
-    "exact": false,
+    "selector": "input[aria-label='Link do portal']"
+   },
+   "seconds": 1.6,
+   "at": 30.06,
+   "label": "zoom: Acesso ao portal, o link e Copiar",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Copiar",
+    "exact": true,
     "within": "main section[aria-label='Detalhes de Cooperativa Recomeço']"
    },
-   "seconds": 2.03,
-   "at": 46.01,
-   "label": "zoom: aviso âmbar Estimativa — sucata é fungível",
+   "seconds": 1.0,
+   "at": 35.53,
+   "label": "Copiar (sem clicar)",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L6",
-   "at": 48.99
+   "at": 38.21
   },
   {
-   "do": "mark",
-   "name": "L7",
-   "at": 62.4
+   "do": "hover",
+   "target": {
+    "selector": "[aria-label='Seções da ficha'] button:has-text('Lucro estimado')"
+   },
+   "seconds": 2.0,
+   "at": 38.77,
+   "label": "aba Lucro estimado (sem clicar)",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "eval",
@@ -297,7 +385,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 76.96
+   "at": 46.16
   }
  ]
 }

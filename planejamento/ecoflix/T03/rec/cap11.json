@@ -1,6 +1,6 @@
 {
  "name": "t03-cap11",
- "title": "T03 · Cap. 11 · Recapitulando (narração 54,3 s ESTIMADA; marcas L1..L5 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; usuário rafael)",
+ "title": "T03 · Cap. 11 · Várias tabelas de preço (narração 209,9 s ESTIMADA; marcas L1..L13 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; usuário rafael)",
  "seed": "t03-cap11",
  "pace": 0.5,
  "cps": 14,
@@ -16,11 +16,13 @@
   "pwa-install-dismissed": "true",
   "theme": "light",
   "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
-  "initial-preferences-set": "true"
+  "initial-preferences-set": "true",
+  "cato_adoption_nudge_38814e47-876a-5977-a5f7-53af364c17bb_34c36c63-0890-5e89-8963-7c77b7996908": "{\"count\":99,\"lastShownAt\":0}"
  },
  "seedExtra": [
   "t03/inicio",
-  "t03/apos-cap08"
+  "t03/apos-cap06",
+  "t03/caixa-0830"
  ],
  "prewarm": [
   "/login"
@@ -70,6 +72,32 @@
   },
   {
    "do": "goto",
+   "url": "/clientes-fornecedores"
+  },
+  {
+   "do": "waitFor",
+   "text": "Clientes e Fornecedores",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
+   "url": "/caixa"
+  },
+  {
+   "do": "waitFor",
+   "text": "Nova Compra",
+   "timeout": 25
+  },
+  {
+   "do": "waitFor",
+   "idle": true
+  },
+  {
+   "do": "goto",
    "url": "/materiais"
   },
   {
@@ -104,83 +132,131 @@
    "at": 0.0
   },
   {
-   "do": "type",
-   "target": {
-    "placeholder": "Buscar material por código ou nome..."
-   },
-   "text": "radiador",
-   "cps": 24,
-   "at": 3.1,
-   "label": "busca radiador"
-  },
-  {
    "do": "hover",
    "target": {
-    "selector": "main tbody tr:has-text('Radiador de cobre') td:nth-child(7)"
+    "text": "Tabelas de Preço",
+    "within": "main"
    },
-   "seconds": 1.0,
-   "at": 7.44,
-   "label": "preços do radiador",
+   "seconds": 0.6,
+   "at": 1.91,
+   "label": "coluna Tabelas de Preço",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main tbody tr:has-text('Radiador de cobre') td:nth-child(2)"
+    "role": "button",
+    "name": "Principal",
+    "exact": true
    },
    "seconds": 1.0,
-   "at": 10.55,
-   "label": "código 70",
+   "at": 3.34,
+   "label": "só a Principal",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L2",
-   "at": 12.37
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main tbody tr:has-text('Radiador de cobre') td:nth-child(3)"
-   },
-   "seconds": 0.82,
-   "at": 17.43,
-   "label": "grupo Radiadores",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "mark",
-   "name": "L3",
-   "at": 18.8
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main tbody tr:has-text('Radiador de cobre') td:nth-child(3)"
-   },
-   "seconds": 0.2,
-   "at": 18.8,
-   "label": "grupo Radiadores (continua)",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "eval",
-   "js": "(()=>{const el=document.querySelector(\"main input[placeholder=\\\"Buscar material por c\\u00f3digo ou nome...\\\"]\");if(!el)return 'SEM ALVO';const set=Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set;set.call(el,\"\");el.dispatchEvent(new Event('input',{bubbles:true}));el.dispatchEvent(new Event('change',{bubbles:true}));return el.value})()",
-   "at": 19.4,
-   "label": "limpa a busca (sem cursor)"
+   "at": 21.11
   },
   {
    "do": "click",
    "target": {
     "role": "button",
-    "name": "Tabela Depósitos"
+    "name": "Nova Tabela",
+    "exact": true
    },
-   "at": 22.03,
-   "label": "Tabela Depósitos +4%"
+   "at": 21.99,
+   "label": "Nova Tabela"
+  },
+  {
+   "do": "waitFor",
+   "text": "Nova Tabela de Preços",
+   "timeout": 8
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Ex: Atacado, Varejo, Premium..."
+   },
+   "text": "Tabela Depósitos",
+   "cps": 30,
+   "noClick": true,
+   "at": 23.78,
+   "label": "Nome da Tabela: Tabela Depósitos"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] #is-linked"
+   },
+   "at": 25.33,
+   "label": "Vincular à tabela principal"
+  },
+  {
+   "do": "waitFor",
+   "text": "Exemplo de cálculo",
+   "timeout": 6
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 28.27
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[inputmode=decimal]"
+   },
+   "text": "4",
+   "at": 28.27,
+   "label": "Valor da variação 4",
+   "clear": true
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Porcentagem\", \"Aumenta\", \"R$ 10,40\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Porcentagem, Aumenta, R$ 10,40"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Exemplo de cálculo",
+    "within": "[role=dialog]"
+   },
+   "seconds": 2.2,
+   "at": 31.07,
+   "label": "Exemplo de cálculo: R$ 10,00 > R$ 10,40 (+4%) (zoom)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 39.12
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 49.94
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Criar Tabela",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 50.14,
+   "label": "Criar Tabela"
+  },
+  {
+   "do": "waitFor",
+   "text": "Tabela de preço criada com sucesso!",
+   "timeout": 10
   },
   {
    "do": "waitFor",
@@ -188,73 +264,528 @@
    "timeout": 8
   },
   {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"main *\")].filter(e=>e.offsetParent!==null&&e.textContent.trim()===\"Cobre mel\").sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-430);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=()=>{const p=Math.min(1,(performance.now()-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 53.8,
+   "label": "desce até o Cobre mel"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Cobre mel\", \"R$ 44,20\", \"R$ 47,90\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main tbody tr\")].filter(e=>!true||e.innerText.includes(\"Cobre mel\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Cobre mel R$ 44,20 na Tabela Depósitos, venda R$ 47,90"
+  },
+  {
    "do": "hover",
    "target": {
-    "text": "Exibindo preços da tabela: Tabela Depósitos",
-    "within": "main"
+    "selector": "main tbody tr:has-text('Cobre mel') td:nth-child(7)"
    },
-   "seconds": 1.2,
-   "at": 25.9,
-   "label": "Exibindo preços da tabela: Tabela Depósitos",
+   "seconds": 1.4,
+   "at": 57.51,
+   "label": "Cobre mel Preço de Compra R$ 44,20 (zoom: linha Cobre mel)",
    "optional": true,
    "timeout": 4
   },
   {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('Cobre mel') td:nth-child(8)"
+   },
+   "seconds": 1.0,
+   "at": 60.39,
+   "label": "Preço de Venda R$ 47,90 (o da principal)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const c=rolagem(document.querySelector(\"main\"+' *'));if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop;if(y0<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=()=>{const p=Math.min(1,(performance.now()-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0*(1-e);p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'topo:'+Math.round(c.scrollTop)})()",
+   "at": 63.33,
+   "label": "volta ao topo (a barra com o Editar Preços)"
+  },
+  {
    "do": "mark",
-   "name": "L4",
-   "at": 33.19
+   "name": "L6",
+   "at": 64.03
   },
   {
    "do": "click",
    "target": {
     "role": "button",
-    "name": "Principal",
+    "name": "Editar Preços",
     "exact": true
    },
-   "at": 33.39,
-   "label": "volta à Principal"
+   "at": 67.65,
+   "label": "Editar Preços"
+  },
+  {
+   "do": "waitFor",
+   "text": "Editar Tabelas de Preço",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] aside[aria-label='Tabelas de preços disponíveis'] button:has-text('Tabela Depósitos')"
+   },
+   "at": 68.26,
+   "label": "Tabela Depósitos na lista da esquerda"
+  },
+  {
+   "do": "waitFor",
+   "text": "Tabela vinculada",
+   "timeout": 8
   },
   {
    "do": "hover",
    "target": {
-    "role": "button",
-    "name": "Movimentar estoque",
-    "exact": true
+    "selector": "[role=dialog] thead th:has-text('Variação')"
    },
-   "seconds": 0.6,
-   "at": 35.66,
-   "label": "Movimentar estoque",
+   "seconds": 0.5,
+   "at": 74.18,
+   "label": "coluna Variação",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "hover",
    "target": {
-    "role": "button",
-    "name": "Exportar"
+    "selector": "[role=dialog] tbody tr:has-text('Fio de cobre') button[title^='Variação padrão']"
    },
-   "seconds": 0.6,
-   "at": 37.94,
-   "label": "Exportar",
+   "seconds": 0.5,
+   "at": 75.62,
+   "label": "cadeado fechado (Variação padrão)",
    "optional": true,
    "timeout": 4
   },
   {
-   "do": "hover",
+   "do": "click",
    "target": {
-    "text": "Lista de Materiais",
-    "within": "main"
+    "selector": "[role=dialog] tbody tr:has-text('Fio de cobre') button[title^='Variação padrão']"
    },
-   "seconds": 0.8,
-   "at": 41.2,
-   "label": "a lista",
-   "optional": true,
-   "timeout": 4
+   "at": 81.16,
+   "label": "abre o cadeado do fio de cobre encapado"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] tbody tr:has-text('Fio de cobre') td:nth-child(4) input"
+   },
+   "text": "2",
+   "at": 86.61,
+   "label": "variação própria do fio de cobre: 2",
+   "clear": true
   },
   {
    "do": "mark",
-   "name": "L5",
-   "at": 44.09
+   "name": "L7",
+   "at": 91.49
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] tbody tr:has-text('Fio de cobre')"
+   },
+   "seconds": 1.0,
+   "at": 91.49,
+   "label": "só o fio de cobre mudou (zoom na linha)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] aside[aria-label='Resumo e regras da tabela']"
+   },
+   "seconds": 1.0,
+   "at": 91.84,
+   "label": "painel da direita: sem o cartão Margem automática",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Cancelar",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 106.26,
+   "label": "Cancelar (nada é salvo)",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 123.18
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "a[href='/clientes-fornecedores']"
+   },
+   "seconds": 0.6,
+   "at": 124.22,
+   "label": "menu lateral (abre ao passar o mouse)",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "a[href='/clientes-fornecedores']"
+   },
+   "at": 126.73,
+   "label": "Clientes e Fornecedores",
+   "noScroll": true
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 760,
+    "y": 420
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "label": "cursor sai do menu (ele recolhe)"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "role": "button",
+    "name": "Fornecedores"
+   },
+   "timeout": 12
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Fornecedores"
+   },
+   "at": 128.09,
+   "label": "aba Fornecedores"
+  },
+  {
+   "do": "pause",
+   "seconds": 0.3
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Fornecedores"
+   },
+   "label": "aba Fornecedores de novo (só se não trocou)",
+   "unless": {
+    "role": "button",
+    "name": "Novo Fornecedor",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "role": "button",
+    "name": "Novo Fornecedor",
+    "exact": true
+   },
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "text": "Depósito Irmãos Siqueira",
+    "within": "main"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Depósito Irmãos Siqueira",
+    "within": "main"
+   },
+   "at": 129.84,
+   "label": "Depósito Irmãos Siqueira"
+  },
+  {
+   "do": "waitFor",
+   "text": "1 preço personalizado",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Editar",
+    "exact": true,
+    "within": "main"
+   },
+   "at": 131.89,
+   "label": "Editar"
+  },
+  {
+   "do": "waitFor",
+   "text": "Editar Fornecedor",
+   "timeout": 10
+  },
+  {
+   "do": "mark",
+   "name": "L9",
+   "at": 133.33
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.offsetParent!==null&&e.textContent.trim()===\"Tabela de Preços Padrão\").sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-380);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=()=>{const p=Math.min(1,(performance.now()-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 133.63,
+   "label": "desce até Tabela de Preços Padrão"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] div.space-y-2:has(> label:has-text('Tabela de Preços Padrão')) button[role=combobox]"
+   },
+   "at": 135.05,
+   "label": "Tabela de Preços Padrão (abre)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Tabela Depósitos"
+   },
+   "at": 137.1,
+   "label": "Tabela Depósitos (zoom)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Salvar",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 138.01,
+   "label": "Salvar",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "text": "Fornecedor atualizado!",
+   "timeout": 10
+  },
+  {
+   "do": "mark",
+   "name": "L10",
+   "at": 142.79
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{history.pushState({},'','/caixa');window.dispatchEvent(new PopStateEvent('popstate'));return location.pathname})()",
+   "at": 148.62,
+   "label": "vai ao Caixa (por baixo da ilustração)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Nova Compra",
+   "timeout": 15
+  },
+  {
+   "do": "mark",
+   "name": "L11",
+   "at": 164.01
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button:has-text('Nova Compra')"
+   },
+   "at": 165.88,
+   "label": "Nova Compra"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "#supplier-desktop-top"
+   },
+   "timeout": 15
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#supplier-desktop-top"
+   },
+   "at": 170.97,
+   "label": "Selecionar Fornecedor"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Buscar por nome, apelido, CPF/CNPJ ou telefone..."
+   },
+   "text": "Depósito",
+   "cps": 30,
+   "noClick": true,
+   "label": "busca Depósito"
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Depósito Irmãos Siqueira",
+    "within": "[role=dialog]"
+   },
+   "at": 173.63,
+   "label": "Depósito Irmãos Siqueira"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Tabela Depósitos\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Tabela de Preços passou para Tabela Depósitos"
+  },
+  {
+   "do": "mark",
+   "name": "L12",
+   "at": 175.49
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "main button[role=combobox]:has-text('Tabela Depósitos')"
+   },
+   "text": "",
+   "noClick": true,
+   "optional": true,
+   "timeout": 4,
+   "at": 175.49,
+   "label": "Tabela de Preços: Tabela Depósitos (zoom, sem o mouse)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "placeholder": "Escreva o nome ou código do material"
+   },
+   "at": 176.29,
+   "label": "campo do material"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Escreva o nome ou código do material"
+   },
+   "text": "cobre",
+   "cps": 30,
+   "noClick": true,
+   "at": 177.72,
+   "label": "material: cobre"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Cobre mel",
+    "exact": false
+   },
+   "at": 178.31,
+   "label": "Cobre mel"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Preço da tabela aplicado para Cobre mel\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"body\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere aviso Preço da tabela aplicado"
+  },
+  {
+   "do": "mark",
+   "name": "L13",
+   "at": 181.53
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "main div:has(> label:has-text('Valor/')) input"
+   },
+   "text": "",
+   "noClick": true,
+   "optional": true,
+   "timeout": 4,
+   "at": 181.53,
+   "label": "Valor/kg 44,20 (zoom)"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const esp=[\"44,2\"];let out='';for(let i=0;i<12;i++){const v=[...document.querySelectorAll(\"main\"+' input, '+\"main\"+' textarea')].map(e=>e.value).join(' | ');const falta=esp.filter(e=>!v.includes(e));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+v.slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Valor/kg 44,20"
+  },
+  {
+   "do": "click",
+   "target": {
+    "placeholder": "Escreva o nome ou código do material"
+   },
+   "at": 182.42,
+   "label": "campo do material de novo"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Escreva o nome ou código do material"
+   },
+   "text": "bronze",
+   "cps": 30,
+   "noClick": true,
+   "at": 183.34,
+   "label": "troca para bronze",
+   "clear": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Bronze",
+    "exact": false
+   },
+   "at": 184.65,
+   "label": "Bronze"
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 990,
+    "y": 748
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "label": "cursor no lugar do aviso (embaixo à direita)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Preço especial aplicado para Bronze"
+   },
+   "seconds": 5.98,
+   "label": "aviso Preço especial aplicado (o mouse segura o aviso) (zoom: Valor/kg 30,50 com o aviso)",
+   "timeout": 6,
+   "noScroll": true,
+   "optional": true
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Preço especial aplicado para Bronze\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"body\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere aviso Preço especial aplicado para Bronze"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const esp=[\"30,5\"];let out='';for(let i=0;i<12;i++){const v=[...document.querySelectorAll(\"main\"+' input, '+\"main\"+' textarea')].map(e=>e.value).join(' | ');const falta=esp.filter(e=>!v.includes(e));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+v.slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Valor/kg 30,50"
   },
   {
    "do": "eval",
@@ -264,7 +795,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 54.32
+   "at": 209.94
   }
  ]
 }

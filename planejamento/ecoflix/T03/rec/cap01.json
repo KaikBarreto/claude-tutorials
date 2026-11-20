@@ -1,6 +1,6 @@
 {
  "name": "t03-cap01",
- "title": "T03 · Cap. 1 · A tela Estoque (narração 82,4 s ESTIMADA; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; usuário rafael)",
+ "title": "T03 · Cap. 1 · A tela Estoque (narração 92,2 s ESTIMADA; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; usuário rafael)",
  "seed": "t03-cap01",
  "pace": 0.5,
  "cps": 14,
@@ -16,7 +16,8 @@
   "pwa-install-dismissed": "true",
   "theme": "light",
   "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
-  "initial-preferences-set": "true"
+  "initial-preferences-set": "true",
+  "cato_adoption_nudge_38814e47-876a-5977-a5f7-53af364c17bb_34c36c63-0890-5e89-8963-7c77b7996908": "{\"count\":99,\"lastShownAt\":0}"
  },
  "seedExtra": [
   "t03/inicio"
@@ -128,11 +129,6 @@
    "timeout": 4
   },
   {
-   "do": "mark",
-   "name": "L2",
-   "at": 11.85
-  },
-  {
    "do": "hover",
    "target": {
     "role": "button",
@@ -140,10 +136,26 @@
     "exact": true
    },
    "seconds": 0.6,
-   "at": 11.85,
+   "at": 11.31,
    "label": "Nova Tabela",
    "optional": true,
    "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main button[title='Como funciona']"
+   },
+   "seconds": 0.9,
+   "at": 12.68,
+   "label": "interrogação Como funciona (os tipos de tabela)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 17.16
   },
   {
    "do": "hover",
@@ -153,7 +165,7 @@
     "exact": true
    },
    "seconds": 0.2,
-   "at": 15.0,
+   "at": 20.31,
    "label": "Movimentar estoque",
    "optional": true,
    "timeout": 4
@@ -162,12 +174,12 @@
    "do": "hover",
    "target": {
     "role": "button",
-    "name": "Editar Tabela",
+    "name": "Editar Preços",
     "exact": true
    },
    "seconds": 0.2,
-   "at": 16.67,
-   "label": "Editar Tabela",
+   "at": 21.98,
+   "label": "Editar Preços",
    "optional": true,
    "timeout": 4
   },
@@ -179,7 +191,7 @@
     "exact": true
    },
    "seconds": 0.15,
-   "at": 17.96,
+   "at": 23.27,
    "label": "Grupos",
    "optional": true,
    "timeout": 4
@@ -191,7 +203,7 @@
     "name": "Exportar"
    },
    "seconds": 0.15,
-   "at": 18.72,
+   "at": 24.03,
    "label": "Exportar",
    "optional": true,
    "timeout": 4
@@ -204,7 +216,7 @@
     "exact": true
    },
    "seconds": 0.6,
-   "at": 19.55,
+   "at": 24.87,
    "label": "Zerar Estoque",
    "optional": true,
    "timeout": 4
@@ -212,7 +224,7 @@
   {
    "do": "mark",
    "name": "L3",
-   "at": 23.58
+   "at": 28.89
   },
   {
    "do": "hover",
@@ -221,7 +233,7 @@
     "within": "main"
    },
    "seconds": 1.2,
-   "at": 26.59,
+   "at": 31.9,
    "label": "cartão Peso Total em Estoque",
    "optional": true,
    "timeout": 4
@@ -229,17 +241,17 @@
   {
    "do": "mark",
    "name": "L4",
-   "at": 29.32
+   "at": 34.63
   },
   {
    "do": "mark",
    "name": "L5",
-   "at": 43.87
+   "at": 49.19
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"main *\")].filter(e=>e.offsetParent!==null&&e.textContent.trim()===\"Lista de Materiais\").sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-110);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=()=>{const p=Math.min(1,(performance.now()-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 44.17,
+   "at": 49.48,
    "label": "desce até a Lista de Materiais"
   },
   {
@@ -248,7 +260,7 @@
     "selector": "main thead th:has-text('Código')"
    },
    "seconds": 0.2,
-   "at": 47.03,
+   "at": 52.34,
    "label": "coluna Código",
    "optional": true,
    "timeout": 4
@@ -259,7 +271,7 @@
     "selector": "main thead th:has-text('Nome')"
    },
    "seconds": 0.2,
-   "at": 47.94,
+   "at": 53.25,
    "label": "coluna Nome",
    "optional": true,
    "timeout": 4
@@ -270,7 +282,7 @@
     "selector": "main thead th:has-text('Estoque')"
    },
    "seconds": 0.2,
-   "at": 48.7,
+   "at": 54.01,
    "label": "coluna Estoque Atual",
    "optional": true,
    "timeout": 4
@@ -281,7 +293,7 @@
     "selector": "main thead th:has-text('Preço de Compra')"
    },
    "seconds": 0.4,
-   "at": 50.14,
+   "at": 55.45,
    "label": "colunas de preço",
    "optional": true,
    "timeout": 4
@@ -293,7 +305,7 @@
     "within": "main"
    },
    "seconds": 1.2,
-   "at": 54.32,
+   "at": 59.63,
    "label": "selo estimativa do Preço médio pago",
    "optional": true,
    "timeout": 4
@@ -304,20 +316,36 @@
    "label": "confere colunas da lista"
   },
   {
+   "do": "click",
+   "target": {
+    "selector": "main thead th:has-text('Estoque')"
+   },
+   "at": 63.88,
+   "label": "clique em Estoque Atual: ordena a lista"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main thead th:has-text('Código')"
+   },
+   "at": 66.31,
+   "label": "clique em Código: volta à ordem do código"
+  },
+  {
    "do": "mark",
    "name": "L6",
-   "at": 57.81
+   "at": 67.67
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const c=rolagem(document.querySelector(\"main\"+' *'));if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop;if(y0<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=()=>{const p=Math.min(1,(performance.now()-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0*(1-e);p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'topo:'+Math.round(c.scrollTop)})()",
-   "at": 59.62,
+   "at": 69.48,
    "label": "volta ao topo (por baixo do corte do Marcos)"
   },
   {
    "do": "mark",
    "name": "L7",
-   "at": 70.22
+   "at": 80.09
   },
   {
    "do": "hover",
@@ -326,7 +354,7 @@
     "name": "Todos os Materiais"
    },
    "seconds": 0.3,
-   "at": 72.47,
+   "at": 82.34,
    "label": "filtro Todos os Materiais",
    "optional": true,
    "timeout": 4
@@ -339,7 +367,7 @@
     "exact": true
    },
    "seconds": 0.3,
-   "at": 73.38,
+   "at": 83.25,
    "label": "Importar planilha",
    "optional": true,
    "timeout": 4
@@ -351,7 +379,7 @@
     "name": "Novo Material"
    },
    "seconds": 0.3,
-   "at": 76.04,
+   "at": 85.91,
    "label": "Novo Material",
    "optional": true,
    "timeout": 4
@@ -362,7 +390,7 @@
     "placeholder": "Buscar material por código ou nome..."
    },
    "seconds": 0.3,
-   "at": 77.41,
+   "at": 87.27,
    "label": "busca Buscar material por código ou nome...",
    "optional": true,
    "timeout": 4
@@ -374,7 +402,7 @@
     "name": "Novo Material"
    },
    "seconds": 1.0,
-   "at": 78.47,
+   "at": 88.34,
    "label": "Novo Material (é por ele que a gente começa)",
    "optional": true,
    "timeout": 4
@@ -387,7 +415,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 82.35
+   "at": 92.22
   }
  ]
 }

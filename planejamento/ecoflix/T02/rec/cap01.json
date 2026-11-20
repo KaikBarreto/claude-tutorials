@@ -1,6 +1,6 @@
 {
  "name": "t02-cap01",
- "title": "T2 · Cap. 1 · Onde fica (narração ESTIMADA 47,5 s; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "title": "T2 · Cap. 1 · Onde fica (narração ESTIMADA 66,2 s; marcas L1..L8 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
  "seed": "t02-cap01",
  "pace": 0.5,
  "cps": 30,
@@ -152,7 +152,7 @@
   },
   {
    "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Empresa: Recicla Vale Metais\", \"1 / 3 usuários\", \"Criar Usuário\", \"Rafael Nogueira\", \"Acesso total · Ativo\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Empresa: Recicla Vale Metais\", \"1 / 3 usuários\", \"Criar Usuário\", \"Relatório por Usuário\", \"Rafael Nogueira\", \"Acesso total · Ativo\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
    "label": "confere a aba com a empresa, o selo 1 / 3 e só o Rafael"
   },
   {
@@ -223,14 +223,32 @@
    "at": 18.31
   },
   {
+   "do": "hover",
+   "target": {
+    "placeholder": "Buscar por nome ou e-mail",
+    "within": "main"
+   },
+   "seconds": 0.15,
+   "note": "L4 busca",
+   "at": 20.61,
+   "label": "Buscar por nome ou e-mail",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 24.05
+  },
+  {
    "do": "click",
    "target": {
     "text": "Rafael Nogueira",
     "exact": true,
     "within": "main"
    },
-   "note": "L4 nome,",
-   "at": 19.52,
+   "note": "L5 nome,",
+   "at": 25.26,
    "label": "clica no Rafael (abre o detalhe)"
   },
   {
@@ -244,7 +262,7 @@
   },
   {
    "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Master\", \"Ativo\", \"Perfil de acesso\", \"Acesso Total\", \"Online agora\", \"Este usuário tem acesso a todas as telas e ações disponíveis nos módulos contratados pela empresa.\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Master\", \"Ativo\", \"Perfil de acesso\", \"Acesso Total\", \"Última atividade\", \"Online agora\", \"Peso dos pedidos\", \"Padrão da empresa\", \"Este usuário tem acesso a todas as telas e ações disponíveis nos módulos contratados pela empresa.\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
    "label": "confere detalhe do Rafael"
   },
   {
@@ -253,8 +271,8 @@
     "selector": "main svg[aria-label=\"Usuário master\"]"
    },
    "seconds": 0.15,
-   "note": "L4 coroa",
-   "at": 22.58,
+   "note": "L5 coroa",
+   "at": 28.32,
    "label": "coroa do master na lista",
    "optional": true,
    "timeout": 4
@@ -267,21 +285,66 @@
     "within": "main"
    },
    "seconds": 0.15,
-   "note": "L4 master:",
-   "at": 24.86,
+   "note": "L5 master:",
+   "at": 30.6,
    "label": "selo Master no detalhe (o responsável pela conta)",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
-   "name": "L5",
-   "at": 28.38
+   "name": "L6",
+   "at": 34.12
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Última atividade",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.15,
+   "note": "L6 última",
+   "at": 38.7,
+   "label": "Última atividade",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Online agora",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.15,
+   "note": "L6 online",
+   "at": 40.67,
+   "label": "Online agora",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main p:has-text('Peso dos pedidos')"
+   },
+   "seconds": 0.15,
+   "note": "L6 peso",
+   "at": 42.8,
+   "label": "Peso dos pedidos: Padrão da empresa",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "mark",
-   "name": "L6",
-   "at": 35.95
+   "name": "L7",
+   "at": 47.08
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 54.64
   },
   {
    "do": "eval",
@@ -291,7 +354,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 47.47
+   "at": 66.16
   }
  ]
 }

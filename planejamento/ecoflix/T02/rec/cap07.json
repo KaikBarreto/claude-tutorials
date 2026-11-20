@@ -1,13 +1,13 @@
 {
  "name": "t02-cap07",
- "title": "T2 · Cap. 7 · Passar o controle (narração ESTIMADA 48,2 s; marcas L1..L5 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "title": "T2 · Cap. 7 · O mapa das permissões (narração ESTIMADA 126,4 s; marcas L1..L8 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
  "seed": "t02-cap07",
  "pace": 0.5,
  "cps": 30,
  "tail": 1.5,
  "start": {
-  "x": 560,
-  "y": 470
+  "x": 1000,
+  "y": 300
  },
  "anonymous": true,
  "storage": {
@@ -83,26 +83,12 @@
    "idle": true
   },
   {
-   "do": "eval",
-   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|Algo deu errado|Falha ao|Something went wrong/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{document.querySelectorAll('[data-sonner-toast][data-type=error]').forEach(t=>{const s='TOAST DE ERRO: '+t.textContent.trim().slice(0,90);if(!window.__avisos.includes(s)&&window.__avisos.length<10)window.__avisos.push(s)})},300);return 1})()"
-  }
- ],
- "steps": [
-  {
-   "do": "mark",
-   "name": "L1",
-   "at": 0.4
-  },
-  {
    "do": "click",
    "target": {
-    "text": "Rafael Nogueira",
+    "text": "Marcos Antunes",
     "exact": true,
     "within": "main"
-   },
-   "note": "L1 master?",
-   "at": 0.4,
-   "label": "clica no Rafael"
+   }
   },
   {
    "do": "waitFor",
@@ -114,187 +100,605 @@
    "timeout": 8
   },
   {
-   "do": "hover",
+   "do": "click",
    "target": {
-    "text": "Master",
+    "role": "button",
+    "name": "Editar",
     "exact": true,
     "within": "main"
-   },
-   "seconds": 0.15,
-   "note": "L1 responsável",
-   "at": 1.42,
-   "label": "selo Master",
-   "optional": true,
-   "timeout": 4
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Atualize os dados e permissões deste usuário",
+   "timeout": 10
+  },
+  {
+   "do": "waitFor",
+   "text": "Restrições",
+   "timeout": 8
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|Algo deu errado|Falha ao|Something went wrong/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{document.querySelectorAll('[data-sonner-toast][data-type=error]').forEach(t=>{const s='TOAST DE ERRO: '+t.textContent.trim().slice(0,90);if(!window.__avisos.includes(s)&&window.__avisos.length<10)window.__avisos.push(s)})},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0.4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=document.querySelector(\"[role=dialog] input[placeholder=\\\"Buscar tela ou a\\u00e7\\u00e3o...\\\"]\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-150);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 0.4,
+   "label": "desce a janela: a lista de permissões inteira"
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main svg[aria-label=\"Usuário master\"]"
+    "text": "Financeiro",
+    "exact": true,
+    "within": "[role=dialog]"
    },
    "seconds": 0.15,
-   "note": "L1 exclui",
-   "at": 4.61,
-   "label": "coroa na lista",
+   "note": "L1 grupo.",
+   "at": 6.96,
+   "label": "bloco Financeiro",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L2",
-   "at": 8.51
+   "at": 7.44
   },
   {
-   "do": "click",
-   "target": {
-    "text": "Juliana Prado",
-    "exact": true,
-    "within": "main"
-   },
-   "note": "L2 serve",
-   "at": 15.79,
-   "label": "clica na Juliana (sob a ilustração)"
+   "do": "eval",
+   "js": "(()=>{const r=[];for(const n of [\"Caixa\"]){const b=document.querySelector('[role=dialog] button[aria-label=\"Ver ações de '+n+'\"]');if(!b){r.push('SEM ALVO '+n);continue}if(b.getAttribute('data-state')!=='open'){b.click();r.push('abriu '+n)}else r.push('já '+n)}return r.join(' | ')})()",
+   "at": 8.44,
+   "label": "abre as 10 ações do Caixa (sem cursor)"
   },
   {
-   "do": "waitFor",
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=document.querySelector(\"[role=dialog] [role=switch][aria-label=\\\"Acesso \\u00e0 tela Caixa\\\"]\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-230);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 8.74,
+   "label": "a lista desce até o Caixa"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=document.querySelector(\"[role=dialog] [role=switch][aria-label=\\\"Registrar Compra\\\"]\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-250);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/450),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 10.66,
+   "label": "a lista desce até Registrar Compra"
+  },
+  {
+   "do": "hover",
    "target": {
-    "text": "Telas (7)",
-    "exact": true,
-    "within": "main"
+    "selector": "[role=dialog] div.items-start:has(> [role=switch][aria-label='Registrar Compra'])"
    },
-   "timeout": 8
+   "seconds": 0.15,
+   "note": "L2 compra,",
+   "at": 11.26,
+   "label": "Registrar Compra",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=document.querySelector(\"[role=dialog] [role=switch][aria-label=\\\"Abrir Caixa\\\"]\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-250);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/450),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 13.69,
+   "label": "a lista desce até Abrir Caixa"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] div.items-start:has(> [role=switch][aria-label='Abrir Caixa'])"
+   },
+   "seconds": 0.15,
+   "note": "L2 abrir",
+   "at": 14.29,
+   "label": "Abrir Caixa",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=document.querySelector(\"[role=dialog] [role=switch][aria-label=\\\"Ver e Operar Todos os Caixas\\\"]\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-250);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/450),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 19.23,
+   "label": "a lista desce até Ver e Operar Todos os Caixas"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] div.items-start:has(> [role=switch][aria-label='Ver e Operar Todos os Caixas'])"
+   },
+   "seconds": 0.15,
+   "note": "L2 outros",
+   "at": 19.83,
+   "label": "Ver e Operar Todos os Caixas",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=document.querySelector(\"[role=dialog] [role=switch][aria-label=\\\"Realizar lan\\u00e7amentos e abrir/fechar caixas com data retroativa\\\"]\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-250);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/450),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 21.13,
+   "label": "a lista desce até Realizar lançamentos e abrir/fechar caixas com data retroativa"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] div.items-start:has(> [role=switch][aria-label='Realizar lançamentos e abrir/fechar caixas com data retroativa'])"
+   },
+   "seconds": 0.15,
+   "note": "L2 retroativa",
+   "at": 21.73,
+   "label": "Realizar lançamentos e abrir/fechar caixas com data retroativa",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 17.59
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main button[aria-label='Ações de Juliana Prado']",
-    "nth": 1
-   },
-   "seconds": 0.35,
-   "note": "L3 menu",
-   "at": 18.22,
-   "label": "menu ... da Juliana",
-   "optional": false,
-   "timeout": 8
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main button[aria-label='Ações de Juliana Prado']",
-    "nth": 1
-   },
-   "seconds": 0.45,
-   "label": "menu ... de Juliana Prado de novo (só se não abriu)",
-   "unless": {
-    "role": "menuitem",
-    "name": "Tornar master"
-   },
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "waitFor",
-   "target": {
-    "role": "menuitem",
-    "name": "Tornar master"
-   },
-   "timeout": 6
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "menuitem",
-    "name": "Tornar master"
-   },
-   "note": "L3 Tornar",
-   "at": 19.48,
-   "label": "Tornar master"
-  },
-  {
-   "do": "waitFor",
-   "text": "Passar o controle da empresa?",
-   "timeout": 8
+   "at": 22.59
   },
   {
    "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Passar o controle da empresa?\", \"Você vai tornar Juliana Prado o novo master da empresa.\", \"você deixará de ser o master\", \"Esta ação é imediata.\", \"Sim, passar o bastão\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=alertdialog]\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
-   "label": "confere janela Passar o controle"
+   "js": "(()=>{const r=[];for(const n of [\"Movimentações Bancárias\", \"Relatório Financeiro\", \"Contas a Pagar/Receber\", \"Categorias Financeiras\", \"Pedidos\"]){const b=document.querySelector('[role=dialog] button[aria-label=\"Ver ações de '+n+'\"]');if(!b){r.push('SEM ALVO '+n);continue}if(b.getAttribute('data-state')!=='open'){b.click();r.push('abriu '+n)}else r.push('já '+n)}return r.join(' | ')})()",
+   "at": 23.59,
+   "label": "abre as ações do banco, relatório, contas, categorias e pedidos (sem cursor)"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=document.querySelector(\"[role=dialog] [role=switch][aria-label=\\\"Usar Contas Banc\\u00e1rias\\\"]\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-250);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/450),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 23.99,
+   "label": "a lista desce até Usar Contas Bancárias"
   },
   {
    "do": "hover",
    "target": {
-    "selector": "[role=alertdialog] h2"
+    "selector": "[role=dialog] div.items-start:has(> [role=switch][aria-label='Usar Contas Bancárias'])"
    },
    "seconds": 0.15,
-   "note": "L3 janela",
-   "at": 20.88,
-   "label": "Passar o controle da empresa?",
+   "note": "L3 Usar",
+   "at": 24.05,
+   "label": "Usar Contas Bancárias",
    "optional": true,
    "timeout": 4
   },
   {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=document.querySelector(\"[role=dialog] [role=switch][aria-label=\\\"Gerenciar Contas Banc\\u00e1rias\\\"]\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-250);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/450),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 27.93,
+   "label": "a lista desce até Gerenciar Contas Bancárias"
+  },
+  {
    "do": "hover",
    "target": {
-    "selector": "[role=alertdialog] p"
+    "selector": "[role=dialog] div.items-start:has(> [role=switch][aria-label='Gerenciar Contas Bancárias'])"
    },
    "seconds": 0.15,
-   "note": "L3 controle",
-   "at": 24.44,
-   "label": "o texto explica o que muda",
+   "note": "L3 Gerenciar",
+   "at": 28.53,
+   "label": "Gerenciar Contas Bancárias",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=document.querySelector(\"[role=dialog] [role=switch][aria-label=\\\"Exportar Relat\\u00f3rios\\\"]\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-250);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/450),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 33.86,
+   "label": "a lista desce até Exportar Relatórios"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] div.items-start:has(> [role=switch][aria-label='Exportar Relatórios'])"
+   },
+   "seconds": 0.15,
+   "note": "L3 exportar,",
+   "at": 34.46,
+   "label": "Exportar Relatórios",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=document.querySelector(\"[role=dialog] [role=switch][aria-label=\\\"Gerenciar Contas Recorrentes\\\"]\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-250);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/450),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 36.28,
+   "label": "a lista desce até Gerenciar Contas Recorrentes"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] div.items-start:has(> [role=switch][aria-label='Gerenciar Contas Recorrentes'])"
+   },
+   "seconds": 0.15,
+   "note": "L3 recorrentes",
+   "at": 36.88,
+   "label": "Gerenciar Contas Recorrentes",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=document.querySelector(\"[role=dialog] [role=switch][aria-label=\\\"Gerenciar Categorias Financeiras\\\"]\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-250);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/450),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 38.79,
+   "label": "a lista desce até Gerenciar Categorias Financeiras"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] div.items-start:has(> [role=switch][aria-label='Gerenciar Categorias Financeiras'])"
+   },
+   "seconds": 0.15,
+   "note": "L3 categorias",
+   "at": 39.39,
+   "label": "Gerenciar Categorias Financeiras",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=document.querySelector(\"[role=dialog] [role=switch][aria-label=\\\"Editar e Excluir Pedidos\\\"]\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-250);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/450),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 42.89,
+   "label": "a lista desce até Editar e Excluir Pedidos"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] div.items-start:has(> [role=switch][aria-label='Editar e Excluir Pedidos'])"
+   },
+   "seconds": 0.15,
+   "note": "L3 editar",
+   "at": 43.49,
+   "label": "Editar e Excluir Pedidos",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 27.35
+   "at": 44.8
   },
   {
-   "do": "type",
-   "target": {
-    "selector": "[role=alertdialog] p"
-   },
-   "text": "",
-   "noClick": true,
-   "optional": true,
-   "timeout": 4,
-   "note": "L4 Você #1",
-   "at": 33.95,
-   "label": "ZOOM você deixará de ser o master (mantém as permissões, perde a proteção)"
+   "do": "eval",
+   "js": "(()=>{const r=[];for(const n of [\"Fiscal & Ambiental\"]){const b=document.querySelector('[role=dialog] button[aria-label=\"Ver ações de '+n+'\"]');if(!b){r.push('SEM ALVO '+n);continue}if(b.getAttribute('data-state')!=='open'){b.click();r.push('abriu '+n)}else r.push('já '+n)}return r.join(' | ')})()",
+   "at": 45.8,
+   "label": "abre as 11 ações do Fiscal & Ambiental (sem cursor)"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=document.querySelector(\"[role=dialog] [role=switch][aria-label=\\\"Emitir NF-e (Produto)\\\"]\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-200);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/450),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 49.16,
+   "label": "a lista desce até Emitir NF-e (Produto)"
   },
   {
    "do": "hover",
    "target": {
-    "selector": "[role=alertdialog] p"
+    "selector": "[role=dialog] div.items-start:has(> [role=switch][aria-label='Emitir NF-e (Produto)'])"
    },
    "seconds": 0.15,
-   "note": "L4 permissões,",
-   "at": 35.42,
-   "label": "mantém suas permissões atuais",
+   "note": "L4 produto,",
+   "at": 49.76,
+   "label": "Emitir NF-e (Produto)",
    "optional": true,
    "timeout": 4
   },
   {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=document.querySelector(\"[role=dialog] [role=switch][aria-label=\\\"Emitir MDF-e (Transporte)\\\"]\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-200);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/450),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 51.43,
+   "label": "a lista desce até Emitir MDF-e (Transporte)"
+  },
+  {
    "do": "hover",
    "target": {
-    "selector": "[role=alertdialog] p"
+    "selector": "[role=dialog] div.items-start:has(> [role=switch][aria-label='Emitir MDF-e (Transporte)'])"
    },
    "seconds": 0.15,
-   "note": "L4 proteção:",
-   "at": 37.39,
-   "label": "nem ficará protegido contra exclusão",
+   "note": "L4 manifesto",
+   "at": 52.03,
+   "label": "Emitir MDF-e (Transporte)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=document.querySelector(\"[role=dialog] [role=switch][aria-label=\\\"Emitir Documentos Ambientais (MTR/CDF)\\\"]\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-200);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/450),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 54.32,
+   "label": "a lista desce até Emitir Documentos Ambientais (MTR/CDF)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] div.items-start:has(> [role=switch][aria-label='Emitir Documentos Ambientais (MTR/CDF)'])"
+   },
+   "seconds": 0.15,
+   "note": "L4 ambientais,",
+   "at": 54.92,
+   "label": "Emitir Documentos Ambientais (MTR/CDF)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=document.querySelector(\"[role=dialog] [role=switch][aria-label=\\\"Exportar Pacote Cont\\u00e1bil\\\"]\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-200);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/450),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 57.73,
+   "label": "a lista desce até Exportar Pacote Contábil"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] div.items-start:has(> [role=switch][aria-label='Exportar Pacote Contábil'])"
+   },
+   "seconds": 0.15,
+   "note": "L4 pacote",
+   "at": 58.33,
+   "label": "Exportar Pacote Contábil",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=document.querySelector(\"[role=dialog] [role=switch][aria-label=\\\"Consultar SPED Fiscal\\\"]\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-200);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/450),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 61.53,
+   "label": "a lista desce até Consultar SPED Fiscal"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] div.items-start:has(> [role=switch][aria-label='Consultar SPED Fiscal'])"
+   },
+   "seconds": 0.15,
+   "note": "L4 consultar,",
+   "at": 62.13,
+   "label": "Consultar SPED Fiscal",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=document.querySelector(\"[role=dialog] [role=switch][aria-label=\\\"Registrar valida\\u00e7\\u00e3o do SPED\\\"]\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-200);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/450),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 66.23,
+   "label": "a lista desce até Registrar validação do SPED"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] div.items-start:has(> [role=switch][aria-label='Registrar validação do SPED'])"
+   },
+   "seconds": 0.15,
+   "note": "L4 validação.",
+   "at": 66.83,
+   "label": "Registrar validação do SPED",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L5",
-   "at": 42.58
+   "at": 67.62
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const r=[];for(const n of [\"Estoque\", \"Ticket de Pesagem\", \"Produção\"]){const b=document.querySelector('[role=dialog] button[aria-label=\"Ver ações de '+n+'\"]');if(!b){r.push('SEM ALVO '+n);continue}if(b.getAttribute('data-state')!=='open'){b.click();r.push('abriu '+n)}else r.push('já '+n)}return r.join(' | ')})()",
+   "at": 68.62,
+   "label": "abre as ações do Estoque, Ticket de Pesagem e Produção (sem cursor)"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=document.querySelector(\"[role=dialog] [role=switch][aria-label=\\\"Cadastrar Materiais\\\"]\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-250);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/450),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 71.74,
+   "label": "a lista desce até Cadastrar Materiais"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] div.items-start:has(> [role=switch][aria-label='Cadastrar Materiais'])"
+   },
+   "seconds": 0.15,
+   "note": "L5 cadastrar",
+   "at": 72.34,
+   "label": "Cadastrar Materiais",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=document.querySelector(\"[role=dialog] [role=switch][aria-label=\\\"Zerar Estoque\\\"]\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-250);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/450),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 75.23,
+   "label": "a lista desce até Zerar Estoque"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] div.items-start:has(> [role=switch][aria-label='Zerar Estoque'])"
+   },
+   "seconds": 0.15,
+   "note": "L5 Zerar",
+   "at": 75.83,
+   "label": "Zerar Estoque",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=document.querySelector(\"[role=dialog] [role=switch][aria-label=\\\"Ticket de Pesagem \\u2014 Compra\\\"]\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-250);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/450),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 78.57,
+   "label": "a lista desce até Ticket de Pesagem — Compra"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] div.items-start:has(> [role=switch][aria-label='Ticket de Pesagem — Compra'])"
+   },
+   "seconds": 0.15,
+   "note": "L5 separa",
+   "at": 79.17,
+   "label": "Ticket de Pesagem — Compra",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=document.querySelector(\"[role=dialog] [role=switch][aria-label=\\\"Ver Custos na Produ\\u00e7\\u00e3o\\\"]\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-250);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/450),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 83.05,
+   "label": "a lista desce até Ver Custos na Produção"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] div.items-start:has(> [role=switch][aria-label='Ver Custos na Produção'])"
+   },
+   "seconds": 0.15,
+   "note": "L5 custos.",
+   "at": 83.65,
+   "label": "Ver Custos na Produção",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 84.21
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const r=[];for(const n of [\"Clientes e Fornecedores\", \"Funcionários (RH)\"]){const b=document.querySelector('[role=dialog] button[aria-label=\"Ver ações de '+n+'\"]');if(!b){r.push('SEM ALVO '+n);continue}if(b.getAttribute('data-state')!=='open'){b.click();r.push('abriu '+n)}else r.push('já '+n)}return r.join(' | ')})()",
+   "at": 85.21,
+   "label": "abre as ações de Clientes e Fornecedores e de Funcionários (sem cursor)"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=document.querySelector(\"[role=dialog] [role=switch][aria-label=\\\"Cadastrar Parceiros\\\"]\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-250);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/450),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 85.61,
+   "label": "a lista desce até Cadastrar Parceiros"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] div.items-start:has(> [role=switch][aria-label='Cadastrar Parceiros'])"
+   },
+   "seconds": 0.15,
+   "note": "L6 cadastrar",
+   "at": 85.9,
+   "label": "Cadastrar Parceiros",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=document.querySelector(\"[role=dialog] [role=switch][aria-label=\\\"Editar e Excluir Clientes/Fornecedores\\\"]\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-250);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/450),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 87.88,
+   "label": "a lista desce até Editar e Excluir Clientes/Fornecedores"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] div.items-start:has(> [role=switch][aria-label='Editar e Excluir Clientes/Fornecedores'])"
+   },
+   "seconds": 0.15,
+   "note": "L6 editar",
+   "at": 88.48,
+   "label": "Editar e Excluir Clientes/Fornecedores",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=document.querySelector(\"[role=dialog] [role=switch][aria-label=\\\"Lan\\u00e7ar cr\\u00e9dito/d\\u00e9bito no saldo\\\"]\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-250);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/450),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 90.92,
+   "label": "a lista desce até Lançar crédito/débito no saldo"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] div.items-start:has(> [role=switch][aria-label='Lançar crédito/débito no saldo'])"
+   },
+   "seconds": 0.15,
+   "note": "L6 lançar",
+   "at": 91.52,
+   "label": "Lançar crédito/débito no saldo",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=document.querySelector(\"[role=dialog] [role=switch][aria-label=\\\"Gerenciar Ponto Eletr\\u00f4nico\\\"]\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-250);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/450),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 98.66,
+   "label": "a lista desce até Gerenciar Ponto Eletrônico"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] div.items-start:has(> [role=switch][aria-label='Gerenciar Ponto Eletrônico'])"
+   },
+   "seconds": 0.15,
+   "note": "L6 ponto",
+   "at": 99.26,
+   "label": "Gerenciar Ponto Eletrônico",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 100.66
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const r=[];for(const n of [\"Configurações\", \"Assinatura\"]){const b=document.querySelector('[role=dialog] button[aria-label=\"Ver ações de '+n+'\"]');if(!b){r.push('SEM ALVO '+n);continue}if(b.getAttribute('data-state')!=='open'){b.click();r.push('abriu '+n)}else r.push('já '+n)}return r.join(' | ')})()",
+   "at": 101.66,
+   "label": "abre as ações de Configurações e Assinatura (sem cursor)"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=document.querySelector(\"[role=dialog] [role=switch][aria-label=\\\"Configurar Empresa\\\"]\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-250);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/450),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 105.31,
+   "label": "a lista desce até Configurar Empresa"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] div.items-start:has(> [role=switch][aria-label='Configurar Empresa'])"
+   },
+   "seconds": 0.15,
+   "note": "L7 Configurações,",
+   "at": 105.91,
+   "label": "Configurar Empresa",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=document.querySelector(\"[role=dialog] [role=switch][aria-label=\\\"Gerenciar Usu\\u00e1rios\\\"]\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-250);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/450),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 108.35,
+   "label": "a lista desce até Gerenciar Usuários"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] div.items-start:has(> [role=switch][aria-label='Gerenciar Usuários'])"
+   },
+   "seconds": 0.15,
+   "note": "L7 aba.",
+   "at": 108.95,
+   "label": "Gerenciar Usuários",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 111.56
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.textContent.trim()===\"Perfis r\\u00e1pidos\").sort((a,b)=>a.textContent.length-b.textContent.length||a.children.length-b.children.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-230);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 112.56,
+   "label": "a janela volta ao topo"
   },
   {
    "do": "click",
@@ -302,30 +706,18 @@
     "role": "button",
     "name": "Cancelar",
     "exact": true,
-    "within": "[role=alertdialog]"
+    "within": "[role=dialog]"
    },
-   "note": "L5 cancelo,",
-   "at": 43.49,
-   "label": "Cancelar"
+   "note": "L8 cancelo,",
+   "at": 123.02,
+   "label": "Cancelar (nada muda)"
   },
   {
    "do": "waitFor",
    "gone": {
-    "selector": "[role=alertdialog]"
+    "selector": "[role=dialog]"
    },
    "timeout": 8
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main svg[aria-label=\"Usuário master\"]"
-   },
-   "seconds": 0.15,
-   "note": "L5 master.",
-   "at": 46.32,
-   "label": "o Rafael continua master (coroa)",
-   "optional": true,
-   "timeout": 4
   },
   {
    "do": "eval",
@@ -335,7 +727,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 48.18
+   "at": 126.42
   }
  ]
 }

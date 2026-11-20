@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """T2 · escreve as sementes extras da aula em rec/mundo/seeds-extra/t02/ (estado de partida de cada capítulo).
 
+1.60.18: a criação grava o perfil rápido (`permission_preset`) e a foto escolhida na criação, então o Marcos já nasce com os dois em
+apos-cap03; os capítulos da aula agora são 14 (6 Restrições, 7 Mapa e 12 Relatório novos; 8 a 11 eram 6 a 9; 13 era 10).
 Cadeia (o `seedExtra` de cada capítulo no gerar.py soma as sementes em ordem, por cima do mundo base):
   inicio      caps 0 a 3  só o Rafael: tira do mundo base a Juliana e o Marcos (a aula os cria na tela) e põe a sessão do
                           Rafael em active_sessions ("Online agora"). Escrita à mão (inicio.json), não por este script.
@@ -8,7 +10,7 @@ Cadeia (o `seedExtra` de cada capítulo no gerar.py soma as sementes em ordem, p
                           operator, SEM permission_preset (a edge create-company-user não grava o perfil rápido), sem tela
                           inicial e sem foto (a criação não grava as duas: achado 1 do inventário).
   apos-cap04  cap 5       + Juliana como o cap04 a cria: 7 telas e 8 ações (15), papel operator.
-  apos-cap05  caps 6 a 10 Marcos depois do "Atualizar" do cap05: tela inicial /caixa, foto, sem "Ver Projeção de Lucro" (31).
+  apos-cap05  caps 6 a 13 Marcos depois do "Atualizar" do cap05: tela inicial /caixa, foto, sem "Ver Projeção de Lucro" (31).
                           A foto é o arquivo rec/mundo/storage/avatars/marcos-antunes.jpg (t02_avatar_marcos.py): o Supabase
                           falso guarda o que se envia só na memória, e o capítulo seguinte parte desta semente.
 O estado final (apos-cap05) é o do mundo base (permissões do T2 conferidas no gerar/sementes.mjs), mais a foto do Marcos.
@@ -40,11 +42,11 @@ assert len(OPERADOR_PADRAO) == 32 and len(set(OPERADOR_PADRAO)) == 32
 assert len(JULIANA) == 15 and sum(p.startswith('screen_') for p in JULIANA) == 7
 
 
-def usuario(chave, email, nome, quando, perms):
+def usuario(chave, email, nome, quando, perms, extra=None):
     uid = f'@id:user.{chave}'
     return {
         'profiles': [{'id': uid, 'email': email, 'full_name': nome, 'company_id': EMPRESA, 'is_active': True,
-                      'created_at': quando, 'updated_at': quando}],
+                      'created_at': quando, 'updated_at': quando, **(extra or {})}],
         'user_roles': [{'id': f'@id:role.{chave}', 'user_id': uid, 'role': 'operator', 'created_at': quando}],
         'user_permissions': [{'id': f'@id:t02.perm.{chave}.{p}', 'user_id': uid, 'permission': p, 'created_at': quando} for p in perms],
     }
@@ -60,15 +62,16 @@ def grava(nome, dados):
 
 
 def main():
-    grava('apos-cap03', {'_doc': 'T2: estado depois do cap03 (Marcos criado com o Operador Padrão; gerado por rec/t02/t02_sementes.py).',
-                         **usuario('marcos', 'marcos.antunes@reciclavalemetais.example', 'Marcos Antunes', '@now-40m', OPERADOR_PADRAO)})
+    grava('apos-cap03', {'_doc': 'T2: estado depois do cap03 (Marcos criado com o Operador Padrão e a foto, como o app 1.60.18 grava; gerado por rec/t02/t02_sementes.py).',
+                         **usuario('marcos', 'marcos.antunes@reciclavalemetais.example', 'Marcos Antunes', '@now-40m', OPERADOR_PADRAO,
+                                    extra={'permission_preset': 'standard_operator', 'avatar_url': '@storage:avatars/marcos-antunes.jpg'})})
     grava('apos-cap04', {'_doc': 'T2: estado depois do cap04 (Juliana criada na mão; gerado por rec/t02/t02_sementes.py).',
                          **usuario('juliana', 'juliana.prado@reciclavalemetais.example', 'Juliana Prado', '@now-30m', JULIANA)})
     grava('apos-cap05', {
-        '_doc': 'T2: estado depois do cap05 (Marcos com foto, tela inicial Caixa e sem Ver Projeção de Lucro; gerado por rec/t02/t02_sementes.py). '
+        '_doc': 'T2: estado depois do cap05 (Marcos com foto, tela inicial Caixa, sem Ver Projeção de Lucro e perfil Personalizado; a foto já vem do apos-cap03; gerado por rec/t02/t02_sementes.py). '
                 'A foto: rec/mundo/storage/avatars/marcos-antunes.jpg (rec/t02/t02_avatar_marcos.py).',
         '_patch': {'profiles': [{'match': {'id': '@id:user.marcos'},
-                                 'set': {'initial_screen_path': '/caixa', 'avatar_url': '@storage:avatars/marcos-antunes.jpg', 'updated_at': '@now-20m'}}]},
+                                 'set': {'initial_screen_path': '/caixa', 'permission_preset': None, 'updated_at': '@now-20m'}}]},
         '_remove': {'user_permissions': [{'user_id': '@id:user.marcos', 'permission': 'action_view_profit_projection'}]},
     })
 

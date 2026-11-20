@@ -1,6 +1,6 @@
 {
  "name": "t04-cap01",
- "title": "T4 · Cap. 1 · Como a tela está organizada (narração ESTIMADA 85,9 s; marcas L1..L9 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "title": "T4 · Cap. 1 · Como a tela está organizada (narração ESTIMADA 93,8 s; marcas L1..L9 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
  "seed": "t04-cap01",
  "pace": 0.5,
  "cps": 40,
@@ -354,14 +354,14 @@
   {
    "do": "mark",
    "name": "L9",
-   "at": 74.33
+   "at": 82.23
   },
   {
    "do": "click",
    "target": {
     "selector": "main div.no-scrollbar > button:has-text('Visão geral')"
    },
-   "at": 75.01,
+   "at": 82.91,
    "label": "aba Visão geral"
   },
   {
@@ -382,7 +382,7 @@
     "within": "main"
    },
    "seconds": 0.8,
-   "at": 78.07,
+   "at": 85.97,
    "label": "Clientes por venda",
    "optional": true,
    "timeout": 4
@@ -395,7 +395,7 @@
     "within": "main"
    },
    "seconds": 0.7,
-   "at": 79.97,
+   "at": 87.86,
    "label": "Fornecedores por compra",
    "optional": true,
    "timeout": 4
@@ -403,7 +403,7 @@
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=[...document.querySelectorAll(\"main *\")].filter(e=>e.textContent.trim()===\"Saldos de clientes\"&&e.offsetParent).sort((a,b)=>a.textContent.length-b.textContent.length||a.children.length-b.children.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-260);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/800),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 81.62,
+   "at": 89.51,
    "label": "desce até os saldos de clientes e fornecedores"
   },
   {
@@ -414,7 +414,7 @@
     "within": "main"
    },
    "seconds": 0.15,
-   "at": 83.08,
+   "at": 90.98,
    "label": "Saldos de clientes (a receber)",
    "optional": true,
    "timeout": 4
@@ -427,7 +427,7 @@
     "within": "main"
    },
    "seconds": 0.6,
-   "at": 84.14,
+   "at": 92.04,
    "label": "Saldos de fornecedores (a pagar)",
    "optional": true,
    "timeout": 4
@@ -440,7 +440,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 85.92
+   "at": 93.82
   }
  ]
 }

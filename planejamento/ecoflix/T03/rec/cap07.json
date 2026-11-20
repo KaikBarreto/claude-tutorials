@@ -1,6 +1,6 @@
 {
  "name": "t03-cap07",
- "title": "T03 · Cap. 7 · Várias tabelas de preço (narração 127,6 s ESTIMADA; marcas L1..L11 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; usuário rafael)",
+ "title": "T03 · Cap. 7 · Margem automática: a tabela toda (narração 156,6 s ESTIMADA; marcas L1..L10 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; usuário rafael)",
  "seed": "t03-cap07",
  "pace": 0.5,
  "cps": 14,
@@ -16,12 +16,12 @@
   "pwa-install-dismissed": "true",
   "theme": "light",
   "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
-  "initial-preferences-set": "true"
+  "initial-preferences-set": "true",
+  "cato_adoption_nudge_38814e47-876a-5977-a5f7-53af364c17bb_34c36c63-0890-5e89-8963-7c77b7996908": "{\"count\":99,\"lastShownAt\":0}"
  },
  "seedExtra": [
   "t03/inicio",
-  "t03/apos-cap06",
-  "t03/caixa-0830"
+  "t03/apos-cap06"
  ],
  "prewarm": [
   "/login"
@@ -71,32 +71,6 @@
   },
   {
    "do": "goto",
-   "url": "/clientes-fornecedores"
-  },
-  {
-   "do": "waitFor",
-   "text": "Clientes e Fornecedores",
-   "timeout": 25
-  },
-  {
-   "do": "waitFor",
-   "idle": true
-  },
-  {
-   "do": "goto",
-   "url": "/caixa"
-  },
-  {
-   "do": "waitFor",
-   "text": "Nova Compra",
-   "timeout": 25
-  },
-  {
-   "do": "waitFor",
-   "idle": true
-  },
-  {
-   "do": "goto",
    "url": "/materiais"
   },
   {
@@ -131,535 +105,479 @@
    "at": 0.0
   },
   {
-   "do": "hover",
+   "do": "click",
    "target": {
-    "text": "Tabelas de Preço",
-    "within": "main"
+    "role": "button",
+    "name": "Editar Preços",
+    "exact": true
    },
-   "seconds": 0.6,
-   "at": 1.91,
-   "label": "coluna Tabelas de Preço",
-   "optional": true,
-   "timeout": 4
+   "at": 15.73,
+   "label": "abre Editar Preços"
+  },
+  {
+   "do": "waitFor",
+   "text": "Editar Tabelas de Preço",
+   "timeout": 10
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "[role=dialog] tbody tr:has-text('Ferro pesado')"
+   },
+   "timeout": 10
   },
   {
    "do": "hover",
    "target": {
-    "role": "button",
-    "name": "Principal",
-    "exact": true
+    "role": "switch",
+    "name": "Margem automática"
    },
-   "seconds": 1.0,
-   "at": 3.34,
-   "label": "só a Principal",
+   "seconds": 0.8,
+   "at": 18.37,
+   "label": "cartão Margem automática (a chave)",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L2",
-   "at": 11.62
+   "at": 20.57
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "switch",
+    "name": "Margem automática"
+   },
+   "at": 20.77,
+   "label": "liga a chave Margem automática"
+  },
+  {
+   "do": "waitFor",
+   "text": "Alcance da margem",
+   "timeout": 6
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Tabela toda",
+    "exact": false,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.4,
+   "at": 23.88,
+   "label": "alcance Tabela toda",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Por material",
+    "exact": false,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.4,
+   "at": 28.59,
+   "label": "alcance Por material",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "click",
    "target": {
     "role": "button",
-    "name": "Nova Tabela",
-    "exact": true
+    "name": "Tabela toda",
+    "exact": false,
+    "within": "[role=dialog]"
    },
-   "at": 12.5,
-   "label": "Nova Tabela"
+   "at": 32.38,
+   "label": "escolhe Tabela toda"
   },
   {
    "do": "waitFor",
-   "text": "Nova Tabela de Preços",
-   "timeout": 8
-  },
-  {
-   "do": "type",
    "target": {
-    "placeholder": "Ex: Atacado, Varejo, Premium..."
+    "selector": "input[aria-label=\"Margem da tabela\"]"
    },
-   "text": "Tabela Depósitos",
-   "cps": 30,
-   "noClick": true,
-   "at": 14.29,
-   "label": "Nome da Tabela: Tabela Depósitos"
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "[role=dialog] #is-linked"
-   },
-   "at": 15.84,
-   "label": "Vincular à tabela principal"
-  },
-  {
-   "do": "waitFor",
-   "text": "Exemplo de cálculo",
    "timeout": 6
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 18.78
-  },
-  {
-   "do": "type",
-   "target": {
-    "selector": "[role=dialog] input[inputmode=decimal]"
-   },
-   "text": "4",
-   "at": 18.78,
-   "label": "Valor da variação 4",
-   "clear": true
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Porcentagem\", \"Aumenta\", \"R$ 10,40\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
-   "label": "confere Porcentagem, Aumenta, R$ 10,40"
+   "at": 34.13
   },
   {
    "do": "hover",
    "target": {
-    "text": "Exemplo de cálculo",
+    "text": "Sobre a compra:",
     "within": "[role=dialog]"
    },
-   "seconds": 2.2,
-   "at": 21.58,
-   "label": "Exemplo de cálculo: R$ 10,00 > R$ 10,40 (+4%) (zoom)",
+   "seconds": 1.0,
+   "at": 37.21,
+   "label": "Sobre a compra: R$ 10,00 com 30% vira R$ 13,00 (zoom)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "input[aria-label=\"Margem da tabela\"]"
+   },
+   "text": "15",
+   "at": 43.11,
+   "label": "margem da tabela 15",
+   "clear": true
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] button[aria-pressed]:text-is('R$')"
+   },
+   "seconds": 0.6,
+   "at": 46.55,
+   "label": "botão R$ (margem em reais por quilo)",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 29.63
-  },
-  {
-   "do": "mark",
-   "name": "L5",
-   "at": 40.46
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "button",
-    "name": "Criar Tabela",
-    "exact": true,
-    "within": "[role=dialog]"
-   },
-   "at": 40.66,
-   "label": "Criar Tabela"
-  },
-  {
-   "do": "waitFor",
-   "text": "Tabela de preço criada com sucesso!",
-   "timeout": 10
-  },
-  {
-   "do": "waitFor",
-   "text": "Exibindo preços da tabela: Tabela Depósitos",
-   "timeout": 8
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"main *\")].filter(e=>e.offsetParent!==null&&e.textContent.trim()===\"Cobre mel\").sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-430);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=()=>{const p=Math.min(1,(performance.now()-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 44.32,
-   "label": "desce até o Cobre mel"
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Cobre mel\", \"R$ 44,20\", \"R$ 47,90\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main tbody tr\")].filter(e=>!true||e.innerText.includes(\"Cobre mel\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
-   "label": "confere Cobre mel R$ 44,20 na Tabela Depósitos, venda R$ 47,90"
+   "at": 49.82
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main tbody tr:has-text('Cobre mel') td:nth-child(7)"
+    "selector": "[role=dialog] button[aria-pressed]:has-text('A venda é recalculada')"
    },
-   "seconds": 1.4,
-   "at": 48.02,
-   "label": "Cobre mel Preço de Compra R$ 44,20 (zoom: linha Cobre mel)",
+   "seconds": 0.4,
+   "at": 53.81,
+   "label": "Qual preço fica como está: Compra",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main tbody tr:has-text('Cobre mel') td:nth-child(8)"
+    "selector": "[role=dialog] button[aria-pressed]:has-text('A compra é recalculada')"
+   },
+   "seconds": 0.4,
+   "at": 57.0,
+   "label": "Qual preço fica como está: Venda",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button[aria-pressed]:has-text('A venda é recalculada')"
+   },
+   "at": 59.51,
+   "label": "Compra fica como está"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Aplicar",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 61.48,
+   "label": "Aplicar"
+  },
+  {
+   "do": "waitFor",
+   "text": "Tabela toda · 15%",
+   "timeout": 8
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 62.32
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] tbody tr:has-text('Cobre misto') input",
+    "nth": 0
+   },
+   "seconds": 0.6,
+   "at": 67.14,
+   "label": "Cobre misto: compra 36,00",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const esp=[\"36,00\", \"41,40\"];let out='';for(let i=0;i<12;i++){const v=[...document.querySelectorAll(\"[role=dialog] tbody tr:has-text('Cobre misto')\"+' input, '+\"[role=dialog] tbody tr:has-text('Cobre misto')\"+' textarea')].map(e=>e.value).join(' | ');const falta=esp.filter(e=>!v.includes(e));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+v.slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Cobre misto 36,00 e 41,40"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] tbody tr:has-text('Cobre misto') input",
+    "nth": 2
    },
    "seconds": 1.0,
-   "at": 50.9,
-   "label": "Preço de Venda R$ 47,90 (o da principal)",
+   "at": 71.55,
+   "label": "Cobre misto: venda 41,40 (zoom: linha Cobre misto)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] tbody tr:has-text('Ferro pesado') input",
+    "nth": 2
+   },
+   "seconds": 1.0,
+   "at": 80.12,
+   "label": "Ferro pesado: venda 1,093 (o milésimo)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "com alterações pendentes",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.2,
+   "at": 82.02,
+   "label": "aviso: margem automática com alterações pendentes (rodapé)",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L6",
-   "at": 54.55
+   "at": 86.27
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] tbody tr:has-text('Cobre misto') input",
+    "nth": 0
+   },
+   "text": "38,00",
+   "at": 90.55,
+   "label": "Cobre misto compra 38,00",
+   "clear": true
+  },
+  {
+   "do": "press",
+   "key": "Tab",
+   "label": "sai da célula"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const esp=[\"38,00\", \"43,70\"];let out='';for(let i=0;i<12;i++){const v=[...document.querySelectorAll(\"[role=dialog] tbody tr:has-text('Cobre misto')\"+' input, '+\"[role=dialog] tbody tr:has-text('Cobre misto')\"+' textarea')].map(e=>e.value).join(' | ');const falta=esp.filter(e=>!v.includes(e));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+v.slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Cobre misto 38,00 e 43,70"
   },
   {
    "do": "hover",
    "target": {
-    "selector": "a[href='/clientes-fornecedores']"
+    "selector": "[role=dialog] tbody tr:has-text('Cobre misto') input",
+    "nth": 2
    },
-   "seconds": 0.6,
-   "at": 55.58,
-   "label": "menu lateral (abre ao passar o mouse)",
-   "noScroll": true,
+   "seconds": 1.0,
+   "at": 94.44,
+   "label": "Cobre misto: venda 43,70 (zoom)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 96.49
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] tbody tr:has-text('Cobre misto') input",
+    "nth": 2
+   },
+   "text": "46,00",
+   "at": 100.62,
+   "label": "Cobre misto venda 46,00",
+   "clear": true
+  },
+  {
+   "do": "press",
+   "key": "Tab",
+   "label": "sai da célula"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const esp=[\"40,00\", \"46,00\"];let out='';for(let i=0;i<12;i++){const v=[...document.querySelectorAll(\"[role=dialog] tbody tr:has-text('Cobre misto')\"+' input, '+\"[role=dialog] tbody tr:has-text('Cobre misto')\"+' textarea')].map(e=>e.value).join(' | ');const falta=esp.filter(e=>!v.includes(e));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+v.slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Cobre misto 40,00 e 46,00"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] tbody tr:has-text('Cobre misto') input",
+    "nth": 0
+   },
+   "seconds": 0.66,
+   "at": 105.04,
+   "label": "Cobre misto: compra 40,00 (zoom)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 106.25
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] tbody tr:has-text('Cobre misto') input",
+    "nth": 0
+   },
+   "seconds": 0.2,
+   "at": 106.25,
+   "label": "Cobre misto: compra 40,00 (zoom) (continua)",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "click",
    "target": {
-    "selector": "a[href='/clientes-fornecedores']"
+    "role": "button",
+    "name": "Editar margem",
+    "exact": false,
+    "within": "[role=dialog]"
    },
-   "at": 58.09,
-   "label": "Clientes e Fornecedores",
-   "noScroll": true
-  },
-  {
-   "do": "scroll",
-   "point": {
-    "x": 760,
-    "y": 420
-   },
-   "by": 0,
-   "duration": 0.3,
-   "after": 0,
-   "label": "cursor sai do menu (ele recolhe)"
+   "at": 109.72,
+   "label": "Editar margem"
   },
   {
    "do": "waitFor",
    "target": {
-    "role": "button",
-    "name": "Fornecedores"
+    "selector": "input[aria-label=\"Margem da tabela\"]"
    },
-   "timeout": 12
+   "timeout": 6
   },
   {
-   "do": "click",
+   "do": "type",
    "target": {
-    "role": "button",
-    "name": "Fornecedores"
+    "selector": "input[aria-label=\"Margem da tabela\"]"
    },
-   "at": 59.45,
-   "label": "aba Fornecedores"
-  },
-  {
-   "do": "pause",
-   "seconds": 0.3
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "button",
-    "name": "Fornecedores"
-   },
-   "label": "aba Fornecedores de novo (só se não trocou)",
-   "unless": {
-    "role": "button",
-    "name": "Novo Fornecedor",
-    "exact": true
-   }
-  },
-  {
-   "do": "waitFor",
-   "target": {
-    "role": "button",
-    "name": "Novo Fornecedor",
-    "exact": true
-   },
-   "timeout": 30
-  },
-  {
-   "do": "waitFor",
-   "target": {
-    "text": "Depósito Irmãos Siqueira",
-    "within": "main"
-   },
-   "timeout": 8
-  },
-  {
-   "do": "click",
-   "target": {
-    "text": "Depósito Irmãos Siqueira",
-    "within": "main"
-   },
-   "at": 61.2,
-   "label": "Depósito Irmãos Siqueira"
-  },
-  {
-   "do": "waitFor",
-   "text": "1 preço personalizado",
-   "timeout": 10
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "button",
-    "name": "Editar",
-    "exact": true,
-    "within": "main"
-   },
-   "at": 63.25,
-   "label": "Editar"
-  },
-  {
-   "do": "waitFor",
-   "text": "Editar Fornecedor",
-   "timeout": 10
-  },
-  {
-   "do": "mark",
-   "name": "L7",
-   "at": 64.69
+   "text": "20",
+   "at": 112.13,
+   "label": "margem da tabela 20",
+   "clear": true
   },
   {
    "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.offsetParent!==null&&e.textContent.trim()===\"Tabela de Preços Padrão\").sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-380);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop;await new Promise(res=>{const t0=performance.now();const f=()=>{const p=Math.min(1,(performance.now()-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 64.99,
-   "label": "desce até Tabela de Preços Padrão"
+   "js": "(async()=>{const esp=[\"40,00\", \"48,00\"];let out='';for(let i=0;i<12;i++){const v=[...document.querySelectorAll(\"[role=dialog] tbody tr:has-text('Cobre misto')\"+' input, '+\"[role=dialog] tbody tr:has-text('Cobre misto')\"+' textarea')].map(e=>e.value).join(' | ');const falta=esp.filter(e=>!v.includes(e));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+v.slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Cobre misto 40,00 e 48,00"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] tbody tr:has-text('Cobre misto') input",
+    "nth": 2
+   },
+   "seconds": 1.0,
+   "at": 116.33,
+   "label": "venda recalculada na hora",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L9",
+   "at": 118.6
   },
   {
    "do": "click",
    "target": {
-    "selector": "[role=dialog] div.space-y-2:has(> label:has-text('Tabela de Preços Padrão')) button[role=combobox]"
+    "selector": "[role=dialog] tbody tr:has-text('Ferro misto') button[aria-label='Personalizar a margem deste material']"
    },
-   "at": 66.41,
-   "label": "Tabela de Preços Padrão (abre)"
+   "at": 125.64,
+   "label": "abre o cadeado do Ferro misto"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] tbody tr:has-text('Ferro misto') input",
+    "nth": 1
+   },
+   "text": "40",
+   "at": 126.98,
+   "label": "Ferro misto margem 40",
+   "clear": true
+  },
+  {
+   "do": "press",
+   "key": "Tab",
+   "label": "sai da célula"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"personalizada\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere selo personalizada no Ferro misto"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] tbody tr:has-text('Ferro misto')"
+   },
+   "seconds": 1.2,
+   "at": 129.74,
+   "label": "Ferro misto: selo personalizada (zoom na linha)",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "click",
    "target": {
-    "role": "option",
-    "name": "Tabela Depósitos"
+    "selector": "[role=dialog] tbody tr:has-text('Ferro misto') button[aria-label='Voltar à margem da tabela']"
    },
-   "at": 68.46,
-   "label": "Tabela Depósitos (zoom)"
+   "at": 133.84,
+   "label": "fecha o cadeado do Ferro misto"
   },
   {
-   "do": "click",
+   "do": "mark",
+   "name": "L10",
+   "at": 138.47
+  },
+  {
+   "do": "hover",
    "target": {
     "role": "button",
     "name": "Salvar",
     "exact": true,
     "within": "[role=dialog]"
    },
-   "at": 69.37,
+   "seconds": 0.5,
+   "at": 142.0,
    "label": "Salvar",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Cancelar",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 145.73,
+   "label": "Cancelar (nada é salvo)",
    "noScroll": true
   },
   {
    "do": "waitFor",
-   "text": "Fornecedor atualizado!",
-   "timeout": 10
-  },
-  {
-   "do": "mark",
-   "name": "L8",
-   "at": 74.15
-  },
-  {
-   "do": "eval",
-   "js": "(()=>{history.pushState({},'','/caixa');window.dispatchEvent(new PopStateEvent('popstate'));return location.pathname})()",
-   "at": 79.99,
-   "label": "vai ao Caixa (por baixo da ilustração)"
-  },
-  {
-   "do": "waitFor",
-   "text": "Nova Compra",
-   "timeout": 15
-  },
-  {
-   "do": "mark",
-   "name": "L9",
-   "at": 95.38
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "main button:has-text('Nova Compra')"
+   "gone": {
+    "role": "dialog"
    },
-   "at": 97.24,
-   "label": "Nova Compra"
-  },
-  {
-   "do": "waitFor",
-   "target": {
-    "selector": "#supplier-desktop-top"
-   },
-   "timeout": 15
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "#supplier-desktop-top"
-   },
-   "at": 102.33,
-   "label": "Selecionar Fornecedor"
-  },
-  {
-   "do": "type",
-   "target": {
-    "placeholder": "Buscar por nome, apelido, CPF/CNPJ ou telefone..."
-   },
-   "text": "Depósito",
-   "cps": 30,
-   "noClick": true,
-   "label": "busca Depósito"
-  },
-  {
-   "do": "click",
-   "target": {
-    "text": "Depósito Irmãos Siqueira",
-    "within": "[role=dialog]"
-   },
-   "at": 104.99,
-   "label": "Depósito Irmãos Siqueira"
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Tabela Depósitos\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
-   "label": "confere Tabela de Preços passou para Tabela Depósitos"
-  },
-  {
-   "do": "mark",
-   "name": "L10",
-   "at": 106.85
-  },
-  {
-   "do": "type",
-   "target": {
-    "selector": "main button[role=combobox]:has-text('Tabela Depósitos')"
-   },
-   "text": "",
-   "noClick": true,
-   "optional": true,
-   "timeout": 4,
-   "at": 106.85,
-   "label": "Tabela de Preços: Tabela Depósitos (zoom, sem o mouse)"
-  },
-  {
-   "do": "click",
-   "target": {
-    "placeholder": "Escreva o nome ou código do material"
-   },
-   "at": 107.65,
-   "label": "campo do material"
-  },
-  {
-   "do": "type",
-   "target": {
-    "placeholder": "Escreva o nome ou código do material"
-   },
-   "text": "cobre",
-   "cps": 30,
-   "noClick": true,
-   "at": 109.08,
-   "label": "material: cobre"
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "option",
-    "name": "Cobre mel",
-    "exact": false
-   },
-   "at": 109.67,
-   "label": "Cobre mel"
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Preço da tabela aplicado para Cobre mel\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"body\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
-   "label": "confere aviso Preço da tabela aplicado"
-  },
-  {
-   "do": "mark",
-   "name": "L11",
-   "at": 112.9
-  },
-  {
-   "do": "type",
-   "target": {
-    "selector": "main div:has(> label:has-text('Valor/')) input"
-   },
-   "text": "",
-   "noClick": true,
-   "optional": true,
-   "timeout": 4,
-   "at": 112.9,
-   "label": "Valor/kg 44,20 (zoom)"
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const esp=[\"44,2\"];let out='';for(let i=0;i<12;i++){const v=[...document.querySelectorAll(\"main\"+' input, '+\"main\"+' textarea')].map(e=>e.value).join(' | ');const falta=esp.filter(e=>!v.includes(e));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+v.slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
-   "label": "confere Valor/kg 44,20"
-  },
-  {
-   "do": "click",
-   "target": {
-    "placeholder": "Escreva o nome ou código do material"
-   },
-   "at": 113.78,
-   "label": "campo do material de novo"
-  },
-  {
-   "do": "type",
-   "target": {
-    "placeholder": "Escreva o nome ou código do material"
-   },
-   "text": "bronze",
-   "cps": 30,
-   "noClick": true,
-   "at": 114.7,
-   "label": "troca para bronze",
-   "clear": true
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "option",
-    "name": "Bronze",
-    "exact": false
-   },
-   "at": 116.01,
-   "label": "Bronze"
-  },
-  {
-   "do": "scroll",
-   "point": {
-    "x": 990,
-    "y": 748
-   },
-   "by": 0,
-   "duration": 0.3,
-   "after": 0,
-   "label": "cursor no lugar do aviso (embaixo à direita)"
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "Preço especial aplicado para Bronze"
-   },
-   "seconds": 5.98,
-   "label": "aviso Preço especial aplicado (o mouse segura o aviso) (zoom: Valor/kg 30,50 com o aviso)",
-   "timeout": 6,
-   "noScroll": true,
-   "optional": true
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Preço especial aplicado para Bronze\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"body\")].filter(e=>!false||e.innerText.includes(\"\"));const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
-   "label": "confere aviso Preço especial aplicado para Bronze"
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const esp=[\"30,5\"];let out='';for(let i=0;i<12;i++){const v=[...document.querySelectorAll(\"main\"+' input, '+\"main\"+' textarea')].map(e=>e.value).join(' | ');const falta=esp.filter(e=>!v.includes(e));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+v.slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
-   "label": "confere Valor/kg 30,50"
+   "timeout": 8
   },
   {
    "do": "eval",
@@ -669,7 +587,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 127.56
+   "at": 156.59
   }
  ]
 }

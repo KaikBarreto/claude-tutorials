@@ -1,9 +1,36 @@
-# Inventário · T4 Clientes, fornecedores e a ficha do parceiro (EcoSistema 1.59.154)
+# Inventário · T4 Clientes, fornecedores e a ficha do parceiro (EcoSistema 1.59.154, atualizado em 20/11 para o 1.60.18: ver a seção "Atualização 20/11" logo abaixo)
 
 Levantado em 10/11/2026 no código gravado (`/home/claude/ecoflix/app-src-1.59.154/`, só leitura). Caminhos relativos a
 `src/`, exceto `supabase/...`. Rótulos entre aspas = texto exato da tela. Gravação em 1280×800: a altura ≤ 820 px liga o
 modo compacto da tela (`[@media(min-width:768px)_and_(max-height:820px)]`): some o subtítulo da página e, na lista, os
 selos ficam só com o ícone (o texto vai para o leitor de tela; o tooltip continua).
+
+## Atualização 20/11 (1.60.18, tela 1600×900)
+Conferido por busca no código (`/dev/shm/ecoflix-src`, `APP_VERSION = "1.60.18"`) e pela `cobertura_160.md`. O que muda em relação às seções abaixo:
+- **Tela 1600×900** (altura > 820): sai o modo compacto, os selos da lista voltam com texto e o subtítulo da página volta. Nas seções
+  abaixo, "1280×800" e "só o ícone" valem só para a gravação antiga.
+- **CNPJ e inscrição** (`EntityFormDialog.tsx`, `entity-form/PendenciasNfePanel.tsx`, `entity-form/pendenciasNfe.ts`, `utils/consultaIe.ts`): a lupa
+  consulta a Receita (`cnpj-lookup`) e a Sintegra (`GET publica.cnpj.ws/cnpj/<14>`); caixa âmbar "Falta isto para emitir NF-e (n)" com "Dá para salvar o
+  cadastro assim, mas a nota não sai até preencher." e links "Número (Dados Fiscais)"; textos "A Sintegra informa IE X para este CNPJ em SP. A ficha
+  está marcada como Não Contribuinte." / "A ficha tem Y." + "Usar a da Sintegra"; "Preenchido pela consulta do CNPJ: ..."; "Confere com a consulta do CNPJ: ...";
+  "A Sintegra não tem inscrição estadual ativa para este CNPJ. Se ele for isento, marque Isento de Inscrição."; alerta "Atenção: a Receita informa que este CNPJ está Baixada.".
+- **CEP** com máscara depois da busca do CNPJ ("12062-150"; `EntityFormDialog.tsx:914`, `cepMask`); a dica da lupa é um tooltip de verdade
+  ("Buscar dados da empresa pelo CNPJ", `CnpjLookupInput.tsx:199-223`) e aparece na tela.
+- **"Rascunho encontrado"** depois de salvar: corrigido no 1.60.18 (handoff de 19/11, conferido só no código; o ensaio confirma).
+- **Saldo inicial** (criação, `EntityFormDialog.tsx:2831-2931`): "+ Adicionar saldo inicial", "Tipo de saldo", "Valor", "Remover saldo inicial"; na edição, "Alterar saldo" e "Cancelar alteração".
+- **Cliente** (`EntityFormDialog.tsx`): "É Indústria" ("Ativa diferimento de ICMS automático nas vendas") e "É uma Reciclagem".
+- **Parceiro duplo:** o saldo único lê na convenção do cliente nas duas abas ("-R$ 840,00" nas duas e na ficha); botão "Desvincular" no rodapé do Editar
+  (`pages/ClientsSuppliers.tsx:1696-1727`, "Manter como Cliente" / "Manter como Fornecedor").
+- **Aba "Preços" da ficha** (`EntityPricePanel.tsx`): filtro "Todos", "Já comprados" ("Já vendidos"), "Personalizados"; colunas "Estado" (Herda/Vinculado/Fixo),
+  "Base", "Variação", "Preço final"; botão "Salvar preços" (`EntityPriceTableModal.tsx:314`, modo inline).
+- **Configurações da tela** (`clients-suppliers/ClientsSuppliersSettingsDialog.tsx`): "Etiquetas" (Nome, Cor, Prévia, "Mostrar esta etiqueta nos portais"; sem "Aplicar em"
+  na etiqueta) e "Campos personalizados" (Nome, Tipo, "Aplicar em"). Filtros: "Situação do saldo" (Todos, Com saldo, Saldo zerado) e "Etiquetas"; "Ordenar lista": Código, Nome, Saldo, CPF/CNPJ, Telefone.
+- **Conta-corrente** (`pages/BalanceDetail.tsx`): "Exportar" = "PDF resumido", "PDF detalhado (com produtos)" (toast "Extrato detalhado gerado"), "Baixar Excel (.xlsx)" (o
+  "Abrir Relatório (PDF)" acabou); "Nova Movimentação de Saldo" chama só `record_partner_balance_movement`; "Lançar crédito/débito" (`components/balance/BalanceEntryDialog.tsx`:
+  "Direção", "Saldo hoje ... → depois ...", "Motivo do lançamento *", "Não movimenta caixa nem conta bancária.", RPC `apply_balance_delta`); "Editar saldo (definir o valor final)".
+- **Extrato em aba nova:** `exportBalanceHtml` e o do relatório de saldos abrem `window.open('', '_blank')` e escrevem HTML (há "Baixar PDF" e "Imprimir" dentro); não é o `#pdf-frame` do `openPdfInTab`.
+- **Aviso do app com aba que não existe:** "Informe o estado (UF) na aba Endereço..." (a UF fica em "Dados Fiscais", "Endereço Fiscal"), e a nota 1.60.3 chama a aba de "Saldo" (na ficha ela é "Conta-corrente").
+
 
 ## 0. O que a fonte diz × o que o código faz (vale o código)
 | Fonte | Código 1.59.154 | Como a aula trata |

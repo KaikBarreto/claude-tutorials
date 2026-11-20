@@ -1,6 +1,6 @@
 {
  "name": "t04-cap02",
- "title": "T4 · Cap. 2 · Pessoa física e pessoa jurídica (narração ESTIMADA 73,1 s; marcas L1..L9 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "title": "T4 · Cap. 2 · Pessoa física e pessoa jurídica (narração ESTIMADA 91,7 s; marcas L1..L10 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
  "seed": "t04-cap02",
  "pace": 0.5,
  "cps": 40,
@@ -172,39 +172,39 @@
   {
    "do": "eval",
    "js": "(()=>{const e=document.activeElement;if(!e||!/^(INPUT|TEXTAREA)$/.test(e.tagName))return 'SEM ALVO (nada em foco)';document.execCommand('insertText',false,\"Rog\\u00e9rio Alves Costa\");return e.value})()",
-   "at": 14.54,
+   "at": 15.22,
    "label": "Nome Rogério Alves Costa (colado)"
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 14.55
+   "at": 16.98
   },
   {
    "do": "click",
    "target": {
     "selector": "[role=dialog] #contact_name"
    },
-   "at": 16.67,
+   "at": 19.1,
    "label": "Apelido Rogério Eletricista (clique no campo)"
   },
   {
    "do": "eval",
    "js": "(()=>{const e=document.activeElement;if(!e||!/^(INPUT|TEXTAREA)$/.test(e.tagName))return 'SEM ALVO (nada em foco)';document.execCommand('insertText',false,\"Rog\\u00e9rio Eletricista\");return e.value})()",
-   "at": 20.63,
+   "at": 23.06,
    "label": "Apelido Rogério Eletricista (colado)"
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 24.24
+   "at": 26.67
   },
   {
    "do": "click",
    "target": {
     "selector": "[role=dialog] #phone"
    },
-   "at": 25.44,
+   "at": 27.88,
    "label": "Telefone (12) 90000-2611 (clique no campo)"
   },
   {
@@ -214,7 +214,7 @@
    },
    "text": "12900002611",
    "cps": 40,
-   "at": 26.75,
+   "at": 29.18,
    "label": "Telefone (12) 90000-2611",
    "noClick": true
   },
@@ -224,7 +224,7 @@
     "selector": "[role=dialog] label[for=phone_unavailable]"
    },
    "seconds": 1.0,
-   "at": 31.01,
+   "at": 33.44,
    "label": "Não possui telefone (sem marcar)",
    "optional": true,
    "timeout": 4
@@ -232,31 +232,58 @@
   {
    "do": "mark",
    "name": "L5",
-   "at": 33.08
+   "at": 35.52
   },
   {
    "do": "click",
    "target": {
     "selector": "[role=dialog] #pix_key"
    },
-   "at": 33.69,
+   "at": 36.12,
    "label": "Chave PIX rogerio.costa@pix.example (clique no campo)"
   },
   {
    "do": "eval",
    "js": "(()=>{const e=document.activeElement;if(!e||!/^(INPUT|TEXTAREA)$/.test(e.tagName))return 'SEM ALVO (nada em foco)';document.execCommand('insertText',false,\"rogerio.costa@pix.example\");return e.value})()",
-   "at": 34.7,
+   "at": 37.12,
    "label": "Chave PIX rogerio.costa@pix.example (colado)"
   },
   {
    "do": "mark",
    "name": "L6",
-   "at": 36.77
+   "at": 39.21
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] label[for=show_phone_in_docs]"
+   },
+   "seconds": 0.49,
+   "at": 44.92,
+   "label": "Mostrar o telefone no comprovante (sem marcar)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] label[for=show_pix_in_docs]"
+   },
+   "seconds": 0.8,
+   "at": 46.36,
+   "label": "Mostrar a chave PIX no comprovante (sem marcar)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 49.88
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.textContent.trim()===\"Saldo inicial\"&&e.offsetParent).sort((a,b)=>a.textContent.length-b.textContent.length||a.children.length-b.children.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-300);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 36.77,
+   "at": 49.88,
    "label": "desce a janela até o Saldo inicial (passa pelo Também é cliente)"
   },
   {
@@ -266,34 +293,64 @@
     "exact": true,
     "within": "[role=dialog]"
    },
-   "seconds": 1.0,
-   "at": 38.54,
+   "seconds": 0.8,
+   "at": 51.65,
    "label": "Saldo inicial",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "+ Adicionar saldo inicial",
+    "within": "[role=dialog]"
+   },
+   "at": 57.4,
+   "label": "+ Adicionar saldo inicial (abre o bloco)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] label[for=balance-positive]"
+   },
+   "seconds": 0.5,
+   "at": 59.09,
+   "label": "Tipo de saldo: Eu devo a ele (a pagar)",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "hover",
    "target": {
-    "role": "button",
-    "name": "Adicionar saldo inicial",
-    "within": "[role=dialog]"
+    "selector": "[role=dialog] label[for=balance-negative]"
    },
-   "seconds": 1.2,
-   "at": 44.39,
-   "label": "+ Adicionar saldo inicial (sem clicar)",
+   "seconds": 0.5,
+   "at": 60.68,
+   "label": "Tipo de saldo: Ele me deve (a receber)",
    "optional": true,
    "timeout": 4
   },
   {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Remover saldo inicial",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 65.14,
+   "label": "Remover saldo inicial (o bloco fecha)"
+  },
+  {
    "do": "mark",
-   "name": "L7",
-   "at": 47.45
+   "name": "L8",
+   "at": 66.02
   },
   {
    "do": "eval",
    "js": "(async()=>{const d=document.querySelector('[role=dialog]');if(!d)return 'sem janela';const c=[...d.querySelectorAll('*')].find(e=>{const s=getComputedStyle(e);return /(auto|scroll)/.test(s.overflowY)&&e.scrollHeight>e.clientHeight+4});if(!c)return 'SEM ROLAGEM';const y0=c.scrollTop,dy=-y0;if(y0<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'topo:'+Math.round(c.scrollTop)})()",
-   "at": 47.45,
+   "at": 66.02,
    "label": "sobe a janela até as abas"
   },
   {
@@ -303,7 +360,7 @@
     "name": "Dados Fiscais",
     "within": "[role=dialog]"
    },
-   "at": 48.28,
+   "at": 66.85,
    "label": "aba Dados Fiscais"
   },
   {
@@ -315,7 +372,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 1.0,
-   "at": 50.97,
+   "at": 69.53,
    "label": "Tipo de Pessoa: Pessoa Física (já vem marcado)",
    "optional": true,
    "timeout": 4
@@ -325,8 +382,8 @@
    "target": {
     "selector": "[role=dialog] #cpf_cnpj"
    },
-   "at": 53.29,
-   "label": "zoom: CPF 418.273.560-90 (L7) (clique no campo)"
+   "at": 71.86,
+   "label": "zoom: CPF 418.273.560-90 (L8) (clique no campo)"
   },
   {
    "do": "type",
@@ -335,8 +392,8 @@
    },
    "text": "41827356090",
    "cps": 40,
-   "at": 54.37,
-   "label": "zoom: CPF 418.273.560-90 (L7)",
+   "at": 72.94,
+   "label": "zoom: CPF 418.273.560-90 (L8)",
    "noClick": true
   },
   {
@@ -346,8 +403,8 @@
   },
   {
    "do": "mark",
-   "name": "L8",
-   "at": 56.76
+   "name": "L9",
+   "at": 75.33
   },
   {
    "do": "click",
@@ -357,7 +414,7 @@
     "exact": true,
     "within": "[role=dialog]"
    },
-   "at": 57.06,
+   "at": 75.63,
    "label": "Salvar"
   },
   {
@@ -384,19 +441,14 @@
    "label": "Rogério Alves Costa na lista (sem mexer o mouse)"
   },
   {
-   "do": "eval",
-   "js": "(()=>{sessionStorage.removeItem('form-draft:entity-form-supplier');return 'rascunho apagado'})()",
-   "label": "apaga o rascunho regravado pelo app (defeito)"
-  },
-  {
    "do": "mark",
-   "name": "L9",
-   "at": 60.6
+   "name": "L10",
+   "at": 79.17
   },
   {
    "do": "eval",
    "js": "(()=>{const b=[...document.querySelectorAll(\"main\"+' button')].find(x=>x.textContent.trim()===\"Novo Fornecedor\");if(!b)return 'SEM ALVO';b.click();return 'ok'})()",
-   "at": 60.6,
+   "at": 79.17,
    "label": "Novo Fornecedor por eval (o clique logo depois de salvar levou 3,5 s no ensaio)"
   },
   {
@@ -405,13 +457,18 @@
    "timeout": 10
   },
   {
+   "do": "eval",
+   "js": "(async()=>{for(let i=0;i<10;i++){const el=document.querySelector(\"body\");const t=el?el.innerText:'';if(!t.includes(\"Rascunho encontrado\"))return 'OK: sumiu '+\"Rascunho encontrado\";await new Promise(r=>setTimeout(r,300));}return 'DIFERENTE: ainda aparece '+\"Rascunho encontrado\"})()",
+   "label": "confere: sem \"Rascunho encontrado\" (corrigido no 1.60.18)"
+  },
+  {
    "do": "click",
    "target": {
     "role": "tab",
     "name": "Dados Fiscais",
     "within": "[role=dialog]"
    },
-   "at": 62.6,
+   "at": 81.17,
    "label": "aba Dados Fiscais"
   },
   {
@@ -422,7 +479,7 @@
     "exact": true,
     "within": "[role=dialog]"
    },
-   "at": 64.54,
+   "at": 83.11,
    "label": "Pessoa Jurídica"
   },
   {
@@ -431,7 +488,7 @@
     "selector": "[role=dialog] #cpf_cnpj"
    },
    "seconds": 0.2,
-   "at": 66.27,
+   "at": 84.83,
    "label": "CNPJ (com a lupa)",
    "optional": true,
    "timeout": 4
@@ -442,7 +499,7 @@
     "selector": "[role=dialog] #inscricao_estadual"
    },
    "seconds": 0.6,
-   "at": 68.51,
+   "at": 87.08,
    "label": "Inscrição Estadual",
    "optional": true,
    "timeout": 4
@@ -453,7 +510,7 @@
     "selector": "[role=dialog] button[aria-label='Buscar dados pelo CNPJ']"
    },
    "seconds": 0.91,
-   "at": 71.25,
+   "at": 89.82,
    "label": "a lupa do CNPJ (o atalho)",
    "optional": true,
    "timeout": 4
@@ -466,7 +523,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 73.11
+   "at": 91.68
   }
  ]
 }

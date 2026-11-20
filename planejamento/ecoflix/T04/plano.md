@@ -4,15 +4,15 @@
 - **Objetivo (uma frase):** cadastrar quem traz e quem leva sucata (pessoa física, empresa pela busca do CNPJ, parceiro
   que é cliente e fornecedor) e aprender a ler o saldo na ficha e no relatório de saldos.
 - **Antes:** T3 · Materiais e tabelas de preço. **Próximo:** T5 · Balança e impressora: o EcoTray.
-- **Áreas das vinhetas:** PARCEIROS · CADASTRO · CADASTRO · FISCAL · SALDO · PREÇOS · FICHA · FICHA · SALDO · FICHA · FICHA ·
-  SALDO · RESUMO.
-- **Duração estimada:** ~15 min de vídeo (1.966 palavras, ~12,6 min de fala a 2,6 palavras/s, mais 13 vinhetas, as
-  ilustrações e as esperas de tela). Alvo da fonte: 17 min. Voz: 11.065 caracteres (falas + títulos).
+- **Áreas das vinhetas:** PARCEIROS · CADASTRO · CADASTRO · FISCAL · FISCAL · FISCAL · SALDO · PREÇOS · PARCEIROS · FICHA · FICHA ·
+  SALDO · SALDO · FICHA · FICHA · SALDO · RESUMO (18 capítulos, 0 a 17: ver "Atualização de 20/11" no fim).
+- **Duração estimada:** ~28 min de vídeo (3.238 palavras, ~20,8 min de fala a 2,6 palavras/s, mais 17 vinhetas, as ilustrações e
+  as esperas de tela; era ~15 min). Voz: ~18.100 caracteres (falas + títulos).
 - **Pronúncia:** as do PERFIL que a aula usa (SEFAZ, PDF, EcoTray) e duas novas a testar: "Cliente-mais-Fornecedor" →
   Cliente+Fornecedor e "pét" → PET. O `config_narracao.json` do T04 segue o `PERFIL.md` (o do perfil estava, às 01:20,
   com NF-e, NFS-e e ICMS em outra grafia; a aula não fala nenhum dos três).
-- **Base:** `T04/inventario.md` (código 1.59.154). **FAKE_NOW:** `2026-11-10T08:30:00-03:00` (terça) em todos os capítulos.
-- **Usuário:** Rafael Nogueira (dono, administrador MASTER). Computador, janela 1280×800.
+- **Base:** `T04/inventario.md` (código 1.59.154, com a seção "Atualização 20/11" para o 1.60.18). **FAKE_NOW:** `2026-11-10T08:30:00-03:00` (terça) em todos os capítulos.
+- **Usuário:** Rafael Nogueira (dono, administrador MASTER). Computador, janela **1600×900** (decisão do Kaik, 20/11).
 
 ## Estado de partida (fim do T3 + mundo base)
 Recicla Vale Metais com todos os módulos; a "Tabela Depósitos" e o material novo do T3 já existem; a tabela padrão é a
@@ -64,7 +64,7 @@ Além do `MUNDO_FICTICIO.md` (a conferir/consolidar pelo agente Mundo; os númer
 | Cooperativa Recomeço (fornecedor) | +2.550,00 | compra de 06/11 (3.700,00) no saldo, menos Pix parcial de 1.150,00 em 09/11 (da Conta Secundária) | vermelho, "a pagar" |
 | Valdir Pereira (fornecedor) | −300,00 | vale em dinheiro em 03/11 ("adiantamento a favor dele" lido como dinheiro adiantado a ele) | verde, "a receber" |
 | Fundição Bandeira do Vale (cliente) | +14.370,00 | venda de 03/11 do T13: 300 kg de cobre mel, a prazo em 3 parcelas de 4.790,00 (17/11, 17/12, 18/01) | verde, "a receber" |
-| Depósito Irmãos Siqueira (duplo, linha `party`) | −840,00 | compra no saldo em 06/11: ferro pesado 1.200 kg (1.140,00), ferro misto 320 kg (240,00), cobre misto 20 kg (720,00) = 2.100,00; venda no saldo em 05/11: papelão 1.250 kg (1.000,00) e plástico PET 100 kg (260,00) = 1.260,00 | vermelho nas duas abas ("-R$ 840,00" em Clientes, "R$ 840,00" em Fornecedores) |
+| Depósito Irmãos Siqueira (duplo, linha `party`) | −840,00 | compra no saldo em 06/11: ferro pesado 1.200 kg (1.140,00), ferro misto 320 kg (240,00), cobre misto 20 kg (720,00) = 2.100,00; venda no saldo em 05/11: papelão 1.250 kg (1.000,00) e plástico PET 100 kg (260,00) = 1.260,00 | vermelho nas duas abas e na ficha, sempre "-R$ 840,00" (1.59.161: o sinal não troca mais entre as abas) |
 O fiado parcelado da Fundição Bandeira do Vale (T13) está no saldo dela: o "A Receber" do cap. 12 é R$ 19.540,00 (junção).
 
 **Cooperativa Recomeço** (fornecedora PJ, completa para NF-e, com `portal_token`): 14 compras, uma por sexta de 07/08 a
@@ -154,3 +154,33 @@ Depósito −840,00; Serra Fina −1.500,00). A "Cida Ramos" continua no mundo (
 4. **Nomenclatura:** sem dizer "nunca muda" (existe "Inverter os termos Cliente e Fornecedor" em Configurações).
 5. **Nomes novos** (Serralheria Bem-Te-Vi, Rogério Alves Costa, Cida Ramos, Rua das Palmeiras, Jardim Santa Luzia, CEP
    12062-150): conferir na semente que não são de empresa ou pessoa real da região.
+
+
+## Atualização de 20/11 (app 1.60.18, tela 1600×900, 18 capítulos)
+
+Base: `cobertura_160.md` (1.60.10), `handoffs/2026-11-19_resposta_correcoes_1.60.18.md` e a decisão da junção (`JUNCAO_160.md`).
+
+**Capítulos novos (0 a 17):** 0 Abertura · 1 Tela · 2 Pessoa física e jurídica (+ "Mostrar no comprovante", saldo inicial aberto) · 3 CNPJ
+(caixa âmbar "Falta isto para emitir NF-e", CEP já com máscara, dica da lupa que agora aparece na tela) · 4 **O que falta pra emitir nota**
+(refeito: Número, inscrição pela Sintegra, regime, sinal verde, Rogério completado pelo CEP) · 5 **Empresa do Lucro Real** (Aços Quiririm:
+IE errada → "Usar a da Sintegra", "Indicador IE", regime "Lucro Real", "É Indústria", "É uma Reciclagem") · 6 **Os avisos da consulta**
+(CNPJ "Baixada", sem IE ativa, trocar o CNPJ limpa, duplicado, limite de 3 por minuto) · 7 Cliente e fornecedor (era 5; + "Desvincular";
+saldo "-R$ 840,00" nas duas abas) · 8 Tabela de preço (era 6; + aba "Preços": "Já comprados", "Fixo", "Vinculado", "Salvar preços") · 9 **Organizar
+a lista** (Configurações: etiquetas e campos personalizados; "Filtros", "Ordenar", menu "...") · 10 Ficha (era 7) · 11 Materiais (era 8) ·
+12 Conta-corrente (era 9; "Exportar" com "PDF resumido" e "PDF detalhado (com produtos)", o detalhado aberto na tela) · 13 **Ajustes na
+conta-corrente** ("Receber", "Dinheiro", "Crédito/débito", lixeira, "Editar saldo", filtro "Data") · 14 Lucro estimado (era 10) · 15 Financeiro e
+notas fiscais (era 11) · 16 Relatório de saldos (era 12; "Exportar em PDF" também aberto na tela) · 17 Recapitulando (era 13).
+
+**Sementes** (`rec/mundo/seeds-extra/t04/`): `inicio` (agora também a Aços Quiririm degradada: IE 688.042.819.111, `regime_tributario` nulo,
+`is_industry` falso), `apos-cap02` (Rogério, cap. 3 e 4), `apos-cap04` (serralheria e Rogério completo; cap. 5, 6 e 7), `apos-n1` (Aços certa:
+IE 688.042.711.117, Lucro Real, indústria; base do cap. 7 em diante, no lugar de `apos-cap04` puro), `apos-cap05` (serralheria dupla; cap. 8),
+`apos-cap06` (Tabela Depósitos no depósito, SEM o preço fixo do ferro pesado e SEM etiqueta; cap. 9, 10, 11 e 12), `apos-cap09` (pagamento de
+1.200,00; cap. 13 a 16). O preço fixo do ferro pesado (cap. 8) e a etiqueta do Valdir (cap. 9) não seguem (junção).
+
+**Mundo novo para o robô:** `publica.cnpj.ws` (host fora do Supabase, handler `ext`), RPC `registrar_consulta_cnpj_ie`, RPC `apply_balance_delta`,
+`cnpj-lookup` com `regime_ecf`/`regime_ecf_ano` e os CNPJs 98.463.027/0001-15 e 52.917.384/0001-05, `cep-lookup` para 12062150.
+
+**PDF na tela:** cap. 12 ("PDF detalhado") e cap. 16 ("Exportar em PDF") abrem uma aba nova com HTML do app; o robô devolve o conteúdo
+(`window.open` guardado em `POPS`) e o coordenador monta a cena (`cenas/ilustracoes.json`, `"tipo": "comprovante"`, `"cena": "pdf"`).
+
+**Gravação:** 1600×900 sai do modo compacto (a altura passa de 820 px): os selos da lista voltam com texto e o subtítulo da página volta.

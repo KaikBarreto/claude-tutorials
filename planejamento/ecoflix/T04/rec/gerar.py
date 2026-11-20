@@ -1,19 +1,24 @@
 #!/usr/bin/env python3
-"""T04 · gera rec/t04/cap00..cap13.json (roteiros do robô) a partir da voz (t04/narracao/capNN.json).
+"""T04 · gera rec/t04/cap00..cap17.json (roteiros do robô) a partir da voz (t04/narracao/capNN.json).
 
-Clientes, fornecedores e a ficha do parceiro, no COMPUTADOR (janela 1280x800: modo compacto da tela, selos da lista só com ícone),
-logado como Rafael Nogueira (MASTER, Recicla Vale Metais), EcoSistema 1.59.154. FAKE_NOW 2026-11-10T08:30:00-03:00 em todos.
+Clientes, fornecedores e a ficha do parceiro, no COMPUTADOR (janela 1600x900: fora do modo compacto da lista, selos com texto),
+logado como Rafael Nogueira (MASTER, Recicla Vale Metais), EcoSistema 1.60.18. FAKE_NOW 2026-11-10T08:30:00-03:00 em todos.
+20/11: 18 capítulos. Novos: 5 (Empresa do Lucro Real), 6 (Os avisos da consulta), 9 (Organizar a lista), 13 (Ajustes na conta-corrente);
+o 4 foi refeito; os antigos 5 a 13 viraram 7, 8, 10, 11, 12, 14, 15, 16, 17.
 Cada passo é preso a uma palavra da fala: `at` = início da palavra − o custo do gesto (A(linha, palavra, folga)), para o cursor CHEGAR
 na palavra (docs/04, "Custo real dos gestos"). Hoje a voz é ESTIMADA (capNN.json do preparar_aula.sh); com a voz real, rode de novo.
 Rodar de qualquer pasta: `python3 -I rec/t04/gerar.py [NN ...]`. Depois: ensaio.py NN, gravação --rapido, resumo.py NN --ens, prever.py.
 
-Cadeia de sementes (rec/mundo/seeds-extra/t04/, t04_sementes.py): `inicio` (Cida Ramos, links do portal, depósito na tabela padrão)
-nos caps 0 a 2; `apos-cap02` (Rogério) nos 3 e 4; `apos-cap04` (serralheria) no 5; `apos-cap05` (serralheria cliente+fornecedor) no 6;
-`apos-cap06` (Tabela Depósitos no depósito) nos 7, 8 e 9; `apos-cap09` (pagamento de 1.200,00) nos 10 a 13. Cada `apos-capNN` sai do
-ensaio do capítulo NN com 0 falho (`t04_sementes.py captura NN`, logo depois, na mesma instância).
+Cadeia de sementes (rec/mundo/seeds-extra/t04/, t04_sementes.py): `inicio` (Cida Ramos, links do portal, depósito na tabela padrão, Aços
+Quiririm "degradada") nos caps 0 a 2; `apos-cap02` (Rogério) nos 3 e 4; `apos-cap04` (serralheria e Rogério completo) nos 5 e 6; `apos-n1`
+(Aços certa: capturada do cap05) no 7; `apos-cap05` (serralheria cliente+fornecedor, capturada do cap07) no 8; `apos-cap06` (Tabela
+Depósitos no depósito, capturada do cap08 SEM o preço fixo) nos 9 a 12; `apos-cap09` (pagamento de 1.200,00, capturada do cap12) nos 13 a 17.
+Cada semente sai do ensaio do capítulo com 0 falho (`t04_sementes.py captura NN [--nome ...] [--sem ...]`, logo depois, na mesma instância).
 
 Particularidades:
  - Menu lateral recolhido no `setup` do cap01 em diante (botão de ícone do topo, sem rótulo); no cap00 o recolher é filmado.
+ - PDF na tela (20/11): o extrato e o relatório abrem uma aba nova com HTML; `POPS` guarda o `window.open` e `HTML_JS` devolve o conteúdo
+   da aba (`HTML:<base64>`) para a ilustração `"cena": "pdf"`; `t04_pdf.py` grava o arquivo.
  - Lista + ficha ao lado (ClientsListView): a linha é um <button> com "código · nome"; a ficha abre ao lado com 7 abas.
  - A dica da lupa do CNPJ é `title` nativo (não aparece no vídeo): o robô passa o mouse e lê o texto (`eval`) para o aviso da edição.
  - Selos da linha (Mesmo telefone, aptidão fiscal) são Tooltip do Radix (aparecem com o mouse parado, 150 ms).
@@ -29,13 +34,14 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 TUT_HOME = os.path.normpath(os.path.join(HERE, '..', '..'))
 NARR = os.path.join(TUT_HOME, 't04', 'narracao')
 FAKE_NOW = '2026-11-10T08:30:00-03:00'
-NOMES = ['Abertura', 'Como a tela está organizada', 'Pessoa física e pessoa jurídica', 'Buscar dados pelo CNPJ', 'Dados fiscais e o campo vermelho',
-         'Cliente e fornecedor ao mesmo tempo', 'Tabela de preço do parceiro', 'A ficha do parceiro', 'Os materiais que ele mais movimenta',
-         'Conta-corrente: saldo e extrato', 'Lucro estimado', 'Financeiro e notas fiscais', 'Relatório de saldos', 'Recapitulando']
+NOMES = ['Abertura', 'Como a tela está organizada', 'Pessoa física e pessoa jurídica', 'Buscar dados pelo CNPJ', 'O que falta pra emitir nota',
+         'Empresa do Lucro Real', 'Os avisos da consulta', 'Cliente e fornecedor ao mesmo tempo', 'Tabela de preço do parceiro', 'Organizar a lista',
+         'A ficha do parceiro', 'Os materiais que ele mais movimenta', 'Conta-corrente: saldo e extrato', 'Ajustes na conta-corrente', 'Lucro estimado',
+         'Financeiro e notas fiscais', 'Relatório de saldos', 'Recapitulando']
 _I = ['t04/inicio']
-SEMENTE = {0: _I, 1: _I, 2: _I, 3: _I + ['t04/apos-cap02'], 4: _I + ['t04/apos-cap02'], 5: _I + ['t04/apos-cap04'],
-           6: _I + ['t04/apos-cap05'], 7: _I + ['t04/apos-cap06'], 8: _I + ['t04/apos-cap06'], 9: _I + ['t04/apos-cap06'],
-           10: _I + ['t04/apos-cap09'], 11: _I + ['t04/apos-cap09'], 12: _I + ['t04/apos-cap09'], 13: _I + ['t04/apos-cap09']}
+_C2, _C4, _N1, _C5, _C6, _C9 = ['t04/apos-cap02'], ['t04/apos-cap04'], ['t04/apos-n1'], ['t04/apos-cap05'], ['t04/apos-cap06'], ['t04/apos-cap09']
+SEMENTE = {0: _I, 1: _I, 2: _I, 3: _I + _C2, 4: _I + _C2, 5: _I + _C4, 6: _I + _C4, 7: _I + _N1, 8: _I + _C5, 9: _I + _C6, 10: _I + _C6,
+           11: _I + _C6, 12: _I + _C6, 13: _I + _C9, 14: _I + _C9, 15: _I + _C9, 16: _I + _C9, 17: _I + _C9}
 
 sys.path.insert(0, NARR)
 try:
@@ -446,7 +452,6 @@ def cap01():
     c.fim()
     return c
 
-
 def js_dlg_topo(dur_ms=600):
     """sobe a rolagem da janela aberta até o topo (as abas da janela ficam à vista)"""
     return ("(async()=>{const d=document.querySelector('[role=dialog]');if(!d)return 'sem janela';const c=[...d.querySelectorAll('*')].find(e=>{const s=getComputedStyle(e);"
@@ -511,29 +516,48 @@ SALDO_FICHA = lambda nome: SEL(f"{FICHA_DE(nome)} .tabular-nums", nth=0)
 COOP = 'Cooperativa Recomeço'
 FC = FICHA_DE(COOP)
 
-# setup do cap04: refaz fora do vídeo o formulário do cap03 e para no Endereço Fiscal com o Número vermelho
+
+# ---------------------------------------------------------------- 1.60.18: caixa âmbar, Sintegra, PDF na tela
+CAIXA_NFE = "section[aria-label='Pendências para emitir NF-e']"
+PEND = lambda campo: SEL(f"{DLG} {CAIXA_NFE} button:has-text('{campo}')")                # o link do campo na caixa âmbar
+TEXTO_CAIXA = TXT('Falta isto para emitir NF-e', within=DLG, exact=False)
+POPS = "(()=>{const o=window.open;window.__pops=[];window.open=function(...a){const w=o.apply(this,a);window.__pops.push(w);return w};return 'ok'})()"
+# o extrato (e o relatório de saldos) abrem uma aba nova e escrevem HTML nela (não é o #pdf-frame do openPdfInTab): devolve o HTML da aba em
+# base64 (`HTML:<b64>`) para a ilustração `"cena": "pdf"` (a gravação filma uma aba só; t04_pdf.py grava o arquivo)
+HTML_JS = ("(async()=>{const w=(window.__pops||[]).slice(-1)[0];if(!w)return 'SEM JANELA';const espera=%s;for(let i=0;i<60;i++){let t='';"
+           "try{t=(w.document&&w.document.body&&w.document.body.innerText)||''}catch(e){return 'ERRO '+e}"
+           "if(t&&espera.every(x=>t.includes(x))){const h='<!doctype html>'+w.document.documentElement.outerHTML;const u=new TextEncoder().encode(h);let s='';"
+           "for(let k=0;k<u.length;k+=8192)s+=String.fromCharCode.apply(null,u.subarray(k,k+8192));return 'HTML:'+btoa(s)}"
+           "await new Promise(r=>setTimeout(r,250))}return 'SEM HTML'})()")
+
+
+def html_js(espera):
+    return HTML_JS % json.dumps(list(espera), ensure_ascii=False)
+
+
+# setup do cap04: refaz fora do vídeo o formulário do cap03 e para em "Dados de Contato" com a caixa âmbar no topo
 REFAZ_CAP03 = [
     {'do': 'click', 'target': NOVO_FORN}, {'do': 'waitFor', 'text': 'Identificação e contato', 'timeout': 10},
     {'do': 'type', 'target': CAMPO('name'), 'text': 'Serralheria Bem-Te-Vi'},
     {'do': 'click', 'target': ABA_DLG('Dados Fiscais')}, {'do': 'click', 'target': BTN('Pessoa Jurídica', DLG)},
     {'do': 'type', 'target': CAMPO('cpf_cnpj'), 'text': '46280719000124'},
     {'do': 'click', 'target': LUPA}, {'do': 'waitFor', 'text': TOAST_CNPJ, 'timeout': 12},
-    {'do': 'waitFor', 'text': AVISO_NUMERO, 'timeout': 8},
+    {'do': 'waitFor', 'text': 'Falta isto para emitir NF-e', 'timeout': 8},
     {'do': 'waitFor', 'gone': {'text': TOAST_CNPJ}, 'timeout': 15},
-    {'do': 'eval', 'js': js_rola_texto('Endereço Fiscal', 150, 300)}, {'do': 'wait', 'seconds': 0.5},
+    {'do': 'click', 'target': ABA_DLG('Dados de Contato')}, {'do': 'wait', 'seconds': 0.6},
 ]
 
 
 def cap02():
-    """Pessoa física e pessoa jurídica: Novo Fornecedor do Rogério (nome, apelido, telefone, Pix, saldo inicial, CPF), Salvar; depois a
-    Pessoa Jurídica de outro cadastro novo mostra CNPJ, razão social e inscrição estadual (sem salvar)."""
+    """Pessoa física e pessoa jurídica: Novo Fornecedor do Rogério (nome, apelido, telefone, Pix, as caixinhas de comprovante, saldo inicial
+    aberto e fechado, CPF), Salvar; depois a Pessoa Jurídica de outro cadastro novo mostra CNPJ, razão social e inscrição estadual (sem salvar)."""
     c = cap_novo(2, start=(900, 300))
     c.mark(1)
     c.hover(ABA('Fornecedores'), 1.0, at=c.A(1, 'fornecedor', 0.5, nth=0), label='aba Fornecedores (já aberta)')
     c.click(NOVO_FORN, at=c.A(1, 'Em', 0.6), label='Novo Fornecedor')
     c.waitfor(text='Identificação e contato', timeout=10)
     c.mark(2)
-    c.cola(CAMPO('name'), 'Rogério Alves Costa', c.A(2, 'único', 1.0), c.A(2, 'Nome.', 0.1), 'Nome Rogério Alves Costa')
+    c.cola(CAMPO('name'), 'Rogério Alves Costa', c.A(2, 'único', 1.0), c.A(2, 'escrevo', 0.1), 'Nome Rogério Alves Costa')
     c.mark(3)
     c.cola(CAMPO('contact_name'), 'Rogério Eletricista', c.A(3, 'Apelido', 0.6, nth=0), c.A(3, 'Rogério', 0.05), 'Apelido Rogério Eletricista')
     c.mark(4)
@@ -542,37 +566,43 @@ def cap02():
     c.mark(5)
     c.cola(CAMPO('pix_key'), 'rogerio.costa@pix.example', c.A(5, 'chave', 0.6), c.A(5, 'Pix', 0.05), 'Chave PIX rogerio.costa@pix.example')
     c.mark(6)
-    c.ev(DLG_ROLA('Saldo inicial', 300, 900), at=c.L(6) - 0.9, label='desce a janela até o Saldo inicial (passa pelo Também é cliente)')
-    c.hover(TXT('Saldo inicial', within=DLG), 1.0, at=c.A(6, 'Saldo', 0.5), label='Saldo inicial')
-    c.hover({'role': 'button', 'name': 'Adicionar saldo inicial', 'within': DLG}, 1.2, at=c.A(6, 'registra', 0.5), label='+ Adicionar saldo inicial (sem clicar)')
+    c.hover(SEL(f'{DLG} label[for=show_phone_in_docs]'), 0.5, at=c.A(6, 'telefone', 0.5), label='Mostrar o telefone no comprovante (sem marcar)')
+    c.hover(SEL(f'{DLG} label[for=show_pix_in_docs]'), 0.8, at=c.A(6, 'Pix', 0.5), label='Mostrar a chave PIX no comprovante (sem marcar)')
     c.mark(7)
-    c.ev(js_dlg_topo(), at=c.L(7) - 0.9, label='sobe a janela até as abas')
-    c.click(ABA_DLG('Dados Fiscais'), at=c.A(7, 'Dados', 0.6), label='aba Dados Fiscais')
-    c.hover(BTN('Pessoa Física', DLG), 1.0, at=c.A(7, 'Pessoa', 0.5), label='Tipo de Pessoa: Pessoa Física (já vem marcado)')
-    c.digita(CAMPO('cpf_cnpj'), '41827356090', c.A(7, 'CPF,', 0.6, nth=0), c.A(7, 'como', 0.05), 'zoom: CPF 418.273.560-90 (L7)')
-    c.confere_campos(['418.273.560-90'], 'CPF com a máscara')
+    c.ev(DLG_ROLA('Saldo inicial', 300, 900), at=c.L(7) - 0.9, label='desce a janela até o Saldo inicial (passa pelo Também é cliente)')
+    c.hover(TXT('Saldo inicial', within=DLG), 0.8, at=c.A(7, 'Saldo', 0.5), label='Saldo inicial')
+    c.click({'role': 'button', 'name': '+ Adicionar saldo inicial', 'within': DLG}, at=c.A(7, 'escolhe', 0.6), label='+ Adicionar saldo inicial (abre o bloco)')
+    c.hover(SEL(f'{DLG} label[for=balance-positive]'), 0.5, at=c.A(7, 'devo', 0.5), label='Tipo de saldo: Eu devo a ele (a pagar)')
+    c.hover(SEL(f'{DLG} label[for=balance-negative]'), 0.5, at=c.A(7, 'deve,', 0.5), label='Tipo de saldo: Ele me deve (a receber)')
+    c.click(BTN('Remover saldo inicial', DLG), at=c.A(7, 'deixo', 0.6), label='Remover saldo inicial (o bloco fecha)')
     c.mark(8)
-    c.click(SALVAR, at=c.A(8, 'Salvar.', 0.6), label='Salvar')
+    c.ev(js_dlg_topo(), at=c.L(8) - 0.9, label='sobe a janela até as abas')
+    c.click(ABA_DLG('Dados Fiscais'), at=c.A(8, 'Dados', 0.6), label='aba Dados Fiscais')
+    c.hover(BTN('Pessoa Física', DLG), 1.0, at=c.A(8, 'Pessoa', 0.5), label='Tipo de Pessoa: Pessoa Física (já vem marcado)')
+    c.digita(CAMPO('cpf_cnpj'), '41827356090', c.A(8, 'CPF,', 0.6, nth=0), c.A(8, 'como', 0.05), 'zoom: CPF 418.273.560-90 (L8)')
+    c.confere_campos(['418.273.560-90'], 'CPF com a máscara')
+    c.mark(9)
+    c.click(SALVAR, at=c.A(9, 'Salvar.', 0.6), label='Salvar')
     c.waitfor(text='Fornecedor cadastrado com sucesso!', timeout=12)
     c.waitfor(gone={'role': 'dialog'}, timeout=8)
     c.marcar(NOME_LINHA('Rogério Alves Costa'), label='Rogério Alves Costa na lista (sem mexer o mouse)')
-    c.mark(9)
-    # defeito do app: o rascunho do formulário (sessionStorage) é regravado depois do clearDraft() do Salvar, e a janela nova abria com
-    # "Rascunho encontrado" (folha de contato do ensaio de 11/11 22:11); o robô apaga a chave antes, como a página faria (Achados do app)
-    c.ev("(()=>{sessionStorage.removeItem('form-draft:entity-form-supplier');return 'rascunho apagado'})()", label='apaga o rascunho regravado pelo app (defeito)')
-    c.ev(js_clica_botao('Novo Fornecedor'), at=c.L(9) - 0.9, label='Novo Fornecedor por eval (o clique logo depois de salvar levou 3,5 s no ensaio)')
+    c.mark(10)
+    # 1.60.18: o "Rascunho encontrado" depois de salvar foi corrigido (handoff de 19/11): a janela nova abre limpa, sem o robô apagar o rascunho
+    c.ev(js_clica_botao('Novo Fornecedor'), at=c.L(10) - 0.9, label='Novo Fornecedor por eval (o clique logo depois de salvar levou 3,5 s no ensaio)')
     c.waitfor(text='Identificação e contato', timeout=10)
-    c.click(ABA_DLG('Dados Fiscais'), at=c.A(9, 'cadastro,', 0.8), label='aba Dados Fiscais')
-    c.click(BTN('Pessoa Jurídica', DLG), at=c.A(9, 'Jurídica.', 0.6), label='Pessoa Jurídica')
-    c.hover(CAMPO('cpf_cnpj'), 0.2, at=c.A(9, 'CNPJ,', 0.7, nth=0), label='CNPJ (com a lupa)')
-    c.hover(CAMPO('inscricao_estadual'), 0.6, at=c.A(9, 'inscrição', 0.5), label='Inscrição Estadual')
-    c.hover(LUPA, 1.0, at=c.A(9, 'atalho.', 0.5), label='a lupa do CNPJ (o atalho)')
+    c.add({'do': 'eval', 'js': js_sem_texto('Rascunho encontrado', 'body'), 'label': 'confere: sem "Rascunho encontrado" (corrigido no 1.60.18)'})
+    c.click(ABA_DLG('Dados Fiscais'), at=c.A(10, 'cadastro,', 0.8), label='aba Dados Fiscais')
+    c.click(BTN('Pessoa Jurídica', DLG), at=c.A(10, 'Jurídica.', 0.6), label='Pessoa Jurídica')
+    c.hover(CAMPO('cpf_cnpj'), 0.2, at=c.A(10, 'CNPJ,', 0.7, nth=0), label='CNPJ (com a lupa)')
+    c.hover(CAMPO('inscricao_estadual'), 0.6, at=c.A(10, 'inscrição', 0.5), label='Inscrição Estadual')
+    c.hover(LUPA, 1.0, at=c.A(10, 'atalho.', 0.5), label='a lupa do CNPJ (o atalho)')
     c.fim()
     return c
 
 
 def cap03():
-    """Buscar dados pelo CNPJ: Serralheria Bem-Te-Vi; CNPJ, lupa (consulta simulada), razão social e nome fantasia, endereço, contato."""
+    """Buscar dados pelo CNPJ: Serralheria Bem-Te-Vi; CNPJ, lupa (consulta simulada, com a dica na tela), razão social e nome fantasia, a caixa
+    âmbar, endereço (CEP com máscara), contato e o aviso amarelo em Dados de Contato."""
     c = cap_novo(3, start=(900, 300))
     c.mark(1)
     c.click(NOVO_FORN, at=c.A(1, 'Chegou', 1.0), label='Novo Fornecedor')
@@ -586,20 +616,22 @@ def cap03():
     c.cola(CAMPO('cpf_cnpj'), '46280719000124', c.A(2, 'Jurídica,', 0.0), c.A(2, 'CNPJ.', 0.05),
            'zoom: CNPJ 46.280.719/0001-24 (L2; colado: 14 dígitos a ~0,16 s não cabem na frase)')
     c.confere_campos(['46.280.719/0001-24'], 'CNPJ com a máscara')
-    c.hover(LUPA, 1.6, at=c.A(3, 'lupa:', 0.5), label='lupa: Buscar dados da empresa pelo CNPJ (dica nativa: aviso na edição)')
-    c.ev(js_title(f"{DLG} button[aria-label='Buscar dados pelo CNPJ']"), label='texto da dica (title) da lupa')
-    c.click(LUPA, at=c.A(3, 'clique,', 0.6), label='clica na lupa: consulta a Receita')
+    c.hover(LUPA, 1.6, at=c.A(3, 'lupa:', 0.5), label='lupa: Buscar dados da empresa pelo CNPJ (a dica agora aparece na tela)')
+    c.confere('body', ['Buscar dados da empresa pelo CNPJ'], 'dica da lupa na tela (1.60.18)')
+    c.click(LUPA, at=c.A(3, 'clique,', 0.6), label='clica na lupa: consulta a Receita e a inscrição estadual')
     c.waitfor(text=TOAST_CNPJ, timeout=12)
     c.mark(4)
     c.confere_campos(['BEM-TE-VI SERRALHERIA E ESTRUTURAS LTDA', 'SERRALHERIA BEM-TE-VI'], 'razão social e nome fantasia da busca')
+    c.confere('dlg', ['Falta isto para emitir NF-e', 'Dá para salvar o cadastro assim, mas a nota não sai até preencher.'], 'a caixa âmbar no topo')
+    c.hover(TEXTO_CAIXA, 0.8, at=c.A(4, 'conferir', 0.5), label='caixa âmbar: Falta isto para emitir NF-e (1)')
     c.hover(CAMPO('razao_social'), 0.8, at=c.A(4, 'razão', 0.5), label='Razão Social (da busca)')
     c.hover(CAMPO('nome_fantasia'), 0.8, at=c.A(4, 'fantasia.', 0.5), label='Nome Fantasia (da busca)')
     c.mark(5)
     c.ev(DLG_ROLA('Endereço Fiscal', 150, 700), at=c.L(5) - 0.9, label='desce a janela até o Endereço Fiscal')
-    c.hover(CEP_IN, 0.3, at=c.A(5, 'CEP,', 0.5), label='CEP 12062-150')
+    c.hover(CEP_IN, 0.3, at=c.A(5, 'CEP,', 0.5), label='CEP 12062-150 (com a máscara, 1.60.18)')
     c.hover(CIDADE, 0.6, at=c.A(5, 'cidade,', 0.5), label='Cidade Taubaté (rua e bairro logo abaixo)')
     c.confere('dlg', ['Taubaté'], 'a cidade casou com Taubaté')
-    c.confere_campos(['12062150', 'RUA DAS PALMEIRAS', 'JARDIM SANTA LUZIA'], 'CEP (sem máscara: achado), rua e bairro da busca')
+    c.confere_campos(['12062-150', 'RUA DAS PALMEIRAS', 'JARDIM SANTA LUZIA'], 'CEP com máscara, rua e bairro da busca')
     c.mark(6)
     c.ev(js_dlg_topo(), at=c.L(6) - 0.9, label='sobe a janela até as abas')
     c.click(ABA_DLG('Dados de Contato'), at=c.A(6, 'Dados', 0.6), label='aba Dados de Contato')
@@ -607,63 +639,190 @@ def cap03():
     c.hover(CAMPO('name'), 0.8, at=c.A(6, 'nome', 0.5), label='Nome: Serralheria Bem-Te-Vi (o digitado)')
     c.confere_campos(['Serralheria Bem-Te-Vi', '(12) 90000-2742', 'contato@serralheriabemtevi.example'], 'nome, telefone e e-mail')
     c.mark(7)
-    c.click(ABA_DLG('Dados Fiscais'), at=c.A(7, 'conferir', 0.6), label='volta à aba Dados Fiscais')
-    c.ev(DLG_ROLA('Endereço Fiscal', 150, 800), at=c.A(7, 'repara', 0.9), label='desce até o Número (vermelho)')
-    c.hover(CAMPO('numero'), 0.5, at=c.A(7, 'campo', 0.5), label='o campo Número, vermelho (sem zoom)')
+    c.confere('dlg', ['Número (Dados Fiscais)'], 'o link do campo em outra aba: Número (Dados Fiscais)')
+    c.marcar(TEXTO_CAIXA, at=c.L(7) - 0.9, label='zoom: a caixa âmbar Falta isto para emitir NF-e (1) com o link Número (Dados Fiscais) (L7)')
+    c.hover(PEND('Número'), 1.4, at=c.A(7, 'amarelo,', 0.5), label='o link Número (Dados Fiscais), na caixa âmbar')
     c.fim()
     return c
 
 
 def cap04():
-    """Dados fiscais e o campo vermelho: Número 418, inscrição estadual (Contribuinte ICMS), regime da consulta, Salvar; sinal verde,
-    triângulo do Rogério e o botão de incompletos."""
+    """O que falta pra emitir nota: o link da caixa âmbar leva ao Número (418); a inscrição pela Sintegra ("Usar a da Sintegra") e o regime;
+    Salvar: sinal verde; o triângulo do Rogério e o CEP que o completa; o botão de incompletos."""
     c = cap_novo(4, extra=REFAZ_CAP03, start=(640, 520))
     c.mark(1)
-    c.marcar(CAMPO('numero'), at=0.35, label='zoom: Número vazio e o aviso vermelho (L1-L2)')
-    c.hover(CAMPO('numero'), 1.4, at=c.A(1, 'Número.', 0.5, nth=0), label='o campo Número (vazio)')
+    c.marcar(TEXTO_CAIXA, at=0.35, label='zoom: a caixa âmbar Falta isto para emitir NF-e (1) com o link Número (L1)')
+    c.hover(PEND('Número'), 1.4, at=c.A(1, 'Número.', 0.5, nth=0), label='o link Número (Dados Fiscais)')
     c.mark(2)
-    c.hover(TXT(AVISO_NUMERO, within=DLG), 1.8, at=c.A(2, 'aviso', 0.5), label='aviso: Não veio da Receita — obrigatório para emitir NF-e')
+    c.click(PEND('Número'), at=c.A(2, 'Clicando', 0.6), label='Número (Dados Fiscais): a janela troca de aba e o cursor cai no campo')
+    c.waitfor(text=AVISO_NUMERO, timeout=8)
+    c.marcar(CAMPO('numero'), at=c.L(2) - 0.5, label='zoom: Número vazio e a linha vermelha (L2)')
+    c.hover(TXT(AVISO_NUMERO, within=DLG), 1.8, at=c.A(2, 'linha', 0.5), label='linha vermelha: Não veio da Receita — obrigatório para emitir NF-e')
     c.mark(3)   # ilustração: a nota leva o endereço
     c.mark(4)
     c.digita(CAMPO('numero'), '418', c.A(4, 'completo', 0.6), c.A(4, 'quatrocentos', 0.05), 'Número 418')
     c.add({'do': 'eval', 'js': js_sem_texto(AVISO_NUMERO), 'label': 'confere o vermelho do Número sumiu'})
+    c.add({'do': 'eval', 'js': js_sem_texto('Falta isto para emitir NF-e'), 'label': 'confere a caixa âmbar sumiu'})
     c.mark(5)
     c.ev(DLG_ROLA('Inscrição Estadual', 230, 800), at=c.L(5) - 0.9, label='sobe a janela até a inscrição estadual')
-    c.hover(CAMPO('inscricao_estadual'), 0.3, at=c.A(5, 'inscrição', 0.5), label='Inscrição Estadual')
-    c.hover(IND_IE, 0.3, at=c.A(5, 'indicador', 0.5), label='Indicador IE')
-    c.hover(REGIME, 0.6, at=c.A(5, 'regime', 0.5), label='Regime tributário do fornecedor')
-    c.click(IND_IE, at=c.A(5, 'Quem', 0.3), label='abre o Indicador IE')
-    c.click(OPT('Contribuinte ICMS'), at=c.A(5, 'que', 0.3, nth=0), label='Contribuinte ICMS')
-    c.cola(CAMPO('inscricao_estadual'), '688412573032', c.A(5, 'contador.', 0.3), c.A(5, 'Eu', 0.05), 'Inscrição Estadual 688412573032')
+    c.confere('dlg', ['A Sintegra informa IE 688412573032 para este CNPJ em SP.', 'Não Contribuinte', 'Usar a da Sintegra'], 'o aviso da Sintegra')
+    c.marcar(CAMPO('inscricao_estadual'), at=c.A(5, 'Agora,', 0.2), label='zoom: o aviso da Sintegra e o link Usar a da Sintegra (L5)')
+    c.hover(BTN('Usar a da Sintegra', DLG), 1.4, at=c.A(5, 'achou.', 0.8), label='o link Usar a da Sintegra')
     c.mark(6)
-    c.hover(REGIME, 1.2, at=c.A(6, 'Simples', 0.5), label='zoom: Regime Simples Nacional e a linha da consulta (L6)')
-    c.hover(TXT('Preenchido pela consulta do CNPJ: a Receita informa que esta empresa é optante pelo Simples Nacional.', within=DLG, exact=False), 1.6,
-            at=c.A(6, 'regime', 0.5, nth=1), label='Preenchido pela consulta do CNPJ')
-    c.confere('dlg', ['Simples Nacional', 'Contribuinte ICMS'], 'regime e indicador')
+    c.click(BTN('Usar a da Sintegra', DLG), at=c.A(6, 'Usar', 0.6), label='clica em Usar a da Sintegra')
+    c.confere('dlg', ['Preenchido pela consulta do CNPJ: a Sintegra informa a inscrição estadual 688412573032 para este CNPJ em SP.', 'Contribuinte ICMS'], 'inscrição e indicador preenchidos')
+    c.hover(CAMPO('inscricao_estadual'), 0.8, at=c.A(6, 'inscrição', 0.5), label='zoom: Inscrição Estadual 688412573032 e Indicador IE Contribuinte ICMS (L6)')
+    c.hover(SEL(f"{DLG} button[role=combobox]:has-text('Contribuinte ICMS')"), 1.4, at=c.A(6, 'contribuinte', 0.5), label='Indicador IE: Contribuinte ICMS')
     c.mark(7)
-    c.click(SALVAR, at=c.A(7, 'Salvar.', 0.6), label='Salvar')
+    c.hover(REGIME, 1.2, at=c.A(7, 'Simples', 0.5), label='zoom: Regime Simples Nacional e a linha da consulta (L7)')
+    c.hover(TXT('Preenchido pela consulta do CNPJ: a Receita informa que esta empresa é optante pelo Simples Nacional.', within=DLG, exact=False), 1.6,
+            at=c.A(7, 'regime', 0.5, nth=1), label='Preenchido pela consulta do CNPJ')
+    c.confere('dlg', ['Simples Nacional', 'Contribuinte ICMS'], 'regime e indicador')
+    c.mark(8)
+    c.mark(9)
+    c.click(SALVAR, at=c.A(9, 'Salvar.', 0.6), label='Salvar')
     c.waitfor(text='Fornecedor cadastrado com sucesso!', timeout=12)
     c.waitfor(gone={'role': 'dialog'}, timeout=8)
-    c.hover(FISCAL_OK('Serralheria Bem-Te-Vi'), 2.0, at=c.A(7, 'verde:', 0.5), label='sinal verde da serralheria (Pronto para emitir NF-e)')
+    c.hover(FISCAL_OK('Serralheria Bem-Te-Vi'), 2.0, at=c.A(9, 'verde:', 0.5), label='sinal verde da serralheria (Pronto para emitir NF-e)')
     c.confere('body', ['Pronto para emitir NF-e'], 'tooltip Pronto para emitir NF-e')
-    c.mark(8)
-    c.hover(INCOMPLETO('Rogério Alves Costa'), 4.0, at=c.A(8, 'triângulo', 0.5), label='triângulo do Rogério (o que falta para a NF-e)')
-    c.confere('body', ['Faltam dados para emitir NF-e para este cadastro:'], 'tooltip do incompleto')
-    c.mark(9)
-    c.click(INCOMPLETOS, at=c.A(9, 'botão', 0.6), label='botão incompletos')
-    c.confere('main aside', ['Rogério Alves Costa', 'Valdir Pereira'], 'só os incompletos')
-    c.hover(NOME_LINHA('Rogério Alves Costa'), 1.0, at=c.A(9, 'mostra', 0.5), label='a lista só com os incompletos')
     c.mark(10)
-    c.click(MOSTRAR_TODOS, at=c.A(10, 'Uma', 0.6), label='Mostrar todos (a lista volta)')
-    c.hover(NOME_LINHA('Serralheria Bem-Te-Vi'), 1.0, at=c.A(10, 'nome,', 0.5), label='a lista inteira')
+    c.hover(INCOMPLETO('Rogério Alves Costa'), 4.0, at=c.A(10, 'triângulo', 0.5), label='triângulo do Rogério (o que falta para a NF-e)')
+    c.confere('body', ['Faltam dados para emitir NF-e para este cadastro:'], 'tooltip do incompleto')
+    c.mark(11)
+    c.click(LINHA('Rogério Alves Costa'), at=c.A(11, 'completar,', 0.3), label='clica no Rogério: a ficha abre ao lado')
+    c.waitfor(target=SEL(FICHA_DE('Rogério Alves Costa')), timeout=10)
+    c.click(BTN_FICHA('Rogério Alves Costa', 'Editar'), at=c.A(11, 'editar.', 0.5), label='Editar')
+    c.waitfor(text='Editar Fornecedor', timeout=10)
+    c.click(ABA_DLG('Dados Fiscais'), at=c.A(11, 'Eu', 0.8), label='aba Dados Fiscais')
+    c.digita(CEP_IN, '12062150', c.A(11, 'digito', 0.1), c.A(11, 'CEP,', 0.05), 'CEP 12062-150')
+    c.confere('dlg', ['Taubaté'], 'a cidade veio com o CEP')
+    c.confere_campos(['12062-150', 'Rua das Palmeiras', 'Jardim Santa Luzia'], 'rua e bairro do CEP')
+    c.digita(CAMPO('numero'), '77', c.A(11, 'Ponho', 0.1), c.A(11, 'número,', 0.15), 'Número 77')
+    c.click(SALVAR, at=c.A(11, 'salvo,', 0.6), label='Salvar')
+    c.waitfor(text='Fornecedor atualizado!', timeout=12)
+    c.waitfor(gone={'role': 'dialog'}, timeout=8)
+    c.hover(FISCAL_OK('Rogério Alves Costa'), 1.4, at=c.A(11, 'pronto', 0.5), label='o Rogério agora com o sinal verde')
+    c.mark(12)
+    c.click(INCOMPLETOS, at=c.A(12, 'botão', 0.6), label='botão incompletos')
+    c.confere('main aside', ['Valdir Pereira', 'Aparecida Ramos', 'Cida Ramos'], 'só os três incompletos')
+    c.hover(NOME_LINHA('Cida Ramos'), 1.0, at=c.A(12, 'mostra', 0.5), label='a lista só com os incompletos')
+    c.mark(13)
+    c.click(MOSTRAR_TODOS, at=c.A(13, 'Uma', 0.6), label='Mostrar todos (a lista volta)')
+    c.hover(NOME_LINHA('Serralheria Bem-Te-Vi'), 1.0, at=c.A(13, 'nome,', 0.5), label='a lista inteira')
     c.fim()
     return c
 
 
+IE_ACOS_CERTA = '688042711117'
+DOC_ACOS = '98.463.027/0001-15'
+IND_ACOS = SEL(f"{DLG} button[role=combobox]:has-text('Contribuinte ICMS')")
+REGIME_ACOS = SEL(f"{DLG} button[role=combobox]:has-text('Lucro Real')")
+
+
 def cap05():
-    """Cliente e fornecedor ao mesmo tempo: Editar a serralheria e marcar Também é cliente; o selo roxo; o depósito (ilustração do saldo
-    único) e a aba Clientes com o mesmo saldo."""
-    c = cap_novo(5, start=(700, 400))
+    """Empresa do Lucro Real: Editar a Aços Quiririm (aba Clientes), a lupa confere o cadastro antigo; inscrição errada -> "Usar a da Sintegra";
+    Indicador IE; regime Lucro Real pela escrituração; "É Indústria" ligado e "É uma Reciclagem" só mostrado; Salvar."""
+    c = cap_novo(5, aba='Clientes', start=(700, 400))
+    c.mark(1)
+    c.click(LINHA('Aços Quiririm Ltda'), at=c.A(1, 'Aços', 0.6), label='clica na Aços Quiririm: a ficha abre ao lado')
+    c.waitfor(target=SEL(FICHA_DE('Aços Quiririm Ltda')), timeout=10)
+    c.click(BTN_FICHA('Aços Quiririm Ltda', 'Editar'), at=c.A(1, 'Editar,', 0.9), label='Editar')
+    c.waitfor(text='Editar Cliente', timeout=10)
+    c.click(ABA_DLG('Dados Fiscais'), at=c.A(1, 'Fiscais.', 0.6), label='aba Dados Fiscais')
+    c.mark(2)
+    c.hover(LUPA, 1.0, at=c.A(2, 'lupa', 0.5), label='a lupa do CNPJ (conferir cadastro antigo)')
+    c.click(LUPA, at=c.A(2, 'Um', 0.6), label='clica na lupa: consulta de novo')
+    c.waitfor(text=TOAST_CNPJ, timeout=12)
+    c.mark(3)
+    c.ev(DLG_ROLA('Inscrição Estadual', 230, 800), at=c.L(3) - 0.9, label='sobe a janela até a inscrição estadual')
+    c.confere('dlg', ['A Sintegra informa IE 688042711117 para este CNPJ em SP.', 'A ficha tem 688.042.819.111.', 'Usar a da Sintegra'], 'o aviso: IE da ficha diferente da Sintegra')
+    c.marcar(CAMPO('inscricao_estadual'), at=c.L(3) - 0.6, label='zoom: o aviso da Sintegra e o link Usar a da Sintegra (L3-L4)')
+    c.hover(BTN('Usar a da Sintegra', DLG), 1.4, at=c.A(3, 'Olha', 0.5), label='o aviso: a ficha tem outro número')
+    c.mark(4)
+    c.mark(5)
+    c.click(BTN('Usar a da Sintegra', DLG), at=c.A(5, 'Usar', 0.6), label='clica em Usar a da Sintegra')
+    c.confere('dlg', ['Preenchido pela consulta do CNPJ: a Sintegra informa a inscrição estadual 688042711117 para este CNPJ em SP.'], 'IE trocada pela da Sintegra')
+    c.mark(6)
+    c.click(IND_ACOS, at=c.A(6, 'Indicador.', 0.6), label='abre o Indicador IE')
+    c.waitfor(target=OPT('Isento de Inscrição'), timeout=6)
+    c.marcar(OPT('Contribuinte ICMS'), label='zoom: a lista do Indicador IE e a ajuda (L6-L7)')
+    c.hover(OPT('Contribuinte ICMS'), 0.5, at=c.A(6, 'Contribuinte', 0.5, nth=0), label='Contribuinte ICMS')
+    c.hover(OPT('Isento de Inscrição'), 0.5, at=c.A(6, 'Isento', 0.5), label='Isento de Inscrição')
+    c.hover(OPT('Não Contribuinte'), 0.5, at=c.A(6, 'Não', 0.5, nth=0), label='Não Contribuinte')
+    c.click(OPT('Contribuinte ICMS'), at=c.L(7) - 0.9, label='fecha em Contribuinte ICMS')
+    c.mark(7)
+    c.hover(TXT('Contribuinte ICMS exige Inscrição Estadual; Isento/Não Contribuinte não.', within=DLG, exact=False), 1.8, at=c.A(7, 'Só', 0.5), label='a ajuda: Contribuinte ICMS exige Inscrição Estadual')
+    c.mark(8)
+    c.ev(DLG_ROLA('Regime tributário do cliente', 300, 700), at=c.L(8) - 0.9, label='desce até o Regime tributário do cliente')
+    c.confere('dlg', ['Lucro Real', 'Preenchido pela consulta do CNPJ: na escrituração de 2024 esta empresa declarou Lucro Real. Confirme com o contador se mudou desde então.'], 'regime Lucro Real e a frase da escrituração')
+    c.hover(REGIME_ACOS, 1.6, at=c.A(8, 'preencheu', 0.5), label='zoom: Regime tributário do cliente em Lucro Real e a frase da escrituração (L8-L9)')
+    c.mark(9)
+    c.hover(TXT('Preenchido pela consulta do CNPJ: na escrituração de 2024', within=DLG, exact=False), 1.6, at=c.A(9, 'atraso.', 0.5), label='Confirme com o contador se mudou desde então')
+    c.mark(10)
+    c.click(REGIME_ACOS, at=c.A(10, 'opções', 0.6), label='abre o seletor de regime')
+    c.waitfor(target=OPT('Lucro Presumido'), timeout=6)
+    for palavra, rot in [('Simples', 'Simples Nacional'), ('MEI,', 'MEI'), ('Presumido', 'Lucro Presumido'), ('Real.', 'Lucro Real'), ('informado:', 'Não informado')]:
+        c.hover(OPT(rot), 0.3, at=c.A(10, palavra, 0.5), label=f'opção {rot}')
+    c.press('Escape', at=c.A(10, 'regime.', 0.0), label='fecha o seletor sem trocar (Esc)')
+    c.mark(11)
+    c.hover(TXT('É o regime de quem compra de você', within=DLG, exact=False), 2.0, at=c.A(11, 'Uma', 0.5), label='zoom: a ajuda É o regime de quem compra de você (L11)')
+    c.mark(12)
+    c.ev(DLG_ROLA('É Indústria', 300, 700), at=c.L(12) - 0.9, label='desce até É Indústria e É uma Reciclagem')
+    c.click(SEL(f"{DLG} #is_industry"), at=c.A(12, 'ligo.', 0.9), label='liga É Indústria')
+    c.mark(13)
+    c.hover(TXT('É uma Reciclagem', within=DLG, exact=False), 1.4, at=c.A(13, 'Reciclagem,', 0.5), label='É uma Reciclagem (sem ligar)')
+    c.mark(14)
+    c.click(SALVAR, at=c.A(14, 'Salvar.', 0.6), label='Salvar')
+    c.waitfor(text='Cliente atualizado!', timeout=12)
+    c.waitfor(gone={'role': 'dialog'}, timeout=8)
+    c.hover(FISCAL_OK('Aços Quiririm Ltda'), 1.4, at=c.A(14, 'certos.', 0.5), label='a Aços continua com o sinal verde')
+    c.mark(15)
+    c.hover(BTN('Novo Cliente', MAIN), 1.0, at=c.A(15, 'Novo', 0.5, nth=1), label='Novo Cliente (sem clicar)')
+    c.fim()
+    return c
+
+
+def cap06():
+    """Os avisos da consulta: Novo Fornecedor (Oficina do Tonho), CNPJ baixado, sem IE ativa, trocar o CNPJ limpa o que veio e o aviso de duplicado
+    (nada é salvo)."""
+    c = cap_novo(6, start=(900, 300))
+    c.mark(1)
+    c.click(NOVO_FORN, at=c.A(1, 'Chegou', 0.8), label='Novo Fornecedor')
+    c.waitfor(text='Identificação e contato', timeout=10)
+    c.cola(CAMPO('name'), 'Oficina do Tonho', c.A(1, 'Oficina', 0.3), c.A(1, 'Tonho,', 0.0), 'Nome Oficina do Tonho')
+    c.click(ABA_DLG('Dados Fiscais'), at=c.A(1, 'nota.', 0.0), label='aba Dados Fiscais')
+    c.click(BTN('Pessoa Jurídica', DLG), at=c.A(1, 'Eu', 0.3), label='Pessoa Jurídica')
+    c.cola(CAMPO('cpf_cnpj'), '52917384000105', c.A(1, 'CNPJ', 0.3), c.A(1, 'CNPJ', 0.0), 'CNPJ 52.917.384/0001-05')
+    c.click(LUPA, at=c.A(1, 'lupa.', 0.6), label='clica na lupa')
+    c.waitfor(text=TOAST_CNPJ, timeout=12)
+    c.mark(2)
+    c.confere('dlg', ['Atenção: a Receita informa que este CNPJ está Baixada.'], 'o alerta vermelho de CNPJ baixado')
+    c.marcar(TXT('Atenção: a Receita informa que este CNPJ está', within=DLG, exact=False), at=c.L(2) - 0.5, label='zoom: o alerta vermelho Atenção: a Receita informa que este CNPJ está Baixada (L2-L3)')
+    c.hover(TXT('Atenção: a Receita informa que este CNPJ está', within=DLG, exact=False), 2.0, at=c.A(2, 'vermelho:', 0.5), label='o alerta vermelho: CNPJ Baixada')
+    c.mark(3)
+    c.mark(4)
+    c.ev(DLG_ROLA('Inscrição Estadual', 230, 800), at=c.L(4) - 0.9, label='desce até a inscrição estadual')
+    c.confere('dlg', ['A Sintegra não tem inscrição estadual ativa para este CNPJ. Se ele for isento, marque Isento de Inscrição.'], 'o aviso: sem inscrição ativa')
+    c.hover(TXT('A Sintegra não tem inscrição estadual ativa', within=DLG, exact=False), 2.2, at=c.A(4, 'aviso:', 0.5), label='zoom: A Sintegra não tem inscrição estadual ativa (L4)')
+    c.mark(5)
+    c.ev(DLG_ROLA('CNPJ', 200, 700), at=c.L(5) - 0.9, label='sobe até o CNPJ')
+    c.click(CAMPO('cpf_cnpj'), at=c.A(5, 'corrigir.', 0.6), label='clica no CNPJ')
+    c.ev("(()=>{const e=document.querySelector('[role=dialog] #cpf_cnpj');if(!e)return 'SEM ALVO';e.focus();e.select();document.execCommand('delete');return 'cnpj apagado: '+JSON.stringify(e.value)})()", at=c.A(5, 'Quando', 0.3), label='apaga o CNPJ')
+    c.type(CAMPO('cpf_cnpj'), '46280719000124', at=c.A(5, 'apaga', 0.2), label='digita o CNPJ da serralheria', noClick=True, cps=30)
+    c.add({'do': 'eval', 'js': js_sem_texto('Atenção: a Receita informa que este CNPJ está'), 'label': 'confere o alerta vermelho sumiu'})
+    c.add({'do': 'eval', 'js': js_sem_texto('A Sintegra não tem inscrição estadual ativa'), 'label': 'confere o aviso da inscrição sumiu'})
+    c.confere('dlg', ['Já existe um fornecedor cadastrado como “Serralheria Bem-Te-Vi” com este CPF/CNPJ.'], 'o aviso de CNPJ já cadastrado')
+    c.hover(TXT('Já existe um fornecedor cadastrado', within=DLG, exact=False), 1.6, at=c.A(5, 'avisa', 0.5), label='Já existe um fornecedor cadastrado com este CPF/CNPJ')
+    c.mark(6)
+    c.click(BTN('Cancelar', DLG), at=c.A(6, 'minuto.', 0.3, nth=1), label='Cancelar (nada é salvo)')
+    c.fim()
+    return c
+
+
+def cap07():
+    """Cliente e fornecedor ao mesmo tempo: Editar a serralheria e marcar Também é cliente; o selo roxo; o botão Desvincular; o depósito
+    (ilustração do saldo único) e a aba Clientes com o mesmo saldo (-R$ 840,00 nas duas abas, 1.59.161)."""
+    c = cap_novo(7, start=(700, 400))
     c.mark(1)
     c.click(LINHA('Serralheria Bem-Te-Vi'), at=c.A(1, 'serralheria', 0.6), label='clica na Serralheria Bem-Te-Vi: a ficha abre ao lado')
     c.waitfor(target=SEL(FICHA_DE('Serralheria Bem-Te-Vi')), timeout=10)
@@ -680,29 +839,35 @@ def cap05():
     c.confere(FICHA_DE('Serralheria Bem-Te-Vi'), ['Cliente+Fornecedor'], 'selo Cliente+Fornecedor na ficha')
     c.hover(TXT('Cliente+Fornecedor', within=FICHA_DE('Serralheria Bem-Te-Vi')), 1.4, at=c.A(3, 'roxo,', 0.5), label='selo roxo Cliente+Fornecedor')
     c.hover(ABA('Clientes'), 0.8, at=c.A(3, 'duas', 0.5), label='as duas abas')
-    c.mark(4)
-    c.click(LINHA('Depósito Irmãos Siqueira'), at=c.A(4, 'Depósito', 0.6), label='clica no Depósito Irmãos Siqueira')
+    c.mark(4)   # Desvincular (1.60.x): reabre o Editar e mostra o botão do rodapé, sem clicar
+    c.click(BTN_FICHA('Serralheria Bem-Te-Vi', 'Editar'), at=c.A(4, 'Se', 0.2), label='Editar de novo (o parceiro agora é dual)')
+    c.waitfor(text='Editar Fornecedor', timeout=10)
+    c.hover(BTN('Desvincular', DLG), 1.6, at=c.A(4, 'Desvincular,', 0.2), label='o botão Desvincular, no rodapé do Editar (sem clicar)')
+    c.click(BTN('Cancelar', DLG), at=c.A(4, 'outro.', 0.3), label='Cancelar')
+    c.waitfor(gone={'role': 'dialog'}, timeout=8)
+    c.mark(5)
+    c.click(LINHA('Depósito Irmãos Siqueira'), at=c.A(5, 'Depósito', 0.6), label='clica no Depósito Irmãos Siqueira')
     c.waitfor(target=SEL(FICHA_DE('Depósito Irmãos Siqueira')), timeout=10)
-    c.confere(FICHA_DE('Depósito Irmãos Siqueira'), ['Cliente+Fornecedor', 'R$ 840,00', 'a pagar'], 'ficha do depósito')
-    c.add({'do': 'eval', 'js': js_cor('Depósito Irmãos Siqueira', 'vermelho'), 'label': 'confere cor: depósito em Fornecedores (R$ 840,00) vermelho'})
-    c.hover(SALDO_FICHA('Depósito Irmãos Siqueira'), 1.4, at=c.A(4, 'cliente', 0.5), label='ficha do depósito: R$ 840,00 a pagar')
-    c.mark(5)   # ilustração do saldo unificado
-    c.mark(6)
+    c.confere(FICHA_DE('Depósito Irmãos Siqueira'), ['Cliente+Fornecedor', '-R$ 840,00', 'a pagar'], 'ficha do depósito: -R$ 840,00 a pagar (1.59.161)')
+    c.add({'do': 'eval', 'js': js_cor('Depósito Irmãos Siqueira', 'vermelho'), 'label': 'confere cor: depósito em Fornecedores (-R$ 840,00) vermelho'})
+    c.hover(SALDO_FICHA('Depósito Irmãos Siqueira'), 1.4, at=c.A(5, 'cliente', 0.5), label='ficha do depósito: -R$ 840,00 a pagar')
+    c.mark(6)   # ilustração do saldo unificado
     c.mark(7)
-    c.click(ABA('Clientes'), at=c.A(7, 'Clientes,', 0.6), label='aba Clientes')
+    c.mark(8)
+    c.click(ABA('Clientes'), at=c.A(8, 'Clientes', 0.6), label='aba Clientes')
     c.waitfor(target=BUSCA('cliente'), timeout=10)
     c.confere('main aside', ['Depósito Irmãos Siqueira', '-R$ 840,00'], 'o depósito em Clientes com -R$ 840,00')
     c.add({'do': 'eval', 'js': js_cor('Depósito Irmãos Siqueira', 'vermelho'), 'label': 'confere cor: depósito em Clientes (-R$ 840,00) vermelho'})
-    c.hover(NOME_LINHA('Depósito Irmãos Siqueira'), 0.8, at=c.A(7, 'aparece', 0.5), label='zoom: linha do Depósito em Clientes (Cliente+Fornecedor)')
-    c.hover(SALDO_ROW('Depósito Irmãos Siqueira'), 2.0, at=c.A(7, 'sinal', 0.5), label='-R$ 840,00 em vermelho')
+    c.hover(NOME_LINHA('Depósito Irmãos Siqueira'), 0.8, at=c.A(8, 'aparece', 0.5), label='zoom: linha do Depósito em Clientes (Cliente+Fornecedor)')
+    c.hover(SALDO_ROW('Depósito Irmãos Siqueira'), 2.0, at=c.A(8, 'vermelho.', 0.5), label='-R$ 840,00 em vermelho (o mesmo das duas abas)')
     c.fim()
     return c
 
 
-def cap06():
+def cap08():
     """Tabela de preço do parceiro: Editar o depósito, Tabela de Preços Padrão Principal -> Tabela Depósitos, o aviso azul, Salvar;
-    (ilustração da ordem dos preços) e a aba Preços da ficha."""
-    c = cap_novo(6, start=(700, 400))
+    (ilustração da ordem dos preços), a aba Preços (Compra/Venda, "Já comprados"), o preço Fixo do ferro pesado a R$ 1,00 e "Salvar preços"."""
+    c = cap_novo(8, start=(700, 400))
     c.mark(1)
     c.click(LINHA('Depósito Irmãos Siqueira'), at=c.A(1, 'Depósito', 0.6), label='clica no Depósito Irmãos Siqueira')
     c.waitfor(target=SEL(FICHA_DE('Depósito Irmãos Siqueira')), timeout=10)
@@ -721,33 +886,117 @@ def cap06():
     c.waitfor(gone={'role': 'dialog'}, timeout=8)
     c.mark(5)   # ilustração: qual preço vale na compra
     c.mark(6)
-    c.ev(js_abas_ficha(True), at=c.L(6) - 0.9, label='rola a faixa das abas até Preços')
+    c.ev(js_abas_ficha(True), at=c.L(6) - 0.9, label='rola a faixa das abas até Preços (só se a faixa não couber)')
     c.hover(ABA_FICHA('Preços'), 0.6, at=c.A(6, 'ficha', 0.5), label='aba Preços')
     c.click(ABA_FICHA('Preços'), at=c.A(6, 'aba', 0.6), label='aba Preços da ficha: Preços Personalizados (Compra e Venda)')
     c.waitfor(text='Preços Personalizados', timeout=12)
+    c.confere(FICHA_DE('Depósito Irmãos Siqueira'), ['Todos', 'Já comprados', 'Personalizados'], 'o filtro da aba Preços: Todos, Já comprados, Personalizados')
+    c.hover(SEL(f"{FICHA_DE('Depósito Irmãos Siqueira')} button[role=tab]:has-text('Venda'), {FICHA_DE('Depósito Irmãos Siqueira')} button:has-text('Venda')", nth=0), 0.6, at=c.A(6, 'venda.', 0.5), label='as abas Compra e Venda')
+    c.mark(7)
+    c.click(SEL(f"{FICHA_DE('Depósito Irmãos Siqueira')} button:has-text('Já comprados')"), at=c.A(7, 'Já', 0.6), label='filtro Já comprados')
+    c.confere(FICHA_DE('Depósito Irmãos Siqueira'), ['Ferro pesado', 'Ferro misto', 'Cobre misto'], 'Já comprados: ferro pesado, ferro misto e cobre misto')
+    c.mark(8)
+    FP = f"{FICHA_DE('Depósito Irmãos Siqueira')} tr:has-text('Ferro pesado')"
+    c.hover(SEL(f"{FP} button[role=combobox]"), 0.6, at=c.A(8, 'estado.', 0.5), label='o Estado da linha Ferro pesado: Herda')
+    c.click(SEL(f"{FP} button[role=combobox]"), at=c.A(8, 'Fixo', 0.8), label='abre o Estado do ferro pesado')
+    c.click(OPT('Fixo'), at=c.A(8, 'combinado,', 0.5), label='Fixo')
+    c.digita(SEL(f"{FP} input[placeholder='0,00']"), '1,00', c.A(8, 'combino', 0.6), c.A(8, 'depósito', 0.05), 'zoom: preço fixo R$ 1,00 do ferro pesado (L8)')
+    c.mark(9)
+    c.click(SEL(f"{FP} button[role=combobox]"), at=c.A(9, 'Vinculado', 0.8), label='abre o Estado de novo: Herda, Vinculado, Fixo')
+    c.hover(OPT('Vinculado'), 1.2, at=c.A(9, 'tabela', 0.4, nth=0), label='Vinculado (sem escolher)')
+    c.press('Escape', at=c.L(10) - 0.9, label='fecha a lista (Esc)')
+    c.mark(10)
+    c.click(BTN('Salvar preços', FICHA_DE('Depósito Irmãos Siqueira')), at=c.A(10, 'Salvar', 0.6), label='Salvar preços')
+    c.waitfor(text='Preços salvos', timeout=12, optional=True)
+    c.click(SEL(f"{FICHA_DE('Depósito Irmãos Siqueira')} button:has-text('Personalizados')"), at=c.A(10, 'Personalizados', 0.6), label='filtro Personalizados')
+    c.confere(FICHA_DE('Depósito Irmãos Siqueira'), ['Ferro pesado'], 'Personalizados: o ferro pesado')
     c.fim()
     return c
 
 
-def cap07():
-    """A ficha do parceiro: Cooperativa Recomeço, cabeçalho, as 7 abas, Visão geral, Acesso ao portal, a aba Lucro estimado."""
-    c = cap_novo(7, start=(700, 400))
+def cap09():
+    """Organizar a lista: Configurações (etiquetas e campos personalizados), a etiqueta Carroceiro, o Valdir etiquetado, Filtros (Com saldo),
+    Ordenar (Saldo) e o menu "..." da linha (sem excluir). Nada disto segue para as próximas aulas."""
+    c = cap_novo(9, start=(700, 400))
+    c.mark(1)
+    c.click(SEL("main button[aria-label='Configurações de clientes e fornecedores']"), at=c.A(1, 'Configurações', 0.6), label='Configurações')
+    c.waitfor(text='Classifique clientes e fornecedores com uma cor fácil de reconhecer.', timeout=10)
+    c.mark(2)
+    c.click(BTN('Nova etiqueta', DLG), at=c.A(2, 'crio', 0.8), label='Nova etiqueta')
+    c.cola(SEL(f"{DLG} input[placeholder='Ex.: BLOQUEADO']"), 'Carroceiro', c.A(2, 'crio', 0.3), c.A(2, 'Carroceiro,', 0.05), 'Nome da etiqueta: CARROCEIRO')
+    c.click(SEL(f"{DLG} button[aria-label^='Selecionar cor']", nth=3), at=c.A(2, 'cor', 0.5), label='escolhe uma cor')
+    c.click(BTN('Salvar', DLG), at=c.A(2, 'salvo.', 0.6), label='Salvar a etiqueta')
+    c.waitfor(text='Etiqueta criada.', timeout=10)
+    c.mark(3)
+    c.click(SEL(f"{DLG} aside button:has-text('Campos personalizados')"), at=c.A(3, 'personalizados,', 0.6), label='Campos personalizados')
+    c.waitfor(text='Crie informações adicionais para cadastro, ficha e portal.', timeout=8)
+    c.click(BTN('Novo campo', DLG), at=c.A(3, 'placa', 0.9), label='Novo campo (sem criar)')
+    c.hover(SEL(f"{DLG} button[role=combobox]", nth=0), 0.8, at=c.A(3, 'veículo,', 0.5), label='o Tipo do campo (Texto curto, Número, Data, Sim/Não, Lista de opções)')
+    c.press('Escape', at=c.L(4) - 1.2, label='fecha a janela de Configurações (Esc)')
+    c.mark(4)
+    c.click(LINHA('Valdir Pereira'), at=c.A(4, 'cadastro', 0.6), label='clica no Valdir Pereira')
+    c.waitfor(target=SEL(FICHA_DE('Valdir Pereira')), timeout=10)
+    c.click(BTN_FICHA('Valdir Pereira', 'Editar'), at=c.A(4, 'Valdir,', 0.2), label='Editar')
+    c.waitfor(text='Editar Fornecedor', timeout=10)
+    c.ev(DLG_ROLA('Etiqueta', 300, 600), label='desce até a Etiqueta')
+    c.click(SEL(f"{DLG} div:has(> label:has-text('Etiqueta')) button"), at=c.A(4, 'Etiqueta,', 0.5), label='abre o seletor de Etiqueta')
+    c.click(SEL("[role=option]:has-text('CARROCEIRO'), [role=menuitemcheckbox]:has-text('CARROCEIRO'), label:has-text('CARROCEIRO')", nth=0), at=c.A(4, 'marco', 0.3), label='marca CARROCEIRO')
+    c.press('Escape', label='fecha a lista')
+    c.click(SALVAR, at=c.A(4, 'Carroceiro.', 0.6), label='Salvar')
+    c.waitfor(text='Fornecedor atualizado!', timeout=12)
+    c.waitfor(gone={'role': 'dialog'}, timeout=8)
+    c.mark(5)
+    c.click(SEL("main aside button[aria-label^='Filtros']"), at=c.A(5, 'Filtros,', 0.6), label='Filtros')
+    c.waitfor(text='Situação do saldo', timeout=6)
+    c.click(BTN('Com saldo'), at=c.A(5, 'saldo,', 0.6, nth=0), label='Com saldo')
+    c.confere('main aside', ['Cooperativa Recomeço', 'Valdir Pereira', 'Depósito Irmãos Siqueira'], 'Com saldo: Cooperativa, Valdir e Depósito')
+    c.mark(6)
+    c.press('Escape', at=c.L(6) - 0.9, label='fecha os Filtros')
+    c.click(SEL("main aside button[aria-label^='Filtros']"), label='abre os Filtros de novo para limpar')
+    c.click(BTN('Todos'), label='Todos (limpa o filtro)')
+    c.press('Escape', label='fecha')
+    c.click(SEL("main aside button[aria-label='Ordenar']"), at=c.A(6, 'Ordenar,', 0.6), label='Ordenar')
+    c.click(BTN('Saldo'), at=c.A(6, 'saldo,', 0.6), label='Saldo')
+    c.press('Escape', at=c.L(7) - 0.9, label='fecha o Ordenar')
+    c.mark(7)
+    c.hover(SEL("main aside button[aria-label='Ações de Cida Ramos']"), 1.2, at=c.A(7, 'pontinhos', 0.6), label='o menu ... da linha Cida Ramos')
+    c.hover(ITEM('Excluir'), 1.6, at=c.A(7, 'exclusão', 0.6), label='Excluir (sem clicar)')
+    c.press('Escape', at=c.A(7, 'antes.', 0.0), label='fecha o menu (Esc)')
+    c.fim()
+    return c
+
+
+# ---------------------------------------------------------------- a ficha da Cooperativa Recomeço (caps 10 a 16)
+COOP = 'Cooperativa Recomeço'
+FC = FICHA_DE(COOP)
+PERIODO = SEL(f"{FC} button:has-text('Período')")
+LINHA_LUCRO = lambda mat, col: SEL(f"{FC} tr:has-text('{mat}') td:nth-child({col})")   # 4 compra, 6 venda, 7 margem/kg, 8 margem total
+AVISO_FUNGIVEL = 'Estimativa — sucata é fungível; a margem é calculada sobre o preço médio de venda do material no período, não é lucro realizado.'
+ABAS_CABEM = ("(()=>{const f=document.querySelector(\"[aria-label='Seções da ficha']\");if(!f)return 'DIFERENTE: sem a faixa das abas';"
+              "const r=f.getBoundingClientRect();const bs=[...f.querySelectorAll('button')];const ult=bs[bs.length-1].getBoundingClientRect();"
+              "return (bs.length===7?'OK':'DIFERENTE')+': '+bs.length+' abas; faixa '+Math.round(f.scrollWidth)+'/'+Math.round(f.clientWidth)+' px; "
+              "última aba termina em '+Math.round(ult.right)+' de '+Math.round(r.right)})()")
+
+
+def cap10():
+    """A ficha do parceiro: Cooperativa Recomeço, cabeçalho, as 7 abas (cabem em 1600x900?), Visão geral, Acesso ao portal."""
+    c = cap_novo(10, start=(700, 400))
     c.mark(1)
     c.click(LINHA(COOP), at=c.A(1, 'Cooperativa', 0.6), label='clica na Cooperativa Recomeço: a ficha abre em Visão geral')
     c.waitfor(target=SEL(FC), timeout=10)
     c.confere(FC, ['Cooperativa Recomeço', 'Fornecedor', 'R$ 2.550,00', 'a pagar'], 'cabeçalho da ficha')
+    c.add({'do': 'eval', 'js': ABAS_CABEM, 'label': 'confere: as 7 abas da ficha em 1600x900'})
     c.mark(2)
     c.hover(SEL(f'{FC} h2, {FC} h1', nth=0), 0.4, at=c.A(2, 'nome,', 0.5), label='nome da cooperativa')
     c.hover(SALDO_FICHA(COOP), 0.5, at=c.A(2, 'saldo', 0.5), label='saldo R$ 2.550,00 a pagar')
     c.hover(BTN_FICHA(COOP, 'Editar'), 0.3, at=c.A(2, 'editar', 0.5), label='Editar')
     c.hover(BTN_FICHA(COOP, 'Nova Movimentação'), 0.6, at=c.A(2, 'lançar', 0.5), label='Nova Movimentação')
     c.mark(3)
-    # cada hover custa ~1,1 s (ensaio de 11/11): o cursor para em 5 das 7 abas, na ordem da fala, e a faixa rola de lado antes de Notas fiscais
-    for palavra, aba in [('Visão', 'Visão geral'), ('Conta-corrente,', 'Conta-corrente'), ('Lucro', 'Lucro estimado'), ('Notas', 'Notas fiscais'),
-                         ('Preços.', 'Preços')]:
+    for palavra, aba in [('Visão', 'Visão geral'), ('Pedidos,', 'Pedidos'), ('Conta-corrente,', 'Conta-corrente'), ('Lucro', 'Lucro estimado'),
+                         ('Financeiro,', 'Financeiro'), ('Notas', 'Notas fiscais'), ('Preços.', 'Preços')]:
         if aba == 'Notas fiscais':
-            c.ev(js_abas_ficha(True, 450), at=c.A(3, 'estimado,', -0.3), label='rola a faixa das abas até Preços')
-        c.hover(ABA_FICHA(aba), 0.05 if aba == 'Preços' else 0.2, at=c.A(3, palavra, 0.45), label=f'aba {aba}')
+            c.ev(js_abas_ficha(True, 450), at=c.A(3, 'Financeiro,', 0.3), label='rola a faixa das abas até Preços (só se não couber)')
+        c.hover(ABA_FICHA(aba), 0.05 if aba == 'Preços' else 0.15, at=c.A(3, palavra, 0.45), label=f'aba {aba}')
     c.mark(4)
     c.hover(TXT('Cadastro', within=FC), 0.8, at=c.A(4, 'cadastro,', 0.5), label='Cadastro')
     c.hover(TXT('Contato e endereço', within=FC), 0.8, at=c.A(4, 'contato', 0.5), label='Contato e endereço')
@@ -760,14 +1009,9 @@ def cap07():
     return c
 
 
-PERIODO = SEL(f"{FC} button:has-text('Período')")
-LINHA_LUCRO = lambda mat, col: SEL(f"{FC} tr:has-text('{mat}') td:nth-child({col})")   # 4 compra, 6 venda, 7 margem/kg, 8 margem total
-AVISO_FUNGIVEL = 'Estimativa — sucata é fungível; a margem é calculada sobre o preço médio de venda do material no período, não é lucro realizado.'
-
-
-def cap08():
-    """Os materiais que ele mais movimenta: aba Pedidos (cartões, gráfico por peso, legenda), (ilustração peso x valor), Período e a lista."""
-    c = cap_novo(8, ficha=COOP, start=(700, 400))
+def cap11():
+    """Pedidos: cartões (Total Comprado, Total de Pedidos), gráfico Top 5 por peso, legenda, (ilustração peso x valor), Período e a lista."""
+    c = cap_novo(11, ficha=COOP, start=(700, 400))
     c.mark(1)
     c.click(ABA_FICHA('Pedidos'), at=c.L(1), label='aba Pedidos')
     c.waitfor(text='Total Comprado', timeout=12)
@@ -781,7 +1025,8 @@ def cap08():
     c.mark(3)
     c.confere(FC, ['Papelão: 59%', 'Plástico PET: 18%', 'Alumínio latinha: 9%', 'Chaparia: 8%', 'Ferro misto: 6%'], 'legenda do gráfico')
     c.hover(TXT('Papelão: 59%', within=FC, exact=False), 2.0, at=c.A(3, 'papelão', 0.5), label='zoom: legenda, Papelão: 59%')
-    c.mark(4)   # ilustração peso x valor
+    c.mark(4)   # ilustração peso x valor (a legenda continua na tela)
+    c.hover(TXT('Alumínio latinha: 9%', within=FC, exact=False), 1.6, at=c.A(4, 'latinha', 0.5), label='zoom: legenda, Alumínio latinha: 9%')
     c.mark(5)
     c.ev(js_ficha_topo(700), at=c.L(5) - 0.9, label='sobe a ficha até a faixa das abas')
     c.hover(PERIODO, 1.0, at=c.A(5, 'Período,', 0.5), label='Período (sem abrir)')
@@ -791,10 +1036,10 @@ def cap08():
     return c
 
 
-def cap09():
+def cap12():
     """Conta-corrente: Saldo Atual R$ 2.550,00 (vermelho), (ilustração dos quatro casos), o extrato, a Movimentação (Pagar, R$ 1.200,00,
-    Pix, observação), Confirmar: R$ 1.350,00; Exportar."""
-    c = cap_novo(9, ficha=COOP, start=(700, 400))
+    Pix, observação), Confirmar: R$ 1.350,00; Exportar com o PDF detalhado aberto (a tela devolve o conteúdo para a ilustração)."""
+    c = cap_novo(12, ficha=COOP, start=(700, 400), extra=[{'do': 'eval', 'js': POPS}])
     c.mark(1)
     c.click(ABA_FICHA('Conta-corrente'), at=c.A(1, 'conta-corrente.', 0.6), label='aba Conta-corrente')
     c.waitfor(text='Saldo Atual', timeout=12)
@@ -830,17 +1075,90 @@ def cap09():
     c.hover(TXT('Saldo Atual', within=FC), 1.4, at=c.A(10, 'mil', 0.5), label='zoom: Saldo Atual R$ 1.350,00 (depois do toast)')
     c.hover(SEL(f"{FC} tbody tr:has-text('Acerto parcial')", nth=0), 1.0, at=c.A(10, 'pagamento', 0.5), label='o pagamento no extrato')
     c.mark(11)
+    c.ev(js_ficha_topo(700), at=c.L(11) - 0.9, label='sobe de novo ao topo da ficha')
     c.click(BTN('Exportar', FC), at=c.A(11, 'Exportar,', 0.6), label='Exportar (abre o menu)')
-    c.hover(ITEM('Abrir Relatório (PDF)'), 0.6, at=c.A(11, 'PDF', 0.5), label='Abrir Relatório (PDF) (sem clicar)')
-    c.hover(ITEM('Baixar Excel (.xlsx)'), 0.8, at=c.A(11, 'planilha,', 0.5), label='Baixar Excel (sem clicar)')
-    c.press('Escape', at=c.A(11, 'parceiro.', 0.0), label='fecha o menu (Esc)')
+    c.hover(ITEM('PDF resumido'), 0.6, at=c.A(11, 'resumido', 0.3), label='PDF resumido (sem clicar)')
+    c.hover(ITEM('Baixar Excel (.xlsx)'), 0.8, at=c.A(11, 'planilha,', 0.3), label='Baixar Excel (sem clicar)')
+    c.mark(12)
+    c.click(ITEM('PDF detalhado (com produtos)'), at=c.A(12, 'detalhado', 0.3), label='PDF detalhado (com produtos): abre o extrato em aba nova')
+    c.ev(html_js(['Cooperativa Recomeço']), label='PDF DO EXTRATO DETALHADO (aba nova, para a ilustração)')
     c.fim()
     return c
 
 
-def cap10():
+# ---- N5: ajustes na conta-corrente (nada daqui segue: a exclusão devolve o saldo a R$ 1.350,00)
+ALERTA = '[role=alertdialog]'
+LINHA_AJUSTE = SEL(f"{FC} tbody tr:has-text('Desconto do papelão molhado')", nth=0)
+
+
+def cap13():
+    """Movimentação Receber e Dinheiro; Crédito/débito (abate R$ 50,00); lápis e lixeira; exclusão do ajuste; Editar saldo (sem salvar); filtro Data."""
+    c = cap_novo(13, ficha=COOP, start=(700, 400))
+    c.click(ABA_FICHA('Conta-corrente'), label='aba Conta-corrente (antes da fala)')
+    c.waitfor(text='Saldo Atual', timeout=12)
+    c.confere(FC, ['R$ 1.350,00'], 'Saldo Atual R$ 1.350,00 (semente apos-cap09)')
+    c.mark(1)
+    c.click(BTN('Movimentação', FC), at=c.A(1, 'Movimentação', 0.6), label='Movimentação')
+    c.waitfor(text='Nova Movimentação de Saldo', timeout=10)
+    c.hover(SEL(f'{DLG} label[for=credit]'), 1.4, at=c.A(1, 'Receber,', 0.5), label='Receber ("Você recebeu do fornecedor")')
+    c.hover(TXT('Dinheiro', within=DLG, exact=False), 1.4, at=c.A(1, 'forma', 0.6), label='Dinheiro (apagado: sem caixa aberto)')
+    c.click(BTN('Cancelar', DLG), at=c.A(1, 'aberto.', 0.5), label='Cancelar')
+    c.waitfor(gone={'role': 'dialog'}, timeout=8)
+    c.mark(2)
+    c.click(BTN('Crédito/débito', FC), at=c.A(2, 'isso', 0.2), label='Crédito/débito')
+    c.waitfor(text='Lançar crédito/débito', timeout=10)
+    c.confere('dlg', ['Saldo atual', 'R$ 1.350,00', 'Direção'], 'janela Lançar crédito/débito, saldo atual R$ 1.350,00')
+    c.hover(TXT('Direção', within=DLG), 0.8, at=c.A(2, 'Crédito/débito.', 0.8), label='Direção')
+    c.mark(3)
+    c.click(SEL(f"{DLG} button:has-text('ou abate o que eu devo a ele')"), at=c.A(3, 'abate', 0.4), label='"Aumenta o que ele me deve · ou abate o que eu devo a ele"')
+    c.digita(SEL(f'{DLG} #balance-entry-amount'), '50', c.A(3, 'Ponho', 0.3), c.A(3, 'cinquenta', 0.05), 'Valor R$ 50,00')
+    c.confere('dlg', ['Saldo hoje', 'R$ 1.350,00', 'depois', 'R$ 1.300,00'], 'prévia: saldo hoje R$ 1.350,00, depois R$ 1.300,00')
+    c.hover(TXT('Saldo hoje', within=DLG, exact=False), 2.0, at=c.A(3, 'conta:', 0.5), label='zoom: a prévia Saldo hoje -> depois')
+    c.mark(4)
+    c.click(SEL(f'{DLG} #balance-entry-description'), at=c.A(4, 'motivo', 0.4), label='Motivo do lançamento (clique no campo)')
+    c.ev(js_colar('Desconto do papelão molhado de 06/11'), at=c.A(4, 'obrigatório.', 0.2), label='Motivo: Desconto do papelão molhado de 06/11 (colado)')
+    c.click(BTN('Salvar', DLG), at=c.A(4, 'Confirmo,', 0.5), label='Salvar')
+    c.waitfor(gone={'role': 'dialog'}, timeout=12)
+    c.confere(FC, ['R$ 1.300,00', 'Desconto do papelão molhado de 06/11'], 'saldo R$ 1.300,00 e a linha Ajuste no extrato')
+    c.hover(TXT('Saldo Atual', within=FC), 1.4, at=c.A(4, 'trezentos.', 0.1), label='zoom: Saldo Atual R$ 1.300,00')
+    c.mark(5)
+    c.ev(js_rola_texto('Histórico de Movimentações', 120, 900, escopo=FC), at=c.L(5) - 0.9, label='desce até o extrato')
+    c.hover(SEL(f"{FC} tbody tr:has-text('Desconto do papelão molhado') button[aria-label='Editar movimentação']", nth=0), 1.2, at=c.A(5, 'lápis,', 0.4), label='lápis da linha do ajuste')
+    c.hover(SEL(f"{FC} tbody tr:has-text('Desconto do papelão molhado') button[aria-label='Excluir movimentação']", nth=0), 1.2, at=c.A(5, 'lixeira,', 0.4), label='lixeira da linha do ajuste')
+    c.mark(6)
+    c.click(SEL(f"{FC} tbody tr:has-text('Desconto do papelão molhado') button[aria-label='Excluir movimentação']", nth=0), at=c.A(6, 'excluo.', 0.2), label='lixeira: abre Excluir Movimentação')
+    c.waitfor(text='Excluir Movimentação', timeout=10)
+    c.confere(ALERTA, ['Efeitos da exclusão', 'Confirmar Exclusão'], 'janela Excluir Movimentação com os efeitos')
+    c.hover(TXT('Efeitos da exclusão', within=ALERTA, exact=False), 2.2, at=c.A(6, 'desfeito,', 0.3), label='zoom: Efeitos da exclusão')
+    c.click(BTN('Confirmar Exclusão', ALERTA), at=c.A(6, 'confirmo,', 0.4), label='Confirmar Exclusão')
+    c.waitfor(text='Lançamento excluído e todos os efeitos revertidos', timeout=12)
+    c.ev(js_ficha_topo(700), label='sobe até o Saldo Atual')
+    c.confere(FC, ['R$ 1.350,00'], 'o saldo voltou a R$ 1.350,00')
+    c.hover(TXT('Saldo Atual', within=FC), 1.4, at=c.A(6, 'volta', 0.5), label='zoom: Saldo Atual R$ 1.350,00 de novo')
+    c.mark(7)
+    c.ev(js_rola_texto('Histórico de Movimentações', 120, 900, escopo=FC), at=c.L(7) - 0.9, label='desce até o extrato')
+    c.hover(SEL(f"{FC} tbody tr:has-text('Acerto parcial')", nth=0), 2.2, at=c.A(7, 'dica:', 0.5), label='a linha do Pix de R$ 1.200,00')
+    c.mark(8)
+    c.ev(js_ficha_topo(700), at=c.L(8) - 0.9, label='sobe até o Saldo Atual')
+    c.click(SEL(f"{FC} button[aria-label='Editar saldo']"), at=c.A(8, 'lápis', 0.5), label='lápis Editar saldo')
+    c.waitfor(text='Observação (opcional)', timeout=10)
+    c.hover(TXT('Tipo de saldo', within=DLG), 1.4, at=c.A(8, 'correção:', 0.5), label='Editar saldo: Tipo de saldo, Valor, Observação (opcional)')
+    c.click(BTN('Cancelar', DLG), at=c.A(8, 'explicado.', 0.3), label='Cancelar')
+    c.waitfor(gone={'role': 'dialog'}, timeout=8)
+    c.mark(9)
+    c.ev(js_rola_texto('Histórico de Movimentações', 120, 900, escopo=FC), at=c.L(9) - 0.9, label='desce até o extrato')
+    c.click(SEL(f"{FC} button:has-text('Data')", nth=0), at=c.A(9, 'Data,', 0.5), label='filtro Data (abre)')
+    c.hover(SEL('[role=menu], [role=listbox], [role=dialog]', nth=0), 1.2, at=c.A(9, 'período', 0.4), label='as opções de período')
+    c.press('Escape', at=c.A(9, 'só.', 0.2), label='fecha o filtro (Esc)')
+    c.click(SEL(f"{FC} tbody tr:has-text('Pedido')", nth=0), at=c.A(9, 'pedido,', 0.5), label='clica num Pedido: os materiais abrem na própria linha')
+    c.hover(SEL(f"{FC} tbody tr:has-text('Pedido')", nth=0), 1.6, at=c.A(9, 'ali', 0.2), label='os itens do pedido, ali mesmo')
+    c.fim()
+    return c
+
+
+def cap14():
     """Lucro estimado: Mês passado; latinha e papelão; os cartões; o aviso âmbar; (ilustração sucata é fungível)."""
-    c = cap_novo(10, ficha=COOP, start=(700, 400))
+    c = cap_novo(14, ficha=COOP, start=(700, 400))
     c.mark(1)
     c.click(ABA_FICHA('Lucro estimado'), at=c.A(1, 'Lucro', 0.6), label='aba Lucro estimado')
     c.waitfor(text='Margem estimada por material', timeout=12)
@@ -864,9 +1182,9 @@ def cap10():
     return c
 
 
-def cap11():
+def cap15():
     """Financeiro e notas fiscais: Receitas e Despesas vinculadas (frete, sacos de ráfia) e Notas fiscais vazia."""
-    c = cap_novo(11, ficha=COOP, start=(700, 400))
+    c = cap_novo(15, ficha=COOP, start=(700, 400))
     c.mark(1)
     c.click(ABA_FICHA('Financeiro'), at=c.A(1, 'Financeiro.', 0.6), label='aba Financeiro')
     c.waitfor(text='Despesas & Receitas', timeout=12)
@@ -894,14 +1212,14 @@ REL_SALDO = lambda nome: SEL(f"{REL} tr:has-text('{nome}') td:nth-child(3)")
 OLHO = lambda nome: SEL(f"{REL} tr:has-text('{nome}') button:has(svg.lucide-eye)")
 
 
-def cap12():
-    """Relatório de saldos: A Receber (R$ 19.540,00) e A Pagar (R$ 3.690,00), um caso por frase; Exportar Relatório; o olho da Aços Quiririm
-    abre a ficha cheia na conta-corrente."""
-    c = cap_novo(12, aba='Clientes', start=(760, 300))
+def cap16():
+    """Relatório de saldos: A Receber (R$ 19.540,00) e A Pagar (R$ 3.690,00), um caso por frase; Exportar em PDF abre o relatório (a tela devolve
+    o conteúdo para a ilustração); o olho da Aços Quiririm abre a ficha cheia na conta-corrente."""
+    c = cap_novo(16, aba='Clientes', start=(760, 300), extra=[{'do': 'eval', 'js': POPS}])
     c.mark(1)
-    c.click(SEL("main button[aria-label='Relatório']"), at=c.A(1, 'Lá', 0.6), label='Relatório')
+    c.click(SEL("main button[aria-label='Relatório']"), at=c.A(1, 'Relatório.', 0.6), label='Relatório')
     c.mark(2)
-    c.flush(1e9)   # a marca L2 entra antes da espera da janela (sem `at` na espera, ela só sairia no hover seguinte, atrasada)
+    c.flush(1e9)
     c.waitfor(text='Visualize todos os saldos a receber e a pagar', timeout=12)
     c.confere('dlg', ['A Receber', 'R$ 19.540,00', 'Fundição Bandeira do Vale', 'Aços Quiririm Ltda', 'Valdir Pereira'], 'bloco A Receber')
     c.hover(TXT('A Receber', within=REL, exact=False), 1.4, at=c.A(2, 'dezenove', 0.5), label='zoom: bloco A Receber, Total R$ 19.540,00 (L2-L4)')
@@ -931,10 +1249,11 @@ def cap12():
     c.mark(9)
     c.ev(js_dlg_topo(700), at=c.L(9) - 0.9, label='sobe ao topo do relatório')
     c.click(BTN('Exportar Relatório', REL), at=c.A(9, 'Exportar', 0.6), label='Exportar Relatório (abre o menu)')
-    c.hover(ITEM('Exportar em PDF'), 0.5, at=c.A(9, 'sai', 0.3), label='Exportar em PDF (sem clicar)')
+    c.hover(ITEM('Exportar em PDF'), 0.5, at=c.A(9, 'sai', 0.3), label='Exportar em PDF')
     c.hover(ITEM('Exportar em Excel'), 0.3, at=c.A(9, 'ou', 0.3), label='Exportar em Excel (sem clicar)')
+    c.click(ITEM('Exportar em PDF'), at=c.A(9, 'planilha.', 0.7), label='Exportar em PDF: abre o relatório em aba nova')
+    c.ev(html_js(['Fundição Bandeira do Vale']), label='PDF DO RELATÓRIO DE SALDOS (aba nova, para a ilustração)')
     c.mark(10)
-    c.press('Escape', at=c.L(10) - 0.9, label='fecha o menu (Esc)')
     c.click(OLHO('Aços Quiririm Ltda'), at=c.A(10, 'olho,', 0.6), label='olho da Aços Quiririm: abre a conta-corrente')
     c.waitfor(text='Conta-Corrente do Cliente', timeout=15)
     c.confere('main', ['Aços Quiririm Ltda', 'R$ 4.870,00'], 'a ficha cheia na conta-corrente')
@@ -943,34 +1262,33 @@ def cap12():
     return c
 
 
-def cap13():
-    """Recapitulando (a montagem da edição usa trechos dos capítulos; este passeio pelo estado final fica de reserva): o Rogério e a
-    serralheria na lista, o selo Cliente+Fornecedor, a ficha da cooperativa e o Relatório de Saldos. L6 é o cartão Próximo."""
-    c = cap_novo(13, start=(760, 300))
+def cap17():
+    """Recapitulando (a montagem da edição usa trechos dos capítulos; este passeio pelo estado final fica de reserva)."""
+    c = cap_novo(17, start=(760, 300))
     c.mark(1)
     c.hover(NOME_LINHA('Rogério Alves Costa'), 1.4, at=c.A(1, 'Rogério,', 0.5), label='Rogério Alves Costa (pessoa física)')
     c.mark(2)
     c.hover(FISCAL_OK('Serralheria Bem-Te-Vi'), 1.4, at=c.A(2, 'serralheria', 0.5), label='a serralheria com o sinal verde')
     c.mark(3)
-    c.click(LINHA('Serralheria Bem-Te-Vi'), at=c.A(3, 'Marcou', 0.6), label='a ficha da serralheria (Cliente+Fornecedor)')
-    c.waitfor(target=SEL(FICHA_DE('Serralheria Bem-Te-Vi')), timeout=10)
-    c.hover(TXT('Cliente+Fornecedor', within=FICHA_DE('Serralheria Bem-Te-Vi')), 1.2, at=c.A(3, 'cliente', 0.5), label='selo Cliente+Fornecedor')
     c.mark(4)
-    c.click(LINHA(COOP), at=c.A(4, 'Abriu', 0.6), label='a ficha da cooperativa')
-    c.waitfor(target=SEL(FC), timeout=10)
-    c.hover(ABA_FICHA('Pedidos'), 0.4, at=c.A(4, 'gráfico', 0.5), label='aba Pedidos')
-    c.hover(ABA_FICHA('Conta-corrente'), 0.4, at=c.A(4, 'pagamento', 0.5), label='aba Conta-corrente')
-    c.hover(ABA_FICHA('Lucro estimado'), 0.6, at=c.A(4, 'lucro', 0.5), label='aba Lucro estimado')
+    c.click(LINHA('Serralheria Bem-Te-Vi'), at=c.A(4, 'Marcou', 0.6), label='a ficha da serralheria (Cliente+Fornecedor)')
+    c.waitfor(target=SEL(FICHA_DE('Serralheria Bem-Te-Vi')), timeout=10)
+    c.hover(TXT('Cliente+Fornecedor', within=FICHA_DE('Serralheria Bem-Te-Vi')), 1.2, at=c.A(4, 'cliente', 0.5), label='selo Cliente+Fornecedor')
     c.mark(5)
-    c.click(SEL("main button[aria-label='Relatório']"), at=c.A(5, 'relatório', 0.6), label='Relatório de Saldos')
-    c.waitfor(text='Visualize todos os saldos a receber e a pagar', timeout=12)
+    c.click(LINHA(COOP), at=c.A(5, 'Abriu', 0.6), label='a ficha da cooperativa')
+    c.waitfor(target=SEL(FC), timeout=10)
+    c.hover(ABA_FICHA('Pedidos'), 0.4, at=c.A(5, 'gráfico', 0.5), label='aba Pedidos')
+    c.hover(ABA_FICHA('Conta-corrente'), 0.4, at=c.A(5, 'pagamento', 0.5), label='aba Conta-corrente')
+    c.hover(ABA_FICHA('Lucro estimado'), 0.6, at=c.A(5, 'lucro', 0.5), label='aba Lucro estimado')
     c.mark(6)
+    c.click(SEL("main button[aria-label='Relatório']"), at=c.A(6, 'relatório', 0.6), label='Relatório de Saldos')
+    c.waitfor(text='Visualize todos os saldos a receber e a pagar', timeout=12)
+    c.mark(7)
     c.fim()
     return c
 
 
-CAPS_ROBO = {n: globals()[f'cap{n:02d}'] for n in range(14) if f'cap{n:02d}' in globals()}
-
+CAPS_ROBO = {n: globals()[f'cap{n:02d}'] for n in range(18) if f'cap{n:02d}' in globals()}
 if __name__ == '__main__':
     quais = [int(a) for a in sys.argv[1:]] or sorted(CAPS_ROBO)
     for n in quais:

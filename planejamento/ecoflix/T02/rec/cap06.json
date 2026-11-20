@@ -1,13 +1,13 @@
 {
  "name": "t02-cap06",
- "title": "T2 · Cap. 6 · Desativar ou excluir (narração ESTIMADA 71,5 s; marcas L1..L8 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "title": "T2 · Cap. 6 · Restrições e contas do banco (narração ESTIMADA 82,4 s; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
  "seed": "t02-cap06",
  "pace": 0.5,
  "cps": 30,
  "tail": 1.5,
  "start": {
-  "x": 560,
-  "y": 470
+  "x": 1000,
+  "y": 300
  },
  "anonymous": true,
  "storage": {
@@ -83,26 +83,12 @@
    "idle": true
   },
   {
-   "do": "eval",
-   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|Algo deu errado|Falha ao|Something went wrong/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{document.querySelectorAll('[data-sonner-toast][data-type=error]').forEach(t=>{const s='TOAST DE ERRO: '+t.textContent.trim().slice(0,90);if(!window.__avisos.includes(s)&&window.__avisos.length<10)window.__avisos.push(s)})},300);return 1})()"
-  }
- ],
- "steps": [
-  {
-   "do": "mark",
-   "name": "L1",
-   "at": 0.4
-  },
-  {
    "do": "click",
    "target": {
     "text": "Marcos Antunes",
     "exact": true,
     "within": "main"
-   },
-   "note": "L1 alguém",
-   "at": 0.48,
-   "label": "clica no Marcos"
+   }
   },
   {
    "do": "waitFor",
@@ -114,343 +100,244 @@
    "timeout": 8
   },
   {
-   "do": "hover",
+   "do": "click",
    "target": {
-    "selector": "main button[aria-label='Ações de Marcos Antunes']",
-    "nth": 1
-   },
-   "seconds": 0.35,
-   "note": "L1 menu",
-   "at": 4.08,
-   "label": "menu ... do Marcos (Tornar master, Desativar, Excluir)",
-   "optional": false,
-   "timeout": 8
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main button[aria-label='Ações de Marcos Antunes']",
-    "nth": 1
-   },
-   "seconds": 0.45,
-   "label": "menu ... de Marcos Antunes de novo (só se não abriu)",
-   "unless": {
-    "role": "menuitem",
-    "name": "Desativar"
-   },
-   "optional": true,
-   "timeout": 4
+    "role": "button",
+    "name": "Editar",
+    "exact": true,
+    "within": "main"
+   }
   },
   {
    "do": "waitFor",
-   "target": {
-    "role": "menuitem",
-    "name": "Desativar"
-   },
-   "timeout": 6
+   "text": "Atualize os dados e permissões deste usuário",
+   "timeout": 10
+  },
+  {
+   "do": "waitFor",
+   "text": "Restrições",
+   "timeout": 8
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|Algo deu errado|Falha ao|Something went wrong/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);setInterval(()=>{document.querySelectorAll('[data-sonner-toast][data-type=error]').forEach(t=>{const s='TOAST DE ERRO: '+t.textContent.trim().slice(0,90);if(!window.__avisos.includes(s)&&window.__avisos.length<10)window.__avisos.push(s)})},300);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0.4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.textContent.trim()===\"Restri\\u00e7\\u00f5es\").sort((a,b)=>a.textContent.length-b.textContent.length||a.children.length-b.children.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-150);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/1500),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "note": "L1 fim",
+   "at": 2.83,
+   "label": "a janela desce até a seção Restrições"
   },
   {
    "do": "hover",
    "target": {
-    "role": "menuitem",
-    "name": "Desativar"
+    "text": "Restrições",
+    "exact": true,
+    "within": "[role=dialog]"
    },
    "seconds": 0.15,
-   "note": "L1 desativar",
-   "at": 7.26,
-   "label": "Desativar",
+   "note": "L1 restrições.",
+   "at": 5.29,
+   "label": "Restrições",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "hover",
    "target": {
-    "role": "menuitem",
-    "name": "Excluir"
+    "text": "Ficam desligadas por padrão. Ative somente para uma exceção consciente.",
+    "exact": true,
+    "within": "[role=dialog]"
    },
    "seconds": 0.15,
-   "note": "L1 excluir.",
-   "at": 8.03,
-   "label": "Excluir",
+   "note": "L1 desligadas,",
+   "at": 7.04,
+   "label": "Ficam desligadas por padrão",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L2",
-   "at": 8.81
-  },
-  {
-   "do": "scroll",
-   "point": {
-    "x": 980,
-    "y": 600
-   },
-   "by": 0,
-   "duration": 0.3,
-   "after": 0,
-   "at": 10.01,
-   "label": "cursor sai do menu (fecha)"
+   "at": 11.85
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 18.42
+   "at": 22.83
   },
   {
-   "do": "hover",
+   "do": "type",
    "target": {
-    "selector": "main button[aria-label='Ações de Marcos Antunes']",
-    "nth": 1
+    "text": "Ver somente clientes e fornecedores que cadastrar",
+    "exact": true,
+    "within": "[role=dialog]"
    },
-   "seconds": 0.35,
-   "note": "L3 Desativo",
-   "at": 18.42,
-   "label": "menu ... do Marcos",
-   "optional": false,
-   "timeout": 8
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main button[aria-label='Ações de Marcos Antunes']",
-    "nth": 1
-   },
-   "seconds": 0.45,
-   "label": "menu ... de Marcos Antunes de novo (só se não abriu)",
-   "unless": {
-    "role": "menuitem",
-    "name": "Desativar"
-   },
+   "text": "",
+   "noClick": true,
    "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "waitFor",
-   "target": {
-    "role": "menuitem",
-    "name": "Desativar"
-   },
-   "timeout": 6
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "menuitem",
-    "name": "Desativar"
-   },
-   "note": "L3 Desativo",
-   "at": 19.02,
-   "label": "Desativar"
-  },
-  {
-   "do": "waitFor",
-   "text": "Usuário desativado!",
-   "timeout": 8
-  },
-  {
-   "do": "waitFor",
-   "target": {
-    "text": "2 / 3 usuários",
-    "exact": true,
-    "within": "main"
-   },
-   "timeout": 8
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Inativo\", \"A conta está impedida de entrar.\", \"2 / 3 usuários\", \"31 permissões · Inativo\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
-   "label": "confere Marcos inativo e o selo 2 / 3"
+   "timeout": 4,
+   "note": "L3 São",
+   "at": 23.73,
+   "label": "ZOOM as três primeiras restrições (clientes e fornecedores, pedidos, tíquetes)"
   },
   {
    "do": "hover",
    "target": {
-    "text": "A conta está impedida de entrar.",
+    "text": "Ver somente clientes e fornecedores que cadastrar",
     "exact": true,
-    "within": "main"
+    "within": "[role=dialog]"
    },
    "seconds": 0.15,
-   "note": "L3 acesso,",
-   "at": 21.25,
-   "label": "A conta está impedida de entrar.",
+   "note": "L3 clientes",
+   "at": 25.43,
+   "label": "Ver somente clientes e fornecedores que cadastrar",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "hover",
    "target": {
-    "text": "2 / 3 usuários",
+    "text": "Ver somente os pedidos que lançar",
     "exact": true,
-    "within": "main"
+    "within": "[role=dialog]"
    },
-   "seconds": 2.4,
-   "note": "L3 contador:",
-   "at": 25.88,
-   "label": "ZOOM selo 2 / 3 usuários",
+   "seconds": 0.15,
+   "note": "L3 pedidos",
+   "at": 29.3,
+   "label": "Ver somente os pedidos que lançar",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Ver somente os tíquetes de pesagem que criar",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.15,
+   "note": "L3 tickets",
+   "at": 31.66,
+   "label": "Ver somente os tíquetes de pesagem que criar",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 30.62
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main button[aria-label='Ações de Marcos Antunes']",
-    "nth": 1
-   },
-   "seconds": 0.35,
-   "note": "L4 mesmo",
-   "at": 32.28,
-   "label": "menu ... do Marcos",
-   "optional": false,
-   "timeout": 8
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main button[aria-label='Ações de Marcos Antunes']",
-    "nth": 1
-   },
-   "seconds": 0.45,
-   "label": "menu ... de Marcos Antunes de novo (só se não abriu)",
-   "unless": {
-    "role": "menuitem",
-    "name": "Ativar"
-   },
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "waitFor",
-   "target": {
-    "role": "menuitem",
-    "name": "Ativar"
-   },
-   "timeout": 6
+   "at": 34.19
   },
   {
    "do": "click",
    "target": {
-    "role": "menuitem",
-    "name": "Ativar"
+    "role": "switch",
+    "name": "Usar somente as contas bancárias liberadas",
+    "exact": true
    },
-   "note": "L4 Ativar.",
-   "at": 33.54,
-   "label": "Ativar"
+   "note": "L4 Ligo,",
+   "at": 37.07,
+   "label": "liga Usar somente as contas bancárias liberadas"
   },
   {
    "do": "waitFor",
-   "text": "Usuário ativado!",
+   "text": "Contas liberadas para este usuário",
    "timeout": 8
   },
   {
-   "do": "waitFor",
-   "target": {
-    "text": "3 / 3 usuários",
-    "exact": true,
-    "within": "main"
-   },
-   "timeout": 8
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Contas liberadas para este usuário\", \"Marque as contas que poderão aparecer em pagamentos por Pix ou transferência.\", \"Conta Principal\", \"Conta Secundária\", \"Poupança antiga\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog],[role=alertdialog]\")];const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere as contas da empresa"
   },
   {
-   "do": "hover",
-   "target": {
-    "text": "3 / 3 usuários",
-    "exact": true,
-    "within": "main"
-   },
-   "seconds": 0.15,
-   "note": "L4 Marcos",
-   "at": 34.96,
-   "label": "selo 3 / 3 usuários (de volta)",
-   "optional": true,
-   "timeout": 4
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.textContent.trim()===\"Contas liberadas para este usu\\u00e1rio\").sort((a,b)=>a.textContent.length-b.textContent.length||a.children.length-b.children.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-200);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "note": "L4 lista",
+   "at": 38.69,
+   "label": "a janela desce até as contas liberadas"
   },
   {
    "do": "mark",
    "name": "L5",
-   "at": 36.58
+   "at": 40.76
   },
   {
-   "do": "hover",
+   "do": "type",
    "target": {
-    "selector": "main button[aria-label='Ações de Marcos Antunes']",
-    "nth": 1
+    "selector": "[role=dialog] label:has([aria-label='Liberar conta Conta Principal'])"
    },
-   "seconds": 0.35,
-   "note": "L5 Excluir",
-   "at": 36.66,
-   "label": "menu ... do Marcos",
-   "optional": false,
-   "timeout": 8
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main button[aria-label='Ações de Marcos Antunes']",
-    "nth": 1
-   },
-   "seconds": 0.45,
-   "label": "menu ... de Marcos Antunes de novo (só se não abriu)",
-   "unless": {
-    "role": "menuitem",
-    "name": "Excluir"
-   },
+   "text": "",
+   "noClick": true,
    "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "waitFor",
-   "target": {
-    "role": "menuitem",
-    "name": "Excluir"
-   },
-   "timeout": 6
+   "timeout": 4,
+   "note": "L5 Marco",
+   "at": 40.86,
+   "label": "ZOOM os cartões das contas"
   },
   {
    "do": "click",
    "target": {
-    "role": "menuitem",
-    "name": "Excluir"
+    "role": "checkbox",
+    "name": "Liberar conta Conta Principal",
+    "exact": true
    },
-   "note": "L5 Excluir",
-   "at": 37.76,
-   "label": "Excluir"
-  },
-  {
-   "do": "waitFor",
-   "text": "Esta ação é irreversível",
-   "timeout": 8
+   "note": "L5 Marco",
+   "at": 41.06,
+   "label": "marca a Conta Principal"
   },
   {
    "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Excluir usuário\", \"Esta ação é irreversível\", \"Para confirmar, digite o email do usuário:\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=alertdialog]\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
-   "label": "confere janela Excluir usuário"
-  },
-  {
-   "do": "eval",
-   "js": "(()=>{const b=[...document.querySelectorAll('[role=alertdialog] button')].find(x=>x.textContent.trim()==='Excluir Usuário');return b?(b.disabled?'OK: Excluir Usuário apagado':'DIFERENTE: Excluir Usuário ligado'):'DIFERENTE: sem o botão'})()",
-   "label": "confere Excluir Usuário apagado"
+   "js": "(()=>{const b=document.querySelector('[role=dialog] [role=checkbox][aria-label=\"Liberar conta Conta Principal\"]');const st=b?b.getAttribute('data-state'):'sem';return (st==='checked'?'OK: ':'DIFERENTE: ')+'Liberar conta Conta Principal '+st})()",
+   "label": "confere Conta Principal marcada"
   },
   {
    "do": "hover",
    "target": {
-    "selector": "#confirmEmail"
+    "selector": "[role=dialog] label:has([aria-label='Liberar conta Conta Secundária'])"
    },
    "seconds": 0.15,
-   "note": "L5 e-mail",
-   "at": 42.9,
-   "label": "Email de confirmação",
+   "note": "L5 Pix",
+   "at": 44.43,
+   "label": "as outras contas ficam de fora",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L6",
-   "at": 45.28
+   "at": 52.35
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.textContent.trim()===\"Perfis r\\u00e1pidos\").sort((a,b)=>a.textContent.length-b.textContent.length||a.children.length-b.children.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-230);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "note": "L6 Três",
+   "at": 53.05,
+   "label": "sobe até os Perfis rápidos"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] button.bg-amber-500"
+   },
+   "seconds": 0.15,
+   "note": "L6 Personalizado.",
+   "at": 73.7,
+   "label": "Personalizado (o perfil passa a ser)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 74.79
   },
   {
    "do": "click",
@@ -458,54 +345,18 @@
     "role": "button",
     "name": "Cancelar",
     "exact": true,
-    "within": "[role=alertdialog]"
+    "within": "[role=dialog]"
    },
-   "note": "L6 cancelo.",
-   "at": 46.19,
-   "label": "Cancelar"
+   "note": "L7 cancelo",
+   "at": 77.22,
+   "label": "Cancelar (nada muda)"
   },
   {
    "do": "waitFor",
    "gone": {
-    "selector": "[role=alertdialog]"
+    "selector": "[role=dialog]"
    },
    "timeout": 8
-  },
-  {
-   "do": "mark",
-   "name": "L7",
-   "at": 52.39
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main svg[aria-label=\"Usuário master\"]"
-   },
-   "seconds": 0.15,
-   "note": "L7 master.",
-   "at": 59.85,
-   "label": "coroa do Rafael (o master)",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "mark",
-   "name": "L8",
-   "at": 64.13
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "Rafael Nogueira",
-    "exact": true,
-    "within": "main"
-   },
-   "seconds": 0.15,
-   "note": "L8 master",
-   "at": 67.64,
-   "label": "Rafael na lista",
-   "optional": true,
-   "timeout": 4
   },
   {
    "do": "eval",
@@ -515,7 +366,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 71.47
+   "at": 82.44
   }
  ]
 }

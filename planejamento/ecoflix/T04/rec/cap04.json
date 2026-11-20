@@ -1,6 +1,6 @@
 {
  "name": "t04-cap04",
- "title": "T4 · Cap. 4 · Dados fiscais e o campo vermelho (narração ESTIMADA 86,3 s; marcas L1..L10 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "title": "T4 · Cap. 4 · O que falta pra emitir nota (narração ESTIMADA 127,0 s; marcas L1..L13 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
  "seed": "t04-cap04",
  "pace": 0.5,
  "cps": 40,
@@ -173,7 +173,7 @@
   },
   {
    "do": "waitFor",
-   "text": "Não veio da Receita — obrigatório para emitir NF-e",
+   "text": "Falta isto para emitir NF-e",
    "timeout": 8
   },
   {
@@ -184,12 +184,16 @@
    "timeout": 15
   },
   {
-   "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.textContent.trim()===\"Endere\\u00e7o Fiscal\"&&e.offsetParent).sort((a,b)=>a.textContent.length-b.textContent.length||a.children.length-b.children.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-150);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/300),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()"
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Dados de Contato",
+    "within": "[role=dialog]"
+   }
   },
   {
    "do": "wait",
-   "seconds": 0.5
+   "seconds": 0.6
   },
   {
    "do": "eval",
@@ -209,30 +213,57 @@
   {
    "do": "type",
    "target": {
-    "selector": "[role=dialog] #numero"
+    "text": "Falta isto para emitir NF-e",
+    "exact": false,
+    "within": "[role=dialog]"
    },
    "text": "",
    "noClick": true,
    "optional": true,
    "timeout": 4,
    "at": 0.4,
-   "label": "zoom: Número vazio e o aviso vermelho (L1-L2)"
+   "label": "zoom: a caixa âmbar Falta isto para emitir NF-e (1) com o link Número (L1)"
   },
   {
    "do": "hover",
    "target": {
-    "selector": "[role=dialog] #numero"
+    "selector": "[role=dialog] section[aria-label='Pendências para emitir NF-e'] button:has-text('Número')"
    },
-   "seconds": 1.4,
-   "at": 1.5,
-   "label": "o campo Número (vazio)",
+   "seconds": 0.15,
+   "at": 6.43,
+   "label": "o link Número (Dados Fiscais)",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L2",
-   "at": 5.55
+   "at": 6.99
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] section[aria-label='Pendências para emitir NF-e'] button:has-text('Número')"
+   },
+   "at": 7.29,
+   "label": "Número (Dados Fiscais): a janela troca de aba e o cursor cai no campo"
+  },
+  {
+   "do": "waitFor",
+   "text": "Não veio da Receita — obrigatório para emitir NF-e",
+   "timeout": 8
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] #numero"
+   },
+   "text": "",
+   "noClick": true,
+   "optional": true,
+   "timeout": 4,
+   "at": 7.39,
+   "label": "zoom: Número vazio e a linha vermelha (L2)"
   },
   {
    "do": "hover",
@@ -242,27 +273,27 @@
     "within": "[role=dialog]"
    },
    "seconds": 1.8,
-   "at": 6.25,
-   "label": "aviso: Não veio da Receita — obrigatório para emitir NF-e",
+   "at": 12.25,
+   "label": "linha vermelha: Não veio da Receita — obrigatório para emitir NF-e",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 10.68
+   "at": 17.74
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 20.75
+   "at": 27.81
   },
   {
    "do": "click",
    "target": {
     "selector": "[role=dialog] #numero"
    },
-   "at": 21.28,
+   "at": 28.34,
    "label": "Número 418 (clique no campo)"
   },
   {
@@ -272,7 +303,7 @@
    },
    "text": "418",
    "cps": 40,
-   "at": 23.72,
+   "at": 30.78,
    "label": "Número 418",
    "noClick": true
   },
@@ -282,93 +313,108 @@
    "label": "confere o vermelho do Número sumiu"
   },
   {
+   "do": "eval",
+   "js": "(async()=>{for(let i=0;i<10;i++){const el=document.querySelector(\"[role=dialog]\");const t=el?el.innerText:'';if(!t.includes(\"Falta isto para emitir NF-e\"))return 'OK: sumiu '+\"Falta isto para emitir NF-e\";await new Promise(r=>setTimeout(r,300));}return 'DIFERENTE: ainda aparece '+\"Falta isto para emitir NF-e\"})()",
+   "label": "confere a caixa âmbar sumiu"
+  },
+  {
    "do": "mark",
    "name": "L5",
-   "at": 26.64
+   "at": 33.47
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.textContent.trim()===\"Inscri\\u00e7\\u00e3o Estadual\"&&e.offsetParent).sort((a,b)=>a.textContent.length-b.textContent.length||a.children.length-b.children.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-230);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/800),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 26.64,
+   "at": 33.47,
    "label": "sobe a janela até a inscrição estadual"
   },
   {
-   "do": "hover",
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"A Sintegra informa IE 688412573032 para este CNPJ em SP.\", \"Não Contribuinte\", \"Usar a da Sintegra\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog],[role=alertdialog]\")];const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere o aviso da Sintegra"
+  },
+  {
+   "do": "type",
    "target": {
     "selector": "[role=dialog] #inscricao_estadual"
    },
-   "seconds": 0.3,
-   "at": 28.63,
-   "label": "Inscrição Estadual",
+   "text": "",
+   "noClick": true,
    "optional": true,
-   "timeout": 4
+   "timeout": 4,
+   "at": 34.17,
+   "label": "zoom: o aviso da Sintegra e o link Usar a da Sintegra (L5)"
   },
   {
    "do": "hover",
    "target": {
-    "selector": "[role=dialog] button[role=combobox]:has-text('Não Contribuinte')"
+    "role": "button",
+    "name": "Usar a da Sintegra",
+    "exact": true,
+    "within": "[role=dialog]"
    },
    "seconds": 0.15,
-   "at": 30.45,
-   "label": "Indicador IE",
+   "at": 41.09,
+   "label": "o link Usar a da Sintegra",
    "optional": true,
    "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "[role=dialog] button[role=combobox]:has-text('Simples Nacional')"
-   },
-   "seconds": 0.6,
-   "at": 31.52,
-   "label": "Regime tributário do fornecedor",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "[role=dialog] button[role=combobox]:has-text('Não Contribuinte')"
-   },
-   "at": 33.39,
-   "label": "abre o Indicador IE"
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "option",
-    "name": "Contribuinte ICMS"
-   },
-   "at": 34.45,
-   "label": "Contribuinte ICMS"
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "[role=dialog] #inscricao_estadual"
-   },
-   "at": 36.43,
-   "label": "Inscrição Estadual 688412573032 (clique no campo)"
-  },
-  {
-   "do": "eval",
-   "js": "(()=>{const e=document.activeElement;if(!e||!/^(INPUT|TEXTAREA)$/.test(e.tagName))return 'SEM ALVO (nada em foco)';document.execCommand('insertText',false,\"688412573032\");return e.value})()",
-   "at": 37.44,
-   "label": "Inscrição Estadual 688412573032 (colado)"
   },
   {
    "do": "mark",
    "name": "L6",
-   "at": 39.22
+   "at": 41.87
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Usar a da Sintegra",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 43.16,
+   "label": "clica em Usar a da Sintegra"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Preenchido pela consulta do CNPJ: a Sintegra informa a inscrição estadual 688412573032 para este CNPJ em SP.\", \"Contribuinte ICMS\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog],[role=alertdialog]\")];const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere inscrição e indicador preenchidos"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] #inscricao_estadual"
+   },
+   "seconds": 0.8,
+   "at": 45.53,
+   "label": "zoom: Inscrição Estadual 688412573032 e Indicador IE Contribuinte ICMS (L6)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] button[role=combobox]:has-text('Contribuinte ICMS')"
+   },
+   "seconds": 1.4,
+   "at": 48.57,
+   "label": "Indicador IE: Contribuinte ICMS",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 55.43
   },
   {
    "do": "hover",
    "target": {
     "selector": "[role=dialog] button[role=combobox]:has-text('Simples Nacional')"
    },
-   "seconds": 0.87,
-   "at": 42.12,
-   "label": "zoom: Regime Simples Nacional e a linha da consulta (L6)",
+   "seconds": 0.88,
+   "at": 57.65,
+   "label": "zoom: Regime Simples Nacional e a linha da consulta (L7)",
    "optional": true,
    "timeout": 4
   },
@@ -380,7 +426,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 1.6,
-   "at": 43.94,
+   "at": 59.48,
    "label": "Preenchido pela consulta do CNPJ",
    "optional": true,
    "timeout": 4
@@ -392,8 +438,13 @@
   },
   {
    "do": "mark",
-   "name": "L7",
-   "at": 47.54
+   "name": "L8",
+   "at": 63.07
+  },
+  {
+   "do": "mark",
+   "name": "L9",
+   "at": 75.18
   },
   {
    "do": "click",
@@ -403,7 +454,7 @@
     "exact": true,
     "within": "[role=dialog]"
    },
-   "at": 47.84,
+   "at": 75.48,
    "label": "Salvar"
   },
   {
@@ -424,7 +475,7 @@
     "selector": "main aside button:has-text('Serralheria Bem-Te-Vi') .cursor-help:has(svg.lucide-badge-check)"
    },
    "seconds": 2.0,
-   "at": 51.58,
+   "at": 79.23,
    "label": "sinal verde da serralheria (Pronto para emitir NF-e)",
    "optional": true,
    "timeout": 4
@@ -436,16 +487,16 @@
   },
   {
    "do": "mark",
-   "name": "L8",
-   "at": 54.57
+   "name": "L10",
+   "at": 82.21
   },
   {
    "do": "hover",
    "target": {
     "selector": "main aside button:has-text('Rogério Alves Costa') .cursor-help:has(svg[class*=triangle])"
    },
-   "seconds": 3.71,
-   "at": 60.13,
+   "seconds": 3.7,
+   "at": 87.78,
    "label": "triângulo do Rogério (o que falta para a NF-e)",
    "optional": true,
    "timeout": 4
@@ -457,44 +508,172 @@
   },
   {
    "do": "mark",
-   "name": "L9",
-   "at": 64.79
+   "name": "L11",
+   "at": 92.43
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main aside button:has-text('Rogério Alves Costa')"
+   },
+   "at": 93.34,
+   "label": "clica no Rogério: a ficha abre ao lado"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "main section[aria-label='Detalhes de Rogério Alves Costa']"
+   },
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Editar",
+    "exact": true,
+    "within": "main section[aria-label='Detalhes de Rogério Alves Costa']"
+   },
+   "at": 94.5,
+   "label": "Editar"
+  },
+  {
+   "do": "waitFor",
+   "text": "Editar Fornecedor",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "tab",
+    "name": "Dados Fiscais",
+    "within": "[role=dialog]"
+   },
+   "at": 94.81,
+   "label": "aba Dados Fiscais"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='00000-000']"
+   },
+   "at": 95.74,
+   "label": "CEP 12062-150 (clique no campo)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='00000-000']"
+   },
+   "text": "12062150",
+   "cps": 40,
+   "at": 96.47,
+   "label": "CEP 12062-150",
+   "noClick": true
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Taubaté\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog],[role=alertdialog]\")];const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere a cidade veio com o CEP"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const esp=[\"12062-150\", \"Rua das Palmeiras\", \"Jardim Santa Luzia\"];let out='';for(let i=0;i<12;i++){const v=[...document.querySelectorAll(\"[role=dialog]\"+' input, '+\"[role=dialog]\"+' textarea')].map(e=>e.value).join(' | ');const falta=esp.filter(e=>!v.includes(e));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+v.slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere rua e bairro do CEP"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] #numero"
+   },
+   "at": 100.37,
+   "label": "Número 77 (clique no campo)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] #numero"
+   },
+   "text": "77",
+   "cps": 40,
+   "at": 100.92,
+   "label": "Número 77",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Salvar",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 101.23,
+   "label": "Salvar"
+  },
+  {
+   "do": "waitFor",
+   "text": "Fornecedor atualizado!",
+   "timeout": 12
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main aside button:has-text('Rogério Alves Costa') .cursor-help:has(svg.lucide-badge-check)"
+   },
+   "seconds": 0.29,
+   "at": 103.84,
+   "label": "o Rogério agora com o sinal verde",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L12",
+   "at": 105.08
   },
   {
    "do": "click",
    "target": {
     "selector": "main button[aria-pressed]:has-text('incompletos')"
    },
-   "at": 65.39,
+   "at": 105.68,
    "label": "botão incompletos"
   },
   {
    "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Rogério Alves Costa\", \"Valdir Pereira\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main aside\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
-   "label": "confere só os incompletos"
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Valdir Pereira\", \"Aparecida Ramos\", \"Cida Ramos\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main aside\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere só os três incompletos"
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main aside button:has-text('Rogério Alves Costa') p.font-medium"
+    "selector": "main aside button:has-text('Cida Ramos') p.font-medium"
    },
    "seconds": 1.0,
-   "at": 68.37,
+   "at": 108.67,
    "label": "a lista só com os incompletos",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
-   "name": "L10",
-   "at": 71.97
+   "name": "L13",
+   "at": 112.72
   },
   {
    "do": "click",
    "target": {
     "selector": "main button[aria-pressed]:has-text('Mostrar todos')"
    },
-   "at": 72.27,
+   "at": 113.02,
    "label": "Mostrar todos (a lista volta)"
   },
   {
@@ -503,7 +682,7 @@
     "selector": "main aside button:has-text('Serralheria Bem-Te-Vi') p.font-medium"
    },
    "seconds": 1.0,
-   "at": 78.59,
+   "at": 119.34,
    "label": "a lista inteira",
    "optional": true,
    "timeout": 4
@@ -516,7 +695,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 86.3
+   "at": 127.04
   }
  ]
 }

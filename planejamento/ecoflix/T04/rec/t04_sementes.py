@@ -3,7 +3,7 @@
 
   python3 -I rec/t04/t04_sementes.py inicio
       escreve t04/inicio.json (à mão, abaixo): o que a aula precisa e o mundo base não traz.
-  python3 -I rec/t04/t04_sementes.py captura NN [--porta 54304]
+  python3 -I rec/t04/t04_sementes.py captura NN [--porta 54304] [--nome apos-n1] [--sem entity_custom_prices]
       logo DEPOIS de um ensaio (ou gravação) do capítulo NN com 0 passo falho, lê a instância do Supabase falso (o estado que o robô
       deixou) e escreve t04/apos-capNN.json: as linhas criadas na aula (created_at >= FAKE_NOW) e, como _patch, as linhas do mundo que
       a aula alterou (updated_at >= FAKE_NOW). Cumulativo: o capítulo seguinte parte de ["t04/inicio", "t04/apos-capNN"].
@@ -74,7 +74,10 @@ def inicio():
             'suppliers': [{'match': {'name': n}, 'set': {'portal_token': token('f:' + n)}} for n in FORNECEDORES]
             + [{'match': {'name': 'Depósito Irmãos Siqueira'}, 'set': {'default_price_table_id': None}}],
             'customers': [{'match': {'name': n}, 'set': {'portal_token': token('c:' + n)}} for n in CLIENTES]
-            + [{'match': {'name': 'Depósito Irmãos Siqueira'}, 'set': {'default_price_table_id': None}}],
+            + [{'match': {'name': 'Depósito Irmãos Siqueira'}, 'set': {'default_price_table_id': None}}]
+            # 1.60.18, cap. 5 (Empresa do Lucro Real): a Aços Quiririm entra "degradada" (junção de 18/11): inscrição com um dígito trocado
+            # (válida, mas errada), sem regime e sem "É Indústria". A aula corrige as três coisas e o mundo volta ao de B (IE 688.042.711.117).
+            + [{'match': {'name': 'Aços Quiririm Ltda'}, 'set': {'inscricao_estadual': '688.042.819.111', 'regime_tributario': None, 'is_industry': False}}],
         },
     }
     return d
@@ -150,7 +153,14 @@ if __name__ == '__main__':
     elif sys.argv[1:2] == ['captura']:
         nn = int(sys.argv[2])
         porta = int(sys.argv[sys.argv.index('--porta') + 1]) if '--porta' in sys.argv else 54304
-        nome, d = f'apos-cap{nn:02d}', captura(nn, porta)
+        # nome: `--nome apos-n1` (capítulo sem número próprio na cadeia); `--sem tabela` tira da semente o que a aula grava e não segue
+        # (junção de 18/11: o preço fixo do ferro pesado do cap. 8 e a etiqueta do Valdir do cap. 9 não vão para as próximas aulas)
+        nome = sys.argv[sys.argv.index('--nome') + 1] if '--nome' in sys.argv else f'apos-cap{nn:02d}'
+        d = captura(nn, porta)
+        for i, a in enumerate(sys.argv):
+            if a == '--sem':
+                d.pop(sys.argv[i + 1], None)
+                d.get('_patch', {}).pop(sys.argv[i + 1], None)
     else:
         sys.exit(__doc__)
     caminho = os.path.join(SAIDA, f'{nome}.json')

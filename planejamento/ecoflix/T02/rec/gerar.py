@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""T2 · Usuários e permissões (EcoFlix, EcoSistema 1.59.154): gera rec/t02/cap00..cap10.json (roteiros do robô) a partir da fala
+"""T2 · Usuários e permissões (EcoFlix, EcoSistema 1.60.18): gera rec/t02/cap00..cap13.json (roteiros do robô) a partir da fala
 ($TUT_HOME/t02/narracao/capNN.json: o estimado até a voz chegar; com a voz, o da voz, sem mudar nada aqui).
 
-Computador 1280x800, Rafael Nogueira (master) na Recicla Vale Metais; FAKE_NOW 2026-11-10T08:30:00-03:00 em todos os capítulos
+Computador 1600x900 (mundo.json navegador.tela), Rafael Nogueira (master) na Recicla Vale Metais; FAKE_NOW 2026-11-10T08:30:00-03:00 em todos os capítulos
 (o mesmo no Supabase falso e no robô). Rodar de qualquer pasta: `python3 -I rec/t02/gerar.py [NN ...]` (ANCORAS=1 lista as
 âncoras). Depois: `node rec/record.mjs rec/t02/capNN.json --check`; gravar um capítulo: `bash rec/t02/t02_rodar.sh NN [--ens]`.
 Login: todo capítulo é "anonymous" e o setup entra pela tela de login com "$TUT_USER"/"$TUT_SENHA" do ambiente (o Supabase
@@ -15,9 +15,13 @@ A palavra casa INTEIRA (sem acento e pontuação, sem prefixo); repetida na linh
 do T14); um passo que começa até 0,25 s antes da marca a puxa para o início dele.
 
 Estado de partida (rec/mundo/seeds-extra/t02/, escrito por t02_sementes.py): `inicio` (só o Rafael: o mundo base já traz a Juliana
-e o Marcos, e a aula os cria na tela) nos caps 0 a 3; + `apos-cap03` (Marcos, Operador Padrão) no cap04; + `apos-cap04` (Juliana) no
-cap05; + `apos-cap05` (Marcos com foto, tela inicial Caixa e sem Ver Projeção de Lucro) nos caps 6 a 10. Os caps 6 a 9 terminam
-no estado em que começam (ativa de novo, cancela, cancela, cancela).
+e o Marcos, e a aula os cria na tela) nos caps 0 a 3; + `apos-cap03` (Marcos, Operador Padrão, com a foto) no cap04; + `apos-cap04`
+(Juliana) no cap05; + `apos-cap05` (Marcos com tela inicial Caixa e sem Ver Projeção de Lucro) nos caps 6 a 13. Os caps 6 a 12
+terminam no estado em que começam (cancela, cancela, ativa de novo, cancela, cancela, cancela, o relatório não grava nada).
+1.60.18 (14 capítulos; novos: 6 Restrições, 7 Mapa, 12 Relatório; 8 a 11 eram 6 a 9; 13 era o 10): o perfil rápido e a foto da
+criação gravam; sem perfil escolhido a lista fica apagada (clicar em "Personalizado" ou num perfil); "Operador Padrão" ganhou o selo
+"Recomendado" dentro do botão (nome acessível "Operador Padrão Recomendado": alvo sem `exact`); "Personalizado" é um botão (âmbar
+quando marcado); limpar a busca não fecha mais as telas abertas; a busca "nota" não traz mais o bloco do Cato.
 
 O que este tutorial ensinou ao robô (explorações rec/t02/_ex/e1..e5, 10/11):
  - "Excluir usuário" e "Passar o controle da empresa?" são AlertDialog: `[role=alertdialog]`, não `[role=dialog]`.
@@ -43,10 +47,11 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 TUT_HOME = os.path.normpath(os.path.join(HERE, '..', '..'))
 NARR = os.path.join(TUT_HOME, 't02', 'narracao')
 FAKE_NOW = '2026-11-10T08:30:00-03:00'
-NOMES = ['Abertura', 'Onde fica', 'Criar o usuário', 'Os três perfis rápidos', 'Telas e ações', 'O balanceiro e o escritório',
-         'Desativar ou excluir', 'Passar o controle', 'O limite de usuários', 'Esconder o valor', 'Recapitulando']
+NOMES = ['Abertura', 'Onde fica', 'Criar o usuário', 'Os perfis rápidos', 'Telas e ações', 'O balanceiro e o escritório',
+         'Restrições e contas do banco', 'O mapa das permissões', 'Desativar ou excluir', 'Passar o controle', 'O limite de usuários',
+         'Esconder o valor', 'Relatório por Usuário', 'Recapitulando']
 _C = ['t02/inicio', 't02/apos-cap03', 't02/apos-cap04', 't02/apos-cap05']
-SEMENTE = {0: _C[:1], 1: _C[:1], 2: _C[:1], 3: _C[:1], 4: _C[:2], 5: _C[:3], 6: _C, 7: _C, 8: _C, 9: _C, 10: _C}
+SEMENTE = {0: _C[:1], 1: _C[:1], 2: _C[:1], 3: _C[:1], 4: _C[:2], 5: _C[:3], **{n: _C for n in range(6, 14)}}
 # senhas FICTÍCIAS dos usuários criados na tela (plano.md do T2; aparecem em pontinhos e nunca são faladas). A senha de quem
 # grava ($TUT_SENHA) não entra em arquivo nenhum.
 SENHA_MARCOS = 'Balanca#2026'
@@ -270,7 +275,10 @@ CRIAR = BTN('Criar Usuário', MAIN)
 CRIAR_DLG = BTN('Criar Usuário', DLG)
 EDITAR = BTN('Editar', MAIN)
 CHIP = lambda nome: BTN(nome, DLG)                                            # perfis rápidos
-PERSONALIZADO = SEL(f'{DLG} span.bg-amber-500')
+CHIP_OP = BTN('Operador Padrão', DLG, exact=False)                            # 1.60.18: desmarcado vira "Operador Padrão Recomendado"
+AVISO_PERFIL = TXT('Escolha primeiro o perfil deste usuário', DLG)            # aviso âmbar enquanto nenhum perfil foi escolhido
+BUSCA_LISTA = {'placeholder': 'Buscar por nome ou e-mail', 'within': MAIN}
+PERSONALIZADO = SEL(f'{DLG} button.bg-amber-500')                            # 1.60.18: o botão Personalizado marcado (âmbar, com o visto)
 SW = lambda nome: {'role': 'switch', 'name': nome, 'exact': True}             # interruptor de ação (o nome é o rótulo da ação)
 TELA = lambda nome: SW(f'Acesso à tela {nome}')                               # interruptor da tela
 VER = lambda nome: BTN(f'Ver ações de {nome}', DLG)                           # "Clique para ver N ações" (abre/fecha)
@@ -310,6 +318,15 @@ IR_USUARIOS = [{'do': 'goto', 'url': '/configuracoes?tab=users'}, {'do': 'waitFo
 SETUP_DASH = LOGIN + IR_USUARIOS + [{'do': 'goto', 'url': '/dashboard'}, {'do': 'waitFor', 'text': 'Olá, Rafael!', 'timeout': 25}, AGUARDA]
 SETUP_USUARIOS = LOGIN + IR_USUARIOS
 
+# o app abre janelas novas (relatório) e a gravação filma uma aba só: POPS guarda cada window.open; HTML_JS devolve o HTML do relatório
+# (base64, UTF-8) para virar a ilustração da edição (padrão POPS/PDF_JS do t08/gerar.py; aqui o relatório é uma página HTML, não um PDF)
+POPS = "(()=>{const o=window.open;window.__pops=[];window.open=function(...a){const w=o.apply(this,a);window.__pops.push(w);return w};return 'ok'})()"
+HTML_JS = ("(async()=>{for(let i=0;i<40;i++){const w=(window.__pops||[]).slice(-1)[0];let h=null;"
+           "try{h=w&&w.document&&w.document.body&&w.document.body.innerText.length>200?w.document.documentElement.outerHTML:null}catch(e){return 'ERRO '+e}"
+           "if(h){const u=new TextEncoder().encode(h);let s='';for(let k=0;k<u.length;k+=8192)s+=String.fromCharCode.apply(null,u.subarray(k,k+8192));return 'HTML:'+btoa(s)}"
+           "await new Promise(r=>setTimeout(r,250))}return 'SEM RELATORIO'})()")
+
+
 # ---------------------------------------------------------------- JavaScript (rolagens suaves e cliques sem cursor)
 ACHA_ROLAGEM = ("const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);"
                 "if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};")
@@ -341,9 +358,9 @@ def js_colar(texto):
             f"document.execCommand('insertText',false,{json.dumps(texto)});return e.value}})()")
 
 
-def js_corpo_abaixo(dur_ms=600):
-    """desce o corpo da janela Criar/Editar Usuário até o fim (a lista de permissões aparece inteira: 368 px)"""
-    return js_rola(f'{DLG} input[placeholder="Buscar tela ou ação..."]', 150, dur_ms)
+def js_corpo_abaixo(dur_ms=600, y=150):
+    """desce o corpo da janela Criar/Editar Usuário até a busca ficar em y (a lista de permissões aparece inteira)"""
+    return js_rola(f'{DLG} input[placeholder="Buscar tela ou ação..."]', y, dur_ms)
 
 
 def js_lista(nome_switch, y, dur_ms=700):
@@ -375,6 +392,12 @@ def js_estado(*nomes):
 def js_selo(nome, esperado):
     return ("(()=>{const b=document.querySelector(\"[role=dialog] button[aria-label='Ver ações de %s'] div.tabular-nums\");"
             "const t=b?b.textContent.trim():'sem selo';return (t===%s?'OK: ':'DIFERENTE: ')+'%s '+t})()") % (nome, json.dumps(esperado), nome)
+
+
+def js_estado_marca(nome):
+    """confere que o checkbox com esse aria-label está marcado"""
+    return ("(()=>{const b=document.querySelector('[role=dialog] [role=checkbox][aria-label=\"%s\"]');const st=b?b.getAttribute('data-state'):'sem';"
+            "return (st==='checked'?'OK: ':'DIFERENTE: ')+'%s '+st})()") % (nome, nome)
 
 
 def _invisivel(d):
@@ -417,7 +440,7 @@ def cap00():
 
 
 def cap01():
-    """Onde fica: rodapé do menu > Configurações > aba Usuários e Permissões; selo, Criar Usuário e o Rafael (master)."""
+    """Onde fica: rodapé do menu > Configurações > aba Usuários e Permissões; selo, busca, Criar Usuário, o Rafael (master), Última atividade."""
     c = cap_novo(1, setup=SETUP_DASH, start=(700, 360))
     c.mark(1)
     c.hover(CONFIG_RODAPE, 2.2, at=c.A(1, 'Configurações,', 0.5), label='Configurações (rodapé do menu, do lado do Sair)', noScroll=True)
@@ -426,7 +449,7 @@ def cap01():
     c.waitfor(text='Configurações do Sistema', timeout=15)
     c.click(ABA_USUARIOS, at=c.A(2, 'aqui,', 0.6), label='aba Usuários e Permissões')
     c.waitfor(text='Gerencie usuários da empresa, papéis e permissões de acesso', timeout=12)
-    c.confere('main', ['Empresa: Recicla Vale Metais', '1 / 3 usuários', 'Criar Usuário', 'Rafael Nogueira', 'Acesso total · Ativo'],
+    c.confere('main', ['Empresa: Recicla Vale Metais', '1 / 3 usuários', 'Criar Usuário', 'Relatório por Usuário', 'Rafael Nogueira', 'Acesso total · Ativo'],
               'a aba com a empresa, o selo 1 / 3 e só o Rafael')
     c.mark(3)
     c.hover(TXT('Empresa: Recicla Vale Metais'), 0.3, at=c.A(3, 'Em', 0.45), label='Empresa: Recicla Vale Metais')
@@ -434,20 +457,26 @@ def cap01():
     c.hover(CRIAR, 1.0, at=c.A(3, 'Criar', 0.5), label='botão Criar Usuário')
     c.hover(LINHA('Rafael Nogueira'), 0.8, at=c.A(3, 'Rafael,', 0.5), label='Rafael na lista (Acesso total · Ativo)')
     c.mark(4)
-    c.click(LINHA('Rafael Nogueira'), at=c.A(4, 'nome,', 0.6), label='clica no Rafael (abre o detalhe)')
-    c.waitfor(target=TXT('Perfil de acesso'), timeout=10)
-    c.confere('main', ['Master', 'Ativo', 'Perfil de acesso', 'Acesso Total', 'Online agora',
-                       'Este usuário tem acesso a todas as telas e ações disponíveis nos módulos contratados pela empresa.'], 'detalhe do Rafael')
-    c.hover(COROA, 1.0, at=c.A(4, 'coroa', 0.5), label='coroa do master na lista')
-    c.hover(TXT('Master'), 2.2, at=c.A(4, 'master:', 0.5), label='selo Master no detalhe (o responsável pela conta)')
+    c.hover(BUSCA_LISTA, 1.4, at=c.A(4, 'busca', 0.5), label='Buscar por nome ou e-mail')
     c.mark(5)
+    c.click(LINHA('Rafael Nogueira'), at=c.A(5, 'nome,', 0.6), label='clica no Rafael (abre o detalhe)')
+    c.waitfor(target=TXT('Perfil de acesso'), timeout=10)
+    c.confere('main', ['Master', 'Ativo', 'Perfil de acesso', 'Acesso Total', 'Última atividade', 'Online agora', 'Peso dos pedidos', 'Padrão da empresa',
+                       'Este usuário tem acesso a todas as telas e ações disponíveis nos módulos contratados pela empresa.'], 'detalhe do Rafael')
+    c.hover(COROA, 1.0, at=c.A(5, 'coroa', 0.5), label='coroa do master na lista')
+    c.hover(TXT('Master'), 2.2, at=c.A(5, 'master:', 0.5), label='selo Master no detalhe (o responsável pela conta)')
     c.mark(6)
+    c.hover(TXT('Última atividade'), 0.6, at=c.A(6, 'última', 0.5), label='Última atividade')
+    c.hover(TXT('Online agora'), 0.8, at=c.A(6, 'online', 0.5), label='Online agora')
+    c.hover(SEL("main p:has-text('Peso dos pedidos')"), 1.2, at=c.A(6, 'peso', 0.5), label='Peso dos pedidos: Padrão da empresa')
+    c.mark(7)
+    c.mark(8)
     c.fim()
     return c
 
 
 def cap02():
-    """Criar o usuário: Criar Usuário, nome, e-mail e senha do Marcos (Senha forte), a foto fica para o Editar; termina com a janela aberta."""
+    """Criar o usuário: Criar Usuário, nome, e-mail e senha do Marcos (Senha forte), a foto que já entra na criação (1.60.18); termina com a janela aberta."""
     c = cap_novo(2, start=(900, 470))
     c.mark(1)
     c.click(CRIAR, at=c.A(1, 'Criar', 0.6), label='Criar Usuário')
@@ -472,49 +501,57 @@ def cap02():
     c.hover(TXT('Pelo menos 1 letra maiúscula', DLG), 0.3, at=c.A(4, 'maiúscula', 0.5), label='Pelo menos 1 letra maiúscula')
     c.hover(TXT('Pelo menos 1 caractere especial', DLG), 0.8, at=c.A(4, 'caractere', 0.5), label='Pelo menos 1 caractere especial')
     c.mark(5)
-    c.hover(BTN('Selecionar foto', DLG), 2.0, at=c.A(5, 'foto,', 0.5), label='Foto do Usuário: Selecionar foto (sem clicar)')
+    # 1.60.18: a edge devolve o userId, então a foto escolhida na criação grava (e aparece na bolinha na hora, prévia local)
+    c.upload(BTN('Selecionar foto', DLG), FOTO_MARCOS, at=c.A(5, 'Escolho', 0.9), label='Foto do Usuário: Selecionar foto, marcos-antunes.jpg')
+    c.confere_js("(()=>{const i=document.querySelector('[role=dialog] img');return i?'OK: a foto aparece na bolinha':'DIFERENTE: sem foto na bolinha'})()", 'foto na bolinha')
     c.mark(6)
-    c.hover(TXT('Permissões', DLG), 1.6, at=c.A(6, 'Agora,', 0.5), label='coluna Permissões (sem clicar)')
+    c.hover(TXT('Permissões', DLG), 1.0, at=c.A(6, 'Agora,', 0.5), label='coluna Permissões (sem clicar)')
+    c.marcar(AVISO_PERFIL, at=c.A(6, 'Repara', 0.0), label='ZOOM aviso Escolha primeiro o perfil deste usuário (frase inteira)')
+    c.hover(AVISO_PERFIL, 1.6, label='aviso Escolha primeiro o perfil deste usuário')
     c.fim()
     return c
 
 
-# setup do cap03: reabre Criar Usuário com nome, e-mail e senha do Marcos (continuação do cap02, fora do vídeo)
+# setup do cap03: reabre Criar Usuário com nome, e-mail, senha e foto do Marcos (continuação do cap02, fora do vídeo)
 REABRE_MARCOS = SETUP_USUARIOS + [
     {'do': 'click', 'target': CRIAR}, {'do': 'waitFor', 'text': 'Preencha os dados do novo usuário', 'timeout': 10},
     {'do': 'type', 'target': SEL('#fullName'), 'text': 'Marcos Antunes', 'cps': 60},
     {'do': 'type', 'target': SEL('#email'), 'text': EMAIL_MARCOS, 'cps': 60},
     {'do': 'type', 'target': SEL('#password'), 'text': SENHA_MARCOS, 'cps': 60},
     {'do': 'waitFor', 'text': 'Senha forte. Deve conter:', 'timeout': 5},
+    {'do': 'upload', 'target': BTN('Selecionar foto', DLG), 'file': FOTO_MARCOS},
     {'do': 'scroll', 'point': {'x': 1000, 'y': 140}, 'by': 0, 'duration': 0.2, 'after': 0},
 ]
 
 
 def cap03():
-    """Os três perfis rápidos: Acesso Total, Somente Visualização e Operador Padrão (fica); Criar Usuário: 2 / 3 usuários."""
+    """Os perfis rápidos: o aviso "Escolha primeiro o perfil", Acesso Total, Somente Visualização e Operador Padrão (fica, Recomendado);
+    Criar Usuário: 2 / 3 usuários, com a foto e o perfil gravados; o detalhe do Marcos."""
     c = cap_novo(3, setup=REABRE_MARCOS, start=(1000, 140))
     c.mark(1)
     c.hover(TXT('Permissões', DLG), 1.0, at=c.A(1, 'permissões.', 0.5), label='coluna Permissões')
-    c.hover(TXT('Perfis rápidos', DLG), 1.2, at=c.A(1, 'perfis', 0.5), label='Perfis rápidos')
+    c.hover(TXT('Perfis rápidos', DLG), 1.2, at=c.A(1, 'perfil.', 0.5), label='Perfis rápidos')
+    c.hover(AVISO_PERFIL, 1.4, at=c.A(1, 'apagada', 0.5), label='aviso Escolha primeiro o perfil deste usuário (a lista apagada)')
     c.mark(2)
-    # sob a ilustração dos chaveiros: o corpo da janela desce e a lista de permissões aparece inteira (368 px)
-    c.ev(js_corpo_abaixo(600), at=c.L(2) + 0.6, label='desce o corpo da janela (sob a ilustração)')
+    # sob a ilustração dos chaveiros: o corpo da janela desce e a lista de permissões aparece inteira
+    c.ev(js_corpo_abaixo(600, 230), at=c.L(2) + 0.6, label='desce o corpo da janela (sob a ilustração)')
     c.mark(3)
     c.click(CHIP('Acesso Total'), at=c.A(3, 'Acesso', 0.6), label='perfil Acesso Total')
     c.mark(4)
     c.click(CHIP('Somente Visualização'), at=c.A(4, 'Somente', 0.6), label='perfil Somente Visualização')
     c.mark(5)
-    c.click(CHIP('Operador Padrão'), at=c.A(5, 'Operador', 0.6), label='perfil Operador Padrão (fica)')
+    c.click(CHIP_OP, at=c.A(5, 'Operador', 0.6), label='perfil Operador Padrão (fica; o selo Recomendado dá lugar ao visto)')
     c.confere_js(js_estado('Acesso à tela Caixa', 'Acesso à tela Pedidos', 'Acesso à tela Estoque', 'Acesso à tela Ticket de Pesagem',
                            '-Acesso à tela Dashboard'), 'Operador Padrão: Caixa, Pedidos, Estoque e Ticket ligados')
     # a lista desce devagar: Caixa, Pedidos (compra e venda), Estoque e Ticket de Pesagem, ligados (duas rolagens: os quatro não
-    # cabem juntos nos 368 px da lista)
+    # cabem juntos na lista)
     c.hover(TELA('Caixa'), 0.2, at=c.A(5, 'caixa,', 0.5), label='Caixa ligado')
     c.ev(js_lista('Acesso à tela Pedidos', 420, 450), at=c.A(5, 'caixa,', -0.2), label='a lista desce até Pedidos')
     c.hover(TELA('Pedidos'), 0.2, at=c.A(5, 'compra', 0.0), label='Pedidos ligado (compra e venda)')
     c.ev(js_lista('Acesso à tela Estoque', 400, 450), at=c.A(5, 'estoque', 0.9), label='a lista desce até Estoque')
     c.hover(TELA('Estoque'), 0.2, at=c.A(5, 'estoque', 0.4), label='Estoque ligado')
-    c.hover(TELA('Ticket de Pesagem'), 1.0, at=c.A(5, 'ticket', 0.45), label='Ticket de Pesagem ligado')
+    c.hover(TELA('Ticket de Pesagem'), 0.8, at=c.A(5, 'ticket', 0.45), label='Ticket de Pesagem ligado')
+    c.hover(CHIP_OP, 1.0, at=c.A(5, 'recomenda', 0.5), label='Operador Padrão marcado: o que o sistema recomenda')
     c.mark(6)
     c.hover(TXT('Ticket de Pesagem', DLG), 0.8, at=c.A(6, 'Marcos.', 0.5), label='o que serve pro Marcos')
     c.hover(TELA('Ticket de Pesagem'), 1.0, at=c.A(6, 'chave', 0.5, nth=0), label='chave por chave (o interruptor)')
@@ -522,8 +559,12 @@ def cap03():
     c.click(CRIAR_DLG, at=c.A(7, 'Criar', 0.6), label='Criar Usuário (rodapé da janela)')
     c.waitfor(target=TXT('Marcos Antunes'), timeout=12)
     c.confere('main', ['2 / 3 usuários', 'Marcos Antunes', '32 permissões · Ativo'], 'Marcos na lista, ativo, e o selo 2 / 3')
-    c.hover(LINHA('Marcos Antunes'), 0.6, at=c.A(7, 'Marcos', 0.5), label='Marcos na lista')
-    c.hover(TXT('32 permissões · Ativo'), 0.8, at=c.A(7, 'ativo.', 0.5), label='32 permissões · Ativo')
+    c.hover(LINHA('Marcos Antunes'), 0.6, at=c.A(7, 'Marcos', 0.5), label='Marcos na lista (com a foto)')
+    c.hover(TXT('32 permissões · Ativo'), 0.8, at=c.A(7, 'ativo,', 0.5), label='32 permissões · Ativo')
+    c.click(LINHA('Marcos Antunes'), at=c.A(7, 'perfil', 0.6), label='clica no Marcos (abre o detalhe)')
+    c.waitfor(target=TXT('Perfil de acesso'), timeout=8)
+    c.confere('main', ['Perfil de acesso', 'Operador Padrão'], 'detalhe do Marcos: Operador Padrão')
+    c.hover(TXT('Operador Padrão'), 1.2, at=c.A(7, 'Operador', 0.5), label='Perfil de acesso: Operador Padrão')
     c.fim()
     return c
 
@@ -545,6 +586,8 @@ def cap04():
     c.click(SEL('#password'), label='campo Senha')
     c.type(SEL('#password'), SENHA_JULIANA, noClick=True, cps=30, label='Senha (Senha forte)')
     c.confere('dlg', ['Senha forte'], 'Senha forte da Juliana')
+    c.click(CHIP('Personalizado'), at=c.A(1, 'Personalizado', 0.6), label='perfil Personalizado (a lista libera, tudo desligado)')
+    c.confere_js(js_estado('-Acesso à tela Caixa', '-Acesso à tela Dashboard', '-Ver Totais e Valores Financeiros'), 'Personalizado: a lista acende, tudo desligado')
     c.mark(2)
     c.ev(js_corpo_abaixo(700), at=c.A(2, 'lista', 0.5), label='desce o corpo da janela: a lista aparece inteira')
     c.hover(TXT('Geral', DLG), 0.3, at=c.A(2, 'separada', 0.4), label='grupo Geral')
@@ -565,8 +608,16 @@ def cap04():
     c.mark(5)
     c.hover(TELA('Contas a Pagar/Receber'), 0.8, at=c.A(5, 'tela,', 0.5, nth=0), label='primeiro a tela (interruptor de Contas a Pagar/Receber)')
     c.hover(SW('Criar Conta a Pagar/Receber'), 0.8, at=c.A(5, 'ações.', 0.5), label='depois as ações')
-    c.ev(js_lista('Acesso à tela Caixa', 400, 700), at=c.A(5, 'tela.', 0.0, nth=1), label='a lista sobe até o Caixa')
-    c.hover(TELA('Caixa'), 1.6, at=c.A(5, 'Caixa', 0.5, nth=0), label='a tela Caixa, desligada (sem abrir as ações)')
+    # 1.60.18: ligar o Registrar Venda com a tela Caixa desligada acende o aviso "Confira esta combinação"
+    c.ev(js_lista('Acesso à tela Caixa', 330, 600), at=c.A(5, 'acontece', 0.3), label='a lista sobe até o Caixa')
+    c.click(VER('Caixa'), at=c.A(5, 'Registrar', 0.6), label='Clique para ver 10 ações (Caixa, desligada)')
+    c.click(SW('Registrar Venda'), at=c.A(5, 'Venda', 0.6), label='liga Registrar Venda (a tela Caixa segue desligada)')
+    c.waitfor(text='Registrar Venda está ligado, mas a tela Caixa está desligada.', timeout=6)
+    c.ev(js_rola_texto('Confira esta combinação', 230, 500), at=c.A(5, 'avisa', 0.8), label='sobe até o aviso')
+    c.hover(TXT('Confira esta combinação', DLG), 2.0, at=c.A(5, 'conferir', 0.5), label='ZOOM aviso Confira esta combinação: Registrar Venda está ligado, mas a tela Caixa está desligada.')
+    c.ev(js_corpo_abaixo(500), at=c.A(5, 'caixa', 0.3, nth=1), label='desce até a lista de novo')
+    c.click(SW('Registrar Venda'), at=c.A(5, 'Desligo,', 0.6), label='desliga Registrar Venda')
+    c.waitfor(gone=TXT('Confira esta combinação', DLG), timeout=6)
     c.mark(6)
     c.click(BUSCA, at=c.A(6, 'busca.', 0.6), label='Buscar tela ou ação...')
     c.type(BUSCA, 'nota', at=c.A(6, 'nota,', 0.05), noClick=True, cps=12, label='busca: nota')
@@ -608,55 +659,183 @@ def cap04():
 
 
 def cap05():
-    """O balanceiro e o escritório: Editar do Marcos (foto, tela inicial Caixa, sem Ver Projeção de Lucro: Personalizado), Atualizar;
-    o detalhe da Juliana (Telas (7), Ações (8), sem Caixa)."""
+    """O balanceiro e o escritório: Editar do Marcos (foto trocada, tela inicial Caixa, Peso dos pedidos, sem Ver Projeção de Lucro:
+    Personalizado), Atualizar; o detalhe da Juliana (Telas (7), Ações (8), sem Caixa)."""
     c = cap_novo(5, start=(560, 470))
     c.mark(1)
     c.click(LINHA('Marcos Antunes'), at=c.A(1, 'balanceiro:', 0.6), label='clica no Marcos')
     c.waitfor(target=TXT('Perfil de acesso'), timeout=8)
     c.click(EDITAR, at=c.A(1, 'Marcos', 0.6), label='Editar (detalhe do Marcos)')
     c.waitfor(text='Atualize os dados e permissões deste usuário', timeout=10)
-    c.confere('dlg', ['Editar Usuário', 'Operador Padrão', 'Nova Senha (opcional)'], 'Editar Usuário com o Operador Padrão marcado')
+    c.confere('dlg', ['Editar Usuário', 'Operador Padrão', 'Nova Senha (opcional)', 'Peso dos pedidos'], 'Editar Usuário com o Operador Padrão marcado')
     c.mark(2)
-    c.upload(BTN('Selecionar foto', DLG), FOTO_MARCOS, at=c.A(2, 'foto', 0.9), label='Selecionar foto: marcos-antunes.jpg')
+    c.upload(BTN('Selecionar foto', DLG), FOTO_MARCOS, at=c.A(2, 'escolho', 0.9), label='Selecionar foto: marcos-antunes.jpg (troca)')
     c.waitfor(text='Foto atualizada com sucesso!', timeout=10)
     c.mark(3)
     c.click(SEL(f'{DLG} #initial-screen'), at=c.A(3, 'Tela', 0.6), label='Tela inicial (Automática)')
     c.click({'role': 'option', 'name': 'Caixa', 'exact': True}, at=c.A(3, 'Caixa.', 0.6, nth=0), label='Tela inicial: Caixa')
     c.mark(4)
-    # o corpo da janela desce: Nova Senha, os perfis, a busca e a lista ficam juntos (com o corpo no alto, a ação do Caixa cairia
-    # embaixo da borda da janela e o robô rolaria com a roda)
-    c.ev(js_corpo_abaixo(600), at=c.L(4) - 0.1, label='desce o corpo da janela')
-    c.hover(SEL(f'{DLG} #password'), 1.4, at=c.A(4, 'Nova', 0.5), label='Nova Senha (opcional) (sem digitar)')
+    c.hover(SEL(f"{DLG} p:has-text('Só aparecem telas liberadas acima')"), 2.0, at=c.A(4, 'telas', 0.5), label='Só aparecem telas liberadas acima. Se a permissão mudar, o sistema escolhe outra')
     c.mark(5)
-    c.click(BUSCA, at=c.A(5, 'Busco', 0.6), label='Buscar tela ou ação...')
-    c.type(BUSCA, 'lucro', at=c.A(5, 'lucro,', 0.05, nth=0), noClick=True, cps=20, label='busca: lucro')
-    c.click(VER('Caixa'), at=c.A(5, 'aparece', 0.0), label='Clique para ver 1 ação (Caixa)')
-    c.hover(ACAO('Ver Projeção de Lucro'), 1.6, at=c.A(5, 'Projeção', 0.4), label='aparece o Ver Projeção de Lucro, dentro do Caixa')
-    c.click(SW('Ver Projeção de Lucro'), at=c.A(5, 'Desligo.', 0.6), label='desliga Ver Projeção de Lucro')
+    c.hover(SEL(f"{DLG} label[for='scale-weight-policy']"), 0.5, at=c.A(5, 'Embaixo', 0.5), label='Peso dos pedidos')
+    c.click(SEL(f'{DLG} #scale-weight-policy'), at=c.A(5, 'exceção', 0.6), label='abre o Peso dos pedidos (Herdar padrão da empresa)')
+    c.marcar(SEL('[role=listbox]'), at=c.A(5, 'obrigar', 0.8), label='ZOOM Peso dos pedidos: as três opções')
+    c.hover({'role': 'option', 'name': 'Exigir peso da balança'}, 0.5, at=c.A(5, 'obrigar', 0.5), label='Exigir peso da balança')
+    c.hover({'role': 'option', 'name': 'Permitir digitação manual'}, 0.5, at=c.A(5, 'liberar', 0.5), label='Permitir digitação manual')
+    c.hover({'role': 'option', 'name': 'Herdar padrão da empresa'}, 0.5, at=c.A(5, 'padrão', 0.5, nth=0), label='Herdar padrão da empresa (marcado)')
+    c.press('Escape', at=c.A(5, 'empresa', -0.8, nth=1), label='fecha sem trocar')
+    c.confere('dlg', ['Herdar padrão da empresa'], 'Peso dos pedidos segue Herdar padrão da empresa')
     c.mark(6)
-    c.confere_js("(()=>{const p=document.querySelector('[role=dialog] span.bg-amber-500');const a=[...document.querySelectorAll('[role=dialog] button.bg-primary')]"
+    c.hover(SEL(f'{DLG} #password'), 1.4, at=c.A(6, 'Nova', 0.5), label='Nova Senha (opcional) (sem digitar)')
+    # o corpo da janela desce: a busca e a lista ficam juntas (com o corpo no alto, a ação do Caixa cairia embaixo da borda da janela)
+    c.ev(js_corpo_abaixo(600), at=c.L(7) - 1.3, label='desce o corpo da janela')
+    c.mark(7)
+    c.click(BUSCA, at=c.A(7, 'Busco', 0.6), label='Buscar tela ou ação...')
+    c.type(BUSCA, 'lucro', at=c.A(7, 'lucro,', 0.05, nth=0), noClick=True, cps=20, label='busca: lucro')
+    c.click(VER('Caixa'), at=c.A(7, 'aparece', 0.0), label='Clique para ver 1 ação (Caixa)')
+    c.hover(ACAO('Ver Projeção de Lucro'), 1.6, at=c.A(7, 'Projeção', 0.4), label='aparece o Ver Projeção de Lucro, dentro do Caixa')
+    c.click(SW('Ver Projeção de Lucro'), at=c.A(7, 'Desligo.', 0.6), label='desliga Ver Projeção de Lucro')
+    c.mark(8)
+    c.ev(js_rola_texto('Perfis rápidos', 230, 600), at=c.L(8) + 0.1, label='sobe até os Perfis rápidos')
+    c.confere_js("(()=>{const p=document.querySelector('[role=dialog] button.bg-amber-500');const a=[...document.querySelectorAll('[role=dialog] button.bg-primary')]"
                  ".filter(b=>['Acesso Total','Operador Padrão','Somente Visualização'].includes(b.textContent.trim()));"
                  "return (p&&!a.length?'OK: ':'DIFERENTE: ')+'Personalizado '+!!p+', perfis marcados '+a.length})()", 'perfil virou Personalizado')
-    c.hover(PERSONALIZADO, 1.2, at=c.A(6, 'Personalizado.', 0.5), label='ZOOM Perfis rápidos com o selo Personalizado')
-    c.hover(CHIP('Operador Padrão'), 1.0, at=c.A(6, 'Operador', 0.5), label='Operador Padrão (desmarcado)')
-    c.mark(7)
-    c.click(BTN('Atualizar', DLG), at=c.A(7, 'Atualizar.', 0.6), label='Atualizar')
+    c.hover(PERSONALIZADO, 1.2, at=c.A(8, 'Personalizado.', 0.5), label='ZOOM Perfis rápidos: o botão Personalizado marcado')
+    c.hover(CHIP_OP, 1.0, at=c.A(8, 'Operador', 0.5), label='Operador Padrão (desmarcado)')
+    c.mark(9)
+    c.click(BTN('Atualizar', DLG), at=c.A(9, 'Atualizar.', 0.6), label='Atualizar')
     c.waitfor(text='Permissões atualizadas!', timeout=12)
     c.confere('body', ['Permissões atualizadas! O usuário precisa fazer login novamente para ver as mudanças.'], 'aviso de permissões')
     c.waitfor(target=TXT('31 permissões · Ativo'), timeout=10)
-    c.hover(LINHA('Marcos Antunes'), 1.2, at=c.A(7, 'continua', 0.5), label='Marcos na lista: foto e 31 permissões')
-    c.mark(8)
-    c.click(LINHA('Juliana Prado'), at=c.A(8, 'escritório.', 0.6), label='clica na Juliana')
+    c.hover(LINHA('Marcos Antunes'), 1.2, at=c.A(9, 'continua', 0.5), label='Marcos na lista: foto e 31 permissões')
+    c.mark(10)
+    c.click(LINHA('Juliana Prado'), at=c.A(10, 'escritório.', 0.6), label='clica na Juliana')
     c.waitfor(target=TXT('Telas (7)'), timeout=8)
     c.confere('main', ['Personalizado', '15 permissões configuradas individualmente.', 'Telas (7)', 'Ações (8)'], 'detalhe da Juliana')
-    # o detalhe rola por dentro (406 a 800 na tela; a lista de telas começa em y 720): sobe "Telas (7)" para y 420
-    c.ev(js_rola_texto('Telas (7)', 420, 500, MAIN), at=c.A(8, 'escritório.', -0.3), label='o detalhe desce até Telas (7)')
-    c.hover(TXT('Contas a Pagar/Receber'), 0.2, at=c.A(8, 'contas,', 0.5), label='Contas a Pagar/Receber (as contas)')
-    c.hover(TXT('Movimentações Bancárias'), 0.2, at=c.A(8, 'banco,', 0.5), label='Movimentações Bancárias (o banco)')
-    c.hover(TXT('Relatório Financeiro'), 0.2, at=c.A(8, 'relatório', 0.5), label='Relatório Financeiro')
-    c.ev(js_rola_texto('Telas (7)', 330, 350, MAIN), at=c.A(8, 'relatório', -0.35), label='o detalhe desce mais um pouco (Fiscal & Ambiental)')
-    c.hover(TXT('Fiscal & Ambiental'), 2.0, at=c.A(8, 'notas.', 0.5), label='Fiscal & Ambiental (as notas); a lista não tem o Caixa')
+    # o detalhe rola por dentro: sobe "Telas (7)" para y 420
+    c.ev(js_rola_texto('Telas (7)', 420, 500, MAIN), at=c.A(10, 'escritório.', -0.3), label='o detalhe desce até Telas (7)')
+    c.hover(TXT('Contas a Pagar/Receber'), 0.2, at=c.A(10, 'contas,', 0.5), label='Contas a Pagar/Receber (as contas)')
+    c.hover(TXT('Movimentações Bancárias'), 0.2, at=c.A(10, 'banco,', 0.5), label='Movimentações Bancárias (o banco)')
+    c.hover(TXT('Relatório Financeiro'), 0.2, at=c.A(10, 'relatório', 0.5), label='Relatório Financeiro')
+    c.ev(js_rola_texto('Telas (7)', 330, 350, MAIN), at=c.A(10, 'relatório', -0.35), label='o detalhe desce mais um pouco (Fiscal & Ambiental)')
+    c.hover(TXT('Fiscal & Ambiental'), 2.0, at=c.A(10, 'notas.', 0.5), label='Fiscal & Ambiental (as notas); a lista não tem o Caixa')
+    c.fim()
+    return c
+
+
+RESTR1 = 'Ver somente clientes e fornecedores que cadastrar'
+RESTR2 = 'Ver somente os pedidos que lançar'
+RESTR3 = 'Ver somente os tíquetes de pesagem que criar'
+RESTR4 = 'Usar somente as contas bancárias liberadas'
+
+
+# setup dos capítulos 6 e 7: abre o Editar do Marcos (fora do vídeo; a seção Restrições e a lista inteira estão na janela)
+EDITA_MARCOS = SETUP_USUARIOS + [
+    {'do': 'click', 'target': TXT('Marcos Antunes')}, {'do': 'waitFor', 'target': TXT('Perfil de acesso'), 'timeout': 8},
+    {'do': 'click', 'target': EDITAR}, {'do': 'waitFor', 'text': 'Atualize os dados e permissões deste usuário', 'timeout': 10},
+    {'do': 'waitFor', 'text': 'Restrições', 'timeout': 8},
+]
+
+
+def cap06():
+    """Restrições e contas do banco: o fim da lista do Editar do Marcos; as quatro restrições; a quarta abre "Contas liberadas para este
+    usuário" e marca a Conta Principal; Cancelar (o Marcos segue com todas as contas)."""
+    c = cap_novo(6, setup=EDITA_MARCOS, start=(1000, 300))
+    c.mark(1)
+    c.ev(js_rola_texto('Restrições', 150, 1500), at=c.A(1, 'fim', 0.3), label='a janela desce até a seção Restrições')
+    c.hover(TXT('Restrições', DLG), 0.8, at=c.A(1, 'restrições.', 0.5), label='Restrições')
+    c.hover(TXT('Ficam desligadas por padrão. Ative somente para uma exceção consciente.', DLG), 1.4, at=c.A(1, 'desligadas,', 0.5), label='Ficam desligadas por padrão')
+    c.mark(2)
+    c.mark(3)
+    c.marcar(TXT(RESTR1, DLG), at=c.A(3, 'São', 0.0), label='ZOOM as três primeiras restrições (clientes e fornecedores, pedidos, tíquetes)')
+    c.hover(TXT(RESTR1, DLG), 0.6, at=c.A(3, 'clientes', 0.5), label=RESTR1)
+    c.hover(TXT(RESTR2, DLG), 0.6, at=c.A(3, 'pedidos', 0.5), label=RESTR2)
+    c.hover(TXT(RESTR3, DLG), 0.8, at=c.A(3, 'tickets', 0.5), label=RESTR3)
+    c.mark(4)
+    c.click(SW(RESTR4), at=c.A(4, 'Ligo,', 0.6), label='liga Usar somente as contas bancárias liberadas')
+    c.waitfor(text='Contas liberadas para este usuário', timeout=8)
+    c.confere('dlg', ['Contas liberadas para este usuário', 'Marque as contas que poderão aparecer em pagamentos por Pix ou transferência.',
+                      'Conta Principal', 'Conta Secundária', 'Poupança antiga'], 'as contas da empresa')
+    c.ev(js_rola_texto('Contas liberadas para este usuário', 200, 900), at=c.A(4, 'lista', 0.5), label='a janela desce até as contas liberadas')
+    c.mark(5)
+    c.marcar(SEL(f"{DLG} label:has([aria-label='Liberar conta Conta Principal'])"), at=c.A(5, 'Marco', 0.8), label='ZOOM os cartões das contas')
+    c.click({'role': 'checkbox', 'name': 'Liberar conta Conta Principal', 'exact': True}, at=c.A(5, 'Marco', 0.6), label='marca a Conta Principal')
+    c.confere_js(js_estado_marca('Liberar conta Conta Principal'), 'Conta Principal marcada')
+    c.hover(SEL(f"{DLG} label:has([aria-label='Liberar conta Conta Secundária'])"), 0.6, at=c.A(5, 'Pix', 0.5), label='as outras contas ficam de fora')
+    c.mark(6)
+    c.ev(js_rola_texto('Perfis rápidos', 230, 900), at=c.A(6, 'Três', 0.2), label='sobe até os Perfis rápidos')
+    c.hover(PERSONALIZADO, 1.6, at=c.A(6, 'Personalizado.', 0.5), label='Personalizado (o perfil passa a ser)')
+    c.mark(7)
+    c.click(BTN('Cancelar', DLG), at=c.A(7, 'cancelo', 0.6), label='Cancelar (nada muda)')
+    c.waitfor(gone=SEL('[role=dialog]'), timeout=8)
+    c.fim()
+    return c
+
+
+def passa(c, i, palavra, rotulo, y=250, folga=0.5, nth=None, seg=0.5, label=None, tela=False):
+    """rola a lista até o interruptor `rotulo` (ação, ou tela se tela=True) e o destaca com o cursor na palavra da fala"""
+    sw = f'Acesso à tela {rotulo}' if tela else rotulo
+    c.ev(js_lista(sw, y, 450), at=max(round(c.L(i) + 0.5, 2), round(c.W(i, palavra, nth) - folga - 0.6, 2)), label=f'a lista desce até {rotulo}')
+    alvo = TELA(rotulo) if tela else ACAO(rotulo)
+    return c.hover(alvo, seg, at=c.A(i, palavra, folga, nth=nth), label=label or rotulo)
+
+
+def cap07():
+    """O mapa das permissões: passeio pelo Editar do Marcos abrindo as ações de cada grupo; sem ligar nada; Cancelar."""
+    c = cap_novo(7, setup=EDITA_MARCOS, start=(1000, 300))
+    c.mark(1)
+    c.ev(js_corpo_abaixo(700), at=0.2, label='desce a janela: a lista de permissões inteira')
+    c.hover(TXT('Financeiro', DLG), 0.8, at=c.A(1, 'grupo.', 0.5), label='bloco Financeiro')
+    # Caixa (10 ações)
+    c.mark(2)
+    c.ev(js_abre_acoes('Caixa'), at=c.L(2) + 0.1, label='abre as 10 ações do Caixa (sem cursor)')
+    c.ev(js_lista('Acesso à tela Caixa', 230, 700), at=c.L(2) + 0.4, label='a lista desce até o Caixa')
+    passa(c, 2, 'compra,', 'Registrar Compra', seg=0.4)
+    passa(c, 2, 'abrir', 'Abrir Caixa', seg=0.4)
+    passa(c, 2, 'outros', 'Ver e Operar Todos os Caixas', seg=0.6)
+    passa(c, 2, 'retroativa', 'Realizar lançamentos e abrir/fechar caixas com data retroativa', seg=1.0)
+    # banco, relatório, contas, categorias, pedidos
+    c.mark(3)
+    c.ev(js_abre_acoes('Movimentações Bancárias', 'Relatório Financeiro', 'Contas a Pagar/Receber', 'Categorias Financeiras', 'Pedidos'),
+         at=c.L(3) + 0.1, label='abre as ações do banco, relatório, contas, categorias e pedidos (sem cursor)')
+    passa(c, 3, 'Usar', 'Usar Contas Bancárias', seg=0.5)
+    passa(c, 3, 'Gerenciar', 'Gerenciar Contas Bancárias', nth=0, seg=0.5)
+    passa(c, 3, 'exportar,', 'Exportar Relatórios', seg=0.5)
+    passa(c, 3, 'recorrentes', 'Gerenciar Contas Recorrentes', seg=0.5)
+    passa(c, 3, 'categorias', 'Gerenciar Categorias Financeiras', seg=0.5)
+    passa(c, 3, 'editar', 'Editar e Excluir Pedidos', seg=0.8)
+    # Fiscal (11 ações)
+    c.mark(4)
+    c.ev(js_abre_acoes('Fiscal & Ambiental'), at=c.L(4) + 0.1, label='abre as 11 ações do Fiscal & Ambiental (sem cursor)')
+    passa(c, 4, 'produto,', 'Emitir NF-e (Produto)', y=200, seg=0.4)
+    passa(c, 4, 'manifesto', 'Emitir MDF-e (Transporte)', y=200, seg=0.4)
+    passa(c, 4, 'ambientais,', 'Emitir Documentos Ambientais (MTR/CDF)', y=200, seg=0.4)
+    passa(c, 4, 'pacote', 'Exportar Pacote Contábil', y=200, seg=0.4)
+    passa(c, 4, 'consultar,', 'Consultar SPED Fiscal', y=200, seg=0.4)
+    passa(c, 4, 'validação.', 'Registrar validação do SPED', y=200, seg=1.0)
+    # Materiais
+    c.mark(5)
+    c.ev(js_abre_acoes('Estoque', 'Ticket de Pesagem', 'Produção'), at=c.L(5) + 0.1, label='abre as ações do Estoque, Ticket de Pesagem e Produção (sem cursor)')
+    passa(c, 5, 'cadastrar', 'Cadastrar Materiais', seg=0.5)
+    passa(c, 5, 'Zerar', 'Zerar Estoque', seg=0.5)
+    passa(c, 5, 'separa', 'Ticket de Pesagem — Compra', seg=0.5)
+    passa(c, 5, 'custos.', 'Ver Custos na Produção', seg=0.8)
+    # Cadastros
+    c.mark(6)
+    c.ev(js_abre_acoes('Clientes e Fornecedores', 'Funcionários (RH)'), at=c.L(6) + 0.1, label='abre as ações de Clientes e Fornecedores e de Funcionários (sem cursor)')
+    passa(c, 6, 'cadastrar', 'Cadastrar Parceiros', seg=0.5)
+    passa(c, 6, 'editar', 'Editar e Excluir Clientes/Fornecedores', seg=0.5)
+    passa(c, 6, 'lançar', 'Lançar crédito/débito no saldo', seg=0.5)
+    passa(c, 6, 'ponto', 'Gerenciar Ponto Eletrônico', seg=0.8)
+    # Sistema
+    c.mark(7)
+    c.ev(js_abre_acoes('Configurações', 'Assinatura'), at=c.L(7) + 0.1, label='abre as ações de Configurações e Assinatura (sem cursor)')
+    passa(c, 7, 'Configurações,', 'Configurar Empresa', seg=0.5)
+    passa(c, 7, 'aba.', 'Gerenciar Usuários', seg=0.8)
+    c.mark(8)
+    c.ev(js_rola_texto('Perfis rápidos', 230, 700), at=c.L(8) + 0.1, label='a janela volta ao topo')
+    c.click(BTN('Cancelar', DLG), at=c.A(8, 'cancelo,', 0.6), label='Cancelar (nada muda)')
+    c.waitfor(gone=SEL('[role=dialog]'), timeout=8)
     c.fim()
     return c
 
@@ -668,9 +847,9 @@ def menu(c, nome, item, at=None, label=None):
     c.waitfor(target=ITEM(item), timeout=6)
 
 
-def cap06():
+def cap08():
     """Desativar ou excluir: menu do Marcos, Desativar (2 / 3), Ativar (3 / 3), Excluir (pede o e-mail) > Cancelar; a coroa do Rafael."""
-    c = cap_novo(6, start=(560, 470))
+    c = cap_novo(8, start=(560, 470))
     c.mark(1)
     c.click(LINHA('Marcos Antunes'), at=c.A(1, 'alguém', 0.6), label='clica no Marcos')
     c.waitfor(target=TXT('Perfil de acesso'), timeout=8)
@@ -712,9 +891,9 @@ def cap06():
     return c
 
 
-def cap07():
+def cap09():
     """Passar o controle: o Rafael (master); menu da Juliana > Tornar master > Passar o controle da empresa? > Cancelar."""
-    c = cap_novo(7, start=(560, 470))
+    c = cap_novo(9, start=(560, 470))
     c.mark(1)
     c.click(LINHA('Rafael Nogueira'), at=c.A(1, 'master?', 0.3), label='clica no Rafael')
     c.waitfor(target=TXT('Perfil de acesso'), timeout=8)
@@ -744,9 +923,10 @@ def cap07():
     return c
 
 
-def cap08():
-    """O limite de usuários: selo 3 / 3; Criar Usuário abre "Sua equipe cresceu!"; + e - nos usuários extras; Cancelar."""
-    c = cap_novo(8, start=(700, 470))
+def cap10():
+    """O limite de usuários: selo 3 / 3; Criar Usuário abre "Sua equipe cresceu!"; + e - nos usuários extras; Cancelar. A frase do limite
+    excedido (L3) é só fala e ilustração: mostrar a janela pede um mundo com excesso."""
+    c = cap_novo(10, start=(700, 470))
     c.mark(1)
     c.confere('main', ['3 / 3 usuários', 'Juliana Prado', 'Marcos Antunes', 'Rafael Nogueira'], 'selo 3 / 3 e os três usuários')
     c.hover(SELO('3 / 3 usuários'), 2.0, at=c.A(1, 'número', 0.5), label='ZOOM selo 3 / 3 usuários')
@@ -756,30 +936,31 @@ def cap08():
     c.hover(LINHA('Marcos Antunes'), 0.15, at=c.A(1, 'Marcos.', 0.6), label='o Marcos')
     c.mark(2)
     c.mark(3)
-    c.click(CRIAR, at=c.A(3, 'Criar', 0.6), label='Criar Usuário (sem vaga)')
+    c.mark(4)
+    c.click(CRIAR, at=c.A(4, 'Criar', 0.6), label='Criar Usuário (sem vaga)')
     c.waitfor(text='Sua equipe cresceu!', timeout=8)
     c.confere('dlg', ['Sua equipe cresceu!', '3 / 3', 'Usuários cadastrados', 'Adicionar usuários extras', 'Novo limite de usuários:',
                       '4 usuários', 'Seu plano será convertido para Personalizado'], 'janela do limite')
-    c.mark(4)
-    c.hover(TXT('Usuários cadastrados', DLG), 0.3, at=c.A(3, 'janela.', 0.5), label='3 / 3 Usuários cadastrados')
-    c.hover(TXT('Adicionar usuários extras', DLG), 0.25, at=c.A(4, 'escolhe', 0.5), label='Adicionar usuários extras')
-    c.click(SEL(f'{DLG} button:has(svg.lucide-plus)'), at=c.A(4, 'quantos', 0.5), label='+ (2 usuários)')
-    c.click(SEL(f'{DLG} button:has(svg.lucide-minus)'), at=c.A(4, 'quer.', 0.6), label='- (1 usuário)')
-    c.hover(TXT('Novo limite de usuários:', DLG), 1.6, at=c.A(4, 'extra', 0.5), label='Novo limite de usuários: 4 usuários')
-    c.hover(SEL(f'{DLG} p:has(> span.font-medium)'), 0.5, at=c.A(4, 'estimativa.', 0.5), label='Seu plano será convertido para Personalizado')
     c.mark(5)
-    # os botões da janela do limite ficam em y 714..754, fora da faixa de clique do robô (96..730): noScroll
-    c.hover(BTN('Continuar', DLG), 1.4, at=c.A(5, 'Continuar', 0.5), label='Continuar (sem clicar)', noScroll=True)
-    c.click(BTN('Cancelar', DLG), at=c.A(5, 'cancelo.', 0.6), label='Cancelar', noScroll=True)
+    c.hover(TXT('Usuários cadastrados', DLG), 0.3, at=c.A(4, 'janela.', 0.5), label='3 / 3 Usuários cadastrados')
+    c.hover(TXT('Adicionar usuários extras', DLG), 0.25, at=c.A(5, 'escolhe', 0.5), label='Adicionar usuários extras')
+    c.click(SEL(f'{DLG} button:has(svg.lucide-plus)'), at=c.A(5, 'quantos', 0.5), label='+ (2 usuários)')
+    c.click(SEL(f'{DLG} button:has(svg.lucide-minus)'), at=c.A(5, 'quer.', 0.6), label='- (1 usuário)')
+    c.hover(TXT('Novo limite de usuários:', DLG), 1.6, at=c.A(5, 'extra', 0.5), label='Novo limite de usuários: 4 usuários')
+    c.hover(SEL(f'{DLG} p:has(> span.font-medium)'), 0.5, at=c.A(5, 'estimativa.', 0.5), label='Seu plano será convertido para Personalizado')
+    c.mark(6)
+    # os botões da janela do limite ficam no pé da janela, fora da faixa de clique do robô: noScroll (conferir no 1600x900)
+    c.hover(BTN('Continuar', DLG), 1.4, at=c.A(6, 'Continuar', 0.5), label='Continuar (sem clicar)', noScroll=True)
+    c.click(BTN('Cancelar', DLG), at=c.A(6, 'cancelo.', 0.6), label='Cancelar', noScroll=True)
     c.waitfor(gone=SEL('[role=dialog]'), timeout=8)
     c.fim()
     return c
 
 
-def cap09():
+def cap11():
     """Esconder o valor: Editar do Marcos; Geral > Ver Totais e Valores Financeiros; Caixa (Ver Dinheiro Total ligado, Projeção de Lucro
     desligada); Ticket de Pesagem (Criar Ticket de Pesagem com Valores desligado); Cancelar."""
-    c = cap_novo(9, start=(560, 470))
+    c = cap_novo(11, start=(560, 470))
     c.mark(1)
     c.click(LINHA('Marcos Antunes'), at=0.3, label='clica no Marcos')
     c.waitfor(target=TXT('Perfil de acesso'), timeout=8)
@@ -810,9 +991,39 @@ def cap09():
     return c
 
 
-def cap10():
-    """Recapitulando: passeio calmo pela aba com os três (base para a montagem dos trechos dos capítulos 2 a 9)."""
-    c = cap_novo(10, start=(760, 300))
+def cap12():
+    """Relatório por Usuário: o botão da aba; Período (Este mês); quem entra (tira a Juliana, Desmarcar todos, Marcar todos); Excel (sem
+    clicar) e Visualizar / PDF: o relatório abre em aba nova (a gravação fica na aba; HTML_JS devolve o relatório para a ilustração)."""
+    c = cap_novo(12, setup=SETUP_USUARIOS + [{'do': 'eval', 'js': POPS}], start=(700, 300))
+    c.mark(1)
+    c.hover(BTN('Relatório por Usuário', MAIN), 1.0, at=c.A(1, 'botão', 0.5), label='botão Relatório por Usuário')
+    c.click(BTN('Relatório por Usuário', MAIN), at=c.A(1, 'Relatório', 0.6), label='Relatório por Usuário')
+    c.waitfor(text='Exporte um relatório de compras e vendas por usuário', timeout=10)
+    c.confere('dlg', ['Relatório por Usuário', 'Período', 'Usuários incluídos', '(3 de 3)', 'Desmarcar todos', 'Excel', 'Visualizar / PDF'], 'janela do relatório')
+    c.mark(2)
+    c.click({'role': 'combobox', 'within': DLG}, at=c.A(2, 'período.', 0.6), label='Período (Este mês)')
+    c.hover({'role': 'option', 'name': 'Mês passado'}, 0.5, at=c.A(2, 'trocar', 0.5), label='as outras opções de período')
+    c.click({'role': 'option', 'name': 'Este mês'}, at=c.A(2, 'outro.', 0.6), label='volta para Este mês')
+    c.mark(3)
+    c.hover(TXT('Usuários incluídos', DLG, exact=False), 0.8, at=c.A(3, 'quem', 0.5), label='Usuários incluídos (3 de 3)')
+    c.click(TXT('Juliana Prado', DLG), at=c.A(3, 'Tiro', 0.6), label='tira a Juliana')
+    c.confere('dlg', ['(2 de 3)'], 'Usuários incluídos 2 de 3')
+    c.click(BTN('Desmarcar todos', DLG), at=c.A(3, 'desmarcar', 0.6), label='Desmarcar todos')
+    c.confere('dlg', ['(0 de 3)', 'Marcar todos'], 'Usuários incluídos 0 de 3')
+    c.click(BTN('Marcar todos', DLG), at=c.A(3, 'marcar', 0.6), label='Marcar todos')
+    c.confere('dlg', ['(3 de 3)'], 'Usuários incluídos 3 de 3')
+    c.mark(4)
+    c.hover(BTN('Excel', DLG), 0.8, at=c.A(4, 'Excel,', 0.5), label='Excel (sem clicar)')
+    c.click(BTN('Visualizar / PDF', DLG), at=c.A(4, 'abrir', 0.6), label='Visualizar / PDF: o relatório abre em outra aba')
+    c.waitfor(text='Relatório gerado com sucesso!', timeout=20)
+    c.ev(HTML_JS, label='relatório HTML (aba nova, para a ilustração)')
+    c.fim()
+    return c
+
+
+def cap13():
+    """Recapitulando: passeio calmo pela aba com os três (base para a montagem dos trechos dos capítulos 2 a 12)."""
+    c = cap_novo(13, start=(760, 300))
     c.mark(1)
     c.hover(ABA_USUARIOS, 1.0, at=c.A(1, 'aba', 0.5), label='aba Usuários e Permissões')
     c.hover(TXT('Gerencie usuários da empresa, papéis e permissões de acesso'), 0.8, at=c.A(1, 'Gerenciar', 0.5), label='Gerenciar Usuários')
@@ -825,17 +1036,20 @@ def cap10():
     c.mark(4)
     c.click(LINHA('Marcos Antunes'), at=c.A(4, 'Marcos', 0.6), label='o Marcos (foto e 31 permissões)')
     c.mark(5)
-    c.hover(ACOES('Marcos Antunes', 0), 0.3, at=c.A(5, 'Desativou', 0.5), label='menu ... (desativar e ativar)')
-    c.hover(COROA, 1.0, at=c.A(5, 'controle', 0.5), label='a coroa do master')
+    c.hover(TXT('Perfil de acesso'), 0.6, at=c.A(5, 'restrições,', 0.5), label='perfil do Marcos (restrições e mapa são do Editar)')
     c.mark(6)
-    c.hover(SELO('3 / 3 usuários'), 1.6, at=c.A(6, 'limite', 0.5), label='selo 3 / 3 usuários')
+    c.hover(ACOES('Marcos Antunes', 0), 0.3, at=c.A(6, 'Desativou', 0.5), label='menu ... (desativar e ativar)')
+    c.hover(COROA, 1.0, at=c.A(6, 'controle', 0.5), label='a coroa do master')
     c.mark(7)
-    c.add({'do': 'scroll', 'point': {'x': 960, 'y': 600}, 'by': 0, 'duration': 0.4, 'after': 0, 'at': c.A(7, 'próximo', 0.4), 'label': 'cursor descansa'})
+    c.hover(SELO('3 / 3 usuários'), 1.0, at=c.A(7, 'limite', 0.5), label='selo 3 / 3 usuários')
+    c.hover(BTN('Relatório por Usuário', MAIN), 1.2, at=c.A(7, 'Relatório', 0.5), label='botão Relatório por Usuário')
+    c.mark(8)
+    c.add({'do': 'scroll', 'point': {'x': 960, 'y': 600}, 'by': 0, 'duration': 0.4, 'after': 0, 'at': c.A(8, 'próximo', 0.4), 'label': 'cursor descansa'})
     c.fim()
     return c
 
 
-CAPS_ROBO = {n: globals()[f'cap{n:02d}'] for n in range(11)}
+CAPS_ROBO = {n: globals()[f'cap{n:02d}'] for n in range(14)}
 
 if __name__ == '__main__':
     quais = [int(a) for a in sys.argv[1:]] or sorted(CAPS_ROBO)

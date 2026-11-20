@@ -1,6 +1,6 @@
 {
  "name": "t03-cap06",
- "title": "T03 · Cap. 6 · Editar preços em massa (narração 68,1 s ESTIMADA; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; usuário rafael)",
+ "title": "T03 · Cap. 6 · Editar preços em massa (narração 117,7 s ESTIMADA; marcas L1..L9 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; usuário rafael)",
  "seed": "t03-cap06",
  "pace": 0.5,
  "cps": 14,
@@ -16,7 +16,8 @@
   "pwa-install-dismissed": "true",
   "theme": "light",
   "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
-  "initial-preferences-set": "true"
+  "initial-preferences-set": "true",
+  "cato_adoption_nudge_38814e47-876a-5977-a5f7-53af364c17bb_34c36c63-0890-5e89-8963-7c77b7996908": "{\"count\":99,\"lastShownAt\":0}"
  },
  "seedExtra": [
   "t03/inicio",
@@ -107,12 +108,12 @@
    "do": "hover",
    "target": {
     "role": "button",
-    "name": "Editar Tabela",
+    "name": "Editar Preços",
     "exact": true
    },
    "seconds": 0.6,
    "at": 11.48,
-   "label": "Editar Tabela",
+   "label": "Editar Preços",
    "optional": true,
    "timeout": 4
   },
@@ -125,25 +126,43 @@
    "do": "click",
    "target": {
     "role": "button",
-    "name": "Editar Tabela",
+    "name": "Editar Preços",
     "exact": true
    },
-   "at": 13.71,
-   "label": "abre Editar Preços em Massa"
+   "at": 14.02,
+   "label": "abre Editar Tabelas de Preço (tela cheia)"
   },
   {
    "do": "waitFor",
-   "text": "Editar Preços em Massa",
+   "text": "Editar Tabelas de Preço",
+   "timeout": 10
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "[role=dialog] tbody tr:has-text('Ferro pesado')"
+   },
    "timeout": 10
   },
   {
    "do": "hover",
    "target": {
-    "text": "Compra (R$)",
+    "text": "Tabelas disponíveis",
     "within": "[role=dialog]"
    },
+   "seconds": 0.5,
+   "at": 15.84,
+   "label": "Tabelas disponíveis: Principal (Padrão)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] thead th:has-text('Compra')"
+   },
    "seconds": 0.3,
-   "at": 17.43,
+   "at": 23.2,
    "label": "Compra (R$)",
    "optional": true,
    "timeout": 4
@@ -151,11 +170,10 @@
   {
    "do": "hover",
    "target": {
-    "text": "Venda (R$)",
-    "within": "[role=dialog]"
+    "selector": "[role=dialog] thead th:has-text('Venda')"
    },
    "seconds": 0.3,
-   "at": 18.27,
+   "at": 24.04,
    "label": "Venda (R$)",
    "optional": true,
    "timeout": 4
@@ -163,19 +181,46 @@
   {
    "do": "hover",
    "target": {
-    "text": "Tabela principal",
-    "within": "[role=dialog]"
+    "selector": "[role=dialog] aside[aria-label='Resumo e regras da tabela']"
    },
    "seconds": 0.6,
-   "at": 19.86,
-   "label": "Tabelas disponíveis: Principal (Padrão)",
+   "at": 26.62,
+   "label": "Resumo da tabela (coluna da direita)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Sair",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.3,
+   "at": 30.18,
+   "label": "Sair",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 24.04
+   "at": 31.7
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "button",
+    "name": "Cancelar",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.4,
+   "at": 31.7,
+   "label": "Cancelar",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "type",
@@ -184,7 +229,7 @@
    },
    "text": "cobre",
    "cps": 14,
-   "at": 24.04,
+   "at": 31.7,
    "label": "busca cobre"
   },
   {
@@ -195,7 +240,7 @@
   {
    "do": "mark",
    "name": "L4",
-   "at": 27.2
+   "at": 34.86
   },
   {
    "do": "click",
@@ -203,7 +248,7 @@
     "selector": "[role=dialog] tbody tr:has-text('Cobre mel') input",
     "nth": 0
    },
-   "at": 28.76,
+   "at": 36.43,
    "label": "Cobre mel: Compra"
   },
   {
@@ -214,7 +259,7 @@
    },
    "text": "42,50",
    "noClick": true,
-   "at": 30.55,
+   "at": 38.22,
    "label": "Cobre mel compra 42,50 (zoom: linha Cobre mel)",
    "clear": true
   },
@@ -224,13 +269,13 @@
     "selector": "[role=dialog] tbody tr:has-text('Cobre mel') input",
     "nth": 1
    },
-   "at": 32.56,
+   "at": 40.22,
    "label": "Cobre mel: Venda"
   },
   {
    "do": "mark",
    "name": "L5",
-   "at": 33.97
+   "at": 41.63
   },
   {
    "do": "type",
@@ -240,7 +285,7 @@
    },
    "text": "47,90",
    "noClick": true,
-   "at": 33.97,
+   "at": 41.63,
    "label": "Cobre mel venda 47,90",
    "clear": true
   },
@@ -252,7 +297,7 @@
    },
    "text": "36,00",
    "cps": 24,
-   "at": 35.47,
+   "at": 43.13,
    "label": "Cobre misto compra 36,00 (selo 4x)",
    "clear": true
   },
@@ -302,7 +347,7 @@
   {
    "do": "mark",
    "name": "L6",
-   "at": 45.36
+   "at": 53.02
   },
   {
    "do": "hover",
@@ -311,8 +356,8 @@
     "nth": 0
    },
    "seconds": 0.8,
-   "at": 45.93,
-   "label": "células alteradas destacadas",
+   "at": 53.6,
+   "label": "células alteradas com a marca",
    "optional": true,
    "timeout": 4
   },
@@ -323,15 +368,64 @@
     "within": "[role=dialog]"
    },
    "seconds": 1.4,
-   "at": 49.12,
-   "label": "aviso 3 material(is) com alterações pendentes",
+   "at": 56.79,
+   "label": "aviso 3 material(is) com alterações pendentes (rodapé)",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L7",
-   "at": 52.92
+   "at": 60.81
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[placeholder='Buscar por código ou nome...']"
+   },
+   "text": "bronze",
+   "cps": 14,
+   "at": 66.15,
+   "label": "busca bronze",
+   "clear": true
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] tbody tr:has-text('Bronze') input",
+    "nth": 1
+   },
+   "text": "28,00",
+   "at": 68.81,
+   "label": "Bronze venda 28,00 (abaixo da compra de 29,00)",
+   "clear": true
+  },
+  {
+   "do": "press",
+   "key": "Tab",
+   "label": "sai da célula"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Venda abaixo da compra\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere resumo: Venda abaixo da compra"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Venda abaixo da compra",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.2,
+   "at": 72.62,
+   "label": "Resumo: Venda abaixo da compra 1 (zoom)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 78.24
   },
   {
    "do": "click",
@@ -341,8 +435,86 @@
     "exact": true,
     "within": "[role=dialog]"
    },
-   "at": 53.12,
-   "label": "Salvar (rodapé da janela)",
+   "at": 79.66,
+   "label": "Salvar (com a venda abaixo da compra)",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "text": "Preço de venda abaixo do custo",
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Preço de venda abaixo do custo"
+   },
+   "seconds": 1.6,
+   "at": 83.83,
+   "label": "Preço de venda abaixo do custo (zoom: a janela)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Cancelar",
+    "exact": true,
+    "within": "[role=alertdialog]"
+   },
+   "at": 88.99,
+   "label": "Cancelar (a janela fecha, nada foi salvo)"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "alertdialog"
+   },
+   "timeout": 6
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] tbody tr:has-text('Bronze') input",
+    "nth": 1
+   },
+   "text": "33,50",
+   "at": 89.5,
+   "label": "Bronze venda de volta a 33,50",
+   "clear": true
+  },
+  {
+   "do": "press",
+   "key": "Tab",
+   "label": "sai da célula"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const el=document.querySelector(\"[role=dialog] input[placeholder='Buscar por c\\u00f3digo ou nome...']\");if(!el)return 'SEM ALVO';const set=Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set;set.call(el,\"\");el.dispatchEvent(new Event('input',{bubbles:true}));el.dispatchEvent(new Event('change',{bubbles:true}));return el.value})()",
+   "at": 93.87,
+   "label": "limpa a busca (sem cursor)"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"3 material(is) com alterações pendentes\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")].filter(e=>!false||e.innerText.includes(\"\"));const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere voltou a 3 alterações"
+  },
+  {
+   "do": "mark",
+   "name": "L9",
+   "at": 97.95
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Salvar",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 98.83,
+   "label": "Salvar (rodapé da tela)",
    "noScroll": true
   },
   {
@@ -366,7 +538,7 @@
    "target": {
     "text": "As tabelas vinculadas serão recalculadas"
    },
-   "seconds": 6.39,
+   "seconds": 6.09,
    "label": "aviso Preços atualizados! As tabelas vinculadas... (o mouse segura o aviso)",
    "timeout": 8,
    "noScroll": true,
@@ -392,7 +564,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 68.08
+   "at": 117.67
   }
  ]
 }

@@ -1,6 +1,6 @@
 {
  "name": "t04-cap07",
- "title": "T4 · Cap. 7 · A ficha do parceiro (narração ESTIMADA 46,2 s; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
+ "title": "T4 · Cap. 7 · Cliente e fornecedor ao mesmo tempo (narração ESTIMADA 81,0 s; marcas L1..L8 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00; logado como Rafael Nogueira)",
  "seed": "t04-cap07",
  "pace": 0.5,
  "cps": 40,
@@ -20,7 +20,7 @@
  },
  "seedExtra": [
   "t04/inicio",
-  "t04/apos-cap06"
+  "t04/apos-n1"
  ],
  "prewarm": [
   "/login"
@@ -133,220 +133,273 @@
   {
    "do": "click",
    "target": {
-    "selector": "main aside button:has-text('Cooperativa Recomeço')"
+    "selector": "main aside button:has-text('Serralheria Bem-Te-Vi')"
    },
-   "at": 2.08,
-   "label": "clica na Cooperativa Recomeço: a ficha abre em Visão geral"
+   "at": 2.46,
+   "label": "clica na Serralheria Bem-Te-Vi: a ficha abre ao lado"
   },
   {
    "do": "waitFor",
    "target": {
-    "selector": "main section[aria-label='Detalhes de Cooperativa Recomeço']"
+    "selector": "main section[aria-label='Detalhes de Serralheria Bem-Te-Vi']"
    },
    "timeout": 10
   },
   {
-   "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Cooperativa Recomeço\", \"Fornecedor\", \"R$ 2.550,00\", \"a pagar\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main section[aria-label='Detalhes de Cooperativa Recome\\u00e7o']\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
-   "label": "confere cabeçalho da ficha"
+   "do": "hover",
+   "target": {
+    "selector": "main section[aria-label='Detalhes de Serralheria Bem-Te-Vi'] .tabular-nums",
+    "nth": 0
+   },
+   "seconds": 1.0,
+   "at": 9.54,
+   "label": "a ficha da serralheria (Fornecedor)",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "mark",
    "name": "L2",
-   "at": 7.44
+   "at": 12.38
   },
   {
-   "do": "hover",
-   "target": {
-    "selector": "main section[aria-label='Detalhes de Cooperativa Recomeço'] h2, main section[aria-label='Detalhes de Cooperativa Recomeço'] h1",
-    "nth": 0
-   },
-   "seconds": 0.15,
-   "at": 9.05,
-   "label": "nome da cooperativa",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main section[aria-label='Detalhes de Cooperativa Recomeço'] .tabular-nums",
-    "nth": 0
-   },
-   "seconds": 0.5,
-   "at": 9.81,
-   "label": "saldo R$ 2.550,00 a pagar",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
+   "do": "click",
    "target": {
     "role": "button",
     "name": "Editar",
     "exact": true,
-    "within": "main section[aria-label='Detalhes de Cooperativa Recomeço']"
+    "within": "main section[aria-label='Detalhes de Serralheria Bem-Te-Vi']"
    },
-   "seconds": 0.15,
-   "at": 11.41,
-   "label": "Editar",
-   "optional": true,
-   "timeout": 4
+   "at": 12.68,
+   "label": "Editar"
   },
   {
-   "do": "hover",
+   "do": "waitFor",
+   "text": "Editar Fornecedor",
+   "timeout": 10
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return null};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.textContent.trim()===\"Tamb\\u00e9m \\u00e9 cliente\"&&e.offsetParent).sort((a,b)=>a.textContent.length-b.textContent.length||a.children.length-b.children.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';let dy=Math.round(el.getBoundingClientRect().top-420);const y0=c.scrollTop;dy=Math.max(-y0,Math.min(c.scrollHeight-c.clientHeight-y0,dy));if(Math.abs(dy)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/500),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "label": "desce a janela até Também é cliente"
+  },
+  {
+   "do": "click",
    "target": {
-    "role": "button",
-    "name": "Nova Movimentação",
-    "exact": true,
-    "within": "main section[aria-label='Detalhes de Cooperativa Recomeço']"
+    "selector": "[role=dialog] #also-counterpart"
    },
-   "seconds": 0.6,
-   "at": 12.32,
-   "label": "Nova Movimentação",
-   "optional": true,
-   "timeout": 4
+   "at": 15.18,
+   "label": "marca Também é cliente"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const e=document.querySelector('[role=dialog] #also-counterpart');return e?(e.getAttribute('data-state')==='checked'?'OK: marcada':'DIFERENTE: '+e.getAttribute('data-state')):'DIFERENTE: sem a caixa'})()",
+   "label": "confere Também é cliente marcada"
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 14.17
+   "at": 16.6
   },
   {
-   "do": "hover",
+   "do": "click",
    "target": {
-    "selector": "[aria-label='Seções da ficha'] button:has-text('Visão geral')"
+    "role": "button",
+    "name": "Salvar",
+    "exact": true,
+    "within": "[role=dialog]"
    },
-   "seconds": 0.2,
-   "at": 16.28,
-   "label": "aba Visão geral",
-   "optional": true,
-   "timeout": 4
+   "at": 16.9,
+   "label": "Salvar"
   },
   {
-   "do": "hover",
-   "target": {
-    "selector": "[aria-label='Seções da ficha'] button:has-text('Conta-corrente')"
-   },
-   "seconds": 0.2,
-   "at": 18.25,
-   "label": "aba Conta-corrente",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "[aria-label='Seções da ficha'] button:has-text('Lucro estimado')"
-   },
-   "seconds": 0.2,
-   "at": 19.62,
-   "label": "aba Lucro estimado",
-   "optional": true,
-   "timeout": 4
+   "do": "waitFor",
+   "text": "Cadastro criado também como cliente.",
+   "timeout": 12
   },
   {
    "do": "eval",
-   "js": "(async()=>{const s=document.querySelector(\"[aria-label='Seções da ficha']\");if(!s)return 'SEM ALVO';const x0=s.scrollLeft,dx=(s.scrollWidth-s.clientWidth)-x0;if(Math.abs(dx)<3)return 'ok';await new Promise(res=>{const t0=performance.now();const f=t=>{const p=Math.min(1,(t-t0)/450),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;s.scrollLeft=x0+dx*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'faixa:'+Math.round(s.scrollLeft)})()",
-   "at": 20.83,
-   "label": "rola a faixa das abas até Preços"
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Cliente+Fornecedor\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main section[aria-label='Detalhes de Serralheria Bem-Te-Vi']\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere selo Cliente+Fornecedor na ficha"
   },
   {
    "do": "hover",
    "target": {
-    "selector": "[aria-label='Seções da ficha'] button:has-text('Notas fiscais')"
+    "text": "Cliente+Fornecedor",
+    "exact": true,
+    "within": "main section[aria-label='Detalhes de Serralheria Bem-Te-Vi']"
    },
-   "seconds": 0.2,
-   "at": 22.05,
-   "label": "aba Notas fiscais",
+   "seconds": 1.4,
+   "at": 19.66,
+   "label": "selo roxo Cliente+Fornecedor",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "hover",
    "target": {
-    "selector": "[aria-label='Seções da ficha'] button:has-text('Preços')"
+    "selector": "main div.no-scrollbar > button:has-text('Clientes')"
    },
    "seconds": 0.15,
-   "at": 23.26,
-   "label": "aba Preços",
+   "at": 24.06,
+   "label": "as duas abas",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 23.77
+   "at": 24.84
   },
   {
-   "do": "hover",
+   "do": "click",
    "target": {
-    "text": "Cadastro",
+    "role": "button",
+    "name": "Editar",
     "exact": true,
-    "within": "main section[aria-label='Detalhes de Cooperativa Recomeço']"
+    "within": "main section[aria-label='Detalhes de Serralheria Bem-Te-Vi']"
    },
-   "seconds": 0.15,
-   "at": 26.68,
-   "label": "Cadastro",
-   "optional": true,
-   "timeout": 4
+   "at": 25.54,
+   "label": "Editar de novo (o parceiro agora é dual)"
   },
   {
-   "do": "hover",
-   "target": {
-    "text": "Contato e endereço",
-    "exact": true,
-    "within": "main section[aria-label='Detalhes de Cooperativa Recomeço']"
-   },
-   "seconds": 0.67,
-   "at": 27.74,
-   "label": "Contato e endereço",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "mark",
-   "name": "L5",
-   "at": 29.36
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "input[aria-label='Link do portal']"
-   },
-   "seconds": 1.6,
-   "at": 30.06,
-   "label": "zoom: Acesso ao portal, o link e Copiar",
-   "optional": true,
-   "timeout": 4
+   "do": "waitFor",
+   "text": "Editar Fornecedor",
+   "timeout": 10
   },
   {
    "do": "hover",
    "target": {
     "role": "button",
-    "name": "Copiar",
+    "name": "Desvincular",
     "exact": true,
-    "within": "main section[aria-label='Detalhes de Cooperativa Recomeço']"
+    "within": "[role=dialog]"
    },
-   "seconds": 1.0,
-   "at": 35.53,
-   "label": "Copiar (sem clicar)",
+   "seconds": 1.6,
+   "at": 27.97,
+   "label": "o botão Desvincular, no rodapé do Editar (sem clicar)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Cancelar",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 38.2,
+   "label": "Cancelar"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 38.48
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main aside button:has-text('Depósito Irmãos Siqueira')"
+   },
+   "at": 40.14,
+   "label": "clica no Depósito Irmãos Siqueira"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "main section[aria-label='Detalhes de Depósito Irmãos Siqueira']"
+   },
+   "timeout": 10
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Cliente+Fornecedor\", \"-R$ 840,00\", \"a pagar\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main section[aria-label='Detalhes de Dep\\u00f3sito Irm\\u00e3os Siqueira']\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere ficha do depósito: -R$ 840,00 a pagar (1.59.161)"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const cor=e=>{for(const el of [e,...e.querySelectorAll('*')])for(const p of ['backgroundColor','color']){const m=(getComputedStyle(el)[p].match(/[\\d.]+/g)||[]).map(Number);if(m.length<3||(m.length>3&&m[3]===0))continue;const [r,g]=m;if(g>r+40)return 'verde';if(r>g+40)return 'vermelho'}return 'cinza'};for(let i=0;i<10;i++){const row=[...document.querySelectorAll(\"main aside button\")].find(x=>x.textContent.includes(\"Dep\\u00f3sito Irm\\u00e3os Siqueira\"));const el=row&&row.querySelector(\".tabular-nums\");if(el){const k=cor(el);return (k===\"vermelho\"?'OK: ':'DIFERENTE: ')+\"Dep\\u00f3sito Irm\\u00e3os Siqueira\"+' '+el.textContent.trim()+' '+k}await new Promise(r=>setTimeout(r,300))}return 'DIFERENTE: sem o saldo de '+\"Dep\\u00f3sito Irm\\u00e3os Siqueira\"})()",
+   "label": "confere cor: depósito em Fornecedores (-R$ 840,00) vermelho"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main section[aria-label='Detalhes de Depósito Irmãos Siqueira'] .tabular-nums",
+    "nth": 0
+   },
+   "seconds": 1.4,
+   "at": 43.05,
+   "label": "ficha do depósito: -R$ 840,00 a pagar",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L6",
-   "at": 38.21
+   "at": 45.43
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 60.28
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 70.27
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main div.no-scrollbar > button:has-text('Clientes')"
+   },
+   "at": 71.11,
+   "label": "aba Clientes"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "placeholder": "Buscar cliente..."
+   },
+   "timeout": 10
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Depósito Irmãos Siqueira\", \"-R$ 840,00\"];let out='';for(let i=0;i<20;i++){const els=[...document.querySelectorAll(\"main aside\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,240);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere o depósito em Clientes com -R$ 840,00"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const cor=e=>{for(const el of [e,...e.querySelectorAll('*')])for(const p of ['backgroundColor','color']){const m=(getComputedStyle(el)[p].match(/[\\d.]+/g)||[]).map(Number);if(m.length<3||(m.length>3&&m[3]===0))continue;const [r,g]=m;if(g>r+40)return 'verde';if(r>g+40)return 'vermelho'}return 'cinza'};for(let i=0;i<10;i++){const row=[...document.querySelectorAll(\"main aside button\")].find(x=>x.textContent.includes(\"Dep\\u00f3sito Irm\\u00e3os Siqueira\"));const el=row&&row.querySelector(\".tabular-nums\");if(el){const k=cor(el);return (k===\"vermelho\"?'OK: ':'DIFERENTE: ')+\"Dep\\u00f3sito Irm\\u00e3os Siqueira\"+' '+el.textContent.trim()+' '+k}await new Promise(r=>setTimeout(r,300))}return 'DIFERENTE: sem o saldo de '+\"Dep\\u00f3sito Irm\\u00e3os Siqueira\"})()",
+   "label": "confere cor: depósito em Clientes (-R$ 840,00) vermelho"
   },
   {
    "do": "hover",
    "target": {
-    "selector": "[aria-label='Seções da ficha'] button:has-text('Lucro estimado')"
+    "selector": "main aside button:has-text('Depósito Irmãos Siqueira') p.font-medium"
+   },
+   "seconds": 0.8,
+   "at": 72.42,
+   "label": "zoom: linha do Depósito em Clientes (Cliente+Fornecedor)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main aside button:has-text('Depósito Irmãos Siqueira') .tabular-nums"
    },
    "seconds": 2.0,
-   "at": 38.77,
-   "label": "aba Lucro estimado (sem clicar)",
+   "at": 76.29,
+   "label": "-R$ 840,00 em vermelho (o mesmo das duas abas)",
    "optional": true,
    "timeout": 4
   },
@@ -358,7 +411,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 46.16
+   "at": 80.95
   }
  ]
 }
