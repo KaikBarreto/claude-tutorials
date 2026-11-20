@@ -119,3 +119,7 @@ as gravações). Cada item diz a aula em que apareceu. **No fim da produção, v
 - **T03 · Editar Preços**: o filtro diz "Abaixo da compra" e o resumo diz "Venda abaixo da compra" (mesmo conceito, dois nomes).
 - **T03 · Editar Preços**: a "Margem típica" do resumo mostra decimais soltos.
 - **T04 · Clientes e Fornecedores**: o aviso "Informe o estado (UF) na aba Endereço" aponta para uma aba que se chama Dados Fiscais.
+- **T06 · Caixa**: o balão do Cato cobre a coluna de ações do histórico; os gráficos do painel somem em dia sem movimento;
+  o menu da linha abre só de passar o mouse (hover).
+- **T06 · Caixa / EcoFlix**: o link do aviso de saldo insuficiente aponta para a aula 5.5 da EcoFlix antiga
+  (`TUTORIAL_DINHEIRO_FISICO_URL`): trocar quando a trilha nova for publicada.

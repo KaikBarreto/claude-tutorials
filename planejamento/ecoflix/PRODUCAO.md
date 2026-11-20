@@ -957,3 +957,11 @@ Decisões:
   (06, 07, 09, 12, 13 com gesto ≥ 0,85 s na voz estimada: rever com a voz). Falta: `t04_lote160.sh 8 12 17` (cap08 e cap17
   dependem das sementes da cadeia), completos 04 e 16 (correções sem teste). Lição: clique de linha vai no NOME (o centro da
   linha caía no botão "..."); `js_garante` reclica sem cursor quando o efeito não vem; aviso de CNPJ repetido só no onBlur.
+- **T06**: 16 capítulos (novos 06 cofre zerado/negativo, 11 despesa e receita, 12 sangria; cortes 09b e 13a; 06-09
+  antigos viraram 07-10, 10→13, 11→14, 12→15). Fala 2.044 → 3.253 palavras. Rápido aprovado em todos menos o 03 (menu
+  "Editar saldo de abertura": correção no gerar.py, coordenador reensaiando). Valores conferidos na tela: 3.006,50,
+  1.450,00, 957,10. Impacto na T09: #85 fecha com 957,10, #86 com 15.000,00, Conta Principal +5.120,00. Sementes novas:
+  cofre-negativo, apos-cap10..14, dia-10-rascunho. **Faltou** a cena do PDF "Ver comprovante" (regra do comprovante na
+  tela): fazer junto das cenas v3 da aula. O modal "sem permissão" só é falado (o mundo não tem usuário sem permissão).
+  **Para o Kaik (fim do projeto)**: o link "Ver tutorial: como funciona o dinheiro do caixa" (`TUTORIAL_DINHEIRO_FISICO_URL`
+  em `src/lib/caixa.ts`) aponta para a aula 5.5 da EcoFlix antiga; trocar quando a trilha nova for publicada.
