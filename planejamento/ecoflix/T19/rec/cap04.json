@@ -1,6 +1,6 @@
 {
  "name": "t19-cap04",
- "title": "T19 · Cap. 4 · Departamentos (narração 38,3 s, ESTIMADA; marcas L1..L5 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
+ "title": "T19 · Cap. 4 · Departamentos (narração 47,7 s, ESTIMADA; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
  "fakeNow": "2026-11-10T08:30:00-03:00",
  "seed": "t19-cap04",
  "pace": 0.5,
@@ -249,6 +249,33 @@
    "timeout": 4
   },
   {
+   "do": "mark",
+   "name": "L4",
+   "at": 18.54
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] button:has(svg[class*='lucide-pencil'])"
+   },
+   "seconds": 0.8,
+   "at": 18.92,
+   "label": "lápis: editar o departamento",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] button:has(svg[class*='lucide-trash'])"
+   },
+   "seconds": 1.2,
+   "at": 22.26,
+   "label": "lixeira: excluir o departamento",
+   "optional": true,
+   "timeout": 4
+  },
+  {
    "do": "press",
    "key": "Escape",
    "label": "fecha a janela"
@@ -271,13 +298,13 @@
   },
   {
    "do": "mark",
-   "name": "L4",
-   "at": 18.54
+   "name": "L5",
+   "at": 27.92
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const el=[...document.querySelectorAll(\"main [role=list] *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Edson Moura\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-430);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/400),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 19.44,
+   "at": 28.82,
    "label": "a lista mostra Edson Moura no meio"
   },
   {
@@ -286,7 +313,7 @@
     "selector": "main [role=listitem] button[aria-label='Ações de Edson Moura']"
    },
    "seconds": 0.23,
-   "at": 20.04,
+   "at": 29.42,
    "label": "menu ⋯ do Edson",
    "optional": false,
    "timeout": 8
@@ -333,7 +360,7 @@
     "role": "menuitem",
     "name": "Editar"
    },
-   "at": 21.27,
+   "at": 30.65,
    "label": "Editar o Edson",
    "noScroll": true
   },
@@ -349,7 +376,7 @@
    "target": {
     "selector": "[role=dialog] #department"
    },
-   "at": 23.78,
+   "at": 33.16,
    "label": "Departamento: Transporte (abre a lista)"
   },
   {
@@ -368,7 +395,7 @@
     "name": "Transporte",
     "exact": true
    },
-   "at": 25.9,
+   "at": 35.28,
    "label": "Departamento: Transporte",
    "noScroll": true
   },
@@ -377,7 +404,7 @@
    "target": {
     "selector": "[role=dialog] button:text-is('Atualizar'):not(.absolute)"
    },
-   "at": 26.58,
+   "at": 35.97,
    "label": "Atualizar"
   },
   {
@@ -400,22 +427,22 @@
     "selector": "main [role=listitem]:has(p:text-is('Edson Moura')) span:has-text('Transporte')"
    },
    "seconds": 0.34,
-   "at": 30.53,
+   "at": 39.91,
    "label": "o Edson com o caminhão laranja e Transporte",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
-   "name": "L5",
-   "at": 31.87
+   "name": "L6",
+   "at": 41.25
   },
   {
    "do": "click",
    "target": {
     "selector": "main button[aria-label^='Filtros']"
    },
-   "at": 32.32,
+   "at": 41.71,
    "label": "Filtros da lista"
   },
   {
@@ -430,7 +457,7 @@
    "target": {
     "selector": "[data-radix-popper-content-wrapper] button[role=combobox]"
    },
-   "at": 34.68,
+   "at": 44.06,
    "label": "Departamento (a lista dos departamentos)",
    "noScroll": true
   },
@@ -478,7 +505,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 38.3
+   "at": 47.69
   }
  ]
 }

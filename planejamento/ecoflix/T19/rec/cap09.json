@@ -1,52 +1,130 @@
 {
  "name": "t19-cap09",
- "title": "T19 · Cap. 9 · O ponto pelo celular (narração 44,7 s, ESTIMADA; marcas L1..L5 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
+ "title": "T19 · Cap. 9 · O extrato do funcionário (narração 66,8 s, ESTIMADA; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
  "fakeNow": "2026-11-10T08:30:00-03:00",
  "seed": "t19-cap09",
- "pace": 0.6,
+ "pace": 0.5,
  "cps": 40,
  "tail": 1.5,
  "start": {
-  "x": 195,
-  "y": 600
+  "x": 760,
+  "y": 470
  },
  "anonymous": true,
  "storage": {
-  "pwa-install-dismissed": "true"
+  "app_version": "1.60.18",
+  "notification_shown_version": "1.60.18",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true",
+  "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10"
  },
  "seedExtra": [
   "t19/apos-cap08"
  ],
  "prewarm": [
-  "/ponto/recicla-vale-metais-gabriel-8G9H5WS6MRTY"
+  "/login"
  ],
  "setup": [
   {
-   "do": "geo",
-   "lat": -23.0105,
-   "lng": -45.5412
-  },
-  {
    "do": "goto",
-   "url": "/ponto/recicla-vale-metais-gabriel-8G9H5WS6MRTY"
+   "url": "/login"
   },
   {
    "do": "waitFor",
-   "text": "Gabriel Rocha",
-   "timeout": 30
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "timeout": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "••••••••"
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
   },
   {
    "do": "waitFor",
-   "text": "Registrar Entrada",
+   "text": "Olá, Rafael",
+   "timeout": 45
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
    "timeout": 20
   },
   {
    "do": "eval",
-   "js": "(()=>{const cv=document.createElement('canvas');cv.width=720;cv.height=720;const g=cv.getContext('2d');let t0=performance.now();\nconst pinta=()=>{const t=(performance.now()-t0)/1000;const W=720,cx=360+Math.sin(t*1.3)*4,cy=380+Math.sin(t*0.9)*3;\nconst gr=g.createLinearGradient(0,0,0,W);gr.addColorStop(0,'#c6d6de');gr.addColorStop(1,'#94a8b2');g.fillStyle=gr;g.fillRect(0,0,W,W);\ng.fillStyle='#78808a';g.fillRect(0,W*0.72,W,W);g.fillStyle='#f27820';g.beginPath();g.ellipse(cx,W*0.98,W*0.36,W*0.3,0,0,Math.PI*2);g.fill();\ng.fillStyle='#e6e6dc';g.fillRect(cx-W*0.30,W*0.86,W*0.6,W*0.03);g.fillStyle='#c69670';g.fillRect(cx-W*0.06,cy+W*0.16,W*0.12,W*0.14);\ng.beginPath();g.ellipse(cx,cy,W*0.17,W*0.2,0,0,Math.PI*2);g.fill();g.fillStyle='#facc15';g.beginPath();g.ellipse(cx,cy-W*0.09,W*0.19,W*0.16,0,Math.PI,0);g.fill();\ng.fillRect(cx-W*0.22,cy-W*0.1,W*0.44,W*0.03);g.fillStyle='#282830';for(const d of[-1,1]){g.beginPath();g.arc(cx+d*W*0.07,cy+W*0.02,9,0,Math.PI*2);g.fill();}\ng.strokeStyle='#96463c';g.lineWidth=7;g.beginPath();g.arc(cx,cy+W*0.06,W*0.06,0.35,Math.PI-0.35);g.stroke();requestAnimationFrame(pinta)};pinta();\nlet st=null;window.__t19cam={chamadas:0,abortados:0};\nconst fake=async()=>{window.__t19cam.chamadas++;if(!st){st=cv.captureStream(24);st.getTracks().forEach(t=>{t.stop=()=>{}})}return st};\nif(!navigator.mediaDevices)Object.defineProperty(navigator,'mediaDevices',{value:{}});\nnavigator.mediaDevices.getUserMedia=fake;navigator.mediaDevices.enumerateDevices=async()=>[{kind:'videoinput',deviceId:'cam-falsa',label:'Câmera frontal',groupId:'g'}];\nconst play0=HTMLMediaElement.prototype.play;HTMLMediaElement.prototype.play=function(){const nossa=st&&this.srcObject===st;const p=play0.call(this);\nreturn nossa?p.catch(e=>{if(e&&e.name==='AbortError'){window.__t19cam.abortados++;return undefined}throw e}):p};\nreturn 'camera falsa'})()"
+   "js": "(()=>{const sb=document.querySelector('[data-state][data-collapsible]');if(sb&&sb.getAttribute('data-state')==='collapsed')return 'ja recolhido';const b=document.querySelector('header button.h-8.w-8');if(!b)return 'SEM ALVO';b.click();return 'recolhido'})()"
   },
   {
    "do": "wait",
-   "seconds": 0.8
+   "seconds": 0.7
+  },
+  {
+   "do": "goto",
+   "url": "/funcionarios"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie sua equipe e controle de pagamentos",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 15
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "main [role=listitem] > button:has(p:text-is('Rafael Nogueira'))"
+   },
+   "timeout": 20
+  },
+  {
+   "do": "wait",
+   "seconds": 0.6
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main [role=listitem] > button:has(p:text-is('Edson Moura'))"
+   }
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "main section[aria-label^='Detalhes de'] div:has(> p:text-is('Saldo atual'))"
+   },
+   "timeout": 10
+  },
+  {
+   "do": "wait",
+   "seconds": 0.6
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{if(window.__abas)return 'ja';window.__abas=[];window.__pdfs=[];const o=URL.createObjectURL.bind(URL);URL.createObjectURL=(b)=>{try{if(b&&b.type==='application/pdf')window.__pdfs.push(b)}catch(e){}return o(b)};const wo=window.open.bind(window);window.open=(...a)=>{const w=wo(...a);window.__abas.push(w);return w};return 'ganchos'})()"
   },
   {
    "do": "eval",
@@ -60,240 +138,244 @@
    "at": 0
   },
   {
+   "do": "click",
+   "target": {
+    "selector": "main section[aria-label^='Detalhes de'] button:has-text('Extrato')"
+   },
+   "at": 1.55,
+   "label": "Extrato"
+  },
+  {
+   "do": "waitFor",
+   "text": "Extrato - Edson Moura",
+   "timeout": 10
+  },
+  {
    "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Gabriel Rocha\", \"Operador de empilhadeira\", \"Recicla Vale Metais\", \"PONTO ELETRÔNICO\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"body\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
-   "label": "confere tela do ponto do Gabriel"
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Bônus\", \"Vales\", \"Faltas\", \"Saldo\", \"R$ 2.900,00\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere cartões do mês novo"
   },
   {
-   "do": "type",
+   "do": "hover",
    "target": {
-    "text": "Gabriel Rocha",
-    "exact": true
+    "text": "Vales",
+    "within": "[role=dialog]"
    },
-   "text": "",
-   "noClick": true,
-   "at": 5.34,
-   "label": "nome do Gabriel e cargo (cabeçalho)",
+   "seconds": 0.1,
+   "at": 5.57,
+   "label": "cartão Vales R$ 0,00",
    "optional": true,
    "timeout": 4
   },
   {
-   "do": "type",
+   "do": "hover",
    "target": {
-    "text": "Recicla Vale Metais"
+    "text": "Bônus",
+    "exact": true,
+    "within": "[role=dialog]"
    },
-   "text": "",
-   "noClick": true,
-   "at": 6.47,
-   "label": "a empresa e a data",
+   "seconds": 0.1,
+   "at": 6.48,
+   "label": "cartão Bônus R$ 0,00",
    "optional": true,
    "timeout": 4
   },
   {
-   "do": "type",
+   "do": "hover",
    "target": {
-    "text": "Você ainda não bateu o ponto hoje"
+    "text": "Saldo",
+    "exact": true,
+    "within": "[role=dialog]"
    },
-   "text": "",
-   "noClick": true,
-   "at": 7.38,
-   "label": "o relógio do ponto (rodapé)",
+   "seconds": 0.5,
+   "at": 7.46,
+   "label": "cartão Saldo R$ 2.900,00",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L2",
-   "at": 7.82
+   "at": 9.49
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Valor pago",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.52,
+   "at": 13.89,
+   "label": "Valor pago R$ 2.750,00 (pagamento detalhado)",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "click",
    "target": {
-    "selector": "button:has-text('Registrar Entrada')"
+    "selector": "[role=dialog] button:has-text('Gerar Recibo')"
    },
-   "at": 8.12,
-   "label": "Registrar Entrada",
-   "noScroll": true
+   "at": 15.41,
+   "label": "Gerar Recibo (pagamento de hoje)"
   },
   {
    "do": "waitFor",
-   "text": "Confirme localização e selfie para registrar o ponto",
+   "text": "Gerar recibo",
    "timeout": 8
   },
   {
-   "do": "type",
+   "do": "hover",
    "target": {
-    "text": "Confirme localização e selfie"
+    "text": "Térmico",
+    "exact": true,
+    "within": "[role=dialog]"
    },
-   "text": "",
-   "noClick": true,
-   "at": 12.87,
-   "label": "Obtendo sua localização...",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "waitFor",
-   "text": "Tirar foto agora",
-   "timeout": 15
-  },
-  {
-   "do": "type",
-   "target": {
-    "selector": "video"
-   },
-   "text": "",
-   "noClick": true,
-   "label": "Selfie do ponto (câmera)",
+   "seconds": 0.1,
+   "at": 19.66,
+   "label": "formato Térmico (80 mm)",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "click",
    "target": {
-    "selector": "button:has-text('Tirar foto agora')"
+    "selector": "[role=dialog] button:has(span:text-is('A4'))"
    },
-   "at": 13.31,
-   "label": "Tirar foto agora",
-   "noScroll": true,
-   "when": {
-    "selector": "button:has-text('Tirar foto agora')"
-   }
-  },
-  {
-   "do": "waitFor",
-   "text": "Confirmar registro",
-   "timeout": 12
+   "at": 20.49,
+   "label": "formato A4 (abre o recibo em aba nova)"
   },
   {
    "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Entrada\", \"Horário\", \"Local\", \"Rua das Oficinas, 1250 - Parque Industrial - Taubaté\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"body\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
-   "label": "confere confirmação com o local do pátio"
+   "js": "(async()=>{let w=null,h='';for(let i=0;i<50;i++){w=window.__abas&&window.__abas[0];try{h=w&&w.document&&w.document.documentElement.outerHTML||''}catch(e){h=''}if(h.includes(\"Edson Moura\"))break;await new Promise(r=>setTimeout(r,200));}if(!h.includes(\"Edson Moura\"))return 'SEM ABA: '+h.slice(0,120);return {html:\"recibo-extrato-edson\",chars:h.length,b64:btoa(unescape(encodeURIComponent(h)))}})()",
+   "label": "HTML do recibo A4 do Edson (aba nova, para a ilustração do comprovante)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Reset para salário base",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.8,
+   "at": 24.9,
+   "label": "Ajuste: Reset para salário base",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 13.71
+   "at": 27.98
   },
   {
-   "do": "type",
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.textContent.trim().startsWith(\"Recebimento do funcion\\u00e1rio\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-220);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/800),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 29.17,
+   "label": "rola a lista do extrato"
+  },
+  {
+   "do": "hover",
    "target": {
-    "text": "Tipo",
-    "exact": true
+    "text": "Recebimento do funcionário",
+    "within": "[role=dialog]"
    },
-   "text": "",
-   "noClick": true,
-   "at": 16.29,
-   "label": "confirmação: Tipo Entrada",
+   "seconds": 0.3,
+   "at": 29.65,
+   "label": "Recebimento +R$ 100,00",
    "optional": true,
    "timeout": 4
   },
   {
-   "do": "type",
+   "do": "hover",
    "target": {
-    "text": "Horário",
-    "exact": true
+    "text": "Viagens extras",
+    "within": "[role=dialog]"
    },
-   "text": "",
-   "noClick": true,
-   "at": 17.04,
-   "label": "Horário e Local (zoom)",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "type",
-   "target": {
-    "text": "Rua das Oficinas, 1250"
-   },
-   "text": "",
-   "noClick": true,
-   "at": 18.03,
-   "label": "Local: Rua das Oficinas, 1250",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "type",
-   "target": {
-    "selector": "[role=dialog] img"
-   },
-   "text": "",
-   "noClick": true,
-   "at": 18.79,
-   "label": "miniatura da selfie",
+   "seconds": 0.3,
+   "at": 32.31,
+   "label": "o bônus de outubro",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "eval",
-   "js": "JSON.stringify(window.__t19cam||null)",
-   "label": "câmera falsa: reaberturas do app (achado: reinicia a cada segundo)"
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.textContent.trim().startsWith(\"Ajuste de sal\\u00e1rio\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-420);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 34.08,
+   "label": "rola até o ajuste de salário"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Ajuste de salário: R$ 2.800,00 → R$ 2.900,00\", \"Recebimento do funcionário - Sobra do vale da viagem\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere o ajuste de salário e o recebimento"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Ajuste de salário",
+    "within": "[role=dialog]"
+   },
+   "seconds": 2.0,
+   "at": 35.5,
+   "label": "Ajuste de salário: R$ 2.800,00 → R$ 2.900,00",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 22.72
+   "at": 41.24
   },
   {
-   "do": "click",
+   "do": "hover",
    "target": {
-    "selector": "button:has-text('Confirmar registro')"
+    "text": "Ajuste de salário",
+    "within": "[role=dialog]"
    },
-   "at": 22.72,
-   "label": "Confirmar registro",
-   "noScroll": true
-  },
-  {
-   "do": "waitFor",
-   "text": "Ponto registrado",
-   "timeout": 10
-  },
-  {
-   "do": "waitFor",
-   "text": "Registros de hoje",
-   "timeout": 8
-  },
-  {
-   "do": "type",
-   "target": {
-    "text": "Registros de hoje"
-   },
-   "text": "",
-   "noClick": true,
-   "at": 26.73,
-   "label": "Registros de hoje: Entrada",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "type",
-   "target": {
-    "selector": "button:has-text('Iniciar Intervalo')"
-   },
-   "text": "",
-   "noClick": true,
-   "at": 30.45,
-   "label": "Iniciar Intervalo",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "type",
-   "target": {
-    "selector": "button:has-text('Registrar Saída')"
-   },
-   "text": "",
-   "noClick": true,
-   "at": 31.51,
-   "label": "Registrar Saída",
+   "seconds": 3.0,
+   "at": 44.8,
+   "label": "Ajuste de salário (continua)",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L5",
-   "at": 31.79
+   "at": 51.99
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "xpath=//div[@role='dialog']//*[normalize-space(text())='Vale/Adiantamento']/ancestor::div[.//button//*[contains(@class,'lucide-trash')]][1]//button[.//*[contains(@class,'lucide-trash')]]"
+   },
+   "seconds": 1.6,
+   "at": 53.05,
+   "label": "lixeira de uma linha Vale/Adiantamento (sem clicar)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 59.63
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 1000,
+    "y": 140
+   },
+   "by": 0,
+   "duration": 0.2,
+   "after": 0,
+   "at": 60.23,
+   "label": "cursor sai da lixeira (ilustração)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:text-is('Fechar'):not(.absolute)"
+   },
+   "at": 65.42,
+   "label": "Fechar o extrato"
   },
   {
    "do": "eval",
@@ -303,8 +385,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 44.68
+   "at": 66.83
   }
- ],
- "device": "phone"
+ ]
 }

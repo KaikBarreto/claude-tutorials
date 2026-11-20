@@ -2,7 +2,7 @@
 # T19 · lote de itens, UM de cada vez na fila justa da trava (rec/fila.sh --prio 19: nunca mais de uma tarefa da aula na fila).
 # Itens: "NN:modos" (ens, final, seed; ex. 03:ens,final,seed) ou "ex:<arquivo de rec/t19/_ex sem .json>". Com prazo: item que
 # ganha a vez a menos de 12 min do fim do lote não grava (o lote em segundo plano não morre no meio de uma gravação). Para no
-# primeiro capítulo com seed pedida que não gravou a semente (a cadeia depende dela).
+# primeiro capítulo com seed pedida que não gravou a semente (a cadeia depende dela) - no lote de ensaio a semente anterior é copiada e segue.
 #   PRAZO_MIN=115 bash rec/t19/t19_fila.sh 02:ens,final,seed 03:ens,seed ...   (saída de cada item em /dev/shm/t19/fila-<item>.txt)
 set -uo pipefail
 TUT_HOME="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
@@ -22,6 +22,11 @@ for it in "$@"; do
   rc=$?
   echo "$it: exit $rc $(date +%H:%M)"
   [[ $rc == 5 ]] && { echo "PRAZO: a vez chegou tarde para $it"; exit 0; }
-  if [[ $MODOS == *seed* ]] && grep -q 'NAO GRAVADA' "/dev/shm/t19/fila-$NN.txt"; then echo "PAREI: cap$NN sem semente"; exit 0; fi
+  if [[ $MODOS == *seed* ]] && grep -q 'NAO GRAVADA' "/dev/shm/t19/fila-$NN.txt"; then
+    # a cadeia não para no lote de ensaio: o capítulo seguinte parte da semente anterior copiada (estado aproximado; o relatório avisa)
+    ANT=$(printf 'apos-cap%02d' "$((10#$NN - 1))"); [[ $((10#$NN)) -le 2 ]] && ANT=inicio
+    SD=rec/mundo/seeds-extra/t19
+    cp -f "$SD/$ANT.json" "$SD/apos-cap$NN.json" && echo "SEMENTE apos-cap$NN COPIADA de $ANT (cap$NN não fechou)"
+  fi
 done
 echo "fila completa"

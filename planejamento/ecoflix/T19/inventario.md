@@ -163,3 +163,20 @@ Rótulos entre aspas = texto exato do código (pt-BR). Gravação em 1280×800 (
   Tabela `employee_absences` (`hooks/useEmployeeAbsences.ts:223-277`).
 - "Exportar Folha de Ponto" (`TimeSheetExportDialog.tsx:213-277`): "Espelho de Ponto (PDF)" e "Planilha para contabilidade
   (Excel)" · "… Não substitui arquivos fiscais AEJ ou AFD."
+
+
+## Atualização 1.60.18 (20/11)
+Rótulos conferidos no código 1.60.18 e que entraram na fala: "Registrar Vale/Adiantamento" (origem Dinheiro (Caixa) ou PIX/Transferência
+(Banco)); cartão "Vales/Adiantamentos" na ficha; no Pagamento (janela larga): "Resumo do pagamento", "Vales/Adiantamentos desta folha"
+("Em aberto", "Desconto neste pagamento"), "Valor líquido do pagamento" (com "Calculado: R$ ..." e "voltar ao calculado"), "Motivo da
+diferença", "Data e hora do pagamento", "Pagamento Misto", "Pagamento sem saída de dinheiro", modo "CLT (com folha)" com "Folha CLT",
+"Proventos e descontos desta folha", "Adicionar rápido" (Horas extras 50%), "Compõe as bases de INSS, IRRF e FGTS", "Descontos extras",
+"INSS desta folha" (ajuste com motivo), pós-pagamento "Pagamento registrado!" (Gerar Recibo / Gerar Holerite, aba nova); menu da linha:
+"Pagar férias", "Pagar 13º salário", "Pagar rescisão" (não mexem no saldo de salário); Exportar Relatório (Relatório de movimentações |
+Relação de pagamento, "Visualizar / PDF", "Excel"); ponto: "PIN do ponto (opcional)" (Definir/Trocar/Remover PIN, 4 ou 6 dígitos), teclado do
+PIN no celular, "Registrar Nova Entrada" (várias jornadas por dia), tablet da empresa (câmera, "Buscar manualmente", A-Z / Quem falta,
+cadeado do PIN, "Exigir reconhecimento facial no quiosque"), Folha de Ponto da equipe (Dias com registro, Trabalhado, Esperado, Saldo, Faltas,
+Férias, Atestado, composição do saldo ao passar o mouse), "Lançar manual" (batida Manual, editar/excluir), Ausências (período), jornada
+individual com intervalo por dia e "Folga", "Batidas da madrugada contam para o dia anterior até".
+Corrigidos no app em relação ao 1.59.154: folha sem "Falta" antes da admissão; recibo do pagamento abre; "Saldo" com máscara de moeda;
+link pessoal de arquivado "acesso desativado"; intervalo da jornada por dia.

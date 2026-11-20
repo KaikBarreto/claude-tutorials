@@ -4,36 +4,43 @@
 - **Objetivo:** a equipe do pátio da Recicla Vale Metais dentro do sistema: cadastro e custo, vale, bônus, falta, pagamento,
   recebimento, extrato e o ponto eletrônico batido no celular e conferido pelo gestor.
 - **Antes:** Relatório Financeiro e DRE (T15). **Próximo:** White Label (T27, "deixar o sistema com a sua marca").
-- **Vinhetas (áreas):** FUNCIONÁRIOS · CADASTRO · CADASTRO · DEPARTAMENTOS · MOVIMENTAÇÕES · PAGAMENTO · EXTRATO · PONTO
-  ELETRÔNICO (4 capítulos) · FUNCIONÁRIOS · RESUMO.
-- **Alvo da fonte:** 16 min. **Fala:** ~2.200 palavras, ~14 min de voz + 13 vinhetas e ilustrações (≈ 15 a 16 min de vídeo).
-- **FAKE_NOW:** `2026-11-10T08:30:00-03:00` (terça) em todos os capítulos. Logado: Rafael Nogueira (MASTER), desktop 1280×800,
-  menu lateral aberto. Capítulo 9 no celular (`device: phone`, sem login).
-- Base: `T19/inventario.md` (código 1.59.154).
+- **Vinhetas (áreas):** FUNCIONÁRIOS · CADASTRO · CADASTRO · DEPARTAMENTOS · MOVIMENTAÇÕES · PAGAMENTO · PAGAMENTO · PAGAMENTO ·
+  EXTRATO · RELATÓRIO · PONTO ELETRÔNICO (5 capítulos) · FUNCIONÁRIOS · RESUMO.
+- **Versão 1.60.18 (20/11):** 18 capítulos (eram 14; "nenhuma aula se divide", mais profundidade). **Fala:** ~3.150 palavras,
+  ~20 min de voz + vinhetas e ilustrações (≈ 24 a 25 min de vídeo). Tela 1600×900 (o cap. 13, tablet, 1024×768).
+- **FAKE_NOW:** `2026-11-10T08:30:00-03:00` (terça) nos caps 0 a 12 e `2026-11-10T16:30:00-03:00` nos caps 13 a 17 (`rec/t19/fake_now.json`;
+  a instância 54319 religa entre o 12 e o 13). Logado: Rafael Nogueira (MASTER), menu lateral recolhido. Cap. 12 no celular
+  (`device: phone`, sem login, hora do ponto avançada por `__avanco_min` no falso), cap. 13 no tablet da empresa.
+- Base: `T19/inventario.md` (código 1.59.154 + bloco "Atualização 1.60.18").
 
-## Capítulos (os da fonte, na ordem)
+## Capítulos (numeração 1.60.18; os da fonte entre parênteses)
 
-| # | Vinheta (área / título) | O que a tela mostra | Cuidados falados | Fala |
+| # | Vinheta (área / título) | O que a tela mostra | Cuidados falados | Fala (estimada) |
 |---|---|---|---|---|
-| 0 | (sem vinheta) | Dashboard → menu "Funcionários (RH)"; [ILUSTRAÇÃO: o caderninho do pátio] | 🔒 · "Antes: Relatório Financeiro e DRE" | 0:30 |
-| 1 | FUNCIONÁRIOS / A tela Funcionários e suas abas | As 7 abas; "Ativos"/"Inativos"; botões; lista "Equipe" com o saldo; ficha do Diego; aba "Dashboard" | ⚠️ abas do ponto só com "Gerenciar Ponto Eletrônico"; o saldo = o que falta pagar | 1:05 |
-| 2 | CADASTRO / Cadastrar o funcionário | "Novo Funcionário": Gabriel Rocha, CPF, telefone, cargo, "Pátio", admissão 10/11; "Salário *" R$ 2.520,00; "Calcular" (Lucro Real, EPI R$ 600,00/ano → "Custo total mensal" R$ 4.264,00); "Chave PIX"; "Cadastrar" | ⚠️ funcionário novo nasce com saldo = salário; estimativa → contador | 1:50 |
-| 3 | CADASTRO / Campos de folha | "Editar" Gabriel → "CLT" → "Nº de dependentes (IRRF)" 1, "Desconta vale-transporte (até 6%)", VT R$ 220,00 → "Atualizar"; [ILUSTRAÇÃO: Informal × CLT] | | 1:00 |
-| 4 | DEPARTAMENTOS / Departamentos | "Gerenciar departamentos": cria "Transporte" (laranja, caminhão) → Edson nele | | 0:45 |
-| 5 | MOVIMENTAÇÕES / Lançar vale, bônus e falta | Diego: vale R$ 200,00 (dinheiro), falta R$ 90,00 → saldo R$ 1.690,00; Cláudio: bônus R$ 150,00 → R$ 2.250,00; [ILUSTRAÇÃO: a conta do saldo] | ⚠️ conta do saldo; ⚠️ não lançar o vale de novo no banco ("Buscar lançamento") | 1:55 |
-| 6 | PAGAMENTO / Pagar e receber do funcionário | Edson: "Recebimento" R$ 100,00 (vales 500 → 400); "Pagamento": desconto de vales R$ 400,00, "CLT (com folha)" de relance, "Valor efetivamente pago" R$ 2.750,00, Pix → saldo volta a R$ 2.900,00; [ILUSTRAÇÃO: o ciclo do pagamento] | ⚠️ INSS e IRRF estimados; ⚠️ pagou, zera e recomeça do salário | 2:00 |
-| 7 | EXTRATO / O extrato do funcionário | "Extrato - Edson Moura": cartões, pagamento detalhado, "Gerar Recibo", "Ajuste de salário: R$ 2.800,00 → R$ 2.900,00", lixeira; [ILUSTRAÇÃO: a linha do extrato presa ao dinheiro] | ⚠️ trocar salário lança o ajuste; ⚠️ excluir desfaz o dinheiro | 1:05 |
-| 8 | PONTO ELETRÔNICO / Ligar o ponto e gerar o link | Aba "Ponto eletrônico" do Gabriel (já ligado), PIN; "Copiar link do ponto"; "Ativar ponto eletrônico" → Juliana; "Tablet da empresa"; [ILUSTRAÇÃO: dois links] | ⚠️ dois links diferentes | 1:25 |
-| 9 | PONTO ELETRÔNICO / O ponto pelo celular | Celular: "Registrar Entrada" → localização → "Tirar foto agora" → "Confirmar registro" → "Ponto registrado"; [ILUSTRAÇÃO: a hora do sistema] | ⚠️ a hora é a da empresa | 1:05 |
-| 10 | PONTO ELETRÔNICO / Registro e folha de ponto | Folha de novembro do Cláudio: "Falta" em 05/11 → "Lançar" → "Atestado"; rodapé e aviso do dia aberto; "Exportar"; "Registro de Ponto" com a batida do Gabriel; "Lançar manual"; [ILUSTRAÇÃO: a falta que aparece sozinha] | ⚠️ dia útil sem batida = Falta; ⚠️ dia sem saída fora do saldo; ⚠️ planilha não substitui os arquivos fiscais | 1:40 |
-| 11 | PONTO ELETRÔNICO / Configurações do ponto | "Exigir selfie", "Exigir localização", jornada padrão, dias; "Jornada Individual" da Juliana 08:00 às 17:00 → "Salvar jornada"; [ILUSTRAÇÃO: jornada da empresa × individual] | | 1:00 |
-| 12 | FUNCIONÁRIOS / Arquivar ou excluir | Rogério: "Arquivar" → "Inativos" → "Reativar"; "Excluir definitivamente" (diálogo, "Cancelar"); [ILUSTRAÇÃO: arquivo × lixeira] | dica: desligar o ponto antes de arquivar | 0:55 |
-| 13 | RESUMO / Recapitulando | Montagem do que foi feito; cartão "Próximo: White Label" | | 0:45 |
+| 0 | (sem vinheta) | Dashboard → menu "Funcionários (RH)"; [ILUSTRAÇÃO: o caderninho do pátio] | 🔒 · "Antes: Relatório Financeiro e DRE" | 0:49 |
+| 1 | FUNCIONÁRIOS / A tela Funcionários e suas abas | As 7 abas; Ativos/Inativos; botões; lista "Equipe" com o saldo; ficha do Diego; "Dashboard" | ⚠️ abas do ponto só com "Gerenciar Ponto Eletrônico" | 1:17 |
+| 2 | CADASTRO / Cadastrar o funcionário | Gabriel Rocha; calculadora do custo (Lucro Real, EPI, adicional, benefícios, horas, Hora Homem → R$ 4.264,00); Pix | ⚠️ estimativa → contador; saldo novo = salário | 1:54 |
+| 3 | CADASTRO / Campos de folha | CLT, dependentes 1, VT R$ 220,00; [ILUSTRAÇÃO: Informal × CLT] | | 0:52 |
+| 4 | DEPARTAMENTOS / Departamentos | "Transporte" (laranja, caminhão), lápis e lixeira, Edson nele, Filtros | | 0:48 |
+| 5 | MOVIMENTAÇÕES / Lançar vale, bônus e falta | "Registrar Vale/Adiantamento" (Dinheiro ou Banco), falta, bônus; [ILUSTRAÇÃO: a conta do saldo] | ⚠️ não lançar o vale de novo no banco | 1:37 |
+| 6 | PAGAMENTO / Pagar e receber do funcionário | Recebimento R$ 100,00; Pagamento largo: "Resumo do pagamento", "Vales/Adiantamentos desta folha", CLT de relance, "Valor líquido do pagamento", diferença + motivo, data, Pagamento Misto, Pix, recibo na aba nova; [ILUSTRAÇÕES: sem saída de dinheiro, recibo, ciclo] | ⚠️ pagou, zera | 2:32 |
+| 7 | PAGAMENTO / A folha de quem é CLT (novo) | Marcos: folha CLT com horas extras 50%, convênio farmácia, INSS/IRRF/VT, líquido, ajuste do INSS, holerite na aba nova | ⚠️ folha estimada; a oficial é do contador | 1:51 |
+| 8 | PAGAMENTO / Férias e décimo terceiro (novo) | Juliana: "Pagar férias" R$ 3.733,33; Cláudio: "Pagar 13º salário" R$ 1.050,00; rescisão citada | ⚠️ não lançar como bônus | 1:01 |
+| 9 | EXTRATO / O extrato do funcionário (7) | Cartões, pagamento detalhado, Gerar Recibo (A4/Térmico, aba nova), ajuste de salário, lixeira | ⚠️ excluir desfaz o dinheiro | 1:07 |
+| 10 | RELATÓRIO / O relatório da equipe (novo) | "Exportar Relatório": movimentações × Relação de pagamento (aba nova), PDF/Excel | | 0:32 |
+| 11 | PONTO ELETRÔNICO / Ligar o ponto e gerar o link (8) | Ponto eletrônico do Gabriel + PIN 4107; Copiar link; Ativar ponto Juliana; Tablet da empresa | ⚠️ dois links | 1:21 |
+| 12 | PONTO ELETRÔNICO / O ponto pelo celular (9) | PIN → Entrada, Iniciar/Voltar do Intervalo, Saída, Registrar Nova Entrada | ⚠️ a hora é a do sistema | 1:18 |
+| 13 | PONTO ELETRÔNICO / O ponto no tablet da empresa (novo) | Tablet 1024×768: Buscar manualmente, lista, saída do Diego, cadeado do PIN; chave do reconhecimento facial | | 0:55 |
+| 14 | PONTO ELETRÔNICO / Folha, registro e ausências (10) | Folha da equipe; Cláudio Falta → Atestado; Exportar; Registro; Lançar manual da Juliana; Ausências (férias) | ⚠️ falta sozinha; ⚠️ planilha não substitui fiscais | 1:59 |
+| 15 | PONTO ELETRÔNICO / Configurações do ponto (11) | Selfie, localização, jornada, madrugada, dias; jornada da Juliana (intervalo por dia, folga) | | 1:18 |
+| 16 | FUNCIONÁRIOS / Arquivar ou excluir (12) | Arquivar, Inativos, Reativar, Excluir; link pessoal arquivado = acesso desativado | dica: desligar o ponto antes | 1:00 |
+| 17 | RESUMO / Recapitulando (13) | Montagem do que foi feito; cartão "Próximo: White Label" | | 1:13 |
 
 Transições faladas: 0→1 "Vamos conhecer a tela"; 1→2 "Começando pelo cadastro"; 2→3 "Agora os campos de folha"; 3→4 "Pra
-organizar a equipe"; 4→5 "Agora o dia a dia"; 5→6 "Hora de pagar"; 6→7 "Tudo isso fica guardado no Extrato"; 7→8 "Agora o ponto
-eletrônico"; 8→9 "No celular do Gabriel"; 9→10 "Do lado do gestor"; 10→11 "Nas Configurações de Ponto"; 11→12 "Por último, quem sai
-da empresa".
+organizar a equipe"; 4→5 "Agora o dia a dia"; 5→6 "Hora de pagar"; 6→7 "Agora o pagamento de quem é registrado"; 7→8 "Férias,
+décimo terceiro e rescisão têm lugar próprio"; 8→9 "Tudo isso fica guardado no Extrato"; 9→10 "Pra ver a equipe inteira num papel
+só"; 10→11 "Agora o ponto eletrônico"; 11→12 "No celular, primeiro ele digita o pin"; 12→13 "E quem não tem celular bate no tablet";
+13→14 "A Folha de Ponto abre com o resumo"; 14→15 "Nas Configurações de Ponto ficam as regras"; 15→16 "Por último, quem sai da empresa".
 
 ## Estado de partida (semente `inicio`)
 Mundo base (`MUNDO_FICTICIO.md`) + o bloco abaixo. Ninguém pago hoje; todos pagos em 09/11 (5º dia útil), menos o Edson (na estrada
@@ -49,7 +56,7 @@ nesse dia). Caixa do Rafael aberto às 08:30 pela semente da aula (junção: no 
 | Nome | Cargo | Depto | Admissão | Salário | Regime | CPF | Chave Pix | Ponto (slug) |
 |---|---|---|---|---|---|---|---|---|
 | Rafael Nogueira | Sócio-administrador | Escritório | 02/03/2015 | 6.000,00 | Informal | 274.913.508-79 (o do T18, junção) | rafael.nogueira@reciclavalemetais.example | não |
-| Juliana Prado | Assistente administrativa | Escritório | 05/06/2023 | 2.800,00 | CLT | 362.918.470-78 | juliana.prado@reciclavalemetais.example | não (liga no cap. 8: `juliana-prado-8w3n`) |
+| Juliana Prado | Assistente administrativa | Escritório | 05/06/2023 | 2.800,00 | CLT | 362.918.470-78 | juliana.prado@reciclavalemetais.example | não (liga no cap. 11: `juliana-prado-8w3n`) |
 | Marcos Antunes | Balanceiro | Pátio | 16/08/2021 | 2.400,00 | CLT | 305.672.148-26 | (12) 90000-4103 | sim (`marcos-antunes-7q2d`) |
 | Edson Moura | Motorista | Pátio (Transporte no cap. 4) | 04/04/2019 | 2.900,00 | Informal | 251.847.396-37 | 251.847.396-37 | sim (`edson-moura-3k8f`) |
 | Cláudio Ferraz | Ajudante de pátio | Pátio | 11/01/2022 | 2.100,00 | CLT | 334.095.127-64 | (12) 90000-4105 | sim (`claudio-ferraz-9m4t`) |
@@ -130,3 +137,17 @@ Anotar no `MUNDO_FICTICIO.md`: os 8 funcionários, os 3 departamentos, o endere�
 6. Link pessoal de funcionário arquivado continua batendo ponto (`time-clock-portal/index.ts:557-566`): a fala dá a dica de
    desligar o ponto antes de arquivar.
 7. Tabela de IRRF/INSS de 2026 = a de 2025 ("placeholder", `utils/payrollTables.ts:35-38`): a fala não diz valor do modo CLT.
+
+## Atualização 1.60.18 (20/11): o que mudou na gravação e nos riscos
+- **Cadeia de sementes:** `inicio` (caps 0 a 2) → `apos-cap02` … `apos-cap16` (um por capítulo, cada ensaio grava a semente do seguinte;
+  `bash rec/t19/t19_fila.sh 02:ens,seed 03:ens,seed ...`). `inicio` mudou: Marcos sem o pagamento de 09/11 (último em 07/10), 1 dependente
+  e VT R$ 220,00 (folha CLT do cap. 7); Juliana com batidas manuais de 02 a 09/11 (a visão "Todos os funcionários" não mostra falta falsa).
+- **Handlers só da T19:** `rpc/set_ponto_pin.mjs` (novo: grava/remove o PIN, o "hash" é `falso:<pin>`) e `functions/time-clock-portal.mjs`
+  (PIN no portal, `employee_inactive`, `get_kiosk` e identidade do tablet, `__avanco_min` que adianta a hora do ponto).
+- **Comprovantes na tela:** o robô devolve o HTML da aba nova (recibo cap. 6, holerite cap. 7, recibo A4 cap. 9, relação de pagamento
+  cap. 10) com o padrão `GANCHOS` + `js_aba_html` (o da T09); entradas `tipo comprovante` em `cenas/ilustracoes.json`.
+- **Riscos 1 e 6 corrigidos no app:** a folha não marca "Falta" antes da admissão (o cap. 14 abre na visão da equipe); o link pessoal
+  de arquivado mostra "acesso desativado" (a fala do cap. 16 diz). **Risco 5:** "Pagamento registrado!" volta a aparecer (cap. 6 e 7).
+- **Celular:** a hora do ponto avança por `__avanco_min` (o `fetch` do robô acrescenta o avanço ao corpo; só o handler falso lê) e pelo
+  passo `clock` do navegador: almoço às 11:00 e saída às 16:00 sem esperar. **Tablet:** `TUT_VIEWPORT=1024x768` só no cap. 13
+  (`t19_rodar.sh`); o reconhecimento facial não tem como ser mostrado (modelo do navegador), a fala só cita a chave.

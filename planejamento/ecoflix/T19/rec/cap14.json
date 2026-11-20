@@ -1,0 +1,844 @@
+{
+ "name": "t19-cap14",
+ "title": "T19 · Cap. 14 · Folha, registro e ausências (narração 119,4 s, ESTIMADA; marcas L1..L11 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T16:30:00-03:00)",
+ "fakeNow": "2026-11-10T16:30:00-03:00",
+ "seed": "t19-cap14",
+ "pace": 0.5,
+ "cps": 40,
+ "tail": 1.5,
+ "start": {
+  "x": 760,
+  "y": 470
+ },
+ "anonymous": true,
+ "storage": {
+  "app_version": "1.60.18",
+  "notification_shown_version": "1.60.18",
+  "pwa-install-dismissed": "true",
+  "theme": "light",
+  "daily-tasks-reminder-last-shown-34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10",
+  "initial-preferences-set": "true",
+  "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10"
+ },
+ "seedExtra": [
+  "t19/apos-cap13"
+ ],
+ "prewarm": [
+  "/login"
+ ],
+ "setup": [
+  {
+   "do": "goto",
+   "url": "/login"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "timeout": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "seu@email.com"
+   },
+   "text": "$TUT_USER",
+   "cps": 40
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "••••••••"
+   },
+   "text": "$TUT_SENHA",
+   "cps": 40
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Entrar",
+    "exact": true
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Olá, Rafael",
+   "timeout": 45
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 20
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const sb=document.querySelector('[data-state][data-collapsible]');if(sb&&sb.getAttribute('data-state')==='collapsed')return 'ja recolhido';const b=document.querySelector('header button.h-8.w-8');if(!b)return 'SEM ALVO';b.click();return 'recolhido'})()"
+  },
+  {
+   "do": "wait",
+   "seconds": 0.7
+  },
+  {
+   "do": "goto",
+   "url": "/funcionarios"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie sua equipe e controle de pagamentos",
+   "timeout": 30
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 15
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "main [role=listitem] > button:has(p:text-is('Rafael Nogueira'))"
+   },
+   "timeout": 20
+  },
+  {
+   "do": "wait",
+   "seconds": 0.6
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#tab-btn-espelho-ponto"
+   }
+  },
+  {
+   "do": "waitFor",
+   "text": "Todos os funcionários",
+   "timeout": 20
+  },
+  {
+   "do": "wait",
+   "seconds": 0.8
+  },
+  {
+   "do": "wait",
+   "seconds": 0.8
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel|Algo deu errado|Falha ao|Something went wrong|inv[áa]lido/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);return 1})()"
+  }
+ ],
+ "steps": [
+  {
+   "do": "mark",
+   "name": "L1",
+   "at": 0
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Dias com registro\", \"Trabalhado\", \"Esperado\", \"Saldo\", \"Faltas\", \"Férias\", \"Atestado\", \"Total\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere tabela da equipe na Folha de Ponto"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Dias com registro",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.3,
+   "at": 1.78,
+   "label": "tabela da equipe: Dias com registro, Trabalhado, Esperado",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('Marcos Antunes') button"
+   },
+   "seconds": 3.0,
+   "at": 4.36,
+   "label": "o saldo do Marcos: Composição do saldo (extras e atrasos)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L2",
+   "at": 11.32
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button[role=combobox]:has-text('Todos os funcionários')"
+   },
+   "at": 11.32,
+   "label": "escolher o funcionário"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "role": "option",
+    "name": "Cláudio Ferraz",
+    "exact": true
+   },
+   "timeout": 8
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Cláudio Ferraz",
+    "exact": true
+   },
+   "at": 18.22,
+   "label": "Cláudio Ferraz",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "text": "Total do mês",
+   "timeout": 10
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Cláudio Ferraz\", \"Entrada → Saída\", \"Trabalhado\", \"Saldo\", \"Status\", \"Falta\", \"Feriado\", \"Completo\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere folha de novembro do Cláudio"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Entrada → Saída",
+    "within": "main"
+   },
+   "seconds": 0.3,
+   "at": 18.9,
+   "label": "coluna Entrada → Saída",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Trabalhado",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.21,
+   "at": 21.03,
+   "label": "coluna Trabalhado",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Saldo",
+    "exact": true,
+    "within": "main"
+   },
+   "seconds": 0.4,
+   "at": 22.24,
+   "label": "coluna Saldo",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 23.89
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const el=[...document.querySelectorAll(\"main *\")].filter(e=>e.textContent.trim().startsWith(\"05/11\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-380);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 24.18,
+   "label": "rola até o dia 05/11"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tr:has-text('05/11') :text-is('Falta')"
+   },
+   "seconds": 2.4,
+   "at": 25.78,
+   "label": "a linha de 05/11: Falta (Lançar)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 36.22
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 1000,
+    "y": 140
+   },
+   "by": 0,
+   "duration": 0.2,
+   "after": 0,
+   "at": 36.83,
+   "label": "cursor descansa (ilustração da falta que aparece sozinha)"
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 40.83
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main tr:has-text('05/11') button:has-text('Lançar')"
+   },
+   "at": 43.11,
+   "label": "Lançar (05/11)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Registre quem não veio",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] #absence-type"
+   },
+   "at": 43.87,
+   "label": "Tipo: Atestado (abre a lista)"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "role": "option",
+    "name": "Atestado",
+    "exact": true
+   },
+   "timeout": 6
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Atestado",
+    "exact": true
+   },
+   "at": 44.77,
+   "label": "Tipo: Atestado",
+   "noScroll": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] #absence-notes"
+   },
+   "at": 45.61,
+   "label": "campo Observação"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] #absence-notes"
+   },
+   "text": "Consulta médica",
+   "cps": 40,
+   "at": 46.59,
+   "label": "Observação: Consulta médica",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:text-is('Lançar ausência')"
+   },
+   "at": 46.9,
+   "label": "Lançar ausência"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 10
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "main tr:has-text('05/11') :text-is('Atestado')"
+   },
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tr:has-text('05/11') :text-is('Atestado')"
+   },
+   "seconds": 0.1,
+   "at": 49.48,
+   "label": "05/11 agora Atestado",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 50.44
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const el=[...document.querySelectorAll(\"main *\")].filter(e=>e.textContent.trim().startsWith(\"Total do m\\u00eas\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-520);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 50.97,
+   "label": "rola até o rodapé da folha"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Total do mês\", \"1 com atestado\", \"sem saída registrada não entram no saldo\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere rodapé e aviso do dia aberto"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Total do mês",
+    "within": "main"
+   },
+   "seconds": 0.8,
+   "at": 51.88,
+   "label": "Total do mês (1 com atestado)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "sem saída registrada",
+    "within": "main"
+   },
+   "seconds": 2.0,
+   "at": 53.86,
+   "label": "aviso: dia(s) sem saída registrada não entram no saldo",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 61.57
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button:has-text('Exportar')"
+   },
+   "at": 64.46,
+   "label": "Exportar"
+  },
+  {
+   "do": "waitFor",
+   "text": "Exportar Folha de Ponto",
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] label[for='time-sheet-mode-pdf']"
+   },
+   "seconds": 0.4,
+   "at": 65.67,
+   "label": "Espelho de Ponto (PDF)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] label[for='time-sheet-mode-excel']"
+   },
+   "seconds": 0.4,
+   "at": 68.33,
+   "label": "Planilha para contabilidade (Excel)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Não substitui arquivos fiscais",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.2,
+   "at": 71.74,
+   "label": "Não substitui arquivos fiscais AEJ ou AFD.",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:text-is('Cancelar'):not(.absolute)"
+   },
+   "at": 74.53,
+   "label": "Cancelar"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 74.98
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#tab-btn-registro-ponto"
+   },
+   "at": 75.36,
+   "label": "aba Registro de Ponto"
+  },
+  {
+   "do": "waitFor",
+   "text": "Lançar manual",
+   "timeout": 10
+  },
+  {
+   "do": "waitFor",
+   "text": "Gabriel Rocha",
+   "timeout": 10
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const el=[...document.querySelectorAll(\"main *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Gabriel Rocha\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-330);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 78.74,
+   "label": "rola até a batida do Gabriel"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "xpath=//main//*[normalize-space(text())='Gabriel Rocha']/following::div[contains(@class,'border')][1]"
+   },
+   "seconds": 1.6,
+   "at": 79.76,
+   "label": "as batidas do Gabriel: selfie, hora, endereço, Mobile - Chrome",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L9",
+   "at": 84.36
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const el=[...document.querySelectorAll(\"main *\")].filter(e=>e.textContent.trim().startsWith(\"Registro de Ponto\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-200);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/400),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 86.47,
+   "label": "volta ao topo"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button:has-text('Lançar manual')"
+   },
+   "at": 87.17,
+   "label": "Lançar manual"
+  },
+  {
+   "do": "waitFor",
+   "text": "Lançar registro manual",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] #punch-emp"
+   },
+   "at": 88.46,
+   "label": "Funcionário: Juliana Prado (abre a lista)"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "role": "option",
+    "name": "Juliana Prado",
+    "exact": true
+   },
+   "timeout": 6
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Juliana Prado",
+    "exact": true
+   },
+   "at": 89.37,
+   "label": "Funcionário: Juliana Prado",
+   "noScroll": true
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] #punch-type"
+   },
+   "seconds": 0.1,
+   "at": 89.9,
+   "label": "Tipo: Entrada",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] #punch-when"
+   },
+   "at": 90.51,
+   "label": "Data e hora da batida"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const dorme=ms=>new Promise(r=>setTimeout(r,ms));let i=null;for(let k=0;k<30&&!i;k++){i=[...document.querySelectorAll('input')].filter(x=>x.type==='time'||/hora|--:--/i.test(x.placeholder||'')).pop();if(!i)await dorme(100)}if(!i)return 'SEM ALVO: campo de hora';const set=Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set;set.call(i,\"08:00\");i.dispatchEvent(new Event('input',{bubbles:true}));i.dispatchEvent(new Event('change',{bubbles:true}));await dorme(300);const ok=[...document.querySelectorAll('button')].find(b=>b.textContent.trim()==='Concluir');if(ok)ok.click();await dorme(300);return 'hora '+i.value})()",
+   "label": "hora 08:00"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] #punch-notes"
+   },
+   "label": "campo Observação"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const e=document.activeElement;if(!e||!/^(INPUT|TEXTAREA)$/.test(e.tagName))return 'SEM FOCO';document.execCommand('insertText',false,\"Esqueceu de bater\");return e.value})()",
+   "at": 91.79,
+   "label": "Observação: Esqueceu de bater"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:text-is('Lançar')"
+   },
+   "at": 92.48,
+   "label": "Lançar"
+  },
+  {
+   "do": "waitFor",
+   "text": "Registro manual lançado",
+   "timeout": 10
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 10
+  },
+  {
+   "do": "mark",
+   "name": "L10",
+   "at": 94.88
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main button:text-is('Hoje')"
+   },
+   "seconds": 0.3,
+   "at": 100.35,
+   "label": "filtros Hoje, Semana, Mês",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main button:text-is('Semana')"
+   },
+   "seconds": 0.3,
+   "label": "Semana",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main button:text-is('Mês')"
+   },
+   "seconds": 0.6,
+   "label": "Mês",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L11",
+   "at": 104.12
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#tab-btn-ausencias"
+   },
+   "at": 104.8,
+   "label": "aba Ausências"
+  },
+  {
+   "do": "waitFor",
+   "text": "Lançar ausência",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button:has-text('Lançar ausência')"
+   },
+   "at": 105.94,
+   "label": "Lançar ausência"
+  },
+  {
+   "do": "waitFor",
+   "text": "Registre quem não veio",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] #absence-employee"
+   },
+   "at": 107.23,
+   "label": "Funcionário: Juliana Prado (abre a lista)"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "role": "option",
+    "name": "Juliana Prado",
+    "exact": true
+   },
+   "timeout": 6
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Juliana Prado",
+    "exact": true
+   },
+   "at": 108.37,
+   "label": "Funcionário: Juliana Prado",
+   "noScroll": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] #absence-type"
+   },
+   "at": 108.75,
+   "label": "Tipo: Férias (abre a lista)"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "role": "option",
+    "name": "Férias",
+    "exact": true
+   },
+   "timeout": 6
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Férias",
+    "exact": true
+   },
+   "at": 109.58,
+   "label": "Tipo: Férias",
+   "noScroll": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] #absence-start"
+   },
+   "at": 110.7,
+   "label": "campo Data de início 07/12/2026"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] #absence-start"
+   },
+   "text": "07122026",
+   "cps": 40,
+   "at": 111.65,
+   "label": "Data de início 07/12/2026",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] #absence-end"
+   },
+   "at": 112.14,
+   "label": "campo Data de fim 05/01/2027"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] #absence-end"
+   },
+   "text": "05012027",
+   "cps": 40,
+   "at": 113.09,
+   "label": "Data de fim 05/01/2027",
+   "noClick": true
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"30 dias\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere 30 dias de ausência"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:text-is('Lançar ausência')"
+   },
+   "at": 113.61,
+   "label": "Lançar ausência"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tr:has-text('Juliana Prado')"
+   },
+   "seconds": 1.4,
+   "at": 116.19,
+   "label": "a linha das férias da Juliana na tabela",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "JSON.stringify(window.__avisos || \"sem observador\")",
+   "label": "avisos de erro na tela"
+  },
+  {
+   "do": "mark",
+   "name": "FIM",
+   "at": 119.43
+  }
+ ]
+}

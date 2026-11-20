@@ -1,6 +1,6 @@
 {
  "name": "t19-cap11",
- "title": "T19 · Cap. 11 · Configurações do ponto (narração 68,5 s, ESTIMADA RESPIROS PENDENTES: na L5 +7.00 s (T 47.66 s no take); marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
+ "title": "T19 · Cap. 11 · Ligar o ponto e gerar o link (narração 81,2 s, ESTIMADA RESPIROS PENDENTES: na L2 +4.50 s (T 22.84 s no take); marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
  "fakeNow": "2026-11-10T08:30:00-03:00",
  "seed": "t19-cap11",
  "pace": 0.5,
@@ -117,205 +117,293 @@
    "at": 0
   },
   {
-   "do": "click",
-   "target": {
-    "selector": "#tab-btn-config-ponto"
-   },
-   "at": 0.0,
-   "label": "aba Configurações de Ponto"
-  },
-  {
-   "do": "waitFor",
-   "text": "Jornada Padrão da Empresa",
-   "timeout": 10
-  },
-  {
    "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const el=[...document.querySelectorAll(\"main *\")].filter(e=>e.textContent.trim().startsWith(\"Jornada Padr\\u00e3o da Empresa\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-120);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 2.73,
-   "label": "o cartão Jornada Padrão da Empresa"
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Exigir selfie\", \"Exigir localização\", \"Dias em que a empresa trabalha\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
-   "label": "confere regras do ponto"
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const esp=[\"60\", \"10\"];let out='';for(let i=0;i<12;i++){const sc=[...document.querySelectorAll(\"main\")].pop();const v=sc?[...sc.querySelectorAll('input, textarea')].map(e=>e.value).join(' | '):'';const falta=esp.filter(e=>!v.includes(e));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+v.slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
-   "label": "confere intervalo 60 e tolerância 10"
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const el=[...document.querySelectorAll(\"main [role=list] *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Gabriel Rocha\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-430);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/400),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 1.49,
+   "label": "a lista mostra Gabriel Rocha no meio"
   },
   {
    "do": "hover",
    "target": {
-    "text": "Exigir selfie",
-    "exact": true,
-    "within": "main"
+    "selector": "main [role=listitem] button[aria-label='Ações de Gabriel Rocha']"
    },
-   "seconds": 0.21,
-   "at": 3.83,
-   "label": "Exigir selfie (ligado)",
+   "seconds": 0.5,
+   "at": 2.09,
+   "label": "menu ⋯ do Gabriel",
+   "optional": false,
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main [role=listitem] button[aria-label='Ações de Gabriel Rocha']"
+   },
+   "seconds": 0.4,
+   "label": "menu ⋯ de Gabriel Rocha de novo (só se não abriu)",
+   "unless": {
+    "role": "menuitem",
+    "name": "Editar"
+   },
    "optional": true,
    "timeout": 4
   },
   {
+   "do": "waitFor",
+   "target": {
+    "role": "menuitem",
+    "name": "Editar"
+   },
+   "timeout": 6
+  },
+  {
    "do": "hover",
    "target": {
-    "text": "Exigir localização",
-    "exact": true,
-    "within": "main"
+    "selector": "main [role=listitem] button[aria-label='Ações de Gabriel Rocha']"
    },
-   "seconds": 0.8,
-   "at": 5.04,
-   "label": "Exigir localização (ligado)",
+   "seconds": 0.2,
+   "label": "menu ⋯ de Gabriel Rocha (só se fechou)",
+   "unless": {
+    "role": "menuitem",
+    "name": "Editar"
+   },
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Editar"
+   },
+   "at": 3.72,
+   "label": "Editar",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "[role=dialog] #name"
+   },
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] [role=tab]:has-text('Ponto eletrônico')"
+   },
+   "at": 3.83,
+   "label": "aba Ponto eletrônico"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "[role=dialog] #ponto-enabled"
+   },
+   "timeout": 6
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Ativar ponto eletrônico\", \"Gera um link público pro funcionário bater ponto sem login.\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere ponto ligado"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] #ponto-enabled"
+   },
+   "seconds": 0.1,
+   "at": 10.89,
+   "label": "Ativar ponto eletrônico (ligado)",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L2",
-   "at": 12.99
+   "at": 11.69
   },
   {
-   "do": "hover",
+   "do": "click",
    "target": {
-    "selector": "main #default-in"
+    "selector": "[role=dialog] button:has-text('Definir PIN')"
    },
-   "seconds": 0.29,
-   "at": 16.63,
-   "label": "Entrada padrão 07:00",
-   "optional": true,
-   "timeout": 4
+   "at": 17.54,
+   "label": "Definir PIN"
   },
   {
-   "do": "hover",
+   "do": "waitFor",
    "target": {
-    "selector": "main #default-out"
+    "placeholder": "Novo PIN"
    },
-   "seconds": 0.3,
-   "at": 17.92,
-   "label": "Saída padrão 16:00",
-   "optional": true,
-   "timeout": 4
+   "timeout": 6
   },
   {
-   "do": "hover",
+   "do": "click",
    "target": {
-    "selector": "main #default-break"
+    "placeholder": "Novo PIN"
    },
-   "seconds": 0.3,
-   "at": 19.66,
-   "label": "Intervalo padrão (min) 60",
-   "optional": true,
-   "timeout": 4
+   "at": 21.13,
+   "label": "campo Novo PIN 4107"
   },
   {
-   "do": "hover",
+   "do": "type",
    "target": {
-    "selector": "main #late-tol"
+    "placeholder": "Novo PIN"
    },
-   "seconds": 0.6,
-   "at": 21.18,
-   "label": "Tolerância de atraso (min) 10",
-   "optional": true,
-   "timeout": 4
+   "text": "4107",
+   "cps": 40,
+   "at": 21.58,
+   "label": "Novo PIN 4107",
+   "noClick": true
   },
   {
-   "do": "mark",
-   "name": "L3",
-   "at": 24.19
+   "do": "click",
+   "target": {
+    "placeholder": "Repita o PIN"
+   },
+   "at": 21.76,
+   "label": "campo Repita o PIN 4107"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Repita o PIN"
+   },
+   "text": "4107",
+   "cps": 40,
+   "at": 22.11,
+   "label": "Repita o PIN 4107",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:text-is('Atualizar'):not(.absolute)"
+   },
+   "at": 23.34,
+   "label": "Atualizar (grava o PIN)"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 12
   },
   {
    "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const el=[...document.querySelectorAll(\"main *\")].filter(e=>e.textContent.trim().startsWith(\"Dias em que a empresa trabalha\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-330);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 24.69,
-   "label": "rola até os dias da empresa"
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const el=[...document.querySelectorAll(\"main [role=list] *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Gabriel Rocha\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-430);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/400),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 23.54,
+   "label": "a lista mostra Gabriel Rocha no meio"
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main #work-weekday-1"
+    "selector": "main [role=listitem] button[aria-label='Ações de Gabriel Rocha']"
    },
    "seconds": 0.1,
-   "at": 27.53,
-   "label": "Dias em que a empresa trabalha: Seg",
+   "at": 24.14,
+   "label": "menu ⋯ do Gabriel",
+   "optional": false,
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main [role=listitem] button[aria-label='Ações de Gabriel Rocha']"
+   },
+   "seconds": 0.4,
+   "label": "menu ⋯ de Gabriel Rocha de novo (só se não abriu)",
+   "unless": {
+    "role": "menuitem",
+    "name": "Editar"
+   },
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "role": "menuitem",
+    "name": "Editar"
+   },
+   "timeout": 6
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main [role=listitem] button[aria-label='Ações de Gabriel Rocha']"
+   },
+   "seconds": 0.2,
+   "label": "menu ⋯ de Gabriel Rocha (só se fechou)",
+   "unless": {
+    "role": "menuitem",
+    "name": "Editar"
+   },
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Editar"
+   },
+   "at": 25.14,
+   "label": "Editar",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "[role=dialog] #name"
+   },
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] [role=tab]:has-text('Ponto eletrônico')"
+   },
+   "at": 26.14,
+   "label": "aba Ponto eletrônico"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "[role=dialog] button:has-text('Trocar PIN')"
+   },
+   "timeout": 6
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] button:has-text('Trocar PIN')"
+   },
+   "seconds": 0.1,
+   "at": 29.25,
+   "label": "Trocar PIN",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main #work-weekday-5"
+    "selector": "[role=dialog] button:has-text('Remover PIN')"
    },
-   "seconds": 1.0,
-   "at": 28.29,
-   "label": "Seg a Sex ligados",
+   "seconds": 0.16,
+   "at": 29.93,
+   "label": "Remover PIN (sem clicar)",
    "optional": true,
    "timeout": 4
   },
   {
-   "do": "mark",
-   "name": "L4",
-   "at": 31.37
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const el=[...document.querySelectorAll(\"main *\")].filter(e=>e.textContent.trim().startsWith(\"Jornada Individual\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-160);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 34.18,
-   "label": "rola até a Jornada Individual"
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main tr:has-text('Juliana Prado')"
-   },
-   "seconds": 0.3,
-   "at": 35.7,
-   "label": "a linha da Juliana (horários herdados em cinza)",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "mark",
-   "name": "L5",
-   "at": 40.3
-  },
-  {
    "do": "click",
    "target": {
-    "selector": "main tr:has-text('Juliana Prado') button:has(svg.lucide-pencil)"
+    "selector": "[role=dialog] button:text-is('Cancelar'):not(.absolute)"
    },
-   "at": 40.53,
-   "label": "lápis da Juliana Prado"
-  },
-  {
-   "do": "waitFor",
-   "text": "Sobrescreve o padrão da empresa para este funcionário.",
-   "timeout": 8
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const dorme=ms=>new Promise(r=>setTimeout(r,ms));const dlg=[...document.querySelectorAll('[role=dialog]')].pop();if(!dlg)return 'SEM JANELA';\nconst linhas=[...dlg.querySelectorAll('div.rounded-lg.border')].filter(d=>/^(Seg|Ter|Qua|Qui|Sex)$/.test((d.querySelector('span.w-10')||{}).textContent||''));\nif(linhas.length!==5)return 'SEM ALVO: '+linhas.length+' dias';let feito=[];\nconst escolhe=async(bt,hh)=>{bt.click();let lb=null;for(let i=0;i<30&&!lb;i++){await dorme(60);lb=[...document.querySelectorAll('[role=listbox]')].find(x=>/hora/i.test(x.getAttribute('aria-label')||''));}\nif(!lb)return false;const op=[...lb.querySelectorAll('[role=option]')].find(o=>o.textContent.trim()===hh);if(!op)return false;op.click();await dorme(120);\nconst ok=[...document.querySelectorAll('[data-radix-popper-content-wrapper] button')].find(b=>b.textContent.trim()==='Concluir');if(ok)ok.click();\nfor(let i=0;i<30&&document.querySelector('[role=listbox]');i++)await dorme(50);return true};\nfor(const l of linhas){const bts=[...l.querySelectorAll('button')].filter(b=>/^\\s*\\d\\d:\\d\\d\\s*$|--:--/.test(b.textContent));if(bts.length<2)return 'SEM ALVO: horas de '+l.textContent;\nif(!await escolhe(bts[0],'08'))return 'falhou entrada';if(!await escolhe(bts[1],'17'))return 'falhou saida';feito.push(l.querySelector('span.w-10').textContent);await dorme(150);}\nreturn 'ok '+feito.join(',')})()",
-   "at": 42.19,
-   "label": "Seg a Sex: 08:00 às 17:00 (trecho acelerado, selo 4x)"
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"08:00\", \"17:00\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
-   "label": "confere jornada da Juliana 08:00 às 17:00"
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "[role=dialog] button:has-text('Salvar jornada')"
-   },
-   "at": 53.76,
-   "label": "Salvar jornada"
-  },
-  {
-   "do": "waitFor",
-   "text": "Jornada salva",
-   "timeout": 8
+   "at": 31.09,
+   "label": "Cancelar"
   },
   {
    "do": "waitFor",
@@ -325,25 +413,82 @@
    "timeout": 8
   },
   {
+   "do": "mark",
+   "name": "L3",
+   "at": 30.74
+  },
+  {
    "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"08:00-17:00\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main table\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
-   "label": "confere a jornada da Juliana na tabela"
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const el=[...document.querySelectorAll(\"main [role=list] *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Gabriel Rocha\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-430);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/400),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 32.11,
+   "label": "a lista mostra Gabriel Rocha no meio"
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main tr:has-text('Juliana Prado')"
+    "selector": "main [role=listitem] button[aria-label='Ações de Gabriel Rocha']"
    },
-   "seconds": 1.0,
-   "at": 55.58,
-   "label": "a linha da Juliana: 08:00-17:00 (1h int.)",
+   "seconds": 0.29,
+   "at": 32.71,
+   "label": "menu ⋯ do Gabriel",
+   "optional": false,
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main [role=listitem] button[aria-label='Ações de Gabriel Rocha']"
+   },
+   "seconds": 0.4,
+   "label": "menu ⋯ de Gabriel Rocha de novo (só se não abriu)",
+   "unless": {
+    "role": "menuitem",
+    "name": "Copiar link do ponto"
+   },
    "optional": true,
    "timeout": 4
   },
   {
+   "do": "waitFor",
+   "target": {
+    "role": "menuitem",
+    "name": "Copiar link do ponto"
+   },
+   "timeout": 6
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main [role=listitem] button[aria-label='Ações de Gabriel Rocha']"
+   },
+   "seconds": 0.2,
+   "label": "menu ⋯ de Gabriel Rocha (só se fechou)",
+   "unless": {
+    "role": "menuitem",
+    "name": "Copiar link do ponto"
+   },
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Copiar link do ponto"
+   },
+   "at": 34.0,
+   "label": "Copiar link do ponto",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "text": "Link copiado",
+   "timeout": 6
+  },
+  {
    "do": "mark",
-   "name": "L6",
-   "at": 58.89
+   "name": "L4",
+   "at": 35.72
   },
   {
    "do": "scroll",
@@ -354,8 +499,104 @@
    "by": 0,
    "duration": 0.2,
    "after": 0,
-   "at": 59.49,
-   "label": "cursor descansa (ilustração da jornada)"
+   "at": 36.32,
+   "label": "cursor descansa (ilustração do link no celular)"
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 40.24
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#tab-btn-config-ponto"
+   },
+   "at": 45.94,
+   "label": "aba Configurações de Ponto"
+  },
+  {
+   "do": "waitFor",
+   "text": "Jornada Padrão da Empresa",
+   "timeout": 10
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const el=[...document.querySelectorAll(\"main *\")].filter(e=>e.textContent.trim().startsWith(\"Marque quem vai bater ponto\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-250);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 47.81,
+   "label": "rola até o cartão Ativar ponto eletrônico"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main div.cursor-pointer:has(p:text-is('Juliana Prado'))"
+   },
+   "at": 52.33,
+   "label": "marca Juliana Prado"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button:has-text('Ativar ponto (1)')"
+   },
+   "at": 53.83,
+   "label": "Ativar ponto (1)"
+  },
+  {
+   "do": "waitFor",
+   "text": "1 funcionário com ponto ativado",
+   "timeout": 8
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 55.24
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const el=[...document.querySelectorAll(\"main *\")].filter(e=>e.textContent.trim().startsWith(\"Tablet da empresa\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-150);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 56.1,
+   "label": "sobe até o cartão Tablet da empresa"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "/ponto/empresa/",
+    "within": "main"
+   },
+   "seconds": 1.2,
+   "at": 58.5,
+   "label": "link do tablet /ponto/empresa/...",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main svg[role=img], main canvas, main img[alt*='QR']"
+   },
+   "seconds": 1.0,
+   "at": 61.54,
+   "label": "QR Code do tablet",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 66.68
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 1000,
+    "y": 140
+   },
+   "by": 0,
+   "duration": 0.2,
+   "after": 0,
+   "at": 67.28,
+   "label": "cursor descansa (ilustração dos dois links)"
   },
   {
    "do": "eval",
@@ -365,7 +606,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 68.51
+   "at": 81.23
   }
  ]
 }

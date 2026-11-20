@@ -1,6 +1,6 @@
 {
  "name": "t19-cap10",
- "title": "T19 · Cap. 10 · Registro e folha de ponto (narração 82,2 s, ESTIMADA; marcas L1..L8 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
+ "title": "T19 · Cap. 10 · O relatório da equipe (narração 31,5 s, ESTIMADA; marcas L1..L3 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
  "fakeNow": "2026-11-10T08:30:00-03:00",
  "seed": "t19-cap10",
  "pace": 0.5,
@@ -106,51 +106,8 @@
    "seconds": 0.6
   },
   {
-   "do": "click",
-   "target": {
-    "selector": "#tab-btn-espelho-ponto"
-   }
-  },
-  {
-   "do": "waitFor",
-   "text": "Todos os funcionários",
-   "timeout": 20
-  },
-  {
-   "do": "wait",
-   "seconds": 0.8
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "main button[role=combobox]:has-text('Todos os funcionários')"
-   }
-  },
-  {
-   "do": "waitFor",
-   "target": {
-    "role": "option",
-    "name": "Cláudio Ferraz",
-    "exact": true
-   },
-   "timeout": 8
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "option",
-    "name": "Cláudio Ferraz",
-    "exact": true
-   }
-  },
-  {
-   "do": "waitFor",
-   "text": "Total do mês",
-   "timeout": 10
-  },
-  {
-   "do": "wait",
-   "seconds": 0.8
+   "do": "eval",
+   "js": "(()=>{if(window.__abas)return 'ja';window.__abas=[];window.__pdfs=[];const o=URL.createObjectURL.bind(URL);URL.createObjectURL=(b)=>{try{if(b&&b.type==='application/pdf')window.__pdfs.push(b)}catch(e){}return o(b)};const wo=window.open.bind(window);window.open=(...a)=>{const w=wo(...a);window.__abas.push(w);return w};return 'ganchos'})()"
   },
   {
    "do": "eval",
@@ -164,295 +121,153 @@
    "at": 0
   },
   {
-   "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Cláudio Ferraz\", \"Entrada → Saída\", \"Trabalhado\", \"Saldo\", \"Status\", \"Falta\", \"Feriado\", \"Completo\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
-   "label": "confere folha de novembro do Cláudio"
+   "do": "click",
+   "target": {
+    "selector": "main button:has-text('Exportar Relatório')"
+   },
+   "at": 3.07,
+   "label": "Exportar Relatório"
+  },
+  {
+   "do": "waitFor",
+   "text": "Modelo de relatório",
+   "timeout": 10
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main button[role=combobox]:has-text('Cláudio Ferraz')"
+    "text": "Relatório de movimentações",
+    "exact": true,
+    "within": "[role=dialog]"
    },
    "seconds": 0.1,
-   "at": 6.4,
-   "label": "a folha do Cláudio",
+   "at": 5.19,
+   "label": "modelo Relatório de movimentações",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "hover",
    "target": {
-    "text": "Entrada → Saída",
-    "within": "main"
-   },
-   "seconds": 0.3,
-   "at": 7.24,
-   "label": "coluna Entrada → Saída",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "Trabalhado",
+    "text": "Relação de pagamento",
     "exact": true,
-    "within": "main"
+    "within": "[role=dialog]"
    },
-   "seconds": 0.22,
-   "at": 9.36,
-   "label": "coluna Trabalhado",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "Saldo",
-    "exact": true,
-    "within": "main"
-   },
-   "seconds": 0.4,
-   "at": 10.58,
-   "label": "coluna Saldo",
+   "seconds": 0.1,
+   "at": 5.57,
+   "label": "modelo Relação de pagamento",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L2",
-   "at": 12.22
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const el=[...document.querySelectorAll(\"main *\")].filter(e=>e.textContent.trim().startsWith(\"05/11\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-380);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 12.52,
-   "label": "rola até o dia 05/11"
+   "at": 6.45
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main tr:has-text('05/11') :text-is('Falta')"
+    "text": "O que incluir",
+    "exact": true,
+    "within": "[role=dialog]"
    },
-   "seconds": 2.4,
-   "at": 14.12,
-   "label": "a linha de 05/11: Falta (Lançar)",
+   "seconds": 0.4,
+   "at": 9.49,
+   "label": "O que incluir (os tipos)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Período",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.4,
+   "at": 13.28,
+   "label": "Período",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Funcionários incluídos",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.1,
+   "at": 16.47,
+   "label": "Funcionários incluídos",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] button:has-text('Marcar todos'), [role=dialog] button:has-text('Desmarcar todos')"
+   },
+   "seconds": 0.6,
+   "label": "Marcar todos",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 24.56
-  },
-  {
-   "do": "scroll",
-   "point": {
-    "x": 1000,
-    "y": 140
-   },
-   "by": 0,
-   "duration": 0.2,
-   "after": 0,
-   "at": 25.16,
-   "label": "cursor descansa (ilustração da falta que aparece sozinha)"
-  },
-  {
-   "do": "mark",
-   "name": "L4",
-   "at": 29.16
+   "at": 17.28
   },
   {
    "do": "click",
    "target": {
-    "selector": "main tr:has-text('05/11') button:has-text('Lançar')"
+    "selector": "[role=dialog] label:has-text('Relação de pagamento')"
    },
-   "at": 31.44,
-   "label": "Lançar (05/11)"
+   "at": 17.58,
+   "label": "Relação de pagamento"
   },
   {
    "do": "waitFor",
-   "text": "Registre quem não veio",
-   "timeout": 10
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "[role=dialog] #absence-type"
-   },
-   "at": 32.2,
-   "label": "Tipo: Atestado (abre a lista)"
-  },
-  {
-   "do": "waitFor",
-   "target": {
-    "role": "option",
-    "name": "Atestado",
-    "exact": true
-   },
+   "text": "quanto pagar a cada funcionário hoje",
    "timeout": 6
   },
   {
    "do": "click",
    "target": {
-    "role": "option",
-    "name": "Atestado",
-    "exact": true
+    "selector": "[role=dialog] button:has-text('Visualizar / PDF')"
    },
-   "at": 33.11,
-   "label": "Tipo: Atestado",
-   "noScroll": true
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "[role=dialog] #absence-notes"
-   },
-   "at": 33.94,
-   "label": "campo Observação"
-  },
-  {
-   "do": "type",
-   "target": {
-    "selector": "[role=dialog] #absence-notes"
-   },
-   "text": "Consulta médica",
-   "cps": 40,
-   "at": 34.93,
-   "label": "Observação: Consulta médica",
-   "noClick": true
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "[role=dialog] button:text-is('Lançar ausência')"
-   },
-   "at": 35.24,
-   "label": "Lançar ausência"
-  },
-  {
-   "do": "waitFor",
-   "gone": {
-    "role": "dialog"
-   },
-   "timeout": 10
-  },
-  {
-   "do": "waitFor",
-   "target": {
-    "selector": "main tr:has-text('05/11') :text-is('Atestado')"
-   },
-   "timeout": 10
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main tr:has-text('05/11') :text-is('Atestado')"
-   },
-   "seconds": 0.1,
-   "at": 37.82,
-   "label": "05/11 agora Atestado",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "mark",
-   "name": "L5",
-   "at": 38.78
+   "at": 24.34,
+   "label": "Visualizar / PDF (abre em aba nova)"
   },
   {
    "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const el=[...document.querySelectorAll(\"main *\")].filter(e=>e.textContent.trim().startsWith(\"Total do m\\u00eas\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-520);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 39.3,
-   "label": "rola até o rodapé da folha"
+   "js": "(async()=>{let w=null,h='';for(let i=0;i<50;i++){w=window.__abas&&window.__abas[0];try{h=w&&w.document&&w.document.documentElement.outerHTML||''}catch(e){h=''}if(h.includes(\"Marcos Antunes\"))break;await new Promise(r=>setTimeout(r,200));}if(!h.includes(\"Marcos Antunes\"))return 'SEM ABA: '+h.slice(0,120);return {html:\"relacao-de-pagamento\",chars:h.length,b64:btoa(unescape(encodeURIComponent(h)))}})()",
+   "label": "HTML da Relação de pagamento (aba nova, para a ilustração do comprovante)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] button:text-is('Excel')"
+   },
+   "seconds": 1.0,
+   "at": 25.7,
+   "label": "Excel",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 30.28,
+   "label": "fecha a janela"
+  },
+  {
+   "do": "wait",
+   "seconds": 0.4
   },
   {
    "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Total do mês\", \"1 com atestado\", \"1 dia(s) sem saída registrada não entram no saldo\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
-   "label": "confere rodapé e aviso do dia aberto"
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "Total do mês",
-    "within": "main"
-   },
-   "seconds": 0.8,
-   "at": 40.22,
-   "label": "Total do mês (1 com atestado)",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "sem saída registrada",
-    "within": "main"
-   },
-   "seconds": 2.0,
-   "at": 42.19,
-   "label": "aviso: 1 dia(s) sem saída registrada não entram no saldo",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "mark",
-   "name": "L6",
-   "at": 49.91
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "main button:has-text('Exportar')"
-   },
-   "at": 52.79,
-   "label": "Exportar"
-  },
-  {
-   "do": "waitFor",
-   "text": "Exportar Folha de Ponto",
-   "timeout": 8
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "[role=dialog] label[for='time-sheet-mode-pdf']"
-   },
-   "seconds": 0.4,
-   "at": 54.0,
-   "label": "Espelho de Ponto (PDF)",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "[role=dialog] label[for='time-sheet-mode-excel']"
-   },
-   "seconds": 0.4,
-   "at": 56.66,
-   "label": "Planilha para contabilidade (Excel)",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "Não substitui arquivos fiscais",
-    "within": "[role=dialog]"
-   },
-   "seconds": 1.2,
-   "at": 60.08,
-   "label": "Não substitui arquivos fiscais AEJ ou AFD.",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "[role=dialog] button:text-is('Cancelar'):not(.absolute)"
-   },
-   "at": 62.87,
-   "label": "Cancelar"
+   "js": "(() => { const ds = [...document.querySelectorAll('[role=dialog]')]; const d = ds[ds.length - 1]; if (!d) return 'ja fechada'; const b = [...d.querySelectorAll('button')].find((x) => [x.textContent, x.getAttribute('aria-label')].some((v) => /^\\s*(fechar|close)\\s*$/i.test(v || ''))); if (!b) return 'sem botao Fechar'; b.click(); return 'fechada pelo botao'; })()",
+   "label": "Fechar (se o Esc não fechou)"
   },
   {
    "do": "waitFor",
@@ -460,62 +275,6 @@
     "role": "dialog"
    },
    "timeout": 8
-  },
-  {
-   "do": "mark",
-   "name": "L7",
-   "at": 63.32
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "#tab-btn-registro-ponto"
-   },
-   "at": 63.7,
-   "label": "aba Registro de Ponto"
-  },
-  {
-   "do": "waitFor",
-   "text": "Lançar manual",
-   "timeout": 10
-  },
-  {
-   "do": "waitFor",
-   "text": "Gabriel Rocha",
-   "timeout": 10
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const el=[...document.querySelectorAll(\"main *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Gabriel Rocha\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-330);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 67.08,
-   "label": "rola até a batida do Gabriel"
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "xpath=//main//*[normalize-space(text())='Gabriel Rocha']/following::div[contains(@class,'border')][1]"
-   },
-   "seconds": 1.6,
-   "at": 68.1,
-   "label": "a batida do Gabriel: selfie, Entrada, hora, endereço, Mobile - Chrome",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "mark",
-   "name": "L8",
-   "at": 72.7
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main button:has-text('Lançar manual')"
-   },
-   "seconds": 2.0,
-   "at": 75.35,
-   "label": "Lançar manual",
-   "optional": true,
-   "timeout": 4
   },
   {
    "do": "eval",
@@ -525,7 +284,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 82.24
+   "at": 31.53
   }
  ]
 }

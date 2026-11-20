@@ -1,18 +1,17 @@
 #!/usr/bin/env python3
-"""T19 · gera rec/t19/cap00..cap13.json (roteiros do robô) a partir da voz ($TUT_HOME/t19/narracao/capNN.json).
+"""T19 · gera rec/t19/cap00..cap17.json (roteiros do robô) a partir da voz ($TUT_HOME/t19/narracao/capNN.json).
 
 Funcionários e ponto eletrônico no COMPUTADOR (janela 1280x800, menu lateral aberto), logado como Rafael Nogueira (MASTER, Recicla
-Vale Metais), no EcoSistema 1.59.154; o cap09 é inteiro no CELULAR ("device": "phone", sem login: o link pessoal do Gabriel).
+Vale Metais), no EcoSistema 1.60.18 (tela 1600x900); o cap12 é inteiro no CELULAR, o cap13 no TABLET (1024x768) ("device": "phone", sem login: o link pessoal do Gabriel).
 O login roda no `setup` (não filmado), com "$TUT_USER"/"$TUT_SENHA" do ambiente: o capítulo abre o navegador sem sessão ("anonymous").
-Relógio do mundo: FAKE_NOW 10/11/2026 08:30 (terça) em todos os capítulos, o mesmo no Supabase falso e no robô.
+Relógio do mundo: FAKE_NOW 10/11/2026 08:30 (terça) nos caps 0 a 12 e 16:30 nos caps 13 a 17 (rec/t19/fake_now.json), o mesmo no Supabase falso e no robô.
 Os `at` saem da palavra que anuncia cada passo: A(linha, palavra, folga) = início da palavra - folga (o custo do gesto, docs/04).
 Respiros (RESPIROS): onde a tela precisa de mais tempo que a fala dá (o preenchimento da jornada no cap11), o gerador abre o vão
 na voz estimada e AVISA (a voz pede `pausas.py NN T:DUR`); a voz com os respiros vai para rec/t19/_voz/capNN.json (o resumo.py lê).
 Rodar de qualquer pasta: `python3 -I rec/t19/gerar.py [NN ...]`. Depois: `node rec/record.mjs rec/t19/capNN.json --check`.
 
 Cadeia de sementes (rec/mundo/seeds-extra/t19/, todas por cima do mundo base): inicio (caps 0 a 2, rec/t19/t19_sementes.py) ->
-apos-cap02 (3) -> apos-cap03 (4) -> apos-cap04 (5) -> apos-cap05 (6) -> apos-cap06 (7 e 8) -> apos-cap08 (9) -> apos-cap09 (10) ->
-apos-cap10 (11) -> apos-cap11 (12) -> apos-cap12 (13). Cada apos-capNN sai do ensaio do capítulo (rec/t19/t19_semente.mjs, na mesma
+apos-cap02 (3) -> apos-cap03 (4) -> ... -> apos-cap16 (17): cada capítulo parte da semente do anterior. Cada apos-capNN sai do ensaio do capítulo (rec/t19/t19_semente.mjs, na mesma
 trava): as tabelas do RH inteiras, o que a aula criou nas outras (caixa, banco) e os acertos de inicio (slug do tablet, categoria).
 
 Particularidades (código 1.59.154, planejamento/ecoflix/T19/inventario.md):
@@ -38,26 +37,27 @@ TUT_HOME = os.path.normpath(os.path.join(HERE, '..', '..'))
 NARR = os.path.join(TUT_HOME, 't19', 'narracao')
 VOZ_PROV = os.path.join(HERE, '_voz')
 sys.path.insert(0, HERE)
-from t19_sementes import t19_slug  # noqa: E402  (o mesmo slug do handler rpc/generate_ponto_slug.mjs)
+from t19_sementes import t19_slug, KIOSK as KIOSK_SLUG  # noqa: E402  (o mesmo slug do handler rpc/generate_ponto_slug.mjs)
 
 RAFAEL = '34c36c63-0890-5e89-8963-7c77b7996908'      # stableId('user.rafael') do mundo
 try:
     VERSAO = open(os.path.join(TUT_HOME, 'app', 'dist', '.versao-app'), encoding='utf8').read().strip() or '1.60.18'
 except OSError:
     VERSAO = '1.60.18'
-FAKE_NOW = {n: '2026-11-10T08:30:00-03:00' for n in range(14)}
-HOJE = {n: FAKE_NOW[n][:10] for n in range(14)}
+FAKE_NOW = {n: ('2026-11-10T08:30:00-03:00' if n < 13 else '2026-11-10T16:30:00-03:00') for n in range(18)}
+HOJE = {n: FAKE_NOW[n][:10] for n in range(18)}
 
 NOMES = ['Abertura', 'A tela Funcionários e suas abas', 'Cadastrar o funcionário', 'Campos de folha', 'Departamentos',
-         'Lançar vale, bônus e falta', 'Pagar e receber do funcionário', 'O extrato do funcionário', 'Ligar o ponto e gerar o link',
-         'O ponto pelo celular', 'Registro e folha de ponto', 'Configurações do ponto', 'Arquivar ou excluir', 'Recapitulando']
-SEMENTE = {0: 'inicio', 1: 'inicio', 2: 'inicio', 3: 'apos-cap02', 4: 'apos-cap03', 5: 'apos-cap04', 6: 'apos-cap05', 7: 'apos-cap06',
-           8: 'apos-cap06', 9: 'apos-cap08', 10: 'apos-cap09', 11: 'apos-cap10', 12: 'apos-cap11', 13: 'apos-cap12'}
+         'Lançar vale, bônus e falta', 'Pagar e receber do funcionário', 'A folha de quem é CLT', 'Férias e décimo terceiro',
+         'O extrato do funcionário', 'O relatório da equipe', 'Ligar o ponto e gerar o link', 'O ponto pelo celular',
+         'O ponto no tablet da empresa', 'Folha, registro e ausências', 'Configurações do ponto', 'Arquivar ou excluir', 'Recapitulando']
+SEMENTE = {0: 'inicio', 1: 'inicio', 2: 'inicio', **{n: f'apos-cap{n - 1:02d}' for n in range(3, 18)}}
 # capítulos cujo estado final vira semente (o ensaio grava seeds-extra/t19/apos-capNN.json)
-GRAVA_SEMENTE = (2, 3, 4, 5, 6, 8, 9, 10, 11, 12)
+GRAVA_SEMENTE = tuple(range(2, 17))
 # vão mínimo (s) na voz ANTES de uma palavra: {cap: [(linha 1-based, palavra ou None = início da linha, nth, segundos)]}
-RESPIROS = {11: [(5, 'Salvar', 0, 7.0)]}
+RESPIROS = {11: [(2, 'Se', 0, 4.5)]}   # o PIN é gravado e o cadastro reaberto antes de "Se ele esquecer"
 GABRIEL_SLUG = t19_slug('Gabriel Rocha')
+FALTAS = []
 
 
 # ---------------------------------------------------------------- voz
@@ -151,7 +151,11 @@ class Cap:
         if len(hits) > 1:
             s.ambiguas.append((i, palavra, nth, len(hits)))
         if len(hits) <= nth:
-            raise SystemExit(f'cap{s.n:02d}: palavra "{palavra}" (#{nth}) não achada na linha {i}: ' + ' '.join(w['w'] for w in s.words if w['linha'] == i - 1))
+            msg = f'cap{s.n:02d}: palavra "{palavra}" (#{nth}) não achada na linha {i}: ' + ' '.join(w['w'] for w in s.words if w['linha'] == i - 1)
+            if os.environ.get('LINT'):
+                FALTAS.append(msg)
+                return 0.0
+            raise SystemExit(msg)
         return hits[nth]['s']
 
     def A(s, i, palavra, folga=0.8, nth=0):
@@ -464,7 +468,6 @@ def cap_novo(n, **kw):
     return Cap(n, **kw)
 
 
-# ================================================================ capítulos
 def cap00():
     """Abertura: Dashboard; o cursor vai ao menu lateral e abre Funcionários (RH); ilustração na L2; cartões do módulo e do Antes."""
     c = cap_novo(0, start=(760, 300), recolhe=False)
@@ -576,22 +579,31 @@ def cap02():
     c.hover(TXT('Custo total mensal', within=CALC), 1.2, at=c.A(7, 'Custo', 0.75), label='Custo total mensal R$ 4.264,00')
     c.confere('dlg', ['R$ 4.264,00'], 'Custo total mensal R$ 4.264,00')
     c.mark(8)
-    c.hover(TXTX('Valores estimados com base', within=CALC), 1.0, at=c.A(8, 'estimados,', 0.75), label='rodapé Valores estimados (contador)')
-    c.click(SEL(f"{CALC} button:has-text('Aplicar R$')"), at=c.A(8, 'Aplicar,', 0.9), label='Aplicar R$ 4.264,00')
-    c.waitfor(gone={'text': 'Composição do custo mensal'}, timeout=8)
-    c.hover(CAMPO('monthly_cost'), 0.8, at=c.A(8, 'cadastro,', 0.75), label='Custo mensal total R$ 4.264,00 no cadastro')
-    c.confere_campos(['R$ 4.264,00'], 'custo aplicado no cadastro')
+    c.ev(js_rola_ate(DLG, 'Adicional', 150, 600), at=c.A(8, 'Rolando', 0.4), label='rola até o Adicional')
+    c.hover(SEL(f"{CALC} label:text-is('Adicional')"), 0.5, at=c.A(8, 'adicional', 0.75), label='Adicional (periculosidade ou insalubridade)')
+    c.ev(js_rola_ate(DLG, 'Benefícios mensais', 150, 600), at=c.A(8, 'benefícios', 1.5), label='rola até os Benefícios mensais')
+    c.hover(TXTX('Benefícios mensais', within=CALC), 0.5, at=c.A(8, 'benefícios', 0.6), label='Benefícios mensais')
+    c.ev(js_rola_ate(DLG, 'Horas trabalhadas por mês', 200, 600), at=c.A(8, 'horas', 1.5), label='rola até as horas trabalhadas')
+    c.hover(TXTX('Horas trabalhadas por mês', within=CALC), 0.5, at=c.A(8, 'horas', 0.6), label='Horas trabalhadas por mês')
+    c.ev(js_rola_ate(DLG, 'Hora Homem', 420, 700), at=c.A(8, 'Com', 0.4), label='rola até o Hora Homem (HH)')
+    c.hover(TXTX('Hora Homem', within=CALC), 1.4, at=c.A(8, 'custa', 0.75), label='Hora Homem (HH): quanto custa a hora dele')
     c.mark(9)
-    c.digita(CAMPO('pix_key'), '(12) 90000-4107', c.W(9, 'Pix,'), 'Chave PIX (12) 90000-4107')
-    c.click(BDLG('Cadastrar'), at=c.A(9, 'Cadastrar.', 0.9), label='Cadastrar')
+    c.hover(TXTX('Valores estimados com base', within=CALC), 1.0, at=c.A(9, 'estimados,', 0.75), label='rodapé Valores estimados (contador)')
+    c.click(SEL(f"{CALC} button:has-text('Aplicar R$')"), at=c.A(9, 'Aplicar,', 0.9), label='Aplicar R$ 4.264,00')
+    c.waitfor(gone={'text': 'Composição do custo mensal'}, timeout=8)
+    c.hover(CAMPO('monthly_cost'), 0.8, at=c.A(9, 'cadastro,', 0.75), label='Custo mensal total R$ 4.264,00 no cadastro')
+    c.confere_campos(['R$ 4.264,00'], 'custo aplicado no cadastro')
+    c.mark(10)
+    c.digita(CAMPO('pix_key'), '(12) 90000-4107', c.W(10, 'Pix,'), 'Chave PIX (12) 90000-4107')
+    c.click(BDLG('Cadastrar'), at=c.A(10, 'Cadastrar.', 0.9), label='Cadastrar')
     c.waitfor(gone={'role': 'dialog'}, timeout=12)
     c.waitfor(target=LINHA('Gabriel Rocha'), timeout=10)
     # o cursor NÃO entra na lista: no caminho até a linha ele passava no "⋯" (menu que abre ao passar o mouse) e o menu cobria a lista
-    rola_ate(c, 'main [role=list]', 'Gabriel Rocha', c.A(9, 'Pronto,', 0.3), 'a lista mostra o Gabriel no meio', y=470, dur_ms=500, prefixo=False)
-    c.marcar(LINHA('Gabriel Rocha'), at=c.A(9, 'lista.', 0.3), label='o Gabriel na lista Equipe')
-    c.mark(10)
+    rola_ate(c, 'main [role=list]', 'Gabriel Rocha', c.A(10, 'Pronto,', 0.3), 'a lista mostra o Gabriel no meio', y=470, dur_ms=500, prefixo=False)
+    c.marcar(LINHA('Gabriel Rocha'), at=c.A(10, 'lista.', 0.3), label='o Gabriel na lista Equipe')
+    c.mark(11)
     c.confere('main [role=list]', ['Gabriel Rocha', 'R$ 2.520,00'], 'saldo do Gabriel = salário')
-    c.marcar(SALDO_LINHA('Gabriel Rocha', 'R$ 2.520,00'), at=c.A(10, 'saldo', 0.3), label='selo de saldo do Gabriel R$ 2.520,00')
+    c.marcar(SALDO_LINHA('Gabriel Rocha', 'R$ 2.520,00'), at=c.A(11, 'saldo', 0.3), label='selo de saldo do Gabriel R$ 2.520,00')
     c.fim()
     return c
 
@@ -645,21 +657,24 @@ def cap04():
     c.click(BDLG('Adicionar'), at=c.A(3, 'Adicionar,', 0.9), label='Adicionar')
     c.waitfor(target=TXT('Transporte', within=DLG), timeout=8)
     c.hover(TXT('Transporte', within=DLG), 0.5, at=c.A(3, 'lista.', 0.75), label='Transporte na lista de departamentos')
-    fechar_janela(c)
     c.mark(4)
-    menu_linha(c, 'Edson Moura', 'Editar', at=c.A(4, 'Edson,', 1.0), label='menu ⋯ do Edson')
-    item_menu(c, 'Edson Moura', 'Editar', at=c.A(4, 'motorista,', 0.6), label='Editar o Edson')
+    c.hover(SEL(f"{DLG} button:has(svg[class*='lucide-pencil'])"), 0.8, at=c.A(4, 'lápis', 0.75), label='lápis: editar o departamento')
+    c.hover(SEL(f"{DLG} button:has(svg[class*='lucide-trash'])"), 1.2, at=c.A(4, 'Excluindo,', 0.75), label='lixeira: excluir o departamento')
+    fechar_janela(c)
+    c.mark(5)
+    menu_linha(c, 'Edson Moura', 'Editar', at=c.A(5, 'Edson,', 1.0), label='menu ⋯ do Edson')
+    item_menu(c, 'Edson Moura', 'Editar', at=c.A(5, 'motorista,', 0.6), label='Editar o Edson')
     c.waitfor(target=CAMPO('department'), timeout=10)
-    escolhe(c, CAMPO('department'), 'Transporte', c.A(4, 'Departamento,', 0.9), c.A(4, 'Transporte', 0.6), 'Departamento: Transporte')
-    c.click(BDLG('Atualizar'), at=c.A(4, 'atualizo.', 0.9), label='Atualizar')
+    escolhe(c, CAMPO('department'), 'Transporte', c.A(5, 'Departamento,', 0.9), c.A(5, 'Transporte', 0.6), 'Departamento: Transporte')
+    c.click(BDLG('Atualizar'), at=c.A(5, 'atualizo.', 0.9), label='Atualizar')
     c.waitfor(gone={'role': 'dialog'}, timeout=12)
     c.waitfor(target=SEL("main [role=listitem]:has(p:text-is('Edson Moura')) span:has-text('Transporte')"), timeout=10)
-    c.hover(SEL("main [role=listitem]:has(p:text-is('Edson Moura')) span:has-text('Transporte')"), 1.0, at=c.A(4, 'cor', 0.75),
+    c.hover(SEL("main [role=listitem]:has(p:text-is('Edson Moura')) span:has-text('Transporte')"), 1.0, at=c.A(5, 'cor', 0.75),
             label='o Edson com o caminhão laranja e Transporte')
-    c.mark(5)
-    c.click(SEL("main button[aria-label^='Filtros']"), at=c.A(5, 'Filtros', 0.9), label='Filtros da lista')
+    c.mark(6)
+    c.click(SEL("main button[aria-label^='Filtros']"), at=c.A(6, 'Filtros', 0.9), label='Filtros da lista')
     c.waitfor(target=SEL(f"{POP} button[role=combobox]"), timeout=6)
-    c.click(SEL(f"{POP} button[role=combobox]"), at=c.A(5, 'departamento', 0.9), label='Departamento (a lista dos departamentos)', noScroll=True)
+    c.click(SEL(f"{POP} button[role=combobox]"), at=c.A(6, 'departamento', 0.9), label='Departamento (a lista dos departamentos)', noScroll=True)
     c.waitfor(target=OPT('Transporte'), timeout=6)
     c.hover(OPT('Transporte'), 0.8, label='os departamentos no filtro', noScroll=True)
     c.press('Escape', label='fecha a lista sem filtrar')
@@ -683,13 +698,14 @@ def cap05():
     c.hover(SEL(f"{DLG} label[for='vale-dinheiro']"), 0.4, at=c.A(2, 'Dinheiro,', 0.9), label='Origem do Pagamento: Dinheiro (Caixa)')
     c.digita(CAMPO('amount'), '200,00', c.W(2, 'valor'), 'Valor R$ 200,00')
     c.digita(CAMPO('description'), 'Adiantamento', c.W(2, 'descrição.'), 'Descrição: Adiantamento')
+    c.hover(SEL(f"{DLG} label[for='vale-pix']"), 1.0, at=c.A(2, 'Banco,', 0.75), label='Origem do Pagamento: PIX/Transferência (Banco)')
     c.mark(3)
     c.click(BDLG('Confirmar'), at=c.A(3, 'Confirmar.', 0.9), label='Confirmar o vale')
     c.waitfor(gone={'role': 'dialog'}, timeout=12)
     c.confere(FICHA, ['R$ 1.780,00'], 'saldo do Diego 1.780,00')
     c.hover(RESUMO('Saldo atual'), 0.8, at=c.A(3, 'saldo', 0.75), label='Saldo atual R$ 1.780,00')
     c.mark(4)
-    c.hover(RESUMO('Vales'), 2.0, at=c.A(4, 'vale', 0.75), label='Vales R$ 200,00 (dica: não lançar de novo no banco)')
+    c.hover(RESUMO('Vales/Adiantamentos'), 2.0, at=c.A(4, 'vale', 0.75), label='Vales R$ 200,00 (dica: não lançar de novo no banco)')
     c.mark(5)
     c.click(BOTAO_FICHA('Falta'), at=c.A(5, 'Falta,', 0.9), label='Falta')
     c.waitfor(target=CAMPO('amount'), timeout=10)
@@ -701,7 +717,7 @@ def cap05():
     c.mark(6)
     c.confere(FICHA, ['R$ 1.690,00', 'R$ 200,00', 'R$ 90,00'], 'saldo 1.690,00, vales 200,00, faltas 90,00')
     c.hover(RESUMO('Salário'), 0.3, at=c.A(6, 'salário,', 0.75), label='Salário R$ 1.980,00')
-    c.hover(RESUMO('Vales'), 0.3, at=c.A(6, 'vale,', 0.75), label='Vales R$ 200,00')
+    c.hover(RESUMO('Vales/Adiantamentos'), 0.3, at=c.A(6, 'vale,', 0.75), label='Vales R$ 200,00')
     c.hover(RESUMO('Faltas'), 0.3, at=c.A(6, 'falta.', 0.75), label='Faltas R$ 90,00')
     c.hover(RESUMO('Saldo atual'), 1.2, at=c.A(6, 'Saldo:', 0.75), label='Saldo atual R$ 1.690,00')
     c.mark(7)
@@ -722,20 +738,49 @@ def cap05():
     return c
 
 
+# ================================================================ 1.60.18 · ganchos das abas novas (recibo, holerite, relatório)
+# A gravação filma uma aba só: o app abre o recibo/holerite/relatório em aba nova (window.open + document.write); o robô guarda a janela e
+# devolve o HTML para a edição montar a cena do comprovante (regra de 19/11, padrão da T09).
+GANCHOS = ("(()=>{if(window.__abas)return 'ja';window.__abas=[];window.__pdfs=[];const o=URL.createObjectURL.bind(URL);"
+           "URL.createObjectURL=(b)=>{try{if(b&&b.type==='application/pdf')window.__pdfs.push(b)}catch(e){}return o(b)};"
+           "const wo=window.open.bind(window);window.open=(...a)=>{const w=wo(...a);window.__abas.push(w);return w};return 'ganchos'})()")
+GAN = {'do': 'eval', 'js': GANCHOS}
+
+
+def js_aba_html(k, nome, espera_txt):
+    """devolve o HTML da k-ésima aba aberta pelo app (documento escrito por ele) quando já tem `espera_txt`"""
+    return ("(async()=>{let w=null,h='';for(let i=0;i<50;i++){w=window.__abas&&window.__abas[%d];try{h=w&&w.document&&w.document.documentElement.outerHTML||''}catch(e){h=''}"
+            "if(h.includes(%s))break;await new Promise(r=>setTimeout(r,200));}if(!h.includes(%s))return 'SEM ABA: '+h.slice(0,120);"
+            "return {html:%s,chars:h.length,b64:btoa(unescape(encodeURIComponent(h)))}})()") % (k, json.dumps(espera_txt), json.dumps(espera_txt), json.dumps(nome))
+
+
+def js_alerta_botao(texto):
+    """clica o botão do AlertDialog aberto (o "Pagamento registrado!" pergunta se quer o recibo)"""
+    return ("(()=>{const b=[...document.querySelectorAll('[role=alertdialog] button')].find(x=>x.textContent.trim().includes(%s));"
+            "if(!b)return 'SEM ALVO';b.click();return 'ok'})()") % json.dumps(texto)
+
+
+ALERTA = "[role=alertdialog]"
+VALOR_PAGO = "#valor-pago"
+
+
 def cap06():
-    """Edson: Recebimento de R$ 100,00 (vales 500 -> 400) e Pagamento de R$ 2.750,00 por Pix (CLT de relance); saldo volta a 2.900,00."""
-    c = cap_novo(6, setup=RH)
+    """Edson: Recebimento de R$ 100,00 (vales 500 -> 400) e Pagamento de R$ 2.750,00 por Pix, com o recibo na aba nova; saldo volta a 2.900,00.
+    1.60.18: janela larga com o "Resumo do pagamento", "Vales/Adiantamentos desta folha", "Valor líquido do pagamento", diferença com motivo,
+    data e Pagamento Misto, CLT de relance."""
+    c = cap_novo(6, setup=RH + [GAN])
     c.mark(1)
     c.click(LINHA('Edson Moura'), at=c.A(1, 'Edson', 0.8), label='Edson Moura')
     c.waitfor(target=RESUMO('Saldo atual'), timeout=10)
     c.confere(FICHA, ['R$ 2.900,00', 'R$ 2.650,00', 'R$ 500,00', 'R$ 250,00'], 'Edson: salário 2.900, saldo 2.650, vales 500, bônus 250')
     c.hover(RESUMO('Saldo atual'), 0.4, at=c.A(1, 'recebe', 0.75), label='Resumo financeiro do Edson')
-    c.hover(RESUMO('Vales'), 0.4, at=c.A(1, 'quinhentos', 0.75), label='Vales R$ 500,00')
+    c.hover(RESUMO('Vales/Adiantamentos'), 0.4, at=c.A(1, 'quinhentos', 0.75), label='Vales/Adiantamentos R$ 500,00')
     c.hover(RESUMO('Bônus'), 0.6, at=c.A(1, 'duzentos', 0.75), label='Bônus R$ 250,00')
     c.mark(2)
     c.click(BOTAO_FICHA('Recebimento'), at=c.A(2, 'Antes,', 0.5), label='Recebimento')
     c.waitfor(text='Registrar devolução de valor pelo funcionário', timeout=10)
     VR = SEL(f"{DLG} input[placeholder='0,00']")
+    c.confere('dlg', ['Vales/Adiantamentos pendentes:', 'R$ 500,00'], 'Vales/Adiantamentos pendentes R$ 500,00')
     c.digita(VR, '100,00', c.W(2, 'cem'), 'Valor a receber 100,00 (Máximo: R$ 500,00)', folga_clique=1.3)
     c.hover(SEL(f"{DLG} label[for='recv-cash']"), 0.3, at=c.A(2, 'caixa', 0.75), label='Forma de Recebimento: Dinheiro (entra no caixa)')
     c.click(SEL(f"{DLG} textarea, {DLG} input[placeholder='Informações adicionais...']"), at=c.A(2, 'abate', 0.6), label='campo Observações')
@@ -743,63 +788,224 @@ def cap06():
     c.mark(3)
     c.click(BDLG('Confirmar Recebimento'), at=c.A(3, 'Confirmado:', 0.9), label='Confirmar Recebimento')
     c.waitfor(text='Recebimento confirmado!', timeout=10)
-    c.confere('dlg', ['Vales antes', 'R$ 500,00', 'Abatido', 'Vales restantes', 'R$ 400,00'], 'vales 500 -> 400')
-    c.hover(TXT('Vales restantes', within=DLG), 0.6, at=c.A(3, 'quatrocentos.', 0.75), label='Vales restantes R$ 400,00')
+    c.confere('dlg', ['Vales/Adiantamentos antes', 'R$ 500,00', 'Abatido', 'Vales/Adiantamentos restantes', 'R$ 400,00'], 'vales 500 -> 400')
+    c.hover(TXT('Vales/Adiantamentos restantes', within=DLG), 0.6, at=c.A(3, 'quatrocentos.', 0.75), label='Vales/Adiantamentos restantes R$ 400,00')
     c.click(BDLG('Fechar'), label='Fechar')
     c.waitfor(gone={'role': 'dialog'}, timeout=8)
     c.mark(4)
     c.click(BOTAO_FICHA('Pagamento'), at=c.A(4, 'Pagamento.', 0.9), label='Pagamento')
     c.waitfor(text='Pagamento ao funcionário', timeout=10)
-    c.confere('body', ['Salário:', 'R$ 2.900,00', 'Total de Bônus:', 'R$ 250,00', 'Descontos:', 'R$ 400,00'], 'resumo do pagamento')
-    c.confere_campos(['400,00', '2.750,00'], 'vales a descontar 400,00 e valor 2.750,00')
-    c.hover(TXT('Salário:'), 0.2, at=c.A(4, 'salário,', 0.75), label='Resumo: Salário')
-    c.hover(TXT('Total de Bônus:'), 0.2, at=c.A(4, 'bônus', 0.75), label='Resumo: Total de Bônus')
-    c.hover(TXT('Descontos:'), 0.5, at=c.A(4, 'descontos.', 0.75), label='Resumo: Descontos (vales)')
+    c.confere('dlg', ['Resumo do pagamento', 'Salário:', 'R$ 2.900,00', 'Total de Bônus:', 'R$ 250,00', 'Descontos:', 'R$ 400,00'], 'resumo do pagamento (Normal)')
+    c.hover(TXT('Resumo do pagamento', within=DLG), 0.3, at=c.A(4, 'resumo', 0.75), label='Resumo do pagamento (cartão à direita)')
+    c.hover(TXT('Salário:', within=DLG), 0.2, at=c.A(4, 'salário,', 0.75), label='Resumo: Salário')
+    c.hover(TXT('Total de Bônus:', within=DLG), 0.2, at=c.A(4, 'bônus', 0.75), label='Resumo: Total de Bônus')
+    c.hover(TXT('Descontos:', within=DLG), 0.5, at=c.A(4, 'descontos.', 0.75), label='Resumo: Descontos (vales)')
     c.mark(5)
-    c.hover(TXTX('Quanto você quer descontar dos vales', within=DLG), 1.0, at=c.A(5, 'quanto', 0.75), label='Quanto você quer descontar dos vales (400,00)')
-    c.hover(TXTX('Valor padrão: 100% dos vales', within=DLG), 1.2, at=c.A(5, 'padrão', 0.75), label='Valor padrão: 100% dos vales (R$ 400,00)')
+    c.hover(TXTX('Vales/Adiantamentos desta folha', within=DLG), 0.8, at=c.A(5, 'quanto', 0.75), label='Vales/Adiantamentos desta folha')
+    c.hover(TXTX('Em aberto: R$ 400,00', within=DLG), 0.6, at=c.A(5, 'saldo', 0.75), label='Em aberto: R$ 400,00')
+    c.confere_campos(['400,00'], 'Desconto neste pagamento 400,00')
+    c.hover(TXT('Desconto neste pagamento', within=DLG), 1.0, at=c.A(5, 'quatrocentos.', 0.75), label='Desconto neste pagamento (400,00)')
     c.mark(6)
     c.click(BDLG('CLT (com folha)'), at=c.A(6, 'CLT,', 0.9), label='Modo de pagamento: CLT (com folha)')
     c.waitfor(text='Valores estimados; confirme com seu contador.', timeout=6)
-    c.hover(TXTX('- INSS'), 0.3, at=c.A(6, 'INSS', 0.75), label='CLT: - INSS e - IRRF (estimados)')
-    c.hover(TXTX('Líquido'), 0.3, at=c.A(6, 'líquido.', 0.75), label='CLT: Líquido')
-    c.hover(TXT('Valores estimados; confirme com seu contador.'), 1.2, at=c.A(6, 'estimados,', 0.75), label='Valores estimados; confirme com seu contador.')
+    c.hover(TXTX('Folha CLT', within=DLG), 0.3, at=c.A(6, 'calcula', 0.75), label='Resumo no modo CLT: Folha CLT')
+    c.hover(TXTX('- INSS', within=DLG), 0.3, at=c.A(6, 'INSS', 0.75), label='CLT: - INSS e - IRRF (estimados)')
+    c.hover(TXTX('Líquido', within=DLG), 0.3, at=c.A(6, 'líquido.', 0.75), label='CLT: Líquido')
     c.click(BDLG('Normal'), at=c.A(6, 'Normal.', 0.9), label='Modo de pagamento: Normal')
     c.mark(7)
-    c.hover(TXTX('Valor efetivamente pago', within=DLG), 1.0, at=c.A(7, 'valor', 0.75), label='Valor efetivamente pago R$ 2.750,00')
+    c.confere_campos(['2.750,00'], 'Valor líquido do pagamento 2.750,00')
+    c.hover(TXTX('Valor líquido do pagamento', within=DLG), 1.0, at=c.A(7, 'líquido', 0.75), label='Valor líquido do pagamento R$ 2.750,00')
     c.confere('dlg', ['Calculado: R$ 2.750,00'], 'Calculado: R$ 2.750,00')
     c.hover(TXTX('Calculado: R$', within=DLG), 1.0, at=c.A(7, 'salário,', 0.75), label='Calculado: R$ 2.750,00')
     c.mark(8)
-    rola_ate(c, DLG, 'Forma de Pagamento', c.A(8, 'Ele', 0.4), 'rola até a Forma de Pagamento', y=260, dur_ms=500)
-    c.click(SEL(f"{DLG} label[for='payment-pix']"), at=c.A(8, 'Pix,', 0.9), label='Forma de Pagamento: PIX/Transferência')
-    c.hover(SEL(f"{DLG} label:has-text('Conta')"), 0.3, at=c.A(8, 'conta', 0.75), label='Conta bancária: Conta Principal')
-    c.click(BDLG('Confirmar Pagamento'), at=c.A(8, 'Confirmar', 0.9), label='Confirmar Pagamento')
-    c.waitfor(gone={'role': 'dialog'}, timeout=15)
+    c.digita(CAMPO('valor-pago'), '2900,00', c.W(8, 'coloco'), 'Valor líquido 2.900,00 (diferente do calculado)', clear=True, folga_clique=1.2)
+    c.confere('dlg', ['a mais', 'Motivo da diferença'], 'selo "a mais" e Motivo da diferença')
+    c.hover(TXTX('a mais', within=DLG), 0.8, at=c.A(8, 'mais', 0.75), label='o selo + R$ 150,00 a mais')
+    escolhe(c, CAMPO('motivo-diferenca'), 'Gratificação', c.A(8, 'motivo:', 0.9), c.A(8, 'gratificação,', 0.5), 'Motivo da diferença: Gratificação')
+    c.click(SEL(f"{DLG} button:text-is('voltar ao calculado')"), at=c.A(8, 'volto', 0.9), label='voltar ao calculado')
+    c.confere_campos(['2.750,00'], 'voltou ao calculado 2.750,00')
     c.mark(9)
-    c.confere(FICHA, ['R$ 2.900,00'], 'saldo do Edson volta a 2.900,00')
-    c.hover(RESUMO('Saldo atual'), 1.0, at=c.A(9, 'saldo:', 0.75), label='Saldo atual R$ 2.900,00')
-    c.hover(DADO('Último pagamento'), 0.8, at=c.A(9, 'salário', 0.75), label='Último pagamento: hoje')
+    rola_ate(c, DLG, 'Data e hora do pagamento', c.A(9, 'data,', 1.6), 'rola até Data e hora do pagamento', y=230, dur_ms=500)
+    c.hover(TXTX('Por padrão é agora', within=DLG), 1.2, at=c.A(9, 'data,', 0.75), label='Data e hora do pagamento (retroativo)')
+    c.click(SEL(f"{DLG} label[for='payment-mixed']"), at=c.A(9, 'Misto,', 0.9), label='Pagamento Misto')
+    c.waitfor(text='Pagamento Misto', timeout=6)
+    c.hover(SEL(f"{DLG} label[for='payment-mixed']"), 1.2, at=c.A(9, 'digita', 0.75), label='Pagamento Misto: Dinheiro e PIX')
+    c.click(SEL(f"{DLG} label[for='payment-pix']"), at=round(c.Lfim(9) - 0.6, 2), label='volta para PIX/Transferência')
     c.mark(10)
-    c.cursor((900, 140), at=c.A(10, 'O', 0.3), label='cursor descansa (ilustração do ciclo do pagamento)')
+    c.cursor((900, 140), at=c.A(10, 'Uma', 0.3), label='cursor descansa (cartão "Pagamento sem saída de dinheiro")')
+    c.mark(11)
+    rola_ate(c, DLG, 'Forma de Pagamento', c.A(11, 'Ele', 0.4), 'rola até a Forma de Pagamento', y=260, dur_ms=500)
+    c.click(SEL(f"{DLG} label[for='payment-pix']"), at=c.A(11, 'Pix,', 0.9), label='Forma de Pagamento: PIX/Transferência')
+    c.hover(SEL(f"{DLG} label:has-text('Conta')"), 0.3, at=c.A(11, 'conta', 0.75), label='Conta bancária: Conta Principal')
+    c.click(BDLG('Confirmar Pagamento'), at=c.A(11, 'Confirmar', 0.9), label='Confirmar Pagamento')
+    c.mark(12)
+    c.waitfor(text='Pagamento registrado!', timeout=15)
+    c.hover(TXTX('Deseja gerar o recibo', within=ALERTA), 1.0, at=c.A(12, 'pergunta', 0.75), label='Pagamento registrado! Deseja gerar o recibo desse pagamento?')
+    c.ev(js_alerta_botao('Gerar Recibo'), at=c.A(12, 'Gerar', 0.9), label='Gerar Recibo (abre o recibo em aba nova)')
+    c.ev(js_aba_html(0, 'recibo-pagamento-edson', 'Edson Moura'), label='HTML do recibo do pagamento do Edson (aba nova, para a ilustração do comprovante)')
+    c.waitfor(gone={'role': 'alertdialog'}, timeout=10)
+    c.mark(13)
+    c.confere(FICHA, ['R$ 2.900,00'], 'saldo do Edson volta a 2.900,00')
+    c.hover(RESUMO('Saldo atual'), 1.0, at=c.A(13, 'saldo', 0.75), label='Saldo atual R$ 2.900,00')
+    c.hover(DADO('Último pagamento'), 0.8, at=c.A(13, 'salário', 0.75), label='Último pagamento: hoje')
+    c.mark(14)
+    c.cursor((900, 140), at=c.A(14, 'O', 0.3), label='cursor descansa (ilustração do ciclo do pagamento)')
     c.fim()
     return c
 
 
 def cap07():
+    """A folha de quem é CLT (Marcos): Horas extras 50% R$ 180,00, Convênio farmácia R$ 60,00, INSS da tabela, líquido, holerite na aba nova."""
+    c = cap_novo(7, setup=RH + [GAN])
+    c.mark(1)
+    c.click(LINHA('Marcos Antunes'), at=c.A(1, 'Marcos,', 0.8), label='Marcos Antunes')
+    c.waitfor(target=RESUMO('Saldo atual'), timeout=10)
+    c.confere(FICHA, ['Marcos Antunes', 'R$ 2.400,00'], 'Marcos: salário e saldo 2.400,00')
+    c.click(BOTAO_FICHA('Pagamento'), at=c.A(1, 'Pagamento', 0.9, nth=1), label='Pagamento')
+    c.waitfor(text='Pagamento ao funcionário', timeout=10)
+    c.confere('dlg', ['Folha CLT', 'Salário base', 'R$ 2.400,00', 'Proventos e descontos desta folha'], 'abre no modo CLT com a folha')
+    c.hover(TXTX('Folha CLT', within=DLG), 1.0, at=c.A(1, 'folha', 0.75), label='Resumo do pagamento: Folha CLT')
+    c.mark(2)
+    rola_ate(c, DLG, 'Proventos e descontos desta folha', c.A(2, 'outubro', 0.4), 'rola até Proventos e descontos desta folha', y=200, dur_ms=500)
+    c.click(SEL(f"{DLG} button:has-text('Horas extras 50%')"), at=c.A(2, 'Horas', 0.9), label='Adicionar rápido: Horas extras 50%')
+    VAL_P = SEL(f"{DLG} input[aria-label='Valor em reais']")
+    c.waitfor(target=VAL_P, timeout=6)
+    c.digita(VAL_P, '180,00', c.W(2, 'cento', nth=1), 'Valor em reais 180,00', folga_clique=1.3)
+    c.hover(VAL_P, 1.0, at=c.A(2, 'reais.', 0.75), label='a linha Horas extras 50% com R$ 180,00')
+    c.mark(3)
+    c.hover(TXTX('Compõe as bases de INSS, IRRF e FGTS', within=DLG), 2.4, at=c.A(3, 'chave', 0.75), label='chave Compõe as bases de INSS, IRRF e FGTS')
+    c.mark(4)
+    DESC = SEL("xpath=//div[@role='dialog']//p[normalize-space()='Descontos extras']/following::input[@aria-label='Descrição'][1]")
+    VAL_D = SEL("xpath=//div[@role='dialog']//p[normalize-space()='Descontos extras']/following::input[@aria-label='Valor em reais'][1]")
+    c.click(SEL(f"{DLG} button:has-text('Adicionar desconto')"), at=c.A(4, 'Descontos', 0.9), label='Adicionar desconto')
+    c.waitfor(target=DESC, timeout=6)
+    c.click(DESC, at=c.A(4, 'convênio', 0.9), label='campo Descrição')
+    c.type(DESC, 'Convênio farmácia', at=c.A(4, 'convênio', 0.05), label='Descrição: Convênio farmácia', cps=40, noClick=True)
+    c.digita(VAL_D, '60,00', c.W(4, 'sessenta'), 'Valor em reais 60,00', folga_clique=1.0)
+    c.mark(5)
+    c.confere('dlg', ['Total de proventos', 'R$ 2.580,00', '- INSS', 'R$ 207,89', '- Vale-transporte', 'R$ 144,00', 'Convênio farmácia', 'R$ 411,89', 'R$ 2.168,11'],
+              'resumo CLT do Marcos: proventos 2.580,00, INSS 207,89, VT 144,00, líquido 2.168,11')
+    c.hover(TXTX('Total de proventos', within=DLG), 0.3, at=c.A(5, 'proventos.', 0.75), label='Total de proventos R$ 2.580,00')
+    c.hover(TXTX('- INSS', within=DLG), 0.3, at=c.A(5, 'INSS', 0.75), label='- INSS (tabela do ano)')
+    c.hover(TXTX('- IRRF', within=DLG), 0.3, at=c.A(5, 'zero,', 0.75), label='- IRRF R$ 0,00')
+    c.hover(TXTX('- Vale-transporte', within=DLG), 0.3, at=c.A(5, 'vale-transporte,', 0.75), label='- Vale-transporte R$ 144,00')
+    c.hover(TXT('Líquido', within=DLG), 1.4, at=c.A(5, 'líquido', 0.75), label='Líquido R$ 2.168,11')
+    c.hover(TXT('Valores estimados; confirme com seu contador.', within=DLG), 1.0, label='Valores estimados; confirme com seu contador. (cena reaproveitada na dica final)')
+    c.mark(6)
+    rola_ate(c, DLG, 'INSS desta folha', c.A(6, 'Se', 0.6), 'rola até INSS desta folha', y=240, dur_ms=500)
+    c.hover(TXTX('Calculado pela tabela oficial', within=DLG), 0.6, at=c.A(6, 'contador', 0.75), label='INSS desta folha: Calculado pela tabela oficial')
+    c.click(CAMPO('override-inss'), at=c.A(6, 'ligar', 0.9), label='liga o ajuste do INSS')
+    c.waitfor(target=CAMPO('inss-adjusted'), timeout=6)
+    c.hover(TXTX('Motivo do ajuste', within=DLG), 1.0, at=c.A(6, 'motivo.', 0.75), label='Novo valor e Motivo do ajuste')
+    c.click(CAMPO('override-inss'), at=c.A(6, 'deixo', 0.9), label='desliga o ajuste (deixa o calculado)')
+    c.mark(7)
+    rola_ate(c, DLG, 'Valor líquido do pagamento', c.A(7, 'líquido', 0.5), 'rola até o Valor líquido do pagamento', y=200, dur_ms=500)
+    c.confere_campos(['2.168,11'], 'Valor líquido do pagamento 2.168,11')
+    rola_ate(c, DLG, 'Forma de Pagamento', c.A(7, 'Pix,', 1.2), 'rola até a Forma de Pagamento', y=260, dur_ms=500)
+    c.click(SEL(f"{DLG} label[for='payment-pix']"), at=c.A(7, 'Pix,', 0.9), label='Forma de Pagamento: PIX/Transferência')
+    c.click(BDLG('Confirmar Pagamento'), at=c.A(7, 'Confirmar', 0.9), label='Confirmar Pagamento')
+    c.mark(8)
+    c.waitfor(text='Pagamento registrado!', timeout=15)
+    c.ev(js_alerta_botao('Gerar Holerite'), at=c.A(8, 'holerite:', 0.9), label='Gerar Holerite (abre o holerite em aba nova)')
+    c.ev(js_aba_html(0, 'holerite-marcos', 'Marcos Antunes'), label='HTML do holerite do Marcos (aba nova, para a ilustração do comprovante)')
+    c.waitfor(gone={'role': 'alertdialog'}, timeout=10)
+    c.mark(9)
+    c.confere(FICHA, ['R$ 2.400,00'], 'saldo do Marcos volta ao salário')
+    c.hover(RESUMO('Saldo atual'), 1.0, at=c.A(9, 'estimativa', 0.75), label='Saldo atual do Marcos (dica: a folha é estimativa)')
+    c.fim()
+    return c
+
+
+def cap08():
+    """Férias da Juliana (R$ 3.733,33, Pix) e 1ª parcela do 13º do Cláudio (R$ 1.050,00): lançamentos de competência própria."""
+    c = cap_novo(8, setup=RH)
+    c.mark(1)
+    c.click(LINHA('Juliana Prado'), at=round(max(0.0, c.L(1) - 0.2), 2), label='Juliana Prado')
+    c.waitfor(target=RESUMO('Saldo atual'), timeout=10)
+    menu_linha(c, 'Juliana Prado', 'Pagar férias', at=0.2, label='menu ⋯ da Juliana')
+    c.hover(ITEM('Pagar férias'), 0.3, at=max(1.4, c.A(1, 'Férias,', 0.75)), label='Pagar férias', noScroll=True)
+    c.hover(ITEM('Pagar 13º salário'), 0.3, at=max(2.0, c.A(1, 'décimo', 0.75)), label='Pagar 13º salário', noScroll=True)
+    c.hover(ITEM('Pagar rescisão'), 0.6, at=max(2.6, c.A(1, 'rescisão', 0.75)), label='Pagar rescisão', noScroll=True)
+    c.mark(2)
+    item_menu(c, 'Juliana Prado', 'Pagar férias', at=c.A(2, 'férias.', 0.9), label='Pagar férias')
+    c.waitfor(text='Pagar Férias', timeout=10)
+    c.hover(TXTX('Não altera o saldo de salário em aberto', within=DLG), 2.4, at=c.A(2, 'aviso:', 0.75), label='aviso: não altera o saldo de salário em aberto')
+    c.mark(3)
+    c.digita(CAMPO('competence-amount'), '3733,33', c.W(3, 'três'), 'Valor 3.733,33', folga_clique=1.2)
+    c.click(SEL(f"{DLG} label[for='competence-pix']"), at=c.A(3, 'Pix,', 0.9), label='Forma de pagamento: PIX/Transferência (Banco)')
+    c.click(CAMPO('competence-description'), at=c.A(3, 'observação,', 0.9), label='campo Observação')
+    c.ev(colar('Período aquisitivo 2025/2026'), at=c.A(3, 'observação,', 0.1), label='Observação: Período aquisitivo 2025/2026')
+    c.click(BDLG('Confirmar'), at=c.A(3, 'Confirmar.', 0.9), label='Confirmar')
+    c.waitfor(gone={'role': 'dialog'}, timeout=12)
+    c.mark(4)
+    c.confere(FICHA, ['R$ 2.800,00'], 'saldo da Juliana segue 2.800,00')
+    c.hover(RESUMO('Saldo atual'), 1.0, at=c.A(4, 'saldo', 0.75), label='Saldo atual R$ 2.800,00 (igual)')
+    c.click(SEL(f"{FICHA} button:has-text('Extrato')"), at=c.A(4, 'extrato', 0.9), label='Extrato')
+    c.waitfor(text='Extrato - Juliana Prado', timeout=10)
+    c.hover(SEL(f"{DLG} :text-is('Férias')"), 1.6, at=c.A(4, 'linha', 0.75), label='a linha com o selo Férias')
+    c.click(BDLG('Fechar'), label='Fechar o extrato')
+    c.waitfor(gone={'role': 'dialog'}, timeout=8)
+    c.mark(5)
+    c.click(LINHA('Cláudio Ferraz'), at=round(max(c.L(5) - 0.2, 0.0), 2), label='Cláudio Ferraz')
+    c.waitfor(target=SEL(f"{FICHA} h2:text-is('Cláudio Ferraz')"), timeout=10)
+    menu_linha(c, 'Cláudio Ferraz', 'Pagar 13º salário', at=c.A(5, 'décimo', 0.9), label='menu ⋯ do Cláudio')
+    item_menu(c, 'Cláudio Ferraz', 'Pagar 13º salário', at=c.A(5, 'terceiro', 0.6), label='Pagar 13º salário')
+    c.waitfor(text='Pagar 13º Salário', timeout=10)
+    c.digita(CAMPO('competence-amount'), '1050,00', c.W(5, 'mil'), 'Valor 1.050,00', folga_clique=1.2)
+    c.click(SEL(f"{DLG} label[for='competence-pix']"), label='Forma de pagamento: PIX/Transferência (Banco)')
+    c.click(CAMPO('competence-description'), label='campo Observação')
+    c.ev(colar('1ª parcela 2026'), label='Observação: 1ª parcela 2026')
+    c.click(BDLG('Confirmar'), at=round(c.Lfim(5) - 0.8, 2), label='Confirmar')
+    c.waitfor(gone={'role': 'dialog'}, timeout=12)
+    c.mark(6)
+    c.cursor((900, 140), at=c.A(6, 'Uma', 0.3), label='cursor descansa (ilustração das três gavetas)')
+    c.fim()
+    return c
+
+
+def cap10():
+    """O relatório da equipe: Exportar Relatório, os dois modelos, os filtros e a Relação de pagamento aberta em aba nova."""
+    c = cap_novo(10, setup=RH + [GAN])
+    c.mark(1)
+    c.click(SEL("main button:has-text('Exportar Relatório')"), at=c.A(1, 'Exportar', 0.9), label='Exportar Relatório')
+    c.waitfor(text='Modelo de relatório', timeout=10)
+    c.hover(TXT('Relatório de movimentações', within=DLG), 0.4, at=c.A(1, 'dois', 0.75), label='modelo Relatório de movimentações')
+    c.hover(TXT('Relação de pagamento', within=DLG), 0.8, at=c.A(1, 'modelos.', 0.75), label='modelo Relação de pagamento')
+    c.mark(2)
+    c.hover(TXT('O que incluir', within=DLG), 0.4, at=c.A(2, 'vales,', 0.75), label='O que incluir (os tipos)')
+    c.hover(TXT('Período', within=DLG), 0.4, at=c.A(2, 'período', 0.75), label='Período')
+    c.hover(TXTX('Funcionários incluídos', within=DLG), 0.4, at=c.A(2, 'marcar.', 0.75), label='Funcionários incluídos')
+    c.hover(SEL(f"{DLG} button:has-text('Marcar todos'), {DLG} button:has-text('Desmarcar todos')"), 0.6, label='Marcar todos')
+    c.mark(3)
+    c.click(SEL(f"{DLG} label:has-text('Relação de pagamento')"), at=c.A(3, 'Relação', 0.9), label='Relação de pagamento')
+    c.waitfor(text='quanto pagar a cada funcionário hoje', timeout=6)
+    c.click(SEL(f"{DLG} button:has-text('Visualizar / PDF')"), at=c.A(3, 'PDF', 0.9), label='Visualizar / PDF (abre em aba nova)')
+    c.ev(js_aba_html(0, 'relacao-de-pagamento', 'Marcos Antunes'), label='HTML da Relação de pagamento (aba nova, para a ilustração do comprovante)')
+    c.hover(SEL(f"{DLG} button:text-is('Excel')"), 1.0, at=c.A(3, 'Excel.', 0.75), label='Excel')
+    fechar_janela(c, at=round(c.Lfim(3) - 0.5, 2))
+    c.fim()
+    return c
+
+
+def cap09():
     """O extrato do Edson: cartões do mês, o pagamento detalhado com Gerar Recibo, o ajuste, o recebimento, os vales, o bônus e o ajuste de
     salário; a lixeira de um vale (sem clicar); Fechar."""
     setup = RH + [{'do': 'click', 'target': LINHA('Edson Moura')}, {'do': 'waitFor', 'target': RESUMO('Saldo atual'), 'timeout': 10}, {'do': 'wait', 'seconds': 0.6}]
-    c = cap_novo(7, setup=setup)
+    c = cap_novo(9, setup=setup + [GAN])
     c.mark(1)
     c.click(SEL(f"{FICHA} button:has-text('Extrato')"), at=c.A(1, 'Extrato.', 0.9), label='Extrato')
     c.waitfor(text='Extrato - Edson Moura', timeout=10)
     c.confere('dlg', ['Bônus', 'Vales', 'Faltas', 'Saldo', 'R$ 2.900,00'], 'cartões do mês novo')
-    c.hover(TXT('Vales', within=DLG), 0.2, at=c.A(1, 'vale,', 0.75), label='cartão Vales R$ 0,00')
+    c.hover(TXTX('Vales', within=DLG), 0.2, at=c.A(1, 'vale,', 0.75), label='cartão Vales R$ 0,00')
     c.hover(TXT('Bônus', within=DLG), 0.2, at=c.A(1, 'bônus,', 0.75), label='cartão Bônus R$ 0,00')
     c.hover(TXT('Saldo', within=DLG), 0.5, at=c.A(1, 'saldo', 0.75), label='cartão Saldo R$ 2.900,00')
     c.mark(2)
     c.hover(TXTX('Valor pago', within=DLG), 0.8, at=c.A(2, 'conta', 0.75), label='Valor pago R$ 2.750,00 (pagamento detalhado)')
-    c.hover(SEL(f"{DLG} button:has-text('Gerar Recibo')"), 0.6, at=c.A(2, 'Gerar', 0.75), label='Gerar Recibo')
+    c.click(SEL(f"{DLG} button:has-text('Gerar Recibo')"), at=c.A(2, 'Gerar', 0.9), label='Gerar Recibo (pagamento de hoje)')
+    c.waitfor(text='Gerar recibo', timeout=8)
+    c.hover(TXT('Térmico', within=DLG), 0.5, at=c.A(2, 'térmico,', 0.75), label='formato Térmico (80 mm)')
+    c.click(SEL(f"{DLG} button:has(span:text-is('A4'))"), at=c.A(2, 'abre', 0.9), label='formato A4 (abre o recibo em aba nova)')
+    c.ev(js_aba_html(0, 'recibo-extrato-edson', 'Edson Moura'), label='HTML do recibo A4 do Edson (aba nova, para a ilustração do comprovante)')
     c.hover(TXTX('Reset para salário base', within=DLG), 0.8, at=c.A(2, 'ajuste', 0.75), label='Ajuste: Reset para salário base')
     c.mark(3)
     c.ev(js_rola_ate(DLG, 'Recebimento do funcionário', 220, 800), at=c.A(3, 'baixo,', 0.4), label='rola a lista do extrato')
@@ -811,9 +1017,9 @@ def cap07():
     c.mark(4)
     c.hover(TXTX('Ajuste de salário', within=DLG), 3.0, at=c.A(4, 'sistema', 0.75), label='Ajuste de salário (continua)')
     c.mark(5)
-    LIXO = SEL("xpath=//div[@role='dialog']//*[normalize-space(text())='Vale']/ancestor::div[.//button//*[contains(@class,'lucide-trash')]][1]"
+    LIXO = SEL("xpath=//div[@role='dialog']//*[normalize-space(text())='Vale/Adiantamento']/ancestor::div[.//button//*[contains(@class,'lucide-trash')]][1]"
                "//button[.//*[contains(@class,'lucide-trash')]]")
-    c.hover(LIXO, 1.6, at=c.A(5, 'excluir', 0.75), label='lixeira de uma linha Vale (sem clicar)')
+    c.hover(LIXO, 1.6, at=c.A(5, 'excluir', 0.75), label='lixeira de uma linha Vale/Adiantamento (sem clicar)')
     c.mark(6)
     c.cursor((1000, 140), at=c.A(6, 'A', 0.3), label='cursor sai da lixeira (ilustração)')
     c.click(BDLG('Fechar'), at=round(c.dur - 1.4, 2), label='Fechar o extrato')
@@ -821,9 +1027,9 @@ def cap07():
     return c
 
 
-def cap08():
-    """Ponto: a aba Ponto eletrônico do Gabriel (ligado, PIN), Copiar link do ponto, Ativar ponto da Juliana e o Tablet da empresa."""
-    c = cap_novo(8, setup=RH)
+def cap11():
+    """Ponto: a aba Ponto eletrônico do Gabriel (ligado) com o PIN 4107 (Definir PIN), Copiar link do ponto, Ativar ponto da Juliana e o Tablet da empresa."""
+    c = cap_novo(11, setup=RH)
     c.mark(1)
     menu_linha(c, 'Gabriel Rocha', 'Editar', at=c.A(1, 'cadastro,', 1.2), label='menu ⋯ do Gabriel')
     item_menu(c, 'Gabriel Rocha', 'Editar', at=c.A(1, 'aba', 0.7), label='Editar')
@@ -833,9 +1039,22 @@ def cap08():
     c.confere('dlg', ['Ativar ponto eletrônico', 'Gera um link público pro funcionário bater ponto sem login.'], 'ponto ligado')
     c.hover(CAMPO('ponto-enabled'), 1.0, at=c.A(1, 'ligado.', 0.75), label='Ativar ponto eletrônico (ligado)')
     c.mark(2)
-    c.hover(TXTX('Sem PIN. Qualquer um com o link', within=DLG), 1.2, at=c.A(2, 'link', 0.75), label='PIN do ponto (opcional): Sem PIN')
-    c.hover(SEL(f"{DLG} button:has-text('Definir PIN')"), 1.4, at=c.A(2, 'PIN', 0.75), label='Definir PIN (sem clicar)')
-    c.click(BDLG('Cancelar'), at=c.A(2, 'dele.', 0.4, nth=1), label='Cancelar')
+    PIN1 = {'placeholder': 'Novo PIN'}
+    PIN2 = {'placeholder': 'Repita o PIN'}
+    c.click(SEL(f"{DLG} button:has-text('Definir PIN')"), at=c.A(2, 'ninguém', 0.9), label='Definir PIN')
+    c.waitfor(target=PIN1, timeout=6)
+    c.digita(PIN1, '4107', c.W(2, 'quatro'), 'Novo PIN 4107', folga_clique=0.5)
+    c.digita(PIN2, '4107', c.W(2, 'números.'), 'Repita o PIN 4107', folga_clique=0.4)
+    c.click(BDLG('Atualizar'), at=c.A(2, 'Se', 4.0), label='Atualizar (grava o PIN)')
+    c.waitfor(gone={'role': 'dialog'}, timeout=12)
+    menu_linha(c, 'Gabriel Rocha', 'Editar', at=c.A(2, 'Se', 3.2), label='menu ⋯ do Gabriel')
+    item_menu(c, 'Gabriel Rocha', 'Editar', at=c.A(2, 'Se', 2.2), label='Editar')
+    c.waitfor(target=CAMPO('name'), timeout=10)
+    c.click(DTAB('Ponto eletrônico'), at=c.A(2, 'Se', 1.2), label='aba Ponto eletrônico')
+    c.waitfor(target=SEL(f"{DLG} button:has-text('Trocar PIN')"), timeout=6)
+    c.hover(SEL(f"{DLG} button:has-text('Trocar PIN')"), 0.4, at=c.A(2, 'troca', 0.75), label='Trocar PIN')
+    c.hover(SEL(f"{DLG} button:has-text('Remover PIN')"), 0.8, at=c.A(2, 'remove.', 0.75), label='Remover PIN (sem clicar)')
+    c.click(BDLG('Cancelar'), at=round(c.Lfim(2) - 0.2, 2), label='Cancelar')
     c.waitfor(gone={'role': 'dialog'}, timeout=8)
     c.mark(3)
     menu_linha(c, 'Gabriel Rocha', 'Copiar link do ponto', at=c.A(3, 'menu', 0.9), label='menu ⋯ do Gabriel')
@@ -886,105 +1105,262 @@ def js_botao(texto, sel='button'):
     return f"[...document.querySelectorAll({json.dumps(sel)})].filter(b=>b.textContent.trim().includes({json.dumps(texto)})&&b.getClientRects().length).pop()"
 
 
-def cap09():
-    """No celular do Gabriel (sem login): Registrar Entrada, localização, selfie (Tirar foto agora), confirmação e Confirmar registro."""
+
+# ---- celular: o app de verdade chama o edge `time-clock-portal` com fetch; o robô acrescenta ao corpo o avanço da hora do ponto
+# (`__avanco_min`, só o handler do falso lê): o relógio do servidor falso pula do almoço e do fim do dia sem esperar.
+JS_AVANCO = ("(()=>{if(window.__avanco!==undefined)return 'ja';const f=window.fetch.bind(window);window.__avanco=0;window.fetch=(u,o)=>{try{"
+             "if(String(u).includes('time-clock-portal')&&o&&typeof o.body==='string'){const b=JSON.parse(o.body);b.__avanco_min=window.__avanco;"
+             "o={...o,body:JSON.stringify(b)}}}catch(e){}return f(u,o)};return 'fetch ok'})()")
+
+
+def js_bate(botao, final):
+    """celular, acelerado (selo 4x): toca no botão, tira a foto, confirma e espera o texto final do rodapé"""
+    return ("(async()=>{const dorme=ms=>new Promise(r=>setTimeout(r,ms));const acha=t=>[...document.querySelectorAll('button')].filter(b=>b.textContent.trim().includes(t)&&b.getClientRects().length).pop();"
+            "const espera=async(f,n)=>{for(let i=0;i<n;i++){const x=f();if(x)return x;await dorme(100)}return null};"
+            "const b=await espera(()=>acha(%s),80);if(!b)return 'SEM ALVO: '+%s;b.click();"
+            "const foto=await espera(()=>acha('Tirar foto agora'),150);if(!foto)return 'SEM ALVO: Tirar foto agora';await dorme(500);foto.click();"
+            "const conf=await espera(()=>acha('Confirmar registro'),150);if(!conf)return 'SEM ALVO: Confirmar registro';await dorme(600);conf.click();"
+            "const ok=await espera(()=>document.body.innerText.includes(%s)?1:null,150);return ok?'ok: '+%s:'SEM FIM: '+%s})()") % (
+        json.dumps(botao), json.dumps(botao), json.dumps(final), json.dumps(final), json.dumps(final))
+
+
+def js_pin(digitos):
+    return ("(async()=>{const dorme=ms=>new Promise(r=>setTimeout(r,ms));for(const d of %s){const b=[...document.querySelectorAll('button')].find(x=>x.textContent.trim()===d);"
+            "if(!b)return 'SEM ALVO: '+d;b.click();await dorme(260)}await dorme(300);const ok=document.querySelector(\"button[aria-label='Confirmar PIN']\");"
+            "if(!ok)return 'SEM ALVO: Confirmar PIN';ok.click();return 'ok'})()") % json.dumps(list(digitos))
+
+
+def cap12():
+    """No celular do Gabriel (sem login): PIN, Registrar Entrada (localização, selfie, confirmação), Iniciar/Voltar do Intervalo e Registrar
+    Saída (relógio do ponto às 11:00 e às 16:00), Jornada concluída e Registrar Nova Entrada."""
     setup = [{'do': 'geo', 'lat': -23.0105, 'lng': -45.5412},
-             {'do': 'goto', 'url': f'/ponto/{GABRIEL_SLUG}'}, {'do': 'waitFor', 'text': 'Gabriel Rocha', 'timeout': 30},
-             {'do': 'waitFor', 'text': 'Registrar Entrada', 'timeout': 20}, {'do': 'eval', 'js': JS_CAMERA}, {'do': 'wait', 'seconds': 0.8}]
-    c = cap_novo(9, setup=setup, phone=True, start=(195, 600), pace=0.6, prewarm=[f'/ponto/{GABRIEL_SLUG}'])
+             {'do': 'goto', 'url': f'/ponto/{GABRIEL_SLUG}'}, {'do': 'waitFor', 'text': 'Digite seu PIN para continuar', 'timeout': 30},
+             {'do': 'eval', 'js': JS_CAMERA}, {'do': 'eval', 'js': JS_AVANCO}, {'do': 'wait', 'seconds': 0.8}]
+    c = cap_novo(12, setup=setup, phone=True, start=(195, 600), pace=0.6, prewarm=[f'/ponto/{GABRIEL_SLUG}'])
     c.mark(1)
-    c.confere('body', ['Gabriel Rocha', 'Operador de empilhadeira', 'Recicla Vale Metais', 'PONTO ELETRÔNICO'], 'tela do ponto do Gabriel')
-    c.marcar(TXT('Gabriel Rocha'), at=c.A(1, 'nome', 0.3), label='nome do Gabriel e cargo (cabeçalho)')
-    c.marcar(TXTX('Recicla Vale Metais'), at=c.A(1, 'empresa', 0.3), label='a empresa e a data')
-    c.marcar(TXTX('Você ainda não bateu o ponto hoje'), at=c.A(1, 'relógio.', 0.3), label='o relógio do ponto (rodapé)')
+    c.marcar(TXTX('Digite seu PIN para continuar'), at=c.A(1, 'celular,', 0.3), label='o teclado do PIN')
+    c.ev(js_pin('4107'), at=c.A(1, 'digita', 0.9), label='digita o PIN 4107 e toca em OK')
+    c.waitfor(text='Registrar Entrada', timeout=20)
     c.mark(2)
-    c.click(SEL("button:has-text('Registrar Entrada')"), at=c.A(2, 'toca', 0.9), label='Registrar Entrada', noScroll=True)
+    c.confere('body', ['Gabriel Rocha', 'Operador de empilhadeira', 'Recicla Vale Metais', 'PONTO ELETRÔNICO'], 'tela do ponto do Gabriel')
+    c.marcar(TXT('Gabriel Rocha'), at=c.A(2, 'nome', 0.3), label='nome do Gabriel e cargo (cabeçalho)')
+    c.marcar(TXTX('Recicla Vale Metais'), at=c.A(2, 'empresa', 0.3), label='a empresa e a data')
+    c.marcar(TXTX('Você ainda não bateu o ponto hoje'), at=c.A(2, 'relógio.', 0.3), label='o relógio do ponto (rodapé)')
+    c.mark(3)
+    c.click(SEL("button:has-text('Registrar Entrada')"), at=c.A(3, 'toca', 0.9), label='Registrar Entrada', noScroll=True)
     c.waitfor(text='Confirme localização e selfie para registrar o ponto', timeout=8)
-    c.marcar(TXTX('Confirme localização e selfie'), at=c.A(2, 'localização.', 0.4), label='Obtendo sua localização...')
+    c.marcar(TXTX('Confirme localização e selfie'), at=c.A(3, 'localização.', 0.4), label='Obtendo sua localização...')
     c.waitfor(text='Tirar foto agora', timeout=15)
-    if c.tem(3, 'selfie.'):   # a fala do roteiro (L3 "Depois vem a selfie ... Tirar foto agora")
-        c.mark(3)
-        c.marcar(SEL("video"), at=c.A(3, 'selfie.', 0.3), label='Selfie do ponto (câmera)')
-        c.click(SEL("button:has-text('Tirar foto agora')"), at=c.A(3, 'Tirar', 0.9), label='Tirar foto agora', noScroll=True,
-                when=SEL("button:has-text('Tirar foto agora')"))
-        nc = 4
-    else:   # voz antiga (sem a linha da selfie): a foto sai antes da confirmação
-        c.marcar(SEL("video"), label='Selfie do ponto (câmera)')
-        c.click(SEL("button:has-text('Tirar foto agora')"), at=round(c.L(3) - 1.3, 2), label='Tirar foto agora', noScroll=True,
-                when=SEL("button:has-text('Tirar foto agora')"))
-        nc = 3
+    c.mark(4)
+    c.marcar(SEL("video"), at=c.A(4, 'selfie.', 0.3), label='Selfie do ponto (câmera)')
+    c.click(SEL("button:has-text('Tirar foto agora')"), at=c.A(4, 'Tirar', 0.9), label='Tirar foto agora', noScroll=True,
+            when=SEL("button:has-text('Tirar foto agora')"))
     c.waitfor(text='Confirmar registro', timeout=12)
-    c.mark(nc)
+    c.mark(5)
     c.confere('body', ['Entrada', 'Horário', 'Local', 'Rua das Oficinas, 1250 - Parque Industrial - Taubaté'], 'confirmação com o local do pátio')
-    c.marcar(TXT('Tipo'), at=c.A(nc, 'tipo,', 0.3), label='confirmação: Tipo Entrada')
-    c.marcar(TXT('Horário'), at=c.A(nc, 'horário,', 0.3), label='Horário e Local (zoom)')
-    c.marcar(TXTX('Rua das Oficinas, 1250'), at=c.A(nc, 'local', 0.3), label='Local: Rua das Oficinas, 1250')
-    c.marcar(SEL("[role=dialog] img"), at=c.A(nc, 'foto.', 0.3), label='miniatura da selfie')
+    c.marcar(TXT('Tipo'), at=c.A(5, 'tipo,', 0.3), label='confirmação: Tipo Entrada')
+    c.marcar(TXT('Horário'), at=c.A(5, 'horário,', 0.3), label='Horário e Local (zoom)')
+    c.marcar(TXTX('Rua das Oficinas, 1250'), at=c.A(5, 'local', 0.3), label='Local: Rua das Oficinas, 1250')
+    c.marcar(SEL("[role=dialog] img"), at=c.A(5, 'foto.', 0.3), label='miniatura da selfie')
     c.ev("JSON.stringify(window.__t19cam||null)", label='câmera falsa: reaberturas do app (achado: reinicia a cada segundo)')
-    c.mark(nc + 1)
-    c.click(SEL("button:has-text('Confirmar registro')"), at=c.A(nc + 1, 'Confirmar', 0.9), label='Confirmar registro', noScroll=True)
+    c.mark(6)
+    c.click(SEL("button:has-text('Confirmar registro')"), at=c.A(6, 'Confirmar', 0.9), label='Confirmar registro', noScroll=True)
     c.waitfor(text='Ponto registrado', timeout=10)
     c.waitfor(text='Registros de hoje', timeout=8)
-    c.marcar(TXTX('Registros de hoje'), at=c.A(nc + 1, 'gravada,', 0.3), label='Registros de hoje: Entrada')
-    c.marcar(SEL("button:has-text('Iniciar Intervalo')"), at=c.A(nc + 1, 'intervalo', 0.3), label='Iniciar Intervalo')
-    c.marcar(SEL("button:has-text('Registrar Saída')"), at=c.A(nc + 1, 'saída.', 0.3), label='Registrar Saída')
-    c.mark(nc + 2)
+    c.marcar(TXTX('Registros de hoje'), at=c.A(6, 'gravada,', 0.3), label='Registros de hoje: Entrada')
+    c.marcar(SEL("button:has-text('Iniciar Intervalo')"), at=c.A(6, 'intervalo', 0.3), label='Iniciar Intervalo')
+    c.marcar(SEL("button:has-text('Registrar Saída')"), at=c.A(6, 'saída.', 0.3), label='Registrar Saída')
+    c.mark(7)
+    # almoço: o relógio do ponto vai a 11:00 (servidor e navegador) e as duas batidas saem aceleradas (selo 4x)
+    c.ev("window.__avanco=150;'avanço 150 min'", at=round(max(c.L(7) - 0.3, 0.0), 2), label='relógio do ponto às 11:00 (servidor)')
+    c.add({'do': 'clock', 'forward': '02:30:00', 'at': round(max(c.L(7) - 0.2, 0.0), 2), 'label': 'relógio do navegador às 11:00'})
+    c.ev(js_bate('Iniciar Intervalo', 'Em intervalo'), at=c.A(7, 'Iniciar', 0.9), label='Iniciar Intervalo (acelerado, selo 4x)')
+    c.ev(js_bate('Voltar do Intervalo', 'Trabalhando'), at=c.A(7, 'Voltar', 0.9), label='Voltar do Intervalo (acelerado, selo 4x)')
+    c.mark(8)
+    c.ev("window.__avanco=330;'avanço 330 min'", at=round(max(c.L(8) - 0.3, 0.0), 2), label='relógio do ponto às 16:00 (servidor)')
+    c.add({'do': 'clock', 'forward': '05:00:00', 'at': round(max(c.L(8) - 0.2, 0.0), 2), 'label': 'relógio do navegador às 16:00'})
+    c.ev(js_bate('Registrar Saída', 'Jornada concluída'), at=c.A(8, 'Registrar', 0.9), label='Registrar Saída (acelerado, selo 4x)')
+    c.marcar(TXTX('Jornada concluída'), at=c.A(8, 'concluída.', 0.3), label='Jornada concluída e as quatro batidas')
+    c.marcar(SEL("button:has-text('Registrar Nova Entrada')"), at=c.A(8, 'Nova', 0.3), label='Registrar Nova Entrada')
+    c.mark(9)
     c.fim()
     return c
 
 
-def cap10():
-    """Folha de Ponto do Cláudio (novembro): a falta de 05/11 vira Atestado; rodapé e aviso do dia aberto; Exportar; Registro de Ponto
-    com a batida do Gabriel; Lançar manual."""
-    setup = RH + aba_setup('Folha de Ponto', 'Todos os funcionários') + [
-        {'do': 'click', 'target': SEL("main button[role=combobox]:has-text('Todos os funcionários')")},
-        {'do': 'waitFor', 'target': OPT('Cláudio Ferraz'), 'timeout': 8}, {'do': 'click', 'target': OPT('Cláudio Ferraz')},
-        {'do': 'waitFor', 'text': 'Total do mês', 'timeout': 10}, {'do': 'wait', 'seconds': 0.8}]
-    c = cap_novo(10, setup=setup)
+def cap13():
+    """O tablet da empresa (1024x768, sem login do gestor na tela): a câmera, Buscar manualmente, a lista (A-Z e Quem falta), a saída do
+    Diego, o cadeado do PIN; depois as configurações do ponto (reconhecimento facial) e o cadastro do Gabriel."""
+    KIOSK = '/ponto/empresa/' + KIOSK_SLUG
+    setup = [{'do': 'goto', 'url': KIOSK}, {'do': 'waitFor', 'text': 'Buscar manualmente', 'timeout': 40}, {'do': 'eval', 'js': JS_CAMERA}, {'do': 'wait', 'seconds': 0.8}]
+    c = cap_novo(13, setup=setup, start=(512, 400), prewarm=[KIOSK], recolhe=False)
     c.mark(1)
-    c.confere('main', ['Cláudio Ferraz', 'Entrada → Saída', 'Trabalhado', 'Saldo', 'Status', 'Falta', 'Feriado', 'Completo'], 'folha de novembro do Cláudio')
-    c.hover(SEL("main button[role=combobox]:has-text('Cláudio Ferraz')"), 0.4, at=c.A(1, 'Cláudio:', 0.75), label='a folha do Cláudio')
-    c.hover(TXTX('Entrada → Saída', within='main'), 0.3, at=c.A(1, 'entrada', 0.75), label='coluna Entrada → Saída')
-    c.hover(TXT('Trabalhado', within='main'), 0.3, at=c.A(1, 'trabalhadas', 0.75), label='coluna Trabalhado')
-    c.hover(TXT('Saldo', within='main'), 0.4, at=c.A(1, 'saldo', 0.75), label='coluna Saldo')
+    c.marcar(TXTX('Buscar manualmente'), at=c.A(1, 'rosto.', 0.5), label='o tablet: câmera e Buscar manualmente')
+    c.click(SEL("button:has-text('Buscar manualmente')"), at=c.A(1, 'tocar', 0.9), label='Buscar manualmente', noScroll=True)
+    c.waitfor(target={'placeholder': 'Buscar funcionário'}, timeout=15)
     c.mark(2)
-    LINHA05 = "main tr:has-text('05/11')"
-    rola_ate(c, 'main', '05/11', c.A(2, 'Repara', 0.6), 'rola até o dia 05/11', y=380)
-    c.hover(SEL(f"{LINHA05} :text-is('Falta')"), 2.4, at=c.A(2, 'Falta,', 0.75), label='a linha de 05/11: Falta (Lançar)')
+    c.hover({'placeholder': 'Buscar funcionário'}, 0.4, at=c.A(2, 'buscar', 0.75), label='Buscar funcionário')
+    c.hover(SEL("button:text-is('A–Z')"), 0.2, label='ordem A–Z')
+    c.click(SEL("button:text-is('Quem falta')"), at=c.A(2, 'ordenar', 0.9), label='Quem falta')
     c.mark(3)
-    c.cursor((1000, 140), at=c.A(3, 'É', 0.3), label='cursor descansa (ilustração da falta que aparece sozinha)')
+    c.click(SEL("button:has-text('Diego Morais')"), at=c.A(3, 'Diego', 0.9), label='cartão do Diego', noScroll=True)
+    c.waitfor(text='Registrar Saída', timeout=15)
+    c.click(SEL("button:has-text('Registrar Saída')"), at=c.A(3, 'saída,', 0.9), label='Registrar Saída', noScroll=True)
+    c.waitfor(text='Tirar foto agora', timeout=15)
+    c.click(SEL("button:has-text('Tirar foto agora')"), at=c.A(3, 'confirma', 1.4), label='Tirar foto agora', noScroll=True)
+    c.waitfor(text='Confirmar registro', timeout=12)
+    c.click(SEL("button:has-text('Confirmar registro')"), at=c.A(3, 'confirma', 0.5), label='Confirmar registro', noScroll=True)
+    c.waitfor(text='Saída registrada', timeout=12)
+    c.marcar(TXTX('Saída registrada'), at=c.A(3, 'hora', 0.3), label='Saída registrada com a hora')
+    c.waitfor(target={'placeholder': 'Buscar funcionário'}, timeout=20)
     c.mark(4)
-    c.click(SEL(f"{LINHA05} button:has-text('Lançar')"), at=c.A(4, 'Lançar,', 0.9), label='Lançar (05/11)')
+    c.hover(SEL("button:has-text('Gabriel Rocha')"), 1.6, at=c.A(4, 'cadeado,', 0.75), label='o cartão do Gabriel com o cadeado (Protegido por PIN)', noScroll=True)
+    c.mark(5)
+    c.ev("location.assign('/funcionarios')", at=c.A(5, 'Se', 0.6), label='volta ao sistema (computador)')
+    c.waitfor(text=SUBTITULO, timeout=30)
+    c.click(ABA('Configurações de Ponto'), at=c.A(5, 'rosto,', 0.9), label='aba Configurações de Ponto')
+    c.waitfor(text='Exigir reconhecimento facial no quiosque', timeout=15)
+    rola_ate(c, 'main', 'Exigir reconhecimento facial', c.A(5, 'chave', 1.6), 'rola até Exigir reconhecimento facial', y=260)
+    c.hover(TXTX('Exigir reconhecimento facial no quiosque', within='main'), 2.0, at=c.A(5, 'chave', 0.75), label='Exigir reconhecimento facial no quiosque')
+    c.fim()
+    return c
+
+
+def cap14():
+    """Folha de Ponto: a visão da equipe (Todos os funcionários), a folha do Cláudio (Falta de 05/11 vira Atestado), Exportar, Registro de Ponto,
+    Lançar manual da Juliana, menu da batida, e a aba Ausências (férias da Juliana)."""
+    setup = RH + aba_setup('Folha de Ponto', 'Todos os funcionários') + [{'do': 'wait', 'seconds': 0.8}]
+    c = cap_novo(14, setup=setup)
+    c.mark(1)
+    c.confere('main', ['Dias com registro', 'Trabalhado', 'Esperado', 'Saldo', 'Faltas', 'Férias', 'Atestado', 'Total'], 'tabela da equipe na Folha de Ponto')
+    c.hover(TXT('Dias com registro', within='main'), 0.3, at=c.A(1, 'resumo', 0.75), label='tabela da equipe: Dias com registro, Trabalhado, Esperado')
+    SALDO_M = SEL("main tbody tr:has-text('Marcos Antunes') button")
+    c.hover(SALDO_M, 3.0, at=c.A(1, 'passando', 0.75), label='o saldo do Marcos: Composição do saldo (extras e atrasos)')
+    c.mark(2)
+    c.click(SEL("main button[role=combobox]:has-text('Todos os funcionários')"), at=c.A(2, 'Escolhendo', 0.9), label='escolher o funcionário')
+    c.waitfor(target=OPT('Cláudio Ferraz'), timeout=8)
+    c.click(OPT('Cláudio Ferraz'), at=c.A(2, 'Cláudio:', 0.6), label='Cláudio Ferraz', noScroll=True)
+    c.waitfor(text='Total do mês', timeout=10)
+    c.confere('main', ['Cláudio Ferraz', 'Entrada → Saída', 'Trabalhado', 'Saldo', 'Status', 'Falta', 'Feriado', 'Completo'], 'folha de novembro do Cláudio')
+    c.hover(TXTX('Entrada → Saída', within='main'), 0.3, at=c.A(2, 'entrada', 0.75), label='coluna Entrada → Saída')
+    c.hover(TXT('Trabalhado', within='main'), 0.3, at=c.A(2, 'trabalhadas', 0.75), label='coluna Trabalhado')
+    c.hover(TXT('Saldo', within='main'), 0.4, at=c.A(2, 'saldo', 0.75), label='coluna Saldo')
+    c.mark(3)
+    LINHA05 = "main tr:has-text('05/11')"
+    rola_ate(c, 'main', '05/11', c.A(3, 'Repara', 0.6), 'rola até o dia 05/11', y=380)
+    c.hover(SEL(f"{LINHA05} :text-is('Falta')"), 2.4, at=c.A(3, 'Falta,', 0.75), label='a linha de 05/11: Falta (Lançar)')
+    c.mark(4)
+    c.cursor((1000, 140), at=c.A(4, 'É', 0.3), label='cursor descansa (ilustração da falta que aparece sozinha)')
+    c.mark(5)
+    c.click(SEL(f"{LINHA05} button:has-text('Lançar')"), at=c.A(5, 'Lançar,', 0.9), label='Lançar (05/11)')
     c.waitfor(text='Registre quem não veio', timeout=10)
-    escolhe(c, CAMPO('absence-type'), 'Atestado', c.A(4, 'escolho', 0.9), c.A(4, 'Atestado', 0.6, nth=1), 'Tipo: Atestado')
-    c.click(CAMPO('absence-notes'), at=c.A(4, 'coloco', 0.6), label='campo Observação')
-    c.type(CAMPO('absence-notes'), 'Consulta médica', at=c.A(4, 'observação.', 0.3), label='Observação: Consulta médica', cps=40, noClick=True)
-    c.click(SEL(f"{DLG} button:text-is('Lançar ausência')"), at=c.A(4, 'Lançar', 0.9, nth=1), label='Lançar ausência')
+    escolhe(c, CAMPO('absence-type'), 'Atestado', c.A(5, 'escolho', 0.9), c.A(5, 'Atestado', 0.6, nth=1), 'Tipo: Atestado')
+    c.click(CAMPO('absence-notes'), at=c.A(5, 'coloco', 0.6), label='campo Observação')
+    c.type(CAMPO('absence-notes'), 'Consulta médica', at=c.A(5, 'observação.', 0.3), label='Observação: Consulta médica', cps=40, noClick=True)
+    c.click(SEL(f"{DLG} button:text-is('Lançar ausência')"), at=c.A(5, 'Lançar', 0.9, nth=1), label='Lançar ausência')
     c.waitfor(gone={'role': 'dialog'}, timeout=10)
     c.waitfor(target=SEL(f"{LINHA05} :text-is('Atestado')"), timeout=10)
-    c.hover(SEL(f"{LINHA05} :text-is('Atestado')"), 0.6, at=c.A(4, 'Atestado.', 0.75, nth=2), label='05/11 agora Atestado')
-    c.mark(5)
-    rola_ate(c, 'main', 'Total do mês', c.A(5, 'rodapé', 0.6), 'rola até o rodapé da folha', y=520)
-    c.confere('main', ['Total do mês', '1 com atestado', '1 dia(s) sem saída registrada não entram no saldo'], 'rodapé e aviso do dia aberto')
-    c.hover(TXTX('Total do mês', within='main'), 0.8, at=c.A(5, 'total', 0.75), label='Total do mês (1 com atestado)')
-    c.hover(TXTX('sem saída registrada', within='main'), 2.0, at=c.A(5, 'aviso:', 0.75), label='aviso: 1 dia(s) sem saída registrada não entram no saldo')
+    c.hover(SEL(f"{LINHA05} :text-is('Atestado')"), 0.6, at=c.A(5, 'Atestado.', 0.75, nth=2), label='05/11 agora Atestado')
     c.mark(6)
-    c.click(SEL("main button:has-text('Exportar')"), at=c.A(6, 'Exportar:', 0.9), label='Exportar')
-    c.waitfor(text='Exportar Folha de Ponto', timeout=8)
-    c.hover(SEL(f"{DLG} label[for='time-sheet-mode-pdf']"), 0.4, at=c.A(6, 'espelho', 0.75), label='Espelho de Ponto (PDF)')
-    c.hover(SEL(f"{DLG} label[for='time-sheet-mode-excel']"), 0.4, at=c.A(6, 'planilha.', 0.75), label='Planilha para contabilidade (Excel)')
-    c.hover(TXTX('Não substitui arquivos fiscais', within=DLG), 1.2, at=c.A(6, 'substitui', 0.75), label='Não substitui arquivos fiscais AEJ ou AFD.')
-    c.click(BDLG('Cancelar'), at=round(c.Lfim(6) - 1.0, 2), label='Cancelar')
-    c.waitfor(gone={'role': 'dialog'}, timeout=8)
+    rola_ate(c, 'main', 'Total do mês', c.A(6, 'rodapé', 0.6), 'rola até o rodapé da folha', y=520)
+    c.confere('main', ['Total do mês', '1 com atestado', 'sem saída registrada não entram no saldo'], 'rodapé e aviso do dia aberto')
+    c.hover(TXTX('Total do mês', within='main'), 0.8, at=c.A(6, 'total', 0.75), label='Total do mês (1 com atestado)')
+    c.hover(TXTX('sem saída registrada', within='main'), 2.0, at=c.A(6, 'aviso:', 0.75), label='aviso: dia(s) sem saída registrada não entram no saldo')
     c.mark(7)
-    c.click(ABA('Registro de Ponto'), at=c.A(7, 'Registro', 0.9), label='aba Registro de Ponto')
+    c.click(SEL("main button:has-text('Exportar')"), at=c.A(7, 'Exportar:', 0.9), label='Exportar')
+    c.waitfor(text='Exportar Folha de Ponto', timeout=8)
+    c.hover(SEL(f"{DLG} label[for='time-sheet-mode-pdf']"), 0.4, at=c.A(7, 'espelho', 0.75), label='Espelho de Ponto (PDF)')
+    c.hover(SEL(f"{DLG} label[for='time-sheet-mode-excel']"), 0.4, at=c.A(7, 'planilha.', 0.75), label='Planilha para contabilidade (Excel)')
+    c.hover(TXTX('Não substitui arquivos fiscais', within=DLG), 1.2, at=c.A(7, 'substitui', 0.75), label='Não substitui arquivos fiscais AEJ ou AFD.')
+    c.click(BDLG('Cancelar'), at=round(c.Lfim(7) - 1.0, 2), label='Cancelar')
+    c.waitfor(gone={'role': 'dialog'}, timeout=8)
+    c.mark(8)
+    c.click(ABA('Registro de Ponto'), at=c.A(8, 'Registro', 0.9), label='aba Registro de Ponto')
     c.waitfor(text='Lançar manual', timeout=10)
     c.waitfor(text='Gabriel Rocha', timeout=10)
     CARD_G = SEL("xpath=//main//*[normalize-space(text())='Gabriel Rocha']/following::div[contains(@class,'border')][1]")
-    rola_ate(c, 'main', 'Gabriel Rocha', c.A(7, 'uma', 0.4), 'rola até a batida do Gabriel', y=330, dur_ms=600, prefixo=False)
-    c.hover(CARD_G, 1.6, at=c.A(7, 'Gabriel', 0.75), label='a batida do Gabriel: selfie, Entrada, hora, endereço, Mobile - Chrome')
+    rola_ate(c, 'main', 'Gabriel Rocha', c.A(8, 'uma', 0.4), 'rola até a batida do Gabriel', y=330, dur_ms=600, prefixo=False)
+    c.hover(CARD_G, 1.6, at=c.A(8, 'Gabriel', 0.75), label='as batidas do Gabriel: selfie, hora, endereço, Mobile - Chrome')
+    c.mark(9)
+    rola_ate(c, 'main', 'Registro de Ponto', c.A(9, 'Lançar', 1.6), 'volta ao topo', y=200, dur_ms=400)
+    c.click(SEL("main button:has-text('Lançar manual')"), at=c.A(9, 'Lançar', 0.9), label='Lançar manual')
+    c.waitfor(text='Lançar registro manual', timeout=10)
+    escolhe(c, CAMPO('punch-emp'), 'Juliana Prado', c.A(9, 'escolho', 0.9), c.A(9, 'ela,', 0.6), 'Funcionário: Juliana Prado')
+    c.hover(CAMPO('punch-type'), 0.3, at=c.A(9, 'tipo,', 0.75), label='Tipo: Entrada')
+    c.click(CAMPO('punch-when'), at=c.A(9, 'hora', 0.9), label='Data e hora da batida')
+    c.ev(JS_HORA('08:00'), label='hora 08:00')
+    c.click(CAMPO('punch-notes'), label='campo Observação')
+    c.ev(colar('Esqueceu de bater'), at=c.A(9, 'motivo.', 0.3), label='Observação: Esqueceu de bater')
+    c.click(SEL(f"{DLG} button:text-is('Lançar')"), at=c.A(9, 'entra', 0.9), label='Lançar')
+    c.waitfor(text='Registro manual lançado', timeout=10)
+    c.waitfor(gone={'role': 'dialog'}, timeout=10)
+    c.mark(10)
+    c.hover(SEL("main button:text-is('Hoje')"), 0.3, at=c.A(10, 'em', 0.75), label='filtros Hoje, Semana, Mês')
+    c.hover(SEL("main button:text-is('Semana')"), 0.3, label='Semana')
+    c.hover(SEL("main button:text-is('Mês')"), 0.6, label='Mês')
+    c.mark(11)
+    c.click(ABA('Ausências'), at=c.A(11, 'Ausências', 0.9), label='aba Ausências')
+    c.waitfor(text='Lançar ausência', timeout=10)
+    c.click(SEL("main button:has-text('Lançar ausência')"), at=c.A(11, 'lança', 0.9), label='Lançar ausência')
+    c.waitfor(text='Registre quem não veio', timeout=10)
+    escolhe(c, CAMPO('absence-employee'), 'Juliana Prado', c.A(11, 'inteiro', 0.9), c.A(11, 'vez.', 0.9), 'Funcionário: Juliana Prado')
+    escolhe(c, CAMPO('absence-type'), 'Férias', c.A(11, 'As', 0.9), c.A(11, 'férias', 0.3), 'Tipo: Férias')
+    c.digita(CAMPO('absence-start'), '07122026', c.W(11, 'sete'), 'Data de início 07/12/2026', folga_clique=1.0)
+    c.digita(CAMPO('absence-end'), '05012027', c.W(11, 'cinco'), 'Data de fim 05/01/2027', folga_clique=1.0)
+    c.confere('dlg', ['30 dias'], '30 dias de ausência')
+    c.click(SEL(f"{DLG} button:text-is('Lançar ausência')"), at=c.A(11, 'Nesses', 0.9), label='Lançar ausência')
+    c.waitfor(gone={'role': 'dialog'}, timeout=10)
+    c.hover(SEL("main tr:has-text('Juliana Prado')"), 1.4, at=c.A(11, 'Férias,', 0.75, nth=1), label='a linha das férias da Juliana na tabela')
+    c.fim()
+    return c
+
+
+# 08:00 no DateTimeField do "Lançar registro manual": o campo de hora do popover (input time) recebe o valor pelo setter nativo; Concluir fecha
+JS_HORA = lambda hhmm: ("(async()=>{const dorme=ms=>new Promise(r=>setTimeout(r,ms));let i=null;for(let k=0;k<30&&!i;k++){i=[...document.querySelectorAll('input')].filter(x=>x.type==='time'||/hora|--:--/i.test(x.placeholder||'')).pop();if(!i)await dorme(100)}"
+                        "if(!i)return 'SEM ALVO: campo de hora';const set=Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set;set.call(i,%s);"
+                        "i.dispatchEvent(new Event('input',{bubbles:true}));i.dispatchEvent(new Event('change',{bubbles:true}));await dorme(300);"
+                        "const ok=[...document.querySelectorAll('button')].find(b=>b.textContent.trim()==='Concluir');if(ok)ok.click();await dorme(300);return 'hora '+i.value})()") % json.dumps(hhmm)
+
+
+def cap17():
+    """Recapitulando: passeio rápido pelo estado final (o editor monta os trechos)."""
+    c = cap_novo(17, setup=RH)
+    c.mark(1)
+    menu_linha(c, 'Gabriel Rocha', 'Editar', at=c.A(1, 'Gabriel', 1.0), label='menu ⋯ do Gabriel')
+    item_menu(c, 'Gabriel Rocha', 'Editar', label='Editar o Gabriel')
+    c.waitfor(target=CAMPO('name'), timeout=10)
+    c.click(DTAB('Remuneração'), at=c.A(1, 'custo', 0.9), label='Remuneração: salário, custo mensal R$ 4.264,00 e CLT')
+    c.hover(CAMPO('monthly_cost'), 0.8, label='Custo mensal total R$ 4.264,00')
+    c.click(BDLG('Cancelar'), at=c.A(1, 'regime', 0.6), label='Cancelar')
+    c.waitfor(gone={'role': 'dialog'}, timeout=8)
+    c.mark(2)
+    c.hover(SEL("main [role=listitem]:has(p:text-is('Edson Moura')) span:has-text('Transporte')"), 0.4, at=c.A(2, 'Transporte,', 0.75), label='o departamento Transporte')
+    c.click(LINHA('Diego Morais'), at=c.A(2, 'Diego', 0.8), label='Diego: vale e falta')
+    c.hover(RESUMO('Faltas'), 0.3, label='Diego: Vales/Adiantamentos 200 e Faltas 90')
+    c.click(LINHA('Cláudio Ferraz'), at=c.A(2, 'Cláudio.', 0.8), label='Cláudio: bônus')
+    c.hover(RESUMO('Bônus'), 0.3, label='Cláudio: Bônus 150')
+    c.mark(3)
+    c.click(LINHA('Edson Moura'), at=c.A(3, 'Edson', 0.8), label='Edson')
+    c.click(SEL(f"{FICHA} button:has-text('Extrato')"), at=c.A(3, 'Fez', 0.9), label='Extrato - Edson Moura')
+    c.waitfor(text='Extrato - Edson Moura', timeout=10)
+    c.mark(4)
+    c.click(BDLG('Fechar'), at=c.A(4, 'extrato', 0.6), label='Fechar o extrato')
+    c.waitfor(gone={'role': 'dialog'}, timeout=8)
+    c.click(SEL("main button:has-text('Exportar Relatório')"), at=c.A(4, 'relatório', 0.9), label='Exportar Relatório')
+    c.waitfor(text='Modelo de relatório', timeout=10)
+    fechar_janela(c, label='fecha o relatório')
+    c.mark(5)
+    menu_linha(c, 'Gabriel Rocha', 'Copiar link do ponto', at=c.A(5, 'Ligou', 0.6), label='menu ⋯ do Gabriel: Copiar link do ponto')
+    c.press('Escape', label='fecha o menu')
+    c.mark(6)
+    c.click(ABA('Folha de Ponto'), at=c.A(6, 'folha', 0.9), label='Folha de Ponto')
+    c.waitfor(text='Todos os funcionários', timeout=10)
+    c.mark(7)
+    c.click(ABA('Funcionários'), at=c.A(7, 'arquivou', 0.9), label='Funcionários')
+    c.waitfor(target=LINHA('Rafael Nogueira'), timeout=10)
+    c.click(SEL("main button:text-is('Inativos')"), at=c.A(7, 'Rogério,', 0.6), label='Inativos com o Rogério')
+    c.waitfor(target=LINHA('Rogério Batista'), timeout=8)
     c.mark(8)
-    c.hover(SEL("main button:has-text('Lançar manual')"), 2.0, at=c.A(8, 'Lançar', 0.75), label='Lançar manual')
+    c.cursor((1000, 140), at=c.A(8, 'No', 0.3), label='cursor descansa (cartão Próximo)')
     c.fim()
     return c
 
@@ -1001,9 +1377,9 @@ if(!await escolhe(bts[0],'08'))return 'falhou entrada';if(!await escolhe(bts[1],
 return 'ok '+feito.join(',')})()"""
 
 
-def cap11():
+def cap15():
     """Configurações do ponto: selfie e localização, jornada padrão e dias; a jornada individual da Juliana (08:00 às 17:00)."""
-    c = cap_novo(11, setup=RH)
+    c = cap_novo(15, setup=RH)
     c.mark(1)
     c.click(ABA('Configurações de Ponto'), at=c.A(1, 'Configurações', 0.9), label='aba Configurações de Ponto')
     c.waitfor(text='Jornada Padrão da Empresa', timeout=10)
@@ -1018,32 +1394,37 @@ def cap11():
     c.hover(CAMPO('default-break', 'main'), 0.3, at=c.A(2, 'hora', 0.75), label='Intervalo padrão (min) 60')
     c.hover(CAMPO('late-tol', 'main'), 0.6, at=c.A(2, 'dez', 0.75), label='Tolerância de atraso (min) 10')
     c.mark(3)
-    rola_ate(c, 'main', 'Dias em que a empresa trabalha', c.A(3, 'E', 0.4), 'rola até os dias da empresa', y=330, dur_ms=600)
-    c.hover(SEL("main #work-weekday-1"), 0.3, at=c.A(3, 'segunda', 0.75), label='Dias em que a empresa trabalha: Seg')
-    c.hover(SEL("main #work-weekday-5"), 1.0, at=c.A(3, 'sexta.', 0.75), label='Seg a Sex ligados')
+    rola_ate(c, 'main', 'Batidas da madrugada', c.A(3, 'madrugada,', 1.0), 'rola até a batida da madrugada', y=300, dur_ms=500)
+    c.hover(CAMPO('overnight-until', 'main'), 1.6, at=c.A(3, 'madrugada,', 0.5), label='Batidas da madrugada contam para o dia anterior até')
     c.mark(4)
-    rola_ate(c, 'main', 'Jornada Individual', c.A(4, 'jornada', 0.6), 'rola até a Jornada Individual', y=160)
-    LAPIS = SEL("main tr:has-text('Juliana Prado') button:has(svg.lucide-pencil)")
-    c.hover(SEL("main tr:has-text('Juliana Prado')"), 0.3, at=c.A(4, 'Juliana,', 0.75), label='a linha da Juliana (horários herdados em cinza)')
+    rola_ate(c, 'main', 'Dias em que a empresa trabalha', c.A(4, 'E', 0.4), 'rola até os dias da empresa', y=330, dur_ms=600)
+    c.hover(SEL("main #work-weekday-1"), 0.3, at=c.A(4, 'segunda', 0.75), label='Dias em que a empresa trabalha: Seg')
+    c.hover(SEL("main #work-weekday-5"), 1.0, at=c.A(4, 'sexta.', 0.75), label='Seg a Sex ligados')
     c.mark(5)
-    c.click(LAPIS, at=c.A(5, 'lápis', 0.9), label='lápis da Juliana Prado')
+    rola_ate(c, 'main', 'Jornada Individual', c.A(5, 'jornada', 0.6), 'rola até a Jornada Individual', y=160)
+    LAPIS = SEL("main tr:has-text('Juliana Prado') button:has(svg.lucide-pencil)")
+    c.hover(SEL("main tr:has-text('Juliana Prado')"), 0.3, at=c.A(5, 'Juliana,', 0.75), label='a linha da Juliana (horários herdados em cinza)')
+    c.mark(6)
+    c.click(LAPIS, at=c.A(6, 'lápis', 0.9), label='lápis da Juliana Prado')
     c.waitfor(text='Sobrescreve o padrão da empresa para este funcionário.', timeout=8)
-    c.ev(JS_JORNADA, at=c.A(5, 'troco', 0.3), label='Seg a Sex: 08:00 às 17:00 (trecho acelerado, selo 4x)')
+    c.ev(JS_JORNADA, at=c.A(6, 'troco', 0.3), label='Seg a Sex: 08:00 às 17:00 (trecho acelerado, selo 4x)')
     c.confere('dlg', ['08:00', '17:00'], 'jornada da Juliana 08:00 às 17:00')
-    c.click(SEL(f"{DLG} button:has-text('Salvar jornada')"), at=c.A(5, 'Salvar', 0.9), label='Salvar jornada')
+    c.hover(SEL(f"{DLG} input[aria-label='Intervalo de Seg em minutos']"), 1.0, at=c.A(6, 'intervalo,', 0.75), label='Intervalo de Seg em minutos (por dia)')
+    c.hover(SEL(f"{DLG} button[role=switch]"), 1.0, at=c.A(6, 'desligando', 0.75), label='o interruptor do dia (Folga)')
+    c.click(SEL(f"{DLG} button:has-text('Salvar jornada')"), at=c.A(6, 'Salvar', 0.9), label='Salvar jornada')
     c.waitfor(text='Jornada salva', timeout=8)
     c.waitfor(gone={'role': 'dialog'}, timeout=8)
     c.confere("main table", ['08:00-17:00'], 'a jornada da Juliana na tabela')
-    c.hover(SEL("main tr:has-text('Juliana Prado')"), 1.0, at=c.A(5, 'folha', 0.75), label='a linha da Juliana: 08:00-17:00 (1h int.)')
-    c.mark(6)
-    c.cursor((1000, 140), at=c.A(6, 'A', 0.3), label='cursor descansa (ilustração da jornada)')
+    c.hover(SEL("main tr:has-text('Juliana Prado')"), 1.0, at=c.A(6, 'folha', 0.75), label='a linha da Juliana: 08:00-17:00 (1h int.)')
+    c.mark(7)
+    c.cursor((1000, 140), at=c.A(7, 'A', 0.3), label='cursor descansa (ilustração da jornada)')
     c.fim()
     return c
 
 
-def cap12():
+def cap16():
     """Arquivar o Rogério, Inativos (Reativar) e o diálogo do Excluir definitivamente (Cancelar)."""
-    c = cap_novo(12, setup=RH)
+    c = cap_novo(16, setup=RH)
     c.mark(1)
     rola_ate(c, 'main [role=list]', 'Rogério Batista', c.A(1, 'sai', 0.4), 'rola a lista até o Rogério', y=520, dur_ms=600, prefixo=False)
     c.click(LINHA('Rogério Batista'), at=c.A(1, 'Rogério,', 0.8), label='Rogério Batista')
@@ -1052,7 +1433,7 @@ def cap12():
     c.hover(DADO('Último pagamento'), 1.0, at=c.A(1, 'recebeu', 0.75), label='Último pagamento 30/10/2026')
     c.mark(2)
     menu_linha(c, 'Rogério Batista', 'Arquivar', at=c.A(2, 'arquivar.', 1.0), label='menu ⋯ do Rogério')
-    c.hover(ITEM('Arquivar'), 3.0, at=c.A(2, 'Assim', 0.5), label='Arquivar em destaque (sem clicar)', noScroll=True)
+    c.hover(ITEM('Arquivar'), 3.0, at=c.A(2, 'Mesmo', 0.5), label='Arquivar em destaque (sem clicar)', noScroll=True)
     c.mark(3)
     item_menu(c, 'Rogério Batista', 'Arquivar', at=c.A(3, 'Arquivar.', 0.6), label='Arquivar')
     c.waitfor(text='Funcionário arquivado', timeout=8)
@@ -1076,47 +1457,7 @@ def cap12():
     return c
 
 
-def cap13():
-    """Recapitulando: passeio rápido pelo estado final (o editor monta os trechos): cadastro e custo do Gabriel, Transporte, Diego,
-    Cláudio, o extrato do Edson, Copiar link do ponto, a folha com Atestado e os Inativos."""
-    c = cap_novo(13, setup=RH)
-    c.mark(1)
-    menu_linha(c, 'Gabriel Rocha', 'Editar', at=c.A(1, 'Gabriel', 1.0), label='menu ⋯ do Gabriel')
-    item_menu(c, 'Gabriel Rocha', 'Editar', label='Editar o Gabriel')
-    c.waitfor(target=CAMPO('name'), timeout=10)
-    c.click(DTAB('Remuneração'), at=c.A(1, 'custo', 0.9), label='Remuneração: salário, custo mensal R$ 4.264,00 e CLT')
-    c.hover(CAMPO('monthly_cost'), 0.8, label='Custo mensal total R$ 4.264,00')
-    c.click(BDLG('Cancelar'), at=c.A(1, 'regime', 0.6), label='Cancelar')
-    c.waitfor(gone={'role': 'dialog'}, timeout=8)
-    c.mark(2)
-    c.hover(SEL("main [role=listitem]:has(p:text-is('Edson Moura')) span:has-text('Transporte')"), 0.4, at=c.A(2, 'Transporte,', 0.75), label='o departamento Transporte')
-    c.click(LINHA('Diego Morais'), at=c.A(2, 'Diego', 0.8), label='Diego: vale e falta')
-    c.hover(RESUMO('Faltas'), 0.3, label='Diego: Vales 200 e Faltas 90')
-    c.click(LINHA('Cláudio Ferraz'), at=c.A(2, 'Cláudio.', 0.8), label='Cláudio: bônus')
-    c.hover(RESUMO('Bônus'), 0.3, label='Cláudio: Bônus 150')
-    c.mark(3)
-    c.click(LINHA('Edson Moura'), at=c.A(3, 'Edson,', 0.8), label='Edson')
-    c.click(SEL(f"{FICHA} button:has-text('Extrato')"), at=c.A(3, 'extrato.', 1.2), label='Extrato - Edson Moura')
-    c.waitfor(text='Extrato - Edson Moura', timeout=10)
-    c.mark(4)
-    c.click(BDLG('Fechar'), at=c.A(4, 'Ligou', 0.6), label='Fechar o extrato')
-    c.waitfor(gone={'role': 'dialog'}, timeout=8)
-    menu_linha(c, 'Gabriel Rocha', 'Copiar link do ponto', at=c.A(4, 'ponto', 0.6), label='menu ⋯ do Gabriel: Copiar link do ponto')
-    c.press('Escape', label='fecha o menu')
-    c.click(ABA('Folha de Ponto'), at=c.A(4, 'falta', 1.2), label='Folha de Ponto')
-    c.waitfor(text='Todos os funcionários', timeout=10)
-    c.mark(5)
-    c.click(ABA('Funcionários'), at=c.A(5, 'arquivou', 0.9), label='Funcionários')
-    c.waitfor(target=LINHA('Rafael Nogueira'), timeout=10)
-    c.click(SEL("main button:text-is('Inativos')"), at=c.A(5, 'Rogério,', 0.6), label='Inativos com o Rogério')
-    c.waitfor(target=LINHA('Rogério Batista'), timeout=8)
-    c.mark(6)
-    c.cursor((1000, 140), at=c.A(6, 'No', 0.3), label='cursor descansa (cartão Próximo)')
-    c.fim()
-    return c
-
-
-CAPS_ROBO = {n: globals()[f'cap{n:02d}'] for n in range(14) if f'cap{n:02d}' in globals()}
+CAPS_ROBO = {n: globals()[f'cap{n:02d}'] for n in range(18) if f'cap{n:02d}' in globals()}
 
 if __name__ == '__main__':
     quais = [int(a) for a in sys.argv[1:]] or sorted(CAPS_ROBO)
@@ -1140,4 +1481,7 @@ if __name__ == '__main__':
             json.dump(d, f, ensure_ascii=False, indent=1)
         resp = ''.join(f'\n    RESPIRO PENDENTE: a voz precisa de +{dd:.2f} s na L{li} (T {t:.2f} s no take): pausas.py {n:02d} {t:.2f}:{dd:.2f}'
                        for li, t, dd in c.respiros)
+        json.dump({f'{k:02d}': FAKE_NOW[k] for k in FAKE_NOW}, open(os.path.join(HERE, 'fake_now.json'), 'w', encoding='utf8'), indent=1)
         print(f'cap{n:02d}: {len(d["steps"])} passos, narração {c.dur:.1f} s ({"estimada" if c.estimada else "da voz"}), FAKE_NOW {FAKE_NOW[n]}{resp}')
+    for m in FALTAS:
+        print('FALTA', m)

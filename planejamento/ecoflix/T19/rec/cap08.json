@@ -1,6 +1,6 @@
 {
  "name": "t19-cap08",
- "title": "T19 · Cap. 8 · Ligar o ponto e gerar o link (narração 75,5 s, ESTIMADA; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
+ "title": "T19 · Cap. 8 · Férias e décimo terceiro (narração 60,6 s, ESTIMADA; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
  "fakeNow": "2026-11-10T08:30:00-03:00",
  "seed": "t19-cap08",
  "pace": 0.5,
@@ -21,7 +21,7 @@
   "dominex:daily-tasks-shown:34c36c63-0890-5e89-8963-7c77b7996908": "2026-11-10"
  },
  "seedExtra": [
-  "t19/apos-cap06"
+  "t19/apos-cap07"
  ],
  "prewarm": [
   "/login"
@@ -117,32 +117,47 @@
    "at": 0
   },
   {
+   "do": "click",
+   "target": {
+    "selector": "main [role=listitem] > button:has(p:text-is('Juliana Prado'))"
+   },
+   "at": 0.2,
+   "label": "Juliana Prado"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "main section[aria-label^='Detalhes de'] div:has(> p:text-is('Saldo atual'))"
+   },
+   "timeout": 10
+  },
+  {
    "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const el=[...document.querySelectorAll(\"main [role=list] *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Gabriel Rocha\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-430);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/400),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 1.49,
-   "label": "a lista mostra Gabriel Rocha no meio"
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const el=[...document.querySelectorAll(\"main [role=list] *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Juliana Prado\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-430);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/400),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 0.0,
+   "label": "a lista mostra Juliana Prado no meio"
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main [role=listitem] button[aria-label='Ações de Gabriel Rocha']"
+    "selector": "main [role=listitem] button[aria-label='Ações de Juliana Prado']"
    },
-   "seconds": 0.5,
-   "at": 2.09,
-   "label": "menu ⋯ do Gabriel",
+   "seconds": 0.2,
+   "at": 0.2,
+   "label": "menu ⋯ da Juliana",
    "optional": false,
    "timeout": 8
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main [role=listitem] button[aria-label='Ações de Gabriel Rocha']"
+    "selector": "main [role=listitem] button[aria-label='Ações de Juliana Prado']"
    },
    "seconds": 0.4,
-   "label": "menu ⋯ de Gabriel Rocha de novo (só se não abriu)",
+   "label": "menu ⋯ de Juliana Prado de novo (só se não abriu)",
    "unless": {
     "role": "menuitem",
-    "name": "Editar"
+    "name": "Pagar férias"
    },
    "optional": true,
    "timeout": 4
@@ -151,107 +166,207 @@
    "do": "waitFor",
    "target": {
     "role": "menuitem",
-    "name": "Editar"
+    "name": "Pagar férias"
    },
    "timeout": 6
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main [role=listitem] button[aria-label='Ações de Gabriel Rocha']"
-   },
-   "seconds": 0.2,
-   "label": "menu ⋯ de Gabriel Rocha (só se fechou)",
-   "unless": {
     "role": "menuitem",
-    "name": "Editar"
-   },
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "menuitem",
-    "name": "Editar"
-   },
-   "at": 3.72,
-   "label": "Editar",
-   "noScroll": true
-  },
-  {
-   "do": "waitFor",
-   "target": {
-    "selector": "[role=dialog] #name"
-   },
-   "timeout": 10
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "[role=dialog] [role=tab]:has-text('Ponto eletrônico')"
-   },
-   "at": 3.83,
-   "label": "aba Ponto eletrônico"
-  },
-  {
-   "do": "waitFor",
-   "target": {
-    "selector": "[role=dialog] #ponto-enabled"
-   },
-   "timeout": 6
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Ativar ponto eletrônico\", \"Gera um link público pro funcionário bater ponto sem login.\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
-   "label": "confere ponto ligado"
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "[role=dialog] #ponto-enabled"
+    "name": "Pagar férias"
    },
    "seconds": 0.1,
-   "at": 10.89,
-   "label": "Ativar ponto eletrônico (ligado)",
+   "at": 1.4,
+   "label": "Pagar férias",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "menuitem",
+    "name": "Pagar 13º salário"
+   },
+   "seconds": 0.1,
+   "at": 2.0,
+   "label": "Pagar 13º salário",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "menuitem",
+    "name": "Pagar rescisão"
+   },
+   "seconds": 0.6,
+   "at": 2.6,
+   "label": "Pagar rescisão",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main [role=listitem] button[aria-label='Ações de Juliana Prado']"
+   },
+   "seconds": 0.2,
+   "label": "menu ⋯ de Juliana Prado (só se fechou)",
+   "unless": {
+    "role": "menuitem",
+    "name": "Pagar férias"
+   },
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L2",
-   "at": 11.69
+   "at": 6.45
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Pagar férias"
+   },
+   "at": 7.74,
+   "label": "Pagar férias",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "text": "Pagar Férias",
+   "timeout": 10
   },
   {
    "do": "hover",
    "target": {
-    "text": "Sem PIN. Qualquer um com o link",
+    "text": "Não altera o saldo de salário em aberto",
     "within": "[role=dialog]"
    },
-   "seconds": 1.2,
-   "at": 13.59,
-   "label": "PIN do ponto (opcional): Sem PIN",
+   "seconds": 2.4,
+   "at": 11.62,
+   "label": "aviso: não altera o saldo de salário em aberto",
    "optional": true,
    "timeout": 4
   },
   {
+   "do": "mark",
+   "name": "L3",
+   "at": 18.42
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] #competence-amount"
+   },
+   "at": 22.52,
+   "label": "campo Valor 3.733,33"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] #competence-amount"
+   },
+   "text": "3733,33",
+   "cps": 40,
+   "at": 23.67,
+   "label": "Valor 3.733,33",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] label[for='competence-pix']"
+   },
+   "at": 27.98,
+   "label": "Forma de pagamento: PIX/Transferência (Banco)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] #competence-description"
+   },
+   "at": 28.82,
+   "label": "campo Observação"
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const e=document.activeElement;if(!e||!/^(INPUT|TEXTAREA)$/.test(e.tagName))return 'SEM FOCO';document.execCommand('insertText',false,\"Per\\u00edodo aquisitivo 2025/2026\");return e.value})()",
+   "at": 29.62,
+   "label": "Observação: Período aquisitivo 2025/2026"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:text-is('Confirmar'):not(.absolute)"
+   },
+   "at": 30.03,
+   "label": "Confirmar"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 12
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"R$ 2.800,00\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main section[aria-label^='Detalhes de']\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere saldo da Juliana segue 2.800,00"
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 31.22
+  },
+  {
    "do": "hover",
    "target": {
-    "selector": "[role=dialog] button:has-text('Definir PIN')"
+    "selector": "main section[aria-label^='Detalhes de'] div:has(> p:text-is('Saldo atual'))"
    },
-   "seconds": 1.4,
-   "at": 20.11,
-   "label": "Definir PIN (sem clicar)",
+   "seconds": 1.0,
+   "at": 31.52,
+   "label": "Saldo atual R$ 2.800,00 (igual)",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "click",
    "target": {
-    "selector": "[role=dialog] button:text-is('Cancelar'):not(.absolute)"
+    "selector": "main section[aria-label^='Detalhes de'] button:has-text('Extrato')"
    },
-   "at": 24.72,
-   "label": "Cancelar"
+   "at": 33.95,
+   "label": "Extrato"
+  },
+  {
+   "do": "waitFor",
+   "text": "Extrato - Juliana Prado",
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] :text-is('Férias')"
+   },
+   "seconds": 0.34,
+   "at": 36.53,
+   "label": "a linha com o selo Férias",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:text-is('Fechar'):not(.absolute)"
+   },
+   "label": "Fechar o extrato"
   },
   {
    "do": "waitFor",
@@ -262,36 +377,51 @@
   },
   {
    "do": "mark",
-   "name": "L3",
-   "at": 25.02
+   "name": "L5",
+   "at": 37.87
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main [role=listitem] > button:has(p:text-is('Cláudio Ferraz'))"
+   },
+   "at": 38.57,
+   "label": "Cláudio Ferraz"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "main section[aria-label^='Detalhes de'] h2:text-is('Cláudio Ferraz')"
+   },
+   "timeout": 10
   },
   {
    "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const el=[...document.querySelectorAll(\"main [role=list] *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Gabriel Rocha\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-430);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/400),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 26.4,
-   "label": "a lista mostra Gabriel Rocha no meio"
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const el=[...document.querySelectorAll(\"main [role=list] *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Cl\\u00e1udio Ferraz\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-430);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/400),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 37.42,
+   "label": "a lista mostra Cláudio Ferraz no meio"
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main [role=listitem] button[aria-label='Ações de Gabriel Rocha']"
+    "selector": "main [role=listitem] button[aria-label='Ações de Cláudio Ferraz']"
    },
-   "seconds": 0.28,
-   "at": 27.0,
-   "label": "menu ⋯ do Gabriel",
+   "seconds": 0.1,
+   "at": 38.02,
+   "label": "menu ⋯ do Cláudio",
    "optional": false,
    "timeout": 8
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main [role=listitem] button[aria-label='Ações de Gabriel Rocha']"
+    "selector": "main [role=listitem] button[aria-label='Ações de Cláudio Ferraz']"
    },
    "seconds": 0.4,
-   "label": "menu ⋯ de Gabriel Rocha de novo (só se não abriu)",
+   "label": "menu ⋯ de Cláudio Ferraz de novo (só se não abriu)",
    "unless": {
     "role": "menuitem",
-    "name": "Copiar link do ponto"
+    "name": "Pagar 13º salário"
    },
    "optional": true,
    "timeout": 4
@@ -300,20 +430,20 @@
    "do": "waitFor",
    "target": {
     "role": "menuitem",
-    "name": "Copiar link do ponto"
+    "name": "Pagar 13º salário"
    },
    "timeout": 6
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main [role=listitem] button[aria-label='Ações de Gabriel Rocha']"
+    "selector": "main [role=listitem] button[aria-label='Ações de Cláudio Ferraz']"
    },
    "seconds": 0.2,
-   "label": "menu ⋯ de Gabriel Rocha (só se fechou)",
+   "label": "menu ⋯ de Cláudio Ferraz (só se fechou)",
    "unless": {
     "role": "menuitem",
-    "name": "Copiar link do ponto"
+    "name": "Pagar 13º salário"
    },
    "optional": true,
    "timeout": 4
@@ -322,129 +452,86 @@
    "do": "click",
    "target": {
     "role": "menuitem",
-    "name": "Copiar link do ponto"
+    "name": "Pagar 13º salário"
    },
-   "at": 28.28,
-   "label": "Copiar link do ponto",
+   "at": 38.85,
+   "label": "Pagar 13º salário",
    "noScroll": true
   },
   {
    "do": "waitFor",
-   "text": "Link copiado",
-   "timeout": 6
-  },
-  {
-   "do": "mark",
-   "name": "L4",
-   "at": 30.0
-  },
-  {
-   "do": "scroll",
-   "point": {
-    "x": 1000,
-    "y": 140
-   },
-   "by": 0,
-   "duration": 0.2,
-   "after": 0,
-   "at": 30.6,
-   "label": "cursor descansa (ilustração do link no celular)"
-  },
-  {
-   "do": "mark",
-   "name": "L5",
-   "at": 34.53
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "#tab-btn-config-ponto"
-   },
-   "at": 40.22,
-   "label": "aba Configurações de Ponto"
-  },
-  {
-   "do": "waitFor",
-   "text": "Jornada Padrão da Empresa",
+   "text": "Pagar 13º Salário",
    "timeout": 10
   },
   {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] #competence-amount"
+   },
+   "at": 43.26,
+   "label": "campo Valor 1.050,00"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] #competence-amount"
+   },
+   "text": "1050,00",
+   "cps": 40,
+   "at": 44.41,
+   "label": "Valor 1.050,00",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] label[for='competence-pix']"
+   },
+   "label": "Forma de pagamento: PIX/Transferência (Banco)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] #competence-description"
+   },
+   "label": "campo Observação"
+  },
+  {
    "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const el=[...document.querySelectorAll(\"main *\")].filter(e=>e.textContent.trim().startsWith(\"Marque quem vai bater ponto\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-250);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 42.09,
-   "label": "rola até o cartão Ativar ponto eletrônico"
+   "js": "(()=>{const e=document.activeElement;if(!e||!/^(INPUT|TEXTAREA)$/.test(e.tagName))return 'SEM FOCO';document.execCommand('insertText',false,\"1\\u00aa parcela 2026\");return e.value})()",
+   "label": "Observação: 1ª parcela 2026"
   },
   {
    "do": "click",
    "target": {
-    "selector": "main div.cursor-pointer:has(p:text-is('Juliana Prado'))"
+    "selector": "[role=dialog] button:text-is('Confirmar'):not(.absolute)"
    },
-   "at": 46.62,
-   "label": "marca Juliana Prado"
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "main button:has-text('Ativar ponto (1)')"
-   },
-   "at": 48.11,
-   "label": "Ativar ponto (1)"
+   "at": 45.41,
+   "label": "Confirmar"
   },
   {
    "do": "waitFor",
-   "text": "1 funcionário com ponto ativado",
-   "timeout": 8
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 12
   },
   {
    "do": "mark",
    "name": "L6",
-   "at": 49.52
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const el=[...document.querySelectorAll(\"main *\")].filter(e=>e.textContent.trim().startsWith(\"Tablet da empresa\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-150);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 50.39,
-   "label": "sobe até o cartão Tablet da empresa"
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "/ponto/empresa/",
-    "within": "main"
-   },
-   "seconds": 1.2,
-   "at": 52.79,
-   "label": "link do tablet /ponto/empresa/...",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main svg[role=img], main canvas, main img[alt*='QR']"
-   },
-   "seconds": 1.0,
-   "at": 55.82,
-   "label": "QR Code do tablet",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "mark",
-   "name": "L7",
-   "at": 60.96
+   "at": 45.66
   },
   {
    "do": "scroll",
    "point": {
-    "x": 1000,
+    "x": 900,
     "y": 140
    },
    "by": 0,
    "duration": 0.2,
    "after": 0,
-   "at": 61.56,
-   "label": "cursor descansa (ilustração dos dois links)"
+   "at": 46.26,
+   "label": "cursor descansa (ilustração das três gavetas)"
   },
   {
    "do": "eval",
@@ -454,7 +541,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 75.52
+   "at": 60.59
   }
  ]
 }

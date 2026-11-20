@@ -1,6 +1,6 @@
 {
  "name": "t19-cap06",
- "title": "T19 · Cap. 6 · Pagar e receber do funcionário (narração 96,7 s, ESTIMADA; marcas L1..L10 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
+ "title": "T19 · Cap. 6 · Pagar e receber do funcionário (narração 151,7 s, ESTIMADA; marcas L1..L14 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
  "fakeNow": "2026-11-10T08:30:00-03:00",
  "seed": "t19-cap06",
  "pace": 0.5,
@@ -107,6 +107,10 @@
   },
   {
    "do": "eval",
+   "js": "(()=>{if(window.__abas)return 'ja';window.__abas=[];window.__pdfs=[];const o=URL.createObjectURL.bind(URL);URL.createObjectURL=(b)=>{try{if(b&&b.type==='application/pdf')window.__pdfs.push(b)}catch(e){}return o(b)};const wo=window.open.bind(window);window.open=(...a)=>{const w=wo(...a);window.__abas.push(w);return w};return 'ganchos'})()"
+  },
+  {
+   "do": "eval",
    "js": "(()=>{window.__avisos=[];const re=/N[ãa]o foi poss[ií]vel|Erro ao|Tente novamente|indispon[ií]vel|Algo deu errado|Falha ao|Something went wrong|inv[áa]lido/i;const chk=(t)=>{t=(t||'').trim();const m=t&&t.match(new RegExp('[^]{0,40}('+re.source+')[^]{0,40}','i'));if(m&&window.__avisos.length<10)window.__avisos.push(m[0].replace(/[\\n\\r\\t ]+/g,' '))};new MutationObserver(ms=>{for(const m of ms){m.addedNodes.forEach(n=>chk(n.textContent));if(m.type==='characterData')chk(m.target.textContent)}}).observe(document.body,{childList:true,subtree:true,characterData:true});chk(document.body.innerText);return 1})()"
   }
  ],
@@ -150,11 +154,11 @@
   {
    "do": "hover",
    "target": {
-    "selector": "main section[aria-label^='Detalhes de'] div:has(> p:text-is('Vales'))"
+    "selector": "main section[aria-label^='Detalhes de'] div:has(> p:text-is('Vales/Adiantamentos'))"
    },
    "seconds": 0.4,
    "at": 7.7,
-   "label": "Vales R$ 500,00",
+   "label": "Vales/Adiantamentos R$ 500,00",
    "optional": true,
    "timeout": 4
   },
@@ -186,6 +190,11 @@
    "do": "waitFor",
    "text": "Registrar devolução de valor pelo funcionário",
    "timeout": 10
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Vales/Adiantamentos pendentes:\", \"R$ 500,00\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Vales/Adiantamentos pendentes R$ 500,00"
   },
   {
    "do": "click",
@@ -250,19 +259,19 @@
   },
   {
    "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Vales antes\", \"R$ 500,00\", \"Abatido\", \"Vales restantes\", \"R$ 400,00\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Vales/Adiantamentos antes\", \"R$ 500,00\", \"Abatido\", \"Vales/Adiantamentos restantes\", \"R$ 400,00\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
    "label": "confere vales 500 -> 400"
   },
   {
    "do": "hover",
    "target": {
-    "text": "Vales restantes",
+    "text": "Vales/Adiantamentos restantes",
     "exact": true,
     "within": "[role=dialog]"
    },
    "seconds": 0.27,
    "at": 26.46,
-   "label": "Vales restantes R$ 400,00",
+   "label": "Vales/Adiantamentos restantes R$ 400,00",
    "optional": true,
    "timeout": 4
   },
@@ -300,22 +309,31 @@
   },
   {
    "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Salário:\", \"R$ 2.900,00\", \"Total de Bônus:\", \"R$ 250,00\", \"Descontos:\", \"R$ 400,00\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"body\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
-   "label": "confere resumo do pagamento"
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Resumo do pagamento\", \"Salário:\", \"R$ 2.900,00\", \"Total de Bônus:\", \"R$ 250,00\", \"Descontos:\", \"R$ 400,00\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere resumo do pagamento (Normal)"
   },
   {
-   "do": "eval",
-   "js": "(async()=>{const esp=[\"400,00\", \"2.750,00\"];let out='';for(let i=0;i<12;i++){const sc=[...document.querySelectorAll(\"[role=dialog]\")].pop();const v=sc?[...sc.querySelectorAll('input, textarea')].map(e=>e.value).join(' | '):'';const falta=esp.filter(e=>!v.includes(e));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+v.slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
-   "label": "confere vales a descontar 400,00 e valor 2.750,00"
+   "do": "hover",
+   "target": {
+    "text": "Resumo do pagamento",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.3,
+   "at": 31.52,
+   "label": "Resumo do pagamento (cartão à direita)",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "hover",
    "target": {
     "text": "Salário:",
-    "exact": true
+    "exact": true,
+    "within": "[role=dialog]"
    },
    "seconds": 0.1,
-   "at": 30.69,
+   "at": 35.01,
    "label": "Resumo: Salário",
    "optional": true,
    "timeout": 4
@@ -324,10 +342,11 @@
    "do": "hover",
    "target": {
     "text": "Total de Bônus:",
-    "exact": true
+    "exact": true,
+    "within": "[role=dialog]"
    },
    "seconds": 0.1,
-   "at": 31.67,
+   "at": 36.0,
    "label": "Resumo: Total de Bônus",
    "optional": true,
    "timeout": 4
@@ -336,10 +355,11 @@
    "do": "hover",
    "target": {
     "text": "Descontos:",
-    "exact": true
+    "exact": true,
+    "within": "[role=dialog]"
    },
    "seconds": 0.1,
-   "at": 32.51,
+   "at": 36.84,
    "label": "Resumo: Descontos (vales)",
    "optional": true,
    "timeout": 4
@@ -347,43 +367,61 @@
   {
    "do": "mark",
    "name": "L5",
-   "at": 33.55
+   "at": 37.87
   },
   {
    "do": "hover",
    "target": {
-    "text": "Quanto você quer descontar dos vales",
+    "text": "Vales/Adiantamentos desta folha",
     "within": "[role=dialog]"
    },
-   "seconds": 1.0,
-   "at": 35.06,
-   "label": "Quanto você quer descontar dos vales (400,00)",
+   "seconds": 0.8,
+   "at": 39.39,
+   "label": "Vales/Adiantamentos desta folha",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "hover",
    "target": {
-    "text": "Valor padrão: 100% dos vales",
+    "text": "Em aberto: R$ 400,00",
     "within": "[role=dialog]"
    },
-   "seconds": 1.2,
-   "at": 37.72,
-   "label": "Valor padrão: 100% dos vales (R$ 400,00)",
+   "seconds": 0.6,
+   "at": 43.19,
+   "label": "Em aberto: R$ 400,00",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const esp=[\"400,00\"];let out='';for(let i=0;i<12;i++){const sc=[...document.querySelectorAll(\"[role=dialog]\")].pop();const v=sc?[...sc.querySelectorAll('input, textarea')].map(e=>e.value).join(' | '):'';const falta=esp.filter(e=>!v.includes(e));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+v.slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Desconto neste pagamento 400,00"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Desconto neste pagamento",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.0,
+   "at": 45.46,
+   "label": "Desconto neste pagamento (400,00)",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L6",
-   "at": 44.22
+   "at": 51.2
   },
   {
    "do": "click",
    "target": {
     "selector": "[role=dialog] button:text-is('CLT (com folha)'):not(.absolute)"
    },
-   "at": 44.83,
+   "at": 51.81,
    "label": "Modo de pagamento: CLT (com folha)"
   },
   {
@@ -394,10 +432,23 @@
   {
    "do": "hover",
    "target": {
-    "text": "- INSS"
+    "text": "Folha CLT",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.1,
+   "at": 53.71,
+   "label": "Resumo no modo CLT: Folha CLT",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "- INSS",
+    "within": "[role=dialog]"
    },
    "seconds": 0.3,
-   "at": 47.41,
+   "at": 54.47,
    "label": "CLT: - INSS e - IRRF (estimados)",
    "optional": true,
    "timeout": 4
@@ -405,23 +456,12 @@
   {
    "do": "hover",
    "target": {
-    "text": "Líquido"
+    "text": "Líquido",
+    "within": "[role=dialog]"
    },
    "seconds": 0.3,
-   "at": 51.05,
+   "at": 58.11,
    "label": "CLT: Líquido",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "Valores estimados; confirme com seu contador.",
-    "exact": true
-   },
-   "seconds": 1.2,
-   "at": 53.56,
-   "label": "Valores estimados; confirme com seu contador.",
    "optional": true,
    "timeout": 4
   },
@@ -430,23 +470,28 @@
    "target": {
     "selector": "[role=dialog] button:text-is('Normal'):not(.absolute)"
    },
-   "at": 59.94,
+   "at": 61.53,
    "label": "Modo de pagamento: Normal"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const esp=[\"2.750,00\"];let out='';for(let i=0;i<12;i++){const sc=[...document.querySelectorAll(\"[role=dialog]\")].pop();const v=sc?[...sc.querySelectorAll('input, textarea')].map(e=>e.value).join(' | '):'';const falta=esp.filter(e=>!v.includes(e));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+v.slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Valor líquido do pagamento 2.750,00"
   },
   {
    "do": "mark",
    "name": "L7",
-   "at": 60.89
+   "at": 67.12
   },
   {
    "do": "hover",
    "target": {
-    "text": "Valor efetivamente pago",
+    "text": "Valor líquido do pagamento",
     "within": "[role=dialog]"
    },
    "seconds": 1.0,
-   "at": 61.2,
-   "label": "Valor efetivamente pago R$ 2.750,00",
+   "at": 67.88,
+   "label": "Valor líquido do pagamento R$ 2.750,00",
    "optional": true,
    "timeout": 4
   },
@@ -462,7 +507,7 @@
     "within": "[role=dialog]"
    },
    "seconds": 1.0,
-   "at": 65.07,
+   "at": 72.89,
    "label": "Calculado: R$ 2.750,00",
    "optional": true,
    "timeout": 4
@@ -470,84 +515,145 @@
   {
    "do": "mark",
    "name": "L8",
-   "at": 76.88
+   "at": 77.49
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] #valor-pago"
+   },
+   "at": 81.29,
+   "label": "campo Valor líquido 2.900,00 (diferente do calculado)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] #valor-pago"
+   },
+   "text": "2900,00",
+   "cps": 40,
+   "at": 82.44,
+   "label": "Valor líquido 2.900,00 (diferente do calculado)",
+   "noClick": true,
+   "clear": true
   },
   {
    "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.textContent.trim().startsWith(\"Forma de Pagamento\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-260);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/500),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 77.38,
-   "label": "rola até a Forma de Pagamento"
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"a mais\", \"Motivo da diferença\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere selo \"a mais\" e Motivo da diferença"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "a mais",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.1,
+   "at": 86.29,
+   "label": "o selo + R$ 150,00 a mais",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] #motivo-diferenca"
+   },
+   "at": 87.21,
+   "label": "Motivo da diferença: Gratificação (abre a lista)"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "role": "option",
+    "name": "Gratificação",
+    "exact": true
+   },
+   "timeout": 6
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Gratificação",
+    "exact": true
+   },
+   "at": 89.27,
+   "label": "Motivo da diferença: Gratificação",
+   "noScroll": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:text-is('voltar ao calculado')"
+   },
+   "at": 96.92,
+   "label": "voltar ao calculado"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const esp=[\"2.750,00\"];let out='';for(let i=0;i<12;i++){const sc=[...document.querySelectorAll(\"[role=dialog]\")].pop();const v=sc?[...sc.querySelectorAll('input, textarea')].map(e=>e.value).join(' | '):'';const falta=esp.filter(e=>!v.includes(e));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+v.slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere voltou ao calculado 2.750,00"
+  },
+  {
+   "do": "mark",
+   "name": "L9",
+   "at": 98.79
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.textContent.trim().startsWith(\"Data e hora do pagamento\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-230);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/500),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 99.23,
+   "label": "rola até Data e hora do pagamento"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Por padrão é agora",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.2,
+   "at": 100.08,
+   "label": "Data e hora do pagamento (retroativo)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] label[for='payment-mixed']"
+   },
+   "at": 103.65,
+   "label": "Pagamento Misto"
+  },
+  {
+   "do": "waitFor",
+   "text": "Pagamento Misto",
+   "timeout": 6
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] label[for='payment-mixed']"
+   },
+   "seconds": 1.2,
+   "at": 108.27,
+   "label": "Pagamento Misto: Dinheiro e PIX",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "click",
    "target": {
     "selector": "[role=dialog] label[for='payment-pix']"
    },
-   "at": 78.02,
-   "label": "Forma de Pagamento: PIX/Transferência"
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "[role=dialog] label:has-text('Conta')"
-   },
-   "seconds": 0.14,
-   "at": 78.93,
-   "label": "Conta bancária: Conta Principal",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "[role=dialog] button:text-is('Confirmar Pagamento'):not(.absolute)"
-   },
-   "at": 80.07,
-   "label": "Confirmar Pagamento"
-  },
-  {
-   "do": "waitFor",
-   "gone": {
-    "role": "dialog"
-   },
-   "timeout": 15
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"R$ 2.900,00\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main section[aria-label^='Detalhes de']\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
-   "label": "confere saldo do Edson volta a 2.900,00"
-  },
-  {
-   "do": "mark",
-   "name": "L9",
-   "at": 82.01
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main section[aria-label^='Detalhes de'] div:has(> p:text-is('Saldo atual'))"
-   },
-   "seconds": 1.0,
-   "at": 82.92,
-   "label": "Saldo atual R$ 2.900,00",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main section[aria-label^='Detalhes de'] dl > div:has(> dt:text-is('Último pagamento'))"
-   },
-   "seconds": 0.26,
-   "at": 86.49,
-   "label": "Último pagamento: hoje",
-   "optional": true,
-   "timeout": 4
+   "at": 111.76,
+   "label": "volta para PIX/Transferência"
   },
   {
    "do": "mark",
    "name": "L10",
-   "at": 87.75
+   "at": 111.81
   },
   {
    "do": "scroll",
@@ -558,7 +664,134 @@
    "by": 0,
    "duration": 0.2,
    "after": 0,
-   "at": 88.35,
+   "at": 112.41,
+   "label": "cursor descansa (cartão \"Pagamento sem saída de dinheiro\")"
+  },
+  {
+   "do": "mark",
+   "name": "L11",
+   "at": 121.65
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.textContent.trim().startsWith(\"Forma de Pagamento\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-260);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/500),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 122.15,
+   "label": "rola até a Forma de Pagamento"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] label[for='payment-pix']"
+   },
+   "at": 122.79,
+   "label": "Forma de Pagamento: PIX/Transferência"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] label:has-text('Conta')"
+   },
+   "seconds": 0.14,
+   "at": 123.7,
+   "label": "Conta bancária: Conta Principal",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:text-is('Confirmar Pagamento'):not(.absolute)"
+   },
+   "at": 124.84,
+   "label": "Confirmar Pagamento"
+  },
+  {
+   "do": "waitFor",
+   "text": "Pagamento registrado!",
+   "timeout": 15
+  },
+  {
+   "do": "mark",
+   "name": "L12",
+   "at": 126.79
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Deseja gerar o recibo",
+    "within": "[role=alertdialog]"
+   },
+   "seconds": 1.0,
+   "at": 127.92,
+   "label": "Pagamento registrado! Deseja gerar o recibo desse pagamento?",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const b=[...document.querySelectorAll('[role=alertdialog] button')].find(x=>x.textContent.trim().includes(\"Gerar Recibo\"));if(!b)return 'SEM ALVO';b.click();return 'ok'})()",
+   "at": 130.2,
+   "label": "Gerar Recibo (abre o recibo em aba nova)"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{let w=null,h='';for(let i=0;i<50;i++){w=window.__abas&&window.__abas[0];try{h=w&&w.document&&w.document.documentElement.outerHTML||''}catch(e){h=''}if(h.includes(\"Edson Moura\"))break;await new Promise(r=>setTimeout(r,200));}if(!h.includes(\"Edson Moura\"))return 'SEM ABA: '+h.slice(0,120);return {html:\"recibo-pagamento-edson\",chars:h.length,b64:btoa(unescape(encodeURIComponent(h)))}})()",
+   "label": "HTML do recibo do pagamento do Edson (aba nova, para a ilustração do comprovante)"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "alertdialog"
+   },
+   "timeout": 10
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"R$ 2.900,00\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main section[aria-label^='Detalhes de']\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere saldo do Edson volta a 2.900,00"
+  },
+  {
+   "do": "mark",
+   "name": "L13",
+   "at": 137.01
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main section[aria-label^='Detalhes de'] div:has(> p:text-is('Saldo atual'))"
+   },
+   "seconds": 1.0,
+   "at": 137.92,
+   "label": "Saldo atual R$ 2.900,00",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main section[aria-label^='Detalhes de'] dl > div:has(> dt:text-is('Último pagamento'))"
+   },
+   "seconds": 0.27,
+   "at": 141.48,
+   "label": "Último pagamento: hoje",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L14",
+   "at": 142.75
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 900,
+    "y": 140
+   },
+   "by": 0,
+   "duration": 0.2,
+   "after": 0,
+   "at": 143.34,
    "label": "cursor descansa (ilustração do ciclo do pagamento)"
   },
   {
@@ -569,7 +802,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 96.69
+   "at": 151.68
   }
  ]
 }

@@ -1,14 +1,14 @@
 {
  "name": "t19-cap13",
- "title": "T19 · Cap. 13 · Recapitulando (narração 48,6 s, ESTIMADA; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
- "fakeNow": "2026-11-10T08:30:00-03:00",
+ "title": "T19 · Cap. 13 · O ponto no tablet da empresa (narração 54,9 s, ESTIMADA; marcas L1..L5 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T16:30:00-03:00)",
+ "fakeNow": "2026-11-10T16:30:00-03:00",
  "seed": "t19-cap13",
  "pace": 0.5,
  "cps": 40,
  "tail": 1.5,
  "start": {
-  "x": 760,
-  "y": 470
+  "x": 512,
+  "y": 400
  },
  "anonymous": true,
  "storage": {
@@ -24,7 +24,7 @@
   "t19/apos-cap12"
  ],
  "prewarm": [
-  "/login"
+  "/ponto/empresa/recicla-vale-metais-4WNB8KBQ4BQP"
  ],
  "setup": [
   {
@@ -73,37 +73,21 @@
    "timeout": 20
   },
   {
-   "do": "eval",
-   "js": "(()=>{const sb=document.querySelector('[data-state][data-collapsible]');if(sb&&sb.getAttribute('data-state')==='collapsed')return 'ja recolhido';const b=document.querySelector('header button.h-8.w-8');if(!b)return 'SEM ALVO';b.click();return 'recolhido'})()"
-  },
-  {
-   "do": "wait",
-   "seconds": 0.7
-  },
-  {
    "do": "goto",
-   "url": "/funcionarios"
+   "url": "/ponto/empresa/recicla-vale-metais-4WNB8KBQ4BQP"
   },
   {
    "do": "waitFor",
-   "text": "Gerencie sua equipe e controle de pagamentos",
-   "timeout": 30
+   "text": "Buscar manualmente",
+   "timeout": 40
   },
   {
-   "do": "waitFor",
-   "idle": true,
-   "timeout": 15
-  },
-  {
-   "do": "waitFor",
-   "target": {
-    "selector": "main [role=listitem] > button:has(p:text-is('Rafael Nogueira'))"
-   },
-   "timeout": 20
+   "do": "eval",
+   "js": "(()=>{const cv=document.createElement('canvas');cv.width=720;cv.height=720;const g=cv.getContext('2d');let t0=performance.now();\nconst pinta=()=>{const t=(performance.now()-t0)/1000;const W=720,cx=360+Math.sin(t*1.3)*4,cy=380+Math.sin(t*0.9)*3;\nconst gr=g.createLinearGradient(0,0,0,W);gr.addColorStop(0,'#c6d6de');gr.addColorStop(1,'#94a8b2');g.fillStyle=gr;g.fillRect(0,0,W,W);\ng.fillStyle='#78808a';g.fillRect(0,W*0.72,W,W);g.fillStyle='#f27820';g.beginPath();g.ellipse(cx,W*0.98,W*0.36,W*0.3,0,0,Math.PI*2);g.fill();\ng.fillStyle='#e6e6dc';g.fillRect(cx-W*0.30,W*0.86,W*0.6,W*0.03);g.fillStyle='#c69670';g.fillRect(cx-W*0.06,cy+W*0.16,W*0.12,W*0.14);\ng.beginPath();g.ellipse(cx,cy,W*0.17,W*0.2,0,0,Math.PI*2);g.fill();g.fillStyle='#facc15';g.beginPath();g.ellipse(cx,cy-W*0.09,W*0.19,W*0.16,0,Math.PI,0);g.fill();\ng.fillRect(cx-W*0.22,cy-W*0.1,W*0.44,W*0.03);g.fillStyle='#282830';for(const d of[-1,1]){g.beginPath();g.arc(cx+d*W*0.07,cy+W*0.02,9,0,Math.PI*2);g.fill();}\ng.strokeStyle='#96463c';g.lineWidth=7;g.beginPath();g.arc(cx,cy+W*0.06,W*0.06,0.35,Math.PI-0.35);g.stroke();requestAnimationFrame(pinta)};pinta();\nlet st=null;window.__t19cam={chamadas:0,abortados:0};\nconst fake=async()=>{window.__t19cam.chamadas++;if(!st){st=cv.captureStream(24);st.getTracks().forEach(t=>{t.stop=()=>{}})}return st};\nif(!navigator.mediaDevices)Object.defineProperty(navigator,'mediaDevices',{value:{}});\nnavigator.mediaDevices.getUserMedia=fake;navigator.mediaDevices.enumerateDevices=async()=>[{kind:'videoinput',deviceId:'cam-falsa',label:'Câmera frontal',groupId:'g'}];\nconst play0=HTMLMediaElement.prototype.play;HTMLMediaElement.prototype.play=function(){const nossa=st&&this.srcObject===st;const p=play0.call(this);\nreturn nossa?p.catch(e=>{if(e&&e.name==='AbortError'){window.__t19cam.abortados++;return undefined}throw e}):p};\nreturn 'camera falsa'})()"
   },
   {
    "do": "wait",
-   "seconds": 0.6
+   "seconds": 0.8
   },
   {
    "do": "eval",
@@ -117,313 +101,210 @@
    "at": 0
   },
   {
-   "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const el=[...document.querySelectorAll(\"main [role=list] *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Gabriel Rocha\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-430);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/400),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 2.22,
-   "label": "a lista mostra Gabriel Rocha no meio"
-  },
-  {
-   "do": "hover",
+   "do": "type",
    "target": {
-    "selector": "main [role=listitem] button[aria-label='Ações de Gabriel Rocha']"
+    "text": "Buscar manualmente"
    },
-   "seconds": 0.5,
-   "at": 2.82,
-   "label": "menu ⋯ do Gabriel",
-   "optional": false,
-   "timeout": 8
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main [role=listitem] button[aria-label='Ações de Gabriel Rocha']"
-   },
-   "seconds": 0.4,
-   "label": "menu ⋯ de Gabriel Rocha de novo (só se não abriu)",
-   "unless": {
-    "role": "menuitem",
-    "name": "Editar"
-   },
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "waitFor",
-   "target": {
-    "role": "menuitem",
-    "name": "Editar"
-   },
-   "timeout": 6
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main [role=listitem] button[aria-label='Ações de Gabriel Rocha']"
-   },
-   "seconds": 0.2,
-   "label": "menu ⋯ de Gabriel Rocha (só se fechou)",
-   "unless": {
-    "role": "menuitem",
-    "name": "Editar"
-   },
+   "text": "",
+   "noClick": true,
+   "at": 7.95,
+   "label": "o tablet: câmera e Buscar manualmente",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "click",
    "target": {
-    "role": "menuitem",
-    "name": "Editar"
+    "selector": "button:has-text('Buscar manualmente')"
    },
-   "label": "Editar o Gabriel",
+   "at": 10.43,
+   "label": "Buscar manualmente",
    "noScroll": true
   },
   {
    "do": "waitFor",
    "target": {
-    "selector": "[role=dialog] #name"
+    "placeholder": "Buscar funcionário"
    },
-   "timeout": 10
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "[role=dialog] [role=tab]:has-text('Remuneração')"
-   },
-   "at": 4.96,
-   "label": "Remuneração: salário, custo mensal R$ 4.264,00 e CLT"
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "[role=dialog] #monthly_cost"
-   },
-   "seconds": 0.8,
-   "label": "Custo mensal total R$ 4.264,00",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "[role=dialog] button:text-is('Cancelar'):not(.absolute)"
-   },
-   "at": 10.12,
-   "label": "Cancelar"
-  },
-  {
-   "do": "waitFor",
-   "gone": {
-    "role": "dialog"
-   },
-   "timeout": 8
+   "timeout": 15
   },
   {
    "do": "mark",
    "name": "L2",
-   "at": 11.54
+   "at": 12.98
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main [role=listitem]:has(p:text-is('Edson Moura')) span:has-text('Transporte')"
+    "placeholder": "Buscar funcionário"
    },
-   "seconds": 0.4,
-   "at": 13.29,
-   "label": "o departamento Transporte",
+   "seconds": 0.29,
+   "at": 18.68,
+   "label": "Buscar funcionário",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "button:text-is('A–Z')"
+   },
+   "seconds": 0.2,
+   "label": "ordem A–Z",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "click",
    "target": {
-    "selector": "main [role=listitem] > button:has(p:text-is('Diego Morais'))"
+    "selector": "button:text-is('Quem falta')"
    },
-   "at": 16.35,
-   "label": "Diego: vale e falta"
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main section[aria-label^='Detalhes de'] div:has(> p:text-is('Faltas'))"
-   },
-   "seconds": 0.3,
-   "label": "Diego: Vales 200 e Faltas 90",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "main [role=listitem] > button:has(p:text-is('Cláudio Ferraz'))"
-   },
-   "at": 17.79,
-   "label": "Cláudio: bônus"
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main section[aria-label^='Detalhes de'] div:has(> p:text-is('Bônus'))"
-   },
-   "seconds": 0.3,
-   "label": "Cláudio: Bônus 150",
-   "optional": true,
-   "timeout": 4
+   "at": 19.97,
+   "label": "Quem falta"
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 18.72
+   "at": 22.14
   },
   {
    "do": "click",
    "target": {
-    "selector": "main [role=listitem] > button:has(p:text-is('Edson Moura'))"
+    "selector": "button:has-text('Diego Morais')"
    },
-   "at": 20.88,
-   "label": "Edson"
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "main section[aria-label^='Detalhes de'] button:has-text('Extrato')"
-   },
-   "at": 24.19,
-   "label": "Extrato - Edson Moura"
+   "at": 22.3,
+   "label": "cartão do Diego",
+   "noScroll": true
   },
   {
    "do": "waitFor",
-   "text": "Extrato - Edson Moura",
-   "timeout": 10
-  },
-  {
-   "do": "mark",
-   "name": "L4",
-   "at": 25.53
+   "text": "Registrar Saída",
+   "timeout": 15
   },
   {
    "do": "click",
    "target": {
-    "selector": "[role=dialog] button:text-is('Fechar'):not(.absolute)"
+    "selector": "button:has-text('Registrar Saída')"
    },
-   "at": 25.83,
-   "label": "Fechar o extrato"
+   "at": 25.18,
+   "label": "Registrar Saída",
+   "noScroll": true
   },
   {
    "do": "waitFor",
-   "gone": {
-    "role": "dialog"
-   },
-   "timeout": 8
+   "text": "Tirar foto agora",
+   "timeout": 15
   },
   {
-   "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const el=[...document.querySelectorAll(\"main [role=list] *\")].find(e=>e.children.length===0&&e.textContent.trim()===\"Gabriel Rocha\");if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-430);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/400),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 25.83,
-   "label": "a lista mostra Gabriel Rocha no meio"
-  },
-  {
-   "do": "hover",
+   "do": "click",
    "target": {
-    "selector": "main [role=listitem] button[aria-label='Ações de Gabriel Rocha']"
+    "selector": "button:has-text('Tirar foto agora')"
    },
-   "seconds": 0.5,
-   "at": 26.43,
-   "label": "menu ⋯ do Gabriel: Copiar link do ponto",
-   "optional": false,
-   "timeout": 8
+   "at": 26.2,
+   "label": "Tirar foto agora",
+   "noScroll": true
   },
   {
-   "do": "hover",
+   "do": "waitFor",
+   "text": "Confirmar registro",
+   "timeout": 12
+  },
+  {
+   "do": "click",
    "target": {
-    "selector": "main [role=listitem] button[aria-label='Ações de Gabriel Rocha']"
+    "selector": "button:has-text('Confirmar registro')"
    },
-   "seconds": 0.4,
-   "label": "menu ⋯ de Gabriel Rocha de novo (só se não abriu)",
-   "unless": {
-    "role": "menuitem",
-    "name": "Copiar link do ponto"
+   "at": 27.1,
+   "label": "Confirmar registro",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "text": "Saída registrada",
+   "timeout": 12
+  },
+  {
+   "do": "type",
+   "target": {
+    "text": "Saída registrada"
    },
+   "text": "",
+   "noClick": true,
+   "at": 28.44,
+   "label": "Saída registrada com a hora",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "waitFor",
    "target": {
-    "role": "menuitem",
-    "name": "Copiar link do ponto"
+    "placeholder": "Buscar funcionário"
    },
-   "timeout": 6
+   "timeout": 20
   },
   {
-   "do": "press",
-   "key": "Escape",
-   "label": "fecha o menu"
+   "do": "mark",
+   "name": "L4",
+   "at": 32.29
   },
   {
-   "do": "click",
+   "do": "hover",
    "target": {
-    "selector": "#tab-btn-espelho-ponto"
+    "selector": "button:has-text('Gabriel Rocha')"
    },
-   "at": 31.83,
-   "label": "Folha de Ponto"
-  },
-  {
-   "do": "waitFor",
-   "text": "Todos os funcionários",
-   "timeout": 10
+   "seconds": 1.6,
+   "at": 34.49,
+   "label": "o cartão do Gabriel com o cadeado (Protegido por PIN)",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "mark",
    "name": "L5",
-   "at": 36.2
+   "at": 37.72
+  },
+  {
+   "do": "eval",
+   "js": "location.assign('/funcionarios')",
+   "at": 38.02,
+   "label": "volta ao sistema (computador)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Gerencie sua equipe e controle de pagamentos",
+   "timeout": 30
   },
   {
    "do": "click",
    "target": {
-    "selector": "#tab-btn-employees"
+    "selector": "#tab-btn-config-ponto"
    },
-   "at": 36.36,
-   "label": "Funcionários"
+   "at": 41.44,
+   "label": "aba Configurações de Ponto"
   },
   {
    "do": "waitFor",
+   "text": "Exigir reconhecimento facial no quiosque",
+   "timeout": 15
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const el=[...document.querySelectorAll(\"main *\")].filter(e=>e.textContent.trim().startsWith(\"Exigir reconhecimento facial\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-260);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 49.17,
+   "label": "rola até Exigir reconhecimento facial"
+  },
+  {
+   "do": "hover",
    "target": {
-    "selector": "main [role=listitem] > button:has(p:text-is('Rafael Nogueira'))"
+    "text": "Exigir reconhecimento facial no quiosque",
+    "within": "main"
    },
-   "timeout": 10
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "main button:text-is('Inativos')"
-   },
-   "at": 37.49,
-   "label": "Inativos com o Rogério"
-  },
-  {
-   "do": "waitFor",
-   "target": {
-    "selector": "main [role=listitem] > button:has(p:text-is('Rogério Batista'))"
-   },
-   "timeout": 8
-  },
-  {
-   "do": "mark",
-   "name": "L6",
-   "at": 40.65
-  },
-  {
-   "do": "scroll",
-   "point": {
-    "x": 1000,
-    "y": 140
-   },
-   "by": 0,
-   "duration": 0.2,
-   "after": 0,
-   "at": 41.25,
-   "label": "cursor descansa (cartão Próximo)"
+   "seconds": 2.0,
+   "at": 50.02,
+   "label": "Exigir reconhecimento facial no quiosque",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "eval",
@@ -433,7 +314,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 48.6
+   "at": 54.86
   }
  ]
 }

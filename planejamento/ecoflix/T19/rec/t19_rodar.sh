@@ -7,7 +7,7 @@
 #   Pela fila justa da trava (rec/fila.sh --prio 19, um capítulo por vez). PRAZO_FIM=<epoch>: se a vez chegar a menos de 12 min do
 #   prazo do lote, não grava (saída 5), para o lote em segundo plano não morrer no meio de uma gravação.
 #   MP4 de ensaio (rápido e completo) com --preset ultrafast --crf 30: só para a folha de contato.
-# Instância: FAKE_PORT 54319 (só desta aula), FAKE_NOW 2026-11-10T08:30:00-03:00. Precisa de TUT_USER e TUT_SENHA no ambiente.
+# Instância: FAKE_PORT 54319 (só desta aula), FAKE_NOW do capítulo em rec/t19/fake_now.json (religa se mudou). Precisa de TUT_USER e TUT_SENHA no ambiente.
 set -uo pipefail
 TUT_HOME="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 cd "$TUT_HOME"
@@ -23,13 +23,22 @@ while [[ $# -gt 0 ]]; do
   shift
 done
 [[ $ENS == 0 && $FIN == 0 ]] && ENS=1
-export FAKE_URL=http://127.0.0.1:54319 FAKE_NOW=2026-11-10T08:30:00-03:00
+python3 -I rec/t19/gerar.py "$NN" > /dev/null
+export FAKE_URL=http://127.0.0.1:54319
+FAKE_NOW=$(python3 -I -c "import json,sys;print(json.load(open('rec/t19/fake_now.json'))[sys.argv[1]])" "$NN") || { echo "sem rec/t19/fake_now.json"; exit 4; }
+export FAKE_NOW
 : "${TUT_USER:?falta TUT_USER}" "${TUT_SENHA:?falta TUT_SENHA}"
+# o relógio do mundo muda entre os capítulos (08:30 nos caps 0 a 12, 16:30 nos 13 a 17): religa a instância 54319 quando é outro
 PID=$(cat rec/.runtime/fake54319.pid 2>/dev/null || true)
 AMB=$( [[ -n "$PID" ]] && tr '\0' '\n' < "/proc/$PID/environ" 2>/dev/null || true)
-if [[ "$AMB" != *$'\nFAKE_PORT=54319\n'* && "$AMB" != FAKE_PORT=54319$'\n'* ]] || [[ "$AMB" != *"FAKE_NOW=$FAKE_NOW"* ]]; then
-  echo "instância 54319 não é a desta aula (ou caiu): FAKE_NOW=$FAKE_NOW FAKE_PORT=54319 bash rec/run.sh fake"; exit 4
+if [[ "$AMB" != *"FAKE_NOW=$FAKE_NOW"* ]]; then
+  FAKE_PORT=54319 bash rec/run.sh down > /dev/null 2>&1 || true
+  FAKE_NOW=$FAKE_NOW FAKE_PORT=54319 bash rec/run.sh fake > /dev/null 2>&1
+  PID=$(cat rec/.runtime/fake54319.pid 2>/dev/null || true)
+  AMB=$( [[ -n "$PID" ]] && tr '\0' '\n' < "/proc/$PID/environ" 2>/dev/null || true)
+  if [[ "$AMB" != *"FAKE_NOW=$FAKE_NOW"* ]]; then echo "instância 54319 não subiu com FAKE_NOW=$FAKE_NOW"; exit 4; fi
 fi
+[[ $((10#$NN)) -eq 13 ]] && export TUT_VIEWPORT=1024x768   # o tablet da empresa (cap13) é gravado em 4:3
 python3 -I rec/t19/gerar.py "$NN" | tail -2
 [[ $ENS == 1 ]] && python3 -I rec/t19/ensaio.py "$NN"
 mkdir -p /dev/shm/t19

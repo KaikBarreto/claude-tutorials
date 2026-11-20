@@ -150,7 +150,7 @@ def main():
         emps.append({
             'id': f'@id:t19.func.{k}', 'company_id': '@id:company.reciclavale', 'name': nome, 'cpf': cpf, 'phone': f'(12) 90000-{tel}',
             'email': email, 'position': cargo, 'department_id': f'@id:t19.depto.{dep}', 'hire_date': adm, 'salary': sal,
-            'employment_regime': reg, 'dependents_count': 0, 'vt_enabled': False, 'vt_monthly_value': None, 'pix_key': pix,
+            'employment_regime': reg, 'dependents_count': 1 if k == 'marcos' else 0, 'vt_enabled': k == 'marcos', 'vt_monthly_value': 220 if k == 'marcos' else None, 'pix_key': pix,
             'ponto_enabled': ponto, 'ponto_slug': t19_slug(nome) if ponto else None, 'is_active': True, 'archived_at': None,
             'photo_url': None, 'monthly_cost': None, 'monthly_cost_breakdown': None, 'address': None, 'payroll_schedule_id': None,
             'salary_period': None, 'created_by': RAFAEL_USER, 'created_at': criado, 'updated_at': criado})
@@ -172,8 +172,10 @@ def main():
 
     for k, nome, *_r in FUNC:
         sal = next(f[5] for f in FUNC if f[0] == k)
-        if k in ('rafael', 'juliana', 'marcos', 'claudio', 'diego'):
+        if k in ('rafael', 'juliana', 'claudio', 'diego'):
             pagamento(k, 'pg0911', '2026-11-09', '08:00', sal)
+    # Marcos (cap07): último pagamento em 07/10, para a folha CLT de novembro abrir limpa
+    pagamento('marcos', 'pg0710', '2026-10-07', '08:00', 2400)
     pagamento('rogerio', 'pg3010', '2026-10-30', '17:00', 1980)
     # Edson: pago em 07/10 (salário de então, 2.800,00); o ajuste de 13/10 saiu no formato do app de outubro (toLocaleString, antes da RPC de 28/10)
     pagamento('edson', 'pg0710', '2026-10-07', '08:00', 2800)
@@ -219,6 +221,15 @@ def main():
         foto_avatar(os.path.join(FOTOS, caminho), 'hoje-' + k)
         recs.append(rec(k, eid, hoje, 'clock_in', hh, 21, caminho, rnd))
         sheets.append(sheet(k, hoje, iso(hoje, hh, 21), None, 0, 0, None, 'open'))
+    # Juliana (escritório, sem link de ponto): batidas lançadas à mão de 02 a 09/11, para a visão "Todos os funcionários" não mostrar falta falsa
+    eidj = stable_id('t19.func.juliana')
+    rj = random.Random('batidas-juliana')
+    for dia in dias_uteis('2026-11-02', '2026-11-09'):
+        for tipo, hh in (('clock_in', '07:00'), ('break_start', '11:00'), ('break_end', '12:00'), ('clock_out', '16:00')):
+            r = rec('juliana', eidj, dia, tipo, hh, 0, None, rj)
+            r.update({'source': 'manual', 'address': None, 'latitude': None, 'longitude': None, 'device_info': None, 'photo_path': None})
+            recs.append(r)
+        sheets.append(sheet('juliana', dia, iso(dia, '07:00'), iso(dia, '16:00'), 480, 60, 0, 'complete'))
     out['time_records'] = recs
     out['time_sheets'] = sheets
 

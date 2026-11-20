@@ -1,6 +1,6 @@
 {
  "name": "t19-cap07",
- "title": "T19 · Cap. 7 · O extrato do funcionário (narração 61,7 s, ESTIMADA; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
+ "title": "T19 · Cap. 7 · A folha de quem é CLT (narração 111,0 s, ESTIMADA; marcas L1..L9 = início de cada linha do roteiro; FAKE_NOW 2026-11-10T08:30:00-03:00)",
  "fakeNow": "2026-11-10T08:30:00-03:00",
  "seed": "t19-cap07",
  "pace": 0.5,
@@ -106,21 +106,8 @@
    "seconds": 0.6
   },
   {
-   "do": "click",
-   "target": {
-    "selector": "main [role=listitem] > button:has(p:text-is('Edson Moura'))"
-   }
-  },
-  {
-   "do": "waitFor",
-   "target": {
-    "selector": "main section[aria-label^='Detalhes de'] div:has(> p:text-is('Saldo atual'))"
-   },
-   "timeout": 10
-  },
-  {
-   "do": "wait",
-   "seconds": 0.6
+   "do": "eval",
+   "js": "(()=>{if(window.__abas)return 'ja';window.__abas=[];window.__pdfs=[];const o=URL.createObjectURL.bind(URL);URL.createObjectURL=(b)=>{try{if(b&&b.type==='application/pdf')window.__pdfs.push(b)}catch(e){}return o(b)};const wo=window.open.bind(window);window.open=(...a)=>{const w=wo(...a);window.__abas.push(w);return w};return 'ganchos'})()"
   },
   {
    "do": "eval",
@@ -136,215 +123,411 @@
   {
    "do": "click",
    "target": {
-    "selector": "main section[aria-label^='Detalhes de'] button:has-text('Extrato')"
+    "selector": "main [role=listitem] > button:has(p:text-is('Marcos Antunes'))"
    },
-   "at": 1.55,
-   "label": "Extrato"
+   "at": 2.79,
+   "label": "Marcos Antunes"
   },
   {
    "do": "waitFor",
-   "text": "Extrato - Edson Moura",
+   "target": {
+    "selector": "main section[aria-label^='Detalhes de'] div:has(> p:text-is('Saldo atual'))"
+   },
    "timeout": 10
   },
   {
    "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Bônus\", \"Vales\", \"Faltas\", \"Saldo\", \"R$ 2.900,00\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
-   "label": "confere cartões do mês novo"
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Marcos Antunes\", \"R$ 2.400,00\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main section[aria-label^='Detalhes de']\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Marcos: salário e saldo 2.400,00"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main section[aria-label^='Detalhes de'] button:text-is('Pagamento')"
+   },
+   "at": 6.26,
+   "label": "Pagamento"
+  },
+  {
+   "do": "waitFor",
+   "text": "Pagamento ao funcionário",
+   "timeout": 10
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Folha CLT\", \"Salário base\", \"R$ 2.400,00\", \"Proventos e descontos desta folha\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere abre no modo CLT com a folha"
   },
   {
    "do": "hover",
    "target": {
-    "text": "Vales",
-    "exact": true,
+    "text": "Folha CLT",
     "within": "[role=dialog]"
    },
-   "seconds": 0.1,
-   "at": 5.57,
-   "label": "cartão Vales R$ 0,00",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "Bônus",
-    "exact": true,
-    "within": "[role=dialog]"
-   },
-   "seconds": 0.1,
-   "at": 6.48,
-   "label": "cartão Bônus R$ 0,00",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "Saldo",
-    "exact": true,
-    "within": "[role=dialog]"
-   },
-   "seconds": 0.5,
-   "at": 7.46,
-   "label": "cartão Saldo R$ 2.900,00",
+   "seconds": 0.72,
+   "at": 10.2,
+   "label": "Resumo do pagamento: Folha CLT",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L2",
-   "at": 9.49
+   "at": 11.92
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.textContent.trim().startsWith(\"Proventos e descontos desta folha\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-200);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/500),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 12.65,
+   "label": "rola até Proventos e descontos desta folha"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:has-text('Horas extras 50%')"
+   },
+   "at": 16.63,
+   "label": "Adicionar rápido: Horas extras 50%"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "[role=dialog] input[aria-label='Valor em reais']"
+   },
+   "timeout": 6
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] input[aria-label='Valor em reais']"
+   },
+   "at": 21.46,
+   "label": "campo Valor em reais 180,00"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[aria-label='Valor em reais']"
+   },
+   "text": "180,00",
+   "cps": 40,
+   "at": 22.71,
+   "label": "Valor em reais 180,00",
+   "noClick": true
   },
   {
    "do": "hover",
    "target": {
-    "text": "Valor pago",
-    "within": "[role=dialog]"
+    "selector": "[role=dialog] input[aria-label='Valor em reais']"
    },
-   "seconds": 0.67,
-   "at": 13.89,
-   "label": "Valor pago R$ 2.750,00 (pagamento detalhado)",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "[role=dialog] button:has-text('Gerar Recibo')"
-   },
-   "seconds": 0.6,
-   "at": 15.56,
-   "label": "Gerar Recibo",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "Reset para salário base",
-    "within": "[role=dialog]"
-   },
-   "seconds": 0.8,
-   "at": 19.73,
-   "label": "Ajuste: Reset para salário base",
+   "seconds": 0.1,
+   "at": 23.23,
+   "label": "a linha Horas extras 50% com R$ 180,00",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 22.82
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.textContent.trim().startsWith(\"Recebimento do funcion\\u00e1rio\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-220);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/800),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 24.01,
-   "label": "rola a lista do extrato"
+   "at": 23.96
   },
   {
    "do": "hover",
    "target": {
-    "text": "Recebimento do funcionário",
+    "text": "Compõe as bases de INSS, IRRF e FGTS",
     "within": "[role=dialog]"
    },
-   "seconds": 0.3,
-   "at": 24.49,
-   "label": "Recebimento +R$ 100,00",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "Viagens extras",
-    "within": "[role=dialog]"
-   },
-   "seconds": 0.3,
-   "at": 27.15,
-   "label": "o bônus de outubro",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.textContent.trim().startsWith(\"Ajuste de sal\\u00e1rio\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-420);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 28.92,
-   "label": "rola até o ajuste de salário"
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Ajuste de salário: R$ 2.800,00 → R$ 2.900,00\", \"Recebimento do funcionário - Sobra do vale da viagem\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
-   "label": "confere o ajuste de salário e o recebimento"
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "Ajuste de salário",
-    "within": "[role=dialog]"
-   },
-   "seconds": 2.0,
-   "at": 30.34,
-   "label": "Ajuste de salário: R$ 2.800,00 → R$ 2.900,00",
+   "seconds": 2.4,
+   "at": 25.4,
+   "label": "chave Compõe as bases de INSS, IRRF e FGTS",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 36.08
+   "at": 39.19
   },
   {
-   "do": "hover",
+   "do": "click",
    "target": {
-    "text": "Ajuste de salário",
-    "within": "[role=dialog]"
+    "selector": "[role=dialog] button:has-text('Adicionar desconto')"
    },
-   "seconds": 3.0,
-   "at": 39.64,
-   "label": "Ajuste de salário (continua)",
-   "optional": true,
-   "timeout": 4
+   "at": 39.49,
+   "label": "Adicionar desconto"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "xpath=//div[@role='dialog']//p[normalize-space()='Descontos extras']/following::input[@aria-label='Descrição'][1]"
+   },
+   "timeout": 6
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "xpath=//div[@role='dialog']//p[normalize-space()='Descontos extras']/following::input[@aria-label='Descrição'][1]"
+   },
+   "at": 43.74,
+   "label": "campo Descrição"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "xpath=//div[@role='dialog']//p[normalize-space()='Descontos extras']/following::input[@aria-label='Descrição'][1]"
+   },
+   "text": "Convênio farmácia",
+   "cps": 40,
+   "at": 44.59,
+   "label": "Descrição: Convênio farmácia",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "xpath=//div[@role='dialog']//p[normalize-space()='Descontos extras']/following::input[@aria-label='Valor em reais'][1]"
+   },
+   "at": 45.47,
+   "label": "campo Valor em reais 60,00"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "xpath=//div[@role='dialog']//p[normalize-space()='Descontos extras']/following::input[@aria-label='Valor em reais'][1]"
+   },
+   "text": "60,00",
+   "cps": 40,
+   "at": 46.42,
+   "label": "Valor em reais 60,00",
+   "noClick": true
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Total de proventos\", \"R$ 2.580,00\", \"- INSS\", \"R$ 207,89\", \"- Vale-transporte\", \"R$ 144,00\", \"Convênio farmácia\", \"R$ 411,89\", \"R$ 2.168,11\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere resumo CLT do Marcos: proventos 2.580,00, INSS 207,89, VT 144,00, líquido 2.168,11"
   },
   {
    "do": "mark",
    "name": "L5",
-   "at": 46.83
+   "at": 47.13
   },
   {
    "do": "hover",
    "target": {
-    "selector": "xpath=//div[@role='dialog']//*[normalize-space(text())='Vale']/ancestor::div[.//button//*[contains(@class,'lucide-trash')]][1]//button[.//*[contains(@class,'lucide-trash')]]"
+    "text": "Total de proventos",
+    "within": "[role=dialog]"
    },
-   "seconds": 1.6,
-   "at": 47.89,
-   "label": "lixeira de uma linha Vale (sem clicar)",
+   "seconds": 0.3,
+   "at": 51.3,
+   "label": "Total de proventos R$ 2.580,00",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "- INSS",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.3,
+   "at": 53.66,
+   "label": "- INSS (tabela do ano)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "- IRRF",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.1,
+   "at": 59.2,
+   "label": "- IRRF R$ 0,00",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "- Vale-transporte",
+    "within": "[role=dialog]"
+   },
+   "seconds": 0.3,
+   "at": 60.11,
+   "label": "- Vale-transporte R$ 144,00",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Líquido",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.4,
+   "at": 63.75,
+   "label": "Líquido R$ 2.168,11",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Valores estimados; confirme com seu contador.",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.0,
+   "label": "Valores estimados; confirme com seu contador. (cena reaproveitada na dica final)",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L6",
-   "at": 54.47
+   "at": 69.42
   },
   {
-   "do": "scroll",
-   "point": {
-    "x": 1000,
-    "y": 140
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.textContent.trim().startsWith(\"INSS desta folha\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-240);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/500),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 69.72,
+   "label": "rola até INSS desta folha"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Calculado pela tabela oficial",
+    "within": "[role=dialog]"
    },
-   "by": 0,
-   "duration": 0.2,
-   "after": 0,
-   "at": 55.07,
-   "label": "cursor sai da lixeira (ilustração)"
+   "seconds": 0.6,
+   "at": 69.95,
+   "label": "INSS desta folha: Calculado pela tabela oficial",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "click",
    "target": {
-    "selector": "[role=dialog] button:text-is('Fechar'):not(.absolute)"
+    "selector": "[role=dialog] #override-inss"
    },
-   "at": 60.26,
-   "label": "Fechar o extrato"
+   "at": 73.97,
+   "label": "liga o ajuste do INSS"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "[role=dialog] #inss-adjusted"
+   },
+   "timeout": 6
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Motivo do ajuste",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.0,
+   "at": 77.54,
+   "label": "Novo valor e Motivo do ajuste",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] #override-inss"
+   },
+   "at": 82.02,
+   "label": "desliga o ajuste (deixa o calculado)"
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 83.82
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.textContent.trim().startsWith(\"Valor l\\u00edquido do pagamento\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-200);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/500),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 84.82,
+   "label": "rola até o Valor líquido do pagamento"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const esp=[\"2.168,11\"];let out='';for(let i=0;i<12;i++){const sc=[...document.querySelectorAll(\"[role=dialog]\")].pop();const v=sc?[...sc.querySelectorAll('input, textarea')].map(e=>e.value).join(' | '):'';const falta=esp.filter(e=>!v.includes(e));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+v.slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Valor líquido do pagamento 2.168,11"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}return document.scrollingElement};const el=[...document.querySelectorAll(\"[role=dialog] *\")].filter(e=>e.textContent.trim().startsWith(\"Forma de Pagamento\")).sort((a,b)=>a.textContent.length-b.textContent.length)[0];if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-260);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/500),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTop=y0+dy*e;p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 86.17,
+   "label": "rola até a Forma de Pagamento"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] label[for='payment-pix']"
+   },
+   "at": 86.47,
+   "label": "Forma de Pagamento: PIX/Transferência"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:text-is('Confirmar Pagamento'):not(.absolute)"
+   },
+   "at": 87.16,
+   "label": "Confirmar Pagamento"
+  },
+  {
+   "do": "waitFor",
+   "text": "Pagamento registrado!",
+   "timeout": 15
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 89.1
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{const b=[...document.querySelectorAll('[role=alertdialog] button')].find(x=>x.textContent.trim().includes(\"Gerar Holerite\"));if(!b)return 'SEM ALVO';b.click();return 'ok'})()",
+   "at": 92.44,
+   "label": "Gerar Holerite (abre o holerite em aba nova)"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{let w=null,h='';for(let i=0;i<50;i++){w=window.__abas&&window.__abas[0];try{h=w&&w.document&&w.document.documentElement.outerHTML||''}catch(e){h=''}if(h.includes(\"Marcos Antunes\"))break;await new Promise(r=>setTimeout(r,200));}if(!h.includes(\"Marcos Antunes\"))return 'SEM ABA: '+h.slice(0,120);return {html:\"holerite-marcos\",chars:h.length,b64:btoa(unescape(encodeURIComponent(h)))}})()",
+   "label": "HTML do holerite do Marcos (aba nova, para a ilustração do comprovante)"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "alertdialog"
+   },
+   "timeout": 10
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"R$ 2.400,00\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main section[aria-label^='Detalhes de']\")];const el=els[els.length-1];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere saldo do Marcos volta ao salário"
+  },
+  {
+   "do": "mark",
+   "name": "L9",
+   "at": 99.32
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main section[aria-label^='Detalhes de'] div:has(> p:text-is('Saldo atual'))"
+   },
+   "seconds": 1.0,
+   "at": 101.9,
+   "label": "Saldo atual do Marcos (dica: a folha é estimativa)",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "eval",
@@ -354,7 +537,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 61.66
+   "at": 110.99
   }
  ]
 }
