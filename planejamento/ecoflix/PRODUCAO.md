@@ -942,7 +942,7 @@ Decisões:
   (3) `--dsf 1.3` em 16:9 dá largura ímpar e o x264 recusa (o `render_cenas` agora sai na hora).
 - **T03**: 17 capítulos + cap01b (novos 07-10 margem automática, 12 menu da tabela; 07-11 antigos viraram 11, 13-16).
   Fala 1.959 → 3.600 palavras (~23 min). Todos no rápido; completos 07, 10, 12, 14; faltavam 06 (rápido e completo) e
-  09 (completo): coordenador rodando no mundo base. Sementes `margem-fora`, `margem-material`; handlers
+  09 (completo): rodados pelo coordenador no mundo base (20/11 04:15): 06 rápido 0 falho, completo 1,17 s no pior gesto (rever com a voz); 09 completo 0,33 s. Sementes `margem-fora`, `margem-material`; handlers
   `save_price_table_margins`, `duplicate_price_table`, `set_my_preferred_price_table`. **schema.json e defaults.json do
   mundo base regenerados do 1.60.18** (tabela nova `price_table_material_margins`; colunas `auto_margin_*` em
   `price_tables`, `show_on_receipt` nos itens, `show_pack_conversion_on_orders` em `companies`); o mundo privado da T03
