@@ -1,6 +1,6 @@
 {
  "name": "t09-cap02",
- "title": "T09 · Cap. 2 · A tela Pedidos (narração 48,8 s ESTIMADA; marcas L1..L5 = início de cada linha do roteiro; FAKE_NOW 2026-11-11T08:30:00-03:00)",
+ "title": "T09 · Cap. 2 · A tela Pedidos (narração 80,9 s ESTIMADA; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-11T08:30:00-03:00)",
  "seed": "t09-cap02",
  "pace": 0.5,
  "cps": 9,
@@ -131,7 +131,7 @@
   {
    "do": "mark",
    "name": "L2",
-   "at": 8.6
+   "at": 18.69
   },
   {
    "do": "click",
@@ -140,7 +140,7 @@
     "exact": true,
     "within": "main"
    },
-   "at": 8.98,
+   "at": 19.08,
    "label": "abre o Resumo do período filtrado (vem fechado)"
   },
   {
@@ -163,7 +163,7 @@
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "at": 11.18,
+   "at": 21.27,
    "label": "[ZOOM] Resumo do período filtrado: Compras e Vendas por forma de pagamento"
   },
   {
@@ -173,7 +173,7 @@
     "within": "main"
    },
    "seconds": 0.4,
-   "at": 11.92,
+   "at": 22.01,
    "label": "Compras",
    "optional": true,
    "timeout": 4
@@ -185,7 +185,7 @@
     "within": "main"
    },
    "seconds": 0.4,
-   "at": 13.96,
+   "at": 24.06,
    "label": "Vendas",
    "optional": true,
    "timeout": 4
@@ -198,7 +198,7 @@
     "within": "main"
    },
    "seconds": 0.2,
-   "at": 15.63,
+   "at": 25.73,
    "label": "Dinheiro",
    "optional": true,
    "timeout": 4
@@ -211,7 +211,7 @@
     "within": "main"
    },
    "seconds": 0.2,
-   "at": 17.0,
+   "at": 27.1,
    "label": "Saldo",
    "optional": true,
    "timeout": 4
@@ -219,7 +219,7 @@
   {
    "do": "mark",
    "name": "L3",
-   "at": 18.28
+   "at": 28.38
   },
   {
    "do": "hover",
@@ -227,7 +227,7 @@
     "selector": "main thead th:has-text('Usuário')"
    },
    "seconds": 0.2,
-   "at": 19.02,
+   "at": 29.12,
    "label": "coluna Usuário",
    "optional": true,
    "timeout": 4
@@ -238,7 +238,7 @@
     "selector": "main thead th:has-text('Data')"
    },
    "seconds": 0.2,
-   "at": 20.31,
+   "at": 30.41,
    "label": "coluna Data",
    "optional": true,
    "timeout": 4
@@ -249,7 +249,7 @@
     "selector": "main thead th:has-text('Tipo')"
    },
    "seconds": 0.2,
-   "at": 21.29,
+   "at": 31.39,
    "label": "coluna Tipo",
    "optional": true,
    "timeout": 4
@@ -260,7 +260,7 @@
     "selector": "main thead th:has-text('N° Pedidos')"
    },
    "seconds": 0.2,
-   "at": 22.89,
+   "at": 32.98,
    "label": "coluna N° Pedidos",
    "optional": true,
    "timeout": 4
@@ -271,7 +271,7 @@
     "selector": "main thead th:has-text('Cliente/Fornecedor')"
    },
    "seconds": 0.2,
-   "at": 23.8,
+   "at": 33.89,
    "label": "coluna Cliente/Fornecedor",
    "optional": true,
    "timeout": 4
@@ -282,7 +282,7 @@
     "selector": "main thead th:has-text('Pagamento')"
    },
    "seconds": 0.2,
-   "at": 26.38,
+   "at": 36.48,
    "label": "coluna Pagamento",
    "optional": true,
    "timeout": 4
@@ -293,7 +293,7 @@
     "selector": "main thead th:has-text('Valor')"
    },
    "seconds": 0.2,
-   "at": 27.06,
+   "at": 37.16,
    "label": "coluna Valor",
    "optional": true,
    "timeout": 4
@@ -301,12 +301,89 @@
   {
    "do": "mark",
    "name": "L4",
-   "at": 28.34
+   "at": 38.44
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main thead th:has-text('Data')"
+   },
+   "seconds": 0.2,
+   "at": 38.95,
+   "label": "cabeçalho Data (ordena)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main thead th:has-text('N° Pedidos')"
+   },
+   "seconds": 0.2,
+   "at": 39.78,
+   "label": "cabeçalho N° Pedidos (ordena)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main thead th:has-text('Valor')"
+   },
+   "at": 41.53,
+   "label": "clica em Valor: a lista ordena do maior para o menor"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main thead th:has-text('Data')"
+   },
+   "at": 43.83,
+   "label": "clica em Data: volta à ordem por data"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "por página",
+    "within": "main"
+   },
+   "seconds": 0.8,
+   "at": 44.34,
+   "label": "[DESTAQUE] rodapé: itens por página",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 49.42
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll('main tbody tr')].find(t=>/Pix/.test(t.innerText)&&t.innerText.includes('Compra'))||document.querySelector('main tbody tr');if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-300);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 49.42,
+   "label": "a lista sobe até uma linha paga no Pix"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('Pix') span.cursor-help"
+   },
+   "seconds": 1.8,
+   "at": 52.36,
+   "label": "[ZOOM] a dica da coluna Pagamento: a conta do Pix",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 60.4
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll('main tbody tr')].find(t=>t.innerText.includes('11/11/2026 07:22'));if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-300);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 28.34,
+   "at": 60.4,
    "label": "a lista sobe: a linha da Aparecida e o que ela abre cabem na tela"
   },
   {
@@ -316,7 +393,7 @@
     "exact": true,
     "within": "main"
    },
-   "at": 28.85,
+   "at": 60.91,
    "label": "abre a linha da latinha da Aparecida (hoje 07:22)"
   },
   {
@@ -327,7 +404,7 @@
     "within": "main tbody tr:has-text('Fornecedor:')"
    },
    "seconds": 0.4,
-   "at": 30.75,
+   "at": 62.8,
    "label": "o material da linha",
    "optional": true,
    "timeout": 4
@@ -339,15 +416,15 @@
     "within": "main"
    },
    "seconds": 0.8,
-   "at": 38.18,
+   "at": 70.24,
    "label": "[ZOOM] o peso: 24 kg",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
-   "name": "L5",
-   "at": 42.2
+   "name": "L7",
+   "at": 74.25
   },
   {
    "do": "hover",
@@ -356,7 +433,7 @@
     "within": "main tbody tr:has-text('11/11/2026 07:22')"
    },
    "seconds": 0.3,
-   "at": 42.2,
+   "at": 74.25,
    "label": "cursor no valor, ao lado do \"⋮\" (passar por cima abriria o menu)",
    "optional": true,
    "timeout": 4
@@ -370,7 +447,7 @@
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "at": 44.33,
+   "at": 76.38,
    "label": "[DESTAQUE] o \"⋮\" no fim da linha (sem abrir)"
   },
   {
@@ -381,7 +458,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 48.85
+   "at": 80.9
   }
  ]
 }

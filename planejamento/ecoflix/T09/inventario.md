@@ -1,3 +1,29 @@
+# Atualização 1.60.18 (20/11/2026): o que vale por cima do texto abaixo (código em `/dev/shm/ecoflix-src/src`)
+
+O corpo deste inventário é do 1.59.154. Para a aula, mandam estes pontos (detalhe em `cobertura_160.md`):
+- **Menu e telas**: "Pedidos" continua item de primeiro nível; "Financeiro" › "Histórico do Caixa" idem. Nada mudou no menu: o robô não achava
+  "Pedidos" porque a varredura de 19/11 rodou com o relógio do mundo em 10/11 (padrão) e a janela "Tarefas para hoje" cobria a tela (o
+  Radix esconde o resto do leitor de tela). Para a T9 o relógio é **11/11/2026 08:30** (`rec/t09/fake_now.json`).
+- **Editar Pedido** (`components/EditTransactionDialog.tsx`): "Se o caixa original estiver fechado, você poderá mantê-lo quando o pedido
+  não movimentar dinheiro ou escolher um caixa aberto para receber o acerto." Lê `cash_transactions`, `bank_transactions` e
+  `balance_movements` pelo `order_id`.
+- **Compra em edição** (`pages/Purchase.tsx`): faixa "Editando pedido {ref} · {fornecedor} · {tabela}"; com caixa de origem fechado,
+  "Caixa de destino da edição:" + selo "Caixa #70 · Original" ("Sem sem movimento em dinheiro: você pode manter o caixa original sem alterar o
+  fechamento."), ou, com dinheiro, "O caixa original está fechado. Como houve movimento em dinheiro, escolha um caixa aberto." Janela "Em qual
+  caixa registrar?" (`components/CashRegisterPickerDialog.tsx`): "Manter no caixa original #70" · "Sem movimento em dinheiro; o fechamento não
+  será alterado.".
+- **Troca de fornecedor com itens** (`components/orders/OrderPriceContextChangeDialog.tsx`, 1.60.18): janela **"Atualizar os preços?"**
+  ("Com {nome}, o preço de N item(ns) é diferente."), linhas "material R$ de → R$ para/kg", "Total dos itens", botões **"Manter preços"** e
+  **"Atualizar N preço(s)"**; só abre se algum preço mudar. (No 1.60.10 era "Trocar fornecedor?" / "Só nos próximos".)
+- **Caixa**: "Reabrir caixa #N?" (`pages/CashHistory.tsx`, chave `reopen.confirmTitleNumbered`); o texto "Reabrir Último Caixa?" só vale sem número.
+- **Pedidos**: ordenar por "Data", "N° Pedidos" e "Valor"; dica da coluna Pagamento (conta do Pix; partes do pagamento misto);
+  "Exportar" → "Exportar pedidos" → "PDF"/"Excel" → janela "Exportar PDF" ("Escolha quais pedidos serão incluídos no relatório": "Período", "Tipo de
+  Pedido", "Forma de Pagamento", "Detalhamento" · "Detalhar materiais de cada pedido"), "Relatório de pedidos gerado"; prévia da exclusão em caixa
+  fechado: "↩ estorno hoje"; selo "Estornado em dd/MM" e "Comprovante sem valores" iguais.
+- **Histórico do Caixa**: "Filtros" abre "Filtros do Histórico" ("Aberto por", "Período", "Limpar filtros", "Aplicar"). **Histórico de Exclusões**:
+  filtros "Período", "Todos os tipos", "Todos os usuários", busca "Buscar pelo nome do registro..."; a linha abre "Quem", "Onde" (navegador e IP).
+- Caixa do Rafael na aula: **#88**.
+
 # Inventário · T9 "Pedidos e histórico do caixa" (EcoSistema 1.59.154)
 
 Código lido em `/home/claude/ecoflix/app-src-1.59.154/` (`src/config/version.ts:16`, `APP_VERSION = "1.59.154"`). Análise

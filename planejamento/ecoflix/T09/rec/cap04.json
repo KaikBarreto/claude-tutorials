@@ -1,6 +1,6 @@
 {
  "name": "t09-cap04",
- "title": "T09 · Cap. 4 · Editar um pedido (narração 133,9 s ESTIMADA; marcas L1..L11 = início de cada linha do roteiro; FAKE_NOW 2026-11-11T08:30:00-03:00)",
+ "title": "T09 · Cap. 4 · Editar um pedido (narração 218,4 s ESTIMADA; marcas L1..L16 = início de cada linha do roteiro; FAKE_NOW 2026-11-11T08:30:00-03:00)",
  "seed": "t09-cap04",
  "pace": 0.5,
  "cps": 9,
@@ -302,9 +302,14 @@
    "timeout": 8
   },
   {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Se o caixa original estiver fechado, você poderá mantê-lo quando o pedido não movimentar dinheiro\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")];const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere aviso do caixa fechado (1.60.2)"
+  },
+  {
    "do": "type",
    "target": {
-    "text": "Se o pedido for de um caixa já fechado",
+    "text": "Se o caixa original estiver fechado",
     "within": "[role=dialog], [role=alertdialog]"
    },
    "text": "",
@@ -312,66 +317,524 @@
    "optional": true,
    "timeout": 4,
    "at": 4.52,
-   "label": "[ZOOM] \"Se o pedido for de um caixa já fechado, o acerto do dinheiro é lançado no caixa de hoje...\" (segue na L2)"
+   "label": "[ZOOM] \"Se o caixa original estiver fechado, você poderá mantê-lo quando o pedido não movimentar dinheiro ou escolher um caixa aberto para receber o acerto.\""
   },
   {
    "do": "hover",
    "target": {
-    "text": "Se o pedido for de um caixa já fechado",
+    "text": "Se o caixa original estiver fechado",
     "within": "[role=dialog], [role=alertdialog]"
    },
    "seconds": 1.0,
-   "at": 7.01,
+   "at": 7.85,
    "label": "o aviso do caixa fechado",
    "optional": true,
    "timeout": 4
   },
   {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Editar Pedido",
+    "exact": true,
+    "within": "[role=dialog], [role=alertdialog]"
+   },
+   "at": 18.95,
+   "label": "Editar Pedido (abre a tela Compra em edição)"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "text": "Editando Compra",
+    "within": "main"
+   },
+   "timeout": 15
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 10
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Editando pedido\", \"Depósito Irmãos Siqueira\", \"Caixa de destino da edição\", \"Caixa #70 · Original\", \"Sem movimento em dinheiro: você pode manter o caixa original\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere tela Compra: Caixa de destino da edição #70 Original"
+  },
+  {
    "do": "mark",
    "name": "L2",
-   "at": 14.74
+   "at": 19.3
   },
   {
-   "do": "scroll",
-   "point": {
-    "x": 640,
-    "y": 560
+   "do": "hover",
+   "target": {
+    "text": "Caixa de destino da edição",
+    "within": "main"
    },
-   "by": 0,
-   "duration": 0.3,
-   "after": 0,
-   "at": 14.95,
-   "label": "cursor descansa na janela (dica: reabrir o caixa)"
-  },
-  {
-   "do": "mark",
-   "name": "L3",
-   "at": 32.93
+   "seconds": 1.6,
+   "at": 26.94,
+   "label": "[ZOOM] \"Caixa de destino da edição:\" com \"Caixa #70 · Original\" e \"Sem movimento em dinheiro: você pode manter o caixa original sem alterar o fechamento.\"",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "click",
    "target": {
-    "role": "button",
-    "name": "Cancelar",
-    "exact": true,
-    "within": "[role=dialog], [role=alertdialog]"
+    "selector": "main [aria-label='Trocar caixa']"
    },
-   "at": 32.93,
-   "label": "Cancelar"
+   "at": 35.54,
+   "label": "o selo do caixa"
+  },
+  {
+   "do": "waitFor",
+   "text": "Em qual caixa registrar?",
+   "timeout": 8
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Em qual caixa registrar?\", \"Manter no caixa original #70\", \"Sem movimento em dinheiro; o fechamento não será alterado.\", \"Caixa #88\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")];const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere janela Em qual caixa registrar?"
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 36.04
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[role=dialog] button:has-text('Caixa #88')"
+   },
+   "seconds": 0.8,
+   "at": 43.23,
+   "label": "o meu caixa de hoje (#88)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:has-text('Manter no caixa original')"
+   },
+   "at": 45.86,
+   "label": "Manter no caixa original #70"
   },
   {
    "do": "waitFor",
    "gone": {
-    "text": "O pedido será carregado para edição."
+    "role": "dialog"
    },
    "timeout": 8
   },
   {
    "do": "click",
    "target": {
+    "selector": "#supplier-desktop-top"
+   },
+   "at": 46.9,
+   "label": "Fornecedor: Depósito Irmãos Siqueira"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "placeholder": "Buscar por nome, apelido, CPF/CNPJ ou telefone..."
+   },
+   "timeout": 8
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 47.17
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Buscar por nome, apelido, CPF/CNPJ ou telefone..."
+   },
+   "text": "Vale Forte",
+   "cps": 14,
+   "at": 48.84,
+   "label": "busca Vale Forte",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:has-text('Auto Peças Vale Forte')"
+   },
+   "at": 49.05,
+   "label": "Auto Peças Vale Forte"
+  },
+  {
+   "do": "waitFor",
+   "text": "Atualizar os preços?",
+   "timeout": 10
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Atualizar os preços?\", \"Auto Peças Vale Forte\", \"Bateria automotiva\", \"3,10\", \"3,40\", \"Total dos itens\", \"744,00\", \"Manter preços\", \"Atualizar 1 preço\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")];const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Atualizar os preços? (3,10 para 3,40, total 744,00)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "text": "Total dos itens",
+    "within": "[role=dialog]"
+   },
+   "text": "",
+   "noClick": true,
+   "optional": true,
+   "timeout": 4,
+   "at": 51.95,
+   "label": "[ZOOM] \"Atualizar os preços?\": Bateria automotiva R$ 3,10 → R$ 3,40/kg e o total dos itens; botões \"Manter preços\" e \"Atualizar 1 preço\""
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Manter preços",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 60.13,
+   "label": "Manter preços"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Auto Peças Vale Forte\", \"Bateria automotiva\", \"744,00\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Fornecedor Auto Peças Vale Forte e o item igual (R$ 744,00)"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const esp=[\"240\", \"3,10\"];let out='';for(let i=0;i<12;i++){const v=[...document.querySelectorAll(\"main tbody\"+' input, '+\"main tbody\"+' textarea')].map(e=>e.value).join(' | ');const falta=esp.filter(e=>!v.includes(e));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+v.slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere o item: 240 kg a R$ 3,10 (preços mantidos)"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll('main button')].find(b=>b.textContent.trim()==='Finalizar');if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-560);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 66.18,
+   "label": "a tela desce até o Finalizar (fica atrás do rodapé)"
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 66.88
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Finalizar",
+    "exact": true
+   },
+   "at": 66.88,
+   "label": "Finalizar"
+  },
+  {
+   "do": "waitFor",
+   "text": "Finalizar Pedido",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:has(span:text-is('Pix/Transferência'))"
+   },
+   "at": 67.57,
+   "label": "Pix/Transferência (Conta Principal)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "CONFIRMAR PAGAMENTO"
+   },
+   "at": 69.34,
+   "label": "CONFIRMAR PAGAMENTO"
+  },
+  {
+   "do": "waitFor",
+   "text": "Deseja imprimir o comprovante de compra?",
+   "timeout": 15
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Visualizar PDF",
+    "exact": true
+   },
+   "at": 71.19,
+   "label": "Visualizar PDF (aba nova: o comprovante no nome da Auto Peças entra na edição)"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{for(let i=0;i<40&&!(window.__pdfs&&window.__pdfs.length>0);i++)await new Promise(r=>setTimeout(r,200));const b=window.__pdfs&&window.__pdfs[0];if(!b)return 'SEM PDF';if(b.size>2500000)return {pdf:\"comprovante-vale-forte-21-10\",bytes:b.size,grande:true};const u=new Uint8Array(await b.arrayBuffer());let s='';for(let i=0;i<u.length;i+=8192)s+=String.fromCharCode.apply(null,u.subarray(i,i+8192));return {pdf:\"comprovante-vale-forte-21-10\",bytes:u.length,b64:btoa(s)}})()",
+   "label": "PDF do comprovante corrigido (para a edição: Auto Peças Vale Forte, 21/10/2026, R$ 744,00)"
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 81.35
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.history.pushState({},'','/pedidos');window.dispatchEvent(new PopStateEvent('popstate'));return 'nav'})()",
+   "at": 81.5,
+   "label": "volta à tela Pedidos (sem recarregar)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Histórico completo de compras e vendas",
+   "timeout": 15
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main [role=combobox]:has-text('Este mês')"
+   },
+   "at": 82.24,
+   "label": "período"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Mês passado"
+   },
+   "at": 83.04,
+   "label": "Mês passado"
+  },
+  {
+   "do": "waitFor",
+   "target": {
     "selector": "main [role=combobox]:has-text('Mês passado')"
    },
-   "at": 33.68,
+   "timeout": 8
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Filtros",
+    "within": "main"
+   },
+   "at": 86.28,
+   "label": "Filtros"
+  },
+  {
+   "do": "waitFor",
+   "text": "Filtrar pedidos",
+   "timeout": 8
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Pedido, cliente, operador, placa..."
+   },
+   "text": "1665",
+   "cps": 14,
+   "at": 86.68,
+   "label": "busca o pedido 1665 (a bateria)",
+   "clear": true
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "label": "fecha o painel"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "main tbody tr:has-text('21/10/2026')"
+   },
+   "timeout": 10
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"21/10/2026\", \"Auto Peças Vale Forte\", \"744,00\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main tbody\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere a bateria já no nome da Auto Peças Vale Forte (sem estornado)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('21/10/2026')"
+   },
+   "seconds": 0.8,
+   "at": 86.97,
+   "label": "[DESTAQUE] a linha de 21/10, agora da Auto Peças Vale Forte, sem selo de estornado",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Filtros",
+    "within": "main"
+   },
+   "at": 87.1,
+   "label": "Filtros"
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Pedido, cliente, operador, placa..."
+   },
+   "text": "1663",
+   "cps": 14,
+   "at": 88.06,
+   "label": "busca o pedido 1663 (a compra em dinheiro das 09:15)",
+   "clear": true
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "label": "fecha o painel"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "main tbody tr:has-text('21/10/2026 09:15')"
+   },
+   "timeout": 10
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('21/10/2026 09:15') button"
+   },
+   "seconds": 0.3,
+   "at": 89.5,
+   "label": "menu da compra em dinheiro de 21/10 09:15",
+   "optional": false,
+   "timeout": 8
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "role": "menuitem",
+    "name": "Ver comprovante"
+   },
+   "timeout": 6
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Editar"
+   },
+   "at": 90.61,
+   "label": "Editar",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "text": "O pedido será carregado para edição.",
+   "timeout": 8
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Editar Pedido",
+    "exact": true,
+    "within": "[role=dialog], [role=alertdialog]"
+   },
+   "at": 90.97,
+   "label": "Editar Pedido"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "text": "Editando Compra",
+    "within": "main"
+   },
+   "timeout": 15
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 10
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Caixa de destino da edição\", \"Caixa #88 · Você\", \"O caixa original está fechado. Como houve movimento em dinheiro, escolha um caixa aberto.\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere compra em dinheiro: o caixa original está fechado, escolha um caixa aberto"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Caixa de destino da edição",
+    "within": "main"
+   },
+   "seconds": 1.6,
+   "at": 91.96,
+   "label": "[ZOOM] \"Caixa de destino da edição:\" com \"Caixa #88 · Você\" e \"O caixa original está fechado. Como houve movimento em dinheiro, escolha um caixa aberto.\"",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L7",
+   "at": 101.36
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button:has-text('Cancelar Edição')",
+    "nth": 0
+   },
+   "at": 101.67,
+   "label": "Cancelar Edição"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "text": "Editando Compra",
+    "within": "main"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 117.88
+  },
+  {
+   "do": "eval",
+   "js": "(()=>{window.history.pushState({},'','/pedidos');window.dispatchEvent(new PopStateEvent('popstate'));return 'nav'})()",
+   "at": 117.88,
+   "label": "volta à tela Pedidos (sem recarregar)"
+  },
+  {
+   "do": "waitFor",
+   "text": "Histórico completo de compras e vendas",
+   "timeout": 15
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main [role=combobox]:has-text('Este mês')"
+   },
+   "at": 118.63,
    "label": "período"
   },
   {
@@ -380,17 +843,8 @@
     "role": "option",
     "name": "Hoje"
    },
-   "at": 35.57,
+   "at": 120.52,
    "label": "Hoje"
-  },
-  {
-   "do": "click",
-   "target": {
-    "text": "Limpar todos",
-    "within": "main"
-   },
-   "at": 36.03,
-   "label": "Limpar todos"
   },
   {
    "do": "waitFor",
@@ -405,7 +859,7 @@
     "selector": "main tbody tr:has-text('11/11/2026 07:22')"
    },
    "seconds": 0.6,
-   "at": 37.62,
+   "at": 122.57,
    "label": "a latinha da Aparecida (24 kg, R$ 148,80)",
    "optional": true,
    "timeout": 4
@@ -417,15 +871,15 @@
     "within": "main tbody tr:has-text('11/11/2026 07:22')"
    },
    "seconds": 0.6,
-   "at": 41.57,
+   "at": 126.52,
    "label": "R$ 148,80 (24 kg)",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
-   "name": "L4",
-   "at": 43.54
+   "name": "L9",
+   "at": 128.49
   },
   {
    "do": "hover",
@@ -433,7 +887,7 @@
     "selector": "main tbody tr:has-text('11/11/2026 07:22') button"
    },
    "seconds": 0.3,
-   "at": 43.54,
+   "at": 128.49,
    "label": "menu da latinha da Aparecida",
    "optional": false,
    "timeout": 8
@@ -452,7 +906,7 @@
     "role": "menuitem",
     "name": "Editar"
    },
-   "at": 44.73,
+   "at": 129.68,
    "label": "Editar",
    "noScroll": true
   },
@@ -469,7 +923,7 @@
     "exact": true,
     "within": "[role=dialog], [role=alertdialog]"
    },
-   "at": 46.32,
+   "at": 131.27,
    "label": "Editar Pedido (abre a tela Compra em edição)"
   },
   {
@@ -492,7 +946,7 @@
     "within": "main"
    },
    "seconds": 0.8,
-   "at": 50.58,
+   "at": 135.53,
    "label": "[DESTAQUE] o selo \"Editando Compra #N\"",
    "optional": true,
    "timeout": 4
@@ -503,7 +957,7 @@
     "selector": "#supplier-desktop-top"
    },
    "seconds": 0.3,
-   "at": 53.54,
+   "at": 138.49,
    "label": "Fornecedor",
    "optional": true,
    "timeout": 4
@@ -514,7 +968,7 @@
     "selector": "main tbody tr:has-text('Alumínio latinha')"
    },
    "seconds": 0.3,
-   "at": 54.83,
+   "at": 139.78,
    "label": "os itens",
    "optional": true,
    "timeout": 4
@@ -526,7 +980,7 @@
     "nth": 0
    },
    "seconds": 0.2,
-   "at": 55.66,
+   "at": 140.61,
    "label": "o peso",
    "optional": true,
    "timeout": 4
@@ -538,22 +992,22 @@
     "nth": 1
    },
    "seconds": 0.2,
-   "at": 56.42,
+   "at": 141.37,
    "label": "o preço",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
-   "name": "L5",
-   "at": 59.45
+   "name": "L10",
+   "at": 144.4
   },
   {
    "do": "click",
    "target": {
     "selector": "main tbody tr:has-text('Alumínio latinha') button[aria-label='Ações do item']"
    },
-   "at": 59.45,
+   "at": 144.4,
    "label": "Ações do item"
   },
   {
@@ -562,7 +1016,7 @@
     "role": "menuitem",
     "name": "Editar"
    },
-   "at": 59.88,
+   "at": 144.83,
    "label": "Editar (o item volta para o formulário)",
    "noScroll": true
   },
@@ -577,7 +1031,7 @@
     "selector": "main input[placeholder='0,000']",
     "nth": 0
    },
-   "at": 62.74,
+   "at": 147.69,
    "label": "Quantidade (Kg) com 24"
   },
   {
@@ -588,7 +1042,7 @@
    },
    "text": "42",
    "cps": 6,
-   "at": 64.68,
+   "at": 149.63,
    "label": "[ZOOM] Quantidade (Kg): 24 vira 42",
    "noClick": true,
    "clear": true
@@ -606,7 +1060,7 @@
     "within": "main"
    },
    "seconds": 1.0,
-   "at": 66.41,
+   "at": 151.36,
    "label": "[ZOOM] Valor Total do Item R$ 260,40",
    "optional": true,
    "timeout": 4
@@ -618,7 +1072,7 @@
     "name": "Incluir Item",
     "exact": true
    },
-   "at": 70.61,
+   "at": 155.56,
    "label": "Incluir Item"
   },
   {
@@ -628,8 +1082,8 @@
   },
   {
    "do": "mark",
-   "name": "L6",
-   "at": 71.11
+   "name": "L11",
+   "at": 156.06
   },
   {
    "do": "hover",
@@ -637,15 +1091,15 @@
     "selector": "main tbody tr:has-text('Alumínio latinha')"
    },
    "seconds": 0.8,
-   "at": 74.28,
+   "at": 159.22,
    "label": "o item na lista com o peso certo",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
-   "name": "L7",
-   "at": 75.94
+   "name": "L12",
+   "at": 160.89
   },
   {
    "do": "scroll",
@@ -656,23 +1110,23 @@
    "by": 0,
    "duration": 0.3,
    "after": 0,
-   "at": 75.94,
+   "at": 160.89,
    "label": "cursor descansa (ilustração: não soma por cima)"
   },
   {
    "do": "mark",
-   "name": "L8",
-   "at": 89.88
+   "name": "L13",
+   "at": 174.83
   },
   {
    "do": "mark",
-   "name": "L9",
-   "at": 101.39
+   "name": "L14",
+   "at": 186.34
   },
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll('main button')].find(b=>b.textContent.trim()==='Finalizar');if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-560);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 106.55,
+   "at": 191.5,
    "label": "a tela desce até o Finalizar (fica atrás do rodapé; sob a ilustração)"
   },
   {
@@ -682,7 +1136,7 @@
     "name": "Finalizar",
     "exact": true
    },
-   "at": 111.18,
+   "at": 196.13,
    "label": "Finalizar"
   },
   {
@@ -692,15 +1146,15 @@
   },
   {
    "do": "mark",
-   "name": "L10",
-   "at": 111.68
+   "name": "L15",
+   "at": 196.63
   },
   {
    "do": "click",
    "target": {
     "selector": "[role=dialog] button:has(span:text-is('Dinheiro'))"
    },
-   "at": 113.03,
+   "at": 197.45,
    "label": "Dinheiro (R$ 260,40)"
   },
   {
@@ -709,7 +1163,7 @@
     "role": "button",
     "name": "CONFIRMAR PAGAMENTO"
    },
-   "at": 113.84,
+   "at": 198.26,
    "label": "CONFIRMAR PAGAMENTO"
   },
   {
@@ -726,13 +1180,13 @@
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "at": 116.16,
+   "at": 200.58,
    "label": "[ZOOM] os avisos: Revertendo pedido original... / Pedido original revertido! Criando pedido editado... / Compra registrada!"
   },
   {
    "do": "mark",
-   "name": "L11",
-   "at": 121.83
+   "name": "L16",
+   "at": 206.24
   },
   {
    "do": "type",
@@ -744,7 +1198,7 @@
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "at": 122.13,
+   "at": 206.55,
    "label": "a compra editada registrada (janela Imprimir Comprovante)"
   },
   {
@@ -754,7 +1208,7 @@
     "name": "Não, obrigado",
     "exact": true
    },
-   "at": 132.0,
+   "at": 216.42,
    "label": "Imprimir Comprovante: Não, obrigado"
   },
   {
@@ -765,7 +1219,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 133.94
+   "at": 218.35
   }
  ]
 }

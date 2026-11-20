@@ -1,6 +1,6 @@
 {
  "name": "t09-cap03",
- "title": "T09 · Cap. 3 · Filtrar até achar (narração 58,7 s ESTIMADA; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-11T08:30:00-03:00)",
+ "title": "T09 · Cap. 3 · Filtrar até achar (narração 80,0 s ESTIMADA; marcas L1..L8 = início de cada linha do roteiro; FAKE_NOW 2026-11-11T08:30:00-03:00)",
  "seed": "t09-cap03",
  "pace": 0.5,
  "cps": 9,
@@ -388,6 +388,94 @@
    "timeout": 4
   },
   {
+   "do": "mark",
+   "name": "L7",
+   "at": 58.1
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Filtros",
+    "within": "main"
+   },
+   "at": 58.1,
+   "label": "Filtros de novo"
+  },
+  {
+   "do": "waitFor",
+   "text": "Filtrar pedidos",
+   "timeout": 8
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const p=[...document.querySelectorAll('[data-radix-popper-content-wrapper]')].find(w=>w.innerText.includes('Filtrar pedidos'));const b=p&&[...p.querySelectorAll('button')].filter(x=>x.className.includes('justify-between'))[2];if(!b)return 'SEM ALVO';b.click();await new Promise(r=>setTimeout(r,150));return 'aberto'})()",
+   "at": 61.35,
+   "label": "abre a lista de Forma de Pagamento (Com Saldo, Pagamento Misto, Não informado)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] label:has-text('Pagamento Misto')"
+   },
+   "seconds": 0.8,
+   "at": 63.09,
+   "label": "[DESTAQUE] Pagamento Misto",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 64.19,
+   "label": "fecha a lista"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const p=[...document.querySelectorAll('[data-radix-popper-content-wrapper]')].find(w=>w.innerText.includes('Filtrar pedidos'));const b=p&&[...p.querySelectorAll('button')].filter(x=>x.className.includes('justify-between'))[3];if(!b)return 'SEM ALVO';b.click();await new Promise(r=>setTimeout(r,150));return 'aberto'})()",
+   "at": 64.9,
+   "label": "abre o campo Conta"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] label:has-text('Conta Principal')"
+   },
+   "seconds": 0.8,
+   "at": 65.36,
+   "label": "[DESTAQUE] a conta bancária",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 65.44,
+   "label": "fecha a lista"
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 66.04,
+   "label": "fecha o painel"
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 67.4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main [role=combobox]:has-text('Mês passado')"
+   },
+   "seconds": 1.0,
+   "at": 68.22,
+   "label": "[DESTAQUE] o período (a dica da lista cortada)",
+   "optional": true,
+   "timeout": 4
+  },
+  {
    "do": "eval",
    "js": "JSON.stringify(window.__avisos || \"sem observador\")",
    "label": "avisos de erro na tela"
@@ -395,7 +483,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 58.7
+   "at": 79.97
   }
  ]
 }

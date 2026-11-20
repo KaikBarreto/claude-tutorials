@@ -390,8 +390,17 @@
   },
   {
    "do": "eval",
-   "js": "(async()=>{const w=(window.__pops||[]).slice(-1)[0];if(!w)return 'SEM JANELA';const espera=[\"Fundição Bandeira do Vale\"];for(let i=0;i<60;i++){let t='';try{t=(w.document&&w.document.body&&w.document.body.innerText)||''}catch(e){return 'ERRO '+e}if(t&&espera.every(x=>t.toLowerCase().includes(x.toLowerCase()))){const h='<!doctype html>'+w.document.documentElement.outerHTML;const u=new TextEncoder().encode(h);let s='';for(let k=0;k<u.length;k+=8192)s+=String.fromCharCode.apply(null,u.subarray(k,k+8192));return 'HTML:'+btoa(s)}await new Promise(r=>setTimeout(r,250))}let d='';try{d=' pops='+window.__pops.length+' fechada='+w.closed+' texto='+((w.document.body&&w.document.body.innerText)||'').slice(0,160)}catch(e){d=' '+e}return 'SEM HTML'+d})()",
+   "js": "(async()=>{let w;for(let i=0;i<60&&!(w=(window.__pops||[]).slice(-1)[0]);i++)await new Promise(r=>setTimeout(r,250));if(!w)return 'SEM JANELA';const espera=[\"Fundição Bandeira do Vale\"];for(let i=0;i<60;i++){let t='';try{t=(w.document&&w.document.documentElement&&w.document.documentElement.textContent)||''}catch(e){return 'ERRO '+e}if(t&&espera.every(x=>t.toLowerCase().includes(x.toLowerCase()))){const h='<!doctype html>'+w.document.documentElement.outerHTML;const u=new TextEncoder().encode(h);let s='';for(let k=0;k<u.length;k+=8192)s+=String.fromCharCode.apply(null,u.subarray(k,k+8192));return 'HTML:'+btoa(s)}await new Promise(r=>setTimeout(r,250))}let d='';try{d=' pops='+window.__pops.length+' fechada='+w.closed+' texto='+((w.document.documentElement&&w.document.documentElement.textContent)||'').slice(0,160)}catch(e){d=' '+e}return 'SEM HTML'+d})()",
    "label": "PDF DO RELATÓRIO DE SALDOS (aba nova, para a ilustração)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "Visualize todos os saldos a receber e a pagar",
+    "exact": false,
+    "within": "[role=dialog]"
+   },
+   "label": "clica no subtítulo (fecha o menu de exportação, se ainda aberto)"
   },
   {
    "do": "mark",

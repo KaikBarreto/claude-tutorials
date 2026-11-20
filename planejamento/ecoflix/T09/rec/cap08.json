@@ -1,13 +1,13 @@
 {
  "name": "t09-cap08",
- "title": "T09 · Cap. 8 · Relatórios do caixa (narração 44,4 s ESTIMADA; marcas L1..L5 = início de cada linha do roteiro; FAKE_NOW 2026-11-11T08:30:00-03:00)",
+ "title": "T09 · Cap. 8 · O Histórico do Caixa (narração 57,6 s ESTIMADA; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-11T08:30:00-03:00)",
  "seed": "t09-cap08",
  "pace": 0.5,
  "cps": 9,
  "tail": 1.5,
  "start": {
-  "x": 900,
-  "y": 440
+  "x": 760,
+  "y": 470
  },
  "anonymous": true,
  "storage": {
@@ -89,23 +89,17 @@
    "timeout": 25
   },
   {
-   "do": "type",
-   "target": {
-    "placeholder": "Buscar por responsável, data ou código..."
-   },
-   "text": "21/10",
-   "cps": 40
+   "do": "goto",
+   "url": "/dashboard"
   },
   {
    "do": "waitFor",
-   "target": {
-    "selector": "main tbody tr:has-text('#70')"
-   },
-   "timeout": 10
+   "idle": true,
+   "timeout": 25
   },
   {
    "do": "wait",
-   "seconds": 0.8
+   "seconds": 1.0
   },
   {
    "do": "eval",
@@ -121,89 +115,399 @@
   {
    "do": "click",
    "target": {
-    "selector": "main tbody tr:has-text('#70') button[aria-label='Ações']"
+    "role": "button",
+    "name": "Financeiro",
+    "exact": true,
+    "within": "[data-sidebar=sidebar]"
    },
-   "at": 0.0,
-   "label": "Ações do #70"
+   "at": 2.85,
+   "label": "menu Financeiro"
   },
   {
    "do": "click",
    "target": {
-    "role": "menuitem",
-    "name": "Ver comprovante"
+    "role": "link",
+    "name": "Histórico do Caixa",
+    "exact": true,
+    "within": "[data-sidebar=sidebar]"
    },
-   "at": 1.47,
-   "label": "Ver comprovante (relatório de fechamento em aba nova: PDF na edição)"
+   "at": 5.24,
+   "label": "menu Histórico do Caixa"
   },
   {
-   "do": "eval",
-   "js": "(async()=>{for(let i=0;i<40&&!(window.__pdfs&&window.__pdfs.length>0);i++)await new Promise(r=>setTimeout(r,200));const b=window.__pdfs&&window.__pdfs[0];if(!b)return 'SEM PDF';if(b.size>2500000)return {pdf:\"relatorio-fechamento-70\",bytes:b.size,grande:true};const u=new Uint8Array(await b.arrayBuffer());let s='';for(let i=0;i<u.length;i+=8192)s+=String.fromCharCode.apply(null,u.subarray(i,i+8192));return {pdf:\"relatorio-fechamento-70\",bytes:u.length,b64:btoa(s)}})()",
-   "label": "PDF do relatório de fechamento do #70 (para a edição)"
+   "do": "waitFor",
+   "text": "Todos os registros de fechamento do caixa",
+   "timeout": 15
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('#85')"
+   },
+   "seconds": 0.6,
+   "at": 7.01,
+   "label": "cada caixa fechado, um por linha",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "mark",
    "name": "L2",
-   "at": 9.81
+   "at": 10.5
   },
   {
-   "do": "scroll",
-   "point": {
-    "x": 700,
-    "y": 520
+   "do": "hover",
+   "target": {
+    "selector": "main thead th:has-text('Código')"
    },
-   "by": 0,
-   "duration": 0.3,
-   "after": 0,
-   "at": 9.81,
-   "label": "cursor descansa (o PDF do fechamento na edição)"
+   "seconds": 0.2,
+   "at": 11.39,
+   "label": "coluna Código",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main thead th:has-text('Abertura')"
+   },
+   "seconds": 0.2,
+   "at": 13.36,
+   "label": "coluna Abertura",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main thead th:has-text('Fechamento')"
+   },
+   "seconds": 0.2,
+   "at": 14.5,
+   "label": "coluna Fechamento",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main thead th:has-text('Aberto por')"
+   },
+   "seconds": 0.2,
+   "at": 15.26,
+   "label": "coluna Aberto por",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main thead th:has-text('Saldo Inicial')"
+   },
+   "seconds": 0.2,
+   "at": 16.92,
+   "label": "coluna Saldo Inicial",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main thead th:has-text('Saldo Final')"
+   },
+   "seconds": 0.2,
+   "at": 17.84,
+   "label": "coluna Saldo Final",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 17.75
+   "at": 19.12
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('#85') svg.lucide-link2"
+   },
+   "seconds": 1.6,
+   "at": 19.12,
+   "label": "[ZOOM] a correntinha entre o #85 e o #86 (dica \"Caixas fechados no mesmo dia\")",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('#86') svg.lucide-link2"
+   },
+   "seconds": 0.8,
+   "at": 24.49,
+   "label": "o #86 do Marcos, de ontem",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "click",
    "target": {
-    "selector": "main tbody tr:has-text('#70') button[aria-label='Ações']"
+    "text": "10/11/2026 08:31",
+    "exact": true,
+    "within": "main"
    },
-   "at": 17.75,
-   "label": "Ações do #70"
+   "at": 26.36,
+   "label": "abre o resumo do #85 (o caixa do Rafael de ontem)"
   },
   {
-   "do": "click",
-   "target": {
-    "role": "menuitem",
-    "name": "Relatório de estoque"
-   },
-   "at": 17.83,
-   "label": "Relatório de estoque (aba nova: o relatório em HTML na edição)"
-  },
-  {
-   "do": "eval",
-   "js": "(async()=>{let w=null,h='';for(let i=0;i<50;i++){w=window.__abas&&window.__abas[1];try{h=w&&w.document&&w.document.documentElement.outerHTML||''}catch(e){h=''}if(h.includes(\"Bateria automotiva\"))break;await new Promise(r=>setTimeout(r,200));}if(!h.includes(\"Bateria automotiva\"))return 'SEM ABA: '+h.slice(0,120);return {html:\"relatorio-estoque-70\",chars:h.length,b64:btoa(unescape(encodeURIComponent(h)))}})()",
-   "label": "HTML do \"Relatório de Estoque do Caixa #70\" (para a edição: Bateria automotiva 240 kg, R$ 744,00)"
+   "do": "waitFor",
+   "text": "Total Compras",
+   "timeout": 10
   },
   {
    "do": "mark",
    "name": "L4",
-   "at": 26.98
+   "at": 26.76
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Total Compras",
+    "within": "main tbody"
+   },
+   "seconds": 0.2,
+   "at": 30.3,
+   "label": "resumo: Total Compras",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Total Vendas",
+    "within": "main tbody"
+   },
+   "seconds": 0.2,
+   "at": 31.13,
+   "label": "resumo: Total Vendas",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Receitas",
+    "within": "main tbody"
+   },
+   "seconds": 0.2,
+   "at": 31.89,
+   "label": "resumo: Receitas",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Despesas",
+    "within": "main tbody"
+   },
+   "seconds": 0.2,
+   "at": 32.8,
+   "label": "resumo: Despesas",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Lucro Projetado",
+    "within": "main tbody"
+   },
+   "seconds": 0.2,
+   "at": 33.79,
+   "label": "resumo: Lucro Projetado",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "placeholder": "Buscar por responsável, data ou código..."
+   },
+   "at": 35.48,
+   "label": "a busca"
   },
   {
    "do": "mark",
    "name": "L5",
-   "at": 37.96
+   "at": 35.83
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Buscar por responsável, data ou código..."
+   },
+   "text": "21/10",
+   "cps": 9,
+   "at": 39.62,
+   "label": "digita 21/10",
+   "noClick": true
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "main tbody tr:has-text('#70')"
+   },
+   "timeout": 10
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"#70\", \"21/10/2026\", \"Marcos Antunes\", \"800,00\", \"612,50\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main tbody\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere o #70 do Marcos (21/10, R$ 800,00 e R$ 612,50)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('#70')"
+   },
+   "seconds": 1.0,
+   "at": 43.86,
+   "label": "[ZOOM] a linha do #70 do Marcos",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Buscar por responsável, data ou código..."
+   },
+   "text": "",
+   "at": 45.33,
+   "label": "apaga a busca 21/10 (os filtros agem sobre a lista toda)",
+   "clear": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Filtros",
+    "exact": true,
+    "within": "main"
+   },
+   "at": 45.85,
+   "label": "Filtros"
+  },
+  {
+   "do": "waitFor",
+   "text": "Filtros do Histórico",
+   "timeout": 8
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 46.13
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] [role=combobox]",
+    "nth": 0
+   },
+   "at": 47.52,
+   "label": "Aberto por"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Marcos Antunes"
+   },
+   "at": 48.0,
+   "label": "Marcos Antunes"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] [role=combobox]",
+    "nth": 1
+   },
+   "at": 49.07,
+   "label": "Período"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Mês passado"
+   },
+   "at": 49.77,
+   "label": "Mês passado"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Aplicar",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 50.05,
+   "label": "Aplicar"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Marcos Antunes\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main tbody\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere a lista só com os caixas do Marcos"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr",
+    "nth": 0
+   },
+   "seconds": 0.8,
+   "at": 51.95,
+   "label": "[DESTAQUE] só os caixas do Marcos em outubro",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Filtros",
+    "within": "main"
+   },
+   "at": 53.35,
+   "label": "Filtros de novo"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Limpar filtros",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 54.15,
+   "label": "Limpar filtros"
   },
   {
    "do": "scroll",
    "point": {
-    "x": 700,
-    "y": 520
+    "x": 760,
+    "y": 600
    },
    "by": 0,
    "duration": 0.3,
    "after": 0,
-   "at": 37.96,
+   "at": 56.15,
    "label": "cursor descansa"
   },
   {
@@ -214,7 +518,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 44.38
+   "at": 57.55
   }
  ]
 }

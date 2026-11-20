@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""T09 · Pedidos e histórico do caixa: gera rec/t09/cap00..cap10.json (roteiros do robô) a partir da voz (t09/narracao/capNN.json).
+"""T09 · Pedidos e histórico do caixa: gera rec/t09/cap00..cap11.json (roteiros do robô) a partir da voz (t09/narracao/capNN.json).
 
-EcoSistema 1.59.154 no Supabase falso (mundo da Recicla Vale Metais), computador 1280x800, logado como Rafael Nogueira (MASTER).
+EcoSistema 1.60.18 no Supabase falso (mundo da Recicla Vale Metais), computador 1600x900, logado como Rafael Nogueira (MASTER).
 Cada passo é preso a uma palavra da fala: `at` = início da palavra - folga (o custo do gesto, docs/04 "Custo real dos gestos"),
 para o cursor CHEGAR na palavra. A voz ainda é a ESTIMADA: quando a voz de verdade chegar, o capNN.json da voz substitui o
 estimado e este gerador roda de novo, sem reescrever nada. Rodar de qualquer pasta: `python3 -I rec/t09/gerar.py [NN ...]`.
@@ -57,10 +57,10 @@ STORAGE = {
 }
 
 NOMES = ['Abertura', 'Duas telas, dois trabalhos', 'A tela Pedidos', 'Filtrar até achar', 'Editar um pedido', 'Excluir e o selo de estornado',
-         'Reimprimir e cupom sem valor', 'O Histórico do Caixa', 'Relatórios do caixa', 'Reabrir um caixa antigo', 'Recapitulando']
+         'Reimprimir e cupom sem valor', 'Exportar a lista', 'O Histórico do Caixa', 'Relatórios do caixa', 'Reabrir um caixa antigo', 'Recapitulando']
 CADEIA = ['inicio', 'apos-cap04', 'apos-cap05', 'apos-cap06', 'apos-cap09']
 SEMENTE = {0: 'inicio', 1: 'inicio', 2: 'inicio', 3: 'inicio', 4: 'inicio', 5: 'apos-cap04', 6: 'apos-cap05', 7: 'apos-cap06', 8: 'apos-cap06',
-           9: 'apos-cap06', 10: 'apos-cap09'}
+           9: 'apos-cap06', 10: 'apos-cap06', 11: 'apos-cap09'}   # nomes de semente seguem os da 1.59 (a T10 parte de apos-cap09)
 
 
 def sementes(n):
@@ -319,7 +319,9 @@ PERIODO = lambda txt: SEL(f"main [role=combobox]:has-text('{txt}')")          # 
 LINHA = lambda txt: f"main tbody tr:has-text('{txt}')"                        # a linha do pedido (data e hora são da semente)
 MENU_LINHA = lambda txt: SEL(f"{LINHA(txt)} button")                          # o "⋮" (HoverDropdownMenu: abre ao passar o mouse)
 L_CIDA, L_VALDIR, L_DUP = '11/11/2026 07:22', '11/11/2026 07:41', '11/11/2026 07:42'
-L_BATERIA = "Depósito Irmãos Siqueira'):has-text('744,00"                     # a compra de 21/10 (fecha o :has-text de LINHA)
+L_BATERIA = "Depósito Irmãos Siqueira'):has-text('744,00"
+L_C1663 = '21/10/2026 09:15'                                                   # a compra em dinheiro das 09:15 (Aparecida; sem fornecedor na semente inicio)
+NAV_PEDIDOS = "(()=>{window.history.pushState({},'','/pedidos');window.dispatchEvent(new PopStateEvent('popstate'));return 'nav'})()"   # SPA, sem recarregar (os ganchos de PDF ficam)                     # a compra de 21/10 (fecha o :has-text de LINHA)
 LINK = lambda n: {'role': 'link', 'name': n, 'exact': True, 'within': MENU}
 
 
@@ -390,7 +392,8 @@ def cap01():
 @capitulo
 def cap02():
     """A tela Pedidos (menu recolhido no setup): período e lista (L1), o Resumo do período aberto (L2, zoom), as colunas (L3),
-    a linha da latinha da Aparecida aberta com os 24 kg (L4) e o "⋮" sem abrir (L5)."""
+    a coluna "Pagamento" com a conta do Pix (L5), ordenar pelos cabeçalhos e o rodapé (L4), a linha da latinha da Aparecida aberta com os
+    24 kg (L6) e o "⋮" sem abrir (L7)."""
     c = Cap(2, setup=setup_pedidos())
     c.mark(1)
     c.hover(PERIODO('Este mês'), 0.5, at=c.A(1, 'mês', 0.7), label='período "Este mês"')
@@ -408,14 +411,24 @@ def cap02():
                               ('Cliente/Fornecedor', 'cliente', 0), ('Pagamento', 'pago', 0), ('Valor', 'valor.', 0)):
         c.hover(SEL(f"main thead th:has-text('{col}')"), 0.2, at=c.A(3, palavra, 0.6, nth=nth), label=f'coluna {col}')
     c.mark(4)
-    c.ev(js_ate_el(f"[...document.querySelectorAll('main tbody tr')].find(t=>t.innerText.includes('{L_CIDA}'))", y=300, dur_ms=700),
-         at=c.A(4, 'Clicando', 0.2), label='a lista sobe: a linha da Aparecida e o que ela abre cabem na tela')
-    c.click(TXT(L_CIDA, within='main'), at=c.A(4, 'linha,', 0.6), label='abre a linha da latinha da Aparecida (hoje 07:22)')
-    c.hover(TXT('Alumínio latinha', within=f"main tbody tr:has-text('Fornecedor:')"), 0.4, at=c.A(4, 'materiais,', 0.6), label='o material da linha')
-    c.hover(TXTX('24.00 Kg', within='main'), 0.8, at=c.A(4, 'vinte', 0.6), label='[ZOOM] o peso: 24 kg')
+    c.hover(SEL("main thead th:has-text('Data')"), 0.2, at=c.A(4, 'Data,', 0.6), label='cabeçalho Data (ordena)')
+    c.hover(SEL("main thead th:has-text('N° Pedidos')"), 0.2, at=c.A(4, 'número', 0.6), label='cabeçalho N° Pedidos (ordena)')
+    c.click(SEL("main thead th:has-text('Valor')"), at=c.A(4, 'Valor,', 0.6), label='clica em Valor: a lista ordena do maior para o menor')
+    c.click(SEL("main thead th:has-text('Data')"), at=c.A(4, 'ordem.', 0.2), label='clica em Data: volta à ordem por data')
+    c.hover(TXTX('por página', within='main'), 0.8, at=c.A(4, 'rodapé', 0.6), label='[DESTAQUE] rodapé: itens por página', optional=True)
     c.mark(5)
-    c.hover(TXTX('R$ 148,80', within=LINHA(L_CIDA)), 0.3, at=c.A(5, 'fim', 0.6), label='cursor no valor, ao lado do "⋮" (passar por cima abriria o menu)')
-    c.registra(MENU_LINHA(L_CIDA), at=c.A(5, 'menu', 0.2), label='[DESTAQUE] o "⋮" no fim da linha (sem abrir)')
+    c.ev(js_ate_el("[...document.querySelectorAll('main tbody tr')].find(t=>/Pix/.test(t.innerText)&&t.innerText.includes('Compra'))||document.querySelector('main tbody tr')", y=300, dur_ms=700),
+         at=c.A(5, 'Na', 0.2), label='a lista sobe até uma linha paga no Pix')
+    c.hover(SEL("main tbody tr:has-text('Pix') span.cursor-help"), 1.8, at=c.A(5, 'Pix,', 0.6), label='[ZOOM] a dica da coluna Pagamento: a conta do Pix', optional=True)
+    c.mark(6)
+    c.ev(js_ate_el(f"[...document.querySelectorAll('main tbody tr')].find(t=>t.innerText.includes('{L_CIDA}'))", y=300, dur_ms=700),
+         at=c.A(6, 'Clicando', 0.2), label='a lista sobe: a linha da Aparecida e o que ela abre cabem na tela')
+    c.click(TXT(L_CIDA, within='main'), at=c.A(6, 'linha,', 0.6), label='abre a linha da latinha da Aparecida (hoje 07:22)')
+    c.hover(TXT('Alumínio latinha', within=f"main tbody tr:has-text('Fornecedor:')"), 0.4, at=c.A(6, 'materiais,', 0.6), label='o material da linha')
+    c.hover(TXTX('24.00 Kg', within='main'), 0.8, at=c.A(6, 'vinte', 0.6), label='[ZOOM] o peso: 24 kg')
+    c.mark(7)
+    c.hover(TXTX('R$ 148,80', within=LINHA(L_CIDA)), 0.3, at=c.A(7, 'fim', 0.6), label='cursor no valor, ao lado do "⋮" (passar por cima abriria o menu)')
+    c.registra(MENU_LINHA(L_CIDA), at=c.A(7, 'menu', 0.2), label='[DESTAQUE] o "⋮" no fim da linha (sem abrir)')
     c.fim()
     return c
 
@@ -472,7 +485,7 @@ def js_campo_filtro(k, busca=None):
 @capitulo
 def cap03():
     """Filtrar até achar: Mês passado (L1); Filtros e a busca "Vale Forte" (L2); o painel fecha e as compras da Vale Forte ficam à mostra
-    (L3, zoom); Tipo, Material e Forma de Pagamento (L4); a linha que sobra aberta (L5, zoom); as etiquetas e o Limpar todos (L6)."""
+    (L3, zoom); Tipo, Material e Forma de Pagamento (L4); a linha que sobra aberta (L5, zoom); as etiquetas e o Limpar todos (L6); os filtros que ficaram: saldo, misto, conta (L7); a dica do período longo (L8)."""
     c = Cap(3, setup=setup_pedidos())
     c.mark(1)
     c.click(PERIODO('Este mês'), at=c.A(1, 'período:', 1.3), label='período')
@@ -504,6 +517,18 @@ def cap03():
     c.mark(6)
     c.hover(TXTX('Filtrando por', within='main'), 0.5, at=c.A(6, 'etiqueta', 0.6), label='[DESTAQUE] as etiquetas "Filtrando por"')
     c.hover(TXTX('Limpar todos', within='main'), 0.8, at=c.A(6, 'Limpar', 0.6), label='Limpar todos (sem clicar)')
+    c.mark(7)
+    c.click(FILTROS, at=c.A(7, 'Os', 0.3), label='Filtros de novo')
+    c.waitfor(text='Filtrar pedidos', timeout=8)
+    c.ev(js_campo_filtro(2), at=c.A(7, 'saldo,', 0.9), label='abre a lista de Forma de Pagamento (Com Saldo, Pagamento Misto, Não informado)')
+    c.hover(OPCAO('Pagamento Misto'), 0.8, at=c.A(7, 'misto,', 0.6), label='[DESTAQUE] Pagamento Misto')
+    c.press('Escape', at=c.A(7, 'misto,', -0.5), label='fecha a lista')
+    c.ev(js_campo_filtro(3), at=c.A(7, 'conta', 0.3), label='abre o campo Conta')
+    c.hover(SEL(f"{POP} label:has-text('Conta Principal')"), 0.8, at=c.A(7, 'bancária', 0.3), label='[DESTAQUE] a conta bancária', optional=True)
+    c.press('Escape', at=c.A(7, 'específica.', 0.9), label='fecha a lista')
+    c.press('Escape', at=c.A(7, 'específica.', 0.3), label='fecha o painel')
+    c.mark(8)
+    c.hover(PERIODO('Mês passado'), 1.0, at=c.A(8, 'período', 0.6), label='[DESTAQUE] o período (a dica da lista cortada)')
     c.fim()
     return c
 
@@ -524,11 +549,42 @@ def setup_historico(busca=None, extra=()):
 
 @capitulo
 def cap07():
+    """Exportar a lista (Mês passado no setup): Exportar > PDF (L1); a janela "Exportar PDF" com o período da tela e só as compras (L2);
+    "Detalhar materiais de cada pedido" (L3, zoom); Exportar PDF abre o relatório em aba nova (L4; o HTML vai para a edição)."""
+    c = Cap(7, setup=setup_pedidos('Mês passado'))
+    c.mark(1)
+    c.click(BTNX('Exportar', within='main'), at=c.A(1, 'Exportar,', 0.7), label='Exportar')
+    c.waitfor(target=ITEM('PDF'), timeout=8)
+    c.hover(ITEM('PDF'), 0.5, at=c.A(1, 'PDF', 0.6), label='PDF', noScroll=True)
+    c.hover(ITEM('Excel'), 0.5, at=c.A(1, 'Excel', 0.6), label='Excel', noScroll=True)
+    c.click(ITEM('PDF'), at=c.A(1, 'Excel', -0.45), label='PDF', noScroll=True)
+    c.waitfor(text='Escolha quais pedidos serão incluídos no relatório', timeout=8)
+    c.mark(2)
+    c.confere('dlg', ['Exportar PDF', 'Escolha quais pedidos serão incluídos no relatório', 'Período', 'Mês passado', 'Tipo de Pedido', 'Compras', 'Vendas',
+                      'Forma de Pagamento', 'Dinheiro', 'PIX / Transferência', 'Saldo', 'Detalhamento', 'Detalhar materiais de cada pedido'], 'janela Exportar PDF')
+    c.hover(TXT('Período', within=DLG), 0.5, at=c.A(2, 'período', 0.6), label='Período (já em Mês passado)')
+    c.click(SEL(f"{DLG} label:has-text('Vendas')"), at=c.A(2, 'compras', 0.7), label='desmarca Vendas (ficam só as compras)')
+    c.hover(TXT('Forma de Pagamento', within=DLG), 0.6, at=c.A(2, 'formas', 0.6), label='Forma de Pagamento: todas marcadas')
+    c.mark(3)
+    c.registra(TXT('Detalhamento', within=DLG), at=c.A(3, 'detalhar:', 0.2), label='[ZOOM] "Detalhamento" · "Detalhar materiais de cada pedido"')
+    c.click(SEL(f"{DLG} label:has-text('Detalhar materiais de cada pedido')"), at=c.A(3, 'detalhar:', 0.1), label='marca "Detalhar materiais de cada pedido"')
+    c.mark(4)
+    c.click(BTN('Exportar PDF', within=DLG), at=c.A(4, 'Exportar,', 0.7), label='Exportar PDF')
+    c.waitfor(text='Relatório de pedidos gerado', timeout=30)
+    c.ev(js_aba_html(0, 'relatorio-pedidos-outubro', 'Bateria automotiva'), label='HTML do "Relatório de Pedidos" (para a edição: período, pedidos de outubro e os materiais de cada um)')
+    c.registra(TOAST('Relatório de pedidos gerado'), at=c.A(4, 'aba', 0.2), label='aviso "Relatório de pedidos gerado"')
+    c.cursor((760, 520), at=c.A(4, 'contador.', 0.2), label='cursor descansa')
+    c.fim()
+    return c
+
+
+@capitulo
+def cap08():
     """O Histórico do Caixa: Financeiro > Histórico do Caixa pelo menu (L1); as colunas (L2); a correntinha dos caixas de ontem (L3, zoom);
-    o resumo de um caixa (L4); a busca "21/10" e o #70 do Marcos (L5, zoom); o botão Filtros (L6)."""
+    o resumo de um caixa (L4); a busca "21/10" e o #70 do Marcos (L5, zoom); o botão Filtros aberto: operador e período, Aplicar e Limpar filtros (L6)."""
     setup = list(LOGIN) + [{'do': 'goto', 'url': '/historico-caixa'}, {'do': 'waitFor', 'text': HIST_OK, 'timeout': 30}, {'do': 'waitFor', 'idle': True, 'timeout': 25},
                            {'do': 'goto', 'url': '/dashboard'}, {'do': 'waitFor', 'idle': True, 'timeout': 25}, {'do': 'wait', 'seconds': 1.0}]
-    c = Cap(7, setup=setup, start=(760, 470))
+    c = Cap(8, setup=setup, start=(760, 470))
     c.mark(1)
     c.click(BTN('Financeiro', within=MENU), at=c.A(1, 'Histórico', 1.2), label='menu Financeiro')
     c.click(LINK('Histórico do Caixa'), at=c.A(1, 'Financeiro.', 0.7), label='menu Histórico do Caixa')
@@ -553,8 +609,20 @@ def cap07():
     c.confere('main tbody', ['#70', '21/10/2026', 'Marcos Antunes', '800,00', '612,50'], 'o #70 do Marcos (21/10, R$ 800,00 e R$ 612,50)')
     c.hover(SEL(LINHA_CX(70)), 1.0, at=c.A(5, 'Marcos', 0.6), label='[ZOOM] a linha do #70 do Marcos')
     c.mark(6)
-    c.hover(BTN('Filtros', within='main'), 0.8, at=c.A(6, 'Filtros,', 0.6), label='Filtros (sem abrir)')
-    c.cursor((760, 600), at=c.A(6, 'grande.', 0.2), label='cursor descansa')
+    c.type(BUSCA_CX, '', at=c.A(6, 'Em', 1.0), clear=True, label='apaga a busca 21/10 (os filtros agem sobre a lista toda)')
+    c.click(BTN('Filtros', within='main'), at=c.A(6, 'Filtros,', 0.7), label='Filtros')
+    c.waitfor(text='Filtros do Histórico', timeout=8)
+    c.click(SEL("[role=dialog] [role=combobox]", nth=0), at=c.A(6, 'quem', 0.7), label='Aberto por')
+    c.click(OPT('Marcos Antunes'), at=c.A(6, 'abriu', 0.6), label='Marcos Antunes')
+    c.click(SEL("[role=dialog] [role=combobox]", nth=1), at=c.A(6, 'período.', 0.9), label='Período')
+    c.click(OPT('Mês passado'), at=c.A(6, 'período.', 0.2), label='Mês passado')
+    c.click(BTN('Aplicar', within=DLG), at=c.A(6, 'Aplicar,', 0.6), label='Aplicar')
+    c.waitfor(gone={'role': 'dialog'}, timeout=8)
+    c.confere('main tbody', ['Marcos Antunes'], 'a lista só com os caixas do Marcos')
+    c.hover(SEL('main tbody tr', nth=0), 0.8, at=c.A(6, 'caixas', 0.6), label='[DESTAQUE] só os caixas do Marcos em outubro')
+    c.click(BTNX('Filtros', within='main'), at=c.A(6, 'Limpar', 1.4), label='Filtros de novo')
+    c.click(BTN('Limpar filtros', within=DLG), at=c.A(6, 'Limpar', 0.6), label='Limpar filtros')
+    c.cursor((760, 600), at=c.A(6, 'tudo.', 0.2), label='cursor descansa')
     c.fim()
     return c
 
@@ -576,80 +644,152 @@ ROLA_FINALIZAR = js_ate_el("[...document.querySelectorAll('main button')].find(b
 
 @capitulo
 def cap04():
-    """Editar um pedido: (setup: Mês passado e os filtros do cap03) Editar no pedido de 21/10 e o aviso do caixa fechado (L1-L2, zoom);
-    Cancelar, Hoje e Limpar todos (L3); Editar a latinha da Aparecida: a tela Compra em edição (L4); o item volta ao formulário e 24 vira
-    42 kg (L5, zoom); Incluir Item (L6); (ilustração L7-L9); Finalizar em dinheiro e os avisos das duas etapas (L10); a dica (L11)."""
+    """Editar um pedido (1.60.18): (setup: Mês passado e os filtros do cap03) Editar na bateria de 21/10, aviso do caixa fechado (L1, zoom);
+    a tela Compra em edição com "Caixa de destino da edição: Caixa #70 · Original" (L2, zoom); o selo abre "Em qual caixa registrar?" (L3);
+    o fornecedor vira Auto Peças Vale Forte e "Atualizar os preços?" fica em "Manter preços" (L4); Finalizar no Pix e o comprovante (L5);
+    de volta a Pedidos, a bateria já no nome da Vale Forte e a compra em dinheiro de 21/10 09:15 pedindo caixa aberto (L6); Cancelar Edição
+    e a dica de reabrir (L7); Hoje (L8); a latinha da Aparecida: edição, 24 vira 42 kg, ilustração, Finalizar em dinheiro (L9-L16)."""
     c = Cap(4, setup=setup_pedidos('Mês passado', extra=SETUP_BATERIA))
     c.mark(1)
     abre_menu_linha(c, L_BATERIA, c.A(1, 'Editar,', 1.5), 'menu do pedido de 21/10')
     c.click(ITEM('Editar'), at=c.A(1, 'Editar,', 0.6), label='Editar (pedido de 21/10)', noScroll=True)
     c.waitfor(text='O pedido será carregado para edição.', timeout=8)
-    c.registra(TXTX('Se o pedido for de um caixa já fechado', within=DLGS), at=c.A(1, 'avisa:', 0.2),
-               label='[ZOOM] "Se o pedido for de um caixa já fechado, o acerto do dinheiro é lançado no caixa de hoje..." (segue na L2)')
-    c.hover(TXTX('Se o pedido for de um caixa já fechado', within=DLGS), 1.0, at=c.A(1, 'fechado,', 0.6), label='o aviso do caixa fechado')
+    c.confere('dlg', ['Se o caixa original estiver fechado, você poderá mantê-lo quando o pedido não movimentar dinheiro'], 'aviso do caixa fechado (1.60.2)')
+    c.registra(TXTX('Se o caixa original estiver fechado', within=DLGS), at=c.A(1, 'avisa', 0.2),
+               label='[ZOOM] "Se o caixa original estiver fechado, você poderá mantê-lo quando o pedido não movimentar dinheiro ou escolher um caixa aberto para receber o acerto."')
+    c.hover(TXTX('Se o caixa original estiver fechado', within=DLGS), 1.0, at=c.A(1, 'fechou,', 0.6), label='o aviso do caixa fechado')
     c.mark(2)
-    c.cursor((640, 560), at=c.A(2, 'dica:', 0.3), label='cursor descansa na janela (dica: reabrir o caixa)')
-    c.mark(3)
-    c.click(BTN('Cancelar', within=DLGS), at=c.A(3, 'Então', 0.2), label='Cancelar')
-    c.waitfor(gone=TXTX('O pedido será carregado para edição.'), timeout=8)
-    c.click(PERIODO('Mês passado'), at=c.A(3, 'começo', 0.9), label='período')
-    c.click(OPT('Hoje'), at=c.A(3, 'hoje.', 0.6), label='Hoje')
-    c.click(TXTX('Limpar todos', within='main'), at=c.A(3, 'Lembra', 0.6), label='Limpar todos')
-    c.waitfor(target=SEL(LINHA(L_CIDA)), timeout=10)
-    c.hover(SEL(LINHA(L_CIDA)), 0.6, at=c.A(3, 'Aparecida?', 0.6), label='a latinha da Aparecida (24 kg, R$ 148,80)')
-    c.hover(TXTX('R$ 148,80', within=LINHA(L_CIDA)), 0.6, at=c.A(3, 'vinte', 0.6), label='R$ 148,80 (24 kg)')
-    c.mark(4)
-    abre_menu_linha(c, L_CIDA, c.A(4, 'O', 0.2), 'menu da latinha da Aparecida')
-    c.click(ITEM('Editar'), at=c.A(4, 'aberto,', 0.6), label='Editar', noScroll=True)
-    c.waitfor(text='O pedido será carregado para edição.', timeout=8)
-    c.click(BTN('Editar Pedido', within=DLGS), at=c.A(4, 'editar.', 0.6), label='Editar Pedido (abre a tela Compra em edição)')
+    c.click(BTN('Editar Pedido', within=DLGS), at=c.A(2, 'bateria', 0.7), label='Editar Pedido (abre a tela Compra em edição)')
     c.waitfor(target=EDITANDO, timeout=15)
     c.waitfor(idle=True, timeout=10)
-    c.hover(EDITANDO, 0.8, at=c.A(4, 'selo', 0.6), label='[DESTAQUE] o selo "Editando Compra #N"')
-    c.hover(FORN, 0.3, at=c.A(4, 'fornecedor,', 0.6), label='Fornecedor')
-    c.hover(SEL("main tbody tr:has-text('Alumínio latinha')"), 0.3, at=c.A(4, 'itens,', 0.6), label='os itens')
-    c.hover(SEL("main tbody tr:has-text('Alumínio latinha') input", nth=0), 0.2, at=c.A(4, 'peso,', 0.6), label='o peso')
-    c.hover(SEL("main tbody tr:has-text('Alumínio latinha') input", nth=1), 0.2, at=c.A(4, 'preço', 0.6), label='o preço')
+    c.confere('main', ['Editando pedido', 'Depósito Irmãos Siqueira', 'Caixa de destino da edição', 'Caixa #70 · Original', 'Sem movimento em dinheiro: você pode manter o caixa original'],
+              'tela Compra: Caixa de destino da edição #70 Original')
+    c.hover(TXTX('Caixa de destino da edição', within='main'), 1.6, at=c.A(2, 'Como', 0.6),
+            label='[ZOOM] "Caixa de destino da edição:" com "Caixa #70 · Original" e "Sem movimento em dinheiro: você pode manter o caixa original sem alterar o fechamento."')
+    c.mark(3)
+    c.click(SEL("main [aria-label='Trocar caixa']"), at=c.A(3, 'Clicando', 0.7), label='o selo do caixa')
+    c.waitfor(text='Em qual caixa registrar?', timeout=8)
+    c.confere('dlg', ['Em qual caixa registrar?', 'Manter no caixa original #70', 'Sem movimento em dinheiro; o fechamento não será alterado.', 'Caixa #88'],
+              'janela Em qual caixa registrar?')
+    c.hover(SEL("[role=dialog] button:has-text('Caixa #88')"), 0.8, at=c.A(3, 'aqui', 0.6), label='o meu caixa de hoje (#88)')
+    c.click(SEL("[role=dialog] button:has-text('Manter no caixa original')"), at=c.A(3, 'original.', 0.4, nth=1), label='Manter no caixa original #70')
+    c.waitfor(gone={'role': 'dialog'}, timeout=8)
+    c.mark(4)
+    c.click(FORN, at=c.A(4, 'fornecedor,', 0.7), label='Fornecedor: Depósito Irmãos Siqueira')
+    c.waitfor(target=PH('Buscar por nome, apelido, CPF/CNPJ ou telefone...'), timeout=8)
+    c.type(PH('Buscar por nome, apelido, CPF/CNPJ ou telefone...'), 'Vale Forte', at=c.A(4, 'troco', 0.05), noClick=True, cps=14, label='busca Vale Forte')
+    c.click(SEL("[role=dialog] button:has-text('Auto Peças Vale Forte')"), at=c.A(4, 'Auto', 0.6), label='Auto Peças Vale Forte')
+    c.waitfor(text='Atualizar os preços?', timeout=10)
+    c.confere('dlg', ['Atualizar os preços?', 'Auto Peças Vale Forte', 'Bateria automotiva', '3,10', '3,40', 'Total dos itens', '744,00', 'Manter preços', 'Atualizar 1 preço'],
+              'Atualizar os preços? (3,10 para 3,40, total 744,00)')
+    c.registra(TXTX('Total dos itens', within=DLG), at=c.A(4, 'pergunta', 0.2), label='[ZOOM] "Atualizar os preços?": Bateria automotiva R$ 3,10 → R$ 3,40/kg e o total dos itens; botões "Manter preços" e "Atualizar 1 preço"')
+    c.click(BTN('Manter preços', within=DLG), at=c.A(4, 'mantenho', 0.6), label='Manter preços')
+    c.waitfor(gone={'role': 'dialog'}, timeout=8)
+    c.confere('main', ['Auto Peças Vale Forte', 'Bateria automotiva', '744,00'], 'Fornecedor Auto Peças Vale Forte e o item igual (R$ 744,00)')
+    c.confere_campos(['240', '3,10'], 'o item: 240 kg a R$ 3,10 (preços mantidos)', escopo='main tbody')
     c.mark(5)
-    c.click(ACOES_ITEM('Alumínio latinha'), at=c.A(5, 'No', 0.2), label='Ações do item')
-    c.click(ITEM('Editar'), at=c.A(5, 'Editar.', 0.6), label='Editar (o item volta para o formulário)', noScroll=True)
-    c.waitfor(text='Item carregado para edição', timeout=8)
-    c.click(QTD, at=c.A(5, 'troco', 0.7), label='Quantidade (Kg) com 24')
-    c.type(QTD, '42', at=c.A(5, 'quarenta', 0.05), noClick=True, clear=True, cps=6, label='[ZOOM] Quantidade (Kg): 24 vira 42')
-    c.confere('main', ['R$ 260,40'], 'Valor Total do Item R$ 260,40')
-    c.hover(VALOR_ITEM, 1.0, at=c.A(5, 'total', 0.6), label='[ZOOM] Valor Total do Item R$ 260,40')
-    c.mark(6)
-    c.click(INCLUIR, at=c.A(6, 'Incluir', 0.7), label='Incluir Item')
-    c.confere_campos(['42', '260,4'], 'o item de volta na lista com 42 kg', escopo='main tbody')
-    c.hover(SEL("main tbody tr:has-text('Alumínio latinha')"), 0.8, at=c.A(6, 'peso', 0.6), label='o item na lista com o peso certo')
-    c.mark(7)
-    c.cursor((900, 560), at=c.A(7, 'Agora,', 0.2), label='cursor descansa (ilustração: não soma por cima)')
-    c.mark(8)
-    c.mark(9)
-    c.mark(10)
-    c.ev(ROLA_FINALIZAR, at=c.A(9, 'caixa', 0.2), label='a tela desce até o Finalizar (fica atrás do rodapé; sob a ilustração)')
-    c.click(FINALIZAR, at=c.A(10, 'Finalizar', 0.7), label='Finalizar')
+    c.ev(ROLA_FINALIZAR, at=c.A(5, 'Finalizar,', 0.9), label='a tela desce até o Finalizar (fica atrás do rodapé)')
+    c.click(FINALIZAR, at=c.A(5, 'Finalizar,', 0.2), label='Finalizar')
     c.waitfor(text='Finalizar Pedido', timeout=10)
-    c.click(TILE('Dinheiro'), at=c.A(10, 'dinheiro,', 0.6), label='Dinheiro (R$ 260,40)')
-    c.click(CONFIRMA_PAG, at=c.A(10, 'Confirmar', 0.7), label='CONFIRMAR PAGAMENTO')
-    c.waitfor(text='Compra registrada!', timeout=15)
-    c.registra(TOAST('Compra registrada!'), at=c.A(10, 'avisos', 0.2), label='[ZOOM] os avisos: Revertendo pedido original... / Pedido original revertido! Criando pedido editado... / Compra registrada!')
+    c.click(TILE('Pix/Transferência'), at=c.A(5, 'Pix', 0.5), label='Pix/Transferência (Conta Principal)')
+    c.click(CONFIRMA_PAG, at=c.A(5, 'Confirmar', 0.7), label='CONFIRMAR PAGAMENTO')
+    c.waitfor(text='Deseja imprimir o comprovante de compra?', timeout=15)
+    c.click(BTN('Visualizar PDF'), at=c.A(5, 'comprovante', 0.6), label='Visualizar PDF (aba nova: o comprovante no nome da Auto Peças entra na edição)')
+    c.ev(js_pdf_tamanho(0, 'comprovante-vale-forte-21-10'), label='PDF do comprovante corrigido (para a edição: Auto Peças Vale Forte, 21/10/2026, R$ 744,00)')
+    c.mark(6)
+    c.ev(NAV_PEDIDOS, at=c.A(6, 'pedido', 0.2), label='volta à tela Pedidos (sem recarregar)')
+    c.waitfor(text=PEDIDOS_OK, timeout=15)
+    c.waitfor(idle=True, timeout=10)
+    c.click(PERIODO('Este mês'), at=c.A(6, 'caixa', 0.9), label='período')
+    c.click(OPT('Mês passado'), at=c.A(6, 'caixa', 0.1), label='Mês passado')
+    c.waitfor(target=PERIODO('Mês passado'), timeout=8)
+    c.click(FILTROS, at=c.A(6, 'estorno.', 0.2), label='Filtros')
+    c.waitfor(text='Filtrar pedidos', timeout=8)
+    c.type(BUSCA_PED, '1665', at=c.A(6, 'estorno.', -0.2), clear=True, cps=14, label='busca o pedido 1665 (a bateria)')
+    c.press('Escape', label='fecha o painel')
+    c.waitfor(target=SEL(LINHA('21/10/2026')), timeout=10)
+    c.confere('main tbody', ['21/10/2026', 'Auto Peças Vale Forte', '744,00'], 'a bateria já no nome da Auto Peças Vale Forte (sem estornado)')
+    c.hover(SEL(LINHA('21/10/2026')), 0.8, at=c.A(6, 'Agora', 0.2), label='[DESTAQUE] a linha de 21/10, agora da Auto Peças Vale Forte, sem selo de estornado')
+    c.click(FILTROS, at=c.A(6, 'outra', 0.9), label='Filtros')
+    c.type(BUSCA_PED, '1663', at=c.A(6, 'compra', 0.4), clear=True, cps=14, label='busca o pedido 1663 (a compra em dinheiro das 09:15)')
+    c.press('Escape', label='fecha o painel')
+    c.waitfor(target=SEL(LINHA(L_C1663)), timeout=10)
+    abre_menu_linha(c, L_C1663, c.A(6, 'paga', 0.7), 'menu da compra em dinheiro de 21/10 09:15')
+    c.click(ITEM('Editar'), at=c.A(6, 'dinheiro.', 0.2), label='Editar', noScroll=True)
+    c.waitfor(text='O pedido será carregado para edição.', timeout=8)
+    c.click(BTN('Editar Pedido', within=DLGS), at=c.A(6, 'Aqui', 0.6), label='Editar Pedido')
+    c.waitfor(target=EDITANDO, timeout=15)
+    c.waitfor(idle=True, timeout=10)
+    c.confere('main', ['Caixa de destino da edição', 'Caixa #88 · Você', 'O caixa original está fechado. Como houve movimento em dinheiro, escolha um caixa aberto.'],
+              'compra em dinheiro: o caixa original está fechado, escolha um caixa aberto')
+    c.hover(TXTX('Caixa de destino da edição', within='main'), 1.6, at=c.A(6, 'original', 0.6),
+            label='[ZOOM] "Caixa de destino da edição:" com "Caixa #88 · Você" e "O caixa original está fechado. Como houve movimento em dinheiro, escolha um caixa aberto."')
+    c.mark(7)
+    c.click(SEL("main button:has-text('Cancelar Edição')", nth=0), at=c.A(7, 'dica:', 0.2), label='Cancelar Edição')
+    c.waitfor(gone=EDITANDO, timeout=8)
+    c.mark(8)
+    c.ev(NAV_PEDIDOS, at=c.A(8, 'Então', 0.2), label='volta à tela Pedidos (sem recarregar)')
+    c.waitfor(text=PEDIDOS_OK, timeout=15)
+    c.waitfor(idle=True, timeout=10)
+    c.click(PERIODO('Este mês'), at=c.A(8, 'começo', 0.9), label='período')
+    c.click(OPT('Hoje'), at=c.A(8, 'hoje.', 0.6), label='Hoje')
+    c.waitfor(target=SEL(LINHA(L_CIDA)), timeout=10)
+    c.hover(SEL(LINHA(L_CIDA)), 0.6, at=c.A(8, 'Aparecida?', 0.6), label='a latinha da Aparecida (24 kg, R$ 148,80)')
+    c.hover(TXTX('R$ 148,80', within=LINHA(L_CIDA)), 0.6, at=c.A(8, 'vinte', 0.6), label='R$ 148,80 (24 kg)')
+    c.mark(9)
+    abre_menu_linha(c, L_CIDA, c.A(9, 'O', 0.2), 'menu da latinha da Aparecida')
+    c.click(ITEM('Editar'), at=c.A(9, 'aberto,', 0.6), label='Editar', noScroll=True)
+    c.waitfor(text='O pedido será carregado para edição.', timeout=8)
+    c.click(BTN('Editar Pedido', within=DLGS), at=c.A(9, 'editar.', 0.6), label='Editar Pedido (abre a tela Compra em edição)')
+    c.waitfor(target=EDITANDO, timeout=15)
+    c.waitfor(idle=True, timeout=10)
+    c.hover(EDITANDO, 0.8, at=c.A(9, 'selo', 0.6), label='[DESTAQUE] o selo "Editando Compra #N"')
+    c.hover(FORN, 0.3, at=c.A(9, 'fornecedor,', 0.6), label='Fornecedor')
+    c.hover(SEL("main tbody tr:has-text('Alumínio latinha')"), 0.3, at=c.A(9, 'itens,', 0.6), label='os itens')
+    c.hover(SEL("main tbody tr:has-text('Alumínio latinha') input", nth=0), 0.2, at=c.A(9, 'peso,', 0.6), label='o peso')
+    c.hover(SEL("main tbody tr:has-text('Alumínio latinha') input", nth=1), 0.2, at=c.A(9, 'preço', 0.6), label='o preço')
+    c.mark(10)
+    c.click(ACOES_ITEM('Alumínio latinha'), at=c.A(10, 'No', 0.2), label='Ações do item')
+    c.click(ITEM('Editar'), at=c.A(10, 'Editar.', 0.6), label='Editar (o item volta para o formulário)', noScroll=True)
+    c.waitfor(text='Item carregado para edição', timeout=8)
+    c.click(QTD, at=c.A(10, 'troco', 0.7), label='Quantidade (Kg) com 24')
+    c.type(QTD, '42', at=c.A(10, 'quarenta', 0.05), noClick=True, clear=True, cps=6, label='[ZOOM] Quantidade (Kg): 24 vira 42')
+    c.confere('main', ['R$ 260,40'], 'Valor Total do Item R$ 260,40')
+    c.hover(VALOR_ITEM, 1.0, at=c.A(10, 'total', 0.6), label='[ZOOM] Valor Total do Item R$ 260,40')
     c.mark(11)
-    c.registra(TXTX('Deseja imprimir o comprovante de compra?', within=DLGS), at=c.A(11, 'dica:', 0.2), label='a compra editada registrada (janela Imprimir Comprovante)')
-    c.click(BTN('Não, obrigado'), at=c.A(11, 'correto.', 0.5), label='Imprimir Comprovante: Não, obrigado')
+    c.click(INCLUIR, at=c.A(11, 'Incluir', 0.7), label='Incluir Item')
+    c.confere_campos(['42', '260,4'], 'o item de volta na lista com 42 kg', escopo='main tbody')
+    c.hover(SEL("main tbody tr:has-text('Alumínio latinha')"), 0.8, at=c.A(11, 'peso', 0.6), label='o item na lista com o peso certo')
+    c.mark(12)
+    c.cursor((900, 560), at=c.A(12, 'Agora,', 0.2), label='cursor descansa (ilustração: não soma por cima)')
+    c.mark(13)
+    c.mark(14)
+    c.mark(15)
+    c.ev(ROLA_FINALIZAR, at=c.A(14, 'caixa', 0.2), label='a tela desce até o Finalizar (fica atrás do rodapé; sob a ilustração)')
+    c.click(FINALIZAR, at=c.A(15, 'Finalizar', 0.7), label='Finalizar')
+    c.waitfor(text='Finalizar Pedido', timeout=10)
+    c.click(TILE('Dinheiro'), at=c.A(15, 'dinheiro,', 0.6), label='Dinheiro (R$ 260,40)')
+    c.click(CONFIRMA_PAG, at=c.A(15, 'Confirmar', 0.7), label='CONFIRMAR PAGAMENTO')
+    c.waitfor(text='Compra registrada!', timeout=15)
+    c.registra(TOAST('Compra registrada!'), at=c.A(15, 'avisos', 0.2), label='[ZOOM] os avisos: Revertendo pedido original... / Pedido original revertido! Criando pedido editado... / Compra registrada!')
+    c.mark(16)
+    c.registra(TXTX('Deseja imprimir o comprovante de compra?', within=DLGS), at=c.A(16, 'dica:', 0.2), label='a compra editada registrada (janela Imprimir Comprovante)')
+    c.click(BTN('Não, obrigado'), at=c.A(16, 'correto.', 0.5), label='Imprimir Comprovante: Não, obrigado')
     c.fim()
     return c
 
 
 TOAST = lambda t: SEL(f"[data-sonner-toast]:has-text('{t}')")
 PREVIA = "[role=alertdialog]:has-text('Vou desfazer tudo que este pedido criou:')"
+L_ORIG0311 = '03/11/2026 08:47'                                          # a compra de 03/11 que ficou (a cópia é a estornada)
 L_ESTORNO = "03/11/2026'):has-text('Estornado em"                            # a cópia de 03/11 da Aparecida (fecha o :has-text de LINHA)
 
 
 @capitulo
 def cap05():
     """Excluir e o selo de estornado: as duas compras do Valdir (L1); a prévia da exclusão (L2, zoom); Excluir pedido (L3); Este mês e o
-    selo "Estornado em 05/11" com a dica (L4-L5, zoom); (ilustração L6); Configurações > Empresa > Ver histórico (L7)."""
+    selo "Estornado em 05/11" com a dica (L4-L5, zoom); (ilustração L6); a prévia em caixa fechado "↩ estorno hoje", só olhada (L7-L8);
+    Configurações > Empresa > Ver histórico (L9); a linha aberta com Quem e Onde (L10)."""
     c = Cap(5, setup=setup_pedidos('Hoje'), storage={'orders_table_items_per_page': '50'})   # 50 por página: as compras de 03/11 na mesma página
     c.mark(1)
     c.hover(SEL(LINHA(L_VALDIR)), 0.5, at=c.A(1, 'Valdir', 0.6), label='a compra do Valdir das 07:41')
@@ -681,18 +821,38 @@ def cap05():
     c.mark(6)
     c.cursor((700, 300), at=c.A(6, 'O', 0.2), label='cursor sai do selo (ilustração excluir x estornar)')
     c.mark(7)
-    c.click(SEL('header button:has(svg.lucide-panel-left)'), at=c.A(7, 'E', 0.2), label='abre o menu lateral (recolhido no começo)', noScroll=True)
-    c.click(SEL("button[aria-label='Configurações']"), at=c.A(7, 'Só', 0.8), label='Configurações (rodapé do menu)', noScroll=True)
+    abre_menu_linha(c, L_ORIG0311, c.A(7, 'Dá', 0.7), 'menu da compra de 03/11 08:47 (a outra cópia, no caixa já fechado)')
+    c.click(ITEM('Excluir'), at=c.A(7, 'prévia', 0.7), label='Excluir (só para ver a prévia)', noScroll=True)
+    c.waitfor(text='Vou desfazer tudo que este pedido criou:', timeout=8)
+    c.waitfor(target=SEL(f"{PREVIA} :text-is('Financeiro')"), timeout=10)
+    c.confere('[role=alertdialog]', ['Vou desfazer tudo que este pedido criou:', 'Pagamento em dinheiro', '389,60', '↩ estorno hoje', 'estorno espelhado'],
+              'prévia em caixa fechado: ↩ estorno hoje e o aviso amarelo')
+    c.registra(TXTX('estorno hoje', within=PREVIA), at=c.A(7, 'estorno', 0.6), label='[ZOOM] "↩ estorno hoje" no lugar de "(apaga)" e o aviso amarelo')
+    c.hover(TXTX('estorno hoje', within=PREVIA), 1.0, at=c.A(7, 'estorno', 0.5), label='↩ estorno hoje')
+    c.click(BTN('Cancelar', within='[role=alertdialog]'), at=c.A(7, 'cancelo', 0.5), label='Cancelar (nada é excluído)')
+    c.waitfor(gone=TXTX('Vou desfazer tudo que este pedido criou:'), timeout=8)
+    c.mark(8)
+    c.cursor((700, 300), at=c.A(8, 'Uma', 0.2), label='cursor descansa (dica: caixa aberto e conciliação)')
+    c.mark(9)
+    c.click(SEL('header button:has(svg.lucide-panel-left)'), at=c.A(9, 'E', 0.2), label='abre o menu lateral (recolhido no começo)', noScroll=True)
+    c.click(SEL("button[aria-label='Configurações']"), at=c.A(9, 'Só', 0.8), label='Configurações (rodapé do menu)', noScroll=True)
     c.waitfor(url='/configuracoes', timeout=15)
-    c.click(TXT('Empresa', within='main'), at=c.A(7, 'administrador', 0.6), label='aba Empresa', unless=TXT('Histórico de Exclusões', within='main'))
+    c.click(TXT('Empresa', within='main'), at=c.A(9, 'administrador', 0.6), label='aba Empresa', unless=TXT('Histórico de Exclusões', within='main'))
     c.waitfor(text='Histórico de Exclusões', timeout=15)
     c.ev(js_ate_el("[...document.querySelectorAll('main h3, main h2, main p, main div')].find(e=>e.children.length===0&&e.textContent.trim()==='Histórico de Exclusões')", y=360, dur_ms=800),
-         at=c.A(7, 'Configurações,', 0.5), label='desce até o cartão Histórico de Exclusões')
-    c.click(BTNX('Ver histórico'), at=c.A(7, 'Ver', 0.7), label='Ver histórico')
+         at=c.A(9, 'Configurações,', 0.5), label='desce até o cartão Histórico de Exclusões')
+    c.click(BTNX('Ver histórico'), at=c.A(9, 'Ver', 0.7), label='Ver histórico')
     c.waitfor(text='Excluiu compra', timeout=15)
     c.confere('main', ['Histórico de Exclusões', 'Excluiu compra', 'Valdir Pereira', 'rafael@reciclavalemetais.example'], 'a linha de hoje no Histórico de Exclusões')
-    c.registra(SEL("main :is(div,li):has(> * :text('Excluiu compra')):has-text('Valdir Pereira')"), at=c.A(7, 'histórico.', -0.6, nth=1),
+    c.registra(SEL("main :is(div,li):has(> * :text('Excluiu compra')):has-text('Valdir Pereira')"), at=c.A(9, 'histórico.', -0.6, nth=1),
                label='[ZOOM] a linha "Excluiu compra "Valdir Pereira"", com a hora e o e-mail')
+    c.mark(10)
+    c.hover(TXTX('Todos os tipos', within='main'), 0.6, at=c.A(10, 'tipo', 0.9), label='filtro Todos os tipos', optional=True)
+    c.hover(TXTX('Todos os usuários', within='main'), 0.6, at=c.A(10, 'usuário.', 0.6), label='filtro Todos os usuários', optional=True)
+    c.click(SEL("main button:has-text('Excluiu compra')", nth=0), at=c.A(10, 'clicando', 0.7), label='abre a linha "Excluiu compra "Valdir Pereira""')
+    c.waitfor(text='Quem', timeout=8)
+    c.confere('main', ['Quem', 'rafael@reciclavalemetais.example', 'Onde', 'Chrome (Desktop)', 'IP: 203.0.113.24', 'Número', 'Total'], 'detalhes da exclusão: Quem, Onde e os dados do pedido')
+    c.registra(TXTX('Onde', within='main'), at=c.A(10, 'onde,', 0.4), label='[ZOOM] "Quem", "Onde" (Chrome, IP) e os dados do pedido que saiu')
     c.fim()
     return c
 
@@ -700,7 +860,7 @@ def cap05():
 @capitulo
 def cap06():
     """Reimprimir e cupom sem valor: o 1º "Ver comprovante" cai no aviso "Popup bloqueado" (L1); (ilustração L2-L3); o 2º abre o PDF (L4,
-    o PDF vai para a edição); Cupom sem valor no Valdir (L5) e o selo (L6); o PDF sem valores (L7); a opção Mostrar valores (L8)."""
+    o PDF vai para a edição); Cupom sem valor no Valdir (L5) e o selo (L6); o PDF sem valores (L7); a opção Mostrar valores (L8); o resto do menu da linha: fotos anexadas e WhatsApp (L9)."""
     c = Cap(6, setup=setup_pedidos('Hoje'))
     c.mark(1)
     c.ev('(()=>{window.__bloqueia=1;return "o próximo pop-up sai bloqueado"})()', label='o navegador "bloqueia" o 1º pop-up (o aviso é o do app)')
@@ -732,15 +892,21 @@ def cap06():
     c.hover(ITEM('Mostrar valores no comprovante'), 1.2, at=c.A(8, 'Mostrar', 0.6), label='[DESTAQUE] "Mostrar valores no comprovante" (sem clicar)', noScroll=True)
     c.press('Escape', at=c.A(8, 'comprovante.', -0.6), label='fecha o menu')
     c.cursor((700, 300), at=c.A(8, 'comprovante.', -0.9), label='cursor sai do menu')
+    c.mark(9)
+    abre_menu_linha(c, L_CIDA, c.A(9, 'menu', 0.2), 'menu da compra da Aparecida')
+    c.hover(ITEM('Ver fotos anexadas'), 0.9, at=c.A(9, 'fotos', 0.6), label='[DESTAQUE] "Ver fotos anexadas"', noScroll=True)
+    c.hover(ITEM('Enviar pelo WhatsApp'), 1.2, at=c.A(9, 'WhatsApp,', 0.6), label='[DESTAQUE] "Enviar pelo WhatsApp" (sem clicar)', noScroll=True)
+    c.press('Escape', at=c.A(9, 'portal.', -0.4), label='fecha o menu')
+    c.cursor((700, 300), at=c.A(9, 'portal.', -0.7), label='cursor sai do menu')
     c.fim()
     return c
 
 
 @capitulo
-def cap08():
+def cap09():
     """Relatórios do caixa (setup: a busca "21/10"): Ver comprovante do #70 (L1; o PDF do fechamento entra na edição: L2); Relatório de
     estoque (L3; o relatório em HTML entra na edição, com a bateria: L4); L5 a tela."""
-    c = Cap(8, setup=setup_historico('21/10'))
+    c = Cap(9, setup=setup_historico('21/10'))
     c.mark(1)
     c.click(ACOES_CX(70), at=c.A(1, 'ações', 0.7), label='Ações do #70')
     c.click(ITEM('Ver comprovante'), at=c.A(1, 'Ver', 0.6), label='Ver comprovante (relatório de fechamento em aba nova: PDF na edição)', noScroll=True)
@@ -759,16 +925,17 @@ def cap08():
 
 
 ABA_CX = lambda n, quem: TXTX(f'#{n} | Caixa - {quem}', within='main')
-L_BATERIA_CX = "main tbody tr:has-text('Bateria'), main tbody tr:has-text('744,00')"
+LINHA_187 = "main tbody tr:has-text('187,50')"                            # a compra em dinheiro de 21/10 09:15 no Histórico de Transações do #70
 
 
 @capitulo
-def cap09():
-    """Reabrir um caixa antigo (setup: a busca "21/10"): Ações > Reabrir caixa (L1-L2); a confirmação e o Caixa (L3); a aba do #70 e a
-    compra da bateria (L4); Editar e o fornecedor trocado (L5, zoom); Finalizar no Pix e Visualizar PDF (L6); de volta ao #70 (L7-L8);
+def cap10():
+    """Reabrir um caixa antigo (setup: a busca "21/10"; 1.60.18: o motivo agora é a compra em dinheiro das 09:15, sem fornecedor): Ações >
+    Reabrir caixa (L1-L2); a confirmação "Reabrir caixa #70?" e o Caixa (L3); a aba do #70 e a compra sem fornecedor (L4); Editar e o
+    fornecedor trocado para a Aparecida (L5, zoom); Finalizar em dinheiro (L6); de volta ao #70 (L7-L8);
     Fechar Caixa com o valor esperado (L9); data e hora do fechamento 21/10 17:31 (L10, zoom); Confirmar Fechamento (L11); a aba do
     meu caixa de hoje (L12)."""
-    c = Cap(9, setup=setup_historico('21/10'))
+    c = Cap(10, setup=setup_historico('21/10'))
     c.mark(1)
     c.click(ACOES_CX(70), at=c.A(1, 'ações', 0.7), label='Ações do #70 (21/10)')
     c.hover(ITEM('Reabrir caixa'), 2.0, at=c.A(1, 'Reabrir', 0.6), label='[ZOOM] Reabrir caixa (liberado: o Marcos não tem caixa aberto hoje)', noScroll=True)
@@ -776,7 +943,7 @@ def cap09():
     c.hover(ITEM('Reabrir caixa'), 3.0, at=c.A(2, 'Marcos', 0.6), label='Reabrir caixa (câmera no item)', noScroll=True)
     c.mark(3)
     c.click(ITEM('Reabrir caixa'), at=c.A(3, 'O', 0.2), label='Reabrir caixa', noScroll=True)
-    c.waitfor(text='Reabrir Último Caixa?', timeout=8)
+    c.waitfor(text='Reabrir caixa #70?', timeout=8)
     c.registra(TXTX('O caixa será reaberto exatamente como estava', within='[role=alertdialog]'), at=c.A(3, 'confirma', 0.2),
                label='[ZOOM] "O caixa será reaberto exatamente como estava antes do fechamento..." e "Fechado em: 21/10/2026 17:31"')
     c.click(BTN('Reabrir Caixa'), at=c.A(3, 'Reabrir', 0.7), label='Reabrir Caixa')
@@ -785,43 +952,43 @@ def cap09():
     c.hover(ABA_CX(70, 'Marcos Antunes'), 0.8, at=c.A(4, 'aba', 0.6), label='[DESTAQUE] a aba "#70 | Caixa - Marcos Antunes"')
     c.hover(ABA_CX(88, 'Rafael Nogueira'), 0.6, at=c.A(4, 'meu', 0.6), label='a aba "#88 | Caixa - Rafael Nogueira (você)"')
     c.click(ABA_CX(70, 'Marcos Antunes'), at=c.A(4, 'Dentro', 0.7), label='abre a aba do #70')
-    c.waitfor(target=SEL("main tbody tr:has-text('Depósito Irmãos Siqueira')"), timeout=12)
-    c.ev(js_ate_el("[...document.querySelectorAll('main tbody tr')].find(t=>t.innerText.includes('Depósito Irmãos Siqueira'))", y=420, dur_ms=900),
-         at=c.A(4, 'compra', 0.9), label='desce até o Histórico de Transações (a compra da bateria)')
-    c.hover(SEL("main tbody tr:has-text('Depósito Irmãos Siqueira')"), 0.6, at=c.A(4, 'bateria.', 0.6), label='a compra do Depósito Irmãos Siqueira, R$ 744,00')
+    c.waitfor(target=SEL(LINHA_187), timeout=12)
+    c.ev(js_ate_el("[...document.querySelectorAll('main tbody tr')].find(t=>t.innerText.includes('187,50'))", y=420, dur_ms=900),
+         at=c.A(4, 'compra', 0.9), label='desce até o Histórico de Transações (a compra em dinheiro, sem fornecedor)')
+    c.hover(SEL(LINHA_187), 0.6, at=c.A(4, 'fornecedor.', 0.6), label='a compra em dinheiro sem fornecedor, R$ 187,50')
     c.mark(5)
-    c.hover(SEL("main tbody tr:has-text('Depósito Irmãos Siqueira') button"), 0.3, at=c.A(5, 'Editar.', 1.4), label='menu da compra', optional=False, timeout=8)
+    c.hover(SEL(f"{LINHA_187} button"), 0.3, at=c.A(5, 'Editar.', 1.4), label='menu da compra', optional=False, timeout=8)
     c.click(ITEM('Editar'), at=c.A(5, 'Editar.', 0.6), label='Editar', noScroll=True)
     c.waitfor(text='O pedido será carregado para edição.', timeout=8)
-    c.click(BTN('Editar Pedido', within=DLGS), at=c.A(5, 'Como', 0.6), label='Editar Pedido')
+    c.click(BTN('Editar Pedido', within=DLGS), at=c.A(5, 'Com', 0.6), label='Editar Pedido')
     c.waitfor(target=EDITANDO, timeout=15)
     c.waitfor(idle=True, timeout=10)
-    c.click(FORN, at=c.A(5, 'fornecedor,', 0.7), label='Fornecedor: Depósito Irmãos Siqueira')
+    c.click(FORN, at=c.A(5, 'fornecedor,', 0.7), label='Fornecedor: não informado')
     c.waitfor(target=PH('Buscar por nome, apelido, CPF/CNPJ ou telefone...'), timeout=8)
-    c.type(PH('Buscar por nome, apelido, CPF/CNPJ ou telefone...'), 'Vale Forte', at=c.A(5, 'troco', 0.05), noClick=True, cps=14, label='busca Vale Forte')
-    c.click(SEL("[role=dialog] button:has-text('Auto Peças Vale Forte')"), at=c.A(5, 'Auto', 0.6), label='Auto Peças Vale Forte')
+    c.type(PH('Buscar por nome, apelido, CPF/CNPJ ou telefone...'), 'Aparecida', at=c.A(5, 'escolho', 0.05), noClick=True, cps=14, label='busca Aparecida')
+    c.click(SEL("[role=dialog] button:has-text('Aparecida Ramos')"), at=c.A(5, 'Aparecida,', 0.6), label='Aparecida Ramos')
+    c.click(BTN('Manter preços', within=DLG), at=c.A(5, 'Aparecida,', -0.3), label='Manter preços (só se a pergunta aparecer)', optional=True, timeout=3)
     c.waitfor(gone={'role': 'dialog'}, timeout=8)
-    c.confere('main', ['Auto Peças Vale Forte', 'Bateria automotiva', '744,00'], 'Fornecedor Auto Peças Vale Forte e o item igual (R$ 744,00)')
-    c.confere_campos(['240', '3,10'], 'o item: 240 kg a R$ 3,10 (o preço não mudou com o fornecedor)', escopo='main tbody')
-    c.registra(FORN, at=c.A(5, 'resto', 0.2), label='[ZOOM] Fornecedor "Auto Peças Vale Forte" e o item Bateria automotiva, 240 kg, R$ 744,00')
-    c.hover(SEL("main tbody tr:has-text('Bateria automotiva')"), 1.0, at=c.A(5, 'duzentos', 0.6), label='o item: 240 kg, R$ 744,00')
-    c.ev(ROLA_FINALIZAR, at=c.A(5, 'quatro', 0.2), label='a tela desce até o Finalizar (fica atrás do rodapé)')
+    c.confere('main', ['Aparecida Ramos', 'Alumínio latinha', 'Papelão', '187,50'], 'Fornecedor Aparecida Ramos e o valor igual (R$ 187,50)')
+    c.registra(FORN, at=c.A(5, 'valor', 0.2), label='[ZOOM] Fornecedor "Aparecida Ramos" e os dois itens, R$ 187,50')
+    c.hover(SEL("main tbody tr:has-text('Alumínio latinha')"), 1.0, at=c.A(5, 'cento', 0.6), label='os itens: R$ 187,50')
+    c.ev(ROLA_FINALIZAR, at=c.A(5, 'cinquenta.', 0.2), label='a tela desce até o Finalizar (fica atrás do rodapé)')
     c.mark(6)
     c.click(FINALIZAR, at=c.A(6, 'Finalizar,', 0.2), label='Finalizar')
     c.waitfor(text='Finalizar Pedido', timeout=10)
-    c.click(TILE('Pix/Transferência'), at=c.A(6, 'Pix', 0.5), label='Pix/Transferência (Conta Principal)')
+    c.click(TILE('Dinheiro'), at=c.A(6, 'dinheiro,', 0.6), label='Dinheiro (R$ 187,50)')
     c.click(CONFIRMA_PAG, at=c.A(6, 'Confirmar', 0.7), label='CONFIRMAR PAGAMENTO')
     c.waitfor(text='Deseja imprimir o comprovante de compra?', timeout=15)
-    c.click(BTN('Visualizar PDF'), at=c.A(6, 'comprovante', 0.6), label='Visualizar PDF (aba nova: o comprovante no nome da Auto Peças entra na edição)')
-    c.ev(js_pdf_tamanho(0, 'comprovante-vale-forte-21-10'), label='PDF do comprovante corrigido (para a edição)')
+    c.click(BTN('Não, obrigado'), at=c.A(6, 'pagamento.', 0.0), label='Imprimir Comprovante: Não, obrigado')
     c.mark(7)
     c.click(SEL("main a:has-text('Voltar para o caixa')"), at=c.A(7, 'Repara:', 0.2), label='Voltar para o caixa', noScroll=True)
     c.waitfor(target=ABA_CX(70, 'Marcos Antunes'), timeout=15)
     c.click(ABA_CX(70, 'Marcos Antunes'), at=c.A(7, 'dia,', 0.7), label='a aba do #70')
-    c.waitfor(target=SEL("main tbody tr:has-text('Auto Peças Vale Forte')"), timeout=12)
-    c.ev(js_ate_el("[...document.querySelectorAll('main tbody tr')].find(t=>t.innerText.includes('Auto Peças Vale Forte'))", y=420, dur_ms=900),
+    c.waitfor(target=SEL(LINHA_187), timeout=12)
+    c.ev(js_ate_el("[...document.querySelectorAll('main tbody tr')].find(t=>t.innerText.includes('187,50'))", y=420, dur_ms=900),
          at=c.A(7, 'Marcos.', 0.9), label='desce até a compra corrigida')
-    c.hover(SEL("main tbody tr:has-text('Auto Peças Vale Forte')"), 0.8, at=c.A(7, 'Marcos.', 0.0), label='[DESTAQUE] a compra no caixa do Marcos, agora da Auto Peças Vale Forte')
+    c.confere('main tbody', ['Aparecida Ramos', '187,50'], 'a compra corrigida, agora da Aparecida Ramos, no caixa do Marcos')
+    c.hover(SEL(LINHA_187), 0.8, at=c.A(7, 'Marcos.', 0.0), label='[DESTAQUE] a compra no caixa do Marcos, agora da Aparecida Ramos')
     c.mark(8)
     c.hover(SEL("main [role=tab]:has-text('Todas')"), 1.0, at=c.A(8, 'Todas', 0.6), label='a aba Todas do histórico')
     c.mark(9)
@@ -852,17 +1019,17 @@ def cap09():
 
 
 @capitulo
-def cap10():
+def cap11():
     """Recapitulando: base da montagem (a edição põe por cima os trechos dos capítulos). A tela Pedidos de Mês passado com os filtros
     do cap03, já com a bateria no nome da Auto Peças Vale Forte (semente apos-cap09)."""
-    c = Cap(10, setup=setup_pedidos('Mês passado', extra=[{'do': 'click', 'target': FILTROS}, {'do': 'waitFor', 'text': 'Filtrar pedidos', 'timeout': 8}]
+    c = Cap(11, setup=setup_pedidos('Mês passado', extra=[{'do': 'click', 'target': FILTROS}, {'do': 'waitFor', 'text': 'Filtrar pedidos', 'timeout': 8}]
                                      + filtros_bateria() + ESC + ESC + [{'do': 'waitFor', 'target': SEL(LINHA("21/10/2026")), 'timeout': 10}]))
     c.mark(1)
     c.registra(TXTX('Filtrando por', within='main'), at=0.4, label='as etiquetas "Filtrando por" e a linha de 21/10 (base da montagem)')
     for i in range(2, len(c.linhas) + 1):
         c.mark(i)
-    c.hover(SEL(LINHA('21/10/2026')), 1.0, at=c.A(6, 'corrigiu', 0.6), label='a linha de 21/10, agora da Auto Peças Vale Forte')
-    c.cursor((760, 520), at=c.A(7, 'No', 0.2), label='cursor descansa (cartão Próximo)')
+    c.hover(SEL(LINHA('21/10/2026')), 1.0, at=c.A(2, 'Corrigiu', 0.6), label='a linha de 21/10, agora da Auto Peças Vale Forte')
+    c.cursor((760, 520), at=c.A(8, 'No', 0.2), label='cursor descansa (cartão Próximo)')
     c.fim()
     return c
 

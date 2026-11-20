@@ -1,6 +1,6 @@
 {
  "name": "t09-cap06",
- "title": "T09 · Cap. 6 · Reimprimir e cupom sem valor (narração 68,0 s ESTIMADA; marcas L1..L8 = início de cada linha do roteiro; FAKE_NOW 2026-11-11T08:30:00-03:00)",
+ "title": "T09 · Cap. 6 · Reimprimir e cupom sem valor (narração 76,2 s ESTIMADA; marcas L1..L9 = início de cada linha do roteiro; FAKE_NOW 2026-11-11T08:30:00-03:00)",
  "seed": "t09-cap06",
  "pace": 0.5,
  "cps": 9,
@@ -177,7 +177,8 @@
     "name": "Ver comprovante"
    },
    "at": 6.71,
-   "label": "Ver comprovante (bloqueado)"
+   "label": "Ver comprovante (bloqueado)",
+   "noScroll": true
   },
   {
    "do": "waitFor",
@@ -246,7 +247,8 @@
     "name": "Ver comprovante"
    },
    "at": 28.76,
-   "label": "Ver comprovante (abre a aba nova: o PDF entra na edição)"
+   "label": "Ver comprovante (abre a aba nova: o PDF entra na edição)",
+   "noScroll": true
   },
   {
    "do": "eval",
@@ -300,7 +302,8 @@
     "name": "Cupom sem valor"
    },
    "at": 46.6,
-   "label": "Cupom sem valor"
+   "label": "Cupom sem valor",
+   "noScroll": true
   },
   {
    "do": "waitFor",
@@ -355,7 +358,8 @@
     "name": "Ver comprovante"
    },
    "at": 52.48,
-   "label": "Ver comprovante do Valdir (PDF sem valores, para a edição)"
+   "label": "Ver comprovante do Valdir (PDF sem valores, para a edição)",
+   "noScroll": true
   },
   {
    "do": "eval",
@@ -395,6 +399,7 @@
    "seconds": 1.2,
    "at": 64.2,
    "label": "[DESTAQUE] \"Mostrar valores no comprovante\" (sem clicar)",
+   "noScroll": true,
    "optional": true,
    "timeout": 4
   },
@@ -417,6 +422,74 @@
    "label": "cursor sai do menu"
   },
   {
+   "do": "mark",
+   "name": "L9",
+   "at": 67.38
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('11/11/2026 07:22') button"
+   },
+   "seconds": 0.3,
+   "at": 67.53,
+   "label": "menu da compra da Aparecida",
+   "optional": false,
+   "timeout": 8
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "role": "menuitem",
+    "name": "Ver comprovante"
+   },
+   "timeout": 6
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "menuitem",
+    "name": "Ver fotos anexadas"
+   },
+   "seconds": 0.9,
+   "at": 68.5,
+   "label": "[DESTAQUE] \"Ver fotos anexadas\"",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "menuitem",
+    "name": "Enviar pelo WhatsApp"
+   },
+   "seconds": 1.2,
+   "at": 70.78,
+   "label": "[DESTAQUE] \"Enviar pelo WhatsApp\" (sem clicar)",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "press",
+   "key": "Escape",
+   "at": 75.19,
+   "label": "fecha o menu"
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 700,
+    "y": 300
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "at": 75.49,
+   "label": "cursor sai do menu"
+  },
+  {
    "do": "eval",
    "js": "JSON.stringify(window.__avisos || \"sem observador\")",
    "label": "avisos de erro na tela"
@@ -424,7 +497,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 67.98
+   "at": 76.15
   }
  ]
 }

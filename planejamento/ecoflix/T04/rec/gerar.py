@@ -524,11 +524,11 @@ TEXTO_CAIXA = TXT('Falta isto para emitir NF-e', within=DLG, exact=False)
 POPS = "(()=>{const o=window.open;window.__pops=[];window.open=function(...a){const w=o.apply(this,a);window.__pops.push(w);return w};return 'ok'})()"
 # o extrato (e o relatório de saldos) abrem uma aba nova e escrevem HTML nela (não é o #pdf-frame do openPdfInTab): devolve o HTML da aba em
 # base64 (`HTML:<b64>`) para a ilustração `"cena": "pdf"` (a gravação filma uma aba só; t04_pdf.py grava o arquivo)
-HTML_JS = ("(async()=>{const w=(window.__pops||[]).slice(-1)[0];if(!w)return 'SEM JANELA';const espera=%s;for(let i=0;i<60;i++){let t='';"
-           "try{t=(w.document&&w.document.body&&w.document.body.innerText)||''}catch(e){return 'ERRO '+e}"
+HTML_JS = ("(async()=>{let w;for(let i=0;i<60&&!(w=(window.__pops||[]).slice(-1)[0]);i++)await new Promise(r=>setTimeout(r,250));if(!w)return 'SEM JANELA';const espera=%s;for(let i=0;i<60;i++){let t='';"
+           "try{t=(w.document&&w.document.documentElement&&w.document.documentElement.textContent)||''}catch(e){return 'ERRO '+e}"
            "if(t&&espera.every(x=>t.toLowerCase().includes(x.toLowerCase()))){const h='<!doctype html>'+w.document.documentElement.outerHTML;const u=new TextEncoder().encode(h);let s='';"
            "for(let k=0;k<u.length;k+=8192)s+=String.fromCharCode.apply(null,u.subarray(k,k+8192));return 'HTML:'+btoa(s)}"
-           "await new Promise(r=>setTimeout(r,250))}let d='';try{d=' pops='+window.__pops.length+' fechada='+w.closed+' texto='+((w.document.body&&w.document.body.innerText)||'').slice(0,160)}catch(e){d=' '+e}return 'SEM HTML'+d})()")
+           "await new Promise(r=>setTimeout(r,250))}let d='';try{d=' pops='+window.__pops.length+' fechada='+w.closed+' texto='+((w.document.documentElement&&w.document.documentElement.textContent)||'').slice(0,160)}catch(e){d=' '+e}return 'SEM HTML'+d})()")
 
 
 def html_js(espera):
@@ -1086,7 +1086,7 @@ def cap12():
     c.hover(ITEM('Baixar Excel (.xlsx)'), 0.8, at=c.A(11, 'planilha,', 0.3), label='Baixar Excel (sem clicar)')
     c.mark(12)
     c.click(ITEM('PDF detalhado (com produtos)'), at=c.A(12, 'detalhado', 0.3), label='PDF detalhado (com produtos): abre o extrato em aba nova')
-    c.ev(html_js(['Cooperativa Recomeço']), label='PDF DO EXTRATO DETALHADO (aba nova, para a ilustração)')
+    c.ev(html_js(['Cooperativa Recomeço', 'Saldo Final', 'Preço unit.']), label='PDF DO EXTRATO DETALHADO (aba nova, para a ilustração)')
     c.fim()
     return c
 
@@ -1258,6 +1258,7 @@ def cap16():
     c.hover(ITEM('Exportar em Excel'), 0.3, at=c.A(9, 'ou', 0.3), label='Exportar em Excel (sem clicar)')
     c.click(ITEM('Exportar em PDF'), at=c.A(9, 'planilha.', 0.7), label='Exportar em PDF: abre o relatório em aba nova')
     c.ev(html_js(['Fundição Bandeira do Vale']), label='PDF DO RELATÓRIO DE SALDOS (aba nova, para a ilustração)')
+    c.click(TXT('Visualize todos os saldos a receber e a pagar', within=REL, exact=False), label='clica no subtítulo (fecha o menu de exportação, se ainda aberto)')
     c.mark(10)
     c.click(OLHO('Aços Quiririm Ltda'), at=c.A(10, 'olho,', 0.6), label='olho da Aços Quiririm: abre a conta-corrente')
     c.waitfor(text='Conta-Corrente do Cliente', timeout=15)

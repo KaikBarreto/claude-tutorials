@@ -1,6 +1,6 @@
 {
  "name": "t09-cap10",
- "title": "T09 · Cap. 10 · Recapitulando (narração 55,9 s ESTIMADA; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-11T08:30:00-03:00)",
+ "title": "T09 · Cap. 10 · Reabrir um caixa antigo (narração 139,7 s ESTIMADA; marcas L1..L12 = início de cada linha do roteiro; FAKE_NOW 2026-11-11T08:30:00-03:00)",
  "seed": "t09-cap10",
  "pace": 0.5,
  "cps": 9,
@@ -23,8 +23,7 @@
   "t09/inicio",
   "t09/apos-cap04",
   "t09/apos-cap05",
-  "t09/apos-cap06",
-  "t09/apos-cap09"
+  "t09/apos-cap06"
  ],
  "prewarm": [
   "/login"
@@ -77,11 +76,11 @@
   },
   {
    "do": "goto",
-   "url": "/pedidos"
+   "url": "/historico-caixa"
   },
   {
    "do": "waitFor",
-   "text": "Histórico completo de compras e vendas",
+   "text": "Todos os registros de fechamento do caixa",
    "timeout": 30
   },
   {
@@ -90,166 +89,23 @@
    "timeout": 25
   },
   {
-   "do": "eval",
-   "js": "(()=>{const b=document.querySelector('header svg.lucide-panel-left-close')?.closest('button');if(!b)return document.querySelector('header svg.lucide-panel-left')?'ja recolhido':'sem botao';b.click();return 'recolhido'})()"
-  },
-  {
-   "do": "wait",
-   "seconds": 0.8
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "main [role=combobox]:has-text('Este mês')"
-   }
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "option",
-    "name": "Mês passado"
-   }
-  },
-  {
-   "do": "waitFor",
-   "target": {
-    "selector": "main [role=combobox]:has-text('Mês passado')"
-   },
-   "timeout": 10
-  },
-  {
-   "do": "waitFor",
-   "idle": true,
-   "timeout": 15
-  },
-  {
-   "do": "wait",
-   "seconds": 0.8
-  },
-  {
-   "do": "click",
-   "target": {
-    "role": "button",
-    "name": "Filtros",
-    "within": "main"
-   }
-  },
-  {
-   "do": "waitFor",
-   "text": "Filtrar pedidos",
-   "timeout": 8
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "[data-radix-popper-content-wrapper]:has-text('Filtrar pedidos') button:has-text('Tipo')"
-   }
-  },
-  {
-   "do": "wait",
-   "seconds": 0.4
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "[data-radix-popper-content-wrapper] label:has-text('Compras')"
-   }
-  },
-  {
-   "do": "wait",
-   "seconds": 0.4
-  },
-  {
-   "do": "press",
-   "key": "Escape"
-  },
-  {
-   "do": "wait",
-   "seconds": 0.4
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "[data-radix-popper-content-wrapper]:has-text('Filtrar pedidos') button:has-text('Material')"
-   }
-  },
-  {
-   "do": "wait",
-   "seconds": 0.4
-  },
-  {
    "do": "type",
    "target": {
-    "placeholder": "Buscar..."
+    "placeholder": "Buscar por responsável, data ou código..."
    },
-   "text": "bat",
-   "noClick": true,
+   "text": "21/10",
    "cps": 40
   },
   {
-   "do": "wait",
-   "seconds": 0.4
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "[data-radix-popper-content-wrapper] label:has-text('Bateria automotiva')"
-   }
-  },
-  {
-   "do": "wait",
-   "seconds": 0.4
-  },
-  {
-   "do": "press",
-   "key": "Escape"
-  },
-  {
-   "do": "wait",
-   "seconds": 0.4
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "[data-radix-popper-content-wrapper]:has-text('Filtrar pedidos') button:has-text('Forma de Pagamento')"
-   }
-  },
-  {
-   "do": "wait",
-   "seconds": 0.4
-  },
-  {
-   "do": "click",
-   "target": {
-    "selector": "[data-radix-popper-content-wrapper] label:has-text('Com Pix/Transferência')"
-   }
-  },
-  {
-   "do": "wait",
-   "seconds": 0.4
-  },
-  {
-   "do": "press",
-   "key": "Escape"
-  },
-  {
-   "do": "wait",
-   "seconds": 0.5
-  },
-  {
-   "do": "press",
-   "key": "Escape"
-  },
-  {
-   "do": "wait",
-   "seconds": 0.5
-  },
-  {
    "do": "waitFor",
    "target": {
-    "selector": "main tbody tr:has-text('21/10/2026')"
+    "selector": "main tbody tr:has-text('#70')"
    },
    "timeout": 10
+  },
+  {
+   "do": "wait",
+   "seconds": 0.8
   },
   {
    "do": "eval",
@@ -263,58 +119,592 @@
    "at": 0
   },
   {
-   "do": "type",
+   "do": "click",
    "target": {
-    "text": "Filtrando por",
-    "within": "main"
+    "selector": "main tbody tr:has-text('#70') button[aria-label='Ações']"
    },
-   "text": "",
-   "noClick": true,
-   "optional": true,
-   "timeout": 4,
-   "at": 0.4,
-   "label": "as etiquetas \"Filtrando por\" e a linha de 21/10 (base da montagem)"
-  },
-  {
-   "do": "mark",
-   "name": "L2",
-   "at": 13.0
-  },
-  {
-   "do": "mark",
-   "name": "L3",
-   "at": 20.41
-  },
-  {
-   "do": "mark",
-   "name": "L4",
-   "at": 26.0
-  },
-  {
-   "do": "mark",
-   "name": "L5",
-   "at": 32.88
-  },
-  {
-   "do": "mark",
-   "name": "L6",
-   "at": 39.68
+   "at": 11.39,
+   "label": "Ações do #70 (21/10)"
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main tbody tr:has-text('21/10/2026')"
+    "role": "menuitem",
+    "name": "Reabrir caixa"
    },
-   "seconds": 1.0,
-   "at": 43.84,
-   "label": "a linha de 21/10, agora da Auto Peças Vale Forte",
+   "seconds": 2.0,
+   "at": 12.86,
+   "label": "[ZOOM] Reabrir caixa (liberado: o Marcos não tem caixa aberto hoje)",
+   "noScroll": true,
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
+   "name": "L2",
+   "at": 14.75
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "menuitem",
+    "name": "Reabrir caixa"
+   },
+   "seconds": 3.0,
+   "at": 19.81,
+   "label": "Reabrir caixa (câmera no item)",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L3",
+   "at": 32.41
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Reabrir caixa"
+   },
+   "at": 32.41,
+   "label": "Reabrir caixa",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "text": "Reabrir caixa #70?",
+   "timeout": 8
+  },
+  {
+   "do": "type",
+   "target": {
+    "text": "O caixa será reaberto exatamente como estava",
+    "within": "[role=alertdialog]"
+   },
+   "text": "",
+   "noClick": true,
+   "optional": true,
+   "timeout": 4,
+   "at": 33.17,
+   "label": "[ZOOM] \"O caixa será reaberto exatamente como estava antes do fechamento...\" e \"Fechado em: 21/10/2026 17:31\""
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Reabrir Caixa",
+    "exact": true
+   },
+   "at": 36.54,
+   "label": "Reabrir Caixa"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "text": "#70 | Caixa - Marcos Antunes",
+    "within": "main"
+   },
+   "timeout": 15
+  },
+  {
+   "do": "mark",
+   "name": "L4",
+   "at": 41.19
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "#70 | Caixa - Marcos Antunes",
+    "within": "main"
+   },
+   "seconds": 0.8,
+   "at": 42.15,
+   "label": "[DESTAQUE] a aba \"#70 | Caixa - Marcos Antunes\"",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "#88 | Caixa - Rafael Nogueira",
+    "within": "main"
+   },
+   "seconds": 0.6,
+   "at": 47.09,
+   "label": "a aba \"#88 | Caixa - Rafael Nogueira (você)\"",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "#70 | Caixa - Marcos Antunes",
+    "within": "main"
+   },
+   "at": 47.97,
+   "label": "abre a aba do #70"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "main tbody tr:has-text('187,50')"
+   },
+   "timeout": 12
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll('main tbody tr')].find(t=>t.innerText.includes('187,50'));if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-420);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 49.22,
+   "label": "desce até o Histórico de Transações (a compra em dinheiro, sem fornecedor)"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('187,50')"
+   },
+   "seconds": 0.6,
+   "at": 51.49,
+   "label": "a compra em dinheiro sem fornecedor, R$ 187,50",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('187,50') button"
+   },
+   "seconds": 0.3,
+   "at": 51.95,
+   "label": "menu da compra",
+   "optional": false,
+   "timeout": 8
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Editar"
+   },
+   "at": 52.75,
+   "label": "Editar",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "text": "O pedido será carregado para edição.",
+   "timeout": 8
+  },
+  {
+   "do": "mark",
+   "name": "L5",
+   "at": 53.15
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Editar Pedido",
+    "exact": true,
+    "within": "[role=dialog], [role=alertdialog]"
+   },
+   "at": 53.36,
+   "label": "Editar Pedido"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "text": "Editando Compra",
+    "within": "main"
+   },
+   "timeout": 15
+  },
+  {
+   "do": "waitFor",
+   "idle": true,
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "#supplier-desktop-top"
+   },
+   "at": 59.71,
+   "label": "Fornecedor: não informado"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "placeholder": "Buscar por nome, apelido, CPF/CNPJ ou telefone..."
+   },
+   "timeout": 8
+  },
+  {
+   "do": "type",
+   "target": {
+    "placeholder": "Buscar por nome, apelido, CPF/CNPJ ou telefone..."
+   },
+   "text": "Aparecida",
+   "cps": 14,
+   "at": 61.65,
+   "label": "busca Aparecida",
+   "noClick": true
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:has-text('Aparecida Ramos')"
+   },
+   "at": 61.86,
+   "label": "Aparecida Ramos"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Manter preços",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 62.76,
+   "label": "Manter preços (só se a pergunta aparecer)",
+   "optional": true,
+   "timeout": 3
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "role": "dialog"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Aparecida Ramos\", \"Alumínio latinha\", \"Papelão\", \"187,50\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Fornecedor Aparecida Ramos e o valor igual (R$ 187,50)"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "#supplier-desktop-top"
+   },
+   "text": "",
+   "noClick": true,
+   "optional": true,
+   "timeout": 4,
+   "at": 63.55,
+   "label": "[ZOOM] Fornecedor \"Aparecida Ramos\" e os dois itens, R$ 187,50"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('Alumínio latinha')"
+   },
+   "seconds": 1.0,
+   "at": 64.67,
+   "label": "os itens: R$ 187,50",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll('main button')].find(b=>b.textContent.trim()==='Finalizar');if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-560);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/600),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 67.42,
+   "label": "a tela desce até o Finalizar (fica atrás do rodapé)"
+  },
+  {
+   "do": "mark",
+   "name": "L6",
+   "at": 68.61
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Finalizar",
+    "exact": true
+   },
+   "at": 68.61,
+   "label": "Finalizar"
+  },
+  {
+   "do": "waitFor",
+   "text": "Finalizar Pedido",
+   "timeout": 10
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:has(span:text-is('Dinheiro'))"
+   },
+   "at": 69.42,
+   "label": "Dinheiro (R$ 187,50)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "CONFIRMAR PAGAMENTO"
+   },
+   "at": 70.23,
+   "label": "CONFIRMAR PAGAMENTO"
+  },
+  {
+   "do": "waitFor",
+   "text": "Deseja imprimir o comprovante de compra?",
+   "timeout": 15
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Não, obrigado",
+    "exact": true
+   },
+   "at": 71.69,
+   "label": "Imprimir Comprovante: Não, obrigado"
+  },
+  {
+   "do": "mark",
    "name": "L7",
-   "at": 48.38
+   "at": 72.67
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main a:has-text('Voltar para o caixa')"
+   },
+   "at": 72.67,
+   "label": "Voltar para o caixa",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "text": "#70 | Caixa - Marcos Antunes",
+    "within": "main"
+   },
+   "timeout": 15
+  },
+  {
+   "do": "click",
+   "target": {
+    "text": "#70 | Caixa - Marcos Antunes",
+    "within": "main"
+   },
+   "at": 76.12,
+   "label": "a aba do #70"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "main tbody tr:has-text('187,50')"
+   },
+   "timeout": 12
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll('main tbody tr')].find(t=>t.innerText.includes('187,50'));if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-420);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/900),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
+   "at": 76.83,
+   "label": "desce até a compra corrigida"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Aparecida Ramos\", \"187,50\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main tbody\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere a compra corrigida, agora da Aparecida Ramos, no caixa do Marcos"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('187,50')"
+   },
+   "seconds": 0.8,
+   "at": 77.73,
+   "label": "[DESTAQUE] a compra no caixa do Marcos, agora da Aparecida Ramos",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 80.84
+  },
+  {
+   "do": "hover",
+   "target": {
+    "selector": "main [role=tab]:has-text('Todas')"
+   },
+   "seconds": 1.0,
+   "at": 84.31,
+   "label": "a aba Todas do histórico",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L9",
+   "at": 90.23
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const raiz=document.querySelector(\"main\");let c=null;for(const e of [raiz,...(raiz?raiz.querySelectorAll('*'):[])]){if(!e)continue;const s=getComputedStyle(e);if(/(auto|scroll)/.test(s.overflowY)&&e.scrollHeight>e.clientHeight+4&&e.scrollTop>2){c=e;break}}if(!c){const se=document.scrollingElement;if(se&&se.scrollTop>2)c=se}if(!c)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/700),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0*(1-e),behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return 'topo:'+Math.round(c.scrollTop)})()",
+   "at": 90.23,
+   "label": "sobe para o cartão do caixa"
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Fechar Caixa"
+   },
+   "at": 90.33,
+   "label": "Fechar Caixa"
+  },
+  {
+   "do": "waitFor",
+   "text": "Valor de Fechamento",
+   "timeout": 10
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const esp=[\"612,50\"];let out='';for(let i=0;i<12;i++){const v=[...document.querySelectorAll(\"[role=dialog]\"+' input, '+\"[role=dialog]\"+' textarea')].map(e=>e.value).join(' | ');const falta=esp.filter(e=>!v.includes(e));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+v.slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Valor de Fechamento 612,50"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Fechar Caixa #70\", \"Marcos Antunes\", \"21/10/2026 07:02\", \"R$ 612,50\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")];const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere Fechar Caixa #70 do Marcos, esperado R$ 612,50"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Valor esperado pelo sistema",
+    "within": "[role=dialog]"
+   },
+   "seconds": 1.0,
+   "at": 94.38,
+   "label": "[ZOOM] Valor de Fechamento 612,50 e \"Valor esperado pelo sistema: R$ 612,50\"",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "mark",
+   "name": "L10",
+   "at": 102.42
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] button:has(svg.lucide-calendar)"
+   },
+   "at": 105.34,
+   "label": "a data do fechamento (hoje)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] button[name=previous-month], [data-radix-popper-content-wrapper] button[aria-label*='anterior' i], [data-radix-popper-content-wrapper] button[aria-label*='previous' i]"
+   },
+   "at": 107.87,
+   "label": "mês anterior (outubro)"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[data-radix-popper-content-wrapper] button[name=day]:text-is('21'), [data-radix-popper-content-wrapper] [role=gridcell] button:text-is('21')"
+   },
+   "at": 109.31,
+   "label": "dia 21"
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] input[aria-label=Hora]"
+   },
+   "at": 111.01,
+   "label": "Hora"
+  },
+  {
+   "do": "type",
+   "target": {
+    "selector": "[role=dialog] input[aria-label=Hora]"
+   },
+   "text": "1731",
+   "cps": 6,
+   "at": 111.76,
+   "label": "17:31",
+   "noClick": true
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"21/10/2026\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")];const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere a data 21/10/2026 no botão"
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const esp=[\"17:31\"];let out='';for(let i=0;i<12;i++){const v=[...document.querySelectorAll(\"[role=dialog]\"+' input, '+\"[role=dialog]\"+' textarea')].map(e=>e.value).join(' | ');const falta=esp.filter(e=>!v.includes(e));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+v.slice(0,260);await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere a hora 17:31"
+  },
+  {
+   "do": "type",
+   "target": {
+    "text": "Data/hora do fechamento",
+    "within": "[role=dialog]"
+   },
+   "text": "",
+   "noClick": true,
+   "optional": true,
+   "timeout": 4,
+   "at": 112.52,
+   "label": "[ZOOM] \"Data/hora do fechamento\" com 21/10/2026 e 17:31"
+  },
+  {
+   "do": "mark",
+   "name": "L11",
+   "at": 113.86
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Confirmar Fechamento",
+    "exact": true
+   },
+   "at": 113.86,
+   "label": "Confirmar Fechamento"
+  },
+  {
+   "do": "waitFor",
+   "text": "Caixa fechado com sucesso!",
+   "timeout": 15
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Não, obrigado",
+    "exact": true
+   },
+   "at": 115.88,
+   "label": "Imprimir Relatório: Não, obrigado"
+  },
+  {
+   "do": "mark",
+   "name": "L12",
+   "at": 123.62
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "#88 | Caixa - Rafael Nogueira",
+    "within": "main"
+   },
+   "seconds": 1.2,
+   "at": 123.62,
+   "label": "a aba do meu caixa de hoje (#88)",
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "scroll",
@@ -325,8 +715,8 @@
    "by": 0,
    "duration": 0.3,
    "after": 0,
-   "at": 48.38,
-   "label": "cursor descansa (cartão Próximo)"
+   "at": 132.32,
+   "label": "cursor descansa"
   },
   {
    "do": "eval",
@@ -336,7 +726,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 55.93
+   "at": 139.75
   }
  ]
 }

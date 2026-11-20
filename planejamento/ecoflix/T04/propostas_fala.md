@@ -17,29 +17,18 @@ As linhas 02 L2/L3, 03 L2, 04 L5 e 09 L9 vêm de medidas feitas entre 13:30 e 17
 lentos, aviso do coordenador): com a máquina normal a digitação pode caber; o robô cola esses textos de qualquer jeito, e a proposta
 fica para a revisão decidir com a voz real.
 
-## Achados do app (1.59.154)
-- **Lupa do CNPJ (cap03 L3):** a dica "Buscar dados da empresa pelo CNPJ" é o `title` nativo do botão
-  (`components/CnpjLookupInput.tsx:146-150`): não aparece no vídeo. O robô passa o mouse e lê o texto (`eval` "texto da dica (title)
-  da lupa"); a edição põe um aviso "Ao passar o mouse: Buscar dados da empresa pelo CNPJ" (docs/08, T9 cap13). A fala fica.
-
-- **As 7 abas da ficha não cabem em 1280 px** (o [TESTAR] do cap07), mesmo com o menu recolhido: a faixa "Seções da ficha"
-  (`ClientsListView.tsx:315`, `overflow-x-auto`) corta "Notas fiscais" e deixa "Preços" fora (x ≈ 1276 numa janela de 1280). O robô
-  rola a faixa de lado (suave, ~0,5 s) antes de "Notas fiscais"/"Preços" nos caps 06, 07 e 11; a fala não muda.
-
-- **CEP sem máscara depois da busca do CNPJ (cap03 L5):** o campo mostra "12062150", não "12062-150": `handleCnpjData` grava o CEP
-  só com dígitos e o `CepLookup` só formata quando a pessoa digita (`EntityFormDialog.tsx:728-731`, `CepLookup.tsx:138-150`). A fala
-  não diz o número; a tela fica como o app mostra.
-- **Aviso do React no console** quando a busca preenche UF e cidade ("Select is changing from uncontrolled to controlled", Selects do
-  Radix que nasceram sem valor): só console. Entrou no `ruidoConsole` do `mundo.json` para não contar como problema da gravação.
-
-- **"Rascunho encontrado" depois de salvar (cap02 L9):** ao abrir "Novo Fornecedor" logo depois de salvar o Rogério, a janela
-  mostra "Rascunho encontrado — Você tem um preenchimento anterior não finalizado." com "Descartar"/"Retomar". O Salvar chama
-  `clearDraft()` antes da gravação assíncrona (`EntityFormDialog.tsx:859`) e o efeito de autosave de `hooks/useFormDraft.ts` regrava
-  o `sessionStorage` (`form-draft:entity-form-supplier`) enquanto a janela ainda está aberta. Defeito para o time do app; o robô apaga
-  a chave antes de abrir a segunda janela (como a página deveria ter feito), e a tela segue o roteiro.
-- **Link do portal com o endereço local:** a ficha mostra "http://127.0.0.1:8080/portal/..." (cap01, ficha da Aços; cap07, zoom no
-  "Acesso ao portal"). Para a gravação final, `APP_ORIGIN=https://ecosistematecnologia.com.br` (o domínio do `index.html` do app;
-  confirmar o do produto) faz o app montar o link com o domínio (docs/04, "Endereço do produto na tela").
+## Achados do app (1.60.18, ensaio de 20/11)
+- **Corrigidos desde o 1.59.154 (tirar da lista do MELHORIAS):** CEP já vem com máscara (12062-150) depois da consulta e quando digitado;
+  "Rascunho encontrado" não aparece mais depois de salvar; a lupa do CNPJ ganhou dica visível (a fala não a cita); as 7 abas da ficha
+  cabem em 1600x900 (faixa 1040/1040 px, última aba termina em x=1370 de 1536), sem rolar.
+- **Bug novo:** a mensagem de campo obrigatório de endereço diz "Informe o estado (UF) na aba Endereço", mas a aba chama-se Dados Fiscais
+  (Endereço Fiscal) (conferir no código antes de citar).
+- **Aviso do React no console** ("Select is changing from controlled to uncontrolled") quando a busca preenche UF e cidade: só console.
+- **Link do portal com o endereço local** na ficha: para a gravação final, `APP_ORIGIN` do produto (docs/04).
+- **"PDF" do extrato e do relatório de saldos** são HTML escrito numa aba nova (`document.write`), não o `#pdf-frame` do T08: o robô devolve
+  o HTML (`html_js`, `rec/t04/t04_pdf.py` grava em `rec/t04/arquivos/`). O extrato detalhado só tem a tabela de materiais depois que o
+  app termina de gerar (aguardar "Preço unit.").
+- **Crédito/débito, lápis e lixeira do extrato** funcionam como na cobertura; o ajuste de R$ 50,00 e a exclusão devolvem o saldo a R$ 1.350,00.
 
 ## Sinal dos saldos (pedido do coordenador, 11/11)
 Conferido no código (`utils/balanceFormatting.ts`, `BalancesReportModal.tsx:109-119`) e nas folhas de contato dos caps 01 e 09

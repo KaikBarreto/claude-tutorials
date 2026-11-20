@@ -64,7 +64,12 @@ export function desfaz(ctx, tipo, id, compensacao) {
   if (!p) return { modo: 'ausente', pedido: null };
   if (p.reverted_at) return { modo: 'ja_revertido', pedido: p };
   const cid = p.company_id;
-  const { fechado } = origem(ctx, p);
+  let { fechado } = origem(ctx, p);
+  // 1.60.2 (migration 20261116155500): pedido de caixa fechado SEM dinheiro, com o próprio caixa de origem escolhido, é refeito ali
+  // mesmo (apaga só vínculos de valor zero; o fechamento não muda). Sem esse caminho vira estorno compensado.
+  const { caixas } = origem(ctx, p);
+  const semDinheiro = !store.rows('cash_transactions').some((c) => c.order_id === p.id && Math.abs(num(c.amount)) > 0.005);
+  if (fechado && compensacao && semDinheiro && caixas.some((c) => c.id === compensacao && c.status === 'closed')) fechado = false;
   const agora = new Date(agoraMs()).toISOString();
   const mats = (mid) => store.rows('materials').find((m) => m.id === mid);
   const movs = store.rows('stock_movements').filter((m) => m.order_id === p.id);
@@ -116,6 +121,8 @@ export function auditoria(ctx, tipo, p, modo) {
     company_id: p.company_id, action_type: 'delete_entity', entity_type: tipo, entity_id: p.id, entity_label: parceiro?.name || `#${p.order_number}`,
     performed_by: ctx.userId, performed_by_email: perfil.email || null, performed_by_role: papel, company_name_snapshot: emp.name || null,
     entity_snapshot: { order_number: p.order_number, total_amount: num(p.total_amount) }, payload: { mode: modo, order_type: tipo },
+    // "Onde" do Histórico de Exclusões: IP de documentação (RFC 5737) e navegador, como o app grava (T9, 1.60.18)
+    ip_address: '203.0.113.24', user_agent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36',
     created_at: new Date(agoraMs()).toISOString(),
   }, { companyId: p.company_id });
 }

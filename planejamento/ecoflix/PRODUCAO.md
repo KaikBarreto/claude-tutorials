@@ -948,3 +948,8 @@ Decisões:
   `price_tables`, `show_on_receipt` nos itens, `show_pack_conversion_on_orders` em `companies`); o mundo privado da T03
   (`rec/t03/_mundo`) ficou igual ao base e saiu do `t03_env.sh`. Ilustrações pendentes: ilu07_margem, ilu09_fora,
   ilu12_ordem e dois PDFs (pdf14_estoque, pdf14_tabela). **Para o Kaik**: Prefixo (F10) e seleção em massa (F11) ficaram fora.
+- **T04**: 18 capítulos (novos 05 Lucro Real, 06 baixada, 09 etiquetas e filtros, 13 ajustes de saldo; cap04 refeito).
+  Fala 3.238 palavras (~20,8 min). Rápido aprovado: 00-03, 09-16. Não fecharam: 04 (lentidão da máquina) e, por cadeia,
+  05-08 e 17; cap12 com o PDF do extrato só no cabeçalho (gerar.py corrigido). Coordenador relançou os lotes de
+  `andamento_160.md`. Handlers: `ext/publica.cnpj.ws`, `registrar_consulta_cnpj_ie`, `apply_balance_delta`; editados
+  `cnpj-lookup` e `functions/cep-lookup` (compartilhado: só o CEP 12062150). PDFs (extrato e relatório) com cena pendente.

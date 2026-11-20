@@ -5,7 +5,7 @@ novo refaz igual). FAKE_NOW da aula: 2026-11-11T08:30:00-03:00 (quarta).
 Cadeia (cada capítulo abre um navegador novo e parte da lista acumulada; ver SEMENTE no gerar.py):
   inicio      o dia 10/11 que a T6 e a T8 contam, já fechado (o #85 do Rafael: abertura de R$ 1.500,00, a compra do ticket #58 da
               Cooperativa por Pix, a venda de 1.600 kg de ferro pesado à Aços Quiririm por Pix e as compras da Aparecida e do Valdir
-              em dinheiro, fecha com R$ 1.007,10; o #86 do Marcos: R$ 17.000,00 + o saque de R$ 3.000,00, fecha com R$ 20.000,00)
+              em dinheiro, fecha com R$ 957,10: o gás de R$ 50,00 e o aluguel de caçamba de R$ 120,00 no Pix entraram na junção de 1.60.18; o #86 do Marcos: R$ 17.000,00 + o saque de R$ 3.000,00 - a sangria de R$ 5.000,00, fecha com R$ 15.000,00)
               e a manhã de 11/11: o #88 do Rafael aberto às 07:10 com R$ 1.200,00 e três compras em dinheiro (07:22 Aparecida,
               24 kg de latinha, R$ 148,80; 07:41 e 07:42 Valdir, 280 kg de ferro misto, R$ 210,00 cada: a 2ª é a duplicada).
               O Marcos sem caixa aberto em 11/11.
@@ -33,6 +33,7 @@ CIDA, VALDIR, RECOMECO = '@id:fornecedor.cida', '@id:fornecedor.valdir', '@id:fo
 QUIRIRIM = '@id:cliente.quiririm'
 PRINCIPAL = '@id:banco.principal'
 CX = {n: f'@id:t09.caixa.{n}' for n in (85, 86, 88)}
+UA_CHROME = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36'
 
 
 def base():
@@ -198,6 +199,11 @@ def main():
     e.ct('saque86', CX[86], 'transfer', 3000.0, '↓ SAQUE · Conta Principal → Caixa #86', quando, RAFAEL)
     e.bt('saque86', PRINCIPAL, 'transfer', -3000.0, '↑ SAQUE · Conta Principal → Caixa #86', quando, RAFAEL, cash_register_id=CX[86])
     e.bt('tarifa86', PRINCIPAL, 'expense', -6.5, 'Tarifa de Saque para o Caixa #86', quando, RAFAEL, cash_register_id=CX[86])
+    # 1.60.18 (junção da T6 nova): 08:5x no #85 o gás da empilhadeira (R$ 50,00, dinheiro) e o aluguel de caçamba (R$ 120,00, Pix na Conta Principal)
+    quando = z(D10, '08:55')
+    e.ct('gas85', CX[85], 'withdrawal', 50.0, 'Gás da empilhadeira', quando, RAFAEL, category_id='@id:categoria.combustivel', cost_center_id='@id:cc.patio')
+    quando = z(D10, '08:58')
+    e.bt('aluguel85', PRINCIPAL, 'deposit', 120.0, 'Aluguel de caçamba', quando, RAFAEL, cash_register_id=CX[85], payment_method='transfer')
     num += 1
     e.pedido('t8', 'purchase', RECOMECO, [(LATINHA, 3080, 6.2, 61.6)], z(D10, '09:00'), RAFAEL, CX[85], 'transfer', num)
     num += 1
@@ -206,8 +212,12 @@ def main():
     e.pedido('cida10', 'purchase', CIDA, [(LATINHA, 42, 6.2, 0)], z(D10, '11:20'), RAFAEL, CX[85], 'cash', num)
     num += 1
     e.pedido('valdir10', 'purchase', VALDIR, [(F_MISTO, 310, 0.75, 0)], z(D10, '15:05'), RAFAEL, CX[85], 'cash', num)
-    e.fecha(85, z(D10, '17:44'), 1007.1, RAFAEL)
-    e.fecha(86, z(D10, '17:36'), 20000.0, MARCOS)
+    # 17:35 a sangria de verdade do #86 (R$ 5.000,00 para a Conta Principal); o #86 fecha com R$ 15.000,00 e o #85 com R$ 957,10
+    quando = z(D10, '17:35')
+    e.ct('sangria86', CX[86], 'transfer', -5000.0, '↑ SANGRIA · Caixa #86 → Conta Principal', quando, MARCOS)
+    e.bt('sangria86', PRINCIPAL, 'transfer', 5000.0, 'Depósito do fim do dia', quando, MARCOS, cash_register_id=CX[86])
+    e.fecha(85, z(D10, '17:44'), 957.1, RAFAEL)
+    e.fecha(86, z(D10, '17:36'), 15000.0, MARCOS)
     # ---------------------------------------------------------------- 11/11 de manhã: o #88 do Rafael
     D11 = '2026-11-11'
     e.caixa(88, RAFAEL, z(D11, '07:10'), 1200.0)
@@ -233,10 +243,15 @@ def main():
             'entity_label': 'Aparecida Ramos', 'performed_by': quem, 'performed_by_email': email,
             'performed_by_role': 'operator' if quem == MARCOS else 'company_admin', 'company_name_snapshot': 'Recicla Vale Metais', 'company_email_snapshot': None,
             'entity_snapshot': {'order_number': copia_b.get('order_number'), 'order_ref': copia_b.get('order_ref'), 'total_amount': copia_b['total_amount']},
-            'payload': {'mode': 'compensated', 'order_type': 'purchase'}, 'ip_address': None, 'user_agent': None,
+            'payload': {'mode': 'compensated', 'order_type': 'purchase'}, 'ip_address': '203.0.113.24', 'user_agent': UA_CHROME,
             'created_at': copia_b.get('reverted_at') or z('2026-11-05', '08:12')})
+    bat = [p for p in B['purchases'] if p.get('transaction_date') == '2026-10-21' and p.get('supplier_id') == '@id:fornecedor.siqueira' and abs(float(p['total_amount']) - 744) < 0.01]
+    assert len(bat) == 1, f'a compra de bateria de 21/10 do Siqueira (R$ 744,00) não está no mundo base ({len(bat)})'
+    c1663 = next(p for p in B['purchases'] if p['id'] == '@id:compra.1663')
+    assert c1663['supplier_id'] == CIDA and abs(float(c1663['total_amount']) - 187.5) < 0.01, 'a compra de 21/10 09:15 (R$ 187,50) mudou no mundo base'
     dados = dict(e.t)
-    dados['_patch'] = {'materials': patch_materiais(e, [LATINHA, F_PESADO, F_MISTO, PAPELAO]),
+    dados['_patch'] = {'purchases': [{'match': {'id': c1663['id']}, 'set': {'supplier_id': None}}],   # 1.60.18: nasce SEM fornecedor; o cap10 põe a Aparecida
+                       'materials': patch_materiais(e, [LATINHA, F_PESADO, F_MISTO, PAPELAO]),
                        'bank_accounts': [{'match': {'id': PRINCIPAL}, 'set': {'balance': e.banco[PRINCIPAL]}}]}
     grava('inicio', 'T09 · estado de 11/11 08:30: o dia 10/11 (T6 e T8) fechado e o caixa #88 do Rafael com as três compras da manhã '
           '(latinha da Aparecida com 24 kg; a compra do Valdir lançada duas vezes). Gerado por rec/t09/t09_sementes.py.', dados)
@@ -244,7 +259,8 @@ def main():
     # ---------------------------------------------------------------- apos-cap04: latinha 24 -> 42 kg
     st = e.estoque[LATINHA] + 18
     grava('apos-cap04', 'T09 · depois do cap04: a compra da Aparecida editada para 42 kg de latinha (R$ 260,40, mesmo número e hora, no #88).', {'_patch': {
-        'purchases': [{'match': {'id': cida}, 'set': {'total_amount': 260.4, 'paid_amount': 260.4}}],
+        'purchases': [{'match': {'id': cida}, 'set': {'total_amount': 260.4, 'paid_amount': 260.4}},
+                      {'match': {'id': bat[0]['id']}, 'set': {'supplier_id': '@id:fornecedor.valeforte'}}],   # cap04: a bateria passada para a Vale Forte, mantida no #70
         'purchase_items': [{'match': {'id': '@id:t09.pi.cida.0'}, 'set': {'quantity': 42, 'total_price': 260.4}}],
         'stock_movements': [{'match': {'id': '@id:t09.sm.cida.0'}, 'set': {'quantity': 42, 'stock_after': e.estoque[LATINHA] - 24 + 42}}],
         'cash_transactions': [{'match': {'id': '@id:t09.ct.cida'}, 'set': {'amount': 260.4}}],
@@ -262,17 +278,15 @@ def main():
             'entity_label': 'Valdir Pereira', 'performed_by': RAFAEL, 'performed_by_email': 'rafael@reciclavalemetais.example',
             'performed_by_role': 'company_admin', 'company_name_snapshot': 'Recicla Vale Metais', 'company_email_snapshot': None,
             'entity_snapshot': {'order_number': n_dup, 'total_amount': 210}, 'payload': {'mode': 'hard_delete', 'order_type': 'purchase'},
-            'ip_address': None, 'user_agent': None, 'created_at': z(D11, '08:33')}],
+            'ip_address': '203.0.113.24', 'user_agent': UA_CHROME, 'created_at': z(D11, '08:33')}],
     })
     # ---------------------------------------------------------------- apos-cap06: cupom sem valor no Valdir
     grava('apos-cap06', 'T09 · depois do cap06: "Cupom sem valor" ligado na compra do Valdir (07:41).', {'_patch': {
         'purchases': [{'match': {'id': valdir}, 'set': {'hide_financial_details': True}}]}})
-    # ---------------------------------------------------------------- apos-cap09: a bateria de 21/10 no nome da Vale Forte, o #70 fechado de novo
-    bat = [p for p in B['purchases'] if p.get('transaction_date') == '2026-10-21' and p.get('supplier_id') == '@id:fornecedor.siqueira' and abs(float(p['total_amount']) - 744) < 0.01]
-    assert len(bat) == 1, f'a compra de bateria de 21/10 do Siqueira (R$ 744,00) não está no mundo base ({len(bat)})'
-    grava('apos-cap09', 'T09 · depois do cap09: a compra de 21/10 (240 kg de bateria, R$ 744,00, Pix) passada para a Auto Peças Vale Forte no #70, '
-          'reaberto e fechado de novo com 21/10/2026 17:31 e R$ 612,50 (para a recapitulação).', {'_patch': {
-              'purchases': [{'match': {'id': bat[0]['id']}, 'set': {'supplier_id': '@id:fornecedor.valeforte'}}],
+    # ---------------------------------------------------------------- apos-cap09: a compra em dinheiro das 09:15 no nome da Aparecida, o #70 fechado de novo
+    grava('apos-cap09', 'T09 · depois do cap10 (a semente mantém o nome da 1.59): a compra de 21/10 09:15 (R$ 187,50, dinheiro) volta à Aparecida Ramos no #70, '
+          'reaberto e fechado de novo com 21/10/2026 17:31 e R$ 612,50 (para a recapitulação e a T10). A bateria de 21/10 já está na Vale Forte desde o apos-cap04.', {'_patch': {
+              'purchases': [{'match': {'id': '@id:compra.1663'}, 'set': {'supplier_id': CIDA}}],
               'cash_register': [{'match': {'id': '@id:caixa.70'}, 'set': {'reopened_at': z(D11, '08:33')}}]}})
     print(f'pedidos #{ULT_PEDIDO + 1}..#{num} (latinha #{n_cida}, duplicada #{n_dup}); caixas #85, #86 e #88 (o #87 não existe na aula: lacuna que nenhuma tela da T9 mostra; coordenador, 11/11: vale o #88)')
 

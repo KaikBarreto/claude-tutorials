@@ -1,6 +1,6 @@
 {
  "name": "t09-cap05",
- "title": "T09 · Cap. 5 · Excluir e o selo de estornado (narração 74,7 s ESTIMADA; marcas L1..L7 = início de cada linha do roteiro; FAKE_NOW 2026-11-11T08:30:00-03:00)",
+ "title": "T09 · Cap. 5 · Excluir e o selo de estornado (narração 111,7 s ESTIMADA; marcas L1..L10 = início de cada linha do roteiro; FAKE_NOW 2026-11-11T08:30:00-03:00)",
  "seed": "t09-cap05",
  "pace": 0.5,
  "cps": 9,
@@ -366,11 +366,122 @@
    "at": 63.04
   },
   {
+   "do": "hover",
+   "target": {
+    "selector": "main tbody tr:has-text('03/11/2026 08:47') button"
+   },
+   "seconds": 0.3,
+   "at": 63.04,
+   "label": "menu da compra de 03/11 08:47 (a outra cópia, no caixa já fechado)",
+   "optional": false,
+   "timeout": 8
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "role": "menuitem",
+    "name": "Ver comprovante"
+   },
+   "timeout": 6
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "menuitem",
+    "name": "Excluir"
+   },
+   "at": 69.14,
+   "label": "Excluir (só para ver a prévia)",
+   "noScroll": true
+  },
+  {
+   "do": "waitFor",
+   "text": "Vou desfazer tudo que este pedido criou:",
+   "timeout": 8
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "[role=alertdialog]:has-text('Vou desfazer tudo que este pedido criou:') :text-is('Financeiro')"
+   },
+   "timeout": 10
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Vou desfazer tudo que este pedido criou:\", \"Pagamento em dinheiro\", \"389,60\", \"↩ estorno hoje\", \"estorno espelhado\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=alertdialog]\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere prévia em caixa fechado: ↩ estorno hoje e o aviso amarelo"
+  },
+  {
+   "do": "type",
+   "target": {
+    "text": "estorno hoje",
+    "within": "[role=alertdialog]:has-text('Vou desfazer tudo que este pedido criou:')"
+   },
+   "text": "",
+   "noClick": true,
+   "optional": true,
+   "timeout": 4,
+   "at": 70.3,
+   "label": "[ZOOM] \"↩ estorno hoje\" no lugar de \"(apaga)\" e o aviso amarelo"
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "estorno hoje",
+    "within": "[role=alertdialog]:has-text('Vou desfazer tudo que este pedido criou:')"
+   },
+   "seconds": 1.0,
+   "at": 70.4,
+   "label": "↩ estorno hoje",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Cancelar",
+    "exact": true,
+    "within": "[role=alertdialog]"
+   },
+   "at": 74.96,
+   "label": "Cancelar (nada é excluído)"
+  },
+  {
+   "do": "waitFor",
+   "gone": {
+    "text": "Vou desfazer tudo que este pedido criou:"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "mark",
+   "name": "L8",
+   "at": 76.29
+  },
+  {
+   "do": "scroll",
+   "point": {
+    "x": 700,
+    "y": 300
+   },
+   "by": 0,
+   "duration": 0.3,
+   "after": 0,
+   "at": 76.29,
+   "label": "cursor descansa (dica: caixa aberto e conciliação)"
+  },
+  {
+   "do": "mark",
+   "name": "L9",
+   "at": 89.09
+  },
+  {
    "do": "click",
    "target": {
     "selector": "header button:has(svg.lucide-panel-left)"
    },
-   "at": 63.04,
+   "at": 89.09,
    "label": "abre o menu lateral (recolhido no começo)",
    "noScroll": true
   },
@@ -379,7 +490,7 @@
    "target": {
     "selector": "button[aria-label='Configurações']"
    },
-   "at": 67.6,
+   "at": 93.66,
    "label": "Configurações (rodapé do menu)",
    "noScroll": true
   },
@@ -395,7 +506,7 @@
     "exact": true,
     "within": "main"
    },
-   "at": 68.18,
+   "at": 94.23,
    "label": "aba Empresa",
    "unless": {
     "text": "Histórico de Exclusões",
@@ -411,7 +522,7 @@
   {
    "do": "eval",
    "js": "(async()=>{const rolagem=(el)=>{let c=el&&el.parentElement;while(c&&c!==document.body){const s=getComputedStyle(c);if(/(auto|scroll)/.test(s.overflowY)&&c.scrollHeight>c.clientHeight+4)return c;c=c.parentElement;}const se=document.scrollingElement;return se&&se.scrollHeight>se.clientHeight+4?se:null};const el=[...document.querySelectorAll('main h3, main h2, main p, main div')].find(e=>e.children.length===0&&e.textContent.trim()==='Histórico de Exclusões');if(!el)return 'SEM ALVO';const c=rolagem(el);if(!c)return 'SEM ROLAGEM';const dy=Math.round(el.getBoundingClientRect().top-360);if(Math.abs(dy)<3)return 'ok';const y0=c.scrollTop,t0=performance.now();await new Promise(res=>{const f=t=>{const p=Math.min(1,(t-t0)/800),e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;c.scrollTo({top:y0+dy*e,behavior:'instant'});p<1?requestAnimationFrame(f):res()};requestAnimationFrame(f)});return Math.round(el.getBoundingClientRect().top)})()",
-   "at": 70.17,
+   "at": 96.23,
    "label": "desce até o cartão Histórico de Exclusões"
   },
   {
@@ -420,7 +531,7 @@
     "role": "button",
     "name": "Ver histórico"
    },
-   "at": 72.1,
+   "at": 98.15,
    "label": "Ver histórico"
   },
   {
@@ -442,8 +553,69 @@
    "noClick": true,
    "optional": true,
    "timeout": 4,
-   "at": 73.7,
+   "at": 99.76,
    "label": "[ZOOM] a linha \"Excluiu compra \"Valdir Pereira\"\", com a hora e o e-mail"
+  },
+  {
+   "do": "mark",
+   "name": "L10",
+   "at": 100.14
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Todos os tipos",
+    "within": "main"
+   },
+   "seconds": 0.6,
+   "at": 102.1,
+   "label": "filtro Todos os tipos",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "text": "Todos os usuários",
+    "within": "main"
+   },
+   "seconds": 0.6,
+   "at": 102.93,
+   "label": "filtro Todos os usuários",
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main button:has-text('Excluiu compra')",
+    "nth": 0
+   },
+   "at": 103.67,
+   "label": "abre a linha \"Excluiu compra \"Valdir Pereira\"\""
+  },
+  {
+   "do": "waitFor",
+   "text": "Quem",
+   "timeout": 8
+  },
+  {
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Quem\", \"rafael@reciclavalemetais.example\", \"Onde\", \"Chrome (Desktop)\", \"IP: 203.0.113.24\", \"Número\", \"Total\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere detalhes da exclusão: Quem, Onde e os dados do pedido"
+  },
+  {
+   "do": "type",
+   "target": {
+    "text": "Onde",
+    "within": "main"
+   },
+   "text": "",
+   "noClick": true,
+   "optional": true,
+   "timeout": 4,
+   "at": 107.61,
+   "label": "[ZOOM] \"Quem\", \"Onde\" (Chrome, IP) e os dados do pedido que saiu"
   },
   {
    "do": "eval",
@@ -453,7 +625,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 74.69
+   "at": 111.72
   }
  ]
 }

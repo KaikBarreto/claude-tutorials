@@ -391,7 +391,7 @@ export function criarPedido(ctx, tipo, a) {
   let caixa = null;
   if (a.p_cash_register_id) {
     caixa = store.rows('cash_register').find((c) => c.id === a.p_cash_register_id);
-    if (!caixa || caixa.company_id !== cid || caixa.status !== 'open') throw new RpcError(`CASH_REGISTER_CLOSED: caixa ${a.p_cash_register_id} inexistente, de outra empresa ou fechado (status=${caixa?.status || 'NULL'})`);
+    if (!caixa || caixa.company_id !== cid || (caixa.status !== 'open' && !(a.p_force_cash_register && caixa.status === 'closed'))) throw new RpcError(`CASH_REGISTER_CLOSED: caixa ${a.p_cash_register_id} inexistente, de outra empresa ou fechado (status=${caixa?.status || 'NULL'})`);
   }
   const cobrado = r2(a.p_paid_amount ?? a.p_total_amount ?? 0);
   const dinheiro = num(a.p_cash_amount), banco = num(a.p_transfer_amount), saldo = num(a.p_balance_amount), excesso = num(a.p_excess_to_balance);

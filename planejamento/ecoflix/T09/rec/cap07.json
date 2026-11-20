@@ -1,13 +1,13 @@
 {
  "name": "t09-cap07",
- "title": "T09 · Cap. 7 · O Histórico do Caixa (narração 53,5 s ESTIMADA; marcas L1..L6 = início de cada linha do roteiro; FAKE_NOW 2026-11-11T08:30:00-03:00)",
+ "title": "T09 · Cap. 7 · Exportar a lista (narração 37,0 s ESTIMADA; marcas L1..L4 = início de cada linha do roteiro; FAKE_NOW 2026-11-11T08:30:00-03:00)",
  "seed": "t09-cap07",
  "pace": 0.5,
  "cps": 9,
  "tail": 1.5,
  "start": {
-  "x": 760,
-  "y": 470
+  "x": 900,
+  "y": 440
  },
  "anonymous": true,
  "storage": {
@@ -76,11 +76,11 @@
   },
   {
    "do": "goto",
-   "url": "/historico-caixa"
+   "url": "/pedidos"
   },
   {
    "do": "waitFor",
-   "text": "Todos os registros de fechamento do caixa",
+   "text": "Histórico completo de compras e vendas",
    "timeout": 30
   },
   {
@@ -89,17 +89,41 @@
    "timeout": 25
   },
   {
-   "do": "goto",
-   "url": "/dashboard"
+   "do": "eval",
+   "js": "(()=>{const b=document.querySelector('header svg.lucide-panel-left-close')?.closest('button');if(!b)return document.querySelector('header svg.lucide-panel-left')?'ja recolhido':'sem botao';b.click();return 'recolhido'})()"
+  },
+  {
+   "do": "wait",
+   "seconds": 0.8
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "main [role=combobox]:has-text('Este mês')"
+   }
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "option",
+    "name": "Mês passado"
+   }
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "selector": "main [role=combobox]:has-text('Mês passado')"
+   },
+   "timeout": 10
   },
   {
    "do": "waitFor",
    "idle": true,
-   "timeout": 25
+   "timeout": 15
   },
   {
    "do": "wait",
-   "seconds": 1.0
+   "seconds": 0.8
   },
   {
    "do": "eval",
@@ -116,294 +140,180 @@
    "do": "click",
    "target": {
     "role": "button",
-    "name": "Financeiro",
-    "exact": true,
-    "within": "[data-sidebar=sidebar]"
+    "name": "Exportar",
+    "within": "main"
    },
-   "at": 2.85,
-   "label": "menu Financeiro"
+   "at": 4.94,
+   "label": "Exportar"
+  },
+  {
+   "do": "waitFor",
+   "target": {
+    "role": "menuitem",
+    "name": "PDF"
+   },
+   "timeout": 8
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "menuitem",
+    "name": "PDF"
+   },
+   "seconds": 0.5,
+   "at": 6.94,
+   "label": "PDF",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 4
+  },
+  {
+   "do": "hover",
+   "target": {
+    "role": "menuitem",
+    "name": "Excel"
+   },
+   "seconds": 0.5,
+   "at": 7.92,
+   "label": "Excel",
+   "noScroll": true,
+   "optional": true,
+   "timeout": 4
   },
   {
    "do": "click",
    "target": {
-    "role": "link",
-    "name": "Histórico do Caixa",
-    "exact": true,
-    "within": "[data-sidebar=sidebar]"
+    "role": "menuitem",
+    "name": "PDF"
    },
-   "at": 5.24,
-   "label": "menu Histórico do Caixa"
+   "at": 8.97,
+   "label": "PDF",
+   "noScroll": true
   },
   {
    "do": "waitFor",
-   "text": "Todos os registros de fechamento do caixa",
-   "timeout": 15
+   "text": "Escolha quais pedidos serão incluídos no relatório",
+   "timeout": 8
   },
   {
-   "do": "hover",
-   "target": {
-    "selector": "main tbody tr:has-text('#85')"
-   },
-   "seconds": 0.6,
-   "at": 7.01,
-   "label": "cada caixa fechado, um por linha",
-   "optional": true,
-   "timeout": 4
+   "do": "eval",
+   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"Exportar PDF\", \"Escolha quais pedidos serão incluídos no relatório\", \"Período\", \"Mês passado\", \"Tipo de Pedido\", \"Compras\", \"Vendas\", \"Forma de Pagamento\", \"Dinheiro\", \"PIX / Transferência\", \"Saldo\", \"Detalhamento\", \"Detalhar materiais de cada pedido\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"[role=dialog]\")];const el=true?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
+   "label": "confere janela Exportar PDF"
   },
   {
    "do": "mark",
    "name": "L2",
-   "at": 10.5
+   "at": 9.2
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main thead th:has-text('Código')"
+    "text": "Período",
+    "exact": true,
+    "within": "[role=dialog]"
    },
-   "seconds": 0.2,
-   "at": 11.39,
-   "label": "coluna Código",
+   "seconds": 0.5,
+   "at": 10.47,
+   "label": "Período (já em Mês passado)",
    "optional": true,
    "timeout": 4
   },
   {
-   "do": "hover",
+   "do": "click",
    "target": {
-    "selector": "main thead th:has-text('Abertura')"
+    "selector": "[role=dialog] label:has-text('Vendas')"
    },
-   "seconds": 0.2,
-   "at": 13.36,
-   "label": "coluna Abertura",
-   "optional": true,
-   "timeout": 4
+   "at": 12.81,
+   "label": "desmarca Vendas (ficam só as compras)"
   },
   {
    "do": "hover",
    "target": {
-    "selector": "main thead th:has-text('Fechamento')"
+    "text": "Forma de Pagamento",
+    "exact": true,
+    "within": "[role=dialog]"
    },
-   "seconds": 0.2,
-   "at": 14.5,
-   "label": "coluna Fechamento",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main thead th:has-text('Aberto por')"
-   },
-   "seconds": 0.2,
-   "at": 15.26,
-   "label": "coluna Aberto por",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main thead th:has-text('Saldo Inicial')"
-   },
-   "seconds": 0.2,
-   "at": 16.92,
-   "label": "coluna Saldo Inicial",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main thead th:has-text('Saldo Final')"
-   },
-   "seconds": 0.2,
-   "at": 17.84,
-   "label": "coluna Saldo Final",
+   "seconds": 0.6,
+   "at": 15.49,
+   "label": "Forma de Pagamento: todas marcadas",
    "optional": true,
    "timeout": 4
   },
   {
    "do": "mark",
    "name": "L3",
-   "at": 19.12
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main tbody tr:has-text('#85') svg.lucide-link2"
-   },
-   "seconds": 1.6,
-   "at": 19.12,
-   "label": "[ZOOM] a correntinha entre o #85 e o #86 (dica \"Caixas fechados no mesmo dia\")",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main tbody tr:has-text('#86') svg.lucide-link2"
-   },
-   "seconds": 0.8,
-   "at": 24.49,
-   "label": "o #86 do Marcos, de ontem",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "click",
-   "target": {
-    "text": "10/11/2026 08:31",
-    "exact": true,
-    "within": "main"
-   },
-   "at": 26.36,
-   "label": "abre o resumo do #85 (o caixa do Rafael de ontem)"
-  },
-  {
-   "do": "waitFor",
-   "text": "Total Compras",
-   "timeout": 10
-  },
-  {
-   "do": "mark",
-   "name": "L4",
-   "at": 26.76
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "Total Compras",
-    "within": "main tbody"
-   },
-   "seconds": 0.2,
-   "at": 30.3,
-   "label": "resumo: Total Compras",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "Total Vendas",
-    "within": "main tbody"
-   },
-   "seconds": 0.2,
-   "at": 31.13,
-   "label": "resumo: Total Vendas",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "Receitas",
-    "within": "main tbody"
-   },
-   "seconds": 0.2,
-   "at": 31.89,
-   "label": "resumo: Receitas",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "Despesas",
-    "within": "main tbody"
-   },
-   "seconds": 0.2,
-   "at": 32.8,
-   "label": "resumo: Despesas",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "hover",
-   "target": {
-    "text": "Lucro Projetado",
-    "within": "main tbody"
-   },
-   "seconds": 0.2,
-   "at": 33.79,
-   "label": "resumo: Lucro Projetado",
-   "optional": true,
-   "timeout": 4
-  },
-  {
-   "do": "click",
-   "target": {
-    "placeholder": "Buscar por responsável, data ou código..."
-   },
-   "at": 35.48,
-   "label": "a busca"
-  },
-  {
-   "do": "mark",
-   "name": "L5",
-   "at": 35.83
+   "at": 17.83
   },
   {
    "do": "type",
    "target": {
-    "placeholder": "Buscar por responsável, data ou código..."
+    "text": "Detalhamento",
+    "exact": true,
+    "within": "[role=dialog]"
    },
-   "text": "21/10",
-   "cps": 9,
-   "at": 39.62,
-   "label": "digita 21/10",
-   "noClick": true
+   "text": "",
+   "noClick": true,
+   "optional": true,
+   "timeout": 4,
+   "at": 19.58,
+   "label": "[ZOOM] \"Detalhamento\" · \"Detalhar materiais de cada pedido\""
+  },
+  {
+   "do": "click",
+   "target": {
+    "selector": "[role=dialog] label:has-text('Detalhar materiais de cada pedido')"
+   },
+   "at": 19.68,
+   "label": "marca \"Detalhar materiais de cada pedido\""
+  },
+  {
+   "do": "click",
+   "target": {
+    "role": "button",
+    "name": "Exportar PDF",
+    "exact": true,
+    "within": "[role=dialog]"
+   },
+   "at": 25.72,
+   "label": "Exportar PDF"
   },
   {
    "do": "waitFor",
-   "target": {
-    "selector": "main tbody tr:has-text('#70')"
-   },
-   "timeout": 10
+   "text": "Relatório de pedidos gerado",
+   "timeout": 30
   },
   {
    "do": "eval",
-   "js": "(async()=>{const norm=t=>t.replace(/[\\s\\u00a0]+/g,' ').toLowerCase();const esp=[\"#70\", \"21/10/2026\", \"Marcos Antunes\", \"800,00\", \"612,50\"];let out='';for(let i=0;i<22;i++){const els=[...document.querySelectorAll(\"main tbody tr:has-text('#70')\")];const el=false?els[els.length-1]:els[0];if(!el){out='DIFERENTE: sem elemento';}else{const t=norm(el.innerText);const falta=esp.filter(e=>!t.includes(norm(e)));if(!falta.length)return 'OK: '+esp.join(' | ');out='DIFERENTE: faltou '+JSON.stringify(falta)+' em: '+t.slice(0,260);}await new Promise(r=>setTimeout(r,300));}return out})()",
-   "label": "confere o #70 do Marcos (21/10, R$ 800,00 e R$ 612,50)"
-  },
-  {
-   "do": "hover",
-   "target": {
-    "selector": "main tbody tr:has-text('#70')"
-   },
-   "seconds": 1.0,
-   "at": 43.86,
-   "label": "[ZOOM] a linha do #70 do Marcos",
-   "optional": true,
-   "timeout": 4
+   "js": "(async()=>{let w=null,h='';for(let i=0;i<50;i++){w=window.__abas&&window.__abas[0];try{h=w&&w.document&&w.document.documentElement.outerHTML||''}catch(e){h=''}if(h.includes(\"Bateria automotiva\"))break;await new Promise(r=>setTimeout(r,200));}if(!h.includes(\"Bateria automotiva\"))return 'SEM ABA: '+h.slice(0,120);return {html:\"relatorio-pedidos-outubro\",chars:h.length,b64:btoa(unescape(encodeURIComponent(h)))}})()",
+   "label": "HTML do \"Relatório de Pedidos\" (para a edição: período, pedidos de outubro e os materiais de cada um)"
   },
   {
    "do": "mark",
-   "name": "L6",
-   "at": 46.13
+   "name": "L4",
+   "at": 26.22
   },
   {
-   "do": "hover",
+   "do": "type",
    "target": {
-    "role": "button",
-    "name": "Filtros",
-    "exact": true,
-    "within": "main"
+    "selector": "[data-sonner-toast]:has-text('Relatório de pedidos gerado')"
    },
-   "seconds": 0.8,
-   "at": 46.13,
-   "label": "Filtros (sem abrir)",
+   "text": "",
+   "noClick": true,
    "optional": true,
-   "timeout": 4
+   "timeout": 4,
+   "at": 28.96,
+   "label": "aviso \"Relatório de pedidos gerado\""
   },
   {
    "do": "scroll",
    "point": {
     "x": 760,
-    "y": 600
+    "y": 520
    },
    "by": 0,
    "duration": 0.3,
    "after": 0,
-   "at": 51.89,
+   "at": 32.45,
    "label": "cursor descansa"
   },
   {
@@ -414,7 +324,7 @@
   {
    "do": "mark",
    "name": "FIM",
-   "at": 53.45
+   "at": 36.97
   }
  ]
 }
